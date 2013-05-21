@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013      Zynga Inc.
+Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013 Lee, Jae-Hong
 
 http://www.cocos2d-x.org
 
@@ -21,28 +22,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CC_GL_BUFFERED_NODE__
-#define __CC_GL_BUFFERED_NODE__
 
-#include <CCGL.h>
+#include "platform/CCDevice.h"
+#include <FSystem.h>
 
-class CCGLBufferedNode
+NS_CC_BEGIN
+using namespace Tizen::System;
+
+int CCDevice::getDPI()
 {
-public:
-    CCGLBufferedNode(void);
+    result r = E_SUCCESS;
+    int dpi = -1;
 
-    /**
-     * Load the given data into this CCNode's GL Buffer. Needed for WebGL, as it does not support client-side arrays.
-     */
-    void setGLBufferData(void *buf, GLuint bufSize, int slot);
-    void setGLIndexData(void *buf, GLuint bufSize, int slot);
+    r = SettingInfo::GetValue(L"http://tizen.org/feature/screen.dpi", dpi);
+    TryLog(!IsFailed(r), "[%s] Cannot get the current dpi", GetErrorMessage(r));
 
-    // We allocate 4 buffer objs per node, and index into them as slots.
-#define BUFFER_SLOTS 4
-    GLuint m_bufferObject[BUFFER_SLOTS];
-    GLuint m_bufferSize[BUFFER_SLOTS];
+    return dpi;
+}
 
-    GLuint m_indexBufferObject[BUFFER_SLOTS];
-    GLuint m_indexBufferSize[BUFFER_SLOTS];
-};
-#endif // __CC_GL_BUFFERED_NODE__
+NS_CC_END

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013      Zynga Inc.
+Copyright (c) 2010 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -21,28 +21,23 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CC_GL_BUFFERED_NODE__
-#define __CC_GL_BUFFERED_NODE__
 
-#include <CCGL.h>
+#ifndef __CC_STD_C_H__
+#define __CC_STD_C_H__
 
-class CCGLBufferedNode
-{
-public:
-    CCGLBufferedNode(void);
+#include "platform/CCPlatformMacros.h"
 
-    /**
-     * Load the given data into this CCNode's GL Buffer. Needed for WebGL, as it does not support client-side arrays.
-     */
-    void setGLBufferData(void *buf, GLuint bufSize, int slot);
-    void setGLIndexData(void *buf, GLuint bufSize, int slot);
+#include <math.h>
+#include <stdio.h>
+#include <sys/time.h>
+#include <float.h>
 
-    // We allocate 4 buffer objs per node, and index into them as slots.
-#define BUFFER_SLOTS 4
-    GLuint m_bufferObject[BUFFER_SLOTS];
-    GLuint m_bufferSize[BUFFER_SLOTS];
+#ifndef MIN
+#define MIN(x,y) (((x) > (y)) ? (y) : (x))
+#endif  // MIN
 
-    GLuint m_indexBufferObject[BUFFER_SLOTS];
-    GLuint m_indexBufferSize[BUFFER_SLOTS];
-};
-#endif // __CC_GL_BUFFERED_NODE__
+#ifndef MAX
+#define MAX(x,y) (((x) < (y)) ? (y) : (x))
+#endif  // MAX
+
+#endif  // __CC_STD_C_H__

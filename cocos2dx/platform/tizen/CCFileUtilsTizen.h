@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013      Zynga Inc.
+Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013 Lee, Jae-Hong
 
 http://www.cocos2d-x.org
 
@@ -21,28 +22,41 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CC_GL_BUFFERED_NODE__
-#define __CC_GL_BUFFERED_NODE__
 
-#include <CCGL.h>
+#ifndef __CC_FILEUTILS_TIZEN_H__
+#define __CC_FILEUTILS_TIZEN_H__
 
-class CCGLBufferedNode
+#include "platform/CCFileUtils.h"
+#include "platform/CCPlatformMacros.h"
+#include "ccTypes.h"
+#include "ccTypeInfo.h"
+#include <string>
+#include <vector>
+
+NS_CC_BEGIN
+
+/**
+ * @addtogroup platform
+ * @{
+ */
+
+//! @brief  Helper class to handle file operations
+class CC_DLL CCFileUtilsTizen : public CCFileUtils
 {
+    friend class CCFileUtils;
+    CCFileUtilsTizen();
 public:
-    CCGLBufferedNode(void);
-
-    /**
-     * Load the given data into this CCNode's GL Buffer. Needed for WebGL, as it does not support client-side arrays.
-     */
-    void setGLBufferData(void *buf, GLuint bufSize, int slot);
-    void setGLIndexData(void *buf, GLuint bufSize, int slot);
-
-    // We allocate 4 buffer objs per node, and index into them as slots.
-#define BUFFER_SLOTS 4
-    GLuint m_bufferObject[BUFFER_SLOTS];
-    GLuint m_bufferSize[BUFFER_SLOTS];
-
-    GLuint m_indexBufferObject[BUFFER_SLOTS];
-    GLuint m_indexBufferSize[BUFFER_SLOTS];
+    /* override funtions */
+    bool init();
+    virtual std::string getWritablePath();
+    virtual bool isFileExist(const std::string& strFilePath);
 };
-#endif // __CC_GL_BUFFERED_NODE__
+
+// end of platform group
+/// @}
+
+NS_CC_END
+
+#endif    // __CC_FILEUTILS_LINUX_H__
+
+

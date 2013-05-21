@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013      Zynga Inc.
+Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013 Lee, Jae-Hong
 
 http://www.cocos2d-x.org
 
@@ -21,28 +22,43 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CC_GL_BUFFERED_NODE__
-#define __CC_GL_BUFFERED_NODE__
 
-#include <CCGL.h>
+#include "platform/CCCommon.h"
+#include "CCStdC.h"
+#include <FBaseLog.h>
 
-class CCGLBufferedNode
+NS_CC_BEGIN
+
+#define MAX_LEN         (cocos2d::kMaxLogLen + 1)
+
+void CCLog(const char * pszFormat, ...)
 {
-public:
-    CCGLBufferedNode(void);
+    char szBuf[MAX_LEN];
 
-    /**
-     * Load the given data into this CCNode's GL Buffer. Needed for WebGL, as it does not support client-side arrays.
-     */
-    void setGLBufferData(void *buf, GLuint bufSize, int slot);
-    void setGLIndexData(void *buf, GLuint bufSize, int slot);
+    va_list ap;
+    va_start(ap, pszFormat);
+    vsnprintf(szBuf, MAX_LEN, pszFormat, ap);
+    va_end(ap);
 
-    // We allocate 4 buffer objs per node, and index into them as slots.
-#define BUFFER_SLOTS 4
-    GLuint m_bufferObject[BUFFER_SLOTS];
-    GLuint m_bufferSize[BUFFER_SLOTS];
+    // Strip any trailing newlines from log message.
+    size_t len = strlen(szBuf);
+    while (len && szBuf[len-1] == '\n')
+    {
+      szBuf[len-1] = '\0';
+      len--;
+    }
 
-    GLuint m_indexBufferObject[BUFFER_SLOTS];
-    GLuint m_indexBufferSize[BUFFER_SLOTS];
-};
-#endif // __CC_GL_BUFFERED_NODE__
+    AppLog("cocos2d-x debug info [%s]\n",  szBuf);
+}
+
+void CCMessageBox(const char * pszMsg, const char * pszTitle)
+{
+    CCLog("%s: %s", pszTitle, pszMsg);
+}
+
+void CCLuaLog(const char * pszFormat)
+{
+    puts(pszFormat);
+}
+
+NS_CC_END

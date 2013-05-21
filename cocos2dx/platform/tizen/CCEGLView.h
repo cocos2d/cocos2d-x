@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013      Zynga Inc.
+Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013 Lee, Jae-Hong
 
 http://www.cocos2d-x.org
 
@@ -21,28 +22,55 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CC_GL_BUFFERED_NODE__
-#define __CC_GL_BUFFERED_NODE__
 
-#include <CCGL.h>
+#ifndef __CC_EGLVIEW_TIZEN_H__
+#define __CC_EGLVIEW_TIZEN_H__
 
-class CCGLBufferedNode
+#include "cocoa/CCGeometry.h"
+#include "platform/CCEGLViewProtocol.h"
+#include <FBase.h>
+
+NS_CC_BEGIN
+
+class CC_DLL CCEGLView
+    : public CCEGLViewProtocol
+    , public Tizen::Base::Runtime::ITimerEventListener
 {
 public:
-    CCGLBufferedNode(void);
+    CCEGLView();
+    virtual ~CCEGLView();
 
+    bool    isOpenGLReady();
+    Tizen::Base::Runtime::Timer*    getTimer();
+    void    cleanup();
+
+    // keep compatible
+    void    end();
+    void    swapBuffers();
+    void    setIMEKeyboardState(bool bOpen);
+
+    // static function
     /**
-     * Load the given data into this CCNode's GL Buffer. Needed for WebGL, as it does not support client-side arrays.
-     */
-    void setGLBufferData(void *buf, GLuint bufSize, int slot);
-    void setGLIndexData(void *buf, GLuint bufSize, int slot);
+    @brief    get the shared main open gl window
+    */
+    static CCEGLView* sharedOpenGLView();
 
-    // We allocate 4 buffer objs per node, and index into them as slots.
-#define BUFFER_SLOTS 4
-    GLuint m_bufferObject[BUFFER_SLOTS];
-    GLuint m_bufferSize[BUFFER_SLOTS];
+    // Tizen timer callback
+    virtual void OnTimerExpired(Tizen::Base::Runtime::Timer& timer);
 
-    GLuint m_indexBufferObject[BUFFER_SLOTS];
-    GLuint m_indexBufferSize[BUFFER_SLOTS];
+private:
+    bool create();
+    bool initEGL();
+    void destroyGL();
+
+    Tizen::Graphics::Opengl::EGLDisplay __eglDisplay;
+    Tizen::Graphics::Opengl::EGLSurface __eglSurface;
+    Tizen::Graphics::Opengl::EGLConfig  __eglConfig;
+    Tizen::Graphics::Opengl::EGLContext __eglContext;
+
+    Tizen::Base::Runtime::Timer*        __pTimer;
 };
-#endif // __CC_GL_BUFFERED_NODE__
+
+NS_CC_END
+
+#endif    // end of __CC_EGLVIEW_TIZEN_H__

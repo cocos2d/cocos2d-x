@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013      Zynga Inc.
+Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013 Lee, Jae-Hong
 
 http://www.cocos2d-x.org
 
@@ -21,28 +22,43 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CC_GL_BUFFERED_NODE__
-#define __CC_GL_BUFFERED_NODE__
 
-#include <CCGL.h>
+#include "CCAccelerometer.h"
+#include <stdio.h>
 
-class CCGLBufferedNode
+NS_CC_BEGIN
+
+CCAccelerometer::CCAccelerometer() : m_pAccelDelegate(NULL)
 {
-public:
-    CCGLBufferedNode(void);
+}
 
-    /**
-     * Load the given data into this CCNode's GL Buffer. Needed for WebGL, as it does not support client-side arrays.
-     */
-    void setGLBufferData(void *buf, GLuint bufSize, int slot);
-    void setGLIndexData(void *buf, GLuint bufSize, int slot);
+CCAccelerometer::~CCAccelerometer()
+{
 
-    // We allocate 4 buffer objs per node, and index into them as slots.
-#define BUFFER_SLOTS 4
-    GLuint m_bufferObject[BUFFER_SLOTS];
-    GLuint m_bufferSize[BUFFER_SLOTS];
+}
 
-    GLuint m_indexBufferObject[BUFFER_SLOTS];
-    GLuint m_indexBufferSize[BUFFER_SLOTS];
-};
-#endif // __CC_GL_BUFFERED_NODE__
+void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
+{
+    m_pAccelDelegate = pDelegate;
+
+    if (pDelegate)
+    {
+    }
+    else
+    {
+    }
+}
+
+void CCAccelerometer::setAccelerometerInterval(float interval)
+{
+}
+
+
+void CCAccelerometer::update(float x, float y, float z, long sensorTimeStamp)
+{
+    if (m_pAccelDelegate)
+    {
+    }
+}
+NS_CC_END
+

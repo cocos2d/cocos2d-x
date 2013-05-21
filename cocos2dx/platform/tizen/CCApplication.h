@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013      Zynga Inc.
+Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013 Lee, Jae-Hong
 
 http://www.cocos2d-x.org
 
@@ -21,28 +22,59 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CC_GL_BUFFERED_NODE__
-#define __CC_GL_BUFFERED_NODE__
 
-#include <CCGL.h>
+#ifndef __CC_APPLICATION_TIZEN_H__
+#define __CC_APPLICATION_TIZEN_H__
 
-class CCGLBufferedNode
+#include "platform/CCCommon.h"
+#include "platform/CCApplicationProtocol.h"
+#include "CCOspApplication.h"
+
+NS_CC_BEGIN
+
+class CCRect;
+
+class CC_DLL CCApplication
+    : public CCApplicationProtocol
 {
 public:
-    CCGLBufferedNode(void);
+    CCApplication();
+    virtual ~CCApplication();
 
     /**
-     * Load the given data into this CCNode's GL Buffer. Needed for WebGL, as it does not support client-side arrays.
+    @brief    Callback by CCDirector to limit FPS.
+    @interval       The time, expressed in seconds, between current frame and next. 
+    */
+    void setAnimationInterval(double interval);
+    long getAnimationInterval();
+
+    /**
+    @brief    Run the message loop.
+    */
+    int run();
+
+    /**
+    @brief    Get current application instance.
+    @return Current application instance pointer.
+    */
+    static CCApplication* sharedApplication();
+
+    /**
+    @brief Get current language config
+    @return Current language config
+    */
+    virtual ccLanguageType getCurrentLanguage();
+    
+    /**
+     @brief Get target platform
      */
-    void setGLBufferData(void *buf, GLuint bufSize, int slot);
-    void setGLIndexData(void *buf, GLuint bufSize, int slot);
+    virtual TargetPlatform getTargetPlatform();
 
-    // We allocate 4 buffer objs per node, and index into them as slots.
-#define BUFFER_SLOTS 4
-    GLuint m_bufferObject[BUFFER_SLOTS];
-    GLuint m_bufferSize[BUFFER_SLOTS];
-
-    GLuint m_indexBufferObject[BUFFER_SLOTS];
-    GLuint m_indexBufferSize[BUFFER_SLOTS];
+protected:
+    static CCApplication * sm_pSharedApplication;
+    static long m_nAnimationInterval; // milliseconds
 };
-#endif // __CC_GL_BUFFERED_NODE__
+
+NS_CC_END
+
+#endif    // __CC_APPLICATION_TIZEN_H__
