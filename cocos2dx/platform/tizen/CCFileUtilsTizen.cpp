@@ -75,8 +75,21 @@ bool CCFileUtilsTizen::init()
 
 string CCFileUtilsTizen::getWritablePath()
 {
-    //return current resource path
-    return m_strDefaultResRootPath;
+    UiApp* pApp = UiApp::GetInstance();
+    if (!pApp)
+    {
+        return null;
+    }
+
+    string path("");
+    AsciiEncoding ascii;
+    String dataPath = pApp->GetAppDataPath();
+    if (!dataPath.IsEmpty())
+    {
+    	path.append((const char *)ascii.GetBytesN(dataPath)->GetPointer());
+    }
+
+    return path;
 }
 
 bool CCFileUtilsTizen::isFileExist(const std::string& strFilePath)
