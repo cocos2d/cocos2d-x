@@ -81,13 +81,10 @@ namespace CocosDenshion
     // Unfortunately this is just hard-coded in Emscripten's SDL
     // implementation.
     static const int NR_CHANNELS = 32;
-
     static void stopBackground(bool bReleaseData)
     {
-    }
-
-    static void setBackgroundVolume(float volume)
-    {
+        SimpleAudioEngine *engine = SimpleAudioEngine::sharedEngine();
+        engine->stopBackgroundMusic();
     }
 
 	SimpleAudioEngine::SimpleAudioEngine()
@@ -112,15 +109,8 @@ namespace CocosDenshion
 	    EffectsMap::const_iterator end = s_effects.end();
 	    for (EffectsMap::iterator it = s_effects.begin(); it != end; it++)
 	    {
-            /*
-	        alSourceStop(it->second->source);
-	        checkALError("end");
-			alDeleteBuffers(1, &it->second->buffer);
-			checkALError("end");
-			alDeleteSources(1, &it->second->source);
-			checkALError("end");
+            Mix_FreeChunk(it->second->chunk);
 			delete it->second;
-            */
 	    }
 	    s_effects.clear();
 
@@ -129,25 +119,10 @@ namespace CocosDenshion
 
 		for (BackgroundMusicsMap::iterator it = s_backgroundMusics.begin(); it != s_backgroundMusics.end(); ++it)
 		{
-            /*
-			alSourceStop(it->second->source);
-			checkALError("end");
-			alDeleteBuffers(1, &it->second->buffer);
-			checkALError("end");
-			alDeleteSources(1, &it->second->source);
-			checkALError("end");
+            Mix_FreeMusic(it->second->music);
 			delete it->second;
-            */
 		}
 		s_backgroundMusics.clear();
-	}
-
-	//
-	// OGG support
-	//
-	static bool isOGGFile(const char *pszFilePath)
-	{
-        return true;
 	}
 
 	//
@@ -192,6 +167,7 @@ namespace CocosDenshion
 
 	void SimpleAudioEngine::rewindBackgroundMusic()
 	{
+        CCLOGWARN("Cannot rewind background in Emscripten");
 	}
 
 	bool SimpleAudioEngine::willPlayBackgroundMusic()
@@ -277,6 +253,17 @@ namespace CocosDenshion
 
 	void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 	{
+        std::string key = std::string(pszFilePath);
+        if(!s_effects.count(key))
+        {
+            return;
+        }
+
+        struct soundData *sound = s_effects[key];
+
+        Mix_FreeChunk(sound->chunk);
+        delete sound;
+        s_effects.erase(key);
 	}
 
 	void SimpleAudioEngine::pauseEffect(unsigned int nSoundId)
