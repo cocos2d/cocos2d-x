@@ -43,8 +43,6 @@
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/external/chipmunk/include/chipmunk&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/external&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/rootstraps/tizen-emulator-2.0.cpp/usr/include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/rootstraps/tizen-emulator-2.0.cpp/usr/include/freetype2&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/prebuilt/libwebp/include&quot;"/>
 								</option>
 								<option id="sbi.gnu.cpp.compiler.option.frameworks.cpp.394899403" name="Tizen-Frameworks" superClass="sbi.gnu.cpp.compiler.option.frameworks.cpp" valueType="userObjs">
 									<listOptionValue builtIn="false" value="osp"/>
@@ -113,6 +111,7 @@
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/rootstraps/tizen-emulator-2.0.cpp/lib&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/rootstraps/tizen-emulator-2.0.cpp/usr/lib&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/prebuilt/libwebp/libs/x86&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/proj.tizen/Debug-Tizen-Emulator&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/extensions/proj.tizen/Debug-Tizen-Emulator&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/external/Box2D/proj.tizen/Debug-Tizen-Emulator&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/external/chipmunk/proj.tizen/Debug-Tizen-Emulator&quot;"/>
@@ -153,6 +152,9 @@
 									<listOptionValue builtIn="false" value="-losp-compat"/>
 								</option>
 								<option id="gnu.cpp.link.option.libs.1104115626" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
+									<listOptionValue builtIn="false" value="cocosdenshion"/>
+									<listOptionValue builtIn="false" value="extensions"/>
+									<listOptionValue builtIn="false" value="cocos2d"/>
 									<listOptionValue builtIn="false" value="z"/>
 									<listOptionValue builtIn="false" value="jpeg"/>
 									<listOptionValue builtIn="false" value="png"/>
@@ -167,8 +169,6 @@
 									<listOptionValue builtIn="false" value="cares"/>
 									<listOptionValue builtIn="false" value="idn"/>
 									<listOptionValue builtIn="false" value="box2d"/>
-									<listOptionValue builtIn="false" value="extensions"/>
-									<listOptionValue builtIn="false" value="cocosdenshion"/>
 									<listOptionValue builtIn="false" value="chipmunk"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.409827423" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
@@ -779,4 +779,5 @@
 	<storageModule moduleId="refreshScope" versionNumber="1">
 		<resource resourceType="PROJECT" workspacePath="/proj.tizen"/>
 	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 </cproject>
