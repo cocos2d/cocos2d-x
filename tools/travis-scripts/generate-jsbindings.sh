@@ -16,10 +16,6 @@
 #  * $NDK_ROOT
 #
 
-#Set git user
-git config --global user.email "CocosRobot@gmail.com"
-git config --global user.name ${GH_USER}
-
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR"/../..
 TOJS_ROOT=$COCOS2DX_ROOT/tools/tojs
@@ -52,6 +48,10 @@ if [ "$GEN_JSB"x != "YES"x ]; then
     popd
     exit 0
 fi
+
+#Set git user
+git config --global user.email "CocosRobot@gmail.com"
+git config --global user.name ${GH_USER}
 
 # Update submodule of auto-gen JSBinding repo.
 pushd "$GENERATED_WORKTREE"

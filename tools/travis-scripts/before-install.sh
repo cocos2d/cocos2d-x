@@ -14,7 +14,7 @@ install_android_ndk()
 {
     # Download android ndk
     echo "Download android ndk ..."
-    if [ "$PLATFORM"x = "linux"x ]; then
+    if [ "$PLATFORM"x = "android"x ]; then
         HOST_NAME="linux"
     elif [ "$PLATFORM"x = "ios"x ]; then
         HOST_NAME="darwin"
