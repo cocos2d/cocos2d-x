@@ -50,7 +50,7 @@ if [ "$GEN_JSB"x != "YES"x ]; then
 fi
 
 #Set git user
-git config --global user.email "CocosRobot@gmail.com"
+git config --global user.email ${GH_EMAIL}
 git config --global user.name ${GH_USER}
 
 # Update submodule of auto-gen JSBinding repo.
