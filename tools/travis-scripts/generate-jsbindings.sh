@@ -24,6 +24,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR"/../..
 TOJS_ROOT=$COCOS2DX_ROOT/tools/tojs
 GENERATED_WORKTREE="$COCOS2DX_ROOT"/scripting/javascript/bindings/generated
+COMMITTAG="[AUTO]"
 
 sudo apt-get --force-yes --yes install python-yaml python-cheetah
 
