@@ -2,6 +2,7 @@
 language: cpp
 env: 
   matrix: 
+  - GEN_JSB=YES
   - PLATFORM=linux DEBUG=1
   - PLATFORM=nacl DEBUG=1
   - PLATFORM=android
