@@ -26,7 +26,32 @@ TOJS_ROOT=$COCOS2DX_ROOT/tools/tojs
 GENERATED_WORKTREE="$COCOS2DX_ROOT"/scripting/javascript/bindings/generated
 COMMITTAG="[AUTO]"
 
-sudo apt-get --force-yes --yes install python-yaml python-cheetah
+# Exit on error
+set -e
+
+if [ "$PLATFORM"x = "ios"x ]; then
+    mkdir -p $HOME/bin
+    pushd $HOME/bin
+    curl -O http://pyyaml.org/download/pyyaml/PyYAML-3.10.zip
+    unzip PyYAML-3.10.zip 2> /dev/null > /dev/null
+    cd PyYAML-3.10
+    sudo python setup.py install 2> /dev/null > /dev/null
+    cd ..
+    curl -O https://pypi.python.org/packages/source/C/Cheetah/Cheetah-2.4.4.tar.gz
+    tar xzf Cheetah-2.4.4.tar.gz
+    cd Cheetah-2.4.4
+    sudo python setup.py install 2> /dev/null > /dev/null
+    popd
+elif [ "$PLATFORM"x = "linux"x ]; then
+    sudo apt-get --force-yes --yes install python-yaml python-cheetah
+fi
+
+if [ "$GEN_JSB"x != "YES"x ]; then
+    pushd "$TOJS_ROOT"
+    ./genbindings.sh
+    popd
+    exit 0
+fi
 
 # Update submodule of auto-gen JSBinding repo.
 pushd "$GENERATED_WORKTREE"
@@ -41,8 +66,7 @@ echo "Show files in scripting/javascript/bindings/generated folder."
 ls -a
 popd
 
-# Exit on error
-set -e
+
 
 # 1. Generate JS bindings
 pushd "$TOJS_ROOT"
