@@ -38,23 +38,25 @@
 									<listOptionValue builtIn="false" value="tizen-emulator-2.0.cpp_llvm31.i386.cpp.staticLib"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.include.paths.1887202981" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x/cocos2dx"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x/cocos2dx/include"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x/cocos2dx/kazmath/include"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x/cocos2dx/platform/tizen"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x/cocos2dx/platform/third_party/tizen/rootstraps/tizen-emulator-2.0.cpp/usr/include"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x/cocos2dx/platform/third_party/tizen/rootstraps/tizen-emulator-2.0.cpp/usr/include/freetype2"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x/cocos2dx/platform/third_party/tizen/prebuilt/libwebp/include"/>
-									<listOptionValue builtIn="false" value="C:/tizen-sdk/platforms/tizen2.0/rootstraps/tizen-emulator-2.0.cpp/usr/include"/>
-									<listOptionValue builtIn="false" value="C:/tizen-sdk/platforms/tizen2.0/rootstraps/tizen-emulator-2.0.cpp/usr/include/libxml2"/>
-									<listOptionValue builtIn="false" value="C:/tizen-sdk/library"/>
-									<listOptionValue builtIn="false" value="C:/tizen-sdk/platforms/tizen2.0/rootstraps/tizen-emulator-2.0.cpp/usr/include/osp"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x/cocos2dx/proj.tizen/proj.tizen/proj.tizen/inc"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/kazmath/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/tizen&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/rootstraps/tizen-emulator-2.0.cpp/usr/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/rootstraps/tizen-emulator-2.0.cpp/usr/include/freetype2&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/prebuilt/libwebp/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/rootstraps/tizen-emulator-2.0.cpp/usr/include&quot;"/>
 								</option>
 								<option id="sbi.gnu.cpp.compiler.option.frameworks.cpp.140749819" name="Tizen-Frameworks" superClass="sbi.gnu.cpp.compiler.option.frameworks.cpp" valueType="userObjs">
 									<listOptionValue builtIn="false" value="osp-static"/>
 								</option>
-								<option id="sbi.gnu.cpp.compiler.option.frameworks_inc.cpp.1250550482" name="Tizen-Frameworks-Include-Path" superClass="sbi.gnu.cpp.compiler.option.frameworks_inc.cpp" valueType="includePath"/>
+								<option id="sbi.gnu.cpp.compiler.option.frameworks_inc.cpp.1250550482" name="Tizen-Frameworks-Include-Path" superClass="sbi.gnu.cpp.compiler.option.frameworks_inc.cpp" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/libxml2&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\tizen-sdk\library&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/osp&quot;"/>
+								</option>
 								<option id="sbi.gnu.cpp.compiler.option.frameworks_cflags.cpp.1942713160" name="Tizen-Frameworks-Other-Cflags" superClass="sbi.gnu.cpp.compiler.option.frameworks_cflags.cpp" valueType="stringList">
 									<listOptionValue builtIn="false" value="-target i386-tizen-linux-gnueabi -gcc-toolchain C:/tizen-sdk/tools/smart-build-interface/../i386-linux-gnueabi-gcc-4.5/ -ccc-gcc-name i386-linux-gnueabi-g++ -march=i386 -Wno-gnu"/>
 									<listOptionValue builtIn="false" value=""/>
@@ -75,23 +77,21 @@
 									<listOptionValue builtIn="false" value="tizen-emulator-2.0.cpp_llvm31.i386.cpp.staticLib"/>
 								</option>
 								<option id="gnu.c.compiler.option.include.paths.821405214" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x/cocos2dx"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x/cocos2dx/include"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x/cocos2dx/kazmath/include"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x/cocos2dx/platform/tizen"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x/cocos2dx/platform/third_party/tizen/rootstraps/tizen-emulator-2.0.cpp/usr/include"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x/cocos2dx/platform/third_party/tizen/rootstraps/tizen-emulator-2.0.cpp/usr/include/freetype2"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x/cocos2dx/platform/third_party/tizen/prebuilt/libwebp/include"/>
-									<listOptionValue builtIn="false" value="C:/tizen-sdk/platforms/tizen2.0/rootstraps/tizen-emulator-2.0.cpp/usr/include"/>
-									<listOptionValue builtIn="false" value="C:/tizen-sdk/platforms/tizen2.0/rootstraps/tizen-emulator-2.0.cpp/usr/include/libxml2"/>
-									<listOptionValue builtIn="false" value="C:/tizen-sdk/library"/>
-									<listOptionValue builtIn="false" value="C:/tizen-sdk/platforms/tizen2.0/rootstraps/tizen-emulator-2.0.cpp/usr/include/osp"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x/cocos2dx/proj.tizen/proj.tizen/proj.tizen/inc"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/kazmath/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/tizen&quot;"/>
 								</option>
 								<option id="sbi.gnu.c.compiler.option.frameworks.cpp.229730784" name="Tizen-Frameworks" superClass="sbi.gnu.c.compiler.option.frameworks.cpp" valueType="userObjs">
 									<listOptionValue builtIn="false" value="osp-static"/>
 								</option>
-								<option id="sbi.gnu.c.compiler.option.frameworks_inc.cpp.1139638882" name="Tizen-Frameworks-Include-Path" superClass="sbi.gnu.c.compiler.option.frameworks_inc.cpp" valueType="includePath"/>
+								<option id="sbi.gnu.c.compiler.option.frameworks_inc.cpp.1139638882" name="Tizen-Frameworks-Include-Path" superClass="sbi.gnu.c.compiler.option.frameworks_inc.cpp" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/libxml2&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\tizen-sdk\library&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/osp&quot;"/>
+								</option>
 								<option id="sbi.gnu.c.compiler.option.frameworks_cflags.cpp.1131449804" name="Tizen-Frameworks-Other-Cflags" superClass="sbi.gnu.c.compiler.option.frameworks_cflags.cpp" valueType="stringList">
 									<listOptionValue builtIn="false" value="-target i386-tizen-linux-gnueabi -gcc-toolchain C:/tizen-sdk/tools/smart-build-interface/../i386-linux-gnueabi-gcc-4.5/ -ccc-gcc-name i386-linux-gnueabi-g++ -march=i386 -Wno-gnu"/>
 									<listOptionValue builtIn="false" value=""/>
