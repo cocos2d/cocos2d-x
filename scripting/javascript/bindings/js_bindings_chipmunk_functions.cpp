@@ -2524,19 +2524,26 @@ JSBool JSB_cpPivotJointGetAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: cpBody*, cpBody*, cpVect
 // Ret value: cpConstraint*
 JSBool JSB_cpPivotJointNew(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION2( argc == 3, cx, JS_FALSE, "Invalid number of arguments" );
+	JSB_PRECONDITION2( argc == 3 || argc == 4, cx, JS_FALSE, "Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
-	cpBody* arg0; cpBody* arg1; cpVect arg2; 
+	cpBody* arg0; cpBody* arg1; cpVect arg2; cpVect arg3;
 
 	ok &= jsval_to_opaque( cx, *argvp++, (void**)&arg0 );
 	ok &= jsval_to_opaque( cx, *argvp++, (void**)&arg1 );
 	ok &= jsval_to_cpVect( cx, *argvp++, (cpVect*) &arg2 );
+	if(argc == 4) {
+		ok &= jsval_to_cpVect( cx, *argvp++, (cpVect*) &arg3 );
+	}
 	JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 	cpConstraint* ret_val;
 
-	ret_val = cpPivotJointNew((cpBody*)arg0 , (cpBody*)arg1 , (cpVect)arg2  );
-
+	if(argc == 4) {
+		ret_val = cpPivotJointNew2((cpBody*)arg0 , (cpBody*)arg1 , (cpVect)arg2 , (cpVect)arg3  );
+	} else {
+		ret_val = cpPivotJointNew((cpBody*)arg0 , (cpBody*)arg1 , (cpVect)arg2  );
+	}
+	
 	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
     

@@ -165,6 +165,7 @@ Developers:
         contribute for Android module building
         Simpler, correct handling of spritesheet sources for CCScale9Sprite.
         Clean up linked libraries for android.
+        JavaScript debugger improved and bugfixed.
 
     Nicolas Gramlich (nicolasgramlich, Zynga)
         fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF
@@ -428,6 +429,13 @@ Developers:
         
     smshuja
         Fixing a bug that pointQueryFirst returns invalid Shape when a shape is not found in JSB.
+        Fixing a bug that New PivotJoint can't access 4 parameters like in html5 version.
+        
+    Carsten Sandtner (casarock)
+        Adding XMLHttpRequest support for JSB.
+        
+    Lee, Jae-Hong (pyrasis)
+        Maintainer of tizen port.
 
 Retired Core Developers:
     WenSheng Yang
