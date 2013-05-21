@@ -38,7 +38,7 @@ if [ "$PLATFORM"x = "ios"x ]; then
     cd Cheetah-2.4.4
     sudo python setup.py install 2> /dev/null > /dev/null
     popd
-elif [ "$PLATFORM"x = "android"x ]; then
+else
     sudo apt-get --force-yes --yes install python-yaml python-cheetah
 fi
 
