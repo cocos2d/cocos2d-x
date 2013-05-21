@@ -577,7 +577,7 @@ void CCLayerRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
     
     if (_cascadeOpacityEnabled)
     {
-        updateDisplayedOpacityChildren(this, _displayedOpacity);
+        CCRGBAProtocol::updateDisplayedOpacityChildren(this, _displayedOpacity);
     }
 }
 
@@ -589,7 +589,7 @@ void CCLayerRGBA::updateDisplayedColor(const ccColor3B& parentColor)
     
     if (_cascadeColorEnabled)
     {
-        updateDisplayedColorChildren(this, _displayedColor);
+        CCRGBAProtocol::updateDisplayedColorChildren(this, _displayedColor);
     }
 }
 
