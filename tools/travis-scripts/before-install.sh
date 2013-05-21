@@ -13,12 +13,12 @@ pushd $HOME/bin
 install_android_ndk()
 {
     # Download android ndk
-    echo "Download android ndk ..."
     if [ "$PLATFORM"x = "android"x ]; then
         HOST_NAME="linux"
     elif [ "$PLATFORM"x = "ios"x ]; then
         HOST_NAME="darwin"
     fi
+    echo "Download android-ndk-r8e-${HOST_NAME}-x86_64.tar.bz2 ..."
     curl -O http://dl.google.com/android/ndk/android-ndk-r8e-${HOST_NAME}-x86_64.tar.bz2
     echo "Decompress android-ndk-r8e-${HOST_NAME}-x86_64.tar.bz2 ..."
     tar xjf android-ndk-r8e-${HOST_NAME}-x86_64.tar.bz2
@@ -28,14 +28,13 @@ install_android_ndk()
 
 install_llvm()
 {
-    echo "Download android ndk ..."
-    if [ "$PLATFORM"x = "linux"x ]; then
+    if [ "$PLATFORM"x = "android"x ]; then
         HOST_NAME="linux-ubuntu_12.04"
     elif [ "$PLATFORM"x = "ios"x ]; then
         HOST_NAME="apple-darwin11"
     fi
     # Download llvm3.1
-    echo "Download llvm3.1 ..."clang+llvm-3.1-x86_64-${HOST_NAME}
+    echo "Download clang+llvm-3.1-x86_64-${HOST_NAME}.tar.gz"
     curl -O http://llvm.org/releases/3.1/clang+llvm-3.1-x86_64-${HOST_NAME}.tar.gz
     echo "Decompress clang+llvm-3.1-x86_64-${HOST_NAME}.tar.gz ..."
     tar xzf clang+llvm-3.1-x86_64-${HOST_NAME}.tar.gz
