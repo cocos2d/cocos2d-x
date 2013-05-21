@@ -1,0 +1,11 @@
+language: objective-c
+script:
+ - export PYTHON_BIN=/usr/bin/python
+ - ./tools/travis-scripts/run-script.sh
+before_install:
+ - ./tools/travis-scripts/before-install.sh
+env:
+  - PLATFORM=ios
+branches:
+  only:
+    - mac-travis
