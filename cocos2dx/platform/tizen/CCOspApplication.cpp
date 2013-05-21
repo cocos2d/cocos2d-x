@@ -141,6 +141,11 @@ CCOspApplication::OnForeground(void)
     {
         timer->Start(CCApplication::sharedApplication()->getAnimationInterval());
     }
+
+    if (CCDirector::sharedDirector()->getOpenGLView())
+    {
+        CCApplication::sharedApplication()->applicationWillEnterForeground();
+    }
 }
 
 void
@@ -152,6 +157,10 @@ CCOspApplication::OnBackground(void)
     {
         timer->Cancel();
     }
+
+	CCApplication::sharedApplication()->applicationDidEnterBackground();
+
+	CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_COME_TO_BACKGROUND, NULL);
 }
 
 void
