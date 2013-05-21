@@ -44,6 +44,196 @@ function CreateExtensionsBasicLayerMenu(pMenu)
 end
 
 -------------------------------------
+--Notification Center Test
+-------------------------------------
+local NotificationCenterParam =
+{
+	kTagLight   = 100,
+    kTagConnect =  200,
+
+	MSG_SWITCH_STATE = "SwitchState"
+}
+local function runNotificationCenterTest()
+		
+		local pNewScene = CCScene:create()
+		local pNewLayer = CCLayer:create()
+		local function BaseInitSceneLayer(pLayer)
+		  if nil == pLayer then
+			  return
+		  end
+		  local s = CCDirector:sharedDirector():getWinSize()
+    	
+    	local function toggleSwitch(tag,menuItem)
+    		local toggleItem = tolua.cast(menuItem,"CCMenuItemToggle")
+    		local nIndex     = toggleItem:getSelectedIndex()
+    		local selectedItem = toggleItem:selectedItem()
+    		if 0 == nIndex  then
+    			selectedItem = nil
+    		end
+    		CCNotificationCenter:sharedNotificationCenter():postNotification(NotificationCenterParam.MSG_SWITCH_STATE,selectedItem)
+    	end
+    	
+    	local switchlabel1 = CCLabelTTF:create("switch off", "Marker Felt", 26)
+    	local switchlabel2 = CCLabelTTF:create("switch on", "Marker Felt", 26)
+    	local switchitem1  = CCMenuItemLabel:create(switchlabel1)
+    	local switchitem2 = CCMenuItemLabel:create(switchlabel2)
+    	local switchitem = CCMenuItemToggle:create(switchitem1)
+    	switchitem:addSubItem(switchitem2)
+    	switchitem:registerScriptTapHandler(toggleSwitch)
+    	--turn on
+    	switchitem:setSelectedIndex(1)
+        local menu = CCMenu:create()
+        menu:addChild(switchitem)
+    	menu:setPosition(ccp(s.width/2+100, s.height/2))
+   		pLayer:addChild(menu)
+
+    	local menuConnect = CCMenu:create()
+    	menuConnect:setPosition(ccp(0,0))
+    	pLayer:addChild(menuConnect)
+    	local i = 1
+    	local bSwitchOn = false
+    	local bConnectArray = 
+    	{
+    		false,
+    		false,
+    		false
+    	}
+    	
+    	local lightArray = {}
+    	
+    	local function updateLightState()
+    		for i = 1, 3 do 
+    			if bSwitchOn and bConnectArray[i] then
+    			    lightArray[i]:setOpacity(255)
+    			else
+        			lightArray[i]:setOpacity(50)
+        		end
+    		end
+    	end
+    	
+    	local function switchStateChanged()
+    		local nIndex = switchitem:getSelectedIndex()
+    		
+    		if 0 == nIndex then
+    			bSwitchOn = false 
+    		else
+    			bSwitchOn = true 
+    		end   		
+    		updateLightState()
+    	end
+    		
+    	local function setIsConnectToSwitch(pLight,bConnect,nIdx)
+    		bConnectArray[nIdx]  = bConnect
+    		print("come in")
+    		if bConnect then
+    			CCNotificationCenter:sharedNotificationCenter():registerScriptObserver(pLight, switchStateChanged,NotificationCenterParam.MSG_SWITCH_STATE)
+    		else
+    			CCNotificationCenter:sharedNotificationCenter():unregisterScriptObserver(pLight,NotificationCenterParam.MSG_SWITCH_STATE)
+    		end
+    		updateLightState()
+    	end
+    	
+
+    	for  i = 1, 3 do 		   	
+        	lightArray[i] = CCSprite:create("Images/Pea.png")
+       		lightArray[i]:setTag(NotificationCenterParam.kTagLight + i)
+        	lightArray[i]:setPosition(ccp(100, s.height / 4 * i) )
+        	pLayer:addChild(lightArray[i])
+			
+        	local connectlabel1 = CCLabelTTF:create("not connected", "Marker Felt", 26)
+        	
+        	local connectlabel2 = CCLabelTTF:create("connected", "Marker Felt", 26)
+        	local connectitem1 = CCMenuItemLabel:create(connectlabel1)
+        	local connectitem2 = CCMenuItemLabel:create(connectlabel2)
+        	local connectitem = CCMenuItemToggle:create(connectitem1)
+        	connectitem:addSubItem(connectitem2)
+        
+        	connectitem:setTag(NotificationCenterParam.kTagConnect+i)
+        	
+        	local function connectToSwitch(tag,menuItem)
+    		   local connectMenuitem = tolua.cast(menuItem,"CCMenuItemToggle")
+    		   local bConnected = true
+    		   if connectMenuitem:getSelectedIndex() == 0 then
+    		   	   bConnected = false
+    		   end
+    		   local nIdx = connectMenuitem:getTag()-NotificationCenterParam.kTagConnect 
+    		   setIsConnectToSwitch(lightArray[nIdx],bConnected,nIdx)
+    		end
+    		
+        	connectitem:registerScriptTapHandler(connectToSwitch)
+        	local nX,nY = lightArray[i]:getPosition()
+        	connectitem:setPosition(ccp(nX,nY+50))
+            
+            menuConnect:addChild(connectitem, 0,connectitem:getTag())
+           
+       		if  i == 2 then
+            	connectitem:setSelectedIndex(1)
+            end
+            bConnectArray[i]   = false	
+           	if 1 == connectitem:getSelectedIndex() then
+           		bConnectArray[i]  = true 
+           	end 	
+    	end
+    	
+    	for i = 1, 3 do
+    	   setIsConnectToSwitch(lightArray[i],bConnectArray[i],i)  
+    	end
+    	local toggleSelectIndex  = switchitem:getSelectedIndex()
+    	local toggleSelectedItem = switchitem:selectedItem()
+    	if 0 == toggleSelectIndex  then
+    		toggleSelectedItem = nil
+    	end
+    	CCNotificationCenter:sharedNotificationCenter():postNotification(NotificationCenterParam.MSG_SWITCH_STATE, toggleSelectedItem)
+    	
+    	--for testing removeAllObservers */
+    	local function doNothing()
+    	end
+    	CCNotificationCenter:sharedNotificationCenter():registerScriptObserver(pNewLayer,doNothing, "random-observer1")
+    	CCNotificationCenter:sharedNotificationCenter():registerScriptObserver(pNewLayer,doNothing, "random-observer2")
+    	CCNotificationCenter:sharedNotificationCenter():registerScriptObserver(pNewLayer,doNothing, "random-observer3")
+    	
+    	local function CreateToMainMenu(pMenu)
+		     if nil == pMenu then
+				return
+			 end
+			 local function toMainLayer()
+				local numObserversRemoved = CCNotificationCenter:sharedNotificationCenter():removeAllObservers(pNewLayer)
+				if 3 ~= numObserversRemoved then
+					print("All observers were not removed!")
+				end
+				
+				for i = 1 , 3 do					 
+					 if bConnectArray[i] then
+					 	CCNotificationCenter:sharedNotificationCenter():unregisterScriptObserver(lightArray[i],NotificationCenterParam.MSG_SWITCH_STATE)
+					 end   		    			
+				end
+				
+       			local pScene = ExtensionsTestMain()
+       			if pScene ~= nil then
+           			CCDirector:sharedDirector():replaceScene(pScene)
+       			end
+    		 end	
+    		 --Create BackMneu
+    		 CCMenuItemFont:setFontName("Arial")
+    		 CCMenuItemFont:setFontSize(24)
+   			 local pMenuItemFont = CCMenuItemFont:create("Back")
+    		 pMenuItemFont:setPosition(ccp(VisibleRect:rightBottom().x - 50, VisibleRect:rightBottom().y + 25))
+    		 pMenuItemFont:registerScriptTapHandler(toMainLayer)
+    		 pMenu:addChild(pMenuItemFont)
+	   end
+	   --Add Menu
+	   local pToMainMenu = CCMenu:create()
+       CreateToMainMenu(pToMainMenu)
+       pToMainMenu:setPosition(ccp(0, 0))
+       pLayer:addChild(pToMainMenu,10)    	
+	   end
+    
+    BaseInitSceneLayer(pNewLayer)
+	pNewScene:addChild(pNewLayer)
+	
+	return pNewScene
+end
+-------------------------------------
 --  Control Extensions Test
 -------------------------------------
 local ControlExtensionsTestEnum = 
@@ -307,9 +497,9 @@ local function runCCControlTest()
         	
         	local pControl = tolua.cast(pSender,"CCControlSwitch")
         	if pControl:isOn() then
-        		pDisplayValueLabel:setString("On");
+        		pDisplayValueLabel:setString("On")
         	else
-        		pDisplayValueLabel:setString("Off");
+        		pDisplayValueLabel:setString("Off")
         	end
         end
         local pSwitchControl = CCControlSwitch:create(
@@ -486,49 +676,49 @@ local function runCCControlTest()
         	if nil == pDisplayValueLabel then
         		return
         	end 
-        	pDisplayValueLabel:setString(CCString:create("Drag Inside"):getCString());
+        	pDisplayValueLabel:setString(CCString:create("Drag Inside"):getCString())
         end
         
         local function touchDragOutsideAction()
         	if nil == pDisplayValueLabel then
         		return
         	end 
-        	pDisplayValueLabel:setString(CCString:create("Drag Outside"):getCString());
+        	pDisplayValueLabel:setString(CCString:create("Drag Outside"):getCString())
         end
         
         local function touchDragEnterAction()
         	if nil == pDisplayValueLabel then
         		return
         	end 
-        	pDisplayValueLabel:setString(CCString:create("Drag Enter"):getCString());
+        	pDisplayValueLabel:setString(CCString:create("Drag Enter"):getCString())
         end
         
         local function touchDragExitAction()
         	if nil == pDisplayValueLabel then
         		return
         	end 
-        	pDisplayValueLabel:setString(CCString:create("Drag Exit"):getCString());
+        	pDisplayValueLabel:setString(CCString:create("Drag Exit"):getCString())
         end
         
         local function touchUpInsideAction()
         	if nil == pDisplayValueLabel then
         		return
         	end 
-        	pDisplayValueLabel:setString(CCString:create("Touch Up Inside."):getCString());
+        	pDisplayValueLabel:setString(CCString:create("Touch Up Inside."):getCString())
         end
         
         local function touchUpOutsideAction()
         	if nil == pDisplayValueLabel then
         		return
         	end 
-        	pDisplayValueLabel:setString(CCString:create("Touch Up Outside."):getCString());
+        	pDisplayValueLabel:setString(CCString:create("Touch Up Outside."):getCString())
         end
         
         local function touchCancelAction()
         	if nil == pDisplayValueLabel then
         		return
         	end 
-        	pDisplayValueLabel:setString(CCString:create("Touch Cancel"):getCString());
+        	pDisplayValueLabel:setString(CCString:create("Touch Cancel"):getCString())
         end
         
         
