@@ -101,43 +101,43 @@ void CCConfiguration::dumpInfo(void) const
 
 	CCPrettyPrinter visitor(0);
 	m_pDefaults->acceptVisitor(visitor);
-	cout << visitor.getResult();
 
+	CCLOG("%s", visitor.getResult().c_str());
 }
 
 void CCConfiguration::gatherGPUInfo()
 {
-	m_pDefaults->setObject( new CCString( (const char*)glGetString(GL_VENDOR)), "gl.vendor");
-	m_pDefaults->setObject( new CCString( (const char*)glGetString(GL_RENDERER)), "gl.renderer");
-	m_pDefaults->setObject( new CCString( (const char*)glGetString(GL_VERSION)), "gl.version");
+	m_pDefaults->setObject( CCString::create( (const char*)glGetString(GL_VENDOR)), "gl.vendor");
+	m_pDefaults->setObject( CCString::create( (const char*)glGetString(GL_RENDERER)), "gl.renderer");
+	m_pDefaults->setObject( CCString::create( (const char*)glGetString(GL_VERSION)), "gl.version");
 
     m_pGlExtensions = (char *)glGetString(GL_EXTENSIONS);
 
     glGetIntegerv(GL_MAX_TEXTURE_SIZE, &m_nMaxTextureSize);
-	m_pDefaults->setObject( new CCInteger((int)m_nMaxTextureSize), "gl.max_texture_size");
+	m_pDefaults->setObject( CCInteger::create((int)m_nMaxTextureSize), "gl.max_texture_size");
 
     glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &m_nMaxTextureUnits);
-	m_pDefaults->setObject( new CCInteger((int)m_nMaxTextureUnits), "gl.max_texture_units");
+	m_pDefaults->setObject( CCInteger::create((int)m_nMaxTextureUnits), "gl.max_texture_units");
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     glGetIntegerv(GL_MAX_SAMPLES_APPLE, &m_nMaxSamplesAllowed);
-	m_pDefaults->setObject( new CCInteger((int)m_nMaxSamplesAllowed), "gl.max_samples_allowed");
+	m_pDefaults->setObject( CCInteger::create((int)m_nMaxSamplesAllowed), "gl.max_samples_allowed");
 #endif
 
     m_bSupportsPVRTC = checkForGLExtension("GL_IMG_texture_compression_pvrtc");
-	m_pDefaults->setObject( new CCBool(m_bSupportsPVRTC), "gl.supports_PVRTC");
+	m_pDefaults->setObject( CCBool::create(m_bSupportsPVRTC), "gl.supports_PVRTC");
 
     m_bSupportsNPOT = true;
-	m_pDefaults->setObject( new CCBool(m_bSupportsNPOT), "gl.supports_NPOT");
+	m_pDefaults->setObject( CCBool::create(m_bSupportsNPOT), "gl.supports_NPOT");
 	
     m_bSupportsBGRA8888 = checkForGLExtension("GL_IMG_texture_format_BGRA888");
-	m_pDefaults->setObject( new CCBool(m_bSupportsBGRA8888), "gl.supports_BGRA8888");
+	m_pDefaults->setObject( CCBool::create(m_bSupportsBGRA8888), "gl.supports_BGRA8888");
 
     m_bSupportsDiscardFramebuffer = checkForGLExtension("GL_EXT_discard_framebuffer");
-	m_pDefaults->setObject( new CCBool(m_bSupportsDiscardFramebuffer), "gl.supports_discard_framebuffer");
+	m_pDefaults->setObject( CCBool::create(m_bSupportsDiscardFramebuffer), "gl.supports_discard_framebuffer");
 
     m_bSupportsShareableVAO = checkForGLExtension("vertex_array_object");
-	m_pDefaults->setObject( new CCBool(m_bSupportsShareableVAO), "gl.supports_vertex_array_object");
+	m_pDefaults->setObject( CCBool::create(m_bSupportsShareableVAO), "gl.supports_vertex_array_object");
     
     CHECK_GL_ERROR_DEBUG();
 }
@@ -172,7 +172,10 @@ bool CCConfiguration::checkForGLExtension(const string &searchName) const
     return bRet;
 }
 
-/* getters for specific variables */
+//
+// getters for specific variables.
+// Mantained for backward compatiblity reasons only.
+//
 int CCConfiguration::getMaxTextureSize(void) const
 {
 	return m_nMaxTextureSize;
@@ -213,6 +216,9 @@ bool CCConfiguration::supportsShareableVAO(void) const
 	return m_bSupportsShareableVAO;
 }
 
+//
+// generic getters for properties
+//
 const char *CCConfiguration::getCString( const char *key ) const
 {
 	CCObject *ret = m_pDefaults->objectForKey(key);
@@ -250,6 +256,11 @@ double CCConfiguration::getNumber( const char *key ) const
 
 	// XXX: Should it throw an exception ?
 	return 0.0;
+}
+
+CCObject * CCConfiguration::getObject( const char *key ) const
+{
+	return m_pDefaults->objectForKey(key);
 }
 
 ccConfigurationType CCConfiguration::getType( const char *key ) const

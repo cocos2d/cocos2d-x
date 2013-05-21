@@ -113,6 +113,9 @@ public:
 	/** returns the value of a given key as a double */
 	double getNumber( const char *key ) const;
 
+	/** returns the value of a given key as a double */
+	CCObject * getObject( const char *key ) const;
+
 	/** returns the type of a given key */
 	ccConfigurationType getType( const char *key ) const;
 
