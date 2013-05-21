@@ -1,17 +1,22 @@
+--- 
+before_install: 
+- ./tools/travis-scripts/before-install.sh
 language: cpp
-script:
- - export NACL_SDK_ROOT=$HOME/bin/nacl_sdk/pepper_canary
- - export PATH=$PATH:$NACL_SDK_ROOT/toolchain/linux_x86_newlib/bin
- - export NDK_ROOT=$HOME/bin/android-ndk
- - ./tools/travis-scripts/run-script.sh
-before_install:
- - ./tools/travis-scripts/before-install.sh
-env:
- matrix:
-  # - GEN_JSB=YES
+branches: 
+  only: 
+  - master
+env: 
+  matrix: 
   - PLATFORM=linux DEBUG=1
   - PLATFORM=nacl DEBUG=1
   - PLATFORM=android
-branches:
-  only:
-    - master
+  global: 
+  - secure: |-
+      k0/cMqJQFgZH7ZbgKuezSGaSiYEGRbW4T6ySuoKd55nW3hpZ3QWu4gyAV3pG
+      dni2kIlsihATigf5ShrQS4GxVZEnpPOFwAG7nhbAF1RTTIalQHjQQwlj3SHb
+      aXgyOZaLcPq2OxnpHivmgyC2v4A6WVeUd5fsKAU+jpoeTzNhTVs=
+script: 
+- export NACL_SDK_ROOT=$HOME/bin/nacl_sdk/pepper_canary
+- export PATH=$PATH:$NACL_SDK_ROOT/toolchain/linux_x86_newlib/bin
+- export NDK_ROOT=$HOME/bin/android-ndk
+- ./tools/travis-scripts/run-script.sh
