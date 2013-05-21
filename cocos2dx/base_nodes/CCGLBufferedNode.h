@@ -24,7 +24,7 @@ THE SOFTWARE.
 #ifndef __CC_GL_BUFFERED_NODE__
 #define __CC_GL_BUFFERED_NODE__
 
-#include <GLES2/gl2.h>
+#include <CCGL.h>
 
 class CCGLBufferedNode
 {
