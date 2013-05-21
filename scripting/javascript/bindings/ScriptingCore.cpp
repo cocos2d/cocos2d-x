@@ -45,6 +45,12 @@
 
 #include "js_bindings_config.h"
 
+#if DEBUG
+#define TRACE_DEBUGGER_SERVER(...) CCLOG(__VA_ARGS__)
+#else
+#define TRACE_DEBUGGER_SERVER(...)
+#endif // #if DEBUG
+
 #define BYTE_CODE_FILE_EXT ".jsc"
 
 pthread_t debugThread;
@@ -1868,6 +1874,14 @@ JSBool JSBDebug_BufferRead(JSContext* cx, unsigned argc, jsval* vp)
     return JS_TRUE;
 }
 
+static void _clientSocketWriteAndClearString(std::string& s) {
+#if JSB_DEBUGGER_OUTPUT_STDOUT
+    write(STDOUT_FILENO, s.c_str(), s.length());
+#endif
+    write(clientSocket, s.c_str(), s.length());
+    s.clear();
+}
+
 JSBool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp)
 {
     if (argc == 1) {
@@ -1875,6 +1889,7 @@ JSBool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp)
         JSStringWrapper strWrapper(argv[0]);
         // this is safe because we're already inside a lock (from clearBuffers)
         outData.append(strWrapper.get());
+        _clientSocketWriteAndClearString(outData);
     }
     return JS_TRUE;
 }
@@ -1915,8 +1930,6 @@ JSBool JSBDebug_UnlockExecution(JSContext* cx, unsigned argc, jsval* vp)
     return JS_TRUE;
 }
 
-bool serverAlive = true;
-
 void processInput(string data) {
     pthread_mutex_lock(&g_qMutex);
     queue.push_back(string(data));
@@ -1932,8 +1945,7 @@ void clearBuffers() {
             inData.clear();
         }
         if (outData.length() > 0) {
-            write(clientSocket, outData.c_str(), outData.length());
-            outData.clear();
+            _clientSocketWriteAndClearString(outData);
         }
     }
     pthread_mutex_unlock(&g_rwMutex);
@@ -1966,9 +1978,18 @@ void* serverEntryPoint(void*)
         int optval = 1;
         if ((setsockopt(s, SOL_SOCKET, SO_REUSEADDR, (char*)&optval, sizeof(optval))) < 0) {
             close(s);
-            LOGD("error setting socket options");
+			TRACE_DEBUGGER_SERVER("debug server : error setting socket option SO_REUSEADDR");
             return NULL;
         }
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+		if ((setsockopt(s, SOL_SOCKET, SO_NOSIGPIPE, &optval, sizeof(optval))) < 0) {
+			close(s);
+			TRACE_DEBUGGER_SERVER("debug server : error setting socket option SO_NOSIGPIPE");
+			return NULL;
+		}
+#endif //(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+
         if ((::bind(s, rp->ai_addr, rp->ai_addrlen)) == 0) {
             break;
         }
@@ -1976,28 +1997,37 @@ void* serverEntryPoint(void*)
         s = -1;
     }
     if (s < 0 || rp == NULL) {
-        LOGD("error creating/binding socket");
+		TRACE_DEBUGGER_SERVER("debug server : error creating/binding socket");
         return NULL;
     }
 
     freeaddrinfo(result);
 
     listen(s, 1);
-    while (serverAlive && (clientSocket = accept(s, NULL, NULL)) > 0) {
-        // read/write data
-        LOGD("debug client connected");
-        while (serverAlive) {
+
+	while (true) {
+        clientSocket = accept(s, NULL, NULL);
+        if (clientSocket < 0)
+            {
+                TRACE_DEBUGGER_SERVER("debug server : error on accept");
+                return NULL;
+            } else {
+            // read/write data
+            TRACE_DEBUGGER_SERVER("debug server : client connected");
             char buf[256];
             int readBytes;
             while ((readBytes = read(clientSocket, buf, 256)) > 0) {
                 buf[readBytes] = '\0';
+                TRACE_DEBUGGER_SERVER("debug server : received command >%s", buf);
                 // no other thread is using this
                 inData.append(buf);
                 // process any input, send any output
                 clearBuffers();
             } // while(read)
-        } // while(serverAlive)
-    }
+            close(clientSocket);
+        }
+	} // while(true)
+
     // we're done, destroy the mutex
     pthread_mutex_destroy(&g_rwMutex);
     pthread_mutex_destroy(&g_qMutex);

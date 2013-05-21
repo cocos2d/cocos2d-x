@@ -152,7 +152,7 @@ JSAutoCompartment ac(cx, obj)
  * @def JSB_DEBUGGER_PORT
  * The port number, where the client will be listening on
  */
-#define JSB_DEBUGGER_PORT 1337
+#define JSB_DEBUGGER_PORT 5086
 
 /** @def JSB_INCLUDE_SYSTEM
  Whether or not it should include bindings for system components like LocalStorage
