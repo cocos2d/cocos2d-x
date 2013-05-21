@@ -15,6 +15,10 @@ env:
       U/JsyiSR9q+8wX1arfciy3BdbMQaKmgt48/9tiU7P2RQJ/FR2AHGq85sNGI/
       ZUxN4JPLGALEvkFMo4NYyJDUcsdRHZX3vbp5xbSSRaBigqJIj3HDxtlPVf2m
       /W2GzcfNNX1ACO18hSWH0d2yFlF263ZmvudzQIfqTESfjGQBzwA=
+  - secure: |-
+      Wsngwo3jlZtvuPfr3RNhqrz/liNIhKYnlw4KYJO90gMQ9ZQKRTlMv2BMiPw/
+      9lV+vgJQDRcFe7dKwtC86vk10EU7Ym2bhVmhMxi/AlmJXgavjmPVdizRT7rh
+      X2Ry/Nb6hGRkH3WS0T3D/KG1+e7lP/TMB9bvo6/locLJ2A6Z1YI=
 script: 
 - export NACL_SDK_ROOT=$HOME/bin/nacl_sdk/pepper_canary
 - export PATH=$PATH:$NACL_SDK_ROOT/toolchain/linux_x86_newlib/bin
