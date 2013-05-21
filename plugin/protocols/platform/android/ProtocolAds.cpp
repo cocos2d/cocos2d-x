@@ -37,9 +37,10 @@ THE SOFTWARE.
 namespace cocos2d { namespace plugin {
 
 extern "C" {
-	JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_InterfaceAds_nativeOnAdsResult(JNIEnv*  env, jobject thiz, jobject obj, jint ret, jstring msg) {
+	JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_InterfaceAds_nativeOnAdsResult(JNIEnv*  env, jobject thiz, jstring className, jint ret, jstring msg) {
 		std::string strMsg = PluginJniHelper::jstring2string(msg);
-		PluginProtocol* pPlugin = PluginUtils::getPluginPtr(obj);
+		std::string strClassName = PluginJniHelper::jstring2string(className);
+		PluginProtocol* pPlugin = PluginUtils::getPluginPtr(strClassName);
 		LOGD("nativeOnAdsResult(), Get plugin ptr : %p", pPlugin);
 		if (pPlugin != NULL)
 		{
@@ -52,8 +53,9 @@ extern "C" {
 		}
 	}
 
-	JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_InterfaceAds_nativeOnPlayerGetPoints(JNIEnv*  env, jobject thiz, jobject obj, jint points) {
-		PluginProtocol* pPlugin = PluginUtils::getPluginPtr(obj);
+	JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_InterfaceAds_nativeOnPlayerGetPoints(JNIEnv*  env, jobject thiz, jstring className, jint points) {
+		std::string strClassName = PluginJniHelper::jstring2string(className);
+		PluginProtocol* pPlugin = PluginUtils::getPluginPtr(strClassName);
 		LOGD("nativeOnPlayerGetPoints(), Get plugin ptr : %p", pPlugin);
 		if (pPlugin != NULL)
 		{

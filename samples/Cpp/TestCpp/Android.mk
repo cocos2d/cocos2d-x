@@ -85,6 +85,7 @@ Classes/SpineTest/SpineTest.cpp \
 Classes/SpriteTest/SpriteTest.cpp \
 Classes/TextureCacheTest/TextureCacheTest.cpp \
 Classes/Texture2dTest/Texture2dTest.cpp \
+Classes/TexturePackerEncryptionTest/TextureAtlasEncryptionTest.cpp \
 Classes/TileMapTest/TileMapTest.cpp \
 Classes/TouchesTest/Ball.cpp \
 Classes/TouchesTest/Paddle.cpp \
@@ -93,6 +94,7 @@ Classes/TransitionsTest/TransitionsTest.cpp \
 Classes/UserDefaultTest/UserDefaultTest.cpp \
 Classes/ZwoptexTest/ZwoptexTest.cpp \
 Classes/FileUtilsTest/FileUtilsTest.cpp \
+Classes/DataVisitorTest/DataVisitorTest.cpp \
 Classes/controller.cpp \
 Classes/testBasic.cpp \
 Classes/AppDelegate.cpp \

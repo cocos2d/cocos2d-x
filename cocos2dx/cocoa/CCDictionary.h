@@ -361,7 +361,14 @@ public:
      *  @see create(), createWithDictionary(CCDictionary*), createWithContentsOfFileThreadSafe(const char*).
      */
     static CCDictionary* createWithContentsOfFile(const char *pFileName);
-
+    
+    /**
+     *  Write a dictionary to a plist file.
+     *  @param fullPath The full path of the plist file. You can get writeable path by getWritablePath()
+     *  @return true if successed, false if failed
+     */
+    bool writeToFile(const char *fullPath);
+     
     /**
      *  Create a dictionary with a plist file.
      *  
@@ -374,6 +381,9 @@ public:
      *  @return A dictionary which isn't an autorelease object.
      */
     static CCDictionary* createWithContentsOfFileThreadSafe(const char *pFileName);
+
+    /* override functions */
+    virtual void acceptVisitor(CCDataVisitor &visitor);
 
 private:
     /** 

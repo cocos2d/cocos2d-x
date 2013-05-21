@@ -473,6 +473,7 @@ JSBool js_pluginx_flurry_AnalyticsFlurry_setDebugMode(JSContext *cx, uint32_t ar
 extern JSObject *jsb_ProtocolAnalytics_prototype;
 
 void js_pluginx_flurry_AnalyticsFlurry_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (AnalyticsFlurry)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
     JS_GET_NATIVE_PROXY(jsproxy, obj);

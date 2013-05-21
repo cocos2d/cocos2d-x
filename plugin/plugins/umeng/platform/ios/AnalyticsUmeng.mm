@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "AnalyticsUmeng.h"
 #include "MobClick.h"
+#include "PluginUtilsIOS.h"
 
 namespace cocos2d { namespace plugin {
 
@@ -51,119 +52,96 @@ AnalyticsUmeng::~AnalyticsUmeng()
 
 bool AnalyticsUmeng::init()
 {
-	return true;
+	return PluginUtilsIOS::initOCPlugin(this, "UmengWrapper");
 }
 
 /** Start a new session. */
 void AnalyticsUmeng::startSession(const char* appKey)
 {
-    if (NULL == appKey || strlen(appKey) == 0) {
-        UmengLogD("appkey is invalid!");
-        return;
-    }
-    NSString* pKey = [NSString stringWithUTF8String:appKey];
-    [[MobClick class] performSelector:@selector(setWrapperType:wrapperVersion:) withObject:@"Cocos2d-x" withObject:@"1.0"];
-    [MobClick startWithAppkey:pKey];
+    ProtocolAnalytics::startSession(appKey);
 }
 
 /** Stop a session. only worked on android */
 void AnalyticsUmeng::stopSession()
 {
+    ProtocolAnalytics::stopSession();
 }
 
 /** Set whether needs to output logs to console.*/
 void AnalyticsUmeng::setDebugMode(bool debug)
 {
     s_bDebugable = debug;
-    [MobClick setLogEnabled:debug];
+    ProtocolAnalytics::setDebugMode(debug);
 }
 
 /** Set the timeout for expiring a session. */
 void AnalyticsUmeng::setSessionContinueMillis(long millis)
 {
-    
+    ProtocolAnalytics::setSessionContinueMillis(millis);
 }
 
 /** log an error */
 void AnalyticsUmeng::logError(const char* errorId, const char* message)
 {
-    
+    ProtocolAnalytics::logError(errorId, message);
 }
 
 /** log an event. */
 void AnalyticsUmeng::logEvent(const char* eventId, LogEventParamMap* paramMap)
 {
-    if (NULL == eventId || strlen(eventId) == 0) {
-        UmengLogD("eventId is invalid!");
-        return;
-    }
-
-    NSString* pId = [NSString stringWithUTF8String:eventId];
-    if (NULL == paramMap) {
-        [MobClick event:pId];
-    } else {
-        NSMutableDictionary* dict = [NSMutableDictionary dictionary];
-        LogEventParamMap::iterator it;
-        for (it = paramMap->begin(); it != paramMap->end(); it++) {
-            std::string key = it->first;
-            std::string value = it->second;
-            NSString* pKey = [NSString stringWithUTF8String:key.c_str()];
-            NSString* pValue = [NSString stringWithUTF8String:value.c_str()];
-            [dict setObject:pValue forKey:pKey];
-        }
-        [MobClick event:pId attributes:dict];
-    }
+    ProtocolAnalytics::logEvent(eventId, paramMap);
 }
 
 /** begin to log a timed event */
 void AnalyticsUmeng::logTimedEventBegin(const char* eventId)
 {
-    if (NULL == eventId || strlen(eventId) == 0) {
-        UmengLogD("eventId is invalid!");
-        return;
-    }
-
-    NSString* pEvent = [NSString stringWithUTF8String:eventId];
-    [MobClick beginEvent:pEvent];
+    ProtocolAnalytics::logTimedEventBegin(eventId);
 }
 
 /** end a timed event */
 void AnalyticsUmeng::logTimedEventEnd(const char* eventId)
 {
-    if (NULL == eventId || strlen(eventId) == 0) {
-        UmengLogD("eventId is invalid!");
-        return;
-    }
-
-    NSString* pEvent = [NSString stringWithUTF8String:eventId];
-    [MobClick endEvent:pEvent];
+    ProtocolAnalytics::logTimedEventEnd(eventId);
 }
 
 /** Whether to catch uncaught exceptions to server.*/
 void AnalyticsUmeng::setCaptureUncaughtException(bool enabled)
 {
-    [MobClick setCrashReportEnabled:enabled];
+    ProtocolAnalytics::setCaptureUncaughtException(enabled);
 }
 
 const char* AnalyticsUmeng::getSDKVersion()
 {
-    return "UMeng no version info";
+    return ProtocolAnalytics::getSDKVersion();
 }
 
 void AnalyticsUmeng::updateOnlineConfig()
 {
-	[MobClick updateOnlineConfig];
+    PluginUtilsIOS::callOCFunctionWithName(this, "updateOnlineConfig");
 }
 
 const char* AnalyticsUmeng::getConfigParams(const char* key)
 {
+    NSString* strKey = [NSString stringWithUTF8String:key];
+    return [[MobClick getConfigParams:strKey] UTF8String];
+    
+    
     if (NULL == key || strlen(key) == 0) {
         UmengLogD("The key is invalid!");
         return "";
     }
 
     NSString* pKey = [NSString stringWithUTF8String:key];
-	NSString* ret = [MobClick getConfigParams:pKey];
+    NSString* ret = nil;
+    PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
+    if (pData) {
+        id pOCObj = pData->obj;
+        SEL selector = NSSelectorFromString(@"getConfigParams:");
+        if ([pOCObj respondsToSelector:selector]) {
+            ret = [pOCObj performSelector:selector withObject:pKey];
+        }
+    }
+
     const char* pRet = (nil == ret) ? NULL : [ret UTF8String];
     return pRet;
 }
@@ -181,12 +159,15 @@ void AnalyticsUmeng::logEventWithLabel(const char* eventId, const char* label)
         return;
     }
 
-    NSString* pId = [NSString stringWithUTF8String:eventId];
-    if (NULL == label) {
-        [MobClick event:pId];
-    } else {
-        NSString* pLabel = [NSString stringWithUTF8String:label];
-        [MobClick event:pId label:pLabel];
+    NSString* strEvent = [NSString stringWithUTF8String:eventId];
+    NSString* strLabel = [NSString stringWithUTF8String:label];
+    PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
+    if (pData) {
+        id pOCObj = pData->obj;
+        SEL selector = NSSelectorFromString(@"logEvent:withLabel:");
+        if ([pOCObj respondsToSelector:selector]) {
+            [pOCObj performSelector:selector withObject:strEvent withObject:strLabel];
+        }
     }
 }
 
@@ -197,13 +178,33 @@ void AnalyticsUmeng::logEventWithDuration(const char* eventId, long duration, co
         return;
     }
 
-    NSString* pId = [NSString stringWithUTF8String:eventId];
-    if (NULL == label) {
-        [MobClick event:pId durations:(int)duration];
-    } else {
-        NSString* pLabel = [NSString stringWithUTF8String:label];
-        [MobClick event:pId label:pLabel durations:(int)duration];
-    }
+    do {
+        PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
+        
+        if (! pData) break;
+        
+        id pOCObj = pData->obj;
+        NSString* className = [NSString stringWithUTF8String:pData->className.c_str()];
+        SEL selector = NSSelectorFromString(@"logEvent:withDuration:withLabel:");
+        
+        if (! [pOCObj respondsToSelector:selector]) {
+            break;
+        }
+        
+        NSString* strEventId = [NSString stringWithUTF8String:eventId];
+        NSString* strLabel   = [NSString stringWithUTF8String:label];
+        NSNumber* numDur     = [NSNumber numberWithLong:duration];
+
+        NSMethodSignature *sig= [NSClassFromString(className) instanceMethodSignatureForSelector:selector];
+        NSInvocation *invocation=[NSInvocation invocationWithMethodSignature:sig];
+        [invocation setTarget:pOCObj];
+        [invocation setSelector:selector];
+        [invocation setArgument:&strEventId atIndex:2];
+        [invocation setArgument:&numDur atIndex:3];
+        [invocation setArgument:&strLabel atIndex:4];
+        [invocation retainArguments];
+        [invocation invoke];
+    } while (0);
 }
 
 void AnalyticsUmeng::logEventWithDuration(const char* eventId, long duration, LogEventParamMap* paramMap)
@@ -213,21 +214,33 @@ void AnalyticsUmeng::logEventWithDuration(const char* eventId, long duration, Lo
         return;
     }
 
-	NSString* pId = [NSString stringWithUTF8String:eventId];
-    if (NULL == paramMap) {
-        [MobClick event:pId durations:(int)duration];
-    } else {
-        NSMutableDictionary* dict = [NSMutableDictionary dictionary];
-        LogEventParamMap::iterator it;
-        for (it = paramMap->begin(); it != paramMap->end(); it++) {
-            std::string key = it->first;
-            std::string value = it->second;
-            NSString* pKey = [NSString stringWithUTF8String:key.c_str()];
-            NSString* pValue = [NSString stringWithUTF8String:value.c_str()];
-            [dict setObject:pValue forKey:pKey];
+    do {
+        PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
+        
+        if (! pData) break;
+        
+        id pOCObj = pData->obj;
+        SEL selector = NSSelectorFromString(@"logEvent:withDuration:withParam:");
+        
+        if (! [pOCObj respondsToSelector:selector]) {
+            break;
         }
-        [MobClick event:pId attributes:dict durations:(int)duration];
-    }
+
+        NSString* strEventId = [NSString stringWithUTF8String:eventId];
+        NSMutableDictionary* dict = PluginUtilsIOS::createDictFromMap(paramMap);
+        NSNumber* numDur     = [NSNumber numberWithLong:duration];
+
+        NSMethodSignature *sig = [[pOCObj class] instanceMethodSignatureForSelector:selector];
+        NSInvocation *invocation =[NSInvocation invocationWithMethodSignature:sig];
+        
+        [invocation setSelector:selector];
+        [invocation setTarget:pOCObj];
+        [invocation setArgument:&strEventId atIndex:2];
+        [invocation setArgument:&numDur atIndex:3];
+        [invocation setArgument:&dict atIndex:4];
+        [invocation retainArguments];
+        [invocation invoke];
+    } while (0);
 }
 
 void AnalyticsUmeng::logTimedEventWithLabelBegin(const char* eventId, const char* label)
@@ -237,12 +250,15 @@ void AnalyticsUmeng::logTimedEventWithLabelBegin(const char* eventId, const char
         return;
     }
 
-    NSString* pId = [NSString stringWithUTF8String:eventId];
-    if (NULL == label) {
-        [MobClick beginEvent:pId];
-    } else {
-        NSString* pLabel = [NSString stringWithUTF8String:label];
-        [MobClick beginEvent:pId label:pLabel];
+    NSString* strEvent = [NSString stringWithUTF8String:eventId];
+    NSString* strLabel = [NSString stringWithUTF8String:label];
+    PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
+    if (pData) {
+        id pOCObj = pData->obj;
+        SEL selector = NSSelectorFromString(@"logTimedEventBegin:withLabel:");
+        if ([pOCObj respondsToSelector:selector]) {
+            [pOCObj performSelector:selector withObject:strEvent withObject:strLabel];
+        }
     }
 }
 
@@ -253,12 +269,15 @@ void AnalyticsUmeng::logTimedEventWithLabelEnd(const char* eventId, const char* 
         return;
     }
 
-	NSString* pId = [NSString stringWithUTF8String:eventId];
-    if (NULL == label) {
-        [MobClick endEvent:pId];
-    } else {
-        NSString* pLabel = [NSString stringWithUTF8String:label];
-        [MobClick endEvent:pId label:pLabel];
+    NSString* strEvent = [NSString stringWithUTF8String:eventId];
+    NSString* strLabel = [NSString stringWithUTF8String:label];
+    PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
+    if (pData) {
+        id pOCObj = pData->obj;
+        SEL selector = NSSelectorFromString(@"logTimedEventEnd:withLabel:");
+        if ([pOCObj respondsToSelector:selector]) {
+            [pOCObj performSelector:selector withObject:strEvent withObject:strLabel];
+        }
     }
 }
 
@@ -269,22 +288,33 @@ void AnalyticsUmeng::logTimedKVEventBegin(const char* eventId, const char* label
         return;
     }
 
-	NSString* pId = [NSString stringWithUTF8String:eventId];
-    NSString* primary = [NSString stringWithUTF8String:label];
-    if (NULL == paramMap || NULL == label) {
-        [MobClick beginEvent:pId];
-    } else {
-        NSMutableDictionary* dict = [NSMutableDictionary dictionary];
-        LogEventParamMap::iterator it;
-        for (it = paramMap->begin(); it != paramMap->end(); it++) {
-            std::string key = it->first;
-            std::string value = it->second;
-            NSString* pKey = [NSString stringWithUTF8String:key.c_str()];
-            NSString* pValue = [NSString stringWithUTF8String:value.c_str()];
-            [dict setObject:pValue forKey:pKey];
+    do {
+        PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
+        
+        if (! pData) break;
+        
+        id pOCObj = pData->obj;
+        NSString* className = [NSString stringWithUTF8String:pData->className.c_str()];
+        SEL selector = NSSelectorFromString(@"logTimedKVEventBegin:withLabel:withParam:");
+        
+        if (! [pOCObj respondsToSelector:selector]) {
+            break;
         }
-        [MobClick beginEvent:pId primarykey:primary attributes:dict];
-    }
+        
+        NSString* strEventId = [NSString stringWithUTF8String:eventId];
+        NSMutableDictionary* dict = PluginUtilsIOS::createDictFromMap(paramMap);
+        NSString* strLabel     = [NSString stringWithUTF8String:label];
+
+        NSMethodSignature *sig= [NSClassFromString(className) instanceMethodSignatureForSelector:selector];
+        NSInvocation *invocation=[NSInvocation invocationWithMethodSignature:sig];
+        [invocation setTarget:pOCObj];
+        [invocation setSelector:selector];
+        [invocation setArgument:&strEventId atIndex:2];
+        [invocation setArgument:&strLabel atIndex:3];
+        [invocation setArgument:&dict atIndex:4];
+        [invocation retainArguments];
+        [invocation invoke];
+    } while (0);
 }
 
 void AnalyticsUmeng::logTimedKVEventEnd(const char* eventId, const char* label)
@@ -294,12 +324,15 @@ void AnalyticsUmeng::logTimedKVEventEnd(const char* eventId, const char* label)
         return;
     }
 
-	NSString* pId = [NSString stringWithUTF8String:eventId];
-    if (NULL == label) {
-        [MobClick endEvent:pId];
-    } else {
-        NSString* primary = [NSString stringWithUTF8String:label];
-        [MobClick endEvent:pId primarykey:primary];
+	NSString* strEvent = [NSString stringWithUTF8String:eventId];
+    NSString* strLabel = [NSString stringWithUTF8String:label];
+    PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
+    if (pData) {
+        id pOCObj = pData->obj;
+        SEL selector = NSSelectorFromString(@"logTimedKVEventEnd:withLabel:");
+        if ([pOCObj respondsToSelector:selector]) {
+            [pOCObj performSelector:selector withObject:strEvent withObject:strLabel];
+        }
     }
 }
 
@@ -310,15 +343,38 @@ void AnalyticsUmeng::startSession(const char* appKey, UmengReportPolicy policy, 
         return;
     }
 
-    NSString* key = [NSString stringWithUTF8String:appKey];
-    NSString* channel = [NSString stringWithUTF8String:channelId];
-    [[MobClick class] performSelector:@selector(setWrapperType:wrapperVersion:) withObject:@"Cocos2d-x" withObject:@"1.0"];
-    [MobClick startWithAppkey:key reportPolicy:(ReportPolicy)policy channelId:channel];
+    do {
+        PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
+        
+        if (! pData) break;
+        
+        id pOCObj = pData->obj;
+        NSString* className = [NSString stringWithUTF8String:pData->className.c_str()];
+        SEL selector = NSSelectorFromString(@"logTimedKVEventBegin:withLabel:withParam:");
+        
+        if (! [pOCObj respondsToSelector:selector]) {
+            break;
+        }
+        
+        NSString* strKey     = [NSString stringWithUTF8String:appKey];
+        NSNumber* numPolicy  = [NSNumber numberWithInt:policy];
+        NSString* strChannel = [NSString stringWithUTF8String:channelId];
+        
+        NSMethodSignature *sig= [NSClassFromString(className) instanceMethodSignatureForSelector:selector];
+        NSInvocation *invocation=[NSInvocation invocationWithMethodSignature:sig];
+        [invocation setTarget:pOCObj];
+        [invocation setSelector:selector];
+        [invocation setArgument:&strKey atIndex:2];
+        [invocation setArgument:&numPolicy atIndex:3];
+        [invocation setArgument:&strChannel atIndex:4];
+        [invocation retainArguments];
+        [invocation invoke];
+    } while (0);
 }
 
 void AnalyticsUmeng::checkUpdate()
 {
-    [MobClick checkUpdate];
+    PluginUtilsIOS::callOCFunctionWithName(this, "checkUpdate");
 }
 
 }} // namespace cocos2d { namespace plugin {
