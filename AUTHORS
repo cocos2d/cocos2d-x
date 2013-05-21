@@ -431,6 +431,9 @@ Developers:
         
     Carsten Sandtner (casarock)
         Adding XMLHttpRequest support for JSB.
+        
+    pyrasis (Lee, Jae-Hong)
+        Maintainer of tizen port.
 
 Retired Core Developers:
     WenSheng Yang
