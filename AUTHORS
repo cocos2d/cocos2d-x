@@ -15,6 +15,11 @@ Developers:
     carlomorgantinizynga
         CCLabelTTF supports for shadow and stroke
         
+    James Gregory (j4m3z0r, Zynga)
+        Maintainer of Emscripten port.
+        Initial Emscripten port.
+        Use browser font rendering instead of FreeType.
+        
     DarraghCoy
         Fix a potential crash SimpleAudioEngineOpenSL::playEffect
 
@@ -172,6 +177,7 @@ Developers:
         added CCBReader (CCBI format)
         Added cleanup and reset methods to ScriptingCore.
         Fixed a bug in ScriptingCore::evalString not setting the outval.
+        Updated .classpath of Android project to latest ADT 22 build tool compatibility.
 
     Rohan Kuruvilla (rohankuruvilla, Zynga)
         Improvements to JS Bindings.
@@ -404,10 +410,6 @@ Developers:
 
     ptekchand (Pranav Tekchand)
         Supporting negative node scales for CCScrollView.
-
-    James Gregory (j4m3z0r, Zynga)
-        Initial Emscripten port.
-        Use browser font rendering instead of FreeType.
 
     coolengineer (Hojin Choi)
         Refactoring callback selector for HttpResponse.
