@@ -94,7 +94,7 @@ public:
     
     
     /** enable or disable shadow for the label */
-    void enableShadow(CCSize &shadowOffset, float shadowOpacity, float shadowBlur, bool mustUpdateTexture = true);
+    void enableShadow(const CCSize &shadowOffset, float shadowOpacity, float shadowBlur, bool mustUpdateTexture = true);
     
     /** disable shadow rendering */
     void disableShadow(bool mustUpdateTexture = true);
