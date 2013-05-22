@@ -15,6 +15,11 @@ Developers:
     carlomorgantinizynga
         CCLabelTTF supports for shadow and stroke
         
+    James Gregory (j4m3z0r, Zynga)
+        Maintainer of Emscripten port.
+        Initial Emscripten port.
+        Use browser font rendering instead of FreeType.
+        
     DarraghCoy
         Fix a potential crash SimpleAudioEngineOpenSL::playEffect
 
@@ -405,10 +410,6 @@ Developers:
 
     ptekchand (Pranav Tekchand)
         Supporting negative node scales for CCScrollView.
-
-    James Gregory (j4m3z0r, Zynga)
-        Initial Emscripten port.
-        Use browser font rendering instead of FreeType.
 
     coolengineer (Hojin Choi)
         Refactoring callback selector for HttpResponse.
