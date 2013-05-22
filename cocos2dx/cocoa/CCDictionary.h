@@ -139,6 +139,7 @@ public:
  */
 #define CCDICT_FOREACH(__dict__, __el__) \
     CCDictElement* pTmp##__dict__##__el__ = NULL; \
+    if (__dict__) \
     HASH_ITER(hh, (__dict__)->m_pElements, __el__, pTmp##__dict__##__el__)
 
 
