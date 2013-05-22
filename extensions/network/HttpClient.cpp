@@ -247,8 +247,14 @@ static bool configureCURL(CURL *handle)
     if (code != CURLE_OK) {
         return false;
     }
-    curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0L);
-    curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 0L);
+    code = curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, CCHttpClient::getInstance()->isSSLVerifyPeer());
+    if (code != CURLE_OK) {
+        return false;
+    }
+    code = curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, CCHttpClient::getInstance()->getSSLVerifyHost());
+    if (code != CURLE_OK) {
+        return false;
+    }
 
     return true;
 }
@@ -394,6 +400,8 @@ void CCHttpClient::destroyInstance()
 CCHttpClient::CCHttpClient()
 : _timeoutForConnect(30)
 , _timeoutForRead(60)
+, _sslVerifyPeer(true)
+, _sslVerifyHost(2L)
 {
     CCDirector::sharedDirector()->getScheduler()->scheduleSelector(
                     schedule_selector(CCHttpClient::dispatchResponseCallbacks), this, 0, false);
