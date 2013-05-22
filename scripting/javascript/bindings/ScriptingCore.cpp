@@ -435,8 +435,13 @@ void ScriptingCore::createGlobalContext() {
     this->cx_ = JS_NewContext(rt_, 8192);
     JS_SetOptions(this->cx_, JSOPTION_TYPE_INFERENCE);
     JS_SetVersion(this->cx_, JSVERSION_LATEST);
+    
+    // Only disable METHODJIT on iOS.
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     JS_SetOptions(this->cx_, JS_GetOptions(this->cx_) & ~JSOPTION_METHODJIT);
     JS_SetOptions(this->cx_, JS_GetOptions(this->cx_) & ~JSOPTION_METHODJIT_ALWAYS);
+#endif
+    
     JS_SetErrorReporter(this->cx_, ScriptingCore::reportError);
 #if defined(JS_GC_ZEAL) && defined(DEBUG)
     //JS_SetGCZeal(this->cx_, 2, JS_DEFAULT_ZEAL_FREQ);
@@ -633,10 +638,10 @@ JSBool ScriptingCore::forceGC(JSContext *cx, uint32_t argc, jsval *vp)
     return JS_TRUE;
 }
 
-static void dumpNamedRoot(const char *name, void *addr,  JSGCRootType type, void *data)
-{
-    CCLOG("Root: '%s' at %p", name, addr);
-}
+//static void dumpNamedRoot(const char *name, void *addr,  JSGCRootType type, void *data)
+//{
+//    CCLOG("Root: '%s' at %p", name, addr);
+//}
 
 JSBool ScriptingCore::dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 {
