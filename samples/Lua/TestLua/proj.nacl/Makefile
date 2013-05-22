@@ -8,6 +8,7 @@ INCLUDES =  -I.. \
 	-I$(COCOS_ROOT)/scripting/lua/tolua \
 	-I$(COCOS_ROOT)/scripting/lua/cocos2dx_support \
 	-I$(NACL_SDK_ROOT)/include \
+        -I$(COCOS_ROOT)/extensions \
 
 
 SOURCES = main.cpp \
@@ -21,6 +22,7 @@ SOURCES = main.cpp \
 include $(COCOS_ROOT)/cocos2dx/proj.nacl/cocos2dx.mk
 
 STATICLIBS += -llua -lnosys
+SHAREDLIBS += -lextension
 
 APP_NAME = TestLua
 TARGET = $(BIN_DIR)/$(APP_NAME)_$(NACL_ARCH).nexe
