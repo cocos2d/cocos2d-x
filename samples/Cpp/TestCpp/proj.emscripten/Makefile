@@ -360,6 +360,8 @@ RESOURCES = \
 	animations/grossini_blue.png \
 	animations/grossini_family.png \
 	animations/grossini_gray.png \
+	background.mp3 \
+	effect1.wav \
 	extensions/CCControlColourPickerSpriteSheet.png \
 	extensions/background.png \
 	extensions/button.png \
