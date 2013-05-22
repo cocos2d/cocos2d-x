@@ -197,7 +197,8 @@ local CCObjectTypes = {
     "CCControlPotentiometer",
     "CCControlSlider",
     "CCControlStepper",
-    "CCControlSwitch"
+    "CCControlSwitch",
+    "CCEditBox"
 }
 
 -- register CCObject types

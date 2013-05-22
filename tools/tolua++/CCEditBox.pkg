@@ -1,0 +1,103 @@
+enum KeyboardReturnType {
+    kKeyboardReturnTypeDefault = 0,
+    kKeyboardReturnTypeDone,
+    kKeyboardReturnTypeSend,
+    kKeyboardReturnTypeSearch,
+    kKeyboardReturnTypeGo
+};
+
+enum EditBoxInputMode
+{
+    kEditBoxInputModeAny = 0,
+
+    kEditBoxInputModeEmailAddr,
+
+    kEditBoxInputModeNumeric,
+
+    kEditBoxInputModePhoneNumber,
+
+    kEditBoxInputModeUrl,
+
+    kEditBoxInputModeDecimal,
+
+    kEditBoxInputModeSingleLine
+};
+
+enum EditBoxInputFlag
+{
+
+    kEditBoxInputFlagPassword = 0,
+
+    kEditBoxInputFlagSensitive,
+
+    kEditBoxInputFlagInitialCapsWord,
+
+    kEditBoxInputFlagInitialCapsSentence,
+
+    kEditBoxInputFlagInitialCapsAllCharacters
+};
+
+class CCEditBox: public CCControlButton
+{
+public:
+
+    CCEditBox(void);
+    
+
+    virtual ~CCEditBox(void);
+
+
+    static CCEditBox* create(const CCSize& size, CCScale9Sprite* pNormal9SpriteBg, CCScale9Sprite* pPressed9SpriteBg = NULL, CCScale9Sprite* pDisabled9SpriteBg = NULL);
+    
+    bool initWithSizeAndBackgroundSprite(const CCSize& size, CCScale9Sprite* pNormal9SpriteBg);
+
+    void registerScriptEditBoxHandler(LUA_FUNCTION handler);
+
+    void unregisterScriptEditBoxHandler(void);
+
+    int  getScriptEditBoxHandler(void);
+
+    void setText(const char* pText);
+
+    const char* getText(void);	
+
+    void setFont(const char* pFontName, int fontSize);   
+
+    void setFontName(const char* pFontName);
+    
+    void setFontSize(int fontSize);
+    
+    void setFontColor(const ccColor3B& color);
+    
+    void setPlaceholderFont(const char* pFontName, int fontSize);
+    
+    void setPlaceholderFontName(const char* pFontName);
+    
+    void setPlaceholderFontSize(int fontSize);
+    
+    void setPlaceholderFontColor(const ccColor3B& color);
+    
+    void setPlaceHolder(const char* pText);
+    
+    const char* getPlaceHolder(void);
+    
+    void setInputMode(EditBoxInputMode inputMode);
+    
+    void setMaxLength(int maxLength);
+    
+    int getMaxLength();
+    
+    void setInputFlag(EditBoxInputFlag inputFlag);
+    
+    void setReturnType(KeyboardReturnType returnType);
+       
+    virtual void setPosition(const CCPoint& pos);
+    virtual void setVisible(bool visible);
+    virtual void setContentSize(const CCSize& size);
+    virtual void setAnchorPoint(const CCPoint& anchorPoint);
+    virtual void visit(void);
+    virtual void onEnter(void);
+    virtual void onExit(void);
+    
+    void touchDownAction(CCObject *sender, CCControlEvent controlEvent);
+};

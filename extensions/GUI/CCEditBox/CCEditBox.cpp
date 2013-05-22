@@ -40,12 +40,14 @@ CCEditBox::CCEditBox(void)
 , m_fAdjustHeight(0.0f)
 , m_nPlaceholderFontSize(-1)
 , m_nFontSize(-1)
+, m_nScriptEditBoxHandler(0)
 {
 }
 
 CCEditBox::~CCEditBox(void)
 {
     CC_SAFE_DELETE(m_pEditBoxImpl);
+    unregisterScriptEditBoxHandler();
 }
 
 
@@ -380,6 +382,21 @@ void CCEditBox::keyboardWillHide(CCIMEKeyboardNotificationInfo& info)
 void CCEditBox::keyboardDidHide(CCIMEKeyboardNotificationInfo& info)
 {
 	
+}
+
+void CCEditBox::registerScriptEditBoxHandler(int handler)
+{
+    unregisterScriptEditBoxHandler();
+    m_nScriptEditBoxHandler = handler;
+}
+
+void CCEditBox::unregisterScriptEditBoxHandler(void)
+{
+    if (0 != m_nScriptEditBoxHandler)
+    {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nScriptEditBoxHandler);
+        m_nScriptEditBoxHandler = 0;
+    }
 }
 
 

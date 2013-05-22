@@ -892,6 +892,107 @@ local function runCCControlTest()
 	return pNewScene
 end
 
+local function runEditBoxTest()
+	local newScene = CCScene:create()
+	local newLayer = CCLayer:create()
+	local visibleOrigin = CCEGLView:sharedOpenGLView():getVisibleOrigin()
+    local visibleSize = CCEGLView:sharedOpenGLView():getVisibleSize()
+    
+    local pBg = CCSprite:create("Images/HelloWorld.png")
+    pBg:setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2))
+    newLayer:addChild(pBg)
+    
+    local TTFShowEditReturn = CCLabelTTF:create("No edit control return!", "", 30)
+    TTFShowEditReturn:setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y + visibleSize.height - 50))
+    newLayer:addChild(TTFShowEditReturn)
+    
+    -- Back Menu
+	local pToMainMenu = CCMenu:create()
+    CreateExtensionsBasicLayerMenu(pToMainMenu)
+    pToMainMenu:setPosition(ccp(0, 0))
+    newLayer:addChild(pToMainMenu,10)
+    
+    local editBoxSize = CCSizeMake(visibleSize.width - 100, 60)
+    local EditName = nil
+    local EditPassword = nil
+    local EditEmail = nil
+	
+	local function editBoxTextEventHandle(strEventName,pSender)
+		local edit = tolua.cast(pSender,"CCEditBox")
+		local strFmt 
+		if strEventName == "began" then
+			strFmt = string.format("editBox %p DidBegin !", edit)
+			print(strFmt)
+		elseif strEventName == "ended" then
+			strFmt = string.format("editBox %p DidEnd !", edit)
+			print(strFmt)
+		elseif strEventName == "return" then
+			strFmt = string.format("editBox %p was returned !",edit)
+			if edit == EditName then
+				TTFShowEditReturn:setString("Name EditBox return !")
+			elseif edit == EditPassword then
+				TTFShowEditReturn:setString("Password EditBox return !")
+			elseif edit == EditEmail then
+				TTFShowEditReturn:setString("Email EditBox return !")
+			end
+			print(strFmt)
+		elseif strEventName == "changed" then
+			strFmt = string.format("editBox %p TextChanged, text: %s ", edit, edit:getText())
+			print(strFmt)
+		end
+	end
+    -- top
+    EditName = CCEditBox:create(editBoxSize, CCScale9Sprite:create("extensions/green_edit.png"))
+    EditName:setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height*3/4))
+    local targetPlatform = CCApplication:sharedApplication():getTargetPlatform()
+    if kTargetIphone == targetPlatform or kTargetIpad == targetPlatform then
+	   EditName:setFontName("Paint Boy")
+	else
+		EditName:setFontName("fonts/Paint Boy.ttf")
+	end
+    EditName:setFontSize(25)
+    EditName:setFontColor(ccc3(255,0,0))
+    EditName:setPlaceHolder("Name:")
+    EditName:setPlaceholderFontColor(ccc3(255,255,255))
+    EditName:setMaxLength(8)
+    EditName:setReturnType(kKeyboardReturnTypeDone)
+	--Handler
+	EditName:registerScriptEditBoxHandler(editBoxTextEventHandle)
+    newLayer:addChild(EditName)
+   
+    --middle
+    EditPassword = CCEditBox:create(editBoxSize, CCScale9Sprite:create("extensions/orange_edit.png"))
+    EditPassword:setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2))
+	if kTargetIphone == targetPlatform or kTargetIpad == targetPlatform then
+		EditPassword:setFont("American Typewriter", 30)
+	else
+		EditPassword:setFont("fonts/American Typewriter.ttf", 30)
+	end
+	
+
+    EditPassword:setFontColor(ccc3(0,255,0))
+    EditPassword:setPlaceHolder("Password:")
+    EditPassword:setMaxLength(6)
+    EditPassword:setInputFlag(kEditBoxInputFlagPassword)
+    EditPassword:setInputMode(kEditBoxInputModeSingleLine)
+	EditPassword:registerScriptEditBoxHandler(editBoxTextEventHandle)
+    newLayer:addChild(EditPassword)
+     
+    --bottom
+    EditEmail = CCEditBox:create(CCSizeMake(editBoxSize.width, editBoxSize.height), CCScale9Sprite:create("extensions/yellow_edit.png"))
+    EditEmail:setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/4))
+    EditEmail:setAnchorPoint(ccp(0.5, 1.0))
+    EditEmail:setPlaceHolder("Email:")
+    EditEmail:setInputMode(kEditBoxInputModeEmailAddr)
+    EditEmail:registerScriptEditBoxHandler(editBoxTextEventHandle)
+    newLayer:addChild(EditEmail)   
+    newLayer:setPosition(ccp(10, 20))
+    
+	
+	newScene:addChild(newLayer)
+	return newScene
+end
+
 local CreateExtensionsTestTable = 
 {
 	runNotificationCenterTest,
