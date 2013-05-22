@@ -1321,14 +1321,14 @@ void CCRGBAProtocol::updateDisplayedOpacityChildren(CCNode* parent, GLubyte pare
     CCObject *obj = NULL;
     CCARRAY_FOREACH(children, obj)
     {
-        CCNode *node = static_cast<CCNode*>(obj);
-        CCRGBAProtocol *rgba = dynamic_cast<CCRGBAProtocol*>(node);
+        CCRGBAProtocol *rgba = dynamic_cast<CCRGBAProtocol*>(obj);
         if(rgba)
         {
             rgba->updateDisplayedOpacity(parentOpacity);
         }
         else
         {
+            CCNode *node = static_cast<CCNode*>(obj);
             CCRGBAProtocol::updateDisplayedOpacityChildren(node, parentOpacity);
         }
     }
@@ -1387,14 +1387,14 @@ void CCRGBAProtocol::updateDisplayedColorChildren(CCNode* parent, const ccColor3
     CCObject *obj = NULL;
     CCARRAY_FOREACH(children, obj)
     {
-        CCNode *node = static_cast<CCNode*>(obj);
-        CCRGBAProtocol *rgba = dynamic_cast<CCRGBAProtocol*>(node);
+        CCRGBAProtocol *rgba = dynamic_cast<CCRGBAProtocol*>(obj);
         if(rgba)
         {
             rgba->updateDisplayedColor(parentColor);
         }
         else
         {
+            CCNode *node = static_cast<CCNode*>(obj);
             CCRGBAProtocol::updateDisplayedColorChildren(node, parentColor);
         }
     }
