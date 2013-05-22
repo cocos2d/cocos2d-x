@@ -25,6 +25,7 @@ SOURCES += $(addprefix $(COCOS_ROOT)/extensions/, $(EXTENSIONS_SOURCES))
 
 include $(COCOS_ROOT)/cocos2dx/proj.nacl/cocos2dx.mk
 
+CXXFLAGS   += -Wno-multichar
 STATICLIBS += -llua -lnosys
 
 APP_NAME = TestLua
