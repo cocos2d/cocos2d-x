@@ -26,9 +26,6 @@ SOURCES += $(addprefix $(COCOS_ROOT)/extensions/, $(EXTENSIONS_SOURCES))
 
 include $(COCOS_ROOT)/cocos2dx/proj.nacl/cocos2dx.mk
 
-CXXFLAGS   += -Wno-multichar
-STATICLIBS += -lchipmunk
-
 APP_NAME = HelloLua
 TARGET = $(BIN_DIR)/$(APP_NAME)_$(NACL_ARCH).nexe
 NMF = $(BIN_DIR)/$(APP_NAME).nmf
