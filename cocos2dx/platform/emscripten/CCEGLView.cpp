@@ -36,6 +36,7 @@ THE SOFTWARE.
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
+#include <SDL/SDL_mixer.h>
 
 #include <ctype.h>
 
@@ -119,8 +120,12 @@ CCEGLView::CCEGLView()
     if (m_isGLInitialized)
     	initEGLFunctions();
 
-    // Initialize SDL: used for font rendering.
-    SDL_Init(SDL_INIT_VIDEO);
+    // Initialize SDL: used for font rendering, sprite loading and audio
+    // playing.
+    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+
+    // Emscripten ignores all these values.
+    Mix_OpenAudio(0, 0, 0, 0);
     TTF_Init();
 
     char *arg1 = (char*)malloc(1);
