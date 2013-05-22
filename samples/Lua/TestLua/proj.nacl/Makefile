@@ -9,6 +9,7 @@ INCLUDES =  -I.. \
 	-I$(COCOS_ROOT)/scripting/lua/cocos2dx_support \
 	-I$(NACL_SDK_ROOT)/include \
         -I$(COCOS_ROOT)/extensions \
+	-I$(COCOS_ROOT)/external/chipmunk \
 
 
 SOURCES = main.cpp \
