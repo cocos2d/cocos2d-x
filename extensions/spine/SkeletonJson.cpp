@@ -32,9 +32,7 @@
 #include <spine/RegionAttachment.h>
 #include <spine/AtlasAttachmentLoader.h>
 
-#ifdef __cplusplus
 namespace cocos2d { namespace extension {
-#endif
 
 typedef struct {
 	SkeletonJson super;
@@ -416,6 +414,4 @@ SkeletonData* SkeletonJson_readSkeletonData (SkeletonJson* self, const char* jso
 	return skeletonData;
 }
 
-#ifdef __cplusplus
 } }
-#endif

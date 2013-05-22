@@ -27,9 +27,7 @@
 #include <math.h>
 #include <spine/extension.h>
 
-#ifdef __cplusplus
 namespace cocos2d { namespace extension {
-#endif
 
 RegionAttachment* RegionAttachment_create (const char* name) {
 	RegionAttachment* self = NEW(RegionAttachment);
@@ -107,6 +105,4 @@ void RegionAttachment_computeVertices (RegionAttachment* self, Slot* slot, float
 	vertices[VERTEX_Y4] = offset[VERTEX_X4] * bone->m10 + offset[VERTEX_Y4] * bone->m11 + bone->worldY;
 }
 
-#ifdef __cplusplus
 } }
-#endif

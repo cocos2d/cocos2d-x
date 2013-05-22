@@ -52,26 +52,26 @@ network/HttpClient.cpp \
 physics_nodes/CCPhysicsDebugNode.cpp \
 physics_nodes/CCPhysicsSprite.cpp \
 LocalStorage/LocalStorageAndroid.cpp \
-spine/Animation.c \
-spine/AnimationState.c \
-spine/AnimationStateData.c \
-spine/Atlas.c \
-spine/AtlasAttachmentLoader.c \
-spine/Attachment.c \
-spine/AttachmentLoader.c \
-spine/Bone.c \
-spine/BoneData.c \
+spine/Animation.cpp \
+spine/AnimationState.cpp \
+spine/AnimationStateData.cpp \
+spine/Atlas.cpp \
+spine/AtlasAttachmentLoader.cpp \
+spine/Attachment.cpp \
+spine/AttachmentLoader.cpp \
+spine/Bone.cpp \
+spine/BoneData.cpp \
 spine/CCSkeleton.cpp \
 spine/CCSkeletonAnimation.cpp \
-spine/extension.c \
-spine/Json.c \
-spine/RegionAttachment.c \
-spine/Skeleton.c \
-spine/SkeletonData.c \
-spine/SkeletonJson.c \
-spine/Skin.c \
-spine/Slot.c \
-spine/SlotData.c \
+spine/extension.cpp \
+spine/Json.cpp \
+spine/RegionAttachment.cpp \
+spine/Skeleton.cpp \
+spine/SkeletonData.cpp \
+spine/SkeletonJson.cpp \
+spine/Skin.cpp \
+spine/Slot.cpp \
+spine/SlotData.cpp \
 spine/spine-cocos2dx.cpp
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static

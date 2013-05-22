@@ -28,10 +28,8 @@
 
 #include <spine/Attachment.h>
 
-#ifdef __cplusplus
 namespace cocos2d { namespace extension {
 extern "C" {
-#endif
 
 struct Skeleton;
 
@@ -47,12 +45,14 @@ void Skin_addAttachment (Skin* self, int slotIndex, const char* name, Attachment
 /* Returns 0 if the attachment was not found. */
 Attachment* Skin_getAttachment (const Skin* self, int slotIndex, const char* name);
 
+/* Returns 0 if the slot or attachment was not found. */
+const char* Skin_getAttachmentName (const Skin* self, int slotIndex, int attachmentIndex);
+
 /** Attach each attachment in this skin if the corresponding attachment in oldSkin is currently attached. */
 void Skin_attachAll (const Skin* self, struct Skeleton* skeleton, const Skin* oldSkin);
 
-#ifdef __cplusplus
 }
-} }
-#endif
+
+}}
 
 #endif /* SPINE_SKIN_H_ */

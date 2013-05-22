@@ -26,9 +26,7 @@
 #include <spine/AnimationState.h>
 #include <spine/extension.h>
 
-#ifdef __cplusplus
 namespace cocos2d { namespace extension {
-#endif
 
 typedef struct _Entry _Entry;
 struct _Entry {
@@ -178,6 +176,5 @@ int/*bool*/AnimationState_isComplete (AnimationState* self) {
 	return !self->animation || self->time >= self->animation->duration;
 }
 
-#ifdef __cplusplus
 } }
-#endif
+

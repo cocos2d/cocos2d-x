@@ -27,9 +27,7 @@
 #include <math.h>
 #include <spine/extension.h>
 
-#ifdef __cplusplus
 namespace cocos2d { namespace extension {
-#endif
 
 static int yDown;
 
@@ -98,6 +96,4 @@ void Bone_updateWorldTransform (Bone* self, int flipX, int flipY) {
 	}
 }
 
-#ifdef __cplusplus
 } }
-#endif

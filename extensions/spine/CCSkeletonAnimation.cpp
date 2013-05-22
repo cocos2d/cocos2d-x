@@ -119,17 +119,17 @@ void CCSkeletonAnimation::setAnimationStateData (AnimationStateData* stateData, 
 	states[stateIndex] = state;
 }
 
-void CCSkeletonAnimation::setMix (char* fromAnimation, char* toAnimation, float duration, int stateIndex) {
+void CCSkeletonAnimation::setMix (const char* fromAnimation, const char* toAnimation, float duration, int stateIndex) {
 	CCAssert(stateIndex >= 0 && stateIndex < (int)states.size(), "stateIndex out of range.");
 	AnimationStateData_setMixByName(states[stateIndex]->data, fromAnimation, toAnimation, duration);
 }
 
-void CCSkeletonAnimation::setAnimation (char* name, bool loop, int stateIndex) {
+void CCSkeletonAnimation::setAnimation (const char* name, bool loop, int stateIndex) {
 	CCAssert(stateIndex >= 0 && stateIndex < (int)states.size(), "stateIndex out of range.");
 	AnimationState_setAnimationByName(states[stateIndex], name, loop);
 }
 
-void CCSkeletonAnimation::addAnimation (char* name, bool loop, float delay, int stateIndex) {
+void CCSkeletonAnimation::addAnimation (const char* name, bool loop, float delay, int stateIndex) {
 	CCAssert(stateIndex >= 0 && stateIndex < (int)states.size(), "stateIndex out of range.");
 	AnimationState_addAnimationByName(states[stateIndex], name, loop, delay);
 }
@@ -139,4 +139,4 @@ void CCSkeletonAnimation::clearAnimation (int stateIndex) {
 	AnimationState_clearAnimation(states[stateIndex]);
 }
 
-} }
+}}

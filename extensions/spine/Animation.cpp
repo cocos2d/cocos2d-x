@@ -27,9 +27,7 @@
 #include <math.h>
 #include <spine/extension.h>
 
-#ifdef __cplusplus
 namespace cocos2d { namespace extension {
-#endif
 
 Animation* Animation_create (const char* name, int timelineCount) {
 	Animation* self = NEW(Animation);
@@ -498,6 +496,4 @@ void AttachmentTimeline_setFrame (AttachmentTimeline* self, int frameIndex, floa
 		self->attachmentNames[frameIndex] = 0;
 }
 
-#ifdef __cplusplus
 } }
-#endif

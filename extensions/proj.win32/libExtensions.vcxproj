@@ -73,7 +73,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <CompileAs>CompileAsCpp</CompileAs>
+      <CompileAs>Default</CompileAs>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -139,26 +139,26 @@
     <ClCompile Include="..\network\HttpClient.cpp" />
     <ClCompile Include="..\physics_nodes\CCPhysicsDebugNode.cpp" />
     <ClCompile Include="..\physics_nodes\CCPhysicsSprite.cpp" />
-    <ClCompile Include="..\spine\Animation.c" />
-    <ClCompile Include="..\spine\AnimationState.c" />
-    <ClCompile Include="..\spine\AnimationStateData.c" />
-    <ClCompile Include="..\spine\Atlas.c" />
-    <ClCompile Include="..\spine\AtlasAttachmentLoader.c" />
-    <ClCompile Include="..\spine\Attachment.c" />
-    <ClCompile Include="..\spine\AttachmentLoader.c" />
-    <ClCompile Include="..\spine\Bone.c" />
-    <ClCompile Include="..\spine\BoneData.c" />
+    <ClCompile Include="..\spine\Animation.cpp" />
+    <ClCompile Include="..\spine\AnimationState.cpp" />
+    <ClCompile Include="..\spine\AnimationStateData.cpp" />
+    <ClCompile Include="..\spine\Atlas.cpp" />
+    <ClCompile Include="..\spine\AtlasAttachmentLoader.cpp" />
+    <ClCompile Include="..\spine\Attachment.cpp" />
+    <ClCompile Include="..\spine\AttachmentLoader.cpp" />
+    <ClCompile Include="..\spine\Bone.cpp" />
+    <ClCompile Include="..\spine\BoneData.cpp" />
     <ClCompile Include="..\spine\CCSkeleton.cpp" />
     <ClCompile Include="..\spine\CCSkeletonAnimation.cpp" />
-    <ClCompile Include="..\spine\extension.c" />
-    <ClCompile Include="..\spine\Json.c" />
-    <ClCompile Include="..\spine\RegionAttachment.c" />
-    <ClCompile Include="..\spine\Skeleton.c" />
-    <ClCompile Include="..\spine\SkeletonData.c" />
-    <ClCompile Include="..\spine\SkeletonJson.c" />
-    <ClCompile Include="..\spine\Skin.c" />
-    <ClCompile Include="..\spine\Slot.c" />
-    <ClCompile Include="..\spine\SlotData.c" />
+    <ClCompile Include="..\spine\extension.cpp" />
+    <ClCompile Include="..\spine\Json.cpp" />
+    <ClCompile Include="..\spine\RegionAttachment.cpp" />
+    <ClCompile Include="..\spine\Skeleton.cpp" />
+    <ClCompile Include="..\spine\SkeletonData.cpp" />
+    <ClCompile Include="..\spine\SkeletonJson.cpp" />
+    <ClCompile Include="..\spine\Skin.cpp" />
+    <ClCompile Include="..\spine\Slot.cpp" />
+    <ClCompile Include="..\spine\SlotData.cpp" />
     <ClCompile Include="..\spine\spine-cocos2dx.cpp" />
     <ClCompile Include="Win32InputBox.cpp" />
   </ItemGroup>

@@ -57,6 +57,7 @@ void CCSkeleton::initialize () {
 
 	blendFunc.src = GL_ONE;
 	blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+	setOpacityModifyRGB(true);
 
 	setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
 	scheduleUpdate();
@@ -124,6 +125,11 @@ void CCSkeleton::draw () {
 	skeleton->g = color.g / (float)255;
 	skeleton->b = color.b / (float)255;
 	skeleton->a = getOpacity() / (float)255;
+	if (premultipliedAlpha) {
+		skeleton->r *= skeleton->a;
+		skeleton->g *= skeleton->a;
+		skeleton->b *= skeleton->a;
+	}
 
 	CCTextureAtlas* textureAtlas = 0;
 	ccV3F_C4B_T2F_Quad quad;
@@ -135,7 +141,7 @@ void CCSkeleton::draw () {
 		Slot* slot = skeleton->slots[i];
 		if (!slot->attachment || slot->attachment->type != ATTACHMENT_REGION) continue;
 		RegionAttachment* attachment = (RegionAttachment*)slot->attachment;
-		CCTextureAtlas* regionTextureAtlas = (CCTextureAtlas*)((AtlasRegion*)attachment->rendererObject)->page->rendererObject;
+		CCTextureAtlas* regionTextureAtlas = getTextureAtlas(attachment);
 		if (regionTextureAtlas != textureAtlas) {
 			if (textureAtlas) {
 				textureAtlas->drawQuads();
@@ -145,7 +151,7 @@ void CCSkeleton::draw () {
 		textureAtlas = regionTextureAtlas;
 		if (textureAtlas->getCapacity() == textureAtlas->getTotalQuads() &&
 			!textureAtlas->resizeCapacity(textureAtlas->getCapacity() * 2)) return;
-		RegionAttachment_updateQuad(attachment, slot, &quad);
+		RegionAttachment_updateQuad(attachment, slot, &quad, premultipliedAlpha);
 		textureAtlas->updateQuad(&quad, textureAtlas->getTotalQuads());
 	}
 	if (textureAtlas) {
@@ -192,32 +198,36 @@ void CCSkeleton::draw () {
 	}
 }
 
+CCTextureAtlas* CCSkeleton::getTextureAtlas (RegionAttachment* regionAttachment) const {
+	return (CCTextureAtlas*)((AtlasRegion*)regionAttachment->rendererObject)->page->rendererObject;
+}
+
 CCRect CCSkeleton::boundingBox () {
 	float minX = FLT_MAX, minY = FLT_MAX, maxX = FLT_MIN, maxY = FLT_MIN;
 	float scaleX = getScaleX();
 	float scaleY = getScaleY();
-	ccV3F_C4B_T2F_Quad quad;
+	float vertices[8];
 	for (int i = 0; i < skeleton->slotCount; ++i) {
 		Slot* slot = skeleton->slots[i];
 		if (!slot->attachment || slot->attachment->type != ATTACHMENT_REGION) continue;
 		RegionAttachment* attachment = (RegionAttachment*)slot->attachment;
-		RegionAttachment_updateQuad(attachment, slot, &quad);
-		minX = min(minX, quad.bl.vertices.x * scaleX);
-		minY = min(minY, quad.bl.vertices.y * scaleY);
-		maxX = max(maxX, quad.bl.vertices.x * scaleX);
-		maxY = max(maxY, quad.bl.vertices.y * scaleY);
-		minX = min(minX, quad.br.vertices.x * scaleX);
-		minY = min(minY, quad.br.vertices.y * scaleY);
-		maxX = max(maxX, quad.br.vertices.x * scaleX);
-		maxY = max(maxY, quad.br.vertices.y * scaleY);
-		minX = min(minX, quad.tl.vertices.x * scaleX);
-		minY = min(minY, quad.tl.vertices.y * scaleY);
-		maxX = max(maxX, quad.tl.vertices.x * scaleX);
-		maxY = max(maxY, quad.tl.vertices.y * scaleY);
-		minX = min(minX, quad.tr.vertices.x * scaleX);
-		minY = min(minY, quad.tr.vertices.y * scaleY);
-		maxX = max(maxX, quad.tr.vertices.x * scaleX);
-		maxY = max(maxY, quad.tr.vertices.y * scaleY);
+		RegionAttachment_computeVertices(attachment, slot, vertices);
+		minX = min(minX, vertices[VERTEX_X1] * scaleX);
+		minY = min(minY, vertices[VERTEX_Y1] * scaleY);
+		maxX = max(maxX, vertices[VERTEX_X1] * scaleX);
+		maxY = max(maxY, vertices[VERTEX_Y1] * scaleY);
+		minX = min(minX, vertices[VERTEX_X4] * scaleX);
+		minY = min(minY, vertices[VERTEX_Y4] * scaleY);
+		maxX = max(maxX, vertices[VERTEX_X4] * scaleX);
+		maxY = max(maxY, vertices[VERTEX_Y4] * scaleY);
+		minX = min(minX, vertices[VERTEX_X2] * scaleX);
+		minY = min(minY, vertices[VERTEX_Y2] * scaleY);
+		maxX = max(maxX, vertices[VERTEX_X2] * scaleX);
+		maxY = max(maxY, vertices[VERTEX_Y2] * scaleY);
+		minX = min(minX, vertices[VERTEX_X3] * scaleX);
+		minY = min(minY, vertices[VERTEX_Y3] * scaleY);
+		maxX = max(maxX, vertices[VERTEX_X3] * scaleX);
+		maxY = max(maxY, vertices[VERTEX_Y3] * scaleY);
 	}
 	CCPoint position = getPosition();
 	return CCRectMake(position.x + minX, position.y + minY, maxX - minX, maxY - minY);
@@ -268,4 +278,12 @@ void CCSkeleton::setBlendFunc (ccBlendFunc blendFunc) {
     this->blendFunc = blendFunc;
 }
 
-} }
+void CCSkeleton::setOpacityModifyRGB (bool value) {
+	premultipliedAlpha = value;
+}
+
+bool CCSkeleton::isOpacityModifyRGB () {
+	return premultipliedAlpha;
+}
+
+}}

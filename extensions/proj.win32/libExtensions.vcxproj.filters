@@ -189,58 +189,58 @@
     <ClCompile Include="..\spine\spine-cocos2dx.cpp">
       <Filter>spine</Filter>
     </ClCompile>
-    <ClCompile Include="..\spine\Animation.c">
+    <ClCompile Include="..\spine\Animation.cpp">
       <Filter>spine\spine-c</Filter>
     </ClCompile>
-    <ClCompile Include="..\spine\AnimationState.c">
+    <ClCompile Include="..\spine\AnimationState.cpp">
       <Filter>spine\spine-c</Filter>
     </ClCompile>
-    <ClCompile Include="..\spine\AnimationStateData.c">
+    <ClCompile Include="..\spine\AnimationStateData.cpp">
       <Filter>spine\spine-c</Filter>
     </ClCompile>
-    <ClCompile Include="..\spine\Atlas.c">
+    <ClCompile Include="..\spine\Atlas.cpp">
       <Filter>spine\spine-c</Filter>
     </ClCompile>
-    <ClCompile Include="..\spine\AtlasAttachmentLoader.c">
+    <ClCompile Include="..\spine\AtlasAttachmentLoader.cpp">
       <Filter>spine\spine-c</Filter>
     </ClCompile>
-    <ClCompile Include="..\spine\Attachment.c">
+    <ClCompile Include="..\spine\Attachment.cpp">
       <Filter>spine\spine-c</Filter>
     </ClCompile>
-    <ClCompile Include="..\spine\AttachmentLoader.c">
+    <ClCompile Include="..\spine\AttachmentLoader.cpp">
       <Filter>spine\spine-c</Filter>
     </ClCompile>
-    <ClCompile Include="..\spine\Bone.c">
+    <ClCompile Include="..\spine\Bone.cpp">
       <Filter>spine\spine-c</Filter>
     </ClCompile>
-    <ClCompile Include="..\spine\BoneData.c">
+    <ClCompile Include="..\spine\BoneData.cpp">
       <Filter>spine\spine-c</Filter>
     </ClCompile>
-    <ClCompile Include="..\spine\extension.c">
+    <ClCompile Include="..\spine\extension.cpp">
       <Filter>spine\spine-c</Filter>
     </ClCompile>
-    <ClCompile Include="..\spine\Json.c">
+    <ClCompile Include="..\spine\Json.cpp">
       <Filter>spine\spine-c</Filter>
     </ClCompile>
-    <ClCompile Include="..\spine\RegionAttachment.c">
+    <ClCompile Include="..\spine\RegionAttachment.cpp">
       <Filter>spine\spine-c</Filter>
     </ClCompile>
-    <ClCompile Include="..\spine\Skeleton.c">
+    <ClCompile Include="..\spine\Skeleton.cpp">
       <Filter>spine\spine-c</Filter>
     </ClCompile>
-    <ClCompile Include="..\spine\SkeletonData.c">
+    <ClCompile Include="..\spine\SkeletonData.cpp">
       <Filter>spine\spine-c</Filter>
     </ClCompile>
-    <ClCompile Include="..\spine\SkeletonJson.c">
+    <ClCompile Include="..\spine\SkeletonJson.cpp">
       <Filter>spine\spine-c</Filter>
     </ClCompile>
-    <ClCompile Include="..\spine\Skin.c">
+    <ClCompile Include="..\spine\Skin.cpp">
       <Filter>spine\spine-c</Filter>
     </ClCompile>
-    <ClCompile Include="..\spine\Slot.c">
+    <ClCompile Include="..\spine\Slot.cpp">
       <Filter>spine\spine-c</Filter>
     </ClCompile>
-    <ClCompile Include="..\spine\SlotData.c">
+    <ClCompile Include="..\spine\SlotData.cpp">
       <Filter>spine\spine-c</Filter>
     </ClCompile>
   </ItemGroup>

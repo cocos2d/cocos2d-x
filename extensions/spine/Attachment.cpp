@@ -23,51 +23,34 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 
+#include <spine/Attachment.h>
 #include <spine/extension.h>
-#include <stdio.h>
+#include <spine/Slot.h>
 
-#ifdef __cplusplus
 namespace cocos2d { namespace extension {
-#endif
 
-static void* (*mallocFunc) (size_t size) = malloc;
-static void (*freeFunc) (void* ptr) = free;
+typedef struct _AttachmentVtable {
+	void (*dispose) (Attachment* self);
+} _AttachmentVtable;
 
-void* _malloc (size_t size) {
-	return mallocFunc(size);
-}
-void* _calloc (size_t num, size_t size) {
-	void* ptr = mallocFunc(size);
-	if (ptr) memset(ptr, 0, size);
-	return ptr;
-}
-void _free (void* ptr) {
-	freeFunc(ptr);
+void _Attachment_init (Attachment* self, const char* name, AttachmentType type, /**/
+		void (*dispose) (Attachment* self)) {
+
+	CONST_CAST(_AttachmentVtable*, self->vtable) = NEW(_AttachmentVtable);
+	VTABLE(Attachment, self) ->dispose = dispose;
+
+	MALLOC_STR(self->name, name);
+	self->type = type;
 }
 
-void _setMalloc (void* (*malloc) (size_t size)) {
-	mallocFunc = malloc;
-}
-void _setFree (void (*free) (void* ptr)) {
-	freeFunc = free;
+void _Attachment_deinit (Attachment* self) {
+	FREE(self->vtable);
+	FREE(self->name);
 }
 
-char* _readFile (const char* path, int* length) {
-	char *data;
-	FILE *file = fopen(path, "rb");
-	if (!file) return 0;
-
-	fseek(file, 0, SEEK_END);
-	*length = ftell(file);
-	fseek(file, 0, SEEK_SET);
-
-	data = MALLOC(char, *length);
-	fread(data, 1, *length, file);
-	fclose(file);
-
-	return data;
+void Attachment_dispose (Attachment* self) {
+	VTABLE(Attachment, self) ->dispose(self);
+	FREE(self);
 }
 
-#ifdef __cplusplus
 } }
-#endif

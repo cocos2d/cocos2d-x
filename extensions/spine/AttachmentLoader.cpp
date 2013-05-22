@@ -27,9 +27,7 @@
 #include <stdio.h>
 #include <spine/extension.h>
 
-#ifdef __cplusplus
 namespace cocos2d { namespace extension {
-#endif
 
 typedef struct _AttachmentLoaderVtable {
 	Attachment* (*newAttachment) (AttachmentLoader* self, Skin* skin, AttachmentType type, const char* name);
@@ -76,6 +74,4 @@ void _AttachmentLoader_setUnknownTypeError (AttachmentLoader* self, AttachmentTy
 	_AttachmentLoader_setError(self, "Unknown attachment type: ", buffer);
 }
 
-#ifdef __cplusplus
 } }
-#endif

@@ -23,65 +23,43 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 
-#include <spine/Slot.h>
+#include <spine/AtlasAttachmentLoader.h>
 #include <spine/extension.h>
-#include <spine/Skeleton.h>
 
-#ifdef __cplusplus
 namespace cocos2d { namespace extension {
-#endif
 
-typedef struct {
-	Slot super;
-	float attachmentTime;
-} _Internal;
+Attachment* _AtlasAttachmentLoader_newAttachment (AttachmentLoader* loader, Skin* skin, AttachmentType type, const char* name) {
+	AtlasAttachmentLoader* self = SUB_CAST(AtlasAttachmentLoader, loader);
+	switch (type) {
+	case ATTACHMENT_REGION: {
+		RegionAttachment* attachment;
+		AtlasRegion* region = Atlas_findRegion(self->atlas, name);
+		if (!region) {
+			_AttachmentLoader_setError(loader, "Region not found: ", name);
+			return 0;
+		}
+		attachment = RegionAttachment_create(name);
+		attachment->rendererObject = region;
+		RegionAttachment_setUVs(attachment, region->u, region->v, region->u2, region->v2, region->rotate);
+		attachment->regionOffsetX = region->offsetX;
+		attachment->regionOffsetY = region->offsetY;
+		attachment->regionWidth = region->width;
+		attachment->regionHeight = region->height;
+		attachment->regionOriginalWidth = region->originalWidth;
+		attachment->regionOriginalHeight = region->originalHeight;
+		return SUPER(attachment);
+	}
+	default:
+		_AttachmentLoader_setUnknownTypeError(loader, type);
+		return 0;
+	}
+}
 
-Slot* Slot_create (SlotData* data, Skeleton* skeleton, Bone* bone) {
-	Slot* self = SUPER(NEW(_Internal));
-	CONST_CAST(SlotData*, self->data) = data;
-	CONST_CAST(Skeleton*, self->skeleton) = skeleton;
-	CONST_CAST(Bone*, self->bone) = bone;
-	Slot_setToSetupPose(self);
+AtlasAttachmentLoader* AtlasAttachmentLoader_create (Atlas* atlas) {
+	AtlasAttachmentLoader* self = NEW(AtlasAttachmentLoader);
+	_AttachmentLoader_init(SUPER(self), _AttachmentLoader_deinit, _AtlasAttachmentLoader_newAttachment);
+	self->atlas = atlas;
 	return self;
 }
 
-void Slot_dispose (Slot* self) {
-	FREE(self);
-}
-
-void Slot_setAttachment (Slot* self, Attachment* attachment) {
-	CONST_CAST(Attachment*, self->attachment) = attachment;
-	SUB_CAST(_Internal, self) ->attachmentTime = self->skeleton->time;
-}
-
-void Slot_setAttachmentTime (Slot* self, float time) {
-	SUB_CAST(_Internal, self) ->attachmentTime = self->skeleton->time - time;
-}
-
-float Slot_getAttachmentTime (const Slot* self) {
-	return self->skeleton->time - SUB_CAST(_Internal, self) ->attachmentTime;
-}
-
-void Slot_setToSetupPose (Slot* self) {
-	Attachment* attachment = 0;
-	self->r = self->data->r;
-	self->g = self->data->g;
-	self->b = self->data->b;
-	self->a = self->data->a;
-
-	if (self->data->attachmentName) {
-		/* Find slot index. */
-		int i;
-		for (i = 0; i < self->skeleton->data->slotCount; ++i) {
-			if (self->data == self->skeleton->data->slots[i]) {
-				attachment = Skeleton_getAttachmentForSlotIndex(self->skeleton, i, self->data->attachmentName);
-				break;
-			}
-		}
-	}
-	Slot_setAttachment(self, attachment);
-}
-
-#ifdef __cplusplus
 } }
-#endif

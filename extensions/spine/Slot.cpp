@@ -23,38 +23,61 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 
-#include <spine/SlotData.h>
+#include <spine/Slot.h>
 #include <spine/extension.h>
+#include <spine/Skeleton.h>
 
-#ifdef __cplusplus
 namespace cocos2d { namespace extension {
-#endif
 
-SlotData* SlotData_create (const char* name, BoneData* boneData) {
-	SlotData* self = NEW(SlotData);
-	MALLOC_STR(self->name, name);
-	CONST_CAST(BoneData*, self->boneData) = boneData;
-	self->r = 1;
-	self->g = 1;
-	self->b = 1;
-	self->a = 1;
+typedef struct {
+	Slot super;
+	float attachmentTime;
+} _Internal;
+
+Slot* Slot_create (SlotData* data, Skeleton* skeleton, Bone* bone) {
+	Slot* self = SUPER(NEW(_Internal));
+	CONST_CAST(SlotData*, self->data) = data;
+	CONST_CAST(Skeleton*, self->skeleton) = skeleton;
+	CONST_CAST(Bone*, self->bone) = bone;
+	Slot_setToSetupPose(self);
 	return self;
 }
 
-void SlotData_dispose (SlotData* self) {
-	FREE(self->name);
-	FREE(self->attachmentName);
+void Slot_dispose (Slot* self) {
 	FREE(self);
 }
 
-void SlotData_setAttachmentName (SlotData* self, const char* attachmentName) {
-	FREE(self->attachmentName);
-	if (attachmentName)
-		MALLOC_STR(self->attachmentName, attachmentName);
-	else
-		CONST_CAST(char*, self->attachmentName) = 0;
+void Slot_setAttachment (Slot* self, Attachment* attachment) {
+	CONST_CAST(Attachment*, self->attachment) = attachment;
+	SUB_CAST(_Internal, self) ->attachmentTime = self->skeleton->time;
 }
 
-#ifdef __cplusplus
+void Slot_setAttachmentTime (Slot* self, float time) {
+	SUB_CAST(_Internal, self) ->attachmentTime = self->skeleton->time - time;
+}
+
+float Slot_getAttachmentTime (const Slot* self) {
+	return self->skeleton->time - SUB_CAST(_Internal, self) ->attachmentTime;
+}
+
+void Slot_setToSetupPose (Slot* self) {
+	Attachment* attachment = 0;
+	self->r = self->data->r;
+	self->g = self->data->g;
+	self->b = self->data->b;
+	self->a = self->data->a;
+
+	if (self->data->attachmentName) {
+		/* Find slot index. */
+		int i;
+		for (i = 0; i < self->skeleton->data->slotCount; ++i) {
+			if (self->data == self->skeleton->data->slots[i]) {
+				attachment = Skeleton_getAttachmentForSlotIndex(self->skeleton, i, self->data->attachmentName);
+				break;
+			}
+		}
+	}
+	Slot_setAttachment(self, attachment);
+}
+
 } }
-#endif
