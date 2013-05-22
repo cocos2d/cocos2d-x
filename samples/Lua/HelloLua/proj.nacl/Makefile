@@ -20,10 +20,12 @@ SOURCES = main.cpp \
         $(COCOS_ROOT)/scripting/lua/cocos2dx_support/LuaCocos2d.cpp \
         $(COCOS_ROOT)/scripting/lua/cocos2dx_support/tolua_fix.c
 
+include $(COCOS2DX_PATH)/../extensions/proj.nacl/Makefile
+SOURCES += $(addprefix $(COCOS_ROOT)/extensions/, $(EXTENSIONS_SOURCES))
+
 include $(COCOS_ROOT)/cocos2dx/proj.nacl/cocos2dx.mk
 
 STATICLIBS += -lchipmunk
-SHAREDLIBS += -lextension 
 
 APP_NAME = HelloLua
 TARGET = $(BIN_DIR)/$(APP_NAME)_$(NACL_ARCH).nexe
