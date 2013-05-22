@@ -3328,7 +3328,7 @@ std::string SpriteNilTexture::subtitle()
 class MySprite1 : public CCSprite
 {
 public:
-    MySprite1() : ivar(10) {}
+    MySprite1() {}
     static MySprite1* createWithSpriteFrameName(const char *pszSpriteFrameName)
     {
         CCSpriteFrame *pFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pszSpriteFrameName);
@@ -3338,15 +3338,12 @@ public:
 
         return pobSprite;
     }
-
-private:
-    int ivar;
 };
 
 class MySprite2 : public CCSprite
 {
 public:
-    MySprite2() : ivar(10) {}
+    MySprite2(){}
     static MySprite2* create(const char *pszName)
     {
         MySprite2 *pobSprite = new MySprite2();
@@ -3355,9 +3352,6 @@ public:
 
         return pobSprite;
     }
-
-private:
-    int ivar;
 };
 
 //------------------------------------------------------------------
@@ -3399,10 +3393,12 @@ class DoubleSprite : public CCSprite
 {
 public:
     DoubleSprite() {m_bHD = false;}
+    using CCSprite::initWithTexture;
     virtual bool initWithTexture(CCTexture2D* texture, CCRect rect);
     // Called everytime the vertex needs to be updated.
     virtual void setContentSize(const CCSize& size);
     // rect used only for the vertex. Called everytime the vertex needs to be updated.
+    using CCSprite::setVertexRect;
     virtual void setVertexRect(CCRect rect);
 
     static DoubleSprite* create(const char* pszFileName);

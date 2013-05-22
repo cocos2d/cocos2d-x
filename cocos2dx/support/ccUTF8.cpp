@@ -70,6 +70,7 @@ Mask = 0x01;                \
 else                        \
 Len = -1;
 
+/*
 #define UTF8_LENGTH(Char)            \
 ((Char) < 0x80 ? 1 :                \
 ((Char) < 0x800 ? 2 :            \
@@ -77,6 +78,12 @@ Len = -1;
 ((Char) < 0x200000 ? 4 :            \
 ((Char) < 0x4000000 ? 5 : 6)))))
 
+unsigned short are always < 0x10000. Test cases that return 4 and more are useless
+*/
+
+#define UTF8_LENGTH(Char)            \
+((Char) < 0x80 ? 1 :                \
+((Char) < 0x800 ? 2 : 3))
 
 #define UTF8_GET(Result, Chars, Count, Mask, Len)    \
 (Result) = (Chars)[0] & (Mask);            \
@@ -335,11 +342,14 @@ cc_unichar_to_utf8 (unsigned short c,
         first = 0xc0;
         len = 2;
     }
-    else if (c < 0x10000)
+    // An unsigned short is always < 0x10000
+    //else if (c < 0x10000)
+    else
     {
         first = 0xe0;
         len = 3;
     }
+    /*
     else if (c < 0x200000)
     {
         first = 0xf0;
@@ -355,7 +365,7 @@ cc_unichar_to_utf8 (unsigned short c,
         first = 0xfc;
         len = 6;
     }
-    
+    */
     if (outbuf)
     {
         for (i = len - 1; i > 0; --i)

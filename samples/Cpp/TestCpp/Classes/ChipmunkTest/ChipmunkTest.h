@@ -28,8 +28,8 @@ public:
     virtual void didAccelerate(CCAcceleration* pAccelerationValue);
 
 private:
-    CCTexture2D* m_pSpriteTexture; // weak ref
 #if CC_ENABLE_CHIPMUNK_INTEGRATION    
+    CCTexture2D* m_pSpriteTexture; // weak ref
     CCPhysicsDebugNode* m_pDebugLayer; // weak ref
 #endif
     cpSpace* m_pSpace; // strong ref

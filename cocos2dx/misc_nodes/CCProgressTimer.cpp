@@ -225,7 +225,7 @@ void CCProgressTimer::updateProgress(void)
     }
 }
 
-void CCProgressTimer::setAnchorPoint(CCPoint anchorPoint)
+void CCProgressTimer::setAnchorPoint(const CCPoint &anchorPoint)
 {
     CCNode::setAnchorPoint(anchorPoint);
 }

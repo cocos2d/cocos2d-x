@@ -80,7 +80,7 @@ public:
     void setReverseProgress(bool reverse);
 
     virtual void draw(void);
-    void setAnchorPoint(CCPoint anchorPoint);
+    void setAnchorPoint(const CCPoint &anchorPoint);
 
     virtual void setOpacityModifyRGB(bool bValue);
     virtual bool isOpacityModifyRGB(void);

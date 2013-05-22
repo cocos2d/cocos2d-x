@@ -156,6 +156,7 @@ public:
     virtual void BeginContact(b2Contact* contact) { B2_NOT_USED(contact); }
     virtual void EndContact(b2Contact* contact) { B2_NOT_USED(contact); }
     virtual void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
+    using b2ContactListener::PostSolve;
     virtual void PostSolve(const b2Contact* contact, const b2ContactImpulse* impulse)
     {
         B2_NOT_USED(contact);

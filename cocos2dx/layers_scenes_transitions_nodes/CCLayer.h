@@ -303,6 +303,7 @@ public:
 
     virtual bool init();
     /** Initializes the CCLayer with a gradient between start and end. */
+    using CCLayerColor::initWithColor;
     virtual bool initWithColor(const ccColor4B& start, const ccColor4B& end);
 
     /** Initializes the CCLayer with a gradient between start and end in the direction of v. */

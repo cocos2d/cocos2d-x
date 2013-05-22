@@ -51,8 +51,9 @@ include ../../../cocos2dx/proj.linux/cocos2dx.mk
 INCLUDES = -I../..
 
 # Unfortunetly Box2D doesn't compiler cleanly without these
+CXXFLAGS += -Wno-uninitialized -Wno-null-conversion -Wno-unused-variable
+# This option is not valid with clang
 CXXFLAGS += -Wno-unused-but-set-variable
-CXXFLAGS += -Wno-uninitialized
 
 ifeq ($(DEBUG), 1)
 DEFINES = -D_DEBUG

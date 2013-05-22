@@ -33,7 +33,6 @@ class Box2DView : public CCLayer
 {
     TestEntry*    m_entry;
     Test*        m_test;
-    int            m_entryID;
 public:
     Box2DView(void);
     virtual ~Box2DView(void);

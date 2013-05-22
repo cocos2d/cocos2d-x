@@ -61,8 +61,7 @@ static CCTexture2DPixelFormat g_defaultAlphaPixelFormat = kCCTexture2DPixelForma
 static bool PVRHaveAlphaPremultiplied_ = false;
 
 CCTexture2D::CCTexture2D()
-: m_bPVRHaveAlphaPremultiplied(true)
-, m_uPixelsWide(0)
+: m_uPixelsWide(0)
 , m_uPixelsHigh(0)
 , m_uName(0)
 , m_fMaxS(0.0)

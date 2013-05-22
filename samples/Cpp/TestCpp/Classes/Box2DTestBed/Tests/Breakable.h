@@ -60,6 +60,7 @@ public:
         m_broke = false;
     }
 
+    using Test::PostSolve;
     void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
     {
         if (m_broke)

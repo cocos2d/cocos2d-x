@@ -98,6 +98,7 @@ COCOS_LIBS = $(LIB_DIR)/libcocos2d.so $(LIB_DIR)/libcocosdenshion.so
 
 include ../../../../cocos2dx/proj.linux/cocos2dx.mk
 
+CXXFLAGS += -Wno-null-conversion
 
 INCLUDES +=	 -I../ \
 	-I../../ \

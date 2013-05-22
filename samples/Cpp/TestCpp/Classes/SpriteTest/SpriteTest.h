@@ -130,8 +130,6 @@ public:
 
 class SpriteBatchNodeZVertex: public SpriteTestDemo
 {
-    int        m_dir;
-    float    m_time;
 public:
     virtual void onEnter();
     virtual void onExit();

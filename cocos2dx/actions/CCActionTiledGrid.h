@@ -39,6 +39,7 @@ class CC_DLL CCShakyTiles3D : public CCTiledGrid3DAction
 {
 public:
     /** initializes the action with a range, whether or not to shake Z vertices, a grid size, and duration */
+    using CCTiledGrid3DAction::initWithDuration;
     virtual bool initWithDuration(float duration, const CCSize& gridSize, int nRange, bool bShakeZ);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
@@ -59,6 +60,7 @@ class CC_DLL CCShatteredTiles3D : public CCTiledGrid3DAction
 {
 public:
     /** initializes the action with a range, whether or not to shatter Z vertices, a grid size and duration */
+    using CCTiledGrid3DAction::initWithDuration;
     virtual bool initWithDuration(float duration, const CCSize& gridSize, int nRange, bool bShatterZ);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
@@ -83,6 +85,7 @@ class CC_DLL CCShuffleTiles : public CCTiledGrid3DAction
 public:
     ~CCShuffleTiles(void);
     /** initializes the action with a random seed, the grid size and the duration */
+    using CCTiledGrid3DAction::initWithDuration;
     virtual bool initWithDuration(float duration, const CCSize& gridSize, unsigned int seed);
     void shuffle(unsigned int *pArray, unsigned int nLen);
     CCSize getDelta(const CCSize& pos);
@@ -171,6 +174,7 @@ class CC_DLL CCTurnOffTiles : public CCTiledGrid3DAction
 public:
     ~CCTurnOffTiles(void);
     /** initializes the action with a random seed, the grid size and the duration */
+    using CCTiledGrid3DAction::initWithDuration;
     virtual bool initWithDuration(float duration, const CCSize& gridSize, unsigned int seed);
     void shuffle(unsigned int *pArray, unsigned int nLen);
     void turnOnTile(const CCPoint& pos);
@@ -206,6 +210,7 @@ public:
     inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
     /** initializes the action with a number of waves, the waves amplitude, the grid size and the duration */
+    using CCTiledGrid3DAction::initWithDuration;
     virtual bool initWithDuration(float duration, const CCSize& gridSize, unsigned int waves, float amplitude);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
@@ -235,6 +240,7 @@ public:
     inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
     /** initializes the action with the number of jumps, the sin amplitude, the grid size and the duration */
+    using CCTiledGrid3DAction::initWithDuration;
     bool initWithDuration(float duration, const CCSize& gridSize, unsigned int numberOfJumps, float amplitude);
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
@@ -254,6 +260,7 @@ class CC_DLL CCSplitRows : public CCTiledGrid3DAction
 {
 public :
     /** initializes the action with the number of rows to split and the duration */
+    using CCTiledGrid3DAction::initWithDuration;
     virtual bool initWithDuration(float duration, unsigned int nRows);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
@@ -274,6 +281,7 @@ class CC_DLL CCSplitCols : public CCTiledGrid3DAction
 {
 public:
     /** initializes the action with the number of columns to split and the duration */
+    using CCTiledGrid3DAction::initWithDuration;
     virtual bool initWithDuration(float duration, unsigned int nCols);
 
     virtual CCObject* copyWithZone(CCZone* pZone);

@@ -41,13 +41,19 @@ NS_CC_BEGIN
 class CC_DLL CCThread
 {
 public:
-    CCThread() : m_pAutoreasePool(0) {}
+    CCThread()
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    : m_pAutoreasePool(0)
+#endif
+    {}
     ~CCThread();
 
     void createAutoreleasePool();
 
 private:
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     void *m_pAutoreasePool;
+#endif
 };
 
 // end of platform group

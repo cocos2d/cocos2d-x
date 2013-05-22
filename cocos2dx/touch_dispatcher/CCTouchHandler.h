@@ -104,6 +104,7 @@ public:
     CCSet* getClaimedTouches(void);
 
     /** initializes a TargetedTouchHandler with a delegate, a priority and whether or not it swallows touches or not */
+    using CCTouchHandler::initWithDelegate;
     bool initWithDelegate(CCTouchDelegate *pDelegate, int nPriority, bool bSwallow);
 
 public:

@@ -11,8 +11,6 @@ public:
     void toggleSwitch(cocos2d::CCObject *sender);
     void connectToSwitch(cocos2d::CCObject *sender);
     void doNothing(cocos2d::CCObject *sender);
-private:
-    bool m_bShowImage;
 };
 
 void runNotificationCenterTest();
