@@ -172,6 +172,7 @@ Developers:
         added CCBReader (CCBI format)
         Added cleanup and reset methods to ScriptingCore.
         Fixed a bug in ScriptingCore::evalString not setting the outval.
+        Updated .classpath of Android project to latest ADT 22 build tool compatibility.
 
     Rohan Kuruvilla (rohankuruvilla, Zynga)
         Improvements to JS Bindings.
