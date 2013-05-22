@@ -187,6 +187,8 @@ class JS_FRIEND_API(SecurityWrapper) : public Base
                             CallArgs args) MOZ_OVERRIDE;
     virtual bool objectClassIs(JSObject *obj, ESClassValue classValue, JSContext *cx) MOZ_OVERRIDE;
     virtual bool regexp_toShared(JSContext *cx, JSObject *proxy, RegExpGuard *g) MOZ_OVERRIDE;
+    virtual bool defineProperty(JSContext *cx, JSObject *wrapper, jsid id,
+                                PropertyDescriptor *desc) MOZ_OVERRIDE;
 
     /*
      * Allow our subclasses to select the superclass behavior they want without
@@ -262,12 +264,12 @@ UnwrapObject(JSObject *obj, bool stopAtOuter = true, unsigned *flagsp = NULL);
 // code should never be unwrapping outer window wrappers, we always stop at
 // outer windows.
 JS_FRIEND_API(JSObject *)
-UnwrapObjectChecked(RawObject obj);
+UnwrapObjectChecked(RawObject obj, bool stopAtOuter = true);
 
 // Unwrap only the outermost security wrapper, with the same semantics as
 // above. This is the checked version of Wrapper::wrappedObject.
 JS_FRIEND_API(JSObject *)
-UnwrapOneChecked(RawObject obj);
+UnwrapOneChecked(RawObject obj, bool stopAtOuter = true);
 
 JS_FRIEND_API(bool)
 IsCrossCompartmentWrapper(RawObject obj);
@@ -296,30 +298,30 @@ RecomputeWrappers(JSContext *cx, const CompartmentFilter &sourceFilter,
 
 /*
  * This auto class should be used around any code, such as brain transplants,
- * that may touch dead compartments. Brain transplants can cause problems
+ * that may touch dead zones. Brain transplants can cause problems
  * because they operate on all compartments, whether live or dead. A brain
  * transplant can cause a formerly dead object to be "reanimated" by causing a
  * read or write barrier to be invoked on it during the transplant. In this way,
- * a compartment becomes a zombie, kept alive by repeatedly consuming
+ * a zone becomes a zombie, kept alive by repeatedly consuming
  * (transplanted) brains.
  *
  * To work around this issue, we observe when mark bits are set on objects in
- * dead compartments. If this happens during a brain transplant, we do a full,
+ * dead zones. If this happens during a brain transplant, we do a full,
  * non-incremental GC at the end of the brain transplant. This will clean up any
  * objects that were improperly marked.
  */
-struct JS_FRIEND_API(AutoMaybeTouchDeadCompartments)
+struct JS_FRIEND_API(AutoMaybeTouchDeadZones)
 {
     // The version that takes an object just uses it for its runtime.
-    AutoMaybeTouchDeadCompartments(JSContext *cx);
-    AutoMaybeTouchDeadCompartments(JSObject *obj);
-    ~AutoMaybeTouchDeadCompartments();
+    AutoMaybeTouchDeadZones(JSContext *cx);
+    AutoMaybeTouchDeadZones(JSObject *obj);
+    ~AutoMaybeTouchDeadZones();
 
   private:
     JSRuntime *runtime;
     unsigned markCount;
     bool inIncremental;
-    bool manipulatingDeadCompartments;
+    bool manipulatingDeadZones;
 };
 
 } /* namespace js */
