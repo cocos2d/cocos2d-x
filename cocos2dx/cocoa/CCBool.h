@@ -26,6 +26,7 @@
 #define __CCBOOL_H__
 
 #include "CCObject.h"
+#include "CCString.h"
 
 NS_CC_BEGIN
 

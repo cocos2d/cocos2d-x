@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 
 #include "CCObject.h"
+#include "CCString.h"
 #include "CCAutoreleasePool.h"
 #include "ccMacros.h"
 #include "script_support/CCScriptSupport.h"
