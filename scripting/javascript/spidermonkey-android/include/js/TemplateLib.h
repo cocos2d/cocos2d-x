@@ -68,14 +68,6 @@ template <class T> struct BitSize {
 template <bool> struct StaticAssert {};
 template <> struct StaticAssert<true> { typedef int result; };
 
-/* Boolean test for whether two types are the same. */
-template <class T, class U> struct IsSameType {
-    static const bool result = false;
-};
-template <class T> struct IsSameType<T,T> {
-    static const bool result = true;
-};
-
 /*
  * Produce an N-bit mask, where N <= BitSize<size_t>::result.  Handle the
  * language-undefined edge case when N = BitSize<size_t>::result.
@@ -116,33 +108,8 @@ template <class T> struct UnsafeRangeSizeMask {
 template <class T> struct StripConst          { typedef T result; };
 template <class T> struct StripConst<const T> { typedef T result; };
 
-/*
- * Traits class for identifying POD types. Until C++0x, there is no automatic
- * way to detect PODs, so for the moment it is done manually.
- */
-template <class T> struct IsPodType                 { static const bool result = false; };
-template <> struct IsPodType<char>                  { static const bool result = true; };
-template <> struct IsPodType<signed char>           { static const bool result = true; };
-template <> struct IsPodType<unsigned char>         { static const bool result = true; };
-template <> struct IsPodType<short>                 { static const bool result = true; };
-template <> struct IsPodType<unsigned short>        { static const bool result = true; };
-template <> struct IsPodType<int>                   { static const bool result = true; };
-template <> struct IsPodType<unsigned int>          { static const bool result = true; };
-template <> struct IsPodType<long>                  { static const bool result = true; };
-template <> struct IsPodType<unsigned long>         { static const bool result = true; };
-template <> struct IsPodType<long long>             { static const bool result = true; };
-template <> struct IsPodType<unsigned long long>    { static const bool result = true; };
-template <> struct IsPodType<bool>                  { static const bool result = true; };
-template <> struct IsPodType<float>                 { static const bool result = true; };
-template <> struct IsPodType<double>                { static const bool result = true; };
-template <> struct IsPodType<wchar_t>               { static const bool result = true; };
-template <typename T> struct IsPodType<T *>         { static const bool result = true; };
-
 template <bool cond, typename T, T v1, T v2> struct If        { static const T result = v1; };
 template <typename T, T v1, T v2> struct If<false, T, v1, v2> { static const T result = v2; };
-
-template <class T> struct IsPointerType             { static const bool result = false; };
-template <class T> struct IsPointerType<T *>        { static const bool result = true; };
 
 /*
  * Traits class for identifying types that are implicitly barriered.
