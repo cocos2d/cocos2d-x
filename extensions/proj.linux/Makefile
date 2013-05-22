@@ -50,6 +50,7 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../GUI/CCControlExtension/CCScale9Sprite.cpp \
 ../GUI/CCControlExtension/CCControlPotentiometer.cpp \
 ../GUI/CCControlExtension/CCControlStepper.cpp \
+../GUI/CCCEditBox\CCEditBox.cpp\
 ../network/HttpClient.cpp \
 ../physics_nodes/CCPhysicsDebugNode.cpp \
 ../physics_nodes/CCPhysicsSprite.cpp \
