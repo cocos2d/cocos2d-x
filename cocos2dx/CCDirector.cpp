@@ -61,6 +61,7 @@ THE SOFTWARE.
 #include "kazmath/kazmath.h"
 #include "kazmath/GL/matrix.h"
 #include "support/CCProfiling.h"
+#include "platform/CCImage.h"
 #include "CCEGLView.h"
 #include "CCConfiguration.h"
 
@@ -808,43 +809,62 @@ void CCDirector::calculateMPF()
 void CCDirector::getFPSImageData(unsigned char** datapointer, unsigned int* length)
 {
     // XXX fixed me if it should be used 
-//    *datapointer = cc_fps_images_png;
-//	*length = cc_fps_images_len();
+    *datapointer = cc_fps_images_png;
+	*length = cc_fps_images_len();
 }
 
 void CCDirector::createStatsLabel()
-{    
+{
+    CCTexture2D *texture = NULL;
+	CCTextureCache *textureCache = CCTextureCache::sharedTextureCache();
+    
     if( m_pFPSLabel && m_pSPFLabel ) 
     {
         CC_SAFE_RELEASE_NULL(m_pFPSLabel);
         CC_SAFE_RELEASE_NULL(m_pSPFLabel);
         CC_SAFE_RELEASE_NULL(m_pDrawsLabel);
+        textureCache->removeTextureForKey("cc_fps_images");
         CCFileUtils::sharedFileUtils()->purgeCachedEntries();
     }
 
-    int fontSize = 0;
-    if (m_obWinSizeInPoints.width > m_obWinSizeInPoints.height)
-    {
-        fontSize = (int)(m_obWinSizeInPoints.height / 320.0f * 24);
-    }
-    else
-    {
-        fontSize = (int)(m_obWinSizeInPoints.width / 320.0f * 24);
+    CCTexture2DPixelFormat currentFormat = CCTexture2D::defaultAlphaPixelFormat();
+    CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
+    unsigned char *data = NULL;
+	unsigned int data_len = 0;
+	getFPSImageData(&data, &data_len);
+    
+    CCImage* image = new CCImage();
+    bool isOK = image->initWithImageData(data, data_len);
+    if (!isOK) {
+        CCLOGERROR("%s", "Fails: init fps_images");
+        return;
     }
     
-    m_pFPSLabel = CCLabelTTF::create("00.0", "Arial", fontSize);
-    m_pFPSLabel->retain();
-    m_pSPFLabel = CCLabelTTF::create("0.000", "Arial", fontSize);
-    m_pSPFLabel->retain();
-    m_pDrawsLabel = CCLabelTTF::create("000", "Arial", fontSize);
-    m_pDrawsLabel->retain();
-
-    CCSize contentSize = m_pDrawsLabel->getContentSize();
-    m_pDrawsLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height*5/2), CC_DIRECTOR_STATS_POSITION));
-    contentSize = m_pSPFLabel->getContentSize();
-    m_pSPFLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height*3/2), CC_DIRECTOR_STATS_POSITION));
-    contentSize = m_pFPSLabel->getContentSize();
-    m_pFPSLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height/2), CC_DIRECTOR_STATS_POSITION));
+    texture = textureCache->addUIImage(image, "cc_fps_images");
+    CC_SAFE_RELEASE(image);
+    
+    float factor = CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height / 320.0f;
+    
+    m_pFPSLabel = new CCLabelAtlas();
+    m_pFPSLabel->setIgnoreContentScaleFactor(true);
+    m_pFPSLabel->initWithString("00.0", texture, 12, 32 , '.');
+    m_pFPSLabel->setScale(factor);
+    
+    m_pSPFLabel = new CCLabelAtlas();
+    m_pSPFLabel->setIgnoreContentScaleFactor(true);
+    m_pSPFLabel->initWithString("0.000", texture, 12, 32, '.');
+    m_pSPFLabel->setScale(factor);
+    
+    m_pDrawsLabel = new CCLabelAtlas();
+    m_pDrawsLabel->setIgnoreContentScaleFactor(true);
+    m_pDrawsLabel->initWithString("000", texture, 12, 32, '.');
+    m_pDrawsLabel->setScale(factor);
+    
+    CCTexture2D::setDefaultAlphaPixelFormat(currentFormat);
+    
+    m_pDrawsLabel->setPosition(ccpAdd(ccp(0, 34*factor), CC_DIRECTOR_STATS_POSITION));
+    m_pSPFLabel->setPosition(ccpAdd(ccp(0, 17*factor), CC_DIRECTOR_STATS_POSITION));
+    m_pFPSLabel->setPosition(CC_DIRECTOR_STATS_POSITION);
 }
 
 float CCDirector::getContentScaleFactor(void)

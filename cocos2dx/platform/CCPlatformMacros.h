@@ -119,11 +119,13 @@ It's new in cocos2d-x since v0.99.5
  */
 #define CC_PROPERTY_READONLY(varType, varName, funName)\
 protected: varType varName;\
-public: virtual varType get##funName(void);
+public: virtual varType get##funName(void);\
+protected:
 
 #define CC_PROPERTY_READONLY_PASS_BY_REF(varType, varName, funName)\
 protected: varType varName;\
-public: virtual const varType& get##funName(void);
+public: virtual const varType& get##funName(void);\
+protected:
 
 /** CC_PROPERTY is used to declare a protected variable.
  We can use getter to read the variable, and use the setter to change the variable.
@@ -138,12 +140,14 @@ public: virtual const varType& get##funName(void);
 #define CC_PROPERTY(varType, varName, funName)\
 protected: varType varName;\
 public: virtual varType get##funName(void);\
-public: virtual void set##funName(varType var);
+public: virtual void set##funName(varType var);\
+protected:
 
 #define CC_PROPERTY_PASS_BY_REF(varType, varName, funName)\
 protected: varType varName;\
 public: virtual const varType& get##funName(void);\
-public: virtual void set##funName(const varType& var);
+public: virtual void set##funName(const varType& var);\
+protected:
 
 /** CC_SYNTHESIZE_READONLY is used to declare a protected variable.
  We can use getter to read the variable.
@@ -156,11 +160,13 @@ public: virtual void set##funName(const varType& var);
  */
 #define CC_SYNTHESIZE_READONLY(varType, varName, funName)\
 protected: varType varName;\
-public: virtual varType get##funName(void) const { return varName; }
+public: virtual varType get##funName(void) const { return varName; }\
+protected:
 
 #define CC_SYNTHESIZE_READONLY_PASS_BY_REF(varType, varName, funName)\
 protected: varType varName;\
-public: virtual const varType& get##funName(void) const { return varName; }
+public: virtual const varType& get##funName(void) const { return varName; }\
+protected:
 
 /** CC_SYNTHESIZE is used to declare a protected variable.
  We can use getter to read the variable, and use the setter to change the variable.
@@ -175,12 +181,14 @@ public: virtual const varType& get##funName(void) const { return varName; }
 #define CC_SYNTHESIZE(varType, varName, funName)\
 protected: varType varName;\
 public: virtual varType get##funName(void) const { return varName; }\
-public: virtual void set##funName(varType var){ varName = var; }
+public: virtual void set##funName(varType var){ varName = var; }\
+protected:
 
 #define CC_SYNTHESIZE_PASS_BY_REF(varType, varName, funName)\
 protected: varType varName;\
 public: virtual const varType& get##funName(void) const { return varName; }\
-public: virtual void set##funName(const varType& var){ varName = var; }
+public: virtual void set##funName(const varType& var){ varName = var; }\
+protected:
 
 #define CC_SYNTHESIZE_RETAIN(varType, varName, funName)    \
 private: varType varName; \
@@ -193,7 +201,9 @@ public: virtual void set##funName(varType var)   \
         CC_SAFE_RELEASE(varName); \
         varName = var; \
     } \
-} 
+} \
+protected:
+
 
 #define CC_SAFE_DELETE(p)            do { if(p) { delete (p); (p) = 0; } } while(0)
 #define CC_SAFE_DELETE_ARRAY(p)     do { if(p) { delete[] (p); (p) = 0; } } while(0)
