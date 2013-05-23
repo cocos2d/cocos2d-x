@@ -480,6 +480,11 @@ files
 	(../Classes/DataVisitorTest)
 	DataVisitorTest.cpp
 	DataVisitorTest.h
+
+	[Test/ConfigurationTest]
+	(../Classes/ConfigurationTest)
+	ConfigurationTest.cpp
+	ConfigurationTest.h
 }
 
 
