@@ -230,7 +230,7 @@ public class IAPNd91 implements IAPAdapter {
 						IAPNd91.LogD("finishPayProcess code : " + code);
 						switch(code){
 						case NdErrorCode.ND_COM_PLATFORM_SUCCESS:
-							IAPNd91.payResult(InterfaceIAP.PAYRESULT_SUCCESS, "购买成功");
+							IAPNd91.payResult(InterfaceIAP.PAYRESULT_SUCCESS, "购买成功"); break;
 						case NdErrorCode.ND_COM_PLATFORM_ERROR_PAY_FAILURE:
 							IAPNd91.payResult(InterfaceIAP.PAYRESULT_FAIL, "购买失败"); break;
 						case NdErrorCode.ND_COM_PLATFORM_ERROR_PAY_CANCEL:

@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "PluginJavaData.h"
 #include "PluginProtocol.h"
 #include <map>
+#include "PluginParam.h"
 
 namespace cocos2d { namespace plugin {
 
@@ -48,13 +49,15 @@ public:
 
     static PluginProtocol* getPluginPtr(std::string className);
 
+    static jobject getJObjFromParam(PluginParam* param);
+
     template <typename T>
-    static void callJavaFunctionWithName_oneBaseType(PluginProtocol* thiz, const char* funcName, const char* paramCode, T param)
+    static void callJavaFunctionWithName_oneParam(PluginProtocol* thiz, const char* funcName, const char* paramCode, T param)
     {
         return_if_fails(funcName != NULL && strlen(funcName) > 0);
         return_if_fails(paramCode != NULL && strlen(paramCode) > 0);
         PluginJavaData* pData = PluginUtils::getPluginJavaData(thiz);
-         PluginJniMethodInfo t;
+        PluginJniMethodInfo t;
         if (PluginJniHelper::getMethodInfo(t
             , pData->jclassName.c_str()
             , funcName
@@ -64,7 +67,7 @@ public:
             t.env->DeleteLocalRef(t.classID);
         }
     }
-    
+
     static void callJavaFunctionWithName(PluginProtocol* thiz, const char* funcName)
     {
         return_if_fails(funcName != NULL && strlen(funcName) > 0);
@@ -79,6 +82,8 @@ public:
             t.env->DeleteLocalRef(t.classID);
         }
     }
+
+    static void outputLog(const char* logTag, const char* pFormat, ...);
 };
 
 }} // namespace cocos2d { namespace plugin {

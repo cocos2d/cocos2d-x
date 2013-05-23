@@ -178,7 +178,7 @@ const char* ProtocolIAP::getSDKVersion()
 
 void ProtocolIAP::setDebugMode(bool debug)
 {
-	PluginUtils::callJavaFunctionWithName_oneBaseType(this, "setDebugMode", "(Z)V", debug);
+	PluginUtils::callJavaFunctionWithName_oneParam(this, "setDebugMode", "(Z)V", debug);
 }
 
 }} // namespace cocos2d { namespace plugin {

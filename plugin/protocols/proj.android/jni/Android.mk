@@ -17,6 +17,7 @@ $(addprefix ../../platform/android/, \
 ) \
 ../../PluginManager.cpp \
 ../../RegisterPlugin.cpp \
+../../PluginParam.cpp
 
 LOCAL_CFLAGS := -Wno-psabi
 LOCAL_EXPORT_CFLAGS := -Wno-psabi
