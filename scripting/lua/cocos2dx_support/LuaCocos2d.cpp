@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on 04/12/13 14:08:59.
+** Generated automatically by tolua++-1.0.92 on Thu May 23 13:54:40 2013.
 */
 
 /****************************************************************************
@@ -209,6 +209,13 @@ static int tolua_collect_CCImage (lua_State* tolua_S)
     return 0;
 }
 
+static int tolua_collect_CCInteger (lua_State* tolua_S)
+{
+ CCInteger* self = (CCInteger*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}
+
 static int tolua_collect_CCLabelTTF (lua_State* tolua_S)
 {
  CCLabelTTF* self = (CCLabelTTF*) tolua_tousertype(tolua_S,1,0);
@@ -284,6 +291,7 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCSpriteBatchNode");
  tolua_usertype(tolua_S,"CCEaseExponentialIn");
  tolua_usertype(tolua_S,"CCApplication");
+ tolua_usertype(tolua_S,"CCInteger");
  tolua_usertype(tolua_S,"SimpleAudioEngine");
  tolua_usertype(tolua_S,"CCSet");
  tolua_usertype(tolua_S,"CCTwirl");
@@ -41518,6 +41526,72 @@ static int tolua_Cocos2d_CCMenu_alignItemsHorizontallyWithPadding00(lua_State* t
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: alignItemsInColumnsWithArray of class  CCMenu */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenu_alignItemsInColumnsWithArray00
+static int tolua_Cocos2d_CCMenu_alignItemsInColumnsWithArray00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenu",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCArray",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenu* self = (CCMenu*)  tolua_tousertype(tolua_S,1,0);
+  CCArray* rows = ((CCArray*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'alignItemsInColumnsWithArray'", NULL);
+#endif
+  {
+   self->alignItemsInColumnsWithArray(rows);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'alignItemsInColumnsWithArray'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: alignItemsInRowsWithArray of class  CCMenu */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenu_alignItemsInRowsWithArray00
+static int tolua_Cocos2d_CCMenu_alignItemsInRowsWithArray00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenu",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCArray",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenu* self = (CCMenu*)  tolua_tousertype(tolua_S,1,0);
+  CCArray* columns = ((CCArray*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'alignItemsInRowsWithArray'", NULL);
+#endif
+  {
+   self->alignItemsInRowsWithArray(columns);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'alignItemsInRowsWithArray'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: setHandlerPriority of class  CCMenu */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenu_setHandlerPriority00
 static int tolua_Cocos2d_CCMenu_setHandlerPriority00(lua_State* tolua_S)
@@ -54672,6 +54746,129 @@ static int tolua_Cocos2d_SimpleAudioEngine_stopAllEffects00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: new of class  CCInteger */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCInteger_new00
+static int tolua_Cocos2d_CCInteger_new00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCInteger",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  int v = ((int)  tolua_tonumber(tolua_S,2,0));
+  {
+   CCInteger* tolua_ret = (CCInteger*)  Mtolua_new((CCInteger)(v));
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCInteger");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new_local of class  CCInteger */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCInteger_new00_local
+static int tolua_Cocos2d_CCInteger_new00_local(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCInteger",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  int v = ((int)  tolua_tonumber(tolua_S,2,0));
+  {
+   CCInteger* tolua_ret = (CCInteger*)  Mtolua_new((CCInteger)(v));
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCInteger");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getValue of class  CCInteger */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCInteger_getValue00
+static int tolua_Cocos2d_CCInteger_getValue00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const CCInteger",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const CCInteger* self = (const CCInteger*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getValue'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->getValue();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getValue'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: create of class  CCInteger */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCInteger_create00
+static int tolua_Cocos2d_CCInteger_create00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCInteger",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  int v = ((int)  tolua_tonumber(tolua_S,2,0));
+  {
+   CCInteger* tolua_ret = (CCInteger*)  CCInteger::create(v);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCInteger");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* Open function */
 TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
 {
@@ -57086,6 +57283,8 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"alignItemsVerticallyWithPadding",tolua_Cocos2d_CCMenu_alignItemsVerticallyWithPadding00);
    tolua_function(tolua_S,"alignItemsHorizontally",tolua_Cocos2d_CCMenu_alignItemsHorizontally00);
    tolua_function(tolua_S,"alignItemsHorizontallyWithPadding",tolua_Cocos2d_CCMenu_alignItemsHorizontallyWithPadding00);
+   tolua_function(tolua_S,"alignItemsInColumnsWithArray",tolua_Cocos2d_CCMenu_alignItemsInColumnsWithArray00);
+   tolua_function(tolua_S,"alignItemsInRowsWithArray",tolua_Cocos2d_CCMenu_alignItemsInRowsWithArray00);
    tolua_function(tolua_S,"setHandlerPriority",tolua_Cocos2d_CCMenu_setHandlerPriority00);
    tolua_function(tolua_S,"addChild",tolua_Cocos2d_CCMenu_addChild00);
    tolua_function(tolua_S,"setOpacity",tolua_Cocos2d_CCMenu_setOpacity00);
@@ -57623,6 +57822,18 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"pauseAllEffects",tolua_Cocos2d_SimpleAudioEngine_pauseAllEffects00);
    tolua_function(tolua_S,"resumeAllEffects",tolua_Cocos2d_SimpleAudioEngine_resumeAllEffects00);
    tolua_function(tolua_S,"stopAllEffects",tolua_Cocos2d_SimpleAudioEngine_stopAllEffects00);
+  tolua_endmodule(tolua_S);
+  #ifdef __cplusplus
+  tolua_cclass(tolua_S,"CCInteger","CCInteger","CCObject",tolua_collect_CCInteger);
+  #else
+  tolua_cclass(tolua_S,"CCInteger","CCInteger","CCObject",NULL);
+  #endif
+  tolua_beginmodule(tolua_S,"CCInteger");
+   tolua_function(tolua_S,"new",tolua_Cocos2d_CCInteger_new00);
+   tolua_function(tolua_S,"new_local",tolua_Cocos2d_CCInteger_new00_local);
+   tolua_function(tolua_S,".call",tolua_Cocos2d_CCInteger_new00_local);
+   tolua_function(tolua_S,"getValue",tolua_Cocos2d_CCInteger_getValue00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCInteger_create00);
   tolua_endmodule(tolua_S);
  tolua_endmodule(tolua_S);
  return 1;
