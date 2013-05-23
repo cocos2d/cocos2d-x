@@ -52,6 +52,7 @@ CCAtlasNode::CCAtlasNode()
 , m_bIsOpacityModifyRGB(false)
 , m_uQuadsToDraw(0)
 , m_nUniformColor(0)
+, m_bIgnoreContentScaleFactor(false)
 {
 }
 
@@ -120,7 +121,16 @@ bool CCAtlasNode::initWithTexture(CCTexture2D* texture, unsigned int tileWidth, 
 
 void CCAtlasNode::calculateMaxItems()
 {
-    const CCSize& s = m_pTextureAtlas->getTexture()->getContentSize();
+    CCSize s;
+    if (m_bIgnoreContentScaleFactor)
+    {
+        s = m_pTextureAtlas->getTexture()->getContentSizeInPixels();
+    }
+    else
+    {
+        s = m_pTextureAtlas->getTexture()->getContentSize();
+    }
+    
     m_uItemsPerColumn = (int)(s.height / m_uItemHeight);
     m_uItemsPerRow = (int)(s.width / m_uItemWidth);
 }
@@ -192,6 +202,11 @@ bool CCAtlasNode::isOpacityModifyRGB()
 void CCAtlasNode::updateOpacityModifyRGB()
 {
     m_bIsOpacityModifyRGB = m_pTextureAtlas->getTexture()->hasPremultipliedAlpha();
+}
+
+void CCAtlasNode::setIgnoreContentScaleFactor(bool bIgnoreContentScaleFactor)
+{
+    m_bIgnoreContentScaleFactor = bIgnoreContentScaleFactor;
 }
 
 // CCAtlasNode - CocosNodeTexture protocol
