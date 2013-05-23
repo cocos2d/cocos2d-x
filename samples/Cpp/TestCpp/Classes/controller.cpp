@@ -128,7 +128,10 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_DATAVISTOR:
         pScene = new DataVisitorTestScene();
         break;
-    default:
+	case TEST_CONFIGURATION:
+		pScene = new ConfigurationTestScene();
+		break;
+	default:
         break;
     }
 

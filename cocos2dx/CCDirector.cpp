@@ -23,6 +23,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
+// standard includes
+#include <string>
+
+// cocos2d includes
 #include "CCDirector.h"
 #include "ccFPSImages.h"
 #include "draw_nodes/CCDrawingPrimitives.h"
@@ -57,7 +62,9 @@ THE SOFTWARE.
 #include "kazmath/GL/matrix.h"
 #include "support/CCProfiling.h"
 #include "CCEGLView.h"
-#include <string>
+#include "CCConfiguration.h"
+
+
 
 /**
  Position of the FPS
@@ -98,9 +105,7 @@ CCDirector::CCDirector(void)
 }
 
 bool CCDirector::init(void)
-{
-    CCLOG("cocos2d: %s", cocos2dVersion());
-    
+{    
     // scenes
     m_pRunningScene = NULL;
     m_pNextScene = NULL;
@@ -304,6 +309,11 @@ void CCDirector::setOpenGLView(CCEGLView *pobOpenGLView)
 
     if (m_pobOpenGLView != pobOpenGLView)
     {
+		// Configuration. Gather GPU info
+		CCConfiguration *conf = CCConfiguration::sharedConfiguration();
+		conf->gatherGPUInfo();
+		conf->dumpInfo();
+
         // EAGLView is not a CCObject
         delete m_pobOpenGLView; // [openGLView_ release]
         m_pobOpenGLView = pobOpenGLView;
