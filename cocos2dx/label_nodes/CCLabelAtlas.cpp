@@ -123,17 +123,13 @@ void CCLabelAtlas::updateAtlasValues()
     CCTexture2D *texture = m_pTextureAtlas->getTexture();
     float textureWide = (float) texture->getPixelsWide();
     float textureHigh = (float) texture->getPixelsHigh();
-    float itemWidthInPixels;
-    float itemHeightInPixels;
+    float itemWidthInPixels = m_uItemWidth * CC_CONTENT_SCALE_FACTOR();
+    float itemHeightInPixels = m_uItemHeight * CC_CONTENT_SCALE_FACTOR();
+    
     if (m_bIgnoreContentScaleFactor)
     {
         itemWidthInPixels = m_uItemWidth;
         itemHeightInPixels = m_uItemHeight;
-    }
-    else
-    {
-        itemWidthInPixels = m_uItemWidth * CC_CONTENT_SCALE_FACTOR();
-        itemHeightInPixels = m_uItemHeight * CC_CONTENT_SCALE_FACTOR();
     }
     
     for(unsigned int i = 0; i < n; i++) {

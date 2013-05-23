@@ -121,14 +121,11 @@ bool CCAtlasNode::initWithTexture(CCTexture2D* texture, unsigned int tileWidth, 
 
 void CCAtlasNode::calculateMaxItems()
 {
-    CCSize s;
+    CCSize s = m_pTextureAtlas->getTexture()->getContentSize();
+    
     if (m_bIgnoreContentScaleFactor)
     {
         s = m_pTextureAtlas->getTexture()->getContentSizeInPixels();
-    }
-    else
-    {
-        s = m_pTextureAtlas->getTexture()->getContentSize();
     }
     
     m_uItemsPerColumn = (int)(s.height / m_uItemHeight);
