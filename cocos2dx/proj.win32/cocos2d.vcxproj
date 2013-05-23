@@ -141,6 +141,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
   <ItemGroup>
     <ClCompile Include="..\base_nodes\CCAtlasNode.cpp" />
     <ClCompile Include="..\base_nodes\CCNode.cpp" />
+    <ClCompile Include="..\ccFPSImages.c" />
     <ClCompile Include="..\cocoa\CCAffineTransform.cpp" />
     <ClCompile Include="..\cocoa\CCArray.cpp" />
     <ClCompile Include="..\cocoa\CCAutoreleasePool.cpp" />
@@ -266,6 +267,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
   <ItemGroup>
     <ClInclude Include="..\base_nodes\CCAtlasNode.h" />
     <ClInclude Include="..\base_nodes\CCNode.h" />
+    <ClInclude Include="..\ccFPSImages.h" />
     <ClInclude Include="..\cocoa\CCAffineTransform.h" />
     <ClInclude Include="..\cocoa\CCArray.h" />
     <ClInclude Include="..\cocoa\CCAutoreleasePool.h" />
