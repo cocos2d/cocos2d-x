@@ -101,6 +101,7 @@ void CCPrettyPrinter::visit(const CCBool * p)
 {
     char buf[50] = {0};
     sprintf(buf, "%s", p->getValue() ? "true" : "false");
+   _result += buf;
 }
 
 void CCPrettyPrinter::visit(const CCInteger *p)
