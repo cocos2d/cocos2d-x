@@ -21,44 +21,69 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CCX_IPLUGIN_H__
-#define __CCX_IPLUGIN_H__
+#ifndef __CCX_PLUGIN_PARAM_H__
+#define __CCX_PLUGIN_PARAM_H__
 
-#include "RegisterPlugin.h"
-#include "PluginParam.h"
+#include <map>
+#include <string>
 
 namespace cocos2d { namespace plugin {
 
-/**
-	The super class for all plugins.
-*/
-
-class PluginProtocol
+class PluginParam
 {
 public:
-    virtual ~PluginProtocol() {}
-    virtual bool init() { return true; }
-    void setUserData(void* userData) { m_pUserData = userData; }
-    void* getUserData() { return m_pUserData; }
+	PluginParam(int nValue);
+	PluginParam(float fValue);
+	PluginParam(bool bValue);
+	PluginParam(const char* strValue);
+	PluginParam(std::map<std::string, PluginParam*> mapValue);
 
-    void callFuncWithParam(const char* funcName, PluginParam* param);
+	typedef enum{
+		kParamTypeNull = 0,
+		kParamTypeInt,
+		kParamTypeFloat,
+		kParamTypeBool,
+		kParamTypeString,
+		kParamTypeMap
+	} ParamType;
 
-    /**
-    @brief plug-in info methods(name, version, SDK version)
-    */
-    virtual const char* getPluginName() = 0;
-    virtual const char* getPluginVersion() = 0;
+	inline ParamType getCurrentType() {
+		return m_type;
+	}
 
-    /**
-    @brief switch debug plug-in on/off
-    */
-    virtual void setDebugMode(bool bDebug) {}
+	inline int getIntValue() {
+		return m_nValue;
+	}
 
-protected:
-    PluginProtocol() {}
-    void* m_pUserData;
+	inline float getFloatValue() {
+		return m_fValue;
+	}
+
+	inline bool getBoolValue() {
+		return m_bValue;
+	}
+
+	inline const char* getStringValue() {
+		return m_strValue.c_str();
+	}
+
+	inline std::map<std::string, PluginParam*> getMapValue() {
+		return m_mapValue;
+	}
+
+private:
+	PluginParam();
+
+private:
+	ParamType m_type;
+
+	int m_nValue;
+	float m_fValue;
+	bool m_bValue;
+	std::string m_strValue;
+	std::map<std::string, PluginParam*> m_mapValue;
 };
 
 }} //namespace cocos2d { namespace plugin {
 
-#endif /* __CCX_IPLUGIN_H__ */
+#endif /* __CCX_PLUGIN_PARAM_H__ */

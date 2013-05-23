@@ -109,17 +109,17 @@ void ProtocolAnalytics::stopSession()
 
 void ProtocolAnalytics::setSessionContinueMillis(long millis)
 {
-	PluginUtils::callJavaFunctionWithName_oneBaseType(this, "setSessionContinueMillis", "(I)V", millis);
+	PluginUtils::callJavaFunctionWithName_oneParam(this, "setSessionContinueMillis", "(I)V", millis);
 }
 
 void ProtocolAnalytics::setCaptureUncaughtException(bool isEnabled)
 {
-	PluginUtils::callJavaFunctionWithName_oneBaseType(this, "setCaptureUncaughtException", "(Z)V", isEnabled);
+	PluginUtils::callJavaFunctionWithName_oneParam(this, "setCaptureUncaughtException", "(Z)V", isEnabled);
 }
 
 void ProtocolAnalytics::setDebugMode(bool isDebugMode)
 {
-    PluginUtils::callJavaFunctionWithName_oneBaseType(this, "setDebugMode", "(Z)V", isDebugMode);
+    PluginUtils::callJavaFunctionWithName_oneParam(this, "setDebugMode", "(Z)V", isDebugMode);
 }
 
 void ProtocolAnalytics::logError(const char* errorId, const char* message)

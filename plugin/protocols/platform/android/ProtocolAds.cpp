@@ -129,12 +129,12 @@ void ProtocolAds::showAds(AdsType type, int sizeEnum, AdsPos pos)
 
 void ProtocolAds::hideAds(AdsType type)
 {
-	PluginUtils::callJavaFunctionWithName_oneBaseType(this, "hideAds", "(I)V", type);
+	PluginUtils::callJavaFunctionWithName_oneParam(this, "hideAds", "(I)V", type);
 }
 
 void ProtocolAds::spendPoints(int points)
 {
-	PluginUtils::callJavaFunctionWithName_oneBaseType(this, "spendPoints", "(I)V", points);
+	PluginUtils::callJavaFunctionWithName_oneParam(this, "spendPoints", "(I)V", points);
 }
 
 const char* ProtocolAds::getSDKVersion()
@@ -156,7 +156,7 @@ const char* ProtocolAds::getSDKVersion()
 
 void ProtocolAds::setDebugMode(bool debug)
 {
-    PluginUtils::callJavaFunctionWithName_oneBaseType(this, "setDebugMode", "(Z)V", debug);
+    PluginUtils::callJavaFunctionWithName_oneParam(this, "setDebugMode", "(Z)V", debug);
 }
 
 void ProtocolAds::setAdsListener(AdsListener* pListener)

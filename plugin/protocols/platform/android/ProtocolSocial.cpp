@@ -165,7 +165,7 @@ const char* ProtocolSocial::getSDKVersion()
 
 void ProtocolSocial::setDebugMode(bool debug)
 {
-	PluginUtils::callJavaFunctionWithName_oneBaseType(this, "setDebugMode", "(Z)V", debug);
+	PluginUtils::callJavaFunctionWithName_oneParam(this, "setDebugMode", "(Z)V", debug);
 }
 
 }} // namespace cocos2d { namespace plugin {

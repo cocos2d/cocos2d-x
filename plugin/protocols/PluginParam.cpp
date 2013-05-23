@@ -21,44 +21,39 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CCX_IPLUGIN_H__
-#define __CCX_IPLUGIN_H__
 
-#include "RegisterPlugin.h"
 #include "PluginParam.h"
 
 namespace cocos2d { namespace plugin {
 
-/**
-	The super class for all plugins.
-*/
-
-class PluginProtocol
+PluginParam::PluginParam(int nValue)
+: m_nValue(nValue)
 {
-public:
-    virtual ~PluginProtocol() {}
-    virtual bool init() { return true; }
-    void setUserData(void* userData) { m_pUserData = userData; }
-    void* getUserData() { return m_pUserData; }
+	m_type = kParamTypeInt;
+}
 
-    void callFuncWithParam(const char* funcName, PluginParam* param);
+PluginParam::PluginParam(float fValue)
+: m_fValue(fValue)
+{
+	m_type = kParamTypeFloat;
+}
 
-    /**
-    @brief plug-in info methods(name, version, SDK version)
-    */
-    virtual const char* getPluginName() = 0;
-    virtual const char* getPluginVersion() = 0;
+PluginParam::PluginParam(bool bValue)
+: m_bValue(bValue)
+{
+	m_type = kParamTypeBool;
+}
 
-    /**
-    @brief switch debug plug-in on/off
-    */
-    virtual void setDebugMode(bool bDebug) {}
+PluginParam::PluginParam(const char* strValue)
+: m_strValue(strValue)
+{
+	m_type = kParamTypeString;
+}
 
-protected:
-    PluginProtocol() {}
-    void* m_pUserData;
-};
+PluginParam::PluginParam(std::map<std::string, PluginParam*> mapValue)
+: m_mapValue(mapValue)
+{
+	m_type = kParamTypeMap;
+}
 
 }} //namespace cocos2d { namespace plugin {
-
-#endif /* __CCX_IPLUGIN_H__ */
