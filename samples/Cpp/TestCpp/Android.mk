@@ -95,6 +95,7 @@ Classes/UserDefaultTest/UserDefaultTest.cpp \
 Classes/ZwoptexTest/ZwoptexTest.cpp \
 Classes/FileUtilsTest/FileUtilsTest.cpp \
 Classes/DataVisitorTest/DataVisitorTest.cpp \
+Classes/ConfigurationTest/ConfigurationTest.cpp \
 Classes/controller.cpp \
 Classes/testBasic.cpp \
 Classes/AppDelegate.cpp \
