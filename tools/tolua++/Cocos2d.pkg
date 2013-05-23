@@ -76,3 +76,4 @@ $pfile "CCTouch.pkg"
 $pfile "CCSet.pkg"
 
 $pfile "SimpleAudioEngine.pkg"
+$pfile "CCInteger.pkg"
