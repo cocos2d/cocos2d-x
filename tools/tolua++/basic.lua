@@ -190,6 +190,7 @@ local CCObjectTypes = {
     "CCParticleSmoke",
     "CCParticleSnow",
     "CCParticleRain",
+    "CCInteger",
 }
 
 -- register CCObject types
