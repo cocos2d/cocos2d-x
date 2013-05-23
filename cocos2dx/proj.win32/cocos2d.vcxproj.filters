@@ -461,6 +461,7 @@
     <ClCompile Include="..\cocoa\CCDataVisitor.cpp">
       <Filter>cocoa</Filter>
     </ClCompile>
+    <ClCompile Include="..\ccFPSImages.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\base_nodes\CCAtlasNode.h">
@@ -929,5 +930,6 @@
     <ClInclude Include="..\cocoa\CCFloat.h">
       <Filter>cocoa</Filter>
     </ClInclude>
+    <ClInclude Include="..\ccFPSImages.h" />
   </ItemGroup>
 </Project>
