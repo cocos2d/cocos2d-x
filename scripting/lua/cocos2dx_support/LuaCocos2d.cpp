@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on 04/12/13 14:08:59.
+** Generated automatically by tolua++-1.0.92 on Sun May 19 19:30:28 2013.
 */
 
 /****************************************************************************
@@ -4101,10 +4101,13 @@ static int tolua_Cocos2d_CCObject_retain00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'retain'", NULL);
 #endif
   {
-   self->retain();
+   CCObject* tolua_ret = (CCObject*)  self->retain();
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
   }
  }
- return 0;
+ return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'retain'.",&tolua_err);
