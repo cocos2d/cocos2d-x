@@ -13,9 +13,11 @@ extern "C" {
 #include "cocos2d.h"
 #include "CCLuaEngine.h"
 #include "SimpleAudioEngine.h"
+#include "cocos-ext.h"
 
 using namespace cocos2d;
 using namespace CocosDenshion;
+using namespace cocos2d::extension;
 
 TOLUA_API int tolua_Cocos2d_open(lua_State* tolua_S);
 
