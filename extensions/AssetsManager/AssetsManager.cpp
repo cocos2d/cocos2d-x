@@ -81,8 +81,14 @@ AssetsManager::AssetsManager(const char* packageUrl/* =NULL */, const char* vers
 , _connectionTimeout(0)
 , _delegate(NULL)
 {
+// @todo Need update pthread library for Android. Today has error on
+//       https://travis-ci.org/cocos2d/cocos2d-x/jobs/7215885
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    _tid = 0;
+#else
     static const pthread_t EMPTY_TID = {};
     _tid = EMPTY_TID;
+#endif
 
     checkStoragePath();
     _schedule = new Helper();
