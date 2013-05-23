@@ -3,6 +3,7 @@ APPNAME="SimpleGame"
 # options
 
 buildexternalsfromsource=
+PARALLEL_BUILD_FLAG=
 
 usage(){
 cat << EOF
@@ -12,14 +13,18 @@ Build C/C++ code for $APPNAME using Android NDK
 
 OPTIONS:
 -s	Build externals from source
+-p  Run make with -j8 option to take advantage of multiple processors
 -h	this help
 EOF
 }
 
-while getopts "sh" OPTION; do
+while getopts "sph" OPTION; do
 case "$OPTION" in
 s)
 buildexternalsfromsource=1
+;;
+p)
+PARALLEL_BUILD_FLAG=\-j8
 ;;
 h)
 usage
@@ -27,6 +32,9 @@ exit 0
 ;;
 esac
 done
+
+# exit this script if any commmand fails
+set -e
 
 # read local.properties
 
@@ -100,6 +108,6 @@ if [[ "$buildexternalsfromsource" ]]; then
         "NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/cocos2dx/platform/third_party/android/source"
 else
     echo "Using prebuilt externals"
-    "$NDK_ROOT"/ndk-build -C "$APP_ANDROID_ROOT" $* \
+    "$NDK_ROOT"/ndk-build $PARALLEL_BUILD_FLAG -C "$APP_ANDROID_ROOT" $* \
         "NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/cocos2dx/platform/third_party/android/prebuilt"
 fi
