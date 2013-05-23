@@ -843,6 +843,19 @@ void CCDirector::createStatsLabel()
     texture = textureCache->addUIImage(image, "cc_fps_images");
     CC_SAFE_RELEASE(image);
 
+    /*
+     We want to use an image which is stored in the file named ccFPSImage.c 
+     for any design resolutions and all resource resolutions. 
+     
+     To achieve this,
+     
+     Firstly, we need to ignore 'contentScaleFactor' in 'CCAtlasNode' and 'CCLabelAtlas'.
+     So I added a new method called 'setIgnoreContentScaleFactor' for 'CCAtlasNode',
+     this is not exposed to game developers, it's only used for displaying FPS now.
+     
+     Secondly, the size of this image is 480*320, to display the FPS label with correct size, 
+     a factor of design resolution ratio of 480x320 is also needed.
+     */
     float factor = CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height / 320.0f;
 
     m_pFPSLabel = new CCLabelAtlas();
