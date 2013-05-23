@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "cocoa/CCInteger.h"
 #include "cocoa/CCBool.h"
 #include "cocos2d.h"
+#include "CCFileUtils.h"
 
 using namespace std;
 
@@ -57,6 +58,7 @@ CCConfiguration::CCConfiguration(void)
 bool CCConfiguration::init(void)
 {
 	m_pDefaults = CCDictionary::create();
+	m_pDefaults->retain();
 
 	m_pDefaults->setObject( CCString::create( cocos2dVersion() ), "cocos2d.version");
 
@@ -221,11 +223,15 @@ bool CCConfiguration::supportsShareableVAO(void) const
 const char *CCConfiguration::getCString( const char *key ) const
 {
 	CCObject *ret = m_pDefaults->objectForKey(key);
-	if( ret )
+	if( ret ) {
 		if( CCString *str=dynamic_cast<CCString*>(ret) )
 			return str->getCString();
 
+		CCAssert(false, "Key found, but from different type");
+	}
+
 	// XXX: Should it throw an exception ?
+	CCLOG("Key not found: '%s'", key );
 	return NULL;
 }
 
@@ -233,11 +239,14 @@ const char *CCConfiguration::getCString( const char *key ) const
 bool CCConfiguration::getBool( const char *key ) const
 {
 	CCObject *ret = m_pDefaults->objectForKey(key);
-	if( ret )
+	if( ret ) {
 		if( CCBool *obj=dynamic_cast<CCBool*>(ret) )
 			return obj->getValue();
+		CCAssert(false, "Key found, but from different type");
+	}
 
 	// XXX: Should it throw an exception ?
+	CCLOG("Key not found: '%s'", key );
 	return false;
 }
 
@@ -251,9 +260,12 @@ double CCConfiguration::getNumber( const char *key ) const
 
 		if( CCInteger *obj=dynamic_cast<CCInteger*>(ret) )
 			return obj->getValue();
+
+		CCAssert(false, "Key found, but from different type");
 	}
 
 	// XXX: Should it throw an exception ?
+	CCLOG("Key not found: '%s'", key );
 	return 0.0;
 }
 
@@ -262,9 +274,23 @@ CCObject * CCConfiguration::getObject( const char *key ) const
 	return m_pDefaults->objectForKey(key);
 }
 
-ccConfigurationType CCConfiguration::getType( const char *key ) const
+//
+// load file
+//
+void CCConfiguration::loadConfigFile( const char *filename )
 {
-	return ConfigurationError;
+	CCDictionary *dict = CCDictionary::createWithContentsOfFile(filename);
+	CCAssert(dict, "cannot create dictionary");
+
+	// Add all keys in the existing dictionary
+    CCDictElement* element;
+    CCDICT_FOREACH(dict, element)
+    {
+		if( ! m_pDefaults->objectForKey( element->getStrKey() ) )
+			m_pDefaults->setObject(element->getObject(), element->getStrKey() );
+		else
+			CCLOG("Key already present. Ignoring '%s'", element->getStrKey() );
+    }
 }
 
 NS_CC_END

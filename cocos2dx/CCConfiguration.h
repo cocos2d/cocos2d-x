@@ -57,9 +57,11 @@ class CC_DLL CCConfiguration : public CCObject
 public:
     /** returns a shared instance of CCConfiguration */
     static CCConfiguration *sharedConfiguration(void);
+
     /** purge the shared instance of CCConfiguration */
     static void purgeConfiguration(void);
-public:    
+
+public:
 
 	virtual ~CCConfiguration(void);
 
@@ -116,21 +118,19 @@ public:
 	/** returns the value of a given key as a double */
 	CCObject * getObject( const char *key ) const;
 
-	/** returns the type of a given key */
-	ccConfigurationType getType( const char *key ) const;
-
 	/** dumps the current configuration on the console */
 	void dumpInfo(void) const;
-
-	/** loads JSON config file in the configuration */
-	void loadConfigFile( char *filename );
 
 	/** gathers OpenGL / GPU information */
 	void gatherGPUInfo( void );
 
+	/** Loads a config file. If the keys are already present, then they are going to be replaced. Otherwise the new keys are added. */
+	void loadConfigFile( const char *filename );
+
 private:
     CCConfiguration(void);
     static CCConfiguration *s_gSharedConfiguration;
+	static std::string		s_sConfigfile;
     
 protected:
     GLint           m_nMaxTextureSize;
