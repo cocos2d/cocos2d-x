@@ -52,7 +52,7 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../GUI/CCControlExtension/CCControlPotentiometer.cpp \
 ../GUI/CCControlExtension/CCControlStepper.cpp \
 ../GUI/CCEditBox/CCEditBox.cpp \
-../GUI/CCEditBox/CCEditBoxImplLinux.cpp \
+../GUI/CCEditBox/CCEditBoxImplNone.cpp \
 ../network/HttpClient.cpp \
 ../physics_nodes/CCPhysicsDebugNode.cpp \
 ../physics_nodes/CCPhysicsSprite.cpp \

@@ -34,8 +34,9 @@ files
 
     ["GUI/CCEditBox"]
     ("../GUI/CCEditBox")
-#    "CCEditBox.h"
-#    "CCEditBox.cpp"
+    "CCEditBox.h"
+    "CCEditBox.cpp"
+    “CCEditBoxImplNone.cpp”
 
     ["GUI/CCScrollView"]
     ("../GUI/CCScrollView")

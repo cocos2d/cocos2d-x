@@ -5,7 +5,7 @@ INCLUDES =  -I../ -I../Classes -I$(COCOS_ROOT)/CocosDenshion/include \
     -I$(COCOS_ROOT)/scripting/lua/lua \
     -I$(COCOS_ROOT)/scripting/lua/tolua \
     -I$(COCOS_ROOT)/scripting/lua/cocos2dx_support \
-    -I$(COCOS_ROOT)/extensions\
+    -I$(COCOS_ROOT)/extensions \
 
 SOURCES = main.cpp ../Classes/AppDelegate.cpp
 
