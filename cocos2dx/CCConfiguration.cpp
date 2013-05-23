@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "cocoa/CCInteger.h"
 #include "cocoa/CCBool.h"
 #include "cocos2d.h"
-#include "CCFileUtils.h"
+#include "platform/CCFileUtils.h"
 
 using namespace std;
 
