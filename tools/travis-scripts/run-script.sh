@@ -24,7 +24,10 @@ if [ "$PLATFORM"x = "android"x ]; then
     ./generate-jsbindings.sh
     
     build_android Cpp HelloCpp
+    build_android Cpp TestCpp
+    build_android Cpp AssetsManagerTest
     build_android Javascript TestJavascript
+    build_android Lua HelloLua
     build_android Lua TestLua
 fi
 
