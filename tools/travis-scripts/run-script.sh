@@ -16,7 +16,8 @@ fi
 build_android()
 {
     cd $COCOS2DX_ROOT/samples/$1/$2/proj.android
-    ./build_native.sh
+    # -p  Run make with -j8 option to take advantage of multiple processors
+    ./build_native.sh -p
 }
 
 if [ "$PLATFORM"x = "android"x ]; then
