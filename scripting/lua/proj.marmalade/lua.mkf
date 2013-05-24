@@ -3,6 +3,7 @@ includepaths
     ../lua/
     ../tolua/
     ../cocos2dx_support/
+    ../../../extensions
 }
 
 files
