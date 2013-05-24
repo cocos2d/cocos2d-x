@@ -21,44 +21,31 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CCX_REGISTERPLUGIN_H__
-#define __CCX_REGISTERPLUGIN_H__
+#ifndef __CCX_PLUGIN_FACTORY_H__
+#define __CCX_PLUGIN_FACTORY_H__
 
 namespace cocos2d { namespace plugin {
 
 class PluginProtocol;
-
-typedef PluginProtocol* (*PluginCreator)();
-
-/**
-	@brief RegisterPlugin class is only for associating plugin name with plugin creator.
-	Plugin developers don't need to use this class directly.
-	Using the macros 'PLUGIN_REGISTER_DECL' and 'PLUGIN_REGISTER_IMPL' instead.
-*/
-class RegisterPlugin
+class PluginManager;
+class PluginFactory
 {
 public:
-    RegisterPlugin(const char* name, PluginCreator pfnCreator);
+	virtual ~PluginFactory();
+	/** Get singleton of PluginFactory */
+    static PluginFactory* getInstance();
+
+    /** Destory the instance of PluginFactory */
+    static void purgeFactory();
+
+private:
+    friend class PluginManager;
+    PluginFactory(void);
+
+    /** create the plugin by name */
+    PluginProtocol* createPlugin(const char* name);
 };
-
-#define PLUGIN_REGISTER_DECL(type) \
-    private: type() {} \
-    		static RegisterPlugin s_registerPlugin; \
-    public: static PluginProtocol* createPlugin(); \
-            virtual const char* getPluginName() { return #type; };
-
-#define PLUGIN_REGISTER_IMPL(type) \
-RegisterPlugin type::s_registerPlugin(#type, type::createPlugin); \
-PluginProtocol* type::createPlugin() { \
-    type* pRet = new type(); \
-    if (pRet) { \
-        if (!pRet->init()) { \
-            delete pRet; pRet = NULL; \
-        } \
-    } \
-    return pRet; \
-}
 
 }} //namespace cocos2d { namespace plugin {
 
-#endif /* __CCX_REGISTERPLUGIN_H__ */
+#endif /* __CCX_PLUGIN_FACTORY_H__ */

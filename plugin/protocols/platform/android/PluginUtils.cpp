@@ -31,23 +31,6 @@ namespace cocos2d { namespace plugin {
 
 #define JAVAVM    cocos2d::PluginJniHelper::getJavaVM()
 
-static cocos2d::plugin::PluginProtocol* s_pPluginInstance = NULL;
-
-extern "C" {
-
-JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_PluginWrapper_nativeInitPlugin(JNIEnv*  env, jobject thiz, jobject obj, jstring className)
-{
-    if (s_pPluginInstance != NULL) {
-        cocos2d::plugin::PluginJavaData* pUserData = new cocos2d::plugin::PluginJavaData();
-        pUserData->jobj = env->NewGlobalRef(obj);
-        pUserData->jclassName = cocos2d::PluginJniHelper::jstring2string(className);
-        cocos2d::plugin::PluginUtils::setPluginJavaData(s_pPluginInstance, pUserData);
-        s_pPluginInstance = NULL;
-    }
-}
-
-}
-
 jobject PluginUtils::createJavaMapObject(PluginJniMethodInfo&t, std::map<std::string, std::string>* paramMap)
 {
 	jclass class_Hashtable = t.env->FindClass("java/util/Hashtable"); 
@@ -65,24 +48,12 @@ jobject PluginUtils::createJavaMapObject(PluginJniMethodInfo&t, std::map<std::st
     return obj_Map;
 }
 
-bool PluginUtils::initJavaPlugin(PluginProtocol* pPlugin, const char* className)
+void PluginUtils::initJavaPlugin(PluginProtocol* pPlugin, jobject jObj, const char* className)
 {
-	return_val_if_fails(className != NULL && strlen(className) > 0, false);
-	bool bRet = false;
-	PluginJniMethodInfo t;
-	s_pPluginInstance = pPlugin;
-	if (PluginJniHelper::getStaticMethodInfo(t
-		, "org/cocos2dx/plugin/PluginWrapper"
-		, "initPlugin"
-		, "(Ljava/lang/String;)Z"))
-	{
-		jstring jclassName = t.env->NewStringUTF(className);
-		bRet = (bool)t.env->CallStaticBooleanMethod(t.classID, t.methodID, jclassName);
-		t.env->DeleteLocalRef(jclassName);
-		t.env->DeleteLocalRef(t.classID);
-	}
-
-	return bRet;
+	cocos2d::plugin::PluginJavaData* pUserData = new cocos2d::plugin::PluginJavaData();
+	pUserData->jobj = PluginUtils::getEnv()->NewGlobalRef(jObj);
+	pUserData->jclassName = className;
+	cocos2d::plugin::PluginUtils::setPluginJavaData(pPlugin, pUserData);
 }
 
 JNIEnv* PluginUtils::getEnv()

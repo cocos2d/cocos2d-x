@@ -26,6 +26,50 @@ THE SOFTWARE.
 
 namespace cocos2d { namespace plugin {
 
+PluginProtocol::~PluginProtocol()
+{
+	PluginUtils::erasePluginJavaData(this);
+}
+
+const char* PluginProtocol::getPluginVersion()
+{
+	std::string verName;
+
+	PluginJavaData* pData = PluginUtils::getPluginJavaData(this);
+	PluginJniMethodInfo t;
+	if (PluginJniHelper::getMethodInfo(t
+		, pData->jclassName.c_str()
+		, "getPluginVersion"
+		, "()Ljava/lang/String;"))
+	{
+		jstring ret = (jstring)(t.env->CallObjectMethod(pData->jobj, t.methodID));
+		verName = PluginJniHelper::jstring2string(ret);
+	}
+	return verName.c_str();
+}
+
+const char* PluginProtocol::getSDKVersion()
+{
+	std::string verName;
+
+	PluginJavaData* pData = PluginUtils::getPluginJavaData(this);
+	PluginJniMethodInfo t;
+	if (PluginJniHelper::getMethodInfo(t
+		, pData->jclassName.c_str()
+		, "getSDKVersion"
+		, "()Ljava/lang/String;"))
+	{
+		jstring ret = (jstring)(t.env->CallObjectMethod(pData->jobj, t.methodID));
+		verName = PluginJniHelper::jstring2string(ret);
+	}
+	return verName.c_str();
+}
+
+void PluginProtocol::setDebugMode(bool isDebugMode)
+{
+    PluginUtils::callJavaFunctionWithName_oneParam(this, "setDebugMode", "(Z)V", isDebugMode);
+}
+
 void PluginProtocol::callFuncWithParam(const char* funcName, PluginParam* param)
 {
 	PluginJavaData* pData = PluginUtils::getPluginJavaData(this);

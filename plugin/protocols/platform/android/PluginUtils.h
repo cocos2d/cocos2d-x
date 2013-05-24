@@ -25,7 +25,6 @@ THE SOFTWARE.
 #define __PLUGIN_UTILS_H__
 
 #include "PluginJniHelper.h"
-#include <android/log.h>
 #include "PluginJavaData.h"
 #include "PluginProtocol.h"
 #include <map>
@@ -40,7 +39,7 @@ class PluginUtils
 {
 public:
     static jobject createJavaMapObject(PluginJniMethodInfo&t, std::map<std::string, std::string>* paramMap);
-    static bool initJavaPlugin(PluginProtocol* pPlugin, const char* className);
+    static void initJavaPlugin(PluginProtocol* pPlugin, jobject jObj, const char* className);
     static JNIEnv* getEnv();
 
     static PluginJavaData* getPluginJavaData(PluginProtocol* pKeyObj);

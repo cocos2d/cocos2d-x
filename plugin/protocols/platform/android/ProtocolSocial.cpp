@@ -27,13 +27,6 @@ THE SOFTWARE.
 #include "PluginUtils.h"
 #include "PluginJavaData.h"
 
-#if 1
-#define  LOG_TAG    "ProtocolSocial"
-#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
-#else
-#define  LOGD(...) 
-#endif
-
 namespace cocos2d { namespace plugin {
 
 extern "C" {
@@ -42,10 +35,10 @@ extern "C" {
 		std::string strMsg = PluginJniHelper::jstring2string(msg);
 		std::string strClassName = PluginJniHelper::jstring2string(className);
 		PluginProtocol* pPlugin = PluginUtils::getPluginPtr(strClassName);
-		LOGD("nativeOnShareResult(), Get plugin ptr : %p", pPlugin);
+		PluginUtils::outputLog("ProtocolSocial", "nativeOnShareResult(), Get plugin ptr : %p", pPlugin);
 		if (pPlugin != NULL)
 		{
-			LOGD("nativeOnShareResult(), Get plugin name : %s", pPlugin->getPluginName());
+			PluginUtils::outputLog("ProtocolSocial", "nativeOnShareResult(), Get plugin name : %s", pPlugin->getPluginName());
 			ProtocolSocial* pSocial = dynamic_cast<ProtocolSocial*>(pPlugin);
 			if (pSocial != NULL)
 			{
@@ -62,19 +55,13 @@ ProtocolSocial::ProtocolSocial()
 
 ProtocolSocial::~ProtocolSocial()
 {
-    PluginUtils::erasePluginJavaData(this);
-}
-
-bool ProtocolSocial::init()
-{
-    return true;
 }
 
 void ProtocolSocial::configDeveloperInfo(TSocialDeveloperInfo devInfo)
 {
     if (devInfo.empty())
     {
-        LOGD("The developer info is empty!");
+        PluginUtils::outputLog("ProtocolSocial", "The developer info is empty!");
         return;
     }
     else
@@ -105,7 +92,7 @@ void ProtocolSocial::share(TShareInfo info)
         {
             onShareResult(kShareFail, "Share info error");
         }
-        LOGD("The Share info is empty!");
+        PluginUtils::outputLog("ProtocolSocial", "The Share info is empty!");
         return;
     }
     else
@@ -141,31 +128,9 @@ void ProtocolSocial::onShareResult(ShareResultCode ret, const char* msg)
     }
     else
     {
-        LOGD("Result listener is null!");
+        PluginUtils::outputLog("ProtocolSocial", "Result listener is null!");
     }
-    LOGD("Share result is : %d(%s)", (int) ret, msg);
-}
-
-const char* ProtocolSocial::getSDKVersion()
-{
-	std::string verName;
-
-	PluginJavaData* pData = PluginUtils::getPluginJavaData(this);
-	PluginJniMethodInfo t;
-	if (PluginJniHelper::getMethodInfo(t
-		, pData->jclassName.c_str()
-		, "getSDKVersion"
-		, "()Ljava/lang/String;"))
-	{
-		jstring ret = (jstring)(t.env->CallObjectMethod(pData->jobj, t.methodID));
-		verName = PluginJniHelper::jstring2string(ret);
-	}
-	return verName.c_str();
-}
-
-void ProtocolSocial::setDebugMode(bool debug)
-{
-	PluginUtils::callJavaFunctionWithName_oneParam(this, "setDebugMode", "(Z)V", debug);
+    PluginUtils::outputLog("ProtocolSocial", "Share result is : %d(%s)", (int) ret, msg);
 }
 
 }} // namespace cocos2d { namespace plugin {
