@@ -146,18 +146,10 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\scripting\lua\cocos2dx_support\CCLuaEngine.h" />
-    <ClInclude Include="..\..\..\..\scripting\lua\cocos2dx_support\Cocos2dxLuaLoader.h" />
-    <ClInclude Include="..\..\..\..\scripting\lua\cocos2dx_support\LuaCocos2d.h" />
-    <ClInclude Include="..\..\..\..\scripting\lua\cocos2dx_support\tolua_fix.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\scripting\lua\cocos2dx_support\CCLuaEngine.cpp" />
-    <ClCompile Include="..\..\..\..\scripting\lua\cocos2dx_support\Cocos2dxLuaLoader.cpp" />
-    <ClCompile Include="..\..\..\..\scripting\lua\cocos2dx_support\LuaCocos2d.cpp" />
-    <ClCompile Include="..\..\..\..\scripting\lua\cocos2dx_support\tolua_fix.c" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>

@@ -144,7 +144,7 @@ int CCLuaEngine::executeMenuItemEvent(CCMenuItem* pMenuItem)
 
 int CCLuaEngine::executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName)
 {
-    int nHandler = pNotificationCenter->getScriptHandler();
+    int nHandler = pNotificationCenter->getObserverHandlerByName(pszName);
     if (!nHandler) return 0;
     
     m_stack->pushString(pszName);

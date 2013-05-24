@@ -8,6 +8,8 @@ INCLUDES =  -I.. \
 	-I$(COCOS_ROOT)/scripting/lua/tolua \
 	-I$(COCOS_ROOT)/scripting/lua/cocos2dx_support \
 	-I$(NACL_SDK_ROOT)/include \
+	-I$(COCOS_ROOT)/external/chipmunk/include/chipmunk \
+	-I$(COCOS_ROOT)/extensions \
 
 
 SOURCES = main.cpp \
@@ -18,8 +20,12 @@ SOURCES = main.cpp \
         $(COCOS_ROOT)/scripting/lua/cocos2dx_support/LuaCocos2d.cpp \
         $(COCOS_ROOT)/scripting/lua/cocos2dx_support/tolua_fix.c
 
+include $(COCOS2DX_PATH)/../extensions/proj.nacl/Makefile
+SOURCES += $(addprefix $(COCOS_ROOT)/extensions/, $(EXTENSIONS_SOURCES))
+
 include $(COCOS_ROOT)/cocos2dx/proj.nacl/cocos2dx.mk
 
+CXXFLAGS   += -Wno-multichar
 STATICLIBS += -llua -lnosys
 
 APP_NAME = TestLua
