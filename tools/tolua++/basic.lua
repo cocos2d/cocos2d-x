@@ -190,6 +190,15 @@ local CCObjectTypes = {
     "CCParticleSmoke",
     "CCParticleSnow",
     "CCParticleRain",
+    "CCScale9Sprite",
+    "CCControl",
+    "CCControlButton",
+    "CCControlColourPicker",
+    "CCControlPotentiometer",
+    "CCControlSlider",
+    "CCControlStepper",
+    "CCControlSwitch",
+    "CCEditBox",
     "CCInteger",
 }
 
