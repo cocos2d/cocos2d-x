@@ -42,7 +42,6 @@ CCNotificationCenter::CCNotificationCenter()
 
 CCNotificationCenter::~CCNotificationCenter()
 {
-//  unregisterScriptObserver(NULL);
     m_observers->release();
 }
 
@@ -137,8 +136,6 @@ int CCNotificationCenter::removeAllObservers(CCObject *target)
 
 void CCNotificationCenter::registerScriptObserver( CCObject *target, int handler,const char* name)
 {
-//  unregisterScriptObserver(name);
-//  m_scriptHandler = handler;
     
     if (this->observerExisted(target, name))
         return;
@@ -153,25 +150,19 @@ void CCNotificationCenter::registerScriptObserver( CCObject *target, int handler
 }
 
 void CCNotificationCenter::unregisterScriptObserver(CCObject *target,const char* name)
-{
-//  if (m_scriptHandler)
+{        
+    CCObject* obj = NULL;
+    CCARRAY_FOREACH(m_observers, obj)
     {
-//      CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_scriptHandler);
-        
-        CCObject* obj = NULL;
-        CCARRAY_FOREACH(m_observers, obj)
-        {
-            CCNotificationObserver* observer = (CCNotificationObserver*) obj;
-            if (!observer)
-                continue;
+        CCNotificationObserver* observer = (CCNotificationObserver*) obj;
+        if (!observer)
+            continue;
             
-            if ( !strcmp(observer->getName(),name) && observer->getTarget() == target)
-            {
-                m_observers->removeObject(observer);
-            }
+        if ( !strcmp(observer->getName(),name) && observer->getTarget() == target)
+        {
+            m_observers->removeObject(observer);
         }
     }
-//  m_scriptHandler = 0;
 }
 
 void CCNotificationCenter::postNotification(const char *name, CCObject *object)
