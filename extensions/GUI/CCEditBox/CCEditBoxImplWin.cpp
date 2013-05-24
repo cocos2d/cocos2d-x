@@ -234,6 +234,15 @@ static void editBoxCallbackFunc(const char* pText, void* ctx)
         thiz->getDelegate()->editBoxEditingDidEnd(thiz->getCCEditBox());
         thiz->getDelegate()->editBoxReturn(thiz->getCCEditBox());
     }
+    
+    CCEditBox* pEditBox = thiz->getCCEditBox();
+    if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
+    {
+        cocos2d::CCScriptEngineProtocol* pEngine = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine();
+        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
+        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "ended",pEditBox);
+        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "return",pEditBox);
+    }
 }
 
 void CCEditBoxImplWin::openKeyboard()
@@ -242,7 +251,14 @@ void CCEditBoxImplWin::openKeyboard()
     {
         m_pDelegate->editBoxEditingDidBegin(m_pEditBox);
     }
-
+    
+    CCEditBox* pEditBox = this->getCCEditBox();
+    if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
+    {
+        cocos2d::CCScriptEngineProtocol* pEngine = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine();
+        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
+    }
+    
 	std::string placeHolder = m_pLabelPlaceHolder->getString();
 	if (placeHolder.length() == 0)
 		placeHolder = "Enter value";
