@@ -1,0 +1,26 @@
+class CCControlSwitch : public CCControl
+{    
+    CCControlSwitch();
+    virtual ~CCControlSwitch();
+    
+    bool initWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite);
+
+    static CCControlSwitch* create(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite);
+   
+    bool initWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite, CCLabelTTF* onLabel, CCLabelTTF* offLabel);
+   
+    static CCControlSwitch* create(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite, CCLabelTTF* onLabel, CCLabelTTF* offLabel);
+
+    void setOn(bool isOn, bool animated);
+    void setOn(bool isOn);
+    bool isOn(void) { return m_bOn; }
+    bool hasMoved() { return m_bMoved; }
+    virtual void setEnabled(bool enabled);
+
+    CCPoint locationFromTouch(CCTouch* touch);
+   
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
+};
