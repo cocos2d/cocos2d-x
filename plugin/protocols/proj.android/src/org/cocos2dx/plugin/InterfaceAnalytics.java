@@ -27,6 +27,8 @@ import java.util.Hashtable;
 
 public interface InterfaceAnalytics {
 
+	public final int PluginType = 2;
+
 	public void startSession(String appKey);
 	public void stopSession();
 	public void setSessionContinueMillis(int millis);
@@ -38,4 +40,5 @@ public interface InterfaceAnalytics {
 	public void logTimedEventBegin(String eventId);
 	public void logTimedEventEnd(String eventId);
 	public String getSDKVersion();
+	public String getPluginVersion();
 }
