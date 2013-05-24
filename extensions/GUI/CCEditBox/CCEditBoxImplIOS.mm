@@ -76,7 +76,6 @@
         [textField_ addTarget:self action:@selector(textChanged) forControlEvents:UIControlEventEditingChanged];
         self.editBox = editBox;
         
-        [[EAGLView sharedEGLView] addSubview:textField_];
         
         return self;
     }while(0);
@@ -404,6 +403,7 @@ void CCEditBoxImplIOS::visit(void)
 
 void CCEditBoxImplIOS::openKeyboard()
 {
+    [[EAGLView sharedEGLView] addSubview:textField_];
     [m_systemControl openKeyboard];
 }
 
