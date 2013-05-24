@@ -15,10 +15,6 @@
     <ClInclude Include="main.h">
       <Filter>win32</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\scripting\lua\cocos2dx_support\CCLuaEngine.h" />
-    <ClInclude Include="..\..\..\..\scripting\lua\cocos2dx_support\Cocos2dxLuaLoader.h" />
-    <ClInclude Include="..\..\..\..\scripting\lua\cocos2dx_support\LuaCocos2d.h" />
-    <ClInclude Include="..\..\..\..\scripting\lua\cocos2dx_support\tolua_fix.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
@@ -27,9 +23,5 @@
     <ClCompile Include="main.cpp">
       <Filter>win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\scripting\lua\cocos2dx_support\CCLuaEngine.cpp" />
-    <ClCompile Include="..\..\..\..\scripting\lua\cocos2dx_support\Cocos2dxLuaLoader.cpp" />
-    <ClCompile Include="..\..\..\..\scripting\lua\cocos2dx_support\LuaCocos2d.cpp" />
-    <ClCompile Include="..\..\..\..\scripting\lua\cocos2dx_support\tolua_fix.c" />
   </ItemGroup>
 </Project>
