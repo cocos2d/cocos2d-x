@@ -9,7 +9,7 @@ INCLUDES = -I$(COCOS_ROOT)/external \
 	-I../CCBReader \
 	-I../GUI/CCControlExtension \
 	-I../network
-    -I../GUI/CCEditBox \
+	-I../GUI/CCEditBox \
 
 DEFINES += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 DEFINES += -D__CC_PLATFORM_IMAGE_CPP__
