@@ -82,6 +82,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/TextInputTest/TextInputTest.cpp \
 	../Classes/Texture2dTest/Texture2dTest.cpp \
 	../Classes/TextureCacheTest/TextureCacheTest.cpp \
+	../Classes/TexturePackerEncryptionTest/TextureAtlasEncryptionTest.cpp \
 	../Classes/TileMapTest/TileMapTest.cpp \
 	../Classes/TouchesTest/Ball.cpp \
 	../Classes/TouchesTest/Paddle.cpp \
@@ -90,6 +91,8 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/UserDefaultTest/UserDefaultTest.cpp \
 	../Classes/ZwoptexTest/ZwoptexTest.cpp \
 	../Classes/SpineTest/SpineTest.cpp \
+	../Classes/DataVisitorTest/DataVisitorTest.cpp \
+	../Classes/ConfigurationTest/ConfigurationTest.cpp \
 	../Classes/controller.cpp \
 	../Classes/testBasic.cpp \
 	../Classes/AppDelegate.cpp \

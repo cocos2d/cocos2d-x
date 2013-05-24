@@ -1,0 +1,111 @@
+
+#define CCControlButtonMarginLR 8
+
+#define CCControlButtonMarginTB 2 
+
+class CCControlButton : public CCControl
+{    
+    CCControlButton();
+    virtual ~CCControlButton();
+    virtual void needsLayout(void);
+
+    virtual void setEnabled(bool enabled);
+    virtual void setSelected(bool enabled);
+    virtual void setHighlighted(bool enabled);
+
+    virtual CCString* getCurrentTitle();
+    virtual const ccColor3B& getCurrentTitleColor() const;
+
+    bool doesAdjustBackgroundImage();
+    void setAdjustBackgroundImage(bool adjustBackgroundImage);
+
+    virtual CCNode* getTitleLabel();
+    virtual void setTitleLabel(CCNode* var);
+
+    virtual CCScale9Sprite* getBackgroundSprite();
+    virtual void setBackgroundSprite(CCScale9Sprite* var);
+
+    virtual CCSize getPreferredSize();
+    virtual void   setPreferredSize(CCSize var);
+
+    virtual bool   getZoomOnTouchDown();
+    virtual void   setZoomOnTouchDown(bool  var);
+
+    virtual CCPoint   getLabelAnchorPoint();
+    virtual void      setLabelAnchorPoint(CCPoint var);
+
+    virtual GLubyte getOpacity(void);
+    virtual void    setOpacity(GLubyte var);
+
+    bool isPushed();
+
+    virtual CCDictionary* getTitleDispatchTable();
+    virtual void setTitleDispatchTable(CCDictionary* var);
+
+    virtual CCDictionary* getTitleColorDispatchTable();
+    virtual void setTitleColorDispatchTable(CCDictionary* var);
+
+    virtual CCDictionary* getTitleLabelDispatchTable();
+    virtual void setTitleLabelDispatchTable(CCDictionary* var);
+
+    virtual CCDictionary* getBackgroundSpriteDispatchTable();
+    virtual void setBackgroundSpriteDispatchTable(CCDictionary* var);
+
+    virtual int getVerticalMargin() const;
+    virtual int getHorizontalOrigin() const;
+
+    virtual void setMargins(int marginH, int marginV);
+
+    virtual bool init();
+    virtual bool initWithLabelAndBackgroundSprite(CCNode* label, CCScale9Sprite* backgroundSprite);
+    
+    static CCControlButton* create(CCNode* label, CCScale9Sprite* backgroundSprite);
+    
+    virtual bool initWithTitleAndFontNameAndFontSize(std::string title, const char * fontName, float fontSize);
+
+    static CCControlButton* create(std::string title, const char * fontName, float fontSize);
+    
+    virtual bool initWithBackgroundSprite(CCScale9Sprite* sprite);
+
+    static CCControlButton* create(CCScale9Sprite* sprite);
+    
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
+
+    virtual CCString* getTitleForState(CCControlState state);
+
+    virtual void setTitleForState(CCString* title, CCControlState state);
+
+
+    virtual const ccColor3B getTitleColorForState(CCControlState state);
+
+
+    virtual void setTitleColorForState(ccColor3B color, CCControlState state);
+
+
+    virtual CCNode* getTitleLabelForState(CCControlState state);
+
+    virtual void setTitleLabelForState(CCNode* label, CCControlState state);
+
+    virtual void setTitleTTFForState(const char * fntFile, CCControlState state);
+    virtual const char * getTitleTTFForState(CCControlState state);
+
+    virtual void setTitleTTFSizeForState(float size, CCControlState state);
+    virtual float getTitleTTFSizeForState(CCControlState state);
+
+    virtual void setTitleBMFontForState(const char * fntFile, CCControlState state);
+    virtual const char * getTitleBMFontForState(CCControlState state);
+
+    virtual CCScale9Sprite* getBackgroundSpriteForState(CCControlState state);
+
+
+    virtual void setBackgroundSpriteForState(CCScale9Sprite* sprite, CCControlState state);
+
+
+    virtual void setBackgroundSpriteFrameForState(CCSpriteFrame * spriteFrame, CCControlState state);
+
+    static CCControlButton* create();
+
+};

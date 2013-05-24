@@ -161,6 +161,7 @@ JSBool js_pluginx_nd91_IAPNd91_setDebugMode(JSContext *cx, uint32_t argc, jsval 
 extern JSObject *jsb_ProtocolIAP_prototype;
 
 void js_pluginx_nd91_IAPNd91_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (IAPNd91)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
     JS_GET_NATIVE_PROXY(jsproxy, obj);

@@ -32,10 +32,12 @@
 #include "PerformanceTest/PerformanceTest.h"
 #include "ZwoptexTest/ZwoptexTest.h"
 #include "CocosDenshionTest/CocosDenshionTest.h"
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPEN)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 // bada don't support libcurl
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
 #include "CurlTest/CurlTest.h"
+#endif
 #endif
 #endif
 #include "UserDefaultTest/UserDefaultTest.h"
@@ -54,7 +56,9 @@
 #endif
 #include "FileUtilsTest/FileUtilsTest.h"
 #include "SpineTest/SpineTest.h"
-
+#include "TexturePackerEncryptionTest/TextureAtlasEncryptionTest.h"
+#include "DataVisitorTest/DataVisitorTest.h"
+#include "ConfigurationTest/ConfigurationTest.h"
 enum
 {
     TEST_ACTIONS = 0,
@@ -111,7 +115,12 @@ enum
 #endif
     TEST_FILEUTILS,
     TEST_SPINE,
-    TESTS_COUNT,    
+    TEST_TEXTUREPACKER_ENCRYPTION,
+    TEST_DATAVISTOR,
+	TEST_CONFIGURATION,
+
+	// last one
+	TESTS_COUNT,
 };
 
 const std::string g_aTestNames[TESTS_COUNT] = {
@@ -151,9 +160,11 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "CocosDenshionTest",
     "PerformanceTest",
     "ZwoptexTest",
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
     "CurlTest",
+#endif
 #endif
 #endif
     "UserDefaultTest",
@@ -168,7 +179,10 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "ClippingNodeTest",
 #endif
     "FileUtilsTest",
-    "SpineTest"
+    "SpineTest",
+    "TexturePackerEncryption",
+    "DataVistorTest",
+	"ConfigurationTest"
 };
 
 #endif

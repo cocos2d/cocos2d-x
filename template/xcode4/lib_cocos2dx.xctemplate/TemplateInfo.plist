@@ -567,6 +567,30 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/cocos2dx/cocoa/CCDataVisitor.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>cocoa</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/cocoa/CCDataVisitor.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/cocoa/CCDataVisitor.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>cocoa</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/cocoa/CCDataVisitor.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/cocos2dx/cocoa/CCDictionary.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -3981,6 +4005,8 @@
 		<string>libs/cocos2dx/cocoa/CCAutoreleasePool.cpp</string>
 		<string>libs/cocos2dx/cocoa/CCAutoreleasePool.h</string>
 		<string>libs/cocos2dx/cocoa/CCBool.h</string>
+		<string>libs/cocos2dx/cocoa/CCDataVisitor.cpp</string>
+		<string>libs/cocos2dx/cocoa/CCDataVisitor.h</string>
 		<string>libs/cocos2dx/cocoa/CCDictionary.cpp</string>
 		<string>libs/cocos2dx/cocoa/CCDictionary.h</string>
 		<string>libs/cocos2dx/cocoa/CCDouble.h</string>

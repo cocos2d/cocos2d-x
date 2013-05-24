@@ -30,6 +30,9 @@ THE SOFTWARE.
 #include "cocoa/CCObject.h"
 #include "cocoa/CCGeometry.h"
 #include "ccTypes.h"
+#ifdef EMSCRIPTEN
+#include "base_nodes/CCGLBufferedNode.h"
+#endif // EMSCRIPTEN
 
 NS_CC_BEGIN
 
@@ -68,6 +71,7 @@ typedef enum {
     //! 2-bit PVRTC-compressed texture: PVRTC2
     kCCTexture2DPixelFormat_PVRTC2,
 
+
     //! Default texture format: RGBA8888
     kCCTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_RGBA8888,
 
@@ -103,6 +107,9 @@ typedef struct _ccTexParams {
 * Be aware that the content of the generated textures will be upside-down!
 */
 class CC_DLL CCTexture2D : public CCObject
+#ifdef EMSCRIPTEN
+, public CCGLBufferedNode
+#endif // EMSCRIPTEN
 {
 public:
     CCTexture2D();
@@ -138,6 +145,8 @@ public:
     bool initWithString(const char *text,  const char *fontName, float fontSize, const CCSize& dimensions, CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment);
     /** Initializes a texture from a string with font name and font size */
     bool initWithString(const char *text, const char *fontName, float fontSize);
+    /** Initializes a texture from a string using a text definition*/
+    bool initWithString(const char *text, ccFontDefinition *textDefinition);
     
     /** Initializes a texture from a PVR file */
     bool initWithPVRFile(const char* file);

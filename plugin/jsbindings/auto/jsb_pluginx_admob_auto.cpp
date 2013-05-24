@@ -223,6 +223,7 @@ JSBool js_pluginx_admob_AdsAdmob_setDebugMode(JSContext *cx, uint32_t argc, jsva
 extern JSObject *jsb_ProtocolAds_prototype;
 
 void js_pluginx_admob_AdsAdmob_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (AdsAdmob)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
     JS_GET_NATIVE_PROXY(jsproxy, obj);

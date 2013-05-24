@@ -144,7 +144,7 @@ int CCLuaEngine::executeMenuItemEvent(CCMenuItem* pMenuItem)
 
 int CCLuaEngine::executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName)
 {
-    int nHandler = pNotificationCenter->getScriptHandler();
+    int nHandler = pNotificationCenter->getObserverHandlerByName(pszName);
     if (!nHandler) return 0;
     
     m_stack->pushString(pszName);
@@ -317,9 +317,9 @@ int CCLuaEngine::executeEvent(int nHandler, const char* pEventName, CCObject* pE
     return ret;
 }
 
-bool CCLuaEngine::executeAssert(bool cond, const char *msg/* = NULL */)
+bool CCLuaEngine::handleAssert(const char *msg)
 {
-    bool ret = m_stack->executeAssert(cond, msg);
+    bool ret = m_stack->handleAssert(msg);
     m_stack->clean();
     return ret;
 }
