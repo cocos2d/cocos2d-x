@@ -8,7 +8,7 @@ INCLUDES = -I$(COCOS_ROOT)/external \
 	-I.. \
 	-I../CCBReader \
 	-I../GUI/CCControlExtension \
-    -I../GUI/CCEditBox \
+	-I../GUI/CCEditBox \
 	-I../network
 
 SOURCES = ../CCBReader/CCBFileLoader.cpp \
