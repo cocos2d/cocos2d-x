@@ -199,7 +199,40 @@ public:
      * Set the delegate for edit box.
      */
     void setDelegate(CCEditBoxDelegate* pDelegate);
+    /**
+     * Registers a script function that will be called for EditBox events.
+     *
+     * This handler will be removed automatically after onExit() called.
+     * @code
+     * -- lua sample
+     * local function editboxEventHandler(eventType)
+     *     if eventType == "began" then
+     *         -- triggered when an edit box gains focus after keyboard is shown
+     *     elseif eventType == "ended" then
+     *         -- triggered when an edit box loses focus after keyboard is hidden.
+     *     elseif eventType == "changed" then
+     *         -- triggered when the edit box text was changed.
+     *     elseif eventType == "return" then
+     *         -- triggered when the return button was pressed or the outside area of keyboard was touched.
+     *     end
+     * end
+     *
+     * local editbox = CCEditBox:create(CCSize(...), CCScale9Sprite:create(...))
+     * editbox = registerScriptEditBoxHandler(editboxEventHandler)
+     * @endcode
+     *
+     * @param handler A number that indicates a lua function.
+     */
+    void registerScriptEditBoxHandler(int handler);
     
+    /**
+     * Unregisters a script function that will be called for EditBox events.
+     */
+    void unregisterScriptEditBoxHandler(void);
+    /**
+     * get a script Handler
+     */
+    int  getScriptEditBoxHandler(void){ return m_nScriptEditBoxHandler ;}
     /**
      * Set the text entered in the edit box.
      * @param pText The given text.
@@ -346,6 +379,7 @@ protected:
     
     int   m_nMaxLength;
     float m_fAdjustHeight;
+    int   m_nScriptEditBoxHandler;
 };
 
 NS_CC_EXT_END
