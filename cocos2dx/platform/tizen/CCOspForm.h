@@ -29,12 +29,19 @@ THE SOFTWARE.
 #include <FBase.h>
 #include <FUi.h>
 
+typedef void (*EditTextCallback)(const char* pText, void* ctx);
+
 class CCOspForm
     : public Tizen::Ui::Controls::Form
     , public Tizen::Ui::ITouchEventListener
+    , public Tizen::Ui::ITextEventListener
 {
 public:
+    CCOspForm();
+    ~CCOspForm();
+
     virtual result OnInitializing(void);
+    virtual result OnTerminating(void);
     virtual void  OnTouchDoublePressed(const Tizen::Ui::Control& source, const Tizen::Graphics::Point& currentPosition, const Tizen::Ui::TouchEventInfo& touchInfo);
     virtual void  OnTouchFocusIn(const Tizen::Ui::Control& source, const Tizen::Graphics::Point& currentPosition, const Tizen::Ui::TouchEventInfo& touchInfo);
     virtual void  OnTouchFocusOut(const Tizen::Ui::Control& source, const Tizen::Graphics::Point& currentPosition, const Tizen::Ui::TouchEventInfo& touchInfo);
@@ -42,6 +49,17 @@ public:
     virtual void  OnTouchMoved(const Tizen::Ui::Control& source, const Tizen::Graphics::Point& currentPosition, const Tizen::Ui::TouchEventInfo& touchInfo);
     virtual void  OnTouchPressed(const Tizen::Ui::Control& source, const Tizen::Graphics::Point& currentPosition, const Tizen::Ui::TouchEventInfo& touchInfo);
     virtual void  OnTouchReleased(const Tizen::Ui::Control& source, const Tizen::Graphics::Point& currentPosition, const Tizen::Ui::TouchEventInfo& touchInfo);
+
+    // ITextEventListener
+    virtual void OnTextValueChanged(const Tizen::Ui::Control& source);
+    virtual void OnTextValueChangeCanceled(const Tizen::Ui::Control& source);
+
+    void ShowKeypad(Tizen::Ui::Controls::KeypadStyle keypadStyle, Tizen::Ui::Controls::KeypadInputModeCategory keypadCategory, bool bSingleLineEnabled, bool bTextPrediction, int nMaxLength, EditTextCallback pfEditTextCallback, void* pCtx);
+    void CloseKeypad();
+
+    Tizen::Ui::Controls::Keypad*__pKeypad;
+    EditTextCallback m_pfEditTextCallback;
+    void* m_pCtx;
 };
 
 #endif  // _CCOSPFORM_H_
