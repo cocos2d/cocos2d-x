@@ -93,7 +93,11 @@ public:
     
     /**
      * Change SSL verify peer flag
-     * @param sslVerifyPeer
+     * @param sslVerifyPeer Curl option value CURLOPT_SSL_VERIFYPEER.
+     * - false: Don't verify the authenticity of the peer's certificate.
+     * - true : Verify the authenticity of the peer's certificate. (Default)
+     * @sa CCHttpClient::isSSLVerifyPeer()
+     * @sa http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTSSLVERIFYPEER
      * @return NULL
      */
     inline void setSSLVerifyPeer(bool sslVerifyPeer){_sslVerifyPeer = sslVerifyPeer;}
@@ -101,14 +105,23 @@ public:
     
     /**
      * Get SSL verify peer flag
+     * @sa CCHttpClient::setSSLVerifyPeer(bool)
+     * @sa http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTSSLVERIFYPEER
      * @return bool
+     * - true : Verify the authenticity of the peer's certificate. (Default)
+     * - false: Don't verify the authenticity of the peer's certificate.
      */
     inline bool isSSLVerifyPeer(){return _sslVerifyPeer;}
 
     
     /**
      * Change SSL verify host flag
-     * @param sslVerifyHost
+     * @param sslVerifyHost Curl option value CURLOPT_SSL_VERIFYHOST. 0 or 2.
+     * - 0: The connection succeeds regardless of the names in the certificate.
+     * - 2: Certificate must indicate that the server is the server to which you meant to connect,
+     *      or the connection fails. (Default)
+     * @sa CCHttpClient::getSSLVerifyHost()
+     * @sa http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTSSLVERIFYHOST
      * @return NULL
      */
     inline void setSSLVerifyHost(long sslVerifyHost){_sslVerifyHost = sslVerifyHost;}
@@ -116,7 +129,12 @@ public:
     
     /**
      * Get SSL verify host flag
-     * @return long
+     * @sa CCHttpClient::setSSLVerifyHost()
+     * @sa http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTSSLVERIFYHOST
+     * @return long Curl option value CURLOPT_SSL_VERIFYHOST.
+     * - 0: The connection succeeds regardless of the names in the certificate.
+     * - 2: Certificate must indicate that the server is the server to which you meant to connect,
+     *      or the connection fails. (Default)
      */
     inline long getSSLVerifyHost(){return _sslVerifyHost;}
     
