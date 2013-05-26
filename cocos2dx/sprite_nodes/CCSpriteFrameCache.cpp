@@ -189,10 +189,13 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
             // create frame
             spriteFrame = new CCSpriteFrame();
             spriteFrame->initWithTexture(pobTexture,
-                            CCRectMake(textureRect.origin.x, textureRect.origin.y, spriteSize.width, spriteSize.height),
+                            CCRectMake(textureRect.origin.x,
+                                       textureRect.origin.y,
+                                       spriteSourceSize.width,
+                                       spriteSourceSize.height),
                             textureRotated,
                             spriteOffset,
-                            spriteSourceSize);
+                            spriteSize);
         }
 
         // add sprite frame
