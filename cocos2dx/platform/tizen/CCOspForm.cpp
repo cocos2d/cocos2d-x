@@ -26,11 +26,26 @@ THE SOFTWARE.
 #include "CCOspForm.h"
 #include "CCDirector.h"
 #include "CCEGLView.h"
+#include <FBase.h>
+#include <FText.h>
 
 USING_NS_CC;
+using namespace Tizen::Base;
+using namespace Tizen::Text;
 using namespace Tizen::Ui;
 using namespace Tizen::Ui::Controls;
 using namespace Tizen::Graphics;
+
+CCOspForm::CCOspForm()
+    : __pKeypad(null)
+    , m_pfEditTextCallback(null)
+    , m_pCtx(null)
+{
+}
+
+CCOspForm::~CCOspForm()
+{
+}
 
 result
 CCOspForm::OnInitializing(void)
@@ -39,6 +54,16 @@ CCOspForm::OnInitializing(void)
     SetMultipointTouchEnabled(true);
 
     return E_SUCCESS;
+}
+
+result
+CCOspForm::OnTerminating(void)
+{
+    result r = E_SUCCESS;
+
+    __pKeypad->Destroy();
+
+    return r;
 }
 
 void
@@ -87,3 +112,51 @@ CCOspForm::OnTouchReleased(const Control& source, const Point& currentPosition, 
     float y = currentPosition.y;
     CCDirector::sharedDirector()->getOpenGLView()->handleTouchesEnd(1, &id, &x, &y);
 }
+
+void CCOspForm::OnTextValueChanged(const Tizen::Ui::Control& source)
+{
+    String text = __pKeypad->GetText();
+    AsciiEncoding ascii;
+    m_pfEditTextCallback((const char *)ascii.GetBytesN(text)->GetPointer(), m_pCtx);
+}
+
+void CCOspForm::OnTextValueChangeCanceled(const Tizen::Ui::Control& source)
+{
+    m_pfEditTextCallback("", m_pCtx);
+}
+
+void
+CCOspForm::ShowKeypad(KeypadStyle keypadStyle, KeypadInputModeCategory keypadCategory, bool bSingleLineEnabled, bool bTextPrediction, int nMaxLength, EditTextCallback pfEditTextCallback, void* pCtx)
+{
+    m_pfEditTextCallback = pfEditTextCallback;
+    m_pCtx = pCtx;
+
+    if (__pKeypad)
+    {
+        __pKeypad->RemoveTextEventListener(*this);
+        __pKeypad->Destroy();
+        __pKeypad = null;
+    }
+
+    if (nMaxLength > 100)
+        nMaxLength = 100;
+    else if (nMaxLength == -1)
+        nMaxLength = 100;
+
+    __pKeypad = new Keypad();
+    __pKeypad->Construct(keypadStyle, keypadCategory, nMaxLength);
+    __pKeypad->AddTextEventListener(*this);
+
+    __pKeypad->SetTextPredictionEnabled(bTextPrediction);
+    __pKeypad->SetSingleLineEnabled(bSingleLineEnabled);
+    __pKeypad->SetShowState(true);
+    __pKeypad->Show();
+}
+
+void
+CCOspForm::CloseKeypad()
+{
+    __pKeypad->SetShowState(false);
+    Invalidate(true);
+}
+
