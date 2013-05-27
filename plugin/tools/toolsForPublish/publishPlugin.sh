@@ -81,8 +81,8 @@ if [ -d ${ANDROID_PROJ_DIR}/sdk ]; then
 fi
 
 #copy android depend on project to publish directory
-if [ -d "${ADNROID_SOURCE_DIR}/DependProject" ]; then
-    cp -rf "${ADNROID_SOURCE_DIR}/DependProject" "${TARGET_DIR}/android"
+if [ -d "${ANDROID_PROJ_DIR}/DependProject" ]; then
+    cp -rf "${ANDROID_PROJ_DIR}/DependProject" "${TARGET_DIR}/android"
 fi
 
 #copy ForManifest.xml file to publish directory
