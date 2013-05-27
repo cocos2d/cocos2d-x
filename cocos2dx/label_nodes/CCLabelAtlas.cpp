@@ -123,6 +123,11 @@ void CCLabelAtlas::updateAtlasValues()
     float textureHigh = (float) texture->getPixelsHigh();
     float itemWidthInPixels = m_uItemWidth * CC_CONTENT_SCALE_FACTOR();
     float itemHeightInPixels = m_uItemHeight * CC_CONTENT_SCALE_FACTOR();
+    if (m_bIgnoreContentScaleFactor)
+    {
+        itemWidthInPixels = m_uItemWidth;
+        itemHeightInPixels = m_uItemHeight;
+    }
 
     ccV3F_C4B_T2F_Quad* quads = m_pTextureAtlas->getQuads();
     for(unsigned int i = 0; i < n; i++) {

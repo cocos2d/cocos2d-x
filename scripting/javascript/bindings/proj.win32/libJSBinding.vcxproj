@@ -30,6 +30,7 @@
     <ClCompile Include="..\js_bindings_system_registration.cpp" />
     <ClCompile Include="..\js_manual_conversions.cpp" />
     <ClCompile Include="..\ScriptingCore.cpp" />
+    <ClCompile Include="..\XMLHTTPRequest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocos2d_specifics.hpp" />
@@ -56,6 +57,8 @@
     <ClInclude Include="..\js_manual_conversions.h" />
     <ClInclude Include="..\ScriptingCore.h" />
     <ClInclude Include="..\spidermonkey_specifics.h" />
+    <ClInclude Include="..\XMLHTTPHelper.h" />
+    <ClInclude Include="..\XMLHTTPRequest.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\generated\jsb_cocos2dx_auto_api.js" />

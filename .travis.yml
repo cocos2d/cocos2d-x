@@ -1,37 +1,30 @@
+--- 
 language: cpp
-script:
- - if [ $PLATFORM = android ]; then export NDK_ROOT=$PWD/android-ndk; fi
- - if [ $PLATFORM = android ]; then cd samples/$SAMPLE_LANG/$APPNAME/proj.android; fi
- - if [ $PLATFORM = android ]; then ./build_native.sh; fi
- - if [ $PLATFORM != android ]; then export NACL_SDK_ROOT=$PWD/nacl_sdk/pepper_canary; fi
- - if [ $PLATFORM != android ]; then export PATH=$PATH:$NACL_SDK_ROOT/toolchain/linux_x86_newlib/bin; fi
- - if [ $PLATFORM != android ]; then make -j4; fi
-before_install:
- - if [ $PLATFORM = linux ]; then ./install-deps-linux.sh; fi
- - if [ $PLATFORM = nacl ]; then sudo apt-get update; fi
- - if [ $PLATFORM = nacl ]; then sudo apt-get install libc6:i386; fi
- - if [ $PLATFORM = nacl ]; then wget http://storage.googleapis.com/nativeclient-mirror/nacl/nacl_sdk/nacl_sdk.zip; fi
- - if [ $PLATFORM = nacl ]; then unzip nacl_sdk.zip; fi
- - if [ $PLATFORM = nacl ]; then nacl_sdk/naclsdk update --force pepper_canary; fi
- - if [ $PLATFORM = android ]; then curl -O http://dl.google.com/android/ndk/android-ndk-r8e-linux-x86_64.tar.bz2; fi
- - if [ $PLATFORM = android ]; then tar xjf android-ndk-r8e-linux-x86_64.tar.bz2; fi
- - if [ $PLATFORM = android ]; then mv android-ndk-r8e android-ndk; fi
-env:
- - PLATFORM=nacl DEBUG=1
- - PLATFORM=nacl DEBUG=0
- - PLATFORM=linux DEBUG=1
- - PLATFORM=linux DEBUG=0
- - PLATFORM=android SAMPLE_LANG=Cpp APPNAME=HelloCpp
- - PLATFORM=android SAMPLE_LANG=Cpp APPNAME=TestCpp
- - PLATFORM=android SAMPLE_LANG=Cpp APPNAME=SimpleGame
- - PLATFORM=android SAMPLE_LANG=Cpp APPNAME=AssetsManagerTest
- - PLATFORM=android SAMPLE_LANG=Javascript APPNAME=CocosDragonJS
- - PLATFORM=android SAMPLE_LANG=Javascript APPNAME=CrystalCraze
- - PLATFORM=android SAMPLE_LANG=Javascript APPNAME=MoonWarriors
- - PLATFORM=android SAMPLE_LANG=Javascript APPNAME=TestJavascript
- - PLATFORM=android SAMPLE_LANG=Javascript APPNAME=WatermelonWithMe
- - PLATFORM=android SAMPLE_LANG=Lua APPNAME=HelloLua
- - PLATFORM=android SAMPLE_LANG=Lua APPNAME=TestLua
-branches:
-  only:
-    - master
+env: 
+  matrix: 
+  - GEN_JSB=YES
+  - PLATFORM=linux DEBUG=1
+  - PLATFORM=nacl DEBUG=1
+  - PLATFORM=android
+  global: 
+  - secure: |-
+      cHXOjAda+t2tmBVuVAiQfvhDN+unToO6hX1rc3dJeGDOk4rlQnylJacjA7o/
+      enkWeHagbW2Ja4h7BxQz4h7dada8zEbIbEMK4VEHx6AWwQM+GIEqkJPv5g8k
+      4P20MLpX4XyUwm/16btpnqgXlyd8Q3Zjh3Vui/5/VzwPnxUQEho=
+  - secure: |-
+      U/JsyiSR9q+8wX1arfciy3BdbMQaKmgt48/9tiU7P2RQJ/FR2AHGq85sNGI/
+      ZUxN4JPLGALEvkFMo4NYyJDUcsdRHZX3vbp5xbSSRaBigqJIj3HDxtlPVf2m
+      /W2GzcfNNX1ACO18hSWH0d2yFlF263ZmvudzQIfqTESfjGQBzwA=
+  - secure: |-
+      Wsngwo3jlZtvuPfr3RNhqrz/liNIhKYnlw4KYJO90gMQ9ZQKRTlMv2BMiPw/
+      9lV+vgJQDRcFe7dKwtC86vk10EU7Ym2bhVmhMxi/AlmJXgavjmPVdizRT7rh
+      X2Ry/Nb6hGRkH3WS0T3D/KG1+e7lP/TMB9bvo6/locLJ2A6Z1YI=
+script: 
+- export NACL_SDK_ROOT=$HOME/bin/nacl_sdk/pepper_canary
+- export PATH=$PATH:$NACL_SDK_ROOT/toolchain/linux_x86_newlib/bin
+- export NDK_ROOT=$HOME/bin/android-ndk
+- ./tools/travis-scripts/run-script.sh
+
+before_install: 
+- ./tools/travis-scripts/before-install.sh
+
