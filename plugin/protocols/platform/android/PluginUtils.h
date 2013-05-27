@@ -56,6 +56,8 @@ public:
         return_if_fails(funcName != NULL && strlen(funcName) > 0);
         return_if_fails(paramCode != NULL && strlen(paramCode) > 0);
         PluginJavaData* pData = PluginUtils::getPluginJavaData(thiz);
+        return_if_fails(pData != NULL);
+
         PluginJniMethodInfo t;
         if (PluginJniHelper::getMethodInfo(t
             , pData->jclassName.c_str()
@@ -71,6 +73,8 @@ public:
     {
         return_if_fails(funcName != NULL && strlen(funcName) > 0);
         PluginJavaData* pData = PluginUtils::getPluginJavaData(thiz);
+        return_if_fails(pData != NULL);
+
         PluginJniMethodInfo t;
         if (PluginJniHelper::getMethodInfo(t
             , pData->jclassName.c_str()
