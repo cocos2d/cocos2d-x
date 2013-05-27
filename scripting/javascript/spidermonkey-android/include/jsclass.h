@@ -33,14 +33,14 @@ SPECIALID_TO_JSID(const SpecialId &sid);
  * (PropertyName, see vm/String.h); and by various special values.
  *
  * Special values are encoded using SpecialId, which is layout-compatible but
- * non-interconvertible with jsid.  A SpecialId may be: an object (used by E4X
- * and perhaps eventually by Harmony-proposed private names); JSID_VOID, which
+ * non-interconvertible with jsid.  A SpecialId is used for JSID_VOID, which
  * does not occur in JS scripts but may be used to indicate the absence of a
- * valid identifier; or JS_DEFAULT_XML_NAMESPACE_ID, if E4X is enabled.
+ * valid identifier.  In the future, a SpecialId may also be an object used by
+ * Harmony-proposed private names.
  */
 class SpecialId
 {
-    uintptr_t bits;
+    uintptr_t bits_;
 
     /* Needs access to raw bits. */
     friend JS_ALWAYS_INLINE jsid SPECIALID_TO_JSID(const SpecialId &sid);
@@ -48,30 +48,29 @@ class SpecialId
 
     static const uintptr_t TYPE_VOID = JSID_TYPE_VOID;
     static const uintptr_t TYPE_OBJECT = JSID_TYPE_OBJECT;
-    static const uintptr_t TYPE_DEFAULT_XML_NAMESPACE = JSID_TYPE_DEFAULT_XML_NAMESPACE;
     static const uintptr_t TYPE_MASK = JSID_TYPE_MASK;
 
-    SpecialId(uintptr_t bits) : bits(bits) { }
+    SpecialId(uintptr_t bits) : bits_(bits) { }
 
   public:
-    SpecialId() : bits(TYPE_VOID) { }
+    SpecialId() : bits_(TYPE_VOID) { }
 
     /* Object-valued */
 
     SpecialId(JSObject &obj)
-      : bits(uintptr_t(&obj) | TYPE_OBJECT)
+      : bits_(uintptr_t(&obj) | TYPE_OBJECT)
     {
         JS_ASSERT(&obj != NULL);
         JS_ASSERT((uintptr_t(&obj) & TYPE_MASK) == 0);
     }
 
     bool isObject() const {
-        return (bits & TYPE_MASK) == TYPE_OBJECT && bits != TYPE_OBJECT;
+        return (bits_ & TYPE_MASK) == TYPE_OBJECT && bits_ != TYPE_OBJECT;
     }
 
     JSObject *toObject() const {
         JS_ASSERT(isObject());
-        return reinterpret_cast<JSObject *>(bits & ~TYPE_MASK);
+        return reinterpret_cast<JSObject *>(bits_ & ~TYPE_MASK);
     }
 
     /* Empty */
@@ -83,7 +82,7 @@ class SpecialId
     }
 
     bool isEmpty() const {
-        return bits == TYPE_OBJECT;
+        return bits_ == TYPE_OBJECT;
     }
 
     /* Void */
@@ -95,19 +94,7 @@ class SpecialId
     }
 
     bool isVoid() const {
-        return bits == TYPE_VOID;
-    }
-
-    /* Default XML namespace */
-
-    static SpecialId defaultXMLNamespace() {
-        SpecialId sid(TYPE_DEFAULT_XML_NAMESPACE);
-        JS_ASSERT(sid.isDefaultXMLNamespace());
-        return sid;
-    }
-
-    bool isDefaultXMLNamespace() const {
-        return bits == TYPE_DEFAULT_XML_NAMESPACE;
+        return bits_ == TYPE_VOID;
     }
 };
 
@@ -115,19 +102,17 @@ static JS_ALWAYS_INLINE jsid
 SPECIALID_TO_JSID(const SpecialId &sid)
 {
     jsid id;
-    JSID_BITS(id) = sid.bits;
+    JSID_BITS(id) = sid.bits_;
     JS_ASSERT_IF(sid.isObject(), JSID_IS_OBJECT(id) && JSID_TO_OBJECT(id) == sid.toObject());
     JS_ASSERT_IF(sid.isVoid(), JSID_IS_VOID(id));
     JS_ASSERT_IF(sid.isEmpty(), JSID_IS_EMPTY(id));
-    JS_ASSERT_IF(sid.isDefaultXMLNamespace(), JSID_IS_DEFAULT_XML_NAMESPACE(id));
     return id;
 }
 
 static JS_ALWAYS_INLINE bool
 JSID_IS_SPECIAL(jsid id)
 {
-    return JSID_IS_OBJECT(id) || JSID_IS_EMPTY(id) || JSID_IS_VOID(id) ||
-           JSID_IS_DEFAULT_XML_NAMESPACE(id);
+    return JSID_IS_OBJECT(id) || JSID_IS_EMPTY(id) || JSID_IS_VOID(id);
 }
 
 static JS_ALWAYS_INLINE SpecialId
@@ -138,10 +123,8 @@ JSID_TO_SPECIALID(jsid id)
         return SpecialId(*JSID_TO_OBJECT(id));
     if (JSID_IS_EMPTY(id))
         return SpecialId::empty();
-    if (JSID_IS_VOID(id))
-        return SpecialId::voidId();
-    JS_ASSERT(JSID_IS_DEFAULT_XML_NAMESPACE(id));
-    return SpecialId::defaultXMLNamespace();
+    JS_ASSERT(JSID_IS_VOID(id));
+    return SpecialId::voidId();
 }
 
 typedef JS::Handle<SpecialId> HandleSpecialId;
@@ -204,8 +187,7 @@ typedef JSBool
 (* DeleteElementOp)(JSContext *cx, HandleObject obj, uint32_t index, MutableHandleValue vp, JSBool strict);
 typedef JSBool
 (* DeleteSpecialOp)(JSContext *cx, HandleObject obj, HandleSpecialId sid, MutableHandleValue vp, JSBool strict);
-typedef JSType
-(* TypeOfOp)(JSContext *cx, HandleObject obj);
+
 
 typedef JSObject *
 (* ObjectOp)(JSContext *cx, HandleObject obj);
@@ -244,11 +226,9 @@ struct ClassSizeMeasurement
 
 struct ClassExtension
 {
-    JSEqualityOp        equality;
     JSObjectOp          outerObject;
     JSObjectOp          innerObject;
     JSIteratorOp        iteratorObject;
-    void               *unused;
 
     /*
      * isWrappedNative is true only if the class is an XPCWrappedNative.
@@ -270,7 +250,7 @@ struct ClassExtension
     JSWeakmapKeyDelegateOp weakmapKeyDelegateOp;
 };
 
-#define JS_NULL_CLASS_EXT   {NULL,NULL,NULL,NULL,NULL,false,NULL}
+#define JS_NULL_CLASS_EXT   {NULL,NULL,NULL,false,NULL}
 
 struct ObjectOps
 {
@@ -304,14 +284,13 @@ struct ObjectOps
     DeleteSpecialOp     deleteSpecial;
 
     JSNewEnumerateOp    enumerate;
-    TypeOfOp            typeOf;
     ObjectOp            thisObject;
 };
 
 #define JS_NULL_OBJECT_OPS                                                    \
     {NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,   \
      NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,        \
-     NULL,NULL,NULL,NULL}
+     NULL,NULL,NULL}
 
 struct Class
 {

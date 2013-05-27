@@ -133,6 +133,7 @@ SOURCES = ../actions/CCAction.cpp \
 ../CCConfiguration.cpp \
 ../CCDirector.cpp \
 ../CCScheduler.cpp \
+../ccFPSImages.c \
 ../cocos2d.cpp 
 
 COCOS_ROOT = ../..

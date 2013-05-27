@@ -273,6 +273,7 @@
 		78C7DFF614EBA5060085D0C2 /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = 78C7DEBD14EBA5060085D0C2 /* music.mid */; };
 		78CAE769156F8124002A7A68 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 78CAE768156F8124002A7A68 /* Particles */; };
 		78ED2F85153D5BC500330E29 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 78ED2F84153D5BC500330E29 /* extensions */; };
+		A059B9AD174D9B8E0078F84F /* ConfigurationTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A059B9AB174D9B8E0078F84F /* ConfigurationTest.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712461292920000B8313A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB212928DE900B8313A /* libxml2.dylib */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
@@ -883,6 +884,8 @@
 		78C7DEBD14EBA5060085D0C2 /* music.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; path = music.mid; sourceTree = "<group>"; };
 		78CAE768156F8124002A7A68 /* Particles */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Particles; sourceTree = "<group>"; };
 		78ED2F84153D5BC500330E29 /* extensions */ = {isa = PBXFileReference; lastKnownFileType = folder; path = extensions; sourceTree = "<group>"; };
+		A059B9AB174D9B8E0078F84F /* ConfigurationTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigurationTest.cpp; sourceTree = "<group>"; };
+		A059B9AC174D9B8E0078F84F /* ConfigurationTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigurationTest.h; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB212928DE900B8313A /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -1461,6 +1464,7 @@
 				15AA9CA715B7EC460033D6C2 /* CocosDenshionTest */,
 				15AA9CAA15B7EC460033D6C2 /* controller.cpp */,
 				15AA9CAB15B7EC460033D6C2 /* controller.h */,
+				A059B9AA174D9B8D0078F84F /* ConfigurationTest */,
 				15AA9CAC15B7EC460033D6C2 /* CurlTest */,
 				15AA9CAF15B7EC460033D6C2 /* CurrentLanguageTest */,
 				1A60BF51173CCCF80054773B /* DataVisitorTest */,
@@ -2368,6 +2372,16 @@
 			path = ../Resources;
 			sourceTree = "<group>";
 		};
+		A059B9AA174D9B8D0078F84F /* ConfigurationTest */ = {
+			isa = PBXGroup;
+			children = (
+				A059B9AB174D9B8E0078F84F /* ConfigurationTest.cpp */,
+				A059B9AC174D9B8E0078F84F /* ConfigurationTest.h */,
+			);
+			name = ConfigurationTest;
+			path = ../Classes/ConfigurationTest;
+			sourceTree = "<group>";
+		};
 		D4144C0C15D23C9C00F4FD92 /* NetworkTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -2726,6 +2740,7 @@
 				1A144289172788AF0096438B /* SpineTest.cpp in Sources */,
 				6442E66D17297DB40008499D /* TextureAtlasEncryptionTest.cpp in Sources */,
 				1A60BF54173CCCF80054773B /* DataVisitorTest.cpp in Sources */,
+				A059B9AD174D9B8E0078F84F /* ConfigurationTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

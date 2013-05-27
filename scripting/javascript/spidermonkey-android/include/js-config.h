@@ -28,7 +28,7 @@
 
 /* Define to 1 if the <machine/endian.h> header is present and
    useable.  See jscpucfg.h.  */
-/* #undef JS_HAVE_MACHINE_ENDIAN_H */
+#define JS_HAVE_MACHINE_ENDIAN_H 1
 
 /* Define to 1 if the <sys/isa_defs.h> header is present and
    useable.  See jscpucfg.h.  */
@@ -61,8 +61,5 @@
 /* Some mozilla code uses JS-friend APIs that depend on JS_METHODJIT being
    correct. */
 #define JS_METHODJIT 1
-
-/* Define to 1 to enable support for E4X (ECMA-357), 0 to disable it. */
-#define JS_HAS_XML_SUPPORT 1
 
 #endif /* js_config_h___ */

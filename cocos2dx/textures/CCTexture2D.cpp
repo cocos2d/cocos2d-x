@@ -174,7 +174,18 @@ bool CCTexture2D::hasPremultipliedAlpha()
 
 bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const CCSize& contentSize)
 {
-    unsigned int bytesPerRow = pixelsWide * bitsPerPixelForFormat(pixelFormat) / 8;
+    unsigned int bitsPerPixel;
+    //Hack: bitsPerPixelForFormat returns wrong number for RGB_888 textures. See function.
+    if(pixelFormat == kCCTexture2DPixelFormat_RGB888)
+    {
+        bitsPerPixel = 24;
+    }
+    else
+    {
+        bitsPerPixel = bitsPerPixelForFormat(pixelFormat);
+    }
+
+    unsigned int bytesPerRow = pixelsWide * bitsPerPixel / 8;
 
     if(bytesPerRow % 8 == 0)
     {
@@ -192,6 +203,7 @@ bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFor
     {
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     }
+
 
     glGenTextures(1, &m_uName);
     ccGLBindTexture2D(m_uName);

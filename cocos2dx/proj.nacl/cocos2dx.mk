@@ -100,7 +100,7 @@ STATICLIBS += -lnacl_io
 endif
 
 SOUNDLIBS := -lalut -lopenal -lvorbisfile -lvorbis -logg
-STATICLIBS += $(SOUNDLIBS) -lfreetype -lxml2 -lwebp -lpng -ljpeg -ltiff -llua
+STATICLIBS += $(SOUNDLIBS) -lfreetype -lxml2 -lwebp -lpng -ljpeg -ltiff -llua -lchipmunk
 STATICLIBS += -lppapi_gles2 -lppapi -lppapi_cpp -lnosys
 SHAREDLIBS += -lpthread -lcocosdenshion -lcocos2d -lz
 
