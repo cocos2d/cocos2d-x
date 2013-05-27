@@ -579,7 +579,7 @@ bool CCImage::initWithImageData(void * pData,
         }
         else if (kFmtRawData == eFmt)
         {
-            bRet = _initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent);
+            bRet = _initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false);
             break;
         }
         else
@@ -1074,7 +1074,7 @@ bool CCImage::_initWithTiffData(void* pData, int nDataLen)
     return bRet;
 }
 
-bool CCImage::_initWithRawData(void * pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent)
+bool CCImage::_initWithRawData(void * pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti)
 {
     bool bRet = false;
     do 
@@ -1085,6 +1085,7 @@ bool CCImage::_initWithRawData(void * pData, int nDatalen, int nWidth, int nHeig
         m_nHeight   = (short)nHeight;
         m_nWidth    = (short)nWidth;
         m_bHasAlpha = true;
+        m_bPreMulti = bPreMulti;
 
         // only RGBA8888 supported
         int nBytesPerComponent = 4;
