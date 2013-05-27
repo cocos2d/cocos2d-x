@@ -23,8 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 package org.cocos2dx.plugin;
 
-import java.util.Hashtable;
-
 public class SocialWrapper {
 	public static final int SHARERESULT_SUCCESS = 0;
 	public static final int SHARERESULT_FAIL    = 1;

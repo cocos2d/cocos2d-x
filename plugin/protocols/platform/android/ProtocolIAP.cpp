@@ -30,7 +30,7 @@ THE SOFTWARE.
 namespace cocos2d { namespace plugin {
 
 extern "C" {
-	JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_InterfaceIAP_nativeOnPayResult(JNIEnv*  env, jobject thiz, jstring className, jint ret, jstring msg)
+	JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_IAPWrapper_nativeOnPayResult(JNIEnv*  env, jobject thiz, jstring className, jint ret, jstring msg)
 	{
 		std::string strMsg = PluginJniHelper::jstring2string(msg);
 		std::string strClassName = PluginJniHelper::jstring2string(className);

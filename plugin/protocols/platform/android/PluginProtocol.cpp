@@ -115,5 +115,3 @@ void PluginProtocol::callFuncWithParam(const char* funcName, PluginParam* param)
 }
 
 }} //namespace cocos2d { namespace plugin {
-
-#endif /* __CCX_IPLUGIN_H__ */

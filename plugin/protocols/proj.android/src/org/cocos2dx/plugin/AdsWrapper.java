@@ -23,8 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 package org.cocos2dx.plugin;
 
-import java.util.Hashtable;
-
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;

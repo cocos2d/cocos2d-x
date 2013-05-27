@@ -98,6 +98,10 @@ PluginJavaData* PluginUtils::getPluginJavaData(PluginProtocol* pKeyObj)
         ret = it->second;
     }
 
+    if (NULL != ret)
+    {
+    	outputLog("PluginUtils", "get plugin java data : %s, %p", ret->jclassName.c_str(), ret->jobj);
+    }
     return ret;
 }
 

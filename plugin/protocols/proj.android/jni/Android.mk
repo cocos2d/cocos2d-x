@@ -11,6 +11,7 @@ $(addprefix ../../platform/android/, \
 	PluginFactory.cpp \
     PluginJniHelper.cpp \
     PluginUtils.cpp \
+    PluginProtocol.cpp \
     ProtocolAnalytics.cpp \
     ProtocolIAP.cpp \
     ProtocolAds.cpp \

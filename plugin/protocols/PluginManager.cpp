@@ -77,6 +77,10 @@ PluginProtocol* PluginManager::loadPlugin(const char* name)
                 it->second = PluginFactory::getInstance()->createPlugin(name);
             }
             pRet = it->second;
+        } else
+        {
+        	pRet = PluginFactory::getInstance()->createPlugin(name);
+        	m_pluginsMap["name"] = pRet;
         }
     } while (false);
 

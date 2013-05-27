@@ -38,9 +38,7 @@ enum {
 	kPluginSocial,
 };
 
-#define ANDROID_PLUGIN_TYPE_FIELD				"PluginType"
-#define ANDROID_PLUGIN_PACKAGE_PREFIX			"org/cocos2dx/plugins/"
-#define BREAK_IF(cond)							if(cond) break
+#define ANDROID_PLUGIN_PACKAGE_PREFIX			"org/cocos2dx/plugin/"
 
 static PluginFactory* s_pFactory = NULL;
 
@@ -91,6 +89,7 @@ PluginProtocol* PluginFactory::createPlugin(const char* name)
 			, "initPlugin"
 			, "(Ljava/lang/String;)Ljava/lang/Object;"))
 		{
+			PluginUtils::outputLog("PluginFactory", "Can't find method initPlugin in class org.cocos2dx.plugin.PluginWrapper");
 			break;
 		}
 
@@ -98,13 +97,22 @@ PluginProtocol* PluginFactory::createPlugin(const char* name)
 		jobject jObj = t.env->CallStaticObjectMethod(t.classID, t.methodID, clsName);
 		t.env->DeleteLocalRef(clsName);
 		t.env->DeleteLocalRef(t.classID);
-		BREAK_IF(jObj == NULL);
+		if (jObj == NULL)
+		{
+			PluginUtils::outputLog("PluginFactory", "Can't find java class %s", jClassName.c_str());
+			break;
+		}
 
-		jclass jcls = t.env->FindClass(jClassName.c_str());
-		jfieldID fid_Type = t.env->GetFieldID(jcls, ANDROID_PLUGIN_TYPE_FIELD, "I");
-		BREAK_IF(fid_Type == NULL);
-
-		int curType = t.env->GetIntField(jObj, fid_Type);
+		if (! PluginJniHelper::getStaticMethodInfo(t
+			, "org/cocos2dx/plugin/PluginWrapper"
+			, "getPluginType"
+			, "(Ljava/lang/Object;)I"))
+		{
+			PluginUtils::outputLog("PluginFactory", "Can't find method getPluginType in class org.cocos2dx.plugin.PluginWrapper");
+			break;
+		}
+		int curType = t.env->CallStaticIntMethod(t.classID, t.methodID, jObj);
+		t.env->DeleteLocalRef(t.classID);
 		PluginUtils::outputLog("PluginFactory", "The type of plugin %s is : %d", name, curType);
 
 		switch (curType)

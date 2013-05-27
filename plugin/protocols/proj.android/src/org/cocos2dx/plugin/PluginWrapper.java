@@ -23,6 +23,8 @@ THE SOFTWARE.
 ****************************************************************************/
 package org.cocos2dx.plugin;
 
+import java.lang.reflect.Field;
+
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.os.Handler;
@@ -73,6 +75,20 @@ public class PluginWrapper {
 			e.printStackTrace();
 		}
         return null;
+	}
+
+	protected static int getPluginType(Object obj) {
+		int nRet = -1;
+		try
+		{
+			Field filedID = obj.getClass().getField("PluginType");
+			Integer nObj = (Integer) filedID.get(obj);
+			nRet = nObj.intValue();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return nRet;
 	}
 
 	public static Context getContext() {

@@ -23,8 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 package org.cocos2dx.plugin;
 
-import java.util.Hashtable;
-
 public class IAPWrapper {
 	public static final int PAYRESULT_SUCCESS = 0;
 	public static final int PAYRESULT_FAIL    = 1;

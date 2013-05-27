@@ -26,7 +26,6 @@ package org.cocos2dx.plugin;
 import java.io.IOException;
 import java.util.Hashtable;
 
-import org.cocos2dx.plugin.InterfaceSocial.ShareAdapter;
 
 import com.weibo.sdk.android.Oauth2AccessToken;
 import com.weibo.sdk.android.Weibo;
@@ -43,7 +42,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 
-public class SocialWeibo implements ShareAdapter {
+public class SocialWeibo implements InterfaceSocial {
 
 	private static final String LOG_TAG = "SocialWeibo";
 	private static Activity mContext = null;
@@ -109,12 +108,12 @@ public class SocialWeibo implements ShareAdapter {
 		LogD("share invoked " + info.toString());
 		mShareInfo =  info;
 		if (! networkReachable()) {
-			shareResult(InterfaceSocial.SHARERESULT_FAIL, "Network error!");
+			shareResult(SocialWrapper.SHARERESULT_FAIL, "Network error!");
 			return;
 		}
 
 		if (! isInitialized) {
-			shareResult(InterfaceSocial.SHARERESULT_FAIL, "Initialize failed!");
+			shareResult(SocialWrapper.SHARERESULT_FAIL, "Initialize failed!");
 			return;
 		}
 
@@ -154,7 +153,7 @@ public class SocialWeibo implements ShareAdapter {
 	}
 
 	public static void shareResult(int ret, String msg) {
-		InterfaceSocial.onShareResult(mSocialAdapter, ret, msg);
+		SocialWrapper.onShareResult(mSocialAdapter, ret, msg);
 		LogD("SocialWeibo result : " + ret + " msg : " + msg);
 	}
 
@@ -170,24 +169,24 @@ public class SocialWeibo implements ShareAdapter {
 
                 mSocialAdapter.shareToWeibo();
         	} catch (Exception e) {
-        		shareResult(InterfaceSocial.SHARERESULT_FAIL, "认证失败!");
+        		shareResult(SocialWrapper.SHARERESULT_FAIL, "认证失败!");
         		LogE("anthorize failed", e);
         	}
         }
 
         @Override
         public void onError(WeiboDialogError e) {
-        	shareResult(InterfaceSocial.SHARERESULT_FAIL, e.getMessage());
+        	shareResult(SocialWrapper.SHARERESULT_FAIL, e.getMessage());
         }
 
         @Override
         public void onCancel() {
-        	shareResult(InterfaceSocial.SHARERESULT_FAIL, "取消认证!");
+        	shareResult(SocialWrapper.SHARERESULT_FAIL, "取消认证!");
         }
 
         @Override
         public void onWeiboException(WeiboException e) {
-        	shareResult(InterfaceSocial.SHARERESULT_FAIL, e.getMessage());
+        	shareResult(SocialWrapper.SHARERESULT_FAIL, e.getMessage());
         }
     }
 
@@ -206,19 +205,24 @@ public class SocialWeibo implements ShareAdapter {
 
 		@Override
 		public void onComplete(String arg0) {
-			shareResult(InterfaceSocial.SHARERESULT_SUCCESS, "分享成功!");
+			shareResult(SocialWrapper.SHARERESULT_SUCCESS, "分享成功!");
 		}
 
 		@Override
 		public void onError(WeiboException arg0) {
 			LogE("Share onError", arg0);
-			shareResult(InterfaceSocial.SHARERESULT_FAIL, "分享失败!");
+			shareResult(SocialWrapper.SHARERESULT_FAIL, "分享失败!");
 		}
 
 		@Override
 		public void onIOException(IOException arg0) {
 			LogE("Share onIOException", arg0);
-			shareResult(InterfaceSocial.SHARERESULT_FAIL, "分享失败!");
+			shareResult(SocialWrapper.SHARERESULT_FAIL, "分享失败!");
 		}
+	}
+
+	@Override
+	public String getPluginVersion() {
+		return "0.2.0";
 	}
 }
