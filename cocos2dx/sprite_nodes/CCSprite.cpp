@@ -320,18 +320,15 @@ void CCSprite::setTextureRect(const CCRect& rect, bool rotated, const CCSize& un
 
     CCPoint relativeOffset = m_obUnflippedOffsetPositionFromCenter;
 
-    // issue #732
-    if (m_bFlipX)
-    {
-        relativeOffset.x = -relativeOffset.x;
-    }
-    if (m_bFlipY)
-    {
-        relativeOffset.y = -relativeOffset.y;
-    }
+    if( m_bFlipX )
+        m_obOffsetPosition.x = relativeOffset.x + m_obContentSize.width - m_obRect.size.width;
+    else
+        m_obOffsetPosition.x = -relativeOffset.x;
 
-    m_obOffsetPosition.x = relativeOffset.x + (m_obContentSize.width - m_obRect.size.width) / 2;
-    m_obOffsetPosition.y = relativeOffset.y + (m_obContentSize.height - m_obRect.size.height) / 2;
+    if( m_bFlipY )
+        m_obOffsetPosition.y = -relativeOffset.y;
+    else
+        m_obOffsetPosition.y = relativeOffset.y + m_obContentSize.height - m_obRect.size.height;
 
     // rendering using batch node
     if (m_pobBatchNode)
