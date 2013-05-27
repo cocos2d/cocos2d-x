@@ -1315,21 +1315,32 @@ void CCNodeRGBA::setOpacity(GLubyte opacity)
 	}
 }
 
+void CCRGBAProtocol::updateDisplayedOpacityChildren(CCNode* parent, GLubyte parentOpacity)
+{
+    CCArray *children = parent->getChildren();
+    CCObject *obj = NULL;
+    CCARRAY_FOREACH(children, obj)
+    {
+        CCRGBAProtocol *rgba = dynamic_cast<CCRGBAProtocol*>(obj);
+        if(rgba)
+        {
+            rgba->updateDisplayedOpacity(parentOpacity);
+        }
+        else
+        {
+            CCNode *node = static_cast<CCNode*>(obj);
+            CCRGBAProtocol::updateDisplayedOpacityChildren(node, parentOpacity);
+        }
+    }
+}
+
 void CCNodeRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
 {
 	_displayedOpacity = _realOpacity * parentOpacity/255.0;
 	
     if (_cascadeOpacityEnabled)
     {
-        CCObject* pObj;
-        CCARRAY_FOREACH(m_pChildren, pObj)
-        {
-            CCRGBAProtocol* item = dynamic_cast<CCRGBAProtocol*>(pObj);
-            if (item)
-            {
-                item->updateDisplayedOpacity(_displayedOpacity);
-            }
-        }
+        CCRGBAProtocol::updateDisplayedOpacityChildren(this, _displayedOpacity);
     }
 }
 
@@ -1370,6 +1381,25 @@ void CCNodeRGBA::setColor(const ccColor3B& color)
 	}
 }
 
+void CCRGBAProtocol::updateDisplayedColorChildren(CCNode* parent, const ccColor3B& parentColor)
+{
+    CCArray *children = parent->getChildren();
+    CCObject *obj = NULL;
+    CCARRAY_FOREACH(children, obj)
+    {
+        CCRGBAProtocol *rgba = dynamic_cast<CCRGBAProtocol*>(obj);
+        if(rgba)
+        {
+            rgba->updateDisplayedColor(parentColor);
+        }
+        else
+        {
+            CCNode *node = static_cast<CCNode*>(obj);
+            CCRGBAProtocol::updateDisplayedColorChildren(node, parentColor);
+        }
+    }
+}
+
 void CCNodeRGBA::updateDisplayedColor(const ccColor3B& parentColor)
 {
 	_displayedColor.r = _realColor.r * parentColor.r/255.0;
@@ -1378,15 +1408,7 @@ void CCNodeRGBA::updateDisplayedColor(const ccColor3B& parentColor)
     
     if (_cascadeColorEnabled)
     {
-        CCObject *obj = NULL;
-        CCARRAY_FOREACH(m_pChildren, obj)
-        {
-            CCRGBAProtocol *item = dynamic_cast<CCRGBAProtocol*>(obj);
-            if (item)
-            {
-                item->updateDisplayedColor(_displayedColor);
-            }
-        }
+        CCRGBAProtocol::updateDisplayedColorChildren(this, _displayedColor);
     }
 }
 

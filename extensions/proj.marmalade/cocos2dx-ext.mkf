@@ -36,15 +36,10 @@ files
     ("../GUI/CCEditBox")
     "CCEditBox.h"
     "CCEditBox.cpp"
-    “CCEditBoxImplNone.cpp”
+    "CCEditBoxImplNone.cpp"
 
     ["GUI/CCScrollView"]
     ("../GUI/CCScrollView")
-    "*.h"
-    "*.cpp"
-
-    ["PhysicsNodes"]
-    ("../physics_nodes")
     "*.h"
     "*.cpp"
 
@@ -52,4 +47,15 @@ files
     ("../spine")
     "*.h"
     "*.cpp"
+}
+
+if {{ defined CC_ENABLE_CHIPMUNK_INTEGRATION or defined CC_ENABLE_BOX2D_INTEGRATION }}
+{
+	files
+	{
+		["PhysicsNodes"]
+			("../physics_nodes")
+			"*.h"
+			"*.cpp"
+	}
 }

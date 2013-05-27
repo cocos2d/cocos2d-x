@@ -7,6 +7,7 @@
 #include "CCNodeLoaderListener.h"
 #include "CCBMemberVariableAssigner.h"
 #include "CCBSelectorResolver.h"
+#include "CCBNodeWrapper.h"
 #include "CCData.h"
 #include "CCBAnimationManager.h"
 #include "CCBSequenceProperty.h"
@@ -22,36 +23,6 @@
 using namespace std;
 
 NS_CC_EXT_BEGIN;
-
-/*************************************************************************
- Implementation of CCBFile
- *************************************************************************/
-
-CCBFile::CCBFile():mCCBFileNode(NULL) {}
-
-CCBFile* CCBFile::create()
-{
-    CCBFile *ret = new CCBFile();
-    
-    if (ret)
-    {
-        ret->autorelease();
-    }
-    
-    return ret;
-}
-
-CCNode* CCBFile::getCCBFileNode()
-{
-    return mCCBFileNode;
-}
-
-void CCBFile::setCCBFileNode(CCNode *pNode)
-{
-    CC_SAFE_RELEASE(mCCBFileNode);
-    mCCBFileNode = pNode;
-    CC_SAFE_RETAIN(mCCBFileNode);
-}
 
 /*************************************************************************
  Implementation of CCBReader
@@ -622,26 +593,19 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
     // Read properties
     ccNodeLoader->parseProperties(node, pParent, this);
     
-    bool isCCBFileNode = dynamic_cast<CCBFile*>(node);
-    // Handle sub ccb files (remove middle node)
-    if (isCCBFileNode)
-    {
-        CCBFile *ccbFileNode = (CCBFile*)node;
-        
-        CCNode *embeddedNode = ccbFileNode->getCCBFileNode();
-        embeddedNode->setPosition(ccbFileNode->getPosition());
-        embeddedNode->setRotation(ccbFileNode->getRotation());
-        embeddedNode->setScaleX(ccbFileNode->getScaleX());
-        embeddedNode->setScaleY(ccbFileNode->getScaleY());
-        embeddedNode->setTag(ccbFileNode->getTag());
-        embeddedNode->setVisible(true);
-        //embeddedNode->ignoreAnchorPointForPosition(ccbFileNode->isIgnoreAnchorPointForPosition());
-        
-        mActionManager->moveAnimationsFromNode(ccbFileNode, embeddedNode);
+    CCNode *originalNode = node;
+    CCBNodeWrapper *ccbNodeWrapper = dynamic_cast<CCBNodeWrapper*>(node);
 
-        ccbFileNode->setCCBFileNode(NULL);
+    // Handle sub ccb files (remove middle node)
+    if (ccbNodeWrapper)
+    {
+        CCNode *wrapped = ccbNodeWrapper->unwrapNode();
         
-        node = embeddedNode;
+        if(wrapped != node)
+        {
+            mActionManager->moveAnimationsFromNode(node, wrapped);
+            node = wrapped;
+        }
     }
 
 #ifdef CCB_ENABLE_JAVASCRIPT
@@ -738,14 +702,16 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
     // FIX ISSUE #1860: "onNodeLoaded will be called twice if ccb was added as a CCBFile".
     // If it's a sub-ccb node, skip notification to CCNodeLoaderListener since it will be
     // notified at LINE #734: CCNode * child = this->readNodeGraph(node);
-    if (!isCCBFileNode) {
-        // Call onNodeLoaded
-        CCNodeLoaderListener * nodeAsCCNodeLoaderListener = dynamic_cast<CCNodeLoaderListener *>(node);
-        if(nodeAsCCNodeLoaderListener != NULL) {
-            nodeAsCCNodeLoaderListener->onNodeLoaded(node, ccNodeLoader);
-        } else if(this->mCCNodeLoaderListener != NULL) {
-            this->mCCNodeLoaderListener->onNodeLoaded(node, ccNodeLoader);
-        }
+    // NOTE: If a node wrapper is present, the node listener message will go to the node wrapper
+    // (the original node), instead of to the wrapped node. This makes sense because otherwise the
+    // wrapped node will be getting a bogus CCNodeLoader
+
+    // Call onNodeLoaded
+    CCNodeLoaderListener * nodeAsCCNodeLoaderListener = dynamic_cast<CCNodeLoaderListener *>(originalNode);
+    if(nodeAsCCNodeLoaderListener != NULL) {
+        nodeAsCCNodeLoaderListener->onNodeLoaded(originalNode, ccNodeLoader);
+    } else if(this->mCCNodeLoaderListener != NULL) {
+        this->mCCNodeLoaderListener->onNodeLoaded(originalNode, ccNodeLoader);
     }
     return node;
 }

@@ -8,6 +8,7 @@ LOCAL_MODULE_FILENAME := libextension
 LOCAL_SRC_FILES := AssetsManager/AssetsManager.cpp \
 CCBReader/CCBFileLoader.cpp \
 CCBReader/CCBReader.cpp \
+CCBReader/CCBFile.cpp \
 CCBReader/CCControlButtonLoader.cpp \
 CCBReader/CCControlLoader.cpp \
 CCBReader/CCLabelBMFontLoader.cpp \

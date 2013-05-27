@@ -38,7 +38,6 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
     int propertyCount = numRegularProps + numExturaProps;
 
     for(int i = 0; i < propertyCount; i++) {
-        bool isExtraProp = (i >= numRegularProps);
         int type = pCCBReader->readInt(false);
         std::string propertyName = pCCBReader->readCachedString();
 
@@ -64,42 +63,6 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
 //             setProp = true;
 //         }
 // #endif
-        
-        // Forward properties for sub ccb files
-        if (dynamic_cast<CCBFile*>(pNode) != NULL)
-        {
-            CCBFile *ccbNode = (CCBFile*)pNode;
-            if (ccbNode->getCCBFileNode() && isExtraProp)
-            {
-                pNode = ccbNode->getCCBFileNode();
-                
-                // Skip properties that doesn't have a value to override
-                CCArray *extraPropsNames = (CCArray*)pNode->getUserObject();
-                CCObject* pObj = NULL;
-                bool bFound = false;
-                CCARRAY_FOREACH(extraPropsNames, pObj)
-                {
-                    CCString* pStr = (CCString*)pObj;
-                    if (0 == pStr->compare(propertyName.c_str()))
-                    {
-                        bFound = true;
-                        break;
-                    }
-                }
-                setProp &= bFound;
-            }
-        }
-        else if (isExtraProp && pNode == pCCBReader->getAnimationManager()->getRootNode())
-        {
-            CCArray *extraPropsNames = (CCArray*)pNode->getUserObject();
-            if (! extraPropsNames)
-            {
-                extraPropsNames = CCArray::create();
-                pNode->setUserObject(extraPropsNames);
-            }
-            
-            extraPropsNames->addObject(CCString::create(propertyName));
-        }
 
         switch(type) 
         {

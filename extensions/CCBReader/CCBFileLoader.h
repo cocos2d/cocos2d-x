@@ -2,6 +2,7 @@
 #define _CCB_CCBFILELOADER_H_
 
 #include "CCNodeLoader.h"
+#include "CCBFile.h"
 #include "CCBReader.h"
 
 NS_CC_EXT_BEGIN
