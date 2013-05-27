@@ -540,7 +540,7 @@ void CCSprite::updateTransform(void)
         if (m_pobTextureAtlas)
         {
             if ( useRefForUpdateQuad){
-                m_pobTextureAtlas->updateQuad(NULL, m_uAtlasIndex);
+                m_pobTextureAtlas->setDirty(true);
             }else{
                 m_pobTextureAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
                 setQuadColorsDirty(false);
@@ -966,7 +966,7 @@ void CCSprite::updateColor(void)
                 quad->br.colors = color4;
                 quad->tl.colors = color4;
                 quad->tr.colors = color4;
-                m_pobTextureAtlas->updateQuad(NULL, m_uAtlasIndex);
+                m_pobTextureAtlas->setDirty(true);
             }else{
                 m_pobTextureAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
                 setQuadTexCoordsDirty(false);
