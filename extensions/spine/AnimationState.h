@@ -28,10 +28,7 @@
 
 #include <spine/AnimationStateData.h>
 
-#ifdef __cplusplus
 namespace cocos2d { namespace extension {
-extern "C" {
-#endif
 
 typedef struct {
 	AnimationStateData* const data;
@@ -64,9 +61,6 @@ void AnimationState_clearAnimation (AnimationState* self);
 
 int/*bool*/AnimationState_isComplete (AnimationState* self);
 
-#ifdef __cplusplus
-}
 } }
-#endif
 
 #endif /* SPINE_ANIMATIONSTATE_H_ */

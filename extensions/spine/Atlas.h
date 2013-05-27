@@ -26,10 +26,7 @@
 #ifndef SPINE_ATLAS_H_
 #define SPINE_ATLAS_H_
 
-#ifdef __cplusplus
 namespace cocos2d { namespace extension {
-extern "C" {
-#endif
 
 typedef enum {
 	ATLAS_ALPHA, ATLAS_INTENSITY, ATLAS_LUMINANCE_ALPHA, ATLAS_RGB565, ATLAS_RGBA4444, ATLAS_RGB888, ATLAS_RGBA8888
@@ -104,9 +101,6 @@ void Atlas_dispose (Atlas* atlas);
 /* Returns 0 if the region was not found. */
 AtlasRegion* Atlas_findRegion (const Atlas* self, const char* name);
 
-#ifdef __cplusplus
-}
 } }
-#endif
 
 #endif /* SPINE_ATLAS_H_ */

@@ -88,10 +88,7 @@
 #include <spine/Atlas.h>
 #include <spine/AttachmentLoader.h>
 
-#ifdef __cplusplus
 namespace cocos2d { namespace extension {
-extern "C" {
-#endif
 
 /*
  * Functions that must be implemented:
@@ -143,9 +140,6 @@ void _CurveTimeline_init (CurveTimeline* self, int frameCount, /**/
 		void (*apply) (const Timeline* self, Skeleton* skeleton, float time, float alpha));
 void _CurveTimeline_deinit (CurveTimeline* self);
 
-#ifdef __cplusplus
 } }
-}
-#endif
 
 #endif /* SPINE_EXTENSION_H_ */

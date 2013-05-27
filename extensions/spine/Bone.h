@@ -28,10 +28,7 @@
 
 #include <spine/BoneData.h>
 
-#ifdef __cplusplus
 namespace cocos2d { namespace extension {
-extern "C" {
-#endif
 
 typedef struct Bone Bone;
 struct Bone {
@@ -57,9 +54,6 @@ void Bone_setToSetupPose (Bone* self);
 
 void Bone_updateWorldTransform (Bone* self, int/*bool*/flipX, int/*bool*/flipY);
 
-#ifdef __cplusplus
-}
 } }
-#endif
 
 #endif /* SPINE_BONE_H_ */

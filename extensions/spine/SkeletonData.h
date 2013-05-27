@@ -31,9 +31,7 @@
 #include <spine/Skin.h>
 #include <spine/Animation.h>
 
-#ifdef __cplusplus
-namespace cocos2d { namespace extension {extern "C" {
-#endif
+namespace cocos2d { namespace extension {
 
 typedef struct {
 	int boneCount;
@@ -63,9 +61,6 @@ Skin* SkeletonData_findSkin (const SkeletonData* self, const char* skinName);
 
 Animation* SkeletonData_findAnimation (const SkeletonData* self, const char* animationName);
 
-#ifdef __cplusplus
-}
 } }
-#endif
 
 #endif /* SPINE_SKELETONDATA_H_ */

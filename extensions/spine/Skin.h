@@ -29,7 +29,6 @@
 #include <spine/Attachment.h>
 
 namespace cocos2d { namespace extension {
-extern "C" {
 
 struct Skeleton;
 
@@ -50,8 +49,6 @@ const char* Skin_getAttachmentName (const Skin* self, int slotIndex, int attachm
 
 /** Attach each attachment in this skin if the corresponding attachment in oldSkin is currently attached. */
 void Skin_attachAll (const Skin* self, struct Skeleton* skeleton, const Skin* oldSkin);
-
-}
 
 }}
 

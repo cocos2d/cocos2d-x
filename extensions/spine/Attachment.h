@@ -26,10 +26,7 @@
 #ifndef SPINE_ATTACHMENT_H_
 #define SPINE_ATTACHMENT_H_
 
-#ifdef __cplusplus
 namespace cocos2d { namespace extension {
-extern "C" {
-#endif
 
 struct Slot;
 
@@ -47,9 +44,6 @@ struct Attachment {
 
 void Attachment_dispose (Attachment* self);
 
-#ifdef __cplusplus
-}
 } }
-#endif
 
 #endif /* SPINE_ATTACHMENT_H_ */

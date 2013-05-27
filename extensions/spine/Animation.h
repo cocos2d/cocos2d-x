@@ -26,10 +26,7 @@
 #ifndef SPINE_ANIMATION_H_
 #define SPINE_ANIMATION_H_
 
-#ifdef __cplusplus
 namespace cocos2d { namespace extension {
-extern "C" {
-#endif
 
 typedef struct Timeline Timeline;
 struct Skeleton;
@@ -130,9 +127,6 @@ AttachmentTimeline* AttachmentTimeline_create (int frameCount);
 /* @param attachmentName May be 0. */
 void AttachmentTimeline_setFrame (AttachmentTimeline* self, int frameIndex, float time, const char* attachmentName);
 
-#ifdef __cplusplus
-}
 } }
-#endif
 
 #endif /* SPINE_ANIMATION_H_ */
