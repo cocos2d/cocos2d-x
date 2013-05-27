@@ -226,7 +226,11 @@ void CCTileMapAtlas::updateAtlasValueAt(const CCPoint& pos, const ccColor3B& val
     quad->br.colors = color;
     quad->bl.colors = color;
 
-    m_pTextureAtlas->updateQuad(NULL, index);
+    m_pTextureAtlas->setDirty(true);
+    unsigned int totalQuads = m_pTextureAtlas->getTotalQuads();
+    if (index + 1 > totalQuads) {
+        m_pTextureAtlas->increaseTotalQuadsWith(index + 1 - totalQuads);
+    }
 }
 
 void CCTileMapAtlas::updateAtlasValues()
