@@ -435,8 +435,13 @@ void ScriptingCore::createGlobalContext() {
     this->cx_ = JS_NewContext(rt_, 8192);
     JS_SetOptions(this->cx_, JSOPTION_TYPE_INFERENCE);
     JS_SetVersion(this->cx_, JSVERSION_LATEST);
+    
+    // Only disable METHODJIT on iOS.
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     JS_SetOptions(this->cx_, JS_GetOptions(this->cx_) & ~JSOPTION_METHODJIT);
     JS_SetOptions(this->cx_, JS_GetOptions(this->cx_) & ~JSOPTION_METHODJIT_ALWAYS);
+#endif
+    
     JS_SetErrorReporter(this->cx_, ScriptingCore::reportError);
 #if defined(JS_GC_ZEAL) && defined(DEBUG)
     //JS_SetGCZeal(this->cx_, 2, JS_DEFAULT_ZEAL_FREQ);
@@ -633,10 +638,10 @@ JSBool ScriptingCore::forceGC(JSContext *cx, uint32_t argc, jsval *vp)
     return JS_TRUE;
 }
 
-static void dumpNamedRoot(const char *name, void *addr,  JSGCRootType type, void *data)
-{
-    CCLOG("Root: '%s' at %p", name, addr);
-}
+//static void dumpNamedRoot(const char *name, void *addr,  JSGCRootType type, void *data)
+//{
+//    CCLOG("Root: '%s' at %p", name, addr);
+//}
 
 JSBool ScriptingCore::dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -1348,47 +1353,48 @@ jsval ccarray_to_jsval(JSContext* cx, CCArray *arr)
 {
     JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
 
-    if (arr && arr->count() > 0) {
-        for(unsigned int i = 0; i < arr->count(); ++i) {
-            jsval arrElement;
-            CCObject *obj = arr->objectAtIndex(i);
+    CCObject* obj;
+    int i = 0;
+    CCARRAY_FOREACH(arr, obj)
+    {
+        jsval arrElement;
 
-            //First, check whether object is associated with js object.
-            js_proxy_t* jsproxy = js_get_or_create_proxy<cocos2d::CCObject>(cx, obj);
-            if (jsproxy) {
-                arrElement = OBJECT_TO_JSVAL(jsproxy->obj);
-            }
-            else {
-                CCString* strVal = NULL;
-                CCDictionary* dictVal = NULL;
-                CCArray* arrVal = NULL;
-                CCDouble* doubleVal = NULL;
-                CCBool* boolVal = NULL;
-                CCFloat* floatVal = NULL;
-                CCInteger* intVal = NULL;
-                
-                if((strVal = dynamic_cast<cocos2d::CCString *>(obj))) {
-                    arrElement = c_string_to_jsval(cx, strVal->getCString());
-                } else if ((dictVal = dynamic_cast<cocos2d::CCDictionary*>(obj))) {
-                    arrElement = ccdictionary_to_jsval(cx, dictVal);
-                } else if ((arrVal = dynamic_cast<cocos2d::CCArray*>(obj))) {
-                    arrElement = ccarray_to_jsval(cx, arrVal);
-                } else if ((doubleVal = dynamic_cast<CCDouble*>(obj))) {
-                    arrElement = DOUBLE_TO_JSVAL(doubleVal->getValue());
-                } else if ((floatVal = dynamic_cast<CCFloat*>(obj))) {
-                    arrElement = DOUBLE_TO_JSVAL(floatVal->getValue());
-                } else if ((intVal = dynamic_cast<CCInteger*>(obj))) {
-                    arrElement = INT_TO_JSVAL(intVal->getValue());
-                }  else if ((boolVal = dynamic_cast<CCBool*>(obj))) {
-                    arrElement = BOOLEAN_TO_JSVAL(boolVal->getValue() ? JS_TRUE : JS_FALSE);
-                } else {
-                    CCAssert(false, "the type isn't suppored.");
-                }
-            }
-            if(!JS_SetElement(cx, jsretArr, i, &arrElement)) {
-                break;
+        //First, check whether object is associated with js object.
+        js_proxy_t* jsproxy = js_get_or_create_proxy<cocos2d::CCObject>(cx, obj);
+        if (jsproxy) {
+            arrElement = OBJECT_TO_JSVAL(jsproxy->obj);
+        }
+        else {
+            CCString* strVal = NULL;
+            CCDictionary* dictVal = NULL;
+            CCArray* arrVal = NULL;
+            CCDouble* doubleVal = NULL;
+            CCBool* boolVal = NULL;
+            CCFloat* floatVal = NULL;
+            CCInteger* intVal = NULL;
+            
+            if((strVal = dynamic_cast<cocos2d::CCString *>(obj))) {
+                arrElement = c_string_to_jsval(cx, strVal->getCString());
+            } else if ((dictVal = dynamic_cast<cocos2d::CCDictionary*>(obj))) {
+                arrElement = ccdictionary_to_jsval(cx, dictVal);
+            } else if ((arrVal = dynamic_cast<cocos2d::CCArray*>(obj))) {
+                arrElement = ccarray_to_jsval(cx, arrVal);
+            } else if ((doubleVal = dynamic_cast<CCDouble*>(obj))) {
+                arrElement = DOUBLE_TO_JSVAL(doubleVal->getValue());
+            } else if ((floatVal = dynamic_cast<CCFloat*>(obj))) {
+                arrElement = DOUBLE_TO_JSVAL(floatVal->getValue());
+            } else if ((intVal = dynamic_cast<CCInteger*>(obj))) {
+                arrElement = INT_TO_JSVAL(intVal->getValue());
+            }  else if ((boolVal = dynamic_cast<CCBool*>(obj))) {
+                arrElement = BOOLEAN_TO_JSVAL(boolVal->getValue() ? JS_TRUE : JS_FALSE);
+            } else {
+                CCAssert(false, "the type isn't suppored.");
             }
         }
+        if(!JS_SetElement(cx, jsretArr, i, &arrElement)) {
+            break;
+        }
+        ++i;
     }
     return OBJECT_TO_JSVAL(jsretArr);
 }

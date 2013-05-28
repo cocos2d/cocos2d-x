@@ -1,4 +1,4 @@
-/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/* -*- Mode: C; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
@@ -84,9 +84,21 @@ struct JSDHashEntryHdr {
     JSDHashNumber       keyHash;        /* every entry must begin like this */
 };
 
-#define JS_DHASH_ENTRY_IS_FREE(entry)   ((entry)->keyHash == 0)
-#define JS_DHASH_ENTRY_IS_BUSY(entry)   (!JS_DHASH_ENTRY_IS_FREE(entry))
-#define JS_DHASH_ENTRY_IS_LIVE(entry)   ((entry)->keyHash >= 2)
+MOZ_ALWAYS_INLINE bool
+JS_DHASH_ENTRY_IS_FREE(JSDHashEntryHdr* entry)
+{
+    return entry->keyHash == 0;
+}
+MOZ_ALWAYS_INLINE bool
+JS_DHASH_ENTRY_IS_BUSY(JSDHashEntryHdr* entry)
+{
+    return !JS_DHASH_ENTRY_IS_FREE(entry);
+}
+MOZ_ALWAYS_INLINE bool
+JS_DHASH_ENTRY_IS_LIVE(JSDHashEntryHdr* entry)
+{
+    return entry->keyHash >= 2;
+}
 
 /*
  * A JSDHashTable is currently 8 words (without the JS_DHASHMETER overhead)

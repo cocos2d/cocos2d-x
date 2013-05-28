@@ -27,10 +27,16 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "ccConfig.h"
 #include <string.h>
+#include "cocoa/CCDictionary.h"
+#include "cocoa/CCInteger.h"
+#include "cocoa/CCBool.h"
+#include "cocos2d.h"
+#include "platform/CCFileUtils.h"
 
 using namespace std;
 
 NS_CC_BEGIN
+
 
 CCConfiguration* CCConfiguration::s_gSharedConfiguration = NULL;
 
@@ -45,57 +51,96 @@ CCConfiguration::CCConfiguration(void)
 , m_nMaxSamplesAllowed(0)
 , m_nMaxTextureUnits(0)
 , m_pGlExtensions(NULL)
+, m_pDefaults(NULL)
 {
 }
 
 bool CCConfiguration::init(void)
 {
-    CCLOG("cocos2d: GL_VENDOR:     %s", glGetString(GL_VENDOR));
-    CCLOG("cocos2d: GL_RENDERER:   %s", glGetString(GL_RENDERER));
-    CCLOG("cocos2d: GL_VERSION:    %s", glGetString(GL_VERSION));
+	m_pDefaults = CCDictionary::create();
+	m_pDefaults->retain();
+
+	m_pDefaults->setObject( CCString::create( cocos2dVersion() ), "cocos2d.version");
+
+
+#if CC_ENABLE_PROFILERS
+	m_pDefaults->setObject( CCBool::create(true), "cocos2d.compiled_with_profiler");
+#else
+	m_pDefaults->setObject( CCBool::create(false), "cocos2d.compiled_with_profiler");
+#endif
+
+#if CC_ENABLE_GL_STATE_CACHE == 0
+	m_pDefaults->setObject( CCBool::create(false), "cocos2d.compiled_with_gl_state_cache");
+#else
+	m_pDefaults->setObject( CCBool::create(true), "cocos2d.compiled_with_gl_state_cache");
+#endif
+
+	return true;
+}
+
+CCConfiguration::~CCConfiguration(void)
+{
+	m_pDefaults->release();
+}
+
+void CCConfiguration::dumpInfo(void) const
+{
+	// Dump
+	CCPrettyPrinter visitor(0);
+	m_pDefaults->acceptVisitor(visitor);
+
+	CCLOG("%s", visitor.getResult().c_str());
+
+
+	// And Dump some warnings as well
+#if CC_ENABLE_PROFILERS
+    CCLOG("cocos2d: **** WARNING **** CC_ENABLE_PROFILERS is defined. Disable it when you finish profiling (from ccConfig.h)");
+    printf("\n");
+#endif
+
+#if CC_ENABLE_GL_STATE_CACHE == 0
+    CCLOG("");
+    CCLOG("cocos2d: **** WARNING **** CC_ENABLE_GL_STATE_CACHE is disabled. To improve performance, enable it (from ccConfig.h)");
+    printf("\n");
+#endif
+
+}
+
+void CCConfiguration::gatherGPUInfo()
+{
+	m_pDefaults->setObject( CCString::create( (const char*)glGetString(GL_VENDOR)), "gl.vendor");
+	m_pDefaults->setObject( CCString::create( (const char*)glGetString(GL_RENDERER)), "gl.renderer");
+	m_pDefaults->setObject( CCString::create( (const char*)glGetString(GL_VERSION)), "gl.version");
 
     m_pGlExtensions = (char *)glGetString(GL_EXTENSIONS);
 
     glGetIntegerv(GL_MAX_TEXTURE_SIZE, &m_nMaxTextureSize);
+	m_pDefaults->setObject( CCInteger::create((int)m_nMaxTextureSize), "gl.max_texture_size");
+
     glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &m_nMaxTextureUnits);
+	m_pDefaults->setObject( CCInteger::create((int)m_nMaxTextureUnits), "gl.max_texture_units");
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     glGetIntegerv(GL_MAX_SAMPLES_APPLE, &m_nMaxSamplesAllowed);
+	m_pDefaults->setObject( CCInteger::create((int)m_nMaxSamplesAllowed), "gl.max_samples_allowed");
 #endif
 
     m_bSupportsPVRTC = checkForGLExtension("GL_IMG_texture_compression_pvrtc");
+	m_pDefaults->setObject( CCBool::create(m_bSupportsPVRTC), "gl.supports_PVRTC");
+
     m_bSupportsNPOT = true;
+	m_pDefaults->setObject( CCBool::create(m_bSupportsNPOT), "gl.supports_NPOT");
+	
     m_bSupportsBGRA8888 = checkForGLExtension("GL_IMG_texture_format_BGRA888");
+	m_pDefaults->setObject( CCBool::create(m_bSupportsBGRA8888), "gl.supports_BGRA8888");
+
     m_bSupportsDiscardFramebuffer = checkForGLExtension("GL_EXT_discard_framebuffer");
+	m_pDefaults->setObject( CCBool::create(m_bSupportsDiscardFramebuffer), "gl.supports_discard_framebuffer");
 
     m_bSupportsShareableVAO = checkForGLExtension("vertex_array_object");
-
-    CCLOG("cocos2d: GL_MAX_TEXTURE_SIZE: %d", m_nMaxTextureSize);
-    CCLOG("cocos2d: GL_MAX_TEXTURE_UNITS: %d",m_nMaxTextureUnits);
-    CCLOG("cocos2d: GL supports PVRTC: %s", (m_bSupportsPVRTC ? "YES" : "NO"));
-    CCLOG("cocos2d: GL supports BGRA8888 textures: %s", (m_bSupportsBGRA8888 ? "YES" : "NO"));
-    CCLOG("cocos2d: GL supports NPOT textures: %s", (m_bSupportsNPOT ? "YES" : "NO"));
-    CCLOG("cocos2d: GL supports discard_framebuffer: %s", (m_bSupportsDiscardFramebuffer ? "YES" : "NO"));
-    CCLOG("cocos2d: GL supports shareable VAO: %s", (m_bSupportsShareableVAO ? "YES" : "NO") );
-
-    bool CC_UNUSED bEnableProfilers = false;
-
-#if CC_ENABLE_PROFILERS
-    bEnableProfilers = true;
-#else
-    bEnableProfilers = false;
-#endif
-    CCLOG("cocos2d: compiled with Profiling Support: %s",
-        bEnableProfilers ? "YES - *** Disable it when you finish profiling ***" : "NO");
-    
-#if CC_ENABLE_GL_STATE_CACHE == 0
-    CCLOG("");
-    CCLOG("cocos2d: **** WARNING **** CC_ENABLE_GL_STATE_CACHE is disabled. To improve performance, enable it by editing ccConfig.h");
-    printf("\n");
-#endif
+	m_pDefaults->setObject( CCBool::create(m_bSupportsShareableVAO), "gl.supports_vertex_array_object");
     
     CHECK_GL_ERROR_DEBUG();
-
-    return true;
 }
 
 CCConfiguration* CCConfiguration::sharedConfiguration(void)
@@ -114,7 +159,7 @@ void CCConfiguration::purgeConfiguration(void)
     CC_SAFE_RELEASE_NULL(s_gSharedConfiguration);
 }
 
-bool CCConfiguration::checkForGLExtension(const string &searchName)
+bool CCConfiguration::checkForGLExtension(const string &searchName) const
 {
     bool bRet = false;
     const char *kSearchName = searchName.c_str();
@@ -126,6 +171,126 @@ bool CCConfiguration::checkForGLExtension(const string &searchName)
     }
     
     return bRet;
+}
+
+//
+// getters for specific variables.
+// Mantained for backward compatiblity reasons only.
+//
+int CCConfiguration::getMaxTextureSize(void) const
+{
+	return m_nMaxTextureSize;
+}
+
+int CCConfiguration::getMaxModelviewStackDepth(void) const
+{
+	return m_nMaxModelviewStackDepth;
+}
+
+int CCConfiguration::getMaxTextureUnits(void) const
+{
+	return m_nMaxTextureUnits;
+}
+
+bool CCConfiguration::supportsNPOT(void) const
+{
+	return m_bSupportsNPOT;
+}
+
+bool CCConfiguration::supportsPVRTC(void) const
+{
+	return m_bSupportsPVRTC;
+}
+
+bool CCConfiguration::supportsBGRA8888(void) const
+{
+	return m_bSupportsBGRA8888;
+}
+
+bool CCConfiguration::supportsDiscardFramebuffer(void) const
+{
+	return m_bSupportsDiscardFramebuffer;
+}
+
+bool CCConfiguration::supportsShareableVAO(void) const
+{
+	return m_bSupportsShareableVAO;
+}
+
+//
+// generic getters for properties
+//
+const char *CCConfiguration::getCString( const char *key ) const
+{
+	CCObject *ret = m_pDefaults->objectForKey(key);
+	if( ret ) {
+		if( CCString *str=dynamic_cast<CCString*>(ret) )
+			return str->getCString();
+
+		CCAssert(false, "Key found, but from different type");
+	}
+
+	// XXX: Should it throw an exception ?
+	CCLOG("Key not found: '%s'", key );
+	return NULL;
+}
+
+/** returns the value of a given key as a boolean */
+bool CCConfiguration::getBool( const char *key ) const
+{
+	CCObject *ret = m_pDefaults->objectForKey(key);
+	if( ret ) {
+		if( CCBool *obj=dynamic_cast<CCBool*>(ret) )
+			return obj->getValue();
+		CCAssert(false, "Key found, but from different type");
+	}
+
+	// XXX: Should it throw an exception ?
+	CCLOG("Key not found: '%s'", key );
+	return false;
+}
+
+/** returns the value of a given key as a double */
+double CCConfiguration::getNumber( const char *key ) const
+{
+	CCObject *ret = m_pDefaults->objectForKey(key);
+	if( ret ) {
+		if( CCDouble *obj=dynamic_cast<CCDouble*>(ret) )
+			return obj->getValue();
+
+		if( CCInteger *obj=dynamic_cast<CCInteger*>(ret) )
+			return obj->getValue();
+
+		CCAssert(false, "Key found, but from different type");
+	}
+
+	// XXX: Should it throw an exception ?
+	CCLOG("Key not found: '%s'", key );
+	return 0.0;
+}
+
+CCObject * CCConfiguration::getObject( const char *key ) const
+{
+	return m_pDefaults->objectForKey(key);
+}
+
+//
+// load file
+//
+void CCConfiguration::loadConfigFile( const char *filename )
+{
+	CCDictionary *dict = CCDictionary::createWithContentsOfFile(filename);
+	CCAssert(dict, "cannot create dictionary");
+
+	// Add all keys in the existing dictionary
+    CCDictElement* element;
+    CCDICT_FOREACH(dict, element)
+    {
+		if( ! m_pDefaults->objectForKey( element->getStrKey() ) )
+			m_pDefaults->setObject(element->getObject(), element->getStrKey() );
+		else
+			CCLOG("Key already present. Ignoring '%s'", element->getStrKey() );
+    }
 }
 
 NS_CC_END
