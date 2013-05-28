@@ -129,7 +129,7 @@ void CCOspForm::OnTextValueChangeCanceled(const Tizen::Ui::Control& source)
 }
 
 void
-CCOspForm::ShowKeypad(KeypadStyle keypadStyle, KeypadInputModeCategory keypadCategory, bool bSingleLineEnabled, bool bTextPrediction, int nMaxLength, EditTextCallback pfEditTextCallback, void* pCtx)
+CCOspForm::ShowKeypad(const char* pMessage, KeypadStyle keypadStyle, KeypadInputModeCategory keypadCategory, bool bSingleLineEnabled, bool bTextPrediction, int nMaxLength, EditTextCallback pfEditTextCallback, void* pCtx)
 {
     m_pfEditTextCallback = pfEditTextCallback;
     m_pCtx = pCtx;
@@ -152,6 +152,7 @@ CCOspForm::ShowKeypad(KeypadStyle keypadStyle, KeypadInputModeCategory keypadCat
 
     __pKeypad->SetTextPredictionEnabled(bTextPrediction);
     __pKeypad->SetSingleLineEnabled(bSingleLineEnabled);
+    __pKeypad->SetText(String(pMessage));
     __pKeypad->SetShowState(true);
     __pKeypad->Show();
 }
