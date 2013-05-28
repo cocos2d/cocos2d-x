@@ -74,7 +74,7 @@ void ProtocolSocial::configDeveloperInfo(TSocialDeveloperInfo devInfo)
     		, "(Ljava/util/Hashtable;)V"))
     	{
         	// generate the hashtable from map
-        	jobject obj_Map = PluginUtils::createJavaMapObject(t, &devInfo);
+        	jobject obj_Map = PluginUtils::createJavaMapObject(&devInfo);
 
             // invoke java method
             t.env->CallVoidMethod(pData->jobj, t.methodID, obj_Map);
@@ -105,7 +105,7 @@ void ProtocolSocial::share(TShareInfo info)
 			, "(Ljava/util/Hashtable;)V"))
 		{
 			// generate the hashtable from map
-			jobject obj_Map = PluginUtils::createJavaMapObject(t, &info);
+			jobject obj_Map = PluginUtils::createJavaMapObject(&info);
 
 			// invoke java method
 			t.env->CallVoidMethod(pData->jobj, t.methodID, obj_Map);

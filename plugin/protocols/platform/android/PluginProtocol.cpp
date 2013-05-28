@@ -28,41 +28,41 @@ namespace cocos2d { namespace plugin {
 
 PluginProtocol::~PluginProtocol()
 {
-	PluginUtils::erasePluginJavaData(this);
+    PluginUtils::erasePluginJavaData(this);
 }
 
 const char* PluginProtocol::getPluginVersion()
 {
-	std::string verName;
+    std::string verName;
 
-	PluginJavaData* pData = PluginUtils::getPluginJavaData(this);
-	PluginJniMethodInfo t;
-	if (PluginJniHelper::getMethodInfo(t
-		, pData->jclassName.c_str()
-		, "getPluginVersion"
-		, "()Ljava/lang/String;"))
-	{
-		jstring ret = (jstring)(t.env->CallObjectMethod(pData->jobj, t.methodID));
-		verName = PluginJniHelper::jstring2string(ret);
-	}
-	return verName.c_str();
+    PluginJavaData* pData = PluginUtils::getPluginJavaData(this);
+    PluginJniMethodInfo t;
+    if (PluginJniHelper::getMethodInfo(t
+        , pData->jclassName.c_str()
+        , "getPluginVersion"
+        , "()Ljava/lang/String;"))
+    {
+        jstring ret = (jstring)(t.env->CallObjectMethod(pData->jobj, t.methodID));
+        verName = PluginJniHelper::jstring2string(ret);
+    }
+    return verName.c_str();
 }
 
 const char* PluginProtocol::getSDKVersion()
 {
-	std::string verName;
+    std::string verName;
 
-	PluginJavaData* pData = PluginUtils::getPluginJavaData(this);
-	PluginJniMethodInfo t;
-	if (PluginJniHelper::getMethodInfo(t
-		, pData->jclassName.c_str()
-		, "getSDKVersion"
-		, "()Ljava/lang/String;"))
-	{
-		jstring ret = (jstring)(t.env->CallObjectMethod(pData->jobj, t.methodID));
-		verName = PluginJniHelper::jstring2string(ret);
-	}
-	return verName.c_str();
+    PluginJavaData* pData = PluginUtils::getPluginJavaData(this);
+    PluginJniMethodInfo t;
+    if (PluginJniHelper::getMethodInfo(t
+        , pData->jclassName.c_str()
+        , "getSDKVersion"
+        , "()Ljava/lang/String;"))
+    {
+        jstring ret = (jstring)(t.env->CallObjectMethod(pData->jobj, t.methodID));
+        verName = PluginJniHelper::jstring2string(ret);
+    }
+    return verName.c_str();
 }
 
 void PluginProtocol::setDebugMode(bool isDebugMode)
@@ -72,46 +72,67 @@ void PluginProtocol::setDebugMode(bool isDebugMode)
 
 void PluginProtocol::callFuncWithParam(const char* funcName, PluginParam* param)
 {
-	PluginJavaData* pData = PluginUtils::getPluginJavaData(this);
-	if (NULL == pData) {
-		PluginUtils::outputLog("PluginProtocol", "Can't find java data for plugin : %s", this->getPluginName());
-		return;
-	}
+    PluginJavaData* pData = PluginUtils::getPluginJavaData(this);
+    if (NULL == pData) {
+        PluginUtils::outputLog("PluginProtocol", "Can't find java data for plugin : %s", this->getPluginName());
+        return;
+    }
 
-	if (NULL == param)
-	{
-		PluginUtils::callJavaFunctionWithName(this, funcName);
-	} else
-	{
-		switch(param->getCurrentType())
-		{
-		case PluginParam::kParamTypeInt:
-			PluginUtils::callJavaFunctionWithName_oneParam(this, funcName, "(I)V", param->getIntValue());
-			break;
-		case PluginParam::kParamTypeFloat:
-			PluginUtils::callJavaFunctionWithName_oneParam(this, funcName, "(F)V", param->getFloatValue());
-			break;
-		case PluginParam::kParamTypeBool:
-			PluginUtils::callJavaFunctionWithName_oneParam(this, funcName, "(Z)V", param->getBoolValue());
-			break;
-		case PluginParam::kParamTypeString:
-			{
-				jstring jstr = PluginUtils::getEnv()->NewStringUTF(param->getStringValue());
-				PluginUtils::callJavaFunctionWithName_oneParam(this, funcName, "(Ljava/lang/String;)V", jstr);
-				PluginUtils::getEnv()->DeleteLocalRef(jstr);
-			}
-			break;
-		case PluginParam::kParamTypeMap:
-			{
-				jobject jMap = PluginUtils::getJObjFromParam(param);
-				PluginUtils::callJavaFunctionWithName_oneParam(this, funcName, "(Lorg/json/JSONObject;)V", jMap);
-				PluginUtils::getEnv()->DeleteLocalRef(jMap);
-			}
-			break;
-		default:
-			break;
-		}
-	}
+    if (NULL == param)
+    {
+        PluginUtils::callJavaFunctionWithName_oneParam(this, funcName, "()V", NULL);
+    } else
+    {
+        switch(param->getCurrentType())
+        {
+        case PluginParam::kParamTypeInt:
+            PluginUtils::callJavaFunctionWithName_oneParam(this, funcName, "(I)V", param->getIntValue());
+            break;
+        case PluginParam::kParamTypeFloat:
+            PluginUtils::callJavaFunctionWithName_oneParam(this, funcName, "(F)V", param->getFloatValue());
+            break;
+        case PluginParam::kParamTypeBool:
+            PluginUtils::callJavaFunctionWithName_oneParam(this, funcName, "(Z)V", param->getBoolValue());
+            break;
+        case PluginParam::kParamTypeString:
+            {
+                jstring jstr = PluginUtils::getEnv()->NewStringUTF(param->getStringValue());
+                PluginUtils::callJavaFunctionWithName_oneParam(this, funcName, "(Ljava/lang/String;)V", jstr);
+                PluginUtils::getEnv()->DeleteLocalRef(jstr);
+            }
+            break;
+        case PluginParam::kParamTypeStringMap:
+        case PluginParam::kParamTypeMap:
+            {
+                jobject jMap = PluginUtils::getJObjFromParam(param);
+                PluginUtils::callJavaFunctionWithName_oneParam(this, funcName, "(Lorg/json/JSONObject;)V", jMap);
+                PluginUtils::getEnv()->DeleteLocalRef(jMap);
+            }
+            break;
+        default:
+            break;
+        }
+    }
+}
+
+const char* PluginProtocol::callStringFuncWithParam(const char* funcName, PluginParam* param)
+{
+    CALL_JAVA_FUNC(const char*, String, "", "Ljava/lang/String;")
+}
+
+int PluginProtocol::callIntFuncWithParam(const char* funcName, PluginParam* param)
+{
+    CALL_JAVA_FUNC(int, Int, 0, "I")
+}
+
+bool PluginProtocol::callBoolFuncWithParam(const char* funcName, PluginParam* param)
+{
+    CALL_JAVA_FUNC(bool, Bool, false, "Z")
+}
+
+float PluginProtocol::callFloatFuncWithParam(const char* funcName, PluginParam* param)
+{
+    CALL_JAVA_FUNC(float, Float, 0.0f, "F")
 }
 
 }} //namespace cocos2d { namespace plugin {
