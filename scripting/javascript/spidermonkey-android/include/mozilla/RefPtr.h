@@ -36,19 +36,26 @@ template<typename T> OutParamRef<T> byRef(RefPtr<T>&);
  * live RefCounted<T> are controlled by RefPtr<T> and
  * RefPtr<super/subclass of T>.  Upon a transition from refcounted==1
  * to 0, the RefCounted<T> "dies" and is destroyed.  The "destroyed"
- * state is represented in DEBUG builds by refcount==-0xdead.  This
+ * state is represented in DEBUG builds by refcount==0xffffdead.  This
  * state distinguishes use-before-ref (refcount==0) from
- * use-after-destroy (refcount==-0xdead).
+ * use-after-destroy (refcount==0xffffdead).
  */
+#ifdef DEBUG
+namespace detail {
+static const int DEAD = 0xffffdead;
+}
+#endif
+
 template<typename T>
 class RefCounted
 {
     friend class RefPtr<T>;
 
-  public:
+  protected:
     RefCounted() : refCnt(0) { }
-    ~RefCounted() { MOZ_ASSERT(refCnt == -0xdead); }
+    ~RefCounted() { MOZ_ASSERT(refCnt == detail::DEAD); }
 
+  public:
     // Compatibility with nsRefPtr.
     void AddRef() {
       MOZ_ASSERT(refCnt >= 0);
@@ -59,7 +66,7 @@ class RefCounted
       MOZ_ASSERT(refCnt > 0);
       if (0 == --refCnt) {
 #ifdef DEBUG
-        refCnt = -0xdead;
+        refCnt = detail::DEAD;
 #endif
         delete static_cast<T*>(this);
       }

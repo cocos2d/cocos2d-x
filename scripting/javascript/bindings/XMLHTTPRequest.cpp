@@ -139,15 +139,21 @@ void MinXmlHttpRequest::_setHttpRequestHeader() {
     std::vector<string> header;
 
     for (std::map<string,string>::iterator it = request_header.begin(); it != request_header.end(); ++it) {
+
+        const char* first = it->first.c_str();
+        const char* second = it->second.c_str();
+        size_t len = sizeof(char) * (strlen(first) + 3 + strlen(second));
+        char* test = (char*) malloc(len);
+        memset(test, 0,len);
         
-        stringstream value_s;
-        const char* value;
+        strcpy(test, first);
+        strcpy(test + strlen(first) , ": ");
+        strcpy(test + strlen(first) + 2, second);
+
+        header.push_back(test);
         
-        value_s << it->first << ": " << it->second;
-        value = value_s.str().c_str();
-        header.push_back(value);
+        free(test);
         
-                
     }
     
     if (!header.empty()) {
@@ -252,6 +258,7 @@ MinXmlHttpRequest::MinXmlHttpRequest() : onreadystateCallback(NULL), isNetwork(t
     
     http_header.clear();
     request_header.clear();
+    withCredentialsValue = true;
     cx = ScriptingCore::getInstance()->getGlobalContext();
     cc_request = new cocos2d::extension::CCHttpRequest();
 }
@@ -736,7 +743,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, setRequestHeader)
         JSStringWrapper w2(jsValue);
         field = w1;
         value = w2;
-
+        
         // Populate the request_header map.
         _setRequestHeader(field, value);
         

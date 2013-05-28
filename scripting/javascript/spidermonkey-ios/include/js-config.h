@@ -20,7 +20,7 @@
 
 /* Define to 1 if SpiderMonkey should support the ability to perform
    entirely too much GC.  */
-#define JS_GC_ZEAL 1
+/* #undef JS_GC_ZEAL */
 
 /* Define to 1 if the <endian.h> header is present and
    useable.  See jscpucfg.h.  */
@@ -61,8 +61,5 @@
 /* Some mozilla code uses JS-friend APIs that depend on JS_METHODJIT being
    correct. */
 /* #undef JS_METHODJIT */
-
-/* Define to 1 to enable support for E4X (ECMA-357), 0 to disable it. */
-#define JS_HAS_XML_SUPPORT 1
 
 #endif /* js_config_h___ */

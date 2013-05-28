@@ -10,6 +10,7 @@ LOCAL_SRC_FILES := \
 CCConfiguration.cpp \
 CCScheduler.cpp \
 CCCamera.cpp \
+ccFPSImages.c \
 actions/CCAction.cpp \
 actions/CCActionCamera.cpp \
 actions/CCActionCatmullRom.cpp \

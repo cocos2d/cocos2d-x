@@ -120,22 +120,7 @@ struct HugeStringInfo
 // compartments within it.
 struct RuntimeSizes
 {
-    RuntimeSizes()
-      : object(0)
-      , atomsTable(0)
-      , contexts(0)
-      , dtoa(0)
-      , temporary(0)
-      , jaegerCode(0)
-      , ionCode(0)
-      , regexpCode(0)
-      , unusedCode(0)
-      , stack(0)
-      , gcMarker(0)
-      , mathCache(0)
-      , scriptFilenames(0)
-      , scriptSources(0)
-    {}
+    RuntimeSizes() { memset(this, 0, sizeof(RuntimeSizes)); }
 
     size_t object;
     size_t atomsTable;
@@ -146,10 +131,12 @@ struct RuntimeSizes
     size_t ionCode;
     size_t regexpCode;
     size_t unusedCode;
+    size_t regexpData;
     size_t stack;
     size_t gcMarker;
     size_t mathCache;
     size_t scriptFilenames;
+    size_t scriptData;
     size_t scriptSources;
 };
 
@@ -174,9 +161,6 @@ struct CompartmentStats
       , gcHeapScripts(0)
       , gcHeapTypeObjects(0)
       , gcHeapIonCodes(0)
-#if JS_HAS_XML_SUPPORT
-      , gcHeapXML(0)
-#endif
       , objectsExtra()
       , stringCharsNonHuge(0)
       , shapesExtraTreeTables(0)
@@ -213,9 +197,6 @@ struct CompartmentStats
       , gcHeapScripts(other.gcHeapScripts)
       , gcHeapTypeObjects(other.gcHeapTypeObjects)
       , gcHeapIonCodes(other.gcHeapIonCodes)
-#if JS_HAS_XML_SUPPORT
-      , gcHeapXML(other.gcHeapXML)
-#endif
       , objectsExtra(other.objectsExtra)
       , stringCharsNonHuge(other.stringCharsNonHuge)
       , shapesExtraTreeTables(other.shapesExtraTreeTables)
@@ -257,9 +238,6 @@ struct CompartmentStats
     size_t gcHeapScripts;
     size_t gcHeapTypeObjects;
     size_t gcHeapIonCodes;
-#if JS_HAS_XML_SUPPORT
-    size_t gcHeapXML;
-#endif
     ObjectsExtraSizes objectsExtra;
 
     size_t stringCharsNonHuge;
@@ -300,9 +278,6 @@ struct CompartmentStats
         ADD(gcHeapScripts);
         ADD(gcHeapTypeObjects);
         ADD(gcHeapIonCodes);
-    #if JS_HAS_XML_SUPPORT
-        ADD(gcHeapXML);
-    #endif
         objectsExtra.add(cStats.objectsExtra);
 
         ADD(stringCharsNonHuge);
@@ -342,7 +317,7 @@ struct RuntimeStats
       , totals()
       , compartmentStatsVector()
       , currCompartmentStats(NULL)
-      , mallocSizeOf(mallocSizeOf)
+      , mallocSizeOf_(mallocSizeOf)
     {}
 
     RuntimeSizes runtime;
@@ -382,7 +357,7 @@ struct RuntimeStats
     js::Vector<CompartmentStats, 0, js::SystemAllocPolicy> compartmentStatsVector;
     CompartmentStats *currCompartmentStats;
 
-    JSMallocSizeOfFun mallocSizeOf;
+    JSMallocSizeOfFun mallocSizeOf_;
 
     virtual void initExtraCompartmentStats(JSCompartment *c, CompartmentStats *cstats) = 0;
 };
@@ -399,10 +374,10 @@ public:
     // A callback that gets a JSObject's nsISupports pointer, if it has one.
     // Note: this function does *not* addref |iface|.
     typedef JSBool(*GetISupportsFun)(JSObject *obj, nsISupports **iface);
-    GetISupportsFun getISupports;
+    GetISupportsFun getISupports_;
 
     ObjectPrivateVisitor(GetISupportsFun getISupports)
-      : getISupports(getISupports)
+      : getISupports_(getISupports)
     {}
 };
 
