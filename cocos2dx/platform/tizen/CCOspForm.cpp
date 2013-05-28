@@ -116,8 +116,11 @@ CCOspForm::OnTouchReleased(const Control& source, const Point& currentPosition, 
 void CCOspForm::OnTextValueChanged(const Tizen::Ui::Control& source)
 {
     String text = __pKeypad->GetText();
-    AsciiEncoding ascii;
-    m_pfEditTextCallback((const char *)ascii.GetBytesN(text)->GetPointer(), m_pCtx);
+    Utf8Encoding utf8;
+    const char* pText = "";
+    if (!text.IsEmpty())
+        pText = (const char *)utf8.GetBytesN(text)->GetPointer();
+    m_pfEditTextCallback(pText, m_pCtx);
 }
 
 void CCOspForm::OnTextValueChangeCanceled(const Tizen::Ui::Control& source)
