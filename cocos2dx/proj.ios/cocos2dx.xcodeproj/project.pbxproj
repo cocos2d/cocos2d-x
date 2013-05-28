@@ -1481,7 +1481,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0460;
-				ORGANIZATIONNAME = "厦门雅基软件有限公司";
+				ORGANIZATIONNAME = "cocos2d-x";
 			};
 			buildConfigurationList = 1551A339158F2AB200E66CFE /* Build configuration list for PBXProject "cocos2dx" */;
 			compatibilityVersion = "Xcode 3.2";
