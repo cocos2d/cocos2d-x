@@ -31,20 +31,21 @@ namespace cocos2d { namespace plugin {
 
 #define JAVAVM    cocos2d::PluginJniHelper::getJavaVM()
 
-jobject PluginUtils::createJavaMapObject(PluginJniMethodInfo&t, std::map<std::string, std::string>* paramMap)
+jobject PluginUtils::createJavaMapObject(std::map<std::string, std::string>* paramMap)
 {
-	jclass class_Hashtable = t.env->FindClass("java/util/Hashtable"); 
-	jmethodID construct_method = t.env->GetMethodID( class_Hashtable, "<init>","()V"); 
-	jobject obj_Map = t.env->NewObject( class_Hashtable, construct_method, "");
+    JNIEnv* env = getEnv();
+	jclass class_Hashtable = env->FindClass("java/util/Hashtable");
+	jmethodID construct_method = env->GetMethodID( class_Hashtable, "<init>","()V");
+	jobject obj_Map = env->NewObject( class_Hashtable, construct_method, "");
 	if (paramMap != NULL)
 	{
-		jmethodID add_method= t.env->GetMethodID( class_Hashtable,"put","(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"); 
+		jmethodID add_method= env->GetMethodID( class_Hashtable,"put","(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;");
 		for (std::map<std::string, std::string>::const_iterator it = paramMap->begin(); it != paramMap->end(); ++it)
 		{
-			t.env->CallObjectMethod(obj_Map, add_method, t.env->NewStringUTF(it->first.c_str()), t.env->NewStringUTF(it->second.c_str()));  
+			env->CallObjectMethod(obj_Map, add_method, env->NewStringUTF(it->first.c_str()), env->NewStringUTF(it->second.c_str()));
 		}
 	}
-    t.env->DeleteLocalRef(class_Hashtable);
+    env->DeleteLocalRef(class_Hashtable);
     return obj_Map;
 }
 
@@ -193,6 +194,30 @@ jobject PluginUtils::getJObjFromParam(PluginParam* param)
 	case PluginParam::kParamTypeString:
 		obj = env->NewStringUTF(param->getStringValue());
 		break;
+	case PluginParam::kParamTypeStringMap:
+	    {
+	        jclass cls = env->FindClass("org/json/JSONObject");
+            jmethodID mid = env->GetMethodID(cls,"<init>","()V");
+            obj = env->NewObject(cls,mid);
+            std::map<std::string, std::string>::iterator it;
+            std::map<std::string, std::string> mapParam = param->getStrMapValue();
+            for (it = mapParam.begin(); it != mapParam.end(); it++)
+            {
+                PluginJniMethodInfo tInfo;
+                if (PluginJniHelper::getMethodInfo(tInfo, "org/json/JSONObject", "put", "(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;"))
+                {
+                    jstring strKey = tInfo.env->NewStringUTF(it->first.c_str());
+                    jstring strValue = tInfo.env->NewStringUTF(it->second.c_str());
+
+                    tInfo.env->CallObjectMethod(obj, tInfo.methodID, strKey, strValue);
+                    tInfo.env->DeleteLocalRef(tInfo.classID);
+
+                    tInfo.env->DeleteLocalRef(strKey);
+                    tInfo.env->DeleteLocalRef(strValue);
+                }
+            }
+        }
+	    break;
 	case PluginParam::kParamTypeMap:
 		{
 			jclass cls = env->FindClass("org/json/JSONObject");
@@ -206,13 +231,13 @@ jobject PluginUtils::getJObjFromParam(PluginParam* param)
 				PluginJniMethodInfo tInfo;
 				if (PluginJniHelper::getMethodInfo(tInfo, "org/json/JSONObject", "put", "(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;"))
 				{
-					jstring strKey = env->NewStringUTF(it->first.c_str());
+					jstring strKey = tInfo.env->NewStringUTF(it->first.c_str());
 					jobject objValue = PluginUtils::getJObjFromParam(it->second);
 
 					tInfo.env->CallObjectMethod(obj, tInfo.methodID, strKey, objValue);
 					tInfo.env->DeleteLocalRef(tInfo.classID);
 
-					PluginUtils::getEnv()->DeleteLocalRef(strKey);
+					tInfo.env->DeleteLocalRef(strKey);
 					PluginUtils::getEnv()->DeleteLocalRef(objValue);
 				}
 			}

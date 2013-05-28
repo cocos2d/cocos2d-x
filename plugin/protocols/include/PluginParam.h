@@ -37,6 +37,7 @@ public:
 	PluginParam(bool bValue);
 	PluginParam(const char* strValue);
 	PluginParam(std::map<std::string, PluginParam*> mapValue);
+	PluginParam(std::map<std::string, std::string> strMapValue);
 
 	typedef enum{
 		kParamTypeNull = 0,
@@ -44,7 +45,8 @@ public:
 		kParamTypeFloat,
 		kParamTypeBool,
 		kParamTypeString,
-		kParamTypeMap
+		kParamTypeMap,
+		kParamTypeStringMap,
 	} ParamType;
 
 	inline ParamType getCurrentType() {
@@ -71,6 +73,10 @@ public:
 		return m_mapValue;
 	}
 
+	inline std::map<std::string, std::string> getStrMapValue() {
+        return m_strMapValue;
+    }
+
 private:
 	PluginParam();
 
@@ -82,6 +88,7 @@ private:
 	bool m_bValue;
 	std::string m_strValue;
 	std::map<std::string, PluginParam*> m_mapValue;
+	std::map<std::string, std::string> m_strMapValue;
 };
 
 }} //namespace cocos2d { namespace plugin {

@@ -56,4 +56,10 @@ PluginParam::PluginParam(std::map<std::string, PluginParam*> mapValue)
 	m_type = kParamTypeMap;
 }
 
+PluginParam::PluginParam(std::map<std::string, std::string> strMapValue)
+: m_strMapValue(strMapValue)
+{
+    m_type = kParamTypeStringMap;
+}
+
 }} //namespace cocos2d { namespace plugin {

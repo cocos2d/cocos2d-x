@@ -88,7 +88,7 @@ void ProtocolAds::configDeveloperInfo(TAdsDeveloperInfo devInfo)
     		, "(Ljava/util/Hashtable;)V"))
     	{
         	// generate the hashtable from map
-        	jobject obj_Map = PluginUtils::createJavaMapObject(t, &devInfo);
+        	jobject obj_Map = PluginUtils::createJavaMapObject(&devInfo);
 
             // invoke java method
             t.env->CallVoidMethod(pData->jobj, t.methodID, obj_Map);

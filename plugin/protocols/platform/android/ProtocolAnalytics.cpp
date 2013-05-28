@@ -58,7 +58,7 @@ static void callJavaFunctionWithName_string_map(ProtocolAnalytics* thiz, const c
     		, "(Ljava/lang/String;Ljava/util/Hashtable;)V"))
     	{
     		jstring jeventId = t.env->NewStringUTF(keyParam);
-    		jobject obj_Map = PluginUtils::createJavaMapObject(t, paramMap);
+    		jobject obj_Map = PluginUtils::createJavaMapObject(paramMap);
     		t.env->CallVoidMethod(pData->jobj, t.methodID, jeventId, obj_Map);
     		t.env->DeleteLocalRef(jeventId);
     		t.env->DeleteLocalRef(obj_Map);
