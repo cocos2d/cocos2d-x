@@ -39,6 +39,8 @@ public:
     double z;
 
     double timestamp;
+    
+    CCAcceleration(): x(0), y(0), z(0), timestamp(0) {}
 };
 
 /**
