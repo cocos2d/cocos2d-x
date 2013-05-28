@@ -158,6 +158,11 @@ bool CCSprite::initWithTexture(CCTexture2D *pTexture, const CCRect& rect, bool r
         
         m_bRecursiveDirty = false;
         setDirty(false);
+
+        //set them to dirty here to make it updated for the first time
+        setQuadTexCoordsDirty(true);
+        setQuadColorsDirty(true);
+        setQuadVerticlesDirty(true);
         
         m_bOpacityModifyRGB = true;
         
@@ -354,6 +359,7 @@ void CCSprite::setTextureRect(const CCRect& rect, bool rotated, const CCSize& un
         m_sQuad.br.vertices = vertex3(x2, y1, 0);
         m_sQuad.tl.vertices = vertex3(x1, y2, 0);
         m_sQuad.tr.vertices = vertex3(x2, y2, 0);
+        setQuadVerticlesDirty(true);
     }
 }
 
@@ -444,19 +450,37 @@ void CCSprite::setTextureCoords(CCRect rect)
         m_sQuad.tr.texCoords.u = right;
         m_sQuad.tr.texCoords.v = top;
     }
+    setQuadTexCoordsDirty(true);
 }
 
 void CCSprite::updateTransform(void)
 {
+    ccV3F_C4B_T2F_Quad* quad = NULL;
+    unsigned int totalQuads = 0;
+    bool useRefForUpdateQuad = false;
+    bool bDirtyQuad = isQuadColorsDirty() || isQuadTexCoordsDirty();
+    if (m_pobTextureAtlas){
+        totalQuads = m_pobTextureAtlas->getTotalQuads();
+        useRefForUpdateQuad = (totalQuads >= m_uAtlasIndex + 1) && (!bDirtyQuad);
+    }
     CCAssert(m_pobBatchNode, "updateTransform is only valid when CCSprite is being rendered using an CCSpriteBatchNode");
 
     // recalculate matrix only if it is dirty
     if( isDirty() ) {
 
+        if (m_pobTextureAtlas)
+		{
+            if (useRefForUpdateQuad){
+                quad = &((m_pobTextureAtlas->getQuads())[m_uAtlasIndex]);
+            }
+        }
         // If it is not visible, or one of its ancestors is not visible, then do nothing:
         if( !m_bVisible || ( m_pParent && m_pParent != m_pobBatchNode && ((CCSprite*)m_pParent)->m_bShouldBeHidden) )
         {
             m_sQuad.br.vertices = m_sQuad.tl.vertices = m_sQuad.tr.vertices = m_sQuad.bl.vertices = vertex3(0,0,0);
+            if ( useRefForUpdateQuad){
+                quad->br.vertices = quad->tl.vertices = quad->tr.vertices = quad->bl.vertices = vertex3(0,0,0);
+            }
             m_bShouldBeHidden = true;
         }
         else 
@@ -507,14 +531,24 @@ void CCSprite::updateTransform(void)
             m_sQuad.br.vertices = vertex3( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), m_fVertexZ );
             m_sQuad.tl.vertices = vertex3( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), m_fVertexZ );
             m_sQuad.tr.vertices = vertex3( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), m_fVertexZ );
+            if ( useRefForUpdateQuad){
+                quad->br.vertices = quad->tl.vertices = quad->tr.vertices = quad->bl.vertices = vertex3( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), m_fVertexZ );
+            }
         }
 
         // MARMALADE CHANGE: ADDED CHECK FOR NULL, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
         if (m_pobTextureAtlas)
-		{
-            m_pobTextureAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
+        {
+            if ( useRefForUpdateQuad){
+                m_pobTextureAtlas->setDirty(true);
+            }else{
+                m_pobTextureAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
+                setQuadColorsDirty(false);
+                setQuadTexCoordsDirty(false);
+            }
+            setQuadVerticlesDirty(false);
         }
-		
+
         m_bRecursiveDirty = false;
         setDirty(false);
     }
@@ -897,14 +931,22 @@ bool CCSprite::isFlipY(void)
 
 void CCSprite::updateColor(void)
 {
+    ccV3F_C4B_T2F_Quad* quad = NULL;
+    bool bDirtyQuad = isQuadVerticlesDirty() || isQuadTexCoordsDirty();
+    unsigned int totalQuads = 0;
+    bool useRefForUpdateQuad = false;
+    if (m_uAtlasIndex != CCSpriteIndexNotInitialized){
+        totalQuads = m_pobTextureAtlas->getTotalQuads();
+        useRefForUpdateQuad = ( totalQuads >= m_uAtlasIndex + 1) && (!bDirtyQuad);
+    }
     ccColor4B color4 = { _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity };
-    
+
     // special opacity for premultiplied textures
-	if (m_bOpacityModifyRGB)
+    if (m_bOpacityModifyRGB)
     {
-		color4.r *= _displayedOpacity/255.0f;
-		color4.g *= _displayedOpacity/255.0f;
-		color4.b *= _displayedOpacity/255.0f;
+        color4.r *= _displayedOpacity/255.0f;
+        color4.g *= _displayedOpacity/255.0f;
+        color4.b *= _displayedOpacity/255.0f;
     }
 
     m_sQuad.bl.colors = color4;
@@ -912,12 +954,25 @@ void CCSprite::updateColor(void)
     m_sQuad.tl.colors = color4;
     m_sQuad.tr.colors = color4;
 
+    setQuadColorsDirty(true);
     // renders using batch node
     if (m_pobBatchNode)
     {
         if (m_uAtlasIndex != CCSpriteIndexNotInitialized)
         {
-            m_pobTextureAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
+            if(useRefForUpdateQuad){
+                quad = &((m_pobTextureAtlas->getQuads())[m_uAtlasIndex]);
+                quad->bl.colors = color4;
+                quad->br.colors = color4;
+                quad->tl.colors = color4;
+                quad->tr.colors = color4;
+                m_pobTextureAtlas->setDirty(true);
+            }else{
+                m_pobTextureAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
+                setQuadTexCoordsDirty(false);
+                setQuadVerticlesDirty(false);
+            }
+            setQuadColorsDirty(false);
         }
         else
         {
@@ -1048,7 +1103,7 @@ void CCSprite::setBatchNode(CCSpriteBatchNode *pobSpriteBatchNode)
         m_sQuad.br.vertices = vertex3( x2, y1, 0 );
         m_sQuad.tl.vertices = vertex3( x1, y2, 0 );
         m_sQuad.tr.vertices = vertex3( x2, y2, 0 );
-
+        setQuadVerticlesDirty(true);
     } else {
 
         // using batch
