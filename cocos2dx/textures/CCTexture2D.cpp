@@ -40,6 +40,7 @@ THE SOFTWARE.
 #include "support/ccUtils.h"
 #include "platform/CCPlatformMacros.h"
 #include "textures/CCTexturePVR.h"
+#include "textures/CCTextureETC.h"
 #include "CCDirector.h"
 #include "shaders/CCGLProgram.h"
 #include "shaders/ccGLStateCache.h"
@@ -719,6 +720,34 @@ bool CCTexture2D::initWithPVRFile(const char* file)
         CCLOG("cocos2d: Couldn't load PVR image %s", file);
     }
 
+    return bRet;
+}
+
+bool CCTexture2D::initWithETCFile(const char* file)
+{
+    bool bRet = false;
+    // nothing to do with CCObject::init
+    
+    CCTextureETC *etc = new CCTextureETC;
+    bRet = etc->initWithFile(file);
+    
+    if (bRet)
+    {
+        m_uName = etc->getName();
+        m_fMaxS = 1.0f;
+        m_fMaxT = 1.0f;
+        m_uPixelsWide = etc->getWidth();
+        m_uPixelsHigh = etc->getHeight();
+        m_tContentSize = CCSizeMake((float)m_uPixelsWide, (float)m_uPixelsHigh);
+        m_bHasPremultipliedAlpha = true;
+        
+        etc->release();
+    }
+    else
+    {
+        CCLOG("cocos2d: Couldn't load ETC image %s", file);
+    }
+    
     return bRet;
 }
 
