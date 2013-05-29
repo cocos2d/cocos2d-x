@@ -127,7 +127,9 @@ ccLanguageType CCApplication::getCurrentLanguage()
     {
         ret = kLanguageArabic;
     }
-    
+    else if ([languageCode isEqualToString:@"nb"]){
+        ret = kLanguageNorwegian;
+    } 
     return ret;
 }
 
