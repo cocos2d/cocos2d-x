@@ -55,6 +55,7 @@ public:
     virtual void OnTextValueChangeCanceled(const Tizen::Ui::Control& source);
 
     void ShowKeypad(const char* pMessage, Tizen::Ui::Controls::KeypadStyle keypadStyle, Tizen::Ui::Controls::KeypadInputModeCategory keypadCategory, bool bSingleLineEnabled, bool bTextPrediction, int nMaxLength, EditTextCallback pfEditTextCallback, void* pCtx);
+    void ShowKeypad();
     void CloseKeypad();
 
     Tizen::Ui::Controls::Keypad*__pKeypad;
