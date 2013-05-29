@@ -240,8 +240,10 @@ bool CCConfiguration::getBool( const char *key ) const
 {
 	CCObject *ret = m_pDefaults->objectForKey(key);
 	if( ret ) {
-		if( CCBool *obj=dynamic_cast<CCBool*>(ret) )
-			return obj->getValue();
+		if( CCBool *boolobj=dynamic_cast<CCBool*>(ret) )
+			return boolobj->getValue();
+		if( CCString *strobj=dynamic_cast<CCString*>(ret) )
+			return strobj->boolValue();
 		CCAssert(false, "Key found, but from different type");
 	}
 
@@ -260,6 +262,9 @@ double CCConfiguration::getNumber( const char *key ) const
 
 		if( CCInteger *obj=dynamic_cast<CCInteger*>(ret) )
 			return obj->getValue();
+
+		if( CCString *strobj=dynamic_cast<CCString*>(ret) )
+			return strobj->doubleValue();
 
 		CCAssert(false, "Key found, but from different type");
 	}
