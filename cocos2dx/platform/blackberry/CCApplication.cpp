@@ -162,7 +162,10 @@ ccLanguageType CCApplication::getCurrentLanguage()
     {
         ret_language = kLanguageArabic;
     }
-
+    else if (strcmp(language, "nb") == 0)
+    {
+        ret_language = kLanguageNorwegian;
+    }
 	free(language);
 	free(country);
 
