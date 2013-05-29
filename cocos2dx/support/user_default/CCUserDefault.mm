@@ -28,6 +28,7 @@
 #import "../tinyxml2/tinyxml2.h"
 #import "platform/CCPlatformConfig.h"
 #import "platform/CCPlatformMacros.h"
+#import "base64.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
@@ -374,6 +375,70 @@ string CCUserDefault::getStringForKey(const char* pKey, const std::string & defa
     }
 }
 
+CCData* CCUserDefault::getDataForKey(const char* pKey)
+{
+    return getDataForKey(pKey, NULL);
+}
+
+CCData* CCUserDefault::getDataForKey(const char* pKey, CCData* defaultValue)
+{
+#ifdef KEEP_COMPATABILITY
+    tinyxml2::XMLDocument* doc = NULL;
+    tinyxml2::XMLElement* node = getXMLNodeForKey(pKey, &doc);
+    if (node)
+    {
+        if (node->FirstChild())
+        {
+            const char * encodedData = node->FirstChild()->Value();
+            unsigned char * decodedData;
+            int decodedDataLen = base64Decode((unsigned char*)encodedData, (unsigned int)strlen(encodedData), &decodedData);
+
+            if (decodedData) {
+                CCData *ret = CCData::create(decodedData, decodedDataLen);
+                
+                // set value in NSUserDefaults
+                setDataForKey(pKey, ret);
+                
+                delete decodedData;
+                
+                flush();
+                
+                // delete xmle node
+                deleteNode(doc, node);
+                
+                return ret;
+            }
+        }
+        else
+        {
+            // delete xmle node
+            deleteNode(doc, node);
+        }
+    }
+#endif
+    
+    NSData *data = [[NSUserDefaults standardUserDefaults] dataForKey:[NSString stringWithUTF8String:pKey]];
+    if (! data)
+    {
+        return defaultValue;
+    }
+    else
+    {
+        unsigned char *bytes = {};
+        unsigned long size = 0;
+        
+        if (data.length > 0) {
+            bytes = (unsigned char*)data.bytes;
+            size = data.length;
+        }
+        CCData *ret = new CCData(bytes, size);
+        
+        ret->autorelease();
+        
+        return ret;
+    }
+}
+
 void CCUserDefault::setBoolForKey(const char* pKey, bool value)
 {
 #ifdef KEEP_COMPATABILITY
@@ -417,6 +482,14 @@ void CCUserDefault::setStringForKey(const char* pKey, const std::string & value)
 #endif
     
     [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithUTF8String:value.c_str()] forKey:[NSString stringWithUTF8String:pKey]];
+}
+
+void CCUserDefault::setDataForKey(const char* pKey, const CCData& value) {
+#ifdef KEEP_COMPATABILITY
+    deleteNodeByKey(pKey);
+#endif
+        
+    [[NSUserDefaults standardUserDefaults] setObject:[NSData dataWithBytes: value.getBytes() length: value.getSize()] forKey:[NSString stringWithUTF8String:pKey]];
 }
 
 CCUserDefault* CCUserDefault::sharedUserDefault()
