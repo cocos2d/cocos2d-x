@@ -175,10 +175,12 @@ void CCLabelAtlas::updateAtlasValues()
         quads[i].bl.colors = c;
         quads[i].br.colors = c;
     }
-    m_pTextureAtlas->setDirty(true);
-    unsigned int totalQuads = m_pTextureAtlas->getTotalQuads();
-    if (n > totalQuads) {
-        m_pTextureAtlas->increaseTotalQuadsWith(n - totalQuads);
+    if (n > 0 ){
+        m_pTextureAtlas->setDirty(true);
+        unsigned int totalQuads = m_pTextureAtlas->getTotalQuads();
+        if (n > totalQuads) {
+            m_pTextureAtlas->increaseTotalQuadsWith(n - totalQuads);
+        }
     }
 }
 
