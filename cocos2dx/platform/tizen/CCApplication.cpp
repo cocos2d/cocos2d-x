@@ -138,7 +138,10 @@ ccLanguageType CCApplication::getCurrentLanguage()
     {
         ret = kLanguageArabic;
     }
-
+    else if (0 == languageCode.CompareTo(L"nor"))
+    {
+        ret = kLanguageNorwegian;
+    }
     return ret;
 }
 
