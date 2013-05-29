@@ -5,10 +5,12 @@
 
 TESTLAYER_CREATE_FUNC(ConfigurationLoadConfig);
 TESTLAYER_CREATE_FUNC(ConfigurationQuery);
+TESTLAYER_CREATE_FUNC(ConfigurationInvalid);
 
 static NEWTESTFUNC createFunctions[] = {
     CF(ConfigurationLoadConfig),
-	CF(ConfigurationQuery)
+	CF(ConfigurationQuery),
+	CF(ConfigurationInvalid)
 };
 
 static int sceneIdx=-1;
@@ -140,7 +142,7 @@ void ConfigurationLoadConfig::onEnter()
 {
     ConfigurationBase::onEnter();
 
-	CCConfiguration::sharedConfiguration()->loadConfigFile("animations/animations.plist");
+	CCConfiguration::sharedConfiguration()->loadConfigFile("configs/config-test-ok.plist");
 	CCConfiguration::sharedConfiguration()->dumpInfo();
 
 }
@@ -166,4 +168,21 @@ void ConfigurationQuery::onEnter()
 std::string ConfigurationQuery::subtitle()
 {
     return "Using getCString(). Check the console";
+}
+
+//------------------------------------------------------------------
+//
+// ConfigurationInvalid
+//
+//------------------------------------------------------------------
+void ConfigurationInvalid::onEnter()
+{
+    ConfigurationBase::onEnter();
+
+	CCConfiguration::sharedConfiguration()->loadConfigFile("configs/config-test-invalid.plist");
+}
+
+std::string ConfigurationInvalid::subtitle()
+{
+    return "Loading an invalid config file";
 }
