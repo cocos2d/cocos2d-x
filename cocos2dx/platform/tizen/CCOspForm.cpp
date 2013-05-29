@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "CCOspForm.h"
 #include "CCDirector.h"
 #include "CCEGLView.h"
+#include "text_input_node/CCIMEDispatcher.h"
 #include <FBase.h>
 #include <FText.h>
 
@@ -123,7 +124,36 @@ void CCOspForm::OnTextValueChanged(const Tizen::Ui::Control& source)
     if (buffer)
         pText = (const char *)buffer->GetPointer();
 
-    m_pfEditTextCallback(pText, m_pCtx);
+    if (m_pfEditTextCallback)
+    {
+        m_pfEditTextCallback(pText, m_pCtx);
+    }
+    else
+    {
+        const char* pContentText = CCIMEDispatcher::sharedDispatcher()->getContentText();
+
+        for (unsigned int i = strlen(pContentText); i > 0; i--)
+        {
+            CCIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+        }
+
+        std::string text("");
+        if (pText != null)
+        {
+            text = pText;
+            if (text.compare("") == 0)
+            {
+                text = "\n";
+            }
+
+            if (text.at(text.length() - 1) != '\n')
+            {
+                text += '\n';
+            }
+        }
+
+        CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(text.c_str(), text.length());
+    }
 
     if (buffer)
         delete buffer;
@@ -131,7 +161,19 @@ void CCOspForm::OnTextValueChanged(const Tizen::Ui::Control& source)
 
 void CCOspForm::OnTextValueChangeCanceled(const Tizen::Ui::Control& source)
 {
-    m_pfEditTextCallback("", m_pCtx);
+    if (m_pfEditTextCallback)
+    {
+        m_pfEditTextCallback("", m_pCtx);
+    }
+    else
+    {
+        const char* pContentText = CCIMEDispatcher::sharedDispatcher()->getContentText();
+
+        for (unsigned int i = strlen(pContentText); i > 0; i--)
+        {
+            CCIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+        }
+    }
 }
 
 void
@@ -161,6 +203,20 @@ CCOspForm::ShowKeypad(const char* pMessage, KeypadStyle keypadStyle, KeypadInput
     __pKeypad->SetText(String(pMessage));
     __pKeypad->SetShowState(true);
     __pKeypad->Show();
+}
+
+void
+CCOspForm::ShowKeypad()
+{
+    ShowKeypad(
+        CCIMEDispatcher::sharedDispatcher()->getContentText(),
+        KEYPAD_STYLE_NORMAL,
+        KEYPAD_MODE_ALPHA,
+        true,
+        true,
+        100,
+        null,
+        null);
 }
 
 void
