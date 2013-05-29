@@ -173,6 +173,9 @@ ccColor3B CCTileMapAtlas::tileAt(const CCPoint& position)
 
 void CCTileMapAtlas::updateAtlasValueAt(const CCPoint& pos, const ccColor3B& value, unsigned int index)
 {
+    unsigned int capacity = m_pTextureAtlas->getCapacity();
+    CCAssert( index >= 0 && index < capacity, "updateAtlasValueAt: Invalid index");
+
     ccV3F_C4B_T2F_Quad* quad = &((m_pTextureAtlas->getQuads())[index]);
 
     int x = pos.x;
