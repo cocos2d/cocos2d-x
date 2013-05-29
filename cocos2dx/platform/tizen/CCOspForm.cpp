@@ -61,7 +61,8 @@ CCOspForm::OnTerminating(void)
 {
     result r = E_SUCCESS;
 
-    __pKeypad->Destroy();
+    if (__pKeypad)
+        __pKeypad->Destroy();
 
     return r;
 }
@@ -117,10 +118,15 @@ void CCOspForm::OnTextValueChanged(const Tizen::Ui::Control& source)
 {
     String text = __pKeypad->GetText();
     Utf8Encoding utf8;
+    ByteBuffer* buffer = utf8.GetBytesN(text);
     const char* pText = "";
-    if (!text.IsEmpty())
-        pText = (const char *)utf8.GetBytesN(text)->GetPointer();
+    if (buffer)
+        pText = (const char *)buffer->GetPointer();
+
     m_pfEditTextCallback(pText, m_pCtx);
+
+    if (buffer)
+        delete buffer;
 }
 
 void CCOspForm::OnTextValueChangeCanceled(const Tizen::Ui::Control& source)
