@@ -129,8 +129,11 @@ void CCLabelAtlas::updateAtlasValues()
         itemHeightInPixels = m_uItemHeight;
     }
 
+    unsigned int capacity = m_pTextureAtlas->getCapacity();
+    CCAssert( n <= capacity, "updateAtlasValues: Invalid String length");
     ccV3F_C4B_T2F_Quad* quads = m_pTextureAtlas->getQuads();
     for(unsigned int i = 0; i < n; i++) {
+
         unsigned char a = s[i] - m_uMapStartChar;
         float row = (float) (a % m_uItemsPerRow);
         float col = (float) (a / m_uItemsPerRow);
