@@ -396,12 +396,12 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 				NSUInteger length = [string length];
 				NSRange range = NSMakeRange(0, 1);
 				NSUInteger width = 0;
-                NSUInteger lastBreakLocation = 0;
+				NSUInteger lastBreakLocation = 0;
 				for (NSUInteger i = 0; i < length; i++) {
 					range.location = i;
-                    NSString *character = [string substringWithRange:range];
+					NSString *character = [string substringWithRange:range];
 					[lineBreak appendString:character];
-                    if ([@"!?.,-= " rangeOfString:character].location != NSNotFound) { lastBreakLocation = i; }
+					if ([@"!?.,-= " rangeOfString:character].location != NSNotFound) { lastBreakLocation = i; }
 					width = [lineBreak sizeWithAttributes:tokenAttributesDict].width;
 					if (width > pInfo->width) {
 						[lineBreak insertString:@"\r\n" atIndex:(lastBreakLocation > 0) ? lastBreakLocation : [lineBreak length] - 1];
