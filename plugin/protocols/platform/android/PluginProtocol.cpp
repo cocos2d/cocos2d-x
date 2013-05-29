@@ -24,6 +24,8 @@ THE SOFTWARE.
 #include "PluginProtocol.h"
 #include "PluginUtils.h"
 
+#define LOG_TAG     "PluginProtocol"
+
 namespace cocos2d { namespace plugin {
 
 PluginProtocol::~PluginProtocol()
@@ -70,11 +72,11 @@ void PluginProtocol::setDebugMode(bool isDebugMode)
     PluginUtils::callJavaFunctionWithName_oneParam(this, "setDebugMode", "(Z)V", isDebugMode);
 }
 
-void PluginProtocol::callFuncWithParam(const char* funcName, PluginParam* param)
+void PluginProtocol::callFuncWithParam(const char* funcName, PluginParam* param, ...)
 {
     PluginJavaData* pData = PluginUtils::getPluginJavaData(this);
     if (NULL == pData) {
-        PluginUtils::outputLog("PluginProtocol", "Can't find java data for plugin : %s", this->getPluginName());
+        PluginUtils::outputLog(LOG_TAG, "Can't find java data for plugin : %s", this->getPluginName());
         return;
     }
 
@@ -83,20 +85,52 @@ void PluginProtocol::callFuncWithParam(const char* funcName, PluginParam* param)
         PluginUtils::callJavaFunctionWithName_oneParam(this, funcName, "()V", NULL);
     } else
     {
-        switch(param->getCurrentType())
+        PluginParam* pRetParam = NULL;
+        std::map<std::string, PluginParam*> allParams;
+        va_list argp;
+        int argno = 0;
+        PluginParam* pArg = NULL;
+
+        allParams["Param1"] = param;
+        va_start( argp, param );
+        while (1)
+        {
+            pArg = va_arg(argp, PluginParam*);
+            if (pArg == NULL)
+            {
+                break;
+            }
+            argno++;
+            char strKey[8] = { 0 };
+            sprintf(strKey, "Param%d", argno + 1);
+            allParams[strKey] = pArg;
+        }
+        va_end(argp);
+
+        PluginParam tempParam(allParams);
+        if (argno == 0)
+        {
+            pRetParam = param;
+        }
+        else
+        {
+            pRetParam = &tempParam;
+        }
+
+        switch(pRetParam->getCurrentType())
         {
         case PluginParam::kParamTypeInt:
-            PluginUtils::callJavaFunctionWithName_oneParam(this, funcName, "(I)V", param->getIntValue());
+            PluginUtils::callJavaFunctionWithName_oneParam(this, funcName, "(I)V", pRetParam->getIntValue());
             break;
         case PluginParam::kParamTypeFloat:
-            PluginUtils::callJavaFunctionWithName_oneParam(this, funcName, "(F)V", param->getFloatValue());
+            PluginUtils::callJavaFunctionWithName_oneParam(this, funcName, "(F)V", pRetParam->getFloatValue());
             break;
         case PluginParam::kParamTypeBool:
-            PluginUtils::callJavaFunctionWithName_oneParam(this, funcName, "(Z)V", param->getBoolValue());
+            PluginUtils::callJavaFunctionWithName_oneParam(this, funcName, "(Z)V", pRetParam->getBoolValue());
             break;
         case PluginParam::kParamTypeString:
             {
-                jstring jstr = PluginUtils::getEnv()->NewStringUTF(param->getStringValue());
+                jstring jstr = PluginUtils::getEnv()->NewStringUTF(pRetParam->getStringValue());
                 PluginUtils::callJavaFunctionWithName_oneParam(this, funcName, "(Ljava/lang/String;)V", jstr);
                 PluginUtils::getEnv()->DeleteLocalRef(jstr);
             }
@@ -104,7 +138,7 @@ void PluginProtocol::callFuncWithParam(const char* funcName, PluginParam* param)
         case PluginParam::kParamTypeStringMap:
         case PluginParam::kParamTypeMap:
             {
-                jobject jMap = PluginUtils::getJObjFromParam(param);
+                jobject jMap = PluginUtils::getJObjFromParam(pRetParam);
                 PluginUtils::callJavaFunctionWithName_oneParam(this, funcName, "(Lorg/json/JSONObject;)V", jMap);
                 PluginUtils::getEnv()->DeleteLocalRef(jMap);
             }
@@ -115,22 +149,22 @@ void PluginProtocol::callFuncWithParam(const char* funcName, PluginParam* param)
     }
 }
 
-const char* PluginProtocol::callStringFuncWithParam(const char* funcName, PluginParam* param)
+const char* PluginProtocol::callStringFuncWithParam(const char* funcName, PluginParam* param, ...)
 {
     CALL_JAVA_FUNC(const char*, String, "", "Ljava/lang/String;")
 }
 
-int PluginProtocol::callIntFuncWithParam(const char* funcName, PluginParam* param)
+int PluginProtocol::callIntFuncWithParam(const char* funcName, PluginParam* param, ...)
 {
     CALL_JAVA_FUNC(int, Int, 0, "I")
 }
 
-bool PluginProtocol::callBoolFuncWithParam(const char* funcName, PluginParam* param)
+bool PluginProtocol::callBoolFuncWithParam(const char* funcName, PluginParam* param, ...)
 {
     CALL_JAVA_FUNC(bool, Bool, false, "Z")
 }
 
-float PluginProtocol::callFloatFuncWithParam(const char* funcName, PluginParam* param)
+float PluginProtocol::callFloatFuncWithParam(const char* funcName, PluginParam* param, ...)
 {
     CALL_JAVA_FUNC(float, Float, 0.0f, "F")
 }

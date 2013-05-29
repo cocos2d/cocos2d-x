@@ -52,11 +52,11 @@ public:
     /**
      * @brief methods for reflections
      */
-    void callFuncWithParam(const char* funcName, PluginParam* param);
-    const char* callStringFuncWithParam(const char* funcName, PluginParam* param);
-    int callIntFuncWithParam(const char* funcName, PluginParam* param);
-    bool callBoolFuncWithParam(const char* funcName, PluginParam* param);
-    float callFloatFuncWithParam(const char* funcName, PluginParam* param);
+    void callFuncWithParam(const char* funcName, PluginParam* param, ...);
+    const char* callStringFuncWithParam(const char* funcName, PluginParam* param, ...);
+    int callIntFuncWithParam(const char* funcName, PluginParam* param, ...);
+    bool callBoolFuncWithParam(const char* funcName, PluginParam* param, ...);
+    float callFloatFuncWithParam(const char* funcName, PluginParam* param, ...);
 
 protected:
     PluginProtocol() {}

@@ -38,9 +38,6 @@ public class AnalyticsFlurry implements InterfaceAnalytics {
     private Context mContext = null;
     protected static String TAG = "AnalyticsFlurry";
 
-    private static final String KEY_EVENT  = "FlurryEvent";
-    private static final String KEY_PARAMS = "FlurryParams";
-    
     protected static void LogE(String msg, Exception e) {
         Log.e(TAG, msg, e);
         e.printStackTrace();
@@ -136,11 +133,11 @@ public class AnalyticsFlurry implements InterfaceAnalytics {
     protected void logTimedEventBegin(JSONObject eventInfo) {
         LogD("logTimedEventBegin invoked!");
         try{
-            String eventId = eventInfo.getString(KEY_EVENT);
+            String eventId = eventInfo.getString("Param1");
             
-            if (eventInfo.has("FlurryParams"))
+            if (eventInfo.has("Param2"))
             {
-                JSONObject params = eventInfo.getJSONObject(KEY_PARAMS);
+                JSONObject params = eventInfo.getJSONObject("Param2");
                 @SuppressWarnings("rawtypes")
                 Iterator it = params.keys();
                 Hashtable<String, String> paramMap = new Hashtable<String, String>();

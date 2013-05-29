@@ -93,24 +93,24 @@ bool AppDelegate::applicationDidFinishLaunching()
     g_pAnalytics->callFuncWithParam("updateOnlineConfig", NULL);
 
     PluginParam pParam1(true);
-    g_pAnalytics->callFuncWithParam("setReportLocation", &pParam1);
+    g_pAnalytics->callFuncWithParam("setReportLocation", &pParam1, NULL);
 
 	g_pAnalytics->callFuncWithParam("logPageView", NULL);
 
 	PluginParam pParam2("1.1");
-	g_pAnalytics->callFuncWithParam("setVersionName", &pParam2);
+	g_pAnalytics->callFuncWithParam("setVersionName", &pParam2, NULL);
 
 	PluginParam pParam3(20);
-	g_pAnalytics->callFuncWithParam("setAge", &pParam3);
+	g_pAnalytics->callFuncWithParam("setAge", &pParam3, NULL);
 
 	PluginParam pParam4(1);
-	g_pAnalytics->callFuncWithParam("setGender", &pParam4);
+	g_pAnalytics->callFuncWithParam("setGender", &pParam4, NULL);
 
 	PluginParam pParam5("123456");
-	g_pAnalytics->callFuncWithParam("setUserId", &pParam5);
+	g_pAnalytics->callFuncWithParam("setUserId", &pParam5, NULL);
 
 	PluginParam pParam6(false);
-	g_pAnalytics->callFuncWithParam("setUseHttps", &pParam6);
+	g_pAnalytics->callFuncWithParam("setUseHttps", &pParam6, NULL);
 
     // initialize director
     CCDirector *pDirector = CCDirector::sharedDirector();
