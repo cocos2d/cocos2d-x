@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
         
+    frranck 
+        adding norwegian language
+    
     varlucian
         fix the bug that OnEnterTransitionDidFinish was called twice when a node is added in onEnter.
         
