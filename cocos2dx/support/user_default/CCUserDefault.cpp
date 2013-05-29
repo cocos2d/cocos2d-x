@@ -409,7 +409,7 @@ void CCUserDefault::setDataForKey(const char* pKey, const CCData& value) {
 
     char *encodedData = 0;
     
-    int enclodedDataLen = base64Encode(value.getBytes(), value.getSize(), &encodedData);
+    base64Encode(value.getBytes(), value.getSize(), &encodedData);
         
     setValueForKey(pKey, encodedData);
     
