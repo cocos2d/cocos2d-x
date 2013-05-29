@@ -396,6 +396,7 @@ Developers:
     jotel (Jaroslaw Lewandowski)
         Fixing a bug that wrong type of argument signature is used in setAccelerometerIntervalJNI function.
         Fix for broken of ccArrayGetIndexOfObject after merging this commit(076f38c).
+        Explicitly initialising CCAcceleration structure.
 
     MarcelBloemendaal
         Adding secureTextEntry property to CCTextFieldTTF.
