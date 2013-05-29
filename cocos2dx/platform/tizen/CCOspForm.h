@@ -54,7 +54,7 @@ public:
     virtual void OnTextValueChanged(const Tizen::Ui::Control& source);
     virtual void OnTextValueChangeCanceled(const Tizen::Ui::Control& source);
 
-    void ShowKeypad(Tizen::Ui::Controls::KeypadStyle keypadStyle, Tizen::Ui::Controls::KeypadInputModeCategory keypadCategory, bool bSingleLineEnabled, bool bTextPrediction, int nMaxLength, EditTextCallback pfEditTextCallback, void* pCtx);
+    void ShowKeypad(const char* pMessage, Tizen::Ui::Controls::KeypadStyle keypadStyle, Tizen::Ui::Controls::KeypadInputModeCategory keypadCategory, bool bSingleLineEnabled, bool bTextPrediction, int nMaxLength, EditTextCallback pfEditTextCallback, void* pCtx);
     void CloseKeypad();
 
     Tizen::Ui::Controls::Keypad*__pKeypad;
