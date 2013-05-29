@@ -28,7 +28,6 @@ CCBReader/CCBKeyframe.cpp \
 CCBReader/CCBSequence.cpp \
 CCBReader/CCBSequenceProperty.cpp \
 CCBReader/CCBValue.cpp \
-CCBReader/CCData.cpp \
 CCBReader/CCNode+CCBRelativePositioning.cpp \
 GUI/CCControlExtension/CCControl.cpp \
 GUI/CCControlExtension/CCControlButton.cpp \

@@ -36,6 +36,7 @@ SOURCES = ../actions/CCAction.cpp \
 ../cocoa/CCSet.cpp \
 ../cocoa/CCZone.cpp \
 ../cocoa/CCArray.cpp \
+../cocoa/CCData.cpp \
 ../cocoa/CCDictionary.cpp \
 ../cocoa/CCString.cpp \
 ../cocoa/CCDataVisitor.cpp \
