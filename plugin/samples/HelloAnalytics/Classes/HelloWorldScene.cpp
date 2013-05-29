@@ -158,28 +158,19 @@ void HelloWorld::eventMenuCallback(CCObject* pSender)
     case TAG_LOG_ONLINE_CONFIG:
         {
             PluginParam param("abc");
-            CCLog("Online config = %s", g_pAnalytics->callStringFuncWithParam("getConfigParams", &param));
+            CCLog("Online config = %s", g_pAnalytics->callStringFuncWithParam("getConfigParams", &param, NULL));
         }
         break;
     case TAG_LOG_EVENT_ID_DURATION:
         {
             PluginParam event1("book");
             PluginParam dura1(12000);
-            std::map<std::string, PluginParam*> param1;
-            param1["UmengEvent"] = &event1;
-            param1["UmengDuration"] = &dura1;
-            PluginParam param1Map(param1);
-            g_pAnalytics->callFuncWithParam("logEventWithDuration", &param1Map);
+            g_pAnalytics->callFuncWithParam("logEventWithDuration", &event1, &dura1, NULL);
 
             PluginParam event2("book");
             PluginParam dura2(12000);
             PluginParam label("chapter1");
-            std::map<std::string, PluginParam*> param2;
-            param2["UmengEvent"] = &event2;
-            param2["UmengDuration"] = &dura2;
-            param2["UmengLabel"] = &label;
-            PluginParam param2Map(param2);
-            g_pAnalytics->callFuncWithParam("logEventWithDuration", &param2Map);
+            g_pAnalytics->callFuncWithParam("logEventWithDurationLabel", &event2, &dura2, &label, NULL);
 
             PluginParam event3("music");
             PluginParam dura3(2330000);
@@ -187,13 +178,7 @@ void HelloWorld::eventMenuCallback(CCObject* pSender)
             paramMap.insert(LogEventParamPair("type", "popular"));
             paramMap.insert(LogEventParamPair("artist", "JJLin"));
             PluginParam mapValue(paramMap);
-
-            std::map<std::string, PluginParam*> param3;
-            param3["UmengEvent"] = &event3;
-            param3["UmengDuration"] = &dura3;
-            param3["UmengParams"] = &mapValue;
-            PluginParam param3Map(param3);
-            g_pAnalytics->callFuncWithParam("logEventWithDuration", &param3Map);
+            g_pAnalytics->callFuncWithParam("logEventWithDurationParams", &event3, &dura3, &mapValue, NULL);
         }
         break;
     case TAG_LOG_EVENT_BEGIN:
@@ -202,11 +187,7 @@ void HelloWorld::eventMenuCallback(CCObject* pSender)
 
             PluginParam event1("music");
             PluginParam label1("one");
-            std::map<std::string, PluginParam*> param1;
-            param1["UmengEvent"] = &event1;
-            param1["UmengLabel"] = &label1;
-            PluginParam param1Map(param1);
-            g_pAnalytics->callFuncWithParam("logTimedEventWithLabelBegin", &param1Map);
+            g_pAnalytics->callFuncWithParam("logTimedEventWithLabelBegin", &event1, &label1, NULL);
 
             PluginParam event2("music");
             PluginParam label2("flag0");
@@ -214,19 +195,10 @@ void HelloWorld::eventMenuCallback(CCObject* pSender)
             paramMap.insert(LogEventParamPair("type", "popular"));
             paramMap.insert(LogEventParamPair("artist", "JJLin"));
             PluginParam mapValue(paramMap);
-            std::map<std::string, PluginParam*> param2;
-            param2["UmengEvent"] = &event2;
-            param2["UmengLabel"] = &label2;
-            param2["UmengParams"] = &mapValue;
-            PluginParam param2Map(param2);
-            g_pAnalytics->callFuncWithParam("logTimedKVEventBegin", &param2Map);
+            g_pAnalytics->callFuncWithParam("logTimedKVEventBegin", &event2, &label2, &mapValue, NULL);
 
             PluginParam event3("music-kv");
-            std::map<std::string, PluginParam*> param3;
-            param3["FlurryEvent"] = &event3;
-            param3["FlurryParams"] = &mapValue;
-            PluginParam param3Map(param3);
-            g_pAnalytics->callFuncWithParam("logTimedEventBegin", &param3Map);
+            g_pAnalytics->callFuncWithParam("logTimedEventBegin", &event3, &mapValue, NULL);
         }
         break;
     case TAG_LOG_EVENT_END:
@@ -235,22 +207,14 @@ void HelloWorld::eventMenuCallback(CCObject* pSender)
 
             PluginParam event1("music");
             PluginParam label1("one");
-            std::map<std::string, PluginParam*> param1;
-            param1["UmengEvent"] = &event1;
-            param1["UmengLabel"] = &label1;
-            PluginParam param1Map(param1);
-            g_pAnalytics->callFuncWithParam("logTimedEventWithLabelEnd", &param1Map);
+            g_pAnalytics->callFuncWithParam("logTimedEventWithLabelEnd", &event1, &label1, NULL);
 
             PluginParam event2("music");
             PluginParam label2("flag0");
-            std::map<std::string, PluginParam*> param2;
-            param2["UmengEvent"] = &event2;
-            param2["UmengLabel"] = &label2;
-            PluginParam param2Map(param2);
-            g_pAnalytics->callFuncWithParam("logTimedKVEventEnd", &param2Map);
+            g_pAnalytics->callFuncWithParam("logTimedKVEventEnd", &event2, &label2, NULL);
 
             PluginParam event3("music-kv");
-            g_pAnalytics->callFuncWithParam("logTimedEventEnd", &event3);
+            g_pAnalytics->callFuncWithParam("logTimedEventEnd", &event3, NULL);
         }
         break;
     case TAG_MAKE_ME_CRASH:

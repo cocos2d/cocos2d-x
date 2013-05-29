@@ -68,26 +68,57 @@ if (NULL == param)                                                              
     ret = PluginUtils::callJava##retCode##FuncWithName_oneParam(this, funcName, paramCode.c_str(), NULL);     \
 } else                                                                                                        \
 {                                                                                                             \
-    switch(param->getCurrentType())                                                                           \
+    PluginParam* pRetParam = NULL;                                                                            \
+    std::map<std::string, PluginParam*> allParams;                                                            \
+    va_list argp;                                                                                             \
+    int argno = 0;                                                                                            \
+    PluginParam* pArg = NULL;                                                                                 \
+                                                                                                              \
+    allParams["Param1"] = param;                                                                              \
+    va_start( argp, param );                                                                                  \
+    while (1)                                                                                                 \
+    {                                                                                                         \
+        pArg = va_arg(argp, PluginParam*);                                                                    \
+        if (pArg == NULL)                                                                                     \
+        {                                                                                                     \
+            break;                                                                                            \
+        }                                                                                                     \
+        argno++;                                                                                              \
+        char strKey[8] = { 0 };                                                                               \
+        sprintf(strKey, "Param%d", argno + 1);                                                                \
+        allParams[strKey] = pArg;                                                                             \
+    }                                                                                                         \
+    va_end(argp);                                                                                             \
+                                                                                                              \
+    PluginParam tempParam(allParams);                                                                         \
+    if (argno == 0)                                                                                           \
+    {                                                                                                         \
+        pRetParam = param;                                                                                    \
+    }                                                                                                         \
+    else                                                                                                      \
+    {                                                                                                         \
+        pRetParam = &tempParam;                                                                               \
+    }                                                                                                         \
+    switch(pRetParam->getCurrentType())                                                                       \
     {                                                                                                         \
     case PluginParam::kParamTypeInt:                                                                          \
         paramCode = "(I)";                                                                                    \
-        paramCode.append(jRetCode);                                                                          \
-        ret = PluginUtils::callJava##retCode##FuncWithName_oneParam(this, funcName, paramCode.c_str(), param->getIntValue());         \
+        paramCode.append(jRetCode);                                                                           \
+        ret = PluginUtils::callJava##retCode##FuncWithName_oneParam(this, funcName, paramCode.c_str(), pRetParam->getIntValue());         \
         break;                                                                                                \
     case PluginParam::kParamTypeFloat:                                                                        \
         paramCode = "(F)";                                                                                    \
-        paramCode.append(jRetCode);                                                                          \
-        ret = PluginUtils::callJava##retCode##FuncWithName_oneParam(this, funcName, paramCode.c_str(), param->getFloatValue());       \
+        paramCode.append(jRetCode);                                                                           \
+        ret = PluginUtils::callJava##retCode##FuncWithName_oneParam(this, funcName, paramCode.c_str(), pRetParam->getFloatValue());       \
         break;                                                                                                \
     case PluginParam::kParamTypeBool:                                                                         \
         paramCode = "(Z)";                                                                                    \
-        paramCode.append(jRetCode);                                                                          \
-        ret = PluginUtils::callJava##retCode##FuncWithName_oneParam(this, funcName, paramCode.c_str(), param->getBoolValue());        \
+        paramCode.append(jRetCode);                                                                           \
+        ret = PluginUtils::callJava##retCode##FuncWithName_oneParam(this, funcName, paramCode.c_str(), pRetParam->getBoolValue());        \
         break;                                                                                                \
     case PluginParam::kParamTypeString:                                                                       \
         {                                                                                                     \
-            jstring jstr = PluginUtils::getEnv()->NewStringUTF(param->getStringValue());                      \
+            jstring jstr = PluginUtils::getEnv()->NewStringUTF(pRetParam->getStringValue());                  \
             paramCode = "(Ljava/lang/String;)";                                                               \
             paramCode.append(jRetCode);                                                                      \
             ret = PluginUtils::callJava##retCode##FuncWithName_oneParam(this, funcName, paramCode.c_str(), jstr);    \
@@ -97,9 +128,9 @@ if (NULL == param)                                                              
     case PluginParam::kParamTypeStringMap:                                                                    \
     case PluginParam::kParamTypeMap:                                                                          \
         {                                                                                                     \
-            jobject jMap = PluginUtils::getJObjFromParam(param);                                              \
+            jobject jMap = PluginUtils::getJObjFromParam(pRetParam);                                          \
             paramCode = "(Lorg/json/JSONObject;)";                                                            \
-            paramCode.append(jRetCode);                                                                      \
+            paramCode.append(jRetCode);                                                                       \
             ret = PluginUtils::callJava##retCode##FuncWithName_oneParam(this, funcName, paramCode.c_str(), jMap); \
             PluginUtils::getEnv()->DeleteLocalRef(jMap);                                                      \
         }                                                                                                     \

@@ -40,11 +40,6 @@ public class AnalyticsUmeng implements InterfaceAnalytics{
     
     protected static String TAG = "AnalyticsUmeng";
 
-    private static final String KEY_EVENT  = "UmengEvent";
-    private static final String KEY_LABEL  = "UmengLabel";
-    private static final String KEY_PARAMS = "UmengParams";
-    private static final String KEY_DURATION = "UmengDuration";
-    
     protected static void LogE(String msg, Exception e) {
         Log.e(TAG, msg, e);
         e.printStackTrace();
@@ -161,34 +156,58 @@ public class AnalyticsUmeng implements InterfaceAnalytics{
         LogD("logEventWithLabel invoked! event : " + eventInfo.toString());
         if (!isValid()) return;
         try{
-            String eventId = eventInfo.getString(KEY_EVENT);
-            String label = eventInfo.getString(KEY_LABEL);
+            String eventId = eventInfo.getString("Param1");
+            String label = eventInfo.getString("Param2");
             MobclickAgent.onEvent(mContext, eventId, label);
         } catch(Exception e){
             LogE("Exception in logEventWithLabel", e);
         }
     }
     
-    protected void logEventWithDuration(JSONObject eventInfo) {
-        LogD("logEventWithDuration invoked! event : " + eventInfo.toString());
+    protected void logEventWithDurationLabel(JSONObject eventInfo) {
+        LogD("logEventWithDurationLabel invoked! event : " + eventInfo.toString());
         if (!isValid()) return;
-        try{
-            String eventId = eventInfo.getString(KEY_EVENT);
-            int duration = eventInfo.getInt(KEY_DURATION);
-
-            if (eventInfo.has(KEY_LABEL)) {
-                String label = eventInfo.getString(KEY_LABEL);
+        try {
+            String eventId = eventInfo.getString("Param1");
+            int duration = eventInfo.getInt("Param2");
+            if (eventInfo.has("Param3")) {
+                String label = eventInfo.getString("Param3");
                 MobclickAgent.onEventDuration(mContext, eventId, label, duration);
-            } else
-            if (eventInfo.has(KEY_PARAMS)) {
-                JSONObject params = eventInfo.getJSONObject(KEY_PARAMS);
+            } else {
+                MobclickAgent.onEventDuration(mContext, eventId, duration);
+            }
+        } catch (Exception e) {
+            LogE("Exception in logEventWithDurationLabel", e);
+        }
+    }
+
+    protected void logEventWithDurationParams(JSONObject eventInfo) {
+        LogD("logEventWithDurationParams invoked! event : " + eventInfo.toString());
+        if (!isValid()) return;
+        try {
+            String eventId = eventInfo.getString("Param1");
+            int duration = eventInfo.getInt("Param2");
+            if (eventInfo.has("Param3")) {
+                JSONObject params = eventInfo.getJSONObject("Param3");
                 HashMap<String, String> curMap = getMapFromJson(params);
                 MobclickAgent.onEventDuration(mContext, eventId, curMap, duration);
             } else {
                 MobclickAgent.onEventDuration(mContext, eventId, duration);
             }
+        } catch (Exception e) {
+            LogE("Exception in logEventWithDurationParams", e);
+        }
+    }
+
+    protected void logEventWithDuration(JSONObject eventInfo) {
+        LogD("logEventWithDuration invoked! event : " + eventInfo.toString());
+        if (!isValid()) return;
+        try{
+            String eventId = eventInfo.getString("Param1");
+            int duration = eventInfo.getInt("Param2");
+            MobclickAgent.onEventDuration(mContext, eventId, duration);
         } catch(Exception e){
-            LogE("Exception in logEventWithDuration, eventId, duration", e);
+            LogE("Exception in logEventWithDuration", e);
         }
     }
 
@@ -196,8 +215,8 @@ public class AnalyticsUmeng implements InterfaceAnalytics{
         LogD("logTimedEventWithLabelBegin invoked! event : " + eventInfo.toString());
         if (!isValid()) return;
         try{
-            String eventId = eventInfo.getString(KEY_EVENT);
-            String label = eventInfo.getString(KEY_LABEL);
+            String eventId = eventInfo.getString("Param1");
+            String label = eventInfo.getString("Param2");
             MobclickAgent.onEventBegin(mContext, eventId, label);
         } catch(Exception e){
             LogE("Exception in logTimedEventWithLabelBegin", e);
@@ -208,8 +227,8 @@ public class AnalyticsUmeng implements InterfaceAnalytics{
         LogD("logTimedEventWithLabelEnd invoked! event : " + eventInfo.toString());
         if (!isValid()) return;
         try{
-            String eventId = eventInfo.getString(KEY_EVENT);
-            String label = eventInfo.getString(KEY_LABEL);
+            String eventId = eventInfo.getString("Param1");
+            String label = eventInfo.getString("Param2");
             MobclickAgent.onEventEnd(mContext, eventId, label);
         } catch(Exception e){
             LogE("Exception in logTimedEventWithLabelEnd", e);
@@ -220,9 +239,9 @@ public class AnalyticsUmeng implements InterfaceAnalytics{
         LogD("logTimedKVEventBegin invoked! event : " + eventInfo.toString());
         if (!isValid()) return;
         try{
-            String eventId = eventInfo.getString(KEY_EVENT);
-            String label = eventInfo.getString(KEY_LABEL);
-            JSONObject params = eventInfo.getJSONObject(KEY_PARAMS);
+            String eventId = eventInfo.getString("Param1");
+            String label = eventInfo.getString("Param2");
+            JSONObject params = eventInfo.getJSONObject("Param3");
             
             if (params != null) {
                 HashMap<String, String> curMap = getMapFromJson(params);
@@ -237,8 +256,8 @@ public class AnalyticsUmeng implements InterfaceAnalytics{
         LogD("logTimedKVEventEnd invoked! event : " + eventInfo.toString());
         if (!isValid()) return;
         try{
-            String eventId = eventInfo.getString(KEY_EVENT);
-            String label = eventInfo.getString(KEY_LABEL);
+            String eventId = eventInfo.getString("Param1");
+            String label = eventInfo.getString("Param2");
             MobclickAgent.onKVEventEnd(mContext, eventId, label);
         } catch(Exception e){
             LogE("Exception in logTimedKVEventEnd", e);
