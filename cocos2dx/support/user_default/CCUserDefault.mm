@@ -424,7 +424,7 @@ CCData* CCUserDefault::getDataForKey(const char* pKey, CCData* defaultValue)
     }
     else
     {
-        unsigned char *bytes = {};
+        unsigned char *bytes = {0};
         unsigned long size = 0;
         
         if (data.length > 0) {
