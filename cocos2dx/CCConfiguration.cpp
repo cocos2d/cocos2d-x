@@ -282,9 +282,38 @@ void CCConfiguration::loadConfigFile( const char *filename )
 	CCDictionary *dict = CCDictionary::createWithContentsOfFile(filename);
 	CCAssert(dict, "cannot create dictionary");
 
+	// search for metadata
+	bool metadata_ok = false;
+	CCObject *metadata = dict->objectForKey("metadata");
+	if( metadata && dynamic_cast<CCDictionary*>(metadata) ) {
+		CCObject *format_o = static_cast<CCDictionary*>(metadata)->objectForKey("format");
+
+		// XXX: cocos2d-x returns CCStrings when importing from .plist. This bug will be addressed in cocos2d-x v3.x
+		if( format_o && dynamic_cast<CCString*>(format_o) ) {
+			int format = static_cast<CCString*>(format_o)->intValue();
+
+			// Support format: 1
+			if( format == 1 ) {
+				metadata_ok = true;
+			}
+		}
+	}
+
+	if( ! metadata_ok ) {
+		CCLOG("Invalid config format for file: %s", filename);
+		return;
+	}
+
+	CCObject *data = dict->objectForKey("data");
+	if( !data || !dynamic_cast<CCDictionary*>(data) ) {
+		CCLOG("Expected 'data' dict, but not found. Config file: %s", filename);
+		return;
+	}
+
 	// Add all keys in the existing dictionary
+	CCDictionary *data_dict = static_cast<CCDictionary*>(data);
     CCDictElement* element;
-    CCDICT_FOREACH(dict, element)
+    CCDICT_FOREACH(data_dict, element)
     {
 		if( ! m_pDefaults->objectForKey( element->getStrKey() ) )
 			m_pDefaults->setObject(element->getObject(), element->getStrKey() );
