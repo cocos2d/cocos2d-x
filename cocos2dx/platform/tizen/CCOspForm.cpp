@@ -61,7 +61,8 @@ CCOspForm::OnTerminating(void)
 {
     result r = E_SUCCESS;
 
-    __pKeypad->Destroy();
+    if (__pKeypad)
+        __pKeypad->Destroy();
 
     return r;
 }
@@ -116,8 +117,16 @@ CCOspForm::OnTouchReleased(const Control& source, const Point& currentPosition, 
 void CCOspForm::OnTextValueChanged(const Tizen::Ui::Control& source)
 {
     String text = __pKeypad->GetText();
-    AsciiEncoding ascii;
-    m_pfEditTextCallback((const char *)ascii.GetBytesN(text)->GetPointer(), m_pCtx);
+    Utf8Encoding utf8;
+    ByteBuffer* buffer = utf8.GetBytesN(text);
+    const char* pText = "";
+    if (buffer)
+        pText = (const char *)buffer->GetPointer();
+
+    m_pfEditTextCallback(pText, m_pCtx);
+
+    if (buffer)
+        delete buffer;
 }
 
 void CCOspForm::OnTextValueChangeCanceled(const Tizen::Ui::Control& source)
@@ -126,7 +135,7 @@ void CCOspForm::OnTextValueChangeCanceled(const Tizen::Ui::Control& source)
 }
 
 void
-CCOspForm::ShowKeypad(KeypadStyle keypadStyle, KeypadInputModeCategory keypadCategory, bool bSingleLineEnabled, bool bTextPrediction, int nMaxLength, EditTextCallback pfEditTextCallback, void* pCtx)
+CCOspForm::ShowKeypad(const char* pMessage, KeypadStyle keypadStyle, KeypadInputModeCategory keypadCategory, bool bSingleLineEnabled, bool bTextPrediction, int nMaxLength, EditTextCallback pfEditTextCallback, void* pCtx)
 {
     m_pfEditTextCallback = pfEditTextCallback;
     m_pCtx = pCtx;
@@ -149,6 +158,7 @@ CCOspForm::ShowKeypad(KeypadStyle keypadStyle, KeypadInputModeCategory keypadCat
 
     __pKeypad->SetTextPredictionEnabled(bTextPrediction);
     __pKeypad->SetSingleLineEnabled(bSingleLineEnabled);
+    __pKeypad->SetText(String(pMessage));
     __pKeypad->SetShowState(true);
     __pKeypad->Show();
 }
