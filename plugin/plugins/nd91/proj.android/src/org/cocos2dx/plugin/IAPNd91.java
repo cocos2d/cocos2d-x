@@ -26,8 +26,6 @@ package org.cocos2dx.plugin;
 import java.util.Hashtable;
 import java.util.UUID;
 
-import org.cocos2dx.plugin.InterfaceIAP.IAPAdapter;
-
 import com.nd.commplatform.NdCommplatform;
 import com.nd.commplatform.NdErrorCode;
 import com.nd.commplatform.NdMiscCallbackListener;
@@ -40,7 +38,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
-public class IAPNd91 implements IAPAdapter {
+public class IAPNd91 implements InterfaceIAP {
 
 	private static final String LOG_TAG = "IAPNd91";
 	private static Activity mContext = null;
@@ -104,13 +102,13 @@ public class IAPNd91 implements IAPAdapter {
 	public void payForProduct(Hashtable<String, String> info) {
 		LogD("payForProduct invoked " + info.toString());
 		if (! networkReachable()) {
-			payResult(InterfaceIAP.PAYRESULT_FAIL, "网络不可用");
+			payResult(IAPWrapper.PAYRESULT_FAIL, "网络不可用");
 			return;
 		}
 
 		curProductInfo = info;
 		if (curProductInfo == null) {
-			payResult(InterfaceIAP.PAYRESULT_FAIL, "商品信息错误");
+			payResult(IAPWrapper.PAYRESULT_FAIL, "商品信息错误");
 			return;
 		}
 
@@ -150,7 +148,7 @@ public class IAPNd91 implements IAPAdapter {
 	}
 
 	private static void payResult(int ret, String msg) {
-		InterfaceIAP.onPayResult(mNd91, ret, msg);
+		IAPWrapper.onPayResult(mNd91, ret, msg);
 		LogD("Nd91 result : " + ret + " msg : " + msg);
 	}
 
@@ -176,14 +174,14 @@ public class IAPNd91 implements IAPAdapter {
 	 				if (code == NdErrorCode.ND_COM_PLATFORM_SUCCESS) {
 	 					addPayment(curProductInfo);
 	 				} else if (code == NdErrorCode.ND_COM_PLATFORM_ERROR_CANCEL) {
-	 					payResult(InterfaceIAP.PAYRESULT_FAIL, "用户取消登录");
+	 					payResult(IAPWrapper.PAYRESULT_FAIL, "用户取消登录");
 	 				} else {
-	 					payResult(InterfaceIAP.PAYRESULT_FAIL, "用户登录失败");
+	 					payResult(IAPWrapper.PAYRESULT_FAIL, "用户登录失败");
 	 				}
 	 			}
 	 		});
 		} catch (Exception e) {
-			payResult(InterfaceIAP.PAYRESULT_FAIL, "用户登录失败");
+			payResult(IAPWrapper.PAYRESULT_FAIL, "用户登录失败");
 			LogE("User login error", e);
 		}
 	}
@@ -199,7 +197,7 @@ public class IAPNd91 implements IAPAdapter {
 				String strCount = productInfo.get("Nd91ProductCount");
 
 				if (id == null || id.length() == 0) {
-					payResult(InterfaceIAP.PAYRESULT_FAIL, "商品信息错误");
+					payResult(IAPWrapper.PAYRESULT_FAIL, "商品信息错误");
 					break;
 				}
 
@@ -230,24 +228,29 @@ public class IAPNd91 implements IAPAdapter {
 						IAPNd91.LogD("finishPayProcess code : " + code);
 						switch(code){
 						case NdErrorCode.ND_COM_PLATFORM_SUCCESS:
-							IAPNd91.payResult(InterfaceIAP.PAYRESULT_SUCCESS, "购买成功");
+							IAPNd91.payResult(IAPWrapper.PAYRESULT_SUCCESS, "购买成功"); break;
 						case NdErrorCode.ND_COM_PLATFORM_ERROR_PAY_FAILURE:
-							IAPNd91.payResult(InterfaceIAP.PAYRESULT_FAIL, "购买失败"); break;
+							IAPNd91.payResult(IAPWrapper.PAYRESULT_FAIL, "购买失败"); break;
 						case NdErrorCode.ND_COM_PLATFORM_ERROR_PAY_CANCEL:
-							IAPNd91.payResult(InterfaceIAP.PAYRESULT_CANCEL, "取消购买"); break;
+							IAPNd91.payResult(IAPWrapper.PAYRESULT_CANCEL, "取消购买"); break;
 						default:
-							IAPNd91.payResult(InterfaceIAP.PAYRESULT_FAIL, "购买失败"); break;
+							IAPNd91.payResult(IAPWrapper.PAYRESULT_FAIL, "购买失败"); break;
 						}
 					}
     			});
 
 				if (aError != 0) {
-					IAPNd91.payResult(InterfaceIAP.PAYRESULT_FAIL, "您输入参数有错,无法提交购买请求");
+					IAPNd91.payResult(IAPWrapper.PAYRESULT_FAIL, "您输入参数有错,无法提交购买请求");
 				}
 			} while (false);
 		} catch (Exception e) {
 			LogE("Error during payment", e);
-			IAPNd91.payResult(InterfaceIAP.PAYRESULT_FAIL, "支付失败");
+			IAPNd91.payResult(IAPWrapper.PAYRESULT_FAIL, "支付失败");
 		}
+	}
+
+	@Override
+	public String getPluginVersion() {
+		return "0.2.0";
 	}
 }
