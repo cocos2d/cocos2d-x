@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "CCGLBufferedNode.h"
 
-CCGLBufferedNode::CCGLBufferedNode(void)
+CCGLBufferedNode::CCGLBufferedNode()
 {
     for(int i = 0; i < BUFFER_SLOTS; i++)
     {
@@ -32,6 +32,21 @@ CCGLBufferedNode::CCGLBufferedNode(void)
         m_bufferSize[i] = 0;
         m_indexBufferObject[i] = 0;
         m_indexBufferSize[i] = 0;
+    }
+}
+
+CCGLBufferedNode::~CCGLBufferedNode()
+{
+    for(int i = 0; i < BUFFER_SLOTS; i++)
+    {
+        if(m_bufferSize[i])
+        {
+            glDeleteBuffers(1, &(m_bufferObject[i]));
+        }
+        if(m_indexBufferSize[i])
+        {
+            glDeleteBuffers(1, &(m_indexBufferObject[i]));
+        }
     }
 }
 

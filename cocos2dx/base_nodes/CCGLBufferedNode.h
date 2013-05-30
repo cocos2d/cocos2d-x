@@ -24,12 +24,13 @@ THE SOFTWARE.
 #ifndef __CC_GL_BUFFERED_NODE__
 #define __CC_GL_BUFFERED_NODE__
 
-#include <GLES2/gl2.h>
+#include <CCGL.h>
 
 class CCGLBufferedNode
 {
 public:
-    CCGLBufferedNode(void);
+    CCGLBufferedNode();
+    virtual ~CCGLBufferedNode();
 
     /**
      * Load the given data into this CCNode's GL Buffer. Needed for WebGL, as it does not support client-side arrays.
