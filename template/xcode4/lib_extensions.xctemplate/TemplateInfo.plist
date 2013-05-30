@@ -278,30 +278,6 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/extensions/CCBReader/CCData.cpp</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>extensions</string>
-				<string>CCBReader</string>
-			</array>
-			<key>Path</key>
-			<string>libs/extensions/CCBReader/CCData.cpp</string>
-		</dict>
-		<key>libs/extensions/CCBReader/CCData.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>extensions</string>
-				<string>CCBReader</string>
-			</array>
-			<key>Path</key>
-			<string>libs/extensions/CCBReader/CCData.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
 		<key>libs/extensions/CCBReader/CCLabelBMFontLoader.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -1863,8 +1839,6 @@
 		<string>libs/extensions/CCBReader/CCControlButtonLoader.h</string>
 		<string>libs/extensions/CCBReader/CCControlLoader.cpp</string>
 		<string>libs/extensions/CCBReader/CCControlLoader.h</string>
-		<string>libs/extensions/CCBReader/CCData.cpp</string>
-		<string>libs/extensions/CCBReader/CCData.h</string>
 		<string>libs/extensions/CCBReader/CCLabelBMFontLoader.cpp</string>
 		<string>libs/extensions/CCBReader/CCLabelBMFontLoader.h</string>
 		<string>libs/extensions/CCBReader/CCLabelTTFLoader.cpp</string>

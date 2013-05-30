@@ -35,6 +35,7 @@ SOURCES = ../actions/CCAction.cpp \
 ../cocoa/CCDictionary.cpp \
 ../cocoa/CCString.cpp \
 ../cocoa/CCDataVisitor.cpp \
+../cocoa/CCData.cpp \
 ../draw_nodes/CCDrawingPrimitives.cpp \
 ../draw_nodes/CCDrawNode.cpp \
 ../effects/CCGrabber.cpp \
@@ -99,6 +100,7 @@ SOURCES = ../actions/CCAction.cpp \
 ../textures/CCTexture2D.cpp \
 ../textures/CCTextureAtlas.cpp \
 ../textures/CCTextureCache.cpp \
+../textures/CCTextureETC.cpp \
 ../textures/CCTexturePVR.cpp \
 ../tilemap_parallax_nodes/CCParallaxNode.cpp \
 ../tilemap_parallax_nodes/CCTMXLayer.cpp \
