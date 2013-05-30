@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "platform/CCCommon.h"
 #include "platform/CCFileUtils.h"
 #include "../tinyxml2/tinyxml2.h"
+#include "support/base64.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
 
@@ -299,6 +300,44 @@ string CCUserDefault::getStringForKey(const char* pKey, const std::string & defa
 	return ret;
 }
 
+CCData* CCUserDefault::getDataForKey(const char* pKey)
+{
+    return getDataForKey(pKey, NULL);
+}
+
+CCData* CCUserDefault::getDataForKey(const char* pKey, CCData* defaultValue)
+{
+    const char* encodedData = NULL;
+	tinyxml2::XMLElement* rootNode;
+	tinyxml2::XMLDocument* doc;
+	tinyxml2::XMLElement* node;
+	node =  getXMLNodeForKey(pKey, &rootNode, &doc);
+	// find the node
+	if (node && node->FirstChild())
+	{
+        encodedData = (const char*)(node->FirstChild()->Value());
+	}
+    
+	CCData* ret = defaultValue;
+    
+	if (encodedData)
+	{
+        unsigned char * decodedData = NULL;
+        int decodedDataLen = base64Decode((unsigned char*)encodedData, (unsigned int)strlen(encodedData), &decodedData);
+        
+        if (decodedData) {
+            ret = CCData::create(decodedData, decodedDataLen);
+        
+            delete decodedData;
+        }
+	}
+    
+    if (doc) delete doc;
+    
+	return ret;    
+}
+
+
 void CCUserDefault::setBoolForKey(const char* pKey, bool value)
 {
     // save bool value as string
@@ -359,6 +398,22 @@ void CCUserDefault::setStringForKey(const char* pKey, const std::string & value)
     }
 
     setValueForKey(pKey, value.c_str());
+}
+
+void CCUserDefault::setDataForKey(const char* pKey, const CCData& value) {
+    // check key
+    if (! pKey)
+    {
+        return;
+    }
+
+    char *encodedData = 0;
+    
+    base64Encode(value.getBytes(), value.getSize(), &encodedData);
+        
+    setValueForKey(pKey, encodedData);
+    
+    if (encodedData) delete encodedData;
 }
 
 CCUserDefault* CCUserDefault::sharedUserDefault()

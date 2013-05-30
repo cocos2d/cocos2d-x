@@ -24,6 +24,7 @@ THE SOFTWARE.
 #include "CCUserDefault.h"
 #include "platform/CCPlatformConfig.h"
 #include "platform/CCCommon.h"
+#include "support/base64.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
@@ -335,6 +336,80 @@ string CCUserDefault::getStringForKey(const char* pKey, const std::string & defa
     return getStringForKeyJNI(pKey, defaultValue.c_str());
 }
 
+CCData* CCUserDefault::getDataForKey(const char* pKey)
+{
+    return getDataForKey(pKey, NULL);
+}
+
+CCData* CCUserDefault::getDataForKey(const char* pKey, CCData* defaultValue)
+{
+#ifdef KEEP_COMPATABILITY
+    tinyxml2::XMLDocument* doc = NULL;
+    tinyxml2::XMLElement* node = getXMLNodeForKey(pKey, &doc);
+    if (node)
+    {
+        if (node->FirstChild())
+        {
+            const char * encodedData = node->FirstChild()->Value();
+            
+            unsigned char * decodedData;
+            int decodedDataLen = base64Decode((unsigned char*)encodedData, (unsigned int)strlen(encodedData), &decodedData);
+            
+            if (decodedData) {
+                CCData *ret = CCData::create(decodedData, decodedDataLen);
+                
+                // set value in NSUserDefaults
+                setDataForKey(pKey, ret);
+                
+                CC_SAFE_DELETE_ARRAY(decodedData);
+                
+                delete decodedData;
+                
+                flush();
+                
+                // delete xmle node
+                deleteNode(doc, node);
+                
+                return ret;
+            }
+        }
+        else
+        {
+            // delete xmle node
+            deleteNode(doc, node);
+        }
+    }
+#endif
+    
+    char * encodedDefaultData = NULL;
+    unsigned int encodedDefaultDataLen = defaultValue ? base64Encode(defaultValue->getBytes(), defaultValue->getSize(), &encodedDefaultData) : 0;
+    
+    string encodedStr = getStringForKeyJNI(pKey, encodedDefaultData);
+
+    if (encodedDefaultData) {
+        delete encodedDefaultData;
+    }
+
+    CCLOG("ENCODED STRING: --%s--%d", encodedStr.c_str(), encodedStr.length());
+    
+    CCData *ret = defaultValue;
+    
+    unsigned char * decodedData = NULL;
+    int decodedDataLen = base64Decode((unsigned char*)encodedStr.c_str(), (unsigned int)encodedStr.length(), &decodedData);
+
+    CCLOG("AFTER DECoDE. ret %p defaultValue %p", ret, defaultValue);
+    CCLOG("DECoDED DATA: %s %d", decodedData, decodedDataLen);
+    
+    if (decodedData && decodedDataLen) {
+        ret = CCData::create(decodedData, decodedDataLen);
+    }
+
+    CCLOG("RETURNED %p!", ret);
+    
+    return ret;
+}
+
+
 void CCUserDefault::setBoolForKey(const char* pKey, bool value)
 {
 #ifdef KEEP_COMPATABILITY
@@ -379,6 +454,26 @@ void CCUserDefault::setStringForKey(const char* pKey, const std::string & value)
 
     return setStringForKeyJNI(pKey, value.c_str());
 }
+
+void CCUserDefault::setDataForKey(const char* pKey, const CCData& value)
+{
+#ifdef KEEP_COMPATABILITY
+    deleteNodeByKey(pKey);
+#endif
+    
+    CCLOG("SET DATA FOR KEY: --%s--%d", value.getBytes(), value.getSize());
+    char * encodedData = NULL;
+    unsigned int encodedDataLen = base64Encode(value.getBytes(), value.getSize(), &encodedData);
+
+    CCLOG("SET DATA ENCODED: --%s", encodedData);
+    
+    return setStringForKeyJNI(pKey, encodedData);
+    
+    if (encodedData) {
+        delete encodedData;
+    }
+}
+
 
 CCUserDefault* CCUserDefault::sharedUserDefault()
 {

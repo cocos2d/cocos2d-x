@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 #include "platform/CCPlatformMacros.h"
 #include <string>
+#include "cocoa/CCData.h"
 
 NS_CC_BEGIN
 
@@ -79,6 +80,12 @@ public:
     */
     std::string getStringForKey(const char* pKey);
     std::string getStringForKey(const char* pKey, const std::string & defaultValue);
+    /**
+     @brief Get binary data value by key, if the key doesn't exist, a default value will return.
+     You can set the default value, or it is null.
+     */
+    CCData* getDataForKey(const char* pKey);
+    CCData* getDataForKey(const char* pKey, CCData* defaultValue);
 
     // set value methods
 
@@ -102,6 +109,10 @@ public:
     @brief Set string value by key.
     */
     void    setStringForKey(const char* pKey, const std::string & value);
+    /**
+     @brief Set binary data value by key.
+     */
+    void    setDataForKey(const char* pKey, const CCData& value);
     /**
      @brief Save content to xml file
      */
