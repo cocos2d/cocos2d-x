@@ -109,6 +109,8 @@ public:
      */
     static CCString* createWithContentsOfFile(const char* pszFileName);
 
+    virtual void acceptVisitor(CCDataVisitor &visitor);
+
 private:
 
     /** only for internal use */

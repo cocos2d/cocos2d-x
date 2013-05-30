@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "AnalyticsFlurry.h"
 #include "Flurry.h"
+#include "PluginUtilsIOS.h"
 
 namespace cocos2d { namespace plugin {
 
@@ -52,19 +53,14 @@ AnalyticsFlurry::~AnalyticsFlurry()
 
 bool AnalyticsFlurry::init()
 {
-    return true;
+    return PluginUtilsIOS::initOCPlugin(this, "FlurryWrapper");
 }
 
 /** override methods of base class */
 /** Start a new session. */
 void AnalyticsFlurry::startSession(const char* appKey)
 {
-    if (NULL == appKey || strlen(appKey) == 0) {
-        FlurryLogD("appkey is invalid!");
-        return;
-    }
-    NSString* pKey = [NSString stringWithUTF8String:appKey];
-    [Flurry startSession:pKey];
+    ProtocolAnalytics::startSession(appKey);
 }
 
 /** Stop a session. 
@@ -72,83 +68,43 @@ void AnalyticsFlurry::startSession(const char* appKey)
 */
 void AnalyticsFlurry::stopSession()
 {
+    ProtocolAnalytics::stopSession();
 }
 
 /** Set whether needs to output logs to console.*/
 void AnalyticsFlurry::setDebugMode(bool debug)
 {
     s_bDebugable = debug;
-    [Flurry setDebugLogEnabled:debug];
+    ProtocolAnalytics::setDebugMode(debug);
 }
     
 /** Set the timeout for expiring a session. */
 void AnalyticsFlurry::setSessionContinueMillis(long millis)
 {
-    int seconds = (int)(millis / 1000);
-    [Flurry setSessionContinueSeconds:seconds];
+    ProtocolAnalytics::setSessionContinueMillis(millis);
 }
 
 /** log an error */
 void AnalyticsFlurry::logError(const char* errorId, const char* message)
 {
-    if (NULL == errorId || strlen(errorId) == 0) {
-        FlurryLogD("errorId is invalid!");
-        return;
-    }
-    NSString* pId = [NSString stringWithUTF8String:errorId];
-    NSString* msg = nil;
-    if (NULL == message) {
-        msg = @"";
-    } else {
-        msg = [NSString stringWithUTF8String:message];
-    }
-    [Flurry logError:pId message:msg exception:nil];
+    ProtocolAnalytics::logError(errorId, message);
 }
 
 /** log an event. */
 void AnalyticsFlurry::logEvent(const char* eventId, LogEventParamMap* paramMap)
 {
-    if (NULL == eventId || strlen(eventId) == 0) {
-        FlurryLogD("eventId is invalid!");
-        return;
-    }
-    
-    NSString* pId = [NSString stringWithUTF8String:eventId];
-    if (NULL == paramMap) {
-        [Flurry logEvent:pId];
-    } else {
-        NSMutableDictionary* dict = [NSMutableDictionary dictionary];
-        LogEventParamMap::iterator it;
-        for (it = paramMap->begin(); it != paramMap->end(); it++) {
-            std::string key = it->first;
-            std::string value = it->second;
-            NSString* pKey = [NSString stringWithUTF8String:key.c_str()];
-            NSString* pValue = [NSString stringWithUTF8String:value.c_str()];
-            [dict setObject:pValue forKey:pKey];
-        }
-        [Flurry logEvent:pId withParameters:dict];
-    }
+    ProtocolAnalytics::logEvent(eventId, paramMap);
 }
 
 void AnalyticsFlurry::logTimedEventBegin(const char* eventId)
 {
-    if (NULL == eventId || strlen(eventId) == 0) {
-        FlurryLogD("eventId is invalid!");
-        return;
-    }
-    NSString* pId = [NSString stringWithUTF8String:eventId];
-    [Flurry logEvent:pId timed:YES];
+    ProtocolAnalytics::logTimedEventBegin(eventId);
 }
 
 /** end a timed event */
 void AnalyticsFlurry::logTimedEventEnd(const char* eventId)
 {
-    if (NULL == eventId || strlen(eventId) == 0) {
-        FlurryLogD("eventId is invalid!");
-        return;
-    }
-    NSString* pId = [NSString stringWithUTF8String:eventId];
-    [Flurry endTimedEvent:pId withParameters:nil];
+    ProtocolAnalytics::logTimedEventEnd(eventId);
 }
 
 /** Whether to catch uncaught exceptions to server.
@@ -156,17 +112,18 @@ void AnalyticsFlurry::logTimedEventEnd(const char* eventId)
  */
 void AnalyticsFlurry::setCaptureUncaughtException(bool enabled)
 {
+    ProtocolAnalytics::setCaptureUncaughtException(enabled);
 }
 
 const char* AnalyticsFlurry::getSDKVersion()
 {
-    NSString* ver = [Flurry getFlurryAgentVersion];
-    return [ver UTF8String];
+    return ProtocolAnalytics::getSDKVersion();
 }
 
 void AnalyticsFlurry::setAge(int age)
 {
-    [Flurry setAge:age];
+    NSNumber* numAge = [NSNumber numberWithInt:age];
+    PluginUtilsIOS::callOCFunctionWithName_Object(this, "setAge:", numAge);
 }
 
 void AnalyticsFlurry::setGender(Gender gender)
@@ -175,7 +132,7 @@ void AnalyticsFlurry::setGender(Gender gender)
     if (gender == FEMALE) {
         ret = @"f";
     }
-    [Flurry setGender:ret];
+    PluginUtilsIOS::callOCFunctionWithName_Object(this, "setGender:", ret);
 }
 
 void AnalyticsFlurry::setUserId(const char* userId)
@@ -185,18 +142,18 @@ void AnalyticsFlurry::setUserId(const char* userId)
         return;
     }
     NSString* pUserID = [NSString stringWithUTF8String:userId];
-    [Flurry setUserID:pUserID];
+    PluginUtilsIOS::callOCFunctionWithName_Object(this, "setUserId:", pUserID);
 }
 
 void AnalyticsFlurry::logPageView()
 {
-    [Flurry logPageView];
+    PluginUtilsIOS::callOCFunctionWithName(this, "logPageView");
 }
-    
+
 void AnalyticsFlurry::setVersionName(const char* versionName)
 {
     NSString* pVer = [NSString stringWithUTF8String:versionName];
-    [Flurry setAppVersion:pVer];
+    PluginUtilsIOS::callOCFunctionWithName_Object(this, "setVersionName:", pVer);
 }
 
 /**
@@ -204,7 +161,7 @@ void AnalyticsFlurry::setVersionName(const char* versionName)
  */
 void AnalyticsFlurry::setUseHttps(bool useHttps)
 {
-    
+    FlurryLogD("setUseHttps in flurry not available on iOS");
 }
 
 /**
@@ -212,7 +169,7 @@ void AnalyticsFlurry::setUseHttps(bool useHttps)
  */
 void AnalyticsFlurry::setReportLocation(bool enabled)
 {
-    
+    FlurryLogD("setReportLocation in flurry not available on iOS");
 }
 
 void AnalyticsFlurry::logTimedEventBegin(const char* eventId, LogEventParamMap* paramMap)
@@ -221,21 +178,20 @@ void AnalyticsFlurry::logTimedEventBegin(const char* eventId, LogEventParamMap* 
         FlurryLogD("eventId is invalid!");
         return;
     }
-    
+
     NSString* pId = [NSString stringWithUTF8String:eventId];
     if (NULL == paramMap) {
-        [Flurry logEvent:pId timed:YES];
+        this->logTimedEventBegin(eventId);
     } else {
-        NSMutableDictionary* dict = [NSMutableDictionary dictionary];
-        LogEventParamMap::iterator it;
-        for (it = paramMap->begin(); it != paramMap->end(); it++) {
-            std::string key = it->first;
-            std::string value = it->second;
-            NSString* pKey = [NSString stringWithUTF8String:key.c_str()];
-            NSString* pValue = [NSString stringWithUTF8String:value.c_str()];
-            [dict setObject:pValue forKey:pKey];
+        NSMutableDictionary* dict = PluginUtilsIOS::createDictFromMap(paramMap);
+        PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
+        if (pData) {
+            id pOCObj = pData->obj;
+            SEL selector = NSSelectorFromString(@"logTimedEventBegin:withParam:");
+            if ([pOCObj respondsToSelector:selector]) {
+                [pOCObj performSelector:selector withObject:pId withObject:dict];
+            }
         }
-        [Flurry logEvent:pId withParameters:dict timed:YES];
     }
 }
     
@@ -248,18 +204,17 @@ void AnalyticsFlurry::logTimedEventEnd(const char* eventId, LogEventParamMap* pa
     
     NSString* pId = [NSString stringWithUTF8String:eventId];
     if (NULL == paramMap) {
-        [Flurry endTimedEvent:pId withParameters:nil];
+        this->logTimedEventEnd(eventId);
     } else {
-        NSMutableDictionary* dict = [NSMutableDictionary dictionary];
-        LogEventParamMap::iterator it;
-        for (it = paramMap->begin(); it != paramMap->end(); it++) {
-            std::string key = it->first;
-            std::string value = it->second;
-            NSString* pKey = [NSString stringWithUTF8String:key.c_str()];
-            NSString* pValue = [NSString stringWithUTF8String:value.c_str()];
-            [dict setObject:pValue forKey:pKey];
+        NSMutableDictionary* dict = PluginUtilsIOS::createDictFromMap(paramMap);
+        PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
+        if (pData) {
+            id pOCObj = pData->obj;
+            SEL selector = NSSelectorFromString(@"logTimedEventEnd:withParam:");
+            if ([pOCObj respondsToSelector:selector]) {
+                [pOCObj performSelector:selector withObject:pId withObject:dict];
+            }
         }
-        [Flurry endTimedEvent:pId withParameters:dict];
     }
 }
 

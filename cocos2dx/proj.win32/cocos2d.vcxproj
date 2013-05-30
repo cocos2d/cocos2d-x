@@ -141,9 +141,11 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
   <ItemGroup>
     <ClCompile Include="..\base_nodes\CCAtlasNode.cpp" />
     <ClCompile Include="..\base_nodes\CCNode.cpp" />
+    <ClCompile Include="..\ccFPSImages.c" />
     <ClCompile Include="..\cocoa\CCAffineTransform.cpp" />
     <ClCompile Include="..\cocoa\CCArray.cpp" />
     <ClCompile Include="..\cocoa\CCAutoreleasePool.cpp" />
+    <ClCompile Include="..\cocoa\CCDataVisitor.cpp" />
     <ClCompile Include="..\cocoa\CCDictionary.cpp" />
     <ClCompile Include="..\cocoa\CCGeometry.cpp" />
     <ClCompile Include="..\cocoa\CCNS.cpp" />
@@ -228,6 +230,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\textures\CCTexture2D.cpp" />
     <ClCompile Include="..\textures\CCTextureAtlas.cpp" />
     <ClCompile Include="..\textures\CCTextureCache.cpp" />
+    <ClCompile Include="..\textures\CCTextureETC.cpp" />
     <ClCompile Include="..\textures\CCTexturePVR.cpp" />
     <ClCompile Include="..\tileMap_parallax_nodes\CCParallaxNode.cpp" />
     <ClCompile Include="..\tileMap_parallax_nodes\CCTileMapAtlas.cpp" />
@@ -265,10 +268,15 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
   <ItemGroup>
     <ClInclude Include="..\base_nodes\CCAtlasNode.h" />
     <ClInclude Include="..\base_nodes\CCNode.h" />
+    <ClInclude Include="..\ccFPSImages.h" />
     <ClInclude Include="..\cocoa\CCAffineTransform.h" />
     <ClInclude Include="..\cocoa\CCArray.h" />
     <ClInclude Include="..\cocoa\CCAutoreleasePool.h" />
+    <ClInclude Include="..\cocoa\CCBool.h" />
+    <ClInclude Include="..\cocoa\CCDataVisitor.h" />
     <ClInclude Include="..\cocoa\CCDictionary.h" />
+    <ClInclude Include="..\cocoa\CCDouble.h" />
+    <ClInclude Include="..\cocoa\CCFloat.h" />
     <ClInclude Include="..\cocoa\CCGeometry.h" />
     <ClInclude Include="..\cocoa\CCInteger.h" />
     <ClInclude Include="..\cocoa\CCNS.h" />
@@ -382,6 +390,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\textures\CCTexture2D.h" />
     <ClInclude Include="..\textures\CCTextureAtlas.h" />
     <ClInclude Include="..\textures\CCTextureCache.h" />
+    <ClInclude Include="..\textures\CCTextureETC.h" />
     <ClInclude Include="..\textures\CCTexturePVR.h" />
     <ClInclude Include="..\tileMap_parallax_nodes\CCParallaxNode.h" />
     <ClInclude Include="..\tileMap_parallax_nodes\CCTileMapAtlas.h" />

@@ -270,14 +270,17 @@
 		1A40DFDB1727AE7E006D4861 /* spine-cocos2dx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40DFC61727AE7E006D4861 /* spine-cocos2dx.cpp */; };
 		1A40DFDF1727AF48006D4861 /* SpineTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40DFDD1727AF48006D4861 /* SpineTest.cpp */; };
 		1A40DFE11727AFBF006D4861 /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 1A40DFE01727AFBF006D4861 /* spine */; };
+		1A60BF64173CD9E80054773B /* DataVisitorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A60BF62173CD9E80054773B /* DataVisitorTest.cpp */; };
 		1A75E96016F85FDB00BA80BD /* TimelineCallbackTestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A75E95E16F85FDB00BA80BD /* TimelineCallbackTestLayer.cpp */; };
 		1AB2D72816B6804D00D72C48 /* FileUtilsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB2D72616B6804D00D72C48 /* FileUtilsTest.cpp */; };
 		1AB2D72A16B681F900D72C48 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 1AB2D72916B681F900D72C48 /* Misc */; };
+		1ABA2873174DAF67007A6C10 /* ConfigurationTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ABA2871174DAF67007A6C10 /* ConfigurationTest.cpp */; };
 		41BC70E415BF81A5006A0A6C /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70DA15BF81A5006A0A6C /* AppController.mm */; };
 		41BC70E515BF81A5006A0A6C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DC15BF81A5006A0A6C /* InfoPlist.strings */; };
 		41BC70E615BF81A5006A0A6C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DE15BF81A5006A0A6C /* MainMenu.xib */; };
 		41BC70E715BF81A5006A0A6C /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70E015BF81A5006A0A6C /* Icon.icns */; };
 		41BC70E815BF81A5006A0A6C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70E115BF81A5006A0A6C /* main.m */; };
+		467373111739F4270034BF94 /* TextureAtlasEncryptionTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4673730F1739F4270034BF94 /* TextureAtlasEncryptionTest.cpp */; };
 		8C583FA6169DB64700F63A10 /* EditBoxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8C583FA4169DB64700F63A10 /* EditBoxTest.cpp */; };
 		8C583FAD169DB6D500F63A10 /* CCEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8C583FA8169DB6D500F63A10 /* CCEditBox.cpp */; };
 		8C583FAE169DB6D500F63A10 /* CCEditBoxImplMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8C583FAC169DB6D500F63A10 /* CCEditBoxImplMac.mm */; };
@@ -862,12 +865,16 @@
 		1A40DFDD1727AF48006D4861 /* SpineTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpineTest.cpp; sourceTree = "<group>"; };
 		1A40DFDE1727AF48006D4861 /* SpineTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpineTest.h; sourceTree = "<group>"; };
 		1A40DFE01727AFBF006D4861 /* spine */ = {isa = PBXFileReference; lastKnownFileType = folder; path = spine; sourceTree = "<group>"; };
+		1A60BF62173CD9E80054773B /* DataVisitorTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataVisitorTest.cpp; sourceTree = "<group>"; };
+		1A60BF63173CD9E80054773B /* DataVisitorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataVisitorTest.h; sourceTree = "<group>"; };
 		1A75E95D16F85FDB00BA80BD /* TimelineCallbackLayerLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineCallbackLayerLoader.h; sourceTree = "<group>"; };
 		1A75E95E16F85FDB00BA80BD /* TimelineCallbackTestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TimelineCallbackTestLayer.cpp; sourceTree = "<group>"; };
 		1A75E95F16F85FDB00BA80BD /* TimelineCallbackTestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineCallbackTestLayer.h; sourceTree = "<group>"; };
 		1AB2D72616B6804D00D72C48 /* FileUtilsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileUtilsTest.cpp; sourceTree = "<group>"; };
 		1AB2D72716B6804D00D72C48 /* FileUtilsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileUtilsTest.h; sourceTree = "<group>"; };
 		1AB2D72916B681F900D72C48 /* Misc */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Misc; sourceTree = "<group>"; };
+		1ABA2871174DAF67007A6C10 /* ConfigurationTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigurationTest.cpp; sourceTree = "<group>"; };
+		1ABA2872174DAF67007A6C10 /* ConfigurationTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigurationTest.h; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* TestCpp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestCpp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41BC70D915BF81A5006A0A6C /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = SOURCE_ROOT; };
 		41BC70DA15BF81A5006A0A6C /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = SOURCE_ROOT; };
@@ -877,6 +884,8 @@
 		41BC70E115BF81A5006A0A6C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = SOURCE_ROOT; };
 		41BC70E215BF81A5006A0A6C /* Test_Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Test_Info.plist; sourceTree = SOURCE_ROOT; };
 		41BC70E315BF81A5006A0A6C /* Test_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test_Prefix.pch; sourceTree = SOURCE_ROOT; };
+		4673730F1739F4270034BF94 /* TextureAtlasEncryptionTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextureAtlasEncryptionTest.cpp; sourceTree = "<group>"; };
+		467373101739F4270034BF94 /* TextureAtlasEncryptionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureAtlasEncryptionTest.h; sourceTree = "<group>"; };
 		8C583FA4169DB64700F63A10 /* EditBoxTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EditBoxTest.cpp; path = ../../Classes/ExtensionsTest/EditBoxTest/EditBoxTest.cpp; sourceTree = "<group>"; };
 		8C583FA5169DB64700F63A10 /* EditBoxTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditBoxTest.h; path = ../../Classes/ExtensionsTest/EditBoxTest/EditBoxTest.h; sourceTree = "<group>"; };
 		8C583FA8169DB6D500F63A10 /* CCEditBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCEditBox.cpp; path = CCEditBox/CCEditBox.cpp; sourceTree = "<group>"; };
@@ -924,21 +933,13 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				15AA9F3A15B7EF960033D6C2 /* AppDelegate.cpp */,
-				15AA9CAA15B7EC460033D6C2 /* controller.cpp */,
-				15AA9D3115B7EC460033D6C2 /* testBasic.cpp */,
-				15A048CE163784C700F7CC0A /* VisibleRect.cpp */,
-				15AA9F3B15B7EF960033D6C2 /* AppDelegate.h */,
-				15AA9CAB15B7EC460033D6C2 /* controller.h */,
-				15AA9D3215B7EC460033D6C2 /* testBasic.h */,
-				15AA9D3315B7EC460033D6C2 /* testResource.h */,
-				15AA9D3415B7EC460033D6C2 /* tests.h */,
-				15A048CF163784C700F7CC0A /* VisibleRect.h */,
 				15AA9C4115B7EC450033D6C2 /* AccelerometerTest */,
 				15AA9C4415B7EC450033D6C2 /* ActionManagerTest */,
 				15AA9C4715B7EC450033D6C2 /* ActionsEaseTest */,
 				15AA9C4A15B7EC450033D6C2 /* ActionsProgressTest */,
 				15AA9C4D15B7EC450033D6C2 /* ActionsTest */,
+				15AA9F3A15B7EF960033D6C2 /* AppDelegate.cpp */,
+				15AA9F3B15B7EF960033D6C2 /* AppDelegate.h */,
 				15AA9C5015B7EC450033D6C2 /* Box2DTest */,
 				15AA9C5315B7EC450033D6C2 /* Box2DTestBed */,
 				15AA9C8915B7EC460033D6C2 /* BugsTest */,
@@ -946,8 +947,12 @@
 				15AA9CA415B7EC460033D6C2 /* ClickAndMoveTest */,
 				15C647E9165F2B39007D4F18 /* ClippingNodeTest */,
 				15AA9CA715B7EC460033D6C2 /* CocosDenshionTest */,
+				1ABA2870174DAF67007A6C10 /* ConfigurationTest */,
+				15AA9CAA15B7EC460033D6C2 /* controller.cpp */,
+				15AA9CAB15B7EC460033D6C2 /* controller.h */,
 				15AA9CAC15B7EC460033D6C2 /* CurlTest */,
 				15AA9CAF15B7EC460033D6C2 /* CurrentLanguageTest */,
+				1A60BF61173CD9E80054773B /* DataVisitorTest */,
 				15AA9CB215B7EC460033D6C2 /* DrawPrimitivesTest */,
 				15AA9CB515B7EC460033D6C2 /* EffectsAdvancedTest */,
 				15AA9CB815B7EC460033D6C2 /* EffectsTest */,
@@ -972,13 +977,20 @@
 				15AA9D2B15B7EC460033D6C2 /* ShaderTest */,
 				1A40DFDC1727AF48006D4861 /* SpineTest */,
 				15AA9D2E15B7EC460033D6C2 /* SpriteTest */,
+				15AA9D3115B7EC460033D6C2 /* testBasic.cpp */,
+				15AA9D3215B7EC460033D6C2 /* testBasic.h */,
+				15AA9D3315B7EC460033D6C2 /* testResource.h */,
+				15AA9D3415B7EC460033D6C2 /* tests.h */,
 				15AA9D3515B7EC460033D6C2 /* TextInputTest */,
 				15AA9D3815B7EC460033D6C2 /* Texture2dTest */,
 				15AA9D3B15B7EC460033D6C2 /* TextureCacheTest */,
+				4673730E1739F4270034BF94 /* TexturePackerEncryptionTest */,
 				15AA9D3E15B7EC460033D6C2 /* TileMapTest */,
 				15AA9D4115B7EC460033D6C2 /* TouchesTest */,
 				15AA9D4815B7EC460033D6C2 /* TransitionsTest */,
 				15AA9D4B15B7EC460033D6C2 /* UserDefaultTest */,
+				15A048CE163784C700F7CC0A /* VisibleRect.cpp */,
+				15A048CF163784C700F7CC0A /* VisibleRect.h */,
 				15AA9D4E15B7EC460033D6C2 /* ZwoptexTest */,
 			);
 			name = Classes;
@@ -2209,6 +2221,16 @@
 			path = ../Classes/SpineTest;
 			sourceTree = "<group>";
 		};
+		1A60BF61173CD9E80054773B /* DataVisitorTest */ = {
+			isa = PBXGroup;
+			children = (
+				1A60BF62173CD9E80054773B /* DataVisitorTest.cpp */,
+				1A60BF63173CD9E80054773B /* DataVisitorTest.h */,
+			);
+			name = DataVisitorTest;
+			path = ../Classes/DataVisitorTest;
+			sourceTree = "<group>";
+		};
 		1A75E95C16F85FDB00BA80BD /* TimelineCallbackTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -2228,6 +2250,16 @@
 			);
 			name = FileUtilsTest;
 			path = ../Classes/FileUtilsTest;
+			sourceTree = "<group>";
+		};
+		1ABA2870174DAF67007A6C10 /* ConfigurationTest */ = {
+			isa = PBXGroup;
+			children = (
+				1ABA2871174DAF67007A6C10 /* ConfigurationTest.cpp */,
+				1ABA2872174DAF67007A6C10 /* ConfigurationTest.h */,
+			);
+			name = ConfigurationTest;
+			path = ../Classes/ConfigurationTest;
 			sourceTree = "<group>";
 		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
@@ -2287,6 +2319,16 @@
 			);
 			path = en.lproj;
 			sourceTree = SOURCE_ROOT;
+		};
+		4673730E1739F4270034BF94 /* TexturePackerEncryptionTest */ = {
+			isa = PBXGroup;
+			children = (
+				4673730F1739F4270034BF94 /* TextureAtlasEncryptionTest.cpp */,
+				467373101739F4270034BF94 /* TextureAtlasEncryptionTest.h */,
+			);
+			name = TexturePackerEncryptionTest;
+			path = ../Classes/TexturePackerEncryptionTest;
+			sourceTree = "<group>";
 		};
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
@@ -2693,6 +2735,9 @@
 				1A40DFDA1727AE7E006D4861 /* SlotData.cpp in Sources */,
 				1A40DFDB1727AE7E006D4861 /* spine-cocos2dx.cpp in Sources */,
 				1A40DFDF1727AF48006D4861 /* SpineTest.cpp in Sources */,
+				467373111739F4270034BF94 /* TextureAtlasEncryptionTest.cpp in Sources */,
+				1A60BF64173CD9E80054773B /* DataVisitorTest.cpp in Sources */,
+				1ABA2873174DAF67007A6C10 /* ConfigurationTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

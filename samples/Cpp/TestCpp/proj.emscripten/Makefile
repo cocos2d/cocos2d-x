@@ -83,6 +83,8 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/UserDefaultTest/UserDefaultTest.cpp \
 	../Classes/ZwoptexTest/ZwoptexTest.cpp \
 	../Classes/FileUtilsTest/FileUtilsTest.cpp \
+	../Classes/DataVisitorTest/DataVisitorTest.cpp \
+	../Classes/ConfigurationTest/ConfigurationTest.cpp \
 	../Classes/controller.cpp \
 	../Classes/testBasic.cpp \
 	../Classes/AppDelegate.cpp \
@@ -359,6 +361,8 @@ RESOURCES = \
 	animations/grossini_blue.png \
 	animations/grossini_family.png \
 	animations/grossini_gray.png \
+	background.mp3 \
+	effect1.wav \
 	extensions/CCControlColourPickerSpriteSheet.png \
 	extensions/background.png \
 	extensions/button.png \

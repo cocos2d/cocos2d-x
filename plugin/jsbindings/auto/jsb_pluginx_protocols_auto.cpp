@@ -144,6 +144,7 @@ JSBool js_pluginx_protocols_PluginProtocol_setDebugMode(JSContext *cx, uint32_t 
 
 
 void js_pluginx_protocols_PluginProtocol_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (PluginProtocol)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
     JS_GET_NATIVE_PROXY(jsproxy, obj);
@@ -303,6 +304,7 @@ JSBool js_pluginx_protocols_PluginManager_getInstance(JSContext *cx, uint32_t ar
 
 
 void js_pluginx_protocols_PluginManager_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (PluginManager)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
     JS_GET_NATIVE_PROXY(jsproxy, obj);
@@ -640,6 +642,7 @@ JSBool js_pluginx_protocols_ProtocolAnalytics_setDebugMode(JSContext *cx, uint32
 extern JSObject *jsb_PluginProtocol_prototype;
 
 void js_pluginx_protocols_ProtocolAnalytics_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (ProtocolAnalytics)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
     JS_GET_NATIVE_PROXY(jsproxy, obj);
@@ -875,6 +878,7 @@ JSBool js_pluginx_protocols_ProtocolIAP_setDebugMode(JSContext *cx, uint32_t arg
 extern JSObject *jsb_PluginProtocol_prototype;
 
 void js_pluginx_protocols_ProtocolIAP_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (ProtocolIAP)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
     JS_GET_NATIVE_PROXY(jsproxy, obj);
@@ -1189,6 +1193,7 @@ JSBool js_pluginx_protocols_ProtocolAds_setDebugMode(JSContext *cx, uint32_t arg
 extern JSObject *jsb_PluginProtocol_prototype;
 
 void js_pluginx_protocols_ProtocolAds_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (ProtocolAds)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
     JS_GET_NATIVE_PROXY(jsproxy, obj);
@@ -1450,6 +1455,7 @@ JSBool js_pluginx_protocols_ProtocolSocial_setResultListener(JSContext *cx, uint
 extern JSObject *jsb_PluginProtocol_prototype;
 
 void js_pluginx_protocols_ProtocolSocial_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (ProtocolSocial)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
     JS_GET_NATIVE_PROXY(jsproxy, obj);

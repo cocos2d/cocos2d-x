@@ -408,6 +408,11 @@ CCDictionary* CCDictionary::createWithContentsOfFileThreadSafe(const char *pFile
     return CCFileUtils::sharedFileUtils()->createCCDictionaryWithContentsOfFile(pFileName);
 }
 
+void CCDictionary::acceptVisitor(CCDataVisitor &visitor)
+{
+    return visitor.visit(this);
+}
+
 CCDictionary* CCDictionary::createWithContentsOfFile(const char *pFileName)
 {
     CCDictionary* pRet = createWithContentsOfFileThreadSafe(pFileName);

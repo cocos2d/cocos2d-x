@@ -280,6 +280,8 @@
 		1A3199AE16C0E3A200207637 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A3199AD16C0E3A200207637 /* libwebp.a */; };
 		1A4646DA16DC8FB700DE131F /* ccFPSImages.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A4646D816DC8FB700DE131F /* ccFPSImages.h */; };
 		1A4646DC16DC901A00DE131F /* ccFPSImages.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A4646DB16DC901900DE131F /* ccFPSImages.c */; };
+		1A5428FF1720F0650074EC5C /* CCDataVisitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A5428FD1720F0650074EC5C /* CCDataVisitor.cpp */; };
+		1A5429001720F0650074EC5C /* CCDataVisitor.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5428FE1720F0650074EC5C /* CCDataVisitor.h */; };
 		1A5B48EA16F084CC008568FC /* CCBool.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5B48E716F084CC008568FC /* CCBool.h */; };
 		1A5B48EB16F084CC008568FC /* CCDouble.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5B48E816F084CC008568FC /* CCDouble.h */; };
 		1A5B48EC16F084CC008568FC /* CCFloat.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5B48E916F084CC008568FC /* CCFloat.h */; };
@@ -289,6 +291,8 @@
 		1AC6CE8816B910CD00330EFD /* CCFileUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC6CE8616B910CD00330EFD /* CCFileUtils.cpp */; };
 		1AC6CE8916B910CD00330EFD /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC6CE8716B910CD00330EFD /* CCFileUtils.h */; };
 		2628297A15EC7064002C4240 /* ccTypeInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 2628297915EC7064002C4240 /* ccTypeInfo.h */; };
+		4698CFA9174CBB700066A57B /* CCTextureETC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4698CFA7174CBB700066A57B /* CCTextureETC.cpp */; };
+		4698CFAA174CBB700066A57B /* CCTextureETC.h in Headers */ = {isa = PBXBuildFile; fileRef = 4698CFA8174CBB700066A57B /* CCTextureETC.h */; };
 		469A7DF316C24787006FFCB2 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 469A7DF116C24787006FFCB2 /* tinyxml2.cpp */; };
 		469A7DF416C24787006FFCB2 /* tinyxml2.h in Headers */ = {isa = PBXBuildFile; fileRef = 469A7DF216C24787006FFCB2 /* tinyxml2.h */; };
 		46A393F616E5D01B00210B16 /* CCUserDefault.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A393F216E5D01B00210B16 /* CCUserDefault.cpp */; };
@@ -587,6 +591,8 @@
 		1A3199AD16C0E3A200207637 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../platform/third_party/ios/libraries/libwebp.a; sourceTree = "<group>"; };
 		1A4646D816DC8FB700DE131F /* ccFPSImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccFPSImages.h; sourceTree = "<group>"; };
 		1A4646DB16DC901900DE131F /* ccFPSImages.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ccFPSImages.c; sourceTree = "<group>"; };
+		1A5428FD1720F0650074EC5C /* CCDataVisitor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDataVisitor.cpp; sourceTree = "<group>"; };
+		1A5428FE1720F0650074EC5C /* CCDataVisitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDataVisitor.h; sourceTree = "<group>"; };
 		1A5B48E716F084CC008568FC /* CCBool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBool.h; sourceTree = "<group>"; };
 		1A5B48E816F084CC008568FC /* CCDouble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDouble.h; sourceTree = "<group>"; };
 		1A5B48E916F084CC008568FC /* CCFloat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFloat.h; sourceTree = "<group>"; };
@@ -596,6 +602,8 @@
 		1AC6CE8616B910CD00330EFD /* CCFileUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFileUtils.cpp; sourceTree = "<group>"; };
 		1AC6CE8716B910CD00330EFD /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtils.h; sourceTree = "<group>"; };
 		2628297915EC7064002C4240 /* ccTypeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypeInfo.h; sourceTree = "<group>"; };
+		4698CFA7174CBB700066A57B /* CCTextureETC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextureETC.cpp; sourceTree = "<group>"; };
+		4698CFA8174CBB700066A57B /* CCTextureETC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextureETC.h; sourceTree = "<group>"; };
 		469A7DF116C24787006FFCB2 /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml2.cpp; sourceTree = "<group>"; };
 		469A7DF216C24787006FFCB2 /* tinyxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml2.h; sourceTree = "<group>"; };
 		46A393F216E5D01B00210B16 /* CCUserDefault.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCUserDefault.cpp; sourceTree = "<group>"; };
@@ -752,6 +760,8 @@
 				1551A384158F2ADE00E66CFE /* CCAutoreleasePool.cpp */,
 				1551A385158F2ADE00E66CFE /* CCAutoreleasePool.h */,
 				1A5B48E716F084CC008568FC /* CCBool.h */,
+				1A5428FD1720F0650074EC5C /* CCDataVisitor.cpp */,
+				1A5428FE1720F0650074EC5C /* CCDataVisitor.h */,
 				1551A386158F2ADE00E66CFE /* CCDictionary.cpp */,
 				1551A387158F2ADE00E66CFE /* CCDictionary.h */,
 				1A5B48E816F084CC008568FC /* CCDouble.h */,
@@ -1167,6 +1177,8 @@
 				1551A611158F2ADE00E66CFE /* CCTextureCache.h */,
 				1551A612158F2ADE00E66CFE /* CCTexturePVR.cpp */,
 				1551A613158F2ADE00E66CFE /* CCTexturePVR.h */,
+				4698CFA7174CBB700066A57B /* CCTextureETC.cpp */,
+				4698CFA8174CBB700066A57B /* CCTextureETC.h */,
 			);
 			path = textures;
 			sourceTree = "<group>";
@@ -1437,6 +1449,8 @@
 				1A5B48EA16F084CC008568FC /* CCBool.h in Headers */,
 				1A5B48EB16F084CC008568FC /* CCDouble.h in Headers */,
 				1A5B48EC16F084CC008568FC /* CCFloat.h in Headers */,
+				1A5429001720F0650074EC5C /* CCDataVisitor.h in Headers */,
+				4698CFAA174CBB700066A57B /* CCTextureETC.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1467,7 +1481,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0460;
-				ORGANIZATIONNAME = "厦门雅基软件有限公司";
+				ORGANIZATIONNAME = "cocos2d-x";
 			};
 			buildConfigurationList = 1551A339158F2AB200E66CFE /* Build configuration list for PBXProject "cocos2dx" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1621,6 +1635,8 @@
 				46A393F616E5D01B00210B16 /* CCUserDefault.cpp in Sources */,
 				46A393F816E5D01B00210B16 /* CCUserDefault.mm in Sources */,
 				46A393F916E5D01B00210B16 /* CCUserDefaultAndroid.cpp in Sources */,
+				1A5428FF1720F0650074EC5C /* CCDataVisitor.cpp in Sources */,
+				4698CFA9174CBB700066A57B /* CCTextureETC.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
