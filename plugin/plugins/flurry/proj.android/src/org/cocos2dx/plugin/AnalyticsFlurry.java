@@ -130,7 +130,7 @@ public class AnalyticsFlurry implements InterfaceAnalytics {
         return ret;
     }
 
-    protected void logTimedEventBegin(JSONObject eventInfo) {
+    protected void logTimedEventBeginWithParams(JSONObject eventInfo) {
         LogD("logTimedEventBegin invoked!");
         try{
             String eventId = eventInfo.getString("Param1");

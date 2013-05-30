@@ -23,25 +23,28 @@ THE SOFTWARE.
 ****************************************************************************/
 #import "InterfaceAnalytics.h"
 
-@interface FlurryWrapper : NSObject <InterfaceAnalytics>
+@interface AnalyticsFlurry : NSObject <InterfaceAnalytics>
 {
     
 }
+
+@property BOOL debug;
 
 /**
  interfaces of protocol : InterfaceAnalytics
  */
 - (void) startSession: (NSString*) appKey;
 - (void) stopSession;
-- (void) setSessionContinueMillis: (NSNumber*) millis;
-- (void) setCaptureUncaughtException: (NSNumber*) isEnabled;
-- (void) setDebugMode: (NSNumber*) isDebugMode;
+- (void) setSessionContinueMillis: (long) millis;
+- (void) setCaptureUncaughtException: (BOOL) isEnabled;
+- (void) setDebugMode: (BOOL) isDebugMode;
 - (void) logError: (NSString*) errorId withMsg:(NSString*) message;
 - (void) logEvent: (NSString*) eventId;
 - (void) logEvent: (NSString*) eventId withParam:(NSMutableDictionary*) paramMap;
 - (void) logTimedEventBegin: (NSString*) eventId;
 - (void) logTimedEventEnd: (NSString*) eventId;
 - (NSString*) getSDKVersion;
+- (NSString*) getPluginVersion;
 
 /**
  interfaces of flurry SDK
@@ -49,9 +52,10 @@ THE SOFTWARE.
 - (void) setAge: (NSNumber*) age;
 - (void) setGender: (NSString*) gender;
 - (void) setUserId: (NSString*) userId;
+- (void) setUseHttps: (NSNumber*) enabled;
 - (void) logPageView;
 - (void) setVersionName: (NSString*) versionName;
-- (void) logTimedEventBegin: (NSString*) eventId withParam:(NSMutableDictionary*) paramMap;
-- (void) logTimedEventEnd: (NSString*) eventId withParam:(NSMutableDictionary*) paramMap;
+- (void) logTimedEventBeginWithParams: (NSMutableDictionary*) params;
+- (void) logTimedEventEndWithParams: (NSMutableDictionary*) params;
 
 @end
