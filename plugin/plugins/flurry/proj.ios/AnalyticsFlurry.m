@@ -21,10 +21,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#import "FlurryWrapper.h"
+#import "AnalyticsFlurry.h"
 #import "Flurry.h"
 
-@implementation FlurryWrapper
+#define OUTPUT_LOG(...)     if (self.debug) NSLog(__VA_ARGS__);
+
+@implementation AnalyticsFlurry
+
+@synthesize debug = __debug;
 
 - (void) startSession: (NSString*) appKey
 {
@@ -33,29 +37,31 @@ THE SOFTWARE.
 
 - (void) stopSession
 {
-    NSLog(@"stopSession in flurry not available on iOS");
+    OUTPUT_LOG(@"Flurry stopSession in flurry not available on iOS");
 }
 
-- (void) setSessionContinueMillis: (NSNumber*) millis
+- (void) setSessionContinueMillis: (long) millis
 {
-    long lMillis = [millis longValue];
-    int seconds = (int)(lMillis / 1000);
+    OUTPUT_LOG(@"Flurry setSessionContinueMillis invoked(%ld)", millis);
+    int seconds = (int)(millis / 1000);
     [Flurry setSessionContinueSeconds:seconds];
 }
 
-- (void) setCaptureUncaughtException: (NSNumber*) isEnabled
+- (void) setCaptureUncaughtException: (BOOL) isEnabled
 {
-    NSLog(@"setCaptureUncaughtException in flurry not available on iOS");
+    OUTPUT_LOG(@"Flurry setCaptureUncaughtException in flurry not available on iOS");
 }
 
-- (void) setDebugMode: (NSNumber*) isDebugMode
+- (void) setDebugMode: (BOOL) isDebugMode
 {
-    BOOL bDebug = [isDebugMode boolValue];
-    [Flurry setDebugLogEnabled:bDebug];
+    OUTPUT_LOG(@"Flurry setDebugMode invoked(%d)", isDebugMode);
+    self.debug = isDebugMode;
+    [Flurry setDebugLogEnabled:isDebugMode];
 }
 
 - (void) logError: (NSString*) errorId withMsg:(NSString*) message
 {
+    OUTPUT_LOG(@"Flurry logError invoked(%@, %@)", errorId, message);
     NSString* msg = nil;
     if (nil == message) {
         msg = @"";
@@ -67,21 +73,25 @@ THE SOFTWARE.
 
 - (void) logEvent: (NSString*) eventId
 {
+    OUTPUT_LOG(@"Flurry logEvent invoked(%@)", eventId);
     [Flurry logEvent:eventId];
 }
 
 - (void) logEvent: (NSString*) eventId withParam:(NSMutableDictionary*) paramMap
 {
+    OUTPUT_LOG(@"Flurry logEventWithParams invoked (%@, %@)", eventId, [paramMap debugDescription]);
     [Flurry logEvent:eventId withParameters:paramMap];
 }
 
 - (void) logTimedEventBegin: (NSString*) eventId
 {
+    OUTPUT_LOG(@"Flurry logTimedEventBegin invoked (%@)", eventId);
     [Flurry logEvent:eventId timed:YES];
 }
 
 - (void) logTimedEventEnd: (NSString*) eventId
 {
+    OUTPUT_LOG(@"Flurry logTimedEventEnd invoked (%@)", eventId);
     [Flurry endTimedEvent:eventId withParameters:nil];
 }
 
@@ -90,40 +100,67 @@ THE SOFTWARE.
     return [Flurry getFlurryAgentVersion];
 }
 
+- (NSString*) getPluginVersion
+{
+    return @"0.2.0";
+}
+
 - (void) setAge: (NSNumber*) age
 {
     int nAge = [age integerValue];
+    OUTPUT_LOG(@"Flurry setAge invoked (%d)", nAge);
     [Flurry setAge:nAge];
 }
 
 - (void) setGender: (NSString*) gender
 {
+    OUTPUT_LOG(@"Flurry setGender invoked (%@)", gender);
     [Flurry setGender:gender];
 }
 
 - (void) setUserId: (NSString*) userId
 {
+    OUTPUT_LOG(@"Flurry setUserId invoked (%@)", userId);
     [Flurry setUserID:userId];
+}
+
+- (void) setUseHttps: (NSNumber*) enabled
+{
+    BOOL bEnabled = [enabled boolValue];
+    OUTPUT_LOG(@"Flurry setUseHttps invoked (%@)", enabled);
+    [Flurry setSecureTransportEnabled:bEnabled];
 }
 
 - (void) logPageView
 {
+    OUTPUT_LOG(@"Flurry logPageView invoked");
     [Flurry logPageView];
 }
 
 - (void) setVersionName: (NSString*) versionName
 {
+    OUTPUT_LOG(@"Flurry setVersionName invoked (%@)", versionName);
     [Flurry setAppVersion:versionName];
 }
 
-- (void) logTimedEventBegin: (NSString*) eventId withParam:(NSMutableDictionary*) paramMap
+- (void) logTimedEventBeginWithParams: (NSMutableDictionary*) paramMap
 {
-    [Flurry logEvent:eventId withParameters:paramMap timed:YES];
+    OUTPUT_LOG(@"Flurry logTimedEventBeginWithParams invoked (%@)", [paramMap debugDescription]);
+    NSString* eventId = (NSString*) [paramMap objectForKey:@"Param1"];
+    NSMutableDictionary* params = (NSMutableDictionary*) [paramMap objectForKey:@"Param2"];
+    if (params) {
+        [Flurry logEvent:eventId withParameters:paramMap timed:YES];
+    } else {
+        [Flurry logEvent:eventId timed:YES];
+    }
 }
 
-- (void) logTimedEventEnd: (NSString*) eventId withParam:(NSMutableDictionary*) paramMap
+- (void) logTimedEventEndWithParams: (NSMutableDictionary*) paramMap
 {
-    [Flurry endTimedEvent:eventId withParameters:paramMap];
+    OUTPUT_LOG(@"Flurry logTimedEventEndWithParams invoked (%@)", [paramMap debugDescription]);
+    NSString* eventId = (NSString*) [paramMap objectForKey:@"Param1"];
+    NSMutableDictionary* params = (NSMutableDictionary*) [paramMap objectForKey:@"Param2"];
+    [Flurry endTimedEvent:eventId withParameters:params];
 }
 
 @end

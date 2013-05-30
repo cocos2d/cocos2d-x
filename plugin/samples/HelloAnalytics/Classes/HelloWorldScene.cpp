@@ -198,7 +198,7 @@ void HelloWorld::eventMenuCallback(CCObject* pSender)
             g_pAnalytics->callFuncWithParam("logTimedKVEventBegin", &event2, &label2, &mapValue, NULL);
 
             PluginParam event3("music-kv");
-            g_pAnalytics->callFuncWithParam("logTimedEventBegin", &event3, &mapValue, NULL);
+            g_pAnalytics->callFuncWithParam("logTimedEventBeginWithParams", &event3, &mapValue, NULL);
         }
         break;
     case TAG_LOG_EVENT_END:
