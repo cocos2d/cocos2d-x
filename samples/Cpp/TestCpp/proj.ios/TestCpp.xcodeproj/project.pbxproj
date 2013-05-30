@@ -97,7 +97,6 @@
 		15A3DA371682F826002FB0C5 /* CCBValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D9C41682F826002FB0C5 /* CCBValue.cpp */; };
 		15A3DA381682F826002FB0C5 /* CCControlButtonLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D9C61682F826002FB0C5 /* CCControlButtonLoader.cpp */; };
 		15A3DA391682F826002FB0C5 /* CCControlLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D9C81682F826002FB0C5 /* CCControlLoader.cpp */; };
-		15A3DA3A1682F826002FB0C5 /* CCData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D9CA1682F826002FB0C5 /* CCData.cpp */; };
 		15A3DA3B1682F826002FB0C5 /* CCLabelBMFontLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D9CC1682F826002FB0C5 /* CCLabelBMFontLoader.cpp */; };
 		15A3DA3C1682F826002FB0C5 /* CCLabelTTFLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D9CE1682F826002FB0C5 /* CCLabelTTFLoader.cpp */; };
 		15A3DA3D1682F826002FB0C5 /* CCLayerColorLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D9D01682F826002FB0C5 /* CCLayerColorLoader.cpp */; };
@@ -488,8 +487,6 @@
 		15A3D9C71682F826002FB0C5 /* CCControlButtonLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlButtonLoader.h; sourceTree = "<group>"; };
 		15A3D9C81682F826002FB0C5 /* CCControlLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControlLoader.cpp; sourceTree = "<group>"; };
 		15A3D9C91682F826002FB0C5 /* CCControlLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlLoader.h; sourceTree = "<group>"; };
-		15A3D9CA1682F826002FB0C5 /* CCData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCData.cpp; sourceTree = "<group>"; };
-		15A3D9CB1682F826002FB0C5 /* CCData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCData.h; sourceTree = "<group>"; };
 		15A3D9CC1682F826002FB0C5 /* CCLabelBMFontLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelBMFontLoader.cpp; sourceTree = "<group>"; };
 		15A3D9CD1682F826002FB0C5 /* CCLabelBMFontLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelBMFontLoader.h; sourceTree = "<group>"; };
 		15A3D9CE1682F826002FB0C5 /* CCLabelTTFLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelTTFLoader.cpp; sourceTree = "<group>"; };
@@ -1280,8 +1277,6 @@
 				15A3D9C71682F826002FB0C5 /* CCControlButtonLoader.h */,
 				15A3D9C81682F826002FB0C5 /* CCControlLoader.cpp */,
 				15A3D9C91682F826002FB0C5 /* CCControlLoader.h */,
-				15A3D9CA1682F826002FB0C5 /* CCData.cpp */,
-				15A3D9CB1682F826002FB0C5 /* CCData.h */,
 				15A3D9CC1682F826002FB0C5 /* CCLabelBMFontLoader.cpp */,
 				15A3D9CD1682F826002FB0C5 /* CCLabelBMFontLoader.h */,
 				15A3D9CE1682F826002FB0C5 /* CCLabelTTFLoader.cpp */,
@@ -2674,7 +2669,6 @@
 				15A3DA371682F826002FB0C5 /* CCBValue.cpp in Sources */,
 				15A3DA381682F826002FB0C5 /* CCControlButtonLoader.cpp in Sources */,
 				15A3DA391682F826002FB0C5 /* CCControlLoader.cpp in Sources */,
-				15A3DA3A1682F826002FB0C5 /* CCData.cpp in Sources */,
 				15A3DA3B1682F826002FB0C5 /* CCLabelBMFontLoader.cpp in Sources */,
 				15A3DA3C1682F826002FB0C5 /* CCLabelTTFLoader.cpp in Sources */,
 				15A3DA3D1682F826002FB0C5 /* CCLayerColorLoader.cpp in Sources */,
