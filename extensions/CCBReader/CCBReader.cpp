@@ -7,7 +7,6 @@
 #include "CCNodeLoaderListener.h"
 #include "CCBMemberVariableAssigner.h"
 #include "CCBSelectorResolver.h"
-#include "CCData.h"
 #include "CCBAnimationManager.h"
 #include "CCBSequenceProperty.h"
 #include "CCBKeyframe.h"
