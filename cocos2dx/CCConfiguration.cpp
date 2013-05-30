@@ -220,7 +220,7 @@ bool CCConfiguration::supportsShareableVAO(void) const
 //
 // generic getters for properties
 //
-const char *CCConfiguration::getCString( const char *key ) const
+const char *CCConfiguration::getCString( const char *key, const char *default_value ) const
 {
 	CCObject *ret = m_pDefaults->objectForKey(key);
 	if( ret ) {
@@ -231,12 +231,11 @@ const char *CCConfiguration::getCString( const char *key ) const
 	}
 
 	// XXX: Should it throw an exception ?
-	CCLOG("Key not found: '%s'", key );
-	return NULL;
+	return default_value;
 }
 
 /** returns the value of a given key as a boolean */
-bool CCConfiguration::getBool( const char *key ) const
+bool CCConfiguration::getBool( const char *key, bool default_value ) const
 {
 	CCObject *ret = m_pDefaults->objectForKey(key);
 	if( ret ) {
@@ -248,12 +247,11 @@ bool CCConfiguration::getBool( const char *key ) const
 	}
 
 	// XXX: Should it throw an exception ?
-	CCLOG("Key not found: '%s'", key );
-	return false;
+	return default_value;
 }
 
 /** returns the value of a given key as a double */
-double CCConfiguration::getNumber( const char *key ) const
+double CCConfiguration::getNumber( const char *key, double default_value ) const
 {
 	CCObject *ret = m_pDefaults->objectForKey(key);
 	if( ret ) {
@@ -270,8 +268,7 @@ double CCConfiguration::getNumber( const char *key ) const
 	}
 
 	// XXX: Should it throw an exception ?
-	CCLOG("Key not found: '%s'", key );
-	return 0.0;
+	return default_value;
 }
 
 CCObject * CCConfiguration::getObject( const char *key ) const
