@@ -462,7 +462,7 @@ void CCSprite::updateTransform(void)
     bool bDirtyQuad = isQuadColorsDirty() || isQuadTexCoordsDirty();
     if (m_pobTextureAtlas){
         capacity = m_pobTextureAtlas->getCapacity();
-        CCAssert( m_uAtlasIndex <= capacity, "updateTransform: Invalid m_uAtlasIndex");
+        CCAssert(m_uAtlasIndex >= 0 && m_uAtlasIndex < capacity, "updateTransform: Invalid m_uAtlasIndex");
         totalQuads = m_pobTextureAtlas->getTotalQuads();
         useRefForUpdateQuad = (totalQuads >= m_uAtlasIndex + 1) && (!bDirtyQuad);
     }
@@ -941,7 +941,7 @@ void CCSprite::updateColor(void)
     bool useRefForUpdateQuad = false;
     if (m_pobBatchNode && (m_uAtlasIndex != CCSpriteIndexNotInitialized)){
         capacity = m_pobTextureAtlas->getCapacity();
-        CCAssert( m_uAtlasIndex <= capacity, "updateColor: Invalid m_uAtlasIndex");
+        CCAssert( m_uAtlasIndex >= 0 && m_uAtlasIndex < capacity, "updateColor: Invalid m_uAtlasIndex");
 
         totalQuads = m_pobTextureAtlas->getTotalQuads();
         useRefForUpdateQuad = ( totalQuads >= m_uAtlasIndex + 1) && (!bDirtyQuad);
