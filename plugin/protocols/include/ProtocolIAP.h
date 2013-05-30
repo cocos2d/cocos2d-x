@@ -50,11 +50,8 @@ public:
 class ProtocolIAP : public PluginProtocol
 {
 public:
-
-    /**
-    @brief plugin initialization
-    */
-    virtual bool init();
+	ProtocolIAP();
+	virtual ~ProtocolIAP();
 
     /**
     @brief config the developer info
@@ -63,7 +60,7 @@ public:
     @warning Must invoke this interface before other interfaces.
              And invoked only once.
     */
-    virtual void configDeveloperInfo(TIAPDeveloperInfo devInfo);
+    void configDeveloperInfo(TIAPDeveloperInfo devInfo);
 
     /**
     @brief pay for product
@@ -74,13 +71,7 @@ public:
     @warning For different plugin, the parameter should have other keys to pay.
              Look at the manual of plugins.
     */
-    virtual void payForProduct(TProductInfo info);
-
-    /**
-	 @brief Set whether needs to output logs to console.
-	 @param debug if true debug mode enabled, or debug mode disabled.
-	 */
-	virtual void setDebugMode(bool debug);
+    void payForProduct(TProductInfo info);
 
     /**
     @breif set the result listener
@@ -93,15 +84,6 @@ public:
     @brief pay result callback
     */
     void onPayResult(PayResultCode ret, const char* msg);
-
-    virtual const char* getPluginVersion() { return "ProtocolIAP, v0.1.01 , subclass should override this interface!"; };
-    virtual const char* getSDKVersion();
-    virtual const char* getPluginName() = 0;
-
-protected:
-    ProtocolIAP();
-public:
-    virtual ~ProtocolIAP();
 
 protected:
     static bool m_bPaying;
