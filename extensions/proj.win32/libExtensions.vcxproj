@@ -101,7 +101,6 @@
     <ClCompile Include="..\CCBReader\CCBValue.cpp" />
     <ClCompile Include="..\CCBReader\CCControlButtonLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCControlLoader.cpp" />
-    <ClCompile Include="..\CCBReader\CCData.cpp" />
     <ClCompile Include="..\CCBReader\CCLabelBMFontLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCLabelTTFLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCLayerColorLoader.cpp" />
@@ -172,7 +171,6 @@
     <ClInclude Include="..\CCBReader\CCBValue.h" />
     <ClInclude Include="..\CCBReader\CCControlButtonLoader.h" />
     <ClInclude Include="..\CCBReader\CCControlLoader.h" />
-    <ClInclude Include="..\CCBReader\CCData.h" />
     <ClInclude Include="..\CCBReader\CCLabelBMFontLoader.h" />
     <ClInclude Include="..\CCBReader\CCLabelTTFLoader.h" />
     <ClInclude Include="..\CCBReader\CCLayerColorLoader.h" />
