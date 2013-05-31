@@ -36,6 +36,7 @@ enum
     ACTION_ROTATEJERK_LAYER,
     ACTION_CALLFUNC_LAYER,
     ACTION_CALLFUNCND_LAYER,
+    ACTION_CALLFUNCTION_LAYER,
     ACTION_REVERSESEQUENCE_LAYER,
     ACTION_REVERSESEQUENCE2_LAYER,
     ACTION_ORBIT_LAYER,
@@ -298,6 +299,18 @@ public:
     virtual std::string subtitle();
     void removeFromParentAndCleanup(CCNode* pSender, void* data);
 };
+
+class ActionCallFunction : public ActionsDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string subtitle();
+
+    void callback1();
+    void callback2(CCNode* pTarget);
+    void callback3(CCNode* pTarget, void* data);
+};
+
 
 class ActionFollow : public ActionsDemo
 {

@@ -29,6 +29,7 @@ TESTLAYER_CREATE_FUNC(ActionRotateToRepeat);
 TESTLAYER_CREATE_FUNC(ActionRotateJerk);
 TESTLAYER_CREATE_FUNC(ActionCallFunc);
 TESTLAYER_CREATE_FUNC(ActionCallFuncND);
+TESTLAYER_CREATE_FUNC(ActionCallFunction);
 TESTLAYER_CREATE_FUNC(ActionReverseSequence);
 TESTLAYER_CREATE_FUNC(ActionReverseSequence2);
 TESTLAYER_CREATE_FUNC(ActionRemoveSelf);
@@ -78,6 +79,7 @@ static NEWTESTFUNC createFunctions[] = {
     CF(ActionRotateJerk),
     CF(ActionCallFunc),
     CF(ActionCallFuncND),
+    CF(ActionCallFunction),
     CF(ActionReverseSequence),
     CF(ActionReverseSequence2),
     CF(ActionOrbit),
@@ -958,6 +960,79 @@ void ActionCallFuncND::removeFromParentAndCleanup(CCNode* pSender, void* data)
     m_grossini->removeFromParentAndCleanup(bCleanUp);
 }
 
+//------------------------------------------------------------------
+//
+//    ActionCallFunction
+//
+//------------------------------------------------------------------
+void ActionCallFunction::onEnter()
+{
+    ActionsDemo::onEnter();
+
+    centerSprites(3);
+
+
+	CCFiniteTimeAction*  action1 = CCSequence::create(
+													  CCMoveBy::create(2, ccp(200,0)),
+													  CCCallFunction::create( std::bind(&ActionCallFunction::callback1, this) ),
+													  CCCallFunction::create(
+																			 // lambda
+																			 [&](){
+																				 CCSize s = CCDirector::sharedDirector()->getWinSize();
+																				 CCLabelTTF *label = CCLabelTTF::create("called:lambda callback", "Marker Felt", 16);
+																				 label->setPosition(ccp( s.width/4*1,s.height/2-40));
+																				 this->addChild(label);
+																			 }  ),
+													  NULL);
+
+    CCFiniteTimeAction*  action2 = CCSequence::create(
+													  CCScaleBy::create(2 ,  2),
+													  CCFadeOut::create(2),
+													  CCCallFunction::create( std::bind(&ActionCallFunction::callback2, this, m_tamara) ),
+													  NULL);
+
+    CCFiniteTimeAction*  action3 = CCSequence::create(
+													  CCRotateBy::create(3 , 360),
+													  CCFadeOut::create(2),
+													  CCCallFunction::create( std::bind(&ActionCallFunction::callback3, this, m_kathia, (void*)42) ),
+													  NULL);
+
+    m_grossini->runAction(action1);
+    m_tamara->runAction(action2);
+    m_kathia->runAction(action3);
+}
+
+
+void ActionCallFunction::callback1()
+{
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCLabelTTF *label = CCLabelTTF::create("callback 1 called", "Marker Felt", 16);
+    label->setPosition(ccp( s.width/4*1,s.height/2));
+
+    addChild(label);
+}
+
+void ActionCallFunction::callback2(CCNode* pSender)
+{
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCLabelTTF *label = CCLabelTTF::create("callback 2 called", "Marker Felt", 16);
+    label->setPosition(ccp( s.width/4*2,s.height/2));
+
+    addChild(label);
+}
+
+void ActionCallFunction::callback3(CCNode* pTarget, void* data)
+{
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCLabelTTF *label = CCLabelTTF::create("callback 3 called", "Marker Felt", 16);
+    label->setPosition(ccp( s.width/4*3,s.height/2));
+    addChild(label);
+}
+
+std::string ActionCallFunction::subtitle()
+{
+    return "Callbacks: CallFunction";
+}
 //------------------------------------------------------------------
 //
 // ActionSpawn

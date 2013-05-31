@@ -38,6 +38,7 @@ CCActionInstant::CCActionInstant() {
 }
 
 CCObject * CCActionInstant::copyWithZone(CCZone *pZone) {
+
     CCZone *pNewZone = NULL;
     CCActionInstant *pRet = NULL;
 
@@ -371,6 +372,60 @@ CCObject * CCPlace::copyWithZone(CCZone *pZone) {
 void CCPlace::update(float time) {
     CC_UNUSED_PARAM(time);
     m_pTarget->setPosition(m_tPosition);
+}
+
+//
+// CCCallFunction
+//
+CCCallFunction * CCCallFunction::create(std::function<void()> func)
+{
+    CCCallFunction *pRet = new CCCallFunction();
+
+    if (pRet && pRet->initWithFunction(func) ) {
+        pRet->autorelease();
+        return pRet;
+    }
+
+    CC_SAFE_DELETE(pRet);
+    return NULL;
+}
+
+bool CCCallFunction::initWithFunction(std::function<void()> func)
+{
+	_function = func;
+    return true;
+}
+
+CCCallFunction::~CCCallFunction(void)
+{
+}
+
+CCObject * CCCallFunction::copyWithZone(CCZone *pZone) {
+    CCZone* pNewZone = NULL;
+    CCCallFunction* pRet = NULL;
+
+    if (pZone && pZone->m_pCopyObject) {
+        //in case of being called at sub class
+        pRet = (CCCallFunction*) (pZone->m_pCopyObject);
+    } else {
+        pRet = new CCCallFunction();
+        pZone = pNewZone = new CCZone(pRet);
+    }
+
+    CCActionInstant::copyWithZone(pZone);
+    pRet->initWithFunction(_function);
+    CC_SAFE_DELETE(pNewZone);
+    return pRet;
+}
+
+void CCCallFunction::update(float time) {
+    CC_UNUSED_PARAM(time);
+    this->execute();
+}
+
+void CCCallFunction::execute() {
+	if( _function )
+		_function();
 }
 
 //

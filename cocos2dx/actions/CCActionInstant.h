@@ -28,6 +28,8 @@ THE SOFTWARE.
 #define __CCINSTANT_ACTION_H__
 
 #include <string>
+#include <functional>
+
 #include "ccTypeInfo.h"
 #include "CCAction.h"
 
@@ -199,6 +201,37 @@ public:
     virtual CCObject* copyWithZone(CCZone *pZone);
 protected:
     CCPoint m_tPosition;
+};
+
+/** @brief Calls a 'callback' defined by std::fucntion
+ */
+class CC_DLL CCCallFunction : public CCActionInstant //<NSCopying>
+{
+public:
+    CCCallFunction()
+	: _function(nullptr)
+    {
+    }
+    virtual ~CCCallFunction();
+
+    /** creates the action with the callback
+
+	 typedef void (CCObject::*SEL_CallFunc)();
+	 */
+    static CCCallFunction * create(std::function<void()> func);
+
+	/** initializes the action with the std::function
+	 */
+    virtual bool initWithFunction(std::function<void()>);
+    /** executes the callback */
+    virtual void execute();
+    //super methods
+    virtual void update(float time);
+    CCObject * copyWithZone(CCZone *pZone);
+
+protected:
+    /** function that will be called */
+	std::function<void()> _function;
 };
 
 /** @brief Calls a 'callback'
