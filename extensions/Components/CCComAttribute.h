@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2013 cocos2d-x.org
+Copyright (c) 2013 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -27,12 +27,11 @@ THE SOFTWARE.
 
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
-#include "Export.h"
 #include <string>
 
 NS_CC_EXT_BEGIN
 
-class EXPORT_DLL CCComAttribute : public cocos2d::CCComponent
+class CCComAttribute : public cocos2d::CCComponent
 {
 protected:
     CCComAttribute(void);

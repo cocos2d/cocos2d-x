@@ -8,8 +8,9 @@ INCLUDES = -I$(COCOS_ROOT)/external \
 	-I.. \
 	-I../CCBReader \
 	-I../GUI/CCControlExtension \
-	-I../network
+	-I../network \
 	-I../GUI/CCEditBox \
+       -I../Components 
 
 DEFINES += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 DEFINES += -D__CC_PLATFORM_IMAGE_CPP__
@@ -56,7 +57,11 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../GUI/CCEditBox/CCEditBox.cpp \
 ../GUI/CCEditBox/CCEditBoxImplNone.cpp \
 ../physics_nodes/CCPhysicsDebugNode.cpp \
-../physics_nodes/CCPhysicsSprite.cpp
+../physics_nodes/CCPhysicsSprite.cpp \
+../Components/CCComAttribute.cpp \
+../Components/CCComAudio.cpp \
+../Components/CCComController.cpp \
+../Components/CCInputDelegate.cpp
 
 include $(COCOS_ROOT)/cocos2dx/proj.emscripten/cocos2dx.mk
 

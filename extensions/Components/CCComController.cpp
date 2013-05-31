@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2013 cocos2d-x.org
+Copyright (c) 2013 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -52,12 +52,12 @@ void CCComController::update(float delta)
 {
 }
 
-bool CCComController::isEnable()
+bool CCComController::isEnabled()
 {
     return m_bEnabled;
 }
 
-void CCComController::setEnable(bool b)
+void CCComController::setEnabled(bool b)
 {
     m_bEnabled = b;
 }

@@ -1299,7 +1299,7 @@ bool CCNode::removeComponent(const char *pName)
     return m_pComponentContainer->remove(pName);
 }
 
-void CCNode::removeAllComponent()
+void CCNode::removeAllComponents()
 {
     m_pComponentContainer->removeAll();
 }

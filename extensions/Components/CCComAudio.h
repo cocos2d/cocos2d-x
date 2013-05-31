@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2013 cocos2d-x.org
+Copyright (c) 2013 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -27,12 +27,11 @@ THE SOFTWARE.
 
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
-#include "Export.h"
 #include "SimpleAudioEngine.h"
 
 NS_CC_EXT_BEGIN
 
-class EXPORT_DLL CCComAudio : public cocos2d::CCComponent
+class CCComAudio : public cocos2d::CCComponent
 {
 protected:
     CCComAudio(void);
@@ -42,8 +41,8 @@ public:
    virtual bool init();
    virtual void onEnter();
    virtual void onExit();
-   virtual bool isEnable();
-   virtual void setEnable(bool b);
+   virtual bool isEnabled();
+   virtual void setEnabled(bool b);
 
    static CCComAudio* create(void);
    

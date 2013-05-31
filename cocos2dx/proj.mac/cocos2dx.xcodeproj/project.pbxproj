@@ -279,6 +279,10 @@
 		1AB7FB4116D0D4C600D35305 /* CCDevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AB7FB4016D0D4C600D35305 /* CCDevice.mm */; };
 		36B713CB17557CF000A2554C /* CCData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36B713C917557CF000A2554C /* CCData.cpp */; };
 		36B713CC17557CF000A2554C /* CCData.h in Headers */ = {isa = PBXBuildFile; fileRef = 36B713CA17557CF000A2554C /* CCData.h */; };
+		370D34E417583DEF0057D638 /* CCComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 370D34E017583DEF0057D638 /* CCComponent.cpp */; };
+		370D34E517583DEF0057D638 /* CCComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 370D34E117583DEF0057D638 /* CCComponent.h */; };
+		370D34E617583DEF0057D638 /* CCComponentContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 370D34E217583DEF0057D638 /* CCComponentContainer.cpp */; };
+		370D34E717583DEF0057D638 /* CCComponentContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 370D34E317583DEF0057D638 /* CCComponentContainer.h */; };
 		41BC70B915BF7EA2006A0A6C /* CCThread.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70B815BF7EA2006A0A6C /* CCThread.mm */; };
 		41CD6C3515BF7382005E6F29 /* CCAccelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = 41CD6C2215BF7382005E6F29 /* CCAccelerometer.h */; };
 		41CD6C3615BF7382005E6F29 /* CCApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 41CD6C2315BF7382005E6F29 /* CCApplication.h */; };
@@ -584,6 +588,10 @@
 		1AB7FB4016D0D4C600D35305 /* CCDevice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCDevice.mm; sourceTree = "<group>"; };
 		36B713C917557CF000A2554C /* CCData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCData.cpp; sourceTree = "<group>"; };
 		36B713CA17557CF000A2554C /* CCData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCData.h; sourceTree = "<group>"; };
+		370D34E017583DEF0057D638 /* CCComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCComponent.cpp; sourceTree = "<group>"; };
+		370D34E117583DEF0057D638 /* CCComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComponent.h; sourceTree = "<group>"; };
+		370D34E217583DEF0057D638 /* CCComponentContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCComponentContainer.cpp; sourceTree = "<group>"; };
+		370D34E317583DEF0057D638 /* CCComponentContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComponentContainer.h; sourceTree = "<group>"; };
 		41BC70B815BF7EA2006A0A6C /* CCThread.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCThread.mm; sourceTree = "<group>"; };
 		41CD6C2215BF7382005E6F29 /* CCAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAccelerometer.h; sourceTree = "<group>"; };
 		41CD6C2315BF7382005E6F29 /* CCApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCApplication.h; sourceTree = "<group>"; };
@@ -1052,6 +1060,7 @@
 		1551A5E7158F2ADE00E66CFE /* support */ = {
 			isa = PBXGroup;
 			children = (
+				370D34DF17583DEF0057D638 /* component */,
 				1551A5E8158F2ADE00E66CFE /* base64.cpp */,
 				1551A5E9158F2ADE00E66CFE /* base64.h */,
 				154269DA15B5653000712A7F /* CCNotificationCenter.cpp */,
@@ -1214,6 +1223,17 @@
 				1A94D34316C1FF8800D79D09 /* types.h */,
 			);
 			path = webp;
+			sourceTree = "<group>";
+		};
+		370D34DF17583DEF0057D638 /* component */ = {
+			isa = PBXGroup;
+			children = (
+				370D34E017583DEF0057D638 /* CCComponent.cpp */,
+				370D34E117583DEF0057D638 /* CCComponent.h */,
+				370D34E217583DEF0057D638 /* CCComponentContainer.cpp */,
+				370D34E317583DEF0057D638 /* CCComponentContainer.h */,
+			);
+			path = component;
 			sourceTree = "<group>";
 		};
 		41CD6C2115BF7382005E6F29 /* mac */ = {
@@ -1429,6 +1449,8 @@
 				1A60BF60173CD9D90054773B /* CCFloat.h in Headers */,
 				464EA09817533CDD004C192B /* CCTextureETC.h in Headers */,
 				36B713CC17557CF000A2554C /* CCData.h in Headers */,
+				370D34E517583DEF0057D638 /* CCComponent.h in Headers */,
+				370D34E717583DEF0057D638 /* CCComponentContainer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1611,6 +1633,8 @@
 				1A60BF5D173CD9D90054773B /* CCDataVisitor.cpp in Sources */,
 				464EA09717533CDD004C192B /* CCTextureETC.cpp in Sources */,
 				36B713CB17557CF000A2554C /* CCData.cpp in Sources */,
+				370D34E417583DEF0057D638 /* CCComponent.cpp in Sources */,
+				370D34E617583DEF0057D638 /* CCComponentContainer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

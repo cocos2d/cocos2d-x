@@ -1,6 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2013 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -51,7 +50,7 @@ CCComponent* CCComponentContainer::get(const char *pName) const
         CC_BREAK_IF(NULL == pName);
         CC_BREAK_IF(NULL == m_pComponents);
         
-        pRet = dynamic_cast<CCComponent*>(m_pComponents->objectForKey(cocos2d::getHashCodeByString(pName)));
+        pRet = dynamic_cast<CCComponent*>(m_pComponents->objectForKey(pName));
         
     } while (0);
     
@@ -74,14 +73,13 @@ bool CCComponentContainer::add(CCComponent *pCom)
         }
         
         CCDictElement *pElement = NULL;
-        intptr_t key = cocos2d::getHashCodeByString(pCom->getName());
-        HASH_FIND_PTR(m_pComponents->m_pElements, &key, pElement);
-
+        HASH_FIND_PTR(m_pComponents->m_pElements, pCom->getName(), pElement);
+        
         CCAssert(pElement == NULL, "Component already added. It can't be added again");
         CC_BREAK_IF(pElement);
         
         pCom->setOwner(m_pOwner);
-        m_pComponents->setObject(pCom, key);
+        m_pComponents->setObject(pCom, pCom->getName());
         pCom->onEnter();
         bRet = true;
     } while(0);
@@ -100,8 +98,7 @@ bool CCComponentContainer::remove(const char *pName)
         
         CCObject* pRetObject = NULL;
         CCDictElement *pElement = NULL;
-        intptr_t key = cocos2d::getHashCodeByString(pName);
-        HASH_FIND_PTR(m_pComponents->m_pElements, &key, pElement);
+        HASH_FIND_PTR(m_pComponents->m_pElements, pName, pElement);
         if (pElement != NULL)
         {
            pRetObject = pElement->getObject();

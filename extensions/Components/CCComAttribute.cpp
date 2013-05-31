@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2013 cocos2d-x.org
+Copyright (c) 2013 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -67,7 +67,7 @@ void CCComAttribute::setIntValue(const char *key, int value)
     
     std::stringstream streamValue;
     streamValue << value;
-    CCString *old = dynamic_cast<CCString*>(m_pAttributes->objectForKey(cocos2d::getHashCodeByString(key)));
+    CCString *old = dynamic_cast<CCString*>(m_pAttributes->objectForKey(key));
     if (old != NULL)
     {
         old->m_sString.assign(streamValue.str());
@@ -75,7 +75,7 @@ void CCComAttribute::setIntValue(const char *key, int value)
     else
     {
         CCString *newvalue = CCString::create(streamValue.str());
-        m_pAttributes->setObject(newvalue, cocos2d::getHashCodeByString(key));
+        m_pAttributes->setObject(newvalue, key);
     }
 }
 
@@ -90,7 +90,7 @@ void CCComAttribute::setDoubleValue(const char *key, double value)
     
     std::stringstream streamValue;
     streamValue << value;
-    CCString *old = dynamic_cast<CCString*>(m_pAttributes->objectForKey(cocos2d::getHashCodeByString(key)));
+    CCString *old = dynamic_cast<CCString*>(m_pAttributes->objectForKey(key));
     if (old != NULL)
     {
         old->m_sString.assign(streamValue.str());
@@ -98,7 +98,7 @@ void CCComAttribute::setDoubleValue(const char *key, double value)
     else
     {
         CCString *newvalue = CCString::create(streamValue.str());
-        m_pAttributes->setObject(newvalue, cocos2d::getHashCodeByString(key));
+        m_pAttributes->setObject(newvalue, key);
     }
 }
 
@@ -113,7 +113,7 @@ void CCComAttribute::setFloatValue(const char *key, float value)
     
     std::stringstream streamValue;
     streamValue << value;
-    CCString *old = dynamic_cast<CCString*>(m_pAttributes->objectForKey(cocos2d::getHashCodeByString(key)));
+    CCString *old = dynamic_cast<CCString*>(m_pAttributes->objectForKey(key));
     if (old != NULL)
     {
         old->m_sString.assign(streamValue.str());
@@ -121,7 +121,7 @@ void CCComAttribute::setFloatValue(const char *key, float value)
     else
     {
         CCString *newvalue = CCString::create(streamValue.str());
-        m_pAttributes->setObject(newvalue, cocos2d::getHashCodeByString(key));
+        m_pAttributes->setObject(newvalue, key);
     }
 }
 
@@ -136,7 +136,7 @@ void CCComAttribute::setBoolValue(const char *key, bool value)
     
     std::stringstream streamValue;
     streamValue << value;
-    CCString *old = dynamic_cast<CCString*>(m_pAttributes->objectForKey(cocos2d::getHashCodeByString(key)));
+    CCString *old = dynamic_cast<CCString*>(m_pAttributes->objectForKey(key));
     if (old != NULL)
     {
         old->m_sString.assign(streamValue.str());
@@ -144,7 +144,7 @@ void CCComAttribute::setBoolValue(const char *key, bool value)
     else
     {
         CCString *newvalue = CCString::create(streamValue.str());
-        m_pAttributes->setObject(newvalue, cocos2d::getHashCodeByString(key));
+        m_pAttributes->setObject(newvalue, key);
     }
 }
 
@@ -159,7 +159,7 @@ void CCComAttribute::setStringValue(const char *key, const char *value)
     
     std::stringstream streamValue;
     streamValue << value;
-    CCString *old = dynamic_cast<CCString*>(m_pAttributes->objectForKey(cocos2d::getHashCodeByString(key)));
+    CCString *old = dynamic_cast<CCString*>(m_pAttributes->objectForKey(key));
     if (old != NULL)
     {
         old->m_sString.assign(streamValue.str());
@@ -167,7 +167,7 @@ void CCComAttribute::setStringValue(const char *key, const char *value)
     else
     {
         CCString *newvalue = CCString::create(streamValue.str());
-        m_pAttributes->setObject(newvalue, cocos2d::getHashCodeByString(key));
+        m_pAttributes->setObject(newvalue, key);
     }
 
 }
@@ -181,7 +181,7 @@ void CCComAttribute::setCCObjectValue(const char *key, CCObject *value)
         m_pAttributes->retain();
     }
     
-    m_pAttributes->setObject(value, cocos2d::getHashCodeByString(key));
+    m_pAttributes->setObject(value, key);
 }
 
 int CCComAttribute::getAsInt(const char *key)
@@ -194,7 +194,7 @@ int CCComAttribute::getAsInt(const char *key)
         CC_BREAK_IF(NULL == key);
         CC_BREAK_IF(NULL == m_pAttributes);
         
-        num = dynamic_cast<CCString*>(m_pAttributes->objectForKey(cocos2d::getHashCodeByString(key)));
+        num = dynamic_cast<CCString*>(m_pAttributes->objectForKey(key));
         CC_BREAK_IF(NULL == num);
         
         ret =  num->intValue();
@@ -214,7 +214,7 @@ double CCComAttribute::getAsDouble(const char *key)
         CC_BREAK_IF(NULL == key);
         CC_BREAK_IF(NULL == m_pAttributes);
         
-        num = dynamic_cast<CCString*>(m_pAttributes->objectForKey(cocos2d::getHashCodeByString(key)));
+        num = dynamic_cast<CCString*>(m_pAttributes->objectForKey(key));
         CC_BREAK_IF(NULL == num);
         
         ret =  num->doubleValue();
@@ -234,7 +234,7 @@ float CCComAttribute::getAsFloat(const char *key)
         CC_BREAK_IF(NULL == key);
         CC_BREAK_IF(NULL == m_pAttributes);
         
-        num = dynamic_cast<CCString*>(m_pAttributes->objectForKey(cocos2d::getHashCodeByString(key)));
+        num = dynamic_cast<CCString*>(m_pAttributes->objectForKey(key));
         CC_BREAK_IF(NULL == num);
         
         ret =  num->floatValue();
@@ -254,7 +254,7 @@ bool CCComAttribute::getAsBool(const char *key)
         CC_BREAK_IF(NULL == key);
         CC_BREAK_IF(NULL == m_pAttributes);
         
-        num = dynamic_cast<CCString*>(m_pAttributes->objectForKey(cocos2d::getHashCodeByString(key)));
+        num = dynamic_cast<CCString*>(m_pAttributes->objectForKey(key));
         CC_BREAK_IF(NULL == num);
         
         ret =  num->boolValue();
@@ -274,7 +274,7 @@ const char* CCComAttribute::getAsString(const char *key)
         CC_BREAK_IF(NULL == key);
         CC_BREAK_IF(NULL == m_pAttributes);
         
-        num = dynamic_cast<CCString*>(m_pAttributes->objectForKey(cocos2d::getHashCodeByString(key)));
+        num = dynamic_cast<CCString*>(m_pAttributes->objectForKey(key));
         CC_BREAK_IF(NULL == num);
         
         ret =  num->m_sString.c_str();
@@ -293,7 +293,7 @@ CCObject* CCComAttribute::getAsCCObject(const char *key)
         CC_BREAK_IF(NULL == key);
         CC_BREAK_IF(NULL == m_pAttributes);
         
-        ret =  m_pAttributes->objectForKey(cocos2d::getHashCodeByString(key));
+        ret =  m_pAttributes->objectForKey(key);
         
     } while(0);
      

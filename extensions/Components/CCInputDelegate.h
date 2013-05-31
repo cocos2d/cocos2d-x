@@ -1,7 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2008-2010 Ricardo Quesada
-Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -29,11 +27,10 @@ THE SOFTWARE.
 
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
-#include "Export.h"
 
 NS_CC_EXT_BEGIN
 
-class EXPORT_DLL CCInputDelegate : public CCTouchDelegate, public CCAccelerometerDelegate, public CCKeypadDelegate
+class CCInputDelegate : public CCTouchDelegate, public CCAccelerometerDelegate, public CCKeypadDelegate
 {
 protected:
     CCInputDelegate(void);

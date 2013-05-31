@@ -1306,24 +1306,24 @@ public:
         /// @{
     /// @name component functions
     /** 
-     *   gets component by ths name 
+     *   gets a component by its name
      */
     CCComponent* getComponent(const char *pName);
     
     /** 
-     *   adds component to node
+     *   adds a component to node
      */
     virtual bool addComponent(CCComponent *com);
     
     /** 
-     *   removes component by its name      
+     *   removes a component by its name      
      */
     virtual bool removeComponent(const char *pName);
     
     /**
      *   removes all components
      */
-    virtual void removeAllComponent();
+    virtual void removeAllComponents();
     /// @} end of component functions
 private:
     /// lazy allocs

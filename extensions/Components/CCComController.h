@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2013 cocos2d-x.org
+Copyright (c) 2013 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
-class EXPORT_DLL CCComController : public cocos2d::CCComponent, public CCInputDelegate
+class CCComController : public cocos2d::CCComponent, public CCInputDelegate
 {
 protected:
     CCComController(void);
@@ -41,8 +41,8 @@ public:
    virtual void onEnter();
    virtual void onExit();
    virtual void update(float delta);
-   virtual bool isEnable();
-   virtual void setEnable(bool b);
+   virtual bool isEnabled();
+   virtual void setEnabled(bool b);
     
    static CCComController* create(void);
 };

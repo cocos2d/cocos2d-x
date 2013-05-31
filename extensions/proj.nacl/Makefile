@@ -59,7 +59,11 @@ EXTENSIONS_SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../spine/Slot.cpp \
 ../spine/SlotData.cpp \
 ../spine/extension.cpp \
-../spine/spine-cocos2dx.cpp
+../spine/spine-cocos2dx.cpp \
+../Components/CCComAttribute.cpp \
+../Components/CCComAudio.cpp \
+../Components/CCComController.cpp \
+../Components/CCInputDelegate.cpp
 
 all:
 
