@@ -10,7 +10,7 @@ NACL_AR ?= $(NACL_ARCH)-nacl-ar
 NACL_CC ?= $(NACL_ARCH)-nacl-gcc
 NACL_CXX ?= $(NACL_ARCH)-nacl-g++
 CCFLAGS += -Wall -Werror
-CXXFLAGS += -Wall -Werror
+CXXFLAGS += -Wall -Werror -std=c++11
 ARFLAGS = cr
 
 THIS_MAKEFILE := $(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
