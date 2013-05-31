@@ -32,6 +32,8 @@
 
 #include "curl/curl.h"
 
+#include "platform/CCFileUtils.h"
+
 NS_CC_EXT_BEGIN
 
 static pthread_t        s_networkThread;
@@ -57,6 +59,8 @@ static CCHttpClient *s_pHttpClient = NULL; // pointer to singleton
 static char s_errorBuffer[CURL_ERROR_SIZE];
 
 typedef size_t (*write_callback)(void *ptr, size_t size, size_t nmemb, void *stream);
+
+static std::string cookieFilename = "";
 
 // Callback function used by libcurl for collect response data
 static size_t writeData(void *ptr, size_t size, size_t nmemb, void *stream)
@@ -305,6 +309,14 @@ public:
             if (!setOption(CURLOPT_HTTPHEADER, m_headers))
                 return false;
         }
+        if (!cookieFilename.empty()) {
+            if (!setOption(CURLOPT_COOKIEFILE, cookieFilename.c_str())) {
+                return false;
+            }
+            if (!setOption(CURLOPT_COOKIEJAR, cookieFilename.c_str())) {
+                return false;
+            }
+        }
 
         return setOption(CURLOPT_URL, request->getUrl())
                 && setOption(CURLOPT_WRITEFUNCTION, callback)
@@ -389,6 +401,15 @@ void CCHttpClient::destroyInstance()
     CCAssert(s_pHttpClient, "");
     CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CCHttpClient::dispatchResponseCallbacks), s_pHttpClient);
     s_pHttpClient->release();
+}
+
+void CCHttpClient::enableCookies(const char* cookieFile) {
+    if (cookieFile) {
+        cookieFilename = std::string(cookieFile);
+    }
+    else {
+        cookieFilename = (CCFileUtils::sharedFileUtils()->getWritablePath() + "cookieFile.txt");
+    }
 }
 
 CCHttpClient::CCHttpClient()
