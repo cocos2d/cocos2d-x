@@ -60,19 +60,19 @@ bool CCConfiguration::init(void)
 	m_pDefaults = CCDictionary::create();
 	m_pDefaults->retain();
 
-	m_pDefaults->setObject( CCString::create( cocos2dVersion() ), "cocos2d.version");
+	m_pDefaults->setObject( CCString::create( cocos2dVersion() ), "cocos2d.x.version");
 
 
 #if CC_ENABLE_PROFILERS
-	m_pDefaults->setObject( CCBool::create(true), "cocos2d.compiled_with_profiler");
+	m_pDefaults->setObject( CCBool::create(true), "cocos2d.x.compiled_with_profiler");
 #else
-	m_pDefaults->setObject( CCBool::create(false), "cocos2d.compiled_with_profiler");
+	m_pDefaults->setObject( CCBool::create(false), "cocos2d.x.compiled_with_profiler");
 #endif
 
 #if CC_ENABLE_GL_STATE_CACHE == 0
-	m_pDefaults->setObject( CCBool::create(false), "cocos2d.compiled_with_gl_state_cache");
+	m_pDefaults->setObject( CCBool::create(false), "cocos2d.x.compiled_with_gl_state_cache");
 #else
-	m_pDefaults->setObject( CCBool::create(true), "cocos2d.compiled_with_gl_state_cache");
+	m_pDefaults->setObject( CCBool::create(true), "cocos2d.x.compiled_with_gl_state_cache");
 #endif
 
 	return true;
@@ -220,7 +220,7 @@ bool CCConfiguration::supportsShareableVAO(void) const
 //
 // generic getters for properties
 //
-const char *CCConfiguration::getCString( const char *key ) const
+const char *CCConfiguration::getCString( const char *key, const char *default_value ) const
 {
 	CCObject *ret = m_pDefaults->objectForKey(key);
 	if( ret ) {
@@ -231,12 +231,11 @@ const char *CCConfiguration::getCString( const char *key ) const
 	}
 
 	// XXX: Should it throw an exception ?
-	CCLOG("Key not found: '%s'", key );
-	return NULL;
+	return default_value;
 }
 
 /** returns the value of a given key as a boolean */
-bool CCConfiguration::getBool( const char *key ) const
+bool CCConfiguration::getBool( const char *key, bool default_value ) const
 {
 	CCObject *ret = m_pDefaults->objectForKey(key);
 	if( ret ) {
@@ -248,12 +247,11 @@ bool CCConfiguration::getBool( const char *key ) const
 	}
 
 	// XXX: Should it throw an exception ?
-	CCLOG("Key not found: '%s'", key );
-	return false;
+	return default_value;
 }
 
 /** returns the value of a given key as a double */
-double CCConfiguration::getNumber( const char *key ) const
+double CCConfiguration::getNumber( const char *key, double default_value ) const
 {
 	CCObject *ret = m_pDefaults->objectForKey(key);
 	if( ret ) {
@@ -270,8 +268,7 @@ double CCConfiguration::getNumber( const char *key ) const
 	}
 
 	// XXX: Should it throw an exception ?
-	CCLOG("Key not found: '%s'", key );
-	return 0.0;
+	return default_value;
 }
 
 CCObject * CCConfiguration::getObject( const char *key ) const
