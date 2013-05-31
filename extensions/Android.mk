@@ -69,7 +69,11 @@ spine/Skin.cpp \
 spine/Slot.cpp \
 spine/SlotData.cpp \
 spine/extension.cpp \
-spine/spine-cocos2dx.cpp
+spine/spine-cocos2dx.cpp \
+Components/CCComAttribute.cpp \
+Components/CCComAudio.cpp \
+Components/CCComController.cpp \
+Components/CCInputDelegate.cpp
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static

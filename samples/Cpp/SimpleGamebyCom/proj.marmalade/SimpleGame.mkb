@@ -1,0 +1,43 @@
+options
+{
+	module_path="../../../../cocos2dx/proj.marmalade/;../../../../CocosDenshion/proj.marmalade/"
+	s3e-data-dir = "../Resources/"
+}
+
+includepaths
+{
+	../Classes
+}
+subprojects
+{
+	IwGL
+	cocos2dx
+	CocosDenshion
+}
+
+assets
+{
+	(../Resources)
+	.
+}
+
+
+
+files
+{
+	[Main]
+	(src)
+	Main.h
+	Main.cpp
+
+	(../Classes)
+	AppDelegate.h
+	AppDelegate.cpp
+	GameOverScene.cpp
+	GameOverScene.h
+	HelloWorldScene.cpp
+	HelloWorldScene.h
+
+}
+
+
