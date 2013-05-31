@@ -32,10 +32,10 @@ using namespace cocos2d;
 using namespace cocos2d::extension;
 
 SceneController::SceneController(void)
-: _targets(NULL)
-, _projectiles(NULL)
-, _fAddTargetTime(0.0f)
+: _fAddTargetTime(0.0f)
 , _fElapsedTime(0.0f)
+, _targets(NULL)
+, _projectiles(NULL)
 {
     m_strName = "SceneController";
 }
