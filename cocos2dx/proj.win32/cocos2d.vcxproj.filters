@@ -138,6 +138,9 @@
     <ClCompile Include="..\cocoa\CCZone.cpp">
       <Filter>cocoa</Filter>
     </ClCompile>
+    <ClCompile Include="..\cocoa\CCData.cpp">
+      <Filter>cocoa</Filter>
+    </ClCompile>
     <ClCompile Include="..\effects\CCGrabber.cpp">
       <Filter>effects</Filter>
     </ClCompile>
@@ -504,6 +507,9 @@
       <Filter>cocoa</Filter>
     </ClInclude>
     <ClInclude Include="..\cocoa\CCZone.h">
+      <Filter>cocoa</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocoa\CCData.h">
       <Filter>cocoa</Filter>
     </ClInclude>
     <ClInclude Include="..\effects\CCGrabber.h">

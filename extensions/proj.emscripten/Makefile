@@ -36,7 +36,6 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CCBReader/CCBSequence.cpp \
 ../CCBReader/CCBSequenceProperty.cpp \
 ../CCBReader/CCBValue.cpp \
-../CCBReader/CCData.cpp \
 ../CCBReader/CCNode+CCBRelativePositioning.cpp \
 ../GUI/CCScrollView/CCScrollView.cpp \
 ../GUI/CCScrollView/CCSorting.cpp \

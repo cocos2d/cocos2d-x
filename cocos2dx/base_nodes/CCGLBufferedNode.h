@@ -29,7 +29,8 @@ THE SOFTWARE.
 class CCGLBufferedNode
 {
 public:
-    CCGLBufferedNode(void);
+    CCGLBufferedNode();
+    virtual ~CCGLBufferedNode();
 
     /**
      * Load the given data into this CCNode's GL Buffer. Needed for WebGL, as it does not support client-side arrays.
