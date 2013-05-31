@@ -204,7 +204,7 @@ void TestSearchPath::onEnter()
     FILE* fp = fopen(fileName.c_str(), "wb");
     if (fp)
     {
-        fwrite(szBuf, 1, strlen(szBuf), fp);
+        if (fwrite(szBuf, 1, strlen(szBuf), fp));
         fclose(fp);
         CCLog("Writing file to writable path succeed.");
     }
