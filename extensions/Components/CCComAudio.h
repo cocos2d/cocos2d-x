@@ -27,7 +27,6 @@ THE SOFTWARE.
 
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
-#include "SimpleAudioEngine.h"
 
 NS_CC_EXT_BEGIN
 

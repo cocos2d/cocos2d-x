@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2010-2013 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -22,44 +22,42 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_EXTENTIONS_CCCOMATTRIBUTE_H__
-#define __CC_EXTENTIONS_CCCOMATTRIBUTE_H__
+#ifndef __CC_SceneController_H__
+#define __CC_SceneController_H__
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
-#include <string>
+#include "cocos-ext.h"
 
-NS_CC_EXT_BEGIN
 
-class CCComAttribute : public cocos2d::CCComponent
+class SceneController : public cocos2d::extension::CCComController
 {
 protected:
-    CCComAttribute(void);
-    virtual ~CCComAttribute(void);
-    
+    SceneController(void);
+    virtual ~SceneController(void);
+        
 public:
-   virtual bool init();
-   static CCComAttribute* create(void);
-
-   void setInt(const char *key, int value);
-   void setDouble(const char *key, double value);
-   void setFloat(const char *key, float value);
-   void setBool(const char *key, bool value);
-   void setCString(const char *key, const char *value);
-   void setObject(const char *key, CCObject *value);
+    virtual bool init();
+    virtual void onEnter();
+    virtual void onExit();
+    virtual void update(float delta);
    
-   int    getInt(const char *key);
-   double getDouble(const char *key);
-   float  getFloat(const char *key);
-   bool   getBool(const char *key);
-   const char* getCString(const char *key);
-   CCObject* getObject(const char *key);
+   static SceneController* create(void);
    
-private:
-   CCDictionary *m_pAttributes;  
+public:
+   cocos2d::CCArray* getTargets() {return _targets;};
+   cocos2d::CCArray* getProjectiles() {return _projectiles;};
+   void spriteMoveFinished(cocos2d::CCNode* sender);
+   void increaseKillCount();
    
+   void addTarget();
+   float _fAddTargetTime;
+   float _fElapsedTime;
+   
+   
+protected:
+    cocos2d::CCArray *_targets;
+	cocos2d::CCArray *_projectiles;
 };
 
-NS_CC_EXT_END
 
 #endif  // __FUNDATION__CCCOMPONENT_H__

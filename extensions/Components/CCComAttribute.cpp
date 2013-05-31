@@ -39,6 +39,8 @@ CCComAttribute::~CCComAttribute(void)
 
 bool CCComAttribute::init()
 {
+    m_pAttributes = CCDictionary::create();
+    m_pAttributes->retain();
     return true;
 }
 
@@ -56,248 +58,126 @@ CCComAttribute* CCComAttribute::create(void)
 	return pRet;
 }
 
-void CCComAttribute::setIntValue(const char *key, int value)
+void CCComAttribute::setInt(const char *key, int value)
 {
     CCAssert(key != NULL, "Argument must be non-nil"); 
-    if (m_pAttributes == NULL)
-    {
-        m_pAttributes = CCDictionary::create();
-        m_pAttributes->retain();
-    }
-    
-    std::stringstream streamValue;
-    streamValue << value;
-    CCString *old = dynamic_cast<CCString*>(m_pAttributes->objectForKey(key));
-    if (old != NULL)
-    {
-        old->m_sString.assign(streamValue.str());
-    }
-    else
-    {
-        CCString *newvalue = CCString::create(streamValue.str());
-        m_pAttributes->setObject(newvalue, key);
-    }
+    m_pAttributes->setObject(CCInteger::create(value), key);
 }
 
-void CCComAttribute::setDoubleValue(const char *key, double value)
+void CCComAttribute::setDouble(const char *key, double value)
 {
     CCAssert(key != NULL, "Argument must be non-nil"); 
-    if (m_pAttributes == NULL)
-    {
-        m_pAttributes = CCDictionary::create();
-        m_pAttributes->retain();
-    }
-    
-    std::stringstream streamValue;
-    streamValue << value;
-    CCString *old = dynamic_cast<CCString*>(m_pAttributes->objectForKey(key));
-    if (old != NULL)
-    {
-        old->m_sString.assign(streamValue.str());
-    }
-    else
-    {
-        CCString *newvalue = CCString::create(streamValue.str());
-        m_pAttributes->setObject(newvalue, key);
-    }
+    m_pAttributes->setObject(CCDouble::create(value), key);
 }
 
-void CCComAttribute::setFloatValue(const char *key, float value)
+void CCComAttribute::setFloat(const char *key, float value)
 {
     CCAssert(key != NULL, "Argument must be non-nil"); 
-    if (m_pAttributes == NULL)
-    {
-        m_pAttributes = CCDictionary::create();
-        m_pAttributes->retain();
-    }
-    
-    std::stringstream streamValue;
-    streamValue << value;
-    CCString *old = dynamic_cast<CCString*>(m_pAttributes->objectForKey(key));
-    if (old != NULL)
-    {
-        old->m_sString.assign(streamValue.str());
-    }
-    else
-    {
-        CCString *newvalue = CCString::create(streamValue.str());
-        m_pAttributes->setObject(newvalue, key);
-    }
+    m_pAttributes->setObject(CCFloat::create(value), key);
 }
 
-void CCComAttribute::setBoolValue(const char *key, bool value)
+void CCComAttribute::setBool(const char *key, bool value)
 {
     CCAssert(key != NULL, "Argument must be non-nil"); 
-    if (m_pAttributes == NULL)
-    {
-        m_pAttributes = CCDictionary::create();
-        m_pAttributes->retain();
-    }
-    
-    std::stringstream streamValue;
-    streamValue << value;
-    CCString *old = dynamic_cast<CCString*>(m_pAttributes->objectForKey(key));
-    if (old != NULL)
-    {
-        old->m_sString.assign(streamValue.str());
-    }
-    else
-    {
-        CCString *newvalue = CCString::create(streamValue.str());
-        m_pAttributes->setObject(newvalue, key);
-    }
+    m_pAttributes->setObject(CCBool::create(value), key);
 }
 
-void CCComAttribute::setStringValue(const char *key, const char *value)
+void CCComAttribute::setCString(const char *key, const char *value)
 {
     CCAssert(key != NULL, "Argument must be non-nil"); 
-    if (m_pAttributes == NULL)
-    {
-        m_pAttributes = CCDictionary::create();
-        m_pAttributes->retain();
-    }
-    
-    std::stringstream streamValue;
-    streamValue << value;
-    CCString *old = dynamic_cast<CCString*>(m_pAttributes->objectForKey(key));
-    if (old != NULL)
-    {
-        old->m_sString.assign(streamValue.str());
-    }
-    else
-    {
-        CCString *newvalue = CCString::create(streamValue.str());
-        m_pAttributes->setObject(newvalue, key);
-    }
-
+    m_pAttributes->setObject(CCString::create(value), key);
 }
 
-void CCComAttribute::setCCObjectValue(const char *key, CCObject *value)
+void CCComAttribute::setObject(const char *key, CCObject *value)
 {
     CCAssert(key != NULL, "Argument must be non-nil"); 
-    if (m_pAttributes == NULL)
-    {
-        m_pAttributes = CCDictionary::create();
-        m_pAttributes->retain();
-    }
-    
     m_pAttributes->setObject(value, key);
 }
 
-int CCComAttribute::getAsInt(const char *key)
+int CCComAttribute::getInt(const char *key)
 {
-    int ret = -1;
-    CCString *num = NULL;
-    CCAssert(key != NULL, "Argument must be non-nil");
-    do
+    CCObject *ret = m_pAttributes->objectForKey(key);
+	if( ret )
     {
-        CC_BREAK_IF(NULL == key);
-        CC_BREAK_IF(NULL == m_pAttributes);
-        
-        num = dynamic_cast<CCString*>(m_pAttributes->objectForKey(key));
-        CC_BREAK_IF(NULL == num);
-        
-        ret =  num->intValue();
-        
-    } while (0);
-     
-    return ret;
+		if( CCInteger *obj=dynamic_cast<CCInteger*>(ret) )
+			return obj->getValue();
+
+		CCAssert(false, "Key found, but from different type");
+	}
+
+	// XXX: Should it throw an exception ?
+	CCLOG("Key not found: '%s'", key );
+	return 0;
 }
 
-double CCComAttribute::getAsDouble(const char *key)
+double CCComAttribute::getDouble(const char *key)
 {
-    double ret = -1.0;
-    CCString *num = NULL;
-    CCAssert(key != NULL, "Argument must be non-nil");
-    do
+    CCObject *ret = m_pAttributes->objectForKey(key);
+	if( ret )
     {
-        CC_BREAK_IF(NULL == key);
-        CC_BREAK_IF(NULL == m_pAttributes);
-        
-        num = dynamic_cast<CCString*>(m_pAttributes->objectForKey(key));
-        CC_BREAK_IF(NULL == num);
-        
-        ret =  num->doubleValue();
-        
-    } while(0);
-     
-    return ret;
+		if( CCDouble *obj=dynamic_cast<CCDouble*>(ret) )
+			return obj->getValue();
+
+		CCAssert(false, "Key found, but from different type");
+	}
+
+	// XXX: Should it throw an exception ?
+	CCLOG("Key not found: '%s'", key );
+	return 0.0;
 }
 
-float CCComAttribute::getAsFloat(const char *key)
+float CCComAttribute::getFloat(const char *key)
 {
-    float ret = -1.0;
-    CCString *num = NULL;
-    CCAssert(key != NULL, "Argument must be non-nil");
-    do
+    CCObject *ret = m_pAttributes->objectForKey(key);
+	if( ret )
     {
-        CC_BREAK_IF(NULL == key);
-        CC_BREAK_IF(NULL == m_pAttributes);
-        
-        num = dynamic_cast<CCString*>(m_pAttributes->objectForKey(key));
-        CC_BREAK_IF(NULL == num);
-        
-        ret =  num->floatValue();
-        
-    } while(0);
-     
-    return ret;
+		if( CCFloat *obj=dynamic_cast<CCFloat*>(ret) )
+			return obj->getValue();
+
+		CCAssert(false, "Key found, but from different type");
+	}
+
+	// XXX: Should it throw an exception ?
+	CCLOG("Key not found: '%s'", key );
+	return 0.0;
 }
 
-bool CCComAttribute::getAsBool(const char *key)
+bool CCComAttribute::getBool(const char *key)
 {
-    bool ret = false;
-    CCString *num = NULL;
-    CCAssert(key != NULL, "Argument must be non-nil");
-    do
+    CCObject *ret = m_pAttributes->objectForKey(key);
+	if( ret )
     {
-        CC_BREAK_IF(NULL == key);
-        CC_BREAK_IF(NULL == m_pAttributes);
-        
-        num = dynamic_cast<CCString*>(m_pAttributes->objectForKey(key));
-        CC_BREAK_IF(NULL == num);
-        
-        ret =  num->boolValue();
-        
-    } while(0);
-     
-    return ret;
+		if( CCBool *boolobj=dynamic_cast<CCBool*>(ret) )
+			return boolobj->getValue();
+		if( CCString *strobj=dynamic_cast<CCString*>(ret) )
+			return strobj->boolValue();
+		CCAssert(false, "Key found, but from different type");
+	}
+
+	// XXX: Should it throw an exception ?
+	CCLOG("Key not found: '%s'", key );
+	return false;
 }
 
-const char* CCComAttribute::getAsString(const char *key)
+const char* CCComAttribute::getCString(const char *key)
 {
-    const char* ret = NULL;
-    CCString *num = NULL;
-    CCAssert(key != NULL, "Argument must be non-nil");
-    do
+   CCObject *ret = m_pAttributes->objectForKey(key);
+	if( ret )
     {
-        CC_BREAK_IF(NULL == key);
-        CC_BREAK_IF(NULL == m_pAttributes);
-        
-        num = dynamic_cast<CCString*>(m_pAttributes->objectForKey(key));
-        CC_BREAK_IF(NULL == num);
-        
-        ret =  num->m_sString.c_str();
-        
-    } while(0);
-     
-    return ret;
+		if( CCString *str=dynamic_cast<CCString*>(ret) )
+			return str->getCString();
+
+		CCAssert(false, "Key found, but from different type");
+	}
+
+	// XXX: Should it throw an exception ?
+	CCLOG("Key not found: '%s'", key );
+	return NULL;
 }
 
-CCObject* CCComAttribute::getAsCCObject(const char *key)
+CCObject* CCComAttribute::getObject(const char *key)
 {
-    CCObject* ret = NULL;
-    CCAssert(key != NULL, "Argument must be non-nil");
-    do
-    {
-        CC_BREAK_IF(NULL == key);
-        CC_BREAK_IF(NULL == m_pAttributes);
-        
-        ret =  m_pAttributes->objectForKey(key);
-        
-    } while(0);
-     
-    return ret;
+    return m_pAttributes->objectForKey(key);
 }
 
 NS_CC_EXT_END

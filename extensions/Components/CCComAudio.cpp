@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCComAudio.h"
+#include "SimpleAudioEngine.h"
 
 NS_CC_EXT_BEGIN
 

@@ -7,6 +7,7 @@
 #include "NetworkTest/HttpClientTest.h"
 #endif
 #include "TableViewTest/TableViewTestScene.h"
+#include "ComponentsTest/ComponentsTestScene.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
 #include "EditBoxTest/EditBoxTest.h"
@@ -28,6 +29,7 @@ enum
     TEST_EDITBOX,
 #endif
 	TEST_TABLEVIEW,
+    TEST_COMPONENTS,
     TEST_MAX_COUNT,
 };
 
@@ -42,7 +44,8 @@ static const std::string testsName[TEST_MAX_COUNT] =
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
     "EditBoxTest",
 #endif
-	"TableViewTest"
+	"TableViewTest",
+    "ComponentsTest"
 };
 
 ////////////////////////////////////////////////////////
@@ -121,6 +124,10 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
 			runTableViewTest();
 		}
 		break;
+    case TEST_COMPONENTS:
+        {
+            runComponentsTestLayerTest();
+        }
     default:
         break;
     }
