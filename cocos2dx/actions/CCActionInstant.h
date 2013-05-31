@@ -203,36 +203,6 @@ protected:
     CCPoint m_tPosition;
 };
 
-/** @brief Calls a 'callback' defined by std::fucntion
- */
-class CC_DLL CCCallFunction : public CCActionInstant //<NSCopying>
-{
-public:
-    CCCallFunction()
-	: _function(nullptr)
-    {
-    }
-    virtual ~CCCallFunction();
-
-    /** creates the action with the callback
-
-	 typedef void (CCObject::*SEL_CallFunc)();
-	 */
-    static CCCallFunction * create(std::function<void()> func);
-
-	/** initializes the action with the std::function
-	 */
-    virtual bool initWithFunction(std::function<void()>);
-    /** executes the callback */
-    virtual void execute();
-    //super methods
-    virtual void update(float time);
-    CCObject * copyWithZone(CCZone *pZone);
-
-protected:
-    /** function that will be called */
-	std::function<void()> _function;
-};
 
 /** @brief Calls a 'callback'
 */
@@ -243,13 +213,20 @@ public:
         : m_pSelectorTarget(NULL)
 		, m_nScriptHandler(0)
         , m_pCallFunc(NULL)
+		, _function(NULL)
     {
     }
     virtual ~CCCallFunc();
 
+	/** creates the action with the callback of type std::function<void()>.
+	 This is the preferred way to create the callback.
+	 */
+    static CCCallFunc * create(const std::function<void()>& func);
+
     /** creates the action with the callback 
 
     typedef void (CCObject::*SEL_CallFunc)();
+	 @deprecated Use the std::function API instead.
     */
     static CCCallFunc * create(CCObject* pSelectorTarget, SEL_CallFunc selector);
 
@@ -261,6 +238,11 @@ public:
     typedef void (CCObject::*SEL_CallFunc)();
     */
     virtual bool initWithTarget(CCObject* pSelectorTarget);
+
+	/** initializes the action with the std::function<void()>
+	 */
+    virtual bool initWithFunction(const std::function<void()>& func);
+
     /** executes the callback */
     virtual void execute();
     //super methods
@@ -288,6 +270,9 @@ protected:
     CCObject*   m_pSelectorTarget;
 
 	int m_nScriptHandler;
+
+    /** function that will be called */
+	std::function<void()> _function;
 
     union
     {

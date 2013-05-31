@@ -375,11 +375,12 @@ void CCPlace::update(float time) {
 }
 
 //
-// CCCallFunction
+// CallFunc
 //
-CCCallFunction * CCCallFunction::create(std::function<void()> func)
+
+CCCallFunc * CCCallFunc::create(const std::function<void()> &func)
 {
-    CCCallFunction *pRet = new CCCallFunction();
+    CCCallFunc *pRet = new CCCallFunc();
 
     if (pRet && pRet->initWithFunction(func) ) {
         pRet->autorelease();
@@ -390,47 +391,6 @@ CCCallFunction * CCCallFunction::create(std::function<void()> func)
     return NULL;
 }
 
-bool CCCallFunction::initWithFunction(std::function<void()> func)
-{
-	_function = func;
-    return true;
-}
-
-CCCallFunction::~CCCallFunction(void)
-{
-}
-
-CCObject * CCCallFunction::copyWithZone(CCZone *pZone) {
-    CCZone* pNewZone = NULL;
-    CCCallFunction* pRet = NULL;
-
-    if (pZone && pZone->m_pCopyObject) {
-        //in case of being called at sub class
-        pRet = (CCCallFunction*) (pZone->m_pCopyObject);
-    } else {
-        pRet = new CCCallFunction();
-        pZone = pNewZone = new CCZone(pRet);
-    }
-
-    CCActionInstant::copyWithZone(pZone);
-    pRet->initWithFunction(_function);
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
-}
-
-void CCCallFunction::update(float time) {
-    CC_UNUSED_PARAM(time);
-    this->execute();
-}
-
-void CCCallFunction::execute() {
-	if( _function )
-		_function();
-}
-
-//
-// CallFunc
-//
 CCCallFunc * CCCallFunc::create(CCObject* pSelectorTarget, SEL_CallFunc selector) 
 {
     CCCallFunc *pRet = new CCCallFunc();
@@ -457,6 +417,12 @@ CCCallFunc * CCCallFunc::create(int nHandler)
 		CC_SAFE_DELETE(pRet);
 	}
 	return pRet;
+}
+
+bool CCCallFunc::initWithFunction(const std::function<void()> &func)
+{
+	_function = func;
+    return true;
 }
 
 bool CCCallFunc::initWithTarget(CCObject* pSelectorTarget) {
@@ -496,8 +462,13 @@ CCObject * CCCallFunc::copyWithZone(CCZone *pZone) {
     }
 
     CCActionInstant::copyWithZone(pZone);
-    pRet->initWithTarget(m_pSelectorTarget);
-    pRet->m_pCallFunc = m_pCallFunc;
+	if( m_pSelectorTarget) {
+		pRet->initWithTarget(m_pSelectorTarget);
+		pRet->m_pCallFunc = m_pCallFunc;
+	}
+	else if( _function )
+		pRet->initWithFunction(_function);
+
     CC_SAFE_DELETE(pNewZone);
     return pRet;
 }
@@ -510,7 +481,8 @@ void CCCallFunc::update(float time) {
 void CCCallFunc::execute() {
     if (m_pCallFunc) {
         (m_pSelectorTarget->*m_pCallFunc)();
-    }
+    } else if( _function )
+		_function();
 	if (m_nScriptHandler) {
 		CCScriptEngineManager::sharedManager()->getScriptEngine()->executeCallFuncActionEvent(this);
 	}

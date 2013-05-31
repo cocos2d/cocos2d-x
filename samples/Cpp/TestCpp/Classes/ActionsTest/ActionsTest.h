@@ -439,7 +439,7 @@ class Issue1398 : public ActionsDemo
 {
 public:
     void incrementInteger();
-    void incrementIntegerCallback(CCNode* pSender, void* data);
+    void incrementIntegerCallback(void* data);
     virtual void onEnter();
     virtual std::string subtitle();
     virtual std::string title();
