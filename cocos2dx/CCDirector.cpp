@@ -51,6 +51,7 @@ THE SOFTWARE.
 #include "label_nodes/CCLabelAtlas.h"
 #include "actions/CCActionManager.h"
 #include "CCConfiguration.h"
+#include "keyboard_dispatcher/CCKeyboardDispatcher.h"
 #include "keypad_dispatcher/CCKeypadDispatcher.h"
 #include "CCAccelerometer.h"
 #include "sprite_nodes/CCAnimationCache.h"
@@ -154,6 +155,9 @@ bool CCDirector::init(void)
     // touchDispatcher
     m_pTouchDispatcher = new CCTouchDispatcher();
     m_pTouchDispatcher->init();
+
+    // KeyboardDispatcher
+    m_pKeyboardDispatcher = new CCKeyboardDispatcher();
 
     // KeypadDispatcher
     m_pKeypadDispatcher = new CCKeypadDispatcher();
@@ -960,6 +964,19 @@ CCTouchDispatcher* CCDirector::getTouchDispatcher()
 {
     return m_pTouchDispatcher;
 }
+
+void CCDirector::setKeyboardDispatcher(CCKeyboardDispatcher* pKeyboardDispatcher)
+{
+    CC_SAFE_RETAIN(pKeyboardDispatcher);
+    CC_SAFE_RELEASE(m_pKeyboardDispatcher);
+    m_pKeyboardDispatcher = pKeyboardDispatcher;
+}
+
+CCKeyboardDispatcher* CCDirector::getKeyboardDispatcher()
+{
+    return m_pKeyboardDispatcher;
+}
+
 
 void CCDirector::setKeypadDispatcher(CCKeypadDispatcher* pKeypadDispatcher)
 {
