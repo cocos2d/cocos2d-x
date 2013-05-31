@@ -29,6 +29,7 @@
 #include "EffectsAdvancedTest/EffectsAdvancedTest.h"
 #include "AccelerometerTest/AccelerometerTest.h"
 #include "KeypadTest/KeypadTest.h"
+#include "KeyboardTest/KeyboardTest.h"
 #include "PerformanceTest/PerformanceTest.h"
 #include "ZwoptexTest/ZwoptexTest.h"
 #include "CocosDenshionTest/CocosDenshionTest.h"
@@ -93,6 +94,7 @@ enum
     TEST_BOX2DBED,
     TEST_EFFECT_ADVANCE,
     TEST_ACCELEROMRTER,
+    TEST_KEYBOARD,
     TEST_KEYPAD,
     TEST_COCOSDENSHION,
     TEST_PERFORMANCE,
@@ -156,6 +158,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "Box2dTestBed",
     "EffectAdvancedTest",
     "Accelerometer",
+    "KeyboardTest",
     "KeypadTest",
     "CocosDenshionTest",
     "PerformanceTest",

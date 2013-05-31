@@ -79,6 +79,8 @@ static TestScene* CreateTestScene(int nIdx)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
     case TEST_KEYPAD:
         pScene = new KeypadTestScene(); break;
+    case TEST_KEYBOARD:
+        pScene = new KeyboardTestScene(); break;
 #endif
     case TEST_COCOSDENSHION:
         pScene = new CocosDenshionTestScene(); break;

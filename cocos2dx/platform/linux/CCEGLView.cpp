@@ -12,6 +12,7 @@
 #include "CCDirector.h"
 #include "touch_dispatcher/CCTouch.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
+#include "keyboard_dispatcher/CCKeyboardDispatcher.h"
 #include "text_input_node/CCIMEDispatcher.h"
 
 PFNGLGENFRAMEBUFFERSEXTPROC glGenFramebuffersEXT = NULL;
@@ -154,6 +155,21 @@ int closeEventHandle() {
 	return GL_TRUE;
 }
 
+void GLFWCALL keyboardEventHandle(int keyCode, int action)
+{
+    CCKeyboardDispatcher *kbDisp = CCDirector::sharedDirector()->getKeyboardDispatcher();
+
+    switch (action)
+    {   
+        case GLFW_PRESS:
+            kbDisp->dispatchKeyboardEvent(keyCode, true);
+            break;
+        case GLFW_RELEASE:
+            kbDisp->dispatchKeyboardEvent(keyCode, false);
+            break;
+    }   
+}
+
 void CCEGLView::setFrameSize(float width, float height)
 {
 	bool eResult = false;
@@ -228,6 +244,8 @@ void CCEGLView::setFrameSize(float width, float height)
 		glfwSetMouseButtonCallback(mouseButtonEventHandle);
 		//register the glfw mouse pos event
 		glfwSetMousePosCallback(mousePosEventHandle);
+        //register the glfw keyboard event
+        glfwSetKeyCallback(keyboardEventHandle);
 
 		glfwSetWindowCloseCallback(closeEventHandle);
 
