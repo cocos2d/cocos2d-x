@@ -33,7 +33,7 @@ NS_CC_EXT_BEGIN
 class CCHttpClient;
 class CCHttpResponse;
 typedef void (CCObject::*SEL_HttpResponse)(CCHttpClient* client, CCHttpResponse* response);
-#define httpresponse_selector(_SELECTOR) (SEL_HttpResponse)(&_SELECTOR)
+#define httpresponse_selector(_SELECTOR) (cocos2d::extension::SEL_HttpResponse)(&_SELECTOR)
 
 /** 
  @brief defines the object which users must packed for CCHttpClient::send(HttpRequest*) method.

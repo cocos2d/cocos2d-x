@@ -102,6 +102,7 @@ SOURCES = ../actions/CCAction.cpp \
 ../textures/CCTexture2D.cpp \
 ../textures/CCTextureAtlas.cpp \
 ../textures/CCTextureCache.cpp \
+../textures/CCTextureETC.cpp \
 ../textures/CCTexturePVR.cpp \
 ../tilemap_parallax_nodes/CCParallaxNode.cpp \
 ../tilemap_parallax_nodes/CCTMXLayer.cpp \
@@ -133,6 +134,7 @@ SOURCES = ../actions/CCAction.cpp \
 ../CCConfiguration.cpp \
 ../CCDirector.cpp \
 ../CCScheduler.cpp \
+../ccFPSImages.c \
 ../cocos2d.cpp 
 
 COCOS_ROOT = ../..

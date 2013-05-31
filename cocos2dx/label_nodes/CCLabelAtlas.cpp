@@ -116,8 +116,6 @@ void CCLabelAtlas::updateAtlasValues()
 {
     unsigned int n = m_sString.length();
 
-    ccV3F_C4B_T2F_Quad quad;
-
     const unsigned char *s = (unsigned char*)m_sString.c_str();
 
     CCTexture2D *texture = m_pTextureAtlas->getTexture();
@@ -125,8 +123,17 @@ void CCLabelAtlas::updateAtlasValues()
     float textureHigh = (float) texture->getPixelsHigh();
     float itemWidthInPixels = m_uItemWidth * CC_CONTENT_SCALE_FACTOR();
     float itemHeightInPixels = m_uItemHeight * CC_CONTENT_SCALE_FACTOR();
+    if (m_bIgnoreContentScaleFactor)
+    {
+        itemWidthInPixels = m_uItemWidth;
+        itemHeightInPixels = m_uItemHeight;
+    }
 
+    unsigned int capacity = m_pTextureAtlas->getCapacity();
+    CCAssert( n <= capacity, "updateAtlasValues: Invalid String length");
+    ccV3F_C4B_T2F_Quad* quads = m_pTextureAtlas->getQuads();
     for(unsigned int i = 0; i < n; i++) {
+
         unsigned char a = s[i] - m_uMapStartChar;
         float row = (float) (a % m_uItemsPerRow);
         float col = (float) (a / m_uItemsPerRow);
@@ -144,34 +151,39 @@ void CCLabelAtlas::updateAtlasValues()
         float bottom    = top + itemHeightInPixels / textureHigh;
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
-        quad.tl.texCoords.u = left;
-        quad.tl.texCoords.v = top;
-        quad.tr.texCoords.u = right;
-        quad.tr.texCoords.v = top;
-        quad.bl.texCoords.u = left;
-        quad.bl.texCoords.v = bottom;
-        quad.br.texCoords.u = right;
-        quad.br.texCoords.v = bottom;
+        quads[i].tl.texCoords.u = left;
+        quads[i].tl.texCoords.v = top;
+        quads[i].tr.texCoords.u = right;
+        quads[i].tr.texCoords.v = top;
+        quads[i].bl.texCoords.u = left;
+        quads[i].bl.texCoords.v = bottom;
+        quads[i].br.texCoords.u = right;
+        quads[i].br.texCoords.v = bottom;
 
-        quad.bl.vertices.x = (float) (i * m_uItemWidth);
-        quad.bl.vertices.y = 0;
-        quad.bl.vertices.z = 0.0f;
-        quad.br.vertices.x = (float)(i * m_uItemWidth + m_uItemWidth);
-        quad.br.vertices.y = 0;
-        quad.br.vertices.z = 0.0f;
-        quad.tl.vertices.x = (float)(i * m_uItemWidth);
-        quad.tl.vertices.y = (float)(m_uItemHeight);
-        quad.tl.vertices.z = 0.0f;
-        quad.tr.vertices.x = (float)(i * m_uItemWidth + m_uItemWidth);
-        quad.tr.vertices.y = (float)(m_uItemHeight);
-        quad.tr.vertices.z = 0.0f;
-        
+        quads[i].bl.vertices.x = (float) (i * m_uItemWidth);
+        quads[i].bl.vertices.y = 0;
+        quads[i].bl.vertices.z = 0.0f;
+        quads[i].br.vertices.x = (float)(i * m_uItemWidth + m_uItemWidth);
+        quads[i].br.vertices.y = 0;
+        quads[i].br.vertices.z = 0.0f;
+        quads[i].tl.vertices.x = (float)(i * m_uItemWidth);
+        quads[i].tl.vertices.y = (float)(m_uItemHeight);
+        quads[i].tl.vertices.z = 0.0f;
+        quads[i].tr.vertices.x = (float)(i * m_uItemWidth + m_uItemWidth);
+        quads[i].tr.vertices.y = (float)(m_uItemHeight);
+        quads[i].tr.vertices.z = 0.0f;
         ccColor4B c = { _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity };
-        quad.tl.colors = c;
-        quad.tr.colors = c;
-        quad.bl.colors = c;
-        quad.br.colors = c;
-        m_pTextureAtlas->updateQuad(&quad, i);
+        quads[i].tl.colors = c;
+        quads[i].tr.colors = c;
+        quads[i].bl.colors = c;
+        quads[i].br.colors = c;
+    }
+    if (n > 0 ){
+        m_pTextureAtlas->setDirty(true);
+        unsigned int totalQuads = m_pTextureAtlas->getTotalQuads();
+        if (n > totalQuads) {
+            m_pTextureAtlas->increaseTotalQuadsWith(n - totalQuads);
+        }
     }
 }
 

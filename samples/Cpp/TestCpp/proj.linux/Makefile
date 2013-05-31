@@ -87,6 +87,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/FileUtilsTest/FileUtilsTest.cpp \
 	../Classes/SpineTest/SpineTest.cpp \
 	../Classes/DataVisitorTest/DataVisitorTest.cpp \
+	../Classes/ConfigurationTest/ConfigurationTest.cpp \
 	../Classes/controller.cpp \
 	../Classes/testBasic.cpp \
 	../Classes/AppDelegate.cpp \

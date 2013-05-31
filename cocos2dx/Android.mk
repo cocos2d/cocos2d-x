@@ -10,6 +10,7 @@ LOCAL_SRC_FILES := \
 CCConfiguration.cpp \
 CCScheduler.cpp \
 CCCamera.cpp \
+ccFPSImages.c \
 actions/CCAction.cpp \
 actions/CCActionCamera.cpp \
 actions/CCActionCatmullRom.cpp \
@@ -127,6 +128,7 @@ text_input_node/CCTextFieldTTF.cpp \
 textures/CCTexture2D.cpp \
 textures/CCTextureAtlas.cpp \
 textures/CCTextureCache.cpp \
+textures/CCTextureETC.cpp \
 textures/CCTexturePVR.cpp \
 tilemap_parallax_nodes/CCParallaxNode.cpp \
 tilemap_parallax_nodes/CCTMXLayer.cpp \

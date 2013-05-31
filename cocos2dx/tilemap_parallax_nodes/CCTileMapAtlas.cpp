@@ -173,7 +173,10 @@ ccColor3B CCTileMapAtlas::tileAt(const CCPoint& position)
 
 void CCTileMapAtlas::updateAtlasValueAt(const CCPoint& pos, const ccColor3B& value, unsigned int index)
 {
-    ccV3F_C4B_T2F_Quad quad;
+    unsigned int capacity = m_pTextureAtlas->getCapacity();
+    CCAssert( index >= 0 && index < capacity, "updateAtlasValueAt: Invalid index");
+
+    ccV3F_C4B_T2F_Quad* quad = &((m_pTextureAtlas->getQuads())[index]);
 
     int x = pos.x;
     int y = pos.y;
@@ -198,35 +201,39 @@ void CCTileMapAtlas::updateAtlasValueAt(const CCPoint& pos, const ccColor3B& val
     float bottom      = top + itemHeightInPixels / textureHigh;
 #endif
 
-    quad.tl.texCoords.u = left;
-    quad.tl.texCoords.v = top;
-    quad.tr.texCoords.u = right;
-    quad.tr.texCoords.v = top;
-    quad.bl.texCoords.u = left;
-    quad.bl.texCoords.v = bottom;
-    quad.br.texCoords.u = right;
-    quad.br.texCoords.v = bottom;
+    quad->tl.texCoords.u = left;
+    quad->tl.texCoords.v = top;
+    quad->tr.texCoords.u = right;
+    quad->tr.texCoords.v = top;
+    quad->bl.texCoords.u = left;
+    quad->bl.texCoords.v = bottom;
+    quad->br.texCoords.u = right;
+    quad->br.texCoords.v = bottom;
 
-    quad.bl.vertices.x = (float) (x * m_uItemWidth);
-    quad.bl.vertices.y = (float) (y * m_uItemHeight);
-    quad.bl.vertices.z = 0.0f;
-    quad.br.vertices.x = (float)(x * m_uItemWidth + m_uItemWidth);
-    quad.br.vertices.y = (float)(y * m_uItemHeight);
-    quad.br.vertices.z = 0.0f;
-    quad.tl.vertices.x = (float)(x * m_uItemWidth);
-    quad.tl.vertices.y = (float)(y * m_uItemHeight + m_uItemHeight);
-    quad.tl.vertices.z = 0.0f;
-    quad.tr.vertices.x = (float)(x * m_uItemWidth + m_uItemWidth);
-    quad.tr.vertices.y = (float)(y * m_uItemHeight + m_uItemHeight);
-    quad.tr.vertices.z = 0.0f;
+    quad->bl.vertices.x = (float) (x * m_uItemWidth);
+    quad->bl.vertices.y = (float) (y * m_uItemHeight);
+    quad->bl.vertices.z = 0.0f;
+    quad->br.vertices.x = (float)(x * m_uItemWidth + m_uItemWidth);
+    quad->br.vertices.y = (float)(y * m_uItemHeight);
+    quad->br.vertices.z = 0.0f;
+    quad->tl.vertices.x = (float)(x * m_uItemWidth);
+    quad->tl.vertices.y = (float)(y * m_uItemHeight + m_uItemHeight);
+    quad->tl.vertices.z = 0.0f;
+    quad->tr.vertices.x = (float)(x * m_uItemWidth + m_uItemWidth);
+    quad->tr.vertices.y = (float)(y * m_uItemHeight + m_uItemHeight);
+    quad->tr.vertices.z = 0.0f;
 
     ccColor4B color = { _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity };
-    quad.tr.colors = color;
-    quad.tl.colors = color;
-    quad.br.colors = color;
-    quad.bl.colors = color;
+    quad->tr.colors = color;
+    quad->tl.colors = color;
+    quad->br.colors = color;
+    quad->bl.colors = color;
 
-    m_pTextureAtlas->updateQuad(&quad, index);
+    m_pTextureAtlas->setDirty(true);
+    unsigned int totalQuads = m_pTextureAtlas->getTotalQuads();
+    if (index + 1 > totalQuads) {
+        m_pTextureAtlas->increaseTotalQuadsWith(index + 1 - totalQuads);
+    }
 }
 
 void CCTileMapAtlas::updateAtlasValues()

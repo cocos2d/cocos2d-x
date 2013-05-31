@@ -8,6 +8,7 @@ INCLUDES = -I$(COCOS_ROOT)/external \
 	-I.. \
 	-I../CCBReader \
 	-I../GUI/CCControlExtension \
+	-I../GUI/CCEditBox \
 	-I../network
 
 SOURCES = ../CCBReader/CCBFileLoader.cpp \
@@ -50,6 +51,8 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../GUI/CCControlExtension/CCScale9Sprite.cpp \
 ../GUI/CCControlExtension/CCControlPotentiometer.cpp \
 ../GUI/CCControlExtension/CCControlStepper.cpp \
+../GUI/CCEditBox/CCEditBox.cpp \
+../GUI/CCEditBox/CCEditBoxImplNone.cpp \
 ../network/HttpClient.cpp \
 ../physics_nodes/CCPhysicsDebugNode.cpp \
 ../physics_nodes/CCPhysicsSprite.cpp \

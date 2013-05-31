@@ -109,7 +109,7 @@ void EditBoxTest::editBoxTextChanged(cocos2d::extension::CCEditBox* editBox, con
 
 void EditBoxTest::editBoxReturn(CCEditBox* editBox)
 {
-    CCLog("editBox %p was returned !");
+    CCLog("editBox %p was returned !",editBox);
     
     if (m_pEditName == editBox)
     {

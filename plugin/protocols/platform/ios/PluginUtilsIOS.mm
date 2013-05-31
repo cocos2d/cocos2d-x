@@ -28,8 +28,6 @@ THE SOFTWARE.
 
 namespace cocos2d { namespace plugin {
 
-static PluginProtocol* s_pPluginInstance = NULL;
-
 bool PluginUtilsIOS::initOCPlugin(PluginProtocol* pPlugin, const char* className)
 {
 	return_val_if_fails(className != NULL && strlen(className) > 0, false);
