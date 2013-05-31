@@ -50,10 +50,10 @@ void Bone_setYDown (int/*bool*/yDown);
 Bone* Bone_create (BoneData* data, Bone* parent);
 void Bone_dispose (Bone* self);
 
-void Bone_setToBindPose (Bone* self);
+void Bone_setToSetupPose (Bone* self);
 
 void Bone_updateWorldTransform (Bone* self, int/*bool*/flipX, int/*bool*/flipY);
 
-}} // namespace cocos2d { namespace extension {
+} }
 
 #endif /* SPINE_BONE_H_ */

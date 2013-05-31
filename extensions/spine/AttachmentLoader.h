@@ -37,6 +37,9 @@ struct AttachmentLoader {
 	const char* error2;
 
 	const void* const vtable;
+#ifdef __cplusplus
+	AttachmentLoader () : error1(0), error2(0), vtable(0) {}
+#endif
 };
 
 void AttachmentLoader_dispose (AttachmentLoader* self);
@@ -44,6 +47,6 @@ void AttachmentLoader_dispose (AttachmentLoader* self);
 /* Returns 0 to not load an attachment. If 0 is returned and AttachmentLoader.error1 is set, an error occurred. */
 Attachment* AttachmentLoader_newAttachment (AttachmentLoader* self, Skin* skin, AttachmentType type, const char* name);
 
-}} // namespace cocos2d { namespace extension {
+} }
 
 #endif /* SPINE_ATTACHMENTLOADER_H_ */

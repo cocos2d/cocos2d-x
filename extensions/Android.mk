@@ -61,6 +61,9 @@ spine/Attachment.cpp \
 spine/AttachmentLoader.cpp \
 spine/Bone.cpp \
 spine/BoneData.cpp \
+spine/CCSkeleton.cpp \
+spine/CCSkeletonAnimation.cpp \
+spine/extension.cpp \
 spine/Json.cpp \
 spine/RegionAttachment.cpp \
 spine/Skeleton.cpp \
@@ -69,7 +72,6 @@ spine/SkeletonJson.cpp \
 spine/Skin.cpp \
 spine/Slot.cpp \
 spine/SlotData.cpp \
-spine/extension.cpp \
 spine/spine-cocos2dx.cpp
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static

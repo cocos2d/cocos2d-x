@@ -42,4 +42,4 @@ void BoneData_dispose (BoneData* self) {
 	FREE(self);
 }
 
-}} // namespace cocos2d { namespace extension {
+} }

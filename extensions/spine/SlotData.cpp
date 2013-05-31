@@ -53,4 +53,4 @@ void SlotData_setAttachmentName (SlotData* self, const char* attachmentName) {
 		CONST_CAST(char*, self->attachmentName) = 0;
 }
 
-}} // namespace cocos2d { namespace extension {
+} }

@@ -127,6 +127,6 @@ AttachmentTimeline* AttachmentTimeline_create (int frameCount);
 /* @param attachmentName May be 0. */
 void AttachmentTimeline_setFrame (AttachmentTimeline* self, int frameIndex, float time, const char* attachmentName);
 
-}} // namespace cocos2d { namespace extension {
+} }
 
 #endif /* SPINE_ANIMATION_H_ */

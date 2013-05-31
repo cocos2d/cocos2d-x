@@ -61,6 +61,6 @@ Skin* SkeletonData_findSkin (const SkeletonData* self, const char* skinName);
 
 Animation* SkeletonData_findAnimation (const SkeletonData* self, const char* animationName);
 
-}} // namespace cocos2d { namespace extension {
+} }
 
 #endif /* SPINE_SKELETONDATA_H_ */

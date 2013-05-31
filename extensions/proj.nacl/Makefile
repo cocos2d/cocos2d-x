@@ -51,6 +51,9 @@ EXTENSIONS_SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../spine/AttachmentLoader.cpp \
 ../spine/Bone.cpp \
 ../spine/BoneData.cpp \
+../spine/CCSkeleton.cpp \
+../spine/CCSkeletonAnimation.cpp \
+../spine/extension.cpp \
 ../spine/Json.cpp \
 ../spine/RegionAttachment.cpp \
 ../spine/Skeleton.cpp \
@@ -59,7 +62,6 @@ EXTENSIONS_SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../spine/Skin.cpp \
 ../spine/Slot.cpp \
 ../spine/SlotData.cpp \
-../spine/extension.cpp \
 ../spine/spine-cocos2dx.cpp
 
 all:

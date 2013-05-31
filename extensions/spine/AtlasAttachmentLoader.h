@@ -38,6 +38,6 @@ typedef struct {
 
 AtlasAttachmentLoader* AtlasAttachmentLoader_create (Atlas* atlas);
 
-}} // namespace cocos2d { namespace extension {
+} }
 
 #endif /* SPINE_ATLASATTACHMENTLOADER_H_ */

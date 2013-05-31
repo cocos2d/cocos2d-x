@@ -44,6 +44,6 @@ struct Attachment {
 
 void Attachment_dispose (Attachment* self);
 
-}} // namespace cocos2d { namespace extension {
+} }
 
 #endif /* SPINE_ATTACHMENT_H_ */

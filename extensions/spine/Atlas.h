@@ -53,7 +53,7 @@ struct AtlasPage {
 	AtlasFilter minFilter, magFilter;
 	AtlasWrap uWrap, vWrap;
 
-	void* texture;
+	void* rendererObject;
 	int width, height;
 
 	AtlasPage* next;
@@ -69,7 +69,7 @@ struct AtlasRegion {
 	const char* name;
 	int x, y, width, height;
 	float u, v, u2, v2;
-	float offsetX, offsetY;
+	int offsetX, offsetY;
 	int originalWidth, originalHeight;
 	int index;
 	int/*bool*/rotate;
@@ -101,6 +101,6 @@ void Atlas_dispose (Atlas* atlas);
 /* Returns 0 if the region was not found. */
 AtlasRegion* Atlas_findRegion (const Atlas* self, const char* name);
 
-}} // namespace cocos2d { namespace extension {
+} }
 
 #endif /* SPINE_ATLAS_H_ */

@@ -96,4 +96,4 @@ Animation* SkeletonData_findAnimation (const SkeletonData* self, const char* ani
 	return 0;
 }
 
-}} // namespace cocos2d { namespace extension {
+} }

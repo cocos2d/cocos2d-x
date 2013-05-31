@@ -41,6 +41,6 @@ struct BoneData {
 BoneData* BoneData_create (const char* name, BoneData* parent);
 void BoneData_dispose (BoneData* self);
 
-}} // namespace cocos2d { namespace extension {
+} }
 
 #endif /* SPINE_BONEDATA_H_ */
