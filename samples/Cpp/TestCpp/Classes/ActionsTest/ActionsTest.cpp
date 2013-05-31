@@ -1012,21 +1012,25 @@ void ActionCallFunction::callback1()
     addChild(label);
 }
 
-void ActionCallFunction::callback2(CCNode* pSender)
+void ActionCallFunction::callback2(CCNode* sender)
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     CCLabelTTF *label = CCLabelTTF::create("callback 2 called", "Marker Felt", 16);
     label->setPosition(ccp( s.width/4*2,s.height/2));
 
     addChild(label);
+
+	CCLOG("sender is: %p", sender);
 }
 
-void ActionCallFunction::callback3(CCNode* pTarget, void* data)
+void ActionCallFunction::callback3(CCNode* sender, void* data)
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     CCLabelTTF *label = CCLabelTTF::create("callback 3 called", "Marker Felt", 16);
     label->setPosition(ccp( s.width/4*3,s.height/2));
     addChild(label);
+
+	CCLOG("target is: %p, data is: %d", sender, (int)data);
 }
 
 std::string ActionCallFunction::subtitle()
