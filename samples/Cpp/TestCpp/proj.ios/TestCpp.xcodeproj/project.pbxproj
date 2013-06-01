@@ -273,6 +273,9 @@
 		78CAE769156F8124002A7A68 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 78CAE768156F8124002A7A68 /* Particles */; };
 		78ED2F85153D5BC500330E29 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 78ED2F84153D5BC500330E29 /* extensions */; };
 		A059B9AD174D9B8E0078F84F /* ConfigurationTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A059B9AB174D9B8E0078F84F /* ConfigurationTest.cpp */; };
+                A059B9AD174D9B8E0078F841 /* CocoaSerializationTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A059B9AB174D9B8E0078F841 /* CocoaSerializationTest.cpp */; };
+                A059B9AD174D9B8E0078F842 /* CocoaSingleTestRunner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A059B9AB174D9B8E0078F842 /* CocoaSingleTestRunner.cpp */; };
+                A059B9AD174D9B8E0078F843 /* CocoaDataEqualityChecker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A059B9AB174D9B8E0078F843 /* CocoaDataEqualityChecker.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712461292920000B8313A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB212928DE900B8313A /* libxml2.dylib */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
@@ -883,6 +886,12 @@
 		78ED2F84153D5BC500330E29 /* extensions */ = {isa = PBXFileReference; lastKnownFileType = folder; path = extensions; sourceTree = "<group>"; };
 		A059B9AB174D9B8E0078F84F /* ConfigurationTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigurationTest.cpp; sourceTree = "<group>"; };
 		A059B9AC174D9B8E0078F84F /* ConfigurationTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigurationTest.h; sourceTree = "<group>"; };
+                A059B9AB174D9B8E0078F841 /* CocoaSerializationTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoaSerializationTest.cpp; sourceTree = "<group>"; };
+		A059B9AC174D9B8E0078F841 /* CocoaSerializationTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaSerializationTest.h; sourceTree = "<group>"; };
+                A059B9AB174D9B8E0078F842 /* CocoaSingleTestRunner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoaSingleTestRunner.cpp; sourceTree = "<group>"; };
+		A059B9AC174D9B8E0078F842 /* CocoaSingleTestRunner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaSingleTestRunner.h; sourceTree = "<group>"; };
+                A059B9AB174D9B8E0078F843 /* CocoaDataEqualityChecker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoaDataEqualityChecker.cpp; sourceTree = "<group>"; };
+		A059B9AC174D9B8E0078F843 /* CocoaDataEqualityChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaDataEqualityChecker.h; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB212928DE900B8313A /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -1460,6 +1469,7 @@
 				15AA9CAA15B7EC460033D6C2 /* controller.cpp */,
 				15AA9CAB15B7EC460033D6C2 /* controller.h */,
 				A059B9AA174D9B8D0078F84F /* ConfigurationTest */,
+				A059B9AA174D9B8D0078F841 /* CocoaSerializationTest */,
 				15AA9CAC15B7EC460033D6C2 /* CurlTest */,
 				15AA9CAF15B7EC460033D6C2 /* CurrentLanguageTest */,
 				1A60BF51173CCCF80054773B /* DataVisitorTest */,
@@ -2375,6 +2385,20 @@
 			);
 			name = ConfigurationTest;
 			path = ../Classes/ConfigurationTest;
+			sourceTree = "<group>";
+		};
+                A059B9AA174D9B8D0078F841 /* CocoaSerializationTest */ = {
+			isa = PBXGroup;
+			children = (
+				A059B9AB174D9B8E0078F841 /* CocoaSerializationTest.cpp */,
+				A059B9AC174D9B8E0078F841 /* CocoaSerializationTest.h */,
+				A059B9AB174D9B8E0078F842 /* CocoaSingleTestRunner.cpp */,
+				A059B9AC174D9B8E0078F842 /* CocoaSingleTestRunner.h */,
+				A059B9AB174D9B8E0078F843 /* CocoaDataEqualityChecker.cpp */,
+				A059B9AC174D9B8E0078F843 /* CocoaDataEqualityChecker.h */,
+			);
+			name = CocoaSerializationTest;
+			path = ../Classes/CocoaSerializationTest;
 			sourceTree = "<group>";
 		};
 		D4144C0C15D23C9C00F4FD92 /* NetworkTest */ = {

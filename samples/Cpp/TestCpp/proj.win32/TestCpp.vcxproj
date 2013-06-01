@@ -122,6 +122,9 @@
     <ClCompile Include="..\Classes\ChipmunkTest\ChipmunkTest.cpp" />
     <ClCompile Include="..\Classes\ClippingNodeTest\ClippingNodeTest.cpp" />
     <ClCompile Include="..\Classes\ConfigurationTest\ConfigurationTest.cpp" />
+    <ClCompile Include="..\Classes\CocoaSerializationTest\CocoaSerializationTest.cpp" />
+    <ClCompile Include="..\Classes\CocoaSerializationTest\CocoaSingleTestRunner.cpp" />
+    <ClCompile Include="..\Classes\CocoaSerializationTest\CocoaDataEqualityChecker.cpp" />
     <ClCompile Include="..\Classes\DataVisitorTest\DataVisitorTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.cpp" />
@@ -218,6 +221,9 @@
     <ClInclude Include="..\Classes\ChipmunkTest\ChipmunkTest.h" />
     <ClInclude Include="..\Classes\ClippingNodeTest\ClippingNodeTest.h" />
     <ClInclude Include="..\Classes\ConfigurationTest\ConfigurationTest.h" />
+    <ClCompile Include="..\Classes\CocoaSerializationTest\CocoaSerializationTest.cpp" />
+    <ClCompile Include="..\Classes\CocoaSerializationTest\CocoaSingleTestRunner.cpp" />
+    <ClCompile Include="..\Classes\CocoaSerializationTest\CocoaDataEqualityChecker.cpp" />
     <ClInclude Include="..\Classes\DataVisitorTest\DataVisitorTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsLayerLoader.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.h" />
