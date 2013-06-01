@@ -69,7 +69,9 @@ bool CCFileUtilsTizen::init()
     }
 
     AsciiEncoding ascii;
-    m_strDefaultResRootPath = (const char *)ascii.GetBytesN(resPath)->GetPointer();
+    ByteBuffer* buffer = ascii.GetBytesN(resPath);
+    m_strDefaultResRootPath = (const char *)buffer->GetPointer();
+    delete buffer;
     return CCFileUtils::init();
 }
 
@@ -86,7 +88,9 @@ string CCFileUtilsTizen::getWritablePath()
     String dataPath = pApp->GetAppDataPath();
     if (!dataPath.IsEmpty())
     {
-    	path.append((const char *)ascii.GetBytesN(dataPath)->GetPointer());
+        ByteBuffer* buffer = ascii.GetBytesN(dataPath);
+        path.append((const char*)buffer->GetPointer());
+        delete buffer;
     }
 
     return path;
