@@ -315,6 +315,7 @@ void CCEditBoxImplTizen::openKeyboard()
     }
 
     ((CCOspForm *)CCOspApplication::GetInstance()->getCCOspForm())->ShowKeypad(
+        m_strText.c_str(),
         keypadStyle,
         keypadCategory,
         bSingleLineEnabled,
