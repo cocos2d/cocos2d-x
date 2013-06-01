@@ -24,7 +24,7 @@ public:
     virtual void onOpen(cocos2d::extension::WebSocket* ws);
     virtual void onMessage(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::Data& data);
     virtual void onClose(cocos2d::extension::WebSocket* ws);
-    virtual void onError(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::WS_ERROR& error);
+    virtual void onError(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::ERROR& error);
     
     void toExtensionsMainLayer(cocos2d::CCObject *sender);
     
