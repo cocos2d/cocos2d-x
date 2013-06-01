@@ -380,6 +380,9 @@ JSBool ScriptingCore::evalString(const char *string, jsval *outVal, const char *
 void ScriptingCore::start() {
     // for now just this
     this->createGlobalContext();
+#if JSB_ENABLE_DEBUGGER
+	this->enableDebugger();
+#endif //JSB_ENABLE_DEBUGGER
 }
 
 void ScriptingCore::addRegisterCallback(sc_register_sth callback) {
