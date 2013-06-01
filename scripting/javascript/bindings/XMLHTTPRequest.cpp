@@ -628,7 +628,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
 {
 
     JSString *str = NULL;
-    char *data = NULL;
+    const char *data;
     
     // Clean up header map. New request, new headers!
     http_header.clear();
@@ -636,7 +636,8 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
         if (!JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &str)) {
             return JS_FALSE;
         };
-        data = JS_EncodeString(cx, str);
+        JSStringWrapper strWrap(str);
+        data = strWrap;
     }
 
 
