@@ -225,7 +225,7 @@ enum WS_MSG {
 };
 
 WebSocket::WebSocket()
-: _readyState(WS_STATE_CONNECTING)
+: _readyState(STATE_CONNECTING)
 , _port(80)
 , _wsHelper(NULL)
 , _wsInstance(NULL)
@@ -335,7 +335,7 @@ bool WebSocket::init(const Delegate& delegate,
 
 void WebSocket::send(const std::string& message)
 {
-    if (_readyState == WS_STATE_OPEN)
+    if (_readyState == STATE_OPEN)
     {
         // In main thread
         WsMessage* msg = new WsMessage();
@@ -353,7 +353,7 @@ void WebSocket::send(const unsigned char* binaryMsg, unsigned int len)
 {
     CCAssert(binaryMsg != NULL && len > 0, "parameter invalid.");
 
-    if (_readyState == WS_STATE_OPEN)
+    if (_readyState == STATE_OPEN)
     {
         // In main thread
         WsMessage* msg = new WsMessage();
@@ -371,11 +371,11 @@ void WebSocket::close()
 {
     CCDirector::sharedDirector()->getScheduler()->unscheduleAllForTarget(_wsHelper);
     
-    if (_readyState == WS_STATE_CLOSING || _readyState == WS_STATE_CLOSED)
+    if (_readyState == STATE_CLOSING || _readyState == STATE_CLOSED)
         return;
 
     CCLOG("websocket (%p) connection closed by client", this);
-    _readyState = WS_STATE_CLOSED;
+    _readyState = STATE_CLOSED;
 
     WsMessage* msg = new WsMessage();
     msg->what = WS_MSG_TO_SUBTRHEAD_CLOSING;
@@ -388,21 +388,21 @@ void WebSocket::close()
     _delegate->onClose(this);
 }
 
-WebSocket::WS_STATE WebSocket::getReadyState()
+WebSocket::STATE WebSocket::getReadyState()
 {
     return _readyState;
 }
 
 int WebSocket::onSubThreadLoop()
 {
-    if (_readyState == WS_STATE_CLOSED || _readyState == WS_STATE_CLOSING)
+    if (_readyState == STATE_CLOSED || _readyState == STATE_CLOSING)
     {
         libwebsocket_context_destroy(_wsContext);
         // return 1 to exit the loop.
         return 1;
     }
     
-    if (_wsContext && _readyState != WS_STATE_CLOSED && _readyState != WS_STATE_CLOSING)
+    if (_wsContext && _readyState != STATE_CLOSED && _readyState != STATE_CLOSING)
     {
         libwebsocket_service(_wsContext, 0);
     }
@@ -442,7 +442,7 @@ void WebSocket::onSubThreadStarted()
 	_wsContext = libwebsocket_create_context(&info);
     
 	if(NULL != _wsContext){
-        _readyState = WS_STATE_CONNECTING;
+        _readyState = STATE_CONNECTING;
         std::string name;
         for (int i = 0; _wsProtocols[i].callback != NULL; ++i) {
             name += (_wsProtocols[i].name);
@@ -480,14 +480,14 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
             {
                 WsMessage* msg = new WsMessage();
                 if (reason == LWS_CALLBACK_CLIENT_CONNECTION_ERROR
-                    || (reason == LWS_CALLBACK_PROTOCOL_DESTROY && _readyState == WS_STATE_CONNECTING)
-                    || (reason == LWS_CALLBACK_DEL_POLL_FD && _readyState == WS_STATE_CONNECTING)
+                    || (reason == LWS_CALLBACK_PROTOCOL_DESTROY && _readyState == STATE_CONNECTING)
+                    || (reason == LWS_CALLBACK_DEL_POLL_FD && _readyState == STATE_CONNECTING)
                     )
                 {
                     msg->what = WS_MSG_TO_UITHREAD_ERROR;
-                    _readyState = WS_STATE_CLOSING;
+                    _readyState = STATE_CLOSING;
                 }
-                else if (reason == LWS_CALLBACK_PROTOCOL_DESTROY && _readyState == WS_STATE_CLOSING)
+                else if (reason == LWS_CALLBACK_PROTOCOL_DESTROY && _readyState == STATE_CLOSING)
                 {
                     msg->what = WS_MSG_TO_UITHREAD_CLOSE;
                 }
@@ -498,7 +498,7 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
             {
                 WsMessage* msg = new WsMessage();
                 msg->what = WS_MSG_TO_UITHREAD_OPEN;
-                _readyState = WS_STATE_OPEN;
+                _readyState = STATE_OPEN;
                 /*
                  * start the ball rolling,
                  * LWS_CALLBACK_CLIENT_WRITEABLE will come next service
@@ -572,10 +572,10 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
 
                 _wsHelper->quitSubThread();
                 
-                if (_readyState != WS_STATE_CLOSED)
+                if (_readyState != STATE_CLOSED)
                 {
                     WsMessage* msg = new WsMessage();
-                    _readyState = WS_STATE_CLOSED;
+                    _readyState = STATE_CLOSED;
                     msg->what = WS_MSG_TO_UITHREAD_CLOSE;
                     _wsHelper->sendMessageToUIThread(msg);
                 }
@@ -646,7 +646,7 @@ void WebSocket::onUIThreadReceiveMessage(WsMessage* msg)
             break;
         case WS_MSG_TO_UITHREAD_ERROR:
             {
-                WebSocket::WS_ERROR err = WS_ERROR_CONNECTION_FAILS;
+                WebSocket::ERROR err = ERROR_CONNECTION_FAILS;
                 _delegate->onError(this, err);
             }
             break;
