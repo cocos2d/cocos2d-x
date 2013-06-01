@@ -57,11 +57,11 @@ public:
     /**
      *  @brief Errors in websocket
      */
-    enum WS_ERROR
+    enum ERROR
     {
-        WS_ERROR_TIMEOUT=0,
-        WS_ERROR_CONNECTION_FAILS,
-        WS_ERROR_UNKNOWN
+        ERROR_TIMEOUT = 0,
+        ERROR_CONNECTION_FAILS,
+        ERROR_UNKNOWN
     };
 
     /**
@@ -74,7 +74,7 @@ public:
         virtual void onOpen(WebSocket* ws) = 0;
         virtual void onMessage(WebSocket* ws, const Data& data) = 0;
         virtual void onClose(WebSocket* ws) = 0;
-        virtual void onError(WebSocket* ws, const WS_ERROR& error) = 0;
+        virtual void onError(WebSocket* ws, const ERROR& error) = 0;
     };
     
     
@@ -107,18 +107,18 @@ public:
     /**
      *  Websocket state
      */
-    enum WS_STATE
+    enum STATE
     {
-        WS_STATE_CONNECTING = 0,
-        WS_STATE_OPEN,
-        WS_STATE_CLOSING,
-        WS_STATE_CLOSED
+        STATE_CONNECTING = 0,
+        STATE_OPEN,
+        STATE_CLOSING,
+        STATE_CLOSED
     };
     
     /**
      *  @brief Gets current state of connection.
      */
-    WS_STATE getReadyState();
+    STATE getReadyState();
     
 private:
     virtual void onSubThreadStarted();
@@ -134,7 +134,7 @@ private:
                          void *user, void *in, size_t len);
     
 private:
-	WS_STATE     _readyState;
+	STATE     _readyState;
     std::string  _host;
     unsigned int _port;
     std::string  _path;
