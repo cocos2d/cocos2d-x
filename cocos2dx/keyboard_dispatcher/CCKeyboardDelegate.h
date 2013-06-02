@@ -38,10 +38,10 @@ NS_CC_BEGIN
 class CC_DLL CCKeyboardDelegate
 {
 public:
-    // The back key clicked
+    /// is called once every time a key is pressed
     virtual void keyPressed(int keyCode) {}
 
-    // The menu key clicked. only available on wophone & android
+    /// is called when a key is released
     virtual void keyReleased(int keyCode) {};
 };
 
