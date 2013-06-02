@@ -38,7 +38,7 @@ public:
 
 class SpineTestLayer: public cocos2d::CCLayer {
 private:
-	cocos2d::extension::CCSkeleton* skeletonNode;
+	cocos2d::extension::CCSkeletonAnimation* skeletonNode;
 
 public:
 
