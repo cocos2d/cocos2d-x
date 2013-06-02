@@ -246,7 +246,10 @@ void CCScrollView::setZoomScale(float s)
         }
         
         oldCenter = m_pContainer->convertToNodeSpace(center);
-        m_pContainer->setScale(MAX(m_fMinScale, MIN(m_fMaxScale, s)));
+
+        // BUGFIX: m_fMinScale and m_fMaxScale are always 1 - disable zooming
+//        m_pContainer->setScale(MAX(m_fMinScale, MIN(m_fMaxScale, s)));
+
         newCenter = m_pContainer->convertToWorldSpace(oldCenter);
         
         const CCPoint offset = ccpSub(center, newCenter);
