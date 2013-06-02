@@ -1,5 +1,7 @@
 EXECUTABLE = TestCpp
 
+DEFINES += -DKEYBOARD_SUPPORT
+
 SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ActionManagerTest/ActionManagerTest.cpp \
 	../Classes/ActionsEaseTest/ActionsEaseTest.cpp \
