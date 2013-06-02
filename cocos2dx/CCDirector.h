@@ -71,7 +71,9 @@ class CCNode;
 class CCScheduler;
 class CCActionManager;
 class CCTouchDispatcher;
+#ifdef KEYBOARD_SUPPORT
 class CCKeyboardDispatcher;
+#endif
 class CCKeypadDispatcher;
 class CCAccelerometer;
 
@@ -323,10 +325,12 @@ public:
      */
     CC_PROPERTY(CCTouchDispatcher*, m_pTouchDispatcher, TouchDispatcher);
 
+#ifdef KEYBOARD_SUPPORT
     /** CCKeyboardDispatcher associated with this director
      @since v?.?
      */
     CC_PROPERTY(CCKeyboardDispatcher*, m_pKeyboardDispatcher, KeyboardDispatcher);
+#endif
     /** CCKeypadDispatcher associated with this director
      @since v2.0
      */

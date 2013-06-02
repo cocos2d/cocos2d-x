@@ -27,7 +27,6 @@ THE SOFTWARE.
 #include <stdarg.h>
 #include "CCLayer.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
-#include "keyboard_dispatcher/CCKeyboardDispatcher.h"
 #include "keypad_dispatcher/CCKeypadDispatcher.h"
 #include "CCAccelerometer.h"
 #include "CCDirector.h"
@@ -39,6 +38,9 @@ THE SOFTWARE.
 #include "support/TransformUtils.h"
 // extern
 #include "kazmath/GL/matrix.h"
+#ifdef KEYBOARD_SUPPORT
+#include "keyboard_dispatcher/CCKeyboardDispatcher.h"
+#endif
 
 NS_CC_BEGIN
 
@@ -46,7 +48,9 @@ NS_CC_BEGIN
 CCLayer::CCLayer()
 : m_bTouchEnabled(false)
 , m_bAccelerometerEnabled(false)
+#ifdef KEYBOARD_SUPPORT
 , m_bKeyboardEnabled(false)
+#endif
 , m_bKeypadEnabled(false)
 , m_pScriptTouchHandlerEntry(NULL)
 , m_pScriptKeypadHandlerEntry(NULL)
@@ -276,6 +280,7 @@ void CCLayer::unregisterScriptAccelerateHandler(void)
     CC_SAFE_RELEASE_NULL(m_pScriptAccelerateHandlerEntry);
 }
 
+#ifdef KEYBOARD_SUPPORT
 /// isKeyboardEnabled getter
 bool CCLayer::isKeyboardEnabled()
 {
@@ -299,6 +304,7 @@ void CCLayer::setKeyboardEnabled(bool enabled)
         }
     }
 }
+#endif
 
 /// isKeypadEnabled getter
 bool CCLayer::isKeypadEnabled()

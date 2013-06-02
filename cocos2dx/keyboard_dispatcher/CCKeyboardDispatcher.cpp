@@ -24,7 +24,6 @@ THE SOFTWARE.
 
 #include "CCKeyboardDispatcher.h"
 #include "support/data_support/ccCArray.h"
-#include <GL/glfw.h>
 
 NS_CC_BEGIN
 
