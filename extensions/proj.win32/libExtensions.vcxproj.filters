@@ -234,6 +234,12 @@
     <ClCompile Include="..\spine\spine-cocos2dx.cpp">
       <Filter>spine</Filter>
     </ClCompile>
+    <ClCompile Include="..\spine\CCSkeleton.cpp">
+      <Filter>spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\spine\CCSkeletonAnimation.cpp">
+      <Filter>spine</Filter>
+    </ClCompile>
     <ClCompile Include="..\network\Websocket.cpp">
       <Filter>network</Filter>
     </ClCompile>
@@ -471,6 +477,12 @@
     </ClInclude>
     <ClInclude Include="..\network\Websocket.h">
       <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spine\CCSkeleton.h">
+      <Filter>spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spine\CCSkeletonAnimation.h">
+      <Filter>spine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
