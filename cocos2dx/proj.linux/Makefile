@@ -9,8 +9,6 @@ INCLUDES += \
 			-I../../external/chipmunk/include/chipmunk \
 			-I../../extensions/network \
 
-DEFINES += -DKEYBOARD_SUPPORT
-
 SOURCES = ../actions/CCAction.cpp \
 ../actions/CCActionCamera.cpp \
 ../actions/CCActionEase.cpp \
