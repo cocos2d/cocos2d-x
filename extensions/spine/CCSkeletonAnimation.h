@@ -23,37 +23,51 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 
-#ifndef SPINE_BONE_H_
-#define SPINE_BONE_H_
+#ifndef SPINE_CCSKELETONANIMATION_H_
+#define SPINE_CCSKELETONANIMATION_H_
 
-#include <spine/BoneData.h>
+#include <spine/spine.h>
+#include <spine/CCSkeleton.h>
+#include "cocos2d.h"
 
 namespace cocos2d { namespace extension {
 
-typedef struct Bone Bone;
-struct Bone {
-	BoneData* const data;
-	Bone* const parent;
-	float x, y;
-	float rotation;
-	float scaleX, scaleY;
+/**
+Draws an animated skeleton, providing a simple API for applying one or more animations and queuing animations to be played later.
+*/
+class CCSkeletonAnimation: public CCSkeleton {
+public:
+	std::vector<AnimationState*> states;
 
-	float const m00, m01, worldX; /* a b x */
-	float const m10, m11, worldY; /* c d y */
-	float const worldRotation;
-	float const worldScaleX, worldScaleY;
+	static CCSkeletonAnimation* createWithData (SkeletonData* skeletonData);
+	static CCSkeletonAnimation* createWithFile (const char* skeletonDataFile, Atlas* atlas, float scale = 1);
+	static CCSkeletonAnimation* createWithFile (const char* skeletonDataFile, const char* atlasFile, float scale = 1);
+
+	CCSkeletonAnimation (SkeletonData* skeletonData);
+	CCSkeletonAnimation (const char* skeletonDataFile, Atlas* atlas, float scale = 1);
+	CCSkeletonAnimation (const char* skeletonDataFile, const char* atlasFile, float scale = 1);
+
+	virtual ~CCSkeletonAnimation ();
+
+	virtual void update (float deltaTime);
+
+	void addAnimationState (AnimationStateData* stateData = 0);
+	void setAnimationStateData (AnimationStateData* stateData, int stateIndex = 0);
+	void setMix (const char* fromAnimation, const char* toAnimation, float duration, int stateIndex = 0);
+	void setAnimation (const char* name, bool loop, int stateIndex = 0);
+	void addAnimation (const char* name, bool loop, float delay = 0, int stateIndex = 0);
+	void clearAnimation (int stateIndex = 0);
+
+protected:
+	CCSkeletonAnimation ();
+
+private:
+	typedef CCSkeleton super;
+	std::vector<AnimationStateData*> stateDatas;
+
+	void initialize ();
 };
-
-void Bone_setYDown (int/*bool*/yDown);
-
-/* @param parent May be 0. */
-Bone* Bone_create (BoneData* data, Bone* parent);
-void Bone_dispose (Bone* self);
-
-void Bone_setToSetupPose (Bone* self);
-
-void Bone_updateWorldTransform (Bone* self, int/*bool*/flipX, int/*bool*/flipY);
 
 }} // namespace cocos2d { namespace extension {
 
-#endif /* SPINE_BONE_H_ */
+#endif /* SPINE_CCSKELETONANIMATION_H_ */
