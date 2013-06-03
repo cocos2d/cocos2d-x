@@ -1,4 +1,5 @@
-INCLUDES = -I.. -I../lua -I../../../extensions -I../../../external/chipmunk/include/chipmunk
+INCLUDES += -I.. -I../lua -I../tolua \
+         -I../Classes -I../../../CocosDenshion/include -I../../../extensions -I../../../external/chipmunk/include/chipmunk
 
 SOURCES = ../lua/lapi.c \
           ../lua/lauxlib.c \
