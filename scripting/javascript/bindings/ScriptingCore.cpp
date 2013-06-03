@@ -1844,7 +1844,33 @@ JSBool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret)
     return JS_TRUE;
 }
 
-#pragma mark - Debugger
+js_proxy_t* jsb_new_proxy(void* nativeObj, JSObject* jsObj)
+{
+    js_proxy_t* p;
+    JS_NEW_PROXY(p, nativeObj, jsObj);
+    return p;
+}
+
+js_proxy_t* jsb_get_native_proxy(void* nativeObj)
+{
+    js_proxy_t* p;
+    JS_GET_PROXY(p, nativeObj);
+    return p;
+}
+
+js_proxy_t* jsb_get_js_proxy(JSObject* jsObj)
+{
+    js_proxy_t* p;
+    JS_GET_NATIVE_PROXY(p, jsObj);
+    return p;
+}
+
+void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy)
+{
+    JS_REMOVE_PROXY(nativeProxy, jsProxy);
+}
+
+//#pragma mark - Debugger
 
 JSBool JSBDebug_StartDebugger(JSContext* cx, unsigned argc, jsval* vp)
 {
