@@ -28,14 +28,15 @@ THE SOFTWARE.
 
 - (void) startSession: (NSString*) appKey;
 - (void) stopSession;
-- (void) setSessionContinueMillis: (NSNumber*) millis;
-- (void) setCaptureUncaughtException: (NSNumber*) isEnabled;
-- (void) setDebugMode: (NSNumber*) isDebugMode;
+- (void) setSessionContinueMillis: (long) millis;
+- (void) setCaptureUncaughtException: (BOOL) isEnabled;
+- (void) setDebugMode: (BOOL) debug;
 - (void) logError: (NSString*) errorId withMsg:(NSString*) message;
 - (void) logEvent: (NSString*) eventId;
 - (void) logEvent: (NSString*) eventId withParam:(NSMutableDictionary*) paramMap;
 - (void) logTimedEventBegin: (NSString*) eventId;
 - (void) logTimedEventEnd: (NSString*) eventId;
 - (NSString*) getSDKVersion;
+- (NSString*) getPluginVersion;
 
 @end
