@@ -109,6 +109,10 @@ extern "C"
             methodID = pEnv->GetStaticMethodID(classID, methodName, paramCode);
             if (! methodID)
             {
+            	if(pEnv->ExceptionCheck())
+				{
+					pEnv->ExceptionClear();
+				}
                 LOGD("Failed to find static method id of %s", methodName);
                 break;
             }
@@ -140,7 +144,11 @@ extern "C"
             methodID = pEnv->GetMethodID(classID, methodName, paramCode);
             if (! methodID)
             {
-                LOGD("Failed to find method id of %s", methodName);
+            	if(pEnv->ExceptionCheck())
+            	{
+            		pEnv->ExceptionClear();
+            	}
+                LOGD("Failed to find method %s in class %s", methodName, className);
                 break;
             }
 
@@ -188,16 +196,6 @@ JavaVM* PluginJniHelper::getJavaVM()
 void PluginJniHelper::setJavaVM(JavaVM *javaVM)
 {
     m_psJavaVM = javaVM;
-}
-
-string PluginJniHelper::m_externalAssetPath;
-
-const char* PluginJniHelper::getExternalAssetPath() {
-    return m_externalAssetPath.c_str();
-}
-
-void PluginJniHelper::setExternalAssetPath(const char * externalAssetPath) {
-    m_externalAssetPath = externalAssetPath;
 }
 
 jclass PluginJniHelper::getClassID(const char *className, JNIEnv *env)
