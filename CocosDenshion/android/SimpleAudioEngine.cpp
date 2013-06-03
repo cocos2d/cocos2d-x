@@ -192,7 +192,8 @@ void SimpleAudioEngine::setEffectsVolume(float volume)
 	}
 }
 
-unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
+unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop,
+                                           float pitch, float pan, float gain)
 {
 	std::string fullPath = getFullPathWithoutAssetsPrefix(pszFilePath);
 	if (s_bI9100)

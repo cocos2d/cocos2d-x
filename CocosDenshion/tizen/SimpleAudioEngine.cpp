@@ -162,7 +162,8 @@ void SimpleAudioEngine::setEffectsVolume(float volume)
     }
 }
 
-unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
+unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop,
+                                           float pitch, float pan, float gain)
 {
     unsigned int nRet = _Hash(pszFilePath);
 

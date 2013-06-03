@@ -424,7 +424,8 @@ namespace CocosDenshion
 		}
 	}
 
-	unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
+	unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop,
+                                               float pitch, float pan, float gain)
 	{
 		// Changing file path to full path
     	std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
