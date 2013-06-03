@@ -58,7 +58,6 @@ bool CCComponentContainer::add(CCComponent *pCom)
     bool bRet = false;
     CCAssert(pCom != NULL, "Argument must be non-nil");
     CCAssert(pCom->getOwner() == NULL, "Component already added. It can't be added again");
-    
     do
     {
         if (m_pComponents == NULL)
@@ -76,7 +75,6 @@ bool CCComponentContainer::add(CCComponent *pCom)
         pCom->onEnter();
         bRet = true;
     } while(0);
-    
     return bRet;
 }
 
@@ -84,7 +82,6 @@ bool CCComponentContainer::remove(const char *pName)
 {
     bool bRet = false;
     CCAssert(pName != NULL, "Argument must be non-nil");
-    
     do 
     {        
         CC_BREAK_IF(!m_pComponents);
@@ -104,7 +101,6 @@ bool CCComponentContainer::remove(const char *pName)
         CC_SAFE_DELETE(pElement);
         bRet = true;
     } while(0);
-    
     return bRet;
  }
 
