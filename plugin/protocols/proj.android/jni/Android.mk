@@ -8,15 +8,17 @@ LOCAL_MODULE_FILENAME := libPluginProtocolStatic
 
 LOCAL_SRC_FILES :=\
 $(addprefix ../../platform/android/, \
+	PluginFactory.cpp \
     PluginJniHelper.cpp \
     PluginUtils.cpp \
+    PluginProtocol.cpp \
     ProtocolAnalytics.cpp \
     ProtocolIAP.cpp \
     ProtocolAds.cpp \
     ProtocolSocial.cpp \
 ) \
 ../../PluginManager.cpp \
-../../RegisterPlugin.cpp \
+../../PluginParam.cpp
 
 LOCAL_CFLAGS := -Wno-psabi
 LOCAL_EXPORT_CFLAGS := -Wno-psabi

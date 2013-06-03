@@ -25,7 +25,7 @@ THE SOFTWARE.
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
-#include "AdsAdmob.h"
+#include "ProtocolAds.h"
 
 class MyAdsListener : public cocos2d::plugin::AdsListener
 {
@@ -57,7 +57,7 @@ public:
     CREATE_FUNC(HelloWorld);
 
 private:
-    cocos2d::plugin::AdsAdmob* m_pAdmob;
+    cocos2d::plugin::ProtocolAds* m_pAdmob;
     MyAdsListener* m_pListener;
 
     cocos2d::CCMenuItemToggle* m_pCaseItem;
