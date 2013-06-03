@@ -1548,99 +1548,6 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: runAnimations of class  CCBAnimationManager */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCBAnimationManager_runAnimations00
-static int tolua_Cocos2d_CCBAnimationManager_runAnimations00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"CCBAnimationManager",0,&tolua_err) ||
-        !tolua_isstring(tolua_S,2,0,&tolua_err) ||
-        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,4,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-        CCBAnimationManager* self = (CCBAnimationManager*)  tolua_tousertype(tolua_S,1,0);
-        const char* pName = ((const char*)  tolua_tostring(tolua_S,2,0));
-        float fTweenDuration = ((float)  tolua_tonumber(tolua_S,3,0));
-#ifndef TOLUA_RELEASE
-        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'runAnimations'", NULL);
-#endif
-        {
-            self->runAnimations(pName,fTweenDuration);
-        }
-    }
-    return 0;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'runAnimations'.",&tolua_err);
-    return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: runAnimations of class  CCBAnimationManager */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCBAnimationManager_runAnimations01
-static int tolua_Cocos2d_CCBAnimationManager_runAnimations01(lua_State* tolua_S)
-{
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"CCBAnimationManager",0,&tolua_err) ||
-        !tolua_isstring(tolua_S,2,0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,3,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-    {
-        CCBAnimationManager* self = (CCBAnimationManager*)  tolua_tousertype(tolua_S,1,0);
-        const char* pName = ((const char*)  tolua_tostring(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'runAnimations'", NULL);
-#endif
-        {
-            self->runAnimations(pName);
-        }
-    }
-    return 0;
-tolua_lerror:
-    return tolua_Cocos2d_CCBAnimationManager_runAnimations00(tolua_S);
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: runAnimations of class  CCBAnimationManager */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCBAnimationManager_runAnimations02
-static int tolua_Cocos2d_CCBAnimationManager_runAnimations02(lua_State* tolua_S)
-{
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"CCBAnimationManager",0,&tolua_err) ||
-        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,4,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-    {
-        CCBAnimationManager* self = (CCBAnimationManager*)  tolua_tousertype(tolua_S,1,0);
-        int nSeqId = ((int)  tolua_tonumber(tolua_S,2,0));
-        float fTweenDuraiton = ((float)  tolua_tonumber(tolua_S,3,0));
-#ifndef TOLUA_RELEASE
-        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'runAnimations'", NULL);
-#endif
-        {
-            self->runAnimations(nSeqId,fTweenDuraiton);
-        }
-    }
-    return 0;
-tolua_lerror:
-    return tolua_Cocos2d_CCBAnimationManager_runAnimations01(tolua_S);
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* method: runAnimationsForSequenceNamedTweenDuration of class  CCBAnimationManager */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCBAnimationManager_runAnimationsForSequenceNamedTweenDuration01
 static int tolua_Cocos2d_CCBAnimationManager_runAnimationsForSequenceNamedTweenDuration01(lua_State* tolua_S)
@@ -2207,9 +2114,6 @@ TOLUA_API int tolua_extensions_ccb_open(lua_State* tolua_S){
       tolua_function(tolua_S,"getRootNode",tolua_Cocos2d_CCBAnimationManager_getRootNode00);
       tolua_function(tolua_S,"addDocumentOutletNode",tolua_Cocos2d_CCBAnimationManager_addDocumentOutletNode00);
       tolua_function(tolua_S,"addDocumentCallbackNode",tolua_Cocos2d_CCBAnimationManager_addDocumentCallbackNode00);
-      tolua_function(tolua_S,"runAnimations",tolua_Cocos2d_CCBAnimationManager_runAnimations00);
-      tolua_function(tolua_S,"runAnimations",tolua_Cocos2d_CCBAnimationManager_runAnimations01);
-      tolua_function(tolua_S,"runAnimations",tolua_Cocos2d_CCBAnimationManager_runAnimations02);
       tolua_function(tolua_S,"runAnimationsForSequenceNamedTweenDuration",tolua_Cocos2d_CCBAnimationManager_runAnimationsForSequenceNamedTweenDuration01);
       tolua_function(tolua_S,"runAnimationsForSequenceNamed",tolua_Cocos2d_CCBAnimationManager_runAnimationsForSequenceNamed00);
       tolua_function(tolua_S,"getDocumentCallbackNodes",tolua_Cocos2d_CCBAnimationManager_getDocumentCallbackNodes00);
