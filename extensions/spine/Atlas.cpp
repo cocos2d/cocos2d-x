@@ -36,8 +36,8 @@ AtlasPage* AtlasPage_create (const char* name) {
 }
 
 void AtlasPage_dispose (AtlasPage* self) {
-	FREE(self->name);
 	_AtlasPage_disposeTexture(self);
+	FREE(self->name);
 	FREE(self);
 }
 
