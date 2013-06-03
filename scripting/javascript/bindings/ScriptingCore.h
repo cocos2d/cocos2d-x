@@ -42,11 +42,11 @@ class ScriptingCore : public CCScriptEngineProtocol
 	SimpleRunLoop* runLoop;
 
 	ScriptingCore();
+    static ScriptingCore* pInstance;
 public:
 	~ScriptingCore();
 
 	static ScriptingCore *getInstance() {
-		static ScriptingCore* pInstance = NULL;
         if (pInstance == NULL) {
             pInstance = new ScriptingCore();
         }
@@ -60,7 +60,7 @@ public:
      @param object to remove
      */
     virtual void removeScriptObjectByCCObject(CCObject* pObj);
-
+    
     /**
      @brief Execute script code contained in the given string.
      @param codes holding the valid script code that should be executed.
@@ -71,7 +71,7 @@ public:
     void pauseSchedulesAndActions(js_proxy_t* p);
     void resumeSchedulesAndActions(js_proxy_t* p);
     void cleanupSchedulesAndActions(js_proxy_t* p);
-
+    
     /**
      @brief Execute a script file.
      @param filename String object holding the filename of the script file that is to be executed

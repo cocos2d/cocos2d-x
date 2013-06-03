@@ -79,6 +79,8 @@ std::map<std::string, JSScript*> filename_script;
 std::map<int,int> ports_sockets;
 // name ~> globals
 std::map<std::string, js::RootedObject*> globals;
+ScriptingCore *ScriptingCore::pInstance = NULL;
+
 
 static void executeJSFunctionFromReservedSpot(JSContext *cx, JSObject *obj,
                                               jsval &dataVal, jsval &retval) {
@@ -530,6 +532,8 @@ void ScriptingCore::reset()
 ScriptingCore::~ScriptingCore()
 {
     cleanup();
+    registrationList.clear();
+    pInstance = NULL;
 }
 
 void ScriptingCore::cleanup()
