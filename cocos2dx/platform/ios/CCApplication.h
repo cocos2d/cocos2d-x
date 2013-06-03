@@ -65,6 +65,8 @@ public:
      @brief Get target platform
      */
     virtual TargetPlatform getTargetPlatform();
+    
+    void purgeApplication();
 
 protected:
     static CCApplication * sm_pSharedApplication;

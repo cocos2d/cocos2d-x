@@ -25,6 +25,7 @@ public:
     */
     int run();
 
+    void purgeApplication();
     /**
     @brief    Get current application instance.
     @return Current application instance pointer.

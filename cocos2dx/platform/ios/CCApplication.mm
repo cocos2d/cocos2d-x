@@ -59,6 +59,13 @@ void CCApplication::setAnimationInterval(double interval)
     [[CCDirectorCaller sharedDirectorCaller] setAnimationInterval: interval ];
 }
 
+void CCApplication::purgeApplication() {
+    if(sm_pSharedApplication) {
+        delete sm_pSharedApplication;
+        sm_pSharedApplication = NULL;
+    }
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////////////////////////////

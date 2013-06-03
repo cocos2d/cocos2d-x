@@ -27,6 +27,10 @@ CCApplication::~CCApplication()
     sm_pSharedApplication = NULL;
 }
 
+void CCApplication::purgeApplication() {
+    delete sm_pSharedApplication;
+}
+
 int CCApplication::run()
 {
     // Initialize instance and cocos2d.
