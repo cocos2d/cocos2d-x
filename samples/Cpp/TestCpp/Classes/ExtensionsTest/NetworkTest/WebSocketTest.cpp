@@ -180,7 +180,7 @@ void WebSocketTestLayer::onClose(cocos2d::extension::WebSocket* ws)
     CC_SAFE_DELETE(ws);
 }
 
-void WebSocketTestLayer::onError(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::ERROR& error)
+void WebSocketTestLayer::onError(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::ErrorCode& error)
 {
     CCLog("Error was fired, error code: %d", error);
     if (ws == _wsiError)
@@ -201,7 +201,7 @@ void WebSocketTestLayer::toExtensionsMainLayer(cocos2d::CCObject *sender)
 // Menu Callbacks
 void WebSocketTestLayer::onMenuSendTextClicked(cocos2d::CCObject *sender)
 {
-    if (_wsiSendText->getReadyState() == WebSocket::STATE_OPEN)
+    if (_wsiSendText->getReadyState() == WebSocket::kStateOpen)
     {
         _sendTextStatus->setString("Send Text WS is waiting...");
         _wsiSendText->send("Hello WebSocket, I'm a text message.");
@@ -216,7 +216,7 @@ void WebSocketTestLayer::onMenuSendTextClicked(cocos2d::CCObject *sender)
 
 void WebSocketTestLayer::onMenuSendBinaryClicked(cocos2d::CCObject *sender)
 {
-    if (_wsiSendBinary->getReadyState() == WebSocket::STATE_OPEN)
+    if (_wsiSendBinary->getReadyState() == WebSocket::kStateOpen)
     {
         _sendBinaryStatus->setString("Send Binary WS is waiting...");
         char buf[] = "Hello WebSocket,\0 I'm\0 a\0 binary\0 message\0.";
