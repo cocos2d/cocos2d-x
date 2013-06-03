@@ -28,7 +28,8 @@ THE SOFTWARE.
 
 - (void) configDeveloperInfo: (NSMutableDictionary*) cpInfo;
 - (void) payForProduct: (NSMutableDictionary*) profuctInfo;
-- (void) setDebugMode: (NSNumber*) debug;
+- (void) setDebugMode: (BOOL) debug;
 - (NSString*) getSDKVersion;
+- (NSString*) getPluginVersion;
 
 @end

@@ -24,8 +24,7 @@ THE SOFTWARE.
 #ifndef __MY_PURCHASE_H__
 #define __MY_PURCHASE_H__
 
-#include "IAPAlipay.h"
-#include "IAPNd91.h"
+#include "ProtocolIAP.h"
 
 class MyPurchaseResult : public cocos2d::plugin::PayResultListener
 {
@@ -55,8 +54,8 @@ private:
 
     static MyPurchase* s_pPurchase;
 
-    cocos2d::plugin::IAPAlipay* s_pAlipay;
-    cocos2d::plugin::IAPNd91* s_pNd91;
+    cocos2d::plugin::ProtocolIAP* s_pAlipay;
+    cocos2d::plugin::ProtocolIAP* s_pNd91;
     MyPurchaseResult* s_pRetListener;
 };
 
