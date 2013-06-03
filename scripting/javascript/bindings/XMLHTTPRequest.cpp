@@ -636,7 +636,8 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
         if (!JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &str)) {
             return JS_FALSE;
         };
-        data = JS_EncodeString(cx, str);
+        JSStringWrapper strWrap(str);
+        data = (char*)strWrap.get().c_str();
     }
 
 
