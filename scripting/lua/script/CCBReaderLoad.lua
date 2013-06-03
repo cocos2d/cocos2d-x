@@ -97,5 +97,4 @@ function CCBReaderLoad(strFilePath,proxy,bSetOwner,strOwnerName)
     end
 
     return node
-
 end
