@@ -129,7 +129,7 @@ public:
         CC_SAFE_DELETE(ws);
     }
     
-    virtual void onError(WebSocket* ws, const WebSocket::ERROR& error)
+    virtual void onError(WebSocket* ws, const WebSocket::ErrorCode& error)
     {
         js_proxy_t * p;
         JS_GET_PROXY(p, ws);
@@ -371,13 +371,13 @@ void register_jsb_websocket(JSContext *cx, JSObject *global) {
     
     JSObject* jsclassObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return WebSocket; })()"));
 
-    JS_DefineProperty(cx, jsclassObj, "CONNECTING", INT_TO_JSVAL((int)WebSocket::STATE_CONNECTING)
+    JS_DefineProperty(cx, jsclassObj, "CONNECTING", INT_TO_JSVAL((int)WebSocket::kStateConnecting)
                       , NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
-	JS_DefineProperty(cx, jsclassObj, "OPEN", INT_TO_JSVAL((int)WebSocket::STATE_OPEN)
+	JS_DefineProperty(cx, jsclassObj, "OPEN", INT_TO_JSVAL((int)WebSocket::kStateOpen)
                       , NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
-	JS_DefineProperty(cx, jsclassObj, "CLOSING", INT_TO_JSVAL((int)WebSocket::STATE_CLOSING)
+	JS_DefineProperty(cx, jsclassObj, "CLOSING", INT_TO_JSVAL((int)WebSocket::kStateClosing)
                       , NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
-	JS_DefineProperty(cx, jsclassObj, "CLOSED", INT_TO_JSVAL((int)WebSocket::STATE_CLOSED)
+	JS_DefineProperty(cx, jsclassObj, "CLOSED", INT_TO_JSVAL((int)WebSocket::kStateClosed)
                       , NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
     
     // make the class enumerable in the registered namespace
