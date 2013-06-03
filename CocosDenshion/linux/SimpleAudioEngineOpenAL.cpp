@@ -48,6 +48,9 @@ namespace CocosDenshion
 		ALuint buffer;
 		ALuint source;
 		bool   isLooped;
+        float pitch;
+        float pan;
+        float gain;
 	};
 
 	typedef map<string, soundData *> EffectsMap;
@@ -433,9 +436,8 @@ namespace CocosDenshion
 
 	unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop,
                                                float pitch, float pan, float gain)
-	{
-		// Changing file path to full path
-    	std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    {
+        std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
 
 		EffectsMap::iterator iter = s_effects.find(fullPath);
 
@@ -453,13 +455,22 @@ namespace CocosDenshion
 		}
 
 		checkALError("playEffect:init");
-		iter->second->isLooped = bLoop;
-		alSourcei(iter->second->source, AL_LOOPING, iter->second->isLooped ? AL_TRUE : AL_FALSE);
-		alSourcePlay(iter->second->source);
+
+        soundData &d = *iter->second;
+		d.isLooped = bLoop;
+        d.pitch = pitch;
+        d.pan = pan;
+        d.gain = gain;
+		alSourcei(d.source, AL_LOOPING, d.isLooped ? AL_TRUE : AL_FALSE);
+        alSourcef(d.source, AL_GAIN, d.gain);
+        alSourcef(d.source, AL_PITCH, d.pitch);
+        float sourcePosAL[] = {d.pan, 0.0f, 0.0f};//Set position - just using left and right panning
+        alSourcefv(d.source, AL_POSITION, sourcePosAL);
+		alSourcePlay(d.source);
 		checkALError("playEffect:alSourcePlay");
 
-		return iter->second->source;
-	}
+		return d.source;
+    }
 
 	void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 	{
