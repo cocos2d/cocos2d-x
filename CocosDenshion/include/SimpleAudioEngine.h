@@ -157,10 +157,24 @@ public:
     @param pszFilePath The path of the effect file,or the FileName of T_SoundResInfo
     @bLoop Whether to loop the effect playing, default value is false
     */
-    unsigned int playEffect(const char* pszFilePath, bool bLoop);
-    unsigned int playEffect(const char* pszFilePath) {
-    	return this->playEffect(pszFilePath, false);
+    unsigned int playEffect(const char* pszFilePath, bool bLoop) {
+        return this->playEffect(pszFilePath, bLoop, 1.0, 0.0, 1.0);
     }
+
+    unsigned int playEffect(const char* pszFilePath) {
+        return this->playEffect(pszFilePath, false);
+    }
+
+    /**
+    @brief Play sound effect  with a file path, pitch, pan and gain
+    @param pszFilePath The path of the effect file,or the FileName of T_SoundResInfo
+    @bLoop Whether to loop the effect playing, default value is false
+    @pitch Frequency, normal value is 1.0. Will also change effect play time.
+    @pan   Stereo effect, in range [-1..1] where -1 enables only left channel.
+    @gain  Volume, normal value is 1.0. Works for range [0..1].
+    */
+    unsigned int playEffect(const char* pszFilePath, bool bLoop,
+                            float pitch, float pan, float gain);
 
     /**
     @brief Pause playing sound effect
