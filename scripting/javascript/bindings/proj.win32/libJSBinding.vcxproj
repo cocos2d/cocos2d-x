@@ -39,6 +39,7 @@
     <ClInclude Include="..\generated\jsb_cocos2dx_auto.hpp" />
     <ClInclude Include="..\generated\jsb_cocos2dx_extension_auto.hpp" />
     <ClInclude Include="..\jsb_cocos2dx_extension_manual.h" />
+    <ClInclude Include="..\jsb_helper.h" />
     <ClInclude Include="..\jsb_opengl_functions.h" />
     <ClInclude Include="..\jsb_opengl_manual.h" />
     <ClInclude Include="..\jsb_opengl_registration.h" />
@@ -59,7 +60,6 @@
     <ClInclude Include="..\js_manual_conversions.h" />
     <ClInclude Include="..\ScriptingCore.h" />
     <ClInclude Include="..\spidermonkey_specifics.h" />
-    <ClInclude Include="..\XMLHTTPHelper.h" />
     <ClInclude Include="..\XMLHTTPRequest.h" />
   </ItemGroup>
   <ItemGroup>

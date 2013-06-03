@@ -154,10 +154,10 @@
     <ClInclude Include="..\XMLHTTPRequest.h">
       <Filter>manual</Filter>
     </ClInclude>
-    <ClInclude Include="..\XMLHTTPHelper.h">
+    <ClInclude Include="..\jsb_websocket.h">
       <Filter>manual</Filter>
     </ClInclude>
-    <ClInclude Include="..\jsb_websocket.h">
+    <ClInclude Include="..\jsb_helper.h">
       <Filter>manual</Filter>
     </ClInclude>
   </ItemGroup>
