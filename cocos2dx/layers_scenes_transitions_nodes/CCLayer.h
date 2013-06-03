@@ -36,9 +36,6 @@ THE SOFTWARE.
 #ifdef EMSCRIPTEN
 #include "base_nodes/CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
-#ifdef KEYBOARD_SUPPORT
-#include "keyboard_dispatcher/CCKeyboardDelegate.h"
-#endif
 
 NS_CC_BEGIN
 
@@ -63,11 +60,7 @@ All features from CCNode are valid, plus the following new features:
 - It can receive iPhone Touches
 - It can receive Accelerometer input
 */
-#ifdef KEYBOARD_SUPPORT
-class CC_DLL CCLayer : public CCNode, public CCTouchDelegate, public CCAccelerometerDelegate, public CCKeypadDelegate, public CCKeyboardDelegate
-#else
 class CC_DLL CCLayer : public CCNode, public CCTouchDelegate, public CCAccelerometerDelegate, public CCKeypadDelegate
-#endif
 {
 public:
     CCLayer();
@@ -144,6 +137,8 @@ public:
 #ifdef KEYBOARD_SUPPORT
     virtual bool isKeyboardEnabled();
     virtual void setKeyboardEnabled(bool value);
+    virtual void keyPressed(int keyCode) {};
+    virtual void keyReleased(int keyCode) {};
 #endif
     virtual bool isKeypadEnabled();
     virtual void setKeypadEnabled(bool value);

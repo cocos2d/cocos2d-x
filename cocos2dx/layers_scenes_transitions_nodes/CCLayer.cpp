@@ -296,11 +296,13 @@ void CCLayer::setKeyboardEnabled(bool enabled)
         CCDirector* pDirector = CCDirector::sharedDirector();
         if (enabled)
         {
-            pDirector->getKeyboardDispatcher()->addDelegate(this);
+            pDirector->getKeyboardDispatcher()->setKeyPressDelegate(std::bind(&CCLayer::keyPressed, this, std::placeholders::_1));
+            pDirector->getKeyboardDispatcher()->setKeyReleaseDelegate(std::bind(&CCLayer::keyReleased, this, std::placeholders::_1));
         }
         else
         {
-            pDirector->getKeyboardDispatcher()->removeDelegate(this);
+            pDirector->getKeyboardDispatcher()->setKeyPressDelegate(NULL);
+            pDirector->getKeyboardDispatcher()->setKeyReleaseDelegate(NULL);
         }
     }
 }
