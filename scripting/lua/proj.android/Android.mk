@@ -11,6 +11,8 @@ LOCAL_SRC_FILES := ../cocos2dx_support/CCLuaBridge.cpp \
           ../cocos2dx_support/CCLuaValue.cpp \
           ../cocos2dx_support/Cocos2dxLuaLoader.cpp \
           ../cocos2dx_support/LuaCocos2d.cpp \
+          ../cocos2dx_support/CCBProxy.cpp \
+          ../cocos2dx_support/Lua_extensions_CCB.cpp \
           ../tolua/tolua_event.c \
           ../tolua/tolua_is.c \
           ../tolua/tolua_map.c \
