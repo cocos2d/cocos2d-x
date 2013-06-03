@@ -3356,6 +3356,56 @@ JSBool js_cocos2dx_CCGLProgram_getProgram(JSContext *cx, uint32_t argc, jsval *v
 	return JS_FALSE;
 }
 
+#define js_cocos2dx_CCCamera_getXYZ(funcName) \
+    JSBool ok = JS_TRUE;                                                                                                  \
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);                                                                               \
+	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);                                                                   \
+	cocos2d::CCCamera* cobj = (cocos2d::CCCamera *)(proxy ? proxy->ptr : NULL);                                           \
+	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");                                                      \
+	if (argc == 0) {                                                                                                      \
+		float x;                                                                                                          \
+		float y;                                                                                                          \
+		float z;                                                                                                          \
+		cobj->funcName(&x, &y, &z);                                                                                       \
+        JSObject* tmp = JS_NewObject(cx, NULL, NULL, NULL);                                                               \
+                                                                                                                          \
+        do                                                                                                                \
+        {                                                                                                                 \
+            if (NULL == tmp) break;                                                                                       \
+                                                                                                                          \
+            ok = JS_DefineProperty(cx, tmp, "x", DOUBLE_TO_JSVAL(x), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&  \
+            JS_DefineProperty(cx, tmp, "y", DOUBLE_TO_JSVAL(y), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&       \
+            JS_DefineProperty(cx, tmp, "z", DOUBLE_TO_JSVAL(z), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);         \
+                                                                                                                          \
+            if (ok) {                                                                                                     \
+                JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(tmp));                                                                \
+                return JS_TRUE;                                                                                           \
+            }                                                                                                             \
+        } while (false);                                                                                                  \
+                                                                                                                          \
+		JS_SET_RVAL(cx, vp, JSVAL_NULL);                                                                                  \
+		return JS_TRUE;                                                                                                   \
+	}                                                                                                                     \
+                                                                                                                          \
+	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);                                       \
+	return JS_FALSE;
+
+
+static JSBool js_cocos2dx_CCCamera_getCenterXYZ(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    js_cocos2dx_CCCamera_getXYZ(getCenterXYZ)
+}
+
+static JSBool js_cocos2dx_CCCamera_getUpXYZ(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    js_cocos2dx_CCCamera_getXYZ(getUpXYZ)
+}
+
+static JSBool js_cocos2dx_CCCamera_getEyeXYZ(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    js_cocos2dx_CCCamera_getXYZ(getEyeXYZ)
+}
+
 void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 {
 	// first, try to get the ns
@@ -3454,6 +3504,11 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, jsb_CCParticleBatchNode_prototype, "setBlendFunc", js_cocos2dx_CCParticleBatchNode_setBlendFunc, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_CCLayerColor_prototype, "setBlendFunc", js_cocos2dx_CCLayerColor_setBlendFunc, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_CCParticleSystem_prototype, "setBlendFunc", js_cocos2dx_CCParticleSystem_setBlendFunc, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+    
+    JS_DefineFunction(cx, jsb_CCCamera_prototype, "getCenter", js_cocos2dx_CCCamera_getCenterXYZ, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_CCCamera_prototype, "getUp", js_cocos2dx_CCCamera_getUpXYZ, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_CCCamera_prototype, "getEye", js_cocos2dx_CCCamera_getEyeXYZ, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    
 
 	JS_DefineFunction(cx, jsb_CCAction_prototype, "copy", js_cocos2dx_CCNode_copy, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, jsb_CCAction_prototype, "retain", js_cocos2dx_retain, 0, JSPROP_READONLY | JSPROP_PERMANENT);
