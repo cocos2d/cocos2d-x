@@ -25,7 +25,8 @@ THE SOFTWARE.
 #ifndef __CCKEYBOARD_DISPATCHER_H__
 #define __CCKEYBOARD_DISPATCHER_H__
 
-#include "CCKeyboardDelegate.h"
+#include <vector>
+#include <functional>
 #include "cocoa/CCArray.h"
 
 NS_CC_BEGIN
@@ -35,7 +36,8 @@ NS_CC_BEGIN
  * @{
  */
 
-struct _ccCArray;
+typedef std::function<void(int)> CCKeyboardDelegate;
+
 /**
 @class CCKeyboardDispatcher
 @brief Dispatch the keypad message from the phone
@@ -47,39 +49,23 @@ public:
     ~CCKeyboardDispatcher();
 
     /**
-    @brief add delegate to concern keypad msg
+    @brief set delagate to key press event
     */
-    void addDelegate(CCKeyboardDelegate* pDelegate);
+    void setKeyPressDelegate(CCKeyboardDelegate delegate);
+    /**
+    @brief set delagate to key release event
+    */
+    void setKeyReleaseDelegate(CCKeyboardDelegate delegate);
 
     /**
-    @brief remove the delegate from the delegates who concern keypad msg
-    */
-    void removeDelegate(CCKeyboardDelegate* pDelegate);
-
-    /**
-    @brief force add the delegate
-    */
-    void forceAddDelegate(CCKeyboardDelegate* pDelegate);
-
-    /**
-    @brief force remove the delegate
-    */
-    void forceRemoveDelegate(CCKeyboardDelegate* pDelegate);
-
-    /**
-    @brief dispatch the key pad msg
+    @brief dispatch the key stroke event
     */
     bool dispatchKeyboardEvent(int keyCode, bool pressed);
 
 protected:
 
-    CCArray* m_pDelegates;
-    bool m_bLocked;
-    bool m_bToAdd;
-    bool m_bToRemove;
-
-    struct _ccCArray *m_pHandlersToAdd;
-    struct _ccCArray *m_pHandlersToRemove;
+    CCKeyboardDelegate m_keyPressDelegate;
+    CCKeyboardDelegate m_keyReleaseDelegate;
 };
 
 // end of input group
