@@ -2,9 +2,10 @@
 # Do not include this file in your project: see cocos2dx.pri.
 ################################################################################
 
-# (Set variables in global scope).
-
 linux {
+    # Use OpenAL in default QtCreator project.
+    isEmpty(COCOS2D_USE_FMOD):COCOS2D_USE_FMOD=0
+
     # Variables used when building libraries.
     CC_LIBRARY_DIR = $$PWD/../../lib/linux/release
     CC_MAKE_FLAGS = -s
@@ -15,6 +16,9 @@ linux {
     }
     contains(COCOS2D_MODULES,box2d) {
         CC_MAKE_FLAGS += USE_BOX2D=1
+    }
+    !equals(COCOS2D_USE_FMOD, 1) {
+        CC_MAKE_FLAGS += OPENAL=1
     }
 
     # We will compile cocos2d shared library on demand using Makefile.

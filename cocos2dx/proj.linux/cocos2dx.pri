@@ -10,6 +10,11 @@
 #   COCOS2D_MODULES += chipmunk
 # note: you cannot include both box2d and chipmunk.
 #
+# By default, QtCreator project will use OpenAL audio backend (because FMOD is
+# free only for non-commercial use). If you are legal FMOD user, set variable
+# COCOS2D_USE_FMOD to use FMOD audio backend:
+#   COCOS2D_USE_FMOD = 1
+#
 ################################################################################
 
 INCLUDEPATH += $$PWD/../
@@ -22,7 +27,8 @@ INCLUDEPATH += $$PWD/../kazmath/include
     # Use equivalents of -Wno-overloaded-virtual -Wno-unused-parameter.
     QMAKE_CXXFLAGS_WARN_ON += /wd4263 /wd4100
 } else {
-    QMAKE_CXXFLAGS_WARN_ON += -Wno-ignored-qualifiers -Wno-overloaded-virtual -Wno-unused-parameter
+    QMAKE_CXXFLAGS_WARN_ON += -Wno-ignored-qualifiers -Wno-overloaded-virtual -Wno-unused-parameter -Wno-unused-function
+    QMAKE_CXXFLAGS += -std=c++0x
 }
 
 include($$PWD/cocos2dx.prf)
