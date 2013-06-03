@@ -55,7 +55,7 @@ CCComAttribute* CCComAttribute::create(void)
     {
         CC_SAFE_DELETE(pRet);
     }
-	return pRet;
+    return pRet;
 }
 
 void CCComAttribute::setInt(const char *key, int value)
@@ -94,7 +94,7 @@ void CCComAttribute::setObject(const char *key, CCObject *value)
     m_pAttributes->setObject(value, key);
 }
 
-int CCComAttribute::getInt(const char *key)
+int CCComAttribute::getInt(const char *key) const
 {
     CCObject *ret = m_pAttributes->objectForKey(key);
 	if( ret )
@@ -102,7 +102,7 @@ int CCComAttribute::getInt(const char *key)
 		if( CCInteger *obj=dynamic_cast<CCInteger*>(ret) )
 			return obj->getValue();
 
-		CCAssert(false, "Key found, but from different type");
+		CCAssert(false, "Key found, type is not integer");
 	}
 
 	// XXX: Should it throw an exception ?
@@ -110,7 +110,7 @@ int CCComAttribute::getInt(const char *key)
 	return 0;
 }
 
-double CCComAttribute::getDouble(const char *key)
+double CCComAttribute::getDouble(const char *key) const
 {
     CCObject *ret = m_pAttributes->objectForKey(key);
 	if( ret )
@@ -118,7 +118,7 @@ double CCComAttribute::getDouble(const char *key)
 		if( CCDouble *obj=dynamic_cast<CCDouble*>(ret) )
 			return obj->getValue();
 
-		CCAssert(false, "Key found, but from different type");
+		CCAssert(false, "Key found, type is not double");
 	}
 
 	// XXX: Should it throw an exception ?
@@ -126,7 +126,7 @@ double CCComAttribute::getDouble(const char *key)
 	return 0.0;
 }
 
-float CCComAttribute::getFloat(const char *key)
+float CCComAttribute::getFloat(const char *key) const
 {
     CCObject *ret = m_pAttributes->objectForKey(key);
 	if( ret )
@@ -134,7 +134,7 @@ float CCComAttribute::getFloat(const char *key)
 		if( CCFloat *obj=dynamic_cast<CCFloat*>(ret) )
 			return obj->getValue();
 
-		CCAssert(false, "Key found, but from different type");
+		CCAssert(false, "Key found, type is not float");
 	}
 
 	// XXX: Should it throw an exception ?
@@ -142,7 +142,7 @@ float CCComAttribute::getFloat(const char *key)
 	return 0.0;
 }
 
-bool CCComAttribute::getBool(const char *key)
+bool CCComAttribute::getBool(const char *key) const
 {
     CCObject *ret = m_pAttributes->objectForKey(key);
 	if( ret )
@@ -151,7 +151,7 @@ bool CCComAttribute::getBool(const char *key)
 			return boolobj->getValue();
 		if( CCString *strobj=dynamic_cast<CCString*>(ret) )
 			return strobj->boolValue();
-		CCAssert(false, "Key found, but from different type");
+		CCAssert(false, "Key found, type is not Bool");
 	}
 
 	// XXX: Should it throw an exception ?
@@ -159,7 +159,7 @@ bool CCComAttribute::getBool(const char *key)
 	return false;
 }
 
-const char* CCComAttribute::getCString(const char *key)
+const char* CCComAttribute::getCString(const char *key) const
 {
    CCObject *ret = m_pAttributes->objectForKey(key);
 	if( ret )
@@ -167,7 +167,7 @@ const char* CCComAttribute::getCString(const char *key)
 		if( CCString *str=dynamic_cast<CCString*>(ret) )
 			return str->getCString();
 
-		CCAssert(false, "Key found, but from different type");
+		CCAssert(false, "Key found, type is not CString");
 	}
 
 	// XXX: Should it throw an exception ?
@@ -175,7 +175,7 @@ const char* CCComAttribute::getCString(const char *key)
 	return NULL;
 }
 
-CCObject* CCComAttribute::getObject(const char *key)
+CCObject* CCComAttribute::getObject(const char *key) const
 {
     return m_pAttributes->objectForKey(key);
 }

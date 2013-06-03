@@ -1284,14 +1284,14 @@ void CCNode::updateTransform()
     arrayMakeObjectsPerformSelector(m_pChildren, updateTransform, CCNode*);
 }
 
-CCComponent* CCNode::getComponent(const char *pName)
+CCComponent* CCNode::getComponent(const char *pName) const
 {
     return m_pComponentContainer->get(pName);
 }
 
-bool CCNode::addComponent(CCComponent *com)
+bool CCNode::addComponent(CCComponent *pComponent)
 {
-    return m_pComponentContainer->add(com);
+    return m_pComponentContainer->add(pComponent);
 }
 
 bool CCNode::removeComponent(const char *pName)

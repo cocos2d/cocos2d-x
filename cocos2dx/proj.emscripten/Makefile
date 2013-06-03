@@ -8,7 +8,7 @@ INCLUDES += \
 			-I../../extensions/GUI/CCControlExtension \
 			-I../../external/chipmunk/include/chipmunk \
 			-I../../extensions/network \
-                       -I../../extensions/Components \
+            -I../../extensions/Components \
 
 DEFINES += -D__CC_PLATFORM_FILEUTILS_CPP__
 DEFINES += -DCC_ENABLE_CHIPMUNK_INTEGRATION

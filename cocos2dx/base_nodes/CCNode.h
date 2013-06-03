@@ -1303,17 +1303,17 @@ public:
     void setAdditionalTransform(const CCAffineTransform& additionalTransform);
     /// @} end of Coordinate Converters
 
-        /// @{
+    /// @{
     /// @name component functions
     /** 
      *   gets a component by its name
      */
-    CCComponent* getComponent(const char *pName);
+    CCComponent* getComponent(const char *pName) const;
     
     /** 
-     *   adds a component to node
+     *   adds a component
      */
-    virtual bool addComponent(CCComponent *com);
+    virtual bool addComponent(CCComponent *pComponent);
     
     /** 
      *   removes a component by its name      

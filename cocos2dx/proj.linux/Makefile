@@ -8,7 +8,7 @@ INCLUDES += \
 			-I../../extensions/GUI/CCControlExtension \
 			-I../../external/chipmunk/include/chipmunk \
 			-I../../extensions/network \
-                       -I../../extensions/Components \
+            -I../../extensions/Components \
 
 SOURCES = ../actions/CCAction.cpp \
 ../actions/CCActionCamera.cpp \

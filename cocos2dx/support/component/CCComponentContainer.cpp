@@ -43,17 +43,13 @@ CCComponentContainer::~CCComponentContainer(void)
 CCComponent* CCComponentContainer::get(const char *pName) const
 {
     CCComponent* pRet = NULL;
-    
     CCAssert(pName != NULL, "Argument must be non-nil");
-    
     do {
         CC_BREAK_IF(NULL == pName);
         CC_BREAK_IF(NULL == m_pComponents);
-        
         pRet = dynamic_cast<CCComponent*>(m_pComponents->objectForKey(pName));
         
     } while (0);
-    
     return pRet;
 }
 
@@ -62,7 +58,7 @@ bool CCComponentContainer::add(CCComponent *pCom)
     bool bRet = false;
     CCAssert(pCom != NULL, "Argument must be non-nil");
     CCAssert(pCom->getOwner() == NULL, "Component already added. It can't be added again");
- 
+    
     do
     {
         if (m_pComponents == NULL)
@@ -71,13 +67,10 @@ bool CCComponentContainer::add(CCComponent *pCom)
             m_pComponents->retain();
             m_pOwner->scheduleUpdate();
         }
+        CCComponent *pComponent = dynamic_cast<CCComponent*>(m_pComponents->objectForKey(pCom->getName()));
         
-        CCDictElement *pElement = NULL;
-        HASH_FIND_PTR(m_pComponents->m_pElements, pCom->getName(), pElement);
-        
-        CCAssert(pElement == NULL, "Component already added. It can't be added again");
-        CC_BREAK_IF(pElement);
-        
+        CCAssert(pComponent == NULL, "Component already added. It can't be added again");
+        CC_BREAK_IF(pComponent);
         pCom->setOwner(m_pOwner);
         m_pComponents->setObject(pCom, pCom->getName());
         pCom->onEnter();
@@ -95,7 +88,6 @@ bool CCComponentContainer::remove(const char *pName)
     do 
     {        
         CC_BREAK_IF(!m_pComponents);
-        
         CCObject* pRetObject = NULL;
         CCDictElement *pElement = NULL;
         HASH_FIND_PTR(m_pComponents->m_pElements, pName, pElement);
@@ -103,18 +95,14 @@ bool CCComponentContainer::remove(const char *pName)
         {
            pRetObject = pElement->getObject();
         }
-        
         CCComponent *com = dynamic_cast<CCComponent*>(pRetObject);
         CC_BREAK_IF(!com);
-
         com->onExit();
         com->setOwner(NULL);
- 
         HASH_DEL(m_pComponents->m_pElements, pElement);
         pElement->getObject()->release();
         CC_SAFE_DELETE(pElement);
         bRet = true;
-        
     } while(0);
     
     return bRet;

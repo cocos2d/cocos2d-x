@@ -48,12 +48,12 @@ public:
    void setCString(const char *key, const char *value);
    void setObject(const char *key, CCObject *value);
    
-   int    getInt(const char *key);
-   double getDouble(const char *key);
-   float  getFloat(const char *key);
-   bool   getBool(const char *key);
-   const char* getCString(const char *key);
-   CCObject* getObject(const char *key);
+   int    getInt(const char *key) const;
+   double getDouble(const char *key) const;
+   float  getFloat(const char *key) const;
+   bool   getBool(const char *key) const;
+   const char* getCString(const char *key) const;
+   CCObject* getObject(const char *key) const;
    
 private:
    CCDictionary *m_pAttributes;  

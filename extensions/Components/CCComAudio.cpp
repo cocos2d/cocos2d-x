@@ -34,6 +34,7 @@ CCComAudio::CCComAudio(void)
 
 CCComAudio::~CCComAudio(void)
 {
+    
 }
 
 bool CCComAudio::init()
@@ -47,6 +48,7 @@ void CCComAudio::onEnter()
 
 void CCComAudio::onExit()
 {
+    stopAllEffects();
 }
 
 bool CCComAudio::isEnabled()
