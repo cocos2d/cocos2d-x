@@ -35,7 +35,7 @@
 #include "jstypes.h"
 #include "jsapi.h"
 #include "jsfriendapi.h"
-#include "XMLHTTPHelper.h"
+#include "jsb_helper.h"
 
 enum MinXmlHttpRequestResponseType {
     kRequestResponseTypeString,
