@@ -1408,6 +1408,15 @@ CCJumpTo* CCJumpTo::create(float duration, const CCPoint& position, float height
     return pJumpTo;
 }
 
+bool CCJumpTo::initWithDuration(float duration, const CCPoint& position, float height, unsigned int jumps)
+{
+    if (CCJumpBy::initWithDuration(duration, position, height, jumps)) {
+        m_endPosition = position;
+    }
+    
+    return false;
+}
+
 CCObject* CCJumpTo::copyWithZone(CCZone* pZone)
 {
     CCZone* pNewZone = NULL;
@@ -1434,7 +1443,7 @@ CCObject* CCJumpTo::copyWithZone(CCZone* pZone)
 void CCJumpTo::startWithTarget(CCNode *pTarget)
 {
     CCJumpBy::startWithTarget(pTarget);
-    m_delta = ccp(m_delta.x - m_startPosition.x, m_delta.y - m_startPosition.y);
+    m_delta = ccp(m_endPosition.x - m_startPosition.x, m_endPosition.y - m_startPosition.y);
 }
 
 // Bezier cubic formula:

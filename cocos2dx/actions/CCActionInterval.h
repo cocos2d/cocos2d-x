@@ -423,12 +423,17 @@ protected:
 class CC_DLL CCJumpTo : public CCJumpBy
 {
 public:
+    /** initializes the action */
+    bool initWithDuration(float duration, const CCPoint& position, float height, unsigned int jumps);
+    
     virtual void startWithTarget(CCNode *pTarget);
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
     /** creates the action */
     static CCJumpTo* create(float duration, const CCPoint& position, float height, int jumps);
+protected:
+    CCPoint m_endPosition;
 };
 
 /** @typedef bezier configuration structure
