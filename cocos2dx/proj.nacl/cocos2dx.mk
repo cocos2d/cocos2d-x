@@ -10,7 +10,10 @@ NACL_AR ?= $(NACL_ARCH)-nacl-ar
 NACL_CC ?= $(NACL_ARCH)-nacl-gcc
 NACL_CXX ?= $(NACL_ARCH)-nacl-g++
 CCFLAGS += -Wall -Werror
-CXXFLAGS += -Wall -Werror
+# GCC 4.6 is primary platform for cocos2d v.3, because it's default compiler for Android, 
+# Blackberry, some Linux distributions.It supports all important features of c++11, but have 
+# no flag "-std=c++11" (which was turned on in version 4.7).
+CXXFLAGS += -Wall -Werror -std=gnu++0x 
 ARFLAGS = cr
 
 THIS_MAKEFILE := $(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))

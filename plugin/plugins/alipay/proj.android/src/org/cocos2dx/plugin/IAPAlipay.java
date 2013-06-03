@@ -28,8 +28,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Hashtable;
 
-import org.cocos2dx.plugin.InterfaceIAP.IAPAdapter;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -41,7 +39,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
 
-public class IAPAlipay implements IAPAdapter {
+public class IAPAlipay implements InterfaceIAP {
 
 	private static final String LOG_TAG = "IAPAlipay";
 	private static Activity mContext = null;
@@ -97,7 +95,7 @@ public class IAPAlipay implements IAPAdapter {
 	public void payForProduct(Hashtable<String, String> info) {
 		LogD("payForProduct invoked " + info.toString());
 		if (! networkReachable()) {
-			payResult(InterfaceIAP.PAYRESULT_FAIL, "网络不可用");
+			payResult(IAPWrapper.PAYRESULT_FAIL, "网络不可用");
 			return;
 		}
 
@@ -108,7 +106,7 @@ public class IAPAlipay implements IAPAdapter {
 				MobileSecurePayHelper mspHelper = new MobileSecurePayHelper(mContext);
 				boolean bInstalled = mspHelper.detectMobile_sp();
 				if (! bInstalled) {
-					payResult(InterfaceIAP.PAYRESULT_FAIL, "未安装支付宝插件");
+					payResult(IAPWrapper.PAYRESULT_FAIL, "未安装支付宝插件");
 					return;
 				}
 
@@ -138,12 +136,12 @@ public class IAPAlipay implements IAPAdapter {
 						closeProgress();
 						mProgress = BaseHelper.showProgress(mContext, null, "正在支付", false, true);
 					} else {
-						payResult(InterfaceIAP.PAYRESULT_FAIL, "支付失败");
+						payResult(IAPWrapper.PAYRESULT_FAIL, "支付失败");
 						return;
 					}
 				} catch (Exception ex) {
 					LogE("Remote call failed", ex);
-					payResult(InterfaceIAP.PAYRESULT_FAIL, "remote call failed");
+					payResult(IAPWrapper.PAYRESULT_FAIL, "remote call failed");
 					return;
 				}
 			}
@@ -200,21 +198,21 @@ public class IAPAlipay implements IAPAdapter {
 							int retVal = resultChecker.checkSign();
 							// 返回验签结果以及交易状态
 							if (retVal == ResultChecker.RESULT_CHECK_SIGN_FAILED) {
-								payResult(InterfaceIAP.PAYRESULT_FAIL, "签名验证失败");
+								payResult(IAPWrapper.PAYRESULT_FAIL, "签名验证失败");
 							} else if (retVal == ResultChecker.RESULT_CHECK_SIGN_SUCCEED && resultChecker.isPayOk()) {
-								payResult(InterfaceIAP.PAYRESULT_SUCCESS, "支付成功");
+								payResult(IAPWrapper.PAYRESULT_SUCCESS, "支付成功");
 							} else {
-								payResult(InterfaceIAP.PAYRESULT_FAIL, "支付失败");
+								payResult(IAPWrapper.PAYRESULT_FAIL, "支付失败");
 							}
 						} catch (Exception e) {
 							e.printStackTrace();
-							payResult(InterfaceIAP.PAYRESULT_FAIL, "结果解析失败");
+							payResult(IAPWrapper.PAYRESULT_FAIL, "结果解析失败");
 						}
 					}
 						break;
 					default:
 						mAdapter.closeProgress();
-						payResult(InterfaceIAP.PAYRESULT_FAIL, "支付失败");
+						payResult(IAPWrapper.PAYRESULT_FAIL, "支付失败");
 						break;
 					}
 
@@ -335,7 +333,12 @@ public class IAPAlipay implements IAPAdapter {
 	}
 
 	private static void payResult(int ret, String msg) {
-		InterfaceIAP.onPayResult(mAdapter, ret, msg);
+		IAPWrapper.onPayResult(mAdapter, ret, msg);
 		LogD("Alipay result : " + ret + " msg : " + msg);
+	}
+
+	@Override
+	public String getPluginVersion() {
+		return "0.2.0";
 	}
 }
