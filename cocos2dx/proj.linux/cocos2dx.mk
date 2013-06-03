@@ -2,8 +2,10 @@ all:
 
 CC = gcc
 CXX = g++
-CCFLAGS += -MMD -Wall -Werror -fPIC
-CXXFLAGS += -MMD -Wall -Werror -fPIC
+# Remove -Wall, because it enables -Wunused-function, and this warning exists in webp.h
+# when enable c++11. I don't know why.
+CCFLAGS += -MMD -Werror -fPIC
+CXXFLAGS += -MMD -Werror -fPIC -std=c++11
 ARFLAGS = cr
 
 DEFINES += -DLINUX
