@@ -1,7 +1,6 @@
 # Modify mk file
 MK_FILE_PATH=$1
 TEMP_FILE_PATH=$(dirname ${MK_FILE_PATH})/temp.txt
-SELECTED_PLUGINS=(${NEED_PUBLISH//:/ })
 
 ###############################
 # functions used
@@ -24,29 +23,28 @@ getStaticModuleName()
 if [ -f ${MK_FILE_PATH} ]; then
     ADD_MODULE_STR=""
     ADD_IMPORT_STR=""
-    for plugin_name in ${SELECTED_PLUGINS[@]}
-    do
-        PLUGIN_MODULE_NAME="$(getStaticModuleName ${plugin_name})"
-        HAVE_PLUGIN=`grep "^\([\s]*[^#]*\)${PLUGIN_MODULE_NAME}" ${MK_FILE_PATH}`
-        if [ "${HAVE_PLUGIN}" ]; then
-            # already have this plugin
-            echo "Plugin ${plugin_name} have added in Android.mk"
-            continue
+
+    plugin_name="protocols"
+    PLUGIN_MODULE_NAME="$(getStaticModuleName ${plugin_name})"
+    HAVE_PLUGIN=`grep "^\([\s]*[^#]*\)${PLUGIN_MODULE_NAME}" ${MK_FILE_PATH}`
+    if [ "${HAVE_PLUGIN}" ]; then
+        # already have this plugin
+        echo "Plugin ${plugin_name} have added in Android.mk"
+        continue
+    else
+        if [ -z "${ADD_MODULE_STR}" ]; then
+            ADD_MODULE_STR=${PLUGIN_MODULE_NAME}
         else
-            if [ -z "${ADD_MODULE_STR}" ]; then
-                ADD_MODULE_STR=${PLUGIN_MODULE_NAME}
-            else
-                ADD_MODULE_STR="${ADD_MODULE_STR} ${PLUGIN_MODULE_NAME}"
-            fi
-            
-            NEW_LINE="\$(call import-module,${plugin_name}/android)"
-            if [ -z "${ADD_IMPORT_STR}" ]; then
-                ADD_IMPORT_STR=${NEW_LINE}
-            else
-                ADD_IMPORT_STR="${ADD_IMPORT_STR}:${NEW_LINE}"
-            fi
+            ADD_MODULE_STR="${ADD_MODULE_STR} ${PLUGIN_MODULE_NAME}"
         fi
-    done
+        
+        NEW_LINE="\$(call import-module,${plugin_name}/android)"
+        if [ -z "${ADD_IMPORT_STR}" ]; then
+            ADD_IMPORT_STR=${NEW_LINE}
+        else
+            ADD_IMPORT_STR="${ADD_IMPORT_STR}:${NEW_LINE}"
+        fi
+    fi
 
     # Modify the mk file if necessary
     if [ "${ADD_MODULE_STR}" ]; then

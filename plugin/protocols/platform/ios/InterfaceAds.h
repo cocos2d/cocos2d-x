@@ -28,9 +28,10 @@ THE SOFTWARE.
 
 - (void) configDeveloperInfo: (NSMutableDictionary*) devInfo;
 - (void) showAds: (int) type size:(int) sizeEnum position:(int) pos;
-- (void) hideAds: (NSNumber*) type;
-- (void) spendPoints: (NSNumber*) points;
-- (void) setDebugMode: (NSNumber*) debug;
+- (void) hideAds: (int) type;
+- (void) spendPoints: (int) points;
+- (void) setDebugMode: (BOOL) debug;
 - (NSString*) getSDKVersion;
+- (NSString*) getPluginVersion;
 
 @end
