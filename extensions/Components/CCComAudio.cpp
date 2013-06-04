@@ -48,6 +48,7 @@ void CCComAudio::onEnter()
 
 void CCComAudio::onExit()
 {
+    stopBackgroundMusic(true);
     stopAllEffects();
 }
 
