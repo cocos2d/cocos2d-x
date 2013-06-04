@@ -106,14 +106,17 @@ public:
 
     bool init(void);
 
-	/** returns the value of a given key as a string */
-	const char* getCString( const char *key ) const;
+	/** returns the value of a given key as a string.
+	 If the key is not found, it will return the default value */
+	const char* getCString( const char *key, const char *default_value=NULL ) const;
 
-	/** returns the value of a given key as a boolean */
-	bool getBool( const char *key ) const;
+	/** returns the value of a given key as a boolean.
+	 If the key is not found, it will return the default value */
+	bool getBool( const char *key, bool default_value=false ) const;
 
-	/** returns the value of a given key as a double */
-	double getNumber( const char *key ) const;
+	/** returns the value of a given key as a double.
+	 If the key is not found, it will return the default value */
+	double getNumber( const char *key, double default_value=0.0 ) const;
 
 	/** returns the value of a given key as a double */
 	CCObject * getObject( const char *key ) const;
