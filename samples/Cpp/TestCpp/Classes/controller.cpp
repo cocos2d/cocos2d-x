@@ -43,12 +43,14 @@ static std::vector< std::tuple<std::string, std::function<TestScene*()>>> g_aTes
 	{ "FileUtilsTest", []() { return new FileUtilsTestScene(); } },
 	{ "FontTest", []() { return new FontTestScene(); } },
 	{ "IntervalTest", [](){return new IntervalTestScene(); } },
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
 	{ "KeypadTest", []() { return new KeypadTestScene(); } },
+#endif
 	{ "LabelTest", [](){return new AtlasTestScene(); } },
 	{ "LayerTest", [](){return new LayerTestScene();} },
 	{ "MenuTest", [](){return new MenuTestScene();} },
 	{ "MotionStreakTest", [](){return new MotionStreakTestScene();} },
-//	{ "MutiTouchTest", []() { return CCScene::create(); } }, // XXX
+	{ "MutiTouchTest", []() { return new MutiTouchTestScene(); } },
 	{ "NodeTest", [](){return new CocosNodeTestScene();} },
 	{ "ParallaxTest", [](){return new ParallaxTestScene(); } },
 	{ "ParticleTest", [](){return new ParticleTestScene(); } },
@@ -62,8 +64,10 @@ static std::vector< std::tuple<std::string, std::function<TestScene*()>>> g_aTes
 	{ "SpriteTest", [](){return new SpriteTestScene(); } },
 	{ "TextInputTest", [](){return new TextInputTestScene(); } },
 	{ "Texture2DTest", [](){return new TextureTestScene(); } },
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 	{ "TextureCacheTest", []() { return new TextureCacheTestScene(); } },
-//	{ "TexturePackerEncryption", []() { return CCScene::create(); } }, // XXX
+#endif
+	{ "TexturePackerEncryption", []() { return new TextureAtlasEncryptionTestScene(); } },
 	{ "TileMapTest", [](){return new TileMapTestScene(); } },
 	{ "TouchesTest", [](){return new PongScene();} },
 	{ "TransitionsTest", [](){return new TransitionsTestScene();} },
@@ -76,14 +80,6 @@ static int g_testCount = g_aTestNames.size();
 #define LINE_SPACE          40
 
 static CCPoint s_tCurPos = CCPointZero;
-
-static TestScene* CreateTestScene(int i)
-{
-    CCDirector::sharedDirector()->purgeCachedData();
-
-	std::function<TestScene*()> f = std::get<1>( g_aTestNames[i] );
-	return f();
-}
 
 TestController::TestController()
 : m_tBeginPos(CCPointZero)
@@ -129,12 +125,17 @@ TestController::~TestController()
 
 void TestController::menuCallback(CCObject * pSender)
 {
+
+	CCDirector::sharedDirector()->purgeCachedData();
+
     // get the userdata, it's the index of the menu item clicked
     CCMenuItem* pMenuItem = (CCMenuItem *)(pSender);
-    int nIdx = pMenuItem->getZOrder() - 10000;
+    int idx = pMenuItem->getZOrder() - 10000;
 
     // create the test scene and run it
-    TestScene* pScene = CreateTestScene(nIdx);
+	auto functor = std::get<1>( g_aTestNames[idx] );
+    TestScene* pScene = functor();
+
     if (pScene)
     {
         pScene->runThisTest();
