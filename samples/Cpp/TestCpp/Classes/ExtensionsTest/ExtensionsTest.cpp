@@ -63,14 +63,17 @@ static const std::string testsName[TEST_MAX_COUNT] =
 // ExtensionsMainLayer
 //
 ////////////////////////////////////////////////////////
+
+static CCPoint s_tCurPos = CCPointZero;
+
 void ExtensionsMainLayer::onEnter()
 {
     CCLayer::onEnter();
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCMenu* pMenu = CCMenu::create();
-    pMenu->setPosition( CCPointZero );
+    m_pItemMenu = CCMenu::create();
+    m_pItemMenu->setPosition( CCPointZero );
     CCMenuItemFont::setFontName("Arial");
     CCMenuItemFont::setFontSize(24);
     for (int i = 0; i < TEST_MAX_COUNT; ++i)
@@ -78,10 +81,10 @@ void ExtensionsMainLayer::onEnter()
         CCMenuItemFont* pItem = CCMenuItemFont::create(testsName[i].c_str(), this,
                                                     menu_selector(ExtensionsMainLayer::menuCallback));
         pItem->setPosition(ccp(s.width / 2, s.height - (i + 1) * LINE_SPACE));
-        pMenu->addChild(pItem, kItemTagBasic + i);
+        m_pItemMenu->addChild(pItem, kItemTagBasic + i);
     }
-
-    addChild(pMenu);
+    setTouchEnabled(true);
+    addChild(m_pItemMenu);
 }
 
 void ExtensionsMainLayer::menuCallback(CCObject* pSender)
@@ -148,6 +151,43 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
     default:
         break;
     }
+}
+
+
+void ExtensionsMainLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
+{
+    CCSetIterator it = pTouches->begin();
+    CCTouch* touch = (CCTouch*)(*it);
+
+    m_tBeginPos = touch->getLocation();    
+}
+
+void ExtensionsMainLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
+{
+    CCSetIterator it = pTouches->begin();
+    CCTouch* touch = (CCTouch*)(*it);
+
+    CCPoint touchLocation = touch->getLocation();    
+    float nMoveY = touchLocation.y - m_tBeginPos.y;
+
+    CCPoint curPos  = m_pItemMenu->getPosition();
+    CCPoint nextPos = ccp(curPos.x, curPos.y + nMoveY);
+
+    if (nextPos.y < 0.0f)
+    {
+        m_pItemMenu->setPosition(CCPointZero);
+        return;
+    }
+
+    if (nextPos.y > ((TEST_MAX_COUNT + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
+    {
+        m_pItemMenu->setPosition(ccp(0, ((TEST_MAX_COUNT + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        return;
+    }
+
+    m_pItemMenu->setPosition(nextPos);
+    m_tBeginPos = touchLocation;
+    s_tCurPos   = nextPos;
 }
 
 ////////////////////////////////////////////////////////
