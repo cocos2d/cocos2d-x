@@ -31,6 +31,9 @@
     <Filter Include="spine">
       <UniqueIdentifier>{ff4b5934-99d4-4ea7-9f50-a774192d9ca9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{86fa67bc-4e23-4b86-a501-e03b2422b883}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\GUI\CCScrollView\CCScrollView.cpp">
@@ -230,6 +233,18 @@
     </ClCompile>
     <ClCompile Include="..\spine\spine-cocos2dx.cpp">
       <Filter>spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Components\CCComAttribute.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Components\CCComAudio.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Components\CCComController.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Components\CCInputDelegate.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -459,6 +474,18 @@
     </ClInclude>
     <ClInclude Include="..\spine\spine.h">
       <Filter>spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\CCComAttribute.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\CCComAudio.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\CCComController.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\CCInputDelegate.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
