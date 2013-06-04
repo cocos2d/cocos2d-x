@@ -27,17 +27,20 @@ THE SOFTWARE.
 #include <map>
 #include <string>
 
+typedef std::map<std::string, std::string>   StringMap;
+
 namespace cocos2d { namespace plugin {
 
+class PluginProtocol;
 class PluginParam
 {
 public:
+    PluginParam();
 	PluginParam(int nValue);
 	PluginParam(float fValue);
 	PluginParam(bool bValue);
 	PluginParam(const char* strValue);
-	PluginParam(std::map<std::string, PluginParam*> mapValue);
-	PluginParam(std::map<std::string, std::string> strMapValue);
+	PluginParam(StringMap strMapValue);
 
 	typedef enum{
 		kParamTypeNull = 0,
@@ -45,8 +48,8 @@ public:
 		kParamTypeFloat,
 		kParamTypeBool,
 		kParamTypeString,
+        kParamTypeStringMap,
 		kParamTypeMap,
-		kParamTypeStringMap,
 	} ParamType;
 
 	inline ParamType getCurrentType() {
@@ -73,12 +76,13 @@ public:
 		return m_mapValue;
 	}
 
-	inline std::map<std::string, std::string> getStrMapValue() {
+	inline StringMap getStrMapValue() {
         return m_strMapValue;
     }
 
 private:
-	PluginParam();
+	friend class PluginProtocol;
+    PluginParam(std::map<std::string, PluginParam*> mapValue);
 
 private:
 	ParamType m_type;
@@ -88,7 +92,7 @@ private:
 	bool m_bValue;
 	std::string m_strValue;
 	std::map<std::string, PluginParam*> m_mapValue;
-	std::map<std::string, std::string> m_strMapValue;
+	StringMap m_strMapValue;
 };
 
 }} //namespace cocos2d { namespace plugin {
