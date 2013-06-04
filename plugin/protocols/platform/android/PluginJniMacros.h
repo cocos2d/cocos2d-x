@@ -32,7 +32,7 @@ retType ret = defaultRet;                                        \
 return_val_if_fails(funcName != NULL && strlen(funcName) > 0, ret);       \
 return_val_if_fails(paramCode != NULL && strlen(paramCode) > 0, ret);     \
 PluginJavaData* pData = PluginUtils::getPluginJavaData(thiz);    \
-return_val_if_fails(pData != NULL, ret);                                  \
+return_val_if_fails(pData != NULL, ret);                         \
                                                                  \
 PluginJniMethodInfo t;                                           \
 if (PluginJniHelper::getMethodInfo(t                             \
@@ -51,6 +51,28 @@ if (PluginJniHelper::getMethodInfo(t                             \
 return ret;                                                      \
 
 
+#define CALL_JAVA_FUNC_WITH_VALIST(retCode)                  \
+std::vector<PluginParam*> allParams;                         \
+if (NULL != param)                                           \
+{                                                            \
+    allParams.push_back(param);                              \
+                                                             \
+    va_list argp;                                            \
+    PluginParam* pArg = NULL;                                \
+    va_start( argp, param );                                 \
+    while (1)                                                \
+    {                                                        \
+        pArg = va_arg(argp, PluginParam*);                   \
+        if (pArg == NULL)                                    \
+            break;                                           \
+                                                             \
+        allParams.push_back(pArg);                           \
+    }                                                        \
+    va_end(argp);                                            \
+}                                                            \
+                                                             \
+return call##retCode##FuncWithParam(funcName, allParams);    \
+
 
 #define CALL_JAVA_FUNC(retType, retCode, defaultRet, jRetCode)    \
 retType ret = defaultRet;                                                                                     \
@@ -61,44 +83,37 @@ if (NULL == pData) {                                                            
 }                                                                                                             \
                                                                                                               \
 std::string paramCode;                                                                                        \
-if (NULL == param)                                                                                            \
+int nParamNum = params.size();                                                                                \
+if (0 == nParamNum)                                                                                           \
 {                                                                                                             \
     paramCode = "()";                                                                                         \
-    paramCode.append(jRetCode);                                                                              \
+    paramCode.append(jRetCode);                                                                               \
     ret = PluginUtils::callJava##retCode##FuncWithName_oneParam(this, funcName, paramCode.c_str(), NULL);     \
 } else                                                                                                        \
 {                                                                                                             \
     PluginParam* pRetParam = NULL;                                                                            \
-    std::map<std::string, PluginParam*> allParams;                                                            \
-    va_list argp;                                                                                             \
-    int argno = 0;                                                                                            \
-    PluginParam* pArg = NULL;                                                                                 \
-                                                                                                              \
-    allParams["Param1"] = param;                                                                              \
-    va_start( argp, param );                                                                                  \
-    while (1)                                                                                                 \
-    {                                                                                                         \
-        pArg = va_arg(argp, PluginParam*);                                                                    \
-        if (pArg == NULL)                                                                                     \
+    bool needDel = false;                                                                                     \
+    if (nParamNum == 1) {                                                                                     \
+        pRetParam = params[0];                                                                                \
+    } else {                                                                                                  \
+        std::map<std::string, PluginParam*> allParams;                                                        \
+        for (int i = 0; i < nParamNum; i++)                                                                   \
         {                                                                                                     \
-            break;                                                                                            \
-        }                                                                                                     \
-        argno++;                                                                                              \
-        char strKey[8] = { 0 };                                                                               \
-        sprintf(strKey, "Param%d", argno + 1);                                                                \
-        allParams[strKey] = pArg;                                                                             \
-    }                                                                                                         \
-    va_end(argp);                                                                                             \
+            PluginParam* pArg = params[i];                                                                    \
+            if (pArg == NULL)                                                                                 \
+            {                                                                                                 \
+                break;                                                                                        \
+            }                                                                                                 \
                                                                                                               \
-    PluginParam tempParam(allParams);                                                                         \
-    if (argno == 0)                                                                                           \
-    {                                                                                                         \
-        pRetParam = param;                                                                                    \
+            char strKey[8] = { 0 };                                                                           \
+            sprintf(strKey, "Param%d", i + 1);                                                                \
+            allParams[strKey] = pArg;                                                                         \
+        }                                                                                                     \
+                                                                                                              \
+        pRetParam = new PluginParam(allParams);                                                               \
+        needDel = true;                                                                                       \
     }                                                                                                         \
-    else                                                                                                      \
-    {                                                                                                         \
-        pRetParam = &tempParam;                                                                               \
-    }                                                                                                         \
+                                                                                                              \
     switch(pRetParam->getCurrentType())                                                                       \
     {                                                                                                         \
     case PluginParam::kParamTypeInt:                                                                          \
@@ -137,6 +152,12 @@ if (NULL == param)                                                              
         break;                                                                                                \
     default:                                                                                                  \
         break;                                                                                                \
+    }                                                                                                         \
+                                                                                                              \
+    if (needDel && pRetParam != NULL)                                                                         \
+    {                                                                                                         \
+        delete pRetParam;                                                                                     \
+        pRetParam = NULL;                                                                                     \
     }                                                                                                         \
 }                                                                                                             \
 return ret;                                                                                                   \
