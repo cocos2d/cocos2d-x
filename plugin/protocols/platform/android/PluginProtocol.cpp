@@ -74,47 +74,63 @@ void PluginProtocol::setDebugMode(bool isDebugMode)
 
 void PluginProtocol::callFuncWithParam(const char* funcName, PluginParam* param, ...)
 {
+    std::vector<PluginParam*> allParams;
+    if (NULL != param)
+    {
+        allParams.push_back(param);
+
+        va_list argp;
+        PluginParam* pArg = NULL;
+        va_start( argp, param );
+        while (1)
+        {
+            pArg = va_arg(argp, PluginParam*);
+            if (pArg == NULL)
+                break;
+
+            allParams.push_back(pArg);
+        }
+        va_end(argp);
+    }
+
+    callFuncWithParam(funcName, allParams);
+}
+
+void PluginProtocol::callFuncWithParam(const char* funcName, std::vector<PluginParam*> params)
+{
     PluginJavaData* pData = PluginUtils::getPluginJavaData(this);
     if (NULL == pData) {
         PluginUtils::outputLog(LOG_TAG, "Can't find java data for plugin : %s", this->getPluginName());
         return;
     }
 
-    if (NULL == param)
+    int nParamNum = params.size();
+    if (nParamNum == 0)
     {
         PluginUtils::callJavaFunctionWithName_oneParam(this, funcName, "()V", NULL);
     } else
     {
         PluginParam* pRetParam = NULL;
-        std::map<std::string, PluginParam*> allParams;
-        va_list argp;
-        int argno = 0;
-        PluginParam* pArg = NULL;
-
-        allParams["Param1"] = param;
-        va_start( argp, param );
-        while (1)
-        {
-            pArg = va_arg(argp, PluginParam*);
-            if (pArg == NULL)
+        bool needDel = false;
+        if (nParamNum == 1) {
+            pRetParam = params[0];
+        } else {
+            std::map<std::string, PluginParam*> allParams;
+            for (int i = 0; i < nParamNum; i++)
             {
-                break;
-            }
-            argno++;
-            char strKey[8] = { 0 };
-            sprintf(strKey, "Param%d", argno + 1);
-            allParams[strKey] = pArg;
-        }
-        va_end(argp);
+                PluginParam* pArg = params[i];
+                if (pArg == NULL)
+                {
+                    break;
+                }
 
-        PluginParam tempParam(allParams);
-        if (argno == 0)
-        {
-            pRetParam = param;
-        }
-        else
-        {
-            pRetParam = &tempParam;
+                char strKey[8] = { 0 };
+                sprintf(strKey, "Param%d", i + 1);
+                allParams[strKey] = pArg;
+            }
+
+            pRetParam = new PluginParam(allParams);
+            needDel = true;
         }
 
         switch(pRetParam->getCurrentType())
@@ -146,25 +162,51 @@ void PluginProtocol::callFuncWithParam(const char* funcName, PluginParam* param,
         default:
             break;
         }
+
+        if (needDel && pRetParam != NULL)
+        {
+            delete pRetParam;
+            pRetParam = NULL;
+        }
     }
 }
 
 const char* PluginProtocol::callStringFuncWithParam(const char* funcName, PluginParam* param, ...)
+{
+    CALL_JAVA_FUNC_WITH_VALIST(String)
+}
+
+const char* PluginProtocol::callStringFuncWithParam(const char* funcName, std::vector<PluginParam*> params)
 {
     CALL_JAVA_FUNC(const char*, String, "", "Ljava/lang/String;")
 }
 
 int PluginProtocol::callIntFuncWithParam(const char* funcName, PluginParam* param, ...)
 {
+    CALL_JAVA_FUNC_WITH_VALIST(Int)
+}
+
+int PluginProtocol::callIntFuncWithParam(const char* funcName, std::vector<PluginParam*> params)
+{
     CALL_JAVA_FUNC(int, Int, 0, "I")
 }
 
 bool PluginProtocol::callBoolFuncWithParam(const char* funcName, PluginParam* param, ...)
 {
+    CALL_JAVA_FUNC_WITH_VALIST(Bool)
+}
+
+bool PluginProtocol::callBoolFuncWithParam(const char* funcName, std::vector<PluginParam*> params)
+{
     CALL_JAVA_FUNC(bool, Bool, false, "Z")
 }
 
 float PluginProtocol::callFloatFuncWithParam(const char* funcName, PluginParam* param, ...)
+{
+    CALL_JAVA_FUNC_WITH_VALIST(Float)
+}
+
+float PluginProtocol::callFloatFuncWithParam(const char* funcName, std::vector<PluginParam*> params)
 {
     CALL_JAVA_FUNC(float, Float, 0.0f, "F")
 }
