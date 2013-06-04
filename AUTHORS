@@ -366,6 +366,7 @@ Developers:
 
     flamingo (flaming0)
         Null pointer check in order to prevent crashes.
+        Updating spine-runtime to EsotericSoftware/spine-runtimes@5f90386.
 
     rtissera (Romain TISSERAND)
         Adding missing JNIEXPORT / JNICALL declarations.
@@ -453,6 +454,9 @@ Developers:
         
     Lee, Jae-Hong (pyrasis)
         Maintainer of tizen port.
+
+    lumendes
+        Updating spine-runtime to EsotericSoftware/spine-runtimes@5f90386.
 
 Retired Core Developers:
     WenSheng Yang
