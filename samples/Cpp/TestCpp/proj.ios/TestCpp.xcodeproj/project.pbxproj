@@ -229,6 +229,8 @@
 		1A4D4A2715FD7E2200F61EEB /* TableViewTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4D4A2415FD7E2200F61EEB /* TableViewTestScene.cpp */; };
 		1A60BF54173CCCF80054773B /* DataVisitorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A60BF52173CCCF80054773B /* DataVisitorTest.cpp */; };
 		1A75E95A16F84FDD00BA80BD /* TimelineCallbackTestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A75E95816F84FDD00BA80BD /* TimelineCallbackTestLayer.cpp */; };
+		1A8F3B1A175DC64000049216 /* CCSkeleton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8F3B16175DC64000049216 /* CCSkeleton.cpp */; };
+		1A8F3B1B175DC64000049216 /* CCSkeletonAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8F3B18175DC64000049216 /* CCSkeletonAnimation.cpp */; };
 		1A9FE96B17277E9D00B21905 /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9FE94417277E9D00B21905 /* Animation.cpp */; };
 		1A9FE96C17277E9D00B21905 /* AnimationState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9FE94617277E9D00B21905 /* AnimationState.cpp */; };
 		1A9FE96D17277E9D00B21905 /* AnimationStateData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9FE94817277E9D00B21905 /* AnimationStateData.cpp */; };
@@ -816,6 +818,10 @@
 		1A75E95716F84FDD00BA80BD /* TimelineCallbackLayerLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineCallbackLayerLoader.h; sourceTree = "<group>"; };
 		1A75E95816F84FDD00BA80BD /* TimelineCallbackTestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TimelineCallbackTestLayer.cpp; sourceTree = "<group>"; };
 		1A75E95916F84FDD00BA80BD /* TimelineCallbackTestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineCallbackTestLayer.h; sourceTree = "<group>"; };
+		1A8F3B16175DC64000049216 /* CCSkeleton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSkeleton.cpp; sourceTree = "<group>"; };
+		1A8F3B17175DC64000049216 /* CCSkeleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSkeleton.h; sourceTree = "<group>"; };
+		1A8F3B18175DC64000049216 /* CCSkeletonAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSkeletonAnimation.cpp; sourceTree = "<group>"; };
+		1A8F3B19175DC64000049216 /* CCSkeletonAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSkeletonAnimation.h; sourceTree = "<group>"; };
 		1A9FE94417277E9D00B21905 /* Animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Animation.cpp; sourceTree = "<group>"; };
 		1A9FE94517277E9D00B21905 /* Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Animation.h; sourceTree = "<group>"; };
 		1A9FE94617277E9D00B21905 /* AnimationState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimationState.cpp; sourceTree = "<group>"; };
@@ -2262,6 +2268,10 @@
 				1A9FE95317277E9D00B21905 /* Bone.h */,
 				1A9FE95417277E9D00B21905 /* BoneData.cpp */,
 				1A9FE95517277E9D00B21905 /* BoneData.h */,
+				1A8F3B16175DC64000049216 /* CCSkeleton.cpp */,
+				1A8F3B17175DC64000049216 /* CCSkeleton.h */,
+				1A8F3B18175DC64000049216 /* CCSkeletonAnimation.cpp */,
+				1A8F3B19175DC64000049216 /* CCSkeletonAnimation.h */,
 				1A9FE95617277E9D00B21905 /* extension.cpp */,
 				1A9FE95717277E9D00B21905 /* extension.h */,
 				1A9FE95817277E9D00B21905 /* Json.cpp */,
@@ -2786,6 +2796,8 @@
 				A059B9AD174D9B8E0078F84F /* ConfigurationTest.cpp in Sources */,
 				1AF5AE6317584196009C997A /* WebSocket.cpp in Sources */,
 				1AF5AE8E1758426A009C997A /* WebSocketTest.cpp in Sources */,
+				1A8F3B1A175DC64000049216 /* CCSkeleton.cpp in Sources */,
+				1A8F3B1B175DC64000049216 /* CCSkeletonAnimation.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2834,7 +2846,7 @@
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/ios/Simulation\"",
 				);
 				INFOPLIST_FILE = "Test-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../../external/libwebsockets/ios/lib\"",
@@ -2882,7 +2894,7 @@
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/ios/Simulation\"",
 				);
 				INFOPLIST_FILE = "Test-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../../external/libwebsockets/ios/lib\"",
@@ -2901,12 +2913,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer: 小明 张 (L4ZF355VQS)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 小明 张 (L4ZF355VQS)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PROVISIONING_PROFILE = "0C43CFE2-55C4-429A-9A03-BFB76D31630B";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0C43CFE2-55C4-429A-9A03-BFB76D31630B";
 				SDKROOT = iphoneos;
@@ -2918,12 +2933,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer: 小明 张 (L4ZF355VQS)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 小明 张 (L4ZF355VQS)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "0C43CFE2-55C4-429A-9A03-BFB76D31630B";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DB6844BA-2943-44DB-B10A-3A3F0E8A52B8";

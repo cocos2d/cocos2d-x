@@ -30,12 +30,14 @@
 namespace cocos2d { namespace extension {
 
 Skeleton* Skeleton_create (SkeletonData* data) {
+	int i, ii;
+
 	Skeleton* self = NEW(Skeleton);
 	CONST_CAST(SkeletonData*, self->data) = data;
 
 	self->boneCount = self->data->boneCount;
 	self->bones = MALLOC(Bone*, self->boneCount);
-	int i, ii;
+
 	for (i = 0; i < self->boneCount; ++i) {
 		BoneData* boneData = self->data->bones[i];
 		Bone* parent = 0;
@@ -58,14 +60,13 @@ Skeleton* Skeleton_create (SkeletonData* data) {
 		SlotData *slotData = data->slots[i];
 
 		/* Find bone for the slotData's boneData. */
-		Bone *bone = NULL;
+		Bone* bone = 0;
 		for (ii = 0; ii < self->boneCount; ++ii) {
 			if (data->bones[ii] == slotData->boneData) {
 				bone = self->bones[ii];
 				break;
 			}
 		}
-
 		self->slots[i] = Slot_create(slotData, self, bone);
 	}
 
@@ -91,6 +92,7 @@ void Skeleton_dispose (Skeleton* self) {
 	FREE(self->slots);
 
 	FREE(self->drawOrder);
+	FREE(self);
 }
 
 void Skeleton_updateWorldTransform (const Skeleton* self) {
@@ -99,21 +101,21 @@ void Skeleton_updateWorldTransform (const Skeleton* self) {
 		Bone_updateWorldTransform(self->bones[i], self->flipX, self->flipY);
 }
 
-void Skeleton_setToBindPose (const Skeleton* self) {
-	Skeleton_setBonesToBindPose(self);
-	Skeleton_setSlotsToBindPose(self);
+void Skeleton_setToSetupPose (const Skeleton* self) {
+	Skeleton_setBonesToSetupPose(self);
+	Skeleton_setSlotsToSetupPose(self);
 }
 
-void Skeleton_setBonesToBindPose (const Skeleton* self) {
+void Skeleton_setBonesToSetupPose (const Skeleton* self) {
 	int i;
 	for (i = 0; i < self->boneCount; ++i)
-		Bone_setToBindPose(self->bones[i]);
+		Bone_setToSetupPose(self->bones[i]);
 }
 
-void Skeleton_setSlotsToBindPose (const Skeleton* self) {
+void Skeleton_setSlotsToSetupPose (const Skeleton* self) {
 	int i;
 	for (i = 0; i < self->slotCount; ++i)
-		Slot_setToBindPose(self->slots[i]);
+		Slot_setToSetupPose(self->slots[i]);
 }
 
 Bone* Skeleton_findBone (const Skeleton* self, const char* boneName) {
@@ -145,11 +147,12 @@ int Skeleton_findSlotIndex (const Skeleton* self, const char* slotName) {
 }
 
 int Skeleton_setSkinByName (Skeleton* self, const char* skinName) {
+	Skin *skin;
 	if (!skinName) {
 		Skeleton_setSkin(self, 0);
 		return 1;
 	}
-	Skin *skin = SkeletonData_findSkin(self->data, skinName);
+	skin = SkeletonData_findSkin(self->data, skinName);
 	if (!skin) return 0;
 	Skeleton_setSkin(self, skin);
 	return 1;
