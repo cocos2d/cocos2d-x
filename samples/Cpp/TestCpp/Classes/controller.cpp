@@ -9,7 +9,11 @@
 #include "testResource.h"
 #include "tests.h"
 
-static std::vector< std::tuple<std::string, std::function<TestScene*()>>> g_aTestNames = {
+
+struct {
+	const char *test_name;
+	std::function<TestScene*()> callback;
+} g_aTestNames[] = {
 
 	{ "Accelerometer", []() { return new AccelerometerTestScene(); } },
 	{ "ActionManagerTest", [](){return new ActionManagerTestScene(); } },
@@ -75,7 +79,7 @@ static std::vector< std::tuple<std::string, std::function<TestScene*()>>> g_aTes
 	{ "ZwoptexTest", []() { return new ZwoptexTestScene(); } },
 };
 
-static int g_testCount = g_aTestNames.size();
+static int g_testCount = sizeof(g_aTestNames) / sizeof(g_aTestNames[0]);
 
 #define LINE_SPACE          40
 
@@ -98,10 +102,7 @@ TestController::TestController()
 // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
 //         CCLabelBMFont* label = CCLabelBMFont::create(g_aTestNames[i].c_str(),  "fonts/arial16.fnt");
 // #else
-		std::pair<std::string, std::function<TestScene*()>> e = g_aTestNames[i];
-		std::string str( std::get<0>(e) );
-		const char *cp = str.c_str();
-        CCLabelTTF* label = CCLabelTTF::create( cp , "Arial", 24);
+        CCLabelTTF* label = CCLabelTTF::create( g_aTestNames[i].test_name, "Arial", 24);
 // #endif        
         CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, this, menu_selector(TestController::menuCallback));
 
@@ -133,8 +134,7 @@ void TestController::menuCallback(CCObject * pSender)
     int idx = pMenuItem->getZOrder() - 10000;
 
     // create the test scene and run it
-	auto functor = std::get<1>( g_aTestNames[idx] );
-    TestScene* pScene = functor();
+    TestScene* pScene = g_aTestNames[idx].callback();
 
     if (pScene)
     {
