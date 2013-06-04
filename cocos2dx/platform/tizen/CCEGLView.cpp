@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "CCGL.h"
 #include "CCDirector.h"
 #include "CCOspApplication.h"
+#include "CCOspForm.h"
 
 NS_CC_BEGIN
 using namespace Tizen::App;
@@ -88,6 +89,14 @@ void CCEGLView::swapBuffers()
 
 void CCEGLView::setIMEKeyboardState(bool bOpen)
 {
+    if (bOpen)
+    {
+        ((CCOspForm *)CCOspApplication::GetInstance()->getCCOspForm())->ShowKeypad();
+    }
+    else
+    {
+        ((CCOspForm *)CCOspApplication::GetInstance()->getCCOspForm())->CloseKeypad();
+    }
 }
 
 CCEGLView* CCEGLView::sharedOpenGLView()
