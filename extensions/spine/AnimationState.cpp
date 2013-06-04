@@ -25,6 +25,7 @@
 
 #include <spine/AnimationState.h>
 #include <spine/extension.h>
+#include <stdio.h>
 
 namespace cocos2d { namespace extension {
 
@@ -67,8 +68,6 @@ void AnimationState_dispose (AnimationState* self) {
 	_AnimationState_clearQueue(self);
 	FREE(self);
 }
-
-#include <stdio.h>
 
 void AnimationState_addAnimation (AnimationState* self, Animation* animation, int/*bool*/loop, float delay) {
 	_Entry* existingEntry;
