@@ -271,9 +271,6 @@ protected:
 
 	int m_nScriptHandler;
 
-    /** function that will be called */
-	std::function<void()> _function;
-
     union
     {
         SEL_CallFunc    m_pCallFunc;
@@ -281,6 +278,9 @@ protected:
         SEL_CallFuncND    m_pCallFuncND;
         SEL_CallFuncO   m_pCallFuncO;
     };
+    
+    /** function that will be called */
+	std::function<void()> _function;
 };
 
 /** 
