@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013 James Chen
 
 http://www.cocos2d-x.org
 
@@ -22,25 +23,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCStdC.h"
+#ifndef __jsb_websocket__
+#define __jsb_websocket__
 
-#ifndef __MINGW32__
+#include "jsapi.h"
+#include "jsfriendapi.h"
 
-NS_CC_BEGIN
+void register_jsb_websocket(JSContext* cx, JSObject* global);
 
-int gettimeofday(struct timeval * val, struct timezone *)
-{
-    if (val)
-    {
-        LARGE_INTEGER liTime, liFreq;
-        QueryPerformanceFrequency( &liFreq );
-        QueryPerformanceCounter( &liTime );
-        val->tv_sec     = (long)( liTime.QuadPart / liFreq.QuadPart );
-        val->tv_usec    = (long)( liTime.QuadPart * 1000000.0 / liFreq.QuadPart - val->tv_sec * 1000000.0 );
-    }
-    return 0;
-}
-
-NS_CC_END
-
-#endif // __MINGW32__
+#endif /* defined(__jsb_websocket__) */
