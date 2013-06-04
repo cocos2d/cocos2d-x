@@ -6,11 +6,13 @@
 TESTLAYER_CREATE_FUNC(ConfigurationLoadConfig);
 TESTLAYER_CREATE_FUNC(ConfigurationQuery);
 TESTLAYER_CREATE_FUNC(ConfigurationInvalid);
+TESTLAYER_CREATE_FUNC(ConfigurationDefault);
 
 static NEWTESTFUNC createFunctions[] = {
     CF(ConfigurationLoadConfig),
 	CF(ConfigurationQuery),
-	CF(ConfigurationInvalid)
+	CF(ConfigurationInvalid),
+	CF(ConfigurationDefault)
 };
 
 static int sceneIdx=-1;
@@ -185,4 +187,38 @@ void ConfigurationInvalid::onEnter()
 std::string ConfigurationInvalid::subtitle()
 {
     return "Loading an invalid config file";
+}
+
+//------------------------------------------------------------------
+//
+// ConfigurationDefault
+//
+//------------------------------------------------------------------
+void ConfigurationDefault::onEnter()
+{
+    ConfigurationBase::onEnter();
+
+	const char *c_value = CCConfiguration::sharedConfiguration()->getCString("invalid.key", "no key");
+	if( strcmp(c_value, "no key") != 0 )
+		CCLOG("1. Test failed!");
+	else
+		CCLOG("1. Test OK!");
+
+	bool b_value = CCConfiguration::sharedConfiguration()->getBool("invalid.key", true);
+	if( ! b_value )
+		CCLOG("2. Test failed!");
+	else
+		CCLOG("2. Test OK!");
+
+	double d_value = CCConfiguration::sharedConfiguration()->getNumber("invalid.key", 42.42);
+	if( d_value != 42.42 )
+		CCLOG("3. Test failed!");
+	else
+		CCLOG("3. Test OK!");
+
+}
+
+std::string ConfigurationDefault::subtitle()
+{
+    return "Tests defaults values";
 }
