@@ -163,6 +163,15 @@ public:
     }
 
     /**
+    @brief Play sound effect  with a file path, pitch, pan and gain
+    @param pszFilePath The path of the effect file,or the FileName of T_SoundResInfo
+    @bLoop Whether to loop the effect playing, default value is false
+    @pitch Pitch of the sound effect
+    @pan   Stereo effect of the sound
+    @gain  gain of the sound effect
+    */
+    unsigned int playEffect(const char* pszFilePath, bool bLoop, float pitch, float pan, float gain);
+    /**
     @brief Pause playing sound effect
     @param nSoundId The return value of function playEffect
     */

@@ -98,6 +98,11 @@ static unsigned int static_playEffect(const char* pszFilePath, bool bLoop)
 {
     return [[SimpleAudioEngine sharedEngine] playEffect:[NSString stringWithUTF8String: pszFilePath] loop:bLoop]; 
 }
+
+static unsigned int static_playEffect(const char* pszFilePath, bool bLoop, Float32 pszPitch, Float32 pszPan,Float32 pszGain )
+{
+    return [[SimpleAudioEngine sharedEngine] playEffect:[NSString stringWithUTF8String: pszFilePath] loop:bLoop pitch:pszPitch pan: pszPan gain:pszGain ];
+}
      
 static void static_stopEffect(int nSoundId)
 {
