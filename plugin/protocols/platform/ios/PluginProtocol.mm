@@ -84,70 +84,111 @@ void PluginProtocol::setDebugMode(bool isDebugMode)
 
 void PluginProtocol::callFuncWithParam(const char* funcName, PluginParam* param, ...)
 {
+    std::vector<PluginParam*> allParams;
+    if (NULL != param)
+    {
+        allParams.push_back(param);
+        
+        va_list argp;
+        PluginParam* pArg = NULL;
+        va_start( argp, param );
+        while (1)
+        {
+            pArg = va_arg(argp, PluginParam*);
+            if (pArg == NULL)
+                break;
+            
+            allParams.push_back(pArg);
+        }
+        va_end(argp);
+    }
+    
+    callFuncWithParam(funcName, allParams);
+}
+    
+void PluginProtocol::callFuncWithParam(const char* funcName, std::vector<PluginParam*> params)
+{
     PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
     if (NULL == pData) {
         PluginUtilsIOS::outputLog("Can't find OC data for plugin : %s", this->getPluginName());
         return;
     }
 
-    if (NULL == param)
+    int nParamNum = params.size();
+    if (0 == nParamNum)
     {
         PluginUtilsIOS::callOCFunctionWithName_oneParam(this, funcName, NULL);
     } else
     {
         PluginParam* pRetParam = NULL;
-        std::map<std::string, PluginParam*> allParams;
-        va_list argp;
-        int argno = 0;
-        PluginParam* pArg = NULL;
-        
-        allParams["Param1"] = param;
-        va_start( argp, param );
-        while (1)
-        {
-            pArg = va_arg(argp, PluginParam*);
-            if (pArg == NULL)
+        bool needDel = false;
+        if (nParamNum == 1) {
+            pRetParam = params[0];
+        } else {
+            std::map<std::string, PluginParam*> allParams;
+            for (int i = 0; i < nParamNum; i++)
             {
-                break;
+                PluginParam* pArg = params[i];
+                if (pArg == NULL)
+                {
+                    break;
+                }
+                
+                char strKey[8] = { 0 };
+                sprintf(strKey, "Param%d", i + 1);
+                allParams[strKey] = pArg;
             }
-            argno++;
-            char strKey[8] = { 0 };
-            sprintf(strKey, "Param%d", argno + 1);
-            allParams[strKey] = pArg;
-        }
-        va_end(argp);
-
-        PluginParam tempParam(allParams);
-        if (argno == 0)
-        {
-            pRetParam = param;
-        }
-        else
-        {
-            pRetParam = &tempParam;
+            
+            pRetParam = new PluginParam(allParams);
+            needDel = true;
         }
 
         id ocParam = PluginUtilsIOS::getOCObjFromParam(pRetParam);
         PluginUtilsIOS::callOCFunctionWithName_oneParam(this, funcName, ocParam);
+
+        if (needDel && NULL != pRetParam) {
+            delete pRetParam;
+            pRetParam = NULL;
+        }
     }
 }
 
 const char* PluginProtocol::callStringFuncWithParam(const char* funcName, PluginParam* param, ...)
+{
+    CALL_OC_FUNC_WITH_VALIST(String)
+}
+    
+const char* PluginProtocol::callStringFuncWithParam(const char* funcName, std::vector<PluginParam*> params)
 {
     CALL_OC_FUNC(const char*, "", String)
 }
 
 int PluginProtocol::callIntFuncWithParam(const char* funcName, PluginParam* param, ...)
 {
+    CALL_OC_FUNC_WITH_VALIST(Int)
+}
+
+int PluginProtocol::callIntFuncWithParam(const char* funcName, std::vector<PluginParam*> params)
+{
     CALL_OC_FUNC(int, 0, Int)
 }
 
 bool PluginProtocol::callBoolFuncWithParam(const char* funcName, PluginParam* param, ...)
 {
+    CALL_OC_FUNC_WITH_VALIST(Bool)
+}
+
+bool PluginProtocol::callBoolFuncWithParam(const char* funcName, std::vector<PluginParam*> params)
+{
     CALL_OC_FUNC(bool, false, Bool)
 }
 
 float PluginProtocol::callFloatFuncWithParam(const char* funcName, PluginParam* param, ...)
+{
+    CALL_OC_FUNC_WITH_VALIST(Float)
+}
+
+float PluginProtocol::callFloatFuncWithParam(const char* funcName, std::vector<PluginParam*> params)
 {
     CALL_OC_FUNC(float, 0.0f, Float)
 }

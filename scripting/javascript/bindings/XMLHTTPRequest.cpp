@@ -223,7 +223,7 @@ void MinXmlHttpRequest::handle_requestResponse(cocos2d::extension::CCHttpClient 
     
     js_proxy_t * p;
     void* ptr = (void*)this;
-    JS_GET_PROXY(p, ptr);
+    p = jsb_get_native_proxy(ptr);
     
     if(p){
         JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
@@ -310,7 +310,7 @@ JS_BINDED_CONSTRUCTOR_IMPL(MinXmlHttpRequest)
     }
 
     JS_SET_RVAL(cx, vp, out);
-    JS_NEW_PROXY(p, req, obj);
+    p =jsb_new_proxy(req, obj);
     
     JS_AddNamedObjectRoot(cx, &p->obj, "XMLHttpRequest");
     return JS_TRUE;

@@ -28,6 +28,8 @@ THE SOFTWARE.
 #define __CCINSTANT_ACTION_H__
 
 #include <string>
+#include <functional>
+
 #include "ccTypeInfo.h"
 #include "CCAction.h"
 
@@ -201,6 +203,7 @@ protected:
     CCPoint m_tPosition;
 };
 
+
 /** @brief Calls a 'callback'
 */
 class CC_DLL CCCallFunc : public CCActionInstant //<NSCopying>
@@ -210,13 +213,20 @@ public:
         : m_pSelectorTarget(NULL)
 		, m_nScriptHandler(0)
         , m_pCallFunc(NULL)
+		, _function(NULL)
     {
     }
     virtual ~CCCallFunc();
 
+	/** creates the action with the callback of type std::function<void()>.
+	 This is the preferred way to create the callback.
+	 */
+    static CCCallFunc * create(const std::function<void()>& func);
+
     /** creates the action with the callback 
 
     typedef void (CCObject::*SEL_CallFunc)();
+	 @deprecated Use the std::function API instead.
     */
     static CCCallFunc * create(CCObject* pSelectorTarget, SEL_CallFunc selector);
 
@@ -228,6 +238,11 @@ public:
     typedef void (CCObject::*SEL_CallFunc)();
     */
     virtual bool initWithTarget(CCObject* pSelectorTarget);
+
+	/** initializes the action with the std::function<void()>
+	 */
+    virtual bool initWithFunction(const std::function<void()>& func);
+
     /** executes the callback */
     virtual void execute();
     //super methods
@@ -263,6 +278,9 @@ protected:
         SEL_CallFuncND    m_pCallFuncND;
         SEL_CallFuncO   m_pCallFuncO;
     };
+    
+    /** function that will be called */
+	std::function<void()> _function;
 };
 
 /** 
