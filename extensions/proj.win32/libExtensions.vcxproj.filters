@@ -31,6 +31,9 @@
     <Filter Include="network">
       <UniqueIdentifier>{2a7741ff-87a5-41c8-8e51-d7a1cf0c8e4d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{e82b14bf-eb08-4a40-a9a2-cc92a154d9b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\GUI\CCScrollView\CCScrollView.cpp">
@@ -242,6 +245,18 @@
     </ClCompile>
     <ClCompile Include="..\network\Websocket.cpp">
       <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Components\CCComAttribute.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Components\CCComAudio.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Components\CCComController.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Components\CCInputDelegate.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -483,6 +498,18 @@
     </ClInclude>
     <ClInclude Include="..\spine\CCSkeletonAnimation.h">
       <Filter>spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\CCComAttribute.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\CCComAudio.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\CCComController.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\CCInputDelegate.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
