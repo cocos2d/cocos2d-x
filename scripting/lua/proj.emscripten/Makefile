@@ -44,7 +44,9 @@ SOURCES = ../lua/lapi.o \
           ../cocos2dx_support/CCLuaStack.cpp \
           ../cocos2dx_support/CCLuaValue.cpp \
           ../cocos2dx_support/Cocos2dxLuaLoader.cpp \
-          ../cocos2dx_support/LuaCocos2d.cpp
+          ../cocos2dx_support/LuaCocos2d.cpp \
+          ../cocos2dx_support/CCBProxy.cpp \
+          ../cocos2dx_support/Lua_extensions_CCB.cpp
 
 include ../../../cocos2dx/proj.emscripten/cocos2dx.mk
 
