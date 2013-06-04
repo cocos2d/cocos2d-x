@@ -26,13 +26,13 @@ THE SOFTWARE.
 
 #include "PluginJniHelper.h"
 #include "PluginJavaData.h"
-#include "PluginProtocol.h"
 #include <map>
 #include "PluginParam.h"
 #include "PluginJniMacros.h"
 
 namespace cocos2d { namespace plugin {
 
+class PluginProtocol;
 class PluginUtils
 {
 public:
