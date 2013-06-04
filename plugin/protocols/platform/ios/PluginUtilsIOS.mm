@@ -31,8 +31,6 @@ THE SOFTWARE.
 
 namespace cocos2d { namespace plugin {
 
-static PluginProtocol* s_pPluginInstance = NULL;
-
 void PluginUtilsIOS::initOCPlugin(PluginProtocol* pPlugin, id ocObj, const char* className)
 {
     PluginOCData* pData = new PluginOCData();
