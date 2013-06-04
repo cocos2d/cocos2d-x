@@ -457,6 +457,9 @@ Developers:
 
     lumendes
         Updating spine-runtime to EsotericSoftware/spine-runtimes@5f90386.
+        
+    sunxiaoyu
+        Refactoring CCEditBox to add UITextField only when keyboard was opened, remove it when keyboard was closed.
 
 Retired Core Developers:
     WenSheng Yang
