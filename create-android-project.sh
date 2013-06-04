@@ -1,35 +1,43 @@
 #!/bin/bash
+# parameters passed to script
 # This script should be called by create-android-project.bat
-# or should be runned in linux shell. It can not be runned under
-# cygwin.
+# or should be runned in linux shell. It can not be runned under cygwin.
 # Don't modify the script until you know what you do.
+PARAMS=$@
+
+# you can also set the environment here and uncomment them
+#NDK_ROOT=
+#ANDROID_SDK_ROOT
+#COCOS2DX_ROOT
 
 # set environment paramters
-NDK_ROOT_LOCAL="/home/laschweinski/android/android-ndk-r5"
-ANDROID_SDK_ROOT_LOCAL="/home/laschweinski/android/android-sdk-linux_86"
-
-NEED_BOX2D=false
-NEED_CHIPMUNK=false
-NEED_LUA=false
-
-# try to get global variable
-if [ $NDK_ROOT"aaa" != "aaa" ]; then
-    echo "use global definition of NDK_ROOT: $NDK_ROOT"
-    NDK_ROOT_LOCAL=$NDK_ROOT
+if [ "x${NDK_ROOT}" == "x" ] ; then
+    NDK_ROOT="/opt/android-ndk"
 fi
 
-if [ $ANDROID_SDK_ROOT"aaa" != "aaa" ]; then
-    echo "use global definition of ANDROID_SDK_ROOT: $ANDROID_SDK_ROOT"
-    ANDROID_SDK_ROOT_LOCAL=$ANDROID_SDK_ROOT
+if [ "x${ANDROID_SDK_ROOT}" == "x" ] ; then
+    ANDROID_SDK_ROOT="/opt/android-sdk-update-manager"
+fi
+ANDROID_CMD="${ANDROID_SDK_ROOT}/tools/android"
+
+if [ "x${COCOS2DX_ROOT}" == "x" ] ; then
+    COCOS2DX_ROOT="${HOME}/cocos2d-x"
+    if [ ! -d $COCOS2DX_ROOT ] ; then
+        COCOS2DX_ROOT=`pwd`
+    fi
 fi
 
-# parameters passed to .bat or .sh
-PARAMS=
+if [ ! -d ${NDK_ROOT} -o ! -d ${ANDROID_SDK_ROOT} -o ! -x ${ANDROID_CMD} ] ; then
+    echo "Please set the environment at first"
+fi
+
+USE_BOX2D=false
+USE_CHIPMUNK=false
+USE_LUA=false
 
 print_usage(){
-    echo ERROR!!!
-    echo usage
-    echo "$0(or corresponding bat file on windows) [-b|--box2d] [-c|--chipmunk] [-l|--lua]"
+    echo "usage:"
+    echo "$0 [-b|--box2d] [-c|--chipmunk] [-l|--lua]"
 }
 
 check_param(){
@@ -38,15 +46,15 @@ check_param(){
         case $param in
             -b | --box2d)
                 echo using box2d
-                NEED_BOX2D=true
+                USE_BOX2D=true
                 ;;
             -c | --chipmunk)
                 echo using chipmunk
-                NEED_CHIPMUNK=true
+                USE_CHIPMUNK=true
                 ;;
             -l | --lua)
                 echo using lua
-                NEED_LUA=true
+                USE_LUA=true
                 ;;
             -linux)
                 // skip it
@@ -56,80 +64,77 @@ check_param(){
                 exit 1
         esac
     done
-    
-    if [ $NEED_BOX2D = "true" ]; then
-        if [ $NEED_CHIPMUNK = "true" ]; then 
-            echo Warning!!!
-            echo Use box2d and chipmunk together????
-        fi
+
+    if [ $USE_BOX2D == "true" -a $USE_CHIPMUNK == "true" ] ; then 
+        echo '[WARN] Using box2d and chipmunk together!'
     fi
 }
 
 # check if it was called by .bat file
-if [ $# -ge 5 ];then
-    if [ $5 = "windows" ];then
-        # called by .bat file
-        length=`expr $# - 5`
-        PARAMS=${@:6:$length}
-        check_param
-        sh $1/template/android/copy_files.sh $1 $2 $3 $4 $NEED_BOX2D $NEED_CHIPMUNK $NEED_LUA
-        exit
-    fi
+if [ $# -ge 5 -a "x$5" == "xwindows" ] ; then
+    # should be called by .bat file
+    length=`expr $# - 5`
+    PARAMS=${@:6:$length}
+    check_param
+    COCOS2DX_ROOT=$COCOS2DX_ROOT sh $COCOS2DX_ROOT/template/android/copy_files.sh $1 $2 $3 $4 $USE_BOX2D $USE_CHIPMUNK $USE_LUA
+    exit
 fi
 
 # the bash file should not be called by cygwin
 KERNEL_NAME=`uname -s | grep "CYGWIN*"`
-if [ $KERNEL_NAME"hi" != "hi" ]; then
-    echo "Error!!!"
-    echo "Don't run in cygwin. You should run corresponding bat."
+if [ "x$KERNEL_NAME" != "x" ] ; then
+    echo "[ERROR] Don't run in cygwin. You should run .bat file"
     exit
 fi
 
 # ok, it was run under linux
 
-# check it was runned in cocos2d-x root
-check_path(){
-    if [ ! -f create-android-project.sh ];then
-        echo Error!!!
-        echo Please run in cocos2dx root
-        exit
-    fi
-}
-
 create_android_project(){
-    echo "Input package path. For example: org.cocos2dx.example"
+    DEFAULT_PACKAGE_PATH='org.cocos2dx.demo'
+    DEFAULT_TARGET_ID='1'
+    DEFAULT_PROJECT_NAME="Hello"
+
+    echo -n "Input package path [${DEFAULT_PACKAGE_PATH}]:"
     read PACKAGE_PATH
-    echo "Now cocos2d-x supports Android 2.2 or upper version"
-    $ANDROID_SDK_ROOT_LOCAL/tools/android list targets
-    echo "input target id:"
+    if [ "x${PACKAGE_PATH}" == "x" ] ; then
+        PACKAGE_PATH=${DEFAULT_PACKAGE_PATH}
+    fi
+
+    ${ANDROID_CMD} list targets
+    echo -n "Input target id [${DEFAULT_TARGET_ID}]:"
     read TARGET_ID
-    echo "input your project name:"
+    if [ "x${TARGET_ID}" == "x" ] ; then
+        TARGET_ID=${DEFAULT_TARGET_ID}
+    fi
+
+    echo -n "Input your project name [${DEFAULT_PROJECT_NAME}]:"
     read PROJECT_NAME
-    PROJECT_DIR=`pwd`/$PROJECT_NAME
-    
+    if [ "x${PROJECT_NAME}" == "x" ] ; then
+        PROJECT_NAME=${DEFAULT_PROJECT_NAME}
+    fi
+    PROJECT_DIR=`pwd`/${PROJECT_NAME}
+
     # check if PROJECT_DIR is exist
-    if [ -d $PROJECT_DIR ]; then
-        echo "$PROJECT_DIR is exist, please use another name"
+    if [ -d $PROJECT_DIR ] ; then
+        echo "$PROJECT_DIR already exist, please use another name"
         exit
     fi
 
     # Make project directory
     mkdir $PROJECT_DIR
     # Create Android project inside proj.android
-    $ANDROID_SDK_ROOT_LOCAL/tools/android create project -n $PROJECT_NAME -t $TARGET_ID -k $PACKAGE_PATH -a $PROJECT_NAME -p $PROJECT_DIR/proj.android
-    $ANDROID_SDK_ROOT_LOCAL/tools/android update project -l cocos2dx/platform/android/java -p $PROJECT_DIR/proj.android
+    $ANDROID_CMD create project -n $PROJECT_NAME -t $TARGET_ID -k $PACKAGE_PATH -a $PROJECT_NAME -p $PROJECT_DIR/proj.android
+    $ANDROID_CMD update project -l ${COCOS2DX_ROOT}/cocos2dx/platform/android/java -p $PROJECT_DIR/proj.android
 }
 
-check_path
-PARAMS=$@
 check_param
 create_android_project
 
 if [ $0 = "linux" ]; then
     # invoked by create-linux-android-project.sh
-    sh `pwd`/template/linux/mycopy_files.sh `pwd` $PROJECT_NAME $NDK_ROOT_LOCAL $PACKAGE_PATH $NEED_BOX2D $NEED_CHIPMUNK $NEED_LUA
+    COCOS2DX_ROOT=$COCOS2DX_ROOT sh $COCOS2DX_ROOT/template/linux/mycopy_files.sh $COCOS2DX_ROOT $PROJECT_NAME $NDK_ROOT $PACKAGE_PATH $USE_BOX2D $USE_CHIPMUNK $USE_LUA
 else
     # invoke template/android/copy_files.sh
-    sh `pwd`/template/android/copy_files.sh `pwd` $PROJECT_NAME $NDK_ROOT_LOCAL $PACKAGE_PATH $NEED_BOX2D $NEED_CHIPMUNK $NEED_LUA
+    COCOS2DX_ROOT=$COCOS2DX_ROOT sh $COCOS2DX_ROOT/template/android/copy_files.sh $COCOS2DX_ROOT $PROJECT_DIR $PACKAGE_PATH $USE_BOX2D $USE_CHIPMUNK $USE_LUA
 fi
 
