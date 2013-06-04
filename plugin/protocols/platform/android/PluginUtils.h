@@ -25,21 +25,19 @@ THE SOFTWARE.
 #define __PLUGIN_UTILS_H__
 
 #include "PluginJniHelper.h"
-#include <android/log.h>
 #include "PluginJavaData.h"
 #include "PluginProtocol.h"
 #include <map>
+#include "PluginParam.h"
+#include "PluginJniMacros.h"
 
 namespace cocos2d { namespace plugin {
-
-#define return_if_fails(cond) if (!(cond)) return; 
-#define return_val_if_fails(cond, ret) if(!(cond)) return (ret);
 
 class PluginUtils
 {
 public:
-    static jobject createJavaMapObject(PluginJniMethodInfo&t, std::map<std::string, std::string>* paramMap);
-    static bool initJavaPlugin(PluginProtocol* pPlugin, const char* className);
+    static jobject createJavaMapObject(std::map<std::string, std::string>* paramMap);
+    static void initJavaPlugin(PluginProtocol* pPlugin, jobject jObj, const char* className);
     static JNIEnv* getEnv();
 
     static PluginJavaData* getPluginJavaData(PluginProtocol* pKeyObj);
@@ -48,37 +46,84 @@ public:
 
     static PluginProtocol* getPluginPtr(std::string className);
 
+    static jobject getJObjFromParam(PluginParam* param);
+
+    // methods have no return value
     template <typename T>
-    static void callJavaFunctionWithName_oneBaseType(PluginProtocol* thiz, const char* funcName, const char* paramCode, T param)
+    static void callJavaFunctionWithName_oneParam(PluginProtocol* thiz, const char* funcName, const char* paramCode, T param)
     {
         return_if_fails(funcName != NULL && strlen(funcName) > 0);
         return_if_fails(paramCode != NULL && strlen(paramCode) > 0);
         PluginJavaData* pData = PluginUtils::getPluginJavaData(thiz);
-         PluginJniMethodInfo t;
+        return_if_fails(pData != NULL);
+
+        PluginJniMethodInfo t;
         if (PluginJniHelper::getMethodInfo(t
             , pData->jclassName.c_str()
             , funcName
             , paramCode))
         {
-            t.env->CallVoidMethod(pData->jobj, t.methodID, param);
+            if (param != NULL)
+            {
+                t.env->CallVoidMethod(pData->jobj, t.methodID, param);
+            } else {
+                t.env->CallVoidMethod(pData->jobj, t.methodID);
+            }
             t.env->DeleteLocalRef(t.classID);
         }
     }
-    
-    static void callJavaFunctionWithName(PluginProtocol* thiz, const char* funcName)
+
+    // methods return value is string
+    template <typename T>
+    static const char* callJavaStringFuncWithName_oneParam(PluginProtocol* thiz, const char* funcName, const char* paramCode, T param)
     {
-        return_if_fails(funcName != NULL && strlen(funcName) > 0);
+        const char* ret = "";
+        return_val_if_fails(funcName != NULL && strlen(funcName) > 0, ret);
+        return_val_if_fails(paramCode != NULL && strlen(paramCode) > 0, ret);
         PluginJavaData* pData = PluginUtils::getPluginJavaData(thiz);
+        return_val_if_fails(pData != NULL, ret);
+
         PluginJniMethodInfo t;
         if (PluginJniHelper::getMethodInfo(t
             , pData->jclassName.c_str()
             , funcName
-            , "()V"))
+            , paramCode))
         {
-            t.env->CallVoidMethod(pData->jobj, t.methodID);
+            jstring strRet = NULL;
+            if (param != NULL)
+            {
+                strRet = (jstring) t.env->CallObjectMethod(pData->jobj, t.methodID, param);
+            } else {
+                strRet = (jstring) t.env->CallObjectMethod(pData->jobj, t.methodID);
+            }
+            ret = PluginJniHelper::jstring2string(strRet).c_str();
             t.env->DeleteLocalRef(t.classID);
         }
+        return ret;
     }
+
+    // methods return value is int
+    template <typename T>
+    static int callJavaIntFuncWithName_oneParam(PluginProtocol* thiz, const char* funcName, const char* paramCode, T param)
+    {
+        CALL_BASERET_JAVA_FUNC_WITH_PARAM(int, paramCode, param, Int, 0)
+    }
+
+    // methods return value is float
+    template <typename T>
+    static float callJavaFloatFuncWithName_oneParam(PluginProtocol* thiz, const char* funcName, const char* paramCode, T param)
+    {
+        CALL_BASERET_JAVA_FUNC_WITH_PARAM(float, paramCode, param, Float, 0.0f)
+    }
+
+    // methods return value is bool
+    template <typename T>
+    static bool callJavaBoolFuncWithName_oneParam(PluginProtocol* thiz, const char* funcName, const char* paramCode, T param)
+    {
+        CALL_BASERET_JAVA_FUNC_WITH_PARAM(bool, paramCode, param, Boolean, false)
+    }
+
+    static void outputLog(const char* logTag, const char* pFormat, ...);
 };
 
 }} // namespace cocos2d { namespace plugin {

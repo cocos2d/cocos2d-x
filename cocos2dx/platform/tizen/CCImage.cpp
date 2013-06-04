@@ -159,7 +159,7 @@ public:
 				return false;
 			}
 
-			if (isspace(unicode)) {
+			if (unicode == ' ') {
 				currentPaintPosition += face->glyph->metrics.horiAdvance >> 6;
 				prevGlyphIndex = glyphIndex;
 				prevCharacter = unicode;

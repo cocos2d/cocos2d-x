@@ -50,11 +50,8 @@ public:
 class ProtocolSocial : public PluginProtocol
 {
 public:
-
-    /**
-    @brief plugin initialization
-    */
-    virtual bool init();
+	ProtocolSocial();
+	virtual ~ProtocolSocial();
 
     /**
     @brief config the social developer info
@@ -63,7 +60,7 @@ public:
     @warning Must invoke this interface before other interfaces.
              And invoked only once.
     */
-    virtual void configDeveloperInfo(TSocialDeveloperInfo devInfo);
+    void configDeveloperInfo(TSocialDeveloperInfo devInfo);
 
     /**
     @brief share information
@@ -73,13 +70,7 @@ public:
     @warning For different plugin, the parameter should have other keys to share.
              Look at the manual of plugins.
     */
-    virtual void share(TShareInfo info);
-
-    /**
-	 @brief Set whether needs to output logs to console.
-	 @param debug if true debug mode enabled, or debug mode disabled.
-	 */
-    virtual void setDebugMode(bool debug);
+    void share(TShareInfo info);
 
     /**
     @breif set the result listener
@@ -93,14 +84,8 @@ public:
     */
     void onShareResult(ShareResultCode ret, const char* msg);
 
-    virtual const char* getPluginVersion() { return "ProtocolSocial, v0.1.0, subclass should override this interface!"; };
-    virtual const char* getSDKVersion();
-    virtual const char* getPluginName() = 0;
-
-protected:
-    ProtocolSocial();
-public:
-    virtual ~ProtocolSocial();
+    const char* getPluginVersion() { return "ProtocolSocial, v0.1.0, subclass should override this interface!"; };
+    const char* getSDKVersion();
 
 protected:
     ShareResultListener* m_pListener;
