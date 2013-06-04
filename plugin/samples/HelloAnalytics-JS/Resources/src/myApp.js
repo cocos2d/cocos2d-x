@@ -57,12 +57,12 @@ var loadAnalyticsPlugin = function() {
     var flurryKey = "";
 
     var targetDevice = cc.Application.getInstance().getTargetPlatform();
-    if (targetDevice == cc.kTargetIphone || targetDevice == cc.kTargetIpad)
+    if (targetDevice == 1)
     {
         umengKey  = UMENG_KEY_IOS;
         flurryKey = FLURRY_KEY_IOS;
     }
-    else if (targetDevice == cc.kTargetAndroid)
+    else if (targetDevice == 2)
     {
         umengKey  = UMENG_KEY_ANDROID;
         flurryKey = FLURRY_KEY_ANDROID;
@@ -84,23 +84,15 @@ var loadAnalyticsPlugin = function() {
     g_pAnalytics.startSession(s_strAppKey);
     g_pAnalytics.setCaptureUncaughtException(true);
 
-    if (g_pAnalytics instanceof plugin.AnalyticsUmeng)
-    {
-        g_pAnalytics.updateOnlineConfig();
-        g_pAnalytics.setDefaultReportPolicy(plugin.AnalyticsUmeng.UmengReportPolicy.REALTIME);
-    }
+    g_pAnalytics.callFuncWithParam("updateOnlineConfig", null);
 
-    if (g_pAnalytics instanceof plugin.AnalyticsFlurry)
-    {
-        g_pAnalytics.setReportLocation(true);
-        g_pAnalytics.logPageView();
-        // const char* sdkVersion = pFlurry.getSDKVersion();
-        g_pAnalytics.setVersionName("1.1");
-        g_pAnalytics.setAge(20);
-        g_pAnalytics.setGender(plugin.AnalyticsFlurry.Gender.MALE);
-        g_pAnalytics.setUserId("123456");
-        g_pAnalytics.setUseHttps(false);
-    }
+    g_pAnalytics.callFuncWithParam("setReportLocation", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeBool, true));
+    g_pAnalytics.callFuncWithParam("logPageView", null);
+    g_pAnalytics.callFuncWithParam("setVersionName", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "1.1"));
+    g_pAnalytics.callFuncWithParam("setAge", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeInt, 20));
+    g_pAnalytics.callFuncWithParam("setGender", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeInt, 1));
+    g_pAnalytics.callFuncWithParam("setUserId", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "123456"));
+    g_pAnalytics.callFuncWithParam("setUseHttps", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeBool, false));
 }
 
 
@@ -181,9 +173,6 @@ var HelloWorld = cc.Layer.extend({
     },
 
     eventMenuCallback: function(pSender) {
-        var isUmeng = g_pAnalytics instanceof plugin.AnalyticsUmeng;
-        var isFlurry = g_pAnalytics instanceof plugin.AnalyticsFlurry;
-
         switch (pSender.getTag())
         {
         case TAG_LOG_EVENT_ID:
@@ -202,31 +191,25 @@ var HelloWorld = cc.Layer.extend({
             break;
         case TAG_LOG_ONLINE_CONFIG:
             {
-                if (isUmeng)
-                {
-                    cc.log("Online config = %s", g_pAnalytics.getConfigParams("abc"));           
-                }
-                else
-                {
-                    cc.log("Now is not using umeng!");
-                }
+                cc.log("Online config = " + g_pAnalytics.callStringFuncWithParam("getConfigParams", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "abc")));
             }
             break;
         case TAG_LOG_EVENT_ID_DURATION:
             {
-                if (isUmeng)
-                {
-                    g_pAnalytics.logEventWithDuration("book", 12000);
-                    g_pAnalytics.logEventWithDuration("book", 23000, "chapter1");
-                    var paramMap = {};
-                    paramMap["type"] = "popular";
-                    paramMap["artist"] = "JJLin";
-                    g_pAnalytics.logEventWithDuration("music", 2330000, paramMap);
-                }
-                else
-                {
-                    cc.log("Now is not using umeng!");
-                }
+                g_pAnalytics.callFuncWithParam("logEventWithDuration",
+                        new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "book"),
+                        new plugin.PluginParam(plugin.PluginParam.ParamType.TypeInt, 12000));
+                g_pAnalytics.callFuncWithParam("logEventWithDurationLabel",
+                        new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "book"),
+                        new plugin.PluginParam(plugin.PluginParam.ParamType.TypeInt, 23000),
+                        new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "chapter1"));
+                var paramMap = {};
+                paramMap["type"] = "popular";
+                paramMap["artist"] = "JJLin";
+                g_pAnalytics.callFuncWithParam("logEventWithDurationParams",
+                        new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "music"),
+                        new plugin.PluginParam(plugin.PluginParam.ParamType.TypeInt, 2330000),
+                        new plugin.PluginParam(plugin.PluginParam.ParamType.TypeStringMap, paramMap));
             }
             break;
         case TAG_LOG_EVENT_BEGIN:
@@ -237,29 +220,31 @@ var HelloWorld = cc.Layer.extend({
                 paramMap["type"] = "popular";
                 paramMap["artist"] = "JJLin";
 
-                if (isUmeng)
-                {
-                    g_pAnalytics.logTimedEventWithLabelBegin("music", "one");
-                    g_pAnalytics.logTimedKVEventBegin("music", "flag0", paramMap);
-                }
-                else if (isFlurry)
-                {
-                    g_pAnalytics.logTimedEventBegin("music-kv", paramMap);
-                }
+                g_pAnalytics.callFuncWithParam("logTimedEventWithLabelBegin",
+                        new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "music"),
+                        new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "one"));
+                g_pAnalytics.callFuncWithParam("logTimedKVEventBegin",
+                        new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "music"),
+                        new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "flag0"),
+                        new plugin.PluginParam(plugin.PluginParam.ParamType.TypeStringMap, paramMap));
+
+                g_pAnalytics.callFuncWithParam("logTimedEventBeginWithParams",
+                        new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "music-kv"),
+                        new plugin.PluginParam(plugin.PluginParam.ParamType.TypeStringMap, paramMap));
             }
             break;
         case TAG_LOG_EVENT_END:
             {
                 g_pAnalytics.logTimedEventEnd("music");
-                if (isUmeng)
-                {          
-                    g_pAnalytics.logTimedEventWithLabelEnd("music", "one");
-                    g_pAnalytics.logTimedKVEventEnd("music", "flag0");
-                }
-                else if (isFlurry)
-                {
-                    g_pAnalytics.logTimedEventEnd("music-kv");
-                }
+
+                g_pAnalytics.callFuncWithParam("logTimedEventWithLabelEnd",
+                        new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "music"),
+                        new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "one"));
+                g_pAnalytics.callFuncWithParam("logTimedKVEventEnd",
+                        new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "music"),
+                        new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "flag0"));
+
+                g_pAnalytics.callFuncWithParam("logTimedEventEnd", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeString, "music-kv"));
             }
             break;
         case TAG_MAKE_ME_CRASH:
@@ -293,3 +278,4 @@ var MyScene = cc.Scene.extend({
         this.addChild(layer);
     }
 });
+
