@@ -313,4 +313,10 @@ private:
 JSBool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value);
 JSBool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret);
 
-#endif
+js_proxy_t* jsb_new_proxy(void* nativeObj, JSObject* jsObj);
+js_proxy_t* jsb_get_native_proxy(void* nativeObj);
+js_proxy_t* jsb_get_js_proxy(JSObject* jsObj);
+void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy);
+
+
+#endif /* __SCRIPTING_CORE_H__ */
