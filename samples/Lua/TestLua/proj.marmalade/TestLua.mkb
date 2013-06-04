@@ -44,3 +44,5 @@ files
 
 postbuild "${MARMALADE_ROOT}/s3e/python/python ./cccopy.py -s ../../../../samples/Cpp/TestCpp/Resources/ -d ../../../../samples/Lua/TestLua/Resources/"
 
+postbuild "${MARMALADE_ROOT}/s3e/python/python ./cccopy.py -s ../../../../scripting/lua/script/ -d ../../../../samples/Lua/TestLua/Resources/"
+

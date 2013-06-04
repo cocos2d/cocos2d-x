@@ -100,26 +100,26 @@ public class AnalyticsUmeng implements InterfaceAnalytics{
 
     @Override
     public void logEvent(String eventId) {
-        LogD("logEvent(eventId) invoked!");
+        LogD("logEvent(" + eventId + ") invoked!");
         MobclickAgent.onEvent(mContext, eventId);
     }
 
     @Override
     public void logEvent(String eventId, Hashtable<String, String> paramMap) {
-        LogD("logEvent(eventId, paramMap) invoked!");
+        LogD("logEvent(" + eventId + "," + paramMap.toString() + ") invoked!");
         HashMap<String, String> curParam = changeTableToMap(paramMap);
         MobclickAgent.onEvent(mContext, eventId, curParam);
     }
 
     @Override
     public void logTimedEventBegin(String eventId) {
-        LogD("logTimedEventBegin invoked!");
+        LogD("logTimedEventBegin(" + eventId + ") invoked!");
         MobclickAgent.onEventBegin(mContext, eventId);
     }
 
     @Override
     public void logTimedEventEnd(String eventId) {
-        LogD("logTimedEventEnd invoked!");
+        LogD("logTimedEventEnd(" + eventId + ") invoked!");
         MobclickAgent.onEventEnd(mContext, eventId);
     }
 

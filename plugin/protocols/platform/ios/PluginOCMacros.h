@@ -27,6 +27,28 @@ THE SOFTWARE.
 #define return_if_fails(cond) if (!(cond)) return;
 #define return_val_if_fails(cond, ret) if(!(cond)) return (ret);
 
+#define CALL_OC_FUNC_WITH_VALIST(retCode)                                                       \
+std::vector<PluginParam*> allParams;                                                            \
+if (NULL != param)                                                                              \
+{                                                                                               \
+    allParams.push_back(param);                                                                 \
+                                                                                                \
+    va_list argp;                                                                               \
+    PluginParam* pArg = NULL;                                                                   \
+    va_start( argp, param );                                                                    \
+    while (1)                                                                                   \
+    {                                                                                           \
+        pArg = va_arg(argp, PluginParam*);                                                      \
+        if (pArg == NULL)                                                                       \
+            break;                                                                              \
+                                                                                                \
+        allParams.push_back(pArg);                                                              \
+    }                                                                                           \
+    va_end(argp);                                                                               \
+}                                                                                               \
+                                                                                                \
+return call##retCode##FuncWithParam(funcName, allParams);                                       \
+
 
 #define CALL_OC_FUNC(retType, defaultRet, retCode)                                              \
 retType ret = defaultRet;                                                                       \
@@ -36,45 +58,42 @@ if (NULL == pData) {                                                            
     return ret;                                                                                 \
 }                                                                                               \
                                                                                                 \
-if (NULL == param)                                                                              \
+int nParamNum = params.size();                                                                  \
+if (0 == nParamNum)                                                                             \
 {                                                                                               \
     ret = PluginUtilsIOS::callOC##retCode##FunctionWithName_oneParam(this, funcName, NULL);     \
 } else                                                                                          \
 {                                                                                               \
     PluginParam* pRetParam = NULL;                                                              \
-    std::map<std::string, PluginParam*> allParams;                                              \
-    va_list argp;                                                                               \
-    int argno = 0;                                                                              \
-    PluginParam* pArg = NULL;                                                                   \
-                                                                                                \
-    allParams["Param1"] = param;                                                                \
-    va_start( argp, param );                                                                    \
-    while (1)                                                                                   \
-    {                                                                                           \
-        pArg = va_arg(argp, PluginParam*);                                                      \
-        if (pArg == NULL)                                                                       \
+    bool needDel = false;                                                                       \
+    if (nParamNum == 1) {                                                                       \
+        pRetParam = params[0];                                                                  \
+    } else {                                                                                    \
+        std::map<std::string, PluginParam*> allParams;                                          \
+        for (int i = 0; i < nParamNum; i++)                                                     \
         {                                                                                       \
-            break;                                                                              \
-        }                                                                                       \
-        argno++;                                                                                \
-        char strKey[8] = { 0 };                                                                 \
-        sprintf(strKey, "Param%d", argno + 1);                                                  \
-        allParams[strKey] = pArg;                                                               \
-    }                                                                                           \
-    va_end(argp);                                                                               \
+            PluginParam* pArg = params[i];                                                      \
+            if (pArg == NULL)                                                                   \
+            {                                                                                   \
+                break;                                                                          \
+            }                                                                                   \
                                                                                                 \
-    PluginParam tempParam(allParams);                                                           \
-    if (argno == 0)                                                                             \
-    {                                                                                           \
-        pRetParam = param;                                                                      \
-    }                                                                                           \
-    else                                                                                        \
-    {                                                                                           \
-        pRetParam = &tempParam;                                                                 \
+            char strKey[8] = { 0 };                                                             \
+            sprintf(strKey, "Param%d", i + 1);                                                  \
+            allParams[strKey] = pArg;                                                           \
+        }                                                                                       \
+                                                                                                \
+        pRetParam = new PluginParam(allParams);                                                 \
+        needDel = true;                                                                         \
     }                                                                                           \
                                                                                                 \
     id ocParam = PluginUtilsIOS::getOCObjFromParam(pRetParam);                                  \
     ret = PluginUtilsIOS::callOC##retCode##FunctionWithName_oneParam(this, funcName, ocParam);  \
+                                                                                                \
+    if (needDel && NULL != pRetParam) {                                                         \
+        delete pRetParam;                                                                       \
+        pRetParam = NULL;                                                                       \
+    }                                                                                           \
 }                                                                                               \
 return ret;                                                                                     \
 

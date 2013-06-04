@@ -48,6 +48,7 @@ struct Skeleton {
 	float r, g, b, a;
 	float time;
 	int/*bool*/flipX, flipY;
+	float x, y;
 };
 
 Skeleton* Skeleton_create (SkeletonData* data);
@@ -55,9 +56,9 @@ void Skeleton_dispose (Skeleton* self);
 
 void Skeleton_updateWorldTransform (const Skeleton* self);
 
-void Skeleton_setToBindPose (const Skeleton* self);
-void Skeleton_setBonesToBindPose (const Skeleton* self);
-void Skeleton_setSlotsToBindPose (const Skeleton* self);
+void Skeleton_setToSetupPose (const Skeleton* self);
+void Skeleton_setBonesToSetupPose (const Skeleton* self);
+void Skeleton_setSlotsToSetupPose (const Skeleton* self);
 
 /* Returns 0 if the bone was not found. */
 Bone* Skeleton_findBone (const Skeleton* self, const char* boneName);

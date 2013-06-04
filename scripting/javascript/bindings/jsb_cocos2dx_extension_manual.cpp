@@ -18,8 +18,7 @@ class JSB_ScrollViewDelegate : public CCScrollViewDelegate
 public:
     virtual void scrollViewDidScroll(CCScrollView* view)
     {
-        js_proxy_t * p;
-        JS_GET_PROXY(p, view);
+        js_proxy_t * p = jsb_get_native_proxy(view);
         if (!p) return;
         
         jsval arg = OBJECT_TO_JSVAL(p->obj);
@@ -28,8 +27,7 @@ public:
     
     virtual void scrollViewDidZoom(CCScrollView* view)
     {
-        js_proxy_t * p;
-        JS_GET_PROXY(p, view);
+        js_proxy_t * p = jsb_get_native_proxy(view);
         if (!p) return;
         
         jsval arg = OBJECT_TO_JSVAL(p->obj);
@@ -48,7 +46,7 @@ static JSBool js_cocos2dx_CCScrollView_setDelegate(JSContext *cx, uint32_t argc,
 {
     jsval *argv = JS_ARGV(cx, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::extension::CCScrollView* cobj = (cocos2d::extension::CCScrollView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
     
@@ -108,8 +106,7 @@ public:
 private:
     void callJSDelegate(CCScrollView* view, std::string jsFunctionName)
     {
-        js_proxy_t * p;
-        JS_GET_PROXY(p, view);
+        js_proxy_t * p = jsb_get_native_proxy(view);
         if (!p) return;
         
         jsval arg = OBJECT_TO_JSVAL(p->obj);
@@ -118,12 +115,10 @@ private:
     
     void callJSDelegate(CCTableView* table, CCTableViewCell* cell, std::string jsFunctionName)
     {
-        js_proxy_t * p;
-        JS_GET_PROXY(p, table);
+        js_proxy_t * p = jsb_get_native_proxy(table);
         if (!p) return;
         
-        js_proxy_t * pCellProxy;
-        JS_GET_PROXY(pCellProxy, cell);
+        js_proxy_t * pCellProxy = jsb_get_native_proxy(cell);
         if (!pCellProxy) return;
         
         jsval args[2];
@@ -140,7 +135,7 @@ static JSBool js_cocos2dx_CCTableView_setDelegate(JSContext *cx, uint32_t argc, 
 {
     jsval *argv = JS_ARGV(cx, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::extension::CCTableView* cobj = (cocos2d::extension::CCTableView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
     
@@ -189,7 +184,7 @@ public:
             do {
                 js_proxy_t *proxy;
                 JSObject *tmpObj = JSVAL_TO_OBJECT(ret);
-                JS_GET_NATIVE_PROXY(proxy, tmpObj);
+                proxy = jsb_get_js_proxy(tmpObj);
                 arg0 = (cocos2d::extension::CCTableViewCell*)(proxy ? proxy->ptr : NULL);
                 JSB_PRECONDITION2( arg0, cx, NULL, "Invalid Native Object");
             } while (0);
@@ -221,8 +216,7 @@ public:
 private:
     bool callJSDelegate(CCTableView* table, std::string jsFunctionName, jsval& retVal)
     {
-        js_proxy_t * p;
-        JS_GET_PROXY(p, table);
+        js_proxy_t * p = jsb_get_native_proxy(table);
         if (!p) return false;
         
         JSBool hasAction;
@@ -249,8 +243,7 @@ private:
     
     bool callJSDelegate(CCTableView* table, int idx, std::string jsFunctionName, jsval& retVal)
     {
-        js_proxy_t * p;
-        JS_GET_PROXY(p, table);
+        js_proxy_t * p = jsb_get_native_proxy(table);
         if (!p) return false;
         
         
@@ -286,7 +279,7 @@ static JSBool js_cocos2dx_CCTableView_setDataSource(JSContext *cx, uint32_t argc
 {
     jsval *argv = JS_ARGV(cx, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::extension::CCTableView* cobj = (cocos2d::extension::CCTableView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
     if (argc == 1)
@@ -339,7 +332,7 @@ static JSBool js_cocos2dx_CCTableView_create(JSContext *cx, uint32_t argc, jsval
             do {
                 js_proxy_t *proxy;
                 JSObject *tmpObj = JSVAL_TO_OBJECT(argv[2]);
-                JS_GET_NATIVE_PROXY(proxy, tmpObj);
+                proxy = jsb_get_js_proxy(tmpObj);
                 arg2 = (cocos2d::CCNode*)(proxy ? proxy->ptr : NULL);
                 JSB_PRECONDITION2( arg2, cx, JS_FALSE, "Invalid Native Object");
             } while (0);
@@ -361,8 +354,7 @@ class JSB_EditBoxDelegate : public CCEditBoxDelegate
 public:
     virtual void editBoxEditingDidBegin(CCEditBox* editBox)
     {
-        js_proxy_t * p;
-        JS_GET_PROXY(p, editBox);
+        js_proxy_t * p = jsb_get_native_proxy(editBox);
         if (!p) return;
         
         jsval arg = OBJECT_TO_JSVAL(p->obj);
@@ -371,8 +363,7 @@ public:
     
     virtual void editBoxEditingDidEnd(CCEditBox* editBox)
     {
-        js_proxy_t * p;
-        JS_GET_PROXY(p, editBox);
+        js_proxy_t * p = jsb_get_native_proxy(editBox);
         if (!p) return;
         
         jsval arg = OBJECT_TO_JSVAL(p->obj);
@@ -381,8 +372,7 @@ public:
     
     virtual void editBoxTextChanged(CCEditBox* editBox, const std::string& text)
     {
-        js_proxy_t * p;
-        JS_GET_PROXY(p, editBox);
+        js_proxy_t * p = jsb_get_native_proxy(editBox);
         if (!p) return;
         
         jsval dataVal[2];
@@ -395,8 +385,7 @@ public:
     
     virtual void editBoxReturn(CCEditBox* editBox)
     {
-        js_proxy_t * p;
-        JS_GET_PROXY(p, editBox);
+        js_proxy_t * p = jsb_get_native_proxy(editBox);
         if (!p) return;
         
         jsval arg = OBJECT_TO_JSVAL(p->obj);
@@ -415,7 +404,7 @@ static JSBool js_cocos2dx_CCEditBox_setDelegate(JSContext *cx, uint32_t argc, js
 {
     jsval *argv = JS_ARGV(cx, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::extension::CCEditBox* cobj = (cocos2d::extension::CCEditBox *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
     

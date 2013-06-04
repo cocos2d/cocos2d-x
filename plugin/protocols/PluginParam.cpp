@@ -26,6 +26,11 @@ THE SOFTWARE.
 
 namespace cocos2d { namespace plugin {
 
+PluginParam::PluginParam()
+{
+    m_type = kParamTypeNull;
+}
+
 PluginParam::PluginParam(int nValue)
 : m_nValue(nValue)
 {
@@ -56,7 +61,7 @@ PluginParam::PluginParam(std::map<std::string, PluginParam*> mapValue)
 	m_type = kParamTypeMap;
 }
 
-PluginParam::PluginParam(std::map<std::string, std::string> strMapValue)
+PluginParam::PluginParam(StringMap strMapValue)
 : m_strMapValue(strMapValue)
 {
     m_type = kParamTypeStringMap;
