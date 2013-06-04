@@ -150,11 +150,11 @@ static void removeJSTouchObject(JSContext *cx, CCTouch *x, jsval &jsret) {
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
     void *ptr = (void*)x;
-    JS_GET_PROXY(nproxy, ptr);
+    nproxy = jsb_get_native_proxy(ptr);
     if (nproxy) {
-        JS_GET_NATIVE_PROXY(jsproxy, nproxy->obj);
+        jsproxy = jsb_get_js_proxy(nproxy->obj);
         JS_RemoveObjectRoot(cx, &jsproxy->obj);
-        JS_REMOVE_PROXY(nproxy, jsproxy);
+        jsb_remove_proxy(nproxy, jsproxy);
     }
 }
 
@@ -590,12 +590,12 @@ void ScriptingCore::removeScriptObjectByCCObject(CCObject* pObj)
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
     void *ptr = (void*)pObj;
-    JS_GET_PROXY(nproxy, ptr);
+    nproxy = jsb_get_native_proxy(ptr);
     if (nproxy) {
         JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-        JS_GET_NATIVE_PROXY(jsproxy, nproxy->obj);
+        jsproxy = jsb_get_js_proxy(nproxy->obj);
         JS_RemoveObjectRoot(cx, &jsproxy->obj);
-        JS_REMOVE_PROXY(nproxy, jsproxy);
+        jsb_remove_proxy(nproxy, jsproxy);
     }
 }
 
@@ -730,8 +730,7 @@ void ScriptingCore::cleanupSchedulesAndActions(js_proxy_t* p)
 
 int ScriptingCore::executeNodeEvent(CCNode* pNode, int nAction)
 {
-    js_proxy_t * p;
-    JS_GET_PROXY(p, pNode);
+    js_proxy_t * p = jsb_get_native_proxy(pNode);
     if (!p) return 0;
 
     jsval retval;
@@ -764,15 +763,12 @@ int ScriptingCore::executeNodeEvent(CCNode* pNode, int nAction)
 
 int ScriptingCore::executeMenuItemEvent(CCMenuItem* pMenuItem)
 {
-    js_proxy_t * p;
-    JS_GET_PROXY(p, pMenuItem);
-
+    js_proxy_t * p = jsb_get_native_proxy(pMenuItem);
     if (!p) return 0;
 
     jsval retval;
     jsval dataVal;
-    js_proxy_t *proxy;
-    JS_GET_PROXY(proxy, pMenuItem);
+    js_proxy_t *proxy = jsb_get_native_proxy(pMenuItem);
     dataVal = (proxy ? OBJECT_TO_JSVAL(proxy->obj) : JSVAL_NULL);
 
     executeJSFunctionFromReservedSpot(this->cx_, p->obj, dataVal, retval);
@@ -792,9 +788,7 @@ int ScriptingCore::executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTa
 
 int ScriptingCore::executeSchedule(int nHandler, float dt, CCNode* pNode/* = NULL*/)
 {
-    js_proxy_t * p;
-    JS_GET_PROXY(p, pNode);
-
+    js_proxy_t * p = jsb_get_native_proxy(pNode);
     if (!p) return 0;
 
     jsval retval;
@@ -851,8 +845,7 @@ int ScriptingCore::executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouc
 
 bool ScriptingCore::executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj) {
 
-    js_proxy_t * p;
-    JS_GET_PROXY(p, self);
+    js_proxy_t * p = jsb_get_native_proxy(self);
     if (!p) return false;
 
     jsval retval;
@@ -912,8 +905,7 @@ int ScriptingCore::executeAccelerometerEvent(CCLayer *pLayer, CCAcceleration *pA
 
 int ScriptingCore::executeLayerKeypadEvent(CCLayer* pLayer, int eventType)
 {
-	js_proxy_t * p;
-	JS_GET_PROXY(p, pLayer);
+	js_proxy_t * p = jsb_get_native_proxy(pLayer);
 
 	if(p){
 		switch(eventType){
@@ -1133,7 +1125,7 @@ JSBool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, CCArray**
         {
             js_proxy_t* p;
             JSObject* obj = JSVAL_TO_OBJECT(*vp);
-            JS_GET_NATIVE_PROXY(p, obj);
+            p = jsb_get_js_proxy(obj);
             if (p) {
                 pArray->addObject((CCObject*)p->ptr);
             }
@@ -1293,7 +1285,7 @@ JSBool jsval_to_ccarray(JSContext* cx, jsval v, CCArray** ret) {
             {
                 js_proxy_t *proxy;
                 JSObject *tmp = JSVAL_TO_OBJECT(value);
-                JS_GET_NATIVE_PROXY(proxy, tmp);
+                proxy = jsb_get_js_proxy(tmp);
                 cocos2d::CCObject* cobj = (cocos2d::CCObject *)(proxy ? proxy->ptr : NULL);
                 // Don't test it.
                 //TEST_NATIVE_OBJECT(cx, cobj)
@@ -1492,7 +1484,7 @@ JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, CCDictionary** ret) {
         {
             js_proxy_t *proxy;
             JSObject *tmp = JSVAL_TO_OBJECT(value);
-            JS_GET_NATIVE_PROXY(proxy, tmp);
+            proxy = jsb_get_js_proxy(tmp);
             cocos2d::CCObject* cobj = (cocos2d::CCObject *)(proxy ? proxy->ptr : NULL);
             // Don't test it.
             //TEST_NATIVE_OBJECT(cx, cobj)
