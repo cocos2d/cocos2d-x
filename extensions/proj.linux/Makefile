@@ -9,7 +9,8 @@ INCLUDES = -I$(COCOS_ROOT)/external \
 	-I../CCBReader \
 	-I../GUI/CCControlExtension \
 	-I../GUI/CCEditBox \
-	-I../network
+	-I../network \
+    -I../Components
 
 SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CCBReader/CCMenuItemImageLoader.cpp \
@@ -76,7 +77,11 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../spine/extension.cpp \
 ../spine/spine-cocos2dx.cpp \
 ../spine/CCSkeleton.cpp \
-../spine/CCSkeletonAnimation.cpp
+../spine/CCSkeletonAnimation.cpp \
+../Components/CCComAttribute.cpp \
+../Components/CCComAudio.cpp \
+../Components/CCComController.cpp \
+../Components/CCInputDelegate.cpp
 
 include $(COCOS_ROOT)/cocos2dx/proj.linux/cocos2dx.mk
 
