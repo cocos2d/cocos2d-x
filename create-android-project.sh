@@ -5,10 +5,10 @@
 # Don't modify the script until you know what you do.
 PARAMS=$@
 
-# you can also set the environment here and uncomment them
-#NDK_ROOT=
-#ANDROID_SDK_ROOT
-#COCOS2DX_ROOT
+# you can set the environment here and uncomment them if you haven't set them in .bashrc
+#export NDK_ROOT=
+#export ANDROID_SDK_ROOT=
+#export COCOS2DX_ROOT=
 
 # set environment paramters
 if [ "x${NDK_ROOT}" == "x" ] ; then
