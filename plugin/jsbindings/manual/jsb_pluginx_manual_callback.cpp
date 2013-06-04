@@ -1,4 +1,4 @@
-#include "jsb_pluginx_manual_iap.h"
+#include "jsb_pluginx_manual_callback.h"
 #include "jsb_pluginx_basic_conversions.h"
 #include "jsb_pluginx_spidermonkey_specifics.h"
 #include "ProtocolAds.h"
