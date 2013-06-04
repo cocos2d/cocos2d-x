@@ -66,6 +66,8 @@ public:
 class ProtocolAds : public PluginProtocol
 {
 public:
+	ProtocolAds();
+	virtual ~ProtocolAds();
 
     typedef enum {
         kBannerAd = 0,
@@ -83,18 +85,13 @@ public:
     } AdsPos;
 
     /**
-    @brief plugin initialization
-    */
-    virtual bool init();
-
-    /**
     @brief config the application info
     @param devInfo This parameter is the info of aplication,
            different plugin have different format
     @warning Must invoke this interface before other interfaces.
              And invoked only once.
     */
-    virtual void configDeveloperInfo(TAdsDeveloperInfo devInfo);
+    void configDeveloperInfo(TAdsDeveloperInfo devInfo);
 
     /**
     @brief show adview
@@ -106,26 +103,20 @@ public:
     @param pos The position where the adview be shown.
                (only used when type is kBannerAd)
     */
-    virtual void showAds(AdsType type, int sizeEnum = 0, AdsPos pos = kPosCenter);
+    void showAds(AdsType type, int sizeEnum = 0, AdsPos pos = kPosCenter);
 
     /**
     @brief Hide the adview
     @param type The adview type need to hide.
     */
-    virtual void hideAds(AdsType type);
+    void hideAds(AdsType type);
 
     /**
     @brief Spend the points.
            Use this method to notify server spend points.
     @param points Need spend number of points
     */
-    virtual void spendPoints(int points);
-
-    /**
-     @brief Set whether needs to output logs to console.
-     @param debug If true debug mode enabled, or debug mode disabled.
-     */
-    virtual void setDebugMode(bool debug);
+    void spendPoints(int points);
 
     /**
      @brief set the Ads listener
@@ -135,15 +126,6 @@ public:
     // For the callbak methods
     void onAdsResult(AdsResultCode code, const char* msg);
     void onPlayerGetPoints(int points);
-
-    virtual const char* getPluginVersion() { return "ProtocolAds, v0.1.01 , subclass should override this interface!"; };
-    virtual const char* getSDKVersion();
-    virtual const char* getPluginName() = 0;
-
-protected:
-    ProtocolAds();
-public:
-    virtual ~ProtocolAds();
 
 protected:
     AdsListener* m_pListener;

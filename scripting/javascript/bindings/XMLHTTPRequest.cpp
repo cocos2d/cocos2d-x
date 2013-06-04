@@ -223,7 +223,7 @@ void MinXmlHttpRequest::handle_requestResponse(cocos2d::extension::CCHttpClient 
     
     js_proxy_t * p;
     void* ptr = (void*)this;
-    JS_GET_PROXY(p, ptr);
+    p = jsb_get_native_proxy(ptr);
     
     if(p){
         JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
@@ -310,7 +310,7 @@ JS_BINDED_CONSTRUCTOR_IMPL(MinXmlHttpRequest)
     }
 
     JS_SET_RVAL(cx, vp, out);
-    JS_NEW_PROXY(p, req, obj);
+    p =jsb_new_proxy(req, obj);
     
     JS_AddNamedObjectRoot(cx, &p->obj, "XMLHttpRequest");
     return JS_TRUE;
@@ -628,7 +628,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
 {
 
     JSString *str = NULL;
-    char *data = NULL;
+    std::string data;
     
     // Clean up header map. New request, new headers!
     http_header.clear();
@@ -636,12 +636,13 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
         if (!JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &str)) {
             return JS_FALSE;
         };
-        data = JS_EncodeString(cx, str);
+        JSStringWrapper strWrap(str);
+        data = strWrap.get();
     }
 
 
-    if (data != NULL && meth.compare("post") == 0 || meth.compare("POST") == 0) {
-        cc_request->setRequestData(data, strlen(data));
+    if (data.length() > 0 && (meth.compare("post") == 0 || meth.compare("POST") == 0)) {
+        cc_request->setRequestData(data.c_str(), data.length());
     }
 
     _setHttpRequestHeader();
@@ -700,7 +701,10 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, getResponseHeader)
         return JS_FALSE;
     };
     
-    char *data = JS_EncodeString(cx, header_value);
+    std::string data;
+    JSStringWrapper strWrap(header_value);
+    data = strWrap.get();
+    
     stringstream streamdata;
     
     streamdata << data;
