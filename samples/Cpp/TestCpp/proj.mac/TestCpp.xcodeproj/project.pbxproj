@@ -2769,8 +2769,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -2799,7 +2797,7 @@
 				INFOPLIST_FILE = Test_Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/mac/libraries\"";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CFLAGS = "-O2";
 				PRODUCT_NAME = TestCpp;
 				SDKROOT = macosx;
@@ -2813,8 +2811,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2841,7 +2837,7 @@
 				INFOPLIST_FILE = Test_Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/mac/libraries\"";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = TestCpp;
 				SDKROOT = macosx;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2855,14 +2851,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: 小明 张 (L4ZF355VQS)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 小明 张 (L4ZF355VQS)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				PROVISIONING_PROFILE = "0C43CFE2-55C4-429A-9A03-BFB76D31630B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0C43CFE2-55C4-429A-9A03-BFB76D31630B";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64";
 			};
@@ -2872,15 +2866,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: 小明 张 (L4ZF355VQS)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 小明 张 (L4ZF355VQS)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "0C43CFE2-55C4-429A-9A03-BFB76D31630B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DB6844BA-2943-44DB-B10A-3A3F0E8A52B8";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64";
 			};

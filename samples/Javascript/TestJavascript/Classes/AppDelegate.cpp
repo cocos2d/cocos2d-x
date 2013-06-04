@@ -11,8 +11,10 @@
 #include "js_bindings_system_registration.h"
 #include "jsb_opengl_registration.h"
 #include "XMLHTTPRequest.h"
+#include "jsb_websocket.h"
 
 USING_NS_CC;
+USING_NS_CC_EXT;
 using namespace CocosDenshion;
 
 AppDelegate::AppDelegate()
@@ -45,6 +47,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(JSB_register_opengl);
     sc->addRegisterCallback(jsb_register_system);
     sc->addRegisterCallback(MinXmlHttpRequest::_js_register);
+    sc->addRegisterCallback(register_jsb_websocket);
 
     sc->start();
 

@@ -510,7 +510,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -537,7 +538,7 @@
 					"\"$(SRCROOT)/../../../../CocosDenshion/third_party/blackberry/libraries/armle-v7\"",
 					"\"$(SRCROOT)/../../../../CocosDenshion/third_party/blackberry/libraries/x86\"",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = SampleGame;
@@ -549,7 +550,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -575,7 +577,7 @@
 					"\"$(SRCROOT)/../../../../CocosDenshion/third_party/blackberry/libraries/armle-v7\"",
 					"\"$(SRCROOT)/../../../../CocosDenshion/third_party/blackberry/libraries/x86\"",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = SampleGame;

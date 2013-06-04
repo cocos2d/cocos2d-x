@@ -28,8 +28,6 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.cocos2dx.plugin.InterfaceAds.AdsAdapter;
-
 import com.google.ads.*;
 import com.google.ads.AdRequest.ErrorCode;
 
@@ -38,7 +36,7 @@ import android.content.Context;
 import android.util.Log;
 import android.view.WindowManager;
 
-public class AdsAdmob implements AdsAdapter {
+public class AdsAdmob implements InterfaceAds {
 
 	private static final String LOG_TAG = "AdsAdmob";
 	private static Activity mContext = null;
@@ -94,10 +92,10 @@ public class AdsAdmob implements AdsAdapter {
 	@Override
 	public void showAds(int adsType, int sizeEnum, int pos) {
 		switch (adsType) {
-		case InterfaceAds.ADS_TYPE_BANNER:
+		case AdsWrapper.ADS_TYPE_BANNER:
 			showBannerAd(sizeEnum, pos);
 			break;
-		case InterfaceAds.ADS_TYPE_FULL_SCREEN:
+		case AdsWrapper.ADS_TYPE_FULL_SCREEN:
 			LogD("Now not support full screen view in Admob");
 			break;
 		default:
@@ -113,10 +111,10 @@ public class AdsAdmob implements AdsAdapter {
 	@Override
 	public void hideAds(int adsType) {
 		switch (adsType) {
-		case InterfaceAds.ADS_TYPE_BANNER:
+		case AdsWrapper.ADS_TYPE_BANNER:
 			hideBannerAd();
 			break;
-		case InterfaceAds.ADS_TYPE_FULL_SCREEN:
+		case AdsWrapper.ADS_TYPE_FULL_SCREEN:
 			break;
 		default:
 			break;
@@ -178,7 +176,7 @@ public class AdsAdmob implements AdsAdapter {
 				if (null == mWm) {
 					mWm = (WindowManager) mContext.getSystemService("window");
 				}
-				InterfaceAds.addAdView(mWm, adView, curPos);
+				AdsWrapper.addAdView(mWm, adView, curPos);
 			}
 		});
 	}
@@ -211,20 +209,20 @@ public class AdsAdmob implements AdsAdapter {
 		@Override
 		public void onDismissScreen(Ad arg0) {
 			LogD("onDismissScreen invoked");
-			InterfaceAds.onAdsResult(mAdapter, InterfaceAds.RESULT_CODE_FullScreenViewDismissed, "Full screen ads view dismissed!");
+			AdsWrapper.onAdsResult(mAdapter, AdsWrapper.RESULT_CODE_FullScreenViewDismissed, "Full screen ads view dismissed!");
 		}
 
 		@Override
 		public void onFailedToReceiveAd(Ad arg0, ErrorCode arg1) {
-			int errorNo = InterfaceAds.RESULT_CODE_UnknownError;
+			int errorNo = AdsWrapper.RESULT_CODE_UnknownError;
 			String errorMsg = "Unknow error";
 			switch (arg1) {
 			case NETWORK_ERROR:
-				errorNo =  InterfaceAds.RESULT_CODE_NetworkError;
+				errorNo =  AdsWrapper.RESULT_CODE_NetworkError;
 				errorMsg = "Network error";
 				break;
 			case INVALID_REQUEST:
-				errorNo = InterfaceAds.RESULT_CODE_NetworkError;
+				errorNo = AdsWrapper.RESULT_CODE_NetworkError;
 				errorMsg = "The ad request is invalid";
 				break;
 			case NO_FILL:
@@ -234,7 +232,7 @@ public class AdsAdmob implements AdsAdapter {
 				break;
 			}
 			LogD("failed to receive ad : " + errorNo + " , " + errorMsg);
-			InterfaceAds.onAdsResult(mAdapter, errorNo, errorMsg);
+			AdsWrapper.onAdsResult(mAdapter, errorNo, errorMsg);
 		}
 
 		@Override
@@ -245,13 +243,18 @@ public class AdsAdmob implements AdsAdapter {
 		@Override
 		public void onPresentScreen(Ad arg0) {
 			LogD("onPresentScreen invoked");
-			InterfaceAds.onAdsResult(mAdapter, InterfaceAds.RESULT_CODE_FullScreenViewShown, "Full screen ads view shown!");
+			AdsWrapper.onAdsResult(mAdapter, AdsWrapper.RESULT_CODE_FullScreenViewShown, "Full screen ads view shown!");
 		}
 
 		@Override
 		public void onReceiveAd(Ad arg0) {
 			LogD("onReceiveAd invoked");
-			InterfaceAds.onAdsResult(mAdapter, InterfaceAds.RESULT_CODE_AdsReceived, "Ads request received success!");
+			AdsWrapper.onAdsResult(mAdapter, AdsWrapper.RESULT_CODE_AdsReceived, "Ads request received success!");
 		}
+	}
+
+	@Override
+	public String getPluginVersion() {
+		return "0.2.0";
 	}
 }

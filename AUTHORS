@@ -103,6 +103,7 @@ Developers:
 
     benjamesward
         add Portuguese and Arabic language support
+        Fixed linebreaks on Mac OSX
 
     Victor K(fnz)
         fix memory leak of CCTextureCache::addImageAsync() on iOS
@@ -307,6 +308,7 @@ Developers:
     xyhl515
         Fixed a bug that CCControlSwitch::setOn(isOn,false) doesn't work.
         Adds VS2012 Express template installing support.
+        Fixing a logical error in CCDrawNode::drawPolygon.
 
     DarraghCoy
         Fix for unaligned memory access crash in CCBReader::readFloat().
