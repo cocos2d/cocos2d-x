@@ -50,6 +50,12 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ExtensionsTest/ExtensionsTest.cpp \
 	../Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp \
 	../Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp \
+    ../Classes/ExtensionsTest/ComponentsTest/ComponentsTestScene.cpp \
+    ../Classes/ExtensionsTest/ComponentsTest/EnemyController.cpp \
+    ../Classes/ExtensionsTest/ComponentsTest/GameOverScene.cpp \
+    ../Classes/ExtensionsTest/ComponentsTest/PlayerController.cpp \
+    ../Classes/ExtensionsTest/ComponentsTest/ProjectileController.cpp \
+    ../Classes/ExtensionsTest/ComponentsTest/SceneController.cpp \
 	../Classes/FontTest/FontTest.cpp \
 	../Classes/IntervalTest/IntervalTest.cpp \
 	../Classes/KeypadTest/KeypadTest.cpp \

@@ -116,6 +116,10 @@
     <ClCompile Include="..\CCBReader\CCScale9SpriteLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCScrollViewLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCSpriteLoader.cpp" />
+    <ClCompile Include="..\Components\CCComAttribute.cpp" />
+    <ClCompile Include="..\Components\CCComAudio.cpp" />
+    <ClCompile Include="..\Components\CCComController.cpp" />
+    <ClCompile Include="..\Components\CCInputDelegate.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControl.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControlButton.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControlColourPicker.cpp" />
@@ -192,6 +196,10 @@
     <ClInclude Include="..\CCBReader\CCScale9SpriteLoader.h" />
     <ClInclude Include="..\CCBReader\CCScrollViewLoader.h" />
     <ClInclude Include="..\CCBReader\CCSpriteLoader.h" />
+    <ClInclude Include="..\Components\CCComAttribute.h" />
+    <ClInclude Include="..\Components\CCComAudio.h" />
+    <ClInclude Include="..\Components\CCComController.h" />
+    <ClInclude Include="..\Components\CCInputDelegate.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControl.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControlButton.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControlColourPicker.h" />

@@ -135,6 +135,12 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
     <ClCompile Include="..\Classes\DataVisitorTest\DataVisitorTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\ComponentsTest\ComponentsTestScene.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\ComponentsTest\EnemyController.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\ComponentsTest\GameOverScene.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\ComponentsTest\PlayerController.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\ComponentsTest\ProjectileController.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\ComponentsTest\SceneController.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.cpp" />
@@ -234,6 +240,12 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackLayerLoader.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\ComponentsTest\ComponentsTestScene.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\ComponentsTest\EnemyController.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\ComponentsTest\GameOverScene.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\ComponentsTest\PlayerController.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\ComponentsTest\ProjectileController.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\ComponentsTest\SceneController.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.h" />
