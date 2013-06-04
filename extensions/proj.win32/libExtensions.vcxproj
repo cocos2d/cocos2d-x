@@ -147,6 +147,8 @@
     <ClCompile Include="..\spine\AttachmentLoader.cpp" />
     <ClCompile Include="..\spine\Bone.cpp" />
     <ClCompile Include="..\spine\BoneData.cpp" />
+    <ClCompile Include="..\spine\CCSkeleton.cpp" />
+    <ClCompile Include="..\spine\CCSkeletonAnimation.cpp" />
     <ClCompile Include="..\spine\extension.cpp" />
     <ClCompile Include="..\spine\Json.cpp" />
     <ClCompile Include="..\spine\RegionAttachment.cpp" />
@@ -226,6 +228,8 @@
     <ClInclude Include="..\spine\AttachmentLoader.h" />
     <ClInclude Include="..\spine\Bone.h" />
     <ClInclude Include="..\spine\BoneData.h" />
+    <ClInclude Include="..\spine\CCSkeleton.h" />
+    <ClInclude Include="..\spine\CCSkeletonAnimation.h" />
     <ClInclude Include="..\spine\extension.h" />
     <ClInclude Include="..\spine\Json.h" />
     <ClInclude Include="..\spine\RegionAttachment.h" />

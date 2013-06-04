@@ -25,7 +25,6 @@
 
 #include <spine/Skin.h>
 #include <spine/extension.h>
-#include <stdio.h>
 
 namespace cocos2d { namespace extension {
 
@@ -65,11 +64,11 @@ Skin* Skin_create (const char* name) {
 }
 
 void Skin_dispose (Skin* self) {
-	_Entry* entry = SUB_CAST(_Internal, self)->entries;
+	_Entry* entry = SUB_CAST(_Internal, self) ->entries;
 	while (entry) {
-		_Entry* nextEtry = entry->next;
+		_Entry* nextEntry = entry->next;
 		_Entry_dispose(entry);
-		entry = nextEtry;
+		entry = nextEntry;
 	}
 
 	FREE(self->name);
@@ -78,14 +77,27 @@ void Skin_dispose (Skin* self) {
 
 void Skin_addAttachment (Skin* self, int slotIndex, const char* name, Attachment* attachment) {
 	_Entry* newEntry = _Entry_create(slotIndex, name, attachment);
-	newEntry->next = SUB_CAST(_Internal, self)->entries;
-	SUB_CAST(_Internal, self)->entries = newEntry;
+	newEntry->next = SUB_CAST(_Internal, self) ->entries;
+	SUB_CAST(_Internal, self) ->entries = newEntry;
 }
 
 Attachment* Skin_getAttachment (const Skin* self, int slotIndex, const char* name) {
 	const _Entry* entry = SUB_CAST(_Internal, self) ->entries;
 	while (entry) {
 		if (entry->slotIndex == slotIndex && strcmp(entry->name, name) == 0) return entry->attachment;
+		entry = entry->next;
+	}
+	return 0;
+}
+
+const char* Skin_getAttachmentName (const Skin* self, int slotIndex, int attachmentIndex) {
+	const _Entry* entry = SUB_CAST(_Internal, self) ->entries;
+	int i = 0;
+	while (entry) {
+		if (entry->slotIndex == slotIndex) {
+			if (i == attachmentIndex) return entry->name;
+			i++;
+		}
 		entry = entry->next;
 	}
 	return 0;
