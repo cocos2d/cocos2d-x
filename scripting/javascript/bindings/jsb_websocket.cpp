@@ -64,8 +64,7 @@ public:
     
     virtual void onOpen(WebSocket* ws)
     {
-        js_proxy_t * p;
-        JS_GET_PROXY(p, ws);
+        js_proxy_t * p = jsb_get_native_proxy(ws);
         if (!p) return;
         
         JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
@@ -80,8 +79,7 @@ public:
     
     virtual void onMessage(WebSocket* ws, const WebSocket::Data& data)
     {
-        js_proxy_t * p;
-        JS_GET_PROXY(p, ws);
+        js_proxy_t * p = jsb_get_native_proxy(ws);
         if (!p) return;
         
         JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
@@ -110,8 +108,7 @@ public:
     
     virtual void onClose(WebSocket* ws)
     {
-        js_proxy_t * p;
-        JS_GET_PROXY(p, ws);
+        js_proxy_t * p = jsb_get_native_proxy(ws);
         if (!p) return;
         
         JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
@@ -122,17 +119,15 @@ public:
         jsval args = OBJECT_TO_JSVAL(jsobj);
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(m_pJSDelegate), "onclose", 1, &args);
 
-        js_proxy_t* jsproxy;
-        JS_GET_NATIVE_PROXY(jsproxy, p->obj);
+        js_proxy_t* jsproxy = jsb_get_js_proxy(p->obj);
         JS_RemoveObjectRoot(cx, &jsproxy->obj);
-        JS_REMOVE_PROXY(p, jsproxy);
+        jsb_remove_proxy(p, jsproxy);
         CC_SAFE_DELETE(ws);
     }
     
     virtual void onError(WebSocket* ws, const WebSocket::ErrorCode& error)
     {
-        js_proxy_t * p;
-        JS_GET_PROXY(p, ws);
+        js_proxy_t * p = jsb_get_native_proxy(ws);
         if (!p) return;
         
         JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
@@ -164,7 +159,7 @@ JSBool js_cocos2dx_extension_WebSocket_send(JSContext *cx, uint32_t argc, jsval 
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	WebSocket* cobj = (WebSocket *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 
@@ -217,7 +212,7 @@ JSBool js_cocos2dx_extension_WebSocket_send(JSContext *cx, uint32_t argc, jsval 
 
 JSBool js_cocos2dx_extension_WebSocket_close(JSContext *cx, uint32_t argc, jsval *vp){
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	WebSocket* cobj = (WebSocket *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
     
@@ -302,8 +297,7 @@ JSBool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc,
                           , NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
         
         // link the native object with the javascript object
-		js_proxy_t *p;
-		JS_NEW_PROXY(p, cobj, obj);
+		js_proxy_t *p = jsb_new_proxy(cobj, obj);
         JS_AddNamedObjectRoot(cx, &p->obj, "WebSocket");
         
         JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
@@ -317,7 +311,7 @@ JSBool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc,
 static JSBool js_cocos2dx_extension_WebSocket_get_readyState(JSContext *cx, JSHandleObject obj, JSHandleId id, JSMutableHandleValue vp)
 {
     JSObject* jsobj = obj.get();
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, jsobj);
+	js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
 	WebSocket* cobj = (WebSocket *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
     
