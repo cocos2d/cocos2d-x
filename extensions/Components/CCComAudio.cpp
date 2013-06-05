@@ -52,7 +52,7 @@ void CCComAudio::onExit()
     stopAllEffects();
 }
 
-bool CCComAudio::isEnabled()
+bool CCComAudio::isEnabled() const
 {
     return m_bEnabled;
 }

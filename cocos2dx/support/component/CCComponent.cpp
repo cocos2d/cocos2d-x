@@ -87,7 +87,7 @@ void CCComponent::setOwner(CCNode *pOwner)
     m_pOwner = pOwner;
 }
 
-bool CCComponent::isEnabled()
+bool CCComponent::isEnabled() const
 {
     return m_bEnabled;
 }
