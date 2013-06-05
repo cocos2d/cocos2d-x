@@ -40,16 +40,20 @@ typedef struct RegionAttachment RegionAttachment;
 struct RegionAttachment {
 	Attachment super;
 	float x, y, scaleX, scaleY, rotation, width, height;
-	AtlasRegion* region;
+
+	void* rendererObject;
+	int regionOffsetX, regionOffsetY; /* Pixels stripped from the bottom left, unrotated. */
+	int regionWidth, regionHeight; /* Unrotated, stripped pixel size. */
+	int regionOriginalWidth, regionOriginalHeight; /* Unrotated, unstripped pixel size. */
+
 	float offset[8];
-	float vertices[8];
 	float uvs[8];
 };
 
 RegionAttachment* RegionAttachment_create (const char* name);
-
+void RegionAttachment_setUVs (RegionAttachment* self, float u, float v, float u2, float v2, int/*bool*/rotate);
 void RegionAttachment_updateOffset (RegionAttachment* self);
-void RegionAttachment_updateVertices (RegionAttachment* self, Slot* slot);
+void RegionAttachment_computeVertices (RegionAttachment* self, float x, float y, Bone* bone, float* vertices);
 
 }} // namespace cocos2d { namespace extension {
 

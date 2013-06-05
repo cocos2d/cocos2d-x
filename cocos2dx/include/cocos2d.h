@@ -272,6 +272,10 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "CCScheduler.h"
 
+// component
+#include "support/component/CCComponent.h"
+#include "support/component/CCComponentContainer.h"
+
 NS_CC_BEGIN
 
 CC_DLL const char* cocos2dVersion();
