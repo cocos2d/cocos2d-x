@@ -41,7 +41,48 @@ THE SOFTWARE.
 // extern
 #include "kazmath/GL/matrix.h"
 
+#include "CCScheduler.h"
+#include <errno.h>
+#include <stack>
+#include <string>
+#include <cctype>
+#include <queue>
+#include <list>
+#include <pthread.h>
+
+using namespace std;
+
 NS_CC_BEGIN
+
+typedef struct _AsyncStruct
+{
+    eImageFormat        imageFormat;
+    CCImage            *image;
+    std::string         filename;
+    CCObject           *target;
+    SEL_CallFunc        selector;
+} AsyncStruct;
+
+typedef struct _SaveInfo
+{
+    AsyncStruct *asyncStruct;
+    bool success;
+} SaveInfo;
+
+static pthread_t s_savingThread;
+
+static pthread_mutex_t		s_SleepMutex;
+static pthread_cond_t		s_SleepCondition;
+
+static pthread_mutex_t      s_AsyncStructQueueMutex;
+static pthread_mutex_t      s_SaveInfoMutex;
+
+static unsigned long s_nAsyncRefCount = 0;
+
+static bool need_quit = false;
+
+static std::queue<AsyncStruct*>* s_pAsyncStructQueue = NULL;
+static std::queue<SaveInfo*>*   s_pSaveQueue = NULL;
 
 // implementation CCRenderTexture
 CCRenderTexture::CCRenderTexture()
@@ -604,6 +645,160 @@ void CCRenderTexture::draw()
         
         end();
 	}
+}
+
+void CCRenderTexture::saveImageAsyncCallBack(float dt)
+{
+    // the image is generated in loading thread
+    std::queue<SaveInfo*> *imagesQueue = s_pSaveQueue;
+
+    pthread_mutex_lock(&s_SaveInfoMutex);
+    if (imagesQueue->empty())
+    {
+        pthread_mutex_unlock(&s_SaveInfoMutex);
+    }
+    else
+    {
+        SaveInfo *pSaveInfo = imagesQueue->front();
+        imagesQueue->pop();
+        pthread_mutex_unlock(&s_SaveInfoMutex);
+
+        AsyncStruct *pAsyncStruct = pSaveInfo->asyncStruct;
+        //TODO: check pSaveInfo->success;
+
+        CCObject *target = pAsyncStruct->target;
+        SEL_CallFunc selector = pAsyncStruct->selector;
+
+        if (target && selector)
+        {
+            (target->*selector)();
+            target->release();
+        }        
+
+        delete pAsyncStruct;
+        delete pSaveInfo;
+
+        --s_nAsyncRefCount;
+        if (0 == s_nAsyncRefCount)
+        {
+            CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CCRenderTexture::saveImageAsyncCallBack), this);
+        }
+    }
+}
+
+void CCRenderTexture::saveToFileAsync(const char *szFilePath, CCObject *target, SEL_CallFunc selector)
+{
+    CCAssert(szFilePath != NULL, "TextureCache: fileimage MUST not be NULL");    
+
+    // optimization
+
+    std::string pathKey = szFilePath;
+
+    pathKey = CCFileUtils::sharedFileUtils()->fullPathForFilename(pathKey.c_str());
+    std::string fullpath = pathKey;
+    // lazy init
+    if (s_pAsyncStructQueue == NULL)
+    {             
+        s_pAsyncStructQueue = new queue<AsyncStruct*>();
+        s_pSaveQueue = new queue<SaveInfo*>();        
+        
+        pthread_mutex_init(&s_AsyncStructQueueMutex, NULL);
+        pthread_mutex_init(&s_SaveInfoMutex, NULL);
+        pthread_mutex_init(&s_SleepMutex, NULL);
+        pthread_cond_init(&s_SleepCondition, NULL);
+        pthread_create(&s_savingThread, NULL, saveImageThread, NULL);
+
+        need_quit = false;
+    }
+
+    if (0 == s_nAsyncRefCount)
+    {
+        CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(CCRenderTexture::saveImageAsyncCallBack), this, 0, false);
+    }
+
+    ++s_nAsyncRefCount;
+
+    if (target)
+    {
+        target->retain();
+    }
+
+    // generate async struct
+    AsyncStruct *data = new AsyncStruct();
+    data->image = newCCImage(true);
+    // TODO: compute image format from filename
+    data->imageFormat = kCCImageFormatJPEG;
+    data->filename = fullpath.c_str();
+    data->target = target;
+    data->selector = selector;
+
+    // add async struct into queue
+    pthread_mutex_lock(&s_AsyncStructQueueMutex);
+    s_pAsyncStructQueue->push(data);
+    pthread_mutex_unlock(&s_AsyncStructQueueMutex);
+
+    pthread_cond_signal(&s_SleepCondition);
+}
+
+void* CCRenderTexture::saveImageThread(void* data)
+{
+    AsyncStruct *pAsyncStruct = NULL;
+
+    while (true)
+    {
+        // create autorelease pool for iOS
+        CCThread thread;
+        thread.createAutoreleasePool();
+
+        std::queue<AsyncStruct*> *pQueue = s_pAsyncStructQueue;
+        pthread_mutex_lock(&s_AsyncStructQueueMutex);// get async struct from queue
+        if (pQueue->empty())
+        {
+            pthread_mutex_unlock(&s_AsyncStructQueueMutex);
+            if (need_quit) {
+                break;
+            }
+            else {
+            	pthread_cond_wait(&s_SleepCondition, &s_SleepMutex);
+                continue;
+            }
+        }
+        else
+        {
+            pAsyncStruct = pQueue->front();
+            pQueue->pop();
+            pthread_mutex_unlock(&s_AsyncStructQueueMutex);
+        }        
+
+        const char *szFilename = pAsyncStruct->filename.c_str();
+        eImageFormat        imageFormat = pAsyncStruct->imageFormat;
+        CCImage            *pImage = pAsyncStruct->image;
+        // generate image info
+        SaveInfo *pSaveInfo = new SaveInfo();
+        pSaveInfo->success = pImage->saveToFile(szFilename, imageFormat);
+        CCLog("CCRenderTexture::saveImageThread saving %s was a %s", szFilename, pSaveInfo->success ? "success" : "failure");
+        pSaveInfo->asyncStruct = pAsyncStruct;
+
+        // put the image info into the queue
+        pthread_mutex_lock(&s_SaveInfoMutex);
+        s_pSaveQueue->push(pSaveInfo);
+        pthread_mutex_unlock(&s_SaveInfoMutex);    
+    }
+    
+    if( s_pAsyncStructQueue != NULL )
+    {
+        delete s_pAsyncStructQueue;
+        s_pAsyncStructQueue = NULL;
+        delete s_pSaveQueue;
+        s_pSaveQueue = NULL;
+
+        pthread_mutex_destroy(&s_AsyncStructQueueMutex);
+        pthread_mutex_destroy(&s_SaveInfoMutex);
+        pthread_mutex_destroy(&s_SleepMutex);
+        pthread_cond_destroy(&s_SleepCondition);
+    }
+    
+    return 0;
 }
 
 bool CCRenderTexture::saveToFile(const char *szFilePath)

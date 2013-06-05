@@ -59,6 +59,9 @@ class CC_DLL CCRenderTexture : public CCNode
     - [[renderTexture sprite] setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
     */
     CC_PROPERTY(CCSprite*, m_pSprite, Sprite)
+private:
+    /// todo: void addImageWithAsyncObject(CCAsyncObject* async);
+    void saveImageAsyncCallBack(float dt);
 public:
     CCRenderTexture();
     virtual ~CCRenderTexture();
@@ -115,6 +118,12 @@ public:
      */
     CCImage* newCCImage(bool flipImage = true);
 
+    /** saves the texture into a file using JPEG format. asyncronously, the targets selector will be called upon completion
+     */
+    void saveToFileAsync(const char *szFilePath, CCObject *target, SEL_CallFunc selector);
+    /** this is where the save thread is run
+     */
+    static void *saveImageThread(void* data);
     /** saves the texture into a file using JPEG format. The file will be saved in the Documents folder.
         Returns YES if the operation is successful.
      */
