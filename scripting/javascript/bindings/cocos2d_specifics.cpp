@@ -395,7 +395,7 @@ JSBool js_cocos2dx_CCMenuItemImage_create(JSContext *cx, uint32_t argc, jsval *v
 				last = 3;
 			}
 		}
-		cocos2d::CCMenuItemImage* ret = cocos2d::CCMenuItemImage::create(arg0, arg1, arg2);
+		cocos2d::CCMenuItemImage* ret = cocos2d::CCMenuItemImage::create((char*)arg0, (char*)arg1, (char*)arg2);
 
 		if (argc >= 3) { 
 			if (!thirdArgIsString) {
