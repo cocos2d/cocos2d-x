@@ -296,6 +296,7 @@ Developers:
     xyhl515
         Fixed a bug that CCControlSwitch::setOn(isOn,false) doesn't work.
         Adds VS2012 Express template installing support.
+        Fixing a logical error in CCDrawNode::drawPolygon.
 
     DarraghCoy
         Fix for unaligned memory access crash in CCBReader::readFloat().
@@ -353,6 +354,7 @@ Developers:
 
     flamingo (flaming0)
         Null pointer check in order to prevent crashes.
+        Updating spine-runtime to EsotericSoftware/spine-runtimes@5f90386.
 
     rtissera (Romain TISSERAND)
         Adding missing JNIEXPORT / JNICALL declarations.
@@ -438,6 +440,12 @@ Developers:
         
     Lee, Jae-Hong (pyrasis)
         Maintainer of tizen port.
+
+    lumendes
+        Updating spine-runtime to EsotericSoftware/spine-runtimes@5f90386.
+        
+    sunxiaoyu
+        Refactoring CCEditBox to add UITextField only when keyboard was opened, remove it when keyboard was closed.
 
 Retired Core Developers:
     WenSheng Yang

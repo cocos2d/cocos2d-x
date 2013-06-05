@@ -39,7 +39,7 @@ Bone* Bone_create (BoneData* data, Bone* parent) {
 	Bone* self = NEW(Bone);
 	CONST_CAST(BoneData*, self->data) = data;
 	CONST_CAST(Bone*, self->parent) = parent;
-	Bone_setToBindPose(self);
+	Bone_setToSetupPose(self);
 	return self;
 }
 
@@ -47,7 +47,7 @@ void Bone_dispose (Bone* self) {
 	FREE(self);
 }
 
-void Bone_setToBindPose (Bone* self) {
+void Bone_setToSetupPose (Bone* self) {
 	self->x = self->data->x;
 	self->y = self->data->y;
 	self->rotation = self->data->rotation;
@@ -56,6 +56,7 @@ void Bone_setToBindPose (Bone* self) {
 }
 
 void Bone_updateWorldTransform (Bone* self, int flipX, int flipY) {
+	float radians, cosine, sine;
 	if (self->parent) {
 		CONST_CAST(float, self->worldX) = self->x * self->parent->m00 + self->y * self->parent->m01 + self->parent->worldX;
 		CONST_CAST(float, self->worldY) = self->x * self->parent->m10 + self->y * self->parent->m11 + self->parent->worldY;
@@ -63,15 +64,20 @@ void Bone_updateWorldTransform (Bone* self, int flipX, int flipY) {
 		CONST_CAST(float, self->worldScaleY) = self->parent->worldScaleY * self->scaleY;
 		CONST_CAST(float, self->worldRotation) = self->parent->worldRotation + self->rotation;
 	} else {
-		CONST_CAST(float, self->worldX) = self->x;
-		CONST_CAST(float, self->worldY) = self->y;
+		CONST_CAST(float, self->worldX) = flipX ? -self->x : self->x;
+		CONST_CAST(float, self->worldY) = flipX ? -self->y : self->y;
 		CONST_CAST(float, self->worldScaleX) = self->scaleX;
 		CONST_CAST(float, self->worldScaleY) = self->scaleY;
 		CONST_CAST(float, self->worldRotation) = self->rotation;
 	}
-	float radians = (float)(self->worldRotation * 3.1415926535897932385 / 180);
-	float cosine = cosf(radians);
-	float sine = sinf(radians);
+	radians = (float)(self->worldRotation * 3.1415926535897932385 / 180);
+#ifdef __STDC_VERSION__
+	cosine = cosf(radians);
+	sine = sinf(radians);
+#else
+	cosine = (float)cos(radians);
+	sine = (float)sin(radians);
+#endif
 	CONST_CAST(float, self->m00) = cosine * self->worldScaleX;
 	CONST_CAST(float, self->m10) = sine * self->worldScaleX;
 	CONST_CAST(float, self->m01) = -sine * self->worldScaleY;
