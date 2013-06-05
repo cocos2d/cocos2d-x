@@ -18,7 +18,9 @@ SOURCES = main.cpp \
         $(COCOS_ROOT)/scripting/lua/cocos2dx_support/CCLuaStack.cpp \
         $(COCOS_ROOT)/scripting/lua/cocos2dx_support/Cocos2dxLuaLoader.cpp \
         $(COCOS_ROOT)/scripting/lua/cocos2dx_support/LuaCocos2d.cpp \
-        $(COCOS_ROOT)/scripting/lua/cocos2dx_support/tolua_fix.c
+        $(COCOS_ROOT)/scripting/lua/cocos2dx_support/tolua_fix.c \
+        $(COCOS_ROOT)/scripting/lua/cocos2dx_support/CCBProxy.cpp \
+        $(COCOS_ROOT)/scripting/lua/cocos2dx_support/Lua_extensions_CCB.cpp \
 
 include $(COCOS2DX_PATH)/../extensions/proj.nacl/Makefile
 SOURCES += $(addprefix $(COCOS_ROOT)/extensions/, $(EXTENSIONS_SOURCES))

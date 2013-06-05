@@ -28,40 +28,12 @@
 
 #include <spine/spine.h>
 #include "cocos2d.h"
+#include <spine/CCSkeleton.h>
+#include <spine/CCSkeletonAnimation.h>
 
 namespace cocos2d { namespace extension {
 
-class CCSkeleton: public cocos2d::CCNodeRGBA, public cocos2d::CCBlendProtocol {
-private:
-	bool ownsSkeleton;
-	bool ownsStateData;
-	Atlas* atlas;
-
-public:
-	Skeleton* const skeleton;
-	AnimationState* const state;
-	float timeScale;
-	bool debugSlots;
-	bool debugBones;
-
-	static CCSkeleton* createWithFile (const char* skeletonDataFile, Atlas* atlas, float scale = 1);
-	static CCSkeleton* createWithFile (const char* skeletonDataFile, const char* atlasFile, float scale = 1);
-	static CCSkeleton* createWithData (SkeletonData* skeletonData, AnimationStateData* stateData = 0);
-
-	CCSkeleton (SkeletonData* skeletonData, AnimationStateData* stateData = 0);
-	virtual ~CCSkeleton ();
-
-	virtual void update (float deltaTime);
-	virtual void draw ();
-	virtual cocos2d::CCRect boundingBox ();
-
-	// CCBlendProtocol
-	CC_PROPERTY(cocos2d::ccBlendFunc, blendFunc, BlendFunc);
-};
-
-/**/
-
-void RegionAttachment_updateQuad (RegionAttachment* self, Slot* slot, cocos2d::ccV3F_C4B_T2F_Quad* quad);
+void RegionAttachment_updateQuad (RegionAttachment* self, Slot* slot, cocos2d::ccV3F_C4B_T2F_Quad* quad, bool premultiplied = false);
 
 }} // namespace cocos2d { namespace extension {
 

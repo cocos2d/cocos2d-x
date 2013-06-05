@@ -78,8 +78,7 @@ JSBool js_cocos2dx_CCBAnimationManager_animationCompleteCallback(JSContext *cx, 
 		jsval *argv = JS_ARGV(cx, vp);
         
         JSObject *obj = JS_THIS_OBJECT(cx, vp);
-		js_proxy_t *proxy;
-		JS_GET_NATIVE_PROXY(proxy, obj);
+		js_proxy_t *proxy = jsb_get_js_proxy(obj);
 		cocos2d::extension::CCBAnimationManager *node = (cocos2d::extension::CCBAnimationManager *)(proxy ? proxy->ptr : NULL);
         
         JSCCBAnimationWrapper *tmpCobj = new JSCCBAnimationWrapper();
@@ -106,7 +105,7 @@ JSBool js_cocos2dx_CCBReader_readNodeGraphFromFile(JSContext *cx, uint32_t argc,
     JSObject *obj;
     cocos2d::extension::CCBReader* cobj;
     obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cobj = (cocos2d::extension::CCBReader *)(proxy ? proxy->ptr : NULL);
     TEST_NATIVE_OBJECT(cx, cobj)
     
@@ -117,7 +116,7 @@ JSBool js_cocos2dx_CCBReader_readNodeGraphFromFile(JSContext *cx, uint32_t argc,
         do {
             js_proxy_t *proxy;
             JSObject *tmpObj = JSVAL_TO_OBJECT(argv[1]);
-            JS_GET_NATIVE_PROXY(proxy, tmpObj);
+            proxy = jsb_get_js_proxy(tmpObj);
             arg1 = (cocos2d::CCObject*)(proxy ? proxy->ptr : NULL);
             TEST_NATIVE_OBJECT(cx, arg1)
         } while (0);
@@ -160,7 +159,7 @@ JSBool js_cocos2dx_CCBReader_readNodeGraphFromFile(JSContext *cx, uint32_t argc,
         do {
             js_proxy_t *proxy;
             JSObject *tmpObj = JSVAL_TO_OBJECT(argv[1]);
-            JS_GET_NATIVE_PROXY(proxy, tmpObj);
+            proxy = jsb_get_js_proxy(tmpObj);
             arg1 = (cocos2d::CCObject*)(proxy ? proxy->ptr : NULL);
             TEST_NATIVE_OBJECT(cx, arg1)
         } while (0);
@@ -191,7 +190,7 @@ JSBool js_cocos2dx_CCBReader_createSceneWithNodeGraphFromFile(JSContext *cx, uin
 	JSObject *obj;
 	cocos2d::extension::CCBReader* cobj;
 	obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cobj = (cocos2d::extension::CCBReader *)(proxy ? proxy->ptr : NULL);
 	TEST_NATIVE_OBJECT(cx, cobj)
     
@@ -202,7 +201,7 @@ JSBool js_cocos2dx_CCBReader_createSceneWithNodeGraphFromFile(JSContext *cx, uin
 		do {
 			js_proxy_t *proxy;
 			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[1]);
-			JS_GET_NATIVE_PROXY(proxy, tmpObj);
+			proxy = jsb_get_js_proxy(tmpObj);
 			arg1 = (cocos2d::CCObject*)(proxy ? proxy->ptr : NULL);
 			TEST_NATIVE_OBJECT(cx, arg1)
 		} while (0);
@@ -245,7 +244,7 @@ JSBool js_cocos2dx_CCBReader_createSceneWithNodeGraphFromFile(JSContext *cx, uin
 		do {
 			js_proxy_t *proxy;
 			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[1]);
-			JS_GET_NATIVE_PROXY(proxy, tmpObj);
+			proxy = jsb_get_js_proxy(tmpObj);
 			arg1 = (cocos2d::CCObject*)(proxy ? proxy->ptr : NULL);
 			TEST_NATIVE_OBJECT(cx, arg1)
 		} while (0);
@@ -283,8 +282,7 @@ JSBool js_CocosBuilder_create(JSContext *cx, uint32_t argc, jsval *vp)
     
     jsval jsret;
     if (ret) {
-        js_proxy_t *proxy;
-        JS_GET_PROXY(proxy, ret);
+        js_proxy_t *proxy = jsb_get_native_proxy(ret);
         if (proxy) {
             jsret = OBJECT_TO_JSVAL(proxy->obj);
         } else {
