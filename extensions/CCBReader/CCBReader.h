@@ -273,6 +273,9 @@ public:
     static void setResolutionScale(float scale);
     
     CCNode* readFileWithCleanUp(bool bCleanUp, CCDictionary* am);
+    
+    void addOwnerOutletName(std::string name);
+    void addOwnerOutletNode(CCNode *node);
 
 private:
     void cleanUpNodeGraph(CCNode *pNode);
