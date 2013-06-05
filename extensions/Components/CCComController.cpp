@@ -52,7 +52,7 @@ void CCComController::update(float delta)
 {
 }
 
-bool CCComController::isEnabled()
+bool CCComController::isEnabled() const
 {
     return m_bEnabled;
 }

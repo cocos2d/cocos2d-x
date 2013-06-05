@@ -40,7 +40,7 @@ public:
    virtual bool init();
    virtual void onEnter();
    virtual void onExit();
-   virtual bool isEnabled();
+   virtual bool isEnabled() const;
    virtual void setEnabled(bool b);
 
    static CCComAudio* create(void);
