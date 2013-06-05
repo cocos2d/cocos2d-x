@@ -196,9 +196,10 @@ public:
     bool initWithSizeAndBackgroundSprite(const CCSize& size, CCScale9Sprite* pNormal9SpriteBg);
     
     /**
-     * Set the delegate for edit box.
+     * Gets/Sets the delegate for edit box.
      */
     void setDelegate(CCEditBoxDelegate* pDelegate);
+    CCEditBoxDelegate* getDelegate();
     /**
      * Registers a script function that will be called for EditBox events.
      *
