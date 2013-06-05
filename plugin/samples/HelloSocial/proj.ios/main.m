@@ -24,6 +24,9 @@ THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
 
+// Under iOS and the Simulator, we can use an alternate Accelerometer interface
+#import "AccelerometerSimulation.h"
+
 int main(int argc, char *argv[]) {
     
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
