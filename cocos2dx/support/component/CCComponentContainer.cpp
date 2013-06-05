@@ -139,7 +139,7 @@ void CCComponentContainer::visit(float fDelta)
     }
 }
 
-bool CCComponentContainer::isEmpty()
+bool CCComponentContainer::isEmpty() const
 {
     return (bool)(!(m_pComponents && m_pComponents->count()));
 }
