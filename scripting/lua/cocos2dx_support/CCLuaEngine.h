@@ -78,6 +78,11 @@ public:
     virtual void removeScriptHandler(int nHandler);
     
     /**
+     @brief Reallocate Lua function reference
+     */
+    virtual int reallocateScriptHandler(int nHandler);
+    
+    /**
      @brief Execute script code contained in the given string.
      @param codes holding the valid script code that should be executed.
      @return 0 if the string is excuted correctly.
