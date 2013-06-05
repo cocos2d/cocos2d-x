@@ -338,7 +338,7 @@ void CCDrawNode::drawPolygon(CCPoint *verts, unsigned int count, const ccColor4F
 		extrude[i] = tmp;
 	}
 	
-	bool outline = (fillColor.a > 0.0 && borderWidth > 0.0);
+	bool outline = (borderColor.a > 0.0 && borderWidth > 0.0);
 	
 	unsigned int triangle_count = 3*count - 2;
 	unsigned int vertex_count = 3*triangle_count;

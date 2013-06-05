@@ -25,6 +25,7 @@ THE SOFTWARE.
 #define __CCX_IPLUGIN_H__
 
 #include "PluginParam.h"
+#include <vector>
 
 namespace cocos2d { namespace plugin {
 
@@ -40,7 +41,7 @@ public:
     /**
     @brief plug-in info methods(name, version, SDK version)
     */
-    inline const char* getPluginName() { return m_pPluginName; }
+    inline const char* getPluginName() { return m_pPluginName.c_str(); }
     const char* getPluginVersion();
     const char* getSDKVersion();
 
@@ -53,10 +54,19 @@ public:
      * @brief methods for reflections
      */
     void callFuncWithParam(const char* funcName, PluginParam* param, ...);
+    void callFuncWithParam(const char* funcName, std::vector<PluginParam*> params);
+
     const char* callStringFuncWithParam(const char* funcName, PluginParam* param, ...);
+    const char* callStringFuncWithParam(const char* funcName, std::vector<PluginParam*> params);
+
     int callIntFuncWithParam(const char* funcName, PluginParam* param, ...);
+    int callIntFuncWithParam(const char* funcName, std::vector<PluginParam*> params);
+
     bool callBoolFuncWithParam(const char* funcName, PluginParam* param, ...);
+    bool callBoolFuncWithParam(const char* funcName, std::vector<PluginParam*> params);
+
     float callFloatFuncWithParam(const char* funcName, PluginParam* param, ...);
+    float callFloatFuncWithParam(const char* funcName, std::vector<PluginParam*> params);
 
 protected:
     PluginProtocol() {}
@@ -66,7 +76,7 @@ private:
     inline void setPluginName(const char* name) {
     	m_pPluginName = name;
     }
-    const char* m_pPluginName;
+    std::string m_pPluginName;
 };
 
 }} //namespace cocos2d { namespace plugin {

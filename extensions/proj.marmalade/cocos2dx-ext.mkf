@@ -52,4 +52,9 @@ files
     ("../spine")
     "*.h"
     "*.cpp"
+    
+    ["Components"]
+    ("../Components")
+    "*.h"
+    "*.cpp"
 }

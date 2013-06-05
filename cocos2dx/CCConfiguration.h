@@ -121,6 +121,9 @@ public:
 	/** returns the value of a given key as a double */
 	CCObject * getObject( const char *key ) const;
 
+	/** sets a new key/value pair  in the configuration dictionary */
+	void setObject( const char *key, CCObject *value );
+
 	/** dumps the current configuration on the console */
 	void dumpInfo(void) const;
 
@@ -146,7 +149,8 @@ protected:
     GLint           m_nMaxSamplesAllowed;
     GLint           m_nMaxTextureUnits;
     char *          m_pGlExtensions;
-	CCDictionary	*m_pDefaults;
+	
+	CCDictionary	*m_pValueDict;
 };
 
 // end of global group
