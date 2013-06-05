@@ -45,7 +45,7 @@ public:
     virtual void removeAll();
     virtual void visit(float fDelta);
 public:
-    bool isEmpty();
+    bool isEmpty() const;
     
 private:
     void alloc(void);
