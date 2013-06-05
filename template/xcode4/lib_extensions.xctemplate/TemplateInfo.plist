@@ -1106,6 +1106,44 @@
 			<key>Path</key>
 			<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplMac.mm</string>
 		</dict>
+		<key>libs/extensions/GUI/CCEditBox/CCEditBoxImplNone.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>GUI</string>
+				<string>CCEditBox</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplNone.cpp</string>
+		</dict>
+		<key>libs/extensions/GUI/CCEditBox/CCEditBoxImplTizen.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>GUI</string>
+				<string>CCEditBox</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplTizen.cpp</string>
+		</dict>
+		<key>libs/extensions/GUI/CCEditBox/CCEditBoxImplTizen.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>GUI</string>
+				<string>CCEditBox</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplTizen.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/extensions/GUI/CCEditBox/CCEditBoxImplWin.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -1318,6 +1356,30 @@
 			</array>
 			<key>Path</key>
 			<string>libs/extensions/network/HttpResponse.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/extensions/network/WebSocket.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>network</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/network/WebSocket.cpp</string>
+		</dict>
+		<key>libs/extensions/network/WebSocket.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>network</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/network/WebSocket.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -1929,6 +1991,9 @@
 		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplIOS.mm</string>
 		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplMac.h</string>
 		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplMac.mm</string>
+		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplNone.cpp</string>
+		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplTizen.cpp</string>
+		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplTizen.h</string>
 		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplWin.cpp</string>
 		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplWin.h</string>
 		<string>libs/extensions/GUI/CCScrollView/CCScrollView.cpp</string>
@@ -1946,6 +2011,8 @@
 		<string>libs/extensions/network/HttpClient.h</string>
 		<string>libs/extensions/network/HttpRequest.h</string>
 		<string>libs/extensions/network/HttpResponse.h</string>
+		<string>libs/extensions/network/WebSocket.cpp</string>
+		<string>libs/extensions/network/WebSocket.h</string>
 		<string>libs/extensions/physics_nodes/CCPhysicsDebugNode.cpp</string>
 		<string>libs/extensions/physics_nodes/CCPhysicsDebugNode.h</string>
 		<string>libs/extensions/physics_nodes/CCPhysicsSprite.cpp</string>
