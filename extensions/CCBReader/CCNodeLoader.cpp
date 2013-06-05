@@ -885,6 +885,10 @@ CCNode * CCNodeLoader::parsePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CC
     CC_SAFE_RETAIN(pCCBReader->mOwner);
     ccbReader->mOwner = pCCBReader->mOwner;
     
+    if (NULL != ccbReader->mOwner) {
+        CCLOG("DDD");
+    }
+    
     ccbReader->getAnimationManager()->mOwner = ccbReader->mOwner;
 
     // The assignments below are done in the CCBReader constructor.
@@ -905,6 +909,36 @@ CCNode * CCNodeLoader::parsePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CC
         ccbReader->getAnimationManager()->runAnimationsForSequenceIdTweenDuration(ccbReader->getAnimationManager()->getAutoPlaySequenceId(), 0);
     }
     
+    if (ccbReader->isJSControlled() && pCCBReader->isJSControlled() && NULL != ccbReader->mOwner)
+    {
+        //set variables and callback to owner
+        //set callback
+        CCArray *ownerCallbackNames = ccbReader->getOwnerCallbackNames();
+        CCArray *ownerCallbackNodes = ccbReader->getOwnerCallbackNodes();
+        if (NULL != ownerCallbackNames && ownerCallbackNames->count() > 0 &&
+            NULL != ownerCallbackNodes && ownerCallbackNodes->count() > 0)
+        {
+            assert(ownerCallbackNames->count() == ownerCallbackNodes->count());
+            int nCount = ownerCallbackNames->count();
+            for (int i = 0 ; i < nCount; i++) {
+                pCCBReader->addOwnerCallbackName((dynamic_cast<CCString*>(ownerCallbackNames->objectAtIndex(i)))->getCString());
+                pCCBReader->addOwnerCallbackNode(dynamic_cast<CCNode*>(ownerCallbackNames->objectAtIndex(i)) );
+            }
+        }
+        //set variables
+        CCArray *ownerOutletNames = ccbReader->getOwnerOutletNames();
+        CCArray *ownerOutletNodes = ccbReader->getOwnerOutletNodes();
+        if (NULL != ownerOutletNames && ownerOutletNames->count() > 0 &&
+            NULL != ownerOutletNodes && ownerOutletNodes->count() > 0)
+        {
+            assert(ownerOutletNames->count() == ownerOutletNodes->count());
+            int nCount = ownerOutletNames->count();
+            for (int i = 0 ; i < nCount; i++) {
+                pCCBReader->addOwnerOutletName((dynamic_cast<CCString*>(ownerOutletNames->objectAtIndex(i)))->getCString());
+                pCCBReader->addOwnerOutletNode(dynamic_cast<CCNode*>(ownerOutletNodes->objectAtIndex(i)) );
+            }
+        }
+    }
     return ccbFileNode;
 }
 

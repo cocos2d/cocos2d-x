@@ -443,7 +443,7 @@ CCObject * CCCallFunc::copyWithZone(CCZone *pZone) {
     CCActionInstant::copyWithZone(pZone);
     pRet->initWithTarget(m_pSelectorTarget);
     pRet->m_pCallFunc = m_pCallFunc;
-    pRet->m_nScriptHandler = m_nScriptHandler;
+    pRet->m_nScriptHandler = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine()->reallocateScriptHandler(m_nScriptHandler);
     CC_SAFE_DELETE(pNewZone);
     return pRet;
 }
