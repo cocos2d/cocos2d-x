@@ -236,9 +236,9 @@ void ConfigurationSet::onEnter()
 
 	CCConfiguration *conf = CCConfiguration::sharedConfiguration();
 
-	conf->setObject("this.is.an.int.key", CCInteger::create(10) );
-	conf->setObject("this.is.a.bool.key", CCBool::create(true) );
-	conf->setObject("this.is.a.string.key", CCString::create("hello world") );
+	conf->setObject("this.is.an.int.value", CCInteger::create(10) );
+	conf->setObject("this.is.a.bool.value", CCBool::create(true) );
+	conf->setObject("this.is.a.string.value", CCString::create("hello world") );
 
 	conf->dumpInfo();
 }
