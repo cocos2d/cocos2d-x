@@ -7,6 +7,7 @@ INCLUDES = \
 	-I$(COCOS_ROOT)/extensions/GUI/CCControlExtension \
 	-I$(COCOS_ROOT)/external/chipmunk/include/chipmunk \
 	-I$(COCOS_ROOT)/extensions/network \
+       -I$(COCOS_ROOT)/extensions/Components \
 	-I$(NACL_SDK_ROOT)/include \
 
 SOURCES = ../actions/CCAction.cpp \
@@ -94,6 +95,8 @@ SOURCES = ../actions/CCAction.cpp \
 ../support/zip_support/ioapi.cpp \
 ../support/zip_support/unzip.cpp \
 ../support/data_support/ccCArray.cpp \
+../support/component/CCComponent.cpp \
+../support/component/CCComponentContainer.cpp \
 ../text_input_node/CCIMEDispatcher.cpp \
 ../text_input_node/CCTextFieldTTF.cpp \
 ../textures/CCTexture2D.cpp \

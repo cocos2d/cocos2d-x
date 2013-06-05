@@ -17,8 +17,7 @@ static JSBool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
 	HASH_FIND_INT(_js_global_type_ht, &typeId, p);
 	assert(p);
 	JSObject *_tmp = JS_NewObject(cx, p->jsclass, p->proto, p->parentProto);
-	js_proxy_t *pp;
-	JS_NEW_PROXY(pp, cobj, _tmp);
+	js_proxy_t *pp = jsb_new_proxy(cobj, _tmp);
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(_tmp));
 
 	return JS_TRUE;
@@ -35,7 +34,7 @@ JSObject *jsb_PluginProtocol_prototype;
 JSBool js_pluginx_protocols_PluginProtocol_getPluginName(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::PluginProtocol* cobj = (cocos2d::plugin::PluginProtocol *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 0) {
@@ -52,7 +51,7 @@ JSBool js_pluginx_protocols_PluginProtocol_getPluginName(JSContext *cx, uint32_t
 JSBool js_pluginx_protocols_PluginProtocol_getPluginVersion(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::PluginProtocol* cobj = (cocos2d::plugin::PluginProtocol *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 0) {
@@ -69,7 +68,7 @@ JSBool js_pluginx_protocols_PluginProtocol_getPluginVersion(JSContext *cx, uint3
 JSBool js_pluginx_protocols_PluginProtocol_getSDKVersion(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::PluginProtocol* cobj = (cocos2d::plugin::PluginProtocol *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 0) {
@@ -88,7 +87,7 @@ JSBool js_pluginx_protocols_PluginProtocol_setDebugMode(JSContext *cx, uint32_t 
 	jsval *argv = JS_ARGV(cx, vp);
 	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::PluginProtocol* cobj = (cocos2d::plugin::PluginProtocol *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 1) {
@@ -110,15 +109,15 @@ void js_pluginx_protocols_PluginProtocol_finalize(JSFreeOp *fop, JSObject *obj) 
     CCLOGINFO("jsbindings: finalizing JS object %p (PluginProtocol)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
-    JS_GET_NATIVE_PROXY(jsproxy, obj);
+    jsproxy = jsb_get_js_proxy(obj);
     if (jsproxy) {
-        JS_GET_PROXY(nproxy, jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
 
 //        cocos2d::plugin::PluginProtocol *nobj = static_cast<cocos2d::plugin::PluginProtocol *>(nproxy->ptr);
 //        if (nobj)
 //            delete nobj;
         
-        JS_REMOVE_PROXY(nproxy, jsproxy);
+        jsb_remove_proxy(nproxy, jsproxy);
     }
 }
 
@@ -186,7 +185,7 @@ JSBool js_pluginx_protocols_PluginManager_unloadPlugin(JSContext *cx, uint32_t a
 	jsval *argv = JS_ARGV(cx, vp);
 	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::PluginManager* cobj = (cocos2d::plugin::PluginManager *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 1) {
@@ -206,7 +205,7 @@ JSBool js_pluginx_protocols_PluginManager_loadPlugin(JSContext *cx, uint32_t arg
 	jsval *argv = JS_ARGV(cx, vp);
 	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::PluginManager* cobj = (cocos2d::plugin::PluginManager *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 1) {
@@ -268,15 +267,15 @@ void js_pluginx_protocols_PluginManager_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (PluginManager)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
-    JS_GET_NATIVE_PROXY(jsproxy, obj);
+    jsproxy = jsb_get_js_proxy(obj);
     if (jsproxy) {
-        JS_GET_PROXY(nproxy, jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
 
 //        cocos2d::plugin::PluginManager *nobj = static_cast<cocos2d::plugin::PluginManager *>(nproxy->ptr);
 //        if (nobj)
 //            delete nobj;
         
-        JS_REMOVE_PROXY(nproxy, jsproxy);
+        jsb_remove_proxy(nproxy, jsproxy);
     }
 }
 
@@ -346,7 +345,7 @@ JSBool js_pluginx_protocols_ProtocolAnalytics_logTimedEventBegin(JSContext *cx, 
 	jsval *argv = JS_ARGV(cx, vp);
 	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::ProtocolAnalytics* cobj = (cocos2d::plugin::ProtocolAnalytics *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 1) {
@@ -366,7 +365,7 @@ JSBool js_pluginx_protocols_ProtocolAnalytics_logError(JSContext *cx, uint32_t a
 	jsval *argv = JS_ARGV(cx, vp);
 	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::ProtocolAnalytics* cobj = (cocos2d::plugin::ProtocolAnalytics *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 2) {
@@ -388,7 +387,7 @@ JSBool js_pluginx_protocols_ProtocolAnalytics_setCaptureUncaughtException(JSCont
 	jsval *argv = JS_ARGV(cx, vp);
 	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::ProtocolAnalytics* cobj = (cocos2d::plugin::ProtocolAnalytics *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 1) {
@@ -408,7 +407,7 @@ JSBool js_pluginx_protocols_ProtocolAnalytics_setSessionContinueMillis(JSContext
 	jsval *argv = JS_ARGV(cx, vp);
 	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::ProtocolAnalytics* cobj = (cocos2d::plugin::ProtocolAnalytics *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 1) {
@@ -428,7 +427,7 @@ JSBool js_pluginx_protocols_ProtocolAnalytics_logEvent(JSContext *cx, uint32_t a
 	jsval *argv = JS_ARGV(cx, vp);
 	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::ProtocolAnalytics* cobj = (cocos2d::plugin::ProtocolAnalytics *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 1) {
@@ -462,7 +461,7 @@ JSBool js_pluginx_protocols_ProtocolAnalytics_startSession(JSContext *cx, uint32
 	jsval *argv = JS_ARGV(cx, vp);
 	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::ProtocolAnalytics* cobj = (cocos2d::plugin::ProtocolAnalytics *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 1) {
@@ -480,7 +479,7 @@ JSBool js_pluginx_protocols_ProtocolAnalytics_startSession(JSContext *cx, uint32
 JSBool js_pluginx_protocols_ProtocolAnalytics_stopSession(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::ProtocolAnalytics* cobj = (cocos2d::plugin::ProtocolAnalytics *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 0) {
@@ -497,7 +496,7 @@ JSBool js_pluginx_protocols_ProtocolAnalytics_logTimedEventEnd(JSContext *cx, ui
 	jsval *argv = JS_ARGV(cx, vp);
 	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::ProtocolAnalytics* cobj = (cocos2d::plugin::ProtocolAnalytics *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 1) {
@@ -520,15 +519,15 @@ void js_pluginx_protocols_ProtocolAnalytics_finalize(JSFreeOp *fop, JSObject *ob
     CCLOGINFO("jsbindings: finalizing JS object %p (ProtocolAnalytics)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
-    JS_GET_NATIVE_PROXY(jsproxy, obj);
+    jsproxy = jsb_get_js_proxy(obj);
     if (jsproxy) {
-        JS_GET_PROXY(nproxy, jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
 
 //        cocos2d::plugin::ProtocolAnalytics *nobj = static_cast<cocos2d::plugin::ProtocolAnalytics *>(nproxy->ptr);
 //        if (nobj)
 //            delete nobj;
         
-        JS_REMOVE_PROXY(nproxy, jsproxy);
+        jsb_remove_proxy(nproxy, jsproxy);
     }
 }
 
@@ -598,7 +597,7 @@ JSBool js_pluginx_protocols_ProtocolIAP_payForProduct(JSContext *cx, uint32_t ar
 	jsval *argv = JS_ARGV(cx, vp);
 	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::ProtocolIAP* cobj = (cocos2d::plugin::ProtocolIAP *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 1) {
@@ -618,7 +617,7 @@ JSBool js_pluginx_protocols_ProtocolIAP_onPayResult(JSContext *cx, uint32_t argc
 	jsval *argv = JS_ARGV(cx, vp);
 	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::ProtocolIAP* cobj = (cocos2d::plugin::ProtocolIAP *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 2) {
@@ -640,7 +639,7 @@ JSBool js_pluginx_protocols_ProtocolIAP_configDeveloperInfo(JSContext *cx, uint3
 	jsval *argv = JS_ARGV(cx, vp);
 	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::ProtocolIAP* cobj = (cocos2d::plugin::ProtocolIAP *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 1) {
@@ -663,15 +662,15 @@ void js_pluginx_protocols_ProtocolIAP_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ProtocolIAP)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
-    JS_GET_NATIVE_PROXY(jsproxy, obj);
+    jsproxy = jsb_get_js_proxy(obj);
     if (jsproxy) {
-        JS_GET_PROXY(nproxy, jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
 
 //        cocos2d::plugin::ProtocolIAP *nobj = static_cast<cocos2d::plugin::ProtocolIAP *>(nproxy->ptr);
 //        if (nobj)
 //            delete nobj;
         
-        JS_REMOVE_PROXY(nproxy, jsproxy);
+        jsb_remove_proxy(nproxy, jsproxy);
     }
 }
 
@@ -738,7 +737,7 @@ JSBool js_pluginx_protocols_ProtocolAds_showAds(JSContext *cx, uint32_t argc, js
 	jsval *argv = JS_ARGV(cx, vp);
 	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::ProtocolAds* cobj = (cocos2d::plugin::ProtocolAds *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 1) {
@@ -780,7 +779,7 @@ JSBool js_pluginx_protocols_ProtocolAds_hideAds(JSContext *cx, uint32_t argc, js
 	jsval *argv = JS_ARGV(cx, vp);
 	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::ProtocolAds* cobj = (cocos2d::plugin::ProtocolAds *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 1) {
@@ -800,7 +799,7 @@ JSBool js_pluginx_protocols_ProtocolAds_configDeveloperInfo(JSContext *cx, uint3
 	jsval *argv = JS_ARGV(cx, vp);
 	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::ProtocolAds* cobj = (cocos2d::plugin::ProtocolAds *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 1) {
@@ -820,7 +819,7 @@ JSBool js_pluginx_protocols_ProtocolAds_spendPoints(JSContext *cx, uint32_t argc
 	jsval *argv = JS_ARGV(cx, vp);
 	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::ProtocolAds* cobj = (cocos2d::plugin::ProtocolAds *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 1) {
@@ -840,7 +839,7 @@ JSBool js_pluginx_protocols_ProtocolAds_onAdsResult(JSContext *cx, uint32_t argc
 	jsval *argv = JS_ARGV(cx, vp);
 	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::ProtocolAds* cobj = (cocos2d::plugin::ProtocolAds *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 2) {
@@ -862,7 +861,7 @@ JSBool js_pluginx_protocols_ProtocolAds_onPlayerGetPoints(JSContext *cx, uint32_
 	jsval *argv = JS_ARGV(cx, vp);
 	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::ProtocolAds* cobj = (cocos2d::plugin::ProtocolAds *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 1) {
@@ -885,15 +884,15 @@ void js_pluginx_protocols_ProtocolAds_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ProtocolAds)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
-    JS_GET_NATIVE_PROXY(jsproxy, obj);
+    jsproxy = jsb_get_js_proxy(obj);
     if (jsproxy) {
-        JS_GET_PROXY(nproxy, jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
 
 //        cocos2d::plugin::ProtocolAds *nobj = static_cast<cocos2d::plugin::ProtocolAds *>(nproxy->ptr);
 //        if (nobj)
 //            delete nobj;
         
-        JS_REMOVE_PROXY(nproxy, jsproxy);
+        jsb_remove_proxy(nproxy, jsproxy);
     }
 }
 
@@ -963,7 +962,7 @@ JSBool js_pluginx_protocols_ProtocolSocial_onShareResult(JSContext *cx, uint32_t
 	jsval *argv = JS_ARGV(cx, vp);
 	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::ProtocolSocial* cobj = (cocos2d::plugin::ProtocolSocial *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 2) {
@@ -985,7 +984,7 @@ JSBool js_pluginx_protocols_ProtocolSocial_share(JSContext *cx, uint32_t argc, j
 	jsval *argv = JS_ARGV(cx, vp);
 	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::ProtocolSocial* cobj = (cocos2d::plugin::ProtocolSocial *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 1) {
@@ -1005,7 +1004,7 @@ JSBool js_pluginx_protocols_ProtocolSocial_configDeveloperInfo(JSContext *cx, ui
 	jsval *argv = JS_ARGV(cx, vp);
 	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::ProtocolSocial* cobj = (cocos2d::plugin::ProtocolSocial *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 1) {
@@ -1028,15 +1027,15 @@ void js_pluginx_protocols_ProtocolSocial_finalize(JSFreeOp *fop, JSObject *obj) 
     CCLOGINFO("jsbindings: finalizing JS object %p (ProtocolSocial)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
-    JS_GET_NATIVE_PROXY(jsproxy, obj);
+    jsproxy = jsb_get_js_proxy(obj);
     if (jsproxy) {
-        JS_GET_PROXY(nproxy, jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
 
 //        cocos2d::plugin::ProtocolSocial *nobj = static_cast<cocos2d::plugin::ProtocolSocial *>(nproxy->ptr);
 //        if (nobj)
 //            delete nobj;
         
-        JS_REMOVE_PROXY(nproxy, jsproxy);
+        jsb_remove_proxy(nproxy, jsproxy);
     }
 }
 
