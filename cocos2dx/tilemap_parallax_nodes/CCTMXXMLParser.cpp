@@ -404,14 +404,32 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     }
     else if (elementName == "tile")
     {
-        CCTMXTilesetInfo* info = (CCTMXTilesetInfo*)pTMXMapInfo->getTilesets()->lastObject();
-        CCDictionary *dict = new CCDictionary();
-        pTMXMapInfo->setParentGID(info->m_uFirstGid + atoi(valueForKey("id", attributeDict)));
-        pTMXMapInfo->getTileProperties()->setObject(dict, pTMXMapInfo->getParentGID());
-        CC_SAFE_RELEASE(dict);
-        
-        pTMXMapInfo->setParentElement(TMXPropertyTile);
+        if (pTMXMapInfo->getParentElement() == TMXPropertyLayer)
+        {
+            CCTMXLayerInfo* layer = (CCTMXLayerInfo*)pTMXMapInfo->getLayers()->lastObject();
+            CCSize layerSize = layer->m_tLayerSize;
+            unsigned int gid = (unsigned int)atoi(valueForKey("gid", attributeDict));
+            int tilesAmount = layerSize.width*layerSize.height;
 
+            for (int i = 0; i < tilesAmount; i++)
+            {
+                if (((int *)layer->m_pTiles)[i] == -1)
+                {
+                    layer->m_pTiles[i] = gid;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            CCTMXTilesetInfo* info = (CCTMXTilesetInfo*)pTMXMapInfo->getTilesets()->lastObject();
+            CCDictionary *dict = new CCDictionary();
+            pTMXMapInfo->setParentGID(info->m_uFirstGid + atoi(valueForKey("id", attributeDict)));
+            pTMXMapInfo->getTileProperties()->setObject(dict, pTMXMapInfo->getParentGID());
+            CC_SAFE_RELEASE(dict);
+
+            pTMXMapInfo->setParentElement(TMXPropertyTile);
+        }
     }
     else if (elementName == "layer")
     {
@@ -485,7 +503,19 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         std::string encoding = valueForKey("encoding", attributeDict);
         std::string compression = valueForKey("compression", attributeDict);
 
-        if( encoding == "base64" )
+        if (encoding == "")
+        {
+            CCTMXLayerInfo* layer = (CCTMXLayerInfo*)pTMXMapInfo->getLayers()->lastObject();
+            CCSize layerSize = layer->m_tLayerSize;
+            int tilesAmount = layerSize.width*layerSize.height;
+
+            int *tiles = (int *) malloc(tilesAmount*sizeof(int));
+            for (int i = 0; i < tilesAmount; i++)
+                tiles[i] = -1;
+
+            layer->m_pTiles = (unsigned int*) tiles;
+        }
+        else if (encoding == "base64")
         {
             int layerAttribs = pTMXMapInfo->getLayerAttribs();
             pTMXMapInfo->setLayerAttribs(layerAttribs | TMXLayerAttribBase64);
@@ -503,7 +533,6 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             }
             CCAssert( compression == "" || compression == "gzip" || compression == "zlib", "TMX: unsupported compression method" );
         }
-        CCAssert( pTMXMapInfo->getLayerAttribs() != TMXLayerAttribNone, "TMX tile map: Only base64 and/or gzip/zlib maps are supported" );
 
     } 
     else if (elementName == "object")
