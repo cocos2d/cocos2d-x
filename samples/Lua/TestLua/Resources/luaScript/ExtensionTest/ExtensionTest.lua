@@ -1,3 +1,5 @@
+require "luaScript/ExtensionTest/CocosBuilderTest"
+
 local LINE_SPACE = 40
 local kItemTagBasic = 1000
 
@@ -1008,6 +1010,7 @@ local s = CCDirector:sharedDirector():getWinSize()
 local function ExtensionsMainLayer()
 	
 	local function CreateExtensionsTestScene(nPerformanceNo)
+        print(nPerformanceNo)
 	  	local pNewscene = CreateExtensionsTestTable[nPerformanceNo]()
   		return pNewscene
 	end

@@ -37,12 +37,14 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCLuaStack *pStack = pEngine->getLuaStack();
     lua_State *tolua_s = pStack->getLuaState();
     tolua_extensions_ccb_open(tolua_s);
+    
+    std::vector<std::string> searchPaths;
+    searchPaths.push_back("cocosbuilderRes");
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
-    std::vector<std::string> searchPaths;
     searchPaths.push_back("TestCppResources");
-    CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
 #endif
+    CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
 
     pEngine->executeScriptFile("luaScript/controller.lua");
 
