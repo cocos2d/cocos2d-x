@@ -271,6 +271,8 @@
 		1A40DFE11727AFBF006D4861 /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 1A40DFE01727AFBF006D4861 /* spine */; };
 		1A60BF64173CD9E80054773B /* DataVisitorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A60BF62173CD9E80054773B /* DataVisitorTest.cpp */; };
 		1A75E96016F85FDB00BA80BD /* TimelineCallbackTestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A75E95E16F85FDB00BA80BD /* TimelineCallbackTestLayer.cpp */; };
+		1A8F3B21175DC6D800049216 /* CCSkeleton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8F3B1D175DC6D800049216 /* CCSkeleton.cpp */; };
+		1A8F3B22175DC6D800049216 /* CCSkeletonAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8F3B1F175DC6D800049216 /* CCSkeletonAnimation.cpp */; };
 		1AB2D72816B6804D00D72C48 /* FileUtilsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB2D72616B6804D00D72C48 /* FileUtilsTest.cpp */; };
 		1AB2D72A16B681F900D72C48 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 1AB2D72916B681F900D72C48 /* Misc */; };
 		1ABA2873174DAF67007A6C10 /* ConfigurationTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ABA2871174DAF67007A6C10 /* ConfigurationTest.cpp */; };
@@ -867,6 +869,10 @@
 		1A75E95D16F85FDB00BA80BD /* TimelineCallbackLayerLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineCallbackLayerLoader.h; sourceTree = "<group>"; };
 		1A75E95E16F85FDB00BA80BD /* TimelineCallbackTestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TimelineCallbackTestLayer.cpp; sourceTree = "<group>"; };
 		1A75E95F16F85FDB00BA80BD /* TimelineCallbackTestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineCallbackTestLayer.h; sourceTree = "<group>"; };
+		1A8F3B1D175DC6D800049216 /* CCSkeleton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSkeleton.cpp; sourceTree = "<group>"; };
+		1A8F3B1E175DC6D800049216 /* CCSkeleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSkeleton.h; sourceTree = "<group>"; };
+		1A8F3B1F175DC6D800049216 /* CCSkeletonAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSkeletonAnimation.cpp; sourceTree = "<group>"; };
+		1A8F3B20175DC6D800049216 /* CCSkeletonAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSkeletonAnimation.h; sourceTree = "<group>"; };
 		1AB2D72616B6804D00D72C48 /* FileUtilsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileUtilsTest.cpp; sourceTree = "<group>"; };
 		1AB2D72716B6804D00D72C48 /* FileUtilsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileUtilsTest.h; sourceTree = "<group>"; };
 		1AB2D72916B681F900D72C48 /* Misc */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Misc; sourceTree = "<group>"; };
@@ -2181,6 +2187,10 @@
 				1A40DFB11727AE7E006D4861 /* Bone.h */,
 				1A40DFB21727AE7E006D4861 /* BoneData.cpp */,
 				1A40DFB31727AE7E006D4861 /* BoneData.h */,
+				1A8F3B1D175DC6D800049216 /* CCSkeleton.cpp */,
+				1A8F3B1E175DC6D800049216 /* CCSkeleton.h */,
+				1A8F3B1F175DC6D800049216 /* CCSkeletonAnimation.cpp */,
+				1A8F3B20175DC6D800049216 /* CCSkeletonAnimation.h */,
 				1A40DFB41727AE7E006D4861 /* extension.cpp */,
 				1A40DFB51727AE7E006D4861 /* extension.h */,
 				1A40DFB61727AE7E006D4861 /* Json.cpp */,
@@ -2732,6 +2742,8 @@
 				467373111739F4270034BF94 /* TextureAtlasEncryptionTest.cpp in Sources */,
 				1A60BF64173CD9E80054773B /* DataVisitorTest.cpp in Sources */,
 				1ABA2873174DAF67007A6C10 /* ConfigurationTest.cpp in Sources */,
+				1A8F3B21175DC6D800049216 /* CCSkeleton.cpp in Sources */,
+				1A8F3B22175DC6D800049216 /* CCSkeletonAnimation.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

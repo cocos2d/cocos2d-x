@@ -160,6 +160,8 @@
 		1A40E76B1727BFC6006D4861 /* Slot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40E7541727BFC6006D4861 /* Slot.cpp */; };
 		1A40E76C1727BFC6006D4861 /* SlotData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40E7561727BFC6006D4861 /* SlotData.cpp */; };
 		1A40E76D1727BFC6006D4861 /* spine-cocos2dx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40E7581727BFC6006D4861 /* spine-cocos2dx.cpp */; };
+		1AB87042175E0AFA005D39BF /* CCSkeleton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB8703E175E0AFA005D39BF /* CCSkeleton.cpp */; };
+		1AB87043175E0AFA005D39BF /* CCSkeletonAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB87040175E0AFA005D39BF /* CCSkeletonAnimation.cpp */; };
 		1AFAF8C316D3884900DB1158 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AFAF8C016D3884900DB1158 /* CloseNormal.png */; };
 		1AFAF8C416D3884900DB1158 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AFAF8C116D3884900DB1158 /* CloseSelected.png */; };
 		1AFAF8C516D3884900DB1158 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AFAF8C216D3884900DB1158 /* HelloWorld.png */; };
@@ -496,6 +498,10 @@
 		1A40E7581727BFC6006D4861 /* spine-cocos2dx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "spine-cocos2dx.cpp"; sourceTree = "<group>"; };
 		1A40E7591727BFC6006D4861 /* spine-cocos2dx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "spine-cocos2dx.h"; sourceTree = "<group>"; };
 		1A40E75A1727BFC6006D4861 /* spine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spine.h; sourceTree = "<group>"; };
+		1AB8703E175E0AFA005D39BF /* CCSkeleton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSkeleton.cpp; sourceTree = "<group>"; };
+		1AB8703F175E0AFA005D39BF /* CCSkeleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSkeleton.h; sourceTree = "<group>"; };
+		1AB87040175E0AFA005D39BF /* CCSkeletonAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSkeletonAnimation.cpp; sourceTree = "<group>"; };
+		1AB87041175E0AFA005D39BF /* CCSkeletonAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSkeletonAnimation.h; sourceTree = "<group>"; };
 		1AFAF8C016D3884900DB1158 /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
 		1AFAF8C116D3884900DB1158 /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseSelected.png; sourceTree = "<group>"; };
 		1AFAF8C216D3884900DB1158 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
@@ -1038,6 +1044,10 @@
 				1A40E7431727BFC6006D4861 /* Bone.h */,
 				1A40E7441727BFC6006D4861 /* BoneData.cpp */,
 				1A40E7451727BFC6006D4861 /* BoneData.h */,
+				1AB8703E175E0AFA005D39BF /* CCSkeleton.cpp */,
+				1AB8703F175E0AFA005D39BF /* CCSkeleton.h */,
+				1AB87040175E0AFA005D39BF /* CCSkeletonAnimation.cpp */,
+				1AB87041175E0AFA005D39BF /* CCSkeletonAnimation.h */,
 				1A40E7461727BFC6006D4861 /* extension.cpp */,
 				1A40E7471727BFC6006D4861 /* extension.h */,
 				1A40E7481727BFC6006D4861 /* Json.cpp */,
@@ -1378,6 +1388,8 @@
 				1A40E76B1727BFC6006D4861 /* Slot.cpp in Sources */,
 				1A40E76C1727BFC6006D4861 /* SlotData.cpp in Sources */,
 				1A40E76D1727BFC6006D4861 /* spine-cocos2dx.cpp in Sources */,
+				1AB87042175E0AFA005D39BF /* CCSkeleton.cpp in Sources */,
+				1AB87043175E0AFA005D39BF /* CCSkeletonAnimation.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1415,6 +1427,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
@@ -1444,7 +1458,7 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../cocos2dx/platform/third_party/mac/libraries\"";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CFLAGS = "-O2";
 				PRODUCT_NAME = HelloCpp;
 				SDKROOT = macosx;
@@ -1457,6 +1471,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
@@ -1484,7 +1500,7 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../cocos2dx/platform/third_party/mac/libraries\"";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = HelloCpp;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "";
