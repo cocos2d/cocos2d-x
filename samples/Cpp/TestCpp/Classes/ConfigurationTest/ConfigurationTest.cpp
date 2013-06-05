@@ -7,12 +7,14 @@ TESTLAYER_CREATE_FUNC(ConfigurationLoadConfig);
 TESTLAYER_CREATE_FUNC(ConfigurationQuery);
 TESTLAYER_CREATE_FUNC(ConfigurationInvalid);
 TESTLAYER_CREATE_FUNC(ConfigurationDefault);
+TESTLAYER_CREATE_FUNC(ConfigurationSet);
 
 static NEWTESTFUNC createFunctions[] = {
     CF(ConfigurationLoadConfig),
 	CF(ConfigurationQuery),
 	CF(ConfigurationInvalid),
-	CF(ConfigurationDefault)
+	CF(ConfigurationDefault),
+	CF(ConfigurationSet)
 };
 
 static int sceneIdx=-1;
@@ -222,3 +224,27 @@ std::string ConfigurationDefault::subtitle()
 {
     return "Tests defaults values";
 }
+
+//------------------------------------------------------------------
+//
+// ConfigurationSet
+//
+//------------------------------------------------------------------
+void ConfigurationSet::onEnter()
+{
+    ConfigurationBase::onEnter();
+
+	CCConfiguration *conf = CCConfiguration::sharedConfiguration();
+
+	conf->setObject("this.is.an.int.value", CCInteger::create(10) );
+	conf->setObject("this.is.a.bool.value", CCBool::create(true) );
+	conf->setObject("this.is.a.string.value", CCString::create("hello world") );
+
+	conf->dumpInfo();
+}
+
+std::string ConfigurationSet::subtitle()
+{
+    return "Tests setting values manually";
+}
+
