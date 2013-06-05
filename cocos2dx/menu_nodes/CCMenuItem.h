@@ -78,13 +78,13 @@ public:
     /** Creates a CCMenuItem with no target/selector */
     static CCMenuItem* create();
     /** Creates a CCMenuItem with a target/selector */
-    static CCMenuItem* create(CCObject *rec, SEL_MenuHandler selector) __attribute__((deprecated));
+    CC_DEPRECATED_ATTRIBUTE static CCMenuItem* create(CCObject *rec, SEL_MenuHandler selector);
     /** Creates a CCMenuItem with a target/selector */
     static CCMenuItem* create(const ccMenuCallback& callback);
     /** Initializes a CCMenuItem with a target/selector */
     bool initWithCallback(const ccMenuCallback& callback);
     /** Initializes a CCMenuItem with a target/selector */
-    bool initWithTarget( CCObject *rec, SEL_MenuHandler selector) __attribute__((deprecated));
+    CC_DEPRECATED_ATTRIBUTE bool initWithTarget( CCObject *rec, SEL_MenuHandler selector);
     /** Returns the outside box */
     CCRect rect();
     /** Activate the item */
@@ -108,7 +108,7 @@ public:
     virtual bool isOpacityModifyRGB(void) { return false;}
     
     /** set the target/selector of the menu item*/
-    void setTarget(CCObject *rec, SEL_MenuHandler selector) __attribute__((deprecated));
+    CC_DEPRECATED_ATTRIBUTE void setTarget(CCObject *rec, SEL_MenuHandler selector);
     /** set the callback to the menu item */
     void setCallback(const ccMenuCallback& callback);
 
@@ -143,7 +143,7 @@ public:
     virtual ~CCMenuItemLabel();
 
     /** creates a CCMenuItemLabel with a Label, target and selector */
-    static CCMenuItemLabel * create(CCNode*label, CCObject* target, SEL_MenuHandler selector) __attribute__((deprecated));
+    CC_DEPRECATED_ATTRIBUTE static CCMenuItemLabel * create(CCNode*label, CCObject* target, SEL_MenuHandler selector);
 
 	/** creates a CCMenuItemLabel with a Label and a callback */
     static CCMenuItemLabel * create(CCNode*label, const ccMenuCallback& callback);
@@ -152,7 +152,7 @@ public:
     static CCMenuItemLabel* create(CCNode *label);
 
     /** initializes a CCMenuItemLabel with a Label, target and selector */
-    bool initWithLabel(CCNode* label, CCObject* target, SEL_MenuHandler selector) __attribute__((deprecated));
+    CC_DEPRECATED_ATTRIBUTE bool initWithLabel(CCNode* label, CCObject* target, SEL_MenuHandler selector);
 
 	/** initializes a CCMenuItemLabel with a Label, target and selector */
     bool initWithLabel(CCNode* label, const ccMenuCallback& callback);
@@ -186,12 +186,12 @@ public:
     /** creates a menu item from a string and atlas with a target/selector */
     static CCMenuItemAtlasFont* create(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap);
     /** creates a menu item from a string and atlas. Use it with MenuItemToggle */
-    static CCMenuItemAtlasFont* create(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, CCObject* target, SEL_MenuHandler selector) __attribute__((deprecated));
+    CC_DEPRECATED_ATTRIBUTE static CCMenuItemAtlasFont* create(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, CCObject* target, SEL_MenuHandler selector);
     /** creates a menu item from a string and atlas. Use it with MenuItemToggle */
     static CCMenuItemAtlasFont* create(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback);
 
     /** initializes a menu item from a string and atlas with a target/selector */
-    bool initWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, CCObject* target, SEL_MenuHandler selector) __attribute__((deprecated));
+    CC_DEPRECATED_ATTRIBUTE bool initWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, CCObject* target, SEL_MenuHandler selector);
     /** initializes a menu item from a string and atlas with a target/selector */
     bool initWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback);
 
@@ -218,12 +218,12 @@ public:
     /** creates a menu item from a string without target/selector. To be used with CCMenuItemToggle */
     static CCMenuItemFont * create(const char *value);
     /** creates a menu item from a string with a target/selector */
-    static CCMenuItemFont * create(const char *value, CCObject* target, SEL_MenuHandler selector) __attribute__((deprecated));
+    CC_DEPRECATED_ATTRIBUTE static CCMenuItemFont * create(const char *value, CCObject* target, SEL_MenuHandler selector);
     /** creates a menu item from a string with a target/selector */
     static CCMenuItemFont * create(const char *value, const ccMenuCallback& callback);
 
     /** initializes a menu item from a string with a target/selector */
-    bool initWithString(const char *value, CCObject* target, SEL_MenuHandler selector) __attribute__((deprecated));
+    CC_DEPRECATED_ATTRIBUTE bool initWithString(const char *value, CCObject* target, SEL_MenuHandler selector);
     /** initializes a menu item from a string with a target/selector */
     bool initWithString(const char *value, const ccMenuCallback& callback);
 
@@ -278,16 +278,16 @@ public:
     /** creates a menu item with a normal, selected and disabled image*/
     static CCMenuItemSprite * create(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite = NULL);
     /** creates a menu item with a normal and selected image with target/selector */
-    static CCMenuItemSprite * create(CCNode* normalSprite, CCNode* selectedSprite, CCObject* target, SEL_MenuHandler selector) __attribute__((deprecated));
+    CC_DEPRECATED_ATTRIBUTE static CCMenuItemSprite * create(CCNode* normalSprite, CCNode* selectedSprite, CCObject* target, SEL_MenuHandler selector);
     /** creates a menu item with a normal,selected  and disabled image with target/selector */
-    static CCMenuItemSprite * create(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector) __attribute__((deprecated));
+    CC_DEPRECATED_ATTRIBUTE static CCMenuItemSprite * create(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector);
     /** creates a menu item with a normal and selected image with a callable object */
     static CCMenuItemSprite * create(CCNode* normalSprite, CCNode* selectedSprite, const ccMenuCallback& callback);
     /** creates a menu item with a normal,selected  and disabled image with target/selector */
     static CCMenuItemSprite * create(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, const ccMenuCallback& callback);
 
     /** initializes a menu item with a normal, selected  and disabled image with target/selector */
-    bool initWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector) __attribute__((deprecated));
+    CC_DEPRECATED_ATTRIBUTE bool initWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector);
     /** initializes a menu item with a normal, selected  and disabled image with a callable object */
     bool initWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, const ccMenuCallback& callback);
 
@@ -324,18 +324,18 @@ public:
     /** creates a menu item with a normal,selected  and disabled image*/
     static CCMenuItemImage* create(const char *normalImage, const char *selectedImage, const char *disabledImage);
     /** creates a menu item with a normal and selected image with target/selector */
-    static CCMenuItemImage* create(const char *normalImage, const char *selectedImage, CCObject* target, SEL_MenuHandler selector) __attribute__((deprecated));
+    CC_DEPRECATED_ATTRIBUTE static CCMenuItemImage* create(const char *normalImage, const char *selectedImage, CCObject* target, SEL_MenuHandler selector);
     /** creates a menu item with a normal and selected image with a callable object */
     static CCMenuItemImage* create(const char *normalImage, const char *selectedImage, const ccMenuCallback& callback);
 
     /** creates a menu item with a normal,selected  and disabled image with target/selector */
-    static CCMenuItemImage* create(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector) __attribute__((deprecated));
+    CC_DEPRECATED_ATTRIBUTE static CCMenuItemImage* create(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector);
     /** creates a menu item with a normal,selected  and disabled image with a callable object */
     static CCMenuItemImage* create(const char *normalImage, const char *selectedImage, const char *disabledImage, const ccMenuCallback& callback);
 
     bool init();
     /** initializes a menu item with a normal, selected  and disabled image with target/selector */
-    bool initWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector) __attribute__((deprecated));
+    CC_DEPRECATED_ATTRIBUTE bool initWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector);
     /** initializes a menu item with a normal, selected  and disabled image with a callable object */
     bool initWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, const ccMenuCallback& callback);
 
@@ -372,12 +372,12 @@ public:
     virtual ~CCMenuItemToggle();
     
     /** creates a menu item from a CCArray with a target selector */
-    static CCMenuItemToggle * createWithTarget(CCObject* target, SEL_MenuHandler selector, CCArray* menuItems) __attribute__((deprecated));
+    CC_DEPRECATED_ATTRIBUTE static CCMenuItemToggle * createWithTarget(CCObject* target, SEL_MenuHandler selector, CCArray* menuItems);
     /** creates a menu item from a CCArray with a callable object */
     static CCMenuItemToggle * createWithTarget(const ccMenuCallback& callback, CCArray* menuItems);
 
     /** creates a menu item from a list of items with a target/selector */
-    static CCMenuItemToggle* createWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, ...) __attribute__((deprecated));
+    CC_DEPRECATED_ATTRIBUTE static CCMenuItemToggle* createWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, ...);
     /** creates a menu item from a list of items with a callable object */
     static CCMenuItemToggle* createWithTarget(const ccMenuCallback& callback, CCMenuItem* item, ...);
 
@@ -385,7 +385,7 @@ public:
     static CCMenuItemToggle* create();
 
     /** initializes a menu item from a list of items with a target selector */
-    bool initWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, va_list args) __attribute__((deprecated));
+    CC_DEPRECATED_ATTRIBUTE bool initWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, va_list args);
     /** initializes a menu item from a list of items with a callable object */
     bool initWithTarget(const ccMenuCallback& callback, CCMenuItem* item, va_list args);
 
