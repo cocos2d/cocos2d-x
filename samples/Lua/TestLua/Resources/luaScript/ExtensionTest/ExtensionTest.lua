@@ -1,4 +1,5 @@
 require "luaScript/ExtensionTest/CocosBuilderTest"
+require "luaScript/ExtensionTest/WebProxyTest"
 
 local LINE_SPACE = 40
 local kItemTagBasic = 1000
@@ -20,7 +21,7 @@ local testsName =
     "NotificationCenterTest",
     "CCControlButtonTest",
     "CocosBuilderTest",
-    "HttpClientTest",
+    "WebSocketTest",
     "EditBoxTest",
     "TableViewTest",
 }
@@ -1000,7 +1001,7 @@ local CreateExtensionsTestTable =
 	runNotificationCenterTest,
 	runCCControlTest,
 	runCocosBuilder,
-	runHttpClientTest,
+	runWebSocketTest,
 	runEditBoxTest,
 	runTableViewTest,	
 }
@@ -1010,7 +1011,6 @@ local s = CCDirector:sharedDirector():getWinSize()
 local function ExtensionsMainLayer()
 	
 	local function CreateExtensionsTestScene(nPerformanceNo)
-        print(nPerformanceNo)
 	  	local pNewscene = CreateExtensionsTestTable[nPerformanceNo]()
   		return pNewscene
 	end

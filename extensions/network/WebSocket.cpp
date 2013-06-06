@@ -324,7 +324,7 @@ bool WebSocket::init(const Delegate& delegate,
         _wsProtocols[0].name = name;
         _wsProtocols[0].callback = WebSocketCallbackWrapper::onSocketCallback;
     }
-
+    m_mapScriptHandler.clear();
     
     // WebSocket thread needs to be invoked at the end of this method.
     _wsHelper = new WsThreadHelper();
@@ -654,6 +654,35 @@ void WebSocket::onUIThreadReceiveMessage(WsMessage* msg)
         default:
             break;
     }
+}
+
+
+void WebSocket::registerScriptHandler(int nFunID,webSocketScriptHandlerType scriptHandlerType)
+{
+    m_mapScriptHandler[scriptHandlerType] = nFunID;
+}
+
+void WebSocket::unregisterScriptHandler(webSocketScriptHandlerType scriptHandlerType)
+{
+    std::map<int,int>::iterator Iter = m_mapScriptHandler.find(scriptHandlerType);
+    
+    if (m_mapScriptHandler.end() != Iter)
+    {
+        m_mapScriptHandler.erase(Iter);
+    }
+}
+
+/**
+ *  @brief Get Handler By DelegateEvent Type
+ */
+int  WebSocket::getScriptHandler(webSocketScriptHandlerType scriptHandlerType)
+{
+    std::map<int,int>::iterator Iter = m_mapScriptHandler.find(scriptHandlerType);
+    
+    if (m_mapScriptHandler.end() != Iter)
+        return Iter->second;
+    
+    return -1;
 }
 
 NS_CC_EXT_END

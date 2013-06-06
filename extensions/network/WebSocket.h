@@ -120,6 +120,29 @@ public:
      */
     State getReadyState();
     
+    /*
+     * @brief  delegate event enum,for lua register handler
+     */
+    enum webSocketScriptHandlerType
+    {
+        kwebSocketScriptHandlerOpen    = 0,
+        kwebSocketScriptHandlerMessage,
+        kwebSocketScriptHandlerClose,
+        kwebSocketScriptHandlerError,
+    };
+    /**
+     *  @brief Add Handler of DelegateEvent
+     */
+    void registerScriptHandler(int nFunID,webSocketScriptHandlerType scriptHandlerType);
+    /**
+     *  @brief Remove Handler of DelegateEvent
+    */
+    void unregisterScriptHandler(webSocketScriptHandlerType scriptHandlerType);
+    /**
+     *  @brief Get Handler By DelegateEvent Type
+     */
+    int  getScriptHandler(webSocketScriptHandlerType scriptHandlerType);
+    
 private:
     virtual void onSubThreadStarted();
     virtual int onSubThreadLoop();
@@ -147,6 +170,7 @@ private:
     Delegate* _delegate;
     int _SSLConnection;
     libwebsocket_protocols* _wsProtocols;
+    std::map<int,int> m_mapScriptHandler;
 };
 
 NS_CC_EXT_END
