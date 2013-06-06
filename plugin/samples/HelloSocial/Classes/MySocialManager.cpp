@@ -102,6 +102,7 @@ void MySocialManager::loadSocialPlugin()
 		{
 			TSocialDeveloperInfo pWeiboInfo;
 			// pWeiboInfo["WeiboAppKey"] = "your app key";
+            // pWeiboInfo["WeiboAppSecret"] = "your app secret";
 			// pWeiboInfo["WeiboRedirectUrl"] = "your redirect url";
 
 			if (pWeiboInfo.empty())

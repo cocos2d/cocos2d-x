@@ -242,7 +242,7 @@ CCTexturePVR::CCTexturePVR()
 
 CCTexturePVR::~CCTexturePVR()
 {
-    CCLOGINFO( "cocos2d: deallocing CCTexturePVR" );
+    CCLOGINFO( "cocos2d: deallocing CCTexturePVR: %p", this );
 
     if (m_uName != 0 && ! m_bRetainName)
     {
