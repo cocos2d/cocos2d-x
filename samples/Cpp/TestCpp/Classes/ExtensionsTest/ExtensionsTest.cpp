@@ -5,6 +5,7 @@
 #include "CocosBuilderTest/CocosBuilderTest.h"
 #include "NetworkTest/HttpClientTest.h"
 #include "TableViewTest/TableViewTestScene.h"
+#include "ArmatureTest/ArmatureScene.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "EditBoxTest/EditBoxTest.h"
@@ -26,6 +27,7 @@ enum
     TEST_EDITBOX,
 #endif
 	TEST_TABLEVIEW,
+	TEST_ARMATURE,
     TEST_MAX_COUNT,
 };
 
@@ -38,7 +40,8 @@ static const std::string testsName[TEST_MAX_COUNT] =
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     "EditBoxTest",
 #endif
-	"TableViewTest"
+	"TableViewTest",
+	"ArmatureTest"
 };
 
 ////////////////////////////////////////////////////////
@@ -115,6 +118,16 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
 	case TEST_TABLEVIEW:
 		{
 			runTableViewTest();
+		}
+		break;
+	case TEST_ARMATURE:
+		{
+			ArmatureTestScene *pScene = new ArmatureTestScene();
+			if (pScene)
+			{
+				pScene->runThisTest();
+				pScene->release();
+			}
 		}
 		break;
     default:

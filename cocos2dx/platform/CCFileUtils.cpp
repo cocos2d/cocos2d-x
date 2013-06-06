@@ -85,6 +85,25 @@ public:
     {
     }
 
+	CCDictionary* dictionaryWithContentsOfCache(const char *pContentCache, unsigned int uDataLength)
+	{
+		m_eResultType = SAX_RESULT_DICT;
+		CCSAXParser parser;
+
+		if (false == parser.init("UTF-8"))
+		{
+			return NULL;
+		}
+		parser.setDelegator(this);
+
+		if (pContentCache != NULL && uDataLength > 0)
+		{
+			parser.parse(pContentCache, uDataLength);
+		}
+
+		return m_pRootDict;
+	}
+
     CCDictionary* dictionaryWithContentsOfFile(const char *pFileName)
     {
         m_eResultType = SAX_RESULT_DICT;
