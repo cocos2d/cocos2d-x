@@ -38,8 +38,35 @@ EXTENSIONS_SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../GUI/CCControlExtension/CCScale9Sprite.cpp \
 ../GUI/CCControlExtension/CCControlPotentiometer.cpp \
 ../GUI/CCControlExtension/CCControlStepper.cpp \
+../GUI/CCEditBox/CCEditBox.cpp \
+../GUI/CCEditBox/CCEditBoxImplNone.cpp \
 ../physics_nodes/CCPhysicsDebugNode.cpp \
-../physics_nodes/CCPhysicsSprite.cpp 
+../physics_nodes/CCPhysicsSprite.cpp \
+../spine/Animation.cpp \
+../spine/AnimationState.cpp \
+../spine/AnimationStateData.cpp \
+../spine/Atlas.cpp \
+../spine/AtlasAttachmentLoader.cpp \
+../spine/Attachment.cpp \
+../spine/AttachmentLoader.cpp \
+../spine/Bone.cpp \
+../spine/BoneData.cpp \
+../spine/Json.cpp \
+../spine/RegionAttachment.cpp \
+../spine/Skeleton.cpp \
+../spine/SkeletonData.cpp \
+../spine/SkeletonJson.cpp \
+../spine/Skin.cpp \
+../spine/Slot.cpp \
+../spine/SlotData.cpp \
+../spine/extension.cpp \
+../spine/CCSkeleton.cpp \
+../spine/CCSkeletonAnimation.cpp \
+../spine/spine-cocos2dx.cpp \
+../Components/CCComAttribute.cpp \
+../Components/CCComAudio.cpp \
+../Components/CCComController.cpp \
+../Components/CCInputDelegate.cpp
 
 all:
 

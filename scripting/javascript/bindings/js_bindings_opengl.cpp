@@ -46,8 +46,7 @@ JSBool js_cocos2dx_GLNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
     // link the native object with the javascript object
-    js_proxy_t *p;
-    JS_NEW_PROXY(p, cobj, obj);
+    js_proxy_t *p = jsb_new_proxy(cobj, obj);
 #ifdef COCOS2D_JAVASCRIPT
     JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::GLNode");
 #endif
@@ -58,6 +57,17 @@ JSBool js_cocos2dx_GLNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 void js_cocos2dx_GLNode_finalize(JSFreeOp *fop, JSObject *obj) {
+}
+
+static JSBool js_cocos2dx_GLNode_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    GLNode *nobj = new GLNode();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    nobj->autorelease();
+    JS_AddNamedObjectRoot(cx, &p->obj, "GLNode");
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return JS_TRUE;
 }
 
 JSBool js_cocos2dx_GLNode_create(JSContext *cx, uint32_t argc, jsval *vp)
@@ -96,7 +106,8 @@ void js_register_cocos2dx_GLNode(JSContext *cx, JSObject *global) {
   };
     
   static JSFunctionSpec funcs[] = {
-    JS_FS_END
+      JS_FN("ctor", js_cocos2dx_GLNode_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+      JS_FS_END
   };
     
   static JSFunctionSpec st_funcs[] = {

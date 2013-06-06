@@ -3,6 +3,7 @@
 #include "AppDelegate.h"
 #include "CCLuaEngine.h"
 #include "SimpleAudioEngine.h"
+#include "Lua_extensions_CCB.h"
 
 using namespace CocosDenshion;
 
@@ -28,23 +29,25 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
-
+    
     // register lua engine
     CCLuaEngine* pEngine = CCLuaEngine::defaultEngine();
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
+    
+    CCLuaStack *pStack = pEngine->getLuaStack();
+    lua_State *tolua_s = pStack->getLuaState();
+    tolua_extensions_ccb_open(tolua_s);
+    
+    std::vector<std::string> searchPaths;
+    searchPaths.push_back("cocosbuilderRes");
 
-	std::string dirPath = "luaScript";
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    CCString* pstrFileContent = CCString::createWithContentsOfFile((dirPath + "/controller.lua").c_str());
-    if (pstrFileContent)
-    {
-        pEngine->executeString(pstrFileContent->getCString());
-    }
-#else
-    std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename((dirPath + "/controller.lua").c_str());
-    pEngine->addSearchPath(path.substr(0, path.find_last_of("/") - dirPath.length()).c_str());
-    pEngine->executeScriptFile(path.c_str());
+#if CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
+    searchPaths.push_back("TestCppResources");
 #endif
+    CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
+
+    pEngine->executeScriptFile("luaScript/controller.lua");
+
     return true;
 }
 

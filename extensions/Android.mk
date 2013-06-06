@@ -49,9 +49,11 @@ GUI/CCScrollView/CCSorting.cpp \
 GUI/CCEditBox/CCEditBox.cpp \
 GUI/CCEditBox/CCEditBoxImplAndroid.cpp \
 network/HttpClient.cpp \
+network/WebSocket.cpp \
 physics_nodes/CCPhysicsDebugNode.cpp \
 physics_nodes/CCPhysicsSprite.cpp \
 LocalStorage/LocalStorageAndroid.cpp \
+<<<<<<< HEAD
 CCArmature/CCArmature.cpp \
 CCArmature/CCBone.cpp \
 CCArmature/animation/CCAnimation.cpp \
@@ -77,12 +79,43 @@ CCArmature/utils/CCSpriteFrameCacheHelper.cpp \
 CCArmature/utils/CCTransformHelp.cpp \
 CCArmature/utils/CCTweenFunction.cpp \
 CCArmature/utils/CCUtilMath.cpp 
+=======
+spine/Animation.cpp \
+spine/AnimationState.cpp \
+spine/AnimationStateData.cpp \
+spine/Atlas.cpp \
+spine/AtlasAttachmentLoader.cpp \
+spine/Attachment.cpp \
+spine/AttachmentLoader.cpp \
+spine/Bone.cpp \
+spine/BoneData.cpp \
+spine/Json.cpp \
+spine/RegionAttachment.cpp \
+spine/Skeleton.cpp \
+spine/SkeletonData.cpp \
+spine/SkeletonJson.cpp \
+spine/Skin.cpp \
+spine/Slot.cpp \
+spine/SlotData.cpp \
+spine/extension.cpp \
+spine/CCSkeletonAnimation.cpp \
+spine/CCSkeleton.cpp \
+spine/spine-cocos2dx.cpp \
+Components/CCComAttribute.cpp \
+Components/CCComAudio.cpp \
+Components/CCComController.cpp \
+Components/CCInputDelegate.cpp
+>>>>>>> 150b91074a57ae0345c03541b533c46a017b0d13
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_curl_static
 LOCAL_WHOLE_STATIC_LIBRARIES += box2d_static
 LOCAL_WHOLE_STATIC_LIBRARIES += chipmunk_static
+LOCAL_WHOLE_STATIC_LIBRARIES += libwebsockets_static
+
+LOCAL_CFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
+LOCAL_EXPORT_CFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                            $(LOCAL_PATH)/CCBReader \
@@ -101,3 +134,4 @@ $(call import-module,CocosDenshion/android)
 $(call import-module,cocos2dx/platform/third_party/android/prebuilt/libcurl)
 $(call import-module,external/Box2D)
 $(call import-module,external/chipmunk)
+$(call import-module,external/libwebsockets/android)

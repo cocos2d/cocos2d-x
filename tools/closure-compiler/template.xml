@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="Javascript compress project" basedir="." default="compile">
+<project name="Javascript compress project" basedir="$PATH_TO_COCOS2D" default="compile">
 
     <taskdef name="jscomp" classname="com.google.javascript.jscomp.ant.CompileTask"
              classpath="$PATH_TO_COMPILER"/>
@@ -8,12 +8,23 @@
         <!--advanced / simple-->
         <jscomp compilationLevel="advanced" warning="quiet"
                 debug="false" output="$PATH_TO_OUTPUT">
-            <externs dir="$PATH_TO_EXCLUDES">
+            <externs dir="$PATH_TO_EXCLUSIONS">
                 <file name="obfuscate_exclude_cocos2d.js"/>
                 <file name="obfuscate_exclude_chipmunk.js"/>
             </externs>
-            <sources dir="$PATH_TO_SOURCES">
-                $JS_FILES
+            <sources dir="$PATH_TO_JS_FRAMEWORK">
+                <file name="jsb_cocos2d_constants.js"/>
+                <file name="jsb_cocos2d.js"/>
+                <file name="jsb_cocos2d_extension.js"/>
+                <file name="jsb_chipmunk_constants.js"/>
+                <file name="jsb_chipmunk.js"/>
+                <file name="jsb_opengl_constants.js"/>
+                <file name="jsb_opengl.js"/>
+                <file name="jsb_cocosbuilder.js"/>
+                <file name="jsb_sys.js"/>
+            </sources>
+            <sources dir="$PATH_TO_JS_SOURCES">
+                $JS_SOURCES
             </sources>
         </jscomp>
     </target>

@@ -38,12 +38,13 @@ THE SOFTWARE.
 #include "shaders/CCGLProgram.h"
 // externals
 #include "kazmath/GL/matrix.h"
-
+#include "support/component/CCComponent.h"
+#include "support/component/CCComponentContainer.h"
 
 #if CC_NODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
 #else
-#define RENDER_IN_SUBPIXEL (__ARGS__) (ceil(__ARGS__))
+#define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
 #endif
 
 NS_CC_BEGIN
@@ -71,7 +72,7 @@ CCNode::CCNode(void)
 , m_nZOrder(0)
 , m_pChildren(NULL)
 , m_pParent(NULL)
-// "whole screen" objects. like Scenes and Layers, should set m_bIgnoreAnchorPointForPosition to false
+// "whole screen" objects. like Scenes and Layers, should set m_bIgnoreAnchorPointForPosition to true
 , m_nTag(kCCNodeTagInvalid)
 // userData is always inited as nil
 , m_pUserData(NULL)
@@ -88,6 +89,7 @@ CCNode::CCNode(void)
 , m_bReorderChildDirty(false)
 , m_nScriptHandler(0)
 , m_nUpdateScriptHandler(0)
+, m_pComponentContainer(NULL)
 {
     // set default scheduler and actionManager
     CCDirector *director = CCDirector::sharedDirector();
@@ -98,6 +100,7 @@ CCNode::CCNode(void)
 
     CCScriptEngineProtocol* pEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
     m_eScriptType = pEngine != NULL ? pEngine->getScriptType() : kScriptTypeNone;
+    m_pComponentContainer = new CCComponentContainer(this);
 }
 
 CCNode::~CCNode(void)
@@ -134,6 +137,10 @@ CCNode::~CCNode(void)
 
     // children
     CC_SAFE_RELEASE(m_pChildren);
+    
+          // m_pComsContainer
+    m_pComponentContainer->removeAll();
+    CC_SAFE_DELETE(m_pComponentContainer);
 }
 
 bool CCNode::init()
@@ -326,7 +333,7 @@ CCArray* CCNode::getChildren()
     return m_pChildren;
 }
 
-unsigned int CCNode::getChildrenCount(void)
+unsigned int CCNode::getChildrenCount(void) const
 {
     return m_pChildren ? m_pChildren->count() : 0;
 }
@@ -392,7 +399,7 @@ void CCNode::setAnchorPoint(const CCPoint& point)
 }
 
 /// contentSize getter
-const CCSize& CCNode::getContentSize()
+const CCSize& CCNode::getContentSize() const
 {
     return m_obContentSize;
 }
@@ -441,7 +448,7 @@ void CCNode::ignoreAnchorPointForPosition(bool newValue)
 }
 
 /// tag getter
-int CCNode::getTag()
+int CCNode::getTag() const
 {
     return m_nTag;
 }
@@ -662,7 +669,7 @@ void CCNode::removeChildByTag(int tag, bool cleanup)
 
     if (child == NULL)
     {
-        CCLOG("cocos2d: removeChildByTag: child not found!");
+        CCLOG("cocos2d: removeChildByTag(tag = %d): child not found!", tag);
     }
     else
     {
@@ -1107,6 +1114,11 @@ void CCNode::update(float fDelta)
     {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nUpdateScriptHandler, fDelta, this);
     }
+    
+    if (m_pComponentContainer && !m_pComponentContainer->isEmpty())
+    {
+        m_pComponentContainer->visit(fDelta);
+    }
 }
 
 CCAffineTransform CCNode::nodeToParentTransform(void)
@@ -1263,6 +1275,26 @@ void CCNode::updateTransform()
 {
     // Recursively iterate over children
     arrayMakeObjectsPerformSelector(m_pChildren, updateTransform, CCNode*);
+}
+
+CCComponent* CCNode::getComponent(const char *pName) const
+{
+    return m_pComponentContainer->get(pName);
+}
+
+bool CCNode::addComponent(CCComponent *pComponent)
+{
+    return m_pComponentContainer->add(pComponent);
+}
+
+bool CCNode::removeComponent(const char *pName)
+{
+    return m_pComponentContainer->remove(pName);
+}
+
+void CCNode::removeAllComponents()
+{
+    m_pComponentContainer->removeAll();
 }
 
 // CCNodeRGBA

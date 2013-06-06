@@ -75,6 +75,7 @@ public class Cocos2dxHelper {
 		Cocos2dxHelper.sCocos2dSound = new Cocos2dxSound(pContext);
 		Cocos2dxHelper.sAssetManager = pContext.getAssets();
 		Cocos2dxBitmap.setContext(pContext);
+		Cocos2dxETCLoader.setContext(pContext);
 	}
 
 	// ===========================================================

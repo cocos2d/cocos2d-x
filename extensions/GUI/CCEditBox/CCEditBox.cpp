@@ -34,16 +34,20 @@ CCEditBox::CCEditBox(void)
 , m_eEditBoxInputMode(kEditBoxInputModeSingleLine)
 , m_eEditBoxInputFlag(kEditBoxInputFlagInitialCapsAllCharacters)
 , m_eKeyboardReturnType(kKeyboardReturnTypeDefault)
+, m_nFontSize(-1)
+, m_nPlaceholderFontSize(-1)
 , m_colText(ccWHITE)
 , m_colPlaceHolder(ccGRAY)
 , m_nMaxLength(0)
 , m_fAdjustHeight(0.0f)
+, m_nScriptEditBoxHandler(0)
 {
 }
 
 CCEditBox::~CCEditBox(void)
 {
     CC_SAFE_DELETE(m_pEditBoxImpl);
+    unregisterScriptEditBoxHandler();
 }
 
 
@@ -103,6 +107,11 @@ void CCEditBox::setDelegate(CCEditBoxDelegate* pDelegate)
     }
 }
 
+CCEditBoxDelegate* CCEditBox::getDelegate()
+{
+    return m_pDelegate;
+}
+
 void CCEditBox::setText(const char* pText)
 {
     if (pText != NULL)
@@ -129,12 +138,32 @@ const char* CCEditBox::getText(void)
 
 void CCEditBox::setFont(const char* pFontName, int fontSize)
 {
+    m_strFontName = pFontName;
+    m_nFontSize = fontSize;
     if (pFontName != NULL)
     {
         if (m_pEditBoxImpl != NULL)
         {
             m_pEditBoxImpl->setFont(pFontName, fontSize);
         }
+    }
+}
+
+void CCEditBox::setFontName(const char* pFontName)
+{
+    m_strFontName = pFontName;
+    if (m_pEditBoxImpl != NULL && m_nFontSize != -1)
+    {
+        m_pEditBoxImpl->setFont(pFontName, m_nFontSize);
+    }
+}
+
+void CCEditBox::setFontSize(int fontSize)
+{
+    m_nFontSize = fontSize;
+    if (m_pEditBoxImpl != NULL && m_strFontName.length() > 0)
+    {
+        m_pEditBoxImpl->setFont(m_strFontName.c_str(), m_nFontSize);
     }
 }
 
@@ -149,12 +178,32 @@ void CCEditBox::setFontColor(const ccColor3B& color)
 
 void CCEditBox::setPlaceholderFont(const char* pFontName, int fontSize)
 {
+    m_strPlaceholderFontName = pFontName;
+    m_nPlaceholderFontSize = fontSize;
     if (pFontName != NULL)
     {
         if (m_pEditBoxImpl != NULL)
         {
             m_pEditBoxImpl->setPlaceholderFont(pFontName, fontSize);
         }
+    }
+}
+
+void CCEditBox::setPlaceholderFontName(const char* pFontName)
+{
+    m_strPlaceholderFontName = pFontName;
+    if (m_pEditBoxImpl != NULL && m_nPlaceholderFontSize != -1)
+    {
+        m_pEditBoxImpl->setPlaceholderFont(pFontName, m_nFontSize);
+    }
+}
+
+void CCEditBox::setPlaceholderFontSize(int fontSize)
+{
+    m_nPlaceholderFontSize = fontSize;
+    if (m_pEditBoxImpl != NULL && m_strPlaceholderFontName.length() > 0)
+    {
+        m_pEditBoxImpl->setPlaceholderFont(m_strPlaceholderFontName.c_str(), m_nFontSize);
     }
 }
 
@@ -338,6 +387,21 @@ void CCEditBox::keyboardWillHide(CCIMEKeyboardNotificationInfo& info)
 void CCEditBox::keyboardDidHide(CCIMEKeyboardNotificationInfo& info)
 {
 	
+}
+
+void CCEditBox::registerScriptEditBoxHandler(int handler)
+{
+    unregisterScriptEditBoxHandler();
+    m_nScriptEditBoxHandler = handler;
+}
+
+void CCEditBox::unregisterScriptEditBoxHandler(void)
+{
+    if (0 != m_nScriptEditBoxHandler)
+    {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nScriptEditBoxHandler);
+        m_nScriptEditBoxHandler = 0;
+    }
 }
 
 

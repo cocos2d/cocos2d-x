@@ -22,9 +22,10 @@
 							<builder buildPath="${workspace_loc:/TestLua/Device-Debug}" id="com.qnx.nto.476715223" keepEnvironmentInBuildfile="false" name="CDT Internal Builder" superClass="com.qnx.nto"/>
 							<tool id="com.qnx.qcc.tool.compiler.1144576773" name="QCC Compiler" superClass="com.qnx.qcc.tool.compiler">
 								<option id="com.qnx.qcc.option.compile.debug.477981148" name="Debug (-g)" superClass="com.qnx.qcc.option.compile.debug" value="true" valueType="boolean"/>
-								<option id="com.qnx.qcc.option.compiler.security.950802078" name="Enhanced Security (-fstack-protector-all)" superClass="com.qnx.qcc.option.compiler.security" value="true" valueType="boolean"/>
+								<option id="com.qnx.qcc.option.compiler.security.950802078" name="Enhanced Security (-fstack-protector-strong)" superClass="com.qnx.qcc.option.compiler.security" value="false" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.compiler.defines.947876049" name="Defines (-D)" superClass="com.qnx.qcc.option.compiler.defines" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_FORTIFY_SOURCE=2"/>
+									<listOptionValue builtIn="false" value="COCOS2D_DEBUG=1"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.includePath.892081154" name="Include Directories (-I)" superClass="com.qnx.qcc.option.compiler.includePath" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}&quot;"/>
@@ -86,6 +87,7 @@
 								<option id="com.qnx.qcc.option.linker.ldoptions.1363839882" name="Linker Options (-Wl,)" superClass="com.qnx.qcc.option.linker.ldoptions" valueType="stringList">
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/proj.blackberry/${ConfigName}/libcocos2dx.a"/>
 									<listOptionValue builtIn="false" value="../../../../../scripting/lua/proj.blackberry/${ConfigName}/liblua.a"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}/libwebp.a"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.qccoptions.1444329036" name="QCC Options" superClass="com.qnx.qcc.option.linker.qccoptions"/>
 								<inputType id="com.qnx.qcc.inputType.linker.697035559" superClass="com.qnx.qcc.inputType.linker">
@@ -100,8 +102,9 @@
 					<folderInfo id="com.qnx.qcc.configuration.exe.debug.446234419.1188521308" name="/" resourcePath="Resources">
 						<toolChain id="com.qnx.qcc.toolChain.1848846370" name="QNX QCC" superClass="com.qnx.qcc.toolChain" unusedChildren="">
 							<option id="com.qnx.qcc.option.cpu.476871357.1012248421" name="Target CPU:" superClass="com.qnx.qcc.option.cpu.476871357"/>
+							<targetPlatform archList="all" binaryParser="com.qnx.tools.ide.qde.core.QDEBynaryParser" id="com.qnx.qcc.targetPlatform" osList="all" superClass="com.qnx.qcc.targetPlatform"/>
 							<tool id="com.qnx.qcc.tool.compiler.98537037" name="QCC Compiler" superClass="com.qnx.qcc.tool.compiler.1144576773">
-								<option id="com.qnx.qcc.option.compiler.optlevel.1516975241" superClass="com.qnx.qcc.option.compiler.optlevel" value="com.qnx.qcc.option.compiler.optlevel.0" valueType="enumerated"/>
+								<option id="com.qnx.qcc.option.compiler.optlevel.1516975241" name="Optimization Level" superClass="com.qnx.qcc.option.compiler.optlevel" value="com.qnx.qcc.option.compiler.optlevel.0" valueType="enumerated"/>
 								<inputType id="com.qnx.qcc.inputType.compiler.1343144202" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
 							<tool id="com.qnx.qcc.tool.assembler.1708463214" name="QCC Assembler" superClass="com.qnx.qcc.tool.assembler.298372204">
@@ -147,7 +150,7 @@
 							<builder buildPath="${workspace_loc:/TestLua/Device-Release}" id="com.qnx.nto.1079130834" keepEnvironmentInBuildfile="false" name="CDT Internal Builder" superClass="com.qnx.nto"/>
 							<tool id="com.qnx.qcc.tool.compiler.489158604" name="QCC Compiler" superClass="com.qnx.qcc.tool.compiler">
 								<option id="com.qnx.qcc.option.compiler.optlevel.1816856148" name="Optimization Level" superClass="com.qnx.qcc.option.compiler.optlevel" value="com.qnx.qcc.option.compiler.optlevel.2" valueType="enumerated"/>
-								<option id="com.qnx.qcc.option.compiler.security.516815496" name="Enhanced Security (-fstack-protector-all)" superClass="com.qnx.qcc.option.compiler.security" value="true" valueType="boolean"/>
+								<option id="com.qnx.qcc.option.compiler.security.516815496" name="Enhanced Security (-fstack-protector-strong)" superClass="com.qnx.qcc.option.compiler.security" value="false" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.compiler.defines.1389762293" name="Defines (-D)" superClass="com.qnx.qcc.option.compiler.defines" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_FORTIFY_SOURCE=2"/>
 								</option>
@@ -206,6 +209,7 @@
 								<option id="com.qnx.qcc.option.linker.ldoptions.2141259757" name="Linker Options (-Wl,)" superClass="com.qnx.qcc.option.linker.ldoptions" valueType="stringList">
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/proj.blackberry/${ConfigName}/libcocos2dx.a"/>
 									<listOptionValue builtIn="false" value="../../../../../scripting/lua/proj.blackberry/${ConfigName}/liblua.a"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}/libwebp.a"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.linker.1321710093" superClass="com.qnx.qcc.inputType.linker">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -245,7 +249,7 @@
 							<tool id="com.qnx.qcc.tool.compiler.1156975065" name="QCC Compiler" superClass="com.qnx.qcc.tool.compiler">
 								<option id="com.qnx.qcc.option.compile.debug.516699842" name="Debug (-g)" superClass="com.qnx.qcc.option.compile.debug" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.compiler.profile2.827918638" name="Build for Profiling (Function Instrumentation) (-finstrument-functions)" superClass="com.qnx.qcc.option.compiler.profile2" value="true" valueType="boolean"/>
-								<option id="com.qnx.qcc.option.compiler.security.90830663" name="Enhanced Security (-fstack-protector-all)" superClass="com.qnx.qcc.option.compiler.security" value="true" valueType="boolean"/>
+								<option id="com.qnx.qcc.option.compiler.security.90830663" name="Enhanced Security (-fstack-protector-strong)" superClass="com.qnx.qcc.option.compiler.security" value="false" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.compiler.defines.2011249500" name="Defines (-D)" superClass="com.qnx.qcc.option.compiler.defines" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_FORTIFY_SOURCE=2"/>
 								</option>
@@ -305,6 +309,7 @@
 								<option id="com.qnx.qcc.option.linker.ldoptions.1370019185" name="Linker Options (-Wl,)" superClass="com.qnx.qcc.option.linker.ldoptions" valueType="stringList">
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/proj.blackberry/${ConfigName}/libcocos2dx.a"/>
 									<listOptionValue builtIn="false" value="../../../../../scripting/lua/proj.blackberry/${ConfigName}/liblua.a"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}/libwebp.a"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.linker.1078171597" superClass="com.qnx.qcc.inputType.linker">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -344,7 +349,7 @@
 							<tool id="com.qnx.qcc.tool.compiler.1214860716" name="QCC Compiler" superClass="com.qnx.qcc.tool.compiler">
 								<option id="com.qnx.qcc.option.compile.debug.1865580810" name="Debug (-g)" superClass="com.qnx.qcc.option.compile.debug" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.compiler.coverage.417773989" name="Build for Code Coverage (-Wc,-ftest-coverage -Wc,-fprofile-arcs)" superClass="com.qnx.qcc.option.compiler.coverage" value="true" valueType="boolean"/>
-								<option id="com.qnx.qcc.option.compiler.security.2078595424" name="Enhanced Security (-fstack-protector-all)" superClass="com.qnx.qcc.option.compiler.security" value="true" valueType="boolean"/>
+								<option id="com.qnx.qcc.option.compiler.security.2078595424" name="Enhanced Security (-fstack-protector-strong)" superClass="com.qnx.qcc.option.compiler.security" value="false" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.compiler.defines.2117581868" name="Defines (-D)" superClass="com.qnx.qcc.option.compiler.defines" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_FORTIFY_SOURCE=2"/>
 								</option>
@@ -372,7 +377,7 @@
 							</tool>
 							<tool id="com.qnx.qcc.tool.linker.1367226426" name="QCC Linker" superClass="com.qnx.qcc.tool.linker">
 								<option id="com.qnx.qcc.option.linker.debug.1276383563" name="Debug (-g)" superClass="com.qnx.qcc.option.linker.debug" value="true" valueType="boolean"/>
-								<option id="com.qnx.qcc.option.linker.coverage.390406687" name="Build for Code Coverage (-ftest-coverage -fprofile-arcs -p)" superClass="com.qnx.qcc.option.linker.coverage" value="true" valueType="boolean"/>
+								<option id="com.qnx.qcc.option.linker.coverage.390406687" name="Build for Code Coverage (-ftest-coverage -fprofile-arcs)" superClass="com.qnx.qcc.option.linker.coverage" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.langcpp.1160718760" name="C++ (-lang-c++)" superClass="com.qnx.qcc.option.linker.langcpp" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraries.1736864271" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="cocos2dx"/>
@@ -404,6 +409,7 @@
 								<option id="com.qnx.qcc.option.linker.ldoptions.619637072" name="Linker Options (-Wl,)" superClass="com.qnx.qcc.option.linker.ldoptions" valueType="stringList">
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/proj.blackberry/${ConfigName}/libcocos2dx.a"/>
 									<listOptionValue builtIn="false" value="../../../../../scripting/lua/proj.blackberry/${ConfigName}/liblua.a"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}/libwebp.a"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.linker.1438498440" superClass="com.qnx.qcc.inputType.linker">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -441,7 +447,7 @@
 							<builder buildPath="${workspace_loc:/TestLua/Simulator}" id="com.qnx.nto.1270333356" keepEnvironmentInBuildfile="false" name="CDT Internal Builder" superClass="com.qnx.nto"/>
 							<tool id="com.qnx.qcc.tool.compiler.431759757" name="QCC Compiler" superClass="com.qnx.qcc.tool.compiler">
 								<option id="com.qnx.qcc.option.compile.debug.2024008205" name="Debug (-g)" superClass="com.qnx.qcc.option.compile.debug" value="true" valueType="boolean"/>
-								<option id="com.qnx.qcc.option.compiler.security.2119227735" name="Enhanced Security (-fstack-protector-all)" superClass="com.qnx.qcc.option.compiler.security" value="true" valueType="boolean"/>
+								<option id="com.qnx.qcc.option.compiler.security.2119227735" name="Enhanced Security (-fstack-protector-strong)" superClass="com.qnx.qcc.option.compiler.security" value="false" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.compiler.defines.250718869" name="Defines (-D)" superClass="com.qnx.qcc.option.compiler.defines" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_FORTIFY_SOURCE=2"/>
 								</option>
@@ -501,6 +507,7 @@
 								<option id="com.qnx.qcc.option.linker.ldoptions.526534847" name="Linker Options (-Wl,)" superClass="com.qnx.qcc.option.linker.ldoptions" valueType="stringList">
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/proj.blackberry/${ConfigName}/libcocos2dx.a"/>
 									<listOptionValue builtIn="false" value="../../../../../scripting/lua/proj.blackberry/${ConfigName}/liblua.a"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}/libwebp.a"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.linker.439307041" superClass="com.qnx.qcc.inputType.linker">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -539,7 +546,7 @@
 							<tool id="com.qnx.qcc.tool.compiler.1309978635" name="QCC Compiler" superClass="com.qnx.qcc.tool.compiler">
 								<option id="com.qnx.qcc.option.compile.debug.347183646" name="Debug (-g)" superClass="com.qnx.qcc.option.compile.debug" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.compiler.profile2.53874439" name="Build for Profiling (Function Instrumentation) (-finstrument-functions)" superClass="com.qnx.qcc.option.compiler.profile2" value="true" valueType="boolean"/>
-								<option id="com.qnx.qcc.option.compiler.security.728843003" name="Enhanced Security (-fstack-protector-all)" superClass="com.qnx.qcc.option.compiler.security" value="true" valueType="boolean"/>
+								<option id="com.qnx.qcc.option.compiler.security.728843003" name="Enhanced Security (-fstack-protector-strong)" superClass="com.qnx.qcc.option.compiler.security" value="false" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.compiler.defines.307652248" name="Defines (-D)" superClass="com.qnx.qcc.option.compiler.defines" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_FORTIFY_SOURCE=2"/>
 								</option>
@@ -599,6 +606,7 @@
 								<option id="com.qnx.qcc.option.linker.ldoptions.536840311" name="Linker Options (-Wl,)" superClass="com.qnx.qcc.option.linker.ldoptions" valueType="stringList">
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/proj.blackberry/${ConfigName}/libcocos2dx.a"/>
 									<listOptionValue builtIn="false" value="../../../../../scripting/lua/proj.blackberry/${ConfigName}/liblua.a"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}/libwebp.a"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.linker.2044213175" superClass="com.qnx.qcc.inputType.linker">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -637,7 +645,7 @@
 							<tool id="com.qnx.qcc.tool.compiler.1856118712" name="QCC Compiler" superClass="com.qnx.qcc.tool.compiler">
 								<option id="com.qnx.qcc.option.compile.debug.367463903" name="Debug (-g)" superClass="com.qnx.qcc.option.compile.debug" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.compiler.coverage.2144541749" name="Build for Code Coverage (-Wc,-ftest-coverage -Wc,-fprofile-arcs)" superClass="com.qnx.qcc.option.compiler.coverage" value="true" valueType="boolean"/>
-								<option id="com.qnx.qcc.option.compiler.security.2041278353" name="Enhanced Security (-fstack-protector-all)" superClass="com.qnx.qcc.option.compiler.security" value="true" valueType="boolean"/>
+								<option id="com.qnx.qcc.option.compiler.security.2041278353" name="Enhanced Security (-fstack-protector-strong)" superClass="com.qnx.qcc.option.compiler.security" value="false" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.compiler.defines.1008023515" name="Defines (-D)" superClass="com.qnx.qcc.option.compiler.defines" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_FORTIFY_SOURCE=2"/>
 								</option>
@@ -665,7 +673,7 @@
 							</tool>
 							<tool id="com.qnx.qcc.tool.linker.35285082" name="QCC Linker" superClass="com.qnx.qcc.tool.linker">
 								<option id="com.qnx.qcc.option.linker.debug.1514682747" name="Debug (-g)" superClass="com.qnx.qcc.option.linker.debug" value="true" valueType="boolean"/>
-								<option id="com.qnx.qcc.option.linker.coverage.1881413807" name="Build for Code Coverage (-ftest-coverage -fprofile-arcs -p)" superClass="com.qnx.qcc.option.linker.coverage" value="true" valueType="boolean"/>
+								<option id="com.qnx.qcc.option.linker.coverage.1881413807" name="Build for Code Coverage (-ftest-coverage -fprofile-arcs)" superClass="com.qnx.qcc.option.linker.coverage" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.langcpp.769428310" name="C++ (-lang-c++)" superClass="com.qnx.qcc.option.linker.langcpp" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraries.1325336223" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="cocos2dx"/>
@@ -697,6 +705,7 @@
 								<option id="com.qnx.qcc.option.linker.ldoptions.259366688" name="Linker Options (-Wl,)" superClass="com.qnx.qcc.option.linker.ldoptions" valueType="stringList">
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/proj.blackberry/${ConfigName}/libcocos2dx.a"/>
 									<listOptionValue builtIn="false" value="../../../../../scripting/lua/proj.blackberry/${ConfigName}/liblua.a"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}/libwebp.a"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.linker.780133405" superClass="com.qnx.qcc.inputType.linker">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>

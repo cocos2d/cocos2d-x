@@ -22,6 +22,7 @@
 # define JS_ATOMIC_SET(p,v)          PR_ATOMIC_SET((int32_t *)(p), (int32_t)(v))
 
 namespace js {
+    // Defined in jsgc.cpp.
     unsigned GetCPUCount();
 }
 

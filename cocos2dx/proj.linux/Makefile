@@ -8,9 +8,7 @@ INCLUDES += \
 			-I../../extensions/GUI/CCControlExtension \
 			-I../../external/chipmunk/include/chipmunk \
 			-I../../extensions/network \
-
-DEFINES += -D__CC_PLATFORM_FILEUTILS_CPP__
-DEFINES += -DCC_ENABLE_CHIPMUNK_INTEGRATION
+            -I../../extensions/Components \
 
 SOURCES = ../actions/CCAction.cpp \
 ../actions/CCActionCamera.cpp \
@@ -37,6 +35,7 @@ SOURCES = ../actions/CCAction.cpp \
 ../cocoa/CCArray.cpp \
 ../cocoa/CCDictionary.cpp \
 ../cocoa/CCString.cpp \
+../cocoa/CCDataVisitor.cpp \
 ../draw_nodes/CCDrawingPrimitives.cpp \
 ../draw_nodes/CCDrawNode.cpp \
 ../effects/CCGrabber.cpp \
@@ -96,11 +95,14 @@ SOURCES = ../actions/CCAction.cpp \
 ../support/zip_support/ioapi.cpp \
 ../support/zip_support/unzip.cpp \
 ../support/data_support/ccCArray.cpp \
+../support/component/CCComponent.cpp \
+../support/component/CCComponentContainer.cpp \
 ../text_input_node/CCIMEDispatcher.cpp \
 ../text_input_node/CCTextFieldTTF.cpp \
 ../textures/CCTexture2D.cpp \
 ../textures/CCTextureAtlas.cpp \
 ../textures/CCTextureCache.cpp \
+../textures/CCTextureETC.cpp \
 ../textures/CCTexturePVR.cpp \
 ../tilemap_parallax_nodes/CCParallaxNode.cpp \
 ../tilemap_parallax_nodes/CCTMXLayer.cpp \
@@ -132,6 +134,7 @@ SOURCES = ../actions/CCAction.cpp \
 ../CCConfiguration.cpp \
 ../CCDirector.cpp \
 ../CCScheduler.cpp \
+../ccFPSImages.c \
 ../cocos2d.cpp 
 
 COCOS_ROOT = ../..

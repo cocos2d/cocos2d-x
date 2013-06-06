@@ -254,7 +254,13 @@ protected:
     void removeTargetWithActionForControlEvent(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvent);
 
     static CCControl* create();
-
+public:
+    void addHandleOfControlEvent(int nFunID,CCControlEvent controlEvent);
+    void removeHandleOfControlEvent(CCControlEvent controlEvent);
+private:
+    int  getHandleOfControlEvent(CCControlEvent controlEvent);
+private:
+    std::map<int,int> m_mapHandleOfControlEvent;
 };
 
 // end of GUI group

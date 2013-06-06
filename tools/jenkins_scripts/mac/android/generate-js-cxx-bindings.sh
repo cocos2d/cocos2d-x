@@ -176,7 +176,7 @@ if [ -z "${COCOS2DX_PULL_BASE+aaa}" ]; then
     echo This script will NOT automatically generate pull requests
     echo unless this variable is set.
     echo example
-    echo  COCOS2DX_PULL_BASE=\"cocos2d/cocos2d-x:gles20\"
+    echo  COCOS2DX_PULL_BASE=\"cocos2d/cocos2d-x:master\"
     echo  COCOS2DX_PULL_BASE=\"username/repository:branch\"
     echo
     echo Exiting with success.

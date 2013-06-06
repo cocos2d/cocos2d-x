@@ -60,8 +60,11 @@ void TableViewTestLayer::tableCellTouched(CCTableView* table, CCTableViewCell* c
     CCLOG("cell touched at index: %i", cell->getIdx());
 }
 
-CCSize TableViewTestLayer::cellSizeForTable(CCTableView *table)
+CCSize TableViewTestLayer::tableCellSizeForIndex(CCTableView *table, unsigned int idx)
 {
+    if (idx == 2) {
+        return CCSizeMake(100, 100);
+    }
     return CCSizeMake(60, 60);
 }
 

@@ -1,3 +1,7 @@
+typedef enum {
+	kCCTouchesAllAtOnce,
+	kCCTouchesOneByOne,
+} ccTouchesMode;
 
 class CCLayer : public CCNode
 {
@@ -9,6 +13,11 @@ class CCLayer : public CCNode
 
     void setKeypadEnabled(bool bValue);
     bool isKeypadEnabled();
+
+    virtual void setTouchMode(ccTouchesMode mode);
+    virtual int getTouchMode();
+    virtual void setTouchPriority(int priority);
+    virtual int getTouchPriority();
 
     void registerScriptTouchHandler(LUA_FUNCTION nHandler,
                                     bool bIsMultiTouches = false,
@@ -25,7 +34,34 @@ class CCLayer : public CCNode
     static CCLayer *create(void);
 };
 
-class CCLayerColor : public CCLayer
+class CCLayerRGBA : public CCLayer, public CCRGBAProtocol
+{
+    static CCLayerRGBA* create();  
+    
+    CCLayerRGBA();
+    virtual ~CCLayerRGBA();
+    
+    virtual bool init();
+    
+    virtual GLubyte getOpacity();
+    virtual GLubyte getDisplayedOpacity();
+    virtual void setOpacity(GLubyte opacity);
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
+    virtual bool isCascadeOpacityEnabled();
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
+    
+    virtual const ccColor3B& getColor();
+    virtual const ccColor3B& getDisplayedColor();
+    virtual void setColor(const ccColor3B& color);
+    virtual void updateDisplayedColor(const ccColor3B& parentColor);
+    virtual bool isCascadeColorEnabled();
+    virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
+    
+    virtual void setOpacityModifyRGB(bool bValue);
+    virtual bool isOpacityModifyRGB();
+};
+
+class CCLayerColor : public CCLayerRGBA
 {
     void changeWidth(GLfloat w);
     void changeHeight(GLfloat h);
@@ -65,6 +101,7 @@ class CCLayerGradient : public CCLayerColor
 
     static CCLayerGradient* create(ccColor4B start, ccColor4B end, CCPoint v);
     static CCLayerGradient* create(ccColor4B start, ccColor4B end);
+    static CCLayerGradient* create();
 };
 
 class CCLayerMultiplex : public CCLayer
@@ -73,6 +110,7 @@ class CCLayerMultiplex : public CCLayer
     void switchTo(unsigned int n);
     void switchToAndReleaseMe(unsigned int n);
 
-	static CCLayerMultiplex * create(CCLayer* layer);
+    static CCLayerMultiplex* createWithArray(CCArray* arrayOfLayers);
+    static CCLayerMultiplex * create();
     static CCLayerMultiplex * createWithLayer(CCLayer* layer);
 };
