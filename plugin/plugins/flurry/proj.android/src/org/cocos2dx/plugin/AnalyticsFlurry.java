@@ -31,6 +31,7 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.util.Log;
 
+import com.flurry.android.Constants;
 import com.flurry.android.FlurryAgent;
 
 public class AnalyticsFlurry implements InterfaceAnalytics {
@@ -119,15 +120,7 @@ public class AnalyticsFlurry implements InterfaceAnalytics {
 
     @Override
     public String getSDKVersion() {
-        LogD("getSDKVersion invoked!");
-        String ret = "";
-        try {
-            int nRet = FlurryAgent.getAgentVersion();
-            ret = "Flurry android ver " + nRet;
-        } catch(Exception e){
-            LogE("Exception in getSDKVersion", e);
-        }
-        return ret;
+        return "3.2.0";
     }
 
     protected void logTimedEventBeginWithParams(JSONObject eventInfo) {
@@ -191,10 +184,16 @@ public class AnalyticsFlurry implements InterfaceAnalytics {
         }
     }
     
-    protected void setGender(byte gender) {
+    protected void setGender(int gender) {
         LogD("setGender invoked!");
         try {
-            FlurryAgent.setGender(gender);
+            byte bGender;
+            if (1 == gender) {
+                bGender = Constants.MALE;
+            } else {
+                bGender = Constants.FEMALE;
+            }
+            FlurryAgent.setGender(bGender);
         } catch(Exception e){
             LogE("Exception in setGender", e);
         }
