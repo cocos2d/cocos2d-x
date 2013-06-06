@@ -20,7 +20,7 @@
  *  attract high-quality users and monetize your user base see <a href="http://support.flurry.com/index.php?title=Publishers">Support Center - Publishers</a>.
  *  
  *  @author 2009 - 2012 Flurry, Inc. All Rights Reserved.
- *  @version 4.0.0
+ *  @version 4.2.0
  * 
  */
 @interface Flurry : NSObject {
@@ -124,6 +124,19 @@
  */
 + (void)setSecureTransportEnabled:(BOOL)value;
 
+/*!
+ *  @brief Enable automatic collection of crash reports.
+ *  @since 4.1
+ *
+ *  This is an optional method that collects crash reports when enabled. The
+ *  default value is @c NO.
+ *
+ *  @note This method must be called prior to invoking #startSession:.
+ *
+ *  @param value @c YES to enable collection of crash reports.
+ */
++ (void)setCrashReportingEnabled:(BOOL)value;
+
 //@}
 
 /*!
@@ -135,6 +148,9 @@
  *  for the period the app is in the foreground until your app is backgrounded for the 
  *  time specified in #setSessionContinueSeconds:. If the app is resumed in that period
  *  the session will continue, otherwise a new session will begin.
+ *
+ *  Crash reporting will not be enabled. See #startSession:enableCrashReporting: for
+ *  more information.
  * 
  *  @note If testing on a simulator, please be sure to send App to background via home
  *  button. Flurry depends on the iOS lifecycle to be complete for full reporting.
@@ -154,6 +170,39 @@
  */
 
 + (void)startSession:(NSString *)apiKey;
+
+
+/*!
+ *  @brief Start a Flurry session for the project denoted by @c apiKey.
+ *  @since 4.0.8
+ *
+ *  This method serves as the entry point to Flurry Analytics collection.  It must be
+ *  called in the scope of @c applicationDidFinishLaunching passing in the launchOptions param.
+ *  The session will continue
+ *  for the period the app is in the foreground until your app is backgrounded for the
+ *  time specified in #setSessionContinueSeconds:. If the app is resumed in that period
+ *  the session will continue, otherwise a new session will begin.
+ *
+ *  @note If testing on a simulator, please be sure to send App to background via home
+ *  button. Flurry depends on the iOS lifecycle to be complete for full reporting.
+ *
+ * @see #setSessionContinueSeconds: for details on setting a custom session timeout.
+ *
+ * @code
+ *  - (BOOL) application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+ {
+ // Optional Flurry startup methods
+ [Flurry startSession:@"YOUR_API_KEY" withOptions:launchOptions];
+ // ....
+ }
+ * @endcode
+ *
+ * @param apiKey The API key for this project.
+ * @param options passed launchOptions from the applicatin's didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+ 
+ */
++ (void) startSession:(NSString *)apiKey withOptions:(id)options;
+
 
 /** @name Event and Error Logging
  *  Methods for reporting custom events and errors during the session. 
@@ -547,12 +596,18 @@
  *  @code
  CLLocationManager *locationManager = [[CLLocationManager alloc] init];
  [locationManager startUpdatingLocation];
- 
+ *  @endcode
+ *
+ *  After starting the location manager, you can set the location with Flurry. You can implement
+ *  CLLocationManagerDelegate to be aware of when the location is updated. Below is an example 
+ *  of how to use this method, after you have recieved a location update from the locationManager.
+ *
+ *  @code
  CLLocation *location = locationManager.location;
- [Flurry setLatitude:location.coordinate.latitude
- longitude:location.coordinate.longitude
- horizontalAccuracy:location.horizontalAccuracy
- verticalAccuracy:location.verticalAccuracy];
+ [Flurry  setLatitude:location.coordinate.latitude
+            longitude:location.coordinate.longitude
+   horizontalAccuracy:location.horizontalAccuracy
+     verticalAccuracy:location.verticalAccuracy];
  *  @endcode
  *  @param latitude The latitude.
  *  @param longitude The longitude.
@@ -588,7 +643,7 @@
  *  @brief Set session to report when app is sent to the background.
  *  @since 2.7
  * 
- *  Use this method report session data when the app is paused. The default value is @c NO.
+ *  Use this method report session data when the app is paused. The default value is @c YES.
  *
  *  @param setSessionReportsOnPauseEnabled YES to send on pause, NO to omit reporting on pause.
  *
@@ -604,7 +659,18 @@
  *  @param value YES to enable event logging, NO to stop custom logging.
  *
  */
-+ (void)setEventLoggingEnabled:(BOOL)value;	
++ (void)setEventLoggingEnabled:(BOOL)value;
+
+/*!
+ *  @brief Set device push token.
+ *  @since 2.7
+ *
+ *  After the device has successfully registered with APNS, call this method to set the push token received from APNS.
+ *
+ *
+ */
++ (void)setPushToken:(NSString *)pushToken;
+
 
 //@}
 
