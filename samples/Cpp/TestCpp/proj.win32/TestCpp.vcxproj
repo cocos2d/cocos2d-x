@@ -133,6 +133,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
     <ClCompile Include="..\Classes\ClippingNodeTest\ClippingNodeTest.cpp" />
     <ClCompile Include="..\Classes\ConfigurationTest\ConfigurationTest.cpp" />
     <ClCompile Include="..\Classes\DataVisitorTest\DataVisitorTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\ArmatureTest\ArmatureScene.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ComponentsTest\ComponentsTestScene.cpp" />
@@ -236,6 +237,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
     <ClInclude Include="..\Classes\ClippingNodeTest\ClippingNodeTest.h" />
     <ClInclude Include="..\Classes\ConfigurationTest\ConfigurationTest.h" />
     <ClInclude Include="..\Classes\DataVisitorTest\DataVisitorTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\ArmatureTest\ArmatureScene.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsLayerLoader.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackLayerLoader.h" />

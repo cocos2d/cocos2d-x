@@ -43,9 +43,9 @@ public:
 	static CCArmature *create();
     
    /**
-	* Allocates a armature, and use the ArmatureData named name in CCArmatureDataManager to initializes the armature. 
+	* Allocates a armature, and use the CCArmatureData named name in CCArmatureDataManager to initializes the armature. 
 	*
-	* @param  name CCArmature will use the name to find to the ArmatureData to initializes it.
+	* @param  name CCArmature will use the name to find to the CCArmatureData to initializes it.
 	* @return A initialized armature which is marked as "autorelease".
 	*/
 	static CCArmature *create(const char *name);
@@ -133,7 +133,7 @@ protected:
 
 	CC_SYNTHESIZE_RETAIN(CCAnimation *, m_pAnimation, Animation);
     
-    CC_SYNTHESIZE(ArmatureData *, m_pArmatureData, ArmatureData);
+    CC_SYNTHESIZE(CCArmatureData *, m_pArmatureData, CCArmatureData);
 
 	CC_SYNTHESIZE(CCBatchNode*, m_pBatchNode, BatchNode);
 

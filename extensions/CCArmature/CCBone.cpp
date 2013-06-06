@@ -109,7 +109,7 @@ bool CCBone::init(const char *name)
         }
 
 		CC_SAFE_DELETE(m_pTweenData);
-		m_pTweenData = new FrameData();
+		m_pTweenData = new CCFrameData();
 
         CC_SAFE_DELETE(m_pTween);
 		m_pTween = new CCTween();
@@ -127,7 +127,7 @@ bool CCBone::init(const char *name)
     return bRet;
 }
 
-void CCBone::setBoneData(BoneData *boneData)
+void CCBone::setBoneData(CCBoneData *boneData)
 {
     CCAssert(NULL != boneData, "_boneData must not be NULL");
 	
@@ -140,7 +140,7 @@ void CCBone::setBoneData(BoneData *boneData)
     m_pDisplayManager->initDisplayList(boneData);
 }
     
-BoneData *CCBone::getBoneData()
+CCBoneData *CCBone::getBoneData()
 {
     return m_pBoneData;
 }
@@ -307,7 +307,7 @@ void CCBone::setZOrder(int zOrder)
 		CCNode::setZOrder(zOrder);
 }
 
-void CCBone::addDisplay(DisplayData *_displayData, int _index)
+void CCBone::addDisplay(CCDisplayData *_displayData, int _index)
 {
     m_pDisplayManager->addDisplay(_displayData, _index);
 }

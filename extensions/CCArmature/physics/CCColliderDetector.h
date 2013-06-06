@@ -36,7 +36,7 @@ class CCBone;
 class ColliderBody : public CCObject
 {
 public:
-	ColliderBody(b2Body *b2b, ContourData *contourData)
+	ColliderBody(b2Body *b2b, CCContourData *contourData)
 		:m_pB2b(NULL)
 		,m_pContourData(NULL)
 	{
@@ -55,14 +55,14 @@ public:
 		return m_pB2b;
 	}
 
-	inline ContourData *getContourData()
+	inline CCContourData *getContourData()
 	{
 		return m_pContourData;
 	}
 
 private:
 	b2Body *m_pB2b;
-	ContourData *m_pContourData;
+	CCContourData *m_pContourData;
 };
 
 /*
@@ -80,10 +80,10 @@ public:
     virtual bool init();
 	virtual bool init(CCBone *bone);
     
-    void addContourData(ContourData *contourData);
+    void addContourData(CCContourData *contourData);
     void addContourDataList(CCArray *contourDataList);
     
-	void removeContourData(ContourData *contourData);
+	void removeContourData(CCContourData *contourData);
 	void removeAll();
     
     void updateTransform(CCAffineTransform &t);

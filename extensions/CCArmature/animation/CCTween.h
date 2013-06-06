@@ -55,32 +55,32 @@ public:
     /**
 	 * Start the Process
      *
-     * @param  movementBoneData  the MovementBoneData include all frame datas
+     * @param  movementBoneData  the CCMovementBoneData include all frame datas
      * @param  durationTo the frames between two animation changing-over.
      *         It's meaning is changing to this animation need how many frames
      *
-     *         -1 : use the value from MovementData get from flash design panel
+     *         -1 : use the value from CCMovementData get from flash design panel
      * @param  durationTween  the frame count you want to play in the game.
      *         if  _durationTween is 80, then the animation will played 80 frames in a loop
      *
-     *         -1 : use the value from MovementData get from flash design panel
+     *         -1 : use the value from CCMovementData get from flash design panel
      *
      * @param  loop   whether the animation is loop
      *
-     *         loop < 0 : use the value from MovementData get from flash design panel
+     *         loop < 0 : use the value from CCMovementData get from flash design panel
      *         loop = 0 : this animation is not loop
      *         loop > 0 : this animation is loop
      *
      * @param  tweenEasing    tween easing is used for calculate easing effect
      *
-     *         TWEEN_EASING_MAX : use the value from MovementData get from flash design panel
+     *         TWEEN_EASING_MAX : use the value from CCMovementData get from flash design panel
      *         -1 : fade out
      *         0  : line
      *         1  : fade in
      *         2  : fade in and out
      *
      */
-	virtual void play(MovementBoneData *movementBoneData, int durationTo, int durationTween,  int loop, int tweenEasing);
+	virtual void play(CCMovementBoneData *movementBoneData, int durationTo, int durationTween,  int loop, int tweenEasing);
 
 protected:
     
@@ -97,27 +97,27 @@ protected:
     /**
 	 * Calculate the between value of _from and _to, and give it to between frame data
      */
-	virtual void setBetween(FrameData *from, FrameData *to);
+	virtual void setBetween(CCFrameData *from, CCFrameData *to);
     
     /**
-	 * According to the percent to calculate current FrameData with tween effect
+	 * According to the percent to calculate current CCFrameData with tween effect
      */
-	virtual FrameData *tweenNodeTo(float percent, FrameData *node = NULL);
+	virtual CCFrameData *tweenNodeTo(float percent, CCFrameData *node = NULL);
     
 	/**
 	 * Update display index and process the key frame event when arrived a key frame
      */
-    virtual void arriveKeyFrame(FrameData *keyFrameData);
+    virtual void arriveKeyFrame(CCFrameData *keyFrameData);
 protected:
-	//! A weak reference to the current MovementBoneData. The data is in the data pool
-	CC_SYNTHESIZE(MovementBoneData*, m_pMovementBoneData, MovementBoneData)
+	//! A weak reference to the current CCMovementBoneData. The data is in the data pool
+	CC_SYNTHESIZE(CCMovementBoneData*, m_pMovementBoneData, MovementBoneData)
 
-	FrameData *m_pTweenData;		//! The computational tween frame data, //! A weak reference to the CCBone's tweenData
-	FrameData *m_pFrom;				//! From frame data, used for calculate between value
-    FrameData *m_pTo;				//! To frame data, used for calculate between value
-	FrameData *m_pBetween;			//! Between frame data, used for calculate current FrameData(m_pNode) value
+	CCFrameData *m_pTweenData;		//! The computational tween frame data, //! A weak reference to the CCBone's tweenData
+	CCFrameData *m_pFrom;				//! From frame data, used for calculate between value
+    CCFrameData *m_pTo;				//! To frame data, used for calculate between value
+	CCFrameData *m_pBetween;			//! Between frame data, used for calculate current CCFrameData(m_pNode) value
 
-    FrameData *m_pCurrentKeyFrame;	//! A weak reference to the current FrameData. The data is in the data pool
+    CCFrameData *m_pCurrentKeyFrame;	//! A weak reference to the current CCFrameData. The data is in the data pool
     
 	CCBone *m_pBone;					//! A weak reference to the CCBone
 
@@ -130,11 +130,11 @@ protected:
 	int m_iTotalDuration;			
 
 
-	int m_iFromIndex;				//! The current frame index in FrameList of MovementBoneData, it's different from m_iFrameIndex
-	int m_iToIndex;					//! The next frame index in FrameList of MovementBoneData, it's different from m_iFrameIndex
+	int m_iFromIndex;				//! The current frame index in FrameList of CCMovementBoneData, it's different from m_iFrameIndex
+	int m_iToIndex;					//! The next frame index in FrameList of CCMovementBoneData, it's different from m_iFrameIndex
 
 
-	FrameData *m_pEditKeyFrame;
+	CCFrameData *m_pEditKeyFrame;
     
 	CCAnimation *m_pAnimation;
 };

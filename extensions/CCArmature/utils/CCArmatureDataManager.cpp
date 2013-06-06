@@ -96,7 +96,7 @@ bool CCArmatureDataManager::init()
     return bRet;
 }
 
-void CCArmatureDataManager::addArmatureData(const char *id, ArmatureData *armatureData)
+void CCArmatureDataManager::addArmatureData(const char *id, CCArmatureData *armatureData)
 {
     if(m_pArmarureDatas)
     {
@@ -104,17 +104,17 @@ void CCArmatureDataManager::addArmatureData(const char *id, ArmatureData *armatu
     }
 }
     
-ArmatureData *CCArmatureDataManager::getArmatureData(const char* id)
+CCArmatureData *CCArmatureDataManager::getArmatureData(const char* id)
 {
-    ArmatureData * armatureData = NULL;
+    CCArmatureData * armatureData = NULL;
     if (m_pArmarureDatas)
     {
-        armatureData = (ArmatureData*)m_pArmarureDatas->objectForKey(id);
+        armatureData = (CCArmatureData*)m_pArmarureDatas->objectForKey(id);
     }
     return armatureData;
 }
 
-void CCArmatureDataManager::addAnimationData(const char *id, AnimationData *animationData)
+void CCArmatureDataManager::addAnimationData(const char *id, CCAnimationData *animationData)
 {
     if(m_pAnimationDatas)
     {
@@ -122,7 +122,7 @@ void CCArmatureDataManager::addAnimationData(const char *id, AnimationData *anim
     }
 }
     
-void CCArmatureDataManager::addTextureData(const char *id, TextureData *textureData)
+void CCArmatureDataManager::addTextureData(const char *id, CCTextureData *textureData)
 {
     if(m_pTextureDatas)
     {
@@ -130,22 +130,22 @@ void CCArmatureDataManager::addTextureData(const char *id, TextureData *textureD
     }
 }
     
-AnimationData* CCArmatureDataManager::getAnimationData(const char* id)
+CCAnimationData* CCArmatureDataManager::getAnimationData(const char* id)
 {
-    AnimationData *animationData = NULL;
+    CCAnimationData *animationData = NULL;
     if (m_pAnimationDatas)
     {
-        animationData = (AnimationData*)m_pAnimationDatas->objectForKey(id);
+        animationData = (CCAnimationData*)m_pAnimationDatas->objectForKey(id);
     }
     return animationData;
 }
 
-TextureData *CCArmatureDataManager::getTextureData(const char* id)
+CCTextureData *CCArmatureDataManager::getTextureData(const char* id)
 {
-    TextureData *textureData = NULL;
+    CCTextureData *textureData = NULL;
     if (m_pTextureDatas)
     {
-        textureData = (TextureData*)m_pTextureDatas->objectForKey(id);
+        textureData = (CCTextureData*)m_pTextureDatas->objectForKey(id);
     }
     return textureData;
 }

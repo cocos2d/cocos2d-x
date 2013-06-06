@@ -25,7 +25,6 @@
     <Filter Include="AssetsManager">
       <UniqueIdentifier>{49487dbe-5758-436a-b014-8e2edc6b33ae}</UniqueIdentifier>
     </Filter>
-<<<<<<< HEAD
     <Filter Include="CCArmature">
       <UniqueIdentifier>{0f60f39f-9b10-4467-a225-185f3f415178}</UniqueIdentifier>
     </Filter>
@@ -52,8 +51,7 @@
     </Filter>
     <Filter Include="CCArmature\external_tool\Json\lib_json">
       <UniqueIdentifier>{d04cf376-7450-4b6a-a055-1db18f8d65de}</UniqueIdentifier>
-=======
-    <Filter Include="spine">
+	</Filter>    <Filter Include="spine">
       <UniqueIdentifier>{ff4b5934-99d4-4ea7-9f50-a774192d9ca9}</UniqueIdentifier>
     </Filter>
     <Filter Include="network">
@@ -61,7 +59,6 @@
     </Filter>
     <Filter Include="Components">
       <UniqueIdentifier>{e82b14bf-eb08-4a40-a9a2-cc92a154d9b9}</UniqueIdentifier>
->>>>>>> 150b91074a57ae0345c03541b533c46a017b0d13
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -209,7 +206,6 @@
     <ClCompile Include="..\AssetsManager\AssetsManager.cpp">
       <Filter>AssetsManager</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="..\CCArmature\animation\CCAnimation.cpp">
       <Filter>CCArmature\animation</Filter>
     </ClCompile>
@@ -287,7 +283,7 @@
     </ClCompile>
     <ClCompile Include="..\CCArmature\external_tool\Json\lib_json\json_writer.cpp">
       <Filter>CCArmature\external_tool\Json\lib_json</Filter>
-=======
+	</ClCompile>
     <ClCompile Include="..\spine\Animation.cpp">
       <Filter>spine</Filter>
     </ClCompile>
@@ -365,7 +361,6 @@
     </ClCompile>
     <ClCompile Include="..\Components\CCInputDelegate.cpp">
       <Filter>Components</Filter>
->>>>>>> 150b91074a57ae0345c03541b533c46a017b0d13
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -539,7 +534,6 @@
     <ClInclude Include="..\AssetsManager\AssetsManager.h">
       <Filter>AssetsManager</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="..\CCArmature\animation\CCAnimation.h">
       <Filter>CCArmature\animation</Filter>
     </ClInclude>
@@ -662,7 +656,6 @@
     <None Include="..\CCArmature\external_tool\Json\lib_json\sconscript">
       <Filter>CCArmature\external_tool\Json\lib_json</Filter>
     </None>
-=======
     <ClInclude Include="..\spine\Animation.h">
       <Filter>spine</Filter>
     </ClInclude>
@@ -744,6 +737,5 @@
     <ClInclude Include="..\Components\CCInputDelegate.h">
       <Filter>Components</Filter>
     </ClInclude>
->>>>>>> 150b91074a57ae0345c03541b533c46a017b0d13
   </ItemGroup>
 </Project>

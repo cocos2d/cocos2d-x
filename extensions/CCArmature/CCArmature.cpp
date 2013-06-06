@@ -139,13 +139,13 @@ bool CCArmature::init(const char *name)
         {
             m_strName = name;
             
-            AnimationData* animationData = armatureDataManager->getAnimationData(name);
-            CCAssert(animationData, "AnimationData not exist! ");
+            CCAnimationData* animationData = armatureDataManager->getAnimationData(name);
+            CCAssert(animationData, "CCAnimationData not exist! ");
             
             m_pAnimation->setAnimationData(animationData);
             
             
-            ArmatureData *armatureData = armatureDataManager->getArmatureData(name);
+            CCArmatureData *armatureData = armatureDataManager->getArmatureData(name);
             CCAssert(armatureData, "");
             
             m_pArmatureData = armatureData;
@@ -160,13 +160,13 @@ bool CCArmature::init(const char *name)
                 //! init bone's  CCTween to 1st movement's 1st frame
                 do {
                     
-                    MovementData *movData = animationData->getMovement(animationData->movementNames.at(0).c_str());
+                    CCMovementData *movData = animationData->getMovement(animationData->movementNames.at(0).c_str());
                     CC_BREAK_IF(!movData);
                     
-                    MovementBoneData *movBoneData = movData->getMovementBoneData(bone->getName().c_str());
+                    CCMovementBoneData *movBoneData = movData->getMovementBoneData(bone->getName().c_str());
                     CC_BREAK_IF(!movBoneData || movBoneData->frameList.count() <= 0);
                     
-                    FrameData *frameData = movBoneData->getFrameData(0);
+                    CCFrameData *frameData = movBoneData->getFrameData(0);
                     CC_BREAK_IF(!frameData);
                     
                     bone->getTweenData()->copy(frameData);
@@ -180,10 +180,10 @@ bool CCArmature::init(const char *name)
         else
         {
             m_strName = "new_armature";
-            m_pArmatureData = ArmatureData::create();
+            m_pArmatureData = CCArmatureData::create();
             m_pArmatureData->name = m_strName;
             
-            AnimationData *animationData = AnimationData::create();
+            CCAnimationData *animationData = CCAnimationData::create();
 			animationData->name = m_strName;
             
             armatureDataManager->addArmatureData(m_strName.c_str(), m_pArmatureData);
@@ -221,7 +221,7 @@ CCBone *CCArmature::createBone(const char *boneName)
 	if(existedBone != NULL)
 		return existedBone;
     
-    BoneData *boneData = (BoneData*)m_pArmatureData->getBoneData(boneName);
+    CCBoneData *boneData = (CCBoneData*)m_pArmatureData->getBoneData(boneName);
 	std::string parentName = boneData->parentName;
 
     CCBone *bone = NULL;

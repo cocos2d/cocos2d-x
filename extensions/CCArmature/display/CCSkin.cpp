@@ -62,7 +62,7 @@ CCSkin::CCSkin()
 {
 }
 
-void CCSkin::setSkinData(const Node& var)
+void CCSkin::setSkinData(const CCBaseData& var)
 {
 	m_sSkinData = var;
 
@@ -74,7 +74,7 @@ void CCSkin::setSkinData(const Node& var)
 	m_tSkinTransform = nodeToParentTransform();
 }
 
-const Node &CCSkin::getSkinData()
+const CCBaseData &CCSkin::getSkinData()
 {
 	return m_sSkinData;
 }

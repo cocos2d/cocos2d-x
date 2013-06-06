@@ -177,7 +177,7 @@ void CCAnimation::play(const char *animationName, int durationTo, int durationTw
 		m_iDurationTween = durationTween;
 	}
     
-    MovementBoneData *movementBoneData = NULL;
+    CCMovementBoneData *movementBoneData = NULL;
     m_pTweenList->removeAllObjects();
 
     CCDictElement *element = NULL;
@@ -186,7 +186,7 @@ void CCAnimation::play(const char *animationName, int durationTo, int durationTw
 	CCDICT_FOREACH(dict, element)
 	{
         CCBone *bone = (CCBone*)element->getObject();
-        movementBoneData = (MovementBoneData*)m_pMovementData->movBoneDataDic.objectForKey(bone->getName());
+        movementBoneData = (CCMovementBoneData*)m_pMovementData->movBoneDataDic.objectForKey(bone->getName());
 
 		CCTween *tween = bone->getTween();
 		if(movementBoneData && movementBoneData->frameList.count()>0)

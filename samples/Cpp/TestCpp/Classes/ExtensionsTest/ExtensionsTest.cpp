@@ -7,15 +7,12 @@
 #include "NetworkTest/HttpClientTest.h"
 #endif
 #include "TableViewTest/TableViewTestScene.h"
-<<<<<<< HEAD
 #include "ArmatureTest/ArmatureScene.h"
-=======
 #include "ComponentsTest/ComponentsTestScene.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "NetworkTest/WebSocketTest.h"
 #endif
->>>>>>> 150b91074a57ae0345c03541b533c46a017b0d13
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
 #include "EditBoxTest/EditBoxTest.h"
@@ -40,11 +37,8 @@ enum
     TEST_EDITBOX,
 #endif
 	TEST_TABLEVIEW,
-<<<<<<< HEAD
+	TEST_COMPONENTS,
 	TEST_ARMATURE,
-=======
-    TEST_COMPONENTS,
->>>>>>> 150b91074a57ae0345c03541b533c46a017b0d13
     TEST_MAX_COUNT,
 };
 
@@ -63,11 +57,8 @@ static const std::string testsName[TEST_MAX_COUNT] =
     "EditBoxTest",
 #endif
 	"TableViewTest",
-<<<<<<< HEAD
+    "ComponentsTest",
 	"ArmatureTest"
-=======
-    "ComponentsTest"
->>>>>>> 150b91074a57ae0345c03541b533c46a017b0d13
 };
 
 ////////////////////////////////////////////////////////
@@ -156,7 +147,10 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
 			runTableViewTest();
 		}
 		break;
-<<<<<<< HEAD
+    case TEST_COMPONENTS:
+        {
+            runComponentsTestLayerTest();
+        }
 	case TEST_ARMATURE:
 		{
 			ArmatureTestScene *pScene = new ArmatureTestScene();
@@ -167,12 +161,6 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
 			}
 		}
 		break;
-=======
-    case TEST_COMPONENTS:
-        {
-            runComponentsTestLayerTest();
-        }
->>>>>>> 150b91074a57ae0345c03541b533c46a017b0d13
     default:
         break;
     }
