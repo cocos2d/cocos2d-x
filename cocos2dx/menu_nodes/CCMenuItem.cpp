@@ -161,6 +161,7 @@ bool CCMenuItem::isSelected()
     return m_bSelected;
 }
 
+// XXX deprecated
 void CCMenuItem::setTarget(CCObject *target, SEL_MenuHandler selector)
 {
 	_target = target;
@@ -432,6 +433,7 @@ CCMenuItemFont * CCMenuItemFont::create(const char *value)
     return pRet;
 }
 
+// XXX: deprecated
 bool CCMenuItemFont::initWithString(const char *value, CCObject* target, SEL_MenuHandler selector)
 {
     CCAssert( value != NULL && strlen(value) != 0, "Value length must be greater than 0");
@@ -846,6 +848,7 @@ CCArray* CCMenuItemToggle::getSubItems()
     return m_pSubItems;
 }
 
+// XXX: deprecated
 CCMenuItemToggle * CCMenuItemToggle::createWithTarget(CCObject* target, SEL_MenuHandler selector, CCArray* menuItems)
 {
     CCMenuItemToggle *pRet = new CCMenuItemToggle();
@@ -864,12 +867,42 @@ CCMenuItemToggle * CCMenuItemToggle::createWithTarget(CCObject* target, SEL_Menu
     return pRet;
 }
 
+CCMenuItemToggle * CCMenuItemToggle::createWithCallback(const ccMenuCallback &callback, CCArray* menuItems)
+{
+    CCMenuItemToggle *pRet = new CCMenuItemToggle();
+    pRet->CCMenuItem::initWithCallback(callback);
+    pRet->m_pSubItems = CCArray::create();
+    pRet->m_pSubItems->retain();
+
+    for (unsigned int z=0; z < menuItems->count(); z++)
+    {
+        CCMenuItem* menuItem = (CCMenuItem*)menuItems->objectAtIndex(z);
+        pRet->m_pSubItems->addObject(menuItem);
+    }
+
+    pRet->m_uSelectedIndex = UINT_MAX;
+    pRet->setSelectedIndex(0);
+    return pRet;
+}
+
+// XXX: deprecated
 CCMenuItemToggle * CCMenuItemToggle::createWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, ...)
 {
     va_list args;
     va_start(args, item);
     CCMenuItemToggle *pRet = new CCMenuItemToggle();
     pRet->initWithTarget(target, selector, item, args);
+    pRet->autorelease();
+    va_end(args);
+    return pRet;
+}
+
+CCMenuItemToggle * CCMenuItemToggle::createWithCallback(const ccMenuCallback &callback, CCMenuItem* item, ...)
+{
+    va_list args;
+    va_start(args, item);
+    CCMenuItemToggle *pRet = new CCMenuItemToggle();
+    pRet->initWithCallback(callback, item, args);
     pRet->autorelease();
     va_end(args);
     return pRet;
@@ -883,14 +916,22 @@ CCMenuItemToggle * CCMenuItemToggle::create()
     return pRet;
 }
 
+// XXX: deprecated
 bool CCMenuItemToggle::initWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, va_list args)
 {
-    CCMenuItem::initWithTarget(target, selector);
+	_target = target;
+	CC_SAFE_RETAIN(_target);
+	return initWithCallback(std::bind( selector, target, std::placeholders::_1), item, args);
+}
+
+bool CCMenuItemToggle::initWithCallback(const ccMenuCallback &callback, CCMenuItem *item, va_list args)
+{
+    CCMenuItem::initWithCallback(callback);
     this->m_pSubItems = CCArray::create();
     this->m_pSubItems->retain();
     int z = 0;
     CCMenuItem *i = item;
-    while(i) 
+    while(i)
     {
         z++;
         m_pSubItems->addObject(i);
