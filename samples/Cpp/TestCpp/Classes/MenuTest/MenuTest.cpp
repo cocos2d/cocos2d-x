@@ -34,42 +34,43 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     CCSprite* spriteSelected = CCSprite::create(s_MenuItem, CCRectMake(0,23*1,115,23));
     CCSprite* spriteDisabled = CCSprite::create(s_MenuItem, CCRectMake(0,23*0,115,23));
 
-    CCMenuItemSprite* item1 = CCMenuItemSprite::create(spriteNormal, spriteSelected, spriteDisabled, this, menu_selector(MenuLayerMainMenu::menuCallback) );
+    CCMenuItemSprite* item1 = CCMenuItemSprite::create(spriteNormal, spriteSelected, spriteDisabled, std::bind(&MenuLayerMainMenu::menuCallback, this, std::placeholders::_1) );
     
     // Image Item
-    CCMenuItem* item2 = CCMenuItemImage::create(s_SendScore, s_PressSendScore, this, menu_selector(MenuLayerMainMenu::menuCallback2) );
+    CCMenuItem* item2 = CCMenuItemImage::create(s_SendScore, s_PressSendScore, std::bind(&MenuLayerMainMenu::menuCallback2, this, std::placeholders::_1) );
 
     // Label Item (LabelAtlas)
     CCLabelAtlas* labelAtlas = CCLabelAtlas::create("0123456789", "fonts/labelatlas.png", 16, 24, '.');
-    CCMenuItemLabel* item3 = CCMenuItemLabel::create(labelAtlas, this, menu_selector(MenuLayerMainMenu::menuCallbackDisabled) );
+    CCMenuItemLabel* item3 = CCMenuItemLabel::create(labelAtlas, std::bind(&MenuLayerMainMenu::menuCallbackDisabled, this, std::placeholders::_1) );
     item3->setDisabledColor( ccc3(32,32,64) );
     item3->setColor( ccc3(200,200,255) );
     
     // Font Item
-    CCMenuItemFont *item4 = CCMenuItemFont::create("I toggle enable items", this, menu_selector(MenuLayerMainMenu::menuCallbackEnable) );
+    CCMenuItemFont *item4 = CCMenuItemFont::create("I toggle enable items", [&](CCObject *sender) {
+		m_disabledItem->setEnabled(! m_disabledItem->isEnabled() );
+	});
 
     item4->setFontSizeObj(20);
     item4->setFontName("Marker Felt");
     
     // Label Item (CCLabelBMFont)
     CCLabelBMFont* label = CCLabelBMFont::create("configuration", "fonts/bitmapFontTest3.fnt");
-    CCMenuItemLabel* item5 = CCMenuItemLabel::create(label, this, menu_selector(MenuLayerMainMenu::menuCallbackConfig));
+    CCMenuItemLabel* item5 = CCMenuItemLabel::create(label, std::bind(&MenuLayerMainMenu::menuCallbackConfig, this, std::placeholders::_1));
 
     // Testing issue #500
     item5->setScale( 0.8f );
 
     // Events
     CCMenuItemFont::setFontName("Marker Felt");
-    CCMenuItemFont *item6 = CCMenuItemFont::create("Priority Test", this, menu_selector(MenuLayerMainMenu::menuCallbackPriorityTest));
+    CCMenuItemFont *item6 = CCMenuItemFont::create("Priority Test", std::bind(&MenuLayerMainMenu::menuCallbackPriorityTest, this, std::placeholders::_1));
     
     // Bugs Item
-    CCMenuItemFont *item7 = CCMenuItemFont::create("Bugs", this, menu_selector(MenuLayerMainMenu::menuCallbackBugsTest));
+    CCMenuItemFont *item7 = CCMenuItemFont::create("Bugs", std::bind(&MenuLayerMainMenu::menuCallbackBugsTest, this, std::placeholders::_1));
 
     // Font Item
-    CCMenuItemFont* item8 = CCMenuItemFont::create("Quit", this, menu_selector(MenuLayerMainMenu::onQuit));
+    CCMenuItemFont* item8 = CCMenuItemFont::create("Quit", std::bind(&MenuLayerMainMenu::onQuit, this, std::placeholders::_1));
     
-    CCMenuItemFont* item9 = CCMenuItemFont::create("Remove menu item when moving", this,
-                                                   menu_selector(MenuLayerMainMenu::menuMovingCallback));
+    CCMenuItemFont* item9 = CCMenuItemFont::create("Remove menu item when moving", std::bind(&MenuLayerMainMenu::menuMovingCallback, this, std::placeholders::_1));
     
     CCActionInterval* color_action = CCTintBy::create(0.5f, 0, -255, -255);
     CCActionInterval* color_back = color_action->reverse();
@@ -162,11 +163,6 @@ void MenuLayerMainMenu::menuCallbackDisabled(CCObject* sender)
     CCLog("TOUCHES DISABLED FOR 5 SECONDS");
 }
 
-void MenuLayerMainMenu::menuCallbackEnable(CCObject* sender) 
-{
-    m_disabledItem->setEnabled(! m_disabledItem->isEnabled() );
-}
-
 void MenuLayerMainMenu::menuCallback2(CCObject* sender)
 {
     ((CCLayerMultiplex*)m_pParent)->switchTo(2);
@@ -202,9 +198,9 @@ MenuLayer2::MenuLayer2()
 {
     for( int i=0;i < 2;i++ ) 
     {
-        CCMenuItemImage* item1 = CCMenuItemImage::create(s_PlayNormal, s_PlaySelect, this, menu_selector(MenuLayer2::menuCallback));
-        CCMenuItemImage* item2 = CCMenuItemImage::create(s_HighNormal, s_HighSelect, this, menu_selector(MenuLayer2::menuCallbackOpacity) );
-        CCMenuItemImage* item3 = CCMenuItemImage::create(s_AboutNormal, s_AboutSelect, this, menu_selector(MenuLayer2::menuCallbackAlign) );
+        CCMenuItemImage* item1 = CCMenuItemImage::create(s_PlayNormal, s_PlaySelect, std::bind( &MenuLayer2::menuCallback, this, std::placeholders::_1));
+        CCMenuItemImage* item2 = CCMenuItemImage::create(s_HighNormal, s_HighSelect, std::bind( &MenuLayer2::menuCallbackOpacity, this, std::placeholders::_1));
+        CCMenuItemImage* item3 = CCMenuItemImage::create(s_AboutNormal, s_AboutSelect, std::bind( &MenuLayer2::menuCallbackAlign, this, std::placeholders::_1));
         
         item1->setScaleX( 1.5f );
         item2->setScaleX( 0.5f );
@@ -313,15 +309,23 @@ MenuLayer3::MenuLayer3()
     CCMenuItemFont::setFontSize(28);
 
     CCLabelBMFont* label = CCLabelBMFont::create("Enable AtlasItem", "fonts/bitmapFontTest3.fnt");
-    CCMenuItemLabel* item1 = CCMenuItemLabel::create(label, this, menu_selector(MenuLayer3::menuCallback2) );
-    CCMenuItemFont* item2 = CCMenuItemFont::create("--- Go Back ---", this, menu_selector(MenuLayer3::menuCallback) );
-    
+    CCMenuItemLabel* item1 = CCMenuItemLabel::create(label, [&](CCObject *sender) {
+		//CCLOG("Label clicked. Toogling AtlasSprite");
+		m_disabledItem->setEnabled( ! m_disabledItem->isEnabled() );
+		m_disabledItem->stopAllActions();
+	});
+    CCMenuItemFont* item2 = CCMenuItemFont::create("--- Go Back ---", [&](CCObject *sender) {
+		    ((CCLayerMultiplex*)m_pParent)->switchTo(0);
+	});
+
     CCSprite *spriteNormal   = CCSprite::create(s_MenuItem,  CCRectMake(0,23*2,115,23));
     CCSprite *spriteSelected = CCSprite::create(s_MenuItem,  CCRectMake(0,23*1,115,23));
     CCSprite *spriteDisabled = CCSprite::create(s_MenuItem,  CCRectMake(0,23*0,115,23));
     
     
-    CCMenuItemSprite* item3 = CCMenuItemSprite::create(spriteNormal, spriteSelected, spriteDisabled, this, menu_selector(MenuLayer3::menuCallback3));
+    CCMenuItemSprite* item3 = CCMenuItemSprite::create(spriteNormal, spriteSelected, spriteDisabled, [](CCObject *sender) {
+		CCLog("sprite clicked!");
+	});
     m_disabledItem = item3;  item3->retain();
     m_disabledItem->setEnabled( false );
     
@@ -355,23 +359,6 @@ MenuLayer3::~MenuLayer3()
     m_disabledItem->release();
 }
 
-void MenuLayer3::menuCallback(CCObject* sender)
-{
-    ((CCLayerMultiplex*)m_pParent)->switchTo(0);
-}
-
-void MenuLayer3::menuCallback2(CCObject* sender)
-{
-    //CCLOG("Label clicked. Toogling AtlasSprite");
-    m_disabledItem->setEnabled( ! m_disabledItem->isEnabled() );
-    m_disabledItem->stopAllActions();
-}
-
-void MenuLayer3::menuCallback3(CCObject* sender)
-{
-    //CCLOG("MenuItemSprite clicked");
-}
-
 //------------------------------------------------------------------
 //
 // MenuLayer4
@@ -385,8 +372,7 @@ MenuLayer4::MenuLayer4()
     title1->setEnabled(false);
     CCMenuItemFont::setFontName( "Marker Felt" );
     CCMenuItemFont::setFontSize(34);
-    CCMenuItemToggle* item1 = CCMenuItemToggle::createWithTarget(this, 
-                                                                menu_selector(MenuLayer4::menuCallback), 
+    CCMenuItemToggle* item1 = CCMenuItemToggle::createWithCallback( std::bind( &MenuLayer4::menuCallback, this, std::placeholders::_1),
                                                                 CCMenuItemFont::create( "On" ),
                                                                 CCMenuItemFont::create( "Off"),
                                                                 NULL );
@@ -397,8 +383,7 @@ MenuLayer4::MenuLayer4()
     title2->setEnabled(false);
     CCMenuItemFont::setFontName( "Marker Felt" );
     CCMenuItemFont::setFontSize(34);
-    CCMenuItemToggle *item2 = CCMenuItemToggle::createWithTarget(this, 
-                                                                menu_selector(MenuLayer4::menuCallback),
+    CCMenuItemToggle *item2 = CCMenuItemToggle::createWithCallback(std::bind( &MenuLayer4::menuCallback, this, std::placeholders::_1),
                                                                 CCMenuItemFont::create( "On" ),
                                                                 CCMenuItemFont::create( "Off"),
                                                                 NULL );
@@ -409,8 +394,7 @@ MenuLayer4::MenuLayer4()
     title3->setEnabled( false );
     CCMenuItemFont::setFontName( "Marker Felt" );
     CCMenuItemFont::setFontSize(34);
-    CCMenuItemToggle *item3 = CCMenuItemToggle::createWithTarget(this, 
-                                                                menu_selector(MenuLayer4::menuCallback), 
+    CCMenuItemToggle *item3 = CCMenuItemToggle::createWithCallback(std::bind( &MenuLayer4::menuCallback, this, std::placeholders::_1), 
                                                                 CCMenuItemFont::create( "High" ),
                                                                 CCMenuItemFont::create( "Low" ),
                                                                 NULL );
@@ -421,8 +405,7 @@ MenuLayer4::MenuLayer4()
     title4->setEnabled(false);
     CCMenuItemFont::setFontName( "Marker Felt" );
     CCMenuItemFont::setFontSize(34);
-    CCMenuItemToggle *item4 = CCMenuItemToggle::createWithTarget(this, 
-                                                                menu_selector(MenuLayer4::menuCallback), 
+    CCMenuItemToggle *item4 = CCMenuItemToggle::createWithCallback(std::bind( &MenuLayer4::menuCallback, this, std::placeholders::_1), 
                                                                 CCMenuItemFont::create( "Off" ), 
                                                                 NULL );
     
@@ -443,7 +426,7 @@ MenuLayer4::MenuLayer4()
     CCMenuItemFont::setFontSize( 34 );
     
     CCLabelBMFont *label = CCLabelBMFont::create( "go back", "fonts/bitmapFontTest3.fnt" );
-    CCMenuItemLabel* back = CCMenuItemLabel::create(label, this, menu_selector(MenuLayer4::backCallback) );
+    CCMenuItemLabel* back = CCMenuItemLabel::create(label, std::bind( &MenuLayer4::backCallback, this, std::placeholders::_1) );
     
     CCMenu *menu = CCMenu::create(
                   title1, title2,
@@ -484,8 +467,16 @@ MenuLayerPriorityTest::MenuLayerPriorityTest()
     // Menu 1
     CCMenuItemFont::setFontName("Marker Felt");
     CCMenuItemFont::setFontSize(18);
-    CCMenuItemFont *item1 = CCMenuItemFont::create("Return to Main Menu", this, menu_selector(MenuLayerPriorityTest::menuCallback));
-    CCMenuItemFont *item2 = CCMenuItemFont::create("Disable menu for 5 seconds", this, menu_selector(MenuLayerPriorityTest::disableMenuCallback));
+    CCMenuItemFont *item1 = CCMenuItemFont::create("Return to Main Menu", std::bind( &MenuLayerPriorityTest::menuCallback, this, std::placeholders::_1));
+    CCMenuItemFont *item2 = CCMenuItemFont::create("Disable menu for 5 seconds", [&](CCObject *sender) {
+		m_pMenu1->setEnabled(false);
+		CCDelayTime *wait = CCDelayTime::create(5);
+		CCCallFunc *enable = CCCallFunc::create( [&]() {
+			    m_pMenu1->setEnabled(true);
+		});
+		CCSequence* seq = CCSequence::create(wait, enable, NULL);
+		m_pMenu1->runAction(seq);
+	});
 
 
     m_pMenu1->addChild(item1);
@@ -498,7 +489,16 @@ MenuLayerPriorityTest::MenuLayerPriorityTest()
     // Menu 2
     m_bPriority = true;
     CCMenuItemFont::setFontSize(48);
-    item1 = CCMenuItemFont::create("Toggle priority", this, menu_selector(MenuLayerPriorityTest::togglePriorityCallback));
+    item1 = CCMenuItemFont::create("Toggle priority", [&](CCObject *sender) {
+		if( m_bPriority) {
+			m_pMenu2->setHandlerPriority(kCCMenuHandlerPriority + 20);
+			m_bPriority = false;
+		} else {
+			m_pMenu2->setHandlerPriority(kCCMenuHandlerPriority - 20);
+			m_bPriority = true;
+		}
+	});
+
     item1->setColor(ccc3(0,0,255));
     m_pMenu2->addChild(item1);
     addChild(m_pMenu2);
@@ -513,32 +513,6 @@ void MenuLayerPriorityTest::menuCallback(CCObject* pSender)
 {
     ((CCLayerMultiplex*)m_pParent)->switchTo(0);
 //    [[CCDirector sharedDirector] popScene];
-}
-
-void MenuLayerPriorityTest::disableMenuCallback(CCObject* pSender)
-{
-    m_pMenu1->setEnabled(false);
-    CCDelayTime *wait = CCDelayTime::create(5);
-    CCCallFunc *enable = CCCallFunc::create(this, callfunc_selector(MenuLayerPriorityTest::enableMenuCallback));
-
-    CCSequence* seq = CCSequence::create(wait, enable, NULL);
-    m_pMenu1->runAction(seq);
-}
-
-void MenuLayerPriorityTest::enableMenuCallback()
-{
-    m_pMenu1->setEnabled(true);
-}
-
-void MenuLayerPriorityTest::togglePriorityCallback(CCObject* pSender)
-{
-    if( m_bPriority) {
-        m_pMenu2->setHandlerPriority(kCCMenuHandlerPriority + 20);
-        m_bPriority = false;
-    } else {
-        m_pMenu2->setHandlerPriority(kCCMenuHandlerPriority - 20);
-        m_bPriority = true;
-    }
 }
 
 // BugsTest
