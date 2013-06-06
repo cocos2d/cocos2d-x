@@ -35,8 +35,11 @@ void _AtlasPage_createTexture (AtlasPage* self, const char* path) {
 	CCTextureAtlas* textureAtlas = CCTextureAtlas::createWithTexture(texture, 4);
 	textureAtlas->retain();
 	self->rendererObject = textureAtlas;
-	self->width = texture->getPixelsWide();
-	self->height = texture->getPixelsHigh();
+    // Using getContentSize to make it supports the strategy of loading resources in cocos2d-x.
+	// self->width = texture->getPixelsWide();
+	// self->height = texture->getPixelsHigh();
+    self->width = texture->getContentSize().width;
+    self->height = texture->getContentSize().height;
 }
 
 void _AtlasPage_disposeTexture (AtlasPage* self) {
