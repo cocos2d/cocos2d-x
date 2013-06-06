@@ -167,9 +167,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libwebp_static
 
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS   := -Wno-psabi -Wno-deprecated-declarations -DUSE_FILE32API
-LOCAL_CPPFLAGS := -Wno-invalid-offsetof
-LOCAL_EXPORT_CFLAGS   := -Wno-psabi -Wno-deprecated-declarations -Wno-invalid-offsetof -DUSE_FILE32API
-LOCAL_EXPORT_CPPFLAGS := -Wno-invalid-offsetof
+LOCAL_EXPORT_CFLAGS   := -Wno-psabi -Wno-deprecated-declarations -DUSE_FILE32API
 
 include $(BUILD_STATIC_LIBRARY)
 
