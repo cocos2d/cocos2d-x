@@ -16,6 +16,8 @@ NS_CC_EXT_BEGIN
 
 // Implementation of CCBAinmationManager
 
+static int ccbAnimationManagerID = 0;
+
 CCBAnimationManager::CCBAnimationManager()
 : mSequences(NULL)
 , mNodeSequences(NULL)
@@ -44,6 +46,9 @@ bool CCBAnimationManager::init()
     mKeyframeCallbacks = new CCArray();
     mKeyframeCallFuncs = new CCDictionary();
 
+    mAnimationManagerId = ccbAnimationManagerID;
+    ccbAnimationManagerID++;
+    
     mTarget = NULL;
     mAnimationCompleteCallbackFunc = NULL;
     
@@ -678,7 +683,12 @@ CCObject* CCBAnimationManager::actionForSoundChannel(CCBSequenceProperty* channe
     return (CCObject *) CCSequence::create(actions);    
 }
 
-
+void CCBAnimationManager::removeActionsByTag(int tag, CCNode* node) {
+    CCActionManager* am = node->getActionManager();
+    while (am->getActionByTag(tag, node)) {
+        am->removeActionByTag(tag, node);
+    }
+}
 
 void CCBAnimationManager::runAction(CCNode *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration)
 {
@@ -714,6 +724,7 @@ void CCBAnimationManager::runAction(CCNode *pNode, CCBSequenceProperty *pSeqProp
         }
         
         CCFiniteTimeAction *seq = CCSequence::create(actions);
+        seq->setTag(mAnimationManagerId);
         pNode->runAction(seq);
     }
 }
@@ -737,13 +748,16 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
 {
     CCAssert(nSeqId != -1, "Sequence id couldn't be found");
     
-    mRootNode->stopAllActions();
+//    mRootNode->stopAllActions();
+    this->removeActionsByTag(mAnimationManagerId, mRootNode);
     
     CCDictElement* pElement = NULL;
     CCDICT_FOREACH(mNodeSequences, pElement)
     {
         CCNode *node = (CCNode*)pElement->getIntKey();
-        node->stopAllActions();
+//        node->stopAllActions();
+        this->removeActionsByTag(mAnimationManagerId, mRootNode);
+
         
         // Refer to CCBReader::readKeyframe() for the real type of value
         CCDictionary *seqs = (CCDictionary*)pElement->getObject();
@@ -790,6 +804,7 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
     CCBSequence *seq = getSequence(nSeqId);
     CCAction *completeAction = CCSequence::createWithTwoActions(CCDelayTime::create(seq->getDuration() + fTweenDuration),
                                                                 CCCallFunc::create(this, callfunc_selector(CCBAnimationManager::sequenceCompleted)));
+    completeAction->setTag(mAnimationManagerId);
     mRootNode->runAction(completeAction);
     
     // Set the running scene
@@ -797,6 +812,7 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
     if(seq->getCallbackChannel() != NULL) {
         CCAction* action = (CCAction *)actionForCallbackChannel(seq->getCallbackChannel());
         if(action != NULL) {
+            action->setTag(mAnimationManagerId);
             mRootNode->runAction(action);
         }
     } 
@@ -804,6 +820,7 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
     if(seq->getSoundChannel() != NULL) {
         CCAction* action = (CCAction *)actionForSoundChannel(seq->getSoundChannel());
         if(action != NULL) {
+            action->setTag(mAnimationManagerId);
             mRootNode->runAction(action);
         }
     }

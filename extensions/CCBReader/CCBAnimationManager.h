@@ -45,11 +45,13 @@ private:
     
     
 public:
+    int mAnimationManagerId;
     bool jsControlled;
     CCBAnimationManager();
     ~CCBAnimationManager();
 
 
+    
     CCObject *mOwner;
     
     virtual bool init();
@@ -123,6 +125,7 @@ private:
     void setAnimatedProperty(const char *pPropName, CCNode *pNode, CCObject *pValue, float fTweenDuraion);
     void setFirstFrame(CCNode *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration);
     CCActionInterval* getEaseAction(CCActionInterval *pAction, int nEasingType, float fEasingOpt);
+    void removeActionsByTag(int tag, CCNode* node);
     void runAction(CCNode *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration);
     void sequenceCompleted();
 };
