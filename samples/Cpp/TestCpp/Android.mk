@@ -55,10 +55,22 @@ Classes/ExtensionsTest/CocosBuilderTest/MenuTest/MenuTestLayer.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest/AnimationsTestLayer.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/TimelineCallbackTest/TimelineCallbackTestLayer.cpp \
 Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp \
+Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp \
 Classes/ExtensionsTest/EditBoxTest/EditBoxTest.cpp \
 Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp \
 Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp \
+<<<<<<< HEAD
 Classes/ExtensionsTest/ArmatureTest/ArmatureScene.cpp \
+=======
+\
+Classes/ExtensionsTest/ComponentsTest/ComponentsTestScene.cpp \
+Classes/ExtensionsTest/ComponentsTest/EnemyController.cpp \
+Classes/ExtensionsTest/ComponentsTest/GameOverScene.cpp \
+Classes/ExtensionsTest/ComponentsTest/PlayerController.cpp \
+Classes/ExtensionsTest/ComponentsTest/ProjectileController.cpp \
+Classes/ExtensionsTest/ComponentsTest/SceneController.cpp \
+\
+>>>>>>> 150b91074a57ae0345c03541b533c46a017b0d13
 Classes/FontTest/FontTest.cpp \
 Classes/IntervalTest/IntervalTest.cpp \
 Classes/KeypadTest/KeypadTest.cpp \
@@ -82,9 +94,11 @@ Classes/RotateWorldTest/RotateWorldTest.cpp \
 Classes/SceneTest/SceneTest.cpp \
 Classes/SchedulerTest/SchedulerTest.cpp \
 Classes/ShaderTest/ShaderTest.cpp \
+Classes/SpineTest/SpineTest.cpp \
 Classes/SpriteTest/SpriteTest.cpp \
 Classes/TextureCacheTest/TextureCacheTest.cpp \
 Classes/Texture2dTest/Texture2dTest.cpp \
+Classes/TexturePackerEncryptionTest/TextureAtlasEncryptionTest.cpp \
 Classes/TileMapTest/TileMapTest.cpp \
 Classes/TouchesTest/Ball.cpp \
 Classes/TouchesTest/Paddle.cpp \
@@ -93,6 +107,8 @@ Classes/TransitionsTest/TransitionsTest.cpp \
 Classes/UserDefaultTest/UserDefaultTest.cpp \
 Classes/ZwoptexTest/ZwoptexTest.cpp \
 Classes/FileUtilsTest/FileUtilsTest.cpp \
+Classes/DataVisitorTest/DataVisitorTest.cpp \
+Classes/ConfigurationTest/ConfigurationTest.cpp \
 Classes/controller.cpp \
 Classes/testBasic.cpp \
 Classes/AppDelegate.cpp \

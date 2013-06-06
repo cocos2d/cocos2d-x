@@ -58,10 +58,6 @@ typedef struct JSStackHeader        JSStackHeader;
 typedef struct JSSubString          JSSubString;
 typedef struct JSSpecializedNative  JSSpecializedNative;
 
-#if JS_HAS_XML_SUPPORT
-typedef struct JSXML                JSXML;
-#endif
-
 /*
  * Template declarations.
  *
@@ -94,8 +90,6 @@ class RegExpStatics;
 class MatchPairs;
 class PropertyName;
 
-namespace detail { class RegExpCode; }
-
 enum RegExpFlag
 {
     IgnoreCaseFlag  = 0x01,
@@ -105,12 +99,6 @@ enum RegExpFlag
 
     NoFlags         = 0x00,
     AllFlags        = 0x0f
-};
-
-enum RegExpExecType
-{
-    RegExpExec,
-    RegExpTest
 };
 
 class ExecuteArgsGuard;
@@ -142,15 +130,7 @@ class InlineMap;
 
 class LifoAlloc;
 
-class BaseShape;
-class UnownedBaseShape;
-struct Shape;
-struct EmptyShape;
-class ShapeKindArray;
-class Bindings;
-
-struct StackBaseShape;
-struct StackShape;
+class Shape;
 
 class Breakpoint;
 class BreakpointSite;
@@ -207,7 +187,6 @@ struct TypeCompartment;
 } /* namespace types */
 
 typedef JS::Handle<Shape*>             HandleShape;
-typedef JS::Handle<BaseShape*>         HandleBaseShape;
 typedef JS::Handle<types::TypeObject*> HandleTypeObject;
 typedef JS::Handle<JSAtom*>            HandleAtom;
 typedef JS::Handle<PropertyName*>      HandlePropertyName;
@@ -215,10 +194,7 @@ typedef JS::Handle<PropertyName*>      HandlePropertyName;
 typedef JS::MutableHandle<Shape*>      MutableHandleShape;
 typedef JS::MutableHandle<JSAtom*>     MutableHandleAtom;
 
-typedef JSAtom *                       RawAtom;
-
 typedef js::Rooted<Shape*>             RootedShape;
-typedef js::Rooted<BaseShape*>         RootedBaseShape;
 typedef js::Rooted<types::TypeObject*> RootedTypeObject;
 typedef js::Rooted<JSAtom*>            RootedAtom;
 typedef js::Rooted<PropertyName*>      RootedPropertyName;
@@ -288,7 +264,7 @@ typedef JSBool
 typedef void
 (* JSNewScriptHook)(JSContext  *cx,
                     const char *filename,  /* URL of script */
-                    unsigned      lineno,     /* first line */
+                    unsigned   lineno,     /* first line */
                     JSScript   *script,
                     JSFunction *fun,
                     void       *callerdata);
@@ -296,66 +272,12 @@ typedef void
 /* called just before script destruction */
 typedef void
 (* JSDestroyScriptHook)(JSFreeOp *fop,
-                        JSRawScript script,
-                        void      *callerdata);
+                        JSScript *script,
+                        void     *callerdata);
 
 typedef void
 (* JSSourceHandler)(const char *filename, unsigned lineno, const jschar *str,
                     size_t length, void **listenerTSData, void *closure);
-
-/*
- * This hook captures high level script execution and function calls (JS or
- * native).  It is used by JS_SetExecuteHook to hook top level scripts and by
- * JS_SetCallHook to hook function calls.  It will get called twice per script
- * or function call: just before execution begins and just after it finishes.
- * In both cases the 'current' frame is that of the executing code.
- *
- * The 'before' param is JS_TRUE for the hook invocation before the execution
- * and JS_FALSE for the invocation after the code has run.
- *
- * The 'ok' param is significant only on the post execution invocation to
- * signify whether or not the code completed 'normally'.
- *
- * The 'closure' param is as passed to JS_SetExecuteHook or JS_SetCallHook
- * for the 'before'invocation, but is whatever value is returned from that
- * invocation for the 'after' invocation. Thus, the hook implementor *could*
- * allocate a structure in the 'before' invocation and return a pointer to that
- * structure. The pointer would then be handed to the hook for the 'after'
- * invocation. Alternately, the 'before' could just return the same value as
- * in 'closure' to cause the 'after' invocation to be called with the same
- * 'closure' value as the 'before'.
- *
- * Returning NULL in the 'before' hook will cause the 'after' hook *not* to
- * be called.
- */
-typedef void *
-(* JSInterpreterHook)(JSContext *cx, JSStackFrame *fp, JSBool before,
-                      JSBool *ok, void *closure);
-
-typedef JSBool
-(* JSDebugErrorHook)(JSContext *cx, const char *message, JSErrorReport *report,
-                     void *closure);
-
-typedef struct JSDebugHooks {
-    JSInterruptHook     interruptHook;
-    void                *interruptHookData;
-    JSNewScriptHook     newScriptHook;
-    void                *newScriptHookData;
-    JSDestroyScriptHook destroyScriptHook;
-    void                *destroyScriptHookData;
-    JSDebuggerHandler   debuggerHandler;
-    void                *debuggerHandlerData;
-    JSSourceHandler     sourceHandler;
-    void                *sourceHandlerData;
-    JSInterpreterHook   executeHook;
-    void                *executeHookData;
-    JSInterpreterHook   callHook;
-    void                *callHookData;
-    JSThrowHook         throwHook;
-    void                *throwHookData;
-    JSDebugErrorHook    debugErrorHook;
-    void                *debugErrorHookData;
-} JSDebugHooks;
 
 /* js::ObjectOps function pointer typedefs. */
 

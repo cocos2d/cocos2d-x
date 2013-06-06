@@ -31,7 +31,6 @@
 
 #include "js_bindings_chipmunk_manual.h"
 #include "js_manual_conversions.h"
-#include "uthash.h"
 
 USING_NS_CC_EXT;
 // Function declarations
@@ -47,8 +46,7 @@ static JSBool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
     HASH_FIND_INT(_js_global_type_ht, &typeId, p);
     assert(p);
     JSObject *_tmp = JS_NewObject(cx, p->jsclass, p->proto, p->parentProto);
-    js_proxy_t *pp;
-    JS_NEW_PROXY(pp, cobj, _tmp);
+    js_proxy_t *pp = jsb_new_proxy(cobj, _tmp);
     JS_AddObjectRoot(cx, &pp->obj);
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(_tmp));
 
@@ -77,7 +75,7 @@ void JSPROXY_CCPhysicsSprite_finalize(JSFreeOp *fop, JSObject *obj)
 JSBool JSPROXY_CCPhysicsSprite_getCPBody(JSContext *cx, uint32_t argc, jsval *vp) {
     
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CCPhysicsSprite* real = (CCPhysicsSprite *)(proxy ? proxy->ptr : NULL);
 	TEST_NATIVE_OBJECT(cx, real)
 	cpBody* ret_val;
@@ -94,7 +92,7 @@ JSBool JSPROXY_CCPhysicsSprite_getCPBody(JSContext *cx, uint32_t argc, jsval *vp
 JSBool JSPROXY_CCPhysicsSprite_ignoreBodyRotation(JSContext *cx, uint32_t argc, jsval *vp) {
     
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	CCPhysicsSprite* real = (CCPhysicsSprite *)(proxy ? proxy->ptr : NULL);
 	TEST_NATIVE_OBJECT(cx, real)
     
@@ -110,7 +108,7 @@ JSBool JSPROXY_CCPhysicsSprite_ignoreBodyRotation(JSContext *cx, uint32_t argc, 
 JSBool JSPROXY_CCPhysicsSprite_setCPBody_(JSContext *cx, uint32_t argc, jsval *vp) {
     
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	CCPhysicsSprite* real = (CCPhysicsSprite *)(proxy ? proxy->ptr : NULL);
 	TEST_NATIVE_OBJECT(cx, real)
     
@@ -132,7 +130,7 @@ JSBool JSPROXY_CCPhysicsSprite_setCPBody_(JSContext *cx, uint32_t argc, jsval *v
 JSBool JSPROXY_CCPhysicsSprite_setIgnoreBodyRotation_(JSContext *cx, uint32_t argc, jsval *vp) {
     
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	CCPhysicsSprite* real = (CCPhysicsSprite *)(proxy ? proxy->ptr : NULL);
 	TEST_NATIVE_OBJECT(cx, real)
     
@@ -187,8 +185,7 @@ JSBool JSB_CCPhysicsDebugNode_debugNodeForCPSpace__static(JSContext *cx, uint32_
             assert(typeClass);
             JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
             jsret = OBJECT_TO_JSVAL(obj);
-            js_proxy_t *p;
-            JS_NEW_PROXY(p, ret, obj);
+            js_proxy_t *p = jsb_new_proxy(ret, obj);
             JS_AddNamedObjectRoot(cx, &p->obj, "CCDebugNode");
         } else {
             jsret = JSVAL_NULL;
@@ -204,7 +201,7 @@ JSBool JSB_CCPhysicsDebugNode_debugNodeForCPSpace__static(JSContext *cx, uint32_
 JSBool JSB_CCPhysicsDebugNode_setSpace_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, jsthis);
+	js_proxy_t *proxy = jsb_get_js_proxy(jsthis);
     CCPhysicsDebugNode* real = (CCPhysicsDebugNode *)(proxy ? proxy->ptr : NULL);
     TEST_NATIVE_OBJECT(cx, real)
 
@@ -226,7 +223,7 @@ JSBool JSB_CCPhysicsDebugNode_setSpace_(JSContext *cx, uint32_t argc, jsval *vp)
 JSBool JSB_CCPhysicsDebugNode_space(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, jsthis);
+    js_proxy_t *proxy = jsb_get_js_proxy(jsthis);
     CCPhysicsDebugNode* real = (CCPhysicsDebugNode *)(proxy ? proxy->ptr : NULL);
     TEST_NATIVE_OBJECT(cx, real)
 	JSB_PRECONDITION2( argc == 0, cx, JS_FALSE, "Invalid number of arguments" );
@@ -314,8 +311,7 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32
                 assert(typeClass);
                 JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
 				jsret = OBJECT_TO_JSVAL(obj);
-                js_proxy_t *p;
-                JS_NEW_PROXY(p, ret, obj);
+                js_proxy_t *p = jsb_new_proxy(ret, obj);
                 JS_AddNamedObjectRoot(cx, &p->obj, "CCPhysicsSprite");
 			} else {
 				jsret = JSVAL_NULL;
@@ -341,8 +337,7 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32
                 assert(typeClass);
                 JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
 				jsret = OBJECT_TO_JSVAL(obj);
-                js_proxy_t *p;
-                JS_NEW_PROXY(p, ret, obj);
+                js_proxy_t *p = jsb_new_proxy(ret, obj);
                 JS_AddNamedObjectRoot(cx, &p->obj, "CCPhysicsSprite");
 			} else {
 				jsret = JSVAL_NULL;
@@ -364,7 +359,7 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrame__static(JSContext *cx, uint
 		do {
 			js_proxy_t *proxy;
 			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
-			JS_GET_NATIVE_PROXY(proxy, tmpObj);
+			proxy = jsb_get_js_proxy(tmpObj);
 			arg0 = (cocos2d::CCSpriteFrame*)(proxy ? proxy->ptr : NULL);
 			TEST_NATIVE_OBJECT(cx, arg0)
 		} while (0);
@@ -381,8 +376,7 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrame__static(JSContext *cx, uint
             assert(typeClass);
             JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
             jsret = OBJECT_TO_JSVAL(obj);
-            js_proxy_t *p;
-            JS_NEW_PROXY(p, ret, obj);
+            js_proxy_t *p = jsb_new_proxy(ret, obj);
             JS_AddNamedObjectRoot(cx, &p->obj, "CCPhysicsSprite");
 		} else {
 			jsret = JSVAL_NULL;
@@ -414,8 +408,7 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrameName__static(JSContext *cx, 
             assert(typeClass);
             JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
             jsret = OBJECT_TO_JSVAL(obj);
-            js_proxy_t *p;
-            JS_NEW_PROXY(p, ret, obj);
+            js_proxy_t *p = jsb_new_proxy(ret, obj);
             JS_AddNamedObjectRoot(cx, &p->obj, "CCPhysicsSprite");
 		} else {
 			jsret = JSVAL_NULL;

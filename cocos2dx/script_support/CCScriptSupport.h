@@ -174,6 +174,9 @@ public:
     /** Remove script function handler, only CCLuaEngine class need to implement this function. */
     virtual void removeScriptHandler(int nHandler) {};
     
+    /** Reallocate script function handler, only CCLuaEngine class need to implement this function. */
+    virtual int reallocateScriptHandler(int nHandler) { return -1;}
+    
     /**
      @brief Execute script code contained in the given string.
      @param codes holding the valid script code that should be executed.
@@ -225,8 +228,11 @@ public:
 
     /** function for common event */
     virtual int executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource = NULL, const char* pEventSourceClassName = NULL) = 0;
-    /** function for assert test */
-    virtual bool executeAssert(bool cond, const char *msg = NULL) = 0;
+
+    /** called by CCAssert to allow scripting engine to handle failed assertions
+     * @return true if the assert was handled by the script engine, false otherwise.
+     */
+    virtual bool handleAssert(const char *msg) = 0;
 };
 
 /**

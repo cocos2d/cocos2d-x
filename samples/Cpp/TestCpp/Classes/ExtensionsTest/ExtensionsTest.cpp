@@ -3,11 +3,21 @@
 #include "NotificationCenterTest/NotificationCenterTest.h"
 #include "ControlExtensionTest/CCControlSceneManager.h"
 #include "CocosBuilderTest/CocosBuilderTest.h"
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
 #include "NetworkTest/HttpClientTest.h"
+#endif
 #include "TableViewTest/TableViewTestScene.h"
+<<<<<<< HEAD
 #include "ArmatureTest/ArmatureScene.h"
+=======
+#include "ComponentsTest/ComponentsTestScene.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#include "NetworkTest/WebSocketTest.h"
+#endif
+>>>>>>> 150b91074a57ae0345c03541b533c46a017b0d13
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
 #include "EditBoxTest/EditBoxTest.h"
 #endif
 
@@ -23,11 +33,18 @@ enum
     TEST_CCCONTROLBUTTON,
     TEST_COCOSBUILDER,
     TEST_HTTPCLIENT,
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    TEST_WEBSOCKET,
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
     TEST_EDITBOX,
 #endif
 	TEST_TABLEVIEW,
+<<<<<<< HEAD
 	TEST_ARMATURE,
+=======
+    TEST_COMPONENTS,
+>>>>>>> 150b91074a57ae0345c03541b533c46a017b0d13
     TEST_MAX_COUNT,
 };
 
@@ -36,12 +53,21 @@ static const std::string testsName[TEST_MAX_COUNT] =
     "NotificationCenterTest",
     "CCControlButtonTest",
     "CocosBuilderTest",
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
     "HttpClientTest",
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    "WebSocketTest",
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
     "EditBoxTest",
 #endif
 	"TableViewTest",
+<<<<<<< HEAD
 	"ArmatureTest"
+=======
+    "ComponentsTest"
+>>>>>>> 150b91074a57ae0345c03541b533c46a017b0d13
 };
 
 ////////////////////////////////////////////////////////
@@ -49,14 +75,17 @@ static const std::string testsName[TEST_MAX_COUNT] =
 // ExtensionsMainLayer
 //
 ////////////////////////////////////////////////////////
+
+static CCPoint s_tCurPos = CCPointZero;
+
 void ExtensionsMainLayer::onEnter()
 {
     CCLayer::onEnter();
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCMenu* pMenu = CCMenu::create();
-    pMenu->setPosition( CCPointZero );
+    m_pItemMenu = CCMenu::create();
+    m_pItemMenu->setPosition( CCPointZero );
     CCMenuItemFont::setFontName("Arial");
     CCMenuItemFont::setFontSize(24);
     for (int i = 0; i < TEST_MAX_COUNT; ++i)
@@ -64,10 +93,10 @@ void ExtensionsMainLayer::onEnter()
         CCMenuItemFont* pItem = CCMenuItemFont::create(testsName[i].c_str(), this,
                                                     menu_selector(ExtensionsMainLayer::menuCallback));
         pItem->setPosition(ccp(s.width / 2, s.height - (i + 1) * LINE_SPACE));
-        pMenu->addChild(pItem, kItemTagBasic + i);
+        m_pItemMenu->addChild(pItem, kItemTagBasic + i);
     }
-
-    addChild(pMenu);
+    setTouchEnabled(true);
+    addChild(m_pItemMenu);
 }
 
 void ExtensionsMainLayer::menuCallback(CCObject* pSender)
@@ -101,14 +130,21 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
             }
         }
         break;
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE && CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE && CC_TARGET_PLATFORM != CC_PLATFORM_NACL && CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
     case TEST_HTTPCLIENT:
         {
             runHttpClientTest();
         }
         break;
 #endif
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+        case TEST_WEBSOCKET:
+        {
+            runWebSocketTest();
+        }
+        break;
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
     case TEST_EDITBOX:
         {
             runEditBoxTest();
@@ -120,6 +156,7 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
 			runTableViewTest();
 		}
 		break;
+<<<<<<< HEAD
 	case TEST_ARMATURE:
 		{
 			ArmatureTestScene *pScene = new ArmatureTestScene();
@@ -130,9 +167,52 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
 			}
 		}
 		break;
+=======
+    case TEST_COMPONENTS:
+        {
+            runComponentsTestLayerTest();
+        }
+>>>>>>> 150b91074a57ae0345c03541b533c46a017b0d13
     default:
         break;
     }
+}
+
+
+void ExtensionsMainLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
+{
+    CCSetIterator it = pTouches->begin();
+    CCTouch* touch = (CCTouch*)(*it);
+
+    m_tBeginPos = touch->getLocation();    
+}
+
+void ExtensionsMainLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
+{
+    CCSetIterator it = pTouches->begin();
+    CCTouch* touch = (CCTouch*)(*it);
+
+    CCPoint touchLocation = touch->getLocation();    
+    float nMoveY = touchLocation.y - m_tBeginPos.y;
+
+    CCPoint curPos  = m_pItemMenu->getPosition();
+    CCPoint nextPos = ccp(curPos.x, curPos.y + nMoveY);
+
+    if (nextPos.y < 0.0f)
+    {
+        m_pItemMenu->setPosition(CCPointZero);
+        return;
+    }
+
+    if (nextPos.y > ((TEST_MAX_COUNT + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
+    {
+        m_pItemMenu->setPosition(ccp(0, ((TEST_MAX_COUNT + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        return;
+    }
+
+    m_pItemMenu->setPosition(nextPos);
+    m_tBeginPos = touchLocation;
+    s_tCurPos   = nextPos;
 }
 
 ////////////////////////////////////////////////////////

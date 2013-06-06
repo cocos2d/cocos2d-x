@@ -160,4 +160,4 @@ cc.PhysicsSprite.prototype.setBody = function( body ) {
 cc.ScrollView.extend = cc.Class.extend;
 cc.TableView.extend = cc.Class.extend;
 cc.TableViewCell.extend = cc.Class.extend;
-
+cc.GLNode.extend = cc.Class.extend;

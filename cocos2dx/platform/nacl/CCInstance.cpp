@@ -82,7 +82,7 @@ bool CocosPepperInstance::Init(uint32_t argc, const char* argn[], const char* ar
 #ifdef OLD_NACL_MOUNTS
     m_runner = new MainThreadRunner(this);
 #else
-    CCLOG("%p %p", pp_instance(), pp::Module::Get()->get_browser_interface());
+    CCLOG("%p %p", (void*)pp_instance(), (void*)pp::Module::Get()->get_browser_interface());
     nacl_io_init_ppapi(pp_instance(), pp::Module::Get()->get_browser_interface());
     CCLOG("done nacl_mounts_init_ppapi");
 

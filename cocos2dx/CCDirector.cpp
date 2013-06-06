@@ -23,6 +23,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
+// standard includes
+#include <string>
+
+// cocos2d includes
 #include "CCDirector.h"
 #include "ccFPSImages.h"
 #include "draw_nodes/CCDrawingPrimitives.h"
@@ -56,8 +61,11 @@ THE SOFTWARE.
 #include "kazmath/kazmath.h"
 #include "kazmath/GL/matrix.h"
 #include "support/CCProfiling.h"
+#include "platform/CCImage.h"
 #include "CCEGLView.h"
-#include <string>
+#include "CCConfiguration.h"
+
+
 
 /**
  Position of the FPS
@@ -98,9 +106,7 @@ CCDirector::CCDirector(void)
 }
 
 bool CCDirector::init(void)
-{
-    CCLOG("cocos2d: %s", cocos2dVersion());
-    
+{    
     // scenes
     m_pRunningScene = NULL;
     m_pNextScene = NULL;
@@ -304,6 +310,11 @@ void CCDirector::setOpenGLView(CCEGLView *pobOpenGLView)
 
     if (m_pobOpenGLView != pobOpenGLView)
     {
+		// Configuration. Gather GPU info
+		CCConfiguration *conf = CCConfiguration::sharedConfiguration();
+		conf->gatherGPUInfo();
+		conf->dumpInfo();
+
         // EAGLView is not a CCObject
         delete m_pobOpenGLView; // [openGLView_ release]
         m_pobOpenGLView = pobOpenGLView;
@@ -579,32 +590,43 @@ void CCDirector::popScene(void)
 
 void CCDirector::popToRootScene(void)
 {
+    popToSceneStackLevel(1);
+}
+
+void CCDirector::popToSceneStackLevel(int level)
+{
     CCAssert(m_pRunningScene != NULL, "A running Scene is needed");
-    unsigned int c = m_pobScenesStack->count();
+    int c = (int)m_pobScenesStack->count();
 
-    if (c == 1) 
+    // level 0? -> end
+    if (level == 0)
     {
-        m_pobScenesStack->removeLastObject();
-        this->end();
-    } 
-    else 
-    {
-        while (c > 1) 
-        {
-            CCScene *current = (CCScene*)m_pobScenesStack->lastObject();
-            if( current->isRunning() )
-            {
-                current->onExitTransitionDidStart();
-                current->onExit();
-            }
-            current->cleanup();
-
-            m_pobScenesStack->removeLastObject();
-            c--;
-        }
-        m_pNextScene = (CCScene*)m_pobScenesStack->lastObject();
-        m_bSendCleanupToScene = false;
+        end();
+        return;
     }
+
+    // current level or lower -> nothing
+    if (level >= c)
+        return;
+
+	// pop stack until reaching desired level
+	while (c > level)
+    {
+		CCScene *current = (CCScene*)m_pobScenesStack->lastObject();
+
+		if (current->isRunning())
+        {
+            current->onExitTransitionDidStart();
+            current->onExit();
+		}
+
+        current->cleanup();
+        m_pobScenesStack->removeLastObject();
+		c--;
+	}
+
+	m_pNextScene = (CCScene*)m_pobScenesStack->lastObject();
+	m_bSendCleanupToScene = false;
 }
 
 void CCDirector::end()
@@ -787,43 +809,75 @@ void CCDirector::calculateMPF()
 void CCDirector::getFPSImageData(unsigned char** datapointer, unsigned int* length)
 {
     // XXX fixed me if it should be used 
-//    *datapointer = cc_fps_images_png;
-//	*length = cc_fps_images_len();
+    *datapointer = cc_fps_images_png;
+	*length = cc_fps_images_len();
 }
 
 void CCDirector::createStatsLabel()
-{    
-    if( m_pFPSLabel && m_pSPFLabel ) 
+{
+    CCTexture2D *texture = NULL;
+    CCTextureCache *textureCache = CCTextureCache::sharedTextureCache();
+
+    if( m_pFPSLabel && m_pSPFLabel )
     {
         CC_SAFE_RELEASE_NULL(m_pFPSLabel);
         CC_SAFE_RELEASE_NULL(m_pSPFLabel);
         CC_SAFE_RELEASE_NULL(m_pDrawsLabel);
+        textureCache->removeTextureForKey("cc_fps_images");
         CCFileUtils::sharedFileUtils()->purgeCachedEntries();
     }
 
-    int fontSize = 0;
-    if (m_obWinSizeInPoints.width > m_obWinSizeInPoints.height)
-    {
-        fontSize = (int)(m_obWinSizeInPoints.height / 320.0f * 24);
-    }
-    else
-    {
-        fontSize = (int)(m_obWinSizeInPoints.width / 320.0f * 24);
-    }
-    
-    m_pFPSLabel = CCLabelTTF::create("00.0", "Arial", fontSize);
-    m_pFPSLabel->retain();
-    m_pSPFLabel = CCLabelTTF::create("0.000", "Arial", fontSize);
-    m_pSPFLabel->retain();
-    m_pDrawsLabel = CCLabelTTF::create("000", "Arial", fontSize);
-    m_pDrawsLabel->retain();
+    CCTexture2DPixelFormat currentFormat = CCTexture2D::defaultAlphaPixelFormat();
+    CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
+    unsigned char *data = NULL;
+    unsigned int data_len = 0;
+    getFPSImageData(&data, &data_len);
 
-    CCSize contentSize = m_pDrawsLabel->getContentSize();
-    m_pDrawsLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height*5/2), CC_DIRECTOR_STATS_POSITION));
-    contentSize = m_pSPFLabel->getContentSize();
-    m_pSPFLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height*3/2), CC_DIRECTOR_STATS_POSITION));
-    contentSize = m_pFPSLabel->getContentSize();
-    m_pFPSLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height/2), CC_DIRECTOR_STATS_POSITION));
+    CCImage* image = new CCImage();
+    bool isOK = image->initWithImageData(data, data_len);
+    if (!isOK) {
+        CCLOGERROR("%s", "Fails: init fps_images");
+        return;
+    }
+
+    texture = textureCache->addUIImage(image, "cc_fps_images");
+    CC_SAFE_RELEASE(image);
+
+    /*
+     We want to use an image which is stored in the file named ccFPSImage.c 
+     for any design resolutions and all resource resolutions. 
+     
+     To achieve this,
+     
+     Firstly, we need to ignore 'contentScaleFactor' in 'CCAtlasNode' and 'CCLabelAtlas'.
+     So I added a new method called 'setIgnoreContentScaleFactor' for 'CCAtlasNode',
+     this is not exposed to game developers, it's only used for displaying FPS now.
+     
+     Secondly, the size of this image is 480*320, to display the FPS label with correct size, 
+     a factor of design resolution ratio of 480x320 is also needed.
+     */
+    float factor = CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height / 320.0f;
+
+    m_pFPSLabel = new CCLabelAtlas();
+    m_pFPSLabel->setIgnoreContentScaleFactor(true);
+    m_pFPSLabel->initWithString("00.0", texture, 12, 32 , '.');
+    m_pFPSLabel->setScale(factor);
+
+    m_pSPFLabel = new CCLabelAtlas();
+    m_pSPFLabel->setIgnoreContentScaleFactor(true);
+    m_pSPFLabel->initWithString("0.000", texture, 12, 32, '.');
+    m_pSPFLabel->setScale(factor);
+
+    m_pDrawsLabel = new CCLabelAtlas();
+    m_pDrawsLabel->setIgnoreContentScaleFactor(true);
+    m_pDrawsLabel->initWithString("000", texture, 12, 32, '.');
+    m_pDrawsLabel->setScale(factor);
+
+    CCTexture2D::setDefaultAlphaPixelFormat(currentFormat);
+
+    m_pDrawsLabel->setPosition(ccpAdd(ccp(0, 34*factor), CC_DIRECTOR_STATS_POSITION));
+    m_pSPFLabel->setPosition(ccpAdd(ccp(0, 17*factor), CC_DIRECTOR_STATS_POSITION));
+    m_pFPSLabel->setPosition(CC_DIRECTOR_STATS_POSITION);
 }
 
 float CCDirector::getContentScaleFactor(void)
@@ -948,7 +1002,9 @@ void CCDisplayLinkDirector::startAnimation(void)
     }
 
     m_bInvalid = false;
+#ifndef EMSCRIPTEN
     CCApplication::sharedApplication()->setAnimationInterval(m_dAnimationInterval);
+#endif // EMSCRIPTEN
 }
 
 void CCDisplayLinkDirector::mainLoop(void)

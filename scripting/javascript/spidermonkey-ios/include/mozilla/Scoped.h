@@ -80,9 +80,9 @@ class Scoped
     {
       MOZ_GUARD_OBJECT_NOTIFIER_INIT;
     }
-    explicit Scoped(const Resource& value
+    explicit Scoped(const Resource& v
                     MOZ_GUARD_OBJECT_NOTIFIER_PARAM)
-      : value(value)
+      : value(v)
     {
       MOZ_GUARD_OBJECT_NOTIFIER_INIT;
     }

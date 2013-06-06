@@ -15,6 +15,7 @@ public:
     ~CCData();
     
     unsigned char* getBytes();
+    unsigned long getSize();
     
 private:
     unsigned char* m_pBytes;

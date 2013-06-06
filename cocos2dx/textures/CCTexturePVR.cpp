@@ -423,13 +423,13 @@ bool CCTexturePVR::unpackPVRv3Data(unsigned char* dataPointer, unsigned int data
 	
 	bool infoValid = false;
     
-    int pvr3TableElements = PVR3_MAX_TABLE_ELEMENTS;
+    unsigned int pvr3TableElements = PVR3_MAX_TABLE_ELEMENTS;
     if (! CCConfiguration::sharedConfiguration()->supportsPVRTC())
     {
         pvr3TableElements = 9;
     }
 	
-	for(int i = 0; i < pvr3TableElements; i++)
+	for(unsigned int i = 0; i < pvr3TableElements; i++)
     {
 		if( v3_pixel_formathash[i].pixelFormat == pixelFormat )
         {
@@ -443,7 +443,7 @@ bool CCTexturePVR::unpackPVRv3Data(unsigned char* dataPointer, unsigned int data
 	// unsupported / bad pixel format
 	if (! infoValid)
     {
-		CCLOG("cocos2d: WARNING: unsupported pvr pixelformat: %llx", pixelFormat );
+		CCLOG("cocos2d: WARNING: unsupported pvr pixelformat: %lx", (unsigned long)pixelFormat );
 		return false;
 	}
     

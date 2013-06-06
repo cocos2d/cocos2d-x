@@ -10,8 +10,11 @@
 #include "js_bindings_chipmunk_registration.h"
 #include "js_bindings_system_registration.h"
 #include "jsb_opengl_registration.h"
+#include "XMLHTTPRequest.h"
+#include "jsb_websocket.h"
 
 USING_NS_CC;
+USING_NS_CC_EXT;
 using namespace CocosDenshion;
 
 AppDelegate::AppDelegate()
@@ -28,13 +31,13 @@ bool AppDelegate::applicationDidFinishLaunching()
     // initialize director
     CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
-    
+
     // turn on display FPS
     pDirector->setDisplayStats(true);
-    
+
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
-    
+
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
     sc->addRegisterCallback(register_all_cocos2dx_extension);
@@ -43,14 +46,19 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(jsb_register_chipmunk);
     sc->addRegisterCallback(JSB_register_opengl);
     sc->addRegisterCallback(jsb_register_system);
-    
+    sc->addRegisterCallback(MinXmlHttpRequest::_js_register);
+    sc->addRegisterCallback(register_jsb_websocket);
+
     sc->start();
-    
+
     CCScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
 #ifdef JS_OBFUSCATED
     ScriptingCore::getInstance()->runScript("game.js");
 #else
+#if JSB_ENABLE_DEBUGGER
+    ScriptingCore::getInstance()->enableDebugger();
+#endif // JSB_ENABLE_DEBUGGER
     ScriptingCore::getInstance()->runScript("tests-boot-jsb.js");
 #endif
     return true;

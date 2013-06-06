@@ -1,0 +1,60 @@
+* Need to figure out how to get correct screen resolutions consistently.
+
+* Touch handler screwed up after TouchesTest? MenuTest? (TestCpp sample)
+
+* TTF Font rendering is slow and seems to wrap around by a few pixels
+  horizontally. Need to investigate here, but I suspect the right answer is to
+  offload font rendering to an offscreen canvas and let the browser handle it.
+  Potentially creates new challenges in packaging which would need to be solved
+  somehow.
+
+
+
+###
+DONE:
+###
+
+* Need to switch to server-side buffers in
+- cocos2dx/draw_nodes/CCDrawingPrimitives
+
+* Need to compile with -O2 -- possible -s VERBOSE=1 will give a clue?
+
+* SchedulerTest crashes
+  - cocos2d::CCNode::boundingBox()
+
+* Parallax Test crashes
+  - cocos2d::CCAtlasNode::calculateMaxItems()
+
+* Particle Test crashes
+  - TIFFClientOpen not a function. Looks like we need to build and link in libtiff.
+
+* cocos2d::CCAtlasNode::calculateMaxItems() throwing an error; related to
+  CCTextureAtlas? Preventing particle test from working.
+
+* Need to switch to server-side buffers in
+- cocos2dx/draw_nodes/CCDrawNode.cpp -- Think this is fixed by undef CC_TEXTURE_ATLAS_USE_VAO?
+- cocos2dx/particle_nodes/CCParticleSystemQuad.cpp -- Think this is fixed by CC_REBIND_INDICES_BUFFER?
+- cocos2dx/textures/CCTextureAtlas.cpp -- Think this works already.
+
+* Layer Test crashes
+  - cocos2d::CCLabelBMFont::create(char const*, char const*, float, cocos2d::CCTextAlignment, cocos2d::CCPoint)
+
+* IntervalTest crashes
+  - cocos2d::CCLabelBMFont::create(char const*, char const*, float, cocos2d::CCTextAlignment, cocos2d::CCPoint)
+
+* TileMap Test crashes
+  - void CCNode::insertChild(CCNode* child, int z)
+
+* LabelTest crashes
+  - cocos2d::CCAtlasNode::calculateMaxItems()
+
+* ZwoptexTest crashes.
+  - ZwoptexGenericTest::onEnter()
+
+* ChipmunkTest crashes:
+    Aborting due to Chipmunk error: Moment of Inertia must be positive and non-zero.
+        Failed condition: moment > 0.0f
+        Source:../src/cpBody.c:151
+
+* Add linkage to libjpeg to get RenderTexture test to work.
+

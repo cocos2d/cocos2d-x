@@ -10,7 +10,7 @@ set NDK_ROOT=C:/android-ndk-r8d
 set PATH=%PATH%;%cd%/win32;%PYTHON_ROOT%
 set COCOS2DX_ROOT=%cd%/../..
 set "COCOS2DX_ROOT=%COCOS2DX_ROOT:\=/%"
-set CXX_GENERATOR_ROOT=%COCOS2DX_ROOT%/tools/cxx-generator
+set CXX_GENERATOR_ROOT=%COCOS2DX_ROOT%/tools/bindings-generator
 set TO_JS_ROOT=%COCOS2DX_ROOT%/tools/tojs
 set "CXX_GENERATOR_ROOT=%CXX_GENERATOR_ROOT:\=/%"
 set OUTPUT_DIR=%COCOS2DX_ROOT%/scripting/javascript/bindings/generated

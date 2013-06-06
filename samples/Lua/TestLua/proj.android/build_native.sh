@@ -98,6 +98,18 @@ if [ -f "$file" ]; then
 fi
 done
 
+# copy common luaScript
+for file in "$APP_ROOT"/../../../scripting/lua/script/*
+do
+if [ -d "$file" ]; then
+    cp -rf "$file" "$APP_ANDROID_ROOT"/assets
+fi
+
+if [ -f "$file" ]; then
+    cp "$file" "$APP_ANDROID_ROOT"/assets
+fi
+done
+
 # remove test_image_rgba4444.pvr.gz
 rm -f "$APP_ANDROID_ROOT"/assets/Images/test_image_rgba4444.pvr.gz
 rm -f "$APP_ANDROID_ROOT"/assets/Images/test_1021x1024_rgba8888.pvr.gz

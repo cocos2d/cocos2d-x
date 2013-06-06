@@ -174,9 +174,9 @@ bool SceneTestLayer3::init()
         CCMenuItemFont *item0 = CCMenuItemFont::create("Touch to pushScene (self)", this, menu_selector(SceneTestLayer3::item0Clicked));
         CCMenuItemFont *item1 = CCMenuItemFont::create("Touch to popScene", this, menu_selector(SceneTestLayer3::item1Clicked));
         CCMenuItemFont *item2 = CCMenuItemFont::create("Touch to popToRootScene", this, menu_selector(SceneTestLayer3::item2Clicked));
+        CCMenuItemFont *item3 = CCMenuItemFont::create("Touch to popToSceneStackLevel(2)", this, menu_selector(SceneTestLayer3::item3Clicked));
 
-
-        CCMenu *menu = CCMenu::create(item0, item1, item2, NULL);
+        CCMenu *menu = CCMenu::create(item0, item1, item2, item3, NULL);
         this->addChild(menu);
         menu->alignItemsVertically();
 
@@ -213,6 +213,11 @@ void SceneTestLayer3::item1Clicked(CCObject* pSender)
 void SceneTestLayer3::item2Clicked(CCObject* pSender)
 {
     CCDirector::sharedDirector()->popToRootScene();
+}
+
+void SceneTestLayer3::item3Clicked(CCObject* pSender)
+{
+    CCDirector::sharedDirector()->popToSceneStackLevel(2);
 }
 
 void SceneTestScene::runThisTest()

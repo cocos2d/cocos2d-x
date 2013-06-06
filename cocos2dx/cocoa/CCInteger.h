@@ -23,6 +23,10 @@ public:
         pRet->autorelease();
         return pRet;
     }
+
+    /* override functions */
+    virtual void acceptVisitor(CCDataVisitor &visitor) { visitor.visit(this); }
+
 private:
     int m_nValue;
 };

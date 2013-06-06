@@ -377,22 +377,25 @@ public:
 				int xoffset = iCurXCursor + glyph.paintPosition;
 
 				for (int y = 0; y < bitmap.rows; ++y) {
+                    int iY = yoffset + y;
+                    if (iY>=iMaxLineHeight) {
+                        //exceed the height truncate
+                        break;
+                    }
+                    iY *= iMaxLineWidth;
+
+                    int bitmap_y = y * bitmap.width;
+
 					for (int x = 0; x < bitmap.width; ++x) {
-						unsigned char cTemp = bitmap.buffer[y * bitmap.width + x];
+						unsigned char cTemp = bitmap.buffer[bitmap_y + x];
 						if (cTemp == 0) {
 							continue;
 						}
 
-						int iY = yoffset + y;
 						int iX = xoffset + x;
 
-						if (iY>=iMaxLineHeight) {
-							//exceed the height truncate
-							break;
-						}
-
 						int iTemp = cTemp << 24 | cTemp << 16 | cTemp << 8 | cTemp;
-						*(int*) &m_pData[(iY * iMaxLineWidth + iX) * 4 + 0] = iTemp;
+						*(int*) &m_pData[(iY + iX) * 4 + 0] = iTemp;
 					}
 				}
 			}
