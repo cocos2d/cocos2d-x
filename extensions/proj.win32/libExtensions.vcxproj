@@ -92,6 +92,32 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\AssetsManager\AssetsManager.cpp" />
+    <ClCompile Include="..\CCArmature\animation\CCAnimation.cpp" />
+    <ClCompile Include="..\CCArmature\animation\CCProcessBase.cpp" />
+    <ClCompile Include="..\CCArmature\animation\CCTween.cpp" />
+    <ClCompile Include="..\CCArmature\CCArmature.cpp" />
+    <ClCompile Include="..\CCArmature\CCBone.cpp" />
+    <ClCompile Include="..\CCArmature\datas\CCDatas.cpp" />
+    <ClCompile Include="..\CCArmature\display\CCBatchNode.cpp" />
+    <ClCompile Include="..\CCArmature\display\CCDecorativeDisplay.cpp" />
+    <ClCompile Include="..\CCArmature\display\CCDisplayFactory.cpp" />
+    <ClCompile Include="..\CCArmature\display\CCDisplayManager.cpp" />
+    <ClCompile Include="..\CCArmature\display\CCShaderNode.cpp" />
+    <ClCompile Include="..\CCArmature\display\CCSkin.cpp" />
+    <ClCompile Include="..\CCArmature\external_tool\CCTexture2DMutable.cpp" />
+    <ClCompile Include="..\CCArmature\external_tool\GLES-Render.cpp" />
+    <ClCompile Include="..\CCArmature\external_tool\Json\CSContentJsonDictionary.cpp" />
+    <ClCompile Include="..\CCArmature\external_tool\Json\lib_json\json_reader.cpp" />
+    <ClCompile Include="..\CCArmature\external_tool\Json\lib_json\json_value.cpp" />
+    <ClCompile Include="..\CCArmature\external_tool\Json\lib_json\json_writer.cpp" />
+    <ClCompile Include="..\CCArmature\physics\CCColliderDetector.cpp" />
+    <ClCompile Include="..\CCArmature\physics\CCPhysicsWorld.cpp" />
+    <ClCompile Include="..\CCArmature\utils\CCArmatureDataManager.cpp" />
+    <ClCompile Include="..\CCArmature\utils\CCDataReaderHelper.cpp" />
+    <ClCompile Include="..\CCArmature\utils\CCSpriteFrameCacheHelper.cpp" />
+    <ClCompile Include="..\CCArmature\utils\CCTransformHelp.cpp" />
+    <ClCompile Include="..\CCArmature\utils\CCTweenFunction.cpp" />
+    <ClCompile Include="..\CCArmature\utils\CCUtilMath.cpp" />
     <ClCompile Include="..\CCBReader\CCBAnimationManager.cpp" />
     <ClCompile Include="..\CCBReader\CCBFileLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCBKeyframe.cpp" />
@@ -142,6 +168,42 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\AssetsManager\AssetsManager.h" />
+    <ClInclude Include="..\CCArmature\animation\CCAnimation.h" />
+    <ClInclude Include="..\CCArmature\animation\CCProcessBase.h" />
+    <ClInclude Include="..\CCArmature\animation\CCTween.h" />
+    <ClInclude Include="..\CCArmature\CCArmature.h" />
+    <ClInclude Include="..\CCArmature\CCBone.h" />
+    <ClInclude Include="..\CCArmature\datas\CCDatas.h" />
+    <ClInclude Include="..\CCArmature\display\CCBatchNode.h" />
+    <ClInclude Include="..\CCArmature\display\CCDecorativeDisplay.h" />
+    <ClInclude Include="..\CCArmature\display\CCDisplayFactory.h" />
+    <ClInclude Include="..\CCArmature\display\CCDisplayManager.h" />
+    <ClInclude Include="..\CCArmature\display\CCShaderNode.h" />
+    <ClInclude Include="..\CCArmature\display\CCSkin.h" />
+    <ClInclude Include="..\CCArmature\external_tool\CCTexture2DMutable.h" />
+    <ClInclude Include="..\CCArmature\external_tool\GLES-Render.h" />
+    <ClInclude Include="..\CCArmature\external_tool\Json\CSContentJsonDictionary.h" />
+    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\autolink.h" />
+    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\config.h" />
+    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\features.h" />
+    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\forwards.h" />
+    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\json_batchallocator.h" />
+    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\json_lib.h" />
+    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\json_tool.h" />
+    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\reader.h" />
+    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\value.h" />
+    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\writer.h" />
+    <ClInclude Include="..\CCArmature\external_tool\sigslot.h" />
+    <ClInclude Include="..\CCArmature\physics\CCColliderDetector.h" />
+    <ClInclude Include="..\CCArmature\physics\CCPhysicsWorld.h" />
+    <ClInclude Include="..\CCArmature\utils\CCArmatureDataManager.h" />
+    <ClInclude Include="..\CCArmature\utils\CCArmatureDefine.h" />
+    <ClInclude Include="..\CCArmature\utils\CCConstValue.h" />
+    <ClInclude Include="..\CCArmature\utils\CCDataReaderHelper.h" />
+    <ClInclude Include="..\CCArmature\utils\CCSpriteFrameCacheHelper.h" />
+    <ClInclude Include="..\CCArmature\utils\CCTransformHelp.h" />
+    <ClInclude Include="..\CCArmature\utils\CCTweenFunction.h" />
+    <ClInclude Include="..\CCArmature\utils\CCUtilMath.h" />
     <ClInclude Include="..\CCBReader\CCBAnimationManager.h" />
     <ClInclude Include="..\CCBReader\CCBFileLoader.h" />
     <ClInclude Include="..\CCBReader\CCBKeyframe.h" />
@@ -199,6 +261,12 @@
     <ClInclude Include="..\physics_nodes\CCPhysicsDebugNode.h" />
     <ClInclude Include="..\physics_nodes\CCPhysicsSprite.h" />
     <ClInclude Include="Win32InputBox.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\CCArmature\external_tool\Json\lib_json\json_internalarray.inl" />
+    <None Include="..\CCArmature\external_tool\Json\lib_json\json_internalmap.inl" />
+    <None Include="..\CCArmature\external_tool\Json\lib_json\json_valueiterator.inl" />
+    <None Include="..\CCArmature\external_tool\Json\lib_json\sconscript" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -58,6 +58,7 @@ Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp \
 Classes/ExtensionsTest/EditBoxTest/EditBoxTest.cpp \
 Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp \
 Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp \
+Classes/ExtensionsTest/ArmatureTest/ArmatureScene.cpp \
 Classes/FontTest/FontTest.cpp \
 Classes/IntervalTest/IntervalTest.cpp \
 Classes/KeypadTest/KeypadTest.cpp \
