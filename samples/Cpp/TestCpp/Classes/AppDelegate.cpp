@@ -18,6 +18,11 @@ AppDelegate::~AppDelegate()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
+	// As an example, load config file
+	// XXX: This should be loaded before the Director is initialized,
+	// XXX: but at this point, the director is already initialized
+	CCConfiguration::sharedConfiguration()->loadConfigFile("configs/config-example.plist");
+
     // initialize director
     CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
@@ -41,12 +46,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     }
 
     CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
-
-    // turn on display FPS
-    pDirector->setDisplayStats(true);
-
-    // set FPS. the default value is 1.0/60 if you don't call this
-    pDirector->setAnimationInterval(1.0 / 60);
 
     CCScene * pScene = CCScene::create();
     CCLayer * pLayer = new TestController();
