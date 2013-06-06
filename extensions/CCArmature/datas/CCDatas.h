@@ -57,31 +57,31 @@ public: \
 
 NS_CC_EXT_BEGIN
 	
-#pragma region Node
+#pragma region CCBaseData
 /**
 * the base node include a lot of attribute.
 */
-class  Node : public cocos2d::CCObject
+class  CCBaseData : public CCObject
 {
 public:
-	CS_CREATE_NO_PARAM_NO_INIT(Node)
+	CS_CREATE_NO_PARAM_NO_INIT(CCBaseData)
 public:
-	Node();
-	~Node(void);
+	CCBaseData();
+	~CCBaseData(void);
 
 	/*
 	* Copy datas from node
-	* @param  node A Node to copy datas
+	* @param  node A CCBaseData to copy datas
 	*/
-	virtual void copy(const Node *_node);
+	virtual void copy(const CCBaseData *_node);
 
 	/*
-	* Calculate two Node's between value(_to - _from) and set to self
+	* Calculate two CCBaseData's between value(_to - _from) and set to self
 	*
-	* @param  from   from Node
-	* @param  to     to Node
+	* @param  from   from CCBaseData
+	* @param  to     to CCBaseData
 	*/
-	virtual void subtract(Node *_from, Node *_to);
+	virtual void subtract(CCBaseData *_from, CCBaseData *_to);
 public:
 	/**
 	* x y skewX skewY scaleX scaleY used to calculate transform matrix
@@ -104,7 +104,7 @@ public:
 };
 #pragma endregion
 
-#pragma region DisplayData
+#pragma region CCDisplayData
 /**
 * DisplayType distinguish which type you display is.
 */
@@ -117,15 +117,15 @@ enum DisplayType{
 	CS_DISPLAY_MAX
 };
 
-class  DisplayData : public cocos2d::CCObject
+class  CCDisplayData : public CCObject
 {
 public:
-	CS_CREATE_NO_PARAM_NO_INIT(DisplayData)
+	CS_CREATE_NO_PARAM_NO_INIT(CCDisplayData)
 
 		static const char *changeDisplayToTexture(const char *);
 public:
-	DisplayData();
-	virtual ~DisplayData(void);
+	CCDisplayData();
+	virtual ~CCDisplayData(void);
 
 	DisplayType displayType;	//! mark which type your display is
 };
@@ -133,17 +133,17 @@ public:
 
 
 
-#pragma region SpriteDisplayData
-class  SpriteDisplayData : public DisplayData
+#pragma region CCSpriteDisplayData
+class  CCSpriteDisplayData : public CCDisplayData
 {
 public:
-	CS_CREATE_NO_PARAM_NO_INIT(SpriteDisplayData)
+	CS_CREATE_NO_PARAM_NO_INIT(CCSpriteDisplayData)
 public:
-	SpriteDisplayData();
-	virtual ~SpriteDisplayData();
+	CCSpriteDisplayData();
+	virtual ~CCSpriteDisplayData();
 
 	inline void setParam(const char *displayName){ this->displayName = displayName; }
-	void copy(SpriteDisplayData *displayData);
+	void copy(CCSpriteDisplayData *displayData);
 public:
 	/**
 	* If DisplayType is CS_DISPLAY_SPRITE, then CCBone will use this image name to create a CCSprite from CCSpriteFrameCache.
@@ -158,17 +158,17 @@ public:
 #pragma endregion
 
 
-#pragma region ArmatureDisplayData
-class  ArmatureDisplayData  : public DisplayData
+#pragma region CCArmatureDisplayData
+class  CCArmatureDisplayData  : public CCDisplayData
 {    
 public:
-	CS_CREATE_NO_PARAM_NO_INIT(ArmatureDisplayData)
+	CS_CREATE_NO_PARAM_NO_INIT(CCArmatureDisplayData)
 public:
-	ArmatureDisplayData();
-	virtual ~ArmatureDisplayData();
+	CCArmatureDisplayData();
+	virtual ~CCArmatureDisplayData();
 
 	inline void setParam(const char *displayName){ this->displayName = displayName; }
-	void copy(ArmatureDisplayData *displayData);
+	void copy(CCArmatureDisplayData *displayData);
 public:
 	/**
 	* If DisplayType is CS_DISPLAY_SPRITE, then CCBone will use this image name to create a CCSprite from CCSpriteFrameCache.
@@ -183,36 +183,36 @@ public:
 #pragma endregion
 
 
-#pragma region ParticleDisplayData
-class  ParticleDisplayData : public DisplayData
+#pragma region CCParticleDisplayData
+class  CCParticleDisplayData : public CCDisplayData
 {
 public:
-	CS_CREATE_NO_PARAM_NO_INIT(ParticleDisplayData)
+	CS_CREATE_NO_PARAM_NO_INIT(CCParticleDisplayData)
 public:
-	ParticleDisplayData();
-	virtual ~ParticleDisplayData(){};
+	CCParticleDisplayData();
+	virtual ~CCParticleDisplayData(){};
 
 	void setParam(const char *plist){ this->plist = plist; }
 
-	void copy(ParticleDisplayData *displayData);
+	void copy(CCParticleDisplayData *displayData);
 public:    
 	std::string plist;
 };
 #pragma endregion
 
 
-#pragma region ShaderDisplayData
-class  ShaderDisplayData : public DisplayData
+#pragma region CCShaderDisplayData
+class  CCShaderDisplayData : public CCDisplayData
 {
 public:
-	CS_CREATE_NO_PARAM_NO_INIT(ShaderDisplayData)
+	CS_CREATE_NO_PARAM_NO_INIT(CCShaderDisplayData)
 public:
-	ShaderDisplayData();
-	virtual ~ShaderDisplayData(){};
+	CCShaderDisplayData();
+	virtual ~CCShaderDisplayData(){};
 
 	inline void setParam(const char *vert, const char *frag){ this->vert = vert; this->frag = frag;}
 
-	void copy(ShaderDisplayData *displayData);
+	void copy(CCShaderDisplayData *displayData);
 public:
 	std::string vert;    
 	std::string frag;
@@ -220,65 +220,65 @@ public:
 #pragma endregion
 
 
-#pragma region BoneData
+#pragma region CCBoneData
 /**
-* BoneData used to init a CCBone.
-* BoneData keeps a DisplayData list, a CCBone can have many display to change.
-* The display information saved in the DisplayData
+* CCBoneData used to init a CCBone.
+* CCBoneData keeps a CCDisplayData list, a CCBone can have many display to change.
+* The display information saved in the CCDisplayData
 */
-class  BoneData : public Node
+class  CCBoneData : public CCBaseData
 {
 public:
-	CS_CREATE_NO_PARAM(BoneData)
+	CS_CREATE_NO_PARAM(CCBoneData)
 public:
-	BoneData(void);
-	~BoneData(void);
+	CCBoneData(void);
+	~CCBoneData(void);
 
 	virtual bool init();
 
-	void addDisplayData(DisplayData *displayData);
-	DisplayData *getDisplayData(int index);
+	void addDisplayData(CCDisplayData *displayData);
+	CCDisplayData *getDisplayData(int index);
 public:
 	std::string name;					//! the bone's name
 	std::string parentName;		//! the bone parent's name
-	cocos2d::CCArray displayDataList;		//! save DisplayData informations for the CCBone
+	CCArray displayDataList;		//! save CCDisplayData informations for the CCBone
 };
 #pragma  endregion
 
-#pragma  region ArmatureData
+#pragma  region CCArmatureData
 /**
-* ArmatureData saved the CCArmature name and Bonedatas needed for the Bones in this CCArmature
-* When we create a CCArmature, we need to get each CCBone's BoneData as it's init information.
-* So we can get a BoneData from the cocos2d::CCDictionary saved in the ArmatureData.
+* CCArmatureData saved the CCArmature name and Bonedatas needed for the Bones in this CCArmature
+* When we create a CCArmature, we need to get each CCBone's CCBoneData as it's init information.
+* So we can get a CCBoneData from the CCDictionary saved in the CCArmatureData.
 */
-class  ArmatureData : public cocos2d::CCObject
+class  CCArmatureData : public CCObject
 {
 public:
-	CS_CREATE_NO_PARAM(ArmatureData)
+	CS_CREATE_NO_PARAM(CCArmatureData)
 public:
-	ArmatureData();
-	~ArmatureData();
+	CCArmatureData();
+	~CCArmatureData();
 
 	bool init();
-	void addBoneData(BoneData *boneData);
-	BoneData *getBoneData(const char *boneName);
+	void addBoneData(CCBoneData *boneData);
+	CCBoneData *getBoneData(const char *boneName);
 public:
 	std::string name;
-	cocos2d::CCDictionary boneDataDic;
-	cocos2d::CCArray boneList;
+	CCDictionary boneDataDic;
+	CCArray boneList;
 };
 #pragma  endregion
 
-#pragma region FrameData
-class  FrameData : public Node
+#pragma region CCFrameData
+class  CCFrameData : public CCBaseData
 {
 public:
-	CS_CREATE_NO_PARAM_NO_INIT(FrameData)
+	CS_CREATE_NO_PARAM_NO_INIT(CCFrameData)
 public:
-	FrameData();
-	~FrameData();
+	CCFrameData();
+	~CCFrameData();
 
-	virtual void copy(FrameData *frameData);
+	virtual void copy(CCFrameData *frameData);
 public:
 	int duration;			//! The frame will last m_iDuration frames
 	CCTweenType tweenEasing;	//! Every frame's tween easing effect
@@ -299,40 +299,40 @@ public:
 };
 #pragma endregion
 
-#pragma region MovementBoneData
-class  MovementBoneData : public cocos2d::CCObject
+#pragma region CCMovementBoneData
+class  CCMovementBoneData : public CCObject
 {
 public:
-	CS_CREATE_NO_PARAM(MovementBoneData)
+	CS_CREATE_NO_PARAM(CCMovementBoneData)
 public:
-	MovementBoneData();
-	~MovementBoneData(void);
+	CCMovementBoneData();
+	~CCMovementBoneData(void);
 
 	virtual bool init();
 
-	void addFrameData(FrameData *frameData);
-	FrameData *getFrameData(int index);
+	void addFrameData(CCFrameData *frameData);
+	CCFrameData *getFrameData(int index);
 public:
 	float delay;		//! movement delay percent, this value can produce a delay effect
 	float scale;		//! scale this movement
 	float duration;		//! this CCBone in this movement will last m_iDuration frames
 	std::string name;	//! bone name
 
-	cocos2d::CCArray frameList;
+	CCArray frameList;
 };
 #pragma endregion
 
-#pragma region MovementData
-class  MovementData : public cocos2d::CCObject
+#pragma region CCMovementData
+class  CCMovementData : public CCObject
 {
 public:
-	CS_CREATE_NO_PARAM_NO_INIT(MovementData)
+	CS_CREATE_NO_PARAM_NO_INIT(CCMovementData)
 public:
-	MovementData(void);
-	~MovementData(void);
+	CCMovementData(void);
+	~CCMovementData(void);
 
-	void addMovementBoneData(MovementBoneData *movBoneData);
-	MovementBoneData *getMovementBoneData(const char *boneName);
+	void addMovementBoneData(CCMovementBoneData *movBoneData);
+	CCMovementBoneData *getMovementBoneData(const char *boneName);
 public:
 	std::string name;
 	int duration;		 //! the frames this movement will last
@@ -355,50 +355,50 @@ public:
 
 	/**
 	* Which tween easing effect the movement use
-	* TWEEN_EASING_MAX : use the value from MovementData get from flash design panel
+	* TWEEN_EASING_MAX : use the value from CCMovementData get from flash design panel
 	*/
 	CCTweenType tweenEasing;
 
 	/**
 	* @brief	save movment bone datas
 	* @key	std::string
-	* @value	MovementBoneData *
+	* @value	CCMovementBoneData *
 	*/
-	cocos2d::CCDictionary movBoneDataDic;
+	CCDictionary movBoneDataDic;
 };
 #pragma endregion
 
-#pragma region AnimationData
+#pragma region CCAnimationData
 /**
-*  AnimationData include all movement infomation for the CCArmature
-*  The struct is AnimationData -> MovementData -> MovementBoneData -> FrameData
+*  CCAnimationData include all movement infomation for the CCArmature
+*  The struct is CCAnimationData -> CCMovementData -> CCMovementBoneData -> CCFrameData
 *                                              -> MovementFrameData
 */
-class  AnimationData : public cocos2d::CCObject
+class  CCAnimationData : public CCObject
 {
 public:
-	CS_CREATE_NO_PARAM_NO_INIT(AnimationData)
+	CS_CREATE_NO_PARAM_NO_INIT(CCAnimationData)
 public:
-	AnimationData(void);
-	~AnimationData(void);
+	CCAnimationData(void);
+	~CCAnimationData(void);
 
 	void release();
 	void retain();
 
-	void addMovement(MovementData* movData);
-	MovementData *getMovement(const char *movementName);
+	void addMovement(CCMovementData* movData);
+	CCMovementData *getMovement(const char *movementName);
 	int getMovementCount();
 public:
 	std::string name;
-	cocos2d::CCDictionary movementDataDic;
+	CCDictionary movementDataDic;
 	std::vector<std::string> movementNames;
 };
 #pragma endregion
 
-#pragma region ContourData
-struct ContourVertex2 : public cocos2d::CCObject
+#pragma region CCContourData
+struct CCContourVertex2 : public CCObject
 {
-	ContourVertex2(float x, float y)
+	CCContourVertex2(float x, float y)
 	{
 		this->x = x;
 		this->y = y;
@@ -409,41 +409,41 @@ struct ContourVertex2 : public cocos2d::CCObject
 };
 
 /*
-* ContourData include a contour vertex information 
+* CCContourData include a contour vertex information 
 */
-class  ContourData : public cocos2d::CCObject
+class  CCContourData : public CCObject
 {
 public:
-	CS_CREATE_NO_PARAM(ContourData)
+	CS_CREATE_NO_PARAM(CCContourData)
 public:
-	ContourData();
-	~ContourData(void);
+	CCContourData();
+	~CCContourData(void);
 
 	virtual bool init();
 public:
-	cocos2d::CCArray vertexList;	//! Save contour vertex info, vertex saved in a CCPoint
+	CCArray vertexList;	//! Save contour vertex info, vertex saved in a CCPoint
 };
 #pragma endregion
 
 
 
 
-#pragma region TextureData
+#pragma region CCTextureData
 /*
-* TextureData include a texture's information 
+* CCTextureData include a texture's information 
 */
-class  TextureData : public cocos2d::CCObject
+class  CCTextureData : public CCObject
 {
 public:
-	CS_CREATE_NO_PARAM(TextureData)
+	CS_CREATE_NO_PARAM(CCTextureData)
 public:
-	TextureData();
-	~TextureData(void);
+	CCTextureData();
+	~CCTextureData(void);
 
 	virtual bool init();
 
-	void addContourData(ContourData *contourData);
-	ContourData *getContourData(int index);
+	void addContourData(CCContourData *contourData);
+	CCContourData *getContourData(int index);
 public:
 	std::string name;	//! The texture's name
 
@@ -453,7 +453,7 @@ public:
 	float width;		//! The texture's width, height
 	float height;
 
-	cocos2d::CCArray contourDataList;
+	CCArray contourDataList;
 };
 #pragma endregion
 

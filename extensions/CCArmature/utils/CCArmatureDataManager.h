@@ -54,54 +54,54 @@ public:
     /**
      * Add armature data
      * @param id The id of the armature data
-	 * @param armatureData ArmatureData *
+	 * @param armatureData CCArmatureData *
      */
-    void addArmatureData(const char *id, ArmatureData *armatureData);
+    void addArmatureData(const char *id, CCArmatureData *armatureData);
     
 	/**
      *	@brief	get armature data
      *
      *	@param	id the id of the armature data you want to get
 	 *  
-	 *  @return	ArmatureData *
+	 *  @return	CCArmatureData *
      */
-    ArmatureData *getArmatureData(const char *id);
+    CCArmatureData *getArmatureData(const char *id);
 
     /**
      *	@brief	add animation data 
      *
      *	@param 	id the id of the animation data 
 	 *
-	 *  @return AnimationData *
+	 *  @return CCAnimationData *
      */
-    void addAnimationData(const char *id, AnimationData *animationData);
+    void addAnimationData(const char *id, CCAnimationData *animationData);
     
 	/**
      *	@brief	get animation data from m_pAnimationDatas(CCDictionary)
      *
      *	@param 	id the id of the animation data you want to get
 	 *  
-	 *  @return AnimationData *
+	 *  @return CCAnimationData *
      */
-    AnimationData *getAnimationData(const char *id);
+    CCAnimationData *getAnimationData(const char *id);
 
     /**
      *	@brief	add texture data 
      *
      *	@param 	id the id of the texture data
 	 *
-	 *  @return TextureData *
+	 *  @return CCTextureData *
      */
-    void addTextureData(const char *id, TextureData *textureData);
+    void addTextureData(const char *id, CCTextureData *textureData);
     
 	/**
      *	@brief	get texture data
      *
      *	@param 	_id the id of the texture data you want to get
 	 *  
-	 *  @return TextureData *
+	 *  @return CCTextureData *
      */
-    TextureData *getTextureData(const char *id);
+    CCTextureData *getTextureData(const char *id);
     
     /**
 	 *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.
@@ -128,21 +128,21 @@ private:
     /**
 	 *	@brief	save amature datas
 	 *  @key	std::string
-	 *  @value	ArmatureData *
+	 *  @value	CCArmatureData *
      */
 	CC_SYNTHESIZE_READONLY(CCDictionary *, m_pArmarureDatas, ArmarureDatas);
 
     /**
 	 *	@brief	save animation datas
 	 *  @key	std::string
-	 *  @value	AnimationData *
+	 *  @value	CCAnimationData *
      */
 	CC_SYNTHESIZE_READONLY(CCDictionary *, m_pAnimationDatas, AnimationDatas);
 
 	/**
 	 *	@brief	save texture datas
 	 *  @key	std::string
-	 *  @value	TextureData *
+	 *  @value	CCTextureData *
      */
 	CC_SYNTHESIZE_READONLY(CCDictionary *, m_pTextureDatas, TextureDatas);
 

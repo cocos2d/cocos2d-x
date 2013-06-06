@@ -50,7 +50,7 @@ public:
 protected:
 
 	CC_SYNTHESIZE_RETAIN(CCNode*, m_pDisplay, Display);
-	CC_SYNTHESIZE_RETAIN(DisplayData*, m_pDisplayData, DisplayData);
+	CC_SYNTHESIZE_RETAIN(CCDisplayData*, m_pDisplayData, DisplayData);
 
 #if ENABLE_PHYSICS_DETECT
 	CC_SYNTHESIZE_RETAIN(CCColliderDetector*, m_pColliderDetector, ColliderDetector);

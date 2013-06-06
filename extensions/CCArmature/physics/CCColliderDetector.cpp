@@ -64,7 +64,7 @@ CCColliderDetector::~CCColliderDetector()
 	{
 		ColliderBody *colliderBody = (ColliderBody*)object;
 
-		ContourData *contourData = colliderBody->getContourData();
+		CCContourData *contourData = colliderBody->getContourData();
 		b2Body *body = colliderBody->getB2Body();
 		CCPhysicsWorld::sharedPhysicsWorld()->getNoGravityWorld()->DestroyBody(body);
 	}
@@ -91,7 +91,7 @@ bool CCColliderDetector::init(CCBone *bone)
 	return true;
 }
 
-void CCColliderDetector::addContourData(ContourData *contourData)
+void CCColliderDetector::addContourData(CCContourData *contourData)
 {
 	const CCArray *array = &contourData->vertexList;
 	CCObject *object = NULL;
@@ -101,7 +101,7 @@ void CCColliderDetector::addContourData(ContourData *contourData)
 	int i = 0;
 	CCARRAY_FOREACH(array, object)
 	{
-		ContourVertex2 *v = (ContourVertex2*)object;
+		CCContourVertex2 *v = (CCContourVertex2*)object;
 		b2bv[i].Set(v->x/PT_RATIO, v->y/PT_RATIO);
 		i++;
 	}
@@ -134,11 +134,11 @@ void CCColliderDetector::addContourDataList(CCArray *contourDataList)
 	CCObject *object = NULL;
 	CCARRAY_FOREACH(contourDataList,object)
 	{
-		addContourData((ContourData*)object);
+		addContourData((CCContourData*)object);
 	}
 }
 
-void CCColliderDetector::removeContourData(ContourData *_contourData)
+void CCColliderDetector::removeContourData(CCContourData *_contourData)
 {
     m_pColliderBodyList->removeObject(_contourData);
 }
@@ -177,7 +177,7 @@ void CCColliderDetector::updateTransform(CCAffineTransform &t)
 	{
 		ColliderBody *colliderBody = (ColliderBody*)object;
 
-		ContourData *contourData = colliderBody->getContourData();
+		CCContourData *contourData = colliderBody->getContourData();
 		b2Body *body = colliderBody->getB2Body();
 
 		b2PolygonShape *shape = (b2PolygonShape *)body->GetFixtureList()->GetShape();
@@ -188,7 +188,7 @@ void CCColliderDetector::updateTransform(CCAffineTransform &t)
 		int i = 0;
 		CCARRAY_FOREACH(array, object)
 		{
-			ContourVertex2 *cv = (ContourVertex2*)object;
+			CCContourVertex2 *cv = (CCContourVertex2*)object;
 			b2Vec2 &bv = shape->m_vertices[i];
 
 			helpPoint.setPoint(cv->x, cv->y);

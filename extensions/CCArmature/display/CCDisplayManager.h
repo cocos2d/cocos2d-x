@@ -46,11 +46,11 @@ public:
     bool init(CCBone *bone);
     
     /**
-	 * Use BoneData to init the display list.
+	 * Use CCBoneData to init the display list.
      * If display is a sprite, and it have texture info in the TexutreData, then use TexutreData to init the display's anchor point
      * If the display is a CCArmature, then create a new CCArmature
      */
-	void initDisplayList(BoneData *_boneData);
+	void initDisplayList(CCBoneData *_boneData);
     
     /**
 	 * Add display and use  _DisplayData init the display.
@@ -58,12 +58,12 @@ public:
      * If _index is current display index, then also change display to _index
      *
 	 *	@param 	displayData it include the display information, like DisplayType.
-     *					If you want to create a sprite display, then create a SpriteDisplayData param
+     *					If you want to create a sprite display, then create a CCSpriteDisplayData param
      *
 	 *	@param 	index the index of the display you want to replace or add to
      *					-1 : append display from back
      */
-    void addDisplay(DisplayData *displayData, int index);
+    void addDisplay(CCDisplayData *displayData, int index);
     
     void removeDisplay(int index);
     

@@ -59,9 +59,7 @@ Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp \
 Classes/ExtensionsTest/EditBoxTest/EditBoxTest.cpp \
 Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp \
 Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp \
-<<<<<<< HEAD
 Classes/ExtensionsTest/ArmatureTest/ArmatureScene.cpp \
-=======
 \
 Classes/ExtensionsTest/ComponentsTest/ComponentsTestScene.cpp \
 Classes/ExtensionsTest/ComponentsTest/EnemyController.cpp \
@@ -70,7 +68,6 @@ Classes/ExtensionsTest/ComponentsTest/PlayerController.cpp \
 Classes/ExtensionsTest/ComponentsTest/ProjectileController.cpp \
 Classes/ExtensionsTest/ComponentsTest/SceneController.cpp \
 \
->>>>>>> 150b91074a57ae0345c03541b533c46a017b0d13
 Classes/FontTest/FontTest.cpp \
 Classes/IntervalTest/IntervalTest.cpp \
 Classes/KeypadTest/KeypadTest.cpp \

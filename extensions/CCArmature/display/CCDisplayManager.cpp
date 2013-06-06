@@ -84,7 +84,7 @@ bool CCDisplayManager::init(CCBone *bone)
 }
 
     
-void CCDisplayManager::addDisplay(DisplayData *_displayData, int _index)
+void CCDisplayManager::addDisplay(CCDisplayData *_displayData, int _index)
 {
     CCDecorativeDisplay *decoDisplay = NULL;
     
@@ -211,7 +211,7 @@ CCDecorativeDisplay *CCDisplayManager::getDecorativeDisplayByIndex( int index)
 	return (CCDecorativeDisplay*)m_pDecoDisplayList->objectAtIndex(index);
 } 
 
-void CCDisplayManager::initDisplayList(BoneData *boneData)
+void CCDisplayManager::initDisplayList(CCBoneData *boneData)
 {
     CC_SAFE_DELETE(m_pDecoDisplayList);
     m_pDecoDisplayList = CCArray::create();
@@ -223,7 +223,7 @@ void CCDisplayManager::initDisplayList(BoneData *boneData)
     CCArray *displayDataList = &boneData->displayDataList;
     CCARRAY_FOREACH(displayDataList, object)
     {
-        DisplayData *displayData = (DisplayData*)object;
+        CCDisplayData *displayData = (CCDisplayData*)object;
         
         CCDecorativeDisplay *decoDisplay = CCDecorativeDisplay::create();
         decoDisplay->setDisplayData(displayData);

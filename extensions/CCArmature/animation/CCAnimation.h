@@ -65,21 +65,21 @@ public:
      * @param  durationTo The frames between two animation changing-over.
      *         It's meaning is changing to this animation need how many frames
      *
-     *         -1 : use the value from MovementData get from flash design panel
+     *         -1 : use the value from CCMovementData get from flash design panel
      * @param  durationTween  The frame count you want to play in the game.
      *         if  _durationTween is 80, then the animation will played 80 frames in a loop
      *
-     *         -1 : use the value from MovementData get from flash design panel
+     *         -1 : use the value from CCMovementData get from flash design panel
      *
      * @param  loop   Whether the animation is loop
      *
-     *         loop < 0 : use the value from MovementData get from flash design panel
+     *         loop < 0 : use the value from CCMovementData get from flash design panel
      *         loop = 0 : this animation is not loop
      *         loop > 0 : this animation is loop
      *
      * @param  tweenEasing CCTween easing is used for calculate easing effect
      *
-     *         TWEEN_EASING_MAX : use the value from MovementData get from flash design panel
+     *         TWEEN_EASING_MAX : use the value from CCMovementData get from flash design panel
      *         -1 : fade out
      *         0  : line
      *         1  : fade in
@@ -131,18 +131,18 @@ protected:
      */
     void updateMovementFrameData(float _currentPercent);
 protected:
-	//! AnimationData save all MovementDatas this animation used.
-	CC_SYNTHESIZE_RETAIN(AnimationData*, m_pAnimationData, AnimationData);
+	//! CCAnimationData save all MovementDatas this animation used.
+	CC_SYNTHESIZE_RETAIN(CCAnimationData*, m_pAnimationData, AnimationData);
     
 
-    MovementData *m_pMovementData;				//! MovementData save all MovementFrameDatas this animation used.
+    CCMovementData *m_pMovementData;				//! CCMovementData save all MovementFrameDatas this animation used.
 
 	CCArmature *m_pArmature;						//! A weak reference of armature
 
 	std::string m_strMovementID;				//! Current movment's name 
 
     int m_iPrevFrameIndex;						//! Prev key frame index
-	int m_iToIndex;								//! The frame index in MovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
+	int m_iToIndex;								//! The frame index in CCMovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
 
 	CCArray *m_pTweenList;
 public:

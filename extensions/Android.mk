@@ -53,7 +53,6 @@ network/WebSocket.cpp \
 physics_nodes/CCPhysicsDebugNode.cpp \
 physics_nodes/CCPhysicsSprite.cpp \
 LocalStorage/LocalStorageAndroid.cpp \
-<<<<<<< HEAD
 CCArmature/CCArmature.cpp \
 CCArmature/CCBone.cpp \
 CCArmature/animation/CCAnimation.cpp \
@@ -78,8 +77,7 @@ CCArmature/utils/CCDataReaderHelper.cpp \
 CCArmature/utils/CCSpriteFrameCacheHelper.cpp \
 CCArmature/utils/CCTransformHelp.cpp \
 CCArmature/utils/CCTweenFunction.cpp \
-CCArmature/utils/CCUtilMath.cpp 
-=======
+CCArmature/utils/CCUtilMath.cpp \
 spine/Animation.cpp \
 spine/AnimationState.cpp \
 spine/AnimationStateData.cpp \
@@ -105,7 +103,6 @@ Components/CCComAttribute.cpp \
 Components/CCComAudio.cpp \
 Components/CCComController.cpp \
 Components/CCInputDelegate.cpp
->>>>>>> 150b91074a57ae0345c03541b533c46a017b0d13
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static

@@ -448,7 +448,7 @@ void TestParticleDisplay::onEnter()
 	armature->setScale(0.6f);
 	addChild(armature);
 
-	ParticleDisplayData displayData;
+	CCParticleDisplayData displayData;
 	displayData.setParam("Particles/SmallSun.plist");
 
 	cocos2d::extension::CCBone *bone  = cocos2d::extension::CCBone::create("p1");
@@ -505,7 +505,7 @@ void TestUseMutiplePicture::onEnter()
 
 	char* weapon[] = {"weapon_f-sword.png", "weapon_f-sword2.png", "weapon_f-sword3.png", "weapon_f-sword4.png", "weapon_f-sword5.png", "weapon_f-knife.png", "weapon_f-hammer.png"};
 
-	SpriteDisplayData displayData;
+	CCSpriteDisplayData displayData;
 	for (int i = 0; i < 7; i++)
 	{
 		displayData.setParam(weapon[i]);

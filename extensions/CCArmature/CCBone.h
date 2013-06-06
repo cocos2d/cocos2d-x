@@ -73,12 +73,12 @@ public:
      * If index is current display index, then also change display to _index
      *
 	 * @param displayData it include the display information, like DisplayType.
-     *          If you want to create a sprite display, then create a SpriteDisplayData param
+     *          If you want to create a sprite display, then create a CCSpriteDisplayData param
      *
 	 *	@param 	_index the index of the display you want to replace or add to
      *          -1 : append display from back
      */
-    void addDisplay(DisplayData *displayData, int index);
+    void addDisplay(CCDisplayData *displayData, int index);
     
     void changeDisplayByIndex(int index, bool force);
 
@@ -140,9 +140,9 @@ public:
 public:
     /*
      *  The origin state of the CCBone. Display's state is effected by m_pBoneData, m_pNode, m_pTweenData
-     *  when call setData function, it will copy from the BoneData.
+     *  when call setData function, it will copy from the CCBoneData.
      */
-	CC_PROPERTY(BoneData *, m_pBoneData, BoneData);
+	CC_PROPERTY(CCBoneData *, m_pBoneData, BoneData);
     
     //! A weak reference to the CCArmature
 	CC_SYNTHESIZE(CCArmature *, m_pArmature, Armature);
@@ -153,7 +153,7 @@ public:
     CC_SYNTHESIZE(CCDisplayManager*, m_pDisplayManager, DisplayManager)
 
 	/*
-	 *	When CCArmature play a animation, if there is not a MovementBoneData of this bone in this MovementData, this bone will hide.
+	 *	When CCArmature play a animation, if there is not a CCMovementBoneData of this bone in this CCMovementData, this bone will hide.
 	 *	Set IgnoreMovementBoneData to true, then this bone will also show.
 	 */
 	CC_SYNTHESIZE_PASS_BY_REF(bool, m_bIgnoreMovementBoneData, IgnoreMovementBoneData)
@@ -162,7 +162,7 @@ protected:
 	CCTween *m_pTween;							//! Calculate tween effect
 
 	//! Used for make tween effect between every frame
-	CC_SYNTHESIZE_READONLY(FrameData*, m_pTweenData, TweenData);
+	CC_SYNTHESIZE_READONLY(CCFrameData*, m_pTweenData, TweenData);
 
 	CC_SYNTHESIZE_PASS_BY_REF(std::string, m_strName, Name);
     

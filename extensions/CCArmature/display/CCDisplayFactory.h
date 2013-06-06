@@ -33,26 +33,26 @@ NS_CC_EXT_BEGIN
 class CCSkin;
 class CCBone;
 class CCDecorativeDisplay;
-class DisplayData;
+class CCDisplayData;
 
 
-void CS_DISPLAY_ADD(CCBone *bone, CCDecorativeDisplay *decoDisplay, DisplayData *displayData);
+void CS_DISPLAY_ADD(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
 void CS_DISPLAY_CREATE(CCBone *bone, CCDecorativeDisplay *decoDisplay);
 void CS_DISPLAY_UPDATE(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty);
 
-void CS_DISPLAY_SPRITE_ADD(CCBone *bone, CCDecorativeDisplay *decoDisplay, DisplayData *displayData);
+void CS_DISPLAY_SPRITE_ADD(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
 void CS_DISPLAY_SPRITE_CREATE(CCBone *bone, CCDecorativeDisplay *decoDisplay);
 void CS_DISPLAY_SPRITE_UPDATE(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty);
 
-void CS_DISPLAY_ARMATURE_ADD(CCBone *bone, CCDecorativeDisplay *decoDisplay, DisplayData *displayData);
+void CS_DISPLAY_ARMATURE_ADD(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
 void CS_DISPLAY_ARMATURE_CREATE(CCBone *bone, CCDecorativeDisplay *decoDisplay);
 void CS_DISPLAY_ARMATURE_UPDATE(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty);
 
-void CS_DISPLAY_PARTICLE_ADD(CCBone *bone, CCDecorativeDisplay *decoDisplay, DisplayData *displayData);
+void CS_DISPLAY_PARTICLE_ADD(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
 void CS_DISPLAY_PARTICLE_CREATE(CCBone *bone, CCDecorativeDisplay *decoDisplay);
 void CS_DISPLAY_PARTICLE_UPDATE(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty);
 
-void CS_DISPLAY_SHADER_ADD(CCBone *bone, CCDecorativeDisplay *decoDisplay, DisplayData *displayData);
+void CS_DISPLAY_SHADER_ADD(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
 void CS_DISPLAY_SHADER_CREATE(CCBone *bone, CCDecorativeDisplay *decoDisplay);
 
 

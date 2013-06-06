@@ -77,8 +77,8 @@ bool CCTween::init(CCBone *bone)
     bool bRet = false;
     do
     {
-        m_pFrom = new FrameData();
-        m_pBetween = new FrameData();
+        m_pFrom = new CCFrameData();
+        m_pBetween = new CCFrameData();
         
         m_pBone = bone;
 		m_pTweenData = m_pBone->getTweenData();
@@ -93,7 +93,7 @@ bool CCTween::init(CCBone *bone)
 }
 
 
-void CCTween::play(MovementBoneData *_movementBoneData, int _durationTo, int _durationTween,  int _loop, int _tweenEasing)
+void CCTween::play(CCMovementBoneData *_movementBoneData, int _durationTo, int _durationTween,  int _loop, int _tweenEasing)
 {
     CCProcessBase::play(NULL, _durationTo, _durationTween, _loop, _tweenEasing);
    
@@ -113,7 +113,7 @@ void CCTween::play(MovementBoneData *_movementBoneData, int _durationTo, int _du
 	if (m_pMovementBoneData->frameList.count() == 1)
     {
 		m_eLoopType = SINGLE_FRAME;
-		FrameData *_nextKeyFrame = m_pMovementBoneData->getFrameData(0);
+		CCFrameData *_nextKeyFrame = m_pMovementBoneData->getFrameData(0);
 		if(_durationTo == 0)
 		{
 			setBetween(_nextKeyFrame, _nextKeyFrame);
@@ -148,7 +148,7 @@ void CCTween::play(MovementBoneData *_movementBoneData, int _durationTo, int _du
         }
         else
         {
-			FrameData *_nextKeyFrame = m_pMovementBoneData->getFrameData(0);
+			CCFrameData *_nextKeyFrame = m_pMovementBoneData->getFrameData(0);
 			setBetween(m_pTweenData, _nextKeyFrame);
             m_bIsTweenKeyFrame = true;
         }
@@ -257,7 +257,7 @@ void CCTween::updateHandler()
 	}
 }
 
-void CCTween::setBetween(FrameData *from, FrameData *to)
+void CCTween::setBetween(CCFrameData *from, CCFrameData *to)
 {
 	do 
 	{
@@ -282,7 +282,7 @@ void CCTween::setBetween(FrameData *from, FrameData *to)
 }
 
 
-void CCTween::arriveKeyFrame(FrameData *keyFrameData)
+void CCTween::arriveKeyFrame(CCFrameData *keyFrameData)
 {
 	if(keyFrameData)
 	{
@@ -318,7 +318,7 @@ void CCTween::arriveKeyFrame(FrameData *keyFrameData)
 }
 
 
-FrameData *CCTween::tweenNodeTo(float percent, FrameData *node)
+CCFrameData *CCTween::tweenNodeTo(float percent, CCFrameData *node)
 {
 	node = node == NULL ? m_pTweenData : node;
 
@@ -358,8 +358,8 @@ float CCTween::updateFrameData(float currentPrecent, bool activeFrame)
     float playedTime = (float)rawDuration * currentPrecent;
     
     
-    FrameData *from;
-    FrameData *to;
+    CCFrameData *from;
+    CCFrameData *to;
     bool isListEnd;
 
     //! If play to current frame's front or back, then find current frame again

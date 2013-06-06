@@ -33,7 +33,7 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
-void CS_DISPLAY_ADD(CCBone *bone, CCDecorativeDisplay *decoDisplay, DisplayData *displayData)
+void CS_DISPLAY_ADD(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData)
 {
 	switch(displayData->displayType)
 	{
@@ -95,10 +95,10 @@ void CS_DISPLAY_UPDATE(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt,
 
 
 
-void CS_DISPLAY_SPRITE_ADD(CCBone *bone, CCDecorativeDisplay *decoDisplay, DisplayData *displayData)
+void CS_DISPLAY_SPRITE_ADD(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData)
 {
-	SpriteDisplayData *sdp = SpriteDisplayData::create();
-	sdp->copy((SpriteDisplayData*)displayData);
+	CCSpriteDisplayData *sdp = CCSpriteDisplayData::create();
+	sdp->copy((CCSpriteDisplayData*)displayData);
 	decoDisplay->setDisplayData(sdp);
 	CS_DISPLAY_SPRITE_CREATE(bone, decoDisplay);
 }
@@ -107,7 +107,7 @@ void CS_DISPLAY_SPRITE_CREATE(CCBone *bone, CCDecorativeDisplay *decoDisplay)
 {
 	CCSkin *skin = NULL;
 
-	SpriteDisplayData *displayData = (SpriteDisplayData*)decoDisplay->getDisplayData();
+	CCSpriteDisplayData *displayData = (CCSpriteDisplayData*)decoDisplay->getDisplayData();
 
 	//! remove .xxx
 	std::string textureName = displayData->displayName;
@@ -131,7 +131,7 @@ void CS_DISPLAY_SPRITE_CREATE(CCBone *bone, CCDecorativeDisplay *decoDisplay)
 	CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTextureAtlas((textureName + ".png").c_str());
 	skin->setTextureAtlas(atlas);
 
-	TextureData *textureData = CCArmatureDataManager::sharedArmatureDataManager()->getTextureData(textureName.c_str());
+	CCTextureData *textureData = CCArmatureDataManager::sharedArmatureDataManager()->getTextureData(textureName.c_str());
 	if(textureData)
 	{
 		//! Init display anchorPoint£¬ every Texture have a anchor point
@@ -163,17 +163,17 @@ void CS_DISPLAY_SPRITE_UPDATE(CCBone *bone, CCDecorativeDisplay *decoDisplay, fl
 }
 
 
-void CS_DISPLAY_ARMATURE_ADD(CCBone *bone, CCDecorativeDisplay *decoDisplay, DisplayData *displayData)
+void CS_DISPLAY_ARMATURE_ADD(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData)
 {
-	ArmatureDisplayData *adp = ArmatureDisplayData::create(); ;
-	adp->copy((ArmatureDisplayData*)displayData);
+	CCArmatureDisplayData *adp = CCArmatureDisplayData::create(); ;
+	adp->copy((CCArmatureDisplayData*)displayData);
 	decoDisplay->setDisplayData(adp);
 
 	CS_DISPLAY_ARMATURE_CREATE(bone, decoDisplay);
 }
 void CS_DISPLAY_ARMATURE_CREATE(CCBone *bone, CCDecorativeDisplay *decoDisplay)
 {
-	ArmatureDisplayData *displayData = (ArmatureDisplayData*)decoDisplay->getDisplayData();
+	CCArmatureDisplayData *displayData = (CCArmatureDisplayData*)decoDisplay->getDisplayData();
     
     CCArmature *armature = CCArmature::create(displayData->displayName.c_str(), bone);
     
@@ -199,24 +199,24 @@ void CS_DISPLAY_ARMATURE_UPDATE(CCBone *bone, CCDecorativeDisplay *decoDisplay, 
 
 
 
-void CS_DISPLAY_PARTICLE_ADD(CCBone *bone, CCDecorativeDisplay *decoDisplay, DisplayData *displayData)
+void CS_DISPLAY_PARTICLE_ADD(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData)
 {
-	ParticleDisplayData *adp = ParticleDisplayData::create(); ;
-	adp->copy((ParticleDisplayData*)displayData);
+	CCParticleDisplayData *adp = CCParticleDisplayData::create(); ;
+	adp->copy((CCParticleDisplayData*)displayData);
 	decoDisplay->setDisplayData(adp);
 
 	CS_DISPLAY_PARTICLE_CREATE(bone, decoDisplay);
 }
 void CS_DISPLAY_PARTICLE_CREATE(CCBone *bone, CCDecorativeDisplay *decoDisplay)
 {
-	ParticleDisplayData *displayData = (ParticleDisplayData*)decoDisplay->getDisplayData();
+	CCParticleDisplayData *displayData = (CCParticleDisplayData*)decoDisplay->getDisplayData();
 	CCParticleSystem *system = CCParticleSystemQuad::create(displayData->plist.c_str());
 	decoDisplay->setDisplay(system);
 }
 void CS_DISPLAY_PARTICLE_UPDATE(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty)
 {
 	CCParticleSystem *system = (CCParticleSystem*)decoDisplay->getDisplay();
-	Node node;
+	CCBaseData node;
 	CCTransformHelp::matrixToNode(bone->nodeToArmatureTransform(), node);
 	system->setPosition(node.x, node.y);
 	system->setScaleX(node.scaleX);
@@ -226,17 +226,17 @@ void CS_DISPLAY_PARTICLE_UPDATE(CCBone *bone, CCDecorativeDisplay *decoDisplay, 
 
 
 
-void CS_DISPLAY_SHADER_ADD(CCBone *bone, CCDecorativeDisplay *decoDisplay, DisplayData *displayData)
+void CS_DISPLAY_SHADER_ADD(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData)
 {
-	ShaderDisplayData *sdp = ShaderDisplayData::create();
-	sdp->copy((ShaderDisplayData*)displayData);
+	CCShaderDisplayData *sdp = CCShaderDisplayData::create();
+	sdp->copy((CCShaderDisplayData*)displayData);
 	decoDisplay->setDisplayData(sdp);
 
 	CS_DISPLAY_SHADER_CREATE(bone, decoDisplay);
 }
 void CS_DISPLAY_SHADER_CREATE(CCBone *bone, CCDecorativeDisplay *decoDisplay)
 {
-	ShaderDisplayData *displayData = (ShaderDisplayData*)decoDisplay->getDisplayData();
+	CCShaderDisplayData *displayData = (CCShaderDisplayData*)decoDisplay->getDisplayData();
 	CCShaderNode *sn = CCShaderNode::shaderNodeWithVertex(displayData->vert.c_str(), displayData->frag.c_str());
 	decoDisplay->setDisplay(sn);
 }
