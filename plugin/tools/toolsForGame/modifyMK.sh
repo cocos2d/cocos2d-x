@@ -26,6 +26,11 @@ if [ -f ${MK_FILE_PATH} ]; then
     ADD_IMPORT_STR=""
     for plugin_name in ${SELECTED_PLUGINS[@]}
     do
+        PLUGIN_MK_FILE=${TARGET_ROOT}/${plugin_name}/android/Android.mk
+        if [ ! -f "${PLUGIN_MK_FILE}" ]; then
+            continue
+        fi
+
         PLUGIN_MODULE_NAME="$(getStaticModuleName ${plugin_name})"
         HAVE_PLUGIN=`grep "^\([\s]*[^#]*\)${PLUGIN_MODULE_NAME}" ${MK_FILE_PATH}`
         if [ "${HAVE_PLUGIN}" ]; then
@@ -111,3 +116,4 @@ else
 fi
 
 exit 0
+
