@@ -60,7 +60,7 @@ char* _readFile (const char* path, int* length) {
 	fseek(file, 0, SEEK_SET);
 
 	data = MALLOC(char, *length);
-	fread(data, 1, *length, file);
+	size_t ret = fread(data, 1, *length, file);
 	fclose(file);
 
 	return data;

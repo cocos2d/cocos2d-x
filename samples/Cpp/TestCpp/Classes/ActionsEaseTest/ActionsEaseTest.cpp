@@ -625,9 +625,9 @@ void EaseSpriteDemo::onEnter()
     addChild(label);
     label->setPosition(ccp(VisibleRect::center().x, VisibleRect::top().y-50));
 
-    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(EaseSpriteDemo::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(EaseSpriteDemo::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(EaseSpriteDemo::nextCallback) );
+    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, std::bind(&EaseSpriteDemo::backCallback, this, std::placeholders::_1) );
+    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, std::bind(&EaseSpriteDemo::restartCallback , this, std::placeholders::_1) );
+    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, std::bind(&EaseSpriteDemo::nextCallback, this, std::placeholders::_1) );
 
     CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 
