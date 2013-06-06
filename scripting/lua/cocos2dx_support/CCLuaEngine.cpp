@@ -324,4 +324,11 @@ bool CCLuaEngine::handleAssert(const char *msg)
     return ret;
 }
 
+int CCLuaEngine::reallocateScriptHandler(int nHandler)
+{    
+    int nRet = m_stack->reallocateScriptHandler(nHandler);
+    m_stack->clean();
+    return nRet;
+}
+
 NS_CC_END

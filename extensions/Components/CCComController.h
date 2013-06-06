@@ -41,7 +41,7 @@ public:
    virtual void onEnter();
    virtual void onExit();
    virtual void update(float delta);
-   virtual bool isEnabled();
+   virtual bool isEnabled() const;
    virtual void setEnabled(bool b);
     
    static CCComController* create(void);
