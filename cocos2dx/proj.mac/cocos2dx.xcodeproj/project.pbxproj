@@ -609,6 +609,8 @@
 		469A7DF816C247C8006FFCB2 /* tinyxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml2.h; sourceTree = "<group>"; };
 		46A3939816E03F4D00210B16 /* ccFPSImages.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ccFPSImages.c; sourceTree = "<group>"; };
 		46A3939916E03F4D00210B16 /* ccFPSImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccFPSImages.h; sourceTree = "<group>"; };
+		A076DDE1175FED3000ACDC32 /* CHANGELOG */ = {isa = PBXFileReference; lastKnownFileType = text; name = CHANGELOG; path = ../../CHANGELOG; sourceTree = "<group>"; };
+		A076DDE2175FED3F00ACDC32 /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = AUTHORS; path = ../../AUTHORS; sourceTree = "<group>"; };
 		F4D7A74615F269D10081CE26 /* ccTypeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypeInfo.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -639,6 +641,8 @@
 		1551A334158F2AB200E66CFE = {
 			isa = PBXGroup;
 			children = (
+				A076DDE2175FED3F00ACDC32 /* AUTHORS */,
+				A076DDE1175FED3000ACDC32 /* CHANGELOG */,
 				1551A873158F2B4700E66CFE /* cocos2dx-Prefix.pch */,
 				1551A353158F2ADE00E66CFE /* cocos2dx */,
 				1551A341158F2AB200E66CFE /* Frameworks */,
