@@ -7,8 +7,8 @@ CXX = g++
 # GCC 4.6 is primary platform for cocos2d v.3, because it's default compiler for Android, 
 # Blackberry, some Linux distributions.It supports all important features of c++11, but have 
 # no flag "-std=c++11" (which was turned on in version 4.7).
-CCFLAGS += -MMD -Werror -fPIC
-CXXFLAGS += -MMD -Werror -fPIC -std=gnu++0x
+CCFLAGS += -MMD -Werror -Wno-deprecated-declarations -fPIC
+CXXFLAGS += -MMD -Werror -Wno-deprecated-declarations -fPIC -std=gnu++0x
 ARFLAGS = cr
 
 DEFINES += -DLINUX

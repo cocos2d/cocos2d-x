@@ -107,6 +107,11 @@ void CCEditBox::setDelegate(CCEditBoxDelegate* pDelegate)
     }
 }
 
+CCEditBoxDelegate* CCEditBox::getDelegate()
+{
+    return m_pDelegate;
+}
+
 void CCEditBox::setText(const char* pText)
 {
     if (pText != NULL)
