@@ -194,9 +194,9 @@ void ActionsDemo::onEnter()
     }    
 
     // add menu
-    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(ActionsDemo::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(ActionsDemo::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(ActionsDemo::nextCallback) );
+    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, std::bind( &ActionsDemo::backCallback, this, std::placeholders::_1) );
+    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, std::bind( &ActionsDemo::restartCallback, this, std::placeholders::_1) );
+    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, std::bind( &ActionsDemo::nextCallback, this, std::placeholders::_1) );
 
     CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 
