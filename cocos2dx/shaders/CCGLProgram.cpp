@@ -57,7 +57,7 @@ CCGLProgram::CCGLProgram()
 
 CCGLProgram::~CCGLProgram()
 {
-    CCLOGINFO("cocos2d: %s %d deallocing 0x%X", __FUNCTION__, __LINE__, this);
+    CCLOGINFO("cocos2d: %s %d deallocing %p", __FUNCTION__, __LINE__, this);
 
     // there is no need to delete the shaders. They should have been already deleted.
     CCAssert(m_uVertShader == 0, "Vertex Shaders should have been already deleted");
