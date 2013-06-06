@@ -374,12 +374,12 @@ public:
     /** creates a menu item from a CCArray with a target selector */
     CC_DEPRECATED_ATTRIBUTE static CCMenuItemToggle * createWithTarget(CCObject* target, SEL_MenuHandler selector, CCArray* menuItems);
     /** creates a menu item from a CCArray with a callable object */
-    static CCMenuItemToggle * createWithTarget(const ccMenuCallback& callback, CCArray* menuItems);
+    static CCMenuItemToggle * createWithCallback(const ccMenuCallback& callback, CCArray* menuItems);
 
     /** creates a menu item from a list of items with a target/selector */
     CC_DEPRECATED_ATTRIBUTE static CCMenuItemToggle* createWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, ...);
     /** creates a menu item from a list of items with a callable object */
-    static CCMenuItemToggle* createWithTarget(const ccMenuCallback& callback, CCMenuItem* item, ...);
+    static CCMenuItemToggle* createWithCallback(const ccMenuCallback& callback, CCMenuItem* item, ...);
 
     /** creates a menu item with no target/selector and no items */
     static CCMenuItemToggle* create();
@@ -387,7 +387,7 @@ public:
     /** initializes a menu item from a list of items with a target selector */
     CC_DEPRECATED_ATTRIBUTE bool initWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, va_list args);
     /** initializes a menu item from a list of items with a callable object */
-    bool initWithTarget(const ccMenuCallback& callback, CCMenuItem* item, va_list args);
+    bool initWithCallback(const ccMenuCallback& callback, CCMenuItem* item, va_list args);
 
     /** creates a menu item with a item */
     static CCMenuItemToggle* create(CCMenuItem *item);
