@@ -104,7 +104,7 @@ TestController::TestController()
 // #else
         CCLabelTTF* label = CCLabelTTF::create( g_aTestNames[i].test_name, "Arial", 24);
 // #endif        
-        CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, this, menu_selector(TestController::menuCallback));
+        CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, std::bind(&TestController::menuCallback, this, std::placeholders::_1));
 
         m_pItemMenu->addChild(pMenuItem, i + 10000);
         pMenuItem->setPosition( ccp( VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE) ));
