@@ -29,7 +29,7 @@ echo
 echo
 echo Now publish protocols
 echo ---------------------------------
-./toolsForPublish/publishPlugin.sh "protocols" ${TARGET_ROOT} ${PLUGIN_ROOT} 1
+./toolsForPublish/publishPlugin.sh "protocols" ${TARGET_ROOT} ${PLUGIN_ROOT}
 echo ---------------------------------
 
 #publish plugins

@@ -101,8 +101,8 @@ if [ -d "${ANDROID_PROJ_DIR}/ForAssets" ]; then
 fi
 
 #Build C++ code
-BUILD_CPLUSPLUS=$4
-if [ $BUILD_CPLUSPLUS ]; then
+BUILD_NATIVE_SCRIPT=${ANDROID_PROJ_DIR}/build_native.sh
+if [ -f $BUILD_NATIVE_SCRIPT ]; then
 
     echo "Build C++ code"
 
@@ -120,11 +120,9 @@ if [ $BUILD_CPLUSPLUS ]; then
     fi
 
     #invoke ndk build for plugin project
-    if [ -f "${ANDROID_PROJ_DIR}/build_native.sh" ]; then
-        ./build_native.sh
-        LIB_FILE="$(getLibraryFileName)"
-        cp -rf "${ANDROID_PROJ_DIR}/obj/local/armeabi/${LIB_FILE}" "${TARGET_DIR}/android"
-    fi
+    ./build_native.sh
+    LIB_FILE="$(getLibraryFileName)"
+    cp -rf "${ANDROID_PROJ_DIR}/obj/local/armeabi/${LIB_FILE}" "${TARGET_DIR}/android"
 
     #generate mk file for prebuild
     ${PLUGIN_ROOT}/tools/toolsForPublish/genPrebuildMK.sh ${ANDROID_PROJ_DIR}/jni/Android.mk ${TARGET_DIR}/android/Android.mk
