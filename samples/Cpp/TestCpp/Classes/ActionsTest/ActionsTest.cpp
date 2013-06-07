@@ -27,6 +27,7 @@ TESTLAYER_CREATE_FUNC(ActionRepeat);
 TESTLAYER_CREATE_FUNC(ActionRepeatForever);
 TESTLAYER_CREATE_FUNC(ActionRotateToRepeat);
 TESTLAYER_CREATE_FUNC(ActionRotateJerk);
+TESTLAYER_CREATE_FUNC(ActionCallFunction);
 TESTLAYER_CREATE_FUNC(ActionCallFunc);
 TESTLAYER_CREATE_FUNC(ActionCallFuncND);
 TESTLAYER_CREATE_FUNC(ActionReverseSequence);
@@ -76,6 +77,7 @@ static NEWTESTFUNC createFunctions[] = {
     CF(ActionRepeatForever),
     CF(ActionRotateToRepeat),
     CF(ActionRotateJerk),
+    CF(ActionCallFunction),
     CF(ActionCallFunc),
     CF(ActionCallFuncND),
     CF(ActionReverseSequence),
@@ -192,9 +194,9 @@ void ActionsDemo::onEnter()
     }    
 
     // add menu
-    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(ActionsDemo::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(ActionsDemo::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(ActionsDemo::nextCallback) );
+    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, std::bind( &ActionsDemo::backCallback, this, std::placeholders::_1) );
+    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, std::bind( &ActionsDemo::restartCallback, this, std::placeholders::_1) );
+    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, std::bind( &ActionsDemo::nextCallback, this, std::placeholders::_1) );
 
     CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 
@@ -816,13 +818,13 @@ void ActionSequence2::onEnter()
     m_grossini->setVisible(false);
 
     CCFiniteTimeAction*  action = CCSequence::create(
-        CCPlace::create(ccp(200,200)),
-        CCShow::create(),
-        CCMoveBy::create(1, ccp(100,0)),
-        CCCallFunc::create(this, callfunc_selector(ActionSequence2::callback1)),
-        CCCallFuncN::create(this, callfuncN_selector(ActionSequence2::callback2)),
-        CCCallFuncND::create(this, callfuncND_selector(ActionSequence2::callback3), (void*)0xbebabeba),
-        NULL);
+		CCPlace::create(ccp(200,200)),
+		CCShow::create(),
+		CCMoveBy::create(1, ccp(100,0)),
+		CCCallFunc::create(std::bind(&ActionSequence2::callback1,this)),
+		CCCallFunc::create(std::bind(&ActionSequence2::callback2,this,m_grossini)),
+		CCCallFunc::create(std::bind(&ActionSequence2::callback3,this,m_grossini,(void*)0xbebabeba)),
+		NULL);
 
     m_grossini->runAction(action);
 }
@@ -862,6 +864,7 @@ std::string ActionSequence2::subtitle()
 //------------------------------------------------------------------
 //
 //    ActionCallFunc
+//    DEPRECATED. Use the std::function() API instead
 //
 //------------------------------------------------------------------
 void ActionCallFunc::onEnter()
@@ -921,12 +924,13 @@ void ActionCallFunc::callback3(CCNode* pTarget, void* data)
 
 std::string ActionCallFunc::subtitle()
 {
-    return "Callbacks: CallFunc and friends";
+    return "Callbacks: CallFunc. Old way. Avoid it";
 }
 
 //------------------------------------------------------------------
 //
 // ActionCallFuncND
+// DEPRECATED. Use the std::function() API instead
 //
 //------------------------------------------------------------------
 void ActionCallFuncND::onEnter()
@@ -958,6 +962,83 @@ void ActionCallFuncND::removeFromParentAndCleanup(CCNode* pSender, void* data)
     m_grossini->removeFromParentAndCleanup(bCleanUp);
 }
 
+//------------------------------------------------------------------
+//
+//    ActionCallFunction
+//
+//------------------------------------------------------------------
+void ActionCallFunction::onEnter()
+{
+    ActionsDemo::onEnter();
+
+    centerSprites(3);
+
+
+	CCFiniteTimeAction*  action1 = CCSequence::create(
+													  CCMoveBy::create(2, ccp(200,0)),
+													  CCCallFunc::create( std::bind(&ActionCallFunction::callback1, this) ),
+													  CCCallFunc::create(
+																			 // lambda
+																			 [&](){
+																				 CCSize s = CCDirector::sharedDirector()->getWinSize();
+																				 CCLabelTTF *label = CCLabelTTF::create("called:lambda callback", "Marker Felt", 16);
+																				 label->setPosition(ccp( s.width/4*1,s.height/2-40));
+																				 this->addChild(label);
+																			 }  ),
+													  NULL);
+
+    CCFiniteTimeAction*  action2 = CCSequence::create(
+													  CCScaleBy::create(2 ,  2),
+													  CCFadeOut::create(2),
+													  CCCallFunc::create( std::bind(&ActionCallFunction::callback2, this, m_tamara) ),
+													  NULL);
+
+    CCFiniteTimeAction*  action3 = CCSequence::create(
+													  CCRotateBy::create(3 , 360),
+													  CCFadeOut::create(2),
+													  CCCallFunc::create( std::bind(&ActionCallFunction::callback3, this, m_kathia, (void*)42) ),
+													  NULL);
+
+    m_grossini->runAction(action1);
+    m_tamara->runAction(action2);
+    m_kathia->runAction(action3);
+}
+
+
+void ActionCallFunction::callback1()
+{
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCLabelTTF *label = CCLabelTTF::create("callback 1 called", "Marker Felt", 16);
+    label->setPosition(ccp( s.width/4*1,s.height/2));
+
+    addChild(label);
+}
+
+void ActionCallFunction::callback2(CCNode* sender)
+{
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCLabelTTF *label = CCLabelTTF::create("callback 2 called", "Marker Felt", 16);
+    label->setPosition(ccp( s.width/4*2,s.height/2));
+
+    addChild(label);
+
+	CCLOG("sender is: %p", sender);
+}
+
+void ActionCallFunction::callback3(CCNode* sender, void* data)
+{
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCLabelTTF *label = CCLabelTTF::create("callback 3 called", "Marker Felt", 16);
+    label->setPosition(ccp( s.width/4*3,s.height/2));
+    addChild(label);
+
+	CCLOG("target is: %p, data is: %ld", sender, (long)data);
+}
+
+std::string ActionCallFunction::subtitle()
+{
+    return "Callbacks: CallFunc with std::function()";
+}
 //------------------------------------------------------------------
 //
 // ActionSpawn
@@ -998,7 +1079,7 @@ void ActionRepeatForever::onEnter()
 
     CCFiniteTimeAction*  action = CCSequence::create(
         CCDelayTime::create(1),
-        CCCallFuncN::create( this, callfuncN_selector(ActionRepeatForever::repeatForever) ), 
+        CCCallFunc::create( std::bind( &ActionRepeatForever::repeatForever, this, m_grossini) ),
         NULL);
 
     m_grossini->runAction(action);
@@ -1704,7 +1785,7 @@ void Issue1305::onEnter()
     }] );
     */
 
-    m_pSpriteTmp->runAction(CCCallFuncN::create(this, callfuncN_selector(Issue1305::log)));
+    m_pSpriteTmp->runAction(CCCallFunc::create(std::bind(&Issue1305::log, this, m_pSpriteTmp)));
     m_pSpriteTmp->retain();
 
     scheduleOnce(schedule_selector(Issue1305::addSprite), 2);
@@ -1766,13 +1847,13 @@ void Issue1305_2::onEnter()
     });
     */
 
-    CCCallFunc* act2 = CCCallFunc::create(this, callfunc_selector(Issue1305_2::printLog1));
+    CCCallFunc* act2 = CCCallFunc::create( std::bind( &Issue1305_2::printLog1, this));
     CCMoveBy* act3 = CCMoveBy::create(2, ccp(0, -100));
-    CCCallFunc* act4 = CCCallFunc::create(this, callfunc_selector(Issue1305_2::printLog2));
+    CCCallFunc* act4 = CCCallFunc::create( std::bind( &Issue1305_2::printLog2, this));
     CCMoveBy* act5 = CCMoveBy::create(2, ccp(100, -100));
-    CCCallFunc* act6 = CCCallFunc::create(this, callfunc_selector(Issue1305_2::printLog3));
+    CCCallFunc* act6 = CCCallFunc::create( std::bind( &Issue1305_2::printLog3, this));
     CCMoveBy* act7 = CCMoveBy::create(2, ccp(-100, 0));
-    CCCallFunc* act8 = CCCallFunc::create(this, callfunc_selector(Issue1305_2::printLog4));
+    CCCallFunc* act8 = CCCallFunc::create( std::bind( &Issue1305_2::printLog4, this));
 
     CCFiniteTimeAction* actF = CCSequence::create(act1, act2, act3, act4, act5, act6, act7, act8, NULL);
 
@@ -1871,15 +1952,15 @@ void Issue1327::onEnter()
     spr->setPosition(ccp(100, 100));
     addChild(spr);
 
-    CCCallFuncN* act1 = CCCallFuncN::create(this, callfuncN_selector(Issue1327::logSprRotation));
+    CCCallFunc* act1 = CCCallFunc::create( std::bind(&Issue1327::logSprRotation, this, spr));
     CCRotateBy* act2 = CCRotateBy::create(0.25, 45);
-    CCCallFuncN* act3 = CCCallFuncN::create(this, callfuncN_selector(Issue1327::logSprRotation));
+    CCCallFunc* act3 = CCCallFunc::create( std::bind(&Issue1327::logSprRotation, this, spr));
     CCRotateBy* act4 = CCRotateBy::create(0.25, 45);
-    CCCallFuncN* act5 = CCCallFuncN::create(this, callfuncN_selector(Issue1327::logSprRotation));
+    CCCallFunc* act5 = CCCallFunc::create( std::bind(&Issue1327::logSprRotation, this, spr));
     CCRotateBy* act6 = CCRotateBy::create(0.25, 45);
-    CCCallFuncN* act7 = CCCallFuncN::create(this, callfuncN_selector(Issue1327::logSprRotation));
+    CCCallFunc* act7 = CCCallFunc::create( std::bind(&Issue1327::logSprRotation, this, spr));
     CCRotateBy* act8 = CCRotateBy::create(0.25, 45);
-    CCCallFuncN* act9 = CCCallFuncN::create(this, callfuncN_selector(Issue1327::logSprRotation));
+    CCCallFunc* act9 = CCCallFunc::create( std::bind(&Issue1327::logSprRotation, this, spr));
 
     CCFiniteTimeAction* actF = CCSequence::create(act1, act2, act3, act4, act5, act6, act7, act8, act9, NULL);
     spr->runAction(actF);
@@ -1917,18 +1998,18 @@ void Issue1398::onEnter()
 
     this->runAction(
         CCSequence::create(
-            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"1"),
-            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"2"),
-            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"3"),
-            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"4"),
-            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"5"),
-            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"6"),
-            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"7"),
-            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"8"),
+			CCCallFunc::create( std::bind(&Issue1398::incrementIntegerCallback, this, (void*)"1")),
+			CCCallFunc::create( std::bind(&Issue1398::incrementIntegerCallback, this, (void*)"2")),
+			CCCallFunc::create( std::bind(&Issue1398::incrementIntegerCallback, this, (void*)"3")),
+			CCCallFunc::create( std::bind(&Issue1398::incrementIntegerCallback, this, (void*)"4")),
+			CCCallFunc::create( std::bind(&Issue1398::incrementIntegerCallback, this, (void*)"5")),
+			CCCallFunc::create( std::bind(&Issue1398::incrementIntegerCallback, this, (void*)"6")),
+			CCCallFunc::create( std::bind(&Issue1398::incrementIntegerCallback, this, (void*)"7")),
+			CCCallFunc::create( std::bind(&Issue1398::incrementIntegerCallback, this, (void*)"8")),
             NULL));
 }
 
-void Issue1398::incrementIntegerCallback(CCNode* pSender, void* data)
+void Issue1398::incrementIntegerCallback(void* data)
 {
     this->incrementInteger();
     CCLog("%s", (char*)data);

@@ -7,13 +7,29 @@ Core Developers:
     XiaoMing Zhang (Minggo)
     JianHua Chen (Dumganhar)
 
+
 Developers:
     Ricardo Quesada
     Rolando Abarca
         Javascript Binding and testjs
+    
+    liuyq
+        CCTextureAtlas::updateQuad modify for the memcpy hot spot.
+        
+    frranck 
+        adding norwegian language
+    
+    varlucian
+        fix the bug that OnEnterTransitionDidFinish was called twice when a node is added in onEnter.
         
     carlomorgantinizynga
         CCLabelTTF supports for shadow and stroke
+        
+    James Gregory (j4m3z0r, Zynga)
+        Maintainer of Emscripten port.
+        Initial Emscripten port.
+        Use browser font rendering instead of FreeType.
+        Add destructor to CCGLBufferedNode.
         
     DarraghCoy
         Fix a potential crash SimpleAudioEngineOpenSL::playEffect
@@ -87,6 +103,7 @@ Developers:
 
     benjamesward
         add Portuguese and Arabic language support
+        Fixed linebreaks on Mac OSX
 
     Victor K(fnz)
         fix memory leak of CCTextureCache::addImageAsync() on iOS
@@ -165,12 +182,14 @@ Developers:
         contribute for Android module building
         Simpler, correct handling of spritesheet sources for CCScale9Sprite.
         Clean up linked libraries for android.
+        JavaScript debugger improved and bugfixed.
 
     Nicolas Gramlich (nicolasgramlich, Zynga)
         fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF
         added CCBReader (CCBI format)
         Added cleanup and reset methods to ScriptingCore.
         Fixed a bug in ScriptingCore::evalString not setting the outval.
+        Updated .classpath of Android project to latest ADT 22 build tool compatibility.
 
     Rohan Kuruvilla (rohankuruvilla, Zynga)
         Improvements to JS Bindings.
@@ -289,6 +308,7 @@ Developers:
     xyhl515
         Fixed a bug that CCControlSwitch::setOn(isOn,false) doesn't work.
         Adds VS2012 Express template installing support.
+        Fixing a logical error in CCDrawNode::drawPolygon.
 
     DarraghCoy
         Fix for unaligned memory access crash in CCBReader::readFloat().
@@ -346,6 +366,7 @@ Developers:
 
     flamingo (flaming0)
         Null pointer check in order to prevent crashes.
+        Updating spine-runtime to EsotericSoftware/spine-runtimes@5f90386.
 
     rtissera (Romain TISSERAND)
         Adding missing JNIEXPORT / JNICALL declarations.
@@ -389,6 +410,8 @@ Developers:
     jotel (Jaroslaw Lewandowski)
         Fixing a bug that wrong type of argument signature is used in setAccelerometerIntervalJNI function.
         Fix for broken of ccArrayGetIndexOfObject after merging this commit(076f38c).
+        Explicitly initialising CCAcceleration structure.
+        Add support to save/retrieve CCData into/from CCUserDefault.
 
     MarcelBloemendaal
         Adding secureTextEntry property to CCTextFieldTTF.
@@ -403,9 +426,6 @@ Developers:
 
     ptekchand (Pranav Tekchand)
         Supporting negative node scales for CCScrollView.
-
-    James Gregory (j4m3z0r, Zynga)
-        Initial Emscripten port.
 
     coolengineer (Hojin Choi)
         Refactoring callback selector for HttpResponse.
@@ -424,6 +444,22 @@ Developers:
 
     Xander84
         Fixing a bug in CCBValue::getByteValue.
+        
+    smshuja
+        Fixing a bug that pointQueryFirst returns invalid Shape when a shape is not found in JSB.
+        Fixing a bug that New PivotJoint can't access 4 parameters like in html5 version.
+        
+    Carsten Sandtner (casarock)
+        Adding XMLHttpRequest support for JSB.
+        
+    Lee, Jae-Hong (pyrasis)
+        Maintainer of tizen port.
+
+    lumendes
+        Updating spine-runtime to EsotericSoftware/spine-runtimes@5f90386.
+        
+    sunxiaoyu
+        Refactoring CCEditBox to add UITextField only when keyboard was opened, remove it when keyboard was closed.
 
 Retired Core Developers:
     WenSheng Yang

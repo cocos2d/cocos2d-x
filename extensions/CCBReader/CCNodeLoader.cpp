@@ -2,7 +2,6 @@
 #include "CCBSelectorResolver.h"
 #include "CCBMemberVariableAssigner.h"
 #include "CCBAnimationManager.h"
-#include "CCData.h"
 #include "CCNode+CCBRelativePositioning.h"
 
 using namespace std;

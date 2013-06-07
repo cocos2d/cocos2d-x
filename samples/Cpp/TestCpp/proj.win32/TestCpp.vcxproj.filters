@@ -223,6 +223,9 @@
     <Filter Include="Classes\DataVisitorTest">
       <UniqueIdentifier>{8049d378-12f7-46ba-ba96-091f3c0a4600}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ConfigurationTest">
+      <UniqueIdentifier>{81ec2355-7efd-49e0-b6cb-b1bba23fbbc8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -503,6 +506,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\DataVisitorTest\DataVisitorTest.cpp">
       <Filter>Classes\DataVisitorTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ConfigurationTest\ConfigurationTest.cpp">
+      <Filter>Classes\ConfigurationTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.cpp">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -964,6 +973,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\DataVisitorTest\DataVisitorTest.h">
       <Filter>Classes\DataVisitorTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ConfigurationTest\ConfigurationTest.h">
+      <Filter>Classes\ConfigurationTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.h">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

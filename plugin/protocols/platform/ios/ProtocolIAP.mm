@@ -26,7 +26,7 @@
 #import "InterfaceIAP.h"
 
 namespace cocos2d { namespace plugin {
-    
+
 bool ProtocolIAP::m_bPaying = false;
 
 ProtocolIAP::ProtocolIAP()
@@ -39,17 +39,59 @@ ProtocolIAP::~ProtocolIAP()
     PluginUtilsIOS::erasePluginOCData(this);
 }
 
-bool ProtocolIAP::init()
-{
-    return true;
-}
-
 void ProtocolIAP::configDeveloperInfo(TIAPDeveloperInfo devInfo)
 {
+    if (devInfo.empty())
+    {
+        PluginUtilsIOS::outputLog("The developer info is empty for %s!", this->getPluginName());
+        return;
+    }
+    else
+    {
+        PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
+        assert(pData != NULL);
+        
+        id ocObj = pData->obj;
+        if ([ocObj conformsToProtocol:@protocol(InterfaceIAP)]) {
+            NSObject<InterfaceIAP>* curObj = ocObj;
+            NSMutableDictionary* pDict = PluginUtilsIOS::createDictFromMap(&devInfo);
+            [curObj configDeveloperInfo:pDict];
+        }
+    }
 }
 
 void ProtocolIAP::payForProduct(TProductInfo info)
 {
+    if (m_bPaying)
+    {
+        PluginUtilsIOS::outputLog("Now is paying");
+        return;
+    }
+
+    if (info.empty())
+    {
+        if (NULL != m_pListener)
+        {
+            onPayResult(kPayFail, "Product info error");
+        }
+        PluginUtilsIOS::outputLog("The product info is empty for %s!", this->getPluginName());
+        return;
+    }
+    else
+    {
+        m_bPaying = true;
+        m_curInfo = info;
+        
+        PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
+        assert(pData != NULL);
+        
+        id ocObj = pData->obj;
+        if ([ocObj conformsToProtocol:@protocol(InterfaceIAP)]) {
+            NSObject<InterfaceIAP>* curObj = ocObj;
+            NSMutableDictionary* dict = PluginUtilsIOS::createDictFromMap(&info);
+            [curObj payForProduct:dict];
+        }
+    }
 }
 
 void ProtocolIAP::setResultListener(PayResultListener* pListener)
@@ -64,17 +106,13 @@ void ProtocolIAP::onPayResult(PayResultCode ret, const char* msg)
     {
         m_pListener->onPayResult(ret, msg, m_curInfo);
     }
+    else
+    {
+        PluginUtilsIOS::outputLog("Pay result listener of %s is null!", this->getPluginName());
+    }
 
     m_curInfo.clear();
-}
-
-const char* ProtocolIAP::getSDKVersion()
-{
-    return "Subclass should override this interface";
-}
-
-void ProtocolIAP::setDebugMode(bool debug)
-{
+    PluginUtilsIOS::outputLog("Pay result of %s is : %d(%s)", this->getPluginName(), (int) ret, msg);
 }
 
 }} //namespace cocos2d { namespace plugin {

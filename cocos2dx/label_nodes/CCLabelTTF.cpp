@@ -316,7 +316,7 @@ bool CCLabelTTF::updateTexture()
     return true;
 }
 
-void CCLabelTTF::enableShadow(CCSize &shadowOffset, float shadowOpacity, float shadowBlur, bool updateTexture)
+void CCLabelTTF::enableShadow(const CCSize &shadowOffset, float shadowOpacity, float shadowBlur, bool updateTexture)
 {
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
@@ -355,7 +355,7 @@ void CCLabelTTF::enableShadow(CCSize &shadowOffset, float shadowOpacity, float s
         }
     
     #else
-        CCAssert(false, "Currently only supported on iOS and Android!");
+        CCLOGERROR("Currently only supported on iOS and Android!");
     #endif
     
 }
@@ -374,7 +374,7 @@ void CCLabelTTF::disableShadow(bool updateTexture)
         }
     
     #else
-        CCAssert(false, "Currently only supported on iOS and Android!");
+        CCLOGERROR("Currently only supported on iOS and Android!");
     #endif
 }
 
@@ -408,7 +408,7 @@ void CCLabelTTF::enableStroke(const ccColor3B &strokeColor, float strokeSize, bo
         }
     
     #else
-        CCAssert(false, "Currently only supported on iOS and Android!");
+        CCLOGERROR("Currently only supported on iOS and Android!");
     #endif
     
 }
@@ -426,7 +426,7 @@ void CCLabelTTF::disableStroke(bool updateTexture)
         }
     
     #else
-        CCAssert(false, "Currently only supported on iOS and Android!");
+        CCLOGERROR("Currently only supported on iOS and Android!");
     #endif
     
 }
@@ -442,7 +442,7 @@ void CCLabelTTF::setFontFillColor(const ccColor3B &tintColor, bool updateTexture
                 this->updateTexture();
         }
     #else
-        CCAssert(false, "Currently only supported on iOS and Android!");
+        CCLOGERROR("Currently only supported on iOS and Android!");
     #endif
 }
 

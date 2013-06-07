@@ -40,6 +40,7 @@ THE SOFTWARE.
 #include "support/ccUtils.h"
 #include "platform/CCPlatformMacros.h"
 #include "textures/CCTexturePVR.h"
+#include "textures/CCTextureETC.h"
 #include "CCDirector.h"
 #include "shaders/CCGLProgram.h"
 #include "shaders/ccGLStateCache.h"
@@ -174,7 +175,18 @@ bool CCTexture2D::hasPremultipliedAlpha()
 
 bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const CCSize& contentSize)
 {
-    unsigned int bytesPerRow = pixelsWide * bitsPerPixelForFormat(pixelFormat) / 8;
+    unsigned int bitsPerPixel;
+    //Hack: bitsPerPixelForFormat returns wrong number for RGB_888 textures. See function.
+    if(pixelFormat == kCCTexture2DPixelFormat_RGB888)
+    {
+        bitsPerPixel = 24;
+    }
+    else
+    {
+        bitsPerPixel = bitsPerPixelForFormat(pixelFormat);
+    }
+
+    unsigned int bytesPerRow = pixelsWide * bitsPerPixel / 8;
 
     if(bytesPerRow % 8 == 0)
     {
@@ -192,6 +204,7 @@ bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFor
     {
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     }
+
 
     glGenTextures(1, &m_uName);
     ccGLBindTexture2D(m_uName);
@@ -707,6 +720,34 @@ bool CCTexture2D::initWithPVRFile(const char* file)
         CCLOG("cocos2d: Couldn't load PVR image %s", file);
     }
 
+    return bRet;
+}
+
+bool CCTexture2D::initWithETCFile(const char* file)
+{
+    bool bRet = false;
+    // nothing to do with CCObject::init
+    
+    CCTextureETC *etc = new CCTextureETC;
+    bRet = etc->initWithFile(file);
+    
+    if (bRet)
+    {
+        m_uName = etc->getName();
+        m_fMaxS = 1.0f;
+        m_fMaxT = 1.0f;
+        m_uPixelsWide = etc->getWidth();
+        m_uPixelsHigh = etc->getHeight();
+        m_tContentSize = CCSizeMake((float)m_uPixelsWide, (float)m_uPixelsHigh);
+        m_bHasPremultipliedAlpha = true;
+        
+        etc->release();
+    }
+    else
+    {
+        CCLOG("cocos2d: Couldn't load ETC image %s", file);
+    }
+    
     return bRet;
 }
 

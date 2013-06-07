@@ -567,6 +567,30 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/cocos2dx/cocoa/CCDataVisitor.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>cocoa</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/cocoa/CCDataVisitor.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/cocoa/CCDataVisitor.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>cocoa</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/cocoa/CCDataVisitor.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/cocos2dx/cocoa/CCDictionary.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -771,6 +795,30 @@
 			</array>
 			<key>Path</key>
 			<string>libs/cocos2dx/cocoa/CCZone.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/cocoa/CCData.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>cocoa</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/cocoa/CCData.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/cocoa/CCData.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>cocoa</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/cocoa/CCData.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -3981,6 +4029,8 @@
 		<string>libs/cocos2dx/cocoa/CCAutoreleasePool.cpp</string>
 		<string>libs/cocos2dx/cocoa/CCAutoreleasePool.h</string>
 		<string>libs/cocos2dx/cocoa/CCBool.h</string>
+		<string>libs/cocos2dx/cocoa/CCDataVisitor.cpp</string>
+		<string>libs/cocos2dx/cocoa/CCDataVisitor.h</string>
 		<string>libs/cocos2dx/cocoa/CCDictionary.cpp</string>
 		<string>libs/cocos2dx/cocoa/CCDictionary.h</string>
 		<string>libs/cocos2dx/cocoa/CCDouble.h</string>
@@ -3998,6 +4048,8 @@
 		<string>libs/cocos2dx/cocoa/CCString.h</string>
 		<string>libs/cocos2dx/cocoa/CCZone.cpp</string>
 		<string>libs/cocos2dx/cocoa/CCZone.h</string>
+		<string>libs/cocos2dx/cocoa/CCData.cpp</string>
+		<string>libs/cocos2dx/cocoa/CCData.h</string>
 		<string>libs/cocos2dx/cocos2d.cpp</string>
 		<string>libs/cocos2dx/draw_nodes/CCDrawingPrimitives.cpp</string>
 		<string>libs/cocos2dx/draw_nodes/CCDrawingPrimitives.h</string>

@@ -39,6 +39,7 @@ class CCString;
 class CCArray;
 class CCDictionary;
 class CCSet;
+class CCData;
 
 /**
  * @addtogroup data_structures
@@ -75,6 +76,7 @@ public:
     virtual void visit(const CCArray *p);
     virtual void visit(const CCDictionary *p);
     virtual void visit(const CCSet *p);
+    virtual void visit(const CCData *p);
 };
 
 
@@ -95,6 +97,7 @@ public:
     virtual void visit(const CCArray *p);
     virtual void visit(const CCDictionary *p);
     virtual void visit(const CCSet *p);
+    virtual void visit(const CCData *p);
 private:
     void setIndentLevel(int indentLevel);
     int _indentLevel;

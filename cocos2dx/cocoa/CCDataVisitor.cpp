@@ -31,6 +31,7 @@
 #include "CCArray.h"
 #include "CCDictionary.h"
 #include "CCSet.h"
+#include "CCData.h"
 
 NS_CC_BEGIN
 
@@ -74,6 +75,11 @@ void CCDataVisitor::visit(const CCSet *value)
     visitObject(value);
 }
 
+void CCDataVisitor::visit(const CCData *value)
+{
+    visitObject(value);
+}
+
 // CCPrettyPrinter
 CCPrettyPrinter::CCPrettyPrinter(int indentLevel/* = 0 */)
 {
@@ -101,6 +107,7 @@ void CCPrettyPrinter::visit(const CCBool * p)
 {
     char buf[50] = {0};
     sprintf(buf, "%s", p->getValue() ? "true" : "false");
+   _result += buf;
 }
 
 void CCPrettyPrinter::visit(const CCInteger *p)
@@ -213,6 +220,12 @@ void CCPrettyPrinter::visit(const CCSet *p)
     _result += "\n";
     _result += _indentStr;
     _result += "</set>\n";
+}
+
+void CCPrettyPrinter::visit(const CCData *p)
+{
+	//TODO Implement
+	CCDataVisitor::visit(p);
 }
 
 void CCPrettyPrinter::setIndentLevel(int indentLevel)

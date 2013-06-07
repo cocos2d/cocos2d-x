@@ -90,9 +90,9 @@ void ActionManagerTest::onEnter()
     addChild(label, 1);
     label->setPosition(ccp(VisibleRect::center().x, VisibleRect::top().y-50));
 
-    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(ActionManagerTest::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(ActionManagerTest::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(ActionManagerTest::nextCallback));
+    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, std::bind(&ActionManagerTest::backCallback, this, std::placeholders::_1) );
+    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, std::bind(&ActionManagerTest::restartCallback, this, std::placeholders::_1) );
+    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, std::bind(&ActionManagerTest::nextCallback, this, std::placeholders::_1));
 
     CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 

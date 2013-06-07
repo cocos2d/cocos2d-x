@@ -97,7 +97,6 @@
 		15A3DA371682F826002FB0C5 /* CCBValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D9C41682F826002FB0C5 /* CCBValue.cpp */; };
 		15A3DA381682F826002FB0C5 /* CCControlButtonLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D9C61682F826002FB0C5 /* CCControlButtonLoader.cpp */; };
 		15A3DA391682F826002FB0C5 /* CCControlLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D9C81682F826002FB0C5 /* CCControlLoader.cpp */; };
-		15A3DA3A1682F826002FB0C5 /* CCData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D9CA1682F826002FB0C5 /* CCData.cpp */; };
 		15A3DA3B1682F826002FB0C5 /* CCLabelBMFontLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D9CC1682F826002FB0C5 /* CCLabelBMFontLoader.cpp */; };
 		15A3DA3C1682F826002FB0C5 /* CCLabelTTFLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D9CE1682F826002FB0C5 /* CCLabelTTFLoader.cpp */; };
 		15A3DA3D1682F826002FB0C5 /* CCLayerColorLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D9D01682F826002FB0C5 /* CCLayerColorLoader.cpp */; };
@@ -230,6 +229,8 @@
 		1A4D4A2715FD7E2200F61EEB /* TableViewTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4D4A2415FD7E2200F61EEB /* TableViewTestScene.cpp */; };
 		1A60BF54173CCCF80054773B /* DataVisitorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A60BF52173CCCF80054773B /* DataVisitorTest.cpp */; };
 		1A75E95A16F84FDD00BA80BD /* TimelineCallbackTestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A75E95816F84FDD00BA80BD /* TimelineCallbackTestLayer.cpp */; };
+		1A8F3B1A175DC64000049216 /* CCSkeleton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8F3B16175DC64000049216 /* CCSkeleton.cpp */; };
+		1A8F3B1B175DC64000049216 /* CCSkeletonAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8F3B18175DC64000049216 /* CCSkeletonAnimation.cpp */; };
 		1A9FE96B17277E9D00B21905 /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9FE94417277E9D00B21905 /* Animation.cpp */; };
 		1A9FE96C17277E9D00B21905 /* AnimationState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9FE94617277E9D00B21905 /* AnimationState.cpp */; };
 		1A9FE96D17277E9D00B21905 /* AnimationStateData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9FE94817277E9D00B21905 /* AnimationStateData.cpp */; };
@@ -252,6 +253,9 @@
 		1AB2D71716B649C200D72C48 /* FileUtilsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB2D71516B649C200D72C48 /* FileUtilsTest.cpp */; };
 		1AB2D71B16B64DC600D72C48 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 1AB2D71A16B64DC600D72C48 /* Misc */; };
 		1ACB3244164770DE00914215 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACB3243164770DE00914215 /* libcurl.a */; };
+		1AF5AE6317584196009C997A /* WebSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AF5AE6117584196009C997A /* WebSocket.cpp */; };
+		1AF5AE8B1758421B009C997A /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AF5AE8A1758421B009C997A /* libwebsockets.a */; };
+		1AF5AE8E1758426A009C997A /* WebSocketTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AF5AE8C1758426A009C997A /* WebSocketTest.cpp */; };
 		1D3623260D0F684500981E51 /* testsAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* testsAppDelegate.mm */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -273,6 +277,7 @@
 		78C7DFF614EBA5060085D0C2 /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = 78C7DEBD14EBA5060085D0C2 /* music.mid */; };
 		78CAE769156F8124002A7A68 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 78CAE768156F8124002A7A68 /* Particles */; };
 		78ED2F85153D5BC500330E29 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 78ED2F84153D5BC500330E29 /* extensions */; };
+		A059B9AD174D9B8E0078F84F /* ConfigurationTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A059B9AB174D9B8E0078F84F /* ConfigurationTest.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712461292920000B8313A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB212928DE900B8313A /* libxml2.dylib */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
@@ -487,8 +492,6 @@
 		15A3D9C71682F826002FB0C5 /* CCControlButtonLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlButtonLoader.h; sourceTree = "<group>"; };
 		15A3D9C81682F826002FB0C5 /* CCControlLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControlLoader.cpp; sourceTree = "<group>"; };
 		15A3D9C91682F826002FB0C5 /* CCControlLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlLoader.h; sourceTree = "<group>"; };
-		15A3D9CA1682F826002FB0C5 /* CCData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCData.cpp; sourceTree = "<group>"; };
-		15A3D9CB1682F826002FB0C5 /* CCData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCData.h; sourceTree = "<group>"; };
 		15A3D9CC1682F826002FB0C5 /* CCLabelBMFontLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelBMFontLoader.cpp; sourceTree = "<group>"; };
 		15A3D9CD1682F826002FB0C5 /* CCLabelBMFontLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelBMFontLoader.h; sourceTree = "<group>"; };
 		15A3D9CE1682F826002FB0C5 /* CCLabelTTFLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelTTFLoader.cpp; sourceTree = "<group>"; };
@@ -815,6 +818,10 @@
 		1A75E95716F84FDD00BA80BD /* TimelineCallbackLayerLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineCallbackLayerLoader.h; sourceTree = "<group>"; };
 		1A75E95816F84FDD00BA80BD /* TimelineCallbackTestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TimelineCallbackTestLayer.cpp; sourceTree = "<group>"; };
 		1A75E95916F84FDD00BA80BD /* TimelineCallbackTestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineCallbackTestLayer.h; sourceTree = "<group>"; };
+		1A8F3B16175DC64000049216 /* CCSkeleton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSkeleton.cpp; sourceTree = "<group>"; };
+		1A8F3B17175DC64000049216 /* CCSkeleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSkeleton.h; sourceTree = "<group>"; };
+		1A8F3B18175DC64000049216 /* CCSkeletonAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSkeletonAnimation.cpp; sourceTree = "<group>"; };
+		1A8F3B19175DC64000049216 /* CCSkeletonAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSkeletonAnimation.h; sourceTree = "<group>"; };
 		1A9FE94417277E9D00B21905 /* Animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Animation.cpp; sourceTree = "<group>"; };
 		1A9FE94517277E9D00B21905 /* Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Animation.h; sourceTree = "<group>"; };
 		1A9FE94617277E9D00B21905 /* AnimationState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimationState.cpp; sourceTree = "<group>"; };
@@ -858,6 +865,12 @@
 		1AB2D71616B649C200D72C48 /* FileUtilsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileUtilsTest.h; sourceTree = "<group>"; };
 		1AB2D71A16B64DC600D72C48 /* Misc */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Misc; sourceTree = "<group>"; };
 		1ACB3243164770DE00914215 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
+		1AF5AE6117584196009C997A /* WebSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocket.cpp; sourceTree = "<group>"; };
+		1AF5AE6217584196009C997A /* WebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebSocket.h; sourceTree = "<group>"; };
+		1AF5AE881758421B009C997A /* libwebsockets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libwebsockets.h; sourceTree = "<group>"; };
+		1AF5AE8A1758421B009C997A /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwebsockets.a; sourceTree = "<group>"; };
+		1AF5AE8C1758426A009C997A /* WebSocketTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocketTest.cpp; sourceTree = "<group>"; };
+		1AF5AE8D1758426A009C997A /* WebSocketTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebSocketTest.h; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* testsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testsAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* testsAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = testsAppDelegate.mm; sourceTree = "<group>"; };
@@ -883,6 +896,8 @@
 		78C7DEBD14EBA5060085D0C2 /* music.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; path = music.mid; sourceTree = "<group>"; };
 		78CAE768156F8124002A7A68 /* Particles */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Particles; sourceTree = "<group>"; };
 		78ED2F84153D5BC500330E29 /* extensions */ = {isa = PBXFileReference; lastKnownFileType = folder; path = extensions; sourceTree = "<group>"; };
+		A059B9AB174D9B8E0078F84F /* ConfigurationTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigurationTest.cpp; sourceTree = "<group>"; };
+		A059B9AC174D9B8E0078F84F /* ConfigurationTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigurationTest.h; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB212928DE900B8313A /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -920,6 +935,7 @@
 				D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */,
 				D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */,
 				D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */,
+				1AF5AE8B1758421B009C997A /* libwebsockets.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1277,8 +1293,6 @@
 				15A3D9C71682F826002FB0C5 /* CCControlButtonLoader.h */,
 				15A3D9C81682F826002FB0C5 /* CCControlLoader.cpp */,
 				15A3D9C91682F826002FB0C5 /* CCControlLoader.h */,
-				15A3D9CA1682F826002FB0C5 /* CCData.cpp */,
-				15A3D9CB1682F826002FB0C5 /* CCData.h */,
 				15A3D9CC1682F826002FB0C5 /* CCLabelBMFontLoader.cpp */,
 				15A3D9CD1682F826002FB0C5 /* CCLabelBMFontLoader.h */,
 				15A3D9CE1682F826002FB0C5 /* CCLabelTTFLoader.cpp */,
@@ -1391,6 +1405,8 @@
 				15A3DA1C1682F826002FB0C5 /* HttpClient.h */,
 				15A3DA1D1682F826002FB0C5 /* HttpRequest.h */,
 				15A3DA1E1682F826002FB0C5 /* HttpResponse.h */,
+				1AF5AE6117584196009C997A /* WebSocket.cpp */,
+				1AF5AE6217584196009C997A /* WebSocket.h */,
 			);
 			path = network;
 			sourceTree = "<group>";
@@ -1461,6 +1477,7 @@
 				15AA9CA715B7EC460033D6C2 /* CocosDenshionTest */,
 				15AA9CAA15B7EC460033D6C2 /* controller.cpp */,
 				15AA9CAB15B7EC460033D6C2 /* controller.h */,
+				A059B9AA174D9B8D0078F84F /* ConfigurationTest */,
 				15AA9CAC15B7EC460033D6C2 /* CurlTest */,
 				15AA9CAF15B7EC460033D6C2 /* CurrentLanguageTest */,
 				1A60BF51173CCCF80054773B /* DataVisitorTest */,
@@ -2251,6 +2268,10 @@
 				1A9FE95317277E9D00B21905 /* Bone.h */,
 				1A9FE95417277E9D00B21905 /* BoneData.cpp */,
 				1A9FE95517277E9D00B21905 /* BoneData.h */,
+				1A8F3B16175DC64000049216 /* CCSkeleton.cpp */,
+				1A8F3B17175DC64000049216 /* CCSkeleton.h */,
+				1A8F3B18175DC64000049216 /* CCSkeletonAnimation.cpp */,
+				1A8F3B19175DC64000049216 /* CCSkeletonAnimation.h */,
 				1A9FE95617277E9D00B21905 /* extension.cpp */,
 				1A9FE95717277E9D00B21905 /* extension.h */,
 				1A9FE95817277E9D00B21905 /* Json.cpp */,
@@ -2286,6 +2307,40 @@
 			path = ../Classes/FileUtilsTest;
 			sourceTree = "<group>";
 		};
+		1AF5AE851758421B009C997A /* libwebsockets */ = {
+			isa = PBXGroup;
+			children = (
+				1AF5AE861758421B009C997A /* ios */,
+			);
+			name = libwebsockets;
+			path = ../../../../external/libwebsockets;
+			sourceTree = "<group>";
+		};
+		1AF5AE861758421B009C997A /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				1AF5AE871758421B009C997A /* include */,
+				1AF5AE891758421B009C997A /* lib */,
+			);
+			path = ios;
+			sourceTree = "<group>";
+		};
+		1AF5AE871758421B009C997A /* include */ = {
+			isa = PBXGroup;
+			children = (
+				1AF5AE881758421B009C997A /* libwebsockets.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		1AF5AE891758421B009C997A /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				1AF5AE8A1758421B009C997A /* libwebsockets.a */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
@@ -2297,6 +2352,7 @@
 				15A3D9B31682F826002FB0C5 /* extensions */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				080E96DDFE201D6D7F000001 /* ios */,
+				1AF5AE851758421B009C997A /* libwebsockets */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				78C7DDAA14EBA5050085D0C2 /* Resources */,
 			);
@@ -2368,11 +2424,23 @@
 			path = ../Resources;
 			sourceTree = "<group>";
 		};
+		A059B9AA174D9B8D0078F84F /* ConfigurationTest */ = {
+			isa = PBXGroup;
+			children = (
+				A059B9AB174D9B8E0078F84F /* ConfigurationTest.cpp */,
+				A059B9AC174D9B8E0078F84F /* ConfigurationTest.h */,
+			);
+			name = ConfigurationTest;
+			path = ../Classes/ConfigurationTest;
+			sourceTree = "<group>";
+		};
 		D4144C0C15D23C9C00F4FD92 /* NetworkTest */ = {
 			isa = PBXGroup;
 			children = (
 				D4144C0D15D23C9C00F4FD92 /* HttpClientTest.cpp */,
 				D4144C0E15D23C9C00F4FD92 /* HttpClientTest.h */,
+				1AF5AE8C1758426A009C997A /* WebSocketTest.cpp */,
+				1AF5AE8D1758426A009C997A /* WebSocketTest.h */,
 			);
 			name = NetworkTest;
 			path = ../../Classes/ExtensionsTest/NetworkTest;
@@ -2660,7 +2728,6 @@
 				15A3DA371682F826002FB0C5 /* CCBValue.cpp in Sources */,
 				15A3DA381682F826002FB0C5 /* CCControlButtonLoader.cpp in Sources */,
 				15A3DA391682F826002FB0C5 /* CCControlLoader.cpp in Sources */,
-				15A3DA3A1682F826002FB0C5 /* CCData.cpp in Sources */,
 				15A3DA3B1682F826002FB0C5 /* CCLabelBMFontLoader.cpp in Sources */,
 				15A3DA3C1682F826002FB0C5 /* CCLabelTTFLoader.cpp in Sources */,
 				15A3DA3D1682F826002FB0C5 /* CCLayerColorLoader.cpp in Sources */,
@@ -2726,6 +2793,11 @@
 				1A144289172788AF0096438B /* SpineTest.cpp in Sources */,
 				6442E66D17297DB40008499D /* TextureAtlasEncryptionTest.cpp in Sources */,
 				1A60BF54173CCCF80054773B /* DataVisitorTest.cpp in Sources */,
+				A059B9AD174D9B8E0078F84F /* ConfigurationTest.cpp in Sources */,
+				1AF5AE6317584196009C997A /* WebSocket.cpp in Sources */,
+				1AF5AE8E1758426A009C997A /* WebSocketTest.cpp in Sources */,
+				1A8F3B1A175DC64000049216 /* CCSkeleton.cpp in Sources */,
+				1A8F3B1B175DC64000049216 /* CCSkeletonAnimation.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2744,8 +2816,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -2774,12 +2844,13 @@
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/ios/Simulation\"",
 				);
 				INFOPLIST_FILE = "Test-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries\"";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries\"",
+					"\"$(SRCROOT)/../../../../external/libwebsockets/ios/lib\"",
+				);
 				OTHER_CFLAGS = "-O2";
 				PRODUCT_NAME = TestCpp;
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -2791,8 +2862,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2819,11 +2888,12 @@
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/ios/Simulation\"",
 				);
 				INFOPLIST_FILE = "Test-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries\"";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries\"",
+					"\"$(SRCROOT)/../../../../external/libwebsockets/ios/lib\"",
+				);
 				PRODUCT_NAME = TestCpp;
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -2835,14 +2905,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: 小明 张 (L4ZF355VQS)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 小明 张 (L4ZF355VQS)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				PROVISIONING_PROFILE = "0C43CFE2-55C4-429A-9A03-BFB76D31630B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0C43CFE2-55C4-429A-9A03-BFB76D31630B";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv6 armv7 i386";
 			};
@@ -2852,15 +2921,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: 小明 张 (L4ZF355VQS)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 小明 张 (L4ZF355VQS)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "0C43CFE2-55C4-429A-9A03-BFB76D31630B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DB6844BA-2943-44DB-B10A-3A3F0E8A52B8";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv6 armv7 i386";
 			};
