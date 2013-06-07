@@ -155,52 +155,55 @@
 
     local function wsErrorClose(strData)
         print("_wsiError websocket instance closed.")
-        errorStatus= nill
+        errorStatus= nil
     end
 
     if nil ~= wsSendText then
-        wsSendText:registerScriptHandler(wsSendTextOpen,kwebSocketScriptHandlerOpen)
-        wsSendText:registerScriptHandler(wsSendTextMessage,kwebSocketScriptHandlerMessage)
-        wsSendText:registerScriptHandler(wsSendTextClose,kwebSocketScriptHandlerClose)
-        wsSendText:registerScriptHandler(wsSendTextError,kwebSocketScriptHandlerError)
+        wsSendText:registerScriptHandler(wsSendTextOpen,kWebSocketScriptHandlerOpen)
+        wsSendText:registerScriptHandler(wsSendTextMessage,kWebSocketScriptHandlerMessage)
+        wsSendText:registerScriptHandler(wsSendTextClose,kWebSocketScriptHandlerClose)
+        wsSendText:registerScriptHandler(wsSendTextError,kWebSocketScriptHandlerError)
     end
 
     if nil ~= wsSendBinary then
-        wsSendBinary:registerScriptHandler(wsSendBinaryOpen,kwebSocketScriptHandlerOpen)
-        wsSendBinary:registerScriptHandler(wsSendBinaryMessage,kwebSocketScriptHandlerMessage)
-        wsSendBinary:registerScriptHandler(wsSendBinaryClose,kwebSocketScriptHandlerClose)
-        wsSendBinary:registerScriptHandler(wsSendBinaryError,kwebSocketScriptHandlerError)
+        wsSendBinary:registerScriptHandler(wsSendBinaryOpen,kWebSocketScriptHandlerOpen)
+        wsSendBinary:registerScriptHandler(wsSendBinaryMessage,kWebSocketScriptHandlerMessage)
+        wsSendBinary:registerScriptHandler(wsSendBinaryClose,kWebSocketScriptHandlerClose)
+        wsSendBinary:registerScriptHandler(wsSendBinaryError,kWebSocketScriptHandlerError)
     end
 
     if nil ~= wsError then
-        wsError:registerScriptHandler(wsErrorOpen,kwebSocketScriptHandlerOpen)
-        wsError:registerScriptHandler(wsErrorMessage,kwebSocketScriptHandlerMessage)
-        wsError:registerScriptHandler(wsErrorClose,kwebSocketScriptHandlerClose)
-        wsError:registerScriptHandler(wsErrorError,kwebSocketScriptHandlerError)
+        wsError:registerScriptHandler(wsErrorOpen,kWebSocketScriptHandlerOpen)
+        wsError:registerScriptHandler(wsErrorMessage,kWebSocketScriptHandlerMessage)
+        wsError:registerScriptHandler(wsErrorClose,kWebSocketScriptHandlerClose)
+        wsError:registerScriptHandler(wsErrorError,kWebSocketScriptHandlerError)
     end
 
     local function OnExit(strEventName)
         if "exit" == strEventName then
             if nil ~= wsSendText  then
                 wsSendText:close()
-                wsSendText:unregisterScriptHandler(kwebSocketScriptHandlerOpen)
-                wsSendText:unregisterScriptHandler(kwebSocketScriptHandlerMessage)
-                wsSendText:unregisterScriptHandler(kwebSocketScriptHandlerClose)
-                wsSendText:unregisterScriptHandler(kwebSocketScriptHandlerError)
+                wsSendText:unregisterScriptHandler(kWebSocketScriptHandlerOpen)
+                wsSendText:unregisterScriptHandler(kWebSocketScriptHandlerMessage)
+                wsSendText:unregisterScriptHandler(kWebSocketScriptHandlerClose)
+                wsSendText:unregisterScriptHandler(kWebSocketScriptHandlerError)
+                wsSendText = nil
             end
             if nil ~= wsSendBinary then
                 wsSendBinary:close()
-                wsSendBinary:unregisterScriptHandler(kwebSocketScriptHandlerOpen)
-                wsSendBinary:unregisterScriptHandler(kwebSocketScriptHandlerMessage)
-                wsSendBinary:unregisterScriptHandler(kwebSocketScriptHandlerClose)
-                wsSendBinary:unregisterScriptHandler(kwebSocketScriptHandlerError)
+                wsSendBinary:unregisterScriptHandler(kWebSocketScriptHandlerOpen)
+                wsSendBinary:unregisterScriptHandler(kWebSocketScriptHandlerMessage)
+                wsSendBinary:unregisterScriptHandler(kWebSocketScriptHandlerClose)
+                wsSendBinary:unregisterScriptHandler(kWebSocketScriptHandlerError)
+                wsSendBinary = nil
             end
             if nil ~=  wsError     then
                 wsError:close()
-                wsError:unregisterScriptHandler(kwebSocketScriptHandlerOpen)
-                wsError:unregisterScriptHandler(kwebSocketScriptHandlerMessage)
-                wsError:unregisterScriptHandler(kwebSocketScriptHandlerClose)
-                wsError:unregisterScriptHandler(kwebSocketScriptHandlerError)
+                wsError:unregisterScriptHandler(kWebSocketScriptHandlerOpen)
+                wsError:unregisterScriptHandler(kWebSocketScriptHandlerMessage)
+                wsError:unregisterScriptHandler(kWebSocketScriptHandlerClose)
+                wsError:unregisterScriptHandler(kWebSocketScriptHandlerError)
+                wsError = nil
             end
         end
     end
