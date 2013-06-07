@@ -27,6 +27,98 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
+
+	CCBaseData::CCBaseData()
+	: x(0.0f)
+	, y(0.0f)
+	, zOrder(0)
+
+	, skewX(0.0f)
+	, skewY(0.0f)
+	, scaleX(1.0f)
+	, scaleY(1.0f)
+
+	, tweenRotate(0.0f)
+
+	, isUseColorInfo(false)
+	, a(255)
+	, r(255)
+	, g(255)
+	, b(255)
+{
+}
+
+CCBaseData::~CCBaseData()
+{
+}
+
+void CCBaseData::copy(const CCBaseData *node )
+{
+	x = node->x;
+	y = node->y;
+	zOrder = node->zOrder;
+
+	scaleX = node->scaleX;
+	scaleY = node->scaleY;
+	skewX = node->skewX;
+	skewY = node->skewY;
+
+	tweenRotate = node->tweenRotate;
+
+	isUseColorInfo = node->isUseColorInfo;
+	r = node->r;
+	g = node->g;
+	b = node->b;
+	a = node->a;
+}
+
+
+void CCBaseData::subtract(CCBaseData *from, CCBaseData *to)
+{
+	x = to->x - from->x;
+	y = to->y - from->y;
+	scaleX = to->scaleX - from->scaleX;
+	scaleY = to->scaleY - from->scaleY;
+	skewX = to->skewX - from->skewX;
+	skewY = to->skewY - from->skewY;
+
+	if(from->isUseColorInfo || to->isUseColorInfo)
+	{
+		a = to->a - from->a;
+		r = to->r - from->r;
+		g = to->g - from->g;
+		b = to->b - from->b;
+
+		isUseColorInfo = true;
+	}
+
+
+	if (skewX > M_PI)
+	{
+		skewX -= (float)CC_DOUBLE_PI;
+	}
+	if (skewX < -M_PI)
+	{
+		skewX += (float)CC_DOUBLE_PI;
+	}
+
+	if (skewY > M_PI)
+	{
+		skewY -= (float)CC_DOUBLE_PI;
+	}
+	if (skewY < -M_PI)
+	{
+		skewY += (float)CC_DOUBLE_PI;
+	}
+
+	if (to->tweenRotate)
+	{
+		skewX += to->tweenRotate;
+		skewY -= to->tweenRotate;
+	}
+}
+
+
 const char *CCDisplayData::changeDisplayToTexture(const char *displayName)
 {
     // remove .xxx
@@ -108,96 +200,6 @@ void CCShaderDisplayData::copy(CCShaderDisplayData *displayData)
     displayType = displayData->displayType;
 }
 
-CCBaseData::CCBaseData()
-    : x(0.0f)
-    , y(0.0f)
-    , zOrder(0)
-
-    , skewX(0.0f)
-    , skewY(0.0f)
-    , scaleX(1.0f)
-    , scaleY(1.0f)
-
-    , tweenRotate(0.0f)
-
-    , isUseColorInfo(false)
-    , a(255)
-    , r(255)
-    , g(255)
-    , b(255)
-{
-}
-
-CCBaseData::~CCBaseData()
-{
-}
-
-
-void CCBaseData::copy(const CCBaseData *node )
-{
-    x = node->x;
-    y = node->y;
-    zOrder = node->zOrder;
-
-    scaleX = node->scaleX;
-    scaleY = node->scaleY;
-    skewX = node->skewX;
-    skewY = node->skewY;
-
-    tweenRotate = node->tweenRotate;
-
-    isUseColorInfo = node->isUseColorInfo;
-    r = node->r;
-    g = node->g;
-    b = node->b;
-    a = node->a;
-}
-
-
-void CCBaseData::subtract(CCBaseData *from, CCBaseData *to)
-{
-    x = to->x - from->x;
-    y = to->y - from->y;
-    scaleX = to->scaleX - from->scaleX;
-    scaleY = to->scaleY - from->scaleY;
-    skewX = to->skewX - from->skewX;
-    skewY = to->skewY - from->skewY;
-
-    if(from->isUseColorInfo || to->isUseColorInfo)
-    {
-        a = to->a - from->a;
-        r = to->r - from->r;
-        g = to->g - from->g;
-        b = to->b - from->b;
-
-        isUseColorInfo = true;
-    }
-
-
-    if (skewX > M_PI)
-    {
-        skewX -= (float)CC_DOUBLE_PI;
-    }
-    if (skewX < -M_PI)
-    {
-        skewX += (float)CC_DOUBLE_PI;
-    }
-
-    if (skewY > M_PI)
-    {
-        skewY -= (float)CC_DOUBLE_PI;
-    }
-    if (skewY < -M_PI)
-    {
-        skewY += (float)CC_DOUBLE_PI;
-    }
-
-    if (to->tweenRotate)
-    {
-        skewX += to->tweenRotate;
-        skewY -= to->tweenRotate;
-    }
-}
 
 CCBoneData::CCBoneData(void)
     : name("")
