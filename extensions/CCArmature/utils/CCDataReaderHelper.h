@@ -52,7 +52,6 @@ public:
     static void clear();
 public:
 
-    #pragma region Decode Data From XML
     /**
      * Translate XML export from Dragon CCBone flash tool to datas, and save them.
      * When you add a new xml, the data already saved will be keeped.
@@ -105,9 +104,8 @@ public:
      * Decode Contour Datas from xml export from Dragon CCBone flash tool
      */
     static CCContourData *decodeContour(tinyxml2::XMLElement *contourXML);
-    #pragma endregion
 
-    #pragma region Decode Data From JSON
+public:
 
     static void addDataFromJson(const char *filePath);
     static void addDataFromJsonCache(const char *fileContent);
@@ -126,9 +124,6 @@ public:
     static CCContourData *decodeContour(cs::CSJsonDictionary &json);
 
     static void decodeNode(CCBaseData *node, cs::CSJsonDictionary &json);
-    //static std::string convertFlashToSP(const char *fileName);
-
-    #pragma endregion
 };
 
 NS_CC_EXT_END
