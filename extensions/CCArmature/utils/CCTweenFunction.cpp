@@ -166,7 +166,8 @@ float CCTweenFunction::quadEaseInOut(float t, float b, float c, float d)
 	t /= d;
     if ((t / 2) < 1)
         return c / 2 * t * t + b;
-    return -c / 2 * ((--t) * (t - 2) - 1) + b;
+	--t;
+    return -c / 2 * (t * (t - 2) - 1) + b;
 }
 
 float CCTweenFunction::cubicEaseIn(float t, float b, float c, float d)
