@@ -2,6 +2,7 @@
 #define _ActionsTest_H_
 
 #include "../testBasic.h"
+#include "../BaseTest.h"
 ////----#include "cocos2d.h"
 
 USING_NS_CC;
@@ -63,7 +64,7 @@ public:
     virtual void runThisTest();
 };
 
-class ActionsDemo : public CCLayer
+class ActionsDemo : public BaseTest
 {
 protected:
     CCSprite*    m_grossini;
