@@ -331,27 +331,4 @@ int CCLuaEngine::reallocateScriptHandler(int nHandler)
     return nRet;
 }
 
-int CCLuaEngine::executeEventByTable(int nHandler,const unsigned char* pTable,int nLength,const char * pEventName,CCObject* pEventSource,const char* pEventSourceClassName)
-{
-    if (NULL == pTable) {
-        return 0;
-    }
-    int nRet = 0;
-    CCLuaValueArray array;
-    for (int i = 0 ; i < nLength; i++) {
-        CCLuaValue value = CCLuaValue::intValue(pTable[i]);
-        array.push_back(value);
-    }
-    
-    m_stack->pushCCLuaValueArray(array);
-    m_stack->pushString(pEventName);
-    if (pEventSource)
-    {
-        m_stack->pushCCObject(pEventSource, pEventSourceClassName ? pEventSourceClassName : "CCObject");
-    }
-    nRet = m_stack->executeFunctionByHandler(nHandler, pEventSource ? 3 : 2);
-    m_stack->clean();
-    return nRet;
-}
-
 NS_CC_END

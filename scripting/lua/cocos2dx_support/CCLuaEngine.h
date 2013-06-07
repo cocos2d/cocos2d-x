@@ -117,8 +117,6 @@ public:
     virtual int executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource = NULL, const char* pEventSourceClassName = NULL);
 
     virtual bool handleAssert(const char *msg);
-    /*d*/
-    virtual int executeEventByTable(int nHandler,const unsigned char* pTable,int nLength,const char * pEventName,CCObject* pEventSource = NULL,const char* pEventSourceClassName = NULL);
     
 private:
     CCLuaEngine(void)
