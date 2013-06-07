@@ -59,6 +59,9 @@ void CCScale9SpriteLoader::onHandlePropTypeSize(CCNode * pNode, CCNode * pParent
 }
 
 void CCScale9SpriteLoader::onHandlePropTypeFloat(CCNode * pNode, CCNode * pParent, const char * pPropertyName, float pFloat, CCBReader * pCCBReader) {
+    
+    // Scale the insets w.r.t to resolution scale set. (Required for correct insets in Tablet mode)
+    pFloat *= CCBReader::getResolutionScale();
     if(strcmp(pPropertyName, PROPERTY_INSETLEFT) == 0) {
         ((CCScale9Sprite *)pNode)->setInsetLeft(pFloat);
     } else if(strcmp(pPropertyName, PROPERTY_INSETTOP) == 0) {
