@@ -26,8 +26,54 @@ THE SOFTWARE.
 #include "CCPhysicsWorld.h"
 #include "../utils/CCArmatureDefine.h"
 #include "Box2D/Box2D.h"
+#include "../external_tool/GLES-Render.h"
 
 NS_CC_EXT_BEGIN
+
+
+class Contact
+{
+public:
+	b2Fixture *fixtureA;
+	b2Fixture *fixtureB;
+};
+
+class ContactListener : public b2ContactListener
+{
+	//! Callbacks for derived classes.
+	virtual void BeginContact(b2Contact *contact)
+	{
+		if (contact)
+		{
+			Contact c;
+			c.fixtureA = contact->GetFixtureA();
+			c.fixtureB = contact->GetFixtureB();
+
+			contact_list.push_back(c);
+		}
+		B2_NOT_USED(contact);
+	}
+	virtual void EndContact(b2Contact *contact)
+	{
+		contact_list.clear();
+		B2_NOT_USED(contact);
+	}
+	virtual void PreSolve(b2Contact *contact, const b2Manifold *oldManifold)
+	{
+		B2_NOT_USED(contact);
+		B2_NOT_USED(oldManifold);
+	}
+	virtual void PostSolve(const b2Contact *contact, const b2ContactImpulse *impulse)
+	{
+		B2_NOT_USED(contact);
+		B2_NOT_USED(impulse);
+	}
+
+public:
+	std::list<Contact> contact_list;
+};
+
+
 
 CCPhysicsWorld *CCPhysicsWorld::s_PhysicsWorld = NULL;
 
