@@ -213,7 +213,7 @@ public:
         : m_pSelectorTarget(NULL)
 		, m_nScriptHandler(0)
         , m_pCallFunc(NULL)
-		, _function(NULL)
+		, _function(nullptr)
     {
     }
     virtual ~CCCallFunc();
