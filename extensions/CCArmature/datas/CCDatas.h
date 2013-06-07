@@ -82,6 +82,10 @@ public:
     */
     virtual void subtract(CCBaseData *_from, CCBaseData *_to);
 public:
+	float x;					//! position x attribute
+	float y;					//! position y attribute
+	int zOrder;					//! zorder attribute, used to order the CCBone's depth order
+
     /**
     * x y skewX skewY scaleX scaleY used to calculate transform matrix
     * skewX, skewY can have rotation effect
@@ -97,9 +101,6 @@ public:
     bool isUseColorInfo;		//! Whether or not this frame have the color changed Info
     int a, r, g, b;
 
-    float x;					//! position x attribute
-    float y;					//! position y attribute
-    int zOrder;					//! zorder attribute, used to order the CCBone's depth order
 };
 
 
@@ -334,7 +335,6 @@ public:
 public:
     std::string name;
     int duration;        //! the frames this movement will last
-    bool loop;           //! whether the movement is looped
 
     /**
     * Change to this movement will last m_iDurationTo frames. Use this effect can avoid too suddenly changing.
@@ -350,6 +350,8 @@ public:
     * Example : If we edit 10 frames in the flash, then m_iDuration is 10. When we set m_iDurationTween to 50, the movement will last 50 frames, the extra 40 frames will auto filled with tween effect
     */
     int durationTween;
+
+	bool loop;           //! whether the movement is looped
 
     /**
     * Which tween easing effect the movement use
@@ -439,13 +441,14 @@ public:
     void addContourData(CCContourData *contourData);
     CCContourData *getContourData(int index);
 public:
-    std::string name;	//! The texture's name
+
+	float height;		//! The texture's width, height
+	float width;
 
     float pivotX;		//! The texture's anchor point
     float pivotY;
 
-    float width;		//! The texture's width, height
-    float height;
+	std::string name;	//! The texture's name
 
     CCArray contourDataList;
 };
