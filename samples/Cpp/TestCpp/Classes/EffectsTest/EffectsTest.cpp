@@ -337,7 +337,7 @@ void EffectTestScene::runThisTest()
 #define SID_RESTART        1
 
 TextLayer::TextLayer(void)
-: BaseTest::BaseTest()
+: BaseTest()
 {
 	CCLayerColor *background = CCLayerColor::create( ccc4(32,128,32,255) );
 	this->addChild(background,-20);
