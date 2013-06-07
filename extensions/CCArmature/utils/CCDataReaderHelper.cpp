@@ -81,7 +81,6 @@ void CCDataReaderHelper::addDataFromFile(const char *filePath)
 }
 
 
-#pragma region Decode Data From XML
 
 void CCDataReaderHelper::addDataFromXML(const char *xmlPath)
 {
@@ -213,7 +212,7 @@ CCBoneData *CCDataReaderHelper::decodeBone(tinyxml2::XMLElement *boneXML, tinyxm
 
     std::string name = boneXML->Attribute(A_NAME);
 
-    CCAssert(name.compare("") != 0, "");
+    CCAssert(name.length() != 0, "");
 
     CCBoneData *boneData = CCBoneData::create();
 
@@ -351,28 +350,28 @@ CCMovementData *CCDataReaderHelper::decodeMovement(tinyxml2::XMLElement *movemen
     tinyxml2::XMLElement *movBoneXml = movementXML->FirstChildElement(BONE);
     while(movBoneXml)
     {
-        const char *_boneName = movBoneXml->Attribute(A_NAME);
+        const char *boneName = movBoneXml->Attribute(A_NAME);
 
-        if (movementData->getMovementBoneData(_boneName))
+        if (movementData->getMovementBoneData(boneName))
         {
             movBoneXml = movBoneXml->NextSiblingElement();
             continue;
         }
 
 
-        CCBoneData *boneData = (CCBoneData *)armatureData->getBoneData(_boneName);
+        CCBoneData *boneData = (CCBoneData *)armatureData->getBoneData(boneName);
 
-        std::string _parentName = boneData->parentName;
+        std::string parentName = boneData->parentName;
 
 
         tinyxml2::XMLElement *parentXml = NULL;
-        if (_parentName.compare("") != 0)
+        if (parentName.length() != 0)
         {
             parentXml = movementXML->FirstChildElement(BONE);
 
             while (parentXml)
             {
-                if (_parentName.compare(parentXml->Attribute(A_NAME)) == 0)
+                if (parentName.compare(parentXml->Attribute(A_NAME)) == 0)
                 {
                     break;
                 }
@@ -698,10 +697,8 @@ CCContourData *CCDataReaderHelper::decodeContour(tinyxml2::XMLElement *contourXM
     return contourData;
 
 }
-#pragma endregion
 
 
-#pragma region Decode Data From JSON
 
 void CCDataReaderHelper::addDataFromJson(const char *filePath)
 {
@@ -1043,6 +1040,5 @@ void CCDataReaderHelper::decodeNode(CCBaseData *node, cs::CSJsonDictionary &json
     }
 
 }
-#pragma endregion
 
 NS_CC_EXT_END

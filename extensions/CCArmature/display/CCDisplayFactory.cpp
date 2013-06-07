@@ -128,7 +128,7 @@ void CCDisplayFactory::createSpriteDisplay(CCBone *bone, CCDecorativeDisplay *de
     }
 
     //! create display
-    if(textureName.compare("") == 0)
+    if(textureName.length() == 0)
     {
         skin = CCSkin::create();
     }

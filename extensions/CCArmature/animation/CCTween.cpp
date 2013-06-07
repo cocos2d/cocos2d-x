@@ -313,7 +313,7 @@ void CCTween::arriveKeyFrame(CCFrameData *keyFrameData)
 
         if(childAramture)
         {
-            if(keyFrameData->m_strMovement.compare("") != 0)
+            if(keyFrameData->m_strMovement.length() != 0)
             {
                 childAramture->getAnimation()->play(keyFrameData->m_strMovement.c_str());
             }

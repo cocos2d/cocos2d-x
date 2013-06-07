@@ -26,9 +26,7 @@ THE SOFTWARE.
 #define __CCCONSTVALUE_H__
 
 static const char *VERSION = "version";
-static float VERSION_2_0 = 2.0f;
-
-static const char *SKELETON = "skeleton";
+static const float VERSION_2_0 = 2.0f;
 
 static const char *ARMATURES = "armatures";
 static const char *ARMATURE = "armature";
@@ -38,14 +36,11 @@ static const char *DISPLAY = "d";
 static const char *ANIMATIONS = "animations";
 static const char *ANIMATION = "animation";
 static const char *MOVEMENT = "mov";
-static const char *EVENT = "event";
 static const char *FRAME = "f";
 
 static const char *TEXTURE_ATLAS = "TextureAtlas";
 static const char *SUB_TEXTURE = "SubTexture";
 
-static const char *AT = "@";
-static const char *A_BONE_TYPE = "bT";
 static const char *A_NAME = "name";
 static const char *A_DURATION = "dr";
 static const char *A_DURATION_TO = "to";
@@ -65,13 +60,11 @@ static const char *A_SKEW_Y = "kY";
 static const char *A_SCALE_X = "cX";
 static const char *A_SCALE_Y = "cY";
 static const char *A_Z = "z";
-static const char *A_HIDE = "hide";
-static const char *A_IMAGE = "img";
 static const char *A_EVENT = "evt";
 static const char *A_SOUND = "sd";
 static const char *A_SOUND_EFFECT = "sdE";
 static const char *A_TWEEN_EASING = "twE";
-static const char *A_TWEEN_ROTATE = "twR";
+//static const char *A_TWEEN_ROTATE = "twR";
 static const char *A_IS_ARMATURE = "isArmature";
 static const char *A_DISPLAY_TYPE = "displayType";
 static const char *A_MOVEMENT = "mov";
@@ -99,16 +92,9 @@ static const char *A_RED_OFFSET = "rM";
 static const char *A_GREEN_OFFSET = "gM";
 static const char *A_BLUE_OFFSET = "bM";
 static const char *A_COLOR_TRANSFORM = "colorTransform";
-static const char *A_ROTATION = "rotation";
-static const char *A_USE_COLOR_INFO = "uci";
-static const char *A_BONE_IMAGE = "bi";
+//static const char *A_ROTATION = "rotation";
+//static const char *A_USE_COLOR_INFO = "uci";
 
-static const char *V_SOUND_LEFT = "l";
-static const char *V_SOUND_RIGHT = "r";
-static const char *V_SOUND_LEFT_TO_RIGHT = "lr";
-static const char *V_SOUND_RIGHT_TO_LEFT = "rl";
-static const char *V_SOUND_FADE_IN = "in";
-static const char *V_SOUND_FADE_OUT = "out";
 
 
 static const char *CONTOUR = "con";
@@ -118,17 +104,15 @@ static const char *CONTOUR_VERTEX = "con_vt";
 static const char *START = "start";
 static const char *COMPLETE = "complete";
 static const char *LOOP_COMPLETE = "loopComplete";
-static const char *IN_FRAME = "inFrame";
 
-static const char *MOVEMENT_EVENT_FRAME = "movementEventFrame";
-static const char *SOUND_FRAME = "soundFrame";
+//static const char *MOVEMENT_EVENT_FRAME = "movementEventFrame";
+//static const char *SOUND_FRAME = "soundFrame";
 
 
 static const char *FL_NAN = "NaN";
 
 
 
-static const char *DATA_TYPE = "data_type";
 static const char *FRAME_DATA = "frame_data";
 static const char *MOVEMENT_BONE_DATA = "mov_bone_data";
 static const char *MOVEMENT_FRAME_DATA = "mov_frame_data";

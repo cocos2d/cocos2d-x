@@ -130,7 +130,7 @@ bool CCArmature::init(const char *name)
 
         CCArmatureDataManager *armatureDataManager = CCArmatureDataManager::sharedArmatureDataManager();
 
-        if(m_strName.compare("") != 0)
+        if(m_strName.length() != 0)
         {
             m_strName = name;
 
@@ -223,7 +223,7 @@ CCBone *CCArmature::createBone(const char *boneName)
 
     CCBone *bone = NULL;
 
-    if( parentName.compare("") != 0 )
+    if( parentName.length() != 0 )
     {
         createBone(parentName.c_str());
         bone = CCBone::create(boneName);

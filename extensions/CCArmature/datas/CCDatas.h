@@ -57,7 +57,6 @@ public: \
 
 NS_CC_EXT_BEGIN
 
-#pragma region CCBaseData
 /**
 * the base node include a lot of attribute.
 */
@@ -102,9 +101,8 @@ public:
     float y;					//! position y attribute
     int zOrder;					//! zorder attribute, used to order the CCBone's depth order
 };
-#pragma endregion
 
-#pragma region CCDisplayData
+
 /**
 * DisplayType distinguish which type you display is.
 */
@@ -130,11 +128,9 @@ public:
 
     DisplayType displayType;	//! mark which type your display is
 };
-#pragma endregion
 
 
 
-#pragma region CCSpriteDisplayData
 class  CCSpriteDisplayData : public CCDisplayData
 {
 public:
@@ -159,10 +155,8 @@ public:
     std::string displayName;
 
 };
-#pragma endregion
 
 
-#pragma region CCArmatureDisplayData
 class  CCArmatureDisplayData  : public CCDisplayData
 {
 public:
@@ -187,10 +181,8 @@ public:
     std::string displayName;
 
 };
-#pragma endregion
 
 
-#pragma region CCParticleDisplayData
 class  CCParticleDisplayData : public CCDisplayData
 {
 public:
@@ -208,10 +200,8 @@ public:
 public:
     std::string plist;
 };
-#pragma endregion
 
 
-#pragma region CCShaderDisplayData
 class  CCShaderDisplayData : public CCDisplayData
 {
 public:
@@ -231,10 +221,8 @@ public:
     std::string vert;
     std::string frag;
 };
-#pragma endregion
 
 
-#pragma region CCBoneData
 /**
 * CCBoneData used to init a CCBone.
 * CCBoneData keeps a CCDisplayData list, a CCBone can have many display to change.
@@ -257,9 +245,8 @@ public:
     std::string parentName;		//! the bone parent's name
     CCArray displayDataList;	//! save CCDisplayData informations for the CCBone
 };
-#pragma  endregion
 
-#pragma  region CCArmatureData
+
 /**
 * CCArmatureData saved the CCArmature name and Bonedatas needed for the Bones in this CCArmature
 * When we create a CCArmature, we need to get each CCBone's CCBoneData as it's init information.
@@ -281,9 +268,8 @@ public:
     CCDictionary boneDataDic;
     CCArray boneList;
 };
-#pragma  endregion
 
-#pragma region CCFrameData
+
 class  CCFrameData : public CCBaseData
 {
 public:
@@ -311,9 +297,8 @@ public:
     std::string m_strSound;
     std::string m_strSoundEffect;
 };
-#pragma endregion
 
-#pragma region CCMovementBoneData
+
 class  CCMovementBoneData : public CCObject
 {
 public:
@@ -334,9 +319,8 @@ public:
 
     CCArray frameList;
 };
-#pragma endregion
 
-#pragma region CCMovementData
+
 class  CCMovementData : public CCObject
 {
 public:
@@ -380,9 +364,8 @@ public:
     */
     CCDictionary movBoneDataDic;
 };
-#pragma endregion
 
-#pragma region CCAnimationData
+
 /**
 *  CCAnimationData include all movement infomation for the CCArmature
 *  The struct is CCAnimationData -> CCMovementData -> CCMovementBoneData -> CCFrameData
@@ -407,9 +390,8 @@ public:
     CCDictionary movementDataDic;
     std::vector<std::string> movementNames;
 };
-#pragma endregion
 
-#pragma region CCContourData
+
 struct CCContourVertex2 : public CCObject
 {
     CCContourVertex2(float x, float y)
@@ -437,12 +419,10 @@ public:
 public:
     CCArray vertexList;	//! Save contour vertex info, vertex saved in a CCPoint
 };
-#pragma endregion
 
 
 
 
-#pragma region CCTextureData
 /*
 * CCTextureData include a texture's information
 */
@@ -469,7 +449,7 @@ public:
 
     CCArray contourDataList;
 };
-#pragma endregion
+
 
 NS_CC_EXT_END
 

@@ -27,7 +27,6 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
-#pragma region CCDisplayData
 const char *CCDisplayData::changeDisplayToTexture(const char *displayName)
 {
     // remove .xxx
@@ -50,9 +49,7 @@ CCDisplayData::CCDisplayData(void)
 CCDisplayData::~CCDisplayData(void)
 {
 }
-#pragma endregion
 
-#pragma region CCSpriteDisplayData
 CCSpriteDisplayData::CCSpriteDisplayData(void)
     : displayName("")
 {
@@ -68,9 +65,7 @@ void CCSpriteDisplayData::copy(CCSpriteDisplayData *displayData)
     displayName = displayData->displayName;
     displayType = displayData->displayType;
 }
-#pragma endregion
 
-#pragma region CCArmatureDisplayData
 CCArmatureDisplayData::CCArmatureDisplayData(void)
     : displayName("")
 {
@@ -86,9 +81,7 @@ void CCArmatureDisplayData::copy(CCArmatureDisplayData *displayData)
     displayName = displayData->displayName;
     displayType = displayData->displayType;
 }
-#pragma endregion
 
-#pragma region CCParticleDisplayData
 CCParticleDisplayData::CCParticleDisplayData(void)
     : plist("")
 {
@@ -100,9 +93,7 @@ void CCParticleDisplayData::copy(CCParticleDisplayData *displayData)
     plist = displayData->plist;
     displayType = displayData->displayType;
 }
-#pragma endregion
 
-#pragma region CCShaderDisplayData
 CCShaderDisplayData::CCShaderDisplayData(void)
     : vert("")
     , frag("")
@@ -116,9 +107,7 @@ void CCShaderDisplayData::copy(CCShaderDisplayData *displayData)
     frag = displayData->frag;
     displayType = displayData->displayType;
 }
-#pragma endregion
 
-#pragma region CCBaseData
 CCBaseData::CCBaseData()
     : x(0.0f)
     , y(0.0f)
@@ -209,9 +198,7 @@ void CCBaseData::subtract(CCBaseData *from, CCBaseData *to)
         skewY -= to->tweenRotate;
     }
 }
-#pragma endregion
 
-#pragma region CCBoneData
 CCBoneData::CCBoneData(void)
     : name("")
     , parentName("")
@@ -237,9 +224,7 @@ CCDisplayData *CCBoneData::getDisplayData(int index)
 {
     return (CCDisplayData *)displayDataList.objectAtIndex(index);
 }
-#pragma endregion
 
-#pragma region CCArmatureData
 CCArmatureData::CCArmatureData()
 {
 }
@@ -263,9 +248,7 @@ CCBoneData *CCArmatureData::getBoneData(const char *boneName)
 {
     return (CCBoneData *)boneDataDic.objectForKey(boneName);
 }
-#pragma endregion
 
-#pragma region CCFrameData
 CCFrameData::CCFrameData(void)
     : duration(1)
     , tweenEasing(Linear)
@@ -290,9 +273,7 @@ void CCFrameData::copy(CCFrameData *frameData)
     displayIndex = frameData->displayIndex;
     tweenEasing = frameData->tweenEasing;
 }
-#pragma endregion
 
-#pragma region CCMovementBoneData
 CCMovementBoneData::CCMovementBoneData()
     : delay(0.0f)
     , scale(1.0f)
@@ -320,11 +301,9 @@ CCFrameData *CCMovementBoneData::getFrameData(int index)
 {
     return (CCFrameData *)frameList.objectAtIndex(index);
 }
-#pragma endregion
 
 
 
-#pragma region CCMovementData
 CCMovementData::CCMovementData(void)
     : name("")
     , duration(0)
@@ -348,11 +327,9 @@ CCMovementBoneData *CCMovementData::getMovementBoneData(const char *boneName)
 {
     return (CCMovementBoneData *)movBoneDataDic.objectForKey(boneName);
 }
-#pragma endregion
 
 
 
-#pragma region CCAnimationData
 CCAnimationData::CCAnimationData(void)
 {
 }
@@ -386,11 +363,9 @@ int CCAnimationData::getMovementCount()
 {
     return movementDataDic.count();
 }
-#pragma endregion
 
 
 
-#pragma region CCContourData
 CCContourData::CCContourData()
 {
 }
@@ -403,9 +378,7 @@ bool CCContourData::init()
 {
     return vertexList.init();
 }
-#pragma endregion
 
-#pragma region CCTextureData
 CCTextureData::CCTextureData()
     : height(0.0f)
     , width(0.0f)
@@ -433,7 +406,6 @@ CCContourData *CCTextureData::getContourData(int index)
 {
     return (CCContourData *)contourDataList.objectAtIndex(index);
 }
-#pragma endregion
 
 
 NS_CC_EXT_END
