@@ -502,12 +502,12 @@ void TestUseMutiplePicture::onEnter()
 	armature->setScale(2);
 	addChild(armature);
 
-	char* weapon[] = {"weapon_f-sword.png", "weapon_f-sword2.png", "weapon_f-sword3.png", "weapon_f-sword4.png", "weapon_f-sword5.png", "weapon_f-knife.png", "weapon_f-hammer.png"};
+	std::string weapon[] = {"weapon_f-sword.png", "weapon_f-sword2.png", "weapon_f-sword3.png", "weapon_f-sword4.png", "weapon_f-sword5.png", "weapon_f-knife.png", "weapon_f-hammer.png"};
 
 	CCSpriteDisplayData displayData;
 	for (int i = 0; i < 7; i++)
 	{
-		displayData.setParam(weapon[i]);
+		displayData.setParam(weapon[i].c_str());
 		armature->getBone("weapon")->addDisplay(&displayData, i);
 	}
 }
