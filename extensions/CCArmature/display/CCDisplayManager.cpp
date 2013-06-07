@@ -90,7 +90,7 @@ void CCDisplayManager::addDisplay(CCDisplayData *displayData, int index)
 {
     CCDecorativeDisplay *decoDisplay = NULL;
 
-    if(index >= 0 && index < m_pDecoDisplayList->count())
+    if(index >= 0 && (unsigned int)index < m_pDecoDisplayList->count())
     {
         decoDisplay = (CCDecorativeDisplay *)m_pDecoDisplayList->objectAtIndex(index);
     }
