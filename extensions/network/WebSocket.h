@@ -123,7 +123,6 @@ public:
      *  @brief Gets current state of connection.
      */
     State getReadyState();
-    
 private:
     virtual void onSubThreadStarted();
     virtual int onSubThreadLoop();

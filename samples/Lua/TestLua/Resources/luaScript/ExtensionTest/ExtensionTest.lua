@@ -1,4 +1,5 @@
 require "luaScript/ExtensionTest/CocosBuilderTest"
+require "luaScript/ExtensionTest/WebProxyTest"
 
 local LINE_SPACE = 40
 local kItemTagBasic = 1000
@@ -8,7 +9,7 @@ local ExtensionTestEnum =
     TEST_NOTIFICATIONCENTER = 0,
     TEST_CCCONTROLBUTTON    = 1,
     TEST_COCOSBUILDER       = 2,
-    TEST_HTTPCLIENT         = 3,
+    TEST_WEBSOCKET          = 3,
     --TRAGET_PLATFORM
     TEST_EDITBOX            = 4,
 	TEST_TABLEVIEW          = 5,
@@ -20,7 +21,7 @@ local testsName =
     "NotificationCenterTest",
     "CCControlButtonTest",
     "CocosBuilderTest",
-    "HttpClientTest",
+    "WebSocketTest",
     "EditBoxTest",
     "TableViewTest",
 }
@@ -1000,7 +1001,7 @@ local CreateExtensionsTestTable =
 	runNotificationCenterTest,
 	runCCControlTest,
 	runCocosBuilder,
-	runHttpClientTest,
+	runWebSocketTest,
 	runEditBoxTest,
 	runTableViewTest,	
 }
@@ -1010,7 +1011,6 @@ local s = CCDirector:sharedDirector():getWinSize()
 local function ExtensionsMainLayer()
 	
 	local function CreateExtensionsTestScene(nPerformanceNo)
-        print(nPerformanceNo)
 	  	local pNewscene = CreateExtensionsTestTable[nPerformanceNo]()
   		return pNewscene
 	end
@@ -1029,11 +1029,19 @@ local function ExtensionsMainLayer()
     menu:setPosition(CCPointMake(0, 0))
     CCMenuItemFont:setFontName("Arial")
     CCMenuItemFont:setFontSize(24)
+    local targetPlatform = CCApplication:sharedApplication():getTargetPlatform()
+    local bSupportWebSocket = true
+    if (kTargetIphone ~= targetPlatform) and (kTargetIpad ~= targetPlatform) and (kTargetAndroid ~= targetPlatform) and (kTargetWindows ~= targetPlatform) then
+        bSupportWebSocket = false
+    end
     for i = 1, ExtensionTestEnum.TEST_MAX_COUNT do
 		local item = CCMenuItemFont:create(testsName[i])
 	    item:registerScriptTapHandler(menuCallback)
         item:setPosition(s.width / 2, s.height - i * LINE_SPACE)
         menu:addChild(item, kItemTagBasic + i)
+        if (i == ExtensionTestEnum.TEST_WEBSOCKET + 1) and false == bSupportWebSocket then
+            item:setEnabled(false)
+        end
 	end
 
     layer:addChild(menu)
