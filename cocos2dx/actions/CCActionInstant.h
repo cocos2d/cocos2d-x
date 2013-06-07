@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include <string>
 #include <functional>
 
+#include "CCStdC.h"
 #include "ccTypeInfo.h"
 #include "CCAction.h"
 
