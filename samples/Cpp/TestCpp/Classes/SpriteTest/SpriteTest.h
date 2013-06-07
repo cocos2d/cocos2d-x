@@ -3,9 +3,10 @@
 
 #include "cocos2d.h"
 #include "../testBasic.h"
+#include "../BaseTest.h"
 #include <string>
 
-class SpriteTestDemo : public CCLayer
+class SpriteTestDemo : public BaseTest
 {
 protected:
     std::string    m_strTitle;

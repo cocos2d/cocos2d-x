@@ -2,6 +2,7 @@
 #define __CONFIGURATIONTEST_H__
 
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
 USING_NS_CC;
 
@@ -15,7 +16,7 @@ public:
     virtual void runThisTest();
 };
 
-class ConfigurationBase : public CCLayer
+class ConfigurationBase : public BaseTest
 {
 protected:
 
