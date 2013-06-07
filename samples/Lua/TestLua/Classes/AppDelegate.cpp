@@ -51,6 +51,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
     searchPaths.push_back("TestCppResources");
+    searchPaths.push_back("script");
 #endif
     CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
 
