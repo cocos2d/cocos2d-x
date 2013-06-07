@@ -19,6 +19,7 @@
     <ClCompile Include="..\jsb_opengl_functions.cpp" />
     <ClCompile Include="..\jsb_opengl_manual.cpp" />
     <ClCompile Include="..\jsb_opengl_registration.cpp" />
+    <ClCompile Include="..\jsb_websocket.cpp" />
     <ClCompile Include="..\js_bindings_ccbreader.cpp" />
     <ClCompile Include="..\js_bindings_chipmunk_auto_classes.cpp" />
     <ClCompile Include="..\js_bindings_chipmunk_functions.cpp" />
@@ -30,6 +31,7 @@
     <ClCompile Include="..\js_bindings_system_registration.cpp" />
     <ClCompile Include="..\js_manual_conversions.cpp" />
     <ClCompile Include="..\ScriptingCore.cpp" />
+    <ClCompile Include="..\XMLHTTPRequest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocos2d_specifics.hpp" />
@@ -37,9 +39,11 @@
     <ClInclude Include="..\generated\jsb_cocos2dx_auto.hpp" />
     <ClInclude Include="..\generated\jsb_cocos2dx_extension_auto.hpp" />
     <ClInclude Include="..\jsb_cocos2dx_extension_manual.h" />
+    <ClInclude Include="..\jsb_helper.h" />
     <ClInclude Include="..\jsb_opengl_functions.h" />
     <ClInclude Include="..\jsb_opengl_manual.h" />
     <ClInclude Include="..\jsb_opengl_registration.h" />
+    <ClInclude Include="..\jsb_websocket.h" />
     <ClInclude Include="..\js_bindings_ccbreader.h" />
     <ClInclude Include="..\js_bindings_chipmunk_auto_classes.h" />
     <ClInclude Include="..\js_bindings_chipmunk_auto_classes_registration.h" />
@@ -56,6 +60,7 @@
     <ClInclude Include="..\js_manual_conversions.h" />
     <ClInclude Include="..\ScriptingCore.h" />
     <ClInclude Include="..\spidermonkey_specifics.h" />
+    <ClInclude Include="..\XMLHTTPRequest.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\generated\jsb_cocos2dx_auto_api.js" />
@@ -122,7 +127,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_LIB;DEBUG;COCOS2D_DEBUG=1;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\..\CocosDenshion\include;$(ProjectDir)..;$(ProjectDir)..\..\spidermonkey-win32\include;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\extensions;$(ProjectDir)..\..\..\..\extensions\LocalStorage;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\..\CocosDenshion\include;$(ProjectDir)..;$(ProjectDir)..\..\spidermonkey-win32\include;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\external\libwebsockets\win32\include;$(ProjectDir)..\..\..\..\extensions;$(ProjectDir)..\..\..\..\extensions\LocalStorage;$(ProjectDir)..\..\..\..\extensions\network;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4068;4101;4800;4251;4996;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -143,7 +148,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\sqlite3\libraries\win32\*.*" "$(O
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_LIB;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\..\CocosDenshion\include;$(ProjectDir)..;$(ProjectDir)..\..\spidermonkey-win32\include;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\extensions;$(ProjectDir)..\..\..\..\extensions\LocalStorage;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\..\CocosDenshion\include;$(ProjectDir)..;$(ProjectDir)..\..\spidermonkey-win32\include;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\external\libwebsockets\win32\include;$(ProjectDir)..\..\..\..\extensions;$(ProjectDir)..\..\..\..\extensions\LocalStorage;$(ProjectDir)..\..\..\..\extensions\network;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4068;4101;4800;4251;4996;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>

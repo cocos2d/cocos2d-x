@@ -8,6 +8,7 @@ INCLUDES = -I$(COCOS_ROOT)/external \
 	-I.. \
 	-I../CCBReader \
 	-I../GUI/CCControlExtension \
+	-I../GUI/CCEditBox \
 	-I../network
 
 SOURCES = ../CCBReader/CCBFileLoader.cpp \
@@ -32,7 +33,6 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CCBReader/CCBSequence.cpp \
 ../CCBReader/CCBSequenceProperty.cpp \
 ../CCBReader/CCBValue.cpp \
-../CCBReader/CCData.cpp \
 ../CCBReader/CCNode+CCBRelativePositioning.cpp \
 ../GUI/CCScrollView/CCScrollView.cpp \
 ../GUI/CCScrollView/CCSorting.cpp \
@@ -50,6 +50,8 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../GUI/CCControlExtension/CCScale9Sprite.cpp \
 ../GUI/CCControlExtension/CCControlPotentiometer.cpp \
 ../GUI/CCControlExtension/CCControlStepper.cpp \
+../GUI/CCEditBox/CCEditBox.cpp \
+../GUI/CCEditBox/CCEditBoxImplNone.cpp \
 ../network/HttpClient.cpp \
 ../physics_nodes/CCPhysicsDebugNode.cpp \
 ../physics_nodes/CCPhysicsSprite.cpp \
@@ -71,7 +73,9 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../spine/Slot.cpp \
 ../spine/SlotData.cpp \
 ../spine/extension.cpp \
-../spine/spine-cocos2dx.cpp
+../spine/spine-cocos2dx.cpp \
+../spine/CCSkeleton.cpp \
+../spine/CCSkeletonAnimation.cpp
 
 include $(COCOS_ROOT)/cocos2dx/proj.linux/cocos2dx.mk
 

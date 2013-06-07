@@ -150,6 +150,9 @@ public:
     
     /** Initializes a texture from a PVR file */
     bool initWithPVRFile(const char* file);
+    
+    /** Initializes a texture from a ETC file */
+    bool initWithETCFile(const char* file);
 
     /** sets the min filter, mag filter, wrap s and wrap t texture parameters.
     If the texture size is NPOT (non power of 2), then in can only use GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}.

@@ -1,7 +1,7 @@
 TARGET = liblua.so
 
 INCLUDES += -I.. -I../lua -I../tolua \
-        -I../Classes -I../../../CocosDenshion/include
+        -I../Classes -I../../../CocosDenshion/include -I../../../extensions -I../../../external/chipmunk/include/chipmunk
 
 SOURCES = ../lua/lapi.o \
           ../lua/lauxlib.c \
@@ -49,6 +49,7 @@ SOURCES = ../lua/lapi.o \
 include ../../../cocos2dx/proj.linux/cocos2dx.mk
 
 TARGET := $(LIB_DIR)/$(TARGET)
+SHAREDLIBS += -lextension
 
 all: $(TARGET)
 

@@ -12,11 +12,9 @@ JSBool js_pluginx_protocols_PluginProtocol_constructor(JSContext *cx, uint32_t a
 void js_pluginx_protocols_PluginProtocol_finalize(JSContext *cx, JSObject *obj);
 void js_register_pluginx_protocols_PluginProtocol(JSContext *cx, JSObject *global);
 void register_all_pluginx_protocols(JSContext* cx, JSObject* obj);
-JSBool js_pluginx_protocols_PluginProtocol_setUserData(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_PluginProtocol_getUserData(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_PluginProtocol_getPluginName(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_PluginProtocol_getPluginVersion(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_PluginProtocol_init(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_pluginx_protocols_PluginProtocol_getSDKVersion(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_PluginProtocol_setDebugMode(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_PluginManager_class;
@@ -41,16 +39,11 @@ void register_all_pluginx_protocols(JSContext* cx, JSObject* obj);
 JSBool js_pluginx_protocols_ProtocolAnalytics_logTimedEventBegin(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_ProtocolAnalytics_logError(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_ProtocolAnalytics_setCaptureUncaughtException(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_ProtocolAnalytics_getPluginName(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_ProtocolAnalytics_getPluginVersion(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_ProtocolAnalytics_logEvent(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_ProtocolAnalytics_setSessionContinueMillis(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_ProtocolAnalytics_init(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_pluginx_protocols_ProtocolAnalytics_logEvent(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_ProtocolAnalytics_startSession(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_ProtocolAnalytics_stopSession(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_ProtocolAnalytics_logTimedEventEnd(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_ProtocolAnalytics_getSDKVersion(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_ProtocolAnalytics_setDebugMode(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_ProtocolIAP_class;
 extern JSObject *jsb_ProtocolIAP_prototype;
@@ -59,14 +52,9 @@ JSBool js_pluginx_protocols_ProtocolIAP_constructor(JSContext *cx, uint32_t argc
 void js_pluginx_protocols_ProtocolIAP_finalize(JSContext *cx, JSObject *obj);
 void js_register_pluginx_protocols_ProtocolIAP(JSContext *cx, JSObject *global);
 void register_all_pluginx_protocols(JSContext* cx, JSObject* obj);
-JSBool js_pluginx_protocols_ProtocolIAP_getPluginVersion(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_ProtocolIAP_payForProduct(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_ProtocolIAP_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_ProtocolIAP_init(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_ProtocolIAP_getPluginName(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_ProtocolIAP_onPayResult(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_ProtocolIAP_getSDKVersion(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_ProtocolIAP_setDebugMode(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_pluginx_protocols_ProtocolIAP_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_ProtocolAds_class;
 extern JSObject *jsb_ProtocolAds_prototype;
@@ -77,15 +65,10 @@ void js_register_pluginx_protocols_ProtocolAds(JSContext *cx, JSObject *global);
 void register_all_pluginx_protocols(JSContext* cx, JSObject* obj);
 JSBool js_pluginx_protocols_ProtocolAds_showAds(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_ProtocolAds_hideAds(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_ProtocolAds_getPluginVersion(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_ProtocolAds_getPluginName(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_ProtocolAds_onAdsResult(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_ProtocolAds_init(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_ProtocolAds_spendPoints(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_ProtocolAds_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_pluginx_protocols_ProtocolAds_spendPoints(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_pluginx_protocols_ProtocolAds_onAdsResult(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_ProtocolAds_onPlayerGetPoints(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_ProtocolAds_getSDKVersion(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_ProtocolAds_setDebugMode(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_ProtocolSocial_class;
 extern JSObject *jsb_ProtocolSocial_prototype;
@@ -94,14 +77,8 @@ JSBool js_pluginx_protocols_ProtocolSocial_constructor(JSContext *cx, uint32_t a
 void js_pluginx_protocols_ProtocolSocial_finalize(JSContext *cx, JSObject *obj);
 void js_register_pluginx_protocols_ProtocolSocial(JSContext *cx, JSObject *global);
 void register_all_pluginx_protocols(JSContext* cx, JSObject* obj);
-JSBool js_pluginx_protocols_ProtocolSocial_getPluginName(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_ProtocolSocial_onShareResult(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_ProtocolSocial_getPluginVersion(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_ProtocolSocial_share(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_ProtocolSocial_init(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_ProtocolSocial_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_ProtocolSocial_getSDKVersion(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_ProtocolSocial_setDebugMode(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_ProtocolSocial_setResultListener(JSContext *cx, uint32_t argc, jsval *vp);
 #endif
 

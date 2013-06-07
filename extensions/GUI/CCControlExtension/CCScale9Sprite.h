@@ -29,7 +29,7 @@ THE SOFTWARE.
 #define __CCScale9Sprite_H__
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
+#include "../../ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
 

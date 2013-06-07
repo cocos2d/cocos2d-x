@@ -13,9 +13,6 @@
     <Filter Include="GUI\CCScrollView">
       <UniqueIdentifier>{46797895-f71d-4ddb-b381-d0884e678d39}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GUI\network">
-      <UniqueIdentifier>{2a7741ff-87a5-41c8-8e51-d7a1cf0c8e4d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="physics_nodes">
       <UniqueIdentifier>{d5806151-7ae1-4fef-af5a-2fa1d1c7377b}</UniqueIdentifier>
     </Filter>
@@ -31,13 +28,16 @@
     <Filter Include="spine">
       <UniqueIdentifier>{ff4b5934-99d4-4ea7-9f50-a774192d9ca9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="network">
+      <UniqueIdentifier>{2a7741ff-87a5-41c8-8e51-d7a1cf0c8e4d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\GUI\CCScrollView\CCScrollView.cpp">
       <Filter>GUI\CCScrollView</Filter>
     </ClCompile>
     <ClCompile Include="..\network\HttpClient.cpp">
-      <Filter>GUI\network</Filter>
+      <Filter>network</Filter>
     </ClCompile>
     <ClCompile Include="..\GUI\CCScrollView\CCSorting.cpp">
       <Filter>GUI\CCScrollView</Filter>
@@ -73,9 +73,6 @@
       <Filter>CCBReader</Filter>
     </ClCompile>
     <ClCompile Include="..\CCBReader\CCControlLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCData.cpp">
       <Filter>CCBReader</Filter>
     </ClCompile>
     <ClCompile Include="..\CCBReader\CCLabelBMFontLoader.cpp">
@@ -234,6 +231,15 @@
     <ClCompile Include="..\spine\spine-cocos2dx.cpp">
       <Filter>spine</Filter>
     </ClCompile>
+    <ClCompile Include="..\spine\CCSkeleton.cpp">
+      <Filter>spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\spine\CCSkeletonAnimation.cpp">
+      <Filter>spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\network\Websocket.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\GUI\CCScrollView\CCScrollView.h">
@@ -242,13 +248,13 @@
     <ClInclude Include="..\cocos-ext.h" />
     <ClInclude Include="..\ExtensionMacros.h" />
     <ClInclude Include="..\network\HttpClient.h">
-      <Filter>GUI\network</Filter>
+      <Filter>network</Filter>
     </ClInclude>
     <ClInclude Include="..\network\HttpRequest.h">
-      <Filter>GUI\network</Filter>
+      <Filter>network</Filter>
     </ClInclude>
     <ClInclude Include="..\network\HttpResponse.h">
-      <Filter>GUI\network</Filter>
+      <Filter>network</Filter>
     </ClInclude>
     <ClInclude Include="..\GUI\CCScrollView\CCSorting.h">
       <Filter>GUI\CCScrollView</Filter>
@@ -290,9 +296,6 @@
       <Filter>CCBReader</Filter>
     </ClInclude>
     <ClInclude Include="..\CCBReader\CCControlLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCData.h">
       <Filter>CCBReader</Filter>
     </ClInclude>
     <ClInclude Include="..\CCBReader\CCLabelBMFontLoader.h">
@@ -465,6 +468,15 @@
     </ClInclude>
     <ClInclude Include="..\spine\spine.h">
       <Filter>spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spine\CCSkeleton.h">
+      <Filter>spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spine\CCSkeletonAnimation.h">
+      <Filter>spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\network\Websocket.h">
+      <Filter>network</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

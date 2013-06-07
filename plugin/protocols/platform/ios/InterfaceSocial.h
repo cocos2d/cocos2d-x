@@ -24,6 +24,10 @@ THE SOFTWARE.
 
 @protocol InterfaceSocial <NSObject>
 
-
+- (void) configDeveloperInfo : (NSMutableDictionary*) cpInfo;
+- (void) share: (NSMutableDictionary*) shareInfo;
+- (void) setDebugMode: (BOOL) debug;
+- (NSString*) getSDKVersion;
+- (NSString*) getPluginVersion;
 
 @end

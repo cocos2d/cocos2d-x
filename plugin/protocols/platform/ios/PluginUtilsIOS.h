@@ -28,11 +28,9 @@ THE SOFTWARE.
 #include "PluginProtocol.h"
 #include <string>
 #include <map>
+#include "PluginParam.h"
 
 namespace cocos2d { namespace plugin {
-
-#define return_if_fails(cond) if (!(cond)) return; 
-#define return_val_if_fails(cond, ret) if(!(cond)) return (ret);
 
 typedef struct _PluginOCData
 {
@@ -43,7 +41,7 @@ typedef struct _PluginOCData
 class PluginUtilsIOS
 {
 public:
-    static bool initOCPlugin(PluginProtocol* pPlugin, const char* className);
+    static void initOCPlugin(PluginProtocol* pPlugin, id ocObj, const char* className);
 
     static PluginOCData* getPluginOCData(PluginProtocol* pKeyObj);
     static void setPluginOCData(PluginProtocol* pKeyObj, PluginOCData* pData);
@@ -51,9 +49,39 @@ public:
 
     static PluginProtocol* getPluginPtr(id obj);
 
+    static id getOCObjFromParam(PluginParam* param);
+
     static NSMutableDictionary* createDictFromMap(std::map<std::string, std::string>* paramMap);
-    static void callOCFunctionWithName(PluginProtocol* pPlugin, const char* funcName);
-    static void callOCFunctionWithName_Object(PluginProtocol* pPlugin, const char* funcName, id obj);
+
+    /**
+     @brief method don't have return value
+     */
+    static void callOCFunctionWithName_oneParam(PluginProtocol* pPlugin, const char* funcName, id param);
+
+    /**
+     @brief method return int value
+     */
+    static int callOCIntFunctionWithName_oneParam(PluginProtocol* pPlugin, const char* funcName, id param);
+    
+    /**
+     @brief method return float value
+     */
+    static float callOCFloatFunctionWithName_oneParam(PluginProtocol* pPlugin, const char* funcName, id param);
+
+    /**
+     @brief method return bool value
+     */
+    static bool callOCBoolFunctionWithName_oneParam(PluginProtocol* pPlugin, const char* funcName, id param);
+    
+    /**
+     @brief method return string value
+     */
+    static const char* callOCStringFunctionWithName_oneParam(PluginProtocol* pPlugin, const char* funcName, id param);
+
+    static void outputLog(const char* pFormat, ...);
+
+private:
+    static id callRetFunction(PluginProtocol* pPlugin, const char* funcName, id param);
 };
 
 }} // namespace cocos2d { namespace plugin {

@@ -41,7 +41,7 @@ CCTMXObjectGroup::CCTMXObjectGroup()
 }
 CCTMXObjectGroup::~CCTMXObjectGroup()
 {
-    CCLOGINFO( "cocos2d: deallocing.");
+    CCLOGINFO( "cocos2d: deallocing: %p", this);
     CC_SAFE_RELEASE(m_pObjects);
     CC_SAFE_RELEASE(m_pProperties);
 }
