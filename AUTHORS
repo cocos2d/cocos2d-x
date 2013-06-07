@@ -183,6 +183,7 @@ Developers:
         Simpler, correct handling of spritesheet sources for CCScale9Sprite.
         Clean up linked libraries for android.
         JavaScript debugger improved and bugfixed.
+        Fix flags for debugger server socket.
 
     Nicolas Gramlich (nicolasgramlich, Zynga)
         fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF
