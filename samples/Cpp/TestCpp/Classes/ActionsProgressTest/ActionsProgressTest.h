@@ -2,8 +2,9 @@
 #define _ACTIONS_PROGRESS_TEST_H_
 
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
-class SpriteDemo : public CCLayer
+class SpriteDemo : public BaseTest
 {
 public:
     SpriteDemo(void);

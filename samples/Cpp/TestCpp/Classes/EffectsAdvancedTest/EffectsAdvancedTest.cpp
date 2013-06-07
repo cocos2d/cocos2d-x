@@ -333,7 +333,7 @@ CCLayer* restartEffectAdvanceAction()
 
 void EffectAdvanceTextLayer::onEnter(void)
 {
-    CCLayer::onEnter();
+    BaseTest::onEnter();
     
     CCSprite *bg = CCSprite::create("Images/background3.png");
     addChild(bg, 0, kTagBackground);
@@ -351,34 +351,7 @@ void EffectAdvanceTextLayer::onEnter(void)
     tamara->setPosition( ccp(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3.0f,VisibleRect::bottom().y+200) );
     CCActionInterval* sc2 = CCScaleBy::create(2, 5);
     CCActionInterval* sc2_back = sc2->reverse();
-    tamara->runAction( CCRepeatForever::create(CCSequence::create(sc2, sc2_back, NULL) ) );
-    
-    CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Marker Felt", 28);
-    
-    label->setPosition( ccp(VisibleRect::center().x,VisibleRect::top().y-80) );
-    addChild(label);
-    label->setTag( kTagLabel );
-
-    std::string strSubtitle = subtitle();
-    if( ! strSubtitle.empty() ) 
-    {
-        CCLabelTTF* l = CCLabelTTF::create(strSubtitle.c_str(), "Thonburi", 16);
-        addChild(l, 101);
-        l->setPosition( ccp(VisibleRect::center().x,VisibleRect::top().y-80) );
-    }    
-
-    CCMenuItemImage *item1 = CCMenuItemImage::create("Images/b1.png", "Images/b2.png", this, menu_selector(EffectAdvanceTextLayer::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::create("Images/r1.png","Images/r2.png", this, menu_selector(EffectAdvanceTextLayer::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::create("Images/f1.png", "Images/f2.png", this, menu_selector(EffectAdvanceTextLayer::nextCallback) );
-
-    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
-
-    menu->setPosition(CCPointZero);
-    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    
-    addChild(menu, 1);    
+    tamara->runAction( CCRepeatForever::create(CCSequence::create(sc2, sc2_back, NULL) ) );    
 }
 
 EffectAdvanceTextLayer::~EffectAdvanceTextLayer(void)

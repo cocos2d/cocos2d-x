@@ -2,8 +2,9 @@
 #define __CLIPPINGNODETEST_H__
 
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
-class BaseClippingNodeTest : public CCLayer
+class BaseClippingNodeTest : public BaseTest
 {
 public:
     ~BaseClippingNodeTest();

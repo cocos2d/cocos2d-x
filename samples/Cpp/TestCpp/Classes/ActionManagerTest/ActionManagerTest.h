@@ -2,8 +2,9 @@
 #define _ACTION_MANAGER_TEST_H_
 
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
-class ActionManagerTest: public CCLayer
+class ActionManagerTest: public BaseTest
 {
 protected:
     CCTextureAtlas* m_atlas;
@@ -15,7 +16,6 @@ public:
     ~ActionManagerTest(void);
 
     virtual std::string title();
-    virtual void onEnter();
 
     void restartCallback(CCObject* pSender);
     void nextCallback(CCObject* pSender);
