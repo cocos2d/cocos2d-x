@@ -33,19 +33,19 @@ NS_CC_EXT_BEGIN
 class CCSkin : public CCSprite
 {
 public:
-	static CCSkin *create();
-	static CCSkin *createWithSpriteFrameName(const char *pszSpriteFrameName);
+    static CCSkin *create();
+    static CCSkin *createWithSpriteFrameName(const char *pszSpriteFrameName);
 public:
     CCSkin();
 
-	void updateTransform();
-	void draw();
+    void updateTransform();
+    void draw();
 
-	CC_PROPERTY_PASS_BY_REF(CCBaseData, m_sSkinData, SkinData);
-	CC_SYNTHESIZE(CCBone*, m_pBone, Bone);
+    CC_PROPERTY_PASS_BY_REF(CCBaseData, m_sSkinData, SkinData);
+    CC_SYNTHESIZE(CCBone *, m_pBone, Bone);
 
 protected:
-	CCAffineTransform m_tSkinTransform;
+    CCAffineTransform m_tSkinTransform;
 };
 
 NS_CC_EXT_END

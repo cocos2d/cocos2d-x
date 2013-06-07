@@ -30,20 +30,20 @@ NS_CC_EXT_BEGIN
 #pragma region CCDisplayData
 const char *CCDisplayData::changeDisplayToTexture(const char *displayName)
 {
-	// remove .xxx
-	std::string textureName = displayName;
-	size_t startPos = textureName.find_last_of(".");
+    // remove .xxx
+    std::string textureName = displayName;
+    size_t startPos = textureName.find_last_of(".");
 
-	if(startPos != std::string::npos)
-	{
-		textureName = textureName.erase(startPos);
-	}
+    if(startPos != std::string::npos)
+    {
+        textureName = textureName.erase(startPos);
+    }
 
-	return textureName.c_str();
+    return textureName.c_str();
 }
 
 CCDisplayData::CCDisplayData(void)
-	:displayType(CS_DISPLAY_SPRITE)
+    : displayType(CS_DISPLAY_SPRITE)
 {
 }
 
@@ -54,9 +54,9 @@ CCDisplayData::~CCDisplayData(void)
 
 #pragma region CCSpriteDisplayData
 CCSpriteDisplayData::CCSpriteDisplayData(void)
-	:displayName("")
+    : displayName("")
 {
-	displayType = CS_DISPLAY_SPRITE;
+    displayType = CS_DISPLAY_SPRITE;
 }
 
 CCSpriteDisplayData::~CCSpriteDisplayData()
@@ -65,16 +65,16 @@ CCSpriteDisplayData::~CCSpriteDisplayData()
 
 void CCSpriteDisplayData::copy(CCSpriteDisplayData *displayData)
 {
-	displayName = displayData->displayName;
-	displayType = displayData->displayType;
+    displayName = displayData->displayName;
+    displayType = displayData->displayType;
 }
 #pragma endregion
 
 #pragma region CCArmatureDisplayData
 CCArmatureDisplayData::CCArmatureDisplayData(void)
-	:displayName("")
+    : displayName("")
 {
-	displayType = CS_DISPLAY_ARMATURE;
+    displayType = CS_DISPLAY_ARMATURE;
 }
 
 CCArmatureDisplayData::~CCArmatureDisplayData()
@@ -83,59 +83,59 @@ CCArmatureDisplayData::~CCArmatureDisplayData()
 
 void CCArmatureDisplayData::copy(CCArmatureDisplayData *displayData)
 {
-	displayName = displayData->displayName;
-	displayType = displayData->displayType;
+    displayName = displayData->displayName;
+    displayType = displayData->displayType;
 }
 #pragma endregion
 
 #pragma region CCParticleDisplayData
 CCParticleDisplayData::CCParticleDisplayData(void)
-	:plist("")
+    : plist("")
 {
-	displayType = CS_DISPLAY_PARTICLE;
+    displayType = CS_DISPLAY_PARTICLE;
 }
 
 void CCParticleDisplayData::copy(CCParticleDisplayData *displayData)
 {
-	plist = displayData->plist;
-	displayType = displayData->displayType;
+    plist = displayData->plist;
+    displayType = displayData->displayType;
 }
 #pragma endregion
 
 #pragma region CCShaderDisplayData
 CCShaderDisplayData::CCShaderDisplayData(void)
-	:vert("")
-	,frag("")
+    : vert("")
+    , frag("")
 {
-	displayType = CS_DISPLAY_SHADER;
+    displayType = CS_DISPLAY_SHADER;
 }
 
 void CCShaderDisplayData::copy(CCShaderDisplayData *displayData)
 {
-	vert = displayData->vert;
-	frag = displayData->frag;
-	displayType = displayData->displayType;
+    vert = displayData->vert;
+    frag = displayData->frag;
+    displayType = displayData->displayType;
 }
 #pragma endregion
 
 #pragma region CCBaseData
 CCBaseData::CCBaseData()
-	:x(0.0f)
-	,y(0.0f)
-	,zOrder(0)
+    : x(0.0f)
+    , y(0.0f)
+    , zOrder(0)
 
-	,skewX(0.0f)
-	,skewY(0.0f)
-	,scaleX(1.0f)
-	,scaleY(1.0f)
+    , skewX(0.0f)
+    , skewY(0.0f)
+    , scaleX(1.0f)
+    , scaleY(1.0f)
 
-	,tweenRotate(0.0f)
+    , tweenRotate(0.0f)
 
-	,isUseColorInfo(false)
-	,a(255)
-	,r(255)
-	,g(255)
-	,b(255)
+    , isUseColorInfo(false)
+    , a(255)
+    , r(255)
+    , g(255)
+    , b(255)
 {
 }
 
@@ -144,77 +144,77 @@ CCBaseData::~CCBaseData()
 }
 
 
-void CCBaseData::copy(const CCBaseData* node )
+void CCBaseData::copy(const CCBaseData *node )
 {
-	x = node->x;
-	y = node->y;
-	zOrder = node->zOrder;
+    x = node->x;
+    y = node->y;
+    zOrder = node->zOrder;
 
-	scaleX = node->scaleX;
-	scaleY = node->scaleY;
-	skewX = node->skewX;
-	skewY = node->skewY;
+    scaleX = node->scaleX;
+    scaleY = node->scaleY;
+    skewX = node->skewX;
+    skewY = node->skewY;
 
-	tweenRotate = node->tweenRotate;
+    tweenRotate = node->tweenRotate;
 
-	isUseColorInfo = node->isUseColorInfo;
-	r = node->r;
-	g = node->g;
-	b = node->b;
-	a = node->a;
+    isUseColorInfo = node->isUseColorInfo;
+    r = node->r;
+    g = node->g;
+    b = node->b;
+    a = node->a;
 }
 
 
 void CCBaseData::subtract(CCBaseData *from, CCBaseData *to)
 {
-	x = to->x - from->x;
-	y = to->y - from->y;
-	scaleX = to->scaleX - from->scaleX;
-	scaleY = to->scaleY - from->scaleY;
-	skewX = to->skewX - from->skewX;
-	skewY = to->skewY - from->skewY;
+    x = to->x - from->x;
+    y = to->y - from->y;
+    scaleX = to->scaleX - from->scaleX;
+    scaleY = to->scaleY - from->scaleY;
+    skewX = to->skewX - from->skewX;
+    skewY = to->skewY - from->skewY;
 
-	if(from->isUseColorInfo || to->isUseColorInfo)
-	{
-		a = to->a - from->a;
-		r = to->r - from->r;
-		g = to->g - from->g;
-		b = to->b - from->b;
+    if(from->isUseColorInfo || to->isUseColorInfo)
+    {
+        a = to->a - from->a;
+        r = to->r - from->r;
+        g = to->g - from->g;
+        b = to->b - from->b;
 
-		isUseColorInfo = true;
-	}
+        isUseColorInfo = true;
+    }
 
 
-	if (skewX > M_PI)
-	{
-		skewX -= (float)CC_DOUBLE_PI;
-	}
-	if (skewX < -M_PI)
-	{
-		skewX += (float)CC_DOUBLE_PI;
-	}
+    if (skewX > M_PI)
+    {
+        skewX -= (float)CC_DOUBLE_PI;
+    }
+    if (skewX < -M_PI)
+    {
+        skewX += (float)CC_DOUBLE_PI;
+    }
 
-	if (skewY > M_PI)
-	{
-		skewY -= (float)CC_DOUBLE_PI;
-	}
-	if (skewY < -M_PI)
-	{
-		skewY += (float)CC_DOUBLE_PI;
-	}
+    if (skewY > M_PI)
+    {
+        skewY -= (float)CC_DOUBLE_PI;
+    }
+    if (skewY < -M_PI)
+    {
+        skewY += (float)CC_DOUBLE_PI;
+    }
 
-	if (to->tweenRotate)
-	{
-		skewX += to->tweenRotate;
-		skewY -= to->tweenRotate;
-	}
+    if (to->tweenRotate)
+    {
+        skewX += to->tweenRotate;
+        skewY -= to->tweenRotate;
+    }
 }
 #pragma endregion
 
 #pragma region CCBoneData
 CCBoneData::CCBoneData(void)
-	:name("")
-	,parentName("")
+    : name("")
+    , parentName("")
 {
 }
 
@@ -224,18 +224,18 @@ CCBoneData::~CCBoneData(void)
 
 bool CCBoneData::init()
 {
-	displayDataList.init();
-	return true;
+    displayDataList.init();
+    return true;
 }
 
 void CCBoneData::addDisplayData(CCDisplayData *displayData)
 {
-	displayDataList.addObject(displayData);
+    displayDataList.addObject(displayData);
 }
 
 CCDisplayData *CCBoneData::getDisplayData(int index)
 {
-	return (CCDisplayData*)displayDataList.objectAtIndex(index);
+    return (CCDisplayData *)displayDataList.objectAtIndex(index);
 }
 #pragma endregion
 
@@ -250,31 +250,31 @@ CCArmatureData::~CCArmatureData()
 
 bool CCArmatureData::init()
 {
-	return boneList.init();
+    return boneList.init();
 }
 
 void CCArmatureData::addBoneData(CCBoneData *boneData)
 {
-	boneDataDic.setObject(boneData, boneData->name);
-	boneList.addObject(boneData);
+    boneDataDic.setObject(boneData, boneData->name);
+    boneList.addObject(boneData);
 }
 
 CCBoneData *CCArmatureData::getBoneData(const char *boneName)
 {
-	return (CCBoneData*)boneDataDic.objectForKey(boneName);
+    return (CCBoneData *)boneDataDic.objectForKey(boneName);
 }
 #pragma endregion
 
 #pragma region CCFrameData
 CCFrameData::CCFrameData(void)
-	:duration(1)
-	,tweenEasing(Linear)
-	,displayIndex(0)
+    : duration(1)
+    , tweenEasing(Linear)
+    , displayIndex(0)
 
-	,m_strMovement("")
-	,m_strEvent("")
-	,m_strSound("")
-	,m_strSoundEffect("")
+    , m_strMovement("")
+    , m_strEvent("")
+    , m_strSound("")
+    , m_strSoundEffect("")
 {
 }
 
@@ -284,20 +284,20 @@ CCFrameData::~CCFrameData(void)
 
 void CCFrameData::copy(CCFrameData *frameData)
 {
-	CCBaseData::copy(frameData);
+    CCBaseData::copy(frameData);
 
-	duration = frameData->duration;
-	displayIndex = frameData->displayIndex;
-	tweenEasing = frameData->tweenEasing;
-}    
+    duration = frameData->duration;
+    displayIndex = frameData->displayIndex;
+    tweenEasing = frameData->tweenEasing;
+}
 #pragma endregion
 
 #pragma region CCMovementBoneData
 CCMovementBoneData::CCMovementBoneData()
-	:delay(0.0f)
-	,scale(1.0f)
-	,duration(0)
-	,name("")
+    : delay(0.0f)
+    , scale(1.0f)
+    , duration(0)
+    , name("")
 {
 }
 
@@ -307,18 +307,18 @@ CCMovementBoneData::~CCMovementBoneData(void)
 
 bool CCMovementBoneData::init()
 {
-	return frameList.init();
+    return frameList.init();
 }
 
 void CCMovementBoneData::addFrameData(CCFrameData *frameData)
 {
-	frameList.addObject(frameData);
-	duration += frameData->duration;
+    frameList.addObject(frameData);
+    duration += frameData->duration;
 }
 
 CCFrameData *CCMovementBoneData::getFrameData(int index)
 {
-	return (CCFrameData*)frameList.objectAtIndex(index);
+    return (CCFrameData *)frameList.objectAtIndex(index);
 }
 #pragma endregion
 
@@ -326,12 +326,12 @@ CCFrameData *CCMovementBoneData::getFrameData(int index)
 
 #pragma region CCMovementData
 CCMovementData::CCMovementData(void)
-	:name("")
-	,duration(0)
-	,durationTo(0)
-	,durationTween(0)
-	,loop(true)
-	,tweenEasing(Linear)
+    : name("")
+    , duration(0)
+    , durationTo(0)
+    , durationTween(0)
+    , loop(true)
+    , tweenEasing(Linear)
 {
 }
 
@@ -341,12 +341,12 @@ CCMovementData::~CCMovementData(void)
 
 void CCMovementData::addMovementBoneData(CCMovementBoneData *movBoneData)
 {
-	movBoneDataDic.setObject(movBoneData, movBoneData->name);
+    movBoneDataDic.setObject(movBoneData, movBoneData->name);
 }
 
 CCMovementBoneData *CCMovementData::getMovementBoneData(const char *boneName)
 {
-	return (CCMovementBoneData*)movBoneDataDic.objectForKey(boneName);
+    return (CCMovementBoneData *)movBoneDataDic.objectForKey(boneName);
 }
 #pragma endregion
 
@@ -363,28 +363,28 @@ CCAnimationData::~CCAnimationData(void)
 
 void CCAnimationData::release()
 {
-	CCObject::release();
+    CCObject::release();
 }
 
 void CCAnimationData::retain()
 {
-	CCObject::retain();
+    CCObject::retain();
 }
 
 void CCAnimationData::addMovement(CCMovementData *movData)
 {
-	movementDataDic.setObject(movData, movData->name);
-	movementNames.push_back(movData->name);
+    movementDataDic.setObject(movData, movData->name);
+    movementNames.push_back(movData->name);
 }
 
 CCMovementData *CCAnimationData::getMovement(const char *movementName)
 {
-	return (CCMovementData*)movementDataDic.objectForKey(movementName);
+    return (CCMovementData *)movementDataDic.objectForKey(movementName);
 }
 
 int CCAnimationData::getMovementCount()
 {
-	return movementDataDic.count();
+    return movementDataDic.count();
 }
 #pragma endregion
 
@@ -401,17 +401,17 @@ CCContourData::~CCContourData()
 
 bool CCContourData::init()
 {
-	return vertexList.init();
+    return vertexList.init();
 }
 #pragma endregion
 
 #pragma region CCTextureData
 CCTextureData::CCTextureData()
-	:height(0.0f)
-	,width(0.0f)
-	,pivotX(0.5f)
-	,pivotY(0.5f)
-	,name("")
+    : height(0.0f)
+    , width(0.0f)
+    , pivotX(0.5f)
+    , pivotY(0.5f)
+    , name("")
 {
 }
 
@@ -421,20 +421,19 @@ CCTextureData::~CCTextureData()
 
 bool CCTextureData::init()
 {
-	return contourDataList.init();
+    return contourDataList.init();
 }
 
 void CCTextureData::addContourData(CCContourData *contourData)
 {
-	contourDataList.addObject(contourData);
+    contourDataList.addObject(contourData);
 }
 
 CCContourData *CCTextureData::getContourData(int index)
 {
-	return (CCContourData*)contourDataList.objectAtIndex(index);
+    return (CCContourData *)contourDataList.objectAtIndex(index);
 }
 #pragma endregion
-
 
 
 NS_CC_EXT_END

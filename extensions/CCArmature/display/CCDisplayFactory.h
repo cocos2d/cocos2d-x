@@ -29,31 +29,35 @@ THE SOFTWARE.
 #include "../datas/CCDatas.h"
 
 NS_CC_EXT_BEGIN
-    
+
 class CCSkin;
 class CCBone;
 class CCDecorativeDisplay;
 class CCDisplayData;
 
+class CCDisplayFactory
+{
+public:
+	static void addDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
+	static void createDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay);
+	static void updateDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty);
 
-void CS_DISPLAY_ADD(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
-void CS_DISPLAY_CREATE(CCBone *bone, CCDecorativeDisplay *decoDisplay);
-void CS_DISPLAY_UPDATE(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty);
+	static void addSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
+	static void createSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay);
+	static void updateSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty);
 
-void CS_DISPLAY_SPRITE_ADD(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
-void CS_DISPLAY_SPRITE_CREATE(CCBone *bone, CCDecorativeDisplay *decoDisplay);
-void CS_DISPLAY_SPRITE_UPDATE(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty);
+	static void addArmatureDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
+	static void createArmatureDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay);
+	static void updateArmatureDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty);
 
-void CS_DISPLAY_ARMATURE_ADD(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
-void CS_DISPLAY_ARMATURE_CREATE(CCBone *bone, CCDecorativeDisplay *decoDisplay);
-void CS_DISPLAY_ARMATURE_UPDATE(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty);
+	static void addParticleDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
+	static void createParticleDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay);
+	static void updateParticleDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty);
 
-void CS_DISPLAY_PARTICLE_ADD(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
-void CS_DISPLAY_PARTICLE_CREATE(CCBone *bone, CCDecorativeDisplay *decoDisplay);
-void CS_DISPLAY_PARTICLE_UPDATE(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty);
+	static void addShaderDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
+	static void createShaderDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay);
 
-void CS_DISPLAY_SHADER_ADD(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
-void CS_DISPLAY_SHADER_CREATE(CCBone *bone, CCDecorativeDisplay *decoDisplay);
+};
 
 
 NS_CC_EXT_END

@@ -38,97 +38,97 @@ NS_CC_EXT_BEGIN
 
 class  CCDataReaderHelper
 {
-    
+
 public:
     /**
-	 * Scale the position data, used for multiresolution adapter
-     * It won't effect the data already read.         
+     * Scale the position data, used for multiresolution adapter
+     * It won't effect the data already read.
      */
     static void setPositionReadScale(float scale);
     static float getPositionReadScale();
 
     static void addDataFromFile(const char *filePath);
 
-	static void clear();
+    static void clear();
 public:
-   
-#pragma region Decode Data From XML
-	/**
-	 * Translate XML export from Dragon CCBone flash tool to datas, and save them.
-	 * When you add a new xml, the data already saved will be keeped.
+
+    #pragma region Decode Data From XML
+    /**
+     * Translate XML export from Dragon CCBone flash tool to datas, and save them.
+     * When you add a new xml, the data already saved will be keeped.
      *
      * @param xmlPath Path of xml file
      */
     static void addDataFromXML(const char *xmlPath);
-    
+
     /**
-	 * Translate XML export from Dragon CCBone flash tool to datas, and save them.
-	 * When you add a new xml, the data already saved will be keeped.
+     * Translate XML export from Dragon CCBone flash tool to datas, and save them.
+     * When you add a new xml, the data already saved will be keeped.
      *
      * @param xmlPath Path of pak file
      */
     static void addDataFromXMLPak(const char *xmlPakPath);
-    
+
     /**
-	 * Translate XML export from Dragon CCBone flash tool to datas, and save them.
-	 * When you add a new xml, the data already saved will be keeped.
+     * Translate XML export from Dragon CCBone flash tool to datas, and save them.
+     * When you add a new xml, the data already saved will be keeped.
      *
      * @param xmlPath The cache of the xml
      */
     static void addDataFromCache(const char *pFileContent);
-    
-    
-    
+
+
+
     /**
-	 * Decode CCArmature Datas from xml export from Dragon CCBone flash tool
+     * Decode CCArmature Datas from xml export from Dragon CCBone flash tool
      */
-	static CCArmatureData *decodeArmature(tinyxml2::XMLElement *armatureXML);
-	static CCBoneData *decodeBone(tinyxml2::XMLElement *boneXML, tinyxml2::XMLElement *parentXML);
-	static CCDisplayData *decodeBoneDisplay(tinyxml2::XMLElement *displayXML);
-    
-    
-	/**
-	 * Decode CCAnimation Datas from xml export from Dragon CCBone flash tool
-     */
-	static CCAnimationData *decodeAnimation(tinyxml2::XMLElement *animationXML);
-	static CCMovementData *decodeMovement(tinyxml2::XMLElement *movementXML, CCArmatureData *armatureData);
-	static CCMovementBoneData *decodeMovementBone(tinyxml2::XMLElement* movBoneXml, tinyxml2::XMLElement* parentXml, CCBoneData *boneData);
-	static CCFrameData *decodeFrame(tinyxml2::XMLElement* frameXML, tinyxml2::XMLElement* parentFrameXml, CCBoneData *boneData);
-    
-	
+    static CCArmatureData *decodeArmature(tinyxml2::XMLElement *armatureXML);
+    static CCBoneData *decodeBone(tinyxml2::XMLElement *boneXML, tinyxml2::XMLElement *parentXML);
+    static CCDisplayData *decodeBoneDisplay(tinyxml2::XMLElement *displayXML);
+
+
     /**
-	 * Decode Texture Datas from xml export from Dragon CCBone flash tool
+     * Decode CCAnimation Datas from xml export from Dragon CCBone flash tool
      */
-	static CCTextureData *decodeTexture(tinyxml2::XMLElement *textureXML);
-    
+    static CCAnimationData *decodeAnimation(tinyxml2::XMLElement *animationXML);
+    static CCMovementData *decodeMovement(tinyxml2::XMLElement *movementXML, CCArmatureData *armatureData);
+    static CCMovementBoneData *decodeMovementBone(tinyxml2::XMLElement *movBoneXml, tinyxml2::XMLElement *parentXml, CCBoneData *boneData);
+    static CCFrameData *decodeFrame(tinyxml2::XMLElement *frameXML, tinyxml2::XMLElement *parentFrameXml, CCBoneData *boneData);
+
+
     /**
-	 * Decode Contour Datas from xml export from Dragon CCBone flash tool
+     * Decode Texture Datas from xml export from Dragon CCBone flash tool
+     */
+    static CCTextureData *decodeTexture(tinyxml2::XMLElement *textureXML);
+
+    /**
+     * Decode Contour Datas from xml export from Dragon CCBone flash tool
      */
     static CCContourData *decodeContour(tinyxml2::XMLElement *contourXML);
-#pragma endregion
+    #pragma endregion
 
-#pragma region Decode Data From JSON
-    
+    #pragma region Decode Data From JSON
+
     static void addDataFromJson(const char *filePath);
-	static void addDataFromJsonCache(const char *fileContent);
+    static void addDataFromJsonCache(const char *fileContent);
 
-	static CCArmatureData *decodeArmature(cs::CSJsonDictionary &json);
-	static CCBoneData *decodeBone(cs::CSJsonDictionary &json);
-	static CCDisplayData *decodeBoneDisplay(cs::CSJsonDictionary &json);
-    
-	static CCAnimationData *decodeAnimation(cs::CSJsonDictionary &json);
-	static CCMovementData *decodeMovement(cs::CSJsonDictionary &json);
-	static CCMovementBoneData *decodeMovementBone(cs::CSJsonDictionary &json);
-	static CCFrameData *decodeFrame(cs::CSJsonDictionary &json);
-    
-	static CCTextureData *decodeTexture(cs::CSJsonDictionary &json);
-    
+    static CCArmatureData *decodeArmature(cs::CSJsonDictionary &json);
+    static CCBoneData *decodeBone(cs::CSJsonDictionary &json);
+    static CCDisplayData *decodeBoneDisplay(cs::CSJsonDictionary &json);
+
+    static CCAnimationData *decodeAnimation(cs::CSJsonDictionary &json);
+    static CCMovementData *decodeMovement(cs::CSJsonDictionary &json);
+    static CCMovementBoneData *decodeMovementBone(cs::CSJsonDictionary &json);
+    static CCFrameData *decodeFrame(cs::CSJsonDictionary &json);
+
+    static CCTextureData *decodeTexture(cs::CSJsonDictionary &json);
+
     static CCContourData *decodeContour(cs::CSJsonDictionary &json);
 
-	static void DecodeNode(CCBaseData *node, cs::CSJsonDictionary &json);
-	//static std::string convertFlashToSP(const char *fileName);
+    static void decodeNode(CCBaseData *node, cs::CSJsonDictionary &json);
+    //static std::string convertFlashToSP(const char *fileName);
 
-#pragma endregion
+    #pragma endregion
 };
 
 NS_CC_EXT_END

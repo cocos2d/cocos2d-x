@@ -29,31 +29,31 @@ THE SOFTWARE.
 #include "../datas/CCDatas.h"
 
 NS_CC_EXT_BEGIN
-    
+
 /*
- *  @brief   use to calculate the matrix of node from parent node
+ * use to calculate the matrix of node from parent node
  */
 class  CCTransformHelp
 {
 public:
-	CCTransformHelp();
+    CCTransformHelp();
 
-	static void transformFromParent(CCBaseData &node, const CCBaseData &parentNode);
-	static void transformToParent(CCBaseData &node, const CCBaseData &parentNode);
+    static void transformFromParent(CCBaseData &node, const CCBaseData &parentNode);
+    static void transformToParent(CCBaseData &node, const CCBaseData &parentNode);
 
-	static void transformFromParentWithoutScale(CCBaseData &node, const CCBaseData &parentNode);
-	static void transformToParentWithoutScale(CCBaseData &node, const CCBaseData &parentNode);
+    static void transformFromParentWithoutScale(CCBaseData &node, const CCBaseData &parentNode);
+    static void transformToParentWithoutScale(CCBaseData &node, const CCBaseData &parentNode);
 
-	static void nodeToMatrix(const CCBaseData &_node, CCAffineTransform &_matrix);
-	static void matrixToNode(const CCAffineTransform &_matrix, CCBaseData &_node);
+    static void nodeToMatrix(const CCBaseData &_node, CCAffineTransform &_matrix);
+    static void matrixToNode(const CCAffineTransform &_matrix, CCBaseData &_node);
 
-	static void nodeConcat(CCBaseData &target, CCBaseData &source);
+    static void nodeConcat(CCBaseData &target, CCBaseData &source);
 public:
-	static CCAffineTransform helpMatrix1;
-	static CCAffineTransform helpMatrix2;
+    static CCAffineTransform helpMatrix1;
+    static CCAffineTransform helpMatrix2;
 
-	static CCPoint helpPoint1;
-	static CCPoint helpPoint2;
+    static CCPoint helpPoint1;
+    static CCPoint helpPoint2;
 };
 
 NS_CC_EXT_END

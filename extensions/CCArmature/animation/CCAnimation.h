@@ -38,8 +38,8 @@ class  CCAnimation : public CCProcessBase
 {
 public:
     /**
-	 * Create with a CCArmature
-     * @param armature The CCArmature CCAnimation will bind to 
+     * Create with a CCArmature
+     * @param armature The CCArmature CCAnimation will bind to
      */
     static CCAnimation *create(CCArmature *armature);
 public:
@@ -47,19 +47,19 @@ public:
     virtual ~CCAnimation(void);
 
     /**
-	 * Init with a CCArmature
+     * Init with a CCArmature
      * @param armature The CCArmature CCAnimation will bind to
      */
     virtual bool init(CCArmature *armature);
-    
+
     /**
-	 * Scale animation play speed.
+     * Scale animation play speed.
      * @param animationScale Scale value
      */
-	virtual void setAnimationScale(float animationScale);
-    
-	/**
-	 * Play animation by animation name.
+    virtual void setAnimationScale(float animationScale);
+
+    /**
+     * Play animation by animation name.
      *
      * @param  animationName  The animation name you want to play
      * @param  durationTo The frames between two animation changing-over.
@@ -86,73 +86,69 @@ public:
      *         2  : fade in and out
      *
      */
-	void play(const char *animationName, int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
-    
+    void play(const char *animationName, int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
+
     /**
-	 * Play animation by index, the other param is the same to play.
+     * Play animation by index, the other param is the same to play.
      * @param  _animationIndex  the animation index you want to play
      */
     void playByIndex(int animationIndex,  int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
-    
+
     /**
-	 * Pause the Process
+     * Pause the Process
      */
-	virtual void pause();
+    virtual void pause();
     /**
-	 * Resume the Process
+     * Resume the Process
      */
-	virtual void resume();
+    virtual void resume();
     /**
-	 * Stop the Process
+     * Stop the Process
      */
-	virtual void stop();
-    
-    
+    virtual void stop();
+
+
     /**
-	 * Get movement count
+     * Get movement count
      */
     int getMovementCount();
-    
+
     void update(float dt);
 protected:
-    
+
     /**
-	 * Update(float dt) will call this handler, you can handle your logic here
+     * Update(float dt) will call this handler, you can handle your logic here
      */
     void updateHandler();
-    
+
     /**
-	 * Update current key frame, and process auto stop, pause
+     * Update current key frame, and process auto stop, pause
      */
-    void updateFrameData(float _currentPercent);
-    
-    /**
-	 * Calculate which frame arrived, and if current frame have event, then call the event listener
-     */
-    void updateMovementFrameData(float _currentPercent);
+    void updateFrameData(float currentPercent);
+
 protected:
-	//! CCAnimationData save all MovementDatas this animation used.
-	CC_SYNTHESIZE_RETAIN(CCAnimationData*, m_pAnimationData, AnimationData);
-    
+    //! CCAnimationData save all MovementDatas this animation used.
+    CC_SYNTHESIZE_RETAIN(CCAnimationData *, m_pAnimationData, AnimationData);
+
 
     CCMovementData *m_pMovementData;				//! CCMovementData save all MovementFrameDatas this animation used.
 
-	CCArmature *m_pArmature;						//! A weak reference of armature
+    CCArmature *m_pArmature;						//! A weak reference of armature
 
-	std::string m_strMovementID;				//! Current movment's name 
+    std::string m_strMovementID;				//! Current movment's name
 
     int m_iPrevFrameIndex;						//! Prev key frame index
-	int m_iToIndex;								//! The frame index in CCMovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
+    int m_iToIndex;								//! The frame index in CCMovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
 
-	CCArray *m_pTweenList;
+    CCArray *m_pTweenList;
 public:
-	/**
-	 * MovementEvent signal. This will emit a signal when trigger a event. 
-	 * The 1st param is the CCArmature. The 2nd param is Event Type, like START, COMPLETE. The 3rd param is Movement ID, also called Movement Name.
+    /**
+     * MovementEvent signal. This will emit a signal when trigger a event.
+     * The 1st param is the CCArmature. The 2nd param is Event Type, like START, COMPLETE. The 3rd param is Movement ID, also called Movement Name.
      */
-	sigslot::signal3<CCArmature*, const char*, const char*> MovementEventSignal;
+    sigslot::signal3<CCArmature *, const char *, const char *> MovementEventSignal;
 
-	sigslot::signal2<CCBone*, const char*> FrameEventSignal;
+    sigslot::signal2<CCBone *, const char *> FrameEventSignal;
 };
 
 NS_CC_EXT_END

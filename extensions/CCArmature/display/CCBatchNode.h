@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
- 
+
 #ifndef __CCBATCHNODE_H__
 #define __CCBATCHNODE_H__
 
@@ -32,17 +32,17 @@ NS_CC_EXT_BEGIN
 class CCBatchNode : public CCNode
 {
 public:
-	static CCBatchNode *create();
+    static CCBatchNode *create();
 public:
     CCBatchNode();
 
-	virtual bool init();
-	virtual void addChild(CCNode *child, int zOrder, int tag);
-	virtual void visit();
-	void draw();
+    virtual bool init();
+    virtual void addChild(CCNode *child, int zOrder, int tag);
+    virtual void visit();
+    void draw();
 
 protected:
-	CCTextureAtlas *m_pAtlas;
+    CCTextureAtlas *m_pAtlas;
 };
 
 NS_CC_EXT_END

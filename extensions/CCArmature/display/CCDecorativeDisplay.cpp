@@ -29,18 +29,19 @@ NS_CC_EXT_BEGIN
 
 CCDecorativeDisplay *CCDecorativeDisplay::create()
 {
-	CCDecorativeDisplay *pDisplay = new CCDecorativeDisplay();
-	if (pDisplay && pDisplay->init()){
-		pDisplay->autorelease();
-		return pDisplay;
-	}
-	CC_SAFE_DELETE(pDisplay);
-	return NULL;
+    CCDecorativeDisplay *pDisplay = new CCDecorativeDisplay();
+    if (pDisplay && pDisplay->init())
+    {
+        pDisplay->autorelease();
+        return pDisplay;
+    }
+    CC_SAFE_DELETE(pDisplay);
+    return NULL;
 }
 
 CCDecorativeDisplay::CCDecorativeDisplay()
-	:m_pDisplay(NULL)
-	,m_pDisplayData(NULL)
+    : m_pDisplay(NULL)
+    , m_pDisplayData(NULL)
 
 {
 #if ENABLE_PHYSICS_DETECT
@@ -51,17 +52,17 @@ CCDecorativeDisplay::CCDecorativeDisplay()
 
 CCDecorativeDisplay::~CCDecorativeDisplay(void)
 {
-	CC_SAFE_RELEASE_NULL(m_pDisplayData);
-	CC_SAFE_RELEASE_NULL(m_pDisplay);
+    CC_SAFE_RELEASE_NULL(m_pDisplayData);
+    CC_SAFE_RELEASE_NULL(m_pDisplay);
 
 #if ENABLE_PHYSICS_DETECT
-	CC_SAFE_RELEASE_NULL(m_pColliderDetector);
+    CC_SAFE_RELEASE_NULL(m_pColliderDetector);
 #endif
 }
 
 bool CCDecorativeDisplay::init()
 {
-	return true;
+    return true;
 }
 
 

@@ -35,106 +35,106 @@ NS_CC_EXT_BEGIN
 
 CCSkin *CCSkin::create()
 {
-	CCSkin *skin = new CCSkin();
-	if(skin && skin->init())
-	{
-		skin->autorelease();
-		return skin;
-	}
-	CC_SAFE_DELETE(skin);
-	return NULL;
+    CCSkin *skin = new CCSkin();
+    if(skin && skin->init())
+    {
+        skin->autorelease();
+        return skin;
+    }
+    CC_SAFE_DELETE(skin);
+    return NULL;
 }
 
 CCSkin *CCSkin::createWithSpriteFrameName(const char *pszSpriteFrameName)
 {
-	CCSkin *skin = new CCSkin();
-	if(skin && skin->initWithSpriteFrameName(pszSpriteFrameName))
-	{
-		skin->autorelease();
-		return skin;
-	}
-	CC_SAFE_DELETE(skin);
-	return NULL;
+    CCSkin *skin = new CCSkin();
+    if(skin && skin->initWithSpriteFrameName(pszSpriteFrameName))
+    {
+        skin->autorelease();
+        return skin;
+    }
+    CC_SAFE_DELETE(skin);
+    return NULL;
 }
 
 CCSkin::CCSkin()
-	:m_pBone(NULL)
+    : m_pBone(NULL)
 {
 }
 
-void CCSkin::setSkinData(const CCBaseData& var)
+void CCSkin::setSkinData(const CCBaseData &var)
 {
-	m_sSkinData = var;
+    m_sSkinData = var;
 
-	setScaleX(m_sSkinData.scaleX);
-	setScaleY(m_sSkinData.scaleY);
-	setRotation(CC_RADIANS_TO_DEGREES(m_sSkinData.skewX));
-	setPosition(ccp(m_sSkinData.x, m_sSkinData.y));
+    setScaleX(m_sSkinData.scaleX);
+    setScaleY(m_sSkinData.scaleY);
+    setRotation(CC_RADIANS_TO_DEGREES(m_sSkinData.skewX));
+    setPosition(ccp(m_sSkinData.x, m_sSkinData.y));
 
-	m_tSkinTransform = nodeToParentTransform();
+    m_tSkinTransform = nodeToParentTransform();
 }
 
 const CCBaseData &CCSkin::getSkinData()
 {
-	return m_sSkinData;
+    return m_sSkinData;
 }
 
 void CCSkin::updateTransform()
 {
-	m_sTransform = CCAffineTransformConcat(m_tSkinTransform, m_pBone->nodeToArmatureTransform());
+    m_sTransform = CCAffineTransformConcat(m_tSkinTransform, m_pBone->nodeToArmatureTransform());
 }
 
 void CCSkin::draw()
 {
-	// If it is not visible, or one of its ancestors is not visible, then do nothing:
-	if( !m_bVisible)
-	{
-		m_sQuad.br.vertices = m_sQuad.tl.vertices = m_sQuad.tr.vertices = m_sQuad.bl.vertices = vertex3(0,0,0);
-	}
-	else 
-	{
-		//
-		// calculate the Quad based on the Affine Matrix
-		//
+    // If it is not visible, or one of its ancestors is not visible, then do nothing:
+    if( !m_bVisible)
+    {
+        m_sQuad.br.vertices = m_sQuad.tl.vertices = m_sQuad.tr.vertices = m_sQuad.bl.vertices = vertex3(0, 0, 0);
+    }
+    else
+    {
+        //
+        // calculate the Quad based on the Affine Matrix
+        //
 
-		CCSize size = m_obRect.size;
+        CCSize size = m_obRect.size;
 
-		float x1 = m_obOffsetPosition.x;
-		float y1 = m_obOffsetPosition.y;
+        float x1 = m_obOffsetPosition.x;
+        float y1 = m_obOffsetPosition.y;
 
-		float x2 = x1 + size.width;
-		float y2 = y1 + size.height;
+        float x2 = x1 + size.width;
+        float y2 = y1 + size.height;
 
-		float x = m_sTransform.tx;
-		float y = m_sTransform.ty;
+        float x = m_sTransform.tx;
+        float y = m_sTransform.ty;
 
-		float cr = m_sTransform.a;
-		float sr = m_sTransform.b;
-		float cr2 = m_sTransform.d;
-		float sr2 = -m_sTransform.c;
-		float ax = x1 * cr - y1 * sr2 + x;
-		float ay = x1 * sr + y1 * cr2 + y;
+        float cr = m_sTransform.a;
+        float sr = m_sTransform.b;
+        float cr2 = m_sTransform.d;
+        float sr2 = -m_sTransform.c;
+        float ax = x1 * cr - y1 * sr2 + x;
+        float ay = x1 * sr + y1 * cr2 + y;
 
-		float bx = x2 * cr - y1 * sr2 + x;
-		float by = x2 * sr + y1 * cr2 + y;
+        float bx = x2 * cr - y1 * sr2 + x;
+        float by = x2 * sr + y1 * cr2 + y;
 
-		float cx = x2 * cr - y2 * sr2 + x;
-		float cy = x2 * sr + y2 * cr2 + y;
+        float cx = x2 * cr - y2 * sr2 + x;
+        float cy = x2 * sr + y2 * cr2 + y;
 
-		float dx = x1 * cr - y2 * sr2 + x;
-		float dy = x1 * sr + y2 * cr2 + y;
+        float dx = x1 * cr - y2 * sr2 + x;
+        float dy = x1 * sr + y2 * cr2 + y;
 
-		m_sQuad.bl.vertices = vertex3( RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), m_fVertexZ );
-		m_sQuad.br.vertices = vertex3( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), m_fVertexZ );
-		m_sQuad.tl.vertices = vertex3( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), m_fVertexZ );
-		m_sQuad.tr.vertices = vertex3( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), m_fVertexZ );
-	}
+        m_sQuad.bl.vertices = vertex3( RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), m_fVertexZ );
+        m_sQuad.br.vertices = vertex3( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), m_fVertexZ );
+        m_sQuad.tl.vertices = vertex3( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), m_fVertexZ );
+        m_sQuad.tr.vertices = vertex3( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), m_fVertexZ );
+    }
 
-	// MARMALADE CHANGE: ADDED CHECK FOR NULL, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
-	if (m_pobTextureAtlas)
-	{
-		m_pobTextureAtlas->updateQuad(&m_sQuad, m_pobTextureAtlas->getTotalQuads());
-	}
+    // MARMALADE CHANGE: ADDED CHECK FOR NULL, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
+    if (m_pobTextureAtlas)
+    {
+        m_pobTextureAtlas->updateQuad(&m_sQuad, m_pobTextureAtlas->getTotalQuads());
+    }
 }
 
 NS_CC_EXT_END

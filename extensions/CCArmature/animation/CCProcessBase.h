@@ -30,19 +30,19 @@ THE SOFTWARE.
 #include "../datas/CCDatas.h"
 
 NS_CC_EXT_BEGIN
-    
+
 enum AnimationType
 {
-	SINGLE_FRAME = -4,          //! the animation just have one frame
-	ANIMATION_NO_LOOP,          //! the animation isn't loop
+    SINGLE_FRAME = -4,          //! the animation just have one frame
+    ANIMATION_NO_LOOP,          //! the animation isn't loop
 
-	ANIMATION_TO_LOOP_FRONT,    //! the animation loop from front
-	ANIMATION_TO_LOOP_BACK,     //! the animation loop from back
+    ANIMATION_TO_LOOP_FRONT,    //! the animation loop from front
+    ANIMATION_TO_LOOP_BACK,     //! the animation loop from back
 
-	ANIMATION_LOOP_FRONT,       //! the animation loop from front
-	ANIMATION_LOOP_BACK,        //! the animation loop from back
+    ANIMATION_LOOP_FRONT,       //! the animation loop from front
+    ANIMATION_LOOP_BACK,        //! the animation loop from back
 
-	ANIMATION_MAX,
+    ANIMATION_MAX,
 
 };
 
@@ -50,11 +50,11 @@ enum AnimationType
 class  CCProcessBase : public CCObject
 {
 public:
-	CCProcessBase(void);
-	~CCProcessBase(void);
-    
-	/**
-	 * Play animation by animation name.
+    CCProcessBase(void);
+    ~CCProcessBase(void);
+
+    /**
+     * Play animation by animation name.
      *
      * @param  animation  It will not used in the CCProcessBase Class
      * @param  durationTo The frames between two animation changing-over.
@@ -81,82 +81,82 @@ public:
      *         2  : fade in and out
      *
      */
-    virtual void play(void * animation, int durationTo, int durationTween,  int loop, int tweenEasing);
+    virtual void play(void *animation, int durationTo, int durationTween,  int loop, int tweenEasing);
 
     /**
-	 * Pause the Process
+     * Pause the Process
      */
-	virtual void pause();
+    virtual void pause();
     /**
-	 * Resume the Process
+     * Resume the Process
      */
-	virtual void resume();
+    virtual void resume();
     /**
-	 * Stop the Process
+     * Stop the Process
      */
-	virtual void stop();
-    
+    virtual void stop();
 
-	virtual void gotoFrame(int frameIndex);
-    
+
+    virtual void gotoFrame(int frameIndex);
+
     /**
      * You should never call this function, unless you know what you do
      * Update the Process, include current process, current frame and son on
      *
      * @param The duration since last update
      */
-	virtual void update(float dt);
- 
+    virtual void update(float dt);
+
     virtual int getCurrentFrameIndex();
-    
+
 protected:
-    
+
 
     /**
-	 * Update(float dt) will call this handler, you can handle your logic here
+     * Update(float dt) will call this handler, you can handle your logic here
      */
-	virtual void updateHandler() {};
+    virtual void updateHandler() {};
 
 protected:
 
-    //! Set and get whether the aniamtion is pause 
-	CC_SYNTHESIZE_PASS_BY_REF(bool, m_bIsPause, IsPause);
-    
+    //! Set and get whether the aniamtion is pause
+    CC_SYNTHESIZE_PASS_BY_REF(bool, m_bIsPause, IsPause);
+
     //! Set and get whether the aniamtion is complete
-	CC_SYNTHESIZE_PASS_BY_REF(bool, m_bIsComplete, IsComplete);
+    CC_SYNTHESIZE_PASS_BY_REF(bool, m_bIsComplete, IsComplete);
 
-	//! Set and get whether the aniamtion is playing
-	CC_SYNTHESIZE_PASS_BY_REF(bool, m_bIsPlaying, IsPlaying);
+    //! Set and get whether the aniamtion is playing
+    CC_SYNTHESIZE_PASS_BY_REF(bool, m_bIsPlaying, IsPlaying);
 
-	//! Current percent this process arrived
-	CC_SYNTHESIZE_PASS_BY_REF(float, m_fCurrentPercent, CurrentPercent);
-	
-	//! The raw duration 
-	CC_SYNTHESIZE_PASS_BY_REF(int, rawDuration, RawDuration);
-	
-	//! The animation whether or not loop
-	CC_SYNTHESIZE_PASS_BY_REF(AnimationType, m_eLoopType, LoopType);
+    //! Current percent this process arrived
+    CC_SYNTHESIZE_PASS_BY_REF(float, m_fCurrentPercent, CurrentPercent);
 
-	//! The tween easing effect
-	CC_SYNTHESIZE_PASS_BY_REF(CCTweenType, m_eTweenEasing, TweenEasing);
+    //! The raw duration
+    CC_SYNTHESIZE_PASS_BY_REF(int, m_iRawDuration, RawDuration);
+
+    //! The animation whether or not loop
+    CC_SYNTHESIZE_PASS_BY_REF(AnimationType, m_eLoopType, LoopType);
+
+    //! The tween easing effect
+    CC_SYNTHESIZE_PASS_BY_REF(CCTweenType, m_eTweenEasing, TweenEasing);
 
     //! The animation update speed
-	CC_SYNTHESIZE_PASS_BY_REF(float, m_fAnimationInternal, AnimationInternal);
+    CC_SYNTHESIZE_PASS_BY_REF(float, m_fAnimationInternal, AnimationInternal);
 
     //! Scale the animation speed
-	CC_SYNTHESIZE_PASS_BY_REF(float, m_fAnimationScale, AnimationScale);
-	
+    CC_SYNTHESIZE_PASS_BY_REF(float, m_fAnimationScale, AnimationScale);
+
 protected:
     //! The durantion frame count will run
-	int m_iDurationTween;
+    int m_iDurationTween;
 
-	//! Current frame this process arrived, this frame is tween frame
-	float m_fCurrentFrame;
-	//! Frame index it the time line
-	int m_iCurFrameIndex;
+    //! Current frame this process arrived, this frame is tween frame
+    float m_fCurrentFrame;
+    //! Frame index it the time line
+    int m_iCurFrameIndex;
 
-	//! Next frame this process need run to
-	int m_iNextFrameIndex;
+    //! Next frame this process need run to
+    int m_iNextFrameIndex;
 
 
     bool m_bIsLoopBack;

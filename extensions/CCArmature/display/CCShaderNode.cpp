@@ -26,23 +26,23 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
-enum 
+enum
 {
     SIZE_X = 128,
     SIZE_Y = 128,
 };
 
 CCShaderNode::CCShaderNode()
-:m_center(vertex2(0.0f, 0.0f))
-,m_resolution(vertex2(0.0f, 0.0f))
-,m_time(0.0f)
-,m_uniformCenter(0)
-,m_uniformResolution(0)
-,m_uniformTime(0)
+    : m_center(vertex2(0.0f, 0.0f))
+    , m_resolution(vertex2(0.0f, 0.0f))
+    , m_time(0.0f)
+    , m_uniformCenter(0)
+    , m_uniformResolution(0)
+    , m_uniformTime(0)
 {
 }
 
-CCShaderNode* CCShaderNode::shaderNodeWithVertex(const char *vert, const char *frag)
+CCShaderNode *CCShaderNode::shaderNodeWithVertex(const char *vert, const char *frag)
 {
     CCShaderNode *node = new CCShaderNode();
     node->initWithVertex(vert, frag);
@@ -93,10 +93,10 @@ void CCShaderNode::update(float dt)
 
 void CCShaderNode::translateFormOtherNode(CCAffineTransform &transform)
 {
-	CCNode::setAdditionalTransform(transform);
+    CCNode::setAdditionalTransform(transform);
 
-	m_center = vertex2(m_sAdditionalTransform.tx * CC_CONTENT_SCALE_FACTOR(), m_sAdditionalTransform.ty * CC_CONTENT_SCALE_FACTOR());
-	m_resolution = vertex2( SIZE_X * m_sAdditionalTransform.a, SIZE_Y * m_sAdditionalTransform.d);
+    m_center = vertex2(m_sAdditionalTransform.tx * CC_CONTENT_SCALE_FACTOR(), m_sAdditionalTransform.ty * CC_CONTENT_SCALE_FACTOR());
+    m_resolution = vertex2( SIZE_X * m_sAdditionalTransform.a, SIZE_Y * m_sAdditionalTransform.d);
 }
 
 void CCShaderNode::setPosition(const CCPoint &newPosition)
@@ -111,7 +111,7 @@ void CCShaderNode::draw()
     CC_NODE_DRAW_SETUP();
 
     float w = SIZE_X, h = SIZE_Y;
-    GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
+    GLfloat vertices[12] = {0, 0, w, 0, w, h, 0, 0, 0, h, w, h};
 
     //
     // Uniforms
@@ -128,9 +128,9 @@ void CCShaderNode::draw()
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
 
     glDrawArrays(GL_TRIANGLES, 0, 6);
-    
+
     CC_INCREMENT_GL_DRAWS(1);
 }
-    
+
 
 NS_CC_EXT_END

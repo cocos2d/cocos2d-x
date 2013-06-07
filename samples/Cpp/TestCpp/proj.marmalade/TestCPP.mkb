@@ -332,6 +332,11 @@ files
 	SceneController.cpp
 	SceneController.h
 
+	[Test/ExtensionsTest/ArmatureTest]
+	(../Classes/ExtensionsTest/ArmatureTest)
+	ArmatureScene.cpp
+	ArmatureScene.h
+
 	[Test/FontTest]
 	(../Classes/FontTest)
 	FontTest.cpp

@@ -25,6 +25,7 @@ THE SOFTWARE.
 
 #include "CCPhysicsWorld.h"
 #include "../utils/CCArmatureDefine.h"
+#include "Box2D/Box2D.h"
 
 NS_CC_EXT_BEGIN
 
@@ -33,86 +34,86 @@ CCPhysicsWorld *CCPhysicsWorld::s_PhysicsWorld = NULL;
 
 CCPhysicsWorld *CCPhysicsWorld::sharedPhysicsWorld()
 {
-	if (s_PhysicsWorld == NULL)
-	{
-		s_PhysicsWorld = new CCPhysicsWorld();
-		s_PhysicsWorld->initNoGravityWorld();
-	}
+    if (s_PhysicsWorld == NULL)
+    {
+        s_PhysicsWorld = new CCPhysicsWorld();
+        s_PhysicsWorld->initNoGravityWorld();
+    }
 
-	return s_PhysicsWorld;
+    return s_PhysicsWorld;
 }
 
 void CCPhysicsWorld::purgePhysicsWorld()
 {
-	delete s_PhysicsWorld;
-	s_PhysicsWorld = NULL;
+    delete s_PhysicsWorld;
+    s_PhysicsWorld = NULL;
 }
 
 CCPhysicsWorld::CCPhysicsWorld()
-	:m_pNoGravityWorld(NULL)
-	,m_pDebugDraw(NULL)
+    : m_pNoGravityWorld(NULL)
+    , m_pDebugDraw(NULL)
 {
 }
 
 CCPhysicsWorld::~CCPhysicsWorld()
 {
-	CC_SAFE_DELETE(m_pDebugDraw);
-	CC_SAFE_DELETE(m_pNoGravityWorld);
-	CC_SAFE_DELETE(m_pContactListener);
+    CC_SAFE_DELETE(m_pDebugDraw);
+    CC_SAFE_DELETE(m_pNoGravityWorld);
+    CC_SAFE_DELETE(m_pContactListener);
 }
 
 void CCPhysicsWorld::initNoGravityWorld()
 {
-	b2Vec2 noGravity(0, 0);
+    b2Vec2 noGravity(0, 0);
 
-	m_pNoGravityWorld = new b2World(noGravity);
-	m_pNoGravityWorld->SetAllowSleeping(true);
+    m_pNoGravityWorld = new b2World(noGravity);
+    m_pNoGravityWorld->SetAllowSleeping(true);
 
-	m_pContactListener = new ContactListener();
-	m_pNoGravityWorld->SetContactListener(m_pContactListener);
+    m_pContactListener = new ContactListener();
+    m_pNoGravityWorld->SetContactListener(m_pContactListener);
 
 
 #if ENABLE_PHYSICS_DEBUG
-	m_pDebugDraw = new GLESDebugDraw( PT_RATIO );
-	m_pNoGravityWorld->SetDebugDraw(m_pDebugDraw);
+    m_pDebugDraw = new GLESDebugDraw( PT_RATIO );
+    m_pNoGravityWorld->SetDebugDraw(m_pDebugDraw);
 
-	uint32 flags = 0;
-	flags += b2Draw::e_shapeBit;
-	//        flags += b2Draw::e_jointBit;
-	//        flags += b2Draw::e_aabbBit;
-	//        flags += b2Draw::e_pairBit;
-	//        flags += b2Draw::e_centerOfMassBit;
-	m_pDebugDraw->SetFlags(flags);
+    uint32 flags = 0;
+    flags += b2Draw::e_shapeBit;
+    //        flags += b2Draw::e_jointBit;
+    //        flags += b2Draw::e_aabbBit;
+    //        flags += b2Draw::e_pairBit;
+    //        flags += b2Draw::e_centerOfMassBit;
+    m_pDebugDraw->SetFlags(flags);
 #endif
 }
 
 b2World *CCPhysicsWorld::getNoGravityWorld()
 {
-	return m_pNoGravityWorld;
+    return m_pNoGravityWorld;
 }
 
 void CCPhysicsWorld::update(float dt)
 {
-	m_pNoGravityWorld->Step(dt, 0, 0);
+    m_pNoGravityWorld->Step(dt, 0, 0);
 
-	for (std::list<Contact>::iterator it = m_pContactListener->contact_list.begin(); it != m_pContactListener->contact_list.end(); ++it)
-	{
-		Contact &contact = *it;
+    for (std::list<Contact>::iterator it = m_pContactListener->contact_list.begin(); it != m_pContactListener->contact_list.end(); ++it)
+    {
+        Contact &contact = *it;
 
-		b2Body *b2a = contact.fixtureA->GetBody();
-		b2Body *b2b = contact.fixtureB->GetBody();
+        b2Body *b2a = contact.fixtureA->GetBody();
+        b2Body *b2b = contact.fixtureB->GetBody();
 
-		CCBone *ba = (CCBone*)b2a->GetUserData();
-		CCBone *bb = (CCBone*)b2b->GetUserData();
+        CCBone *ba = (CCBone *)b2a->GetUserData();
+        CCBone *bb = (CCBone *)b2b->GetUserData();
 
-		BoneColliderSignal.emit(ba, bb);
-	}
+        BoneColliderSignal.emit(ba, bb);
+    }
 
 }
 
 void CCPhysicsWorld::drawDebug()
 {
-	m_pNoGravityWorld->DrawDebugData();
+    m_pNoGravityWorld->DrawDebugData();
 }
 
 NS_CC_EXT_END

@@ -56,7 +56,7 @@ public: \
 }
 
 NS_CC_EXT_BEGIN
-	
+
 #pragma region CCBaseData
 /**
 * the base node include a lot of attribute.
@@ -64,43 +64,43 @@ NS_CC_EXT_BEGIN
 class  CCBaseData : public CCObject
 {
 public:
-	CS_CREATE_NO_PARAM_NO_INIT(CCBaseData)
+    CS_CREATE_NO_PARAM_NO_INIT(CCBaseData)
 public:
-	CCBaseData();
-	~CCBaseData(void);
+    CCBaseData();
+    ~CCBaseData(void);
 
-	/*
-	* Copy datas from node
-	* @param  node A CCBaseData to copy datas
-	*/
-	virtual void copy(const CCBaseData *_node);
+    /*
+    * Copy datas from node
+    * @param  node A CCBaseData to copy datas
+    */
+    virtual void copy(const CCBaseData *_node);
 
-	/*
-	* Calculate two CCBaseData's between value(_to - _from) and set to self
-	*
-	* @param  from   from CCBaseData
-	* @param  to     to CCBaseData
-	*/
-	virtual void subtract(CCBaseData *_from, CCBaseData *_to);
+    /*
+    * Calculate two CCBaseData's between value(_to - _from) and set to self
+    *
+    * @param  from   from CCBaseData
+    * @param  to     to CCBaseData
+    */
+    virtual void subtract(CCBaseData *_from, CCBaseData *_to);
 public:
-	/**
-	* x y skewX skewY scaleX scaleY used to calculate transform matrix
-	* skewX, skewY can have rotation effect
-	* To get more matrix information, you can have a look at this pape : http://www.senocular.com/flash/tutorials/transformmatrix/
-	*/
-	float skewX;
-	float skewY;
-	float scaleX;
-	float scaleY;
+    /**
+    * x y skewX skewY scaleX scaleY used to calculate transform matrix
+    * skewX, skewY can have rotation effect
+    * To get more matrix information, you can have a look at this pape : http://www.senocular.com/flash/tutorials/transformmatrix/
+    */
+    float skewX;
+    float skewY;
+    float scaleX;
+    float scaleY;
 
-	float tweenRotate;			//! SkewX, SkewY, and TweenRotate effect the rotation
+    float tweenRotate;			//! SkewX, SkewY, and TweenRotate effect the rotation
 
-	bool isUseColorInfo;		//! Whether or not this frame have the color changed Info
-	int a, r, g, b;
+    bool isUseColorInfo;		//! Whether or not this frame have the color changed Info
+    int a, r, g, b;
 
-	float x;					//! position x attribute
-	float y;					//! position y attribute
-	int zOrder;					//! zorder attribute, used to order the CCBone's depth order
+    float x;					//! position x attribute
+    float y;					//! position y attribute
+    int zOrder;					//! zorder attribute, used to order the CCBone's depth order
 };
 #pragma endregion
 
@@ -108,26 +108,27 @@ public:
 /**
 * DisplayType distinguish which type you display is.
 */
-enum DisplayType{
-	CS_DISPLAY_SPRITE,          //! display is a single CCSprite
-	CS_DISPLAY_ARMATURE,        //! display is a CCArmature
-	CS_DISPLAY_PARTICLE,        //! display is a CCParticle.
-	CS_DISPLAY_SHADER,          //! display is a shader
+enum DisplayType
+{
+    CS_DISPLAY_SPRITE,          //! display is a single CCSprite
+    CS_DISPLAY_ARMATURE,        //! display is a CCArmature
+    CS_DISPLAY_PARTICLE,        //! display is a CCParticle.
+    CS_DISPLAY_SHADER,          //! display is a shader
 
-	CS_DISPLAY_MAX
+    CS_DISPLAY_MAX
 };
 
 class  CCDisplayData : public CCObject
 {
 public:
-	CS_CREATE_NO_PARAM_NO_INIT(CCDisplayData)
+    CS_CREATE_NO_PARAM_NO_INIT(CCDisplayData)
 
-		static const char *changeDisplayToTexture(const char *);
+    static const char *changeDisplayToTexture(const char *);
 public:
-	CCDisplayData();
-	virtual ~CCDisplayData(void);
+    CCDisplayData();
+    virtual ~CCDisplayData(void);
 
-	DisplayType displayType;	//! mark which type your display is
+    DisplayType displayType;	//! mark which type your display is
 };
 #pragma endregion
 
@@ -137,22 +138,25 @@ public:
 class  CCSpriteDisplayData : public CCDisplayData
 {
 public:
-	CS_CREATE_NO_PARAM_NO_INIT(CCSpriteDisplayData)
+    CS_CREATE_NO_PARAM_NO_INIT(CCSpriteDisplayData)
 public:
-	CCSpriteDisplayData();
-	virtual ~CCSpriteDisplayData();
+    CCSpriteDisplayData();
+    virtual ~CCSpriteDisplayData();
 
-	inline void setParam(const char *displayName){ this->displayName = displayName; }
-	void copy(CCSpriteDisplayData *displayData);
+    inline void setParam(const char *displayName)
+    {
+        this->displayName = displayName;
+    }
+    void copy(CCSpriteDisplayData *displayData);
 public:
-	/**
-	* If DisplayType is CS_DISPLAY_SPRITE, then CCBone will use this image name to create a CCSprite from CCSpriteFrameCache.
-	* It should note that when use this name to create CCSprite from CCSpriteFrameCache, you should use m_strDisplayName + ".png", because when use Texture Packer to pack single image file, the name have ".png".
-	*
-	* If DisplayType is CS_DISPLAY_ARMATURE, the name is the CCArmature's name. When CCBone init display and type is CS_DISPLAY_ARMATURE,
-	* then CCBone will create a CCArmature.
-	*/
-	std::string displayName;
+    /**
+    * If DisplayType is CS_DISPLAY_SPRITE, then CCBone will use this image name to create a CCSprite from CCSpriteFrameCache.
+    * It should note that when use this name to create CCSprite from CCSpriteFrameCache, you should use m_strDisplayName + ".png", because when use Texture Packer to pack single image file, the name have ".png".
+    *
+    * If DisplayType is CS_DISPLAY_ARMATURE, the name is the CCArmature's name. When CCBone init display and type is CS_DISPLAY_ARMATURE,
+    * then CCBone will create a CCArmature.
+    */
+    std::string displayName;
 
 };
 #pragma endregion
@@ -160,24 +164,27 @@ public:
 
 #pragma region CCArmatureDisplayData
 class  CCArmatureDisplayData  : public CCDisplayData
-{    
+{
 public:
-	CS_CREATE_NO_PARAM_NO_INIT(CCArmatureDisplayData)
+    CS_CREATE_NO_PARAM_NO_INIT(CCArmatureDisplayData)
 public:
-	CCArmatureDisplayData();
-	virtual ~CCArmatureDisplayData();
+    CCArmatureDisplayData();
+    virtual ~CCArmatureDisplayData();
 
-	inline void setParam(const char *displayName){ this->displayName = displayName; }
-	void copy(CCArmatureDisplayData *displayData);
+    inline void setParam(const char *displayName)
+    {
+        this->displayName = displayName;
+    }
+    void copy(CCArmatureDisplayData *displayData);
 public:
-	/**
-	* If DisplayType is CS_DISPLAY_SPRITE, then CCBone will use this image name to create a CCSprite from CCSpriteFrameCache.
-	* It should note that when use this name to create CCSprite from CCSpriteFrameCache, you should use m_strDisplayName + ".png", because when use Texture Packer to pack single image file, the name have ".png".
-	*
-	* If DisplayType is CS_DISPLAY_ARMATURE, the name is the CCArmature's name. When CCBone init display and type is CS_DISPLAY_ARMATURE,
-	* then CCBone will create a CCArmature.
-	*/
-	std::string displayName;
+    /**
+    * If DisplayType is CS_DISPLAY_SPRITE, then CCBone will use this image name to create a CCSprite from CCSpriteFrameCache.
+    * It should note that when use this name to create CCSprite from CCSpriteFrameCache, you should use m_strDisplayName + ".png", because when use Texture Packer to pack single image file, the name have ".png".
+    *
+    * If DisplayType is CS_DISPLAY_ARMATURE, the name is the CCArmature's name. When CCBone init display and type is CS_DISPLAY_ARMATURE,
+    * then CCBone will create a CCArmature.
+    */
+    std::string displayName;
 
 };
 #pragma endregion
@@ -187,16 +194,19 @@ public:
 class  CCParticleDisplayData : public CCDisplayData
 {
 public:
-	CS_CREATE_NO_PARAM_NO_INIT(CCParticleDisplayData)
+    CS_CREATE_NO_PARAM_NO_INIT(CCParticleDisplayData)
 public:
-	CCParticleDisplayData();
-	virtual ~CCParticleDisplayData(){};
+    CCParticleDisplayData();
+    virtual ~CCParticleDisplayData() {};
 
-	void setParam(const char *plist){ this->plist = plist; }
+    void setParam(const char *plist)
+    {
+        this->plist = plist;
+    }
 
-	void copy(CCParticleDisplayData *displayData);
-public:    
-	std::string plist;
+    void copy(CCParticleDisplayData *displayData);
+public:
+    std::string plist;
 };
 #pragma endregion
 
@@ -205,17 +215,21 @@ public:
 class  CCShaderDisplayData : public CCDisplayData
 {
 public:
-	CS_CREATE_NO_PARAM_NO_INIT(CCShaderDisplayData)
+    CS_CREATE_NO_PARAM_NO_INIT(CCShaderDisplayData)
 public:
-	CCShaderDisplayData();
-	virtual ~CCShaderDisplayData(){};
+    CCShaderDisplayData();
+    virtual ~CCShaderDisplayData() {};
 
-	inline void setParam(const char *vert, const char *frag){ this->vert = vert; this->frag = frag;}
+    inline void setParam(const char *vert, const char *frag)
+    {
+        this->vert = vert;
+        this->frag = frag;
+    }
 
-	void copy(CCShaderDisplayData *displayData);
+    void copy(CCShaderDisplayData *displayData);
 public:
-	std::string vert;    
-	std::string frag;
+    std::string vert;
+    std::string frag;
 };
 #pragma endregion
 
@@ -229,19 +243,19 @@ public:
 class  CCBoneData : public CCBaseData
 {
 public:
-	CS_CREATE_NO_PARAM(CCBoneData)
+    CS_CREATE_NO_PARAM(CCBoneData)
 public:
-	CCBoneData(void);
-	~CCBoneData(void);
+    CCBoneData(void);
+    ~CCBoneData(void);
 
-	virtual bool init();
+    virtual bool init();
 
-	void addDisplayData(CCDisplayData *displayData);
-	CCDisplayData *getDisplayData(int index);
+    void addDisplayData(CCDisplayData *displayData);
+    CCDisplayData *getDisplayData(int index);
 public:
-	std::string name;					//! the bone's name
-	std::string parentName;		//! the bone parent's name
-	CCArray displayDataList;		//! save CCDisplayData informations for the CCBone
+    std::string name;			//! the bone's name
+    std::string parentName;		//! the bone parent's name
+    CCArray displayDataList;	//! save CCDisplayData informations for the CCBone
 };
 #pragma  endregion
 
@@ -254,18 +268,18 @@ public:
 class  CCArmatureData : public CCObject
 {
 public:
-	CS_CREATE_NO_PARAM(CCArmatureData)
+    CS_CREATE_NO_PARAM(CCArmatureData)
 public:
-	CCArmatureData();
-	~CCArmatureData();
+    CCArmatureData();
+    ~CCArmatureData();
 
-	bool init();
-	void addBoneData(CCBoneData *boneData);
-	CCBoneData *getBoneData(const char *boneName);
+    bool init();
+    void addBoneData(CCBoneData *boneData);
+    CCBoneData *getBoneData(const char *boneName);
 public:
-	std::string name;
-	CCDictionary boneDataDic;
-	CCArray boneList;
+    std::string name;
+    CCDictionary boneDataDic;
+    CCArray boneList;
 };
 #pragma  endregion
 
@@ -273,29 +287,29 @@ public:
 class  CCFrameData : public CCBaseData
 {
 public:
-	CS_CREATE_NO_PARAM_NO_INIT(CCFrameData)
+    CS_CREATE_NO_PARAM_NO_INIT(CCFrameData)
 public:
-	CCFrameData();
-	~CCFrameData();
+    CCFrameData();
+    ~CCFrameData();
 
-	virtual void copy(CCFrameData *frameData);
+    virtual void copy(CCFrameData *frameData);
 public:
-	int duration;			//! The frame will last m_iDuration frames
-	CCTweenType tweenEasing;	//! Every frame's tween easing effect
+    int duration;                //! The frame will last m_iDuration frames
+    CCTweenType tweenEasing;     //! Every frame's tween easing effect
 
-	/**
-	* The current display index when change to this frame.
-	* If value is -1, then display will not show.
-	*/
-	int displayIndex;
+    /**
+    * The current display index when change to this frame.
+    * If value is -1, then display will not show.
+    */
+    int displayIndex;
 
-	/**
-	* m_strMovement, m_strEvent, m_strSound, m_strSoundEffect do not support yet
-	*/
-	std::string m_strMovement;
-	std::string m_strEvent;
-	std::string m_strSound;
-	std::string m_strSoundEffect;
+    /**
+    * m_strMovement, m_strEvent, m_strSound, m_strSoundEffect do not support yet
+    */
+    std::string m_strMovement;
+    std::string m_strEvent;
+    std::string m_strSound;
+    std::string m_strSoundEffect;
 };
 #pragma endregion
 
@@ -303,22 +317,22 @@ public:
 class  CCMovementBoneData : public CCObject
 {
 public:
-	CS_CREATE_NO_PARAM(CCMovementBoneData)
+    CS_CREATE_NO_PARAM(CCMovementBoneData)
 public:
-	CCMovementBoneData();
-	~CCMovementBoneData(void);
+    CCMovementBoneData();
+    ~CCMovementBoneData(void);
 
-	virtual bool init();
+    virtual bool init();
 
-	void addFrameData(CCFrameData *frameData);
-	CCFrameData *getFrameData(int index);
+    void addFrameData(CCFrameData *frameData);
+    CCFrameData *getFrameData(int index);
 public:
-	float delay;		//! movement delay percent, this value can produce a delay effect
-	float scale;		//! scale this movement
-	float duration;		//! this CCBone in this movement will last m_iDuration frames
-	std::string name;	//! bone name
+    float delay;		//! movement delay percent, this value can produce a delay effect
+    float scale;		//! scale this movement
+    float duration;		//! this CCBone in this movement will last m_iDuration frames
+    std::string name;	//! bone name
 
-	CCArray frameList;
+    CCArray frameList;
 };
 #pragma endregion
 
@@ -326,45 +340,45 @@ public:
 class  CCMovementData : public CCObject
 {
 public:
-	CS_CREATE_NO_PARAM_NO_INIT(CCMovementData)
+    CS_CREATE_NO_PARAM_NO_INIT(CCMovementData)
 public:
-	CCMovementData(void);
-	~CCMovementData(void);
+    CCMovementData(void);
+    ~CCMovementData(void);
 
-	void addMovementBoneData(CCMovementBoneData *movBoneData);
-	CCMovementBoneData *getMovementBoneData(const char *boneName);
+    void addMovementBoneData(CCMovementBoneData *movBoneData);
+    CCMovementBoneData *getMovementBoneData(const char *boneName);
 public:
-	std::string name;
-	int duration;		 //! the frames this movement will last
-	bool loop;			//! whether the movement is looped
+    std::string name;
+    int duration;        //! the frames this movement will last
+    bool loop;           //! whether the movement is looped
 
-	/**
-	* Change to this movement will last m_iDurationTo frames. Use this effect can avoid too suddenly changing.
-	*
-	* Example : current movement is "stand", we want to change to "run", then we fill m_iDurationTo frames before
-	* change to "run" instead of changing to "run" directly.
-	*/
-	int durationTo;
+    /**
+    * Change to this movement will last m_iDurationTo frames. Use this effect can avoid too suddenly changing.
+    *
+    * Example : current movement is "stand", we want to change to "run", then we fill m_iDurationTo frames before
+    * change to "run" instead of changing to "run" directly.
+    */
+    int durationTo;
 
-	/*
-	* This is different from m_iDuration, m_iDurationTween contain tween effect.
-	*
-	* Example : If we edit 10 frames in the flash, then m_iDuration is 10. When we set m_iDurationTween to 50, the movement will last 50 frames, the extra 40 frames will auto filled with tween effect
-	*/
-	int durationTween;
+    /*
+    * This is different from m_iDuration, m_iDurationTween contain tween effect.
+    *
+    * Example : If we edit 10 frames in the flash, then m_iDuration is 10. When we set m_iDurationTween to 50, the movement will last 50 frames, the extra 40 frames will auto filled with tween effect
+    */
+    int durationTween;
 
-	/**
-	* Which tween easing effect the movement use
-	* TWEEN_EASING_MAX : use the value from CCMovementData get from flash design panel
-	*/
-	CCTweenType tweenEasing;
+    /**
+    * Which tween easing effect the movement use
+    * TWEEN_EASING_MAX : use the value from CCMovementData get from flash design panel
+    */
+    CCTweenType tweenEasing;
 
-	/**
-	* @brief	save movment bone datas
-	* @key	std::string
-	* @value	CCMovementBoneData *
-	*/
-	CCDictionary movBoneDataDic;
+    /**
+    * @brief	save movment bone datas
+    * @key	std::string
+    * @value	CCMovementBoneData *
+    */
+    CCDictionary movBoneDataDic;
 };
 #pragma endregion
 
@@ -377,51 +391,51 @@ public:
 class  CCAnimationData : public CCObject
 {
 public:
-	CS_CREATE_NO_PARAM_NO_INIT(CCAnimationData)
+    CS_CREATE_NO_PARAM_NO_INIT(CCAnimationData)
 public:
-	CCAnimationData(void);
-	~CCAnimationData(void);
+    CCAnimationData(void);
+    ~CCAnimationData(void);
 
-	void release();
-	void retain();
+    void release();
+    void retain();
 
-	void addMovement(CCMovementData* movData);
-	CCMovementData *getMovement(const char *movementName);
-	int getMovementCount();
+    void addMovement(CCMovementData *movData);
+    CCMovementData *getMovement(const char *movementName);
+    int getMovementCount();
 public:
-	std::string name;
-	CCDictionary movementDataDic;
-	std::vector<std::string> movementNames;
+    std::string name;
+    CCDictionary movementDataDic;
+    std::vector<std::string> movementNames;
 };
 #pragma endregion
 
 #pragma region CCContourData
 struct CCContourVertex2 : public CCObject
 {
-	CCContourVertex2(float x, float y)
-	{
-		this->x = x;
-		this->y = y;
-	}
+    CCContourVertex2(float x, float y)
+    {
+        this->x = x;
+        this->y = y;
+    }
 
-	float x;
-	float y;
+    float x;
+    float y;
 };
 
 /*
-* CCContourData include a contour vertex information 
+* CCContourData include a contour vertex information
 */
 class  CCContourData : public CCObject
 {
 public:
-	CS_CREATE_NO_PARAM(CCContourData)
+    CS_CREATE_NO_PARAM(CCContourData)
 public:
-	CCContourData();
-	~CCContourData(void);
+    CCContourData();
+    ~CCContourData(void);
 
-	virtual bool init();
+    virtual bool init();
 public:
-	CCArray vertexList;	//! Save contour vertex info, vertex saved in a CCPoint
+    CCArray vertexList;	//! Save contour vertex info, vertex saved in a CCPoint
 };
 #pragma endregion
 
@@ -430,30 +444,30 @@ public:
 
 #pragma region CCTextureData
 /*
-* CCTextureData include a texture's information 
+* CCTextureData include a texture's information
 */
 class  CCTextureData : public CCObject
 {
 public:
-	CS_CREATE_NO_PARAM(CCTextureData)
+    CS_CREATE_NO_PARAM(CCTextureData)
 public:
-	CCTextureData();
-	~CCTextureData(void);
+    CCTextureData();
+    ~CCTextureData(void);
 
-	virtual bool init();
+    virtual bool init();
 
-	void addContourData(CCContourData *contourData);
-	CCContourData *getContourData(int index);
+    void addContourData(CCContourData *contourData);
+    CCContourData *getContourData(int index);
 public:
-	std::string name;	//! The texture's name
+    std::string name;	//! The texture's name
 
-	float pivotX;		//! The texture's anchor point
-	float pivotY;
+    float pivotX;		//! The texture's anchor point
+    float pivotY;
 
-	float width;		//! The texture's width, height
-	float height;
+    float width;		//! The texture's width, height
+    float height;
 
-	CCArray contourDataList;
+    CCArray contourDataList;
 };
 #pragma endregion
 

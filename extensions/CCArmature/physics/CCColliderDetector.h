@@ -27,7 +27,9 @@ THE SOFTWARE.
 
 #include "../utils/CCArmatureDefine.h"
 #include "../datas/CCDatas.h"
-#include "Box2D/Box2D.h"
+
+class b2Body;
+struct b2Filter;
 
 NS_CC_EXT_BEGIN
 
