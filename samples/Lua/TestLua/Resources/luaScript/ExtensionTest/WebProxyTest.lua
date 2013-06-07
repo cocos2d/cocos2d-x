@@ -159,7 +159,6 @@
     end
 
     if nil ~= wsSendText then
-        print("come in")
         wsSendText:registerScriptHandler(wsSendTextOpen,kwebSocketScriptHandlerOpen)
         wsSendText:registerScriptHandler(wsSendTextMessage,kwebSocketScriptHandlerMessage)
         wsSendText:registerScriptHandler(wsSendTextClose,kwebSocketScriptHandlerClose)
