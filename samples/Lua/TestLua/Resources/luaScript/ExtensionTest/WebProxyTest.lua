@@ -28,7 +28,7 @@
         if nil ~= wsSendText then
             if kStateOpen == wsSendText:getReadyState() then
                sendTextStatus:setString("Send Text WS is waiting...")
-               wsSendText:sendStrMsg("Hello WebSocket中文, I'm a text message.")
+               wsSendText:sendTextMsg("Hello WebSocket中文, I'm a text message.")
             else
                 local warningStr = "send text websocket instance wasn't ready..."
                 print(warningStr)
@@ -116,7 +116,7 @@
         sendBinaryStatus:setString("Send Binary WS was opened.")
     end
 
-    local function wsSendBinaryMessage(paramTable,strEventName)
+    local function wsSendBinaryMessage(paramTable)
         local length = table.getn(paramTable)
         local i = 1
         local strInfo = "response bin msg: "

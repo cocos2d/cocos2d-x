@@ -233,10 +233,6 @@ public:
      * @return true if the assert was handled by the script engine, false otherwise.
      */
     virtual bool handleAssert(const char *msg) = 0;
-    /**
-    function for commen event ,param have lua table
-    **/
-    virtual int executeEventByTable(int nHandler,const unsigned char* pTable,int nLength,const char * pEventName,CCObject* pEventSource = NULL,const char* pEventSourceClassName = NULL){ return 0 ; }
 };
 
 /**
