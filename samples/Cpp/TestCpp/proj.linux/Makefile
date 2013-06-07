@@ -91,6 +91,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/controller.cpp \
 	../Classes/testBasic.cpp \
 	../Classes/AppDelegate.cpp \
+	../Classes/BaseTest.cpp \
 	../Classes/VisibleRect.cpp \
 	main.cpp
 
