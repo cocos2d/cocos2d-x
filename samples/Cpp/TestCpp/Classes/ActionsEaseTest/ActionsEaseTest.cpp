@@ -606,7 +606,7 @@ std::string EaseSpriteDemo::title()
 
 void EaseSpriteDemo::onEnter()
 {
-    CCLayer::onEnter();
+    BaseTest::onEnter();
 
     // Or you can create an sprite using a filename. PNG and BMP files are supported. Probably TIFF too
     m_grossini = CCSprite::create(s_pPathGrossini); m_grossini->retain();
@@ -620,23 +620,6 @@ void EaseSpriteDemo::onEnter()
     m_grossini->setPosition(ccp(VisibleRect::left().x + 60, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height*1/5));
     m_kathia->setPosition(ccp(VisibleRect::left().x + 60, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height*2.5f/5));
     m_tamara->setPosition(ccp(VisibleRect::left().x + 60, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height*4/5));
-
-    CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 32);
-    addChild(label);
-    label->setPosition(ccp(VisibleRect::center().x, VisibleRect::top().y-50));
-
-    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, std::bind(&EaseSpriteDemo::backCallback, this, std::placeholders::_1) );
-    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, std::bind(&EaseSpriteDemo::restartCallback , this, std::placeholders::_1) );
-    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, std::bind(&EaseSpriteDemo::nextCallback, this, std::placeholders::_1) );
-
-    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
-
-    menu->setPosition(CCPointZero);
-    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y + item2->getContentSize().height/2));
-    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y + item2->getContentSize().height/2));
-    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y + item2->getContentSize().height/2));
-    
-    addChild(menu, 1);    
 }
 
 void EaseSpriteDemo::restartCallback(CCObject* pSender)

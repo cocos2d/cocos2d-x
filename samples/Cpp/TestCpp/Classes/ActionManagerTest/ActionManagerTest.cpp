@@ -82,28 +82,6 @@ std::string ActionManagerTest::title()
     return "No title";
 }
 
-void ActionManagerTest::onEnter()
-{
-    CCLayer::onEnter();
-
-    CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 32);
-    addChild(label, 1);
-    label->setPosition(ccp(VisibleRect::center().x, VisibleRect::top().y-50));
-
-    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, std::bind(&ActionManagerTest::backCallback, this, std::placeholders::_1) );
-    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, std::bind(&ActionManagerTest::restartCallback, this, std::placeholders::_1) );
-    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, std::bind(&ActionManagerTest::nextCallback, this, std::placeholders::_1));
-
-    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
-
-    menu->setPosition(CCPointZero);
-    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y + item2->getContentSize().height/2));
-    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y + item2->getContentSize().height/2));
-    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y + item2->getContentSize().height/2));
-    
-    addChild(menu, 1);    
-}
-
 void ActionManagerTest::restartCallback(CCObject* pSender)
 {
     CCScene* s = new ActionManagerTestScene();

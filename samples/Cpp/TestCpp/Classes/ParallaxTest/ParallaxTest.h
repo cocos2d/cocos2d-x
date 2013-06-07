@@ -2,8 +2,9 @@
 #define _PARALLAX_TEST_H_
 
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
-class ParallaxDemo : public CCLayer
+class ParallaxDemo : public BaseTest
 {
 protected:
     CCTextureAtlas* m_atlas;
