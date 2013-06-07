@@ -77,6 +77,7 @@ public:
      */
     void registerScriptHandler(int nFunID,WebSocketScriptHandlerType scriptHandlerType)
     {
+        this->unregisterScriptHandler(scriptHandlerType);
         m_mapScriptHandler[scriptHandlerType] = nFunID;
     }
     /**
