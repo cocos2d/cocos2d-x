@@ -95,7 +95,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Classes"/>
+						<entry excluding="ExtensionsTest/NetworkTest/WebSocketTest.cpp|ExtensionsTest/NetworkTest/WebSocketTest.h" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Classes"/>
 						<entry excluding="Classes" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
