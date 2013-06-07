@@ -30,7 +30,6 @@ THE SOFTWARE.
 #include "../utils/CCConstValue.h"
 #include "../datas/CCDatas.h"
 
-//using namespace std;
 
 NS_CC_EXT_BEGIN
 
@@ -48,9 +47,9 @@ CCAnimation *CCAnimation::create(CCArmature *armature)
 
 
 CCAnimation::CCAnimation()
-    : m_pAnimationData(NULL)
+	: m_pAnimationData(NULL)
+	, m_pArmature(NULL)
     , m_strMovementID("")
-    , m_pArmature(NULL)
     , m_iToIndex(0)
 {
 

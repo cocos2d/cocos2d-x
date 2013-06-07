@@ -120,7 +120,7 @@ public:
 
 	virtual void onEnter();
 	virtual std::string title();
-	void animationEvent(cocos2d::extension::CCArmature *armature, const char *movementType, const char *movementID);
+	void animationEvent(cocos2d::extension::CCArmature *armature, cocos2d::extension::MovementEventType movementType, const char *movementID);
 	void callback1();
 	void callback2();
 

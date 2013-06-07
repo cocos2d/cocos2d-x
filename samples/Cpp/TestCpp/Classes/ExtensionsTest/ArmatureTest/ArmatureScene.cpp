@@ -398,12 +398,11 @@ std::string TestAnimationEvent::title()
 {
 	return "Test cocos2d::extension::CCArmature Animation Event";
 }
-void TestAnimationEvent::animationEvent(cocos2d::extension::CCArmature *armature, const char *movementType, const char *movementID)
+void TestAnimationEvent::animationEvent(cocos2d::extension::CCArmature *armature, MovementEventType movementType, const char *movementID)
 {
 	std::string id = movementID;
-	std::string type = movementType;
 
-	if (type.compare(LOOP_COMPLETE) == 0)
+	if (movementType == LOOP_COMPLETE)
 	{
 		if (id.compare("Fire") == 0)
 		{
