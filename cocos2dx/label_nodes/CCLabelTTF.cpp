@@ -96,6 +96,18 @@ CCLabelTTF* CCLabelTTF::create(const char *string, const char *fontName, float f
     return NULL;
 }
 
+CCLabelTTF * CCLabelTTF::createWithFontDefinition(const char *string, ccFontDefinition &textDefinition)
+{
+    CCLabelTTF *pRet = new CCLabelTTF();
+    if(pRet && pRet->initWithStringAndTextDefinition(string, textDefinition))
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    CC_SAFE_DELETE(pRet);
+    return NULL;
+}
+
 bool CCLabelTTF::init()
 {
     return this->initWithString("", "Helvetica", 12);
