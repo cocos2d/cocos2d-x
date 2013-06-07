@@ -31,6 +31,12 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
+
+static const char *START = "start";
+static const char *COMPLETE = "complete";
+static const char *LOOP_COMPLETE = "loopComplete";
+
+
 class CCArmature;
 class CCBone;
 
