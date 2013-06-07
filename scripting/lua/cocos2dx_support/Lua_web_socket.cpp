@@ -55,6 +55,13 @@ static int SendBinaryMessageToLua(int nHandler,const unsigned char* pTable,int n
 class LuaWebSocket: public WebSocket,public WebSocket::Delegate
 {
 public:
+    virtual ~LuaWebSocket()
+    {
+        this->unregisterScriptHandler(kWebSocketScriptHandlerOpen);
+        this->unregisterScriptHandler(kWebSocketScriptHandlerMessage);
+        this->unregisterScriptHandler(kWebSocketScriptHandlerClose);
+        this->unregisterScriptHandler(kWebSocketScriptHandlerError);
+    }
     /*
      * @brief  delegate event enum,for lua register handler
      */
@@ -140,6 +147,7 @@ public:
             int nHandler = luaWs->getScriptHandler(LuaWebSocket::kWebSocketScriptHandlerClose);
             if (-1 != nHandler) {
                 CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(nHandler,"");
+                CC_SAFE_DELETE(ws);
             }
         }
     }

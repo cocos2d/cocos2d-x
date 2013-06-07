@@ -106,6 +106,7 @@
     local function wsSendTextClose(strData)
         print("_wsiSendText websocket instance closed.")
         sendTextStatus = nil
+        wsSendText = nil
     end
 
     local function wsSendTextError(strData)
@@ -135,6 +136,7 @@
     local function wsSendBinaryClose(strData)
         print("_wsiSendBinary websocket instance closed.")
         sendBinaryStatus = nil
+        wsSendBinary = nil
     end
 
     local function wsSendBinaryError(strData)
@@ -156,6 +158,7 @@
     local function wsErrorClose(strData)
         print("_wsiError websocket instance closed.")
         errorStatus= nil
+        wsError = nil
     end
 
     if nil ~= wsSendText then
@@ -183,27 +186,12 @@
         if "exit" == strEventName then
             if nil ~= wsSendText  then
                 wsSendText:close()
-                wsSendText:unregisterScriptHandler(kWebSocketScriptHandlerOpen)
-                wsSendText:unregisterScriptHandler(kWebSocketScriptHandlerMessage)
-                wsSendText:unregisterScriptHandler(kWebSocketScriptHandlerClose)
-                wsSendText:unregisterScriptHandler(kWebSocketScriptHandlerError)
-                wsSendText = nil
             end
             if nil ~= wsSendBinary then
                 wsSendBinary:close()
-                wsSendBinary:unregisterScriptHandler(kWebSocketScriptHandlerOpen)
-                wsSendBinary:unregisterScriptHandler(kWebSocketScriptHandlerMessage)
-                wsSendBinary:unregisterScriptHandler(kWebSocketScriptHandlerClose)
-                wsSendBinary:unregisterScriptHandler(kWebSocketScriptHandlerError)
-                wsSendBinary = nil
             end
             if nil ~=  wsError     then
                 wsError:close()
-                wsError:unregisterScriptHandler(kWebSocketScriptHandlerOpen)
-                wsError:unregisterScriptHandler(kWebSocketScriptHandlerMessage)
-                wsError:unregisterScriptHandler(kWebSocketScriptHandlerClose)
-                wsError:unregisterScriptHandler(kWebSocketScriptHandlerError)
-                wsError = nil
             end
         end
     end
