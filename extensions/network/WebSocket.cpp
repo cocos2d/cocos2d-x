@@ -328,7 +328,6 @@ bool WebSocket::init(const Delegate& delegate,
         _wsProtocols[0].name = name;
         _wsProtocols[0].callback = WebSocketCallbackWrapper::onSocketCallback;
     }
-
     
     // WebSocket thread needs to be invoked at the end of this method.
     _wsHelper = new WsThreadHelper();
@@ -659,5 +658,4 @@ void WebSocket::onUIThreadReceiveMessage(WsMessage* msg)
             break;
     }
 }
-
 NS_CC_EXT_END
