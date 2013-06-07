@@ -44,13 +44,13 @@ CCDisplayManager *CCDisplayManager::create(CCBone *bone)
 
 
 CCDisplayManager::CCDisplayManager()
-    : m_pDecoDisplayList(NULL)
+	: m_pDecoDisplayList(NULL)
+	, m_pDisplayRenderNode(NULL)
     , m_pCurrentDecoDisplay(NULL)
-    , m_pDisplayRenderNode(NULL)
     , m_iDisplayIndex(-1)
-    , m_bForceChangeDisplay(false)
+	, m_bForceChangeDisplay(false)
+	, m_bVisible(true)
     , m_pBone(NULL)
-    , m_bVisible(true)
 {
 }
 

@@ -121,10 +121,9 @@ public:
     virtual bool containPoint(float x, float y);
 
 protected:
-    //! Display render node.
-    CCNode *m_pDisplayRenderNode;
-
-    CCArray *m_pDecoDisplayList;
+	CCArray *m_pDecoDisplayList;
+	//! Display render node.
+	CCNode *m_pDisplayRenderNode;
     //! Include current display information, like contour sprite, etc.
     CCDecorativeDisplay *m_pCurrentDecoDisplay;
     //! Current display index

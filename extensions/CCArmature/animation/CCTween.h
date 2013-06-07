@@ -125,16 +125,12 @@ protected:
 
     bool m_bIsTweenKeyFrame;
 
-
     int betweenDuration;			//! Current key frame will last betweenDuration frames
     int m_iTotalDuration;
 
 
     int m_iFromIndex;				//! The current frame index in FrameList of CCMovementBoneData, it's different from m_iFrameIndex
     int m_iToIndex;					//! The next frame index in FrameList of CCMovementBoneData, it's different from m_iFrameIndex
-
-
-    CCFrameData *m_pEditKeyFrame;
 
     CCAnimation *m_pAnimation;
 };

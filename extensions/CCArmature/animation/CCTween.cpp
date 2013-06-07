@@ -49,16 +49,17 @@ CCTween *CCTween::create(CCBone *bone)
 
 
 CCTween::CCTween()
-    : m_pFrom(NULL)
+    : m_pMovementBoneData(NULL)
     , m_pTweenData(NULL)
-    , m_pBetween(NULL)
+	, m_pFrom(NULL)
+	, m_pTo(NULL)
+	, m_pBetween(NULL)
+	, m_pCurrentKeyFrame(NULL)
     , m_pBone(NULL)
-    , m_pCurrentKeyFrame(NULL)
-    , m_pMovementBoneData(NULL)
+    
     , m_eFrameTweenEasing(Linear)
     , m_iFromIndex(0)
     , m_iToIndex(0)
-    , m_pEditKeyFrame(NULL)
     , m_pAnimation(NULL)
 {
 
@@ -100,7 +101,6 @@ void CCTween::play(CCMovementBoneData *_movementBoneData, int _durationTo, int _
     m_eLoopType = (AnimationType)_loop;
 
     m_pCurrentKeyFrame = NULL;
-    m_pEditKeyFrame = NULL;
     m_bIsTweenKeyFrame = false;
 
     m_iTotalDuration = 0;
