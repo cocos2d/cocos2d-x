@@ -104,7 +104,6 @@ public:
      */
     CCBone *getParentBone();
 
-
     /**
      * Remove itself from its parent CCBone.
      * @param 	recursion    whether or not remove Child display

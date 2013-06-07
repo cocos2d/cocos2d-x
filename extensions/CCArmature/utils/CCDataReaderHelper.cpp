@@ -22,12 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include "support/tinyxml2/tinyxml2.h"
 #include "CCDataReaderHelper.h"
 #include "CCArmatureDataManager.h"
 #include "CCTransformHelp.h"
 #include "CCArmatureDefine.h"
 #include "../datas/CCDatas.h"
-#include "support/tinyxml2/tinyxml2.h"
 
 
 

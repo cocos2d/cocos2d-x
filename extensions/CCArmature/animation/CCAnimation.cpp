@@ -218,7 +218,7 @@ void CCAnimation::play(const char *animationName, int durationTo, int durationTw
 void CCAnimation::playByIndex(int animationIndex, int durationTo, int durationTween,  int loop, int tweenEasing)
 {
     std::vector<std::string> &movName = m_pAnimationData->movementNames;
-    CC_ASSERT((animationIndex > -1) && (animationIndex < movName.size()));
+    CC_ASSERT((animationIndex > -1) && ((unsigned int)animationIndex < movName.size()));
 
     std::string animationName = movName.at(animationIndex);
     play(animationName.c_str(), durationTo, durationTween, loop, tweenEasing);

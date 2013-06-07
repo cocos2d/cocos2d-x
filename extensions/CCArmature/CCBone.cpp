@@ -80,7 +80,6 @@ CCBone::~CCBone(void)
     CC_SAFE_DELETE(m_pTweenData);
     CC_SAFE_DELETE(m_pChildren);
     CC_SAFE_DELETE(m_pTween);
-    CC_SAFE_DELETE(m_pUserData);
     CC_SAFE_DELETE(m_pDisplayManager);
 
     if(m_pBoneData)
