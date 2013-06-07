@@ -26,4 +26,8 @@ static CCLayer* create##className() \
 
 #define CF(className) create##className
 
+// C++ 11
+
+#define CL(__className__) [](){ return new __className__();}
+
 #endif

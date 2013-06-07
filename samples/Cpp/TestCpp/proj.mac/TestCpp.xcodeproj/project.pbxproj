@@ -285,6 +285,7 @@
 		8C583FA6169DB64700F63A10 /* EditBoxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8C583FA4169DB64700F63A10 /* EditBoxTest.cpp */; };
 		8C583FAD169DB6D500F63A10 /* CCEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8C583FA8169DB6D500F63A10 /* CCEditBox.cpp */; };
 		8C583FAE169DB6D500F63A10 /* CCEditBoxImplMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8C583FAC169DB6D500F63A10 /* CCEditBoxImplMac.mm */; };
+		A076DDF917615C0100ACDC32 /* BaseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A076DDF717615C0100ACDC32 /* BaseTest.cpp */; };
 		D4EFE03715D27336002D3DA0 /* HttpClientTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4EFE03515D27336002D3DA0 /* HttpClientTest.cpp */; };
 /* End PBXBuildFile section */
 
@@ -896,6 +897,8 @@
 		8C583FAA169DB6D500F63A10 /* CCEditBoxImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEditBoxImpl.h; path = CCEditBox/CCEditBoxImpl.h; sourceTree = "<group>"; };
 		8C583FAB169DB6D500F63A10 /* CCEditBoxImplMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEditBoxImplMac.h; path = CCEditBox/CCEditBoxImplMac.h; sourceTree = "<group>"; };
 		8C583FAC169DB6D500F63A10 /* CCEditBoxImplMac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CCEditBoxImplMac.mm; path = CCEditBox/CCEditBoxImplMac.mm; sourceTree = "<group>"; };
+		A076DDF717615C0100ACDC32 /* BaseTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BaseTest.cpp; path = ../Classes/BaseTest.cpp; sourceTree = "<group>"; };
+		A076DDF817615C0100ACDC32 /* BaseTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseTest.h; path = ../Classes/BaseTest.h; sourceTree = "<group>"; };
 		D4EFE03515D27336002D3DA0 /* HttpClientTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpClientTest.cpp; sourceTree = "<group>"; };
 		D4EFE03615D27336002D3DA0 /* HttpClientTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpClientTest.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -943,6 +946,8 @@
 				15AA9C4D15B7EC450033D6C2 /* ActionsTest */,
 				15AA9F3A15B7EF960033D6C2 /* AppDelegate.cpp */,
 				15AA9F3B15B7EF960033D6C2 /* AppDelegate.h */,
+				A076DDF717615C0100ACDC32 /* BaseTest.cpp */,
+				A076DDF817615C0100ACDC32 /* BaseTest.h */,
 				15AA9C5015B7EC450033D6C2 /* Box2DTest */,
 				15AA9C5315B7EC450033D6C2 /* Box2DTestBed */,
 				15AA9C8915B7EC460033D6C2 /* BugsTest */,
@@ -2744,6 +2749,7 @@
 				1ABA2873174DAF67007A6C10 /* ConfigurationTest.cpp in Sources */,
 				1A8F3B21175DC6D800049216 /* CCSkeleton.cpp in Sources */,
 				1A8F3B22175DC6D800049216 /* CCSkeletonAnimation.cpp in Sources */,
+				A076DDF917615C0100ACDC32 /* BaseTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
