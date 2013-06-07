@@ -4,7 +4,9 @@
 #include "CCLuaEngine.h"
 #include "SimpleAudioEngine.h"
 #include "Lua_extensions_CCB.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "Lua_web_socket.h"
+#endif
 
 using namespace CocosDenshion;
 
@@ -38,10 +40,11 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCLuaStack *pStack = pEngine->getLuaStack();
     lua_State *tolua_s = pStack->getLuaState();
     tolua_extensions_ccb_open(tolua_s);
-    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)    
     pStack = pEngine->getLuaStack();
     tolua_s = pStack->getLuaState();
     tolua_web_socket_open(tolua_s);
+#endif
     
     std::vector<std::string> searchPaths;
     searchPaths.push_back("cocosbuilderRes");
