@@ -21,6 +21,10 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
+
+"[WebSocket module] is based in part on the work of the libwebsockets  project
+(http://libwebsockets.org)"
+
  ****************************************************************************/
 
 #ifndef __CC_WEBSOCKET_H__
