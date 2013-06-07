@@ -115,7 +115,6 @@ static const char *FL_NAN = "NaN";
 
 static const char *FRAME_DATA = "frame_data";
 static const char *MOVEMENT_BONE_DATA = "mov_bone_data";
-static const char *MOVEMENT_FRAME_DATA = "mov_frame_data";
 static const char *MOVEMENT_DATA = "mov_data";
 static const char *ANIMATION_DATA = "animation_data";
 static const char *DISPLAY_DATA = "display_data";
