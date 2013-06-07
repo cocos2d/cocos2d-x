@@ -71,7 +71,7 @@ public:
     , m_bEnabled(false)            
     , m_nScriptTapHandler(0)
 	, _target(NULL)
-	, _callback(NULL)
+	, _callback(nullptr)
     {}
     virtual ~CCMenuItem();
 
