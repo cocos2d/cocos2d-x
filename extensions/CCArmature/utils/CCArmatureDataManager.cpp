@@ -49,8 +49,8 @@ CCArmatureDataManager *CCArmatureDataManager::sharedArmatureDataManager()
 
 CCArmatureDataManager::CCArmatureDataManager(void)
 {
+	m_pArmarureDatas = NULL;
     m_pAnimationDatas = NULL;
-    m_pArmarureDatas = NULL;
     m_pTextureDatas = NULL;
 }
 
