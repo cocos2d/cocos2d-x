@@ -65,7 +65,6 @@ CCColliderDetector::~CCColliderDetector()
     {
         ColliderBody *colliderBody = (ColliderBody *)object;
 
-        CCContourData *contourData = colliderBody->getContourData();
         b2Body *body = colliderBody->getB2Body();
         CCPhysicsWorld::sharedPhysicsWorld()->getNoGravityWorld()->DestroyBody(body);
     }
