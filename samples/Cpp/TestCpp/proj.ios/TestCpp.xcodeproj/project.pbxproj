@@ -292,6 +292,7 @@
 		78CAE769156F8124002A7A68 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 78CAE768156F8124002A7A68 /* Particles */; };
 		78ED2F85153D5BC500330E29 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 78ED2F84153D5BC500330E29 /* extensions */; };
 		A059B9AD174D9B8E0078F84F /* ConfigurationTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A059B9AB174D9B8E0078F84F /* ConfigurationTest.cpp */; };
+		A076DDEE1760FAAA00ACDC32 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = A076DDED1760FAAA00ACDC32 /* configs */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712461292920000B8313A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB212928DE900B8313A /* libxml2.dylib */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
@@ -937,6 +938,7 @@
 		78ED2F84153D5BC500330E29 /* extensions */ = {isa = PBXFileReference; lastKnownFileType = folder; path = extensions; sourceTree = "<group>"; };
 		A059B9AB174D9B8E0078F84F /* ConfigurationTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigurationTest.cpp; sourceTree = "<group>"; };
 		A059B9AC174D9B8E0078F84F /* ConfigurationTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigurationTest.h; sourceTree = "<group>"; };
+		A076DDED1760FAAA00ACDC32 /* configs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = configs; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB212928DE900B8313A /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -2468,6 +2470,7 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A076DDED1760FAAA00ACDC32 /* configs */,
 				37EEEC2E175DE52C003C1193 /* components */,
 				789B560C15197BE00038CD1E /* animations */,
 				15FC61A716095C2B00AE81F8 /* ccb */,
@@ -2629,6 +2632,7 @@
 				37EEEC25175DE509003C1193 /* background-music-aac.wav in Resources */,
 				37EEEC26175DE509003C1193 /* pew-pew-lei.wav in Resources */,
 				37EEEC2F175DE52C003C1193 /* components in Resources */,
+				A076DDEE1760FAAA00ACDC32 /* configs in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3008,14 +3012,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: 小明 张 (L4ZF355VQS)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 小明 张 (L4ZF355VQS)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				PROVISIONING_PROFILE = "0C43CFE2-55C4-429A-9A03-BFB76D31630B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0C43CFE2-55C4-429A-9A03-BFB76D31630B";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv6 armv7 i386";
 			};
@@ -3025,15 +3025,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: 小明 张 (L4ZF355VQS)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 小明 张 (L4ZF355VQS)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "0C43CFE2-55C4-429A-9A03-BFB76D31630B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DB6844BA-2943-44DB-B10A-3A3F0E8A52B8";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv6 armv7 i386";
 			};
