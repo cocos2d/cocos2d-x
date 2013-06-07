@@ -95,7 +95,7 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="lua"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tolua"/>
-						<entry excluding="platform/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos2dx_support"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos2dx_support"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -171,6 +171,7 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="lua"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tolua"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos2dx_support"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -251,6 +252,7 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="lua"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tolua"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos2dx_support"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -331,6 +333,7 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="lua"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tolua"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos2dx_support"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -408,6 +411,7 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="lua"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tolua"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos2dx_support"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -489,6 +493,7 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="lua"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tolua"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos2dx_support"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -568,6 +573,7 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="lua"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tolua"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos2dx_support"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
