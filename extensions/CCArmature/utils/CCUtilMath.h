@@ -37,7 +37,7 @@ NS_CC_EXT_BEGIN
 
 //! hit test function
 bool isSpriteContainPoint(CCSprite *sprite, CCPoint point);
-bool isSpriteContainPoint(CCSprite *sprite, CCPoint point,CCPoint &outPoint);
+bool isSpriteContainPoint(CCSprite *sprite, CCPoint point, CCPoint &outPoint);
 
 #define CC_SPRITE_CONTAIN_POINT(sprite, point) isSpriteContainPoint((sprite), (point))
 #define CC_SPRITE_CONTAIN_POINT_WITH_RETURN(sprite, point, outPoint) isSpriteContainPoint((sprite), (point), outPoint)

@@ -27,193 +27,157 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
-CCSpriteFrameCacheHelper * CCSpriteFrameCacheHelper::s_SpriteFrameCacheHelper = NULL;
+CCSpriteFrameCacheHelper *CCSpriteFrameCacheHelper::s_SpriteFrameCacheHelper = NULL;
 
 CCSpriteFrameCacheHelper *CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()
 {
-	if(!s_SpriteFrameCacheHelper)
-	{
-		s_SpriteFrameCacheHelper = new CCSpriteFrameCacheHelper();
-	}
+    if(!s_SpriteFrameCacheHelper)
+    {
+        s_SpriteFrameCacheHelper = new CCSpriteFrameCacheHelper();
+    }
 
-	return s_SpriteFrameCacheHelper;
+    return s_SpriteFrameCacheHelper;
 }
 
 void CCSpriteFrameCacheHelper::purgeSpriteFrameCacheHelper()
 {
-	delete s_SpriteFrameCacheHelper;
-	s_SpriteFrameCacheHelper = NULL;
+    delete s_SpriteFrameCacheHelper;
+    s_SpriteFrameCacheHelper = NULL;
 }
 
-void CCSpriteFrameCacheHelper::addSpriteFrameFromFile(const char *_plistPath, const char *_imagePath)
+void CCSpriteFrameCacheHelper::addSpriteFrameFromFile(const char *plistPath, const char *imagePath)
 {
 
-	std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename(_plistPath);
-	CCDictionary *dict = CCDictionary::createWithContentsOfFileThreadSafe(path.c_str());
+    std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename(plistPath);
+    CCDictionary *dict = CCDictionary::createWithContentsOfFileThreadSafe(path.c_str());
 
 
-	CCTexture2D *pobTexture = CCTextureCache::sharedTextureCache()->addImage(_imagePath);
+    CCTexture2D *pobTexture = CCTextureCache::sharedTextureCache()->addImage(imagePath);
 
-	addSpriteFrameFromDict(dict, pobTexture, _imagePath);
+    addSpriteFrameFromDict(dict, pobTexture, imagePath);
 
-	dict->release();
-
-}
-
-void CCSpriteFrameCacheHelper::addSpriteFrameFromPak(const char *_plistPath, const char *_imagePath)
-{
-// #if CS_TOOL_PLATFORM
-// 		//! create CCDictionary from pak
-// 		char *_pFileContent = NULL;
-// 		int size = JsonReader::getFileBuffer(_plistPath, &_pFileContent);
-// 
-// 		CCDictMaker dictMaker;
-// 		CCDictionary *dict = dictMaker.dictionaryWithContentsOfCache(_pFileContent, size);
-// 
-// 
-// 		//! create CCTexture2D from pak
-// 		size = JsonReader::getFileBuffer(_imagePath, &_pFileContent);
-// 
-// 		CCImage *img = new CCImage();
-// 		img->initWithImageData(_pFileContent, size);
-// 
-// 		CCTexture2D *pobTexture = CCTextureCache::sharedTextureCache()->addUIImage(img, _imagePath);
-// 
-// 		addSpriteFrameFromDict(dict, pobTexture, _imagePath);
-// #endif
+    dict->release();
 
 }
 
-void CCSpriteFrameCacheHelper::addSpriteFrameFromDict(CCDictionary* dictionary, CCTexture2D *pobTexture, const char *_imagePath)
+void CCSpriteFrameCacheHelper::addSpriteFrameFromDict(CCDictionary *dictionary, CCTexture2D *pobTexture, const char *imagePath)
 {
+    /*
+    Supported Zwoptex Formats:
 
-	/*
-	Supported Zwoptex Formats:
+    ZWTCoordinatesFormatOptionXMLLegacy = 0, // Flash Version
+    ZWTCoordinatesFormatOptionXML1_0 = 1, // Desktop Version 0.0 - 0.4b
+    ZWTCoordinatesFormatOptionXML1_1 = 2, // Desktop Version 1.0.0 - 1.0.1
+    ZWTCoordinatesFormatOptionXML1_2 = 3, // Desktop Version 1.0.2+
+    */
 
-	ZWTCoordinatesFormatOptionXMLLegacy = 0, // Flash Version
-	ZWTCoordinatesFormatOptionXML1_0 = 1, // Desktop Version 0.0 - 0.4b
-	ZWTCoordinatesFormatOptionXML1_1 = 2, // Desktop Version 1.0.0 - 1.0.1
-	ZWTCoordinatesFormatOptionXML1_2 = 3, // Desktop Version 1.0.2+
-	*/
+    CCDictionary *metadataDict = (CCDictionary *)dictionary->objectForKey("metadata");
+    CCDictionary *framesDict = (CCDictionary *)dictionary->objectForKey("frames");
+    int format = 0;
 
-	CCDictionary *metadataDict = (CCDictionary*)dictionary->objectForKey("metadata");
-	CCDictionary *framesDict = (CCDictionary*)dictionary->objectForKey("frames");
-	int format = 0;
+    // get the format
+    if(metadataDict != NULL)
+    {
+        format = metadataDict->valueForKey("format")->intValue();
+    }
 
-	// get the format
-	if(metadataDict != NULL)
-	{
-		format = metadataDict->valueForKey("format")->intValue();
-	}
+    // check the format
+    CCAssert(format >= 0 && format <= 3, "format is not supported for CCSpriteFrameCache addSpriteFramesWithDictionary:textureFilename:");
 
-	// check the format
-	CCAssert(format >=0 && format <= 3, "format is not supported for CCSpriteFrameCache addSpriteFramesWithDictionary:textureFilename:");
+    CCDictElement *pElement = NULL;
+    CCDICT_FOREACH(framesDict, pElement)
+    {
+        CCDictionary *frameDict = (CCDictionary *)pElement->getObject();
+        std::string spriteFrameName = pElement->getStrKey();
 
-	CCDictElement* pElement = NULL;
-	CCDICT_FOREACH(framesDict, pElement)
-	{
-		CCDictionary* frameDict = (CCDictionary*)pElement->getObject();
-		std::string spriteFrameName = pElement->getStrKey();
+        m_Display2ImageMap[spriteFrameName] = imagePath;
 
-		m_Display2ImageMap[spriteFrameName] = _imagePath;
+        //CCLog("spriteFrameName : %s,    imagePath : %s", spriteFrameName.c_str(), _imagePath);
 
-		//CCLog("spriteFrameName : %s,    imagePath : %s", spriteFrameName.c_str(), _imagePath);
+        CCSpriteFrame *spriteFrame = (CCSpriteFrame *)CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(spriteFrameName.c_str());
+        if (spriteFrame)
+        {
+            continue;
+        }
 
-		CCSpriteFrame* spriteFrame = (CCSpriteFrame*)CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(spriteFrameName.c_str());
-		if (spriteFrame)
-		{
-			continue;
+        if(format == 0)
+        {
+            float x = frameDict->valueForKey("x")->floatValue();
+            float y = frameDict->valueForKey("y")->floatValue();
+            float w = frameDict->valueForKey("width")->floatValue();
+            float h = frameDict->valueForKey("height")->floatValue();
+            float ox = frameDict->valueForKey("offsetX")->floatValue();
+            float oy = frameDict->valueForKey("offsetY")->floatValue();
+            int ow = frameDict->valueForKey("originalWidth")->intValue();
+            int oh = frameDict->valueForKey("originalHeight")->intValue();
+            // check ow/oh
+            if(!ow || !oh)
+            {
+                CCLOG("cocos2d: WARNING: originalWidth/Height not found on the CCSpriteFrame. AnchorPoint won't work as expected. Regenrate the .plist");
+            }
+            // abs ow/oh
+            ow = abs(ow);
+            oh = abs(oh);
+            // create frame
+            spriteFrame = new CCSpriteFrame();
+            spriteFrame->initWithTexture(pobTexture, CCRectMake(x, y, w, h), false, CCPointMake(ox, oy), CCSizeMake((float)ow, (float)oh));
 		}
+        else if(format == 1 || format == 2)
+        {
+            CCRect frame = CCRectFromString(frameDict->valueForKey("frame")->getCString());
+            bool rotated = false;
 
-		if(format == 0)
-		{
-			float x = frameDict->valueForKey("x")->floatValue();
-			float y = frameDict->valueForKey("y")->floatValue();
-			float w = frameDict->valueForKey("width")->floatValue();
-			float h = frameDict->valueForKey("height")->floatValue();
-			float ox = frameDict->valueForKey("offsetX")->floatValue();
-			float oy = frameDict->valueForKey("offsetY")->floatValue();
-			int ow = frameDict->valueForKey("originalWidth")->intValue();
-			int oh = frameDict->valueForKey("originalHeight")->intValue();
-			// check ow/oh
-			if(!ow || !oh)
-			{
-				CCLOG("cocos2d: WARNING: originalWidth/Height not found on the CCSpriteFrame. AnchorPoint won't work as expected. Regenrate the .plist");
-			}
-			// abs ow/oh
-			ow = abs(ow);
-			oh = abs(oh);
-			// create frame
-			spriteFrame = new CCSpriteFrame();
-			spriteFrame->initWithTexture(pobTexture,
-				CCRectMake(x, y, w, h),
-				false,
-				CCPointMake(ox, oy),
-				CCSizeMake((float)ow, (float)oh)
-				);
-		}
-		else if(format == 1 || format == 2)
-		{
-			CCRect frame = CCRectFromString(frameDict->valueForKey("frame")->getCString());
-			bool rotated = false;
+            // rotation
+            if (format == 2)
+            {
+                rotated = frameDict->valueForKey("rotated")->boolValue();
+            }
 
-			// rotation
-			if (format == 2)
-			{
-				rotated = frameDict->valueForKey("rotated")->boolValue();
-			}
+            CCPoint offset = CCPointFromString(frameDict->valueForKey("offset")->getCString());
+            CCSize sourceSize = CCSizeFromString(frameDict->valueForKey("sourceSize")->getCString());
 
-			CCPoint offset = CCPointFromString(frameDict->valueForKey("offset")->getCString());
-			CCSize sourceSize = CCSizeFromString(frameDict->valueForKey("sourceSize")->getCString());
+            // create frame
+            spriteFrame = new CCSpriteFrame();
+            spriteFrame->initWithTexture(pobTexture, frame, rotated, offset, sourceSize );
+        }
+        else if (format == 3)
+        {
 
-			// create frame
-			spriteFrame = new CCSpriteFrame();
-			spriteFrame->initWithTexture(pobTexture,
-				frame,
-				rotated,
-				offset,
-				sourceSize
-				);
-		}
-		else if (format == 3)
-		{
+        }
 
-		}
-
-		// add sprite frame
-		CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFrame(spriteFrame, spriteFrameName.c_str());
-		spriteFrame->release();
-	}
+        // add sprite frame
+        CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFrame(spriteFrame, spriteFrameName.c_str());
+        spriteFrame->release();
+    }
 }
 
-const char *CCSpriteFrameCacheHelper::getDisplayImagePath(const char *_displayName)
+const char *CCSpriteFrameCacheHelper::getDisplayImagePath(const char *displayName)
 {
-	return m_Display2ImageMap[_displayName].c_str();
+    return m_Display2ImageMap[displayName].c_str();
 }
 
 
 CCTextureAtlas *CCSpriteFrameCacheHelper::getTextureAtlas(const char *displayName)
 {
-	const char *textureName = getDisplayImagePath(displayName); 
-	CCTextureAtlas *atlas = (CCTextureAtlas*)m_pDisplay2TextureAtlas->objectForKey(textureName);
-	if (atlas == NULL)
-	{
-		atlas = CCTextureAtlas::createWithTexture(CCTextureCache::sharedTextureCache()->addImage(textureName), 4);
-		m_pDisplay2TextureAtlas->setObject(atlas, textureName);
-	}
+    const char *textureName = getDisplayImagePath(displayName);
+    CCTextureAtlas *atlas = (CCTextureAtlas *)m_pDisplay2TextureAtlas->objectForKey(textureName);
+    if (atlas == NULL)
+    {
+        atlas = CCTextureAtlas::createWithTexture(CCTextureCache::sharedTextureCache()->addImage(textureName), 4);
+        m_pDisplay2TextureAtlas->setObject(atlas, textureName);
+    }
 
-	return atlas;
+    return atlas;
 }
 
 CCSpriteFrameCacheHelper::CCSpriteFrameCacheHelper()
 {
-	m_pDisplay2TextureAtlas = new CCDictionary();
+    m_pDisplay2TextureAtlas = new CCDictionary();
 }
 
 CCSpriteFrameCacheHelper::~CCSpriteFrameCacheHelper()
 {
-	CC_SAFE_RELEASE_NULL(m_pDisplay2TextureAtlas);
+    CC_SAFE_RELEASE_NULL(m_pDisplay2TextureAtlas);
 }
-
 
 NS_CC_EXT_END

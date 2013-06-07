@@ -35,36 +35,32 @@ class  CCSpriteFrameCacheHelper
 {
 public:
     static CCSpriteFrameCacheHelper *sharedSpriteFrameCacheHelper();
-    
-	static void purgeSpriteFrameCacheHelper();
+
+    static void purgeSpriteFrameCacheHelper();
 public:
-    
+
     /**
      *	@brief	Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name
      *
      */
-    void addSpriteFrameFromFile(const char *_plistPath, const char *_imagePath);
-    
-    void addSpriteFrameFromPak(const char *_plistPath, const char *_imagePath);
-    
-    void addSpriteFrameFromDict(CCDictionary* dictionary, CCTexture2D *pobTexture, const char *_imagePath);
-    
+    void addSpriteFrameFromFile(const char *plistPath, const char *imagePath);
+
+    void addSpriteFrameFromDict(CCDictionary *dictionary, CCTexture2D *pobTexture, const char *imagePath);
+
     /**
-     *	@brief	Get this display in which image
-     *
+     * Get this display in which image
      */
     const char *getDisplayImagePath(const char *displayName);
-	CCTextureAtlas *getTextureAtlas(const char *displayName);
-	
+    CCTextureAtlas *getTextureAtlas(const char *displayName);
+
 private:
     CCSpriteFrameCacheHelper();
-	~CCSpriteFrameCacheHelper();
+    ~CCSpriteFrameCacheHelper();
 
     std::map<std::string, std::string> m_Display2ImageMap;
-	CCDictionary *m_pDisplay2TextureAtlas;
-    
-    static CCSpriteFrameCacheHelper *s_SpriteFrameCacheHelper;
+    CCDictionary *m_pDisplay2TextureAtlas;
 
+    static CCSpriteFrameCacheHelper *s_SpriteFrameCacheHelper;
 };
 
 NS_CC_EXT_END

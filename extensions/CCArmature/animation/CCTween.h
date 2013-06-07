@@ -38,22 +38,22 @@ class  CCTween : public CCProcessBase
 {
 public:
     /**
-	 * Create with a CCBone
+     * Create with a CCBone
      * @param bone the CCBone CCTween will bind to
      */
-	static CCTween* create(CCBone *bone);
+    static CCTween *create(CCBone *bone);
 public:
-	CCTween(void);
-	virtual ~CCTween(void);
+    CCTween(void);
+    virtual ~CCTween(void);
 
     /**
-	 * Init with a CCBone
+     * Init with a CCBone
      * @param bone the CCBone CCTween will bind to
      */
-	virtual bool init(CCBone *bone);
-	
+    virtual bool init(CCBone *bone);
+
     /**
-	 * Start the Process
+     * Start the Process
      *
      * @param  movementBoneData  the CCMovementBoneData include all frame datas
      * @param  durationTo the frames between two animation changing-over.
@@ -80,63 +80,63 @@ public:
      *         2  : fade in and out
      *
      */
-	virtual void play(CCMovementBoneData *movementBoneData, int durationTo, int durationTween,  int loop, int tweenEasing);
+    virtual void play(CCMovementBoneData *movementBoneData, int durationTo, int durationTween,  int loop, int tweenEasing);
 
 protected:
-    
+
     /**
-	 * Update(float dt) will call this handler, you can handle your logic here
+     * Update(float dt) will call this handler, you can handle your logic here
      */
-	virtual void updateHandler();
-    
+    virtual void updateHandler();
+
     /**
-	 * Calculate which frame arrived, and if current frame have event, then call the event listener
+     * Calculate which frame arrived, and if current frame have event, then call the event listener
      */
     virtual float updateFrameData(float currentPrecent, bool activeFrame = false);
-    
+
     /**
-	 * Calculate the between value of _from and _to, and give it to between frame data
+     * Calculate the between value of _from and _to, and give it to between frame data
      */
-	virtual void setBetween(CCFrameData *from, CCFrameData *to);
-    
+    virtual void setBetween(CCFrameData *from, CCFrameData *to);
+
     /**
-	 * According to the percent to calculate current CCFrameData with tween effect
+     * According to the percent to calculate current CCFrameData with tween effect
      */
-	virtual CCFrameData *tweenNodeTo(float percent, CCFrameData *node = NULL);
-    
-	/**
-	 * Update display index and process the key frame event when arrived a key frame
+    virtual CCFrameData *tweenNodeTo(float percent, CCFrameData *node = NULL);
+
+    /**
+     * Update display index and process the key frame event when arrived a key frame
      */
     virtual void arriveKeyFrame(CCFrameData *keyFrameData);
 protected:
-	//! A weak reference to the current CCMovementBoneData. The data is in the data pool
-	CC_SYNTHESIZE(CCMovementBoneData*, m_pMovementBoneData, MovementBoneData)
+    //! A weak reference to the current CCMovementBoneData. The data is in the data pool
+    CC_SYNTHESIZE(CCMovementBoneData *, m_pMovementBoneData, MovementBoneData)
 
-	CCFrameData *m_pTweenData;		//! The computational tween frame data, //! A weak reference to the CCBone's tweenData
-	CCFrameData *m_pFrom;				//! From frame data, used for calculate between value
+    CCFrameData *m_pTweenData;		//! The computational tween frame data, //! A weak reference to the CCBone's tweenData
+    CCFrameData *m_pFrom;				//! From frame data, used for calculate between value
     CCFrameData *m_pTo;				//! To frame data, used for calculate between value
-	CCFrameData *m_pBetween;			//! Between frame data, used for calculate current CCFrameData(m_pNode) value
+    CCFrameData *m_pBetween;			//! Between frame data, used for calculate current CCFrameData(m_pNode) value
 
     CCFrameData *m_pCurrentKeyFrame;	//! A weak reference to the current CCFrameData. The data is in the data pool
-    
-	CCBone *m_pBone;					//! A weak reference to the CCBone
 
-	CCTweenType m_eFrameTweenEasing;	//! Dedermine which tween effect current frame use 
+    CCBone *m_pBone;					//! A weak reference to the CCBone
 
-	bool m_bIsTweenKeyFrame;
-    
-    
-	int betweenDuration;			//! Current key frame will last betweenDuration frames
-	int m_iTotalDuration;			
+    CCTweenType m_eFrameTweenEasing;	//! Dedermine which tween effect current frame use
+
+    bool m_bIsTweenKeyFrame;
 
 
-	int m_iFromIndex;				//! The current frame index in FrameList of CCMovementBoneData, it's different from m_iFrameIndex
-	int m_iToIndex;					//! The next frame index in FrameList of CCMovementBoneData, it's different from m_iFrameIndex
+    int betweenDuration;			//! Current key frame will last betweenDuration frames
+    int m_iTotalDuration;
 
 
-	CCFrameData *m_pEditKeyFrame;
-    
-	CCAnimation *m_pAnimation;
+    int m_iFromIndex;				//! The current frame index in FrameList of CCMovementBoneData, it's different from m_iFrameIndex
+    int m_iToIndex;					//! The next frame index in FrameList of CCMovementBoneData, it's different from m_iFrameIndex
+
+
+    CCFrameData *m_pEditKeyFrame;
+
+    CCAnimation *m_pAnimation;
 };
 
 NS_CC_EXT_END

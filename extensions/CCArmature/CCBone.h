@@ -46,135 +46,136 @@ public:
     static CCBone *create();
     /**
      * Allocates and initializes a bone.
-	 *
-	 * @param  name If name is not null, then set name to the bone's name
+     *
+     * @param  name If name is not null, then set name to the bone's name
      * @return A initialized bone which is marked as "autorelease".
      */
-	static CCBone *create(const char *name);
+    static CCBone *create(const char *name);
 
 public:
     CCBone();
-	virtual ~CCBone(void);
-    
-	/**
+    virtual ~CCBone(void);
+
+    /**
      * Initializes an empty CCBone with nothing init.
      */
     virtual bool init();
 
     /**
-	 * Initializes a CCBone with the specified name
-	 * @param name CCBone's name.
+     * Initializes a CCBone with the specified name
+     * @param name CCBone's name.
      */
-	virtual bool init(const char *name);
+    virtual bool init(const char *name);
 
     /**
-	 * Add display and use  _DisplayData init the display.
+     * Add display and use  _DisplayData init the display.
      * If index already have a display, then replace it.
      * If index is current display index, then also change display to _index
      *
-	 * @param displayData it include the display information, like DisplayType.
+     * @param displayData it include the display information, like DisplayType.
      *          If you want to create a sprite display, then create a CCSpriteDisplayData param
      *
-	 *	@param 	_index the index of the display you want to replace or add to
+     *	@param 	_index the index of the display you want to replace or add to
      *          -1 : append display from back
      */
     void addDisplay(CCDisplayData *displayData, int index);
-    
+
     void changeDisplayByIndex(int index, bool force);
 
     /**
-	 * Add a child to this bone, and it will let this child call setParent(CCBone *_parent) function to set self to it's parent
-	 *	@param 	_child  the child you want to add
+     * Add a child to this bone, and it will let this child call setParent(CCBone *_parent) function to set self to it's parent
+     *	@param 	_child  the child you want to add
      */
-	void addChildBone(CCBone* _child);
-    
+    void addChildBone(CCBone *_child);
+
     /**
-	 * Set parent bone. 
+     * Set parent bone.
      * If _parent is NUll, then also remove this bone from armature.
      * It will not set the CCArmature, if you want to add the bone to a CCArmature, you should use CCArmature::addBone(CCBone *bone, const char* _parentName).
      *
-	 * @param parent  the parent bone.
+     * @param parent  the parent bone.
      *          NULL : remove this bone from armature
      */
     void setParentBone(CCBone *parent);
-    
+
     /**
-	 * Get parent bone
-	 *	@return parent bone
+     * Get parent bone
+     * @return parent bone
      */
     CCBone *getParentBone();
-    
-    
+
+
     /**
-	 * Remove itself from its parent CCBone.
-	 *	@param 	recursion    whether or not remove Child display
+     * Remove itself from its parent CCBone.
+     * @param 	recursion    whether or not remove Child display
      */
     void removeFromParent(bool recursion);
-    
+
     /**
-	 * Removes a child CCBone 
-	 *	@param 	bone   the bone you want to remove
+     * Removes a child CCBone
+     * @param 	bone   the bone you want to remove
      */
-	void removeChildBone(CCBone *bone, bool recursion);
+    void removeChildBone(CCBone *bone, bool recursion);
 
-	void update(float delta);
+    void update(float delta);
 
-	void updateDisplayedColor(const ccColor3B& parentColor);
-	void updateDisplayedOpacity(GLubyte parentOpacity);
+    void updateDisplayedColor(const ccColor3B &parentColor);
+    void updateDisplayedOpacity(GLubyte parentOpacity);
 
-	//! Update color to render display
-	void updateColor();
+    //! Update color to render display
+    void updateColor();
 
-	CCArray *getChildren();
-	CCTween *getTween();
+    CCArray *getChildren();
+    CCTween *getTween();
 
-	virtual void setZOrder(int zOrder);
-	/*
-	 * Whether or not the bone's transform property changed. if true, the bone will update the transform.
-	 */
-	inline virtual void	setTransformDirty(bool dirty){ m_bTransformDirty = dirty; } 
-	inline virtual bool isTransformDirty(){ return m_bTransformDirty; }
-	
-	inline CCAffineTransform nodeToArmatureTransform(){return m_tWorldTransform;}
+    virtual void setZOrder(int zOrder);
+    /*
+     * Whether or not the bone's transform property changed. if true, the bone will update the transform.
+     */
+    virtual void setTransformDirty(bool dirty);
+
+    virtual bool isTransformDirty();
+
+    virtual CCAffineTransform nodeToArmatureTransform();
 
 public:
     /*
      *  The origin state of the CCBone. Display's state is effected by m_pBoneData, m_pNode, m_pTweenData
      *  when call setData function, it will copy from the CCBoneData.
      */
-	CC_PROPERTY(CCBoneData *, m_pBoneData, BoneData);
-    
+    CC_PROPERTY(CCBoneData *, m_pBoneData, BoneData);
+
     //! A weak reference to the CCArmature
-	CC_SYNTHESIZE(CCArmature *, m_pArmature, Armature);
-    
+    CC_SYNTHESIZE(CCArmature *, m_pArmature, Armature);
+
     //! A weak reference to the child CCArmature
     CC_PROPERTY(CCArmature *, m_pChildArmature, ChildArmature);
-    
-    CC_SYNTHESIZE(CCDisplayManager*, m_pDisplayManager, DisplayManager)
 
-	/*
-	 *	When CCArmature play a animation, if there is not a CCMovementBoneData of this bone in this CCMovementData, this bone will hide.
-	 *	Set IgnoreMovementBoneData to true, then this bone will also show.
-	 */
-	CC_SYNTHESIZE_PASS_BY_REF(bool, m_bIgnoreMovementBoneData, IgnoreMovementBoneData)
+    CC_SYNTHESIZE(CCDisplayManager *, m_pDisplayManager, DisplayManager)
+
+    /*
+     *	When CCArmature play a animation, if there is not a CCMovementBoneData of this bone in this CCMovementData, this bone will hide.
+     *	Set IgnoreMovementBoneData to true, then this bone will also show.
+     */
+    CC_SYNTHESIZE_PASS_BY_REF(bool, m_bIgnoreMovementBoneData, IgnoreMovementBoneData)
 
 protected:
-	CCTween *m_pTween;							//! Calculate tween effect
+    CCTween *m_pTween;				//! Calculate tween effect
 
-	//! Used for make tween effect between every frame
-	CC_SYNTHESIZE_READONLY(CCFrameData*, m_pTweenData, TweenData);
+    //! Used for make tween effect between every frame
+    CC_SYNTHESIZE_READONLY(CCFrameData *, m_pTweenData, TweenData);
 
-	CC_SYNTHESIZE_PASS_BY_REF(std::string, m_strName, Name);
-    
-	//! Lazy allocs
-	void childrenAlloc(void);
+    CC_SYNTHESIZE_PASS_BY_REF(std::string, m_strName, Name);
+
+    //! Lazy allocs
+    void childrenAlloc(void);
     CCArray *m_pChildren;
-    
-    CCBone *m_pParent;						//! A weak reference to it's parent
-	bool m_bTransformDirty;			//! Whether or not transform dirty
 
-	//! self Transform, use this to change display's state
-	CCAffineTransform m_tWorldTransform;
+    CCBone *m_pParent;				//! A weak reference to it's parent
+    bool m_bTransformDirty;			//! Whether or not transform dirty
+
+    //! self Transform, use this to change display's state
+    CCAffineTransform m_tWorldTransform;
 };
 
 NS_CC_EXT_END

@@ -39,10 +39,10 @@ public:
 
     virtual void update(float dt);
     virtual void setPosition(const CCPoint &newPosition);
-	virtual void translateFormOtherNode(CCAffineTransform &transform);
+    virtual void translateFormOtherNode(CCAffineTransform &transform);
     virtual void draw();
 
-    static CCShaderNode* shaderNodeWithVertex(const char *vert, const char *frag);
+    static CCShaderNode *shaderNodeWithVertex(const char *vert, const char *frag);
 
 private:
 

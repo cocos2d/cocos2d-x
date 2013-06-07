@@ -126,12 +126,9 @@ public:
     static float bounceEaseIn(float t, float b, float c, float d);
     static float bounceEaseOut(float t, float b, float c, float d);
     static float bounceEaseInOut(float t, float b, float c, float d);
-    
 };
     
 
 NS_CC_EXT_END
 
 #endif /*__CCTWEENFUNCTION_H__*/
-	 
-

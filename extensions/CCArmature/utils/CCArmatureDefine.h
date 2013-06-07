@@ -33,11 +33,11 @@ THE SOFTWARE.
 
 #ifndef ENABLE_PHYSICS_DEBUG
 #define ENABLE_PHYSICS_DEBUG 1
-#endif 
+#endif
 
 #ifndef ENABLE_PHYSICS_DETECT
 #define ENABLE_PHYSICS_DETECT 1
-#endif 
+#endif
 
 
 #define MAX_VERTEXZ_VALUE 5000000.0f

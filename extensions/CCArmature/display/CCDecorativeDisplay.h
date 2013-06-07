@@ -40,23 +40,23 @@ NS_CC_EXT_BEGIN
 class  CCDecorativeDisplay: public CCObject, public sigslot::has_slots<>
 {
 public:
-	static CCDecorativeDisplay *create();
+    static CCDecorativeDisplay *create();
 public:
-	CCDecorativeDisplay(void);
-	~CCDecorativeDisplay(void);
+    CCDecorativeDisplay(void);
+    ~CCDecorativeDisplay(void);
 
-	virtual bool init();
+    virtual bool init();
 
 protected:
 
-	CC_SYNTHESIZE_RETAIN(CCNode*, m_pDisplay, Display);
-	CC_SYNTHESIZE_RETAIN(CCDisplayData*, m_pDisplayData, DisplayData);
+    CC_SYNTHESIZE_RETAIN(CCNode *, m_pDisplay, Display);
+    CC_SYNTHESIZE_RETAIN(CCDisplayData *, m_pDisplayData, DisplayData);
 
 #if ENABLE_PHYSICS_DETECT
-	CC_SYNTHESIZE_RETAIN(CCColliderDetector*, m_pColliderDetector, ColliderDetector);
+    CC_SYNTHESIZE_RETAIN(CCColliderDetector *, m_pColliderDetector, ColliderDetector);
 #endif
 public:
-	void anchorPointChanged(float pointX, float pointY);
+    void anchorPointChanged(float pointX, float pointY);
 };
 
 NS_CC_EXT_END

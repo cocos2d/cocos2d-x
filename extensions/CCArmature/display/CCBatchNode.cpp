@@ -30,90 +30,90 @@ NS_CC_EXT_BEGIN
 
 CCBatchNode *CCBatchNode::create()
 {
-	CCBatchNode *batchNode = new CCBatchNode();
-	if (batchNode && batchNode->init())
-	{
-		batchNode->autorelease();
-		return batchNode;
-	}
-	CC_SAFE_DELETE(batchNode);
-	return NULL;
+    CCBatchNode *batchNode = new CCBatchNode();
+    if (batchNode && batchNode->init())
+    {
+        batchNode->autorelease();
+        return batchNode;
+    }
+    CC_SAFE_DELETE(batchNode);
+    return NULL;
 }
 
 CCBatchNode::CCBatchNode()
-	:m_pAtlas(NULL)
+    : m_pAtlas(NULL)
 {
 }
 
 bool CCBatchNode::init()
 {
-	bool ret = CCNode::init();
-	setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
-	return ret;
+    bool ret = CCNode::init();
+    setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
+    return ret;
 }
 
 void CCBatchNode::addChild(CCNode *child, int zOrder, int tag)
 {
-	CCNode::addChild(child, zOrder, tag);
-	CCArmature *armature = dynamic_cast<CCArmature*>(child);
-	if (armature != NULL)
-	{
-		armature->setBatchNode(this);
-	}
+    CCNode::addChild(child, zOrder, tag);
+    CCArmature *armature = dynamic_cast<CCArmature *>(child);
+    if (armature != NULL)
+    {
+        armature->setBatchNode(this);
+    }
 }
 
 void CCBatchNode::visit()
 {
-	// quick return if not visible. children won't be drawn.
-	if (!m_bVisible)
-	{
-		return;
-	}
-	kmGLPushMatrix();
+    // quick return if not visible. children won't be drawn.
+    if (!m_bVisible)
+    {
+        return;
+    }
+    kmGLPushMatrix();
 
-	if (m_pGrid && m_pGrid->isActive())
-	{
-		m_pGrid->beforeDraw();
-	}
+    if (m_pGrid && m_pGrid->isActive())
+    {
+        m_pGrid->beforeDraw();
+    }
 
-	transform();
-	sortAllChildren();
-	draw();
+    transform();
+    sortAllChildren();
+    draw();
 
-	// reset for next frame
-	m_uOrderOfArrival = 0;
+    // reset for next frame
+    m_uOrderOfArrival = 0;
 
-	if (m_pGrid && m_pGrid->isActive())
-	{
-		m_pGrid->afterDraw(this);
-	}
+    if (m_pGrid && m_pGrid->isActive())
+    {
+        m_pGrid->afterDraw(this);
+    }
 
-	kmGLPopMatrix();
+    kmGLPopMatrix();
 }
 
 void CCBatchNode::draw()
 {
-	CC_NODE_DRAW_SETUP();
-	CCObject *object = NULL;
-	CCARRAY_FOREACH(m_pChildren, object)
-	{
-		CCArmature *armature = dynamic_cast<CCArmature*>(object);
-		if (armature)
-		{
-			armature->visit();
-			m_pAtlas = armature->getTextureAtlas();
-		}
-		else
-		{
-			((CCNode*)object)->visit();
-		}
-	}
+    CC_NODE_DRAW_SETUP();
+    CCObject *object = NULL;
+    CCARRAY_FOREACH(m_pChildren, object)
+    {
+        CCArmature *armature = dynamic_cast<CCArmature *>(object);
+        if (armature)
+        {
+            armature->visit();
+            m_pAtlas = armature->getTextureAtlas();
+        }
+        else
+        {
+            ((CCNode *)object)->visit();
+        }
+    }
 
-	if (m_pAtlas)
-	{
-		m_pAtlas->drawQuads();
-		m_pAtlas->removeAllQuads();
-	}
+    if (m_pAtlas)
+    {
+        m_pAtlas->drawQuads();
+        m_pAtlas->removeAllQuads();
+    }
 }
 
 NS_CC_EXT_END

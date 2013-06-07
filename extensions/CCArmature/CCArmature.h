@@ -80,7 +80,7 @@ public:
      *
      * @param name The bone's name you want to get
      */
-    virtual CCBone *getBone(const char *name);
+    virtual CCBone *getBone(const char *name) const;
     /**
      * Change a bone's parent with the specified parent name.
      *
@@ -143,13 +143,13 @@ protected:
 
 	CC_SYNTHESIZE(CCBone*, m_pParentBone, ParentBone);
 protected:
-    CCDictionary *m_pBoneDic;						//! The dictionary of the bones, include all bones in the armature, no matter it is the direct bone or the indirect bone. It is different from m_pChindren.
+    CCDictionary *m_pBoneDic;                    //! The dictionary of the bones, include all bones in the armature, no matter it is the direct bone or the indirect bone. It is different from m_pChindren.
 
 	CCArray *m_pTopBoneList;
 
     static std::map<int, CCArmature*> m_sArmatureIndexDic;	//! Use to save armature zorder info, 
 
-	ccBlendFunc        m_sBlendFunc;				//! It's required for CCTextureProtocol inheritance
+	ccBlendFunc m_sBlendFunc;                    //! It's required for CCTextureProtocol inheritance
 
 	CCPoint m_pOffsetPoint;
 };

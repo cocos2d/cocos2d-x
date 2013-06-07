@@ -26,7 +26,6 @@ THE SOFTWARE.
 #define __CCPHYSICSWORLD_H__
 
 #include "../utils/CCArmatureDefine.h"
-#include "Box2D/Box2D.h"
 #include "../CCBone.h"
 #include "../external_tool/sigslot.h"
 #include "../external_tool/GLES-Render.h"
@@ -38,77 +37,83 @@ using std::list;
 #define PT_RATIO 32
 #endif
 
+struct b2Manifold;
+struct b2ContactImpulse;
+class b2Fixture;
+class b2Contact;
+class b2World;
+
 NS_CC_EXT_BEGIN
 
 class Contact
 {
 public:
-	b2Fixture *fixtureA;
-	b2Fixture *fixtureB;
+    b2Fixture *fixtureA;
+    b2Fixture *fixtureB;
 };
 
 class ContactListener : public b2ContactListener
 {
-	//! Callbacks for derived classes.
-	virtual void BeginContact(b2Contact* contact) 
-	{ 
-		if (contact)
-		{
-			Contact c;
-			c.fixtureA = contact->GetFixtureA();
-			c.fixtureB = contact->GetFixtureB();
+    //! Callbacks for derived classes.
+    virtual void BeginContact(b2Contact *contact)
+    {
+        if (contact)
+        {
+            Contact c;
+            c.fixtureA = contact->GetFixtureA();
+            c.fixtureB = contact->GetFixtureB();
 
-			contact_list.push_back(c);
-		}
-		B2_NOT_USED(contact); 
-	}
-	virtual void EndContact(b2Contact* contact) 
-	{ 
-		contact_list.clear();
-		B2_NOT_USED(contact); 
-	}
-	virtual void PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
-	{
-		B2_NOT_USED(contact);
-		B2_NOT_USED(oldManifold);
-	}
-	virtual void PostSolve(const b2Contact* contact, const b2ContactImpulse* impulse)
-	{
-		B2_NOT_USED(contact);
-		B2_NOT_USED(impulse);
-	}
+            contact_list.push_back(c);
+        }
+        B2_NOT_USED(contact);
+    }
+    virtual void EndContact(b2Contact *contact)
+    {
+        contact_list.clear();
+        B2_NOT_USED(contact);
+    }
+    virtual void PreSolve(b2Contact *contact, const b2Manifold *oldManifold)
+    {
+        B2_NOT_USED(contact);
+        B2_NOT_USED(oldManifold);
+    }
+    virtual void PostSolve(const b2Contact *contact, const b2ContactImpulse *impulse)
+    {
+        B2_NOT_USED(contact);
+        B2_NOT_USED(impulse);
+    }
 
 public:
-	std::list<Contact> contact_list;
+    std::list<Contact> contact_list;
 };
 
 
 class CCPhysicsWorld
 {
 public:
-	static CCPhysicsWorld *sharedPhysicsWorld();
-	static void purgePhysicsWorld();
+    static CCPhysicsWorld *sharedPhysicsWorld();
+    static void purgePhysicsWorld();
 
-	void initNoGravityWorld();
+    void initNoGravityWorld();
 private:
-	CCPhysicsWorld();
-	~CCPhysicsWorld();
+    CCPhysicsWorld();
+    ~CCPhysicsWorld();
 
 private:
-	static CCPhysicsWorld *s_PhysicsWorld;
+    static CCPhysicsWorld *s_PhysicsWorld;
 
-	b2World *m_pNoGravityWorld;
+    b2World *m_pNoGravityWorld;
 
-	ContactListener *m_pContactListener;
+    ContactListener *m_pContactListener;
 
-	GLESDebugDraw *m_pDebugDraw;
+    GLESDebugDraw *m_pDebugDraw;
 public:
-	void update(float dt);
-	void drawDebug();
+    void update(float dt);
+    void drawDebug();
 
-	b2World *getNoGravityWorld();
+    b2World *getNoGravityWorld();
 
-	sigslot::signal2<CCBone*, CCBone*> BoneColliderSignal;
+    sigslot::signal2<CCBone *, CCBone *> BoneColliderSignal;
 };
 
 NS_CC_EXT_END
