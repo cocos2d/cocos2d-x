@@ -28,6 +28,7 @@
  ****************************************************************************/
 
 #include "WebSocket.h"
+#include <pthread.h>
 #include <queue>
 #include <signal.h>
 #include <errno.h>
@@ -465,7 +466,6 @@ void WebSocket::onSubThreadEnded()
 
 }
 
-
 int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                      struct libwebsocket *wsi,
                      enum libwebsocket_callback_reasons reason,
@@ -658,4 +658,5 @@ void WebSocket::onUIThreadReceiveMessage(WsMessage* msg)
             break;
     }
 }
+
 NS_CC_EXT_END
