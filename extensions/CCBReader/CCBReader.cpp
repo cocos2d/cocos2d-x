@@ -621,7 +621,7 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
     // Read properties
     ccNodeLoader->parseProperties(node, pParent, this);
     
-    bool isCCBFileNode = dynamic_cast<CCBFile*>(node);
+    bool isCCBFileNode = (NULL == dynamic_cast<CCBFile*>(node)) ? false : true;
     // Handle sub ccb files (remove middle node)
     if (isCCBFileNode)
     {
