@@ -72,10 +72,11 @@ CCArmature *CCArmature::create(const char *name, CCBone *parentBone)
 
 CCArmature::CCArmature()
     : m_pAnimation(NULL)
-    , m_pBoneDic(NULL)
+	, m_pArmatureData(NULL)
+	, m_pBatchNode(NULL)
     , m_pAtlas(NULL)
-    , m_pBatchNode(NULL)
-    , m_pParentBone(NULL)
+	, m_pParentBone(NULL)
+	, m_pBoneDic(NULL)
     , m_pTopBoneList(NULL)
 {
 }

@@ -32,9 +32,12 @@ THE SOFTWARE.
 NS_CC_EXT_BEGIN
 
 
-static const char *START = "start";
-static const char *COMPLETE = "complete";
-static const char *LOOP_COMPLETE = "loopComplete";
+enum MovementEventType
+{
+	START,
+	COMPLETE,
+	LOOP_COMPLETE
+};
 
 
 class CCArmature;
@@ -152,7 +155,7 @@ public:
      * MovementEvent signal. This will emit a signal when trigger a event.
      * The 1st param is the CCArmature. The 2nd param is Event Type, like START, COMPLETE. The 3rd param is Movement ID, also called Movement Name.
      */
-    sigslot::signal3<CCArmature *, const char *, const char *> MovementEventSignal;
+    sigslot::signal3<CCArmature *, MovementEventType, const char *> MovementEventSignal;
 
     sigslot::signal2<CCBone *, const char *> FrameEventSignal;
 };
