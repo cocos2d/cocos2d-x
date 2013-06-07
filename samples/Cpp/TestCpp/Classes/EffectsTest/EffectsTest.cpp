@@ -337,8 +337,10 @@ void EffectTestScene::runThisTest()
 #define SID_RESTART        1
 
 TextLayer::TextLayer(void)
+: BaseTest::BaseTest()
 {
-    initWithColor( ccc4(32,128,32,255) );
+	CCLayerColor *background = CCLayerColor::create( ccc4(32,128,32,255) );
+	this->addChild(background,-20);
     
     CCNode* node = CCNode::create();
     CCActionInterval* effect = getAction();
@@ -364,25 +366,6 @@ TextLayer::TextLayer(void)
     CCActionInterval* sc2_back = sc2->reverse();
     tamara->runAction( CCRepeatForever::create(CCSequence::create(sc2, sc2_back, NULL)) );
     
-    CCLabelTTF* label = CCLabelTTF::create((effectsList[actionIdx]).c_str(), "Marker Felt", 32);
-    
-    label->setPosition( ccp(VisibleRect::center().x,VisibleRect::top().y-80) );
-    addChild(label);
-    label->setTag( kTagLabel );
-
-    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(TextLayer::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(TextLayer::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(TextLayer::nextCallback) );
-
-    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
-
-    menu->setPosition(CCPointZero);
-    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    
-    addChild(menu, 1);    
-
     schedule( schedule_selector(TextLayer::checkAnim) );
 }
 
@@ -413,7 +396,7 @@ TextLayer* TextLayer::create()
 
 void TextLayer::onEnter()
 {
-    CCLayer::onEnter();
+    BaseTest::onEnter();
 }
 
 void TextLayer::newScene()

@@ -640,7 +640,7 @@ void RadiusMode1::onEnter()
 {
     ParticleDemo::onEnter();
 
-    setColor(ccBLACK);
+	m_color->setColor(ccBLACK);
     removeChild(m_background, true);
     m_background = NULL;
 
@@ -724,7 +724,7 @@ void RadiusMode2::onEnter()
 {
     ParticleDemo::onEnter();
 
-    setColor(ccBLACK);
+    m_color->setColor(ccBLACK);
     removeChild(m_background, true);
     m_background = NULL;
 
@@ -808,7 +808,7 @@ void Issue704::onEnter()
 {
     ParticleDemo::onEnter();
 
-    setColor(ccBLACK);
+    m_color->setColor(ccBLACK);
     removeChild(m_background, true);
     m_background = NULL;
 
@@ -900,7 +900,7 @@ void Issue870::onEnter()
 {
     ParticleDemo::onEnter();
 
-    setColor(ccBLACK);
+    m_color->setColor(ccBLACK);
     removeChild(m_background, true);
     m_background = NULL;
 
@@ -941,7 +941,7 @@ void DemoParticleFromFile::onEnter()
 {
     ParticleDemo::onEnter();
 
-    setColor(ccBLACK);
+    m_color->setColor(ccBLACK);
     removeChild(m_background, true);
     m_background = NULL;
 
@@ -1067,41 +1067,26 @@ ParticleDemo::~ParticleDemo(void)
 
 void ParticleDemo::onEnter(void)
 {
-    CCLayer::onEnter();
-    
-    initWithColor( ccc4(127,127,127,255) );
+    BaseTest::onEnter();
+
+	m_color = CCLayerColor::create( ccc4(127,127,127,255) );
+	this->addChild(m_color);
     
     m_emitter = NULL;
     
     setTouchEnabled( true );
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
-    CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 28);
-    addChild(label, 100, 1000);
-    label->setPosition( ccp(s.width/2, s.height-50) );
     
-    CCLabelTTF *sub = CCLabelTTF::create(subtitle().c_str(), "Arial", 16);
-    addChild(sub, 100);
-    sub->setPosition(ccp(s.width/2, s.height-80));
-    
-    
-    CCMenuItemImage* item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(ParticleDemo::backCallback) );
-    CCMenuItemImage* item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(ParticleDemo::restartCallback) );
-    CCMenuItemImage* item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2,  this, menu_selector(ParticleDemo::nextCallback) );
-    
-    CCMenuItemToggle* item4 = CCMenuItemToggle::createWithTarget(this, 
-                                                               menu_selector(ParticleDemo::toggleCallback), 
+    CCMenuItemToggle* item4 = CCMenuItemToggle::createWithCallback( std::bind( &ParticleDemo::toggleCallback, this, std::placeholders::_1),
                                                                CCMenuItemFont::create( "Free Movement" ),
                                                                CCMenuItemFont::create( "Relative Movement" ),
                                                                CCMenuItemFont::create( "Grouped Movement" ),
                                                                NULL );
     
-    CCMenu *menu = CCMenu::create(item1, item2, item3, item4, NULL);
+    CCMenu *menu = CCMenu::create(item4, NULL);
     
     menu->setPosition( CCPointZero );
-    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
     item4->setPosition( ccp( VisibleRect::left().x, VisibleRect::bottom().y+ 100) );
     item4->setAnchorPoint( ccp(0,0) );
     
@@ -1123,9 +1108,6 @@ void ParticleDemo::onEnter(void)
     
     
     scheduleUpdate();
-
-    CCLabelTTF* pLabel = (CCLabelTTF*)(this->getChildByTag(1000));
-    pLabel->setString(title().c_str());
 }
 
 std::string ParticleDemo::title()
@@ -1229,7 +1211,7 @@ void ParticleBatchHybrid::onEnter()
 {
     ParticleDemo::onEnter();
 
-    setColor(ccBLACK);
+    m_color->setColor(ccBLACK);
     removeChild(m_background, true);
     m_background = NULL;
 
@@ -1277,7 +1259,7 @@ void ParticleBatchMultipleEmitters::onEnter()
 {
     ParticleDemo::onEnter();
 
-    setColor(ccBLACK);
+    m_color->setColor(ccBLACK);
     removeChild(m_background, true);
     m_background = NULL;
 
@@ -1320,7 +1302,7 @@ void ParticleReorder::onEnter()
     ParticleDemo::onEnter();
 
     m_nOrder = 0;
-    setColor(ccBLACK);
+    m_color->setColor(ccBLACK);
     removeChild(m_background, true);
     m_background = NULL;
 
@@ -1490,7 +1472,7 @@ void Issue1201::onEnter()
 {
     ParticleDemo::onEnter();
 
-    setColor(ccBLACK);
+    m_color->setColor(ccBLACK);
     removeChild(m_background, true);
     m_background = NULL;
 
@@ -1520,7 +1502,7 @@ void MultipleParticleSystems::onEnter()
 {
     ParticleDemo::onEnter();
 
-    setColor(ccBLACK);
+    m_color->setColor(ccBLACK);
     removeChild(m_background, true);
     m_background = NULL;
 
@@ -1575,7 +1557,7 @@ void MultipleParticleSystemsBatched::onEnter()
 {
     ParticleDemo::onEnter();
 
-    setColor(ccBLACK);
+    m_color->setColor(ccBLACK);
     removeChild(m_background, true);
     m_background = NULL;
 
@@ -1637,7 +1619,7 @@ void AddAndDeleteParticleSystems::onEnter()
 {
     ParticleDemo::onEnter();
 
-    setColor(ccBLACK);
+    m_color->setColor(ccBLACK);
     removeChild(m_background, true);
     m_background = NULL;
 
@@ -1726,7 +1708,7 @@ void ReorderParticleSystems::onEnter()
 {
     ParticleDemo::onEnter();
 
-    setColor(ccBLACK);
+    m_color->setColor(ccBLACK);
     removeChild(m_background ,true);
     m_background = NULL;
 
@@ -1872,7 +1854,7 @@ void PremultipliedAlphaTest::onEnter()
 {
     ParticleDemo::onEnter();
 
-    this->setColor(ccBLUE);
+	m_color->setColor(ccBLUE);
     this->removeChild(m_background, true);
     m_background = NULL;
 
@@ -1904,7 +1886,7 @@ void PremultipliedAlphaTest2::onEnter()
 {
     ParticleDemo::onEnter();
 
-    this->setColor(ccBLACK);
+	m_color->setColor(ccBLACK);
     this->removeChild(m_background, true);
     m_background = NULL;
 

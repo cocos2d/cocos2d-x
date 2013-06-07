@@ -38,137 +38,70 @@ CCLayer* nextSpriteTestAction();
 CCLayer* backSpriteTestAction();
 CCLayer* restartSpriteTestAction();
 
-typedef CCLayer* (*NEWSPRITETESTFUNC)();
-#define SPRITETEST_CREATE_FUNC(className) \
-static CCLayer* create##className() \
-{ return new className(); }
 
-SPRITETEST_CREATE_FUNC(Sprite1);
-SPRITETEST_CREATE_FUNC(SpriteBatchNode1);
-SPRITETEST_CREATE_FUNC(SpriteFrameTest);
-SPRITETEST_CREATE_FUNC(SpriteFrameAliasNameTest);
-SPRITETEST_CREATE_FUNC(SpriteAnchorPoint);
-SPRITETEST_CREATE_FUNC(SpriteBatchNodeAnchorPoint);
-SPRITETEST_CREATE_FUNC(SpriteOffsetAnchorRotation);
-SPRITETEST_CREATE_FUNC(SpriteBatchNodeOffsetAnchorRotation);
-SPRITETEST_CREATE_FUNC(SpriteOffsetAnchorScale);
-SPRITETEST_CREATE_FUNC(SpriteBatchNodeOffsetAnchorScale);
-SPRITETEST_CREATE_FUNC(SpriteOffsetAnchorSkew);
-SPRITETEST_CREATE_FUNC(SpriteOffsetAnchorRotationalSkew);
-SPRITETEST_CREATE_FUNC(SpriteBatchNodeOffsetAnchorSkew);
-SPRITETEST_CREATE_FUNC(SpriteBatchNodeOffsetAnchorRotationalSkew);
-SPRITETEST_CREATE_FUNC(SpriteOffsetAnchorSkewScale);
-SPRITETEST_CREATE_FUNC(SpriteOffsetAnchorRotationalSkewScale);
-SPRITETEST_CREATE_FUNC(SpriteBatchNodeOffsetAnchorSkewScale);
-SPRITETEST_CREATE_FUNC(SpriteBatchNodeOffsetAnchorRotationalSkewScale);
-SPRITETEST_CREATE_FUNC(SpriteOffsetAnchorFlip);
-SPRITETEST_CREATE_FUNC(SpriteBatchNodeOffsetAnchorFlip);
-SPRITETEST_CREATE_FUNC(SpriteAnimationSplit);
-SPRITETEST_CREATE_FUNC(SpriteColorOpacity);
-SPRITETEST_CREATE_FUNC(SpriteBatchNodeColorOpacity);
-SPRITETEST_CREATE_FUNC(SpriteZOrder);
-SPRITETEST_CREATE_FUNC(SpriteBatchNodeZOrder);
-SPRITETEST_CREATE_FUNC(SpriteBatchNodeReorder);
-SPRITETEST_CREATE_FUNC(SpriteBatchNodeReorderIssue744);
-SPRITETEST_CREATE_FUNC(SpriteBatchNodeReorderIssue766);
-SPRITETEST_CREATE_FUNC(SpriteBatchNodeReorderIssue767);
-SPRITETEST_CREATE_FUNC(SpriteBatchNodeReorderSameIndex);
-SPRITETEST_CREATE_FUNC(SpriteBatchNodeReorderOneChild);
-SPRITETEST_CREATE_FUNC(NodeSort);
-SPRITETEST_CREATE_FUNC(SpriteZVertex);
-SPRITETEST_CREATE_FUNC(SpriteBatchNodeZVertex);
-SPRITETEST_CREATE_FUNC(Sprite6);
-SPRITETEST_CREATE_FUNC(SpriteFlip);
-SPRITETEST_CREATE_FUNC(SpriteBatchNodeFlip);
-SPRITETEST_CREATE_FUNC(SpriteAliased);
-SPRITETEST_CREATE_FUNC(SpriteBatchNodeAliased);
-SPRITETEST_CREATE_FUNC(SpriteNewTexture);
-SPRITETEST_CREATE_FUNC(SpriteBatchNodeNewTexture);
-SPRITETEST_CREATE_FUNC(SpriteHybrid);
-SPRITETEST_CREATE_FUNC(SpriteBatchNodeChildren);
-SPRITETEST_CREATE_FUNC(SpriteBatchNodeChildrenZ);
-SPRITETEST_CREATE_FUNC(SpriteChildrenVisibility);
-SPRITETEST_CREATE_FUNC(SpriteChildrenVisibilityIssue665);
-SPRITETEST_CREATE_FUNC(SpriteChildrenAnchorPoint);
-SPRITETEST_CREATE_FUNC(SpriteBatchNodeChildrenAnchorPoint);
-SPRITETEST_CREATE_FUNC(SpriteBatchNodeChildrenScale);
-SPRITETEST_CREATE_FUNC(SpriteChildrenChildren);
-SPRITETEST_CREATE_FUNC(SpriteBatchNodeChildrenChildren);
-SPRITETEST_CREATE_FUNC(SpriteSkewNegativeScaleChildren);
-SPRITETEST_CREATE_FUNC(SpriteRotationalSkewNegativeScaleChildren);
-SPRITETEST_CREATE_FUNC(SpriteBatchNodeSkewNegativeScaleChildren);
-SPRITETEST_CREATE_FUNC(SpriteBatchNodeRotationalSkewNegativeScaleChildren);
-SPRITETEST_CREATE_FUNC(SpriteNilTexture);
-SPRITETEST_CREATE_FUNC(SpriteSubclass);
-SPRITETEST_CREATE_FUNC(SpriteDoubleResolution);
-SPRITETEST_CREATE_FUNC(SpriteBatchBug1217);
-SPRITETEST_CREATE_FUNC(AnimationCache);
-SPRITETEST_CREATE_FUNC(AnimationCacheFile);
-
-
-static NEWSPRITETESTFUNC createFunctions[] =
+static std::function<CCLayer*()> createFunctions[] =
 {
-    createSprite1,
-	createSpriteBatchNode1,
-	createSpriteFrameTest,
-	createSpriteFrameAliasNameTest,
-	createSpriteAnchorPoint,
-	createSpriteBatchNodeAnchorPoint,
-	createSpriteOffsetAnchorRotation,
-	createSpriteBatchNodeOffsetAnchorRotation,
-	createSpriteOffsetAnchorScale,
-	createSpriteBatchNodeOffsetAnchorScale,
-	createSpriteOffsetAnchorSkew,
-	createSpriteOffsetAnchorRotationalSkew,
-	createSpriteBatchNodeOffsetAnchorSkew,
-	createSpriteBatchNodeOffsetAnchorRotationalSkew,
-	createSpriteOffsetAnchorSkewScale,
-	createSpriteOffsetAnchorRotationalSkewScale,
-	createSpriteBatchNodeOffsetAnchorSkewScale,
-	createSpriteBatchNodeOffsetAnchorRotationalSkewScale,
-	createSpriteOffsetAnchorFlip,
-	createSpriteBatchNodeOffsetAnchorFlip,
-	createSpriteAnimationSplit,
-	createSpriteColorOpacity,
-	createSpriteBatchNodeColorOpacity,
-	createSpriteZOrder,
-	createSpriteBatchNodeZOrder,
-	createSpriteBatchNodeReorder,
-	createSpriteBatchNodeReorderIssue744,
-	createSpriteBatchNodeReorderIssue766,
-	createSpriteBatchNodeReorderIssue767,
-	createSpriteBatchNodeReorderSameIndex,
-	createSpriteBatchNodeReorderOneChild,
-	createNodeSort,
-	createSpriteZVertex,
-	createSpriteBatchNodeZVertex,
-	createSprite6,
-	createSpriteFlip,
-	createSpriteBatchNodeFlip,
-	createSpriteAliased,
-	createSpriteBatchNodeAliased,
-	createSpriteNewTexture,
-	createSpriteBatchNodeNewTexture,
-	createSpriteHybrid,
-	createSpriteBatchNodeChildren,
-	createSpriteBatchNodeChildrenZ,
-	createSpriteChildrenVisibility,
-	createSpriteChildrenVisibilityIssue665,
-	createSpriteChildrenAnchorPoint,
-	createSpriteBatchNodeChildrenAnchorPoint,
-	createSpriteBatchNodeChildrenScale,
-	createSpriteChildrenChildren,
-	createSpriteBatchNodeChildrenChildren,
-	createSpriteSkewNegativeScaleChildren,
-	createSpriteRotationalSkewNegativeScaleChildren,
-	createSpriteBatchNodeSkewNegativeScaleChildren,
-	createSpriteBatchNodeRotationalSkewNegativeScaleChildren,
-	createSpriteNilTexture,
-	createSpriteSubclass,
-	createSpriteDoubleResolution,
-	createSpriteBatchBug1217,
-	createAnimationCache,
-	createAnimationCacheFile,
+	CL(Sprite1),
+	CL(SpriteBatchNode1),
+	CL(SpriteFrameTest),
+	CL(SpriteFrameAliasNameTest),
+	CL(SpriteAnchorPoint),
+	CL(SpriteBatchNodeAnchorPoint),
+	CL(SpriteOffsetAnchorRotation),
+	CL(SpriteBatchNodeOffsetAnchorRotation),
+	CL(SpriteOffsetAnchorScale),
+	CL(SpriteBatchNodeOffsetAnchorScale),
+	CL(SpriteOffsetAnchorSkew),
+	CL(SpriteOffsetAnchorRotationalSkew),
+	CL(SpriteBatchNodeOffsetAnchorSkew),
+	CL(SpriteBatchNodeOffsetAnchorRotationalSkew),
+	CL(SpriteOffsetAnchorSkewScale),
+	CL(SpriteOffsetAnchorRotationalSkewScale),
+	CL(SpriteBatchNodeOffsetAnchorSkewScale),
+	CL(SpriteBatchNodeOffsetAnchorRotationalSkewScale),
+	CL(SpriteOffsetAnchorFlip),
+	CL(SpriteBatchNodeOffsetAnchorFlip),
+	CL(SpriteAnimationSplit),
+	CL(SpriteColorOpacity),
+	CL(SpriteBatchNodeColorOpacity),
+	CL(SpriteZOrder),
+	CL(SpriteBatchNodeZOrder),
+	CL(SpriteBatchNodeReorder),
+	CL(SpriteBatchNodeReorderIssue744),
+	CL(SpriteBatchNodeReorderIssue766),
+	CL(SpriteBatchNodeReorderIssue767),
+	CL(SpriteBatchNodeReorderSameIndex),
+	CL(SpriteBatchNodeReorderOneChild),
+	CL(NodeSort),
+	CL(SpriteZVertex),
+	CL(SpriteBatchNodeZVertex),
+	CL(Sprite6),
+	CL(SpriteFlip),
+	CL(SpriteBatchNodeFlip),
+	CL(SpriteAliased),
+	CL(SpriteBatchNodeAliased),
+	CL(SpriteNewTexture),
+	CL(SpriteBatchNodeNewTexture),
+	CL(SpriteHybrid),
+	CL(SpriteBatchNodeChildren),
+	CL(SpriteBatchNodeChildrenZ),
+	CL(SpriteChildrenVisibility),
+	CL(SpriteChildrenVisibilityIssue665),
+	CL(SpriteChildrenAnchorPoint),
+	CL(SpriteBatchNodeChildrenAnchorPoint),
+	CL(SpriteBatchNodeChildrenScale),
+	CL(SpriteChildrenChildren),
+	CL(SpriteBatchNodeChildrenChildren),
+	CL(SpriteSkewNegativeScaleChildren),
+	CL(SpriteRotationalSkewNegativeScaleChildren),
+	CL(SpriteBatchNodeSkewNegativeScaleChildren),
+	CL(SpriteBatchNodeRotationalSkewNegativeScaleChildren),
+	CL(SpriteNilTexture),
+	CL(SpriteSubclass),
+	CL(SpriteDoubleResolution),
+	CL(SpriteBatchBug1217),
+	CL(AnimationCache),
+	CL(AnimationCacheFile),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -212,6 +145,7 @@ CCLayer* restartSpriteTestAction()
 //------------------------------------------------------------------
 
 SpriteTestDemo::SpriteTestDemo(void)
+: BaseTest()
 {
 }
 
@@ -231,34 +165,7 @@ std::string SpriteTestDemo::subtitle()
 
 void SpriteTestDemo::onEnter()
 {
-    CCLayer::onEnter();
-
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-
-    CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 28);
-    addChild(label, 1);
-    label->setPosition( ccp(s.width/2, s.height-50) );
-
-    std::string strSubtitle = subtitle();
-    if( ! strSubtitle.empty() ) 
-    {
-        CCLabelTTF* l = CCLabelTTF::create(strSubtitle.c_str(), "Thonburi", 16);
-        addChild(l, 1);
-        l->setPosition( ccp(s.width/2, s.height-80) );
-    }    
-
-    CCMenuItemImage *item1 = CCMenuItemImage::create("Images/b1.png", "Images/b2.png", this, menu_selector(SpriteTestDemo::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::create("Images/r1.png","Images/r2.png", this, menu_selector(SpriteTestDemo::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::create("Images/f1.png", "Images/f2.png", this, menu_selector(SpriteTestDemo::nextCallback) );
-
-    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
-
-    menu->setPosition(CCPointZero);
-    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    
-    addChild(menu, 1);    
+    BaseTest::onEnter();  
 }
 
 void SpriteTestDemo::restartCallback(CCObject* pSender)
