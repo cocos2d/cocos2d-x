@@ -10,7 +10,6 @@ local ExtensionTestEnum =
     TEST_CCCONTROLBUTTON    = 1,
     TEST_COCOSBUILDER       = 2,
     TEST_WEBSOCKET          = 3,
-    --TRAGET_PLATFORM
     TEST_EDITBOX            = 4,
 	TEST_TABLEVIEW          = 5,
     TEST_MAX_COUNT          = 6,
@@ -1030,16 +1029,23 @@ local function ExtensionsMainLayer()
     CCMenuItemFont:setFontName("Arial")
     CCMenuItemFont:setFontSize(24)
     local targetPlatform = CCApplication:sharedApplication():getTargetPlatform()
-    local bSupportWebSocket = true
-    if (kTargetIphone ~= targetPlatform) and (kTargetIpad ~= targetPlatform) and (kTargetAndroid ~= targetPlatform) and (kTargetWindows ~= targetPlatform) then
-        bSupportWebSocket = false
+    local bSupportWebSocket = false
+    if (kTargetIphone == targetPlatform) or (kTargetIpad == targetPlatform) or (kTargetAndroid == targetPlatform) or (kTargetWindows == targetPlatform) then
+        bSupportWebSocket = true
+    end
+    local bSupportEdit = false
+    if (kTargetIphone == targetPlatform) or (kTargetIpad == targetPlatform) or 
+        (kTargetAndroid == targetPlatform) or (kTargetWindows == targetPlatform) or 
+        (kTargetMacOS == targetPlatform) or (kTargetTizen == targetPlatform) then
+        bSupportEdit = true
     end
     for i = 1, ExtensionTestEnum.TEST_MAX_COUNT do
 		local item = CCMenuItemFont:create(testsName[i])
 	    item:registerScriptTapHandler(menuCallback)
         item:setPosition(s.width / 2, s.height - i * LINE_SPACE)
         menu:addChild(item, kItemTagBasic + i)
-        if (i == ExtensionTestEnum.TEST_WEBSOCKET + 1) and false == bSupportWebSocket then
+        if ((i == ExtensionTestEnum.TEST_WEBSOCKET + 1) and (false == bSupportWebSocket))
+        or ((i == ExtensionTestEnum.TEST_EDITBOX + 1) and (false == bSupportEdit)) then
             item:setEnabled(false)
         end
 	end
