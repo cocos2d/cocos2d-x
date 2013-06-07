@@ -129,6 +129,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Classes\BaseTest.cpp" />
     <ClCompile Include="..\Classes\ChipmunkTest\ChipmunkTest.cpp" />
     <ClCompile Include="..\Classes\ClippingNodeTest\ClippingNodeTest.cpp" />
     <ClCompile Include="..\Classes\ConfigurationTest\ConfigurationTest.cpp" />
@@ -226,6 +227,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
     <ClCompile Include="..\Classes\MutiTouchTest\MutiTouchTest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Classes\BaseTest.h" />
     <ClInclude Include="..\Classes\ChipmunkTest\ChipmunkTest.h" />
     <ClInclude Include="..\Classes\ClippingNodeTest\ClippingNodeTest.h" />
     <ClInclude Include="..\Classes\ConfigurationTest\ConfigurationTest.h" />

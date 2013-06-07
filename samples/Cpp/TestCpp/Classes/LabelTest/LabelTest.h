@@ -2,8 +2,9 @@
 #define _ATLAS_TEST_H_
 
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
-class AtlasDemo : public CCLayer
+class AtlasDemo : public BaseTest
 {
 protected:
 
