@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "../CCArmature.h"
 #include "../external_tool/Json/CSContentJsonDictionary.h"
 
-class tinyxml2::XMLElement;
+namespace tinyxml2 { class XMLElement; }
 
 NS_CC_EXT_BEGIN
 
