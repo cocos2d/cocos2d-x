@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCDATA_H__
-#define __CCDATA_H__
+#ifndef __CCARMATURE_DATAS_H__
+#define __CCARMATURE_DATAS_H__
 
 #include "../utils/CCArmatureDefine.h"
 #include "../utils/CCTweenFunction.h"
@@ -456,4 +456,4 @@ public:
 
 NS_CC_EXT_END
 
-#endif /*__CCDATA_H__*/
+#endif /*__CCARMATURE_DATAS_H__*/
