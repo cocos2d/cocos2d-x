@@ -89,7 +89,7 @@ TestController::TestController()
 : m_tBeginPos(CCPointZero)
 {
     // add close menu
-    CCMenuItemImage *pCloseItem = CCMenuItemImage::create(s_pPathClose, s_pPathClose, this, menu_selector(TestController::closeCallback) );
+    CCMenuItemImage *pCloseItem = CCMenuItemImage::create(s_pPathClose, s_pPathClose, std::bind( &TestController::closeCallback, this, std::placeholders::_1) );
     CCMenu* pMenu =CCMenu::create(pCloseItem, NULL);
 
     pMenu->setPosition( CCPointZero );

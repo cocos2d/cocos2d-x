@@ -1428,45 +1428,13 @@ CCLayer* restartTileMapAction()
 
 
 TileDemo::TileDemo(void)
+: BaseTest()
 {
     setTouchEnabled( true );
-
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-
-    m_label = CCLabelTTF::create("", "Arial", 28);
-    addChild(m_label, 1);
-    m_label->setPosition( ccp(s.width/2, s.height-50) );
-    m_label->retain();
-
-    std::string strSubtitle = subtitle();
-    if( ! strSubtitle.empty() ) 
-    {
-        CCLabelTTF* l = CCLabelTTF::create(strSubtitle.c_str(), "Thonburi", 16);
-        addChild(l, 1);
-        l->setPosition( ccp(s.width/2, s.height-80) );
-
-        m_subtitle = l;
-        m_subtitle->retain();
-    }    
-
-    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(TileDemo::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(TileDemo::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(TileDemo::nextCallback) );
-
-    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
-
-    menu->setPosition( CCPointZero );
-    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    
-    addChild(menu, 1);    
 }
 
 TileDemo::~TileDemo(void)
 {
-    m_label->release();
-    m_subtitle->release();
 }
 
 std::string TileDemo::title()
@@ -1481,10 +1449,7 @@ std::string TileDemo::subtitle()
 
 void TileDemo::onEnter()
 {
-    CCLayer::onEnter();
-
-    m_label->setString(title().c_str());
-    m_subtitle->setString(subtitle().c_str());
+    BaseTest::onEnter();
 }
 
 void TileDemo::restartCallback(CCObject* pSender)

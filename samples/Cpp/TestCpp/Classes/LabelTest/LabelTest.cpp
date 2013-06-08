@@ -940,19 +940,19 @@ LabelTTFTest::LabelTTFTest()
 
     CCMenuItemFont::setFontSize(30);
     CCMenu *menu = CCMenu::create(
-        CCMenuItemFont::create("Left", this, menu_selector(LabelTTFTest::setAlignmentLeft)),
-        CCMenuItemFont::create("Center", this, menu_selector(LabelTTFTest::setAlignmentCenter)),
-        CCMenuItemFont::create("Right", this, menu_selector(LabelTTFTest::setAlignmentRight)),
+		CCMenuItemFont::create("Left", std::bind( &LabelTTFTest::setAlignmentLeft, this, std::placeholders::_1)),
+		CCMenuItemFont::create("Center", std::bind( &LabelTTFTest::setAlignmentCenter, this, std::placeholders::_1)),
+		CCMenuItemFont::create("Right", std::bind( &LabelTTFTest::setAlignmentRight, this, std::placeholders::_1)),
         NULL);
     menu->alignItemsVerticallyWithPadding(4);
     menu->setPosition(ccp(50, s.height / 2 - 20));
     this->addChild(menu);
 
     menu = CCMenu::create(
-        CCMenuItemFont::create("Top", this, menu_selector(LabelTTFTest::setAlignmentTop)),
-        CCMenuItemFont::create("Middle", this, menu_selector(LabelTTFTest::setAlignmentMiddle)),
-        CCMenuItemFont::create("Bottom", this, menu_selector(LabelTTFTest::setAlignmentBottom)),
-        NULL);
+		CCMenuItemFont::create("Top", std::bind( &LabelTTFTest::setAlignmentTop, this, std::placeholders::_1)),
+		CCMenuItemFont::create("Middle", std::bind( &LabelTTFTest::setAlignmentMiddle, this, std::placeholders::_1)),
+		CCMenuItemFont::create("Bottom", std::bind( &LabelTTFTest::setAlignmentBottom, this, std::placeholders::_1)),
+		NULL);
     menu->alignItemsVerticallyWithPadding(4);
     menu->setPosition(ccp(s.width - 50, s.height / 2 - 20));
     this->addChild(menu);
@@ -1155,9 +1155,9 @@ BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
     this->m_pArrowsShouldRetain->retain();
 
     CCMenuItemFont::setFontSize(20);
-    CCMenuItemFont *longSentences = CCMenuItemFont::create("Long Flowing Sentences", this, menu_selector(BitmapFontMultiLineAlignment::stringChanged));
-    CCMenuItemFont *lineBreaks = CCMenuItemFont::create("Short Sentences With Intentional Line Breaks", this, menu_selector(BitmapFontMultiLineAlignment::stringChanged));
-    CCMenuItemFont *mixed = CCMenuItemFont::create("Long Sentences Mixed With Intentional Line Breaks", this, menu_selector(BitmapFontMultiLineAlignment::stringChanged));
+    CCMenuItemFont *longSentences = CCMenuItemFont::create("Long Flowing Sentences", std::bind( &BitmapFontMultiLineAlignment::stringChanged, this, std::placeholders::_1));
+    CCMenuItemFont *lineBreaks = CCMenuItemFont::create("Short Sentences With Intentional Line Breaks", std::bind( &BitmapFontMultiLineAlignment::stringChanged, this, std::placeholders::_1));
+    CCMenuItemFont *mixed = CCMenuItemFont::create("Long Sentences Mixed With Intentional Line Breaks", std::bind( &BitmapFontMultiLineAlignment::stringChanged, this, std::placeholders::_1));
     CCMenu *stringMenu = CCMenu::create(longSentences, lineBreaks, mixed, NULL);
     stringMenu->alignItemsVertically();
 
@@ -1169,9 +1169,9 @@ BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
 
     CCMenuItemFont::setFontSize(30);
 
-    CCMenuItemFont *left = CCMenuItemFont::create("Left", this, menu_selector(BitmapFontMultiLineAlignment::alignmentChanged));
-    CCMenuItemFont *center = CCMenuItemFont::create("Center", this, menu_selector(BitmapFontMultiLineAlignment::alignmentChanged));
-    CCMenuItemFont *right = CCMenuItemFont::create("Right", this, menu_selector(BitmapFontMultiLineAlignment::alignmentChanged));
+    CCMenuItemFont *left = CCMenuItemFont::create("Left", std::bind( &BitmapFontMultiLineAlignment::alignmentChanged, this, std::placeholders::_1));
+    CCMenuItemFont *center = CCMenuItemFont::create("Center", std::bind( &BitmapFontMultiLineAlignment::alignmentChanged, this, std::placeholders::_1));
+    CCMenuItemFont *right = CCMenuItemFont::create("Right", std::bind( &BitmapFontMultiLineAlignment::alignmentChanged, this, std::placeholders::_1));
     CCMenu *alignmentMenu = CCMenu::create(left, center, right, NULL);
     alignmentMenu->alignItemsHorizontallyWithPadding(alignmentItemPadding);
 

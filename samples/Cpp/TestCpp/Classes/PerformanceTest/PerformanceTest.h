@@ -7,7 +7,6 @@ class PerformanceMainLayer : public CCLayer
 {
 public:
     virtual void onEnter();
-    void menuCallback(CCObject* pSender);
 };
 
 class PerformBasicLayer : public CCLayer

@@ -2,13 +2,10 @@
 #define _TILEMAP_TEST_H_
 
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
-class TileDemo : public CCLayer
+class TileDemo : public BaseTest
 {
-protected:
-    CCLabelTTF* m_label;
-    CCLabelTTF* m_subtitle;
-
 public:
     TileDemo(void);
     virtual ~TileDemo(void);
