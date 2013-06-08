@@ -5,10 +5,6 @@
 #include "cocos-ext.h"
 #include "../../VisibleRect.h"
 #include "../../testBasic.h"
-//#include "vld.h"
-
-//#include "Box2D/Box2D.h"
-
 
 class ArmatureTestScene : public TestScene
 {
