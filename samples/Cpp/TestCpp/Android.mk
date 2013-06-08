@@ -59,6 +59,7 @@ Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp \
 Classes/ExtensionsTest/EditBoxTest/EditBoxTest.cpp \
 Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp \
 Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp \
+Classes/ExtensionsTest/ArmatureTest/ArmatureScene.cpp \
 \
 Classes/ExtensionsTest/ComponentsTest/ComponentsTestScene.cpp \
 Classes/ExtensionsTest/ComponentsTest/EnemyController.cpp \
