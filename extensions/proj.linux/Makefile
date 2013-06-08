@@ -111,7 +111,7 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 
 include $(COCOS_ROOT)/cocos2dx/proj.linux/cocos2dx.mk
 
-CXXFLAGS += -Wno-multichar
+CXXFLAGS += -Wno-multichar -Wno-delete-non-virtual-dtor
 
 TARGET := $(LIB_DIR)/$(TARGET)
 

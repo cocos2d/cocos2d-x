@@ -53,6 +53,7 @@ void _setFree (void (*free) (void* ptr)) {
 char* _readFile (const char* path, int* length) {
 	char *data;
 	FILE *file = fopen(path, "rb");
+    int readBytes = 0;
 	if (!file) return 0;
 
 	fseek(file, 0, SEEK_END);
@@ -60,9 +61,13 @@ char* _readFile (const char* path, int* length) {
 	fseek(file, 0, SEEK_SET);
 
 	data = MALLOC(char, *length);
-	fread(data, 1, *length, file);
+	readBytes = fread(data, 1, *length, file);
 	fclose(file);
-
+    if (readBytes != *length)
+    {
+        FREE(data);
+        data = NULL;
+    }
 	return data;
 }
 

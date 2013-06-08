@@ -1984,15 +1984,16 @@ void* serverEntryPoint(void*)
     struct addrinfo hints, *result, *rp;
     int s;
     memset(&hints, 0, sizeof(struct addrinfo));
-    hints.ai_family = AF_INET;
-    hints.ai_socktype = SOCK_STREAM; // TCP
+    hints.ai_family = AF_INET;       // IPv4
+    hints.ai_socktype = SOCK_STREAM; // TCP stream sockets
+    hints.ai_flags = AI_PASSIVE;     // fill in my IP for me
 
-    int err;
     stringstream portstr;
     portstr << JSB_DEBUGGER_PORT;
-    const char* tmp = portstr.str().c_str();
-    if ((err = getaddrinfo(NULL, tmp, &hints, &result)) != 0) {
-        printf("error: %s\n", gai_strerror(err));
+
+    int err;
+    if ((err = getaddrinfo(NULL, portstr.str().c_str(), &hints, &result)) != 0) {
+        LOGD("getaddrinfo error : %s\n", gai_strerror(err));
     }
 
     for (rp = result; rp != NULL; rp = rp->ai_next) {

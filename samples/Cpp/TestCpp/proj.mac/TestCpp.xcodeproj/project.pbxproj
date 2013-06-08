@@ -309,6 +309,7 @@
 		379F8E41176328840028C07D /* CCUtilMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 379F8E22176328840028C07D /* CCUtilMath.cpp */; };
 		379F8E43176328940028C07D /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 379F8E42176328940028C07D /* armature */; };
 		379F8E47176328A40028C07D /* ArmatureScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 379F8E45176328A40028C07D /* ArmatureScene.cpp */; };
+		379F8EE3176353780028C07D /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 379F8EE2176353780028C07D /* configs */; };
 		37EEEC61175DE9EE003C1193 /* CCComAttribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37EEEC59175DE9EE003C1193 /* CCComAttribute.cpp */; };
 		37EEEC62175DE9EE003C1193 /* CCComAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37EEEC5B175DE9EE003C1193 /* CCComAudio.cpp */; };
 		37EEEC63175DE9EE003C1193 /* CCComController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37EEEC5D175DE9EE003C1193 /* CCComController.cpp */; };
@@ -996,6 +997,7 @@
 		379F8E42176328940028C07D /* armature */ = {isa = PBXFileReference; lastKnownFileType = folder; path = armature; sourceTree = "<group>"; };
 		379F8E45176328A40028C07D /* ArmatureScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ArmatureScene.cpp; sourceTree = "<group>"; };
 		379F8E46176328A40028C07D /* ArmatureScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArmatureScene.h; sourceTree = "<group>"; };
+		379F8EE2176353780028C07D /* configs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = configs; sourceTree = "<group>"; };
 		37EEEC59175DE9EE003C1193 /* CCComAttribute.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCComAttribute.cpp; sourceTree = "<group>"; };
 		37EEEC5A175DE9EE003C1193 /* CCComAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComAttribute.h; sourceTree = "<group>"; };
 		37EEEC5B175DE9EE003C1193 /* CCComAudio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCComAudio.cpp; sourceTree = "<group>"; };
@@ -2666,6 +2668,7 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				379F8EE2176353780028C07D /* configs */,
 				379F8E42176328940028C07D /* armature */,
 				37EEEC78175DEA0F003C1193 /* components */,
 				15D2552415E60029000D5E89 /* animations */,
@@ -2834,6 +2837,7 @@
 				379F8E37176328840028C07D /* json_valueiterator.inl in Resources */,
 				379F8E39176328840028C07D /* sconscript in Resources */,
 				379F8E43176328940028C07D /* armature in Resources */,
+				379F8EE3176353780028C07D /* configs in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
