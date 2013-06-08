@@ -1,3 +1,4 @@
+require "audioEngine" 
 local EFFECT_FILE = "effect1.wav"
 local MUSIC_FILE  = "background.mp3"
 
@@ -35,60 +36,60 @@ local function CocosDenshionTest()
         local nIdx = pMenuItem:getZOrder() - 10000
         -- play background music
         if nIdx ==  0 then
-            SimpleAudioEngine:sharedEngine():playBackgroundMusic(MUSIC_FILE, true)
+            audioEngine.playMusic(MUSIC_FILE, true)
         elseif nIdx == 1 then
             -- stop background music
-            SimpleAudioEngine:sharedEngine():stopBackgroundMusic()
+            audioEngine.stopMusic()
         elseif nIdx == 2 then
             -- pause background music
-            SimpleAudioEngine:sharedEngine():pauseBackgroundMusic()
+            audioEngine.pauseMusic()
         elseif nIdx == 3 then
             -- resume background music
-            SimpleAudioEngine:sharedEngine():resumeBackgroundMusic()
+            audioEngine.resumeMusic()
             -- rewind background music
         elseif nIdx == 4 then
-            SimpleAudioEngine:sharedEngine():rewindBackgroundMusic()
+            audioEngine.rewindMusic()
         elseif nIdx == 5 then
             -- is background music playing
-            if SimpleAudioEngine:sharedEngine():isBackgroundMusicPlaying() then
+            if audioEngine.isMusicPlaying () then
                 cclog("background music is playing")
             else
                 cclog("background music is not playing")
             end
         elseif nIdx == 6 then
             -- play effect
-            m_nSoundId = SimpleAudioEngine:sharedEngine():playEffect(EFFECT_FILE)
+            m_nSoundId = audioEngine.playEffect(EFFECT_FILE)
         elseif nIdx == 7 then
             -- play effect
-            m_nSoundId = SimpleAudioEngine:sharedEngine():playEffect(EFFECT_FILE, true)
+            m_nSoundId = audioEngine.playEffect(EFFECT_FILE, true)
         elseif nIdx == 8 then
             -- stop effect
-            SimpleAudioEngine:sharedEngine():stopEffect(m_nSoundId)
+            audioEngine.stopEffect(m_nSoundId)
         elseif nIdx == 9 then
             -- unload effect
-            SimpleAudioEngine:sharedEngine():unloadEffect(EFFECT_FILE)
+            audioEngine.unloadEffect(EFFECT_FILE)
         elseif nIdx == 10 then
             -- add bakcground music volume
-            SimpleAudioEngine:sharedEngine():setBackgroundMusicVolume(SimpleAudioEngine:sharedEngine():getBackgroundMusicVolume() + 0.1)
+            audioEngine.setMusicVolume(audioEngine.getMusicVolume() + 0.1)
         elseif nIdx == 11 then
             -- sub backgroud music volume
-            SimpleAudioEngine:sharedEngine():setBackgroundMusicVolume(SimpleAudioEngine:sharedEngine():getBackgroundMusicVolume() - 0.1)
+            audioEngine.setMusicVolume(audioEngine.getMusicVolume() - 0.1)
         elseif nIdx == 12 then
             -- add effects volume
-            SimpleAudioEngine:sharedEngine():setEffectsVolume(SimpleAudioEngine:sharedEngine():getEffectsVolume() + 0.1)
+            audioEngine.setEffectsVolume(audioEngine.getEffectsVolume() + 0.1)
         elseif nIdx == 13 then
             -- sub effects volume
-            SimpleAudioEngine:sharedEngine():setEffectsVolume(SimpleAudioEngine:sharedEngine():getEffectsVolume() - 0.1)
+            audioEngine.setEffectsVolume(audioEngine.getEffectsVolume() - 0.1)
         elseif nIdx == 14 then
-            SimpleAudioEngine:sharedEngine():pauseEffect(m_nSoundId)
+            audioEngine.pauseEffect(m_nSoundId)
         elseif nIdx == 15 then
-            SimpleAudioEngine:sharedEngine():resumeEffect(m_nSoundId)
+            audioEngine.resumeEffect(m_nSoundId)
         elseif nIdx == 16 then
-            SimpleAudioEngine:sharedEngine():pauseAllEffects()
+            audioEngine.pauseAllEffects()
         elseif nIdx == 17 then
-            SimpleAudioEngine:sharedEngine():resumeAllEffects()
+            audioEngine.resumeAllEffects()
         elseif nIdx == 18 then
-            SimpleAudioEngine:sharedEngine():stopAllEffects()
+            audioEngine.stopAllEffects()
         end
     end
     -- add menu items for tests
@@ -121,7 +122,7 @@ local function CocosDenshionTest()
         if event == "enter" then
 
         elseif event == "exit" then
-            SimpleAudioEngine:sharedEngine():endToLua()
+            --SimpleAudioEngine:sharedEngine():endToLua()
         end
     end
 
