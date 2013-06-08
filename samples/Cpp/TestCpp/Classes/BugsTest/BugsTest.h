@@ -7,7 +7,6 @@ class BugsTestMainLayer : public CCLayer
 {
 public:
     virtual void onEnter();
-    void menuCallback(CCObject* pSender);
 
     virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
     virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);

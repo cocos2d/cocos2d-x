@@ -3,8 +3,9 @@
 
 ////----#include "cocos2d.h"
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
-class TestCocosNodeDemo : public CCLayer
+class TestCocosNodeDemo : public BaseTest
 {
 public:
     TestCocosNodeDemo(void);

@@ -33,7 +33,6 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CCBReader/CCBSequence.cpp \
 ../CCBReader/CCBSequenceProperty.cpp \
 ../CCBReader/CCBValue.cpp \
-../CCBReader/CCData.cpp \
 ../CCBReader/CCNode+CCBRelativePositioning.cpp \
 ../GUI/CCScrollView/CCScrollView.cpp \
 ../GUI/CCScrollView/CCSorting.cpp \
@@ -74,7 +73,9 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../spine/Slot.cpp \
 ../spine/SlotData.cpp \
 ../spine/extension.cpp \
-../spine/spine-cocos2dx.cpp
+../spine/spine-cocos2dx.cpp \
+../spine/CCSkeleton.cpp \
+../spine/CCSkeletonAnimation.cpp
 
 include $(COCOS_ROOT)/cocos2dx/proj.linux/cocos2dx.mk
 

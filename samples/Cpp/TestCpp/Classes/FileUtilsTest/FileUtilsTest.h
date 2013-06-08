@@ -2,6 +2,8 @@
 #define __FILEUTILSTEST_H__
 
 #include "../testBasic.h"
+#include "../BaseTest.h"
+
 USING_NS_CC;
 using namespace std;
 
@@ -11,7 +13,7 @@ public:
     virtual void runThisTest();
 };
 
-class FileUtilsDemo : public CCLayer
+class FileUtilsDemo : public BaseTest
 {
 public:
     virtual void onEnter();

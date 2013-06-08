@@ -3,8 +3,9 @@
 
 #include "cocos2d.h"
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
-class RenderTextureTest : public CCLayer
+class RenderTextureTest : public BaseTest
 {
 public:
     virtual void onEnter();

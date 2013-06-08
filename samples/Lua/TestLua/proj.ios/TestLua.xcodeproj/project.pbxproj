@@ -16,7 +16,6 @@
 		15C153FD1683112E00D239F2 /* CCBValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C1538A1683112E00D239F2 /* CCBValue.cpp */; };
 		15C153FE1683112E00D239F2 /* CCControlButtonLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C1538C1683112E00D239F2 /* CCControlButtonLoader.cpp */; };
 		15C153FF1683112E00D239F2 /* CCControlLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C1538E1683112E00D239F2 /* CCControlLoader.cpp */; };
-		15C154001683112E00D239F2 /* CCData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C153901683112E00D239F2 /* CCData.cpp */; };
 		15C154011683112E00D239F2 /* CCLabelBMFontLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C153921683112E00D239F2 /* CCLabelBMFontLoader.cpp */; };
 		15C154021683112E00D239F2 /* CCLabelTTFLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C153941683112E00D239F2 /* CCLabelTTFLoader.cpp */; };
 		15C154031683112E00D239F2 /* CCLayerColorLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C153961683112E00D239F2 /* CCLayerColorLoader.cpp */; };
@@ -232,8 +231,6 @@
 		15C1538D1683112E00D239F2 /* CCControlButtonLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlButtonLoader.h; sourceTree = "<group>"; };
 		15C1538E1683112E00D239F2 /* CCControlLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControlLoader.cpp; sourceTree = "<group>"; };
 		15C1538F1683112E00D239F2 /* CCControlLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlLoader.h; sourceTree = "<group>"; };
-		15C153901683112E00D239F2 /* CCData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCData.cpp; sourceTree = "<group>"; };
-		15C153911683112E00D239F2 /* CCData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCData.h; sourceTree = "<group>"; };
 		15C153921683112E00D239F2 /* CCLabelBMFontLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelBMFontLoader.cpp; sourceTree = "<group>"; };
 		15C153931683112E00D239F2 /* CCLabelBMFontLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelBMFontLoader.h; sourceTree = "<group>"; };
 		15C153941683112E00D239F2 /* CCLabelTTFLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelTTFLoader.cpp; sourceTree = "<group>"; };
@@ -618,8 +615,6 @@
 				15C1538D1683112E00D239F2 /* CCControlButtonLoader.h */,
 				15C1538E1683112E00D239F2 /* CCControlLoader.cpp */,
 				15C1538F1683112E00D239F2 /* CCControlLoader.h */,
-				15C153901683112E00D239F2 /* CCData.cpp */,
-				15C153911683112E00D239F2 /* CCData.h */,
 				15C153921683112E00D239F2 /* CCLabelBMFontLoader.cpp */,
 				15C153931683112E00D239F2 /* CCLabelBMFontLoader.h */,
 				15C153941683112E00D239F2 /* CCLabelTTFLoader.cpp */,
@@ -1357,7 +1352,6 @@
 				15C153FD1683112E00D239F2 /* CCBValue.cpp in Sources */,
 				15C153FE1683112E00D239F2 /* CCControlButtonLoader.cpp in Sources */,
 				15C153FF1683112E00D239F2 /* CCControlLoader.cpp in Sources */,
-				15C154001683112E00D239F2 /* CCData.cpp in Sources */,
 				15C154011683112E00D239F2 /* CCLabelBMFontLoader.cpp in Sources */,
 				15C154021683112E00D239F2 /* CCLabelTTFLoader.cpp in Sources */,
 				15C154031683112E00D239F2 /* CCLayerColorLoader.cpp in Sources */,
@@ -1577,6 +1571,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -1629,6 +1625,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;

@@ -134,34 +134,7 @@ std::string AtlasDemo::subtitle()
 
 void AtlasDemo::onEnter()
 {
-    CCLayer::onEnter();
-
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-
-    CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 28);
-    addChild(label, 1);
-    label->setPosition( ccp(s.width/2, s.height-50) );
-
-    std::string strSubtitle = subtitle();
-    if( ! strSubtitle.empty() ) 
-    {
-        CCLabelTTF* l = CCLabelTTF::create(strSubtitle.c_str(), "Thonburi", 16);
-        addChild(l, 1);
-        l->setPosition( ccp(s.width/2, s.height-80) );
-    }    
-
-    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(AtlasDemo::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(AtlasDemo::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(AtlasDemo::nextCallback) );
-
-    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
-
-    menu->setPosition( CCPointZero );
-    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));;
-    
-    addChild(menu, 1);    
+    BaseTest::onEnter();
 }
 
 void AtlasDemo::restartCallback(CCObject* pSender)
@@ -967,19 +940,19 @@ LabelTTFTest::LabelTTFTest()
 
     CCMenuItemFont::setFontSize(30);
     CCMenu *menu = CCMenu::create(
-        CCMenuItemFont::create("Left", this, menu_selector(LabelTTFTest::setAlignmentLeft)),
-        CCMenuItemFont::create("Center", this, menu_selector(LabelTTFTest::setAlignmentCenter)),
-        CCMenuItemFont::create("Right", this, menu_selector(LabelTTFTest::setAlignmentRight)),
+		CCMenuItemFont::create("Left", std::bind( &LabelTTFTest::setAlignmentLeft, this, std::placeholders::_1)),
+		CCMenuItemFont::create("Center", std::bind( &LabelTTFTest::setAlignmentCenter, this, std::placeholders::_1)),
+		CCMenuItemFont::create("Right", std::bind( &LabelTTFTest::setAlignmentRight, this, std::placeholders::_1)),
         NULL);
     menu->alignItemsVerticallyWithPadding(4);
     menu->setPosition(ccp(50, s.height / 2 - 20));
     this->addChild(menu);
 
     menu = CCMenu::create(
-        CCMenuItemFont::create("Top", this, menu_selector(LabelTTFTest::setAlignmentTop)),
-        CCMenuItemFont::create("Middle", this, menu_selector(LabelTTFTest::setAlignmentMiddle)),
-        CCMenuItemFont::create("Bottom", this, menu_selector(LabelTTFTest::setAlignmentBottom)),
-        NULL);
+		CCMenuItemFont::create("Top", std::bind( &LabelTTFTest::setAlignmentTop, this, std::placeholders::_1)),
+		CCMenuItemFont::create("Middle", std::bind( &LabelTTFTest::setAlignmentMiddle, this, std::placeholders::_1)),
+		CCMenuItemFont::create("Bottom", std::bind( &LabelTTFTest::setAlignmentBottom, this, std::placeholders::_1)),
+		NULL);
     menu->alignItemsVerticallyWithPadding(4);
     menu->setPosition(ccp(s.width - 50, s.height / 2 - 20));
     this->addChild(menu);
@@ -1182,9 +1155,9 @@ BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
     this->m_pArrowsShouldRetain->retain();
 
     CCMenuItemFont::setFontSize(20);
-    CCMenuItemFont *longSentences = CCMenuItemFont::create("Long Flowing Sentences", this, menu_selector(BitmapFontMultiLineAlignment::stringChanged));
-    CCMenuItemFont *lineBreaks = CCMenuItemFont::create("Short Sentences With Intentional Line Breaks", this, menu_selector(BitmapFontMultiLineAlignment::stringChanged));
-    CCMenuItemFont *mixed = CCMenuItemFont::create("Long Sentences Mixed With Intentional Line Breaks", this, menu_selector(BitmapFontMultiLineAlignment::stringChanged));
+    CCMenuItemFont *longSentences = CCMenuItemFont::create("Long Flowing Sentences", std::bind( &BitmapFontMultiLineAlignment::stringChanged, this, std::placeholders::_1));
+    CCMenuItemFont *lineBreaks = CCMenuItemFont::create("Short Sentences With Intentional Line Breaks", std::bind( &BitmapFontMultiLineAlignment::stringChanged, this, std::placeholders::_1));
+    CCMenuItemFont *mixed = CCMenuItemFont::create("Long Sentences Mixed With Intentional Line Breaks", std::bind( &BitmapFontMultiLineAlignment::stringChanged, this, std::placeholders::_1));
     CCMenu *stringMenu = CCMenu::create(longSentences, lineBreaks, mixed, NULL);
     stringMenu->alignItemsVertically();
 
@@ -1196,9 +1169,9 @@ BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
 
     CCMenuItemFont::setFontSize(30);
 
-    CCMenuItemFont *left = CCMenuItemFont::create("Left", this, menu_selector(BitmapFontMultiLineAlignment::alignmentChanged));
-    CCMenuItemFont *center = CCMenuItemFont::create("Center", this, menu_selector(BitmapFontMultiLineAlignment::alignmentChanged));
-    CCMenuItemFont *right = CCMenuItemFont::create("Right", this, menu_selector(BitmapFontMultiLineAlignment::alignmentChanged));
+    CCMenuItemFont *left = CCMenuItemFont::create("Left", std::bind( &BitmapFontMultiLineAlignment::alignmentChanged, this, std::placeholders::_1));
+    CCMenuItemFont *center = CCMenuItemFont::create("Center", std::bind( &BitmapFontMultiLineAlignment::alignmentChanged, this, std::placeholders::_1));
+    CCMenuItemFont *right = CCMenuItemFont::create("Right", std::bind( &BitmapFontMultiLineAlignment::alignmentChanged, this, std::placeholders::_1));
     CCMenu *alignmentMenu = CCMenu::create(left, center, right, NULL);
     alignmentMenu->alignItemsHorizontallyWithPadding(alignmentItemPadding);
 

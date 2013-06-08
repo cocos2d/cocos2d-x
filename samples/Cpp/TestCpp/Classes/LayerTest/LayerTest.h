@@ -3,8 +3,9 @@
 
 ////----#include "cocos2d.h"
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
-class LayerTest : public CCLayer
+class LayerTest : public BaseTest
 {
 protected:
     std::string    m_strTitle;
