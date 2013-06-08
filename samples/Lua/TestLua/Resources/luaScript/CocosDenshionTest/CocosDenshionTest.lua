@@ -1,4 +1,4 @@
-require "audioEngine" 
+require "AudioEngine" 
 local EFFECT_FILE = "effect1.wav"
 local MUSIC_FILE  = "background.mp3"
 
@@ -36,60 +36,60 @@ local function CocosDenshionTest()
         local nIdx = pMenuItem:getZOrder() - 10000
         -- play background music
         if nIdx ==  0 then
-            audioEngine.playMusic(MUSIC_FILE, true)
+            AudioEngine.playMusic(MUSIC_FILE, true)
         elseif nIdx == 1 then
             -- stop background music
-            audioEngine.stopMusic()
+            AudioEngine.stopMusic()
         elseif nIdx == 2 then
             -- pause background music
-            audioEngine.pauseMusic()
+            AudioEngine.pauseMusic()
         elseif nIdx == 3 then
             -- resume background music
-            audioEngine.resumeMusic()
+            AudioEngine.resumeMusic()
             -- rewind background music
         elseif nIdx == 4 then
-            audioEngine.rewindMusic()
+            AudioEngine.rewindMusic()
         elseif nIdx == 5 then
             -- is background music playing
-            if audioEngine.isMusicPlaying () then
+            if AudioEngine.isMusicPlaying () then
                 cclog("background music is playing")
             else
                 cclog("background music is not playing")
             end
         elseif nIdx == 6 then
             -- play effect
-            m_nSoundId = audioEngine.playEffect(EFFECT_FILE)
+            m_nSoundId = AudioEngine.playEffect(EFFECT_FILE)
         elseif nIdx == 7 then
             -- play effect
-            m_nSoundId = audioEngine.playEffect(EFFECT_FILE, true)
+            m_nSoundId = AudioEngine.playEffect(EFFECT_FILE, true)
         elseif nIdx == 8 then
             -- stop effect
-            audioEngine.stopEffect(m_nSoundId)
+            AudioEngine.stopEffect(m_nSoundId)
         elseif nIdx == 9 then
             -- unload effect
-            audioEngine.unloadEffect(EFFECT_FILE)
+            AudioEngine.unloadEffect(EFFECT_FILE)
         elseif nIdx == 10 then
             -- add bakcground music volume
-            audioEngine.setMusicVolume(audioEngine.getMusicVolume() + 0.1)
+            AudioEngine.setMusicVolume(AudioEngine.getMusicVolume() + 0.1)
         elseif nIdx == 11 then
             -- sub backgroud music volume
-            audioEngine.setMusicVolume(audioEngine.getMusicVolume() - 0.1)
+            AudioEngine.setMusicVolume(AudioEngine.getMusicVolume() - 0.1)
         elseif nIdx == 12 then
             -- add effects volume
-            audioEngine.setEffectsVolume(audioEngine.getEffectsVolume() + 0.1)
+            AudioEngine.setEffectsVolume(AudioEngine.getEffectsVolume() + 0.1)
         elseif nIdx == 13 then
             -- sub effects volume
-            audioEngine.setEffectsVolume(audioEngine.getEffectsVolume() - 0.1)
+            AudioEngine.setEffectsVolume(AudioEngine.getEffectsVolume() - 0.1)
         elseif nIdx == 14 then
-            audioEngine.pauseEffect(m_nSoundId)
+            AudioEngine.pauseEffect(m_nSoundId)
         elseif nIdx == 15 then
-            audioEngine.resumeEffect(m_nSoundId)
+            AudioEngine.resumeEffect(m_nSoundId)
         elseif nIdx == 16 then
-            audioEngine.pauseAllEffects()
+            AudioEngine.pauseAllEffects()
         elseif nIdx == 17 then
-            audioEngine.resumeAllEffects()
+            AudioEngine.resumeAllEffects()
         elseif nIdx == 18 then
-            audioEngine.stopAllEffects()
+            AudioEngine.stopAllEffects()
         end
     end
     -- add menu items for tests

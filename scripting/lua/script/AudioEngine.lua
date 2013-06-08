@@ -1,5 +1,5 @@
---Encapsulate SimpleAudioEngine to audioEngine,Play music and sound effects. 
-audioEngine = audioEngine or {}
+--Encapsulate SimpleAudioEngine to AudioEngine,Play music and sound effects. 
+AudioEngine = AudioEngine or {}
 
 local sharedEngine = SimpleAudioEngine:sharedEngine()
 
@@ -100,26 +100,26 @@ local function resumeEffect(handle)
 end
 
 
-audioEngine.stopAllEffects = stopAllEffects
-audioEngine.getMusicVolume = getMusicVolume
-audioEngine.isMusicPlaying = isMusicPlaying
-audioEngine.getEffectsVolume  = getEffectsVolume
-audioEngine.setMusicVolume = setMusicVolume
-audioEngine.stopEffect     = stopEffect
-audioEngine.stopMusic     = stopMusic
-audioEngine.playMusic     = playMusic
-audioEngine.pauseAllEffects = pauseAllEffects
-audioEngine.preloadMusic = preloadMusic
-audioEngine.resumeMusic = resumeMusic
-audioEngine.playEffect = playEffect
-audioEngine.rewindMusic = rewindMusic
-audioEngine.willPlayMusic  = willPlayMusic
-audioEngine.unloadEffect  = unloadEffect
-audioEngine.preloadEffect = preloadEffect
-audioEngine.setEffectsVolume = setEffectsVolume
-audioEngine.pauseEffect = pauseEffect
-audioEngine.resumeAllEffects = resumeAllEffects
-audioEngine.pauseMusic = pauseMusic
-audioEngine.resumeEffect = resumeEffect
+AudioEngine.stopAllEffects = stopAllEffects
+AudioEngine.getMusicVolume = getMusicVolume
+AudioEngine.isMusicPlaying = isMusicPlaying
+AudioEngine.getEffectsVolume  = getEffectsVolume
+AudioEngine.setMusicVolume = setMusicVolume
+AudioEngine.stopEffect     = stopEffect
+AudioEngine.stopMusic     = stopMusic
+AudioEngine.playMusic     = playMusic
+AudioEngine.pauseAllEffects = pauseAllEffects
+AudioEngine.preloadMusic = preloadMusic
+AudioEngine.resumeMusic = resumeMusic
+AudioEngine.playEffect = playEffect
+AudioEngine.rewindMusic = rewindMusic
+AudioEngine.willPlayMusic  = willPlayMusic
+AudioEngine.unloadEffect  = unloadEffect
+AudioEngine.preloadEffect = preloadEffect
+AudioEngine.setEffectsVolume = setEffectsVolume
+AudioEngine.pauseEffect = pauseEffect
+AudioEngine.resumeAllEffects = resumeAllEffects
+AudioEngine.pauseMusic = pauseMusic
+AudioEngine.resumeEffect = resumeEffect
 
 
