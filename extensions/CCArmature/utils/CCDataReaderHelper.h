@@ -87,7 +87,7 @@ public:
 
 
     /**
-     * Decode CCAnimation Datas from xml export from Dragon CCBone flash tool
+     * Decode CCArmatureAnimation Datas from xml export from Dragon CCBone flash tool
      */
     static CCAnimationData *decodeAnimation(tinyxml2::XMLElement *animationXML);
     static CCMovementData *decodeMovement(tinyxml2::XMLElement *movementXML, CCArmatureData *armatureData);

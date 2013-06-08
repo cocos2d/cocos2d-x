@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCAnimation.h"
+#include "CCArmatureAnimation.h"
 #include "../CCArmature.h"
 #include "../CCBone.h"
 #include "../utils/CCArmatureDefine.h"
@@ -33,20 +33,20 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
-CCAnimation *CCAnimation::create(CCArmature *armature)
+CCArmatureAnimation *CCArmatureAnimation::create(CCArmature *armature)
 {
-    CCAnimation *pARmatureAnimation = new CCAnimation();
-    if (pARmatureAnimation && pARmatureAnimation->init(armature))
+    CCArmatureAnimation *pArmatureAnimation = new CCArmatureAnimation();
+    if (pArmatureAnimation && pArmatureAnimation->init(armature))
     {
-        pARmatureAnimation->autorelease();
-        return pARmatureAnimation;
+        pArmatureAnimation->autorelease();
+        return pArmatureAnimation;
     }
-    CC_SAFE_DELETE(pARmatureAnimation);
+    CC_SAFE_DELETE(pArmatureAnimation);
     return NULL;
 }
 
 
-CCAnimation::CCAnimation()
+CCArmatureAnimation::CCArmatureAnimation()
 	: m_pAnimationData(NULL)
 	, m_pArmature(NULL)
     , m_strMovementID("")
@@ -55,13 +55,13 @@ CCAnimation::CCAnimation()
 
 }
 
-CCAnimation::~CCAnimation(void)
+CCArmatureAnimation::~CCArmatureAnimation(void)
 {
     CC_SAFE_RELEASE_NULL(m_pTweenList);
     CC_SAFE_RELEASE_NULL(m_pAnimationData);
 }
 
-bool CCAnimation::init(CCArmature *armature)
+bool CCArmatureAnimation::init(CCArmature *armature)
 {
     bool bRet = false;
     do
@@ -79,7 +79,7 @@ bool CCAnimation::init(CCArmature *armature)
 }
 
 
-void CCAnimation:: pause()
+void CCArmatureAnimation:: pause()
 {
     CCObject *object = NULL;
     CCARRAY_FOREACH(m_pTweenList, object)
@@ -89,7 +89,7 @@ void CCAnimation:: pause()
     CCProcessBase::pause();
 }
 
-void CCAnimation::resume()
+void CCArmatureAnimation::resume()
 {
     CCObject *object = NULL;
     CCARRAY_FOREACH(m_pTweenList, object)
@@ -99,7 +99,7 @@ void CCAnimation::resume()
     CCProcessBase::resume();
 }
 
-void CCAnimation::stop()
+void CCArmatureAnimation::stop()
 {
     CCObject *object = NULL;
     CCARRAY_FOREACH(m_pTweenList, object)
@@ -110,7 +110,7 @@ void CCAnimation::stop()
     CCProcessBase::stop();
 }
 
-void CCAnimation::setAnimationScale(float animationScale )
+void CCArmatureAnimation::setAnimationScale(float animationScale )
 {
     if(animationScale == m_fAnimationScale)
     {
@@ -133,7 +133,7 @@ void CCAnimation::setAnimationScale(float animationScale )
 }
 
 
-void CCAnimation::play(const char *animationName, int durationTo, int durationTween,  int loop, int tweenEasing)
+void CCArmatureAnimation::play(const char *animationName, int durationTo, int durationTween,  int loop, int tweenEasing)
 {
     CCAssert(m_pAnimationData, "m_pAnimationData can not be null");
 
@@ -215,7 +215,7 @@ void CCAnimation::play(const char *animationName, int durationTo, int durationTw
 }
 
 
-void CCAnimation::playByIndex(int animationIndex, int durationTo, int durationTween,  int loop, int tweenEasing)
+void CCArmatureAnimation::playByIndex(int animationIndex, int durationTo, int durationTween,  int loop, int tweenEasing)
 {
     std::vector<std::string> &movName = m_pAnimationData->movementNames;
     CC_ASSERT((animationIndex > -1) && ((unsigned int)animationIndex < movName.size()));
@@ -226,12 +226,12 @@ void CCAnimation::playByIndex(int animationIndex, int durationTo, int durationTw
 
 
 
-int CCAnimation::getMovementCount()
+int CCArmatureAnimation::getMovementCount()
 {
     return m_pAnimationData->getMovementCount();
 }
 
-void CCAnimation::update(float dt)
+void CCArmatureAnimation::update(float dt)
 {
     CCProcessBase::update(dt);
     CCObject *object = NULL;
@@ -241,7 +241,7 @@ void CCAnimation::update(float dt)
     }
 }
 
-void CCAnimation::updateHandler()
+void CCArmatureAnimation::updateHandler()
 {
     if (m_fCurrentPercent >= 1)
     {
@@ -304,7 +304,7 @@ void CCAnimation::updateHandler()
 }
 
 
-void CCAnimation::updateFrameData(float currentPercent)
+void CCArmatureAnimation::updateFrameData(float currentPercent)
 {
     m_iPrevFrameIndex = m_iCurFrameIndex;
     m_iCurFrameIndex = m_iRawDuration * currentPercent;

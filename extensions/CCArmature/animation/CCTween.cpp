@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 
 #include "CCTween.h"
-#include "CCAnimation.h"
+#include "CCArmatureAnimation.h"
 #include "../CCBone.h"
 #include "../CCArmature.h"
 #include "../utils/CCUtilMath.h"
