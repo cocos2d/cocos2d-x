@@ -229,6 +229,9 @@
     <Filter Include="Classes\ExtensionsTest\ComponentsTest">
       <UniqueIdentifier>{90142ee3-1b3c-4bc6-a353-986231a58a17}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ExtensionsTest\ArmatureTest">
+      <UniqueIdentifier>{710d484c-0bf8-4024-a1e7-43258671b4cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -533,6 +536,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\ComponentsTest\SceneController.cpp">
       <Filter>Classes\ExtensionsTest\ComponentsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\ArmatureTest\ArmatureScene.cpp">
+      <Filter>Classes\ExtensionsTest\ArmatureTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1018,6 +1024,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\ComponentsTest\SceneController.h">
       <Filter>Classes\ExtensionsTest\ComponentsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\ArmatureTest\ArmatureScene.h">
+      <Filter>Classes\ExtensionsTest\ArmatureTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
