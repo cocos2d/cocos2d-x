@@ -65,7 +65,6 @@ public class Cocos2dxETCLoader {
 			
 			texture = ETC1Util.createTexture(inputStream);
 			inputStream.close();
-			assetManager.close();
 		} catch (Exception e) {
 			Log.d("Cocos2dx", "Unable to create texture for " + filePath);
 			
@@ -73,6 +72,8 @@ public class Cocos2dxETCLoader {
 		}
 		
 		if (texture != null) {
+			boolean ret = true;
+			
 			try {
 				int width = texture.getWidth();
 				int height = texture.getHeight();
@@ -88,9 +89,10 @@ public class Cocos2dxETCLoader {
 			} catch (Exception e)
 			{
 				Log.d("invoke native function error", e.toString());
+				ret = false;
 			}
 			
-			return true;
+			return ret;
 		} else {
 			return false;
 		}
