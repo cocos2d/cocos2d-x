@@ -14,9 +14,6 @@ public:
     virtual void onEnter();
 
     virtual void runThisTest() = 0;
-
-    // The CallBack for back to the main menu scene
-    virtual void MainMenuCallback(CCObject* pSender);
 };
 
 typedef CCLayer* (*NEWTESTFUNC)();

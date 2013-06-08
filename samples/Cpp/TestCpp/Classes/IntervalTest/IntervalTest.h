@@ -18,7 +18,6 @@ public:
     IntervalLayer(void);
     virtual ~IntervalLayer();
 public:
-    void onPause(CCObject* pSender);
 
     void step1(float dt);
     void step2(float dt);

@@ -1814,19 +1814,19 @@ void TextureMemoryAlloc::onEnter()
     
     CCMenuItemFont::setFontSize(24);
     
-    CCMenuItem *item1 = CCMenuItemFont::create("PNG", this, menu_selector(TextureMemoryAlloc::updateImage));
+    CCMenuItem *item1 = CCMenuItemFont::create("PNG", std::bind(&TextureMemoryAlloc::updateImage, this, std::placeholders::_1));
     item1->setTag(0);
     
-    CCMenuItem *item2 = CCMenuItemFont::create("RGBA8", this, menu_selector(TextureMemoryAlloc::updateImage));
+    CCMenuItem *item2 = CCMenuItemFont::create("RGBA8", std::bind(&TextureMemoryAlloc::updateImage, this, std::placeholders::_1));
     item2->setTag(1);
     
-    CCMenuItem *item3 = CCMenuItemFont::create("RGB8", this, menu_selector(TextureMemoryAlloc::updateImage));
+    CCMenuItem *item3 = CCMenuItemFont::create("RGB8", std::bind(&TextureMemoryAlloc::updateImage, this, std::placeholders::_1));
     item3->setTag(2);
     
-    CCMenuItem *item4 = CCMenuItemFont::create("RGBA4", this, menu_selector(TextureMemoryAlloc::updateImage));
+    CCMenuItem *item4 = CCMenuItemFont::create("RGBA4", std::bind(&TextureMemoryAlloc::updateImage, this, std::placeholders::_1));
     item4->setTag(3);
     
-    CCMenuItem *item5 = CCMenuItemFont::create("A8", this, menu_selector(TextureMemoryAlloc::updateImage));
+    CCMenuItem *item5 = CCMenuItemFont::create("A8", std::bind(&TextureMemoryAlloc::updateImage, this, std::placeholders::_1));
     item5->setTag(4);
     
     CCMenu *menu = CCMenu::create(item1, item2, item3, item4, item5, NULL);
@@ -1834,7 +1834,7 @@ void TextureMemoryAlloc::onEnter()
     
     addChild(menu);
     
-    CCMenuItemFont *warmup = CCMenuItemFont::create("warm up texture", this, menu_selector(TextureMemoryAlloc::changeBackgroundVisible));
+    CCMenuItemFont *warmup = CCMenuItemFont::create("warm up texture", std::bind(&TextureMemoryAlloc::changeBackgroundVisible, this, std::placeholders::_1));
     
     CCMenu *menu2 = CCMenu::create(warmup, NULL);
 

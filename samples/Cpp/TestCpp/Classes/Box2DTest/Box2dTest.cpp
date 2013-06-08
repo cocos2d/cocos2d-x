@@ -115,23 +115,20 @@ void Box2DTestLayer::initPhysics()
 
 void Box2DTestLayer::createResetButton()
 {
-    CCMenuItemImage *reset = CCMenuItemImage::create("Images/r1.png", "Images/r2.png", this, menu_selector(Box2DTestLayer::reset));
+    CCMenuItemImage *reset = CCMenuItemImage::create("Images/r1.png", "Images/r2.png", [](CCObject *sender) {
+		CCScene* s = new Box2DTestScene();
+		Box2DTestLayer* child = new Box2DTestLayer();
+		s->addChild(child);
+		child->release();
+		CCDirector::sharedDirector()->replaceScene(s);
+		s->release();
+	});
 
     CCMenu *menu = CCMenu::create(reset, NULL);
 
     menu->setPosition(ccp(VisibleRect::bottom().x, VisibleRect::bottom().y + 30));
     this->addChild(menu, -1);
 
-}
-
-void Box2DTestLayer::reset(CCObject* sender)
-{
-    CCScene* s = new Box2DTestScene();
-    Box2DTestLayer* child = new Box2DTestLayer();
-    s->addChild(child);
-    child->release();
-    CCDirector::sharedDirector()->replaceScene(s);
-    s->release();
 }
 
 void Box2DTestLayer::draw()

@@ -518,9 +518,9 @@ void MenuLayerPriorityTest::menuCallback(CCObject* pSender)
 // BugsTest
 BugsTest::BugsTest()
 {
-    CCMenuItemFont *issue1410 = CCMenuItemFont::create("Issue 1410", this, menu_selector(BugsTest::issue1410MenuCallback));
-    CCMenuItemFont *issue1410_2 = CCMenuItemFont::create("Issue 1410 #2", this, menu_selector(BugsTest::issue1410v2MenuCallback));
-    CCMenuItemFont *back = CCMenuItemFont::create("Back", this, menu_selector(BugsTest::backMenuCallback));
+    CCMenuItemFont *issue1410 = CCMenuItemFont::create("Issue 1410", std::bind( &BugsTest::issue1410MenuCallback, this, std::placeholders::_1));
+    CCMenuItemFont *issue1410_2 = CCMenuItemFont::create("Issue 1410 #2", std::bind( &BugsTest::issue1410v2MenuCallback, this, std::placeholders::_1));
+    CCMenuItemFont *back = CCMenuItemFont::create("Back", std::bind( &BugsTest::backMenuCallback, this, std::placeholders::_1));
     
     CCMenu *menu = CCMenu::create(issue1410, issue1410_2, back, NULL);
     addChild(menu);
@@ -564,7 +564,7 @@ RemoveMenuItemWhenMove::RemoveMenuItemWhenMove()
     item = CCMenuItemFont::create("item 1");
     item->retain();
     
-    CCMenuItemFont *back = CCMenuItemFont::create("go back", this, menu_selector(RemoveMenuItemWhenMove::goBack));
+    CCMenuItemFont *back = CCMenuItemFont::create("go back", std::bind( &RemoveMenuItemWhenMove::goBack, this, std::placeholders::_1));
     
     CCMenu *menu = CCMenu::create(item, back, NULL);
     addChild(menu);
