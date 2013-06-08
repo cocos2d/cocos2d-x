@@ -112,7 +112,7 @@ bool CCArmature::init(const char *name)
         removeAllChildren();
 
         CC_SAFE_DELETE(m_pAnimation);
-        m_pAnimation = new CCAnimation();
+        m_pAnimation = new CCArmatureAnimation();
         m_pAnimation->init(this);
 
         CC_SAFE_DELETE(m_pBoneDic);

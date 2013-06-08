@@ -43,21 +43,21 @@ enum MovementEventType
 class CCArmature;
 class CCBone;
 
-class  CCAnimation : public CCProcessBase
+class  CCArmatureAnimation : public CCProcessBase
 {
 public:
     /**
      * Create with a CCArmature
-     * @param armature The CCArmature CCAnimation will bind to
+     * @param armature The CCArmature CCArmatureAnimation will bind to
      */
-    static CCAnimation *create(CCArmature *armature);
+    static CCArmatureAnimation *create(CCArmature *armature);
 public:
-    CCAnimation();
-    virtual ~CCAnimation(void);
+    CCArmatureAnimation();
+    virtual ~CCArmatureAnimation(void);
 
     /**
      * Init with a CCArmature
-     * @param armature The CCArmature CCAnimation will bind to
+     * @param armature The CCArmature CCArmatureAnimation will bind to
      */
     virtual bool init(CCArmature *armature);
 

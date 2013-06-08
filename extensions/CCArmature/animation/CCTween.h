@@ -32,7 +32,7 @@ THE SOFTWARE.
 NS_CC_EXT_BEGIN
 
 class CCBone;
-class CCAnimation;
+class CCArmatureAnimation;
 
 class  CCTween : public CCProcessBase
 {
@@ -132,7 +132,7 @@ protected:
     int m_iFromIndex;				//! The current frame index in FrameList of CCMovementBoneData, it's different from m_iFrameIndex
     int m_iToIndex;					//! The next frame index in FrameList of CCMovementBoneData, it's different from m_iFrameIndex
 
-    CCAnimation *m_pAnimation;
+    CCArmatureAnimation *m_pAnimation;
 };
 
 NS_CC_EXT_END

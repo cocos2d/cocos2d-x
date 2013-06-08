@@ -51,7 +51,8 @@
     </Filter>
     <Filter Include="CCArmature\external_tool\Json\lib_json">
       <UniqueIdentifier>{d04cf376-7450-4b6a-a055-1db18f8d65de}</UniqueIdentifier>
-	</Filter>    <Filter Include="spine">
+    </Filter>
+    <Filter Include="spine">
       <UniqueIdentifier>{ff4b5934-99d4-4ea7-9f50-a774192d9ca9}</UniqueIdentifier>
     </Filter>
     <Filter Include="network">
@@ -206,9 +207,6 @@
     <ClCompile Include="..\AssetsManager\AssetsManager.cpp">
       <Filter>AssetsManager</Filter>
     </ClCompile>
-    <ClCompile Include="..\CCArmature\animation\CCAnimation.cpp">
-      <Filter>CCArmature\animation</Filter>
-    </ClCompile>
     <ClCompile Include="..\CCArmature\animation\CCProcessBase.cpp">
       <Filter>CCArmature\animation</Filter>
     </ClCompile>
@@ -283,7 +281,7 @@
     </ClCompile>
     <ClCompile Include="..\CCArmature\external_tool\Json\lib_json\json_writer.cpp">
       <Filter>CCArmature\external_tool\Json\lib_json</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\spine\Animation.cpp">
       <Filter>spine</Filter>
     </ClCompile>
@@ -361,6 +359,9 @@
     </ClCompile>
     <ClCompile Include="..\Components\CCInputDelegate.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature\animation\CCArmatureAnimation.cpp">
+      <Filter>CCArmature\animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -534,9 +535,6 @@
     <ClInclude Include="..\AssetsManager\AssetsManager.h">
       <Filter>AssetsManager</Filter>
     </ClInclude>
-    <ClInclude Include="..\CCArmature\animation\CCAnimation.h">
-      <Filter>CCArmature\animation</Filter>
-    </ClInclude>
     <ClInclude Include="..\CCArmature\animation\CCProcessBase.h">
       <Filter>CCArmature\animation</Filter>
     </ClInclude>
@@ -641,6 +639,9 @@
     </ClInclude>
     <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\writer.h">
       <Filter>CCArmature\external_tool\Json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\animation\CCArmatureAnimation.h">
+      <Filter>CCArmature\animation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

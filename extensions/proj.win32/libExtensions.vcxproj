@@ -92,7 +92,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\AssetsManager\AssetsManager.cpp" />
-    <ClCompile Include="..\CCArmature\animation\CCAnimation.cpp" />
+    <ClCompile Include="..\CCArmature\animation\CCArmatureAnimation.cpp" />
     <ClCompile Include="..\CCArmature\animation\CCProcessBase.cpp" />
     <ClCompile Include="..\CCArmature\animation\CCTween.cpp" />
     <ClCompile Include="..\CCArmature\CCArmature.cpp" />
@@ -194,7 +194,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\AssetsManager\AssetsManager.h" />
-    <ClInclude Include="..\CCArmature\animation\CCAnimation.h" />
+    <ClInclude Include="..\CCArmature\animation\CCArmatureAnimation.h" />
     <ClInclude Include="..\CCArmature\animation\CCProcessBase.h" />
     <ClInclude Include="..\CCArmature\animation\CCTween.h" />
     <ClInclude Include="..\CCArmature\CCArmature.h" />

@@ -55,7 +55,7 @@ physics_nodes/CCPhysicsSprite.cpp \
 LocalStorage/LocalStorageAndroid.cpp \
 CCArmature/CCArmature.cpp \
 CCArmature/CCBone.cpp \
-CCArmature/animation/CCAnimation.cpp \
+CCArmature/animation/CCArmatureAnimation.cpp \
 CCArmature/animation/CCProcessBase.cpp \
 CCArmature/animation/CCTween.cpp \
 CCArmature/datas/CCDatas.cpp \

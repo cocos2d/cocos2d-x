@@ -43,7 +43,7 @@
 
 #include "CCArmature/CCArmature.h"
 #include "CCArmature/CCBone.h"
-#include "CCArmature/animation/CCAnimation.h"
+#include "CCArmature/animation/CCArmatureAnimation.h"
 #include "CCArmature/datas/CCDatas.h"
 #include "CCArmature/display/CCBatchNode.h"
 #include "CCArmature/display/CCDecorativeDisplay.h"

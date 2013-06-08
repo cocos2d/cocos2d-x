@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "utils/CCArmatureDefine.h"
 #include "CCBone.h"
 #include "display/CCBatchNode.h"
-#include "animation/CCAnimation.h"
+#include "animation/CCArmatureAnimation.h"
 
 NS_CC_EXT_BEGIN
     
@@ -131,7 +131,7 @@ protected:
 	CCBone *createBone(const char *boneName );
     
 
-	CC_SYNTHESIZE_RETAIN(CCAnimation *, m_pAnimation, Animation);
+	CC_SYNTHESIZE_RETAIN(CCArmatureAnimation *, m_pAnimation, Animation);
     
     CC_SYNTHESIZE(CCArmatureData *, m_pArmatureData, CCArmatureData);
 
