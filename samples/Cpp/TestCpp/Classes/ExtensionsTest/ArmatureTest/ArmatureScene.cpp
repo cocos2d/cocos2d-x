@@ -348,18 +348,21 @@ void TestChangeZorder::onEnter()
 	armature = cocos2d::extension::CCArmature::create("Knight_f/Knight");
 	armature->getAnimation()->playByIndex(0);
 	armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y-100));
-	addChild(armature,++currentTag, currentTag);
+	++currentTag;
+	addChild(armature, currentTag, currentTag);
 
 	armature = cocos2d::extension::CCArmature::create("TestBone");
 	armature->getAnimation()->playByIndex(0);
 	armature->setScale(0.3f);
 	armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y-100));
-	addChild(armature,++currentTag, currentTag);
+	++currentTag;
+	addChild(armature, currentTag, currentTag);
 
 	armature = cocos2d::extension::CCArmature::create("Zombie_f/Zombie");
 	armature->getAnimation()->playByIndex(0);
 	armature->setPosition(ccp(VisibleRect::center().x , VisibleRect::center().y-100));
-	addChild(armature,++currentTag, currentTag);
+	++currentTag;
+	addChild(armature, currentTag, currentTag);
 
 	schedule( schedule_selector(TestChangeZorder::changeZorder), 1);      
 
@@ -521,7 +524,8 @@ std::string TestUseMutiplePicture::subtitle()
 }
 bool TestUseMutiplePicture::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
-	displayIndex = (++displayIndex) % 6;
+	++displayIndex;
+	displayIndex = (displayIndex) % 6;
 	armature->getBone("weapon")->changeDisplayByIndex(displayIndex, true);
 	return false;
 }
@@ -653,7 +657,8 @@ std::string TestArmatureNesting::title()
 }
 bool TestArmatureNesting::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
-	weaponIndex = ++weaponIndex % 4;
+	++weaponIndex;
+	weaponIndex = weaponIndex % 4;
 
 	armature->getBone("armInside")->getChildArmature()->getAnimation()->playByIndex(weaponIndex);
 	armature->getBone("armOutside")->getChildArmature()->getAnimation()->playByIndex(weaponIndex);
