@@ -20,7 +20,12 @@ function CCBReaderLoad(strFilePath,proxy,bSetOwner,strOwnerName)
             local callbackName = tolua.cast(ownerCallbackNames:objectAtIndex(i - 1),"CCString")
             local callbackNode = tolua.cast(ownerCallbackNodes:objectAtIndex(i - 1),"CCNode")
             if "" ~= strOwnerName and nil ~= ccb[strOwnerName] then
-                proxy:setCallback(callbackNode,ccb[strOwnerName][callbackName:getCString()])
+            	local cbName = callbackName:getCString()
+            	if "function" == type(ccb[strOwnerName][cbName]) then
+                	proxy:setCallback(callbackNode,ccb[strOwnerName][cbName])
+                else
+                	print("WARNING: Cannot found lua function [" .. strOwnerName .. "." .. cbName .. "] for owner selector")
+                end
             end
         end
 
@@ -33,7 +38,7 @@ function CCBReaderLoad(strFilePath,proxy,bSetOwner,strOwnerName)
             local outletNode = tolua.cast(ownerOutletNodes:objectAtIndex(i - 1),"CCNode")
 
             if "" ~= strOwnerName and nil ~= ccb[strOwnerName] then
-                ccb[strOwnerName][outletName:getCString()] = outletNode
+                ccb[strOwnerName][outletName:getCString()] = tolua.cast(outletNode, proxy:getNodeTypeName(outletNode))
             end
         end
     end
@@ -60,7 +65,13 @@ function CCBReaderLoad(strFilePath,proxy,bSetOwner,strOwnerName)
             local callbackName = tolua.cast(documentCallbackNames:objectAtIndex(i - 1),"CCString")
             local callbackNode = tolua.cast(documentCallbackNodes:objectAtIndex(i - 1),"CCNode")
             if "" ~= documentControllerName and nil ~= ccb[documentControllerName] then
-                proxy:setCallback(callbackNode,ccb[documentControllerName][callbackName:getCString()])
+                --proxy:setCallback(callbackNode,ccb[documentControllerName][callbackName:getCString()])
+          		local cbName = callbackName:getCString()
+            	if "function" == type(ccb[documentControllerName][cbName]) then
+                	proxy:setCallback(callbackNode,ccb[documentControllerName][cbName])
+                else
+                	print("WARNING: Cannot found lua function [" .. documentControllerName .. "." .. cbName .. "] for docRoot selector")
+                end
             end
         end
 
@@ -73,7 +84,7 @@ function CCBReaderLoad(strFilePath,proxy,bSetOwner,strOwnerName)
             local outletNode = tolua.cast(documentOutletNodes:objectAtIndex(i - 1),"CCNode")
 
             if nil ~= ccb[documentControllerName] then
-                ccb[documentControllerName][outletName:getCString()] = outletNode
+                ccb[documentControllerName][outletName:getCString()] = tolua.cast(outletNode, proxy:getNodeTypeName(outletNode))
             end 
         end
         --[[
