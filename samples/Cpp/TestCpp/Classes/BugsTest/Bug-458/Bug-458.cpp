@@ -21,13 +21,13 @@ bool Bug458Layer::init()
 //        [question setContentSize:CGSizeMake(50,50)];
 //        [question2 setContentSize:CGSizeMake(50,50)];
         
-        CCMenuItemSprite* sprite = CCMenuItemSprite::create(question2, question, (CCObject*)this, menu_selector(Bug458Layer::selectAnswer));
+        CCMenuItemSprite* sprite = CCMenuItemSprite::create(question2, question, std::bind( &Bug458Layer::selectAnswer, this, std::placeholders::_1) );
         CCLayerColor* layer = CCLayerColor::create(ccc4(0,0,255,255), 100, 100);
         question->release();
         question2->release();
 
         CCLayerColor* layer2 = CCLayerColor::create(ccc4(255,0,0,255), 100, 100);
-        CCMenuItemSprite* sprite2 = CCMenuItemSprite::create(layer, layer2, (CCObject*)this, menu_selector(Bug458Layer::selectAnswer));        
+        CCMenuItemSprite* sprite2 = CCMenuItemSprite::create(layer, layer2, std::bind( &Bug458Layer::selectAnswer, this, std::placeholders::_1) );
         CCMenu* menu = CCMenu::create(sprite, sprite2, NULL);
         menu->alignItemsVerticallyWithPadding(100);
         menu->setPosition(ccp(size.width / 2, size.height / 2));

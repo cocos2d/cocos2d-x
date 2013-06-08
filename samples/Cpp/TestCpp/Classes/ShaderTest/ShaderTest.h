@@ -3,17 +3,17 @@
 
 #include "../testBasic.h"
 #include "cocos-ext.h"
+#include "../BaseTest.h"
 
 USING_NS_CC_EXT;
 
-class ShaderTestDemo : public CCLayer
+class ShaderTestDemo : public BaseTest
 {
 public:
     ShaderTestDemo(void);
 
     virtual std::string title();
     virtual std::string subtitle();
-    virtual bool init();
 
     void restartCallback(CCObject* pSender);
     void nextCallback(CCObject* pSender);
