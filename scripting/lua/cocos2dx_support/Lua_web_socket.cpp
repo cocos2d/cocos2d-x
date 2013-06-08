@@ -148,7 +148,6 @@ public:
             int nHandler = luaWs->getScriptHandler(LuaWebSocket::kWebSocketScriptHandlerClose);
             if (-1 != nHandler) {
                 CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(nHandler,"");
-                CC_SAFE_DELETE(ws);
             }
         }
     }
