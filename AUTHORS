@@ -14,6 +14,7 @@ Developers:
         
     carlomorgantinizynga
         CCLabelTTF supports for shadow and stroke
+        Adding CCLabelTTF::createWithFontDefinition.
         
     James Gregory (j4m3z0r, Zynga)
         Maintainer of Emscripten port.
