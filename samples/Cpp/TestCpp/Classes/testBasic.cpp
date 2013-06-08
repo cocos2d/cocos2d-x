@@ -17,7 +17,14 @@ void TestScene::onEnter()
 //#else
     CCLabelTTF* label = CCLabelTTF::create("MainMenu", "Arial", 20);
 //#endif
-    CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, this, menu_selector(TestScene::MainMenuCallback));
+    CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, [](CCObject *sender) {
+		CCScene* pScene = CCScene::create();
+		CCLayer* pLayer = new TestController();
+		pLayer->autorelease();
+
+		pScene->addChild(pLayer);
+		CCDirector::sharedDirector()->replaceScene(pScene);
+	});
 
     CCMenu* pMenu =CCMenu::create(pMenuItem, NULL);
 
@@ -25,14 +32,4 @@ void TestScene::onEnter()
     pMenuItem->setPosition( ccp( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
 
     addChild(pMenu, 1);
-}
-
-void TestScene::MainMenuCallback(CCObject* pSender)
-{
-    CCScene* pScene = CCScene::create();
-    CCLayer* pLayer = new TestController();
-    pLayer->autorelease();
-
-    pScene->addChild(pLayer);
-    CCDirector::sharedDirector()->replaceScene(pScene);
 }
