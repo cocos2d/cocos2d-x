@@ -75,17 +75,19 @@ public class Cocos2dxETCLoader {
 			boolean ret = true;
 			
 			try {
-				int width = texture.getWidth();
-				int height = texture.getHeight();
+				final int width = texture.getWidth();
+				final int height = texture.getHeight();
+				final int length = texture.getData().remaining();
 
-			    final byte[] data = new byte[width * height * 3];
+			    final byte[] data = new byte[length];
 			    final ByteBuffer buf = ByteBuffer.wrap(data);
 			    buf.order(ByteOrder.nativeOrder());
 			    buf.put(texture.getData());
 
 				nativeSetTextureInfo(width,
 			             height,
-			             data);
+			             data,
+			             length);
 			} catch (Exception e)
 			{
 				Log.d("invoke native function error", e.toString());
@@ -102,5 +104,6 @@ public class Cocos2dxETCLoader {
 		Cocos2dxETCLoader.context = context;
 	}
 	
-	private static native void nativeSetTextureInfo(final int width, final int height, final byte[] data);
+	private static native void nativeSetTextureInfo(final int width, final int height, final byte[] data,
+			final int dataLength);
 }
