@@ -447,6 +447,9 @@ Developers:
         
     sunxiaoyu
         Refactoring CCEditBox to add UITextField only when keyboard was opened, remove it when keyboard was closed.
+        
+    edwardzhou (Edward Zhou)
+        Correcting the type detecting order for Lua CCBProxy::getNodeTypeName.
 
 Retired Core Developers:
     WenSheng Yang
