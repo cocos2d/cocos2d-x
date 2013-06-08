@@ -452,10 +452,10 @@ files
 	TextureCacheTest.cpp
 	TextureCacheTest.h
 
-    [Test/TexturePackerEncryptionTest]
-	[../Classes/TexturePackerEncryptionTest]
-	TexturePackerEncryptionTest.cpp
-	TexturePackerEncryptionTest.h
+	[Test/TexturePackerEncryptionTest]
+	(../Classes/TexturePackerEncryptionTest)
+	TextureAtlasEncryptionTest.cpp
+	TextureAtlasEncryptionTest.h
 
 	[Test/TileMapTest]
 	(../Classes/TileMapTest)

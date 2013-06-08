@@ -36,7 +36,7 @@ typedef struct _AttachmentVtable {
 void _Attachment_init (Attachment* self, const char* name, AttachmentType type, /**/
 		void (*dispose) (Attachment* self)) {
 
-	CONST_CAST(_AttachmentVtable*, self->vtable) = NEW(_AttachmentVtable);
+	CONST_CAST(void*, self->vtable) = NEW(_AttachmentVtable);
 	VTABLE(Attachment, self) ->dispose = dispose;
 
 	MALLOC_STR(self->name, name);

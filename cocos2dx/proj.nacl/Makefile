@@ -2,13 +2,7 @@ COCOS_ROOT = ../..
 COCOS_SRC_ROOT = $(COCOS_ROOT)/cocos2dx
 
 INCLUDES = \
-	-I$(COCOS_ROOT)/extensions \
-	-I$(COCOS_ROOT)/extensions/CCBReader \
-	-I$(COCOS_ROOT)/extensions/GUI/CCControlExtension \
-	-I$(COCOS_ROOT)/external/chipmunk/include/chipmunk \
-	-I$(COCOS_ROOT)/extensions/network \
-       -I$(COCOS_ROOT)/extensions/Components \
-	-I$(NACL_SDK_ROOT)/include \
+	-I$(NACL_SDK_ROOT)/include
 
 SOURCES = ../actions/CCAction.cpp \
 ../actions/CCActionCamera.cpp \

@@ -97,7 +97,7 @@ THE SOFTWARE.
 
 - (NSString*) getSDKVersion
 {
-    return [Flurry getFlurryAgentVersion];
+    return @"4.2.1";
 }
 
 - (NSString*) getPluginVersion
@@ -112,10 +112,17 @@ THE SOFTWARE.
     [Flurry setAge:nAge];
 }
 
-- (void) setGender: (NSString*) gender
+- (void) setGender: (NSNumber*) gender
 {
     OUTPUT_LOG(@"Flurry setGender invoked (%@)", gender);
-    [Flurry setGender:gender];
+    int nValue = [gender intValue];
+    NSString* strGender;
+    if (nValue == 1) {
+        strGender = @"m";
+    } else {
+        strGender = @"f";
+    }
+    [Flurry setGender:strGender];
 }
 
 - (void) setUserId: (NSString*) userId
