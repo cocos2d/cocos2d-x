@@ -70,6 +70,10 @@ public:
                                const CCSize& dimensions, CCTextAlignment hAlignment, 
                                CCVerticalTextAlignment vAlignment);
     
+    
+    /** Create a lable with string and a font definition*/
+    static CCLabelTTF * createWithFontDefinition(const char *string, ccFontDefinition &textDefinition);
+    
     /** initializes the CCLabelTTF with a font name and font size */
     bool initWithString(const char *string, const char *fontName, float fontSize);
     
