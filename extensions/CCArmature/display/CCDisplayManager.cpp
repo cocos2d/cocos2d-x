@@ -189,6 +189,7 @@ void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisp
             m_pBone->setChildArmature((CCArmature *)m_pDisplayRenderNode);
         }
         m_pDisplayRenderNode->retain();
+		m_pDisplayRenderNode->setVisible(m_bVisible);
     }
 }
 

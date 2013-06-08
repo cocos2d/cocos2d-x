@@ -144,6 +144,18 @@ CCBoneData *CCBone::getBoneData()
     return m_pBoneData;
 }
 
+void CCBone::setArmature(CCArmature *armature)
+{
+	m_pArmature = armature;
+	m_pTween->setAnimation(m_pArmature->getAnimation());
+}
+
+
+CCArmature *CCBone::getArmature()
+{
+	return m_pArmature;
+}
+
 void CCBone::update(float delta)
 {
     if (m_pParent)
