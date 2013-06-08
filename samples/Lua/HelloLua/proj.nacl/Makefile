@@ -10,9 +10,8 @@ INCLUDES =  -I.. \
 	-I$(NACL_SDK_ROOT)/include \
 	-I$(COCOS_ROOT)/external/chipmunk/include/chipmunk \
 	-I$(COCOS_ROOT)/extensions \
+	-I$(COCOS_ROOT)/extensions/Components
 	
-
-
 SOURCES = main.cpp \
         ../Classes/AppDelegate.cpp \
         $(COCOS_ROOT)/scripting/lua/cocos2dx_support/CCLuaEngine.cpp \
