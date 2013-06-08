@@ -92,9 +92,23 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
     quantityOfNodes = nNodes;
 
     CCMenuItemFont::setFontSize(65);
-    CCMenuItemFont *decrease = CCMenuItemFont::create(" - ", this, menu_selector(NodeChildrenMainScene::onDecrease));
+    CCMenuItemFont *decrease = CCMenuItemFont::create(" - ", [&](CCObject *sender) {
+		quantityOfNodes -= kNodesIncrease;
+		if( quantityOfNodes < 0 )
+			quantityOfNodes = 0;
+
+		updateQuantityLabel();
+		updateQuantityOfNodes();
+	});
     decrease->setColor(ccc3(0,200,20));
-    CCMenuItemFont *increase = CCMenuItemFont::create(" + ", this, menu_selector(NodeChildrenMainScene::onIncrease));
+    CCMenuItemFont *increase = CCMenuItemFont::create(" + ", [&](CCObject *sender) {
+		quantityOfNodes += kNodesIncrease;
+		if( quantityOfNodes > kMaxNodes )
+			quantityOfNodes = kMaxNodes;
+
+		updateQuantityLabel();
+		updateQuantityOfNodes();
+	});
     increase->setColor(ccc3(0,200,20));
 
     CCMenu *menu = CCMenu::create(decrease, increase, NULL);
@@ -110,26 +124,6 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
     NodeChildrenMenuLayer* pMenu = new NodeChildrenMenuLayer(true, TEST_COUNT, s_nCurCase);
     addChild(pMenu);
     pMenu->release();
-
-    updateQuantityLabel();
-    updateQuantityOfNodes();
-}
-
-void NodeChildrenMainScene::onDecrease(CCObject* pSender)
-{
-    quantityOfNodes -= kNodesIncrease;
-    if( quantityOfNodes < 0 )
-        quantityOfNodes = 0;
-
-    updateQuantityLabel();
-    updateQuantityOfNodes();
-}
-
-void NodeChildrenMainScene::onIncrease(CCObject* pSender)
-{
-    quantityOfNodes += kNodesIncrease;
-    if( quantityOfNodes > kMaxNodes )
-        quantityOfNodes = kMaxNodes;
 
     updateQuantityLabel();
     updateQuantityOfNodes();
