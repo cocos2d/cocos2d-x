@@ -309,7 +309,8 @@ std::string TestPerformance::subtitle()
 }
 void TestPerformance::addArmature(cocos2d::extension::CCArmature *armature)
 {
-	addChild(armature, armatureCount++);
+	armatureCount++;
+	addChild(armature, armatureCount);
 }
 void TestPerformance::update(float delta)
 {
@@ -479,7 +480,8 @@ std::string TestParticleDisplay::subtitle()
 }
 bool TestParticleDisplay::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
-	animationID = (++animationID) % armature->getAnimation()->getMovementCount();
+	++animationID;
+	animationID = animationID % armature->getAnimation()->getMovementCount();
 	armature->getAnimation()->playByIndex(animationID);
 	return false;
 }
