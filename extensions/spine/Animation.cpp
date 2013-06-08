@@ -82,7 +82,7 @@ typedef struct _TimelineVtable {
 void _Timeline_init (Timeline* self, /**/
 		void (*dispose) (Timeline* self), /**/
 		void (*apply) (const Timeline* self, Skeleton* skeleton, float time, float alpha)) {
-	CONST_CAST(_TimelineVtable*, self->vtable) = NEW(_TimelineVtable);
+	CONST_CAST(void*, self->vtable) = NEW(_TimelineVtable);
 	VTABLE(Timeline, self) ->dispose = dispose;
 	VTABLE(Timeline, self) ->apply = apply;
 }

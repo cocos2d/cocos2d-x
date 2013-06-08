@@ -83,9 +83,10 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="CCBReader"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="GUI"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="network"/>
+						<entry excluding="WebSocket.cpp|WebSocket.h" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="network"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="physics_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="spine"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Components"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -162,6 +163,8 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="GUI"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="network"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="physics_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Components"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="spine"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -238,6 +241,8 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="GUI"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="network"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="physics_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Components"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="spine"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -314,6 +319,8 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="GUI"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="network"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="physics_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Components"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="spine"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -388,6 +395,8 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="GUI"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="network"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="physics_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Components"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="spine"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -463,6 +472,8 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="GUI"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="network"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="physics_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Components"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="spine"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -538,6 +549,8 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="GUI"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="network"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="physics_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Components"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="spine"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

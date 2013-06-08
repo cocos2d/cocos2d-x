@@ -125,7 +125,7 @@ void AnimationStateData_setMix (AnimationStateData* self, Animation* from, Anima
 	if (!fromEntry) {
 		fromEntry = _FromEntry_create(from);
 		fromEntry->next = (_FromEntry*)self->entries;
-		CONST_CAST(_FromEntry*, self->entries) = fromEntry;
+		CONST_CAST(void*, self->entries) = fromEntry;
 	}
 	toEntry = _ToEntry_create(to, duration);
 	toEntry->next = fromEntry->toEntries;

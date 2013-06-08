@@ -14,6 +14,7 @@ Developers:
         
     carlomorgantinizynga
         CCLabelTTF supports for shadow and stroke
+        Adding CCLabelTTF::createWithFontDefinition.
         
     James Gregory (j4m3z0r, Zynga)
         Maintainer of Emscripten port.
@@ -171,6 +172,7 @@ Developers:
         Simpler, correct handling of spritesheet sources for CCScale9Sprite.
         Clean up linked libraries for android.
         JavaScript debugger improved and bugfixed.
+        Fix flags for debugger server socket.
 
     Nicolas Gramlich (nicolasgramlich, Zynga)
         fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF
@@ -446,6 +448,10 @@ Developers:
         
     sunxiaoyu
         Refactoring CCEditBox to add UITextField only when keyboard was opened, remove it when keyboard was closed.
+        
+    edwardzhou (Edward Zhou)
+        Correcting the type detecting order for Lua CCBProxy::getNodeTypeName.
+        Casting variables to their own type, and print warning info if no corresponding lua callback function instead of crash.
 
 Retired Core Developers:
     WenSheng Yang
