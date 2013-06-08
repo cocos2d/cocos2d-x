@@ -57,7 +57,12 @@ IntervalLayer::IntervalLayer()
     addChild(sprite);
     sprite->runAction( CCRepeatForever::create(CCSequence::create(jump, jump->reverse(), NULL) ));
     // pause button
-    CCMenuItem* item1 = CCMenuItemFont::create("Pause", this, menu_selector(IntervalLayer::onPause) );
+    CCMenuItem* item1 = CCMenuItemFont::create("Pause", [&](CCObject* sender) {
+		if(CCDirector::sharedDirector()->isPaused())
+			CCDirector::sharedDirector()->resume();
+		else
+			CCDirector::sharedDirector()->pause();
+	});
     CCMenu* menu = CCMenu::create(item1, NULL);
     menu->setPosition( ccp(s.width/2, s.height-50) );
 
@@ -78,15 +83,6 @@ void IntervalLayer::update(float dt)
     char time[10] = {0};
     sprintf(time, "%2.1f", m_time0);
     m_label0->setString(time);
-}
-
-void IntervalLayer::onPause(CCObject* pSender)
-{
-    if(CCDirector::sharedDirector()->isPaused())
-        CCDirector::sharedDirector()->resume(); 
-    else
-        CCDirector::sharedDirector()->pause(); 
-
 }
 
 void IntervalLayer::step1(float dt)
