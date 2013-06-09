@@ -290,7 +290,7 @@ void CCArmature::removeBone(CCBone *bone, bool recursion)
         m_pTopBoneList->removeObject(bone);
     }
     m_pBoneDic->removeObjectForKey(bone->getName());
-    m_pChildren->removeObject(bone);
+    removeChild(bone, true);
 }
 
 

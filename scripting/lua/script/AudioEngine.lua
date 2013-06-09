@@ -1,33 +1,32 @@
 --Encapsulate SimpleAudioEngine to AudioEngine,Play music and sound effects. 
-AudioEngine = AudioEngine or {}
-
+local M = {}
 local sharedEngine = SimpleAudioEngine:sharedEngine()
 
-local function stopAllEffects()
+function M.stopAllEffects()
     sharedEngine:stopAllEffects()
 end
 
-local function getMusicVolume()
+function M.getMusicVolume()
     return sharedEngine:getBackgroundMusicVolume()
 end
 
-local function isMusicPlaying()
+function M.isMusicPlaying()
     return sharedEngine:isBackgroundMusicPlaying()
 end
 
-local function getEffectsVolume()
+function M.getEffectsVolume()
     return sharedEngine:getEffectsVolume()
 end
 
-local function setMusicVolume(volume)
+function M.setMusicVolume(volume)
     sharedEngine:setBackgroundMusicVolume(volume)
 end
 
-local function stopEffect(handle)
+function M.stopEffect(handle)
     sharedEngine:stopEffect(handle)
 end
 
-local function stopMusic(isReleaseData)
+function M.stopMusic(isReleaseData)
     local releaseDataValue = false
     if nil ~= isReleaseData then
         releaseDataValue = isReleaseData
@@ -35,7 +34,7 @@ local function stopMusic(isReleaseData)
     sharedEngine:stopBackgroundMusic(releaseDataValue)
 end
 
-local function playMusic(filename, isLoop)
+function M.playMusic(filename, isLoop)
     local loopValue = false
     if nil ~= isLoop then
         loopValue = isLoop
@@ -43,19 +42,19 @@ local function playMusic(filename, isLoop)
     sharedEngine:playBackgroundMusic(filename, loopValue)
 end
 
-local function pauseAllEffects()
+function M.pauseAllEffects()
     sharedEngine:pauseAllEffects()
 end
 
-local function preloadMusic(filename)
+function M.preloadMusic(filename)
     sharedEngine:preloadBackgroundMusic(filename)
 end
 
-local function resumeMusic()
+function M.resumeMusic()
     sharedEngine:resumeBackgroundMusic()
 end
 
-local function playEffect(filename, isLoop)
+function M.playEffect(filename, isLoop)
     local loopValue = false
     if nil ~= isLoop then
         loopValue = isLoop
@@ -63,63 +62,52 @@ local function playEffect(filename, isLoop)
     return sharedEngine:playEffect(filename, loopValue)
 end
 
-local function rewindMusic()
+function M.rewindMusic()
     sharedEngine:rewindBackgroundMusic()
 end
 
-local function willPlayMusic()
+function M.willPlayMusic()
     return sharedEngine:willPlayBackgroundMusic()
 end
 
-local function unloadEffect(filename)
+function M.unloadEffect(filename)
     sharedEngine:unloadEffect(filename)
 end
 
-local function preloadEffect(filename)
+function M.preloadEffect(filename)
     sharedEngine:preloadEffect(filename)
 end
 
-local function setEffectsVolume(volume)
+function M.setEffectsVolume(volume)
     sharedEngine:setEffectsVolume(volume)
 end
 
-local function pauseEffect(handle)
+function M.pauseEffect(handle)
     sharedEngine:pauseEffect(handle)
 end
 
-local function resumeAllEffects(handle)
+function M.resumeAllEffects(handle)
     sharedEngine:resumeAllEffects()
 end
 
-local function pauseMusic()
+function M.pauseMusic()
     sharedEngine:pauseBackgroundMusic()
 end
 
-local function resumeEffect(handle)
+function M.resumeEffect(handle)
     sharedEngine:resumeEffect(handle)
 end
 
-
-AudioEngine.stopAllEffects = stopAllEffects
-AudioEngine.getMusicVolume = getMusicVolume
-AudioEngine.isMusicPlaying = isMusicPlaying
-AudioEngine.getEffectsVolume  = getEffectsVolume
-AudioEngine.setMusicVolume = setMusicVolume
-AudioEngine.stopEffect     = stopEffect
-AudioEngine.stopMusic     = stopMusic
-AudioEngine.playMusic     = playMusic
-AudioEngine.pauseAllEffects = pauseAllEffects
-AudioEngine.preloadMusic = preloadMusic
-AudioEngine.resumeMusic = resumeMusic
-AudioEngine.playEffect = playEffect
-AudioEngine.rewindMusic = rewindMusic
-AudioEngine.willPlayMusic  = willPlayMusic
-AudioEngine.unloadEffect  = unloadEffect
-AudioEngine.preloadEffect = preloadEffect
-AudioEngine.setEffectsVolume = setEffectsVolume
-AudioEngine.pauseEffect = pauseEffect
-AudioEngine.resumeAllEffects = resumeAllEffects
-AudioEngine.pauseMusic = pauseMusic
-AudioEngine.resumeEffect = resumeEffect
+local modename = "AudioEngine"
+local proxy = {}
+local mt    = {
+    __index = M,
+    __newindex =  function (t ,k ,v)
+        print("attemp to update a read-only table")
+    end
+} 
+setmetatable(proxy,mt)
+_G[modename] = proxy
+package.loaded[modename] = proxy
 
 

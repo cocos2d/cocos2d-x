@@ -5,10 +5,6 @@
 #include "cocos-ext.h"
 #include "../../VisibleRect.h"
 #include "../../testBasic.h"
-//#include "vld.h"
-
-//#include "Box2D/Box2D.h"
-
 
 class ArmatureTestScene : public TestScene
 {
@@ -22,10 +18,9 @@ public:
 };
 
 enum {
-	TEST_DRAGON_BONES_2_0 = 0,
-	TEST_COCOSTUDIO_WITH_SKELETON,
+	TEST_COCOSTUDIO_WITH_SKELETON = 0,
 	TEST_COCOSTUDIO_WITHOUT_SKELETON,
-	TEST_COCOSTUDIO_WITH_CONVERT_FROM_DRAGON_BONES_2_0,
+	TEST_DRAGON_BONES_2_0,
 	TEST_PERFORMANCE,
 	TEST_CHANGE_ZORDER,
 	TEST_ANIMATION_EVENT,
@@ -78,11 +73,6 @@ class TestCSWithoutSkeleton : public ArmatureTestLayer
 	virtual std::string title();
 };
 
-class TestCSContertFromDragonBone : public ArmatureTestLayer
-{
-	virtual void onEnter();
-	virtual std::string title();
-};
 
 class TestPerformance : public ArmatureTestLayer
 {
