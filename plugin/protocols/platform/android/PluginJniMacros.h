@@ -40,12 +40,25 @@ if (PluginJniHelper::getMethodInfo(t                             \
     , funcName                                                   \
     , paramCode))                                                \
 {                                                                \
-    if (NULL != param)                                           \
-    {                                                            \
-        ret = t.env->Call##retCode##Method(pData->jobj, t.methodID, param);  \
-    } else {                                                     \
-        ret = t.env->Call##retCode##Method(pData->jobj, t.methodID);  \
-    }                                                            \
+    ret = t.env->Call##retCode##Method(pData->jobj, t.methodID, param);  \
+    t.env->DeleteLocalRef(t.classID);                            \
+}                                                                \
+return ret;                                                      \
+
+
+#define CALL_BASERET_JAVA_FUNC(retType, paramCode, retCode, defaultRet)   \
+retType ret = defaultRet;                                        \
+return_val_if_fails(funcName != NULL && strlen(funcName) > 0, ret);       \
+PluginJavaData* pData = PluginUtils::getPluginJavaData(thiz);    \
+return_val_if_fails(pData != NULL, ret);                         \
+                                                                 \
+PluginJniMethodInfo t;                                           \
+if (PluginJniHelper::getMethodInfo(t                             \
+    , pData->jclassName.c_str()                                  \
+    , funcName                                                   \
+    , paramCode))                                                \
+{                                                                \
+    ret = t.env->Call##retCode##Method(pData->jobj, t.methodID); \
     t.env->DeleteLocalRef(t.classID);                            \
 }                                                                \
 return ret;                                                      \
@@ -88,7 +101,7 @@ if (0 == nParamNum)                                                             
 {                                                                                                             \
     paramCode = "()";                                                                                         \
     paramCode.append(jRetCode);                                                                               \
-    ret = PluginUtils::callJava##retCode##FuncWithName_oneParam(this, funcName, paramCode.c_str(), NULL);     \
+    ret = PluginUtils::callJava##retCode##FuncWithName(this, funcName);                                       \
 } else                                                                                                        \
 {                                                                                                             \
     PluginParam* pRetParam = NULL;                                                                            \
