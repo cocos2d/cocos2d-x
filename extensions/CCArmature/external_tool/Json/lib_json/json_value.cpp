@@ -29,7 +29,7 @@
 
 namespace CSJson {
 
-const Value Value::null;
+const Value Value::jsonNull;
 const Int Value::minInt = Int( ~(UInt(-1)/2) );
 const Int Value::maxInt = Int( UInt(-1)/2 );
 const UInt Value::maxUInt = UInt(-1);
@@ -1086,7 +1086,7 @@ Value::operator[]( ArrayIndex index )
    if ( it != value_.map_->end()  &&  (*it).first == key )
       return (*it).second;
 
-   ObjectValues::value_type defaultValue( key, null );
+   ObjectValues::value_type defaultValue( key, jsonNull );
    it = value_.map_->insert( it, defaultValue );
    return (*it).second;
 #else
@@ -1108,12 +1108,12 @@ Value::operator[]( ArrayIndex index ) const
 {
    JSON_ASSERT( type_ == nullValue  ||  type_ == arrayValue );
    if ( type_ == nullValue )
-      return null;
+      return jsonNull;
 #ifndef JSON_VALUE_USE_INTERNAL_MAP
    CZString key( index );
    ObjectValues::const_iterator it = value_.map_->find( key );
    if ( it == value_.map_->end() )
-      return null;
+      return jsonNull;
    return (*it).second;
 #else
    Value *value = value_.array_->find( index );
@@ -1151,7 +1151,7 @@ Value::resolveReference( const char *key,
    if ( it != value_.map_->end()  &&  (*it).first == actualKey )
       return (*it).second;
 
-   ObjectValues::value_type defaultValue( actualKey, null );
+   ObjectValues::value_type defaultValue( actualKey, jsonNull );
    it = value_.map_->insert( it, defaultValue );
    Value &value = (*it).second;
    return value;
@@ -1166,7 +1166,7 @@ Value::get( ArrayIndex index,
             const Value &defaultValue ) const
 {
    const Value *value = &((*this)[index]);
-   return value == &null ? defaultValue : *value;
+   return value == &jsonNull ? defaultValue : *value;
 }
 
 
@@ -1183,12 +1183,12 @@ Value::operator[]( const char *key ) const
 {
    JSON_ASSERT( type_ == nullValue  ||  type_ == objectValue );
    if ( type_ == nullValue )
-      return null;
+      return jsonNull;
 #ifndef JSON_VALUE_USE_INTERNAL_MAP
    CZString actualKey( key, CZString::noDuplication );
    ObjectValues::const_iterator it = value_.map_->find( actualKey );
    if ( it == value_.map_->end() )
-      return null;
+      return jsonNull;
    return (*it).second;
 #else
    const Value *value = value_.map_->find( key );
@@ -1245,7 +1245,7 @@ Value::get( const char *key,
             const Value &defaultValue ) const
 {
    const Value *value = &((*this)[key]);
-   return value == &null ? defaultValue : *value;
+   return value == &jsonNull ? defaultValue : *value;
 }
 
 
@@ -1261,12 +1261,12 @@ Value::removeMember( const char* key )
 {
    JSON_ASSERT( type_ == nullValue  ||  type_ == objectValue );
    if ( type_ == nullValue )
-      return null;
+      return jsonNull;
 #ifndef JSON_VALUE_USE_INTERNAL_MAP
    CZString actualKey( key, CZString::noDuplication );
    ObjectValues::iterator it = value_.map_->find( actualKey );
    if ( it == value_.map_->end() )
-      return null;
+      return jsonNull;
    Value old(it->second);
    value_.map_->erase(it);
    return old;
@@ -1301,7 +1301,7 @@ bool
 Value::isMember( const char *key ) const
 {
    const Value *value = &((*this)[key]);
-   return value != &null;
+   return value != &jsonNull;
 }
 
 
@@ -1769,7 +1769,7 @@ Path::resolve( const Value &root ) const
             // Error: unable to resolve path (object value expected at position...)
          }
          node = &((*node)[arg.key_]);
-         if ( node == &Value::null )
+         if ( node == &Value::jsonNull )
          {
             // Error: unable to resolve path (object has no member named '' at position...)
          }
@@ -1798,7 +1798,7 @@ Path::resolve( const Value &root,
          if ( !node->isObject() )
             return defaultValue;
          node = &((*node)[arg.key_]);
-         if ( node == &Value::null )
+         if ( node == &Value::jsonNull )
             return defaultValue;
       }
    }
