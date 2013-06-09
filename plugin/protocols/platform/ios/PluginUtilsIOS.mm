@@ -172,16 +172,31 @@ void PluginUtilsIOS::callOCFunctionWithName_oneParam(PluginProtocol* pPlugin, co
         id pOCObj = pData->obj;
 
         NSString* strFuncName = [NSString stringWithUTF8String:funcName];
-        if (param != nil) {
-            strFuncName = [strFuncName stringByAppendingString:@":"];
-        }
+        strFuncName = [strFuncName stringByAppendingString:@":"];
+
         SEL selector = NSSelectorFromString(strFuncName);
         if ([pOCObj respondsToSelector:selector]) {
-            if (param == nil) {
-                [pOCObj performSelector:selector];
-            } else {
-                [pOCObj performSelector:selector withObject:param];
-            }
+            [pOCObj performSelector:selector withObject:param];
+        } else {
+            outputLog("Can't find function '%s' in class '%s'", [strFuncName UTF8String], pData->className.c_str());
+        }
+    } else {
+        PluginUtilsIOS::outputLog("Plugin %s not right initilized", pPlugin->getPluginName());
+    }
+}
+    
+void PluginUtilsIOS::callOCFunctionWithName(PluginProtocol* pPlugin, const char* funcName)
+{
+    return_if_fails(funcName != NULL && strlen(funcName) > 0);
+    
+    PluginOCData* pData = PluginUtilsIOS::getPluginOCData(pPlugin);
+    if (pData) {
+        id pOCObj = pData->obj;
+        
+        NSString* strFuncName = [NSString stringWithUTF8String:funcName];
+        SEL selector = NSSelectorFromString(strFuncName);
+        if ([pOCObj respondsToSelector:selector]) {
+            [pOCObj performSelector:selector];
         } else {
             outputLog("Can't find function '%s' in class '%s'", [strFuncName UTF8String], pData->className.c_str());
         }
@@ -192,14 +207,33 @@ void PluginUtilsIOS::callOCFunctionWithName_oneParam(PluginProtocol* pPlugin, co
 
 int PluginUtilsIOS::callOCIntFunctionWithName_oneParam(PluginProtocol* pPlugin, const char* funcName, id param)
 {
-    int ret = (NSInteger)callRetFunction(pPlugin, funcName, param);
+    NSNumber* num = (NSNumber*) callRetFunctionWithParam(pPlugin, funcName, param);
+    int ret = [num integerValue];
+    return ret;
+}
+
+int PluginUtilsIOS::callOCIntFunctionWithName(PluginProtocol* pPlugin, const char* funcName)
+{
+    NSNumber* num = (NSNumber*) callRetFunction(pPlugin, funcName);
+    int ret = [num integerValue];
     return ret;
 }
 
 float PluginUtilsIOS::callOCFloatFunctionWithName_oneParam(PluginProtocol* pPlugin, const char* funcName, id param)
 {
     float ret = 0.0f;
-    NSNumber* pRet = (NSNumber*)callRetFunction(pPlugin, funcName, param);
+    NSNumber* pRet = (NSNumber*)callRetFunctionWithParam(pPlugin, funcName, param);
+    if (nil != pRet) {
+        ret = [pRet floatValue];
+    }
+    
+    return ret;
+}
+
+float PluginUtilsIOS::callOCFloatFunctionWithName(PluginProtocol* pPlugin, const char* funcName)
+{
+    float ret = 0.0f;
+    NSNumber* pRet = (NSNumber*)callRetFunction(pPlugin, funcName);
     if (nil != pRet) {
         ret = [pRet floatValue];
     }
@@ -210,7 +244,7 @@ float PluginUtilsIOS::callOCFloatFunctionWithName_oneParam(PluginProtocol* pPlug
 bool PluginUtilsIOS::callOCBoolFunctionWithName_oneParam(PluginProtocol* pPlugin, const char* funcName, id param)
 {
     bool ret = false;
-    NSNumber* pRet = (NSNumber*)callRetFunction(pPlugin, funcName, param);
+    NSNumber* pRet = (NSNumber*)callRetFunctionWithParam(pPlugin, funcName, param);
     if (nil != pRet) {
         ret = [pRet boolValue];
     }
@@ -218,18 +252,40 @@ bool PluginUtilsIOS::callOCBoolFunctionWithName_oneParam(PluginProtocol* pPlugin
     return ret;
 }
 
+bool PluginUtilsIOS::callOCBoolFunctionWithName(PluginProtocol* pPlugin, const char* funcName)
+{
+    bool ret = false;
+    NSNumber* pRet = (NSNumber*)callRetFunction(pPlugin, funcName);
+    if (nil != pRet) {
+        ret = [pRet boolValue];
+    }
+    
+    return ret;
+}
+
 const char* PluginUtilsIOS::callOCStringFunctionWithName_oneParam(PluginProtocol* pPlugin, const char* funcName, id param)
 {
     const char* ret = "";
-    NSString* pRet = (NSString*)callRetFunction(pPlugin, funcName, param);
+    NSString* pRet = (NSString*)callRetFunctionWithParam(pPlugin, funcName, param);
     if (nil != pRet) {
         ret = [pRet UTF8String];
     }
 
     return ret;
 }
+    
+const char* PluginUtilsIOS::callOCStringFunctionWithName(PluginProtocol* pPlugin, const char* funcName)
+{
+    const char* ret = "";
+    NSString* pRet = (NSString*)callRetFunction(pPlugin, funcName);
+    if (nil != pRet) {
+        ret = [pRet UTF8String];
+    }
+    
+    return ret;
+}
 
-id PluginUtilsIOS::callRetFunction(PluginProtocol* pPlugin, const char* funcName, id param)
+id PluginUtilsIOS::callRetFunction(PluginProtocol* pPlugin, const char* funcName)
 {
     id ret = nil;
     return_val_if_fails(funcName != NULL && strlen(funcName) > 0, ret);
@@ -239,16 +295,33 @@ id PluginUtilsIOS::callRetFunction(PluginProtocol* pPlugin, const char* funcName
         id pOCObj = pData->obj;
         
         NSString* strFuncName = [NSString stringWithUTF8String:funcName];
-        if (param != nil) {
-            strFuncName = [strFuncName stringByAppendingString:@":"];
-        }
         SEL selector = NSSelectorFromString(strFuncName);
         if ([pOCObj respondsToSelector:selector]) {
-            if (param == nil) {
-                ret = [pOCObj performSelector:selector];
-            } else {
-                ret = [pOCObj performSelector:selector withObject:param];
-            }
+            ret = [pOCObj performSelector:selector];
+        } else {
+            outputLog("Can't find function '%s' in class '%s'", [strFuncName UTF8String], pData->className.c_str());
+        }
+    } else {
+        PluginUtilsIOS::outputLog("Plugin %s not right initilized", pPlugin->getPluginName());
+    }
+    
+    return ret;
+}
+
+id PluginUtilsIOS::callRetFunctionWithParam(PluginProtocol* pPlugin, const char* funcName, id param)
+{
+    id ret = nil;
+    return_val_if_fails(funcName != NULL && strlen(funcName) > 0, ret);
+    
+    PluginOCData* pData = PluginUtilsIOS::getPluginOCData(pPlugin);
+    if (pData) {
+        id pOCObj = pData->obj;
+        
+        NSString* strFuncName = [NSString stringWithUTF8String:funcName];
+        strFuncName = [strFuncName stringByAppendingString:@":"];
+        SEL selector = NSSelectorFromString(strFuncName);
+        if ([pOCObj respondsToSelector:selector]) {
+            ret = [pOCObj performSelector:selector withObject:param];
         } else {
             outputLog("Can't find function '%s' in class '%s'", [strFuncName UTF8String], pData->className.c_str());
         }
