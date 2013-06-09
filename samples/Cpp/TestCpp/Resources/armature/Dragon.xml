@@ -192,7 +192,7 @@
         </b>
         <b name="beardR" sc="1" dl="0">
           <f x="-19.8" y="-221.55" cocos2d_x="-23" cocos2d_y="-230.45" kX="0" kY="0" cX="1" cY="1" pX="3.2" pY="8.9" z="16" dI="0" dr="4"/>
-          <f x="-19.8" y="-221.55" cocos2d_x="-24.1" cocos2d_y="-230" kX="-7.5" kY="-7.5" cX="1" cY="1" pX="3.1" pY="8.95" z="16" dI="0" dr="4"/>
+          <f x="-19.8" y="-221.55" cocos2d_x="-24.1" cocos2d_y="-230" kX="-7.5" kY="-7.5" cX="1" cY="1" pX="3.1" pY="8.95" z="16" dI="0" evt="walk_middle" dr="4"/>
         </b>
       </mov>
       <mov name="jump" dr="5" to="3" drTW="5" lp="1" twE="NaN">

@@ -12,7 +12,7 @@
  * It is an internal header that must not be exposed.
  */
 
-namespace Json {
+namespace CSJson {
 
 /// Converts a unicode code-point to UTF-8.
 static inline std::string 
@@ -88,6 +88,6 @@ uintToString( LargestUInt value,
    while ( value != 0 );
 }
 
-} // namespace Json {
+} // namespace CSJson {
 
 #endif // LIB_JSONCPP_JSON_TOOL_H_INCLUDED

@@ -1,6 +1,7 @@
 options
 {
     module_path="../../cocos2dx/proj.marmalade"
+    enable-exceptions
 }
 
 subprojects

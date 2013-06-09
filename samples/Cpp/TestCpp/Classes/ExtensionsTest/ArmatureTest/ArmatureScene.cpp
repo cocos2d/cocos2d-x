@@ -22,8 +22,6 @@ CCLayer *CreateLayer(int index)
 		pLayer = new TestCSWithSkeleton(); break;
 	case TEST_COCOSTUDIO_WITHOUT_SKELETON:
 		pLayer = new TestCSWithoutSkeleton(); break;
-	case TEST_COCOSTUDIO_WITH_CONVERT_FROM_DRAGON_BONES_2_0:
-		pLayer = new TestCSContertFromDragonBone(); break;
 	case TEST_PERFORMANCE:
 		pLayer = new TestPerformance(); break;
 	case TEST_CHANGE_ZORDER:
@@ -99,11 +97,9 @@ ArmatureTestScene::ArmatureTestScene(bool bPortrait)
 }
 void ArmatureTestScene::runThisTest()
 {
-	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/Example08.png", "armature/Example08.plist", "armature/Example08.xml");
 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/TestBone0.png", "armature/TestBone0.plist", "armature/TestBone.json");
  	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/Cowboy0.png", "armature/Cowboy0.plist", "armature/Cowboy.json");
 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/knight.png", "armature/knight.plist", "armature/knight.xml");
-	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/zamboni0.png", "armature/zamboni0.plist", "armature/zamboni.json");
 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/weapon.png", "armature/weapon.plist", "armature/weapon.xml");
 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/robot.png", "armature/robot.plist", "armature/robot.xml");
 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/cyborg.png", "armature/cyborg.plist", "armature/cyborg.xml");
@@ -118,6 +114,7 @@ void ArmatureTestScene::MainMenuCallback(CCObject* pSender)
 {
 	TestScene::MainMenuCallback(pSender);
 
+	removeAllChildren();
 	CCArmatureDataManager::sharedArmatureDataManager()->purgeArmatureSystem();
 }
 
@@ -125,6 +122,7 @@ void ArmatureTestScene::MainMenuCallback(CCObject* pSender)
 
 void ArmatureTestLayer::onEnter()
 {
+
 	CCLayer::onEnter();
 
 	// add title and subtitle
@@ -138,7 +136,7 @@ void ArmatureTestLayer::onEnter()
 	std::string strSubtitle = subtitle();
 	if( ! strSubtitle.empty() ) 
 	{
-		CCLabelTTF* l = CCLabelTTF::create(strSubtitle.c_str(), "Thonburi", 22);
+		CCLabelTTF* l = CCLabelTTF::create(strSubtitle.c_str(), "Arial", 18);
 		l->setColor(ccc3(0, 0, 0));
 		addChild(l, 1, 10001);
 		l->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - 60) );
@@ -158,8 +156,8 @@ void ArmatureTestLayer::onEnter()
 
 	addChild(menu, 100);
 
-
 	setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
+
 }
 void ArmatureTestLayer::onExit()
 {
@@ -198,11 +196,6 @@ void ArmatureTestLayer::backCallback(CCObject* pSender)
 void ArmatureTestLayer::draw()
 {
 	CCLayer::draw();
-
-// 	CC_NODE_DRAW_SETUP();
-// 	ccDrawColor4B(0,0,0,255);
-// 	ccDrawLine(VisibleRect::left(), VisibleRect::right());
-// 	ccDrawLine(VisibleRect::bottom(), VisibleRect::top());
 }
 
 
@@ -216,8 +209,8 @@ void TestDragonBones20::onEnter()
 	armature->getAnimation()->playByIndex(1);
 	armature->getAnimation()->setAnimationScale(0.4f);
 	armature->setPosition(VisibleRect::center().x, VisibleRect::center().y * 0.3f);
-	addChild(armature);
-
+	armature->setScale(0.6f);
+    addChild(armature);
 }
 
 std::string TestDragonBones20::title()
@@ -229,12 +222,10 @@ std::string TestDragonBones20::title()
 void TestCSWithSkeleton::onEnter()
 {
 	ArmatureTestLayer::onEnter();
-
 	cocos2d::extension::CCArmature *armature = NULL;
-
 	armature = cocos2d::extension::CCArmature::create("Cowboy");
 	armature->getAnimation()->playByIndex(0);
-	armature->setScale(0.3f);
+	armature->setScale(0.2f);
 	armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y/*-100*/));
 	addChild(armature);
 }
@@ -249,12 +240,11 @@ std::string TestCSWithSkeleton::title()
 void TestCSWithoutSkeleton::onEnter()
 {
 	ArmatureTestLayer::onEnter();
-
 	cocos2d::extension::CCArmature *armature = NULL;
-
 	armature = cocos2d::extension::CCArmature::create("TestBone");
 	armature->getAnimation()->playByIndex(0);
-	armature->setScale(0.3f);
+    armature->setAnchorPoint(ccp(0.5, -0.1));
+	armature->setScale(0.2f);
 	armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y-100));
 	addChild(armature);
 }
@@ -263,26 +253,6 @@ std::string TestCSWithoutSkeleton::title()
 {
 	return "Test Export From CocoStudio Without Skeleton Effect";
 }
-
-
-
-
-void TestCSContertFromDragonBone::onEnter()
-{
-	ArmatureTestLayer::onEnter();
-
-	cocos2d::extension::CCArmature *armature = cocos2d::extension::CCArmature::create("Zombie_zamboni");
-	armature->getAnimation()->playByIndex(1);
-	armature->getAnimation()->setAnimationScale(0.5);
-	armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y + 100));
-	addChild(armature);
-}
-
-std::string TestCSContertFromDragonBone::title()
-{
-	return "Test CocoStudio Data Convert From DragonBones 2.0 ";
-}
-
 
 
 
@@ -299,13 +269,14 @@ void TestPerformance::onEnter()
 
 	scheduleUpdate();
 }
+
 std::string TestPerformance::title()
 {
 	return "Test Performance";
 }
 std::string TestPerformance::subtitle()
 {
-	return "Current cocos2d::extension::CCArmature Count : ";
+	return "Current CCArmature Count : ";
 }
 void TestPerformance::addArmature(cocos2d::extension::CCArmature *armature)
 {
@@ -324,6 +295,7 @@ void TestPerformance::update(float delta)
 		armature->init("Knight_f/Knight");
 		armature->getAnimation()->playByIndex(0);
 		armature->setPosition(50 + armatureCount * 2, 150);
+    	armature->setScale(0.6f);
 		addArmature(armature);
 		armature->release();
 
@@ -350,19 +322,21 @@ void TestChangeZorder::onEnter()
 	armature->getAnimation()->playByIndex(0);
 	armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y-100));
 	++currentTag;
+	armature->setScale(0.6f);
 	addChild(armature, currentTag, currentTag);
 
 	armature = cocos2d::extension::CCArmature::create("TestBone");
 	armature->getAnimation()->playByIndex(0);
-	armature->setScale(0.3f);
+	armature->setScale(0.24f);
 	armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y-100));
 	++currentTag;
 	addChild(armature, currentTag, currentTag);
 
-	armature = cocos2d::extension::CCArmature::create("Zombie_f/Zombie");
+	armature = cocos2d::extension::CCArmature::create("Dragon");
 	armature->getAnimation()->playByIndex(0);
 	armature->setPosition(ccp(VisibleRect::center().x , VisibleRect::center().y-100));
 	++currentTag;
+	armature->setScale(0.6f);
 	addChild(armature, currentTag, currentTag);
 
 	schedule( schedule_selector(TestChangeZorder::changeZorder), 1);      
@@ -371,7 +345,7 @@ void TestChangeZorder::onEnter()
 }
 std::string TestChangeZorder::title()
 {
-	return "Test Change ZOrder Of Different cocos2d::extension::CCArmature";
+	return "Test Change ZOrder Of Different CCArmature";
 }
 void TestChangeZorder::changeZorder(float dt)
 {
@@ -392,15 +366,15 @@ void TestAnimationEvent::onEnter()
 	ArmatureTestLayer::onEnter();
 	armature = cocos2d::extension::CCArmature::create("Cowboy");
 	armature->getAnimation()->play("Fire");
-	armature->setScaleX(-0.3f);
-	armature->setScaleY(0.3f);
+	armature->setScaleX(-0.24f);
+	armature->setScaleY(0.24f);
 	armature->setPosition(ccp(VisibleRect::left().x + 50, VisibleRect::left().y));
 	armature->getAnimation()->MovementEventSignal.connect(this, &TestAnimationEvent::animationEvent);
 	addChild(armature);
 }
 std::string TestAnimationEvent::title()
 {
-	return "Test cocos2d::extension::CCArmature Animation Event";
+	return "Test CCArmature Animation Event";
 }
 void TestAnimationEvent::animationEvent(cocos2d::extension::CCArmature *armature, MovementEventType movementType, const char *movementID)
 {
@@ -448,7 +422,7 @@ void TestParticleDisplay::onEnter()
 	armature = cocos2d::extension::CCArmature::create("robot");
 	armature->getAnimation()->playByIndex(0);
 	armature->setPosition(VisibleRect::center());
-	armature->setScale(0.6f);
+	armature->setScale(0.48f);
 	addChild(armature);
 
 	CCParticleDisplayData displayData;
@@ -459,7 +433,7 @@ void TestParticleDisplay::onEnter()
 	bone->changeDisplayByIndex(0, true);
 	bone->setIgnoreMovementBoneData(true);
 	bone->setZOrder(100);
-	bone->setScale(2);
+	bone->setScale(1.2f);
 	armature->addBone(bone, "bady-a3");
 	
 	bone  = cocos2d::extension::CCBone::create("p2");
@@ -467,7 +441,7 @@ void TestParticleDisplay::onEnter()
 	bone->changeDisplayByIndex(0, true);
 	bone->setIgnoreMovementBoneData(true);
 	bone->setZOrder(100);
-	bone->setScale(2);
+	bone->setScale(1.2f);
 	armature->addBone(bone, "bady-a30");
 }
 std::string TestParticleDisplay::title()
@@ -504,7 +478,7 @@ void TestUseMutiplePicture::onEnter()
 	armature = cocos2d::extension::CCArmature::create("Knight_f/Knight");
 	armature->getAnimation()->playByIndex(0);
 	armature->setPosition(ccp(VisibleRect::left().x+70, VisibleRect::left().y));
-	armature->setScale(2);
+	armature->setScale(1.2f);
 	addChild(armature);
 
 	std::string weapon[] = {"weapon_f-sword.png", "weapon_f-sword2.png", "weapon_f-sword3.png", "weapon_f-sword4.png", "weapon_f-sword5.png", "weapon_f-knife.png", "weapon_f-hammer.png"};
@@ -518,7 +492,7 @@ void TestUseMutiplePicture::onEnter()
 }
 std::string TestUseMutiplePicture::title()
 {
-	return "Test One cocos2d::extension::CCArmature Use Different Picture";
+	return "Test One CCArmature Use Different Picture";
 }
 std::string TestUseMutiplePicture::subtitle()
 {
@@ -547,15 +521,15 @@ void TestBox2DDetector::onEnter()
 	armature = cocos2d::extension::CCArmature::create("Cowboy");
 	armature->getAnimation()->play("Fire");
 	armature->getAnimation()->setAnimationScale(0.1f);
-	armature->setScaleX(-0.3f);
-	armature->setScaleY(0.3f);
+	armature->setScaleX(-0.2f);
+	armature->setScaleY(0.2f);
 	armature->setPosition(ccp(VisibleRect::left().x + 70, VisibleRect::left().y));
 	addChild(armature);
 
 	armature2 = cocos2d::extension::CCArmature::create("Cowboy");
 	armature2->getAnimation()->play("Walk");
-	armature2->setScaleX(-0.3f);
-	armature2->setScaleY(0.3f);
+	armature2->setScaleX(-0.2f);
+	armature2->setScaleY(0.2f);
 	armature2->setPosition(ccp(VisibleRect::right().x - 30, VisibleRect::left().y));
 	addChild(armature2);
 
@@ -593,9 +567,10 @@ void TestBoundingBox::onEnter()
 {
 	ArmatureTestLayer::onEnter();
 
-	armature = cocos2d::extension::CCArmature::create("Zombie_f/Zombie");
+	armature = cocos2d::extension::CCArmature::create("Cowboy");
 	armature->getAnimation()->playByIndex(0);
 	armature->setPosition(VisibleRect::center());
+   	armature->setScale(0.2f); 
 	addChild(armature);
 }
 std::string TestBoundingBox::title()
@@ -620,9 +595,10 @@ void TestAnchorPoint::onEnter()
 
 	for (int i = 0; i<5; i++)
 	{
-		cocos2d::extension::CCArmature *armature = cocos2d::extension::CCArmature::create("Zombie_f/Zombie");
+		cocos2d::extension::CCArmature *armature = cocos2d::extension::CCArmature::create("Cowboy");
 		armature->getAnimation()->playByIndex(0);
 		armature->setPosition(VisibleRect::center());
+    	armature->setScale(0.2f);
 		addChild(armature, 0, i);
 	}
 
@@ -647,7 +623,7 @@ void TestArmatureNesting::onEnter()
 	armature = cocos2d::extension::CCArmature::create("cyborg");
 	armature->getAnimation()->playByIndex(1);
 	armature->setPosition(VisibleRect::center());
-	armature->setScale(2);
+	armature->setScale(1.2f);
 	armature->getAnimation()->setAnimationScale(0.4f);
 	addChild(armature);
 
@@ -655,7 +631,7 @@ void TestArmatureNesting::onEnter()
 }
 std::string TestArmatureNesting::title()
 {
-	return "Test cocos2d::extension::CCArmature Nesting";
+	return "Test CCArmature Nesting";
 }
 bool TestArmatureNesting::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {

@@ -5,7 +5,7 @@
 
 // included by json_value.cpp
 
-namespace Json {
+namespace CSJson {
 
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
@@ -453,4 +453,4 @@ ValueInternalArray::compare( const ValueInternalArray &other ) const
    return 0;
 }
 
-} // namespace Json
+} // namespace CSJson

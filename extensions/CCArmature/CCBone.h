@@ -145,7 +145,7 @@ public:
     CC_PROPERTY(CCBoneData *, m_pBoneData, BoneData);
 
     //! A weak reference to the CCArmature
-    CC_SYNTHESIZE(CCArmature *, m_pArmature, Armature);
+    CC_PROPERTY(CCArmature *, m_pArmature, Armature);
 
     //! A weak reference to the child CCArmature
     CC_PROPERTY(CCArmature *, m_pChildArmature, ChildArmature);
