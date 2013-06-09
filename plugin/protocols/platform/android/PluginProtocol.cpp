@@ -107,7 +107,7 @@ void PluginProtocol::callFuncWithParam(const char* funcName, std::vector<PluginP
     int nParamNum = params.size();
     if (nParamNum == 0)
     {
-        PluginUtils::callJavaFunctionWithName_oneParam(this, funcName, "()V", NULL);
+        PluginUtils::callJavaFunctionWithName(this, funcName);
     } else
     {
         PluginParam* pRetParam = NULL;
