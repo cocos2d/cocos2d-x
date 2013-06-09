@@ -11,7 +11,7 @@
 
 # ifndef JSONCPP_DOC_EXCLUDE_IMPLEMENTATION
 
-namespace Json {
+namespace CSJson {
 
 /* Fast memory allocator.
  *
@@ -122,7 +122,7 @@ private:
 };
 
 
-} // namespace Json
+} // namespace CSJson
 
 # endif // ifndef JSONCPP_DOC_INCLUDE_IMPLEMENTATION
 
