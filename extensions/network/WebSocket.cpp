@@ -557,6 +557,8 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                         CC_SAFE_DELETE(data);
                         CC_SAFE_DELETE_ARRAY(buf);
                     }
+                    
+                    CC_SAFE_DELETE(subThreadMsg);
                 }
 
                 _wsHelper->_subThreadWsMessageQueue->clear();

@@ -46,24 +46,9 @@ CCControlColourPicker::CCControlColourPicker()
 
 CCControlColourPicker::~CCControlColourPicker()
 {
-    if (m_background)
-    {
-        m_background->removeFromParentAndCleanup(true);
-    }
-    
-    if (m_huePicker)
-    {
-        m_huePicker->removeFromParentAndCleanup(true);
-    }
-    
-    if (m_colourPicker)
-    {
-        m_colourPicker->removeFromParentAndCleanup(true);
-    }
-    
-    m_background     = NULL;
-    m_huePicker      = NULL;
-    m_colourPicker   = NULL;
+    CC_SAFE_RELEASE(m_background);
+    CC_SAFE_RELEASE(m_huePicker);
+    CC_SAFE_RELEASE(m_colourPicker);
 }
 
 bool CCControlColourPicker::init()
