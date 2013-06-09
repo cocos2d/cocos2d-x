@@ -267,6 +267,7 @@
 		FACAD8971762C1B500D75ADE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/PluginTwitter.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PluginTwitter-Prefix.pch";
@@ -280,6 +281,7 @@
 		FACAD8981762C1B500D75ADE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/PluginTwitter.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PluginTwitter-Prefix.pch";
