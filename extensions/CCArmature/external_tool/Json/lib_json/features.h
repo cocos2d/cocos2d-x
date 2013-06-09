@@ -10,7 +10,7 @@
 # include "forwards.h"
 #endif // if !defined(JSON_IS_AMALGAMATION)
 
-namespace Json {
+namespace CSJson {
 
    /** \brief Configuration passed to reader and writer.
     * This configuration object can be used to force the Reader or Writer
@@ -44,6 +44,6 @@ namespace Json {
       bool strictRoot_;
    };
 
-} // namespace Json
+} // namespace CSJson
 
 #endif // CPPTL_JSON_FEATURES_H_INCLUDED
