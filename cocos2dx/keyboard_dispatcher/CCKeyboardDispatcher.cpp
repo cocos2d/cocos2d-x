@@ -54,13 +54,17 @@ void CCKeyboardDispatcher::setKeyReleaseDelegate(CCKeyboardDelegate delegate)
 
 bool CCKeyboardDispatcher::dispatchKeyboardEvent(int keyCode, bool pressed)
 {
-    if (pressed)
+    if (m_keyPressDelegate != NULL && pressed)
     {
         m_keyPressDelegate(keyCode);
     }
-    else
+    else if (m_keyReleaseDelegate != NULL)
     {
         m_keyReleaseDelegate(keyCode);
+    }
+    else
+    {
+        return false;
     }
 
     return true;
