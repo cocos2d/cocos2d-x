@@ -89,12 +89,12 @@ namespace cs {
         std::vector<std::string> getAllMemberNames();
 
     protected:
-        Json::Value m_cValue;
+        CSJson::Value m_cValue;
 
     private:
-        void initWithValue(Json::Value& value);
-        inline bool isKeyValidate(const char *pszKey, Json::Value& root);
-        inline Json::Value * validateArrayItem(const char *pszArrayKey, int nIndex);
+        void initWithValue(CSJson::Value& value);
+        inline bool isKeyValidate(const char *pszKey, CSJson::Value& root);
+        inline CSJson::Value * validateArrayItem(const char *pszArrayKey, int nIndex);
     };
 
 }

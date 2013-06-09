@@ -23,7 +23,7 @@
 
 /** \brief JSON (JavaScript Object Notation).
  */
-namespace Json {
+namespace CSJson {
 
    /** \brief Type of the value held by a Value object.
     */
@@ -60,8 +60,8 @@ namespace Json {
     *
     * Example of usage:
     * \code
-    * Json::Value aValue( StaticString("some text") );
-    * Json::Value object;
+    * CSJson::Value aValue( StaticString("some text") );
+    * CSJson::Value object;
     * static const StaticString code("code");
     * object[code] = 1234;
     * \endcode
@@ -126,36 +126,36 @@ namespace Json {
       typedef std::vector<std::string> Members;
       typedef ValueIterator iterator;
       typedef ValueConstIterator const_iterator;
-      typedef Json::UInt UInt;
-      typedef Json::Int Int;
+      typedef CSJson::UInt UInt;
+      typedef CSJson::Int Int;
 # if defined(JSON_HAS_INT64)
-      typedef Json::UInt64 UInt64;
-      typedef Json::Int64 Int64;
+      typedef CSJson::UInt64 UInt64;
+      typedef CSJson::Int64 Int64;
 #endif // defined(JSON_HAS_INT64)
-      typedef Json::LargestInt LargestInt;
-      typedef Json::LargestUInt LargestUInt;
-      typedef Json::ArrayIndex ArrayIndex;
+      typedef CSJson::LargestInt LargestInt;
+      typedef CSJson::LargestUInt LargestUInt;
+      typedef CSJson::ArrayIndex ArrayIndex;
 
       static const Value null;
-      /// Minimum signed integer value that can be stored in a Json::Value.
+      /// Minimum signed integer value that can be stored in a CSJson::Value.
       static const LargestInt minLargestInt;
-      /// Maximum signed integer value that can be stored in a Json::Value.
+      /// Maximum signed integer value that can be stored in a CSJson::Value.
       static const LargestInt maxLargestInt;
-      /// Maximum unsigned integer value that can be stored in a Json::Value.
+      /// Maximum unsigned integer value that can be stored in a CSJson::Value.
       static const LargestUInt maxLargestUInt;
 
-      /// Minimum signed int value that can be stored in a Json::Value.
+      /// Minimum signed int value that can be stored in a CSJson::Value.
       static const Int minInt;
-      /// Maximum signed int value that can be stored in a Json::Value.
+      /// Maximum signed int value that can be stored in a CSJson::Value.
       static const Int maxInt;
-      /// Maximum unsigned int value that can be stored in a Json::Value.
+      /// Maximum unsigned int value that can be stored in a CSJson::Value.
       static const UInt maxUInt;
 
-      /// Minimum signed 64 bits int value that can be stored in a Json::Value.
+      /// Minimum signed 64 bits int value that can be stored in a CSJson::Value.
       static const Int64 minInt64;
-      /// Maximum signed 64 bits int value that can be stored in a Json::Value.
+      /// Maximum signed 64 bits int value that can be stored in a CSJson::Value.
       static const Int64 maxInt64;
-      /// Maximum unsigned 64 bits int value that can be stored in a Json::Value.
+      /// Maximum unsigned 64 bits int value that can be stored in a CSJson::Value.
       static const UInt64 maxUInt64;
 
    private:
@@ -206,9 +206,9 @@ namespace Json {
 
         Examples:
     \code
-    Json::Value null_value; // null
-    Json::Value arr_value(Json::arrayValue); // []
-    Json::Value obj_value(Json::objectValue); // {}
+    CSJson::Value null_value; // null
+    CSJson::Value arr_value(Json::arrayValue); // []
+    CSJson::Value obj_value(Json::objectValue); // {}
     \endcode
       */
       Value( ValueType type = nullValue );
@@ -228,7 +228,7 @@ namespace Json {
        * constructor.
        * Example of usage:
        * \code
-       * Json::Value aValue( StaticString("some text") );
+       * CSJson::Value aValue( StaticString("some text") );
        * \endcode
        */
       Value( const StaticString &value );
@@ -357,7 +357,7 @@ namespace Json {
        * the new entry is not duplicated.
        * Example of use:
        * \code
-       * Json::Value object;
+       * CSJson::Value object;
        * static const StaticString code("code");
        * object[code] = 1234;
        * \endcode
@@ -1097,7 +1097,7 @@ public: // overridden from ValueArrayAllocator
    };
 
 
-} // namespace Json
+} // namespace CSJson
 
 
 #endif // CPPTL_JSON_H_INCLUDED

@@ -5,7 +5,7 @@
 
 // included by json_value.cpp
 
-namespace Json {
+namespace CSJson {
 
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
@@ -296,4 +296,4 @@ ValueIterator::operator =( const SelfType &other )
    return *this;
 }
 
-} // namespace Json
+} // namespace CSJson
