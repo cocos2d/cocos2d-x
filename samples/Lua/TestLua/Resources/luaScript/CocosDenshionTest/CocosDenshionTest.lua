@@ -111,12 +111,12 @@ local function CocosDenshionTest()
     ret:setTouchEnabled(true)
 
     -- preload background music and effect
-    SimpleAudioEngine:sharedEngine():preloadBackgroundMusic( MUSIC_FILE )
-    SimpleAudioEngine:sharedEngine():preloadEffect( EFFECT_FILE )
+    AudioEngine.preloadMusic( MUSIC_FILE )
+    AudioEngine.preloadEffect( EFFECT_FILE )
 
     -- set default volume
-    SimpleAudioEngine:sharedEngine():setEffectsVolume(0.5)
-    SimpleAudioEngine:sharedEngine():setBackgroundMusicVolume(0.5)
+    AudioEngine.setEffectsVolume(0.5)
+    AudioEngine.setMusicVolume(0.5)
 
     local function onNodeEvent(event)
         if event == "enter" then
