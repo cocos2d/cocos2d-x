@@ -79,7 +79,8 @@ bool CCControlColourPicker::init()
         
         // Add image
         m_background=CCControlUtils::addSpriteToTargetWithPosAndAnchor("menuColourPanelBackground.png", spriteSheet, CCPointZero, ccp(0.5f, 0.5f));
-       
+        CC_SAFE_RETAIN(m_background);
+        
         CCPoint backgroundPointZero = ccpSub(m_background->getPosition(), ccp (m_background->getContentSize().width / 2, m_background->getContentSize().height / 2));
         
         // Setup panels
