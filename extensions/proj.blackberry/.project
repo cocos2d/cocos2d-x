@@ -80,6 +80,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>CCArmature</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/CCArmature</locationURI>
+		</link>
+		<link>
 			<name>CCBReader</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/CCBReader</locationURI>
