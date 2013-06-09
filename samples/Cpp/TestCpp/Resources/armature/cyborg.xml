@@ -1,0 +1,447 @@
+<skeleton name="Cyborg" frameRate="24" version="2.0">
+ <armatures>
+  <armature name="cyborg">
+   <b name="armInside" parent="chest" x="5.6" y="-13.8" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="0">
+    <d name="armInside" isArmature="1"/>
+   </b>
+   <b name="legL" parent="crotch" x="3" y="0" kX="-35.09" kY="-35.12" cX="1" cY="1" pX="0" pY="0" z="1">
+    <d name="CyborgFolder-LeftThigh"/>
+   </b>
+   <b name="crusL" parent="legL" x="14.5" y="18" kX="0.25" kY="0.25" cX="1" cY="1" pX="0" pY="0" z="2">
+    <d name="CyborgFolder-Leg"/>
+   </b>
+   <b name="body" parent="crotch" x="0" y="0" kX="9.77" kY="9.82" cX="1" cY="1" pX="0" pY="0" z="3">
+    <d name="CyborgFolder-Trunk"/>
+   </b>
+   <b name="crotch" x="0" y="0" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="4">
+    <d name="CyborgFolder-Hip"/>
+   </b>
+   <b name="chest" parent="body" x="2.6" y="-13" kX="4.77" kY="4.81" cX="1" cY="1" pX="0" pY="0" z="5">
+    <d name="CyborgFolder-Chest"/>
+   </b>
+   <b name="head" parent="chest" x="4" y="-19" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="6">
+    <d name="CyborgFolder-Head"/>
+   </b>
+   <b name="legR" parent="crotch" x="-3" y="0" kX="-7" kY="-7" cX="1" cY="1" pX="0" pY="0" z="7">
+    <d name="CyborgFolder-RightThigh"/>
+   </b>
+   <b name="crusR" parent="legR" x="-0.95" y="21.85" kX="33" kY="33" cX="1" cY="1" pX="0" pY="0" z="8">
+    <d name="CyborgFolder-Leg"/>
+   </b>
+   <b name="armOutside" parent="chest" x="-2.4" y="-14.8" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="9">
+    <d name="armOutside" isArmature="1"/>
+   </b>
+  </armature>
+  <armature name="armInside">
+   <b name="handL" parent="upperarmL" x="23.55" y="12.25" kX="-74.32" kY="-74.36" cX="1" cY="1" pX="0" pY="0" z="0">
+    <d name="CyborgFolder-LeftHand"/>
+   </b>
+   <b name="forearmL" x="10.3" y="7.85" kX="-69.29" kY="-69.29" cX="1" cY="1" pX="0" pY="0" z="1">
+    <d name="CyborgFolder-LeftArm"/>
+   </b>
+   <b name="upperarmL" parent="forearmL" x="0" y="0" kX="-54.52" kY="-54.55" cX="1" cY="1" pX="0" pY="0" z="2">
+    <d name="CyborgFolder-LeftShoulder"/>
+   </b>
+  </armature>
+  <armature name="armOutside">
+   <b name="weapon" parent="handR" x="13" y="15" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="0">
+    <d name="CyborgFolder-weapon1"/>
+    <d name="CyborgFolder-weapon2"/>
+    <d name="CyborgFolder-weapon3"/>
+    <d name="CyborgFolder-weapon4"/>
+   </b>
+   <b name="upperarmR" x="0" y="0" kX="30" kY="30" cX="1" cY="1" pX="0" pY="0" z="1">
+    <d name="CyborgFolder-RightShoulder"/>
+   </b>
+   <b name="handR" parent="forearmR" x="6.3" y="15.5" kX="-98.77" kY="-98.82" cX="1" cY="1" pX="0" pY="0" z="2">
+    <d name="CyborgFolder-RightHand"/>
+   </b>
+   <b name="forearmR" parent="upperarmR" x="-7.45" y="12.4" kX="-78.04" kY="-78.09" cX="1" cY="1" pX="0" pY="0" z="3">
+    <d name="CyborgFolder-RightArm"/>
+   </b>
+  </armature>
+ </armatures>
+ <animations>
+  <animation name="armInside">
+   <mov name="weapon1" dr="1" to="6">
+    <b name="handL" sc="1" dl="0">
+     <f x="23.55" y="12.25" cocos2d_x="23.55" cocos2d_y="12.25" kX="-74.32" kY="-74.36" cX="1" cY="1" pX="0" pY="0" z="0" dI="0" dr="1"/>
+    </b>
+    <b name="forearmL" sc="1" dl="0">
+     <f x="10.3" y="7.85" cocos2d_x="10.3" cocos2d_y="7.85" kX="-69.29" kY="-69.29" cX="1" cY="1" pX="0" pY="0" z="1" dI="0" dr="1"/>
+    </b>
+    <b name="upperarmL" sc="1" dl="0">
+     <f x="0" y="0" cocos2d_x="0" cocos2d_y="0" kX="-54.52" kY="-54.55" cX="1" cY="1" pX="0" pY="0" z="2" dI="0" dr="1"/>
+    </b>
+   </mov>
+   <mov name="weapon2" dr="1" to="6">
+    <b name="handL" sc="1" dl="0">
+     <f x="25.7" y="4.25" cocos2d_x="25.7" cocos2d_y="4.25" kX="-90.83" kY="-90.86" cX="1" cY="1" pX="0" pY="0" z="0" dI="0" dr="1"/>
+    </b>
+    <b name="forearmL" sc="1" dl="0">
+     <f x="12.3" y="3.85" cocos2d_x="12.3" cocos2d_y="3.85" kX="-87.02" kY="-87.02" cX="1" cY="1" pX="0" pY="0" z="1" dI="0" dr="1"/>
+    </b>
+    <b name="upperarmL" sc="1" dl="0">
+     <f x="0" y="0" cocos2d_x="0" cocos2d_y="0" kX="-72.03" kY="-72.07" cX="1" cY="1" pX="0" pY="0" z="2" dI="0" dr="1"/>
+    </b>
+   </mov>
+   <mov name="weapon3" dr="1" to="6">
+    <b name="handL" sc="1" dl="0">
+     <f x="23.55" y="12.9" cocos2d_x="23.55" cocos2d_y="12.9" kX="-66.29" kY="-66.33" cX="1" cY="1" pX="0" pY="0" z="0" dI="0" dr="1"/>
+    </b>
+    <b name="forearmL" sc="1" dl="0">
+     <f x="10.3" y="7.8" cocos2d_x="10.3" cocos2d_y="7.8" kX="-65.3" kY="-65.31" cX="1" cY="1" pX="0" pY="0" z="1" dI="0" dr="1"/>
+    </b>
+    <b name="upperarmL" sc="1" dl="0">
+     <f x="0" y="0" cocos2d_x="0" cocos2d_y="0" kX="-52.05" kY="-52.09" cX="1" cY="1" pX="0" pY="0" z="2" dI="0" dr="1"/>
+    </b>
+   </mov>
+   <mov name="weapon4" dr="1" to="6">
+    <b name="handL" sc="1" dl="0">
+     <f x="27.25" y="-0.05" cocos2d_x="27.25" cocos2d_y="-0.05" kX="-97.33" kY="-97.37" cX="1" cY="1" pX="0" pY="0" z="0" dI="0" dr="1"/>
+    </b>
+    <b name="forearmL" sc="1" dl="0">
+     <f x="13" y="3.2" cocos2d_x="13" cocos2d_y="3.2" kX="-101.47" kY="-101.47" cX="1" cY="1" pX="0" pY="0" z="1" dI="0" dr="1"/>
+    </b>
+    <b name="upperarmL" sc="1" dl="0">
+     <f x="0" y="0" cocos2d_x="0" cocos2d_y="0" kX="-74.08" kY="-74.12" cX="1" cY="1" pX="0" pY="0" z="2" dI="0" dr="1"/>
+    </b>
+   </mov>
+  </animation>
+  <animation name="armOutside">
+   <mov name="weapon1" dr="1" to="6">
+    <b name="weapon" sc="1" dl="0">
+     <f x="13" y="15" cocos2d_x="13" cocos2d_y="15" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="0" dI="0" dr="1"/>
+    </b>
+    <b name="upperarmR" sc="1" dl="0">
+     <f x="0" y="0" cocos2d_x="0" cocos2d_y="0" kX="30" kY="30" cX="1" cY="1" pX="0" pY="0" z="1" dI="0" dr="1"/>
+    </b>
+    <b name="handR" sc="1" dl="0">
+     <f x="6.3" y="15.5" cocos2d_x="6.3" cocos2d_y="15.5" kX="-98.77" kY="-98.82" cX="1" cY="1" pX="0" pY="0" z="2" dI="0" dr="1"/>
+    </b>
+    <b name="forearmR" sc="1" dl="0">
+     <f x="-7.45" y="12.4" cocos2d_x="-7.45" cocos2d_y="12.4" kX="-78.04" kY="-78.09" cX="1" cY="1" pX="0" pY="0" z="3" dI="0" dr="1"/>
+    </b>
+   </mov>
+   <mov name="weapon2" dr="1" to="6">
+    <b name="weapon" sc="1" dl="0">
+     <f x="22.5" y="5" cocos2d_x="22.5" cocos2d_y="5" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="0" dI="1" dr="1"/>
+    </b>
+    <b name="upperarmR" sc="1" dl="0">
+     <f x="0" y="0" cocos2d_x="0" cocos2d_y="0" kX="-25.17" kY="-25.16" cX="1" cY="1" pX="0" pY="0" z="1" dI="0" dr="1"/>
+    </b>
+    <b name="handR" sc="1" dl="0">
+     <f x="17.35" y="8.9" cocos2d_x="17.35" cocos2d_y="8.9" kX="-116.25" kY="-116.3" cX="1" cY="1" pX="0" pY="0" z="2" dI="0" dr="1"/>
+    </b>
+    <b name="forearmR" sc="1" dl="0">
+     <f x="5" y="14" cocos2d_x="5" cocos2d_y="14" kX="-113.49" kY="-113.54" cX="1" cY="1" pX="0" pY="0" z="3" dI="0" dr="1"/>
+    </b>
+   </mov>
+   <mov name="weapon3" dr="1" to="6">
+    <b name="weapon" sc="1" dl="0">
+     <f x="8" y="8" cocos2d_x="8" cocos2d_y="8" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="0" dI="2" dr="1"/>
+    </b>
+    <b name="upperarmR" sc="1" dl="0">
+     <f x="0" y="0" cocos2d_x="0" cocos2d_y="0" kX="43.22" kY="43.23" cX="1" cY="1" pX="0" pY="0" z="1" dI="0" dr="1"/>
+    </b>
+    <b name="handR" sc="1" dl="0">
+     <f x="3.3" y="11.5" cocos2d_x="3.3" cocos2d_y="11.5" kX="-98.77" kY="-98.82" cX="1" cY="1" pX="0" pY="0" z="2" dI="0" dr="1"/>
+    </b>
+    <b name="forearmR" sc="1" dl="0">
+     <f x="-11" y="11" cocos2d_x="-11" cocos2d_y="11" kX="-87.07" kY="-87.11" cX="1" cY="1" pX="0" pY="0" z="3" dI="0" dr="1"/>
+    </b>
+   </mov>
+   <mov name="weapon4" dr="1" to="6">
+    <b name="weapon" sc="1" dl="0">
+     <f x="12.5" y="-2.5" cocos2d_x="12.5" cocos2d_y="-2.5" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="0" dI="3" dr="1"/>
+    </b>
+    <b name="upperarmR" sc="1" dl="0">
+     <f x="0" y="0" cocos2d_x="0" cocos2d_y="0" kX="-5.7" kY="-5.69" cX="1" cY="1" pX="0" pY="0" z="1" dI="0" dr="1"/>
+    </b>
+    <b name="handR" sc="1" dl="0">
+     <f x="10.3" y="4.5" cocos2d_x="10.3" cocos2d_y="4.5" kX="-155.48" kY="-155.52" cX="1" cY="1" pX="0" pY="0" z="2" dI="0" dr="1"/>
+    </b>
+    <b name="forearmR" sc="1" dl="0">
+     <f x="2" y="16" cocos2d_x="2" cocos2d_y="16" kX="-140.71" kY="-140.76" cX="1" cY="1" pX="0" pY="0" z="3" dI="0" dr="1"/>
+    </b>
+   </mov>
+  </animation>
+  <animation name="cyborg">
+   <mov name="stand" dr="2" to="6" drTW="25" lp="1" twE="2">
+    <b name="armInside" sc="1" dl="0">
+     <f x="5.6" y="-13.8" cocos2d_x="5.6" cocos2d_y="-13.8" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="0" dI="0" dr="1"/>
+     <f x="6.6" y="-10.8" cocos2d_x="6.6" cocos2d_y="-10.8" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="0" dI="0" dr="1"/>
+    </b>
+    <b name="legL" sc="1" dl="0">
+     <f x="3" y="0" cocos2d_x="3" cocos2d_y="0" kX="-35.09" kY="-35.12" cX="1" cY="1" pX="0" pY="0" z="1" dI="0" dr="1"/>
+     <f x="3" y="2" cocos2d_x="3" cocos2d_y="2" kX="-45.25" kY="-45.25" cX="1" cY="1" pX="0" pY="0" z="1" dI="0" dr="1"/>
+    </b>
+    <b name="crusL" sc="1" dl="0">
+     <f x="14.5" y="18" cocos2d_x="14.5" cocos2d_y="18" kX="0.25" kY="0.25" cX="1" cY="1" pX="0" pY="0" z="2" dI="0" dr="1"/>
+     <f x="17.5" y="17.6" cocos2d_x="17.5" cocos2d_y="17.6" kX="4.29" kY="4.29" cX="1" cY="1" pX="0" pY="0" z="2" dI="0" dr="1"/>
+    </b>
+    <b name="body" sc="1" dl="0.05">
+     <f x="0" y="0" cocos2d_x="0" cocos2d_y="0" kX="9.77" kY="9.82" cX="1" cY="1" pX="0" pY="0" z="3" dI="0" dr="1"/>
+     <f x="0" y="2" cocos2d_x="0" cocos2d_y="2" kX="16" kY="16" cX="1" cY="1" pX="0" pY="0" z="3" dI="0" dr="1"/>
+    </b>
+    <b name="crotch" sc="1" dl="0">
+     <f x="0" y="0" cocos2d_x="0" cocos2d_y="0" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="4" dI="0" dr="1"/>
+     <f x="0" y="2" cocos2d_x="0" cocos2d_y="2" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="4" dI="0" dr="1"/>
+    </b>
+    <b name="chest" sc="1" dl="0.1">
+     <f x="2.6" y="-13" cocos2d_x="2.6" cocos2d_y="-13" kX="4.77" kY="4.81" cX="1" cY="1" pX="0" pY="0" z="5" dI="0" dr="1"/>
+     <f x="3.6" y="-11" cocos2d_x="3.6" cocos2d_y="-11" kX="6" kY="6" cX="1" cY="1" pX="0" pY="0" z="5" dI="0" dr="1"/>
+    </b>
+    <b name="head" sc="1" dl="0.2">
+     <f x="4" y="-19" cocos2d_x="4" cocos2d_y="-19" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="6" dI="0" dr="1"/>
+     <f x="5" y="-17" cocos2d_x="5" cocos2d_y="-17" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="6" dI="0" dr="1"/>
+    </b>
+    <b name="legR" sc="1" dl="0">
+     <f x="-3" y="0" cocos2d_x="-3" cocos2d_y="0" kX="-7" kY="-7" cX="1" cY="1" pX="0" pY="0" z="7" dI="0" dr="1"/>
+     <f x="-3" y="2" cocos2d_x="-3" cocos2d_y="2" kX="-12" kY="-12" cX="1" cY="1" pX="0" pY="0" z="7" dI="0" dr="1"/>
+    </b>
+    <b name="crusR" sc="1" dl="0">
+     <f x="-0.95" y="21.85" cocos2d_x="-0.95" cocos2d_y="21.85" kX="33" kY="33" cX="1" cY="1" pX="0" pY="0" z="8" dI="0" dr="1"/>
+     <f x="1.05" y="22.85" cocos2d_x="1.05" cocos2d_y="22.85" kX="36" kY="36" cX="1" cY="1" pX="0" pY="0" z="8" dI="0" dr="1"/>
+    </b>
+    <b name="armOutside" sc="1" dl="0">
+     <f x="-2.4" y="-14.8" cocos2d_x="-2.4" cocos2d_y="-14.8" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="9" dI="0" dr="1"/>
+     <f x="-1.4" y="-11.8" cocos2d_x="-1.4" cocos2d_y="-11.8" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="9" dI="0" dr="1"/>
+    </b>
+   </mov>
+   <mov name="run" dr="2" to="6" drTW="24" lp="1" twE="2">
+    <b name="armInside" sc="1" dl="0">
+     <f x="5.6" y="-21.8" cocos2d_x="5.6" cocos2d_y="-21.8" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="0" dI="0" dr="1"/>
+     <f x="3.6" y="-11.8" cocos2d_x="3.6" cocos2d_y="-11.8" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="0" dI="0" dr="1"/>
+    </b>
+    <b name="legL" sc="1" dl="0">
+     <f x="-2" y="-4" cocos2d_x="-2" cocos2d_y="-4" kX="35" kY="35" cX="1" cY="1" pX="0" pY="0" z="1" dI="0" dr="1"/>
+     <f x="2" y="4" cocos2d_x="2" cocos2d_y="4" kX="-70" kY="-70" cX="1" cY="1" pX="0" pY="0" z="1" dI="0" dr="1"/>
+    </b>
+    <b name="crusL" sc="1" dl="-0.15">
+     <f x="-16.35" y="16.55" cocos2d_x="-16.35" cocos2d_y="16.55" kX="50" kY="50" cX="1" cY="1" pX="0" pY="0" z="2" dI="0" dr="1"/>
+     <f x="25.55" y="12.55" cocos2d_x="25.55" cocos2d_y="12.55" kX="25" kY="25" cX="1" cY="1" pX="0" pY="0" z="2" dI="0" dr="1"/>
+    </b>
+    <b name="body" sc="0.5" dl="0">
+     <f x="0" y="-5" cocos2d_x="0" cocos2d_y="-5" kX="10" kY="10" cX="1" cY="1" pX="0" pY="0" z="3" dI="0" dr="1"/>
+     <f x="0" y="5" cocos2d_x="0" cocos2d_y="5" kX="12" kY="12" cX="1" cY="1" pX="0" pY="0" z="3" dI="0" dr="1"/>
+    </b>
+    <b name="crotch" sc="0.5" dl="0">
+     <f x="0" y="-5" cocos2d_x="0" cocos2d_y="-5" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="4" dI="0" dr="1"/>
+     <f x="0" y="5" cocos2d_x="0" cocos2d_y="5" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="4" dI="0" dr="1"/>
+    </b>
+    <b name="chest" sc="0.5" dl="0">
+     <f x="2.65" y="-19.75" cocos2d_x="2.65" cocos2d_y="-19.75" kX="5" kY="5" cX="1" cY="1" pX="0" pY="0" z="5" dI="0" dr="1"/>
+     <f x="3.85" y="-9.5" cocos2d_x="3.85" cocos2d_y="-9.5" kX="6" kY="6" cX="1" cY="1" pX="0" pY="0" z="5" dI="0" dr="1"/>
+    </b>
+    <b name="head" sc="0.5" dl="0">
+     <f x="4" y="-25" cocos2d_x="4" cocos2d_y="-25" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="6" dI="0" dr="1"/>
+     <f x="5" y="-15" cocos2d_x="5" cocos2d_y="-15" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="6" dI="0" dr="1"/>
+    </b>
+    <b name="legR" sc="1" dl="0">
+     <f x="2" y="-6" cocos2d_x="2" cocos2d_y="-6" kX="-70" kY="-70" cX="1" cY="1" pX="0" pY="0" z="7" dI="0" dr="1"/>
+     <f x="-2" y="6" cocos2d_x="-2" cocos2d_y="6" kX="35" kY="35" cX="1" cY="1" pX="0" pY="0" z="7" dI="0" dr="1"/>
+    </b>
+    <b name="crusR" sc="1" dl="-0.15">
+     <f x="25.55" y="2.55" cocos2d_x="25.55" cocos2d_y="2.55" kX="25" kY="25" cX="1" cY="1" pX="0" pY="0" z="8" dI="0" dr="1"/>
+     <f x="-16.35" y="26.55" cocos2d_x="-16.35" cocos2d_y="26.55" kX="50" kY="50" cX="1" cY="1" pX="0" pY="0" z="8" dI="0" dr="1"/>
+    </b>
+    <b name="armOutside" sc="1" dl="0">
+     <f x="-2.4" y="-22.8" cocos2d_x="-2.4" cocos2d_y="-22.8" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="9" dI="0" dr="1"/>
+     <f x="5.6" y="-12.8" cocos2d_x="5.6" cocos2d_y="-12.8" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="9" dI="0" dr="1"/>
+    </b>
+   </mov>
+   <mov name="runBack" dr="2" to="4" drTW="30" lp="1" twE="2">
+    <b name="armInside" sc="1" dl="0">
+     <f x="-2.4" y="-21.8" cocos2d_x="-2.4" cocos2d_y="-21.8" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="0" dI="0" dr="1"/>
+     <f x="-2.4" y="-17.8" cocos2d_x="-2.4" cocos2d_y="-17.8" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="0" dI="0" dr="1"/>
+    </b>
+    <b name="legL" sc="1" dl="0">
+     <f x="3" y="-6" cocos2d_x="3" cocos2d_y="-6" kX="-45" kY="-45" cX="1" cY="1" pX="0" pY="0" z="1" dI="0" dr="1"/>
+     <f x="-2.95" y="0" cocos2d_x="-2.95" cocos2d_y="0" kX="15" kY="15" cX="1" cY="1" pX="0" pY="0" z="1" dI="0" dr="1"/>
+    </b>
+    <b name="crusL" sc="1" dl="-0.85">
+     <f x="17.9" y="9.3" cocos2d_x="17.9" cocos2d_y="9.3" kX="45" kY="45" cX="1" cY="1" pX="0" pY="0" z="2" dI="0" dr="1"/>
+     <f x="-8.3" y="21.55" cocos2d_x="-8.3" cocos2d_y="21.55" kX="9" kY="9" cX="1" cY="1" pX="0" pY="0" z="2" dI="0" dr="1"/>
+    </b>
+    <b name="body" sc="0.5" dl="0">
+     <f x="0" y="-5" cocos2d_x="0" cocos2d_y="-5" kX="-6" kY="-6" cX="1" cY="1" pX="0" pY="0" z="3" dI="0" dr="1"/>
+     <f x="0" y="-1" cocos2d_x="0" cocos2d_y="-1" kX="-6" kY="-6" cX="1" cY="1" pX="0" pY="0" z="3" dI="0" dr="1"/>
+    </b>
+    <b name="crotch" sc="0.5" dl="0.5">
+     <f x="0" y="-5" cocos2d_x="0" cocos2d_y="-5" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="4" dI="0" dr="1"/>
+     <f x="0" y="-1" cocos2d_x="0" cocos2d_y="-1" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="4" dI="0" dr="1"/>
+    </b>
+    <b name="chest" sc="0.5" dl="0">
+     <f x="-2.15" y="-18.5" cocos2d_x="-2.15" cocos2d_y="-18.5" kX="-3" kY="-3" cX="1" cY="1" pX="0" pY="0" z="5" dI="0" dr="1"/>
+     <f x="-2.15" y="-14.5" cocos2d_x="-2.15" cocos2d_y="-14.5" kX="-3" kY="-3" cX="1" cY="1" pX="0" pY="0" z="5" dI="0" dr="1"/>
+    </b>
+    <b name="head" sc="0.5" dl="0">
+     <f x="-3" y="-25" cocos2d_x="-3" cocos2d_y="-25" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="6" dI="0" dr="1"/>
+     <f x="-3" y="-21" cocos2d_x="-3" cocos2d_y="-21" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="6" dI="0" dr="1"/>
+    </b>
+    <b name="legR" sc="1" dl="0">
+     <f x="-3" y="-4" cocos2d_x="-3" cocos2d_y="-4" kX="15" kY="15" cX="1" cY="1" pX="0" pY="0" z="7" dI="0" dr="1"/>
+     <f x="3" y="-1.95" cocos2d_x="3" cocos2d_y="-1.95" kX="-45" kY="-45" cX="1" cY="1" pX="0" pY="0" z="7" dI="0" dr="1"/>
+    </b>
+    <b name="crusR" sc="1" dl="-0.85">
+     <f x="-8.35" y="17.55" cocos2d_x="-8.35" cocos2d_y="17.55" kX="9" kY="9" cX="1" cY="1" pX="0" pY="0" z="8" dI="0" dr="1"/>
+     <f x="17.9" y="13.3" cocos2d_x="17.9" cocos2d_y="13.3" kX="45" kY="45" cX="1" cY="1" pX="0" pY="0" z="8" dI="0" dr="1"/>
+    </b>
+    <b name="armOutside" sc="1" dl="0">
+     <f x="-3.4" y="-20.8" cocos2d_x="-3.4" cocos2d_y="-20.8" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="9" dI="0" dr="1"/>
+     <f x="-4.4" y="-17.8" cocos2d_x="-4.4" cocos2d_y="-17.8" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="9" dI="0" dr="1"/>
+    </b>
+   </mov>
+   <mov name="squat" dr="1" to="6">
+    <b name="armInside" sc="1" dl="0">
+     <f x="5.6" y="16.2" cocos2d_x="5.6" cocos2d_y="16.2" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="0" dI="0" dr="1"/>
+    </b>
+    <b name="legL" sc="1" dl="0">
+     <f x="2" y="31" cocos2d_x="2" cocos2d_y="31" kX="-120" kY="-120" cX="1" cY="1" pX="0" pY="0" z="1" dI="0" dr="1"/>
+    </b>
+    <b name="crusL" sc="1" dl="0">
+     <f x="21.1" y="21.2" cocos2d_x="21.1" cocos2d_y="21.2" kX="-13.5" kY="-13.5" cX="1" cY="1" pX="0" pY="0" z="2" dI="0" dr="1"/>
+    </b>
+    <b name="body" sc="1" dl="0">
+     <f x="0" y="32" cocos2d_x="0" cocos2d_y="32" kX="9" kY="9" cX="1" cY="1" pX="0" pY="0" z="3" dI="0" dr="1"/>
+    </b>
+    <b name="crotch" sc="1" dl="0">
+     <f x="0" y="32" cocos2d_x="0" cocos2d_y="32" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="4" dI="0" dr="1"/>
+    </b>
+    <b name="chest" sc="1" dl="0">
+     <f x="1.6" y="18" cocos2d_x="1.6" cocos2d_y="18" kX="6" kY="6" cX="1" cY="1" pX="0" pY="0" z="5" dI="0" dr="1"/>
+    </b>
+    <b name="head" sc="1" dl="0">
+     <f x="4" y="13" cocos2d_x="4" cocos2d_y="13" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="6" dI="0" dr="1"/>
+    </b>
+    <b name="legR" sc="1" dl="0">
+     <f x="-2" y="31" cocos2d_x="-2" cocos2d_y="31" kX="-30" kY="-30" cX="1" cY="1" pX="0" pY="0" z="7" dI="0" dr="1"/>
+    </b>
+    <b name="crusR" sc="1" dl="0">
+     <f x="7.85" y="49.45" cocos2d_x="7.85" cocos2d_y="49.45" kX="89.99" kY="89.99" cX="1" cY="1" pX="0" pY="0" z="8" dI="0" dr="1"/>
+    </b>
+    <b name="armOutside" sc="1" dl="0">
+     <f x="-2.4" y="15.2" cocos2d_x="-2.4" cocos2d_y="15.2" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="9" dI="0" dr="1"/>
+    </b>
+   </mov>
+   <mov name="jump" dr="1" to="6">
+    <b name="armInside" sc="1" dl="0">
+     <f x="7.6" y="-15.8" cocos2d_x="7.6" cocos2d_y="-15.8" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="0" dI="0" dr="1"/>
+    </b>
+    <b name="legL" sc="1" dl="0">
+     <f x="-2" y="1" cocos2d_x="-2" cocos2d_y="1" kX="30" kY="30" cX="1" cY="1" pX="0" pY="0" z="1" dI="0" dr="1"/>
+    </b>
+    <b name="crusL" sc="1" dl="0">
+     <f x="-12.9" y="20.2" cocos2d_x="-12.9" cocos2d_y="20.2" kX="30" kY="30" cX="1" cY="1" pX="0" pY="0" z="2" dI="0" dr="1"/>
+    </b>
+    <b name="body" sc="1" dl="0">
+     <f x="0" y="0" cocos2d_x="0" cocos2d_y="0" kX="15" kY="15" cX="1" cY="1" pX="0" pY="0" z="3" dI="0" dr="1"/>
+    </b>
+    <b name="crotch" sc="1" dl="0">
+     <f x="0" y="0" cocos2d_x="0" cocos2d_y="0" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="4" dI="0" dr="1"/>
+    </b>
+    <b name="chest" sc="1" dl="0">
+     <f x="3.6" y="-14" cocos2d_x="3.6" cocos2d_y="-14" kX="10" kY="10" cX="1" cY="1" pX="0" pY="0" z="5" dI="0" dr="1"/>
+    </b>
+    <b name="head" sc="1" dl="0">
+     <f x="5" y="-20" cocos2d_x="5" cocos2d_y="-20" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="6" dI="0" dr="1"/>
+    </b>
+    <b name="legR" sc="1" dl="0">
+     <f x="2" y="-1" cocos2d_x="2" cocos2d_y="-1" kX="-60" kY="-60" cX="1" cY="1" pX="0" pY="0" z="7" dI="0" dr="1"/>
+    </b>
+    <b name="crusR" sc="1" dl="0">
+     <f x="20.85" y="10.45" cocos2d_x="20.85" cocos2d_y="10.45" kX="60" kY="60" cX="1" cY="1" pX="0" pY="0" z="8" dI="0" dr="1"/>
+    </b>
+    <b name="armOutside" sc="1" dl="0">
+     <f x="-0.4" y="-16.8" cocos2d_x="-0.4" cocos2d_y="-16.8" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="9" dI="0" dr="1"/>
+    </b>
+   </mov>
+   <mov name="fall" dr="1" to="6">
+    <b name="armInside" sc="1" dl="0">
+     <f x="-1.4" y="-14.8" cocos2d_x="-1.4" cocos2d_y="-14.8" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="0" dI="0" dr="1"/>
+    </b>
+    <b name="legL" sc="1" dl="0">
+     <f x="2" y="0" cocos2d_x="2" cocos2d_y="0" kX="-55" kY="-55" cX="1" cY="1" pX="0" pY="0" z="1" dI="0" dr="1"/>
+    </b>
+    <b name="crusL" sc="1" dl="0">
+     <f x="20.1" y="13.2" cocos2d_x="20.1" cocos2d_y="13.2" kX="36" kY="36" cX="1" cY="1" pX="0" pY="0" z="2" dI="0" dr="1"/>
+    </b>
+    <b name="body" sc="1" dl="0">
+     <f x="0" y="0" cocos2d_x="0" cocos2d_y="0" kX="-9" kY="-9" cX="1" cY="1" pX="0" pY="0" z="3" dI="0" dr="1"/>
+    </b>
+    <b name="crotch" sc="1" dl="0">
+     <f x="0" y="0" cocos2d_x="0" cocos2d_y="0" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="4" dI="0" dr="1"/>
+    </b>
+    <b name="chest" sc="1" dl="0">
+     <f x="-3.4" y="-14" cocos2d_x="-3.4" cocos2d_y="-14" kX="-6" kY="-6" cX="1" cY="1" pX="0" pY="0" z="5" dI="0" dr="1"/>
+    </b>
+    <b name="head" sc="1" dl="0">
+     <f x="-5" y="-20" cocos2d_x="-5" cocos2d_y="-20" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="6" dI="0" dr="1"/>
+    </b>
+    <b name="legR" sc="1" dl="0">
+     <f x="-2" y="0" cocos2d_x="-2" cocos2d_y="0" kX="-15" kY="-15" cX="1" cY="1" pX="0" pY="0" z="7" dI="0" dr="1"/>
+    </b>
+    <b name="crusR" sc="1" dl="0">
+     <f x="3.85" y="21.45" cocos2d_x="3.85" cocos2d_y="21.45" kX="-15" kY="-15" cX="1" cY="1" pX="0" pY="0" z="8" dI="0" dr="1"/>
+    </b>
+    <b name="armOutside" sc="1" dl="0">
+     <f x="-9.4" y="-15.8" cocos2d_x="-9.4" cocos2d_y="-15.8" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="9" dI="0" dr="1"/>
+    </b>
+   </mov>
+   <mov name="fallEnd" dr="4" to="4" drTW="4" lp="0" twE="NaN">
+    <b name="armInside" sc="1" dl="0">
+     <f x="9.6" y="-4.8" cocos2d_x="9.6" cocos2d_y="-4.8" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="0" dI="0" dr="4"/>
+    </b>
+    <b name="legL" sc="1" dl="0">
+     <f x="4" y="7" cocos2d_x="4" cocos2d_y="7" kX="-60" kY="-60" cX="1" cY="1" pX="0" pY="0" z="1" dI="0" dr="4"/>
+    </b>
+    <b name="crusL" sc="1" dl="0">
+     <f x="22.5" y="18" cocos2d_x="22.5" cocos2d_y="18" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="2" dI="0" dr="4"/>
+    </b>
+    <b name="body" sc="1" dl="0">
+     <f x="0" y="7" cocos2d_x="0" cocos2d_y="7" kX="23.52" kY="23.57" cX="1" cY="1" pX="0" pY="0" z="3" dI="0" dr="4"/>
+    </b>
+    <b name="crotch" sc="1" dl="0">
+     <f x="0" y="7" cocos2d_x="0" cocos2d_y="7" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="4" dI="0" dr="4"/>
+    </b>
+    <b name="chest" sc="1" dl="0">
+     <f x="6.6" y="-4" cocos2d_x="6.6" cocos2d_y="-4" kX="4.77" kY="4.81" cX="1" cY="1" pX="0" pY="0" z="5" dI="0" dr="4"/>
+    </b>
+    <b name="head" sc="1" dl="0">
+     <f x="8" y="-10" cocos2d_x="8" cocos2d_y="-10" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="6" dI="0" dr="4"/>
+    </b>
+    <b name="legR" sc="1" dl="0">
+     <f x="-4" y="7" cocos2d_x="-4" cocos2d_y="7" kX="-30" kY="-30" cX="1" cY="1" pX="0" pY="0" z="7" dI="0" dr="4"/>
+    </b>
+    <b name="crusR" sc="1" dl="0">
+     <f x="6" y="26" cocos2d_x="6" cocos2d_y="26" kX="45" kY="45" cX="1" cY="1" pX="0" pY="0" z="8" dI="0" dr="4"/>
+    </b>
+    <b name="armOutside" sc="1" dl="0">
+     <f x="1.6" y="-5.8" cocos2d_x="1.6" cocos2d_y="-5.8" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="9" dI="0" dr="4"/>
+    </b>
+    <f st="0" dr="3"/>
+    <f st="3" dr="1" mov="stand"/>
+   </mov>
+  </animation>
+ </animations>
+ <TextureAtlas name="Cyborg" width="128" height="128">
+  <SubTexture name="CyborgFolder-RightArm" width="10" height="19" cocos2d_pX="5" cocos2d_pY="4" x="28" y="89"/>
+  <SubTexture name="CyborgFolder-RightHand" width="7" height="9" cocos2d_pX="3" cocos2d_pY="0" x="119" y="0"/>
+  <SubTexture name="CyborgFolder-RightShoulder" width="14" height="19" cocos2d_pX="7" cocos2d_pY="5" x="0" y="89"/>
+  <SubTexture name="CyborgFolder-weapon4" width="101" height="23" cocos2d_pX="28" cocos2d_pY="13" x="0" y="0"/>
+  <SubTexture name="CyborgFolder-weapon3" width="92" height="22" cocos2d_pX="23" cocos2d_pY="0" x="0" y="25"/>
+  <SubTexture name="CyborgFolder-weapon2" width="91" height="20" cocos2d_pX="20" cocos2d_pY="14" x="0" y="49"/>
+  <SubTexture name="CyborgFolder-weapon1" width="70" height="16" cocos2d_pX="27" cocos2d_pY="14" x="0" y="71"/>
+  <SubTexture name="CyborgFolder-LeftShoulder" width="14" height="19" cocos2d_pX="7" cocos2d_pY="5" x="72" y="71"/>
+  <SubTexture name="CyborgFolder-LeftArm" width="10" height="19" cocos2d_pX="5" cocos2d_pY="4" x="16" y="89"/>
+  <SubTexture name="CyborgFolder-LeftHand" width="7" height="9" cocos2d_pX="3" cocos2d_pY="0" x="119" y="11"/>
+  <SubTexture name="CyborgFolder-RightThigh" width="14" height="28" cocos2d_pX="7" cocos2d_pY="5" x="109" y="64"/>
+  <SubTexture name="CyborgFolder-Head" width="32" height="18" cocos2d_pX="20" cocos2d_pY="18" x="94" y="44"/>
+  <SubTexture name="CyborgFolder-Chest" width="18" height="9" cocos2d_pX="6" cocos2d_pY="7" x="40" y="89"/>
+  <SubTexture name="CyborgFolder-Hip" width="4" height="4" cocos2d_pX="2" cocos2d_pY="2" x="119" y="22"/>
+  <SubTexture name="CyborgFolder-Trunk" width="10" height="16" cocos2d_pX="3" cocos2d_pY="14" x="60" y="89"/>
+  <SubTexture name="CyborgFolder-Leg" width="14" height="42" cocos2d_pX="7" cocos2d_pY="6" x="103" y="0"/>
+  <SubTexture name="CyborgFolder-LeftThigh" width="14" height="28" cocos2d_pX="7" cocos2d_pY="5" x="93" y="64"/>
+ </TextureAtlas>
+</skeleton>

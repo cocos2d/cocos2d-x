@@ -21,9 +21,14 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
+
+"[WebSocket module] is based in part on the work of the libwebsockets  project
+(http://libwebsockets.org)"
+
  ****************************************************************************/
 
 #include "WebSocket.h"
+#include <pthread.h>
 #include <queue>
 #include <signal.h>
 #include <errno.h>
@@ -324,7 +329,6 @@ bool WebSocket::init(const Delegate& delegate,
         _wsProtocols[0].name = name;
         _wsProtocols[0].callback = WebSocketCallbackWrapper::onSocketCallback;
     }
-
     
     // WebSocket thread needs to be invoked at the end of this method.
     _wsHelper = new WsThreadHelper();
@@ -461,7 +465,6 @@ void WebSocket::onSubThreadEnded()
 {
 
 }
-
 
 int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                      struct libwebsocket *wsi,
