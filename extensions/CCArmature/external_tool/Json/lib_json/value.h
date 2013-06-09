@@ -136,7 +136,7 @@ namespace CSJson {
       typedef CSJson::LargestUInt LargestUInt;
       typedef CSJson::ArrayIndex ArrayIndex;
 
-      static const Value null;
+      static const Value jsonNull;
       /// Minimum signed integer value that can be stored in a CSJson::Value.
       static const LargestInt minLargestInt;
       /// Maximum signed integer value that can be stored in a CSJson::Value.
