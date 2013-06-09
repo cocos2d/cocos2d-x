@@ -232,6 +232,7 @@ CCDictionary* CCTextureCache::snapshotTextures()
     {
         pRet->setObject(pElement->getObject(), pElement->getStrKey());
     }
+    pRet->autorelease();
     return pRet;
 }
 
