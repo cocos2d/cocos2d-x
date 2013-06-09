@@ -25,7 +25,7 @@
 #define JSON_FAIL_MESSAGE( message ) throw std::runtime_error( message );
 #define JSON_ASSERT_MESSAGE( condition, message ) if (!( condition )) JSON_FAIL_MESSAGE( message )
 
-namespace Json {
+namespace CSJson {
 
 const Value Value::null;
 const Int Value::minInt = Int( ~(UInt(-1)/2) );
@@ -73,7 +73,7 @@ releaseStringValue( char *value )
       free( value );
 }
 
-} // namespace Json
+} // namespace CSJson
 
 
 // //////////////////////////////////////////////////////////////////
@@ -92,7 +92,7 @@ releaseStringValue( char *value )
 # include "json_valueiterator.inl"
 #endif // if !defined(JSON_IS_AMALGAMATION)
 
-namespace Json {
+namespace CSJson {
 
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
@@ -1832,4 +1832,4 @@ Path::make( Value &root ) const
 }
 
 
-} // namespace Json
+} // namespace CSJson

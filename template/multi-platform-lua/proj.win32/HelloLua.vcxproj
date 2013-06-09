@@ -99,8 +99,7 @@
       </DllDataFileName>
     </Midl>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>xcopy "$(ProjectDir)..\..\..\scripting\lua\script" "$(ProjectDir)..\Resources" /e /Y</Command>
       <Message>
       </Message>
     </PreBuildEvent>
