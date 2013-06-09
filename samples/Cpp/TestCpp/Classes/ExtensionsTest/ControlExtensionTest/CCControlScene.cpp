@@ -42,8 +42,7 @@ bool CCControlScene::init()
 {
     if (CCLayer::init())
     {    
-        CCMenuItemFont* pBackItem = CCMenuItemFont::create("Back", this,
-            menu_selector(CCControlScene::toExtensionsMainLayer));
+        CCMenuItemFont* pBackItem = CCMenuItemFont::create("Back", std::bind( &CCControlScene::toExtensionsMainLayer, this, std::placeholders::_1));
         pBackItem->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
         CCMenu* pBackMenu = CCMenu::create(pBackItem, NULL);
         pBackMenu->setPosition( CCPointZero );
@@ -66,9 +65,9 @@ bool CCControlScene::init()
         addChild(m_pSceneTitleLabel, 1);
         
         // Add the menu
-        CCMenuItemImage *item1 = CCMenuItemImage::create("Images/b1.png", "Images/b2.png", this, menu_selector(CCControlScene::previousCallback));
-        CCMenuItemImage *item2 = CCMenuItemImage::create("Images/r1.png", "Images/r2.png", this, menu_selector(CCControlScene::restartCallback));
-        CCMenuItemImage *item3 = CCMenuItemImage::create("Images/f1.png", "Images/f2.png", this, menu_selector(CCControlScene::nextCallback));
+        CCMenuItemImage *item1 = CCMenuItemImage::create("Images/b1.png", "Images/b2.png", std::bind( &CCControlScene::previousCallback, this, std::placeholders::_1));
+        CCMenuItemImage *item2 = CCMenuItemImage::create("Images/r1.png", "Images/r2.png", std::bind( &CCControlScene::restartCallback, this, std::placeholders::_1));
+        CCMenuItemImage *item3 = CCMenuItemImage::create("Images/f1.png", "Images/f2.png", std::bind( &CCControlScene::nextCallback, this, std::placeholders::_1));
         
         CCMenu *menu = CCMenu::create(item1, item3, item2, NULL);
         menu->setPosition(CCPointZero);

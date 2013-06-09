@@ -78,7 +78,7 @@ CCTMXLayerInfo::CCTMXLayerInfo()
 
 CCTMXLayerInfo::~CCTMXLayerInfo()
 {
-    CCLOGINFO("cocos2d: deallocing.");
+    CCLOGINFO("cocos2d: deallocing: %p", this);
     CC_SAFE_RELEASE(m_pProperties);
     if( m_bOwnTiles && m_pTiles )
     {
@@ -108,7 +108,7 @@ CCTMXTilesetInfo::CCTMXTilesetInfo()
 }
 CCTMXTilesetInfo::~CCTMXTilesetInfo()
 {
-    CCLOGINFO("cocos2d: deallocing.");
+    CCLOGINFO("cocos2d: deallocing: %p", this);
 }
 CCRect CCTMXTilesetInfo::rectForGID(unsigned int gid)
 {
@@ -208,7 +208,7 @@ CCTMXMapInfo::CCTMXMapInfo()
 
 CCTMXMapInfo::~CCTMXMapInfo()
 {
-    CCLOGINFO("cocos2d: deallocing.");
+    CCLOGINFO("cocos2d: deallocing: %p", this);
     CC_SAFE_RELEASE(m_pTilesets);
     CC_SAFE_RELEASE(m_pLayers);
     CC_SAFE_RELEASE(m_pProperties);

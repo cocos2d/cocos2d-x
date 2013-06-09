@@ -52,7 +52,7 @@ const unsigned int    kDisableTag = 0x3;
 
 CCMenuItem* CCMenuItem::create()
 {
-    return CCMenuItem::create((const ccMenuCallback&)NULL);
+    return CCMenuItem::create((const ccMenuCallback&)nullptr);
 }
 
 // XXX deprecated
@@ -161,6 +161,7 @@ bool CCMenuItem::isSelected()
     return m_bSelected;
 }
 
+// XXX deprecated
 void CCMenuItem::setTarget(CCObject *target, SEL_MenuHandler selector)
 {
 	_target = target;
@@ -227,7 +228,7 @@ CCMenuItemLabel * CCMenuItemLabel::create(CCNode*label, const ccMenuCallback& ca
 CCMenuItemLabel* CCMenuItemLabel::create(CCNode *label)
 {
     CCMenuItemLabel *pRet = new CCMenuItemLabel();
-    pRet->initWithLabel(label, (const ccMenuCallback&) NULL);
+    pRet->initWithLabel(label, (const ccMenuCallback&) nullptr);
     pRet->autorelease();
     return pRet;
 }
@@ -334,7 +335,7 @@ void CCMenuItemLabel::setEnabled(bool enabled)
 
 CCMenuItemAtlasFont * CCMenuItemAtlasFont::create(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap)
 {
-    return CCMenuItemAtlasFont::create(value, charMapFile, itemWidth, itemHeight, startCharMap, (const ccMenuCallback&)NULL);
+    return CCMenuItemAtlasFont::create(value, charMapFile, itemWidth, itemHeight, startCharMap, (const ccMenuCallback&)nullptr);
 }
 
 // XXX: deprecated
@@ -427,11 +428,12 @@ CCMenuItemFont * CCMenuItemFont::create(const char *value, const ccMenuCallback&
 CCMenuItemFont * CCMenuItemFont::create(const char *value)
 {
     CCMenuItemFont *pRet = new CCMenuItemFont();
-    pRet->initWithString(value, (const ccMenuCallback&)NULL);
+    pRet->initWithString(value, (const ccMenuCallback&)nullptr);
     pRet->autorelease();
     return pRet;
 }
 
+// XXX: deprecated
 bool CCMenuItemFont::initWithString(const char *value, CCObject* target, SEL_MenuHandler selector)
 {
     CCAssert( value != NULL && strlen(value) != 0, "Value length must be greater than 0");
@@ -571,7 +573,7 @@ void CCMenuItemSprite::setDisabledImage(CCNode* pImage)
 
 CCMenuItemSprite * CCMenuItemSprite::create(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite)
 {
-    return CCMenuItemSprite::create(normalSprite, selectedSprite, disabledSprite, (const ccMenuCallback&)NULL);
+    return CCMenuItemSprite::create(normalSprite, selectedSprite, disabledSprite, (const ccMenuCallback&)nullptr);
 }
 
 // XXX deprecated
@@ -726,12 +728,12 @@ CCMenuItemImage* CCMenuItemImage::create()
 
 bool CCMenuItemImage::init(void)
 {
-    return initWithNormalImage(NULL, NULL, NULL, (const ccMenuCallback&)NULL);
+    return initWithNormalImage(NULL, NULL, NULL, (const ccMenuCallback&)nullptr);
 }
 
 CCMenuItemImage * CCMenuItemImage::create(const char *normalImage, const char *selectedImage)
 {
-    return CCMenuItemImage::create(normalImage, selectedImage, NULL, (const ccMenuCallback&)NULL);
+    return CCMenuItemImage::create(normalImage, selectedImage, NULL, (const ccMenuCallback&)nullptr);
 }
 
 // XXX deprecated
@@ -773,7 +775,7 @@ CCMenuItemImage * CCMenuItemImage::create(const char *normalImage, const char *s
 CCMenuItemImage * CCMenuItemImage::create(const char *normalImage, const char *selectedImage, const char *disabledImage)
 {
     CCMenuItemImage *pRet = new CCMenuItemImage();
-    if (pRet && pRet->initWithNormalImage(normalImage, selectedImage, disabledImage, (const ccMenuCallback&)NULL))
+    if (pRet && pRet->initWithNormalImage(normalImage, selectedImage, disabledImage, (const ccMenuCallback&)nullptr))
     {
         pRet->autorelease();
         return pRet;
@@ -846,6 +848,7 @@ CCArray* CCMenuItemToggle::getSubItems()
     return m_pSubItems;
 }
 
+// XXX: deprecated
 CCMenuItemToggle * CCMenuItemToggle::createWithTarget(CCObject* target, SEL_MenuHandler selector, CCArray* menuItems)
 {
     CCMenuItemToggle *pRet = new CCMenuItemToggle();
@@ -864,12 +867,42 @@ CCMenuItemToggle * CCMenuItemToggle::createWithTarget(CCObject* target, SEL_Menu
     return pRet;
 }
 
+CCMenuItemToggle * CCMenuItemToggle::createWithCallback(const ccMenuCallback &callback, CCArray* menuItems)
+{
+    CCMenuItemToggle *pRet = new CCMenuItemToggle();
+    pRet->CCMenuItem::initWithCallback(callback);
+    pRet->m_pSubItems = CCArray::create();
+    pRet->m_pSubItems->retain();
+
+    for (unsigned int z=0; z < menuItems->count(); z++)
+    {
+        CCMenuItem* menuItem = (CCMenuItem*)menuItems->objectAtIndex(z);
+        pRet->m_pSubItems->addObject(menuItem);
+    }
+
+    pRet->m_uSelectedIndex = UINT_MAX;
+    pRet->setSelectedIndex(0);
+    return pRet;
+}
+
+// XXX: deprecated
 CCMenuItemToggle * CCMenuItemToggle::createWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, ...)
 {
     va_list args;
     va_start(args, item);
     CCMenuItemToggle *pRet = new CCMenuItemToggle();
     pRet->initWithTarget(target, selector, item, args);
+    pRet->autorelease();
+    va_end(args);
+    return pRet;
+}
+
+CCMenuItemToggle * CCMenuItemToggle::createWithCallback(const ccMenuCallback &callback, CCMenuItem* item, ...)
+{
+    va_list args;
+    va_start(args, item);
+    CCMenuItemToggle *pRet = new CCMenuItemToggle();
+    pRet->initWithCallback(callback, item, args);
     pRet->autorelease();
     va_end(args);
     return pRet;
@@ -883,14 +916,22 @@ CCMenuItemToggle * CCMenuItemToggle::create()
     return pRet;
 }
 
+// XXX: deprecated
 bool CCMenuItemToggle::initWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, va_list args)
 {
-    CCMenuItem::initWithTarget(target, selector);
+	_target = target;
+	CC_SAFE_RETAIN(_target);
+	return initWithCallback(std::bind( selector, target, std::placeholders::_1), item, args);
+}
+
+bool CCMenuItemToggle::initWithCallback(const ccMenuCallback &callback, CCMenuItem *item, va_list args)
+{
+    CCMenuItem::initWithCallback(callback);
     this->m_pSubItems = CCArray::create();
     this->m_pSubItems->retain();
     int z = 0;
     CCMenuItem *i = item;
-    while(i) 
+    while(i)
     {
         z++;
         m_pSubItems->addObject(i);
@@ -911,7 +952,7 @@ CCMenuItemToggle* CCMenuItemToggle::create(CCMenuItem *item)
 
 bool CCMenuItemToggle::initWithItem(CCMenuItem *item)
 {
-    CCMenuItem::initWithCallback((const ccMenuCallback&)NULL);
+    CCMenuItem::initWithCallback((const ccMenuCallback&)nullptr);
     setSubItems(CCArray::create());
 
     if (item)

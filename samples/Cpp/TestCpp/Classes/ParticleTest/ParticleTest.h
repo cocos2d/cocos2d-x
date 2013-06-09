@@ -2,6 +2,7 @@
 #define _PARTICLE_TEST_H_
 
 #include "../testBasic.h"
+#include "../BaseTest.h"
 ////----#include "cocos2d.h"
 // #include "touch_dispatcher/CCTouch.h"
 // #include "CCParticleExample.h"
@@ -12,11 +13,12 @@ public:
     virtual void runThisTest();
 };
 
-class ParticleDemo : public CCLayerColor
+class ParticleDemo : public BaseTest
 {
 protected:
     CCParticleSystem*    m_emitter;
     CCSprite*            m_background;
+	CCLayerColor*		 m_color;
 
 public:
     ~ParticleDemo(void);

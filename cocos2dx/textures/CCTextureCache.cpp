@@ -207,7 +207,7 @@ CCTextureCache::CCTextureCache()
 
 CCTextureCache::~CCTextureCache()
 {
-    CCLOGINFO("cocos2d: deallocing CCTextureCache.");
+    CCLOGINFO("cocos2d: deallocing CCTextureCache: %p", this);
     need_quit = true;
 
     pthread_cond_signal(&s_SleepCondition);
@@ -232,6 +232,7 @@ CCDictionary* CCTextureCache::snapshotTextures()
     {
         pRet->setObject(pElement->getObject(), pElement->getStrKey());
     }
+    pRet->autorelease();
     return pRet;
 }
 

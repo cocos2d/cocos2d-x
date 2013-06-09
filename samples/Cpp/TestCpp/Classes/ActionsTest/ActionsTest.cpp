@@ -2,101 +2,53 @@
 #include "../testResource.h"
 #include "cocos2d.h"
 
-TESTLAYER_CREATE_FUNC(ActionManual);
-TESTLAYER_CREATE_FUNC(ActionMove);
-TESTLAYER_CREATE_FUNC(ActionRotate);
-TESTLAYER_CREATE_FUNC(ActionScale);
-TESTLAYER_CREATE_FUNC(ActionSkew);
-TESTLAYER_CREATE_FUNC(ActionRotationalSkew);
-TESTLAYER_CREATE_FUNC(ActionRotationalSkewVSStandardSkew);
-TESTLAYER_CREATE_FUNC(ActionSkewRotateScale);
-TESTLAYER_CREATE_FUNC(ActionJump);
-TESTLAYER_CREATE_FUNC(ActionCardinalSpline);
-TESTLAYER_CREATE_FUNC(ActionCatmullRom);
-TESTLAYER_CREATE_FUNC(ActionBezier);
-TESTLAYER_CREATE_FUNC(ActionBlink);
-TESTLAYER_CREATE_FUNC(ActionFade);
-TESTLAYER_CREATE_FUNC(ActionTint);
-TESTLAYER_CREATE_FUNC(ActionAnimate);
-TESTLAYER_CREATE_FUNC(ActionSequence);
-TESTLAYER_CREATE_FUNC(ActionSequence2);
-TESTLAYER_CREATE_FUNC(ActionSpawn);
-TESTLAYER_CREATE_FUNC(ActionReverse);
-TESTLAYER_CREATE_FUNC(ActionDelayTime);
-TESTLAYER_CREATE_FUNC(ActionRepeat);
-TESTLAYER_CREATE_FUNC(ActionRepeatForever);
-TESTLAYER_CREATE_FUNC(ActionRotateToRepeat);
-TESTLAYER_CREATE_FUNC(ActionRotateJerk);
-TESTLAYER_CREATE_FUNC(ActionCallFunction);
-TESTLAYER_CREATE_FUNC(ActionCallFunc);
-TESTLAYER_CREATE_FUNC(ActionCallFuncND);
-TESTLAYER_CREATE_FUNC(ActionReverseSequence);
-TESTLAYER_CREATE_FUNC(ActionReverseSequence2);
-TESTLAYER_CREATE_FUNC(ActionRemoveSelf);
-TESTLAYER_CREATE_FUNC(ActionOrbit);
-TESTLAYER_CREATE_FUNC(ActionFollow);
-TESTLAYER_CREATE_FUNC(ActionTargeted);
-TESTLAYER_CREATE_FUNC(ActionMoveStacked);
-TESTLAYER_CREATE_FUNC(ActionMoveJumpStacked);
-TESTLAYER_CREATE_FUNC(ActionMoveBezierStacked);
-TESTLAYER_CREATE_FUNC(ActionCardinalSplineStacked);
-TESTLAYER_CREATE_FUNC(ActionCatmullRomStacked);
-TESTLAYER_CREATE_FUNC(PauseResumeActions);
-TESTLAYER_CREATE_FUNC(Issue1305);
-TESTLAYER_CREATE_FUNC(Issue1305_2);
-TESTLAYER_CREATE_FUNC(Issue1288);
-TESTLAYER_CREATE_FUNC(Issue1288_2);
-TESTLAYER_CREATE_FUNC(Issue1327);
-TESTLAYER_CREATE_FUNC(Issue1398);
-
-
-static NEWTESTFUNC createFunctions[] = {
-    CF(ActionManual),
-    CF(ActionMove),
-    CF(ActionRotate),
-    CF(ActionScale),
-    CF(ActionSkew),
-    CF(ActionRotationalSkew),
-    CF(ActionRotationalSkewVSStandardSkew),
-    CF(ActionSkewRotateScale),
-    CF(ActionJump),
-    CF(ActionCardinalSpline),
-    CF(ActionCatmullRom),
-    CF(ActionBezier),
-    CF(ActionBlink),
-    CF(ActionFade),
-    CF(ActionTint),
-    CF(ActionAnimate),
-    CF(ActionSequence),
-    CF(ActionSequence2),
-	CF(ActionRemoveSelf),
-    CF(ActionSpawn),
-    CF(ActionReverse),
-    CF(ActionDelayTime),
-    CF(ActionRepeat),
-    CF(ActionRepeatForever),
-    CF(ActionRotateToRepeat),
-    CF(ActionRotateJerk),
-    CF(ActionCallFunction),
-    CF(ActionCallFunc),
-    CF(ActionCallFuncND),
-    CF(ActionReverseSequence),
-    CF(ActionReverseSequence2),
-    CF(ActionOrbit),
-    CF(ActionFollow),
-    CF(ActionTargeted),
-    CF(ActionMoveStacked),
-    CF(ActionMoveJumpStacked),
-    CF(ActionMoveBezierStacked),
-    CF(ActionCardinalSplineStacked),
-    CF(ActionCatmullRomStacked),
-    CF(PauseResumeActions),
-    CF(Issue1305),
-    CF(Issue1305_2),
-    CF(Issue1288),
-    CF(Issue1288_2),
-    CF(Issue1327),
-    CF(Issue1398)
+static std::function<CCLayer*()> createFunctions[] = {
+    CL(ActionManual),
+    CL(ActionMove),
+    CL(ActionRotate),
+    CL(ActionScale),
+    CL(ActionSkew),
+    CL(ActionRotationalSkew),
+    CL(ActionRotationalSkewVSStandardSkew),
+    CL(ActionSkewRotateScale),
+    CL(ActionJump),
+    CL(ActionCardinalSpline),
+    CL(ActionCatmullRom),
+    CL(ActionBezier),
+    CL(ActionBlink),
+    CL(ActionFade),
+    CL(ActionTint),
+    CL(ActionAnimate),
+    CL(ActionSequence),
+    CL(ActionSequence2),
+	CL(ActionRemoveSelf),
+    CL(ActionSpawn),
+    CL(ActionReverse),
+    CL(ActionDelayTime),
+    CL(ActionRepeat),
+    CL(ActionRepeatForever),
+    CL(ActionRotateToRepeat),
+    CL(ActionRotateJerk),
+    CL(ActionCallFunction),
+    CL(ActionCallFunc),
+    CL(ActionCallFuncND),
+    CL(ActionReverseSequence),
+    CL(ActionReverseSequence2),
+    CL(ActionOrbit),
+    CL(ActionFollow),
+    CL(ActionTargeted),
+    CL(ActionMoveStacked),
+    CL(ActionMoveJumpStacked),
+    CL(ActionMoveBezierStacked),
+    CL(ActionCardinalSplineStacked),
+    CL(ActionCatmullRomStacked),
+    CL(PauseResumeActions),
+    CL(Issue1305),
+    CL(Issue1305_2),
+    CL(Issue1288),
+    CL(Issue1288_2),
+    CL(Issue1327),
+    CL(Issue1398)
 };
 
 static int sceneIdx=-1;
@@ -158,7 +110,7 @@ std::string ActionsDemo::subtitle()
 
 void ActionsDemo::onEnter()
 {
-    CCLayer::onEnter();
+    BaseTest::onEnter();
 
     // Or you can create an sprite using a filename. only PNG is supported now. Probably TIFF too
     m_grossini = CCSprite::create(s_pPathGrossini);
@@ -177,35 +129,6 @@ void ActionsDemo::onEnter()
     m_grossini->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height/3));
     m_tamara->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height*2/3));
     m_kathia->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height/2)); 
-
-    // add title and subtitle
-    std::string str = title();
-    const char * pTitle = str.c_str();
-    CCLabelTTF* label = CCLabelTTF::create(pTitle, "Arial", 32);
-    addChild(label, 1);
-    label->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - 30) );
-
-    std::string strSubtitle = subtitle();
-    if( ! strSubtitle.empty() ) 
-    {
-        CCLabelTTF* l = CCLabelTTF::create(strSubtitle.c_str(), "Thonburi", 16);
-        addChild(l, 1);
-        l->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - 60) );
-    }    
-
-    // add menu
-    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, std::bind( &ActionsDemo::backCallback, this, std::placeholders::_1) );
-    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, std::bind( &ActionsDemo::restartCallback, this, std::placeholders::_1) );
-    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, std::bind( &ActionsDemo::nextCallback, this, std::placeholders::_1) );
-
-    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
-
-    menu->setPosition(CCPointZero);
-    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-
-    addChild(menu, 1);
 }
 
 void ActionsDemo::onExit()
@@ -214,7 +137,7 @@ void ActionsDemo::onExit()
     m_tamara->release();
     m_kathia->release();
 
-    CCLayer::onExit();
+    BaseTest::onExit();
 }
 
 void ActionsDemo::restartCallback(CCObject* pSender)

@@ -3,10 +3,11 @@
 
 ////----#include "cocos2d.h"
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
 USING_NS_CC;
 
-class EaseSpriteDemo : public CCLayer
+class EaseSpriteDemo : public BaseTest
 {
 protected:
     CCSprite*    m_grossini;

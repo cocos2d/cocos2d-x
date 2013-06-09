@@ -1,3 +1,8 @@
+cocos2d-x-3.0alpha0-pre @Jul.24 2013
+[all platforms]
+     Feature  #XXXX: Add support for std::function<> in CCMemuItem and CCCallFunc
+
+
 cocos2d-2.1rc0-x-2.1.3 @May.01 2013
 [all platforms]
      Bug      #1853: use SHELLOPTS instead of "-o igncr" for Android Eclipse project

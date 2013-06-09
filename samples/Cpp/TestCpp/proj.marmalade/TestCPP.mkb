@@ -45,6 +45,8 @@ files
 	tests.h
 	VisibleRect.cpp
 	VisibleRect.h
+	BaseTest.cpp
+	BaseTest.h
 
 	[Test/AccelerometerTest]
 	(../Classes/AccelerometerTest)
