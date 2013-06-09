@@ -82,6 +82,8 @@ public:
      */
     virtual void play(CCMovementBoneData *movementBoneData, int durationTo, int durationTween,  int loop, int tweenEasing);
 
+	inline void setAnimation(CCArmatureAnimation *animation) { m_pAnimation = animation; }
+	inline CCArmatureAnimation *getAnimation() const { return m_pAnimation; }
 protected:
 
     /**

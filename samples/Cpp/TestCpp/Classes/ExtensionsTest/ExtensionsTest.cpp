@@ -151,6 +151,7 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
         {
             runComponentsTestLayerTest();
         }
+        break;
 	case TEST_ARMATURE:
 		{
 			ArmatureTestScene *pScene = new ArmatureTestScene();
