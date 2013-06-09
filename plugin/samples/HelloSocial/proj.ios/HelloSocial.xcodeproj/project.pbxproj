@@ -35,6 +35,8 @@
 		D4EF949C15BD2D8E00D803EB /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949B15BD2D8E00D803EB /* Icon-114.png */; };
 		D4EF949E15BD2D9600D803EB /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949D15BD2D9600D803EB /* Icon-72.png */; };
 		D4EF94A015BD2D9800D803EB /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949F15BD2D9800D803EB /* Icon-144.png */; };
+		FACAD8F61763061F00D75ADE /* libPluginTwitter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FACAD8F51762DC3A00D75ADE /* libPluginTwitter.a */; };
+		FACAD8F81763070D00D75ADE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FACAD8F71763070D00D75ADE /* SystemConfiguration.framework */; };
 		FAE27583175DEC8600F5DA8E /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = FAE27580175DEC8600F5DA8E /* background.png */; };
 		FAE27584175DEC8600F5DA8E /* twitter.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = FAE27581175DEC8600F5DA8E /* twitter.jpeg */; };
 		FAE27585175DEC8600F5DA8E /* weibo.png in Resources */ = {isa = PBXBuildFile; fileRef = FAE27582175DEC8600F5DA8E /* weibo.png */; };
@@ -46,6 +48,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		FACAD8F41762DC3A00D75ADE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FACAD8ED1762DC3A00D75ADE /* PluginTwitter.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FACAD8881762C1B500D75ADE;
+			remoteInfo = PluginTwitter;
+		};
 		FAE2757E175DEC0D00F5DA8E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FAE27577175DEC0C00F5DA8E /* cocos2dx.xcodeproj */;
@@ -112,6 +121,8 @@
 		D4EF949D15BD2D9600D803EB /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "../proj.ios/Icon-72.png"; sourceTree = "<group>"; };
 		D4EF949F15BD2D9800D803EB /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-144.png"; path = "../proj.ios/Icon-144.png"; sourceTree = "<group>"; };
 		D4F9F37B12E54555005CA6D2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
+		FACAD8ED1762DC3A00D75ADE /* PluginTwitter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginTwitter.xcodeproj; path = ../../../plugins/twitter/proj.ios/PluginTwitter.xcodeproj; sourceTree = "<group>"; };
+		FACAD8F71763070D00D75ADE /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		FAE27577175DEC0C00F5DA8E /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../../cocos2dx/proj.ios/cocos2dx.xcodeproj; sourceTree = "<group>"; };
 		FAE27580175DEC8600F5DA8E /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		FAE27581175DEC8600F5DA8E /* twitter.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = twitter.jpeg; sourceTree = "<group>"; };
@@ -128,6 +139,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FACAD8F81763070D00D75ADE /* SystemConfiguration.framework in Frameworks */,
+				FACAD8F61763061F00D75ADE /* libPluginTwitter.a in Frameworks */,
 				FAE275A1175DEEF500F5DA8E /* AudioToolbox.framework in Frameworks */,
 				FAE27598175DEE1900F5DA8E /* libcocos2dx.a in Frameworks */,
 				FAE27599175DEE1900F5DA8E /* libPluginProtocol.a in Frameworks */,
@@ -223,6 +236,8 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				FACAD8F71763070D00D75ADE /* SystemConfiguration.framework */,
+				FACAD8ED1762DC3A00D75ADE /* PluginTwitter.xcodeproj */,
 				FAE2758F175DED2300F5DA8E /* PluginWeibo.xcodeproj */,
 				FAE27586175DED1700F5DA8E /* PluginProtocol.xcodeproj */,
 				FAE27577175DEC0C00F5DA8E /* cocos2dx.xcodeproj */,
@@ -271,6 +286,14 @@
 			);
 			name = Resources;
 			path = ../Resources;
+			sourceTree = "<group>";
+		};
+		FACAD8EE1762DC3A00D75ADE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FACAD8F51762DC3A00D75ADE /* libPluginTwitter.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		FAE27578175DEC0C00F5DA8E /* Products */ = {
@@ -347,6 +370,10 @@
 					ProjectRef = FAE27586175DED1700F5DA8E /* PluginProtocol.xcodeproj */;
 				},
 				{
+					ProductGroup = FACAD8EE1762DC3A00D75ADE /* Products */;
+					ProjectRef = FACAD8ED1762DC3A00D75ADE /* PluginTwitter.xcodeproj */;
+				},
+				{
 					ProductGroup = FAE27590175DED2300F5DA8E /* Products */;
 					ProjectRef = FAE2758F175DED2300F5DA8E /* PluginWeibo.xcodeproj */;
 				},
@@ -359,6 +386,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		FACAD8F51762DC3A00D75ADE /* libPluginTwitter.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPluginTwitter.a;
+			remoteRef = FACAD8F41762DC3A00D75ADE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		FAE2757F175DEC0D00F5DA8E /* libcocos2dx.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -430,8 +464,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 彬 张 (BE3QDJTL78)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 彬 张 (BE3QDJTL78)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -462,8 +496,8 @@
 				OTHER_CFLAGS = "-O2";
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = HelloSocial;
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "34B6E084-2760-4B9B-94CE-0998083C95F5";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "34B6E084-2760-4B9B-94CE-0998083C95F5";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -475,8 +509,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 彬 张 (BE3QDJTL78)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 彬 张 (BE3QDJTL78)";
 				COPY_PHASE_STRIP = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -504,8 +538,8 @@
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries\"";
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = HelloSocial;
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "34B6E084-2760-4B9B-94CE-0998083C95F5";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "34B6E084-2760-4B9B-94CE-0998083C95F5";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -517,14 +551,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: 小明 张 (L4ZF355VQS)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 小明 张 (L4ZF355VQS)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 彬 张 (BE3QDJTL78)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 彬 张 (BE3QDJTL78)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				PROVISIONING_PROFILE = "0C43CFE2-55C4-429A-9A03-BFB76D31630B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0C43CFE2-55C4-429A-9A03-BFB76D31630B";
+				PROVISIONING_PROFILE = "34B6E084-2760-4B9B-94CE-0998083C95F5";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "34B6E084-2760-4B9B-94CE-0998083C95F5";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv6 armv7 i386";
 			};
@@ -534,15 +568,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: 小明 张 (L4ZF355VQS)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 小明 张 (L4ZF355VQS)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 彬 张 (BE3QDJTL78)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 彬 张 (BE3QDJTL78)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "0C43CFE2-55C4-429A-9A03-BFB76D31630B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DB6844BA-2943-44DB-B10A-3A3F0E8A52B8";
+				PROVISIONING_PROFILE = "34B6E084-2760-4B9B-94CE-0998083C95F5";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "34B6E084-2760-4B9B-94CE-0998083C95F5";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv6 armv7 i386";
 			};
