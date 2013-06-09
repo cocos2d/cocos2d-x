@@ -70,7 +70,7 @@
 # define JSONCPP_DEPRECATED(message)
 #endif // if !defined(JSONCPP_DEPRECATED)
 
-namespace Json {
+namespace CSJson {
    typedef int Int;
    typedef unsigned int UInt;
 # if defined(JSON_NO_INT64)
@@ -90,7 +90,7 @@ namespace Json {
    typedef UInt64 LargestUInt;
 #  define JSON_HAS_INT64
 # endif // if defined(JSON_NO_INT64)
-} // end namespace Json
+} // end namespace CSJson
 
 
 #endif // JSON_CONFIG_H_INCLUDED
