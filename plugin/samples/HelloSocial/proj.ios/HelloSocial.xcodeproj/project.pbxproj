@@ -35,6 +35,8 @@
 		D4EF949C15BD2D8E00D803EB /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949B15BD2D8E00D803EB /* Icon-114.png */; };
 		D4EF949E15BD2D9600D803EB /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949D15BD2D9600D803EB /* Icon-72.png */; };
 		D4EF94A015BD2D9800D803EB /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949F15BD2D9800D803EB /* Icon-144.png */; };
+		FA375ABA17644EF5001EE713 /* libPluginTwitter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA375AB817644ED8001EE713 /* libPluginTwitter.a */; };
+		FA375ABC17644EFE001EE713 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA375ABB17644EFE001EE713 /* SystemConfiguration.framework */; };
 		FAE27583175DEC8600F5DA8E /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = FAE27580175DEC8600F5DA8E /* background.png */; };
 		FAE27584175DEC8600F5DA8E /* twitter.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = FAE27581175DEC8600F5DA8E /* twitter.jpeg */; };
 		FAE27585175DEC8600F5DA8E /* weibo.png in Resources */ = {isa = PBXBuildFile; fileRef = FAE27582175DEC8600F5DA8E /* weibo.png */; };
@@ -46,6 +48,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		FA375AB717644ED8001EE713 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FA375AB117644ED8001EE713 /* PluginTwitter.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FACAD8881762C1B500D75ADE;
+			remoteInfo = PluginTwitter;
+		};
 		FAE2757E175DEC0D00F5DA8E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FAE27577175DEC0C00F5DA8E /* cocos2dx.xcodeproj */;
@@ -112,6 +121,8 @@
 		D4EF949D15BD2D9600D803EB /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "../proj.ios/Icon-72.png"; sourceTree = "<group>"; };
 		D4EF949F15BD2D9800D803EB /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-144.png"; path = "../proj.ios/Icon-144.png"; sourceTree = "<group>"; };
 		D4F9F37B12E54555005CA6D2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
+		FA375AB117644ED8001EE713 /* PluginTwitter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginTwitter.xcodeproj; path = ../../../plugins/twitter/proj.ios/PluginTwitter.xcodeproj; sourceTree = "<group>"; };
+		FA375ABB17644EFE001EE713 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		FAE27577175DEC0C00F5DA8E /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../../cocos2dx/proj.ios/cocos2dx.xcodeproj; sourceTree = "<group>"; };
 		FAE27580175DEC8600F5DA8E /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		FAE27581175DEC8600F5DA8E /* twitter.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = twitter.jpeg; sourceTree = "<group>"; };
@@ -128,6 +139,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA375ABC17644EFE001EE713 /* SystemConfiguration.framework in Frameworks */,
+				FA375ABA17644EF5001EE713 /* libPluginTwitter.a in Frameworks */,
 				FAE275A1175DEEF500F5DA8E /* AudioToolbox.framework in Frameworks */,
 				FAE27598175DEE1900F5DA8E /* libcocos2dx.a in Frameworks */,
 				FAE27599175DEE1900F5DA8E /* libPluginProtocol.a in Frameworks */,
@@ -223,6 +236,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				FA375AB117644ED8001EE713 /* PluginTwitter.xcodeproj */,
 				FAE2758F175DED2300F5DA8E /* PluginWeibo.xcodeproj */,
 				FAE27586175DED1700F5DA8E /* PluginProtocol.xcodeproj */,
 				FAE27577175DEC0C00F5DA8E /* cocos2dx.xcodeproj */,
@@ -239,6 +253,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FA375ABB17644EFE001EE713 /* SystemConfiguration.framework */,
 				FAE275A0175DEEF500F5DA8E /* AudioToolbox.framework */,
 				BF170DB212928DE900B8313A /* libxml2.dylib */,
 				BF170DB412928DE900B8313A /* libz.dylib */,
@@ -271,6 +286,14 @@
 			);
 			name = Resources;
 			path = ../Resources;
+			sourceTree = "<group>";
+		};
+		FA375AB217644ED8001EE713 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FA375AB817644ED8001EE713 /* libPluginTwitter.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		FAE27578175DEC0C00F5DA8E /* Products */ = {
@@ -347,6 +370,10 @@
 					ProjectRef = FAE27586175DED1700F5DA8E /* PluginProtocol.xcodeproj */;
 				},
 				{
+					ProductGroup = FA375AB217644ED8001EE713 /* Products */;
+					ProjectRef = FA375AB117644ED8001EE713 /* PluginTwitter.xcodeproj */;
+				},
+				{
 					ProductGroup = FAE27590175DED2300F5DA8E /* Products */;
 					ProjectRef = FAE2758F175DED2300F5DA8E /* PluginWeibo.xcodeproj */;
 				},
@@ -359,6 +386,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		FA375AB817644ED8001EE713 /* libPluginTwitter.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPluginTwitter.a;
+			remoteRef = FA375AB717644ED8001EE713 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		FAE2757F175DEC0D00F5DA8E /* libcocos2dx.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -521,8 +555,6 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				PROVISIONING_PROFILE = "0C43CFE2-55C4-429A-9A03-BFB76D31630B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0C43CFE2-55C4-429A-9A03-BFB76D31630B";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv6 armv7 i386";
 			};
@@ -537,8 +569,6 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "0C43CFE2-55C4-429A-9A03-BFB76D31630B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DB6844BA-2943-44DB-B10A-3A3F0E8A52B8";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv6 armv7 i386";
 			};

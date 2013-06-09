@@ -117,7 +117,7 @@ void PluginProtocol::callFuncWithParam(const char* funcName, std::vector<PluginP
     int nParamNum = params.size();
     if (0 == nParamNum)
     {
-        PluginUtilsIOS::callOCFunctionWithName_oneParam(this, funcName, NULL);
+        PluginUtilsIOS::callOCFunctionWithName(this, funcName);
     } else
     {
         PluginParam* pRetParam = NULL;
