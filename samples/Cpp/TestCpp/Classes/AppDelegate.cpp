@@ -23,12 +23,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 	// As an example, load config file
 	// XXX: This should be loaded before the Director is initialized,
 	// XXX: but at this point, the director is already initialized
-    
-    // Uncomment next line only for testing, I commented it since custom configuration
-    // should not affect TestCpp project, it'll generate ugly display on some platforms like Linux,
-    // Marmalade, Blackberry since config-example.plist use rgba5551 for texture format.
-    
-	// CCConfiguration::sharedConfiguration()->loadConfigFile("configs/config-example.plist");
+	CCConfiguration::sharedConfiguration()->loadConfigFile("configs/config-example.plist");
 
     // initialize director
     CCDirector *pDirector = CCDirector::sharedDirector();
