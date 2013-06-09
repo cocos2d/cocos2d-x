@@ -79,7 +79,13 @@ void CCDisplayFactory::updateDisplay(CCBone *bone, CCDecorativeDisplay *decoDisp
         CCColliderDetector *detector = decoDisplay->getColliderDetector();
         if (detector)
         {
-            CCAffineTransform t = CCAffineTransformConcat(bone->nodeToArmatureTransform(), bone->getArmature()->nodeToWorldTransform());
+			CCNode *node = decoDisplay->getDisplay();
+			CCAffineTransform displayTransform = node->nodeToParentTransform();
+			CCPoint anchorPoint =  node->getAnchorPointInPoints();
+			anchorPoint = CCPointApplyAffineTransform(anchorPoint, displayTransform);
+			displayTransform.tx = anchorPoint.x;
+			displayTransform.ty = anchorPoint.y;
+            CCAffineTransform t = CCAffineTransformConcat(displayTransform, bone->getArmature()->nodeToWorldTransform());
             detector->updateTransform(t);
         }
     }
