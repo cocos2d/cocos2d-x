@@ -57,31 +57,37 @@ public:
      @brief method don't have return value
      */
     static void callOCFunctionWithName_oneParam(PluginProtocol* pPlugin, const char* funcName, id param);
+    static void callOCFunctionWithName(PluginProtocol* pPlugin, const char* funcName);
 
     /**
      @brief method return int value
      */
     static int callOCIntFunctionWithName_oneParam(PluginProtocol* pPlugin, const char* funcName, id param);
+    static int callOCIntFunctionWithName(PluginProtocol* pPlugin, const char* funcName);
     
     /**
      @brief method return float value
      */
     static float callOCFloatFunctionWithName_oneParam(PluginProtocol* pPlugin, const char* funcName, id param);
+    static float callOCFloatFunctionWithName(PluginProtocol* pPlugin, const char* funcName);
 
     /**
      @brief method return bool value
      */
     static bool callOCBoolFunctionWithName_oneParam(PluginProtocol* pPlugin, const char* funcName, id param);
+    static bool callOCBoolFunctionWithName(PluginProtocol* pPlugin, const char* funcName);
     
     /**
      @brief method return string value
      */
     static const char* callOCStringFunctionWithName_oneParam(PluginProtocol* pPlugin, const char* funcName, id param);
+    static const char* callOCStringFunctionWithName(PluginProtocol* pPlugin, const char* funcName);
 
     static void outputLog(const char* pFormat, ...);
 
 private:
-    static id callRetFunction(PluginProtocol* pPlugin, const char* funcName, id param);
+    static id callRetFunctionWithParam(PluginProtocol* pPlugin, const char* funcName, id param);
+    static id callRetFunction(PluginProtocol* pPlugin, const char* funcName);
 };
 
 }} // namespace cocos2d { namespace plugin {
