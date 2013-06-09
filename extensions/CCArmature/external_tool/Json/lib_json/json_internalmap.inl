@@ -5,7 +5,7 @@
 
 // included by json_value.cpp
 
-namespace Json {
+namespace CSJson {
 
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
@@ -612,4 +612,4 @@ ValueInternalMap::distance( const IteratorState &x, const IteratorState &y )
    return offset;
 }
 
-} // namespace Json
+} // namespace CSJson

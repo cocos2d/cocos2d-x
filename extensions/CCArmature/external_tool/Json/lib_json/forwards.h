@@ -10,7 +10,7 @@
 # include "config.h"
 #endif // if !defined(JSON_IS_AMALGAMATION)
 
-namespace Json {
+namespace CSJson {
 
    // writer.h
    class FastWriter;
@@ -38,7 +38,7 @@ namespace Json {
    class ValueInternalMap;
 #endif // #ifdef JSON_VALUE_USE_INTERNAL_MAP
 
-} // namespace Json
+} // namespace CSJson
 
 
 #endif // JSON_FORWARDS_H_INCLUDED
