@@ -1,9 +1,5 @@
 --Encapsulate SimpleAudioEngine to AudioEngine,Play music and sound effects. 
-local modename = "AudioEngine"
 local M = {}
-_G[modename] = M
-package.loaded[modename] = M
-
 local sharedEngine = SimpleAudioEngine:sharedEngine()
 
 function M.stopAllEffects()
@@ -101,5 +97,17 @@ end
 function M.resumeEffect(handle)
     sharedEngine:resumeEffect(handle)
 end
+
+local modename = "AudioEngine"
+local proxy = {}
+local mt    = {
+    __index = M,
+    __newindex =  function (t ,k ,v)
+        print("attemp to update a read-only table")
+    end
+} 
+setmetatable(proxy,mt)
+_G[modename] = proxy
+package.loaded[modename] = proxy
 
 
