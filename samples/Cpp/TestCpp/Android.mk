@@ -100,6 +100,7 @@ Classes/ConfigurationTest/ConfigurationTest.cpp \
 Classes/controller.cpp \
 Classes/testBasic.cpp \
 Classes/AppDelegate.cpp \
+Classes/BaseTest.cpp \
 Classes/VisibleRect.cpp
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static

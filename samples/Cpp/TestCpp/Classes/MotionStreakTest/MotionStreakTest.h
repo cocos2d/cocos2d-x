@@ -3,10 +3,11 @@
 
 ////----#include "cocos2d.h"
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
 //USING_NS_CC;
 
-class MotionStreakTest : public CCLayer
+class MotionStreakTest : public BaseTest
 {
 public:
     MotionStreakTest(void);

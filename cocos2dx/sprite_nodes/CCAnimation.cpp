@@ -51,7 +51,7 @@ bool CCAnimationFrame::initWithSpriteFrame(CCSpriteFrame* spriteFrame, float del
 
 CCAnimationFrame::~CCAnimationFrame()
 {    
-    CCLOGINFO( "cocos2d: deallocing %s", this);
+    CCLOGINFO( "cocos2d: deallocing %p", this);
 
     CC_SAFE_RELEASE(m_pSpriteFrame);
     CC_SAFE_RELEASE(m_pUserInfo);

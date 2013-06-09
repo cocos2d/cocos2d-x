@@ -28,7 +28,6 @@ public:
 
     void initPhysics();
     void createResetButton();
-    void reset(CCObject* sender);
     virtual void draw();
 
     void addNewSpriteAtPosition(CCPoint p);

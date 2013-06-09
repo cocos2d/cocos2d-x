@@ -7,7 +7,6 @@ class ExtensionsMainLayer : public CCLayer
 {
 public:
     virtual void onEnter();
-    void menuCallback(CCObject* pSender);
 };
 
 class ExtensionsTestScene : public TestScene
