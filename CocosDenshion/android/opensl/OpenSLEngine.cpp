@@ -289,7 +289,8 @@ bool initAudioPlayer(AudioPlayer* player, const char* filename)
 		if(fp){
 			SLDataLocator_URI loc_fd = {SL_DATALOCATOR_URI , (SLchar*)filename};
 			SLDataFormat_MIME format_mime = {SL_DATAFORMAT_MIME, NULL, SL_CONTAINERTYPE_UNSPECIFIED};
-			(player->audioSrc) = {&loc_fd, &format_mime};
+			player->audioSrc.pLocator = &loc_fd;
+			player->audioSrc.pFormat = &format_mime;
 			return createAudioPlayerBySource(player);
 		}
 		LOGD("file not found! Stop preload file: %s", filename);
