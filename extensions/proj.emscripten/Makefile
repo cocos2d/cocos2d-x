@@ -8,11 +8,11 @@ INCLUDES = -I$(COCOS_ROOT)/external \
 	-I.. \
 	-I../CCBReader \
 	-I../GUI/CCControlExtension \
-	-I../network
+	-I../network \
 	-I../GUI/CCEditBox \
 	-I../Components \
-	-I../CCArmature \
-    
+	-I../CCArmature
+
 DEFINES += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 DEFINES += -D__CC_PLATFORM_IMAGE_CPP__
 
@@ -88,7 +88,7 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CCArmature/utils/CCSpriteFrameCacheHelper.cpp \
 ../CCArmature/utils/CCTransformHelp.cpp \
 ../CCArmature/utils/CCTweenFunction.cpp \
-../CCArmature/utils/CCUtilMath.cpp \
+../CCArmature/utils/CCUtilMath.cpp
 
 include $(COCOS_ROOT)/cocos2dx/proj.emscripten/cocos2dx.mk
 
