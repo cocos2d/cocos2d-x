@@ -164,6 +164,9 @@
 		1A40E7EF1727C47E006D4861 /* Slot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40E7D81727C47E006D4861 /* Slot.cpp */; };
 		1A40E7F01727C47E006D4861 /* SlotData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40E7DA1727C47E006D4861 /* SlotData.cpp */; };
 		1A40E7F11727C47E006D4861 /* spine-cocos2dx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40E7DC1727C47E006D4861 /* spine-cocos2dx.cpp */; };
+		1A9CE91D1765A2C2000E3062 /* CCBProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9CE9171765A2C2000E3062 /* CCBProxy.cpp */; };
+		1A9CE91E1765A2C2000E3062 /* Lua_extensions_CCB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9CE9191765A2C2000E3062 /* Lua_extensions_CCB.cpp */; };
+		1A9CE91F1765A2C2000E3062 /* Lua_web_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9CE91B1765A2C2000E3062 /* Lua_web_socket.cpp */; };
 		1A9D7E63171E38B2000B3B9A /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9D7E62171E38B2000B3B9A /* libluajit.a */; };
 		1AB87024175E0A2D005D39BF /* WebSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB87022175E0A2D005D39BF /* WebSocket.cpp */; };
 		1AB87029175E0A40005D39BF /* CCSkeleton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB87025175E0A40005D39BF /* CCSkeleton.cpp */; };
@@ -537,6 +540,12 @@
 		1A40E7DC1727C47E006D4861 /* spine-cocos2dx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "spine-cocos2dx.cpp"; sourceTree = "<group>"; };
 		1A40E7DD1727C47E006D4861 /* spine-cocos2dx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "spine-cocos2dx.h"; sourceTree = "<group>"; };
 		1A40E7DE1727C47E006D4861 /* spine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spine.h; sourceTree = "<group>"; };
+		1A9CE9171765A2C2000E3062 /* CCBProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBProxy.cpp; sourceTree = "<group>"; };
+		1A9CE9181765A2C2000E3062 /* CCBProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBProxy.h; sourceTree = "<group>"; };
+		1A9CE9191765A2C2000E3062 /* Lua_extensions_CCB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Lua_extensions_CCB.cpp; sourceTree = "<group>"; };
+		1A9CE91A1765A2C2000E3062 /* Lua_extensions_CCB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lua_extensions_CCB.h; sourceTree = "<group>"; };
+		1A9CE91B1765A2C2000E3062 /* Lua_web_socket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Lua_web_socket.cpp; sourceTree = "<group>"; };
+		1A9CE91C1765A2C2000E3062 /* Lua_web_socket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lua_web_socket.h; sourceTree = "<group>"; };
 		1A9D7E5D171E38B2000B3B9A /* lauxlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lauxlib.h; sourceTree = "<group>"; };
 		1A9D7E5E171E38B2000B3B9A /* lua.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua.h; sourceTree = "<group>"; };
 		1A9D7E5F171E38B2000B3B9A /* luaconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luaconf.h; sourceTree = "<group>"; };
@@ -1235,6 +1244,8 @@
 		46C1007916BF786A00F74D54 /* cocos2dx_support */ = {
 			isa = PBXGroup;
 			children = (
+				1A9CE9171765A2C2000E3062 /* CCBProxy.cpp */,
+				1A9CE9181765A2C2000E3062 /* CCBProxy.h */,
 				46C1007A16BF786A00F74D54 /* CCLuaBridge.cpp */,
 				46C1007B16BF786A00F74D54 /* CCLuaBridge.h */,
 				46C1007C16BF786A00F74D54 /* CCLuaEngine.cpp */,
@@ -1245,6 +1256,10 @@
 				46C1008116BF786A00F74D54 /* CCLuaValue.h */,
 				46C1008216BF786A00F74D54 /* Cocos2dxLuaLoader.cpp */,
 				46C1008316BF786A00F74D54 /* Cocos2dxLuaLoader.h */,
+				1A9CE9191765A2C2000E3062 /* Lua_extensions_CCB.cpp */,
+				1A9CE91A1765A2C2000E3062 /* Lua_extensions_CCB.h */,
+				1A9CE91B1765A2C2000E3062 /* Lua_web_socket.cpp */,
+				1A9CE91C1765A2C2000E3062 /* Lua_web_socket.h */,
 				46C1008416BF786A00F74D54 /* LuaCocos2d.cpp */,
 				46C1008516BF786A00F74D54 /* LuaCocos2d.h */,
 				46C1008616BF786A00F74D54 /* platform */,
@@ -1632,6 +1647,9 @@
 				1AB87024175E0A2D005D39BF /* WebSocket.cpp in Sources */,
 				1AB87029175E0A40005D39BF /* CCSkeleton.cpp in Sources */,
 				1AB8702A175E0A40005D39BF /* CCSkeletonAnimation.cpp in Sources */,
+				1A9CE91D1765A2C2000E3062 /* CCBProxy.cpp in Sources */,
+				1A9CE91E1765A2C2000E3062 /* Lua_extensions_CCB.cpp in Sources */,
+				1A9CE91F1765A2C2000E3062 /* Lua_web_socket.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

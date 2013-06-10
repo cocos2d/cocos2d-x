@@ -18,8 +18,8 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#ifndef RENDER_H
-#define RENDER_H
+#ifndef CC_ARMATURE_GLES_RENDER_H
+#define CC_ARMATURE_GLES_RENDER_H
 
 #include "Box2D/Box2D.h"
 #include "cocos2d.h"
