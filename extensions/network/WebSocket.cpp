@@ -222,7 +222,6 @@ void WsThreadHelper::update(float dt)
 enum WS_MSG {
     WS_MSG_TO_SUBTRHEAD_SENDING_STRING = 0,
     WS_MSG_TO_SUBTRHEAD_SENDING_BINARY,
-    WS_MSG_TO_SUBTRHEAD_CLOSING,
     WS_MSG_TO_UITHREAD_OPEN,
     WS_MSG_TO_UITHREAD_MESSAGE,
     WS_MSG_TO_UITHREAD_ERROR,
@@ -381,10 +380,6 @@ void WebSocket::close()
     CCLOG("websocket (%p) connection closed by client", this);
     _readyState = kStateClosed;
 
-    WsMessage* msg = new WsMessage();
-    msg->what = WS_MSG_TO_SUBTRHEAD_CLOSING;
-
-    _wsHelper->sendMessageToSubThread(msg);
     _wsHelper->joinSubThread();
     
     // onClose callback needs to be invoked at the end of this method
@@ -481,20 +476,26 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
         case LWS_CALLBACK_PROTOCOL_DESTROY:
         case LWS_CALLBACK_CLIENT_CONNECTION_ERROR:
             {
-                WsMessage* msg = new WsMessage();
+                WsMessage* msg = NULL;
                 if (reason == LWS_CALLBACK_CLIENT_CONNECTION_ERROR
                     || (reason == LWS_CALLBACK_PROTOCOL_DESTROY && _readyState == kStateConnecting)
                     || (reason == LWS_CALLBACK_DEL_POLL_FD && _readyState == kStateConnecting)
                     )
                 {
+                    msg = new WsMessage();
                     msg->what = WS_MSG_TO_UITHREAD_ERROR;
                     _readyState = kStateClosing;
                 }
                 else if (reason == LWS_CALLBACK_PROTOCOL_DESTROY && _readyState == kStateClosing)
                 {
+                    msg = new WsMessage();
                     msg->what = WS_MSG_TO_UITHREAD_CLOSE;
                 }
-                _wsHelper->sendMessageToUIThread(msg);
+
+                if (msg)
+                {
+                    _wsHelper->sendMessageToUIThread(msg);
+                }
             }
             break;
         case LWS_CALLBACK_CLIENT_ESTABLISHED:
