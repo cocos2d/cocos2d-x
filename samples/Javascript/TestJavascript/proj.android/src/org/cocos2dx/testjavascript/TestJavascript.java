@@ -25,14 +25,41 @@ package org.cocos2dx.testjavascript;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 
+import android.util.Log;
 import android.os.Bundle;
+import android.content.ContextWrapper;
+import android.content.Context;
+import android.content.Intent;
+import android.app.Activity;
+import android.os.Process;
 
 public class TestJavascript extends Cocos2dxActivity{
-	
-	protected void onCreate(Bundle savedInstanceState){
-		super.onCreate(savedInstanceState);
-	}
-	
+
+    private static TestJavascript c;
+
+    public static Activity getCurrentContext() {
+	return c;
+    }
+
+    protected void onCreate(Bundle savedInstanceState){
+	super.onCreate(savedInstanceState);
+	c = this;
+	Log.i("TestJavascriptDebug", "PROCESS ID: "+Process.myPid());
+    }
+
+    public static void switchAndKillActivityTest() {
+	Log.i("TestJavascriptDebug", "inside switch and kill activity");
+	Intent launchGame = new Intent(c, TestActivity.class);
+        c.startActivity(launchGame);
+	c.finish();
+    }
+    
+    public static void switchAndPauseActivityTest() {
+	Log.i("TestJavascriptDebug", "inside switch and pause activity");
+	Intent launchGame = new Intent(c, TestActivity.class);
+        c.startActivity(launchGame);
+    }
+
     static {
         System.loadLibrary("testjavascript");
     }

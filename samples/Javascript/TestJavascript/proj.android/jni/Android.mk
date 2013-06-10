@@ -7,7 +7,9 @@ LOCAL_MODULE := test_javascript_shared
 LOCAL_MODULE_FILENAME := libtestjavascript
 
 LOCAL_SRC_FILES := testjavascript/main.cpp \
-                   ../../Classes/AppDelegate.cpp
+                   ../../Classes/AppDelegate.cpp \
+		  ../../Classes/android/TestHelperJNI.cpp \
+		  ../../Classes/android/DeviceSpecificBindings.cpp \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 
