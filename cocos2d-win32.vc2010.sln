@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+# Visual C++ Express 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libBox2D", "external\Box2D\proj.win32\Box2D.vcxproj", "{929480E7-23C0-4DF6-8456-096D71547116}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libchipmunk", "external\chipmunk\proj.win32\chipmunk.vcxproj", "{207BC7A9-CCF1-4F2F-A04D-45F72242AE25}"
@@ -72,14 +72,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WatermelonWithMe", "samples
 		{39379840-825A-45A0-B363-C09FFEF864BD} = {39379840-825A-45A0-B363-C09FFEF864BD}
 		{207BC7A9-CCF1-4F2F-A04D-45F72242AE25} = {207BC7A9-CCF1-4F2F-A04D-45F72242AE25}
 	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project-js", "project-js", "{68B43009-A1C1-41B2-8AF7-77278B70E897}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project-lua", "project-lua", "{46BAA168-511D-4C17-B482-0C73844530CB}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project-cpp", "project-cpp", "{F3E539F7-881F-4B6B-BC0E-B05D4D9E5384}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project-common", "project-common", "{4FB013BE-242F-42C1-B535-560699C2EA67}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libJSBinding", "scripting\javascript\bindings\proj.win32\libJSBinding.vcxproj", "{39379840-825A-45A0-B363-C09FFEF864BD}"
 	ProjectSection(ProjectDependencies) = postProject
