@@ -41,6 +41,15 @@ if [ "$PLATFORM"x = "linux"x ]; then
     make -j4
 fi
 
+if [ "$PLATFORM"x = "emscripten"x ]; then
+    cd $COCOS2DX_ROOT
+    export PYTHON=/usr/bin/python
+    export LLVM=$HOME/bin/clang+llvm-3.2/bin
+    sudo mkdir -p /Library/Fonts
+    sudo cp samples/Cpp/TestCpp/Resources/fonts/arial.ttf /Library/Fonts/Arial.ttf
+    make -f Makefile.emscripten -j 8
+fi
+
 if [ "$PLATFORM"x = "ios"x ]; then
     cd $COCOS2DX_ROOT/tools/travis-scripts
     ./generate-jsbindings.sh
