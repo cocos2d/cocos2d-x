@@ -6,6 +6,7 @@ env:
   - PLATFORM=linux DEBUG=1
   - PLATFORM=nacl DEBUG=1
   - PLATFORM=android
+  - PLATFORM=emscripten DEBUG=1
   global: 
   - secure: |-
       cHXOjAda+t2tmBVuVAiQfvhDN+unToO6hX1rc3dJeGDOk4rlQnylJacjA7o/
