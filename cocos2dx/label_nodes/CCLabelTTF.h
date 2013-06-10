@@ -40,11 +40,20 @@ NS_CC_BEGIN
 
 
 /** @brief CCLabelTTF is a subclass of CCTextureNode that knows how to render text labels
-*
-* All features from CCTextureNode are valid in CCLabelTTF
-*
-* CCLabelTTF objects are slow. Consider using CCLabelAtlas or CCLabelBMFont instead.
-*/
+ *
+ * All features from CCTextureNode are valid in CCLabelTTF
+ *
+ * CCLabelTTF objects are slow. Consider using CCLabelAtlas or CCLabelBMFont instead.
+ *
+ * Custom ttf file can be put in assets/ or external storage that the Application can access.
+ * @code
+ * CCLabelTTF *label1 = CCLabelTTF::create("alignment left", "A Damn Mess", fontSize, blockSize, 
+ *                                          kCCTextAlignmentLeft, kCCVerticalTextAlignmentCenter);
+ * CCLabelTTF *label2 = CCLabelTTF::create("alignment right", "/mnt/sdcard/Scissor Cuts.ttf", fontSize, blockSize,
+ *                                          kCCTextAlignmentLeft, kCCVerticalTextAlignmentCenter);
+ * @endcode
+ *
+ */
 class CC_DLL CCLabelTTF : public CCSprite, public CCLabelProtocol
 {
 public:
