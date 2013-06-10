@@ -7,7 +7,7 @@
 
 NS_CC_BEGIN
 
-class CCData : public CCObject
+class CC_DLL CCData : public CCObject
 {
 public:
     CCData(unsigned char *pBytes, const unsigned long nSize);

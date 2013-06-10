@@ -118,10 +118,11 @@ unsigned char* CCFileUtilsAndroid::getFileData(const char* pszFileName, const ch
         return 0;
     }
 
-    if (pszFileName[0] != '/')
+    string fullPath = fullPathForFilename(pszFileName);
+
+    if (fullPath[0] != '/')
     {
         //CCLOG("GETTING FILE RELATIVE DATA: %s", pszFileName);
-        string fullPath = fullPathForFilename(pszFileName);
         pData = s_pZipFile->getFileData(fullPath.c_str(), pSize);
     }
     else
@@ -130,7 +131,7 @@ unsigned char* CCFileUtilsAndroid::getFileData(const char* pszFileName, const ch
         {
             // read rrom other path than user set it
 	        //CCLOG("GETTING FILE ABSOLUTE DATA: %s", pszFileName);
-            FILE *fp = fopen(pszFileName, pszMode);
+            FILE *fp = fopen(fullPath.c_str(), pszMode);
             CC_BREAK_IF(!fp);
 
             unsigned long size;

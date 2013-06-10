@@ -19,8 +19,6 @@ public:
     virtual std::string subtitle();
     virtual void updateQuantityOfNodes() = 0;
 
-    void onDecrease(CCObject* pSender);
-    void onIncrease(CCObject* pSender);
     void updateQuantityLabel();
 
     int getQuantityOfNodes() { return quantityOfNodes; }
