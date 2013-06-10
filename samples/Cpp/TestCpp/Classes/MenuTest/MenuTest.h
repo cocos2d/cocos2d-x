@@ -23,7 +23,6 @@ public:
     void menuCallback(CCObject* pSender);
     void menuCallbackConfig(CCObject* pSender);
     void menuCallbackDisabled(CCObject* pSender);
-    void menuCallbackEnable(CCObject* pSender);
     void menuCallback2(CCObject* pSender);
     void menuCallbackPriorityTest(CCObject* pSender);
     void menuCallbackBugsTest(CCObject *pSender);
@@ -63,11 +62,6 @@ public:
     MenuLayer3(void);
     ~MenuLayer3();
 
-public:
-    void menuCallback(CCObject* pSender);
-    void menuCallback2(CCObject* pSender);
-    void menuCallback3(CCObject* pSender);
-
     //CREATE_NODE(MenuLayer3);
 };
 
@@ -91,9 +85,6 @@ public:
     ~MenuLayerPriorityTest();
 
     void menuCallback(CCObject* pSender);
-    void disableMenuCallback(CCObject* pSender);
-    void enableMenuCallback();
-    void togglePriorityCallback(CCObject* pSender);
 private:
     CCMenu* m_pMenu1;
     CCMenu* m_pMenu2;

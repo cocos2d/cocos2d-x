@@ -24,6 +24,7 @@ Developers:
         
     carlomorgantinizynga
         CCLabelTTF supports for shadow and stroke
+        Adding CCLabelTTF::createWithFontDefinition.
         
     James Gregory (j4m3z0r, Zynga)
         Maintainer of Emscripten port.
@@ -183,6 +184,7 @@ Developers:
         Simpler, correct handling of spritesheet sources for CCScale9Sprite.
         Clean up linked libraries for android.
         JavaScript debugger improved and bugfixed.
+        Fix flags for debugger server socket.
 
     Nicolas Gramlich (nicolasgramlich, Zynga)
         fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF

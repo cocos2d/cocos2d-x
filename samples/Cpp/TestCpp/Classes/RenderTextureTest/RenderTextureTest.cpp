@@ -6,21 +6,13 @@
 // Test #3 by David Deaco (ddeaco)
 
 
-
-TESTLAYER_CREATE_FUNC(RenderTextureSave);
-TESTLAYER_CREATE_FUNC(RenderTextureIssue937);
-TESTLAYER_CREATE_FUNC(RenderTextureZbuffer);
-TESTLAYER_CREATE_FUNC(RenderTextureTestDepthStencil);
-TESTLAYER_CREATE_FUNC(RenderTextureTargetNode);
-TESTLAYER_CREATE_FUNC(SpriteRenderTextureBug);
-
-static NEWTESTFUNC createFunctions[] = {
-    CF(RenderTextureSave),
-    CF(RenderTextureIssue937),
-    CF(RenderTextureZbuffer),
-    CF(RenderTextureTestDepthStencil),
-    CF(RenderTextureTargetNode),
-    CF(SpriteRenderTextureBug),
+static std::function<CCLayer*()> createFunctions[] = {
+    CL(RenderTextureSave),
+    CL(RenderTextureIssue937),
+    CL(RenderTextureZbuffer),
+    CL(RenderTextureTestDepthStencil),
+    CL(RenderTextureTargetNode),
+    CL(SpriteRenderTextureBug),
 };
 
 #define MAX_LAYER   (sizeof(createFunctions)/sizeof(createFunctions[0]))
@@ -60,34 +52,7 @@ static CCLayer* restartTestCase()
 
 void RenderTextureTest::onEnter()
 {
-    CCLayer::onEnter();
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-
-
-    CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 26);
-    addChild(label, 1);
-    label->setPosition( ccp(s.width/2, s.height-50) );
-
-    std::string strSubtitle = subtitle();
-    if( ! strSubtitle.empty() ) 
-    {
-        CCLabelTTF* l = CCLabelTTF::create(strSubtitle.c_str(), "Thonburi", 16);
-        addChild(l, 1);
-        l->setPosition( ccp(s.width/2, s.height-80) );
-    }    
-
-    CCMenuItemImage *item1 = CCMenuItemImage::create("Images/b1.png", "Images/b2.png", this, menu_selector(RenderTextureTest::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::create("Images/r1.png","Images/r2.png", this, menu_selector(RenderTextureTest::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::create("Images/f1.png", "Images/f2.png", this, menu_selector(RenderTextureTest::nextCallback) );
-
-    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
-
-    menu->setPosition( CCPointZero );
-    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-
-    addChild(menu, 1);
+    BaseTest::onEnter();
 }
 
 void RenderTextureTest::restartCallback(CCObject* pSender)
@@ -150,8 +115,8 @@ RenderTextureSave::RenderTextureSave()
 
     // Save Image menu
     CCMenuItemFont::setFontSize(16);
-    CCMenuItem *item1 = CCMenuItemFont::create("Save Image", this, menu_selector(RenderTextureSave::saveImage));
-    CCMenuItem *item2 = CCMenuItemFont::create("Clear", this, menu_selector(RenderTextureSave::clearImage));
+    CCMenuItem *item1 = CCMenuItemFont::create("Save Image", std::bind( &RenderTextureSave::saveImage, this, std::placeholders::_1));
+    CCMenuItem *item2 = CCMenuItemFont::create("Clear", std::bind( &RenderTextureSave::clearImage, this, std::placeholders::_1));
     CCMenu *menu = CCMenu::create(item1, item2, NULL);
     this->addChild(menu);
     menu->alignItemsVertically();
@@ -564,7 +529,7 @@ RenderTextureTargetNode::RenderTextureTargetNode()
     scheduleUpdate();
     
     // Toggle clear on / off
-    CCMenuItemFont *item = CCMenuItemFont::create("Clear On/Off", this, menu_selector(RenderTextureTargetNode::touched));
+    CCMenuItemFont *item = CCMenuItemFont::create("Clear On/Off", std::bind( &RenderTextureTargetNode::touched, this, std::placeholders::_1));
     CCMenu *menu = CCMenu::create(item, NULL);
     addChild(menu);
 

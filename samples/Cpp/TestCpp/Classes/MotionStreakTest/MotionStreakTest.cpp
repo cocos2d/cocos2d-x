@@ -228,36 +228,11 @@ std::string MotionStreakTest::subtitle()
 
 void MotionStreakTest::onEnter()
 {
-    CCLayer::onEnter();
+    BaseTest::onEnter();
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 32);
-    addChild(label, 0, kTagLabel);
-    label->setPosition(ccp(s.width/2, s.height-50));
-    
-    string subTitle = this->subtitle();
-    if (subTitle.size() > 0)
-    {
-        CCLabelTTF *l = CCLabelTTF::create(subTitle.c_str(), "Thonburi", 16);
-        addChild(l, 1);
-        l->setPosition(ccp(s.width/2, s.height-80));
-    }
-
-    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(MotionStreakTest::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(MotionStreakTest::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(MotionStreakTest::nextCallback) );
-
-    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
-
-    menu->setPosition(CCPointZero);
-    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    
-    addChild(menu, 1);    
-
-    CCMenuItemToggle *itemMode = CCMenuItemToggle::createWithTarget(this, menu_selector(MotionStreakTest::modeCallback),
+    CCMenuItemToggle *itemMode = CCMenuItemToggle::createWithCallback( std::bind(&MotionStreakTest::modeCallback, this, std::placeholders::_1),
         CCMenuItemFont::create("Use High Quality Mode"),
         CCMenuItemFont::create("Use Fast Mode"),
         NULL);

@@ -2,9 +2,10 @@
 #define __TEXTURE2D_TEST_H__
 
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
 
-class TextureDemo : public CCLayer
+class TextureDemo : public BaseTest
 {
 public:
     virtual ~TextureDemo();
