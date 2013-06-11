@@ -47,6 +47,9 @@ struct {
 	{ "FileUtilsTest", []() { return new FileUtilsTestScene(); } },
 	{ "FontTest", []() { return new FontTestScene(); } },
 	{ "IntervalTest", [](){return new IntervalTestScene(); } },
+#ifdef KEYBOARD_SUPPORT
+	{ "KeyboardTest", []() { return new KeyboardTestScene(); } },
+#endif
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
 	{ "KeypadTest", []() { return new KeypadTestScene(); } },
 #endif

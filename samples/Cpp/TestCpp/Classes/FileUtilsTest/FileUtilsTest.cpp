@@ -180,9 +180,11 @@ void TestSearchPath::onEnter()
     FILE* fp = fopen(fileName.c_str(), "wb");
     if (fp)
     {
-        fwrite(szBuf, 1, strlen(szBuf), fp);
+        size_t ret = fwrite(szBuf, 1, strlen(szBuf), fp);
+        CCAssert(ret == 0, "fwrite function returned nonzero value");
         fclose(fp);
-        CCLog("Writing file to writable path succeed.");
+        if (ret == 0)
+            CCLog("Writing file to writable path succeed.");
     }
     
     searchPaths.insert(searchPaths.begin(), writablePath);
