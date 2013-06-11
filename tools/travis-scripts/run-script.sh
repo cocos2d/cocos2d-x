@@ -16,6 +16,7 @@ fi
 build_android()
 {
     cd $COCOS2DX_ROOT/samples/$1/$2/proj.android
+    ln -s ../../../../android_build_objs obj
     ./build_native.sh
 }
 
@@ -23,6 +24,8 @@ if [ "$PLATFORM"x = "android"x ]; then
     cd $COCOS2DX_ROOT/tools/travis-scripts
     ./generate-jsbindings.sh
     
+    cd $COCOS2DX_ROOT
+    mkdir android_build_objs
     build_android Cpp HelloCpp
     build_android Cpp TestCpp
     build_android Cpp AssetsManagerTest
