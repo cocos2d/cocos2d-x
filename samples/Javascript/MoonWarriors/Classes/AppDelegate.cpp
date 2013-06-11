@@ -42,7 +42,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
 #if JSB_ENABLE_DEBUGGER
-    ScriptingCore::getInstance()->enableDebugger();
     ScriptingCore::getInstance()->runScript("main.debug.js");
 #else
     ScriptingCore::getInstance()->runScript("MoonWarriors-jsb.js");
