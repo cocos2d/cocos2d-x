@@ -12,6 +12,9 @@ Developers:
     Ricardo Quesada
     Rolando Abarca
         Javascript Binding and testjs
+        
+    simpliplant
+        Hardware keyboard support
     
     liuyq
         CCTextureAtlas::updateQuad modify for the memcpy hot spot.
