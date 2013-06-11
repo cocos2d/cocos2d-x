@@ -81,7 +81,7 @@ JSBool JSPROXY_CCPhysicsSprite_getCPBody(JSContext *cx, uint32_t argc, jsval *vp
 	cpBody* ret_val;
     
 	ret_val = real->getCPBody();
-    jsval ret_jsval = opaque_to_jsval(cx, ret_val);
+	jsval ret_jsval = c_class_to_jsval( cx, ret_val, JSB_cpBody_object, JSB_cpBody_class, "cpBody" );
 	JS_SET_RVAL(cx, vp, ret_jsval);
     
 	return JS_TRUE;
