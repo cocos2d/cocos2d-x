@@ -167,7 +167,6 @@ void CCLayer::setTouchEnabled(bool enabled)
         m_bTouchEnabled = enabled;
         if (m_bRunning)
         {
-            printf(" -- running2\n");
             if (enabled)
             {
                 this->registerWithTouchDispatcher();
