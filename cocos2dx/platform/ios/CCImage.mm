@@ -297,10 +297,10 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         // draw text
         CGColorSpaceRef colorSpace  = CGColorSpaceCreateDeviceRGB();
         CGContextRef context        = CGBitmapContextCreate(data,
-                                                            dim.width,
-                                                            dim.height,
+                                                            (size_t)dim.width,
+                                                            (size_t)dim.height,
                                                             8,
-                                                            dim.width * 4,
+                                                            (size_t)dim.width * 4,
                                                             colorSpace,
                                                             kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
         
