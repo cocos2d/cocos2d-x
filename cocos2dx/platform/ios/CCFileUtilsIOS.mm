@@ -36,6 +36,11 @@ THE SOFTWARE.
 
 #include "CCFileUtilsIOS.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#import <CoreText/CoreText.h>
+#import <CoreText/CTFontManager.h>
+#endif
+
 NS_CC_BEGIN
 
 static void addValueToCCDict(id key, id value, CCDictionary* pDict);
@@ -359,6 +364,24 @@ CCArray* CCFileUtilsIOS::createCCArrayWithContentsOfFile(const std::string& file
     
     return pRet;
 }
+
+const char* CCFileUtilsIOS::addCustomFont(const char *font)
+{
+    // Custom .ttf file ?
+    NSString  *fontName = [NSString stringWithUTF8String:font];
+    if ([[fontName lowercaseString] hasSuffix:@".ttf"])
+    {
+        // This is a file, register font with font manager
+        NSString* fontFile = [NSString stringWithUTF8String:CCFileUtils::sharedFileUtils()->fullPathForFilename(font).c_str()];
+        NSURL* fontURL = [NSURL fileURLWithPath:fontFile];
+        CTFontManagerRegisterFontsForURL((CFURLRef)fontURL, 1, NULL);
+        
+        return [[[fontFile lastPathComponent] stringByDeletingPathExtension] cStringUsingEncoding:NSUTF8StringEncoding];
+    }
+    
+    return font;
+}
+
 
 NS_CC_END
 

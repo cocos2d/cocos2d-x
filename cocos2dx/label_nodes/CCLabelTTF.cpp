@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "shaders/CCGLProgram.h"
 #include "shaders/CCShaderCache.h"
 #include "CCApplication.h"
+#include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 
@@ -279,7 +280,8 @@ void CCLabelTTF::setFontName(const char *fontName)
     if (m_pFontName->compare(fontName))
     {
         delete m_pFontName;
-        m_pFontName = new std::string(fontName);
+//        m_pFontName = new std::string(fontName);
+        m_pFontName = new std::string(CCFileUtils::sharedFileUtils()->addCustomFont(fontName));
         
         // Force update
         if (m_string.size() > 0)
