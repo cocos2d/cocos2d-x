@@ -43,6 +43,11 @@ THE SOFTWARE.
 #include <list>
 #include <pthread.h>
 
+#ifdef EMSCRIPTEN
+#include <emscripten/emscripten.h>
+#include "platform/emscripten/CCTextureCacheEmscripten.h"
+#endif // EMSCRIPTEN
+
 using namespace std;
 
 NS_CC_BEGIN
@@ -186,7 +191,11 @@ CCTextureCache * CCTextureCache::sharedTextureCache()
 {
     if (!g_sharedTextureCache)
     {
+#ifdef EMSCRIPTEN
+        g_sharedTextureCache = new CCTextureCacheEmscripten();
+#else
         g_sharedTextureCache = new CCTextureCache();
+#endif // EMSCRIPTEN
     }
     return g_sharedTextureCache;
 }
@@ -230,10 +239,6 @@ CCDictionary* CCTextureCache::snapshotTextures()
 
 void CCTextureCache::addImageAsync(const char *path, CCObject *target, SEL_CallFuncO selector)
 {
-#ifdef EMSCRIPTEN
-    CCLOGWARN("Cannot load image %s asynchronously in Emscripten builds.", path);
-    return;
-#endif // EMSCRIPTEN
 
     CCAssert(path != NULL, "TextureCache: fileimage MUST not be NULL");    
 
