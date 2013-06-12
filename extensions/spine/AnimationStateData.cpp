@@ -74,37 +74,43 @@ AnimationStateData* AnimationStateData_create (SkeletonData* skeletonData) {
 }
 
 void AnimationStateData_dispose (AnimationStateData* self) {
+	_ToEntry* toEntry;
+	_ToEntry* nextToEntry;
+	_FromEntry* nextFromEntry;
+
 	_FromEntry* fromEntry = (_FromEntry*)self->entries;
 	while (fromEntry) {
-		_ToEntry* toEntry = fromEntry->toEntries;
+		toEntry = fromEntry->toEntries;
 		while (toEntry) {
-			_ToEntry* next = toEntry->next;
+			nextToEntry = toEntry->next;
 			_ToEntry_dispose(toEntry);
-			toEntry = next;
+			toEntry = nextToEntry;
 		}
-		_FromEntry* next = fromEntry->next;
+		nextFromEntry = fromEntry->next;
 		_FromEntry_dispose(fromEntry);
-		fromEntry = next;
+		fromEntry = nextFromEntry;
 	}
 
 	FREE(self);
 }
 
 void AnimationStateData_setMixByName (AnimationStateData* self, const char* fromName, const char* toName, float duration) {
+	Animation* to;
 	Animation* from = SkeletonData_findAnimation(self->skeletonData, fromName);
 	if (!from) return;
-	Animation* to = SkeletonData_findAnimation(self->skeletonData, toName);
+	to = SkeletonData_findAnimation(self->skeletonData, toName);
 	if (!to) return;
 	AnimationStateData_setMix(self, from, to, duration);
 }
 
 void AnimationStateData_setMix (AnimationStateData* self, Animation* from, Animation* to, float duration) {
 	/* Find existing FromEntry. */
+	_ToEntry* toEntry;
 	_FromEntry* fromEntry = (_FromEntry*)self->entries;
 	while (fromEntry) {
 		if (fromEntry->animation == from) {
 			/* Find existing ToEntry. */
-			_ToEntry* toEntry = fromEntry->toEntries;
+			toEntry = fromEntry->toEntries;
 			while (toEntry) {
 				if (toEntry->animation == to) {
 					toEntry->duration = duration;
@@ -121,7 +127,7 @@ void AnimationStateData_setMix (AnimationStateData* self, Animation* from, Anima
 		fromEntry->next = (_FromEntry*)self->entries;
 		CONST_CAST(void*, self->entries) = fromEntry;
 	}
-	_ToEntry* toEntry = _ToEntry_create(to, duration);
+	toEntry = _ToEntry_create(to, duration);
 	toEntry->next = fromEntry->toEntries;
 	fromEntry->toEntries = toEntry;
 }

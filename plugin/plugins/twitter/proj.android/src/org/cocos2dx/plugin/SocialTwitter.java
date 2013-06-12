@@ -25,7 +25,6 @@ package org.cocos2dx.plugin;
 
 import java.util.Hashtable;
 
-import org.cocos2dx.plugin.InterfaceSocial.ShareAdapter;
 import org.cocos2dx.plugin.TwitterApp.TwDialogListener;
 
 import android.app.Activity;
@@ -34,11 +33,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
-public class SocialTwitter implements ShareAdapter {
+public class SocialTwitter implements InterfaceSocial {
 
 	private static final String LOG_TAG = "SocialTwitter";
 	private static Activity mContext = null;
-	private static ShareAdapter mSocialAdapter = null;
+	private static InterfaceSocial mSocialAdapter = null;
 	protected static boolean bDebug = false;
 	private static String CONSUMER_KEY="";
 	private static String CONSUMER_SECRET="";
@@ -98,12 +97,12 @@ public class SocialTwitter implements ShareAdapter {
 		LogD("share invoked " + info.toString());
 		mShareInfo =  info;
 		if (! networkReachable()) {
-			shareResult(InterfaceSocial.SHARERESULT_FAIL, "Network error!");
+			shareResult(SocialWrapper.SHARERESULT_FAIL, "Network error!");
 			return;
 		}
 
 		if (! isInitialized) {
-			shareResult(InterfaceSocial.SHARERESULT_FAIL, "Initialize failed!");
+			shareResult(SocialWrapper.SHARERESULT_FAIL, "Initialize failed!");
 			return;
 		}
 
@@ -153,7 +152,7 @@ public class SocialTwitter implements ShareAdapter {
 	}
 
 	private static void shareResult(int ret, String msg) {
-		InterfaceSocial.onShareResult(mSocialAdapter, ret, msg);
+		SocialWrapper.onShareResult(mSocialAdapter, ret, msg);
 		LogD("SocialTwitter result : " + ret + " msg : " + msg);
 	}
 
@@ -162,7 +161,7 @@ public class SocialTwitter implements ShareAdapter {
 		@Override
 		public void onError(int flag, String value) {
 			LogD("Twitter connection failed!");
-			shareResult(InterfaceSocial.SHARERESULT_FAIL, value);			
+			shareResult(SocialWrapper.SHARERESULT_FAIL, value);			
 		}
 		
 		@Override
@@ -181,11 +180,16 @@ public class SocialTwitter implements ShareAdapter {
 				mTwitter.updateStatus(text);	
 			}
 			LogD("Posted to Twitter!");
-			shareResult(InterfaceSocial.SHARERESULT_SUCCESS, "Share succeed!");
+			shareResult(SocialWrapper.SHARERESULT_SUCCESS, "Share succeed!");
 		} catch (Exception e) {
 			LogD("Post to Twitter failed!");
-			shareResult(InterfaceSocial.SHARERESULT_FAIL, "Unknown error!");
+			shareResult(SocialWrapper.SHARERESULT_FAIL, "Unknown error!");
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public String getPluginVersion() {
+		return "0.2.0";
 	}
 }

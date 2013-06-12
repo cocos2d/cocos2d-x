@@ -45,6 +45,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/blackberry"/>
 									<listOptionValue builtIn="false" value="../../../external/chipmunk/include/chipmunk"/>
+									<listOptionValue builtIn="false" value="../../../external"/>
 									<listOptionValue builtIn="false" value="../../../CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
@@ -83,9 +84,11 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="CCBReader"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="GUI"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="network"/>
+						<entry excluding="WebSocket.cpp|WebSocket.h" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="network"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="physics_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="spine"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Components"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="CCArmature"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -123,6 +126,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/blackberry"/>
 									<listOptionValue builtIn="false" value="../../../external/chipmunk/include/chipmunk"/>
+									<listOptionValue builtIn="false" value="../../../external"/>
 									<listOptionValue builtIn="false" value="../../../CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
@@ -162,6 +166,9 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="GUI"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="network"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="physics_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Components"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="spine"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="CCArmature"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -201,6 +208,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/blackberry"/>
 									<listOptionValue builtIn="false" value="../../../external/chipmunk/include/chipmunk"/>
+									<listOptionValue builtIn="false" value="../../../external"/>
 									<listOptionValue builtIn="false" value="../../../CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
@@ -238,6 +246,9 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="GUI"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="network"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="physics_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Components"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="spine"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="CCArmature"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -277,6 +288,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/blackberry"/>
 									<listOptionValue builtIn="false" value="../../../external/chipmunk/include/chipmunk"/>
+									<listOptionValue builtIn="false" value="../../../external"/>
 									<listOptionValue builtIn="false" value="../../../CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
@@ -314,6 +326,9 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="GUI"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="network"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="physics_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Components"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="spine"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="CCArmature"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -352,6 +367,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/blackberry"/>
 									<listOptionValue builtIn="false" value="../../../external/chipmunk/include/chipmunk"/>
+									<listOptionValue builtIn="false" value="../../../external"/>
 									<listOptionValue builtIn="false" value="../../../CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
@@ -388,6 +404,9 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="GUI"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="network"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="physics_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Components"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="spine"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="CCArmature"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -426,6 +445,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/blackberry"/>
 									<listOptionValue builtIn="false" value="../../../external/chipmunk/include/chipmunk"/>
+									<listOptionValue builtIn="false" value="../../../external"/>
 									<listOptionValue builtIn="false" value="../../../CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
@@ -463,6 +483,9 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="GUI"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="network"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="physics_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Components"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="spine"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="CCArmature"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -501,6 +524,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/blackberry"/>
 									<listOptionValue builtIn="false" value="../../../external/chipmunk/include/chipmunk"/>
+									<listOptionValue builtIn="false" value="../../../external"/>
 									<listOptionValue builtIn="false" value="../../../CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
@@ -538,6 +562,9 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="GUI"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="network"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="physics_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Components"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="spine"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="CCArmature"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

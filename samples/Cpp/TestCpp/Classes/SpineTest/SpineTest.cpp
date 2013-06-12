@@ -48,10 +48,11 @@ void SpineTestScene::runThisTest()
 bool SpineTestLayer::init () {
 	if (!CCLayer::init()) return false;
 
-	skeletonNode = CCSkeleton::createWithFile("spine/spineboy.json", "spine/spineboy.atlas");
-	AnimationStateData_setMixByName(skeletonNode->state->data, "walk", "jump", 0.4f);
-	AnimationStateData_setMixByName(skeletonNode->state->data, "jump", "walk", 0.4f);
-	AnimationState_setAnimationByName(skeletonNode->state, "walk", true);
+	skeletonNode = CCSkeletonAnimation::createWithFile("spine/spineboy.json", "spine/spineboy.atlas");
+    skeletonNode->setMix("walk", "jump", 0.4f);
+    skeletonNode->setMix("jump", "walk", 0.4f);    
+    skeletonNode->setAnimation("walk", true);
+
 	skeletonNode->timeScale = 0.3f;
 	skeletonNode->debugBones = true;
 
@@ -70,9 +71,11 @@ bool SpineTestLayer::init () {
 }
 
 void SpineTestLayer::update (float deltaTime) {
-    if (skeletonNode->state->loop) {
-        if (skeletonNode->state->time > 2) AnimationState_setAnimationByName(skeletonNode->state, "jump", false);
+    if (skeletonNode->states[0]->loop) {
+        if (skeletonNode->states[0]->time > 2)
+            skeletonNode->setAnimation("jump", false);
     } else {
-        if (skeletonNode->state->time > 1) AnimationState_setAnimationByName(skeletonNode->state, "walk", true);
+        if (skeletonNode->states[0]->time > 1)
+            skeletonNode->setAnimation("walk", true);
     }
 }

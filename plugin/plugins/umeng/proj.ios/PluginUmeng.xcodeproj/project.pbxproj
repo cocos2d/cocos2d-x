@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		FA09A305168ADAEC008C1C7B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA09A304168ADAEC008C1C7B /* Foundation.framework */; };
-		FA09A352168ADCA6008C1C7B /* AnalyticsUmeng.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA09A350168ADCA6008C1C7B /* AnalyticsUmeng.mm */; };
-		FA866506168BE06A0073E055 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA866505168BE06A0073E055 /* libMobClickLibrary.a */; };
+		FAB6DFE91756F3B600C90D89 /* AnalyticsUmeng.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB6DFE61756F3B600C90D89 /* AnalyticsUmeng.m */; };
+		FAB6DFEA1756F3B600C90D89 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAB6DFE71756F3B600C90D89 /* libMobClickLibrary.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,10 +27,10 @@
 /* Begin PBXFileReference section */
 		FA09A301168ADAEC008C1C7B /* libPluginUmeng.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPluginUmeng.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA09A304168ADAEC008C1C7B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		FA09A34E168ADC97008C1C7B /* AnalyticsUmeng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnalyticsUmeng.h; sourceTree = "<group>"; };
-		FA09A350168ADCA6008C1C7B /* AnalyticsUmeng.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AnalyticsUmeng.mm; sourceTree = "<group>"; };
-		FA09A351168ADCA6008C1C7B /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
-		FA866505168BE06A0073E055 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
+		FAB6DFE51756F3B600C90D89 /* AnalyticsUmeng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnalyticsUmeng.h; sourceTree = "<group>"; };
+		FAB6DFE61756F3B600C90D89 /* AnalyticsUmeng.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyticsUmeng.m; sourceTree = "<group>"; };
+		FAB6DFE71756F3B600C90D89 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
+		FAB6DFE81756F3B600C90D89 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,7 +39,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA09A305168ADAEC008C1C7B /* Foundation.framework in Frameworks */,
-				FA866506168BE06A0073E055 /* libMobClickLibrary.a in Frameworks */,
+				FAB6DFEA1756F3B600C90D89 /* libMobClickLibrary.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -49,8 +49,10 @@
 		FA09A2F6168ADAEC008C1C7B = {
 			isa = PBXGroup;
 			children = (
-				FA09A34F168ADCA6008C1C7B /* ios */,
-				FA09A34D168ADC97008C1C7B /* include */,
+				FAB6DFE51756F3B600C90D89 /* AnalyticsUmeng.h */,
+				FAB6DFE61756F3B600C90D89 /* AnalyticsUmeng.m */,
+				FAB6DFE71756F3B600C90D89 /* libMobClickLibrary.a */,
+				FAB6DFE81756F3B600C90D89 /* MobClick.h */,
 				FA09A303168ADAEC008C1C7B /* Frameworks */,
 				FA09A302168ADAEC008C1C7B /* Products */,
 			);
@@ -70,26 +72,6 @@
 				FA09A304168ADAEC008C1C7B /* Foundation.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		FA09A34D168ADC97008C1C7B /* include */ = {
-			isa = PBXGroup;
-			children = (
-				FA09A34E168ADC97008C1C7B /* AnalyticsUmeng.h */,
-			);
-			name = include;
-			path = ../include;
-			sourceTree = "<group>";
-		};
-		FA09A34F168ADCA6008C1C7B /* ios */ = {
-			isa = PBXGroup;
-			children = (
-				FA866505168BE06A0073E055 /* libMobClickLibrary.a */,
-				FA09A350168ADCA6008C1C7B /* AnalyticsUmeng.mm */,
-				FA09A351168ADCA6008C1C7B /* MobClick.h */,
-			);
-			name = ios;
-			path = ../platform/ios;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -143,7 +125,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA09A352168ADCA6008C1C7B /* AnalyticsUmeng.mm in Sources */,
+				FAB6DFE91756F3B600C90D89 /* AnalyticsUmeng.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,7 +182,7 @@
 				DSTROOT = /tmp/libPluginUmeng.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PluginUmeng-Prefix.pch";
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../protocols/include";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../protocols/platform/ios";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -218,7 +200,7 @@
 				DSTROOT = /tmp/libPluginUmeng.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PluginUmeng-Prefix.pch";
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../protocols/include";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../protocols/platform/ios";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",

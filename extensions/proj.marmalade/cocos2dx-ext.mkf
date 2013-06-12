@@ -1,6 +1,7 @@
 options
 {
     module_path="../../cocos2dx/proj.marmalade"
+    enable-exceptions
 }
 
 subprojects
@@ -34,8 +35,9 @@ files
 
     ["GUI/CCEditBox"]
     ("../GUI/CCEditBox")
-#    "CCEditBox.h"
-#    "CCEditBox.cpp"
+    "CCEditBox.h"
+    "CCEditBox.cpp"
+    "CCEditBoxImplNone.cpp"
 
     ["GUI/CCScrollView"]
     ("../GUI/CCScrollView")
@@ -49,6 +51,71 @@ files
 
     ["spine"]
     ("../spine")
+    "*.h"
+    "*.cpp"
+    
+    ["Components"]
+    ("../Components")
+    "*.h"
+    "*.cpp"
+
+	["CCArmature/Animation"]
+    ("../CCArmature/animation")
+    "*.h"
+    "*.cpp"
+
+	["CCArmature"]
+    ("../CCArmature")
+    "*.h"
+    "*.cpp"
+
+	["CCArmature/Animation"]
+    ("../CCArmature/animation")
+    "*.h"
+    "*.cpp"
+
+	["CCArmature/Animation"]
+    ("../CCArmature/animation")
+    "*.h"
+    "*.cpp"
+
+	["CCArmature/Datas"]
+    ("../CCArmature/datas")
+    "*.h"
+    "*.cpp"
+
+	["CCArmature/Display"]
+    ("../CCArmature/display")
+    "*.h"
+    "*.cpp"
+
+	["CCArmature/Physics"]
+    ("../CCArmature/physics")
+    "*.h"
+    "*.cpp"
+
+	["CCArmature/Utils"]
+    ("../CCArmature/utils")
+    "*.h"
+    "*.cpp"
+
+	["CCArmature/External_tool"]
+    ("../CCArmature/external_tool")
+    "*.h"
+    "*.cpp"
+
+	["CCArmature/External_tool/Json"]
+    ("../CCArmature/external_tool/Json")
+    "*.h"
+    "*.cpp"
+
+	["CCArmature/External_tool/Json"]
+    ("../CCArmature/external_tool/Json")
+    "*.h"
+    "*.cpp"
+
+	["CCArmature/External_tool/Json/lib_json"]
+    ("../CCArmature/external_tool/Json/lib_json")
     "*.h"
     "*.cpp"
 }

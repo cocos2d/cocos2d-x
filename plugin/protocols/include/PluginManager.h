@@ -25,7 +25,8 @@ THE SOFTWARE.
 #define __CCX_PLUGINMANAGER_H__
 
 #include "PluginProtocol.h"
-#include "RegisterPlugin.h"
+#include <map>
+#include <string>
 
 namespace cocos2d { namespace plugin {
 
@@ -42,10 +43,10 @@ public:
     PluginProtocol* loadPlugin(const char* name);
     /** unload the plugin by name */
     void unloadPlugin(const char* name);
+
 private:
-	friend class RegisterPlugin;
-	bool registerPlugin(const char* name, PluginCreator pfnCreator);
     PluginManager(void);
+    std::map<std::string, PluginProtocol*> m_pluginsMap;
 };
 
 }} //namespace cocos2d { namespace plugin {

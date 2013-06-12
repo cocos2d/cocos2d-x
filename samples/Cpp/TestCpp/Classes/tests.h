@@ -56,7 +56,9 @@
 #endif
 #include "FileUtilsTest/FileUtilsTest.h"
 #include "SpineTest/SpineTest.h"
-
+#include "TexturePackerEncryptionTest/TextureAtlasEncryptionTest.h"
+#include "DataVisitorTest/DataVisitorTest.h"
+#include "ConfigurationTest/ConfigurationTest.h"
 enum
 {
     TEST_ACTIONS = 0,
@@ -113,7 +115,12 @@ enum
 #endif
     TEST_FILEUTILS,
     TEST_SPINE,
-    TESTS_COUNT,    
+    TEST_TEXTUREPACKER_ENCRYPTION,
+    TEST_DATAVISTOR,
+	TEST_CONFIGURATION,
+
+	// last one
+	TESTS_COUNT,
 };
 
 const std::string g_aTestNames[TESTS_COUNT] = {
@@ -172,7 +179,10 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "ClippingNodeTest",
 #endif
     "FileUtilsTest",
-    "SpineTest"
+    "SpineTest",
+    "TexturePackerEncryption",
+    "DataVistorTest",
+	"ConfigurationTest"
 };
 
 #endif

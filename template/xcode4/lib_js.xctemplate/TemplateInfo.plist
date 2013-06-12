@@ -626,6 +626,19 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/javascript/bindings/jsb_helper.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/jsb_helper.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/javascript/bindings/jsb_opengl_functions.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -698,6 +711,30 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/javascript/bindings/jsb_websocket.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/jsb_websocket.cpp</string>
+		</dict>
+		<key>libs/javascript/bindings/jsb_websocket.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/jsb_websocket.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/javascript/bindings/obfuscate/obfuscate_exclude_chipmunk.js</key>
 		<dict>
 			<key>Group</key>
@@ -759,6 +796,30 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/javascript/bindings/XMLHTTPRequest.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/XMLHTTPRequest.cpp</string>
+		</dict>
+		<key>libs/javascript/bindings/XMLHTTPRequest.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/XMLHTTPRequest.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 	</dict>
 	<key>Nodes</key>
 	<array>
@@ -811,17 +872,22 @@
 		<string>libs/javascript/bindings/js_manual_conversions.h</string>
 		<string>libs/javascript/bindings/jsb_cocos2dx_extension_manual.cpp</string>
 		<string>libs/javascript/bindings/jsb_cocos2dx_extension_manual.h</string>
+		<string>libs/javascript/bindings/jsb_helper.h</string>
 		<string>libs/javascript/bindings/jsb_opengl_functions.cpp</string>
 		<string>libs/javascript/bindings/jsb_opengl_functions.h</string>
 		<string>libs/javascript/bindings/jsb_opengl_manual.cpp</string>
 		<string>libs/javascript/bindings/jsb_opengl_manual.h</string>
 		<string>libs/javascript/bindings/jsb_opengl_registration.cpp</string>
 		<string>libs/javascript/bindings/jsb_opengl_registration.h</string>
+		<string>libs/javascript/bindings/jsb_websocket.cpp</string>
+		<string>libs/javascript/bindings/jsb_websocket.h</string>
 		<string>libs/javascript/bindings/obfuscate/obfuscate_exclude_chipmunk.js</string>
 		<string>libs/javascript/bindings/obfuscate/obfuscate_exclude_cocos2d.js</string>
 		<string>libs/javascript/bindings/ScriptingCore.cpp</string>
 		<string>libs/javascript/bindings/ScriptingCore.h</string>
 		<string>libs/javascript/bindings/spidermonkey_specifics.h</string>
+		<string>libs/javascript/bindings/XMLHTTPRequest.cpp</string>
+		<string>libs/javascript/bindings/XMLHTTPRequest.h</string>
 	</array>
 </dict>
 </plist>

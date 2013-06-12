@@ -34,18 +34,20 @@ CCEditBox::CCEditBox(void)
 , m_eEditBoxInputMode(kEditBoxInputModeSingleLine)
 , m_eEditBoxInputFlag(kEditBoxInputFlagInitialCapsAllCharacters)
 , m_eKeyboardReturnType(kKeyboardReturnTypeDefault)
+, m_nFontSize(-1)
+, m_nPlaceholderFontSize(-1)
 , m_colText(ccWHITE)
 , m_colPlaceHolder(ccGRAY)
 , m_nMaxLength(0)
 , m_fAdjustHeight(0.0f)
-, m_nPlaceholderFontSize(-1)
-, m_nFontSize(-1)
+, m_nScriptEditBoxHandler(0)
 {
 }
 
 CCEditBox::~CCEditBox(void)
 {
     CC_SAFE_DELETE(m_pEditBoxImpl);
+    unregisterScriptEditBoxHandler();
 }
 
 
@@ -103,6 +105,11 @@ void CCEditBox::setDelegate(CCEditBoxDelegate* pDelegate)
     {
         m_pEditBoxImpl->setDelegate(pDelegate);
     }
+}
+
+CCEditBoxDelegate* CCEditBox::getDelegate()
+{
+    return m_pDelegate;
 }
 
 void CCEditBox::setText(const char* pText)
@@ -380,6 +387,21 @@ void CCEditBox::keyboardWillHide(CCIMEKeyboardNotificationInfo& info)
 void CCEditBox::keyboardDidHide(CCIMEKeyboardNotificationInfo& info)
 {
 	
+}
+
+void CCEditBox::registerScriptEditBoxHandler(int handler)
+{
+    unregisterScriptEditBoxHandler();
+    m_nScriptEditBoxHandler = handler;
+}
+
+void CCEditBox::unregisterScriptEditBoxHandler(void)
+{
+    if (0 != m_nScriptEditBoxHandler)
+    {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nScriptEditBoxHandler);
+        m_nScriptEditBoxHandler = 0;
+    }
 }
 
 
