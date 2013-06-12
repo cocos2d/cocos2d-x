@@ -236,6 +236,11 @@ JSBool jsval_to_LogEventParamMap(JSContext *cx, jsval v, LogEventParamMap** ret)
     return jsret;
 }
 
+JSBool jsval_to_StringMap(JSContext *cx, jsval v, StringMap* ret)
+{
+    return jsval_to_TProductInfo(cx, v, ret);
+}
+
 // From native type to jsval
 jsval int32_to_jsval( JSContext *cx, int32_t number )
 {

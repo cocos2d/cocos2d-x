@@ -71,7 +71,7 @@ bool HelloWorld::init()
         return false;
     }
     
-    m_pAdmob = dynamic_cast<AdsAdmob*>(PluginManager::getInstance()->loadPlugin("AdsAdmob"));
+    m_pAdmob = dynamic_cast<ProtocolAds*>(PluginManager::getInstance()->loadPlugin("AdsAdmob"));
     TAdsDeveloperInfo devInfo;
     devInfo["AdmobID"] = "a1516fb6b16b12f";
     m_pAdmob->configDeveloperInfo(devInfo);
@@ -168,7 +168,7 @@ void HelloWorld::testShow(CCObject* pSender)
     int nSize = 0;
 	if (m_pAds == m_pAdmob)
 	{
-	    nSize = AdsAdmob::kSizeBanner;
+	    nSize = 0;
 	}
 
     if (m_pAds)

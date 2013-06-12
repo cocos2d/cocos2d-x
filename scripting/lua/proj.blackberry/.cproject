@@ -46,7 +46,15 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../lua"/>
+									<listOptionValue builtIn="false" value="../../tolua"/>
 									<listOptionValue builtIn="false" value="../../third_party/blackberry/include"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/blackberry"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/include"/>
+									<listOptionValue builtIn="false" value="../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="../../../../extensions"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.qccoptions.1372558930" name="QCC Options" superClass="com.qnx.qcc.option.compiler.qccoptions"/>
 								<option id="com.qnx.qcc.option.compiler.optlevel.1056360362" name="Optimization Level" superClass="com.qnx.qcc.option.compiler.optlevel" value="com.qnx.qcc.option.compiler.optlevel.0" valueType="enumerated"/>
@@ -87,6 +95,7 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="lua"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tolua"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos2dx_support"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -124,7 +133,15 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../lua"/>
+									<listOptionValue builtIn="false" value="../../tolua"/>
 									<listOptionValue builtIn="false" value="../../third_party/blackberry/include"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/blackberry"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/include"/>
+									<listOptionValue builtIn="false" value="../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="../../../../extensions"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.qccoptions.1936049270" name="QCC Options" superClass="com.qnx.qcc.option.compiler.qccoptions"/>
 								<inputType id="com.qnx.qcc.inputType.compiler.82187465" superClass="com.qnx.qcc.inputType.compiler"/>
@@ -154,6 +171,7 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="lua"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tolua"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos2dx_support"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -192,7 +210,15 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../lua"/>
+									<listOptionValue builtIn="false" value="../../tolua"/>
 									<listOptionValue builtIn="false" value="../../third_party/blackberry/include"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/blackberry"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/include"/>
+									<listOptionValue builtIn="false" value="../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="../../../../extensions"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.qccoptions.584937839" name="QCC Options" superClass="com.qnx.qcc.option.compiler.qccoptions"/>
 								<option id="com.qnx.qcc.option.compiler.optlevel.914759768" name="Optimization Level" superClass="com.qnx.qcc.option.compiler.optlevel" value="com.qnx.qcc.option.compiler.optlevel.0" valueType="enumerated"/>
@@ -226,6 +252,7 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="lua"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tolua"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos2dx_support"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -264,7 +291,15 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../lua"/>
+									<listOptionValue builtIn="false" value="../../tolua"/>
 									<listOptionValue builtIn="false" value="../../third_party/blackberry/include"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/blackberry"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/include"/>
+									<listOptionValue builtIn="false" value="../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="../../../../extensions"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.qccoptions.1106404059" name="QCC Options" superClass="com.qnx.qcc.option.compiler.qccoptions"/>
 								<option id="com.qnx.qcc.option.compiler.optlevel.212006056" name="Optimization Level" superClass="com.qnx.qcc.option.compiler.optlevel" value="com.qnx.qcc.option.compiler.optlevel.0" valueType="enumerated"/>
@@ -298,6 +333,7 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="lua"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tolua"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos2dx_support"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -334,7 +370,15 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../lua"/>
+									<listOptionValue builtIn="false" value="../../tolua"/>
 									<listOptionValue builtIn="false" value="../../third_party/blackberry/include"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/blackberry"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/include"/>
+									<listOptionValue builtIn="false" value="../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="../../../../extensions"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.qccoptions.641179327" name="QCC Options" superClass="com.qnx.qcc.option.compiler.qccoptions"/>
 								<option id="com.qnx.qcc.option.compiler.optlevel.302138215" name="Optimization Level" superClass="com.qnx.qcc.option.compiler.optlevel" value="com.qnx.qcc.option.compiler.optlevel.0" valueType="enumerated"/>
@@ -367,6 +411,7 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="lua"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tolua"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos2dx_support"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -406,7 +451,15 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../lua"/>
+									<listOptionValue builtIn="false" value="../../tolua"/>
 									<listOptionValue builtIn="false" value="../../third_party/blackberry/include"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/blackberry"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/include"/>
+									<listOptionValue builtIn="false" value="../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="../../../../extensions"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.qccoptions.151407782" name="QCC Options" superClass="com.qnx.qcc.option.compiler.qccoptions"/>
 								<option id="com.qnx.qcc.option.compiler.optlevel.1527970638" name="Optimization Level" superClass="com.qnx.qcc.option.compiler.optlevel" value="com.qnx.qcc.option.compiler.optlevel.0" valueType="enumerated"/>
@@ -440,6 +493,7 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="lua"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tolua"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos2dx_support"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -477,7 +531,15 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../lua"/>
+									<listOptionValue builtIn="false" value="../../tolua"/>
 									<listOptionValue builtIn="false" value="../../third_party/blackberry/include"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/blackberry"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/include"/>
+									<listOptionValue builtIn="false" value="../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="../../../../extensions"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.qccoptions.1555108705" name="QCC Options" superClass="com.qnx.qcc.option.compiler.qccoptions"/>
 								<option id="com.qnx.qcc.option.compiler.optlevel.495924247" name="Optimization Level" superClass="com.qnx.qcc.option.compiler.optlevel" value="com.qnx.qcc.option.compiler.optlevel.0" valueType="enumerated"/>
@@ -511,6 +573,7 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="lua"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tolua"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos2dx_support"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

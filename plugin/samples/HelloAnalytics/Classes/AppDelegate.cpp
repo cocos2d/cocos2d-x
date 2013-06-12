@@ -25,8 +25,7 @@ THE SOFTWARE.
 #include "cocos2d.h"
 #include "HelloWorldScene.h"
 #include "PluginManager.h"
-#include "AnalyticsFlurry.h"
-#include "AnalyticsUmeng.h"
+#include "ProtocolAnalytics.h"
 
 using namespace cocos2d::plugin;
 USING_NS_CC;
@@ -86,26 +85,32 @@ bool AppDelegate::applicationDidFinishLaunching()
     g_pAnalytics->setDebugMode(true);
     g_pAnalytics->startSession(s_strAppKey.c_str());
     g_pAnalytics->setCaptureUncaughtException(true);
+    g_pAnalytics->setSessionContinueMillis(10000);
 
-    AnalyticsUmeng* pUmeng = dynamic_cast<AnalyticsUmeng*>(g_pAnalytics);
-    AnalyticsFlurry* pFlurry = dynamic_cast<AnalyticsFlurry*>(g_pAnalytics);
-    if (pUmeng != NULL)
-    {
-        pUmeng->updateOnlineConfig();
-        pUmeng->setDefaultReportPolicy(AnalyticsUmeng::REALTIME);
-    }
+    const char* sdkVer = g_pAnalytics->getSDKVersion();
+    CCLog("SDK version : %s", sdkVer);
 
-    if (pFlurry != NULL)
-    {
-        pFlurry->setReportLocation(true);
-        pFlurry->logPageView();
-        // const char* sdkVersion = pFlurry->getSDKVersion();
-        pFlurry->setVersionName("1.1");
-        pFlurry->setAge(20);
-        pFlurry->setGender(AnalyticsFlurry::MALE);
-        pFlurry->setUserId("123456");
-        pFlurry->setUseHttps(false);
-    }
+    g_pAnalytics->callFuncWithParam("updateOnlineConfig", NULL);
+
+    PluginParam pParam1(true);
+    g_pAnalytics->callFuncWithParam("setReportLocation", &pParam1, NULL);
+
+	g_pAnalytics->callFuncWithParam("logPageView", NULL);
+
+	PluginParam pParam2("1.1");
+	g_pAnalytics->callFuncWithParam("setVersionName", &pParam2, NULL);
+
+	PluginParam pParam3(20);
+	g_pAnalytics->callFuncWithParam("setAge", &pParam3, NULL);
+
+	PluginParam pParam4(1);
+	g_pAnalytics->callFuncWithParam("setGender", &pParam4, NULL);
+
+	PluginParam pParam5("123456");
+	g_pAnalytics->callFuncWithParam("setUserId", &pParam5, NULL);
+
+	PluginParam pParam6(false);
+	g_pAnalytics->callFuncWithParam("setUseHttps", &pParam6, NULL);
 
     // initialize director
     CCDirector *pDirector = CCDirector::sharedDirector();

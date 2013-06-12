@@ -9,6 +9,7 @@
 #define mozilla_Assertions_h_
 
 #include "mozilla/Attributes.h"
+#include "mozilla/Compiler.h"
 
 #include <stddef.h>
 #include <stdio.h>
@@ -312,7 +313,7 @@ MOZ_ReportAssertionFailure(const char* s, const char* file, int ln)
     * that, call a noreturn function; abort() will do nicely.  Qualify the call
     * in C++ in case there's another abort() visible in local scope.
     */
-#  if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 5)
+#  if MOZ_GCC_VERSION_AT_LEAST(4, 5, 0)
 #    define MOZ_NOT_REACHED_MARKER() __builtin_unreachable()
 #  else
 #    ifdef __cplusplus

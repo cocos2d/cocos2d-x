@@ -1,6 +1,5 @@
-// XXX: Have just stubbed stuff out to get this building for now.
-
 /****************************************************************************
+Copyright (c) 2013 Zynga Inc.
 Copyright (c) 2010 cocos2d-x.org
 
 http://www.cocos2d-x.org
@@ -24,19 +23,31 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+// XXX: This is all just a bit of a hack. SDL uses channels as its underlying
+// abstraction, whilst CocosDenshion deals in individual effects. Consequently
+// we can't set start/stop, because to SDL, effects (chunks) are just opaque
+// blocks of data that get scheduled on channels. To workaround this, we assign
+// each sound to a channel, but since there are only 32 channels, we use the
+// modulus of the sound's address (which on Emscripten is just an incrementing
+// integer) to decide which channel.
+//
+// A more rigorous implementation would have logic to store the state of
+// channels and restore it as necessary. This should probably just be
+// considered a toy for now, but it will probably prove sufficient for many
+// use-cases. Recall also that Emscripten undoes this abstraction on the other
+// side because it is using HTML5 audio objects as its underlying primitive!
+
 #include <map>
 #include <string>
 #include <stdio.h>
 #include <unistd.h>
 
-#include <AL/al.h>
-#include <AL/alc.h>
-//#include <AL/alut.h>
-#include <sys/stat.h>
-//#include <vorbis/vorbisfile.h>
-
 #include "SimpleAudioEngine.h"
 #include "cocos2d.h"
+
+#include <SDL/SDL.h>
+#include <SDL/SDL_mixer.h>
+
 USING_NS_CC;
 
 using namespace std;
@@ -44,13 +55,13 @@ using namespace std;
 namespace CocosDenshion
 {
 	struct soundData {
-		ALuint buffer;
-		ALuint source;
+        Mix_Chunk *chunk;
 		bool   isLooped;
 	};
 
 	typedef map<string, soundData *> EffectsMap;
 	EffectsMap s_effects;
+    float s_effectsVolume = 1.0;
 
 	typedef enum {
 		PLAYING,
@@ -58,60 +69,22 @@ namespace CocosDenshion
 		PAUSED,
 	} playStatus;
 
-	static float s_volume 				   = 1.0f;
-	static float s_effectVolume			   = 1.0f;
-
 	struct backgroundMusicData {
-		ALuint buffer;
-		ALuint source;
+		Mix_Music *music;
 	};
 	typedef map<string, backgroundMusicData *> BackgroundMusicsMap;
 	BackgroundMusicsMap s_backgroundMusics;
-
-	static ALuint s_backgroundSource = AL_NONE;
+    float s_backgroundVolume = 1.0;
 
 	static SimpleAudioEngine  *s_engine = 0;
 
-	static int checkALError(const char *funcName)
-	{
-		int err = alGetError();
-
-		if (err != AL_NO_ERROR)
-		{
-			switch (err)
-			{
-				case AL_INVALID_NAME:
-					fprintf(stderr, "AL_INVALID_NAME in %s\n", funcName);
-					break;
-
-				case AL_INVALID_ENUM:
-					fprintf(stderr, "AL_INVALID_ENUM in %s\n", funcName);
-					break;
-
-				case AL_INVALID_VALUE:
-					fprintf(stderr, "AL_INVALID_VALUE in %s\n", funcName);
-					break;
-
-				case AL_INVALID_OPERATION:
-					fprintf(stderr, "AL_INVALID_OPERATION in %s\n", funcName);
-					break;
-
-				case AL_OUT_OF_MEMORY:
-					fprintf(stderr, "AL_OUT_OF_MEMORY in %s\n", funcName);
-					break;
-			}
-		}
-
-		return err;
-	}
-
+    // Unfortunately this is just hard-coded in Emscripten's SDL
+    // implementation.
+    static const int NR_CHANNELS = 32;
     static void stopBackground(bool bReleaseData)
     {
-		s_backgroundSource = AL_NONE;
-    }
-
-    static void setBackgroundVolume(float volume)
-    {
+        SimpleAudioEngine *engine = SimpleAudioEngine::sharedEngine();
+        engine->stopBackgroundMusic();
     }
 
 	SimpleAudioEngine::SimpleAudioEngine()
@@ -132,18 +105,11 @@ namespace CocosDenshion
 
 	void SimpleAudioEngine::end()
 	{
-		checkALError("end");
-
 		// clear all the sounds
 	    EffectsMap::const_iterator end = s_effects.end();
 	    for (EffectsMap::iterator it = s_effects.begin(); it != end; it++)
 	    {
-	        alSourceStop(it->second->source);
-	        checkALError("end");
-			alDeleteBuffers(1, &it->second->buffer);
-			checkALError("end");
-			alDeleteSources(1, &it->second->source);
-			checkALError("end");
+            Mix_FreeChunk(it->second->chunk);
 			delete it->second;
 	    }
 	    s_effects.clear();
@@ -153,29 +119,11 @@ namespace CocosDenshion
 
 		for (BackgroundMusicsMap::iterator it = s_backgroundMusics.begin(); it != s_backgroundMusics.end(); ++it)
 		{
-			alSourceStop(it->second->source);
-			checkALError("end");
-			alDeleteBuffers(1, &it->second->buffer);
-			checkALError("end");
-			alDeleteSources(1, &it->second->source);
-			checkALError("end");
+            Mix_FreeMusic(it->second->music);
 			delete it->second;
 		}
 		s_backgroundMusics.clear();
 	}
-
-	//
-	// OGG support
-	//
-	static bool isOGGFile(const char *pszFilePath)
-	{
-        return true;
-	}
-
-	static ALuint createBufferFromOGG(const char *pszFilePath)
-	{
-	}
-
 
 	//
 	// background audio
@@ -186,88 +134,117 @@ namespace CocosDenshion
 
 	void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 	{
+        std::string key = std::string(pszFilePath);
+        struct backgroundMusicData *musicData;
+        if(!s_backgroundMusics.count(key))
+        {
+            musicData = new struct backgroundMusicData();
+            musicData->music = Mix_LoadMUS(pszFilePath);
+            s_backgroundMusics[key] = musicData;
+        }
+        else
+        {
+            musicData = s_backgroundMusics[key];
+        }
+
+        Mix_PlayMusic(musicData->music, bLoop ? -1 : 0);
 	}
 
 	void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
 	{
+        Mix_HaltMusic();
 	}
 
 	void SimpleAudioEngine::pauseBackgroundMusic()
 	{
+        Mix_PauseMusic();
 	}
 
 	void SimpleAudioEngine::resumeBackgroundMusic()
 	{
+        Mix_ResumeMusic();
 	} 
 
 	void SimpleAudioEngine::rewindBackgroundMusic()
 	{
+        CCLOGWARN("Cannot rewind background in Emscripten");
 	}
 
 	bool SimpleAudioEngine::willPlayBackgroundMusic()
 	{
-		return false;
+		return true;
 	}
 
 	bool SimpleAudioEngine::isBackgroundMusicPlaying()
 	{
-        return false;
+        return Mix_PlayingMusic();
 	}
 
 	float SimpleAudioEngine::getBackgroundMusicVolume()
 	{
-		return s_volume;
+        return s_backgroundVolume;
 	}
 
 	void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
 	{
+        // Ensure volume is between 0.0 and 1.0.
+        volume = volume > 1.0 ? 1.0 : volume;
+        volume = volume < 0.0 ? 0.0 : volume;
+
+        Mix_VolumeMusic(volume * MIX_MAX_VOLUME);
+        s_backgroundVolume = volume;
 	}
 
-	//
-	// Effect audio (using OpenAL)
-	//
 	float SimpleAudioEngine::getEffectsVolume()
 	{
-		return s_effectVolume;
+		return s_effectsVolume;
 	}
 
 	void SimpleAudioEngine::setEffectsVolume(float volume)
 	{
+        volume = volume > 1.0 ? 1.0 : volume;
+        volume = volume < 0.0 ? 0.0 : volume;
+
+        // Need to set volume on every channel. SDL will then read this volume
+        // level and apply it back to the individual sample.
+        for(int i = 0; i < NR_CHANNELS; i++)
+        {
+            Mix_Volume(i, volume * MIX_MAX_VOLUME);
+        }
+
+        s_effectsVolume = volume;
 	}
 
 	unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
 	{
-		// Changing file path to full path
-    	std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+        std::string key = std::string(pszFilePath);
+        struct soundData *sound;
+        if(!s_effects.count(key))
+        {
+            sound = new struct soundData();
+            sound->chunk = Mix_LoadWAV(pszFilePath);
+            sound->isLooped = bLoop;
+            s_effects[key] = sound;
+        }
+        else
+        {
+            sound = s_effects[key];
+        }
+        // This is safe here since Emscripten is just passing back an
+        // incrementing integer each time you use the Mix_LoadWAV method.
+        unsigned int result = (unsigned int) sound->chunk;
 
-		EffectsMap::iterator iter = s_effects.find(fullPath);
+        // XXX: This is a bit of a hack, but... Choose a channel based on the
+        // modulo of the # of channels. This allows us to set the volume
+        // without passing around both chunk address and channel.
+        Mix_PlayChannel(result % NR_CHANNELS, sound->chunk, bLoop ? -1 : 0);
 
-		if (iter == s_effects.end())
-		{
-			preloadEffect(fullPath.c_str());
-
-			// let's try again
-			iter = s_effects.find(fullPath);
-			if (iter == s_effects.end())
-			{
-				fprintf(stderr, "could not find play sound %s\n", fullPath.c_str());
-				return -1;
-			}
-		}
-
-		checkALError("playEffect");
-		iter->second->isLooped = bLoop;
-		alSourcei(iter->second->source, AL_LOOPING, iter->second->isLooped ? AL_TRUE : AL_FALSE);
-		alSourcePlay(iter->second->source);
-		checkALError("playEffect");
-
-		return iter->second->source;
+        return result;
 	}
 
 	void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 	{
-		alSourceStop(nSoundId);
-		checkALError("stopEffect");
+        Mix_HaltChannel(nSoundId % NR_CHANNELS);
 	}
 
 	void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
@@ -276,85 +253,51 @@ namespace CocosDenshion
 
 	void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 	{
-		// Changing file path to full path
-    	std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
-    	
-		EffectsMap::iterator iter = s_effects.find(fullPath);
+        std::string key = std::string(pszFilePath);
+        if(!s_effects.count(key))
+        {
+            return;
+        }
 
-		if (iter != s_effects.end())
-	    {
-			checkALError("unloadEffect");
+        struct soundData *sound = s_effects[key];
 
-	        alSourceStop(iter->second->source);
-	        checkALError("unloadEffect");
-
-			alDeleteSources(1, &iter->second->source);
-			checkALError("unloadEffect");
-
-			alDeleteBuffers(1, &iter->second->buffer);
-			checkALError("unloadEffect");
-			delete iter->second;
-
-			s_effects.erase(iter);
-	    }
+        Mix_FreeChunk(sound->chunk);
+        delete sound;
+        s_effects.erase(key);
 	}
 
 	void SimpleAudioEngine::pauseEffect(unsigned int nSoundId)
 	{
-		ALint state;
-		alGetSourcei(nSoundId, AL_SOURCE_STATE, &state);
-		if (state == AL_PLAYING)
-			alSourcePause(nSoundId);
-		checkALError("pauseEffect");
+        Mix_Pause(nSoundId % NR_CHANNELS);
 	}
 
 	void SimpleAudioEngine::pauseAllEffects()
 	{
-		EffectsMap::iterator iter = s_effects.begin();
-		ALint state;
-		while (iter != s_effects.end())
-	    {
-			alGetSourcei(iter->second->source, AL_SOURCE_STATE, &state);
-			if (state == AL_PLAYING)
-				alSourcePause(iter->second->source);
-			checkALError("pauseAllEffects");
-			++iter;
-	    }
+        for(int i = 0; i < NR_CHANNELS; i++)
+        {
+            Mix_Pause(i);
+        }
 	}
 
 	void SimpleAudioEngine::resumeEffect(unsigned int nSoundId)
 	{
-		ALint state;
-		alGetSourcei(nSoundId, AL_SOURCE_STATE, &state);
-		if (state == AL_PAUSED)
-			alSourcePlay(nSoundId);
-		checkALError("resumeEffect");
+        Mix_Resume(nSoundId % NR_CHANNELS);
 	}
 
 	void SimpleAudioEngine::resumeAllEffects()
 	{
-		EffectsMap::iterator iter = s_effects.begin();
-		ALint state;
-		while (iter != s_effects.end())
-	    {
-			alGetSourcei(iter->second->source, AL_SOURCE_STATE, &state);
-			if (state == AL_PAUSED)
-				alSourcePlay(iter->second->source);
-			checkALError("resumeAllEffects");
-			++iter;
-	    }
+        for(int i = 0; i < NR_CHANNELS; i++)
+        {
+            Mix_Resume(i);
+        }
 	}
 
     void SimpleAudioEngine::stopAllEffects()
     {
-		EffectsMap::iterator iter = s_effects.begin();
-
-		if (iter != s_effects.end())
-	    {
-			checkALError("stopAllEffects");
-	        alSourceStop(iter->second->source);
-			checkALError("stopAllEffects");
-	    }
+        for(int i = 0; i < NR_CHANNELS; i++)
+        {
+            Mix_HaltChannel(i);
+        }
     }
 
 }

@@ -1,0 +1,23 @@
+class CCControlColourPicker : public CCControl
+{    
+    CCControlColourPicker();
+    virtual ~CCControlColourPicker();
+    virtual void setColor(const ccColor3B& colorValue);
+    virtual void setEnabled(bool bEnabled);
+
+    virtual CCControlSaturationBrightnessPicker*  getcolourPicker() const; 
+    virtual void setcolourPicker(CCControlSaturationBrightnessPicker*  var);
+
+    virtual CCControlHuePicker*  getHuePicker() const; 
+    virtual void setHuePicker(CCControlHuePicker*  var);
+
+    virtual CCSprite*  getBackground() const; 
+    virtual void setBackground(CCSprite*  var);
+
+    static CCControlColourPicker* create();
+
+    virtual bool init();
+    
+    void hueSliderValueChanged(CCObject * sender, CCControlEvent controlEvent);
+    void colourSliderValueChanged(CCObject * sender, CCControlEvent controlEvent);
+};
