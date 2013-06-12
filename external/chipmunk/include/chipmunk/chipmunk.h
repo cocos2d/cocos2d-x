@@ -22,6 +22,10 @@
 #ifndef CHIPMUNK_HEADER
 #define CHIPMUNK_HEADER
 
+#ifdef _MSC_VER
+    #define _USE_MATH_DEFINES
+#endif
+
 #include <stdlib.h>
 #include <math.h>
 
@@ -34,26 +38,26 @@ extern "C" {
 #endif
 
 #if CP_ALLOW_PRIVATE_ACCESS == 1
-	#define CP_PRIVATE(symbol) symbol
+	#define CP_PRIVATE(__symbol__) __symbol__
 #else
-	#define CP_PRIVATE(symbol) symbol##_private
+	#define CP_PRIVATE(__symbol__) __symbol__##_private
 #endif
 
 void cpMessage(const char *condition, const char *file, int line, int isError, int isHardError, const char *message, ...);
 #ifdef NDEBUG
-	#define	cpAssertWarn(condition, ...)
+	#define	cpAssertWarn(__condition__, ...)
 #else
-	#define cpAssertWarn(condition, ...) if(!(condition)) cpMessage(#condition, __FILE__, __LINE__, 0, 0, __VA_ARGS__)
+	#define cpAssertWarn(__condition__, ...) if(!(__condition__)) cpMessage(#__condition__, __FILE__, __LINE__, 0, 0, __VA_ARGS__)
 #endif
 
 #ifdef NDEBUG
-	#define	cpAssertSoft(condition, ...)
+	#define	cpAssertSoft(__condition__, ...)
 #else
-	#define cpAssertSoft(condition, ...) if(!(condition)) cpMessage(#condition, __FILE__, __LINE__, 1, 0, __VA_ARGS__)
+	#define cpAssertSoft(__condition__, ...) if(!(__condition__)) cpMessage(#__condition__, __FILE__, __LINE__, 1, 0, __VA_ARGS__)
 #endif
 
 // Hard assertions are important and cheap to execute. They are not disabled by compiling as debug.
-#define cpAssertHard(condition, ...) if(!(condition)) cpMessage(#condition, __FILE__, __LINE__, 1, 1, __VA_ARGS__)
+#define cpAssertHard(__condition__, ...) if(!(__condition__)) cpMessage(#__condition__, __FILE__, __LINE__, 1, 1, __VA_ARGS__)
 
 
 #include "chipmunk_types.h"
@@ -106,10 +110,10 @@ typedef struct cpSpace cpSpace;
 
 #include "cpSpace.h"
 
-// Chipmunk 6.1.2
+// Chipmunk 6.1.5
 #define CP_VERSION_MAJOR 6
 #define CP_VERSION_MINOR 1
-#define CP_VERSION_RELEASE 2
+#define CP_VERSION_RELEASE 5
 
 /// Version string.
 extern const char *cpVersionString;
