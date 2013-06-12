@@ -164,7 +164,7 @@ CCRect CCControlUtils::CCRectUnion(const CCRect& src1, const CCRect& src2)
     float x2 = MAX(src1.getMaxX(), src2.getMaxX());
     float y2 = MAX(src1.getMaxY(), src2.getMaxY());
     
-    result.origin=ccp(x1,x2);
+    result.origin=ccp(x1,y1);
     result.size=CCSizeMake(x2-x1, y2-y1);
     return result;
 }
