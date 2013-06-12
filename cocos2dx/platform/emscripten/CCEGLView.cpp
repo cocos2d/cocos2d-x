@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "CCAccelerometer.h"
 #include "CCApplication.h"
 
+#include <emscripten/emscripten.h>
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_mixer.h>
@@ -138,6 +139,9 @@ CCEGLView::CCEGLView()
     glutMouseFunc(&mouseCB);
     glutMotionFunc(&motionCB);
     glutPassiveMotionFunc(&motionCB);
+
+    // Setup a JS namespace for all cocos2dx helper functions.
+    emscripten_run_script("Module.cocos2dx = { classes: {}, objects: {} };");
 }
 
 CCEGLView::~CCEGLView()

@@ -43,14 +43,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-// premultiply alpha, or the effect will wrong when want to use other pixel format in CCTexture2D,
-// such as RGB888, RGB5A1
-#define CC_RGB_PREMULTIPLY_ALPHA(vr, vg, vb, va) \
-    (unsigned)(((unsigned)((unsigned char)(vr) * ((unsigned char)(va) + 1)) >> 8) | \
-    ((unsigned)((unsigned char)(vg) * ((unsigned char)(va) + 1) >> 8) << 8) | \
-    ((unsigned)((unsigned char)(vb) * ((unsigned char)(va) + 1) >> 8) << 16) | \
-    ((unsigned)(unsigned char)(va) << 24))
-
 // on ios, we should use platform/ios/CCImage_ios.mm instead
 
 typedef struct 
@@ -107,7 +99,7 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
     SDL_Surface *iSurf = IMG_Load(strPath);
 
     int size = 4 * (iSurf->w * iSurf->h);
-    bRet = _initWithRawData((void*)iSurf->pixels, size, iSurf->w, iSurf->h, 8, true);
+    bRet = initWithRawData((void*)iSurf->pixels, size, iSurf->w, iSurf->h, 8, true);
 
     unsigned int *tmp = (unsigned int *)m_pData;
     int nrPixels = iSurf->w * iSurf->h;
@@ -179,7 +171,7 @@ bool CCImage::initWithImageData(void * pData,
         }
         else if (kFmtRawData == eFmt)
         {
-            bRet = _initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false);
+            bRet = initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false);
             break;
         }
         else
@@ -680,7 +672,7 @@ bool CCImage::_initWithTiffData(void* pData, int nDataLen)
     return bRet;
 }
 
-bool CCImage::_initWithRawData(void * pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti)
+bool CCImage::initWithRawData(void * pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti)
 {
     bool bRet = false;
     do 

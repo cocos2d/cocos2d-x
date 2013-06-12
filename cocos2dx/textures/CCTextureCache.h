@@ -106,7 +106,7 @@ public:
     * @since v0.8
     */
     
-    void addImageAsync(const char *path, CCObject *target, SEL_CallFuncO selector);
+    virtual void addImageAsync(const char *path, CCObject *target, SEL_CallFuncO selector);
 
     /* Returns a Texture2D object given an CGImageRef image
     * If the image was not previously loaded, it will create a new CCTexture2D object and it will return it.
@@ -115,6 +115,7 @@ public:
     * If "key" is nil, then a new texture will be created each time.
     * @since v0.8
     */
+
     // todo: CGImageRef CCTexture2D* addCGImage(CGImageRef image, string &  key);
     /** Returns a Texture2D object given an UIImage image
     * If the image was not previously loaded, it will create a new CCTexture2D object and it will return it.
