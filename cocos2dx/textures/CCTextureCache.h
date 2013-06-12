@@ -40,6 +40,16 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+class AsyncStruct
+{
+public:
+    AsyncStruct(const std::string& fn, CCObject *t, SEL_CallFuncO s) : filename(fn), target(t), selector(s) {}
+
+    std::string            filename;
+    CCObject    *target;
+    SEL_CallFuncO        selector;
+};
+
 class CCLock;
 class CCImage;
 

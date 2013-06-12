@@ -47,13 +47,6 @@ using namespace std;
 
 NS_CC_BEGIN
 
-typedef struct _AsyncStruct
-{
-    std::string            filename;
-    CCObject    *target;
-    SEL_CallFuncO        selector;
-} AsyncStruct;
-
 typedef struct _ImageInfo
 {
     AsyncStruct *asyncStruct;
@@ -292,10 +285,7 @@ void CCTextureCache::addImageAsync(const char *path, CCObject *target, SEL_CallF
     }
 
     // generate async struct
-    AsyncStruct *data = new AsyncStruct();
-    data->filename = fullpath.c_str();
-    data->target = target;
-    data->selector = selector;
+    AsyncStruct *data = new AsyncStruct(fullpath, target, selector);
 
     // add async struct into queue
     pthread_mutex_lock(&s_asyncStructQueueMutex);
