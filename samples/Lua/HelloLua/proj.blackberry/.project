@@ -5,6 +5,7 @@
 	<projects>
 		<project>cocos2dx</project>
 		<project>CocosDenshion</project>
+		<project>extensions</project>
 		<project>lua</project>
 	</projects>
 	<buildSpec>
@@ -87,11 +88,6 @@
 			<name>Resources</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Resources</locationURI>
-		</link>
-		<link>
-			<name>cocos2dx_support</name>
-			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/scripting/lua/cocos2dx_support</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
