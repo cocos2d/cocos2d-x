@@ -211,7 +211,6 @@
 		15A3D59D1682F3BC002FB0C5 /* ScriptingCore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScriptingCore.cpp; sourceTree = "<group>"; };
 		15A3D59E1682F3BC002FB0C5 /* ScriptingCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptingCore.h; sourceTree = "<group>"; };
 		15A3D59F1682F3BC002FB0C5 /* spidermonkey_specifics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spidermonkey_specifics.h; sourceTree = "<group>"; };
-		15A3D5A01682F3BC002FB0C5 /* uthash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uthash.h; sourceTree = "<group>"; };
 		15A3D5BA1682F3D2002FB0C5 /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
 		15A3D5BB1682F3D2002FB0C5 /* chipmunk_ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_ffi.h; sourceTree = "<group>"; };
 		15A3D5BC1682F3D2002FB0C5 /* chipmunk_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_private.h; sourceTree = "<group>"; };
@@ -538,7 +537,6 @@
 				15A3D59D1682F3BC002FB0C5 /* ScriptingCore.cpp */,
 				15A3D59E1682F3BC002FB0C5 /* ScriptingCore.h */,
 				15A3D59F1682F3BC002FB0C5 /* spidermonkey_specifics.h */,
-				15A3D5A01682F3BC002FB0C5 /* uthash.h */,
 			);
 			name = bindings;
 			path = ../../../../scripting/javascript/bindings;
@@ -1253,8 +1251,8 @@
 					"\"$(SRCROOT)/../../../../cocos2dx\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/kazmath/include\"",
 					"\"$(SRCROOT)/../../../../CocosDenshion/include\"",
-					"\"$(SDKROOT)/usr/include/libxml2\"",
 					"$(SRCROOT)/../../../../cocos2dx/include",
+					"$(SRCROOT)/../../../../extensions",
 					"$(SRCROOT)/../../../../cocos2dx/platform/ios",
 					"$(SRCROOT)/../../../../external/chipmunk/include/chipmunk",
 					"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/include",
@@ -1294,8 +1292,8 @@
 					"\"$(SRCROOT)/../../../../cocos2dx\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/kazmath/include\"",
 					"\"$(SRCROOT)/../../../../CocosDenshion/include\"",
-					"\"$(SDKROOT)/usr/include/libxml2\"",
 					"$(SRCROOT)/../../../../cocos2dx/include",
+					"$(SRCROOT)/../../../../extensions",
 					"$(SRCROOT)/../../../../cocos2dx/platform/ios",
 					"$(SRCROOT)/../../../../external/chipmunk/include/chipmunk",
 					"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/include",

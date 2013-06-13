@@ -201,7 +201,7 @@ void CCDrawNode::render()
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid *)offsetof(ccV2F_C4B_T2F, vertices));
     
     // color
-    glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid *)offsetof(ccV2F_C4B_T2F, colors));
+    glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(ccV2F_C4B_T2F), (GLvoid *)offsetof(ccV2F_C4B_T2F, colors));
     
     // texcood
     glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid *)offsetof(ccV2F_C4B_T2F, texCoords));
@@ -338,7 +338,7 @@ void CCDrawNode::drawPolygon(CCPoint *verts, unsigned int count, const ccColor4F
 		extrude[i] = tmp;
 	}
 	
-	bool outline = (fillColor.a > 0.0 && borderWidth > 0.0);
+	bool outline = (borderColor.a > 0.0 && borderWidth > 0.0);
 	
 	unsigned int triangle_count = 3*count - 2;
 	unsigned int vertex_count = 3*triangle_count;

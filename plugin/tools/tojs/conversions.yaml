@@ -45,8 +45,11 @@ conversions:
       ${($level + 1) * '\t'}JSB_PRECONDITION2( ${out_value}, cx, JS_FALSE, "Invalid Native Object");
       ${($level + 0) * '\t'}} while (0)
     TProductInfo: "ok &= jsval_to_TProductInfo(cx, ${in_value}, &${out_value})"
-    TDeveloperInfo: "ok &= jsval_to_TDeveloperInfo(cx, ${in_value}, &${out_value})"
+    TIAPDeveloperInfo: "ok &= jsval_to_TIAPDeveloperInfo(cx, ${in_value}, &${out_value})"
     TPaymentInfo: "ok &= jsval_to_TPaymentInfo(cx, ${in_value}, &${out_value})"
+    TAdsDeveloperInfo: "ok &= jsval_to_TAdsDeveloperInfo(cx, ${in_value}, &${out_value})"
+    TSocialDeveloperInfo: "ok &= jsval_to_TSocialDeveloperInfo(cx, ${in_value}, &${out_value})"
+    TShareInfo: "ok &= jsval_to_TShareInfo(cx, ${in_value}, &${out_value})"
     LogEventParamMap*: |
       LogEventParamMap ${out_value}_tmp;
       ${($level + 0) * '\t'}do {
@@ -79,8 +82,11 @@ conversions:
     "CCArray*": "${out_value} = ccarray_to_jsval(cx, ${in_value})"
     "CCDictionary*": "${out_value} = ccdictionary_to_jsval(cx, ${in_value})"
     TProductInfo: "${out_value} = TProductInfo_to_jsval(cx, ${in_value})"
-    TDeveloperInfo: "${out_value} = TDeveloperInfo_to_jsval(cx, ${in_value})"
+    TIAPDeveloperInfo: "${out_value} = TIAPDeveloperInfo_to_jsval(cx, ${in_value})"
     TPaymentInfo: "${out_value} = TPaymentInfo_to_jsval(cx, ${in_value})"
+    TAdsDeveloperInfo: "${out_value} = TAdsDeveloperInfo_to_jsval(cx, ${in_value})"
+    TSocialDeveloperInfo: "${out_value} = TSocialDeveloperInfo_to_jsval(cx, ${in_value})"
+    TShareInfo: "${out_value} = TShareInfo_to_jsval(cx, ${in_value})"
     LogEventParamMap*: "${out_value} = LogEventParamMap_to_jsval(cx, ${in_value})"
     long: "${out_value} = long_to_jsval(cx, ${in_value})"
 

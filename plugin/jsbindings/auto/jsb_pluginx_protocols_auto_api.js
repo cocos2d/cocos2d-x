@@ -9,18 +9,6 @@ var plugin = plugin || {};
 plugin.PluginProtocol = {
 
 /**
- * @method setUserData
- * @param {void*}
- */
-setUserData : function () {},
-
-/**
- * @method getUserData
- * @return A value converted from C/C++ "void*"
- */
-getUserData : function () {},
-
-/**
  * @method getPluginName
  * @return A value converted from C/C++ "const char*"
  */
@@ -33,10 +21,10 @@ getPluginName : function () {},
 getPluginVersion : function () {},
 
 /**
- * @method init
- * @return A value converted from C/C++ "bool"
+ * @method getSDKVersion
+ * @return A value converted from C/C++ "const char*"
  */
-init : function () {},
+getSDKVersion : function () {},
 
 /**
  * @method setDebugMode
@@ -102,16 +90,10 @@ logError : function () {},
 setCaptureUncaughtException : function () {},
 
 /**
- * @method getPluginName
- * @return A value converted from C/C++ "const char*"
+ * @method setSessionContinueMillis
+ * @param {long}
  */
-getPluginName : function () {},
-
-/**
- * @method getPluginVersion
- * @return A value converted from C/C++ "const char*"
- */
-getPluginVersion : function () {},
+setSessionContinueMillis : function () {},
 
 /**
  * @method logEvent
@@ -119,18 +101,6 @@ getPluginVersion : function () {},
  * @param {LogEventParamMap*}
  */
 logEvent : function () {},
-
-/**
- * @method setSessionContinueMillis
- * @param {long}
- */
-setSessionContinueMillis : function () {},
-
-/**
- * @method init
- * @return A value converted from C/C++ "bool"
- */
-init : function () {},
 
 /**
  * @method startSession
@@ -149,18 +119,6 @@ stopSession : function () {},
  */
 logTimedEventEnd : function () {},
 
-/**
- * @method getSDKVersion
- * @return A value converted from C/C++ "const char*"
- */
-getSDKVersion : function () {},
-
-/**
- * @method setDebugMode
- * @param {bool}
- */
-setDebugMode : function () {},
-
 };
 
 /**
@@ -169,108 +127,94 @@ setDebugMode : function () {},
 plugin.ProtocolIAP = {
 
 /**
- * @method initDeveloperInfo
- * @param {TDeveloperInfo}
- */
-initDeveloperInfo : function () {},
-
-/**
- * @method getPluginVersion
- * @return A value converted from C/C++ "const char*"
- */
-getPluginVersion : function () {},
-
-/**
- * @method init
- * @return A value converted from C/C++ "bool"
- */
-init : function () {},
-
-/**
  * @method payForProduct
  * @param {TProductInfo}
  */
 payForProduct : function () {},
 
 /**
- * @method getSDKVersion
- * @return A value converted from C/C++ "const char*"
- */
-getSDKVersion : function () {},
-
-/**
- * @method setDebugMode
- * @param {bool}
- */
-setDebugMode : function () {},
-
-/**
- * @method getPluginName
- * @return A value converted from C/C++ "const char*"
- */
-getPluginName : function () {},
-
-/**
- * @method payResult
- * @param {cocos2d::plugin::EPayResult}
+ * @method onPayResult
+ * @param {cocos2d::plugin::PayResultCode}
  * @param {const char*}
  */
-payResult : function () {},
+onPayResult : function () {},
+
+/**
+ * @method configDeveloperInfo
+ * @param {TIAPDeveloperInfo}
+ */
+configDeveloperInfo : function () {},
 
 };
 
 /**
- * @class ProtocolIAPOnLine
+ * @class ProtocolAds
  */
-plugin.ProtocolIAPOnLine = {
+plugin.ProtocolAds = {
 
 /**
- * @method initDeveloperInfo
- * @param {TDeveloperInfo}
+ * @method showAds
+ * @param {cocos2d::plugin::ProtocolAds::AdsType}
+ * @param {int}
+ * @param {cocos2d::plugin::ProtocolAds::AdsPos}
  */
-initDeveloperInfo : function () {},
+showAds : function () {},
 
 /**
- * @method getPluginVersion
- * @return A value converted from C/C++ "const char*"
+ * @method hideAds
+ * @param {cocos2d::plugin::ProtocolAds::AdsType}
  */
-getPluginVersion : function () {},
+hideAds : function () {},
 
 /**
- * @method init
- * @return A value converted from C/C++ "bool"
+ * @method configDeveloperInfo
+ * @param {TAdsDeveloperInfo}
  */
-init : function () {},
+configDeveloperInfo : function () {},
 
 /**
- * @method payForProduct
- * @param {TProductInfo}
+ * @method spendPoints
+ * @param {int}
  */
-payForProduct : function () {},
+spendPoints : function () {},
 
 /**
- * @method getSDKVersion
- * @return A value converted from C/C++ "const char*"
- */
-getSDKVersion : function () {},
-
-/**
- * @method setDebugMode
- * @param {bool}
- */
-setDebugMode : function () {},
-
-/**
- * @method getPluginName
- * @return A value converted from C/C++ "const char*"
- */
-getPluginName : function () {},
-
-/**
- * @method payFailedLocally
- * @param {cocos2d::plugin::EPayResult}
+ * @method onAdsResult
+ * @param {cocos2d::plugin::AdsResultCode}
  * @param {const char*}
  */
-payFailedLocally : function () {},
+onAdsResult : function () {},
+
+/**
+ * @method onPlayerGetPoints
+ * @param {int}
+ */
+onPlayerGetPoints : function () {},
+
+};
+
+/**
+ * @class ProtocolSocial
+ */
+plugin.ProtocolSocial = {
+
+/**
+ * @method onShareResult
+ * @param {cocos2d::plugin::ShareResultCode}
+ * @param {const char*}
+ */
+onShareResult : function () {},
+
+/**
+ * @method share
+ * @param {TShareInfo}
+ */
+share : function () {},
+
+/**
+ * @method configDeveloperInfo
+ * @param {TSocialDeveloperInfo}
+ */
+configDeveloperInfo : function () {},
 
 };

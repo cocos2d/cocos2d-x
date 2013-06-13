@@ -185,17 +185,7 @@
 						<key>type</key>
 						<string>Check</string>
 						<key>value</key>
-						<false/>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>accelerometerEnabled</string>
-						<key>platform</key>
-						<string>iOS</string>
-						<key>type</key>
-						<string>Check</string>
-						<key>value</key>
-						<false/>
+						<true/>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -206,16 +196,6 @@
 						<string>Check</string>
 						<key>value</key>
 						<true/>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>keyboardEnabled</string>
-						<key>platform</key>
-						<string>Mac</string>
-						<key>type</key>
-						<string>Check</string>
-						<key>value</key>
-						<false/>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -605,8 +585,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>13.958333015441895</real>
-							<real>79.0625</real>
+							<real>13.75</real>
+							<real>79.375</real>
 							<integer>4</integer>
 						</array>
 					</dict>
@@ -1291,9 +1271,9 @@
 						<string>Color3</string>
 						<key>value</key>
 						<array>
+							<integer>254</integer>
 							<integer>255</integer>
-							<integer>255</integer>
-							<integer>255</integer>
+							<integer>254</integer>
 						</array>
 					</dict>
 					<dict>
@@ -4078,16 +4058,6 @@
 			</dict>
 			<dict>
 				<key>name</key>
-				<string>accelerometerEnabled</string>
-				<key>platform</key>
-				<string>iOS</string>
-				<key>type</key>
-				<string>Check</string>
-				<key>value</key>
-				<false/>
-			</dict>
-			<dict>
-				<key>name</key>
 				<string>mouseEnabled</string>
 				<key>platform</key>
 				<string>Mac</string>
@@ -4095,16 +4065,6 @@
 				<string>Check</string>
 				<key>value</key>
 				<true/>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>keyboardEnabled</string>
-				<key>platform</key>
-				<string>Mac</string>
-				<key>type</key>
-				<string>Check</string>
-				<key>value</key>
-				<false/>
 			</dict>
 		</array>
 	</dict>

@@ -100,12 +100,12 @@ CCObject* CCObject::autorelease(void)
     return this;
 }
 
-bool CCObject::isSingleReference(void)
+bool CCObject::isSingleReference(void) const
 {
     return m_uReference == 1;
 }
 
-unsigned int CCObject::retainCount(void)
+unsigned int CCObject::retainCount(void) const
 {
     return m_uReference;
 }
@@ -113,6 +113,11 @@ unsigned int CCObject::retainCount(void)
 bool CCObject::isEqual(const CCObject *pObject)
 {
     return this == pObject;
+}
+
+void CCObject::acceptVisitor(CCDataVisitor &visitor)
+{
+    visitor.visitObject(this);
 }
 
 NS_CC_END

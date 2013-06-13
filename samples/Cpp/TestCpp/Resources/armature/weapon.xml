@@ -1,0 +1,37 @@
+<skeleton name="weapon" frameRate="24" version="1.4">
+ <armatures>
+  <armature name="weapon">
+   <b name="图层 1" x="-21.65" y="-1.5" kX="0" kY="0" cX="1" cY="1" z="0">
+    <d name="weapon_f-hammer"/>
+   </b>
+   <b name="图层 2" x="-3.65" y="-74.55" kX="0" kY="0" cX="1" cY="1" z="1">
+    <d name="weapon_f-sword2"/>
+   </b>
+   <b name="图层 3" x="-27" y="70" kX="0" kY="0" cX="1" cY="1" z="2">
+    <d name="weapon_f-knife"/>
+   </b>
+   <b name="图层 4" x="-14" y="143.5" kX="0" kY="0" cX="1" cY="1" z="3">
+    <d name="weapon_f-sword3"/>
+   </b>
+   <b name="图层 5" x="-285.65" y="1" kX="0" kY="0" cX="1" cY="1" z="4">
+    <d name="weapon_f-sword4"/>
+   </b>
+   <b name="图层 6" x="-299.65" y="51.5" kX="0" kY="0" cX="1" cY="1" z="5">
+    <d name="weapon_f-sword5"/>
+   </b>
+   <b name="图层 7" x="-320.3" y="-60.15" kX="0" kY="0" cX="1" cY="1" z="6">
+    <d name="weapon_f-sword"/>
+   </b>
+  </armature>
+ </armatures>
+ <animations/>
+ <TextureAtlas name="weapon" width="512" height="256">
+  <SubTexture name="weapon_f-sword" pX="10" pY="15" width="90" height="30" x="175" y="162"/>
+  <SubTexture name="weapon_f-sword5" pX="30.65" pY="11.65" width="250" height="56" x="0" y="93"/>
+  <SubTexture name="weapon_f-sword4" pX="44.65" pY="46.15" width="250" height="91" x="0" y="0"/>
+  <SubTexture name="weapon_f-sword3" pX="44.65" pY="28" width="250" height="60" x="252" y="0"/>
+  <SubTexture name="weapon_f-knife" pX="31.65" pY="26.15" width="250" height="59" x="252" y="62"/>
+  <SubTexture name="weapon_f-sword2" pX="55" pY="18.5" width="250" height="37" x="252" y="123"/>
+  <SubTexture name="weapon_f-hammer" pX="37" pY="34" width="173" height="69" x="0" y="151"/>
+ </TextureAtlas>
+</skeleton>
