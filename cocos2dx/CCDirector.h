@@ -288,6 +288,9 @@ public:
      */
     void purgeCachedData(void);
 
+	/** sets the default values based on the CCConfiguration info */
+    void setDefaultValues(void);
+
     // OpenGL Helper
 
     /** sets the OpenGL default values */

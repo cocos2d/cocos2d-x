@@ -469,6 +469,9 @@ CCObject * CCCallFunc::copyWithZone(CCZone *pZone) {
 	else if( _function )
 		pRet->initWithFunction(_function);
 
+    if (m_nScriptHandler > 0 ) {
+        pRet->m_nScriptHandler = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine()->reallocateScriptHandler(m_nScriptHandler);
+    }
     CC_SAFE_DELETE(pNewZone);
     return pRet;
 }

@@ -111,6 +111,16 @@
 			<locationURI>PARENT-1-PROJECT_LOC/base_nodes</locationURI>
 		</link>
 		<link>
+			<name>ccFPSImages.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/ccFPSImages.c</locationURI>
+		</link>
+		<link>
+			<name>ccFPSImages.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/ccFPSImages.h</locationURI>
+		</link>
+		<link>
 			<name>cocoa</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/cocoa</locationURI>

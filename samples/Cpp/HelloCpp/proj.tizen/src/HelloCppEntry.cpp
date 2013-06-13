@@ -57,6 +57,7 @@ OspMain(int argc, char* pArgv[])
     }
 
     CCOspApplication::SetApplicationInitializedCallback(ApplicationInitialized);
+    CCOspApplication::SetScreenOrientation(Tizen::Ui::ORIENTATION_LANDSCAPE);
     result r = Tizen::App::Application::Execute(CCOspApplication::CreateInstance, &args);
 
     TryLog(r == E_SUCCESS, "[%s] Application execution failed", GetErrorMessage(r));
@@ -73,7 +74,7 @@ ApplicationInitialized(void)
     AppDelegate* pAppDelegate = new AppDelegate;
 
     CCEGLView* eglView = CCEGLView::sharedOpenGLView();
-    eglView->setFrameSize(720, 1280);
+    eglView->setFrameSize(1280, 720);
 
     CCApplication::sharedApplication()->run();
 }
