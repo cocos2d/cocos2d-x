@@ -744,9 +744,10 @@ void ActionSequence2::onEnter()
 		CCPlace::create(ccp(200,200)),
 		CCShow::create(),
 		CCMoveBy::create(1, ccp(100,0)),
-		CCCallFunc::create(std::bind(&ActionSequence2::callback1,this)),
-		CCCallFunc::create(std::bind(&ActionSequence2::callback2,this,m_grossini)),
-		CCCallFunc::create(std::bind(&ActionSequence2::callback3,this,m_grossini,(void*)0xbebabeba)),
+		// CALLBACK_0 == std::bind( &function, instance, ...)
+		CCCallFunc::create( CALLBACK_0(ActionSequence2::callback1,this)),
+		CCCallFunc::create( CALLBACK_0(ActionSequence2::callback2,this,m_grossini)),
+		CCCallFunc::create( CALLBACK_0(ActionSequence2::callback3,this,m_grossini,(void*)0xbebabeba)),
 		NULL);
 
     m_grossini->runAction(action);

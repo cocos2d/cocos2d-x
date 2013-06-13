@@ -125,7 +125,7 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     {
         char str[10] = {0};
         sprintf(str, "%d ", i);
-        CCMenuItemFont* itemFont = CCMenuItemFont::create(str, std::bind( &ParticleMainScene::testNCallback, this, std::placeholders::_1));
+        CCMenuItemFont* itemFont = CCMenuItemFont::create(str, CALLBACK_1(ParticleMainScene::testNCallback, this));
         itemFont->setTag(i);
         pSubMenu->addChild(itemFont, 10);
 

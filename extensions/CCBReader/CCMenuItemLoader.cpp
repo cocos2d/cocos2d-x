@@ -11,7 +11,8 @@ void CCMenuItemLoader::onHandlePropTypeBlock(CCNode * pNode, CCNode * pParent, c
     if(strcmp(pPropertyName, PROPERTY_BLOCK) == 0) {
         if (NULL != pBlockData) // Add this condition to allow CCMenuItemImage without target/selector predefined 
         {
-            ((CCMenuItem *)pNode)->setTarget(pBlockData->mTarget, pBlockData->mSELMenuHandler);
+            ((CCMenuItem *)pNode)->setCallback( std::bind( pBlockData->mSELMenuHandler, pBlockData->mTarget, std::placeholders::_1) );
+//            ((CCMenuItem *)pNode)->setTarget(pBlockData->mTarget, pBlockData->mSELMenuHandler);
         }
     } else {
         CCNodeLoader::onHandlePropTypeBlock(pNode, pParent, pPropertyName, pBlockData, pCCBReader);
