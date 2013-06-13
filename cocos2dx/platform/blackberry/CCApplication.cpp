@@ -166,6 +166,10 @@ ccLanguageType CCApplication::getCurrentLanguage()
     {
         ret_language = kLanguageNorwegian;
     }
+    else if (strcmp(language, "pl") == 0)
+    {
+        ret_language = kLanguagePolish;
+    }
 	free(language);
 	free(country);
 
