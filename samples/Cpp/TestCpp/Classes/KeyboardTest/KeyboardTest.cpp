@@ -1,5 +1,7 @@
 #include "KeyboardTest.h"
 
+#ifdef KEYBOARD_SUPPORT
+
 KeyboardTest::KeyboardTest()
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
@@ -40,3 +42,5 @@ void KeyboardTestScene::runThisTest()
     CCDirector::sharedDirector()->replaceScene(this);
     pLayer->release();
 }
+
+#endif
