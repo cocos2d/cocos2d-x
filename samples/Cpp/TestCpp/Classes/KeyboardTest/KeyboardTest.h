@@ -1,6 +1,8 @@
 #ifndef _KEYBOARD_TEST_H_
 #define _KEYBOARD_TEST_H_
 
+#ifdef KEYBOARD_SUPPORT
+
 #include "cocos2d.h"
 #include "../testBasic.h"
 
@@ -22,5 +24,7 @@ class KeyboardTestScene : public TestScene
 public:
     virtual void runThisTest();
 };
+
+#endif
 
 #endif
