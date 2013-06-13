@@ -442,4 +442,14 @@ public:
     void transformSprite(cocos2d::CCSprite *sprite);
 };
 
+// ETC1 texture format test
+class TextureETC1 : public TextureDemo
+{
+public:
+    TextureETC1();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
 #endif // __TEXTURE2D_TEST_H__

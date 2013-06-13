@@ -55,6 +55,7 @@
     <!-- the variable 'worksparce_loc' is not supported in bbndk2.0, so we create an empty folder to make the relative path work. -->
     <asset path="../Resources">Resources</asset>
     <asset path="../../../Cpp/TestCpp/Resources">Resources/TestCppResources</asset>
+    <asset path="../../../../scripting/lua/script">Resources/script</asset>
     
     <!-- the path of the three shared libraries as follows in bbndk2.0 is different from bbndk1.0, so if the version of bbndk you use is 1.0, just uncomment the next three lines and comment the following three lines-->
     

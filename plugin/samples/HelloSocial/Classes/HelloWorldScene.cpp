@@ -31,6 +31,7 @@ using namespace cocos2d::plugin;
 
 enum {
 	TAG_SHARE_BY_TWWITER = 100,
+	TAG_SHARE_BY_WEIBO = 101,
 };
 
 typedef struct tagEventMenuItem {
@@ -39,7 +40,8 @@ typedef struct tagEventMenuItem {
 }EventMenuItem;
 
 static EventMenuItem s_EventMenuItem[] = {
-    {"twitter.jpeg", TAG_SHARE_BY_TWWITER}
+    {"twitter.jpeg", TAG_SHARE_BY_TWWITER},
+    {"weibo.png", TAG_SHARE_BY_WEIBO}
 };
 
 CCScene* HelloWorld::scene()
@@ -94,7 +96,7 @@ bool HelloWorld::init()
     pMenu->setPosition( CCPointZero );
     this->addChild(pMenu, 1);
 
-    CCPoint posStep = ccp(220, -150);
+    CCPoint posStep = ccp(150, -150);
     CCPoint beginPos = ccpAdd(posTL, ccpMult(posStep, 0.5f));
     int line = 0;
     int row = 0;
@@ -134,7 +136,7 @@ void HelloWorld::eventMenuCallback(CCObject* pSender)
 {
 	CCMenuItemLabel* pMenuItem = (CCMenuItemLabel*)pSender;
     TShareInfo pInfo;
-    pInfo["SharedText"] = "MyFirst tweet!";
+    pInfo["SharedText"] = "Share message : HelloSocial!";
     // pInfo["SharedImagePath"] = "Full/path/to/image";
     MySocialManager::MyShareMode mode = (MySocialManager::MyShareMode) (pMenuItem->getTag() - TAG_SHARE_BY_TWWITER + 1);
     MySocialManager::sharedSocialManager()->shareByMode(pInfo, mode);

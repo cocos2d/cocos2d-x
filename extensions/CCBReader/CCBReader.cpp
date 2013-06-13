@@ -556,8 +556,9 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
     if(memberVarAssignmentType != kCCBTargetTypeNone) {
         memberVarAssignmentName = this->readCachedString();
     }
-
+    
     CCNodeLoader *ccNodeLoader = this->mCCNodeLoaderLibrary->getCCNodeLoader(className.c_str());
+     
     if (! ccNodeLoader)
     {
         CCLog("no corresponding node loader for %s", className.c_str());
@@ -622,7 +623,7 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
     // Read properties
     ccNodeLoader->parseProperties(node, pParent, this);
     
-    bool isCCBFileNode = dynamic_cast<CCBFile*>(node);
+    bool isCCBFileNode = (NULL == dynamic_cast<CCBFile*>(node)) ? false : true;
     // Handle sub ccb files (remove middle node)
     if (isCCBFileNode)
     {
@@ -1034,6 +1035,19 @@ CCArray* CCBReader::getNodesWithAnimationManagers() {
 
 CCArray* CCBReader::getAnimationManagersForNodes() {
     return mAnimationManagersForNodes;
+}
+
+void CCBReader::addOwnerOutletName(std::string name)
+{
+    mOwnerOutletNames.push_back(name);
+
+}
+void CCBReader::addOwnerOutletNode(CCNode *node)
+{
+    if (NULL != node)
+        return;
+    
+    mOwnerOutletNodes->addObject(node);
 }
 
 /************************************************************************

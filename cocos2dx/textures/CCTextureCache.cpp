@@ -232,6 +232,7 @@ CCDictionary* CCTextureCache::snapshotTextures()
     {
         pRet->setObject(pElement->getObject(), pElement->getStrKey());
     }
+    pRet->autorelease();
     return pRet;
 }
 
@@ -399,6 +400,11 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
             {
                 texture = this->addPVRImage(fullpath.c_str());
             }
+            else if (std::string::npos != lowerCase.find(".pkm"))
+            {
+                // ETC1 file format, only supportted on Android
+                texture = this->addETCImage(fullpath.c_str());
+            }
             else
             {
                 CCImage::EImageFormat eImageFormat = CCImage::kFmtUnKnown;
@@ -422,11 +428,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                 pImage = new CCImage();
                 CC_BREAK_IF(NULL == pImage);
 
-                unsigned long nSize = 0;
-                unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullpath.c_str(), "rb", &nSize);
-                
-                bool bRet = pImage->initWithImageData((void*)pBuffer, nSize, eImageFormat);
-                CC_SAFE_DELETE_ARRAY(pBuffer);
+                bool bRet = pImage->initWithImageFile(fullpath.c_str(), eImageFormat);
                 CC_BREAK_IF(!bRet);
 
                 texture = new CCTexture2D();
@@ -485,6 +487,35 @@ CCTexture2D * CCTextureCache::addPVRImage(const char* path)
         CC_SAFE_DELETE(texture);
     }
 
+    return texture;
+}
+
+CCTexture2D* CCTextureCache::addETCImage(const char* path)
+{
+    CCAssert(path != NULL, "TextureCache: fileimage MUST not be nil");
+    
+    CCTexture2D* texture = NULL;
+    std::string key(path);
+    
+    if( (texture = (CCTexture2D*)m_pTextures->objectForKey(key.c_str())) )
+    {
+        return texture;
+    }
+    
+    // Split up directory and filename
+    std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(key.c_str());
+    texture = new CCTexture2D();
+    if(texture != NULL && texture->initWithETCFile(fullpath.c_str()))
+    {
+        m_pTextures->setObject(texture, key.c_str());
+        texture->autorelease();
+    }
+    else
+    {
+        CCLOG("cocos2d: Couldn't add ETCImage:%s in CCTextureCache",key.c_str());
+        CC_SAFE_DELETE(texture);
+    }
+    
     return texture;
 }
 

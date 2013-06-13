@@ -11,6 +11,18 @@ Developers:
     Ricardo Quesada
     Rolando Abarca
         Javascript Binding and testjs
+        
+    carlomorgantinizynga
+        CCLabelTTF supports for shadow and stroke
+        Adding CCLabelTTF::createWithFontDefinition.
+        
+    James Gregory (j4m3z0r, Zynga)
+        Maintainer of Emscripten port.
+        Initial Emscripten port.
+        Use browser font rendering instead of FreeType.
+        
+    DarraghCoy
+        Fix a potential crash SimpleAudioEngineOpenSL::playEffect
 
     silverscania
         Pass correct parameter to glPixelStorei when creating a texture
@@ -45,6 +57,7 @@ Developers:
 
     martell
         use tinyxml2 to replace libxml2
+        Added Mingw-crt Support without breaking VS SDK
 
     mchinen
         fix emulator issue for OpenGL ES 2.0 on Android
@@ -158,12 +171,15 @@ Developers:
         contribute for Android module building
         Simpler, correct handling of spritesheet sources for CCScale9Sprite.
         Clean up linked libraries for android.
+        JavaScript debugger improved and bugfixed.
+        Fix flags for debugger server socket.
 
     Nicolas Gramlich (nicolasgramlich, Zynga)
         fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF
         added CCBReader (CCBI format)
         Added cleanup and reset methods to ScriptingCore.
         Fixed a bug in ScriptingCore::evalString not setting the outval.
+        Updated .classpath of Android project to latest ADT 22 build tool compatibility.
 
     Rohan Kuruvilla (rohankuruvilla, Zynga)
         Improvements to JS Bindings.
@@ -282,6 +298,7 @@ Developers:
     xyhl515
         Fixed a bug that CCControlSwitch::setOn(isOn,false) doesn't work.
         Adds VS2012 Express template installing support.
+        Fixing a logical error in CCDrawNode::drawPolygon.
 
     DarraghCoy
         Fix for unaligned memory access crash in CCBReader::readFloat().
@@ -322,6 +339,7 @@ Developers:
 
     csy1988525
         Fixing a bug about display result is wrong when invoking CCControlButton:: setHighlighted.
+        fixed a bug when button's parent is hided, the button still can responce to clicked event.
 
     Asad ur Rehman (AsadR)
         Adding CCNotificationCenter::removeAllObservers(CCObject *target).
@@ -338,6 +356,7 @@ Developers:
 
     flamingo (flaming0)
         Null pointer check in order to prevent crashes.
+        Updating spine-runtime to EsotericSoftware/spine-runtimes@5f90386.
 
     rtissera (Romain TISSERAND)
         Adding missing JNIEXPORT / JNICALL declarations.
@@ -396,9 +415,6 @@ Developers:
     ptekchand (Pranav Tekchand)
         Supporting negative node scales for CCScrollView.
 
-    James Gregory (j4m3z0r, Zynga)
-        Initial Emscripten port.
-
     coolengineer (Hojin Choi)
         Refactoring callback selector for HttpResponse.
 
@@ -416,6 +432,26 @@ Developers:
 
     Xander84
         Fixing a bug in CCBValue::getByteValue.
+        
+    smshuja
+        Fixing a bug that pointQueryFirst returns invalid Shape when a shape is not found in JSB.
+        Fixing a bug that New PivotJoint can't access 4 parameters like in html5 version.
+        
+    Carsten Sandtner (casarock)
+        Adding XMLHttpRequest support for JSB.
+        
+    Lee, Jae-Hong (pyrasis)
+        Maintainer of tizen port.
+
+    lumendes
+        Updating spine-runtime to EsotericSoftware/spine-runtimes@5f90386.
+        
+    sunxiaoyu
+        Refactoring CCEditBox to add UITextField only when keyboard was opened, remove it when keyboard was closed.
+        
+    edwardzhou (Edward Zhou)
+        Correcting the type detecting order for Lua CCBProxy::getNodeTypeName.
+        Casting variables to their own type, and print warning info if no corresponding lua callback function instead of crash.
 
 Retired Core Developers:
     WenSheng Yang

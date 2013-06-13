@@ -100,6 +100,9 @@
     <Filter Include="support\user_default">
       <UniqueIdentifier>{c45b97e8-fa1f-4e58-8ec5-d46371c2dd26}</UniqueIdentifier>
     </Filter>
+    <Filter Include="support\component">
+      <UniqueIdentifier>{485f1c18-d463-48d0-bcaa-a10e32aa3332}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\base_nodes\CCAtlasNode.cpp">
@@ -460,6 +463,16 @@
     </ClCompile>
     <ClCompile Include="..\cocoa\CCDataVisitor.cpp">
       <Filter>cocoa</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ccFPSImages.c" />
+    <ClCompile Include="..\textures\CCTextureETC.cpp">
+      <Filter>textures</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\component\CCComponent.cpp">
+      <Filter>support\component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\component\CCComponentContainer.cpp">
+      <Filter>support\component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -928,6 +941,16 @@
     </ClInclude>
     <ClInclude Include="..\cocoa\CCFloat.h">
       <Filter>cocoa</Filter>
+    </ClInclude>
+    <ClInclude Include="..\textures\CCTextureETC.h">
+      <Filter>textures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ccFPSImages.h" />
+    <ClInclude Include="..\support\component\CCComponent.h">
+      <Filter>support\component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\component\CCComponentContainer.h">
+      <Filter>support\component</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

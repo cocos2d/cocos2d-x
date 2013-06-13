@@ -42,21 +42,32 @@ void Animation_dispose (Animation* self) {
 	for (i = 0; i < self->timelineCount; ++i)
 		Timeline_dispose(self->timelines[i]);
 	FREE(self->timelines);
+	FREE(self->name);
 	FREE(self);
 }
 
 void Animation_apply (const Animation* self, Skeleton* skeleton, float time, int/*bool*/loop) {
-	if (loop && self->duration) time = fmodf(time, self->duration);
-
 	int i, n = self->timelineCount;
+
+#ifdef __STDC_VERSION__
+	if (loop && self->duration) time = fmodf(time, self->duration);
+#else
+	if (loop && self->duration) time = (float)fmod(time, self->duration);
+#endif
+
 	for (i = 0; i < n; ++i)
 		Timeline_apply(self->timelines[i], skeleton, time, 1);
 }
 
 void Animation_mix (const Animation* self, Skeleton* skeleton, float time, int/*bool*/loop, float alpha) {
-	if (loop && self->duration) time = fmodf(time, self->duration);
-
 	int i, n = self->timelineCount;
+
+#ifdef __STDC_VERSION__
+	if (loop && self->duration) time = fmodf(time, self->duration);
+#else
+	if (loop && self->duration) time = (float)fmod(time, self->duration);
+#endif
+
 	for (i = 0; i < n; ++i)
 		Timeline_apply(self->timelines[i], skeleton, time, alpha);
 }
@@ -68,8 +79,8 @@ typedef struct _TimelineVtable {
 	void (*dispose) (Timeline* self);
 } _TimelineVtable;
 
-void _Timeline_init (Timeline* self, //
-		void (*dispose) (Timeline* self), //
+void _Timeline_init (Timeline* self, /**/
+		void (*dispose) (Timeline* self), /**/
 		void (*apply) (const Timeline* self, Skeleton* skeleton, float time, float alpha)) {
 	CONST_CAST(void*, self->vtable) = NEW(_TimelineVtable);
 	VTABLE(Timeline, self) ->dispose = dispose;
@@ -94,8 +105,8 @@ static const float CURVE_LINEAR = 0;
 static const float CURVE_STEPPED = -1;
 static const int CURVE_SEGMENTS = 10;
 
-void _CurveTimeline_init (CurveTimeline* self, int frameCount, //
-		void (*dispose) (Timeline* self), //
+void _CurveTimeline_init (CurveTimeline* self, int frameCount, /**/
+		void (*dispose) (Timeline* self), /**/
 		void (*apply) (const Timeline* self, Skeleton* skeleton, float time, float alpha)) {
 	_Timeline_init(SUPER(self), dispose, apply);
 	self->curves = CALLOC(float, (frameCount - 1) * 6);
@@ -136,17 +147,24 @@ void CurveTimeline_setCurve (CurveTimeline* self, int frameIndex, float cx1, flo
 }
 
 float CurveTimeline_getCurvePercent (const CurveTimeline* self, int frameIndex, float percent) {
+	float dfy;
+	float ddfx;
+	float ddfy;
+	float dddfx;
+	float dddfy;
+	float x, y;
+	int i;
 	int curveIndex = frameIndex * 6;
 	float dfx = self->curves[curveIndex];
 	if (dfx == CURVE_LINEAR) return percent;
 	if (dfx == CURVE_STEPPED) return 0;
-	float dfy = self->curves[curveIndex + 1];
-	float ddfx = self->curves[curveIndex + 2];
-	float ddfy = self->curves[curveIndex + 3];
-	float dddfx = self->curves[curveIndex + 4];
-	float dddfy = self->curves[curveIndex + 5];
-	float x = dfx, y = dfy;
-	int i = CURVE_SEGMENTS - 2;
+	dfy = self->curves[curveIndex + 1];
+	ddfx = self->curves[curveIndex + 2];
+	ddfy = self->curves[curveIndex + 3];
+	dddfx = self->curves[curveIndex + 4];
+	dddfy = self->curves[curveIndex + 5];
+	x = dfx, y = dfy;
+	i = CURVE_SEGMENTS - 2;
 	while (1) {
 		if (x >= percent) {
 			float lastX = x - dfx;
@@ -167,10 +185,10 @@ float CurveTimeline_getCurvePercent (const CurveTimeline* self, int frameIndex, 
 
 /* @param target After the first and before the last entry. */
 static int binarySearch (float *values, int valuesLength, float target, int step) {
-	int low = 0;
+	int low = 0, current;
 	int high = valuesLength / step - 2;
 	if (high == 0) return step;
-	int current = high >> 1;
+	current = high >> 1;
 	while (1) {
 		if (values[(current + 1) * step] <= target)
 			low = current + 1;
@@ -201,7 +219,7 @@ void _BaseTimeline_dispose (Timeline* timeline) {
 }
 
 /* Many timelines have structure identical to struct BaseTimeline and extend CurveTimeline. **/
-struct BaseTimeline* _BaseTimeline_create (int frameCount, int frameSize, //
+struct BaseTimeline* _BaseTimeline_create (int frameCount, int frameSize, /**/
 		void (*apply) (const Timeline* self, Skeleton* skeleton, float time, float alpha)) {
 
 	struct BaseTimeline* self = NEW(struct BaseTimeline);
@@ -219,11 +237,15 @@ static const int ROTATE_LAST_FRAME_TIME = -2;
 static const int ROTATE_FRAME_VALUE = 1;
 
 void _RotateTimeline_apply (const Timeline* timeline, Skeleton* skeleton, float time, float alpha) {
+	Bone *bone;
+	int frameIndex;
+	float lastFrameValue, frameTime, percent, amount;
+
 	RotateTimeline* self = SUB_CAST(RotateTimeline, timeline);
 
 	if (time < self->frames[0]) return; /* Time is before first frame. */
 
-	Bone *bone = skeleton->bones[self->boneIndex];
+	bone = skeleton->bones[self->boneIndex];
 
 	if (time >= self->frames[self->framesLength - 2]) { /* Time is after last frame. */
 		float amount = bone->data->rotation + self->frames[self->framesLength - 1] - bone->rotation;
@@ -236,13 +258,13 @@ void _RotateTimeline_apply (const Timeline* timeline, Skeleton* skeleton, float 
 	}
 
 	/* Interpolate between the last frame and the current frame. */
-	int frameIndex = binarySearch(self->frames, self->framesLength, time, 2);
-	float lastFrameValue = self->frames[frameIndex - 1];
-	float frameTime = self->frames[frameIndex];
-	float percent = 1 - (time - frameTime) / (self->frames[frameIndex + ROTATE_LAST_FRAME_TIME] - frameTime);
+	frameIndex = binarySearch(self->frames, self->framesLength, time, 2);
+	lastFrameValue = self->frames[frameIndex - 1];
+	frameTime = self->frames[frameIndex];
+	percent = 1 - (time - frameTime) / (self->frames[frameIndex + ROTATE_LAST_FRAME_TIME] - frameTime);
 	percent = CurveTimeline_getCurvePercent(SUPER(self), frameIndex / 2 - 1, percent < 0 ? 0 : (percent > 1 ? 1 : percent));
 
-	float amount = self->frames[frameIndex + ROTATE_FRAME_VALUE] - lastFrameValue;
+	amount = self->frames[frameIndex + ROTATE_FRAME_VALUE] - lastFrameValue;
 	while (amount > 180)
 		amount -= 360;
 	while (amount < -180)
@@ -272,11 +294,15 @@ static const int TRANSLATE_FRAME_X = 1;
 static const int TRANSLATE_FRAME_Y = 2;
 
 void _TranslateTimeline_apply (const Timeline* timeline, Skeleton* skeleton, float time, float alpha) {
+	Bone *bone;
+	int frameIndex;
+	float lastFrameX, lastFrameY, frameTime, percent;
+
 	TranslateTimeline* self = SUB_CAST(TranslateTimeline, timeline);
 
 	if (time < self->frames[0]) return; /* Time is before first frame. */
 
-	Bone *bone = skeleton->bones[self->boneIndex];
+	bone = skeleton->bones[self->boneIndex];
 
 	if (time >= self->frames[self->framesLength - 3]) { /* Time is after last frame. */
 		bone->x += (bone->data->x + self->frames[self->framesLength - 2] - bone->x) * alpha;
@@ -285,11 +311,11 @@ void _TranslateTimeline_apply (const Timeline* timeline, Skeleton* skeleton, flo
 	}
 
 	/* Interpolate between the last frame and the current frame. */
-	int frameIndex = binarySearch(self->frames, self->framesLength, time, 3);
-	float lastFrameX = self->frames[frameIndex - 2];
-	float lastFrameY = self->frames[frameIndex - 1];
-	float frameTime = self->frames[frameIndex];
-	float percent = 1 - (time - frameTime) / (self->frames[frameIndex + TRANSLATE_LAST_FRAME_TIME] - frameTime);
+	frameIndex = binarySearch(self->frames, self->framesLength, time, 3);
+	lastFrameX = self->frames[frameIndex - 2];
+	lastFrameY = self->frames[frameIndex - 1];
+	frameTime = self->frames[frameIndex];
+	percent = 1 - (time - frameTime) / (self->frames[frameIndex + TRANSLATE_LAST_FRAME_TIME] - frameTime);
 	percent = CurveTimeline_getCurvePercent(SUPER(self), frameIndex / 3 - 1, percent < 0 ? 0 : (percent > 1 ? 1 : percent));
 
 	bone->x += (bone->data->x + lastFrameX + (self->frames[frameIndex + TRANSLATE_FRAME_X] - lastFrameX) * percent - bone->x)
@@ -312,11 +338,15 @@ void TranslateTimeline_setFrame (TranslateTimeline* self, int frameIndex, float 
 /**/
 
 void _ScaleTimeline_apply (const Timeline* timeline, Skeleton* skeleton, float time, float alpha) {
-	ScaleTimeline* self = SUB_CAST(ScaleTimeline, timeline);
+	Bone *bone;
+	int frameIndex;
+	float lastFrameX, lastFrameY, frameTime, percent;
 
+	ScaleTimeline* self = SUB_CAST(ScaleTimeline, timeline);
+	
 	if (time < self->frames[0]) return; /* Time is before first frame. */
 
-	Bone *bone = skeleton->bones[self->boneIndex];
+	bone = skeleton->bones[self->boneIndex];
 	if (time >= self->frames[self->framesLength - 3]) { /* Time is after last frame. */
 		bone->scaleX += (bone->data->scaleX - 1 + self->frames[self->framesLength - 2] - bone->scaleX) * alpha;
 		bone->scaleY += (bone->data->scaleY - 1 + self->frames[self->framesLength - 1] - bone->scaleY) * alpha;
@@ -324,11 +354,11 @@ void _ScaleTimeline_apply (const Timeline* timeline, Skeleton* skeleton, float t
 	}
 
 	/* Interpolate between the last frame and the current frame. */
-	int frameIndex = binarySearch(self->frames, self->framesLength, time, 3);
-	float lastFrameX = self->frames[frameIndex - 2];
-	float lastFrameY = self->frames[frameIndex - 1];
-	float frameTime = self->frames[frameIndex];
-	float percent = 1 - (time - frameTime) / (self->frames[frameIndex + TRANSLATE_LAST_FRAME_TIME] - frameTime);
+	frameIndex = binarySearch(self->frames, self->framesLength, time, 3);
+	lastFrameX = self->frames[frameIndex - 2];
+	lastFrameY = self->frames[frameIndex - 1];
+	frameTime = self->frames[frameIndex];
+	percent = 1 - (time - frameTime) / (self->frames[frameIndex + TRANSLATE_LAST_FRAME_TIME] - frameTime);
 	percent = CurveTimeline_getCurvePercent(SUPER(self), frameIndex / 3 - 1, percent < 0 ? 0 : (percent > 1 ? 1 : percent));
 
 	bone->scaleX += (bone->data->scaleX - 1 + lastFrameX + (self->frames[frameIndex + TRANSLATE_FRAME_X] - lastFrameX) * percent
@@ -354,11 +384,15 @@ static const int COLOR_FRAME_B = 3;
 static const int COLOR_FRAME_A = 4;
 
 void _ColorTimeline_apply (const Timeline* timeline, Skeleton* skeleton, float time, float alpha) {
+	Slot *slot;
+	int frameIndex;
+	float lastFrameR, lastFrameG, lastFrameB, lastFrameA, percent, frameTime;
+	float r, g, b, a;
 	ColorTimeline* self = (ColorTimeline*)timeline;
 
 	if (time < self->frames[0]) return; /* Time is before first frame. */
 
-	Slot *slot = skeleton->slots[self->slotIndex];
+	slot = skeleton->slots[self->slotIndex];
 
 	if (time >= self->frames[self->framesLength - 5]) { /* Time is after last frame. */
 		int i = self->framesLength - 1;
@@ -370,19 +404,19 @@ void _ColorTimeline_apply (const Timeline* timeline, Skeleton* skeleton, float t
 	}
 
 	/* Interpolate between the last frame and the current frame. */
-	int frameIndex = binarySearch(self->frames, self->framesLength, time, 5);
-	float lastFrameR = self->frames[frameIndex - 4];
-	float lastFrameG = self->frames[frameIndex - 3];
-	float lastFrameB = self->frames[frameIndex - 2];
-	float lastFrameA = self->frames[frameIndex - 1];
-	float frameTime = self->frames[frameIndex];
-	float percent = 1 - (time - frameTime) / (self->frames[frameIndex + COLOR_LAST_FRAME_TIME] - frameTime);
+	frameIndex = binarySearch(self->frames, self->framesLength, time, 5);
+	lastFrameR = self->frames[frameIndex - 4];
+	lastFrameG = self->frames[frameIndex - 3];
+	lastFrameB = self->frames[frameIndex - 2];
+	lastFrameA = self->frames[frameIndex - 1];
+	frameTime = self->frames[frameIndex];
+	percent = 1 - (time - frameTime) / (self->frames[frameIndex + COLOR_LAST_FRAME_TIME] - frameTime);
 	percent = CurveTimeline_getCurvePercent(SUPER(self), frameIndex / 5 - 1, percent < 0 ? 0 : (percent > 1 ? 1 : percent));
 
-	float r = lastFrameR + (self->frames[frameIndex + COLOR_FRAME_R] - lastFrameR) * percent;
-	float g = lastFrameG + (self->frames[frameIndex + COLOR_FRAME_G] - lastFrameG) * percent;
-	float b = lastFrameB + (self->frames[frameIndex + COLOR_FRAME_B] - lastFrameB) * percent;
-	float a = lastFrameA + (self->frames[frameIndex + COLOR_FRAME_A] - lastFrameA) * percent;
+	r = lastFrameR + (self->frames[frameIndex + COLOR_FRAME_R] - lastFrameR) * percent;
+	g = lastFrameG + (self->frames[frameIndex + COLOR_FRAME_G] - lastFrameG) * percent;
+	b = lastFrameB + (self->frames[frameIndex + COLOR_FRAME_B] - lastFrameB) * percent;
+	a = lastFrameA + (self->frames[frameIndex + COLOR_FRAME_A] - lastFrameA) * percent;
 	if (alpha < 1) {
 		slot->r += (r - slot->r) * alpha;
 		slot->g += (g - slot->g) * alpha;
@@ -412,30 +446,33 @@ void ColorTimeline_setFrame (ColorTimeline* self, int frameIndex, float time, fl
 /**/
 
 void _AttachmentTimeline_apply (const Timeline* timeline, Skeleton* skeleton, float time, float alpha) {
+	int frameIndex;
+	const char* attachmentName;
 	AttachmentTimeline* self = (AttachmentTimeline*)timeline;
 
 	if (time < self->frames[0]) return; /* Time is before first frame. */
 
-	int frameIndex;
 	if (time >= self->frames[self->framesLength - 1]) /* Time is after last frame. */
 		frameIndex = self->framesLength - 1;
 	else
 		frameIndex = binarySearch(self->frames, self->framesLength, time, 1) - 1;
 
-	const char* attachmentName = self->attachmentNames[frameIndex];
+	attachmentName = self->attachmentNames[frameIndex];
 	Slot_setAttachment(skeleton->slots[self->slotIndex],
 			attachmentName ? Skeleton_getAttachmentForSlotIndex(skeleton, self->slotIndex, attachmentName) : 0);
 }
 
 void _AttachmentTimeline_dispose (Timeline* timeline) {
-	_Timeline_deinit(timeline);
-	AttachmentTimeline* self = (AttachmentTimeline*)timeline;
-
+	AttachmentTimeline* self;
 	int i;
+
+	_Timeline_deinit(timeline);
+	self = (AttachmentTimeline*)timeline;
+
 	for (i = 0; i < self->framesLength; ++i)
 		FREE(self->attachmentNames[i]);
 	FREE(self->attachmentNames);
-
+	FREE(self->frames);
 	FREE(self);
 }
 

@@ -32,7 +32,9 @@ require "luaScript/EffectsAdvancedTest/EffectsAdvancedTest"
 require "luaScript/UserDefaultTest/UserDefaultTest"
 require "luaScript/CurrentLanguageTest/CurrentLanguageTest"
 require "luaScript/BugsTest/BugsTest"
-------------------------
+require "luaScript/ExtensionTest/ExtensionTest"
+require "luaScript/AccelerometerTest/AccelerometerTest"
+require "luaScript/KeypadTest/KeypadTest"
 
 
 local LINE_SPACE = 40
@@ -55,7 +57,7 @@ local _allTests = {
     { isSupported = true,  name = "NodeTest"               , create_func   =                  CocosNodeTest },
     { isSupported = true,  name = "TouchesTest"            , create_func   =               TouchesTest      },
     --Many tests in MenuTest will crash, so disable it. Should enable it after all crashes are resolved.
-    { isSupported = false,  name = "MenuTest"               , create_func   =                  MenuTestMain  },
+    { isSupported = true,  name = "MenuTest"               , create_func   =                  MenuTestMain  },
     { isSupported = true,  name = "ActionManagerTest"      , create_func   =         ActionManagerTestMain  },
     { isSupported = true,  name = "LayerTest"              , create_func   =                 LayerTestMain  },
     { isSupported = true,  name = "SceneTest"              , create_func   =                 SceneTestMain  },
@@ -72,8 +74,8 @@ local _allTests = {
     { isSupported = false,  name = "Box2dTest"              , create_func=                 Box2dTestMain  },
     { isSupported = false,  name = "Box2dTestBed"           , create_func=              Box2dTestBedMain  },
     { isSupported = true,  name = "EffectAdvancedTest"     , create_func   =        EffectAdvancedTestMain  },
-    { isSupported = false,  name = "Accelerometer"          , create_func=             AccelerometerMain  },
-    { isSupported = false,  name = "KeypadTest"             , create_func=                KeypadTestMain  },
+    { isSupported = true,  name = "Accelerometer"          , create_func=             AccelerometerMain  },
+    { isSupported = true,  name = "KeypadTest"             , create_func=                KeypadTestMain  },
     { isSupported = true,  name = "CocosDenshionTest"      , create_func   =         CocosDenshionTestMain  },
     { isSupported = true,  name = "PerformanceTest"        , create_func=           PerformanceTestMain  },
     { isSupported = true,  name = "ZwoptexTest"            , create_func   =               ZwoptexTestMain  },
@@ -83,9 +85,9 @@ local _allTests = {
     { isSupported = true,  name = "FontTest"               , create_func   =              FontTestMain      },
     { isSupported = true,  name = "CurrentLanguageTest"    , create_func=   CurrentLanguageTestMain      },
     { isSupported = false,  name = "TextureCacheTest"       , create_func=      TextureCacheTestMain      },
-    { isSupported = false,  name = "ExtensionsTest"         , create_func=        ExtensionsTestMain      },
+    { isSupported = true,  name = "ExtensionsTest"         , create_func=        ExtensionsTestMain      },
     { isSupported = false,  name = "ShaderTest"             , create_func=            ShaderTestMain      },
-    { isSupported = false,  name = "MutiTouchTest"          , create_func=          MutiTouchTestMain          }
+    { isSupported = false,  name = "MutiTouchTest"          , create_func=          MutiTouchTestMain     }
 }
 
 local TESTS_COUNT = table.getn(_allTests)

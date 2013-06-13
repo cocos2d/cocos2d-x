@@ -33,6 +33,7 @@ MySocialManager* MySocialManager::s_pManager = NULL;
 MySocialManager::MySocialManager()
 : s_pRetListener(NULL)
 , s_pTwitter(NULL)
+, s_pWeibo(NULL)
 {
 
 }
@@ -74,22 +75,47 @@ void MySocialManager::loadSocialPlugin()
 
 	{
 		// init twitter plugin
-		s_pTwitter = dynamic_cast<SocialTwitter*>(PluginManager::getInstance()->loadPlugin("SocialTwitter"));
-		TSocialDeveloperInfo pTwitterInfo;
-
-        /* Warning: must set your twiiter dev info here */
-		// pTwitterInfo["TwitterKey"] = "your consumerkey";
-        // pTwitterInfo["TwitterSecret"] = "your consumersecret";
-
-		if (pTwitterInfo.empty())
+		s_pTwitter = dynamic_cast<ProtocolSocial*>(PluginManager::getInstance()->loadPlugin("SocialTwitter"));
+		if (NULL != s_pTwitter)
 		{
-			char msg[256] = { 0 };
-			sprintf(msg, "Developer info is empty. PLZ fill your twitter info in %s(nearby line %d)", __FILE__, __LINE__);
-			CCMessageBox(msg, "Twitter Warning");
+			TSocialDeveloperInfo pTwitterInfo;
+
+			/* Warning: must set your twiiter dev info here */
+			// pTwitterInfo["TwitterKey"] = "your consumerkey";
+			// pTwitterInfo["TwitterSecret"] = "your consumersecret";
+
+			if (pTwitterInfo.empty())
+			{
+				char msg[256] = { 0 };
+				sprintf(msg, "Developer info is empty. PLZ fill your twitter info in %s(nearby line %d)", __FILE__, __LINE__);
+				CCMessageBox(msg, "Twitter Warning");
+			}
+			s_pTwitter->setDebugMode(true);
+			s_pTwitter->configDeveloperInfo(pTwitterInfo);
+			s_pTwitter->setResultListener(s_pRetListener);
 		}
-		s_pTwitter->setDebugMode(true);
-		s_pTwitter->configDeveloperInfo(pTwitterInfo);
-		s_pTwitter->setResultListener(s_pRetListener);
+	}
+
+	{
+		s_pWeibo = dynamic_cast<ProtocolSocial*>(PluginManager::getInstance()->loadPlugin("SocialWeibo"));
+		if (NULL != s_pWeibo)
+		{
+			TSocialDeveloperInfo pWeiboInfo;
+			// pWeiboInfo["WeiboAppKey"] = "your app key";
+            // pWeiboInfo["WeiboAppSecret"] = "your app secret";
+			// pWeiboInfo["WeiboRedirectUrl"] = "your redirect url";
+
+			if (pWeiboInfo.empty())
+			{
+				char msg[256] = { 0 };
+				sprintf(msg, "Developer info is empty. PLZ fill your weibo info in %s(nearby line %d)", __FILE__, __LINE__);
+				CCMessageBox(msg, "Weibo Warning");
+			}
+
+			s_pWeibo->setDebugMode(true);
+			s_pWeibo->configDeveloperInfo(pWeiboInfo);
+			s_pWeibo->setResultListener(s_pRetListener);
+		}
 	}
 }
 
@@ -100,6 +126,12 @@ void MySocialManager::unloadSocialPlugin()
 		PluginManager::getInstance()->unloadPlugin("SocialTwitter");
 		s_pTwitter = NULL;
 	}
+
+	if (s_pWeibo)
+	{
+		PluginManager::getInstance()->unloadPlugin("SocialWeibo");
+		s_pWeibo = NULL;
+	}
 }
 
 void MySocialManager::shareByMode(TShareInfo info, MyShareMode mode)
@@ -109,6 +141,9 @@ void MySocialManager::shareByMode(TShareInfo info, MyShareMode mode)
 	{
 	case eTwitter:
 		pShare = s_pTwitter;
+		break;
+	case eWeibo:
+		pShare = s_pWeibo;
 		break;
 	default:
 		break;
