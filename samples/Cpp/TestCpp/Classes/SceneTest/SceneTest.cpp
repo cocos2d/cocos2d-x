@@ -18,9 +18,9 @@ enum
 
 SceneTestLayer1::SceneTestLayer1()
 {
-    CCMenuItemFont* item1 = CCMenuItemFont::create( "Test pushScene", std::bind(&SceneTestLayer1::onPushScene, this, std::placeholders::_1));
-    CCMenuItemFont* item2 = CCMenuItemFont::create( "Test pushScene w/transition", std::bind(&SceneTestLayer1::onPushSceneTran, this, std::placeholders::_1));
-    CCMenuItemFont* item3 = CCMenuItemFont::create( "Quit", std::bind(&SceneTestLayer1::onQuit, this, std::placeholders::_1));
+    CCMenuItemFont* item1 = CCMenuItemFont::create( "Test pushScene", CALLBACK_1(SceneTestLayer1::onPushScene, this));
+    CCMenuItemFont* item2 = CCMenuItemFont::create( "Test pushScene w/transition", CALLBACK_1(SceneTestLayer1::onPushSceneTran, this));
+    CCMenuItemFont* item3 = CCMenuItemFont::create( "Quit", CALLBACK_1(SceneTestLayer1::onQuit, this));
     
     CCMenu* menu = CCMenu::create( item1, item2, item3, NULL );
     menu->alignItemsVertically();
@@ -103,9 +103,9 @@ SceneTestLayer2::SceneTestLayer2()
 {
     m_timeCounter = 0;
 
-    CCMenuItemFont* item1 = CCMenuItemFont::create( "replaceScene", std::bind(&SceneTestLayer2::onReplaceScene, this, std::placeholders::_1));
-    CCMenuItemFont* item2 = CCMenuItemFont::create( "replaceScene w/transition", std::bind(&SceneTestLayer2::onReplaceSceneTran, this, std::placeholders::_1));
-    CCMenuItemFont* item3 = CCMenuItemFont::create( "Go Back", std::bind(&SceneTestLayer2::onGoBack, this, std::placeholders::_1));
+    CCMenuItemFont* item1 = CCMenuItemFont::create( "replaceScene", CALLBACK_1(SceneTestLayer2::onReplaceScene, this));
+    CCMenuItemFont* item2 = CCMenuItemFont::create( "replaceScene w/transition", CALLBACK_1(SceneTestLayer2::onReplaceSceneTran, this));
+    CCMenuItemFont* item3 = CCMenuItemFont::create( "Go Back", CALLBACK_1(SceneTestLayer2::onGoBack, this));
     
     CCMenu* menu = CCMenu::create( item1, item2, item3, NULL );
     menu->alignItemsVertically();
@@ -171,10 +171,10 @@ bool SceneTestLayer3::init()
     {
         CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-        CCMenuItemFont *item0 = CCMenuItemFont::create("Touch to pushScene (self)", std::bind(&SceneTestLayer3::item0Clicked, this, std::placeholders::_1));
-        CCMenuItemFont *item1 = CCMenuItemFont::create("Touch to popScene", std::bind(&SceneTestLayer3::item1Clicked, this, std::placeholders::_1));
-        CCMenuItemFont *item2 = CCMenuItemFont::create("Touch to popToRootScene", std::bind(&SceneTestLayer3::item2Clicked, this, std::placeholders::_1));
-        CCMenuItemFont *item3 = CCMenuItemFont::create("Touch to popToSceneStackLevel(2)", std::bind(&SceneTestLayer3::item3Clicked, this, std::placeholders::_1));
+        CCMenuItemFont *item0 = CCMenuItemFont::create("Touch to pushScene (self)", CALLBACK_1(SceneTestLayer3::item0Clicked, this));
+        CCMenuItemFont *item1 = CCMenuItemFont::create("Touch to popScene", CALLBACK_1(SceneTestLayer3::item1Clicked, this));
+        CCMenuItemFont *item2 = CCMenuItemFont::create("Touch to popToRootScene", CALLBACK_1(SceneTestLayer3::item2Clicked, this));
+        CCMenuItemFont *item3 = CCMenuItemFont::create("Touch to popToSceneStackLevel(2)", CALLBACK_1(SceneTestLayer3::item3Clicked, this));
 
         CCMenu *menu = CCMenu::create(item0, item1, item2, item3, NULL);
         this->addChild(menu);

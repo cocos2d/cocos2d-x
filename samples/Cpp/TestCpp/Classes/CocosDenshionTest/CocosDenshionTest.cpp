@@ -63,7 +63,7 @@ m_nSoundId(0)
 //#else
         CCLabelTTF* label = CCLabelTTF::create(testItems[i].c_str(), "Arial", 24);
 //#endif        
-        CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, std::bind( &CocosDenshionTest::menuCallback, this, std::placeholders::_1));
+        CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, CALLBACK_1(CocosDenshionTest::menuCallback, this));
         
         m_pItmeMenu->addChild(pMenuItem, i + 10000);
         pMenuItem->setPosition( ccp( VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE) ));
