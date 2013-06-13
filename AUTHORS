@@ -188,6 +188,7 @@ Developers:
         Clean up linked libraries for android.
         JavaScript debugger improved and bugfixed.
         Fix flags for debugger server socket.
+        When user has built with JS Debugger support ScriptingCore will handle necessary runtime changes.
 
     Nicolas Gramlich (nicolasgramlich, Zynga)
         fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF
