@@ -466,6 +466,9 @@ Developers:
         
     sunxiaoyu
         Refactoring CCEditBox to add UITextField only when keyboard was opened, remove it when keyboard was closed.
+        
+    maciekczwa
+        Adding Polish language support.
 
 Retired Core Developers:
     WenSheng Yang
