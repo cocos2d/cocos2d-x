@@ -49,12 +49,12 @@ public:
      *  @param target The target which wants to observe notification events.
      *  @param selector The callback function which will be invoked when the specified notification event was posted.
      *  @param name The name of this notification.
-     *  @param obj The extra parameter which will be passed to the callback function.
+     *  @param sender The object whose notifications the target wants to receive. Only notifications sent by this sender are delivered to the target. NULL means that the sender is not used to decide whether to deliver the notification to target.
      */
     void addObserver(CCObject *target, 
                      SEL_CallFuncO selector,
                      const char *name,
-                     CCObject *obj);
+                     CCObject *sender);
 
     /** @brief Removes the observer by the specified target and name.
      *  @param target The target of this notification.
@@ -84,9 +84,9 @@ public:
 
     /** @brief Posts one notification event by name.
      *  @param name The name of this notification.
-     *  @param object The extra parameter.
+     *  @param sender The object posting the notification. Can be NULL
      */
-    void postNotification(const char *name, CCObject *object);
+    void postNotification(const char *name, CCObject *sender);
     
     /** @brief Gets script handler.
      *  @note Only supports Lua Binding now.
@@ -103,7 +103,7 @@ private:
     // internal functions
 
     // Check whether the observer exists by the specified target and name.
-    bool observerExisted(CCObject *target,const char *name);
+    bool observerExisted(CCObject *target,const char *name, CCObject *sender);
     
     // variables
     //
@@ -118,23 +118,23 @@ public:
      *  @param target The target which wants to observer notification events.
      *  @param selector The callback function which will be invoked when the specified notification event was posted.
      *  @param name The name of this notification.
-     *  @param obj The extra parameter which will be passed to the callback function.
+     *  @param sender The object whose notifications the target wants to receive. Only notifications sent by this sender are delivered to the target. NULL means that the sender is not used to decide whether to deliver the notification to target.
      */
     CCNotificationObserver(CCObject *target, 
                            SEL_CallFuncO selector,
                            const char *name,
-                           CCObject *obj);
+                           CCObject *sender);
 
     /** CCNotificationObserver destructor function */
     ~CCNotificationObserver();      
     
     /** Invokes the callback function of this observer */
-    void performSelector(CCObject *obj);
+    void performSelector(CCObject *sender);
 private:
     CC_PROPERTY_READONLY(CCObject *, m_target, Target);
     CC_PROPERTY_READONLY(SEL_CallFuncO, m_selector, Selector);
     CC_PROPERTY_READONLY(char *, m_name, Name);
-    CC_PROPERTY_READONLY(CCObject *, m_object, Object);
+    CC_PROPERTY_READONLY(CCObject *, m_sender, Sender);
     CC_PROPERTY(int, m_nHandler,Handler);
 };
 

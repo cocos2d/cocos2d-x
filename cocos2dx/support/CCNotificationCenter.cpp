@@ -62,7 +62,7 @@ void CCNotificationCenter::purgeNotificationCenter(void)
 //
 // internal functions
 //
-bool CCNotificationCenter::observerExisted(CCObject *target,const char *name)
+bool CCNotificationCenter::observerExisted(CCObject *target,const char *name, CCObject *sender)
 {
     CCObject* obj = NULL;
     CCARRAY_FOREACH(m_observers, obj)
@@ -71,7 +71,7 @@ bool CCNotificationCenter::observerExisted(CCObject *target,const char *name)
         if (!observer)
             continue;
         
-        if (!strcmp(observer->getName(),name) && observer->getTarget() == target)
+        if (!strcmp(observer->getName(),name) && observer->getTarget() == target && observer->getSender() == sender)
             return true;
     }
     return false;
@@ -83,12 +83,12 @@ bool CCNotificationCenter::observerExisted(CCObject *target,const char *name)
 void CCNotificationCenter::addObserver(CCObject *target, 
                                        SEL_CallFuncO selector,
                                        const char *name,
-                                       CCObject *obj)
+                                       CCObject *sender)
 {
-    if (this->observerExisted(target, name))
+    if (this->observerExisted(target, name, sender))
         return;
     
-    CCNotificationObserver *observer = new CCNotificationObserver(target, selector, name, obj);
+    CCNotificationObserver *observer = new CCNotificationObserver(target, selector, name, sender);
     if (!observer)
         return;
     
@@ -165,7 +165,7 @@ void CCNotificationCenter::unregisterScriptObserver(CCObject *target,const char*
     }
 }
 
-void CCNotificationCenter::postNotification(const char *name, CCObject *object)
+void CCNotificationCenter::postNotification(const char *name, CCObject *sender)
 {
     CCArray* ObserversCopy = CCArray::createWithCapacity(m_observers->count());
     ObserversCopy->addObjectsFromArray(m_observers);
@@ -175,8 +175,8 @@ void CCNotificationCenter::postNotification(const char *name, CCObject *object)
         CCNotificationObserver* observer = (CCNotificationObserver*) obj;
         if (!observer)
             continue;
-        
-        if (!strcmp(name,observer->getName()) && (observer->getObject() == object || observer->getObject() == NULL || object == NULL))
+
+        if (!strcmp(name,observer->getName()) && (observer->getObject() == object || observer->getObject() == NULL || sender == NULL))
         {
             if (0 != observer->getHandler())
             {
@@ -185,7 +185,7 @@ void CCNotificationCenter::postNotification(const char *name, CCObject *object)
             }
             else
             {
-                observer->performSelector(object);
+                observer->performSelector(sender);
             }
         }
     }
@@ -228,11 +228,11 @@ int CCNotificationCenter::getObserverHandlerByName(const char* name)
 CCNotificationObserver::CCNotificationObserver(CCObject *target, 
                                                SEL_CallFuncO selector,
                                                const char *name,
-                                               CCObject *obj)
+                                               CCObject *sender)
 {
     m_target = target;
     m_selector = selector;
-    m_object = obj;
+    m_sender = sender;
     
     m_name = new char[strlen(name)+1];
     memset(m_name,0,strlen(name)+1);
@@ -247,14 +247,14 @@ CCNotificationObserver::~CCNotificationObserver()
     CC_SAFE_DELETE_ARRAY(m_name);
 }
 
-void CCNotificationObserver::performSelector(CCObject *obj)
+void CCNotificationObserver::performSelector(CCObject *sender)
 {
     if (m_target)
     {
-		if (obj) {
-			(m_target->*m_selector)(obj);
+		if (sender) {
+			(m_target->*m_selector)(sender);
 		} else {
-			(m_target->*m_selector)(m_object);
+			(m_target->*m_selector)(m_sender);
 		}
     }
 }
@@ -274,9 +274,9 @@ char *CCNotificationObserver::getName()
     return m_name;
 }
 
-CCObject *CCNotificationObserver::getObject()
+CCObject *CCNotificationObserver::getSender()
 {
-    return m_object;
+    return m_sender;
 }
 
 int CCNotificationObserver::getHandler()
