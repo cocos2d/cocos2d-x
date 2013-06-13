@@ -50,7 +50,7 @@ ChipmunkTestLayer::ChipmunkTestLayer()
 
     // menu for debug layer
     CCMenuItemFont::setFontSize(18);
-    CCMenuItemFont *item = CCMenuItemFont::create("Toggle debug", std::bind( &ChipmunkTestLayer::toggleDebugCallback, this, std::placeholders::_1));
+    CCMenuItemFont *item = CCMenuItemFont::create("Toggle debug", CALLBACK_1(ChipmunkTestLayer::toggleDebugCallback, this));
 
     CCMenu *menu = CCMenu::create(item, NULL);
     this->addChild(menu);
@@ -147,7 +147,7 @@ void ChipmunkTestLayer::update(float delta)
 
 void ChipmunkTestLayer::createResetButton()
 {
-    CCMenuItemImage *reset = CCMenuItemImage::create("Images/r1.png", "Images/r2.png", std::bind( &ChipmunkTestLayer::reset, this, std::placeholders::_1));
+    CCMenuItemImage *reset = CCMenuItemImage::create("Images/r1.png", "Images/r2.png", CALLBACK_1(ChipmunkTestLayer::reset, this));
 
     CCMenu *menu = CCMenu::create(reset, NULL);
 
