@@ -373,7 +373,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 		
 		// alignment, linebreak
 		unsigned uHoriFlag = eAlign & 0x0f;
-		unsigned uVertFlag = (eAlign & 0xf0) >> 4;
+		unsigned uVertFlag = (eAlign >> 4) & 0x0f;
 		NSTextAlignment align = (2 == uHoriFlag) ? NSRightTextAlignment
 			: (3 == uHoriFlag) ? NSCenterTextAlignment
 			: NSLeftTextAlignment;
@@ -440,9 +440,12 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 			case NSRightTextAlignment: xPadding = dimensions.width-realDimensions.width; break;
 			default: break;
 		}
-		
-		CGFloat yPadding = (1 == uVertFlag || realDimensions.height >= dimensions.height) ? 0	// align to top
-		: (2 == uVertFlag) ? dimensions.height - realDimensions.height							// align to bottom
+
+		// 1: TOP
+		// 2: BOTTOM
+		// 3: CENTER
+		CGFloat yPadding = (1 == uVertFlag || realDimensions.height >= dimensions.height) ? (dimensions.height - realDimensions.height)	// align to top
+		: (2 == uVertFlag) ? 0																	// align to bottom
 		: (dimensions.height - realDimensions.height) / 2.0f;									// align to center
 		
 		
