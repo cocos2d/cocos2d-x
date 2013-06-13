@@ -46,19 +46,24 @@ class RangedPtr
     T* const rangeEnd;
 #endif
 
+    typedef void (RangedPtr::* ConvertibleToBool)();
+    void nonNull() {}
+
     void checkSanity() {
       MOZ_ASSERT(rangeStart <= ptr);
       MOZ_ASSERT(ptr <= rangeEnd);
     }
 
-    /* Creates a new pointer for |ptr|, restricted to this pointer's range. */
-    RangedPtr<T> create(T *ptr) const {
+    /* Creates a new pointer for |p|, restricted to this pointer's range. */
+    RangedPtr<T> create(T *p) const {
 #ifdef DEBUG
-      return RangedPtr<T>(ptr, rangeStart, rangeEnd);
+      return RangedPtr<T>(p, rangeStart, rangeEnd);
 #else
-      return RangedPtr<T>(ptr, NULL, size_t(0));
+      return RangedPtr<T>(p, NULL, size_t(0));
 #endif
     }
+
+    uintptr_t asUintptr() const { return uintptr_t(ptr); }
 
   public:
     RangedPtr(T* p, T* start, T* end)
@@ -95,7 +100,7 @@ class RangedPtr
 
     /* Equivalent to RangedPtr(arr, arr, N). */
     template<size_t N>
-    RangedPtr(T arr[N])
+    RangedPtr(T (&arr)[N])
       : ptr(arr)
 #ifdef DEBUG
       , rangeStart(arr), rangeEnd(arr + N)
@@ -107,6 +112,8 @@ class RangedPtr
     T* get() const {
       return ptr;
     }
+
+    operator ConvertibleToBool() const { return ptr ? &RangedPtr::nonNull : 0; }
 
     /*
      * You can only assign one RangedPtr into another if the two pointers have
@@ -128,13 +135,13 @@ class RangedPtr
 
     RangedPtr<T> operator+(size_t inc) {
       MOZ_ASSERT(inc <= size_t(-1) / sizeof(T));
-      MOZ_ASSERT(ptr + inc >= ptr);
+      MOZ_ASSERT(asUintptr() + inc * sizeof(T) >= asUintptr());
       return create(ptr + inc);
     }
 
     RangedPtr<T> operator-(size_t dec) {
       MOZ_ASSERT(dec <= size_t(-1) / sizeof(T));
-      MOZ_ASSERT(ptr - dec <= ptr);
+      MOZ_ASSERT(asUintptr() - dec * sizeof(T) <= asUintptr());
       return create(ptr - dec);
     }
 
@@ -240,7 +247,6 @@ class RangedPtr
   private:
     RangedPtr() MOZ_DELETE;
     T* operator&() MOZ_DELETE;
-    operator T*() const MOZ_DELETE;
 };
 
 } /* namespace mozilla */

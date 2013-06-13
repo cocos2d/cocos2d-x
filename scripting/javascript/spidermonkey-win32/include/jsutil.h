@@ -54,9 +54,9 @@ class AlignedPtrAndFlag
     uintptr_t bits;
 
   public:
-    AlignedPtrAndFlag(T *t, bool flag) {
+    AlignedPtrAndFlag(T *t, bool aFlag) {
         JS_ASSERT((uintptr_t(t) & 1) == 0);
-        bits = uintptr_t(t) | uintptr_t(flag);
+        bits = uintptr_t(t) | uintptr_t(aFlag);
     }
 
     T *ptr() const {
@@ -80,9 +80,9 @@ class AlignedPtrAndFlag
         bits &= ~uintptr_t(1);
     }
 
-    void set(T *t, bool flag) {
+    void set(T *t, bool aFlag) {
         JS_ASSERT((uintptr_t(t) & 1) == 0);
-        bits = uintptr_t(t) | flag;
+        bits = uintptr_t(t) | aFlag;
     }
 };
 
@@ -162,17 +162,17 @@ class AutoScopedAssign
   public:
     AutoScopedAssign(T *addr, const T &value
                      MOZ_GUARD_OBJECT_NOTIFIER_PARAM)
-        : addr(addr), old(*addr)
+        : addr_(addr), old(*addr_)
     {
         MOZ_GUARD_OBJECT_NOTIFIER_INIT;
-        *addr = value;
+        *addr_ = value;
     }
 
-    ~AutoScopedAssign() { *addr = old; }
+    ~AutoScopedAssign() { *addr_ = old; }
 
   private:
     MOZ_DECL_USE_GUARD_OBJECT_NOTIFIER
-    T *addr;
+    T *addr_;
     T old;
 };
 
@@ -255,15 +255,6 @@ PodEqual(T *one, T *two, size_t len)
     }
 
     return !memcmp(one, two, len * sizeof(T));
-}
-
-template <class T>
-JS_ALWAYS_INLINE static void
-Swap(T &t, T &u)
-{
-    T tmp(Move(t));
-    t = Move(u);
-    u = Move(tmp);
 }
 
 template <typename T>

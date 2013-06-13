@@ -12,8 +12,6 @@
 #include "jsb_opengl_registration.h"
 
 #include "jsb_pluginx_protocols_auto.hpp"
-#include "jsb_pluginx_flurry_auto.hpp"
-#include "jsb_pluginx_umeng_auto.hpp"
 #include "jsb_pluginx_extension_registration.h"
 
 USING_NS_CC;
@@ -25,7 +23,7 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
-    CCScriptEngineManager::sharedManager()->purgeSharedManager();
+    CCScriptEngineManager::purgeSharedManager();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
@@ -49,8 +47,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(JSB_register_opengl);
 
     sc->addRegisterCallback(register_all_pluginx_protocols);
-    sc->addRegisterCallback(register_all_pluginx_umeng);
-    sc->addRegisterCallback(register_all_pluginx_flurry);
     sc->addRegisterCallback(register_pluginx_js_extensions);
     sc->start();
     CCLOG("applicationDidFinishLaunching 02");

@@ -1,7 +1,29 @@
+/****************************************************************************
+Copyright (c) 2012-2013 cocos2d-x.org
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 #include "HelloWorldScene.h"
 #include "PluginManager.h"
-#include "AnalyticsFlurry.h"
-#include "AnalyticsUmeng.h"
+#include "ProtocolAnalytics.h"
 #include "AppDelegate.h"
 
 using namespace cocos2d;
@@ -84,16 +106,16 @@ bool HelloWorld::init()
         CCLabelTTF* label = CCLabelTTF::create(s_EventMenuItem[i].id.c_str(), "Arial", 24);
         CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, this, menu_selector(HelloWorld::eventMenuCallback));
         pMenu->addChild(pMenuItem, 0, s_EventMenuItem[i].tag);
-        yPos = size.height - 50*i - 100;
+        yPos = size.height - 35*i - 100;
         pMenuItem->setPosition( ccp(size.width / 2, yPos));
     }
 
     std::string strName = g_pAnalytics->getPluginName();
-    std::string strVer = g_pAnalytics->getPluginVersion();
+    std::string strVer = g_pAnalytics->getSDKVersion();
     char ret[256] = { 0 };
     sprintf(ret, "Plugin : %s, Ver : %s", strName.c_str(), strVer.c_str());
-    CCLabelTTF* pLabel = CCLabelTTF::create(ret, "Arial", 24, CCSizeMake(size.width, 0), kCCTextAlignmentCenter);
-    pLabel->setPosition(ccp(size.width / 2, yPos - 100));
+    CCLabelTTF* pLabel = CCLabelTTF::create(ret, "Arial", 18, CCSizeMake(size.width, 0), kCCTextAlignmentCenter);
+    pLabel->setPosition(ccp(size.width / 2, yPos - 80));
     addChild(pLabel);
 
     CCLabelTTF* label = CCLabelTTF::create("reload all plugins", "Arial", 24);
@@ -116,8 +138,6 @@ void HelloWorld::reloadPluginMenuCallback(CCObject* pSender)
 void HelloWorld::eventMenuCallback(CCObject* pSender)
 {
     CCMenuItemLabel* pMenuItem = (CCMenuItemLabel*)pSender;
-    AnalyticsUmeng* pUmeng = dynamic_cast<AnalyticsUmeng*>(g_pAnalytics);
-    AnalyticsFlurry* pFlurry = dynamic_cast<AnalyticsFlurry*>(g_pAnalytics);
 
     switch (pMenuItem->getTag())
     {
@@ -137,64 +157,64 @@ void HelloWorld::eventMenuCallback(CCObject* pSender)
         break;
     case TAG_LOG_ONLINE_CONFIG:
         {
-            if (pUmeng != NULL)
-            {
-                CCLog("Online config = %s", pUmeng->getConfigParams("abc"));           
-            }
-            else
-            {
-                CCLog("Now is not using umeng!");
-            }
+            PluginParam param("abc");
+            CCLog("Online config = %s", g_pAnalytics->callStringFuncWithParam("getConfigParams", &param, NULL));
         }
         break;
     case TAG_LOG_EVENT_ID_DURATION:
         {
-            if (pUmeng != NULL)
-            {
-                pUmeng->logEventWithDuration("book", 12000);
-                pUmeng->logEventWithDuration("book", 23000, "chapter1");
-                LogEventParamMap paramMap;
-                paramMap.insert(LogEventParamPair("type", "popular"));
-                paramMap.insert(LogEventParamPair("artist", "JJLin"));
-                pUmeng->logEventWithDuration("music", 2330000, &paramMap);
-            }
-            else
-            {
-                CCLog("Now is not using umeng!");
-            }
+            PluginParam event1("book");
+            PluginParam dura1(12000);
+            g_pAnalytics->callFuncWithParam("logEventWithDuration", &event1, &dura1, NULL);
+
+            PluginParam event2("book");
+            PluginParam dura2(12000);
+            PluginParam label("chapter1");
+            g_pAnalytics->callFuncWithParam("logEventWithDurationLabel", &event2, &dura2, &label, NULL);
+
+            PluginParam event3("music");
+            PluginParam dura3(2330000);
+            LogEventParamMap paramMap;
+            paramMap.insert(LogEventParamPair("type", "popular"));
+            paramMap.insert(LogEventParamPair("artist", "JJLin"));
+            PluginParam mapValue(paramMap);
+            g_pAnalytics->callFuncWithParam("logEventWithDurationParams", &event3, &dura3, &mapValue, NULL);
         }
         break;
     case TAG_LOG_EVENT_BEGIN:
         {
             g_pAnalytics->logTimedEventBegin("music");
 
+            PluginParam event1("music");
+            PluginParam label1("one");
+            g_pAnalytics->callFuncWithParam("logTimedEventWithLabelBegin", &event1, &label1, NULL);
+
+            PluginParam event2("music");
+            PluginParam label2("flag0");
             LogEventParamMap paramMap;
             paramMap.insert(LogEventParamPair("type", "popular"));
             paramMap.insert(LogEventParamPair("artist", "JJLin"));
+            PluginParam mapValue(paramMap);
+            g_pAnalytics->callFuncWithParam("logTimedKVEventBegin", &event2, &label2, &mapValue, NULL);
 
-            if (pUmeng != NULL)
-            {
-                pUmeng->logTimedEventWithLabelBegin("music", "one");
-                pUmeng->logTimedKVEventBegin("music", "flag0", &paramMap);
-            }
-            else if (pFlurry != NULL)
-            {
-                pFlurry->logTimedEventBegin("music-kv", &paramMap);
-            }
+            PluginParam event3("music-kv");
+            g_pAnalytics->callFuncWithParam("logTimedEventBeginWithParams", &event3, &mapValue, NULL);
         }
         break;
     case TAG_LOG_EVENT_END:
         {
             g_pAnalytics->logTimedEventEnd("music");
-            if (pUmeng != NULL)
-            {          
-                pUmeng->logTimedEventWithLabelEnd("music", "one");
-                pUmeng->logTimedKVEventEnd("music", "flag0");
-            }
-            else if (pFlurry != NULL)
-            {
-                pFlurry->logTimedEventEnd("music-kv");
-            }
+
+            PluginParam event1("music");
+            PluginParam label1("one");
+            g_pAnalytics->callFuncWithParam("logTimedEventWithLabelEnd", &event1, &label1, NULL);
+
+            PluginParam event2("music");
+            PluginParam label2("flag0");
+            g_pAnalytics->callFuncWithParam("logTimedKVEventEnd", &event2, &label2, NULL);
+
+            PluginParam event3("music-kv");
+            g_pAnalytics->callFuncWithParam("logTimedEventEnd", &event3, NULL);
         }
         break;
     case TAG_MAKE_ME_CRASH:
@@ -213,6 +233,7 @@ void HelloWorld::menuCloseCallback(CCObject* pSender)
     if (g_pAnalytics)
         g_pAnalytics->stopSession();
 
+    PluginManager::end();
     CCDirector::sharedDirector()->end();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);

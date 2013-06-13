@@ -79,6 +79,16 @@ void CCEGLViewProtocol::setDesignResolutionSize(float width, float height, Resol
         m_fScaleX = m_fScaleY = MIN(m_fScaleX, m_fScaleY);
     }
 
+    if ( resolutionPolicy == kResolutionFixedHeight) {
+    	m_fScaleX = m_fScaleY;
+    	m_obDesignResolutionSize.width = ceilf(m_obScreenSize.width/m_fScaleX);
+    }
+
+    if ( resolutionPolicy == kResolutionFixedWidth) {
+    	m_fScaleY = m_fScaleX;
+    	m_obDesignResolutionSize.height = ceilf(m_obScreenSize.height/m_fScaleY);
+    }
+
     // calculate the rect of viewport    
     float viewPortW = m_obDesignResolutionSize.width * m_fScaleX;
     float viewPortH = m_obDesignResolutionSize.height * m_fScaleY;
@@ -156,7 +166,7 @@ void CCEGLViewProtocol::setScissorInPoints(float x , float y , float w , float h
 
 bool CCEGLViewProtocol::isScissorEnabled()
 {
-	return glIsEnabled(GL_SCISSOR_TEST);
+	return (GL_FALSE == glIsEnabled(GL_SCISSOR_TEST)) ? false : true;
 }
 
 CCRect CCEGLViewProtocol::getScissorRect()

@@ -12,15 +12,6 @@ local testLayer  = nil
 local titleLabel = nil
 local entry      = nil
 
-local function onEnterOrExit(tag)
-    local scheduler = CCDirector:sharedDirector():getScheduler()
-    if tag == "enter" then
-        entry = scheduler:scheduleScriptFunc(checkAnim, 0, false)
-    elseif tag == "exit" then
-        scheduler:unscheduleScriptEntry(entry)
-    end
-end
-
 local function checkAnim(dt)
     local s2 = testLayer:getChildByTag(kTagBackground)
     if s2 == nil then
@@ -31,6 +22,15 @@ local function checkAnim(dt)
         if s2:getGrid() ~= nil then
             s2:setGrid(nil)
         end
+    end
+end
+
+local function onEnterOrExit(tag)
+    local scheduler = CCDirector:sharedDirector():getScheduler()
+    if tag == "enter" then
+        entry = scheduler:scheduleScriptFunc(checkAnim, 0, false)
+    elseif tag == "exit" then
+        scheduler:unscheduleScriptEntry(entry)
     end
 end
 

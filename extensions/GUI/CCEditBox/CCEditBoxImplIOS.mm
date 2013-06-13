@@ -81,8 +81,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
         [textField_ addTarget:self action:@selector(textChanged) forControlEvents:UIControlEventEditingChanged];
         self.editBox = editBox;
         
-        [[EAGLView sharedEGLView] addSubview:textField_];
-		textField_.hidden = YES;
+		
         
         return self;
     }while(0);
@@ -117,12 +116,14 @@ static const int CC_EDIT_BOX_PADDING = 5;
 
 -(void) openKeyboard
 {
+    [[EAGLView sharedEGLView] addSubview:textField_];
     [textField_ becomeFirstResponder];
 }
 
 -(void) closeKeyboard
 {
     [textField_ resignFirstResponder];
+    [textField_ removeFromSuperview];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)sender
@@ -153,6 +154,13 @@ static const int CC_EDIT_BOX_PADDING = 5;
     {
         pDelegate->editBoxEditingDidBegin(getEditBoxImplIOS()->getCCEditBox());
     }
+    
+    cocos2d::extension::CCEditBox*  pEditBox= getEditBoxImplIOS()->getCCEditBox();
+    if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
+    {
+        cocos2d::CCScriptEngineProtocol* pEngine = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine();
+        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
+    }
     return YES;
 }
 
@@ -167,6 +175,14 @@ static const int CC_EDIT_BOX_PADDING = 5;
     {
         pDelegate->editBoxEditingDidEnd(getEditBoxImplIOS()->getCCEditBox());
         pDelegate->editBoxReturn(getEditBoxImplIOS()->getCCEditBox());
+    }
+    
+    cocos2d::extension::CCEditBox*  pEditBox= getEditBoxImplIOS()->getCCEditBox();
+    if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
+    {
+        cocos2d::CCScriptEngineProtocol* pEngine = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine();
+        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "ended",pEditBox);
+        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "return",pEditBox);
     }
 	
 	if(editBox_ != nil)
@@ -210,6 +226,14 @@ static const int CC_EDIT_BOX_PADDING = 5;
     {
         pDelegate->editBoxTextChanged(getEditBoxImplIOS()->getCCEditBox(), getEditBoxImplIOS()->getText());
     }
+    
+    cocos2d::extension::CCEditBox*  pEditBox= getEditBoxImplIOS()->getCCEditBox();
+    if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
+    {
+        cocos2d::CCScriptEngineProtocol* pEngine = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine();
+        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
+    }
+
 }
 
 @end

@@ -30,6 +30,11 @@ string CCFileUtilsMarmalade::getWritablePath()
 
 bool CCFileUtilsMarmalade::isFileExist(const std::string& strFilePath)
 {
+    if (0 == strFilePath.length())
+    {
+        return false;
+    }
+    
     return s3eFileCheckExists(strFilePath.c_str()) == S3E_TRUE ? true : false;
 }
 
