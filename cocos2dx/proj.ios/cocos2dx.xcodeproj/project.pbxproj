@@ -293,6 +293,10 @@
 		2628297A15EC7064002C4240 /* ccTypeInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 2628297915EC7064002C4240 /* ccTypeInfo.h */; };
 		36B713C717557CB900A2554C /* CCData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36B713C517557CB900A2554C /* CCData.cpp */; };
 		36B713C817557CB900A2554C /* CCData.h in Headers */ = {isa = PBXBuildFile; fileRef = 36B713C617557CB900A2554C /* CCData.h */; };
+		465E20AC176ABE63001D853C /* CCComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 465E20A8176ABE63001D853C /* CCComponent.cpp */; };
+		465E20AD176ABE63001D853C /* CCComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 465E20A9176ABE63001D853C /* CCComponent.h */; };
+		465E20AE176ABE63001D853C /* CCComponentContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 465E20AA176ABE63001D853C /* CCComponentContainer.cpp */; };
+		465E20AF176ABE63001D853C /* CCComponentContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 465E20AB176ABE63001D853C /* CCComponentContainer.h */; };
 		4698CFA9174CBB700066A57B /* CCTextureETC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4698CFA7174CBB700066A57B /* CCTextureETC.cpp */; };
 		4698CFAA174CBB700066A57B /* CCTextureETC.h in Headers */ = {isa = PBXBuildFile; fileRef = 4698CFA8174CBB700066A57B /* CCTextureETC.h */; };
 		469A7DF316C24787006FFCB2 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 469A7DF116C24787006FFCB2 /* tinyxml2.cpp */; };
@@ -606,6 +610,10 @@
 		2628297915EC7064002C4240 /* ccTypeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypeInfo.h; sourceTree = "<group>"; };
 		36B713C517557CB900A2554C /* CCData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCData.cpp; sourceTree = "<group>"; };
 		36B713C617557CB900A2554C /* CCData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCData.h; sourceTree = "<group>"; };
+		465E20A8176ABE63001D853C /* CCComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCComponent.cpp; sourceTree = "<group>"; };
+		465E20A9176ABE63001D853C /* CCComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComponent.h; sourceTree = "<group>"; };
+		465E20AA176ABE63001D853C /* CCComponentContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCComponentContainer.cpp; sourceTree = "<group>"; };
+		465E20AB176ABE63001D853C /* CCComponentContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComponentContainer.h; sourceTree = "<group>"; };
 		4698CFA7174CBB700066A57B /* CCTextureETC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextureETC.cpp; sourceTree = "<group>"; };
 		4698CFA8174CBB700066A57B /* CCTextureETC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextureETC.h; sourceTree = "<group>"; };
 		469A7DF116C24787006FFCB2 /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml2.cpp; sourceTree = "<group>"; };
@@ -1118,6 +1126,7 @@
 				1551A5F1158F2ADE00E66CFE /* ccUtils.h */,
 				1551A5F3158F2ADE00E66CFE /* CCVertex.h */,
 				1551A5FD158F2ADE00E66CFE /* TransformUtils.h */,
+				465E20A7176ABE63001D853C /* component */,
 				1551A5F4158F2ADE00E66CFE /* data_support */,
 				1551A5F9158F2ADE00E66CFE /* image_support */,
 				469A7DF016C24787006FFCB2 /* tinyxml2 */,
@@ -1257,6 +1266,17 @@
 				1A3191B816C0DDE700207637 /* types.h */,
 			);
 			path = webp;
+			sourceTree = "<group>";
+		};
+		465E20A7176ABE63001D853C /* component */ = {
+			isa = PBXGroup;
+			children = (
+				465E20A8176ABE63001D853C /* CCComponent.cpp */,
+				465E20A9176ABE63001D853C /* CCComponent.h */,
+				465E20AA176ABE63001D853C /* CCComponentContainer.cpp */,
+				465E20AB176ABE63001D853C /* CCComponentContainer.h */,
+			);
+			path = component;
 			sourceTree = "<group>";
 		};
 		469A7DF016C24787006FFCB2 /* tinyxml2 */ = {
@@ -1458,6 +1478,8 @@
 				1A5429001720F0650074EC5C /* CCDataVisitor.h in Headers */,
 				4698CFAA174CBB700066A57B /* CCTextureETC.h in Headers */,
 				36B713C817557CB900A2554C /* CCData.h in Headers */,
+				465E20AD176ABE63001D853C /* CCComponent.h in Headers */,
+				465E20AF176ABE63001D853C /* CCComponentContainer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1645,6 +1667,8 @@
 				1A5428FF1720F0650074EC5C /* CCDataVisitor.cpp in Sources */,
 				4698CFA9174CBB700066A57B /* CCTextureETC.cpp in Sources */,
 				36B713C717557CB900A2554C /* CCData.cpp in Sources */,
+				465E20AC176ABE63001D853C /* CCComponent.cpp in Sources */,
+				465E20AE176ABE63001D853C /* CCComponentContainer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
