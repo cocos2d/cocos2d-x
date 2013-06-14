@@ -43,6 +43,13 @@ void CCActionCamera::startWithTarget(CCNode *pTarget)
     camera->getUpXYZ(&m_fUpXOrig, &m_fUpYOrig, &m_fUpZOrig);
 }
 
+CCActionCamera* CCActionCamera::clone() const
+{
+	auto a = new CCActionCamera(*this);
+	a->autorelease();
+	return a;
+}
+
 CCActionInterval * CCActionCamera::reverse()
 {
     return CCReverseTime::create(this);
@@ -61,6 +68,14 @@ CCOrbitCamera * CCOrbitCamera::create(float t, float radius, float deltaRadius, 
     }
     CC_SAFE_DELETE(pRet);
     return NULL;
+}
+
+CCOrbitCamera* CCOrbitCamera::clone() const
+{
+	auto a = new CCOrbitCamera(*this);
+	a->initWithDuration(m_fDuration, m_fRadius, m_fDeltaRadius, m_fAngleZ, m_fDeltaAngleZ, m_fAngleX, m_fDeltaAngleX);
+	a->autorelease();
+	return a;
 }
 
 CCObject * CCOrbitCamera::copyWithZone(CCZone *pZone)

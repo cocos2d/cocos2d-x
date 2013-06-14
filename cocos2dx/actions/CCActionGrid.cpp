@@ -106,6 +106,14 @@ CCActionInterval* CCGridAction::reverse(void)
     return CCReverseTime::create(this);
 }
 
+CCGridAction * CCGridAction::clone() const
+{
+	auto a = new CCGridAction(*this);
+	a->initWithDuration(m_fDuration, m_sGridSize);
+	a->autorelease();
+	return a;
+}
+
 CCObject* CCGridAction::copyWithZone(CCZone *pZone)
 {
     CCZone* pNewZone = NULL;
