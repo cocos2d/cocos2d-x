@@ -45,7 +45,8 @@ class CC_DLL CCActionCamera : public CCActionInterval //<NSCopying>
 {
 public:
     CCActionCamera()
-        :m_fCenterXOrig(0)
+		:CCActionInterval()
+        ,m_fCenterXOrig(0)
         ,m_fCenterYOrig(0)
         ,m_fCenterZOrig(0)
         ,m_fEyeXOrig(0)
@@ -59,6 +60,8 @@ public:
     // super methods
     virtual void startWithTarget(CCNode *pTarget);
     virtual CCActionInterval * reverse();
+	/** returns a new clone of the action */
+	CCActionCamera *clone() const;
 protected:
     float m_fCenterXOrig;
     float m_fCenterYOrig;
@@ -82,7 +85,8 @@ class CC_DLL CCOrbitCamera : public CCActionCamera //<NSCopying>
 {
 public:
     CCOrbitCamera()
-        : m_fRadius(0.0)
+		: CCActionCamera()
+		, m_fRadius(0.0)
         , m_fDeltaRadius(0.0)
         , m_fAngleZ(0.0)
         , m_fDeltaAngleZ(0.0)
@@ -103,6 +107,8 @@ public:
     /** positions the camera according to spherical coordinates */
     void sphericalRadius(float *r, float *zenith, float *azimuth);
     // super methods
+	/** returns a new clone of the action */
+	CCOrbitCamera *clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);

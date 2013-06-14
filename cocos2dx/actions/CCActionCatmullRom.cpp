@@ -279,6 +279,14 @@ void CCCardinalSplineTo::startWithTarget(cocos2d::CCNode *pTarget)
     m_accumulatedDiff = CCPointZero;
 }
 
+CCCardinalSplineTo* CCCardinalSplineTo::clone() const
+{
+	auto a = new CCCardinalSplineTo(*this);
+	a->initWithDuration(this->m_fDuration, this->m_pPoints, this->m_fTension);
+	a->autorelease();
+	return a;
+}
+
 CCCardinalSplineTo* CCCardinalSplineTo::copyWithZone(cocos2d::CCZone *pZone)
 {
     CCZone* pNewZone = NULL;
@@ -437,6 +445,14 @@ void CCCardinalSplineBy::startWithTarget(cocos2d::CCNode *pTarget)
     m_startPosition = pTarget->getPosition();
 }
 
+CCCardinalSplineBy* CCCardinalSplineBy::clone() const
+{
+	auto a = new CCCardinalSplineBy(*this);
+	a->initWithDuration(this->m_fDuration, (CCPointArray*)this->m_pPoints->copy()->autorelease(), this->m_fTension);
+	a->autorelease();
+	return a;
+}
+
 /* CCCatmullRomTo
  */
 
@@ -468,6 +484,15 @@ bool CCCatmullRomTo::initWithDuration(float dt, cocos2d::CCPointArray *points)
     return false;
 }
 
+CCCatmullRomTo* CCCatmullRomTo::clone() const
+{
+	auto a = new CCCatmullRomTo(*this);
+	a->initWithDuration(this->m_fDuration, (CCPointArray*)this->m_pPoints->copy()->autorelease());
+	a->autorelease();
+	return a;
+}
+
+
 /* CCCatmullRomBy
  */
 
@@ -497,6 +522,14 @@ bool CCCatmullRomBy::initWithDuration(float dt, cocos2d::CCPointArray *points)
     }
     
     return false;
+}
+
+CCCatmullRomBy* CCCatmullRomBy::clone() const
+{
+	auto a = new CCCatmullRomBy(*this);
+	a->initWithDuration(this->m_fDuration, (CCPointArray*)this->m_pPoints->copy()->autorelease());
+	a->autorelease();
+	return a;
 }
 
 NS_CC_END;

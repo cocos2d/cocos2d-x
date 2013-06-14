@@ -47,6 +47,7 @@ class CC_DLL CCCopying
 {
 public:
     virtual CCObject* copyWithZone(CCZone* pZone);
+	
 };
 
 class CC_DLL CCObject : public CCCopying

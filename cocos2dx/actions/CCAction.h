@@ -50,11 +50,15 @@ class CC_DLL CCAction : public CCObject
 {
 public:
     CCAction(void);
+	CCAction(const CCAction& other );
+
     virtual ~CCAction(void);
 
     const char* description();
 
     virtual CCObject* copyWithZone(CCZone *pZone);
+	/** returns a clone of action */
+	virtual CCAction* clone() const;
 
     //! return true if the action has finished
     virtual bool isDone(void);
@@ -124,7 +128,8 @@ class CC_DLL CCFiniteTimeAction : public CCAction
 {
 public:
     CCFiniteTimeAction()
-        : m_fDuration(0)
+	: CCAction()
+	, m_fDuration(0)
     {}
     virtual ~CCFiniteTimeAction(){}
     //! get duration in seconds of the action
@@ -134,6 +139,10 @@ public:
 
     /** returns a reversed action */
     virtual CCFiniteTimeAction* reverse(void);
+
+	/** returns a clone of action */
+	virtual CCFiniteTimeAction* clone() const;
+
 protected:
     //! duration in seconds
     float m_fDuration;
@@ -151,10 +160,8 @@ class CCRepeatForever;
 class CC_DLL CCSpeed : public CCAction
 {
 public:
-    CCSpeed()
-        : m_fSpeed(0.0)
-        , m_pInnerAction(NULL)
-    {}
+    CCSpeed();
+	CCSpeed(const CCSpeed &other);
     virtual ~CCSpeed(void);
 
     inline float getSpeed(void) { return m_fSpeed; }
@@ -165,6 +172,9 @@ public:
     bool initWithAction(CCActionInterval *pAction, float fSpeed);
 
     virtual CCObject* copyWithZone(CCZone *pZone);
+
+	/** returns a clone of action */
+	virtual CCSpeed* clone() const;
     virtual void startWithTarget(CCNode* pTarget);
     virtual void stop();
     virtual void step(float dt);
@@ -199,13 +209,15 @@ class CC_DLL CCFollow : public CCAction
 {
 public:
     CCFollow()
-        : m_pobFollowedNode(NULL)
+        : CCAction()
+		, m_pobFollowedNode(NULL)
         , m_bBoundarySet(false)
         , m_bBoundaryFullyCovered(false)        
         , m_fLeftBoundary(0.0)
         , m_fRightBoundary(0.0)
         , m_fTopBoundary(0.0)
         , m_fBottomBoundary(0.0)
+		, _worldRect(CCRectZero)
     {}
     virtual ~CCFollow(void);
     
@@ -217,6 +229,8 @@ public:
     bool initWithTarget(CCNode *pFollowedNode, const CCRect& rect = CCRectZero);
 
     virtual CCObject* copyWithZone(CCZone *pZone);
+	/** returns a clone of action */
+	virtual CCFollow* clone() const;
     virtual void step(float dt);
     virtual bool isDone(void);
     virtual void stop(void);
@@ -245,6 +259,8 @@ protected:
     float m_fRightBoundary;
     float m_fTopBoundary;
     float m_fBottomBoundary;
+	CCRect _worldRect;
+
 };
 
 // end of actions group

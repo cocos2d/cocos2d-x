@@ -89,27 +89,27 @@ CCTexture2D::~CCTexture2D()
     }
 }
 
-CCTexture2DPixelFormat CCTexture2D::getPixelFormat()
+CCTexture2DPixelFormat CCTexture2D::getPixelFormat() const
 {
     return m_ePixelFormat;
 }
 
-unsigned int CCTexture2D::getPixelsWide()
+unsigned int CCTexture2D::getPixelsWide() const
 {
     return m_uPixelsWide;
 }
 
-unsigned int CCTexture2D::getPixelsHigh()
+unsigned int CCTexture2D::getPixelsHigh() const
 {
     return m_uPixelsHigh;
 }
 
-GLuint CCTexture2D::getName()
+GLuint CCTexture2D::getName() const
 {
     return m_uName;
 }
 
-CCSize CCTexture2D::getContentSize()
+CCSize CCTexture2D::getContentSize() const
 {
 
     CCSize ret;

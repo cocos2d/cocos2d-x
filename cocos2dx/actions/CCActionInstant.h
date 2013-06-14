@@ -48,9 +48,9 @@ the CCIntervalAction actions.
 class CC_DLL CCActionInstant : public CCFiniteTimeAction //<NSCopying>
 {
 public:
-    CCActionInstant();
     virtual ~CCActionInstant(){}
     // CCAction methods
+    virtual CCActionInstant* clone() const;	
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual bool isDone(void);
     virtual void step(float dt);
@@ -69,6 +69,7 @@ public:
     //super methods
     virtual void update(float time);
     virtual CCFiniteTimeAction * reverse(void);
+	virtual CCShow* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
 public:
 
@@ -89,6 +90,7 @@ public:
     //super methods
     virtual void update(float time);
     virtual CCFiniteTimeAction * reverse(void);
+	virtual CCHide* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
 public:
 
@@ -105,6 +107,7 @@ public:
     virtual ~CCToggleVisibility(){}
     //super method
     virtual void update(float time);
+	virtual CCToggleVisibility* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
 public:
 
@@ -123,6 +126,7 @@ public:
 	//super methods
 	virtual void update(float time);
 	virtual CCFiniteTimeAction * reverse(void);
+	virtual CCRemoveSelf* clone() const;
 	virtual CCObject* copyWithZone(CCZone *pZone);
 public:
 	/** create the action */
@@ -153,6 +157,7 @@ public:
     //super methods
     virtual void update(float time);
     virtual CCFiniteTimeAction * reverse(void);
+	virtual CCFlipX* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
 
 protected:
@@ -179,6 +184,7 @@ public:
     //super methods
     virtual void update(float time);
     virtual CCFiniteTimeAction * reverse(void);
+	virtual CCFlipY* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
 
 protected:
@@ -199,6 +205,7 @@ public:
     bool initWithPosition(const CCPoint& pos);
     //super methods
     virtual void update(float time);
+	virtual CCPlace* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
 protected:
     CCPoint m_tPosition;
@@ -248,6 +255,7 @@ public:
     virtual void execute();
     //super methods
     virtual void update(float time);
+	virtual CCCallFunc* clone() const;
     CCObject * copyWithZone(CCZone *pZone);
 
     inline CCObject* getTargetCallback()
@@ -313,6 +321,7 @@ public:
     */
     virtual bool initWithTarget(CCObject* pSelectorTarget, SEL_CallFuncN selector);
     // super methods
+	virtual CCCallFuncN* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void execute();
 };
@@ -336,6 +345,7 @@ public:
     /** initializes the action with the callback and the data to pass as an argument */
     virtual bool initWithTarget(CCObject* pSelectorTarget, SEL_CallFuncND selector, void* d);
     // super methods
+	virtual CCCallFuncND* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void execute();
 
@@ -373,6 +383,7 @@ public:
     */
     virtual bool initWithTarget(CCObject* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject);
     // super methods
+	virtual CCCallFuncO* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void execute();
 
