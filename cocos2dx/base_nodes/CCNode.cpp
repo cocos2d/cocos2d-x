@@ -841,7 +841,7 @@ void CCNode::visit()
             }
         }        
     }
-    elses
+    else
     {
         this->draw();
     }
