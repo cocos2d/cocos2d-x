@@ -844,13 +844,10 @@ void CCNode::visit()
             }
         }        
     }
-    else
+    elses
     {
         this->draw();
     }
-
-    // reset for next frame
-    m_uOrderOfArrival = 0;
 
      if (m_pGrid && m_pGrid->isActive())
      {
