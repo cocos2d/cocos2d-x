@@ -295,8 +295,8 @@ void CCLayer::setKeyboardEnabled(bool enabled)
         CCDirector* pDirector = CCDirector::sharedDirector();
         if (enabled)
         {
-            pDirector->getKeyboardDispatcher()->setKeyPressDelegate( CALLBACK_1(CCLayer::keyPressed, this) );
-            pDirector->getKeyboardDispatcher()->setKeyReleaseDelegate( CALLBACK_1(CCLayer::keyReleased, this) );
+            pDirector->getKeyboardDispatcher()->setKeyPressDelegate( CC_CALLBACK_1(CCLayer::keyPressed, this) );
+            pDirector->getKeyboardDispatcher()->setKeyReleaseDelegate( CC_CALLBACK_1(CCLayer::keyReleased, this) );
         }
         else
         {

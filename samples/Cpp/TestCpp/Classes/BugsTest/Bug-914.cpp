@@ -46,7 +46,7 @@ bool Bug914Layer::init()
 
         // create and initialize a Label
         CCLabelTTF *label = CCLabelTTF::create("Hello World", "Marker Felt", 64);
-        CCMenuItem *item1 = CCMenuItemFont::create("restart", CALLBACK_1(Bug914Layer::restart, this));
+        CCMenuItem *item1 = CCMenuItemFont::create("restart", CC_CALLBACK_1(Bug914Layer::restart, this));
 
         CCMenu *menu = CCMenu::create(item1, NULL);
         menu->alignItemsVertically();

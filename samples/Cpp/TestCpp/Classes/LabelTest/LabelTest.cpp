@@ -940,18 +940,18 @@ LabelTTFTest::LabelTTFTest()
 
     CCMenuItemFont::setFontSize(30);
     CCMenu *menu = CCMenu::create(
-		CCMenuItemFont::create("Left", CALLBACK_1(LabelTTFTest::setAlignmentLeft, this)),
-		CCMenuItemFont::create("Center", CALLBACK_1(LabelTTFTest::setAlignmentCenter, this)),
-		CCMenuItemFont::create("Right", CALLBACK_1(LabelTTFTest::setAlignmentRight, this)),
+		CCMenuItemFont::create("Left", CC_CALLBACK_1(LabelTTFTest::setAlignmentLeft, this)),
+		CCMenuItemFont::create("Center", CC_CALLBACK_1(LabelTTFTest::setAlignmentCenter, this)),
+		CCMenuItemFont::create("Right", CC_CALLBACK_1(LabelTTFTest::setAlignmentRight, this)),
         NULL);
     menu->alignItemsVerticallyWithPadding(4);
     menu->setPosition(ccp(50, s.height / 2 - 20));
     this->addChild(menu);
 
     menu = CCMenu::create(
-		CCMenuItemFont::create("Top", CALLBACK_1(LabelTTFTest::setAlignmentTop, this)),
-		CCMenuItemFont::create("Middle", CALLBACK_1(LabelTTFTest::setAlignmentMiddle, this)),
-		CCMenuItemFont::create("Bottom", CALLBACK_1(LabelTTFTest::setAlignmentBottom, this)),
+		CCMenuItemFont::create("Top", CC_CALLBACK_1(LabelTTFTest::setAlignmentTop, this)),
+		CCMenuItemFont::create("Middle", CC_CALLBACK_1(LabelTTFTest::setAlignmentMiddle, this)),
+		CCMenuItemFont::create("Bottom", CC_CALLBACK_1(LabelTTFTest::setAlignmentBottom, this)),
 		NULL);
     menu->alignItemsVerticallyWithPadding(4);
     menu->setPosition(ccp(s.width - 50, s.height / 2 - 20));
@@ -1155,9 +1155,9 @@ BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
     this->m_pArrowsShouldRetain->retain();
 
     CCMenuItemFont::setFontSize(20);
-    CCMenuItemFont *longSentences = CCMenuItemFont::create("Long Flowing Sentences", CALLBACK_1(BitmapFontMultiLineAlignment::stringChanged, this));
-    CCMenuItemFont *lineBreaks = CCMenuItemFont::create("Short Sentences With Intentional Line Breaks", CALLBACK_1(BitmapFontMultiLineAlignment::stringChanged, this));
-    CCMenuItemFont *mixed = CCMenuItemFont::create("Long Sentences Mixed With Intentional Line Breaks", CALLBACK_1(BitmapFontMultiLineAlignment::stringChanged, this));
+    CCMenuItemFont *longSentences = CCMenuItemFont::create("Long Flowing Sentences", CC_CALLBACK_1(BitmapFontMultiLineAlignment::stringChanged, this));
+    CCMenuItemFont *lineBreaks = CCMenuItemFont::create("Short Sentences With Intentional Line Breaks", CC_CALLBACK_1(BitmapFontMultiLineAlignment::stringChanged, this));
+    CCMenuItemFont *mixed = CCMenuItemFont::create("Long Sentences Mixed With Intentional Line Breaks", CC_CALLBACK_1(BitmapFontMultiLineAlignment::stringChanged, this));
     CCMenu *stringMenu = CCMenu::create(longSentences, lineBreaks, mixed, NULL);
     stringMenu->alignItemsVertically();
 
@@ -1169,9 +1169,9 @@ BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
 
     CCMenuItemFont::setFontSize(30);
 
-    CCMenuItemFont *left = CCMenuItemFont::create("Left", CALLBACK_1(BitmapFontMultiLineAlignment::alignmentChanged, this));
-    CCMenuItemFont *center = CCMenuItemFont::create("Center", CALLBACK_1(BitmapFontMultiLineAlignment::alignmentChanged, this));
-    CCMenuItemFont *right = CCMenuItemFont::create("Right", CALLBACK_1(BitmapFontMultiLineAlignment::alignmentChanged, this));
+    CCMenuItemFont *left = CCMenuItemFont::create("Left", CC_CALLBACK_1(BitmapFontMultiLineAlignment::alignmentChanged, this));
+    CCMenuItemFont *center = CCMenuItemFont::create("Center", CC_CALLBACK_1(BitmapFontMultiLineAlignment::alignmentChanged, this));
+    CCMenuItemFont *right = CCMenuItemFont::create("Right", CC_CALLBACK_1(BitmapFontMultiLineAlignment::alignmentChanged, this));
     CCMenu *alignmentMenu = CCMenu::create(left, center, right, NULL);
     alignmentMenu->alignItemsHorizontallyWithPadding(alignmentItemPadding);
 
