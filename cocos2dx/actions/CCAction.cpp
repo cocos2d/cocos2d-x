@@ -37,20 +37,9 @@ NS_CC_BEGIN
 //
 
 CCAction::CCAction()
-:CCObject()
-,m_pOriginalTarget(NULL)
+:m_pOriginalTarget(NULL)
 ,m_pTarget(NULL)
 ,m_nTag(kCCActionTagInvalid)
-{
-}
-
-// XXX: Can it use the implicitic copy constructor ?
-// XXX: here target and original target are being resetted to NULL.
-CCAction::CCAction(const CCAction& other )
-:CCObject()
-,m_pOriginalTarget(NULL)
-,m_pTarget(NULL)
-,m_nTag(other.m_nTag)
 {
 }
 
@@ -75,6 +64,8 @@ CCAction* CCAction::clone() const
 {
 	// XXX shall not happen
 	auto a = new CCAction(*this);
+	a->m_nTag = m_nTag;
+	a->m_pTarget = a->m_pOriginalTarget = NULL;
 	a->autorelease();
 	return a;
 }
@@ -148,13 +139,6 @@ CCFiniteTimeAction *CCFiniteTimeAction::reverse()
 CCSpeed::CCSpeed()
 : m_fSpeed(0.0)
 , m_pInnerAction(NULL)
-{
-}
-
-CCSpeed::CCSpeed(const CCSpeed &other)
-: m_fSpeed(0.0)
-, CCAction()
-//, m_pInnerAction(other.m_pInnerAction->clone())
 {
 }
 

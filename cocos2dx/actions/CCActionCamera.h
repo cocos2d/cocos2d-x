@@ -45,8 +45,7 @@ class CC_DLL CCActionCamera : public CCActionInterval //<NSCopying>
 {
 public:
     CCActionCamera()
-		:CCActionInterval()
-        ,m_fCenterXOrig(0)
+		:m_fCenterXOrig(0)
         ,m_fCenterYOrig(0)
         ,m_fCenterZOrig(0)
         ,m_fEyeXOrig(0)
@@ -85,8 +84,7 @@ class CC_DLL CCOrbitCamera : public CCActionCamera //<NSCopying>
 {
 public:
     CCOrbitCamera()
-		: CCActionCamera()
-		, m_fRadius(0.0)
+		: m_fRadius(0.0)
         , m_fDeltaRadius(0.0)
         , m_fAngleZ(0.0)
         , m_fDeltaAngleZ(0.0)
