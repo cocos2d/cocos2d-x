@@ -530,19 +530,34 @@ void AssetsManager::Helper::sendMessage(Message *msg)
 
 void AssetsManager::Helper::update(float dt)
 {
+    while (true)
+    {
+        bool finish = processMessage();
+        if (finish)
+            break;
+    }
+}
+
+bool AssetsManager::Helper::processMessage()
+{
     Message *msg = NULL;
+    size_t queueSize = 0;
     
     // Returns quickly if no message
     pthread_mutex_lock(&_messageQueueMutex);
-    if (0 == _messageQueue->size())
+    queueSize = _messageQueue->size();
+    
+    if (0 == queueSize)
     {
         pthread_mutex_unlock(&_messageQueueMutex);
-        return;
+        return true;
     }
     
     // Gets message
     msg = *(_messageQueue->begin());
     _messageQueue->pop_front();
+    
+    queueSize = _messageQueue->size();
     pthread_mutex_unlock(&_messageQueueMutex);
     
     switch (msg->what) {
@@ -580,6 +595,7 @@ void AssetsManager::Helper::update(float dt)
     }
     
     delete msg;
+    return queueSize == 0;
 }
 
 void AssetsManager::Helper::handleUpdateSucceed(Message *msg)

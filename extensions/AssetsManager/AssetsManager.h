@@ -147,7 +147,7 @@ protected:
     bool createDirectory(const char *path);
     void setSearchPath();
     void sendErrorMessage(ErrorCode code);
-    
+     
 private:
     typedef struct _Message
     {
@@ -164,6 +164,7 @@ private:
         ~Helper();
         
         virtual void update(float dt);
+        bool processMessage();
         void sendMessage(Message *msg);
         
     private:
