@@ -7,11 +7,6 @@ class ExtensionsMainLayer : public CCLayer
 {
 public:
     virtual void onEnter();
-    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
-private:
-    CCPoint m_tBeginPos;
-    CCMenu* m_pItemMenu;
 };
 
 class ExtensionsTestScene : public TestScene

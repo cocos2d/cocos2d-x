@@ -7,8 +7,8 @@
 #include "NetworkTest/HttpClientTest.h"
 #endif
 #include "TableViewTest/TableViewTestScene.h"
-#include "ArmatureTest/ArmatureScene.h"
 #include "ComponentsTest/ComponentsTestScene.h"
+#include "ArmatureTest/ArmatureScene.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "NetworkTest/WebSocketTest.h"
@@ -57,6 +57,13 @@ static struct {
 #endif
 	{ "TableViewTest", [](CCObject *sender){ runTableViewTest();}
 	},
+    { "CommponentTest", [](CCObject *sender) { runComponentsTestLayerTest(); }
+    },
+    { "ArmatureTest", [](CCObject *sender) { ArmatureTestScene *pScene = new ArmatureTestScene();
+                                             pScene->runThisTest();
+                                             pScene->release();
+                                        }
+    },
 };
 
 static const int g_maxTests = sizeof(g_extensionsTests) / sizeof(g_extensionsTests[0]);
@@ -66,64 +73,24 @@ static const int g_maxTests = sizeof(g_extensionsTests) / sizeof(g_extensionsTes
 // ExtensionsMainLayer
 //
 ////////////////////////////////////////////////////////
-
-static CCPoint s_tCurPos = CCPointZero;
-
 void ExtensionsMainLayer::onEnter()
 {
     CCLayer::onEnter();
-
+    
     CCSize s = CCDirector::sharedDirector()->getWinSize();
-
-    m_pItemMenu = CCMenu::create();
-    m_pItemMenu->setPosition( CCPointZero );
+    
+    CCMenu* pMenu = CCMenu::create();
+    pMenu->setPosition( CCPointZero );
     CCMenuItemFont::setFontName("Arial");
     CCMenuItemFont::setFontSize(24);
     for (int i = 0; i < g_maxTests; ++i)
     {
         CCMenuItemFont* pItem = CCMenuItemFont::create(g_extensionsTests[i].name, g_extensionsTests[i].callback);
         pItem->setPosition(ccp(s.width / 2, s.height - (i + 1) * LINE_SPACE));
-        m_pItemMenu->addChild(pItem, kItemTagBasic + i);
+        pMenu->addChild(pItem, kItemTagBasic + i);
     }
-    setTouchEnabled(true);
-    addChild(m_pItemMenu);
-}
-
-
-void ExtensionsMainLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
-{
-    CCSetIterator it = pTouches->begin();
-    CCTouch* touch = (CCTouch*)(*it);
-
-    m_tBeginPos = touch->getLocation();    
-}
-
-void ExtensionsMainLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
-{
-    CCSetIterator it = pTouches->begin();
-    CCTouch* touch = (CCTouch*)(*it);
-
-    CCPoint touchLocation = touch->getLocation();    
-    float nMoveY = touchLocation.y - m_tBeginPos.y;
-
-    CCPoint curPos  = m_pItemMenu->getPosition();
-    CCPoint nextPos = ccp(curPos.x, curPos.y + nMoveY);
-
-    if (nextPos.y < 0.0f)
-    {
-        m_pItemMenu->setPosition(CCPointZero);
-        return;
-    }
-
-    if (nextPos.y > ((TEST_MAX_COUNT + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
-    {
-        m_pItemMenu->setPosition(ccp(0, ((TEST_MAX_COUNT + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
-        return;
-    }
-
-    m_pItemMenu->setPosition(nextPos);
-    m_tBeginPos = touchLocation;
-    s_tCurPos   = nextPos;
+    
+    addChild(pMenu);
 }
 
 ////////////////////////////////////////////////////////
@@ -137,6 +104,6 @@ void ExtensionsTestScene::runThisTest()
     CCLayer* pLayer = new ExtensionsMainLayer();
     addChild(pLayer);
     pLayer->release();
-
+    
     CCDirector::sharedDirector()->replaceScene(this);
 }
