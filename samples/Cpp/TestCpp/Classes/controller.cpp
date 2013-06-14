@@ -92,7 +92,7 @@ TestController::TestController()
 : m_tBeginPos(CCPointZero)
 {
     // add close menu
-    CCMenuItemImage *pCloseItem = CCMenuItemImage::create(s_pPathClose, s_pPathClose, CALLBACK_1(TestController::closeCallback, this) );
+    CCMenuItemImage *pCloseItem = CCMenuItemImage::create(s_pPathClose, s_pPathClose, CC_CALLBACK_1(TestController::closeCallback, this) );
     CCMenu* pMenu =CCMenu::create(pCloseItem, NULL);
 
     pMenu->setPosition( CCPointZero );
@@ -107,7 +107,7 @@ TestController::TestController()
 // #else
         CCLabelTTF* label = CCLabelTTF::create( g_aTestNames[i].test_name, "Arial", 24);
 // #endif        
-        CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, CALLBACK_1(TestController::menuCallback, this));
+        CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, CC_CALLBACK_1(TestController::menuCallback, this));
 
         m_pItemMenu->addChild(pMenuItem, i + 10000);
         pMenuItem->setPosition( ccp( VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE) ));

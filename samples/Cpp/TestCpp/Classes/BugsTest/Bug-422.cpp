@@ -31,9 +31,9 @@ void Bug422Layer::reset()
     removeChild(node, false);
 //    [self removeChildByTag:localtag-1 cleanup:NO];
 
-    CCMenuItem *item1 = CCMenuItemFont::create("One", CALLBACK_1(Bug422Layer::menuCallback, this) );
+    CCMenuItem *item1 = CCMenuItemFont::create("One", CC_CALLBACK_1(Bug422Layer::menuCallback, this) );
     CCLog("MenuItemFont: %p", item1);
-	CCMenuItem *item2 = CCMenuItemFont::create("Two", CALLBACK_1(Bug422Layer::menuCallback, this) );
+	CCMenuItem *item2 = CCMenuItemFont::create("Two", CC_CALLBACK_1(Bug422Layer::menuCallback, this) );
     CCMenu *menu = CCMenu::create(item1, item2, NULL);
     menu->alignItemsVertically();
 
