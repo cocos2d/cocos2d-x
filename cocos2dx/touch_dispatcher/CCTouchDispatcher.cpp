@@ -101,6 +101,52 @@ CCTouchDispatcher::~CCTouchDispatcher(void)
 //
 // handlers management
 //
+
+void CCTouchDispatcher::processDelegate()
+{
+    if (m_bToRemove)
+    {
+        m_bToRemove = false;
+        for (unsigned int i = 0; i < m_pHandlersToRemove->num; ++i)
+        {
+            forceRemoveDelegate((CCTouchDelegate*)m_pHandlersToRemove->arr[i]);
+        }
+        ccCArrayRemoveAllValues(m_pHandlersToRemove);
+    }
+    
+    if (m_bToAdd)
+    {
+        m_bToAdd = false;
+        CCTouchHandler* pHandler = NULL;
+        CCObject* pObj = NULL;
+        CCARRAY_FOREACH(m_pHandlersToAdd, pObj)
+        {
+            pHandler = (CCTouchHandler*)pObj;
+            if (! pHandler)
+            {
+                break;
+            }
+            
+            if (dynamic_cast<CCTargetedTouchHandler*>(pHandler) != NULL)
+            {
+                forceAddHandler(pHandler, m_pTargetedHandlers);
+            }
+            else
+            {
+                forceAddHandler(pHandler, m_pStandardHandlers);
+            }
+        }
+        
+        m_pHandlersToAdd->removeAllObjects();
+    }
+    
+    if (m_bToQuit)
+    {
+        m_bToQuit = false;
+        forceRemoveAllDelegates();
+    }
+}
+
 void CCTouchDispatcher::forceAddHandler(CCTouchHandler *pHandler, CCArray *pArray)
 {
     unsigned int u = 0;
@@ -441,47 +487,7 @@ void CCTouchDispatcher::touches(CCSet *pTouches, CCEvent *pEvent, unsigned int u
     // the add/removes/quit is done after the iterations
     //
     m_bLocked = false;
-    if (m_bToRemove)
-    {
-        m_bToRemove = false;
-        for (unsigned int i = 0; i < m_pHandlersToRemove->num; ++i)
-        {
-            forceRemoveDelegate((CCTouchDelegate*)m_pHandlersToRemove->arr[i]);
-        }
-        ccCArrayRemoveAllValues(m_pHandlersToRemove);
-    }
-
-    if (m_bToAdd)
-    {
-        m_bToAdd = false;
-        CCTouchHandler* pHandler = NULL;
-        CCObject* pObj = NULL;
-        CCARRAY_FOREACH(m_pHandlersToAdd, pObj)
-         {
-             pHandler = (CCTouchHandler*)pObj;
-            if (! pHandler)
-            {
-                break;
-            }
-
-            if (dynamic_cast<CCTargetedTouchHandler*>(pHandler) != NULL)
-            {                
-                forceAddHandler(pHandler, m_pTargetedHandlers);
-            }
-            else
-            {
-                forceAddHandler(pHandler, m_pStandardHandlers);
-            }
-         }
- 
-         m_pHandlersToAdd->removeAllObjects();    
-    }
-
-    if (m_bToQuit)
-    {
-        m_bToQuit = false;
-        forceRemoveAllDelegates();
-    }
+    processDelegate();
 }
 
 void CCTouchDispatcher::touchesBegan(CCSet *touches, CCEvent *pEvent)
