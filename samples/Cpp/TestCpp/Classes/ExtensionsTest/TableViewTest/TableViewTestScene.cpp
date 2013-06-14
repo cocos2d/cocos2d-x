@@ -39,7 +39,7 @@ bool TableViewTestLayer::init()
 	tableView->reloadData();
 
 	// Back Menu
-	CCMenuItemFont *itemBack = CCMenuItemFont::create("Back", CALLBACK_1(TableViewTestLayer::toExtensionsMainLayer, this));
+	CCMenuItemFont *itemBack = CCMenuItemFont::create("Back", CC_CALLBACK_1(TableViewTestLayer::toExtensionsMainLayer, this));
 	itemBack->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
 	CCMenu *menuBack = CCMenu::create(itemBack, NULL);
 	menuBack->setPosition(CCPointZero);

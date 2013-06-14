@@ -297,9 +297,9 @@ TestLayer1::TestLayer1(void)
     addChild( label);
 
     // menu
-    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, CALLBACK_1(TestLayer1::backCallback, this) );
-    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, CALLBACK_1(TestLayer1::restartCallback, this) );
-    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, CALLBACK_1(TestLayer1::nextCallback, this) );
+    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, CC_CALLBACK_1(TestLayer1::backCallback, this) );
+    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, CC_CALLBACK_1(TestLayer1::restartCallback, this) );
+    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, CC_CALLBACK_1(TestLayer1::nextCallback, this) );
 
     CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 
@@ -426,9 +426,9 @@ TestLayer2::TestLayer2()
     addChild( label);
 
     // menu
-    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, CALLBACK_1(TestLayer2::backCallback, this) );
-    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, CALLBACK_1(TestLayer2::restartCallback, this) );
-    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, CALLBACK_1(TestLayer2::nextCallback, this) );
+    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, CC_CALLBACK_1(TestLayer2::backCallback, this) );
+    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, CC_CALLBACK_1(TestLayer2::restartCallback, this) );
+    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, CC_CALLBACK_1(TestLayer2::nextCallback, this) );
 
     CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 
