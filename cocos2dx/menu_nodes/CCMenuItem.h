@@ -58,20 +58,13 @@ class CCSpriteFrame;
  */
 class CC_DLL CCMenuItem : public CCNodeRGBA
 {
-protected:
-    /** whether or not the item is selected
-     @since v0.8.2
-     */
-    bool m_bSelected;
-    bool m_bEnabled;
-
 public:
     CCMenuItem()
     : m_bSelected(false)
     , m_bEnabled(false)            
     , m_nScriptTapHandler(0)
-	, _target(NULL)
 	, _callback(nullptr)
+    , _target(NULL)
     {}
     virtual ~CCMenuItem();
 
@@ -113,13 +106,13 @@ public:
     void setCallback(const ccMenuCallback& callback);
 
 protected:
+    bool            m_bSelected;
+    bool            m_bEnabled;
+    int             m_nScriptTapHandler;
 	// callback
 	ccMenuCallback _callback;
-
 	// If using the old API, the _target needs to be retained / released
 	CCObject		*_target;
-
-    int             m_nScriptTapHandler;
 };
 
 /** @brief An abstract class for "label" CCMenuItemLabel items 
