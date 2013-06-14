@@ -50,7 +50,6 @@ class CC_DLL CCAction : public CCObject
 {
 public:
     CCAction(void);
-	CCAction(const CCAction& other );
 
     virtual ~CCAction(void);
 
@@ -128,8 +127,7 @@ class CC_DLL CCFiniteTimeAction : public CCAction
 {
 public:
     CCFiniteTimeAction()
-	: CCAction()
-	, m_fDuration(0)
+	: m_fDuration(0)
     {}
     virtual ~CCFiniteTimeAction(){}
     //! get duration in seconds of the action
@@ -161,7 +159,6 @@ class CC_DLL CCSpeed : public CCAction
 {
 public:
     CCSpeed();
-	CCSpeed(const CCSpeed &other);
     virtual ~CCSpeed(void);
 
     inline float getSpeed(void) { return m_fSpeed; }
@@ -209,8 +206,7 @@ class CC_DLL CCFollow : public CCAction
 {
 public:
     CCFollow()
-        : CCAction()
-		, m_pobFollowedNode(NULL)
+		: m_pobFollowedNode(NULL)
         , m_bBoundarySet(false)
         , m_bBoundaryFullyCovered(false)        
         , m_fLeftBoundary(0.0)
