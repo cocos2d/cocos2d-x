@@ -310,7 +310,7 @@ void CCDirector::calculateDeltaTime(void)
 
     *m_pLastUpdate = now;
 }
-float CCDirector::getDeltaTime()
+float CCDirector::getDeltaTime() const
 {
 	return m_fDeltaTime;
 }
