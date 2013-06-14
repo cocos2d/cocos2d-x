@@ -42,6 +42,22 @@ install_llvm()
     mv clang+llvm-3.1-x86_64-${HOST_NAME} clang+llvm-3.1
 }
 
+install_llvm_3_2()
+{
+    if [ "$PLATFORM"x = "ios"x ]; then
+        HOST_NAME="apple-darwin11"
+    else
+        HOST_NAME="linux-ubuntu-12.04"
+    fi
+    # Download llvm3.2
+    echo "Download clang+llvm-3.2-x86_64-${HOST_NAME}.tar.gz"
+    curl -O http://llvm.org/releases/3.2/clang+llvm-3.2-x86_64-${HOST_NAME}.tar.gz
+    echo "Decompress clang+llvm-3.2-x86_64-${HOST_NAME}.tar.gz ..."
+    tar xzf clang+llvm-3.2-x86_64-${HOST_NAME}.tar.gz
+    # Rename llvm
+    mv clang+llvm-3.2-x86_64-${HOST_NAME} clang+llvm-3.2
+}
+
 if [ "$GEN_JSB"x = "YES"x ]; then
     if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
         exit 0
@@ -67,6 +83,10 @@ fi
 if [ "$PLATFORM"x = "android"x ]; then 
     install_android_ndk
     install_llvm
+fi
+
+if [ "$PLATFORM"x = "emscripten"x ]; then 
+    install_llvm_3_2
 fi
 
 if [ "$PLATFORM"x = "ios"x ]; then

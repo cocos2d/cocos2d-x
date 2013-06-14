@@ -16,6 +16,7 @@ include $(COCOS_ROOT)/cocos2dx/proj.emscripten/cocos2dx.mk
 $(TARGET): $(OBJECTS) $(STATICLIBS) $(COCOS_LIBS) $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
 	cp -a ../../../../samples/Cpp/TestCpp/Resources ../../../../samples/Lua/TestLua
+	cp -r ../../../../scripting/lua/script/ ../../../../samples/Lua/TestLua/Resources
 	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $@ $(SHAREDLIBS) $(STATICLIBS) $(LIBS)
 
 $(OBJ_DIR)/%.o: ../%.cpp $(CORE_MAKEFILE_LIST)

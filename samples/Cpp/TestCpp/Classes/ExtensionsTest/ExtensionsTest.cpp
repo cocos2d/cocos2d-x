@@ -7,6 +7,8 @@
 #include "NetworkTest/HttpClientTest.h"
 #endif
 #include "TableViewTest/TableViewTestScene.h"
+#include "ComponentsTest/ComponentsTestScene.h"
+#include "ArmatureTest/ArmatureScene.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "NetworkTest/WebSocketTest.h"
@@ -55,6 +57,13 @@ static struct {
 #endif
 	{ "TableViewTest", [](CCObject *sender){ runTableViewTest();}
 	},
+    { "CommponentTest", [](CCObject *sender) { runComponentsTestLayerTest(); }
+    },
+    { "ArmatureTest", [](CCObject *sender) { ArmatureTestScene *pScene = new ArmatureTestScene();
+                                             pScene->runThisTest();
+                                             pScene->release();
+                                        }
+    },
 };
 
 static const int g_maxTests = sizeof(g_extensionsTests) / sizeof(g_extensionsTests[0]);
@@ -67,9 +76,9 @@ static const int g_maxTests = sizeof(g_extensionsTests) / sizeof(g_extensionsTes
 void ExtensionsMainLayer::onEnter()
 {
     CCLayer::onEnter();
-
+    
     CCSize s = CCDirector::sharedDirector()->getWinSize();
-
+    
     CCMenu* pMenu = CCMenu::create();
     pMenu->setPosition( CCPointZero );
     CCMenuItemFont::setFontName("Arial");
@@ -80,7 +89,7 @@ void ExtensionsMainLayer::onEnter()
         pItem->setPosition(ccp(s.width / 2, s.height - (i + 1) * LINE_SPACE));
         pMenu->addChild(pItem, kItemTagBasic + i);
     }
-
+    
     addChild(pMenu);
 }
 
@@ -95,6 +104,6 @@ void ExtensionsTestScene::runThisTest()
     CCLayer* pLayer = new ExtensionsMainLayer();
     addChild(pLayer);
     pLayer->release();
-
+    
     CCDirector::sharedDirector()->replaceScene(this);
 }
