@@ -71,6 +71,9 @@ public:
     void update(float dt);
     CCActionInterval* reverse();
 
+	/** returns a new clone of the action */
+	CCActionTween *clone() const;
+
     std::string        m_strKey;
     float            m_fFrom, m_fTo;
     float            m_fDelta;

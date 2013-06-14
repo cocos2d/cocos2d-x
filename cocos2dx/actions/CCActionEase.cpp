@@ -76,6 +76,14 @@ bool CCActionEase::initWithAction(CCActionInterval *pAction)
     return false;
 }
 
+CCActionEase* CCActionEase::clone() const
+{
+	auto a = new CCActionEase(*this);
+	a->initWithAction((CCActionInterval *)m_pInner->clone());
+	a->autorelease();
+	return a;
+}
+
 CCObject* CCActionEase::copyWithZone(CCZone *pZone)
 {
     CCZone* pNewZone = NULL;
@@ -164,6 +172,14 @@ bool CCEaseRateAction::initWithAction(CCActionInterval *pAction, float fRate)
     return false;
 }
 
+CCEaseRateAction* CCEaseRateAction::clone() const
+{
+	auto a = new CCEaseRateAction(*this);
+	a->initWithAction((CCActionInterval*)m_pInner->clone(), m_fRate);
+	a->autorelease();
+	return a;
+}
+
 CCObject* CCEaseRateAction::copyWithZone(CCZone *pZone)
 {
     CCZone* pNewZone = NULL;
@@ -214,6 +230,14 @@ CCEaseIn* CCEaseIn::create(CCActionInterval *pAction, float fRate)
     }
 
     return pRet;
+}
+
+CCEaseIn* CCEaseIn::clone() const
+{
+	auto a = new CCEaseIn(*this);
+	a->initWithAction((CCActionInterval*)m_pInner->clone(), m_fRate);
+	a->autorelease();
+	return a;
 }
 
 CCObject* CCEaseIn::copyWithZone(CCZone *pZone)
@@ -268,6 +292,14 @@ CCEaseOut* CCEaseOut::create(CCActionInterval *pAction, float fRate)
     return pRet;   
 }
 
+CCEaseOut* CCEaseOut::clone() const
+{
+	auto a = new CCEaseOut(*this);
+	a->initWithAction((CCActionInterval*)m_pInner->clone(), m_fRate);
+	a->autorelease();
+	return a;
+}
+
 CCObject* CCEaseOut::copyWithZone(CCZone *pZone)
 {
     CCZone* pNewZone = NULL;
@@ -318,6 +350,14 @@ CCEaseInOut* CCEaseInOut::create(CCActionInterval *pAction, float fRate)
     }
 
     return pRet; 
+}
+
+CCEaseInOut* CCEaseInOut::clone() const
+{
+	auto a = new CCEaseInOut(*this);
+	a->initWithAction((CCActionInterval*)m_pInner->clone(), m_fRate);
+	a->autorelease();
+	return a;
 }
 
 CCObject* CCEaseInOut::copyWithZone(CCZone *pZone)
@@ -381,6 +421,14 @@ CCEaseExponentialIn* CCEaseExponentialIn::create(CCActionInterval* pAction)
     return pRet;    
 }
 
+CCEaseExponentialIn* CCEaseExponentialIn::clone() const
+{
+	auto a = new CCEaseExponentialIn(*this);
+	a->initWithAction((CCActionInterval *)m_pInner->clone());
+	a->autorelease();
+	return a;
+}
+
 CCObject* CCEaseExponentialIn::copyWithZone(CCZone *pZone)
 {
     CCZone* pNewZone = NULL;
@@ -431,6 +479,14 @@ CCEaseExponentialOut* CCEaseExponentialOut::create(CCActionInterval* pAction)
     }
 
     return pRet; 
+}
+
+CCEaseExponentialOut* CCEaseExponentialOut::clone() const
+{
+	auto a = new CCEaseExponentialOut(*this);
+	a->initWithAction((CCActionInterval *)m_pInner->clone());
+	a->autorelease();
+	return a;
 }
 
 CCObject* CCEaseExponentialOut::copyWithZone(CCZone *pZone)
@@ -484,6 +540,14 @@ CCEaseExponentialInOut* CCEaseExponentialInOut::create(CCActionInterval *pAction
     }
 
     return pRet; 
+}
+
+CCEaseExponentialInOut* CCEaseExponentialInOut::clone() const
+{
+	auto a = new CCEaseExponentialInOut(*this);
+	a->initWithAction((CCActionInterval *)m_pInner->clone());
+	a->autorelease();
+	return a;
 }
 
 CCObject* CCEaseExponentialInOut::copyWithZone(CCZone *pZone)
@@ -549,6 +613,14 @@ CCEaseSineIn* CCEaseSineIn::create(CCActionInterval* pAction)
     return pRet; 
 }
 
+CCEaseSineIn* CCEaseSineIn::clone() const
+{
+	auto a = new CCEaseSineIn(*this);
+	a->initWithAction((CCActionInterval *)m_pInner->clone());
+	a->autorelease();
+	return a;
+}
+
 CCObject* CCEaseSineIn::copyWithZone(CCZone *pZone)
 {
     CCZone* pNewZone = NULL;
@@ -602,6 +674,14 @@ CCEaseSineOut* CCEaseSineOut::create(CCActionInterval* pAction)
     return pRet; 
 }
 
+CCEaseSineOut* CCEaseSineOut::clone() const
+{
+	auto a = new CCEaseSineOut(*this);
+	a->initWithAction((CCActionInterval *)m_pInner->clone());
+	a->autorelease();
+	return a;
+}
+
 CCObject* CCEaseSineOut::copyWithZone(CCZone *pZone)
 {
     CCZone* pNewZone = NULL;
@@ -653,6 +733,14 @@ CCEaseSineInOut* CCEaseSineInOut::create(CCActionInterval* pAction)
     }
 
     return pRet; 
+}
+
+CCEaseSineInOut* CCEaseSineInOut::clone() const
+{
+	auto a = new CCEaseSineInOut(*this);
+	a->initWithAction((CCActionInterval *)m_pInner->clone());
+	a->autorelease();
+	return a;
 }
 
 CCObject* CCEaseSineInOut::copyWithZone(CCZone *pZone)
@@ -724,6 +812,14 @@ bool CCEaseElastic::initWithAction(CCActionInterval *pAction, float fPeriod/* = 
     return false;
 }
 
+CCEaseElastic* CCEaseElastic::clone() const
+{
+	auto a = new CCEaseElastic(*this);
+	a->initWithAction((CCActionInterval *)m_pInner->clone(), m_fPeriod);
+	a->autorelease();
+	return a;
+}
+
 CCObject* CCEaseElastic::copyWithZone(CCZone *pZone)
 {
     CCZone* pNewZone = NULL;
@@ -777,6 +873,14 @@ CCEaseElasticIn* CCEaseElasticIn::create(CCActionInterval *pAction, float fPerio
     }
 
     return pRet; 
+}
+
+CCEaseElasticIn* CCEaseElasticIn::clone() const
+{
+	auto a = new CCEaseElasticIn(*this);
+	a->initWithAction((CCActionInterval *)m_pInner->clone(), m_fPeriod);
+	a->autorelease();
+	return a;
 }
 
 CCObject* CCEaseElasticIn::copyWithZone(CCZone *pZone)
@@ -849,6 +953,14 @@ CCEaseElasticOut* CCEaseElasticOut::create(CCActionInterval *pAction, float fPer
     return pRet; 
 }
 
+CCEaseElasticOut* CCEaseElasticOut::clone() const
+{
+	auto a = new CCEaseElasticOut(*this);
+	a->initWithAction((CCActionInterval *)m_pInner->clone(), m_fPeriod);
+	a->autorelease();
+	return a;
+}
+
 CCObject *CCEaseElasticOut::copyWithZone(CCZone *pZone)
 {
     CCZone* pNewZone = NULL;
@@ -916,6 +1028,14 @@ CCEaseElasticInOut* CCEaseElasticInOut::create(CCActionInterval *pAction, float 
     }
 
     return pRet; 
+}
+
+CCEaseElasticInOut* CCEaseElasticInOut::clone() const
+{
+	auto a = new CCEaseElasticInOut(*this);
+	a->initWithAction((CCActionInterval *)m_pInner->clone(), m_fPeriod);
+	a->autorelease();
+	return a;
 }
 
 CCObject* CCEaseElasticInOut::copyWithZone(CCZone *pZone)
@@ -998,6 +1118,14 @@ CCEaseBounce* CCEaseBounce::create(CCActionInterval* pAction)
     return pRet; 
 }
 
+CCEaseBounce* CCEaseBounce::clone() const
+{
+	auto a = new CCEaseBounce(*this);
+	a->initWithAction((CCActionInterval *)m_pInner->clone());
+	a->autorelease();
+	return a;
+}
+
 CCObject* CCEaseBounce::copyWithZone(CCZone *pZone)
 {
     CCZone* pNewZone = NULL;
@@ -1067,6 +1195,14 @@ CCEaseBounceIn* CCEaseBounceIn::create(CCActionInterval* pAction)
     return pRet; 
 }
 
+CCEaseBounceIn* CCEaseBounceIn::clone() const
+{
+	auto a = new CCEaseBounceIn(*this);
+	a->initWithAction((CCActionInterval *)m_pInner->clone());
+	a->autorelease();
+	return a;
+}
+
 CCObject* CCEaseBounceIn::copyWithZone(CCZone *pZone)
 {
     CCZone* pNewZone = NULL;
@@ -1121,6 +1257,14 @@ CCEaseBounceOut* CCEaseBounceOut::create(CCActionInterval* pAction)
     return pRet; 
 }
 
+CCEaseBounceOut* CCEaseBounceOut::clone() const
+{
+	auto a = new CCEaseBounceOut(*this);
+	a->initWithAction((CCActionInterval *)m_pInner->clone());
+	a->autorelease();
+	return a;
+}
+
 CCObject* CCEaseBounceOut::copyWithZone(CCZone *pZone)
 {
     CCZone* pNewZone = NULL;
@@ -1173,6 +1317,14 @@ CCEaseBounceInOut* CCEaseBounceInOut::create(CCActionInterval* pAction)
     }
 
     return pRet; 
+}
+
+CCEaseBounceInOut* CCEaseBounceInOut::clone() const
+{
+	auto a = new CCEaseBounceInOut(*this);
+	a->initWithAction((CCActionInterval *)m_pInner->clone());
+	a->autorelease();
+	return a;
 }
 
 CCObject* CCEaseBounceInOut::copyWithZone(CCZone *pZone)
@@ -1239,6 +1391,14 @@ CCEaseBackIn* CCEaseBackIn::create(CCActionInterval *pAction)
     return pRet;
 }
 
+CCEaseBackIn* CCEaseBackIn::clone() const
+{
+	auto a = new CCEaseBackIn(*this);
+	a->initWithAction((CCActionInterval *)m_pInner->clone());
+	a->autorelease();
+	return a;
+}
+
 CCObject* CCEaseBackIn::copyWithZone(CCZone *pZone)
 {
     CCZone* pNewZone = NULL;
@@ -1291,6 +1451,14 @@ CCEaseBackOut* CCEaseBackOut::create(CCActionInterval* pAction)
     }
 
     return pRet;
+}
+
+CCEaseBackOut* CCEaseBackOut::clone() const
+{
+	auto a = new CCEaseBackOut(*this);
+	a->initWithAction((CCActionInterval *)m_pInner->clone());
+	a->autorelease();
+	return a;
 }
 
 CCObject* CCEaseBackOut::copyWithZone(CCZone *pZone)
@@ -1347,6 +1515,14 @@ CCEaseBackInOut* CCEaseBackInOut::create(CCActionInterval* pAction)
     }
 
     return pRet;
+}
+
+CCEaseBackInOut* CCEaseBackInOut::clone() const
+{
+	auto a = new CCEaseBackInOut(*this);
+	a->initWithAction((CCActionInterval *)m_pInner->clone());
+	a->autorelease();
+	return a;
 }
 
 CCObject* CCEaseBackInOut::copyWithZone(CCZone *pZone)
