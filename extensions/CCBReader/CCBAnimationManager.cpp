@@ -612,18 +612,17 @@ CCObject* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* cha
             else if (selectorTarget == kCCBTargetTypeOwner) target = mOwner;
             if(target != NULL) {
                 if(selectorName.length() > 0) {
-                    SEL_CallFuncN selCallFunc = 0;
+                    CCCallFunc* pCallback = NULL;
                     
                     CCBSelectorResolver* targetAsCCBSelectorResolver = dynamic_cast<CCBSelectorResolver *>(target);
 
                     if(targetAsCCBSelectorResolver != NULL) {
-                        selCallFunc = targetAsCCBSelectorResolver->onResolveCCBCCCallFuncSelector(target, selectorName.c_str    ());
+                        pCallback = targetAsCCBSelectorResolver->onResolveCCBCCCallFuncSelector(target, selectorName.c_str());
                     }
-                    if(selCallFunc == 0) {
+                    if(pCallback == NULL) {
                         CCLOG("Skipping selector '%s' since no CCBSelectorResolver is present.", selectorName.c_str());
                     } else {
-                        CCCallFuncN *callback = CCCallFuncN::create(target, selCallFunc);
-                        actions->addObject(callback);
+                        actions->addObject(pCallback);
                     }
                 } else {
                     CCLOG("Unexpected empty selector.");
