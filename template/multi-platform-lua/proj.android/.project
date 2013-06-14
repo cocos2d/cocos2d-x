@@ -30,11 +30,4 @@
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>src_common</name>
-			<type>2</type>
-			<locationURI>PARENT-3-PROJECT_LOC/cocos2dx/platform/android/java/src_common</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>

@@ -10,6 +10,7 @@
 		<string>org.cocos2d-x.libcocosdenshion</string>
 		<string>org.cocos2d-x.libextensions</string>
 		<string>org.cocos2d-x.libchipmunk</string>
+		<string>org.cocos2d-x.libwebsockets</string>
 	</array>
 	<key>Concrete</key>
 	<true/>

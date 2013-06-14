@@ -1,3 +1,6 @@
+require "luaScript/ExtensionTest/CocosBuilderTest"
+require "luaScript/ExtensionTest/WebProxyTest"
+
 local LINE_SPACE = 40
 local kItemTagBasic = 1000
 
@@ -6,8 +9,7 @@ local ExtensionTestEnum =
     TEST_NOTIFICATIONCENTER = 0,
     TEST_CCCONTROLBUTTON    = 1,
     TEST_COCOSBUILDER       = 2,
-    TEST_HTTPCLIENT         = 3,
-    --TRAGET_PLATFORM
+    TEST_WEBSOCKET          = 3,
     TEST_EDITBOX            = 4,
 	TEST_TABLEVIEW          = 5,
     TEST_MAX_COUNT          = 6,
@@ -18,7 +20,7 @@ local testsName =
     "NotificationCenterTest",
     "CCControlButtonTest",
     "CocosBuilderTest",
-    "HttpClientTest",
+    "WebSocketTest",
     "EditBoxTest",
     "TableViewTest",
 }
@@ -998,7 +1000,7 @@ local CreateExtensionsTestTable =
 	runNotificationCenterTest,
 	runCCControlTest,
 	runCocosBuilder,
-	runHttpClientTest,
+	runWebSocketTest,
 	runEditBoxTest,
 	runTableViewTest,	
 }
@@ -1026,11 +1028,26 @@ local function ExtensionsMainLayer()
     menu:setPosition(CCPointMake(0, 0))
     CCMenuItemFont:setFontName("Arial")
     CCMenuItemFont:setFontSize(24)
+    local targetPlatform = CCApplication:sharedApplication():getTargetPlatform()
+    local bSupportWebSocket = false
+    if (kTargetIphone == targetPlatform) or (kTargetIpad == targetPlatform) or (kTargetAndroid == targetPlatform) or (kTargetWindows == targetPlatform) then
+        bSupportWebSocket = true
+    end
+    local bSupportEdit = false
+    if (kTargetIphone == targetPlatform) or (kTargetIpad == targetPlatform) or 
+        (kTargetAndroid == targetPlatform) or (kTargetWindows == targetPlatform) or 
+        (kTargetMacOS == targetPlatform) or (kTargetTizen == targetPlatform) then
+        bSupportEdit = true
+    end
     for i = 1, ExtensionTestEnum.TEST_MAX_COUNT do
 		local item = CCMenuItemFont:create(testsName[i])
 	    item:registerScriptTapHandler(menuCallback)
         item:setPosition(s.width / 2, s.height - i * LINE_SPACE)
         menu:addChild(item, kItemTagBasic + i)
+        if ((i == ExtensionTestEnum.TEST_WEBSOCKET + 1) and (false == bSupportWebSocket))
+        or ((i == ExtensionTestEnum.TEST_EDITBOX + 1) and (false == bSupportEdit)) then
+            item:setEnabled(false)
+        end
 	end
 
     layer:addChild(menu)
