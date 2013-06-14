@@ -90,7 +90,7 @@ public:
     
     /** reverse the current control point array inline, without generating a new one */
     void reverseInline();
-    
+
     virtual CCObject* copyWithZone(CCZone *zone);
     
     const std::vector<CCPoint*>* getControlPoints();
@@ -119,6 +119,8 @@ public:
     bool initWithDuration(float duration, CCPointArray* points, float tension);
     
     // super virtual functions
+	/** returns a new clone of the action */
+	virtual CCCardinalSplineTo *clone() const;
     virtual CCCardinalSplineTo* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
@@ -159,6 +161,10 @@ public:
     virtual void startWithTarget(CCNode *pTarget);
     virtual CCActionInterval* reverse();
     virtual void updatePosition(CCPoint &newPos);
+
+	/** returns a new clone of the action */
+	virtual CCCardinalSplineBy *clone() const;
+
 protected:
     CCPoint m_startPosition;
 };
@@ -177,6 +183,9 @@ public:
 
     /** initializes the action with a duration and an array of points */
     bool initWithDuration(float dt, CCPointArray* points);
+
+	/** returns a new clone of the action */
+	virtual CCCatmullRomTo *clone() const;
 };
 
 /** An action that moves the target with a CatmullRom curve by a certain distance.
@@ -193,6 +202,9 @@ public:
 
     /** initializes the action with a duration and an array of points */
     bool initWithDuration(float dt, CCPointArray* points);
+
+	/** returns a new clone of the action */
+	virtual CCCatmullRomBy *clone() const;
 };
 
 /** Returns the Cardinal Spline position for a given set of control points, tension and time */
