@@ -129,28 +129,28 @@ class Lens3DTarget : public CCNode
 public:
     virtual void setPosition(const CCPoint& var)
     {
-        m_pLens3D->setPosition(var);
+        _lens3D->setPosition(var);
     }
     
     virtual const CCPoint& getPosition()
     {
-        return m_pLens3D->getPosition();
+        return _lens3D->getPosition();
     }
     
     static Lens3DTarget* create(CCLens3D* pAction)
     {
         Lens3DTarget* pRet = new Lens3DTarget();
-        pRet->m_pLens3D = pAction;
+        pRet->_lens3D = pAction;
         pRet->autorelease();
         return pRet;
     }
 private:
 
     Lens3DTarget()
-        : m_pLens3D(NULL)
+        : _lens3D(NULL)
     {}
 
-    CCLens3D* m_pLens3D;
+    CCLens3D* _lens3D;
 };
 
 void Effect4::onEnter()

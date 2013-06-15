@@ -233,7 +233,7 @@ public:
     /**
      * get a script Handler
      */
-    int  getScriptEditBoxHandler(void){ return m_nScriptEditBoxHandler ;}
+    int  getScriptEditBoxHandler(void){ return _scriptEditBoxHandler ;}
     /**
      * Set the text entered in the edit box.
      * @param pText The given text.
@@ -359,28 +359,28 @@ public:
     void touchDownAction(CCObject *sender, CCControlEvent controlEvent);
     
 protected:
-    CCEditBoxImpl*      m_pEditBoxImpl;
-    CCEditBoxDelegate*  m_pDelegate;
+    CCEditBoxImpl*      _editBoxImpl;
+    CCEditBoxDelegate*  _delegate;
     
-    EditBoxInputMode    m_eEditBoxInputMode;
-    EditBoxInputFlag    m_eEditBoxInputFlag;
-    KeyboardReturnType  m_eKeyboardReturnType;
+    EditBoxInputMode    _editBoxInputMode;
+    EditBoxInputFlag    _editBoxInputFlag;
+    KeyboardReturnType  _keyboardReturnType;
     
-    std::string m_strText;
-    std::string m_strPlaceHolder;
+    std::string _text;
+    std::string _placeHolder;
     
-    std::string m_strFontName;
-    std::string m_strPlaceholderFontName;
+    std::string _fontName;
+    std::string _placeholderFontName;
     
-    int m_nFontSize;
-    int m_nPlaceholderFontSize;
+    int _fontSize;
+    int _placeholderFontSize;
     
-    ccColor3B m_colText;
-    ccColor3B m_colPlaceHolder;
+    ccColor3B _colText;
+    ccColor3B _colPlaceHolder;
     
-    int   m_nMaxLength;
-    float m_fAdjustHeight;
-    int   m_nScriptEditBoxHandler;
+    int   _maxLength;
+    float _adjustHeight;
+    int   _scriptEditBoxHandler;
 };
 
 NS_CC_EXT_END

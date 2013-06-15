@@ -43,8 +43,8 @@ bool CCFileUtilsLinux::init()
 
     fullpath[length] = '\0';
     std::string appPath = fullpath;
-    m_strDefaultResRootPath = appPath.substr(0, appPath.find_last_of("/"));
-    m_strDefaultResRootPath += "/../../../Resources/";
+    _defaultResRootPath = appPath.substr(0, appPath.find_last_of("/"));
+    _defaultResRootPath += "/../../../Resources/";
 
     // Set writable path to $XDG_CONFIG_HOME or ~/.config/<app name>/ if $XDG_CONFIG_HOME not exists.
     const char* xdg_config_path = getenv("XDG_CONFIG_HOME");
@@ -55,9 +55,9 @@ bool CCFileUtilsLinux::init()
     } else {
         xdgConfigPath  = xdg_config_path;
     }
-    m_writablePath = xdgConfigPath;
-    m_writablePath += appPath.substr(appPath.find_last_of("/"));
-    m_writablePath += "/";
+    _writablePath = xdgConfigPath;
+    _writablePath += appPath.substr(appPath.find_last_of("/"));
+    _writablePath += "/";
 
     return CCFileUtils::init();
 }
@@ -65,12 +65,12 @@ bool CCFileUtilsLinux::init()
 string CCFileUtilsLinux::getWritablePath()
 {
     struct stat st;
-    stat(m_writablePath.c_str(), &st);
+    stat(_writablePath.c_str(), &st);
     if (!S_ISDIR(st.st_mode)) {
-        mkdir(m_writablePath.c_str(), 0744);
+        mkdir(_writablePath.c_str(), 0744);
     }
 
-    return m_writablePath;
+    return _writablePath;
 }
 
 bool CCFileUtilsLinux::isFileExist(const std::string& strFilePath)
@@ -83,7 +83,7 @@ bool CCFileUtilsLinux::isFileExist(const std::string& strFilePath)
     std::string strPath = strFilePath;
     if (!isAbsolutePath(strPath))
     { // Not absolute path, add the default root path at the beginning.
-        strPath.insert(0, m_strDefaultResRootPath);
+        strPath.insert(0, _defaultResRootPath);
     }
     
     struct stat sts;

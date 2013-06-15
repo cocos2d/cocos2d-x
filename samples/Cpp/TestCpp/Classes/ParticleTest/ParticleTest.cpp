@@ -24,11 +24,11 @@ void DemoFirework::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_emitter = CCParticleFireworks::create();
-    m_emitter->retain();
-    m_background->addChild(m_emitter, 10);
+    _emitter = CCParticleFireworks::create();
+    _emitter->retain();
+    _background->addChild(_emitter, 10);
     
-    m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_stars1) );
+    _emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_stars1) );
     
     setEmitterPosition();
 }
@@ -48,13 +48,13 @@ void DemoFire::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_emitter = CCParticleFire::create();
-    m_emitter->retain();
-    m_background->addChild(m_emitter, 10);
+    _emitter = CCParticleFire::create();
+    _emitter->retain();
+    _background->addChild(_emitter, 10);
     
-    m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );//.pvr");
-    CCPoint p = m_emitter->getPosition();
-    m_emitter->setPosition( ccp(p.x, 100) );
+    _emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );//.pvr");
+    CCPoint p = _emitter->getPosition();
+    _emitter->setPosition( ccp(p.x, 100) );
     
     setEmitterPosition();
 }
@@ -73,11 +73,11 @@ void DemoSun::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_emitter = CCParticleSun::create();
-    m_emitter->retain();
-    m_background->addChild(m_emitter, 10);
+    _emitter = CCParticleSun::create();
+    _emitter->retain();
+    _background->addChild(_emitter, 10);
 
-    m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
+    _emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
     
     setEmitterPosition();
 }
@@ -96,11 +96,11 @@ void DemoGalaxy::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_emitter = CCParticleGalaxy::create();
-    m_emitter->retain();
-    m_background->addChild(m_emitter, 10);
+    _emitter = CCParticleGalaxy::create();
+    _emitter->retain();
+    _background->addChild(_emitter, 10);
     
-    m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
+    _emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
     
     setEmitterPosition(); 
 }
@@ -119,10 +119,10 @@ void DemoFlower::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_emitter = CCParticleFlower::create();
-    m_emitter->retain();
-    m_background->addChild(m_emitter, 10);
-    m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_stars1) );
+    _emitter = CCParticleFlower::create();
+    _emitter->retain();
+    _background->addChild(_emitter, 10);
+    _emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_stars1) );
     
     setEmitterPosition();
 }
@@ -141,72 +141,72 @@ void DemoBigFlower::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_emitter = new CCParticleSystemQuad();
-    m_emitter->initWithTotalParticles(50);
-    //m_emitter->autorelease();
+    _emitter = new CCParticleSystemQuad();
+    _emitter->initWithTotalParticles(50);
+    //_emitter->autorelease();
 
-    m_background->addChild(m_emitter, 10);
-    ////m_emitter->release();    // win32 :  use this line or remove this line and use autorelease()
-    m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_stars1) );
+    _background->addChild(_emitter, 10);
+    ////_emitter->release();    // win32 :  use this line or remove this line and use autorelease()
+    _emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_stars1) );
 
-    m_emitter->setDuration(-1);
+    _emitter->setDuration(-1);
     
     // gravity
-    m_emitter->setGravity(CCPointZero);
+    _emitter->setGravity(CCPointZero);
     
     // angle
-    m_emitter->setAngle(90);
-    m_emitter->setAngleVar(360);
+    _emitter->setAngle(90);
+    _emitter->setAngleVar(360);
     
     // speed of particles
-    m_emitter->setSpeed(160);
-    m_emitter->setSpeedVar(20);
+    _emitter->setSpeed(160);
+    _emitter->setSpeedVar(20);
     
     // radial
-    m_emitter->setRadialAccel(-120);
-    m_emitter->setRadialAccelVar(0);
+    _emitter->setRadialAccel(-120);
+    _emitter->setRadialAccelVar(0);
     
     // tagential
-    m_emitter->setTangentialAccel(30);
-    m_emitter->setTangentialAccelVar(0);
+    _emitter->setTangentialAccel(30);
+    _emitter->setTangentialAccelVar(0);
     
     // emitter position
-    m_emitter->setPosition( ccp(160,240) );
-    m_emitter->setPosVar(CCPointZero);
+    _emitter->setPosition( ccp(160,240) );
+    _emitter->setPosVar(CCPointZero);
     
     // life of particles
-    m_emitter->setLife(4);
-    m_emitter->setLifeVar(1);
+    _emitter->setLife(4);
+    _emitter->setLifeVar(1);
     
     // spin of particles
-    m_emitter->setStartSpin(0);
-    m_emitter->setStartSizeVar(0);
-    m_emitter->setEndSpin(0);
-    m_emitter->setEndSpinVar(0);
+    _emitter->setStartSpin(0);
+    _emitter->setStartSizeVar(0);
+    _emitter->setEndSpin(0);
+    _emitter->setEndSpinVar(0);
     
     // color of particles
     ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
-    m_emitter->setStartColor(startColor);
+    _emitter->setStartColor(startColor);
     
     ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
-    m_emitter->setStartColorVar(startColorVar);
+    _emitter->setStartColorVar(startColorVar);
     
     ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
-    m_emitter->setEndColor(endColor);
+    _emitter->setEndColor(endColor);
     
     ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};    
-    m_emitter->setEndColorVar(endColorVar);
+    _emitter->setEndColorVar(endColorVar);
     
     // size, in pixels
-    m_emitter->setStartSize(80.0f);
-    m_emitter->setStartSizeVar(40.0f);
-    m_emitter->setEndSize(kParticleStartSizeEqualToEndSize);
+    _emitter->setStartSize(80.0f);
+    _emitter->setStartSizeVar(40.0f);
+    _emitter->setEndSize(kParticleStartSizeEqualToEndSize);
     
     // emits per second
-    m_emitter->setEmissionRate(m_emitter->getTotalParticles()/m_emitter->getLife());
+    _emitter->setEmissionRate(_emitter->getTotalParticles()/_emitter->getLife());
     
     // additive
-    m_emitter->setBlendAdditive(true);
+    _emitter->setBlendAdditive(true);
 
     setEmitterPosition();
 }
@@ -225,73 +225,73 @@ void DemoRotFlower::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_emitter = new CCParticleSystemQuad();
-    m_emitter->initWithTotalParticles(300);
-    //m_emitter->autorelease();
+    _emitter = new CCParticleSystemQuad();
+    _emitter->initWithTotalParticles(300);
+    //_emitter->autorelease();
 
-    m_background->addChild(m_emitter, 10);
-    ////m_emitter->release();    // win32 : Remove this line
-    m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_stars2) );
+    _background->addChild(_emitter, 10);
+    ////_emitter->release();    // win32 : Remove this line
+    _emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_stars2) );
     
     // duration
-    m_emitter->setDuration(-1);
+    _emitter->setDuration(-1);
     
     // gravity
-    m_emitter->setGravity(CCPointZero);
+    _emitter->setGravity(CCPointZero);
     
     // angle
-    m_emitter->setAngle(90);
-    m_emitter->setAngleVar(360);
+    _emitter->setAngle(90);
+    _emitter->setAngleVar(360);
     
     // speed of particles
-    m_emitter->setSpeed(160);
-    m_emitter->setSpeedVar(20);
+    _emitter->setSpeed(160);
+    _emitter->setSpeedVar(20);
     
     // radial
-    m_emitter->setRadialAccel(-120);
-    m_emitter->setRadialAccelVar(0);
+    _emitter->setRadialAccel(-120);
+    _emitter->setRadialAccelVar(0);
     
     // tagential
-    m_emitter->setTangentialAccel(30);
-    m_emitter->setTangentialAccelVar(0);
+    _emitter->setTangentialAccel(30);
+    _emitter->setTangentialAccelVar(0);
     
     // emitter position
-    m_emitter->setPosition( ccp(160,240) );
-    m_emitter->setPosVar(CCPointZero);
+    _emitter->setPosition( ccp(160,240) );
+    _emitter->setPosVar(CCPointZero);
     
     // life of particles
-    m_emitter->setLife(3);
-    m_emitter->setLifeVar(1);
+    _emitter->setLife(3);
+    _emitter->setLifeVar(1);
 
     // spin of particles
-    m_emitter->setStartSpin(0);
-    m_emitter->setStartSpinVar(0);
-    m_emitter->setEndSpin(0);
-    m_emitter->setEndSpinVar(2000);
+    _emitter->setStartSpin(0);
+    _emitter->setStartSpinVar(0);
+    _emitter->setEndSpin(0);
+    _emitter->setEndSpinVar(2000);
     
     // color of particles
     ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
-    m_emitter->setStartColor(startColor);
+    _emitter->setStartColor(startColor);
     
     ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
-    m_emitter->setStartColorVar(startColorVar);
+    _emitter->setStartColorVar(startColorVar);
     
     ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
-    m_emitter->setEndColor(endColor);
+    _emitter->setEndColor(endColor);
     
     ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};    
-    m_emitter->setEndColorVar(endColorVar);
+    _emitter->setEndColorVar(endColorVar);
 
     // size, in pixels
-    m_emitter->setStartSize(30.0f);
-    m_emitter->setStartSizeVar(00.0f);
-    m_emitter->setEndSize(kParticleStartSizeEqualToEndSize);
+    _emitter->setStartSize(30.0f);
+    _emitter->setStartSizeVar(00.0f);
+    _emitter->setEndSize(kParticleStartSizeEqualToEndSize);
     
     // emits per second
-    m_emitter->setEmissionRate(m_emitter->getTotalParticles()/m_emitter->getLife());
+    _emitter->setEmissionRate(_emitter->getTotalParticles()/_emitter->getLife());
 
     // additive
-    m_emitter->setBlendAdditive(false);
+    _emitter->setBlendAdditive(false);
     
     setEmitterPosition();
 }
@@ -310,11 +310,11 @@ void DemoMeteor::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_emitter = CCParticleMeteor::create();
-    m_emitter->retain();
-    m_background->addChild(m_emitter, 10);
+    _emitter = CCParticleMeteor::create();
+    _emitter->retain();
+    _background->addChild(_emitter, 10);
     
-    m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
+    _emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
     
     setEmitterPosition();
 }
@@ -333,11 +333,11 @@ void DemoSpiral::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_emitter = CCParticleSpiral::create();
-    m_emitter->retain();
-    m_background->addChild(m_emitter, 10);
+    _emitter = CCParticleSpiral::create();
+    _emitter->retain();
+    _background->addChild(_emitter, 10);
     
-    m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
+    _emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
     
     setEmitterPosition();
 }
@@ -356,13 +356,13 @@ void DemoExplosion::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_emitter = CCParticleExplosion::create();
-    m_emitter->retain();
-    m_background->addChild(m_emitter, 10);
+    _emitter = CCParticleExplosion::create();
+    _emitter->retain();
+    _background->addChild(_emitter, 10);
     
-    m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_stars1) );
+    _emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_stars1) );
     
-    m_emitter->setAutoRemoveOnFinish(true);
+    _emitter->setAutoRemoveOnFinish(true);
     
     setEmitterPosition();
 }
@@ -381,13 +381,13 @@ void DemoSmoke::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_emitter = CCParticleSmoke::create();
-    m_emitter->retain();
-    m_background->addChild(m_emitter, 10);
-    m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
+    _emitter = CCParticleSmoke::create();
+    _emitter->retain();
+    _background->addChild(_emitter, 10);
+    _emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
     
-    CCPoint p = m_emitter->getPosition();
-    m_emitter->setPosition( ccp( p.x, 100) );
+    CCPoint p = _emitter->getPosition();
+    _emitter->setPosition( ccp( p.x, 100) );
     
     setEmitterPosition();
 }
@@ -406,36 +406,36 @@ void DemoSnow::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_emitter = CCParticleSnow::create();
-    m_emitter->retain();
-    m_background->addChild(m_emitter, 10);
+    _emitter = CCParticleSnow::create();
+    _emitter->retain();
+    _background->addChild(_emitter, 10);
     
-    CCPoint p = m_emitter->getPosition();
-    m_emitter->setPosition( ccp( p.x, p.y-110) );
-    m_emitter->setLife(3);
-    m_emitter->setLifeVar(1);
+    CCPoint p = _emitter->getPosition();
+    _emitter->setPosition( ccp( p.x, p.y-110) );
+    _emitter->setLife(3);
+    _emitter->setLifeVar(1);
     
     // gravity
-    m_emitter->setGravity(ccp(0,-10));
+    _emitter->setGravity(ccp(0,-10));
         
     // speed of particles
-    m_emitter->setSpeed(130);
-    m_emitter->setSpeedVar(30);
+    _emitter->setSpeed(130);
+    _emitter->setSpeedVar(30);
     
     
-    ccColor4F startColor = m_emitter->getStartColor();
+    ccColor4F startColor = _emitter->getStartColor();
     startColor.r = 0.9f;
     startColor.g = 0.9f;
     startColor.b = 0.9f;
-    m_emitter->setStartColor(startColor);
+    _emitter->setStartColor(startColor);
     
-    ccColor4F startColorVar = m_emitter->getStartColorVar();
+    ccColor4F startColorVar = _emitter->getStartColorVar();
     startColorVar.b = 0.1f;
-    m_emitter->setStartColorVar(startColorVar);
+    _emitter->setStartColorVar(startColorVar);
     
-    m_emitter->setEmissionRate(m_emitter->getTotalParticles()/m_emitter->getLife());
+    _emitter->setEmissionRate(_emitter->getTotalParticles()/_emitter->getLife());
     
-    m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_snow) );
+    _emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_snow) );
     
     setEmitterPosition();
 }
@@ -454,15 +454,15 @@ void DemoRain::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_emitter = CCParticleRain::create();
-    m_emitter->retain();
-    m_background->addChild(m_emitter, 10);
+    _emitter = CCParticleRain::create();
+    _emitter->retain();
+    _background->addChild(_emitter, 10);
     
-    CCPoint p = m_emitter->getPosition();
-    m_emitter->setPosition( ccp( p.x, p.y-100) );
-    m_emitter->setLife(4);
+    CCPoint p = _emitter->getPosition();
+    _emitter->setPosition( ccp( p.x, p.y-100) );
+    _emitter->setLife(4);
     
-    m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
+    _emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
     
     setEmitterPosition();
 }
@@ -482,74 +482,74 @@ void DemoModernArt::onEnter()
     ParticleDemo::onEnter();
 
 //FIXME: If use CCParticleSystemPoint, bada 1.0 device will crash. 
-//  Crash place: CCParticleSystemPoint.cpp Line 149, function: glDrawArrays(GL_POINTS, 0, m_uParticleIdx);
-//  m_emitter = new CCParticleSystemPoint();
-    m_emitter = new CCParticleSystemQuad();
-    m_emitter->initWithTotalParticles(1000);
-    //m_emitter->autorelease();
+//  Crash place: CCParticleSystemPoint.cpp Line 149, function: glDrawArrays(GL_POINTS, 0, _particleIdx);
+//  _emitter = new CCParticleSystemPoint();
+    _emitter = new CCParticleSystemQuad();
+    _emitter->initWithTotalParticles(1000);
+    //_emitter->autorelease();
 
-    m_background->addChild(m_emitter, 10);
-    ////m_emitter->release();
+    _background->addChild(_emitter, 10);
+    ////_emitter->release();
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
     // duration
-    m_emitter->setDuration(-1);
+    _emitter->setDuration(-1);
     
     // gravity
-    m_emitter->setGravity(ccp(0,0));
+    _emitter->setGravity(ccp(0,0));
     
     // angle
-    m_emitter->setAngle(0);
-    m_emitter->setAngleVar(360);
+    _emitter->setAngle(0);
+    _emitter->setAngleVar(360);
     
     // radial
-    m_emitter->setRadialAccel(70);
-    m_emitter->setRadialAccelVar(10);
+    _emitter->setRadialAccel(70);
+    _emitter->setRadialAccelVar(10);
     
     // tagential
-    m_emitter->setTangentialAccel(80);
-    m_emitter->setTangentialAccelVar(0);
+    _emitter->setTangentialAccel(80);
+    _emitter->setTangentialAccelVar(0);
     
     // speed of particles
-    m_emitter->setSpeed(50);
-    m_emitter->setSpeedVar(10);
+    _emitter->setSpeed(50);
+    _emitter->setSpeedVar(10);
     
     // emitter position
-    m_emitter->setPosition( ccp( s.width/2, s.height/2) );
-    m_emitter->setPosVar(CCPointZero);
+    _emitter->setPosition( ccp( s.width/2, s.height/2) );
+    _emitter->setPosVar(CCPointZero);
     
     // life of particles
-    m_emitter->setLife(2.0f);
-    m_emitter->setLifeVar(0.3f);
+    _emitter->setLife(2.0f);
+    _emitter->setLifeVar(0.3f);
     
     // emits per frame
-    m_emitter->setEmissionRate(m_emitter->getTotalParticles()/m_emitter->getLife());
+    _emitter->setEmissionRate(_emitter->getTotalParticles()/_emitter->getLife());
     
     // color of particles
     ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
-    m_emitter->setStartColor(startColor);
+    _emitter->setStartColor(startColor);
     
     ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
-    m_emitter->setStartColorVar(startColorVar);
+    _emitter->setStartColorVar(startColorVar);
     
     ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
-    m_emitter->setEndColor(endColor);
+    _emitter->setEndColor(endColor);
     
     ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};    
-    m_emitter->setEndColorVar(endColorVar);
+    _emitter->setEndColorVar(endColorVar);
     
     // size, in pixels
-    m_emitter->setStartSize(1.0f);
-    m_emitter->setStartSizeVar(1.0f);
-    m_emitter->setEndSize(32.0f);
-    m_emitter->setEndSizeVar(8.0f);
+    _emitter->setStartSize(1.0f);
+    _emitter->setStartSizeVar(1.0f);
+    _emitter->setEndSize(32.0f);
+    _emitter->setEndSizeVar(8.0f);
     
     // texture
-    m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
+    _emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
     
     // additive
-    m_emitter->setBlendAdditive(false);
+    _emitter->setBlendAdditive(false);
     
     setEmitterPosition();
 }
@@ -568,17 +568,17 @@ void DemoRing::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_emitter = CCParticleFlower::create();
-    m_emitter->retain();
+    _emitter = CCParticleFlower::create();
+    _emitter->retain();
 
-    m_background->addChild(m_emitter, 10);
+    _background->addChild(_emitter, 10);
 
-    m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_stars1) );
-    m_emitter->setLifeVar(0);
-    m_emitter->setLife(10);
-    m_emitter->setSpeed(100);
-    m_emitter->setSpeedVar(0);
-    m_emitter->setEmissionRate(10000);
+    _emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_stars1) );
+    _emitter->setLifeVar(0);
+    _emitter->setLife(10);
+    _emitter->setSpeed(100);
+    _emitter->setSpeedVar(0);
+    _emitter->setEmissionRate(10000);
     
     setEmitterPosition();
 }
@@ -597,8 +597,8 @@ void ParallaxParticle::onEnter()
 {
     ParticleDemo::onEnter();
     
-    m_background->getParent()->removeChild(m_background, true);
-    m_background = NULL;
+    _background->getParent()->removeChild(_background, true);
+    _background = NULL;
 
     CCParallaxNode* p = CCParallaxNode::create(); 
     addChild(p, 5);
@@ -609,12 +609,12 @@ void ParallaxParticle::onEnter()
     p->addChild( p1, 1, ccp(0.5f,1), ccp(0,250) );
     p->addChild(p2, 2, ccp(1.5f,1), ccp(0,50) );
 
-    m_emitter = CCParticleFlower::create();
-    m_emitter->retain();
-    m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
+    _emitter = CCParticleFlower::create();
+    _emitter->retain();
+    _emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
 
-    p1->addChild(m_emitter, 10);
-    m_emitter->setPosition( ccp(250,200) );
+    p1->addChild(_emitter, 10);
+    _emitter->setPosition( ccp(250,200) );
     
     CCParticleSun* par = CCParticleSun::create();
     p2->addChild(par, 10);
@@ -640,74 +640,74 @@ void RadiusMode1::onEnter()
 {
     ParticleDemo::onEnter();
 
-	m_color->setColor(ccBLACK);
-    removeChild(m_background, true);
-    m_background = NULL;
+	_color->setColor(ccBLACK);
+    removeChild(_background, true);
+    _background = NULL;
 
-    m_emitter = new CCParticleSystemQuad();
-    m_emitter->initWithTotalParticles(200);
-    addChild(m_emitter, 10);
-    m_emitter->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/stars-grayscale.png"));
+    _emitter = new CCParticleSystemQuad();
+    _emitter->initWithTotalParticles(200);
+    addChild(_emitter, 10);
+    _emitter->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/stars-grayscale.png"));
 
     // duration
-    m_emitter->setDuration(kCCParticleDurationInfinity);
+    _emitter->setDuration(kCCParticleDurationInfinity);
 
     // radius mode
-    m_emitter->setEmitterMode(kCCParticleModeRadius);
+    _emitter->setEmitterMode(kCCParticleModeRadius);
 
     // radius mode: start and end radius in pixels
-    m_emitter->setStartRadius(0);
-    m_emitter->setStartRadiusVar(0);
-    m_emitter->setEndRadius(160);
-    m_emitter->setEndRadiusVar(0);
+    _emitter->setStartRadius(0);
+    _emitter->setStartRadiusVar(0);
+    _emitter->setEndRadius(160);
+    _emitter->setEndRadiusVar(0);
 
     // radius mode: degrees per second
-    m_emitter->setRotatePerSecond(180);
-    m_emitter->setRotatePerSecondVar(0);
+    _emitter->setRotatePerSecond(180);
+    _emitter->setRotatePerSecondVar(0);
 
 
     // angle
-    m_emitter->setAngle(90);
-    m_emitter->setAngleVar(0);
+    _emitter->setAngle(90);
+    _emitter->setAngleVar(0);
 
     // emitter position
     CCSize size = CCDirector::sharedDirector()->getWinSize();
-    m_emitter->setPosition(ccp(size.width/2, size.height/2));
-    m_emitter->setPosVar(CCPointZero);
+    _emitter->setPosition(ccp(size.width/2, size.height/2));
+    _emitter->setPosVar(CCPointZero);
 
     // life of particles
-    m_emitter->setLife(5);
-    m_emitter->setLifeVar(0);
+    _emitter->setLife(5);
+    _emitter->setLifeVar(0);
 
     // spin of particles
-    m_emitter->setStartSpin(0);
-    m_emitter->setStartSpinVar(0);
-    m_emitter->setEndSpin(0);
-    m_emitter->setEndSpinVar(0);
+    _emitter->setStartSpin(0);
+    _emitter->setStartSpinVar(0);
+    _emitter->setEndSpin(0);
+    _emitter->setEndSpinVar(0);
 
     // color of particles
     ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
-    m_emitter->setStartColor(startColor);
+    _emitter->setStartColor(startColor);
 
     ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
-    m_emitter->setStartColorVar(startColorVar);
+    _emitter->setStartColorVar(startColorVar);
 
     ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
-    m_emitter->setEndColor(endColor);
+    _emitter->setEndColor(endColor);
 
     ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};    
-    m_emitter->setEndColorVar(endColorVar);
+    _emitter->setEndColorVar(endColorVar);
 
     // size, in pixels
-    m_emitter->setStartSize(32);
-    m_emitter->setStartSizeVar(0);
-    m_emitter->setEndSize(kCCParticleStartSizeEqualToEndSize);
+    _emitter->setStartSize(32);
+    _emitter->setStartSizeVar(0);
+    _emitter->setEndSize(kCCParticleStartSizeEqualToEndSize);
 
     // emits per second
-    m_emitter->setEmissionRate(m_emitter->getTotalParticles() / m_emitter->getLife());
+    _emitter->setEmissionRate(_emitter->getTotalParticles() / _emitter->getLife());
 
     // additive
-    m_emitter->setBlendAdditive(false);
+    _emitter->setBlendAdditive(false);
 }
 
 std::string RadiusMode1::title()
@@ -724,74 +724,74 @@ void RadiusMode2::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_color->setColor(ccBLACK);
-    removeChild(m_background, true);
-    m_background = NULL;
+    _color->setColor(ccBLACK);
+    removeChild(_background, true);
+    _background = NULL;
 
-    m_emitter = new CCParticleSystemQuad();
-    m_emitter->initWithTotalParticles(200);
-    addChild(m_emitter, 10);
-    m_emitter->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/stars-grayscale.png"));
+    _emitter = new CCParticleSystemQuad();
+    _emitter->initWithTotalParticles(200);
+    addChild(_emitter, 10);
+    _emitter->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/stars-grayscale.png"));
 
     // duration
-    m_emitter->setDuration(kCCParticleDurationInfinity);
+    _emitter->setDuration(kCCParticleDurationInfinity);
 
     // radius mode
-    m_emitter->setEmitterMode(kCCParticleModeRadius);
+    _emitter->setEmitterMode(kCCParticleModeRadius);
 
     // radius mode: start and end radius in pixels
-    m_emitter->setStartRadius(100);
-    m_emitter->setStartRadiusVar(0);
-    m_emitter->setEndRadius(kCCParticleStartRadiusEqualToEndRadius);
-    m_emitter->setEndRadiusVar(0);
+    _emitter->setStartRadius(100);
+    _emitter->setStartRadiusVar(0);
+    _emitter->setEndRadius(kCCParticleStartRadiusEqualToEndRadius);
+    _emitter->setEndRadiusVar(0);
 
     // radius mode: degrees per second
-    m_emitter->setRotatePerSecond(45);
-    m_emitter->setRotatePerSecondVar(0);
+    _emitter->setRotatePerSecond(45);
+    _emitter->setRotatePerSecondVar(0);
 
 
     // angle
-    m_emitter->setAngle(90);
-    m_emitter->setAngleVar(0);
+    _emitter->setAngle(90);
+    _emitter->setAngleVar(0);
 
     // emitter position
     CCSize size = CCDirector::sharedDirector()->getWinSize();
-    m_emitter->setPosition(ccp(size.width/2, size.height/2));
-    m_emitter->setPosVar(CCPointZero);
+    _emitter->setPosition(ccp(size.width/2, size.height/2));
+    _emitter->setPosVar(CCPointZero);
 
     // life of particles
-    m_emitter->setLife(4);
-    m_emitter->setLifeVar(0);
+    _emitter->setLife(4);
+    _emitter->setLifeVar(0);
 
     // spin of particles
-    m_emitter->setStartSpin(0);
-    m_emitter->setStartSpinVar(0);
-    m_emitter->setEndSpin(0);
-    m_emitter->setEndSpinVar(0);
+    _emitter->setStartSpin(0);
+    _emitter->setStartSpinVar(0);
+    _emitter->setEndSpin(0);
+    _emitter->setEndSpinVar(0);
 
     // color of particles
     ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
-    m_emitter->setStartColor(startColor);
+    _emitter->setStartColor(startColor);
 
     ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
-    m_emitter->setStartColorVar(startColorVar);
+    _emitter->setStartColorVar(startColorVar);
 
         ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
-    m_emitter->setEndColor(endColor);
+    _emitter->setEndColor(endColor);
 
     ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};    
-    m_emitter->setEndColorVar(endColorVar);
+    _emitter->setEndColorVar(endColorVar);
 
     // size, in pixels
-    m_emitter->setStartSize(32);
-    m_emitter->setStartSizeVar(0);
-    m_emitter->setEndSize(kCCParticleStartSizeEqualToEndSize);
+    _emitter->setStartSize(32);
+    _emitter->setStartSizeVar(0);
+    _emitter->setEndSize(kCCParticleStartSizeEqualToEndSize);
 
     // emits per second
-    m_emitter->setEmissionRate(m_emitter->getTotalParticles() / m_emitter->getLife());
+    _emitter->setEmissionRate(_emitter->getTotalParticles() / _emitter->getLife());
 
     // additive
-    m_emitter->setBlendAdditive(false);
+    _emitter->setBlendAdditive(false);
 }
 
 std::string RadiusMode2::title()
@@ -808,77 +808,77 @@ void Issue704::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_color->setColor(ccBLACK);
-    removeChild(m_background, true);
-    m_background = NULL;
+    _color->setColor(ccBLACK);
+    removeChild(_background, true);
+    _background = NULL;
 
-    m_emitter = new CCParticleSystemQuad();
-    m_emitter->initWithTotalParticles(100);
-    addChild(m_emitter, 10);
-    m_emitter->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+    _emitter = new CCParticleSystemQuad();
+    _emitter->initWithTotalParticles(100);
+    addChild(_emitter, 10);
+    _emitter->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
 
     // duration
-    m_emitter->setDuration(kCCParticleDurationInfinity);
+    _emitter->setDuration(kCCParticleDurationInfinity);
 
     // radius mode
-    m_emitter->setEmitterMode(kCCParticleModeRadius);
+    _emitter->setEmitterMode(kCCParticleModeRadius);
 
     // radius mode: start and end radius in pixels
-    m_emitter->setStartRadius(50);
-    m_emitter->setStartRadiusVar(0);
-    m_emitter->setEndRadius(kCCParticleStartRadiusEqualToEndRadius);
-    m_emitter->setEndRadiusVar(0);
+    _emitter->setStartRadius(50);
+    _emitter->setStartRadiusVar(0);
+    _emitter->setEndRadius(kCCParticleStartRadiusEqualToEndRadius);
+    _emitter->setEndRadiusVar(0);
 
     // radius mode: degrees per second
-    m_emitter->setRotatePerSecond(0);
-    m_emitter->setRotatePerSecondVar(0);
+    _emitter->setRotatePerSecond(0);
+    _emitter->setRotatePerSecondVar(0);
 
 
     // angle
-    m_emitter->setAngle(90);
-    m_emitter->setAngleVar(0);
+    _emitter->setAngle(90);
+    _emitter->setAngleVar(0);
 
     // emitter position
     CCSize size = CCDirector::sharedDirector()->getWinSize();
-    m_emitter->setPosition(ccp(size.width/2, size.height/2));
-    m_emitter->setPosVar(CCPointZero);
+    _emitter->setPosition(ccp(size.width/2, size.height/2));
+    _emitter->setPosVar(CCPointZero);
 
     // life of particles
-    m_emitter->setLife(5);
-    m_emitter->setLifeVar(0);
+    _emitter->setLife(5);
+    _emitter->setLifeVar(0);
 
     // spin of particles
-    m_emitter->setStartSpin(0);
-    m_emitter->setStartSpinVar(0);
-    m_emitter->setEndSpin(0);
-    m_emitter->setEndSpinVar(0);
+    _emitter->setStartSpin(0);
+    _emitter->setStartSpinVar(0);
+    _emitter->setEndSpin(0);
+    _emitter->setEndSpinVar(0);
 
     // color of particles
     ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
-    m_emitter->setStartColor(startColor);
+    _emitter->setStartColor(startColor);
 
     ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
-    m_emitter->setStartColorVar(startColorVar);
+    _emitter->setStartColorVar(startColorVar);
 
         ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
-    m_emitter->setEndColor(endColor);
+    _emitter->setEndColor(endColor);
 
     ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};    
-    m_emitter->setEndColorVar(endColorVar);
+    _emitter->setEndColorVar(endColorVar);
 
     // size, in pixels
-    m_emitter->setStartSize(16);
-    m_emitter->setStartSizeVar(0);
-    m_emitter->setEndSize(kCCParticleStartSizeEqualToEndSize);
+    _emitter->setStartSize(16);
+    _emitter->setStartSizeVar(0);
+    _emitter->setEndSize(kCCParticleStartSizeEqualToEndSize);
 
     // emits per second
-    m_emitter->setEmissionRate(m_emitter->getTotalParticles() / m_emitter->getLife());
+    _emitter->setEmissionRate(_emitter->getTotalParticles() / _emitter->getLife());
 
     // additive
-    m_emitter->setBlendAdditive(false);
+    _emitter->setBlendAdditive(false);
 
     CCRotateBy* rot = CCRotateBy::create(16, 360);
-    m_emitter->runAction(CCRepeatForever::create(rot));
+    _emitter->runAction(CCRepeatForever::create(rot));
 }
 
 std::string Issue704::title()
@@ -900,26 +900,26 @@ void Issue870::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_color->setColor(ccBLACK);
-    removeChild(m_background, true);
-    m_background = NULL;
+    _color->setColor(ccBLACK);
+    removeChild(_background, true);
+    _background = NULL;
 
     CCParticleSystemQuad *system = new CCParticleSystemQuad();
     system->initWithFile("Particles/SpinningPeas.plist");
     system->setTextureWithRect(CCTextureCache::sharedTextureCache()->addImage("Images/particles.png"), CCRectMake(0,0,32,32));
     addChild(system, 10);
-    m_emitter = system;
+    _emitter = system;
 
-    m_nIndex = 0;
+    _index = 0;
     schedule(schedule_selector(Issue870::updateQuads), 2.0f);
 }
 
 void Issue870::updateQuads(float dt)
 {
-    m_nIndex = (m_nIndex + 1) % 4;
-    CCRect rect = CCRectMake(m_nIndex * 32, 0, 32, 32);
-    CCParticleSystemQuad* system = (CCParticleSystemQuad*)m_emitter;
-    system->setTextureWithRect(m_emitter->getTexture(), rect);
+    _index = (_index + 1) % 4;
+    CCRect rect = CCRectMake(_index * 32, 0, 32, 32);
+    CCParticleSystemQuad* system = (CCParticleSystemQuad*)_emitter;
+    system->setTextureWithRect(_emitter->getTexture(), rect);
 }
 
 std::string Issue870::title()
@@ -941,14 +941,14 @@ void DemoParticleFromFile::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_color->setColor(ccBLACK);
-    removeChild(m_background, true);
-    m_background = NULL;
+    _color->setColor(ccBLACK);
+    removeChild(_background, true);
+    _background = NULL;
 
-    m_emitter = new CCParticleSystemQuad();
-    std::string filename = "Particles/" + m_title + ".plist";
-    m_emitter->initWithFile(filename.c_str());
-    addChild(m_emitter, 10);
+    _emitter = new CCParticleSystemQuad();
+    std::string filename = "Particles/" + _title + ".plist";
+    _emitter->initWithFile(filename.c_str());
+    addChild(_emitter, 10);
 
     setEmitterPosition();
 }
@@ -1062,17 +1062,17 @@ CCLayer* restartParticleAction()
 
 ParticleDemo::~ParticleDemo(void)
 {
-    CC_SAFE_RELEASE(m_emitter);
+    CC_SAFE_RELEASE(_emitter);
 }
 
 void ParticleDemo::onEnter(void)
 {
     BaseTest::onEnter();
 
-	m_color = CCLayerColor::create( ccc4(127,127,127,255) );
-	this->addChild(m_color);
+	_color = CCLayerColor::create( ccc4(127,127,127,255) );
+	this->addChild(_color);
     
-    m_emitter = NULL;
+    _emitter = NULL;
     
     setTouchEnabled( true );
     
@@ -1097,14 +1097,14 @@ void ParticleDemo::onEnter(void)
     labelAtlas->setPosition(ccp(s.width-66,50));
     
     // moving background
-    m_background = CCSprite::create(s_back3);
-    addChild(m_background, 5);
-    m_background->setPosition( ccp(s.width/2, s.height-180) );
+    _background = CCSprite::create(s_back3);
+    addChild(_background, 5);
+    _background->setPosition( ccp(s.width/2, s.height-180) );
     
     CCActionInterval* move = CCMoveBy::create(4, ccp(300,0) );
     CCActionInterval* move_back = move->reverse();
     CCSequence* seq = CCSequence::create( move, move_back, NULL);
-    m_background->runAction( CCRepeatForever::create(seq) );
+    _background->runAction( CCRepeatForever::create(seq) );
     
     
     scheduleUpdate();
@@ -1137,46 +1137,46 @@ void ParticleDemo::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
     CCPoint location = touch->getLocation();
 
     CCPoint pos = CCPointZero;
-    if (m_background)
+    if (_background)
     {
-        pos = m_background->convertToWorldSpace(CCPointZero);
+        pos = _background->convertToWorldSpace(CCPointZero);
     }
 
-    if (m_emitter != NULL)
+    if (_emitter != NULL)
     {
-        m_emitter->setPosition( ccpSub(location, pos) );    
+        _emitter->setPosition( ccpSub(location, pos) );    
     }
 }
 
 void ParticleDemo::update(float dt)
 {
-    if (m_emitter)
+    if (_emitter)
     {
         CCLabelAtlas* atlas = (CCLabelAtlas*)getChildByTag(kTagParticleCount);
         char str[5] = {0};
-        sprintf(str, "%04d", m_emitter->getParticleCount());
+        sprintf(str, "%04d", _emitter->getParticleCount());
         atlas->setString(str);
     }
 }
 
 void ParticleDemo::toggleCallback(CCObject* pSender)
 {
-    if (m_emitter != NULL)
+    if (_emitter != NULL)
     {
-        if( m_emitter->getPositionType() == kCCPositionTypeGrouped )
-            m_emitter->setPositionType( kCCPositionTypeFree );
-        else if (m_emitter->getPositionType() == kCCPositionTypeFree)
-            m_emitter->setPositionType(kCCPositionTypeRelative);
-        else if (m_emitter->getPositionType() == kCCPositionTypeRelative)
-            m_emitter->setPositionType( kCCPositionTypeGrouped );
+        if( _emitter->getPositionType() == kCCPositionTypeGrouped )
+            _emitter->setPositionType( kCCPositionTypeFree );
+        else if (_emitter->getPositionType() == kCCPositionTypeFree)
+            _emitter->setPositionType(kCCPositionTypeRelative);
+        else if (_emitter->getPositionType() == kCCPositionTypeRelative)
+            _emitter->setPositionType( kCCPositionTypeGrouped );
     }
 }
 
 void ParticleDemo::restartCallback(CCObject* pSender)
 {
-    if (m_emitter != NULL)
+    if (_emitter != NULL)
     {
-        m_emitter->resetSystem(); 
+        _emitter->resetSystem(); 
     }
 }
 
@@ -1199,9 +1199,9 @@ void ParticleDemo::backCallback(CCObject* pSender)
 void ParticleDemo::setEmitterPosition()
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
-    if (m_emitter != NULL)
+    if (_emitter != NULL)
     {
-        m_emitter->setPosition( ccp(s.width / 2, s.height / 2) );
+        _emitter->setPosition( ccp(s.width / 2, s.height / 2) );
     }
 }
 
@@ -1211,15 +1211,15 @@ void ParticleBatchHybrid::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_color->setColor(ccBLACK);
-    removeChild(m_background, true);
-    m_background = NULL;
+    _color->setColor(ccBLACK);
+    removeChild(_background, true);
+    _background = NULL;
 
-    m_emitter = CCParticleSystemQuad::create("Particles/LavaFlow.plist");
-    m_emitter->retain();
-    CCParticleBatchNode *batch = CCParticleBatchNode::createWithTexture(m_emitter->getTexture());
+    _emitter = CCParticleSystemQuad::create("Particles/LavaFlow.plist");
+    _emitter->retain();
+    CCParticleBatchNode *batch = CCParticleBatchNode::createWithTexture(_emitter->getTexture());
 
-    batch->addChild(m_emitter);
+    batch->addChild(_emitter);
 
     addChild(batch, 10);
 
@@ -1228,17 +1228,17 @@ void ParticleBatchHybrid::onEnter()
      CCNode *node = CCNode::create();
      addChild(node);
  
-     m_pParent1 = batch;
-     m_pParent2 = node;
+     _parent1 = batch;
+     _parent2 = node;
 }
 
 void ParticleBatchHybrid::switchRender(float dt)
 {
-     bool usingBatch = ( m_emitter->getBatchNode() != NULL );
-     m_emitter->removeFromParentAndCleanup(false);
+     bool usingBatch = ( _emitter->getBatchNode() != NULL );
+     _emitter->removeFromParentAndCleanup(false);
  
-     CCNode *newParent = (usingBatch ? m_pParent2  : m_pParent1 );
-     newParent->addChild(m_emitter);
+     CCNode *newParent = (usingBatch ? _parent2  : _parent1 );
+     newParent->addChild(_emitter);
  
      CCLog("Particle: Using new parent: %s", usingBatch ? "CCNode" : "CCParticleBatchNode");
 }
@@ -1259,9 +1259,9 @@ void ParticleBatchMultipleEmitters::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_color->setColor(ccBLACK);
-    removeChild(m_background, true);
-    m_background = NULL;
+    _color->setColor(ccBLACK);
+    removeChild(_background, true);
+    _background = NULL;
 
     CCParticleSystemQuad *emitter1 = CCParticleSystemQuad::create("Particles/LavaFlow.plist");
     emitter1->setStartColor(ccc4f(1,0,0,1));
@@ -1301,10 +1301,10 @@ void ParticleReorder::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_nOrder = 0;
-    m_color->setColor(ccBLACK);
-    removeChild(m_background, true);
-    m_background = NULL;
+    _order = 0;
+    _color->setColor(ccBLACK);
+    removeChild(_background, true);
+    _background = NULL;
 
     CCParticleSystem* ignore = CCParticleSystemQuad::create("Particles/SmallSun.plist");
     CCNode *parent1 = CCNode::create();
@@ -1362,24 +1362,24 @@ void ParticleReorder::reorderParticles(float dt)
         CCNode *child2 = parent->getChildByTag(2);
         CCNode *child3 = parent->getChildByTag(3);
 
-        if( m_nOrder % 3 == 0 ) {
+        if( _order % 3 == 0 ) {
             parent->reorderChild(child1, 1);
             parent->reorderChild(child2, 2);
             parent->reorderChild(child3, 3);
 
-        } else if (m_nOrder % 3 == 1 ) {
+        } else if (_order % 3 == 1 ) {
             parent->reorderChild(child1, 3);
             parent->reorderChild(child2, 1);
             parent->reorderChild(child3, 2);
 
-        } else if (m_nOrder % 3 == 2 ) {
+        } else if (_order % 3 == 2 ) {
             parent->reorderChild(child1, 2);
             parent->reorderChild(child2, 3);
             parent->reorderChild(child3, 1);
         }
     }
 
-    m_nOrder++;
+    _order++;
 }
 
 class RainbowEffect : public CCParticleSystemQuad
@@ -1445,14 +1445,14 @@ bool RainbowEffect::initWithTotalParticles(unsigned int numberOfParticles)
         setStartColor(ccc4FFromccc4B(ccc4(50, 50, 50, 50)));
         setEndColor(ccc4FFromccc4B(ccc4(0, 0, 0, 0)));
 
-        m_tStartColorVar.r = 0.0f;
-        m_tStartColorVar.g = 0.0f;
-        m_tStartColorVar.b = 0.0f;
-        m_tStartColorVar.a = 0.0f;
-        m_tEndColorVar.r = 0.0f;
-        m_tEndColorVar.g = 0.0f;
-        m_tEndColorVar.b = 0.0f;
-        m_tEndColorVar.a = 0.0f;
+        _startColorVar.r = 0.0f;
+        _startColorVar.g = 0.0f;
+        _startColorVar.b = 0.0f;
+        _startColorVar.a = 0.0f;
+        _endColorVar.r = 0.0f;
+        _endColorVar.g = 0.0f;
+        _endColorVar.b = 0.0f;
+        _endColorVar.a = 0.0f;
 
         setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/particles.png"));
         return true;
@@ -1463,7 +1463,7 @@ bool RainbowEffect::initWithTotalParticles(unsigned int numberOfParticles)
 
 void RainbowEffect::update(float dt)
 {
-    m_fEmitCounter = 0;
+    _emitCounter = 0;
     CCParticleSystemQuad::update(dt);
 }
 
@@ -1472,9 +1472,9 @@ void Issue1201::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_color->setColor(ccBLACK);
-    removeChild(m_background, true);
-    m_background = NULL;
+    _color->setColor(ccBLACK);
+    removeChild(_background, true);
+    _background = NULL;
 
     RainbowEffect *particle = new RainbowEffect();
     particle->initWithTotalParticles(50);
@@ -1485,7 +1485,7 @@ void Issue1201::onEnter()
 
     particle->setPosition(ccp(s.width/2, s.height/2));
 
-    m_emitter = particle;
+    _emitter = particle;
 }
 
 std::string Issue1201::title()
@@ -1502,9 +1502,9 @@ void MultipleParticleSystems::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_color->setColor(ccBLACK);
-    removeChild(m_background, true);
-    m_background = NULL;
+    _color->setColor(ccBLACK);
+    removeChild(_background, true);
+    _background = NULL;
 
     CCTextureCache::sharedTextureCache()->addImage("Images/particles.png"); 
 
@@ -1517,7 +1517,7 @@ void MultipleParticleSystems::onEnter()
         addChild(particleSystem);
     }
 
-    m_emitter = NULL;
+    _emitter = NULL;
 
 }
 
@@ -1557,9 +1557,9 @@ void MultipleParticleSystemsBatched::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_color->setColor(ccBLACK);
-    removeChild(m_background, true);
-    m_background = NULL;
+    _color->setColor(ccBLACK);
+    removeChild(_background, true);
+    _background = NULL;
 
     CCParticleBatchNode *batchNode = new CCParticleBatchNode();
     batchNode->initWithTexture(NULL, 3000);
@@ -1579,7 +1579,7 @@ void MultipleParticleSystemsBatched::onEnter()
 
     batchNode->release();
 
-    m_emitter = NULL;
+    _emitter = NULL;
 }
 
 void MultipleParticleSystemsBatched::update(float dt)
@@ -1619,19 +1619,19 @@ void AddAndDeleteParticleSystems::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_color->setColor(ccBLACK);
-    removeChild(m_background, true);
-    m_background = NULL;
+    _color->setColor(ccBLACK);
+    removeChild(_background, true);
+    _background = NULL;
 
     //adds the texture inside the plist to the texture cache
-    m_pBatchNode = CCParticleBatchNode::createWithTexture((CCTexture2D*)NULL, 16000);
+    _batchNode = CCParticleBatchNode::createWithTexture((CCTexture2D*)NULL, 16000);
 
-    addChild(m_pBatchNode, 1, 2);
+    addChild(_batchNode, 1, 2);
 
     for (int i = 0; i<6; i++) {
 
         CCParticleSystemQuad *particleSystem = CCParticleSystemQuad::create("Particles/Spiral.plist");
-        m_pBatchNode->setTexture(particleSystem->getTexture());
+        _batchNode->setTexture(particleSystem->getTexture());
 
         particleSystem->setPositionType(kCCPositionTypeGrouped);         
         particleSystem->setTotalParticles(200);
@@ -1639,23 +1639,23 @@ void AddAndDeleteParticleSystems::onEnter()
         particleSystem->setPosition(ccp(i*15 +100,i*15+100));
 
         unsigned int randZ = rand() % 100; 
-        m_pBatchNode->addChild(particleSystem, randZ, -1);
+        _batchNode->addChild(particleSystem, randZ, -1);
 
     }
 
     schedule(schedule_selector(AddAndDeleteParticleSystems::removeSystem), 0.5f);
-    m_emitter = NULL;
+    _emitter = NULL;
 
 }
 
 void AddAndDeleteParticleSystems::removeSystem(float dt)
 {
-    int nChildrenCount = m_pBatchNode->getChildren()->count();
+    int nChildrenCount = _batchNode->getChildren()->count();
     if (nChildrenCount > 0) 
     {
         CCLOG("remove random system");
         unsigned int uRand = rand() % (nChildrenCount - 1);
-        m_pBatchNode->removeChild((CCNode*)m_pBatchNode->getChildren()->objectAtIndex(uRand), true);
+        _batchNode->removeChild((CCNode*)_batchNode->getChildren()->objectAtIndex(uRand), true);
 
         CCParticleSystemQuad *particleSystem = CCParticleSystemQuad::create("Particles/Spiral.plist");
         //add new
@@ -1667,7 +1667,7 @@ void AddAndDeleteParticleSystems::removeSystem(float dt)
 
         CCLOG("add a new system");
         unsigned int randZ = rand() % 100; 
-        m_pBatchNode->addChild(particleSystem, randZ, -1);
+        _batchNode->addChild(particleSystem, randZ, -1);
     }
 }
 
@@ -1708,20 +1708,20 @@ void ReorderParticleSystems::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_color->setColor(ccBLACK);
-    removeChild(m_background ,true);
-    m_background = NULL;
+    _color->setColor(ccBLACK);
+    removeChild(_background ,true);
+    _background = NULL;
 
-    m_pBatchNode = CCParticleBatchNode::create("Images/stars-grayscale.png" ,3000);
+    _batchNode = CCParticleBatchNode::create("Images/stars-grayscale.png" ,3000);
 
-    addChild(m_pBatchNode, 1, 2);
+    addChild(_batchNode, 1, 2);
 
 
     for (int i = 0; i<3; i++) {
 
         CCParticleSystemQuad* particleSystem = new CCParticleSystemQuad();
         particleSystem->initWithTotalParticles(200);
-        particleSystem->setTexture(m_pBatchNode->getTexture());
+        particleSystem->setTexture(_batchNode->getTexture());
 
         // duration
         particleSystem->setDuration(kCCParticleDurationInfinity);
@@ -1786,7 +1786,7 @@ void ReorderParticleSystems::onEnter()
         particleSystem->setPosition(ccp(i*10+120 ,200));
 
 
-        m_pBatchNode->addChild(particleSystem);
+        _batchNode->addChild(particleSystem);
         particleSystem->setPositionType(kCCPositionTypeFree);
 
         particleSystem->release();
@@ -1796,14 +1796,14 @@ void ReorderParticleSystems::onEnter()
     }
 
     schedule(schedule_selector(ReorderParticleSystems::reorderSystem), 2.0f);
-    m_emitter = NULL;
+    _emitter = NULL;
 
 }
 
 void ReorderParticleSystems::reorderSystem(float time)
 {
-    CCParticleSystem* system = (CCParticleSystem*)m_pBatchNode->getChildren()->objectAtIndex(1);
-    m_pBatchNode->reorderChild(system, system->getZOrder() - 1);     
+    CCParticleSystem* system = (CCParticleSystem*)_batchNode->getChildren()->objectAtIndex(1);
+    _batchNode->reorderChild(system, system->getZOrder() - 1);     
 }
 
 
@@ -1854,30 +1854,30 @@ void PremultipliedAlphaTest::onEnter()
 {
     ParticleDemo::onEnter();
 
-	m_color->setColor(ccBLUE);
-    this->removeChild(m_background, true);
-    m_background = NULL;
+	_color->setColor(ccBLUE);
+    this->removeChild(_background, true);
+    _background = NULL;
 
-    m_emitter = CCParticleSystemQuad::create("Particles/BoilingFoam.plist");
-    m_emitter->retain();
+    _emitter = CCParticleSystemQuad::create("Particles/BoilingFoam.plist");
+    _emitter->retain();
     // Particle Designer "normal" blend func causes black halo on premul textures (ignores multiplication)
     //this->emitter.blendFunc = (ccBlendFunc){ GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA };
 
     // Cocos2d "normal" blend func for premul causes alpha to be ignored (oversaturates colors)
     ccBlendFunc tBlendFunc = { GL_ONE, GL_ONE_MINUS_SRC_ALPHA };
-    m_emitter->setBlendFunc(tBlendFunc);
+    _emitter->setBlendFunc(tBlendFunc);
 
-    CCAssert(m_emitter->getOpacityModifyRGB(), "Particle texture does not have premultiplied alpha, test is useless");
+    CCAssert(_emitter->getOpacityModifyRGB(), "Particle texture does not have premultiplied alpha, test is useless");
 
     // Toggle next line to see old behavior
     //	this->emitter.opacityModifyRGB = NO;
 
-    m_emitter->setStartColor(ccc4f(1, 1, 1, 1));
-    m_emitter->setEndColor(ccc4f(1, 1, 1, 0));
-    m_emitter->setStartColorVar(ccc4f(0, 0, 0, 0));
-    m_emitter->setEndColorVar(ccc4f(0, 0, 0, 0));
+    _emitter->setStartColor(ccc4f(1, 1, 1, 1));
+    _emitter->setEndColor(ccc4f(1, 1, 1, 0));
+    _emitter->setStartColorVar(ccc4f(0, 0, 0, 0));
+    _emitter->setEndColorVar(ccc4f(0, 0, 0, 0));
 
-    this->addChild(m_emitter, 10);
+    this->addChild(_emitter, 10);
 }
 
 // PremultipliedAlphaTest2
@@ -1886,13 +1886,13 @@ void PremultipliedAlphaTest2::onEnter()
 {
     ParticleDemo::onEnter();
 
-	m_color->setColor(ccBLACK);
-    this->removeChild(m_background, true);
-    m_background = NULL;
+	_color->setColor(ccBLACK);
+    this->removeChild(_background, true);
+    _background = NULL;
 
-    m_emitter = CCParticleSystemQuad::create("Particles/TestPremultipliedAlpha.plist");
-    m_emitter->retain();
-    this->addChild(m_emitter ,10);
+    _emitter = CCParticleSystemQuad::create("Particles/TestPremultipliedAlpha.plist");
+    _emitter->retain();
+    this->addChild(_emitter ,10);
 }
 
 std::string PremultipliedAlphaTest2::title()

@@ -248,32 +248,32 @@ private:
     bool initPremultipliedATextureWithImage(CCImage * image, unsigned int pixelsWide, unsigned int pixelsHigh);
     
     // By default PVR images are treated as if they don't have the alpha channel premultiplied
-    bool m_bPVRHaveAlphaPremultiplied;
+    bool _PVRHaveAlphaPremultiplied;
 
     /** pixel format of the texture */
-    CC_PROPERTY_READONLY(CCTexture2DPixelFormat, m_ePixelFormat, PixelFormat)
+    CC_PROPERTY_READONLY(CCTexture2DPixelFormat, _pixelFormat, PixelFormat)
     /** width in pixels */
-    CC_PROPERTY_READONLY(unsigned int, m_uPixelsWide, PixelsWide)
+    CC_PROPERTY_READONLY(unsigned int, _pixelsWide, PixelsWide)
     /** height in pixels */
-    CC_PROPERTY_READONLY(unsigned int, m_uPixelsHigh, PixelsHigh)
+    CC_PROPERTY_READONLY(unsigned int, _pixelsHigh, PixelsHigh)
 
     /** texture name */
-    CC_PROPERTY_READONLY(GLuint, m_uName, Name)
+    CC_PROPERTY_READONLY(GLuint, _name, Name)
 
     /** texture max S */
-    CC_PROPERTY(GLfloat, m_fMaxS, MaxS)
+    CC_PROPERTY(GLfloat, _maxS, MaxS)
     /** texture max T */
-    CC_PROPERTY(GLfloat, m_fMaxT, MaxT)
+    CC_PROPERTY(GLfloat, _maxT, MaxT)
     /** content size */
-    CC_PROPERTY_READONLY(CCSize, m_tContentSize, ContentSize)
+    CC_PROPERTY_READONLY(CCSize, _contentSize, ContentSize)
 
     /** whether or not the texture has their Alpha premultiplied */
-    bool m_bHasPremultipliedAlpha;
+    bool _hasPremultipliedAlpha;
 
-    bool m_bHasMipmaps;
+    bool _hasMipmaps;
 
     /** shader program used by drawAtPoint and drawInRect */
-    CC_PROPERTY(CCGLProgram*, m_pShaderProgram, ShaderProgram);
+    CC_PROPERTY(CCGLProgram*, _shaderProgram, ShaderProgram);
 };
 
 // end of textures group

@@ -51,12 +51,12 @@ public:
 	static CCEGLView* sharedOpenGLView();			// MH: Cocos2D now uses pointer instead of ref
 
 private:
-	bool				m_bAccelState;
-	bool				m_bCaptured;
-	s3eKey				m_Key;
-    bool				m_isMultiTouch;
+	bool				_accelState;
+	bool				_captured;
+	s3eKey				_key;
+    bool				_isMultiTouch;
 	
-	static CCEGLView*	m_pInstance ;
+	static CCEGLView*	_instance ;
 	
 	void	setTouch(void* systemData);
 	void	setMotionTouch(void* systemData);

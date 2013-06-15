@@ -7,9 +7,9 @@
 class ActionManagerTest: public BaseTest
 {
 protected:
-    CCTextureAtlas* m_atlas;
+    CCTextureAtlas* _atlas;
 
-    std::string    m_strTitle;
+    std::string    _title;
 
 public:
     ActionManagerTest(void);

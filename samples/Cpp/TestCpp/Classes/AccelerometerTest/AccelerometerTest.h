@@ -8,8 +8,8 @@ USING_NS_CC;
 class AccelerometerTest: public CCLayer
 {
 protected:
-    CCSprite* m_pBall;
-    double    m_fLastTime;
+    CCSprite* _ball;
+    double    _lastTime;
 
 public:
     AccelerometerTest(void);

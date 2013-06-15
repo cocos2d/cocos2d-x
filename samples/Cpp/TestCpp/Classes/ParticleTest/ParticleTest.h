@@ -16,9 +16,9 @@ public:
 class ParticleDemo : public BaseTest
 {
 protected:
-    CCParticleSystem*    m_emitter;
-    CCSprite*            m_background;
-	CCLayerColor*		 m_color;
+    CCParticleSystem*    _emitter;
+    CCSprite*            _background;
+	CCLayerColor*		 _color;
 
 public:
     ~ParticleDemo(void);
@@ -156,15 +156,15 @@ public:
 class DemoParticleFromFile : public ParticleDemo
 {
 public:
-    std::string m_title;
+    std::string _title;
     DemoParticleFromFile(const char *file)
     {    
-        m_title = file;
+        _title = file;
     }
     virtual void onEnter();
     virtual std::string title()
     {
-        return m_title;
+        return _title;
     }
 };
 
@@ -199,7 +199,7 @@ public:
     void updateQuads(float dt);
 
 private:
-    int m_nIndex;
+    int _index;
 };
 
 class Issue1201 : public ParticleDemo
@@ -218,8 +218,8 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 private:
-    CCNode* m_pParent1;
-    CCNode* m_pParent2;
+    CCNode* _parent1;
+    CCNode* _parent2;
 };
 
 class ParticleBatchMultipleEmitters : public ParticleDemo
@@ -238,7 +238,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 private:
-    unsigned int m_nOrder;
+    unsigned int _order;
 };
 
 class MultipleParticleSystems : public ParticleDemo
@@ -258,7 +258,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 private:
-    CCParticleBatchNode* m_pBatchNode;
+    CCParticleBatchNode* _batchNode;
 };
 
 class AddAndDeleteParticleSystems : public ParticleDemo
@@ -270,7 +270,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 private:
-    CCParticleBatchNode* m_pBatchNode;
+    CCParticleBatchNode* _batchNode;
 };
 
 class ReorderParticleSystems : public ParticleDemo
@@ -282,7 +282,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 private:
-    CCParticleBatchNode* m_pBatchNode;
+    CCParticleBatchNode* _batchNode;
 };
 
 class PremultipliedAlphaTest : public ParticleDemo

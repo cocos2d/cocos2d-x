@@ -28,8 +28,8 @@ protected:
 class MotionStreakTest1 : public MotionStreakTest
 {
 protected:
-    CCNode*        m_root;
-    CCNode*        m_target;
+    CCNode*        _root;
+    CCNode*        _target;
 
 public:
     virtual void onEnter();
@@ -40,8 +40,8 @@ public:
 class MotionStreakTest2 : public MotionStreakTest
 {
 protected:
-    CCNode*        m_root;
-    CCNode*        m_target;
+    CCNode*        _root;
+    CCNode*        _target;
 
 public:
     virtual void onEnter();
@@ -57,9 +57,9 @@ public:
     virtual void onEnter();
     virtual void update(float dt);
 private:
-    CCPoint m_center;
-    float m_fRadius;
-    float m_fAngle;
+    CCPoint _center;
+    float _radius;
+    float _angle;
 };
 
 class MotionStreakTestScene : public TestScene

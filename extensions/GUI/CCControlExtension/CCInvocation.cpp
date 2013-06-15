@@ -40,16 +40,16 @@ CCInvocation* CCInvocation::create(CCObject* target, SEL_CCControlHandler action
 
 CCInvocation::CCInvocation(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvent)
 {
-    m_target=target;
-    m_action=action;
-    m_controlEvent=controlEvent;
+    _target=target;
+    _action=action;
+    _controlEvent=controlEvent;
 }
 
 void CCInvocation::invoke(CCObject* sender)
 {
-    if (m_target && m_action)
+    if (_target && _action)
     {
-        (m_target->*m_action)(sender, m_controlEvent);
+        (_target->*_action)(sender, _controlEvent);
     }                
 }
 

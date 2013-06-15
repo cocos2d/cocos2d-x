@@ -13,7 +13,7 @@ public:
     virtual void onEnter();
 
 protected:
-    std::string    m_strTitle;
+    std::string    _title;
 };
 
 class TextureAtlasEncryptionTestScene : public TestScene

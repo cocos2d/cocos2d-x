@@ -69,25 +69,25 @@ public:
     virtual void onEnter(void);
 private:
 
-    CCLabelTTF* m_pLabel;
-    CCLabelTTF* m_pLabelPlaceHolder;
-    EditBoxInputMode    m_eEditBoxInputMode;
-    EditBoxInputFlag    m_eEditBoxInputFlag;
-    KeyboardReturnType  m_eKeyboardReturnType;
+    CCLabelTTF* _label;
+    CCLabelTTF* _labelPlaceHolder;
+    EditBoxInputMode    _editBoxInputMode;
+    EditBoxInputFlag    _editBoxInputFlag;
+    KeyboardReturnType  _keyboardReturnType;
     
-    std::string m_strText;
-    std::string m_strPlaceHolder;
+    std::string _text;
+    std::string _placeHolder;
     
-    ccColor3B m_colText;
-    ccColor3B m_colPlaceHolder;
+    ccColor3B _colText;
+    ccColor3B _colPlaceHolder;
 
-    int   m_nMaxLength;
-    CCSize m_EditSize;
+    int   _maxLength;
+    CCSize _editSize;
 
 	/*
-    CCSize     m_tContentSize;
-    HWND       m_pSysEdit;
-    int        m_nMaxTextLength;
+    CCSize     _contentSize;
+    HWND       _sysEdit;
+    int        _maxTextLength;
 	*/
 };
 

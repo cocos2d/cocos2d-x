@@ -84,39 +84,39 @@ public:
     virtual bool isOpacityModifyRGB(void);
 
     /** When fast mode is enabled, new points are added faster but with lower precision */
-    inline bool isFastMode() { return m_bFastMode; }
-    inline void setFastMode(bool bFastMode) { m_bFastMode = bFastMode; }
+    inline bool isFastMode() { return _fastMode; }
+    inline void setFastMode(bool bFastMode) { _fastMode = bFastMode; }
 
-    inline bool isStartingPositionInitialized() { return m_bStartingPositionInitialized; }
+    inline bool isStartingPositionInitialized() { return _startingPositionInitialized; }
     inline void setStartingPositionInitialized(bool bStartingPositionInitialized) 
     { 
-        m_bStartingPositionInitialized = bStartingPositionInitialized; 
+        _startingPositionInitialized = bStartingPositionInitialized; 
     }
 protected:
-    bool m_bFastMode;
-    bool m_bStartingPositionInitialized;
+    bool _fastMode;
+    bool _startingPositionInitialized;
 private:
     /** texture used for the motion streak */
-    CCTexture2D* m_pTexture;
-    ccBlendFunc m_tBlendFunc;
-    CCPoint m_tPositionR;
+    CCTexture2D* _texture;
+    ccBlendFunc _blendFunc;
+    CCPoint _positionR;
 
-    float m_fStroke;
-    float m_fFadeDelta;
-    float m_fMinSeg;
+    float _stroke;
+    float _fadeDelta;
+    float _minSeg;
 
-    unsigned int m_uMaxPoints;
-    unsigned int m_uNuPoints;
-    unsigned int m_uPreviousNuPoints;
+    unsigned int _maxPoints;
+    unsigned int _nuPoints;
+    unsigned int _previousNuPoints;
 
     /** Pointers */
-    CCPoint* m_pPointVertexes;
-    float* m_pPointState;
+    CCPoint* _pointVertexes;
+    float* _pointState;
 
     // Opengl
-    ccVertex2F* m_pVertices;
-    GLubyte* m_pColorPointer;
-    ccTex2F* m_pTexCoords;
+    ccVertex2F* _vertices;
+    GLubyte* _colorPointer;
+    ccTex2F* _texCoords;
 };
 
 // end of misc_nodes group

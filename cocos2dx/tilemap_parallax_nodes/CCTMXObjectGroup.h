@@ -45,17 +45,17 @@ NS_CC_BEGIN
 class CC_DLL CCTMXObjectGroup : public CCObject
 {
     /** offset position of child objects */
-    CC_SYNTHESIZE_PASS_BY_REF(CCPoint, m_tPositionOffset, PositionOffset);
+    CC_SYNTHESIZE_PASS_BY_REF(CCPoint, _positionOffset, PositionOffset);
     /** list of properties stored in a dictionary */
-    CC_PROPERTY(CCDictionary*, m_pProperties, Properties);
+    CC_PROPERTY(CCDictionary*, _properties, Properties);
     /** array of the objects */
-    CC_PROPERTY(CCArray*, m_pObjects, Objects);
+    CC_PROPERTY(CCArray*, _objects, Objects);
 public:
     CCTMXObjectGroup();
     virtual ~CCTMXObjectGroup();
 
-    inline const char* getGroupName(){ return m_sGroupName.c_str(); }
-    inline void setGroupName(const char *groupName){ m_sGroupName = groupName; }
+    inline const char* getGroupName(){ return _groupName.c_str(); }
+    inline void setGroupName(const char *groupName){ _groupName = groupName; }
 
     /** return the value for the specific property name */
     CCString *propertyNamed(const char* propertyName);
@@ -66,7 +66,7 @@ public:
     CCDictionary* objectNamed(const char *objectName);
 protected:    
     /** name of the group */
-    std::string m_sGroupName;
+    std::string _groupName;
 };
 
 // end of tilemap_parallax_nodes group

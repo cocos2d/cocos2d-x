@@ -28,8 +28,8 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 CCComponent::CCComponent(void)
-: m_pOwner(NULL)
-, m_bEnabled(true)
+: _owner(NULL)
+, _enabled(true)
 {
 }
 
@@ -74,27 +74,27 @@ CCComponent* CCComponent::create(void)
 
 const char* CCComponent::getName() const
 {
-    return m_strName.c_str();
+    return _name.c_str();
 }
 
 CCNode* CCComponent::getOwner() const
 {
-    return m_pOwner;
+    return _owner;
 }
 
 void CCComponent::setOwner(CCNode *pOwner)
 {
-    m_pOwner = pOwner;
+    _owner = pOwner;
 }
 
 bool CCComponent::isEnabled() const
 {
-    return m_bEnabled;
+    return _enabled;
 }
 
 void CCComponent::setEnabled(bool b)
 {
-    m_bEnabled = b;
+    _enabled = b;
 }
 
 NS_CC_END
