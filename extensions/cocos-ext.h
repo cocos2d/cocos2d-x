@@ -40,6 +40,22 @@
 #include "network/HttpResponse.h"
 #include "network/HttpClient.h"
 
+#include "CCArmature/CCArmature.h"
+#include "CCArmature/CCBone.h"
+#include "CCArmature/animation/CCArmatureAnimation.h"
+#include "CCArmature/datas/CCDatas.h"
+#include "CCArmature/display/CCBatchNode.h"
+#include "CCArmature/display/CCDecorativeDisplay.h"
+#include "CCArmature/display/CCDisplayManager.h"
+#include "CCArmature/display/CCSkin.h"
+#include "CCArmature/physics/CCColliderDetector.h"
+#include "CCArmature/physics/CCPhysicsWorld.h"
+#include "CCArmature/utils/CCArmatureDataManager.h"
+#include "CCArmature/utils/CCConstValue.h"
+#include "CCArmature/utils/CCDataReaderHelper.h"
+#include "CCArmature/utils/CCTweenFunction.h"
+#include "CCArmature/external_tool/sigslot.h"
+
 // Physics integration
 #if CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION
 #include "physics_nodes/CCPhysicsDebugNode.h"
@@ -47,5 +63,9 @@
 #endif
 
 #include "spine/spine-cocos2dx.h"
+
+#include "Components/CCComAttribute.h"
+#include "Components/CCComAudio.h"
+#include "Components/CCComController.h"
 
 #endif /* __COCOS2D_EXT_H__ */
