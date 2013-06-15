@@ -32,6 +32,10 @@ copy_resouces() {
 # from HelloWorld copy src and jni to APP_DIR
 copy_src_and_jni() {
     cp -rf $HELLOWORLD_ROOT/proj.android/{jni,src} $APP_DIR/proj.android
+
+    # cocos2d-x java lib
+    mkdir -p $APP_DIR/proj.android/src/org/cocos2dx/lib/
+    cp -f $COCOS2DX_ROOT/cocos2dx/platform/android/java/src/org/cocos2dx/lib/*.java $APP_DIR/proj.android/src/org/cocos2dx/lib/
     
     # replace Android.mk
     sh $COCOS2DX_ROOT/template/android/gamemk.sh $APP_DIR/proj.android/jni/Android.mk $USE_BOX2D $USE_CHIPMUNK $USE_LUA
