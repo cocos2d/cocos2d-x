@@ -1,11 +1,3 @@
-//
-//  iphoneAppDelegate.m
-//  iphone
-//
-//  Created by Walzer on 10-11-16.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
-//
-
 #import "AppController.h"
 #import "EAGLView.h"
 #import "cocos2d.h"

@@ -202,6 +202,12 @@ public:
     /** listen the event that coming to foreground on Android
      */
     void listenBackToForeground(CCObject *obj);
+
+    /** whether or not the array buffer of the VBO needs to be updated*/
+    inline bool isDirty(void) { return m_bDirty; }
+    /** specify if the array buffer of the VBO needs to be updated */
+    inline void setDirty(bool bDirty) { m_bDirty = bDirty; }
+
 private:
     void setupIndices();
     void mapBuffers();
