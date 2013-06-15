@@ -48,45 +48,9 @@ CCAction::~CCAction()
     CCLOGINFO("cocos2d: deallocing");
 }
 
-CCAction* CCAction::create()
-{
-    CCAction * pRet = new CCAction();
-    pRet->autorelease();
-    return pRet;
-}
-
 const char* CCAction::description()
 {
     return CCString::createWithFormat("<CCAction | Tag = %d>", m_nTag)->getCString();
-}
-
-CCAction* CCAction::clone() const
-{
-	// XXX shall not happen
-	auto a = new CCAction(*this);
-	a->m_nTag = m_nTag;
-	a->m_pTarget = a->m_pOriginalTarget = NULL;
-	a->autorelease();
-	return a;
-}
-
-CCObject* CCAction::copyWithZone(CCZone *pZone)
-{
-    CCZone *pNewZone = NULL;
-    CCAction *pRet = NULL;
-    if (pZone && pZone->m_pCopyObject)
-    {
-        pRet = (CCAction*)(pZone->m_pCopyObject);
-    }
-    else
-    {
-        pRet = new CCAction();
-        pNewZone = new CCZone(pRet);
-    }
-    //copy member data
-    pRet->m_nTag = m_nTag;
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
 }
 
 void CCAction::startWithTarget(CCNode *aTarget)
@@ -114,23 +78,6 @@ void CCAction::update(float time)
 {
     CC_UNUSED_PARAM(time);
     CCLOG("[Action update]. override me");
-}
-
-//
-// FiniteTimeAction
-//
-
-CCFiniteTimeAction* CCFiniteTimeAction::clone() const
-{
-	auto a = new CCFiniteTimeAction(*this);
-	a->autorelease();
-	return a;
-}
-
-CCFiniteTimeAction *CCFiniteTimeAction::reverse()
-{
-    CCLOG("cocos2d: FiniteTimeAction#reverse: Implement me");
-    return NULL;
 }
 
 //
@@ -219,9 +166,9 @@ bool CCSpeed::isDone()
     return m_pInnerAction->isDone();
 }
 
-CCActionInterval *CCSpeed::reverse()
+CCSpeed *CCSpeed::reverse() const
 {
-     return (CCActionInterval*)(CCSpeed::create(m_pInnerAction->reverse(), m_fSpeed));
+	return CCSpeed::create(m_pInnerAction->reverse(), m_fSpeed);
 }
 
 void CCSpeed::setInnerAction(CCActionInterval *pAction)

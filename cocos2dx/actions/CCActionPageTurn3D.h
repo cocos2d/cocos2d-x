@@ -46,6 +46,12 @@ NS_CC_BEGIN
 class CC_DLL CCPageTurn3D : public CCGrid3DAction
 {
 public:
+	/** returns a new clone of the action */
+	virtual CCPageTurn3D* clone() const;
+
+	/** returns a a new reversed action */
+	virtual CCPageTurn3D* reverse() const;
+
     virtual void update(float time);
 
 public:

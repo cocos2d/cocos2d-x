@@ -121,11 +121,14 @@ public:
     // super virtual functions
 	/** returns a new clone of the action */
 	virtual CCCardinalSplineTo *clone() const;
+
+	/** returns a new reversed action */
+    virtual CCCardinalSplineTo* reverse() const;
+
     virtual CCCardinalSplineTo* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
-    virtual CCActionInterval* reverse();
-    
+
     virtual void updatePosition(CCPoint &newPos);
     
     inline CCPointArray* getPoints() { return m_pPoints; }
@@ -159,11 +162,14 @@ public:
     CCCardinalSplineBy();
     
     virtual void startWithTarget(CCNode *pTarget);
-    virtual CCActionInterval* reverse();
+
     virtual void updatePosition(CCPoint &newPos);
 
 	/** returns a new clone of the action */
 	virtual CCCardinalSplineBy *clone() const;
+
+	/** returns a new reversed action */
+    virtual CCCardinalSplineBy* reverse() const;
 
 protected:
     CCPoint m_startPosition;

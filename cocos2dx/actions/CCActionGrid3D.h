@@ -49,6 +49,9 @@ public:
     /** initializes an action with duration, grid size, waves and amplitude */
     bool initWithDuration(float duration, const CCSize& gridSize, unsigned int waves, float amplitude);
 
+	/** returns a new clone of the action */
+	virtual CCWaves3D* clone() const;
+
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
 
@@ -68,6 +71,10 @@ public:
     /** initializes the action with duration */
     virtual bool initWithDuration(float duration);
     virtual bool initWithSize(const CCSize& gridSize, float duration);
+
+	/** returns a new clone of the action */
+	virtual CCFlipX3D* clone() const;
+
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
 
@@ -104,6 +111,10 @@ public:
 
     /** initializes the action with center position, radius, a grid size and duration */
     bool initWithDuration(float duration, const CCSize& gridSize, const CCPoint& position, float radius);
+
+	/** returns a new clone of the action */
+	virtual CCLens3D* clone() const;
+
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
 
@@ -139,6 +150,10 @@ public:
 
     /** initializes the action with radius, number of waves, amplitude, a grid size and duration */
     bool initWithDuration(float duration, const CCSize& gridSize, const CCPoint& position, float radius, unsigned int waves, float amplitude);
+
+	/** returns a new clone of the action */
+	virtual CCRipple3D* clone() const;
+
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
 
@@ -160,6 +175,10 @@ class CC_DLL CCShaky3D : public CCGrid3DAction
 public:
     /** initializes the action with a range, shake Z vertices, a grid and duration */
     bool initWithDuration(float duration, const CCSize& gridSize, int range, bool shakeZ);
+
+	/** returns a new clone of the action */
+	virtual CCShaky3D* clone() const;
+
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
 
@@ -183,6 +202,10 @@ public:
 
     /** initializes the action with amplitude, a grid and duration */
     bool initWithDuration(float duration, const CCSize& gridSize, unsigned int waves, float amplitude);
+
+	/** returns a new clone of the action */
+	virtual CCLiquid* clone() const;
+
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
 
@@ -207,6 +230,10 @@ public:
 
     /** initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration */
     bool initWithDuration(float duration, const CCSize& gridSize, unsigned int waves, float amplitude, bool horizontal, bool vertical);
+
+	/** returns a new clone of the action */
+	virtual CCWaves* clone() const;
+
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
 
@@ -239,6 +266,10 @@ public:
 
     /** initializes the action with center position, number of twirls, amplitude, a grid size and duration */
     bool initWithDuration(float duration, const CCSize& gridSize, CCPoint position, unsigned int twirls, float amplitude);
+
+	/** returns a new clone of the action */
+	virtual CCTwirl* clone() const;
+
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
 

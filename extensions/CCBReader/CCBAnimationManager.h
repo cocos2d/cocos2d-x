@@ -139,6 +139,8 @@ public:
     static CCBSetSpriteFrame* create(CCSpriteFrame *pSpriteFrame);
     bool initWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
     virtual void update(float time);
+	/** returns a new clone of the action */
+	virtual CCBSetSpriteFrame* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
 };
 
@@ -156,6 +158,8 @@ public:
     static CCBSoundEffect* actionWithSoundFile(const std::string &file, float pitch, float pan, float gain);
     bool initWithSoundFile(const std::string &file, float pitch, float pan, float gain);
     virtual void update(float time);
+	/** returns a new clone of the action */
+	virtual CCBSoundEffect* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
 };
 
@@ -171,6 +175,8 @@ public:
     static CCBRotateTo* create(float fDuration, float fAngle);
     bool initWithDuration(float fDuration, float fAngle);
     virtual void update(float time);
+	/** returns a new clone of the action */
+	virtual CCBRotateTo* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void startWithTarget(CCNode *pNode);
 };
@@ -185,6 +191,8 @@ public:
     static CCBRotateXTo* create(float fDuration, float fAngle);
     bool initWithDuration(float fDuration, float fAngle);
     virtual void startWithTarget(CCNode *pNode);
+	/** returns a new clone of the action */
+	virtual CCBRotateXTo* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void update(float time);
 };
@@ -195,11 +203,13 @@ private:
     float mStartAngle;
     float mDstAngle;
     float mDiffAngle;
-    
+
 public:
     static CCBRotateYTo* create(float fDuration, float fAngle);
     bool initWithDuration(float fDuration, float fAngle);
     virtual void startWithTarget(CCNode *pNode);
+	/** returns a new clone of the action */
+	virtual CCBRotateYTo* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void update(float time);
 };
@@ -209,7 +219,10 @@ class CCBEaseInstant : public CCActionEase
 {
 public:
     static CCBEaseInstant* create(CCActionInterval *pAction);
-    
+
+	/** returns a new clone of the action */
+	virtual CCBEaseInstant* clone() const;
+	
     virtual void update(float dt);
 };
 

@@ -50,18 +50,13 @@ public:
     /** initializes the action */
     bool initWithAction(CCActionInterval *pAction);
 
-	virtual CCActionEase* clone() const;
-    virtual CCObject* copyWithZone(CCZone* pZone);
+	virtual CCActionEase* clone() const = 0;
+    virtual CCActionEase* reverse() const = 0;
+
     virtual void startWithTarget(CCNode *pTarget);
     virtual void stop(void);
     virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
     virtual CCActionInterval* getInnerAction();
-
-public:
-
-    /** creates the action */
-    static CCActionEase* create(CCActionInterval *pAction);
 
 protected:
     /** The inner action */
@@ -85,14 +80,8 @@ public:
     /** Initializes the action with the inner action and the rate parameter */
     bool initWithAction(CCActionInterval *pAction, float fRate);
 
-	virtual CCEaseRateAction* clone() const;
-    virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual CCActionInterval* reverse(void);
-
-public:
-
-    /** Creates the action with the inner action and the rate parameter */
-    static CCEaseRateAction* create(CCActionInterval* pAction, float fRate);
+	virtual CCEaseRateAction* clone() const = 0;
+    virtual CCEaseRateAction* reverse() const = 0;
 
 protected:
     float m_fRate;
@@ -106,8 +95,12 @@ class CC_DLL CCEaseIn : public CCEaseRateAction
 {
 public:
     virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
+
+	/** returns a new clone of the action */
 	virtual CCEaseIn* clone() const;
+	/** returns a new reversed action */
+	virtual CCEaseIn* reverse() const;
+
     virtual CCObject* copyWithZone(CCZone* pZone);
 public:
 
@@ -123,8 +116,10 @@ class CC_DLL CCEaseOut : public CCEaseRateAction
 {
 public:
     virtual void update(float time);
-    virtual CCActionInterval* reverse();
+	/** returns a new clone of the action */
 	virtual CCEaseOut* clone() const;
+	/** returns a new reversed action */
+	virtual CCEaseOut* reverse() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -141,9 +136,11 @@ class CC_DLL CCEaseInOut : public CCEaseRateAction
 {
 public:
     virtual void update(float time);
-	virtual CCEaseInOut* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual CCActionInterval* reverse(void);
+	/** returns a new clone of the action */
+	virtual CCEaseInOut* clone() const;
+	/** returns a new reversed action */
+	virtual CCEaseInOut* reverse() const;
 
 public:
 
@@ -159,8 +156,10 @@ class CC_DLL CCEaseExponentialIn : public CCActionEase
 {
 public:
     virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
+	/** returns a new clone of the action */
 	virtual CCEaseExponentialIn* clone() const;
+	/** returns a new reversed action */
+	virtual CCActionEase* reverse() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -176,8 +175,10 @@ class CC_DLL CCEaseExponentialOut : public CCActionEase
 {
 public:
     virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
+	/** returns a new clone of the action */
 	virtual CCEaseExponentialOut* clone() const;
+	/** returns a new reversed action */
+	virtual CCActionEase* reverse() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -193,9 +194,11 @@ class CC_DLL CCEaseExponentialInOut : public CCActionEase
 {
 public:
     virtual void update(float time);
+	/** returns a new clone of the action */
 	virtual CCEaseExponentialInOut* clone() const;
+	/** returns a new reversed action */
+	virtual CCEaseExponentialInOut* reverse() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual CCActionInterval* reverse();
 
 public:
 
@@ -211,8 +214,10 @@ class CC_DLL CCEaseSineIn : public CCActionEase
 {
 public:
     virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
+	/** returns a new clone of the action */
 	virtual CCEaseSineIn* clone() const;
+	/** returns a new reversed action */
+	virtual CCActionEase* reverse() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -228,8 +233,10 @@ class CC_DLL CCEaseSineOut : public CCActionEase
 {
 public:
     virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
+	/** returns a new clone of the action */
 	virtual CCEaseSineOut* clone() const;
+	/** returns a new reversed action */
+	virtual CCActionEase* reverse() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -246,9 +253,11 @@ class CC_DLL CCEaseSineInOut : public CCActionEase
 {
 public:
     virtual void update(float time);
+	/** returns a new clone of the action */
 	virtual CCEaseSineInOut* clone() const;
+	/** returns a new reversed action */
+	virtual CCEaseSineInOut* reverse() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual CCActionInterval* reverse();
 
 public:
 
@@ -272,15 +281,11 @@ public:
     /** Initializes the action with the inner action and the period in radians (default is 0.3) */
     bool initWithAction(CCActionInterval *pAction, float fPeriod = 0.3f);
 
-    virtual CCActionInterval* reverse(void);
-	virtual CCEaseElastic* clone() const;
-    virtual CCObject* copyWithZone(CCZone* pZone);
+	/** returns a new clone of the action */
+	virtual CCEaseElastic* clone() const = 0;
+	/** returns a new reversed action */
+	virtual CCEaseElastic* reverse() const = 0;
 
-public:
-
-    /** Creates the action with the inner action and the period in radians (default is 0.3) */
-    static CCEaseElastic* create(CCActionInterval *pAction, float fPeriod);
-    static CCEaseElastic* create(CCActionInterval *pAction);
 protected:
     float m_fPeriod;
 };
@@ -295,8 +300,10 @@ class CC_DLL CCEaseElasticIn : public CCEaseElastic
 {
 public:
     virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
+	/** returns a new clone of the action */
 	virtual CCEaseElasticIn* clone() const;
+	/** returns a new reversed action */
+	virtual CCEaseElastic* reverse() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -316,8 +323,10 @@ class CC_DLL CCEaseElasticOut : public CCEaseElastic
 {
 public:
     virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
+	/** returns a new clone of the action */
 	virtual CCEaseElasticOut* clone() const;
+	/** returns a new reversed action */
+	virtual CCEaseElastic* reverse() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -337,8 +346,10 @@ class CC_DLL CCEaseElasticInOut : public CCEaseElastic
 {
 public:
     virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
+	/** returns a new clone of the action */
 	virtual CCEaseElasticInOut* clone() const;
+	/** returns a new reversed action */
+	virtual CCEaseElasticInOut* reverse() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -357,14 +368,11 @@ class CC_DLL CCEaseBounce : public CCActionEase
 {
 public:
     float bounceTime(float time);
-    virtual CCObject* copyWithZone(CCZone* pZone);
-	virtual CCEaseBounce* clone() const;
-    virtual CCActionInterval* reverse();
+	/** returns a new clone of the action */
+	virtual CCEaseBounce* clone() const = 0;
+	/** returns a new reversed action */
+	virtual CCEaseBounce* reverse() const = 0;
 
-public:
-
-    /** creates the action */
-    static CCEaseBounce* create(CCActionInterval* pAction);
 };
 
 /** 
@@ -377,8 +385,10 @@ class CC_DLL CCEaseBounceIn : public CCEaseBounce
 {
 public:
     virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
+	/** returns a new clone of the action */
 	virtual CCEaseBounceIn* clone() const;
+	/** returns a new reversed action */
+	virtual CCEaseBounce* reverse() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -397,8 +407,10 @@ class CC_DLL CCEaseBounceOut : public CCEaseBounce
 {
 public:
     virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
+	/** returns a new clone of the action */
 	virtual CCEaseBounceOut* clone() const;
+	/** returns a new reversed action */
+	virtual CCEaseBounce* reverse() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -417,9 +429,11 @@ class CC_DLL CCEaseBounceInOut : public CCEaseBounce
 {
 public:
     virtual void update(float time);
+	/** returns a new clone of the action */
 	virtual CCEaseBounceInOut* clone() const;
+	/** returns a new reversed action */
+	virtual CCEaseBounceInOut* reverse() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual CCActionInterval* reverse();
 
 public:
 
@@ -437,8 +451,10 @@ class CC_DLL CCEaseBackIn : public CCActionEase
 {
 public:
     virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
+	/** returns a new clone of the action */
 	virtual CCEaseBackIn* clone() const;
+	/** returns a new reversed action */
+	virtual CCActionEase* reverse() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -457,8 +473,10 @@ class CC_DLL CCEaseBackOut : public CCActionEase
 {
 public:
     virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
+	/** returns a new clone of the action */
 	virtual CCEaseBackOut* clone() const;
+	/** returns a new reversed action */
+	virtual CCActionEase* reverse() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -477,9 +495,11 @@ class CC_DLL CCEaseBackInOut : public CCActionEase
 {
 public:
     virtual void update(float time);
+	/** returns a new clone of the action */
 	virtual CCEaseBackInOut* clone() const;
+	/** returns a new reversed action */
+	virtual CCEaseBackInOut* reverse() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual CCActionInterval* reverse();
 
 public:
 

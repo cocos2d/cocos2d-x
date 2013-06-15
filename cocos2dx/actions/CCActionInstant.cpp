@@ -35,30 +35,6 @@ NS_CC_BEGIN
 // InstantAction
 //
 
-CCActionInstant * CCActionInstant::clone() const
-{
-	auto a = new CCActionInstant(*this);
-	a->autorelease();
-	return a;
-}
-
-CCObject * CCActionInstant::copyWithZone(CCZone *pZone) {
-
-    CCZone *pNewZone = NULL;
-    CCActionInstant *pRet = NULL;
-
-    if (pZone && pZone->m_pCopyObject) {
-        pRet = (CCActionInstant*) (pZone->m_pCopyObject);
-    } else {
-        pRet = new CCActionInstant();
-        pZone = pNewZone = new CCZone(pRet);
-    }
-
-    CCFiniteTimeAction::copyWithZone(pZone);
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
-}
-
 bool CCActionInstant::isDone() {
     return true;
 }
@@ -71,10 +47,6 @@ void CCActionInstant::step(float dt) {
 void CCActionInstant::update(float time) {
     CC_UNUSED_PARAM(time);
     // nothing
-}
-
-CCFiniteTimeAction * CCActionInstant::reverse() {
-    return (CCFiniteTimeAction*) (copy()->autorelease());
 }
 
 //
@@ -97,8 +69,9 @@ void CCShow::update(float time) {
     m_pTarget->setVisible(true);
 }
 
-CCFiniteTimeAction* CCShow::reverse() {
-    return (CCFiniteTimeAction*) (CCHide::create());
+CCActionInstant* CCShow::reverse() const
+{
+    return CCHide::create();
 }
 
 CCShow * CCShow::clone() const
@@ -143,8 +116,9 @@ void CCHide::update(float time) {
     m_pTarget->setVisible(false);
 }
 
-CCFiniteTimeAction *CCHide::reverse() {
-    return (CCFiniteTimeAction*) (CCShow::create());
+CCActionInstant *CCHide::reverse() const
+{
+    return CCShow::create();
 }
 
 CCHide * CCHide::clone() const
@@ -189,6 +163,11 @@ void CCToggleVisibility::update(float time)
 {
     CC_UNUSED_PARAM(time);
     m_pTarget->setVisible(!m_pTarget->isVisible());
+}
+
+CCToggleVisibility * CCToggleVisibility::reverse() const
+{
+	return CCToggleVisibility::create();
 }
 
 CCToggleVisibility * CCToggleVisibility::clone() const
@@ -239,8 +218,9 @@ void CCRemoveSelf::update(float time) {
 	m_pTarget->removeFromParentAndCleanup(m_bIsNeedCleanUp);
 }
 
-CCFiniteTimeAction *CCRemoveSelf::reverse() {
-	return (CCFiniteTimeAction*) (CCRemoveSelf::create(m_bIsNeedCleanUp));
+CCRemoveSelf *CCRemoveSelf::reverse() const
+{
+	return CCRemoveSelf::create(m_bIsNeedCleanUp);
 }
 
 CCRemoveSelf * CCRemoveSelf::clone() const
@@ -295,7 +275,8 @@ void CCFlipX::update(float time) {
     ((CCSprite*) (m_pTarget))->setFlipX(m_bFlipX);
 }
 
-CCFiniteTimeAction* CCFlipX::reverse() {
+CCFlipX* CCFlipX::reverse() const
+{
     return CCFlipX::create(!m_bFlipX);
 }
 
@@ -351,7 +332,8 @@ void CCFlipY::update(float time) {
     ((CCSprite*) (m_pTarget))->setFlipY(m_bFlipY);
 }
 
-CCFiniteTimeAction* CCFlipY::reverse() {
+CCFlipY* CCFlipY::reverse() const
+{
     return CCFlipY::create(!m_bFlipY);
 }
 
