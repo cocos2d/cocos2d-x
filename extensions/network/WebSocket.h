@@ -31,7 +31,6 @@
 #define __CC_WEBSOCKET_H__
 
 #include "ExtensionMacros.h"
-#include <pthread.h>
 #include "cocos2d.h"
 #include "libwebsockets.h"
 #include <list>
@@ -123,7 +122,6 @@ public:
      *  @brief Gets current state of connection.
      */
     State getReadyState();
-    
 private:
     virtual void onSubThreadStarted();
     virtual int onSubThreadLoop();
@@ -150,7 +148,7 @@ private:
     struct libwebsocket_context* _wsContext;
     Delegate* _delegate;
     int _SSLConnection;
-    libwebsocket_protocols* _wsProtocols;
+    struct libwebsocket_protocols* _wsProtocols;
 };
 
 NS_CC_EXT_END
