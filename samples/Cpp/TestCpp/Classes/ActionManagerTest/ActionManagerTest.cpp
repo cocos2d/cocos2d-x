@@ -139,7 +139,7 @@ void CrashTest::onEnter()
 
 void CrashTest::removeThis()
 {
-    m_pParent->removeChild(this, true);
+    _parent->removeChild(this, true);
     
     nextCallback(this);
 }

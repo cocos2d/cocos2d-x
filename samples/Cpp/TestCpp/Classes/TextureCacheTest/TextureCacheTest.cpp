@@ -6,19 +6,19 @@
 USING_NS_CC;
 
 TextureCacheTest::TextureCacheTest()
-: m_nNumberOfSprites(20)
-, m_nNumberOfLoadedSprites(0)
+: _numberOfSprites(20)
+, _numberOfLoadedSprites(0)
 {
     CCSize size = CCDirector::sharedDirector()->getWinSize();
 
-    m_pLabelLoading = CCLabelTTF::create("loading...", "Arial", 15);
-    m_pLabelPercent = CCLabelTTF::create("%0", "Arial", 15);
+    _labelLoading = CCLabelTTF::create("loading...", "Arial", 15);
+    _labelPercent = CCLabelTTF::create("%0", "Arial", 15);
 
-    m_pLabelLoading->setPosition(ccp(size.width / 2, size.height / 2 - 20));
-    m_pLabelPercent->setPosition(ccp(size.width / 2, size.height / 2 + 20));
+    _labelLoading->setPosition(ccp(size.width / 2, size.height / 2 - 20));
+    _labelPercent->setPosition(ccp(size.width / 2, size.height / 2 + 20));
 
-    this->addChild(m_pLabelLoading);
-    this->addChild(m_pLabelPercent);
+    this->addChild(_labelLoading);
+    this->addChild(_labelPercent);
 
     // load textrues
     CCTextureCache::sharedTextureCache()->addImageAsync("Images/HelloWorld.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
@@ -45,15 +45,15 @@ TextureCacheTest::TextureCacheTest()
 
 void TextureCacheTest::loadingCallBack(CCObject *obj)
 {
-    ++m_nNumberOfLoadedSprites;
+    ++_numberOfLoadedSprites;
     char tmp[10];
-    sprintf(tmp,"%%%d", (int)(((float)m_nNumberOfLoadedSprites / m_nNumberOfSprites) * 100));
-    m_pLabelPercent->setString(tmp);
+    sprintf(tmp,"%%%d", (int)(((float)_numberOfLoadedSprites / _numberOfSprites) * 100));
+    _labelPercent->setString(tmp);
 
-    if (m_nNumberOfLoadedSprites == m_nNumberOfSprites)
+    if (_numberOfLoadedSprites == _numberOfSprites)
     {
-        this->removeChild(m_pLabelLoading, true);
-        this->removeChild(m_pLabelPercent, true);
+        this->removeChild(_labelLoading, true);
+        this->removeChild(_labelPercent, true);
         addSprite();
     }
 }

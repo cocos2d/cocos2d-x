@@ -14,10 +14,10 @@ public:
     void loadingCallBack(cocos2d::CCObject *obj);
 
 private:
-    cocos2d::CCLabelTTF *m_pLabelLoading;
-    cocos2d::CCLabelTTF *m_pLabelPercent;
-    int m_nNumberOfSprites;
-    int m_nNumberOfLoadedSprites;
+    cocos2d::CCLabelTTF *_labelLoading;
+    cocos2d::CCLabelTTF *_labelPercent;
+    int _numberOfSprites;
+    int _numberOfLoadedSprites;
 };
 
 class TextureCacheTestScene : public TestScene

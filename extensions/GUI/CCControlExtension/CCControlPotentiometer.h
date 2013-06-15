@@ -74,17 +74,17 @@ public:
     virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
 
 protected:
-    CC_SYNTHESIZE_RETAIN(CCSprite*, m_pThumbSprite, ThumbSprite)
-    CC_SYNTHESIZE_RETAIN(CCProgressTimer*, m_pProgressTimer, ProgressTimer)
-    CC_SYNTHESIZE(CCPoint, m_tPreviousLocation, PreviousLocation)
+    CC_SYNTHESIZE_RETAIN(CCSprite*, _thumbSprite, ThumbSprite)
+    CC_SYNTHESIZE_RETAIN(CCProgressTimer*, _progressTimer, ProgressTimer)
+    CC_SYNTHESIZE(CCPoint, _previousLocation, PreviousLocation)
     /** Contains the receiver’s current value. */
-    float           m_fValue; 
+    float           _value; 
     /** Contains the minimum value of the receiver. 
     * The default value of this property is 0.0. */
-    float           m_fMinimumValue;
+    float           _minimumValue;
     /** Contains the maximum value of the receiver. 
     * The default value of this property is 1.0. */
-    float           m_fMaximumValue;
+    float           _maximumValue;
     /** Factorize the event dispath into these methods. */
     void potentiometerBegan(CCPoint location);
     void potentiometerMoved(CCPoint location);

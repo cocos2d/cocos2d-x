@@ -51,9 +51,9 @@ public:
     CCNode* getOwner() const;
     
 protected:
-    CCNode *m_pOwner;
-    std::string m_strName;
-    bool m_bEnabled;
+    CCNode *_owner;
+    std::string _name;
+    bool _enabled;
 };
 
 NS_CC_END

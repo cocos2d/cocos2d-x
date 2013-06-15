@@ -181,16 +181,16 @@ extern "C"
 
 NS_CC_BEGIN
 
-JavaVM* JniHelper::m_psJavaVM = NULL;
+JavaVM* JniHelper::_psJavaVM = NULL;
 
 JavaVM* JniHelper::getJavaVM()
 {
-    return m_psJavaVM;
+    return _psJavaVM;
 }
 
 void JniHelper::setJavaVM(JavaVM *javaVM)
 {
-    m_psJavaVM = javaVM;
+    _psJavaVM = javaVM;
 }
 
 jclass JniHelper::getClassID(const char *className, JNIEnv *env)

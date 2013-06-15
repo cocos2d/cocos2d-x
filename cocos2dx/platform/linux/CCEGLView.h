@@ -54,9 +54,9 @@ private:
 	void destroyGL();
 private:
 	//store current mouse point for moving, valid if and only if the mouse pressed
-	CCPoint m_mousePoint;
+	CCPoint _mousePoint;
 	bool bIsInit;
-	float m_fFrameZoomFactor;
+	float _frameZoomFactor;
 };
 
 NS_CC_END

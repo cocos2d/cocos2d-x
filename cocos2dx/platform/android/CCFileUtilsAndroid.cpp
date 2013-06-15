@@ -56,7 +56,7 @@ CCFileUtilsAndroid::~CCFileUtilsAndroid()
 
 bool CCFileUtilsAndroid::init()
 {
-    m_strDefaultResRootPath = "assets/";
+    _defaultResRootPath = "assets/";
     return CCFileUtils::init();
 }
 
@@ -73,9 +73,9 @@ bool CCFileUtilsAndroid::isFileExist(const std::string& strFilePath)
     if (strFilePath[0] != '/')
     {
         std::string strPath = strFilePath;
-        if (strPath.find(m_strDefaultResRootPath) != 0)
+        if (strPath.find(_defaultResRootPath) != 0)
         {// Didn't find "assets/" at the beginning of the path, adding it.
-            strPath.insert(0, m_strDefaultResRootPath);
+            strPath.insert(0, _defaultResRootPath);
         }
 
         if (s_pZipFile->fileExists(strPath))
@@ -101,7 +101,7 @@ bool CCFileUtilsAndroid::isAbsolutePath(const std::string& strPath)
     // 1) Files in APK, e.g. assets/path/path/file.png
     // 2) Files not in APK, e.g. /data/data/org.cocos2dx.hellocpp/cache/path/path/file.png, or /sdcard/path/path/file.png.
     // So these two situations need to be checked on Android.
-    if (strPath[0] == '/' || strPath.find(m_strDefaultResRootPath) == 0)
+    if (strPath[0] == '/' || strPath.find(_defaultResRootPath) == 0)
     {
         return true;
     }

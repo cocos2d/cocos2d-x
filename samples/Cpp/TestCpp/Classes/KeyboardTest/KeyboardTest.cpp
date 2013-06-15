@@ -12,16 +12,16 @@ KeyboardTest::KeyboardTest()
     setKeyboardEnabled(true);
 
     // create a label to display the tip string
-    m_pLabel = CCLabelTTF::create("Please press any key and see console log...", "Arial", 22);
-    m_pLabel->setPosition(ccp(s.width / 2, s.height / 2));
-    addChild(m_pLabel, 0);
+    _label = CCLabelTTF::create("Please press any key and see console log...", "Arial", 22);
+    _label->setPosition(ccp(s.width / 2, s.height / 2));
+    addChild(_label, 0);
     
-    m_pLabel->retain();
+    _label->retain();
 }
 
 KeyboardTest::~KeyboardTest()
 {
-    m_pLabel->release();
+    _label->release();
 }
 
 void KeyboardTest::keyPressed(int keyCode)

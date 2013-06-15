@@ -47,7 +47,7 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     
     // Font Item
     CCMenuItemFont *item4 = CCMenuItemFont::create("I toggle enable items", [&](CCObject *sender) {
-		m_disabledItem->setEnabled(! m_disabledItem->isEnabled() );
+		_disabledItem->setEnabled(! _disabledItem->isEnabled() );
 	});
 
     item4->setFontSizeObj(20);
@@ -107,8 +107,8 @@ MenuLayerMainMenu::MenuLayerMainMenu()
         i++;
     }
 
-    m_disabledItem = item3; item3->retain();
-    m_disabledItem->setEnabled( false );
+    _disabledItem = item3; item3->retain();
+    _disabledItem->setEnabled( false );
 
     addChild(menu);
     menu->setPosition(ccp(s.width/2, s.height/2));
@@ -133,17 +133,17 @@ void MenuLayerMainMenu::ccTouchMoved(CCTouch *touch, CCEvent * pEvent)
 
 MenuLayerMainMenu::~MenuLayerMainMenu()
 {
-    m_disabledItem->release();
+    _disabledItem->release();
 }
 
 void MenuLayerMainMenu::menuCallback(CCObject* sender)
 {
-    ((CCLayerMultiplex*)m_pParent)->switchTo(1);
+    ((CCLayerMultiplex*)_parent)->switchTo(1);
 }
 
 void MenuLayerMainMenu::menuCallbackConfig(CCObject* sender)
 {
-    ((CCLayerMultiplex*)m_pParent)->switchTo(3);
+    ((CCLayerMultiplex*)_parent)->switchTo(3);
 }
 
 void MenuLayerMainMenu::allowTouches(float dt)
@@ -165,17 +165,17 @@ void MenuLayerMainMenu::menuCallbackDisabled(CCObject* sender)
 
 void MenuLayerMainMenu::menuCallback2(CCObject* sender)
 {
-    ((CCLayerMultiplex*)m_pParent)->switchTo(2);
+    ((CCLayerMultiplex*)_parent)->switchTo(2);
 }
 
 void MenuLayerMainMenu::menuCallbackPriorityTest(CCObject* pSender)
 {
-    ((CCLayerMultiplex*)m_pParent)->switchTo(4);
+    ((CCLayerMultiplex*)_parent)->switchTo(4);
 }
 
 void MenuLayerMainMenu::menuCallbackBugsTest(CCObject *pSender)
 {
-    ((CCLayerMultiplex*)m_pParent)->switchTo(5);
+    ((CCLayerMultiplex*)_parent)->switchTo(5);
 }
 
 void MenuLayerMainMenu::onQuit(CCObject* sender)
@@ -186,7 +186,7 @@ void MenuLayerMainMenu::onQuit(CCObject* sender)
 
 void MenuLayerMainMenu::menuMovingCallback(CCObject *pSender)
 {
-    ((CCLayerMultiplex*)m_pParent)->switchTo(6);
+    ((CCLayerMultiplex*)_parent)->switchTo(6);
 }
 
 //------------------------------------------------------------------
@@ -215,10 +215,10 @@ MenuLayer2::MenuLayer2()
         
         addChild(menu, 0, 100+i);
 
-        m_centeredMenu = menu->getPosition();
+        _centeredMenu = menu->getPosition();
     }
 
-    m_alignedH = true;
+    _alignedH = true;
     alignMenusH();
 }
 
@@ -231,7 +231,7 @@ void MenuLayer2::alignMenusH()
     for(int i=0;i<2;i++) 
     {
         CCMenu *menu = (CCMenu*)getChildByTag(100+i);
-        menu->setPosition( m_centeredMenu );
+        menu->setPosition( _centeredMenu );
         if(i==0) 
         {
             // TIP: if no padding, padding = 5
@@ -255,7 +255,7 @@ void MenuLayer2::alignMenusV()
     for(int i=0;i<2;i++) 
     {
         CCMenu *menu = (CCMenu*)getChildByTag(100+i);
-        menu->setPosition( m_centeredMenu );
+        menu->setPosition( _centeredMenu );
         if(i==0) 
         {
             // TIP: if no padding, padding = 5
@@ -275,7 +275,7 @@ void MenuLayer2::alignMenusV()
 
 void MenuLayer2::menuCallback(CCObject* sender)
 {
-    ((CCLayerMultiplex*)m_pParent)->switchTo(0);
+    ((CCLayerMultiplex*)_parent)->switchTo(0);
 }
 
 void MenuLayer2::menuCallbackOpacity(CCObject* sender)
@@ -290,9 +290,9 @@ void MenuLayer2::menuCallbackOpacity(CCObject* sender)
 
 void MenuLayer2::menuCallbackAlign(CCObject* sender)
 {
-    m_alignedH = ! m_alignedH;
+    _alignedH = ! _alignedH;
     
-    if( m_alignedH )
+    if( _alignedH )
         alignMenusH();
     else
         alignMenusV(); 
@@ -311,11 +311,11 @@ MenuLayer3::MenuLayer3()
     CCLabelBMFont* label = CCLabelBMFont::create("Enable AtlasItem", "fonts/bitmapFontTest3.fnt");
     CCMenuItemLabel* item1 = CCMenuItemLabel::create(label, [&](CCObject *sender) {
 		//CCLOG("Label clicked. Toogling AtlasSprite");
-		m_disabledItem->setEnabled( ! m_disabledItem->isEnabled() );
-		m_disabledItem->stopAllActions();
+		_disabledItem->setEnabled( ! _disabledItem->isEnabled() );
+		_disabledItem->stopAllActions();
 	});
     CCMenuItemFont* item2 = CCMenuItemFont::create("--- Go Back ---", [&](CCObject *sender) {
-		    ((CCLayerMultiplex*)m_pParent)->switchTo(0);
+		    ((CCLayerMultiplex*)_parent)->switchTo(0);
 	});
 
     CCSprite *spriteNormal   = CCSprite::create(s_MenuItem,  CCRectMake(0,23*2,115,23));
@@ -326,8 +326,8 @@ MenuLayer3::MenuLayer3()
     CCMenuItemSprite* item3 = CCMenuItemSprite::create(spriteNormal, spriteSelected, spriteDisabled, [](CCObject *sender) {
 		CCLog("sprite clicked!");
 	});
-    m_disabledItem = item3;  item3->retain();
-    m_disabledItem->setEnabled( false );
+    _disabledItem = item3;  item3->retain();
+    _disabledItem->setEnabled( false );
     
     CCMenu *menu = CCMenu::create( item1, item2, item3, NULL);    
     menu->setPosition( ccp(0,0) );
@@ -356,7 +356,7 @@ MenuLayer3::MenuLayer3()
 
 MenuLayer3::~MenuLayer3()
 {
-    m_disabledItem->release();
+    _disabledItem->release();
 }
 
 //------------------------------------------------------------------
@@ -454,14 +454,14 @@ void MenuLayer4::menuCallback(CCObject* sender)
 
 void MenuLayer4::backCallback(CCObject* sender)
 {
-    ((CCLayerMultiplex*)m_pParent)->switchTo(0);
+    ((CCLayerMultiplex*)_parent)->switchTo(0);
 }
 
 MenuLayerPriorityTest::MenuLayerPriorityTest()
 {
     // Testing empty menu
-    m_pMenu1 = CCMenu::create();
-    m_pMenu2 = CCMenu::create();
+    _menu1 = CCMenu::create();
+    _menu2 = CCMenu::create();
 
 
     // Menu 1
@@ -469,39 +469,39 @@ MenuLayerPriorityTest::MenuLayerPriorityTest()
     CCMenuItemFont::setFontSize(18);
     CCMenuItemFont *item1 = CCMenuItemFont::create("Return to Main Menu", CC_CALLBACK_1(MenuLayerPriorityTest::menuCallback, this));
     CCMenuItemFont *item2 = CCMenuItemFont::create("Disable menu for 5 seconds", [&](CCObject *sender) {
-		m_pMenu1->setEnabled(false);
+		_menu1->setEnabled(false);
 		CCDelayTime *wait = CCDelayTime::create(5);
 		CCCallFunc *enable = CCCallFunc::create( [&]() {
-			    m_pMenu1->setEnabled(true);
+			    _menu1->setEnabled(true);
 		});
 		CCSequence* seq = CCSequence::create(wait, enable, NULL);
-		m_pMenu1->runAction(seq);
+		_menu1->runAction(seq);
 	});
 
 
-    m_pMenu1->addChild(item1);
-    m_pMenu1->addChild(item2);
+    _menu1->addChild(item1);
+    _menu1->addChild(item2);
 
-    m_pMenu1->alignItemsVerticallyWithPadding(2);
+    _menu1->alignItemsVerticallyWithPadding(2);
 
-    addChild(m_pMenu1);
+    addChild(_menu1);
 
     // Menu 2
-    m_bPriority = true;
+    _priority = true;
     CCMenuItemFont::setFontSize(48);
     item1 = CCMenuItemFont::create("Toggle priority", [&](CCObject *sender) {
-		if( m_bPriority) {
-			m_pMenu2->setHandlerPriority(kCCMenuHandlerPriority + 20);
-			m_bPriority = false;
+		if( _priority) {
+			_menu2->setHandlerPriority(kCCMenuHandlerPriority + 20);
+			_priority = false;
 		} else {
-			m_pMenu2->setHandlerPriority(kCCMenuHandlerPriority - 20);
-			m_bPriority = true;
+			_menu2->setHandlerPriority(kCCMenuHandlerPriority - 20);
+			_priority = true;
 		}
 	});
 
     item1->setColor(ccc3(0,0,255));
-    m_pMenu2->addChild(item1);
-    addChild(m_pMenu2);
+    _menu2->addChild(item1);
+    addChild(_menu2);
 }
 
 MenuLayerPriorityTest::~MenuLayerPriorityTest()
@@ -511,7 +511,7 @@ MenuLayerPriorityTest::~MenuLayerPriorityTest()
 
 void MenuLayerPriorityTest::menuCallback(CCObject* pSender)
 {
-    ((CCLayerMultiplex*)m_pParent)->switchTo(0);
+    ((CCLayerMultiplex*)_parent)->switchTo(0);
 //    [[CCDirector sharedDirector] popScene];
 }
 
@@ -550,7 +550,7 @@ void BugsTest::issue1410v2MenuCallback(cocos2d::CCObject *pSender)
 
 void BugsTest::backMenuCallback(cocos2d::CCObject *pSender)
 {
-    ((CCLayerMultiplex*)m_pParent)->switchTo(0);
+    ((CCLayerMultiplex*)_parent)->switchTo(0);
 }
 
 RemoveMenuItemWhenMove::RemoveMenuItemWhenMove()
@@ -577,7 +577,7 @@ RemoveMenuItemWhenMove::RemoveMenuItemWhenMove()
 
 void RemoveMenuItemWhenMove::goBack(CCObject *pSender)
 {
-    ((CCLayerMultiplex*)m_pParent)->switchTo(0);
+    ((CCLayerMultiplex*)_parent)->switchTo(0);
 }
 
 RemoveMenuItemWhenMove::~RemoveMenuItemWhenMove()

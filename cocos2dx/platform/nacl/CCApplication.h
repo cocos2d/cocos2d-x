@@ -64,7 +64,7 @@ public:
 
     static bool isRunning() { return s_running; }
 protected:
-    long m_nAnimationInterval;  // microseconds
+    long _animationInterval;  // microseconds
 
     static bool s_running; // is the application running
     static CCApplication* sm_pSharedApplication;

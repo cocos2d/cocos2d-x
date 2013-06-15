@@ -55,7 +55,7 @@ public:
     void touchUpOutsideAction(CCObject *sender, CCControlEvent controlEvent);
     void touchCancelAction(CCObject *sender, CCControlEvent controlEvent);
 protected:
-    CC_SYNTHESIZE_RETAIN(CCLabelTTF *, m_pDisplayValueLabel, DisplayValueLabel)
+    CC_SYNTHESIZE_RETAIN(CCLabelTTF *, _displayValueLabel, DisplayValueLabel)
     CONTROL_SCENE_CREATE_FUNC(CCControlButtonTest_Event)
 };
 

@@ -62,33 +62,33 @@ public:
     virtual void setHighlighted(bool enabled);
 protected:
     // CCRGBAProtocol
-    //bool m_bIsOpacityModifyRGB;
+    //bool _isOpacityModifyRGB;
 
     /** The current title that is displayed on the button. */
-    CC_SYNTHESIZE_READONLY(CCString*, m_currentTitle, CurrentTitle);
+    CC_SYNTHESIZE_READONLY(CCString*, _currentTitle, CurrentTitle);
 
     /** The current color used to display the title. */
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(ccColor3B, m_currentTitleColor, CurrentTitleColor);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(ccColor3B, _currentTitleColor, CurrentTitleColor);
 
     /** Adjust the background image. YES by default. If the property is set to NO, the 
     background will use the prefered size of the background image. */
     bool doesAdjustBackgroundImage();
     void setAdjustBackgroundImage(bool adjustBackgroundImage);
-    bool m_doesAdjustBackgroundImage;
+    bool _doesAdjustBackgroundImage;
 
     /** The current title label. */
-    CC_SYNTHESIZE_RETAIN(CCNode*, m_titleLabel, TitleLabel);
+    CC_SYNTHESIZE_RETAIN(CCNode*, _titleLabel, TitleLabel);
 
     /** The current background sprite. */
-    CC_SYNTHESIZE_RETAIN(CCScale9Sprite*, m_backgroundSprite, BackgroundSprite);
+    CC_SYNTHESIZE_RETAIN(CCScale9Sprite*, _backgroundSprite, BackgroundSprite);
 
     /** The prefered size of the button, if label is larger it will be expanded. */
-    CC_PROPERTY(CCSize, m_preferredSize, PreferredSize);
+    CC_PROPERTY(CCSize, _preferredSize, PreferredSize);
 
     /** Adjust the button zooming on touchdown. Default value is YES. */
-    CC_PROPERTY(bool, m_zoomOnTouchDown, ZoomOnTouchDown);
+    CC_PROPERTY(bool, _zoomOnTouchDown, ZoomOnTouchDown);
 
-    CC_PROPERTY(CCPoint, m_labelAnchorPoint, LabelAnchorPoint);
+    CC_PROPERTY(CCPoint, _labelAnchorPoint, LabelAnchorPoint);
 
     /* Override setter to affect a background sprite too */
     virtual GLubyte getOpacity(void);
@@ -98,24 +98,24 @@ protected:
     
     /** Flag to know if the button is currently pushed.  */
 protected:
-    bool m_isPushed;
-    bool m_bParentInited;
+    bool _isPushed;
+    bool _parentInited;
 public:
-    bool isPushed() { return m_isPushed; }
+    bool isPushed() { return _isPushed; }
 
     // <CCControlState, CCString*>
-    CC_SYNTHESIZE_RETAIN(CCDictionary*, m_titleDispatchTable, TitleDispatchTable);
+    CC_SYNTHESIZE_RETAIN(CCDictionary*, _titleDispatchTable, TitleDispatchTable);
     // <CCControlState, CCColor3bObject*>
-    CC_SYNTHESIZE_RETAIN(CCDictionary*, m_titleColorDispatchTable, TitleColorDispatchTable);
+    CC_SYNTHESIZE_RETAIN(CCDictionary*, _titleColorDispatchTable, TitleColorDispatchTable);
     // <CCControlState, CCNode*>
-    CC_SYNTHESIZE_RETAIN(CCDictionary*, m_titleLabelDispatchTable, TitleLabelDispatchTable);
+    CC_SYNTHESIZE_RETAIN(CCDictionary*, _titleLabelDispatchTable, TitleLabelDispatchTable);
     // <CCControlState, CCScale9Sprite*>
-    CC_SYNTHESIZE_RETAIN(CCDictionary*, m_backgroundSpriteDispatchTable, BackgroundSpriteDispatchTable);
+    CC_SYNTHESIZE_RETAIN(CCDictionary*, _backgroundSpriteDispatchTable, BackgroundSpriteDispatchTable);
 
     /* Define the button margin for Top/Bottom edge */
-    CC_SYNTHESIZE_READONLY(int, m_marginV, VerticalMargin);
+    CC_SYNTHESIZE_READONLY(int, _marginV, VerticalMargin);
     /* Define the button margin for Left/Right edge */
-    CC_SYNTHESIZE_READONLY(int, m_marginH, HorizontalOrigin);
+    CC_SYNTHESIZE_READONLY(int, _marginH, HorizontalOrigin);
     //set the margins at once (so we only have to do one call of needsLayout)
     virtual void setMargins(int marginH, int marginV);
 

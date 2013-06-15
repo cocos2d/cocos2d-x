@@ -134,7 +134,7 @@ public:
 	/** init the action */
 	bool init(bool isNeedCleanUp);
 protected:
-	bool m_bIsNeedCleanUp;
+	bool _isNeedCleanUp;
 };
 
 /** 
@@ -145,7 +145,7 @@ class CC_DLL CCFlipX : public CCActionInstant
 {
 public:
     CCFlipX()
-        :m_bFlipX(false)
+        :_flipX(false)
     {}
     virtual ~CCFlipX(){}
 
@@ -161,7 +161,7 @@ public:
     virtual CCObject* copyWithZone(CCZone *pZone);
 
 protected:
-    bool    m_bFlipX;
+    bool    _flipX;
 };
 
 /** 
@@ -172,7 +172,7 @@ class CC_DLL CCFlipY : public CCActionInstant
 {
 public:
     CCFlipY()
-        :m_bFlipY(false)
+        :_flipY(false)
     {}
     virtual ~CCFlipY(){}
 
@@ -188,7 +188,7 @@ public:
     virtual CCObject* copyWithZone(CCZone *pZone);
 
 protected:
-    bool    m_bFlipY;
+    bool    _flipY;
 };
 
 /** @brief Places the node in a certain position
@@ -208,7 +208,7 @@ public:
 	virtual CCPlace* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
 protected:
-    CCPoint m_tPosition;
+    CCPoint _position;
 };
 
 
@@ -218,9 +218,9 @@ class CC_DLL CCCallFunc : public CCActionInstant //<NSCopying>
 {
 public:
     CCCallFunc()
-        : m_pSelectorTarget(NULL)
-		, m_nScriptHandler(0)
-        , m_pCallFunc(NULL)
+        : _selectorTarget(NULL)
+		, _scriptHandler(0)
+        , _callFunc(NULL)
 		, _function(nullptr)
     {
     }
@@ -260,32 +260,32 @@ public:
 
     inline CCObject* getTargetCallback()
     {
-        return m_pSelectorTarget;
+        return _selectorTarget;
     }
 
     inline void setTargetCallback(CCObject* pSel)
     {
-        if (pSel != m_pSelectorTarget)
+        if (pSel != _selectorTarget)
         {
             CC_SAFE_RETAIN(pSel);
-            CC_SAFE_RELEASE(m_pSelectorTarget);
-            m_pSelectorTarget = pSel; 
+            CC_SAFE_RELEASE(_selectorTarget);
+            _selectorTarget = pSel; 
         }
     }
     
-    inline int getScriptHandler() { return m_nScriptHandler; };
+    inline int getScriptHandler() { return _scriptHandler; };
 protected:
     /** Target that will be called */
-    CCObject*   m_pSelectorTarget;
+    CCObject*   _selectorTarget;
 
-	int m_nScriptHandler;
+	int _scriptHandler;
 
     union
     {
-        SEL_CallFunc    m_pCallFunc;
-        SEL_CallFuncN    m_pCallFuncN;
-        SEL_CallFuncND    m_pCallFuncND;
-        SEL_CallFuncO   m_pCallFuncO;
+        SEL_CallFunc    _callFunc;
+        SEL_CallFuncN    _callFuncN;
+        SEL_CallFuncND    _callFuncND;
+        SEL_CallFuncO   _callFuncO;
     };
     
     /** function that will be called */
@@ -350,7 +350,7 @@ public:
     virtual void execute();
 
 protected:
-    void            *m_pData;
+    void            *_data;
 };
 
 
@@ -389,22 +389,22 @@ public:
 
     inline CCObject* getObject()
     {
-        return m_pObject;
+        return _object;
     }
 
     inline void setObject(CCObject* pObj)
     {
-        if (pObj != m_pObject)
+        if (pObj != _object)
         {
-            CC_SAFE_RELEASE(m_pObject);
-            m_pObject = pObj;
-            CC_SAFE_RETAIN(m_pObject);
+            CC_SAFE_RELEASE(_object);
+            _object = pObj;
+            CC_SAFE_RETAIN(_object);
         }
     }
 
 protected:
     /** object to be passed as argument */
-    CCObject* m_pObject;
+    CCObject* _object;
 };
 
 // end of actions group

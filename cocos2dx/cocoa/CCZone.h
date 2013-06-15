@@ -43,7 +43,7 @@ public:
     CCZone(CCObject *pObject = NULL);
 
 public:
-    CCObject *m_pCopyObject;
+    CCObject *_copyObject;
 };
 
 // end of data_structure group

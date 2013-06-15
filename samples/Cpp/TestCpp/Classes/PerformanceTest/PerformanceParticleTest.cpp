@@ -37,7 +37,7 @@ void ParticleMenuLayer::showCurrentTest()
 
     ParticleMainScene* pNewScene = NULL;
 
-    switch (m_nCurCase)
+    switch (_curCase)
     {
     case 0:
         pNewScene = new ParticlePerformTest1;
@@ -53,7 +53,7 @@ void ParticleMenuLayer::showCurrentTest()
         break;
     }
 
-    s_nParCurIdx = m_nCurCase;
+    s_nParCurIdx = _curCase;
     if (pNewScene)
     {
         pNewScene->initWithSubTest(subTest, parNum);
