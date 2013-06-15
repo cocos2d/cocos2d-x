@@ -356,7 +356,7 @@ void CCCardinalSplineTo::updatePosition(cocos2d::CCPoint &newPos)
     m_previousPosition = newPos;
 }
 
-CCActionInterval* CCCardinalSplineTo::reverse()
+CCCardinalSplineTo* CCCardinalSplineTo::reverse() const
 {
     CCPointArray *pReverse = m_pPoints->reverse();
     
@@ -395,7 +395,7 @@ void CCCardinalSplineBy::updatePosition(cocos2d::CCPoint &newPos)
     m_previousPosition = p;
 }
 
-CCActionInterval* CCCardinalSplineBy::reverse()
+CCCardinalSplineBy* CCCardinalSplineBy::reverse() const
 {
     CCPointArray *copyConfig = (CCPointArray*)m_pPoints->copy();
 	

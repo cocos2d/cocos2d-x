@@ -50,7 +50,7 @@ CCActionCamera* CCActionCamera::clone() const
 	return a;
 }
 
-CCActionInterval * CCActionCamera::reverse()
+CCReverseTime * CCActionCamera::reverse() const
 {
     return CCReverseTime::create(this);
 }

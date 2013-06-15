@@ -74,7 +74,7 @@ void CCActionTween::update(float dt)
     dynamic_cast<CCActionTweenDelegate*>(m_pTarget)->updateTweenAction(m_fTo  - m_fDelta * (1 - dt), m_strKey.c_str());
 }
 
-CCActionInterval* CCActionTween::reverse()
+CCActionTween* CCActionTween::reverse() const
 {
     return CCActionTween::create(m_fDuration, m_strKey.c_str(), m_fTo, m_fFrom);
 }

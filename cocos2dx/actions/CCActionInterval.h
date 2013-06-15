@@ -70,19 +70,12 @@ public:
     /** returns true if the action has finished */
     virtual bool isDone(void);
 
-    virtual CCObject* copyWithZone(CCZone* pZone);
-	/** returns a new clone of the action */
-    virtual CCActionInterval* clone() const;
-	
     virtual void step(float dt);
     virtual void startWithTarget(CCNode *pTarget);
     /** returns a reversed action */
     virtual CCActionInterval* reverse(void);
 
-public:
-
-    /** creates the action */
-    static CCActionInterval* create(float d);
+	virtual CCActionInterval *clone() const = 0;
 
 public:
     //extension in CCGridAction 
@@ -108,10 +101,12 @@ public:
 	/** returns a new clone of the action */
     virtual CCSequence* clone() const;
 
+	/** returns a new reversed action */
+	virtual CCSequence* reverse() const;
+
     virtual void startWithTarget(CCNode *pTarget);
     virtual void stop(void);
     virtual void update(float t);
-    virtual CCActionInterval* reverse(void);
 
 public:
 
@@ -145,11 +140,13 @@ public:
 	/** returns a new clone of the action */
     virtual CCRepeat* clone() const;
 
+	/** returns a new reversed action */
+	virtual CCRepeat* reverse() const;
+
     virtual void startWithTarget(CCNode *pTarget);
     virtual void stop(void);
     virtual void update(float dt);
     virtual bool isDone(void);
-    virtual CCActionInterval* reverse(void);
 
     inline void setInnerAction(CCFiniteTimeAction *pAction)
     {
@@ -196,10 +193,13 @@ public:
     virtual CCObject* copyWithZone(CCZone *pZone);
 	/** returns a new clone of the action */
     virtual CCRepeatForever* clone() const;
+
+	/** returns a new reversed action */
+	virtual CCRepeatForever* reverse(void) const;
+
     virtual void startWithTarget(CCNode* pTarget);
     virtual void step(float dt);
     virtual bool isDone(void);
-    virtual CCActionInterval* reverse(void);
 
     inline void setInnerAction(CCActionInterval *pAction)
     {
@@ -238,10 +238,13 @@ public:
     virtual CCObject* copyWithZone(CCZone* pZone);
 	/** returns a new clone of the action */
     virtual CCSpawn* clone() const;
+
+	/** returns a new reversed action */
+	virtual CCSpawn* reverse(void) const;
+
     virtual void startWithTarget(CCNode *pTarget);
     virtual void stop(void);
     virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
 
 public:
 
@@ -312,9 +315,12 @@ public:
 	/** returns a new clone of the action */
     virtual CCRotateBy* clone() const;
 
+	/** returns a new reversed action */
+	virtual CCRotateBy* reverse(void) const;
+
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
+
     
 protected:
     float m_fAngleX;
@@ -339,8 +345,11 @@ public:
 	/** returns a new clone of the action */
     virtual CCMoveBy* clone() const;
 
+	/** returns a new reversed action */
+	virtual CCMoveBy* reverse(void) const;
+
     virtual void startWithTarget(CCNode *pTarget);
-    virtual CCActionInterval* reverse(void);
+
     virtual void update(float time);
 
 public:
@@ -387,6 +396,8 @@ public:
     virtual CCObject* copyWithZone(CCZone* pZone);
 	/** returns a new clone of the action */
     virtual CCSkewTo* clone() const;
+	/** returns a new reversed action */
+	virtual CCSkewTo* reverse(void) const;
 
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
@@ -414,7 +425,12 @@ class CC_DLL CCSkewBy : public CCSkewTo
 public:
     virtual bool initWithDuration(float t, float sx, float sy);
     virtual void startWithTarget(CCNode *pTarget);
-    virtual CCActionInterval* reverse(void);
+
+	/** returns a new clone of the action */
+    virtual CCSkewBy* clone() const;
+	/** returns a new reversed action */
+	virtual CCSkewBy* reverse(void) const;
+
 
 public:
 
@@ -433,10 +449,11 @@ public:
     virtual CCObject* copyWithZone(CCZone* pZone);
 	/** returns a new clone of the action */
     virtual CCJumpBy* clone() const;
+	/** returns a new reversed action */
+	virtual CCJumpBy* reverse(void) const;
 
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
 
 public:
     /** creates the action */
@@ -458,6 +475,8 @@ public:
     virtual CCObject* copyWithZone(CCZone* pZone);
 	/** returns a new clone of the action */
     virtual CCJumpTo* clone() const;
+	/** returns a new reversed action */
+	virtual CCJumpTo* reverse(void) const;
 
 public:
     /** creates the action */
@@ -486,6 +505,8 @@ public:
     virtual CCObject* copyWithZone(CCZone* pZone);
 	/** returns a new clone of the action */
     virtual CCBezierBy* clone() const;
+	/** returns a new reversed action */
+	virtual CCBezierBy* reverse(void) const;
 
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
@@ -510,6 +531,8 @@ public:
     virtual CCObject* copyWithZone(CCZone* pZone);
 	/** returns a new clone of the action */
     virtual CCBezierTo* clone() const;
+	/** returns a new reversed action */
+	virtual CCBezierTo* reverse(void) const;
 
 public:
 
@@ -536,6 +559,8 @@ public:
     virtual CCObject* copyWithZone(CCZone* pZone);
 	/** returns a new clone of the action */
     virtual CCScaleTo* clone() const;
+	/** returns a new reversed action */
+	virtual CCScaleTo* reverse(void) const;
 
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
@@ -564,9 +589,11 @@ class CC_DLL CCScaleBy : public CCScaleTo
 {
 public:
     virtual void startWithTarget(CCNode *pTarget);
-    virtual CCActionInterval* reverse(void);
 	/** returns a new clone of the action */
     virtual CCScaleBy* clone() const;
+	/** returns a new reversed action */
+	virtual CCScaleBy* reverse(void) const;
+
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -588,9 +615,11 @@ public:
 
 	/** returns a new clone of the action */
     virtual CCBlink* clone() const;
+	/** returns a new reversed action */
+	virtual CCBlink* reverse(void) const;
+
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
 
 public:
 
@@ -612,9 +641,12 @@ class CC_DLL CCFadeIn : public CCActionInterval
 {
 public:
     virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
+
 	/** returns a new clone of the action */
     virtual CCFadeIn* clone() const;
+	/** returns a new reversed action */
+	virtual CCFadeIn* reverse(void) const;
+
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -629,10 +661,12 @@ class CC_DLL CCFadeOut : public CCActionInterval
 {
 public:
     virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
     virtual CCObject* copyWithZone(CCZone* pZone);
 	/** returns a new clone of the action */
     virtual CCFadeOut* clone() const;
+	/** returns a new reversed action */
+	virtual CCFadeOut* reverse(void) const;
+
 
 public:
 
@@ -651,6 +685,9 @@ public:
 
 	/** returns a new clone of the action */
     virtual CCFadeTo* clone() const;
+	/** returns a new reversed action */
+	virtual CCFadeTo* reverse(void) const;
+
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
@@ -675,6 +712,9 @@ public:
 
 	/** returns a new clone of the action */
     virtual CCTintTo* clone() const;
+	/** returns a new reversed action */
+	virtual CCTintTo* reverse(void) const;
+
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
@@ -698,10 +738,12 @@ public:
 
 	/** returns a new clone of the action */
     virtual CCTintBy* clone() const;
+	/** returns a new reversed action */
+	virtual CCTintBy* reverse() const;
+
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
 
 public:
     /** creates an action with duration and color */
@@ -722,7 +764,8 @@ class CC_DLL CCDelayTime : public CCActionInterval
 {
 public:
     virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
+	/** returns a new reversed action */
+    virtual CCDelayTime* reverse() const;
 	/** returns a new clone of the action */
     virtual CCDelayTime* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
@@ -749,13 +792,14 @@ public:
     /** initializes the action */
     bool initWithAction(CCFiniteTimeAction *pAction);
 
+	/** returns a new reversed action */
+	virtual CCReverseTime* reverse(void) const;
 	/** returns a new clone of the action */
     virtual CCReverseTime* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void stop(void);
     virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
 
 public:
     /** creates the action */
@@ -777,11 +821,15 @@ public:
 
 	/** returns a new clone of the action */
     virtual CCAnimate* clone() const;
+	/** returns a new reversed action */
+    virtual CCAnimate* reverse() const;
+
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void stop(void);
     virtual void update(float t);
-    virtual CCActionInterval* reverse(void);
+
+
 
 public:
     /** creates the action with an Animation and will restore the original frame when the animation is over */
@@ -811,6 +859,9 @@ public:
 
 	/** returns a new clone of the action */
     virtual CCTargetedAction* clone() const;
+	/** returns a new reversed action */
+    virtual CCTargetedAction* reverse() const;
+
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void stop(void);

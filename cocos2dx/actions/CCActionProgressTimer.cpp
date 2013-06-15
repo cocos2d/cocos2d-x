@@ -141,7 +141,7 @@ CCObject* CCProgressFromTo::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-CCActionInterval* CCProgressFromTo::reverse(void)
+CCProgressFromTo* CCProgressFromTo::reverse(void) const
 {
     return CCProgressFromTo::create(m_fDuration, m_fTo, m_fFrom);
 }
