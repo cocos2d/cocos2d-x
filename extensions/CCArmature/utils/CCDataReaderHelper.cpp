@@ -118,6 +118,7 @@ static const char *MOVEMENT_BONE_DATA = "mov_bone_data";
 static const char *MOVEMENT_DATA = "mov_data";
 static const char *ANIMATION_DATA = "animation_data";
 static const char *DISPLAY_DATA = "display_data";
+static const char *SKIN_DATA = "skin_data";
 static const char *BONE_DATA = "bone_data";
 static const char *ARMATURE_DATA = "armature_data";
 static const char *CONTOUR_DATA = "contour_data";
@@ -854,6 +855,8 @@ CCArmatureData *CCDataReaderHelper::decodeArmature(cs::CSJsonDictionary &json)
         armatureData->name = name;
     }
 
+	armatureData->dataVersion = json.getItemFloatValue("data_version", 0.1f);
+
     int length = json.getArrayItemCount(BONE_DATA);
     for (int i = 0; i < length; i++)
     {
@@ -913,6 +916,20 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(cs::CSJsonDictionary &json)
         {
             ((CCSpriteDisplayData *)displayData)->displayName = name;
         }
+
+		cs::CSJsonDictionary *dic = json.getSubItemFromArray(SKIN_DATA, 0);
+		if (dic != NULL)
+		{
+			CCSpriteDisplayData *sdd = (CCSpriteDisplayData *)displayData;
+			sdd->skinData.x = dic->getItemFloatValue(A_X, 0);
+			sdd->skinData.y = dic->getItemFloatValue(A_Y, 0);
+			sdd->skinData.scaleX = dic->getItemFloatValue(A_SCALE_X, 1);
+			sdd->skinData.scaleY = dic->getItemFloatValue(A_SCALE_Y, 1);
+			sdd->skinData.skewX = dic->getItemFloatValue(A_SKEW_X, 0);
+			sdd->skinData.skewY = dic->getItemFloatValue(A_SKEW_Y, 0);
+			delete dic;
+		}
+		
     }
 
     break;

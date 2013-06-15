@@ -133,7 +133,7 @@ protected:
 
 	CC_SYNTHESIZE_RETAIN(CCArmatureAnimation *, m_pAnimation, Animation);
     
-    CC_SYNTHESIZE(CCArmatureData *, m_pArmatureData, CCArmatureData);
+    CC_SYNTHESIZE(CCArmatureData *, m_pArmatureData, ArmatureData);
 
 	CC_SYNTHESIZE(CCBatchNode*, m_pBatchNode, BatchNode);
 
