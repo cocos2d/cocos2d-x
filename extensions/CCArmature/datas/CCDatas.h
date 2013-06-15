@@ -155,6 +155,7 @@ public:
     */
     std::string displayName;
 
+	CCBaseData skinData;
 };
 
 
@@ -268,6 +269,7 @@ public:
     std::string name;
     CCDictionary boneDataDic;
     CCArray boneList;
+	float dataVersion;
 };
 
 

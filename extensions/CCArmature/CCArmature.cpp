@@ -407,7 +407,10 @@ void CCArmature::updateOffsetPoint()
     CCRect rect = boundingBox();
     setContentSize(rect.size);
     m_pOffsetPoint = ccp(-rect.origin.x,  -rect.origin.y);
-    setAnchorPoint(ccp(m_pOffsetPoint.x / rect.size.width, m_pOffsetPoint.y / rect.size.height));
+	if (rect.size.width != 0 && rect.size.height!= 0)
+	{
+		setAnchorPoint(ccp(m_pOffsetPoint.x / rect.size.width, m_pOffsetPoint.y / rect.size.height));
+	}
 }
 
 

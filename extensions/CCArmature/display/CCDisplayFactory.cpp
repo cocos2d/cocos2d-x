@@ -154,7 +154,18 @@ void CCDisplayFactory::createSpriteDisplay(CCBone *bone, CCDecorativeDisplay *de
     }
 
     skin->setBone(bone);
-    skin->setSkinData(*bone->getBoneData());
+	CCArmature *armature = bone->getArmature();
+	if (armature)
+	{
+		if (armature->getArmatureData()->dataVersion >= 0.15f)
+		{
+			skin->setSkinData(displayData->skinData);
+		}
+		else
+		{
+			skin->setSkinData(*bone->getBoneData());
+		}
+	}
 
     decoDisplay->setDisplay(skin);
 
