@@ -76,7 +76,7 @@ if [ $# -ge 5 -a "x$5" == "xwindows" ] ; then
     length=`expr $# - 5`
     PARAMS=${@:6:$length}
     check_param
-    COCOS2DX_ROOT=$COCOS2DX_ROOT sh $COCOS2DX_ROOT/template/android/copy_files.sh $1 $2 $3 $4 $USE_BOX2D $USE_CHIPMUNK $USE_LUA
+    ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT COCOS2DX_ROOT=$COCOS2DX_ROOT sh $COCOS2DX_ROOT/template/android/copy_files.sh $1 $2 $3 $4 $USE_BOX2D $USE_CHIPMUNK $USE_LUA
     exit
 fi
 
@@ -132,9 +132,9 @@ create_android_project
 
 if [ $0 = "linux" ]; then
     # invoked by create-linux-android-project.sh
-    COCOS2DX_ROOT=$COCOS2DX_ROOT sh $COCOS2DX_ROOT/template/linux/mycopy_files.sh $COCOS2DX_ROOT $PROJECT_NAME $NDK_ROOT $PACKAGE_PATH $USE_BOX2D $USE_CHIPMUNK $USE_LUA
+    ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT COCOS2DX_ROOT=$COCOS2DX_ROOT sh $COCOS2DX_ROOT/template/linux/mycopy_files.sh $COCOS2DX_ROOT $PROJECT_NAME $NDK_ROOT $PACKAGE_PATH $USE_BOX2D $USE_CHIPMUNK $USE_LUA
 else
     # invoke template/android/copy_files.sh
-    COCOS2DX_ROOT=$COCOS2DX_ROOT sh $COCOS2DX_ROOT/template/android/copy_files.sh $COCOS2DX_ROOT $PROJECT_DIR $PACKAGE_PATH $USE_BOX2D $USE_CHIPMUNK $USE_LUA
+    ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT COCOS2DX_ROOT=$COCOS2DX_ROOT sh $COCOS2DX_ROOT/template/android/copy_files.sh $COCOS2DX_ROOT $PROJECT_DIR $PACKAGE_PATH $USE_BOX2D $USE_CHIPMUNK $USE_LUA
 fi
 
