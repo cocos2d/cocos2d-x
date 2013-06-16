@@ -931,6 +931,12 @@ void CCRotateTo::update(float time)
     }
 }
 
+CCRotateTo *CCRotateTo::reverse() const
+{
+	CCAssert(false, "RotateTo doesn't support the 'reverse' method");
+	return nullptr;
+}
+
 //
 // RotateBy
 //
@@ -1330,6 +1336,14 @@ CCSkewBy* CCSkewBy::create(float t, float sx, float sy)
     return pSkewBy;
 }
 
+CCSkewBy * CCSkewBy::clone() const
+{
+	auto a = new CCSkewBy(*this);
+	a->initWithDuration(m_fDuration, m_fSkewX, m_fSkewY);
+	a->autorelease();
+	return a;
+}
+
 bool CCSkewBy::initWithDuration(float t, float deltaSkewX, float deltaSkewY)
 {
     bool bRet = false;
@@ -1610,7 +1624,7 @@ void CCBezierBy::update(float time)
     }
 }
 
-CCActionInterval* CCBezierBy::reverse(void)
+CCBezierBy* CCBezierBy::reverse(void) const
 {
     ccBezierConfig r;
 
@@ -1685,6 +1699,13 @@ void CCBezierTo::startWithTarget(CCNode *pTarget)
     m_sConfig.controlPoint_2 = ccpSub(m_sToConfig.controlPoint_2, m_startPosition);
     m_sConfig.endPosition = ccpSub(m_sToConfig.endPosition, m_startPosition);
 }
+
+CCBezierTo* CCBezierTo::reverse() const
+{
+	CCAssert(false, "CCBezierTo doesn't support the 'reverse' method");
+	return nullptr;
+}
+
 
 //
 // ScaleTo
@@ -2675,6 +2696,12 @@ CCTargetedAction* CCTargetedAction::clone(void) const
 	a->initWithTarget(m_pForcedTarget, (CCFiniteTimeAction*)m_pAction->clone());
 	a->autorelease();
 	return a;
+}
+
+CCTargetedAction* CCTargetedAction::reverse(void) const
+{
+	// no reverse for this action, just clone it
+	return this->clone();
 }
 
 CCObject* CCTargetedAction::copyWithZone(CCZone* pZone)

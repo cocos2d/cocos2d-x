@@ -142,6 +142,14 @@ bool CCFlipX3D::initWithSize(const CCSize& gridSize, float duration)
     return CCGrid3DAction::initWithDuration(duration, gridSize);
 }
 
+CCFlipX3D* CCFlipX3D::clone() const
+{
+	auto a = new CCFlipX3D(*this);
+    a->initWithSize(m_sGridSize, m_fDuration);
+	a->autorelease();
+	return a;
+}
+
 CCObject* CCFlipX3D::copyWithZone(CCZone *pZone)
 {
     CCZone* pNewZone = NULL;

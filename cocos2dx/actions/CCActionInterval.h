@@ -514,7 +514,6 @@ public:
 
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
 
 public:
     /** creates the action with a duration and a bezier configuration */

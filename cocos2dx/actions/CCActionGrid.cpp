@@ -293,7 +293,6 @@ CCDeccelAmplitude* CCDeccelAmplitude::create(CCAction *pAction, float duration)
     return pRet;
 }
 
-
 bool CCDeccelAmplitude::initWithAction(CCAction *pAction, float duration)
 {
     if (CCActionInterval::initWithDuration(duration))
@@ -325,6 +324,14 @@ void CCDeccelAmplitude::update(float time)
     m_pOther->update(time);
 }
 
+CCDeccelAmplitude* CCDeccelAmplitude::clone() const
+{
+	auto a = new CCDeccelAmplitude(*this);
+	a->initWithAction(m_pOther->clone(), m_fDuration);
+	a->autorelease();
+	return a;
+}
+
 CCDeccelAmplitude* CCDeccelAmplitude::reverse() const
 {
     return CCDeccelAmplitude::create(m_pOther->reverse(), m_fDuration);
@@ -350,6 +357,18 @@ CCStopGrid* CCStopGrid::create(void)
 
     return pAction;
 }
+
+CCStopGrid* CCStopGrid::clone() const
+{
+	return CCStopGrid::create();
+}
+
+CCStopGrid* CCStopGrid::reverse() const
+{
+	// no reverse, just clone it
+	return this->clone();
+}
+
 // implementation of CCReuseGrid
 
 CCReuseGrid* CCReuseGrid::create(int times)
@@ -385,6 +404,17 @@ void CCReuseGrid::startWithTarget(CCNode *pTarget)
     {
         m_pTarget->getGrid()->setReuseGrid(m_pTarget->getGrid()->getReuseGrid() + m_nTimes);
     }
+}
+
+CCReuseGrid* CCReuseGrid::clone() const
+{
+	return CCReuseGrid::create(m_nTimes);
+}
+
+CCReuseGrid* CCReuseGrid::reverse() const
+{
+	// no reverse, just clone it
+	return this->clone();
 }
 
 NS_CC_END
