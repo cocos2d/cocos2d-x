@@ -392,6 +392,12 @@ CCPlace * CCPlace::clone() const
 	return a;
 }
 
+CCPlace * CCPlace::reverse() const
+{
+	// no reverse, just clone
+	return this->clone();
+}
+
 CCObject * CCPlace::copyWithZone(CCZone *pZone) {
     CCZone *pNewZone = NULL;
     CCPlace *pRet = NULL;
@@ -502,6 +508,13 @@ CCCallFunc * CCCallFunc::clone() const
 	a->autorelease();
 	return a;
 }
+
+CCCallFunc * CCCallFunc::reverse() const
+{
+	// no reverse here, just return a clone
+	return this->clone();
+}
+
 
 CCObject * CCCallFunc::copyWithZone(CCZone *pZone) {
     CCZone* pNewZone = NULL;
