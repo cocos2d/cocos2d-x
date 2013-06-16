@@ -282,8 +282,12 @@ public:
     virtual bool initWithDuration(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
+
 	/** returns a new clone of the action */
     virtual CCRotateTo* clone() const;
+
+	/** returns a new reversed action */
+    virtual CCRotateTo* reverse() const;
 
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
@@ -645,7 +649,7 @@ public:
 	/** returns a new clone of the action */
     virtual CCFadeIn* clone() const;
 	/** returns a new reversed action */
-	virtual CCFadeIn* reverse(void) const;
+	virtual CCActionInterval* reverse(void) const;
 
     virtual CCObject* copyWithZone(CCZone* pZone);
 
@@ -665,7 +669,7 @@ public:
 	/** returns a new clone of the action */
     virtual CCFadeOut* clone() const;
 	/** returns a new reversed action */
-	virtual CCFadeOut* reverse(void) const;
+	virtual CCActionInterval* reverse(void) const;
 
 
 public:
@@ -793,7 +797,7 @@ public:
     bool initWithAction(CCFiniteTimeAction *pAction);
 
 	/** returns a new reversed action */
-	virtual CCReverseTime* reverse(void) const;
+	virtual CCFiniteTimeAction* reverse() const;
 	/** returns a new clone of the action */
     virtual CCReverseTime* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);

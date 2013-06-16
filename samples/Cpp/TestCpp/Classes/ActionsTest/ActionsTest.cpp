@@ -1164,8 +1164,8 @@ void ActionReverseSequence2::onEnter()
     //   Sequence should work both with IntervalAction and InstantActions
     CCActionInterval*  move1 = CCMoveBy::create(1, ccp(250,0));
     CCActionInterval*  move2 = CCMoveBy::create(1, ccp(0,50));
-    CCToggleVisibility*  tog1 = new CCToggleVisibility();
-    CCToggleVisibility*  tog2 = new CCToggleVisibility();
+    CCToggleVisibility*  tog1 = CCToggleVisibility::create();
+    CCToggleVisibility*  tog2 = CCToggleVisibility::create();
     tog1->autorelease();
     tog2->autorelease();
     CCFiniteTimeAction*  seq = CCSequence::create( move1, tog1, move2, tog2, move1->reverse(), NULL);

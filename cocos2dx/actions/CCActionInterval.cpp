@@ -1449,7 +1449,7 @@ void CCJumpBy::update(float t)
     }
 }
 
-CCActionInterval* CCJumpBy::reverse(void)
+CCJumpBy* CCJumpBy::reverse() const
 {
     return CCJumpBy::create(m_fDuration, ccp(-m_delta.x, -m_delta.y),
         m_height, m_nJumps);
@@ -1844,7 +1844,7 @@ void CCScaleBy::startWithTarget(CCNode *pTarget)
     m_fDeltaY = m_fStartScaleY * m_fEndScaleY - m_fStartScaleY;
 }
 
-CCActionInterval* CCScaleBy::reverse(void)
+CCScaleBy* CCScaleBy::reverse() const
 {
     return CCScaleBy::create(m_fDuration, 1 / m_fEndScaleX, 1 / m_fEndScaleY);
 }
@@ -1985,7 +1985,7 @@ void CCFadeIn::update(float time)
     /*m_pTarget->setOpacity((GLubyte)(255 * time));*/
 }
 
-CCActionInterval* CCFadeIn::reverse(void)
+CCActionInterval* CCFadeIn::reverse() const
 {
     return CCFadeOut::create(m_fDuration);
 }
@@ -2043,7 +2043,7 @@ void CCFadeOut::update(float time)
     /*m_pTarget->setOpacity(GLubyte(255 * (1 - time)));*/    
 }
 
-CCActionInterval* CCFadeOut::reverse(void)
+CCActionInterval* CCFadeOut::reverse() const
 {
     return CCFadeIn::create(m_fDuration);
 }
@@ -2284,7 +2284,7 @@ void CCTintBy::update(float time)
     }    
 }
 
-CCActionInterval* CCTintBy::reverse(void)
+CCTintBy* CCTintBy::reverse() const
 {
     return CCTintBy::create(m_fDuration, -m_deltaR, -m_deltaG, -m_deltaB);
 }
@@ -2337,7 +2337,7 @@ void CCDelayTime::update(float time)
     return;
 }
 
-CCActionInterval* CCDelayTime::reverse(void)
+CCDelayTime* CCDelayTime::reverse() const
 {
     return CCDelayTime::create(m_fDuration);
 }
@@ -2350,7 +2350,7 @@ CCReverseTime* CCReverseTime::create(CCFiniteTimeAction *pAction)
 {
     // casting to prevent warnings
     CCReverseTime *pReverseTime = new CCReverseTime();
-    pReverseTime->initWithAction(pAction);
+    pReverseTime->initWithAction( pAction->clone() );
     pReverseTime->autorelease();
 
     return pReverseTime;
@@ -2378,7 +2378,7 @@ bool CCReverseTime::initWithAction(CCFiniteTimeAction *pAction)
 CCReverseTime* CCReverseTime::clone(void) const
 {
 	auto a = new CCReverseTime(*this);
-	a->initWithAction((CCFiniteTimeAction*)m_pOther->clone());
+	a->initWithAction( m_pOther->clone() );
 	a->autorelease();
 	return a;
 }
@@ -2436,7 +2436,7 @@ void CCReverseTime::update(float time)
     }
 }
 
-CCReverseTime* CCReverseTime::reverse(void) const
+CCFiniteTimeAction* CCReverseTime::reverse() const
 {
     return m_pOther->clone();
 }

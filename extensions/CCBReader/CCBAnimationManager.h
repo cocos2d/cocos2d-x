@@ -141,6 +141,10 @@ public:
     virtual void update(float time);
 	/** returns a new clone of the action */
 	virtual CCBSetSpriteFrame* clone() const;
+
+	/** returns a new reversed action */
+	virtual CCBSetSpriteFrame* reverse() const;
+
     virtual CCObject* copyWithZone(CCZone *pZone);
 };
 
@@ -160,6 +164,10 @@ public:
     virtual void update(float time);
 	/** returns a new clone of the action */
 	virtual CCBSoundEffect* clone() const;
+
+	/** returns a new reversed action */
+	virtual CCBSoundEffect* reverse() const;
+
     virtual CCObject* copyWithZone(CCZone *pZone);
 };
 
@@ -177,6 +185,10 @@ public:
     virtual void update(float time);
 	/** returns a new clone of the action */
 	virtual CCBRotateTo* clone() const;
+
+	/** returns a new reversed action */
+	virtual CCBRotateTo* reverse() const;
+
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void startWithTarget(CCNode *pNode);
 };
@@ -193,6 +205,10 @@ public:
     virtual void startWithTarget(CCNode *pNode);
 	/** returns a new clone of the action */
 	virtual CCBRotateXTo* clone() const;
+
+	/** returns a new reversed action */
+	virtual CCBRotateXTo* reverse() const;
+
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void update(float time);
 };
@@ -210,6 +226,10 @@ public:
     virtual void startWithTarget(CCNode *pNode);
 	/** returns a new clone of the action */
 	virtual CCBRotateYTo* clone() const;
+
+	/** returns a new reversed action */
+	virtual CCBRotateYTo* reverse() const;
+
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void update(float time);
 };
@@ -222,6 +242,9 @@ public:
 
 	/** returns a new clone of the action */
 	virtual CCBEaseInstant* clone() const;
+
+	/** returns a new reversed action */
+	virtual CCBEaseInstant* reverse() const;
 	
     virtual void update(float dt);
 };

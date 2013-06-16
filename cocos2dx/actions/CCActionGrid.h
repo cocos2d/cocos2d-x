@@ -43,8 +43,11 @@ class CC_DLL CCGridAction : public CCActionInterval
 public:
 	/** returns a new clone of the action */
 	virtual CCGridAction * clone() const = 0;
-	/** returns a new reversed action */
-    virtual CCGridAction* reverse(void) const = 0;
+
+	/** returns a new reversed action.
+	 The reversed action is created with the CCReverseTime action.
+	 */
+    virtual CCGridAction* reverse() const;
 
     virtual void startWithTarget(CCNode *pTarget);
 
