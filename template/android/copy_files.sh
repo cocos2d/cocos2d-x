@@ -50,7 +50,7 @@ copy_build_native() {
 
 # copy debugger script and replace templated parameters
 copy_ndkgdb() {
-    sed "s#__projectname__#$APP_NAME#;s#__packagename__#$PACKAGE_PATH#" $COCOS2DX_ROOT/template/android/ndkgdb.sh > $APP_DIR/proj.android/ndkgdb.sh
+    sed "s#__projectname__#$APP_NAME#;s#__packagename__#$PACKAGE_PATH#;s#__androidsdk__#$ANDROID_SDK_ROOT#;s#__ndkroot__#$NDK_ROOT#;s#__cocos2dxroot__#$COCOS2DX_ROOT#" $COCOS2DX_ROOT/template/android/ndkgdb.sh > $APP_DIR/proj.android/ndkgdb.sh
     chmod u+x $APP_DIR/proj.android/ndkgdb.sh
 }
 
