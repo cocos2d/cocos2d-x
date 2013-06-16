@@ -44,9 +44,6 @@ public:
 	/** returns a new clone of the action */
 	virtual CCShakyTiles3D* clone() const;
 
-	/** returns a new reversed action */
-	virtual CCShakyTiles3D* reverse() const;
-
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
 
@@ -69,9 +66,6 @@ public:
 
 	/** returns a new clone of the action */
 	virtual CCShatteredTiles3D* clone() const;
-
-	/** returns a new reversed action */
-	virtual CCShatteredTiles3D* reverse() const;
 
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
@@ -106,9 +100,6 @@ public:
 	/** returns a new clone of the action */
 	virtual CCShuffleTiles* clone() const;
 
-	/** returns a new reversed action */
-	virtual CCShuffleTiles* reverse() const;
-
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -136,9 +127,6 @@ public:
 	/** returns a new clone of the action */
 	virtual CCFadeOutTRTiles* clone() const;
 
-	/** returns a new reversed action */
-	virtual CCFadeOutTRTiles* reverse() const;
-
 public:
 
     /** creates the action with the grid size and the duration */
@@ -155,9 +143,6 @@ public:
 
 	/** returns a new clone of the action */
 	virtual CCFadeOutBLTiles* clone() const;
-
-	/** returns a new reversed action */
-	virtual CCFadeOutBLTiles* reverse() const;
 
 public:
 
@@ -177,9 +162,6 @@ public:
 	/** returns a new clone of the action */
 	virtual CCFadeOutUpTiles* clone() const;
 
-	/** returns a new reversed action */
-	virtual CCFadeOutUpTiles* reverse() const;
-
 public:
     /** creates the action with the grid size and the duration */
     static CCFadeOutUpTiles* create(float duration, const CCSize& gridSize);
@@ -194,9 +176,6 @@ class CC_DLL CCFadeOutDownTiles : public CCFadeOutUpTiles
 public:
 	/** returns a new clone of the action */
 	virtual CCFadeOutDownTiles* clone() const;
-
-	/** returns a new reversed action */
-	virtual CCFadeOutDownTiles* reverse() const;
 
     virtual float testFunc(const CCSize& pos, float time);
 
@@ -221,9 +200,6 @@ public:
 
 	/** returns a new clone of the action */
 	virtual CCTurnOffTiles* clone() const;
-
-	/** returns a new reversed action */
-	virtual CCTurnOffTiles* reverse() const;
 
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
@@ -260,9 +236,6 @@ public:
 	/** returns a new clone of the action */
 	virtual CCWavesTiles3D* clone() const;
 
-	/** returns a new reversed action */
-	virtual CCWavesTiles3D* reverse() const;
-
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
 
@@ -295,9 +268,6 @@ public:
 	/** returns a new clone of the action */
 	virtual CCJumpTiles3D* clone() const;
 
-	/** returns a new reversed action */
-	virtual CCJumpTiles3D* reverse() const;
-
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
 
@@ -321,9 +291,6 @@ public :
 	/** returns a new clone of the action */
 	virtual CCSplitRows* clone() const;
 
-	/** returns a new reversed action */
-	virtual CCSplitRows* reverse() const;
-
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
     virtual void startWithTarget(CCNode *pTarget);
@@ -346,9 +313,6 @@ public:
 
 	/** returns a new clone of the action */
 	virtual CCSplitCols* clone() const;
-
-	/** returns a new reversed action */
-	virtual CCSplitCols* reverse() const;
 
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);

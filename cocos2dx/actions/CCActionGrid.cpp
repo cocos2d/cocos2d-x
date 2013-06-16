@@ -75,6 +75,11 @@ void CCGridAction::startWithTarget(CCNode *pTarget)
     }
 }
 
+CCGridAction* CCGridAction::reverse() const
+{
+	return (CCGridAction*)CCReverseTime::create( this->clone() );
+}
+
 CCGridBase* CCGridAction::getGrid(void)
 {
     // Abstract class needs implementation
@@ -199,7 +204,7 @@ void CCAccelDeccelAmplitude::update(float time)
     ((CCAccelDeccelAmplitude*)(m_pOther))->setAmplitudeRate(powf(f, m_fRate));
 }
 
-CCAccelDeccelAmplitude* CCAccelDeccelAmplitude::reverse(void) const
+CCAccelDeccelAmplitude* CCAccelDeccelAmplitude::reverse() const
 {
     return CCAccelDeccelAmplitude::create(m_pOther->reverse(), m_fDuration);
 }
@@ -263,7 +268,7 @@ void CCAccelAmplitude::update(float time)
     m_pOther->update(time);
 }
 
-CCAccelAmplitude* CCAccelAmplitude::reverse(void) const
+CCAccelAmplitude* CCAccelAmplitude::reverse() const
 {
     return CCAccelAmplitude::create(m_pOther->reverse(), m_fDuration);
 }
@@ -320,7 +325,7 @@ void CCDeccelAmplitude::update(float time)
     m_pOther->update(time);
 }
 
-CCDeccelAmplitude* CCDeccelAmplitude::reverse(void) const
+CCDeccelAmplitude* CCDeccelAmplitude::reverse() const
 {
     return CCDeccelAmplitude::create(m_pOther->reverse(), m_fDuration);
 }

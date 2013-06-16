@@ -59,9 +59,9 @@ public:
     // super methods
     virtual void startWithTarget(CCNode *pTarget);
 	/** returns a new reversed action */
-    virtual CCReverseTime * reverse() const;
+    virtual CCFiniteTimeAction * reverse() const;
 	/** returns a new clone of the action */
-	CCActionCamera *clone() const;
+	virtual CCActionCamera *clone() const;
 protected:
     float m_fCenterXOrig;
     float m_fCenterYOrig;
