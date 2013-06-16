@@ -64,8 +64,8 @@ public:
 
 protected:
 
-    CCKeyboardDelegate m_keyPressDelegate;
-    CCKeyboardDelegate m_keyReleaseDelegate;
+    CCKeyboardDelegate _keyPressDelegate;
+    CCKeyboardDelegate _keyReleaseDelegate;
 };
 
 // end of input group

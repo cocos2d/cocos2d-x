@@ -63,7 +63,7 @@ struct ccTouchHandlerHelperData {
     // we only use the type
 //    void (StandardTouchDelegate::*touchesSel)(CCSet*, CCEvent*);
 //    void (TargetedTouchDelegate::*touchSel)(NSTouch*, CCEvent*);
-    int  m_type;
+    int  _type;
 };
 
 
@@ -102,10 +102,10 @@ public:
     ~CCTouchDispatcher();
     bool init(void);
     CCTouchDispatcher() 
-        : m_pTargetedHandlers(NULL)
-        , m_pStandardHandlers(NULL)
-        , m_pHandlersToAdd(NULL)
-        , m_pHandlersToRemove(NULL)
+        : _targetedHandlers(NULL)
+        , _standardHandlers(NULL)
+        , _handlersToAdd(NULL)
+        , _handlersToRemove(NULL)
         
     {}
 
@@ -155,19 +155,19 @@ protected:
     CCTouchHandler* findHandler(CCArray* pArray, CCTouchDelegate *pDelegate);
 
 protected:
-     CCArray* m_pTargetedHandlers;
-     CCArray* m_pStandardHandlers;
+     CCArray* _targetedHandlers;
+     CCArray* _standardHandlers;
 
-    bool m_bLocked;
-    bool m_bToAdd;
-    bool m_bToRemove;
-     CCArray* m_pHandlersToAdd;
-    struct _ccCArray *m_pHandlersToRemove;
-    bool m_bToQuit;
-    bool m_bDispatchEvents;
+    bool _locked;
+    bool _toAdd;
+    bool _toRemove;
+     CCArray* _handlersToAdd;
+    struct _ccCArray *_handlersToRemove;
+    bool _toQuit;
+    bool _dispatchEvents;
 
     // 4, 1 for each type of event
-    struct ccTouchHandlerHelperData m_sHandlerHelperData[ccTouchMax];
+    struct ccTouchHandlerHelperData _handlerHelperData[ccTouchMax];
 };
 
 // end of input group

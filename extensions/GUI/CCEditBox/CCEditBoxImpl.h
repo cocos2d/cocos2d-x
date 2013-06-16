@@ -36,7 +36,7 @@ NS_CC_EXT_BEGIN
 class CCEditBoxImpl
 {
 public:
-    CCEditBoxImpl(CCEditBox* pEditBox) : m_pDelegate(NULL),m_pEditBox(pEditBox) {}
+    CCEditBoxImpl(CCEditBox* pEditBox) : _delegate(NULL),_editBox(pEditBox) {}
     virtual ~CCEditBoxImpl() {}
     
     virtual bool initWithSize(const CCSize& size) = 0;
@@ -67,12 +67,12 @@ public:
     virtual void onEnter(void) = 0;
     
     
-    void setDelegate(CCEditBoxDelegate* pDelegate) { m_pDelegate = pDelegate; };
-    CCEditBoxDelegate* getDelegate() { return m_pDelegate; };
-    CCEditBox* getCCEditBox() { return m_pEditBox; };
+    void setDelegate(CCEditBoxDelegate* pDelegate) { _delegate = pDelegate; };
+    CCEditBoxDelegate* getDelegate() { return _delegate; };
+    CCEditBox* getCCEditBox() { return _editBox; };
 protected:
-    CCEditBoxDelegate* m_pDelegate;
-    CCEditBox* m_pEditBox;
+    CCEditBoxDelegate* _delegate;
+    CCEditBox* _editBox;
 };
 
 // This method must be implemented at each subclass of CCEditBoxImpl.

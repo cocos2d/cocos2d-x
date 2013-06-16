@@ -491,7 +491,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 
 NS_CC_BEGIN
 
-static bool m_bEnabledScale = true;
+static bool _enabledScale = true;
 
 bool isFileExists(const char* szFilePath);
 
@@ -556,25 +556,25 @@ bool isFileExists(const char* szFilePath)
 }
 
 CCImage::CCImage()
-: m_nWidth(0)
-, m_nHeight(0)
-, m_nBitsPerComponent(0)
-, m_pData(0)
-, m_bHasAlpha(false)
-, m_bPreMulti(false)
+: _width(0)
+, _height(0)
+, _bitsPerComponent(0)
+, _data(0)
+, _hasAlpha(false)
+, _preMulti(false)
 {
     
 }
 
 CCImage::~CCImage()
 {
-    CC_SAFE_DELETE_ARRAY(m_pData);
+    CC_SAFE_DELETE_ARRAY(_data);
 }
 
 bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
 {
     std::string strTemp = CCFileUtils::sharedFileUtils()->fullPathForFilename(strPath);
-	if (m_bEnabledScale)
+	if (_enabledScale)
 	{
 		if (!isFileExists(strTemp.c_str()))
 		{
@@ -587,11 +587,11 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
 				}
 /*				CCSize size = CCDirector::sharedDirector()->getWinSize();		
 	#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-				m_dScaleX = size.width/800.0f;
-				m_dScaleY = size.height/480.0f;
+				_scaleX = size.width/800.0f;
+				_scaleY = size.height/480.0f;
 	#else
-				m_dScaleX = size.width/960.0f;
-				m_dScaleY = size.height/640.0f;
+				_scaleX = size.width/960.0f;
+				_scaleY = size.height/640.0f;
 				
 	#endif
 */
@@ -599,8 +599,8 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
 		}    
 		else
 		{
-//			m_dScaleX = 1.0;
-//			m_dScaleY = 1.0;
+//			_scaleX = 1.0;
+//			_scaleY = 1.0;
 		}
 	}
 	
@@ -805,8 +805,8 @@ bool CCImage::potImageData(unsigned int POTWide, unsigned int POTHigh)
 	
 	if (data)
 	{
-		CC_SAFE_DELETE_ARRAY(m_pData);
-		m_pData = data;
+		CC_SAFE_DELETE_ARRAY(_data);
+		_data = data;
 	}
 	return true;	
 }
@@ -832,23 +832,23 @@ bool CCImage::initWithImageData(void * pData,
         }
         else
         {
-            bRet = _initWithData(pData, nDataLen, &info, 1.0f, 1.0f);//m_dScaleX, m_dScaleY);
+            bRet = _initWithData(pData, nDataLen, &info, 1.0f, 1.0f);//_scaleX, _scaleY);
             if (bRet)
             {
-                m_nHeight = (short)info.height;
-                m_nWidth = (short)info.width;
-                m_nBitsPerComponent = info.bitsPerComponent;
+                _height = (short)info.height;
+                _width = (short)info.width;
+                _bitsPerComponent = info.bitsPerComponent;
                 if (eFmt == kFmtJpg)
                 {
-                    m_bHasAlpha = true;
-                    m_bPreMulti = false;
+                    _hasAlpha = true;
+                    _preMulti = false;
                 }
                 else
                 {
-                    m_bHasAlpha = info.hasAlpha;
-                    m_bPreMulti = info.isPremultipliedAlpha;
+                    _hasAlpha = info.hasAlpha;
+                    _preMulti = info.isPremultipliedAlpha;
                 }
-                m_pData = info.data;
+                _data = info.data;
             }
         }
     } while (0);
@@ -872,15 +872,15 @@ bool CCImage::initWithString(
     {
         return false;
     }
-    m_nHeight = (short)info.height;
-    m_nWidth = (short)info.width;
-    m_nBitsPerComponent = info.bitsPerComponent;
-    m_bHasAlpha = info.hasAlpha;
-    m_bPreMulti = info.isPremultipliedAlpha;
-	if (m_pData) {
-		CC_SAFE_DELETE_ARRAY(m_pData);
+    _height = (short)info.height;
+    _width = (short)info.width;
+    _bitsPerComponent = info.bitsPerComponent;
+    _hasAlpha = info.hasAlpha;
+    _preMulti = info.isPremultipliedAlpha;
+	if (_data) {
+		CC_SAFE_DELETE_ARRAY(_data);
 	}
-    m_pData = info.data;
+    _data = info.data;
 
     return true;
 }

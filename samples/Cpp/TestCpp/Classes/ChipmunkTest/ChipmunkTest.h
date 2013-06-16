@@ -28,12 +28,12 @@ public:
     virtual void didAccelerate(CCAcceleration* pAccelerationValue);
 
 private:
-    CCTexture2D* m_pSpriteTexture; // weak ref
+    CCTexture2D* _spriteTexture; // weak ref
 #if CC_ENABLE_CHIPMUNK_INTEGRATION    
-    CCPhysicsDebugNode* m_pDebugLayer; // weak ref
+    CCPhysicsDebugNode* _debugLayer; // weak ref
 #endif
-    cpSpace* m_pSpace; // strong ref
-    cpShape* m_pWalls[4];
+    cpSpace* _space; // strong ref
+    cpShape* _walls[4];
 };
 
 class ChipmunkAccelTouchTestScene : public TestScene

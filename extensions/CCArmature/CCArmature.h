@@ -120,8 +120,8 @@ public:
      */
 	virtual void updateOffsetPoint();
 
-	inline void setBlendFunc(ccBlendFunc blendFunc) { m_sBlendFunc = blendFunc; }
-	inline ccBlendFunc getBlendFunc(void) { return m_sBlendFunc; }
+	inline void setBlendFunc(ccBlendFunc blendFunc) { _blendFunc = blendFunc; }
+	inline ccBlendFunc getBlendFunc(void) { return _blendFunc; }
 
 protected:
     
@@ -131,27 +131,27 @@ protected:
 	CCBone *createBone(const char *boneName );
     
 
-	CC_SYNTHESIZE_RETAIN(CCArmatureAnimation *, m_pAnimation, Animation);
+	CC_SYNTHESIZE_RETAIN(CCArmatureAnimation *, _animation, Animation);
     
-    CC_SYNTHESIZE(CCArmatureData *, m_pArmatureData, CCArmatureData);
+    CC_SYNTHESIZE(CCArmatureData *, _armatureData, CCArmatureData);
 
-	CC_SYNTHESIZE(CCBatchNode*, m_pBatchNode, BatchNode);
+	CC_SYNTHESIZE(CCBatchNode*, _batchNode, BatchNode);
 
-	CC_SYNTHESIZE_PASS_BY_REF(std::string, m_strName, Name);
+	CC_SYNTHESIZE_PASS_BY_REF(std::string, _name, Name);
 
-	CC_SYNTHESIZE(CCTextureAtlas*, m_pAtlas, TextureAtlas);
+	CC_SYNTHESIZE(CCTextureAtlas*, _atlas, TextureAtlas);
 
-	CC_SYNTHESIZE(CCBone*, m_pParentBone, ParentBone);
+	CC_SYNTHESIZE(CCBone*, _parentBone, ParentBone);
 protected:
-    CCDictionary *m_pBoneDic;                    //! The dictionary of the bones, include all bones in the armature, no matter it is the direct bone or the indirect bone. It is different from m_pChindren.
+    CCDictionary *_boneDic;                    //! The dictionary of the bones, include all bones in the armature, no matter it is the direct bone or the indirect bone. It is different from _chindren.
 
-	CCArray *m_pTopBoneList;
+	CCArray *_topBoneList;
 
-    static std::map<int, CCArmature*> m_sArmatureIndexDic;	//! Use to save armature zorder info, 
+    static std::map<int, CCArmature*> _armatureIndexDic;	//! Use to save armature zorder info, 
 
-	ccBlendFunc m_sBlendFunc;                    //! It's required for CCTextureProtocol inheritance
+	ccBlendFunc _blendFunc;                    //! It's required for CCTextureProtocol inheritance
 
-	CCPoint m_pOffsetPoint;
+	CCPoint _offsetPoint;
 };
 
 NS_CC_EXT_END

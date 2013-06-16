@@ -28,7 +28,7 @@
 
 CCControlSwitchTest::~CCControlSwitchTest()
 {
-    CC_SAFE_RELEASE(m_pDisplayValueLabel);
+    CC_SAFE_RELEASE(_displayValueLabel);
 }
 
 bool CCControlSwitchTest::init()
@@ -51,11 +51,11 @@ bool CCControlSwitchTest::init()
         
         layer_width += background->getContentSize().width;
         
-        m_pDisplayValueLabel  = CCLabelTTF::create("#color" ,"Marker Felt" ,30);
-        m_pDisplayValueLabel->retain();
+        _displayValueLabel  = CCLabelTTF::create("#color" ,"Marker Felt" ,30);
+        _displayValueLabel->retain();
 
-        m_pDisplayValueLabel->setPosition(background->getPosition());
-        layer->addChild(m_pDisplayValueLabel);
+        _displayValueLabel->setPosition(background->getPosition());
+        layer->addChild(_displayValueLabel);
         
         // Create the switch
         CCControlSwitch *switchControl = CCControlSwitch::create
@@ -88,11 +88,11 @@ void CCControlSwitchTest::valueChanged(CCObject* sender, CCControlEvent controlE
     CCControlSwitch* pSwitch = (CCControlSwitch*)sender;
     if (pSwitch->isOn())
     {
-        m_pDisplayValueLabel->setString("On");
+        _displayValueLabel->setString("On");
     } 
     else
     {
-        m_pDisplayValueLabel->setString("Off");
+        _displayValueLabel->setString("Off");
     }
 }
 

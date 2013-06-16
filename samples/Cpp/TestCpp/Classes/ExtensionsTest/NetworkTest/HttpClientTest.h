@@ -22,7 +22,7 @@ public:
     void onHttpRequestCompleted(cocos2d::extension::CCHttpClient *sender, cocos2d::extension::CCHttpResponse *response);
 
 private:
-    cocos2d::CCLabelTTF* m_labelStatusCode;
+    cocos2d::CCLabelTTF* _labelStatusCode;
 };
 
 void runHttpClientTest();

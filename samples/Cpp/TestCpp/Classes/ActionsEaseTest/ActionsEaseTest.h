@@ -10,11 +10,11 @@ USING_NS_CC;
 class EaseSpriteDemo : public BaseTest
 {
 protected:
-    CCSprite*    m_grossini;
-    CCSprite*    m_tamara;
-    CCSprite*    m_kathia;
+    CCSprite*    _grossini;
+    CCSprite*    _tamara;
+    CCSprite*    _kathia;
 
-    std::string    m_strTitle;
+    std::string    _title;
 
 public:
     EaseSpriteDemo(void);

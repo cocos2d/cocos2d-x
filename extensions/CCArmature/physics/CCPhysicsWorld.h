@@ -61,11 +61,11 @@ private:
 private:
     static CCPhysicsWorld *s_PhysicsWorld;
 
-    b2World *m_pNoGravityWorld;
+    b2World *_noGravityWorld;
 
-    ContactListener *m_pContactListener;
+    ContactListener *_contactListener;
 
-    GLESDebugDraw *m_pDebugDraw;
+    GLESDebugDraw *_debugDraw;
 public:
     void update(float dt);
     void drawDebug();

@@ -33,7 +33,7 @@ void NodeChildrenMenuLayer::showCurrentTest()
     int nNodes = ((NodeChildrenMainScene*)getParent())->getQuantityOfNodes();
     NodeChildrenMainScene* pScene = NULL;
 
-    switch (m_nCurCase)
+    switch (_curCase)
     {
 //     case 0:
 //         pScene = new IterateSpriteSheetFastEnum();
@@ -51,7 +51,7 @@ void NodeChildrenMenuLayer::showCurrentTest()
         pScene = new ReorderSpriteSheet();
         break;
     }
-    s_nCurCase = m_nCurCase;
+    s_nCurCase = _curCase;
 
     if (pScene)
     {

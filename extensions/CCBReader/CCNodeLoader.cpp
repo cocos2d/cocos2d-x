@@ -10,17 +10,17 @@ NS_CC_EXT_BEGIN
 
 CCNodeLoader::CCNodeLoader()
 {
-    m_pCustomProperties = new CCDictionary();
+    _customProperties = new CCDictionary();
 }
 
 CCNodeLoader::~CCNodeLoader()
 {
-    CC_SAFE_RELEASE(m_pCustomProperties);
+    CC_SAFE_RELEASE(_customProperties);
 }
 
 CCDictionary* CCNodeLoader::getCustomProperties()
 {
-    return m_pCustomProperties;
+    return _customProperties;
 }
 
 CCNode * CCNodeLoader::loadCCNode(CCNode * pParent, CCBReader * pCCBReader) {
@@ -993,7 +993,7 @@ void CCNodeLoader::onHandlePropTypeScaleLock(CCNode * pNode, CCNode * pParent, c
 void CCNodeLoader::onHandlePropTypeFloat(CCNode * pNode, CCNode * pParent, const char* pPropertyName, float pFloat, CCBReader * pCCBReader) {
 //    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
     // It may be a custom property, add it to custom property dictionary.
-    m_pCustomProperties->setObject(CCBValue::create(pFloat), pPropertyName);
+    _customProperties->setObject(CCBValue::create(pFloat), pPropertyName);
 }
 
 
@@ -1020,7 +1020,7 @@ void CCNodeLoader::onHandlePropTypeInteger(CCNode * pNode, CCNode * pParent, con
     } else {
  //       ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
         // It may be a custom property, add it to custom property dictionary.
-        m_pCustomProperties->setObject(CCBValue::create(pInteger), pPropertyName);
+        _customProperties->setObject(CCBValue::create(pInteger), pPropertyName);
     }
 }
 
@@ -1040,7 +1040,7 @@ void CCNodeLoader::onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, const
     } else {
         //ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
         // It may be a custom property, add it to custom property dictionary.
-        m_pCustomProperties->setObject(CCBValue::create(pCheck), pPropertyName);
+        _customProperties->setObject(CCBValue::create(pCheck), pPropertyName);
     }
 }
 
@@ -1083,7 +1083,7 @@ void CCNodeLoader::onHandlePropTypeFntFile(CCNode * pNode, CCNode * pParent, con
 void CCNodeLoader::onHandlePropTypeString(CCNode * pNode, CCNode * pParent, const char* pPropertyName, const char * pString, CCBReader * pCCBReader) {
 //    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
     // It may be a custom property, add it to custom property dictionary.
-    m_pCustomProperties->setObject(CCBValue::create(pString), pPropertyName);
+    _customProperties->setObject(CCBValue::create(pString), pPropertyName);
 }
 
 void CCNodeLoader::onHandlePropTypeText(CCNode * pNode, CCNode * pParent, const char* pPropertyName, const char * pText, CCBReader * pCCBReader) {

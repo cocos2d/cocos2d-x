@@ -54,14 +54,14 @@ CCColliderDetector *CCColliderDetector::create(CCBone *bone)
 }
 
 CCColliderDetector::CCColliderDetector()
-    : m_pColliderBodyList(NULL)
+    : _colliderBodyList(NULL)
 {
 }
 
 CCColliderDetector::~CCColliderDetector()
 {
     CCObject *object = NULL;
-    CCARRAY_FOREACH(m_pColliderBodyList, object)
+    CCARRAY_FOREACH(_colliderBodyList, object)
     {
         ColliderBody *colliderBody = (ColliderBody *)object;
 
@@ -70,15 +70,15 @@ CCColliderDetector::~CCColliderDetector()
     }
 
 
-    m_pColliderBodyList->removeAllObjects();
-    CC_SAFE_DELETE(m_pColliderBodyList);
+    _colliderBodyList->removeAllObjects();
+    CC_SAFE_DELETE(_colliderBodyList);
 }
 
 bool CCColliderDetector::init()
 {
-    m_pColliderBodyList = CCArray::create();
-    CCAssert(m_pColliderBodyList, "create m_pColliderBodyList failed!");
-    m_pColliderBodyList->retain();
+    _colliderBodyList = CCArray::create();
+    CCAssert(_colliderBodyList, "create _colliderBodyList failed!");
+    _colliderBodyList->retain();
 
     return true;
 }
@@ -119,13 +119,13 @@ void CCColliderDetector::addContourData(CCContourData *contourData)
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.position = b2Vec2(0.0f, 0.0f);
-    bodyDef.userData = m_pBone;
+    bodyDef.userData = _bone;
 
     b2Body *body = CCPhysicsWorld::sharedPhysicsWorld()->getNoGravityWorld()->CreateBody(&bodyDef);
     body->CreateFixture(&fixtureDef);
 
     ColliderBody *colliderBody = new ColliderBody(body, contourData);
-    m_pColliderBodyList->addObject(colliderBody);
+    _colliderBodyList->addObject(colliderBody);
     colliderBody->release();
 }
 
@@ -140,18 +140,18 @@ void CCColliderDetector::addContourDataList(CCArray *contourDataList)
 
 void CCColliderDetector::removeContourData(CCContourData *_contourData)
 {
-    m_pColliderBodyList->removeObject(_contourData);
+    _colliderBodyList->removeObject(_contourData);
 }
 
 void CCColliderDetector::removeAll()
 {
-    m_pColliderBodyList->removeAllObjects();
+    _colliderBodyList->removeAllObjects();
 }
 
 void CCColliderDetector::setColliderFilter(b2Filter &filter)
 {
     CCObject *object = NULL;
-    CCARRAY_FOREACH(m_pColliderBodyList, object)
+    CCARRAY_FOREACH(_colliderBodyList, object)
     {
         ColliderBody *colliderBody = (ColliderBody *)object;
         colliderBody->getB2Body()->GetFixtureList()->SetFilterData(filter);
@@ -161,7 +161,7 @@ void CCColliderDetector::setColliderFilter(b2Filter &filter)
 void CCColliderDetector::setActive(bool active)
 {
     CCObject *object = NULL;
-    CCARRAY_FOREACH(m_pColliderBodyList, object)
+    CCARRAY_FOREACH(_colliderBodyList, object)
     {
         ColliderBody *colliderBody = (ColliderBody *)object;
         colliderBody->getB2Body()->SetActive(active);
@@ -173,7 +173,7 @@ CCPoint helpPoint;
 void CCColliderDetector::updateTransform(CCAffineTransform &t)
 {
     CCObject *object = NULL;
-    CCARRAY_FOREACH(m_pColliderBodyList, object)
+    CCARRAY_FOREACH(_colliderBodyList, object)
     {
         ColliderBody *colliderBody = (ColliderBody *)object;
 

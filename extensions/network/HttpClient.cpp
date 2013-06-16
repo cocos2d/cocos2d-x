@@ -256,29 +256,29 @@ static bool configureCURL(CURL *handle)
 class CURLRaii
 {
     /// Instance of CURL
-    CURL *m_curl;
+    CURL *_curl;
     /// Keeps custom header data
-    curl_slist *m_headers;
+    curl_slist *_headers;
 public:
     CURLRaii()
-        : m_curl(curl_easy_init())
-        , m_headers(NULL)
+        : _curl(curl_easy_init())
+        , _headers(NULL)
     {
     }
 
     ~CURLRaii()
     {
-        if (m_curl)
-            curl_easy_cleanup(m_curl);
+        if (_curl)
+            curl_easy_cleanup(_curl);
         /* free the linked list for header data */
-        if (m_headers)
-            curl_slist_free_all(m_headers);
+        if (_headers)
+            curl_slist_free_all(_headers);
     }
 
     template <class T>
     bool setOption(CURLoption option, T data)
     {
-        return CURLE_OK == curl_easy_setopt(m_curl, option, data);
+        return CURLE_OK == curl_easy_setopt(_curl, option, data);
     }
 
     /**
@@ -289,9 +289,9 @@ public:
      */
     bool init(CCHttpRequest *request, write_callback callback, void *stream, write_callback headerCallback, void *headerStream)
     {
-        if (!m_curl)
+        if (!_curl)
             return false;
-        if (!configureCURL(m_curl))
+        if (!configureCURL(_curl))
             return false;
 
         /* get custom header data (if set) */
@@ -300,9 +300,9 @@ public:
         {
             /* append custom headers one by one */
             for (std::vector<std::string>::iterator it = headers.begin(); it != headers.end(); ++it)
-                m_headers = curl_slist_append(m_headers,it->c_str());
+                _headers = curl_slist_append(_headers,it->c_str());
             /* set custom headers for curl */
-            if (!setOption(CURLOPT_HTTPHEADER, m_headers))
+            if (!setOption(CURLOPT_HTTPHEADER, _headers))
                 return false;
         }
 
@@ -317,9 +317,9 @@ public:
     /// @param responseCode Null not allowed
     bool perform(int *responseCode)
     {
-        if (CURLE_OK != curl_easy_perform(m_curl))
+        if (CURLE_OK != curl_easy_perform(_curl))
             return false;
-        CURLcode code = curl_easy_getinfo(m_curl, CURLINFO_RESPONSE_CODE, responseCode);
+        CURLcode code = curl_easy_getinfo(_curl, CURLINFO_RESPONSE_CODE, responseCode);
         if (code != CURLE_OK || *responseCode != 200)
             return false;
         

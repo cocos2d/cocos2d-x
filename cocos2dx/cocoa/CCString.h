@@ -117,7 +117,7 @@ private:
     bool initWithFormatAndValist(const char* format, va_list ap);
 
 public:
-    std::string m_sString;
+    std::string _string;
 };
 
 struct CCStringCompare : public std::binary_function<CCString *, CCString *, bool> {

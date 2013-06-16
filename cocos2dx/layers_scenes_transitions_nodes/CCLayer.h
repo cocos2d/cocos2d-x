@@ -151,25 +151,25 @@ public:
     virtual void keyBackClicked(void);
     virtual void keyMenuClicked(void);
     
-    inline CCTouchScriptHandlerEntry* getScriptTouchHandlerEntry() { return m_pScriptTouchHandlerEntry; };
-    inline CCScriptHandlerEntry* getScriptKeypadHandlerEntry() { return m_pScriptKeypadHandlerEntry; };
-    inline CCScriptHandlerEntry* getScriptAccelerateHandlerEntry() { return m_pScriptAccelerateHandlerEntry; };
+    inline CCTouchScriptHandlerEntry* getScriptTouchHandlerEntry() { return _scriptTouchHandlerEntry; };
+    inline CCScriptHandlerEntry* getScriptKeypadHandlerEntry() { return _scriptKeypadHandlerEntry; };
+    inline CCScriptHandlerEntry* getScriptAccelerateHandlerEntry() { return _scriptAccelerateHandlerEntry; };
 protected:   
-    bool m_bTouchEnabled;
-    bool m_bAccelerometerEnabled;
+    bool _touchEnabled;
+    bool _accelerometerEnabled;
 #ifdef KEYBOARD_SUPPORT
-    bool m_bKeyboardEnabled;
+    bool _keyboardEnabled;
 #endif
-    bool m_bKeypadEnabled;
+    bool _keypadEnabled;
     
 private:
     // Script touch events handler
-    CCTouchScriptHandlerEntry* m_pScriptTouchHandlerEntry;
-    CCScriptHandlerEntry* m_pScriptKeypadHandlerEntry;
-    CCScriptHandlerEntry* m_pScriptAccelerateHandlerEntry;
+    CCTouchScriptHandlerEntry* _scriptTouchHandlerEntry;
+    CCScriptHandlerEntry* _scriptKeypadHandlerEntry;
+    CCScriptHandlerEntry* _scriptAccelerateHandlerEntry;
     
-    int m_nTouchPriority;
-    ccTouchesMode m_eTouchMode;
+    int _touchPriority;
+    ccTouchesMode _touchMode;
     
     int  excuteScriptTouchHandler(int nEventType, CCTouch *pTouch);
     int  excuteScriptTouchHandler(int nEventType, CCSet *pTouches);
@@ -234,8 +234,8 @@ class CC_DLL CCLayerColor : public CCLayerRGBA, public CCBlendProtocol
 #endif // EMSCRIPTEN
 {
 protected:
-    ccVertex2F m_pSquareVertices[4];
-    ccColor4F  m_pSquareColors[4];
+    ccVertex2F _squareVertices[4];
+    ccColor4F  _squareColors[4];
 
 public:
     CCLayerColor();
@@ -267,7 +267,7 @@ public:
     void changeWidthAndHeight(GLfloat w ,GLfloat h);
 
     /** BlendFunction. Conforms to CCBlendProtocol protocol */
-    CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
+    CC_PROPERTY(ccBlendFunc, _blendFunc, BlendFunc)
 
     virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
     virtual bool isOpacityModifyRGB(void) { return false;}
@@ -317,17 +317,17 @@ public:
     /** Initializes the CCLayer with a gradient between start and end in the direction of v. */
     virtual bool initWithColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
 
-    CC_PROPERTY_PASS_BY_REF(ccColor3B, m_startColor, StartColor)
-    CC_PROPERTY_PASS_BY_REF(ccColor3B, m_endColor, EndColor)
-    CC_PROPERTY(GLubyte, m_cStartOpacity, StartOpacity)
-    CC_PROPERTY(GLubyte, m_cEndOpacity, EndOpacity)
-    CC_PROPERTY_PASS_BY_REF(CCPoint, m_AlongVector, Vector)
+    CC_PROPERTY_PASS_BY_REF(ccColor3B, _startColor, StartColor)
+    CC_PROPERTY_PASS_BY_REF(ccColor3B, _endColor, EndColor)
+    CC_PROPERTY(GLubyte, _startOpacity, StartOpacity)
+    CC_PROPERTY(GLubyte, _endOpacity, EndOpacity)
+    CC_PROPERTY_PASS_BY_REF(CCPoint, _alongVector, Vector)
 
     /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
     Default: YES
     */
 protected:
-    bool m_bCompressedInterpolation;
+    bool _compressedInterpolation;
 public:
     virtual void setCompressedInterpolation(bool bCompressedInterpolation);
     virtual bool isCompressedInterpolation();
@@ -347,8 +347,8 @@ Features:
 class CC_DLL CCLayerMultiplex : public CCLayer
 {
 protected:
-    unsigned int m_nEnabledLayer;
-    CCArray*     m_pLayers;
+    unsigned int _enabledLayer;
+    CCArray*     _layers;
 public:
     CCLayerMultiplex();
     virtual ~CCLayerMultiplex();

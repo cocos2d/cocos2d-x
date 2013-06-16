@@ -78,18 +78,18 @@ public:
     void registerScriptHandler(int nFunID,WebSocketScriptHandlerType scriptHandlerType)
     {
         this->unregisterScriptHandler(scriptHandlerType);
-        m_mapScriptHandler[scriptHandlerType] = nFunID;
+        _mapScriptHandler[scriptHandlerType] = nFunID;
     }
     /**
      *  @brief Remove Handler of DelegateEvent
      */
     void unregisterScriptHandler(WebSocketScriptHandlerType scriptHandlerType)
     {
-        std::map<int,int>::iterator Iter = m_mapScriptHandler.find(scriptHandlerType);
+        std::map<int,int>::iterator Iter = _mapScriptHandler.find(scriptHandlerType);
         
-        if (m_mapScriptHandler.end() != Iter)
+        if (_mapScriptHandler.end() != Iter)
         {
-            m_mapScriptHandler.erase(Iter);
+            _mapScriptHandler.erase(Iter);
         }
     }
     /**
@@ -97,9 +97,9 @@ public:
      */
     int  getScriptHandler(WebSocketScriptHandlerType scriptHandlerType)
     {
-        std::map<int,int>::iterator Iter = m_mapScriptHandler.find(scriptHandlerType);
+        std::map<int,int>::iterator Iter = _mapScriptHandler.find(scriptHandlerType);
         
-        if (m_mapScriptHandler.end() != Iter)
+        if (_mapScriptHandler.end() != Iter)
             return Iter->second;
         
         return -1;
@@ -107,7 +107,7 @@ public:
     
     void InitScriptHandleMap()
     {
-        m_mapScriptHandler.clear();
+        _mapScriptHandler.clear();
     }
     
     virtual void onOpen(WebSocket* ws)
@@ -165,7 +165,7 @@ public:
 
     
 private:
-    std::map<int,int> m_mapScriptHandler;
+    std::map<int,int> _mapScriptHandler;
 };
 
 #ifdef __cplusplus

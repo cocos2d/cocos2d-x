@@ -39,32 +39,32 @@ class ColliderBody : public CCObject
 {
 public:
 	ColliderBody(b2Body *b2b, CCContourData *contourData)
-		:m_pB2b(NULL)
-		,m_pContourData(NULL)
+		:_pB2b(NULL)
+		,_contourData(NULL)
 	{
-		this->m_pB2b = b2b;
-		this->m_pContourData = contourData;
-		CC_SAFE_RETAIN(m_pContourData);
+		this->_pB2b = b2b;
+		this->_contourData = contourData;
+		CC_SAFE_RETAIN(_contourData);
 	}
 
 	~ColliderBody()
 	{
-		CC_SAFE_RELEASE(m_pContourData);
+		CC_SAFE_RELEASE(_contourData);
 	}
 
 	inline b2Body *getB2Body()
 	{
-		return m_pB2b;
+		return _pB2b;
 	}
 
 	inline CCContourData *getContourData()
 	{
-		return m_pContourData;
+		return _contourData;
 	}
 
 private:
-	b2Body *m_pB2b;
-	CCContourData *m_pContourData;
+	b2Body *_pB2b;
+	CCContourData *_contourData;
 };
 
 /*
@@ -94,9 +94,9 @@ public:
 
     void setActive(bool active);
 private:
-    CCArray *m_pColliderBodyList;
+    CCArray *_colliderBodyList;
     
-	CC_SYNTHESIZE(CCBone*, m_pBone, Bone);
+	CC_SYNTHESIZE(CCBone*, _bone, Bone);
 
 };
 		

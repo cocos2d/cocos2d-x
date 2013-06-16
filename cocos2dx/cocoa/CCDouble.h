@@ -38,8 +38,8 @@ class CC_DLL CCDouble : public CCObject
 {
 public:
     CCDouble(double v)
-        : m_dValue(v) {}
-    double getValue() const {return m_dValue;}
+        : _value(v) {}
+    double getValue() const {return _value;}
 
     static CCDouble* create(double v)
     {
@@ -55,7 +55,7 @@ public:
     virtual void acceptVisitor(CCDataVisitor &visitor) { visitor.visit(this); }
 
 private:
-    double m_dValue;
+    double _value;
 };
 
 // end of data_structure group

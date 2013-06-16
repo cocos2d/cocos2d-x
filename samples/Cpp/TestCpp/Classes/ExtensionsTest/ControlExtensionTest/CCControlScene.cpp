@@ -28,14 +28,14 @@
 #include "../ExtensionsTest.h"
 
 CCControlScene::CCControlScene()
-: m_pSceneTitleLabel(NULL)
+: _sceneTitleLabel(NULL)
 {
 
 }
 
 CCControlScene::~CCControlScene()
 {
-    CC_SAFE_RELEASE_NULL(m_pSceneTitleLabel);
+    CC_SAFE_RELEASE_NULL(_sceneTitleLabel);
 }
 
 bool CCControlScene::init()
@@ -61,8 +61,8 @@ bool CCControlScene::init()
         
         // Add the title
         setSceneTitleLabel(CCLabelTTF::create("Title", "Arial", 12));
-        m_pSceneTitleLabel->setPosition(ccp (VisibleRect::center().x, VisibleRect::top().y - m_pSceneTitleLabel->getContentSize().height / 2 - 5));
-        addChild(m_pSceneTitleLabel, 1);
+        _sceneTitleLabel->setPosition(ccp (VisibleRect::center().x, VisibleRect::top().y - _sceneTitleLabel->getContentSize().height / 2 - 5));
+        addChild(_sceneTitleLabel, 1);
         
         // Add the menu
         CCMenuItemImage *item1 = CCMenuItemImage::create("Images/b1.png", "Images/b2.png", CC_CALLBACK_1(CCControlScene::previousCallback, this));

@@ -73,7 +73,7 @@ static CCRect getRect(CCNode * pNode)
 //////////////////////////////////////////////////////////////////////////
 
 TextInputTest::TextInputTest()
-: m_pNotificationLayer(0)
+: _notificationLayer(0)
 {
     
 }
@@ -105,7 +105,7 @@ void TextInputTest::backCallback(CCObject* pSender)
 
 void TextInputTest::addKeyboardNotificationLayer(KeyboardNotificationLayer * pLayer)
 {
-    m_pNotificationLayer = pLayer;
+    _notificationLayer = pLayer;
     addChild(pLayer);
 }
 
@@ -124,7 +124,7 @@ void TextInputTest::onEnter()
 //////////////////////////////////////////////////////////////////////////
 
 KeyboardNotificationLayer::KeyboardNotificationLayer()
-: m_pTrackNode(0)
+: _trackNode(0)
 {
     setTouchEnabled(true);
 }
@@ -140,12 +140,12 @@ void KeyboardNotificationLayer::keyboardWillShow(CCIMEKeyboardNotificationInfo& 
     CCLOG("TextInputTest:keyboardWillShowAt(origin:%f,%f, size:%f,%f)",
         info.end.origin.x, info.end.origin.y, info.end.size.width, info.end.size.height);
 
-    if (! m_pTrackNode)
+    if (! _trackNode)
     {
         return;
     }
 
-    CCRect rectTracked = getRect(m_pTrackNode);
+    CCRect rectTracked = getRect(_trackNode);
     CCLOG("TextInputTest:trackingNodeAt(origin:%f,%f, size:%f,%f)",
         rectTracked.origin.x, rectTracked.origin.y, rectTracked.size.width, rectTracked.size.height);
 
@@ -178,13 +178,13 @@ void KeyboardNotificationLayer::keyboardWillShow(CCIMEKeyboardNotificationInfo& 
 bool KeyboardNotificationLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
     CCLOG("++++++++++++++++++++++++++++++++++++++++++++");
-    m_beginPos = pTouch->getLocation();    
+    _beginPos = pTouch->getLocation();    
     return true;
 }
 
 void KeyboardNotificationLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 {
-    if (! m_pTrackNode)
+    if (! _trackNode)
     {
         return;
     }
@@ -192,11 +192,11 @@ void KeyboardNotificationLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
     CCPoint endPos = pTouch->getLocation();    
 
     float delta = 5.0f;
-    if (::abs(endPos.x - m_beginPos.x) > delta
-        || ::abs(endPos.y - m_beginPos.y) > delta)
+    if (::abs(endPos.x - _beginPos.x) > delta
+        || ::abs(endPos.y - _beginPos.y) > delta)
     {
         // not click
-        m_beginPos.x = m_beginPos.y = -1;
+        _beginPos.x = _beginPos.y = -1;
         return;
     }
 
@@ -205,7 +205,7 @@ void KeyboardNotificationLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
     CCPoint point = convertTouchToNodeSpaceAR(pTouch);
     CCLOG("KeyboardNotificationLayer:clickedAt(%f,%f)", point.x, point.y);
 
-    rect = getRect(m_pTrackNode);
+    rect = getRect(_trackNode);
     CCLOG("KeyboardNotificationLayer:TrackNode at(origin:%f,%f, size:%f,%f)",
         rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
 
@@ -224,7 +224,7 @@ std::string TextFieldTTFDefaultTest::subtitle()
 
 void TextFieldTTFDefaultTest::onClickTrackNode(bool bClicked)
 {
-    CCTextFieldTTF * pTextField = (CCTextFieldTTF*)m_pTrackNode;
+    CCTextFieldTTF * pTextField = (CCTextFieldTTF*)_trackNode;
     if (bClicked)
     {
         // TextFieldTTFTest be clicked
@@ -259,7 +259,7 @@ void TextFieldTTFDefaultTest::onEnter()
     pTextField->setPosition(ccp(s.width / 2, s.height / 2));
 #endif
 
-    m_pTrackNode = pTextField;
+    _trackNode = pTextField;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -273,7 +273,7 @@ std::string TextFieldTTFActionTest::subtitle()
 
 void TextFieldTTFActionTest::onClickTrackNode(bool bClicked)
 {
-    CCTextFieldTTF * pTextField = (CCTextFieldTTF*)m_pTrackNode;
+    CCTextFieldTTF * pTextField = (CCTextFieldTTF*)_trackNode;
     if (bClicked)
     {
         // TextFieldTTFTest be clicked
@@ -292,62 +292,62 @@ void TextFieldTTFActionTest::onEnter()
 {
     KeyboardNotificationLayer::onEnter();
 
-    m_nCharLimit = 12;
+    _charLimit = 12;
 
-    m_pTextFieldAction = CCRepeatForever::create(
+    _textFieldAction = CCRepeatForever::create(
         CCSequence::create(
             CCFadeOut::create(0.25),
             CCFadeIn::create(0.25),
             0
         ));
-    m_pTextFieldAction->retain();
-    m_bAction = false;
+    _textFieldAction->retain();
+    _action = false;
 
     // add CCTextFieldTTF
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    m_pTextField = CCTextFieldTTF::textFieldWithPlaceHolder("<click here for input>",
+    _textField = CCTextFieldTTF::textFieldWithPlaceHolder("<click here for input>",
         FONT_NAME,
         FONT_SIZE);
-    addChild(m_pTextField);
+    addChild(_textField);
 
-    m_pTextField->setDelegate(this);
+    _textField->setDelegate(this);
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)    
     // on android, CCTextFieldTTF cannot auto adjust its position when soft-keyboard pop up
     // so we had to set a higher position
-    m_pTextField->setPosition(ccp(s.width / 2, s.height/2 + 50));
+    _textField->setPosition(ccp(s.width / 2, s.height/2 + 50));
 #else
-    m_pTextField->setPosition(ccp(s.width / 2, s.height / 2));
+    _textField->setPosition(ccp(s.width / 2, s.height / 2));
 #endif
 
-    m_pTrackNode = m_pTextField;
+    _trackNode = _textField;
 }
 
 void TextFieldTTFActionTest::onExit()
 {
     KeyboardNotificationLayer::onExit();
-    m_pTextFieldAction->release();
+    _textFieldAction->release();
 }
 
 // CCTextFieldDelegate protocol
 bool TextFieldTTFActionTest::onTextFieldAttachWithIME(CCTextFieldTTF * pSender)
 {
-    if (! m_bAction)
+    if (! _action)
     {
-        m_pTextField->runAction(m_pTextFieldAction);
-        m_bAction = true;
+        _textField->runAction(_textFieldAction);
+        _action = true;
     }
     return false;
 }
 
 bool TextFieldTTFActionTest::onTextFieldDetachWithIME(CCTextFieldTTF * pSender)
 {
-    if (m_bAction)
+    if (_action)
     {
-        m_pTextField->stopAction(m_pTextFieldAction);
-        m_pTextField->setOpacity(255);
-        m_bAction = false;
+        _textField->stopAction(_textFieldAction);
+        _textField->setOpacity(255);
+        _action = false;
     }
     return false;
 }
@@ -360,8 +360,8 @@ bool TextFieldTTFActionTest::onTextFieldInsertText(CCTextFieldTTF * pSender, con
         return false;
     }
     
-    // if the textfield's char count more than m_nCharLimit, doesn't insert text anymore.
-    if (pSender->getCharCount() >= m_nCharLimit)
+    // if the textfield's char count more than _charLimit, doesn't insert text anymore.
+    if (pSender->getCharCount() >= _charLimit)
     {
         return true;
     }
