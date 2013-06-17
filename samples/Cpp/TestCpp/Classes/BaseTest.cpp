@@ -33,9 +33,10 @@ void BaseTest::onEnter()
     }
 
     // add menu
-    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, std::bind( &BaseTest::backCallback, this, std::placeholders::_1) );
-    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, std::bind( &BaseTest::restartCallback, this, std::placeholders::_1) );
-    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, std::bind( &BaseTest::nextCallback, this, std::placeholders::_1) );
+	// CC_CALLBACK_1 == std::bind( function_ptr, instance, std::placeholders::_1, ...)
+    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, CC_CALLBACK_1(BaseTest::backCallback, this) );
+    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, CC_CALLBACK_1(BaseTest::restartCallback, this) );
+    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, CC_CALLBACK_1(BaseTest::nextCallback, this) );
 
     CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 

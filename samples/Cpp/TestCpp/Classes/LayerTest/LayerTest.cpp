@@ -595,7 +595,7 @@ LayerGradient::LayerGradient()
     CCLabelTTF *label2 = CCLabelTTF::create("Compressed Interpolation: Disabled", "Marker Felt", 26);
     CCMenuItemLabel *item1 = CCMenuItemLabel::create(label1);
     CCMenuItemLabel *item2 = CCMenuItemLabel::create(label2);
-    CCMenuItemToggle *item = CCMenuItemToggle::createWithCallback( std::bind(&LayerGradient::toggleItem, this, std::placeholders::_1), item1, item2, NULL);
+    CCMenuItemToggle *item = CCMenuItemToggle::createWithCallback( CC_CALLBACK_1(LayerGradient::toggleItem, this), item1, item2, NULL);
 
     CCMenu *menu = CCMenu::create(item, NULL);
     addChild(menu);
@@ -660,7 +660,7 @@ void LayerIgnoreAnchorPointPos::onEnter()
     CCSize lsize = l->getContentSize();
     child->setPosition(ccp(lsize.width/2, lsize.height/2));
 
-    CCMenuItemFont *item = CCMenuItemFont::create("Toggle ignore anchor point", std::bind( &LayerIgnoreAnchorPointPos::onToggle, this, std::placeholders::_1));
+    CCMenuItemFont *item = CCMenuItemFont::create("Toggle ignore anchor point", CC_CALLBACK_1(LayerIgnoreAnchorPointPos::onToggle, this));
 
     CCMenu *menu = CCMenu::create(item, NULL);
     this->addChild(menu);
@@ -708,7 +708,7 @@ void LayerIgnoreAnchorPointRot::onEnter()
     CCSize lsize = l->getContentSize();
     child->setPosition(ccp(lsize.width/2, lsize.height/2));
 
-    CCMenuItemFont *item = CCMenuItemFont::create("Toogle ignore anchor point", std::bind( &LayerIgnoreAnchorPointRot::onToggle, this, std::placeholders::_1));
+    CCMenuItemFont *item = CCMenuItemFont::create("Toogle ignore anchor point", CC_CALLBACK_1(LayerIgnoreAnchorPointRot::onToggle, this));
 
     CCMenu *menu = CCMenu::create(item, NULL);
     this->addChild(menu);
@@ -759,7 +759,7 @@ void LayerIgnoreAnchorPointScale::onEnter()
     CCSize lsize = l->getContentSize();
     child->setPosition(ccp(lsize.width/2, lsize.height/2));
 
-    CCMenuItemFont *item = CCMenuItemFont::create("Toogle ignore anchor point", std::bind( &LayerIgnoreAnchorPointScale::onToggle, this, std::placeholders::_1));
+    CCMenuItemFont *item = CCMenuItemFont::create("Toogle ignore anchor point", CC_CALLBACK_1(LayerIgnoreAnchorPointScale::onToggle, this));
 
     CCMenu *menu = CCMenu::create(item, NULL);
     this->addChild(menu);

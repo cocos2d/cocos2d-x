@@ -122,6 +122,9 @@ ccLanguageType CCApplication::getCurrentLanguage()
     else if ([languageCode isEqualToString:@"nb"]){
         ret = kLanguageNorwegian;
     }
+    else if ([languageCode isEqualToString:@"pl"]){
+        ret = kLanguagePolish;
+    }
     return ret;
 }
 
