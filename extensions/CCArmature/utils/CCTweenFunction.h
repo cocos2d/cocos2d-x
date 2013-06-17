@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "CCArmatureDefine.h"
 #include <math.h>
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
     
 enum CCTweenType{
     TWEEN_EASING_MIN = -1,
@@ -129,6 +129,6 @@ public:
 };
     
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {
 
 #endif /*__CCTWEENFUNCTION_H__*/

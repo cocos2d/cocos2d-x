@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "CCShaderNode.h"
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
 
 enum
 {
@@ -133,4 +133,4 @@ void CCShaderNode::draw()
 }
 
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {

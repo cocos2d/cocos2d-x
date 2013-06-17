@@ -35,7 +35,7 @@ THE SOFTWARE.
 #include "../physics/CCColliderDetector.h"
 #endif
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
 
 class  CCDecorativeDisplay: public CCObject, public sigslot::has_slots<>
 {
@@ -59,6 +59,6 @@ public:
     void anchorPointChanged(float pointX, float pointY);
 };
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {
 
 #endif /*__CCDECORATIVEDISPLAY_H__*/

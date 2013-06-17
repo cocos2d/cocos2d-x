@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "../utils/CCUtilMath.h"
 #include "../display/CCSkin.h"
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
 
 CCDisplayManager *CCDisplayManager::create(CCBone *bone)
 {
@@ -320,4 +320,4 @@ CCPoint CCDisplayManager::getAnchorPointInPoints()
 }
 
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {

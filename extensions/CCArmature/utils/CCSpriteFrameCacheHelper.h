@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 using namespace std;
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
 
 class  CCSpriteFrameCacheHelper
 {
@@ -63,6 +63,6 @@ private:
     static CCSpriteFrameCacheHelper *s_SpriteFrameCacheHelper;
 };
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {
 
 #endif /*__CCSPRITEFRAMECACHEHELPER_H__*/

@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "../datas/CCDatas.h"
 
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
 
 /**
  *	@brief	format and manage armature configuration and armature animation
@@ -148,6 +148,6 @@ private:
 };
 
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {
 
 #endif/*__CCARMATUREDATAMANAGER_H__*/

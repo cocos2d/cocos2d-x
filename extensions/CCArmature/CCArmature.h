@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "display/CCBatchNode.h"
 #include "animation/CCArmatureAnimation.h"
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
     
 class  CCArmature : public CCNodeRGBA, public CCBlendProtocol 
 {
@@ -154,6 +154,6 @@ protected:
 	CCPoint _offsetPoint;
 };
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {
 
 #endif /*__CCARMATURE_H__*/

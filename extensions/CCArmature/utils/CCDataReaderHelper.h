@@ -33,7 +33,7 @@ THE SOFTWARE.
 
 namespace tinyxml2 { class XMLElement; }
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
 
 
 class  CCDataReaderHelper
@@ -126,6 +126,6 @@ public:
     static void decodeNode(CCBaseData *node, cs::CSJsonDictionary &json);
 };
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {
 
 #endif /*__CCDATAREADERHELPER_H__*/

@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "datas/CCDatas.h"
 #include "display/CCSkin.h"
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
 
 std::map<int, CCArmature *> CCArmature::_armatureIndexDic;
 
@@ -575,4 +575,4 @@ CCBone *CCArmature::getBoneAtPoint(float x, float y)
     return NULL;
 }
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {

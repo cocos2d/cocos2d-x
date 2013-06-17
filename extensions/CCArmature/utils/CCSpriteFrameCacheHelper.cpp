@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "CCSpriteFrameCacheHelper.h"
 
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
 
 CCSpriteFrameCacheHelper *CCSpriteFrameCacheHelper::s_SpriteFrameCacheHelper = NULL;
 
@@ -180,4 +180,4 @@ CCSpriteFrameCacheHelper::~CCSpriteFrameCacheHelper()
     CC_SAFE_RELEASE_NULL(_display2TextureAtlas);
 }
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {

@@ -55,7 +55,7 @@ public: \
 	return NULL;\
 }
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
 
 /**
 * the base node include a lot of attribute.
@@ -454,6 +454,6 @@ public:
 };
 
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {
 
 #endif /*__CCARMATURE_DATAS_H__*/
