@@ -41,9 +41,9 @@ NS_CC_BEGIN
 class CC_DLL CCClippingNode : public CCNode
 {
 protected:
-    CCNode* m_pStencil;
-    GLfloat m_fAlphaThreshold;
-    bool    m_bInverted;
+    CCNode* _stencil;
+    GLfloat _alphaThreshold;
+    bool    _inverted;
     
 public:
     /** Creates and initializes a clipping node without a stencil.

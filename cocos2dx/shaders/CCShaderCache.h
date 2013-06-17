@@ -70,7 +70,7 @@ private:
     bool init();
     void loadDefaultShader(CCGLProgram *program, int type);
 
-    CCDictionary* m_pPrograms;
+    CCDictionary* _programs;
 
 };
 

@@ -24,7 +24,7 @@ public:
 
 class Atlas1 : public AtlasDemo
 {
-    CCTextureAtlas*        m_textureAtlas;
+    CCTextureAtlas*        _textureAtlas;
 public:
     Atlas1();
     ~Atlas1();
@@ -35,7 +35,7 @@ public:
 
 class LabelAtlasTest : public AtlasDemo
 {
-    float        m_time;
+    float        _time;
 public:
     LabelAtlasTest();
 
@@ -47,7 +47,7 @@ public:
 
 class LabelAtlasColorTest : public AtlasDemo
 {
-    float        m_time;
+    float        _time;
 public:
     LabelAtlasColorTest();
     virtual void step(float dt);
@@ -67,7 +67,7 @@ public:
 
 class Atlas3 : public AtlasDemo
 {
-    float        m_time;
+    float        _time;
 public:
     Atlas3();
 
@@ -79,7 +79,7 @@ public:
 
 class Atlas4 : public AtlasDemo
 {
-    float        m_time;
+    float        _time;
 public:
     Atlas4();
     virtual void step(float dt);
@@ -190,9 +190,9 @@ private:
     void  updateAlignment();
     const char* getCurrentAlignment();
 private:
-    CCLabelTTF* m_plabel;
-    CCTextAlignment m_eHorizAlign;
-    CCVerticalTextAlignment m_eVertAlign;
+    CCLabelTTF* _plabel;
+    CCTextAlignment _horizAlign;
+    CCVerticalTextAlignment _vertAlign;
 };
 
 class LabelTTFMultiline : public AtlasDemo
@@ -232,11 +232,11 @@ public:
     virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
 
 public:
-    CCLabelBMFont *m_pLabelShouldRetain;
-    CCSprite *m_pArrowsBarShouldRetain;
-    CCSprite *m_pArrowsShouldRetain;
-    CCMenuItemFont *m_pLastSentenceItem, *m_pLastAlignmentItem;
-    bool m_drag;
+    CCLabelBMFont *_labelShouldRetain;
+    CCSprite *_arrowsBarShouldRetain;
+    CCSprite *_arrowsShouldRetain;
+    CCMenuItemFont *_lastSentenceItem, *_lastAlignmentItem;
+    bool _drag;
 };
 
 class LabelTTFA8Test : public AtlasDemo

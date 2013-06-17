@@ -27,11 +27,11 @@ THE SOFTWARE.
 NS_CC_EXT_BEGIN
 
 CCInputDelegate::CCInputDelegate(void)
-: m_bTouchEnabled(false)
-, m_bAccelerometerEnabled(false)
-, m_bKeypadEnabled(false)
-, m_nTouchPriority(0)
-, m_eTouchMode(kCCTouchesAllAtOnce)
+: _touchEnabled(false)
+, _accelerometerEnabled(false)
+, _keypadEnabled(false)
+, _touchPriority(0)
+, _touchMode(kCCTouchesAllAtOnce)
 {
 
 }
@@ -96,23 +96,23 @@ void CCInputDelegate::didAccelerate(CCAcceleration* pAccelerationValue)
 
 bool CCInputDelegate::isTouchEnabled()
 {
-    return m_bTouchEnabled;
+    return _touchEnabled;
 }
 
 void CCInputDelegate::setTouchEnabled(bool enabled)
 {
-    if (m_bTouchEnabled != enabled)
+    if (_touchEnabled != enabled)
     {
-        m_bTouchEnabled = enabled;
+        _touchEnabled = enabled;
         if (enabled)
         {
-            if( m_eTouchMode == kCCTouchesAllAtOnce )
+            if( _touchMode == kCCTouchesAllAtOnce )
             {
                 CCDirector::sharedDirector()->getTouchDispatcher()->addStandardDelegate(this, 0);
             }
             else
             {
-                CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, m_nTouchPriority, true);
+                CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, _touchPriority, true);
             }
         }
         else
@@ -124,11 +124,11 @@ void CCInputDelegate::setTouchEnabled(bool enabled)
 
 void CCInputDelegate::setTouchMode(ccTouchesMode mode)
 {
-    if(m_eTouchMode != mode)
+    if(_touchMode != mode)
     {
-        m_eTouchMode = mode;
+        _touchMode = mode;
         
-		if( m_bTouchEnabled)
+		if( _touchEnabled)
         {
 			setTouchEnabled(false);
 			setTouchEnabled(true);
@@ -138,11 +138,11 @@ void CCInputDelegate::setTouchMode(ccTouchesMode mode)
 
 void CCInputDelegate::setTouchPriority(int priority)
 {
-    if (m_nTouchPriority != priority)
+    if (_touchPriority != priority)
     {
-        m_nTouchPriority = priority;
+        _touchPriority = priority;
         
-		if( m_bTouchEnabled)
+		if( _touchEnabled)
         {
 			setTouchEnabled(false);
 			setTouchEnabled(true);
@@ -152,24 +152,24 @@ void CCInputDelegate::setTouchPriority(int priority)
 
 int CCInputDelegate::getTouchPriority()
 {
-    return m_nTouchPriority;
+    return _touchPriority;
 }
 
 int CCInputDelegate::getTouchMode()
 {
-    return m_eTouchMode;
+    return _touchMode;
 }
 
 bool CCInputDelegate::isAccelerometerEnabled()
 {
-    return m_bAccelerometerEnabled;
+    return _accelerometerEnabled;
 }
 
 void CCInputDelegate::setAccelerometerEnabled(bool enabled)
 {
-    if (enabled != m_bAccelerometerEnabled)
+    if (enabled != _accelerometerEnabled)
     {
-        m_bAccelerometerEnabled = enabled;
+        _accelerometerEnabled = enabled;
 
         CCDirector* pDirector = CCDirector::sharedDirector();
         if (enabled)
@@ -185,14 +185,14 @@ void CCInputDelegate::setAccelerometerEnabled(bool enabled)
 
 bool CCInputDelegate::isKeypadEnabled()
 {
-    return m_bKeypadEnabled;
+    return _keypadEnabled;
 }
 
 void CCInputDelegate::setKeypadEnabled(bool enabled)
 {
-    if (enabled != m_bKeypadEnabled)
+    if (enabled != _keypadEnabled)
     {
-        m_bKeypadEnabled = enabled;
+        _keypadEnabled = enabled;
 
         CCDirector* pDirector = CCDirector::sharedDirector();
         if (enabled)

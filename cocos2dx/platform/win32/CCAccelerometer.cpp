@@ -148,9 +148,9 @@ namespace
 NS_CC_BEGIN
 
 CCAccelerometer::CCAccelerometer() : 
-    m_pAccelDelegate(NULL)
+    _accelDelegate(NULL)
 {
-    memset(&m_obAccelerationValue, 0, sizeof(m_obAccelerationValue));
+    memset(&_accelerationValue, 0, sizeof(_accelerationValue));
 }
 
 CCAccelerometer::~CCAccelerometer() 
@@ -160,7 +160,7 @@ CCAccelerometer::~CCAccelerometer()
 
 void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate) 
 {
-    m_pAccelDelegate = pDelegate;
+    _accelDelegate = pDelegate;
 
     // Enable/disable the accelerometer.
     // Well, there isn't one on Win32 so we don't do anything other than register
@@ -185,15 +185,15 @@ void CCAccelerometer::setAccelerometerInterval(float interval)
 
 void CCAccelerometer::update( double x,double y,double z,double timestamp ) 
 {
-    if (m_pAccelDelegate)
+    if (_accelDelegate)
     {
-        m_obAccelerationValue.x            = x;
-        m_obAccelerationValue.y            = y;
-        m_obAccelerationValue.z            = z;
-        m_obAccelerationValue.timestamp = timestamp;
+        _accelerationValue.x            = x;
+        _accelerationValue.y            = y;
+        _accelerationValue.z            = z;
+        _accelerationValue.timestamp = timestamp;
 
         // Delegate
-        m_pAccelDelegate->didAccelerate(&m_obAccelerationValue);
+        _accelDelegate->didAccelerate(&_accelerationValue);
     }    
 }
 

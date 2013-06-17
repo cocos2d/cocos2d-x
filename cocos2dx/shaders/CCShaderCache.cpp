@@ -64,7 +64,7 @@ void CCShaderCache::purgeSharedShaderCache()
 }
 
 CCShaderCache::CCShaderCache()
-: m_pPrograms(0)
+: _programs(0)
 {
 
 }
@@ -72,12 +72,12 @@ CCShaderCache::CCShaderCache()
 CCShaderCache::~CCShaderCache()
 {
     CCLOGINFO("cocos2d deallocing %p", this);
-    m_pPrograms->release();
+    _programs->release();
 }
 
 bool CCShaderCache::init()
 {
-    m_pPrograms = new CCDictionary();
+    _programs = new CCDictionary();
     loadDefaultShaders();
     return true;
 }
@@ -88,14 +88,14 @@ void CCShaderCache::loadDefaultShaders()
     CCGLProgram *p = new CCGLProgram();
     loadDefaultShader(p, kCCShaderType_PositionTextureColor);
 
-    m_pPrograms->setObject(p, kCCShader_PositionTextureColor);
+    _programs->setObject(p, kCCShader_PositionTextureColor);
     p->release();
 
     // Position Texture Color alpha test
     p = new CCGLProgram();
     loadDefaultShader(p, kCCShaderType_PositionTextureColorAlphaTest);
 
-    m_pPrograms->setObject(p, kCCShader_PositionTextureColorAlphaTest);
+    _programs->setObject(p, kCCShader_PositionTextureColorAlphaTest);
     p->release();
 
     //
@@ -104,7 +104,7 @@ void CCShaderCache::loadDefaultShaders()
     p = new CCGLProgram();
     loadDefaultShader(p, kCCShaderType_PositionColor);
 
-    m_pPrograms->setObject(p, kCCShader_PositionColor);
+    _programs->setObject(p, kCCShader_PositionColor);
     p->release();
 
     //
@@ -113,7 +113,7 @@ void CCShaderCache::loadDefaultShaders()
     p = new CCGLProgram();
     loadDefaultShader(p, kCCShaderType_PositionTexture);
 
-    m_pPrograms->setObject(p, kCCShader_PositionTexture);
+    _programs->setObject(p, kCCShader_PositionTexture);
     p->release();
 
     //
@@ -122,7 +122,7 @@ void CCShaderCache::loadDefaultShaders()
     p = new CCGLProgram();
     loadDefaultShader(p, kCCShaderType_PositionTexture_uColor);
 
-    m_pPrograms->setObject(p ,kCCShader_PositionTexture_uColor);
+    _programs->setObject(p ,kCCShader_PositionTexture_uColor);
     p->release();
 
     //
@@ -131,7 +131,7 @@ void CCShaderCache::loadDefaultShaders()
     p = new CCGLProgram();
     loadDefaultShader(p, kCCShaderType_PositionTextureA8Color);
     
-    m_pPrograms->setObject(p, kCCShader_PositionTextureA8Color);
+    _programs->setObject(p, kCCShader_PositionTextureA8Color);
     p->release();
 
     //
@@ -140,7 +140,7 @@ void CCShaderCache::loadDefaultShaders()
     p = new CCGLProgram();
     loadDefaultShader(p, kCCShaderType_Position_uColor);
     
-    m_pPrograms->setObject(p, kCCShader_Position_uColor);
+    _programs->setObject(p, kCCShader_Position_uColor);
     p->release();
     
     //
@@ -149,7 +149,7 @@ void CCShaderCache::loadDefaultShaders()
     p = new CCGLProgram();
     loadDefaultShader(p, kCCShaderType_PositionLengthTexureColor);
     
-    m_pPrograms->setObject(p, kCCShader_PositionLengthTexureColor);
+    _programs->setObject(p, kCCShader_PositionLengthTexureColor);
     p->release();
 }
 
@@ -285,12 +285,12 @@ void CCShaderCache::loadDefaultShader(CCGLProgram *p, int type)
 
 CCGLProgram* CCShaderCache::programForKey(const char* key)
 {
-    return (CCGLProgram*)m_pPrograms->objectForKey(key);
+    return (CCGLProgram*)_programs->objectForKey(key);
 }
 
 void CCShaderCache::addProgram(CCGLProgram* program, const char* key)
 {
-    m_pPrograms->setObject(program, key);
+    _programs->setObject(program, key);
 }
 
 NS_CC_END

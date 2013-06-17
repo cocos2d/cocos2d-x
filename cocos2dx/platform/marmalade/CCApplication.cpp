@@ -42,7 +42,7 @@ CCApplication::CCApplication()
 {
 	IW_CALLSTACK("CCApplication::CCApplication");
 	
-	m_nAnimationInterval = 0;
+	_animationInterval = 0;
 	CC_ASSERT(! sm_pSharedApplication);
 	sm_pSharedApplication = this;
 }
@@ -100,8 +100,8 @@ int CCApplication::Run()
 
         CCDirector::sharedDirector()->mainLoop();
 
-		while ((s3eTimerGetMs() - updateTime) < m_nAnimationInterval) {
-			int32 yield = (int32) (m_nAnimationInterval - (s3eTimerGetMs() - updateTime));
+		while ((s3eTimerGetMs() - updateTime) < _animationInterval) {
+			int32 yield = (int32) (_animationInterval - (s3eTimerGetMs() - updateTime));
 			if (yield<0)
 				break;
 			s3eDeviceYield(yield);
@@ -114,7 +114,7 @@ int CCApplication::Run()
 void CCApplication::setAnimationInterval(double interval)
 {
 	IW_CALLSTACK("CCXApplication::setAnimationInterval");
-	m_nAnimationInterval = (uint64)(1000 * interval);		// MH: Added cast to uint64
+	_animationInterval = (uint64)(1000 * interval);		// MH: Added cast to uint64
 	
 }
 

@@ -57,9 +57,9 @@ void PerformanceMainLayer::onEnter()
 //
 ////////////////////////////////////////////////////////
 PerformBasicLayer::PerformBasicLayer(bool bControlMenuVisible, int nMaxCases, int nCurCase)
-: m_bControlMenuVisible(bControlMenuVisible)
-, m_nMaxCases(nMaxCases)
-, m_nCurCase(nCurCase)
+: _controlMenuVisible(bControlMenuVisible)
+, _maxCases(nMaxCases)
+, _curCase(nCurCase)
 {
 
 }
@@ -75,7 +75,7 @@ void PerformBasicLayer::onEnter()
     CCMenu* pMenu = CCMenu::create(pMainItem, NULL);
     pMenu->setPosition( CCPointZero );
 
-    if (m_bControlMenuVisible)
+    if (_controlMenuVisible)
     {
         CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, CC_CALLBACK_1(PerformBasicLayer::backCallback, this));
         CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, CC_CALLBACK_1(PerformBasicLayer::restartCallback, this));
@@ -106,17 +106,17 @@ void PerformBasicLayer::restartCallback(CCObject* pSender)
 
 void PerformBasicLayer::nextCallback(CCObject* pSender)
 {
-    m_nCurCase++;
-    m_nCurCase = m_nCurCase % m_nMaxCases;
+    _curCase++;
+    _curCase = _curCase % _maxCases;
 
     showCurrentTest();
 }
 
 void PerformBasicLayer::backCallback(CCObject* pSender)
 {
-    m_nCurCase--;
-    if( m_nCurCase < 0 )
-        m_nCurCase += m_nMaxCases;
+    _curCase--;
+    if( _curCase < 0 )
+        _curCase += _maxCases;
 
     showCurrentTest();
 }

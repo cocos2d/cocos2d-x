@@ -1458,7 +1458,7 @@ void TextureAsync::onEnter()
 {
     TextureDemo::onEnter();
 
-    m_nImageOffset = 0;
+    _imageOffset = 0;
 
     CCSize size =CCDirector::sharedDirector()->getWinSize();
 
@@ -1513,10 +1513,10 @@ void TextureAsync::imageLoaded(CCObject* pObj)
     addChild(sprite, -1);
 
     CCSize size = director->getWinSize();
-    int i = m_nImageOffset * 32;
+    int i = _imageOffset * 32;
     sprite->setPosition(ccp( i % (int)size.width, (i / (int)size.width) * 32 ));
 
-    m_nImageOffset++;
+    _imageOffset++;
 
     CCLog("Image loaded: %p", tex);
 }
@@ -1714,17 +1714,17 @@ void TextureDrawAtPoint::onEnter()
 {
     TextureDemo::onEnter();
 
-    m_pTex1 = CCTextureCache::sharedTextureCache()->addImage("Images/grossinis_sister1.png");
-    m_pTex2 = CCTextureCache::sharedTextureCache()->addImage("Images/grossinis_sister2.png");
+    _tex1 = CCTextureCache::sharedTextureCache()->addImage("Images/grossinis_sister1.png");
+    _tex2 = CCTextureCache::sharedTextureCache()->addImage("Images/grossinis_sister2.png");
 
-    m_pTex1->retain();
-    m_pTex2->retain();
+    _tex1->retain();
+    _tex2->retain();
 }
 
 TextureDrawAtPoint::~TextureDrawAtPoint()
 {
-    m_pTex1->release();
-    m_pTex2->release();
+    _tex1->release();
+    _tex2->release();
 }
 
 std::string TextureDrawAtPoint::title()
@@ -1743,8 +1743,8 @@ void TextureDrawAtPoint::draw()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    m_pTex1->drawAtPoint(ccp(s.width/2-50, s.height/2 - 50));
-    m_pTex2->drawAtPoint(ccp(s.width/2+50, s.height/2 - 50));
+    _tex1->drawAtPoint(ccp(s.width/2-50, s.height/2 - 50));
+    _tex2->drawAtPoint(ccp(s.width/2+50, s.height/2 - 50));
 
 }
 
@@ -1753,17 +1753,17 @@ void TextureDrawAtPoint::draw()
 void TextureDrawInRect::onEnter()
 {
     TextureDemo::onEnter();
-    m_pTex1 = CCTextureCache::sharedTextureCache()->addImage("Images/grossinis_sister1.png");
-    m_pTex2 = CCTextureCache::sharedTextureCache()->addImage("Images/grossinis_sister2.png");
+    _tex1 = CCTextureCache::sharedTextureCache()->addImage("Images/grossinis_sister1.png");
+    _tex2 = CCTextureCache::sharedTextureCache()->addImage("Images/grossinis_sister2.png");
 
-    m_pTex1->retain();
-    m_pTex2->retain();
+    _tex1->retain();
+    _tex2->retain();
 }
 
 TextureDrawInRect::~TextureDrawInRect()
 {
-    m_pTex1->release();
-    m_pTex2->release();
+    _tex1->release();
+    _tex2->release();
 }
 
 void TextureDrawInRect::draw()
@@ -1772,11 +1772,11 @@ void TextureDrawInRect::draw()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCRect rect1 = CCRectMake( s.width/2 - 80, 20, m_pTex1->getContentSize().width * 0.5f, m_pTex1->getContentSize().height *2 );
-    CCRect rect2 = CCRectMake( s.width/2 + 80, s.height/2, m_pTex1->getContentSize().width * 2, m_pTex1->getContentSize().height * 0.5f );
+    CCRect rect1 = CCRectMake( s.width/2 - 80, 20, _tex1->getContentSize().width * 0.5f, _tex1->getContentSize().height *2 );
+    CCRect rect2 = CCRectMake( s.width/2 + 80, s.height/2, _tex1->getContentSize().width * 2, _tex1->getContentSize().height * 0.5f );
 
-    m_pTex1->drawInRect(rect1);
-    m_pTex2->drawInRect(rect2);
+    _tex1->drawInRect(rect1);
+    _tex2->drawInRect(rect2);
 
 }
 
@@ -1810,7 +1810,7 @@ void TextureTestScene::runThisTest()
 void TextureMemoryAlloc::onEnter()
 {
     TextureDemo::onEnter();
-    m_pBackground = NULL;
+    _background = NULL;
     
     CCMenuItemFont::setFontSize(24);
     
@@ -1848,17 +1848,17 @@ void TextureMemoryAlloc::onEnter()
 
 void TextureMemoryAlloc::changeBackgroundVisible(cocos2d::CCObject *sender)
 {
-    if (m_pBackground)
+    if (_background)
     {
-        m_pBackground->setVisible(true);
+        _background->setVisible(true);
     }
 }
 
 void TextureMemoryAlloc::updateImage(cocos2d::CCObject *sender)
 {
-    if (m_pBackground)
+    if (_background)
     {
-        m_pBackground->removeFromParentAndCleanup(true);
+        _background->removeFromParentAndCleanup(true);
     }
     
     CCTextureCache::sharedTextureCache()->removeUnusedTextures();
@@ -1900,13 +1900,13 @@ void TextureMemoryAlloc::updateImage(cocos2d::CCObject *sender)
 #endif
 	}
 
-    m_pBackground = CCSprite::create(file.c_str());
-    addChild(m_pBackground, -10);
+    _background = CCSprite::create(file.c_str());
+    addChild(_background, -10);
 	
-    m_pBackground->setVisible(false);
+    _background->setVisible(false);
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
-    m_pBackground->setPosition(ccp(s.width/2, s.height/2));
+    _background->setPosition(ccp(s.width/2, s.height/2));
 }
 
 string TextureMemoryAlloc::title()

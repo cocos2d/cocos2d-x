@@ -62,7 +62,7 @@ class CC_DLL CCActionInterval : public CCFiniteTimeAction
 {
 public:
     /** how many seconds had elapsed since the actions started to run. */
-    inline float getElapsed(void) { return m_elapsed; }
+    inline float getElapsed(void) { return _elapsed; }
 
     /** initializes the action */
     bool initWithDuration(float d);
@@ -90,8 +90,8 @@ public:
     float getAmplitudeRate(void);
 
 protected:
-    float m_elapsed;
-    bool   m_bFirstTick;
+    float _elapsed;
+    bool   _firstTick;
 };
 
 /** @brief Runs actions sequentially, one after another
@@ -125,9 +125,9 @@ public:
     static CCSequence* createWithTwoActions(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
 
 protected:
-    CCFiniteTimeAction *m_pActions[2];
-    float m_split;
-    int m_last;
+    CCFiniteTimeAction *_actions[2];
+    float _split;
+    int _last;
 };
 
 /** @brief Repeats an action a number of times.
@@ -153,17 +153,17 @@ public:
 
     inline void setInnerAction(CCFiniteTimeAction *pAction)
     {
-        if (m_pInnerAction != pAction)
+        if (_innerAction != pAction)
         {
             CC_SAFE_RETAIN(pAction);
-            CC_SAFE_RELEASE(m_pInnerAction);
-            m_pInnerAction = pAction;
+            CC_SAFE_RELEASE(_innerAction);
+            _innerAction = pAction;
         }
     }
 
     inline CCFiniteTimeAction* getInnerAction()
     {
-        return m_pInnerAction;
+        return _innerAction;
     }
 
 public:
@@ -171,12 +171,12 @@ public:
     /** creates a CCRepeat action. Times is an unsigned integer between 1 and pow(2,30) */
     static CCRepeat* create(CCFiniteTimeAction *pAction, unsigned int times);
 protected:
-    unsigned int m_uTimes;
-    unsigned int m_uTotal;
-    float m_fNextDt;
-    bool m_bActionInstant;
+    unsigned int _times;
+    unsigned int _total;
+    float _nextDt;
+    bool _actionInstant;
     /** Inner action */
-    CCFiniteTimeAction *m_pInnerAction;
+    CCFiniteTimeAction *_innerAction;
 };
 
 /** @brief Repeats an action for ever.
@@ -187,7 +187,7 @@ class CC_DLL CCRepeatForever : public CCActionInterval
 {
 public:
     CCRepeatForever()
-        : m_pInnerAction(NULL)
+        : _innerAction(NULL)
     {}
     virtual ~CCRepeatForever();
 
@@ -203,17 +203,17 @@ public:
 
     inline void setInnerAction(CCActionInterval *pAction)
     {
-        if (m_pInnerAction != pAction)
+        if (_innerAction != pAction)
         {
-            CC_SAFE_RELEASE(m_pInnerAction);
-            m_pInnerAction = pAction;
-            CC_SAFE_RETAIN(m_pInnerAction);
+            CC_SAFE_RELEASE(_innerAction);
+            _innerAction = pAction;
+            CC_SAFE_RETAIN(_innerAction);
         }
     }
 
     inline CCActionInterval* getInnerAction()
     {
-        return m_pInnerAction;
+        return _innerAction;
     }
 
 public:
@@ -222,7 +222,7 @@ public:
     static CCRepeatForever* create(CCActionInterval *pAction);
 protected:
     /** Inner action */
-    CCActionInterval *m_pInnerAction;
+    CCActionInterval *_innerAction;
 };
 
 /** @brief Spawn a new action immediately
@@ -258,8 +258,8 @@ public:
     static CCSpawn* createWithTwoActions(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
 
 protected:
-    CCFiniteTimeAction *m_pOne;
-    CCFiniteTimeAction *m_pTwo;
+    CCFiniteTimeAction *_one;
+    CCFiniteTimeAction *_two;
 };
 
 /** @brief Rotates a CCNode object to a certain angle by modifying it's
@@ -286,13 +286,13 @@ public:
     virtual void update(float time);
     
 protected:
-    float m_fDstAngleX;
-    float m_fStartAngleX;
-    float m_fDiffAngleX;
+    float _dstAngleX;
+    float _startAngleX;
+    float _diffAngleX;
     
-    float m_fDstAngleY;
-    float m_fStartAngleY;
-    float m_fDiffAngleY;
+    float _dstAngleY;
+    float _startAngleY;
+    float _diffAngleY;
 };
 
 /** @brief Rotates a CCNode object clockwise a number of degrees by modifying it's rotation attribute.
@@ -317,10 +317,10 @@ public:
     virtual CCActionInterval* reverse(void);
     
 protected:
-    float m_fAngleX;
-    float m_fStartAngleX;
-    float m_fAngleY;
-    float m_fStartAngleY;
+    float _angleX;
+    float _startAngleX;
+    float _angleY;
+    float _startAngleY;
 };
 
 /**  Moves a CCNode object x,y pixels by modifying it's position attribute.
@@ -347,9 +347,9 @@ public:
     /** creates the action */
     static CCMoveBy* create(float duration, const CCPoint& deltaPosition);
 protected:
-    CCPoint m_positionDelta;
-    CCPoint m_startPosition;
-    CCPoint m_previousPosition;
+    CCPoint _positionDelta;
+    CCPoint _startPosition;
+    CCPoint _previousPosition;
 };
 
 /** Moves a CCNode object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
@@ -373,7 +373,7 @@ public:
     /** creates the action */
     static CCMoveTo* create(float duration, const CCPoint& position);
 protected:
-    CCPoint m_endPosition;
+    CCPoint _endPosition;
 };
 
 /** Skews a CCNode object to given angles by modifying it's skewX and skewY attributes
@@ -396,14 +396,14 @@ public:
     /** creates the action */
     static CCSkewTo* create(float t, float sx, float sy);
 protected:
-    float m_fSkewX;
-    float m_fSkewY;
-    float m_fStartSkewX;
-    float m_fStartSkewY;
-    float m_fEndSkewX;
-    float m_fEndSkewY;
-    float m_fDeltaX;
-    float m_fDeltaY;
+    float _skewX;
+    float _skewY;
+    float _startSkewX;
+    float _startSkewY;
+    float _endSkewX;
+    float _endSkewY;
+    float _deltaX;
+    float _deltaY;
 };
 
 /** Skews a CCNode object by skewX and skewY degrees
@@ -442,11 +442,11 @@ public:
     /** creates the action */
     static CCJumpBy* create(float duration, const CCPoint& position, float height, unsigned int jumps);
 protected:
-    CCPoint         m_startPosition;
-    CCPoint         m_delta;
-    float           m_height;
-    unsigned int    m_nJumps;
-    CCPoint         m_previousPos;
+    CCPoint         _startPosition;
+    CCPoint         _delta;
+    float           _height;
+    unsigned int    _jumps;
+    CCPoint         _previousPos;
 };
 
 /** @brief Moves a CCNode object to a parabolic position simulating a jump movement by modifying it's position attribute.
@@ -495,9 +495,9 @@ public:
     /** creates the action with a duration and a bezier configuration */
     static CCBezierBy* create(float t, const ccBezierConfig& c);
 protected:
-    ccBezierConfig m_sConfig;
-    CCPoint m_startPosition;
-    CCPoint m_previousPosition;
+    ccBezierConfig _config;
+    CCPoint _startPosition;
+    CCPoint _previousPosition;
 };
 
 /** @brief An action that moves the target with a cubic Bezier curve to a destination point.
@@ -518,7 +518,7 @@ public:
     bool initWithDuration(float t, const ccBezierConfig &c);
     
 protected:
-    ccBezierConfig m_sToConfig;
+    ccBezierConfig _toConfig;
 };
 
 /** @brief Scales a CCNode object to a zoom factor by modifying it's scale attribute.
@@ -548,14 +548,14 @@ public:
     /** creates the action with and X factor and a Y factor */
     static CCScaleTo* create(float duration, float sx, float sy);
 protected:
-    float m_fScaleX;
-    float m_fScaleY;
-    float m_fStartScaleX;
-    float m_fStartScaleY;
-    float m_fEndScaleX;
-    float m_fEndScaleY;
-    float m_fDeltaX;
-    float m_fDeltaY;
+    float _scaleX;
+    float _scaleY;
+    float _startScaleX;
+    float _startScaleY;
+    float _endScaleX;
+    float _endScaleY;
+    float _deltaX;
+    float _deltaY;
 };
 
 /** @brief Scales a CCNode object a zoom factor by modifying it's scale attribute.
@@ -601,8 +601,8 @@ public:
     virtual void stop();
     
 protected:
-    unsigned int m_nTimes;
-    bool m_bOriginalState;
+    unsigned int _times;
+    bool _originalState;
 };
 
 /** @brief Fades In an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 0 to 255.
@@ -659,8 +659,8 @@ public:
     /** creates an action with duration and opacity */
     static CCFadeTo* create(float duration, GLubyte opacity);
 protected:
-    GLubyte m_toOpacity;
-    GLubyte m_fromOpacity;
+    GLubyte _toOpacity;
+    GLubyte _fromOpacity;
 };
 
 /** @brief Tints a CCNode that implements the CCNodeRGB protocol from current tint to a custom one.
@@ -683,8 +683,8 @@ public:
     /** creates an action with duration and color */
     static CCTintTo* create(float duration, GLubyte red, GLubyte green, GLubyte blue);
 protected:
-    ccColor3B m_to;
-    ccColor3B m_from;
+    ccColor3B _to;
+    ccColor3B _from;
 };
 
 /** @brief Tints a CCNode that implements the CCNodeRGB protocol from current tint to a custom one.
@@ -707,13 +707,13 @@ public:
     /** creates an action with duration and color */
     static CCTintBy* create(float duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
 protected:
-    GLshort m_deltaR;
-    GLshort m_deltaG;
-    GLshort m_deltaB;
+    GLshort _deltaR;
+    GLshort _deltaG;
+    GLshort _deltaB;
 
-    GLshort m_fromR;
-    GLshort m_fromG;
-    GLshort m_fromB;
+    GLshort _fromR;
+    GLshort _fromG;
+    GLshort _fromB;
 };
 
 /** @brief Delays the action a certain amount of seconds
@@ -761,7 +761,7 @@ public:
     /** creates the action */
     static CCReverseTime* create(CCFiniteTimeAction *pAction);
 protected:
-    CCFiniteTimeAction *m_pOther;
+    CCFiniteTimeAction *_other;
 };
 
 class CCTexture2D;
@@ -786,12 +786,12 @@ public:
 public:
     /** creates the action with an Animation and will restore the original frame when the animation is over */
     static CCAnimate* create(CCAnimation *pAnimation);
-    CC_SYNTHESIZE_RETAIN(CCAnimation*, m_pAnimation, Animation)
+    CC_SYNTHESIZE_RETAIN(CCAnimation*, _animation, Animation)
 protected:
-    std::vector<float>* m_pSplitTimes;
-    int                m_nNextFrame;
-    CCSpriteFrame*  m_pOrigFrame;
-       unsigned int    m_uExecutedLoops;
+    std::vector<float>* _splitTimes;
+    int                _nextFrame;
+    CCSpriteFrame*  _origFrame;
+       unsigned int    _executedLoops;
 };
 
 /** Overrides the target of an action so that it always runs on the target
@@ -817,9 +817,9 @@ public:
     virtual void update(float time);
 
     /** This is the target that the action will be forced to run with */
-    CC_SYNTHESIZE_RETAIN(CCNode*, m_pForcedTarget, ForcedTarget);
+    CC_SYNTHESIZE_RETAIN(CCNode*, _forcedTarget, ForcedTarget);
 private:
-    CCFiniteTimeAction* m_pAction;
+    CCFiniteTimeAction* _action;
 };
 
 // end of actions group

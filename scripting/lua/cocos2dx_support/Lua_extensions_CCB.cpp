@@ -91,8 +91,8 @@ static int tolua_Cocos2d_CCBReader_new00(lua_State* tolua_S)
     {
         {
             CCBReader* tolua_ret = (CCBReader*)  Mtolua_new((CCBReader)());
-            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCBReader");
         }
     }
@@ -121,8 +121,8 @@ static int tolua_Cocos2d_CCBReader_new00_local(lua_State* tolua_S)
     {
         {
             CCBReader* tolua_ret = (CCBReader*)  Mtolua_new((CCBReader)());
-            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCBReader");
             tolua_register_gc(tolua_S,lua_gettop(tolua_S));
         }
@@ -156,8 +156,8 @@ static int tolua_Cocos2d_CCBReader_getOwnerCallbackNames00(lua_State* tolua_S)
 #endif
         {
             CCArray* tolua_ret = (CCArray*)  self->getOwnerCallbackNames();
-            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
         }
     }
@@ -223,8 +223,8 @@ static int tolua_Cocos2d_CCBReader_getOwnerCallbackNodes00(lua_State* tolua_S)
 #endif
         {
             CCArray* tolua_ret = (CCArray*)  self->getOwnerCallbackNodes();
-            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
         }
     }
@@ -289,8 +289,8 @@ static int tolua_Cocos2d_CCBReader_getOwnerOutletNodes00(lua_State* tolua_S)
 #endif
         {
             CCArray* tolua_ret = (CCArray*)  self->getOwnerOutletNodes();
-            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
         }
     }
@@ -355,8 +355,8 @@ static int tolua_Cocos2d_CCBReader_getOwnerOutletNames00(lua_State* tolua_S)
 #endif
         {
             CCArray* tolua_ret = (CCArray*)  self->getOwnerOutletNames();
-            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
         }
     }
@@ -422,8 +422,8 @@ static int tolua_Cocos2d_CCBReader_getAnimationManagersForNodes00(lua_State* tol
 #endif
         {
             CCArray* tolua_ret = (CCArray*)  self->getAnimationManagersForNodes();
-            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
         }
     }
@@ -456,8 +456,8 @@ static int tolua_Cocos2d_CCBReader_getNodesWithAnimationManagers00(lua_State* to
 #endif
         {
             CCArray* tolua_ret = (CCArray*)  self->getNodesWithAnimationManagers();
-            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
         }
     }
@@ -490,8 +490,8 @@ static int tolua_Cocos2d_CCBReader_getAnimationManager00(lua_State* tolua_S)
 #endif
         {
             CCBAnimationManager* tolua_ret = (CCBAnimationManager*)  self->getAnimationManager();
-            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCBAnimationManager");
         }
     }
@@ -547,8 +547,8 @@ static int tolua_Cocos2d_CCBReader_new01(lua_State* tolua_S)
     {
         {
             CCBReader* tolua_ret = (CCBReader*)  Mtolua_new((CCBReader)());
-            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCBReader");
         }
     }
@@ -572,8 +572,8 @@ static int tolua_Cocos2d_CCBReader_new01_local(lua_State* tolua_S)
     {
         {
             CCBReader* tolua_ret = (CCBReader*)  Mtolua_new((CCBReader)());
-            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCBReader");
             tolua_register_gc(tolua_S,lua_gettop(tolua_S));
         }
@@ -604,8 +604,8 @@ static int tolua_Cocos2d_ccbreader_getOwner00(lua_State* tolua_S)
 #endif
         {
             CCObject* tolua_ret = (CCObject*)self->getOwner();
-            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
         }
     }
@@ -634,8 +634,8 @@ static int tolua_Cocos2d_CCBAnimationManager_new00(lua_State* tolua_S)
     {
         {
             CCBAnimationManager* tolua_ret = (CCBAnimationManager*)  Mtolua_new((CCBAnimationManager)());
-            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCBAnimationManager");
         }
     }
@@ -664,8 +664,8 @@ static int tolua_Cocos2d_CCBAnimationManager_new00_local(lua_State* tolua_S)
     {
         {
             CCBAnimationManager* tolua_ret = (CCBAnimationManager*)  Mtolua_new((CCBAnimationManager)());
-            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCBAnimationManager");
             tolua_register_gc(tolua_S,lua_gettop(tolua_S));
         }
@@ -796,8 +796,8 @@ static int tolua_Cocos2d_CCBAnimationManager_getDocumentCallbackNames00(lua_Stat
 #endif
         {
             CCArray* tolua_ret = (CCArray*)  self->getDocumentCallbackNames();
-            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
         }
     }
@@ -867,8 +867,8 @@ static int tolua_Cocos2d_CCBAnimationManager_getDocumentOutletNodes00(lua_State*
 #endif
         {
             CCArray* tolua_ret = (CCArray*)  self->getDocumentOutletNodes();
-            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
         }
     }
@@ -1034,8 +1034,8 @@ static int tolua_Cocos2d_CCBAnimationManager_getSequences00(lua_State* tolua_S)
 #endif
         {
             CCArray* tolua_ret = (CCArray*)  self->getSequences();
-            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
         }
     }
@@ -1168,8 +1168,8 @@ static int tolua_Cocos2d_CCBAnimationManager_getDocumentOutletNames00(lua_State*
 #endif
         {
             CCArray* tolua_ret = (CCArray*)  self->getDocumentOutletNames();
-            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
         }
     }
@@ -1234,8 +1234,8 @@ static int tolua_Cocos2d_CCBAnimationManager_getKeyframeCallbacks00(lua_State* t
 #endif
         {
             CCArray* tolua_ret = (CCArray*)  self->getKeyframeCallbacks();
-            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
         }
     }
@@ -1468,8 +1468,8 @@ static int tolua_Cocos2d_CCBAnimationManager_getRootNode00(lua_State* tolua_S)
 #endif
         {
             CCNode* tolua_ret = (CCNode*)  self->getRootNode();
-            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
         }
     }
@@ -1631,8 +1631,8 @@ static int tolua_Cocos2d_CCBAnimationManager_getDocumentCallbackNodes00(lua_Stat
 #endif
         {
             CCArray* tolua_ret = (CCArray*)  self->getDocumentCallbackNodes();
-            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
         }
     }
@@ -1797,8 +1797,8 @@ static int tolua_Cocos2d_CCBProxy_create00(lua_State* tolua_S)
         {
             CCBProxy *tolua_ret = (CCBProxy*)CCBProxy::create();
             tolua_ret->init();
-            int  nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-            int *pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            int  nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int *pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCBProxy");
         }
     }
@@ -1856,8 +1856,8 @@ static int tolua_Cocos2d_CCBProxy_new00(lua_State* tolua_S)
     {
         {
             CCBProxy* tolua_ret = (CCBProxy*)  Mtolua_new((CCBProxy)());
-            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCBProxy");
         }
     }
@@ -1886,8 +1886,8 @@ static int tolua_Cocos2d_CCBProxy_new00_local(lua_State* tolua_S)
     {
         {
             CCBProxy* tolua_ret = (CCBProxy*)  Mtolua_new((CCBProxy)());
-            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCBProxy");
             tolua_register_gc(tolua_S,lua_gettop(tolua_S));
         }
@@ -1921,8 +1921,8 @@ static int tolua_Cocos2d_CCBProxy_createCCBreader00(lua_State* tolua_S)
 #endif
         {
             CCBReader* tolua_ret = (CCBReader*) self->createCCBreader();
-            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCBReader");
         }
     }
@@ -1961,8 +1961,8 @@ static int tolua_Cocos2d_CCBProxy_readCCBFromFile00(lua_State* tolua_S)
             CCBReader*  pCCBReader   = ((CCBReader*)  tolua_tousertype(tolua_S,3,0));
             bool  bSetOwner = (bool)  tolua_toboolean(tolua_S,4,0);
             CCNode* tolua_ret = (CCNode*) self->readCCBFromFile(pCCBFilePath, pCCBReader,bSetOwner);
-            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
         }
     }

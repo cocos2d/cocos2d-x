@@ -41,7 +41,7 @@ CCBatchNode *CCBatchNode::create()
 }
 
 CCBatchNode::CCBatchNode()
-    : m_pAtlas(NULL)
+    : _atlas(NULL)
 {
 }
 
@@ -65,15 +65,15 @@ void CCBatchNode::addChild(CCNode *child, int zOrder, int tag)
 void CCBatchNode::visit()
 {
     // quick return if not visible. children won't be drawn.
-    if (!m_bVisible)
+    if (!_visible)
     {
         return;
     }
     kmGLPushMatrix();
 
-    if (m_pGrid && m_pGrid->isActive())
+    if (_grid && _grid->isActive())
     {
-        m_pGrid->beforeDraw();
+        _grid->beforeDraw();
     }
 
     transform();
@@ -81,11 +81,11 @@ void CCBatchNode::visit()
     draw();
 
     // reset for next frame
-    m_uOrderOfArrival = 0;
+    _orderOfArrival = 0;
 
-    if (m_pGrid && m_pGrid->isActive())
+    if (_grid && _grid->isActive())
     {
-        m_pGrid->afterDraw(this);
+        _grid->afterDraw(this);
     }
 
     kmGLPopMatrix();
@@ -95,13 +95,13 @@ void CCBatchNode::draw()
 {
     CC_NODE_DRAW_SETUP();
     CCObject *object = NULL;
-    CCARRAY_FOREACH(m_pChildren, object)
+    CCARRAY_FOREACH(_children, object)
     {
         CCArmature *armature = dynamic_cast<CCArmature *>(object);
         if (armature)
         {
             armature->visit();
-            m_pAtlas = armature->getTextureAtlas();
+            _atlas = armature->getTextureAtlas();
         }
         else
         {
@@ -109,10 +109,10 @@ void CCBatchNode::draw()
         }
     }
 
-    if (m_pAtlas)
+    if (_atlas)
     {
-        m_pAtlas->drawQuads();
-        m_pAtlas->removeAllQuads();
+        _atlas->drawQuads();
+        _atlas->removeAllQuads();
     }
 }
 

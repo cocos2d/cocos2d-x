@@ -76,7 +76,7 @@ public:
     void addAnimationData(const char *id, CCAnimationData *animationData);
     
 	/**
-     *	@brief	get animation data from m_pAnimationDatas(CCDictionary)
+     *	@brief	get animation data from _animationDatas(CCDictionary)
      *
      *	@param 	id the id of the animation data you want to get
 	 *  
@@ -118,7 +118,7 @@ public:
     
 	
 	/**
-	 *	@brief	Clear the data in the m_pArmarureDatas and m_pAnimationDatas, and set m_pArmarureDatas and m_pAnimationDatas to NULL
+	 *	@brief	Clear the data in the _armarureDatas and _animationDatas, and set _armarureDatas and _animationDatas to NULL
      */
     void removeAll();
 
@@ -129,21 +129,21 @@ private:
 	 *  @key	std::string
 	 *  @value	CCArmatureData *
      */
-	CC_SYNTHESIZE_READONLY(CCDictionary *, m_pArmarureDatas, ArmarureDatas);
+	CC_SYNTHESIZE_READONLY(CCDictionary *, _armarureDatas, ArmarureDatas);
 
     /**
 	 *	@brief	save animation datas
 	 *  @key	std::string
 	 *  @value	CCAnimationData *
      */
-	CC_SYNTHESIZE_READONLY(CCDictionary *, m_pAnimationDatas, AnimationDatas);
+	CC_SYNTHESIZE_READONLY(CCDictionary *, _animationDatas, AnimationDatas);
 
 	/**
 	 *	@brief	save texture datas
 	 *  @key	std::string
 	 *  @value	CCTextureData *
      */
-	CC_SYNTHESIZE_READONLY(CCDictionary *, m_pTextureDatas, TextureDatas);
+	CC_SYNTHESIZE_READONLY(CCDictionary *, _textureDatas, TextureDatas);
 
 };
 

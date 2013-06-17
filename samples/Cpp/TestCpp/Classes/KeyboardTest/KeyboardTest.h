@@ -16,7 +16,7 @@ public:
     virtual void keyReleased(int keyCode);
 
 private:
-    CCLabelTTF*            m_pLabel;
+    CCLabelTTF*            _label;
 };
 
 class KeyboardTestScene : public TestScene
