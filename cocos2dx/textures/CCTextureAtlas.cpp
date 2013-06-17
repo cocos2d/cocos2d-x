@@ -68,12 +68,12 @@ CCTextureAtlas::~CCTextureAtlas()
     CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
 }
 
-unsigned int CCTextureAtlas::getTotalQuads()
+unsigned int CCTextureAtlas::getTotalQuads() const
 {
     return m_uTotalQuads;
 }
 
-unsigned int CCTextureAtlas::getCapacity()
+unsigned int CCTextureAtlas::getCapacity() const
 {
     return m_uCapacity;
 }

@@ -38,6 +38,7 @@ typedef struct cpDampedRotarySpring {
 	cpFloat w_coef;
 	
 	cpFloat iSum;
+	cpFloat jAcc;
 } cpDampedRotarySpring;
 
 /// Allocate a damped rotary spring.

@@ -71,6 +71,9 @@ public:
     virtual bool isDone(void);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
+	/** returns a new clone of the action */
+    virtual CCActionInterval* clone() const;
+	
     virtual void step(float dt);
     virtual void startWithTarget(CCNode *pTarget);
     /** returns a reversed action */
@@ -102,6 +105,9 @@ public:
     bool initWithTwoActions(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
+	/** returns a new clone of the action */
+    virtual CCSequence* clone() const;
+
     virtual void startWithTarget(CCNode *pTarget);
     virtual void stop(void);
     virtual void update(float t);
@@ -136,6 +142,9 @@ public:
     bool initWithAction(CCFiniteTimeAction *pAction, unsigned int times);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
+	/** returns a new clone of the action */
+    virtual CCRepeat* clone() const;
+
     virtual void startWithTarget(CCNode *pTarget);
     virtual void stop(void);
     virtual void update(float dt);
@@ -185,6 +194,8 @@ public:
     /** initializes the action */
     bool initWithAction(CCActionInterval *pAction);
     virtual CCObject* copyWithZone(CCZone *pZone);
+	/** returns a new clone of the action */
+    virtual CCRepeatForever* clone() const;
     virtual void startWithTarget(CCNode* pTarget);
     virtual void step(float dt);
     virtual bool isDone(void);
@@ -225,6 +236,8 @@ public:
     bool initWithTwoActions(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
+	/** returns a new clone of the action */
+    virtual CCSpawn* clone() const;
     virtual void startWithTarget(CCNode *pTarget);
     virtual void stop(void);
     virtual void update(float time);
@@ -266,6 +279,9 @@ public:
     virtual bool initWithDuration(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
+	/** returns a new clone of the action */
+    virtual CCRotateTo* clone() const;
+
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
     
@@ -293,6 +309,9 @@ public:
     bool initWithDuration(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
+	/** returns a new clone of the action */
+    virtual CCRotateBy* clone() const;
+
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
@@ -317,6 +336,9 @@ public:
     bool initWithDuration(float duration, const CCPoint& deltaPosition);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
+	/** returns a new clone of the action */
+    virtual CCMoveBy* clone() const;
+
     virtual void startWithTarget(CCNode *pTarget);
     virtual CCActionInterval* reverse(void);
     virtual void update(float time);
@@ -342,6 +364,9 @@ public:
     bool initWithDuration(float duration, const CCPoint& position);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
+	/** returns a new clone of the action */
+    virtual CCMoveTo* clone() const;
+
     virtual void startWithTarget(CCNode *pTarget);
 
 public:
@@ -360,6 +385,9 @@ public:
     CCSkewTo();
     virtual bool initWithDuration(float t, float sx, float sy);
     virtual CCObject* copyWithZone(CCZone* pZone);
+	/** returns a new clone of the action */
+    virtual CCSkewTo* clone() const;
+
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
 
@@ -403,6 +431,9 @@ public:
     bool initWithDuration(float duration, const CCPoint& position, float height, unsigned int jumps);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
+	/** returns a new clone of the action */
+    virtual CCJumpBy* clone() const;
+
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
@@ -425,6 +456,8 @@ class CC_DLL CCJumpTo : public CCJumpBy
 public:
     virtual void startWithTarget(CCNode *pTarget);
     virtual CCObject* copyWithZone(CCZone* pZone);
+	/** returns a new clone of the action */
+    virtual CCJumpTo* clone() const;
 
 public:
     /** creates the action */
@@ -451,6 +484,9 @@ public:
     bool initWithDuration(float t, const ccBezierConfig& c);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
+	/** returns a new clone of the action */
+    virtual CCBezierBy* clone() const;
+
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
@@ -472,6 +508,8 @@ class CC_DLL CCBezierTo : public CCBezierBy
 public:
     virtual void startWithTarget(CCNode *pTarget);
     virtual CCObject* copyWithZone(CCZone* pZone);
+	/** returns a new clone of the action */
+    virtual CCBezierTo* clone() const;
 
 public:
 
@@ -496,6 +534,9 @@ public:
     bool initWithDuration(float duration, float sx, float sy);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
+	/** returns a new clone of the action */
+    virtual CCScaleTo* clone() const;
+
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
 
@@ -524,6 +565,8 @@ class CC_DLL CCScaleBy : public CCScaleTo
 public:
     virtual void startWithTarget(CCNode *pTarget);
     virtual CCActionInterval* reverse(void);
+	/** returns a new clone of the action */
+    virtual CCScaleBy* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -543,6 +586,8 @@ public:
     /** initializes the action */
     bool initWithDuration(float duration, unsigned int uBlinks);
 
+	/** returns a new clone of the action */
+    virtual CCBlink* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
@@ -568,6 +613,8 @@ class CC_DLL CCFadeIn : public CCActionInterval
 public:
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
+	/** returns a new clone of the action */
+    virtual CCFadeIn* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -584,6 +631,8 @@ public:
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
     virtual CCObject* copyWithZone(CCZone* pZone);
+	/** returns a new clone of the action */
+    virtual CCFadeOut* clone() const;
 
 public:
 
@@ -600,6 +649,8 @@ public:
     /** initializes the action with duration and opacity */
     bool initWithDuration(float duration, GLubyte opacity);
 
+	/** returns a new clone of the action */
+    virtual CCFadeTo* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
@@ -622,6 +673,8 @@ public:
     /** initializes the action with duration and color */
     bool initWithDuration(float duration, GLubyte red, GLubyte green, GLubyte blue);
 
+	/** returns a new clone of the action */
+    virtual CCTintTo* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
@@ -643,6 +696,8 @@ public:
     /** initializes the action with duration and color */
     bool initWithDuration(float duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
 
+	/** returns a new clone of the action */
+    virtual CCTintBy* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
@@ -668,6 +723,8 @@ class CC_DLL CCDelayTime : public CCActionInterval
 public:
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
+	/** returns a new clone of the action */
+    virtual CCDelayTime* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -692,6 +749,8 @@ public:
     /** initializes the action */
     bool initWithAction(CCFiniteTimeAction *pAction);
 
+	/** returns a new clone of the action */
+    virtual CCReverseTime* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void stop(void);
@@ -716,7 +775,8 @@ public:
     /** initializes the action with an Animation and will restore the original frame when the animation is over */
     bool initWithAnimation(CCAnimation *pAnimation);
 
-
+	/** returns a new clone of the action */
+    virtual CCAnimate* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void stop(void);
@@ -749,6 +809,8 @@ public:
     /** Init an action with the specified action and forced target */
     bool initWithTarget(CCNode* pTarget, CCFiniteTimeAction* pAction);
 
+	/** returns a new clone of the action */
+    virtual CCTargetedAction* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void stop(void);

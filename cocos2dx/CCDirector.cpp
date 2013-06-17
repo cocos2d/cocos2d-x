@@ -64,7 +64,9 @@ THE SOFTWARE.
 #include "platform/CCImage.h"
 #include "CCEGLView.h"
 #include "CCConfiguration.h"
-
+#ifdef KEYBOARD_SUPPORT
+#include "keyboard_dispatcher/CCKeyboardDispatcher.h"
+#endif
 
 
 /**
@@ -106,19 +108,17 @@ CCDirector::CCDirector(void)
 }
 
 bool CCDirector::init(void)
-{    
+{
+	setDefaultValues();
+
     // scenes
     m_pRunningScene = NULL;
     m_pNextScene = NULL;
 
     m_pNotificationNode = NULL;
 
-    m_dOldAnimationInterval = m_dAnimationInterval = 1.0 / kDefaultFPS;    
     m_pobScenesStack = new CCArray();
     m_pobScenesStack->init();
-
-    // Set default projection (3D)
-    m_eProjection = kCCDirectorProjectionDefault;
 
     // projection delegate if "Custom" projection is used
     m_pProjectionDelegate = NULL;
@@ -129,7 +129,6 @@ bool CCDirector::init(void)
     m_pFPSLabel = NULL;
     m_pSPFLabel = NULL;
     m_pDrawsLabel = NULL;
-    m_bDisplayStats = false;
     m_uTotalFrames = m_uFrames = 0;
     m_pszFPS = new char[10];
     m_pLastUpdate = new struct cc_timeval();
@@ -154,6 +153,11 @@ bool CCDirector::init(void)
     // touchDispatcher
     m_pTouchDispatcher = new CCTouchDispatcher();
     m_pTouchDispatcher->init();
+
+#ifdef KEYBOARD_SUPPORT
+    // KeyboardDispatcher
+    m_pKeyboardDispatcher = new CCKeyboardDispatcher();
+#endif
 
     // KeypadDispatcher
     m_pKeypadDispatcher = new CCKeypadDispatcher();
@@ -181,6 +185,9 @@ CCDirector::~CCDirector(void)
     CC_SAFE_RELEASE(m_pScheduler);
     CC_SAFE_RELEASE(m_pActionManager);
     CC_SAFE_RELEASE(m_pTouchDispatcher);
+#ifdef KEYBOARD_SUPPORT
+    CC_SAFE_RELEASE(m_pKeyboardDispatcher);
+#endif
     CC_SAFE_RELEASE(m_pKeypadDispatcher);
     CC_SAFE_DELETE(m_pAccelerometer);
 
@@ -194,6 +201,42 @@ CCDirector::~CCDirector(void)
     delete []m_pszFPS;
 
     s_SharedDirector = NULL;
+}
+
+void CCDirector::setDefaultValues(void)
+{
+	CCConfiguration *conf = CCConfiguration::sharedConfiguration();
+
+	// default FPS
+	double fps = conf->getNumber("cocos2d.x.fps", kDefaultFPS);
+	m_dOldAnimationInterval = m_dAnimationInterval = 1.0 / fps;
+
+	// Display FPS
+	m_bDisplayStats = conf->getBool("cocos2d.x.display_fps", false);
+
+	// GL projection
+	const char *projection = conf->getCString("cocos2d.x.gl.projection", "3d");
+	if( strcmp(projection, "3d") == 0 )
+		m_eProjection = kCCDirectorProjection3D;
+	else if (strcmp(projection, "2d") == 0)
+		m_eProjection = kCCDirectorProjection2D;
+	else if (strcmp(projection, "custom") == 0)
+		m_eProjection = kCCDirectorProjectionCustom;
+	else
+		CCAssert(false, "Invalid projection value");
+
+	// Default pixel format for PNG images with alpha
+	const char *pixel_format = conf->getCString("cocos2d.x.texture.pixel_format_for_png", "rgba8888");
+	if( strcmp(pixel_format, "rgba8888") == 0 )
+		CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
+	else if( strcmp(pixel_format, "rgba4444") == 0 )
+		CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
+	else if( strcmp(pixel_format, "rgba5551") == 0 )
+		CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB5A1);
+
+	// PVR v2 has alpha premultiplied ?
+	bool pvr_alpha_premultipled = conf->getBool("cocos2d.x.texture.pvrv2_has_alpha_premultiplied", false);
+	CCTexture2D::PVRImagesHavePremultipliedAlpha(pvr_alpha_premultipled);
 }
 
 void CCDirector::setGLDefaultValues(void)
@@ -300,7 +343,7 @@ void CCDirector::calculateDeltaTime(void)
 
     *m_pLastUpdate = now;
 }
-float CCDirector::getDeltaTime()
+float CCDirector::getDeltaTime() const
 {
 	return m_fDeltaTime;
 }
@@ -960,6 +1003,20 @@ CCTouchDispatcher* CCDirector::getTouchDispatcher()
 {
     return m_pTouchDispatcher;
 }
+
+#ifdef KEYBOARD_SUPPORT
+void CCDirector::setKeyboardDispatcher(CCKeyboardDispatcher* pKeyboardDispatcher)
+{
+    CC_SAFE_RETAIN(pKeyboardDispatcher);
+    CC_SAFE_RELEASE(m_pKeyboardDispatcher);
+    m_pKeyboardDispatcher = pKeyboardDispatcher;
+}
+
+CCKeyboardDispatcher* CCDirector::getKeyboardDispatcher()
+{
+    return m_pKeyboardDispatcher;
+}
+#endif
 
 void CCDirector::setKeypadDispatcher(CCKeypadDispatcher* pKeypadDispatcher)
 {

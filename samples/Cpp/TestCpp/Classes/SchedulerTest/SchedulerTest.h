@@ -4,10 +4,11 @@
 #include "cocos2d.h"
 #include "cocos-ext.h"
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
 USING_NS_CC_EXT;
 
-class SchedulerTestLayer : public CCLayer
+class SchedulerTestLayer : public BaseTest
 {
 public:
     virtual void onEnter();

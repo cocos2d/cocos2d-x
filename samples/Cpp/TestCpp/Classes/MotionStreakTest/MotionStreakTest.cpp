@@ -232,7 +232,7 @@ void MotionStreakTest::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCMenuItemToggle *itemMode = CCMenuItemToggle::createWithCallback( std::bind(&MotionStreakTest::modeCallback, this, std::placeholders::_1),
+    CCMenuItemToggle *itemMode = CCMenuItemToggle::createWithCallback( CC_CALLBACK_1(MotionStreakTest::modeCallback, this),
         CCMenuItemFont::create("Use High Quality Mode"),
         CCMenuItemFont::create("Use Fast Mode"),
         NULL);

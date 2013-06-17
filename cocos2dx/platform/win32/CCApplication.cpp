@@ -151,8 +151,11 @@ ccLanguageType CCApplication::getCurrentLanguage()
         case LANG_ARABIC:
             ret = kLanguageArabic;
             break;
-	case LANG_NORWEGIAN:
+	    case LANG_NORWEGIAN:
             ret = kLanguageNorwegian;
+            break;
+ 	    case LANG_POLISH:
+            ret = kLanguagePolish;
             break;
     }
 

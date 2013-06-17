@@ -744,9 +744,10 @@ void ActionSequence2::onEnter()
 		CCPlace::create(ccp(200,200)),
 		CCShow::create(),
 		CCMoveBy::create(1, ccp(100,0)),
-		CCCallFunc::create(std::bind(&ActionSequence2::callback1,this)),
-		CCCallFunc::create(std::bind(&ActionSequence2::callback2,this,m_grossini)),
-		CCCallFunc::create(std::bind(&ActionSequence2::callback3,this,m_grossini,(void*)0xbebabeba)),
+		// CC_CALLBACK_0 == std::bind( &function, instance, ...)
+		CCCallFunc::create( CC_CALLBACK_0(ActionSequence2::callback1,this)),
+		CCCallFunc::create( CC_CALLBACK_0(ActionSequence2::callback2,this,m_grossini)),
+		CCCallFunc::create( CC_CALLBACK_0(ActionSequence2::callback3,this,m_grossini,(void*)0xbebabeba)),
 		NULL);
 
     m_grossini->runAction(action);
@@ -1404,11 +1405,11 @@ void ActionMoveStacked::runActionsInSprite(CCSprite *sprite)
     sprite->runAction(
         CCRepeatForever::create(
                 CCSequence::create(
-                CCMoveBy::create(0.05, ccp(10,10)),
-                CCMoveBy::create(0.05, ccp(-10,-10)),
+                CCMoveBy::create(0.05f, ccp(10,10)),
+                CCMoveBy::create(0.05f, ccp(-10,-10)),
        NULL)));
     
-    CCMoveBy* action = CCMoveBy::create(2, ccp(400,0));
+    CCMoveBy* action = CCMoveBy::create(2.0f, ccp(400,0));
     CCMoveBy* action_back = (CCMoveBy*)action->reverse();
     
     sprite->runAction(
@@ -1430,11 +1431,11 @@ void ActionMoveJumpStacked::runActionsInSprite(CCSprite *sprite)
     sprite->runAction(
           CCRepeatForever::create(
             CCSequence::create(
-             CCMoveBy::create(0.05, ccp(10,2)),
-             CCMoveBy::create(0.05, ccp(-10,-2)),
+             CCMoveBy::create(0.05f, ccp(10,2)),
+             CCMoveBy::create(0.05f, ccp(-10,-2)),
              NULL)));
     
-    CCJumpBy* jump = CCJumpBy::create(2, ccp(400,0), 100, 5);
+    CCJumpBy* jump = CCJumpBy::create(2.0f, ccp(400,0), 100, 5);
     CCJumpBy* jump_back = (CCJumpBy*)jump->reverse();
     
     sprite->runAction(
@@ -1469,8 +1470,8 @@ void ActionMoveBezierStacked::runActionsInSprite(CCSprite *sprite)
     sprite->runAction(
      CCRepeatForever::create(
       CCSequence::create(
-       CCMoveBy::create(0.05, ccp(10,0)),
-       CCMoveBy::create(0.05, ccp(-10,0)),
+       CCMoveBy::create(0.05f, ccp(10,0)),
+       CCMoveBy::create(0.05f, ccp(-10,0)),
        NULL)));
 }
 
@@ -1520,8 +1521,8 @@ void ActionCatmullRomStacked::onEnter()
     m_tamara->runAction(
      CCRepeatForever::create(
       CCSequence::create(
-       CCMoveBy::create(0.05, ccp(10,0)),
-       CCMoveBy::create(0.05, ccp(-10,0)),
+       CCMoveBy::create(0.05f, ccp(10,0)),
+       CCMoveBy::create(0.05f, ccp(-10,0)),
        NULL)));
     
     
@@ -1552,8 +1553,8 @@ void ActionCatmullRomStacked::onEnter()
     m_kathia->runAction(
      CCRepeatForever::create(
       CCSequence::create(
-       CCMoveBy::create(0.05, ccp(10,0)),
-       CCMoveBy::create(0.05, ccp(-10,0)),
+       CCMoveBy::create(0.05f, ccp(10,0)),
+       CCMoveBy::create(0.05f, ccp(-10,0)),
        NULL)));
     
     
@@ -1630,8 +1631,8 @@ void ActionCardinalSplineStacked::onEnter()
     m_tamara->runAction(
      CCRepeatForever::create(
       CCSequence::create(
-       CCMoveBy::create(0.05, ccp(10,0)),
-       CCMoveBy::create(0.05, ccp(-10,0)),
+       CCMoveBy::create(0.05f, ccp(10,0)),
+       CCMoveBy::create(0.05f, ccp(-10,0)),
        NULL)));
     
     
@@ -1653,8 +1654,8 @@ void ActionCardinalSplineStacked::onEnter()
     m_kathia->runAction(
      CCRepeatForever::create(
       CCSequence::create(
-       CCMoveBy::create(0.05, ccp(10,0)),
-       CCMoveBy::create(0.05, ccp(-10,0)),
+       CCMoveBy::create(0.05f, ccp(10,0)),
+       CCMoveBy::create(0.05f, ccp(-10,0)),
        NULL)));
     
     

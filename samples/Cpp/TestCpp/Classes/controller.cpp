@@ -47,6 +47,9 @@ struct {
 	{ "FileUtilsTest", []() { return new FileUtilsTestScene(); } },
 	{ "FontTest", []() { return new FontTestScene(); } },
 	{ "IntervalTest", [](){return new IntervalTestScene(); } },
+#ifdef KEYBOARD_SUPPORT
+	{ "KeyboardTest", []() { return new KeyboardTestScene(); } },
+#endif
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
 	{ "KeypadTest", []() { return new KeypadTestScene(); } },
 #endif
@@ -89,7 +92,7 @@ TestController::TestController()
 : m_tBeginPos(CCPointZero)
 {
     // add close menu
-    CCMenuItemImage *pCloseItem = CCMenuItemImage::create(s_pPathClose, s_pPathClose, std::bind( &TestController::closeCallback, this, std::placeholders::_1) );
+    CCMenuItemImage *pCloseItem = CCMenuItemImage::create(s_pPathClose, s_pPathClose, CC_CALLBACK_1(TestController::closeCallback, this) );
     CCMenu* pMenu =CCMenu::create(pCloseItem, NULL);
 
     pMenu->setPosition( CCPointZero );
@@ -104,7 +107,7 @@ TestController::TestController()
 // #else
         CCLabelTTF* label = CCLabelTTF::create( g_aTestNames[i].test_name, "Arial", 24);
 // #endif        
-        CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, std::bind(&TestController::menuCallback, this, std::placeholders::_1));
+        CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, CC_CALLBACK_1(TestController::menuCallback, this));
 
         m_pItemMenu->addChild(pMenuItem, i + 10000);
         pMenuItem->setPosition( ccp( VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE) ));

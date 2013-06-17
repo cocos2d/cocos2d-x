@@ -554,17 +554,13 @@ void CCSprite::draw(void)
     if (m_pobTexture != NULL)
     {
         ccGLBindTexture2D( m_pobTexture->getName() );
+        ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
     }
     else
     {
         ccGLBindTexture2D(0);
+        ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_Color );
     }
-    
-    //
-    // Attributes
-    //
-
-    ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
 
 #define kQuadSize sizeof(m_sQuad.bl)
 #ifdef EMSCRIPTEN
@@ -578,10 +574,13 @@ void CCSprite::draw(void)
     int diff = offsetof( ccV3F_C4B_T2F, vertices);
     glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
 
-    // texCoods
-    diff = offsetof( ccV3F_C4B_T2F, texCoords);
-    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-
+    if (m_pobTexture != NULL)
+    {
+        // texCoods
+        diff = offsetof( ccV3F_C4B_T2F, texCoords);
+        glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+    }
+    
     // color
     diff = offsetof( ccV3F_C4B_T2F, colors);
     glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));

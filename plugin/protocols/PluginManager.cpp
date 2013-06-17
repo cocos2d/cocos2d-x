@@ -80,7 +80,7 @@ PluginProtocol* PluginManager::loadPlugin(const char* name)
         } else
         {
         	pRet = PluginFactory::getInstance()->createPlugin(name);
-        	m_pluginsMap["name"] = pRet;
+        	m_pluginsMap[name] = pRet;
         }
     } while (false);
 

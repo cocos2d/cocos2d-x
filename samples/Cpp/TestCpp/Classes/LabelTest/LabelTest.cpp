@@ -940,18 +940,18 @@ LabelTTFTest::LabelTTFTest()
 
     CCMenuItemFont::setFontSize(30);
     CCMenu *menu = CCMenu::create(
-		CCMenuItemFont::create("Left", std::bind( &LabelTTFTest::setAlignmentLeft, this, std::placeholders::_1)),
-		CCMenuItemFont::create("Center", std::bind( &LabelTTFTest::setAlignmentCenter, this, std::placeholders::_1)),
-		CCMenuItemFont::create("Right", std::bind( &LabelTTFTest::setAlignmentRight, this, std::placeholders::_1)),
+		CCMenuItemFont::create("Left", CC_CALLBACK_1(LabelTTFTest::setAlignmentLeft, this)),
+		CCMenuItemFont::create("Center", CC_CALLBACK_1(LabelTTFTest::setAlignmentCenter, this)),
+		CCMenuItemFont::create("Right", CC_CALLBACK_1(LabelTTFTest::setAlignmentRight, this)),
         NULL);
     menu->alignItemsVerticallyWithPadding(4);
     menu->setPosition(ccp(50, s.height / 2 - 20));
     this->addChild(menu);
 
     menu = CCMenu::create(
-		CCMenuItemFont::create("Top", std::bind( &LabelTTFTest::setAlignmentTop, this, std::placeholders::_1)),
-		CCMenuItemFont::create("Middle", std::bind( &LabelTTFTest::setAlignmentMiddle, this, std::placeholders::_1)),
-		CCMenuItemFont::create("Bottom", std::bind( &LabelTTFTest::setAlignmentBottom, this, std::placeholders::_1)),
+		CCMenuItemFont::create("Top", CC_CALLBACK_1(LabelTTFTest::setAlignmentTop, this)),
+		CCMenuItemFont::create("Middle", CC_CALLBACK_1(LabelTTFTest::setAlignmentMiddle, this)),
+		CCMenuItemFont::create("Bottom", CC_CALLBACK_1(LabelTTFTest::setAlignmentBottom, this)),
 		NULL);
     menu->alignItemsVerticallyWithPadding(4);
     menu->setPosition(ccp(s.width - 50, s.height / 2 - 20));
@@ -1155,9 +1155,9 @@ BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
     this->m_pArrowsShouldRetain->retain();
 
     CCMenuItemFont::setFontSize(20);
-    CCMenuItemFont *longSentences = CCMenuItemFont::create("Long Flowing Sentences", std::bind( &BitmapFontMultiLineAlignment::stringChanged, this, std::placeholders::_1));
-    CCMenuItemFont *lineBreaks = CCMenuItemFont::create("Short Sentences With Intentional Line Breaks", std::bind( &BitmapFontMultiLineAlignment::stringChanged, this, std::placeholders::_1));
-    CCMenuItemFont *mixed = CCMenuItemFont::create("Long Sentences Mixed With Intentional Line Breaks", std::bind( &BitmapFontMultiLineAlignment::stringChanged, this, std::placeholders::_1));
+    CCMenuItemFont *longSentences = CCMenuItemFont::create("Long Flowing Sentences", CC_CALLBACK_1(BitmapFontMultiLineAlignment::stringChanged, this));
+    CCMenuItemFont *lineBreaks = CCMenuItemFont::create("Short Sentences With Intentional Line Breaks", CC_CALLBACK_1(BitmapFontMultiLineAlignment::stringChanged, this));
+    CCMenuItemFont *mixed = CCMenuItemFont::create("Long Sentences Mixed With Intentional Line Breaks", CC_CALLBACK_1(BitmapFontMultiLineAlignment::stringChanged, this));
     CCMenu *stringMenu = CCMenu::create(longSentences, lineBreaks, mixed, NULL);
     stringMenu->alignItemsVertically();
 
@@ -1169,9 +1169,9 @@ BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
 
     CCMenuItemFont::setFontSize(30);
 
-    CCMenuItemFont *left = CCMenuItemFont::create("Left", std::bind( &BitmapFontMultiLineAlignment::alignmentChanged, this, std::placeholders::_1));
-    CCMenuItemFont *center = CCMenuItemFont::create("Center", std::bind( &BitmapFontMultiLineAlignment::alignmentChanged, this, std::placeholders::_1));
-    CCMenuItemFont *right = CCMenuItemFont::create("Right", std::bind( &BitmapFontMultiLineAlignment::alignmentChanged, this, std::placeholders::_1));
+    CCMenuItemFont *left = CCMenuItemFont::create("Left", CC_CALLBACK_1(BitmapFontMultiLineAlignment::alignmentChanged, this));
+    CCMenuItemFont *center = CCMenuItemFont::create("Center", CC_CALLBACK_1(BitmapFontMultiLineAlignment::alignmentChanged, this));
+    CCMenuItemFont *right = CCMenuItemFont::create("Right", CC_CALLBACK_1(BitmapFontMultiLineAlignment::alignmentChanged, this));
     CCMenu *alignmentMenu = CCMenu::create(left, center, right, NULL);
     alignmentMenu->alignItemsHorizontallyWithPadding(alignmentItemPadding);
 
@@ -1470,7 +1470,7 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     addChild(layer, -10);
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
- 
+    
     ccColor3B tintColorRed      =  { 255, 0, 0   };
     ccColor3B tintColorYellow   =  { 255, 255, 0 };
     ccColor3B tintColorBlue     =  { 0, 0, 255   };
@@ -1478,9 +1478,6 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     ccColor3B strokeShadowColor =  { 255, 0, 0   };
     
     CCSize shadowOffset(12.0, 12.0);
-    
-    // create the label shadow only
-    CCLabelTTF* fontShadow = new CCLabelTTF();
     
     ccFontDefinition shadowTextDef;
     shadowTextDef.m_fontSize = 20;
@@ -1492,17 +1489,16 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     shadowTextDef.m_shadow.m_shadowBlur    = 1.0;
     shadowTextDef.m_fontFillColor   = tintColorRed;
     
-    fontShadow->initWithStringAndTextDefinition("Shadow Only Red Text", shadowTextDef);
+    // shadow only label
+    CCLabelTTF* fontShadow = CCLabelTTF::createWithFontDefinition("Shadow Only Red Text", shadowTextDef);
     
     // add label to the scene
     this->addChild(fontShadow);
     fontShadow->setPosition(ccp(s.width/2,s.height/4*2.5));
     
-
     
-    // create the label stroke only
-    CCLabelTTF* fontStroke = new CCLabelTTF();
-        
+    
+    // create the stroke only label
     ccFontDefinition strokeTextDef;
     strokeTextDef.m_fontSize = 20;
     strokeTextDef.m_fontName = std::string("Marker Felt");
@@ -1513,7 +1509,8 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     
     strokeTextDef.m_fontFillColor   = tintColorYellow;
     
-    fontStroke->initWithStringAndTextDefinition("Stroke Only Yellow Text", strokeTextDef);
+    // stroke only label
+    CCLabelTTF* fontStroke = CCLabelTTF::createWithFontDefinition("Stroke Only Yellow Text", strokeTextDef);
     
     // add label to the scene
     this->addChild(fontStroke);
@@ -1522,8 +1519,6 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     
     
     // create the label stroke and shadow
-    CCLabelTTF* fontStrokeAndShadow = new CCLabelTTF();
-
     ccFontDefinition strokeShaodwTextDef;
     strokeShaodwTextDef.m_fontSize = 20;
     strokeShaodwTextDef.m_fontName = std::string("Marker Felt");
@@ -1539,12 +1534,15 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     
     
     strokeShaodwTextDef.m_fontFillColor   = tintColorBlue;
-
-    fontStrokeAndShadow->initWithStringAndTextDefinition("Stroke & Shadow Blue Text", strokeShaodwTextDef);
+    
+    // shadow + stroke label
+    CCLabelTTF* fontStrokeAndShadow = CCLabelTTF::createWithFontDefinition("Stroke & Shadow Blue Text", strokeShaodwTextDef);
     
     // add label to the scene
     this->addChild(fontStrokeAndShadow);
     fontStrokeAndShadow->setPosition(ccp(s.width/2,s.height/4*1.1));
+    
+
     
 }
 
