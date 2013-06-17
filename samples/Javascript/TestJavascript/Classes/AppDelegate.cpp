@@ -12,22 +12,27 @@
 #include "jsb_opengl_registration.h"
 #include "XMLHTTPRequest.h"
 #include "jsb_websocket.h"
+#include "DeviceSpecificBindings.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace CocosDenshion;
 
+
 AppDelegate::AppDelegate()
 {
 }
+
 
 AppDelegate::~AppDelegate()
 {
     CCScriptEngineManager::purgeSharedManager();
 }
 
+
 bool AppDelegate::applicationDidFinishLaunching()
 {
+    
     // initialize director
     CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
@@ -48,7 +53,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(jsb_register_system);
     sc->addRegisterCallback(MinXmlHttpRequest::_js_register);
     sc->addRegisterCallback(register_jsb_websocket);
-
+    sc->addRegisterCallback(registerDeviceSpeceficTests);
     sc->start();
 
     CCScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
@@ -61,6 +66,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif // JSB_ENABLE_DEBUGGER
     ScriptingCore::getInstance()->runScript("tests-boot-jsb.js");
 #endif
+
     return true;
 }
 

@@ -717,10 +717,14 @@ void CCDirector::purgeDirector()
     
     CHECK_GL_ERROR_DEBUG();
     
+    CCScriptEngineManager::sharedManager()->purgeSharedManager();
+    CCApplication::sharedApplication()->purgeApplication();
+    
     // OpenGL view
     m_pobOpenGLView->end();
     m_pobOpenGLView = NULL;
 
+    
     // delete CCDirector
     release();
 }

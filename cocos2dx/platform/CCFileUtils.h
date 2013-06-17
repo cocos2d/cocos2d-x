@@ -246,6 +246,8 @@ public:
      */
     virtual void setSearchPaths(const std::vector<std::string>& searchPaths);
     
+    virtual const char * addCustomFont(const char *font);
+    
     /**
       * Add search path.
       *

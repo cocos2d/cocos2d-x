@@ -52,6 +52,8 @@ public:
     virtual bool writeToFile(CCDictionary *dict, const std::string& fullPath);
     
     virtual CCArray* createCCArrayWithContentsOfFile(const std::string& filename);
+    virtual const char* addCustomFont(const char *font);
+    
 };
 
 // end of platform group

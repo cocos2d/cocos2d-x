@@ -442,7 +442,7 @@ static tinyxml2::XMLElement* generateElementForArray(cocos2d::CCArray *array, ti
     }
     return rootNode;
 }
-
+const char* CCFileUtils::addCustomFont(const char *font) {return font;}
 
 #else
 NS_CC_BEGIN
@@ -451,6 +451,8 @@ NS_CC_BEGIN
 CCDictionary* CCFileUtils::createCCDictionaryWithContentsOfFile(const std::string& filename) {return NULL;}
 bool CCFileUtils::writeToFile(cocos2d::CCDictionary *dict, const std::string &fullPath) {return NULL;}
 CCArray* CCFileUtils::createCCArrayWithContentsOfFile(const std::string& filename) {return NULL;}
+const char* CCFileUtils::addCustomFont(const char *font) {return font;}
+
 
 #endif /* (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) */
 
