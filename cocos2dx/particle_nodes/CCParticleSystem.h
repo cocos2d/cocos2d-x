@@ -49,11 +49,7 @@ enum {
     kCCParticleStartSizeEqualToEndSize = -1,
 
     /** The starting radius of the particle is equal to the ending radius */
-    kCCParticleStartRadiusEqualToEndRadius = -1,
-
-    // backward compatible
-    kParticleStartSizeEqualToEndSize = kCCParticleStartSizeEqualToEndSize,
-    kParticleDurationInfinity = kCCParticleDurationInfinity,
+    kCCParticleStartRadiusEqualToEndRadius = -1
 };
 
 //* @enum
@@ -82,11 +78,6 @@ typedef enum {
     kCCPositionTypeGrouped,
 }tCCPositionType;
 
-// backward compatible
-enum {
-    kPositionTypeFree = kCCPositionTypeFree,
-    kPositionTypeGrouped = kCCPositionTypeGrouped,
-}; 
 
 /**
 Structure that contains the values of each particle
