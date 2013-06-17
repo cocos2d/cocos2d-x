@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "../utils/CCTweenFunction.h"
 
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
 
 CCTween *CCTween::create(CCBone *bone)
 {
@@ -435,4 +435,4 @@ float CCTween::updateFrameData(float currentPrecent, bool activeFrame)
     return currentPrecent;
 }
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {

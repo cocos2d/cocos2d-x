@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "../utils/CCArmatureDataManager.h"
 #include "../utils/CCTransformHelp.h"
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
 
 void CCDisplayFactory::addDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData)
 {
@@ -250,4 +250,4 @@ void CCDisplayFactory::createShaderDisplay(CCBone *bone, CCDecorativeDisplay *de
     decoDisplay->setDisplay(sn);
 }
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {

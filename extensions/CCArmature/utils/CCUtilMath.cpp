@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "CCUtilMath.h"
 
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
 
 bool isSpriteContainPoint(CCSprite *_sprite, CCPoint _point, CCPoint &_outPoint)
 {
@@ -75,4 +75,4 @@ CCPoint circleTo(float t, CCPoint &center, float radius, float fromRadian, float
     return p;
 }
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {

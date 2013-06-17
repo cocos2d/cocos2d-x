@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "../utils/CCArmatureDefine.h"
 #include "../datas/CCDatas.h"
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
 
 enum AnimationType
 {
@@ -162,6 +162,6 @@ protected:
     bool _isLoopBack;
 };
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {
 
 #endif /*__CCPROCESSBASE_H__*/
