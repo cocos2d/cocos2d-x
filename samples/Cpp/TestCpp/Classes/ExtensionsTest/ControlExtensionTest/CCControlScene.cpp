@@ -42,8 +42,7 @@ bool CCControlScene::init()
 {
     if (CCLayer::init())
     {    
-        CCMenuItemFont* pBackItem = CCMenuItemFont::create("Back", this,
-            menu_selector(CCControlScene::toExtensionsMainLayer));
+        CCMenuItemFont* pBackItem = CCMenuItemFont::create("Back", CC_CALLBACK_1(CCControlScene::toExtensionsMainLayer, this));
         pBackItem->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
         CCMenu* pBackMenu = CCMenu::create(pBackItem, NULL);
         pBackMenu->setPosition( CCPointZero );
@@ -66,9 +65,9 @@ bool CCControlScene::init()
         addChild(m_pSceneTitleLabel, 1);
         
         // Add the menu
-        CCMenuItemImage *item1 = CCMenuItemImage::create("Images/b1.png", "Images/b2.png", this, menu_selector(CCControlScene::previousCallback));
-        CCMenuItemImage *item2 = CCMenuItemImage::create("Images/r1.png", "Images/r2.png", this, menu_selector(CCControlScene::restartCallback));
-        CCMenuItemImage *item3 = CCMenuItemImage::create("Images/f1.png", "Images/f2.png", this, menu_selector(CCControlScene::nextCallback));
+        CCMenuItemImage *item1 = CCMenuItemImage::create("Images/b1.png", "Images/b2.png", CC_CALLBACK_1(CCControlScene::previousCallback, this));
+        CCMenuItemImage *item2 = CCMenuItemImage::create("Images/r1.png", "Images/r2.png", CC_CALLBACK_1(CCControlScene::restartCallback, this));
+        CCMenuItemImage *item3 = CCMenuItemImage::create("Images/f1.png", "Images/f2.png", CC_CALLBACK_1(CCControlScene::nextCallback, this));
         
         CCMenu *menu = CCMenu::create(item1, item3, item2, NULL);
         menu->setPosition(CCPointZero);

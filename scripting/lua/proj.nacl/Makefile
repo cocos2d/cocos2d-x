@@ -1,4 +1,4 @@
-INCLUDES = -I.. -I../lua
+INCLUDES = -I.. -I../lua -I../../../extensions -I../../../external/chipmunk/include/chipmunk
 
 SOURCES = ../lua/lapi.c \
           ../lua/lauxlib.c \
@@ -34,7 +34,7 @@ SOURCES = ../lua/lapi.c \
           ../tolua/tolua_is.c \
           ../tolua/tolua_map.c \
           ../tolua/tolua_push.c \
-          ../tolua/tolua_to.c
+          ../tolua/tolua_to.c 
 
 COCOS_ROOT = ../../..
 
@@ -51,3 +51,7 @@ $(TARGET): $(OBJECTS) $(CORE_MAKEFILE_LIST)
 $(OBJ_DIR)/%.o: ../%.c $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
 	$(LOG_CC)$(NACL_CC) -MMD $(CCFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
+	
+$(OBJ_DIR)/%.o: ../%.cpp $(CORE_MAKEFILE_LIST)
+	@mkdir -p $(@D)
+	$(LOG_CXX)$(NACL_CXX) -MMD $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@

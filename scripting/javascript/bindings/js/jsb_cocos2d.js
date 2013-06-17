@@ -4,6 +4,19 @@
 
 var cc = cc || {};
 
+cc.LANGUAGE_ENGLISH    = 0;
+cc.LANGUAGE_CHINESE    = 1;
+cc.LANGUAGE_FRENCH     = 2;
+cc.LANGUAGE_ITALIAN    = 3;
+cc.LANGUAGE_GERMAN     = 4;
+cc.LANGUAGE_SPANISH    = 5;
+cc.LANGUAGE_RUSSIAN    = 6;
+cc.LANGUAGE_KOREAN     = 7;
+cc.LANGUAGE_JAPANESE   = 8;
+cc.LANGUAGE_HUNGARIAN  = 9;
+cc.LANGUAGE_PORTUGUESE = 10;
+cc.LANGUAGE_ARABIC     = 11;
+
 cc.DIRECTOR_PROJECTION_2D = 0;
 cc.DIRECTOR_PROJECTION_3D = 1;
 
@@ -84,7 +97,7 @@ cc._reuse_size = {width:0, height:0};
 cc._reuse_rect = {x:0, y:0, width:0, height:0};
 cc._reuse_color3b = {r:255, g:255, b:255 };
 cc._reuse_color4b = {r:255, g:255, b:255, a:255 };
-cc.log = cc.log || log;
+cc.log = cc._cocosplayerLog || cc.log || log;
 
 //
 // Color 3B
@@ -377,17 +390,7 @@ cc.LayerMultiplex.create = cc.LayerMultiplex.createWithArray;
  * @param {object} jsobj subclass
  * @param {object} klass superclass
  */
-cc.associateWithNative = function( jsobj, superclass_or_instance ) {
-
-    try {
-        // Used when subclassing using the "extend" method
-        var nativeObj = new superclass_or_instance();
-        __associateObjWithNative( jsobj, nativeObj );
-    } catch(err) {
-        // Used when subclassing using the goog.inherits method
-       __associateObjWithNative( jsobj, superclass_or_instance );
-   }
-};
+cc.associateWithNative = function( jsobj, superclass_or_instance ) {};
 
 //
 // JSB supports 2 official ways to create subclasses
@@ -499,7 +502,6 @@ cc.Class.extend = function (prop) {
     return Class;
 };
 
-cc.Node.prototype.ctor = function() {};
 cc.Node.extend = cc.Class.extend;
 cc.Layer.extend = cc.Class.extend;
 cc.LayerGradient.extend = cc.Class.extend;

@@ -2,13 +2,14 @@
 #define __TEXT_INPUT_TEST_H__
 
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
 class KeyboardNotificationLayer;
 
 /**
 @brief    TextInputTest for retain prev, reset, next, main menu buttons.
 */
-class TextInputTest : public CCLayer
+class TextInputTest : public BaseTest
 {
     KeyboardNotificationLayer * m_pNotificationLayer;
 public:

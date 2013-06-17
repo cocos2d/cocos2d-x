@@ -141,9 +141,11 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
   <ItemGroup>
     <ClCompile Include="..\base_nodes\CCAtlasNode.cpp" />
     <ClCompile Include="..\base_nodes\CCNode.cpp" />
+    <ClCompile Include="..\ccFPSImages.c" />
     <ClCompile Include="..\cocoa\CCAffineTransform.cpp" />
     <ClCompile Include="..\cocoa\CCArray.cpp" />
     <ClCompile Include="..\cocoa\CCAutoreleasePool.cpp" />
+    <ClCompile Include="..\cocoa\CCDataVisitor.cpp" />
     <ClCompile Include="..\cocoa\CCDictionary.cpp" />
     <ClCompile Include="..\cocoa\CCGeometry.cpp" />
     <ClCompile Include="..\cocoa\CCNS.cpp" />
@@ -151,6 +153,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\cocoa\CCSet.cpp" />
     <ClCompile Include="..\cocoa\CCString.cpp" />
     <ClCompile Include="..\cocoa\CCZone.cpp" />
+    <ClCompile Include="..\cocoa\CCData.cpp" />
     <ClCompile Include="..\draw_nodes\CCDrawingPrimitives.cpp" />
     <ClCompile Include="..\draw_nodes\CCDrawNode.cpp" />
     <ClCompile Include="..\effects\CCGrabber.cpp" />
@@ -217,6 +220,8 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\support\ccUTF8.cpp" />
     <ClCompile Include="..\support\ccUtils.cpp" />
     <ClCompile Include="..\support\CCVertex.cpp" />
+    <ClCompile Include="..\support\component\CCComponent.cpp" />
+    <ClCompile Include="..\support\component\CCComponentContainer.cpp" />
     <ClCompile Include="..\support\tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="..\support\TransformUtils.cpp" />
     <ClCompile Include="..\support\data_support\ccCArray.cpp" />
@@ -228,6 +233,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\textures\CCTexture2D.cpp" />
     <ClCompile Include="..\textures\CCTextureAtlas.cpp" />
     <ClCompile Include="..\textures\CCTextureCache.cpp" />
+    <ClCompile Include="..\textures\CCTextureETC.cpp" />
     <ClCompile Include="..\textures\CCTexturePVR.cpp" />
     <ClCompile Include="..\tileMap_parallax_nodes\CCParallaxNode.cpp" />
     <ClCompile Include="..\tileMap_parallax_nodes\CCTileMapAtlas.cpp" />
@@ -265,10 +271,15 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
   <ItemGroup>
     <ClInclude Include="..\base_nodes\CCAtlasNode.h" />
     <ClInclude Include="..\base_nodes\CCNode.h" />
+    <ClInclude Include="..\ccFPSImages.h" />
     <ClInclude Include="..\cocoa\CCAffineTransform.h" />
     <ClInclude Include="..\cocoa\CCArray.h" />
     <ClInclude Include="..\cocoa\CCAutoreleasePool.h" />
+    <ClInclude Include="..\cocoa\CCBool.h" />
+    <ClInclude Include="..\cocoa\CCDataVisitor.h" />
     <ClInclude Include="..\cocoa\CCDictionary.h" />
+    <ClInclude Include="..\cocoa\CCDouble.h" />
+    <ClInclude Include="..\cocoa\CCFloat.h" />
     <ClInclude Include="..\cocoa\CCGeometry.h" />
     <ClInclude Include="..\cocoa\CCInteger.h" />
     <ClInclude Include="..\cocoa\CCNS.h" />
@@ -276,6 +287,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\cocoa\CCSet.h" />
     <ClInclude Include="..\cocoa\CCString.h" />
     <ClInclude Include="..\cocoa\CCZone.h" />
+    <ClInclude Include="..\cocoa\CCData.h" />
     <ClInclude Include="..\draw_nodes\CCDrawingPrimitives.h" />
     <ClInclude Include="..\draw_nodes\CCDrawNode.h" />
     <ClInclude Include="..\effects\CCGrabber.h" />
@@ -369,6 +381,8 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\support\ccUTF8.h" />
     <ClInclude Include="..\support\ccUtils.h" />
     <ClInclude Include="..\support\CCVertex.h" />
+    <ClInclude Include="..\support\component\CCComponent.h" />
+    <ClInclude Include="..\support\component\CCComponentContainer.h" />
     <ClInclude Include="..\support\tinyxml2\tinyxml2.h" />
     <ClInclude Include="..\support\TransformUtils.h" />
     <ClInclude Include="..\support\data_support\ccCArray.h" />
@@ -382,6 +396,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\textures\CCTexture2D.h" />
     <ClInclude Include="..\textures\CCTextureAtlas.h" />
     <ClInclude Include="..\textures\CCTextureCache.h" />
+    <ClInclude Include="..\textures\CCTextureETC.h" />
     <ClInclude Include="..\textures\CCTexturePVR.h" />
     <ClInclude Include="..\tileMap_parallax_nodes\CCParallaxNode.h" />
     <ClInclude Include="..\tileMap_parallax_nodes\CCTileMapAtlas.h" />

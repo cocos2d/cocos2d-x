@@ -7,7 +7,6 @@
 #include "CCNodeLoaderListener.h"
 #include "CCBMemberVariableAssigner.h"
 #include "CCBSelectorResolver.h"
-#include "CCData.h"
 #include "CCBAnimationManager.h"
 #include "CCBSequenceProperty.h"
 #include "CCBKeyframe.h"
@@ -556,8 +555,9 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
     if(memberVarAssignmentType != kCCBTargetTypeNone) {
         memberVarAssignmentName = this->readCachedString();
     }
-
+    
     CCNodeLoader *ccNodeLoader = this->mCCNodeLoaderLibrary->getCCNodeLoader(className.c_str());
+     
     if (! ccNodeLoader)
     {
         CCLog("no corresponding node loader for %s", className.c_str());
@@ -622,18 +622,20 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
     // Read properties
     ccNodeLoader->parseProperties(node, pParent, this);
     
+    bool isCCBFileNode = (NULL == dynamic_cast<CCBFile*>(node)) ? false : true;
     // Handle sub ccb files (remove middle node)
-    if (dynamic_cast<CCBFile*>(node))
+    if (isCCBFileNode)
     {
         CCBFile *ccbFileNode = (CCBFile*)node;
         
         CCNode *embeddedNode = ccbFileNode->getCCBFileNode();
         embeddedNode->setPosition(ccbFileNode->getPosition());
         embeddedNode->setRotation(ccbFileNode->getRotation());
-        embeddedNode->setScale(ccbFileNode->getScale());
+        embeddedNode->setScaleX(ccbFileNode->getScaleX());
+        embeddedNode->setScaleY(ccbFileNode->getScaleY());
         embeddedNode->setTag(ccbFileNode->getTag());
         embeddedNode->setVisible(true);
-        embeddedNode->ignoreAnchorPointForPosition(ccbFileNode->isIgnoreAnchorPointForPosition());
+        //embeddedNode->ignoreAnchorPointForPosition(ccbFileNode->isIgnoreAnchorPointForPosition());
         
         mActionManager->moveAnimationsFromNode(ccbFileNode, embeddedNode);
 
@@ -733,14 +735,18 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
         node->addChild(child);
     }
 
-    // Call onNodeLoaded
-    CCNodeLoaderListener * nodeAsCCNodeLoaderListener = dynamic_cast<CCNodeLoaderListener *>(node);
-    if(nodeAsCCNodeLoaderListener != NULL) {
-        nodeAsCCNodeLoaderListener->onNodeLoaded(node, ccNodeLoader);
-    } else if(this->mCCNodeLoaderListener != NULL) {
-        this->mCCNodeLoaderListener->onNodeLoaded(node, ccNodeLoader);
+    // FIX ISSUE #1860: "onNodeLoaded will be called twice if ccb was added as a CCBFile".
+    // If it's a sub-ccb node, skip notification to CCNodeLoaderListener since it will be
+    // notified at LINE #734: CCNode * child = this->readNodeGraph(node);
+    if (!isCCBFileNode) {
+        // Call onNodeLoaded
+        CCNodeLoaderListener * nodeAsCCNodeLoaderListener = dynamic_cast<CCNodeLoaderListener *>(node);
+        if(nodeAsCCNodeLoaderListener != NULL) {
+            nodeAsCCNodeLoaderListener->onNodeLoaded(node, ccNodeLoader);
+        } else if(this->mCCNodeLoaderListener != NULL) {
+            this->mCCNodeLoaderListener->onNodeLoaded(node, ccNodeLoader);
+        }
     }
-
     return node;
 }
 
@@ -1030,13 +1036,33 @@ CCArray* CCBReader::getAnimationManagersForNodes() {
     return mAnimationManagersForNodes;
 }
 
+void CCBReader::addOwnerOutletName(std::string name)
+{
+    mOwnerOutletNames.push_back(name);
+
+}
+void CCBReader::addOwnerOutletNode(CCNode *node)
+{
+    if (NULL != node)
+        return;
+    
+    mOwnerOutletNodes->addObject(node);
+}
+
 /************************************************************************
  Static functions
  ************************************************************************/
 
+static float __ccbResolutionScale = 1.0f;
+
 float CCBReader::getResolutionScale()
 {
-    return 1;
+    return __ccbResolutionScale;
+}
+
+void CCBReader::setResolutionScale(float scale)
+{
+    __ccbResolutionScale = scale;
 }
 
 NS_CC_EXT_END;

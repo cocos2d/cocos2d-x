@@ -38,6 +38,9 @@ THE SOFTWARE.
 #include "support/TransformUtils.h"
 // extern
 #include "kazmath/GL/matrix.h"
+#ifdef KEYBOARD_SUPPORT
+#include "keyboard_dispatcher/CCKeyboardDispatcher.h"
+#endif
 
 NS_CC_BEGIN
 
@@ -45,6 +48,9 @@ NS_CC_BEGIN
 CCLayer::CCLayer()
 : m_bTouchEnabled(false)
 , m_bAccelerometerEnabled(false)
+#ifdef KEYBOARD_SUPPORT
+, m_bKeyboardEnabled(false)
+#endif
 , m_bKeypadEnabled(false)
 , m_pScriptTouchHandlerEntry(NULL)
 , m_pScriptKeypadHandlerEntry(NULL)
@@ -273,6 +279,34 @@ void CCLayer::unregisterScriptAccelerateHandler(void)
     CC_SAFE_RELEASE_NULL(m_pScriptAccelerateHandlerEntry);
 }
 
+#ifdef KEYBOARD_SUPPORT
+/// isKeyboardEnabled getter
+bool CCLayer::isKeyboardEnabled()
+{
+    return m_bKeyboardEnabled;
+}
+/// isKeyboardEnabled setter
+void CCLayer::setKeyboardEnabled(bool enabled)
+{
+    if (enabled != m_bKeyboardEnabled)
+    {
+        m_bKeyboardEnabled = enabled;
+
+        CCDirector* pDirector = CCDirector::sharedDirector();
+        if (enabled)
+        {
+            pDirector->getKeyboardDispatcher()->setKeyPressDelegate( CC_CALLBACK_1(CCLayer::keyPressed, this) );
+            pDirector->getKeyboardDispatcher()->setKeyReleaseDelegate( CC_CALLBACK_1(CCLayer::keyReleased, this) );
+        }
+        else
+        {
+            pDirector->getKeyboardDispatcher()->setKeyPressDelegate(NULL);
+            pDirector->getKeyboardDispatcher()->setKeyReleaseDelegate(NULL);
+        }
+    }
+}
+#endif
+
 /// isKeypadEnabled getter
 bool CCLayer::isKeypadEnabled()
 {
@@ -314,7 +348,7 @@ void CCLayer::unregisterScriptKeypadHandler(void)
 
 void CCLayer::keyBackClicked(void)
 {
-    if (m_pScriptKeypadHandlerEntry)
+    if (m_pScriptKeypadHandlerEntry || m_eScriptType == kScriptTypeJavascript)
     {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeLayerKeypadEvent(this, kTypeBackClicked);
     }
@@ -709,7 +743,7 @@ bool CCLayerColor::initWithColor(const ccColor4B& color, GLfloat w, GLfloat h)
         _displayedColor.r = _realColor.r = color.r;
         _displayedColor.g = _realColor.g = color.g;
         _displayedColor.b = _realColor.b = color.b;
-        _displayedOpacity = color.a;
+        _displayedOpacity = _realOpacity = color.a;
 
         for (size_t i = 0; i<sizeof(m_pSquareVertices) / sizeof( m_pSquareVertices[0]); i++ )
         {
@@ -778,8 +812,16 @@ void CCLayerColor::draw()
     //
     // Attributes
     //
+#ifdef EMSCRIPTEN
+    setGLBufferData(m_pSquareVertices, 4 * sizeof(ccVertex2F), 0);
+    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+    setGLBufferData(m_pSquareColors, 4 * sizeof(ccColor4F), 1);
+    glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_FLOAT, GL_FALSE, 0, 0);
+#else
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, m_pSquareVertices);
     glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_FLOAT, GL_FALSE, 0, m_pSquareColors);
+#endif // EMSCRIPTEN
 
     ccGLBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 

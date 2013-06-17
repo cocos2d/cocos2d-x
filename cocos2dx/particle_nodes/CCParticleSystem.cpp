@@ -1031,7 +1031,7 @@ bool CCParticleSystem::isActive()
     return m_bIsActive;
 }
 
-unsigned int CCParticleSystem::getParticleCount()
+unsigned int CCParticleSystem::getParticleCount() const
 {
     return m_uParticleCount;
 }

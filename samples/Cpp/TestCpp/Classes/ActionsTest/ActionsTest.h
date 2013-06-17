@@ -2,6 +2,7 @@
 #define _ActionsTest_H_
 
 #include "../testBasic.h"
+#include "../BaseTest.h"
 ////----#include "cocos2d.h"
 
 USING_NS_CC;
@@ -36,6 +37,7 @@ enum
     ACTION_ROTATEJERK_LAYER,
     ACTION_CALLFUNC_LAYER,
     ACTION_CALLFUNCND_LAYER,
+    ACTION_CALLFUNCTION_LAYER,
     ACTION_REVERSESEQUENCE_LAYER,
     ACTION_REVERSESEQUENCE2_LAYER,
     ACTION_ORBIT_LAYER,
@@ -62,7 +64,7 @@ public:
     virtual void runThisTest();
 };
 
-class ActionsDemo : public CCLayer
+class ActionsDemo : public BaseTest
 {
 protected:
     CCSprite*    m_grossini;
@@ -299,6 +301,18 @@ public:
     void removeFromParentAndCleanup(CCNode* pSender, void* data);
 };
 
+class ActionCallFunction : public ActionsDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string subtitle();
+
+    void callback1();
+    void callback2(CCNode* pTarget);
+    void callback3(CCNode* pTarget, void* data);
+};
+
+
 class ActionFollow : public ActionsDemo
 {
 public:
@@ -426,7 +440,7 @@ class Issue1398 : public ActionsDemo
 {
 public:
     void incrementInteger();
-    void incrementIntegerCallback(CCNode* pSender, void* data);
+    void incrementIntegerCallback(void* data);
     virtual void onEnter();
     virtual std::string subtitle();
     virtual std::string title();

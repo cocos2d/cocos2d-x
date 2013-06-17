@@ -57,7 +57,7 @@ CCGLProgram::CCGLProgram()
 
 CCGLProgram::~CCGLProgram()
 {
-    CCLOGINFO("cocos2d: %s %d deallocing 0x%X", __FUNCTION__, __LINE__, this);
+    CCLOGINFO("cocos2d: %s %d deallocing %p", __FUNCTION__, __LINE__, this);
 
     // there is no need to delete the shaders. They should have been already deleted.
     CCAssert(m_uVertShader == 0, "Vertex Shaders should have been already deleted");
@@ -130,7 +130,10 @@ bool CCGLProgram::initWithVertexShaderFilename(const char* vShaderFilename, cons
 
 const char* CCGLProgram::description()
 {
-    return CCString::createWithFormat("<CCGLProgram = %08X | Program = %i, VertexShader = %i, FragmentShader = %i>", this, m_uProgram, m_uVertShader, m_uFragShader)->getCString();
+    return CCString::createWithFormat("<CCGLProgram = "
+                                      CC_FORMAT_PRINTF_SIZE_T
+                                      " | Program = %i, VertexShader = %i, FragmentShader = %i>",
+                                      (size_t)this, m_uProgram, m_uVertShader, m_uFragShader)->getCString();
 }
 
 bool CCGLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source)
@@ -341,10 +344,73 @@ GLint CCGLProgram::getUniformLocationForName(const char* name)
 void CCGLProgram::setUniformLocationWith1i(GLint location, GLint i1)
 {
     bool updated =  updateUniformLocation(location, &i1, sizeof(i1)*1);
-
-    if( updated ) 
+    
+    if( updated )
     {
         glUniform1i( (GLint)location, i1);
+    }
+}
+
+void CCGLProgram::setUniformLocationWith2i(GLint location, GLint i1, GLint i2)
+{
+    GLint ints[2] = {i1,i2};
+    bool updated =  updateUniformLocation(location, ints, sizeof(ints));
+    
+    if( updated )
+    {
+        glUniform2i( (GLint)location, i1, i2);
+    }
+}
+
+void CCGLProgram::setUniformLocationWith3i(GLint location, GLint i1, GLint i2, GLint i3)
+{
+    GLint ints[3] = {i1,i2,i3};
+    bool updated =  updateUniformLocation(location, ints, sizeof(ints));
+    
+    if( updated )
+    {
+        glUniform3i( (GLint)location, i1, i2, i3);
+    }
+}
+
+void CCGLProgram::setUniformLocationWith4i(GLint location, GLint i1, GLint i2, GLint i3, GLint i4)
+{
+    GLint ints[4] = {i1,i2,i3,i4};
+    bool updated =  updateUniformLocation(location, ints, sizeof(ints));
+    
+    if( updated )
+    {
+        glUniform4i( (GLint)location, i1, i2, i3, i4);
+    }
+}
+
+void CCGLProgram::setUniformLocationWith2iv(GLint location, GLint* ints, unsigned int numberOfArrays)
+{
+    bool updated =  updateUniformLocation(location, ints, sizeof(int)*2*numberOfArrays);
+    
+    if( updated )
+    {
+        glUniform2iv( (GLint)location, (GLsizei)numberOfArrays, ints );
+    }
+}
+
+void CCGLProgram::setUniformLocationWith3iv(GLint location, GLint* ints, unsigned int numberOfArrays)
+{
+    bool updated =  updateUniformLocation(location, ints, sizeof(int)*3*numberOfArrays);
+    
+    if( updated )
+    {
+        glUniform3iv( (GLint)location, (GLsizei)numberOfArrays, ints );
+    }
+}
+
+void CCGLProgram::setUniformLocationWith4iv(GLint location, GLint* ints, unsigned int numberOfArrays)
+{
+    bool updated =  updateUniformLocation(location, ints, sizeof(int)*4*numberOfArrays);
+    
+    if( updated )
+    {
+        glUniform4iv( (GLint)location, (GLsizei)numberOfArrays, ints );
     }
 }
 

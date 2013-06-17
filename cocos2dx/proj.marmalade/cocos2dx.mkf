@@ -59,6 +59,7 @@ files
 	("../")
 	"*.h"
 	"*.cpp"
+	"*.c"
 
 	(.)
 	["docs"]
@@ -185,6 +186,11 @@ files
 
 	("../support/zip_support")
 	[support/zip_support]
+	"*.h"
+	"*.cpp"
+    
+    ("../support/component")
+	[support/component]
 	"*.h"
 	"*.cpp"
 	

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/nd3_banner_bg">
+
+	<TextView
+		android:id="@+id/nd3_banner_title" 
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content"
+		android:gravity="center"
+		android:textSize="@dimen/nd3_btn_text_size"
+		android:textStyle="bold"
+		android:textColor="@color/nd3_white"
+		android:drawableLeft="@drawable/nd3_banner_logo"
+		android:text="@string/nd3_banner_title_format">
+		
+	</TextView>
+
+</LinearLayout>
+
+

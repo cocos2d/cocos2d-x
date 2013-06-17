@@ -8,7 +8,6 @@
 #ifndef jsalloc_h_
 #define jsalloc_h_
 
-#include "jspubtd.h"
 #include "jsutil.h"
 
 namespace js {
@@ -52,7 +51,7 @@ class SystemAllocPolicy
  */
 class TempAllocPolicy
 {
-    JSContext *const cx;
+    JSContext *const cx_;
 
     /*
      * Non-inline helper to call JSRuntime::onOutOfMemory with minimal
@@ -61,10 +60,10 @@ class TempAllocPolicy
     JS_FRIEND_API(void *) onOutOfMemory(void *p, size_t nbytes);
 
   public:
-    TempAllocPolicy(JSContext *cx) : cx(cx) {}
+    TempAllocPolicy(JSContext *cx) : cx_(cx) {}
 
     JSContext *context() const {
-        return cx;
+        return cx_;
     }
 
     void *malloc_(size_t bytes) {

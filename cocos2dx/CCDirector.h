@@ -34,7 +34,7 @@ THE SOFTWARE.
 #include "cocoa/CCArray.h"
 #include "CCGL.h"
 #include "kazmath/mat4.h"
-#include "label_nodes/CCLabelTTF.h"
+#include "label_nodes/CCLabelAtlas.h"
 #include "ccTypeInfo.h"
 
 
@@ -71,6 +71,9 @@ class CCNode;
 class CCScheduler;
 class CCActionManager;
 class CCTouchDispatcher;
+#ifdef KEYBOARD_SUPPORT
+class CCKeyboardDispatcher;
+#endif
 class CCKeypadDispatcher;
 class CCAccelerometer;
 
@@ -204,7 +207,7 @@ public:
 
     // Scene Management
 
-    /**Enters the Director's main loop with the given Scene. 
+    /** Enters the Director's main loop with the given Scene.
      * Call it to run only your FIRST scene.
      * Don't call it if there is already a running scene.
      *
@@ -212,26 +215,32 @@ public:
      */
     void runWithScene(CCScene *pScene);
 
-    /**Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
+    /** Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
      * The new scene will be executed.
      * Try to avoid big stacks of pushed scenes to reduce memory allocation. 
      * ONLY call it if there is a running scene.
      */
     void pushScene(CCScene *pScene);
 
-    /**Pops out a scene from the queue.
+    /** Pops out a scene from the queue.
      * This scene will replace the running one.
      * The running scene will be deleted. If there are no more scenes in the stack the execution is terminated.
      * ONLY call it if there is a running scene.
      */
     void popScene(void);
 
-    /**Pops out all scenes from the queue until the root scene in the queue.
+    /** Pops out all scenes from the queue until the root scene in the queue.
      * This scene will replace the running one.
-     * The running scene will be deleted. If there are no more scenes in the stack the execution is terminated.
-     * ONLY call it if there is a running scene.
+     * Internally it will call `popToSceneStackLevel(1)`
      */
     void popToRootScene(void);
+
+    /** Pops out all scenes from the queue until it reaches `level`.
+     If level is 0, it will end the director.
+     If level is 1, it will pop all scenes until it reaches to root scene.
+     If level is <= than the current stack level, it won't do anything.
+     */
+ 	void popToSceneStackLevel(int level);
 
     /** Replaces the running scene with a new one. The running scene is terminated.
      * ONLY call it if there is a running scene.
@@ -279,6 +288,9 @@ public:
      */
     void purgeCachedData(void);
 
+	/** sets the default values based on the CCConfiguration info */
+    void setDefaultValues(void);
+
     // OpenGL Helper
 
     /** sets the OpenGL default values */
@@ -316,6 +328,12 @@ public:
      */
     CC_PROPERTY(CCTouchDispatcher*, m_pTouchDispatcher, TouchDispatcher);
 
+#ifdef KEYBOARD_SUPPORT
+    /** CCKeyboardDispatcher associated with this director
+     @since v?.?
+     */
+    CC_PROPERTY(CCKeyboardDispatcher*, m_pKeyboardDispatcher, KeyboardDispatcher);
+#endif
     /** CCKeypadDispatcher associated with this director
      @since v2.0
      */
@@ -329,6 +347,7 @@ public:
     /* delta time since last tick to main loop */
 	CC_PROPERTY_READONLY(float, m_fDeltaTime, DeltaTime);
 	
+public:
     /** returns a shared instance of the director */
     static CCDirector* sharedDirector(void);
 
@@ -360,9 +379,9 @@ protected:
     float m_fAccumDt;
     float m_fFrameRate;
     
-    CCLabelTTF *m_pFPSLabel;
-    CCLabelTTF *m_pSPFLabel;
-    CCLabelTTF *m_pDrawsLabel;
+    CCLabelAtlas *m_pFPSLabel;
+    CCLabelAtlas *m_pSPFLabel;
+    CCLabelAtlas *m_pDrawsLabel;
     
     /** Whether or not the Director is paused */
     bool m_bPaused;

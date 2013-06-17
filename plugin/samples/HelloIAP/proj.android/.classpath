@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry exported="true" kind="lib" path="publish/protocols/android/libPluginProtocol.jar"/>
+	<classpathentry exported="true" kind="lib" path="publish/plugins/alipay/android/alipay_plugin.jar"/>
+	<classpathentry exported="true" kind="lib" path="publish/plugins/alipay/android/libPluginAlipay.jar"/>
+	<classpathentry exported="true" kind="lib" path="publish/plugins/nd91/android/libPluginNd91.jar"/>
+	<classpathentry exported="true" kind="lib" path="publish/plugins/nd91/android/NdComPlatform.jar"/>
+	<classpathentry kind="output" path="bin/classes"/>
+</classpath>

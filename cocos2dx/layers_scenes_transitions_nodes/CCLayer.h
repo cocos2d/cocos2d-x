@@ -33,6 +33,9 @@ THE SOFTWARE.
 #include "platform/CCAccelerometerDelegate.h"
 #include "keypad_dispatcher/CCKeypadDelegate.h"
 #include "cocoa/CCArray.h"
+#ifdef EMSCRIPTEN
+#include "base_nodes/CCGLBufferedNode.h"
+#endif // EMSCRIPTEN
 
 NS_CC_BEGIN
 
@@ -127,10 +130,16 @@ public:
     virtual void setAccelerometerEnabled(bool value);
     virtual void setAccelerometerInterval(double interval);
 
-    /** whether or not it will receive keypad events
+    /** whether or not it will receive keyboard or keypad events
     You can enable / disable accelerometer events with this property.
     it's new in cocos2d-x
     */
+#ifdef KEYBOARD_SUPPORT
+    virtual bool isKeyboardEnabled();
+    virtual void setKeyboardEnabled(bool value);
+    virtual void keyPressed(int keyCode) {};
+    virtual void keyReleased(int keyCode) {};
+#endif
     virtual bool isKeypadEnabled();
     virtual void setKeypadEnabled(bool value);
 
@@ -148,6 +157,9 @@ public:
 protected:   
     bool m_bTouchEnabled;
     bool m_bAccelerometerEnabled;
+#ifdef KEYBOARD_SUPPORT
+    bool m_bKeyboardEnabled;
+#endif
     bool m_bKeypadEnabled;
     
 private:
@@ -217,6 +229,9 @@ All features from CCLayer are valid, plus the following new features:
 - RGB colors
 */
 class CC_DLL CCLayerColor : public CCLayerRGBA, public CCBlendProtocol
+#ifdef EMSCRIPTEN
+, public CCGLBufferedNode
+#endif // EMSCRIPTEN
 {
 protected:
     ccVertex2F m_pSquareVertices[4];

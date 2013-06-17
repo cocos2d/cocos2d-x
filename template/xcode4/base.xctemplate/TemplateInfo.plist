@@ -51,6 +51,7 @@
 					<string>COCOS2D_DEBUG=1</string>
 					<string>USE_FILE32API</string>
 					<string>CC_TARGET_OS_IPHONE</string>
+					<string>CC_ENABLE_CHIPMUNK_INTEGRATION=1</string>
 				</array>
 				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
 				<string>NO</string>
@@ -62,6 +63,7 @@
 					<string>NDEBUG</string>
 					<string>USE_FILE32API</string>
 					<string>CC_TARGET_OS_IPHONE</string>
+					<string>CC_ENABLE_CHIPMUNK_INTEGRATION=1</string>
 				</array>
 			</dict>
 		</dict>
@@ -78,7 +80,7 @@
 				<string>&quot;$(PROJECT_NAME)/libs/cocos2dx/kazmath/include&quot;</string>
 				<string>&quot;$(PROJECT_NAME)/libs/cocos2dx&quot;</string>
 				<string>&quot;$(PROJECT_NAME)/libs/CocosDenshion/include&quot;</string>
-				<string>&quot;$(SDKROOT)/usr/include/libxml2&quot;</string>
+				<string>&quot;$(PROJECT_NAME)/libs/extensions&quot;</string>
 				<string>&quot;$(PROJECT_NAME)/libs/cocos2dx/include&quot;</string>
 				<string>&quot;$(PROJECT_NAME)/libs/cocos2dx/platform/third_party/ios&quot;</string>
 				<string>&quot;$(PROJECT_NAME)/libs/cocos2dx/platform/ios&quot;</string>

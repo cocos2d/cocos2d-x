@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.nd.commplatform.uap.widget.NdActivityDescriptionView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content">
+  <!-- 文本-1 -->
+  <TextView
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:id="@+id/nd3_activity_content_reg_1"
+  android:layout_alignParentTop="true"
+  android:textColor="@color/nd3_black"/>
+  
+  
+  <!-- 文本-2 -->
+  <TextView
+  android:id="@+id/nd3_activity_content_reg_3"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:paddingTop="@dimen/nd3_margin_size"
+  android:paddingBottom="@dimen/nd3_margin_size"
+  android:layout_below="@id/nd3_activity_content_reg_1"
+  android:textColor="@color/nd3_black"
+  android:layout_alignWithParentIfMissing="true"/>
+</com.nd.commplatform.uap.widget.NdActivityDescriptionView>

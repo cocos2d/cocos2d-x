@@ -25,6 +25,7 @@ distribution.
 #define TINYXML2_INCLUDED
 
 #include "platform/CCPlatformConfig.h"
+#include "platform/CCPlatformMacros.h"
 
 #if defined(ANDROID_NDK) || defined(__BORLANDC__) || (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
 #   include <ctype.h>
@@ -123,7 +124,7 @@ class XMLPrinter;
 	and entity translation if actually read. Can also store (and memory
 	manage) a traditional char[]
 */
-class StrPair
+class CC_DLL StrPair
 {
 public:
     enum {
@@ -187,7 +188,7 @@ private:
 	cause a call to new/delete
 */
 template <class T, int INIT>
-class DynArray
+class CC_DLL DynArray
 {
 public:
     DynArray< T, INIT >() {
@@ -278,7 +279,7 @@ private:
 	Parent virtual class of a pool for fast allocation
 	and deallocation of objects.
 */
-class MemPool
+class CC_DLL MemPool
 {
 public:
     MemPool() {}
@@ -295,7 +296,7 @@ public:
 	Template child class to create pools of the correct type.
 */
 template< int SIZE >
-class MemPoolT : public MemPool
+class CC_DLL MemPoolT : public MemPool
 {
 public:
     MemPoolT() : _root(0), _currentAllocs(0), _nAllocs(0), _maxAllocs(0), _nUntracked(0)	{}
@@ -401,7 +402,7 @@ private:
 
 	@sa XMLNode::Accept()
 */
-class XMLVisitor
+class CC_DLL XMLVisitor
 {
 public:
     virtual ~XMLVisitor() {}
@@ -446,7 +447,7 @@ public:
 /*
 	Utility functionality.
 */
-class XMLUtil
+class CC_DLL XMLUtil
 {
 public:
     // Anything in the high order range of UTF-8 is assumed to not be whitespace. This isn't
@@ -539,7 +540,7 @@ public:
 
 	@endverbatim
 */
-class XMLNode
+class CC_DLL XMLNode
 {
     friend class XMLDocument;
     friend class XMLElement;
@@ -805,7 +806,7 @@ private:
 	you generally want to leave it alone, but you can change the output mode with
 	SetCDATA() and query it with CDATA().
 */
-class XMLText : public XMLNode
+class CC_DLL XMLText : public XMLNode
 {
     friend class XMLBase;
     friend class XMLDocument;
@@ -844,7 +845,7 @@ private:
 
 
 /** An XML Comment. */
-class XMLComment : public XMLNode
+class CC_DLL XMLComment : public XMLNode
 {
     friend class XMLDocument;
 public:
@@ -882,7 +883,7 @@ private:
 	The text of the declaration isn't interpreted. It is parsed
 	and written as a string.
 */
-class XMLDeclaration : public XMLNode
+class CC_DLL XMLDeclaration : public XMLNode
 {
     friend class XMLDocument;
 public:
@@ -914,7 +915,7 @@ protected:
 
 	DTD tags get thrown into TiXmlUnknowns.
 */
-class XMLUnknown : public XMLNode
+class CC_DLL XMLUnknown : public XMLNode
 {
     friend class XMLDocument;
 public:
@@ -973,7 +974,7 @@ enum XMLError {
 	@note The attributes are not XMLNodes. You may only query the
 	Next() attribute in a list.
 */
-class XMLAttribute
+class CC_DLL XMLAttribute
 {
     friend class XMLElement;
 public:
@@ -1074,7 +1075,7 @@ private:
 	and can contain other elements, text, comments, and unknowns.
 	Elements also contain an arbitrary number of attributes.
 */
-class XMLElement : public XMLNode
+class CC_DLL XMLElement : public XMLNode
 {
     friend class XMLBase;
     friend class XMLDocument;
@@ -1356,7 +1357,7 @@ enum Whitespace {
 	All Nodes are connected and allocated to a Document.
 	If the Document is deleted, all its Nodes are also deleted.
 */
-class XMLDocument : public XMLNode
+class CC_DLL XMLDocument : public XMLNode
 {
     friend class XMLElement;
 public:
@@ -1612,7 +1613,7 @@ private:
 
 	See also XMLConstHandle, which is the same as XMLHandle, but operates on const objects.
 */
-class XMLHandle
+class CC_DLL XMLHandle
 {
 public:
     /// Create a handle from any node (at any depth of the tree.) This can be a null pointer.
@@ -1696,7 +1697,7 @@ private:
 	A variant of the XMLHandle class for working with const XMLNodes and Documents. It is the
 	same in all regards, except for the 'const' qualifiers. See XMLHandle for API.
 */
-class XMLConstHandle
+class CC_DLL XMLConstHandle
 {
 public:
     XMLConstHandle( const XMLNode* node )											{
@@ -1803,7 +1804,7 @@ private:
 	printer.CloseElement();
 	@endverbatim
 */
-class XMLPrinter : public XMLVisitor
+class CC_DLL XMLPrinter : public XMLVisitor
 {
 public:
     /** Construct the printer. If the FILE* is specified,

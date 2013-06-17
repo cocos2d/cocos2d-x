@@ -10,6 +10,7 @@
 
 #include "mozilla/Assertions.h"
 #include "mozilla/Attributes.h"
+#include "mozilla/Scoped.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -21,8 +22,7 @@
 
 #include "jstypes.h"
 
-# include "js/TemplateLib.h"
-# include "mozilla/Scoped.h"
+#include "js/TemplateLib.h"
 
 /* The public JS engine namespace. */
 namespace JS {}
@@ -58,6 +58,14 @@ using namespace JS;
 # endif
 #else
 # define JS_THREADSAFE_ASSERT(expr) ((void) 0)
+#endif
+
+#if defined(DEBUG)
+# define JS_DIAGNOSTICS_ASSERT(expr) MOZ_ASSERT(expr)
+#elif defined(JS_CRASH_DIAGNOSTICS)
+# define JS_DIAGNOSTICS_ASSERT(expr) do { if (!(expr)) MOZ_CRASH(); } while(0)
+#else
+# define JS_DIAGNOSTICS_ASSERT(expr) ((void) 0)
 #endif
 
 #define JS_STATIC_ASSERT(cond)           MOZ_STATIC_ASSERT(cond, "JS_STATIC_ASSERT")
@@ -546,115 +554,16 @@ struct ScopedFreePtrTraits
     static T* empty() { return NULL; }
     static void release(T* ptr) { js_free(ptr); }
 };
-SCOPED_TEMPLATE(ScopedFreePtr, ScopedFreePtrTraits)
+SCOPED_TEMPLATE(ScopedJSFreePtr, ScopedFreePtrTraits)
 
 template <typename T>
 struct ScopedDeletePtrTraits : public ScopedFreePtrTraits<T>
 {
     static void release(T *ptr) { js_delete(ptr); }
 };
-SCOPED_TEMPLATE(ScopedDeletePtr, ScopedDeletePtrTraits)
+SCOPED_TEMPLATE(ScopedJSDeletePtr, ScopedDeletePtrTraits)
 
 } /* namespace js */
-
-/*
- * The following classes are designed to cause assertions to detect
- * inadvertent use of guard objects as temporaries.  In other words,
- * when we have a guard object whose only purpose is its constructor and
- * destructor (and is never otherwise referenced), the intended use
- * might be:
- *     JSAutoTempValueRooter tvr(cx, 1, &val);
- * but is is easy to accidentally write:
- *     JSAutoTempValueRooter(cx, 1, &val);
- * which compiles just fine, but runs the destructor well before the
- * intended time.
- *
- * They work by adding (#ifdef DEBUG) an additional parameter to the
- * guard object's constructor, with a default value, so that users of
- * the guard object's API do not need to do anything.  The default value
- * of this parameter is a temporary object.  C++ (ISO/IEC 14882:1998),
- * section 12.2 [class.temporary], clauses 4 and 5 seem to assume a
- * guarantee that temporaries are destroyed in the reverse of their
- * construction order, but I actually can't find a statement that that
- * is true in the general case (beyond the two specific cases mentioned
- * there).  However, it seems to be true.
- *
- * These classes are intended to be used only via the macros immediately
- * below them:
- *   JS_DECL_USE_GUARD_OBJECT_NOTIFIER declares (ifdef DEBUG) a member
- *     variable, and should be put where a declaration of a private
- *     member variable would be placed.
- *   JS_GUARD_OBJECT_NOTIFIER_PARAM should be placed at the end of the
- *     parameters to each constructor of the guard object; it declares
- *     (ifdef DEBUG) an additional parameter.
- *   JS_GUARD_OBJECT_NOTIFIER_INIT is a statement that belongs in each
- *     constructor.  It uses the parameter declared by
- *     JS_GUARD_OBJECT_NOTIFIER_PARAM.
- */
-#ifdef DEBUG
-class JS_FRIEND_API(JSGuardObjectNotifier)
-{
-private:
-    bool* mStatementDone;
-public:
-    JSGuardObjectNotifier() : mStatementDone(NULL) {}
-
-    ~JSGuardObjectNotifier() {
-        *mStatementDone = true;
-    }
-
-    void setStatementDone(bool *aStatementDone) {
-        mStatementDone = aStatementDone;
-    }
-};
-
-class JS_FRIEND_API(JSGuardObjectNotificationReceiver)
-{
-private:
-    bool mStatementDone;
-public:
-    JSGuardObjectNotificationReceiver() : mStatementDone(false) {}
-
-    ~JSGuardObjectNotificationReceiver() {
-        /*
-         * Assert that the guard object was not used as a temporary.
-         * (Note that this assert might also fire if Init is not called
-         * because the guard object's implementation is not using the
-         * above macros correctly.)
-         */
-        JS_ASSERT(mStatementDone);
-    }
-
-    void Init(const JSGuardObjectNotifier &aNotifier) {
-        /*
-         * aNotifier is passed as a const reference so that we can pass a
-         * temporary, but we really intend it as non-const
-         */
-        const_cast<JSGuardObjectNotifier&>(aNotifier).
-            setStatementDone(&mStatementDone);
-    }
-};
-
-#define JS_DECL_USE_GUARD_OBJECT_NOTIFIER \
-    JSGuardObjectNotificationReceiver _mCheckNotUsedAsTemporary;
-#define JS_GUARD_OBJECT_NOTIFIER_PARAM \
-    , const JSGuardObjectNotifier& _notifier = JSGuardObjectNotifier()
-#define JS_GUARD_OBJECT_NOTIFIER_PARAM_NO_INIT \
-    , const JSGuardObjectNotifier& _notifier
-#define JS_GUARD_OBJECT_NOTIFIER_PARAM0 \
-    const JSGuardObjectNotifier& _notifier = JSGuardObjectNotifier()
-#define JS_GUARD_OBJECT_NOTIFIER_INIT \
-    JS_BEGIN_MACRO _mCheckNotUsedAsTemporary.Init(_notifier); JS_END_MACRO
-
-#else /* defined(DEBUG) */
-
-#define JS_DECL_USE_GUARD_OBJECT_NOTIFIER
-#define JS_GUARD_OBJECT_NOTIFIER_PARAM
-#define JS_GUARD_OBJECT_NOTIFIER_PARAM_NO_INIT
-#define JS_GUARD_OBJECT_NOTIFIER_PARAM0
-#define JS_GUARD_OBJECT_NOTIFIER_INIT JS_BEGIN_MACRO JS_END_MACRO
-
-#endif /* !defined(DEBUG) */
 
 namespace js {
 
@@ -807,6 +716,15 @@ class ReentrancyGuard
 #endif
     }
 };
+
+template <class T>
+JS_ALWAYS_INLINE static void
+Swap(T &t, T &u)
+{
+    T tmp(Move(t));
+    t = Move(u);
+    u = Move(tmp);
+}
 
 /*
  * Round x up to the nearest power of 2.  This function assumes that the most

@@ -42,6 +42,7 @@
 #include "support/zip_support/ZipUtils.h"
 #include "platform/CCFileUtils.h"
 #include "kazmath/GL/matrix.h"
+#include "support/CCProfiling.h"
 
 NS_CC_BEGIN
 
@@ -402,7 +403,7 @@ void CCParticleBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
 
 void CCParticleBatchNode::draw(void)
 {
-    CC_PROFILER_STOP("CCParticleBatchNode - draw");
+    CC_PROFILER_START("CCParticleBatchNode - draw");
 
     if( m_pTextureAtlas->getTotalQuads() == 0 )
     {

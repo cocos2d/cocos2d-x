@@ -29,13 +29,18 @@
 #include "EffectsAdvancedTest/EffectsAdvancedTest.h"
 #include "AccelerometerTest/AccelerometerTest.h"
 #include "KeypadTest/KeypadTest.h"
+#ifdef KEYBOARD_SUPPORT
+#include "KeyboardTest/KeyboardTest.h"
+#endif
 #include "PerformanceTest/PerformanceTest.h"
 #include "ZwoptexTest/ZwoptexTest.h"
 #include "CocosDenshionTest/CocosDenshionTest.h"
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPEN)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 // bada don't support libcurl
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
 #include "CurlTest/CurlTest.h"
+#endif
 #endif
 #endif
 #include "UserDefaultTest/UserDefaultTest.h"
@@ -53,119 +58,9 @@
 #include "ChipmunkTest/ChipmunkTest.h"
 #endif
 #include "FileUtilsTest/FileUtilsTest.h"
-
-enum
-{
-    TEST_ACTIONS = 0,
-    TEST_TRANSITIONS,
-    TEST_PROGRESS_ACTIONS,
-    TEST_EFFECTS,
-    TEST_CLICK_AND_MOVE,
-    TEST_ROTATE_WORLD,
-    TEST_PARTICLE,
-    TEST_EASE_ACTIONS,
-    TEST_MOTION_STREAK,
-    TEST_DRAW_PRIMITIVES,
-    TEST_COCOSNODE,
-    TEST_TOUCHES,
-    TEST_MENU,
-    TEST_ACTION_MANAGER,
-    TEST_LAYER,
-    TEST_SCENE,
-    TEST_PARALLAX,
-    TEST_TILE_MAP,
-    TEST_INTERVAL,
-    TEST_LABEL,
-    TEST_TEXT_INPUT,
-    TEST_SPRITE,
-    TEST_SCHEDULER,
-    TEST_RENDERTEXTURE,
-    TEST_TEXTURE2D,
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-    TEST_CHIPMUNK,
-#endif
-    TEST_BOX2D,
-    TEST_BOX2DBED,
-    TEST_EFFECT_ADVANCE,
-    TEST_ACCELEROMRTER,
-    TEST_KEYPAD,
-    TEST_COCOSDENSHION,
-    TEST_PERFORMANCE,
-    TEST_ZWOPTEX,
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
-    TEST_CURL,
-#endif
-#endif
-    TEST_USERDEFAULT,
-    TEST_BUGS,
-    TEST_FONTS,
-    TEST_CURRENT_LANGUAGE,
-    TEST_TEXTURECACHE,
-    TEST_EXTENSIONS,
-    TEST_SHADER,
-    TEST_MUTITOUCH,
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-    TEST_CLIPPINGNODE,
-#endif
-    TEST_FILEUTILS,
-    TESTS_COUNT,    
-};
-
-const std::string g_aTestNames[TESTS_COUNT] = {
-    "ActionsTest",
-    "TransitionsTest",
-    "ActionsProgressTest",
-    "EffectsTest",
-    "ClickAndMoveTest",
-    "RotateWorldTest",
-    "ParticleTest",
-    "ActionsEaseTest",
-    "MotionStreakTest",
-    "DrawPrimitivesTest",
-    "NodeTest",
-    "TouchesTest",
-    "MenuTest",
-    "ActionManagerTest",
-    "LayerTest",
-    "SceneTest",
-    "ParallaxTest",
-    "TileMapTest",
-    "IntervalTest",
-    "LabelTest",
-    "TextInputTest",
-    "SpriteTest",
-    "SchedulerTest",
-    "RenderTextureTest",
-    "Texture2DTest",
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-    "ChipmunkTest",
-#endif
-    "Box2dTest",
-    "Box2dTestBed",
-    "EffectAdvancedTest",
-    "Accelerometer",
-    "KeypadTest",
-    "CocosDenshionTest",
-    "PerformanceTest",
-    "ZwoptexTest",
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
-    "CurlTest",
-#endif
-#endif
-    "UserDefaultTest",
-    "BugsTest",
-    "FontTest",
-    "CurrentLanguageTest",
-    "TextureCacheTest",
-    "ExtensionsTest",
-    "ShaderTest",
-    "MutiTouchTest",
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-    "ClippingNodeTest",
-#endif
-    "FileUtilsTest"
-};
+#include "SpineTest/SpineTest.h"
+#include "TexturePackerEncryptionTest/TextureAtlasEncryptionTest.h"
+#include "DataVisitorTest/DataVisitorTest.h"
+#include "ConfigurationTest/ConfigurationTest.h"
 
 #endif

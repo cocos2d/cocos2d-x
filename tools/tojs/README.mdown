@@ -1,4 +1,4 @@
-How to Use cxx-generator
+How to Use bindings-generator
 ==================
 
 On Windows:
@@ -15,6 +15,6 @@ On Windows:
 On MAC:
 ----------
 
-* Please refer to https://github.com/funkaster/cxx-generator/blob/master/README.md
+* Please refer to https://github.com/cocos2d/bindings-generator/blob/master/README.md
 
 

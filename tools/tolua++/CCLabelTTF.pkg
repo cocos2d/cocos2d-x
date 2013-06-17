@@ -1,6 +1,9 @@
 
 class CCLabelTTF : public CCSprite
 {
+    CCLabelTTF();
+    ~CCLabelTTF();
+    bool init();
     void setString(const char *label);
     const char* getString(void);
 

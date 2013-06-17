@@ -2,8 +2,9 @@
 #define _ATLAS_TEST_H_
 
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
-class AtlasDemo : public CCLayer
+class AtlasDemo : public BaseTest
 {
 protected:
 
@@ -282,6 +283,16 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 };
+
+class TTFFontShadowAndStroke : public AtlasDemo
+{
+public:
+    TTFFontShadowAndStroke();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
 
 class Issue1343 : public AtlasDemo
 {

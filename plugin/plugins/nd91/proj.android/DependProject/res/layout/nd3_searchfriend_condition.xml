@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+  <LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" 
+		android:orientation ="vertical"
+		android:background="@drawable/nd3_bk1"
+		android:layout_marginTop="@dimen/nd3_option_margin_top"
+		style="@style/nd3_option_margin_style"		
+		>
+		
+		<!-- 性别 -->
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation ="horizontal"
+			android:gravity="center_vertical"
+			style="@style/nd3_option_item_margin_style"			
+			>
+			
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/nd3_more_info_tip_sex"
+				style="@style/nd3_option_textview_style"
+				>
+			</TextView>
+
+			<TextView
+				android:id="@+id/nd3_more_info_sex"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:singleLine="true"
+				android:hint="@string/nd3_no_constrait_tip"
+				style="@style/nd3_option_edittext_style"
+				android:textColor="@color/nd3_black"
+				>
+			</TextView>		
+				
+		</LinearLayout>
+
+		<!-- 分隔线 -->
+		<ImageView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/nd3_horizontal_line"
+			>
+		
+		</ImageView>	
+				
+		<!-- 年龄 -->
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation ="horizontal"
+			android:gravity="center_vertical"
+			style="@style/nd3_option_item_margin_style"			
+			>
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/nd3_age"
+				style="@style/nd3_option_textview_style"
+				>
+			</TextView>
+
+			<TextView
+				android:id="@+id/nd3_more_info_date"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:singleLine="true"
+				android:hint="@string/nd3_no_constrait_tip"
+				style="@style/nd3_option_edittext_style"
+				android:textColor="@color/nd3_black"
+				>
+			</TextView>
+						
+		</LinearLayout>
+
+		<!-- 分隔线 -->
+		<ImageView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/nd3_horizontal_line"
+			>
+		
+		</ImageView>	
+				
+		<!-- 居住地 -->
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation ="horizontal"
+			android:gravity="center_vertical"
+			style="@style/nd3_option_item_margin_style"			
+			>
+			
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/nd3_more_info_tip_address"
+				style="@style/nd3_option_textview_style"
+				>
+			</TextView>
+
+			<TextView
+				android:id="@+id/nd3_more_info_address"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:singleLine="true"
+				android:hint="@string/nd3_no_constrait_tip"
+				style="@style/nd3_option_edittext_style"
+				android:textColor="@color/nd3_black"
+				>
+			</TextView>
+					
+		</LinearLayout>
+							
+	</LinearLayout>
+</RelativeLayout>

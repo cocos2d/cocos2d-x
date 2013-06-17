@@ -19,8 +19,14 @@ LOCAL_SRC_FILES := ScriptingCore.cpp \
                    js_bindings_system_registration.cpp \
                    js_bindings_ccbreader.cpp \
                    js_bindings_core.cpp \
+                   js_bindings_opengl.cpp \
+                   jsb_opengl_functions.cpp \
+                   jsb_opengl_manual.cpp \
+                   jsb_opengl_registration.cpp \
                    generated/jsb_cocos2dx_auto.cpp \
-                   generated/jsb_cocos2dx_extension_auto.cpp 
+                   generated/jsb_cocos2dx_extension_auto.cpp \
+                   XMLHTTPRequest.cpp \
+                   jsb_websocket.cpp
 
 LOCAL_CFLAGS := -DCOCOS2D_JAVASCRIPT
 

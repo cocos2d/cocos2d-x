@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/nd3_more_info_layout"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent" 
+	android:orientation ="vertical"
+	>
+	
+	<!-- 头像 -->
+	<FrameLayout
+		android:id="@+id/nd3_more_info_portrait_layout"
+		android:layout_width="57dip"
+		android:layout_height="57dip"
+		android:background="@drawable/nd3_default_portrait"
+		android:layout_marginTop="@dimen/nd3_option_margin_top"
+		style="@style/nd3_option_margin_style"
+		>
+
+		<!-- 添加头像 -->
+		<TextView
+			android:id="@+id/nd3_more_info_portrait_add"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+			android:layout_gravity="center"
+			android:gravity="center"
+			android:text="@string/nd3_more_info_portrait_add"
+			android:textSize="@dimen/nd3_portrait_add_text_size"
+			android:textColor="@color/nd3_portrait_add_color"
+			>
+		</TextView>
+				
+		<!-- 头像 -->
+		<ImageView
+			android:id="@+id/nd3_more_info_portrait"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:visibility="gone" 
+			android:scaleType="centerInside"
+			>
+		</ImageView>
+		
+		<!-- 编辑头像 -->
+		<TextView
+			android:id="@+id/nd3_more_info_portrait_edit"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:layout_gravity="bottom|center_horizontal"
+			android:gravity="bottom|center_horizontal"
+			android:text="@string/nd3_more_info_portrait_edit"
+			android:textColor="@color/nd3_white"
+			android:background="@drawable/nd3_portrait_edit_bg"
+			android:visibility="visible" 
+			>
+		</TextView>
+		
+	</FrameLayout>
+
+	
+	<!-- 姓名、昵称 -->
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" 
+		android:orientation ="vertical"
+		android:background="@drawable/nd3_bk1"
+		style="@style/nd3_option_margin_style"		
+		>
+		
+		<!-- 姓名 -->
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation ="horizontal"
+			android:gravity="center_vertical"
+			style="@style/nd3_option_item_margin_style"			
+			>
+			
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/nd3_more_info_tip_real_name"
+				style="@style/nd3_option_textview_style"
+				android:maxLength="24"
+				>
+			</TextView>
+
+			<EditText
+				android:id="@+id/nd3_more_info_real_name"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:singleLine="true"
+				android:maxLength="24"
+				android:hint="@string/nd3_more_info_hint_real_name"
+				style="@style/nd3_option_edittext_style"
+				>
+			</EditText>		
+				
+		</LinearLayout>
+		
+		<!-- 分隔线 -->
+		<ImageView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/nd3_horizontal_line"
+			>
+		
+		</ImageView>	
+				
+		<!-- 昵称 -->
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation ="horizontal"
+			android:gravity="center_vertical"
+			style="@style/nd3_option_item_margin_style"			
+			>
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/nd3_more_info_tip_nickname"
+				style="@style/nd3_option_textview_style"
+				>
+			</TextView>
+
+			<EditText
+				android:id="@+id/nd3_more_info_nickname"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:singleLine="true"
+				android:maxLength="10"
+				android:hint="@string/nd3_more_info_hint_nickname"
+				style="@style/nd3_option_edittext_style"
+				>
+			</EditText>
+						
+		</LinearLayout>
+		
+	</LinearLayout>
+
+	<!-- 性别、生日、居住地 -->
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" 
+		android:orientation ="vertical"
+		android:background="@drawable/nd3_bk1"
+		style="@style/nd3_option_margin_style"		
+		>
+		
+		<!-- 性别 -->
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation ="horizontal"
+			android:gravity="center_vertical"
+			style="@style/nd3_option_item_margin_style"			
+			>
+			
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/nd3_more_info_tip_sex"
+				style="@style/nd3_option_textview_style"
+				>
+			</TextView>
+
+			<TextView
+				android:id="@+id/nd3_more_info_sex"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:singleLine="true"
+				android:textColor="@color/nd3_black"
+				android:hint="@string/nd3_more_info_hint_sex"
+				style="@style/nd3_option_edittext_style"
+				>
+			</TextView>		
+				
+		</LinearLayout>
+
+		<!-- 分隔线 -->
+		<ImageView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/nd3_horizontal_line"
+			>
+		
+		</ImageView>	
+				
+		<!-- 生日 -->
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation ="horizontal"
+			android:gravity="center_vertical"
+			style="@style/nd3_option_item_margin_style"			
+			>
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/nd3_more_info_tip_date"
+				style="@style/nd3_option_textview_style"
+				>
+			</TextView>
+
+			<TextView
+				android:id="@+id/nd3_more_info_date"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:singleLine="true"
+				android:textColor="@color/nd3_black"
+				android:hint="@string/nd3_more_info_hint_date"
+				style="@style/nd3_option_edittext_style"
+				>
+			</TextView>
+						
+		</LinearLayout>
+
+		<!-- 分隔线 -->
+		<ImageView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/nd3_horizontal_line"
+			>
+		
+		</ImageView>	
+				
+		<!-- 居住地 -->
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation ="horizontal"
+			android:gravity="center_vertical"
+			style="@style/nd3_option_item_margin_style"			
+			>
+			
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/nd3_more_info_tip_address"
+				style="@style/nd3_option_textview_style"
+				>
+			</TextView>
+
+			<TextView
+				android:id="@+id/nd3_more_info_address"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:singleLine="true"
+				android:textColor="@color/nd3_black"
+				android:hint="@string/nd3_more_info_hint_address"
+				style="@style/nd3_option_edittext_style"
+				>
+			</TextView>
+					
+		</LinearLayout>
+							
+	</LinearLayout>
+	 
+</LinearLayout>

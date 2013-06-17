@@ -5,12 +5,14 @@ TESTLAYER_CREATE_FUNC(TestResolutionDirectories);
 TESTLAYER_CREATE_FUNC(TestSearchPath);
 TESTLAYER_CREATE_FUNC(TestFilenameLookup);
 TESTLAYER_CREATE_FUNC(TestIsFileExist);
+TESTLAYER_CREATE_FUNC(TextWritePlist);
 
 static NEWTESTFUNC createFunctions[] = {
     CF(TestResolutionDirectories),
     CF(TestSearchPath),
     CF(TestFilenameLookup),
-    CF(TestIsFileExist)
+    CF(TestIsFileExist),
+    CF(TextWritePlist),
 };
 
 static int sceneIdx=-1;
@@ -63,31 +65,7 @@ void FileUtilsTestScene::runThisTest()
 
 void FileUtilsDemo::onEnter()
 {
-    CCLayer::onEnter();
-    
-    CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 32);
-    addChild(label);
-    label->setPosition(ccp(VisibleRect::center().x, VisibleRect::top().y-50));
-    
-    std::string subTitle = subtitle();
-    if(! subTitle.empty())
-    {
-        CCLabelTTF* l = CCLabelTTF::create(subTitle.c_str(), "Thonburi", 16);
-        addChild(l, 1);
-        l->setPosition(ccp(VisibleRect::center().x, VisibleRect::top().y-80));
-    }
-    
-    CCMenuItemImage *item1 = CCMenuItemImage::create("Images/b1.png", "Images/b2.png", this, menu_selector(FileUtilsDemo::backCallback));
-    CCMenuItemImage *item2 = CCMenuItemImage::create("Images/r1.png","Images/r2.png", this, menu_selector(FileUtilsDemo::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::create("Images/f1.png", "Images/f2.png", this, menu_selector(FileUtilsDemo::nextCallback) );
-    
-    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
-    menu->setPosition(CCPointZero);
-    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    
-    addChild(menu, 1);
+    BaseTest::onEnter();    
 }
 
 void FileUtilsDemo::backCallback(CCObject* pSender)
@@ -202,9 +180,11 @@ void TestSearchPath::onEnter()
     FILE* fp = fopen(fileName.c_str(), "wb");
     if (fp)
     {
-        fwrite(szBuf, 1, strlen(szBuf), fp);
+        size_t ret = fwrite(szBuf, 1, strlen(szBuf), fp);
+        CCAssert(ret == 0, "fwrite function returned nonzero value");
         fclose(fp);
-        CCLog("Writing file to writable path succeed.");
+        if (ret == 0)
+            CCLog("Writing file to writable path succeed.");
     }
     
     searchPaths.insert(searchPaths.begin(), writablePath);
@@ -226,7 +206,7 @@ void TestSearchPath::onEnter()
     
     // Gets external.txt from writable path
     string fullPath = sharedFileUtils->fullPathForFilename("external.txt");
-    CCLog("\nexternal file path = %s\n", fullPath.c_str());
+    CCLog("external file path = %s", fullPath.c_str());
     if (fullPath.length() > 0)
     {
         fp = fopen(fullPath.c_str(), "rb");
@@ -347,4 +327,64 @@ string TestIsFileExist::title()
 string TestIsFileExist::subtitle()
 {
     return "";
+}
+
+//#pragma mark - TestWritePlist
+
+void TextWritePlist::onEnter()
+{
+    FileUtilsDemo::onEnter();
+    CCDictionary *root = CCDictionary::create();
+    CCString *string = CCString::create("string element value");
+    root->setObject(string, "string element key");
+    
+    CCArray *array = CCArray::create();
+    
+    CCDictionary *dictInArray = CCDictionary::create();
+    dictInArray->setObject(CCString::create("string in dictInArray value 0"), "string in dictInArray key 0");
+    dictInArray->setObject(CCString::create("string in dictInArray value 1"), "string in dictInArray key 1");
+    array->addObject(dictInArray);
+    
+    array->addObject(CCString::create("string in array"));
+    
+    CCArray *arrayInArray = CCArray::create();
+    arrayInArray->addObject(CCString::create("string 0 in arrayInArray"));
+    arrayInArray->addObject(CCString::create("string 1 in arrayInArray"));
+    array->addObject(arrayInArray);
+    
+    root->setObject(array, "array");
+    
+    CCDictionary *dictInDict = CCDictionary::create();
+    dictInDict->setObject(CCString::create("string in dictInDict value"), "string in dictInDict key");
+    
+    root->setObject(dictInDict, "dictInDict");
+    
+    // end with /
+    std::string writablePath = CCFileUtils::sharedFileUtils()->getWritablePath();
+    std::string fullPath = writablePath + "text.plist";
+    if(root->writeToFile(fullPath.c_str()))
+        CCLog("see the plist file at %s", fullPath.c_str());
+    else
+        CCLog("write plist file failed");
+    
+    CCLabelTTF *label = CCLabelTTF::create(fullPath.c_str(), "Thonburi", 6);
+    this->addChild(label);
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    label->setPosition(ccp(winSize.width/2, winSize.height/3));
+}
+
+void TextWritePlist::onExit()
+{
+    FileUtilsDemo::onExit();
+}
+
+string TextWritePlist::title()
+{
+    return "FileUtils: CCDictionary to plist";
+}
+
+string TextWritePlist::subtitle()
+{
+    std::string writablePath = CCFileUtils::sharedFileUtils()->getWritablePath().c_str();
+    return ("See plist file at your writablePath");
 }

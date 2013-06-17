@@ -60,6 +60,16 @@ const char* CCAction::description()
     return CCString::createWithFormat("<CCAction | Tag = %d>", m_nTag)->getCString();
 }
 
+CCAction* CCAction::clone() const
+{
+	// XXX shall not happen
+	auto a = new CCAction(*this);
+	a->m_nTag = m_nTag;
+	a->m_pTarget = a->m_pOriginalTarget = NULL;
+	a->autorelease();
+	return a;
+}
+
 CCObject* CCAction::copyWithZone(CCZone *pZone)
 {
     CCZone *pNewZone = NULL;
@@ -110,6 +120,13 @@ void CCAction::update(float time)
 // FiniteTimeAction
 //
 
+CCFiniteTimeAction* CCFiniteTimeAction::clone() const
+{
+	auto a = new CCFiniteTimeAction(*this);
+	a->autorelease();
+	return a;
+}
+
 CCFiniteTimeAction *CCFiniteTimeAction::reverse()
 {
     CCLOG("cocos2d: FiniteTimeAction#reverse: Implement me");
@@ -119,6 +136,12 @@ CCFiniteTimeAction *CCFiniteTimeAction::reverse()
 //
 // Speed
 //
+CCSpeed::CCSpeed()
+: m_fSpeed(0.0)
+, m_pInnerAction(NULL)
+{
+}
+
 CCSpeed::~CCSpeed()
 {
     CC_SAFE_RELEASE(m_pInnerAction);
@@ -143,6 +166,14 @@ bool CCSpeed::initWithAction(CCActionInterval *pAction, float fSpeed)
     m_pInnerAction = pAction;
     m_fSpeed = fSpeed;    
     return true;
+}
+
+CCSpeed *CCSpeed::clone(void) const
+{
+	auto a = new CCSpeed(*this);
+	a->initWithAction(m_pInnerAction->clone(), m_fSpeed);
+	a->autorelease();
+	return  a;
 }
 
 CCObject *CCSpeed::copyWithZone(CCZone *pZone)
@@ -223,12 +254,21 @@ CCFollow* CCFollow::create(CCNode *pFollowedNode, const CCRect& rect/* = CCRectZ
     return NULL;
 }
 
+CCFollow* CCFollow::clone(void) const
+{
+	auto a = new CCFollow(*this);
+	a->initWithTarget(m_pobFollowedNode, _worldRect);
+	a->autorelease();
+	return a;
+}
+
 bool CCFollow::initWithTarget(CCNode *pFollowedNode, const CCRect& rect/* = CCRectZero*/)
 {
     CCAssert(pFollowedNode != NULL, "");
  
     pFollowedNode->retain();
     m_pobFollowedNode = pFollowedNode;
+	_worldRect = rect;
     if (rect.equals(CCRectZero))
     {
         m_bBoundarySet = false;
