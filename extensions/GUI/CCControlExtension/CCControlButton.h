@@ -80,7 +80,7 @@ protected:
     CC_SYNTHESIZE_RETAIN(CCNode*, m_titleLabel, TitleLabel);
 
     /** The current background sprite. */
-    CC_SYNTHESIZE_RETAIN(CCScale9Sprite*, m_backgroundSprite, BackgroundSprite);
+    CC_SYNTHESIZE_RETAIN(CCNode*, m_backgroundSprite, BackgroundSprite);
 
     /** The prefered size of the button, if label is larger it will be expanded. */
     CC_PROPERTY(CCSize, m_preferredSize, PreferredSize);
@@ -121,18 +121,18 @@ public:
 
 
 public:
-    virtual bool init();
-    virtual bool initWithLabelAndBackgroundSprite(CCNode* label, CCScale9Sprite* backgroundSprite);
+    virtual bool init(bool is9Patch = true);
+    virtual bool initWithLabelAndBackgroundSprite(CCNode* label, CCNode* pBackgroundSprite);
     
-    static CCControlButton* create(CCNode* label, CCScale9Sprite* backgroundSprite);
+    static CCControlButton* create(CCNode* label, CCNode* pBackgroundSprite);
     
-    virtual bool initWithTitleAndFontNameAndFontSize(std::string title, const char * fontName, float fontSize);
+    virtual bool initWithTitleAndFontNameAndFontSize(std::string title, const char * fontName, float fontSize, bool is9Patch = true);
 
-    static CCControlButton* create(std::string title, const char * fontName, float fontSize);
+    static CCControlButton* create(std::string title, const char * fontName, float fontSize, bool is9Patch = true);
     
-    virtual bool initWithBackgroundSprite(CCScale9Sprite* sprite);
+    virtual bool initWithBackgroundSprite(CCNode* pSprite);
 
-    static CCControlButton* create(CCScale9Sprite* sprite);
+    static CCControlButton* create(CCNode* pSprite);
     
     //events
     virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
@@ -221,7 +221,7 @@ public:
     * @param state The state that uses the background sprite. Possible values are
     * described in "CCControlState".
     */
-    virtual CCScale9Sprite* getBackgroundSpriteForState(CCControlState state);
+    virtual CCNode* getBackgroundSpriteForState(CCControlState state);
 
     /**
     * Sets the background sprite to use for the specified button state.
@@ -230,7 +230,7 @@ public:
     * @param state The state that uses the specified image. The values are described
     * in "CCControlState".
     */
-    virtual void setBackgroundSpriteForState(CCScale9Sprite* sprite, CCControlState state);
+    virtual void setBackgroundSpriteForState(CCNode* pSprite, CCControlState state);
 
     /**
      * Sets the background spriteFrame to use for the specified button state.
@@ -239,9 +239,9 @@ public:
      * @param state The state that uses the specified image. The values are described
      * in "CCControlState".
      */
-    virtual void setBackgroundSpriteFrameForState(CCSpriteFrame * spriteFrame, CCControlState state);
+    virtual void setBackgroundSpriteFrameForState(CCSpriteFrame * spriteFrame, CCControlState state,bool is9Patch = true);
 
-    static CCControlButton* create();
+    static CCControlButton* create( bool is9Patch = true);
 };
 
 // end of GUI group

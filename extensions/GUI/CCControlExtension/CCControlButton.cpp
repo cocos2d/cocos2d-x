@@ -43,18 +43,18 @@ enum
 };
 
 CCControlButton::CCControlButton()
-: m_currentTitle(NULL)
+: m_currentTitle(nullptr)
 , m_currentTitleColor(ccWHITE)
 , m_doesAdjustBackgroundImage(false)
-, m_titleLabel(NULL)
-, m_backgroundSprite(NULL)
+, m_titleLabel(nullptr)
+, m_backgroundSprite(nullptr)
 , m_zoomOnTouchDown(false)
 , m_isPushed(false)
 , m_bParentInited(false)
-, m_titleDispatchTable(NULL)
-, m_titleColorDispatchTable(NULL)
-, m_titleLabelDispatchTable(NULL)
-, m_backgroundSpriteDispatchTable(NULL)
+, m_titleDispatchTable(nullptr)
+, m_titleColorDispatchTable(nullptr)
+, m_titleLabelDispatchTable(nullptr)
+, m_backgroundSpriteDispatchTable(nullptr)
 , m_marginV(CCControlButtonMarginTB)
 , m_marginH(CCControlButtonMarginLR)
 {
@@ -74,20 +74,29 @@ CCControlButton::~CCControlButton()
 
 //initialisers
 
-bool CCControlButton::init()
+bool CCControlButton::init(bool is9Patch /*= true*/)
 {
-    return this->initWithLabelAndBackgroundSprite(CCLabelTTF::create("", "Helvetica", 12), CCScale9Sprite::create());
+    CCNode* pBackgroundSprite;
+    if(is9Patch)
+    {
+    	pBackgroundSprite = CCScale9Sprite::create();
+    }
+    else
+    {
+    	pBackgroundSprite = CCSprite::create();
+    }
+    return this->initWithLabelAndBackgroundSprite(CCLabelTTF::create("", "Helvetica", 12), pBackgroundSprite);
 }
 
-bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Sprite* backgroundSprite)
+bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* pNode, CCNode* pBackgroundSprite)
 {
     if (CCControl::init())
     {
-        CCAssert(node != NULL, "Label must not be nil.");
-        CCLabelProtocol* label = dynamic_cast<CCLabelProtocol*>(node);
-        CCRGBAProtocol* rgbaLabel = dynamic_cast<CCRGBAProtocol*>(node);
-        CCAssert(backgroundSprite != NULL, "Background sprite must not be nil.");
-        CCAssert(label != NULL || rgbaLabel!=NULL || backgroundSprite != NULL, "");
+        CCAssert(pNode != nullptr, "Label must not be nil.");
+        CCLabelProtocol* pLabel = dynamic_cast<CCLabelProtocol*>(pNode);
+        CCRGBAProtocol* pRgbaLabel = dynamic_cast<CCRGBAProtocol*>(pNode);
+        CCAssert(pBackgroundSprite != nullptr, "Background sprite must not be nil.");
+        CCAssert(pLabel != nullptr || pRgbaLabel!=nullptr || pBackgroundSprite != nullptr, "");
         
         m_bParentInited = true;
 
@@ -101,11 +110,14 @@ bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Spr
         m_isPushed = false;
         m_zoomOnTouchDown = true;
 
-        m_currentTitle=NULL;
+        m_currentTitle=nullptr;
 
-        // Adjust the background image by default
-        setAdjustBackgroundImage(true);
-        setPreferredSize(CCSizeZero);
+        // Adjust the background image by default if we have CCScale9Sprite
+        setAdjustBackgroundImage(dynamic_cast<CCScale9Sprite*>(pBackgroundSprite) != nullptr);
+
+        setPreferredSize(m_doesAdjustBackgroundImage ?
+        	CCSizeZero
+        	:pBackgroundSprite->boundingBox().size);
         // Zooming button by default
         m_zoomOnTouchDown = true;
         
@@ -114,8 +126,8 @@ bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Spr
         setAnchorPoint(ccp(0.5f, 0.5f));
         
         // Set the nodes
-        setTitleLabel(node);
-        setBackgroundSprite(backgroundSprite);
+        setTitleLabel(pNode);
+        setBackgroundSprite(pBackgroundSprite);
 
         // Set the default color and opacity
         setColor(ccc3(255.0f, 255.0f, 255.0f));
@@ -124,12 +136,12 @@ bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Spr
         
         // Initialize the dispatch table
         
-        CCString* tempString = CCString::create(label->getString());
+        CCString* pTempString = CCString::create(pLabel->getString());
         //tempString->autorelease();
-        setTitleForState(tempString, CCControlStateNormal);
-        setTitleColorForState(rgbaLabel->getColor(), CCControlStateNormal);
-        setTitleLabelForState(node, CCControlStateNormal);
-        setBackgroundSpriteForState(backgroundSprite, CCControlStateNormal);
+        setTitleForState(pTempString, CCControlStateNormal);
+        setTitleColorForState(pRgbaLabel->getColor(), CCControlStateNormal);
+        setTitleLabelForState(pNode, CCControlStateNormal);
+        setBackgroundSpriteForState(pBackgroundSprite, CCControlStateNormal);
         
         setLabelAnchorPoint(ccp(0.5f, 0.5f));
 
@@ -145,38 +157,47 @@ bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Spr
     }
 }
 
-CCControlButton* CCControlButton::create(CCNode* label, CCScale9Sprite* backgroundSprite)
+CCControlButton* CCControlButton::create(CCNode* pLabel, CCNode* pBackgroundSprite)
 {
     CCControlButton *pRet = new CCControlButton();
-    pRet->initWithLabelAndBackgroundSprite(label, backgroundSprite);
+    pRet->initWithLabelAndBackgroundSprite(pLabel, pBackgroundSprite);
     pRet->autorelease();
     return pRet;
 }
 
-bool CCControlButton::initWithTitleAndFontNameAndFontSize(string title, const char * fontName, float fontSize)
+bool CCControlButton::initWithTitleAndFontNameAndFontSize(string title, const char * fontName, float fontSize, bool is9Patch /*= true*/)
 {
     CCLabelTTF *label = CCLabelTTF::create(title.c_str(), fontName, fontSize);
-    return initWithLabelAndBackgroundSprite(label, CCScale9Sprite::create());
+    CCNode* pBackgroundSprite;
+    if(is9Patch)
+    {
+    	pBackgroundSprite = CCScale9Sprite::create();
+    }
+    else
+    {
+    	pBackgroundSprite = CCSprite::create();
+    }
+    return initWithLabelAndBackgroundSprite(label, pBackgroundSprite);
 }
 
-CCControlButton* CCControlButton::create(string title, const char * fontName, float fontSize)
+CCControlButton* CCControlButton::create(string title, const char * fontName, float fontSize, bool is9Patch /*= true*/)
 {
     CCControlButton *pRet = new CCControlButton();
-    pRet->initWithTitleAndFontNameAndFontSize(title, fontName, fontSize);
+    pRet->initWithTitleAndFontNameAndFontSize(title, fontName, fontSize,is9Patch);
     pRet->autorelease();
     return pRet;
 }
 
-bool CCControlButton::initWithBackgroundSprite(CCScale9Sprite* sprite)
+bool CCControlButton::initWithBackgroundSprite(CCNode* pSprite)
 {
     CCLabelTTF *label = CCLabelTTF::create("", "Arial", 30);//
-    return initWithLabelAndBackgroundSprite(label, sprite);
+    return initWithLabelAndBackgroundSprite(label, pSprite);
 }
 
-CCControlButton* CCControlButton::create(CCScale9Sprite* sprite)
+CCControlButton* CCControlButton::create(CCNode* pSprite)
 {
     CCControlButton *pRet = new CCControlButton();
-    pRet->initWithBackgroundSprite(sprite);
+    pRet->initWithBackgroundSprite(pSprite);
     pRet->autorelease();
     return pRet;
 }
@@ -248,11 +269,15 @@ void CCControlButton::setPreferredSize(CCSize size)
     else
     {
         m_doesAdjustBackgroundImage = false;
-        CCDictElement * item = NULL;
+        CCDictElement * item = nullptr;
         CCDICT_FOREACH(m_backgroundSpriteDispatchTable, item)
         {
-            CCScale9Sprite* sprite = (CCScale9Sprite*)item->getObject();
-            sprite->setPreferredSize(size);
+            CCObject* pObject = item->getObject();
+            CCScale9Sprite* pSprite = dynamic_cast<CCScale9Sprite*>(pObject);
+            if(pSprite != nullptr)
+            {
+            	pSprite->setPreferredSize(size);
+            }
         }
     }
 
@@ -284,7 +309,7 @@ CCPoint CCControlButton::getLabelAnchorPoint()
 void CCControlButton::setLabelAnchorPoint(CCPoint labelAnchorPoint)
 {
     this->m_labelAnchorPoint = labelAnchorPoint;
-    if (m_titleLabel != NULL)
+    if (m_titleLabel != nullptr)
     {
         this->m_titleLabel->setAnchorPoint(labelAnchorPoint);
     }
@@ -292,7 +317,7 @@ void CCControlButton::setLabelAnchorPoint(CCPoint labelAnchorPoint)
 
 CCString* CCControlButton::getTitleForState(CCControlState state)
 {
-    if (m_titleDispatchTable != NULL)
+    if (m_titleDispatchTable != nullptr)
     {
         CCString* title=(CCString*)m_titleDispatchTable->objectForKey(state);    
         if (title)
@@ -326,7 +351,7 @@ const ccColor3B CCControlButton::getTitleColorForState(CCControlState state)
     ccColor3B returnColor = ccWHITE;
     do 
     {
-        CC_BREAK_IF(NULL == m_titleColorDispatchTable);
+        CC_BREAK_IF(nullptr == m_titleColorDispatchTable);
         CCColor3bObject* colorObject=(CCColor3bObject*)m_titleColorDispatchTable->objectForKey(state);    
         if (colorObject)
         {
@@ -404,7 +429,7 @@ const char * CCControlButton::getTitleTTFForState(CCControlState state)
 {
     CCLabelProtocol* label = dynamic_cast<CCLabelProtocol*>(this->getTitleLabelForState(state));
     CCLabelTTF* labelTTF = dynamic_cast<CCLabelTTF*>(label);
-    if(labelTTF != 0)
+    if(labelTTF != nullptr)
     {
         return labelTTF->getFontName();
     }
@@ -420,7 +445,7 @@ void CCControlButton::setTitleTTFSizeForState(float size, CCControlState state)
     if(label)
     {
         CCLabelTTF* labelTTF = dynamic_cast<CCLabelTTF*>(label);
-        if(labelTTF != 0)
+        if(labelTTF != nullptr)
         {
             return labelTTF->setFontSize(size);
         }
@@ -431,7 +456,7 @@ float CCControlButton::getTitleTTFSizeForState(CCControlState state)
 {
     CCLabelProtocol* label = dynamic_cast<CCLabelProtocol*>(this->getTitleLabelForState(state));
     CCLabelTTF* labelTTF = dynamic_cast<CCLabelTTF*>(label);
-    if(labelTTF != 0)
+    if(labelTTF != nullptr)
     {
         return labelTTF->getFontSize();
     }
@@ -455,7 +480,7 @@ const char * CCControlButton::getTitleBMFontForState(CCControlState state)
 {
     CCLabelProtocol* label = dynamic_cast<CCLabelProtocol*>(this->getTitleLabelForState(state));
     CCLabelBMFont* labelBMFont = dynamic_cast<CCLabelBMFont*>(label);
-    if(labelBMFont != 0)
+    if(labelBMFont != nullptr)
     {
         return labelBMFont->getFntFile();
     }
@@ -466,42 +491,45 @@ const char * CCControlButton::getTitleBMFontForState(CCControlState state)
 }
 
 
-CCScale9Sprite* CCControlButton::getBackgroundSpriteForState(CCControlState state)
+CCNode* CCControlButton::getBackgroundSpriteForState(CCControlState state)
 {
-    CCScale9Sprite* backgroundSprite = (CCScale9Sprite*)m_backgroundSpriteDispatchTable->objectForKey(state);    
-    if (backgroundSprite)
+    CCNode* pBackgroundSprite = (CCNode*)m_backgroundSpriteDispatchTable->objectForKey(state);
+    if (pBackgroundSprite)
     {
-        return backgroundSprite;
+        return pBackgroundSprite;
     }
-    return (CCScale9Sprite*)m_backgroundSpriteDispatchTable->objectForKey(CCControlStateNormal);
+    return (CCNode*)m_backgroundSpriteDispatchTable->objectForKey(CCControlStateNormal);
 }
 
 
-void CCControlButton::setBackgroundSpriteForState(CCScale9Sprite* sprite, CCControlState state)
+void CCControlButton::setBackgroundSpriteForState(CCNode* pSprite, CCControlState state)
 {
     CCSize oldPreferredSize = m_preferredSize;
 
-    CCScale9Sprite* previousBackgroundSprite = (CCScale9Sprite*)m_backgroundSpriteDispatchTable->objectForKey(state);
-    if (previousBackgroundSprite)
+    CCNode* pPreviousBackgroundSprite = (CCNode*)m_backgroundSpriteDispatchTable->objectForKey(state);
+    if (pPreviousBackgroundSprite)
     {
-        removeChild(previousBackgroundSprite, true);
+        removeChild(pPreviousBackgroundSprite, true);
         m_backgroundSpriteDispatchTable->removeObjectForKey(state);
     }
 
-    m_backgroundSpriteDispatchTable->setObject(sprite, state);
-    sprite->setVisible(false);
-    sprite->setAnchorPoint(ccp(0.5f, 0.5f));
-    addChild(sprite);
+    m_backgroundSpriteDispatchTable->setObject(pSprite, state);
+    pSprite->setVisible(false);
+    pSprite->setAnchorPoint(ccp(0.5f, 0.5f));
+    addChild(pSprite);
 
-    if (this->m_preferredSize.width != 0 || this->m_preferredSize.height != 0)
+    CCScale9Sprite* pScaleSprite = dynamic_cast<CCScale9Sprite*>(pSprite);
+
+    if (pScaleSprite != nullptr && (this->m_preferredSize.width != 0 || this->m_preferredSize.height != 0))
     {
+
         if (oldPreferredSize.equals(m_preferredSize))
         {
             // Force update of preferred size
-            sprite->setPreferredSize(CCSizeMake(oldPreferredSize.width+1, oldPreferredSize.height+1));
+        	pScaleSprite->setPreferredSize(CCSizeMake(oldPreferredSize.width+1, oldPreferredSize.height+1));
         }
         
-        sprite->setPreferredSize(this->m_preferredSize);
+        pScaleSprite->setPreferredSize(this->m_preferredSize);
     }
 
     // If the current state if equal to the given state we update the layout
@@ -511,10 +539,18 @@ void CCControlButton::setBackgroundSpriteForState(CCScale9Sprite* sprite, CCCont
     }
 }
 
-void CCControlButton::setBackgroundSpriteFrameForState(CCSpriteFrame * spriteFrame, CCControlState state)
+void CCControlButton::setBackgroundSpriteFrameForState(CCSpriteFrame * pSpriteFrame, CCControlState state,bool is9Patch/* = true*/)
 {
-    CCScale9Sprite * sprite = CCScale9Sprite::createWithSpriteFrame(spriteFrame);
-    this->setBackgroundSpriteForState(sprite, state);
+	CCNode* pSprite;
+	if(is9Patch)
+	{
+		pSprite = CCScale9Sprite::createWithSpriteFrame(pSpriteFrame);
+	}
+	else
+	{
+		pSprite= CCSprite::createWithSpriteFrame(pSpriteFrame);
+	}
+    this->setBackgroundSpriteForState(pSprite, state);
 }
 
 
@@ -524,7 +560,7 @@ void CCControlButton::needsLayout()
         return;
     }
     // Hide the background and the label
-    if (m_titleLabel != NULL) {
+    if (m_titleLabel != nullptr) {
         m_titleLabel->setVisible(false);
     }
     if (m_backgroundSprite) {
@@ -553,21 +589,21 @@ void CCControlButton::needsLayout()
     {
         rgbaLabel->setColor(m_currentTitleColor);
     }
-    if (m_titleLabel != NULL)
+    if (m_titleLabel != nullptr)
     {
         m_titleLabel->setPosition(ccp (getContentSize().width / 2, getContentSize().height / 2));
     }
     
     // Update the background sprite
     this->setBackgroundSprite(this->getBackgroundSpriteForState(m_eState));
-    if (m_backgroundSprite != NULL)
+    if (m_backgroundSprite != nullptr)
     {
         m_backgroundSprite->setPosition(ccp (getContentSize().width / 2, getContentSize().height / 2));
     }
    
     // Get the title label size
     CCSize titleLabelSize;
-    if (m_titleLabel != NULL)
+    if (m_titleLabel != nullptr)
     {
         titleLabelSize = m_titleLabel->boundingBox().size;
     }
@@ -576,17 +612,17 @@ void CCControlButton::needsLayout()
     if (m_doesAdjustBackgroundImage)
     {
         // Add the margins
-        if (m_backgroundSprite != NULL)
+        if (m_backgroundSprite != nullptr)
         {
             m_backgroundSprite->setContentSize(CCSizeMake(titleLabelSize.width + m_marginH * 2, titleLabelSize.height + m_marginV * 2));
         }
     } 
-    else
+    else if(m_backgroundSprite != nullptr)
     {        
         //TODO: should this also have margins if one of the preferred sizes is relaxed?
-        if (m_backgroundSprite != NULL)
+        if (dynamic_cast<CCScale9Sprite*>(m_backgroundSprite))
         {
-            CCSize preferredSize = m_backgroundSprite->getPreferredSize();
+            CCSize preferredSize = ((CCScale9Sprite*)m_backgroundSprite)->getPreferredSize();
             if (preferredSize.width <= 0)
             {
                 preferredSize.width = titleLabelSize.width;
@@ -598,31 +634,36 @@ void CCControlButton::needsLayout()
 
             m_backgroundSprite->setContentSize(preferredSize);
         }
+        else
+        {
+        	CCSize size = m_backgroundSprite->boundingBox().size;
+        	m_backgroundSprite->setContentSize(size);
+        }
     }
     
     // Set the content size
     CCRect rectTitle;
-    if (m_titleLabel != NULL)
+    if (m_titleLabel != nullptr)
     {
         rectTitle = m_titleLabel->boundingBox();
     }
     CCRect rectBackground;
-    if (m_backgroundSprite != NULL)
+    if (m_backgroundSprite != nullptr)
     {
         rectBackground = m_backgroundSprite->boundingBox();
     }
 
     CCRect maxRect = CCControlUtils::CCRectUnion(rectTitle, rectBackground);
-    setContentSize(CCSizeMake(maxRect.size.width, maxRect.size.height));        
+    CCControl::setContentSize(maxRect.size);
     
-    if (m_titleLabel != NULL)
+    if (m_titleLabel != nullptr)
     {
         m_titleLabel->setPosition(ccp(getContentSize().width/2, getContentSize().height/2));
         // Make visible the background and the label
         m_titleLabel->setVisible(true);
     }
   
-    if (m_backgroundSprite != NULL)
+    if (m_backgroundSprite != nullptr)
     {
         m_backgroundSprite->setPosition(ccp(getContentSize().width/2, getContentSize().height/2));
         m_backgroundSprite->setVisible(true);   
@@ -633,12 +674,12 @@ void CCControlButton::needsLayout()
 
 bool CCControlButton::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
-    if (!isTouchInside(pTouch) || !isEnabled() || !isVisible() || !hasVisibleParents() )
+	if (!isTouchInside(pTouch) || !isEnabled() || !isVisible() || !hasVisibleParents() )
     {
         return false;
     }
     
-    for (CCNode *c = this->m_pParent; c != NULL; c = c->getParent())
+    for (CCNode *c = this->m_pParent; c != nullptr; c = c->getParent())
     {
         if (c->isVisible() == false)
         {
@@ -716,11 +757,14 @@ void CCControlButton::setOpacity(GLubyte opacity)
 //            pNode->setOpacity(opacity);
 //        }
 //    }
-    CCDictElement * item = NULL;
+    CCDictElement * item = nullptr;
     CCDICT_FOREACH(m_backgroundSpriteDispatchTable, item)
     {
-        CCScale9Sprite* sprite = (CCScale9Sprite*)item->getObject();
-        sprite->setOpacity(opacity);
+    	CCRGBAProtocol* pSprite = dynamic_cast<CCRGBAProtocol*>(item->getObject());
+    	if(pSprite != nullptr)
+    	{
+    		pSprite->setOpacity(opacity);
+    	}
     }
 }
 
@@ -733,11 +777,14 @@ void CCControlButton::setColor(const ccColor3B & color)
 {
 	CCControl::setColor(color);
 	
-	CCDictElement * item = NULL;
+	CCDictElement * item = nullptr;
     CCDICT_FOREACH(m_backgroundSpriteDispatchTable, item)
     {
-        CCScale9Sprite* sprite = (CCScale9Sprite*)item->getObject();
-        sprite->setColor(color);
+    	CCRGBAProtocol* pSprite = dynamic_cast<CCRGBAProtocol*>(item->getObject());
+    	if(pSprite != nullptr)
+    	{
+    		pSprite->setColor(color);
+    	}
     }
 }
 
@@ -753,16 +800,16 @@ void CCControlButton::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
     sendActionsForControlEvents(CCControlEventTouchCancel);
 }
 
-CCControlButton* CCControlButton::create()
+CCControlButton* CCControlButton::create( bool is9Patch /*= true*/)
 {
     CCControlButton *pControlButton = new CCControlButton();
-    if (pControlButton && pControlButton->init())
+    if (pControlButton && pControlButton->init(is9Patch))
     {
         pControlButton->autorelease();
         return pControlButton;
     }
     CC_SAFE_DELETE(pControlButton);
-    return NULL;
+    return nullptr;
 }
 
 NS_CC_EXT_END
