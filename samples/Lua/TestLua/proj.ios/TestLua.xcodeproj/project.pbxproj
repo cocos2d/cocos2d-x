@@ -144,6 +144,7 @@
 		15C1569C1683138E00D239F2 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 15C156951683138E00D239F2 /* Icon-72.png */; };
 		15C1569D1683138E00D239F2 /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = 15C156961683138E00D239F2 /* Icon-114.png */; };
 		15C1569E1683138E00D239F2 /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = 15C156971683138E00D239F2 /* Icon-144.png */; };
+		15FCDF6817699EF700383143 /* LuaOpengl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FCDF6617699EF700383143 /* LuaOpengl.cpp */; };
 		1AA88D13171E35AA0023E7B2 /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AA88D12171E35AA0023E7B2 /* libluajit.a */; };
 		1AD263A2168350490089000C /* luaScript in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263A1168350490089000C /* luaScript */; };
 		1AD263BB1683506D0089000C /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263A31683506C0089000C /* animations */; };
@@ -483,6 +484,8 @@
 		15C156951683138E00D239F2 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = SOURCE_ROOT; };
 		15C156961683138E00D239F2 /* Icon-114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-114.png"; sourceTree = SOURCE_ROOT; };
 		15C156971683138E00D239F2 /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-144.png"; sourceTree = SOURCE_ROOT; };
+		15FCDF6617699EF700383143 /* LuaOpengl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaOpengl.cpp; sourceTree = "<group>"; };
+		15FCDF6717699EF700383143 /* LuaOpengl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaOpengl.h; sourceTree = "<group>"; };
 		1AA88BA1171D30B00023E7B2 /* lauxlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lauxlib.h; sourceTree = "<group>"; };
 		1AA88BA2171D30B00023E7B2 /* lua.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua.h; sourceTree = "<group>"; };
 		1AA88BA3171D30B00023E7B2 /* luaconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luaconf.h; sourceTree = "<group>"; };
@@ -1091,6 +1094,8 @@
 		46C1007916BF786A00F74D54 /* cocos2dx_support */ = {
 			isa = PBXGroup;
 			children = (
+				15FCDF6617699EF700383143 /* LuaOpengl.cpp */,
+				15FCDF6717699EF700383143 /* LuaOpengl.h */,
 				46C1007A16BF786A00F74D54 /* CCLuaBridge.cpp */,
 				46C1007B16BF786A00F74D54 /* CCLuaBridge.h */,
 				46C1007C16BF786A00F74D54 /* CCLuaEngine.cpp */,
@@ -1479,6 +1484,7 @@
 				46C1009116BF786A00F74D54 /* LuaCocos2d.cpp in Sources */,
 				46C1009216BF786A00F74D54 /* CCLuaObjcBridge.mm in Sources */,
 				46C1009316BF786A00F74D54 /* tolua_fix.c in Sources */,
+				15FCDF6817699EF700383143 /* LuaOpengl.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
