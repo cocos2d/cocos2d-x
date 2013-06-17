@@ -281,7 +281,7 @@ bool WebSocket::init(const Delegate& delegate,
         port = atoi(host.substr(pos+1, host.size()).c_str());
     }
     
-    pos = host.find("/", pos);
+    pos = host.find("/", 0);
     std::string path = "/";
     if(pos >= 0){
         path += host.substr(pos + 1, host.size());
@@ -290,14 +290,17 @@ bool WebSocket::init(const Delegate& delegate,
     pos = host.find(":");
     if(pos >= 0){
         host.erase(pos, host.size());
+    }else if((pos = host.find("/"))>=0) {
+    	host.erase(pos, host.size());
     }
-
     
     _host = host;
     _port = port;
     _path = path;
     _SSLConnection = useSSL ? 1 : 0;
     
+    CCLOG("[WebSocket::init] _host: %s, _port: %d, _path: %s", _host.c_str(), _port, _path.c_str());
+
     int protocolCount = 0;
     if (protocols && protocols->size() > 0)
     {
