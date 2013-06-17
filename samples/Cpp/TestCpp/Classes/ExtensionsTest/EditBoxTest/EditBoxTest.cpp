@@ -27,7 +27,7 @@ EditBoxTest::EditBoxTest()
     addChild(m_pTTFShowEditReturn);
     
     // Back Menu
-    CCMenuItemFont *itemBack = CCMenuItemFont::create("Back", std::bind( &EditBoxTest::toExtensionsMainLayer, this, std::placeholders::_1));
+    CCMenuItemFont *itemBack = CCMenuItemFont::create("Back", CC_CALLBACK_1(EditBoxTest::toExtensionsMainLayer, this));
     itemBack->setPosition(ccp(visibleOrigin.x+visibleSize.width - 50, visibleOrigin.y+25));
     CCMenu *menuBack = CCMenu::create(itemBack, NULL);
     menuBack->setPosition(CCPointZero);

@@ -87,7 +87,7 @@ local _allTests = {
     { isSupported = false,  name = "TextureCacheTest"       , create_func=      TextureCacheTestMain      },
     { isSupported = true,  name = "ExtensionsTest"         , create_func=        ExtensionsTestMain      },
     { isSupported = false,  name = "ShaderTest"             , create_func=            ShaderTestMain      },
-    { isSupported = false,  name = "MutiTouchTest"          , create_func=          MutiTouchTestMain          }
+    { isSupported = false,  name = "MutiTouchTest"          , create_func=          MutiTouchTestMain     }
 }
 
 local TESTS_COUNT = table.getn(_allTests)

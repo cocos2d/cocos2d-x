@@ -1078,7 +1078,7 @@ void ParticleDemo::onEnter(void)
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
-    CCMenuItemToggle* item4 = CCMenuItemToggle::createWithCallback( std::bind( &ParticleDemo::toggleCallback, this, std::placeholders::_1),
+    CCMenuItemToggle* item4 = CCMenuItemToggle::createWithCallback( CC_CALLBACK_1(ParticleDemo::toggleCallback, this),
                                                                CCMenuItemFont::create( "Free Movement" ),
                                                                CCMenuItemFont::create( "Relative Movement" ),
                                                                CCMenuItemFont::create( "Grouped Movement" ),

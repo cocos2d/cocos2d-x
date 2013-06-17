@@ -115,8 +115,8 @@ RenderTextureSave::RenderTextureSave()
 
     // Save Image menu
     CCMenuItemFont::setFontSize(16);
-    CCMenuItem *item1 = CCMenuItemFont::create("Save Image", std::bind( &RenderTextureSave::saveImage, this, std::placeholders::_1));
-    CCMenuItem *item2 = CCMenuItemFont::create("Clear", std::bind( &RenderTextureSave::clearImage, this, std::placeholders::_1));
+    CCMenuItem *item1 = CCMenuItemFont::create("Save Image", CC_CALLBACK_1(RenderTextureSave::saveImage, this));
+    CCMenuItem *item2 = CCMenuItemFont::create("Clear", CC_CALLBACK_1(RenderTextureSave::clearImage, this));
     CCMenu *menu = CCMenu::create(item1, item2, NULL);
     this->addChild(menu);
     menu->alignItemsVertically();
@@ -529,7 +529,7 @@ RenderTextureTargetNode::RenderTextureTargetNode()
     scheduleUpdate();
     
     // Toggle clear on / off
-    CCMenuItemFont *item = CCMenuItemFont::create("Clear On/Off", std::bind( &RenderTextureTargetNode::touched, this, std::placeholders::_1));
+    CCMenuItemFont *item = CCMenuItemFont::create("Clear On/Off", CC_CALLBACK_1(RenderTextureTargetNode::touched, this));
     CCMenu *menu = CCMenu::create(item, NULL);
     addChild(menu);
 

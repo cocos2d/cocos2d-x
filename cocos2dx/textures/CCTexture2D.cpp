@@ -89,27 +89,27 @@ CCTexture2D::~CCTexture2D()
     }
 }
 
-CCTexture2DPixelFormat CCTexture2D::getPixelFormat()
+CCTexture2DPixelFormat CCTexture2D::getPixelFormat() const
 {
     return m_ePixelFormat;
 }
 
-unsigned int CCTexture2D::getPixelsWide()
+unsigned int CCTexture2D::getPixelsWide() const
 {
     return m_uPixelsWide;
 }
 
-unsigned int CCTexture2D::getPixelsHigh()
+unsigned int CCTexture2D::getPixelsHigh() const
 {
     return m_uPixelsHigh;
 }
 
-GLuint CCTexture2D::getName()
+GLuint CCTexture2D::getName() const
 {
     return m_uName;
 }
 
-CCSize CCTexture2D::getContentSize()
+CCSize CCTexture2D::getContentSize() const
 {
 
     CCSize ret;
@@ -807,7 +807,7 @@ void CCTexture2D::setAliasTexParameters()
 
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    ccTexParams texParams = {m_bHasMipmaps?GL_NEAREST_MIPMAP_NEAREST:GL_NEAREST,GL_NEAREST,GL_NONE,GL_NONE};
+    ccTexParams texParams = {(GLuint)(m_bHasMipmaps?GL_NEAREST_MIPMAP_NEAREST:GL_NEAREST),GL_NEAREST,GL_NONE,GL_NONE};
     VolatileTexture::setTexParameters(this, &texParams);
 #endif
 }
@@ -827,7 +827,7 @@ void CCTexture2D::setAntiAliasTexParameters()
 
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    ccTexParams texParams = {m_bHasMipmaps?GL_LINEAR_MIPMAP_NEAREST:GL_LINEAR,GL_LINEAR,GL_NONE,GL_NONE};
+    ccTexParams texParams = {(GLuint)(m_bHasMipmaps?GL_LINEAR_MIPMAP_NEAREST:GL_LINEAR),GL_LINEAR,GL_NONE,GL_NONE};
     VolatileTexture::setTexParameters(this, &texParams);
 #endif
 }
@@ -875,7 +875,6 @@ const char* CCTexture2D::stringForFormat()
 	return  NULL;
 }
 
-
 //
 // Texture options for images that contains alpha
 //
@@ -885,7 +884,6 @@ void CCTexture2D::setDefaultAlphaPixelFormat(CCTexture2DPixelFormat format)
 {
     g_defaultAlphaPixelFormat = format;
 }
-
 
 CCTexture2DPixelFormat CCTexture2D::defaultAlphaPixelFormat()
 {

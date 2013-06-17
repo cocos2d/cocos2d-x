@@ -259,22 +259,22 @@ void CCNotificationObserver::performSelector(CCObject *obj)
     }
 }
 
-CCObject *CCNotificationObserver::getTarget()
+CCObject *CCNotificationObserver::getTarget() const
 {
     return m_target;
 }
 
-SEL_CallFuncO CCNotificationObserver::getSelector()
+SEL_CallFuncO CCNotificationObserver::getSelector() const
 {
     return m_selector;
 }
 
-char *CCNotificationObserver::getName()
+char *CCNotificationObserver::getName() const
 {
     return m_name;
 }
 
-CCObject *CCNotificationObserver::getObject()
+CCObject *CCNotificationObserver::getObject() const
 {
     return m_object;
 }
