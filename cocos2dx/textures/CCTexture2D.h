@@ -73,17 +73,7 @@ typedef enum {
 
 
     //! Default texture format: RGBA8888
-    kCCTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_RGBA8888,
-
-    // backward compatibility stuff
-    kTexture2DPixelFormat_RGBA8888 = kCCTexture2DPixelFormat_RGBA8888,
-    kTexture2DPixelFormat_RGB888 = kCCTexture2DPixelFormat_RGB888,
-    kTexture2DPixelFormat_RGB565 = kCCTexture2DPixelFormat_RGB565,
-    kTexture2DPixelFormat_A8 = kCCTexture2DPixelFormat_A8,
-    kTexture2DPixelFormat_RGBA4444 = kCCTexture2DPixelFormat_RGBA4444,
-    kTexture2DPixelFormat_RGB5A1 = kCCTexture2DPixelFormat_RGB5A1,
-    kTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_Default
-
+    kCCTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_RGBA8888
 } CCTexture2DPixelFormat;
 
 class CCGLProgram;
