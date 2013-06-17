@@ -95,15 +95,18 @@ unsigned int SimpleAudioEngineOpenSL::playEffect(const char* pszFilePath, bool b
         if (s_pOpenSL->getEffectState(soundID) == PLAYSTATE_PLAYING)
         {
             // recreate an effect player
-            s_pOpenSL->recreatePlayer(pszFilePath);
+           if (s_pOpenSL->recreatePlayer(pszFilePath))
+           {
+           	s_pOpenSL->setEffectLooping(soundID, bLoop);
+           }
         }
         else
         {
             s_pOpenSL->setEffectState(soundID, PLAYSTATE_STOPPED);
             s_pOpenSL->setEffectState(soundID, PLAYSTATE_PLAYING);
+            s_pOpenSL->setEffectLooping(soundID, bLoop);
         }
 
-        s_pOpenSL->setEffectLooping(soundID, bLoop);
     }
 
     return soundID;
