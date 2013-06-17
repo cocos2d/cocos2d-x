@@ -107,14 +107,14 @@ private:
 	void			adjustTextFieldPosition();
     void            placeInactiveLabels();
 	
-    CCLabelTTF*     m_pLabel;
-    CCLabelTTF*     m_pLabelPlaceHolder;
-    CCSize          m_tContentSize;
-    CCPoint         m_obPosition;
-    CCPoint         m_obAnchorPoint;
-    EditBoxImplIOS* m_systemControl;
-    int             m_nMaxTextLength;
-    bool            m_bInRetinaMode;
+    CCLabelTTF*     _label;
+    CCLabelTTF*     _labelPlaceHolder;
+    CCSize          _contentSize;
+    CCPoint         _position;
+    CCPoint         _anchorPoint;
+    EditBoxImplIOS* _systemControl;
+    int             _maxTextLength;
+    bool            _inRetinaMode;
 };
 
 

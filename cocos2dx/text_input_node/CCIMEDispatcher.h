@@ -100,7 +100,7 @@ private:
     CCIMEDispatcher();
     
     class Impl;
-    Impl * m_pImpl;
+    Impl * _impl;
 };
 
 // end of input group

@@ -49,7 +49,7 @@ is turned on in CCDirector using:
 class CC_DLL CCTransitionPageTurn : public CCTransitionScene
 {
 protected:
-    bool    m_bBack;
+    bool    _back;
     
 public:
     CCTransitionPageTurn();

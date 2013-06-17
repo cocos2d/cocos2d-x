@@ -34,7 +34,7 @@ using namespace Tizen::System;
 
 // sharedApplication pointer
 CCApplication * CCApplication::sm_pSharedApplication = 0;
-long CCApplication::m_nAnimationInterval = 1000;
+long CCApplication::_animationInterval = 1000;
 
 CCApplication::CCApplication()
 {
@@ -61,12 +61,12 @@ int CCApplication::run()
 
 void CCApplication::setAnimationInterval(double interval)
 {
-    m_nAnimationInterval = interval * 1000.0f;
+    _animationInterval = interval * 1000.0f;
 }
 
 long CCApplication::getAnimationInterval()
 {
-    return m_nAnimationInterval;
+    return _animationInterval;
 }
 
 //////////////////////////////////////////////////////////////////////////

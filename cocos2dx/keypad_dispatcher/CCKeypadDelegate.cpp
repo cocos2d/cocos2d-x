@@ -34,14 +34,14 @@ NS_CC_BEGIN
 //------------------------------------------------------------------
 CCKeypadDelegate* CCKeypadHandler::getDelegate()
 {
-    return m_pDelegate;
+    return _delegate;
 }
 
 CCKeypadHandler::~CCKeypadHandler()
 {
-    if (m_pDelegate)
+    if (_delegate)
     {
-        dynamic_cast<CCObject*>(m_pDelegate)->release();
+        dynamic_cast<CCObject*>(_delegate)->release();
     }  
 }
 
@@ -52,18 +52,18 @@ void CCKeypadHandler::setDelegate(CCKeypadDelegate *pDelegate)
         dynamic_cast<CCObject*>(pDelegate)->retain();
     }
 
-    if (m_pDelegate)
+    if (_delegate)
     {
-        dynamic_cast<CCObject*>(m_pDelegate)->release();
+        dynamic_cast<CCObject*>(_delegate)->release();
     }
-    m_pDelegate = pDelegate;
+    _delegate = pDelegate;
 }
 
 bool CCKeypadHandler::initWithDelegate(CCKeypadDelegate *pDelegate)
 {
     CCAssert(pDelegate != NULL, "It's a wrong delegate!");
 
-    m_pDelegate = pDelegate;
+    _delegate = pDelegate;
     dynamic_cast<CCObject*>(pDelegate)->retain();
 
     return true;

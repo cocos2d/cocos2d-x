@@ -80,19 +80,19 @@ static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t leng
 //////////////////////////////////////////////////////////////////////////
 
 CCImage::CCImage()
-: m_nWidth(0)
-, m_nHeight(0)
-, m_nBitsPerComponent(0)
-, m_pData(0)
-, m_bHasAlpha(false)
-, m_bPreMulti(false)
+: _width(0)
+, _height(0)
+, _bitsPerComponent(0)
+, _data(0)
+, _hasAlpha(false)
+, _preMulti(false)
 {
 
 }
 
 CCImage::~CCImage()
 {
-    CC_SAFE_DELETE_ARRAY(m_pData);
+    CC_SAFE_DELETE_ARRAY(_data);
 }
 
 bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
@@ -109,11 +109,11 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
     int size = 4 * (iSurf->w * iSurf->h);
     bRet = _initWithRawData((void*)iSurf->pixels, size, iSurf->w, iSurf->h, 8, true);
 
-    unsigned int *tmp = (unsigned int *)m_pData;
+    unsigned int *tmp = (unsigned int *)_data;
     int nrPixels = iSurf->w * iSurf->h;
     for(int i = 0; i < nrPixels; i++)
     {
-        unsigned char *p = m_pData + i * 4;
+        unsigned char *p = _data + i * 4;
         tmp[i] = CC_RGB_PREMULTIPLY_ALPHA( p[0], p[1], p[2], p[3] );
     }
 
@@ -340,16 +340,16 @@ bool CCImage::_initWithJpgData(void * data, int nSize)
         jpeg_start_decompress( &cinfo );
 
         /* init image info */
-        m_nWidth  = (short)(cinfo.output_width);
-        m_nHeight = (short)(cinfo.output_height);
-        m_bHasAlpha = false;
-        m_bPreMulti = false;
-        m_nBitsPerComponent = 8;
+        _width  = (short)(cinfo.output_width);
+        _height = (short)(cinfo.output_height);
+        _hasAlpha = false;
+        _preMulti = false;
+        _bitsPerComponent = 8;
         row_pointer[0] = new unsigned char[cinfo.output_width*cinfo.output_components];
         CC_BREAK_IF(! row_pointer[0]);
 
-        m_pData = new unsigned char[cinfo.output_width*cinfo.output_height*cinfo.output_components];
-        CC_BREAK_IF(! m_pData);
+        _data = new unsigned char[cinfo.output_width*cinfo.output_height*cinfo.output_components];
+        CC_BREAK_IF(! _data);
 
         /* now actually read the jpeg into the raw buffer */
         /* read one scan line at a time */
@@ -358,7 +358,7 @@ bool CCImage::_initWithJpgData(void * data, int nSize)
             jpeg_read_scanlines( &cinfo, row_pointer, 1 );
             for( i=0; i<cinfo.output_width*cinfo.output_components;i++) 
             {
-                m_pData[location++] = row_pointer[0][i];
+                _data[location++] = row_pointer[0][i];
             }
         }
 
@@ -419,9 +419,9 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
         // read png file info
         png_read_info(png_ptr, info_ptr);
         
-        m_nWidth = png_get_image_width(png_ptr, info_ptr);
-        m_nHeight = png_get_image_height(png_ptr, info_ptr);
-        m_nBitsPerComponent = png_get_bit_depth(png_ptr, info_ptr);
+        _width = png_get_image_width(png_ptr, info_ptr);
+        _height = png_get_image_height(png_ptr, info_ptr);
+        _bitsPerComponent = png_get_bit_depth(png_ptr, info_ptr);
         png_uint_32 color_type = png_get_color_type(png_ptr, info_ptr);
 
         //CCLOG("color type %u", color_type);
@@ -433,7 +433,7 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
             png_set_palette_to_rgb(png_ptr);
         }
         // low-bit-depth grayscale images are to be expanded to 8 bits
-        if (color_type == PNG_COLOR_TYPE_GRAY && m_nBitsPerComponent < 8)
+        if (color_type == PNG_COLOR_TYPE_GRAY && _bitsPerComponent < 8)
         {
             png_set_expand_gray_1_2_4_to_8(png_ptr);
         }
@@ -443,7 +443,7 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
             png_set_tRNS_to_alpha(png_ptr);
         }  
         // reduce images with 16-bit samples to 8 bits
-        if (m_nBitsPerComponent == 16)
+        if (_bitsPerComponent == 16)
         {
             png_set_strip_16(png_ptr);            
         } 
@@ -454,32 +454,32 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
         }
 
         // read png data
-        // m_nBitsPerComponent will always be 8
-        m_nBitsPerComponent = 8;
+        // _bitsPerComponent will always be 8
+        _bitsPerComponent = 8;
         png_uint_32 rowbytes;
-        png_bytep* row_pointers = (png_bytep*)malloc( sizeof(png_bytep) * m_nHeight );
+        png_bytep* row_pointers = (png_bytep*)malloc( sizeof(png_bytep) * _height );
         
         png_read_update_info(png_ptr, info_ptr);
         
         rowbytes = png_get_rowbytes(png_ptr, info_ptr);
         
-        m_pData = new unsigned char[rowbytes * m_nHeight];
-        CC_BREAK_IF(!m_pData);
+        _data = new unsigned char[rowbytes * _height];
+        CC_BREAK_IF(!_data);
         
-        for (unsigned short i = 0; i < m_nHeight; ++i)
+        for (unsigned short i = 0; i < _height; ++i)
         {
-            row_pointers[i] = m_pData + i*rowbytes;
+            row_pointers[i] = _data + i*rowbytes;
         }
         png_read_image(png_ptr, row_pointers);
         
         png_read_end(png_ptr, NULL);
         
-        png_uint_32 channel = rowbytes/m_nWidth;
+        png_uint_32 channel = rowbytes/_width;
         if (channel == 4)
         {
-            m_bHasAlpha = true;
-            unsigned int *tmp = (unsigned int *)m_pData;
-            for(unsigned short i = 0; i < m_nHeight; i++)
+            _hasAlpha = true;
+            unsigned int *tmp = (unsigned int *)_data;
+            for(unsigned short i = 0; i < _height; i++)
             {
                 for(unsigned int j = 0; j < rowbytes; j += 4)
                 {
@@ -488,7 +488,7 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
                 }
             }
             
-            m_bPreMulti = true;
+            _preMulti = true;
         }
 
         CC_SAFE_FREE(row_pointers);
@@ -641,12 +641,12 @@ bool CCImage::_initWithTiffData(void* pData, int nDataLen)
 
         npixels = w * h;
         
-        m_bHasAlpha = true;
-        m_nWidth = w;
-        m_nHeight = h;
-        m_nBitsPerComponent = 8;
+        _hasAlpha = true;
+        _width = w;
+        _height = h;
+        _bitsPerComponent = 8;
 
-        m_pData = new unsigned char[npixels * sizeof (uint32)];
+        _data = new unsigned char[npixels * sizeof (uint32)];
 
         uint32* raster = (uint32*) _TIFFmalloc(npixels * sizeof (uint32));
         if (raster != NULL) 
@@ -656,17 +656,17 @@ bool CCImage::_initWithTiffData(void* pData, int nDataLen)
                 /* the raster data is pre-multiplied by the alpha component 
                    after invoking TIFFReadRGBAImageOriented
                 unsigned char* src = (unsigned char*)raster;
-                unsigned int* tmp = (unsigned int*)m_pData;
+                unsigned int* tmp = (unsigned int*)_data;
 
-                for(int j = 0; j < m_nWidth * m_nHeight * 4; j += 4)
+                for(int j = 0; j < _width * _height * 4; j += 4)
                 {
                     *tmp++ = CC_RGB_PREMULTIPLY_ALPHA( src[j], src[j + 1], 
                         src[j + 2], src[j + 3] );
                 }
                 */
-                m_bPreMulti = true;
+                _preMulti = true;
 
-               memcpy(m_pData, raster, npixels*sizeof (uint32));
+               memcpy(_data, raster, npixels*sizeof (uint32));
            }
 
           _TIFFfree(raster);
@@ -687,18 +687,18 @@ bool CCImage::_initWithRawData(void * pData, int nDatalen, int nWidth, int nHeig
     {
         CC_BREAK_IF(0 == nWidth || 0 == nHeight);
 
-        m_nBitsPerComponent = nBitsPerComponent;
-        m_nHeight   = (short)nHeight;
-        m_nWidth    = (short)nWidth;
-        m_bHasAlpha = true;
-        m_bPreMulti = bPreMulti;
+        _bitsPerComponent = nBitsPerComponent;
+        _height   = (short)nHeight;
+        _width    = (short)nWidth;
+        _hasAlpha = true;
+        _preMulti = bPreMulti;
 
         // only RGBA8888 supported
         int nBytesPerComponent = 4;
         int nSize = nHeight * nWidth * nBytesPerComponent;
-        m_pData = new unsigned char[nSize];
-        CC_BREAK_IF(! m_pData);
-        memcpy(m_pData, pData, nSize);
+        _data = new unsigned char[nSize];
+        CC_BREAK_IF(! _data);
+        memcpy(_data, pData, nSize);
 
         bRet = true;
     } while (0);
@@ -783,14 +783,14 @@ bool CCImage::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
 #endif
         png_init_io(png_ptr, fp);
 
-        if (!bIsToRGB && m_bHasAlpha)
+        if (!bIsToRGB && _hasAlpha)
         {
-            png_set_IHDR(png_ptr, info_ptr, m_nWidth, m_nHeight, 8, PNG_COLOR_TYPE_RGB_ALPHA,
+            png_set_IHDR(png_ptr, info_ptr, _width, _height, 8, PNG_COLOR_TYPE_RGB_ALPHA,
                 PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
         } 
         else
         {
-            png_set_IHDR(png_ptr, info_ptr, m_nWidth, m_nHeight, 8, PNG_COLOR_TYPE_RGB,
+            png_set_IHDR(png_ptr, info_ptr, _width, _height, 8, PNG_COLOR_TYPE_RGB,
                 PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
         }
 
@@ -801,7 +801,7 @@ bool CCImage::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
 
         png_set_packing(png_ptr);
 
-        row_pointers = (png_bytep *)malloc(m_nHeight * sizeof(png_bytep));
+        row_pointers = (png_bytep *)malloc(_height * sizeof(png_bytep));
         if(row_pointers == NULL)
         {
             fclose(fp);
@@ -809,11 +809,11 @@ bool CCImage::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
             break;
         }
 
-        if (!m_bHasAlpha)
+        if (!_hasAlpha)
         {
-            for (int i = 0; i < (int)m_nHeight; i++)
+            for (int i = 0; i < (int)_height; i++)
             {
-                row_pointers[i] = (png_bytep)m_pData + i * m_nWidth * 3;
+                row_pointers[i] = (png_bytep)_data + i * _width * 3;
             }
 
             png_write_image(png_ptr, row_pointers);
@@ -825,7 +825,7 @@ bool CCImage::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
         {
             if (bIsToRGB)
             {
-                unsigned char *pTempData = new unsigned char[m_nWidth * m_nHeight * 3];
+                unsigned char *pTempData = new unsigned char[_width * _height * 3];
                 if (NULL == pTempData)
                 {
                     fclose(fp);
@@ -833,19 +833,19 @@ bool CCImage::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
                     break;
                 }
 
-                for (int i = 0; i < m_nHeight; ++i)
+                for (int i = 0; i < _height; ++i)
                 {
-                    for (int j = 0; j < m_nWidth; ++j)
+                    for (int j = 0; j < _width; ++j)
                     {
-                        pTempData[(i * m_nWidth + j) * 3] = m_pData[(i * m_nWidth + j) * 4];
-                        pTempData[(i * m_nWidth + j) * 3 + 1] = m_pData[(i * m_nWidth + j) * 4 + 1];
-                        pTempData[(i * m_nWidth + j) * 3 + 2] = m_pData[(i * m_nWidth + j) * 4 + 2];
+                        pTempData[(i * _width + j) * 3] = _data[(i * _width + j) * 4];
+                        pTempData[(i * _width + j) * 3 + 1] = _data[(i * _width + j) * 4 + 1];
+                        pTempData[(i * _width + j) * 3 + 2] = _data[(i * _width + j) * 4 + 2];
                     }
                 }
 
-                for (int i = 0; i < (int)m_nHeight; i++)
+                for (int i = 0; i < (int)_height; i++)
                 {
-                    row_pointers[i] = (png_bytep)pTempData + i * m_nWidth * 3;
+                    row_pointers[i] = (png_bytep)pTempData + i * _width * 3;
                 }
 
                 png_write_image(png_ptr, row_pointers);
@@ -857,9 +857,9 @@ bool CCImage::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
             } 
             else
             {
-                for (int i = 0; i < (int)m_nHeight; i++)
+                for (int i = 0; i < (int)_height; i++)
                 {
-                    row_pointers[i] = (png_bytep)m_pData + i * m_nWidth * 4;
+                    row_pointers[i] = (png_bytep)_data + i * _width * 4;
                 }
 
                 png_write_image(png_ptr, row_pointers);
@@ -903,8 +903,8 @@ bool CCImage::_saveImageToJPG(const char * pszFilePath)
         
         jpeg_stdio_dest(&cinfo, outfile);
 
-        cinfo.image_width = m_nWidth;    /* image width and height, in pixels */
-        cinfo.image_height = m_nHeight;
+        cinfo.image_width = _width;    /* image width and height, in pixels */
+        cinfo.image_height = _height;
         cinfo.input_components = 3;       /* # of color components per pixel */
         cinfo.in_color_space = JCS_RGB;       /* colorspace of input image */
 
@@ -912,11 +912,11 @@ bool CCImage::_saveImageToJPG(const char * pszFilePath)
 
         jpeg_start_compress(&cinfo, TRUE);
 
-        row_stride = m_nWidth * 3; /* JSAMPLEs per row in image_buffer */
+        row_stride = _width * 3; /* JSAMPLEs per row in image_buffer */
 
-        if (m_bHasAlpha)
+        if (_hasAlpha)
         {
-            unsigned char *pTempData = new unsigned char[m_nWidth * m_nHeight * 3];
+            unsigned char *pTempData = new unsigned char[_width * _height * 3];
             if (NULL == pTempData)
             {
                 jpeg_finish_compress(&cinfo);
@@ -925,14 +925,14 @@ bool CCImage::_saveImageToJPG(const char * pszFilePath)
                 break;
             }
 
-            for (int i = 0; i < m_nHeight; ++i)
+            for (int i = 0; i < _height; ++i)
             {
-                for (int j = 0; j < m_nWidth; ++j)
+                for (int j = 0; j < _width; ++j)
 
                 {
-                    pTempData[(i * m_nWidth + j) * 3] = m_pData[(i * m_nWidth + j) * 4];
-                    pTempData[(i * m_nWidth + j) * 3 + 1] = m_pData[(i * m_nWidth + j) * 4 + 1];
-                    pTempData[(i * m_nWidth + j) * 3 + 2] = m_pData[(i * m_nWidth + j) * 4 + 2];
+                    pTempData[(i * _width + j) * 3] = _data[(i * _width + j) * 4];
+                    pTempData[(i * _width + j) * 3 + 1] = _data[(i * _width + j) * 4 + 1];
+                    pTempData[(i * _width + j) * 3 + 2] = _data[(i * _width + j) * 4 + 2];
                 }
             }
 
@@ -946,7 +946,7 @@ bool CCImage::_saveImageToJPG(const char * pszFilePath)
         else
         {
             while (cinfo.next_scanline < cinfo.image_height) {
-                row_pointer[0] = & m_pData[cinfo.next_scanline * row_stride];
+                row_pointer[0] = & _data[cinfo.next_scanline * row_stride];
                 (void) jpeg_write_scanlines(&cinfo, row_pointer, 1);
             }
         }

@@ -301,10 +301,10 @@ protected:
     CCFileUtils();
     
     /**
-     *  Initializes the instance of CCFileUtils. It will set m_searchPathArray and m_searchResolutionsOrderArray to default values.
+     *  Initializes the instance of CCFileUtils. It will set _searchPathArray and _searchResolutionsOrderArray to default values.
      *
      *  @note When you are porting Cocos2d-x to a new platform, you may need to take care of this method.
-     *        You could assign a default value to m_strDefaultResRootPath in the subclass of CCFileUtils(e.g. CCFileUtilsAndroid). Then invoke the CCFileUtils::init().
+     *        You could assign a default value to _defaultResRootPath in the subclass of CCFileUtils(e.g. CCFileUtilsAndroid). Then invoke the CCFileUtils::init().
      *  @return true if successed, otherwise it returns false.
      *
      */
@@ -365,19 +365,19 @@ protected:
      *
      *  @since v2.1
      */
-    CCDictionary* m_pFilenameLookupDict;
+    CCDictionary* _filenameLookupDict;
     
     /** 
      *  The vector contains resolution folders.
      *  The lower index of the element in this vector, the higher priority for this resolution directory.
      */
-    std::vector<std::string> m_searchResolutionsOrderArray;
+    std::vector<std::string> _searchResolutionsOrderArray;
     
     /**
      * The vector contains search paths.
      * The lower index of the element in this vector, the higher priority for this search path.
      */
-    std::vector<std::string> m_searchPathArray;
+    std::vector<std::string> _searchPathArray;
     
     /**
      *  The default root path of resources.
@@ -386,13 +386,13 @@ protected:
      *  On Android, the default root path of resources will be assigned with "assets/" in CCFileUtilsAndroid::init().
      *  Similarly on Blackberry, we assign "app/native/Resources/" to this variable in CCFileUtilsBlackberry::init().
      */
-    std::string m_strDefaultResRootPath;
+    std::string _defaultResRootPath;
     
     /**
      *  The full path cache. When a file is found, it will be added into this cache. 
      *  This variable is used for improving the performance of file search.
      */
-    std::map<std::string, std::string> m_fullPathCache;
+    std::map<std::string, std::string> _fullPathCache;
     
     /**
      *  The singleton pointer of CCFileUtils.

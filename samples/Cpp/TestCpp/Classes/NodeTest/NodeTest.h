@@ -102,7 +102,7 @@ public:
 
 class CameraZoomTest : public TestCocosNodeDemo
 {
-    float    m_z;
+    float    _z;
 public:
     CameraZoomTest();
     void update(float dt);

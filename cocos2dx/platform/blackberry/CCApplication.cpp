@@ -13,7 +13,7 @@ NS_CC_BEGIN;
 
 // sharedApplication pointer
 CCApplication * CCApplication::sm_pSharedApplication = 0;
-long CCApplication::m_animationInterval = 1000;
+long CCApplication::_animationInterval = 1000;
 
 // convert the timespec into milliseconds
 static long time2millis(struct timespec *times)
@@ -55,7 +55,7 @@ int CCApplication::run()
 		clock_gettime(CLOCK_REALTIME, &time_struct);
 		current_time = time2millis(&time_struct);
 
-		if ((current_time - update_time) > m_animationInterval)
+		if ((current_time - update_time) > _animationInterval)
 		{
 			update_time = current_time;
 			CCDirector::sharedDirector()->mainLoop();
@@ -72,25 +72,25 @@ int CCApplication::run()
 void CCApplication::setAnimationInterval(double interval)
 {
 	// interval in milliseconds
-	m_animationInterval = (long)(interval * 1000);
+	_animationInterval = (long)(interval * 1000);
 }
 
 void CCApplication::setResourceRootPath(const std::string& rootResDir)
 {
-    m_resourceRootPath = rootResDir;
-    if (m_resourceRootPath[m_resourceRootPath.length() - 1] != '/')
+    _resourceRootPath = rootResDir;
+    if (_resourceRootPath[_resourceRootPath.length() - 1] != '/')
     {
-        m_resourceRootPath += '/';
+        _resourceRootPath += '/';
     }
     CCFileUtils* pFileUtils = CCFileUtils::sharedFileUtils();
     std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
-    searchPaths.insert(searchPaths.begin(), m_resourceRootPath);
+    searchPaths.insert(searchPaths.begin(), _resourceRootPath);
     pFileUtils->setSearchPaths(searchPaths);
 }
 
 const std::string& CCApplication::getResourceRootPath(void)
 {
-    return m_resourceRootPath;
+    return _resourceRootPath;
 }
 
 TargetPlatform CCApplication::getTargetPlatform()

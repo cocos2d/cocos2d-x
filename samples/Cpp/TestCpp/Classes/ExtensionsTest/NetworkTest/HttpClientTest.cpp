@@ -6,7 +6,7 @@ USING_NS_CC;
 USING_NS_CC_EXT;
 
 HttpClientTest::HttpClientTest() 
-: m_labelStatusCode(NULL)
+: _labelStatusCode(NULL)
 {
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 
@@ -52,9 +52,9 @@ HttpClientTest::HttpClientTest()
     menuRequest->addChild(itemDelete);
     
     // Response Code Label
-    m_labelStatusCode = CCLabelTTF::create("HTTP Status Code", "Marker Felt", 20);
-    m_labelStatusCode->setPosition(ccp(winSize.width / 2,  winSize.height - MARGIN - 6 * SPACE));
-    addChild(m_labelStatusCode);
+    _labelStatusCode = CCLabelTTF::create("HTTP Status Code", "Marker Felt", 20);
+    _labelStatusCode->setPosition(ccp(winSize.width / 2,  winSize.height - MARGIN - 6 * SPACE));
+    addChild(_labelStatusCode);
     
     // Back Menu
     CCMenuItemFont *itemBack = CCMenuItemFont::create("Back", CC_CALLBACK_1(HttpClientTest::toExtensionsMainLayer, this));
@@ -110,7 +110,7 @@ void HttpClientTest::onMenuGetTestClicked(cocos2d::CCObject *sender)
     }
         
     // waiting
-    m_labelStatusCode->setString("waiting...");
+    _labelStatusCode->setString("waiting...");
  
 }
 
@@ -152,7 +152,7 @@ void HttpClientTest::onMenuPostTestClicked(cocos2d::CCObject *sender)
     }
     
     // waiting
-    m_labelStatusCode->setString("waiting...");
+    _labelStatusCode->setString("waiting...");
 }
 
 void HttpClientTest::onMenuPostBinaryTestClicked(cocos2d::CCObject *sender)
@@ -171,7 +171,7 @@ void HttpClientTest::onMenuPostBinaryTestClicked(cocos2d::CCObject *sender)
     request->release();
     
     // waiting
-    m_labelStatusCode->setString("waiting...");
+    _labelStatusCode->setString("waiting...");
 }
 
 
@@ -214,7 +214,7 @@ void HttpClientTest::onMenuPutTestClicked(CCObject *sender)
     }
 
     // waiting
-    m_labelStatusCode->setString("waiting...");
+    _labelStatusCode->setString("waiting...");
 }
 
 void HttpClientTest::onMenuDeleteTestClicked(CCObject *sender)
@@ -242,7 +242,7 @@ void HttpClientTest::onMenuDeleteTestClicked(CCObject *sender)
     }
 
     // waiting
-    m_labelStatusCode->setString("waiting...");
+    _labelStatusCode->setString("waiting...");
 }
 
 void HttpClientTest::onHttpRequestCompleted(CCHttpClient *sender, CCHttpResponse *response)
@@ -261,7 +261,7 @@ void HttpClientTest::onHttpRequestCompleted(CCHttpClient *sender, CCHttpResponse
     int statusCode = response->getResponseCode();
     char statusString[64] = {};
     sprintf(statusString, "HTTP Status Code: %d, tag = %s", statusCode, response->getHttpRequest()->getTag());
-    m_labelStatusCode->setString(statusString);
+    _labelStatusCode->setString(statusString);
     CCLog("response code: %d", statusCode);
     
     if (!response->isSucceed()) 

@@ -10,7 +10,7 @@ enum {
 };
 
 Box2DTestLayer::Box2DTestLayer()
-: m_pSpriteTexture(NULL)
+: _spriteTexture(NULL)
 , world(NULL)
 {
 #if CC_ENABLE_BOX2D_INTEGRATION
@@ -26,10 +26,10 @@ Box2DTestLayer::Box2DTestLayer()
 #if 1
     // Use batch node. Faster
     CCSpriteBatchNode *parent = CCSpriteBatchNode::create("Images/blocks.png", 100);
-    m_pSpriteTexture = parent->getTexture();
+    _spriteTexture = parent->getTexture();
 #else
     // doesn't use batch node. Slower
-    m_pSpriteTexture = CCTextureCache::sharedTextureCache()->addImage("Images/blocks.png");
+    _spriteTexture = CCTextureCache::sharedTextureCache()->addImage("Images/blocks.png");
     CCNode *parent = CCNode::create();
 #endif
     addChild(parent, 0, kTagParentNode);
@@ -58,7 +58,7 @@ Box2DTestLayer::~Box2DTestLayer()
 {
     CC_SAFE_DELETE(world);
     
-    //delete m_debugDraw;
+    //delete _debugDraw;
 }
 
 void Box2DTestLayer::initPhysics()
@@ -72,8 +72,8 @@ void Box2DTestLayer::initPhysics()
 
     world->SetContinuousPhysics(true);
 
-//     m_debugDraw = new GLESDebugDraw( PTM_RATIO );
-//     world->SetDebugDraw(m_debugDraw);
+//     _debugDraw = new GLESDebugDraw( PTM_RATIO );
+//     world->SetDebugDraw(_debugDraw);
 
     uint32 flags = 0;
     flags += b2Draw::e_shapeBit;
@@ -81,7 +81,7 @@ void Box2DTestLayer::initPhysics()
     //        flags += b2Draw::e_aabbBit;
     //        flags += b2Draw::e_pairBit;
     //        flags += b2Draw::e_centerOfMassBit;
-    //m_debugDraw->SetFlags(flags);
+    //_debugDraw->SetFlags(flags);
 
 
     // Define the ground body.
@@ -181,7 +181,7 @@ void Box2DTestLayer::addNewSpriteAtPosition(CCPoint p)
     //just randomly picking one of the images
     int idx = (CCRANDOM_0_1() > .5 ? 0:1);
     int idy = (CCRANDOM_0_1() > .5 ? 0:1);
-    CCPhysicsSprite *sprite = CCPhysicsSprite::createWithTexture(m_pSpriteTexture,CCRectMake(32 * idx,32 * idy,32,32));
+    CCPhysicsSprite *sprite = CCPhysicsSprite::createWithTexture(_spriteTexture,CCRectMake(32 * idx,32 * idy,32,32));
     parent->addChild(sprite);
     sprite->setB2Body(body);
     sprite->setPTMRatio(PTM_RATIO);

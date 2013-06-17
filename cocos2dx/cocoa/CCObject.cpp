@@ -38,26 +38,26 @@ CCObject* CCCopying::copyWithZone(CCZone *pZone)
 }
 
 CCObject::CCObject(void)
-: m_nLuaID(0)
-, m_uReference(1) // when the object is created, the reference count of it is 1
-, m_uAutoReleaseCount(0)
+: _luaID(0)
+, _reference(1) // when the object is created, the reference count of it is 1
+, _autoReleaseCount(0)
 {
     static unsigned int uObjectCount = 0;
 
-    m_uID = ++uObjectCount;
+    _ID = ++uObjectCount;
 }
 
 CCObject::~CCObject(void)
 {
     // if the object is managed, we should remove it
     // from pool manager
-    if (m_uAutoReleaseCount > 0)
+    if (_autoReleaseCount > 0)
     {
         CCPoolManager::sharedPoolManager()->removeObject(this);
     }
 
     // if the object is referenced by Lua engine, remove it
-    if (m_nLuaID)
+    if (_luaID)
     {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptObjectByCCObject(this);
     }
@@ -78,10 +78,10 @@ CCObject* CCObject::copy()
 
 void CCObject::release(void)
 {
-    CCAssert(m_uReference > 0, "reference count should greater than 0");
-    --m_uReference;
+    CCAssert(_reference > 0, "reference count should greater than 0");
+    --_reference;
 
-    if (m_uReference == 0)
+    if (_reference == 0)
     {
         delete this;
     }
@@ -89,9 +89,9 @@ void CCObject::release(void)
 
 void CCObject::retain(void)
 {
-    CCAssert(m_uReference > 0, "reference count should greater than 0");
+    CCAssert(_reference > 0, "reference count should greater than 0");
 
-    ++m_uReference;
+    ++_reference;
 }
 
 CCObject* CCObject::autorelease(void)
@@ -102,12 +102,12 @@ CCObject* CCObject::autorelease(void)
 
 bool CCObject::isSingleReference(void) const
 {
-    return m_uReference == 1;
+    return _reference == 1;
 }
 
 unsigned int CCObject::retainCount(void) const
 {
-    return m_uReference;
+    return _reference;
 }
 
 bool CCObject::isEqual(const CCObject *pObject)

@@ -30,7 +30,7 @@ NS_CC_BEGIN
 
 CCTouchDelegate* CCTouchHandler::getDelegate(void)
 {
-    return m_pDelegate;
+    return _delegate;
 }
 
 void CCTouchHandler::setDelegate(CCTouchDelegate *pDelegate)
@@ -40,32 +40,32 @@ void CCTouchHandler::setDelegate(CCTouchDelegate *pDelegate)
         dynamic_cast<CCObject*>(pDelegate)->retain();
     }
 
-    if (m_pDelegate)
+    if (_delegate)
     {
-        dynamic_cast<CCObject*>(m_pDelegate)->release();
+        dynamic_cast<CCObject*>(_delegate)->release();
     }
 
-    m_pDelegate = pDelegate;
+    _delegate = pDelegate;
 }
 
 int CCTouchHandler::getPriority(void)
 {
-    return m_nPriority;
+    return _priority;
 }
 
 void CCTouchHandler::setPriority(int nPriority)
 {
-    m_nPriority = nPriority;
+    _priority = nPriority;
 }
 
 int CCTouchHandler::getEnabledSelectors(void)
 {
-    return m_nEnabledSelectors;
+    return _enabledSelectors;
 }
 
 void CCTouchHandler::setEnalbedSelectors(int nValue)
 {
-    m_nEnabledSelectors = nValue;
+    _enabledSelectors = nValue;
 }
 
 CCTouchHandler* CCTouchHandler::handlerWithDelegate(CCTouchDelegate *pDelegate, int nPriority)
@@ -91,21 +91,21 @@ bool CCTouchHandler::initWithDelegate(CCTouchDelegate *pDelegate, int nPriority)
 {
     CCAssert(pDelegate != NULL, "touch delegate should not be null");
 
-    m_pDelegate = pDelegate; 
+    _delegate = pDelegate; 
 
     dynamic_cast<CCObject*>(pDelegate)->retain();
 
-    m_nPriority = nPriority;
-    m_nEnabledSelectors = 0;
+    _priority = nPriority;
+    _enabledSelectors = 0;
 
     return true;
 }
 
 CCTouchHandler::~CCTouchHandler(void)
 {
-    if (m_pDelegate)
+    if (_delegate)
     {
-        dynamic_cast<CCObject*>(m_pDelegate)->release();
+        dynamic_cast<CCObject*>(_delegate)->release();
     }   
 }
 
@@ -143,17 +143,17 @@ CCStandardTouchHandler* CCStandardTouchHandler::handlerWithDelegate(CCTouchDeleg
 
 bool CCTargetedTouchHandler::isSwallowsTouches(void)
 {
-    return m_bSwallowsTouches;
+    return _swallowsTouches;
 }
 
 void CCTargetedTouchHandler::setSwallowsTouches(bool bSwallowsTouches)
 {
-    m_bSwallowsTouches = bSwallowsTouches;
+    _swallowsTouches = bSwallowsTouches;
 }
 
 CCSet* CCTargetedTouchHandler::getClaimedTouches(void)
 {
-    return m_pClaimedTouches;
+    return _claimedTouches;
 }
 
 CCTargetedTouchHandler* CCTargetedTouchHandler::handlerWithDelegate(CCTouchDelegate *pDelegate, int nPriority, bool bSwallow)
@@ -178,8 +178,8 @@ bool CCTargetedTouchHandler::initWithDelegate(CCTouchDelegate *pDelegate, int nP
 {
     if (CCTouchHandler::initWithDelegate(pDelegate, nPriority))
     {
-        m_pClaimedTouches = new CCSet();
-        m_bSwallowsTouches = bSwallow;
+        _claimedTouches = new CCSet();
+        _swallowsTouches = bSwallow;
 
         return true;
     }
@@ -189,7 +189,7 @@ bool CCTargetedTouchHandler::initWithDelegate(CCTouchDelegate *pDelegate, int nP
 
 CCTargetedTouchHandler::~CCTargetedTouchHandler(void)
 {
-    CC_SAFE_RELEASE(m_pClaimedTouches);
+    CC_SAFE_RELEASE(_claimedTouches);
 }
 
 NS_CC_END

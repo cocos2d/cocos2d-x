@@ -38,8 +38,8 @@ class CC_DLL CCFloat : public CCObject
 {
 public:
     CCFloat(float v)
-        : m_fValue(v) {}
-    float getValue() const {return m_fValue;}
+        : _value(v) {}
+    float getValue() const {return _value;}
 
     static CCFloat* create(float v)
     {
@@ -55,7 +55,7 @@ public:
     virtual void acceptVisitor(CCDataVisitor &visitor) { visitor.visit(this); }
 
 private:
-    float m_fValue;
+    float _value;
 };
 
 // end of data_structure group
