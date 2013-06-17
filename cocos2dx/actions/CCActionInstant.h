@@ -28,6 +28,9 @@ THE SOFTWARE.
 #define __CCINSTANT_ACTION_H__
 
 #include <string>
+#include <functional>
+
+#include "CCStdC.h"
 #include "ccTypeInfo.h"
 #include "CCAction.h"
 
@@ -45,9 +48,9 @@ the CCIntervalAction actions.
 class CC_DLL CCActionInstant : public CCFiniteTimeAction //<NSCopying>
 {
 public:
-    CCActionInstant();
     virtual ~CCActionInstant(){}
     // CCAction methods
+    virtual CCActionInstant* clone() const;	
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual bool isDone(void);
     virtual void step(float dt);
@@ -66,6 +69,7 @@ public:
     //super methods
     virtual void update(float time);
     virtual CCFiniteTimeAction * reverse(void);
+	virtual CCShow* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
 public:
 
@@ -86,6 +90,7 @@ public:
     //super methods
     virtual void update(float time);
     virtual CCFiniteTimeAction * reverse(void);
+	virtual CCHide* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
 public:
 
@@ -102,6 +107,7 @@ public:
     virtual ~CCToggleVisibility(){}
     //super method
     virtual void update(float time);
+	virtual CCToggleVisibility* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
 public:
 
@@ -120,6 +126,7 @@ public:
 	//super methods
 	virtual void update(float time);
 	virtual CCFiniteTimeAction * reverse(void);
+	virtual CCRemoveSelf* clone() const;
 	virtual CCObject* copyWithZone(CCZone *pZone);
 public:
 	/** create the action */
@@ -150,6 +157,7 @@ public:
     //super methods
     virtual void update(float time);
     virtual CCFiniteTimeAction * reverse(void);
+	virtual CCFlipX* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
 
 protected:
@@ -176,6 +184,7 @@ public:
     //super methods
     virtual void update(float time);
     virtual CCFiniteTimeAction * reverse(void);
+	virtual CCFlipY* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
 
 protected:
@@ -196,10 +205,12 @@ public:
     bool initWithPosition(const CCPoint& pos);
     //super methods
     virtual void update(float time);
+	virtual CCPlace* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
 protected:
     CCPoint m_tPosition;
 };
+
 
 /** @brief Calls a 'callback'
 */
@@ -210,13 +221,20 @@ public:
         : m_pSelectorTarget(NULL)
 		, m_nScriptHandler(0)
         , m_pCallFunc(NULL)
+		, _function(nullptr)
     {
     }
     virtual ~CCCallFunc();
 
+	/** creates the action with the callback of type std::function<void()>.
+	 This is the preferred way to create the callback.
+	 */
+    static CCCallFunc * create(const std::function<void()>& func);
+
     /** creates the action with the callback 
 
     typedef void (CCObject::*SEL_CallFunc)();
+	 @deprecated Use the std::function API instead.
     */
     static CCCallFunc * create(CCObject* pSelectorTarget, SEL_CallFunc selector);
 
@@ -228,10 +246,16 @@ public:
     typedef void (CCObject::*SEL_CallFunc)();
     */
     virtual bool initWithTarget(CCObject* pSelectorTarget);
+
+	/** initializes the action with the std::function<void()>
+	 */
+    virtual bool initWithFunction(const std::function<void()>& func);
+
     /** executes the callback */
     virtual void execute();
     //super methods
     virtual void update(float time);
+	virtual CCCallFunc* clone() const;
     CCObject * copyWithZone(CCZone *pZone);
 
     inline CCObject* getTargetCallback()
@@ -263,6 +287,9 @@ protected:
         SEL_CallFuncND    m_pCallFuncND;
         SEL_CallFuncO   m_pCallFuncO;
     };
+    
+    /** function that will be called */
+	std::function<void()> _function;
 };
 
 /** 
@@ -294,6 +321,7 @@ public:
     */
     virtual bool initWithTarget(CCObject* pSelectorTarget, SEL_CallFuncN selector);
     // super methods
+	virtual CCCallFuncN* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void execute();
 };
@@ -317,6 +345,7 @@ public:
     /** initializes the action with the callback and the data to pass as an argument */
     virtual bool initWithTarget(CCObject* pSelectorTarget, SEL_CallFuncND selector, void* d);
     // super methods
+	virtual CCCallFuncND* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void execute();
 
@@ -354,6 +383,7 @@ public:
     */
     virtual bool initWithTarget(CCObject* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject);
     // super methods
+	virtual CCCallFuncO* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void execute();
 

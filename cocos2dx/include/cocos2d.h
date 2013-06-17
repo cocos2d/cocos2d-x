@@ -70,6 +70,7 @@ THE SOFTWARE.
 #include "cocoa/CCString.h"
 #include "cocoa/CCNS.h"
 #include "cocoa/CCZone.h"
+#include "cocoa/CCData.h"
 
 // draw nodes
 #include "draw_nodes/CCDrawingPrimitives.h"
@@ -199,6 +200,22 @@ THE SOFTWARE.
     #include "platform/nacl/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN)
+    #include "platform/emscripten/CCAccelerometer.h"
+    #include "platform/emscripten/CCApplication.h"
+    #include "platform/emscripten/CCEGLView.h"
+    #include "platform/emscripten/CCGL.h"
+    #include "platform/emscripten/CCStdC.h"
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
+    #include "platform/tizen/CCAccelerometer.h"
+    #include "platform/tizen/CCApplication.h"
+    #include "platform/tizen/CCEGLView.h"
+    #include "platform/tizen/CCGL.h"
+    #include "platform/tizen/CCStdC.h"
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
+
 // script_support
 #include "script_support/CCScriptSupport.h"
 
@@ -255,6 +272,10 @@ THE SOFTWARE.
 #include "CCConfiguration.h"
 #include "CCDirector.h"
 #include "CCScheduler.h"
+
+// component
+#include "support/component/CCComponent.h"
+#include "support/component/CCComponentContainer.h"
 
 NS_CC_BEGIN
 

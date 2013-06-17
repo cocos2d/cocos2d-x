@@ -92,40 +92,13 @@ static CCLayer* restartAction()
 
 bool BaseClippingNodeTest::init()
 {
-	if (CCLayer::init()) {
-        
-		CCSize s = CCDirector::sharedDirector()->getWinSize();
+	if (BaseTest::init()) {
         
         CCSprite *background = CCSprite::create(s_back3);
         background->setAnchorPoint( CCPointZero );
         background->setPosition( CCPointZero );
         this->addChild(background, -1);
 
-		CCLabelTTF *label = CCLabelTTF::create(this->title().c_str(), "Arial", 32);
-		this->addChild(label, 1, kTagTitleLabel);
-		label->setPosition( ccp(s.width / 2, s.height - 50));
-		
-		std::string subtitleText = this->subtitle();
-		if (subtitleText.length() > 0) {
-			CCLabelTTF *subtitle = CCLabelTTF::create(subtitleText.c_str(), "Thonburi", 16);
-			this->addChild(subtitle, 1, kTagSubtitleLabel);
-			subtitle->setPosition(ccp(s.width / 2, s.height - 80));
-		}
-
-		CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2,
-                                                               this, menu_selector(BaseClippingNodeTest::backCallback));
-		CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2,
-                                                               this, menu_selector(BaseClippingNodeTest::restartCallback));
-		CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2,
-                                                               this, menu_selector(BaseClippingNodeTest::nextCallback));
-
-		CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
-		menu->setPosition( CCPointZero );
-		item1->setPosition( ccp(s.width / 2 - item2->getContentSize().width * 2, item2->getContentSize().height / 2));
-		item2->setPosition( ccp(s.width / 2, item2->getContentSize().height / 2));
-		item3->setPosition( ccp(s.width / 2 + item2->getContentSize().width * 2, item2->getContentSize().height / 2));
-		this->addChild(menu, 1);
-        
         this->setup();
         return true;
 	}
@@ -731,7 +704,7 @@ void RawStencilBufferTest3::setupStencilForClippingOnPlane(GLint plane)
 void RawStencilBufferTest3::setupStencilForDrawingOnPlane(GLint plane)
 {
     glDepthMask(GL_TRUE);
-    glEnable(GL_DEPTH_TEST);
+    //glEnable(GL_DEPTH_TEST);
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
 }
 
@@ -797,7 +770,7 @@ void RawStencilBufferTest5::setupStencilForDrawingOnPlane(GLint plane)
     glDisable(GL_ALPHA_TEST);
 #endif
     glDepthMask(GL_TRUE);
-    glEnable(GL_DEPTH_TEST);
+    //glEnable(GL_DEPTH_TEST);
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
 }
 
@@ -863,7 +836,7 @@ void RawStencilBufferTest6::setupStencilForDrawingOnPlane(GLint plane)
     glDisable(GL_ALPHA_TEST);
 #endif
     glDepthMask(GL_TRUE);
-    glEnable(GL_DEPTH_TEST);
+    //glEnable(GL_DEPTH_TEST);
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
     glFlush();
 }

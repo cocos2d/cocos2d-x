@@ -13,7 +13,7 @@
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     #define MUSIC_FILE        "music.mid"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX )
     #define MUSIC_FILE        "background.ogg"
 #else
     #define MUSIC_FILE        "background.mp3"
@@ -63,7 +63,7 @@ m_nSoundId(0)
 //#else
         CCLabelTTF* label = CCLabelTTF::create(testItems[i].c_str(), "Arial", 24);
 //#endif        
-        CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, this, menu_selector(CocosDenshionTest::menuCallback));
+        CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, CC_CALLBACK_1(CocosDenshionTest::menuCallback, this));
         
         m_pItmeMenu->addChild(pMenuItem, i + 10000);
         pMenuItem->setPosition( ccp( VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE) ));

@@ -9,37 +9,41 @@
 #include "Bug-1159.h"
 #include "Bug-1174.h"
 
-#define TEST_BUG(bugNO)                                 \
-{                                                       \
-CCScene* pScene = CCScene::create();                      \
-Bug##bugNO##Layer* pLayer = new Bug##bugNO##Layer();    \
-pLayer->init();                                         \
-pScene->addChild(pLayer);                               \
-CCDirector::sharedDirector()->replaceScene(pScene);     \
-pLayer->autorelease();                                  \
+#define TEST_BUG(__bug__)									\
+{															\
+	CCScene* pScene = CCScene::create();					\
+	Bug##__bug__##Layer* pLayer = new Bug##__bug__##Layer();	\
+	pLayer->init();                                         \
+	pScene->addChild(pLayer);                               \
+	CCDirector::sharedDirector()->replaceScene(pScene);     \
+	pLayer->autorelease();                                  \
 }
 
 enum
 {
-    MAX_COUNT = 9,
     LINE_SPACE = 40,
     kItemTagBasic = 5432,
 };
 
 static CCPoint s_tCurPos = CCPointZero;
 
-const std::string testsName[MAX_COUNT] = 
-{
-    "Bug-350",
-    "Bug-422",
-    "Bug-458",
-    "Bug-624",
-    "Bug-886",
-    "Bug-899",
-    "Bug-914",
-    "Bug-1159",
-    "Bug-1174"
+struct {
+	const char *test_name;
+	std::function<void(CCObject*)> callback;
+} g_bugs[] = {
+	{ "Bug-350", [](CCObject* sender){ TEST_BUG(350)} },
+	{ "Bug-422", [](CCObject* sender){ TEST_BUG(422)} },
+	{ "Bug-458", [](CCObject* sender){ TEST_BUG(458)} },
+	{ "Bug-624", [](CCObject* sender){ TEST_BUG(624)} },
+	{ "Bug-886", [](CCObject* sender){ TEST_BUG(886)} },
+	{ "Bug-899", [](CCObject* sender){ TEST_BUG(899)} },
+	{ "Bug-914", [](CCObject* sender){ TEST_BUG(914)} },
+	{ "Bug-1159", [](CCObject* sender){ TEST_BUG(1159)} },
+	{ "Bug-1174", [](CCObject* sender){ TEST_BUG(1174)} },
 };
+
+static const int g_maxitems = sizeof(g_bugs) / sizeof(g_bugs[0]);
+
 
 ////////////////////////////////////////////////////////
 //
@@ -54,10 +58,9 @@ void BugsTestMainLayer::onEnter()
     m_pItmeMenu = CCMenu::create();
     CCMenuItemFont::setFontName("Arial");
     CCMenuItemFont::setFontSize(24);
-    for (int i = 0; i < MAX_COUNT; ++i)
+    for (int i = 0; i < g_maxitems; ++i)
     {
-        CCMenuItemFont* pItem = CCMenuItemFont::create(testsName[i].c_str(), this,
-                                                    menu_selector(BugsTestMainLayer::menuCallback));
+        CCMenuItemFont* pItem = CCMenuItemFont::create(g_bugs[i].test_name, g_bugs[i].callback);
         pItem->setPosition(ccp(s.width / 2, s.height - (i + 1) * LINE_SPACE));
         m_pItmeMenu->addChild(pItem, kItemTagBasic + i);
     }
@@ -65,45 +68,6 @@ void BugsTestMainLayer::onEnter()
     m_pItmeMenu->setPosition(s_tCurPos);
     addChild(m_pItmeMenu);
     setTouchEnabled(true);
-}
-
-void BugsTestMainLayer::menuCallback(CCObject* pSender)
-{
-    CCMenuItemFont* pItem = (CCMenuItemFont*)pSender;
-    int nIndex = pItem->getZOrder() - kItemTagBasic;
-
-    switch (nIndex)
-    {
-    case 0:
-        TEST_BUG(350);
-        break;
-    case 1:
-        TEST_BUG(422);
-        break;
-    case 2:
-        TEST_BUG(458);
-        break;
-    case 3:
-        TEST_BUG(624);
-        break;
-    case 4:
-        TEST_BUG(886);
-        break;
-    case 5:
-        TEST_BUG(899);
-        break;
-    case 6:
-        TEST_BUG(914);
-        break;
-    case 7:
-        TEST_BUG(1159);
-        break;
-    case 8:
-        TEST_BUG(1174);
-        break;
-    default:
-        break;
-    }
 }
 
 void BugsTestMainLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
@@ -131,9 +95,9 @@ void BugsTestMainLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
         return;
     }
 
-    if (nextPos.y > ((MAX_COUNT + 1)* LINE_SPACE - winSize.height))
+    if (nextPos.y > ((g_maxitems + 1)* LINE_SPACE - winSize.height))
     {
-        m_pItmeMenu->setPosition(ccp(0, ((MAX_COUNT + 1)* LINE_SPACE - winSize.height)));
+        m_pItmeMenu->setPosition(ccp(0, ((g_maxitems + 1)* LINE_SPACE - winSize.height)));
         return;
     }
 
@@ -153,8 +117,7 @@ void BugsTestBaseLayer::onEnter()
 
     CCMenuItemFont::setFontName("Arial");
     CCMenuItemFont::setFontSize(24);
-    CCMenuItemFont* pMainItem = CCMenuItemFont::create("Back", this,
-        menu_selector(BugsTestBaseLayer::backCallback));
+    CCMenuItemFont* pMainItem = CCMenuItemFont::create("Back", CC_CALLBACK_1(BugsTestBaseLayer::backCallback, this));
     pMainItem->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
     CCMenu* pMenu = CCMenu::create(pMainItem, NULL);
     pMenu->setPosition( CCPointZero );

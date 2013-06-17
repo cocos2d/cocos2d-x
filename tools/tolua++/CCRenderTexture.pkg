@@ -1,9 +1,8 @@
-
-typedef enum eImageFormat
+enum tCCImageFormat
 {
     kCCImageFormatJPEG       = 0,
     kCCImageFormatPNG       = 1,
-} tImageFormat;
+};
 
 class CCRenderTexture : public CCNode
 {
@@ -11,7 +10,7 @@ class CCRenderTexture : public CCNode
     void setSprite(CCSprite* psprite);
 
     void begin();
-    void end @ endToLua ();
+    void endToLua ();
     void beginWithClear(float r, float g, float b, float a);
     void beginWithClear(float r, float g, float b, float a, float depthValue);
     void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue);
@@ -25,7 +24,7 @@ class CCRenderTexture : public CCNode
     bool saveToFile(const char *szFilePath);
     bool saveToFile(const char *name, tCCImageFormat format);
 
-		static CCRenderTexture * create(int w ,int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat);
+    static CCRenderTexture * create(int w ,int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat);
     static CCRenderTexture * create(int w, int h, CCTexture2DPixelFormat eFormat);
     static CCRenderTexture * create(int w, int h);
 };

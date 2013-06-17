@@ -3,8 +3,9 @@
 
 #include "cocos2d.h"
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
-class EffectAdvanceTextLayer: public CCLayer
+class EffectAdvanceTextLayer: public BaseTest
 {
 protected:
     CCTextureAtlas* m_atlas;

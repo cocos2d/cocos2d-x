@@ -50,7 +50,6 @@
 		15A3CF5D1682C2B8002FB0C5 /* CCBValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3CEEA1682C2B7002FB0C5 /* CCBValue.cpp */; };
 		15A3CF5E1682C2B8002FB0C5 /* CCControlButtonLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3CEEC1682C2B7002FB0C5 /* CCControlButtonLoader.cpp */; };
 		15A3CF5F1682C2B8002FB0C5 /* CCControlLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3CEEE1682C2B7002FB0C5 /* CCControlLoader.cpp */; };
-		15A3CF601682C2B8002FB0C5 /* CCData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3CEF01682C2B7002FB0C5 /* CCData.cpp */; };
 		15A3CF611682C2B8002FB0C5 /* CCLabelBMFontLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3CEF21682C2B7002FB0C5 /* CCLabelBMFontLoader.cpp */; };
 		15A3CF621682C2B8002FB0C5 /* CCLabelTTFLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3CEF41682C2B7002FB0C5 /* CCLabelTTFLoader.cpp */; };
 		15A3CF631682C2B8002FB0C5 /* CCLayerColorLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3CEF61682C2B7002FB0C5 /* CCLayerColorLoader.cpp */; };
@@ -105,6 +104,12 @@
 		1A2758141698218C00504026 /* jsb_opengl.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A27579D1697FA7200504026 /* jsb_opengl.js */; };
 		1A2758151698218C00504026 /* jsb_sys.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A27579E1697FA7200504026 /* jsb_sys.js */; };
 		1A2758161698218C00504026 /* jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A27579F1697FA7200504026 /* jsb.js */; };
+		1A3F882B170A7E3C000159E1 /* jsb_chipmunk_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A3F8828170A7E3C000159E1 /* jsb_chipmunk_constants.js */; };
+		1A3F882C170A7E3C000159E1 /* jsb_cocos2d_extension.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A3F8829170A7E3C000159E1 /* jsb_cocos2d_extension.js */; };
+		1A3F882D170A7E3C000159E1 /* jsb_opengl_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A3F882A170A7E3C000159E1 /* jsb_opengl_constants.js */; };
+		1A3F882E170A7F15000159E1 /* jsb_chipmunk_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A3F8828170A7E3C000159E1 /* jsb_chipmunk_constants.js */; };
+		1A3F882F170A7F15000159E1 /* jsb_cocos2d_extension.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A3F8829170A7E3C000159E1 /* jsb_cocos2d_extension.js */; };
+		1A3F8830170A7F15000159E1 /* jsb_opengl_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A3F882A170A7E3C000159E1 /* jsb_opengl_constants.js */; };
 		1A82F5D1169AC71F00C4B13A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A82F5D0169AC71F00C4B13A /* libsqlite3.dylib */; };
 		1A82F5D8169AC75500C4B13A /* LocalStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A82F5D5169AC75500C4B13A /* LocalStorage.cpp */; };
 		1A82F5D9169AC75500C4B13A /* LocalStorageAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A82F5D7169AC75500C4B13A /* LocalStorageAndroid.cpp */; };
@@ -233,8 +238,6 @@
 		15A3CEED1682C2B7002FB0C5 /* CCControlButtonLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlButtonLoader.h; sourceTree = "<group>"; };
 		15A3CEEE1682C2B7002FB0C5 /* CCControlLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControlLoader.cpp; sourceTree = "<group>"; };
 		15A3CEEF1682C2B7002FB0C5 /* CCControlLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlLoader.h; sourceTree = "<group>"; };
-		15A3CEF01682C2B7002FB0C5 /* CCData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCData.cpp; sourceTree = "<group>"; };
-		15A3CEF11682C2B7002FB0C5 /* CCData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCData.h; sourceTree = "<group>"; };
 		15A3CEF21682C2B7002FB0C5 /* CCLabelBMFontLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelBMFontLoader.cpp; sourceTree = "<group>"; };
 		15A3CEF31682C2B7002FB0C5 /* CCLabelBMFontLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelBMFontLoader.h; sourceTree = "<group>"; };
 		15A3CEF41682C2B7002FB0C5 /* CCLabelTTFLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelTTFLoader.cpp; sourceTree = "<group>"; };
@@ -330,7 +333,6 @@
 		15A3D09A1682E721002FB0C5 /* ScriptingCore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScriptingCore.cpp; sourceTree = "<group>"; };
 		15A3D09B1682E721002FB0C5 /* ScriptingCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptingCore.h; sourceTree = "<group>"; };
 		15A3D09C1682E721002FB0C5 /* spidermonkey_specifics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spidermonkey_specifics.h; sourceTree = "<group>"; };
-		15A3D09D1682E721002FB0C5 /* uthash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uthash.h; sourceTree = "<group>"; };
 		1A177F0F1698297600C9AC27 /* js_bindings_system_functions_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_system_functions_registration.h; sourceTree = "<group>"; };
 		1A177F101698297600C9AC27 /* js_bindings_system_functions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_system_functions.cpp; sourceTree = "<group>"; };
 		1A177F111698297600C9AC27 /* js_bindings_system_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_system_functions.h; sourceTree = "<group>"; };
@@ -344,6 +346,9 @@
 		1A27579D1697FA7200504026 /* jsb_opengl.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_opengl.js; sourceTree = "<group>"; };
 		1A27579E1697FA7200504026 /* jsb_sys.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_sys.js; sourceTree = "<group>"; };
 		1A27579F1697FA7200504026 /* jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb.js; sourceTree = "<group>"; };
+		1A3F8828170A7E3C000159E1 /* jsb_chipmunk_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_chipmunk_constants.js; sourceTree = "<group>"; };
+		1A3F8829170A7E3C000159E1 /* jsb_cocos2d_extension.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2d_extension.js; sourceTree = "<group>"; };
+		1A3F882A170A7E3C000159E1 /* jsb_opengl_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_opengl_constants.js; sourceTree = "<group>"; };
 		1A82F5D0169AC71F00C4B13A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		1A82F5D5169AC75500C4B13A /* LocalStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorage.cpp; sourceTree = "<group>"; };
 		1A82F5D6169AC75500C4B13A /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
@@ -568,8 +573,6 @@
 				15A3CEED1682C2B7002FB0C5 /* CCControlButtonLoader.h */,
 				15A3CEEE1682C2B7002FB0C5 /* CCControlLoader.cpp */,
 				15A3CEEF1682C2B7002FB0C5 /* CCControlLoader.h */,
-				15A3CEF01682C2B7002FB0C5 /* CCData.cpp */,
-				15A3CEF11682C2B7002FB0C5 /* CCData.h */,
 				15A3CEF21682C2B7002FB0C5 /* CCLabelBMFontLoader.cpp */,
 				15A3CEF31682C2B7002FB0C5 /* CCLabelBMFontLoader.h */,
 				15A3CEF41682C2B7002FB0C5 /* CCLabelTTFLoader.cpp */,
@@ -733,7 +736,6 @@
 				15A3D09A1682E721002FB0C5 /* ScriptingCore.cpp */,
 				15A3D09B1682E721002FB0C5 /* ScriptingCore.h */,
 				15A3D09C1682E721002FB0C5 /* spidermonkey_specifics.h */,
-				15A3D09D1682E721002FB0C5 /* uthash.h */,
 			);
 			name = bindings;
 			path = ../../../../scripting/javascript/bindings;
@@ -756,6 +758,9 @@
 		15A3D0831682E721002FB0C5 /* js */ = {
 			isa = PBXGroup;
 			children = (
+				1A3F8828170A7E3C000159E1 /* jsb_chipmunk_constants.js */,
+				1A3F8829170A7E3C000159E1 /* jsb_cocos2d_extension.js */,
+				1A3F882A170A7E3C000159E1 /* jsb_opengl_constants.js */,
 				1AA51AD416F71386000FDF05 /* jsb_cocos2d_constants.js */,
 				1A2757991697FA7200504026 /* jsb_chipmunk.js */,
 				1A27579A1697FA7200504026 /* jsb_cocos2d.js */,
@@ -911,6 +916,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A3F882E170A7F15000159E1 /* jsb_chipmunk_constants.js in Resources */,
+				1A3F882F170A7F15000159E1 /* jsb_cocos2d_extension.js in Resources */,
+				1A3F8830170A7F15000159E1 /* jsb_opengl_constants.js in Resources */,
 				1AA51AD616F713F5000FDF05 /* jsb_cocos2d_constants.js in Resources */,
 				1A2758101698218C00504026 /* jsb_chipmunk.js in Resources */,
 				1A2758111698218C00504026 /* jsb_cocos2d.js in Resources */,
@@ -981,7 +989,6 @@
 				15A3CF5D1682C2B8002FB0C5 /* CCBValue.cpp in Sources */,
 				15A3CF5E1682C2B8002FB0C5 /* CCControlButtonLoader.cpp in Sources */,
 				15A3CF5F1682C2B8002FB0C5 /* CCControlLoader.cpp in Sources */,
-				15A3CF601682C2B8002FB0C5 /* CCData.cpp in Sources */,
 				15A3CF611682C2B8002FB0C5 /* CCLabelBMFontLoader.cpp in Sources */,
 				15A3CF621682C2B8002FB0C5 /* CCLabelTTFLoader.cpp in Sources */,
 				15A3CF631682C2B8002FB0C5 /* CCLayerColorLoader.cpp in Sources */,
@@ -1034,6 +1041,9 @@
 				1AAC795916EDC63A00B97F83 /* jsb_cocos2dx_extension_auto_api.js in Sources */,
 				1AAC795A16EDC63A00B97F83 /* jsb_cocos2dx_extension_auto.cpp in Sources */,
 				1AA51AD516F71386000FDF05 /* jsb_cocos2d_constants.js in Sources */,
+				1A3F882B170A7E3C000159E1 /* jsb_chipmunk_constants.js in Sources */,
+				1A3F882C170A7E3C000159E1 /* jsb_cocos2d_extension.js in Sources */,
+				1A3F882D170A7E3C000159E1 /* jsb_opengl_constants.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1085,6 +1095,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 1;
@@ -1104,15 +1116,15 @@
 					"\"$(SRCROOT)/../../../../cocos2dx\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/kazmath/include\"",
 					"\"$(SRCROOT)/../../../../CocosDenshion/include\"",
-					"\"$(SDKROOT)/usr/include/libxml2\"",
 					"$(SRCROOT)/../../../../cocos2dx/include",
 					"$(SRCROOT)/../../../../cocos2dx/platform/ios",
+					"$(SRCROOT)/../../../../extensions",
 					"$(SRCROOT)/../../../../external/chipmunk/include/chipmunk",
 					"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/include",
 					"$(SRCROOT)/../../../../scripting/javascript/bindings",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/lib\"";
 				OTHER_LDFLAGS = (
 					"-lxml2",
@@ -1129,6 +1141,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
@@ -1145,15 +1159,15 @@
 					"\"$(SRCROOT)/../../../../cocos2dx\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/kazmath/include\"",
 					"\"$(SRCROOT)/../../../../CocosDenshion/include\"",
-					"\"$(SDKROOT)/usr/include/libxml2\"",
 					"$(SRCROOT)/../../../../cocos2dx/include",
 					"$(SRCROOT)/../../../../cocos2dx/platform/ios",
+					"$(SRCROOT)/../../../../extensions",
 					"$(SRCROOT)/../../../../external/chipmunk/include/chipmunk",
 					"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/include",
 					"$(SRCROOT)/../../../../scripting/javascript/bindings",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/lib\"";
 				OTHER_LDFLAGS = (
 					"-lxml2",

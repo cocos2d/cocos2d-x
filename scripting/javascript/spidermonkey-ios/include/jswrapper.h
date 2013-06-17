@@ -49,8 +49,8 @@ class JS_FRIEND_API(Wrapper) : public DirectProxyHandler
      * is not safe to unwrap, operations requiring full access to the underlying
      * object (via UnwrapObjectChecked) will throw. Otherwise, they will succeed.
      */
-    void setSafeToUnwrap(bool safe) { mSafeToUnwrap = safe; };
-    bool isSafeToUnwrap() { return mSafeToUnwrap; };
+    void setSafeToUnwrap(bool safe) { mSafeToUnwrap = safe; }
+    bool isSafeToUnwrap() { return mSafeToUnwrap; }
 
     static JSObject *New(JSContext *cx, JSObject *obj, JSObject *proto,
                          JSObject *parent, Wrapper *handler);
@@ -82,11 +82,11 @@ class JS_FRIEND_API(Wrapper) : public DirectProxyHandler
 
     /* ES5 Harmony fundamental wrapper traps. */
     virtual bool getPropertyDescriptor(JSContext *cx, JSObject *wrapper,
-                                       jsid id, bool set,
-                                       PropertyDescriptor *desc) MOZ_OVERRIDE;
+                                       jsid id, PropertyDescriptor *desc,
+                                       unsigned flags) MOZ_OVERRIDE;
     virtual bool getOwnPropertyDescriptor(JSContext *cx, JSObject *wrapper,
-                                          jsid id, bool set,
-                                          PropertyDescriptor *desc) MOZ_OVERRIDE;
+                                          jsid id, PropertyDescriptor *desc,
+                                          unsigned flags) MOZ_OVERRIDE;
     virtual bool defineProperty(JSContext *cx, JSObject *wrapper, jsid id,
                                 PropertyDescriptor *desc) MOZ_OVERRIDE;
     virtual bool getOwnPropertyNames(JSContext *cx, JSObject *wrapper,
@@ -131,10 +131,10 @@ class JS_FRIEND_API(CrossCompartmentWrapper) : public Wrapper
     virtual ~CrossCompartmentWrapper();
 
     /* ES5 Harmony fundamental wrapper traps. */
-    virtual bool getPropertyDescriptor(JSContext *cx, JSObject *wrapper, jsid id, bool set,
-                                       PropertyDescriptor *desc) MOZ_OVERRIDE;
-    virtual bool getOwnPropertyDescriptor(JSContext *cx, JSObject *wrapper, jsid id, bool set,
-                                          PropertyDescriptor *desc) MOZ_OVERRIDE;
+    virtual bool getPropertyDescriptor(JSContext *cx, JSObject *wrapper, jsid id,
+                                       PropertyDescriptor *desc, unsigned flags) MOZ_OVERRIDE;
+    virtual bool getOwnPropertyDescriptor(JSContext *cx, JSObject *wrapper, jsid id,
+                                          PropertyDescriptor *desc, unsigned flags) MOZ_OVERRIDE;
     virtual bool defineProperty(JSContext *cx, JSObject *wrapper, jsid id,
                                 PropertyDescriptor *desc) MOZ_OVERRIDE;
     virtual bool getOwnPropertyNames(JSContext *cx, JSObject *wrapper, AutoIdVector &props) MOZ_OVERRIDE;
@@ -160,7 +160,6 @@ class JS_FRIEND_API(CrossCompartmentWrapper) : public Wrapper
     virtual JSString *fun_toString(JSContext *cx, JSObject *wrapper, unsigned indent) MOZ_OVERRIDE;
     virtual bool regexp_toShared(JSContext *cx, JSObject *proxy, RegExpGuard *g) MOZ_OVERRIDE;
     virtual bool defaultValue(JSContext *cx, JSObject *wrapper, JSType hint, Value *vp) MOZ_OVERRIDE;
-    virtual bool iteratorNext(JSContext *cx, JSObject *wrapper, Value *vp);
     virtual bool getPrototypeOf(JSContext *cx, JSObject *proxy, JSObject **protop);
 
     static CrossCompartmentWrapper singleton;
@@ -188,6 +187,8 @@ class JS_FRIEND_API(SecurityWrapper) : public Base
                             CallArgs args) MOZ_OVERRIDE;
     virtual bool objectClassIs(JSObject *obj, ESClassValue classValue, JSContext *cx) MOZ_OVERRIDE;
     virtual bool regexp_toShared(JSContext *cx, JSObject *proxy, RegExpGuard *g) MOZ_OVERRIDE;
+    virtual bool defineProperty(JSContext *cx, JSObject *wrapper, jsid id,
+                                PropertyDescriptor *desc) MOZ_OVERRIDE;
 
     /*
      * Allow our subclasses to select the superclass behavior they want without
@@ -208,10 +209,10 @@ class JS_FRIEND_API(DeadObjectProxy) : public BaseProxyHandler
     explicit DeadObjectProxy();
 
     /* ES5 Harmony fundamental wrapper traps. */
-    virtual bool getPropertyDescriptor(JSContext *cx, JSObject *wrapper, jsid id, bool set,
-                                       PropertyDescriptor *desc) MOZ_OVERRIDE;
-    virtual bool getOwnPropertyDescriptor(JSContext *cx, JSObject *wrapper, jsid id, bool set,
-                                          PropertyDescriptor *desc) MOZ_OVERRIDE;
+    virtual bool getPropertyDescriptor(JSContext *cx, JSObject *wrapper, jsid id,
+                                       PropertyDescriptor *desc, unsigned flags) MOZ_OVERRIDE;
+    virtual bool getOwnPropertyDescriptor(JSContext *cx, JSObject *wrapper, jsid id,
+                                          PropertyDescriptor *desc, unsigned flags) MOZ_OVERRIDE;
     virtual bool defineProperty(JSContext *cx, JSObject *wrapper, jsid id,
                                 PropertyDescriptor *desc) MOZ_OVERRIDE;
     virtual bool getOwnPropertyNames(JSContext *cx, JSObject *wrapper, AutoIdVector &props) MOZ_OVERRIDE;
@@ -229,7 +230,6 @@ class JS_FRIEND_API(DeadObjectProxy) : public BaseProxyHandler
     virtual JSString *fun_toString(JSContext *cx, JSObject *proxy, unsigned indent);
     virtual bool regexp_toShared(JSContext *cx, JSObject *proxy, RegExpGuard *g);
     virtual bool defaultValue(JSContext *cx, JSObject *obj, JSType hint, Value *vp);
-    virtual bool iteratorNext(JSContext *cx, JSObject *proxy, Value *vp);
     virtual bool getElementIfPresent(JSContext *cx, JSObject *obj, JSObject *receiver,
                                      uint32_t index, Value *vp, bool *present);
     virtual bool getPrototypeOf(JSContext *cx, JSObject *proxy, JSObject **protop);
@@ -264,12 +264,12 @@ UnwrapObject(JSObject *obj, bool stopAtOuter = true, unsigned *flagsp = NULL);
 // code should never be unwrapping outer window wrappers, we always stop at
 // outer windows.
 JS_FRIEND_API(JSObject *)
-UnwrapObjectChecked(RawObject obj);
+UnwrapObjectChecked(RawObject obj, bool stopAtOuter = true);
 
 // Unwrap only the outermost security wrapper, with the same semantics as
 // above. This is the checked version of Wrapper::wrappedObject.
 JS_FRIEND_API(JSObject *)
-UnwrapOneChecked(RawObject obj);
+UnwrapOneChecked(RawObject obj, bool stopAtOuter = true);
 
 JS_FRIEND_API(bool)
 IsCrossCompartmentWrapper(RawObject obj);
@@ -298,30 +298,30 @@ RecomputeWrappers(JSContext *cx, const CompartmentFilter &sourceFilter,
 
 /*
  * This auto class should be used around any code, such as brain transplants,
- * that may touch dead compartments. Brain transplants can cause problems
+ * that may touch dead zones. Brain transplants can cause problems
  * because they operate on all compartments, whether live or dead. A brain
  * transplant can cause a formerly dead object to be "reanimated" by causing a
  * read or write barrier to be invoked on it during the transplant. In this way,
- * a compartment becomes a zombie, kept alive by repeatedly consuming
+ * a zone becomes a zombie, kept alive by repeatedly consuming
  * (transplanted) brains.
  *
  * To work around this issue, we observe when mark bits are set on objects in
- * dead compartments. If this happens during a brain transplant, we do a full,
+ * dead zones. If this happens during a brain transplant, we do a full,
  * non-incremental GC at the end of the brain transplant. This will clean up any
  * objects that were improperly marked.
  */
-struct JS_FRIEND_API(AutoMaybeTouchDeadCompartments)
+struct JS_FRIEND_API(AutoMaybeTouchDeadZones)
 {
     // The version that takes an object just uses it for its runtime.
-    AutoMaybeTouchDeadCompartments(JSContext *cx);
-    AutoMaybeTouchDeadCompartments(JSObject *obj);
-    ~AutoMaybeTouchDeadCompartments();
+    AutoMaybeTouchDeadZones(JSContext *cx);
+    AutoMaybeTouchDeadZones(JSObject *obj);
+    ~AutoMaybeTouchDeadZones();
 
   private:
     JSRuntime *runtime;
     unsigned markCount;
     bool inIncremental;
-    bool manipulatingDeadCompartments;
+    bool manipulatingDeadZones;
 };
 
 } /* namespace js */

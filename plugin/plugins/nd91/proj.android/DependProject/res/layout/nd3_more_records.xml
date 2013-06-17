@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/nd3_more_records_layout"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent" 
+	android:orientation ="vertical"
+	>
+	
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" 
+		android:orientation ="vertical"
+		android:background="@drawable/nd3_bk1"
+		android:layout_marginTop="@dimen/nd3_option_margin_top"
+		style="@style/nd3_option_margin_style"			
+		>
+		
+		<!-- 充值记录 -->
+		<LinearLayout
+			android:id="@+id/nd3_more_records_recharges"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation ="horizontal"
+			android:gravity="center_vertical"
+			style="@style/nd3_option_item_margin_style"				
+			>
+			
+			<TextView
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/nd3_more_records_recharges"
+				style="@style/nd3_option_textview_style"
+				>
+			</TextView>
+
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"	
+				android:src="@drawable/nd3_switch_image"			
+				>
+			</ImageView>
+							
+		</LinearLayout>
+
+		<!-- 分隔线 -->
+		<ImageView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/nd3_horizontal_line"
+			>
+		
+		</ImageView>
+		
+		<!-- 消费记录 -->
+		<LinearLayout
+			android:id="@+id/nd3_more_records_consumes"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation ="horizontal"
+			android:gravity="center_vertical"
+			style="@style/nd3_option_item_margin_style"				
+			>
+			
+			<TextView
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/nd3_more_records_consumes"
+				style="@style/nd3_option_textview_style"
+				>
+			</TextView>
+
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"	
+				android:src="@drawable/nd3_switch_image"			
+				>
+			</ImageView>
+							
+		</LinearLayout>
+
+	</LinearLayout>
+
+</LinearLayout>

@@ -8,19 +8,23 @@
 
 enum
 {
-    MAX_COUNT = 5,
     LINE_SPACE = 40,
     kItemTagBasic = 1000,
 };
 
-const std::string testsName[MAX_COUNT] = 
+struct {
+	const char *name;
+	std::function<void(CCObject*)> callback;
+} g_testsName[] =
 {
-    "PerformanceNodeChildrenTest",
-    "PerformanceParticleTest",
-    "PerformanceSpriteTest",
-    "PerformanceTextureTest",
-    "PerformanceTouchesTest"
+    { "PerformanceNodeChildrenTest", [](CCObject*sender){runNodeChildrenTest();} },
+	{ "PerformanceParticleTest",[](CCObject*sender){runParticleTest();} },
+	{ "PerformanceSpriteTest",[](CCObject*sender){runSpriteTest();} },
+	{ "PerformanceTextureTest",[](CCObject*sender){runTextureTest();} },
+	{ "PerformanceTouchesTest",[](CCObject*sender){runTouchesTest();} },
 };
+
+static const int g_testMax = sizeof(g_testsName)/sizeof(g_testsName[0]);
 
 ////////////////////////////////////////////////////////
 //
@@ -37,42 +41,14 @@ void PerformanceMainLayer::onEnter()
     pMenu->setPosition( CCPointZero );
     CCMenuItemFont::setFontName("Arial");
     CCMenuItemFont::setFontSize(24);
-    for (int i = 0; i < MAX_COUNT; ++i)
+    for (int i = 0; i < g_testMax; ++i)
     {
-        CCMenuItemFont* pItem = CCMenuItemFont::create(testsName[i].c_str(), this,
-                                                    menu_selector(PerformanceMainLayer::menuCallback));
+        CCMenuItemFont* pItem = CCMenuItemFont::create(g_testsName[i].name, g_testsName[i].callback);
         pItem->setPosition(ccp(s.width / 2, s.height - (i + 1) * LINE_SPACE));
         pMenu->addChild(pItem, kItemTagBasic + i);
     }
 
     addChild(pMenu);
-}
-
-void PerformanceMainLayer::menuCallback(CCObject* pSender)
-{
-    CCMenuItemFont* pItem = (CCMenuItemFont*)pSender;
-    int nIndex = pItem->getZOrder() - kItemTagBasic;
-
-    switch (nIndex)
-    {
-    case 0:
-        runNodeChildrenTest();
-        break;
-    case 1:
-        runParticleTest();
-        break;
-    case 2:
-        runSpriteTest();
-        break;
-    case 3:
-        runTextureTest();
-        break;
-    case 4:
-        runTouchesTest();
-        break;
-    default:
-        break;
-    }
 }
 
 ////////////////////////////////////////////////////////
@@ -94,17 +70,16 @@ void PerformBasicLayer::onEnter()
 
     CCMenuItemFont::setFontName("Arial");
     CCMenuItemFont::setFontSize(24);
-    CCMenuItemFont* pMainItem = CCMenuItemFont::create("Back", this,
-                                                    menu_selector(PerformBasicLayer::toMainLayer));
+    CCMenuItemFont* pMainItem = CCMenuItemFont::create("Back", CC_CALLBACK_1(PerformBasicLayer::toMainLayer, this));
     pMainItem->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
     CCMenu* pMenu = CCMenu::create(pMainItem, NULL);
     pMenu->setPosition( CCPointZero );
 
     if (m_bControlMenuVisible)
     {
-        CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(PerformBasicLayer::backCallback) );
-        CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(PerformBasicLayer::restartCallback) );
-        CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(PerformBasicLayer::nextCallback) );
+        CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, CC_CALLBACK_1(PerformBasicLayer::backCallback, this));
+        CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, CC_CALLBACK_1(PerformBasicLayer::restartCallback, this));
+        CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, CC_CALLBACK_1(PerformBasicLayer::nextCallback, this));
         item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
         item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
         item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/nd_bind_phone_number_layout"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent" 
+	android:orientation ="vertical"
+	android:fillViewport="true"
+	android:gravity="center"
+	>
+	<RelativeLayout
+        android:id="@+id/nd3_title_bar_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/nd3_title_bar_bg"
+        android:orientation="vertical" >
+
+        <!-- 左按钮 -->
+
+        <Button
+            android:id="@+id/nd3_title_bar_button_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dip"
+            android:background="@drawable/nd3_title_bar_return_btn_xml"
+            android:gravity="center"
+            android:text="@string/nd3_topbar_ret"
+            android:textColor="#FFFFFFFF"
+            android:textSize="16sp" >
+        </Button>
+
+        <!-- 标题 -->
+
+        <TextView
+            android:id="@+id/nd3_title_bar_title"
+            style="@style/nd3_textview_0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" 
+            android:drawablePadding="@dimen/nd3_option_item_marginLeft"
+            android:text="@string/nd_bind_phone_title" >
+        </TextView>
+
+        <!-- 右按钮 -->
+
+        <Button
+            android:id="@+id/nd3_title_bar_button_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
+            android:background="@drawable/nd3_title_bar_action_btn_xml"
+            android:gravity="center"
+            android:text="@string/nd3_account_login_button_right"
+            android:textColor="#FFFFFFFF"
+            android:textSize="16sp"
+            android:visibility="invisible" >
+        </Button>
+    </RelativeLayout>
+ <ScrollView
+     android:layout_width="fill_parent"
+     android:layout_height="fill_parent" >   
+  <LinearLayout 
+	    android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:orientation="vertical"
+		style="@style/nd3_option_item_margin_style"
+		android:gravity="center_horizontal">
+        <ImageView 
+            android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/nd_winning"
+			android:layout_gravity="center"/>
+	    <!-- 提示信息 -->
+		<TextView
+		    android:id="@+id/nd_lottery_tip"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:textSize="@dimen/nd3_register_agreement_text_size"
+			android:textColor="@color/nd3_white"		
+			android:layout_marginTop="@dimen/nd3_option_margin_top"
+			style="@style/nd3_option_margin_style"
+			>
+		</TextView>
+	 
+		   
+		<Button 
+		    android:id="@+id/nd_lottery_exit"
+	    	android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/nd3_yes"
+			android:textSize="@dimen/nd3_pay_tip_text_size"
+			android:textColor="@color/nd3_font_color"	
+			style="@style/nd3_button_margin_style"	
+			android:background="@drawable/nd_white_btn"
+			android:gravity="center"
+			android:layout_marginTop="@dimen/nd_20"
+			/>      
+	  
+	   <TextView
+		    android:id="@+id/nd_server_tel"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:gravity="center|bottom"  
+			android:textSize="@dimen/nd3_register_agreement_text_size"
+			android:textColor="@color/nd3_white"		
+			android:layout_marginTop="@dimen/nd3_option_margin_top"
+			style="@style/nd3_option_margin_style"
+			>
+		</TextView>
+	</LinearLayout>
+  </ScrollView>				
+</LinearLayout>

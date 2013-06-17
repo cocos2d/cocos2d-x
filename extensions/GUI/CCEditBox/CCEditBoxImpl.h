@@ -36,7 +36,7 @@ NS_CC_EXT_BEGIN
 class CCEditBoxImpl
 {
 public:
-    CCEditBoxImpl(CCEditBox* pEditBox) : m_pEditBox(pEditBox), m_pDelegate(NULL)  {}
+    CCEditBoxImpl(CCEditBox* pEditBox) : m_pDelegate(NULL),m_pEditBox(pEditBox) {}
     virtual ~CCEditBoxImpl() {}
     
     virtual bool initWithSize(const CCSize& size) = 0;

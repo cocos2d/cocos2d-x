@@ -79,9 +79,23 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     quantityParticles = particles;
 
     CCMenuItemFont::setFontSize(65);
-    CCMenuItemFont *decrease = CCMenuItemFont::create(" - ", this, menu_selector(ParticleMainScene::onDecrease));
+    CCMenuItemFont *decrease = CCMenuItemFont::create(" - ", [&](CCObject *sender) {
+		quantityParticles -= kNodesIncrease;
+		if( quantityParticles < 0 )
+			quantityParticles = 0;
+
+		updateQuantityLabel();
+		createParticleSystem();
+	});
     decrease->setColor(ccc3(0,200,20));
-    CCMenuItemFont *increase = CCMenuItemFont::create(" + ", this, menu_selector(ParticleMainScene::onIncrease));
+    CCMenuItemFont *increase = CCMenuItemFont::create(" + ", [&](CCObject *sender) {
+		quantityParticles += kNodesIncrease;
+		if( quantityParticles > kMaxParticles )
+			quantityParticles = kMaxParticles;
+
+		updateQuantityLabel();
+		createParticleSystem();
+	});
     increase->setColor(ccc3(0,200,20));
 
     CCMenu *menu = CCMenu::create(decrease, increase, NULL);
@@ -111,7 +125,7 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     {
         char str[10] = {0};
         sprintf(str, "%d ", i);
-        CCMenuItemFont* itemFont = CCMenuItemFont::create(str, this, menu_selector(ParticleMainScene::testNCallback));
+        CCMenuItemFont* itemFont = CCMenuItemFont::create(str, CC_CALLBACK_1(ParticleMainScene::testNCallback, this));
         itemFont->setTag(i);
         pSubMenu->addChild(itemFont, 10);
 
@@ -247,26 +261,6 @@ void ParticleMainScene::testNCallback(CCObject* pSender)
 
     ParticleMenuLayer* pMenu = (ParticleMenuLayer*)getChildByTag(kTagMenuLayer);
     pMenu->restartCallback(pSender);
-}
-
-void ParticleMainScene::onIncrease(CCObject* pSender)
-{
-    quantityParticles += kNodesIncrease;
-    if( quantityParticles > kMaxParticles )
-        quantityParticles = kMaxParticles;
-
-    updateQuantityLabel();
-    createParticleSystem();
-}
-
-void ParticleMainScene::onDecrease(CCObject* pSender)
-{
-    quantityParticles -= kNodesIncrease;
-    if( quantityParticles < 0 )
-        quantityParticles = 0;
-
-    updateQuantityLabel();
-    createParticleSystem();
 }
 
 void ParticleMainScene::updateQuantityLabel()

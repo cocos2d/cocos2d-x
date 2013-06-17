@@ -18,8 +18,6 @@ public:
 
     void step(float dt);
     void createParticleSystem();
-    void onDecrease(CCObject* pSender);
-    void onIncrease(CCObject* pSender);
     void testNCallback(CCObject* pSender);
     void updateQuantityLabel();
     int getSubTestNum() { return subtestNumber; }

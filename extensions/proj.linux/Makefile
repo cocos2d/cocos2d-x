@@ -8,10 +8,10 @@ INCLUDES = -I$(COCOS_ROOT)/external \
 	-I.. \
 	-I../CCBReader \
 	-I../GUI/CCControlExtension \
-	-I../network
-
-DEFINES += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
-DEFINES += -D__CC_PLATFORM_IMAGE_CPP__
+	-I../GUI/CCEditBox \
+	-I../network \
+	-I../Components \
+	-I../CCArmature
 
 SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CCBReader/CCMenuItemImageLoader.cpp \
@@ -35,7 +35,6 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CCBReader/CCBSequence.cpp \
 ../CCBReader/CCBSequenceProperty.cpp \
 ../CCBReader/CCBValue.cpp \
-../CCBReader/CCData.cpp \
 ../CCBReader/CCNode+CCBRelativePositioning.cpp \
 ../GUI/CCScrollView/CCScrollView.cpp \
 ../GUI/CCScrollView/CCSorting.cpp \
@@ -53,9 +52,61 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../GUI/CCControlExtension/CCScale9Sprite.cpp \
 ../GUI/CCControlExtension/CCControlPotentiometer.cpp \
 ../GUI/CCControlExtension/CCControlStepper.cpp \
+../GUI/CCEditBox/CCEditBox.cpp \
+../GUI/CCEditBox/CCEditBoxImplNone.cpp \
 ../network/HttpClient.cpp \
 ../physics_nodes/CCPhysicsDebugNode.cpp \
-../physics_nodes/CCPhysicsSprite.cpp
+../physics_nodes/CCPhysicsSprite.cpp \
+../spine/Animation.cpp \
+../spine/AnimationState.cpp \
+../spine/AnimationStateData.cpp \
+../spine/Atlas.cpp \
+../spine/AtlasAttachmentLoader.cpp \
+../spine/Attachment.cpp \
+../spine/AttachmentLoader.cpp \
+../spine/Bone.cpp \
+../spine/BoneData.cpp \
+../spine/Json.cpp \
+../spine/RegionAttachment.cpp \
+../spine/Skeleton.cpp \
+../spine/SkeletonData.cpp \
+../spine/SkeletonJson.cpp \
+../spine/Skin.cpp \
+../spine/Slot.cpp \
+../spine/SlotData.cpp \
+../spine/extension.cpp \
+../spine/spine-cocos2dx.cpp \
+../spine/CCSkeleton.cpp \
+../spine/CCSkeletonAnimation.cpp \
+../CCArmature/CCArmature.cpp \
+../CCArmature/CCBone.cpp \
+../CCArmature/animation/CCArmatureAnimation.cpp \
+../CCArmature/animation/CCProcessBase.cpp \
+../CCArmature/animation/CCTween.cpp \
+../CCArmature/datas/CCDatas.cpp \
+../CCArmature/display/CCBatchNode.cpp \
+../CCArmature/display/CCDecorativeDisplay.cpp \
+../CCArmature/display/CCDisplayFactory.cpp \
+../CCArmature/display/CCDisplayManager.cpp \
+../CCArmature/display/CCShaderNode.cpp \
+../CCArmature/display/CCSkin.cpp \
+../CCArmature/external_tool/GLES-Render.cpp \
+../CCArmature/external_tool/Json/CSContentJsonDictionary.cpp \
+../CCArmature/external_tool/Json/lib_json/json_value.cpp \
+../CCArmature/external_tool/Json/lib_json/json_reader.cpp \
+../CCArmature/external_tool/Json/lib_json/json_writer.cpp \
+../CCArmature/physics/CCColliderDetector.cpp \
+../CCArmature/physics/CCPhysicsWorld.cpp \
+../CCArmature/utils/CCArmatureDataManager.cpp \
+../CCArmature/utils/CCDataReaderHelper.cpp \
+../CCArmature/utils/CCSpriteFrameCacheHelper.cpp \
+../CCArmature/utils/CCTransformHelp.cpp \
+../CCArmature/utils/CCTweenFunction.cpp \
+../CCArmature/utils/CCUtilMath.cpp \
+../Components/CCComAttribute.cpp \
+../Components/CCComAudio.cpp \
+../Components/CCComController.cpp \
+../Components/CCInputDelegate.cpp 
 
 include $(COCOS_ROOT)/cocos2dx/proj.linux/cocos2dx.mk
 

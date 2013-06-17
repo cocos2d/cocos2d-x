@@ -2,99 +2,53 @@
 #include "../testResource.h"
 #include "cocos2d.h"
 
-TESTLAYER_CREATE_FUNC(ActionManual);
-TESTLAYER_CREATE_FUNC(ActionMove);
-TESTLAYER_CREATE_FUNC(ActionRotate);
-TESTLAYER_CREATE_FUNC(ActionScale);
-TESTLAYER_CREATE_FUNC(ActionSkew);
-TESTLAYER_CREATE_FUNC(ActionRotationalSkew);
-TESTLAYER_CREATE_FUNC(ActionRotationalSkewVSStandardSkew);
-TESTLAYER_CREATE_FUNC(ActionSkewRotateScale);
-TESTLAYER_CREATE_FUNC(ActionJump);
-TESTLAYER_CREATE_FUNC(ActionCardinalSpline);
-TESTLAYER_CREATE_FUNC(ActionCatmullRom);
-TESTLAYER_CREATE_FUNC(ActionBezier);
-TESTLAYER_CREATE_FUNC(ActionBlink);
-TESTLAYER_CREATE_FUNC(ActionFade);
-TESTLAYER_CREATE_FUNC(ActionTint);
-TESTLAYER_CREATE_FUNC(ActionAnimate);
-TESTLAYER_CREATE_FUNC(ActionSequence);
-TESTLAYER_CREATE_FUNC(ActionSequence2);
-TESTLAYER_CREATE_FUNC(ActionSpawn);
-TESTLAYER_CREATE_FUNC(ActionReverse);
-TESTLAYER_CREATE_FUNC(ActionDelayTime);
-TESTLAYER_CREATE_FUNC(ActionRepeat);
-TESTLAYER_CREATE_FUNC(ActionRepeatForever);
-TESTLAYER_CREATE_FUNC(ActionRotateToRepeat);
-TESTLAYER_CREATE_FUNC(ActionRotateJerk);
-TESTLAYER_CREATE_FUNC(ActionCallFunc);
-TESTLAYER_CREATE_FUNC(ActionCallFuncND);
-TESTLAYER_CREATE_FUNC(ActionReverseSequence);
-TESTLAYER_CREATE_FUNC(ActionReverseSequence2);
-TESTLAYER_CREATE_FUNC(ActionRemoveSelf);
-TESTLAYER_CREATE_FUNC(ActionOrbit);
-TESTLAYER_CREATE_FUNC(ActionFollow);
-TESTLAYER_CREATE_FUNC(ActionTargeted);
-TESTLAYER_CREATE_FUNC(ActionMoveStacked);
-TESTLAYER_CREATE_FUNC(ActionMoveJumpStacked);
-TESTLAYER_CREATE_FUNC(ActionMoveBezierStacked);
-TESTLAYER_CREATE_FUNC(ActionCardinalSplineStacked);
-TESTLAYER_CREATE_FUNC(ActionCatmullRomStacked);
-TESTLAYER_CREATE_FUNC(PauseResumeActions);
-TESTLAYER_CREATE_FUNC(Issue1305);
-TESTLAYER_CREATE_FUNC(Issue1305_2);
-TESTLAYER_CREATE_FUNC(Issue1288);
-TESTLAYER_CREATE_FUNC(Issue1288_2);
-TESTLAYER_CREATE_FUNC(Issue1327);
-TESTLAYER_CREATE_FUNC(Issue1398);
-
-
-static NEWTESTFUNC createFunctions[] = {
-    CF(ActionManual),
-    CF(ActionMove),
-    CF(ActionRotate),
-    CF(ActionScale),
-    CF(ActionSkew),
-    CF(ActionRotationalSkew),
-    CF(ActionRotationalSkewVSStandardSkew),
-    CF(ActionSkewRotateScale),
-    CF(ActionJump),
-    CF(ActionCardinalSpline),
-    CF(ActionCatmullRom),
-    CF(ActionBezier),
-    CF(ActionBlink),
-    CF(ActionFade),
-    CF(ActionTint),
-    CF(ActionAnimate),
-    CF(ActionSequence),
-    CF(ActionSequence2),
-	CF(ActionRemoveSelf),
-    CF(ActionSpawn),
-    CF(ActionReverse),
-    CF(ActionDelayTime),
-    CF(ActionRepeat),
-    CF(ActionRepeatForever),
-    CF(ActionRotateToRepeat),
-    CF(ActionRotateJerk),
-    CF(ActionCallFunc),
-    CF(ActionCallFuncND),
-    CF(ActionReverseSequence),
-    CF(ActionReverseSequence2),
-    CF(ActionOrbit),
-    CF(ActionFollow),
-    CF(ActionTargeted),
-    CF(ActionMoveStacked),
-    CF(ActionMoveJumpStacked),
-    CF(ActionMoveBezierStacked),
-    CF(ActionCardinalSplineStacked),
-    CF(ActionCatmullRomStacked),
-    CF(PauseResumeActions),
-    CF(Issue1305),
-    CF(Issue1305_2),
-    CF(Issue1288),
-    CF(Issue1288_2),
-    CF(Issue1327),
-    CF(Issue1398)
+static std::function<CCLayer*()> createFunctions[] = {
+    CL(ActionManual),
+    CL(ActionMove),
+    CL(ActionRotate),
+    CL(ActionScale),
+    CL(ActionSkew),
+    CL(ActionRotationalSkew),
+    CL(ActionRotationalSkewVSStandardSkew),
+    CL(ActionSkewRotateScale),
+    CL(ActionJump),
+    CL(ActionCardinalSpline),
+    CL(ActionCatmullRom),
+    CL(ActionBezier),
+    CL(ActionBlink),
+    CL(ActionFade),
+    CL(ActionTint),
+    CL(ActionAnimate),
+    CL(ActionSequence),
+    CL(ActionSequence2),
+	CL(ActionRemoveSelf),
+    CL(ActionSpawn),
+    CL(ActionReverse),
+    CL(ActionDelayTime),
+    CL(ActionRepeat),
+    CL(ActionRepeatForever),
+    CL(ActionRotateToRepeat),
+    CL(ActionRotateJerk),
+    CL(ActionCallFunction),
+    CL(ActionCallFunc),
+    CL(ActionCallFuncND),
+    CL(ActionReverseSequence),
+    CL(ActionReverseSequence2),
+    CL(ActionOrbit),
+    CL(ActionFollow),
+    CL(ActionTargeted),
+    CL(ActionMoveStacked),
+    CL(ActionMoveJumpStacked),
+    CL(ActionMoveBezierStacked),
+    CL(ActionCardinalSplineStacked),
+    CL(ActionCatmullRomStacked),
+    CL(PauseResumeActions),
+    CL(Issue1305),
+    CL(Issue1305_2),
+    CL(Issue1288),
+    CL(Issue1288_2),
+    CL(Issue1327),
+    CL(Issue1398)
 };
 
 static int sceneIdx=-1;
@@ -156,7 +110,7 @@ std::string ActionsDemo::subtitle()
 
 void ActionsDemo::onEnter()
 {
-    CCLayer::onEnter();
+    BaseTest::onEnter();
 
     // Or you can create an sprite using a filename. only PNG is supported now. Probably TIFF too
     m_grossini = CCSprite::create(s_pPathGrossini);
@@ -175,35 +129,6 @@ void ActionsDemo::onEnter()
     m_grossini->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height/3));
     m_tamara->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height*2/3));
     m_kathia->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height/2)); 
-
-    // add title and subtitle
-    std::string str = title();
-    const char * pTitle = str.c_str();
-    CCLabelTTF* label = CCLabelTTF::create(pTitle, "Arial", 32);
-    addChild(label, 1);
-    label->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - 30) );
-
-    std::string strSubtitle = subtitle();
-    if( ! strSubtitle.empty() ) 
-    {
-        CCLabelTTF* l = CCLabelTTF::create(strSubtitle.c_str(), "Thonburi", 16);
-        addChild(l, 1);
-        l->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - 60) );
-    }    
-
-    // add menu
-    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(ActionsDemo::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(ActionsDemo::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(ActionsDemo::nextCallback) );
-
-    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
-
-    menu->setPosition(CCPointZero);
-    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-
-    addChild(menu, 1);
 }
 
 void ActionsDemo::onExit()
@@ -212,7 +137,7 @@ void ActionsDemo::onExit()
     m_tamara->release();
     m_kathia->release();
 
-    CCLayer::onExit();
+    BaseTest::onExit();
 }
 
 void ActionsDemo::restartCallback(CCObject* pSender)
@@ -816,13 +741,14 @@ void ActionSequence2::onEnter()
     m_grossini->setVisible(false);
 
     CCFiniteTimeAction*  action = CCSequence::create(
-        CCPlace::create(ccp(200,200)),
-        CCShow::create(),
-        CCMoveBy::create(1, ccp(100,0)),
-        CCCallFunc::create(this, callfunc_selector(ActionSequence2::callback1)),
-        CCCallFuncN::create(this, callfuncN_selector(ActionSequence2::callback2)),
-        CCCallFuncND::create(this, callfuncND_selector(ActionSequence2::callback3), (void*)0xbebabeba),
-        NULL);
+		CCPlace::create(ccp(200,200)),
+		CCShow::create(),
+		CCMoveBy::create(1, ccp(100,0)),
+		// CC_CALLBACK_0 == std::bind( &function, instance, ...)
+		CCCallFunc::create( CC_CALLBACK_0(ActionSequence2::callback1,this)),
+		CCCallFunc::create( CC_CALLBACK_0(ActionSequence2::callback2,this,m_grossini)),
+		CCCallFunc::create( CC_CALLBACK_0(ActionSequence2::callback3,this,m_grossini,(void*)0xbebabeba)),
+		NULL);
 
     m_grossini->runAction(action);
 }
@@ -862,6 +788,7 @@ std::string ActionSequence2::subtitle()
 //------------------------------------------------------------------
 //
 //    ActionCallFunc
+//    DEPRECATED. Use the std::function() API instead
 //
 //------------------------------------------------------------------
 void ActionCallFunc::onEnter()
@@ -921,12 +848,13 @@ void ActionCallFunc::callback3(CCNode* pTarget, void* data)
 
 std::string ActionCallFunc::subtitle()
 {
-    return "Callbacks: CallFunc and friends";
+    return "Callbacks: CallFunc. Old way. Avoid it";
 }
 
 //------------------------------------------------------------------
 //
 // ActionCallFuncND
+// DEPRECATED. Use the std::function() API instead
 //
 //------------------------------------------------------------------
 void ActionCallFuncND::onEnter()
@@ -958,6 +886,83 @@ void ActionCallFuncND::removeFromParentAndCleanup(CCNode* pSender, void* data)
     m_grossini->removeFromParentAndCleanup(bCleanUp);
 }
 
+//------------------------------------------------------------------
+//
+//    ActionCallFunction
+//
+//------------------------------------------------------------------
+void ActionCallFunction::onEnter()
+{
+    ActionsDemo::onEnter();
+
+    centerSprites(3);
+
+
+	CCFiniteTimeAction*  action1 = CCSequence::create(
+													  CCMoveBy::create(2, ccp(200,0)),
+													  CCCallFunc::create( std::bind(&ActionCallFunction::callback1, this) ),
+													  CCCallFunc::create(
+																			 // lambda
+																			 [&](){
+																				 CCSize s = CCDirector::sharedDirector()->getWinSize();
+																				 CCLabelTTF *label = CCLabelTTF::create("called:lambda callback", "Marker Felt", 16);
+																				 label->setPosition(ccp( s.width/4*1,s.height/2-40));
+																				 this->addChild(label);
+																			 }  ),
+													  NULL);
+
+    CCFiniteTimeAction*  action2 = CCSequence::create(
+													  CCScaleBy::create(2 ,  2),
+													  CCFadeOut::create(2),
+													  CCCallFunc::create( std::bind(&ActionCallFunction::callback2, this, m_tamara) ),
+													  NULL);
+
+    CCFiniteTimeAction*  action3 = CCSequence::create(
+													  CCRotateBy::create(3 , 360),
+													  CCFadeOut::create(2),
+													  CCCallFunc::create( std::bind(&ActionCallFunction::callback3, this, m_kathia, (void*)42) ),
+													  NULL);
+
+    m_grossini->runAction(action1);
+    m_tamara->runAction(action2);
+    m_kathia->runAction(action3);
+}
+
+
+void ActionCallFunction::callback1()
+{
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCLabelTTF *label = CCLabelTTF::create("callback 1 called", "Marker Felt", 16);
+    label->setPosition(ccp( s.width/4*1,s.height/2));
+
+    addChild(label);
+}
+
+void ActionCallFunction::callback2(CCNode* sender)
+{
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCLabelTTF *label = CCLabelTTF::create("callback 2 called", "Marker Felt", 16);
+    label->setPosition(ccp( s.width/4*2,s.height/2));
+
+    addChild(label);
+
+	CCLOG("sender is: %p", sender);
+}
+
+void ActionCallFunction::callback3(CCNode* sender, void* data)
+{
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCLabelTTF *label = CCLabelTTF::create("callback 3 called", "Marker Felt", 16);
+    label->setPosition(ccp( s.width/4*3,s.height/2));
+    addChild(label);
+
+	CCLOG("target is: %p, data is: %ld", sender, (long)data);
+}
+
+std::string ActionCallFunction::subtitle()
+{
+    return "Callbacks: CallFunc with std::function()";
+}
 //------------------------------------------------------------------
 //
 // ActionSpawn
@@ -998,7 +1003,7 @@ void ActionRepeatForever::onEnter()
 
     CCFiniteTimeAction*  action = CCSequence::create(
         CCDelayTime::create(1),
-        CCCallFuncN::create( this, callfuncN_selector(ActionRepeatForever::repeatForever) ), 
+        CCCallFunc::create( std::bind( &ActionRepeatForever::repeatForever, this, m_grossini) ),
         NULL);
 
     m_grossini->runAction(action);
@@ -1400,11 +1405,11 @@ void ActionMoveStacked::runActionsInSprite(CCSprite *sprite)
     sprite->runAction(
         CCRepeatForever::create(
                 CCSequence::create(
-                CCMoveBy::create(0.05, ccp(10,10)),
-                CCMoveBy::create(0.05, ccp(-10,-10)),
+                CCMoveBy::create(0.05f, ccp(10,10)),
+                CCMoveBy::create(0.05f, ccp(-10,-10)),
        NULL)));
     
-    CCMoveBy* action = CCMoveBy::create(2, ccp(400,0));
+    CCMoveBy* action = CCMoveBy::create(2.0f, ccp(400,0));
     CCMoveBy* action_back = (CCMoveBy*)action->reverse();
     
     sprite->runAction(
@@ -1426,11 +1431,11 @@ void ActionMoveJumpStacked::runActionsInSprite(CCSprite *sprite)
     sprite->runAction(
           CCRepeatForever::create(
             CCSequence::create(
-             CCMoveBy::create(0.05, ccp(10,2)),
-             CCMoveBy::create(0.05, ccp(-10,-2)),
+             CCMoveBy::create(0.05f, ccp(10,2)),
+             CCMoveBy::create(0.05f, ccp(-10,-2)),
              NULL)));
     
-    CCJumpBy* jump = CCJumpBy::create(2, ccp(400,0), 100, 5);
+    CCJumpBy* jump = CCJumpBy::create(2.0f, ccp(400,0), 100, 5);
     CCJumpBy* jump_back = (CCJumpBy*)jump->reverse();
     
     sprite->runAction(
@@ -1465,8 +1470,8 @@ void ActionMoveBezierStacked::runActionsInSprite(CCSprite *sprite)
     sprite->runAction(
      CCRepeatForever::create(
       CCSequence::create(
-       CCMoveBy::create(0.05, ccp(10,0)),
-       CCMoveBy::create(0.05, ccp(-10,0)),
+       CCMoveBy::create(0.05f, ccp(10,0)),
+       CCMoveBy::create(0.05f, ccp(-10,0)),
        NULL)));
 }
 
@@ -1516,8 +1521,8 @@ void ActionCatmullRomStacked::onEnter()
     m_tamara->runAction(
      CCRepeatForever::create(
       CCSequence::create(
-       CCMoveBy::create(0.05, ccp(10,0)),
-       CCMoveBy::create(0.05, ccp(-10,0)),
+       CCMoveBy::create(0.05f, ccp(10,0)),
+       CCMoveBy::create(0.05f, ccp(-10,0)),
        NULL)));
     
     
@@ -1548,8 +1553,8 @@ void ActionCatmullRomStacked::onEnter()
     m_kathia->runAction(
      CCRepeatForever::create(
       CCSequence::create(
-       CCMoveBy::create(0.05, ccp(10,0)),
-       CCMoveBy::create(0.05, ccp(-10,0)),
+       CCMoveBy::create(0.05f, ccp(10,0)),
+       CCMoveBy::create(0.05f, ccp(-10,0)),
        NULL)));
     
     
@@ -1626,8 +1631,8 @@ void ActionCardinalSplineStacked::onEnter()
     m_tamara->runAction(
      CCRepeatForever::create(
       CCSequence::create(
-       CCMoveBy::create(0.05, ccp(10,0)),
-       CCMoveBy::create(0.05, ccp(-10,0)),
+       CCMoveBy::create(0.05f, ccp(10,0)),
+       CCMoveBy::create(0.05f, ccp(-10,0)),
        NULL)));
     
     
@@ -1649,8 +1654,8 @@ void ActionCardinalSplineStacked::onEnter()
     m_kathia->runAction(
      CCRepeatForever::create(
       CCSequence::create(
-       CCMoveBy::create(0.05, ccp(10,0)),
-       CCMoveBy::create(0.05, ccp(-10,0)),
+       CCMoveBy::create(0.05f, ccp(10,0)),
+       CCMoveBy::create(0.05f, ccp(-10,0)),
        NULL)));
     
     
@@ -1704,7 +1709,7 @@ void Issue1305::onEnter()
     }] );
     */
 
-    m_pSpriteTmp->runAction(CCCallFuncN::create(this, callfuncN_selector(Issue1305::log)));
+    m_pSpriteTmp->runAction(CCCallFunc::create(std::bind(&Issue1305::log, this, m_pSpriteTmp)));
     m_pSpriteTmp->retain();
 
     scheduleOnce(schedule_selector(Issue1305::addSprite), 2);
@@ -1766,13 +1771,13 @@ void Issue1305_2::onEnter()
     });
     */
 
-    CCCallFunc* act2 = CCCallFunc::create(this, callfunc_selector(Issue1305_2::printLog1));
+    CCCallFunc* act2 = CCCallFunc::create( std::bind( &Issue1305_2::printLog1, this));
     CCMoveBy* act3 = CCMoveBy::create(2, ccp(0, -100));
-    CCCallFunc* act4 = CCCallFunc::create(this, callfunc_selector(Issue1305_2::printLog2));
+    CCCallFunc* act4 = CCCallFunc::create( std::bind( &Issue1305_2::printLog2, this));
     CCMoveBy* act5 = CCMoveBy::create(2, ccp(100, -100));
-    CCCallFunc* act6 = CCCallFunc::create(this, callfunc_selector(Issue1305_2::printLog3));
+    CCCallFunc* act6 = CCCallFunc::create( std::bind( &Issue1305_2::printLog3, this));
     CCMoveBy* act7 = CCMoveBy::create(2, ccp(-100, 0));
-    CCCallFunc* act8 = CCCallFunc::create(this, callfunc_selector(Issue1305_2::printLog4));
+    CCCallFunc* act8 = CCCallFunc::create( std::bind( &Issue1305_2::printLog4, this));
 
     CCFiniteTimeAction* actF = CCSequence::create(act1, act2, act3, act4, act5, act6, act7, act8, NULL);
 
@@ -1871,15 +1876,15 @@ void Issue1327::onEnter()
     spr->setPosition(ccp(100, 100));
     addChild(spr);
 
-    CCCallFuncN* act1 = CCCallFuncN::create(this, callfuncN_selector(Issue1327::logSprRotation));
+    CCCallFunc* act1 = CCCallFunc::create( std::bind(&Issue1327::logSprRotation, this, spr));
     CCRotateBy* act2 = CCRotateBy::create(0.25, 45);
-    CCCallFuncN* act3 = CCCallFuncN::create(this, callfuncN_selector(Issue1327::logSprRotation));
+    CCCallFunc* act3 = CCCallFunc::create( std::bind(&Issue1327::logSprRotation, this, spr));
     CCRotateBy* act4 = CCRotateBy::create(0.25, 45);
-    CCCallFuncN* act5 = CCCallFuncN::create(this, callfuncN_selector(Issue1327::logSprRotation));
+    CCCallFunc* act5 = CCCallFunc::create( std::bind(&Issue1327::logSprRotation, this, spr));
     CCRotateBy* act6 = CCRotateBy::create(0.25, 45);
-    CCCallFuncN* act7 = CCCallFuncN::create(this, callfuncN_selector(Issue1327::logSprRotation));
+    CCCallFunc* act7 = CCCallFunc::create( std::bind(&Issue1327::logSprRotation, this, spr));
     CCRotateBy* act8 = CCRotateBy::create(0.25, 45);
-    CCCallFuncN* act9 = CCCallFuncN::create(this, callfuncN_selector(Issue1327::logSprRotation));
+    CCCallFunc* act9 = CCCallFunc::create( std::bind(&Issue1327::logSprRotation, this, spr));
 
     CCFiniteTimeAction* actF = CCSequence::create(act1, act2, act3, act4, act5, act6, act7, act8, act9, NULL);
     spr->runAction(actF);
@@ -1917,21 +1922,21 @@ void Issue1398::onEnter()
 
     this->runAction(
         CCSequence::create(
-            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"1"),
-            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"2"),
-            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"3"),
-            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"4"),
-            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"5"),
-            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"6"),
-            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"7"),
-            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"8"),
+			CCCallFunc::create( std::bind(&Issue1398::incrementIntegerCallback, this, (void*)"1")),
+			CCCallFunc::create( std::bind(&Issue1398::incrementIntegerCallback, this, (void*)"2")),
+			CCCallFunc::create( std::bind(&Issue1398::incrementIntegerCallback, this, (void*)"3")),
+			CCCallFunc::create( std::bind(&Issue1398::incrementIntegerCallback, this, (void*)"4")),
+			CCCallFunc::create( std::bind(&Issue1398::incrementIntegerCallback, this, (void*)"5")),
+			CCCallFunc::create( std::bind(&Issue1398::incrementIntegerCallback, this, (void*)"6")),
+			CCCallFunc::create( std::bind(&Issue1398::incrementIntegerCallback, this, (void*)"7")),
+			CCCallFunc::create( std::bind(&Issue1398::incrementIntegerCallback, this, (void*)"8")),
             NULL));
 }
 
-void Issue1398::incrementIntegerCallback(CCNode* pSender, void* data)
+void Issue1398::incrementIntegerCallback(void* data)
 {
     this->incrementInteger();
-    CCLog((char*)data);
+    CCLog("%s", (char*)data);
 }
 
 std::string Issue1398::subtitle()

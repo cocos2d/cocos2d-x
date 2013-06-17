@@ -7,10 +7,82 @@ Core Developers:
     XiaoMing Zhang (Minggo)
     JianHua Chen (Dumganhar)
 
+
 Developers:
     Ricardo Quesada
     Rolando Abarca
         Javascript Binding and testjs
+        
+    simpliplant
+        Hardware keyboard support
+    
+    liuyq
+        CCTextureAtlas::updateQuad modify for the memcpy hot spot.
+        
+    frranck 
+        adding norwegian language
+    
+    varlucian
+        fix the bug that OnEnterTransitionDidFinish was called twice when a node is added in onEnter.
+        
+    carlomorgantinizynga
+        CCLabelTTF supports for shadow and stroke
+        Adding CCLabelTTF::createWithFontDefinition.
+        
+    James Gregory (j4m3z0r, Zynga)
+        Maintainer of Emscripten port.
+        Initial Emscripten port.
+        Use browser font rendering instead of FreeType.
+        Add destructor to CCGLBufferedNode.
+        
+    DarraghCoy
+        Fix a potential crash SimpleAudioEngineOpenSL::playEffect
+
+    silverscania
+        Pass correct parameter to glPixelStorei when creating a texture
+
+    FlagellumDei
+        Center the window correctly on windows
+
+    ggggamer
+        fixed memory leak of preloadEffect on windows
+
+    CodeSnooker
+        Added Method to create a CCMenuItemToggle from a CCArray with a target selector
+
+    wagaf-d
+        Move ccpX functions to CCPoint methods and operators
+
+    sergey-shambir
+        Added CC_DISABLE_COPY macro
+        Added __attribute__(__format__()) for CCLog and CCString
+        Refactoring network extension and fixing unlikely memory leaks.
+        Adding PUT/DELETE methods for CCHttpRequest.
+
+    savdalion 
+        Added example for russian language in TestCpp
+        Added const modifier for classes CCArray, CCObject
+
+    rodrigogolive
+        Fix broke linux build
+
+    kdejongh
+        Fix for spaces at the beginning of wrapped lines on Android
+
+    martell
+        use tinyxml2 to replace libxml2
+        Added Mingw-crt Support without breaking VS SDK
+
+    mchinen
+        fix emulator issue for OpenGL ES 2.0 on Android
+        Fix missing protocol method warning for iOS 6.0 addition
+
+    DenizPiri
+        use CCLOG to implement print() function in LUA
+
+    nickveri
+    nickkwalee
+        added some missing function for setting integer shader uniforms in CCGLProgram
 
     biteforest
         fix cc scale9 sprite bug
@@ -20,9 +92,14 @@ Developers:
 
     DarraghCoy
         fix for loading custom fonts on iOS when referenced from a CCB file
+        Fix CCUserDefault.cpp compiling on Android.
+        Fixing CCFileUtils 'createXXXXWithContentsOfFile' path lookup issue.
+        Add CCDirector::popToSceneStackLevel(int level).
+        Fixing a bug that custom font can't be loaded correctly if using full path of filename on android.
 
     Waiter
         fix an error that OpenSLEngine can't load resources from SD card
+        add CCRemoveSelf action
 
     billy1380
         make CCLens3d support concave effect.
@@ -30,6 +107,7 @@ Developers:
 
     benjamesward
         add Portuguese and Arabic language support
+        Fixed linebreaks on Mac OSX
 
     Victor K(fnz)
         fix memory leak of CCTextureCache::addImageAsync() on iOS
@@ -70,6 +148,10 @@ Developers:
          Some improvements for CCScrollView and CCTableView.
          Touch priority can't be set to the value specified by a call to CCMenu::setTouchPriority(int).
          CCTableView crashes if a CCTableViewDelegate is not provided.
+         Fixing a bug that _realOpacity isn't assigned in CCLayerColor::initWithColor.
+         CCScrollView TouchPriority Fix
+         Add encrypted PVR.CCZ support to ZipUtils + Tests
+         Fix for broken of ccArrayGetIndexOfObject after merging this commit(076f38c).
 
     Weeds (Andre Rudlaff)
         Used fontconfig to enhance font rendering on linux.
@@ -77,10 +159,17 @@ Developers:
         Fixed a bug that the truetype fonts from resource directory can't be found on linux.
         Fixed the size calculations for true type fonts (especially for italic fonts).
         Added a very simple greedy line break algorithmfor true type labels.
+        Fixed font rendering crash for certain fonts on linux.
+        Fixed potential crash in CCScheduler::removeHashElement.
+        Fixed potential crash in CCSaxParser.
+        Added kResolutionFixedHeight and kResolutionFixedWidth resolution policy.
+        Use pthread mutex and condition variable instead of pthred semaphore to load image asynchronizely.
+        Fixed crash in HttpClient request on 64Bit.
 
     Nat Weiss (iphonegamekit.com)
         author of Mac port
         add TMX polygon parsing
+        Properly resets the tile's Y flipping
 
     XiaoLong Zhang (Chukong Inc)
     Mike McGary (Zynga)
@@ -96,15 +185,25 @@ Developers:
     Surith Thekkiam (folecr, Zynga)
         contribute for Android module building
         Simpler, correct handling of spritesheet sources for CCScale9Sprite.
+        Clean up linked libraries for android.
+        JavaScript debugger improved and bugfixed.
+        Fix flags for debugger server socket.
+        Fix flags for debugger server socket.
+        When user has built with JS Debugger support ScriptingCore will handle necessary runtime changes.
 
     Nicolas Gramlich (nicolasgramlich, Zynga)
         fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF
         added CCBReader (CCBI format)
         Added cleanup and reset methods to ScriptingCore.
+        Fixed a bug in ScriptingCore::evalString not setting the outval.
+        Updated .classpath of Android project to latest ADT 22 build tool compatibility.
 
     Rohan Kuruvilla (rohankuruvilla, Zynga)
         Improvements to JS Bindings.
         Synchronizing CCBReader to version 5.
+        Adding OpenGL Bindings to Javascript.
+        Fixing a bug that nested ccb-files are not positioned correctly.
+        Fixing a bug that crash when loading valid project.
 
     Jianfeng Zou (NetDragon Inc)
         contributes CCListView and CCTextureWatcher.
@@ -208,11 +307,15 @@ Developers:
         Adding CCEditBox implementation for Mac OSX.
 
     tiantian20007
-        Fix crash for call runAnimation() in CCBAnimationManagerDelegate::completedAnimationSequenceNamed.
+        Fixing a crash for call runAnimation() in CCBAnimationManagerDelegate::completedAnimationSequenceNamed.
+        Fixing a bug that CCControl's touch priority is not set correctly; m_nDefaultTouchPriority is never used.
+        Fixing a syntax error for RENDER_IN_SUBPIXEL macro.
+        Implement CCDictionary::writeToFile().
 
     xyhl515
         Fixed a bug that CCControlSwitch::setOn(isOn,false) doesn't work.
         Adds VS2012 Express template installing support.
+        Fixing a logical error in CCDrawNode::drawPolygon.
 
     DarraghCoy
         Fix for unaligned memory access crash in CCBReader::readFloat().
@@ -220,6 +323,8 @@ Developers:
     Sergej Tatarincev (SevInf)
         Making ScriptingCore.cpp compiled fine with C++11 on iOS.
         Using shared NodeLoaderLibrary in CCBReader bindings.
+        CCEditBox iOS enchantments/bugfixes.
+        Support variable cell sizes in CCTableView.
 
     ThePickleMan
         Adding 'rotationIsDir' property to ParticleSystem.
@@ -239,12 +344,19 @@ Developers:
         Refactor linux build system and fix many warnings.
         Fixing a bug where missing packages would cause the script to exit on linux.
         Adding 'make run' target for linux projects.
+        Stripping newlines from log message and fixing linux library location.
+        Fixing a bug that CCPhysicsSprite was overriding only some of the getPosition methods.
+        Adding a macro USE_BOX2D to check whether to enable Box2D for linux and nacl port.
+        Adding Travis build support for linux and NaCl.
+        Logging assert messages to the console.
+        Renaming CCScriptSupport::executeAssert to CCScriptSupport::handleAssert.
 
     Peter Young (young40)
         Implements setVisible() for CCEditBox
-    
+
     csy1988525
         Fixing a bug about display result is wrong when invoking CCControlButton:: setHighlighted.
+        fixed a bug when button's parent is hided, the button still can responce to clicked event.
 
     Asad ur Rehman (AsadR)
         Adding CCNotificationCenter::removeAllObservers(CCObject *target).
@@ -254,6 +366,111 @@ Developers:
 
     whitegfx
         Implementation of kEditBoxInputFlagSensitive setting for CCEditBoxImplIOS.
+
+    Zecken (gelldur)
+        Fixing a profiling compilation error in CCParticleBatchNode.
+        Fixing linking errors for TestCPP with libcurl on linux.
+
+    flamingo (flaming0)
+        Null pointer check in order to prevent crashes.
+        Updating spine-runtime to EsotericSoftware/spine-runtimes@5f90386.
+
+    rtissera (Romain TISSERAND)
+        Adding missing JNIEXPORT / JNICALL declarations.
+        Fix iOS 4.3 JPEG loading issue.
+
+    Yodesoft
+        Improving font rendering performance for linux platform.
+        Reducing function call in nativeInitBitmapDC to improve performance.
+        Refactoring writable path to "<user's home>/.config/<app name>" for linux platform.
+
+    sjchao
+        Fixing a display bug when a scrollView nested in another scrollView.
+
+    Éloi Rivard (azmeuk)
+        Linux OpenAL support.
+
+    elmiro
+        Correction of passed buffer size to readlink and verification of result return by readlink.
+
+    harikrishnar (Hari Krishna)
+        Wrong logic in CCArray::initWithObjects.
+        Fixing a bug that button should not get respond if its parent is invisable.
+
+    rogerzanoni
+        Fixing a linking error that libpthread and libGL libraries need to be linked on linux.
+        Fixing a compiling error of [-Werror=array-bounds] when compiling Box2dTestBed.
+
+    zhanghaojie
+        Fixing a bug that anchorPoint property of CCScale9Sprite doesn't work in CCBReader.
+
+    MarkEHenderson (Mark Henderson)
+        Fixing of variable initialization in SpriteBatchNode.
+
+    akira-cn
+        Adding response for back and menu keypad event for Android.
+
+    lgb (Oleg)
+        Fixing a compilation error for BlackBerry PlayBook.
+        Comparing float number by using epsilon and absolute difference.
+
+    jotel (Jaroslaw Lewandowski)
+        Fixing a bug that wrong type of argument signature is used in setAccelerometerIntervalJNI function.
+        Fix for broken of ccArrayGetIndexOfObject after merging this commit(076f38c).
+        Explicitly initialising CCAcceleration structure.
+        Add support to save/retrieve CCData into/from CCUserDefault.
+
+    MarcelBloemendaal
+        Adding secureTextEntry property to CCTextFieldTTF.
+
+    brawsome
+        Adding new macro CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK to CCBMemberVariableAssigner.h.
+        Adding CCLOG before original path is returned in CCFileUtils::fullPathForFileName to aid in debugging.
+        Optmization to ccArrayGetIndexOfObject.
+
+    sunzhuoshi
+        Adding support for javascript bytecode.
+
+    ptekchand (Pranav Tekchand)
+        Supporting negative node scales for CCScrollView.
+
+    coolengineer (Hojin Choi)
+        Refactoring callback selector for HttpResponse.
+
+    djh-
+        Fixing a bug that displayed color of CCDrawNode is incorrect when VAO is disabled.
+
+    acai (beingstudio)
+        Fix of null pointer access in CCBAnimationManager::getRunningSequenceName.
+
+    metalgit92
+        Adding const qualification to some CCNode's getters
+
+    Clarinexus
+        Fixing a bug that setColor and setOpacity of CCControlButton and CCScale9Sprite are broken.
+
+    Xander84
+        Fixing a bug in CCBValue::getByteValue.
+        
+    smshuja
+        Fixing a bug that pointQueryFirst returns invalid Shape when a shape is not found in JSB.
+        Fixing a bug that New PivotJoint can't access 4 parameters like in html5 version.
+        
+    Carsten Sandtner (casarock)
+        Adding XMLHttpRequest support for JSB.
+        
+    Lee, Jae-Hong (pyrasis)
+        Maintainer of tizen port.
+
+    lumendes
+        Updating spine-runtime to EsotericSoftware/spine-runtimes@5f90386.
+        
+    sunxiaoyu
+        Refactoring CCEditBox to add UITextField only when keyboard was opened, remove it when keyboard was closed.
+        
+    edwardzhou (Edward Zhou)
+        Correcting the type detecting order for Lua CCBProxy::getNodeTypeName.
+        Casting variables to their own type, and print warning info if no corresponding lua callback function instead of crash.
 
 Retired Core Developers:
     WenSheng Yang

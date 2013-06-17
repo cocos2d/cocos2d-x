@@ -3,7 +3,7 @@ typedef enum {
     kCCProgressTimerTypeBar,
 } CCProgressTimerType;
 
-class CCProgressTimer : public CCNode
+class CCProgressTimer : public CCNodeRGBA
 {
     CCProgressTimerType getType(void);
 

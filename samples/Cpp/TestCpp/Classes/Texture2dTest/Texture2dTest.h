@@ -2,9 +2,10 @@
 #define __TEXTURE2D_TEST_H__
 
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
 
-class TextureDemo : public CCLayer
+class TextureDemo : public BaseTest
 {
 public:
     virtual ~TextureDemo();
@@ -440,6 +441,16 @@ public:
     virtual std::string subtitle();
     
     void transformSprite(cocos2d::CCSprite *sprite);
+};
+
+// ETC1 texture format test
+class TextureETC1 : public TextureDemo
+{
+public:
+    TextureETC1();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
 };
 
 #endif // __TEXTURE2D_TEST_H__

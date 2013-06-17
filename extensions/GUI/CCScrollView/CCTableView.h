@@ -1,19 +1,19 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
  Copyright (c) 2010 Sangwoo Im
- 
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,6 +30,7 @@
 #include "CCTableViewCell.h"
 
 #include <set>
+#include <vector>
 
 NS_CC_EXT_BEGIN
 
@@ -70,7 +71,7 @@ public:
      * @param cell  cell that is pressed
      */
     virtual void tableCellUnhighlight(CCTableView* table, CCTableViewCell* cell){};
-    
+
     /**
      * Delegate called when the cell is about to be recycled. Immediately
      * after this call the cell will be removed from the scene graph and
@@ -80,7 +81,7 @@ public:
      * @param cell  cell that is pressed
      */
     virtual void tableCellWillRecycle(CCTableView* table, CCTableViewCell* cell){};
-    
+
 };
 
 
@@ -91,13 +92,25 @@ class CCTableViewDataSource
 {
 public:
     virtual ~CCTableViewDataSource() {}
+
+    /**
+     * cell size for a given index
+     *
+     * @param idx the index of a cell to get a size
+     * @return size of a cell at given index
+     */
+    virtual CCSize tableCellSizeForIndex(CCTableView *table, unsigned int idx) {
+        return cellSizeForTable(table);
+    };
     /**
      * cell height for a given table.
      *
      * @param table table to hold the instances of Class
      * @return cell size
      */
-    virtual CCSize cellSizeForTable(CCTableView *table) = 0;
+    virtual CCSize cellSizeForTable(CCTableView *table) {
+        return CCSizeZero;
+    };
     /**
      * a cell instance at a given index
      *
@@ -107,7 +120,7 @@ public:
     virtual CCTableViewCell* tableCellAtIndex(CCTableView *table, unsigned int idx) = 0;
     /**
      * Returns number of cells in a given table view.
-     * 
+     *
      * @return number of cells
      */
     virtual unsigned int numberOfCellsInTableView(CCTableView *table) = 0;
@@ -119,7 +132,7 @@ public:
  * UITableView counterpart for cocos2d for iphone.
  *
  * this is a very basic, minimal implementation to bring UITableView-like component into cocos2d world.
- * 
+ *
  */
 class CCTableView : public CCScrollView, public CCScrollViewDelegate
 {
@@ -144,7 +157,7 @@ public:
      * @return table view
      */
     static CCTableView* create(CCTableViewDataSource* dataSource, CCSize size, CCNode *container);
-    
+
     /**
      * data source
      */
@@ -153,7 +166,7 @@ public:
     /**
      * delegate
      */
-    CCTableViewDelegate* getDelegate() { return m_pTableViewDelegate; } 
+    CCTableViewDelegate* getDelegate() { return m_pTableViewDelegate; }
     void setDelegate(CCTableViewDelegate* pDelegate) { m_pTableViewDelegate = pDelegate; }
 
     /**
@@ -204,24 +217,29 @@ public:
 
     virtual void scrollViewDidScroll(CCScrollView* view);
     virtual void scrollViewDidZoom(CCScrollView* view) {}
-    
+
     virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
 
 protected:
-    
+
     CCTableViewCell *m_pTouchedCell;
     /**
      * vertical direction of cell filling
      */
     CCTableViewVerticalFillOrder m_eVordering;
-    
+
     /**
      * index set to query the indexes of the cells used.
      */
     std::set<unsigned int>* m_pIndices;
+
+    /**
+     * vector with all cell positions
+     */
+    std::vector<float> m_vCellsPositions;
     //NSMutableIndexSet *indices_;
     /**
      * cells that are currently in the table
@@ -246,12 +264,12 @@ protected:
     unsigned int _indexFromOffset(CCPoint offset);
     CCPoint __offsetFromIndex(unsigned int index);
     CCPoint _offsetFromIndex(unsigned int index);
-    
 
     void _moveCellOutOfSight(CCTableViewCell *cell);
     void _setIndexForCell(unsigned int index, CCTableViewCell *cell);
     void _addCellIfNecessary(CCTableViewCell * cell);
-    
+
+    void _updateCellPositions();
 public:
     void _updateContentSize();
 
@@ -261,4 +279,3 @@ public:
 NS_CC_EXT_END
 
 #endif /* __CCTABLEVIEW_H__ */
-

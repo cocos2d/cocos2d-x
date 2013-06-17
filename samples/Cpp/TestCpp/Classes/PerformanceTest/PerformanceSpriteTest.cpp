@@ -287,9 +287,9 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     quantityNodes = 0;
 
     CCMenuItemFont::setFontSize(65);
-    CCMenuItemFont *decrease = CCMenuItemFont::create(" - ", this, menu_selector(SpriteMainScene::onDecrease));
+    CCMenuItemFont *decrease = CCMenuItemFont::create(" - ", CC_CALLBACK_1(SpriteMainScene::onDecrease, this));
     decrease->setColor(ccc3(0,200,20));
-    CCMenuItemFont *increase = CCMenuItemFont::create(" + ", this, menu_selector(SpriteMainScene::onIncrease));
+    CCMenuItemFont *increase = CCMenuItemFont::create(" + ", CC_CALLBACK_1(SpriteMainScene::onIncrease, this));
     increase->setColor(ccc3(0,200,20));
 
     CCMenu *menu = CCMenu::create(decrease, increase, NULL);
@@ -314,7 +314,7 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     {
         char str[10] = {0};
         sprintf(str, "%d ", i);
-        CCMenuItemFont* itemFont = CCMenuItemFont::create(str, this, menu_selector(SpriteMainScene::testNCallback));
+        CCMenuItemFont* itemFont = CCMenuItemFont::create(str, CC_CALLBACK_1(SpriteMainScene::testNCallback, this));
         itemFont->setTag(i);
         pSubMenu->addChild(itemFont, 10);
 

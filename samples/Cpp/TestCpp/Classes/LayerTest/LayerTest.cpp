@@ -6,36 +6,21 @@ enum
     kTagLayer = 1,
 };
 
-TESTLAYER_CREATE_FUNC(LayerTestCascadingOpacityA);
-TESTLAYER_CREATE_FUNC(LayerTestCascadingOpacityB);
-TESTLAYER_CREATE_FUNC(LayerTestCascadingOpacityC);
-TESTLAYER_CREATE_FUNC(LayerTestCascadingColorA);
-TESTLAYER_CREATE_FUNC(LayerTestCascadingColorB);
-TESTLAYER_CREATE_FUNC(LayerTestCascadingColorC);
-TESTLAYER_CREATE_FUNC(LayerTest1);
-TESTLAYER_CREATE_FUNC(LayerTest2);
-TESTLAYER_CREATE_FUNC(LayerTestBlend);
-TESTLAYER_CREATE_FUNC(LayerGradient);
-TESTLAYER_CREATE_FUNC(LayerIgnoreAnchorPointPos);
-TESTLAYER_CREATE_FUNC(LayerIgnoreAnchorPointRot);
-TESTLAYER_CREATE_FUNC(LayerIgnoreAnchorPointScale);
-TESTLAYER_CREATE_FUNC(LayerExtendedBlendOpacityTest);
-
-static NEWTESTFUNC createFunctions[] = {
-    CF(LayerTestCascadingOpacityA),
-    CF(LayerTestCascadingOpacityB),
-    CF(LayerTestCascadingOpacityC),
-    CF(LayerTestCascadingColorA),
-    CF(LayerTestCascadingColorB),
-    CF(LayerTestCascadingColorC),
-    CF(LayerTest1),
-    CF(LayerTest2),
-    CF(LayerTestBlend),
-    CF(LayerGradient),
-    CF(LayerIgnoreAnchorPointPos),
-    CF(LayerIgnoreAnchorPointRot),
-    CF(LayerIgnoreAnchorPointScale),
-    CF(LayerExtendedBlendOpacityTest)
+static std::function<CCLayer*()> createFunctions[] = {
+    CL(LayerTestCascadingOpacityA),
+    CL(LayerTestCascadingOpacityB),
+    CL(LayerTestCascadingOpacityC),
+    CL(LayerTestCascadingColorA),
+    CL(LayerTestCascadingColorB),
+    CL(LayerTestCascadingColorC),
+    CL(LayerTest1),
+    CL(LayerTest2),
+    CL(LayerTestBlend),
+    CL(LayerGradient),
+    CL(LayerIgnoreAnchorPointPos),
+    CL(LayerIgnoreAnchorPointRot),
+    CL(LayerIgnoreAnchorPointScale),
+    CL(LayerExtendedBlendOpacityTest)
 };
 
 static int sceneIdx=-1;
@@ -99,34 +84,7 @@ std::string LayerTest::title()
 
 void LayerTest::onEnter()
 {
-    CCLayer::onEnter();
-
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-
-    CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 32);
-    addChild(label, 1);
-    label->setPosition( ccp(s.width/2, s.height-50) );
-
-    string subtitle_ = subtitle();
-    if (subtitle_.size() > 0)
-    {
-        CCLabelTTF *l = CCLabelTTF::create(subtitle_.c_str(), "Thonburi", 16);
-        addChild(l, 1);
-        l->setPosition(ccp(s.width / 2, s.height - 80));
-    }
-
-    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(LayerTest::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(LayerTest::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(LayerTest::nextCallback) );
-
-    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
-
-    menu->setPosition( CCPointZero );
-    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    
-    addChild(menu, 1);    
+    BaseTest::onEnter();
 }
 
 void LayerTest::restartCallback(CCObject* pSender)
@@ -637,7 +595,7 @@ LayerGradient::LayerGradient()
     CCLabelTTF *label2 = CCLabelTTF::create("Compressed Interpolation: Disabled", "Marker Felt", 26);
     CCMenuItemLabel *item1 = CCMenuItemLabel::create(label1);
     CCMenuItemLabel *item2 = CCMenuItemLabel::create(label2);
-    CCMenuItemToggle *item = CCMenuItemToggle::createWithTarget(this, menu_selector(LayerGradient::toggleItem), item1, item2, NULL);
+    CCMenuItemToggle *item = CCMenuItemToggle::createWithCallback( CC_CALLBACK_1(LayerGradient::toggleItem, this), item1, item2, NULL);
 
     CCMenu *menu = CCMenu::create(item, NULL);
     addChild(menu);
@@ -702,7 +660,7 @@ void LayerIgnoreAnchorPointPos::onEnter()
     CCSize lsize = l->getContentSize();
     child->setPosition(ccp(lsize.width/2, lsize.height/2));
 
-    CCMenuItemFont *item = CCMenuItemFont::create("Toggle ignore anchor point", this, menu_selector(LayerIgnoreAnchorPointPos::onToggle));
+    CCMenuItemFont *item = CCMenuItemFont::create("Toggle ignore anchor point", CC_CALLBACK_1(LayerIgnoreAnchorPointPos::onToggle, this));
 
     CCMenu *menu = CCMenu::create(item, NULL);
     this->addChild(menu);
@@ -750,7 +708,7 @@ void LayerIgnoreAnchorPointRot::onEnter()
     CCSize lsize = l->getContentSize();
     child->setPosition(ccp(lsize.width/2, lsize.height/2));
 
-    CCMenuItemFont *item = CCMenuItemFont::create("Toogle ignore anchor point", this, menu_selector(LayerIgnoreAnchorPointRot::onToggle));
+    CCMenuItemFont *item = CCMenuItemFont::create("Toogle ignore anchor point", CC_CALLBACK_1(LayerIgnoreAnchorPointRot::onToggle, this));
 
     CCMenu *menu = CCMenu::create(item, NULL);
     this->addChild(menu);
@@ -801,7 +759,7 @@ void LayerIgnoreAnchorPointScale::onEnter()
     CCSize lsize = l->getContentSize();
     child->setPosition(ccp(lsize.width/2, lsize.height/2));
 
-    CCMenuItemFont *item = CCMenuItemFont::create("Toogle ignore anchor point", this, menu_selector(LayerIgnoreAnchorPointScale::onToggle));
+    CCMenuItemFont *item = CCMenuItemFont::create("Toogle ignore anchor point", CC_CALLBACK_1(LayerIgnoreAnchorPointScale::onToggle, this));
 
     CCMenu *menu = CCMenu::create(item, NULL);
     this->addChild(menu);

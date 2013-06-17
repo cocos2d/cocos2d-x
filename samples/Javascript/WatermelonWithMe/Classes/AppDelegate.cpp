@@ -10,6 +10,7 @@
 #include "js_bindings_chipmunk_registration.h"
 #include "js_bindings_ccbreader.h"
 #include "js_bindings_system_registration.h"
+#include "jsb_opengl_registration.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -20,7 +21,7 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
-    CCScriptEngineManager::sharedManager()->purgeSharedManager();
+    CCScriptEngineManager::purgeSharedManager();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
@@ -35,6 +36,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
     
+    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(480, 320, kResolutionFixedHeight);
+    
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
     sc->addRegisterCallback(register_all_cocos2dx_extension);
@@ -43,6 +46,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(jsb_register_chipmunk);
     sc->addRegisterCallback(register_CCBuilderReader);
     sc->addRegisterCallback(jsb_register_system);
+    sc->addRegisterCallback(JSB_register_opengl);
 
     sc->start();
     

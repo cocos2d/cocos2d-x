@@ -14,7 +14,7 @@ typedef enum {
 
 } ccHonorParentTransform;
 */
-class CCSprite : public CCNode
+class CCSprite : public CCNodeRGBA
 {
 	void setDirty(bool bDirty);
 	bool isDirty(void);

@@ -34,10 +34,16 @@ NS_CC_BEGIN
 //
 // InstantAction
 //
-CCActionInstant::CCActionInstant() {
+
+CCActionInstant * CCActionInstant::clone() const
+{
+	auto a = new CCActionInstant(*this);
+	a->autorelease();
+	return a;
 }
 
 CCObject * CCActionInstant::copyWithZone(CCZone *pZone) {
+
     CCZone *pNewZone = NULL;
     CCActionInstant *pRet = NULL;
 
@@ -95,6 +101,13 @@ CCFiniteTimeAction* CCShow::reverse() {
     return (CCFiniteTimeAction*) (CCHide::create());
 }
 
+CCShow * CCShow::clone() const
+{
+	auto a = new CCShow(*this);
+	a->autorelease();
+	return a;
+}
+
 CCObject* CCShow::copyWithZone(CCZone *pZone) {
 
     CCZone *pNewZone = NULL;
@@ -134,6 +147,13 @@ CCFiniteTimeAction *CCHide::reverse() {
     return (CCFiniteTimeAction*) (CCShow::create());
 }
 
+CCHide * CCHide::clone() const
+{
+	auto a = new CCHide(*this);
+	a->autorelease();
+	return a;
+}
+
 CCObject* CCHide::copyWithZone(CCZone *pZone) {
     CCZone *pNewZone = NULL;
     CCHide *pRet = NULL;
@@ -169,6 +189,13 @@ void CCToggleVisibility::update(float time)
 {
     CC_UNUSED_PARAM(time);
     m_pTarget->setVisible(!m_pTarget->isVisible());
+}
+
+CCToggleVisibility * CCToggleVisibility::clone() const
+{
+	auto a = new CCToggleVisibility(*this);
+	a->autorelease();
+	return a;
 }
 
 CCObject* CCToggleVisibility::copyWithZone(CCZone *pZone)
@@ -214,6 +241,14 @@ void CCRemoveSelf::update(float time) {
 
 CCFiniteTimeAction *CCRemoveSelf::reverse() {
 	return (CCFiniteTimeAction*) (CCRemoveSelf::create(m_bIsNeedCleanUp));
+}
+
+CCRemoveSelf * CCRemoveSelf::clone() const
+{
+	auto a = new CCRemoveSelf(*this);
+	a->init(m_bIsNeedCleanUp);
+	a->autorelease();
+	return a;
 }
 
 CCObject* CCRemoveSelf::copyWithZone(CCZone *pZone) {
@@ -264,6 +299,14 @@ CCFiniteTimeAction* CCFlipX::reverse() {
     return CCFlipX::create(!m_bFlipX);
 }
 
+CCFlipX * CCFlipX::clone() const
+{
+	auto a = new CCFlipX(*this);
+	a->initWithFlipX(m_bFlipX);
+	a->autorelease();
+	return a;
+}
+
 CCObject * CCFlipX::copyWithZone(CCZone *pZone) {
     CCZone *pNewZone = NULL;
     CCFlipX *pRet = NULL;
@@ -312,6 +355,14 @@ CCFiniteTimeAction* CCFlipY::reverse() {
     return CCFlipY::create(!m_bFlipY);
 }
 
+CCFlipY * CCFlipY::clone() const
+{
+	auto a = new CCFlipY(*this);
+	a->initWithFlipY(m_bFlipY);
+	a->autorelease();
+	return a;
+}
+
 CCObject* CCFlipY::copyWithZone(CCZone *pZone) {
     CCZone *pNewZone = NULL;
     CCFlipY *pRet = NULL;
@@ -351,6 +402,14 @@ bool CCPlace::initWithPosition(const CCPoint& pos) {
     return true;
 }
 
+CCPlace * CCPlace::clone() const
+{
+	auto a = new CCPlace(*this);
+	a->initWithPosition(m_tPosition);
+	a->autorelease();
+	return a;
+}
+
 CCObject * CCPlace::copyWithZone(CCZone *pZone) {
     CCZone *pNewZone = NULL;
     CCPlace *pRet = NULL;
@@ -376,6 +435,20 @@ void CCPlace::update(float time) {
 //
 // CallFunc
 //
+
+CCCallFunc * CCCallFunc::create(const std::function<void()> &func)
+{
+    CCCallFunc *pRet = new CCCallFunc();
+
+    if (pRet && pRet->initWithFunction(func) ) {
+        pRet->autorelease();
+        return pRet;
+    }
+
+    CC_SAFE_DELETE(pRet);
+    return NULL;
+}
+
 CCCallFunc * CCCallFunc::create(CCObject* pSelectorTarget, SEL_CallFunc selector) 
 {
     CCCallFunc *pRet = new CCCallFunc();
@@ -404,6 +477,12 @@ CCCallFunc * CCCallFunc::create(int nHandler)
 	return pRet;
 }
 
+bool CCCallFunc::initWithFunction(const std::function<void()> &func)
+{
+	_function = func;
+    return true;
+}
+
 bool CCCallFunc::initWithTarget(CCObject* pSelectorTarget) {
     if (pSelectorTarget) 
     {
@@ -428,6 +507,20 @@ CCCallFunc::~CCCallFunc(void)
     CC_SAFE_RELEASE(m_pSelectorTarget);
 }
 
+CCCallFunc * CCCallFunc::clone() const
+{
+	auto a = new CCCallFunc(*this);
+	if( m_pSelectorTarget) {
+		a->initWithTarget(m_pSelectorTarget);
+		a->m_pCallFunc = m_pCallFunc;
+	}
+	else if( _function )
+		a->initWithFunction(_function);
+
+	a->autorelease();
+	return a;
+}
+
 CCObject * CCCallFunc::copyWithZone(CCZone *pZone) {
     CCZone* pNewZone = NULL;
     CCCallFunc* pRet = NULL;
@@ -441,8 +534,16 @@ CCObject * CCCallFunc::copyWithZone(CCZone *pZone) {
     }
 
     CCActionInstant::copyWithZone(pZone);
-    pRet->initWithTarget(m_pSelectorTarget);
-    pRet->m_pCallFunc = m_pCallFunc;
+	if( m_pSelectorTarget) {
+		pRet->initWithTarget(m_pSelectorTarget);
+		pRet->m_pCallFunc = m_pCallFunc;
+	}
+	else if( _function )
+		pRet->initWithFunction(_function);
+
+    if (m_nScriptHandler > 0 ) {
+        pRet->m_nScriptHandler = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine()->reallocateScriptHandler(m_nScriptHandler);
+    }
     CC_SAFE_DELETE(pNewZone);
     return pRet;
 }
@@ -455,7 +556,8 @@ void CCCallFunc::update(float time) {
 void CCCallFunc::execute() {
     if (m_pCallFunc) {
         (m_pSelectorTarget->*m_pCallFunc)();
-    }
+    } else if( _function )
+		_function();
 	if (m_nScriptHandler) {
 		CCScriptEngineManager::sharedManager()->getScriptEngine()->executeCallFuncActionEvent(this);
 	}
@@ -511,6 +613,14 @@ bool CCCallFuncN::initWithTarget(CCObject* pSelectorTarget,
     return false;
 }
 
+CCCallFuncN * CCCallFuncN::clone() const
+{
+	auto a = new CCCallFuncN(*this);
+	a->initWithTarget(m_pSelectorTarget, m_pCallFuncN);
+	a->autorelease();
+	return a;
+}
+
 CCObject * CCCallFuncN::copyWithZone(CCZone* zone) {
     CCZone* pNewZone = NULL;
     CCCallFuncN* pRet = NULL;
@@ -555,6 +665,14 @@ bool CCCallFuncND::initWithTarget(CCObject* pSelectorTarget,
     }
 
     return false;
+}
+
+CCCallFuncND * CCCallFuncND::clone() const
+{
+	auto a = new CCCallFuncND(*this);
+	a->initWithTarget(m_pSelectorTarget, m_pCallFuncND, m_pData);
+	a->autorelease();
+	return a;
 }
 
 CCObject * CCCallFuncND::copyWithZone(CCZone* zone) {
@@ -622,6 +740,14 @@ bool CCCallFuncO::initWithTarget(CCObject* pSelectorTarget,
     }
 
     return false;
+}
+
+CCCallFuncO * CCCallFuncO::clone() const
+{
+	auto a = new CCCallFuncO(*this);
+	a->initWithTarget(m_pSelectorTarget, m_pCallFuncO, m_pObject);
+	a->autorelease();
+	return a;
 }
 
 CCObject * CCCallFuncO::copyWithZone(CCZone* zone) {

@@ -10,7 +10,10 @@ NACL_AR ?= $(NACL_ARCH)-nacl-ar
 NACL_CC ?= $(NACL_ARCH)-nacl-gcc
 NACL_CXX ?= $(NACL_ARCH)-nacl-g++
 CCFLAGS += -Wall -Werror
-CXXFLAGS += -Wall -Werror
+# GCC 4.6 is primary platform for cocos2d v.3, because it's default compiler for Android, 
+# Blackberry, some Linux distributions.It supports all important features of c++11, but have 
+# no flag "-std=c++11" (which was turned on in version 4.7).
+CXXFLAGS += -Wall -Werror -std=gnu++0x 
 ARFLAGS = cr
 
 THIS_MAKEFILE := $(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
@@ -18,13 +21,15 @@ THIS_MAKEFILE := $(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
 # The top level of the cocos2dx-x source tree.  The parent Makefile will
 # often define this, but in case is doesn't we can find it relative to
 # THIS_MAKEFILE
-COCOS_ROOT ?= $(realpath $(dir $(THIS_MAKEFILE))/../..)
-COCOS_SRC = $(COCOS_ROOT)/cocos2dx
+ifndef COCOS_ROOT
+COCOS_ROOT := $(realpath $(dir $(THIS_MAKEFILE))/../..)
+endif
+COCOS_SRC := $(COCOS_ROOT)/cocos2dx
 
 ifeq ($(NACL_ARCH), i686)
-ARCH_DIR=$(NACL_LIBC)_x86_32
+ARCH_DIR := $(NACL_LIBC)_x86_32
 else
-ARCH_DIR=$(NACL_LIBC)_$(NACL_ARCH)
+ARCH_DIR := $(NACL_LIBC)_$(NACL_ARCH)
 endif
 
 NACLPORTS_ROOT ?= $(NACL_SDK_ROOT)/ports
@@ -32,6 +37,12 @@ NACLPORTS_INCLUDE ?= $(NACLPORTS_ROOT)/include
 OUT_DIR ?= obj
 OBJ_DIR ?= $(OUT_DIR)/$(NACL_ARCH)
 LIB_DIR ?= $(COCOS_ROOT)/lib/nacl/$(ARCH_DIR)
+
+ifdef USE_BOX2D
+DEFINES += -DCC_ENABLE_BOX2D_INTEGRATION=1
+else
+DEFINES += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
+endif
 
 INCLUDES += -I$(COCOS_SRC) \
 	-I$(COCOS_SRC)/cocoa \
@@ -92,7 +103,7 @@ STATICLIBS += -lnacl_io
 endif
 
 SOUNDLIBS := -lalut -lopenal -lvorbisfile -lvorbis -logg
-STATICLIBS += $(SOUNDLIBS) -lfreetype -lxml2 -lwebp -lpng -ljpeg -ltiff -llua
+STATICLIBS += $(SOUNDLIBS) -lfreetype -lxml2 -lwebp -lpng -ljpeg -ltiff -llua -lchipmunk
 STATICLIBS += -lppapi_gles2 -lppapi -lppapi_cpp -lnosys
 SHAREDLIBS += -lpthread -lcocosdenshion -lcocos2d -lz
 

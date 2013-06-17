@@ -44,7 +44,7 @@ public:
     virtual void applicationWillEnterForeground();
 };
 
-class UpdateLayer : public cocos2d::CCLayer
+class UpdateLayer : public cocos2d::CCLayer, public cocos2d::extension::AssetsManagerDelegateProtocol
 {
 public:
     UpdateLayer();
@@ -54,6 +54,10 @@ public:
     void enter(cocos2d::CCObject *pSender);
     void reset(cocos2d::CCObject *pSender);
     void update(cocos2d::CCObject *pSender);
+
+    virtual void onError(cocos2d::extension::AssetsManager::ErrorCode errorCode);
+    virtual void onProgress(int percent);
+    virtual void onSuccess();
     
 private:
     cocos2d::extension::AssetsManager* getAssetsManager();
@@ -62,6 +66,7 @@ private:
     cocos2d::CCMenuItemFont *pItemEnter;
     cocos2d::CCMenuItemFont *pItemReset;
     cocos2d::CCMenuItemFont *pItemUpdate;
+    cocos2d::CCLabelTTF *pProgressLabel;
     std::string pathToSave;
     bool isUpdateItemClicked;
 };

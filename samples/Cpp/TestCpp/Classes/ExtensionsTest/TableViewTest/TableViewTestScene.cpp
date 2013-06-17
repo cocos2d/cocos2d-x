@@ -39,7 +39,7 @@ bool TableViewTestLayer::init()
 	tableView->reloadData();
 
 	// Back Menu
-	CCMenuItemFont *itemBack = CCMenuItemFont::create("Back", this, menu_selector(TableViewTestLayer::toExtensionsMainLayer));
+	CCMenuItemFont *itemBack = CCMenuItemFont::create("Back", CC_CALLBACK_1(TableViewTestLayer::toExtensionsMainLayer, this));
 	itemBack->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
 	CCMenu *menuBack = CCMenu::create(itemBack, NULL);
 	menuBack->setPosition(CCPointZero);
@@ -60,8 +60,11 @@ void TableViewTestLayer::tableCellTouched(CCTableView* table, CCTableViewCell* c
     CCLOG("cell touched at index: %i", cell->getIdx());
 }
 
-CCSize TableViewTestLayer::cellSizeForTable(CCTableView *table)
+CCSize TableViewTestLayer::tableCellSizeForIndex(CCTableView *table, unsigned int idx)
 {
+    if (idx == 2) {
+        return CCSizeMake(100, 100);
+    }
     return CCSizeMake(60, 60);
 }
 

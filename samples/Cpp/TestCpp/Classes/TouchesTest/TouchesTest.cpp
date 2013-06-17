@@ -30,11 +30,6 @@ PongScene::PongScene()
     pongLayer->release();
 }
 
-void PongScene::MainMenuCallback(CCObject* pSender)
-{
-    TestScene::MainMenuCallback(pSender);
-}
-
 //------------------------------------------------------------------
 //
 // PongLayer

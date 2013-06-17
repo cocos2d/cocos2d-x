@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android" 
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent" 
+	android:orientation ="vertical"
+	android:fillViewport="true"
+	>
+	
+	<!-- 标题栏 -->
+	<RelativeLayout 
+        android:id="@+id/nd3_account_register_titlebar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/nd3_title_bar_bg" >
+		
+	    <!-- 左按钮 -->
+
+        <Button
+            android:id="@+id/nd3_title_bar_button_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dip"
+            android:background="@drawable/nd3_title_bar_return_btn_xml"
+            android:gravity="center"
+            android:text="@string/nd3_topbar_ret"
+            android:textColor="#FFFFFFFF"
+            android:textSize="16sp" >
+        </Button> 
+		
+		<!-- 标题 -->
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+			android:text="@string/nd3_account_register_title"
+			style="@style/nd3_textview_0"
+			>
+		
+		</TextView>	
+
+	   
+    </RelativeLayout>
+    
+	<!-- 内容 -->
+	<ScrollView
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_weight="1"
+		>
+
+		<LinearLayout  
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent" 
+			android:orientation ="vertical"
+			android:fillViewport="true"
+			>
+		
+		    <!-- 注册提示语 -->
+			<TextView
+			    android:id="@+id/nd_tips"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:gravity="left"
+				android:text="@string/nd_guest_regist_tips"
+				android:textSize="@dimen/nd3_register_agreement_text_size"
+				android:textColor="@color/nd3_white"		
+				android:layout_marginTop="@dimen/nd3_option_margin_top"
+				android:layout_marginLeft="10dip"
+				android:layout_marginRight="10dip"
+				>
+			</TextView>
+			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"  
+				android:layout_marginTop="@dimen/nd3_option_margin_top" 
+				>	
+				<!-- 通行证、昵称、密码 -->
+				<LinearLayout
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content" 
+					android:orientation ="vertical"
+					android:background="@drawable/nd3_bk1"
+					style="@style/nd3_option_margin_style"
+					android:layout_weight="0.6"
+					>
+					
+					<!-- 通行证 -->
+					<LinearLayout
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content" 
+						android:orientation ="horizontal"
+						android:gravity="center_vertical"
+						style="@style/nd3_option_item_margin_style"			
+						>
+						
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="@string/nd3_account_register_tip_account"
+							style="@style/nd3_option_textview_style"
+							>
+						</TextView>
+			
+						<AutoCompleteTextView
+							android:id="@+id/nd3_account_register_account"
+							android:layout_width="fill_parent"
+							android:layout_height="wrap_content"
+							android:layout_weight="1"
+							android:singleLine="true"
+							android:maxLength="70"
+							android:hint="@string/nd3_account_register_hint_account"
+							style="@style/nd3_option_edittext_style"
+							>
+						</AutoCompleteTextView>		
+							
+					</LinearLayout>
+					 
+					<!-- 分隔线 -->
+					<ImageView
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:background="@drawable/nd3_horizontal_line"
+					>
+				    </ImageView>
+							
+					<!-- 密码 -->
+					<LinearLayout
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content" 
+						android:orientation ="horizontal"
+						android:gravity="center_vertical"
+						style="@style/nd3_option_item_margin_style"					
+						>
+						
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="@string/nd3_account_register_tip_password"
+							style="@style/nd3_option_textview_style"
+							>
+						</TextView>
+			
+						<EditText
+							android:id="@+id/nd3_account_register_password"
+							android:layout_width="fill_parent"
+							android:layout_height="wrap_content"
+							android:layout_weight="1"
+							android:singleLine="true"
+							android:maxLength="12"
+							android:hint="@string/nd3_account_register_hint_password"
+							style="@style/nd3_option_edittext_style"
+							>
+						</EditText>
+								
+					</LinearLayout>
+										
+				</LinearLayout>
+				<LinearLayout
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content" 
+					android:layout_weight="1"
+					android:orientation ="vertical"
+					android:layout_gravity="center">
+				     <Button 
+				         android:id="@+id/nd_guest_regist"
+						 android:layout_width="wrap_content"
+						 android:layout_height="wrap_content"
+						 android:layout_gravity="center" 
+						 android:textColor="@color/nd3_white"		
+						 style="@style/nd3_option_margin_style" 
+						 android:text="@string/nd_guest_regist" 	 
+						 android:background="@drawable/nd_green"
+						 android:textSize="18dip"/>
+				     
+				     <Button 
+				         android:id="@+id/nd_login"
+						 android:layout_width="wrap_content"
+						 android:layout_height="wrap_content"
+						 android:layout_gravity="center"
+						 android:text="@string/nd_has_account" 
+						 android:textColor="@color/nd3_white"	 
+						 android:textSize="18dip"
+						 style="@style/nd3_option_margin_style" 
+						 android:background="@drawable/nd_blue"/>
+				</LinearLayout>     
+			</LinearLayout>	
+			<!-- 使用条款 -->
+			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content" 
+				android:orientation ="horizontal"
+				style="@style/nd3_option_margin_style"
+				>
+				
+				<CheckBox
+					android:id="@+id/nd3_account_register_is_agree"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="true"
+					android:button="@null"
+					android:background="@drawable/nd3_square_checkbox_button"
+					>
+				</CheckBox>
+		
+				<TextView
+					android:id="@+id/nd3_account_register_agreement"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="@dimen/nd3_option_item_marginLeft"
+					android:text="@string/nd3_account_register_agreement"
+					android:textColor="@color/nd3_white"
+					android:textSize="@dimen/nd3_register_agreement_text_size"
+					>
+				</TextView>
+								
+		</LinearLayout>
+			
+			     
+		
+			<!-- 使用条款 -->
+			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content" 
+				android:orientation ="vertical"
+				style="@style/nd3_option_margin_style"
+				> 
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/nd_guest_official_tips" 
+					android:textColor="@color/nd3_white"
+					android:textSize="18dip"
+					android:textStyle="bold"
+					/>
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/nd_guest_official_tips0" 
+					android:textColor="@color/nd3_white" 
+					/>
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/nd_guest_official_tips1" 
+					android:textColor="@color/nd3_white" 
+					/>
+								
+			</LinearLayout>
+					
+		 
+			 
+		</LinearLayout>
+		
+	</ScrollView>
+</LinearLayout>

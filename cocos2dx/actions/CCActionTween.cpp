@@ -54,6 +54,14 @@ bool CCActionTween::initWithDuration(float aDuration, const char* key, float fro
     return false;
 }
 
+CCActionTween *CCActionTween::clone() const
+{
+	auto a = new CCActionTween(*this);
+	a->initWithDuration(m_fDuration, m_strKey.c_str(), m_fFrom, m_fTo);
+	a->autorelease();
+	return a;
+}
+
 void CCActionTween::startWithTarget(CCNode *pTarget)
 {
     CCAssert(dynamic_cast<CCActionTweenDelegate*>(pTarget), "target must implement CCActionTweenDelegate");

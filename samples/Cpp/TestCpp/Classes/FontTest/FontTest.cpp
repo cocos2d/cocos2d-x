@@ -6,6 +6,10 @@ enum {
     kTagLabel2,
     kTagLabel3,
     kTagLabel4,
+    
+    kTagColor1,
+    kTagColor2,
+    kTagColor3,
 };
 
 static int fontIdx = 0;
@@ -73,18 +77,8 @@ static const char* restartAction(void)
 
 
 FontTest::FontTest()
+: BaseTest()
 {
-    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(FontTest::backCallback));
-    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(FontTest::restartCallback));
-    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(FontTest::nextCallback));
-
-    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
-    menu->setPosition(CCPointZero);
-    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    addChild(menu, 1);
-    
     showFont(restartAction());
 }
 
@@ -99,6 +93,9 @@ void FontTest::showFont(const char *pFont)
     removeChildByTag(kTagLabel2, true);
     removeChildByTag(kTagLabel3, true);
     removeChildByTag(kTagLabel4, true);
+    removeChildByTag(kTagColor1, true);
+    removeChildByTag(kTagColor2, true);
+    removeChildByTag(kTagColor3, true);
 
     CCLabelTTF *top = CCLabelTTF::create(pFont, pFont, 24);
     CCLabelTTF *left = CCLabelTTF::create("alignment left", pFont, fontSize,
@@ -133,11 +130,11 @@ void FontTest::showFont(const char *pFont)
     right->setPosition(ccp(blockSize.width*2, s.height/2));
     rightColor->setPosition(right->getPosition());
 
-    this->addChild(leftColor, -1);
+    this->addChild(leftColor, -1, kTagColor1);
     this->addChild(left, 0, kTagLabel1);
-    this->addChild(rightColor, -1);
+    this->addChild(rightColor, -1, kTagColor2);
     this->addChild(right, 0, kTagLabel2);
-    this->addChild(centerColor, -1);
+    this->addChild(centerColor, -1, kTagColor3);
     this->addChild(center, 0, kTagLabel3);
     this->addChild(top, 0, kTagLabel4);
 }

@@ -61,7 +61,7 @@ void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
 	{		
 		if (s3eAccelerometerStart() != S3E_RESULT_SUCCESS)
 		{
-			CCLog("s3eAccelerometerStart() - ERROR\n");
+			CCLog("s3eAccelerometerStart() - ERROR");
 		}
 	}
 	else

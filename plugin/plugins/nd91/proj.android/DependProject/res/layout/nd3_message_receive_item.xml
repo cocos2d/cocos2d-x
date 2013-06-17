@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 消息 from -->
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/nd3_message_send_item_layout"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:layout_marginRight="@dimen/nd3_item_divider">
+  
+  <TextView
+  android:id="@+id/nd3_messagetiem_txt"
+  android:layout_height="wrap_content"
+  android:layout_width="wrap_content"
+  android:layout_marginRight="@dimen/nd3_item_divider"
+  android:layout_centerHorizontal="true"
+  android:textColor="@color/nd3_black"
+  />
+  
+  <TextView
+  android:id="@+id/nd3_message_send_txt"
+  android:layout_below="@id/nd3_messagetiem_txt"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:layout_marginRight="@dimen/nd3_item_divider"
+  android:layout_alignParentRight="true" 
+  android:background="@drawable/nd3_msge_friend" 
+  android:textColor="@color/nd3_black"
+  />
+     
+</RelativeLayout>

@@ -27,7 +27,7 @@ EditBoxTest::EditBoxTest()
     addChild(m_pTTFShowEditReturn);
     
     // Back Menu
-    CCMenuItemFont *itemBack = CCMenuItemFont::create("Back", this, menu_selector(EditBoxTest::toExtensionsMainLayer));
+    CCMenuItemFont *itemBack = CCMenuItemFont::create("Back", CC_CALLBACK_1(EditBoxTest::toExtensionsMainLayer, this));
     itemBack->setPosition(ccp(visibleOrigin.x+visibleSize.width - 50, visibleOrigin.y+25));
     CCMenu *menuBack = CCMenu::create(itemBack, NULL);
     menuBack->setPosition(CCPointZero);
@@ -39,10 +39,11 @@ EditBoxTest::EditBoxTest()
     m_pEditName = CCEditBox::create(editBoxSize, CCScale9Sprite::create("extensions/green_edit.png"));
     m_pEditName->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height*3/4));
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	m_pEditName->setFont("Paint Boy", 25);
+    m_pEditName->setFontName("Paint Boy");
 #else
-	m_pEditName->setFont("fonts/Paint Boy.ttf", 25);
+	m_pEditName->setFontName("fonts/Paint Boy.ttf");
 #endif
+    m_pEditName->setFontSize(25);
     m_pEditName->setFontColor(ccRED);
     m_pEditName->setPlaceHolder("Name:");
     m_pEditName->setPlaceholderFontColor(ccWHITE);
@@ -108,7 +109,7 @@ void EditBoxTest::editBoxTextChanged(cocos2d::extension::CCEditBox* editBox, con
 
 void EditBoxTest::editBoxReturn(CCEditBox* editBox)
 {
-    CCLog("editBox %p was returned !");
+    CCLog("editBox %p was returned !",editBox);
     
     if (m_pEditName == editBox)
     {

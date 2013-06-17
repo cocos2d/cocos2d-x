@@ -9,8 +9,12 @@
 #include "cocos2d_specifics.hpp"
 #include "js_bindings_chipmunk_registration.h"
 #include "js_bindings_system_registration.h"
+#include "jsb_opengl_registration.h"
+#include "XMLHTTPRequest.h"
+#include "jsb_websocket.h"
 
 USING_NS_CC;
+USING_NS_CC_EXT;
 using namespace CocosDenshion;
 
 AppDelegate::AppDelegate()
@@ -19,7 +23,7 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
-    CCScriptEngineManager::sharedManager()->purgeSharedManager();
+    CCScriptEngineManager::purgeSharedManager();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
@@ -27,23 +31,26 @@ bool AppDelegate::applicationDidFinishLaunching()
     // initialize director
     CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
-    
+
     // turn on display FPS
     pDirector->setDisplayStats(true);
-    
+
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
-    
+
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
     sc->addRegisterCallback(register_all_cocos2dx_extension);
     sc->addRegisterCallback(register_cocos2dx_js_extensions);
     sc->addRegisterCallback(register_all_cocos2dx_extension_manual);
     sc->addRegisterCallback(jsb_register_chipmunk);
+    sc->addRegisterCallback(JSB_register_opengl);
     sc->addRegisterCallback(jsb_register_system);
-    
+    sc->addRegisterCallback(MinXmlHttpRequest::_js_register);
+    sc->addRegisterCallback(register_jsb_websocket);
+
     sc->start();
-    
+
     CCScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
 #ifdef JS_OBFUSCATED
