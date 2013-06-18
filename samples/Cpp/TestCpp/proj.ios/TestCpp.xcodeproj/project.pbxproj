@@ -321,6 +321,7 @@
 		78ED2F85153D5BC500330E29 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 78ED2F84153D5BC500330E29 /* extensions */; };
 		A059B9AD174D9B8E0078F84F /* ConfigurationTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A059B9AB174D9B8E0078F84F /* ConfigurationTest.cpp */; };
 		A076DDF6176143F300ACDC32 /* BaseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A076DDF4176143F300ACDC32 /* BaseTest.cpp */; };
+		A0B7466D17712A2A0021A776 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 46DBCD23176AC3B0006FE29A /* configs */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712461292920000B8313A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB212928DE900B8313A /* libxml2.dylib */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
@@ -2875,6 +2876,7 @@
 				465E208F176ABD8D001D853C /* json_valueiterator.inl in Resources */,
 				465E2091176ABD8D001D853C /* sconscript in Resources */,
 				465E216E176AEE9D001D853C /* armature in Resources */,
+				A0B7466D17712A2A0021A776 /* configs in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
