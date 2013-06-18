@@ -72,8 +72,9 @@ public:
 
     virtual void step(float dt);
     virtual void startWithTarget(CCNode *pTarget);
+
     /** returns a reversed action */
-    virtual CCActionInterval* reverse(void);
+    virtual CCActionInterval* reverse() const = 0;
 
 	virtual CCActionInterval *clone() const = 0;
 
@@ -796,7 +797,7 @@ public:
     bool initWithAction(CCFiniteTimeAction *pAction);
 
 	/** returns a new reversed action */
-	virtual CCFiniteTimeAction* reverse() const;
+	virtual CCReverseTime* reverse() const;
 	/** returns a new clone of the action */
     virtual CCReverseTime* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);

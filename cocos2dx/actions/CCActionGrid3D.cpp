@@ -64,6 +64,15 @@ bool CCWaves3D::initWithDuration(float duration, const CCSize& gridSize, unsigne
     return false;
 }
 
+CCWaves3D* CCWaves3D::clone() const
+{
+	// no copy constructor
+	auto a = new CCWaves3D();
+    a->initWithDuration(_duration, _gridSize, _waves, _amplitude);
+	a->autorelease();
+	return a;
+}
+
 CCObject* CCWaves3D::copyWithZone(CCZone *pZone)
 {
     CCZone* pNewZone = NULL;
@@ -144,7 +153,8 @@ bool CCFlipX3D::initWithSize(const CCSize& gridSize, float duration)
 
 CCFlipX3D* CCFlipX3D::clone() const
 {
-	auto a = new CCFlipX3D(*this);
+	// no copy constructor	
+	auto a = new CCFlipX3D();
     a->initWithSize(_gridSize, _duration);
 	a->autorelease();
 	return a;
@@ -384,6 +394,15 @@ bool CCLens3D::initWithDuration(float duration, const CCSize& gridSize, const CC
     return false;
 }
 
+CCLens3D* CCLens3D::clone() const
+{
+	// no copy constructor
+	auto a = new CCLens3D();
+	a->initWithDuration(_duration, _gridSize, _position, _radius);
+	a->autorelease();
+	return a;
+}
+
 CCObject* CCLens3D::copyWithZone(CCZone *pZone)
 {
     CCZone* pNewZone = NULL;
@@ -501,6 +520,16 @@ void CCRipple3D::setPosition(const CCPoint& position)
     _position = position;
 }
 
+
+CCRipple3D* CCRipple3D::clone() const
+{
+	// no copy constructor
+	auto a = new CCRipple3D();
+	a->initWithDuration(_duration, _gridSize, _position, _radius, _waves, _amplitude);
+	a->autorelease();
+	return a;
+}
+
 CCObject* CCRipple3D::copyWithZone(CCZone *pZone)
 {
     CCZone* pNewZone = NULL;
@@ -580,6 +609,15 @@ bool CCShaky3D::initWithDuration(float duration, const CCSize& gridSize, int ran
     }
 
     return false;
+}
+
+CCShaky3D* CCShaky3D::clone() const
+{
+	// no copy constructor
+	auto a = new CCShaky3D();
+    a->initWithDuration(_duration, _gridSize, _randrange, _shakeZ);
+	a->autorelease();
+	return a;
 }
 
 CCObject* CCShaky3D::copyWithZone(CCZone *pZone)
@@ -662,6 +700,15 @@ bool CCLiquid::initWithDuration(float duration, const CCSize& gridSize, unsigned
     return false;
 }
 
+CCLiquid* CCLiquid::clone() const
+{
+	// no copy constructor
+	auto a = new CCLiquid();
+	a->initWithDuration(_duration, _gridSize, _waves, _amplitude);
+	a->autorelease();
+	return a;
+}
+
 CCObject* CCLiquid::copyWithZone(CCZone *pZone)
 {
     CCZone* pNewZone = NULL;
@@ -736,6 +783,15 @@ bool CCWaves::initWithDuration(float duration, const CCSize& gridSize, unsigned 
     }
 
     return false;
+}
+
+CCWaves* CCWaves::clone() const
+{
+	// no copy constructor
+	auto a = new CCWaves();
+	a->initWithDuration(_duration, _gridSize, _waves, _amplitude, _horizontal, _vertical);
+	a->autorelease();
+	return a;
 }
 
 CCObject* CCWaves::copyWithZone(CCZone *pZone)
@@ -825,6 +881,15 @@ bool CCTwirl::initWithDuration(float duration, const CCSize& gridSize, CCPoint p
 void CCTwirl::setPosition(const CCPoint& position)
 {
     _position = position;
+}
+
+CCTwirl *CCTwirl::clone() const
+{
+	// no copy constructor	
+	auto a = new CCTwirl();
+	a->initWithDuration(_duration, _gridSize, _position, _twirls, _amplitude);
+	a->autorelease();
+	return a;
 }
 
 CCObject* CCTwirl::copyWithZone(CCZone *pZone)

@@ -75,7 +75,8 @@ bool CCShakyTiles3D::initWithDuration(float duration, const CCSize& gridSize, in
 
 CCShakyTiles3D* CCShakyTiles3D::clone() const
 {
-	auto a = new CCShakyTiles3D(*this);
+	// no copy constructor	
+	auto a = new CCShakyTiles3D();
     a->initWithDuration(_duration, _gridSize, _randrange, _shakeZ);
 	a->autorelease();
 	return a;
@@ -177,7 +178,8 @@ bool CCShatteredTiles3D::initWithDuration(float duration, const CCSize& gridSize
 
 CCShatteredTiles3D* CCShatteredTiles3D::clone() const
 {
-	auto a = new CCShatteredTiles3D(*this);
+	// no copy constructor	
+	auto a = new CCShatteredTiles3D();
 	a->initWithDuration(_duration, _gridSize, _randrange, _shatterZ);
 	a->autorelease();
 	return a;
@@ -284,7 +286,8 @@ bool CCShuffleTiles::initWithDuration(float duration, const CCSize& gridSize, un
 
 CCShuffleTiles* CCShuffleTiles::clone() const
 {
-	auto a = new CCShuffleTiles(*this);
+	// no copy constructor
+	auto a = new CCShuffleTiles();
 	a->initWithDuration(_duration, _gridSize, _seed);
 	a->autorelease();
 	return a;
@@ -442,7 +445,8 @@ CCFadeOutTRTiles* CCFadeOutTRTiles::create(float duration, const CCSize& gridSiz
 
 CCFadeOutTRTiles* CCFadeOutTRTiles::clone() const
 {
-	auto a = new CCFadeOutTRTiles(*this);
+	// no copy constructor
+	auto a = new CCFadeOutTRTiles();
 	a->initWithDuration(_duration, _gridSize);
 	a->autorelease();
 	return a;
@@ -539,7 +543,8 @@ CCFadeOutBLTiles* CCFadeOutBLTiles::create(float duration, const CCSize& gridSiz
 
 CCFadeOutBLTiles* CCFadeOutBLTiles::clone() const
 {
-	auto a = new CCFadeOutBLTiles(*this);
+	// no copy constructor
+	auto a = new CCFadeOutBLTiles();
 	a->initWithDuration(_duration, _gridSize);
 	a->autorelease();
 	return a;
@@ -579,7 +584,8 @@ CCFadeOutUpTiles* CCFadeOutUpTiles::create(float duration, const CCSize& gridSiz
 
 CCFadeOutUpTiles* CCFadeOutUpTiles::clone() const
 {
-	auto a = new CCFadeOutUpTiles(*this);
+	// no copy constructor
+	auto a = new CCFadeOutUpTiles();
 	a->initWithDuration(_duration, _gridSize);
 	a->autorelease();
 	return a;
@@ -632,7 +638,8 @@ CCFadeOutDownTiles* CCFadeOutDownTiles::create(float duration, const CCSize& gri
 
 CCFadeOutDownTiles* CCFadeOutDownTiles::clone() const
 {
-	auto a = new CCFadeOutDownTiles(*this);
+	// no copy constructor
+	auto a = new CCFadeOutDownTiles();
 	a->initWithDuration(_duration, _gridSize);
 	a->autorelease();
 	return a;
@@ -699,7 +706,8 @@ bool CCTurnOffTiles::initWithDuration(float duration, const CCSize& gridSize, un
 
 CCTurnOffTiles* CCTurnOffTiles::clone() const
 {
-	auto a = new CCTurnOffTiles(*this);
+	// no copy constructor
+	auto a = new CCTurnOffTiles();
     a->initWithDuration(_duration, _gridSize, _seed );
 	a->autorelease();
 	return a;
@@ -838,7 +846,8 @@ bool CCWavesTiles3D::initWithDuration(float duration, const CCSize& gridSize, un
 
 CCWavesTiles3D* CCWavesTiles3D::clone() const
 {
-	auto a = new CCWavesTiles3D(*this);
+	// no copy constructor
+	auto a = new CCWavesTiles3D();
     a->initWithDuration(_duration, _gridSize, _waves, _amplitude);
 	a->autorelease();
 	return a;
@@ -924,7 +933,8 @@ bool CCJumpTiles3D::initWithDuration(float duration, const CCSize& gridSize, uns
 
 CCJumpTiles3D* CCJumpTiles3D::clone() const
 {
-	auto a = new CCJumpTiles3D(*this);
+	// no copy constructor
+	auto a = new CCJumpTiles3D();
     a->initWithDuration(_duration, _gridSize, _jumps, _amplitude);
 	a->autorelease();
 	return a;
@@ -1014,7 +1024,8 @@ bool CCSplitRows::initWithDuration(float duration, unsigned int nRows)
 
 CCSplitRows* CCSplitRows::clone() const
 {
-	auto a = new CCSplitRows(*this);
+	// no copy constructor
+	auto a = new CCSplitRows();
     a->initWithDuration(_duration, _rows);
 	a->autorelease();
 	return a;
@@ -1100,7 +1111,8 @@ bool CCSplitCols::initWithDuration(float duration, unsigned int nCols)
 
 CCSplitCols* CCSplitCols::clone() const
 {
-	auto a = new CCSplitCols(*this);
+	// no copy constructor	
+	auto a = new CCSplitCols();
     a->initWithDuration(_duration, _cols);
 	a->autorelease();
 	return a;

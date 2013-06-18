@@ -174,7 +174,8 @@ bool CCAccelDeccelAmplitude::initWithAction(CCAction *pAction, float duration)
 
 CCAccelDeccelAmplitude* CCAccelDeccelAmplitude::clone() const
 {
-	auto a = new CCAccelDeccelAmplitude(*this);
+	// no copy constructor
+	auto a = new CCAccelDeccelAmplitude();
 	a->initWithAction(_other->clone(), _rate);
 	a->autorelease();
 	return a;
@@ -245,7 +246,8 @@ bool CCAccelAmplitude::initWithAction(CCAction *pAction, float duration)
 
 CCAccelAmplitude* CCAccelAmplitude::clone() const
 {
-	auto a = new CCAccelAmplitude(*this);
+	// no copy constructor
+	auto a = new CCAccelAmplitude();
 	a->initWithAction(_other->clone(), _duration);
 	a->autorelease();
 	return a;
@@ -326,7 +328,8 @@ void CCDeccelAmplitude::update(float time)
 
 CCDeccelAmplitude* CCDeccelAmplitude::clone() const
 {
-	auto a = new CCDeccelAmplitude(*this);
+	// no copy constructor	
+	auto a = new CCDeccelAmplitude();
 	a->initWithAction(_other->clone(), _duration);
 	a->autorelease();
 	return a;
