@@ -419,7 +419,7 @@ Atlas3::Atlas3()
     label2->setAnchorPoint( ccp(0.5f, 0.5f) );
     label2->setColor( ccRED );
     addChild(label2, 0, kTagBitmapAtlas2);
-    label2->runAction( (CCAction*)(repeat->copy()->autorelease()) );
+    label2->runAction( repeat->clone() );
     
     CCLabelBMFont* label3 = CCLabelBMFont::create("Test", "fonts/bitmapFontTest2.fnt");
     // testing anchors
@@ -520,7 +520,7 @@ Atlas4::Atlas4()
     label2->setPosition( ccp(s.width/2.0f, 80) );
     
     CCSprite* lastChar = (CCSprite*) label2->getChildByTag(3);
-    lastChar->runAction( (CCAction*)(rot_4ever->copy()->autorelease()) );
+    lastChar->runAction( rot_4ever->clone() );
     
     schedule( schedule_selector(Atlas4::step), 0.1f);
 }
