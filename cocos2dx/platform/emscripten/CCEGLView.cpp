@@ -139,9 +139,6 @@ CCEGLView::CCEGLView()
     glutMouseFunc(&mouseCB);
     glutMotionFunc(&motionCB);
     glutPassiveMotionFunc(&motionCB);
-
-    // Setup a JS namespace for all cocos2dx helper functions.
-    emscripten_run_script("Module.cocos2dx = { classes: {}, objects: {} };");
 }
 
 CCEGLView::~CCEGLView()
