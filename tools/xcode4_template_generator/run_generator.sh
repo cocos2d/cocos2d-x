@@ -47,7 +47,7 @@ popd
 
 
 echo "generating libextensions"
-python ./tools/xcode4_template_generator/template_generator.py --directory extensions --identifier libextensions --prefix libs --exclude "proj.tizen proj.emscripten proj.marmalade proj.win32 proj.nacl proj.blackberry proj.linux Android.mk CCEditBoxImplAndroid.cpp CCEditBoxImplAndroid.h" > ./template/xcode4/lib_extensions.xctemplate/TemplateInfo.plist
+python ./tools/xcode4_template_generator/template_generator.py --directory extensions --identifier libextensions --prefix libs --exclude "proj.tizen proj.emscripten proj.marmalade proj.win32 proj.nacl proj.blackberry proj.linux Android.mk CCEditBoxImplAndroid.cpp CCEditBoxImplAndroid.h CCArmature" > ./template/xcode4/lib_extensions.xctemplate/TemplateInfo.plist
 
 echo "done"
 
