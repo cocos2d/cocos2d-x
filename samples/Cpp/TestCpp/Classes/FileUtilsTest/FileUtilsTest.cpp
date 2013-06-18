@@ -118,13 +118,13 @@ void TestResolutionDirectories::onEnter()
     string ret;
     
     sharedFileUtils->purgeCachedEntries();
-    m_defaultSearchPathArray = sharedFileUtils->getSearchPaths();
-    vector<string> searchPaths = m_defaultSearchPathArray;
+    _defaultSearchPathArray = sharedFileUtils->getSearchPaths();
+    vector<string> searchPaths = _defaultSearchPathArray;
     searchPaths.insert(searchPaths.begin(),   "Misc");
     sharedFileUtils->setSearchPaths(searchPaths);
     
-    m_defaultResolutionsOrderArray = sharedFileUtils->getSearchResolutionsOrder();
-    vector<string> resolutionsOrder = m_defaultResolutionsOrderArray;
+    _defaultResolutionsOrderArray = sharedFileUtils->getSearchResolutionsOrder();
+    vector<string> resolutionsOrder = _defaultResolutionsOrderArray;
 
     resolutionsOrder.insert(resolutionsOrder.begin(), "resources-ipadhd");
     resolutionsOrder.insert(resolutionsOrder.begin()+1, "resources-ipad");
@@ -147,8 +147,8 @@ void TestResolutionDirectories::onExit()
     CCFileUtils *sharedFileUtils = CCFileUtils::sharedFileUtils();
     
 	// reset search path
-	sharedFileUtils->setSearchPaths(m_defaultSearchPathArray);
-    sharedFileUtils->setSearchResolutionsOrder(m_defaultResolutionsOrderArray);
+	sharedFileUtils->setSearchPaths(_defaultSearchPathArray);
+    sharedFileUtils->setSearchResolutionsOrder(_defaultResolutionsOrderArray);
     FileUtilsDemo::onExit();
 }
 
@@ -172,8 +172,8 @@ void TestSearchPath::onEnter()
     string ret;
     
     sharedFileUtils->purgeCachedEntries();
-    m_defaultSearchPathArray = sharedFileUtils->getSearchPaths();
-    vector<string> searchPaths = m_defaultSearchPathArray;
+    _defaultSearchPathArray = sharedFileUtils->getSearchPaths();
+    vector<string> searchPaths = _defaultSearchPathArray;
     string writablePath = sharedFileUtils->getWritablePath();
     string fileName = writablePath+"external.txt";
     char szBuf[100] = "Hello Cocos2d-x!";
@@ -192,8 +192,8 @@ void TestSearchPath::onEnter()
     searchPaths.insert(searchPaths.begin()+2, "Misc/searchpath2");
     sharedFileUtils->setSearchPaths(searchPaths);
     
-    m_defaultResolutionsOrderArray = sharedFileUtils->getSearchResolutionsOrder();
-    vector<string> resolutionsOrder = m_defaultResolutionsOrderArray;
+    _defaultResolutionsOrderArray = sharedFileUtils->getSearchResolutionsOrder();
+    vector<string> resolutionsOrder = _defaultResolutionsOrderArray;
     
     resolutionsOrder.insert(resolutionsOrder.begin(), "resources-ipad");
     sharedFileUtils->setSearchResolutionsOrder(resolutionsOrder);
@@ -226,8 +226,8 @@ void TestSearchPath::onExit()
 	CCFileUtils *sharedFileUtils = CCFileUtils::sharedFileUtils();
 
 	// reset search path
-	sharedFileUtils->setSearchPaths(m_defaultSearchPathArray);
-    sharedFileUtils->setSearchResolutionsOrder(m_defaultResolutionsOrderArray);
+	sharedFileUtils->setSearchPaths(_defaultSearchPathArray);
+    sharedFileUtils->setSearchResolutionsOrder(_defaultResolutionsOrderArray);
     FileUtilsDemo::onExit();
 }
 

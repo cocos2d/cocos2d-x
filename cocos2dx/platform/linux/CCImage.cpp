@@ -59,7 +59,7 @@ public:
 	BitmapDC() {
 		libError = FT_Init_FreeType( &library );
 		FcInit();
-		m_pData = NULL;
+		_data = NULL;
 		reset();
 	}
 
@@ -67,8 +67,8 @@ public:
 		FT_Done_FreeType(library);
 		FcFini();
 		//data will be deleted by CCImage
-//		if (m_pData) {
-//			delete m_pData;
+//		if (_data) {
+//			delete _data;
 //		}
         reset();
 	}
@@ -355,8 +355,8 @@ public:
 		int txtHeight = iMaxLineHeight;
 		iMaxLineHeight = MAX(iMaxLineHeight, nHeight);
 
-		m_pData = new unsigned char[iMaxLineWidth * iMaxLineHeight * 4];
-		memset(m_pData,0, iMaxLineWidth * iMaxLineHeight*4);
+		_data = new unsigned char[iMaxLineWidth * iMaxLineHeight * 4];
+		memset(_data,0, iMaxLineWidth * iMaxLineHeight*4);
 
 		int iCurYCursor = computeLineStartY(face, eAlignMask, txtHeight, iMaxLineHeight);
 
@@ -395,7 +395,7 @@ public:
 						int iX = xoffset + x;
 
 						int iTemp = cTemp << 24 | cTemp << 16 | cTemp << 8 | cTemp;
-						*(int*) &m_pData[(iY + iX) * 4 + 0] = iTemp;
+						*(int*) &_data[(iY + iX) * 4 + 0] = iTemp;
 					}
 				}
 			}
@@ -411,7 +411,7 @@ public:
 public:
 	FT_Library library;
 
-	unsigned char *m_pData;
+	unsigned char *_data;
 	int libError;
 	std::vector<LineBreakLine> textLines;
 	int iMaxLineWidth;
@@ -443,15 +443,15 @@ bool CCImage::initWithString(
 
 		CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, pFontName, nSize));
 
-		// assign the dc.m_pData to m_pData in order to save time
-		m_pData = dc.m_pData;
-		CC_BREAK_IF(! m_pData);
+		// assign the dc._data to _data in order to save time
+		_data = dc._data;
+		CC_BREAK_IF(! _data);
 
-		m_nWidth = (short)dc.iMaxLineWidth;
-		m_nHeight = (short)dc.iMaxLineHeight;
-		m_bHasAlpha = true;
-		m_bPreMulti = true;
-		m_nBitsPerComponent = 8;
+		_width = (short)dc.iMaxLineWidth;
+		_height = (short)dc.iMaxLineHeight;
+		_hasAlpha = true;
+		_preMulti = true;
+		_bitsPerComponent = 8;
 
 		bRet = true;
 

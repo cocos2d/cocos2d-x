@@ -42,8 +42,8 @@ public:
     virtual ~CocosPepperInstance()
     {
 #ifdef OLD_NACL_MOUNTS
-        if (m_runner)
-            delete m_runner;
+        if (_runner)
+            delete _runner;
 #endif
     }
 
@@ -53,15 +53,15 @@ public:
 
     bool HandleInputEvent(const pp::InputEvent& event);
 
-    pp::Size Size() { return m_size; }
+    pp::Size Size() { return _size; }
 
 #ifdef OLD_NACL_MOUNTS
-    MainThreadRunner* m_runner;
+    MainThreadRunner* _runner;
 #endif
 private:
-    pp::Size m_size;
-    pthread_t m_cocos_thread;
-    bool m_running;
+    pp::Size _size;
+    pthread_t _cocos_thread;
+    bool _running;
 };
 
 #endif /* __CC_INSTANCE_H__ */

@@ -49,9 +49,9 @@ CCArmatureDataManager *CCArmatureDataManager::sharedArmatureDataManager()
 
 CCArmatureDataManager::CCArmatureDataManager(void)
 {
-	m_pArmarureDatas = NULL;
-    m_pAnimationDatas = NULL;
-    m_pTextureDatas = NULL;
+	_armarureDatas = NULL;
+    _animationDatas = NULL;
+    _textureDatas = NULL;
 }
 
 
@@ -59,9 +59,9 @@ CCArmatureDataManager::~CCArmatureDataManager(void)
 {
     removeAll();
 
-    CC_SAFE_DELETE(m_pAnimationDatas);
-    CC_SAFE_DELETE(m_pArmarureDatas);
-    CC_SAFE_DELETE(m_pTextureDatas);
+    CC_SAFE_DELETE(_animationDatas);
+    CC_SAFE_DELETE(_armarureDatas);
+    CC_SAFE_DELETE(_textureDatas);
 }
 
 void CCArmatureDataManager::purgeArmatureSystem()
@@ -77,17 +77,17 @@ bool CCArmatureDataManager::init()
     bool bRet = false;
     do
     {
-        m_pArmarureDatas = CCDictionary::create();
-        CCAssert(m_pArmarureDatas, "create CCArmatureDataManager::m_pArmarureDatas fail!");
-        m_pArmarureDatas->retain();
+        _armarureDatas = CCDictionary::create();
+        CCAssert(_armarureDatas, "create CCArmatureDataManager::_armarureDatas fail!");
+        _armarureDatas->retain();
 
-        m_pAnimationDatas = CCDictionary::create();
-        CCAssert(m_pAnimationDatas, "create CCArmatureDataManager::m_pAnimationDatas fail!");
-        m_pAnimationDatas->retain();
+        _animationDatas = CCDictionary::create();
+        CCAssert(_animationDatas, "create CCArmatureDataManager::_animationDatas fail!");
+        _animationDatas->retain();
 
-        m_pTextureDatas = CCDictionary::create();
-        CCAssert(m_pTextureDatas, "create CCArmatureDataManager::m_pTextureDatas fail!");
-        m_pTextureDatas->retain();
+        _textureDatas = CCDictionary::create();
+        CCAssert(_textureDatas, "create CCArmatureDataManager::_textureDatas fail!");
+        _textureDatas->retain();
 
         bRet = true;
     }
@@ -98,44 +98,44 @@ bool CCArmatureDataManager::init()
 
 void CCArmatureDataManager::addArmatureData(const char *id, CCArmatureData *armatureData)
 {
-    if(m_pArmarureDatas)
+    if(_armarureDatas)
     {
-        m_pArmarureDatas->setObject(armatureData, id);
+        _armarureDatas->setObject(armatureData, id);
     }
 }
 
 CCArmatureData *CCArmatureDataManager::getArmatureData(const char *id)
 {
     CCArmatureData *armatureData = NULL;
-    if (m_pArmarureDatas)
+    if (_armarureDatas)
     {
-        armatureData = (CCArmatureData *)m_pArmarureDatas->objectForKey(id);
+        armatureData = (CCArmatureData *)_armarureDatas->objectForKey(id);
     }
     return armatureData;
 }
 
 void CCArmatureDataManager::addAnimationData(const char *id, CCAnimationData *animationData)
 {
-    if(m_pAnimationDatas)
+    if(_animationDatas)
     {
-        m_pAnimationDatas->setObject(animationData, id);
+        _animationDatas->setObject(animationData, id);
     }
 }
 
 void CCArmatureDataManager::addTextureData(const char *id, CCTextureData *textureData)
 {
-    if(m_pTextureDatas)
+    if(_textureDatas)
     {
-        m_pTextureDatas->setObject(textureData, id);
+        _textureDatas->setObject(textureData, id);
     }
 }
 
 CCAnimationData *CCArmatureDataManager::getAnimationData(const char *id)
 {
     CCAnimationData *animationData = NULL;
-    if (m_pAnimationDatas)
+    if (_animationDatas)
     {
-        animationData = (CCAnimationData *)m_pAnimationDatas->objectForKey(id);
+        animationData = (CCAnimationData *)_animationDatas->objectForKey(id);
     }
     return animationData;
 }
@@ -143,9 +143,9 @@ CCAnimationData *CCArmatureDataManager::getAnimationData(const char *id)
 CCTextureData *CCArmatureDataManager::getTextureData(const char *id)
 {
     CCTextureData *textureData = NULL;
-    if (m_pTextureDatas)
+    if (_textureDatas)
     {
-        textureData = (CCTextureData *)m_pTextureDatas->objectForKey(id);
+        textureData = (CCTextureData *)_textureDatas->objectForKey(id);
     }
     return textureData;
 }
@@ -180,18 +180,18 @@ void CCArmatureDataManager::addSpriteFrameFromFile(const char *plistPath, const 
 
 void CCArmatureDataManager::removeAll()
 {
-    if( m_pAnimationDatas )
+    if( _animationDatas )
     {
-        m_pAnimationDatas->removeAllObjects();
+        _animationDatas->removeAllObjects();
     }
-    if( m_pArmarureDatas )
+    if( _armarureDatas )
     {
-        m_pArmarureDatas->removeAllObjects();
+        _armarureDatas->removeAllObjects();
     }
 
-    if( m_pTextureDatas )
+    if( _textureDatas )
     {
-        m_pTextureDatas->removeAllObjects();
+        _textureDatas->removeAllObjects();
     }
 
     CCDataReaderHelper::clear();

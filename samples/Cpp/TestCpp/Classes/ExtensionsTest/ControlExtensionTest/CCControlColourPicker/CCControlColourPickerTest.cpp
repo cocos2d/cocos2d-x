@@ -66,11 +66,11 @@ bool CCControlColourPickerTest::init()
 
         layer_width += background->getContentSize().width;
 
-        m_pColorLabel = CCLabelTTF::create("#color", "Marker Felt", 30);
-        m_pColorLabel->retain();
+        _colorLabel = CCLabelTTF::create("#color", "Marker Felt", 30);
+        _colorLabel->retain();
 
-        m_pColorLabel->setPosition(background->getPosition());
-        layer->addChild(m_pColorLabel);
+        _colorLabel->setPosition(background->getPosition());
+        layer->addChild(_colorLabel);
 
         // Set the layer size
         layer->setContentSize(CCSizeMake(layer_width, 0));
@@ -86,13 +86,13 @@ bool CCControlColourPickerTest::init()
 
 CCControlColourPickerTest::~CCControlColourPickerTest()
 {
-    CC_SAFE_RELEASE(m_pColorLabel);
+    CC_SAFE_RELEASE(_colorLabel);
 }
 
 void CCControlColourPickerTest::colourValueChanged(CCObject *sender, CCControlEvent controlEvent)
 {
     CCControlColourPicker* pPicker = (CCControlColourPicker*)sender;
-    m_pColorLabel->setString(CCString::createWithFormat("#%02X%02X%02X",pPicker->getColor().r, pPicker->getColor().g, pPicker->getColor().b)->getCString());
+    _colorLabel->setString(CCString::createWithFormat("#%02X%02X%02X",pPicker->getColor().r, pPicker->getColor().g, pPicker->getColor().b)->getCString());
 }
 
 

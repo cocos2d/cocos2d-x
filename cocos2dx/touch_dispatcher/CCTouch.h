@@ -39,8 +39,8 @@ class CC_DLL CCTouch : public CCObject
 {
 public:
     CCTouch() 
-        : m_nId(0),
-        m_startPointCaptured(false)
+        : _id(0),
+        _startPointCaptured(false)
     {}
 
     /** returns the current touch location in OpenGL coordinates */
@@ -60,28 +60,28 @@ public:
     
     void setTouchInfo(int id, float x, float y)
     {
-        m_nId = id;
-        m_prevPoint = m_point;
-        m_point.x   = x;
-        m_point.y   = y;
-        if (!m_startPointCaptured)
+        _id = id;
+        _prevPoint = _point;
+        _point.x   = x;
+        _point.y   = y;
+        if (!_startPointCaptured)
         {
-            m_startPoint = m_point;
-            m_startPointCaptured = true;
+            _startPoint = _point;
+            _startPointCaptured = true;
         }
     }
 
     int getID() const
     {
-        return m_nId;
+        return _id;
     }
 
 private:
-    int m_nId;
-    bool m_startPointCaptured;
-    CCPoint m_startPoint;
-    CCPoint m_point;
-    CCPoint m_prevPoint;
+    int _id;
+    bool _startPointCaptured;
+    CCPoint _startPoint;
+    CCPoint _point;
+    CCPoint _prevPoint;
 };
 
 class CC_DLL CCEvent : public CCObject

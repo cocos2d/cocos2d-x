@@ -67,9 +67,9 @@ public:
     static CCTouchHandler* handlerWithDelegate(CCTouchDelegate *pDelegate, int nPriority);
 
 protected:
-    CCTouchDelegate *m_pDelegate;
-    int m_nPriority;
-    int m_nEnabledSelectors;
+    CCTouchDelegate *_delegate;
+    int _priority;
+    int _enabledSelectors;
 };
 
 /** CCStandardTouchHandler
@@ -111,8 +111,8 @@ public:
     static CCTargetedTouchHandler* handlerWithDelegate(CCTouchDelegate *pDelegate, int nPriority, bool bSwallow);
 
 protected:
-    bool m_bSwallowsTouches;
-    CCSet *m_pClaimedTouches;
+    bool _swallowsTouches;
+    CCSet *_claimedTouches;
 };
 
 // end of input group

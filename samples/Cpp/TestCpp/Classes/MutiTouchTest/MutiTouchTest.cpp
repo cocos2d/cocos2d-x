@@ -19,23 +19,23 @@ public:
 
     virtual void draw()
     {
-        ccDrawColor4B(m_TouchColor.r, m_TouchColor.g, m_TouchColor.b, 255);
+        ccDrawColor4B(_touchColor.r, _touchColor.g, _touchColor.b, 255);
         glLineWidth(10);
-        ccDrawLine( ccp(0, m_pTouchPoint.y), ccp(getContentSize().width, m_pTouchPoint.y) );
-        ccDrawLine( ccp(m_pTouchPoint.x, 0), ccp(m_pTouchPoint.x, getContentSize().height) );
+        ccDrawLine( ccp(0, _touchPoint.y), ccp(getContentSize().width, _touchPoint.y) );
+        ccDrawLine( ccp(_touchPoint.x, 0), ccp(_touchPoint.x, getContentSize().height) );
         glLineWidth(1);
         ccPointSize(30);
-        ccDrawPoint(m_pTouchPoint);
+        ccDrawPoint(_touchPoint);
     }
 
     void setTouchPos(const CCPoint& pt)
     {
-        m_pTouchPoint = pt;
+        _touchPoint = pt;
     }
 
     void setTouchColor(ccColor3B color)
     {
-        m_TouchColor = color;
+        _touchColor = color;
     }
 
     static TouchPoint* touchPointWithParent(CCNode* pParent)
@@ -48,8 +48,8 @@ public:
     }
 
 private:
-    CCPoint m_pTouchPoint;
-    ccColor3B m_TouchColor;
+    CCPoint _touchPoint;
+    ccColor3B _touchColor;
 };
 
 bool MutiTouchTestLayer::init()

@@ -41,11 +41,11 @@ public:
     void updateTransform();
     void draw();
 
-    CC_PROPERTY_PASS_BY_REF(CCBaseData, m_sSkinData, SkinData);
-    CC_SYNTHESIZE(CCBone *, m_pBone, Bone);
+    CC_PROPERTY_PASS_BY_REF(CCBaseData, _skinData, SkinData);
+    CC_SYNTHESIZE(CCBone *, _bone, Bone);
 
 protected:
-    CCAffineTransform m_tSkinTransform;
+    CCAffineTransform _skinTransform;
 };
 
 NS_CC_EXT_END

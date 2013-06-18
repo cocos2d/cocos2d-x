@@ -50,9 +50,9 @@ typedef void (CCObject::*SEL_CCControlHandler)(CCObject*, CCControlEvent);
 
 class CCInvocation : public CCObject
 {
-    CC_SYNTHESIZE_READONLY(SEL_CCControlHandler, m_action, Action);
-    CC_SYNTHESIZE_READONLY(CCObject*, m_target, Target);
-    CC_SYNTHESIZE_READONLY(CCControlEvent, m_controlEvent, ControlEvent);
+    CC_SYNTHESIZE_READONLY(SEL_CCControlHandler, _action, Action);
+    CC_SYNTHESIZE_READONLY(CCObject*, _target, Target);
+    CC_SYNTHESIZE_READONLY(CCControlEvent, _controlEvent, ControlEvent);
     
 public:
     static CCInvocation* create(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvent);

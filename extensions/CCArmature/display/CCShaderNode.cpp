@@ -33,12 +33,12 @@ enum
 };
 
 CCShaderNode::CCShaderNode()
-    : m_center(vertex2(0.0f, 0.0f))
-    , m_resolution(vertex2(0.0f, 0.0f))
-    , m_time(0.0f)
-    , m_uniformCenter(0)
-    , m_uniformResolution(0)
-    , m_uniformTime(0)
+    : _center(vertex2(0.0f, 0.0f))
+    , _resolution(vertex2(0.0f, 0.0f))
+    , _time(0.0f)
+    , _uniformCenter(0)
+    , _uniformResolution(0)
+    , _uniformTime(0)
 {
 }
 
@@ -56,8 +56,8 @@ bool CCShaderNode::initWithVertex(const char *vert, const char *frag)
 
     loadShaderVertex(vert, frag);
 
-    m_time = 0;
-    m_resolution = vertex2(SIZE_X, SIZE_Y);
+    _time = 0;
+    _resolution = vertex2(SIZE_X, SIZE_Y);
 
     scheduleUpdate();
 
@@ -77,9 +77,9 @@ void CCShaderNode::loadShaderVertex(const char *vert, const char *frag)
 
     shader->updateUniforms();
 
-    m_uniformCenter = glGetUniformLocation(shader->getProgram(), "center");
-    m_uniformResolution = glGetUniformLocation(shader->getProgram(), "resolution");
-    m_uniformTime = glGetUniformLocation(shader->getProgram(), "time");
+    _uniformCenter = glGetUniformLocation(shader->getProgram(), "center");
+    _uniformResolution = glGetUniformLocation(shader->getProgram(), "resolution");
+    _uniformTime = glGetUniformLocation(shader->getProgram(), "time");
 
     this->setShaderProgram(shader);
 
@@ -88,22 +88,22 @@ void CCShaderNode::loadShaderVertex(const char *vert, const char *frag)
 
 void CCShaderNode::update(float dt)
 {
-    m_time += dt;
+    _time += dt;
 }
 
 void CCShaderNode::translateFormOtherNode(CCAffineTransform &transform)
 {
     CCNode::setAdditionalTransform(transform);
 
-    m_center = vertex2(m_sAdditionalTransform.tx * CC_CONTENT_SCALE_FACTOR(), m_sAdditionalTransform.ty * CC_CONTENT_SCALE_FACTOR());
-    m_resolution = vertex2( SIZE_X * m_sAdditionalTransform.a, SIZE_Y * m_sAdditionalTransform.d);
+    _center = vertex2(_additionalTransform.tx * CC_CONTENT_SCALE_FACTOR(), _additionalTransform.ty * CC_CONTENT_SCALE_FACTOR());
+    _resolution = vertex2( SIZE_X * _additionalTransform.a, SIZE_Y * _additionalTransform.d);
 }
 
 void CCShaderNode::setPosition(const CCPoint &newPosition)
 {
     CCNode::setPosition(newPosition);
     CCPoint position = getPosition();
-    m_center = vertex2(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
+    _center = vertex2(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
 }
 
 void CCShaderNode::draw()
@@ -116,12 +116,12 @@ void CCShaderNode::draw()
     //
     // Uniforms
     //
-    getShaderProgram()->setUniformLocationWith2f(m_uniformCenter, m_center.x, m_center.y);
-    getShaderProgram()->setUniformLocationWith2f(m_uniformResolution, m_resolution.x, m_resolution.y);
+    getShaderProgram()->setUniformLocationWith2f(_uniformCenter, _center.x, _center.y);
+    getShaderProgram()->setUniformLocationWith2f(_uniformResolution, _resolution.x, _resolution.y);
 
 
     // time changes all the time, so it is Ok to call OpenGL directly, and not the "cached" version
-    glUniform1f(m_uniformTime, m_time);
+    glUniform1f(_uniformTime, _time);
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 

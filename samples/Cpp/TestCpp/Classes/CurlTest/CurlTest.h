@@ -13,7 +13,7 @@ public:
     virtual void ccTouchesEnded(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent);
 
 private:
-    cocos2d::CCLabelTTF*         m_pLabel;
+    cocos2d::CCLabelTTF*         _label;
 };
 
 class CurlTestScene : public TestScene

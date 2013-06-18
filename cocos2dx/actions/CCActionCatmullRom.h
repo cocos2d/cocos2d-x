@@ -98,7 +98,7 @@ public:
     void setControlPoints(std::vector<CCPoint*> *controlPoints);
 private:
     /** Array that contains the control points */
-    std::vector<CCPoint*> *m_pControlPoints;
+    std::vector<CCPoint*> *_controlPoints;
 };
 
 /** Cardinal Spline path.
@@ -128,21 +128,21 @@ public:
     
     virtual void updatePosition(CCPoint &newPos);
     
-    inline CCPointArray* getPoints() { return m_pPoints; }
+    inline CCPointArray* getPoints() { return _points; }
     inline void  setPoints(CCPointArray* points) 
     {
         CC_SAFE_RETAIN(points);
-        CC_SAFE_RELEASE(m_pPoints);
-        m_pPoints = points;
+        CC_SAFE_RELEASE(_points);
+        _points = points;
     }
     
 protected:
     /** Array of control points */
-    CCPointArray *m_pPoints;
-    float m_fDeltaT;
-    float m_fTension;
-    CCPoint	m_previousPosition;
-    CCPoint	m_accumulatedDiff;
+    CCPointArray *_points;
+    float _deltaT;
+    float _tension;
+    CCPoint	_previousPosition;
+    CCPoint	_accumulatedDiff;
 };
 
 /** Cardinal Spline path.
@@ -166,7 +166,7 @@ public:
 	virtual CCCardinalSplineBy *clone() const;
 
 protected:
-    CCPoint m_startPosition;
+    CCPoint _startPosition;
 };
 
 /** An action that moves the target with a CatmullRom curve to a destination point.

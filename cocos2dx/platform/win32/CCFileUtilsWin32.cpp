@@ -60,7 +60,7 @@ CCFileUtilsWin32::CCFileUtilsWin32()
 bool CCFileUtilsWin32::init()
 {
     _checkPath();
-    m_strDefaultResRootPath = s_pszResourcePath;
+    _defaultResRootPath = s_pszResourcePath;
     return CCFileUtils::init();
 }
 
@@ -74,7 +74,7 @@ bool CCFileUtilsWin32::isFileExist(const std::string& strFilePath)
     std::string strPath = strFilePath;
     if (!isAbsolutePath(strPath))
     { // Not absolute path, add the default root path at the beginning.
-        strPath.insert(0, m_strDefaultResRootPath);
+        strPath.insert(0, _defaultResRootPath);
     }
     return GetFileAttributesA(strPath.c_str()) != -1 ? true : false;
 }

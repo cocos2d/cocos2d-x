@@ -353,7 +353,7 @@ public:
     virtual std::string subtitle();
     virtual void onEnter();
 private:
-    int m_nImageOffset;
+    int _imageOffset;
 };
 
 class TextureGlRepeat : public TextureDemo
@@ -399,7 +399,7 @@ public:
     virtual void onEnter();
     virtual void draw();
 private:
-    CCTexture2D* m_pTex1, *m_pTex2;
+    CCTexture2D* _tex1, *_tex2;
 };
 
 class TextureDrawInRect : public TextureDemo
@@ -411,7 +411,7 @@ public:
     virtual void onEnter();
     virtual void draw();
 private:
-    CCTexture2D* m_pTex1, *m_pTex2;
+    CCTexture2D* _tex1, *_tex2;
 };
 
 class TextureTestScene : public TestScene
@@ -429,7 +429,7 @@ public:
     void updateImage(CCObject *sender);
     void changeBackgroundVisible(CCObject *sender);
 private:
-    CCSprite *m_pBackground;
+    CCSprite *_background;
 };
 
 class TexturePVRv3Premult : public TextureDemo

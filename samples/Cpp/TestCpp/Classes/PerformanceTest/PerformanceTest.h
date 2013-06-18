@@ -24,9 +24,9 @@ public:
     virtual void toMainLayer(CCObject* pSender);
 
 protected:
-    bool m_bControlMenuVisible;
-    int  m_nMaxCases;
-    int  m_nCurCase;
+    bool _controlMenuVisible;
+    int  _maxCases;
+    int  _curCase;
 };
 
 class PerformanceTestScene : public TestScene

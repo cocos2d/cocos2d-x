@@ -66,7 +66,7 @@ public:
     void nextCallback(CCObject* sender);
 
     /** Title label of the scene. */
-    CC_SYNTHESIZE_RETAIN(CCLabelTTF*, m_pSceneTitleLabel, SceneTitleLabel)
+    CC_SYNTHESIZE_RETAIN(CCLabelTTF*, _sceneTitleLabel, SceneTitleLabel)
 
     CONTROL_SCENE_CREATE_FUNC(CCControlScene);
 };

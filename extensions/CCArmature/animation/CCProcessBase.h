@@ -119,47 +119,47 @@ protected:
 
 protected:
 	//! Scale the animation speed
-	CC_SYNTHESIZE_PASS_BY_REF(float, m_fAnimationScale, AnimationScale);
+	CC_SYNTHESIZE_PASS_BY_REF(float, _animationScale, AnimationScale);
 
     //! Set and get whether the aniamtion is pause
-    CC_SYNTHESIZE_PASS_BY_REF(bool, m_bIsPause, IsPause);
+    CC_SYNTHESIZE_PASS_BY_REF(bool, _isPause, IsPause);
 
     //! Set and get whether the aniamtion is complete
-    CC_SYNTHESIZE_PASS_BY_REF(bool, m_bIsComplete, IsComplete);
+    CC_SYNTHESIZE_PASS_BY_REF(bool, _isComplete, IsComplete);
 
     //! Set and get whether the aniamtion is playing
-    CC_SYNTHESIZE_PASS_BY_REF(bool, m_bIsPlaying, IsPlaying);
+    CC_SYNTHESIZE_PASS_BY_REF(bool, _isPlaying, IsPlaying);
 
     //! Current percent this process arrived
-    CC_SYNTHESIZE_PASS_BY_REF(float, m_fCurrentPercent, CurrentPercent);
+    CC_SYNTHESIZE_PASS_BY_REF(float, _currentPercent, CurrentPercent);
 
     //! The raw duration
-    CC_SYNTHESIZE_PASS_BY_REF(int, m_iRawDuration, RawDuration);
+    CC_SYNTHESIZE_PASS_BY_REF(int, _rawDuration, RawDuration);
 
     //! The animation whether or not loop
-    CC_SYNTHESIZE_PASS_BY_REF(AnimationType, m_eLoopType, LoopType);
+    CC_SYNTHESIZE_PASS_BY_REF(AnimationType, _loopType, LoopType);
 
     //! The tween easing effect
-    CC_SYNTHESIZE_PASS_BY_REF(CCTweenType, m_eTweenEasing, TweenEasing);
+    CC_SYNTHESIZE_PASS_BY_REF(CCTweenType, _tweenEasing, TweenEasing);
 
     //! The animation update speed
-    CC_SYNTHESIZE_PASS_BY_REF(float, m_fAnimationInternal, AnimationInternal);
+    CC_SYNTHESIZE_PASS_BY_REF(float, _animationInternal, AnimationInternal);
 
 
 protected:
     //! The durantion frame count will run
-    int m_iDurationTween;
+    int _durationTween;
 
     //! Current frame this process arrived, this frame is tween frame
-    float m_fCurrentFrame;
+    float _currentFrame;
     //! Frame index it the time line
-    int m_iCurFrameIndex;
+    int _curFrameIndex;
 
     //! Next frame this process need run to
-    int m_iNextFrameIndex;
+    int _nextFrameIndex;
 
 
-    bool m_bIsLoopBack;
+    bool _isLoopBack;
 };
 
 NS_CC_EXT_END

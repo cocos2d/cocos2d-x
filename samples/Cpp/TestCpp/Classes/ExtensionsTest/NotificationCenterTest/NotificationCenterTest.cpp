@@ -22,14 +22,14 @@ public:
     void updateLightState();
 
 private:
-    bool m_bConnected;
+    bool _connected;
     static bool s_bSwitchOn;
 };
 
 bool Light::s_bSwitchOn = false;
 
 Light::Light()
-    : m_bConnected(false)
+    : _connected(false)
 {}
 
 Light::~Light()
@@ -47,8 +47,8 @@ Light* Light::lightWithFile(const char* name)
 
 void Light::setIsConnectToSwitch(bool bConnectToSwitch)
 {
-    m_bConnected = bConnectToSwitch;
-    if (m_bConnected)
+    _connected = bConnectToSwitch;
+    if (_connected)
     {
         CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(Light::switchStateChanged), MSG_SWITCH_STATE, NULL);
     }
@@ -67,7 +67,7 @@ void Light::switchStateChanged(CCObject* obj)
 
 void Light::updateLightState()
 {
-    if (s_bSwitchOn && m_bConnected)
+    if (s_bSwitchOn && _connected)
     {
         this->setOpacity(255);
     }
@@ -78,7 +78,7 @@ void Light::updateLightState()
 }
 
 NotificationCenterTest::NotificationCenterTest()
-: m_bShowImage(false)
+: _showImage(false)
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 

@@ -228,23 +228,23 @@ CCEditBoxImpl* __createSystemEditBox(CCEditBox* pEditBox)
 }
 
 CCEditBoxImplMac::CCEditBoxImplMac(CCEditBox* pEditText)
-: CCEditBoxImpl(pEditText), m_pSysEdit(NULL), m_nMaxTextLength(-1)
-, m_obAnchorPoint(ccp(0.5f, 0.5f))
+: CCEditBoxImpl(pEditText), _sysEdit(NULL), _maxTextLength(-1)
+, _anchorPoint(ccp(0.5f, 0.5f))
 {
     //! TODO: Retina on Mac
-    //! m_bInRetinaMode = [[EAGLView sharedEGLView] contentScaleFactor] == 2.0f ? true : false;
-    m_bInRetinaMode = false;
+    //! _inRetinaMode = [[EAGLView sharedEGLView] contentScaleFactor] == 2.0f ? true : false;
+    _inRetinaMode = false;
 }
 
 CCEditBoxImplMac::~CCEditBoxImplMac()
 {
-    [m_pSysEdit release];
+    [_sysEdit release];
 }
 
 void CCEditBoxImplMac::doAnimationWhenKeyboardMove(float duration, float distance)
 {
-    if ([m_pSysEdit isEditState] || distance < 0.0f)
-        [m_pSysEdit doAnimationWhenKeyboardMoveWithDuration:duration distance:distance];
+    if ([_sysEdit isEditState] || distance < 0.0f)
+        [_sysEdit doAnimationWhenKeyboardMoveWithDuration:duration distance:distance];
 }
 
 bool CCEditBoxImplMac::initWithSize(const CCSize& size)
@@ -253,14 +253,14 @@ bool CCEditBoxImplMac::initWithSize(const CCSize& size)
 
     NSRect rect = NSMakeRect(0, 0, size.width * eglView->getScaleX(),size.height * eglView->getScaleY());
 
-    if (m_bInRetinaMode) {
+    if (_inRetinaMode) {
          rect.size.width /= 2.0f;
          rect.size.height /= 2.0f;
     }
     
-    m_pSysEdit = [[EditBoxImplMac alloc] initWithFrame:rect editBox:this];
+    _sysEdit = [[EditBoxImplMac alloc] initWithFrame:rect editBox:this];
     
-    if (!m_pSysEdit)
+    if (!_sysEdit)
         return false;
     
     return true;
@@ -274,7 +274,7 @@ void CCEditBoxImplMac::setFont(const char* pFontName, int fontSize)
 //	NSString * fntName = [NSString stringWithUTF8String:pFontName];
 //	UIFont *textFont = [UIFont fontWithName:fntName size:fontSize];
 //	if(textFont != nil)
-//		[m_pSysEdit.textField setFont:textFont];
+//		[_sysEdit.textField setFont:textFont];
 }
 
 void CCEditBoxImplMac::setPlaceholderFont(const char* pFontName, int fontSize)
@@ -284,7 +284,7 @@ void CCEditBoxImplMac::setPlaceholderFont(const char* pFontName, int fontSize)
 
 void CCEditBoxImplMac::setFontColor(const ccColor3B& color)
 {
-    m_pSysEdit.textField.textColor = [NSColor colorWithCalibratedRed:color.r / 255.0f green:color.g / 255.0f blue:color.b / 255.0f alpha:1.0f];
+    _sysEdit.textField.textColor = [NSColor colorWithCalibratedRed:color.r / 255.0f green:color.g / 255.0f blue:color.b / 255.0f alpha:1.0f];
 }
 
 void CCEditBoxImplMac::setPlaceholderFontColor(const ccColor3B& color)
@@ -298,12 +298,12 @@ void CCEditBoxImplMac::setInputMode(EditBoxInputMode inputMode)
 
 void CCEditBoxImplMac::setMaxLength(int maxLength)
 {
-    m_nMaxTextLength = maxLength;
+    _maxTextLength = maxLength;
 }
 
 int CCEditBoxImplMac::getMaxLength()
 {
-    return m_nMaxTextLength;
+    return _maxTextLength;
 }
 
 void CCEditBoxImplMac::setInputFlag(EditBoxInputFlag inputFlag)
@@ -317,27 +317,27 @@ void CCEditBoxImplMac::setReturnType(KeyboardReturnType returnType)
 
 bool CCEditBoxImplMac::isEditing()
 {
-    return [m_pSysEdit isEditState] ? true : false;
+    return [_sysEdit isEditState] ? true : false;
 }
 
 void CCEditBoxImplMac::setText(const char* pText)
 {
-    m_pSysEdit.textField.stringValue = [NSString stringWithUTF8String:pText];
+    _sysEdit.textField.stringValue = [NSString stringWithUTF8String:pText];
 }
 
 const char*  CCEditBoxImplMac::getText(void)
 {
-    return [m_pSysEdit.textField.stringValue UTF8String];
+    return [_sysEdit.textField.stringValue UTF8String];
 }
 
 void CCEditBoxImplMac::setPlaceHolder(const char* pText)
 {
-    [[m_pSysEdit.textField cell] setPlaceholderString:[NSString stringWithUTF8String:pText]];
+    [[_sysEdit.textField cell] setPlaceholderString:[NSString stringWithUTF8String:pText]];
 }
 
 NSPoint CCEditBoxImplMac::convertDesignCoordToScreenCoord(const CCPoint& designCoord, bool bInRetinaMode)
 {
-    NSRect frame = [m_pSysEdit.textField frame];
+    NSRect frame = [_sysEdit.textField frame];
     CGFloat height = frame.size.height;
     
     CCEGLViewProtocol* eglView = CCEGLView::sharedOpenGLView();
@@ -359,37 +359,37 @@ NSPoint CCEditBoxImplMac::convertDesignCoordToScreenCoord(const CCPoint& designC
 
 void CCEditBoxImplMac::adjustTextFieldPosition()
 {
-	CCSize contentSize = m_pEditBox->getContentSize();
+	CCSize contentSize = _editBox->getContentSize();
 	CCRect rect = CCRectMake(0, 0, contentSize.width, contentSize.height);
 
-    rect = CCRectApplyAffineTransform(rect, m_pEditBox->nodeToWorldTransform());
+    rect = CCRectApplyAffineTransform(rect, _editBox->nodeToWorldTransform());
 	
 	CCPoint designCoord = ccp(rect.origin.x, rect.origin.y + rect.size.height);
-    [m_pSysEdit setPosition:convertDesignCoordToScreenCoord(designCoord, m_bInRetinaMode)];
+    [_sysEdit setPosition:convertDesignCoordToScreenCoord(designCoord, _inRetinaMode)];
 }
 
 void CCEditBoxImplMac::setPosition(const CCPoint& pos)
 {
-    m_obPosition = pos;
+    _position = pos;
     adjustTextFieldPosition();
 }
 
 void CCEditBoxImplMac::setVisible(bool visible)
 {
-    [m_pSysEdit.textField setHidden:!visible];
+    [_sysEdit.textField setHidden:!visible];
 }
 
 void CCEditBoxImplMac::setContentSize(const CCSize& size)
 {
-    m_tContentSize = size;
+    _contentSize = size;
     CCLOG("[Edit text] content size = (%f, %f)", size.width, size.height);
 }
 
 void CCEditBoxImplMac::setAnchorPoint(const CCPoint& anchorPoint)
 {
     CCLOG("[Edit text] anchor point = (%f, %f)", anchorPoint.x, anchorPoint.y);
-	m_obAnchorPoint = anchorPoint;
-	setPosition(m_obPosition);
+	_anchorPoint = anchorPoint;
+	setPosition(_position);
 }
 
 void CCEditBoxImplMac::visit(void)
@@ -399,12 +399,12 @@ void CCEditBoxImplMac::visit(void)
 
 void CCEditBoxImplMac::openKeyboard()
 {
-    [m_pSysEdit openKeyboard];
+    [_sysEdit openKeyboard];
 }
 
 void CCEditBoxImplMac::closeKeyboard()
 {
-    [m_pSysEdit closeKeyboard];
+    [_sysEdit closeKeyboard];
 }
 
 void CCEditBoxImplMac::onEnter(void)

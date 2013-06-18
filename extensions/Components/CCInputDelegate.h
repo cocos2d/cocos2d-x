@@ -65,13 +65,13 @@ public:
     virtual int  getTouchPriority();
     
 protected:   
-    bool m_bTouchEnabled;
-    bool m_bAccelerometerEnabled;
-    bool m_bKeypadEnabled;
+    bool _touchEnabled;
+    bool _accelerometerEnabled;
+    bool _keypadEnabled;
     
 private:
-     int m_nTouchPriority;
-     ccTouchesMode m_eTouchMode;
+     int _touchPriority;
+     ccTouchesMode _touchMode;
 };
 
 NS_CC_EXT_END

@@ -48,7 +48,7 @@ public:
     cocos2d::CCScene *currentControlScene();
 
     /** Control scene id. */
-    CC_SYNTHESIZE(int, m_nCurrentControlSceneId, CurrentControlSceneId)
+    CC_SYNTHESIZE(int, _currentControlSceneId, CurrentControlSceneId)
 };
 
 #endif /* __CCCONTROLSCENEMANAGER_H__ */

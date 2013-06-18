@@ -181,8 +181,8 @@ public:
      *
      * This is an internal method. Don't call it outside the framework.
      * The difference between setZOrder(int) and _setOrder(int) is:
-     * - _setZOrder(int) is a pure setter for m_nZOrder memeber variable
-     * - setZOrder(int) firstly changes m_nZOrder, then recorder this node in its parent's chilren array.
+     * - _setZOrder(int) is a pure setter for _ZOrder memeber variable
+     * - setZOrder(int) firstly changes _ZOrder, then recorder this node in its parent's chilren array.
      */
     virtual void _setZOrder(int z);
     /**
@@ -265,7 +265,7 @@ public:
     /**
      * Gets the scale factor of the node,  when X and Y have the same scale factor.
      *
-     * @warning Assert when m_fScaleX != m_fScaleY.
+     * @warning Assert when _scaleX != _scaleY.
      * @see setScale(float)
      *
      * @return The scale factor of the node.
@@ -896,7 +896,7 @@ public:
      *
      * @return A number that indicates a lua function.
      */
-    inline int getScriptHandler() { return m_nScriptHandler; };
+    inline int getScriptHandler() { return _scriptHandler; };
     
     /** 
      * Schedules for lua script. 
@@ -1341,71 +1341,71 @@ private:
     CCPoint convertToWindowSpace(const CCPoint& nodePoint);
 
 protected:
-    float m_fRotationX;                 ///< rotation angle on x-axis
-    float m_fRotationY;                 ///< rotation angle on y-axis
+    float _rotationX;                 ///< rotation angle on x-axis
+    float _rotationY;                 ///< rotation angle on y-axis
     
-    float m_fScaleX;                    ///< scaling factor on x-axis
-    float m_fScaleY;                    ///< scaling factor on y-axis
+    float _scaleX;                    ///< scaling factor on x-axis
+    float _scaleY;                    ///< scaling factor on y-axis
     
-    float m_fVertexZ;                   ///< OpenGL real Z vertex
+    float _vertexZ;                   ///< OpenGL real Z vertex
     
-    CCPoint m_obPosition;               ///< position of the node
+    CCPoint _position;               ///< position of the node
     
-    float m_fSkewX;                     ///< skew angle on x-axis
-    float m_fSkewY;                     ///< skew angle on y-axis
+    float _skewX;                     ///< skew angle on x-axis
+    float _skewY;                     ///< skew angle on y-axis
     
-    CCPoint m_obAnchorPointInPoints;    ///< anchor point in points
-    CCPoint m_obAnchorPoint;            ///< anchor point normalized (NOT in points)
+    CCPoint _anchorPointInPoints;    ///< anchor point in points
+    CCPoint _anchorPoint;            ///< anchor point normalized (NOT in points)
     
-    CCSize m_obContentSize;             ///< untransformed size of the node
+    CCSize _contentSize;             ///< untransformed size of the node
     
     
-    CCAffineTransform m_sAdditionalTransform; ///< transform
-    CCAffineTransform m_sTransform;     ///< transform
-    CCAffineTransform m_sInverse;       ///< transform
+    CCAffineTransform _additionalTransform; ///< transform
+    CCAffineTransform _transform;     ///< transform
+    CCAffineTransform _inverse;       ///< transform
     
-    CCCamera *m_pCamera;                ///< a camera
+    CCCamera *_camera;                ///< a camera
     
-    CCGridBase *m_pGrid;                ///< a grid
+    CCGridBase *_grid;                ///< a grid
     
-    int m_nZOrder;                      ///< z-order value that affects the draw order
+    int _ZOrder;                      ///< z-order value that affects the draw order
     
-    CCArray *m_pChildren;               ///< array of children nodes
-    CCNode *m_pParent;                  ///< weak reference to parent node
+    CCArray *_children;               ///< array of children nodes
+    CCNode *_parent;                  ///< weak reference to parent node
     
-    int m_nTag;                         ///< a tag. Can be any number you assigned just to identify this node
+    int _tag;                         ///< a tag. Can be any number you assigned just to identify this node
     
-    void *m_pUserData;                  ///< A user assingned void pointer, Can be point to any cpp object
-    CCObject *m_pUserObject;            ///< A user assigned CCObject
+    void *_userData;                  ///< A user assingned void pointer, Can be point to any cpp object
+    CCObject *_userObject;            ///< A user assigned CCObject
     
-    CCGLProgram *m_pShaderProgram;      ///< OpenGL shader
+    CCGLProgram *_shaderProgram;      ///< OpenGL shader
     
-    ccGLServerState m_eGLServerState;   ///< OpenGL servier side state
+    ccGLServerState _GLServerState;   ///< OpenGL servier side state
     
-    unsigned int m_uOrderOfArrival;     ///< used to preserve sequence while sorting children with the same zOrder
+    unsigned int _orderOfArrival;     ///< used to preserve sequence while sorting children with the same zOrder
     
-    CCScheduler *m_pScheduler;          ///< scheduler used to schedule timers and updates
+    CCScheduler *_scheduler;          ///< scheduler used to schedule timers and updates
     
-    CCActionManager *m_pActionManager;  ///< a pointer to ActionManager singleton, which is used to handle all the actions
+    CCActionManager *_actionManager;  ///< a pointer to ActionManager singleton, which is used to handle all the actions
     
-    bool m_bRunning;                    ///< is running
+    bool _running;                    ///< is running
     
-    bool m_bTransformDirty;             ///< transform dirty flag
-    bool m_bInverseDirty;               ///< transform dirty flag
-    bool m_bAdditionalTransformDirty;   ///< The flag to check whether the additional transform is dirty
-    bool m_bVisible;                    ///< is this node visible
+    bool _transformDirty;             ///< transform dirty flag
+    bool _inverseDirty;               ///< transform dirty flag
+    bool _additionalTransformDirty;   ///< The flag to check whether the additional transform is dirty
+    bool _visible;                    ///< is this node visible
     
-    bool m_bIgnoreAnchorPointForPosition; ///< true if the Anchor Point will be (0,0) when you position the CCNode, false otherwise.
+    bool _ignoreAnchorPointForPosition; ///< true if the Anchor Point will be (0,0) when you position the CCNode, false otherwise.
                                           ///< Used by CCLayer and CCScene.
     
-    bool m_bReorderChildDirty;          ///< children order dirty flag
-    bool m_bIsTransitionFinished;       ///< flag to indicate whether the transition was finished
+    bool _reorderChildDirty;          ///< children order dirty flag
+    bool _isTransitionFinished;       ///< flag to indicate whether the transition was finished
     
-    int m_nScriptHandler;               ///< script handler for onEnter() & onExit(), used in Javascript binding and Lua binding.
-    int m_nUpdateScriptHandler;         ///< script handler for update() callback per frame, which is invoked from lua & javascript.
-    ccScriptType m_eScriptType;         ///< type of script binding, lua or javascript
+    int _scriptHandler;               ///< script handler for onEnter() & onExit(), used in Javascript binding and Lua binding.
+    int _updateScriptHandler;         ///< script handler for update() callback per frame, which is invoked from lua & javascript.
+    ccScriptType _scriptType;         ///< type of script binding, lua or javascript
     
-    CCComponentContainer *m_pComponentContainer;        ///< Dictionary of components
+    CCComponentContainer *_componentContainer;        ///< Dictionary of components
 
 };
 
