@@ -160,32 +160,32 @@ protected:
     ccFontDefinition    _prepareTextDefinition(bool adjustForResolution = false);
     
     /** Dimensions of the label in Points */
-    CCSize m_tDimensions;
+    CCSize _dimensions;
     /** The alignment of the label */
-    CCTextAlignment         m_hAlignment;
+    CCTextAlignment         _alignment;
     /** The vertical alignment of the label */
-    CCVerticalTextAlignment m_vAlignment;
+    CCVerticalTextAlignment _vAlignment;
     /** Font name used in the label */
-    std::string * m_pFontName;
+    std::string * _fontName;
     /** Font size of the label */
-    float m_fFontSize;
+    float _fontSize;
     /** label's string */
-    std::string m_string;
+    std::string _string;
     
     /** font shadow */
-    bool    m_shadowEnabled;
-    CCSize  m_shadowOffset;
-    float   m_shadowOpacity;
-    float   m_shadowBlur;
+    bool    _shadowEnabled;
+    CCSize  _shadowOffset;
+    float   _shadowOpacity;
+    float   _shadowBlur;
     
     
     /** font stroke */
-    bool        m_strokeEnabled;
-    ccColor3B   m_strokeColor;
-    float       m_strokeSize;
+    bool        _strokeEnabled;
+    ccColor3B   _strokeColor;
+    float       _strokeSize;
         
     /** font tint */
-    ccColor3B   m_textFillColor;
+    ccColor3B   _textFillColor;
 
     
 };

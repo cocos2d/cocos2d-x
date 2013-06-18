@@ -48,16 +48,16 @@ NS_CC_EXT_BEGIN
 class CCControlHuePicker : public CCControl
 {
     //maunally put in the setters
-    CC_SYNTHESIZE_READONLY(float, m_hue, Hue);
+    CC_SYNTHESIZE_READONLY(float, _hue, Hue);
     virtual void setHue(float val);
-    CC_SYNTHESIZE_READONLY(float, m_huePercentage, HuePercentage);
+    CC_SYNTHESIZE_READONLY(float, _huePercentage, HuePercentage);
     virtual void setHuePercentage(float val);
 
 
     //not sure if these need to be there actually. I suppose someone might want to access the sprite?
-    CC_SYNTHESIZE_RETAIN(CCSprite*, m_background, Background);
-    CC_SYNTHESIZE_RETAIN(CCSprite*, m_slider, Slider);
-    CC_SYNTHESIZE_READONLY(CCPoint, m_startPos, StartPos);
+    CC_SYNTHESIZE_RETAIN(CCSprite*, _background, Background);
+    CC_SYNTHESIZE_RETAIN(CCSprite*, _slider, Slider);
+    CC_SYNTHESIZE_READONLY(CCPoint, _startPos, StartPos);
 
 public:
     CCControlHuePicker();

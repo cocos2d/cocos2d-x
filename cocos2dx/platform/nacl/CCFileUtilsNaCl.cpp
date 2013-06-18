@@ -56,7 +56,7 @@ bool CCFileUtilsNaCl::isFileExist(const std::string& strFilePath)
     std::string strPath = strFilePath;
     if (!isAbsolutePath(strPath))
     { // Not absolute path, add the default root path at the beginning.
-        strPath.insert(0, m_strDefaultResRootPath);
+        strPath.insert(0, _defaultResRootPath);
     }
 
     struct stat sts;

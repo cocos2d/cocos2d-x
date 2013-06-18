@@ -88,8 +88,8 @@ public:
 protected:
     static CCApplication * sm_pSharedApplication;
     
-    std::string m_resourceRootPath;
-    std::string m_startupScriptFilename;
+    std::string _resourceRootPath;
+    std::string _startupScriptFilename;
 };
 
 NS_CC_END

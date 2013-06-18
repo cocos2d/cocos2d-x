@@ -53,30 +53,30 @@ class CC_DLL CCAtlasNode : public CCNodeRGBA, public CCTextureProtocol
 protected:
 
     //! chars per row
-    unsigned int m_uItemsPerRow;
+    unsigned int _itemsPerRow;
     //! chars per column
-    unsigned int m_uItemsPerColumn;
+    unsigned int _itemsPerColumn;
 
     //! width of each char
-    unsigned int    m_uItemWidth;
+    unsigned int    _itemWidth;
     //! height of each char
-    unsigned int    m_uItemHeight;
+    unsigned int    _itemHeight;
 
-    ccColor3B    m_tColorUnmodified;
+    ccColor3B    _colorUnmodified;
 
-    CC_PROPERTY(CCTextureAtlas*, m_pTextureAtlas, TextureAtlas);
+    CC_PROPERTY(CCTextureAtlas*, _textureAtlas, TextureAtlas);
 
     // protocol variables
-    bool m_bIsOpacityModifyRGB;
+    bool _isOpacityModifyRGB;
     
-    CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc);
+    CC_PROPERTY(ccBlendFunc, _blendFunc, BlendFunc);
 
     // quads to draw
-    CC_PROPERTY(unsigned int, m_uQuadsToDraw, QuadsToDraw);
+    CC_PROPERTY(unsigned int, _quadsToDraw, QuadsToDraw);
     // color uniform
-    GLint    m_nUniformColor;
+    GLint    _uniformColor;
     // This varible is only used for CCLabelAtlas FPS display. So plz don't modify its value.
-    bool m_bIgnoreContentScaleFactor;
+    bool _ignoreContentScaleFactor;
     
 public:
     CCAtlasNode();

@@ -109,12 +109,12 @@ enum
 };
 
 ShaderNode::ShaderNode()
-:m_center(vertex2(0.0f, 0.0f))
-,m_resolution(vertex2(0.0f, 0.0f))
-,m_time(0.0f)
-,m_uniformCenter(0)
-,m_uniformResolution(0)
-,m_uniformTime(0)
+:_center(vertex2(0.0f, 0.0f))
+,_resolution(vertex2(0.0f, 0.0f))
+,_time(0.0f)
+,_uniformCenter(0)
+,_uniformResolution(0)
+,_uniformTime(0)
 {
 }
 
@@ -141,16 +141,16 @@ bool ShaderNode::initWithVertex(const char *vert, const char *frag)
 
     loadShaderVertex(vert, frag);
 
-    m_time = 0;
-    m_resolution = vertex2(SIZE_X, SIZE_Y);
+    _time = 0;
+    _resolution = vertex2(SIZE_X, SIZE_Y);
 
     scheduleUpdate();
 
     setContentSize(CCSizeMake(SIZE_X, SIZE_Y));
     setAnchorPoint(ccp(0.5f, 0.5f));
     
-    m_vertFileName = vert;
-    m_fragFileName = frag;
+    _vertFileName = vert;
+    _fragFileName = frag;
 
     return true;
 }
@@ -158,7 +158,7 @@ bool ShaderNode::initWithVertex(const char *vert, const char *frag)
 void ShaderNode::listenBackToForeground(CCObject *obj)
 {
     this->setShaderProgram(NULL);
-    loadShaderVertex(m_vertFileName.c_str(), m_fragFileName.c_str());
+    loadShaderVertex(_vertFileName.c_str(), _fragFileName.c_str());
 }
 
 void ShaderNode::loadShaderVertex(const char *vert, const char *frag)
@@ -171,9 +171,9 @@ void ShaderNode::loadShaderVertex(const char *vert, const char *frag)
 
     shader->updateUniforms();
 
-    m_uniformCenter = glGetUniformLocation(shader->getProgram(), "center");
-    m_uniformResolution = glGetUniformLocation(shader->getProgram(), "resolution");
-    m_uniformTime = glGetUniformLocation(shader->getProgram(), "time");
+    _uniformCenter = glGetUniformLocation(shader->getProgram(), "center");
+    _uniformResolution = glGetUniformLocation(shader->getProgram(), "resolution");
+    _uniformTime = glGetUniformLocation(shader->getProgram(), "time");
 
     this->setShaderProgram(shader);
 
@@ -182,14 +182,14 @@ void ShaderNode::loadShaderVertex(const char *vert, const char *frag)
 
 void ShaderNode::update(float dt)
 {
-    m_time += dt;
+    _time += dt;
 }
 
 void ShaderNode::setPosition(const CCPoint &newPosition)
 {
     CCNode::setPosition(newPosition);
     CCPoint position = getPosition();
-    m_center = vertex2(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
+    _center = vertex2(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
 }
 
 void ShaderNode::draw()
@@ -202,11 +202,11 @@ void ShaderNode::draw()
     //
     // Uniforms
     //
-    getShaderProgram()->setUniformLocationWith2f(m_uniformCenter, m_center.x, m_center.y);
-    getShaderProgram()->setUniformLocationWith2f(m_uniformResolution, m_resolution.x, m_resolution.y);
+    getShaderProgram()->setUniformLocationWith2f(_uniformCenter, _center.x, _center.y);
+    getShaderProgram()->setUniformLocationWith2f(_uniformResolution, _resolution.x, _resolution.y);
 
     // time changes all the time, so it is Ok to call OpenGL directly, and not the "cached" version
-    glUniform1f(m_uniformTime, m_time);
+    glUniform1f(_uniformTime, _time);
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 
@@ -535,8 +535,8 @@ void SpriteBlur::draw()
     //
     // Attributes
     //
-#define kQuadSize sizeof(m_sQuad.bl)
-    long offset = (long)&m_sQuad;
+#define kQuadSize sizeof(_quad.bl)
+    long offset = (long)&_quad;
 
     // vertex
     int diff = offsetof( ccV3F_C4B_T2F, vertices);
@@ -603,20 +603,20 @@ bool ShaderBlur::init()
 {
     if( ShaderTestDemo::init() ) 
     {
-        m_pBlurSprite = SpriteBlur::create("Images/grossini.png");
+        _blurSprite = SpriteBlur::create("Images/grossini.png");
 
         CCSprite *sprite = CCSprite::create("Images/grossini.png");
 
         CCSize s = CCDirector::sharedDirector()->getWinSize();
-        m_pBlurSprite->setPosition(ccp(s.width/3, s.height/2));
+        _blurSprite->setPosition(ccp(s.width/3, s.height/2));
         sprite->setPosition(ccp(2*s.width/3, s.height/2));
 
-        addChild(m_pBlurSprite);
+        addChild(_blurSprite);
         addChild(sprite);
 
-        m_pSliderCtl = createSliderCtl();
+        _sliderCtl = createSliderCtl();
 
-        addChild(m_pSliderCtl);
+        addChild(_sliderCtl);
         return true;
     }
 
@@ -626,14 +626,14 @@ bool ShaderBlur::init()
 void ShaderBlur::sliderAction(CCObject* sender, CCControlEvent controlEvent)
 {
     CCControlSlider* pSlider = (CCControlSlider*)sender;
-    m_pBlurSprite->setBlurSize(pSlider->getValue());
+    _blurSprite->setBlurSize(pSlider->getValue());
 }
 
 // ShaderRetroEffect
 
 ShaderRetroEffect::ShaderRetroEffect()
-: m_pLabel(NULL)
-, m_fAccum(0.0f)
+: _label(NULL)
+, _accum(0.0f)
 {
     init();
 }
@@ -656,16 +656,16 @@ bool ShaderRetroEffect::init()
         CCDirector *director = CCDirector::sharedDirector();
         CCSize s = director->getWinSize();
 
-        m_pLabel = CCLabelBMFont::create("RETRO EFFECT", "fonts/west_england-64.fnt");
+        _label = CCLabelBMFont::create("RETRO EFFECT", "fonts/west_england-64.fnt");
 
-        m_pLabel->setShaderProgram(p);
+        _label->setShaderProgram(p);
 
         p->release();
 
 
-        m_pLabel->setPosition(ccp(s.width/2,s.height/2));
+        _label->setPosition(ccp(s.width/2,s.height/2));
 
-        addChild(m_pLabel);
+        addChild(_label);
 
         scheduleUpdate();
         return true;
@@ -676,9 +676,9 @@ bool ShaderRetroEffect::init()
 
 void ShaderRetroEffect::update(float dt)
 {
-    m_fAccum += dt;
+    _accum += dt;
 
-    CCArray* pArray = m_pLabel->getChildren();
+    CCArray* pArray = _label->getChildren();
 
     int i=0;
     CCObject* pObj = NULL;
@@ -687,10 +687,10 @@ void ShaderRetroEffect::update(float dt)
         CCSprite *sprite = (CCSprite*)pObj;
         i++;
         CCPoint oldPosition = sprite->getPosition();
-        sprite->setPosition(ccp( oldPosition.x, sinf( m_fAccum * 2 + i/2.0) * 20  ));
+        sprite->setPosition(ccp( oldPosition.x, sinf( _accum * 2 + i/2.0) * 20  ));
 
         // add fabs() to prevent negative scaling
-        float scaleY = ( sinf( m_fAccum * 2 + i/2.0 + 0.707) );
+        float scaleY = ( sinf( _accum * 2 + i/2.0 + 0.707) );
 
         sprite->setScaleY(scaleY);
     }

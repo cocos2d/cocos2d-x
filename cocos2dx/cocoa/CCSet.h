@@ -93,7 +93,7 @@ public:
     virtual void acceptVisitor(CCDataVisitor &visitor);
 
 private:
-    std::set<CCObject *> *m_pSet;
+    std::set<CCObject *> *_set;
 };
 
 // end of data_structure group

@@ -73,7 +73,7 @@ public:
     void pause(float dt);
     void resume(float dt);
 private:
-    CCSet* m_pPausedTargets;
+    CCSet* _pausedTargets;
 };
 
 class SchedulerPauseResumeAllUser : public SchedulerTestLayer
@@ -91,7 +91,7 @@ public:
     void pause(float dt);
     void resume(float dt);
 private:
-    CCSet* m_pPausedTargets;
+    CCSet* _pausedTargets;
 };
 
 class SchedulerUnscheduleAll : public SchedulerTestLayer
@@ -122,7 +122,7 @@ public:
     void tick4(float dt);
     void unscheduleAll(float dt);
 private:
-    bool m_bActionManagerActive;
+    bool _actionManagerActive;
 };
 
 class SchedulerUnscheduleAllUserLevel : public SchedulerTestLayer
@@ -195,7 +195,7 @@ public:
     void initWithString(CCString* pStr, int priority);
     virtual void update(float dt);
 private:
-    CCString* m_pstring;
+    CCString* _pstring;
 };
 
 class RescheduleSelector : public SchedulerTestLayer
@@ -207,8 +207,8 @@ public:
 
     void schedUpdate(float dt);
 private:
-    float m_fInterval;
-    int   m_nTicks;
+    float _interval;
+    int   _ticks;
 };
 
 class SchedulerDelayAndRepeat : public SchedulerTestLayer
@@ -229,7 +229,7 @@ public:
     virtual std::string subtitle();
     CCControlSlider* sliderCtl();
     void sliderAction(CCObject* pSender, CCControlEvent controlEvent);
-    CCControlSlider* m_pSliderCtl;
+    CCControlSlider* _sliderCtl;
 };
 
 

@@ -40,8 +40,8 @@ private:
         float fValue;
     } mValue;
     
-    std::string m_strValue;
-    CCArray* m_arrValue;
+    std::string _value;
+    CCArray* _arrValue;
     int mType;
     
 public:

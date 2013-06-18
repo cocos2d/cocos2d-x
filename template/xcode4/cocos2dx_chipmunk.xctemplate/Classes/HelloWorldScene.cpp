@@ -24,20 +24,20 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 }
 
 ChipmunkPhysicsSprite::ChipmunkPhysicsSprite()
-: m_pBody(NULL)
+: _body(NULL)
 {
 
 }
 
 ChipmunkPhysicsSprite::~ChipmunkPhysicsSprite()
 {
-    cpBodyEachShape(m_pBody, removeShape, NULL);
-    cpBodyFree( m_pBody );
+    cpBodyEachShape(_body, removeShape, NULL);
+    cpBodyFree( _body );
 }
 
 void ChipmunkPhysicsSprite::setPhysicsBody(cpBody * body)
 {
-    m_pBody = body;
+    _body = body;
 }
 
 // this method will only get called if the sprite is batched.
@@ -50,29 +50,29 @@ bool ChipmunkPhysicsSprite::isDirty(void)
 
 CCAffineTransform ChipmunkPhysicsSprite::nodeToParentTransform(void)
 {
-    float x = m_pBody->p.x;
-    float y = m_pBody->p.y;
+    float x = _body->p.x;
+    float y = _body->p.y;
 
     if ( isIgnoreAnchorPointForPosition() ) {
-        x += m_obAnchorPointInPoints.x;
-        y += m_obAnchorPointInPoints.y;
+        x += _anchorPointInPoints.x;
+        y += _anchorPointInPoints.y;
     }
 
     // Make matrix
-    float c = m_pBody->rot.x;
-    float s = m_pBody->rot.y;
+    float c = _body->rot.x;
+    float s = _body->rot.y;
 
-    if( ! m_obAnchorPointInPoints.equals(CCPointZero) ){
-        x += c*-m_obAnchorPointInPoints.x + -s*-m_obAnchorPointInPoints.y;
-        y += s*-m_obAnchorPointInPoints.x + c*-m_obAnchorPointInPoints.y;
+    if( ! _anchorPointInPoints.equals(CCPointZero) ){
+        x += c*-_anchorPointInPoints.x + -s*-_anchorPointInPoints.y;
+        y += s*-_anchorPointInPoints.x + c*-_anchorPointInPoints.y;
     }
 
     // Rot, Translate Matrix
-    m_sTransform = CCAffineTransformMake( c,  s,
+    _transform = CCAffineTransformMake( c,  s,
         -s,    c,
         x,    y );
 
-    return m_sTransform;
+    return _transform;
 }
 
 HelloWorld::HelloWorld()
@@ -83,10 +83,10 @@ HelloWorld::~HelloWorld()
 {
     // manually Free rogue shapes
     for( int i=0;i<4;i++) {
-        cpShapeFree( m_pWalls[i] );
+        cpShapeFree( _walls[i] );
     }
     
-    cpSpaceFree( m_pSpace );
+    cpSpaceFree( _space );
     
 }
 
@@ -129,10 +129,10 @@ bool HelloWorld::init()
 #if 1
     // Use batch node. Faster
     CCSpriteBatchNode *parent = CCSpriteBatchNode::create("grossini_dance_atlas.png", 100);
-    m_pSpriteTexture = parent->getTexture();
+    _spriteTexture = parent->getTexture();
 #else
     // doesn't use batch node. Slower
-    m_pSpriteTexture = CCTextureCache::sharedTextureCache()->addImage("grossini_dance_atlas.png");
+    _spriteTexture = CCTextureCache::sharedTextureCache()->addImage("grossini_dance_atlas.png");
     CCNode *parent = CCNode::node();
 #endif
     addChild(parent, 0, kTagParentNode);
@@ -152,30 +152,30 @@ void HelloWorld::initPhysics()
     // init chipmunk
     cpInitChipmunk();
 
-    m_pSpace = cpSpaceNew();
+    _space = cpSpaceNew();
 
-    m_pSpace->gravity = cpv(0, -100);
+    _space->gravity = cpv(0, -100);
 
     //
     // rogue shapes
     // We have to free them manually
     //
     // bottom
-    m_pWalls[0] = cpSegmentShapeNew( m_pSpace->staticBody, cpv(0,0), cpv(s.width,0), 0.0f);
+    _walls[0] = cpSegmentShapeNew( _space->staticBody, cpv(0,0), cpv(s.width,0), 0.0f);
 
     // top
-    m_pWalls[1] = cpSegmentShapeNew( m_pSpace->staticBody, cpv(0,s.height), cpv(s.width,s.height), 0.0f);
+    _walls[1] = cpSegmentShapeNew( _space->staticBody, cpv(0,s.height), cpv(s.width,s.height), 0.0f);
 
     // left
-    m_pWalls[2] = cpSegmentShapeNew( m_pSpace->staticBody, cpv(0,0), cpv(0,s.height), 0.0f);
+    _walls[2] = cpSegmentShapeNew( _space->staticBody, cpv(0,0), cpv(0,s.height), 0.0f);
 
     // right
-    m_pWalls[3] = cpSegmentShapeNew( m_pSpace->staticBody, cpv(s.width,0), cpv(s.width,s.height), 0.0f);
+    _walls[3] = cpSegmentShapeNew( _space->staticBody, cpv(s.width,0), cpv(s.width,s.height), 0.0f);
 
     for( int i=0;i<4;i++) {
-        m_pWalls[i]->e = 1.0f;
-        m_pWalls[i]->u = 1.0f;
-        cpSpaceAddStaticShape(m_pSpace, m_pWalls[i] );
+        _walls[i]->e = 1.0f;
+        _walls[i]->u = 1.0f;
+        cpSpaceAddStaticShape(_space, _walls[i] );
     }
 }
 
@@ -186,7 +186,7 @@ void HelloWorld::update(float delta)
     float dt = CCDirector::sharedDirector()->getAnimationInterval()/(float)steps;
 
     for(int i=0; i<steps; i++){
-        cpSpaceStep(m_pSpace, dt);
+        cpSpaceStep(_space, dt);
     }
 }
 
@@ -203,7 +203,7 @@ void HelloWorld::addNewSpriteAtPosition(CCPoint pos)
     posy = (posy % 3) * 121;
 
     ChipmunkPhysicsSprite *sprite = new ChipmunkPhysicsSprite();
-    sprite->initWithTexture(m_pSpriteTexture, CCRectMake(posx, posy, 85, 121));
+    sprite->initWithTexture(_spriteTexture, CCRectMake(posx, posy, 85, 121));
     sprite->autorelease();
 
     parent->addChild(sprite);
@@ -221,11 +221,11 @@ void HelloWorld::addNewSpriteAtPosition(CCPoint pos)
     cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, cpvzero));
 
     body->p = cpv(pos.x, pos.y);
-    cpSpaceAddBody(m_pSpace, body);
+    cpSpaceAddBody(_space, body);
 
     cpShape* shape = cpPolyShapeNew(body, num, verts, cpvzero);
     shape->e = 0.5f; shape->u = 0.5f;
-    cpSpaceAddShape(m_pSpace, shape);
+    cpSpaceAddShape(_space, shape);
 
     sprite->setPhysicsBody(body);
 }
@@ -265,7 +265,7 @@ void HelloWorld::didAccelerate(CCAcceleration* pAccelerationValue)
 
     CCPoint v = ccp( accelX, accelY);
     v = ccpMult(v, 200);
-    m_pSpace->gravity = cpv(v.x, v.y);
+    _space->gravity = cpv(v.x, v.y);
 }
 
 

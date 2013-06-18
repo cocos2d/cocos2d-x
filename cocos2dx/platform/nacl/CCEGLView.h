@@ -78,10 +78,10 @@ private:
     void destroyGL();
     bool bIsInit;
     bool bIsMouseDown;
-    float m_fFrameZoomFactor;
-    OpenGLContext* m_context;
-    std::queue<pp::InputEvent> m_event_queue;
-    pthread_mutex_t m_mutex;
+    float _frameZoomFactor;
+    OpenGLContext* _context;
+    std::queue<pp::InputEvent> _event_queue;
+    pthread_mutex_t _mutex;
 };
 
 NS_CC_END

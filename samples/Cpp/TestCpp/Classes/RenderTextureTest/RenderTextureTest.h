@@ -29,8 +29,8 @@ public:
     void saveImage(CCObject *pSender);
 
 private:
-    CCRenderTexture *m_pTarget;
-    CCSprite *m_pBrush;
+    CCRenderTexture *_target;
+    CCSprite *_brush;
 };
 
 class RenderTextureIssue937 : public RenderTextureTest

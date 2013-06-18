@@ -19,16 +19,16 @@ class JSB_ScrollViewDelegate
 {
 public:
     JSB_ScrollViewDelegate()
-    : m_pJSDelegate(NULL)
-    , m_bNeedUnroot(false)
+    : _JSDelegate(NULL)
+    , _needUnroot(false)
     {}
     
     virtual ~JSB_ScrollViewDelegate()
     {
-        if (m_bNeedUnroot)
+        if (_needUnroot)
         {
             JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-            JS_RemoveObjectRoot(cx, &m_pJSDelegate);
+            JS_RemoveObjectRoot(cx, &_JSDelegate);
         }
     }
     
@@ -38,7 +38,7 @@ public:
         if (!p) return;
         
         jsval arg = OBJECT_TO_JSVAL(p->obj);
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(m_pJSDelegate), "scrollViewDidScroll", 1, &arg, NULL);
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "scrollViewDidScroll", 1, &arg, NULL);
     }
     
     virtual void scrollViewDidZoom(CCScrollView* view)
@@ -47,25 +47,25 @@ public:
         if (!p) return;
         
         jsval arg = OBJECT_TO_JSVAL(p->obj);
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(m_pJSDelegate), "scrollViewDidZoom", 1, &arg, NULL);
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "scrollViewDidZoom", 1, &arg, NULL);
     }
     
     void setJSDelegate(JSObject* pJSDelegate)
     {
-        m_pJSDelegate = pJSDelegate;
+        _JSDelegate = pJSDelegate;
         
         // Check whether the js delegate is a pure js object.
-        js_proxy_t* p = jsb_get_js_proxy(m_pJSDelegate);
+        js_proxy_t* p = jsb_get_js_proxy(_JSDelegate);
         if (!p)
         {
-            m_bNeedUnroot = true;
+            _needUnroot = true;
             JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-            JS_AddNamedObjectRoot(cx, &m_pJSDelegate, "TableViewDelegate");
+            JS_AddNamedObjectRoot(cx, &_JSDelegate, "TableViewDelegate");
         }
     }
 private:
-    JSObject* m_pJSDelegate;
-    bool m_bNeedUnroot;
+    JSObject* _JSDelegate;
+    bool _needUnroot;
 };
 
 static JSBool js_cocos2dx_CCScrollView_setDelegate(JSContext *cx, uint32_t argc, jsval *vp)
@@ -105,16 +105,16 @@ class JSB_TableViewDelegate
 {
 public:
     JSB_TableViewDelegate()
-    : m_pJSDelegate(NULL)
-    , m_bNeedUnroot(false)
+    : _JSDelegate(NULL)
+    , _needUnroot(false)
     {}
     
     virtual ~JSB_TableViewDelegate()
     {
-        if (m_bNeedUnroot)
+        if (_needUnroot)
         {
             JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-            JS_RemoveObjectRoot(cx, &m_pJSDelegate);
+            JS_RemoveObjectRoot(cx, &_JSDelegate);
         }
     }
     
@@ -150,15 +150,15 @@ public:
     
     void setJSDelegate(JSObject* pJSDelegate)
     {
-        m_pJSDelegate = pJSDelegate;
+        _JSDelegate = pJSDelegate;
         
         // Check whether the js delegate is a pure js object.
-        js_proxy_t* p = jsb_get_js_proxy(m_pJSDelegate);
+        js_proxy_t* p = jsb_get_js_proxy(_JSDelegate);
         if (!p)
         {
-            m_bNeedUnroot = true;
+            _needUnroot = true;
             JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-            JS_AddNamedObjectRoot(cx, &m_pJSDelegate, "TableViewDelegate");
+            JS_AddNamedObjectRoot(cx, &_JSDelegate, "TableViewDelegate");
         }
     }
     
@@ -170,7 +170,7 @@ private:
         if (!p) return;
         
         jsval arg = OBJECT_TO_JSVAL(p->obj);
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(m_pJSDelegate), jsFunctionName.c_str(), 1, &arg, NULL);
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), jsFunctionName.c_str(), 1, &arg, NULL);
     }
     
     void callJSDelegate(CCTableView* table, CCTableViewCell* cell, std::string jsFunctionName)
@@ -185,11 +185,11 @@ private:
         args[0] = OBJECT_TO_JSVAL(p->obj);
         args[1] = OBJECT_TO_JSVAL(pCellProxy->obj);
         
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(m_pJSDelegate), jsFunctionName.c_str(), 2, args, NULL);
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), jsFunctionName.c_str(), 2, args, NULL);
     }
     
-    JSObject* m_pJSDelegate;
-    bool m_bNeedUnroot;
+    JSObject* _JSDelegate;
+    bool _needUnroot;
 };
 
 static JSBool js_cocos2dx_CCTableView_setDelegate(JSContext *cx, uint32_t argc, jsval *vp)
@@ -230,16 +230,16 @@ class JSB_TableViewDataSource
 {
 public:
     JSB_TableViewDataSource()
-    : m_pJSTableViewDataSource(NULL)
-    , m_bNeedUnroot(false)
+    : _JSTableViewDataSource(NULL)
+    , _needUnroot(false)
     {}
     
     virtual ~JSB_TableViewDataSource()
     {
-        if (m_bNeedUnroot)
+        if (_needUnroot)
         {
             JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-            JS_RemoveObjectRoot(cx, &m_pJSTableViewDataSource);
+            JS_RemoveObjectRoot(cx, &_JSTableViewDataSource);
         }
     }
     
@@ -297,15 +297,15 @@ public:
     
     void setTableViewDataSource(JSObject* pJSSource)
     {
-        m_pJSTableViewDataSource = pJSSource;
+        _JSTableViewDataSource = pJSSource;
         
         // Check whether the js delegate is a pure js object.
-        js_proxy_t* p = jsb_get_js_proxy(m_pJSTableViewDataSource);
+        js_proxy_t* p = jsb_get_js_proxy(_JSTableViewDataSource);
         if (!p)
         {
-            m_bNeedUnroot = true;
+            _needUnroot = true;
             JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-            JS_AddNamedObjectRoot(cx, &m_pJSTableViewDataSource, "TableViewDataSource");
+            JS_AddNamedObjectRoot(cx, &_JSTableViewDataSource, "TableViewDataSource");
         }
     }
     
@@ -320,7 +320,7 @@ private:
         jsval dataVal = OBJECT_TO_JSVAL(p->obj);
         
         JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-        JSObject* obj = m_pJSTableViewDataSource;
+        JSObject* obj = _JSTableViewDataSource;
         
         if (JS_HasProperty(cx, obj, jsFunctionName.c_str(), &hasAction) && hasAction) {
             if(!JS_GetProperty(cx, obj, jsFunctionName.c_str(), &temp_retval)) {
@@ -350,7 +350,7 @@ private:
         dataVal[1] = INT_TO_JSVAL(idx);
         
         JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-        JSObject* obj = m_pJSTableViewDataSource;
+        JSObject* obj = _JSTableViewDataSource;
         
         if (JS_HasProperty(cx, obj, jsFunctionName.c_str(), &hasAction) && hasAction) {
             if(!JS_GetProperty(cx, obj, jsFunctionName.c_str(), &temp_retval)) {
@@ -368,8 +368,8 @@ private:
     }
     
 private:
-    JSObject* m_pJSTableViewDataSource;
-    bool m_bNeedUnroot;
+    JSObject* _JSTableViewDataSource;
+    bool _needUnroot;
 };
 
 static JSBool js_cocos2dx_CCTableView_setDataSource(JSContext *cx, uint32_t argc, jsval *vp)
@@ -471,16 +471,16 @@ class JSB_EditBoxDelegate
 {
 public:
     JSB_EditBoxDelegate()
-    : m_pJSDelegate(NULL)
-    , m_bNeedUnroot(false)
+    : _JSDelegate(NULL)
+    , _needUnroot(false)
     {}
     
     virtual ~JSB_EditBoxDelegate()
     {
-        if (m_bNeedUnroot)
+        if (_needUnroot)
         {
             JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-            JS_RemoveObjectRoot(cx, &m_pJSDelegate);
+            JS_RemoveObjectRoot(cx, &_JSDelegate);
         }
     }
     
@@ -490,7 +490,7 @@ public:
         if (!p) return;
         
         jsval arg = OBJECT_TO_JSVAL(p->obj);
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(m_pJSDelegate), "editBoxEditingDidBegin", 1, &arg, NULL);
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "editBoxEditingDidBegin", 1, &arg, NULL);
     }
     
     virtual void editBoxEditingDidEnd(CCEditBox* editBox)
@@ -499,7 +499,7 @@ public:
         if (!p) return;
         
         jsval arg = OBJECT_TO_JSVAL(p->obj);
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(m_pJSDelegate), "editBoxEditingDidEnd", 1, &arg, NULL);
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "editBoxEditingDidEnd", 1, &arg, NULL);
     }
     
     virtual void editBoxTextChanged(CCEditBox* editBox, const std::string& text)
@@ -512,7 +512,7 @@ public:
         std::string arg1 = text;
         dataVal[1] = std_string_to_jsval(ScriptingCore::getInstance()->getGlobalContext(), arg1);
         
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(m_pJSDelegate), "editBoxTextChanged", 2, dataVal, NULL);
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "editBoxTextChanged", 2, dataVal, NULL);
     }
     
     virtual void editBoxReturn(CCEditBox* editBox)
@@ -521,25 +521,25 @@ public:
         if (!p) return;
         
         jsval arg = OBJECT_TO_JSVAL(p->obj);
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(m_pJSDelegate), "editBoxReturn", 1, &arg, NULL);
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "editBoxReturn", 1, &arg, NULL);
     }
     
     void setJSDelegate(JSObject* pJSDelegate)
     {
-        m_pJSDelegate = pJSDelegate;
+        _JSDelegate = pJSDelegate;
         
         // Check whether the js delegate is a pure js object.
-        js_proxy_t* p = jsb_get_js_proxy(m_pJSDelegate);
+        js_proxy_t* p = jsb_get_js_proxy(_JSDelegate);
         if (!p)
         {
-            m_bNeedUnroot = true;
+            _needUnroot = true;
             JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-            JS_AddNamedObjectRoot(cx, &m_pJSDelegate, "TableViewDelegate");
+            JS_AddNamedObjectRoot(cx, &_JSDelegate, "TableViewDelegate");
         }
     }
 private:
-    JSObject* m_pJSDelegate;
-    bool m_bNeedUnroot;
+    JSObject* _JSDelegate;
+    bool _needUnroot;
 };
 
 static JSBool js_cocos2dx_CCEditBox_setDelegate(JSContext *cx, uint32_t argc, jsval *vp)

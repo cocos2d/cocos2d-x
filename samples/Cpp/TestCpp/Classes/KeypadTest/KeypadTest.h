@@ -14,7 +14,7 @@ public:
     virtual void keyMenuClicked();
 
 private:
-    CCLabelTTF*            m_pLabel;
+    CCLabelTTF*            _label;
 };
 
 class KeypadTestScene : public TestScene

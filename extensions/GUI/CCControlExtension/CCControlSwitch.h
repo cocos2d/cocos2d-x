@@ -75,8 +75,8 @@ public:
      */
     void setOn(bool isOn, bool animated);
     void setOn(bool isOn);
-    bool isOn(void) { return m_bOn; }
-    bool hasMoved() { return m_bMoved; }
+    bool isOn(void) { return _on; }
+    bool hasMoved() { return _moved; }
     virtual void setEnabled(bool enabled);
 
     CCPoint locationFromTouch(CCTouch* touch);
@@ -88,12 +88,12 @@ public:
 
 protected:
     /** Sprite which represents the view. */
-    CCControlSwitchSprite* m_pSwitchSprite;
-    float m_fInitialTouchXPosition;
+    CCControlSwitchSprite* _switchSprite;
+    float _initialTouchXPosition;
     
-    bool m_bMoved;
+    bool _moved;
     /** A Boolean value that determines the off/on state of the switch. */
-    bool m_bOn;
+    bool _on;
 };
 
 // end of GUI group

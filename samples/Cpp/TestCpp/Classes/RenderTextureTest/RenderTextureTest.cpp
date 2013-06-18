@@ -98,19 +98,19 @@ RenderTextureSave::RenderTextureSave()
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     // create a render texture, this is what we are going to draw into
-    m_pTarget = CCRenderTexture::create(s.width, s.height, kCCTexture2DPixelFormat_RGBA8888);
-    m_pTarget->retain();
-    m_pTarget->setPosition(ccp(s.width / 2, s.height / 2));
+    _target = CCRenderTexture::create(s.width, s.height, kCCTexture2DPixelFormat_RGBA8888);
+    _target->retain();
+    _target->setPosition(ccp(s.width / 2, s.height / 2));
 
     // note that the render texture is a CCNode, and contains a sprite of its texture for convience,
     // so we can just parent it to the scene like any other CCNode
-    this->addChild(m_pTarget, -1);
+    this->addChild(_target, -1);
 
     // create a brush image to draw into the texture with
-    m_pBrush = CCSprite::create("Images/fire.png");
-    m_pBrush->retain();
-    m_pBrush->setColor(ccRED);
-    m_pBrush->setOpacity(20);
+    _brush = CCSprite::create("Images/fire.png");
+    _brush->retain();
+    _brush->setColor(ccRED);
+    _brush->setOpacity(20);
     this->setTouchEnabled(true);
 
     // Save Image menu
@@ -135,7 +135,7 @@ string RenderTextureSave::subtitle()
 
 void RenderTextureSave::clearImage(cocos2d::CCObject *pSender)
 {
-    m_pTarget->clear(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
+    _target->clear(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
 }
 
 void RenderTextureSave::saveImage(cocos2d::CCObject *pSender)
@@ -147,11 +147,11 @@ void RenderTextureSave::saveImage(cocos2d::CCObject *pSender)
     char jpg[20];
     sprintf(jpg, "image-%d.jpg", counter);
 
-    m_pTarget->saveToFile(png, kCCImageFormatPNG);
-    m_pTarget->saveToFile(jpg, kCCImageFormatJPEG);
+    _target->saveToFile(png, kCCImageFormatPNG);
+    _target->saveToFile(jpg, kCCImageFormatJPEG);
     
 
-    CCImage *pImage = m_pTarget->newCCImage();
+    CCImage *pImage = _target->newCCImage();
 
     CCTexture2D *tex = CCTextureCache::sharedTextureCache()->addUIImage(pImage, png);
 
@@ -171,8 +171,8 @@ void RenderTextureSave::saveImage(cocos2d::CCObject *pSender)
 
 RenderTextureSave::~RenderTextureSave()
 {
-    m_pBrush->release();
-    m_pTarget->release();
+    _brush->release();
+    _target->release();
     CCTextureCache::sharedTextureCache()->removeUnusedTextures();
 }
 
@@ -183,7 +183,7 @@ void RenderTextureSave::ccTouchesMoved(CCSet* touches, CCEvent* event)
     CCPoint end = touch->getPreviousLocation();
 
     // begin drawing to the render texture
-    m_pTarget->begin();
+    _target->begin();
 
     // for extra points, we'll draw this smoothly from the last position and vary the sprite's
     // scale/rotation/offset
@@ -196,20 +196,20 @@ void RenderTextureSave::ccTouchesMoved(CCSet* touches, CCEvent* event)
             float difx = end.x - start.x;
             float dify = end.y - start.y;
             float delta = (float)i / distance;
-            m_pBrush->setPosition(ccp(start.x + (difx * delta), start.y + (dify * delta)));
-            m_pBrush->setRotation(rand() % 360);
+            _brush->setPosition(ccp(start.x + (difx * delta), start.y + (dify * delta)));
+            _brush->setRotation(rand() % 360);
             float r = (float)(rand() % 50 / 50.f) + 0.25f;
-            m_pBrush->setScale(r);
-            /*m_pBrush->setColor(ccc3(CCRANDOM_0_1() * 127 + 128, 255, 255));*/
+            _brush->setScale(r);
+            /*_brush->setColor(ccc3(CCRANDOM_0_1() * 127 + 128, 255, 255));*/
             // Use CCRANDOM_0_1() will cause error when loading libtests.so on android, I don't know why.
-            m_pBrush->setColor(ccc3(rand() % 127 + 128, 255, 255));
+            _brush->setColor(ccc3(rand() % 127 + 128, 255, 255));
             // Call visit to draw the brush, don't call draw..
-            m_pBrush->visit();
+            _brush->visit();
         }
     }
 
     // finish drawing and return context back to the screen
-    m_pTarget->end();
+    _target->end();
 }
 
 /**
@@ -612,8 +612,8 @@ void SpriteRenderTextureBug::SimpleSprite::draw()
     
 	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex);
     
-#define kQuadSize sizeof(m_sQuad.bl)
-	long offset = (long)&m_sQuad;
+#define kQuadSize sizeof(_quad.bl)
+	long offset = (long)&_quad;
     
 	// vertex
 	int diff = offsetof( ccV3F_C4B_T2F, vertices);

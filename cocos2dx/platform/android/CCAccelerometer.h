@@ -41,8 +41,8 @@ public:
     void update(float x, float y, float z, long sensorTimeStamp);
 
 private:
-    CCAccelerometerDelegate* m_pAccelDelegate;
-    CCAcceleration m_obAccelerationValue;
+    CCAccelerometerDelegate* _accelDelegate;
+    CCAcceleration _accelerationValue;
 };
 
 }//namespace cocos2d

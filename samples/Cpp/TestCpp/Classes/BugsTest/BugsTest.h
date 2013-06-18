@@ -12,8 +12,8 @@ public:
     virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
 
 protected:
-    CCPoint m_tBeginPos;
-    CCMenu* m_pItmeMenu;
+    CCPoint _beginPos;
+    CCMenu* _itmeMenu;
 };
 
 class BugsTestBaseLayer : public CCLayer

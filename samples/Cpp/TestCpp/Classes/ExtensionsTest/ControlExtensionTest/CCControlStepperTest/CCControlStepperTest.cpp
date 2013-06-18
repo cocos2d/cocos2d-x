@@ -26,14 +26,14 @@
 #include "CCControlStepperTest.h"
 
 CCControlStepperTest::CCControlStepperTest()
-: m_pDisplayValueLabel(NULL)
+: _displayValueLabel(NULL)
 {
 
 }
 
 CCControlStepperTest::~CCControlStepperTest()
 {
-    CC_SAFE_RELEASE(m_pDisplayValueLabel);
+    CC_SAFE_RELEASE(_displayValueLabel);
 }
 
 bool CCControlStepperTest::init()
@@ -56,8 +56,8 @@ bool CCControlStepperTest::init()
         
         this->setDisplayValueLabel(CCLabelTTF::create("0", "HelveticaNeue-Bold", 30));
 
-        m_pDisplayValueLabel->setPosition(background->getPosition());
-        layer->addChild(m_pDisplayValueLabel);
+        _displayValueLabel->setPosition(background->getPosition());
+        layer->addChild(_displayValueLabel);
         
         layer_width                 += background->getContentSize().width;
         
@@ -91,6 +91,6 @@ void CCControlStepperTest::valueChanged(CCObject *sender, CCControlEvent control
 {
     CCControlStepper* pControl = (CCControlStepper*)sender;
     // Change value of label.
-    m_pDisplayValueLabel->setString(CCString::createWithFormat("%0.02f", (float)pControl->getValue())->getCString());	
+    _displayValueLabel->setString(CCString::createWithFormat("%0.02f", (float)pControl->getValue())->getCString());	
 }
 
