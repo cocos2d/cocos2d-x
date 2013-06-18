@@ -59,7 +59,7 @@ public:
     // super methods
     virtual void startWithTarget(CCNode *pTarget);
 	/** returns a new reversed action */
-    virtual CCFiniteTimeAction * reverse() const;
+    virtual CCActionCamera * reverse() const;
 	/** returns a new clone of the action */
 	virtual CCActionCamera *clone() const;
 protected:

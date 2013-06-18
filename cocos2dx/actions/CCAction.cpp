@@ -115,9 +115,10 @@ bool CCSpeed::initWithAction(CCActionInterval *pAction, float fSpeed)
     return true;
 }
 
-CCSpeed *CCSpeed::clone(void) const
+CCSpeed *CCSpeed::clone() const
 {
-	auto a = new CCSpeed(*this);
+	// no copy constructor
+	auto a = new CCSpeed();
 	a->initWithAction(_innerAction->clone(), _speed);
 	a->autorelease();
 	return  a;
@@ -202,9 +203,10 @@ CCFollow* CCFollow::create(CCNode *pFollowedNode, const CCRect& rect/* = CCRectZ
     return NULL;
 }
 
-CCFollow* CCFollow::clone(void) const
+CCFollow* CCFollow::clone() const
 {
-	auto a = new CCFollow(*this);
+	// no copy constructor
+	auto a = new CCFollow();
 	a->initWithTarget(_followedNode, _worldRect);
 	a->autorelease();
 	return a;

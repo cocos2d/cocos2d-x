@@ -192,6 +192,9 @@ public:
 
 	/** returns a new clone of the action */
 	virtual CCCatmullRomTo *clone() const;
+
+	/** returns a reversed copy of the action */
+	virtual CCCatmullRomTo *reverse() const;
 };
 
 /** An action that moves the target with a CatmullRom curve by a certain distance.
@@ -211,6 +214,10 @@ public:
 
 	/** returns a new clone of the action */
 	virtual CCCatmullRomBy *clone() const;
+
+	/** returns a reversed copy of the action */
+	virtual CCCatmullRomBy *reverse() const;
+
 };
 
 /** Returns the Cardinal Spline position for a given set of control points, tension and time */

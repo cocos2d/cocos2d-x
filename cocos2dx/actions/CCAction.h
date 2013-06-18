@@ -46,7 +46,7 @@ enum {
 /** 
 @brief Base class for CCAction objects.
  */
-class CC_DLL CCAction : public CCObject 
+class CC_DLL CCAction : public CCObject, public CCClonable
 {
 public:
     CCAction(void);

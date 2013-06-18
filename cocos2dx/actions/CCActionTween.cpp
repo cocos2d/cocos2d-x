@@ -56,7 +56,8 @@ bool CCActionTween::initWithDuration(float aDuration, const char* key, float fro
 
 CCActionTween *CCActionTween::clone() const
 {
-	auto a = new CCActionTween(*this);
+	// no copy constructor	
+	auto a = new CCActionTween();
 	a->initWithDuration(_duration, _key.c_str(), _from, _to);
 	a->autorelease();
 	return a;

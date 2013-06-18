@@ -47,14 +47,15 @@ void CCActionCamera::startWithTarget(CCNode *pTarget)
 
 CCActionCamera* CCActionCamera::clone() const
 {
-	auto a = new CCActionCamera(*this);
+	// no copy constructor
+	auto a = new CCActionCamera();
 	a->autorelease();
 	return a;
 }
 
-CCFiniteTimeAction * CCActionCamera::reverse() const
+CCActionCamera * CCActionCamera::reverse() const
 {
-    return CCReverseTime::create(const_cast<CCActionCamera*>(this));
+    return (CCActionCamera*)CCReverseTime::create(const_cast<CCActionCamera*>(this));
 }
 //
 // CCOrbitCamera
@@ -74,7 +75,8 @@ CCOrbitCamera * CCOrbitCamera::create(float t, float radius, float deltaRadius, 
 
 CCOrbitCamera* CCOrbitCamera::clone() const
 {
-	auto a = new CCOrbitCamera(*this);
+	// no copy constructor	
+	auto a = new CCOrbitCamera();
 	a->initWithDuration(_duration, _radius, _deltaRadius, _angleZ, _deltaAngleZ, _angleX, _deltaAngleX);
 	a->autorelease();
 	return a;

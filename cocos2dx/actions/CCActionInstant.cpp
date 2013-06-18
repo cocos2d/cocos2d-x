@@ -75,7 +75,8 @@ CCActionInstant* CCShow::reverse() const
 
 CCShow * CCShow::clone() const
 {
-	auto a = new CCShow(*this);
+	// no copy constructor
+	auto a = new CCShow();
 	a->autorelease();
 	return a;
 }
@@ -122,7 +123,8 @@ CCActionInstant *CCHide::reverse() const
 
 CCHide * CCHide::clone() const
 {
-	auto a = new CCHide(*this);
+	// no copy constructor
+	auto a = new CCHide();
 	a->autorelease();
 	return a;
 }
@@ -171,7 +173,8 @@ CCToggleVisibility * CCToggleVisibility::reverse() const
 
 CCToggleVisibility * CCToggleVisibility::clone() const
 {
-	auto a = new CCToggleVisibility(*this);
+	// no copy constructor
+	auto a = new CCToggleVisibility();
 	a->autorelease();
 	return a;
 }
@@ -224,7 +227,8 @@ CCRemoveSelf *CCRemoveSelf::reverse() const
 
 CCRemoveSelf * CCRemoveSelf::clone() const
 {
-	auto a = new CCRemoveSelf(*this);
+	// no copy constructor
+	auto a = new CCRemoveSelf();
 	a->init(_isNeedCleanUp);
 	a->autorelease();
 	return a;
@@ -281,7 +285,8 @@ CCFlipX* CCFlipX::reverse() const
 
 CCFlipX * CCFlipX::clone() const
 {
-	auto a = new CCFlipX(*this);
+	// no copy constructor
+	auto a = new CCFlipX();
 	a->initWithFlipX(_flipX);
 	a->autorelease();
 	return a;
@@ -338,7 +343,8 @@ CCFlipY* CCFlipY::reverse() const
 
 CCFlipY * CCFlipY::clone() const
 {
-	auto a = new CCFlipY(*this);
+	// no copy constructor
+	auto a = new CCFlipY();
 	a->initWithFlipY(_flipY);
 	a->autorelease();
 	return a;
@@ -385,7 +391,8 @@ bool CCPlace::initWithPosition(const CCPoint& pos) {
 
 CCPlace * CCPlace::clone() const
 {
-	auto a = new CCPlace(*this);
+	// no copy constructor
+	auto a = new CCPlace();
 	a->initWithPosition(_position);
 	a->autorelease();
 	return a;
@@ -496,7 +503,8 @@ CCCallFunc::~CCCallFunc(void)
 
 CCCallFunc * CCCallFunc::clone() const
 {
-	auto a = new CCCallFunc(*this);
+	// no copy constructor
+	auto a = new CCCallFunc();
 	if( _selectorTarget) {
 		a->initWithTarget(_selectorTarget);
 		a->_callFunc = _callFunc;
@@ -609,7 +617,8 @@ bool CCCallFuncN::initWithTarget(CCObject* pSelectorTarget,
 
 CCCallFuncN * CCCallFuncN::clone() const
 {
-	auto a = new CCCallFuncN(*this);
+	// no copy constructor
+	auto a = new CCCallFuncN();
 	a->initWithTarget(_selectorTarget, _callFuncN);
 	a->autorelease();
 	return a;
@@ -663,7 +672,8 @@ bool CCCallFuncND::initWithTarget(CCObject* pSelectorTarget,
 
 CCCallFuncND * CCCallFuncND::clone() const
 {
-	auto a = new CCCallFuncND(*this);
+	// no copy constructor
+	auto a = new CCCallFuncND();
 	a->initWithTarget(_selectorTarget, _callFuncND, _data);
 	a->autorelease();
 	return a;
@@ -738,7 +748,8 @@ bool CCCallFuncO::initWithTarget(CCObject* pSelectorTarget,
 
 CCCallFuncO * CCCallFuncO::clone() const
 {
-	auto a = new CCCallFuncO(*this);
+	// no copy constructor	
+	auto a = new CCCallFuncO();
 	a->initWithTarget(_selectorTarget, _callFuncO, _object);
 	a->autorelease();
 	return a;

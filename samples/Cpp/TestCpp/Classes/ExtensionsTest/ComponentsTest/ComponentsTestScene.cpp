@@ -80,7 +80,7 @@ cocos2d::CCNode* ComponentsTestLayer::createGameScene()
         root->addChild(player, 1, 1);
         
 
-        CCMenuItemFont *itemBack = CCMenuItemFont::create("Back", this, menu_selector(ComponentsTestLayer::toExtensionsMainLayer));
+        CCMenuItemFont *itemBack = CCMenuItemFont::create("Back", CC_CALLBACK_1(ComponentsTestLayer::toExtensionsMainLayer,this));
         itemBack->setColor(ccc3(0, 0, 0));
         itemBack->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
         CCMenu *menuBack = CCMenu::create(itemBack, NULL);
