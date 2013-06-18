@@ -80,6 +80,7 @@ Device-Release/
 
 # Ignore vim swaps
 *.swp
+*.swo
 
 # Ignore config files in javascript bindings generator
 tools/tojs/user.cfg

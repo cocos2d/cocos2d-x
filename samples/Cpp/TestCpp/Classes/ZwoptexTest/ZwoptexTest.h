@@ -2,8 +2,9 @@
 #define __ZWOPTEX_TEST_H__
 
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
-class ZwoptexTest : public CCLayer
+class ZwoptexTest : public BaseTest
 {
 public:
     virtual void onEnter();

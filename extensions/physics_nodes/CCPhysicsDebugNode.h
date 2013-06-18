@@ -45,7 +45,7 @@ NS_CC_EXT_BEGIN
 class CCPhysicsDebugNode : public CCDrawNode
 {
 protected:
-    cpSpace *m_pSpacePtr;
+    cpSpace *_spacePtr;
     
 public:
     /** Create a debug node for a regular Chipmunk space. */

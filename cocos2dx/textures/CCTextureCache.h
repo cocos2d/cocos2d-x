@@ -55,8 +55,8 @@ class CCImage;
 class CC_DLL CCTextureCache : public CCObject
 {
 protected:
-    CCDictionary* m_pTextures;
-    //pthread_mutex_t                *m_pDictLock;
+    CCDictionary* _textures;
+    //pthread_mutex_t                *_dictLock;
 
 
 private:
@@ -207,22 +207,22 @@ protected:
     
     CCImage *uiImage;
 
-    ccCachedImageType m_eCashedImageType;
+    ccCachedImageType _cashedImageType;
 
-    void *m_pTextureData;
-    CCSize m_TextureSize;
-    CCTexture2DPixelFormat m_PixelFormat;
+    void *_textureData;
+    CCSize _textureSize;
+    CCTexture2DPixelFormat _pixelFormat;
 
-    std::string m_strFileName;
-    CCImage::EImageFormat m_FmtImage;
+    std::string _fileName;
+    CCImage::EImageFormat _fmtImage;
 
-    ccTexParams     m_texParams;
-    CCSize          m_size;
-    CCTextAlignment m_alignment;
-    CCVerticalTextAlignment m_vAlignment;
-    std::string     m_strFontName;
-    std::string     m_strText;
-    float           m_fFontSize;
+    ccTexParams     _texParams;
+    CCSize          _size;
+    CCTextAlignment _alignment;
+    CCVerticalTextAlignment _vAlignment;
+    std::string     _fontName;
+    std::string     _text;
+    float           _fontSize;
 };
 
 #endif

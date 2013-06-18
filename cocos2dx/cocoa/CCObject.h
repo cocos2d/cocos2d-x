@@ -47,20 +47,21 @@ class CC_DLL CCCopying
 {
 public:
     virtual CCObject* copyWithZone(CCZone* pZone);
+	
 };
 
 class CC_DLL CCObject : public CCCopying
 {
 public:
-    // object id, CCScriptSupport need public m_uID
-    unsigned int        m_uID;
+    // object id, CCScriptSupport need public _ID
+    unsigned int        _ID;
     // Lua reference id
-    int                 m_nLuaID;
+    int                 _luaID;
 protected:
     // count of references
-    unsigned int        m_uReference;
+    unsigned int        _reference;
     // count of autorelease
-    unsigned int        m_uAutoReleaseCount;
+    unsigned int        _autoReleaseCount;
 public:
     CCObject(void);
     virtual ~CCObject(void);
@@ -98,6 +99,11 @@ typedef int (CCObject::*SEL_Compare)(CCObject*);
 #define menu_selector(_SELECTOR) (SEL_MenuHandler)(&_SELECTOR)
 #define event_selector(_SELECTOR) (SEL_EventHandler)(&_SELECTOR)
 #define compare_selector(_SELECTOR) (SEL_Compare)(&_SELECTOR)
+
+// new callbacks based on C++11
+#define CC_CALLBACK_0(__selector__,__target__, ...) std::bind(&__selector__,__target__, ##__VA_ARGS__)
+#define CC_CALLBACK_1(__selector__,__target__, ...) std::bind(&__selector__,__target__, std::placeholders::_1, ##__VA_ARGS__)
+#define CC_CALLBACK_2(__selector__,__target__, ...) std::bind(&__selector__,__target__, std::placeholders::_1, std::placeholders::_2, ##__VA_ARGS__)
 
 // end of base_nodes group
 /// @}

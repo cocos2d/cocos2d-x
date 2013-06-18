@@ -86,6 +86,7 @@ if [ "$PLATFORM"x = "android"x ]; then
 fi
 
 if [ "$PLATFORM"x = "emscripten"x ]; then 
+    sudo rm -rf /dev/shm && sudo ln -s /run/shm /dev/shm
     install_llvm_3_2
 fi
 

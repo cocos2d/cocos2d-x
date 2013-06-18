@@ -45,7 +45,7 @@ bool Bug1159Layer::init()
         sprite_b->setPosition(ccp(s.width/2, s.height/2));
         addChild(sprite_b);
 
-        CCMenuItemLabel *label = CCMenuItemLabel::create(CCLabelTTF::create("Flip Me", "Helvetica", 24), this, menu_selector(Bug1159Layer::callBack));
+        CCMenuItemLabel *label = CCMenuItemLabel::create(CCLabelTTF::create("Flip Me", "Helvetica", 24), CC_CALLBACK_1(Bug1159Layer::callBack, this) );
         CCMenu *menu = CCMenu::create(label, NULL);
         menu->setPosition(ccp(s.width - 200.0f, 50.0f));
         addChild(menu);

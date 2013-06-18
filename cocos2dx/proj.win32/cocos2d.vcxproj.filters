@@ -101,7 +101,7 @@
       <UniqueIdentifier>{c45b97e8-fa1f-4e58-8ec5-d46371c2dd26}</UniqueIdentifier>
     </Filter>
     <Filter Include="support\component">
-      <UniqueIdentifier>{485f1c18-d463-48d0-bcaa-a10e32aa3332}</UniqueIdentifier>
+      <UniqueIdentifier>{caa78ce0-9b58-4314-b117-1acae278691e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +139,9 @@
       <Filter>cocoa</Filter>
     </ClCompile>
     <ClCompile Include="..\cocoa\CCZone.cpp">
+      <Filter>cocoa</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocoa\CCData.cpp">
       <Filter>cocoa</Filter>
     </ClCompile>
     <ClCompile Include="..\effects\CCGrabber.cpp">
@@ -513,6 +516,9 @@
       <Filter>cocoa</Filter>
     </ClInclude>
     <ClInclude Include="..\cocoa\CCZone.h">
+      <Filter>cocoa</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocoa\CCData.h">
       <Filter>cocoa</Filter>
     </ClInclude>
     <ClInclude Include="..\effects\CCGrabber.h">
@@ -946,10 +952,10 @@
       <Filter>textures</Filter>
     </ClInclude>
     <ClInclude Include="..\ccFPSImages.h" />
-    <ClInclude Include="..\support\component\CCComponent.h">
+    <ClInclude Include="..\support\component\CCComponentContainer.h">
       <Filter>support\component</Filter>
     </ClInclude>
-    <ClInclude Include="..\support\component\CCComponentContainer.h">
+    <ClInclude Include="..\support\component\CCComponent.h">
       <Filter>support\component</Filter>
     </ClInclude>
   </ItemGroup>

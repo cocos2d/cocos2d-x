@@ -100,12 +100,12 @@ public:
 private:
     NSPoint    convertDesignCoordToScreenCoord(const CCPoint& designCoord, bool bInRetinaMode);
     void       adjustTextFieldPosition();
-    CCSize     m_tContentSize;
-    CCPoint    m_obPosition;
-    CCPoint    m_obAnchorPoint;
-    int        m_nMaxTextLength;
-    bool       m_bInRetinaMode;
-    EditBoxImplMac*  m_pSysEdit;
+    CCSize     _contentSize;
+    CCPoint    _position;
+    CCPoint    _anchorPoint;
+    int        _maxTextLength;
+    bool       _inRetinaMode;
+    EditBoxImplMac*  _sysEdit;
 };
 
 

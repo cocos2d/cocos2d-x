@@ -50,7 +50,6 @@
 		15A3CF5D1682C2B8002FB0C5 /* CCBValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3CEEA1682C2B7002FB0C5 /* CCBValue.cpp */; };
 		15A3CF5E1682C2B8002FB0C5 /* CCControlButtonLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3CEEC1682C2B7002FB0C5 /* CCControlButtonLoader.cpp */; };
 		15A3CF5F1682C2B8002FB0C5 /* CCControlLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3CEEE1682C2B7002FB0C5 /* CCControlLoader.cpp */; };
-		15A3CF601682C2B8002FB0C5 /* CCData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3CEF01682C2B7002FB0C5 /* CCData.cpp */; };
 		15A3CF611682C2B8002FB0C5 /* CCLabelBMFontLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3CEF21682C2B7002FB0C5 /* CCLabelBMFontLoader.cpp */; };
 		15A3CF621682C2B8002FB0C5 /* CCLabelTTFLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3CEF41682C2B7002FB0C5 /* CCLabelTTFLoader.cpp */; };
 		15A3CF631682C2B8002FB0C5 /* CCLayerColorLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3CEF61682C2B7002FB0C5 /* CCLayerColorLoader.cpp */; };
@@ -239,8 +238,6 @@
 		15A3CEED1682C2B7002FB0C5 /* CCControlButtonLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlButtonLoader.h; sourceTree = "<group>"; };
 		15A3CEEE1682C2B7002FB0C5 /* CCControlLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControlLoader.cpp; sourceTree = "<group>"; };
 		15A3CEEF1682C2B7002FB0C5 /* CCControlLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlLoader.h; sourceTree = "<group>"; };
-		15A3CEF01682C2B7002FB0C5 /* CCData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCData.cpp; sourceTree = "<group>"; };
-		15A3CEF11682C2B7002FB0C5 /* CCData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCData.h; sourceTree = "<group>"; };
 		15A3CEF21682C2B7002FB0C5 /* CCLabelBMFontLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelBMFontLoader.cpp; sourceTree = "<group>"; };
 		15A3CEF31682C2B7002FB0C5 /* CCLabelBMFontLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelBMFontLoader.h; sourceTree = "<group>"; };
 		15A3CEF41682C2B7002FB0C5 /* CCLabelTTFLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelTTFLoader.cpp; sourceTree = "<group>"; };
@@ -576,8 +573,6 @@
 				15A3CEED1682C2B7002FB0C5 /* CCControlButtonLoader.h */,
 				15A3CEEE1682C2B7002FB0C5 /* CCControlLoader.cpp */,
 				15A3CEEF1682C2B7002FB0C5 /* CCControlLoader.h */,
-				15A3CEF01682C2B7002FB0C5 /* CCData.cpp */,
-				15A3CEF11682C2B7002FB0C5 /* CCData.h */,
 				15A3CEF21682C2B7002FB0C5 /* CCLabelBMFontLoader.cpp */,
 				15A3CEF31682C2B7002FB0C5 /* CCLabelBMFontLoader.h */,
 				15A3CEF41682C2B7002FB0C5 /* CCLabelTTFLoader.cpp */,
@@ -994,7 +989,6 @@
 				15A3CF5D1682C2B8002FB0C5 /* CCBValue.cpp in Sources */,
 				15A3CF5E1682C2B8002FB0C5 /* CCControlButtonLoader.cpp in Sources */,
 				15A3CF5F1682C2B8002FB0C5 /* CCControlLoader.cpp in Sources */,
-				15A3CF601682C2B8002FB0C5 /* CCData.cpp in Sources */,
 				15A3CF611682C2B8002FB0C5 /* CCLabelBMFontLoader.cpp in Sources */,
 				15A3CF621682C2B8002FB0C5 /* CCLabelTTFLoader.cpp in Sources */,
 				15A3CF631682C2B8002FB0C5 /* CCLayerColorLoader.cpp in Sources */,
@@ -1101,6 +1095,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 1;
@@ -1128,7 +1124,7 @@
 					"$(SRCROOT)/../../../../scripting/javascript/bindings",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/lib\"";
 				OTHER_LDFLAGS = (
 					"-lxml2",
@@ -1145,6 +1141,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
@@ -1169,7 +1167,7 @@
 					"$(SRCROOT)/../../../../scripting/javascript/bindings",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/lib\"";
 				OTHER_LDFLAGS = (
 					"-lxml2",

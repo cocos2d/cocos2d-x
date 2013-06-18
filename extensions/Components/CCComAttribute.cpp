@@ -27,20 +27,20 @@ THE SOFTWARE.
 NS_CC_EXT_BEGIN
 
 CCComAttribute::CCComAttribute(void)
-: m_pAttributes(NULL)
+: _attributes(NULL)
 {
-    m_strName = "ComAttribute";
+    _name = "ComAttribute";
 }
 
 CCComAttribute::~CCComAttribute(void)
 {
-    CC_SAFE_RELEASE(m_pAttributes);
+    CC_SAFE_RELEASE(_attributes);
 }
 
 bool CCComAttribute::init()
 {
-    m_pAttributes = CCDictionary::create();
-    m_pAttributes->retain();
+    _attributes = CCDictionary::create();
+    _attributes->retain();
     return true;
 }
 
@@ -61,42 +61,42 @@ CCComAttribute* CCComAttribute::create(void)
 void CCComAttribute::setInt(const char *key, int value)
 {
     CCAssert(key != NULL, "Argument must be non-nil"); 
-    m_pAttributes->setObject(CCInteger::create(value), key);
+    _attributes->setObject(CCInteger::create(value), key);
 }
 
 void CCComAttribute::setDouble(const char *key, double value)
 {
     CCAssert(key != NULL, "Argument must be non-nil"); 
-    m_pAttributes->setObject(CCDouble::create(value), key);
+    _attributes->setObject(CCDouble::create(value), key);
 }
 
 void CCComAttribute::setFloat(const char *key, float value)
 {
     CCAssert(key != NULL, "Argument must be non-nil"); 
-    m_pAttributes->setObject(CCFloat::create(value), key);
+    _attributes->setObject(CCFloat::create(value), key);
 }
 
 void CCComAttribute::setBool(const char *key, bool value)
 {
     CCAssert(key != NULL, "Argument must be non-nil"); 
-    m_pAttributes->setObject(CCBool::create(value), key);
+    _attributes->setObject(CCBool::create(value), key);
 }
 
 void CCComAttribute::setCString(const char *key, const char *value)
 {
     CCAssert(key != NULL, "Argument must be non-nil"); 
-    m_pAttributes->setObject(CCString::create(value), key);
+    _attributes->setObject(CCString::create(value), key);
 }
 
 void CCComAttribute::setObject(const char *key, CCObject *value)
 {
     CCAssert(key != NULL, "Argument must be non-nil"); 
-    m_pAttributes->setObject(value, key);
+    _attributes->setObject(value, key);
 }
 
 int CCComAttribute::getInt(const char *key) const
 {
-    CCObject *ret = m_pAttributes->objectForKey(key);
+    CCObject *ret = _attributes->objectForKey(key);
 	if( ret )
     {
 		if( CCInteger *obj=dynamic_cast<CCInteger*>(ret) )
@@ -112,7 +112,7 @@ int CCComAttribute::getInt(const char *key) const
 
 double CCComAttribute::getDouble(const char *key) const
 {
-    CCObject *ret = m_pAttributes->objectForKey(key);
+    CCObject *ret = _attributes->objectForKey(key);
 	if( ret )
     {
 		if( CCDouble *obj=dynamic_cast<CCDouble*>(ret) )
@@ -128,7 +128,7 @@ double CCComAttribute::getDouble(const char *key) const
 
 float CCComAttribute::getFloat(const char *key) const
 {
-    CCObject *ret = m_pAttributes->objectForKey(key);
+    CCObject *ret = _attributes->objectForKey(key);
 	if( ret )
     {
 		if( CCFloat *obj=dynamic_cast<CCFloat*>(ret) )
@@ -144,7 +144,7 @@ float CCComAttribute::getFloat(const char *key) const
 
 bool CCComAttribute::getBool(const char *key) const
 {
-    CCObject *ret = m_pAttributes->objectForKey(key);
+    CCObject *ret = _attributes->objectForKey(key);
 	if( ret )
     {
 		if( CCBool *boolobj=dynamic_cast<CCBool*>(ret) )
@@ -161,7 +161,7 @@ bool CCComAttribute::getBool(const char *key) const
 
 const char* CCComAttribute::getCString(const char *key) const
 {
-   CCObject *ret = m_pAttributes->objectForKey(key);
+   CCObject *ret = _attributes->objectForKey(key);
 	if( ret )
     {
 		if( CCString *str=dynamic_cast<CCString*>(ret) )
@@ -177,7 +177,7 @@ const char* CCComAttribute::getCString(const char *key) const
 
 CCObject* CCComAttribute::getObject(const char *key) const
 {
-    return m_pAttributes->objectForKey(key);
+    return _attributes->objectForKey(key);
 }
 
 NS_CC_EXT_END

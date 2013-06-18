@@ -96,32 +96,32 @@ void CCPhysicsWorld::purgePhysicsWorld()
 }
 
 CCPhysicsWorld::CCPhysicsWorld()
-    : m_pNoGravityWorld(NULL)
-    , m_pDebugDraw(NULL)
+    : _noGravityWorld(NULL)
+    , _debugDraw(NULL)
 {
 }
 
 CCPhysicsWorld::~CCPhysicsWorld()
 {
-    CC_SAFE_DELETE(m_pDebugDraw);
-    CC_SAFE_DELETE(m_pNoGravityWorld);
-    CC_SAFE_DELETE(m_pContactListener);
+    CC_SAFE_DELETE(_debugDraw);
+    CC_SAFE_DELETE(_noGravityWorld);
+    CC_SAFE_DELETE(_contactListener);
 }
 
 void CCPhysicsWorld::initNoGravityWorld()
 {
     b2Vec2 noGravity(0, 0);
 
-    m_pNoGravityWorld = new b2World(noGravity);
-    m_pNoGravityWorld->SetAllowSleeping(true);
+    _noGravityWorld = new b2World(noGravity);
+    _noGravityWorld->SetAllowSleeping(true);
 
-    m_pContactListener = new ContactListener();
-    m_pNoGravityWorld->SetContactListener(m_pContactListener);
+    _contactListener = new ContactListener();
+    _noGravityWorld->SetContactListener(_contactListener);
 
 
 #if ENABLE_PHYSICS_DEBUG
-    m_pDebugDraw = new GLESDebugDraw( PT_RATIO );
-    m_pNoGravityWorld->SetDebugDraw(m_pDebugDraw);
+    _debugDraw = new GLESDebugDraw( PT_RATIO );
+    _noGravityWorld->SetDebugDraw(_debugDraw);
 
     uint32 flags = 0;
     flags += b2Draw::e_shapeBit;
@@ -129,20 +129,20 @@ void CCPhysicsWorld::initNoGravityWorld()
     //        flags += b2Draw::e_aabbBit;
     //        flags += b2Draw::e_pairBit;
     //        flags += b2Draw::e_centerOfMassBit;
-    m_pDebugDraw->SetFlags(flags);
+    _debugDraw->SetFlags(flags);
 #endif
 }
 
 b2World *CCPhysicsWorld::getNoGravityWorld()
 {
-    return m_pNoGravityWorld;
+    return _noGravityWorld;
 }
 
 void CCPhysicsWorld::update(float dt)
 {
-    m_pNoGravityWorld->Step(dt, 0, 0);
+    _noGravityWorld->Step(dt, 0, 0);
 
-    for (std::list<Contact>::iterator it = m_pContactListener->contact_list.begin(); it != m_pContactListener->contact_list.end(); ++it)
+    for (std::list<Contact>::iterator it = _contactListener->contact_list.begin(); it != _contactListener->contact_list.end(); ++it)
     {
         Contact &contact = *it;
 
@@ -159,7 +159,7 @@ void CCPhysicsWorld::update(float dt)
 
 void CCPhysicsWorld::drawDebug()
 {
-    m_pNoGravityWorld->DrawDebugData();
+    _noGravityWorld->DrawDebugData();
 }
 
 NS_CC_EXT_END

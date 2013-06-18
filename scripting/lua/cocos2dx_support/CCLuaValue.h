@@ -88,55 +88,55 @@ public:
     static const CCLuaValue ccobjectValue(CCObject* ccobjectValue, const std::string& objectTypename);
     
     CCLuaValue(void)
-    : m_type(CCLuaValueTypeInt)
-    , m_ccobjectType(NULL)
+    : _type(CCLuaValueTypeInt)
+    , _ccobjectType(NULL)
     {
-        memset(&m_field, 0, sizeof(m_field));
+        memset(&_field, 0, sizeof(_field));
     }
     CCLuaValue(const CCLuaValue& rhs);
     CCLuaValue& operator=(const CCLuaValue& rhs);
     ~CCLuaValue(void);
     
     const CCLuaValueType getType(void) const {
-        return m_type;
+        return _type;
     }
     
     const std::string& getCCObjectTypename(void) const {
-        return *m_ccobjectType;
+        return *_ccobjectType;
     }
     
     int intValue(void) const {
-        return m_field.intValue;
+        return _field.intValue;
     }
     
     float floatValue(void) const {
-        return m_field.floatValue;
+        return _field.floatValue;
     }
     
     bool booleanValue(void) const {
-        return m_field.booleanValue;
+        return _field.booleanValue;
     }
     
     const std::string& stringValue(void) const {
-        return *m_field.stringValue;
+        return *_field.stringValue;
     }
     
     const CCLuaValueDict& dictValue(void) const {
-        return *m_field.dictValue;
+        return *_field.dictValue;
     }
     
     const CCLuaValueArray& arrayValue(void) const {
-        return *m_field.arrayValue;
+        return *_field.arrayValue;
     }
     
     CCObject* ccobjectValue(void) const {
-        return m_field.ccobjectValue;
+        return _field.ccobjectValue;
     }
     
 private:
-    CCLuaValueField m_field;
-    CCLuaValueType  m_type;
-    std::string*    m_ccobjectType;
+    CCLuaValueField _field;
+    CCLuaValueType  _type;
+    std::string*    _ccobjectType;
     
     void copy(const CCLuaValue& rhs);
 };

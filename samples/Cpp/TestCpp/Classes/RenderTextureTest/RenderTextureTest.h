@@ -3,8 +3,9 @@
 
 #include "cocos2d.h"
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
-class RenderTextureTest : public CCLayer
+class RenderTextureTest : public BaseTest
 {
 public:
     virtual void onEnter();
@@ -28,8 +29,8 @@ public:
     void saveImage(CCObject *pSender);
 
 private:
-    CCRenderTexture *m_pTarget;
-    CCSprite *m_pBrush;
+    CCRenderTexture *_target;
+    CCSprite *_brush;
 };
 
 class RenderTextureIssue937 : public RenderTextureTest

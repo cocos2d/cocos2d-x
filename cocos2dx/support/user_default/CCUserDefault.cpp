@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "platform/CCCommon.h"
 #include "platform/CCFileUtils.h"
 #include "../tinyxml2/tinyxml2.h"
+#include "support/base64.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
 
@@ -139,28 +140,28 @@ static void setValueForKey(const char* pKey, const char* pValue)
  * implements of CCUserDefault
  */
 
-CCUserDefault* CCUserDefault::m_spUserDefault = 0;
-string CCUserDefault::m_sFilePath = string("");
-bool CCUserDefault::m_sbIsFilePathInitialized = false;
+CCUserDefault* CCUserDefault::_spUserDefault = 0;
+string CCUserDefault::_filePath = string("");
+bool CCUserDefault::_sbIsFilePathInitialized = false;
 
 /**
- * If the user invoke delete CCUserDefault::sharedUserDefault(), should set m_spUserDefault
+ * If the user invoke delete CCUserDefault::sharedUserDefault(), should set _spUserDefault
  * to null to avoid error when he invoke CCUserDefault::sharedUserDefault() later.
  */
 CCUserDefault::~CCUserDefault()
 {
-	CC_SAFE_DELETE(m_spUserDefault);
-    m_spUserDefault = NULL;
+	CC_SAFE_DELETE(_spUserDefault);
+    _spUserDefault = NULL;
 }
 
 CCUserDefault::CCUserDefault()
 {
-	m_spUserDefault = NULL;
+	_spUserDefault = NULL;
 }
 
 void CCUserDefault::purgeSharedUserDefault()
 {
-    m_spUserDefault = NULL;
+    _spUserDefault = NULL;
 }
 
  bool CCUserDefault::getBoolForKey(const char* pKey)
@@ -299,6 +300,44 @@ string CCUserDefault::getStringForKey(const char* pKey, const std::string & defa
 	return ret;
 }
 
+CCData* CCUserDefault::getDataForKey(const char* pKey)
+{
+    return getDataForKey(pKey, NULL);
+}
+
+CCData* CCUserDefault::getDataForKey(const char* pKey, CCData* defaultValue)
+{
+    const char* encodedData = NULL;
+	tinyxml2::XMLElement* rootNode;
+	tinyxml2::XMLDocument* doc;
+	tinyxml2::XMLElement* node;
+	node =  getXMLNodeForKey(pKey, &rootNode, &doc);
+	// find the node
+	if (node && node->FirstChild())
+	{
+        encodedData = (const char*)(node->FirstChild()->Value());
+	}
+    
+	CCData* ret = defaultValue;
+    
+	if (encodedData)
+	{
+        unsigned char * decodedData = NULL;
+        int decodedDataLen = base64Decode((unsigned char*)encodedData, (unsigned int)strlen(encodedData), &decodedData);
+        
+        if (decodedData) {
+            ret = CCData::create(decodedData, decodedDataLen);
+        
+            delete decodedData;
+        }
+	}
+    
+    if (doc) delete doc;
+    
+	return ret;    
+}
+
+
 void CCUserDefault::setBoolForKey(const char* pKey, bool value)
 {
     // save bool value as string
@@ -361,6 +400,22 @@ void CCUserDefault::setStringForKey(const char* pKey, const std::string & value)
     setValueForKey(pKey, value.c_str());
 }
 
+void CCUserDefault::setDataForKey(const char* pKey, const CCData& value) {
+    // check key
+    if (! pKey)
+    {
+        return;
+    }
+
+    char *encodedData = 0;
+    
+    base64Encode(value.getBytes(), value.getSize(), &encodedData);
+        
+    setValueForKey(pKey, encodedData);
+    
+    if (encodedData) delete encodedData;
+}
+
 CCUserDefault* CCUserDefault::sharedUserDefault()
 {
     initXMLFilePath();
@@ -372,17 +427,17 @@ CCUserDefault* CCUserDefault::sharedUserDefault()
         return NULL;
     }
 
-    if (! m_spUserDefault)
+    if (! _spUserDefault)
     {
-        m_spUserDefault = new CCUserDefault();
+        _spUserDefault = new CCUserDefault();
     }
 
-    return m_spUserDefault;
+    return _spUserDefault;
 }
 
 bool CCUserDefault::isXMLFileExist()
 {
-    FILE *fp = fopen(m_sFilePath.c_str(), "r");
+    FILE *fp = fopen(_filePath.c_str(), "r");
 	bool bRet = false;
 
 	if (fp)
@@ -396,10 +451,10 @@ bool CCUserDefault::isXMLFileExist()
 
 void CCUserDefault::initXMLFilePath()
 {
-    if (! m_sbIsFilePathInitialized)
+    if (! _sbIsFilePathInitialized)
     {
-        m_sFilePath += CCFileUtils::sharedFileUtils()->getWritablePath() + XML_FILE_NAME;
-        m_sbIsFilePathInitialized = true;
+        _filePath += CCFileUtils::sharedFileUtils()->getWritablePath() + XML_FILE_NAME;
+        _sbIsFilePathInitialized = true;
     }    
 }
 
@@ -424,7 +479,7 @@ bool CCUserDefault::createXMLFile()
 		return false;  
 	}  
 	pDoc->LinkEndChild(pRootEle);  
-	bRet = tinyxml2::XML_SUCCESS == pDoc->SaveFile(m_sFilePath.c_str());
+	bRet = tinyxml2::XML_SUCCESS == pDoc->SaveFile(_filePath.c_str());
 
 	if(pDoc)
 	{
@@ -436,7 +491,7 @@ bool CCUserDefault::createXMLFile()
 
 const string& CCUserDefault::getXMLFilePath()
 {
-    return m_sFilePath;
+    return _filePath;
 }
 
 void CCUserDefault::flush()

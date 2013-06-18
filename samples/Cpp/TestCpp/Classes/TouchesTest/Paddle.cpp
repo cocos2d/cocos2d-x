@@ -27,7 +27,7 @@ bool Paddle::initWithTexture(CCTexture2D* aTexture)
 {
     if( CCSprite::initWithTexture(aTexture) ) 
     {
-        m_state = kPaddleStateUngrabbed;
+        _state = kPaddleStateUngrabbed;
     }
     
     return true;
@@ -54,10 +54,10 @@ bool Paddle::containsTouchLocation(CCTouch* touch)
 
 bool Paddle::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
-    if (m_state != kPaddleStateUngrabbed) return false;
+    if (_state != kPaddleStateUngrabbed) return false;
     if ( !containsTouchLocation(touch) ) return false;
     
-    m_state = kPaddleStateGrabbed;
+    _state = kPaddleStateGrabbed;
     return true;
 }
 
@@ -70,7 +70,7 @@ void Paddle::ccTouchMoved(CCTouch* touch, CCEvent* event)
     // you get CCSets instead of 1 UITouch, so you'd need to loop through the set
     // in each touchXXX method.
     
-    CCAssert(m_state == kPaddleStateGrabbed, "Paddle - Unexpected state!");    
+    CCAssert(_state == kPaddleStateGrabbed, "Paddle - Unexpected state!");    
     
     CCPoint touchPoint = touch->getLocation();
     
@@ -85,9 +85,9 @@ CCObject* Paddle::copyWithZone(CCZone *pZone)
 
 void Paddle::ccTouchEnded(CCTouch* touch, CCEvent* event)
 {
-    CCAssert(m_state == kPaddleStateGrabbed, "Paddle - Unexpected state!");    
+    CCAssert(_state == kPaddleStateGrabbed, "Paddle - Unexpected state!");    
     
-    m_state = kPaddleStateUngrabbed;
+    _state = kPaddleStateUngrabbed;
 } 
 
 void Paddle::touchDelegateRetain()

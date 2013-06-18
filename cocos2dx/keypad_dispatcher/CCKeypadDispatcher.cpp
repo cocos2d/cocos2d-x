@@ -33,28 +33,28 @@ NS_CC_BEGIN
 //
 //------------------------------------------------------------------
 CCKeypadDispatcher::CCKeypadDispatcher()
-: m_bLocked(false)
-, m_bToAdd(false)
-, m_bToRemove(false)
+: _locked(false)
+, _toAdd(false)
+, _toRemove(false)
 {
-    m_pDelegates = CCArray::create();
-    m_pDelegates->retain();
+    _delegates = CCArray::create();
+    _delegates->retain();
 
-    m_pHandlersToAdd    = ccCArrayNew(8);
-    m_pHandlersToRemove = ccCArrayNew(8);
+    _handlersToAdd    = ccCArrayNew(8);
+    _handlersToRemove = ccCArrayNew(8);
 }
 
 CCKeypadDispatcher::~CCKeypadDispatcher()
 {
-    CC_SAFE_RELEASE(m_pDelegates);
-    if (m_pHandlersToAdd)
+    CC_SAFE_RELEASE(_delegates);
+    if (_handlersToAdd)
     {
-        ccCArrayFree(m_pHandlersToAdd);
+        ccCArrayFree(_handlersToAdd);
     }
     
-    if (m_pHandlersToRemove)
+    if (_handlersToRemove)
     {
-        ccCArrayFree(m_pHandlersToRemove);
+        ccCArrayFree(_handlersToRemove);
     }    
 }
 
@@ -64,14 +64,14 @@ void CCKeypadDispatcher::removeDelegate(CCKeypadDelegate* pDelegate)
     {
         return;
     }
-    if (! m_bLocked)
+    if (! _locked)
     {
         forceRemoveDelegate(pDelegate);
     }
     else
     {
-        ccCArrayAppendValue(m_pHandlersToRemove, pDelegate);
-        m_bToRemove = true;
+        ccCArrayAppendValue(_handlersToRemove, pDelegate);
+        _toRemove = true;
     }
 }
 
@@ -82,14 +82,14 @@ void CCKeypadDispatcher::addDelegate(CCKeypadDelegate* pDelegate)
         return;
     }
 
-    if (! m_bLocked)
+    if (! _locked)
     {
         forceAddDelegate(pDelegate);
     }
     else
     {
-        ccCArrayAppendValue(m_pHandlersToAdd, pDelegate);
-        m_bToAdd = true;
+        ccCArrayAppendValue(_handlersToAdd, pDelegate);
+        _toAdd = true;
     }
 }
 
@@ -99,7 +99,7 @@ void CCKeypadDispatcher::forceAddDelegate(CCKeypadDelegate* pDelegate)
 
     if (pHandler)
     {
-        m_pDelegates->addObject(pHandler);
+        _delegates->addObject(pHandler);
     }
 }
 
@@ -107,12 +107,12 @@ void CCKeypadDispatcher::forceRemoveDelegate(CCKeypadDelegate* pDelegate)
 {
     CCKeypadHandler* pHandler = NULL;
     CCObject* pObj = NULL;
-    CCARRAY_FOREACH(m_pDelegates, pObj)
+    CCARRAY_FOREACH(_delegates, pObj)
     {
         pHandler = (CCKeypadHandler*)pObj;
         if (pHandler && pHandler->getDelegate() == pDelegate)
         {
-            m_pDelegates->removeObject(pHandler);
+            _delegates->removeObject(pHandler);
             break;
         }
     }
@@ -123,12 +123,12 @@ bool CCKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
     CCKeypadHandler*  pHandler = NULL;
     CCKeypadDelegate* pDelegate = NULL;
 
-    m_bLocked = true;
+    _locked = true;
 
-    if (m_pDelegates->count() > 0)
+    if (_delegates->count() > 0)
     {
         CCObject* pObj = NULL;
-        CCARRAY_FOREACH(m_pDelegates, pObj)
+        CCARRAY_FOREACH(_delegates, pObj)
         {
             CC_BREAK_IF(!pObj);
 
@@ -149,25 +149,25 @@ bool CCKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
         }
     }
 
-    m_bLocked = false;
-    if (m_bToRemove)
+    _locked = false;
+    if (_toRemove)
     {
-        m_bToRemove = false;
-        for (unsigned int i = 0; i < m_pHandlersToRemove->num; ++i)
+        _toRemove = false;
+        for (unsigned int i = 0; i < _handlersToRemove->num; ++i)
         {
-            forceRemoveDelegate((CCKeypadDelegate*)m_pHandlersToRemove->arr[i]);
+            forceRemoveDelegate((CCKeypadDelegate*)_handlersToRemove->arr[i]);
         }
-        ccCArrayRemoveAllValues(m_pHandlersToRemove);
+        ccCArrayRemoveAllValues(_handlersToRemove);
     }
 
-    if (m_bToAdd)
+    if (_toAdd)
     {
-        m_bToAdd = false;
-        for (unsigned int i = 0; i < m_pHandlersToAdd->num; ++i)
+        _toAdd = false;
+        for (unsigned int i = 0; i < _handlersToAdd->num; ++i)
         {
-            forceAddDelegate((CCKeypadDelegate*)m_pHandlersToAdd->arr[i]);
+            forceAddDelegate((CCKeypadDelegate*)_handlersToAdd->arr[i]);
         }
-        ccCArrayRemoveAllValues(m_pHandlersToAdd);
+        ccCArrayRemoveAllValues(_handlersToAdd);
     }
 
     return true;

@@ -58,24 +58,24 @@ public:
     ~CCScriptHandlerEntry(void);
     
     int getHandler(void) {
-        return m_nHandler;
+        return _handler;
     }
     
     int getEntryId(void) {
-        return m_nEntryId;
+        return _entryId;
     }
     
 protected:
     CCScriptHandlerEntry(int nHandler)
-    : m_nHandler(nHandler)
+    : _handler(nHandler)
     {
         static int newEntryId = 0;
         newEntryId++;
-        m_nEntryId = newEntryId;
+        _entryId = newEntryId;
     }
     
-    int m_nHandler;
-    int m_nEntryId;
+    int _handler;
+    int _entryId;
 };
 
 /**
@@ -91,34 +91,34 @@ public:
     ~CCSchedulerScriptHandlerEntry(void);
     
     cocos2d::CCTimer* getTimer(void) {
-        return m_pTimer;
+        return _timer;
     }
     
     bool isPaused(void) {
-        return m_bPaused;
+        return _paused;
     }
     
     void markedForDeletion(void) {
-        m_bMarkedForDeletion = true;
+        _markedForDeletion = true;
     }
     
     bool isMarkedForDeletion(void) {
-        return m_bMarkedForDeletion;
+        return _markedForDeletion;
     }
     
 private:
     CCSchedulerScriptHandlerEntry(int nHandler)
     : CCScriptHandlerEntry(nHandler)
-    , m_pTimer(NULL)
-    , m_bPaused(false)
-    , m_bMarkedForDeletion(false)
+    , _timer(NULL)
+    , _paused(false)
+    , _markedForDeletion(false)
     {
     }
     bool init(float fInterval, bool bPaused);
     
-    cocos2d::CCTimer*   m_pTimer;
-    bool                m_bPaused;
-    bool                m_bMarkedForDeletion;
+    cocos2d::CCTimer*   _timer;
+    bool                _paused;
+    bool                _markedForDeletion;
 };
 
 
@@ -130,30 +130,30 @@ public:
     ~CCTouchScriptHandlerEntry(void);
     
     bool isMultiTouches(void) {
-        return m_bIsMultiTouches;
+        return _isMultiTouches;
     }
     
     int getPriority(void) {
-        return m_nPriority;
+        return _priority;
     }
     
     bool getSwallowsTouches(void) {
-        return m_bSwallowsTouches;
+        return _swallowsTouches;
     }
     
 private:
     CCTouchScriptHandlerEntry(int nHandler)
     : CCScriptHandlerEntry(nHandler)
-    , m_bIsMultiTouches(false)
-    , m_nPriority(0)
-    , m_bSwallowsTouches(false)
+    , _isMultiTouches(false)
+    , _priority(0)
+    , _swallowsTouches(false)
     {
     }
     bool init(bool bIsMultiTouches, int nPriority, bool bSwallowsTouches);
     
-    bool    m_bIsMultiTouches;
-    int     m_nPriority;
-    bool    m_bSwallowsTouches;
+    bool    _isMultiTouches;
+    int     _priority;
+    bool    _swallowsTouches;
 };
 
 
@@ -246,7 +246,7 @@ public:
     ~CCScriptEngineManager(void);
     
     CCScriptEngineProtocol* getScriptEngine(void) {
-        return m_pScriptEngine;
+        return _scriptEngine;
     }
     void setScriptEngine(CCScriptEngineProtocol *pScriptEngine);
     void removeScriptEngine(void);
@@ -256,11 +256,11 @@ public:
     
 private:
     CCScriptEngineManager(void)
-    : m_pScriptEngine(NULL)
+    : _scriptEngine(NULL)
     {
     }
     
-    CCScriptEngineProtocol *m_pScriptEngine;
+    CCScriptEngineProtocol *_scriptEngine;
 };
 
 // end of script_support group

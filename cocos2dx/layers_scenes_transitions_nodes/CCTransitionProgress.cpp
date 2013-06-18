@@ -41,9 +41,9 @@ enum {
 };
 
 CCTransitionProgress::CCTransitionProgress()
-: m_fTo(0.0f)
-, m_fFrom(0.0f)
-, m_pSceneToBeModified(NULL)
+: _to(0.0f)
+, _from(0.0f)
+, _sceneToBeModified(NULL)
 {
 
 }
@@ -80,12 +80,12 @@ void CCTransitionProgress::onEnter()
     // render outScene to its texturebuffer
     texture->clear(0, 0, 0, 1);
     texture->begin();
-    m_pSceneToBeModified->visit();
+    _sceneToBeModified->visit();
     texture->end();
 
 
     //    Since we've passed the outScene to the texture we don't need it.
-    if (m_pSceneToBeModified == m_pOutScene)
+    if (_sceneToBeModified == _outScene)
     {
         hideOutShowIn();
     }
@@ -94,7 +94,7 @@ void CCTransitionProgress::onEnter()
 
     // create the blend action
     CCActionInterval* layerAction = (CCActionInterval*)CCSequence::create(
-        CCProgressFromTo::create(m_fDuration, m_fFrom, m_fTo),
+        CCProgressFromTo::create(_duration, _from, _to),
         CCCallFunc::create(this, callfunc_selector(CCTransitionProgress::finish)), 
         NULL);
     // run the blend action
@@ -114,14 +114,14 @@ void CCTransitionProgress::onExit()
 
 void CCTransitionProgress::sceneOrder()
 {
-    m_bIsInSceneOnTop = false;
+    _isInSceneOnTop = false;
 }
 
 void CCTransitionProgress::setupTransition()
 {
-    m_pSceneToBeModified = m_pOutScene;
-    m_fFrom = 100;
-    m_fTo = 0;
+    _sceneToBeModified = _outScene;
+    _from = 100;
+    _to = 0;
 }
 
 CCProgressTimer* CCTransitionProgress::progressTimerNodeWithRenderTexture(CCRenderTexture* texture)
@@ -278,14 +278,14 @@ CCTransitionProgressInOut* CCTransitionProgressInOut::create(float t, CCScene* s
 
 void CCTransitionProgressInOut::sceneOrder()
 {
-    m_bIsInSceneOnTop = false;
+    _isInSceneOnTop = false;
 }
 
 void CCTransitionProgressInOut::setupTransition()
 {
-    m_pSceneToBeModified = m_pInScene;
-    m_fFrom = 0;
-    m_fTo = 100;    
+    _sceneToBeModified = _inScene;
+    _from = 0;
+    _to = 100;    
 }
 
 CCProgressTimer* CCTransitionProgressInOut::progressTimerNodeWithRenderTexture(CCRenderTexture* texture)

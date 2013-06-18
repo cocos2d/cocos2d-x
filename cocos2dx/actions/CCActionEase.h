@@ -50,6 +50,7 @@ public:
     /** initializes the action */
     bool initWithAction(CCActionInterval *pAction);
 
+	virtual CCActionEase* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void stop(void);
@@ -64,7 +65,7 @@ public:
 
 protected:
     /** The inner action */
-    CCActionInterval *m_pInner;
+    CCActionInterval *_inner;
 };
 
 /** 
@@ -77,13 +78,14 @@ public:
     virtual ~CCEaseRateAction(void);
 
     /** set rate value for the actions */
-    inline void setRate(float rate) { m_fRate = rate; }
+    inline void setRate(float rate) { _rate = rate; }
     /** get rate value for the actions */
-    inline float getRate(void) { return m_fRate; }
+    inline float getRate(void) { return _rate; }
 
     /** Initializes the action with the inner action and the rate parameter */
     bool initWithAction(CCActionInterval *pAction, float fRate);
 
+	virtual CCEaseRateAction* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual CCActionInterval* reverse(void);
 
@@ -93,7 +95,7 @@ public:
     static CCEaseRateAction* create(CCActionInterval* pAction, float fRate);
 
 protected:
-    float m_fRate;
+    float _rate;
 };
 
 /** 
@@ -105,6 +107,7 @@ class CC_DLL CCEaseIn : public CCEaseRateAction
 public:
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
+	virtual CCEaseIn* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 public:
 
@@ -121,6 +124,7 @@ class CC_DLL CCEaseOut : public CCEaseRateAction
 public:
     virtual void update(float time);
     virtual CCActionInterval* reverse();
+	virtual CCEaseOut* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -137,6 +141,7 @@ class CC_DLL CCEaseInOut : public CCEaseRateAction
 {
 public:
     virtual void update(float time);
+	virtual CCEaseInOut* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual CCActionInterval* reverse(void);
 
@@ -155,6 +160,7 @@ class CC_DLL CCEaseExponentialIn : public CCActionEase
 public:
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
+	virtual CCEaseExponentialIn* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -171,6 +177,7 @@ class CC_DLL CCEaseExponentialOut : public CCActionEase
 public:
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
+	virtual CCEaseExponentialOut* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -186,6 +193,7 @@ class CC_DLL CCEaseExponentialInOut : public CCActionEase
 {
 public:
     virtual void update(float time);
+	virtual CCEaseExponentialInOut* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual CCActionInterval* reverse();
 
@@ -204,6 +212,7 @@ class CC_DLL CCEaseSineIn : public CCActionEase
 public:
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
+	virtual CCEaseSineIn* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -220,6 +229,7 @@ class CC_DLL CCEaseSineOut : public CCActionEase
 public:
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
+	virtual CCEaseSineOut* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -236,6 +246,7 @@ class CC_DLL CCEaseSineInOut : public CCActionEase
 {
 public:
     virtual void update(float time);
+	virtual CCEaseSineInOut* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual CCActionInterval* reverse();
 
@@ -254,14 +265,15 @@ class CC_DLL CCEaseElastic : public CCActionEase
 {
 public:
     /** get period of the wave in radians. default is 0.3 */
-    inline float getPeriod(void) { return m_fPeriod; }
+    inline float getPeriod(void) { return _period; }
     /** set period of the wave in radians. */
-    inline void setPeriod(float fPeriod) { m_fPeriod = fPeriod; }
+    inline void setPeriod(float fPeriod) { _period = fPeriod; }
 
     /** Initializes the action with the inner action and the period in radians (default is 0.3) */
     bool initWithAction(CCActionInterval *pAction, float fPeriod = 0.3f);
 
     virtual CCActionInterval* reverse(void);
+	virtual CCEaseElastic* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -270,7 +282,7 @@ public:
     static CCEaseElastic* create(CCActionInterval *pAction, float fPeriod);
     static CCEaseElastic* create(CCActionInterval *pAction);
 protected:
-    float m_fPeriod;
+    float _period;
 };
 
 /** 
@@ -284,6 +296,7 @@ class CC_DLL CCEaseElasticIn : public CCEaseElastic
 public:
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
+	virtual CCEaseElasticIn* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -304,6 +317,7 @@ class CC_DLL CCEaseElasticOut : public CCEaseElastic
 public:
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
+	virtual CCEaseElasticOut* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -324,6 +338,7 @@ class CC_DLL CCEaseElasticInOut : public CCEaseElastic
 public:
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
+	virtual CCEaseElasticInOut* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -343,6 +358,7 @@ class CC_DLL CCEaseBounce : public CCActionEase
 public:
     float bounceTime(float time);
     virtual CCObject* copyWithZone(CCZone* pZone);
+	virtual CCEaseBounce* clone() const;
     virtual CCActionInterval* reverse();
 
 public:
@@ -362,6 +378,7 @@ class CC_DLL CCEaseBounceIn : public CCEaseBounce
 public:
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
+	virtual CCEaseBounceIn* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -381,6 +398,7 @@ class CC_DLL CCEaseBounceOut : public CCEaseBounce
 public:
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
+	virtual CCEaseBounceOut* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -399,6 +417,7 @@ class CC_DLL CCEaseBounceInOut : public CCEaseBounce
 {
 public:
     virtual void update(float time);
+	virtual CCEaseBounceInOut* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual CCActionInterval* reverse();
 
@@ -419,6 +438,7 @@ class CC_DLL CCEaseBackIn : public CCActionEase
 public:
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
+	virtual CCEaseBackIn* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -438,6 +458,7 @@ class CC_DLL CCEaseBackOut : public CCActionEase
 public:
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
+	virtual CCEaseBackOut* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -456,6 +477,7 @@ class CC_DLL CCEaseBackInOut : public CCActionEase
 {
 public:
     virtual void update(float time);
+	virtual CCEaseBackInOut* clone() const;
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual CCActionInterval* reverse();
 

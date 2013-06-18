@@ -3,10 +3,11 @@
 
 #include "cocos2d.h"
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
 #include <string>
 
-class BaseLayer : public CCLayer
+class BaseLayer : public BaseTest
 {
 public:
     BaseLayer();

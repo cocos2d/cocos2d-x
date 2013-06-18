@@ -139,42 +139,42 @@ public:
 
 public:
     /*
-     *  The origin state of the CCBone. Display's state is effected by m_pBoneData, m_pNode, m_pTweenData
+     *  The origin state of the CCBone. Display's state is effected by _boneData, _node, _tweenData
      *  when call setData function, it will copy from the CCBoneData.
      */
-    CC_PROPERTY(CCBoneData *, m_pBoneData, BoneData);
+    CC_PROPERTY(CCBoneData *, _boneData, BoneData);
 
     //! A weak reference to the CCArmature
-    CC_PROPERTY(CCArmature *, m_pArmature, Armature);
+    CC_PROPERTY(CCArmature *, _armature, Armature);
 
     //! A weak reference to the child CCArmature
-    CC_PROPERTY(CCArmature *, m_pChildArmature, ChildArmature);
+    CC_PROPERTY(CCArmature *, _childArmature, ChildArmature);
 
-    CC_SYNTHESIZE(CCDisplayManager *, m_pDisplayManager, DisplayManager)
+    CC_SYNTHESIZE(CCDisplayManager *, _displayManager, DisplayManager)
 
     /*
      *	When CCArmature play a animation, if there is not a CCMovementBoneData of this bone in this CCMovementData, this bone will hide.
      *	Set IgnoreMovementBoneData to true, then this bone will also show.
      */
-    CC_SYNTHESIZE_PASS_BY_REF(bool, m_bIgnoreMovementBoneData, IgnoreMovementBoneData)
+    CC_SYNTHESIZE_PASS_BY_REF(bool, _ignoreMovementBoneData, IgnoreMovementBoneData)
 
 protected:
-    CCTween *m_pTween;				//! Calculate tween effect
+    CCTween *_tween;				//! Calculate tween effect
 
     //! Used for make tween effect between every frame
-    CC_SYNTHESIZE_READONLY(CCFrameData *, m_pTweenData, TweenData);
+    CC_SYNTHESIZE_READONLY(CCFrameData *, _tweenData, TweenData);
 
-    CC_SYNTHESIZE_PASS_BY_REF(std::string, m_strName, Name);
+    CC_SYNTHESIZE_PASS_BY_REF(std::string, _name, Name);
 
     //! Lazy allocs
     void childrenAlloc(void);
-    CCArray *m_pChildren;
+    CCArray *_children;
 
-    CCBone *m_pParent;				//! A weak reference to it's parent
-    bool m_bTransformDirty;			//! Whether or not transform dirty
+    CCBone *_parent;				//! A weak reference to it's parent
+    bool _transformDirty;			//! Whether or not transform dirty
 
     //! self Transform, use this to change display's state
-    CCAffineTransform m_tWorldTransform;
+    CCAffineTransform _worldTransform;
 };
 
 NS_CC_EXT_END

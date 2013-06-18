@@ -17,7 +17,7 @@ public:
     virtual void update(float dt);
 
 protected:
-    CCLabelBMFont * m_plabel;
+    CCLabelBMFont * _plabel;
     int                numberOfTouchesB;
     int                numberOfTouchesM;
     int                numberOfTouchesE;

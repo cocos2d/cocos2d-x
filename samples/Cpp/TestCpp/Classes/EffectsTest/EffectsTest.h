@@ -2,6 +2,7 @@
 #define _EFFECTS_TEST_H_
 
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
 class EffectTestScene : public TestScene
 {
@@ -9,10 +10,10 @@ public:
     virtual void runThisTest();
 };
 
-class TextLayer : public CCLayerColor
+class TextLayer : public BaseTest
 {
 protected:
-    //UxString    m_strTitle;
+    //UxString    _title;
 
 public:
     TextLayer(void);

@@ -67,7 +67,7 @@ public:
     static CCKeypadHandler* handlerWithDelegate(CCKeypadDelegate *pDelegate);
 
 protected:
-    CCKeypadDelegate* m_pDelegate;
+    CCKeypadDelegate* _delegate;
 };
 
 // end of input group

@@ -100,34 +100,7 @@ std::string TestCocosNodeDemo::subtitle()
 
 void TestCocosNodeDemo::onEnter()
 {
-    CCLayer::onEnter();
-
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-
-    CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 32);
-    addChild(label, 10);
-    label->setPosition( ccp(s.width/2, s.height-50) );
-
-    std::string strSubtitle = subtitle();
-    if( ! strSubtitle.empty() ) 
-    {
-        CCLabelTTF* l = CCLabelTTF::create(strSubtitle.c_str(), "Thonburi", 16);
-        addChild(l, 1);
-        l->setPosition( ccp(s.width/2, s.height-80) );
-    }    
-
-    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(TestCocosNodeDemo::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1,s_pPathR2, this, menu_selector(TestCocosNodeDemo::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(TestCocosNodeDemo::nextCallback) );
-
-    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
-
-    menu->setPosition( CCPointZero );
-    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    
-    addChild(menu, 11);    
+    BaseTest::onEnter();
 }
 
 void TestCocosNodeDemo::restartCallback(CCObject* pSender)
@@ -646,7 +619,7 @@ CameraZoomTest::CameraZoomTest()
     addChild( sprite, 0, 20);
     sprite->setPosition(ccp(s.width/4*3, s.height/2));
 
-    m_z = 0;
+    _z = 0;
     scheduleUpdate();
 }
 
@@ -655,15 +628,15 @@ void CameraZoomTest::update(float dt)
     CCNode *sprite;
     CCCamera *cam;
     
-    m_z += dt * 100;
+    _z += dt * 100;
     
     sprite = getChildByTag(20);
     cam = sprite->getCamera();
-    cam->setEyeXYZ(0, 0, m_z);
+    cam->setEyeXYZ(0, 0, _z);
     
     sprite = getChildByTag(40);
     cam = sprite->getCamera();
-    cam->setEyeXYZ(0, 0, -m_z);    
+    cam->setEyeXYZ(0, 0, -_z);    
 }
 
 std::string CameraZoomTest::title()

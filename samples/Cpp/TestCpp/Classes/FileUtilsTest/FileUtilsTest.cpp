@@ -65,31 +65,7 @@ void FileUtilsTestScene::runThisTest()
 
 void FileUtilsDemo::onEnter()
 {
-    CCLayer::onEnter();
-    
-    CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 32);
-    addChild(label);
-    label->setPosition(ccp(VisibleRect::center().x, VisibleRect::top().y-50));
-    
-    std::string subTitle = subtitle();
-    if(! subTitle.empty())
-    {
-        CCLabelTTF* l = CCLabelTTF::create(subTitle.c_str(), "Thonburi", 16);
-        addChild(l, 1);
-        l->setPosition(ccp(VisibleRect::center().x, VisibleRect::top().y-80));
-    }
-    
-    CCMenuItemImage *item1 = CCMenuItemImage::create("Images/b1.png", "Images/b2.png", this, menu_selector(FileUtilsDemo::backCallback));
-    CCMenuItemImage *item2 = CCMenuItemImage::create("Images/r1.png","Images/r2.png", this, menu_selector(FileUtilsDemo::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::create("Images/f1.png", "Images/f2.png", this, menu_selector(FileUtilsDemo::nextCallback) );
-    
-    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
-    menu->setPosition(CCPointZero);
-    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    
-    addChild(menu, 1);
+    BaseTest::onEnter();    
 }
 
 void FileUtilsDemo::backCallback(CCObject* pSender)
@@ -142,13 +118,13 @@ void TestResolutionDirectories::onEnter()
     string ret;
     
     sharedFileUtils->purgeCachedEntries();
-    m_defaultSearchPathArray = sharedFileUtils->getSearchPaths();
-    vector<string> searchPaths = m_defaultSearchPathArray;
+    _defaultSearchPathArray = sharedFileUtils->getSearchPaths();
+    vector<string> searchPaths = _defaultSearchPathArray;
     searchPaths.insert(searchPaths.begin(),   "Misc");
     sharedFileUtils->setSearchPaths(searchPaths);
     
-    m_defaultResolutionsOrderArray = sharedFileUtils->getSearchResolutionsOrder();
-    vector<string> resolutionsOrder = m_defaultResolutionsOrderArray;
+    _defaultResolutionsOrderArray = sharedFileUtils->getSearchResolutionsOrder();
+    vector<string> resolutionsOrder = _defaultResolutionsOrderArray;
 
     resolutionsOrder.insert(resolutionsOrder.begin(), "resources-ipadhd");
     resolutionsOrder.insert(resolutionsOrder.begin()+1, "resources-ipad");
@@ -171,8 +147,8 @@ void TestResolutionDirectories::onExit()
     CCFileUtils *sharedFileUtils = CCFileUtils::sharedFileUtils();
     
 	// reset search path
-	sharedFileUtils->setSearchPaths(m_defaultSearchPathArray);
-    sharedFileUtils->setSearchResolutionsOrder(m_defaultResolutionsOrderArray);
+	sharedFileUtils->setSearchPaths(_defaultSearchPathArray);
+    sharedFileUtils->setSearchResolutionsOrder(_defaultResolutionsOrderArray);
     FileUtilsDemo::onExit();
 }
 
@@ -196,17 +172,19 @@ void TestSearchPath::onEnter()
     string ret;
     
     sharedFileUtils->purgeCachedEntries();
-    m_defaultSearchPathArray = sharedFileUtils->getSearchPaths();
-    vector<string> searchPaths = m_defaultSearchPathArray;
+    _defaultSearchPathArray = sharedFileUtils->getSearchPaths();
+    vector<string> searchPaths = _defaultSearchPathArray;
     string writablePath = sharedFileUtils->getWritablePath();
     string fileName = writablePath+"external.txt";
     char szBuf[100] = "Hello Cocos2d-x!";
     FILE* fp = fopen(fileName.c_str(), "wb");
     if (fp)
     {
-        fwrite(szBuf, 1, strlen(szBuf), fp);
+        size_t ret = fwrite(szBuf, 1, strlen(szBuf), fp);
+        CCAssert(ret == 0, "fwrite function returned nonzero value");
         fclose(fp);
-        CCLog("Writing file to writable path succeed.");
+        if (ret == 0)
+            CCLog("Writing file to writable path succeed.");
     }
     
     searchPaths.insert(searchPaths.begin(), writablePath);
@@ -214,8 +192,8 @@ void TestSearchPath::onEnter()
     searchPaths.insert(searchPaths.begin()+2, "Misc/searchpath2");
     sharedFileUtils->setSearchPaths(searchPaths);
     
-    m_defaultResolutionsOrderArray = sharedFileUtils->getSearchResolutionsOrder();
-    vector<string> resolutionsOrder = m_defaultResolutionsOrderArray;
+    _defaultResolutionsOrderArray = sharedFileUtils->getSearchResolutionsOrder();
+    vector<string> resolutionsOrder = _defaultResolutionsOrderArray;
     
     resolutionsOrder.insert(resolutionsOrder.begin(), "resources-ipad");
     sharedFileUtils->setSearchResolutionsOrder(resolutionsOrder);
@@ -248,8 +226,8 @@ void TestSearchPath::onExit()
 	CCFileUtils *sharedFileUtils = CCFileUtils::sharedFileUtils();
 
 	// reset search path
-	sharedFileUtils->setSearchPaths(m_defaultSearchPathArray);
-    sharedFileUtils->setSearchResolutionsOrder(m_defaultResolutionsOrderArray);
+	sharedFileUtils->setSearchPaths(_defaultSearchPathArray);
+    sharedFileUtils->setSearchResolutionsOrder(_defaultResolutionsOrderArray);
     FileUtilsDemo::onExit();
 }
 

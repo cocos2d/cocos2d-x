@@ -33,7 +33,7 @@ public:
     bool init();
     void valueChanged(CCObject *sender, CCControlEvent controlEvent);
 protected:
-    CCLabelTTF* m_pDisplayValueLabel;
+    CCLabelTTF* _displayValueLabel;
     CONTROL_SCENE_CREATE_FUNC(CCControlSliderTest)
 };
 

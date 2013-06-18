@@ -90,7 +90,7 @@ void CCSpriteFrameCacheHelper::addSpriteFrameFromDict(CCDictionary *dictionary, 
         CCDictionary *frameDict = (CCDictionary *)pElement->getObject();
         std::string spriteFrameName = pElement->getStrKey();
 
-        m_Display2ImageMap[spriteFrameName] = imagePath;
+        _display2ImageMap[spriteFrameName] = imagePath;
 
         //CCLog("spriteFrameName : %s,    imagePath : %s", spriteFrameName.c_str(), _imagePath);
 
@@ -153,18 +153,18 @@ void CCSpriteFrameCacheHelper::addSpriteFrameFromDict(CCDictionary *dictionary, 
 
 const char *CCSpriteFrameCacheHelper::getDisplayImagePath(const char *displayName)
 {
-    return m_Display2ImageMap[displayName].c_str();
+    return _display2ImageMap[displayName].c_str();
 }
 
 
 CCTextureAtlas *CCSpriteFrameCacheHelper::getTextureAtlas(const char *displayName)
 {
     const char *textureName = getDisplayImagePath(displayName);
-    CCTextureAtlas *atlas = (CCTextureAtlas *)m_pDisplay2TextureAtlas->objectForKey(textureName);
+    CCTextureAtlas *atlas = (CCTextureAtlas *)_display2TextureAtlas->objectForKey(textureName);
     if (atlas == NULL)
     {
         atlas = CCTextureAtlas::createWithTexture(CCTextureCache::sharedTextureCache()->addImage(textureName), 4);
-        m_pDisplay2TextureAtlas->setObject(atlas, textureName);
+        _display2TextureAtlas->setObject(atlas, textureName);
     }
 
     return atlas;
@@ -172,12 +172,12 @@ CCTextureAtlas *CCSpriteFrameCacheHelper::getTextureAtlas(const char *displayNam
 
 CCSpriteFrameCacheHelper::CCSpriteFrameCacheHelper()
 {
-    m_pDisplay2TextureAtlas = new CCDictionary();
+    _display2TextureAtlas = new CCDictionary();
 }
 
 CCSpriteFrameCacheHelper::~CCSpriteFrameCacheHelper()
 {
-    CC_SAFE_RELEASE_NULL(m_pDisplay2TextureAtlas);
+    CC_SAFE_RELEASE_NULL(_display2TextureAtlas);
 }
 
 NS_CC_EXT_END

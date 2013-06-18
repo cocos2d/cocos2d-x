@@ -3,17 +3,17 @@
 
 #include "../testBasic.h"
 #include "cocos-ext.h"
+#include "../BaseTest.h"
 
 USING_NS_CC_EXT;
 
-class ShaderTestDemo : public CCLayer
+class ShaderTestDemo : public BaseTest
 {
 public:
     ShaderTestDemo(void);
 
     virtual std::string title();
     virtual std::string subtitle();
-    virtual bool init();
 
     void restartCallback(CCObject* pSender);
     void nextCallback(CCObject* pSender);
@@ -93,8 +93,8 @@ public:
     CCControlSlider* createSliderCtl();
     void sliderAction(CCObject* sender, CCControlEvent controlEvent);
 protected:
-    SpriteBlur* m_pBlurSprite;
-    CCControlSlider* m_pSliderCtl;
+    SpriteBlur* _blurSprite;
+    CCControlSlider* _sliderCtl;
 };
 
 class ShaderRetroEffect : public ShaderTestDemo
@@ -106,8 +106,8 @@ public:
     bool init();
     void update(float dt);
 protected:
-    CCLabelBMFont* m_pLabel;
-    float           m_fAccum;
+    CCLabelBMFont* _label;
+    float           _accum;
 };
 
 class ShaderNode : public CCNode
@@ -128,12 +128,12 @@ public:
 
 private:
 
-    ccVertex2F m_center;
-    ccVertex2F m_resolution;
-    float      m_time;
-    GLuint     m_uniformCenter, m_uniformResolution, m_uniformTime;
-    std::string m_vertFileName;
-    std::string m_fragFileName;
+    ccVertex2F _center;
+    ccVertex2F _resolution;
+    float      _time;
+    GLuint     _uniformCenter, _uniformResolution, _uniformTime;
+    std::string _vertFileName;
+    std::string _fragFileName;
 };
 
 class ShaderFail : public ShaderTestDemo

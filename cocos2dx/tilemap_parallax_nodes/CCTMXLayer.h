@@ -74,17 +74,17 @@ Tiles can have tile flags for additional properties. At the moment only flip hor
 class CC_DLL CCTMXLayer : public CCSpriteBatchNode
 {
     /** size of the layer in tiles */
-    CC_SYNTHESIZE_PASS_BY_REF(CCSize, m_tLayerSize, LayerSize);
+    CC_SYNTHESIZE_PASS_BY_REF(CCSize, _layerSize, LayerSize);
     /** size of the map's tile (could be different from the tile's size) */
-    CC_SYNTHESIZE_PASS_BY_REF(CCSize, m_tMapTileSize, MapTileSize);
+    CC_SYNTHESIZE_PASS_BY_REF(CCSize, _mapTileSize, MapTileSize);
     /** pointer to the map of tiles */
-    CC_SYNTHESIZE(unsigned int*, m_pTiles, Tiles);
+    CC_SYNTHESIZE(unsigned int*, _tiles, Tiles);
     /** Tileset information for the layer */
-    CC_PROPERTY(CCTMXTilesetInfo*, m_pTileSet, TileSet);
+    CC_PROPERTY(CCTMXTilesetInfo*, _tileSet, TileSet);
     /** Layer orientation, which is the same as the map orientation */
-    CC_SYNTHESIZE(unsigned int, m_uLayerOrientation, LayerOrientation);
+    CC_SYNTHESIZE(unsigned int, _layerOrientation, LayerOrientation);
     /** properties from the layer. They can be added using Tiled */
-    CC_PROPERTY(CCDictionary*, m_pProperties, Properties);
+    CC_PROPERTY(CCDictionary*, _properties, Properties);
 public:
     CCTMXLayer();
     virtual ~CCTMXLayer();
@@ -155,8 +155,8 @@ public:
     // super method
     void removeChild(CCNode* child, bool cleanup);
 
-    inline const char* getLayerName(){ return m_sLayerName.c_str(); }
-    inline void setLayerName(const char *layerName){ m_sLayerName = layerName; }
+    inline const char* getLayerName(){ return _layerName.c_str(); }
+    inline void setLayerName(const char *layerName){ _layerName = layerName; }
 private:
     CCPoint positionForIsoAt(const CCPoint& pos);
     CCPoint positionForOrthoAt(const CCPoint& pos);
@@ -180,23 +180,23 @@ private:
     unsigned int atlasIndexForNewZ(int z);
 protected:
     //! name of the layer
-    std::string m_sLayerName;
+    std::string _layerName;
     //! TMX Layer supports opacity
-    unsigned char        m_cOpacity;
+    unsigned char        _opacity;
 
-    unsigned int        m_uMinGID;
-    unsigned int        m_uMaxGID;
+    unsigned int        _minGID;
+    unsigned int        _maxGID;
 
     //! Only used when vertexZ is used
-    int                    m_nVertexZvalue;
-    bool                m_bUseAutomaticVertexZ;
+    int                    _vertexZvalue;
+    bool                _useAutomaticVertexZ;
 
     //! used for optimization
-    CCSprite            *m_pReusedTile;
-    ccCArray            *m_pAtlasIndexArray;
+    CCSprite            *_reusedTile;
+    ccCArray            *_atlasIndexArray;
     
     // used for retina display
-    float               m_fContentScaleFactor;            
+    float               _contentScaleFactor;            
 };
 
 // end of tilemap_parallax_nodes group
