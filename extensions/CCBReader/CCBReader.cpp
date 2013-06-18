@@ -412,7 +412,7 @@ unsigned char CCBReader::readByte() {
 }
 
 bool CCBReader::readBool() {
-    return 0 == this->readByte() ? false : true;
+    return 0 != this->readByte();
 }
 
 std::string CCBReader::readUTF8()
@@ -623,7 +623,7 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
     // Read properties
     ccNodeLoader->parseProperties(node, pParent, this);
     
-    bool isCCBFileNode = (NULL == dynamic_cast<CCBFile*>(node)) ? false : true;
+    bool isCCBFileNode = (NULL != dynamic_cast<CCBFile*>(node));
     // Handle sub ccb files (remove middle node)
     if (isCCBFileNode)
     {
