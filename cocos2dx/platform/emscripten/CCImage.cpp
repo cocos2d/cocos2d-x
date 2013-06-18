@@ -57,7 +57,7 @@ public:
     BitmapDC()
     {
 		iInterval = szFont_kenning;
-		m_pData = NULL;
+		_data = NULL;
 		reset();
     }
     
@@ -200,8 +200,8 @@ public:
         iMaxLineHeight = MAX(iMaxLineHeight, nHeight);
 
         uint bitmapSize = iMaxLineWidth * iMaxLineHeight * 4;
-        m_pData = new unsigned char[bitmapSize];
-        memset(m_pData, 0, bitmapSize);
+        _data = new unsigned char[bitmapSize];
+        memset(_data, 0, bitmapSize);
 
         if(!strlen(text))
         {
@@ -235,7 +235,7 @@ public:
             // We treat pixels as 32-bit words, since both source and target
             // are rendered as such.
             int *pixels = (int*)tSurf->pixels;
-            int *out = (int*)m_pData;
+            int *out = (int*)_data;
 
             // (i, j) should be treated as (x, y) coordinates in the source
             // bitmap. This loop maps those locations to the target bitmap.
@@ -266,7 +266,7 @@ public:
     }
 
 public:
-	unsigned char *m_pData;
+	unsigned char *_data;
 	int libError;
 	vector<TextLine> vLines;
 	int iInterval;
@@ -300,15 +300,15 @@ bool CCImage::initWithString(
 
         CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, fullFontName.c_str(), nSize));
         
-        // assign the dc.m_pData to m_pData in order to save time
-        m_pData = dc.m_pData;
-        CC_BREAK_IF(! m_pData);
+        // assign the dc._data to _data in order to save time
+        _data = dc._data;
+        CC_BREAK_IF(! _data);
         
-        m_nWidth = (short)dc.iMaxLineWidth;
-        m_nHeight = (short)dc.iMaxLineHeight;
-        m_bHasAlpha = true;
-        m_bPreMulti = true;
-        m_nBitsPerComponent = 8;
+        _width = (short)dc.iMaxLineWidth;
+        _height = (short)dc.iMaxLineHeight;
+        _hasAlpha = true;
+        _preMulti = true;
+        _bitsPerComponent = 8;
         
         bRet = true;
         

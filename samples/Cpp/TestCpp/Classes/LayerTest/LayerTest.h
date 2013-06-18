@@ -8,7 +8,7 @@
 class LayerTest : public BaseTest
 {
 protected:
-    std::string    m_strTitle;
+    std::string    _title;
 
 public:
     LayerTest(void);

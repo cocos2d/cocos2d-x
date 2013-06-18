@@ -110,19 +110,19 @@ class CC_DLL CCBMFontConfiguration : public CCObject
     // XXX: Creating a public interface so that the bitmapFontArray[] is accessible
 public://@public
     // BMFont definitions
-    tCCFontDefHashElement *m_pFontDefDictionary;
+    tCCFontDefHashElement *_fontDefDictionary;
 
     //! FNTConfig: Common Height Should be signed (issue #1343)
-    int m_nCommonHeight;
+    int _commonHeight;
     //! Padding
-    ccBMFontPadding    m_tPadding;
+    ccBMFontPadding    _padding;
     //! atlas name
-    std::string m_sAtlasName;
+    std::string _atlasName;
     //! values for kerning
-    tCCKerningHashElement *m_pKerningDictionary;
+    tCCKerningHashElement *_kerningDictionary;
     
     // Character Set defines the letters that actually exist in the font
-    std::set<unsigned int> *m_pCharacterSet;
+    std::set<unsigned int> *_characterSet;
 public:
     CCBMFontConfiguration();
     virtual ~CCBMFontConfiguration();
@@ -134,8 +134,8 @@ public:
     /** initializes a BitmapFontConfiguration with a FNT file */
     bool initWithFNTfile(const char *FNTfile);
     
-    inline const char* getAtlasName(){ return m_sAtlasName.c_str(); }
-    inline void setAtlasName(const char* atlasName) { m_sAtlasName = atlasName; }
+    inline const char* getAtlasName(){ return _atlasName.c_str(); }
+    inline void setAtlasName(const char* atlasName) { _atlasName = atlasName; }
     
     std::set<unsigned int>* getCharacterSet() const;
 private:
@@ -254,38 +254,38 @@ private:
 protected:
     virtual void setString(unsigned short *newString, bool needUpdateLabel);
     // string to render
-    unsigned short* m_sString;
+    unsigned short* _string;
     
     // name of fntFile
-    std::string m_sFntFile;
+    std::string _fntFile;
     
     // initial string without line breaks
-    unsigned short* m_sInitialString;
-    std::string m_sInitialStringUTF8;
+    unsigned short* _initialString;
+    std::string _initialStringUTF8;
     
     // alignment of all lines
-    CCTextAlignment m_pAlignment;
+    CCTextAlignment _alignment;
     // max width until a line break is added
-    float m_fWidth;
+    float _width;
     
-    CCBMFontConfiguration *m_pConfiguration;
+    CCBMFontConfiguration *_configuration;
     
-    bool m_bLineBreakWithoutSpaces;
+    bool _lineBreakWithoutSpaces;
     // offset of the texture atlas
-    CCPoint    m_tImageOffset;
+    CCPoint    _imageOffset;
     
     // reused char
-    CCSprite *m_pReusedChar;
+    CCSprite *_reusedChar;
     
     // texture RGBA
-    GLubyte m_cDisplayedOpacity;
-    GLubyte m_cRealOpacity;
-    ccColor3B m_tDisplayedColor;
-    ccColor3B m_tRealColor;
-    bool m_bCascadeColorEnabled;
-    bool m_bCascadeOpacityEnabled;
+    GLubyte _displayedOpacity;
+    GLubyte _realOpacity;
+    ccColor3B _displayedColor;
+    ccColor3B _realColor;
+    bool _cascadeColorEnabled;
+    bool _cascadeOpacityEnabled;
     /** conforms to CCRGBAProtocol protocol */
-    bool        m_bIsOpacityModifyRGB;
+    bool        _isOpacityModifyRGB;
 
 };
 

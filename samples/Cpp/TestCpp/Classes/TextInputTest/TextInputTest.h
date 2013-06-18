@@ -11,7 +11,7 @@ class KeyboardNotificationLayer;
 */
 class TextInputTest : public BaseTest
 {
-    KeyboardNotificationLayer * m_pNotificationLayer;
+    KeyboardNotificationLayer * _notificationLayer;
 public:
     TextInputTest();
 
@@ -45,8 +45,8 @@ public:
     virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
 
 protected:
-    CCNode * m_pTrackNode;
-    CCPoint  m_beginPos;
+    CCNode * _trackNode;
+    CCPoint  _beginPos;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -70,10 +70,10 @@ public:
 
 class TextFieldTTFActionTest : public KeyboardNotificationLayer, public CCTextFieldDelegate
 {
-    CCTextFieldTTF *    m_pTextField;
-    CCAction *          m_pTextFieldAction;
-    bool                m_bAction;
-    int                 m_nCharLimit;       // the textfield max char limit
+    CCTextFieldTTF *    _textField;
+    CCAction *          _textFieldAction;
+    bool                _action;
+    int                 _charLimit;       // the textfield max char limit
 
 public:
     void callbackRemoveNodeWhenDidAction(CCNode * pNode);

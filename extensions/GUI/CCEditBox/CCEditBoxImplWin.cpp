@@ -38,14 +38,14 @@ CCEditBoxImpl* __createSystemEditBox(CCEditBox* pEditBox)
 
 CCEditBoxImplWin::CCEditBoxImplWin(CCEditBox* pEditText)
 : CCEditBoxImpl(pEditText)
-, m_pLabel(NULL)
-, m_pLabelPlaceHolder(NULL)
-, m_eEditBoxInputMode(kEditBoxInputModeSingleLine)
-, m_eEditBoxInputFlag(kEditBoxInputFlagInitialCapsAllCharacters)
-, m_eKeyboardReturnType(kKeyboardReturnTypeDefault)
-, m_colText(ccWHITE)
-, m_colPlaceHolder(ccGRAY)
-, m_nMaxLength(-1)
+, _label(NULL)
+, _labelPlaceHolder(NULL)
+, _editBoxInputMode(kEditBoxInputModeSingleLine)
+, _editBoxInputFlag(kEditBoxInputFlagInitialCapsAllCharacters)
+, _keyboardReturnType(kKeyboardReturnTypeDefault)
+, _colText(ccWHITE)
+, _colPlaceHolder(ccGRAY)
+, _maxLength(-1)
 {
     
 }
@@ -61,81 +61,81 @@ void CCEditBoxImplWin::doAnimationWhenKeyboardMove(float duration, float distanc
 bool CCEditBoxImplWin::initWithSize(const CCSize& size)
 {
     //! int fontSize = getFontSizeAccordingHeightJni(size.height-12);
-    m_pLabel = CCLabelTTF::create("", "", size.height-12);
+    _label = CCLabelTTF::create("", "", size.height-12);
 	// align the text vertically center
-    m_pLabel->setAnchorPoint(ccp(0, 0.5f));
-    m_pLabel->setPosition(ccp(5, size.height / 2.0f));
-    m_pLabel->setColor(m_colText);
-    m_pEditBox->addChild(m_pLabel);
+    _label->setAnchorPoint(ccp(0, 0.5f));
+    _label->setPosition(ccp(5, size.height / 2.0f));
+    _label->setColor(_colText);
+    _editBox->addChild(_label);
 
-    m_pLabelPlaceHolder = CCLabelTTF::create("", "", size.height-12);
+    _labelPlaceHolder = CCLabelTTF::create("", "", size.height-12);
 	// align the text vertically center
-    m_pLabelPlaceHolder->setAnchorPoint(ccp(0, 0.5f));
-    m_pLabelPlaceHolder->setPosition(ccp(5, size.height / 2.0f));
-    m_pLabelPlaceHolder->setVisible(false);
-    m_pLabelPlaceHolder->setColor(m_colPlaceHolder);
-    m_pEditBox->addChild(m_pLabelPlaceHolder);
+    _labelPlaceHolder->setAnchorPoint(ccp(0, 0.5f));
+    _labelPlaceHolder->setPosition(ccp(5, size.height / 2.0f));
+    _labelPlaceHolder->setVisible(false);
+    _labelPlaceHolder->setColor(_colPlaceHolder);
+    _editBox->addChild(_labelPlaceHolder);
     
-    m_EditSize = size;
+    _editSize = size;
     return true;
 }
 
 void CCEditBoxImplWin::setFont(const char* pFontName, int fontSize)
 {
-	if(m_pLabel != NULL) {
-		m_pLabel->setFontName(pFontName);
-		m_pLabel->setFontSize(fontSize);
+	if(_label != NULL) {
+		_label->setFontName(pFontName);
+		_label->setFontSize(fontSize);
 	}
 	
-	if(m_pLabelPlaceHolder != NULL) {
-		m_pLabelPlaceHolder->setFontName(pFontName);
-		m_pLabelPlaceHolder->setFontSize(fontSize);
+	if(_labelPlaceHolder != NULL) {
+		_labelPlaceHolder->setFontName(pFontName);
+		_labelPlaceHolder->setFontSize(fontSize);
 	}
 }
 
 void CCEditBoxImplWin::setFontColor(const ccColor3B& color)
 {
-    m_colText = color;
-    m_pLabel->setColor(color);
+    _colText = color;
+    _label->setColor(color);
 }
 
 void CCEditBoxImplWin::setPlaceholderFont(const char* pFontName, int fontSize)
 {
-	if(m_pLabelPlaceHolder != NULL) {
-		m_pLabelPlaceHolder->setFontName(pFontName);
-		m_pLabelPlaceHolder->setFontSize(fontSize);
+	if(_labelPlaceHolder != NULL) {
+		_labelPlaceHolder->setFontName(pFontName);
+		_labelPlaceHolder->setFontSize(fontSize);
 	}
 }
 
 void CCEditBoxImplWin::setPlaceholderFontColor(const ccColor3B& color)
 {
-    m_colPlaceHolder = color;
-    m_pLabelPlaceHolder->setColor(color);
+    _colPlaceHolder = color;
+    _labelPlaceHolder->setColor(color);
 }
 
 void CCEditBoxImplWin::setInputMode(EditBoxInputMode inputMode)
 {
-    m_eEditBoxInputMode = inputMode;
+    _editBoxInputMode = inputMode;
 }
 
 void CCEditBoxImplWin::setMaxLength(int maxLength)
 {
-    m_nMaxLength = maxLength;
+    _maxLength = maxLength;
 }
 
 int CCEditBoxImplWin::getMaxLength()
 {
-    return m_nMaxLength;
+    return _maxLength;
 }
 
 void CCEditBoxImplWin::setInputFlag(EditBoxInputFlag inputFlag)
 {
-    m_eEditBoxInputFlag = inputFlag;
+    _editBoxInputFlag = inputFlag;
 }
 
 void CCEditBoxImplWin::setReturnType(KeyboardReturnType returnType)
 {
-    m_eKeyboardReturnType = returnType;
+    _keyboardReturnType = returnType;
 }
 
 bool CCEditBoxImplWin::isEditing()
@@ -147,17 +147,17 @@ void CCEditBoxImplWin::setText(const char* pText)
 {
     if (pText != NULL)
     {
-        m_strText = pText;
+        _text = pText;
 
-        if (m_strText.length() > 0)
+        if (_text.length() > 0)
         {
-            m_pLabelPlaceHolder->setVisible(false);
+            _labelPlaceHolder->setVisible(false);
 
             std::string strToShow;
 
-            if (kEditBoxInputFlagPassword == m_eEditBoxInputFlag)
+            if (kEditBoxInputFlagPassword == _editBoxInputFlag)
             {
-                long length = cc_utf8_strlen(m_strText.c_str(), -1);
+                long length = cc_utf8_strlen(_text.c_str(), -1);
                 for (long i = 0; i < length; i++)
                 {
                     strToShow.append("*");
@@ -165,17 +165,17 @@ void CCEditBoxImplWin::setText(const char* pText)
             }
             else
             {
-                strToShow = m_strText;
+                strToShow = _text;
             }
 
-            //! std::string strWithEllipsis = getStringWithEllipsisJni(strToShow.c_str(), m_EditSize.width, m_EditSize.height-12);
-            //! m_pLabel->setString(strWithEllipsis.c_str());
-			m_pLabel->setString(strToShow.c_str());
+            //! std::string strWithEllipsis = getStringWithEllipsisJni(strToShow.c_str(), _editSize.width, _editSize.height-12);
+            //! _label->setString(strWithEllipsis.c_str());
+			_label->setString(strToShow.c_str());
         }
         else
         {
-            m_pLabelPlaceHolder->setVisible(true);
-            m_pLabel->setString("");
+            _labelPlaceHolder->setVisible(true);
+            _label->setString("");
         }
 
     }
@@ -183,27 +183,27 @@ void CCEditBoxImplWin::setText(const char* pText)
 
 const char*  CCEditBoxImplWin::getText(void)
 {
-    return m_strText.c_str();
+    return _text.c_str();
 }
 
 void CCEditBoxImplWin::setPlaceHolder(const char* pText)
 {
     if (pText != NULL)
     {
-        m_strPlaceHolder = pText;
-        if (m_strPlaceHolder.length() > 0 && m_strText.length() == 0)
+        _placeHolder = pText;
+        if (_placeHolder.length() > 0 && _text.length() == 0)
         {
-            m_pLabelPlaceHolder->setVisible(true);
+            _labelPlaceHolder->setVisible(true);
         }
 
-        m_pLabelPlaceHolder->setString(m_strPlaceHolder.c_str());
+        _labelPlaceHolder->setString(_placeHolder.c_str());
     }
 }
 
 void CCEditBoxImplWin::setPosition(const CCPoint& pos)
 {
-	//m_pLabel->setPosition(pos);
-	//m_pLabelPlaceHolder->setPosition(pos);
+	//_label->setPosition(pos);
+	//_labelPlaceHolder->setPosition(pos);
 }
 
 void CCEditBoxImplWin::setVisible(bool visible)
@@ -247,9 +247,9 @@ static void editBoxCallbackFunc(const char* pText, void* ctx)
 
 void CCEditBoxImplWin::openKeyboard()
 {
-    if (m_pDelegate != NULL)
+    if (_delegate != NULL)
     {
-        m_pDelegate->editBoxEditingDidBegin(m_pEditBox);
+        _delegate->editBoxEditingDidBegin(_editBox);
     }
     
     CCEditBox* pEditBox = this->getCCEditBox();
@@ -259,7 +259,7 @@ void CCEditBoxImplWin::openKeyboard()
         pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
     }
     
-	std::string placeHolder = m_pLabelPlaceHolder->getString();
+	std::string placeHolder = _labelPlaceHolder->getString();
 	if (placeHolder.length() == 0)
 		placeHolder = "Enter value";
 
@@ -272,11 +272,11 @@ void CCEditBoxImplWin::openKeyboard()
 	if (didChange) 	
 		setText(pText);
 
-	if (m_pDelegate != NULL) {
+	if (_delegate != NULL) {
 		if (didChange)
-			m_pDelegate->editBoxTextChanged(m_pEditBox, getText());
-		m_pDelegate->editBoxEditingDidEnd(m_pEditBox);
-		m_pDelegate->editBoxReturn(m_pEditBox);
+			_delegate->editBoxTextChanged(_editBox, getText());
+		_delegate->editBoxEditingDidEnd(_editBox);
+		_delegate->editBoxReturn(_editBox);
 	}
 }
 

@@ -32,8 +32,8 @@ public:
     virtual string title();
     virtual string subtitle();
 private:
-    vector<string> m_defaultSearchPathArray;
-    vector<string> m_defaultResolutionsOrderArray;
+    vector<string> _defaultSearchPathArray;
+    vector<string> _defaultResolutionsOrderArray;
 };
 
 class TestSearchPath : public FileUtilsDemo
@@ -44,8 +44,8 @@ public:
     virtual string title();
     virtual string subtitle();
 private:
-    vector<string> m_defaultSearchPathArray;
-    vector<string> m_defaultResolutionsOrderArray;
+    vector<string> _defaultSearchPathArray;
+    vector<string> _defaultResolutionsOrderArray;
 };
 
 class TestFilenameLookup : public FileUtilsDemo

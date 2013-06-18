@@ -256,10 +256,10 @@ CCFrameData::CCFrameData(void)
     , tweenEasing(Linear)
     , displayIndex(0)
 
-    , m_strMovement("")
-    , m_strEvent("")
-    , m_strSound("")
-    , m_strSoundEffect("")
+    , _movement("")
+    , _event("")
+    , _sound("")
+    , _soundEffect("")
 {
 }
 

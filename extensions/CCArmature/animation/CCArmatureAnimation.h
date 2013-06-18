@@ -137,19 +137,19 @@ protected:
 
 protected:
     //! CCAnimationData save all MovementDatas this animation used.
-    CC_SYNTHESIZE_RETAIN(CCAnimationData *, m_pAnimationData, AnimationData);
+    CC_SYNTHESIZE_RETAIN(CCAnimationData *, _animationData, AnimationData);
 
 
-    CCMovementData *m_pMovementData;				//! CCMovementData save all MovementFrameDatas this animation used.
+    CCMovementData *_movementData;				//! CCMovementData save all MovementFrameDatas this animation used.
 
-    CCArmature *m_pArmature;						//! A weak reference of armature
+    CCArmature *_armature;						//! A weak reference of armature
 
-    std::string m_strMovementID;				//! Current movment's name
+    std::string _movementID;				//! Current movment's name
 
-    int m_iPrevFrameIndex;						//! Prev key frame index
-    int m_iToIndex;								//! The frame index in CCMovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
+    int _prevFrameIndex;						//! Prev key frame index
+    int _toIndex;								//! The frame index in CCMovementData->_movFrameDataArr, it's different from _frameIndex.
 
-    CCArray *m_pTweenList;
+    CCArray *_tweenList;
 public:
     /**
      * MovementEvent signal. This will emit a signal when trigger a event.

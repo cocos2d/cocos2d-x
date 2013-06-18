@@ -148,7 +148,7 @@ public:
 public:
     /**
     * If DisplayType is CS_DISPLAY_SPRITE, then CCBone will use this image name to create a CCSprite from CCSpriteFrameCache.
-    * It should note that when use this name to create CCSprite from CCSpriteFrameCache, you should use m_strDisplayName + ".png", because when use Texture Packer to pack single image file, the name have ".png".
+    * It should note that when use this name to create CCSprite from CCSpriteFrameCache, you should use _displayName + ".png", because when use Texture Packer to pack single image file, the name have ".png".
     *
     * If DisplayType is CS_DISPLAY_ARMATURE, the name is the CCArmature's name. When CCBone init display and type is CS_DISPLAY_ARMATURE,
     * then CCBone will create a CCArmature.
@@ -174,7 +174,7 @@ public:
 public:
     /**
     * If DisplayType is CS_DISPLAY_SPRITE, then CCBone will use this image name to create a CCSprite from CCSpriteFrameCache.
-    * It should note that when use this name to create CCSprite from CCSpriteFrameCache, you should use m_strDisplayName + ".png", because when use Texture Packer to pack single image file, the name have ".png".
+    * It should note that when use this name to create CCSprite from CCSpriteFrameCache, you should use _displayName + ".png", because when use Texture Packer to pack single image file, the name have ".png".
     *
     * If DisplayType is CS_DISPLAY_ARMATURE, the name is the CCArmature's name. When CCBone init display and type is CS_DISPLAY_ARMATURE,
     * then CCBone will create a CCArmature.
@@ -281,7 +281,7 @@ public:
 
     virtual void copy(CCFrameData *frameData);
 public:
-    int duration;                //! The frame will last m_iDuration frames
+    int duration;                //! The frame will last _duration frames
     CCTweenType tweenEasing;     //! Every frame's tween easing effect
 
     /**
@@ -291,12 +291,12 @@ public:
     int displayIndex;
 
     /**
-    * m_strMovement, m_strEvent, m_strSound, m_strSoundEffect do not support yet
+    * _movement, _event, _sound, _soundEffect do not support yet
     */
-    std::string m_strMovement;
-    std::string m_strEvent;
-    std::string m_strSound;
-    std::string m_strSoundEffect;
+    std::string _movement;
+    std::string _event;
+    std::string _sound;
+    std::string _soundEffect;
 };
 
 
@@ -315,7 +315,7 @@ public:
 public:
     float delay;		//! movement delay percent, this value can produce a delay effect
     float scale;		//! scale this movement
-    float duration;		//! this CCBone in this movement will last m_iDuration frames
+    float duration;		//! this CCBone in this movement will last _duration frames
     std::string name;	//! bone name
 
     CCArray frameList;
@@ -337,17 +337,17 @@ public:
     int duration;        //! the frames this movement will last
 
     /**
-    * Change to this movement will last m_iDurationTo frames. Use this effect can avoid too suddenly changing.
+    * Change to this movement will last _durationTo frames. Use this effect can avoid too suddenly changing.
     *
-    * Example : current movement is "stand", we want to change to "run", then we fill m_iDurationTo frames before
+    * Example : current movement is "stand", we want to change to "run", then we fill _durationTo frames before
     * change to "run" instead of changing to "run" directly.
     */
     int durationTo;
 
     /*
-    * This is different from m_iDuration, m_iDurationTween contain tween effect.
+    * This is different from _duration, _durationTween contain tween effect.
     *
-    * Example : If we edit 10 frames in the flash, then m_iDuration is 10. When we set m_iDurationTween to 50, the movement will last 50 frames, the extra 40 frames will auto filled with tween effect
+    * Example : If we edit 10 frames in the flash, then _duration is 10. When we set _durationTween to 50, the movement will last 50 frames, the extra 40 frames will auto filled with tween effect
     */
     int durationTween;
 

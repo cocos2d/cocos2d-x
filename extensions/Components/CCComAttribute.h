@@ -56,7 +56,7 @@ public:
    CCObject* getObject(const char *key) const;
    
 private:
-   CCDictionary *m_pAttributes;  
+   CCDictionary *_attributes;  
    
 };
 

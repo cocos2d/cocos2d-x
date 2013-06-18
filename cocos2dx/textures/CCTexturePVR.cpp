@@ -227,16 +227,16 @@ typedef struct {
 
 
 CCTexturePVR::CCTexturePVR() 
-: m_uNumberOfMipmaps(0)
-, m_uWidth(0)
-, m_uHeight(0)
-, m_uName(0)
-, m_bHasAlpha(false)
-, m_bHasPremultipliedAlpha(false)
-, m_bForcePremultipliedAlpha(false)
-, m_bRetainName(false)
-, m_eFormat(kCCTexture2DPixelFormat_Default)
-, m_pPixelFormatInfo(NULL)
+: _numberOfMipmaps(0)
+, _width(0)
+, _height(0)
+, _name(0)
+, _hasAlpha(false)
+, _hasPremultipliedAlpha(false)
+, _forcePremultipliedAlpha(false)
+, _retainName(false)
+, _format(kCCTexture2DPixelFormat_Default)
+, _pixelFormatInfo(NULL)
 {
 }
 
@@ -244,9 +244,9 @@ CCTexturePVR::~CCTexturePVR()
 {
     CCLOGINFO( "cocos2d: deallocing CCTexturePVR: %p", this );
 
-    if (m_uName != 0 && ! m_bRetainName)
+    if (_name != 0 && ! _retainName)
     {
-        ccGLDeleteTexture(m_uName);
+        ccGLDeleteTexture(_name);
     }
 }
 
@@ -303,23 +303,23 @@ bool CCTexturePVR::unpackPVRv2Data(unsigned char* data, unsigned int len)
         //Does image format in table fits to the one parsed from header?
         if (v2_pixel_formathash[i].pixelFormat == formatFlags)
         {
-            m_pPixelFormatInfo = v2_pixel_formathash[i].pixelFormatInfo;
+            _pixelFormatInfo = v2_pixel_formathash[i].pixelFormatInfo;
             
             //Reset num of mipmaps
-            m_uNumberOfMipmaps = 0;
+            _numberOfMipmaps = 0;
 
             //Get size of mipmap
-            m_uWidth = width = CC_SWAP_INT32_LITTLE_TO_HOST(header->width);
-            m_uHeight = height = CC_SWAP_INT32_LITTLE_TO_HOST(header->height);
+            _width = width = CC_SWAP_INT32_LITTLE_TO_HOST(header->width);
+            _height = height = CC_SWAP_INT32_LITTLE_TO_HOST(header->height);
             
             //Do we use alpha ?
             if (CC_SWAP_INT32_LITTLE_TO_HOST(header->bitmaskAlpha))
             {
-                m_bHasAlpha = true;
+                _hasAlpha = true;
             }
             else
             {
-                m_bHasAlpha = false;
+                _hasAlpha = false;
             }
             
             //Get ptr to where data starts..
@@ -327,8 +327,8 @@ bool CCTexturePVR::unpackPVRv2Data(unsigned char* data, unsigned int len)
 
             //Move by size of header
             bytes = ((unsigned char *)data) + sizeof(ccPVRv2TexHeader);
-            m_eFormat = m_pPixelFormatInfo->ccPixelFormat;
-            bpp = m_pPixelFormatInfo->bpp;
+            _format = _pixelFormatInfo->ccPixelFormat;
+            bpp = _pixelFormatInfo->bpp;
             
             // Calculate the data size for each texture level and respect the minimum number of blocks
             while (dataOffset < dataLength)
@@ -372,12 +372,12 @@ bool CCTexturePVR::unpackPVRv2Data(unsigned char* data, unsigned int len)
                 packetLength = packetLength > dataSize ? dataSize : packetLength;
                 
                 //Make record to the mipmaps array and increment counter
-                m_asMipmaps[m_uNumberOfMipmaps].address = bytes + dataOffset;
-                m_asMipmaps[m_uNumberOfMipmaps].len = packetLength;
-                m_uNumberOfMipmaps++;
+                _asMipmaps[_numberOfMipmaps].address = bytes + dataOffset;
+                _asMipmaps[_numberOfMipmaps].len = packetLength;
+                _numberOfMipmaps++;
                 
                 //Check that we didn't overflow
-                CCAssert(m_uNumberOfMipmaps < CC_PVRMIPMAP_MAX, 
+                CCAssert(_numberOfMipmaps < CC_PVRMIPMAP_MAX, 
                          "TexturePVR: Maximum number of mipmaps reached. Increase the CC_PVRMIPMAP_MAX value");
                 
                 dataOffset += packetLength;
@@ -433,8 +433,8 @@ bool CCTexturePVR::unpackPVRv3Data(unsigned char* dataPointer, unsigned int data
     {
 		if( v3_pixel_formathash[i].pixelFormat == pixelFormat )
         {
-			m_pPixelFormatInfo = v3_pixel_formathash[i].pixelFormatInfo;
-			m_bHasAlpha = m_pPixelFormatInfo->alpha;
+			_pixelFormatInfo = v3_pixel_formathash[i].pixelFormatInfo;
+			_hasAlpha = _pixelFormatInfo->alpha;
 			infoValid = true;
 			break;
 		}
@@ -451,17 +451,17 @@ bool CCTexturePVR::unpackPVRv3Data(unsigned char* dataPointer, unsigned int data
 	uint32_t flags = CC_SWAP_INT32_LITTLE_TO_HOST(header->flags);
 	
 	// PVRv3 specifies premultiply alpha in a flag -- should always respect this in PVRv3 files
-	m_bForcePremultipliedAlpha = true;
+	_forcePremultipliedAlpha = true;
 	if (flags & kPVR3TextureFlagPremultipliedAlpha)
     {
-		m_bHasPremultipliedAlpha = true;
+		_hasPremultipliedAlpha = true;
 	}
     
 	// sizing
 	uint32_t width = CC_SWAP_INT32_LITTLE_TO_HOST(header->width);
 	uint32_t height = CC_SWAP_INT32_LITTLE_TO_HOST(header->height);
-	m_uWidth = width;
-	m_uHeight = height;
+	_width = width;
+	_height = height;
 	uint32_t dataOffset = 0, dataSize = 0;
 	uint32_t blockSize = 0, widthBlocks = 0, heightBlocks = 0;
 	uint8_t *bytes = NULL;
@@ -469,10 +469,10 @@ bool CCTexturePVR::unpackPVRv3Data(unsigned char* dataPointer, unsigned int data
 	dataOffset = (sizeof(ccPVRv3TexHeader) + header->metadataLength);
 	bytes = dataPointer;
 	
-	m_uNumberOfMipmaps = header->numberOfMipmaps;
-	CCAssert(m_uNumberOfMipmaps < CC_PVRMIPMAP_MAX, "TexturePVR: Maximum number of mimpaps reached. Increate the CC_PVRMIPMAP_MAX value");
+	_numberOfMipmaps = header->numberOfMipmaps;
+	CCAssert(_numberOfMipmaps < CC_PVRMIPMAP_MAX, "TexturePVR: Maximum number of mimpaps reached. Increate the CC_PVRMIPMAP_MAX value");
     
-	for (unsigned int i = 0; i < m_uNumberOfMipmaps; i++)
+	for (unsigned int i = 0; i < _numberOfMipmaps; i++)
     {	
 		switch (pixelFormat)
         {
@@ -511,12 +511,12 @@ bool CCTexturePVR::unpackPVRv3Data(unsigned char* dataPointer, unsigned int data
 			heightBlocks = 2;
         }
 		
-		dataSize = widthBlocks * heightBlocks * ((blockSize  * m_pPixelFormatInfo->bpp) / 8);
+		dataSize = widthBlocks * heightBlocks * ((blockSize  * _pixelFormatInfo->bpp) / 8);
 		unsigned int packetLength = ((unsigned int)dataLength-dataOffset);
 		packetLength = packetLength > dataSize ? dataSize : packetLength;
 		
-		m_asMipmaps[i].address = bytes+dataOffset;
-		m_asMipmaps[i].len = packetLength;
+		_asMipmaps[i].address = bytes+dataOffset;
+		_asMipmaps[i].len = packetLength;
 		
 		dataOffset += packetLength;
 		CCAssert(dataOffset <= dataLength, "CCTexurePVR: Invalid lenght");
@@ -531,25 +531,25 @@ bool CCTexturePVR::unpackPVRv3Data(unsigned char* dataPointer, unsigned int data
 
 bool CCTexturePVR::createGLTexture()
 {
-    unsigned int width = m_uWidth;
-    unsigned int height = m_uHeight;
+    unsigned int width = _width;
+    unsigned int height = _height;
     GLenum err;
     
-    if (m_uNumberOfMipmaps > 0)
+    if (_numberOfMipmaps > 0)
     {
-        if (m_uName != 0)
+        if (_name != 0)
         {
-            ccGLDeleteTexture(m_uName);
+            ccGLDeleteTexture(_name);
         }
         
         // From PVR sources: "PVR files are never row aligned."
         glPixelStorei(GL_UNPACK_ALIGNMENT,1);
         
-        glGenTextures(1, &m_uName);
-        glBindTexture(GL_TEXTURE_2D, m_uName);
+        glGenTextures(1, &_name);
+        glBindTexture(GL_TEXTURE_2D, _name);
         
         // Default: Anti alias.
-		if (m_uNumberOfMipmaps == 1)
+		if (_numberOfMipmaps == 1)
         {
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         }
@@ -565,13 +565,13 @@ bool CCTexturePVR::createGLTexture()
     
     CHECK_GL_ERROR_DEBUG(); // clean possible GL error
     
-	GLenum internalFormat = m_pPixelFormatInfo->internalFormat;
-	GLenum format = m_pPixelFormatInfo->format;
-	GLenum type = m_pPixelFormatInfo->type;
-    bool compressed = m_pPixelFormatInfo->compressed;
+	GLenum internalFormat = _pixelFormatInfo->internalFormat;
+	GLenum format = _pixelFormatInfo->format;
+	GLenum type = _pixelFormatInfo->type;
+    bool compressed = _pixelFormatInfo->compressed;
 
     // Generate textures with mipmaps
-    for (unsigned int i = 0; i < m_uNumberOfMipmaps; ++i)
+    for (unsigned int i = 0; i < _numberOfMipmaps; ++i)
     {
         if (compressed && ! CCConfiguration::sharedConfiguration()->supportsPVRTC()) 
         {
@@ -579,8 +579,8 @@ bool CCTexturePVR::createGLTexture()
 			return false;
 		}
         
-		unsigned char *data = m_asMipmaps[i].address;
-		GLsizei datalen = m_asMipmaps[i].len;
+		unsigned char *data = _asMipmaps[i].address;
+		GLsizei datalen = _asMipmaps[i].len;
         
 		if (compressed)
         {
@@ -641,16 +641,16 @@ bool CCTexturePVR::initWithContentsOfFile(const char* path)
         return false;
     }
     
-    m_uNumberOfMipmaps = 0;
+    _numberOfMipmaps = 0;
 
-    m_uName = 0;
-    m_uWidth = m_uHeight = 0;
-    m_pPixelFormatInfo = NULL;
-    m_bHasAlpha = false;
-    m_bForcePremultipliedAlpha = false;
-    m_bHasPremultipliedAlpha = false;
+    _name = 0;
+    _width = _height = 0;
+    _pixelFormatInfo = NULL;
+    _hasAlpha = false;
+    _forcePremultipliedAlpha = false;
+    _hasPremultipliedAlpha = false;
 
-    m_bRetainName = false; // cocos2d integration
+    _retainName = false; // cocos2d integration
 
     if (! ((unpackPVRv2Data(pvrdata, pvrlen)  || unpackPVRv3Data(pvrdata, pvrlen)) && createGLTexture()) )
     {

@@ -70,7 +70,7 @@ bool CCFileUtilsTizen::init()
 
     AsciiEncoding ascii;
     ByteBuffer* buffer = ascii.GetBytesN(resPath);
-    m_strDefaultResRootPath = (const char *)buffer->GetPointer();
+    _defaultResRootPath = (const char *)buffer->GetPointer();
     delete buffer;
     return CCFileUtils::init();
 }
@@ -101,7 +101,7 @@ bool CCFileUtilsTizen::isFileExist(const std::string& strFilePath)
     std::string strPath = strFilePath;
     if (!isAbsolutePath(strPath))
     { // Not absolute path, add the default root path at the beginning.
-        strPath.insert(0, m_strDefaultResRootPath);
+        strPath.insert(0, _defaultResRootPath);
     }
 
     return File::IsFileExist(strPath.c_str());

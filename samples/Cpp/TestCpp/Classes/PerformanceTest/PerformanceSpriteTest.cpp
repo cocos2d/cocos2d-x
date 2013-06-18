@@ -234,7 +234,7 @@ void SpriteMenuLayer::showCurrentTest()
     int nSubTest = pPreScene->getSubTestNum();
     int nNodes   = pPreScene->getNodesNum();
 
-    switch (m_nCurCase)
+    switch (_curCase)
     {
     case 0:
         pScene = new SpritePerformTest1;
@@ -258,7 +258,7 @@ void SpriteMenuLayer::showCurrentTest()
         pScene = new SpritePerformTest7;
         break;
     }
-    s_nSpriteCurCase = m_nCurCase;
+    s_nSpriteCurCase = _curCase;
 
     if (pScene)
     {
@@ -278,8 +278,8 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     //srandom(0);
 
     subtestNumber = asubtest;
-    m_pSubTest = new SubTest;
-    m_pSubTest->initWithSubTest(asubtest, this);
+    _subTest = new SubTest;
+    _subTest->initWithSubTest(asubtest, this);
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
@@ -347,10 +347,10 @@ std::string SpriteMainScene::title()
 
 SpriteMainScene::~SpriteMainScene()
 {
-    if (m_pSubTest)
+    if (_subTest)
     {
-        delete m_pSubTest;
-        m_pSubTest = NULL;
+        delete _subTest;
+        _subTest = NULL;
     }
 }
 
@@ -381,7 +381,7 @@ void SpriteMainScene::onIncrease(CCObject* pSender)
 
     for( int i=0;i< kNodesIncrease;i++)
     {
-        CCSprite *sprite = m_pSubTest->createSpriteWithTag(quantityNodes);
+        CCSprite *sprite = _subTest->createSpriteWithTag(quantityNodes);
         doTest(sprite);
         quantityNodes++;
     }
@@ -397,7 +397,7 @@ void SpriteMainScene::onDecrease(CCObject* pSender)
     for( int i=0;i < kNodesIncrease;i++)
     {
         quantityNodes--;
-        m_pSubTest->removeByTag(quantityNodes);
+        _subTest->removeByTag(quantityNodes);
     }
 
     updateNodes();

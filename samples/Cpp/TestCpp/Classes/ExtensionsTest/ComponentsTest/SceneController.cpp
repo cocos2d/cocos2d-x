@@ -13,7 +13,7 @@ SceneController::SceneController(void)
 , _targets(NULL)
 , _projectiles(NULL)
 {
-    m_strName = "SceneController";
+    _name = "SceneController";
 }
 
 SceneController::~SceneController(void)
@@ -43,8 +43,8 @@ void SceneController::onEnter()
     _targets = new CCArray;
     _projectiles = new CCArray;
    
-    ((CCComAudio*)(m_pOwner->getComponent("Audio")))->playBackgroundMusic("background-music-aac.wav", true);
-    ((CCComAttribute*)(m_pOwner->getComponent("ComAttribute")))->setInt("KillCount", 0);
+    ((CCComAudio*)(_owner->getComponent("Audio")))->playBackgroundMusic("background-music-aac.wav", true);
+    ((CCComAttribute*)(_owner->getComponent("ComAttribute")))->setInt("KillCount", 0);
 }
 
 void SceneController::onExit()
@@ -81,7 +81,7 @@ SceneController* SceneController::create(void)
 void SceneController::addTarget()
 {
 	CCSprite *target = CCSprite::create("components/Target.png", CCRectMake(0,0,27,40));
-    m_pOwner->addChild(target, 1, 2);
+    _owner->addChild(target, 1, 2);
     
     target->addComponent(EnemyController::create());
 	target->setTag(2);
@@ -91,7 +91,7 @@ void SceneController::addTarget()
 void SceneController::spriteMoveFinished(CCNode* sender)
 {
 	CCSprite *sprite = (CCSprite *)sender;
-	m_pOwner->removeChild(sprite, true);
+	_owner->removeChild(sprite, true);
     
 	if (sprite->getTag() == 2)  // target
 	{
@@ -109,9 +109,9 @@ void SceneController::spriteMoveFinished(CCNode* sender)
 
 void SceneController::increaseKillCount()
 {
-    int nProjectilesDestroyed = ((CCComAttribute*)(m_pOwner->getComponent("ComAttribute")))->getInt("KillCount");
+    int nProjectilesDestroyed = ((CCComAttribute*)(_owner->getComponent("ComAttribute")))->getInt("KillCount");
     
-    CCComAttribute *p = (CCComAttribute*)(m_pOwner->getComponent("ComAttribute"));
+    CCComAttribute *p = (CCComAttribute*)(_owner->getComponent("ComAttribute"));
     p->setInt("KillCount", ++nProjectilesDestroyed);
 
     if (nProjectilesDestroyed >= 5)

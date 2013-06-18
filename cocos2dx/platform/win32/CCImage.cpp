@@ -33,38 +33,38 @@ class BitmapDC
 {
 public:
     BitmapDC(HWND hWnd = NULL)
-    : m_hDC(NULL)
-    , m_hBmp(NULL)
-    , m_hFont((HFONT)GetStockObject(DEFAULT_GUI_FONT))
-    , m_hWnd(NULL)
+    : _DC(NULL)
+    , _bmp(NULL)
+    , _font((HFONT)GetStockObject(DEFAULT_GUI_FONT))
+    , _wnd(NULL)
     {
-        m_hWnd = hWnd;
+        _wnd = hWnd;
         HDC hdc = GetDC(hWnd);
-        m_hDC   = CreateCompatibleDC(hdc);
+        _DC   = CreateCompatibleDC(hdc);
         ReleaseDC(hWnd, hdc);
     }
 
     ~BitmapDC()
     {
         prepareBitmap(0, 0);
-        if (m_hDC)
+        if (_DC)
         {
-            DeleteDC(m_hDC);
+            DeleteDC(_DC);
         }
         HFONT hDefFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
-        if (hDefFont != m_hFont)
+        if (hDefFont != _font)
         {
-            DeleteObject(m_hFont);
-            m_hFont = hDefFont;
+            DeleteObject(_font);
+            _font = hDefFont;
         }
 		// release temp font resource	
-		if (m_curFontPath.size() > 0)
+		if (_curFontPath.size() > 0)
 		{
-			wchar_t * pwszBuffer = utf8ToUtf16(m_curFontPath);
+			wchar_t * pwszBuffer = utf8ToUtf16(_curFontPath);
 			if (pwszBuffer)
 			{
 				RemoveFontResource(pwszBuffer);
-				SendMessage( m_hWnd, WM_FONTCHANGE, 0, 0);
+				SendMessage( _wnd, WM_FONTCHANGE, 0, 0);
 				delete [] pwszBuffer;
 				pwszBuffer = NULL;
 			}
@@ -124,7 +124,7 @@ public:
             {
                 tNewFont.lfHeight = -nSize;
             }
-            GetObjectA(m_hFont,  sizeof(tOldFont), &tOldFont);
+            GetObjectA(_font,  sizeof(tOldFont), &tOldFont);
 
             if (tOldFont.lfHeight == tNewFont.lfHeight
                 && 0 == strcmp(tOldFont.lfFaceName, tNewFont.lfFaceName))
@@ -135,53 +135,53 @@ public:
             }
 
             // delete old font
-            if (m_hFont != hDefFont)
+            if (_font != hDefFont)
             {
-                DeleteObject(m_hFont);
+                DeleteObject(_font);
 				// release old font register
-				if (m_curFontPath.size() > 0)
+				if (_curFontPath.size() > 0)
 				{
-					wchar_t * pwszBuffer = utf8ToUtf16(m_curFontPath);
+					wchar_t * pwszBuffer = utf8ToUtf16(_curFontPath);
 					if (pwszBuffer)
 					{
 						if(RemoveFontResource(pwszBuffer))
 						{
-							SendMessage( m_hWnd, WM_FONTCHANGE, 0, 0);
+							SendMessage( _wnd, WM_FONTCHANGE, 0, 0);
 						}						
 						delete [] pwszBuffer;
 						pwszBuffer = NULL;
 					}
 				}
 				if (fontPath.size() > 0)
-					m_curFontPath = fontPath;
+					_curFontPath = fontPath;
 				else
-					m_curFontPath.clear();
+					_curFontPath.clear();
 				// register temp font
-				if (m_curFontPath.size() > 0)
+				if (_curFontPath.size() > 0)
 				{
-					wchar_t * pwszBuffer = utf8ToUtf16(m_curFontPath);
+					wchar_t * pwszBuffer = utf8ToUtf16(_curFontPath);
 					if (pwszBuffer)
 					{
 						if(AddFontResource(pwszBuffer))
 						{
-							SendMessage( m_hWnd, WM_FONTCHANGE, 0, 0);
+							SendMessage( _wnd, WM_FONTCHANGE, 0, 0);
 						}						
 						delete [] pwszBuffer;
 						pwszBuffer = NULL;
 					}
 				}
             }
-            m_hFont = NULL;
+            _font = NULL;
 
             // disable Cleartype
             tNewFont.lfQuality = ANTIALIASED_QUALITY;
 
             // create new font
-            m_hFont = CreateFontIndirectA(&tNewFont);
-            if (! m_hFont)
+            _font = CreateFontIndirectA(&tNewFont);
+            if (! _font)
             {
                 // create failed, use default font
-                m_hFont = hDefFont;
+                _font = hDefFont;
                 break;
             }
             
@@ -208,11 +208,11 @@ public:
                     | (dwFmt & DT_RIGHT);
             }
             // use current font to measure text extent
-            HGDIOBJ hOld = SelectObject(m_hDC, m_hFont);
+            HGDIOBJ hOld = SelectObject(_DC, _font);
 
             // measure text size
-            DrawTextW(m_hDC, pszText, nLen, &rc, dwCalcFmt);
-            SelectObject(m_hDC, hOld);
+            DrawTextW(_DC, pszText, nLen, &rc, dwCalcFmt);
+            SelectObject(_DC, hOld);
 
             tRet.cx = rc.right;
             tRet.cy = rc.bottom;
@@ -224,15 +224,15 @@ public:
     bool prepareBitmap(int nWidth, int nHeight)
     {
         // release bitmap
-        if (m_hBmp)
+        if (_bmp)
         {
-            DeleteObject(m_hBmp);
-            m_hBmp = NULL;
+            DeleteObject(_bmp);
+            _bmp = NULL;
         }
         if (nWidth > 0 && nHeight > 0)
         {
-            m_hBmp = CreateBitmap(nWidth, nHeight, 1, 32, NULL);
-            if (! m_hBmp)
+            _bmp = CreateBitmap(nWidth, nHeight, 1, 32, NULL);
+            if (! _bmp)
             {
                 return false;
             }
@@ -334,30 +334,30 @@ public:
             CC_BREAK_IF(! prepareBitmap(tSize.cx, tSize.cy));
 
             // draw text
-            HGDIOBJ hOldFont = SelectObject(m_hDC, m_hFont);
-            HGDIOBJ hOldBmp  = SelectObject(m_hDC, m_hBmp);
+            HGDIOBJ hOldFont = SelectObject(_DC, _font);
+            HGDIOBJ hOldBmp  = SelectObject(_DC, _bmp);
             
-            SetBkMode(m_hDC, TRANSPARENT);
-            SetTextColor(m_hDC, RGB(255, 255, 255)); // white color
+            SetBkMode(_DC, TRANSPARENT);
+            SetTextColor(_DC, RGB(255, 255, 255)); // white color
 
             // draw text
-            nRet = DrawTextW(m_hDC, pwszBuffer, nLen, &rcText, dwFmt);
-            //DrawTextA(m_hDC, pszText, nLen, &rcText, dwFmt);
+            nRet = DrawTextW(_DC, pwszBuffer, nLen, &rcText, dwFmt);
+            //DrawTextA(_DC, pszText, nLen, &rcText, dwFmt);
 
-            SelectObject(m_hDC, hOldBmp);
-            SelectObject(m_hDC, hOldFont);
+            SelectObject(_DC, hOldBmp);
+            SelectObject(_DC, hOldFont);
         } while (0);
         CC_SAFE_DELETE_ARRAY(pwszBuffer);
         return nRet;
     }
 
-    CC_SYNTHESIZE_READONLY(HDC, m_hDC, DC);
-    CC_SYNTHESIZE_READONLY(HBITMAP, m_hBmp, Bitmap);
+    CC_SYNTHESIZE_READONLY(HDC, _DC, DC);
+    CC_SYNTHESIZE_READONLY(HBITMAP, _bmp, Bitmap);
 private:
     friend class CCImage;
-    HFONT   m_hFont;
-    HWND    m_hWnd;
-    std::string m_curFontPath;
+    HFONT   _font;
+    HWND    _wnd;
+    std::string _curFontPath;
 };
 
 static BitmapDC& sharedBitmapDC()
@@ -390,8 +390,8 @@ bool CCImage::initWithString(
         SIZE size = {nWidth, nHeight};
         CC_BREAK_IF(! dc.drawText(pText, size, eAlignMask));
 
-        m_pData = new unsigned char[size.cx * size.cy * 4];
-        CC_BREAK_IF(! m_pData);
+        _data = new unsigned char[size.cx * size.cy * 4];
+        CC_BREAK_IF(! _data);
 
         struct
         {
@@ -402,23 +402,23 @@ bool CCImage::initWithString(
         CC_BREAK_IF(! GetDIBits(dc.getDC(), dc.getBitmap(), 0, 0, 
             NULL, (LPBITMAPINFO)&bi, DIB_RGB_COLORS));
 
-        m_nWidth    = (short)size.cx;
-        m_nHeight   = (short)size.cy;
-        m_bHasAlpha = true;
-        m_bPreMulti = false;
-        m_nBitsPerComponent = 8;
+        _width    = (short)size.cx;
+        _height   = (short)size.cy;
+        _hasAlpha = true;
+        _preMulti = false;
+        _bitsPerComponent = 8;
         // copy pixed data
         bi.bmiHeader.biHeight = (bi.bmiHeader.biHeight > 0)
            ? - bi.bmiHeader.biHeight : bi.bmiHeader.biHeight;
-        GetDIBits(dc.getDC(), dc.getBitmap(), 0, m_nHeight, m_pData, 
+        GetDIBits(dc.getDC(), dc.getBitmap(), 0, _height, _data, 
             (LPBITMAPINFO)&bi, DIB_RGB_COLORS);
 
         // change pixel's alpha value to 255, when it's RGB != 0
         COLORREF * pPixel = NULL;
-        for (int y = 0; y < m_nHeight; ++y)
+        for (int y = 0; y < _height; ++y)
         {
-            pPixel = (COLORREF *)m_pData + y * m_nWidth;
-            for (int x = 0; x < m_nWidth; ++x)
+            pPixel = (COLORREF *)_data + y * _width;
+            for (int x = 0; x < _width; ++x)
             {
                 COLORREF& clr = *pPixel;
                 if (GetRValue(clr) || GetGValue(clr) || GetBValue(clr))

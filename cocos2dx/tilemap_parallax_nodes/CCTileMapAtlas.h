@@ -57,7 +57,7 @@ Instead, use the newer TMX file format: CCTMXTiledMap
 class CC_DLL CCTileMapAtlas : public CCAtlasNode 
 {
     /** TileMap info */
-    CC_PROPERTY(struct sImageTGA*, m_pTGAInfo, TGAInfo);
+    CC_PROPERTY(struct sImageTGA*, _TGAInfo, TGAInfo);
 public:
     CCTileMapAtlas();
     virtual ~CCTileMapAtlas();
@@ -89,9 +89,9 @@ private:
 
 protected:
     //! x,y to atlas dictionary
-    CCDictionary* m_pPosToAtlasIndex;
+    CCDictionary* _posToAtlasIndex;
     //! numbers of tiles to render
-    int m_nItemsToRender;
+    int _itemsToRender;
 };
 
 // end of tilemap_parallax_nodes group

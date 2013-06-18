@@ -30,16 +30,16 @@ NS_CC_BEGIN
 
 CCSet::CCSet(void)
 {
-    m_pSet = new set<CCObject *>;
+    _set = new set<CCObject *>;
 }
 
 CCSet::CCSet(const CCSet &rSetObject)
 {
-    m_pSet = new set<CCObject *>(*rSetObject.m_pSet);
+    _set = new set<CCObject *>(*rSetObject._set);
 
     // call retain of members
     CCSetIterator iter;
-    for (iter = m_pSet->begin(); iter != m_pSet->end(); ++iter)
+    for (iter = _set->begin(); iter != _set->end(); ++iter)
     {
         if (! (*iter))
         {
@@ -53,7 +53,7 @@ CCSet::CCSet(const CCSet &rSetObject)
 CCSet::~CCSet(void)
 {
     removeAllObjects();
-    CC_SAFE_DELETE(m_pSet);
+    CC_SAFE_DELETE(_set);
 }
 
 void CCSet::acceptVisitor(CCDataVisitor &visitor)
@@ -87,25 +87,25 @@ CCSet* CCSet::mutableCopy(void)
 
 int CCSet::count(void)
 {
-    return (int)m_pSet->size();
+    return (int)_set->size();
 }
 
 void CCSet::addObject(CCObject *pObject)
 {
     CC_SAFE_RETAIN(pObject);
-    m_pSet->insert(pObject);
+    _set->insert(pObject);
 }
 
 void CCSet::removeObject(CCObject *pObject)
 {
-    m_pSet->erase(pObject);
+    _set->erase(pObject);
     CC_SAFE_RELEASE(pObject);
 }
 
 void CCSet::removeAllObjects()
 {
     CCSetIterator it;
-    for (it = m_pSet->begin(); it != m_pSet->end(); ++it)
+    for (it = _set->begin(); it != _set->end(); ++it)
     {
         if (! (*it))
         {
@@ -118,29 +118,29 @@ void CCSet::removeAllObjects()
 
 bool CCSet::containsObject(CCObject *pObject)
 {
-    return m_pSet->find(pObject) != m_pSet->end();
+    return _set->find(pObject) != _set->end();
 }
 
 CCSetIterator CCSet::begin(void)
 {
-    return m_pSet->begin();
+    return _set->begin();
 }
 
 CCSetIterator CCSet::end(void)
 {
-    return m_pSet->end();
+    return _set->end();
 }
 
 CCObject* CCSet::anyObject()
 {
-    if (!m_pSet || m_pSet->empty())
+    if (!_set || _set->empty())
     {
         return 0;
     }
     
     CCSetIterator it;
 
-    for( it = m_pSet->begin(); it != m_pSet->end(); ++it)
+    for( it = _set->begin(); it != _set->end(); ++it)
     {
         if (*it)
         {
