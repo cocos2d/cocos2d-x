@@ -59,11 +59,6 @@ void CCTextureCacheEmscripten_addImageAsyncCallBack(CCTextureCacheEmscripten *tc
  */
 CCTextureCacheEmscripten::CCTextureCacheEmscripten()
 {
-    const char *js = 
-#       include "CCTextureCacheEmscripten.js"
-    ;
-    emscripten_run_script(js);
-
     // Add dummy references to these functions so that the compiler will emit
     // code for them prior to this point (which is before when we will call
     // them.
@@ -84,7 +79,6 @@ CCTextureCacheEmscripten::CCTextureCacheEmscripten()
 CCTextureCacheEmscripten::~CCTextureCacheEmscripten()
 {
     cocos2dx_shutdownAsyncImageLoader();
-    emscripten_run_script("Module.cocos2dx.AsyncImageLoader = null;");
 }
 
 /**
