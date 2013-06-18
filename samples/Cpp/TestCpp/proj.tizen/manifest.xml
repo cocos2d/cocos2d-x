@@ -10,7 +10,7 @@
     <Apps>
         <ApiVersion>2.1</ApiVersion>
         <Privileges/>
-        <UiApp LaunchingHistoryVisible="True" Main="True" MenuIconVisible="True" Name="TestCpp">
+        <UiApp HwAcceleration="On" LaunchingHistoryVisible="True" Main="True" MenuIconVisible="True" Name="TestCpp">
             <UiScalability BaseScreenSize="Normal" CoordinateSystem="Logical" LogicalCoordinate="720"/>
             <UiTheme SystemTheme="White"/>
             <DisplayNames>
