@@ -24,7 +24,7 @@ THE SOFTWARE.
 #ifndef __MY_SOCIAL_MANAGER_H__
 #define __MY_SOCIAL_MANAGER_H__
 
-#include "SocialTwitter.h"
+#include "ProtocolSocial.h"
 
 class MyShareResult : public cocos2d::plugin::ShareResultListener
 {
@@ -41,6 +41,7 @@ public:
     typedef enum {
     	eNoneMode = 0,
     	eTwitter,
+    	eWeibo,
     } MyShareMode;
 
 	void unloadSocialPlugin();
@@ -53,7 +54,8 @@ private:
 
     static MySocialManager* s_pManager;
 
-    cocos2d::plugin::SocialTwitter* s_pTwitter;
+    cocos2d::plugin::ProtocolSocial* s_pTwitter;
+    cocos2d::plugin::ProtocolSocial* s_pWeibo;
     MyShareResult* s_pRetListener;
 };
 

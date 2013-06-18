@@ -9,10 +9,6 @@ echo android project dir is ${ANDROID_PROJ_DIR}
 #create directory for plugin
 mkdir -p ${TARGET_DIR}
 
-#create include directory
-mkdir -p ${TARGET_DIR}/include
-cp -rf ${PLUGIN_ROOT}/${plugin_name}/include/* ${TARGET_DIR}/include
-
 ###############################
 # functions used
 ###############################
@@ -84,28 +80,9 @@ if [ -d ${ANDROID_PROJ_DIR}/sdk ]; then
     cp -rf ${ANDROID_PROJ_DIR}/sdk/*.jar ${TARGET_DIR}/android
 fi
 
-#copy android include files
-ADNROID_SOURCE_DIR=${PLUGIN_ROOT}/${plugin_name}/platform/android
-if [ -d ${ADNROID_SOURCE_DIR} ]; then
-    HAVE_HEADER_FILE=`find ${ADNROID_SOURCE_DIR} -name "*.h"`
-    if [ -n "${HAVE_HEADER_FILE}" ]; then
-        cp -rf ${ADNROID_SOURCE_DIR}/*.h "${TARGET_DIR}/android"
-    fi
-fi
-
-#invoke ndk build for plugin project
-if [ -f "${ANDROID_PROJ_DIR}/build_native.sh" ]; then
-    ./build_native.sh
-    LIB_FILE="$(getLibraryFileName)"
-    cp -rf "${ANDROID_PROJ_DIR}/obj/local/armeabi/${LIB_FILE}" "${TARGET_DIR}/android"
-fi
-
-#generate mk file for prebuild
-${PLUGIN_ROOT}/tools/toolsForPublish/genPrebuildMK.sh ${ANDROID_PROJ_DIR}/jni/Android.mk ${TARGET_DIR}/android/Android.mk
-
 #copy android depend on project to publish directory
-if [ -d "${ADNROID_SOURCE_DIR}/DependProject" ]; then
-    cp -rf "${ADNROID_SOURCE_DIR}/DependProject" "${TARGET_DIR}/android"
+if [ -d "${ANDROID_PROJ_DIR}/DependProject" ]; then
+    cp -rf "${ANDROID_PROJ_DIR}/DependProject" "${TARGET_DIR}/android"
 fi
 
 #copy ForManifest.xml file to publish directory
@@ -121,6 +98,34 @@ fi
 #copy ForAssets directory to publish directory
 if [ -d "${ANDROID_PROJ_DIR}/ForAssets" ]; then
     cp -rf "${ANDROID_PROJ_DIR}/ForAssets" "${TARGET_DIR}/android"
+fi
+
+#Build C++ code
+BUILD_NATIVE_SCRIPT=${ANDROID_PROJ_DIR}/build_native.sh
+if [ -f $BUILD_NATIVE_SCRIPT ]; then
+
+    echo "Build C++ code"
+
+    #create include directory
+    mkdir -p ${TARGET_DIR}/include
+    cp -rf ${PLUGIN_ROOT}/${plugin_name}/include/* ${TARGET_DIR}/include
+
+    #copy android include files
+    ADNROID_SOURCE_DIR=${PLUGIN_ROOT}/${plugin_name}/platform/android
+    if [ -d ${ADNROID_SOURCE_DIR} ]; then
+        HAVE_HEADER_FILE=`find ${ADNROID_SOURCE_DIR} -name "*.h"`
+        if [ -n "${HAVE_HEADER_FILE}" ]; then
+            cp -rf ${ADNROID_SOURCE_DIR}/*.h "${TARGET_DIR}/android"
+        fi
+    fi
+
+    #invoke ndk build for plugin project
+    ./build_native.sh
+    LIB_FILE="$(getLibraryFileName)"
+    cp -rf "${ANDROID_PROJ_DIR}/obj/local/armeabi/${LIB_FILE}" "${TARGET_DIR}/android"
+
+    #generate mk file for prebuild
+    ${PLUGIN_ROOT}/tools/toolsForPublish/genPrebuildMK.sh ${ANDROID_PROJ_DIR}/jni/Android.mk ${TARGET_DIR}/android/Android.mk
 fi
 
 popd

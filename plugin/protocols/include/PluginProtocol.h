@@ -24,36 +24,59 @@ THE SOFTWARE.
 #ifndef __CCX_IPLUGIN_H__
 #define __CCX_IPLUGIN_H__
 
-#include "RegisterPlugin.h"
+#include "PluginParam.h"
+#include <vector>
 
 namespace cocos2d { namespace plugin {
 
 /**
 	The super class for all plugins.
 */
-
+class PluginFactory;
 class PluginProtocol
 {
 public:
-    virtual ~PluginProtocol() {}
-    virtual bool init() { return true; }
-    void setUserData(void* userData) { m_pUserData = userData; }
-    void* getUserData() { return m_pUserData; }
+    virtual ~PluginProtocol();
 
     /**
     @brief plug-in info methods(name, version, SDK version)
     */
-    virtual const char* getPluginName() = 0;
-    virtual const char* getPluginVersion() = 0;
+    inline const char* getPluginName() { return m_pPluginName.c_str(); }
+    const char* getPluginVersion();
+    const char* getSDKVersion();
 
     /**
     @brief switch debug plug-in on/off
     */
-    virtual void setDebugMode(bool bDebug) {}
+    void setDebugMode(bool bDebug);
+
+    /**
+     * @brief methods for reflections
+     */
+    void callFuncWithParam(const char* funcName, PluginParam* param, ...);
+    void callFuncWithParam(const char* funcName, std::vector<PluginParam*> params);
+
+    const char* callStringFuncWithParam(const char* funcName, PluginParam* param, ...);
+    const char* callStringFuncWithParam(const char* funcName, std::vector<PluginParam*> params);
+
+    int callIntFuncWithParam(const char* funcName, PluginParam* param, ...);
+    int callIntFuncWithParam(const char* funcName, std::vector<PluginParam*> params);
+
+    bool callBoolFuncWithParam(const char* funcName, PluginParam* param, ...);
+    bool callBoolFuncWithParam(const char* funcName, std::vector<PluginParam*> params);
+
+    float callFloatFuncWithParam(const char* funcName, PluginParam* param, ...);
+    float callFloatFuncWithParam(const char* funcName, std::vector<PluginParam*> params);
 
 protected:
     PluginProtocol() {}
-    void* m_pUserData;
+
+private:
+    friend class PluginFactory;
+    inline void setPluginName(const char* name) {
+    	m_pPluginName = name;
+    }
+    std::string m_pPluginName;
 };
 
 }} //namespace cocos2d { namespace plugin {

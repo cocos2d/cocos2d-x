@@ -33,7 +33,7 @@ NS_CC_EXT_BEGIN
 class CCHttpClient;
 class CCHttpResponse;
 typedef void (CCObject::*SEL_HttpResponse)(CCHttpClient* client, CCHttpResponse* response);
-#define httpresponse_selector(_SELECTOR) (SEL_HttpResponse)(&_SELECTOR)
+#define httpresponse_selector(_SELECTOR) (cocos2d::extension::SEL_HttpResponse)(&_SELECTOR)
 
 /** 
  @brief defines the object which users must packed for CCHttpClient::send(HttpRequest*) method.
@@ -49,6 +49,8 @@ public:
     {
         kHttpGet,
         kHttpPost,
+        kHttpPut,
+        kHttpDelete,
         kHttpUnkown,
     } HttpRequestType;
     
@@ -161,7 +163,7 @@ public:
     
     /** Required field. You should set the callback selector function at ack the http request completed
      */
-    inline void setResponseCallback(CCObject* pTarget, SEL_CallFuncND pSelector) CC_DEPRECATED_ATTRIBUTE
+    CC_DEPRECATED_ATTRIBUTE inline void setResponseCallback(CCObject* pTarget, SEL_CallFuncND pSelector)
     {
         setResponseCallback(pTarget, (SEL_HttpResponse) pSelector);
     }
@@ -190,7 +192,7 @@ public:
         _prxy( SEL_HttpResponse cb ) :_cb(cb) {}
         ~_prxy(){};
         operator SEL_HttpResponse() const { return _cb; }
-        operator SEL_CallFuncND()   const CC_DEPRECATED_ATTRIBUTE { return (SEL_CallFuncND) _cb; }
+        CC_DEPRECATED_ATTRIBUTE operator SEL_CallFuncND()   const { return (SEL_CallFuncND) _cb; }
     protected:
         SEL_HttpResponse _cb;
     };

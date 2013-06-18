@@ -27,23 +27,17 @@ THE SOFTWARE.
 #include "PluginUtils.h"
 #include "PluginJavaData.h"
 
-#if 1
-#define  LOG_TAG    "ProtocolAds"
-#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
-#else
-#define  LOGD(...) 
-#endif
-
 namespace cocos2d { namespace plugin {
 
 extern "C" {
-	JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_InterfaceAds_nativeOnAdsResult(JNIEnv*  env, jobject thiz, jobject obj, jint ret, jstring msg) {
+	JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_AdsWrapper_nativeOnAdsResult(JNIEnv*  env, jobject thiz, jstring className, jint ret, jstring msg) {
 		std::string strMsg = PluginJniHelper::jstring2string(msg);
-		PluginProtocol* pPlugin = PluginUtils::getPluginPtr(obj);
-		LOGD("nativeOnAdsResult(), Get plugin ptr : %p", pPlugin);
+		std::string strClassName = PluginJniHelper::jstring2string(className);
+		PluginProtocol* pPlugin = PluginUtils::getPluginPtr(strClassName);
+		PluginUtils::outputLog("ProtocolAds", "nativeOnAdsResult(), Get plugin ptr : %p", pPlugin);
 		if (pPlugin != NULL)
 		{
-			LOGD("nativeOnAdsResult(), Get plugin name : %s", pPlugin->getPluginName());
+			PluginUtils::outputLog("ProtocolAds", "nativeOnAdsResult(), Get plugin name : %s", pPlugin->getPluginName());
 			ProtocolAds* pAds = dynamic_cast<ProtocolAds*>(pPlugin);
 			if (pAds != NULL)
 			{
@@ -52,12 +46,13 @@ extern "C" {
 		}
 	}
 
-	JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_InterfaceAds_nativeOnPlayerGetPoints(JNIEnv*  env, jobject thiz, jobject obj, jint points) {
-		PluginProtocol* pPlugin = PluginUtils::getPluginPtr(obj);
-		LOGD("nativeOnPlayerGetPoints(), Get plugin ptr : %p", pPlugin);
+	JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_AdsWrapper_nativeOnPlayerGetPoints(JNIEnv*  env, jobject thiz, jstring className, jint points) {
+		std::string strClassName = PluginJniHelper::jstring2string(className);
+		PluginProtocol* pPlugin = PluginUtils::getPluginPtr(strClassName);
+		PluginUtils::outputLog("ProtocolAds", "nativeOnPlayerGetPoints(), Get plugin ptr : %p", pPlugin);
 		if (pPlugin != NULL)
 		{
-			LOGD("nativeOnPlayerGetPoints(), Get plugin name : %s", pPlugin->getPluginName());
+			PluginUtils::outputLog("ProtocolAds", "nativeOnPlayerGetPoints(), Get plugin name : %s", pPlugin->getPluginName());
 			ProtocolAds* pAds = dynamic_cast<ProtocolAds*>(pPlugin);
 			if (pAds != NULL)
 			{
@@ -74,19 +69,13 @@ ProtocolAds::ProtocolAds()
 
 ProtocolAds::~ProtocolAds()
 {
-    PluginUtils::erasePluginJavaData(this);
-}
-
-bool ProtocolAds::init()
-{
-    return true;
 }
 
 void ProtocolAds::configDeveloperInfo(TAdsDeveloperInfo devInfo)
 {
     if (devInfo.empty())
     {
-        LOGD("The application info is empty!");
+        PluginUtils::outputLog("ProtocolAds", "The application info is empty!");
         return;
     }
     else
@@ -99,7 +88,7 @@ void ProtocolAds::configDeveloperInfo(TAdsDeveloperInfo devInfo)
     		, "(Ljava/util/Hashtable;)V"))
     	{
         	// generate the hashtable from map
-        	jobject obj_Map = PluginUtils::createJavaMapObject(t, &devInfo);
+        	jobject obj_Map = PluginUtils::createJavaMapObject(&devInfo);
 
             // invoke java method
             t.env->CallVoidMethod(pData->jobj, t.methodID, obj_Map);
@@ -114,7 +103,7 @@ void ProtocolAds::showAds(AdsType type, int sizeEnum, AdsPos pos)
 	PluginJavaData* pData = PluginUtils::getPluginJavaData(this);
 	PluginJniMethodInfo t;
 
-	LOGD("Class name : %s", pData->jclassName.c_str());
+	PluginUtils::outputLog("ProtocolAds", "Class name : %s", pData->jclassName.c_str());
 	if (PluginJniHelper::getMethodInfo(t
 		, pData->jclassName.c_str()
 		, "showAds"
@@ -127,34 +116,12 @@ void ProtocolAds::showAds(AdsType type, int sizeEnum, AdsPos pos)
 
 void ProtocolAds::hideAds(AdsType type)
 {
-	PluginUtils::callJavaFunctionWithName_oneBaseType(this, "hideAds", "(I)V", type);
+	PluginUtils::callJavaFunctionWithName_oneParam(this, "hideAds", "(I)V", type);
 }
 
 void ProtocolAds::spendPoints(int points)
 {
-	PluginUtils::callJavaFunctionWithName_oneBaseType(this, "spendPoints", "(I)V", points);
-}
-
-const char* ProtocolAds::getSDKVersion()
-{
-    std::string verName;
-
-    PluginJavaData* pData = PluginUtils::getPluginJavaData(this);
-    PluginJniMethodInfo t;
-    if (PluginJniHelper::getMethodInfo(t
-        , pData->jclassName.c_str()
-        , "getSDKVersion"
-        , "()Ljava/lang/String;"))
-    {
-        jstring ret = (jstring)(t.env->CallObjectMethod(pData->jobj, t.methodID));
-        verName = PluginJniHelper::jstring2string(ret);
-    }
-    return verName.c_str();
-}
-
-void ProtocolAds::setDebugMode(bool debug)
-{
-    PluginUtils::callJavaFunctionWithName_oneBaseType(this, "setDebugMode", "(Z)V", debug);
+	PluginUtils::callJavaFunctionWithName_oneParam(this, "spendPoints", "(I)V", points);
 }
 
 void ProtocolAds::setAdsListener(AdsListener* pListener)
@@ -164,7 +131,7 @@ void ProtocolAds::setAdsListener(AdsListener* pListener)
 
 void ProtocolAds::onAdsResult(AdsResultCode code, const char* msg)
 {
-	LOGD("ProtocolAds::adsResult invoked!");
+	PluginUtils::outputLog("ProtocolAds", "ProtocolAds::adsResult invoked!");
 	if (m_pListener != NULL)
 	{
 		m_pListener->onAdsResult(code, msg);
@@ -173,7 +140,7 @@ void ProtocolAds::onAdsResult(AdsResultCode code, const char* msg)
 
 void ProtocolAds::onPlayerGetPoints(int points)
 {
-	LOGD("ProtocolAds::onPlayerGetPoints invoked!");
+	PluginUtils::outputLog("ProtocolAds", "ProtocolAds::onPlayerGetPoints invoked!");
 	if (m_pListener != NULL)
 	{
 		m_pListener->onPlayerGetPoints(this, points);

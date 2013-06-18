@@ -25,29 +25,12 @@ package org.cocos2dx.plugin;
 
 import java.util.Hashtable;
 
-public class InterfaceIAP {
-	public static final int PAYRESULT_SUCCESS = 0;
-	public static final int PAYRESULT_FAIL    = 1;
-	public static final int PAYRESULT_CANCEL  = 2;
-	public static final int PAYRESULT_TIMEOUT = 3;
+public interface InterfaceIAP {
+	public final int PluginType = 3;
 
-	public interface IAPAdapter {
-		public void configDeveloperInfo(Hashtable<String, String> cpInfo);
-		public void payForProduct(Hashtable<String, String> cpInfo);
-		public void setDebugMode(boolean debug);
-		public String getSDKVersion();
-	}
-
-	public static void onPayResult(IAPAdapter obj, int ret, String msg) {
-		final int curRet = ret;
-		final String curMsg = msg;
-		final IAPAdapter curObj = obj;
-		PluginWrapper.runOnGLThread(new Runnable() {
-			@Override
-			public void run() {
-				nativeOnPayResult(curObj, curRet, curMsg);
-			}
-		});
-	}
-	private static native void nativeOnPayResult(Object obj, int ret, String msg);
+	public void configDeveloperInfo(Hashtable<String, String> cpInfo);
+	public void payForProduct(Hashtable<String, String> cpInfo);
+	public void setDebugMode(boolean debug);
+	public String getSDKVersion();
+	public String getPluginVersion();
 }

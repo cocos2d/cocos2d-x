@@ -13,6 +13,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_extension_static
 LOCAL_WHOLE_STATIC_LIBRARIES += chipmunk_static
 LOCAL_WHOLE_STATIC_LIBRARIES += spidermonkey_static
 LOCAL_WHOLE_STATIC_LIBRARIES += scriptingcore-spidermonkey
@@ -24,5 +25,6 @@ include $(BUILD_SHARED_LIBRARY)
 $(call import-module,cocos2dx)
 $(call import-module,CocosDenshion/android)
 $(call import-module,external/chipmunk)
+$(call import-module,extensions)
 $(call import-module,scripting/javascript/spidermonkey-android)
 $(call import-module,scripting/javascript/bindings)

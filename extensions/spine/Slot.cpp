@@ -39,7 +39,7 @@ Slot* Slot_create (SlotData* data, Skeleton* skeleton, Bone* bone) {
 	CONST_CAST(SlotData*, self->data) = data;
 	CONST_CAST(Skeleton*, self->skeleton) = skeleton;
 	CONST_CAST(Bone*, self->bone) = bone;
-	Slot_setToBindPose(self);
+	Slot_setToSetupPose(self);
 	return self;
 }
 
@@ -60,13 +60,13 @@ float Slot_getAttachmentTime (const Slot* self) {
 	return self->skeleton->time - SUB_CAST(_Internal, self) ->attachmentTime;
 }
 
-void Slot_setToBindPose (Slot* self) {
+void Slot_setToSetupPose (Slot* self) {
+	Attachment* attachment = 0;
 	self->r = self->data->r;
 	self->g = self->data->g;
 	self->b = self->data->b;
 	self->a = self->data->a;
 
-	Attachment* attachment = 0;
 	if (self->data->attachmentName) {
 		/* Find slot index. */
 		int i;

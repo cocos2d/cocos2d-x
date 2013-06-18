@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		159B8972175B97D30005B47D /* CCBProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 159B896E175B97D30005B47D /* CCBProxy.cpp */; };
+		159B8973175B97D30005B47D /* Lua_extensions_CCB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 159B8970175B97D30005B47D /* Lua_extensions_CCB.cpp */; };
+		159B8978175B9AB30005B47D /* CCBReaderLoad.lua in Resources */ = {isa = PBXBuildFile; fileRef = 159B8977175B9AB30005B47D /* CCBReaderLoad.lua */; };
+		159B8A28175D9A930005B47D /* cocosbuilderRes in Resources */ = {isa = PBXBuildFile; fileRef = 159B8A27175D9A930005B47D /* cocosbuilderRes */; };
+		159C08D5175F8221004ED7D4 /* Lua_web_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 159C08D3175F8221004ED7D4 /* Lua_web_socket.cpp */; };
+		159C08F9175F83D6004ED7D4 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 159C08EB175F83D6004ED7D4 /* libwebsockets.a */; };
+		159C08FE175F84B6004ED7D4 /* WebSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 159C08FC175F84B6004ED7D4 /* WebSocket.cpp */; };
+		159C09251762FC1A004ED7D4 /* AudioEngine.lua in Resources */ = {isa = PBXBuildFile; fileRef = 159C09241762FC1A004ED7D4 /* AudioEngine.lua */; };
 		15C153F71683112E00D239F2 /* CCBAnimationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C1537C1683112E00D239F2 /* CCBAnimationManager.cpp */; };
 		15C153F81683112E00D239F2 /* CCBFileLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C1537E1683112E00D239F2 /* CCBFileLoader.cpp */; };
 		15C153F91683112E00D239F2 /* CCBKeyframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C153801683112E00D239F2 /* CCBKeyframe.cpp */; };
@@ -211,6 +219,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		159B896E175B97D30005B47D /* CCBProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBProxy.cpp; sourceTree = "<group>"; };
+		159B896F175B97D30005B47D /* CCBProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBProxy.h; sourceTree = "<group>"; };
+		159B8970175B97D30005B47D /* Lua_extensions_CCB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Lua_extensions_CCB.cpp; sourceTree = "<group>"; };
+		159B8971175B97D30005B47D /* Lua_extensions_CCB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lua_extensions_CCB.h; sourceTree = "<group>"; };
+		159B8977175B9AB30005B47D /* CCBReaderLoad.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CCBReaderLoad.lua; sourceTree = "<group>"; };
+		159B8A27175D9A930005B47D /* cocosbuilderRes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = cocosbuilderRes; path = ../../../Lua/TestLua/Resources/cocosbuilderRes; sourceTree = "<group>"; };
+		159C08D3175F8221004ED7D4 /* Lua_web_socket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Lua_web_socket.cpp; sourceTree = "<group>"; };
+		159C08D4175F8221004ED7D4 /* Lua_web_socket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lua_web_socket.h; sourceTree = "<group>"; };
+		159C08E9175F83D6004ED7D4 /* libwebsockets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libwebsockets.h; sourceTree = "<group>"; };
+		159C08EB175F83D6004ED7D4 /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwebsockets.a; sourceTree = "<group>"; };
+		159C08FC175F84B6004ED7D4 /* WebSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocket.cpp; sourceTree = "<group>"; };
+		159C08FD175F84B6004ED7D4 /* WebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebSocket.h; sourceTree = "<group>"; };
+		159C09241762FC1A004ED7D4 /* AudioEngine.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AudioEngine.lua; sourceTree = "<group>"; };
 		15C1533E168310C700D239F2 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../../cocos2dx/proj.ios/cocos2dx.xcodeproj; sourceTree = "<group>"; };
 		15C1537C1683112E00D239F2 /* CCBAnimationManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBAnimationManager.cpp; sourceTree = "<group>"; };
 		15C1537D1683112E00D239F2 /* CCBAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBAnimationManager.h; sourceTree = "<group>"; };
@@ -567,12 +588,55 @@
 				F293B3D915EB7BE500256477 /* Foundation.framework in Frameworks */,
 				F293B3DB15EB7BE500256477 /* CoreGraphics.framework in Frameworks */,
 				1AA88D13171E35AA0023E7B2 /* libluajit.a in Frameworks */,
+				159C08F9175F83D6004ED7D4 /* libwebsockets.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		159B8976175B9AB30005B47D /* script */ = {
+			isa = PBXGroup;
+			children = (
+				159C09241762FC1A004ED7D4 /* AudioEngine.lua */,
+				159B8977175B9AB30005B47D /* CCBReaderLoad.lua */,
+			);
+			path = script;
+			sourceTree = "<group>";
+		};
+		159C08DB175F83D6004ED7D4 /* libwebsockets */ = {
+			isa = PBXGroup;
+			children = (
+				159C08E7175F83D6004ED7D4 /* ios */,
+			);
+			path = libwebsockets;
+			sourceTree = "<group>";
+		};
+		159C08E7175F83D6004ED7D4 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				159C08E8175F83D6004ED7D4 /* include */,
+				159C08EA175F83D6004ED7D4 /* lib */,
+			);
+			path = ios;
+			sourceTree = "<group>";
+		};
+		159C08E8175F83D6004ED7D4 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				159C08E9175F83D6004ED7D4 /* libwebsockets.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		159C08EA175F83D6004ED7D4 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				159C08EB175F83D6004ED7D4 /* libwebsockets.a */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
 		15C1533F168310C700D239F2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -726,6 +790,8 @@
 		15C153E01683112E00D239F2 /* network */ = {
 			isa = PBXGroup;
 			children = (
+				159C08FC175F84B6004ED7D4 /* WebSocket.cpp */,
+				159C08FD175F84B6004ED7D4 /* WebSocket.h */,
 				15C153E11683112E00D239F2 /* HttpClient.cpp */,
 				15C153E21683112E00D239F2 /* HttpClient.h */,
 				15C153E31683112E00D239F2 /* HttpRequest.h */,
@@ -1043,6 +1109,7 @@
 		15C155FF168311CB00D239F2 /* lua */ = {
 			isa = PBXGroup;
 			children = (
+				159B8976175B9AB30005B47D /* script */,
 				46C1007916BF786A00F74D54 /* cocos2dx_support */,
 				1AA88A50171D04FC0023E7B2 /* luajit */,
 				15C15650168311CB00D239F2 /* tolua */,
@@ -1096,6 +1163,12 @@
 		46C1007916BF786A00F74D54 /* cocos2dx_support */ = {
 			isa = PBXGroup;
 			children = (
+				159C08D3175F8221004ED7D4 /* Lua_web_socket.cpp */,
+				159C08D4175F8221004ED7D4 /* Lua_web_socket.h */,
+				159B896E175B97D30005B47D /* CCBProxy.cpp */,
+				159B896F175B97D30005B47D /* CCBProxy.h */,
+				159B8970175B97D30005B47D /* Lua_extensions_CCB.cpp */,
+				159B8971175B97D30005B47D /* Lua_extensions_CCB.h */,
 				46C1007A16BF786A00F74D54 /* CCLuaBridge.cpp */,
 				46C1007B16BF786A00F74D54 /* CCLuaBridge.h */,
 				46C1007C16BF786A00F74D54 /* CCLuaEngine.cpp */,
@@ -1145,6 +1218,7 @@
 				15C155FF168311CB00D239F2 /* lua */,
 				F293B6E815EB807E00256477 /* Other Sources */,
 				F293B3C915EB7BE500256477 /* Products */,
+				159C08DB175F83D6004ED7D4 /* libwebsockets */,
 				F293BC4615EB859D00256477 /* Resources */,
 			);
 			sourceTree = "<group>";
@@ -1198,6 +1272,7 @@
 		F293BC4615EB859D00256477 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				159B8A27175D9A930005B47D /* cocosbuilderRes */,
 				1AD263A31683506C0089000C /* animations */,
 				1AD263A41683506C0089000C /* app.icf */,
 				1AD263A51683506C0089000C /* background.mp3 */,
@@ -1334,6 +1409,9 @@
 				1AD263D01683506D0089000C /* Shaders in Resources */,
 				1AD263D11683506D0089000C /* TileMaps in Resources */,
 				1AD263D21683506D0089000C /* zwoptex in Resources */,
+				159B8978175B9AB30005B47D /* CCBReaderLoad.lua in Resources */,
+				159B8A28175D9A930005B47D /* cocosbuilderRes in Resources */,
+				159C09251762FC1A004ED7D4 /* AudioEngine.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1485,6 +1563,10 @@
 				46C1009116BF786A00F74D54 /* LuaCocos2d.cpp in Sources */,
 				46C1009216BF786A00F74D54 /* CCLuaObjcBridge.mm in Sources */,
 				46C1009316BF786A00F74D54 /* tolua_fix.c in Sources */,
+				159B8972175B97D30005B47D /* CCBProxy.cpp in Sources */,
+				159B8973175B97D30005B47D /* Lua_extensions_CCB.cpp in Sources */,
+				159C08D5175F8221004ED7D4 /* Lua_web_socket.cpp in Sources */,
+				159C08FE175F84B6004ED7D4 /* WebSocket.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1608,6 +1690,7 @@
 					"\"$(SRCROOT)/../../../../external\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/ios/Simulation\"",
+					"\"$(SRCROOT)/../../../../external/libwebsockets/ios/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -1615,6 +1698,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries",
 					"\"$(SRCROOT)/../../../../scripting/lua/luajit/ios\"",
+					"\"$(SRCROOT)/../../../../external/libwebsockets/ios/lib\"",
 				);
 				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1658,6 +1742,7 @@
 					"\"$(SRCROOT)/../../../../external\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/ios/Simulation\"",
+					"\"$(SRCROOT)/../../../../external/libwebsockets/ios/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -1665,6 +1750,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries",
 					"\"$(SRCROOT)/../../../../scripting/lua/luajit/ios\"",
+					"\"$(SRCROOT)/../../../../external/libwebsockets/ios/lib\"",
 				);
 				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
