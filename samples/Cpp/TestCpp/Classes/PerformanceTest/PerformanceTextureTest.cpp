@@ -27,13 +27,13 @@ void TextureMenuLayer::showCurrentTest()
 {
     CCScene* pScene = NULL;
 
-    switch (m_nCurCase)
+    switch (_curCase)
     {
     case 0:
         pScene = TextureTest::scene();
         break;
     }
-    s_nTexCurCase = m_nCurCase;
+    s_nTexCurCase = _curCase;
 
     if (pScene)
     {

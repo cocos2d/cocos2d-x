@@ -48,16 +48,16 @@ NS_CC_EXT_BEGIN
 class CCControlSaturationBrightnessPicker : public CCControl
 {
     /** Contains the receiver¡¯s current saturation value. */
-    CC_SYNTHESIZE_READONLY(float, m_saturation, Saturation);
+    CC_SYNTHESIZE_READONLY(float, _saturation, Saturation);
     /** Contains the receiver¡¯s current brightness value. */
-    CC_SYNTHESIZE_READONLY(float, m_brightness, Brightness);
+    CC_SYNTHESIZE_READONLY(float, _brightness, Brightness);
 
     //not sure if these need to be there actually. I suppose someone might want to access the sprite?
-    CC_SYNTHESIZE_READONLY(CCSprite*, m_background, Background);
-    CC_SYNTHESIZE_READONLY(CCSprite*, m_overlay, Overlay);
-    CC_SYNTHESIZE_READONLY(CCSprite*, m_shadow, Shadow);
-    CC_SYNTHESIZE_READONLY(CCSprite*, m_slider, Slider);
-    CC_SYNTHESIZE_READONLY(CCPoint, m_startPos, StartPos);
+    CC_SYNTHESIZE_READONLY(CCSprite*, _background, Background);
+    CC_SYNTHESIZE_READONLY(CCSprite*, _overlay, Overlay);
+    CC_SYNTHESIZE_READONLY(CCSprite*, _shadow, Shadow);
+    CC_SYNTHESIZE_READONLY(CCSprite*, _slider, Slider);
+    CC_SYNTHESIZE_READONLY(CCPoint, _startPos, StartPos);
 
 protected:
     int         boxPos;

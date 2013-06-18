@@ -13,7 +13,7 @@ typedef enum tagPaddleState
 
 class Paddle : public CCSprite, public CCTargetedTouchDelegate
 {
-    PaddleState        m_state;
+    PaddleState        _state;
 
 public:
     Paddle(void);

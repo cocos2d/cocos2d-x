@@ -70,7 +70,7 @@ void* cocos_main(void* arg)
                                 "background.ogg",
                                 "fonts/Marker Felt.ttf" };
 
-    downloadFiles(instance->m_runner, filenames, sizeof(filenames)/sizeof(char*));
+    downloadFiles(instance->_runner, filenames, sizeof(filenames)/sizeof(char*));
 #endif
 
     fprintf(stderr, "calling application->run\n");

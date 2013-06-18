@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-CCAccelerometer::CCAccelerometer() : m_pAccelDelegate(NULL)
+CCAccelerometer::CCAccelerometer() : _accelDelegate(NULL)
 {
 }
 
@@ -39,7 +39,7 @@ CCAccelerometer::~CCAccelerometer()
 
 void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
 {
-    m_pAccelDelegate = pDelegate;
+    _accelDelegate = pDelegate;
 
     if (pDelegate)
     {
@@ -56,7 +56,7 @@ void CCAccelerometer::setAccelerometerInterval(float interval)
 
 void CCAccelerometer::update(float x, float y, float z, long sensorTimeStamp)
 {
-    if (m_pAccelDelegate)
+    if (_accelDelegate)
     {
     }
 }

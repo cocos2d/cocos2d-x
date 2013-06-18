@@ -65,7 +65,7 @@ public:
 
 protected:
     /** The inner action */
-    CCActionInterval *m_pInner;
+    CCActionInterval *_inner;
 };
 
 /** 
@@ -78,9 +78,9 @@ public:
     virtual ~CCEaseRateAction(void);
 
     /** set rate value for the actions */
-    inline void setRate(float rate) { m_fRate = rate; }
+    inline void setRate(float rate) { _rate = rate; }
     /** get rate value for the actions */
-    inline float getRate(void) { return m_fRate; }
+    inline float getRate(void) { return _rate; }
 
     /** Initializes the action with the inner action and the rate parameter */
     bool initWithAction(CCActionInterval *pAction, float fRate);
@@ -95,7 +95,7 @@ public:
     static CCEaseRateAction* create(CCActionInterval* pAction, float fRate);
 
 protected:
-    float m_fRate;
+    float _rate;
 };
 
 /** 
@@ -265,9 +265,9 @@ class CC_DLL CCEaseElastic : public CCActionEase
 {
 public:
     /** get period of the wave in radians. default is 0.3 */
-    inline float getPeriod(void) { return m_fPeriod; }
+    inline float getPeriod(void) { return _period; }
     /** set period of the wave in radians. */
-    inline void setPeriod(float fPeriod) { m_fPeriod = fPeriod; }
+    inline void setPeriod(float fPeriod) { _period = fPeriod; }
 
     /** Initializes the action with the inner action and the period in radians (default is 0.3) */
     bool initWithAction(CCActionInterval *pAction, float fPeriod = 0.3f);
@@ -282,7 +282,7 @@ public:
     static CCEaseElastic* create(CCActionInterval *pAction, float fPeriod);
     static CCEaseElastic* create(CCActionInterval *pAction);
 protected:
-    float m_fPeriod;
+    float _period;
 };
 
 /** 

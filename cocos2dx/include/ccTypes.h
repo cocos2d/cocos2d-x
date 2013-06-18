@@ -372,16 +372,16 @@ typedef struct _ccFontShadow
 public:
     
     // shadow is not enabled by default
-    _ccFontShadow(): m_shadowEnabled(false) {}
+    _ccFontShadow(): _shadowEnabled(false) {}
     
     // true if shadow enabled
-    bool   m_shadowEnabled;
+    bool   _shadowEnabled;
     // shadow x and y offset
-	CCSize m_shadowOffset;
+	CCSize _shadowOffset;
     // shadow blurrines
-	float  m_shadowBlur;
+	float  _shadowBlur;
     // shadow opacity
-	float  m_shadowOpacity;
+	float  _shadowOpacity;
     
 } ccFontShadow;
 
@@ -391,14 +391,14 @@ typedef struct _ccFontStroke
 public:
     
     // stroke is disabled by default
-    _ccFontStroke(): m_strokeEnabled(false) {}
+    _ccFontStroke(): _strokeEnabled(false) {}
     
     // true if stroke enabled
-    bool        m_strokeEnabled;
+    bool        _strokeEnabled;
     // stroke color
-	ccColor3B   m_strokeColor;
+	ccColor3B   _strokeColor;
     // stroke size
-    float       m_strokeSize;
+    float       _strokeSize;
     
 } ccFontStroke;
 
@@ -407,27 +407,27 @@ typedef struct _ccFontDefinition
 {
 public:
     
-    _ccFontDefinition():  m_alignment(kCCTextAlignmentCenter),
-    m_vertAlignment(kCCVerticalTextAlignmentTop),
-    m_fontFillColor(ccWHITE)
-    { m_dimensions = CCSizeMake(0,0); }
+    _ccFontDefinition():  _alignment(kCCTextAlignmentCenter),
+    _vertAlignment(kCCVerticalTextAlignmentTop),
+    _fontFillColor(ccWHITE)
+    { _dimensions = CCSizeMake(0,0); }
     
     // font name
-    std::string             m_fontName;
+    std::string             _fontName;
     // font size
-    int                     m_fontSize;
+    int                     _fontSize;
     // horizontal alignment
-    CCTextAlignment         m_alignment;
+    CCTextAlignment         _alignment;
     // vertical alignment
-    CCVerticalTextAlignment m_vertAlignment;
+    CCVerticalTextAlignment _vertAlignment;
     // renering box
-    CCSize                  m_dimensions;
+    CCSize                  _dimensions;
     // font color
-    ccColor3B               m_fontFillColor;
+    ccColor3B               _fontFillColor;
     // font shadow
-    ccFontShadow            m_shadow;
+    ccFontShadow            _shadow;
     // font stroke
-    ccFontStroke            m_stroke;
+    ccFontStroke            _stroke;
     
 } ccFontDefinition;
 

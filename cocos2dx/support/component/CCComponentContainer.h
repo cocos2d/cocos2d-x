@@ -51,8 +51,8 @@ private:
     void alloc(void);
     
 private:
-    CCDictionary *m_pComponents;        ///< Dictionary of components
-    CCNode *m_pOwner;
+    CCDictionary *_components;        ///< Dictionary of components
+    CCNode *_owner;
     
     friend class CCNode;
 };

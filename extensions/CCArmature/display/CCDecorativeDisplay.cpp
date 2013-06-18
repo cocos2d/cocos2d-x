@@ -40,23 +40,23 @@ CCDecorativeDisplay *CCDecorativeDisplay::create()
 }
 
 CCDecorativeDisplay::CCDecorativeDisplay()
-    : m_pDisplay(NULL)
-    , m_pDisplayData(NULL)
+    : _display(NULL)
+    , _displayData(NULL)
 
 {
 #if ENABLE_PHYSICS_DETECT
-    m_pColliderDetector = NULL;
+    _colliderDetector = NULL;
 #endif
 }
 
 
 CCDecorativeDisplay::~CCDecorativeDisplay(void)
 {
-    CC_SAFE_RELEASE_NULL(m_pDisplayData);
-    CC_SAFE_RELEASE_NULL(m_pDisplay);
+    CC_SAFE_RELEASE_NULL(_displayData);
+    CC_SAFE_RELEASE_NULL(_display);
 
 #if ENABLE_PHYSICS_DETECT
-    CC_SAFE_RELEASE_NULL(m_pColliderDetector);
+    CC_SAFE_RELEASE_NULL(_colliderDetector);
 #endif
 }
 

@@ -69,8 +69,8 @@ public:
 	float getEffectsVolume();
 
 private:
-	SLmillibel m_musicVolume;
-	SLmillibel m_effectVolume;
+	SLmillibel _musicVolume;
+	SLmillibel _effectVolume;
 };
 
 #endif

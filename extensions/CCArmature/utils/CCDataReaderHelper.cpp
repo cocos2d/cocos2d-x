@@ -580,19 +580,19 @@ CCFrameData *CCDataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  ti
 
     if(frameXML->Attribute(A_MOVEMENT) != NULL)
     {
-        frameData->m_strMovement = frameXML->Attribute(A_MOVEMENT);
+        frameData->_movement = frameXML->Attribute(A_MOVEMENT);
     }
     if(frameXML->Attribute(A_EVENT) != NULL)
     {
-        frameData->m_strEvent = frameXML->Attribute(A_EVENT);
+        frameData->_event = frameXML->Attribute(A_EVENT);
     }
     if(frameXML->Attribute(A_SOUND) != NULL)
     {
-        frameData->m_strSound = frameXML->Attribute(A_SOUND);
+        frameData->_sound = frameXML->Attribute(A_SOUND);
     }
     if(frameXML->Attribute(A_SOUND_EFFECT) != NULL)
     {
-        frameData->m_strSoundEffect = frameXML->Attribute(A_SOUND_EFFECT);
+        frameData->_soundEffect = frameXML->Attribute(A_SOUND_EFFECT);
     }
 
 
@@ -1054,7 +1054,7 @@ CCFrameData *CCDataReaderHelper::decodeFrame(cs::CSJsonDictionary &json)
     const char *event = json.getItemStringValue(A_EVENT);
     if (event != NULL)
     {
-        frameData->m_strEvent = event;
+        frameData->_event = event;
     }
 
     return frameData;

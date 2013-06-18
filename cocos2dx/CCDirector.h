@@ -111,38 +111,38 @@ public:
     // attribute
 
     /** Get current running Scene. Director can only run one Scene at the time */
-    inline CCScene* getRunningScene(void) { return m_pRunningScene; }
+    inline CCScene* getRunningScene(void) { return _runningScene; }
 
     /** Get the FPS value */
-    inline double getAnimationInterval(void) { return m_dAnimationInterval; }
+    inline double getAnimationInterval(void) { return _animationInterval; }
     /** Set the FPS value. */
     virtual void setAnimationInterval(double dValue) = 0;
 
     /** Whether or not to display the FPS on the bottom-left corner */
-    inline bool isDisplayStats(void) { return m_bDisplayStats; }
+    inline bool isDisplayStats(void) { return _displayStats; }
     /** Display the FPS on the bottom-left corner */
-    inline void setDisplayStats(bool bDisplayStats) { m_bDisplayStats = bDisplayStats; }
+    inline void setDisplayStats(bool bDisplayStats) { _displayStats = bDisplayStats; }
     
     /** seconds per frame */
-    inline float getSecondsPerFrame() { return m_fSecondsPerFrame; }
+    inline float getSecondsPerFrame() { return _secondsPerFrame; }
 
     /** Get the CCEGLView, where everything is rendered */
-    inline CCEGLView* getOpenGLView(void) { return m_pobOpenGLView; }
+    inline CCEGLView* getOpenGLView(void) { return _openGLView; }
     void setOpenGLView(CCEGLView *pobOpenGLView);
 
-    inline bool isNextDeltaTimeZero(void) { return m_bNextDeltaTimeZero; }
+    inline bool isNextDeltaTimeZero(void) { return _nextDeltaTimeZero; }
     void setNextDeltaTimeZero(bool bNextDeltaTimeZero);
 
     /** Whether or not the Director is paused */
-    inline bool isPaused(void) { return m_bPaused; }
+    inline bool isPaused(void) { return _paused; }
 
     /** How many frames were called since the director started */
-    inline unsigned int getTotalFrames(void) { return m_uTotalFrames; }
+    inline unsigned int getTotalFrames(void) { return _totalFrames; }
     
     /** Sets an OpenGL projection
      @since v0.8.2
      */
-    inline ccDirectorProjection getProjection(void) { return m_eProjection; }
+    inline ccDirectorProjection getProjection(void) { return _projection; }
     void setProjection(ccDirectorProjection kProjection);
     
     /** Sets the glViewport*/
@@ -156,7 +156,7 @@ public:
      If the new scene replaces the old one, the it will receive the "cleanup" message.
      @since v0.99.0
      */
-    inline bool isSendCleanupToScene(void) { return m_bSendCleanupToScene; }
+    inline bool isSendCleanupToScene(void) { return _sendCleanupToScene; }
 
     /** This object will be visited after the main scene is visited.
      This object MUST implement the "visit" selector.
@@ -316,36 +316,36 @@ public:
     /** CCScheduler associated with this director
      @since v2.0
      */
-    CC_PROPERTY(CCScheduler*, m_pScheduler, Scheduler);
+    CC_PROPERTY(CCScheduler*, _scheduler, Scheduler);
 
     /** CCActionManager associated with this director
      @since v2.0
      */
-    CC_PROPERTY(CCActionManager*, m_pActionManager, ActionManager);
+    CC_PROPERTY(CCActionManager*, _actionManager, ActionManager);
 
     /** CCTouchDispatcher associated with this director
      @since v2.0
      */
-    CC_PROPERTY(CCTouchDispatcher*, m_pTouchDispatcher, TouchDispatcher);
+    CC_PROPERTY(CCTouchDispatcher*, _touchDispatcher, TouchDispatcher);
 
 #ifdef KEYBOARD_SUPPORT
     /** CCKeyboardDispatcher associated with this director
      @since v?.?
      */
-    CC_PROPERTY(CCKeyboardDispatcher*, m_pKeyboardDispatcher, KeyboardDispatcher);
+    CC_PROPERTY(CCKeyboardDispatcher*, _keyboardDispatcher, KeyboardDispatcher);
 #endif
     /** CCKeypadDispatcher associated with this director
      @since v2.0
      */
-    CC_PROPERTY(CCKeypadDispatcher*, m_pKeypadDispatcher, KeypadDispatcher);
+    CC_PROPERTY(CCKeypadDispatcher*, _keypadDispatcher, KeypadDispatcher);
 
     /** CCAccelerometer associated with this director
      @since v2.0
      */
-    CC_PROPERTY(CCAccelerometer*, m_pAccelerometer, Accelerometer);
+    CC_PROPERTY(CCAccelerometer*, _accelerometer, Accelerometer);
 
     /* delta time since last tick to main loop */
-	CC_PROPERTY_READONLY(float, m_fDeltaTime, DeltaTime);
+	CC_PROPERTY_READONLY(float, _deltaTime, DeltaTime);
 	
 public:
     /** returns a shared instance of the director */
@@ -354,7 +354,7 @@ public:
 protected:
 
     void purgeDirector();
-    bool m_bPurgeDirecotorInNextLoop; // this flag will be set to true in end()
+    bool _purgeDirecotorInNextLoop; // this flag will be set to true in end()
     
     void setNextScene(void);
     
@@ -367,66 +367,66 @@ protected:
     void calculateDeltaTime();
 protected:
     /* The CCEGLView, where everything is rendered */
-    CCEGLView    *m_pobOpenGLView;
+    CCEGLView    *_openGLView;
 
-    double m_dAnimationInterval;
-    double m_dOldAnimationInterval;
+    double _animationInterval;
+    double _oldAnimationInterval;
 
     /* landscape mode ? */
-    bool m_bLandscape;
+    bool _landscape;
     
-    bool m_bDisplayStats;
-    float m_fAccumDt;
-    float m_fFrameRate;
+    bool _displayStats;
+    float _accumDt;
+    float _frameRate;
     
-    CCLabelAtlas *m_pFPSLabel;
-    CCLabelAtlas *m_pSPFLabel;
-    CCLabelAtlas *m_pDrawsLabel;
+    CCLabelAtlas *_FPSLabel;
+    CCLabelAtlas *_SPFLabel;
+    CCLabelAtlas *_drawsLabel;
     
     /** Whether or not the Director is paused */
-    bool m_bPaused;
+    bool _paused;
 
     /* How many frames were called since the director started */
-    unsigned int m_uTotalFrames;
-    unsigned int m_uFrames;
-    float m_fSecondsPerFrame;
+    unsigned int _totalFrames;
+    unsigned int _frames;
+    float _secondsPerFrame;
      
     /* The running scene */
-    CCScene *m_pRunningScene;
+    CCScene *_runningScene;
     
     /* will be the next 'runningScene' in the next frame
      nextScene is a weak reference. */
-    CCScene *m_pNextScene;
+    CCScene *_nextScene;
     
     /* If YES, then "old" scene will receive the cleanup message */
-    bool    m_bSendCleanupToScene;
+    bool    _sendCleanupToScene;
 
     /* scheduled scenes */
-    CCArray* m_pobScenesStack;
+    CCArray* _scenesStack;
     
     /* last time the main loop was updated */
-    struct cc_timeval *m_pLastUpdate;
+    struct cc_timeval *_lastUpdate;
 
     /* whether or not the next delta time will be zero */
-    bool m_bNextDeltaTimeZero;
+    bool _nextDeltaTimeZero;
     
     /* projection used */
-    ccDirectorProjection m_eProjection;
+    ccDirectorProjection _projection;
 
     /* window size in points */
-    CCSize    m_obWinSizeInPoints;
+    CCSize    _winSizeInPoints;
     
     /* content scale factor */
-    float    m_fContentScaleFactor;
+    float    _contentScaleFactor;
 
     /* store the fps string */
-    char *m_pszFPS;
+    char *_FPS;
 
     /* This object will be visited after the scene. Useful to hook a notification node */
-    CCNode *m_pNotificationNode;
+    CCNode *_notificationNode;
 
     /* Projection protocol delegate */
-    CCDirectorDelegate *m_pProjectionDelegate;
+    CCDirectorDelegate *_projectionDelegate;
     
     // CCEGLViewProtocol will recreate stats labels to fit visible rect
     friend class CCEGLViewProtocol;
@@ -445,7 +445,7 @@ class CCDisplayLinkDirector : public CCDirector
 {
 public:
     CCDisplayLinkDirector(void) 
-        : m_bInvalid(false)
+        : _invalid(false)
     {}
 
     virtual void mainLoop(void);
@@ -454,7 +454,7 @@ public:
     virtual void stopAnimation();
 
 protected:
-    bool m_bInvalid;
+    bool _invalid;
 };
 
 // end of base_node group

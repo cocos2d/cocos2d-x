@@ -55,23 +55,23 @@ public:
     virtual ~CCGridBase(void);
 
     /** whether or not the grid is active */
-    inline bool isActive(void) { return m_bActive; }
+    inline bool isActive(void) { return _active; }
     void setActive(bool bActive);
 
     /** number of times that the grid will be reused */
-    inline int getReuseGrid(void) { return m_nReuseGrid; }
-    inline void setReuseGrid(int nReuseGrid) { m_nReuseGrid = nReuseGrid; }
+    inline int getReuseGrid(void) { return _reuseGrid; }
+    inline void setReuseGrid(int nReuseGrid) { _reuseGrid = nReuseGrid; }
 
     /** size of the grid */
-    inline const CCSize& getGridSize(void) { return m_sGridSize; }
-    inline void setGridSize(const CCSize& gridSize) { m_sGridSize = gridSize; }
+    inline const CCSize& getGridSize(void) { return _gridSize; }
+    inline void setGridSize(const CCSize& gridSize) { _gridSize = gridSize; }
 
     /** pixels between the grids */
-    inline const CCPoint& getStep(void) { return m_obStep; }
-    inline void setStep(const CCPoint& step) { m_obStep = step; }
+    inline const CCPoint& getStep(void) { return _step; }
+    inline void setStep(const CCPoint& step) { _step = step; }
 
     /** is texture flipped */
-    inline bool isTextureFlipped(void) { return m_bIsTextureFlipped; }
+    inline bool isTextureFlipped(void) { return _isTextureFlipped; }
     void setTextureFlipped(bool bFlipped);
 
     bool initWithSize(const CCSize& gridSize, CCTexture2D *pTexture, bool bFlipped);
@@ -93,15 +93,15 @@ public:
     void set2DProjection(void);
 
 protected:
-    bool m_bActive;
-    int  m_nReuseGrid;
-    CCSize m_sGridSize;
-    CCTexture2D *m_pTexture;
-    CCPoint m_obStep;
-    CCGrabber *m_pGrabber;
-    bool m_bIsTextureFlipped;
-    CCGLProgram* m_pShaderProgram;
-    ccDirectorProjection m_directorProjection;
+    bool _active;
+    int  _reuseGrid;
+    CCSize _gridSize;
+    CCTexture2D *_texture;
+    CCPoint _step;
+    CCGrabber *_grabber;
+    bool _isTextureFlipped;
+    CCGLProgram* _shaderProgram;
+    ccDirectorProjection _directorProjection;
 };
 
 /**
@@ -134,10 +134,10 @@ public:
     static CCGrid3D* create(const CCSize& gridSize);
     
 protected:
-    GLvoid *m_pTexCoordinates;
-    GLvoid *m_pVertices;
-    GLvoid *m_pOriginalVertices;
-    GLushort *m_pIndices;
+    GLvoid *_texCoordinates;
+    GLvoid *_vertices;
+    GLvoid *_originalVertices;
+    GLushort *_indices;
 };
 
 /**
@@ -172,10 +172,10 @@ public:
     static CCTiledGrid3D* create(const CCSize& gridSize);
     
 protected:
-    GLvoid *m_pTexCoordinates;
-    GLvoid *m_pVertices;
-    GLvoid *m_pOriginalVertices;
-    GLushort *m_pIndices;
+    GLvoid *_texCoordinates;
+    GLvoid *_vertices;
+    GLvoid *_originalVertices;
+    GLushort *_indices;
 };
 
 // end of effects group

@@ -38,8 +38,8 @@ class CC_DLL CCBool : public CCObject
 {
 public:
     CCBool(bool v)
-        : m_bValue(v) {}
-    bool getValue() const {return m_bValue;}
+        : _value(v) {}
+    bool getValue() const {return _value;}
 
     static CCBool* create(bool v)
     {
@@ -55,7 +55,7 @@ public:
     virtual void acceptVisitor(CCDataVisitor &visitor) { visitor.visit(this); }
 
 private:
-    bool m_bValue;
+    bool _value;
 };
 
 // end of data_structure group

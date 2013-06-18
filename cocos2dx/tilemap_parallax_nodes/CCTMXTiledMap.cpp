@@ -88,42 +88,42 @@ bool CCTMXTiledMap::initWithXML(const char* tmxString, const char* resourcePath)
 }
 
 CCTMXTiledMap::CCTMXTiledMap()
-    :m_tMapSize(CCSizeZero)
-    ,m_tTileSize(CCSizeZero)        
-    ,m_pObjectGroups(NULL)
-    ,m_pProperties(NULL)
-    ,m_pTileProperties(NULL)
+    :_mapSize(CCSizeZero)
+    ,_tileSize(CCSizeZero)        
+    ,_objectGroups(NULL)
+    ,_properties(NULL)
+    ,_tileProperties(NULL)
 {
 }
 CCTMXTiledMap::~CCTMXTiledMap()
 {
-    CC_SAFE_RELEASE(m_pProperties);
-    CC_SAFE_RELEASE(m_pObjectGroups);
-    CC_SAFE_RELEASE(m_pTileProperties);
+    CC_SAFE_RELEASE(_properties);
+    CC_SAFE_RELEASE(_objectGroups);
+    CC_SAFE_RELEASE(_tileProperties);
 }
 
 CCArray* CCTMXTiledMap::getObjectGroups()
 {
-    return m_pObjectGroups;
+    return _objectGroups;
 }
 
 void CCTMXTiledMap::setObjectGroups(CCArray* var)
 {
     CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(m_pObjectGroups);
-    m_pObjectGroups = var;
+    CC_SAFE_RELEASE(_objectGroups);
+    _objectGroups = var;
 }
 
 CCDictionary * CCTMXTiledMap::getProperties()
 {
-    return m_pProperties;
+    return _properties;
 }
 
 void CCTMXTiledMap::setProperties(CCDictionary* var)
 {
     CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(m_pProperties);
-    m_pProperties = var;
+    CC_SAFE_RELEASE(_properties);
+    _properties = var;
 }
 
 // private
@@ -133,7 +133,7 @@ CCTMXLayer * CCTMXTiledMap::parseLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *
     CCTMXLayer *layer = CCTMXLayer::create(tileset, layerInfo, mapInfo);
 
     // tell the layerinfo to release the ownership of the tiles map.
-    layerInfo->m_bOwnTiles = false;
+    layerInfo->_ownTiles = false;
     layer->setupTiles();
 
     return layer;
@@ -141,7 +141,7 @@ CCTMXLayer * CCTMXTiledMap::parseLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *
 
 CCTMXTilesetInfo * CCTMXTiledMap::tilesetForLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo)
 {
-    CCSize size = layerInfo->m_tLayerSize;
+    CCSize size = layerInfo->_layerSize;
     CCArray* tilesets = mapInfo->getTilesets();
     if (tilesets && tilesets->count()>0)
     {
@@ -157,7 +157,7 @@ CCTMXTilesetInfo * CCTMXTiledMap::tilesetForLayer(CCTMXLayerInfo *layerInfo, CCT
                     for( unsigned int x=0; x < size.width; x++ ) 
                     {
                         unsigned int pos = (unsigned int)(x + size.width * y);
-                        unsigned int gid = layerInfo->m_pTiles[ pos ];
+                        unsigned int gid = layerInfo->_tiles[ pos ];
 
                         // gid are stored in little endian.
                         // if host is big endian, then swap
@@ -170,7 +170,7 @@ CCTMXTilesetInfo * CCTMXTiledMap::tilesetForLayer(CCTMXLayerInfo *layerInfo, CCT
                         {
                             // Optimization: quick return
                             // if the layer is invalid (more than 1 tileset per layer) an CCAssert will be thrown later
-                            if( (gid & kCCFlippedMask) >= tileset->m_uFirstGid )
+                            if( (gid & kCCFlippedMask) >= tileset->_firstGid )
                                 return tileset;
                         }
                     }
@@ -180,27 +180,27 @@ CCTMXTilesetInfo * CCTMXTiledMap::tilesetForLayer(CCTMXLayerInfo *layerInfo, CCT
     }
 
     // If all the tiles are 0, return empty tileset
-    CCLOG("cocos2d: Warning: TMX Layer '%s' has no tiles", layerInfo->m_sName.c_str());
+    CCLOG("cocos2d: Warning: TMX Layer '%s' has no tiles", layerInfo->_name.c_str());
     return NULL;
 }
 
 void CCTMXTiledMap::buildWithMapInfo(CCTMXMapInfo* mapInfo)
 {
-    m_tMapSize = mapInfo->getMapSize();
-    m_tTileSize = mapInfo->getTileSize();
-    m_nMapOrientation = mapInfo->getOrientation();
+    _mapSize = mapInfo->getMapSize();
+    _tileSize = mapInfo->getTileSize();
+    _mapOrientation = mapInfo->getOrientation();
 
-    CC_SAFE_RELEASE(m_pObjectGroups);
-    m_pObjectGroups = mapInfo->getObjectGroups();
-    CC_SAFE_RETAIN(m_pObjectGroups);
+    CC_SAFE_RELEASE(_objectGroups);
+    _objectGroups = mapInfo->getObjectGroups();
+    CC_SAFE_RETAIN(_objectGroups);
 
-    CC_SAFE_RELEASE(m_pProperties);
-    m_pProperties = mapInfo->getProperties();
-    CC_SAFE_RETAIN(m_pProperties);
+    CC_SAFE_RELEASE(_properties);
+    _properties = mapInfo->getProperties();
+    CC_SAFE_RETAIN(_properties);
 
-    CC_SAFE_RELEASE(m_pTileProperties);
-    m_pTileProperties = mapInfo->getTileProperties();
-    CC_SAFE_RETAIN(m_pTileProperties);
+    CC_SAFE_RELEASE(_tileProperties);
+    _tileProperties = mapInfo->getTileProperties();
+    CC_SAFE_RETAIN(_tileProperties);
 
     int idx=0;
 
@@ -212,7 +212,7 @@ void CCTMXTiledMap::buildWithMapInfo(CCTMXMapInfo* mapInfo)
         CCARRAY_FOREACH(layers, pObj)
         {
             layerInfo = (CCTMXLayerInfo*)pObj;
-            if (layerInfo && layerInfo->m_bVisible)
+            if (layerInfo && layerInfo->_visible)
             {
                 CCTMXLayer *child = parseLayer(layerInfo, mapInfo);
                 addChild((CCNode*)child, idx, idx);
@@ -235,7 +235,7 @@ CCTMXLayer * CCTMXTiledMap::layerNamed(const char *layerName)
 {
     CCAssert(layerName != NULL && strlen(layerName) > 0, "Invalid layer name!");
     CCObject* pObj = NULL;
-    CCARRAY_FOREACH(m_pChildren, pObj) 
+    CCARRAY_FOREACH(_children, pObj) 
     {
         CCTMXLayer* layer = dynamic_cast<CCTMXLayer*>(pObj);
         if(layer)
@@ -256,11 +256,11 @@ CCTMXObjectGroup * CCTMXTiledMap::objectGroupNamed(const char *groupName)
     CCAssert(groupName != NULL && strlen(groupName) > 0, "Invalid group name!");
 
     std::string sGroupName = groupName;
-    if (m_pObjectGroups && m_pObjectGroups->count()>0)
+    if (_objectGroups && _objectGroups->count()>0)
     {
         CCTMXObjectGroup* objectGroup = NULL;
         CCObject* pObj = NULL;
-        CCARRAY_FOREACH(m_pObjectGroups, pObj)
+        CCARRAY_FOREACH(_objectGroups, pObj)
         {
             objectGroup = (CCTMXObjectGroup*)(pObj);
             if (objectGroup && objectGroup->getGroupName() == sGroupName)
@@ -276,12 +276,12 @@ CCTMXObjectGroup * CCTMXTiledMap::objectGroupNamed(const char *groupName)
 
 CCString* CCTMXTiledMap::propertyNamed(const char *propertyName)
 {
-    return (CCString*)m_pProperties->objectForKey(propertyName);
+    return (CCString*)_properties->objectForKey(propertyName);
 }
 
 CCDictionary* CCTMXTiledMap::propertiesForGID(int GID)
 {
-    return (CCDictionary*)m_pTileProperties->objectForKey(GID);
+    return (CCDictionary*)_tileProperties->objectForKey(GID);
 }
         
 

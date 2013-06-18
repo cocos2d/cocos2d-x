@@ -57,8 +57,8 @@ private:
     CCSpriteFrameCacheHelper();
     ~CCSpriteFrameCacheHelper();
 
-    std::map<std::string, std::string> m_Display2ImageMap;
-    CCDictionary *m_pDisplay2TextureAtlas;
+    std::map<std::string, std::string> _display2ImageMap;
+    CCDictionary *_display2TextureAtlas;
 
     static CCSpriteFrameCacheHelper *s_SpriteFrameCacheHelper;
 };

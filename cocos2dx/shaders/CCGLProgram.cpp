@@ -46,13 +46,13 @@ typedef struct _hashUniformEntry
 } tHashUniformEntry;
 
 CCGLProgram::CCGLProgram()
-: m_uProgram(0)
-, m_uVertShader(0)
-, m_uFragShader(0)
-, m_pHashForUniforms(NULL)
-, m_bUsesTime(false)
+: _program(0)
+, _vertShader(0)
+, _fragShader(0)
+, _hashForUniforms(NULL)
+, _usesTime(false)
 {
-    memset(m_uUniforms, 0, sizeof(m_uUniforms));
+    memset(_uniforms, 0, sizeof(_uniforms));
 }
 
 CCGLProgram::~CCGLProgram()
@@ -60,20 +60,20 @@ CCGLProgram::~CCGLProgram()
     CCLOGINFO("cocos2d: %s %d deallocing %p", __FUNCTION__, __LINE__, this);
 
     // there is no need to delete the shaders. They should have been already deleted.
-    CCAssert(m_uVertShader == 0, "Vertex Shaders should have been already deleted");
-    CCAssert(m_uFragShader == 0, "Fragment Shaders should have been already deleted");
+    CCAssert(_vertShader == 0, "Vertex Shaders should have been already deleted");
+    CCAssert(_fragShader == 0, "Fragment Shaders should have been already deleted");
 
-    if (m_uProgram) 
+    if (_program) 
     {
-        ccGLDeleteProgram(m_uProgram);
+        ccGLDeleteProgram(_program);
     }
 
     tHashUniformEntry *current_element, *tmp;
 
     // Purge uniform hash
-    HASH_ITER(hh, m_pHashForUniforms, current_element, tmp)
+    HASH_ITER(hh, _hashForUniforms, current_element, tmp)
     {
-        HASH_DEL(m_pHashForUniforms, current_element);
+        HASH_DEL(_hashForUniforms, current_element);
         free(current_element->value);
         free(current_element);
     }
@@ -81,14 +81,14 @@ CCGLProgram::~CCGLProgram()
 
 bool CCGLProgram::initWithVertexShaderByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
 {
-    m_uProgram = glCreateProgram();
+    _program = glCreateProgram();
     CHECK_GL_ERROR_DEBUG();
 
-    m_uVertShader = m_uFragShader = 0;
+    _vertShader = _fragShader = 0;
 
     if (vShaderByteArray)
     {
-        if (!compileShader(&m_uVertShader, GL_VERTEX_SHADER, vShaderByteArray))
+        if (!compileShader(&_vertShader, GL_VERTEX_SHADER, vShaderByteArray))
         {
             CCLOG("cocos2d: ERROR: Failed to compile vertex shader");
         }
@@ -97,23 +97,23 @@ bool CCGLProgram::initWithVertexShaderByteArray(const GLchar* vShaderByteArray, 
     // Create and compile fragment shader
     if (fShaderByteArray)
     {
-        if (!compileShader(&m_uFragShader, GL_FRAGMENT_SHADER, fShaderByteArray))
+        if (!compileShader(&_fragShader, GL_FRAGMENT_SHADER, fShaderByteArray))
         {
             CCLOG("cocos2d: ERROR: Failed to compile fragment shader");
         }
     }
 
-    if (m_uVertShader)
+    if (_vertShader)
     {
-        glAttachShader(m_uProgram, m_uVertShader);
+        glAttachShader(_program, _vertShader);
     }
     CHECK_GL_ERROR_DEBUG();
 
-    if (m_uFragShader)
+    if (_fragShader)
     {
-        glAttachShader(m_uProgram, m_uFragShader);
+        glAttachShader(_program, _fragShader);
     }
-    m_pHashForUniforms = NULL;
+    _hashForUniforms = NULL;
     
     CHECK_GL_ERROR_DEBUG();
 
@@ -133,7 +133,7 @@ const char* CCGLProgram::description()
     return CCString::createWithFormat("<CCGLProgram = "
                                       CC_FORMAT_PRINTF_SIZE_T
                                       " | Program = %i, VertexShader = %i, FragmentShader = %i>",
-                                      (size_t)this, m_uProgram, m_uVertShader, m_uFragShader)->getCString();
+                                      (size_t)this, _program, _vertShader, _fragShader)->getCString();
 }
 
 bool CCGLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source)
@@ -192,63 +192,63 @@ bool CCGLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* sour
 
 void CCGLProgram::addAttribute(const char* attributeName, GLuint index)
 {
-    glBindAttribLocation(m_uProgram, index, attributeName);
+    glBindAttribLocation(_program, index, attributeName);
 }
 
 void CCGLProgram::updateUniforms()
 {
-    m_uUniforms[kCCUniformPMatrix] = glGetUniformLocation(m_uProgram, kCCUniformPMatrix_s);
-	m_uUniforms[kCCUniformMVMatrix] = glGetUniformLocation(m_uProgram, kCCUniformMVMatrix_s);
-	m_uUniforms[kCCUniformMVPMatrix] = glGetUniformLocation(m_uProgram, kCCUniformMVPMatrix_s);
+    _uniforms[kCCUniformPMatrix] = glGetUniformLocation(_program, kCCUniformPMatrix_s);
+	_uniforms[kCCUniformMVMatrix] = glGetUniformLocation(_program, kCCUniformMVMatrix_s);
+	_uniforms[kCCUniformMVPMatrix] = glGetUniformLocation(_program, kCCUniformMVPMatrix_s);
 	
-	m_uUniforms[kCCUniformTime] = glGetUniformLocation(m_uProgram, kCCUniformTime_s);
-	m_uUniforms[kCCUniformSinTime] = glGetUniformLocation(m_uProgram, kCCUniformSinTime_s);
-	m_uUniforms[kCCUniformCosTime] = glGetUniformLocation(m_uProgram, kCCUniformCosTime_s);
+	_uniforms[kCCUniformTime] = glGetUniformLocation(_program, kCCUniformTime_s);
+	_uniforms[kCCUniformSinTime] = glGetUniformLocation(_program, kCCUniformSinTime_s);
+	_uniforms[kCCUniformCosTime] = glGetUniformLocation(_program, kCCUniformCosTime_s);
 	
-	m_bUsesTime = (
-                 m_uUniforms[kCCUniformTime] != -1 ||
-                 m_uUniforms[kCCUniformSinTime] != -1 ||
-                 m_uUniforms[kCCUniformCosTime] != -1
+	_usesTime = (
+                 _uniforms[kCCUniformTime] != -1 ||
+                 _uniforms[kCCUniformSinTime] != -1 ||
+                 _uniforms[kCCUniformCosTime] != -1
                  );
     
-	m_uUniforms[kCCUniformRandom01] = glGetUniformLocation(m_uProgram, kCCUniformRandom01_s);
+	_uniforms[kCCUniformRandom01] = glGetUniformLocation(_program, kCCUniformRandom01_s);
 
-    m_uUniforms[kCCUniformSampler] = glGetUniformLocation(m_uProgram, kCCUniformSampler_s);
+    _uniforms[kCCUniformSampler] = glGetUniformLocation(_program, kCCUniformSampler_s);
 
     this->use();
     
     // Since sample most probably won't change, set it to 0 now.
-    this->setUniformLocationWith1i(m_uUniforms[kCCUniformSampler], 0);
+    this->setUniformLocationWith1i(_uniforms[kCCUniformSampler], 0);
 }
 
 bool CCGLProgram::link()
 {
-    CCAssert(m_uProgram != 0, "Cannot link invalid program");
+    CCAssert(_program != 0, "Cannot link invalid program");
     
     GLint status = GL_TRUE;
     
-    glLinkProgram(m_uProgram);
+    glLinkProgram(_program);
 
-    if (m_uVertShader)
+    if (_vertShader)
     {
-        glDeleteShader(m_uVertShader);
+        glDeleteShader(_vertShader);
     }
     
-    if (m_uFragShader)
+    if (_fragShader)
     {
-        glDeleteShader(m_uFragShader);
+        glDeleteShader(_fragShader);
     }
     
-    m_uVertShader = m_uFragShader = 0;
+    _vertShader = _fragShader = 0;
 	
 #if DEBUG
-    glGetProgramiv(m_uProgram, GL_LINK_STATUS, &status);
+    glGetProgramiv(_program, GL_LINK_STATUS, &status);
 	
     if (status == GL_FALSE)
     {
-        CCLOG("cocos2d: ERROR: Failed to link program: %i", m_uProgram);
-        ccGLDeleteProgram(m_uProgram);
-        m_uProgram = 0;
+        CCLOG("cocos2d: ERROR: Failed to link program: %i", _program);
+        ccGLDeleteProgram(_program);
+        _program = 0;
     }
 #endif
 	
@@ -257,7 +257,7 @@ bool CCGLProgram::link()
 
 void CCGLProgram::use()
 {
-    ccGLUseProgram(m_uProgram);
+    ccGLUseProgram(_program);
 }
 
 const char* CCGLProgram::logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc)
@@ -279,17 +279,17 @@ const char* CCGLProgram::logForOpenGLObject(GLuint object, GLInfoFunction infoFu
 
 const char* CCGLProgram::vertexShaderLog()
 {
-    return this->logForOpenGLObject(m_uVertShader, (GLInfoFunction)&glGetShaderiv, (GLLogFunction)&glGetShaderInfoLog);
+    return this->logForOpenGLObject(_vertShader, (GLInfoFunction)&glGetShaderiv, (GLLogFunction)&glGetShaderInfoLog);
 }
 
 const char* CCGLProgram::fragmentShaderLog()
 {
-    return this->logForOpenGLObject(m_uFragShader, (GLInfoFunction)&glGetShaderiv, (GLLogFunction)&glGetShaderInfoLog);
+    return this->logForOpenGLObject(_fragShader, (GLInfoFunction)&glGetShaderiv, (GLLogFunction)&glGetShaderInfoLog);
 }
 
 const char* CCGLProgram::programLog()
 {
-    return this->logForOpenGLObject(m_uProgram, (GLInfoFunction)&glGetProgramiv, (GLLogFunction)&glGetProgramInfoLog);
+    return this->logForOpenGLObject(_program, (GLInfoFunction)&glGetProgramiv, (GLLogFunction)&glGetProgramInfoLog);
 }
 
 // Uniform cache
@@ -303,7 +303,7 @@ bool CCGLProgram::updateUniformLocation(GLint location, GLvoid* data, unsigned i
     
     bool updated = true;
     tHashUniformEntry *element = NULL;
-    HASH_FIND_INT(m_pHashForUniforms, &location, element);
+    HASH_FIND_INT(_hashForUniforms, &location, element);
 
     if (! element)
     {
@@ -316,7 +316,7 @@ bool CCGLProgram::updateUniformLocation(GLint location, GLvoid* data, unsigned i
         element->value = malloc( bytes );
         memcpy(element->value, data, bytes );
 
-        HASH_ADD_INT(m_pHashForUniforms, location, element);
+        HASH_ADD_INT(_hashForUniforms, location, element);
     }
     else
     {
@@ -336,9 +336,9 @@ bool CCGLProgram::updateUniformLocation(GLint location, GLvoid* data, unsigned i
 GLint CCGLProgram::getUniformLocationForName(const char* name)
 {
     CCAssert(name != NULL, "Invalid uniform name" );
-    CCAssert(m_uProgram != 0, "Invalid operation. Cannot get uniform location when program is not initialized");
+    CCAssert(_program != 0, "Invalid operation. Cannot get uniform location when program is not initialized");
     
-    return glGetUniformLocation(m_uProgram, name);
+    return glGetUniformLocation(_program, name);
 }
 
 void CCGLProgram::setUniformLocationWith1i(GLint location, GLint i1)
@@ -509,11 +509,11 @@ void CCGLProgram::setUniformsForBuiltins()
 	
 	kmMat4Multiply(&matrixMVP, &matrixP, &matrixMV);
     
-    setUniformLocationWithMatrix4fv(m_uUniforms[kCCUniformPMatrix], matrixP.mat, 1);
-    setUniformLocationWithMatrix4fv(m_uUniforms[kCCUniformMVMatrix], matrixMV.mat, 1);
-    setUniformLocationWithMatrix4fv(m_uUniforms[kCCUniformMVPMatrix], matrixMVP.mat, 1);
+    setUniformLocationWithMatrix4fv(_uniforms[kCCUniformPMatrix], matrixP.mat, 1);
+    setUniformLocationWithMatrix4fv(_uniforms[kCCUniformMVMatrix], matrixMV.mat, 1);
+    setUniformLocationWithMatrix4fv(_uniforms[kCCUniformMVPMatrix], matrixMVP.mat, 1);
 	
-	if(m_bUsesTime)
+	if(_usesTime)
     {
 		CCDirector *director = CCDirector::sharedDirector();
 		// This doesn't give the most accurate global time value.
@@ -521,38 +521,38 @@ void CCGLProgram::setUniformsForBuiltins()
 		// Getting Mach time per frame per shader using time could be extremely expensive.
         float time = director->getTotalFrames() * director->getAnimationInterval();
 		
-        setUniformLocationWith4f(m_uUniforms[kCCUniformTime], time/10.0, time, time*2, time*4);
-        setUniformLocationWith4f(m_uUniforms[kCCUniformSinTime], time/8.0, time/4.0, time/2.0, sinf(time));
-        setUniformLocationWith4f(m_uUniforms[kCCUniformCosTime], time/8.0, time/4.0, time/2.0, cosf(time));
+        setUniformLocationWith4f(_uniforms[kCCUniformTime], time/10.0, time, time*2, time*4);
+        setUniformLocationWith4f(_uniforms[kCCUniformSinTime], time/8.0, time/4.0, time/2.0, sinf(time));
+        setUniformLocationWith4f(_uniforms[kCCUniformCosTime], time/8.0, time/4.0, time/2.0, cosf(time));
 	}
 	
-	if (m_uUniforms[kCCUniformRandom01] != -1)
+	if (_uniforms[kCCUniformRandom01] != -1)
     {
-        setUniformLocationWith4f(m_uUniforms[kCCUniformRandom01], CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
+        setUniformLocationWith4f(_uniforms[kCCUniformRandom01], CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
 	}
 }
 
 void CCGLProgram::reset()
 {
-    m_uVertShader = m_uFragShader = 0;
-    memset(m_uUniforms, 0, sizeof(m_uUniforms));
+    _vertShader = _fragShader = 0;
+    memset(_uniforms, 0, sizeof(_uniforms));
     
 
     // it is already deallocated by android
-    //ccGLDeleteProgram(m_uProgram);
-    m_uProgram = 0;
+    //ccGLDeleteProgram(_program);
+    _program = 0;
 
     
     tHashUniformEntry *current_element, *tmp;
     
     // Purge uniform hash
-    HASH_ITER(hh, m_pHashForUniforms, current_element, tmp) 
+    HASH_ITER(hh, _hashForUniforms, current_element, tmp) 
     {
-        HASH_DEL(m_pHashForUniforms, current_element);
+        HASH_DEL(_hashForUniforms, current_element);
         free(current_element->value);
         free(current_element);
     }
-    m_pHashForUniforms = NULL;
+    _hashForUniforms = NULL;
 }
 
 NS_CC_END

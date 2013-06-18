@@ -43,7 +43,7 @@ class CC_DLL CCFileUtilsLinux : public CCFileUtils
 {
     friend class CCFileUtils;
     CCFileUtilsLinux();
-    std::string m_writablePath;
+    std::string _writablePath;
 public:
     /* override funtions */
     bool init();

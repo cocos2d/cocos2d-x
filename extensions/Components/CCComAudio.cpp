@@ -29,7 +29,7 @@ NS_CC_EXT_BEGIN
 
 CCComAudio::CCComAudio(void)
 {
-    m_strName = "Audio";
+    _name = "Audio";
 }
 
 CCComAudio::~CCComAudio(void)
@@ -54,12 +54,12 @@ void CCComAudio::onExit()
 
 bool CCComAudio::isEnabled() const
 {
-    return m_bEnabled;
+    return _enabled;
 }
 
 void CCComAudio::setEnabled(bool b)
 {
-    m_bEnabled = b;
+    _enabled = b;
 }
 
 CCComAudio* CCComAudio::create(void)

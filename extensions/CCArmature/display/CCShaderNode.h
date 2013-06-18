@@ -46,10 +46,10 @@ public:
 
 private:
 
-    ccVertex2F m_center;
-    ccVertex2F m_resolution;
-    float      m_time;
-    GLuint     m_uniformCenter, m_uniformResolution, m_uniformTime;
+    ccVertex2F _center;
+    ccVertex2F _resolution;
+    float      _time;
+    GLuint     _uniformCenter, _uniformResolution, _uniformTime;
 };
 
 NS_CC_EXT_END

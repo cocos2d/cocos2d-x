@@ -51,7 +51,7 @@ CCEGLView::~CCEGLView()
 
 bool CCEGLView::isOpenGLReady()
 {
-    return (m_obScreenSize.width != 0 && m_obScreenSize.height != 0);
+    return (_screenSize.width != 0 && _screenSize.height != 0);
 }
 
 Timer*

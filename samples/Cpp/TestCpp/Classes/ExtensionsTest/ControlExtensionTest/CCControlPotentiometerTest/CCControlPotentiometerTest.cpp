@@ -25,14 +25,14 @@
 #include "CCControlPotentiometerTest.h"
 
 CCControlPotentiometerTest::CCControlPotentiometerTest()
-: m_pDisplayValueLabel(NULL)
+: _displayValueLabel(NULL)
 {
 
 }
 
 CCControlPotentiometerTest::~CCControlPotentiometerTest()
 {
-    CC_SAFE_RELEASE(m_pDisplayValueLabel);
+    CC_SAFE_RELEASE(_displayValueLabel);
 }
 
 bool CCControlPotentiometerTest::init()
@@ -57,8 +57,8 @@ bool CCControlPotentiometerTest::init()
         
         this->setDisplayValueLabel(CCLabelTTF::create("", "HelveticaNeue-Bold", 30));
 
-        m_pDisplayValueLabel->setPosition(background->getPosition());
-        layer->addChild(m_pDisplayValueLabel);
+        _displayValueLabel->setPosition(background->getPosition());
+        layer->addChild(_displayValueLabel);
 		
         // Add the slider
         CCControlPotentiometer *potentiometer = CCControlPotentiometer::create("extensions/potentiometerTrack.png"
@@ -88,6 +88,6 @@ void CCControlPotentiometerTest::valueChanged(CCObject *sender, CCControlEvent c
 {
     CCControlPotentiometer* pControl = (CCControlPotentiometer*)sender;
 	// Change value of label.
-    m_pDisplayValueLabel->setString(CCString::createWithFormat("%.02f", pControl->getValue())->getCString());	
+    _displayValueLabel->setString(CCString::createWithFormat("%.02f", pControl->getValue())->getCString());	
 }
 

@@ -44,16 +44,16 @@ NS_CC_BEGIN
 class CC_DLL CCDrawNode : public CCNode
 {
 protected:
-    GLuint      m_uVao;
-    GLuint      m_uVbo;
+    GLuint      _vao;
+    GLuint      _vbo;
     
-    unsigned int    m_uBufferCapacity;
-    GLsizei         m_nBufferCount;
-    ccV2F_C4B_T2F   *m_pBuffer;
+    unsigned int    _bufferCapacity;
+    GLsizei         _bufferCount;
+    ccV2F_C4B_T2F   *_buffer;
     
-    ccBlendFunc     m_sBlendFunc;
+    ccBlendFunc     _blendFunc;
     
-    bool            m_bDirty;
+    bool            _dirty;
     
 public:
     static CCDrawNode* create();

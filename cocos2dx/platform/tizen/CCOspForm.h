@@ -59,8 +59,8 @@ public:
     void CloseKeypad();
 
     Tizen::Ui::Controls::Keypad*__pKeypad;
-    EditTextCallback m_pfEditTextCallback;
-    void* m_pCtx;
+    EditTextCallback _editTextCallback;
+    void* _ctx;
 };
 
 #endif  // _CCOSPFORM_H_

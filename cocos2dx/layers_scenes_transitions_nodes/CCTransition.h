@@ -81,11 +81,11 @@ class CC_DLL CCTransitionScene : public CCScene
 {
 
 protected:
-    CCScene    * m_pInScene;
-    CCScene    * m_pOutScene;
-    float    m_fDuration;
-    bool    m_bIsInSceneOnTop;
-    bool    m_bIsSendCleanupToScene;
+    CCScene    * _inScene;
+    CCScene    * _outScene;
+    float    _duration;
+    bool    _isInSceneOnTop;
+    bool    _isSendCleanupToScene;
 
 public:
 
@@ -121,7 +121,7 @@ private:
 class CC_DLL CCTransitionSceneOriented : public CCTransitionScene
 {
 protected:
-    tOrientation m_eOrientation;
+    tOrientation _orientation;
 
 public:
     CCTransitionSceneOriented();
@@ -416,7 +416,7 @@ Fade out the outgoing scene and then fade in the incoming scene.'''
 class CC_DLL CCTransitionFade : public CCTransitionScene
 {
 protected:
-    ccColor4B    m_tColor;
+    ccColor4B    _color;
 
 public:
 

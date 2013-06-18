@@ -31,9 +31,9 @@ NS_CC_BEGIN
 
 class CCPointObject : CCObject
 {
-    CC_SYNTHESIZE(CCPoint, m_tRatio, Ratio)
-    CC_SYNTHESIZE(CCPoint, m_tOffset, Offset)
-    CC_SYNTHESIZE(CCNode *,m_pChild, Child)    // weak ref
+    CC_SYNTHESIZE(CCPoint, _ratio, Ratio)
+    CC_SYNTHESIZE(CCPoint, _offset, Offset)
+    CC_SYNTHESIZE(CCNode *,_child, Child)    // weak ref
 
 public:
     static CCPointObject * pointWithCCPoint(CCPoint ratio, CCPoint offset)
@@ -45,24 +45,24 @@ public:
     }
     bool initWithCCPoint(CCPoint ratio, CCPoint offset)
     {
-        m_tRatio = ratio;
-        m_tOffset = offset;
-        m_pChild = NULL;
+        _ratio = ratio;
+        _offset = offset;
+        _child = NULL;
         return true;
     }
 };
 
 CCParallaxNode::CCParallaxNode()
 {
-    m_pParallaxArray = ccArrayNew(5);        
-    m_tLastPosition = CCPointMake(-100,-100);
+    _parallaxArray = ccArrayNew(5);        
+    _lastPosition = CCPointMake(-100,-100);
 }
 CCParallaxNode::~CCParallaxNode()
 {
-    if( m_pParallaxArray )
+    if( _parallaxArray )
     {
-        ccArrayFree(m_pParallaxArray);
-        m_pParallaxArray = NULL;
+        ccArrayFree(_parallaxArray);
+        _parallaxArray = NULL;
     }
 }
 
@@ -85,9 +85,9 @@ void CCParallaxNode::addChild(CCNode *child, unsigned int z, const CCPoint& rati
     CCAssert( child != NULL, "Argument must be non-nil");
     CCPointObject *obj = CCPointObject::pointWithCCPoint(ratio, offset);
     obj->setChild(child);
-    ccArrayAppendObjectWithResize(m_pParallaxArray, (CCObject*)obj);
+    ccArrayAppendObjectWithResize(_parallaxArray, (CCObject*)obj);
 
-    CCPoint pos = m_obPosition;
+    CCPoint pos = _position;
     pos.x = pos.x * ratio.x + offset.x;
     pos.y = pos.y * ratio.y + offset.y;
     child->setPosition(pos);
@@ -96,12 +96,12 @@ void CCParallaxNode::addChild(CCNode *child, unsigned int z, const CCPoint& rati
 }
 void CCParallaxNode::removeChild(CCNode* child, bool cleanup)
 {
-    for( unsigned int i=0;i < m_pParallaxArray->num;i++)
+    for( unsigned int i=0;i < _parallaxArray->num;i++)
     {
-        CCPointObject *point = (CCPointObject*)m_pParallaxArray->arr[i];
+        CCPointObject *point = (CCPointObject*)_parallaxArray->arr[i];
         if( point->getChild()->isEqual(child)) 
         {
-            ccArrayRemoveObjectAtIndex(m_pParallaxArray, i, true);
+            ccArrayRemoveObjectAtIndex(_parallaxArray, i, true);
             break;
         }
     }
@@ -109,12 +109,12 @@ void CCParallaxNode::removeChild(CCNode* child, bool cleanup)
 }
 void CCParallaxNode::removeAllChildrenWithCleanup(bool cleanup)
 {
-    ccArrayRemoveAllObjects(m_pParallaxArray);
+    ccArrayRemoveAllObjects(_parallaxArray);
     CCNode::removeAllChildrenWithCleanup(cleanup);
 }
 CCPoint CCParallaxNode::absolutePosition()
 {
-    CCPoint ret = m_obPosition;
+    CCPoint ret = _position;
     CCNode *cn = this;
     while (cn->getParent() != NULL)
     {
@@ -134,16 +134,16 @@ void CCParallaxNode::visit()
     //    CCPoint pos = position_;
     //    CCPoint    pos = [self convertToWorldSpace:CCPointZero];
     CCPoint pos = this->absolutePosition();
-    if( ! pos.equals(m_tLastPosition) )
+    if( ! pos.equals(_lastPosition) )
     {
-        for(unsigned int i=0; i < m_pParallaxArray->num; i++ ) 
+        for(unsigned int i=0; i < _parallaxArray->num; i++ ) 
         {
-            CCPointObject *point = (CCPointObject*)m_pParallaxArray->arr[i];
+            CCPointObject *point = (CCPointObject*)_parallaxArray->arr[i];
             float x = -pos.x + pos.x * point->getRatio().x + point->getOffset().x;
             float y = -pos.y + pos.y * point->getRatio().y + point->getOffset().y;            
             point->getChild()->setPosition(ccp(x,y));
         }
-        m_tLastPosition = pos;
+        _lastPosition = pos;
     }
     CCNode::visit();
 }
