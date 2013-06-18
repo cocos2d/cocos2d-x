@@ -72,6 +72,7 @@ public:
     typedef enum {
         kBannerAd = 0,
         kFullScreenAd,
+        kMoreApp,
     } AdsType;
 
     typedef enum {
@@ -110,6 +111,11 @@ public:
     @param type The adview type need to hide.
     */
     void hideAds(AdsType type);
+
+    /**
+    @brief Query the points of player
+    */
+    void queryPoints();
 
     /**
     @brief Spend the points.

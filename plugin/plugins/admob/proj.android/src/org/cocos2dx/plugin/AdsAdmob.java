@@ -99,6 +99,9 @@ public class AdsAdmob implements InterfaceAds {
 		case AdsWrapper.ADS_TYPE_FULL_SCREEN:
 			LogD("Now not support full screen view in Admob");
 			break;
+		case AdsWrapper.ADS_TYPE_MORE_APP:
+		    LogD("Now not support more app ads in Admob");
+		    break;
 		default:
 			break;
 		}
@@ -106,7 +109,7 @@ public class AdsAdmob implements InterfaceAds {
 
 	@Override
 	public void spendPoints(int points) {
-		// do nothing, Admob don't have this function
+		LogD("Admob not support spend points!");
 	}
 
 	@Override
@@ -261,4 +264,9 @@ public class AdsAdmob implements InterfaceAds {
 	public String getPluginVersion() {
 		return "0.2.0";
 	}
+
+    @Override
+    public void queryPoints() {
+        LogD("Admob not support query points!");
+    }
 }
