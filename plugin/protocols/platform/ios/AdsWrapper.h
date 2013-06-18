@@ -41,6 +41,7 @@ typedef enum {
 typedef enum {
     kTypeBanner = 0,
     kTypeFullScreen,
+    kTypeMoreApp,
 } AdsTypeEnum;
 
 typedef enum {

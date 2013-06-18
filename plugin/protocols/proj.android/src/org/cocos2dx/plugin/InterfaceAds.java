@@ -32,6 +32,7 @@ public interface InterfaceAds {
 	public void configDeveloperInfo(Hashtable<String, String> devInfo);
 	public void showAds(int type, int sizeEnum, int pos);
 	public void hideAds(int type);
+	public void queryPoints();
 	public void spendPoints(int points);
 	public void setDebugMode(boolean debug);
 	public String getSDKVersion();

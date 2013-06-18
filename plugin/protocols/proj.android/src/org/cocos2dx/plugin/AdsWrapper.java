@@ -39,6 +39,7 @@ public class AdsWrapper {
 
     public static final int ADS_TYPE_BANNER        = 0;
     public static final int ADS_TYPE_FULL_SCREEN   = 1;
+    public static final int ADS_TYPE_MORE_APP      = 2;
 
 	public static final int POS_CENTER 	     = 0;
 	public static final int POS_TOP		     = 1;
