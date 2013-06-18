@@ -22,20 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "PluginManager.h"
-#include <map>
-#include <string>
+#include "PluginFactory.h"
+
 namespace cocos2d { namespace plugin {
 
-typedef struct tagPluginInfo
-{
-    PluginCreator pfnCreator;
-    PluginProtocol* pInstance;
-}PluginInfo;
-
-typedef std::map<std::string, PluginInfo> PluginCreatorMap;
-typedef std::pair<std::string, PluginInfo> PluginCreatorPair;
-
-static PluginCreatorMap* s_pCreatorMap = NULL;
 static PluginManager* s_pPluginManager = NULL;
 
 PluginManager::PluginManager(void)
@@ -44,14 +34,15 @@ PluginManager::PluginManager(void)
 
 PluginManager::~PluginManager()
 {
-    PluginCreatorMap::iterator it = s_pCreatorMap->begin();
-    for (;it != s_pCreatorMap->end();++it)
+	std::map<std::string, PluginProtocol*>::iterator it = m_pluginsMap.begin();
+    for (;it != m_pluginsMap.end();++it)
     {
-        if (it->second.pInstance != NULL) {
-            delete it->second.pInstance;
-            it->second.pInstance = NULL;
+        if (it->second != NULL) {
+            delete it->second;
+            it->second = NULL;
         }
     }
+    m_pluginsMap.clear();
 }
 
 PluginManager* PluginManager::getInstance()
@@ -70,6 +61,8 @@ void PluginManager::end()
         delete s_pPluginManager;
         s_pPluginManager = NULL;
     }
+
+    PluginFactory::purgeFactory();
 }
 
 PluginProtocol* PluginManager::loadPlugin(const char* name)
@@ -77,18 +70,20 @@ PluginProtocol* PluginManager::loadPlugin(const char* name)
     PluginProtocol* pRet = NULL;
     do {
         if (name == NULL || strlen(name) == 0) break;
-        PluginCreatorMap::iterator it = s_pCreatorMap->find(name);
-        if (it != s_pCreatorMap->end())
+        std::map<std::string, PluginProtocol*>::iterator it = m_pluginsMap.find(name);
+        if (it != m_pluginsMap.end())
         {
-            if (it->second.pInstance == NULL) {
-                it->second.pInstance = it->second.pfnCreator();
+            if (it->second == NULL) {
+                it->second = PluginFactory::getInstance()->createPlugin(name);
             }
-            else {
-                // LOGD("The plugin has been loaded, return the loaded instance directly.");
-            }
-            pRet = it->second.pInstance;
+            pRet = it->second;
+        } else
+        {
+        	pRet = PluginFactory::getInstance()->createPlugin(name);
+        	m_pluginsMap[name] = pRet;
         }
     } while (false);
+
     return pRet;
 }
 
@@ -96,28 +91,15 @@ void PluginManager::unloadPlugin(const char* name)
 {
     do {
         if (name == NULL || strlen(name) == 0) break;
-        PluginCreatorMap::iterator it = s_pCreatorMap->find(name);
-        if (it != s_pCreatorMap->end())
+        std::map<std::string, PluginProtocol*>::iterator it = m_pluginsMap.find(name);
+		if (it != m_pluginsMap.end())
         {
-            if (it->second.pInstance != NULL) {
-                delete it->second.pInstance;
-                it->second.pInstance = NULL;
+            if (it->second != NULL) {
+                delete it->second;
+                it->second = NULL;
             }
         }
     } while (false);
-}
-
-bool PluginManager::registerPlugin(const char* name, PluginCreator pfnCreator)
-{
-    if (s_pCreatorMap == NULL) {
-        static PluginCreatorMap s_CreatorMap;
-        s_pCreatorMap = &s_CreatorMap;
-    }
-    PluginInfo info;
-    info.pfnCreator = pfnCreator;
-    info.pInstance = NULL;
-    s_pCreatorMap->insert(PluginCreatorPair(name, info));
-    return true;
 }
 
 }} //namespace cocos2d { namespace plugin {

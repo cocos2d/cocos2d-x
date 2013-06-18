@@ -26,11 +26,27 @@ THE SOFTWARE.
 #include "CCOspForm.h"
 #include "CCDirector.h"
 #include "CCEGLView.h"
+#include "text_input_node/CCIMEDispatcher.h"
+#include <FBase.h>
+#include <FText.h>
 
 USING_NS_CC;
+using namespace Tizen::Base;
+using namespace Tizen::Text;
 using namespace Tizen::Ui;
 using namespace Tizen::Ui::Controls;
 using namespace Tizen::Graphics;
+
+CCOspForm::CCOspForm()
+    : __pKeypad(null)
+    , m_pfEditTextCallback(null)
+    , m_pCtx(null)
+{
+}
+
+CCOspForm::~CCOspForm()
+{
+}
 
 result
 CCOspForm::OnInitializing(void)
@@ -39,6 +55,17 @@ CCOspForm::OnInitializing(void)
     SetMultipointTouchEnabled(true);
 
     return E_SUCCESS;
+}
+
+result
+CCOspForm::OnTerminating(void)
+{
+    result r = E_SUCCESS;
+
+    if (__pKeypad)
+        __pKeypad->Destroy();
+
+    return r;
 }
 
 void
@@ -87,3 +114,115 @@ CCOspForm::OnTouchReleased(const Control& source, const Point& currentPosition, 
     float y = currentPosition.y;
     CCDirector::sharedDirector()->getOpenGLView()->handleTouchesEnd(1, &id, &x, &y);
 }
+
+void CCOspForm::OnTextValueChanged(const Tizen::Ui::Control& source)
+{
+    String text = __pKeypad->GetText();
+    Utf8Encoding utf8;
+    ByteBuffer* buffer = utf8.GetBytesN(text);
+    const char* pText = "";
+    if (buffer)
+        pText = (const char *)buffer->GetPointer();
+
+    if (m_pfEditTextCallback)
+    {
+        m_pfEditTextCallback(pText, m_pCtx);
+    }
+    else
+    {
+        const char* pContentText = CCIMEDispatcher::sharedDispatcher()->getContentText();
+
+        for (unsigned int i = strlen(pContentText); i > 0; i--)
+        {
+            CCIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+        }
+
+        std::string text("");
+        if (pText != null)
+        {
+            text = pText;
+            if (text.compare("") == 0)
+            {
+                text = "\n";
+            }
+
+            if (text.at(text.length() - 1) != '\n')
+            {
+                text += '\n';
+            }
+        }
+
+        CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(text.c_str(), text.length());
+    }
+
+    if (buffer)
+        delete buffer;
+}
+
+void CCOspForm::OnTextValueChangeCanceled(const Tizen::Ui::Control& source)
+{
+    if (m_pfEditTextCallback)
+    {
+        m_pfEditTextCallback("", m_pCtx);
+    }
+    else
+    {
+        const char* pContentText = CCIMEDispatcher::sharedDispatcher()->getContentText();
+
+        for (unsigned int i = strlen(pContentText); i > 0; i--)
+        {
+            CCIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+        }
+    }
+}
+
+void
+CCOspForm::ShowKeypad(const char* pMessage, KeypadStyle keypadStyle, KeypadInputModeCategory keypadCategory, bool bSingleLineEnabled, bool bTextPrediction, int nMaxLength, EditTextCallback pfEditTextCallback, void* pCtx)
+{
+    m_pfEditTextCallback = pfEditTextCallback;
+    m_pCtx = pCtx;
+
+    if (__pKeypad)
+    {
+        __pKeypad->RemoveTextEventListener(*this);
+        __pKeypad->Destroy();
+        __pKeypad = null;
+    }
+
+    if (nMaxLength > 100)
+        nMaxLength = 100;
+    else if (nMaxLength == -1)
+        nMaxLength = 100;
+
+    __pKeypad = new Keypad();
+    __pKeypad->Construct(keypadStyle, keypadCategory, nMaxLength);
+    __pKeypad->AddTextEventListener(*this);
+
+    __pKeypad->SetTextPredictionEnabled(bTextPrediction);
+    __pKeypad->SetSingleLineEnabled(bSingleLineEnabled);
+    __pKeypad->SetText(String(pMessage));
+    __pKeypad->SetShowState(true);
+    __pKeypad->Show();
+}
+
+void
+CCOspForm::ShowKeypad()
+{
+    ShowKeypad(
+        CCIMEDispatcher::sharedDispatcher()->getContentText(),
+        KEYPAD_STYLE_NORMAL,
+        KEYPAD_MODE_ALPHA,
+        true,
+        true,
+        100,
+        null,
+        null);
+}
+
+void
+CCOspForm::CloseKeypad()
+{
+    __pKeypad->SetShowState(false);
+    Invalidate(true);
+}
+

@@ -33,7 +33,7 @@ typedef struct _AttachmentVtable {
 	void (*dispose) (Attachment* self);
 } _AttachmentVtable;
 
-void _Attachment_init (Attachment* self, const char* name, AttachmentType type, //
+void _Attachment_init (Attachment* self, const char* name, AttachmentType type, /**/
 		void (*dispose) (Attachment* self)) {
 
 	CONST_CAST(void*, self->vtable) = NEW(_AttachmentVtable);
@@ -50,6 +50,7 @@ void _Attachment_deinit (Attachment* self) {
 
 void Attachment_dispose (Attachment* self) {
 	VTABLE(Attachment, self) ->dispose(self);
+	FREE(self);
 }
 
 }} // namespace cocos2d { namespace extension {

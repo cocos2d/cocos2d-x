@@ -5,10 +5,16 @@
 
 TESTLAYER_CREATE_FUNC(ConfigurationLoadConfig);
 TESTLAYER_CREATE_FUNC(ConfigurationQuery);
+TESTLAYER_CREATE_FUNC(ConfigurationInvalid);
+TESTLAYER_CREATE_FUNC(ConfigurationDefault);
+TESTLAYER_CREATE_FUNC(ConfigurationSet);
 
 static NEWTESTFUNC createFunctions[] = {
     CF(ConfigurationLoadConfig),
-	CF(ConfigurationQuery)
+	CF(ConfigurationQuery),
+	CF(ConfigurationInvalid),
+	CF(ConfigurationDefault),
+	CF(ConfigurationSet)
 };
 
 static int sceneIdx=-1;
@@ -140,7 +146,7 @@ void ConfigurationLoadConfig::onEnter()
 {
     ConfigurationBase::onEnter();
 
-	CCConfiguration::sharedConfiguration()->loadConfigFile("animations/animations.plist");
+	CCConfiguration::sharedConfiguration()->loadConfigFile("configs/config-test-ok.plist");
 	CCConfiguration::sharedConfiguration()->dumpInfo();
 
 }
@@ -167,3 +173,78 @@ std::string ConfigurationQuery::subtitle()
 {
     return "Using getCString(). Check the console";
 }
+
+//------------------------------------------------------------------
+//
+// ConfigurationInvalid
+//
+//------------------------------------------------------------------
+void ConfigurationInvalid::onEnter()
+{
+    ConfigurationBase::onEnter();
+
+	CCConfiguration::sharedConfiguration()->loadConfigFile("configs/config-test-invalid.plist");
+}
+
+std::string ConfigurationInvalid::subtitle()
+{
+    return "Loading an invalid config file";
+}
+
+//------------------------------------------------------------------
+//
+// ConfigurationDefault
+//
+//------------------------------------------------------------------
+void ConfigurationDefault::onEnter()
+{
+    ConfigurationBase::onEnter();
+
+	const char *c_value = CCConfiguration::sharedConfiguration()->getCString("invalid.key", "no key");
+	if( strcmp(c_value, "no key") != 0 )
+		CCLOG("1. Test failed!");
+	else
+		CCLOG("1. Test OK!");
+
+	bool b_value = CCConfiguration::sharedConfiguration()->getBool("invalid.key", true);
+	if( ! b_value )
+		CCLOG("2. Test failed!");
+	else
+		CCLOG("2. Test OK!");
+
+	double d_value = CCConfiguration::sharedConfiguration()->getNumber("invalid.key", 42.42);
+	if( d_value != 42.42 )
+		CCLOG("3. Test failed!");
+	else
+		CCLOG("3. Test OK!");
+
+}
+
+std::string ConfigurationDefault::subtitle()
+{
+    return "Tests defaults values";
+}
+
+//------------------------------------------------------------------
+//
+// ConfigurationSet
+//
+//------------------------------------------------------------------
+void ConfigurationSet::onEnter()
+{
+    ConfigurationBase::onEnter();
+
+	CCConfiguration *conf = CCConfiguration::sharedConfiguration();
+
+	conf->setObject("this.is.an.int.value", CCInteger::create(10) );
+	conf->setObject("this.is.a.bool.value", CCBool::create(true) );
+	conf->setObject("this.is.a.string.value", CCString::create("hello world") );
+
+	conf->dumpInfo();
+}
+
+std::string ConfigurationSet::subtitle()
+{
+    return "Tests setting values manually";
+}
+

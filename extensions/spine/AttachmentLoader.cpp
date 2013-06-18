@@ -34,8 +34,8 @@ typedef struct _AttachmentLoaderVtable {
 	void (*dispose) (AttachmentLoader* self);
 } _AttachmentLoaderVtable;
 
-void _AttachmentLoader_init (AttachmentLoader* self, //
-		void (*dispose) (AttachmentLoader* self), //
+void _AttachmentLoader_init (AttachmentLoader* self, /**/
+		void (*dispose) (AttachmentLoader* self), /**/
 		Attachment* (*newAttachment) (AttachmentLoader* self, Skin* skin, AttachmentType type, const char* name)) {
 	CONST_CAST(void*, self->vtable) = NEW(_AttachmentLoaderVtable);
 	VTABLE(AttachmentLoader, self) ->dispose = dispose;
@@ -50,6 +50,7 @@ void _AttachmentLoader_deinit (AttachmentLoader* self) {
 
 void AttachmentLoader_dispose (AttachmentLoader* self) {
 	VTABLE(AttachmentLoader, self) ->dispose(self);
+	FREE(self);
 }
 
 Attachment* AttachmentLoader_newAttachment (AttachmentLoader* self, Skin* skin, AttachmentType type, const char* name) {
