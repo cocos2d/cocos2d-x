@@ -10,17 +10,17 @@ NS_CC_EXT_BEGIN
 
 CCNodeLoader::CCNodeLoader()
 {
-    m_pCustomProperties = new CCDictionary();
+    _customProperties = new CCDictionary();
 }
 
 CCNodeLoader::~CCNodeLoader()
 {
-    CC_SAFE_RELEASE(m_pCustomProperties);
+    CC_SAFE_RELEASE(_customProperties);
 }
 
 CCDictionary* CCNodeLoader::getCustomProperties()
 {
-    return m_pCustomProperties;
+    return _customProperties;
 }
 
 CCNode * CCNodeLoader::loadCCNode(CCNode * pParent, CCBReader * pCCBReader) {
@@ -884,6 +884,10 @@ CCNode * CCNodeLoader::parsePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CC
     CC_SAFE_RETAIN(pCCBReader->mOwner);
     ccbReader->mOwner = pCCBReader->mOwner;
     
+    if (NULL != ccbReader->mOwner) {
+        CCLOG("DDD");
+    }
+    
     ccbReader->getAnimationManager()->mOwner = ccbReader->mOwner;
 
     // The assignments below are done in the CCBReader constructor.
@@ -904,6 +908,36 @@ CCNode * CCNodeLoader::parsePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CC
         ccbReader->getAnimationManager()->runAnimationsForSequenceIdTweenDuration(ccbReader->getAnimationManager()->getAutoPlaySequenceId(), 0);
     }
     
+    if (ccbReader->isJSControlled() && pCCBReader->isJSControlled() && NULL != ccbReader->mOwner)
+    {
+        //set variables and callback to owner
+        //set callback
+        CCArray *ownerCallbackNames = ccbReader->getOwnerCallbackNames();
+        CCArray *ownerCallbackNodes = ccbReader->getOwnerCallbackNodes();
+        if (NULL != ownerCallbackNames && ownerCallbackNames->count() > 0 &&
+            NULL != ownerCallbackNodes && ownerCallbackNodes->count() > 0)
+        {
+            assert(ownerCallbackNames->count() == ownerCallbackNodes->count());
+            int nCount = ownerCallbackNames->count();
+            for (int i = 0 ; i < nCount; i++) {
+                pCCBReader->addOwnerCallbackName((dynamic_cast<CCString*>(ownerCallbackNames->objectAtIndex(i)))->getCString());
+                pCCBReader->addOwnerCallbackNode(dynamic_cast<CCNode*>(ownerCallbackNames->objectAtIndex(i)) );
+            }
+        }
+        //set variables
+        CCArray *ownerOutletNames = ccbReader->getOwnerOutletNames();
+        CCArray *ownerOutletNodes = ccbReader->getOwnerOutletNodes();
+        if (NULL != ownerOutletNames && ownerOutletNames->count() > 0 &&
+            NULL != ownerOutletNodes && ownerOutletNodes->count() > 0)
+        {
+            assert(ownerOutletNames->count() == ownerOutletNodes->count());
+            int nCount = ownerOutletNames->count();
+            for (int i = 0 ; i < nCount; i++) {
+                pCCBReader->addOwnerOutletName((dynamic_cast<CCString*>(ownerOutletNames->objectAtIndex(i)))->getCString());
+                pCCBReader->addOwnerOutletNode(dynamic_cast<CCNode*>(ownerOutletNodes->objectAtIndex(i)) );
+            }
+        }
+    }
     return ccbFileNode;
 }
 
@@ -959,7 +993,7 @@ void CCNodeLoader::onHandlePropTypeScaleLock(CCNode * pNode, CCNode * pParent, c
 void CCNodeLoader::onHandlePropTypeFloat(CCNode * pNode, CCNode * pParent, const char* pPropertyName, float pFloat, CCBReader * pCCBReader) {
 //    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
     // It may be a custom property, add it to custom property dictionary.
-    m_pCustomProperties->setObject(CCBValue::create(pFloat), pPropertyName);
+    _customProperties->setObject(CCBValue::create(pFloat), pPropertyName);
 }
 
 
@@ -986,7 +1020,7 @@ void CCNodeLoader::onHandlePropTypeInteger(CCNode * pNode, CCNode * pParent, con
     } else {
  //       ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
         // It may be a custom property, add it to custom property dictionary.
-        m_pCustomProperties->setObject(CCBValue::create(pInteger), pPropertyName);
+        _customProperties->setObject(CCBValue::create(pInteger), pPropertyName);
     }
 }
 
@@ -1006,7 +1040,7 @@ void CCNodeLoader::onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, const
     } else {
         //ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
         // It may be a custom property, add it to custom property dictionary.
-        m_pCustomProperties->setObject(CCBValue::create(pCheck), pPropertyName);
+        _customProperties->setObject(CCBValue::create(pCheck), pPropertyName);
     }
 }
 
@@ -1049,7 +1083,7 @@ void CCNodeLoader::onHandlePropTypeFntFile(CCNode * pNode, CCNode * pParent, con
 void CCNodeLoader::onHandlePropTypeString(CCNode * pNode, CCNode * pParent, const char* pPropertyName, const char * pString, CCBReader * pCCBReader) {
 //    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
     // It may be a custom property, add it to custom property dictionary.
-    m_pCustomProperties->setObject(CCBValue::create(pString), pPropertyName);
+    _customProperties->setObject(CCBValue::create(pString), pPropertyName);
 }
 
 void CCNodeLoader::onHandlePropTypeText(CCNode * pNode, CCNode * pParent, const char* pPropertyName, const char * pText, CCBReader * pCCBReader) {

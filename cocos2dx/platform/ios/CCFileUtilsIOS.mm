@@ -307,18 +307,25 @@ CCDictionary* CCFileUtilsIOS::createCCDictionaryWithContentsOfFile(const std::st
     NSString* pPath = [NSString stringWithUTF8String:fullPath.c_str()];
     NSDictionary* pDict = [NSDictionary dictionaryWithContentsOfFile:pPath];
     
-    CCDictionary* pRet = new CCDictionary();
-    for (id key in [pDict allKeys]) {
-        id value = [pDict objectForKey:key];
-        addValueToCCDict(key, value, pRet);
+    if (pDict != nil)
+    {
+        CCDictionary* pRet = new CCDictionary();
+        for (id key in [pDict allKeys]) {
+            id value = [pDict objectForKey:key];
+            addValueToCCDict(key, value, pRet);
+        }
+        
+        return pRet;
     }
-    
-    return pRet;
+    else
+    {
+        return NULL;
+    }
 }
 
 bool CCFileUtilsIOS::writeToFile(CCDictionary *dict, const std::string &fullPath)
 {
-    //CCLOG("iOS||Mac CCDictionary %d write to file %s", dict->m_uID, fullPath.c_str());
+    //CCLOG("iOS||Mac CCDictionary %d write to file %s", dict->_ID, fullPath.c_str());
     NSMutableDictionary *nsDict = [NSMutableDictionary dictionary];
     
     CCDictElement *element = NULL;

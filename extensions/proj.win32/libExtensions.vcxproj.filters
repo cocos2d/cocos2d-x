@@ -31,6 +31,30 @@
     <Filter Include="network">
       <UniqueIdentifier>{2a7741ff-87a5-41c8-8e51-d7a1cf0c8e4d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CCArmature">
+      <UniqueIdentifier>{cf3469d5-421b-4990-a9be-4cd95129fb73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CCArmature\animation">
+      <UniqueIdentifier>{f48d1291-33fe-49a1-8f9f-4d203e782d4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CCArmature\datas">
+      <UniqueIdentifier>{043f8489-822e-43c8-8d9d-5d171a701663}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CCArmature\display">
+      <UniqueIdentifier>{b8c65820-b5c9-4bd6-83c8-180fdc6100fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CCArmature\physics">
+      <UniqueIdentifier>{fa9a165e-cc7c-45e9-ae4f-cae3c2f16e6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CCArmature\utils">
+      <UniqueIdentifier>{5e5b3d7d-62a7-493e-a130-ed72ee7c65f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{5258a1e1-5d50-4fee-9216-da08d2ec19de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CCArmature\external_tool">
+      <UniqueIdentifier>{bd365bbb-6972-4073-b268-8360df428166}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\GUI\CCScrollView\CCScrollView.cpp">
@@ -239,6 +263,96 @@
     </ClCompile>
     <ClCompile Include="..\network\Websocket.cpp">
       <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature\CCArmature.cpp">
+      <Filter>CCArmature</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature\CCBone.cpp">
+      <Filter>CCArmature</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature\animation\CCArmatureAnimation.cpp">
+      <Filter>CCArmature\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature\animation\CCProcessBase.cpp">
+      <Filter>CCArmature\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature\animation\CCTween.cpp">
+      <Filter>CCArmature\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature\datas\CCDatas.cpp">
+      <Filter>CCArmature\datas</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature\display\CCBatchNode.cpp">
+      <Filter>CCArmature\display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature\display\CCDecorativeDisplay.cpp">
+      <Filter>CCArmature\display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature\display\CCDisplayFactory.cpp">
+      <Filter>CCArmature\display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature\display\CCDisplayManager.cpp">
+      <Filter>CCArmature\display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature\display\CCShaderNode.cpp">
+      <Filter>CCArmature\display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature\display\CCSkin.cpp">
+      <Filter>CCArmature\display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature\physics\CCColliderDetector.cpp">
+      <Filter>CCArmature\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature\physics\CCPhysicsWorld.cpp">
+      <Filter>CCArmature\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature\utils\CCArmatureDataManager.cpp">
+      <Filter>CCArmature\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature\utils\CCDataReaderHelper.cpp">
+      <Filter>CCArmature\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature\utils\CCSpriteFrameCacheHelper.cpp">
+      <Filter>CCArmature\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature\utils\CCTransformHelp.cpp">
+      <Filter>CCArmature\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature\utils\CCTweenFunction.cpp">
+      <Filter>CCArmature\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature\utils\CCUtilMath.cpp">
+      <Filter>CCArmature\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Components\CCComAttribute.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Components\CCComAudio.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Components\CCComController.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Components\CCInputDelegate.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature\external_tool\CCTexture2DMutable.cpp">
+      <Filter>CCArmature\external_tool</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature\external_tool\GLES-Render.cpp">
+      <Filter>CCArmature\external_tool</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature\external_tool\Json\CSContentJsonDictionary.cpp">
+      <Filter>CCArmature\external_tool</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature\external_tool\Json\lib_json\json_reader.cpp">
+      <Filter>CCArmature\external_tool</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature\external_tool\Json\lib_json\json_value.cpp">
+      <Filter>CCArmature\external_tool</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature\external_tool\Json\lib_json\json_writer.cpp">
+      <Filter>CCArmature\external_tool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -478,5 +592,136 @@
     <ClInclude Include="..\network\Websocket.h">
       <Filter>network</Filter>
     </ClInclude>
+    <ClInclude Include="..\CCArmature\CCArmature.h">
+      <Filter>CCArmature</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\CCBone.h">
+      <Filter>CCArmature</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\animation\CCArmatureAnimation.h">
+      <Filter>CCArmature\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\animation\CCProcessBase.h">
+      <Filter>CCArmature\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\animation\CCTween.h">
+      <Filter>CCArmature\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\datas\CCDatas.h">
+      <Filter>CCArmature\datas</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\display\CCBatchNode.h">
+      <Filter>CCArmature\display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\display\CCDecorativeDisplay.h">
+      <Filter>CCArmature\display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\display\CCDisplayFactory.h">
+      <Filter>CCArmature\display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\display\CCDisplayManager.h">
+      <Filter>CCArmature\display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\display\CCShaderNode.h">
+      <Filter>CCArmature\display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\display\CCSkin.h">
+      <Filter>CCArmature\display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\physics\CCColliderDetector.h">
+      <Filter>CCArmature\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\physics\CCPhysicsWorld.h">
+      <Filter>CCArmature\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\utils\CCArmatureDataManager.h">
+      <Filter>CCArmature\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\utils\CCArmatureDefine.h">
+      <Filter>CCArmature\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\utils\CCConstValue.h">
+      <Filter>CCArmature\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\utils\CCDataReaderHelper.h">
+      <Filter>CCArmature\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\utils\CCSpriteFrameCacheHelper.h">
+      <Filter>CCArmature\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\utils\CCTransformHelp.h">
+      <Filter>CCArmature\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\utils\CCTweenFunction.h">
+      <Filter>CCArmature\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\utils\CCUtilMath.h">
+      <Filter>CCArmature\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\CCComAttribute.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\CCComAudio.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\CCComController.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\CCInputDelegate.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\external_tool\CCTexture2DMutable.h">
+      <Filter>CCArmature\external_tool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\external_tool\GLES-Render.h">
+      <Filter>CCArmature\external_tool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\external_tool\sigslot.h">
+      <Filter>CCArmature\external_tool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\external_tool\Json\CSContentJsonDictionary.h">
+      <Filter>CCArmature\external_tool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\autolink.h">
+      <Filter>CCArmature\external_tool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\config.h">
+      <Filter>CCArmature\external_tool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\features.h">
+      <Filter>CCArmature\external_tool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\forwards.h">
+      <Filter>CCArmature\external_tool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\json_batchallocator.h">
+      <Filter>CCArmature\external_tool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\json_lib.h">
+      <Filter>CCArmature\external_tool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\json_tool.h">
+      <Filter>CCArmature\external_tool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\reader.h">
+      <Filter>CCArmature\external_tool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\value.h">
+      <Filter>CCArmature\external_tool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\writer.h">
+      <Filter>CCArmature\external_tool</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\CCArmature\external_tool\Json\lib_json\json_internalarray.inl">
+      <Filter>CCArmature\external_tool</Filter>
+    </None>
+    <None Include="..\CCArmature\external_tool\Json\lib_json\json_internalmap.inl">
+      <Filter>CCArmature\external_tool</Filter>
+    </None>
+    <None Include="..\CCArmature\external_tool\Json\lib_json\json_valueiterator.inl">
+      <Filter>CCArmature\external_tool</Filter>
+    </None>
   </ItemGroup>
 </Project>

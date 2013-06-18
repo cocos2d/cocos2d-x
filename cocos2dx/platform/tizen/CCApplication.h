@@ -72,7 +72,7 @@ public:
 
 protected:
     static CCApplication * sm_pSharedApplication;
-    static long m_nAnimationInterval; // milliseconds
+    static long _animationInterval; // milliseconds
 };
 
 NS_CC_END

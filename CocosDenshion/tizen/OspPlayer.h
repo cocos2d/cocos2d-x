@@ -59,7 +59,7 @@ protected:
 
 private:
     Tizen::Media::Player* __pPlayer;
-    unsigned int m_nSoundID;
+    unsigned int _soundID;
 };
 
 #endif // _OSP_PLAYER_H_

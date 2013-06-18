@@ -37,13 +37,13 @@ PongScene::PongScene()
 //------------------------------------------------------------------
 PongLayer::PongLayer()
 {
-    m_ballStartingVelocity = ccp(20.0f, -100.0f);
+    _ballStartingVelocity = ccp(20.0f, -100.0f);
     
-    m_ball = Ball::ballWithTexture( CCTextureCache::sharedTextureCache()->addImage(s_Ball) );
-    m_ball->setPosition( VisibleRect::center() );
-    m_ball->setVelocity( m_ballStartingVelocity );
-    addChild( m_ball );
-    m_ball->retain();
+    _ball = Ball::ballWithTexture( CCTextureCache::sharedTextureCache()->addImage(s_Ball) );
+    _ball->setPosition( VisibleRect::center() );
+    _ball->setVelocity( _ballStartingVelocity );
+    addChild( _ball );
+    _ball->retain();
     
     CCTexture2D* paddleTexture = CCTextureCache::sharedTextureCache()->addImage(s_Paddle);
     
@@ -65,10 +65,10 @@ PongLayer::PongLayer()
     paddle->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - kStatusBarHeight - 100) );
     paddlesM->addObject( paddle );
     
-    m_paddles = (CCArray*)paddlesM->copy();
+    _paddles = (CCArray*)paddlesM->copy();
     
     CCObject* pObj = NULL;
-    CCARRAY_FOREACH(m_paddles, pObj)
+    CCARRAY_FOREACH(_paddles, pObj)
     {
         paddle = (Paddle*)(pObj);
 
@@ -83,40 +83,40 @@ PongLayer::PongLayer()
 
 PongLayer::~PongLayer()
 {
-    m_ball->release();
-    m_paddles->release();
+    _ball->release();
+    _paddles->release();
 }
 
 void PongLayer::resetAndScoreBallForPlayer(int player)
 {
-    m_ballStartingVelocity = ccpMult(m_ballStartingVelocity, -1.1f);
-    m_ball->setVelocity( m_ballStartingVelocity );
-    m_ball->setPosition( VisibleRect::center() );
+    _ballStartingVelocity = ccpMult(_ballStartingVelocity, -1.1f);
+    _ball->setVelocity( _ballStartingVelocity );
+    _ball->setPosition( VisibleRect::center() );
     
     // TODO -- scoring
 }
 
 void PongLayer::doStep(float delta)
 {
-    m_ball->move(delta);
+    _ball->move(delta);
 
     Paddle* paddle = NULL;
     CCObject* pObj = NULL;
-    CCARRAY_FOREACH(m_paddles, pObj)
+    CCARRAY_FOREACH(_paddles, pObj)
     {
         paddle = (Paddle*)(pObj);
 
         if(!paddle)
             break;
 
-        m_ball->collideWithPaddle( paddle );
+        _ball->collideWithPaddle( paddle );
     }
 
-    if (m_ball->getPosition().y > VisibleRect::top().y - kStatusBarHeight + m_ball->radius())
+    if (_ball->getPosition().y > VisibleRect::top().y - kStatusBarHeight + _ball->radius())
         resetAndScoreBallForPlayer( kLowPlayer );
-    else if (m_ball->getPosition().y < VisibleRect::bottom().y-m_ball->radius())
+    else if (_ball->getPosition().y < VisibleRect::bottom().y-_ball->radius())
         resetAndScoreBallForPlayer( kHighPlayer );
-    m_ball->draw();
+    _ball->draw();
 } 
 
 void PongScene::runThisTest()

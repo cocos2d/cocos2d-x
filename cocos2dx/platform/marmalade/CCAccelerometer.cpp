@@ -28,34 +28,34 @@
 namespace cocos2d
 {
 
-CCAccelerometer* CCAccelerometer::m_spCCAccelerometer = NULL;
+CCAccelerometer* CCAccelerometer::_spCCAccelerometer = NULL;
 
-CCAccelerometer::CCAccelerometer() : m_pAccelDelegate(NULL)
+CCAccelerometer::CCAccelerometer() : _accelDelegate(NULL)
 {
 }
 
 CCAccelerometer::~CCAccelerometer() 
 {
-//	if( m_spCCAccelerometer ) {
-//		delete m_spCCAccelerometer ;
-		m_spCCAccelerometer = NULL;
+//	if( _spCCAccelerometer ) {
+//		delete _spCCAccelerometer ;
+		_spCCAccelerometer = NULL;
 //	}
 }
 
 CCAccelerometer* CCAccelerometer::sharedAccelerometer() 
 {
 
-	if (m_spCCAccelerometer == NULL)
+	if (_spCCAccelerometer == NULL)
 	{
-		m_spCCAccelerometer = new CCAccelerometer();
+		_spCCAccelerometer = new CCAccelerometer();
 	}
 
-	return m_spCCAccelerometer;
+	return _spCCAccelerometer;
 }
 
 void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate) 
 {
-	m_pAccelDelegate = pDelegate;
+	_accelDelegate = pDelegate;
 
 	if (pDelegate)
 	{		
@@ -72,14 +72,14 @@ void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
 
 void CCAccelerometer::update(float x, float y, float z, uint64 sensorTimeStamp) 
 {
-	if (m_pAccelDelegate)
+	if (_accelDelegate)
 	{
-		m_obAccelerationValue.x = ((double)x)/S3E_ACCELEROMETER_1G ;
-		m_obAccelerationValue.y = ((double)y)/S3E_ACCELEROMETER_1G ;
-		m_obAccelerationValue.z = ((double)z)/S3E_ACCELEROMETER_1G ;
-		m_obAccelerationValue.timestamp = (double)(sensorTimeStamp / 1000.0);
+		_accelerationValue.x = ((double)x)/S3E_ACCELEROMETER_1G ;
+		_accelerationValue.y = ((double)y)/S3E_ACCELEROMETER_1G ;
+		_accelerationValue.z = ((double)z)/S3E_ACCELEROMETER_1G ;
+		_accelerationValue.timestamp = (double)(sensorTimeStamp / 1000.0);
 
-		m_pAccelDelegate->didAccelerate(&m_obAccelerationValue);
+		_accelDelegate->didAccelerate(&_accelerationValue);
 	}	
 }
 

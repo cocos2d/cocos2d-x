@@ -43,9 +43,9 @@ USING_NS_CC;
 
 CocosPepperInstance::CocosPepperInstance(PP_Instance instance) : pp::Instance(instance),
 #ifdef OLD_NACL_MOUNTS
-    m_runner(NULL),
+    _runner(NULL),
 #endif
-    m_running(false)
+    _running(false)
 {
     RequestInputEvents(PP_INPUTEVENT_CLASS_MOUSE);
     RequestFilteringInputEvents(PP_INPUTEVENT_CLASS_KEYBOARD);
@@ -54,25 +54,25 @@ CocosPepperInstance::CocosPepperInstance(PP_Instance instance) : pp::Instance(in
 void CocosPepperInstance::DidChangeView(const pp::View& view)
 {
     pp::Rect position = view.GetRect();
-    if (m_size == position.size())
+    if (_size == position.size())
     {
         // Size did not change.
         return;
     }
 
-    if (m_running)
+    if (_running)
     {
         CCLOG("DidChangeView (%dx%d) while cocos thread already running",
                position.size().width(), position.size().height());
         return;
     }
 
-    m_size = position.size();
+    _size = position.size();
     assert(!CCEGLView::g_instance);
     CCEGLView::g_instance = this;
-    CCLOG("DidChangeView %dx%d", m_size.width(), m_size.height());
-    pthread_create(&m_cocos_thread, NULL, cocos_main, this);
-    m_running = true;
+    CCLOG("DidChangeView %dx%d", _size.width(), _size.height());
+    pthread_create(&_cocos_thread, NULL, cocos_main, this);
+    _running = true;
 }
 
 
@@ -80,7 +80,7 @@ bool CocosPepperInstance::Init(uint32_t argc, const char* argn[], const char* ar
 {
     CCLog("CocosPepperInstance::Init");
 #ifdef OLD_NACL_MOUNTS
-    m_runner = new MainThreadRunner(this);
+    _runner = new MainThreadRunner(this);
 #else
     CCLOG("%p %p", (void*)pp_instance(), (void*)pp::Module::Get()->get_browser_interface());
     nacl_io_init_ppapi(pp_instance(), pp::Module::Get()->get_browser_interface());

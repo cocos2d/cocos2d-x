@@ -37,6 +37,7 @@ Classes/CurrentLanguageTest/CurrentLanguageTest.cpp \
 Classes/DrawPrimitivesTest/DrawPrimitivesTest.cpp \
 Classes/EffectsAdvancedTest/EffectsAdvancedTest.cpp \
 Classes/EffectsTest/EffectsTest.cpp \
+Classes/ExtensionsTest/ArmatureTest/ArmatureScene.cpp \
 Classes/ExtensionsTest/ExtensionsTest.cpp \
 Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp \
 Classes/ExtensionsTest/ControlExtensionTest/CCControlScene.cpp \
@@ -54,6 +55,12 @@ Classes/ExtensionsTest/CocosBuilderTest/ButtonTest/ButtonTestLayer.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/MenuTest/MenuTestLayer.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest/AnimationsTestLayer.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/TimelineCallbackTest/TimelineCallbackTestLayer.cpp \
+Classes/ExtensionsTest/ComponentsTest/ComponentsTestScene.cpp \
+Classes/ExtensionsTest/ComponentsTest/EnemyController.cpp \
+Classes/ExtensionsTest/ComponentsTest/GameOverScene.cpp \
+Classes/ExtensionsTest/ComponentsTest/PlayerController.cpp \
+Classes/ExtensionsTest/ComponentsTest/ProjectileController.cpp \
+Classes/ExtensionsTest/ComponentsTest/SceneController.cpp \
 Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp \
 Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp \
 Classes/ExtensionsTest/EditBoxTest/EditBoxTest.cpp \

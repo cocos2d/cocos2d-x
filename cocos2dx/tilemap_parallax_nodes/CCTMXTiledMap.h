@@ -109,15 +109,15 @@ object->propertyNamed(name_of_the_property);
 class CC_DLL CCTMXTiledMap : public CCNode
 {
     /** the map's size property measured in tiles */
-    CC_SYNTHESIZE_PASS_BY_REF(CCSize, m_tMapSize, MapSize);
+    CC_SYNTHESIZE_PASS_BY_REF(CCSize, _mapSize, MapSize);
     /** the tiles's size property measured in pixels */
-    CC_SYNTHESIZE_PASS_BY_REF(CCSize, m_tTileSize, TileSize);
+    CC_SYNTHESIZE_PASS_BY_REF(CCSize, _tileSize, TileSize);
     /** map orientation */
-    CC_SYNTHESIZE(int, m_nMapOrientation, MapOrientation);
+    CC_SYNTHESIZE(int, _mapOrientation, MapOrientation);
     /** object groups */
-    CC_PROPERTY(CCArray*, m_pObjectGroups, ObjectGroups);
+    CC_PROPERTY(CCArray*, _objectGroups, ObjectGroups);
     /** properties */
-    CC_PROPERTY(CCDictionary*, m_pProperties, Properties);
+    CC_PROPERTY(CCDictionary*, _properties, Properties);
 public:
     CCTMXTiledMap();
     virtual ~CCTMXTiledMap();
@@ -152,7 +152,7 @@ private:
     void buildWithMapInfo(CCTMXMapInfo* mapInfo);
 protected:
     //! tile properties
-    CCDictionary* m_pTileProperties;
+    CCDictionary* _tileProperties;
 
 };
 

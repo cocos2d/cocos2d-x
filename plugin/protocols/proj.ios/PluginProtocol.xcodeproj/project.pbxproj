@@ -18,6 +18,7 @@
 		FAB6DF981755D82F00C90D89 /* PluginFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = FAB6DF971755D82F00C90D89 /* PluginFactory.mm */; };
 		FAB6DF9A1755D93600C90D89 /* PluginProtocol.mm in Sources */ = {isa = PBXBuildFile; fileRef = FAB6DF991755D93600C90D89 /* PluginProtocol.mm */; };
 		FAB6DFD31756EA4D00C90D89 /* ProtocolSocial.mm in Sources */ = {isa = PBXBuildFile; fileRef = FAB6DFD21756EA4D00C90D89 /* ProtocolSocial.mm */; };
+		FADC44CA176EABCF00B2D5ED /* AdsWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = FADC44C9176EABCF00B2D5ED /* AdsWrapper.mm */; };
 		FAE27553175DB9FB00F5DA8E /* SocialWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = FAE27552175DB9FB00F5DA8E /* SocialWrapper.mm */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +61,8 @@
 		FAB6DF991755D93600C90D89 /* PluginProtocol.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PluginProtocol.mm; sourceTree = "<group>"; };
 		FAB6DFCD1755EF8E00C90D89 /* PluginOCMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginOCMacros.h; sourceTree = "<group>"; };
 		FAB6DFD21756EA4D00C90D89 /* ProtocolSocial.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ProtocolSocial.mm; sourceTree = "<group>"; };
+		FADC44C8176EABCF00B2D5ED /* AdsWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdsWrapper.h; sourceTree = "<group>"; };
+		FADC44C9176EABCF00B2D5ED /* AdsWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AdsWrapper.mm; sourceTree = "<group>"; };
 		FAE27551175DB9FB00F5DA8E /* SocialWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialWrapper.h; sourceTree = "<group>"; };
 		FAE27552175DB9FB00F5DA8E /* SocialWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SocialWrapper.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -125,6 +128,8 @@
 		FA0CB8B5168D3CC200E36B11 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				FADC44C8176EABCF00B2D5ED /* AdsWrapper.h */,
+				FADC44C9176EABCF00B2D5ED /* AdsWrapper.mm */,
 				FAE27551175DB9FB00F5DA8E /* SocialWrapper.h */,
 				FAE27552175DB9FB00F5DA8E /* SocialWrapper.mm */,
 				FAB6DFCD1755EF8E00C90D89 /* PluginOCMacros.h */,
@@ -206,6 +211,7 @@
 				FAB6DF9A1755D93600C90D89 /* PluginProtocol.mm in Sources */,
 				FAB6DFD31756EA4D00C90D89 /* ProtocolSocial.mm in Sources */,
 				FAE27553175DB9FB00F5DA8E /* SocialWrapper.mm in Sources */,
+				FADC44CA176EABCF00B2D5ED /* AdsWrapper.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

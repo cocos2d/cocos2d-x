@@ -76,22 +76,22 @@ private:
 	void		showKeyboard();
 	void		hideKeyboard();
 
-	static bool 		m_initializedFunctions;
-	static const GLubyte *m_extensions;
+	static bool 		_initializedFunctions;
+	static const GLubyte *_extensions;
 
-	bool			 m_isGLInitialized;
-	bool 		     m_isWindowActive;
+	bool			 _isGLInitialized;
+	bool 		     _isWindowActive;
 	
-	EventHandler*	 m_pEventHandler;
+	EventHandler*	 _eventHandler;
 
-	EGLDisplay 		 m_eglDisplay;
-	EGLContext 		 m_eglContext;
-	EGLSurface 		 m_eglSurface;
-    screen_event_t 	 m_screenEvent;
-    screen_window_t  m_screenWindow;
-    screen_context_t m_screenContext;
-    screen_display_t m_screen_display;
-    char 			 m_windowGroupID[16];
+	EGLDisplay 		 _eglDisplay;
+	EGLContext 		 _eglContext;
+	EGLSurface 		 _eglSurface;
+    screen_event_t 	 _screenEvent;
+    screen_window_t  _screenWindow;
+    screen_context_t _screenContext;
+    screen_display_t _screen_display;
+    char 			 _windowGroupID[16];
 };
 
 NS_CC_END

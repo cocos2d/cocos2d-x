@@ -79,13 +79,13 @@ public:
 
 protected:
 
-    CCArray* m_pDelegates;
-    bool m_bLocked;
-    bool m_bToAdd;
-    bool m_bToRemove;
+    CCArray* _delegates;
+    bool _locked;
+    bool _toAdd;
+    bool _toRemove;
 
-    struct _ccCArray *m_pHandlersToAdd;
-    struct _ccCArray *m_pHandlersToRemove;
+    struct _ccCArray *_handlersToAdd;
+    struct _ccCArray *_handlersToRemove;
 };
 
 // end of input group

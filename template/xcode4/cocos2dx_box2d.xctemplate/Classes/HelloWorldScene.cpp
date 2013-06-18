@@ -18,14 +18,14 @@ enum {
 };
 
 PhysicsSprite::PhysicsSprite()
-: m_pBody(NULL)
+: _body(NULL)
 {
 
 }
 
 void PhysicsSprite::setPhysicsBody(b2Body * body)
 {
-    m_pBody = body;
+    _body = body;
 }
 
 // this method will only get called if the sprite is batched.
@@ -39,32 +39,32 @@ bool PhysicsSprite::isDirty(void)
 // returns the transform matrix according the Chipmunk Body values
 CCAffineTransform PhysicsSprite::nodeToParentTransform(void)
 {
-    b2Vec2 pos  = m_pBody->GetPosition();
+    b2Vec2 pos  = _body->GetPosition();
 
     float x = pos.x * PTM_RATIO;
     float y = pos.y * PTM_RATIO;
 
     if ( isIgnoreAnchorPointForPosition() ) {
-        x += m_obAnchorPointInPoints.x;
-        y += m_obAnchorPointInPoints.y;
+        x += _anchorPointInPoints.x;
+        y += _anchorPointInPoints.y;
     }
 
     // Make matrix
-    float radians = m_pBody->GetAngle();
+    float radians = _body->GetAngle();
     float c = cosf(radians);
     float s = sinf(radians);
 
-    if( ! m_obAnchorPointInPoints.equals(CCPointZero) ){
-        x += c*-m_obAnchorPointInPoints.x + -s*-m_obAnchorPointInPoints.y;
-        y += s*-m_obAnchorPointInPoints.x + c*-m_obAnchorPointInPoints.y;
+    if( ! _anchorPointInPoints.equals(CCPointZero) ){
+        x += c*-_anchorPointInPoints.x + -s*-_anchorPointInPoints.y;
+        y += s*-_anchorPointInPoints.x + c*-_anchorPointInPoints.y;
     }
 
     // Rot, Translate Matrix
-    m_sTransform = CCAffineTransformMake( c,  s,
+    _transform = CCAffineTransformMake( c,  s,
         -s,    c,
         x,    y );
 
-    return m_sTransform;
+    return _transform;
 }
 
 HelloWorld::HelloWorld()
@@ -77,7 +77,7 @@ HelloWorld::HelloWorld()
     this->initPhysics();
 
     CCSpriteBatchNode *parent = CCSpriteBatchNode::create("blocks.png", 100);
-    m_pSpriteTexture = parent->getTexture();
+    _spriteTexture = parent->getTexture();
 
     addChild(parent, 0, kTagParentNode);
 
@@ -97,7 +97,7 @@ HelloWorld::~HelloWorld()
     delete world;
     world = NULL;
     
-    //delete m_debugDraw;
+    //delete _debugDraw;
 }
 
 void HelloWorld::initPhysics()
@@ -114,8 +114,8 @@ void HelloWorld::initPhysics()
 
     world->SetContinuousPhysics(true);
 
-//     m_debugDraw = new GLESDebugDraw( PTM_RATIO );
-//     world->SetDebugDraw(m_debugDraw);
+//     _debugDraw = new GLESDebugDraw( PTM_RATIO );
+//     world->SetDebugDraw(_debugDraw);
 
     uint32 flags = 0;
     flags += b2Draw::e_shapeBit;
@@ -123,7 +123,7 @@ void HelloWorld::initPhysics()
     //        flags += b2Draw::e_aabbBit;
     //        flags += b2Draw::e_pairBit;
     //        flags += b2Draw::e_centerOfMassBit;
-    //m_debugDraw->SetFlags(flags);
+    //_debugDraw->SetFlags(flags);
 
 
     // Define the ground body.
@@ -184,7 +184,7 @@ void HelloWorld::addNewSpriteAtPosition(CCPoint p)
     int idx = (CCRANDOM_0_1() > .5 ? 0:1);
     int idy = (CCRANDOM_0_1() > .5 ? 0:1);
     PhysicsSprite *sprite = new PhysicsSprite();
-    sprite->initWithTexture(m_pSpriteTexture, CCRectMake(32 * idx,32 * idy,32,32));
+    sprite->initWithTexture(_spriteTexture, CCRectMake(32 * idx,32 * idy,32,32));
     sprite->autorelease();
     
     parent->addChild(sprite);

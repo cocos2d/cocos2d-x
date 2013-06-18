@@ -9,7 +9,7 @@ USING_NS_CC;
 
 class Ball : public CCSprite
 {
-    CCPoint m_velocity;
+    CCPoint _velocity;
 public:
     Ball(void);
     virtual ~Ball(void);
@@ -22,8 +22,8 @@ public:
 
 
 public:
-    void setVelocity(CCPoint velocity){m_velocity = velocity;}
-    CCPoint getVelocity(){return m_velocity;}
+    void setVelocity(CCPoint velocity){_velocity = velocity;}
+    CCPoint getVelocity(){return _velocity;}
 
 public:
     static Ball* ballWithTexture(CCTexture2D* aTexture);

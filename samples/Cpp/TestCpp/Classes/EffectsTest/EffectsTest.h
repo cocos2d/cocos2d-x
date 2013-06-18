@@ -13,7 +13,7 @@ public:
 class TextLayer : public BaseTest
 {
 protected:
-    //UxString    m_strTitle;
+    //UxString    _title;
 
 public:
     TextLayer(void);

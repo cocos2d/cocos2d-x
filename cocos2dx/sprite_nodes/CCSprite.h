@@ -263,8 +263,8 @@ public:
     /// @name Functions inherited from CCTextureProtocol
     virtual void setTexture(CCTexture2D *texture);
     virtual CCTexture2D* getTexture(void);
-    inline void setBlendFunc(ccBlendFunc blendFunc) { m_sBlendFunc = blendFunc; }
-    inline ccBlendFunc getBlendFunc(void) { return m_sBlendFunc; }
+    inline void setBlendFunc(ccBlendFunc blendFunc) { _blendFunc = blendFunc; }
+    inline ccBlendFunc getBlendFunc(void) { return _blendFunc; }
     /// @}
 
     /// @{
@@ -400,53 +400,53 @@ public:
      *
      * @return true if the sprite needs to be updated in the Atlas, false otherwise.
      */
-    inline virtual bool isDirty(void) { return m_bDirty; }
+    inline virtual bool isDirty(void) { return _dirty; }
     
     /** 
      * Makes the Sprite to be updated in the Atlas.
      */
-    inline virtual void setDirty(bool bDirty) { m_bDirty = bDirty; }
+    inline virtual void setDirty(bool bDirty) { _dirty = bDirty; }
     
     /**
      * Returns the quad (tex coords, vertex coords and color) information. 
      */
-    inline ccV3F_C4B_T2F_Quad getQuad(void) { return m_sQuad; }
+    inline ccV3F_C4B_T2F_Quad getQuad(void) { return _quad; }
 
     /** 
      * Returns whether or not the texture rectangle is rotated.
      */
-    inline bool isTextureRectRotated(void) { return m_bRectRotated; }
+    inline bool isTextureRectRotated(void) { return _rectRotated; }
     
     /** 
      * Returns the index used on the TextureAtlas. 
      */
-    inline unsigned int getAtlasIndex(void) { return m_uAtlasIndex; }
+    inline unsigned int getAtlasIndex(void) { return _atlasIndex; }
     
     /** 
      * Sets the index used on the TextureAtlas.
      * @warning Don't modify this value unless you know what you are doing
      */
-    inline void setAtlasIndex(unsigned int uAtlasIndex) { m_uAtlasIndex = uAtlasIndex; }
+    inline void setAtlasIndex(unsigned int uAtlasIndex) { _atlasIndex = uAtlasIndex; }
 
     /** 
      * Returns the rect of the CCSprite in points 
      */
-    inline const CCRect& getTextureRect(void) { return m_obRect; }
+    inline const CCRect& getTextureRect(void) { return _rect; }
 
     /**
      * Gets the weak reference of the CCTextureAtlas when the sprite is rendered using via CCSpriteBatchNode
      */
-    inline CCTextureAtlas* getTextureAtlas(void) { return m_pobTextureAtlas; }
+    inline CCTextureAtlas* getTextureAtlas(void) { return _textureAtlas; }
     
     /**
      * Sets the weak reference of the CCTextureAtlas when the sprite is rendered using via CCSpriteBatchNode
      */
-    inline void setTextureAtlas(CCTextureAtlas *pobTextureAtlas) { m_pobTextureAtlas = pobTextureAtlas; }
+    inline void setTextureAtlas(CCTextureAtlas *pobTextureAtlas) { _textureAtlas = pobTextureAtlas; }
 
     /** 
      * Gets the offset position of the sprite. Calculated automatically by editors like Zwoptex.
      */
-    inline const CCPoint& getOffsetPosition(void) { return m_obOffsetPosition; }
+    inline const CCPoint& getOffsetPosition(void) { return _offsetPosition; }
 
 
     /** 
@@ -497,43 +497,43 @@ protected:
     //
     // Data used when the sprite is rendered using a CCSpriteSheet
     //
-    CCTextureAtlas*     m_pobTextureAtlas;      /// CCSpriteBatchNode texture atlas (weak reference)
-    unsigned int        m_uAtlasIndex;          /// Absolute (real) Index on the SpriteSheet
-    CCSpriteBatchNode*  m_pobBatchNode;         /// Used batch node (weak reference)
+    CCTextureAtlas*     _textureAtlas;      /// CCSpriteBatchNode texture atlas (weak reference)
+    unsigned int        _atlasIndex;          /// Absolute (real) Index on the SpriteSheet
+    CCSpriteBatchNode*  _batchNode;         /// Used batch node (weak reference)
     
-    bool                m_bDirty;               /// Whether the sprite needs to be updated
-    bool                m_bRecursiveDirty;      /// Whether all of the sprite's children needs to be updated
-    bool                m_bHasChildren;         /// Whether the sprite contains children
-    bool                m_bShouldBeHidden;      /// should not be drawn because one of the ancestors is not visible
-    CCAffineTransform   m_transformToBatch;
+    bool                _dirty;               /// Whether the sprite needs to be updated
+    bool                _recursiveDirty;      /// Whether all of the sprite's children needs to be updated
+    bool                _hasChildren;         /// Whether the sprite contains children
+    bool                _shouldBeHidden;      /// should not be drawn because one of the ancestors is not visible
+    CCAffineTransform   _transformToBatch;
     
     //
     // Data used when the sprite is self-rendered
     //
-    ccBlendFunc        m_sBlendFunc;            /// It's required for CCTextureProtocol inheritance
-    CCTexture2D*       m_pobTexture;            /// CCTexture2D object that is used to render the sprite
+    ccBlendFunc        _blendFunc;            /// It's required for CCTextureProtocol inheritance
+    CCTexture2D*       _texture;            /// CCTexture2D object that is used to render the sprite
 
     //
     // Shared data
     //
 
     // texture
-    CCRect m_obRect;                            /// Retangle of CCTexture2D
-    bool   m_bRectRotated;                      /// Whether the texture is rotated
+    CCRect _rect;                            /// Retangle of CCTexture2D
+    bool   _rectRotated;                      /// Whether the texture is rotated
 
     // Offset Position (used by Zwoptex)
-    CCPoint m_obOffsetPosition;
-    CCPoint m_obUnflippedOffsetPositionFromCenter;
+    CCPoint _offsetPosition;
+    CCPoint _unflippedOffsetPositionFromCenter;
 
     // vertex coords, texture coords and color info
-    ccV3F_C4B_T2F_Quad m_sQuad;
+    ccV3F_C4B_T2F_Quad _quad;
 
     // opacity and RGB protocol
-    bool m_bOpacityModifyRGB;
+    bool _opacityModifyRGB;
 
     // image is flipped
-    bool m_bFlipX;                              /// Whether the sprite is flipped horizaontally or not.
-    bool m_bFlipY;                              /// Whether the sprite is flipped vertically or not.
+    bool _flipX;                              /// Whether the sprite is flipped horizaontally or not.
+    bool _flipY;                              /// Whether the sprite is flipped vertically or not.
 };
 
 

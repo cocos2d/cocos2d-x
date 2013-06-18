@@ -58,7 +58,7 @@ public:
     virtual CCGridBase* getGrid(void);
 
 protected:
-    CCSize m_sGridSize;
+    CCSize _gridSize;
 };
 
 /** 
@@ -120,17 +120,17 @@ public:
     virtual void update(float time);
 
     /** get amplitude rate */
-    inline float getRate(void) { return m_fRate; }
+    inline float getRate(void) { return _rate; }
     /** set amplitude rate */
-    inline void setRate(float fRate) { m_fRate = fRate; }
+    inline void setRate(float fRate) { _rate = fRate; }
 
 public:
     /** creates the action with an inner action that has the amplitude property, and a duration time */
     static CCAccelDeccelAmplitude* create(CCAction *pAction, float duration);
 
 protected:
-    float m_fRate;
-    CCActionInterval *m_pOther;
+    float _rate;
+    CCActionInterval *_other;
 };
 
 /** @brief CCAccelAmplitude action */
@@ -148,9 +148,9 @@ public:
 	virtual CCAccelAmplitude* reverse() const;
 
     /** get amplitude rate */
-    inline float getRate(void) { return m_fRate; }
+    inline float getRate(void) { return _rate; }
     /** set amplitude rate */
-    inline void setRate(float fRate) { m_fRate = fRate; }
+    inline void setRate(float fRate) { _rate = fRate; }
 
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
@@ -159,8 +159,8 @@ public:
     /** creates the action with an inner action that has the amplitude property, and a duration time */
     static CCAccelAmplitude* create(CCAction *pAction, float duration);
 protected:
-    float m_fRate;
-    CCActionInterval *m_pOther;
+    float _rate;
+    CCActionInterval *_other;
 };
 
 /** @brief CCDeccelAmplitude action */
@@ -178,9 +178,9 @@ public:
 	virtual CCDeccelAmplitude* reverse() const;
 
     /** get amplitude rate */
-    inline float getRate(void) { return m_fRate; }
+    inline float getRate(void) { return _rate; }
     /** set amplitude rate */
-    inline void setRate(float fRate) { m_fRate = fRate; }
+    inline void setRate(float fRate) { _rate = fRate; }
 
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
@@ -190,8 +190,8 @@ public:
     static CCDeccelAmplitude* create(CCAction *pAction, float duration);
 
 protected:
-    float m_fRate;
-    CCActionInterval *m_pOther;
+    float _rate;
+    CCActionInterval *_other;
 };
 
 /** @brief CCStopGrid action.
@@ -234,7 +234,7 @@ public:
     /** creates an action with the number of times that the current grid will be reused */
     static CCReuseGrid* create(int times);
 protected:
-    int m_nTimes;
+    int _times;
 };
 
 // end of actions group

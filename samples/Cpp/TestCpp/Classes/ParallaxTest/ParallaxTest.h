@@ -7,7 +7,7 @@
 class ParallaxDemo : public BaseTest
 {
 protected:
-    CCTextureAtlas* m_atlas;
+    CCTextureAtlas* _atlas;
 
 public:
     ParallaxDemo(void);
@@ -24,9 +24,9 @@ public:
 class Parallax1 : public ParallaxDemo
 {
 protected:
-    CCNode*        m_root;
-    CCNode*        m_target;
-    CCMotionStreak*        m_streak;
+    CCNode*        _root;
+    CCNode*        _target;
+    CCMotionStreak*        _streak;
 
 public:
     Parallax1();
@@ -36,9 +36,9 @@ public:
 class Parallax2 : public ParallaxDemo
 {
 protected:
-    CCNode*        m_root;
-    CCNode*        m_target;
-    CCMotionStreak*        m_streak;
+    CCNode*        _root;
+    CCNode*        _target;
+    CCMotionStreak*        _streak;
 
 public:
     Parallax2();

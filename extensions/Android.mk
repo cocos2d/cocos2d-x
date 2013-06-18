@@ -6,6 +6,31 @@ LOCAL_MODULE    := cocos_extension_static
 LOCAL_MODULE_FILENAME := libextension
 
 LOCAL_SRC_FILES := AssetsManager/AssetsManager.cpp \
+CCArmature/CCArmature.cpp \
+CCArmature/CCBone.cpp \
+CCArmature/animation/CCArmatureAnimation.cpp \
+CCArmature/animation/CCProcessBase.cpp \
+CCArmature/animation/CCTween.cpp \
+CCArmature/datas/CCDatas.cpp \
+CCArmature/display/CCBatchNode.cpp \
+CCArmature/display/CCDecorativeDisplay.cpp \
+CCArmature/display/CCDisplayFactory.cpp \
+CCArmature/display/CCDisplayManager.cpp \
+CCArmature/display/CCShaderNode.cpp \
+CCArmature/display/CCSkin.cpp \
+CCArmature/external_tool/GLES-Render.cpp \
+CCArmature/external_tool/Json/CSContentJsonDictionary.cpp \
+CCArmature/external_tool/Json/lib_json/json_value.cpp \
+CCArmature/external_tool/Json/lib_json/json_reader.cpp \
+CCArmature/external_tool/Json/lib_json/json_writer.cpp \
+CCArmature/physics/CCColliderDetector.cpp \
+CCArmature/physics/CCPhysicsWorld.cpp \
+CCArmature/utils/CCArmatureDataManager.cpp \
+CCArmature/utils/CCDataReaderHelper.cpp \
+CCArmature/utils/CCSpriteFrameCacheHelper.cpp \
+CCArmature/utils/CCTransformHelp.cpp \
+CCArmature/utils/CCTweenFunction.cpp \
+CCArmature/utils/CCUtilMath.cpp \
 CCBReader/CCBFileLoader.cpp \
 CCBReader/CCBReader.cpp \
 CCBReader/CCControlButtonLoader.cpp \
@@ -29,6 +54,10 @@ CCBReader/CCBSequence.cpp \
 CCBReader/CCBSequenceProperty.cpp \
 CCBReader/CCBValue.cpp \
 CCBReader/CCNode+CCBRelativePositioning.cpp \
+Components/CCComAttribute.cpp \
+Components/CCComAudio.cpp \
+Components/CCComController.cpp \
+Components/CCInputDelegate.cpp \
 GUI/CCControlExtension/CCControl.cpp \
 GUI/CCControlExtension/CCControlButton.cpp \
 GUI/CCControlExtension/CCControlColourPicker.cpp \
@@ -80,6 +109,8 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_curl_static
 LOCAL_WHOLE_STATIC_LIBRARIES += box2d_static
 LOCAL_WHOLE_STATIC_LIBRARIES += chipmunk_static
 LOCAL_WHOLE_STATIC_LIBRARIES += libwebsockets_static
+
+LOCAL_CXXFLAGS += -fexceptions
 
 LOCAL_CFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 LOCAL_EXPORT_CFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1

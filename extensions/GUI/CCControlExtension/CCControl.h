@@ -89,14 +89,14 @@ class CCControl : public CCLayerRGBA
 {
 
     //CCRGBAProtocol
-    bool m_bIsOpacityModifyRGB;
+    bool _isOpacityModifyRGB;
     
     /** The current control state constant. */
-    CC_SYNTHESIZE_READONLY(CCControlState, m_eState, State);
+    CC_SYNTHESIZE_READONLY(CCControlState, _state, State);
 
     /** True if all of the controls parents are visible */
 protected:
-    bool m_hasVisibleParents;
+    bool _hasVisibleParents;
 
 public:
     /** Tells whether the control is enabled. */
@@ -118,16 +118,16 @@ public:
     virtual void setOpacityModifyRGB(bool bOpacityModifyRGB);
 
 protected:
-    bool m_bEnabled;
-    bool m_bSelected;
-    bool m_bHighlighted;
+    bool _enabled;
+    bool _selected;
+    bool _highlighted;
 
     /** 
      * Table of connection between the CCControlEvents and their associated
      * target-actions pairs. For each CCButtonEvents a list of NSInvocation
      * (which contains the target-action pair) is linked.
      */
-    CCDictionary* m_pDispatchTable;
+    CCDictionary* _dispatchTable;
 
 public:
     CCControl();
@@ -260,7 +260,7 @@ public:
 private:
     int  getHandleOfControlEvent(CCControlEvent controlEvent);
 private:
-    std::map<int,int> m_mapHandleOfControlEvent;
+    std::map<int,int> _mapHandleOfControlEvent;
 };
 
 // end of GUI group

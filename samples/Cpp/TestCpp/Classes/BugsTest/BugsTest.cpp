@@ -55,18 +55,18 @@ void BugsTestMainLayer::onEnter()
     CCLayer::onEnter();
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
-    m_pItmeMenu = CCMenu::create();
+    _itmeMenu = CCMenu::create();
     CCMenuItemFont::setFontName("Arial");
     CCMenuItemFont::setFontSize(24);
     for (int i = 0; i < g_maxitems; ++i)
     {
         CCMenuItemFont* pItem = CCMenuItemFont::create(g_bugs[i].test_name, g_bugs[i].callback);
         pItem->setPosition(ccp(s.width / 2, s.height - (i + 1) * LINE_SPACE));
-        m_pItmeMenu->addChild(pItem, kItemTagBasic + i);
+        _itmeMenu->addChild(pItem, kItemTagBasic + i);
     }
 
-    m_pItmeMenu->setPosition(s_tCurPos);
-    addChild(m_pItmeMenu);
+    _itmeMenu->setPosition(s_tCurPos);
+    addChild(_itmeMenu);
     setTouchEnabled(true);
 }
 
@@ -75,7 +75,7 @@ void BugsTestMainLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
     CCSetIterator it = pTouches->begin();
     CCTouch* touch = (CCTouch*)(*it);
 
-    m_tBeginPos = touch->getLocation();    
+    _beginPos = touch->getLocation();    
 }
 
 void BugsTestMainLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
@@ -84,25 +84,25 @@ void BugsTestMainLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
     CCTouch* touch = (CCTouch*)(*it);
 
     CCPoint touchLocation = touch->getLocation();    
-    float nMoveY = touchLocation.y - m_tBeginPos.y;
+    float nMoveY = touchLocation.y - _beginPos.y;
 
-    CCPoint curPos  = m_pItmeMenu->getPosition();
+    CCPoint curPos  = _itmeMenu->getPosition();
     CCPoint nextPos = ccp(curPos.x, curPos.y + nMoveY);
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
     if (nextPos.y < 0.0f)
     {
-        m_pItmeMenu->setPosition(CCPointZero);
+        _itmeMenu->setPosition(CCPointZero);
         return;
     }
 
     if (nextPos.y > ((g_maxitems + 1)* LINE_SPACE - winSize.height))
     {
-        m_pItmeMenu->setPosition(ccp(0, ((g_maxitems + 1)* LINE_SPACE - winSize.height)));
+        _itmeMenu->setPosition(ccp(0, ((g_maxitems + 1)* LINE_SPACE - winSize.height)));
         return;
     }
 
-    m_pItmeMenu->setPosition(nextPos);
-    m_tBeginPos = touchLocation;
+    _itmeMenu->setPosition(nextPos);
+    _beginPos = touchLocation;
     s_tCurPos   = nextPos;
 }
 

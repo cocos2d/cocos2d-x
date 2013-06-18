@@ -64,20 +64,20 @@ using the camera.
 class CC_DLL CCCamera : public CCObject
 {
 protected:
-    float m_fEyeX;
-    float m_fEyeY;
-    float m_fEyeZ;
+    float _eyeX;
+    float _eyeY;
+    float _eyeZ;
 
-    float m_fCenterX;
-    float m_fCenterY;
-    float m_fCenterZ;
+    float _centerX;
+    float _centerY;
+    float _centerZ;
 
-    float m_fUpX;
-    float m_fUpY;
-    float m_fUpZ;
+    float _upX;
+    float _upY;
+    float _upZ;
 
-    bool m_bDirty;
-    kmMat4    m_lookupMatrix;
+    bool _dirty;
+    kmMat4    _lookupMatrix;
 public:
     CCCamera(void);
     ~CCCamera(void);
@@ -87,9 +87,9 @@ public:
     const char* description(void);
 
     /** sets the dirty value */
-    inline void setDirty(bool bValue) { m_bDirty = bValue; }
+    inline void setDirty(bool bValue) { _dirty = bValue; }
     /** get the dirty value */
-    inline bool isDirty(void) { return m_bDirty; }
+    inline bool isDirty(void) { return _dirty; }
 
     /** sets the camera in the default position */
     void restore(void);
