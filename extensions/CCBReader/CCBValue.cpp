@@ -131,7 +131,7 @@ bool CCBValue::getBoolValue()
 
 unsigned char CCBValue::getByteValue()
 {
-    assert(mType = kUnsignedCharValue);
+    assert(mType == kUnsignedCharValue);
     
     return (unsigned char)(mValue.nValue);
 }

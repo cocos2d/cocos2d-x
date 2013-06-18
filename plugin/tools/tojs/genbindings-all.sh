@@ -1,7 +1,5 @@
 #!/bin/bash
 
-PLUGIN_NAME=("alipay" "flurry" "nd91" "umeng" "admob" "twitter")
-
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # ... use paths relative to current directory
 PLUGIN_ROOT="$DIR/../.."
@@ -30,12 +28,5 @@ check_return_value()
 
 ./genbindings.sh "protocols"
 check_return_value "protocols"
-
-for i in "${PLUGIN_NAME[@]}"
-do
-    echo $i
-    ./genbindings.sh $i "plugins/"
-    check_return_value $i
-done
 
 echo "--- Generating all jsbindings glue codes for pluginx succeed. :) --- "

@@ -404,13 +404,33 @@ int CCLuaStack::executeFunctionByHandler(int nHandler, int numArgs)
     return ret;
 }
 
-bool CCLuaStack::executeAssert(bool cond, const char *msg)
+bool CCLuaStack::handleAssert(const char *msg)
 {
     if (m_callFromLua == 0) return false;
     
     lua_pushfstring(m_state, "ASSERT FAILED ON LUA EXECUTE: %s", msg ? msg : "unknown");
     lua_error(m_state);
     return true;
+}
+
+int CCLuaStack::reallocateScriptHandler(int nHandler)
+{
+    LUA_FUNCTION  nNewHandle = -1;
+    
+    if (pushFunctionByHandler(nHandler))
+    {
+       nNewHandle = toluafix_ref_function(m_state,lua_gettop(m_state),0);
+    }
+/*
+    toluafix_get_function_by_refid(m_state,nNewHandle);
+    if (!lua_isfunction(m_state, -1))
+    {
+        CCLOG("Error!");
+    }
+    lua_settop(m_state, 0);
+*/
+    return nNewHandle;
+
 }
 
 NS_CC_END

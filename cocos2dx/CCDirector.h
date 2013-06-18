@@ -34,7 +34,7 @@ THE SOFTWARE.
 #include "cocoa/CCArray.h"
 #include "CCGL.h"
 #include "kazmath/mat4.h"
-#include "label_nodes/CCLabelTTF.h"
+#include "label_nodes/CCLabelAtlas.h"
 #include "ccTypeInfo.h"
 
 
@@ -285,6 +285,9 @@ public:
      */
     void purgeCachedData(void);
 
+	/** sets the default values based on the CCConfiguration info */
+    void setDefaultValues(void);
+
     // OpenGL Helper
 
     /** sets the OpenGL default values */
@@ -335,6 +338,7 @@ public:
     /* delta time since last tick to main loop */
 	CC_PROPERTY_READONLY(float, m_fDeltaTime, DeltaTime);
 	
+public:
     /** returns a shared instance of the director */
     static CCDirector* sharedDirector(void);
 
@@ -366,9 +370,9 @@ protected:
     float m_fAccumDt;
     float m_fFrameRate;
     
-    CCLabelTTF *m_pFPSLabel;
-    CCLabelTTF *m_pSPFLabel;
-    CCLabelTTF *m_pDrawsLabel;
+    CCLabelAtlas *m_pFPSLabel;
+    CCLabelAtlas *m_pSPFLabel;
+    CCLabelAtlas *m_pDrawsLabel;
     
     /** Whether or not the Director is paused */
     bool m_bPaused;

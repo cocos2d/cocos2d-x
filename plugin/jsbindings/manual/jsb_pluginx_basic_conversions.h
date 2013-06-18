@@ -9,6 +9,10 @@
 #include "ProtocolAds.h"
 #include "ProtocolSocial.h"
 
+#ifndef CCLOGINFO
+#define CCLOGINFO(...)      
+#endif
+
 using namespace cocos2d::plugin;
 
 namespace pluginx {
@@ -27,6 +31,7 @@ JSBool jsval_to_TSocialDeveloperInfo(JSContext *cx, jsval v, TSocialDeveloperInf
 JSBool jsval_to_TShareInfo(JSContext *cx, jsval v, TShareInfo* ret);
 JSBool jsval_to_TPaymentInfo(JSContext *cx, jsval v, std::map<std::string, std::string>* ret);
 JSBool jsval_to_LogEventParamMap(JSContext *cx, jsval v, LogEventParamMap** ret);
+JSBool jsval_to_StringMap(JSContext *cx, jsval v, StringMap* ret);
 
 // from native
 jsval int32_to_jsval( JSContext *cx, int32_t l);

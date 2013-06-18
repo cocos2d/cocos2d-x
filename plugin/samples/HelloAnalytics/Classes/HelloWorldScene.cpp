@@ -23,8 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "HelloWorldScene.h"
 #include "PluginManager.h"
-#include "AnalyticsFlurry.h"
-#include "AnalyticsUmeng.h"
+#include "ProtocolAnalytics.h"
 #include "AppDelegate.h"
 
 using namespace cocos2d;
@@ -112,7 +111,7 @@ bool HelloWorld::init()
     }
 
     std::string strName = g_pAnalytics->getPluginName();
-    std::string strVer = g_pAnalytics->getPluginVersion();
+    std::string strVer = g_pAnalytics->getSDKVersion();
     char ret[256] = { 0 };
     sprintf(ret, "Plugin : %s, Ver : %s", strName.c_str(), strVer.c_str());
     CCLabelTTF* pLabel = CCLabelTTF::create(ret, "Arial", 18, CCSizeMake(size.width, 0), kCCTextAlignmentCenter);
@@ -139,8 +138,6 @@ void HelloWorld::reloadPluginMenuCallback(CCObject* pSender)
 void HelloWorld::eventMenuCallback(CCObject* pSender)
 {
     CCMenuItemLabel* pMenuItem = (CCMenuItemLabel*)pSender;
-    AnalyticsUmeng* pUmeng = dynamic_cast<AnalyticsUmeng*>(g_pAnalytics);
-    AnalyticsFlurry* pFlurry = dynamic_cast<AnalyticsFlurry*>(g_pAnalytics);
 
     switch (pMenuItem->getTag())
     {
@@ -160,64 +157,64 @@ void HelloWorld::eventMenuCallback(CCObject* pSender)
         break;
     case TAG_LOG_ONLINE_CONFIG:
         {
-            if (pUmeng != NULL)
-            {
-                CCLog("Online config = %s", pUmeng->getConfigParams("abc"));           
-            }
-            else
-            {
-                CCLog("Now is not using umeng!");
-            }
+            PluginParam param("abc");
+            CCLog("Online config = %s", g_pAnalytics->callStringFuncWithParam("getConfigParams", &param, NULL));
         }
         break;
     case TAG_LOG_EVENT_ID_DURATION:
         {
-            if (pUmeng != NULL)
-            {
-                pUmeng->logEventWithDuration("book", 12000);
-                pUmeng->logEventWithDuration("book", 23000, "chapter1");
-                LogEventParamMap paramMap;
-                paramMap.insert(LogEventParamPair("type", "popular"));
-                paramMap.insert(LogEventParamPair("artist", "JJLin"));
-                pUmeng->logEventWithDuration("music", 2330000, &paramMap);
-            }
-            else
-            {
-                CCLog("Now is not using umeng!");
-            }
+            PluginParam event1("book");
+            PluginParam dura1(12000);
+            g_pAnalytics->callFuncWithParam("logEventWithDuration", &event1, &dura1, NULL);
+
+            PluginParam event2("book");
+            PluginParam dura2(12000);
+            PluginParam label("chapter1");
+            g_pAnalytics->callFuncWithParam("logEventWithDurationLabel", &event2, &dura2, &label, NULL);
+
+            PluginParam event3("music");
+            PluginParam dura3(2330000);
+            LogEventParamMap paramMap;
+            paramMap.insert(LogEventParamPair("type", "popular"));
+            paramMap.insert(LogEventParamPair("artist", "JJLin"));
+            PluginParam mapValue(paramMap);
+            g_pAnalytics->callFuncWithParam("logEventWithDurationParams", &event3, &dura3, &mapValue, NULL);
         }
         break;
     case TAG_LOG_EVENT_BEGIN:
         {
             g_pAnalytics->logTimedEventBegin("music");
 
+            PluginParam event1("music");
+            PluginParam label1("one");
+            g_pAnalytics->callFuncWithParam("logTimedEventWithLabelBegin", &event1, &label1, NULL);
+
+            PluginParam event2("music");
+            PluginParam label2("flag0");
             LogEventParamMap paramMap;
             paramMap.insert(LogEventParamPair("type", "popular"));
             paramMap.insert(LogEventParamPair("artist", "JJLin"));
+            PluginParam mapValue(paramMap);
+            g_pAnalytics->callFuncWithParam("logTimedKVEventBegin", &event2, &label2, &mapValue, NULL);
 
-            if (pUmeng != NULL)
-            {
-                pUmeng->logTimedEventWithLabelBegin("music", "one");
-                pUmeng->logTimedKVEventBegin("music", "flag0", &paramMap);
-            }
-            else if (pFlurry != NULL)
-            {
-                pFlurry->logTimedEventBegin("music-kv", &paramMap);
-            }
+            PluginParam event3("music-kv");
+            g_pAnalytics->callFuncWithParam("logTimedEventBeginWithParams", &event3, &mapValue, NULL);
         }
         break;
     case TAG_LOG_EVENT_END:
         {
             g_pAnalytics->logTimedEventEnd("music");
-            if (pUmeng != NULL)
-            {          
-                pUmeng->logTimedEventWithLabelEnd("music", "one");
-                pUmeng->logTimedKVEventEnd("music", "flag0");
-            }
-            else if (pFlurry != NULL)
-            {
-                pFlurry->logTimedEventEnd("music-kv");
-            }
+
+            PluginParam event1("music");
+            PluginParam label1("one");
+            g_pAnalytics->callFuncWithParam("logTimedEventWithLabelEnd", &event1, &label1, NULL);
+
+            PluginParam event2("music");
+            PluginParam label2("flag0");
+            g_pAnalytics->callFuncWithParam("logTimedKVEventEnd", &event2, &label2, NULL);
+
+            PluginParam event3("music-kv");
+            g_pAnalytics->callFuncWithParam("logTimedEventEnd", &event3, NULL);
         }
         break;
     case TAG_MAKE_ME_CRASH:

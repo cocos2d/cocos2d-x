@@ -25,69 +25,36 @@ THE SOFTWARE.
 #include <android/log.h>
 #include <map>
 
+#define MAX_LOG_LEN			256
+
 namespace cocos2d { namespace plugin {
 
 #define JAVAVM    cocos2d::PluginJniHelper::getJavaVM()
 
-#if 1
-#define  LOG_TAG    "PluginUtils"
-#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
-#else
-#define  LOGD(...) 
-#endif
-
-static cocos2d::plugin::PluginProtocol* s_pPluginInstance = NULL;
-
-extern "C" {
-
-JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_PluginWrapper_nativeInitPlugin(JNIEnv*  env, jobject thiz, jobject obj, jstring className)
+jobject PluginUtils::createJavaMapObject(std::map<std::string, std::string>* paramMap)
 {
-    if (s_pPluginInstance != NULL) {
-        cocos2d::plugin::PluginJavaData* pUserData = new cocos2d::plugin::PluginJavaData();
-        pUserData->jobj = env->NewGlobalRef(obj);
-        pUserData->jclassName = cocos2d::PluginJniHelper::jstring2string(className);
-        cocos2d::plugin::PluginUtils::setPluginJavaData(s_pPluginInstance, pUserData);
-        s_pPluginInstance = NULL;
-    }
-}
-
-}
-
-jobject PluginUtils::createJavaMapObject(PluginJniMethodInfo&t, std::map<std::string, std::string>* paramMap)
-{
-	jclass class_Hashtable = t.env->FindClass("java/util/Hashtable"); 
-	jmethodID construct_method = t.env->GetMethodID( class_Hashtable, "<init>","()V"); 
-	jobject obj_Map = t.env->NewObject( class_Hashtable, construct_method, "");
+    JNIEnv* env = getEnv();
+	jclass class_Hashtable = env->FindClass("java/util/Hashtable");
+	jmethodID construct_method = env->GetMethodID( class_Hashtable, "<init>","()V");
+	jobject obj_Map = env->NewObject( class_Hashtable, construct_method, "");
 	if (paramMap != NULL)
 	{
-		jmethodID add_method= t.env->GetMethodID( class_Hashtable,"put","(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"); 
+		jmethodID add_method= env->GetMethodID( class_Hashtable,"put","(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;");
 		for (std::map<std::string, std::string>::const_iterator it = paramMap->begin(); it != paramMap->end(); ++it)
 		{
-			t.env->CallObjectMethod(obj_Map, add_method, t.env->NewStringUTF(it->first.c_str()), t.env->NewStringUTF(it->second.c_str()));  
+			env->CallObjectMethod(obj_Map, add_method, env->NewStringUTF(it->first.c_str()), env->NewStringUTF(it->second.c_str()));
 		}
 	}
-    t.env->DeleteLocalRef(class_Hashtable);
+    env->DeleteLocalRef(class_Hashtable);
     return obj_Map;
 }
 
-bool PluginUtils::initJavaPlugin(PluginProtocol* pPlugin, const char* className)
+void PluginUtils::initJavaPlugin(PluginProtocol* pPlugin, jobject jObj, const char* className)
 {
-	return_val_if_fails(className != NULL && strlen(className) > 0, false);
-	bool bRet = false;
-	PluginJniMethodInfo t;
-	s_pPluginInstance = pPlugin;
-	if (PluginJniHelper::getStaticMethodInfo(t
-		, "org/cocos2dx/plugin/PluginWrapper"
-		, "initPlugin"
-		, "(Ljava/lang/String;)Z"))
-	{
-		jstring jclassName = t.env->NewStringUTF(className);
-		bRet = (bool)t.env->CallStaticBooleanMethod(t.classID, t.methodID, jclassName);
-		t.env->DeleteLocalRef(jclassName);
-		t.env->DeleteLocalRef(t.classID);
-	}
-
-	return bRet;
+	cocos2d::plugin::PluginJavaData* pUserData = new cocos2d::plugin::PluginJavaData();
+	pUserData->jobj = PluginUtils::getEnv()->NewGlobalRef(jObj);
+	pUserData->jclassName = className;
+	cocos2d::plugin::PluginUtils::setPluginJavaData(pPlugin, pUserData);
 }
 
 JNIEnv* PluginUtils::getEnv()
@@ -98,13 +65,13 @@ JNIEnv* PluginUtils::getEnv()
     {
         if (JAVAVM->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK)
         {
-            LOGD("Failed to get the environment using GetEnv()");
+        	outputLog("PluginUtils", "Failed to get the environment using GetEnv()");
             break;
         }
 
         if (JAVAVM->AttachCurrentThread(&env, 0) < 0)
         {
-            LOGD("Failed to get the environment using AttachCurrentThread()");
+            outputLog("PluginUtils", "Failed to get the environment using AttachCurrentThread()");
             break;
         }
 
@@ -119,10 +86,10 @@ JNIEnv* PluginUtils::getEnv()
 }
 
 std::map<PluginProtocol*, PluginJavaData*> s_PluginObjMap;
-std::map<jobject, PluginProtocol*> s_JObjPluginMap;
+std::map<std::string, PluginProtocol*> s_JObjPluginMap;
 
 typedef std::map<PluginProtocol*, PluginJavaData*>::iterator ObjMapIter;
-typedef std::map<jobject, PluginProtocol*>::iterator JObjPluginMapIter;
+typedef std::map<std::string, PluginProtocol*>::iterator JObjPluginMapIter;
 
 PluginJavaData* PluginUtils::getPluginJavaData(PluginProtocol* pKeyObj)
 {
@@ -135,10 +102,10 @@ PluginJavaData* PluginUtils::getPluginJavaData(PluginProtocol* pKeyObj)
     return ret;
 }
 
-PluginProtocol* PluginUtils::getPluginPtr(jobject jobj)
+PluginProtocol* PluginUtils::getPluginPtr(std::string className)
 {
 	PluginProtocol* ret = NULL;
-	JObjPluginMapIter it = s_JObjPluginMap.find(jobj);
+	JObjPluginMapIter it = s_JObjPluginMap.find(className);
 	if (it != s_JObjPluginMap.end()) {
 		ret = it->second;
 	}
@@ -150,7 +117,7 @@ void PluginUtils::setPluginJavaData(PluginProtocol* pKeyObj, PluginJavaData* pDa
 {
     erasePluginJavaData(pKeyObj);
     s_PluginObjMap.insert(std::pair<PluginProtocol*, PluginJavaData*>(pKeyObj, pData));
-    s_JObjPluginMap.insert(std::pair<jobject, PluginProtocol*>(pData->jobj, pKeyObj));
+    s_JObjPluginMap.insert(std::pair<std::string, PluginProtocol*>(pData->jclassName, pKeyObj));
 }
 
 void PluginUtils::erasePluginJavaData(PluginProtocol* pKeyObj)
@@ -162,19 +129,121 @@ void PluginUtils::erasePluginJavaData(PluginProtocol* pKeyObj)
         {
             jobject jobj = pData->jobj;
 
-            JObjPluginMapIter pluginIt = s_JObjPluginMap.find(jobj);
+            JObjPluginMapIter pluginIt = s_JObjPluginMap.find(pData->jclassName);
             if (pluginIt != s_JObjPluginMap.end())
             {
             	s_JObjPluginMap.erase(pluginIt);
             }
 
             JNIEnv* pEnv = getEnv();
-            LOGD("Delete global reference.");
+            outputLog("PluginUtils", "Delete global reference.");
             pEnv->DeleteGlobalRef(jobj);
             delete pData;
         }
         s_PluginObjMap.erase(it);
     }
+}
+
+void PluginUtils::outputLog(const char* logTag, const char* pFormat, ...)
+{
+	char buf[MAX_LOG_LEN + 1];
+
+	va_list args;
+	va_start(args, pFormat);
+	vsnprintf(buf, MAX_LOG_LEN, pFormat, args);
+	va_end(args);
+
+	__android_log_print(ANDROID_LOG_DEBUG, logTag,  buf);
+}
+
+jobject PluginUtils::getJObjFromParam(PluginParam* param)
+{
+	if (NULL == param)
+	{
+		return NULL;
+	}
+
+	jobject obj = NULL;
+	PluginJniMethodInfo t;
+	JNIEnv* env = PluginUtils::getEnv();
+
+	switch(param->getCurrentType())
+	{
+	case PluginParam::kParamTypeInt:
+		if (PluginJniHelper::getStaticMethodInfo(t, "java/lang/Integer", "valueOf", "(I)Ljava/lang/Integer;"))
+		{
+			obj = t.env->CallStaticObjectMethod(t.classID, t.methodID, param->getIntValue());
+		}
+		break;
+	case PluginParam::kParamTypeFloat:
+		if (PluginJniHelper::getStaticMethodInfo(t, "java/lang/Float", "valueOf", "(F)Ljava/lang/Float;"))
+		{
+			obj = t.env->CallStaticObjectMethod(t.classID, t.methodID, param->getFloatValue());
+		}
+		break;
+	case PluginParam::kParamTypeBool:
+		if (PluginJniHelper::getStaticMethodInfo(t, "java/lang/Boolean", "valueOf", "(Z)Ljava/lang/Boolean;"))
+		{
+			obj = t.env->CallStaticObjectMethod(t.classID, t.methodID, param->getBoolValue());
+		}
+		break;
+	case PluginParam::kParamTypeString:
+		obj = env->NewStringUTF(param->getStringValue());
+		break;
+	case PluginParam::kParamTypeStringMap:
+	    {
+	        jclass cls = env->FindClass("org/json/JSONObject");
+            jmethodID mid = env->GetMethodID(cls,"<init>","()V");
+            obj = env->NewObject(cls,mid);
+            std::map<std::string, std::string>::iterator it;
+            std::map<std::string, std::string> mapParam = param->getStrMapValue();
+            for (it = mapParam.begin(); it != mapParam.end(); it++)
+            {
+                PluginJniMethodInfo tInfo;
+                if (PluginJniHelper::getMethodInfo(tInfo, "org/json/JSONObject", "put", "(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;"))
+                {
+                    jstring strKey = tInfo.env->NewStringUTF(it->first.c_str());
+                    jstring strValue = tInfo.env->NewStringUTF(it->second.c_str());
+
+                    tInfo.env->CallObjectMethod(obj, tInfo.methodID, strKey, strValue);
+                    tInfo.env->DeleteLocalRef(tInfo.classID);
+
+                    tInfo.env->DeleteLocalRef(strKey);
+                    tInfo.env->DeleteLocalRef(strValue);
+                }
+            }
+        }
+	    break;
+	case PluginParam::kParamTypeMap:
+		{
+			jclass cls = env->FindClass("org/json/JSONObject");
+			jmethodID mid = env->GetMethodID(cls,"<init>","()V");
+			obj = env->NewObject(cls,mid);
+
+			std::map<std::string, PluginParam*>::iterator it;
+			std::map<std::string, PluginParam*> mapParam = param->getMapValue();
+			for (it = mapParam.begin(); it != mapParam.end(); it++)
+			{
+				PluginJniMethodInfo tInfo;
+				if (PluginJniHelper::getMethodInfo(tInfo, "org/json/JSONObject", "put", "(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;"))
+				{
+					jstring strKey = tInfo.env->NewStringUTF(it->first.c_str());
+					jobject objValue = PluginUtils::getJObjFromParam(it->second);
+
+					tInfo.env->CallObjectMethod(obj, tInfo.methodID, strKey, objValue);
+					tInfo.env->DeleteLocalRef(tInfo.classID);
+
+					tInfo.env->DeleteLocalRef(strKey);
+					PluginUtils::getEnv()->DeleteLocalRef(objValue);
+				}
+			}
+		}
+		break;
+	default:
+		break;
+	}
+
+	return obj;
 }
 
 }}// namespace cocos2d { namespace plugin {

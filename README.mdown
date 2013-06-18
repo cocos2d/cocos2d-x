@@ -1,7 +1,7 @@
 cocos2d-x
 =========
 
-[![Build Status](https://travis-ci.org/sbc100/cocos2d-x.png?branch=travis)](https://travis-ci.org/sbc100/cocos2d-x)
+[![Build Status](https://travis-ci.org/cocos2d/cocos2d-x.png?branch=master)](https://travis-ci.org/cocos2d/cocos2d-x)
 
 [cocos2d-x][1] is a multi-platform 2D game framework in C++, branched on
 [cocos2d-iphone][2] and licensed under MIT.  The master branch on github uses
@@ -18,7 +18,7 @@ Supported Platforms
      http://github.com/cocos2d-x/cocos2dx-win8.
    * Bada: cocos2d-x v1.x supports Bada SDK 1.0 & 2.0. Bada support was
      deprecated since cocos2d-x v2.0.
-   * BlackBerry: stable, contribued by staffs in RIM, supports Playbook & BB10.
+   * BlackBerry: stable, contributed by staffs in RIM, supports Playbook & BB10.
    * Marmalade: stable since cocos2d-x v0.11.0, contributed by Marmalade's staff.
    * Native Client (NaCl): contributed by the Native Client authors.
    * Windows: stable, well tested on WinXP/Vista/Win7. Please upgrde the drive
@@ -26,6 +26,8 @@ Supported Platforms
    * Linux: support but not very stable.
    * Emscripten: Alpha-level. Most features implemented. Needs testing.
      Contributed by Zynga staff.
+   * Tizen: Experimental. Essential features implemented. Needs more implementing.
+     Contributed by Lee, Jae-Hong.
 
 You can visit our continuous integration system http://ci.cocos2d-x.org to
 check the stability on edge version.
