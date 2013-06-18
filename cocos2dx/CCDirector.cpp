@@ -194,6 +194,7 @@ CCDirector::~CCDirector(void)
     // pop the autorelease pool
     CCPoolManager::sharedPoolManager()->pop();
     CCPoolManager::purgePoolManager();
+    CCScriptEngineManager::purgeSharedManager();
 
     // delete _lastUpdate
     CC_SAFE_DELETE(_lastUpdate);
