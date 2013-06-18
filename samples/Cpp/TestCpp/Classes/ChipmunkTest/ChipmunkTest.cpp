@@ -38,10 +38,10 @@ ChipmunkTestLayer::ChipmunkTestLayer()
 #if 1
     // Use batch node. Faster
     CCSpriteBatchNode *parent = CCSpriteBatchNode::create("Images/grossini_dance_atlas.png", 100);
-    m_pSpriteTexture = parent->getTexture();
+    _spriteTexture = parent->getTexture();
 #else
     // doesn't use batch node. Slower
-    m_pSpriteTexture = CCTextureCache::sharedTextureCache()->addImage("Images/grossini_dance_atlas.png");
+    _spriteTexture = CCTextureCache::sharedTextureCache()->addImage("Images/grossini_dance_atlas.png");
     CCNode *parent = CCNode::create();
 #endif
     addChild(parent, 0, kTagParentNode);
@@ -73,7 +73,7 @@ ChipmunkTestLayer::ChipmunkTestLayer()
 void ChipmunkTestLayer::toggleDebugCallback(CCObject* pSender)
 {
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
-    m_pDebugLayer->setVisible(! m_pDebugLayer->isVisible());
+    _debugLayer->setVisible(! _debugLayer->isVisible());
 #endif
 }
 
@@ -81,10 +81,10 @@ ChipmunkTestLayer::~ChipmunkTestLayer()
 {
     // manually Free rogue shapes
     for( int i=0;i<4;i++) {
-        cpShapeFree( m_pWalls[i] );
+        cpShapeFree( _walls[i] );
     }
 
-    cpSpaceFree( m_pSpace );
+    cpSpaceFree( _space );
 
 }
 
@@ -94,43 +94,43 @@ void ChipmunkTestLayer::initPhysics()
     // init chipmunk
     //cpInitChipmunk();
 
-    m_pSpace = cpSpaceNew();
+    _space = cpSpaceNew();
 
-    m_pSpace->gravity = cpv(0, -100);
+    _space->gravity = cpv(0, -100);
 
     //
     // rogue shapes
     // We have to free them manually
     //
     // bottom
-    m_pWalls[0] = cpSegmentShapeNew( m_pSpace->staticBody,
+    _walls[0] = cpSegmentShapeNew( _space->staticBody,
         cpv(VisibleRect::leftBottom().x,VisibleRect::leftBottom().y),
         cpv(VisibleRect::rightBottom().x, VisibleRect::rightBottom().y), 0.0f);
 
     // top
-    m_pWalls[1] = cpSegmentShapeNew( m_pSpace->staticBody, 
+    _walls[1] = cpSegmentShapeNew( _space->staticBody, 
         cpv(VisibleRect::leftTop().x, VisibleRect::leftTop().y),
         cpv(VisibleRect::rightTop().x, VisibleRect::rightTop().y), 0.0f);
 
     // left
-    m_pWalls[2] = cpSegmentShapeNew( m_pSpace->staticBody,
+    _walls[2] = cpSegmentShapeNew( _space->staticBody,
         cpv(VisibleRect::leftBottom().x,VisibleRect::leftBottom().y),
         cpv(VisibleRect::leftTop().x,VisibleRect::leftTop().y), 0.0f);
 
     // right
-    m_pWalls[3] = cpSegmentShapeNew( m_pSpace->staticBody, 
+    _walls[3] = cpSegmentShapeNew( _space->staticBody, 
         cpv(VisibleRect::rightBottom().x, VisibleRect::rightBottom().y),
         cpv(VisibleRect::rightTop().x, VisibleRect::rightTop().y), 0.0f);
 
     for( int i=0;i<4;i++) {
-        m_pWalls[i]->e = 1.0f;
-        m_pWalls[i]->u = 1.0f;
-        cpSpaceAddStaticShape(m_pSpace, m_pWalls[i] );
+        _walls[i]->e = 1.0f;
+        _walls[i]->u = 1.0f;
+        cpSpaceAddStaticShape(_space, _walls[i] );
     }
 
     // Physics debug layer
-    m_pDebugLayer = CCPhysicsDebugNode::create(m_pSpace);
-    this->addChild(m_pDebugLayer, Z_PHYSICS_DEBUG);
+    _debugLayer = CCPhysicsDebugNode::create(_space);
+    this->addChild(_debugLayer, Z_PHYSICS_DEBUG);
 #endif
 }
 
@@ -141,7 +141,7 @@ void ChipmunkTestLayer::update(float delta)
     float dt = CCDirector::sharedDirector()->getAnimationInterval()/(float)steps;
 
     for(int i=0; i<steps; i++){
-        cpSpaceStep(m_pSpace, dt);
+        cpSpaceStep(_space, dt);
     }
 }
 
@@ -190,13 +190,13 @@ void ChipmunkTestLayer::addNewSpriteAtPosition(CCPoint pos)
     cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, cpvzero));
 
     body->p = cpv(pos.x, pos.y);
-    cpSpaceAddBody(m_pSpace, body);
+    cpSpaceAddBody(_space, body);
 
     cpShape* shape = cpPolyShapeNew(body, num, verts, cpvzero);
     shape->e = 0.5f; shape->u = 0.5f;
-    cpSpaceAddShape(m_pSpace, shape);
+    cpSpaceAddShape(_space, shape);
 
-    CCPhysicsSprite *sprite = CCPhysicsSprite::createWithTexture(m_pSpriteTexture, CCRectMake(posx, posy, 85, 121));
+    CCPhysicsSprite *sprite = CCPhysicsSprite::createWithTexture(_spriteTexture, CCRectMake(posx, posy, 85, 121));
     parent->addChild(sprite);
 
     sprite->setCPBody(body);
@@ -242,7 +242,7 @@ void ChipmunkTestLayer::didAccelerate(CCAcceleration* pAccelerationValue)
 
     CCPoint v = ccp( accelX, accelY);
     v = ccpMult(v, 200);
-    m_pSpace->gravity = cpv(v.x, v.y);
+    _space->gravity = cpv(v.x, v.y);
 }
 
 void ChipmunkAccelTouchTestScene::runThisTest()

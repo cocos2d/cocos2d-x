@@ -52,7 +52,7 @@ public:
     };
 
     CCLuaStack *getLuaStack(void) {
-        return m_stack;
+        return _stack;
     }
     
     /**
@@ -76,6 +76,11 @@ public:
      @brief Remove Lua function reference
      */
     virtual void removeScriptHandler(int nHandler);
+    
+    /**
+     @brief Reallocate Lua function reference
+     */
+    virtual int reallocateScriptHandler(int nHandler);
     
     /**
      @brief Execute script code contained in the given string.
@@ -115,14 +120,14 @@ public:
     
 private:
     CCLuaEngine(void)
-    : m_stack(NULL)
+    : _stack(NULL)
     {
     }
     
     bool init(void);
     
-    static CCLuaEngine* m_defaultEngine;
-    CCLuaStack *m_stack;
+    static CCLuaEngine* _defaultEngine;
+    CCLuaStack *_stack;
 };
 
 NS_CC_END

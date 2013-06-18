@@ -24,10 +24,10 @@ public:
     virtual void editBoxTextChanged(cocos2d::extension::CCEditBox* editBox, const std::string& text);
     virtual void editBoxReturn(cocos2d::extension::CCEditBox* editBox);
 private:
-    cocos2d::CCLabelTTF* m_pTTFShowEditReturn;
-    cocos2d::extension::CCEditBox* m_pEditName;
-    cocos2d::extension::CCEditBox* m_pEditPassword;
-    cocos2d::extension::CCEditBox* m_pEditEmail;
+    cocos2d::CCLabelTTF* _TTFShowEditReturn;
+    cocos2d::extension::CCEditBox* _editName;
+    cocos2d::extension::CCEditBox* _editPassword;
+    cocos2d::extension::CCEditBox* _editEmail;
 };
 
 void runEditBoxTest();

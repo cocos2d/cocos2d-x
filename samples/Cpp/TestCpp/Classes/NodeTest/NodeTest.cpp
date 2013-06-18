@@ -619,7 +619,7 @@ CameraZoomTest::CameraZoomTest()
     addChild( sprite, 0, 20);
     sprite->setPosition(ccp(s.width/4*3, s.height/2));
 
-    m_z = 0;
+    _z = 0;
     scheduleUpdate();
 }
 
@@ -628,15 +628,15 @@ void CameraZoomTest::update(float dt)
     CCNode *sprite;
     CCCamera *cam;
     
-    m_z += dt * 100;
+    _z += dt * 100;
     
     sprite = getChildByTag(20);
     cam = sprite->getCamera();
-    cam->setEyeXYZ(0, 0, m_z);
+    cam->setEyeXYZ(0, 0, _z);
     
     sprite = getChildByTag(40);
     cam = sprite->getCamera();
-    cam->setEyeXYZ(0, 0, -m_z);    
+    cam->setEyeXYZ(0, 0, -_z);    
 }
 
 std::string CameraZoomTest::title()

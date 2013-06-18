@@ -52,15 +52,15 @@ public:
 
     const std::string& getStartupScriptFilename(void)
     {
-        return m_startupScriptFilename;
+        return _startupScriptFilename;
     }
 
 protected:
-    HINSTANCE           m_hInstance;
-    HACCEL              m_hAccelTable;
-    LARGE_INTEGER       m_nAnimationInterval;
-    std::string         m_resourceRootPath;
-    std::string         m_startupScriptFilename;
+    HINSTANCE           _instance;
+    HACCEL              _accelTable;
+    LARGE_INTEGER       _animationInterval;
+    std::string         _resourceRootPath;
+    std::string         _startupScriptFilename;
 
     static CCApplication * sm_pSharedApplication;
 };

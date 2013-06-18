@@ -46,7 +46,7 @@ The children will be moved faster / slower than the parent according the the par
 class CC_DLL CCParallaxNode : public CCNode 
 {
     /** array that holds the offset / ratio of the children */
-    CC_SYNTHESIZE(struct _ccArray *, m_pParallaxArray, ParallaxArray)
+    CC_SYNTHESIZE(struct _ccArray *, _parallaxArray, ParallaxArray)
 
 public:
     /** Adds a child to the container with a z-order, a parallax ratio and a position offset
@@ -66,7 +66,7 @@ public:
 private:
     CCPoint absolutePosition();
 protected:
-    CCPoint    m_tLastPosition;
+    CCPoint    _lastPosition;
 };
 
 // end of tilemap_parallax_nodes group

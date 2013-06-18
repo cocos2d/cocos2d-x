@@ -46,7 +46,7 @@ public:
      @return A pointer to the lua_State that the script module is attached to.
      */
     lua_State* getLuaState(void) {
-        return m_state;
+        return _state;
     }
     
     /**
@@ -70,6 +70,11 @@ public:
      @brief Remove Lua function reference
      */
     virtual void removeScriptHandler(int nHandler);
+    
+    /**
+     @brief Remove Lua function reference
+     */
+    virtual int reallocateScriptHandler(int nHandler);
     
     /**
      @brief Execute script code contained in the given string.
@@ -113,16 +118,16 @@ public:
     
 protected:
     CCLuaStack(void)
-    : m_state(NULL)
-    , m_callFromLua(0)
+    : _state(NULL)
+    , _callFromLua(0)
     {
     }
     
     bool init(void);
     bool initWithLuaState(lua_State *L);
     
-    lua_State *m_state;
-    int m_callFromLua;
+    lua_State *_state;
+    int _callFromLua;
 };
 
 NS_CC_END

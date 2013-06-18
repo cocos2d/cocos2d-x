@@ -83,20 +83,20 @@ public:
     /** Allocates a timer with a script callback function and an interval in seconds. */
     static CCTimer* timerWithScriptHandler(int nHandler, float fSeconds);
     
-    inline int getScriptHandler() { return m_nScriptHandler; };
+    inline int getScriptHandler() { return _scriptHandler; };
 
 protected:
-    CCObject *m_pTarget;
-    float m_fElapsed;
-    bool m_bRunForever;
-    bool m_bUseDelay;
-    unsigned int m_uTimesExecuted;
-    unsigned int m_uRepeat; //0 = once, 1 is 2 x executed
-    float m_fDelay;
-    float m_fInterval;
-    SEL_SCHEDULE m_pfnSelector;
+    CCObject *_target;
+    float _elapsed;
+    bool _runForever;
+    bool _useDelay;
+    unsigned int _timesExecuted;
+    unsigned int _repeat; //0 = once, 1 is 2 x executed
+    float _delay;
+    float _interval;
+    SEL_SCHEDULE _selector;
     
-    int m_nScriptHandler;
+    int _scriptHandler;
 };
 
 //
@@ -125,7 +125,7 @@ public:
     CCScheduler();
     ~CCScheduler(void);
 
-    inline float getTimeScale(void) { return m_fTimeScale; }
+    inline float getTimeScale(void) { return _timeScale; }
     /** Modifies the time of all scheduled callbacks.
     You can use this property to create a 'slow motion' or 'fast forward' effect.
     Default is 1.0. To create a 'slow motion' effect, use values below 1.0.
@@ -133,7 +133,7 @@ public:
     @since v0.8
     @warning It will affect EVERY scheduled selector / action.
     */
-    inline void setTimeScale(float fTimeScale) { m_fTimeScale = fTimeScale; }
+    inline void setTimeScale(float fTimeScale) { _timeScale = fTimeScale; }
 
     /** 'update' the scheduler.
      You should NEVER call this method, unless you know what you are doing.
@@ -247,23 +247,23 @@ private:
     void appendIn(struct _listEntry **ppList, CCObject *pTarget, bool bPaused);
 
 protected:
-    float m_fTimeScale;
+    float _timeScale;
 
     //
     // "updates with priority" stuff
     //
-    struct _listEntry *m_pUpdatesNegList;        // list of priority < 0
-    struct _listEntry *m_pUpdates0List;            // list priority == 0
-    struct _listEntry *m_pUpdatesPosList;        // list priority > 0
-    struct _hashUpdateEntry *m_pHashForUpdates; // hash used to fetch quickly the list entries for pause,delete,etc
+    struct _listEntry *_updatesNegList;        // list of priority < 0
+    struct _listEntry *_updates0List;            // list priority == 0
+    struct _listEntry *_updatesPosList;        // list priority > 0
+    struct _hashUpdateEntry *_hashForUpdates; // hash used to fetch quickly the list entries for pause,delete,etc
 
     // Used for "selectors with interval"
-    struct _hashSelectorEntry *m_pHashForTimers;
-    struct _hashSelectorEntry *m_pCurrentTarget;
-    bool m_bCurrentTargetSalvaged;
+    struct _hashSelectorEntry *_hashForTimers;
+    struct _hashSelectorEntry *_currentTarget;
+    bool _currentTargetSalvaged;
     // If true unschedule will not remove anything from a hash. Elements will only be marked for deletion.
-    bool m_bUpdateHashLocked;
-    CCArray* m_pScriptHandlerEntries;
+    bool _updateHashLocked;
+    CCArray* _scriptHandlerEntries;
 };
 
 // end of global group

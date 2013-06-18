@@ -31,19 +31,19 @@
 NS_CC_EXT_BEGIN
 
 CCControlPotentiometer::CCControlPotentiometer()
-: m_pThumbSprite(NULL)
-, m_pProgressTimer(NULL)
-, m_fValue(0.0f)
-, m_fMinimumValue(0.0f)
-, m_fMaximumValue(0.0f)
+: _thumbSprite(NULL)
+, _progressTimer(NULL)
+, _value(0.0f)
+, _minimumValue(0.0f)
+, _maximumValue(0.0f)
 {
 
 }
 
 CCControlPotentiometer::~CCControlPotentiometer()
 {
-    CC_SAFE_RELEASE(m_pThumbSprite);
-    CC_SAFE_RELEASE(m_pProgressTimer);
+    CC_SAFE_RELEASE(_thumbSprite);
+    CC_SAFE_RELEASE(_progressTimer);
 }
 
 CCControlPotentiometer* CCControlPotentiometer::create(const char* backgroundFile, const char* progressFile, const char* thumbFile)
@@ -89,9 +89,9 @@ bool CCControlPotentiometer::initWithTrackSprite_ProgressTimer_ThumbSprite(CCSpr
         setContentSize(trackSprite->getContentSize());
         
         // Init default values
-        m_fMinimumValue           = 0.0f;
-        m_fMaximumValue           = 1.0f;
-        setValue(m_fMinimumValue);
+        _minimumValue           = 0.0f;
+        _maximumValue           = 1.0f;
+        setValue(_minimumValue);
         return true;
     }
     return false;
@@ -100,79 +100,79 @@ bool CCControlPotentiometer::initWithTrackSprite_ProgressTimer_ThumbSprite(CCSpr
 void CCControlPotentiometer::setEnabled(bool enabled)
 {
     CCControl::setEnabled(enabled);
-    if (m_pThumbSprite != NULL)
+    if (_thumbSprite != NULL)
     {
-        m_pThumbSprite->setOpacity((enabled) ? 255 : 128);
+        _thumbSprite->setOpacity((enabled) ? 255 : 128);
     }
 }
 
 void CCControlPotentiometer::setValue(float value)
 {
     // set new value with sentinel
-    if (value < m_fMinimumValue)
+    if (value < _minimumValue)
     {
-        value                   = m_fMinimumValue;
+        value                   = _minimumValue;
     }
 	
-    if (value > m_fMaximumValue) 
+    if (value > _maximumValue) 
     {
-        value                   = m_fMaximumValue;
+        value                   = _maximumValue;
     }
     
-    m_fValue                      = value;
+    _value                      = value;
     
     // Update thumb and progress position for new value
-    float percent               = (value - m_fMinimumValue) / (m_fMaximumValue - m_fMinimumValue);
-    m_pProgressTimer->setPercentage(percent * 100.0f);
-    m_pThumbSprite->setRotation(percent * 360.0f);
+    float percent               = (value - _minimumValue) / (_maximumValue - _minimumValue);
+    _progressTimer->setPercentage(percent * 100.0f);
+    _thumbSprite->setRotation(percent * 360.0f);
     
     sendActionsForControlEvents(CCControlEventValueChanged);    
 }
 
 float CCControlPotentiometer::getValue()
 {
-    return m_fValue;
+    return _value;
 }
 
 void CCControlPotentiometer::setMinimumValue(float minimumValue)
 {
-    m_fMinimumValue       = minimumValue;
+    _minimumValue       = minimumValue;
     
-    if (m_fMinimumValue >= m_fMaximumValue)
+    if (_minimumValue >= _maximumValue)
     {
-        m_fMaximumValue   = m_fMinimumValue + 1.0f;
+        _maximumValue   = _minimumValue + 1.0f;
     }
     
-    setValue(m_fMaximumValue);
+    setValue(_maximumValue);
 }
 
 float CCControlPotentiometer::getMinimumValue()
 {
-    return m_fMinimumValue;
+    return _minimumValue;
 }
 
 void CCControlPotentiometer::setMaximumValue(float maximumValue)
 {
-    m_fMaximumValue       = maximumValue;
+    _maximumValue       = maximumValue;
     
-    if (m_fMaximumValue <= m_fMinimumValue)
+    if (_maximumValue <= _minimumValue)
     {
-        m_fMinimumValue   = m_fMaximumValue - 1.0f;
+        _minimumValue   = _maximumValue - 1.0f;
     }
     
-    setValue(m_fMinimumValue);
+    setValue(_minimumValue);
 }
 
 float CCControlPotentiometer::getMaximumValue()
 {
-    return m_fMaximumValue;
+    return _maximumValue;
 }
 
 bool CCControlPotentiometer::isTouchInside(CCTouch * touch)
 {
     CCPoint touchLocation   = this->getTouchLocation(touch);
     
-    float distance          = this->distanceBetweenPointAndPoint(m_pProgressTimer->getPosition(), touchLocation);
+    float distance          = this->distanceBetweenPointAndPoint(_progressTimer->getPosition(), touchLocation);
 
     return distance < MIN(getContentSize().width / 2, getContentSize().height / 2);
 }
@@ -184,9 +184,9 @@ bool CCControlPotentiometer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
         return false;
     }
     
-    m_tPreviousLocation    = this->getTouchLocation(pTouch);
+    _previousLocation    = this->getTouchLocation(pTouch);
     
-    this->potentiometerBegan(m_tPreviousLocation);
+    this->potentiometerBegan(_previousLocation);
     
     return true;
 }
@@ -237,10 +237,10 @@ void CCControlPotentiometer::potentiometerBegan(CCPoint location)
 void CCControlPotentiometer::potentiometerMoved(CCPoint location)
 {
     float angle       = this->angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint(
-        m_pProgressTimer->getPosition(),
+        _progressTimer->getPosition(),
         location,
-        m_pProgressTimer->getPosition(),
-        m_tPreviousLocation);
+        _progressTimer->getPosition(),
+        _previousLocation);
     
     // fix value, if the 12 o'clock position is between location and previousLocation
     if (angle > 180)
@@ -252,9 +252,9 @@ void CCControlPotentiometer::potentiometerMoved(CCPoint location)
         angle += 360;
     }
 
-    setValue(m_fValue + angle / 360.0f * (m_fMaximumValue - m_fMinimumValue));
+    setValue(_value + angle / 360.0f * (_maximumValue - _minimumValue));
     
-    m_tPreviousLocation    = location;
+    _previousLocation    = location;
 }
 
 void CCControlPotentiometer::potentiometerEnded(CCPoint location)

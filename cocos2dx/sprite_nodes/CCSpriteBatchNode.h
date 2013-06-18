@@ -70,18 +70,18 @@ public:
     // property
     
     // retain
-    inline CCTextureAtlas* getTextureAtlas(void) { return m_pobTextureAtlas; }
+    inline CCTextureAtlas* getTextureAtlas(void) { return _textureAtlas; }
     inline void setTextureAtlas(CCTextureAtlas* textureAtlas) 
     { 
-        if (textureAtlas != m_pobTextureAtlas)
+        if (textureAtlas != _textureAtlas)
         {
             CC_SAFE_RETAIN(textureAtlas);
-            CC_SAFE_RELEASE(m_pobTextureAtlas);
-            m_pobTextureAtlas = textureAtlas;
+            CC_SAFE_RELEASE(_textureAtlas);
+            _textureAtlas = textureAtlas;
         }
     }
 
-    inline CCArray* getDescendants(void) { return m_pobDescendants; }
+    inline CCArray* getDescendants(void) { return _descendants; }
 
     /** creates a CCSpriteBatchNode with a texture2d and capacity of children.
     The capacity will be increased in 33% in runtime if it run out of space.
@@ -167,11 +167,11 @@ private:
     void updateBlendFunc();
 
 protected:
-    CCTextureAtlas *m_pobTextureAtlas;
-    ccBlendFunc m_blendFunc;
+    CCTextureAtlas *_textureAtlas;
+    ccBlendFunc _blendFunc;
 
     // all descendants: children, gran children, etc...
-    CCArray* m_pobDescendants;
+    CCArray* _descendants;
 };
 
 // end of sprite_nodes group

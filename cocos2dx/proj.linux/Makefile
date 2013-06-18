@@ -8,6 +8,7 @@ INCLUDES += \
 			-I../../extensions/GUI/CCControlExtension \
 			-I../../external/chipmunk/include/chipmunk \
 			-I../../extensions/network \
+            -I../../extensions/Components \
 
 SOURCES = ../actions/CCAction.cpp \
 ../actions/CCActionCamera.cpp \
@@ -96,6 +97,8 @@ SOURCES = ../actions/CCAction.cpp \
 ../support/zip_support/ioapi.cpp \
 ../support/zip_support/unzip.cpp \
 ../support/data_support/ccCArray.cpp \
+../support/component/CCComponent.cpp \
+../support/component/CCComponentContainer.cpp \
 ../text_input_node/CCIMEDispatcher.cpp \
 ../text_input_node/CCTextFieldTTF.cpp \
 ../textures/CCTexture2D.cpp \

@@ -59,8 +59,8 @@ public:
 
 protected:
 	static CCApplication * sm_pSharedApplication;
-	std::string m_resourceRootPath;
-	static long   			m_animationInterval;
+	std::string _resourceRootPath;
+	static long   			_animationInterval;
 };
 
 NS_CC_END

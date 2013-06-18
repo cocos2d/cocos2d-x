@@ -58,8 +58,8 @@ public:
      */
     virtual TargetPlatform getTargetPlatform();
 protected:
-    long       m_nAnimationInterval;  //micro second
-    std::string m_resourceRootPath;
+    long       _animationInterval;  //micro second
+    std::string _resourceRootPath;
     
 	static CCApplication * sm_pSharedApplication;
 };

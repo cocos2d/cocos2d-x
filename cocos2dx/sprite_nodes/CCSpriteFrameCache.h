@@ -59,7 +59,7 @@ class CC_DLL CCSpriteFrameCache : public CCObject
 {
 protected:
     // MARMALADE: Made this protected not private, as deriving from this class is pretty useful
-    CCSpriteFrameCache(void) : m_pSpriteFrames(NULL), m_pSpriteFramesAliases(NULL){}
+    CCSpriteFrameCache(void) : _spriteFrames(NULL), _spriteFramesAliases(NULL){}
 public:
     bool init(void);
     ~CCSpriteFrameCache(void);
@@ -139,11 +139,11 @@ public:
 
 private:
     // MARMALADE: Made this protected not private, as deriving from this class is pretty useful
-//    CCSpriteFrameCache(void) : m_pSpriteFrames(NULL), m_pSpriteFramesAliases(NULL){}
+//    CCSpriteFrameCache(void) : _spriteFrames(NULL), _spriteFramesAliases(NULL){}
 protected:
-    CCDictionary* m_pSpriteFrames;
-    CCDictionary* m_pSpriteFramesAliases;
-    std::set<std::string>*  m_pLoadedFileNames;
+    CCDictionary* _spriteFrames;
+    CCDictionary* _spriteFramesAliases;
+    std::set<std::string>*  _loadedFileNames;
 };
 
 // end of sprite_nodes group

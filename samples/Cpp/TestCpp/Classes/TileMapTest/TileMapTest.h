@@ -71,8 +71,8 @@ public:
 
 class TMXReadWriteTest : public TileDemo
 {
-    unsigned int m_gid;
-    unsigned int m_gid2;
+    unsigned int _gid;
+    unsigned int _gid2;
 public:
     TMXReadWriteTest(void);
     virtual std::string title();
@@ -158,7 +158,7 @@ public:
 
 class TMXIsoZorder : public TileDemo
 {
-    CCSprite*    m_tamara;
+    CCSprite*    _tamara;
 public:
     TMXIsoZorder(void);
     virtual std::string title();
@@ -171,7 +171,7 @@ public:
 
 class TMXOrthoZorder : public TileDemo
 {
-    CCSprite*    m_tamara;
+    CCSprite*    _tamara;
 public:
     TMXOrthoZorder(void);
     virtual std::string title();
@@ -183,7 +183,7 @@ public:
 
 class TMXIsoVertexZ : public TileDemo
 {
-    CCSprite*    m_tamara;
+    CCSprite*    _tamara;
 public:
     TMXIsoVertexZ(void);
     virtual std::string title();
@@ -197,7 +197,7 @@ public:
 
 class TMXOrthoVertexZ : public TileDemo
 {
-    CCSprite*    m_tamara;
+    CCSprite*    _tamara;
 public:
     TMXOrthoVertexZ(void);
     virtual std::string title();

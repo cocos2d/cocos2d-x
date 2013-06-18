@@ -2122,11 +2122,11 @@ JSBool jsval_to_ccfontdefinition( JSContext *cx, jsval vp, ccFontDefinition *out
     CCVerticalTextAlignment defaultTextVAlignment   = kCCVerticalTextAlignmentTop;
     
     // by default shadow and stroke are off
-    out->m_shadow.m_shadowEnabled = false;
-    out->m_stroke.m_strokeEnabled = false;
+    out->_shadow._shadowEnabled = false;
+    out->_stroke._strokeEnabled = false;
     
     // white text by default
-    out->m_fontFillColor = ccWHITE;
+    out->_fontFillColor = ccWHITE;
     
     // font name
     jsval jsr;
@@ -2135,11 +2135,11 @@ JSBool jsval_to_ccfontdefinition( JSContext *cx, jsval vp, ccFontDefinition *out
     JSStringWrapper wrapper(jsr);
     if ( wrapper )
     {
-        out->m_fontName  = (char*)wrapper;
+        out->_fontName  = (char*)wrapper;
     }
     else
     {
-        out->m_fontName  = defautlFontName;
+        out->_fontName  = defautlFontName;
     }
     
     // font size
@@ -2150,11 +2150,11 @@ JSBool jsval_to_ccfontdefinition( JSContext *cx, jsval vp, ccFontDefinition *out
         JS_GetProperty(cx, jsobj, "fontSize", &jsr);
         double fontSize = 0.0;
         JS_ValueToNumber(cx, jsr, &fontSize);
-        out->m_fontSize  = fontSize;
+        out->_fontSize  = fontSize;
     }
     else
     {
-        out->m_fontSize  = defaultFontSize;
+        out->_fontSize  = defaultFontSize;
     }
     
     // font alignment horizontal
@@ -2164,11 +2164,11 @@ JSBool jsval_to_ccfontdefinition( JSContext *cx, jsval vp, ccFontDefinition *out
         JS_GetProperty(cx, jsobj, "fontAlignmentH", &jsr);
         double fontAlign = 0.0;
         JS_ValueToNumber(cx, jsr, &fontAlign);
-        out->m_alignment = (CCTextAlignment)(int)fontAlign;
+        out->_alignment = (CCTextAlignment)(int)fontAlign;
     }
     else
     {
-        out->m_alignment  = defaultTextAlignment;
+        out->_alignment  = defaultTextAlignment;
     }
     
     // font alignment vertical
@@ -2178,11 +2178,11 @@ JSBool jsval_to_ccfontdefinition( JSContext *cx, jsval vp, ccFontDefinition *out
         JS_GetProperty(cx, jsobj, "fontAlignmentV", &jsr);
         double fontAlign = 0.0;
         JS_ValueToNumber(cx, jsr, &fontAlign);
-        out->m_vertAlignment = (CCVerticalTextAlignment)(int)fontAlign;
+        out->_vertAlignment = (CCVerticalTextAlignment)(int)fontAlign;
     }
     else
     {
-        out->m_vertAlignment  = defaultTextVAlignment;
+        out->_vertAlignment  = defaultTextVAlignment;
     }
     
     // font fill color
@@ -2195,7 +2195,7 @@ JSBool jsval_to_ccfontdefinition( JSContext *cx, jsval vp, ccFontDefinition *out
         if( ! JS_ValueToObject( cx, jsr, &jsobjColor ) )
             return JS_FALSE;
         
-        out->m_fontFillColor = getColorFromJSObject(cx, jsobjColor);
+        out->_fontFillColor = getColorFromJSObject(cx, jsobjColor);
     }
     
     // font rendering box dimensions
@@ -2208,7 +2208,7 @@ JSBool jsval_to_ccfontdefinition( JSContext *cx, jsval vp, ccFontDefinition *out
         if( ! JS_ValueToObject( cx, jsr, &jsobjSize ) )
             return JS_FALSE;
         
-        out->m_dimensions = getSizeFromJSObject(cx, jsobjSize);
+        out->_dimensions = getSizeFromJSObject(cx, jsobjSize);
     }
     
     // shadow
@@ -2216,14 +2216,14 @@ JSBool jsval_to_ccfontdefinition( JSContext *cx, jsval vp, ccFontDefinition *out
     if ( hasProperty )
     {
         JS_GetProperty(cx, jsobj, "shadowEnabled", &jsr);
-        out->m_shadow.m_shadowEnabled  = ToBoolean(jsr);
+        out->_shadow._shadowEnabled  = ToBoolean(jsr);
         
-        if( out->m_shadow.m_shadowEnabled )
+        if( out->_shadow._shadowEnabled )
         {
             // default shadow values
-            out->m_shadow.m_shadowOffset  = CCSize(5, 5);
-            out->m_shadow.m_shadowBlur    = 1;
-            out->m_shadow.m_shadowOpacity = 1;
+            out->_shadow._shadowOffset  = CCSize(5, 5);
+            out->_shadow._shadowBlur    = 1;
+            out->_shadow._shadowOpacity = 1;
             
             // shado offset
             JS_HasProperty(cx, jsobj, "shadowOffset", &hasProperty);
@@ -2234,7 +2234,7 @@ JSBool jsval_to_ccfontdefinition( JSContext *cx, jsval vp, ccFontDefinition *out
                 JSObject *jsobjShadowOffset;
                 if( ! JS_ValueToObject( cx, jsr, &jsobjShadowOffset ) )
                     return JS_FALSE;
-                out->m_shadow.m_shadowOffset = getSizeFromJSObject(cx, jsobjShadowOffset);
+                out->_shadow._shadowOffset = getSizeFromJSObject(cx, jsobjShadowOffset);
             }
             
             // shadow blur
@@ -2244,7 +2244,7 @@ JSBool jsval_to_ccfontdefinition( JSContext *cx, jsval vp, ccFontDefinition *out
                 JS_GetProperty(cx, jsobj, "shadowBlur", &jsr);
                 double shadowBlur = 0.0;
                 JS_ValueToNumber(cx, jsr, &shadowBlur);
-                out->m_shadow.m_shadowBlur = shadowBlur;
+                out->_shadow._shadowBlur = shadowBlur;
             }
             
             // shadow intensity
@@ -2254,7 +2254,7 @@ JSBool jsval_to_ccfontdefinition( JSContext *cx, jsval vp, ccFontDefinition *out
                 JS_GetProperty(cx, jsobj, "shadowOpacity", &jsr);
                 double shadowOpacity = 0.0;
                 JS_ValueToNumber(cx, jsr, &shadowOpacity);
-                out->m_shadow.m_shadowOpacity = shadowOpacity;
+                out->_shadow._shadowOpacity = shadowOpacity;
             }
         }
     }
@@ -2264,13 +2264,13 @@ JSBool jsval_to_ccfontdefinition( JSContext *cx, jsval vp, ccFontDefinition *out
     if ( hasProperty )
     {
         JS_GetProperty(cx, jsobj, "strokeEnabled", &jsr);
-        out->m_stroke.m_strokeEnabled  = ToBoolean(jsr);
+        out->_stroke._strokeEnabled  = ToBoolean(jsr);
         
-        if( out->m_stroke.m_strokeEnabled )
+        if( out->_stroke._strokeEnabled )
         {
             // default stroke values
-            out->m_stroke.m_strokeSize  = 1;
-            out->m_stroke.m_strokeColor = ccBLUE;
+            out->_stroke._strokeSize  = 1;
+            out->_stroke._strokeColor = ccBLUE;
             
             // stroke color
             JS_HasProperty(cx, jsobj, "strokeColor", &hasProperty);
@@ -2281,7 +2281,7 @@ JSBool jsval_to_ccfontdefinition( JSContext *cx, jsval vp, ccFontDefinition *out
                 JSObject *jsobjStrokeColor;
                 if( ! JS_ValueToObject( cx, jsr, &jsobjStrokeColor ) )
                     return JS_FALSE;
-                out->m_stroke.m_strokeColor = getColorFromJSObject(cx, jsobjStrokeColor);
+                out->_stroke._strokeColor = getColorFromJSObject(cx, jsobjStrokeColor);
             }
             
             // stroke size
@@ -2291,7 +2291,7 @@ JSBool jsval_to_ccfontdefinition( JSContext *cx, jsval vp, ccFontDefinition *out
                 JS_GetProperty(cx, jsobj, "strokeSize", &jsr);
                 double strokeSize = 0.0;
                 JS_ValueToNumber(cx, jsr, &strokeSize);
-                out->m_stroke.m_strokeSize = strokeSize;
+                out->_stroke._strokeSize = strokeSize;
             }
         }
     }

@@ -39,8 +39,8 @@ public:
     void setAccelerometerInterval(float interval);
     void update( double x,double y,double z,double timestamp );
 private:
-    CCAcceleration m_obAccelerationValue;
-    CCAccelerometerDelegate* m_pAccelDelegate;
+    CCAcceleration _accelerationValue;
+    CCAccelerometerDelegate* _accelDelegate;
 };
 
 NS_CC_END

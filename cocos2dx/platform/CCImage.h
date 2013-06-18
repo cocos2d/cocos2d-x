@@ -141,12 +141,12 @@ public:
     #endif
     
 
-    unsigned char *   getData()               { return m_pData; }
-    int               getDataLen()            { return m_nWidth * m_nHeight; }
+    unsigned char *   getData()               { return _data; }
+    int               getDataLen()            { return _width * _height; }
 
 
-    bool hasAlpha()                     { return m_bHasAlpha;   }
-    bool isPremultipliedAlpha()         { return m_bPreMulti;   }
+    bool hasAlpha()                     { return _hasAlpha;   }
+    bool isPremultipliedAlpha()         { return _preMulti;   }
 
 
     /**
@@ -156,9 +156,9 @@ public:
     */
     bool saveToFile(const char *pszFilePath, bool bIsToRGB = true);
 
-    CC_SYNTHESIZE_READONLY(unsigned short,   m_nWidth,       Width);
-    CC_SYNTHESIZE_READONLY(unsigned short,   m_nHeight,      Height);
-    CC_SYNTHESIZE_READONLY(int,     m_nBitsPerComponent,   BitsPerComponent);
+    CC_SYNTHESIZE_READONLY(unsigned short,   _width,       Width);
+    CC_SYNTHESIZE_READONLY(unsigned short,   _height,      Height);
+    CC_SYNTHESIZE_READONLY(int,     _bitsPerComponent,   BitsPerComponent);
 
 protected:
     bool _initWithJpgData(void *pData, int nDatalen);
@@ -171,9 +171,9 @@ protected:
     bool _saveImageToPNG(const char *pszFilePath, bool bIsToRGB = true);
     bool _saveImageToJPG(const char *pszFilePath);
 
-    unsigned char *m_pData;
-    bool m_bHasAlpha;
-    bool m_bPreMulti;
+    unsigned char *_data;
+    bool _hasAlpha;
+    bool _preMulti;
 
 
 private:

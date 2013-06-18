@@ -92,20 +92,20 @@ void CCEGLView::setViewPortInPoints(float x , float y , float w , float h)
 {
     float frameZoomFactor = [[EAGLView sharedEGLView] frameZoomFactor];
     
-    glViewport((GLint)(x * m_fScaleX * frameZoomFactor + m_obViewPortRect.origin.x * frameZoomFactor),
-               (GLint)(y * m_fScaleY * frameZoomFactor + m_obViewPortRect.origin.y * frameZoomFactor),
-               (GLsizei)(w * m_fScaleX * frameZoomFactor),
-               (GLsizei)(h * m_fScaleY * frameZoomFactor));
+    glViewport((GLint)(x * _scaleX * frameZoomFactor + _viewPortRect.origin.x * frameZoomFactor),
+               (GLint)(y * _scaleY * frameZoomFactor + _viewPortRect.origin.y * frameZoomFactor),
+               (GLsizei)(w * _scaleX * frameZoomFactor),
+               (GLsizei)(h * _scaleY * frameZoomFactor));
 }
 
 void CCEGLView::setScissorInPoints(float x , float y , float w , float h)
 {
     float frameZoomFactor = [[EAGLView sharedEGLView] frameZoomFactor];
     
-    glScissor((GLint)(x * m_fScaleX * frameZoomFactor + m_obViewPortRect.origin.x * frameZoomFactor),
-              (GLint)(y * m_fScaleY * frameZoomFactor + m_obViewPortRect.origin.y * frameZoomFactor),
-              (GLsizei)(w * m_fScaleX * frameZoomFactor),
-              (GLsizei)(h * m_fScaleY * frameZoomFactor));
+    glScissor((GLint)(x * _scaleX * frameZoomFactor + _viewPortRect.origin.x * frameZoomFactor),
+              (GLint)(y * _scaleY * frameZoomFactor + _viewPortRect.origin.y * frameZoomFactor),
+              (GLsizei)(w * _scaleX * frameZoomFactor),
+              (GLsizei)(h * _scaleY * frameZoomFactor));
 }
 
 void CCEGLView::setMultiTouchMask(bool mask)

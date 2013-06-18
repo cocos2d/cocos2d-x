@@ -58,20 +58,13 @@ class CCSpriteFrame;
  */
 class CC_DLL CCMenuItem : public CCNodeRGBA
 {
-protected:
-    /** whether or not the item is selected
-     @since v0.8.2
-     */
-    bool m_bSelected;
-    bool m_bEnabled;
-
 public:
     CCMenuItem()
-    : m_bSelected(false)
-    , m_bEnabled(false)            
-    , m_nScriptTapHandler(0)
-	, _target(NULL)
+    : _selected(false)
+    , _enabled(false)            
+    , _scriptTapHandler(0)
 	, _callback(nullptr)
+    , _target(NULL)
     {}
     virtual ~CCMenuItem();
 
@@ -97,7 +90,7 @@ public:
     /** Register menu handler script function */
     virtual void registerScriptTapHandler(int nHandler);
     virtual void unregisterScriptTapHandler(void);
-    int getScriptTapHandler() { return m_nScriptTapHandler; };
+    int getScriptTapHandler() { return _scriptTapHandler; };
 
     virtual bool isEnabled();
     //@note: It's 'setIsEnable' in cocos2d-iphone. 
@@ -113,13 +106,13 @@ public:
     void setCallback(const ccMenuCallback& callback);
 
 protected:
+    bool            _selected;
+    bool            _enabled;
+    int             _scriptTapHandler;
 	// callback
 	ccMenuCallback _callback;
-
 	// If using the old API, the _target needs to be retained / released
 	CCObject		*_target;
-
-    int             m_nScriptTapHandler;
 };
 
 /** @brief An abstract class for "label" CCMenuItemLabel items 
@@ -132,13 +125,13 @@ protected:
 class CC_DLL CCMenuItemLabel : public CCMenuItem
 {
     /** the color that will be used to disable the item */
-    CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tDisabledColor, DisabledColor);
+    CC_PROPERTY_PASS_BY_REF(ccColor3B, _disabledColor, DisabledColor);
     /** Label that is rendered. It can be any CCNode that implements the CCLabelProtocol */
-    CC_PROPERTY(CCNode*, m_pLabel, Label);
+    CC_PROPERTY(CCNode*, _label, Label);
 public:
     CCMenuItemLabel()
-    : m_pLabel(NULL)
-    , m_fOriginalScale(0.0)
+    : _label(NULL)
+    , _originalScale(0.0)
     {}
     virtual ~CCMenuItemLabel();
 
@@ -169,8 +162,8 @@ public:
     virtual void setEnabled(bool enabled);
     
 protected:
-    ccColor3B    m_tColorBackup;
-    float        m_fOriginalScale;
+    ccColor3B    _colorBackup;
+    float        _originalScale;
 };
 
 
@@ -204,7 +197,7 @@ public:
 class CC_DLL CCMenuItemFont : public CCMenuItemLabel
 {
 public:
-    CCMenuItemFont() : m_uFontSize(0), m_strFontName(""){}
+    CCMenuItemFont() : _fontSize(0), _fontName(""){}
     virtual ~CCMenuItemFont(){}
     /** set default font size */
     static void setFontSize(unsigned int s);
@@ -247,8 +240,8 @@ public:
 protected:
     void recreateLabel();
     
-    unsigned int m_uFontSize;
-    std::string m_strFontName;
+    unsigned int _fontSize;
+    std::string _fontName;
 };
 
 
@@ -263,16 +256,16 @@ protected:
 class CC_DLL CCMenuItemSprite : public CCMenuItem
 {
     /** the image used when the item is not selected */
-    CC_PROPERTY(CCNode*, m_pNormalImage, NormalImage);
+    CC_PROPERTY(CCNode*, _normalImage, NormalImage);
     /** the image used when the item is selected */
-    CC_PROPERTY(CCNode*, m_pSelectedImage, SelectedImage);
+    CC_PROPERTY(CCNode*, _selectedImage, SelectedImage);
     /** the image used when the item is disabled */
-    CC_PROPERTY(CCNode*, m_pDisabledImage, DisabledImage);
+    CC_PROPERTY(CCNode*, _disabledImage, DisabledImage);
 public:
     CCMenuItemSprite()
-    :m_pNormalImage(NULL)
-    ,m_pSelectedImage(NULL)
-    ,m_pDisabledImage(NULL)
+    :_normalImage(NULL)
+    ,_selectedImage(NULL)
+    ,_disabledImage(NULL)
     {}
 
     /** creates a menu item with a normal, selected and disabled image*/
@@ -359,15 +352,15 @@ public:
 class CC_DLL CCMenuItemToggle : public CCMenuItem
 {
     /** returns the selected item */
-    CC_PROPERTY(unsigned int, m_uSelectedIndex, SelectedIndex);
+    CC_PROPERTY(unsigned int, _selectedIndex, SelectedIndex);
     /** CCMutableArray that contains the subitems. You can add/remove items in runtime, and you can replace the array with a new one.
      @since v0.7.2
      */
-    CC_PROPERTY(CCArray*, m_pSubItems, SubItems);
+    CC_PROPERTY(CCArray*, _subItems, SubItems);
 public:
     CCMenuItemToggle()
-    : m_uSelectedIndex(0)
-    , m_pSubItems(NULL)            
+    : _selectedIndex(0)
+    , _subItems(NULL)            
     {}
     virtual ~CCMenuItemToggle();
     

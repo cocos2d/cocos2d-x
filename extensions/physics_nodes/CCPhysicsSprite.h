@@ -49,15 +49,15 @@ NS_CC_EXT_BEGIN
 class CCPhysicsSprite : public CCSprite
 {
 protected:
-    bool    m_bIgnoreBodyRotation;
+    bool    _ignoreBodyRotation;
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
-    cpBody  *m_pCPBody;
+    cpBody  *_CPBody;
 
 #elif CC_ENABLE_BOX2D_INTEGRATION
-    b2Body  *m_pB2Body;
+    b2Body  *_pB2Body;
 
     // Pixels to Meters ratio
-    float   m_fPTMRatio;
+    float   _PTMRatio;
 #endif // CC_ENABLE_CHIPMUNK_INTEGRATION
 public:
     CCPhysicsSprite();

@@ -23,7 +23,7 @@ public:
     virtual bool isDirty(void);
     virtual cocos2d::CCAffineTransform nodeToParentTransform(void);
 private:
-    cpBody* m_pBody;    // strong ref
+    cpBody* _body;    // strong ref
 };
 
 // HelloWorld Layer
@@ -42,9 +42,9 @@ public:
     virtual void didAccelerate(cocos2d::CCAcceleration* pAccelerationValue);
 
 private:
-    cocos2d::CCTexture2D* m_pSpriteTexture; // weak ref
-    cpSpace* m_pSpace; // strong ref
-    cpShape* m_pWalls[4];
+    cocos2d::CCTexture2D* _spriteTexture; // weak ref
+    cpSpace* _space; // strong ref
+    cpShape* _walls[4];
 
 };
 

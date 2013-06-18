@@ -62,13 +62,13 @@ public:
     bool initWithSpriteFrame(CCSpriteFrame* spriteFrame, float delayUnits, CCDictionary* userInfo);
     
     /** CCSpriteFrameName to be used */
-    CC_SYNTHESIZE_RETAIN(CCSpriteFrame*, m_pSpriteFrame, SpriteFrame)
+    CC_SYNTHESIZE_RETAIN(CCSpriteFrame*, _spriteFrame, SpriteFrame)
 
     /**  how many units of time the frame takes */
-    CC_SYNTHESIZE(float, m_fDelayUnits, DelayUnits)
+    CC_SYNTHESIZE(float, _delayUnits, DelayUnits)
 
     /**  A CCAnimationFrameDisplayedNotification notification will be broadcast when the frame is displayed with this dictionary as UserInfo. If UserInfo is nil, then no notification will be broadcast. */
-    CC_SYNTHESIZE_RETAIN(CCDictionary*, m_pUserInfo, UserInfo)
+    CC_SYNTHESIZE_RETAIN(CCDictionary*, _userInfo, UserInfo)
 };
 
 
@@ -139,22 +139,22 @@ public:
     virtual CCObject* copyWithZone(CCZone* pZone);
 
     /** total Delay units of the CCAnimation. */
-    CC_SYNTHESIZE_READONLY(float, m_fTotalDelayUnits, TotalDelayUnits)
+    CC_SYNTHESIZE_READONLY(float, _totalDelayUnits, TotalDelayUnits)
 
     /** Delay in seconds of the "delay unit" */
-    CC_SYNTHESIZE(float, m_fDelayPerUnit, DelayPerUnit)
+    CC_SYNTHESIZE(float, _delayPerUnit, DelayPerUnit)
 
     /** duration in seconds of the whole animation. It is the result of totalDelayUnits * delayPerUnit */
-    CC_PROPERTY_READONLY(float, m_fDuration, Duration)
+    CC_PROPERTY_READONLY(float, _duration, Duration)
 
     /** array of CCAnimationFrames */
-    CC_SYNTHESIZE_RETAIN(CCArray*, m_pFrames, Frames)
+    CC_SYNTHESIZE_RETAIN(CCArray*, _frames, Frames)
 
     /** whether or not it shall restore the original frame when the animation finishes */
-    CC_SYNTHESIZE(bool, m_bRestoreOriginalFrame, RestoreOriginalFrame)
+    CC_SYNTHESIZE(bool, _restoreOriginalFrame, RestoreOriginalFrame)
 
     /** how many times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ... */
-    CC_SYNTHESIZE(unsigned int, m_uLoops, Loops)
+    CC_SYNTHESIZE(unsigned int, _loops, Loops)
 };
 
 // end of sprite_nodes group

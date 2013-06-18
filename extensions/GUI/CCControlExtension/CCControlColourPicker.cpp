@@ -37,18 +37,18 @@
 NS_CC_EXT_BEGIN
 
 CCControlColourPicker::CCControlColourPicker()
-: m_colourPicker(NULL)
-, m_huePicker(NULL)
-, m_background(NULL)
+: _colourPicker(NULL)
+, _huePicker(NULL)
+, _background(NULL)
 {
 
 }
 
 CCControlColourPicker::~CCControlColourPicker()
 {
-    CC_SAFE_RELEASE(m_background);
-    CC_SAFE_RELEASE(m_huePicker);
-    CC_SAFE_RELEASE(m_colourPicker);
+    CC_SAFE_RELEASE(_background);
+    CC_SAFE_RELEASE(_huePicker);
+    CC_SAFE_RELEASE(_colourPicker);
 }
 
 bool CCControlColourPicker::init()
@@ -73,36 +73,36 @@ bool CCControlColourPicker::init()
 //         spriteSheet->getTexture()->generateMipmap();
 
         // Init default color
-        m_hsv.h = 0;
-        m_hsv.s = 0;
-        m_hsv.v = 0;
+        _hsv.h = 0;
+        _hsv.s = 0;
+        _hsv.v = 0;
         
         // Add image
-        m_background=CCControlUtils::addSpriteToTargetWithPosAndAnchor("menuColourPanelBackground.png", spriteSheet, CCPointZero, ccp(0.5f, 0.5f));
-        CC_SAFE_RETAIN(m_background);
+        _background=CCControlUtils::addSpriteToTargetWithPosAndAnchor("menuColourPanelBackground.png", spriteSheet, CCPointZero, ccp(0.5f, 0.5f));
+        CC_SAFE_RETAIN(_background);
         
-        CCPoint backgroundPointZero = ccpSub(m_background->getPosition(), ccp (m_background->getContentSize().width / 2, m_background->getContentSize().height / 2));
+        CCPoint backgroundPointZero = ccpSub(_background->getPosition(), ccp (_background->getContentSize().width / 2, _background->getContentSize().height / 2));
         
         // Setup panels
         float hueShift                = 8;
         float colourShift             = 28;
         
-        m_huePicker = new CCControlHuePicker();
-        m_huePicker->initWithTargetAndPos(spriteSheet, ccp(backgroundPointZero.x + hueShift, backgroundPointZero.y + hueShift));
-        m_colourPicker = new CCControlSaturationBrightnessPicker();
-        m_colourPicker->initWithTargetAndPos(spriteSheet, ccp(backgroundPointZero.x + colourShift, backgroundPointZero.y + colourShift));
+        _huePicker = new CCControlHuePicker();
+        _huePicker->initWithTargetAndPos(spriteSheet, ccp(backgroundPointZero.x + hueShift, backgroundPointZero.y + hueShift));
+        _colourPicker = new CCControlSaturationBrightnessPicker();
+        _colourPicker->initWithTargetAndPos(spriteSheet, ccp(backgroundPointZero.x + colourShift, backgroundPointZero.y + colourShift));
         
         // Setup events
-        m_huePicker->addTargetWithActionForControlEvents(this, cccontrol_selector(CCControlColourPicker::hueSliderValueChanged), CCControlEventValueChanged);
-        m_colourPicker->addTargetWithActionForControlEvents(this, cccontrol_selector(CCControlColourPicker::colourSliderValueChanged), CCControlEventValueChanged);
+        _huePicker->addTargetWithActionForControlEvents(this, cccontrol_selector(CCControlColourPicker::hueSliderValueChanged), CCControlEventValueChanged);
+        _colourPicker->addTargetWithActionForControlEvents(this, cccontrol_selector(CCControlColourPicker::colourSliderValueChanged), CCControlEventValueChanged);
        
         // Set defaults
         updateHueAndControlPicker();
-        addChild(m_huePicker);
-        addChild(m_colourPicker);
+        addChild(_huePicker);
+        addChild(_colourPicker);
 
         // Set content size
-        setContentSize(m_background->getContentSize());
+        setContentSize(_background->getContentSize());
         return true;
     }
     else
@@ -129,20 +129,20 @@ void CCControlColourPicker::setColor(const ccColor3B& color)
     rgba.b      = color.b / 255.0f;
     rgba.a      = 1.0f;
     
-    m_hsv=CCControlUtils::HSVfromRGB(rgba);
+    _hsv=CCControlUtils::HSVfromRGB(rgba);
     updateHueAndControlPicker();
 }
 
 void CCControlColourPicker::setEnabled(bool enabled)
 {
     CCControl::setEnabled(enabled);
-    if (m_huePicker != NULL)
+    if (_huePicker != NULL)
     {
-        m_huePicker->setEnabled(enabled);
+        _huePicker->setEnabled(enabled);
     }
-    if (m_colourPicker)
+    if (_colourPicker)
     {
-        m_colourPicker->setEnabled(enabled);
+        _colourPicker->setEnabled(enabled);
     } 
 }
 
@@ -150,24 +150,24 @@ void CCControlColourPicker::setEnabled(bool enabled)
 //need two events to prevent an infinite loop! (can't update huePicker when the huePicker triggers the callback due to CCControlEventValueChanged)
 void CCControlColourPicker::updateControlPicker()
 {
-    m_huePicker->setHue(m_hsv.h);
-    m_colourPicker->updateWithHSV(m_hsv);
+    _huePicker->setHue(_hsv.h);
+    _colourPicker->updateWithHSV(_hsv);
 }
 
 void CCControlColourPicker::updateHueAndControlPicker()
 {
-    m_huePicker->setHue(m_hsv.h);
-    m_colourPicker->updateWithHSV(m_hsv);
-    m_colourPicker->updateDraggerWithHSV(m_hsv);
+    _huePicker->setHue(_hsv.h);
+    _colourPicker->updateWithHSV(_hsv);
+    _colourPicker->updateDraggerWithHSV(_hsv);
 }
 
 
 void CCControlColourPicker::hueSliderValueChanged(CCObject * sender, CCControlEvent controlEvent)
 {
-    m_hsv.h      = ((CCControlHuePicker*)sender)->getHue();
+    _hsv.h      = ((CCControlHuePicker*)sender)->getHue();
 
     // Update the value
-    RGBA rgb    = CCControlUtils::RGBfromHSV(m_hsv);
+    RGBA rgb    = CCControlUtils::RGBfromHSV(_hsv);
     // XXX fixed me if not correct
     CCControl::setColor(ccc3((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
     
@@ -178,12 +178,12 @@ void CCControlColourPicker::hueSliderValueChanged(CCObject * sender, CCControlEv
 
 void CCControlColourPicker::colourSliderValueChanged(CCObject * sender, CCControlEvent controlEvent)
 {
-    m_hsv.s=((CCControlSaturationBrightnessPicker*)sender)->getSaturation();
-    m_hsv.v=((CCControlSaturationBrightnessPicker*)sender)->getBrightness();
+    _hsv.s=((CCControlSaturationBrightnessPicker*)sender)->getSaturation();
+    _hsv.v=((CCControlSaturationBrightnessPicker*)sender)->getBrightness();
 
 
      // Update the value
-    RGBA rgb    = CCControlUtils::RGBfromHSV(m_hsv);
+    RGBA rgb    = CCControlUtils::RGBfromHSV(_hsv);
     // XXX fixed me if not correct
     CCControl::setColor(ccc3((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
     

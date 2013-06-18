@@ -88,17 +88,17 @@ This information is obtained from the TMX file.
 */
 class CC_DLL CCTMXLayerInfo : public CCObject
 {
-    CC_PROPERTY(CCDictionary*, m_pProperties, Properties);
+    CC_PROPERTY(CCDictionary*, _properties, Properties);
 public:
-    std::string         m_sName;
-    CCSize              m_tLayerSize;
-    unsigned int        *m_pTiles;
-    bool                m_bVisible;
-    unsigned char       m_cOpacity;
-    bool                m_bOwnTiles;
-    unsigned int        m_uMinGID;
-    unsigned int        m_uMaxGID;
-    CCPoint             m_tOffset;
+    std::string         _name;
+    CCSize              _layerSize;
+    unsigned int        *_tiles;
+    bool                _visible;
+    unsigned char       _opacity;
+    bool                _ownTiles;
+    unsigned int        _minGID;
+    unsigned int        _maxGID;
+    CCPoint             _offset;
 public:
     CCTMXLayerInfo();
     virtual ~CCTMXLayerInfo();
@@ -117,15 +117,15 @@ This information is obtained from the TMX file.
 class CC_DLL CCTMXTilesetInfo : public CCObject
 {
 public:
-    std::string     m_sName;
-    unsigned int    m_uFirstGid;
-    CCSize          m_tTileSize;
-    unsigned int    m_uSpacing;
-    unsigned int    m_uMargin;
+    std::string     _name;
+    unsigned int    _firstGid;
+    CCSize          _tileSize;
+    unsigned int    _spacing;
+    unsigned int    _margin;
     //! filename containing the tiles (should be spritesheet / texture atlas)
-    std::string     m_sSourceImage;
+    std::string     _sourceImage;
     //! size in pixels of the image
-    CCSize          m_tImageSize;
+    CCSize          _imageSize;
 public:
     CCTMXTilesetInfo();
     virtual ~CCTMXTilesetInfo();
@@ -149,27 +149,27 @@ class CC_DLL CCTMXMapInfo : public CCObject, public CCSAXDelegator
 {    
 public:    
     /// map orientation
-    CC_SYNTHESIZE(int,    m_nOrientation, Orientation);
+    CC_SYNTHESIZE(int,    _orientation, Orientation);
     /// map width & height
-    CC_SYNTHESIZE_PASS_BY_REF(CCSize, m_tMapSize, MapSize);
+    CC_SYNTHESIZE_PASS_BY_REF(CCSize, _mapSize, MapSize);
     /// tiles width & height
-    CC_SYNTHESIZE_PASS_BY_REF(CCSize, m_tTileSize, TileSize);
+    CC_SYNTHESIZE_PASS_BY_REF(CCSize, _tileSize, TileSize);
     /// Layers
-    CC_PROPERTY(CCArray*, m_pLayers, Layers);
+    CC_PROPERTY(CCArray*, _layers, Layers);
     /// tilesets
-    CC_PROPERTY(CCArray*, m_pTilesets, Tilesets);
+    CC_PROPERTY(CCArray*, _tilesets, Tilesets);
     /// ObjectGroups
-    CC_PROPERTY(CCArray*, m_pObjectGroups, ObjectGroups);
+    CC_PROPERTY(CCArray*, _objectGroups, ObjectGroups);
     /// parent element
-    CC_SYNTHESIZE(int, m_nParentElement, ParentElement);
+    CC_SYNTHESIZE(int, _parentElement, ParentElement);
     /// parent GID
-    CC_SYNTHESIZE(unsigned int, m_uParentGID, ParentGID);
+    CC_SYNTHESIZE(unsigned int, _parentGID, ParentGID);
     /// layer attribs
-    CC_SYNTHESIZE(int, m_nLayerAttribs, LayerAttribs);
+    CC_SYNTHESIZE(int, _layerAttribs, LayerAttribs);
     /// is storing characters?
-    CC_SYNTHESIZE(bool, m_bStoringCharacters, StoringCharacters);
+    CC_SYNTHESIZE(bool, _storingCharacters, StoringCharacters);
     /// properties
-    CC_PROPERTY(CCDictionary*, m_pProperties, Properties);
+    CC_PROPERTY(CCDictionary*, _properties, Properties);
 public:    
     CCTMXMapInfo();
     virtual ~CCTMXMapInfo();
@@ -194,22 +194,22 @@ public:
     void endElement(void *ctx, const char *name);
     void textHandler(void *ctx, const char *ch, int len);
     
-    inline const char* getCurrentString(){ return m_sCurrentString.c_str(); }
-    inline void setCurrentString(const char *currentString){ m_sCurrentString = currentString; }
-    inline const char* getTMXFileName(){ return m_sTMXFileName.c_str(); }
-    inline void setTMXFileName(const char *fileName){ m_sTMXFileName = fileName; }
+    inline const char* getCurrentString(){ return _currentString.c_str(); }
+    inline void setCurrentString(const char *currentString){ _currentString = currentString; }
+    inline const char* getTMXFileName(){ return _TMXFileName.c_str(); }
+    inline void setTMXFileName(const char *fileName){ _TMXFileName = fileName; }
 private:
     void internalInit(const char* tmxFileName, const char* resourcePath);
 protected:
     //! tmx filename
-    std::string m_sTMXFileName;
+    std::string _TMXFileName;
     // tmx resource path
-    std::string m_sResources;
+    std::string _resources;
     //! current string
-    std::string m_sCurrentString;
+    std::string _currentString;
     //! tile properties
-    CCDictionary* m_pTileProperties;
-    unsigned int m_uCurrentFirstGID;
+    CCDictionary* _tileProperties;
+    unsigned int _currentFirstGID;
 };
 
 // end of tilemap_parallax_nodes group

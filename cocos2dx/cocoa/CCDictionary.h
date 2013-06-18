@@ -95,8 +95,8 @@ public:
      */
     inline const char* getStrKey() const
     {
-        CCAssert(m_szKey[0] != '\0', "Should not call this function for integer dictionary");
-        return m_szKey;
+        CCAssert(_strKey[0] != '\0', "Should not call this function for integer dictionary");
+        return _strKey;
     }
 
     /**
@@ -108,8 +108,8 @@ public:
      */
     inline intptr_t getIntKey() const
     {
-        CCAssert(m_szKey[0] == '\0', "Should not call this function for string dictionary");
-        return m_iKey;
+        CCAssert(_strKey[0] == '\0', "Should not call this function for string dictionary");
+        return _intKey;
     }
     
     /**
@@ -117,16 +117,16 @@ public:
      *
      * @return  The object of this element.
      */
-    inline CCObject* getObject() const { return m_pObject; }
+    inline CCObject* getObject() const { return _object; }
 
 private:
     // The max length of string key.
     #define   MAX_KEY_LEN   256
     // char array is needed for HASH_ADD_STR in UT_HASH.
     // So it's a pain that all elements will allocate 256 bytes for this array.
-    char      m_szKey[MAX_KEY_LEN];     // hash key of string type
-    intptr_t  m_iKey;       // hash key of integer type
-    CCObject* m_pObject;    // hash value
+    char      _strKey[MAX_KEY_LEN];     // hash key of string type
+    intptr_t  _intKey;       // hash key of integer type
+    CCObject* _object;    // hash value
 public:
     UT_hash_handle hh;      // makes this class hashable
     friend class CCDictionary; // declare CCDictionary as friend class
@@ -140,7 +140,7 @@ public:
 #define CCDICT_FOREACH(__dict__, __el__) \
     CCDictElement* pTmp##__dict__##__el__ = NULL; \
     if (__dict__) \
-    HASH_ITER(hh, (__dict__)->m_pElements, __el__, pTmp##__dict__##__el__)
+    HASH_ITER(hh, (__dict__)->_elements, __el__, pTmp##__dict__##__el__)
 
 
 
@@ -399,7 +399,7 @@ public:
      * 
      *  @note For internal usage, we need to declare this member variable as public since it's used in UT_HASH.
      */
-    CCDictElement* m_pElements;
+    CCDictElement* _elements;
 private:
     
     /** The support type of dictionary, it's confirmed when setObject is invoked. */
@@ -413,7 +413,7 @@ private:
     /** 
      *  The type of dictionary, it's assigned to kCCDictUnknown by default.
      */
-    CCDictType m_eDictType;
+    CCDictType _dictType;
 };
 
 // end of data_structure group

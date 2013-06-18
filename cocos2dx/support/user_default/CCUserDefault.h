@@ -128,9 +128,9 @@ private:
     static bool createXMLFile();
     static void initXMLFilePath();
     
-    static CCUserDefault* m_spUserDefault;
-    static std::string m_sFilePath;
-    static bool m_sbIsFilePathInitialized;
+    static CCUserDefault* _spUserDefault;
+    static std::string _filePath;
+    static bool _sbIsFilePathInitialized;
 };
 
 // end of data_storage group

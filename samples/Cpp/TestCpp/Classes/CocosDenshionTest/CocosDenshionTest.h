@@ -15,10 +15,10 @@ public:
     virtual void onExit();
 
 private:
-    CCMenu* m_pItmeMenu;
-    CCPoint m_tBeginPos;
-    int m_nTestCount;
-    unsigned int m_nSoundId;
+    CCMenu* _itmeMenu;
+    CCPoint _beginPos;
+    int _testCount;
+    unsigned int _soundId;
 };
 
 class CocosDenshionTestScene : public TestScene
