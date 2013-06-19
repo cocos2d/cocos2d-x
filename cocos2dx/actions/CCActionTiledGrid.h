@@ -41,6 +41,9 @@ public:
     /** initializes the action with a range, whether or not to shake Z vertices, a grid size, and duration */
     virtual bool initWithDuration(float duration, const CCSize& gridSize, int nRange, bool bShakeZ);
 
+	/** returns a new clone of the action */
+	virtual CCShakyTiles3D* clone() const;
+
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
 
@@ -60,6 +63,9 @@ class CC_DLL CCShatteredTiles3D : public CCTiledGrid3DAction
 public:
     /** initializes the action with a range, whether or not to shatter Z vertices, a grid size and duration */
     virtual bool initWithDuration(float duration, const CCSize& gridSize, int nRange, bool bShatterZ);
+
+	/** returns a new clone of the action */
+	virtual CCShatteredTiles3D* clone() const;
 
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
@@ -90,6 +96,10 @@ public:
 
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
+
+	/** returns a new clone of the action */
+	virtual CCShuffleTiles* clone() const;
+
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -114,6 +124,9 @@ public:
     virtual void transformTile(const CCPoint& pos, float distance);
     virtual void update(float time);
 
+	/** returns a new clone of the action */
+	virtual CCFadeOutTRTiles* clone() const;
+
 public:
 
     /** creates the action with the grid size and the duration */
@@ -127,6 +140,9 @@ class CC_DLL CCFadeOutBLTiles : public CCFadeOutTRTiles
 {
 public:
     virtual float testFunc(const CCSize& pos, float time);
+
+	/** returns a new clone of the action */
+	virtual CCFadeOutBLTiles* clone() const;
 
 public:
 
@@ -143,6 +159,9 @@ public:
     virtual float testFunc(const CCSize& pos, float time);
     virtual void transformTile(const CCPoint& pos, float distance);
 
+	/** returns a new clone of the action */
+	virtual CCFadeOutUpTiles* clone() const;
+
 public:
     /** creates the action with the grid size and the duration */
     static CCFadeOutUpTiles* create(float duration, const CCSize& gridSize);
@@ -155,6 +174,9 @@ public:
 class CC_DLL CCFadeOutDownTiles : public CCFadeOutUpTiles
 {
 public:
+	/** returns a new clone of the action */
+	virtual CCFadeOutDownTiles* clone() const;
+
     virtual float testFunc(const CCSize& pos, float time);
 
 public:
@@ -175,6 +197,9 @@ public:
     void shuffle(unsigned int *pArray, unsigned int nLen);
     void turnOnTile(const CCPoint& pos);
     void turnOffTile(const CCPoint& pos);
+
+	/** returns a new clone of the action */
+	virtual CCTurnOffTiles* clone() const;
 
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
@@ -208,6 +233,9 @@ public:
     /** initializes the action with a number of waves, the waves amplitude, the grid size and the duration */
     virtual bool initWithDuration(float duration, const CCSize& gridSize, unsigned int waves, float amplitude);
 
+	/** returns a new clone of the action */
+	virtual CCWavesTiles3D* clone() const;
+
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
 
@@ -236,6 +264,10 @@ public:
 
     /** initializes the action with the number of jumps, the sin amplitude, the grid size and the duration */
     bool initWithDuration(float duration, const CCSize& gridSize, unsigned int numberOfJumps, float amplitude);
+
+	/** returns a new clone of the action */
+	virtual CCJumpTiles3D* clone() const;
+
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
 
@@ -256,6 +288,9 @@ public :
     /** initializes the action with the number of rows to split and the duration */
     virtual bool initWithDuration(float duration, unsigned int nRows);
 
+	/** returns a new clone of the action */
+	virtual CCSplitRows* clone() const;
+
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
     virtual void startWithTarget(CCNode *pTarget);
@@ -275,6 +310,9 @@ class CC_DLL CCSplitCols : public CCTiledGrid3DAction
 public:
     /** initializes the action with the number of columns to split and the duration */
     virtual bool initWithDuration(float duration, unsigned int nCols);
+
+	/** returns a new clone of the action */
+	virtual CCSplitCols* clone() const;
 
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);

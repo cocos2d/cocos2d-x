@@ -79,7 +79,7 @@ void Effect2::onEnter()
 //    id orbit_back = [orbit reverse];
 //
 //    [target runAction: [RepeatForever::create: [Sequence actions: orbit, orbit_back, nil]]];
-    target->runAction(CCSequence::create( shaky, delay, reuse, shuffle, delay->copy()->autorelease(), turnoff, turnon, NULL) );
+    target->runAction(CCSequence::create( shaky, delay, reuse, shuffle, delay->clone(), turnoff, turnon, NULL) );
 }
 
 std::string Effect2::title()

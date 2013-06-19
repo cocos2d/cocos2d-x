@@ -342,8 +342,8 @@ MenuLayer3::MenuLayer3()
     item2->runAction( CCRepeatForever::create(CCSequence::create( jump, jump->reverse(), NULL)));
 
     CCActionInterval* spin1 = CCRotateBy::create(3, 360);
-    CCActionInterval* spin2 = (CCActionInterval*)(spin1->copy()->autorelease());
-    CCActionInterval* spin3 = (CCActionInterval*)(spin1->copy()->autorelease());
+    CCActionInterval* spin2 = spin1->clone();
+    CCActionInterval* spin3 = spin1->clone();
     
     item1->runAction( CCRepeatForever::create(spin1) );
     item2->runAction( CCRepeatForever::create(spin2) );
