@@ -2620,6 +2620,10 @@ void CCAnimate::startWithTarget(CCNode *pTarget)
     _executedLoops = 0;
 }
 
+int CCAnimate::getNextFrame(){
+	return _nextFrame;
+}
+
 void CCAnimate::stop(void)
 {
     if (_animation->getRestoreOriginalFrame() && _target)
