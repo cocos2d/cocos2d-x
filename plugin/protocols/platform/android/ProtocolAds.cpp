@@ -119,6 +119,11 @@ void ProtocolAds::hideAds(AdsType type)
 	PluginUtils::callJavaFunctionWithName_oneParam(this, "hideAds", "(I)V", type);
 }
 
+void ProtocolAds::queryPoints()
+{
+    PluginUtils::callJavaFunctionWithName(this, "queryPoints");
+}
+
 void ProtocolAds::spendPoints(int points)
 {
 	PluginUtils::callJavaFunctionWithName_oneParam(this, "spendPoints", "(I)V", points);
