@@ -1,6 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2009      Sindesso Pty Ltd http://www.sindesso.com/
+Copyright (c) 2013      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -22,44 +21,28 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __ACTION_CCPAGETURN3D_ACTION_H__
-#define __ACTION_CCPAGETURN3D_ACTION_H__
 
-#include "CCActionGrid3D.h"
+#ifndef __CCTEXTURE_CACHE_EMSCRIPTEN_H__
+#define __CCTEXTURE_CACHE_EMSCRIPTEN_H__
+
+#include "textures/CCTextureCache.h"
 
 NS_CC_BEGIN
 
-/**
- * @addtogroup actions
- * @{
- */
-
-/**
- @brief This action simulates a page turn from the bottom right hand corner of the screen.
- It's not much use by itself but is used by the PageTurnTransition.
- 
- Based on an original paper by L Hong et al.
- http://www.parc.com/publication/1638/turning-pages-of-3d-electronic-books.html
-  
- @since v0.8.2
- */
-class CC_DLL CCPageTurn3D : public CCGrid3DAction
+class CC_DLL CCTextureCacheEmscripten : public CCTextureCache
 {
 public:
-	/** returns a new clone of the action */
-	virtual CCPageTurn3D* clone() const;
+    CCTextureCacheEmscripten();
+    virtual ~CCTextureCacheEmscripten();
 
-    virtual void update(float time);
+    void addImageAsync(const char *path, CCObject *target, SEL_CallFuncO selector);
 
-public:
+    /* Public method since we need to call it from C code to workaround linkage from JS.
+    */
+    void addImageAsyncCallBack_emscripten(AsyncStruct *data, unsigned char *imgData, int width, int height);
 
-    /** create the action */
-    static CCPageTurn3D* create(float duration, const CCSize& gridSize);
 };
-
-// end of actions group
-/// @}
 
 NS_CC_END
 
-#endif // __ACTION_CCPAGETURN3D_ACTION_H__
+#endif

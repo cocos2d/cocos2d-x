@@ -69,8 +69,8 @@ public:
 
     void startWithTarget(CCNode *pTarget);
     void update(float dt);
-    CCActionInterval* reverse();
-
+	/** returns a new reversed action */
+    CCActionTween* reverse() const;
 	/** returns a new clone of the action */
 	CCActionTween *clone() const;
 

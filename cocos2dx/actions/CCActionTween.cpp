@@ -56,7 +56,8 @@ bool CCActionTween::initWithDuration(float aDuration, const char* key, float fro
 
 CCActionTween *CCActionTween::clone() const
 {
-	auto a = new CCActionTween(*this);
+	// no copy constructor	
+	auto a = new CCActionTween();
 	a->initWithDuration(_duration, _key.c_str(), _from, _to);
 	a->autorelease();
 	return a;
@@ -74,7 +75,7 @@ void CCActionTween::update(float dt)
     dynamic_cast<CCActionTweenDelegate*>(_target)->updateTweenAction(_to  - _delta * (1 - dt), _key.c_str());
 }
 
-CCActionInterval* CCActionTween::reverse()
+CCActionTween* CCActionTween::reverse() const
 {
     return CCActionTween::create(_duration, _key.c_str(), _to, _from);
 }

@@ -34,31 +34,6 @@ NS_CC_BEGIN
 //
 // InstantAction
 //
-
-CCActionInstant * CCActionInstant::clone() const
-{
-	auto a = new CCActionInstant(*this);
-	a->autorelease();
-	return a;
-}
-
-CCObject * CCActionInstant::copyWithZone(CCZone *pZone) {
-
-    CCZone *pNewZone = NULL;
-    CCActionInstant *pRet = NULL;
-
-    if (pZone && pZone->_copyObject) {
-        pRet = (CCActionInstant*) (pZone->_copyObject);
-    } else {
-        pRet = new CCActionInstant();
-        pZone = pNewZone = new CCZone(pRet);
-    }
-
-    CCFiniteTimeAction::copyWithZone(pZone);
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
-}
-
 bool CCActionInstant::isDone() {
     return true;
 }
@@ -71,10 +46,6 @@ void CCActionInstant::step(float dt) {
 void CCActionInstant::update(float time) {
     CC_UNUSED_PARAM(time);
     // nothing
-}
-
-CCFiniteTimeAction * CCActionInstant::reverse() {
-    return (CCFiniteTimeAction*) (copy()->autorelease());
 }
 
 //
@@ -97,13 +68,15 @@ void CCShow::update(float time) {
     _target->setVisible(true);
 }
 
-CCFiniteTimeAction* CCShow::reverse() {
-    return (CCFiniteTimeAction*) (CCHide::create());
+CCActionInstant* CCShow::reverse() const
+{
+    return CCHide::create();
 }
 
 CCShow * CCShow::clone() const
 {
-	auto a = new CCShow(*this);
+	// no copy constructor
+	auto a = new CCShow();
 	a->autorelease();
 	return a;
 }
@@ -143,13 +116,15 @@ void CCHide::update(float time) {
     _target->setVisible(false);
 }
 
-CCFiniteTimeAction *CCHide::reverse() {
-    return (CCFiniteTimeAction*) (CCShow::create());
+CCActionInstant *CCHide::reverse() const
+{
+    return CCShow::create();
 }
 
 CCHide * CCHide::clone() const
 {
-	auto a = new CCHide(*this);
+	// no copy constructor
+	auto a = new CCHide();
 	a->autorelease();
 	return a;
 }
@@ -191,9 +166,15 @@ void CCToggleVisibility::update(float time)
     _target->setVisible(!_target->isVisible());
 }
 
+CCToggleVisibility * CCToggleVisibility::reverse() const
+{
+	return CCToggleVisibility::create();
+}
+
 CCToggleVisibility * CCToggleVisibility::clone() const
 {
-	auto a = new CCToggleVisibility(*this);
+	// no copy constructor
+	auto a = new CCToggleVisibility();
 	a->autorelease();
 	return a;
 }
@@ -239,13 +220,15 @@ void CCRemoveSelf::update(float time) {
 	_target->removeFromParentAndCleanup(_isNeedCleanUp);
 }
 
-CCFiniteTimeAction *CCRemoveSelf::reverse() {
-	return (CCFiniteTimeAction*) (CCRemoveSelf::create(_isNeedCleanUp));
+CCRemoveSelf *CCRemoveSelf::reverse() const
+{
+	return CCRemoveSelf::create(_isNeedCleanUp);
 }
 
 CCRemoveSelf * CCRemoveSelf::clone() const
 {
-	auto a = new CCRemoveSelf(*this);
+	// no copy constructor
+	auto a = new CCRemoveSelf();
 	a->init(_isNeedCleanUp);
 	a->autorelease();
 	return a;
@@ -295,13 +278,15 @@ void CCFlipX::update(float time) {
     ((CCSprite*) (_target))->setFlipX(_flipX);
 }
 
-CCFiniteTimeAction* CCFlipX::reverse() {
+CCFlipX* CCFlipX::reverse() const
+{
     return CCFlipX::create(!_flipX);
 }
 
 CCFlipX * CCFlipX::clone() const
 {
-	auto a = new CCFlipX(*this);
+	// no copy constructor
+	auto a = new CCFlipX();
 	a->initWithFlipX(_flipX);
 	a->autorelease();
 	return a;
@@ -351,13 +336,15 @@ void CCFlipY::update(float time) {
     ((CCSprite*) (_target))->setFlipY(_flipY);
 }
 
-CCFiniteTimeAction* CCFlipY::reverse() {
+CCFlipY* CCFlipY::reverse() const
+{
     return CCFlipY::create(!_flipY);
 }
 
 CCFlipY * CCFlipY::clone() const
 {
-	auto a = new CCFlipY(*this);
+	// no copy constructor
+	auto a = new CCFlipY();
 	a->initWithFlipY(_flipY);
 	a->autorelease();
 	return a;
@@ -404,10 +391,17 @@ bool CCPlace::initWithPosition(const CCPoint& pos) {
 
 CCPlace * CCPlace::clone() const
 {
-	auto a = new CCPlace(*this);
+	// no copy constructor
+	auto a = new CCPlace();
 	a->initWithPosition(_position);
 	a->autorelease();
 	return a;
+}
+
+CCPlace * CCPlace::reverse() const
+{
+	// no reverse, just clone
+	return this->clone();
 }
 
 CCObject * CCPlace::copyWithZone(CCZone *pZone) {
@@ -509,7 +503,8 @@ CCCallFunc::~CCCallFunc(void)
 
 CCCallFunc * CCCallFunc::clone() const
 {
-	auto a = new CCCallFunc(*this);
+	// no copy constructor
+	auto a = new CCCallFunc();
 	if( _selectorTarget) {
 		a->initWithTarget(_selectorTarget);
 		a->_callFunc = _callFunc;
@@ -520,6 +515,13 @@ CCCallFunc * CCCallFunc::clone() const
 	a->autorelease();
 	return a;
 }
+
+CCCallFunc * CCCallFunc::reverse() const
+{
+	// no reverse here, just return a clone
+	return this->clone();
+}
+
 
 CCObject * CCCallFunc::copyWithZone(CCZone *pZone) {
     CCZone* pNewZone = NULL;
@@ -615,7 +617,8 @@ bool CCCallFuncN::initWithTarget(CCObject* pSelectorTarget,
 
 CCCallFuncN * CCCallFuncN::clone() const
 {
-	auto a = new CCCallFuncN(*this);
+	// no copy constructor
+	auto a = new CCCallFuncN();
 	a->initWithTarget(_selectorTarget, _callFuncN);
 	a->autorelease();
 	return a;
@@ -669,7 +672,8 @@ bool CCCallFuncND::initWithTarget(CCObject* pSelectorTarget,
 
 CCCallFuncND * CCCallFuncND::clone() const
 {
-	auto a = new CCCallFuncND(*this);
+	// no copy constructor
+	auto a = new CCCallFuncND();
 	a->initWithTarget(_selectorTarget, _callFuncND, _data);
 	a->autorelease();
 	return a;
@@ -744,7 +748,8 @@ bool CCCallFuncO::initWithTarget(CCObject* pSelectorTarget,
 
 CCCallFuncO * CCCallFuncO::clone() const
 {
-	auto a = new CCCallFuncO(*this);
+	// no copy constructor	
+	auto a = new CCCallFuncO();
 	a->initWithTarget(_selectorTarget, _callFuncO, _object);
 	a->autorelease();
 	return a;
