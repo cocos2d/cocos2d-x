@@ -148,7 +148,7 @@ namespace
 NS_CC_BEGIN
 
 CCAccelerometer::CCAccelerometer() : 
-    _accelDelegate(NULL)
+    _function(nullptr)
 {
     memset(&_accelerationValue, 0, sizeof(_accelerationValue));
 }
@@ -158,14 +158,14 @@ CCAccelerometer::~CCAccelerometer()
 
 }
 
-void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate) 
+void CCAccelerometer::setDelegate(std::function<void(CCAcceleration*)> function) 
 {
-    _accelDelegate = pDelegate;
+    _function = function;
 
     // Enable/disable the accelerometer.
     // Well, there isn't one on Win32 so we don't do anything other than register
     // and deregister ourselves from the Windows Key handler.
-    if (pDelegate)
+    if (_function)
     {
         // Register our handler
         CCEGLView::sharedOpenGLView()->setAccelerometerKeyHook( &myAccelerometerKeyHook );
@@ -185,7 +185,7 @@ void CCAccelerometer::setAccelerometerInterval(float interval)
 
 void CCAccelerometer::update( double x,double y,double z,double timestamp ) 
 {
-    if (_accelDelegate)
+    if (_function)
     {
         _accelerationValue.x            = x;
         _accelerationValue.y            = y;
@@ -193,7 +193,7 @@ void CCAccelerometer::update( double x,double y,double z,double timestamp )
         _accelerationValue.timestamp = timestamp;
 
         // Delegate
-        _accelDelegate->didAccelerate(&_accelerationValue);
+        _function(&_accelerationValue);
     }    
 }
 
