@@ -716,6 +716,25 @@ JSBool js_cocos2dx_CCNode_copy(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_FALSE;
 }
 
+template <class T>
+JSBool js_cocos2dx_clone(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	if (argc == 0) {
+		JSObject *obj = JS_THIS_OBJECT(cx, vp);
+		js_proxy_t *proxy = jsb_get_js_proxy(obj);
+		T *clonable = (T *)(proxy ? proxy->ptr : NULL);
+		TEST_NATIVE_OBJECT(cx, clonable)
+		cocos2d::CCObject *ret = clonable->clone();
+        proxy = js_get_or_create_proxy<cocos2d::CCObject>(cx, ret);
+		if (ret && proxy) {
+			JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(proxy->obj));
+			return JS_TRUE;
+		}
+	}
+    JS_ReportError(cx, "wrong number of arguments");
+	return JS_FALSE;
+}
+
 JSObject* getObjectFromNamespace(JSContext* cx, JSObject *ns, const char *name) {
 	jsval out;
     JSBool ok = JS_TRUE;
@@ -3479,10 +3498,10 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, jsb_CCCamera_prototype, "getEye", js_cocos2dx_CCCamera_getEyeXYZ, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     
 
-	JS_DefineFunction(cx, jsb_CCAction_prototype, "copy", js_cocos2dx_CCNode_copy, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+	JS_DefineFunction(cx, jsb_CCAction_prototype, "copy", js_cocos2dx_clone<cocos2d::CCAction>, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, jsb_CCAction_prototype, "retain", js_cocos2dx_retain, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, jsb_CCAction_prototype, "release", js_cocos2dx_release, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-	JS_DefineFunction(cx, jsb_CCAnimation_prototype, "copy", js_cocos2dx_CCNode_copy, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+	JS_DefineFunction(cx, jsb_CCAnimation_prototype, "copy", js_cocos2dx_clone<cocos2d::CCAnimation>, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, jsb_CCAnimation_prototype, "retain", js_cocos2dx_retain, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, jsb_CCAnimation_prototype, "release", js_cocos2dx_release, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, jsb_CCSpriteFrame_prototype, "retain", js_cocos2dx_retain, 0, JSPROP_READONLY | JSPROP_PERMANENT);

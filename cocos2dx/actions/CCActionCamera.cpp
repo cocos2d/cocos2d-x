@@ -23,11 +23,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
 #include "CCActionCamera.h"
 #include "base_nodes/CCNode.h"
 #include "CCCamera.h"
 #include "CCStdC.h"
 #include "cocoa/CCZone.h"
+
 
 NS_CC_BEGIN
 //
@@ -45,14 +47,15 @@ void CCActionCamera::startWithTarget(CCNode *pTarget)
 
 CCActionCamera* CCActionCamera::clone() const
 {
-	auto a = new CCActionCamera(*this);
+	// no copy constructor
+	auto a = new CCActionCamera();
 	a->autorelease();
 	return a;
 }
 
-CCActionInterval * CCActionCamera::reverse()
+CCActionCamera * CCActionCamera::reverse() const
 {
-    return CCReverseTime::create(this);
+    return (CCActionCamera*)CCReverseTime::create(const_cast<CCActionCamera*>(this));
 }
 //
 // CCOrbitCamera
@@ -72,7 +75,8 @@ CCOrbitCamera * CCOrbitCamera::create(float t, float radius, float deltaRadius, 
 
 CCOrbitCamera* CCOrbitCamera::clone() const
 {
-	auto a = new CCOrbitCamera(*this);
+	// no copy constructor	
+	auto a = new CCOrbitCamera();
 	a->initWithDuration(_duration, _radius, _deltaRadius, _angleZ, _deltaAngleZ, _angleX, _deltaAngleX);
 	a->autorelease();
 	return a;

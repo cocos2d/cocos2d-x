@@ -41,10 +41,15 @@ class CCGridBase;
 class CC_DLL CCGridAction : public CCActionInterval
 {
 public:
-	virtual CCGridAction * clone() const;
-    virtual CCObject* copyWithZone(CCZone* pZone);
+	/** returns a new clone of the action */
+	virtual CCGridAction * clone() const = 0;
+
+	/** returns a new reversed action.
+	 The reversed action is created with the CCReverseTime action.
+	 */
+    virtual CCGridAction* reverse() const;
+
     virtual void startWithTarget(CCNode *pTarget);
-    virtual CCActionInterval* reverse(void);
 
     /** initializes the action with size and duration */
     virtual bool initWithDuration(float duration, const CCSize& gridSize);
@@ -52,14 +57,6 @@ public:
     /** returns the grid */
     virtual CCGridBase* getGrid(void);
 
-public:
-    /** creates the action with size and duration */
-    // We can't make this create function compatible with previous version, bindings-generator will be confused since they
-    // have the same function name and the same number of arguments. So sorry about that.
-    //CC_DEPRECATED_ATTRIBUTE static CCGridAction* create(const CCSize& gridSize, float duration);
-
-    /** creates the action with size and duration */
-    static CCGridAction* create(float duration, const CCSize& gridSize);
 protected:
     CCSize _gridSize;
 };
@@ -71,6 +68,9 @@ protected:
 class CC_DLL CCGrid3DAction : public CCGridAction
 {
 public:
+	/** returns a new clone of the action */
+	virtual CCGrid3DAction * clone() const = 0;
+
     /** returns the grid */
     virtual CCGridBase* getGrid(void);
     /** returns the vertex than belongs to certain position in the grid */
@@ -79,16 +79,15 @@ public:
     ccVertex3F originalVertex(const CCPoint& position);
     /** sets a new vertex to a certain position of the grid */
     void setVertex(const CCPoint& position, const ccVertex3F& vertex);
-
-public:
-    /** creates the action with size and duration */
-    static CCGrid3DAction* create(float duration, const CCSize& gridSize);
 };
 
 /** @brief Base class for CCTiledGrid3D actions */
 class CC_DLL CCTiledGrid3DAction : public CCGridAction
 {
 public:
+	/** returns a new clone of the action */
+	virtual CCTiledGrid3DAction * clone() const = 0;
+
     /** returns the tile that belongs to a certain position of the grid */
     ccQuad3 tile(const CCPoint& position);
     /** returns the non-transformed tile that belongs to a certain position of the grid */
@@ -112,9 +111,13 @@ public:
     /** initializes the action with an inner action that has the amplitude property, and a duration time */
     bool initWithAction(CCAction *pAction, float duration);
 
+	/** returns a new clone of the action */
+	virtual CCAccelDeccelAmplitude* clone() const;
+	/** returns a new reversed action */
+	virtual CCAccelDeccelAmplitude* reverse() const;
+
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
 
     /** get amplitude rate */
     inline float getRate(void) { return _rate; }
@@ -138,6 +141,12 @@ public:
     /** initializes the action with an inner action that has the amplitude property, and a duration time */
     bool initWithAction(CCAction *pAction, float duration);
 
+	/** returns a new clone of the action */
+	virtual CCAccelAmplitude* clone() const;
+
+	/** returns a new reversed action */
+	virtual CCAccelAmplitude* reverse() const;
+
     /** get amplitude rate */
     inline float getRate(void) { return _rate; }
     /** set amplitude rate */
@@ -145,7 +154,6 @@ public:
 
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
 
 public:
     /** creates the action with an inner action that has the amplitude property, and a duration time */
@@ -163,6 +171,12 @@ public:
     /** initializes the action with an inner action that has the amplitude property, and a duration time */
     bool initWithAction(CCAction *pAction, float duration);
 
+	/** returns a new clone of the action */
+	virtual CCDeccelAmplitude* clone() const;
+
+	/** returns a new reversed action */
+	virtual CCDeccelAmplitude* reverse() const;
+
     /** get amplitude rate */
     inline float getRate(void) { return _rate; }
     /** set amplitude rate */
@@ -170,7 +184,6 @@ public:
 
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
 
 public:
     /** creates the action with an inner action that has the amplitude property, and a duration time */
@@ -191,6 +204,12 @@ class CC_DLL CCStopGrid : public CCActionInstant
 public:
     virtual void startWithTarget(CCNode *pTarget);
 
+	/** returns a new clone of the action */
+	virtual CCStopGrid* clone() const;
+
+	/** returns a new reversed action */
+	virtual CCStopGrid* reverse() const;
+
 public:
     /** Allocates and initializes the action */
     static CCStopGrid* create(void);
@@ -204,6 +223,12 @@ public:
     bool initWithTimes(int times);
 
     virtual void startWithTarget(CCNode *pTarget);
+
+	/** returns a new clone of the action */
+	virtual CCReuseGrid* clone() const;
+
+	/** returns a new reversed action */
+	virtual CCReuseGrid* reverse() const;
 
 public:
     /** creates an action with the number of times that the current grid will be reused */
