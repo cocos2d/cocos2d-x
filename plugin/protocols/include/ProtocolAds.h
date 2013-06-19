@@ -36,8 +36,8 @@ typedef enum
 {
     kAdsReceived = 0,            // The ad is received
 
-    kFullScreenViewShown,       // The full screen advertisement shown
-    kFullScreenViewDismissed,   // The full screen advertisement dismissed
+    kAdsShown,                  // The advertisement shown
+    kAdsDismissed,              // The advertisement dismissed
 
     kPointsSpendSucceed,        // The points spend succeed
     kPointsSpendFailed,         // The points spend failed
