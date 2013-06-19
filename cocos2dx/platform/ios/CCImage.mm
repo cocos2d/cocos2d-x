@@ -123,29 +123,6 @@ static bool _initWithImage(CGImageRef cgImage, tImageInfo *pImageinfo)
     return true;
 }
 
-static bool _initWithFile(const char* path, tImageInfo *pImageinfo)
-{
-    CGImageRef                CGImage;    
-    UIImage                    *jpg;
-    UIImage                    *png;
-    bool            ret;
-    
-    // convert jpg to png before loading the texture
-    
-    NSString *fullPath = [NSString stringWithUTF8String:path];
-    jpg = [[UIImage alloc] initWithContentsOfFile: fullPath];
-    png = [[UIImage alloc] initWithData:UIImagePNGRepresentation(jpg)];
-    CGImage = png.CGImage;    
-    
-    ret = _initWithImage(CGImage, pImageinfo);
-    
-    [png release];
-    [jpg release];
-    
-    return ret;
-}
-
-
 static bool _initWithData(void * pBuffer, int length, tImageInfo *pImageinfo)
 {
     bool ret = false;

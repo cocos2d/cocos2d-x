@@ -32,7 +32,7 @@ THE SOFTWARE.
 
 namespace cocos2d
 {
-    CCAccelerometer::CCAccelerometer() : _accelDelegate(NULL)
+    CCAccelerometer::CCAccelerometer() : _function(nullptr)
     {
     }
 
@@ -41,11 +41,11 @@ namespace cocos2d
 
     }
 
-    void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate) 
+    void CCAccelerometer::setDelegate(std::function<void(CCAcceleration*)> function) 
     {
-        _accelDelegate = pDelegate;
+        _function = function;
 
-        if (pDelegate)
+        if (_function)
         {        
             enableAccelerometerJNI();
         }
@@ -63,14 +63,14 @@ namespace cocos2d
 
     void CCAccelerometer::update(float x, float y, float z, long sensorTimeStamp) 
     {
-        if (_accelDelegate)
+        if (_function)
         {
             _accelerationValue.x = -((double)x / TG3_GRAVITY_EARTH);
             _accelerationValue.y = -((double)y / TG3_GRAVITY_EARTH);
             _accelerationValue.z = -((double)z / TG3_GRAVITY_EARTH);
             _accelerationValue.timestamp = (double)sensorTimeStamp;
 
-            _accelDelegate->didAccelerate(&_accelerationValue);
+            _function(&_accelerationValue);
         }    
     }
 } // end of namespace cococs2d
