@@ -57,6 +57,18 @@ CCAnimationFrame::~CCAnimationFrame()
     CC_SAFE_RELEASE(_userInfo);
 }
 
+CCAnimationFrame* CCAnimationFrame::clone() const
+{
+	// no copy constructor
+	auto frame = new CCAnimationFrame();
+    frame->initWithSpriteFrame(_spriteFrame->clone(),
+							   _delayUnits,
+							   _userInfo != NULL ? (CCDictionary*)_userInfo->copy()->autorelease() : NULL);
+
+	frame->autorelease();
+	return frame;
+}
+
 CCObject* CCAnimationFrame::copyWithZone(CCZone* pZone)
 {
     CCZone* pNewZone = NULL;
@@ -203,6 +215,16 @@ void CCAnimation::addSpriteFrameWithTexture(CCTexture2D *pobTexture, const CCRec
 float CCAnimation::getDuration(void) const
 {
     return _totalDelayUnits * _delayPerUnit;
+}
+
+CCAnimation* CCAnimation::clone() const
+{
+	// no copy constructor	
+	auto a = new CCAnimation();
+    a->initWithAnimationFrames(_frames, _delayPerUnit, _loops);
+    a->setRestoreOriginalFrame(_restoreOriginalFrame);
+	a->autorelease();
+	return a;
 }
 
 CCObject* CCAnimation::copyWithZone(CCZone* pZone)

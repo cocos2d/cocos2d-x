@@ -102,8 +102,8 @@ local function Test2()
     local action1 = CCRepeatForever:create(CCSequence:create(array1))
 
 	local array2 = CCArray:create()
-	array2:addObject(a1:copy():autorelease())
-	array2:addObject(a2:copy():autorelease())
+	array2:addObject(a1:clone())
+	array2:addObject(a2:clone())
 	array2:addObject(a2:reverse())
     local action2 = CCRepeatForever:create(CCSequence:create(array2))
 
@@ -270,10 +270,10 @@ local function Test6()
     local rot = CCRotateBy:create(2, 360)
     local rot_back = rot:reverse()
     local forever1 = CCRepeatForever:create(CCSequence:createWithTwoActions(rot, rot_back))
-    local forever11 = tolua.cast(forever1:copy():autorelease(), "CCRepeatForever")
+    local forever11 = tolua.cast(forever1:clone(), "CCRepeatForever")
 
-    local forever2 = tolua.cast(forever1:copy():autorelease(), "CCRepeatForever")
-    local forever21 = tolua.cast(forever1:copy():autorelease(), "CCRepeatForever")
+    local forever2 = tolua.cast(forever1:clone(), "CCRepeatForever")
+    local forever21 = tolua.cast(forever1:clone(), "CCRepeatForever")
 
     Test6_layer:addChild(sp1, 0, kTagSprite1)
     sp1:addChild(sp11)
@@ -381,7 +381,7 @@ local function StressTest2()
 	fire = tolua.cast(fire, "CCNode")
     fire:setPosition(80, s.height / 2 - 50)
 
-    local copy_seq3 = tolua.cast(seq3:copy():autorelease(), "CCSequence")
+    local copy_seq3 = tolua.cast(seq3:clone(), "CCSequence")
     fire:runAction(CCRepeatForever:create(copy_seq3))
     sublayer:addChild(fire, 2)
 
@@ -573,7 +573,7 @@ local function ConvertToNode()
 
         point:setPosition(sprite:getPosition())
 
-        local copy = tolua.cast(action:copy():autorelease(), "CCRepeatForever")
+        local copy = tolua.cast(action:clone(), "CCRepeatForever")
         sprite:runAction(copy)
         ConvertToNode_layer:addChild(sprite, i)
     end

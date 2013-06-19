@@ -120,6 +120,15 @@ CCSpriteFrame::~CCSpriteFrame(void)
     CC_SAFE_RELEASE(_texture);
 }
 
+CCSpriteFrame* CCSpriteFrame::clone() const
+{
+	// no copy constructor	
+    CCSpriteFrame *copy = new CCSpriteFrame();
+    copy->initWithTextureFilename(_textureFilename.c_str(), _rectInPixels, _rotated, _offsetInPixels, _originalSizeInPixels);
+    copy->setTexture(_texture);
+    return copy;
+}
+
 CCObject* CCSpriteFrame::copyWithZone(CCZone *pZone)
 {
     CC_UNUSED_PARAM(pZone);

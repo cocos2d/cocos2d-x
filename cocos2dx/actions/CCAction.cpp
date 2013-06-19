@@ -48,45 +48,9 @@ CCAction::~CCAction()
     CCLOGINFO("cocos2d: deallocing");
 }
 
-CCAction* CCAction::create()
-{
-    CCAction * pRet = new CCAction();
-    pRet->autorelease();
-    return pRet;
-}
-
 const char* CCAction::description()
 {
     return CCString::createWithFormat("<CCAction | Tag = %d>", _tag)->getCString();
-}
-
-CCAction* CCAction::clone() const
-{
-	// XXX shall not happen
-	auto a = new CCAction(*this);
-	a->_tag = _tag;
-	a->_target = a->_originalTarget = NULL;
-	a->autorelease();
-	return a;
-}
-
-CCObject* CCAction::copyWithZone(CCZone *pZone)
-{
-    CCZone *pNewZone = NULL;
-    CCAction *pRet = NULL;
-    if (pZone && pZone->_copyObject)
-    {
-        pRet = (CCAction*)(pZone->_copyObject);
-    }
-    else
-    {
-        pRet = new CCAction();
-        pNewZone = new CCZone(pRet);
-    }
-    //copy member data
-    pRet->_tag = _tag;
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
 }
 
 void CCAction::startWithTarget(CCNode *aTarget)
@@ -114,23 +78,6 @@ void CCAction::update(float time)
 {
     CC_UNUSED_PARAM(time);
     CCLOG("[Action update]. override me");
-}
-
-//
-// FiniteTimeAction
-//
-
-CCFiniteTimeAction* CCFiniteTimeAction::clone() const
-{
-	auto a = new CCFiniteTimeAction(*this);
-	a->autorelease();
-	return a;
-}
-
-CCFiniteTimeAction *CCFiniteTimeAction::reverse()
-{
-    CCLOG("cocos2d: FiniteTimeAction#reverse: Implement me");
-    return NULL;
 }
 
 //
@@ -168,9 +115,10 @@ bool CCSpeed::initWithAction(CCActionInterval *pAction, float fSpeed)
     return true;
 }
 
-CCSpeed *CCSpeed::clone(void) const
+CCSpeed *CCSpeed::clone() const
 {
-	auto a = new CCSpeed(*this);
+	// no copy constructor
+	auto a = new CCSpeed();
 	a->initWithAction(_innerAction->clone(), _speed);
 	a->autorelease();
 	return  a;
@@ -219,9 +167,10 @@ bool CCSpeed::isDone()
     return _innerAction->isDone();
 }
 
-CCActionInterval *CCSpeed::reverse()
+CCSpeed *CCSpeed::reverse() const
 {
-     return (CCActionInterval*)(CCSpeed::create(_innerAction->reverse(), _speed));
+
+	return CCSpeed::create(_innerAction->reverse(), _speed);
 }
 
 void CCSpeed::setInnerAction(CCActionInterval *pAction)
@@ -254,9 +203,10 @@ CCFollow* CCFollow::create(CCNode *pFollowedNode, const CCRect& rect/* = CCRectZ
     return NULL;
 }
 
-CCFollow* CCFollow::clone(void) const
+CCFollow* CCFollow::clone() const
 {
-	auto a = new CCFollow(*this);
+	// no copy constructor
+	auto a = new CCFollow();
 	a->initWithTarget(_followedNode, _worldRect);
 	a->autorelease();
 	return a;

@@ -281,7 +281,8 @@ void CCCardinalSplineTo::startWithTarget(cocos2d::CCNode *pTarget)
 
 CCCardinalSplineTo* CCCardinalSplineTo::clone() const
 {
-	auto a = new CCCardinalSplineTo(*this);
+	// no copy constructor
+	auto a = new CCCardinalSplineTo();
 	a->initWithDuration(this->_duration, this->_points, this->_tension);
 	a->autorelease();
 	return a;
@@ -356,7 +357,7 @@ void CCCardinalSplineTo::updatePosition(cocos2d::CCPoint &newPos)
     _previousPosition = newPos;
 }
 
-CCActionInterval* CCCardinalSplineTo::reverse()
+CCCardinalSplineTo* CCCardinalSplineTo::reverse() const
 {
     CCPointArray *pReverse = _points->reverse();
     
@@ -395,7 +396,7 @@ void CCCardinalSplineBy::updatePosition(cocos2d::CCPoint &newPos)
     _previousPosition = p;
 }
 
-CCActionInterval* CCCardinalSplineBy::reverse()
+CCCardinalSplineBy* CCCardinalSplineBy::reverse() const
 {
     CCPointArray *copyConfig = (CCPointArray*)_points->copy();
 	
@@ -447,7 +448,8 @@ void CCCardinalSplineBy::startWithTarget(cocos2d::CCNode *pTarget)
 
 CCCardinalSplineBy* CCCardinalSplineBy::clone() const
 {
-	auto a = new CCCardinalSplineBy(*this);
+	// no copy constructor
+	auto a = new CCCardinalSplineBy();
 	a->initWithDuration(this->_duration, (CCPointArray*)this->_points->copy()->autorelease(), this->_tension);
 	a->autorelease();
 	return a;
@@ -486,10 +488,17 @@ bool CCCatmullRomTo::initWithDuration(float dt, cocos2d::CCPointArray *points)
 
 CCCatmullRomTo* CCCatmullRomTo::clone() const
 {
-	auto a = new CCCatmullRomTo(*this);
+	// no copy constructor
+	auto a = new CCCatmullRomTo();
 	a->initWithDuration(this->_duration, (CCPointArray*)this->_points->copy()->autorelease());
 	a->autorelease();
 	return a;
+}
+
+CCCatmullRomTo* CCCatmullRomTo::reverse() const
+{
+    CCPointArray *pReverse = _points->reverse();
+    return CCCatmullRomTo::create(_duration, pReverse);
 }
 
 
@@ -526,10 +535,55 @@ bool CCCatmullRomBy::initWithDuration(float dt, cocos2d::CCPointArray *points)
 
 CCCatmullRomBy* CCCatmullRomBy::clone() const
 {
-	auto a = new CCCatmullRomBy(*this);
+	// no copy constructor	
+	auto a = new CCCatmullRomBy();
 	a->initWithDuration(this->_duration, (CCPointArray*)this->_points->copy()->autorelease());
 	a->autorelease();
 	return a;
+}
+
+CCCatmullRomBy* CCCatmullRomBy::reverse() const
+{
+    CCPointArray *copyConfig = (CCPointArray*)_points->copy();
+
+	//
+	// convert "absolutes" to "diffs"
+	//
+    CCPoint p = copyConfig->getControlPointAtIndex(0);
+    for (unsigned int i = 1; i < copyConfig->count(); ++i)
+    {
+        CCPoint current = copyConfig->getControlPointAtIndex(i);
+        CCPoint diff = ccpSub(current, p);
+        copyConfig->replaceControlPoint(diff, i);
+
+        p = current;
+    }
+
+
+	// convert to "diffs" to "reverse absolute"
+
+    CCPointArray *pReverse = copyConfig->reverse();
+    copyConfig->release();
+
+	// 1st element (which should be 0,0) should be here too
+
+    p = pReverse->getControlPointAtIndex(pReverse->count()-1);
+    pReverse->removeControlPointAtIndex(pReverse->count()-1);
+
+    p = ccpNeg(p);
+    pReverse->insertControlPoint(p, 0);
+
+    for (unsigned int i = 1; i < pReverse->count(); ++i)
+    {
+        CCPoint current = pReverse->getControlPointAtIndex(i);
+        current = ccpNeg(current);
+        CCPoint abs = ccpAdd(current, p);
+        pReverse->replaceControlPoint(abs, i);
+
+        p = abs;
+    }
+
+    return CCCatmullRomBy::create(_duration, pReverse);
 }
 
 NS_CC_END;
