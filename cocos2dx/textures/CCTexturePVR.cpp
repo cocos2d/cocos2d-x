@@ -434,6 +434,7 @@ bool CCTexturePVR::unpackPVRv3Data(unsigned char* dataPointer, unsigned int data
 		if( v3_pixel_formathash[i].pixelFormat == pixelFormat )
         {
 			_pixelFormatInfo = v3_pixel_formathash[i].pixelFormatInfo;
+			_format = _pixelFormatInfo->ccPixelFormat;
 			_hasAlpha = _pixelFormatInfo->alpha;
 			infoValid = true;
 			break;
