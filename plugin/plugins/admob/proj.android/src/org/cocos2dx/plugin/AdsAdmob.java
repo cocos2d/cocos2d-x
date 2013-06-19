@@ -216,7 +216,7 @@ public class AdsAdmob implements InterfaceAds {
 		@Override
 		public void onDismissScreen(Ad arg0) {
 			LogD("onDismissScreen invoked");
-			AdsWrapper.onAdsResult(mAdapter, AdsWrapper.RESULT_CODE_FullScreenViewDismissed, "Full screen ads view dismissed!");
+			AdsWrapper.onAdsResult(mAdapter, AdsWrapper.RESULT_CODE_AdsDismissed, "Ads view dismissed!");
 		}
 
 		@Override
@@ -250,7 +250,7 @@ public class AdsAdmob implements InterfaceAds {
 		@Override
 		public void onPresentScreen(Ad arg0) {
 			LogD("onPresentScreen invoked");
-			AdsWrapper.onAdsResult(mAdapter, AdsWrapper.RESULT_CODE_FullScreenViewShown, "Full screen ads view shown!");
+			AdsWrapper.onAdsResult(mAdapter, AdsWrapper.RESULT_CODE_AdsShown, "Ads view shown!");
 		}
 
 		@Override

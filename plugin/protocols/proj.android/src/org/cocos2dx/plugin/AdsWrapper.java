@@ -30,8 +30,8 @@ import android.view.WindowManager;
 public class AdsWrapper {
 
 	public static final int RESULT_CODE_AdsReceived = 0;               // The ad is received
-	public static final int RESULT_CODE_FullScreenViewShown = 1;       // The full screen advertisement shown
-    public static final int RESULT_CODE_FullScreenViewDismissed = 2;   // The full screen advertisement dismissed
+	public static final int RESULT_CODE_AdsShown = 1;                  // The advertisement shown
+    public static final int RESULT_CODE_AdsDismissed = 2;              // The advertisement dismissed
     public static final int RESULT_CODE_PointsSpendSucceed = 3;        // The points spend succeed
     public static final int RESULT_CODE_PointsSpendFailed = 4;         // The points spend failed
     public static final int RESULT_CODE_NetworkError = 5;              // Network error
