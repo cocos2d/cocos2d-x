@@ -482,7 +482,7 @@ bool CCImage::initWithImageData(void * pData,
         CC_BREAK_IF(! pData || nDataLen <= 0);
         if (eFmt == kFmtRawData)
         {
-            bRet = _initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false);
+            bRet = initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false);
         }
         else if (eFmt == kFmtWebp)
         {
@@ -506,7 +506,7 @@ bool CCImage::initWithImageData(void * pData,
     return bRet;
 }
 
-bool CCImage::_initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti)
+bool CCImage::initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti)
 {
     bool bRet = false;
     do 
