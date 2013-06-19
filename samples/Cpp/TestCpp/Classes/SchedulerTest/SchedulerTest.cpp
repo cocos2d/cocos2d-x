@@ -900,8 +900,8 @@ void SchedulerTimeScale::onEnter()
     CCFiniteTimeAction* spawn = CCSpawn::create(seq3_1, seq3_2, NULL);
     CCRepeat* action = CCRepeat::create(spawn, 50);
 
-    CCRepeat* action2 = (CCRepeat*)action->copy()->autorelease();
-    CCRepeat* action3 = (CCRepeat*)action->copy()->autorelease();
+    CCRepeat* action2 = action->clone();
+    CCRepeat* action3 = action->clone();
 
     CCSprite *grossini = CCSprite::create("Images/grossini.png");
     CCSprite *tamara = CCSprite::create("Images/grossinis_sister1.png");
@@ -998,9 +998,7 @@ void TwoSchedulers::onEnter()
     CCSprite *grossini = CCSprite::create("Images/grossini.png");
     addChild(grossini);
     grossini->setPosition(ccp(s.width/2,100));
-    grossini->runAction((CCAction*)action->copy()->autorelease());
-
-
+    grossini->runAction(action->clone());
 
     CCScheduler *defaultScheduler = CCDirector::sharedDirector()->getScheduler();
 
@@ -1027,7 +1025,7 @@ void TwoSchedulers::onEnter()
         addChild(sprite);
         sprite->setPosition(ccp(30+15*i,100));
 
-        sprite->runAction((CCAction*)action->copy()->autorelease());
+        sprite->runAction(action->clone());
     }
 
 
@@ -1052,7 +1050,7 @@ void TwoSchedulers::onEnter()
         addChild(sprite);
         sprite->setPosition(ccp(s.width-30-15*i,100));
 
-        sprite->runAction((CCAction*)action->copy()->autorelease());
+        sprite->runAction(action->clone());
     }
 
     sliderCtl1 = sliderCtl();

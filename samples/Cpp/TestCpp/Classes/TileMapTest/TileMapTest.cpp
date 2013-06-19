@@ -340,9 +340,9 @@ TMXReadWriteTest::TMXReadWriteTest()
     CCActionInterval* scaleback = CCScaleTo::create(1, 1);
     CCActionInstant* finish = CCCallFuncN::create(this, callfuncN_selector(TMXReadWriteTest::removeSprite));
     CCSequence* seq0 = CCSequence::create(move, rotate, scale, opacity, fadein, scaleback, finish, NULL);
-    CCActionInterval* seq1 = (CCActionInterval*)(seq0->copy()->autorelease());
-    CCActionInterval* seq2 = (CCActionInterval*)(seq0->copy()->autorelease());
-    CCActionInterval* seq3 = (CCActionInterval*)(seq0->copy()->autorelease());
+    CCActionInterval* seq1 = seq0->clone();
+    CCActionInterval* seq2 = seq0->clone();
+    CCActionInterval* seq3 = seq0->clone();
     
     tile0->runAction(seq0);
     tile1->runAction(seq1);

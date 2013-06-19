@@ -3,6 +3,7 @@
 #include "cocos2d.h"
 
 static std::function<CCLayer*()> createFunctions[] = {
+
     CL(ActionManual),
     CL(ActionMove),
     CL(ActionRotate),
@@ -466,7 +467,7 @@ void ActionRotate::onEnter()
     CCActionInterval*  actionByBack = actionBy->reverse();
     _grossini->runAction( CCSequence::create(actionBy, actionByBack, NULL));
 
-    _kathia->runAction( CCSequence::create(actionTo2, actionTo0->copy()->autorelease(), NULL));
+    _kathia->runAction( CCSequence::create(actionTo2, actionTo0->clone(), NULL));
 }
 
 std::string ActionRotate::subtitle()
@@ -525,7 +526,7 @@ void ActionBezier::onEnter()
 
     CCActionInterval*  bezierForward = CCBezierBy::create(3, bezier);
     CCActionInterval*  bezierBack = bezierForward->reverse();    
-    CCAction*  rep = CCRepeatForever::create(CCSequence::create( bezierForward, bezierBack, NULL));
+    CCAction*  rep = CCRepeatForever::create((CCActionInterval*)CCSequence::create( bezierForward, bezierBack, NULL));
 
 
     // sprite 2
@@ -679,7 +680,7 @@ void ActionAnimate::onEnter()
     // File animation
     //
     // with 4 loops
-    CCAnimation *animation3 = (CCAnimation *)animation2->copy()->autorelease();
+    CCAnimation *animation3 = animation2->clone();
     animation3->setLoops(4);
 
 
@@ -1037,7 +1038,7 @@ void ActionRotateToRepeat::onEnter()
     CCActionInterval*  act2 = CCRotateTo::create(1, 0);
     CCActionInterval*  seq = CCSequence::create(act1, act2, NULL);
     CCAction*  rep1 = CCRepeatForever::create(seq);
-    CCActionInterval*  rep2 = CCRepeat::create((CCFiniteTimeAction*)(seq->copy()->autorelease()), 10);
+    CCActionInterval*  rep2 = CCRepeat::create( seq->clone(), 10);
 
     _tamara->runAction(rep1);
     _kathia->runAction(rep2);
@@ -1066,7 +1067,7 @@ void ActionRotateJerk::onEnter()
         NULL);
 
     CCActionInterval*  rep1 = CCRepeat::create(seq, 10);
-    CCAction*  rep2 = CCRepeatForever::create( (CCActionInterval*)(seq->copy()->autorelease()) );
+    CCAction*  rep2 = CCRepeatForever::create( (CCActionInterval*) seq->clone() );
 
     _tamara->runAction(rep1);
     _kathia->runAction(rep2);
@@ -1162,26 +1163,23 @@ void ActionReverseSequence2::onEnter()
 
     // Test:
     //   Sequence should work both with IntervalAction and InstantActions
-    CCActionInterval*  move1 = CCMoveBy::create(1, ccp(250,0));
-    CCActionInterval*  move2 = CCMoveBy::create(1, ccp(0,50));
-    CCToggleVisibility*  tog1 = new CCToggleVisibility();
-    CCToggleVisibility*  tog2 = new CCToggleVisibility();
-    tog1->autorelease();
-    tog2->autorelease();
-    CCFiniteTimeAction*  seq = CCSequence::create( move1, tog1, move2, tog2, move1->reverse(), NULL);
-    CCActionInterval*  action = CCRepeat::create(CCSequence::create( seq, seq->reverse(), NULL), 3);
-
+	auto move1 = CCMoveBy::create(1, ccp(250,0));
+	auto move2 = CCMoveBy::create(1, ccp(0,50));
+	auto tog1 = CCToggleVisibility::create();
+	auto tog2 = CCToggleVisibility::create();
+	auto seq = CCSequence::create( move1, tog1, move2, tog2, move1->reverse(), NULL);
+	auto action = CCRepeat::create(CCSequence::create( seq, seq->reverse(), NULL), 3);
 
 
     // Test:
     //   Also test that the reverse of Hide is Show, and vice-versa
     _kathia->runAction(action);
 
-    CCActionInterval*  move_tamara = CCMoveBy::create(1, ccp(100,0));
-    CCActionInterval*  move_tamara2 = CCMoveBy::create(1, ccp(50,0));
-    CCActionInstant*  hide = CCHide::create();
-    CCFiniteTimeAction*  seq_tamara = CCSequence::create( move_tamara, hide, move_tamara2, NULL);
-    CCFiniteTimeAction*  seq_back = seq_tamara->reverse();
+	auto move_tamara = CCMoveBy::create(1, ccp(100,0));
+	auto move_tamara2 = CCMoveBy::create(1, ccp(50,0));
+	auto hide = CCHide::create();
+	auto seq_tamara = CCSequence::create( move_tamara, hide, move_tamara2, NULL);
+	auto seq_back = seq_tamara->reverse();
     _tamara->runAction( CCSequence::create( seq_tamara, seq_back, NULL));
 }
 std::string ActionReverseSequence2::subtitle()
@@ -1206,7 +1204,7 @@ void ActionRepeat::onEnter()
         CCSequence::create( CCPlace::create(ccp(60,60)), a1, NULL) , 
         3); 
     CCAction*  action2 = CCRepeatForever::create(
-        CCSequence::create((CCActionInterval*)(a1->copy()->autorelease()), a1->reverse(), NULL)
+        CCSequence::create((CCActionInterval*)(a1->clone()), a1->reverse(), NULL)
         );
 
     _kathia->runAction(action1);
@@ -1256,8 +1254,8 @@ void ActionOrbit::onEnter()
     CCSequence*  seq = CCSequence::create(move, move_back, NULL);
     CCAction*  rfe = CCRepeatForever::create(seq);
     _kathia->runAction(rfe);
-    _tamara->runAction((CCAction*)(rfe->copy()->autorelease()));
-    _grossini->runAction((CCAction*)(rfe->copy()->autorelease()));
+    _tamara->runAction(rfe->clone() );
+    _grossini->runAction( rfe->clone() );
 }
 
 std::string ActionOrbit::subtitle()
@@ -1311,9 +1309,9 @@ void ActionTargeted::onEnter()
 
 
     CCJumpBy* jump1 = CCJumpBy::create(2,CCPointZero,100,3);
-    CCJumpBy* jump2 = (CCJumpBy*)jump1->copy()->autorelease();
+    CCJumpBy* jump2 = jump1->clone();
     CCRotateBy* rot1 =  CCRotateBy::create(1, 360);
-    CCRotateBy* rot2 = (CCRotateBy*)rot1->copy()->autorelease();
+    CCRotateBy* rot2 = rot1->clone();
 
     CCTargetedAction *t1 = CCTargetedAction::create(_kathia, jump2);
     CCTargetedAction *t2 = CCTargetedAction::create(_kathia, rot2);
@@ -1410,7 +1408,7 @@ void ActionMoveStacked::runActionsInSprite(CCSprite *sprite)
        NULL)));
     
     CCMoveBy* action = CCMoveBy::create(2.0f, ccp(400,0));
-    CCMoveBy* action_back = (CCMoveBy*)action->reverse();
+    CCMoveBy* action_back = action->reverse();
     
     sprite->runAction(
       CCRepeatForever::create(
@@ -1436,7 +1434,7 @@ void ActionMoveJumpStacked::runActionsInSprite(CCSprite *sprite)
              NULL)));
     
     CCJumpBy* jump = CCJumpBy::create(2.0f, ccp(400,0), 100, 5);
-    CCJumpBy* jump_back = (CCJumpBy*)jump->reverse();
+    CCJumpBy* jump_back = jump->reverse();
     
     sprite->runAction(
       CCRepeatForever::create(
@@ -1462,7 +1460,7 @@ void ActionMoveBezierStacked::runActionsInSprite(CCSprite *sprite)
     bezier.endPosition = ccp(300,100);
     
     CCBezierBy* bezierForward = CCBezierBy::create(3, bezier);
-    CCBezierBy* bezierBack = (CCBezierBy*)bezierForward->reverse();
+    CCBezierBy* bezierBack = bezierForward->reverse();
     CCSequence* seq = CCSequence::create(bezierForward, bezierBack, NULL);
     CCRepeatForever* rep = CCRepeatForever::create(seq);
     sprite->runAction(rep);
@@ -1511,7 +1509,7 @@ void ActionCatmullRomStacked::onEnter()
     array->addControlPoint(ccp(s.width/2, s.height/2));
     
     CCCatmullRomBy *action = CCCatmullRomBy::create(3, array);
-    CCCatmullRomBy* reverse = (CCCatmullRomBy*)action->reverse();
+    CCCatmullRomBy* reverse = action->reverse();
     
     CCSequence *seq = CCSequence::create(action, reverse, NULL);
     
@@ -1543,7 +1541,7 @@ void ActionCatmullRomStacked::onEnter()
     
     
     CCCatmullRomTo *action2 = CCCatmullRomTo::create(3, array2);
-    CCCatmullRomTo* reverse2 = (CCCatmullRomTo*)action2->reverse();
+    CCCatmullRomTo* reverse2 = action2->reverse();
     
     CCSequence *seq2 = CCSequence::create(action2, reverse2, NULL);
     
@@ -1621,7 +1619,7 @@ void ActionCardinalSplineStacked::onEnter()
     
     
     CCCatmullRomBy *action = (CCCatmullRomBy*)CCCardinalSplineBy::create(3, array, 0);
-    CCCatmullRomBy* reverse = (CCCatmullRomBy*)action->reverse();
+    CCCatmullRomBy* reverse = action->reverse();
     
     CCSequence *seq = CCSequence::create(action, reverse, NULL);
     
@@ -1642,8 +1640,8 @@ void ActionCardinalSplineStacked::onEnter()
     // Spline with high tension (tension==1)
     //
     
-    CCCatmullRomBy *action2 = (CCCatmullRomBy*)CCCardinalSplineBy::create(3, array, 1);
-    CCCatmullRomBy* reverse2 = (CCCatmullRomBy*)action2->reverse();
+    CCCardinalSplineBy *action2 = CCCardinalSplineBy::create(3, array, 1);
+    CCCardinalSplineBy* reverse2 = action2->reverse();
     
     CCSequence *seq2 = CCSequence::create(action2, reverse2, NULL);
     
@@ -1826,7 +1824,7 @@ void Issue1288::onEnter()
     addChild(spr);
 
     CCMoveBy* act1 = CCMoveBy::create(0.5, ccp(100, 0));
-    CCMoveBy* act2 = (CCMoveBy*)act1->reverse();
+    CCMoveBy* act2 = act1->reverse();
     CCFiniteTimeAction* act3 = CCSequence::create(act1, act2, NULL);
     CCRepeat* act4 = CCRepeat::create(act3, 2);
 

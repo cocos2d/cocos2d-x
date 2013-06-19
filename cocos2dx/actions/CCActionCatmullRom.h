@@ -121,11 +121,14 @@ public:
     // super virtual functions
 	/** returns a new clone of the action */
 	virtual CCCardinalSplineTo *clone() const;
+
+	/** returns a new reversed action */
+    virtual CCCardinalSplineTo* reverse() const;
+
     virtual CCCardinalSplineTo* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
-    virtual CCActionInterval* reverse();
-    
+
     virtual void updatePosition(CCPoint &newPos);
     
     inline CCPointArray* getPoints() { return _points; }
@@ -159,11 +162,14 @@ public:
     CCCardinalSplineBy();
     
     virtual void startWithTarget(CCNode *pTarget);
-    virtual CCActionInterval* reverse();
+
     virtual void updatePosition(CCPoint &newPos);
 
 	/** returns a new clone of the action */
 	virtual CCCardinalSplineBy *clone() const;
+
+	/** returns a new reversed action */
+    virtual CCCardinalSplineBy* reverse() const;
 
 protected:
     CCPoint _startPosition;
@@ -186,6 +192,9 @@ public:
 
 	/** returns a new clone of the action */
 	virtual CCCatmullRomTo *clone() const;
+
+	/** returns a reversed copy of the action */
+	virtual CCCatmullRomTo *reverse() const;
 };
 
 /** An action that moves the target with a CatmullRom curve by a certain distance.
@@ -205,6 +214,10 @@ public:
 
 	/** returns a new clone of the action */
 	virtual CCCatmullRomBy *clone() const;
+
+	/** returns a reversed copy of the action */
+	virtual CCCatmullRomBy *reverse() const;
+
 };
 
 /** Returns the Cardinal Spline position for a given set of control points, tension and time */

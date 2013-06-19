@@ -50,13 +50,15 @@ class CC_DLL CCActionInstant : public CCFiniteTimeAction //<NSCopying>
 public:
     virtual ~CCActionInstant(){}
     // CCAction methods
-    virtual CCActionInstant* clone() const;	
-    virtual CCObject* copyWithZone(CCZone *pZone);
+
+	/** returns a new clone of the action */
+	virtual CCActionInstant* clone() const = 0;
+    /** returns a new reversed action */
+    virtual CCActionInstant * reverse(void) const = 0;
+
     virtual bool isDone(void);
     virtual void step(float dt);
     virtual void update(float time);
-    //CCFiniteTimeAction method
-    virtual CCFiniteTimeAction * reverse(void);
 };
 
 /** @brief Show the node
@@ -68,8 +70,12 @@ public:
     virtual ~CCShow(){}
     //super methods
     virtual void update(float time);
-    virtual CCFiniteTimeAction * reverse(void);
+
+	/** returns a new reversed action */
+    virtual CCActionInstant * reverse(void) const;
+	/** returns a new clone of the action */
 	virtual CCShow* clone() const;
+
     virtual CCObject* copyWithZone(CCZone *pZone);
 public:
 
@@ -89,7 +95,9 @@ public:
     virtual ~CCHide(){}
     //super methods
     virtual void update(float time);
-    virtual CCFiniteTimeAction * reverse(void);
+	/** returns a new reversed action */
+	virtual CCActionInstant* reverse() const;
+	/** returns a new clone of the action */
 	virtual CCHide* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
 public:
@@ -107,6 +115,9 @@ public:
     virtual ~CCToggleVisibility(){}
     //super method
     virtual void update(float time);
+	/** returns a new reversed action */
+	virtual CCToggleVisibility* reverse() const;
+	/** returns a new clone of the action */
 	virtual CCToggleVisibility* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
 public:
@@ -125,8 +136,10 @@ public:
 	virtual ~CCRemoveSelf(){}
 	//super methods
 	virtual void update(float time);
-	virtual CCFiniteTimeAction * reverse(void);
+	/** returns a new clone of the instance */
 	virtual CCRemoveSelf* clone() const;
+	/** returns a new reversed action */
+	virtual CCRemoveSelf* reverse() const;
 	virtual CCObject* copyWithZone(CCZone *pZone);
 public:
 	/** create the action */
@@ -156,7 +169,9 @@ public:
     bool initWithFlipX(bool x);
     //super methods
     virtual void update(float time);
-    virtual CCFiniteTimeAction * reverse(void);
+	/** returns a new reversed action */
+	virtual CCFlipX* reverse() const;
+	/** returns a new clone of the action */
 	virtual CCFlipX* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
 
@@ -183,7 +198,9 @@ public:
     bool initWithFlipY(bool y);
     //super methods
     virtual void update(float time);
-    virtual CCFiniteTimeAction * reverse(void);
+	/** returns a new reversed action */
+	virtual CCFlipY* reverse() const;
+	/** returns a new clone of the action */
 	virtual CCFlipY* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
 
@@ -205,6 +222,9 @@ public:
     bool initWithPosition(const CCPoint& pos);
     //super methods
     virtual void update(float time);
+	/** returns a new reversed action */
+	virtual CCPlace* reverse() const;
+	/** returns a new clone of the action */
 	virtual CCPlace* clone() const;
     virtual CCObject* copyWithZone(CCZone *pZone);
 protected:
@@ -255,6 +275,9 @@ public:
     virtual void execute();
     //super methods
     virtual void update(float time);
+	/** returns a new reversed action */
+	virtual CCCallFunc* reverse() const;
+	/** returns a new clone of the action */
 	virtual CCCallFunc* clone() const;
     CCObject * copyWithZone(CCZone *pZone);
 

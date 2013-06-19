@@ -53,6 +53,21 @@ bool CCProgressTo::initWithDuration(float duration, float fPercent)
     return false;
 }
 
+CCProgressTo* CCProgressTo::clone() const
+{
+	// no copy constructor	
+	auto a = new CCProgressTo();
+    a->initWithDuration(_duration, _to);
+	a->autorelease();
+	return a;
+}
+
+CCProgressTo* CCProgressTo::reverse() const
+{
+	CCAssert(false, "reverse() not supported in CCProgressTo");
+	return nullptr;
+}
+
 CCObject* CCProgressTo::copyWithZone(CCZone *pZone)
 {
     CCZone* pNewZone = NULL;
@@ -118,6 +133,15 @@ bool CCProgressFromTo::initWithDuration(float duration, float fFromPercentage, f
     return false;
 }
 
+CCProgressFromTo* CCProgressFromTo::clone() const
+{
+	// no copy constructor	
+	auto a = new CCProgressFromTo();
+	a->initWithDuration(_duration, _from, _to);
+	a->autorelease();
+	return a;
+}
+
 CCObject* CCProgressFromTo::copyWithZone(CCZone *pZone)
 {
     CCZone* pNewZone = NULL;
@@ -141,7 +165,7 @@ CCObject* CCProgressFromTo::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-CCActionInterval* CCProgressFromTo::reverse(void)
+CCProgressFromTo* CCProgressFromTo::reverse(void) const
 {
     return CCProgressFromTo::create(_duration, _to, _from);
 }
