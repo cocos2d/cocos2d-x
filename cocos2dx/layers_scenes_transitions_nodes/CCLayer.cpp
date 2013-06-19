@@ -235,11 +235,11 @@ void CCLayer::setAccelerometerEnabled(bool enabled)
             CCDirector* pDirector = CCDirector::sharedDirector();
             if (enabled)
             {
-                pDirector->getAccelerometer()->setDelegate(this);
+                pDirector->getAccelerometer()->setDelegate(CC_CALLBACK_1(CCLayer::didAccelerate, this));
             }
             else
             {
-                pDirector->getAccelerometer()->setDelegate(NULL);
+                pDirector->getAccelerometer()->setDelegate(nullptr);
             }
         }
     }
@@ -379,7 +379,7 @@ void CCLayer::onEnter()
     // add this layer to concern the Accelerometer Sensor
     if (_accelerometerEnabled)
     {
-        pDirector->getAccelerometer()->setDelegate(this);
+        pDirector->getAccelerometer()->setDelegate(CC_CALLBACK_1(CCLayer::didAccelerate, this));
     }
 
     // add this layer to concern the keypad msg
@@ -419,7 +419,7 @@ void CCLayer::onEnterTransitionDidFinish()
     if (_accelerometerEnabled)
     {
         CCDirector* pDirector = CCDirector::sharedDirector();
-        pDirector->getAccelerometer()->setDelegate(this);
+        pDirector->getAccelerometer()->setDelegate(CC_CALLBACK_1(CCLayer::didAccelerate, this));
     }
     
     CCNode::onEnterTransitionDidFinish();

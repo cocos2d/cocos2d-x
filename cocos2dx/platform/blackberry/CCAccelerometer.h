@@ -25,6 +25,7 @@ THE SOFTWARE.
 #ifndef __PLATFORM_CCACCELEROMETER_BLACKBERRY_H__
 #define __PLATFORM_CCACCELEROMETER_BLACKBERRY_H__
 
+#include <functional>
 #include "platform/CCAccelerometerDelegate.h"
 
 NS_CC_BEGIN
@@ -35,12 +36,12 @@ public:
     CCAccelerometer();
     ~CCAccelerometer();
 
-    void setDelegate(CCAccelerometerDelegate* pDelegate);
+    void setDelegate(std::function<void(CCAcceleration*)> function);
     void setAccelerometerInterval(float interval) {CC_UNUSED_PARAM(interval);};
     void update(long sensorTimeStamp, double x, double y, double z);
 
 private:
-    CCAccelerometerDelegate* _accelDelegate;
+    std::function<void(CCAcceleration*)> _function;
     CCAcceleration 			 _accelerationValue;
     static int				 _initialOrientationAngle;
 };
