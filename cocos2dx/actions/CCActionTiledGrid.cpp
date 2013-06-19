@@ -73,6 +73,15 @@ bool CCShakyTiles3D::initWithDuration(float duration, const CCSize& gridSize, in
     return false;
 }
 
+CCShakyTiles3D* CCShakyTiles3D::clone() const
+{
+	// no copy constructor	
+	auto a = new CCShakyTiles3D();
+    a->initWithDuration(_duration, _gridSize, _randrange, _shakeZ);
+	a->autorelease();
+	return a;
+}
+
 CCObject* CCShakyTiles3D::copyWithZone(CCZone *pZone)
 {
     CCZone* pNewZone = NULL;
@@ -165,6 +174,15 @@ bool CCShatteredTiles3D::initWithDuration(float duration, const CCSize& gridSize
     }
 
     return false;
+}
+
+CCShatteredTiles3D* CCShatteredTiles3D::clone() const
+{
+	// no copy constructor	
+	auto a = new CCShatteredTiles3D();
+	a->initWithDuration(_duration, _gridSize, _randrange, _shatterZ);
+	a->autorelease();
+	return a;
 }
 
 CCObject* CCShatteredTiles3D::copyWithZone(CCZone *pZone)
@@ -264,6 +282,15 @@ bool CCShuffleTiles::initWithDuration(float duration, const CCSize& gridSize, un
     }
 
     return false;
+}
+
+CCShuffleTiles* CCShuffleTiles::clone() const
+{
+	// no copy constructor
+	auto a = new CCShuffleTiles();
+	a->initWithDuration(_duration, _gridSize, _seed);
+	a->autorelease();
+	return a;
 }
 
 CCObject* CCShuffleTiles::copyWithZone(CCZone *pZone)
@@ -416,6 +443,15 @@ CCFadeOutTRTiles* CCFadeOutTRTiles::create(float duration, const CCSize& gridSiz
     return pAction;    
 }
 
+CCFadeOutTRTiles* CCFadeOutTRTiles::clone() const
+{
+	// no copy constructor
+	auto a = new CCFadeOutTRTiles();
+	a->initWithDuration(_duration, _gridSize);
+	a->autorelease();
+	return a;
+}
+
 float CCFadeOutTRTiles::testFunc(const CCSize& pos, float time)
 {
     CCPoint n = ccpMult(ccp((float)_gridSize.width, (float)_gridSize.height), time);
@@ -505,6 +541,15 @@ CCFadeOutBLTiles* CCFadeOutBLTiles::create(float duration, const CCSize& gridSiz
     return pAction;
 }
 
+CCFadeOutBLTiles* CCFadeOutBLTiles::clone() const
+{
+	// no copy constructor
+	auto a = new CCFadeOutBLTiles();
+	a->initWithDuration(_duration, _gridSize);
+	a->autorelease();
+	return a;
+}
+
 float CCFadeOutBLTiles::testFunc(const CCSize& pos, float time)
 {
     CCPoint n = ccpMult(ccp((float)_gridSize.width, (float)_gridSize.height), (1.0f - time));
@@ -535,6 +580,15 @@ CCFadeOutUpTiles* CCFadeOutUpTiles::create(float duration, const CCSize& gridSiz
     }
 
     return pAction;
+}
+
+CCFadeOutUpTiles* CCFadeOutUpTiles::clone() const
+{
+	// no copy constructor
+	auto a = new CCFadeOutUpTiles();
+	a->initWithDuration(_duration, _gridSize);
+	a->autorelease();
+	return a;
 }
 
 float CCFadeOutUpTiles::testFunc(const CCSize& pos, float time)
@@ -580,6 +634,15 @@ CCFadeOutDownTiles* CCFadeOutDownTiles::create(float duration, const CCSize& gri
     }
 
     return pAction;
+}
+
+CCFadeOutDownTiles* CCFadeOutDownTiles::clone() const
+{
+	// no copy constructor
+	auto a = new CCFadeOutDownTiles();
+	a->initWithDuration(_duration, _gridSize);
+	a->autorelease();
+	return a;
 }
 
 float CCFadeOutDownTiles::testFunc(const CCSize& pos, float time)
@@ -639,6 +702,15 @@ bool CCTurnOffTiles::initWithDuration(float duration, const CCSize& gridSize, un
     }
 
     return false;
+}
+
+CCTurnOffTiles* CCTurnOffTiles::clone() const
+{
+	// no copy constructor
+	auto a = new CCTurnOffTiles();
+    a->initWithDuration(_duration, _gridSize, _seed );
+	a->autorelease();
+	return a;
 }
 
 CCObject* CCTurnOffTiles::copyWithZone(CCZone *pZone)
@@ -772,6 +844,15 @@ bool CCWavesTiles3D::initWithDuration(float duration, const CCSize& gridSize, un
     return false;
 }
 
+CCWavesTiles3D* CCWavesTiles3D::clone() const
+{
+	// no copy constructor
+	auto a = new CCWavesTiles3D();
+    a->initWithDuration(_duration, _gridSize, _waves, _amplitude);
+	a->autorelease();
+	return a;
+}
+
 CCObject* CCWavesTiles3D::copyWithZone(CCZone *pZone)
 {
     CCZone* pNewZone = NULL;
@@ -848,6 +929,15 @@ bool CCJumpTiles3D::initWithDuration(float duration, const CCSize& gridSize, uns
     }
 
     return false;
+}
+
+CCJumpTiles3D* CCJumpTiles3D::clone() const
+{
+	// no copy constructor
+	auto a = new CCJumpTiles3D();
+    a->initWithDuration(_duration, _gridSize, _jumps, _amplitude);
+	a->autorelease();
+	return a;
 }
 
 CCObject* CCJumpTiles3D::copyWithZone(CCZone *pZone)
@@ -932,6 +1022,15 @@ bool CCSplitRows::initWithDuration(float duration, unsigned int nRows)
     return CCTiledGrid3DAction::initWithDuration(duration, CCSizeMake(1, nRows));
 }
 
+CCSplitRows* CCSplitRows::clone() const
+{
+	// no copy constructor
+	auto a = new CCSplitRows();
+    a->initWithDuration(_duration, _rows);
+	a->autorelease();
+	return a;
+}
+
 CCObject* CCSplitRows::copyWithZone(CCZone *pZone)
 {
     CCZone* pNewZone = NULL;
@@ -1008,6 +1107,15 @@ bool CCSplitCols::initWithDuration(float duration, unsigned int nCols)
 {
     _cols = nCols;
     return CCTiledGrid3DAction::initWithDuration(duration, CCSizeMake(nCols, 1));
+}
+
+CCSplitCols* CCSplitCols::clone() const
+{
+	// no copy constructor	
+	auto a = new CCSplitCols();
+    a->initWithDuration(_duration, _cols);
+	a->autorelease();
+	return a;
 }
 
 CCObject* CCSplitCols::copyWithZone(CCZone *pZone)

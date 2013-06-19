@@ -50,6 +50,15 @@ public:
 	
 };
 
+/** Interface that defines how to clone an object */
+class CC_DLL CCClonable
+{
+public:
+	/** returns a copy of the object */
+    virtual CCClonable* clone() const = 0;
+	virtual ~CCClonable() {};
+};
+
 class CC_DLL CCObject : public CCCopying
 {
 public:

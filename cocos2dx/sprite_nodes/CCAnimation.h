@@ -52,7 +52,7 @@ class CCSpriteFrame;
  
  @since v2.0
  */
-class CC_DLL CCAnimationFrame : public CCObject
+class CC_DLL CCAnimationFrame : public CCObject, public CCClonable
 {
 public:
     CCAnimationFrame();
@@ -60,7 +60,10 @@ public:
     virtual CCObject* copyWithZone(CCZone* pZone);
     /** initializes the animation frame with a spriteframe, number of delay units and a notification user info */
     bool initWithSpriteFrame(CCSpriteFrame* spriteFrame, float delayUnits, CCDictionary* userInfo);
-    
+
+	/** returns a copy of the CCAnimationFrame */
+	virtual CCAnimationFrame *clone() const;
+
     /** CCSpriteFrameName to be used */
     CC_SYNTHESIZE_RETAIN(CCSpriteFrame*, _spriteFrame, SpriteFrame)
 
@@ -82,7 +85,7 @@ You can animate a CCAnimation object by using the CCAnimate action. Example:
 [sprite runAction:[CCAnimate actionWithAnimation:animation]];
 
 */
-class CC_DLL CCAnimation : public CCObject
+class CC_DLL CCAnimation : public CCObject, public CCClonable
 {
 public:
     CCAnimation();
@@ -135,6 +138,9 @@ public:
     @since v2.0
     */
     bool initWithAnimationFrames(CCArray* arrayOfAnimationFrames, float delayPerUnit, unsigned int loops);
+
+	/** returns a clone fo the animation */
+	virtual CCAnimation *clone() const;
 
     virtual CCObject* copyWithZone(CCZone* pZone);
 
