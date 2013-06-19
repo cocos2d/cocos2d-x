@@ -34,6 +34,7 @@ Developers:
         Initial Emscripten port.
         Use browser font rendering instead of FreeType.
         Add destructor to CCGLBufferedNode.
+        Asynchronous Image loading for Emscripten
         
     DarraghCoy
         Fix a potential crash SimpleAudioEngineOpenSL::playEffect
@@ -100,6 +101,7 @@ Developers:
     Waiter
         fix an error that OpenSLEngine can't load resources from SD card
         add CCRemoveSelf action
+        Fixing a bug that CCLabelTTF setString crash on android.
 
     billy1380
         make CCLens3d support concave effect.
@@ -471,6 +473,9 @@ Developers:
     edwardzhou (Edward Zhou)
         Correcting the type detecting order for Lua CCBProxy::getNodeTypeName.
         Casting variables to their own type, and print warning info if no corresponding lua callback function instead of crash.
+
+    musikov
+        Fixing a bug that missing precision when getting strokeColor and fontFillColor
 
 Retired Core Developers:
     WenSheng Yang
