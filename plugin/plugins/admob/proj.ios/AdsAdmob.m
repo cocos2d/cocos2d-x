@@ -62,10 +62,18 @@
         return;
     }
 
-    if (type == kTypeBanner) {
+    switch (type) {
+    case kTypeBanner:
         [self showBanner:sizeEnum atPos:pos];
-    } else {
+        break;
+    case kTypeFullScreen:
         OUTPUT_LOG(@"Now not support full screen view in Admob");
+        break;
+    case kTypeMoreApp:
+        OUTPUT_LOG(@"Now not support more app ads in Admob");
+        break;
+    default:
+        break;
     }
 }
 
@@ -82,9 +90,14 @@
     }
 }
 
+- (void) queryPoints
+{
+    OUTPUT_LOG(@"Admob not support query points!");
+}
+
 - (void) spendPoints: (int) points
 {
-    
+    OUTPUT_LOG(@"Admob not support spend points!");
 }
 
 - (void) setDebugMode: (BOOL) isDebugMode
