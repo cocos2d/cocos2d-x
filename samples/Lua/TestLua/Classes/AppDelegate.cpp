@@ -7,6 +7,7 @@
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "Lua_web_socket.h"
 #endif
+#include "LuaOpengl.h"
 
 using namespace CocosDenshion;
 
@@ -45,6 +46,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     tolua_s = pStack->getLuaState();
     tolua_web_socket_open(tolua_s);
 #endif
+    tolua_opengl_open(tolua_s);
     
     std::vector<std::string> searchPaths;
     searchPaths.push_back("cocosbuilderRes");

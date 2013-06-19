@@ -68,11 +68,26 @@ private:
 static void tolua_reg_GLNode_type(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S, "GLNode");
+    tolua_usertype(tolua_S, "CCShaderCache");
 }
 
 static int tolua_collect_GLNode (lua_State* tolua_S)
 {
     GLNode *self = (GLNode*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}
+
+static int tolua_collect_CCGLProgram (lua_State* tolua_S)
+{
+ CCGLProgram* self = (CCGLProgram*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}
+
+static int tolua_collect_CCShaderCache (lua_State* tolua_S)
+{
+ CCShaderCache* self = (CCShaderCache*) tolua_tousertype(tolua_S,1,0);
     Mtolua_delete(self);
     return 0;
 }
@@ -94,14 +109,109 @@ static int tolua_Cocos2d_GLNode_create00(lua_State* tolua_S)
         GLNode *glNode = new GLNode();
         if (NULL != glNode)
         {
+            glNode->autorelease();
             tolua_pushusertype(tolua_S,(void*)glNode,"GLNode");
-            tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+            //tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+        }
+        else
+        {
+            return 0;
         }
     }
     return 1;
 #ifndef TOLUA_RELEASE
 tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: registerScriptDrawHandler of class  GLNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_GLNode_registerScriptDrawHandler00
+static int tolua_Cocos2d_GLNode_registerScriptDrawHandler00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S,1,"GLNode",0,&tolua_err) ||
+        (tolua_isvaluenil(tolua_S,2,&tolua_err) || !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err)) ||
+        !tolua_isnoobj(tolua_S,3,&tolua_err))
+        goto tolua_lerror;
+    else
+#endif
+    {
+        GLNode* self = (GLNode*)  tolua_tousertype(tolua_S,1,0);
+        LUA_FUNCTION funcID = (  toluafix_ref_function(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'registerScriptDrawHandler'", NULL);
+#endif
+        if(NULL != self)
+            self->registerScriptDrawHandler(funcID);
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'registerScriptDrawHandler'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: unregisterScriptDrawHandler of class  GLNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_GLNode_unregisterScriptDrawHandler00
+static int tolua_Cocos2d_GLNode_unregisterScriptDrawHandler00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S,1,"GLNode",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err))
+        goto tolua_lerror;
+    else
+#endif
+    {
+        GLNode* self = (GLNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'unregisterScriptDrawHandler'", NULL);
+#endif
+        if(NULL != self)
+            self->unregisterScriptHandler();
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'unregisterScriptDrawHandler'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setShaderProgram of class  GLNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_GLNode_setShaderProgram00
+static int tolua_Cocos2d_GLNode_setShaderProgram00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"GLNode",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,2,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,3,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        GLNode* self = (GLNode*)  tolua_tousertype(tolua_S,1,0);
+        CCGLProgram* pShaderProgram = ((CCGLProgram*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setShaderProgram'", NULL);
+#endif
+        if(NULL != self)
+            self->setShaderProgram(pShaderProgram);
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setShaderProgram'.",&tolua_err);
     return 0;
 #endif
 }
@@ -539,9 +649,9 @@ static int tolua_Cocos2d_GLNode_glBufferData00(lua_State* tolua_S)
         {
             return  0;
         }
-        for (int i = 0; i < length; i++)
+        for (int i = 1; i <= length; i++)
         {
-            floatArray[i] = (float)tolua_tofieldnumber(tolua_S, 4, i, 0);
+            floatArray[i-1] = (float)tolua_tofieldnumber(tolua_S, 4, i, 0);
         }
         unsigned int usage  = (unsigned int)tolua_tonumber(tolua_S,5,0);
         long lengthInByte = length * sizeof(float);
@@ -583,9 +693,9 @@ static int tolua_Cocos2d_GLNode_glBufferSubData00(lua_State* tolua_S)
         {
             return  0;
         }
-        for (int i = 0; i < length; i++)
+        for (int i = 1; i <= length; i++)
         {
-            floatArray[i] = (float)tolua_tofieldnumber(tolua_S, 5, i, 0);
+            floatArray[i-1] = (float)tolua_tofieldnumber(tolua_S, 5, i, 0);
         }
         long lengthInByte = length * sizeof(float);
         long offsetInByte = offset * sizeof(float);
@@ -840,9 +950,9 @@ static int tolua_Cocos2d_GLNode_glCompressedTexImage2D00(lua_State* tolua_S)
         {
             return  0;
         }
-        for (int i = 0; i < length; i++)
+        for (int i = 1; i <= length; i++)
         {
-            floatArray[i] = (float)tolua_tofieldnumber(tolua_S, 10, i, 0);
+            floatArray[i - 1] = (float)tolua_tofieldnumber(tolua_S, 10, i, 0);
         }
         glCompressedTexImage2D((GLenum)target , (GLint)level , (GLenum)internalformat , (GLsizei)width , (GLsizei)height , (GLint)border , (GLsizei)imageSize , (GLvoid*)floatArray  );
         
@@ -896,9 +1006,9 @@ static int tolua_Cocos2d_GLNode_glCompressedTexSubImage2D00(lua_State* tolua_S)
         {
             return  0;
         }
-        for (int i = 0; i < length; i++)
+        for (int i = 1; i <= length; i++)
         {
-            floatArray[i] = (float)tolua_tofieldnumber(tolua_S, 11, i, 0);
+            floatArray[i-1] = (float)tolua_tofieldnumber(tolua_S, 11, i, 0);
         }
         glCompressedTexSubImage2D((GLenum)target , (GLint)level , (GLint)xoffset , (GLint)yoffset , (GLsizei)width , (GLsizei)height , (GLenum)format , (GLsizei)imageSize , (GLvoid*)floatArray  );
         
@@ -1469,9 +1579,9 @@ static int tolua_Cocos2d_GLNode_glDrawElements00(lua_State* tolua_S)
             {
                 return 0;
             }
-            for (int i = 0; i < arg3; i++)
+            for (int i = 1; i <= arg3; i++)
             {
-                unit8Array[i] = (unsigned char)tolua_tofieldnumber(tolua_S, 6, i, 0);
+                unit8Array[i-1] = (unsigned char)tolua_tofieldnumber(tolua_S, 6, i, 0);
             }
             glDrawElements((GLenum)arg0 , (GLsizei)arg1 , (GLenum)arg2 , (GLvoid*)unit8Array);
             CC_SAFE_DELETE_ARRAY(unit8Array);
@@ -1483,9 +1593,9 @@ static int tolua_Cocos2d_GLNode_glDrawElements00(lua_State* tolua_S)
             {
                 return 0;
             }
-            for (int i = 0; i < arg3; i++)
+            for (int i = 1; i <= arg3; i++)
             {
-                shortArray[i] = (unsigned short)tolua_tofieldnumber(tolua_S, 6, i, 0);
+                shortArray[i-1] = (unsigned short)tolua_tofieldnumber(tolua_S, 6, i, 0);
             }
             glDrawElements((GLenum)arg0 , (GLsizei)arg1 , (GLenum)arg2 , (GLvoid*)shortArray);
             CC_SAFE_DELETE_ARRAY(shortArray);
@@ -1497,9 +1607,9 @@ static int tolua_Cocos2d_GLNode_glDrawElements00(lua_State* tolua_S)
             {
                 return 0;
             }
-            for (int i = 0; i < arg3; i++)
+            for (int i = 1; i <= arg3; i++)
             {
-                intArray[i] = (unsigned int)tolua_tofieldnumber(tolua_S, 6, i, 0);
+                intArray[i-1] = (unsigned int)tolua_tofieldnumber(tolua_S, 6, i, 0);
             }
             glDrawElements((GLenum)arg0 , (GLsizei)arg1 , (GLenum)arg2 , (GLvoid*)intArray);
             CC_SAFE_DELETE_ARRAY(intArray);
@@ -1722,14 +1832,13 @@ static int tolua_Cocos2d_GLNode_glGenBuffers00(lua_State* tolua_S)
     tolua_Error tolua_err;
     if (
         !tolua_isusertype(tolua_S,1,"GLNode",0,&tolua_err) ||
-        !tolua_isnumber(tolua_S, 2, 0, &tolua_err)          ||
-        !tolua_isnoobj(tolua_S, 3, &tolua_err)
+        !tolua_isnoobj(tolua_S, 2, &tolua_err)
         )
         goto tolua_lerror;
     else
 #endif
     {
-        unsigned int buffer = (unsigned int)tolua_tonumber(tolua_S, 2, 0);
+        unsigned int buffer = 0;
         glGenBuffers(1, &buffer);
         tolua_pushnumber(tolua_S, buffer);
     }
@@ -1806,14 +1915,13 @@ static int tolua_Cocos2d_GLNode_glGenTextures00(lua_State* tolua_S)
     tolua_Error tolua_err;
     if (
         !tolua_isusertype(tolua_S,1,"GLNode",0,&tolua_err) ||
-        !tolua_isnumber(tolua_S, 2, 0, &tolua_err)          ||
-        !tolua_isnoobj(tolua_S, 3, &tolua_err)
+        !tolua_isnoobj(tolua_S, 2, &tolua_err)
         )
         goto tolua_lerror;
     else
 #endif
     {
-        unsigned int texture = (unsigned int)tolua_tonumber(tolua_S, 2, 0);
+        GLuint texture;
         glGenTextures(1, &texture);
         tolua_pushnumber(tolua_S, texture);
     }
@@ -3122,8 +3230,9 @@ static int tolua_Cocos2d_GLNode_glTexImage2D00(lua_State* tolua_S)
         !tolua_isnumber(tolua_S, 7, 0, &tolua_err)         ||
         !tolua_isnumber(tolua_S, 8, 0, &tolua_err)         ||
         !tolua_isnumber(tolua_S, 9, 0, &tolua_err)         ||
-        !tolua_isnumber(tolua_S, 10, 0, &tolua_err)         ||
-        !tolua_isnoobj(tolua_S, 11, &tolua_err)
+        !tolua_isnumber(tolua_S, 10, 0, &tolua_err)        ||
+        !tolua_istable(tolua_S, 11, 0, &tolua_err)         ||
+        !tolua_isnoobj(tolua_S, 12, &tolua_err)
         )
         goto tolua_lerror;
     else
@@ -3144,25 +3253,27 @@ static int tolua_Cocos2d_GLNode_glTexImage2D00(lua_State* tolua_S)
         {
             return  0;
         }
-        for (int i = 0; i < arg8; i++)
+        
+        for (int i = 1; i <= arg8; i++)
         {
-            unit8Array[i] = 0;
+            unit8Array[i-1] = (unsigned char)tolua_tofieldnumber(tolua_S, 11, i, 0);
         }
         
-       	glTexImage2D((GLenum)arg0 , (GLint)arg1 , (GLint)arg2 , (GLsizei)arg3 , (GLsizei)arg4 , (GLint)arg5 , (GLenum)arg6 , (GLenum)arg7 , (GLvoid*)unit8Array  );
-        
-        lua_newtable(tolua_S);                                         /* L: table */
-        int index = 1;
-        for (int i = 0; i < arg8; i++)
-        {
-            lua_pushnumber(tolua_S, unit8Array[i]);                   /* L: unit8 value */
-            lua_rawseti(tolua_S, -2, index);                          /* table[index] = value, L: table */
-            ++index;
-        }
+       	glTexImage2D((GLenum)arg0 , (GLint)arg1 , (GLint)arg2 , (GLsizei)arg3 , (GLsizei)arg4 , (GLint)arg5 , (GLenum)arg6 , (GLenum)arg7 , (GLvoid*)unit8Array);
+
+//        lua_newtable(tolua_S);                                         /* L: table */
+//        int index = 1;
+//        for (int i = 0; i < arg8; i++)
+//        {
+//            lua_pushnumber(tolua_S, unit8Array[i]);                   /* L: unit8 value */
+//            lua_rawseti(tolua_S, -2, index);                          /* table[index] = value, L: table */
+//            ++index;
+//        }
+
         
         CC_SAFE_DELETE_ARRAY(unit8Array);
     }
-    return 1;
+    return 0;
 #ifndef TOLUA_RELEASE
 tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'glTexImage2D'.",&tolua_err);
@@ -3353,9 +3464,9 @@ static int tolua_Cocos2d_GLNode_glUniform1fv00(lua_State* tolua_S)
         {
             return  0;
         }
-        for (int i = 0; i < arg2; i++)
+        for (int i = 1; i <= arg2; i++)
         {
-            floatArray[i] = (float)tolua_tofieldnumber(tolua_S, 5, i, 0);
+            floatArray[i-1] = (float)tolua_tofieldnumber(tolua_S, 5, i, 0);
         }
         glUniform1fv((GLint)arg0 , (GLsizei)arg1 , (GLfloat*)floatArray  );
         CC_SAFE_DELETE_ARRAY(floatArray);
@@ -3424,9 +3535,9 @@ static int tolua_Cocos2d_GLNode_glUniform1iv00(lua_State* tolua_S)
         {
             return  0;
         }
-        for (int i = 0; i < arg2; i++)
+        for (int i = 1; i <= arg2; i++)
         {
-            intArray[i] = (int)tolua_tofieldnumber(tolua_S, 5, i, 0);
+            intArray[i-1] = (int)tolua_tofieldnumber(tolua_S, 5, i, 0);
         }
         glUniform1iv((GLint)arg0 , (GLsizei)arg1 , (GLint*)intArray  );
         CC_SAFE_DELETE_ARRAY(intArray);
@@ -3497,9 +3608,9 @@ static int tolua_Cocos2d_GLNode_glUniform2fv00(lua_State* tolua_S)
         {
             return  0;
         }
-        for (int i = 0; i < arg2; i++)
+        for (int i = 1; i <= arg2; i++)
         {
-            floatArray[i] = (float)tolua_tofieldnumber(tolua_S, 5, i, 0);
+            floatArray[i-1] = (float)tolua_tofieldnumber(tolua_S, 5, i, 0);
         }
         glUniform1fv((GLint)arg0 , (GLsizei)arg1 , (GLfloat*)floatArray  );
         CC_SAFE_DELETE_ARRAY(floatArray);
@@ -3570,9 +3681,9 @@ static int tolua_Cocos2d_GLNode_glUniform2iv00(lua_State* tolua_S)
         {
             return  0;
         }
-        for (int i = 0; i < arg2; i++)
+        for (int i = 1; i <= arg2; i++)
         {
-            intArray[i] = (int)tolua_tofieldnumber(tolua_S, 5, i, 0);
+            intArray[i-1] = (int)tolua_tofieldnumber(tolua_S, 5, i, 0);
         }
         glUniform2iv((GLint)arg0 , (GLsizei)arg1 , (GLint*)arg2  );
         CC_SAFE_DELETE_ARRAY(intArray);
@@ -3645,9 +3756,9 @@ static int tolua_Cocos2d_GLNode_glUniform3fv00(lua_State* tolua_S)
         {
             return  0;
         }
-        for (int i = 0; i < arg2; i++)
+        for (int i = 1; i <= arg2; i++)
         {
-            floatArray[i] = (float)tolua_tofieldnumber(tolua_S, 5, i, 0);
+            floatArray[i-1] = (float)tolua_tofieldnumber(tolua_S, 5, i, 0);
         }
         glUniform1fv((GLint)arg0 , (GLsizei)arg1 , (GLfloat*)floatArray  );
         CC_SAFE_DELETE_ARRAY(floatArray);
@@ -3720,9 +3831,9 @@ static int tolua_Cocos2d_GLNode_glUniform3iv00(lua_State* tolua_S)
         {
             return  0;
         }
-        for (int i = 0; i < arg2; i++)
+        for (int i = 1; i <= arg2; i++)
         {
-            intArray[i] = (int)tolua_tofieldnumber(tolua_S, 5, i, 0);
+            intArray[i-1] = (int)tolua_tofieldnumber(tolua_S, 5, i, 0);
         }
         glUniform3iv((GLint)arg0 , (GLsizei)arg1 , (GLint*)arg2  );
         CC_SAFE_DELETE_ARRAY(intArray);
@@ -3797,9 +3908,9 @@ static int tolua_Cocos2d_GLNode_glUniform4fv00(lua_State* tolua_S)
         {
             return  0;
         }
-        for (int i = 0; i < arg2; i++)
+        for (int i = 1; i <= arg2; i++)
         {
-            floatArray[i] = (float)tolua_tofieldnumber(tolua_S, 5, i, 0);
+            floatArray[i-1] = (float)tolua_tofieldnumber(tolua_S, 5, i, 0);
         }
         glUniform4fv((GLint)arg0 , (GLsizei)arg1 , (GLfloat*)arg2  );
         CC_SAFE_DELETE_ARRAY(floatArray);
@@ -3874,9 +3985,9 @@ static int tolua_Cocos2d_GLNode_glUniform4iv00(lua_State* tolua_S)
         {
             return  0;
         }
-        for (int i = 0; i < arg2; i++)
+        for (int i = 1; i <= arg2; i++)
         {
-            intArray[i] = (int)tolua_tofieldnumber(tolua_S, 5, i, 0);
+            intArray[i-1] = (int)tolua_tofieldnumber(tolua_S, 5, i, 0);
         }
         glUniform4iv((GLint)arg0 , (GLsizei)arg1 , (GLint*)arg2  );
         CC_SAFE_DELETE_ARRAY(intArray);
@@ -3916,9 +4027,9 @@ static int tolua_Cocos2d_GLNode_glUniformMatrix2fv00(lua_State* tolua_S)
         {
             return  0;
         }
-        for (int i = 0; i < arg2; i++)
+        for (int i = 1; i <= arg2; i++)
         {
-            floatArray[i] = (float)tolua_tofieldnumber(tolua_S, 5, i, 0);
+            floatArray[i-1] = (float)tolua_tofieldnumber(tolua_S, 5, i, 0);
         }
         glUniformMatrix2fv(arg0, 1, (GLboolean)arg1 , (GLfloat*)floatArray  );
         CC_SAFE_DELETE_ARRAY(floatArray);
@@ -3959,9 +4070,9 @@ static int tolua_Cocos2d_GLNode_glUniformMatrix3fv00(lua_State* tolua_S)
             return  0;
         }
         
-        for (int i = 0; i < arg2; i++)
+        for (int i = 1; i <= arg2; i++)
         {
-            floatArray[i] = (float)tolua_tofieldnumber(tolua_S, 5, i, 0);
+            floatArray[i-1] = (float)tolua_tofieldnumber(tolua_S, 5, i, 0);
         }
         
         glUniformMatrix3fv(arg0, 1, (GLboolean)arg1 , (GLfloat*)floatArray  );
@@ -3985,7 +4096,7 @@ static int tolua_Cocos2d_GLNode_glUniformMatrix4fv00(lua_State* tolua_S)
     if (
         !tolua_isusertype(tolua_S,1,"GLNode",0,&tolua_err) ||
         !tolua_isnumber(tolua_S, 2, 0, &tolua_err)         ||
-        !tolua_isnumber(tolua_S, 3, 0, &tolua_err)         ||
+        !tolua_isboolean(tolua_S, 3, 0, &tolua_err)        ||
         !tolua_isnumber(tolua_S, 4, 0, &tolua_err)         ||
         !tolua_istable(tolua_S, 5, 0, &tolua_err)          ||
         !tolua_isnoobj(tolua_S, 6, &tolua_err)
@@ -3995,7 +4106,7 @@ static int tolua_Cocos2d_GLNode_glUniformMatrix4fv00(lua_State* tolua_S)
 #endif
     {
         int arg0 = (int)tolua_tonumber(tolua_S, 2, 0);
-        unsigned short arg1 = (unsigned short)tolua_tonumber(tolua_S, 3, 0);
+        bool arg1 = (bool)tolua_toboolean(tolua_S, 3, 0);
         int arg2 = (int)tolua_tonumber(tolua_S, 4, 0);
         float* floatArray   = new float[arg2];
         if (NULL == floatArray)
@@ -4003,9 +4114,9 @@ static int tolua_Cocos2d_GLNode_glUniformMatrix4fv00(lua_State* tolua_S)
             return  0;
         }
         
-        for (int i = 0; i < arg2; i++)
+        for (int i = 1; i <= arg2; i++)
         {
-            floatArray[i] = (float)tolua_tofieldnumber(tolua_S, 5, i, 0);
+            floatArray[i-1] = (float)tolua_tofieldnumber(tolua_S, 5, i, 0);
         }
         
         glUniformMatrix4fv(arg0, 1, (GLboolean)arg1 , (GLfloat*)floatArray  );
@@ -4128,9 +4239,9 @@ static int tolua_Cocos2d_GLNode_glVertexAttrib1fv00(lua_State* tolua_S)
             return  0;
         }
         
-        for (int i = 0; i < arg1; i++)
+        for (int i = 1; i <= arg1; i++)
         {
-            floatArray[i] = (float)tolua_tofieldnumber(tolua_S, 4, i, 0);
+            floatArray[i-1] = (float)tolua_tofieldnumber(tolua_S, 4, i, 0);
         }
         
         glVertexAttrib1fv((GLuint)arg0 , (GLfloat*)floatArray  );
@@ -4202,9 +4313,9 @@ static int tolua_Cocos2d_GLNode_glVertexAttrib2fv00(lua_State* tolua_S)
             return  0;
         }
         
-        for (int i = 0; i < arg1; i++)
+        for (int i = 1; i <= arg1; i++)
         {
-            floatArray[i] = (float)tolua_tofieldnumber(tolua_S, 4, i, 0);
+            floatArray[i-1] = (float)tolua_tofieldnumber(tolua_S, 4, i, 0);
         }
         
         glVertexAttrib2fv((GLuint)arg0 , (GLfloat*)floatArray  );
@@ -4278,9 +4389,9 @@ static int tolua_Cocos2d_GLNode_glVertexAttrib3fv00(lua_State* tolua_S)
             return  0;
         }
         
-        for (int i = 0; i < arg1; i++)
+        for (int i = 1; i <= arg1; i++)
         {
-            floatArray[i] = (float)tolua_tofieldnumber(tolua_S, 4, i, 0);
+            floatArray[i-1] = (float)tolua_tofieldnumber(tolua_S, 4, i, 0);
         }
         
         glVertexAttrib3fv((GLuint)arg0 , (GLfloat*)floatArray  );
@@ -4356,9 +4467,9 @@ static int tolua_Cocos2d_GLNode_glVertexAttrib4fv00(lua_State* tolua_S)
             return  0;
         }
         
-        for (int i = 0; i < arg1; i++)
+        for (int i = 1; i <= arg1; i++)
         {
-            floatArray[i] = (float)tolua_tofieldnumber(tolua_S, 4, i, 0);
+            floatArray[i-1] = (float)tolua_tofieldnumber(tolua_S, 4, i, 0);
         }
         
         glVertexAttrib4fv((GLuint)arg0 , (GLfloat*)floatArray  );
@@ -4385,7 +4496,7 @@ static int tolua_Cocos2d_GLNode_glVertexAttribPointer00(lua_State* tolua_S)
         !tolua_isnumber(tolua_S, 2, 0, &tolua_err)         ||
         !tolua_isnumber(tolua_S, 3, 0, &tolua_err)         ||
         !tolua_isnumber(tolua_S, 4, 0, &tolua_err)          ||
-        !tolua_isnumber(tolua_S, 5, 0, &tolua_err)          ||
+        !tolua_isboolean(tolua_S, 5, 0, &tolua_err)          ||
         !tolua_isnumber(tolua_S, 6, 0, &tolua_err)          ||
         !tolua_isnumber(tolua_S, 7, 0, &tolua_err)          ||
         !tolua_isnoobj(tolua_S, 8, &tolua_err)
@@ -4397,7 +4508,7 @@ static int tolua_Cocos2d_GLNode_glVertexAttribPointer00(lua_State* tolua_S)
         unsigned int arg0 = (unsigned int)tolua_tonumber(tolua_S, 2, 0);
         int arg1 = (int)tolua_tonumber(tolua_S, 3, 0);
         unsigned int arg2 = (unsigned int)tolua_tonumber(tolua_S, 4, 0);
-        unsigned int arg3 = (unsigned int)tolua_tonumber(tolua_S, 5, 0);
+        bool arg3 = tolua_toboolean(tolua_S, 5, 0);
         int arg4 = (int)tolua_tonumber(tolua_S, 6, 0);
         int arg5 = (int)tolua_tonumber(tolua_S, 7, 0);
         glVertexAttribPointer((GLuint)arg0 , (GLint)arg1 , (GLenum)arg2 , (GLboolean)arg3 , (GLsizei)arg4 , (GLvoid*)arg5  );
@@ -4446,6 +4557,1433 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: glEnableVertexAttribs of class  GLNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_GLNode_glEnableVertexAttribs00
+static int tolua_Cocos2d_GLNode_glEnableVertexAttribs00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"GLNode",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S, 2, 0, &tolua_err)         ||
+        !tolua_isnoobj(tolua_S, 3, &tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        int arg0 = (int)tolua_tonumber(tolua_S, 2, 0);
+        ccGLEnableVertexAttribs(arg0);
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'glEnableVertexAttribs'.",&tolua_err);
+    return 0;
+#endif
+    
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_new00
+static int tolua_Cocos2d_CCGLProgram_new00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertable(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        {
+            CCGLProgram* tolua_ret = (CCGLProgram*)  Mtolua_new((CCGLProgram)());
+            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCGLProgram");
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new_local of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_new00_local
+static int tolua_Cocos2d_CCGLProgram_new00_local(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertable(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        {
+            CCGLProgram* tolua_ret = (CCGLProgram*)  Mtolua_new((CCGLProgram)());
+            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCGLProgram");
+            tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: delete of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_delete00
+static int tolua_Cocos2d_CCGLProgram_delete00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
+#endif
+        Mtolua_delete(self);
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: initWithVertexShaderByteArray of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_initWithVertexShaderByteArray00
+static int tolua_Cocos2d_CCGLProgram_initWithVertexShaderByteArray00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+        !tolua_isstring(tolua_S,3,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,4,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+        const char* vShaderByteArray = ((const char*)  tolua_tostring(tolua_S,2,0));
+        const char* fShaderByteArray = ((const char*)  tolua_tostring(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'initWithVertexShaderByteArray'", NULL);
+#endif
+        {
+            bool tolua_ret = (bool)  self->initWithVertexShaderByteArray(vShaderByteArray,fShaderByteArray);
+            tolua_pushboolean(tolua_S,(bool)tolua_ret);
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'initWithVertexShaderByteArray'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: initWithVertexShaderFilename of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_initWithVertexShaderFilename00
+static int tolua_Cocos2d_CCGLProgram_initWithVertexShaderFilename00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+        !tolua_isstring(tolua_S,3,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,4,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+        const char* vShaderFilename = ((const char*)  tolua_tostring(tolua_S,2,0));
+        const char* fShaderFilename = ((const char*)  tolua_tostring(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'initWithVertexShaderFilename'", NULL);
+#endif
+        {
+            bool tolua_ret = (bool)  self->initWithVertexShaderFilename(vShaderFilename,fShaderFilename);
+            tolua_pushboolean(tolua_S,(bool)tolua_ret);
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'initWithVertexShaderFilename'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: addAttribute of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_addAttribute00
+static int tolua_Cocos2d_CCGLProgram_addAttribute00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,4,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+        const char* attributeName = ((const char*)  tolua_tostring(tolua_S,2,0));
+        unsigned int index = ((unsigned int)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addAttribute'", NULL);
+#endif
+        {
+            self->addAttribute(attributeName,index);
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'addAttribute'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: link of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_link00
+static int tolua_Cocos2d_CCGLProgram_link00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'link'", NULL);
+#endif
+        {
+            bool tolua_ret = (bool)  self->link();
+            tolua_pushboolean(tolua_S,(bool)tolua_ret);
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'link'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: use of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_use00
+static int tolua_Cocos2d_CCGLProgram_use00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'use'", NULL);
+#endif
+        {
+            self->use();
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'use'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: updateUniforms of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_updateUniforms00
+static int tolua_Cocos2d_CCGLProgram_updateUniforms00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'updateUniforms'", NULL);
+#endif
+        {
+            self->updateUniforms();
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'updateUniforms'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getUniformLocationForName of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_getUniformLocationForName00
+static int tolua_Cocos2d_CCGLProgram_getUniformLocationForName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,3,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+        const char* name = ((const char*)  tolua_tostring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getUniformLocationForName'", NULL);
+#endif
+        {
+            int tolua_ret = (int)  self->getUniformLocationForName(name);
+            tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'getUniformLocationForName'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUniformLocationWith1i of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_setUniformLocationWith1i00
+static int tolua_Cocos2d_CCGLProgram_setUniformLocationWith1i00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,4,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+        int location = ((int)  tolua_tonumber(tolua_S,2,0));
+        int i1 = ((int)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformLocationWith1i'", NULL);
+#endif
+        {
+            self->setUniformLocationWith1i(location,i1);
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setUniformLocationWith1i'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUniformLocationWith2i of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_setUniformLocationWith2i00
+static int tolua_Cocos2d_CCGLProgram_setUniformLocationWith2i00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,5,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+        int location = ((int)  tolua_tonumber(tolua_S,2,0));
+        int i1 = ((int)  tolua_tonumber(tolua_S,3,0));
+        int i2 = ((int)  tolua_tonumber(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformLocationWith2i'", NULL);
+#endif
+        {
+            self->setUniformLocationWith2i(location,i1,i2);
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setUniformLocationWith2i'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUniformLocationWith3i of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_setUniformLocationWith3i00
+static int tolua_Cocos2d_CCGLProgram_setUniformLocationWith3i00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,5,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,6,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+        int location = ((int)  tolua_tonumber(tolua_S,2,0));
+        int i1 = ((int)  tolua_tonumber(tolua_S,3,0));
+        int i2 = ((int)  tolua_tonumber(tolua_S,4,0));
+        int i3 = ((int)  tolua_tonumber(tolua_S,5,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformLocationWith3i'", NULL);
+#endif
+        {
+            self->setUniformLocationWith3i(location,i1,i2,i3);
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setUniformLocationWith3i'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUniformLocationWith4i of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_setUniformLocationWith4i00
+static int tolua_Cocos2d_CCGLProgram_setUniformLocationWith4i00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,5,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,6,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,7,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+        int location = ((int)  tolua_tonumber(tolua_S,2,0));
+        int i1 = ((int)  tolua_tonumber(tolua_S,3,0));
+        int i2 = ((int)  tolua_tonumber(tolua_S,4,0));
+        int i3 = ((int)  tolua_tonumber(tolua_S,5,0));
+        int i4 = ((int)  tolua_tonumber(tolua_S,6,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformLocationWith4i'", NULL);
+#endif
+        {
+            self->setUniformLocationWith4i(location,i1,i2,i3,i4);
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setUniformLocationWith4i'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUniformLocationWith2iv of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_setUniformLocationWith2iv00
+static int tolua_Cocos2d_CCGLProgram_setUniformLocationWith2iv00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,5,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+        int location = ((int)  tolua_tonumber(tolua_S,2,0));
+        int ints = ((int)  tolua_tonumber(tolua_S,3,0));
+        unsigned int numberOfArrays = ((unsigned int)  tolua_tonumber(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformLocationWith2iv'", NULL);
+#endif
+        {
+            self->setUniformLocationWith2iv(location,&ints,numberOfArrays);
+            tolua_pushnumber(tolua_S,(lua_Number)ints);
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setUniformLocationWith2iv'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUniformLocationWith3iv of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_setUniformLocationWith3iv00
+static int tolua_Cocos2d_CCGLProgram_setUniformLocationWith3iv00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,5,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+        int location = ((int)  tolua_tonumber(tolua_S,2,0));
+        int ints = ((int)  tolua_tonumber(tolua_S,3,0));
+        unsigned int numberOfArrays = ((unsigned int)  tolua_tonumber(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformLocationWith3iv'", NULL);
+#endif
+        {
+            self->setUniformLocationWith3iv(location,&ints,numberOfArrays);
+            tolua_pushnumber(tolua_S,(lua_Number)ints);
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setUniformLocationWith3iv'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUniformLocationWith4iv of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_setUniformLocationWith4iv00
+static int tolua_Cocos2d_CCGLProgram_setUniformLocationWith4iv00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,5,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+        int location = ((int)  tolua_tonumber(tolua_S,2,0));
+        int ints = ((int)  tolua_tonumber(tolua_S,3,0));
+        unsigned int numberOfArrays = ((unsigned int)  tolua_tonumber(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformLocationWith4iv'", NULL);
+#endif
+        {
+            self->setUniformLocationWith4iv(location,&ints,numberOfArrays);
+            tolua_pushnumber(tolua_S,(lua_Number)ints);
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setUniformLocationWith4iv'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUniformLocationWith1f of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_setUniformLocationWith1f00
+static int tolua_Cocos2d_CCGLProgram_setUniformLocationWith1f00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,4,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+        int location = ((int)  tolua_tonumber(tolua_S,2,0));
+        float f1 = ((float)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformLocationWith1f'", NULL);
+#endif
+        {
+            self->setUniformLocationWith1f(location,f1);
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setUniformLocationWith1f'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUniformLocationWith2f of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_setUniformLocationWith2f00
+static int tolua_Cocos2d_CCGLProgram_setUniformLocationWith2f00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,5,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+        int location = ((int)  tolua_tonumber(tolua_S,2,0));
+        float f1 = ((float)  tolua_tonumber(tolua_S,3,0));
+        float f2 = ((float)  tolua_tonumber(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformLocationWith2f'", NULL);
+#endif
+        {
+            self->setUniformLocationWith2f(location,f1,f2);
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setUniformLocationWith2f'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUniformLocationWith3f of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_setUniformLocationWith3f00
+static int tolua_Cocos2d_CCGLProgram_setUniformLocationWith3f00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,5,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,6,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+        int location = ((int)  tolua_tonumber(tolua_S,2,0));
+        float f1 = ((float)  tolua_tonumber(tolua_S,3,0));
+        float f2 = ((float)  tolua_tonumber(tolua_S,4,0));
+        float f3 = ((float)  tolua_tonumber(tolua_S,5,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformLocationWith3f'", NULL);
+#endif
+        {
+            self->setUniformLocationWith3f(location,f1,f2,f3);
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setUniformLocationWith3f'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUniformLocationWith4f of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_setUniformLocationWith4f00
+static int tolua_Cocos2d_CCGLProgram_setUniformLocationWith4f00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,5,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,6,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,7,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+        int location = ((int)  tolua_tonumber(tolua_S,2,0));
+        float f1 = ((float)  tolua_tonumber(tolua_S,3,0));
+        float f2 = ((float)  tolua_tonumber(tolua_S,4,0));
+        float f3 = ((float)  tolua_tonumber(tolua_S,5,0));
+        float f4 = ((float)  tolua_tonumber(tolua_S,6,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformLocationWith4f'", NULL);
+#endif
+        {
+            self->setUniformLocationWith4f(location,f1,f2,f3,f4);
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setUniformLocationWith4f'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUniformLocationWith2fv of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_setUniformLocationWith2fv00
+static int tolua_Cocos2d_CCGLProgram_setUniformLocationWith2fv00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,5,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+        int location = ((int)  tolua_tonumber(tolua_S,2,0));
+        float floats = ((float)  tolua_tonumber(tolua_S,3,0));
+        unsigned int numberOfArrays = ((unsigned int)  tolua_tonumber(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformLocationWith2fv'", NULL);
+#endif
+        {
+            self->setUniformLocationWith2fv(location,&floats,numberOfArrays);
+            tolua_pushnumber(tolua_S,(lua_Number)floats);
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setUniformLocationWith2fv'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUniformLocationWith3fv of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_setUniformLocationWith3fv00
+static int tolua_Cocos2d_CCGLProgram_setUniformLocationWith3fv00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,5,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+        int location = ((int)  tolua_tonumber(tolua_S,2,0));
+        float floats = ((float)  tolua_tonumber(tolua_S,3,0));
+        unsigned int numberOfArrays = ((unsigned int)  tolua_tonumber(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformLocationWith3fv'", NULL);
+#endif
+        {
+            self->setUniformLocationWith3fv(location,&floats,numberOfArrays);
+            tolua_pushnumber(tolua_S,(lua_Number)floats);
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setUniformLocationWith3fv'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUniformLocationWith4fv of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_setUniformLocationWith4fv00
+static int tolua_Cocos2d_CCGLProgram_setUniformLocationWith4fv00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,5,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+        int location = ((int)  tolua_tonumber(tolua_S,2,0));
+        float floats = ((float)  tolua_tonumber(tolua_S,3,0));
+        unsigned int numberOfArrays = ((unsigned int)  tolua_tonumber(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformLocationWith4fv'", NULL);
+#endif
+        {
+            self->setUniformLocationWith4fv(location,&floats,numberOfArrays);
+            tolua_pushnumber(tolua_S,(lua_Number)floats);
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setUniformLocationWith4fv'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUniformLocationWithMatrix4fv of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_setUniformLocationWithMatrix4fv00
+static int tolua_Cocos2d_CCGLProgram_setUniformLocationWithMatrix4fv00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,5,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+        int location = ((int)  tolua_tonumber(tolua_S,2,0));
+        float matrixArray = ((float)  tolua_tonumber(tolua_S,3,0));
+        unsigned int numberOfMatrices = ((unsigned int)  tolua_tonumber(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformLocationWithMatrix4fv'", NULL);
+#endif
+        {
+            self->setUniformLocationWithMatrix4fv(location,&matrixArray,numberOfMatrices);
+            tolua_pushnumber(tolua_S,(lua_Number)matrixArray);
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setUniformLocationWithMatrix4fv'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUniformsForBuiltins of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_setUniformsForBuiltins00
+static int tolua_Cocos2d_CCGLProgram_setUniformsForBuiltins00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformsForBuiltins'", NULL);
+#endif
+        {
+            self->setUniformsForBuiltins();
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setUniformsForBuiltins'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: vertexShaderLog of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_vertexShaderLog00
+static int tolua_Cocos2d_CCGLProgram_vertexShaderLog00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'vertexShaderLog'", NULL);
+#endif
+        {
+            const char* tolua_ret = (const char*)  self->vertexShaderLog();
+            tolua_pushstring(tolua_S,(const char*)tolua_ret);
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'vertexShaderLog'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: fragmentShaderLog of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_fragmentShaderLog00
+static int tolua_Cocos2d_CCGLProgram_fragmentShaderLog00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'fragmentShaderLog'", NULL);
+#endif
+        {
+            const char* tolua_ret = (const char*)  self->fragmentShaderLog();
+            tolua_pushstring(tolua_S,(const char*)tolua_ret);
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'fragmentShaderLog'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: programLog of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_programLog00
+static int tolua_Cocos2d_CCGLProgram_programLog00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'programLog'", NULL);
+#endif
+        {
+            const char* tolua_ret = (const char*)  self->programLog();
+            tolua_pushstring(tolua_S,(const char*)tolua_ret);
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'programLog'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reset of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_reset00
+static int tolua_Cocos2d_CCGLProgram_reset00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reset'", NULL);
+#endif
+        {
+            self->reset();
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'reset'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getProgram of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_getProgram00
+static int tolua_Cocos2d_CCGLProgram_getProgram00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCGLProgram* self = (CCGLProgram*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getProgram'", NULL);
+#endif
+        {
+            unsigned const int tolua_ret = ( unsigned const int)  self->getProgram();
+            tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'getProgram'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+
+/* method: create of class  CCGLProgram */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGLProgram_create00
+static int tolua_Cocos2d_CCGLProgram_create00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertable(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isstring(tolua_S, 2, 0, &tolua_err)              ||
+        !tolua_isstring(tolua_S,3,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,4,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        const char* arg0 = tolua_tostring(tolua_S, 2, "");
+        const char* arg1 = tolua_tostring(tolua_S, 3, "");
+        CCGLProgram* tolua_ret = new CCGLProgram();
+        tolua_ret->autorelease();
+        tolua_ret->initWithVertexShaderFilename(arg0, arg1);
+        int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+        int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+        toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCGLProgram");
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+    return 0;
+#endif 
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new of class  CCShaderCache */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCShaderCache_new00
+static int tolua_Cocos2d_CCShaderCache_new00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCShaderCache",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   CCShaderCache* tolua_ret = (CCShaderCache*)  Mtolua_new((CCShaderCache)());
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCShaderCache");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new_local of class  CCShaderCache */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCShaderCache_new00_local
+static int tolua_Cocos2d_CCShaderCache_new00_local(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCShaderCache",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   CCShaderCache* tolua_ret = (CCShaderCache*)  Mtolua_new((CCShaderCache)());
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCShaderCache");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: delete of class  CCShaderCache */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCShaderCache_delete00
+static int tolua_Cocos2d_CCShaderCache_delete00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCShaderCache",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCShaderCache* self = (CCShaderCache*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
+#endif
+  Mtolua_delete(self);
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: sharedShaderCache of class  CCShaderCache */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCShaderCache_sharedShaderCache00
+static int tolua_Cocos2d_CCShaderCache_sharedShaderCache00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCShaderCache",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   CCShaderCache* tolua_ret = (CCShaderCache*)  CCShaderCache::sharedShaderCache();
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCShaderCache");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'sharedShaderCache'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: purgeSharedShaderCache of class  CCShaderCache */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCShaderCache_purgeSharedShaderCache00
+static int tolua_Cocos2d_CCShaderCache_purgeSharedShaderCache00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCShaderCache",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   CCShaderCache::purgeSharedShaderCache();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'purgeSharedShaderCache'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: loadDefaultShaders of class  CCShaderCache */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCShaderCache_loadDefaultShaders00
+static int tolua_Cocos2d_CCShaderCache_loadDefaultShaders00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCShaderCache",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCShaderCache* self = (CCShaderCache*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'loadDefaultShaders'", NULL);
+#endif
+  {
+   self->loadDefaultShaders();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'loadDefaultShaders'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reloadDefaultShaders of class  CCShaderCache */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCShaderCache_reloadDefaultShaders00
+static int tolua_Cocos2d_CCShaderCache_reloadDefaultShaders00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCShaderCache",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCShaderCache* self = (CCShaderCache*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reloadDefaultShaders'", NULL);
+#endif
+  {
+   self->reloadDefaultShaders();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reloadDefaultShaders'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: programForKey of class  CCShaderCache */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCShaderCache_programForKey00
+static int tolua_Cocos2d_CCShaderCache_programForKey00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCShaderCache",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCShaderCache* self = (CCShaderCache*)  tolua_tousertype(tolua_S,1,0);
+  const char* key = ((const char*)  tolua_tostring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'programForKey'", NULL);
+#endif
+  {
+   CCGLProgram* tolua_ret = (CCGLProgram*)  self->programForKey(key);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCGLProgram");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'programForKey'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: addProgram of class  CCShaderCache */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCShaderCache_addProgram00
+static int tolua_Cocos2d_CCShaderCache_addProgram00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCShaderCache",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCGLProgram",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCShaderCache* self = (CCShaderCache*)  tolua_tousertype(tolua_S,1,0);
+  CCGLProgram* program = ((CCGLProgram*)  tolua_tousertype(tolua_S,2,0));
+  const char* key = ((const char*)  tolua_tostring(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addProgram'", NULL);
+#endif
+  {
+   self->addProgram(program,key);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'addProgram'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+
 
 TOLUA_API int tolua_opengl_open(lua_State* tolua_S)
 {
@@ -4456,6 +5994,9 @@ TOLUA_API int tolua_opengl_open(lua_State* tolua_S)
       tolua_cclass(tolua_S,"GLNode","GLNode","CCNode",tolua_collect_GLNode);
       tolua_beginmodule(tolua_S,"GLNode");
         tolua_function(tolua_S, "create", tolua_Cocos2d_GLNode_create00);
+        tolua_function(tolua_S, "registerScriptDrawHandler", tolua_Cocos2d_GLNode_registerScriptDrawHandler00);
+        tolua_function(tolua_S, "unregisterScriptDrawHandler", tolua_Cocos2d_GLNode_unregisterScriptDrawHandler00);
+        tolua_function(tolua_S, "setShaderProgram", tolua_Cocos2d_GLNode_setShaderProgram00);
         tolua_function(tolua_S, "getSupportedExtensions", tolua_Cocos2d_GLNode_glGetSupportedExtensions00);
         tolua_function(tolua_S, "activeTexture", tolua_Cocos2d_GLNode_glActiveTexture00);
         tolua_function(tolua_S, "_attachShader", tolua_Cocos2d_GLNode_glAttachShader00);
@@ -4532,6 +6073,10 @@ TOLUA_API int tolua_opengl_open(lua_State* tolua_S)
         tolua_function(tolua_S, "isRenderbuffer", tolua_Cocos2d_GLNode_glIsRenderbuffer00);
         tolua_function(tolua_S, "isShader", tolua_Cocos2d_GLNode_glIsShader00);
         tolua_function(tolua_S, "isTexture", tolua_Cocos2d_GLNode_glIsTexture00);
+        tolua_function(tolua_S, "lineWidth", tolua_Cocos2d_GLNode_glLineWidth00);
+        tolua_function(tolua_S, "_linkProgram", tolua_Cocos2d_GLNode_glLinkProgram00);
+        tolua_function(tolua_S, "pixelStorei", tolua_Cocos2d_GLNode_glPixelStorei00);
+        tolua_function(tolua_S, "polygonOffset", tolua_Cocos2d_GLNode_glPolygonOffset00);
         tolua_function(tolua_S, "readPixels", tolua_Cocos2d_GLNode_glReadPixels00);
         tolua_function(tolua_S, "releaseShaderCompiler", tolua_Cocos2d_GLNode_glReleaseShaderCompiler00);
         tolua_function(tolua_S, "renderbufferStorage", tolua_Cocos2d_GLNode_glRenderbufferStorage00);
@@ -4579,7 +6124,57 @@ TOLUA_API int tolua_opengl_open(lua_State* tolua_S)
         tolua_function(tolua_S, "vertexAttrib4fv", tolua_Cocos2d_GLNode_glVertexAttrib4fv00);
         tolua_function(tolua_S, "vertexAttribPointer", tolua_Cocos2d_GLNode_glVertexAttribPointer00);
         tolua_function(tolua_S, "viewport", tolua_Cocos2d_GLNode_glViewport00);
+        tolua_function(tolua_S, "glEnableVertexAttribs", tolua_Cocos2d_GLNode_glEnableVertexAttribs00);
       tolua_endmodule(tolua_S);
+      tolua_cclass(tolua_S,"CCGLProgram","CCGLProgram","CCObject",tolua_collect_CCGLProgram);
+      tolua_beginmodule(tolua_S,"CCGLProgram");
+        tolua_function(tolua_S,"new",tolua_Cocos2d_CCGLProgram_new00);
+        tolua_function(tolua_S,"new_local",tolua_Cocos2d_CCGLProgram_new00_local);
+        tolua_function(tolua_S,".call",tolua_Cocos2d_CCGLProgram_new00_local);
+        tolua_function(tolua_S,"delete",tolua_Cocos2d_CCGLProgram_delete00);
+        tolua_function(tolua_S,"initWithVertexShaderByteArray",tolua_Cocos2d_CCGLProgram_initWithVertexShaderByteArray00);
+        tolua_function(tolua_S,"initWithVertexShaderFilename",tolua_Cocos2d_CCGLProgram_initWithVertexShaderFilename00);
+        tolua_function(tolua_S,"addAttribute",tolua_Cocos2d_CCGLProgram_addAttribute00);
+        tolua_function(tolua_S,"link",tolua_Cocos2d_CCGLProgram_link00);
+        tolua_function(tolua_S,"use",tolua_Cocos2d_CCGLProgram_use00);
+        tolua_function(tolua_S,"updateUniforms",tolua_Cocos2d_CCGLProgram_updateUniforms00);
+        tolua_function(tolua_S,"getUniformLocationForName",tolua_Cocos2d_CCGLProgram_getUniformLocationForName00);
+        tolua_function(tolua_S,"setUniformLocationWith1i",tolua_Cocos2d_CCGLProgram_setUniformLocationWith1i00);
+        tolua_function(tolua_S,"setUniformLocationWith2i",tolua_Cocos2d_CCGLProgram_setUniformLocationWith2i00);
+        tolua_function(tolua_S,"setUniformLocationWith3i",tolua_Cocos2d_CCGLProgram_setUniformLocationWith3i00);
+        tolua_function(tolua_S,"setUniformLocationWith4i",tolua_Cocos2d_CCGLProgram_setUniformLocationWith4i00);
+        tolua_function(tolua_S,"setUniformLocationWith2iv",tolua_Cocos2d_CCGLProgram_setUniformLocationWith2iv00);
+        tolua_function(tolua_S,"setUniformLocationWith3iv",tolua_Cocos2d_CCGLProgram_setUniformLocationWith3iv00);
+        tolua_function(tolua_S,"setUniformLocationWith4iv",tolua_Cocos2d_CCGLProgram_setUniformLocationWith4iv00);
+        tolua_function(tolua_S,"setUniformLocationWith1f",tolua_Cocos2d_CCGLProgram_setUniformLocationWith1f00);
+        tolua_function(tolua_S,"setUniformLocationWith2f",tolua_Cocos2d_CCGLProgram_setUniformLocationWith2f00);
+        tolua_function(tolua_S,"setUniformLocationWith3f",tolua_Cocos2d_CCGLProgram_setUniformLocationWith3f00);
+        tolua_function(tolua_S,"setUniformLocationWith4f",tolua_Cocos2d_CCGLProgram_setUniformLocationWith4f00);
+        tolua_function(tolua_S,"setUniformLocationWith2fv",tolua_Cocos2d_CCGLProgram_setUniformLocationWith2fv00);
+        tolua_function(tolua_S,"setUniformLocationWith3fv",tolua_Cocos2d_CCGLProgram_setUniformLocationWith3fv00);
+        tolua_function(tolua_S,"setUniformLocationWith4fv",tolua_Cocos2d_CCGLProgram_setUniformLocationWith4fv00);
+        tolua_function(tolua_S,"setUniformLocationWithMatrix4fv",tolua_Cocos2d_CCGLProgram_setUniformLocationWithMatrix4fv00);
+        tolua_function(tolua_S,"setUniformsForBuiltins",tolua_Cocos2d_CCGLProgram_setUniformsForBuiltins00);
+        tolua_function(tolua_S,"vertexShaderLog",tolua_Cocos2d_CCGLProgram_vertexShaderLog00);
+        tolua_function(tolua_S,"fragmentShaderLog",tolua_Cocos2d_CCGLProgram_fragmentShaderLog00);
+        tolua_function(tolua_S,"programLog",tolua_Cocos2d_CCGLProgram_programLog00);
+        tolua_function(tolua_S,"reset",tolua_Cocos2d_CCGLProgram_reset00);
+        tolua_function(tolua_S,"getProgram",tolua_Cocos2d_CCGLProgram_getProgram00);
+        tolua_function(tolua_S, "create", tolua_Cocos2d_CCGLProgram_create00);
+     tolua_endmodule(tolua_S);
+     tolua_cclass(tolua_S,"CCShaderCache","CCShaderCache","CCObject",tolua_collect_CCShaderCache);
+     tolua_beginmodule(tolua_S,"CCShaderCache");
+        tolua_function(tolua_S,"new",tolua_Cocos2d_CCShaderCache_new00);
+        tolua_function(tolua_S,"new_local",tolua_Cocos2d_CCShaderCache_new00_local);
+        tolua_function(tolua_S,".call",tolua_Cocos2d_CCShaderCache_new00_local);
+        tolua_function(tolua_S,"delete",tolua_Cocos2d_CCShaderCache_delete00);
+        tolua_function(tolua_S,"getInstance",tolua_Cocos2d_CCShaderCache_sharedShaderCache00);
+        tolua_function(tolua_S,"purgeSharedShaderCache",tolua_Cocos2d_CCShaderCache_purgeSharedShaderCache00);
+        tolua_function(tolua_S,"loadDefaultShaders",tolua_Cocos2d_CCShaderCache_loadDefaultShaders00);
+        tolua_function(tolua_S,"reloadDefaultShaders",tolua_Cocos2d_CCShaderCache_reloadDefaultShaders00);
+        tolua_function(tolua_S,"getProgram",tolua_Cocos2d_CCShaderCache_programForKey00);
+        tolua_function(tolua_S,"addProgram",tolua_Cocos2d_CCShaderCache_addProgram00);
+     tolua_endmodule(tolua_S);
     tolua_endmodule(tolua_S);
     return 1;
 }

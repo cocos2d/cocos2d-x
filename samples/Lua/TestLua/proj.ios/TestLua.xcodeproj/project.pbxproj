@@ -15,6 +15,8 @@
 		159C08F9175F83D6004ED7D4 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 159C08EB175F83D6004ED7D4 /* libwebsockets.a */; };
 		159C08FE175F84B6004ED7D4 /* WebSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 159C08FC175F84B6004ED7D4 /* WebSocket.cpp */; };
 		159C09251762FC1A004ED7D4 /* AudioEngine.lua in Resources */ = {isa = PBXBuildFile; fileRef = 159C09241762FC1A004ED7D4 /* AudioEngine.lua */; };
+		15A08DD31770429000D7077F /* OpenglConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15A08DD21770429000D7077F /* OpenglConstants.lua */; };
+		15A08DD5177046D000D7077F /* Cocos2dConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15A08DD4177046D000D7077F /* Cocos2dConstants.lua */; };
 		15C153F71683112E00D239F2 /* CCBAnimationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C1537C1683112E00D239F2 /* CCBAnimationManager.cpp */; };
 		15C153F81683112E00D239F2 /* CCBFileLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C1537E1683112E00D239F2 /* CCBFileLoader.cpp */; };
 		15C153F91683112E00D239F2 /* CCBKeyframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C153801683112E00D239F2 /* CCBKeyframe.cpp */; };
@@ -232,6 +234,8 @@
 		159C08FC175F84B6004ED7D4 /* WebSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocket.cpp; sourceTree = "<group>"; };
 		159C08FD175F84B6004ED7D4 /* WebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebSocket.h; sourceTree = "<group>"; };
 		159C09241762FC1A004ED7D4 /* AudioEngine.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AudioEngine.lua; sourceTree = "<group>"; };
+		15A08DD21770429000D7077F /* OpenglConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OpenglConstants.lua; sourceTree = "<group>"; };
+		15A08DD4177046D000D7077F /* Cocos2dConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cocos2dConstants.lua; sourceTree = "<group>"; };
 		15C1533E168310C700D239F2 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../../cocos2dx/proj.ios/cocos2dx.xcodeproj; sourceTree = "<group>"; };
 		15C1537C1683112E00D239F2 /* CCBAnimationManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBAnimationManager.cpp; sourceTree = "<group>"; };
 		15C1537D1683112E00D239F2 /* CCBAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBAnimationManager.h; sourceTree = "<group>"; };
@@ -598,6 +602,8 @@
 		159B8976175B9AB30005B47D /* script */ = {
 			isa = PBXGroup;
 			children = (
+				15A08DD4177046D000D7077F /* Cocos2dConstants.lua */,
+				15A08DD21770429000D7077F /* OpenglConstants.lua */,
 				159C09241762FC1A004ED7D4 /* AudioEngine.lua */,
 				159B8977175B9AB30005B47D /* CCBReaderLoad.lua */,
 			);
@@ -1412,6 +1418,8 @@
 				159B8978175B9AB30005B47D /* CCBReaderLoad.lua in Resources */,
 				159B8A28175D9A930005B47D /* cocosbuilderRes in Resources */,
 				159C09251762FC1A004ED7D4 /* AudioEngine.lua in Resources */,
+				15A08DD31770429000D7077F /* OpenglConstants.lua in Resources */,
+				15A08DD5177046D000D7077F /* Cocos2dConstants.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
