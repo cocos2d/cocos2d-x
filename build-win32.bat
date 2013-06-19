@@ -8,9 +8,6 @@ echo.
 if defined VS110COMNTOOLS (
     set VSTOOLS="%VS110COMNTOOLS%"
     set VC_VER=110
-) else if defined VS100COMNTOOLS (
-    set VSTOOLS="%VS100COMNTOOLS%"
-    set VC_VER=100
 )
 
 
@@ -31,10 +28,7 @@ echo. */
 echo.
 
 call %VSVARS%
-if %VC_VER%==100 (
-    msbuild cocos2d-win32.vc2010.sln /p:Configuration="Debug"
-    msbuild cocos2d-win32.vc2010.sln /p:Configuration="Release"
-) else if %VC_VER%==110 (
+if %VC_VER%==110 (
     msbuild cocos2d-win32.vc2012.sln /t:Clean
     msbuild cocos2d-win32.vc2012.sln /p:Configuration="Debug" /m
     msbuild cocos2d-win32.vc2012.sln /p:Configuration="Release" /m
@@ -86,7 +80,7 @@ if not exist "%CC_TEST_BIN%" (
 
 call "%CC_TEST_BIN%"
 popd
-start http://www.cocos2d-x.org/projects/cocos2d-x/wiki/Cocos2d-x_Application_Wizard_for_Visual_Studio_User_Guide
+
 goto EOF
 
 :ERROR
