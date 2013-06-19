@@ -18,8 +18,8 @@ public:
     virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
 
 private:
-    CCPoint m_tBeginPos;
-    CCMenu* m_pItemMenu;
+    CCPoint _beginPos;
+    CCMenu* _itemMenu;
 };
 
 #endif

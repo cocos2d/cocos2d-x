@@ -518,7 +518,7 @@ std::string SpriteBatchNodeColorOpacity::title()
 
 SpriteZOrder::SpriteZOrder()
 {
-    m_dir = 1;
+    _dir = 1;
             
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
@@ -553,11 +553,11 @@ void SpriteZOrder::reorderSprite(float dt)
     int z = sprite->getZOrder();
     
     if( z < -1 )
-        m_dir = 1;
+        _dir = 1;
     if( z > 10 )
-        m_dir = -1;
+        _dir = -1;
     
-    z += m_dir * 3;
+    z += _dir * 3;
     
     reorderChild(sprite, z);
     
@@ -576,7 +576,7 @@ std::string SpriteZOrder::title()
 
 SpriteBatchNodeZOrder::SpriteBatchNodeZOrder()
 {
-    m_dir = 1;
+    _dir = 1;
     
     // small capacity. Testing resizing.
     // Don't use capacity=1 in your real game. It is expensive to resize the capacity
@@ -617,11 +617,11 @@ void SpriteBatchNodeZOrder::reorderSprite(float dt)
     int z = sprite->getZOrder();
     
     if( z < -1 )
-        m_dir = 1;
+        _dir = 1;
     if( z > 10 )
-        m_dir = -1;
+        _dir = -1;
     
-    z += m_dir * 3;
+    z += _dir * 3;
 
     batch->reorderChild(sprite, z);
 }
@@ -923,8 +923,8 @@ SpriteZVertex::SpriteZVertex()
     }
     
     
-    m_dir = 1;
-    m_time = 0;
+    _dir = 1;
+    _time = 0;
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     float step = s.width/12;
@@ -1085,7 +1085,7 @@ SpriteAnchorPoint::SpriteAnchorPoint()
         
         point->setPosition( sprite->getPosition() );
         
-        CCAction* copy = (CCAction*)(action->copy()->autorelease());
+        CCAction* copy = action->clone();
         sprite->runAction(copy);
         addChild(sprite, i);
     }        
@@ -1138,7 +1138,7 @@ SpriteBatchNodeAnchorPoint::SpriteBatchNodeAnchorPoint()
 
         point->setPosition( sprite->getPosition() );
         
-        CCAction* copy = (CCAction*)(action->copy()->autorelease());
+        CCAction* copy = action->clone();
         sprite->runAction(copy);
         batch->addChild(sprite, i);
     }
@@ -1190,7 +1190,7 @@ Sprite6::Sprite6()
         CCSprite* sprite = CCSprite::createWithTexture(batch->getTexture(), CCRectMake(85*i, 121*1, 85, 121));
         sprite->setPosition( ccp( (i+1)*step, s.height/2) );
 
-        sprite->runAction( (CCAction*)(action->copy()->autorelease()) );
+        sprite->runAction( action->clone());
         batch->addChild(sprite, i);
     }
     
@@ -1308,7 +1308,7 @@ SpriteAliased::SpriteAliased()
     CCActionInterval* seq = CCSequence::create( scale, scale_back, NULL);
     CCAction* repeat = CCRepeatForever::create(seq);
     
-    CCAction* repeat2 = (CCAction*)(repeat->copy()->autorelease());
+    CCAction* repeat2 = repeat->clone();
     
     sprite1->runAction(repeat);
     sprite2->runAction(repeat2);
@@ -1367,7 +1367,7 @@ SpriteBatchNodeAliased::SpriteBatchNodeAliased()
     CCActionInterval* seq = CCSequence::create( scale, scale_back, NULL);
     CCAction* repeat = CCRepeatForever::create(seq);
     
-    CCAction* repeat2 = (CCAction*)(repeat->copy()->autorelease());
+    CCAction* repeat2 = repeat->clone();
     
     sprite1->runAction(repeat);
     sprite2->runAction(repeat2);
@@ -1406,12 +1406,12 @@ SpriteNewTexture::SpriteNewTexture()
     CCNode* node = CCNode::create();
     addChild(node, 0, kTagSpriteBatchNode);
 
-    m_texture1 = CCTextureCache::sharedTextureCache()->addImage("Images/grossini_dance_atlas.png");
-    m_texture1->retain();
-    m_texture2 = CCTextureCache::sharedTextureCache()->addImage("Images/grossini_dance_atlas-mono.png");
-    m_texture2->retain();
+    _texture1 = CCTextureCache::sharedTextureCache()->addImage("Images/grossini_dance_atlas.png");
+    _texture1->retain();
+    _texture2 = CCTextureCache::sharedTextureCache()->addImage("Images/grossini_dance_atlas-mono.png");
+    _texture2->retain();
     
-    m_usingTexture1 = true;
+    _usingTexture1 = true;
 
     for(int i=0;i<30;i++)
         addNewSprite();
@@ -1419,8 +1419,8 @@ SpriteNewTexture::SpriteNewTexture()
 
 SpriteNewTexture::~SpriteNewTexture()
 {
-    m_texture1->release();
-    m_texture2->release();
+    _texture1->release();
+    _texture2->release();
 }
 
 void SpriteNewTexture::addNewSprite()
@@ -1435,7 +1435,7 @@ void SpriteNewTexture::addNewSprite()
     
     
     CCNode* node = getChildByTag( kTagSpriteBatchNode );
-    CCSprite* sprite = CCSprite::createWithTexture(m_texture1, CCRectMake(x,y,85,121));
+    CCSprite* sprite = CCSprite::createWithTexture(_texture1, CCRectMake(x,y,85,121));
     node->addChild(sprite);
     
     sprite->setPosition( ccp( p.x, p.y) );
@@ -1469,7 +1469,7 @@ void SpriteNewTexture::ccTouchesEnded(CCSet* touches, CCEvent* event)
     CCSprite* sprite;
     CCObject* pObject;
 
-    if( m_usingTexture1 )                          //--> win32 : Let's it make just simple sentence
+    if( _usingTexture1 )                          //--> win32 : Let's it make just simple sentence
     {
         CCARRAY_FOREACH(children, pObject)
         {
@@ -1477,10 +1477,10 @@ void SpriteNewTexture::ccTouchesEnded(CCSet* touches, CCEvent* event)
             if(! sprite)
                 break;
 
-            sprite->setTexture(m_texture2);
+            sprite->setTexture(_texture2);
         }
 
-        m_usingTexture1 = false;
+        _usingTexture1 = false;
     } 
     else 
     {
@@ -1490,10 +1490,10 @@ void SpriteNewTexture::ccTouchesEnded(CCSet* touches, CCEvent* event)
             if(! sprite)
                 break;
 
-            sprite->setTexture(m_texture1);
+            sprite->setTexture(_texture1);
         }
 
-        m_usingTexture1 = true;
+        _usingTexture1 = true;
     }
 }
 
@@ -1515,9 +1515,9 @@ SpriteBatchNodeNewTexture::SpriteBatchNodeNewTexture()
     CCSpriteBatchNode* batch = CCSpriteBatchNode::create("Images/grossini_dance_atlas.png", 50);
     addChild(batch, 0, kTagSpriteBatchNode);
     
-    m_texture1 = batch->getTexture(); m_texture1->retain();
-    m_texture2 = CCTextureCache::sharedTextureCache()->addImage("Images/grossini_dance_atlas-mono.png");
-    m_texture2->retain();
+    _texture1 = batch->getTexture(); _texture1->retain();
+    _texture2 = CCTextureCache::sharedTextureCache()->addImage("Images/grossini_dance_atlas-mono.png");
+    _texture2->retain();
     
     for(int i=0;i<30;i++)
         addNewSprite();
@@ -1525,8 +1525,8 @@ SpriteBatchNodeNewTexture::SpriteBatchNodeNewTexture()
 
 SpriteBatchNodeNewTexture::~SpriteBatchNodeNewTexture()
 {
-    m_texture1->release();
-    m_texture2->release();
+    _texture1->release();
+    _texture2->release();
 }
 
 void SpriteBatchNodeNewTexture::addNewSprite()
@@ -1570,10 +1570,10 @@ void SpriteBatchNodeNewTexture::ccTouchesEnded(CCSet* touches, CCEvent* event)
 {
     CCSpriteBatchNode* batch = (CCSpriteBatchNode*) getChildByTag( kTagSpriteBatchNode );
     
-    if( batch->getTexture() == m_texture1 )
-        batch->setTexture(m_texture2);
+    if( batch->getTexture() == _texture1 )
+        batch->setTexture(_texture2);
     else
-        batch->setTexture(m_texture1);    
+        batch->setTexture(_texture1);    
 }
 
 std::string SpriteBatchNodeNewTexture::title()
@@ -1604,11 +1604,11 @@ void SpriteFrameTest::onEnter()
     //
     // Animation using Sprite BatchNode
     //
-    m_pSprite1 = CCSprite::createWithSpriteFrameName("grossini_dance_01.png");
-    m_pSprite1->setPosition( ccp( s.width/2-80, s.height/2) );
+    _sprite1 = CCSprite::createWithSpriteFrameName("grossini_dance_01.png");
+    _sprite1->setPosition( ccp( s.width/2-80, s.height/2) );
 
     CCSpriteBatchNode* spritebatch = CCSpriteBatchNode::create("animations/grossini.png");
-    spritebatch->addChild(m_pSprite1);
+    spritebatch->addChild(_sprite1);
     addChild(spritebatch);
 
     CCArray* animFrames = CCArray::createWithCapacity(15);
@@ -1622,18 +1622,18 @@ void SpriteFrameTest::onEnter()
     }
 
     CCAnimation* animation = CCAnimation::createWithSpriteFrames(animFrames, 0.3f);
-    m_pSprite1->runAction( CCRepeatForever::create( CCAnimate::create(animation) ) );
+    _sprite1->runAction( CCRepeatForever::create( CCAnimate::create(animation) ) );
 
     // to test issue #732, uncomment the following line
-    m_pSprite1->setFlipX(false);
-    m_pSprite1->setFlipY(false);
+    _sprite1->setFlipX(false);
+    _sprite1->setFlipY(false);
 
     //
     // Animation using standard Sprite
     //
-    m_pSprite2 = CCSprite::createWithSpriteFrameName("grossini_dance_01.png");
-    m_pSprite2->setPosition( ccp( s.width/2 + 80, s.height/2) );
-    addChild(m_pSprite2);
+    _sprite2 = CCSprite::createWithSpriteFrameName("grossini_dance_01.png");
+    _sprite2->setPosition( ccp( s.width/2 + 80, s.height/2) );
+    addChild(_sprite2);
 
 
     CCArray* moreFrames = CCArray::createWithCapacity(20);
@@ -1656,15 +1656,15 @@ void SpriteFrameTest::onEnter()
     CCAnimation *animMixed = CCAnimation::createWithSpriteFrames(moreFrames, 0.3f);
 
 
-    m_pSprite2->runAction(CCRepeatForever::create( CCAnimate::create(animMixed) ) );
+    _sprite2->runAction(CCRepeatForever::create( CCAnimate::create(animMixed) ) );
 
 
     // to test issue #732, uncomment the following line
-    m_pSprite2->setFlipX(false);
-    m_pSprite2->setFlipY(false);
+    _sprite2->setFlipX(false);
+    _sprite2->setFlipY(false);
 
     schedule(schedule_selector(SpriteFrameTest::startIn05Secs), 0.5f);
-    m_nCounter = 0;
+    _counter = 0;
 }
 
 void SpriteFrameTest::onExit()
@@ -1694,11 +1694,11 @@ void SpriteFrameTest::startIn05Secs(float dt)
 
 void SpriteFrameTest::flipSprites(float dt)
 {
-    m_nCounter++;
+    _counter++;
 
     bool fx = false;
     bool fy = false;
-    int  i  = m_nCounter % 4;
+    int  i  = _counter % 4;
 
     switch ( i ) {
         case 0:
@@ -1719,10 +1719,10 @@ void SpriteFrameTest::flipSprites(float dt)
             break;
     }
 
-    m_pSprite1->setFlipX(fx);
-    m_pSprite1->setFlipY(fy);
-    m_pSprite2->setFlipX(fx);
-    m_pSprite2->setFlipY(fy);
+    _sprite1->setFlipX(fx);
+    _sprite1->setFlipY(fy);
+    _sprite2->setFlipX(fx);
+    _sprite2->setFlipY(fy);
     //NSLog(@"flipX:%d, flipY:%d", fx, fy);
 }
 
@@ -2139,11 +2139,11 @@ SpriteAnimationSplit::SpriteAnimationSplit()
             
     CCAnimation *animation = CCAnimation::createWithSpriteFrames(animFrames, 0.2f);
     CCAnimate *animate = CCAnimate::create(animation);
-    CCActionInterval* seq = CCSequence::create( animate,
-                       CCFlipX::create(true),
-                       animate->copy()->autorelease(),
-                       CCFlipX::create(false),
-                       NULL);
+	auto seq = CCSequence::create(animate,
+								  CCFlipX::create(true),
+								  animate->clone(),
+								  CCFlipX::create(false),
+								  NULL);
     
     sprite->runAction(CCRepeatForever::create( seq ) );
 }
@@ -2206,7 +2206,7 @@ SpriteHybrid::SpriteHybrid()
         sprite->runAction( CCRepeatForever::create(action) );
     }
     
-    m_usingSpriteBatchNode = false;
+    _usingSpriteBatchNode = false;
     
     schedule( schedule_selector(SpriteHybrid::reparentSprite), 2);
 }
@@ -2218,7 +2218,7 @@ void SpriteHybrid::reparentSprite(float dt)
     
     CCArray* retArray = CCArray::createWithCapacity(250);
 
-    if( m_usingSpriteBatchNode )
+    if( _usingSpriteBatchNode )
         CC_SWAP(p1,p2, CCNode*);
 
     ////----CCLOG("New parent is: %x", p2);
@@ -2248,7 +2248,7 @@ void SpriteHybrid::reparentSprite(float dt)
         i++;
     }
 
-    m_usingSpriteBatchNode = ! m_usingSpriteBatchNode;
+    _usingSpriteBatchNode = ! _usingSpriteBatchNode;
 }
 
 void SpriteHybrid::onExit()
@@ -2846,7 +2846,7 @@ SpriteBatchNodeChildrenScale::SpriteBatchNodeChildrenScale()
     sprite1->setPosition( ccp( 3*s.width/4, s.height/4) );
     sprite1->setScaleX( -0.5f );
     sprite1->setScaleY( 2.0f );
-    sprite1->runAction( (CCAction*)(seq->copy()->autorelease()) );
+    sprite1->runAction( seq->clone() );
     
     sprite2 = CCSprite::createWithSpriteFrameName("grossinis_sister2.png");
     sprite2->setPosition( ccp( 50,0) );
@@ -2866,7 +2866,7 @@ SpriteBatchNodeChildrenScale::SpriteBatchNodeChildrenScale()
     sprite1->setPosition( ccp( s.width/4, 2*s.height/3) );
     sprite1->setScaleX( 1.5f );
     sprite1->setScaleY( -0.5f );
-    sprite1->runAction( (CCAction*)(seq->copy()->autorelease()) );
+    sprite1->runAction( seq->clone() );
     
     sprite2 = CCSprite::createWithSpriteFrameName("grossinis_sister2.png");
     sprite2->setPosition( ccp( 50,0) );
@@ -2885,7 +2885,7 @@ SpriteBatchNodeChildrenScale::SpriteBatchNodeChildrenScale()
     sprite1->setPosition( ccp( 3*s.width/4, 2*s.height/3) );
     sprite1->setScaleX( 1.5f );
     sprite1->setScaleY( -0.5f);
-    sprite1->runAction( (CCAction*)(seq->copy()->autorelease()) );
+    sprite1->runAction( seq->clone() );
     
     sprite2 = CCSprite::createWithSpriteFrameName("grossinis_sister2.png");
     sprite2->setPosition( ccp( 50,0) );
@@ -2930,14 +2930,14 @@ SpriteChildrenChildren::SpriteChildrenChildren()
     // parent
     l1 = CCSprite::createWithSpriteFrameName("father.gif");
     l1->setPosition( ccp( s.width/2, s.height/2) );
-    l1->runAction( (CCAction*)(seq->copy()->autorelease()) );
+    l1->runAction( seq->clone() );
     aParent->addChild(l1);
     CCSize l1Size = l1->getContentSize();
     
     // child left
     l2a = CCSprite::createWithSpriteFrameName("sister1.gif");
     l2a->setPosition( ccp( -50 + l1Size.width/2, 0 + l1Size.height/2) );
-    l2a->runAction( (CCAction*)(rot_back_fe->copy()->autorelease()) );
+    l2a->runAction( rot_back_fe->clone() );
     l1->addChild(l2a);
     CCSize l2aSize = l2a->getContentSize();        
     
@@ -2945,7 +2945,7 @@ SpriteChildrenChildren::SpriteChildrenChildren()
     // child right
     l2b = CCSprite::createWithSpriteFrameName("sister2.gif");
     l2b->setPosition( ccp( +50 + l1Size.width/2, 0 + l1Size.height/2) );
-    l2b->runAction( (CCAction*)(rot_back_fe->copy()->autorelease()) );
+    l2b->runAction( rot_back_fe->clone() );
     l1->addChild(l2b);
     CCSize l2bSize = l2a->getContentSize();        
     
@@ -3014,14 +3014,14 @@ SpriteBatchNodeChildrenChildren::SpriteBatchNodeChildrenChildren()
     // parent
     l1 = CCSprite::createWithSpriteFrameName("father.gif");
     l1->setPosition( ccp( s.width/2, s.height/2) );
-    l1->runAction( (CCAction*)(seq->copy()->autorelease()) );
+    l1->runAction( seq->clone() );
     aParent->addChild(l1);
     CCSize l1Size = l1->getContentSize();
 
     // child left
     l2a = CCSprite::createWithSpriteFrameName("sister1.gif");
     l2a->setPosition( ccp( -50 + l1Size.width/2, 0 + l1Size.height/2) );
-    l2a->runAction( (CCAction*)(rot_back_fe->copy()->autorelease()) );
+    l2a->runAction( rot_back_fe->clone() );
     l1->addChild(l2a);
     CCSize l2aSize = l2a->getContentSize();        
 
@@ -3029,7 +3029,7 @@ SpriteBatchNodeChildrenChildren::SpriteBatchNodeChildrenChildren()
     // child right
     l2b = CCSprite::createWithSpriteFrameName("sister2.gif");
     l2b->setPosition( ccp( +50 + l1Size.width/2, 0 + l1Size.height/2) );
-    l2b->runAction( (CCAction*)(rot_back_fe->copy()->autorelease()) );
+    l2b->runAction( rot_back_fe->clone() );
     l1->addChild(l2b);
     CCSize l2bSize = l2a->getContentSize();        
 
@@ -3305,7 +3305,7 @@ std::string SpriteSubclass::subtitle()
 class DoubleSprite : public CCSprite
 {
 public:
-    DoubleSprite() {m_bHD = false;}
+    DoubleSprite() {_HD = false;}
     virtual bool initWithTexture(CCTexture2D* texture, CCRect rect);
     // Called everytime the vertex needs to be updated.
     virtual void setContentSize(const CCSize& size);
@@ -3313,7 +3313,7 @@ public:
     virtual void setVertexRect(CCRect rect);
 
     static DoubleSprite* create(const char* pszFileName);
-    bool m_bHD;
+    bool _HD;
 };
 
 DoubleSprite* DoubleSprite::create(const char* pszFileName)
@@ -3339,7 +3339,7 @@ void DoubleSprite::setContentSize(const CCSize& size)
 {
     CCSize s = size;
     // If Retina Display and Texture is in HD then scale the vertex rect
-    if( CC_CONTENT_SCALE_FACTOR() == 2 && ! m_bHD ) {
+    if( CC_CONTENT_SCALE_FACTOR() == 2 && ! _HD ) {
         s.width *= 2;
         s.height *= 2;
     }
@@ -3351,7 +3351,7 @@ void DoubleSprite::setContentSize(const CCSize& size)
 void DoubleSprite::setVertexRect(CCRect rect)
 {
     // If Retina Display and Texture is in HD then scale the vertex rect
-    if( CC_CONTENT_SCALE_FACTOR() == 2 && ! m_bHD ) {
+    if( CC_CONTENT_SCALE_FACTOR() == 2 && ! _HD ) {
         rect.size.width *= 2;
         rect.size.height *= 2;
     }
@@ -3407,7 +3407,7 @@ SpriteDoubleResolution::SpriteDoubleResolution()
     CCScaleBy* scale_back = (CCScaleBy*)scale->reverse();
     CCSequence* seq = CCSequence::create(scale, scale_back, NULL);
 
-    CCSequence* seq_copy = (CCSequence*)seq->copy()->autorelease();
+    CCSequence* seq_copy = seq->clone();
 
     spriteSD->runAction(seq);
     spriteHD->runAction(seq_copy);
@@ -4004,7 +4004,7 @@ SpriteOffsetAnchorFlip::SpriteOffsetAnchorFlip()
         CCFlipY *flip = CCFlipY::create(true);
         CCFlipY *flip_back = CCFlipY::create(false);
         CCDelayTime *delay = CCDelayTime::create(1);
-        CCSequence *seq = CCSequence::create(delay, flip, delay->copy()->autorelease(), flip_back, NULL);
+        CCSequence *seq = CCSequence::create(delay, flip, delay->clone(), flip_back, NULL);
         sprite->runAction(CCRepeatForever::create(seq));
 
         addChild(sprite, 0);
@@ -4115,28 +4115,28 @@ string SpriteBatchNodeOffsetAnchorFlip::subtitle()
 
 NodeSort::NodeSort()
 {
-    m_pNode = CCNode::create();
-    addChild(m_pNode, 0, 0);
+    _node = CCNode::create();
+    addChild(_node, 0, 0);
 
-    m_pSprite1 = CCSprite::create("Images/piece.png", CCRectMake(128, 0, 64, 64));
-    m_pSprite1->setPosition(ccp(100, 160));
-    m_pNode->addChild(m_pSprite1, -6, 1);
+    _sprite1 = CCSprite::create("Images/piece.png", CCRectMake(128, 0, 64, 64));
+    _sprite1->setPosition(ccp(100, 160));
+    _node->addChild(_sprite1, -6, 1);
 
-    m_pSprite2 = CCSprite::create("Images/piece.png", CCRectMake(128, 0, 64, 64));
-    m_pSprite2->setPosition(ccp(164, 160));
-    m_pNode->addChild(m_pSprite2, -6, 2);
+    _sprite2 = CCSprite::create("Images/piece.png", CCRectMake(128, 0, 64, 64));
+    _sprite2->setPosition(ccp(164, 160));
+    _node->addChild(_sprite2, -6, 2);
 
-    m_pSprite4 = CCSprite::create("Images/piece.png", CCRectMake(128, 0, 64, 64));
-    m_pSprite4->setPosition(ccp(292, 160));
-    m_pNode->addChild(m_pSprite4, -3, 4);
+    _sprite4 = CCSprite::create("Images/piece.png", CCRectMake(128, 0, 64, 64));
+    _sprite4->setPosition(ccp(292, 160));
+    _node->addChild(_sprite4, -3, 4);
 
-    m_pSprite3 = CCSprite::create("Images/piece.png", CCRectMake(128, 0, 64, 64));
-    m_pSprite3->setPosition(ccp(228, 160));
-    m_pNode->addChild(m_pSprite3, -4, 3);
+    _sprite3 = CCSprite::create("Images/piece.png", CCRectMake(128, 0, 64, 64));
+    _sprite3->setPosition(ccp(228, 160));
+    _node->addChild(_sprite3, -4, 3);
 
-    m_pSprite5 = CCSprite::create("Images/piece.png", CCRectMake(128, 0, 64, 64));
-    m_pSprite5->setPosition(ccp(356, 160));
-    m_pNode->addChild(m_pSprite5, -3, 5);
+    _sprite5 = CCSprite::create("Images/piece.png", CCRectMake(128, 0, 64, 64));
+    _sprite5->setPosition(ccp(356, 160));
+    _node->addChild(_sprite5, -3, 5);
 
     schedule(schedule_selector(NodeSort::reorderSprite));
 }
@@ -4158,17 +4158,17 @@ void NodeSort::reorderSprite(float dt)
     CCLog("Before reorder--");
     
     CCObject* pObj = NULL;
-    CCARRAY_FOREACH(m_pNode->getChildren(), pObj)
+    CCARRAY_FOREACH(_node->getChildren(), pObj)
     {
         CCSprite *child = (CCSprite*)pObj;
         CCLog("tag %i z %i",(int)child->getTag(),(int)child->getZOrder());
     }
     //z-4
-    m_pNode->reorderChild((CCNode *)m_pNode->getChildren()->objectAtIndex(0), -6);
+    _node->reorderChild((CCNode *)_node->getChildren()->objectAtIndex(0), -6);
 
-    m_pNode->sortAllChildren();
+    _node->sortAllChildren();
     CCLog("After reorder--");
-    CCARRAY_FOREACH(m_pNode->getChildren(), pObj)
+    CCARRAY_FOREACH(_node->getChildren(), pObj)
     {
         CCSprite *child = (CCSprite*)pObj;
         CCLog("tag %i z %i",(int)child->getTag(),(int)child->getZOrder());
@@ -4178,28 +4178,28 @@ void NodeSort::reorderSprite(float dt)
 /// SpriteBatchNodeReorderSameIndex
 SpriteBatchNodeReorderSameIndex::SpriteBatchNodeReorderSameIndex()
 {
-    m_pBatchNode = CCSpriteBatchNode::create("Images/piece.png", 15);
-    addChild(m_pBatchNode, 1, 0);
+    _batchNode = CCSpriteBatchNode::create("Images/piece.png", 15);
+    addChild(_batchNode, 1, 0);
 
-    m_pSprite1 = CCSprite::createWithTexture(m_pBatchNode->getTexture(), CCRectMake(128,0,64,64));
-    m_pSprite1->setPosition(ccp(100,160));
-    m_pBatchNode->addChild(m_pSprite1, 3, 1);
+    _sprite1 = CCSprite::createWithTexture(_batchNode->getTexture(), CCRectMake(128,0,64,64));
+    _sprite1->setPosition(ccp(100,160));
+    _batchNode->addChild(_sprite1, 3, 1);
 
-    m_pSprite2= CCSprite::createWithTexture(m_pBatchNode->getTexture(), CCRectMake(128,0,64,64));
-    m_pSprite2->setPosition(ccp(164,160));
-    m_pBatchNode->addChild(m_pSprite2, 4, 2);
+    _sprite2= CCSprite::createWithTexture(_batchNode->getTexture(), CCRectMake(128,0,64,64));
+    _sprite2->setPosition(ccp(164,160));
+    _batchNode->addChild(_sprite2, 4, 2);
 
-    m_pSprite3 = CCSprite::createWithTexture(m_pBatchNode->getTexture(), CCRectMake(128,0,64,64));
-    m_pSprite3->setPosition(ccp(228,160));
-    m_pBatchNode->addChild(m_pSprite3, 4, 3);
+    _sprite3 = CCSprite::createWithTexture(_batchNode->getTexture(), CCRectMake(128,0,64,64));
+    _sprite3->setPosition(ccp(228,160));
+    _batchNode->addChild(_sprite3, 4, 3);
 
-    m_pSprite4 = CCSprite::createWithTexture(m_pBatchNode->getTexture(), CCRectMake(128,0,64,64));
-    m_pSprite4->setPosition(ccp(292,160));
-    m_pBatchNode->addChild(m_pSprite4, 5, 4);
+    _sprite4 = CCSprite::createWithTexture(_batchNode->getTexture(), CCRectMake(128,0,64,64));
+    _sprite4->setPosition(ccp(292,160));
+    _batchNode->addChild(_sprite4, 5, 4);
 
-    m_pSprite5 = CCSprite::createWithTexture(m_pBatchNode->getTexture(), CCRectMake(128,0,64,64));
-    m_pSprite5->setPosition(ccp(356,160));
-    m_pBatchNode->addChild(m_pSprite5, 6, 5);
+    _sprite5 = CCSprite::createWithTexture(_batchNode->getTexture(), CCRectMake(128,0,64,64));
+    _sprite5->setPosition(ccp(356,160));
+    _batchNode->addChild(_sprite5, 6, 5);
 
 
     scheduleOnce(schedule_selector(SpriteBatchNodeReorderSameIndex::reorderSprite), 2);
@@ -4217,13 +4217,13 @@ std::string SpriteBatchNodeReorderSameIndex::subtitle()
 
 void SpriteBatchNodeReorderSameIndex::reorderSprite(float dt)
 {
-    m_pBatchNode->reorderChild(m_pSprite4, 4);
-    m_pBatchNode->reorderChild(m_pSprite5, 4);
-    m_pBatchNode->reorderChild(m_pSprite1, 4);
+    _batchNode->reorderChild(_sprite4, 4);
+    _batchNode->reorderChild(_sprite5, 4);
+    _batchNode->reorderChild(_sprite1, 4);
 
-    m_pBatchNode->sortAllChildren();
+    _batchNode->sortAllChildren();
     CCObject *child;
-    CCARRAY_FOREACH(m_pBatchNode->getDescendants(), child)
+    CCARRAY_FOREACH(_batchNode->getDescendants(), child)
     {
         CCLog("tag %i", (int)((CCSprite *)child)->getTag());
     }    
@@ -4245,7 +4245,7 @@ SpriteBatchNodeReorderOneChild::SpriteBatchNodeReorderOneChild()
 
     aParent = CCSpriteBatchNode::create("animations/ghosts.png");
 
-    m_pBatchNode = aParent;
+    _batchNode = aParent;
     //[[aParent texture] generateMipmap];
     addChild(aParent);
 
@@ -4284,7 +4284,7 @@ SpriteBatchNodeReorderOneChild::SpriteBatchNodeReorderOneChild()
     l3a2->setPosition(ccp(0+l2aSize.width/2,+50+l2aSize.height/2));
     l2a->addChild(l3a2, 2);
 
-    m_pReorderSprite = l2a;
+    _reorderSprite = l2a;
 
     // child right bottom
     l3b1 = CCSprite::createWithSpriteFrameName("child1.gif");
@@ -4305,9 +4305,9 @@ SpriteBatchNodeReorderOneChild::SpriteBatchNodeReorderOneChild()
 
 void SpriteBatchNodeReorderOneChild::reorderSprite(float dt)
 {
-    m_pReorderSprite->getParent()->reorderChild(m_pReorderSprite, -1);
+    _reorderSprite->getParent()->reorderChild(_reorderSprite, -1);
 
-    m_pBatchNode->sortAllChildren();
+    _batchNode->sortAllChildren();
     //CCSprite* child;
     //CCARRAY_FOREACH(batchNode.descendants,child) NSLog(@"tag %i",child.tag);
 }

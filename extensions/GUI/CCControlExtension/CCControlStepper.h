@@ -71,10 +71,10 @@ public:
 
 protected:
     // Weak links to children
-	CC_SYNTHESIZE_RETAIN(CCSprite*, m_pMinusSprite, MinusSprite)
-    CC_SYNTHESIZE_RETAIN(CCSprite*, m_pPlusSprite, PlusSprite)
-    CC_SYNTHESIZE_RETAIN(CCLabelTTF*, m_pMinusLabel, MinusLabel)
-    CC_SYNTHESIZE_RETAIN(CCLabelTTF*, m_pPlusLabel, PlusLabel)
+	CC_SYNTHESIZE_RETAIN(CCSprite*, _minusSprite, MinusSprite)
+    CC_SYNTHESIZE_RETAIN(CCSprite*, _plusSprite, PlusSprite)
+    CC_SYNTHESIZE_RETAIN(CCLabelTTF*, _minusLabel, MinusLabel)
+    CC_SYNTHESIZE_RETAIN(CCLabelTTF*, _plusLabel, PlusLabel)
     
     /** Update the layout of the stepper with the given touch location. */
     void updateLayoutUsingTouchLocation(CCPoint location);
@@ -89,22 +89,22 @@ protected:
     void stopAutorepeat();
 
     /** The numeric value of the stepper. */
-    double                  m_dValue;
+    double                  _value;
     /** The continuous vs. noncontinuous state of the stepper. */
-    bool                    m_bContinuous;
+    bool                    _continuous;
     /** The automatic vs. nonautomatic repeat state of the stepper. */
-    bool                    m_bAutorepeat;
+    bool                    _autorepeat;
     /** The wrap vs. no-wrap state of the stepper. */
-    bool                    m_bWraps;
+    bool                    _wraps;
     /** The lowest possible numeric value for the stepper. */
-    double                  m_dMinimumValue;
+    double                  _minimumValue;
     /** The highest possible numeric value for the stepper. */
-    double                  m_dMaximumValue;
+    double                  _maximumValue;
     /** The step, or increment, value for the stepper. */
-    double                  m_dStepValue;
-    bool                    m_bTouchInsideFlag;
-    CCControlStepperPart    m_eTouchedPart;
-    int                     m_nAutorepeatCount;
+    double                  _stepValue;
+    bool                    _touchInsideFlag;
+    CCControlStepperPart    _touchedPart;
+    int                     _autorepeatCount;
 };
 
 // end of GUI group

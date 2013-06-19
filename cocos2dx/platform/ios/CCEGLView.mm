@@ -32,8 +32,8 @@ NS_CC_BEGIN
 
 CCEGLView::CCEGLView()
 {
-    m_obScreenSize.width = m_obDesignResolutionSize.width = [[EAGLView sharedEGLView] getWidth];
-    m_obScreenSize.height = m_obDesignResolutionSize.height = [[EAGLView sharedEGLView] getHeight];
+    _screenSize.width = _designResolutionSize.width = [[EAGLView sharedEGLView] getWidth];
+    _screenSize.height = _designResolutionSize.height = [[EAGLView sharedEGLView] getHeight];
 }
 
 CCEGLView::~CCEGLView()
@@ -48,9 +48,9 @@ bool CCEGLView::isOpenGLReady()
     
 bool CCEGLView::setContentScaleFactor(float contentScaleFactor)
 {
-    assert(m_eResolutionPolicy == kResolutionUnKnown); // cannot enable retina mode
+    assert(_resolutionPolicy == kResolutionUnKnown); // cannot enable retina mode
 	
-	m_fScaleX = m_fScaleY = contentScaleFactor;
+	_scaleX = _scaleY = contentScaleFactor;
 	[[EAGLView sharedEGLView] setNeedsLayout];
         
 	return true;

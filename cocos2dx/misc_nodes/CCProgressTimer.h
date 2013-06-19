@@ -63,13 +63,13 @@ public:
     ~CCProgressTimer(void);
 
     /**    Change the percentage to change progress. */
-    inline CCProgressTimerType getType(void) { return m_eType; }
+    inline CCProgressTimerType getType(void) { return _type; }
 
     /** Percentages are from 0 to 100 */
-    inline float getPercentage(void) {return m_fPercentage; }
+    inline float getPercentage(void) {return _percentage; }
 
     /** The image to show the progress percentage, retain */
-    inline CCSprite* getSprite(void) { return m_pSprite; }
+    inline CCSprite* getSprite(void) { return _sprite; }
 
     /** Initializes a progress timer with the sprite as the shape the timer goes through */
     bool initWithSprite(CCSprite* sp);
@@ -85,8 +85,8 @@ public:
     virtual void setOpacityModifyRGB(bool bValue);
     virtual bool isOpacityModifyRGB(void);
     
-    inline bool isReverseDirection() { return m_bReverseDirection; };
-    inline void setReverseDirection(bool value) { m_bReverseDirection = value; };
+    inline bool isReverseDirection() { return _reverseDirection; };
+    inline void setReverseDirection(bool value) { _reverseDirection = value; };
 
 public:
     /** Creates a progress timer with the sprite as the shape the timer goes through */
@@ -101,11 +101,11 @@ protected:
     CCPoint boundaryTexCoord(char index);
 
 protected:
-    CCProgressTimerType m_eType;
-    float m_fPercentage;
-    CCSprite *m_pSprite;
-    int m_nVertexDataCount;
-    ccV2F_C4B_T2F *m_pVertexData;
+    CCProgressTimerType _type;
+    float _percentage;
+    CCSprite *_sprite;
+    int _vertexDataCount;
+    ccV2F_C4B_T2F *_vertexData;
 
     /**
      *    Midpoint is used to modify the progress start position.
@@ -117,7 +117,7 @@ protected:
      *        you want a bottom to top then set the midpoint all the way to ccp(x,0)
      *        you want a top to bottom then set the midpoint all the way to ccp(x,1)
      */
-    CC_PROPERTY(CCPoint, m_tMidpoint, Midpoint);
+    CC_PROPERTY(CCPoint, _midpoint, Midpoint);
 
     /**
      *    This allows the bar type to move the component at a specific rate
@@ -125,9 +125,9 @@ protected:
      *    For example you want a left to right bar but not have the height stay 100%
      *    Set the rate to be ccp(0,1); and set the midpoint to = ccp(0,.5f);
      */
-    CC_SYNTHESIZE(CCPoint, m_tBarChangeRate, BarChangeRate);
+    CC_SYNTHESIZE(CCPoint, _barChangeRate, BarChangeRate);
 
-    bool m_bReverseDirection;
+    bool _reverseDirection;
 };
 
 // end of misc_nodes group

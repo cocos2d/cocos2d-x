@@ -74,9 +74,9 @@ int CCApplication::run()
 
         //long iCurTime = getCurrentMillSecond();
         /*
-        if (iCurTime-iLastTime<m_nAnimationInterval)
+        if (iCurTime-iLastTime<_animationInterval)
         {
-            usleep((m_nAnimationInterval - iCurTime+iLastTime)*1000);
+            usleep((_animationInterval - iCurTime+iLastTime)*1000);
         }
         */
     }
@@ -87,7 +87,7 @@ int CCApplication::run()
 
 void CCApplication::setAnimationInterval(double interval)
 {
-    m_nAnimationInterval = interval * 1000.0f;
+    _animationInterval = interval * 1000.0f;
 }
 
 TargetPlatform CCApplication::getTargetPlatform()

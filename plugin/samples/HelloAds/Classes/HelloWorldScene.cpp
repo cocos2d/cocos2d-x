@@ -73,7 +73,13 @@ bool HelloWorld::init()
     
     m_pAdmob = dynamic_cast<ProtocolAds*>(PluginManager::getInstance()->loadPlugin("AdsAdmob"));
     TAdsDeveloperInfo devInfo;
+    
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+    devInfo["AdmobID"] = "a1517500cc8f794";
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     devInfo["AdmobID"] = "a1516fb6b16b12f";
+#endif
+    
     m_pAdmob->configDeveloperInfo(devInfo);
     m_pListener = new MyAdsListener();
     m_pAdmob->setAdsListener(m_pListener);
@@ -91,8 +97,7 @@ bool HelloWorld::init()
     CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
                                         "CloseNormal.png",
                                         "CloseSelected.png",
-                                        this,
-                                        menu_selector(HelloWorld::menuCloseCallback));
+                                        CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
     
 	pCloseItem->setPosition(ccp(origin.x + visibleSize.width - pCloseItem->getContentSize().width/2 ,
                                 origin.y + pCloseItem->getContentSize().height/2));
@@ -102,21 +107,20 @@ bool HelloWorld::init()
     pMenu->setPosition(CCPointZero);
 
 	CCLabelTTF* label1 = CCLabelTTF::create("ShowAds", "Arial", 24);
-	CCMenuItemLabel* pItemShow = CCMenuItemLabel::create(label1, this, menu_selector(HelloWorld::testShow));
+	CCMenuItemLabel* pItemShow = CCMenuItemLabel::create(label1, CC_CALLBACK_1(HelloWorld::testShow, this));
 	pItemShow->setAnchorPoint(ccp(0.5f, 0));
 	pMenu->addChild(pItemShow, 0);
 	pItemShow->setPosition(ccpAdd(posMid, ccp(-100, -120)));
 
 	CCLabelTTF* label2 = CCLabelTTF::create("HideAds", "Arial", 24);
-	CCMenuItemLabel* pItemHide = CCMenuItemLabel::create(label2, this, menu_selector(HelloWorld::testHide));
+	CCMenuItemLabel* pItemHide = CCMenuItemLabel::create(label2, CC_CALLBACK_1(HelloWorld::testHide, this));
 	pItemHide->setAnchorPoint(ccp(0.5f, 0));
 	pMenu->addChild(pItemHide, 0);
 	pItemHide->setPosition(ccpAdd(posMid, ccp(100, -120)));
 
 	// create optional menu
 	// cases item
-	m_pCaseItem = CCMenuItemToggle::createWithTarget(this,
-												menu_selector(HelloWorld::caseChanged),
+	m_pCaseItem = CCMenuItemToggle::createWithCallback(CC_CALLBACK_1(HelloWorld::caseChanged, this),
 												CCMenuItemFont::create( s_aTestCases[0].c_str() ),
 												NULL );
 	int caseLen = sizeof(s_aTestCases) / sizeof(std::string);
@@ -128,8 +132,7 @@ bool HelloWorld::init()
 	pMenu->addChild(m_pCaseItem);
 
 	// type item
-	m_pTypeItem = CCMenuItemToggle::createWithTarget(this,
-												menu_selector(HelloWorld::typeChanged),
+	m_pTypeItem = CCMenuItemToggle::createWithCallback(CC_CALLBACK_1(HelloWorld::typeChanged, this),
 												CCMenuItemFont::create( s_aTestTypes[0].c_str() ),
 												NULL );
 	int typeLen = sizeof(s_aTestTypes) / sizeof(std::string);
@@ -141,8 +144,7 @@ bool HelloWorld::init()
 	pMenu->addChild(m_pTypeItem);
 
 	// poses item
-	m_pPosItem = CCMenuItemToggle::createWithTarget(this,
-												menu_selector(HelloWorld::posChanged),
+	m_pPosItem = CCMenuItemToggle::createWithCallback(CC_CALLBACK_1(HelloWorld::posChanged, this),
 												CCMenuItemFont::create( s_aTestPoses[0].c_str() ),
 												NULL );
 	int posLen = sizeof(s_aTestPoses) / sizeof(std::string);

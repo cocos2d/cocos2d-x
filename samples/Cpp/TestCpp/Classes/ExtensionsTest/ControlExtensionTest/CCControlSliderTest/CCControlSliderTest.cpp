@@ -33,7 +33,7 @@ CCControlSliderTest::CCControlSliderTest()
 
 CCControlSliderTest::~CCControlSliderTest()
 {
-    CC_SAFE_RELEASE_NULL(m_pDisplayValueLabel);
+    CC_SAFE_RELEASE_NULL(_displayValueLabel);
 }
 
 bool CCControlSliderTest::init()
@@ -43,11 +43,11 @@ bool CCControlSliderTest::init()
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
 
         // Add a label in which the slider value will be displayed
-        m_pDisplayValueLabel = CCLabelTTF::create("Move the slider thumb!\nThe lower slider is restricted." ,"Marker Felt", 32);
-        m_pDisplayValueLabel->retain();
-        m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1.0f));
-        m_pDisplayValueLabel->setPosition(ccp(screenSize.width / 1.7f, screenSize.height / 2.0f));
-        addChild(m_pDisplayValueLabel);
+        _displayValueLabel = CCLabelTTF::create("Move the slider thumb!\nThe lower slider is restricted." ,"Marker Felt", 32);
+        _displayValueLabel->retain();
+        _displayValueLabel->setAnchorPoint(ccp(0.5f, -1.0f));
+        _displayValueLabel->setPosition(ccp(screenSize.width / 1.7f, screenSize.height / 2.0f));
+        addChild(_displayValueLabel);
 
         // Add the slider
         CCControlSlider *slider = CCControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
@@ -85,8 +85,8 @@ void CCControlSliderTest::valueChanged(CCObject *sender, CCControlEvent controlE
     CCControlSlider* pSlider = (CCControlSlider*)sender;
     // Change value of label.
 	if(pSlider->getTag() == 1)
-		m_pDisplayValueLabel->setString(CCString::createWithFormat("Upper slider value = %.02f", pSlider->getValue())->getCString());  
+		_displayValueLabel->setString(CCString::createWithFormat("Upper slider value = %.02f", pSlider->getValue())->getCString());  
 	if(pSlider->getTag() == 2)
-		m_pDisplayValueLabel->setString(CCString::createWithFormat("Lower slider value = %.02f", pSlider->getValue())->getCString());  
+		_displayValueLabel->setString(CCString::createWithFormat("Lower slider value = %.02f", pSlider->getValue())->getCString());  
 }
 

@@ -56,10 +56,10 @@ enum {
 class CC_DLL CCMenu : public CCLayerRGBA
 {
     /** whether or not the menu will receive events */
-    bool m_bEnabled;
+    bool _enabled;
     
 public:
-    CCMenu() : m_pSelectedItem(NULL) {}
+    CCMenu() : _selectedItem(NULL) {}
     virtual ~CCMenu(){}
 
     /** creates an empty CCMenu */
@@ -137,13 +137,13 @@ public:
     virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
     virtual bool isOpacityModifyRGB(void) { return false;}
     
-    virtual bool isEnabled() { return m_bEnabled; }
-    virtual void setEnabled(bool value) { m_bEnabled = value; };
+    virtual bool isEnabled() { return _enabled; }
+    virtual void setEnabled(bool value) { _enabled = value; };
 
 protected:
     CCMenuItem* itemForTouch(CCTouch * touch);
-    tCCMenuState m_eState;
-    CCMenuItem *m_pSelectedItem;
+    tCCMenuState _state;
+    CCMenuItem *_selectedItem;
 };
 
 // end of GUI group

@@ -51,7 +51,7 @@ public:
     void setObjectID(unsigned int uIdx);
     unsigned int getObjectID();
 private:
-    unsigned int m_uIdx;
+    unsigned int _idx;
 };
 
 NS_CC_EXT_END

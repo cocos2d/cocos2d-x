@@ -89,7 +89,7 @@ static int g_testCount = sizeof(g_aTestNames) / sizeof(g_aTestNames[0]);
 static CCPoint s_tCurPos = CCPointZero;
 
 TestController::TestController()
-: m_tBeginPos(CCPointZero)
+: _beginPos(CCPointZero)
 {
     // add close menu
     CCMenuItemImage *pCloseItem = CCMenuItemImage::create(s_pPathClose, s_pPathClose, CC_CALLBACK_1(TestController::closeCallback, this) );
@@ -99,7 +99,7 @@ TestController::TestController()
     pCloseItem->setPosition(ccp( VisibleRect::right().x - 30, VisibleRect::top().y - 30));
 
     // add menu items for tests
-    m_pItemMenu = CCMenu::create();
+    _itemMenu = CCMenu::create();
     for (int i = 0; i < g_testCount; ++i)
     {
 // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
@@ -109,13 +109,13 @@ TestController::TestController()
 // #endif        
         CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, CC_CALLBACK_1(TestController::menuCallback, this));
 
-        m_pItemMenu->addChild(pMenuItem, i + 10000);
+        _itemMenu->addChild(pMenuItem, i + 10000);
         pMenuItem->setPosition( ccp( VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE) ));
     }
 
-    m_pItemMenu->setContentSize(CCSizeMake(VisibleRect::getVisibleRect().size.width, (g_testCount + 1) * (LINE_SPACE)));
-    m_pItemMenu->setPosition(s_tCurPos);
-    addChild(m_pItemMenu);
+    _itemMenu->setContentSize(CCSizeMake(VisibleRect::getVisibleRect().size.width, (g_testCount + 1) * (LINE_SPACE)));
+    _itemMenu->setPosition(s_tCurPos);
+    addChild(_itemMenu);
 
     setTouchEnabled(true);
 
@@ -159,7 +159,7 @@ void TestController::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
     CCSetIterator it = pTouches->begin();
     CCTouch* touch = (CCTouch*)(*it);
 
-    m_tBeginPos = touch->getLocation();    
+    _beginPos = touch->getLocation();    
 }
 
 void TestController::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
@@ -168,24 +168,24 @@ void TestController::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
     CCTouch* touch = (CCTouch*)(*it);
 
     CCPoint touchLocation = touch->getLocation();    
-    float nMoveY = touchLocation.y - m_tBeginPos.y;
+    float nMoveY = touchLocation.y - _beginPos.y;
 
-    CCPoint curPos  = m_pItemMenu->getPosition();
+    CCPoint curPos  = _itemMenu->getPosition();
     CCPoint nextPos = ccp(curPos.x, curPos.y + nMoveY);
 
     if (nextPos.y < 0.0f)
     {
-        m_pItemMenu->setPosition(CCPointZero);
+        _itemMenu->setPosition(CCPointZero);
         return;
     }
 
     if (nextPos.y > ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        m_pItemMenu->setPosition(ccp(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(ccp(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
         return;
     }
 
-    m_pItemMenu->setPosition(nextPos);
-    m_tBeginPos = touchLocation;
+    _itemMenu->setPosition(nextPos);
+    _beginPos = touchLocation;
     s_tCurPos   = nextPos;
 }

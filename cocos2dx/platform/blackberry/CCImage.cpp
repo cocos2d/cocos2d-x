@@ -56,7 +56,7 @@ public:
     {
     	libError = FT_Init_FreeType( &library );
 		iInterval = szFont_kenning;
-		m_pData = NULL;
+		_data = NULL;
 		reset();
     }
     
@@ -249,8 +249,8 @@ public:
         
 		const char* pText = text;
 		//data will be deleted by CCImage
-        //		if (m_pData) {
-        //			delete m_pData;
+        //		if (_data) {
+        //			delete _data;
         //		}
         
 		int iCurXCursor, iCurYCursor;
@@ -289,11 +289,11 @@ public:
             
 			//compute the final line height
 			iMaxLineHeight = MAX(iMaxLineHeight, nHeight);
-			m_pData = new unsigned char[iMaxLineWidth * iMaxLineHeight*4];
+			_data = new unsigned char[iMaxLineWidth * iMaxLineHeight*4];
 //			iCurYCursor = SHIFT6(face->size->metrics.ascender);
         	iCurYCursor = computeLineStartY( face, eAlignMask, txtHeight, iMaxLineHeight );
 
-			memset(m_pData,0, iMaxLineWidth * iMaxLineHeight*4);
+			memset(_data,0, iMaxLineWidth * iMaxLineHeight*4);
             
             size_t lines = vLines.size();
             for (size_t i = 0; i < lines; i++) {
@@ -329,18 +329,18 @@ public:
 								continue;
 							}
 
-//							m_pData[(iY * iMaxLineWidth + iX) * 4 + 3] =
+//							_data[(iY * iMaxLineWidth + iX) * 4 + 3] =
 //							bitmap.buffer[i * bitmap.width + j] ?
 //							0xff : 0;//alpha
-//							m_pData[(iY * iMaxLineWidth + iX) * 4 + 1] =
+//							_data[(iY * iMaxLineWidth + iX) * 4 + 1] =
 //							bitmap.buffer[i * bitmap.width + j];//R
-//							m_pData[(iY * iMaxLineWidth + iX) * 4 + 2] =
+//							_data[(iY * iMaxLineWidth + iX) * 4 + 2] =
 //							bitmap.buffer[i * bitmap.width + j];//G
-//							m_pData[(iY * iMaxLineWidth + iX) * 4 + 0] =
+//							_data[(iY * iMaxLineWidth + iX) * 4 + 0] =
 //							bitmap.buffer[i * bitmap.width + j];//B
 
 							int iTemp = cTemp << 24 | cTemp << 16 | cTemp << 8 | cTemp;
-							*(int*) &m_pData[(iY * iMaxLineWidth + iX) * 4 + 0] = iTemp;
+							*(int*) &_data[(iY * iMaxLineWidth + iX) * 4 + 0] = iTemp;
 						}
 					}
 					//step to next glyph
@@ -356,7 +356,7 @@ public:
             //			for (int i = 0; i < iMaxLineHeight; i++) {
             //				for (int j = 0; j < iMaxLineWidth; j++) {
             //					printf("%d",
-            //							m_pData[(i * iMaxLineWidth + j) * 4] ? 1 : 0);
+            //							_data[(i * iMaxLineWidth + j) * 4] ? 1 : 0);
             //				}
             //				printf("\n");
             //			}
@@ -380,7 +380,7 @@ public:
 
 public:
 	FT_Library library;
-	unsigned char *m_pData;
+	unsigned char *_data;
 	int libError;
 	vector<TextLine> vLines;
 	int iInterval;
@@ -420,15 +420,15 @@ bool CCImage::initWithString(
         CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, fullFontName.c_str(), nSize));
         //CCLog("---- dc.getBitmap is Succesfull...");
         
-        // assign the dc.m_pData to m_pData in order to save time
-        m_pData = dc.m_pData;
-        CC_BREAK_IF(! m_pData);
+        // assign the dc._data to _data in order to save time
+        _data = dc._data;
+        CC_BREAK_IF(! _data);
         
-        m_nWidth = (short)dc.iMaxLineWidth;
-        m_nHeight = (short)dc.iMaxLineHeight;
-        m_bHasAlpha = true;
-        m_bPreMulti = true;
-        m_nBitsPerComponent = 8;
+        _width = (short)dc.iMaxLineWidth;
+        _height = (short)dc.iMaxLineHeight;
+        _hasAlpha = true;
+        _preMulti = true;
+        _bitsPerComponent = 8;
         
         bRet = true;
         

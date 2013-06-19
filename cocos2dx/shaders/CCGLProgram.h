@@ -186,7 +186,7 @@ public:
     // when opengl context lost, so don't call it.
     void reset();
     
-    inline const GLuint getProgram() { return m_uProgram; }
+    inline const GLuint getProgram() { return _program; }
 
 private:
     bool updateUniformLocation(GLint location, GLvoid* data, unsigned int bytes);
@@ -195,12 +195,12 @@ private:
     const char* logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc);
 
 private:
-    GLuint            m_uProgram;
-    GLuint            m_uVertShader;
-    GLuint            m_uFragShader;
-    GLint             m_uUniforms[kCCUniform_MAX];
-    struct _hashUniformEntry* m_pHashForUniforms;
-    bool              m_bUsesTime;
+    GLuint            _program;
+    GLuint            _vertShader;
+    GLuint            _fragShader;
+    GLint             _uniforms[kCCUniform_MAX];
+    struct _hashUniformEntry* _hashForUniforms;
+    bool              _usesTime;
 };
 
 // end of shaders group

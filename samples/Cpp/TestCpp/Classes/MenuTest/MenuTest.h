@@ -7,7 +7,7 @@
 class MenuLayerMainMenu : public CCLayer
 {
 protected:
-    CCMenuItem*    m_disabledItem;
+    CCMenuItem*    _disabledItem;
 
 public:
     MenuLayerMainMenu(void);
@@ -35,8 +35,8 @@ public:
 class MenuLayer2 : public CCLayer
 {
 protected:
-    CCPoint        m_centeredMenu;
-    bool                m_alignedH; 
+    CCPoint        _centeredMenu;
+    bool                _alignedH; 
 
     void alignMenusH();
     void alignMenusV();
@@ -56,7 +56,7 @@ public:
 class MenuLayer3 : public CCLayer
 {
 protected:
-    CCMenuItem*    m_disabledItem;
+    CCMenuItem*    _disabledItem;
 
 public:
     MenuLayer3(void);
@@ -86,9 +86,9 @@ public:
 
     void menuCallback(CCObject* pSender);
 private:
-    CCMenu* m_pMenu1;
-    CCMenu* m_pMenu2;
-    bool m_bPriority;
+    CCMenu* _menu1;
+    CCMenu* _menu2;
+    bool _priority;
 };
 
 class BugsTest : public CCLayer

@@ -35,23 +35,23 @@
 NS_CC_EXT_BEGIN
 
 CCControlSlider::CCControlSlider()
-: m_value(0.0f)
-, m_minimumValue(0.0f)
-, m_maximumValue(0.0f)
-, m_minimumAllowedValue(0.0f)
-, m_maximumAllowedValue(0.0f)
-, m_thumbSprite(NULL)
-, m_progressSprite(NULL)
-, m_backgroundSprite(NULL)
+: _value(0.0f)
+, _minimumValue(0.0f)
+, _maximumValue(0.0f)
+, _minimumAllowedValue(0.0f)
+, _maximumAllowedValue(0.0f)
+, _thumbSprite(NULL)
+, _progressSprite(NULL)
+, _backgroundSprite(NULL)
 {
 
 }
 
 CCControlSlider::~CCControlSlider()
 {
-    CC_SAFE_RELEASE(m_thumbSprite);
-    CC_SAFE_RELEASE(m_progressSprite);
-    CC_SAFE_RELEASE(m_backgroundSprite);
+    CC_SAFE_RELEASE(_thumbSprite);
+    CC_SAFE_RELEASE(_progressSprite);
+    CC_SAFE_RELEASE(_backgroundSprite);
 }
 
 CCControlSlider* CCControlSlider::create(const char* bgFile, const char* progressFile, const char* thumbFile)
@@ -97,24 +97,24 @@ CCControlSlider* CCControlSlider::create(CCSprite * backgroundSprite, CCSprite* 
         setContentSize(CCSizeMake(maxRect.size.width, maxRect.size.height));
         
         // Add the slider background
-        m_backgroundSprite->setAnchorPoint(ccp(0.5f, 0.5f));
-        m_backgroundSprite->setPosition(ccp(this->getContentSize().width / 2, this->getContentSize().height / 2));
-        addChild(m_backgroundSprite);
+        _backgroundSprite->setAnchorPoint(ccp(0.5f, 0.5f));
+        _backgroundSprite->setPosition(ccp(this->getContentSize().width / 2, this->getContentSize().height / 2));
+        addChild(_backgroundSprite);
 
         // Add the progress bar
-        m_progressSprite->setAnchorPoint(ccp(0.0f, 0.5f));
-        m_progressSprite->setPosition(ccp(0.0f, this->getContentSize().height / 2));
-        addChild(m_progressSprite);
+        _progressSprite->setAnchorPoint(ccp(0.0f, 0.5f));
+        _progressSprite->setPosition(ccp(0.0f, this->getContentSize().height / 2));
+        addChild(_progressSprite);
 
         // Add the slider thumb  
-        m_thumbSprite->setPosition(ccp(0.0f, this->getContentSize().height / 2));
-        addChild(m_thumbSprite);
+        _thumbSprite->setPosition(ccp(0.0f, this->getContentSize().height / 2));
+        addChild(_thumbSprite);
         
         // Init default values
-        m_minimumValue                   = 0.0f;
-        m_maximumValue                   = 1.0f;
+        _minimumValue                   = 0.0f;
+        _maximumValue                   = 1.0f;
 
-        setValue(m_minimumValue);
+        setValue(_minimumValue);
         return true;
      }
      else
@@ -127,26 +127,26 @@ CCControlSlider* CCControlSlider::create(CCSprite * backgroundSprite, CCSprite* 
 void CCControlSlider::setEnabled(bool enabled)
 {
     CCControl::setEnabled(enabled);
-    if (m_thumbSprite != NULL) 
+    if (_thumbSprite != NULL) 
     {
-        m_thumbSprite->setOpacity((enabled) ? 255 : 128);
+        _thumbSprite->setOpacity((enabled) ? 255 : 128);
     }
 }
 
  void CCControlSlider::setValue(float value)
  {
      // set new value with sentinel
-     if (value < m_minimumValue)
+     if (value < _minimumValue)
      {
-         value = m_minimumValue;
+         value = _minimumValue;
      }
 
-     if (value > m_maximumValue) 
+     if (value > _maximumValue) 
      {
-         value = m_maximumValue;
+         value = _maximumValue;
      }
 
-     m_value = value;
+     _value = value;
 
      this->needsLayout();
 
@@ -155,24 +155,24 @@ void CCControlSlider::setEnabled(bool enabled)
 
  void CCControlSlider::setMinimumValue(float minimumValue)
  {
-     m_minimumValue=minimumValue;
-     m_minimumAllowedValue = minimumValue;
-     if (m_minimumValue >= m_maximumValue)    
+     _minimumValue=minimumValue;
+     _minimumAllowedValue = minimumValue;
+     if (_minimumValue >= _maximumValue)    
      {
-        m_maximumValue   = m_minimumValue + 1.0f;
+        _maximumValue   = _minimumValue + 1.0f;
      }
-     setValue(m_value);
+     setValue(_value);
  }
 
  void CCControlSlider::setMaximumValue(float maximumValue)
  {
-     m_maximumValue=maximumValue;
-     m_maximumAllowedValue = maximumValue;
-     if (m_maximumValue <= m_minimumValue)   
+     _maximumValue=maximumValue;
+     _maximumAllowedValue = maximumValue;
+     if (_maximumValue <= _minimumValue)   
      {
-        m_minimumValue   = m_maximumValue - 1.0f;
+        _minimumValue   = _maximumValue - 1.0f;
      }
-     setValue(m_value);
+     setValue(_value);
  }
 
 bool CCControlSlider::isTouchInside(CCTouch * touch)
@@ -181,8 +181,8 @@ bool CCControlSlider::isTouchInside(CCTouch * touch)
   touchLocation           = this->getParent()->convertToNodeSpace(touchLocation);
 
   CCRect rect             = this->boundingBox();
-  rect.size.width         += m_thumbSprite->getContentSize().width;
-  rect.origin.x           -= m_thumbSprite->getContentSize().width / 2;
+  rect.size.width         += _thumbSprite->getContentSize().width;
+  rect.origin.x           -= _thumbSprite->getContentSize().width / 2;
 
   return rect.containsPoint(touchLocation);
 }
@@ -195,9 +195,9 @@ CCPoint CCControlSlider::locationFromTouch(CCTouch* touch)
   if (touchLocation.x < 0)
   {
       touchLocation.x     = 0;
-  } else if (touchLocation.x > m_backgroundSprite->getContentSize().width)
+  } else if (touchLocation.x > _backgroundSprite->getContentSize().width)
   {
-      touchLocation.x     = m_backgroundSprite->getContentSize().width;
+      touchLocation.x     = _backgroundSprite->getContentSize().width;
   }
 
   return touchLocation;
@@ -229,21 +229,21 @@ void CCControlSlider::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 
 void CCControlSlider::needsLayout()
 {
-    if (NULL == m_thumbSprite || NULL == m_backgroundSprite || NULL == m_progressSprite)
+    if (NULL == _thumbSprite || NULL == _backgroundSprite || NULL == _progressSprite)
     {
         return;
     }
     // Update thumb position for new value
-    float percent               = (m_value - m_minimumValue) / (m_maximumValue - m_minimumValue);
+    float percent               = (_value - _minimumValue) / (_maximumValue - _minimumValue);
 
-    CCPoint pos                 = m_thumbSprite->getPosition();
-    pos.x                       = percent * m_backgroundSprite->getContentSize().width;
-    m_thumbSprite->setPosition(pos);
+    CCPoint pos                 = _thumbSprite->getPosition();
+    pos.x                       = percent * _backgroundSprite->getContentSize().width;
+    _thumbSprite->setPosition(pos);
 
     // Stretches content proportional to newLevel
-    CCRect textureRect          = m_progressSprite->getTextureRect();
+    CCRect textureRect          = _progressSprite->getTextureRect();
     textureRect                 = CCRectMake(textureRect.origin.x, textureRect.origin.y, pos.x, textureRect.size.height);
-    m_progressSprite->setTextureRect(textureRect, m_progressSprite->isTextureRectRotated(), textureRect.size);
+    _progressSprite->setTextureRect(textureRect, _progressSprite->isTextureRectRotated(), textureRect.size);
 }
 
 void CCControlSlider::sliderBegan(CCPoint location)
@@ -262,7 +262,7 @@ void CCControlSlider::sliderEnded(CCPoint location)
 {
     if (this->isSelected())
     {
-        setValue(valueForLocation(m_thumbSprite->getPosition()));
+        setValue(valueForLocation(_thumbSprite->getPosition()));
     }
     this->getThumbSprite()->setColor(ccWHITE);
     this->setSelected(false);
@@ -270,8 +270,8 @@ void CCControlSlider::sliderEnded(CCPoint location)
 
 float CCControlSlider::valueForLocation(CCPoint location)
 {
-    float percent = location.x/ m_backgroundSprite->getContentSize().width;
-    return MAX(MIN(m_minimumValue + percent * (m_maximumValue - m_minimumValue), m_maximumAllowedValue), m_minimumAllowedValue);
+    float percent = location.x/ _backgroundSprite->getContentSize().width;
+    return MAX(MIN(_minimumValue + percent * (_maximumValue - _minimumValue), _maximumAllowedValue), _minimumAllowedValue);
 }
 
 NS_CC_EXT_END

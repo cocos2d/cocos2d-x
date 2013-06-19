@@ -75,13 +75,13 @@ public:
 
     void init()
     {
-        m_DelegateWithIme = 0;
+        _delegateWithIme = 0;
     }
 
     DelegateIter findDelegate(CCIMEDelegate* pDelegate)
     {
-        DelegateIter end = m_DelegateList.end();
-        for (DelegateIter iter = m_DelegateList.begin(); iter != end; ++iter)
+        DelegateIter end = _delegateList.end();
+        for (DelegateIter iter = _delegateList.begin(); iter != end; ++iter)
         {
             if (pDelegate == *iter)
             {
@@ -91,8 +91,8 @@ public:
         return end;
     }
 
-    DelegateList    m_DelegateList;
-    CCIMEDelegate*  m_DelegateWithIme;
+    DelegateList    _delegateList;
+    CCIMEDelegate*  _delegateWithIme;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -100,14 +100,14 @@ public:
 //////////////////////////////////////////////////////////////////////////
 
 CCIMEDispatcher::CCIMEDispatcher()
-: m_pImpl(new CCIMEDispatcher::Impl)
+: _impl(new CCIMEDispatcher::Impl)
 {
-    m_pImpl->init();
+    _impl->init();
 }
 
 CCIMEDispatcher::~CCIMEDispatcher()
 {
-    CC_SAFE_DELETE(m_pImpl);
+    CC_SAFE_DELETE(_impl);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -116,16 +116,16 @@ CCIMEDispatcher::~CCIMEDispatcher()
 
 void CCIMEDispatcher::addDelegate(CCIMEDelegate* pDelegate)
 {
-    if (! pDelegate || ! m_pImpl)
+    if (! pDelegate || ! _impl)
     {
         return;
     }
-    if (m_pImpl->m_DelegateList.end() != m_pImpl->findDelegate(pDelegate))
+    if (_impl->_delegateList.end() != _impl->findDelegate(pDelegate))
     {
         // pDelegate already in list
         return;
     }
-    m_pImpl->m_DelegateList.push_front(pDelegate);
+    _impl->_delegateList.push_front(pDelegate);
 }
 
 bool CCIMEDispatcher::attachDelegateWithIME(CCIMEDelegate * pDelegate)
@@ -133,28 +133,28 @@ bool CCIMEDispatcher::attachDelegateWithIME(CCIMEDelegate * pDelegate)
     bool bRet = false;
     do
     {
-        CC_BREAK_IF(! m_pImpl || ! pDelegate);
+        CC_BREAK_IF(! _impl || ! pDelegate);
 
-        DelegateIter end  = m_pImpl->m_DelegateList.end();
-        DelegateIter iter = m_pImpl->findDelegate(pDelegate);
+        DelegateIter end  = _impl->_delegateList.end();
+        DelegateIter iter = _impl->findDelegate(pDelegate);
 
         // if pDelegate is not in delegate list, return
         CC_BREAK_IF(end == iter);
 
-        if (m_pImpl->m_DelegateWithIme)
+        if (_impl->_delegateWithIme)
         {
             // if old delegate canDetachWithIME return false 
             // or pDelegate canAttachWithIME return false,
             // do nothing.
-            CC_BREAK_IF(! m_pImpl->m_DelegateWithIme->canDetachWithIME()
+            CC_BREAK_IF(! _impl->_delegateWithIme->canDetachWithIME()
                 || ! pDelegate->canAttachWithIME());
 
             // detach first
-            CCIMEDelegate * pOldDelegate = m_pImpl->m_DelegateWithIme;
-            m_pImpl->m_DelegateWithIme = 0;
+            CCIMEDelegate * pOldDelegate = _impl->_delegateWithIme;
+            _impl->_delegateWithIme = 0;
             pOldDelegate->didDetachWithIME();
 
-            m_pImpl->m_DelegateWithIme = *iter;
+            _impl->_delegateWithIme = *iter;
             pDelegate->didAttachWithIME();
             bRet = true;
             break;
@@ -163,7 +163,7 @@ bool CCIMEDispatcher::attachDelegateWithIME(CCIMEDelegate * pDelegate)
         // delegate hasn't attached to IME yet
         CC_BREAK_IF(! pDelegate->canAttachWithIME());
 
-        m_pImpl->m_DelegateWithIme = *iter;
+        _impl->_delegateWithIme = *iter;
         pDelegate->didAttachWithIME();
         bRet = true;
     } while (0);
@@ -175,14 +175,14 @@ bool CCIMEDispatcher::detachDelegateWithIME(CCIMEDelegate * pDelegate)
     bool bRet = false;
     do
     {
-        CC_BREAK_IF(! m_pImpl || ! pDelegate);
+        CC_BREAK_IF(! _impl || ! pDelegate);
 
         // if pDelegate is not the current delegate attached to IME, return
-        CC_BREAK_IF(m_pImpl->m_DelegateWithIme != pDelegate);
+        CC_BREAK_IF(_impl->_delegateWithIme != pDelegate);
 
         CC_BREAK_IF(! pDelegate->canDetachWithIME());
 
-        m_pImpl->m_DelegateWithIme = 0;
+        _impl->_delegateWithIme = 0;
         pDelegate->didDetachWithIME();
         bRet = true;
     } while (0);
@@ -193,19 +193,19 @@ void CCIMEDispatcher::removeDelegate(CCIMEDelegate* pDelegate)
 {
     do 
     {
-        CC_BREAK_IF(! pDelegate || ! m_pImpl);
+        CC_BREAK_IF(! pDelegate || ! _impl);
 
-        DelegateIter iter = m_pImpl->findDelegate(pDelegate);
-        DelegateIter end  = m_pImpl->m_DelegateList.end();
+        DelegateIter iter = _impl->findDelegate(pDelegate);
+        DelegateIter end  = _impl->_delegateList.end();
         CC_BREAK_IF(end == iter);
 
-        if (m_pImpl->m_DelegateWithIme)
+        if (_impl->_delegateWithIme)
 
-        if (*iter == m_pImpl->m_DelegateWithIme)
+        if (*iter == _impl->_delegateWithIme)
         {
-            m_pImpl->m_DelegateWithIme = 0;
+            _impl->_delegateWithIme = 0;
         }
-        m_pImpl->m_DelegateList.erase(iter);
+        _impl->_delegateList.erase(iter);
     } while (0);
 }
 
@@ -217,12 +217,12 @@ void CCIMEDispatcher::dispatchInsertText(const char * pText, int nLen)
 {
     do 
     {
-        CC_BREAK_IF(! m_pImpl || ! pText || nLen <= 0);
+        CC_BREAK_IF(! _impl || ! pText || nLen <= 0);
 
         // there is no delegate attached to IME
-        CC_BREAK_IF(! m_pImpl->m_DelegateWithIme);
+        CC_BREAK_IF(! _impl->_delegateWithIme);
 
-        m_pImpl->m_DelegateWithIme->insertText(pText, nLen);
+        _impl->_delegateWithIme->insertText(pText, nLen);
     } while (0);
 }
 
@@ -230,21 +230,21 @@ void CCIMEDispatcher::dispatchDeleteBackward()
 {
     do 
     {
-        CC_BREAK_IF(! m_pImpl);
+        CC_BREAK_IF(! _impl);
 
         // there is no delegate attached to IME
-        CC_BREAK_IF(! m_pImpl->m_DelegateWithIme);
+        CC_BREAK_IF(! _impl->_delegateWithIme);
 
-        m_pImpl->m_DelegateWithIme->deleteBackward();
+        _impl->_delegateWithIme->deleteBackward();
     } while (0);
 }
 
 const char * CCIMEDispatcher::getContentText()
 {
     const char * pszContentText = 0;
-    if (m_pImpl && m_pImpl->m_DelegateWithIme)
+    if (_impl && _impl->_delegateWithIme)
     {
-        pszContentText = m_pImpl->m_DelegateWithIme->getContentText();
+        pszContentText = _impl->_delegateWithIme->getContentText();
     }
     return (pszContentText) ? pszContentText : "";
 }
@@ -255,11 +255,11 @@ const char * CCIMEDispatcher::getContentText()
 
 void CCIMEDispatcher::dispatchKeyboardWillShow(CCIMEKeyboardNotificationInfo& info)
 {
-    if (m_pImpl)
+    if (_impl)
     {
         CCIMEDelegate * pDelegate = 0;
-        DelegateIter last = m_pImpl->m_DelegateList.end();
-        for (DelegateIter first = m_pImpl->m_DelegateList.begin(); first != last; ++first)
+        DelegateIter last = _impl->_delegateList.end();
+        for (DelegateIter first = _impl->_delegateList.begin(); first != last; ++first)
         {
             pDelegate = *(first);
             if (pDelegate)
@@ -272,11 +272,11 @@ void CCIMEDispatcher::dispatchKeyboardWillShow(CCIMEKeyboardNotificationInfo& in
 
 void CCIMEDispatcher::dispatchKeyboardDidShow(CCIMEKeyboardNotificationInfo& info)
 {
-    if (m_pImpl)
+    if (_impl)
     {
         CCIMEDelegate * pDelegate = 0;
-        DelegateIter last = m_pImpl->m_DelegateList.end();
-        for (DelegateIter first = m_pImpl->m_DelegateList.begin(); first != last; ++first)
+        DelegateIter last = _impl->_delegateList.end();
+        for (DelegateIter first = _impl->_delegateList.begin(); first != last; ++first)
         {
             pDelegate = *(first);
             if (pDelegate)
@@ -289,11 +289,11 @@ void CCIMEDispatcher::dispatchKeyboardDidShow(CCIMEKeyboardNotificationInfo& inf
 
 void CCIMEDispatcher::dispatchKeyboardWillHide(CCIMEKeyboardNotificationInfo& info)
 {
-    if (m_pImpl)
+    if (_impl)
     {
         CCIMEDelegate * pDelegate = 0;
-        DelegateIter last = m_pImpl->m_DelegateList.end();
-        for (DelegateIter first = m_pImpl->m_DelegateList.begin(); first != last; ++first)
+        DelegateIter last = _impl->_delegateList.end();
+        for (DelegateIter first = _impl->_delegateList.begin(); first != last; ++first)
         {
             pDelegate = *(first);
             if (pDelegate)
@@ -306,11 +306,11 @@ void CCIMEDispatcher::dispatchKeyboardWillHide(CCIMEKeyboardNotificationInfo& in
 
 void CCIMEDispatcher::dispatchKeyboardDidHide(CCIMEKeyboardNotificationInfo& info)
 {
-    if (m_pImpl)
+    if (_impl)
     {
         CCIMEDelegate * pDelegate = 0;
-        DelegateIter last = m_pImpl->m_DelegateList.end();
-        for (DelegateIter first = m_pImpl->m_DelegateList.begin(); first != last; ++first)
+        DelegateIter last = _impl->_delegateList.end();
+        for (DelegateIter first = _impl->_delegateList.begin(); first != last; ++first)
         {
             pDelegate = *(first);
             if (pDelegate)

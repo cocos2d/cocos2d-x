@@ -32,7 +32,7 @@ NS_CC_BEGIN
 
 CCScene::CCScene()
 {
-    m_bIgnoreAnchorPointForPosition = true;
+    _ignoreAnchorPointForPosition = true;
     setAnchorPoint(ccp(0.5f, 0.5f));
 }
 

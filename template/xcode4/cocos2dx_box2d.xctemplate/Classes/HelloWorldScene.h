@@ -20,7 +20,7 @@ public:
     virtual bool isDirty(void);
     virtual cocos2d::CCAffineTransform nodeToParentTransform(void);
 private:
-    b2Body* m_pBody;    // strong ref
+    b2Body* _body;    // strong ref
 };
 
 class HelloWorld : public cocos2d::CCLayer {
@@ -41,7 +41,7 @@ public:
     
 private:
     b2World* world;
-    cocos2d::CCTexture2D* m_pSpriteTexture; // weak ref
+    cocos2d::CCTexture2D* _spriteTexture; // weak ref
 };
 
 #endif // __HELLO_WORLD_H__

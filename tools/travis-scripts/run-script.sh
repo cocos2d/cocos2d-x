@@ -48,6 +48,7 @@ if [ "$PLATFORM"x = "emscripten"x ]; then
     cd $COCOS2DX_ROOT
     export PYTHON=/usr/bin/python
     export LLVM=$HOME/bin/clang+llvm-3.2/bin
+    export LLVM_ROOT=$LLVM
     sudo mkdir -p /Library/Fonts
     sudo cp samples/Cpp/TestCpp/Resources/fonts/arial.ttf /Library/Fonts/Arial.ttf
     EMCC_DEBUG=1 make -f Makefile.emscripten -j 8

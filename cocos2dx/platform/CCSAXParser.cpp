@@ -34,7 +34,7 @@ NS_CC_BEGIN
 class XmlSaxHander : public tinyxml2::XMLVisitor
 {
 public:
-	XmlSaxHander():m_ccsaxParserImp(0){};
+	XmlSaxHander():_ccsaxParserImp(0){};
 	
 	virtual bool VisitEnter( const tinyxml2::XMLElement& element, const tinyxml2::XMLAttribute* firstAttribute );
 	virtual bool VisitExit( const tinyxml2::XMLElement& element );
@@ -43,11 +43,11 @@ public:
 
 	void setCCSAXParserImp(CCSAXParser* parser)
 	{
-		m_ccsaxParserImp = parser;
+		_ccsaxParserImp = parser;
 	}
 
 private:
-	CCSAXParser *m_ccsaxParserImp;
+	CCSAXParser *_ccsaxParserImp;
 };
 
 
@@ -68,27 +68,27 @@ bool XmlSaxHander::VisitEnter( const tinyxml2::XMLElement& element, const tinyxm
 	//attsVector.push_back(nullptr);
     attsVector.push_back(NULL);
 
-	CCSAXParser::startElement(m_ccsaxParserImp, (const CC_XML_CHAR *)element.Value(), (const CC_XML_CHAR **)(&attsVector[0]));
+	CCSAXParser::startElement(_ccsaxParserImp, (const CC_XML_CHAR *)element.Value(), (const CC_XML_CHAR **)(&attsVector[0]));
 	return true;
 }
 bool XmlSaxHander::VisitExit( const tinyxml2::XMLElement& element )
 {
 	//CCLog("VisitExit %s",element.Value());
 
-	CCSAXParser::endElement(m_ccsaxParserImp, (const CC_XML_CHAR *)element.Value());
+	CCSAXParser::endElement(_ccsaxParserImp, (const CC_XML_CHAR *)element.Value());
 	return true;
 }
 
 bool XmlSaxHander::Visit( const tinyxml2::XMLText& text )
 {
 	//CCLog("Visit %s",text.Value());
-	CCSAXParser::textHandler(m_ccsaxParserImp, (const CC_XML_CHAR *)text.Value(), strlen(text.Value()));
+	CCSAXParser::textHandler(_ccsaxParserImp, (const CC_XML_CHAR *)text.Value(), strlen(text.Value()));
 	return true;
 }
 
 CCSAXParser::CCSAXParser()
 {
-    m_pDelegator = NULL;
+    _delegator = NULL;
 }
 
 CCSAXParser::~CCSAXParser(void)
@@ -127,20 +127,20 @@ bool CCSAXParser::parse(const char *pszFile)
 
 void CCSAXParser::startElement(void *ctx, const CC_XML_CHAR *name, const CC_XML_CHAR **atts)
 {
-    ((CCSAXParser*)(ctx))->m_pDelegator->startElement(ctx, (char*)name, (const char**)atts);
+    ((CCSAXParser*)(ctx))->_delegator->startElement(ctx, (char*)name, (const char**)atts);
 }
 
 void CCSAXParser::endElement(void *ctx, const CC_XML_CHAR *name)
 {
-    ((CCSAXParser*)(ctx))->m_pDelegator->endElement(ctx, (char*)name);
+    ((CCSAXParser*)(ctx))->_delegator->endElement(ctx, (char*)name);
 }
 void CCSAXParser::textHandler(void *ctx, const CC_XML_CHAR *name, int len)
 {
-    ((CCSAXParser*)(ctx))->m_pDelegator->textHandler(ctx, (char*)name, len);
+    ((CCSAXParser*)(ctx))->_delegator->textHandler(ctx, (char*)name, len);
 }
 void CCSAXParser::setDelegator(CCSAXDelegator* pDelegator)
 {
-    m_pDelegator = pDelegator;
+    _delegator = pDelegator;
 }
 
 NS_CC_END

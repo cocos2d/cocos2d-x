@@ -58,7 +58,7 @@ class CC_DLL CCRenderTexture : public CCNode
     The blending function can be changed in runtime by calling:
     - [[renderTexture sprite] setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
     */
-    CC_PROPERTY(CCSprite*, m_pSprite, Sprite)
+    CC_PROPERTY(CCSprite*, _sprite, Sprite)
 public:
     CCRenderTexture();
     virtual ~CCRenderTexture();
@@ -161,20 +161,20 @@ private:
     void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags);
 
 protected:
-    GLuint       m_uFBO;
-    GLuint       m_uDepthRenderBufffer;
-    GLint        m_nOldFBO;
-    CCTexture2D* m_pTexture;
-    CCTexture2D* m_pTextureCopy;    // a copy of m_pTexture
-    CCImage*     m_pUITextureImage;
-    GLenum       m_ePixelFormat;
+    GLuint       _FBO;
+    GLuint       _depthRenderBufffer;
+    GLint        _oldFBO;
+    CCTexture2D* _texture;
+    CCTexture2D* _textureCopy;    // a copy of _texture
+    CCImage*     _UITextureImage;
+    GLenum       _pixelFormat;
     
     // code for "auto" update
-    GLbitfield   m_uClearFlags;
-    ccColor4F    m_sClearColor;
-    GLclampf     m_fClearDepth;
-    GLint        m_nClearStencil;
-    bool         m_bAutoDraw;
+    GLbitfield   _clearFlags;
+    ccColor4F    _clearColor;
+    GLclampf     _clearDepth;
+    GLint        _clearStencil;
+    bool         _autoDraw;
 };
 
 // end of textures group

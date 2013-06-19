@@ -82,8 +82,8 @@ public:
      */
     virtual void play(CCMovementBoneData *movementBoneData, int durationTo, int durationTween,  int loop, int tweenEasing);
 
-	inline void setAnimation(CCArmatureAnimation *animation) { m_pAnimation = animation; }
-	inline CCArmatureAnimation *getAnimation() const { return m_pAnimation; }
+	inline void setAnimation(CCArmatureAnimation *animation) { _animation = animation; }
+	inline CCArmatureAnimation *getAnimation() const { return _animation; }
 protected:
 
     /**
@@ -112,29 +112,29 @@ protected:
     virtual void arriveKeyFrame(CCFrameData *keyFrameData);
 protected:
     //! A weak reference to the current CCMovementBoneData. The data is in the data pool
-    CC_SYNTHESIZE(CCMovementBoneData *, m_pMovementBoneData, MovementBoneData)
+    CC_SYNTHESIZE(CCMovementBoneData *, _movementBoneData, MovementBoneData)
 
-    CCFrameData *m_pTweenData;		//! The computational tween frame data, //! A weak reference to the CCBone's tweenData
-    CCFrameData *m_pFrom;				//! From frame data, used for calculate between value
-    CCFrameData *m_pTo;				//! To frame data, used for calculate between value
-    CCFrameData *m_pBetween;			//! Between frame data, used for calculate current CCFrameData(m_pNode) value
+    CCFrameData *_tweenData;		//! The computational tween frame data, //! A weak reference to the CCBone's tweenData
+    CCFrameData *_from;				//! From frame data, used for calculate between value
+    CCFrameData *_to;				//! To frame data, used for calculate between value
+    CCFrameData *_between;			//! Between frame data, used for calculate current CCFrameData(_node) value
 
-    CCFrameData *m_pCurrentKeyFrame;	//! A weak reference to the current CCFrameData. The data is in the data pool
+    CCFrameData *_currentKeyFrame;	//! A weak reference to the current CCFrameData. The data is in the data pool
 
-    CCBone *m_pBone;					//! A weak reference to the CCBone
+    CCBone *_bone;					//! A weak reference to the CCBone
 
-    CCTweenType m_eFrameTweenEasing;	//! Dedermine which tween effect current frame use
+    CCTweenType _frameTweenEasing;	//! Dedermine which tween effect current frame use
 
-    bool m_bIsTweenKeyFrame;
+    bool _isTweenKeyFrame;
 
     int betweenDuration;			//! Current key frame will last betweenDuration frames
-    int m_iTotalDuration;
+    int _totalDuration;
 
 
-    int m_iFromIndex;				//! The current frame index in FrameList of CCMovementBoneData, it's different from m_iFrameIndex
-    int m_iToIndex;					//! The next frame index in FrameList of CCMovementBoneData, it's different from m_iFrameIndex
+    int _fromIndex;				//! The current frame index in FrameList of CCMovementBoneData, it's different from _frameIndex
+    int _toIndex;					//! The next frame index in FrameList of CCMovementBoneData, it's different from _frameIndex
 
-    CCArmatureAnimation *m_pAnimation;
+    CCArmatureAnimation *_animation;
 };
 
 NS_CC_EXT_END

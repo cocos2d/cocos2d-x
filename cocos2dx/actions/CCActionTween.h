@@ -69,14 +69,14 @@ public:
 
     void startWithTarget(CCNode *pTarget);
     void update(float dt);
-    CCActionInterval* reverse();
-
+	/** returns a new reversed action */
+    CCActionTween* reverse() const;
 	/** returns a new clone of the action */
 	CCActionTween *clone() const;
 
-    std::string        m_strKey;
-    float            m_fFrom, m_fTo;
-    float            m_fDelta;
+    std::string        _key;
+    float            _from, _to;
+    float            _delta;
 };
 
 // end of actions group

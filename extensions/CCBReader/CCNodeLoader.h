@@ -117,7 +117,7 @@ class CCNodeLoader : public CCObject {
         virtual void onHandlePropTypeCCBFile(CCNode * pNode, CCNode * pParent, const char* pPropertyName, CCNode * pCCBFileNode, CCBReader * pCCBReader);
 
 protected:
-        CCDictionary* m_pCustomProperties;
+        CCDictionary* _customProperties;
 };
 
 NS_CC_EXT_END

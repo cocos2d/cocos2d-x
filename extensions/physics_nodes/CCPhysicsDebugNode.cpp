@@ -179,20 +179,20 @@ static void DrawConstraint(cpConstraint *constraint, CCDrawNode *renderer)
 
 void CCPhysicsDebugNode::draw()
 {
-    if (! m_pSpacePtr)
+    if (! _spacePtr)
     {
         return;
     }
     
-    cpSpaceEachShape(m_pSpacePtr, (cpSpaceShapeIteratorFunc)DrawShape, this);
-	cpSpaceEachConstraint(m_pSpacePtr, (cpSpaceConstraintIteratorFunc)DrawConstraint, this);
+    cpSpaceEachShape(_spacePtr, (cpSpaceShapeIteratorFunc)DrawShape, this);
+	cpSpaceEachConstraint(_spacePtr, (cpSpaceConstraintIteratorFunc)DrawConstraint, this);
     
     CCDrawNode::draw();
     CCDrawNode::clear();
 }
 
 CCPhysicsDebugNode::CCPhysicsDebugNode()
-: m_pSpacePtr(NULL)
+: _spacePtr(NULL)
 {}
 
 CCPhysicsDebugNode* CCPhysicsDebugNode::create(cpSpace *space)
@@ -202,7 +202,7 @@ CCPhysicsDebugNode* CCPhysicsDebugNode::create(cpSpace *space)
     {
         node->init();
         
-        node->m_pSpacePtr = space;
+        node->_spacePtr = space;
         
         node->autorelease();
     }
@@ -220,12 +220,12 @@ CCPhysicsDebugNode::~CCPhysicsDebugNode()
 
 cpSpace* CCPhysicsDebugNode::getSpace() const
 {
-    return m_pSpacePtr;
+    return _spacePtr;
 }
 
 void CCPhysicsDebugNode::setSpace(cpSpace *space)
 {
-    m_pSpacePtr = space;
+    _spacePtr = space;
 }
 
 NS_CC_EXT_END
