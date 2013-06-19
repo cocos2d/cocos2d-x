@@ -318,6 +318,7 @@ Developers:
         Fixed a bug that CCControlSwitch::setOn(isOn,false) doesn't work.
         Adds VS2012 Express template installing support.
         Fixing a logical error in CCDrawNode::drawPolygon.
+        Fixing a bug that Jsb function getCPBody return type is not right.
 
     DarraghCoy
         Fix for unaligned memory access crash in CCBReader::readFloat().
