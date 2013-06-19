@@ -23,21 +23,124 @@
  ****************************************************************************/
 
 #include "CCAccelerometer.h"
-#include "AccelerometerDelegateWrapper.h"
+
+#import <Foundation/Foundation.h>
+#import "CCAccelerometerDelegate.h"
+#import <UIKit/UIKit.h>
+#import <functional>
+
+@interface AccelerometerDispatcher : NSObject<UIAccelerometerDelegate>
+{
+    std::function<void(cocos2d::CCAcceleration*)> _function;
+    cocos2d::CCAcceleration *_acceleration;
+}
+
++ (id) sharedAccelerometerDispather;
+- (id) init;
+- (void) addDelegate: (std::function<void(cocos2d::CCAcceleration*)>) function;
+- (void) setAccelerometerInterval:(float)interval;
+
+@end
+
+@implementation AccelerometerDispatcher
+
+static AccelerometerDispatcher* s_pAccelerometerDispatcher;
+
++ (id) sharedAccelerometerDispather
+{
+    if (s_pAccelerometerDispatcher == nil) {
+        s_pAccelerometerDispatcher = [[self alloc] init];
+    }
+    
+    return s_pAccelerometerDispatcher;
+}
+
+- (id) init
+{
+    _acceleration = new cocos2d::CCAcceleration();
+    return self;
+}
+
+- (void) dealloc
+{
+    s_pAccelerometerDispatcher = nullptr;
+    _function = nullptr;
+    delete _acceleration;
+    [super dealloc];
+}
+
+- (void) addDelegate: (std::function<void(cocos2d::CCAcceleration*)>) function
+{
+    _function = function;
+    
+    if (_function)
+    {
+        [[UIAccelerometer sharedAccelerometer] setDelegate:self];
+    }
+    else
+    {
+        [[UIAccelerometer sharedAccelerometer] setDelegate:nil];
+    }
+}
+
+-(void) setAccelerometerInterval:(float)interval
+{
+    [[UIAccelerometer sharedAccelerometer] setUpdateInterval:interval];
+}
+
+- (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
+{
+    if (! _function)
+    {
+        return;
+    }
+    
+    _acceleration->x = acceleration.x;
+    _acceleration->y = acceleration.y;
+    _acceleration->z = acceleration.z;
+    _acceleration->timestamp = acceleration.timestamp;
+    
+    double tmp = _acceleration->x;
+    
+    switch ([[UIApplication sharedApplication] statusBarOrientation])
+    {
+        case UIInterfaceOrientationLandscapeRight:
+            _acceleration->x = -_acceleration->y;
+            _acceleration->y = tmp;
+            break;
+            
+        case UIInterfaceOrientationLandscapeLeft:
+            _acceleration->x = _acceleration->y;
+            _acceleration->y = -tmp;
+            break;
+            
+        case UIInterfaceOrientationPortraitUpsideDown:
+            _acceleration->x = -_acceleration->y;
+            _acceleration->y = -tmp;
+            break;
+            
+        case UIInterfaceOrientationPortrait:
+            break;
+    }
+    
+    _function(_acceleration);
+}
+
+@end
+
+/** Implementation of CCAccelerometer
+ */
 
 NS_CC_BEGIN
-    
-CCAccelerometer::CCAccelerometer()
-{
-}
 
-CCAccelerometer::~CCAccelerometer()
-{
-}
 
-void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
+CCAccelerometer::CCAccelerometer() {}
+
+CCAccelerometer::~CCAccelerometer() {}
+
+void CCAccelerometer::setDelegate(std::function<void (CCAcceleration *)> function)
 {
-    [[AccelerometerDispatcher sharedAccelerometerDispather] addDelegate:pDelegate];
+    [[AccelerometerDispatcher sharedAccelerometerDispather] addDelegate:function];
 }
 
 void CCAccelerometer::setAccelerometerInterval(float interval)
@@ -46,4 +149,3 @@ void CCAccelerometer::setAccelerometerInterval(float interval)
 }
 
 NS_CC_END
-

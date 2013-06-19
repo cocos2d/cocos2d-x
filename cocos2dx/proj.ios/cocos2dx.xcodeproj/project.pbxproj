@@ -156,8 +156,6 @@
 		1551A724158F2ADE00E66CFE /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A477158F2ADE00E66CFE /* CCSAXParser.cpp */; };
 		1551A725158F2ADE00E66CFE /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A478158F2ADE00E66CFE /* CCSAXParser.h */; };
 		1551A727158F2ADE00E66CFE /* CCThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A47A158F2ADE00E66CFE /* CCThread.h */; };
-		1551A728158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A47C158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h */; };
-		1551A729158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1551A47D158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm */; };
 		1551A72A158F2ADE00E66CFE /* CCAccelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A47E158F2ADE00E66CFE /* CCAccelerometer.h */; };
 		1551A72B158F2ADE00E66CFE /* CCAccelerometer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1551A47F158F2ADE00E66CFE /* CCAccelerometer.mm */; };
 		1551A72C158F2ADE00E66CFE /* CCApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A480158F2ADE00E66CFE /* CCApplication.h */; };
@@ -473,8 +471,6 @@
 		1551A477158F2ADE00E66CFE /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
 		1551A478158F2ADE00E66CFE /* CCSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSAXParser.h; sourceTree = "<group>"; };
 		1551A47A158F2ADE00E66CFE /* CCThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCThread.h; sourceTree = "<group>"; };
-		1551A47C158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerometerDelegateWrapper.h; sourceTree = "<group>"; };
-		1551A47D158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AccelerometerDelegateWrapper.mm; sourceTree = "<group>"; };
 		1551A47E158F2ADE00E66CFE /* CCAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAccelerometer.h; sourceTree = "<group>"; };
 		1551A47F158F2ADE00E66CFE /* CCAccelerometer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCAccelerometer.mm; sourceTree = "<group>"; };
 		1551A480158F2ADE00E66CFE /* CCApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCApplication.h; sourceTree = "<group>"; };
@@ -1009,8 +1005,6 @@
 		1551A47B158F2ADE00E66CFE /* ios */ = {
 			isa = PBXGroup;
 			children = (
-				1551A47C158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h */,
-				1551A47D158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm */,
 				1551A47E158F2ADE00E66CFE /* CCAccelerometer.h */,
 				1551A47F158F2ADE00E66CFE /* CCAccelerometer.mm */,
 				1551A480158F2ADE00E66CFE /* CCApplication.h */,
@@ -1386,7 +1380,6 @@
 				1551A723158F2ADE00E66CFE /* CCPlatformMacros.h in Headers */,
 				1551A725158F2ADE00E66CFE /* CCSAXParser.h in Headers */,
 				1551A727158F2ADE00E66CFE /* CCThread.h in Headers */,
-				1551A728158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h in Headers */,
 				1551A72A158F2ADE00E66CFE /* CCAccelerometer.h in Headers */,
 				1551A72C158F2ADE00E66CFE /* CCApplication.h in Headers */,
 				1551A72F158F2ADE00E66CFE /* CCDirectorCaller.h in Headers */,
@@ -1600,7 +1593,6 @@
 				1551A6F7158F2ADE00E66CFE /* CCParticleSystemQuad.cpp in Sources */,
 				1551A71C158F2ADE00E66CFE /* CCEGLViewProtocol.cpp in Sources */,
 				1551A724158F2ADE00E66CFE /* CCSAXParser.cpp in Sources */,
-				1551A729158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm in Sources */,
 				1551A72B158F2ADE00E66CFE /* CCAccelerometer.mm in Sources */,
 				1551A72D158F2ADE00E66CFE /* CCApplication.mm in Sources */,
 				1551A72E158F2ADE00E66CFE /* CCCommon.mm in Sources */,
