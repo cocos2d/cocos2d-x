@@ -139,7 +139,7 @@ void CCTextureCacheEmscripten::addImageAsyncCallBack_emscripten(AsyncStruct *dat
 #endif
 
     // cache the texture
-    m_pTextures->setObject(texture, filename);
+    _pTextures->setObject(texture, filename);
     texture->autorelease();
 
     CCObject *target = data->target;
@@ -163,7 +163,7 @@ void CCTextureCacheEmscripten::addImageAsync(const char *path, CCObject *target,
 
     // optimization
     std::string pathKey = CCFileUtils::sharedFileUtils()->fullPathForFilename(path);
-    texture = (CCTexture2D*)m_pTextures->objectForKey(pathKey.c_str());
+    texture = (CCTexture2D*)_pTextures->objectForKey(pathKey.c_str());
 
     std::string fullpath = pathKey;
     if (texture != NULL)
