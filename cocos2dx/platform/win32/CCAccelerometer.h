@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __PLATFORM_WIN32_UIACCELEROMETER_H__
 
 #include "platform/CCAccelerometerDelegate.h"
+#include <functional>
 
 NS_CC_BEGIN
 
@@ -35,12 +36,12 @@ public:
     CCAccelerometer();
     ~CCAccelerometer();
 
-    void setDelegate(CCAccelerometerDelegate* pDelegate);
+    void setDelegate(std::function<void(CCAcceleration*)> function);
     void setAccelerometerInterval(float interval);
     void update( double x,double y,double z,double timestamp );
 private:
     CCAcceleration _accelerationValue;
-    CCAccelerometerDelegate* _accelDelegate;
+    std::function<void(CCAcceleration*)> _function;
 };
 
 NS_CC_END

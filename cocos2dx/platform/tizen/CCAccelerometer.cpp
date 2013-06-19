@@ -30,8 +30,8 @@ using namespace Tizen::Uix::Sensor;
 NS_CC_BEGIN
 
 CCAccelerometer::CCAccelerometer()
-    : _accelDelegate(NULL)
-    , __sensorMgr(NULL)
+    : _function(nullptr)
+    , __sensorMgr(nullptr)
 {
 }
 
@@ -40,11 +40,11 @@ CCAccelerometer::~CCAccelerometer()
 
 }
 
-void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
+void CCAccelerometer::setDelegate(std::function<void(CCAcceleration*)> function)
 {
-    _accelDelegate = pDelegate;
+    _function = function;
 
-    if (pDelegate)
+    if (_function)
     {
         startSensor();
     }
@@ -97,7 +97,7 @@ void CCAccelerometer::stopSensor()
 
 void CCAccelerometer::OnDataReceived(SensorType sensorType, SensorData& sensorData , result r)
 {
-    if (_accelDelegate)
+    if (_function)
     {
         AccelerationSensorData& data = static_cast<AccelerationSensorData&>(sensorData);
         AppLog("AccelerationSensorData    x = %5.4f , y = %5.4f,  z = %5.4f ", data.x,data.y,data.z);
@@ -107,7 +107,7 @@ void CCAccelerometer::OnDataReceived(SensorType sensorType, SensorData& sensorDa
         _accelerationValue.z = -data.z;
         _accelerationValue.timestamp = data.timestamp;
 
-        _accelDelegate->didAccelerate(&_accelerationValue);
+        _function(&_accelerationValue);
     }
 }
 
