@@ -49,7 +49,7 @@ public:
 protected:
     int            lastRenderedCount;
     int            quantityNodes;
-    SubTest        *m_pSubTest;
+    SubTest        *_subTest;
     int            subtestNumber;
 };
 

@@ -141,9 +141,9 @@ void ArmatureTestLayer::onEnter()
 	}    
 
 	// add menu
-	CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(ArmatureTestLayer::backCallback) );
-	CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(ArmatureTestLayer::restartCallback) );
-	CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(ArmatureTestLayer::nextCallback) );
+	CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, CC_CALLBACK_1(ArmatureTestLayer::backCallback,this));
+	CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, CC_CALLBACK_1(ArmatureTestLayer::restartCallback, this));
+	CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, CC_CALLBACK_1(ArmatureTestLayer::nextCallback, this));
 
 	CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 

@@ -37,7 +37,7 @@ public:
     /** Callback for the change value. */
     void colourValueChanged(CCObject *sender, CCControlEvent controlEvent);
 
-    CC_SYNTHESIZE_RETAIN(CCLabelTTF*, m_pColorLabel, ColorLabel)
+    CC_SYNTHESIZE_RETAIN(CCLabelTTF*, _colorLabel, ColorLabel)
 
     CONTROL_SCENE_CREATE_FUNC(CCControlColourPickerTest)
 };

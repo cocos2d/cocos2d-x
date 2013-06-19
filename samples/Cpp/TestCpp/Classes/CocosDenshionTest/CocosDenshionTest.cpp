@@ -25,9 +25,9 @@ using namespace CocosDenshion;
 #define LINE_SPACE          40
 
 CocosDenshionTest::CocosDenshionTest()
-: m_pItmeMenu(NULL),
-m_tBeginPos(CCPointZero),
-m_nSoundId(0)
+: _itmeMenu(NULL),
+_beginPos(CCPointZero),
+_soundId(0)
 {
     std::string testItems[] = {
         "play background music",
@@ -52,11 +52,11 @@ m_nSoundId(0)
     };
 
     // add menu items for tests
-    m_pItmeMenu = CCMenu::create();
+    _itmeMenu = CCMenu::create();
 
-    m_nTestCount = sizeof(testItems) / sizeof(testItems[0]);
+    _testCount = sizeof(testItems) / sizeof(testItems[0]);
 
-    for (int i = 0; i < m_nTestCount; ++i)
+    for (int i = 0; i < _testCount; ++i)
     {
 //#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
 //        CCLabelBMFont* label = CCLabelBMFont::create(testItems[i].c_str(),  "fonts/arial16.fnt");
@@ -65,13 +65,13 @@ m_nSoundId(0)
 //#endif        
         CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, CC_CALLBACK_1(CocosDenshionTest::menuCallback, this));
         
-        m_pItmeMenu->addChild(pMenuItem, i + 10000);
+        _itmeMenu->addChild(pMenuItem, i + 10000);
         pMenuItem->setPosition( ccp( VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE) ));
     }
 
-    m_pItmeMenu->setContentSize(CCSizeMake(VisibleRect::getVisibleRect().size.width, (m_nTestCount + 1) * LINE_SPACE));
-    m_pItmeMenu->setPosition(CCPointZero);
-    addChild(m_pItmeMenu);
+    _itmeMenu->setContentSize(CCSizeMake(VisibleRect::getVisibleRect().size.width, (_testCount + 1) * LINE_SPACE));
+    _itmeMenu->setPosition(CCPointZero);
+    addChild(_itmeMenu);
 
     setTouchEnabled(true);
 
@@ -137,15 +137,15 @@ void CocosDenshionTest::menuCallback(CCObject * pSender)
         break;
     // play effect
     case 6:
-        m_nSoundId = SimpleAudioEngine::sharedEngine()->playEffect(EFFECT_FILE);
+        _soundId = SimpleAudioEngine::sharedEngine()->playEffect(EFFECT_FILE);
         break;
     // play effect
     case 7:
-        m_nSoundId = SimpleAudioEngine::sharedEngine()->playEffect(EFFECT_FILE, true);
+        _soundId = SimpleAudioEngine::sharedEngine()->playEffect(EFFECT_FILE, true);
         break;
     // stop effect
     case 8:
-        SimpleAudioEngine::sharedEngine()->stopEffect(m_nSoundId);
+        SimpleAudioEngine::sharedEngine()->stopEffect(_soundId);
         break;
     // unload effect
     case 9:
@@ -168,10 +168,10 @@ void CocosDenshionTest::menuCallback(CCObject * pSender)
         SimpleAudioEngine::sharedEngine()->setEffectsVolume(SimpleAudioEngine::sharedEngine()->getEffectsVolume() - 0.1f);
         break;
     case 14:
-        SimpleAudioEngine::sharedEngine()->pauseEffect(m_nSoundId);
+        SimpleAudioEngine::sharedEngine()->pauseEffect(_soundId);
         break;
     case 15:
-        SimpleAudioEngine::sharedEngine()->resumeEffect(m_nSoundId);
+        SimpleAudioEngine::sharedEngine()->resumeEffect(_soundId);
         break;
     case 16:
         SimpleAudioEngine::sharedEngine()->pauseAllEffects();
@@ -191,7 +191,7 @@ void CocosDenshionTest::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
     CCSetIterator it = pTouches->begin();
     CCTouch* touch = (CCTouch*)(*it);
 
-    m_tBeginPos = touch->getLocation();    
+    _beginPos = touch->getLocation();    
 }
 
 void CocosDenshionTest::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
@@ -200,25 +200,25 @@ void CocosDenshionTest::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
     CCTouch* touch = (CCTouch*)(*it);
 
     CCPoint touchLocation = touch->getLocation();
-    float nMoveY = touchLocation.y - m_tBeginPos.y;
+    float nMoveY = touchLocation.y - _beginPos.y;
 
-    CCPoint curPos  = m_pItmeMenu->getPosition();
+    CCPoint curPos  = _itmeMenu->getPosition();
     CCPoint nextPos = ccp(curPos.x, curPos.y + nMoveY);
 
     if (nextPos.y < 0.0f)
     {
-        m_pItmeMenu->setPosition(CCPointZero);
+        _itmeMenu->setPosition(CCPointZero);
         return;
     }
 
-    if (nextPos.y > ((m_nTestCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
+    if (nextPos.y > ((_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        m_pItmeMenu->setPosition(ccp(0, ((m_nTestCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itmeMenu->setPosition(ccp(0, ((_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
         return;
     }
 
-    m_pItmeMenu->setPosition(nextPos);
-    m_tBeginPos = touchLocation;
+    _itmeMenu->setPosition(nextPos);
+    _beginPos = touchLocation;
 }
 
 void CocosDenshionTestScene::runThisTest()

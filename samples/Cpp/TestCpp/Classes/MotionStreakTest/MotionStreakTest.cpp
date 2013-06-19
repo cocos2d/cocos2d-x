@@ -24,14 +24,14 @@ void MotionStreakTest1::onEnter()
     CCSize s = CCDirector::sharedDirector()->getWinSize();
   
     // the root object just rotates around
-    m_root = CCSprite::create(s_pPathR1);
-    addChild(m_root, 1);
-    m_root->setPosition(ccp(s.width/2, s.height/2));
+    _root = CCSprite::create(s_pPathR1);
+    addChild(_root, 1);
+    _root->setPosition(ccp(s.width/2, s.height/2));
   
     // the target object is offset from root, and the streak is moved to follow it
-    m_target = CCSprite::create(s_pPathR1);
-    m_root->addChild(m_target);
-    m_target->setPosition(ccp(s.width/4, 0));
+    _target = CCSprite::create(s_pPathR1);
+    _root->addChild(_target);
+    _target->setPosition(ccp(s.width/4, 0));
 
     // create the streak object and add it to the scene
     streak = CCMotionStreak::create(2, 3, 32, ccGREEN, s_streak);
@@ -43,8 +43,8 @@ void MotionStreakTest1::onEnter()
 
     CCAction* action1 = CCRepeatForever::create(a1);
     CCActionInterval* motion = CCMoveBy::create(2, ccp(100,0) );
-    m_root->runAction( CCRepeatForever::create(CCSequence::create(motion, motion->reverse(), NULL) ) );
-    m_root->runAction( action1 );
+    _root->runAction( CCRepeatForever::create(CCSequence::create(motion, motion->reverse(), NULL) ) );
+    _root->runAction( action1 );
 
     CCActionInterval *colorAction = CCRepeatForever::create(CCSequence::create(
         CCTintTo::create(0.2f, 255, 0, 0),
@@ -61,7 +61,7 @@ void MotionStreakTest1::onEnter()
 
 void MotionStreakTest1::onUpdate(float delta)
 {
-    streak->setPosition( m_target->convertToWorldSpace(CCPointZero) );
+    streak->setPosition( _target->convertToWorldSpace(CCPointZero) );
 }
 
 std::string MotionStreakTest1::title()
@@ -122,18 +122,18 @@ void Issue1358::onEnter()
     addChild(streak);
     
     
-    m_center  = ccp(size.width/2, size.height/2);
-    m_fRadius = size.width/3;
-    m_fAngle = 0.0f;
+    _center  = ccp(size.width/2, size.height/2);
+    _radius = size.width/3;
+    _angle = 0.0f;
     
     schedule(schedule_selector(Issue1358::update), 0);
 }
 
 void Issue1358::update(float dt)
 {
-    m_fAngle += 1.0f;
-    streak->setPosition(ccp(m_center.x + cosf(m_fAngle/180 * M_PI)*m_fRadius,
-                            m_center.y + sinf(m_fAngle/ 180 * M_PI)*m_fRadius));
+    _angle += 1.0f;
+    streak->setPosition(ccp(_center.x + cosf(_angle/180 * M_PI)*_radius,
+                            _center.y + sinf(_angle/ 180 * M_PI)*_radius));
 }
 
 std::string Issue1358::title()

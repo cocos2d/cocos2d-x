@@ -139,18 +139,18 @@ private:
 	static std::string		s_sConfigfile;
     
 protected:
-    GLint           m_nMaxTextureSize;
-    GLint           m_nMaxModelviewStackDepth;
-    bool            m_bSupportsPVRTC;
-    bool            m_bSupportsNPOT;
-    bool            m_bSupportsBGRA8888;
-    bool            m_bSupportsDiscardFramebuffer;
-    bool            m_bSupportsShareableVAO;
-    GLint           m_nMaxSamplesAllowed;
-    GLint           m_nMaxTextureUnits;
-    char *          m_pGlExtensions;
+    GLint           _maxTextureSize;
+    GLint           _maxModelviewStackDepth;
+    bool            _supportsPVRTC;
+    bool            _supportsNPOT;
+    bool            _supportsBGRA8888;
+    bool            _supportsDiscardFramebuffer;
+    bool            _supportsShareableVAO;
+    GLint           _maxSamplesAllowed;
+    GLint           _maxTextureUnits;
+    char *          _glExtensions;
 	
-	CCDictionary	*m_pValueDict;
+	CCDictionary	*_valueDict;
 };
 
 // end of global group

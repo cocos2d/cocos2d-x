@@ -8,7 +8,7 @@ using namespace cocos2d::extension;
 
 PlayerController::PlayerController(void)
 {
-    m_strName = "PlayerController";
+    _name = "PlayerController";
 }
 
 PlayerController::~PlayerController(void)
@@ -43,13 +43,13 @@ void PlayerController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
     
 
 	CCSprite *projectile = CCSprite::create("components/Projectile.png", CCRectMake(0, 0, 20, 20));
-    m_pOwner->getParent()->addChild(projectile, 1, 4);
+    _owner->getParent()->addChild(projectile, 1, 4);
     
     ProjectileController *com = ProjectileController::create();
     projectile->addComponent(com);
     com->move(location.x, location.y);
 
-    ((CCComAudio*)(m_pOwner->getComponent("Audio")))->playEffect("pew-pew-lei.wav");
+    ((CCComAudio*)(_owner->getComponent("Audio")))->playEffect("pew-pew-lei.wav");
 }
 
 PlayerController* PlayerController::create(void)

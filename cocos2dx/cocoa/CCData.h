@@ -31,8 +31,8 @@ public:
     virtual void acceptVisitor(CCDataVisitor &visitor) { visitor.visit(this); }
 
 private:
-    unsigned char* m_pBytes;
-    unsigned long m_nSize;
+    unsigned char* _bytes;
+    unsigned long _size;
 };
 
 NS_CC_END

@@ -125,8 +125,8 @@ public:
     // properties
     //////////////////////////////////////////////////////////////////////////
 
-    CC_SYNTHESIZE(CCTextFieldDelegate *, m_pDelegate, Delegate);
-    CC_SYNTHESIZE_READONLY(int, m_nCharCount, CharCount);
+    CC_SYNTHESIZE(CCTextFieldDelegate *, _delegate, Delegate);
+    CC_SYNTHESIZE_READONLY(int, _charCount, CharCount);
     virtual const ccColor3B& getColorSpaceHolder();
     virtual void setColorSpaceHolder(const ccColor3B& color);
 
@@ -135,7 +135,7 @@ public:
     virtual void setString(const char *text);
     virtual const char* getString(void);
 protected:
-    std::string * m_pInputText;
+    std::string * _inputText;
 
     // place holder text property
     // place holder text displayed when there is no text in the text field.
@@ -143,13 +143,13 @@ public:
     virtual void setPlaceHolder(const char * text);
     virtual const char * getPlaceHolder(void);
 protected:
-    std::string * m_pPlaceHolder;
-    ccColor3B m_ColorSpaceHolder;
+    std::string * _placeHolder;
+    ccColor3B _colorSpaceHolder;
 public:
     virtual void setSecureTextEntry(bool value);
     virtual bool isSecureTextEntry();
 protected:
-    bool m_bSecureTextEntry;
+    bool _secureTextEntry;
 protected:
 
     virtual void draw();
@@ -165,7 +165,7 @@ protected:
     virtual const char * getContentText();
 private:
     class LengthStack;
-    LengthStack * m_pLens;
+    LengthStack * _lens;
 };
 
 // end of input group

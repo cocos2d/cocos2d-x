@@ -309,7 +309,7 @@ enum
 
 TMXReadWriteTest::TMXReadWriteTest()
 {
-    m_gid = 0;
+    _gid = 0;
     
     CCTMXTiledMap* map = CCTMXTiledMap::create("TileMaps/orthogonal-test2.tmx");
     addChild(map, 0, kTagTileMap);
@@ -340,9 +340,9 @@ TMXReadWriteTest::TMXReadWriteTest()
     CCActionInterval* scaleback = CCScaleTo::create(1, 1);
     CCActionInstant* finish = CCCallFuncN::create(this, callfuncN_selector(TMXReadWriteTest::removeSprite));
     CCSequence* seq0 = CCSequence::create(move, rotate, scale, opacity, fadein, scaleback, finish, NULL);
-    CCActionInterval* seq1 = (CCActionInterval*)(seq0->copy()->autorelease());
-    CCActionInterval* seq2 = (CCActionInterval*)(seq0->copy()->autorelease());
-    CCActionInterval* seq3 = (CCActionInterval*)(seq0->copy()->autorelease());
+    CCActionInterval* seq1 = seq0->clone();
+    CCActionInterval* seq2 = seq0->clone();
+    CCActionInterval* seq3 = seq0->clone();
     
     tile0->runAction(seq0);
     tile1->runAction(seq1);
@@ -350,8 +350,8 @@ TMXReadWriteTest::TMXReadWriteTest()
     tile3->runAction(seq3);
     
     
-    m_gid = layer->tileGIDAt(ccp(0,63));
-    ////----CCLOG("Tile GID at:(0,63) is: %d", m_gid);
+    _gid = layer->tileGIDAt(ccp(0,63));
+    ////----CCLOG("Tile GID at:(0,63) is: %d", _gid);
 
     schedule(schedule_selector(TMXReadWriteTest::updateCol), 2.0f); 
     schedule(schedule_selector(TMXReadWriteTest::repaintWithGID), 2.05f);
@@ -360,7 +360,7 @@ TMXReadWriteTest::TMXReadWriteTest()
     ////----CCLOG("++++atlas quantity: %d", layer->textureAtlas()->getTotalQuads());
     ////----CCLOG("++++children: %d", layer->getChildren()->count() );
     
-    m_gid2 = 0;
+    _gid2 = 0;
 }
 
 void TMXReadWriteTest::removeSprite(CCNode* sender)
@@ -389,10 +389,10 @@ void TMXReadWriteTest::updateCol(float dt)
 
     for( int y=0; y< s.height; y++ ) 
     {
-        layer->setTileGID(m_gid2, ccp((float)3, (float)y));
+        layer->setTileGID(_gid2, ccp((float)3, (float)y));
     }
     
-    m_gid2 = (m_gid2 + 1) % 80;
+    _gid2 = (_gid2 + 1) % 80;
 }
 
 void TMXReadWriteTest::repaintWithGID(float dt)
@@ -808,25 +808,25 @@ TMXIsoZorder::TMXIsoZorder()
     CCLOG("ContentSize: %f, %f", s.width,s.height);
     map->setPosition(ccp(-s.width/2,0));
     
-    m_tamara = CCSprite::create(s_pPathSister1);
-    map->addChild(m_tamara, map->getChildren()->count() );
-    m_tamara->retain();
+    _tamara = CCSprite::create(s_pPathSister1);
+    map->addChild(_tamara, map->getChildren()->count() );
+    _tamara->retain();
     int mapWidth = map->getMapSize().width * map->getTileSize().width;
-    m_tamara->setPosition(CC_POINT_PIXELS_TO_POINTS(ccp( mapWidth/2,0)));
-    m_tamara->setAnchorPoint(ccp(0.5f,0));
+    _tamara->setPosition(CC_POINT_PIXELS_TO_POINTS(ccp( mapWidth/2,0)));
+    _tamara->setAnchorPoint(ccp(0.5f,0));
 
     
     CCActionInterval* move = CCMoveBy::create(10, ccp(300,250));
     CCActionInterval* back = move->reverse();
     CCSequence* seq = CCSequence::create(move, back,NULL);
-    m_tamara->runAction( CCRepeatForever::create(seq) );
+    _tamara->runAction( CCRepeatForever::create(seq) );
     
     schedule( schedule_selector(TMXIsoZorder::repositionSprite) );
 }
 
 TMXIsoZorder::~TMXIsoZorder()
 {
-    m_tamara->release();
+    _tamara->release();
 }
 
 void TMXIsoZorder::onExit()
@@ -837,7 +837,7 @@ void TMXIsoZorder::onExit()
 
 void TMXIsoZorder::repositionSprite(float dt)
 {
-    CCPoint p = m_tamara->getPosition();
+    CCPoint p = _tamara->getPosition();
     p = CC_POINT_POINTS_TO_PIXELS(p);
     CCNode *map = getChildByTag(kTagTileMap);
     
@@ -849,7 +849,7 @@ void TMXIsoZorder::repositionSprite(float dt)
     int newZ = 4 - (p.y / 48);
     newZ = max(newZ,0);
     
-    map->reorderChild(m_tamara, newZ);    
+    map->reorderChild(_tamara, newZ);    
 }
 
 std::string TMXIsoZorder::title()
@@ -876,28 +876,28 @@ TMXOrthoZorder::TMXOrthoZorder()
     CCSize CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
     
-    m_tamara = CCSprite::create(s_pPathSister1);
-    map->addChild(m_tamara,  map->getChildren()->count());
-    m_tamara->retain();
-    m_tamara->setAnchorPoint(ccp(0.5f,0));
+    _tamara = CCSprite::create(s_pPathSister1);
+    map->addChild(_tamara,  map->getChildren()->count());
+    _tamara->retain();
+    _tamara->setAnchorPoint(ccp(0.5f,0));
 
     
     CCActionInterval* move = CCMoveBy::create(10, ccp(400,450));
     CCActionInterval* back = move->reverse();
     CCSequence* seq = CCSequence::create(move, back,NULL);
-    m_tamara->runAction( CCRepeatForever::create(seq));
+    _tamara->runAction( CCRepeatForever::create(seq));
     
     schedule( schedule_selector(TMXOrthoZorder::repositionSprite));
 }
 
 TMXOrthoZorder::~TMXOrthoZorder()
 {
-    m_tamara->release();
+    _tamara->release();
 }
 
 void TMXOrthoZorder::repositionSprite(float dt)
 {
-    CCPoint p = m_tamara->getPosition();
+    CCPoint p = _tamara->getPosition();
     p = CC_POINT_POINTS_TO_PIXELS(p);
     CCNode* map = getChildByTag(kTagTileMap);
     
@@ -910,7 +910,7 @@ void TMXOrthoZorder::repositionSprite(float dt)
     int newZ = 4 - ( (p.y-10) / 81);
     newZ = max(newZ,0);
 
-    map->reorderChild(m_tamara, newZ);
+    map->reorderChild(_tamara, newZ);
 }
 
 std::string TMXOrthoZorder::title()
@@ -941,13 +941,13 @@ TMXIsoVertexZ::TMXIsoVertexZ()
     // because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
     // can use any CCSprite and it will work OK.
     CCTMXLayer* layer = map->layerNamed("Trees");
-    m_tamara = layer->tileAt( ccp(29,29) );
-    m_tamara->retain();
+    _tamara = layer->tileAt( ccp(29,29) );
+    _tamara->retain();
     
     CCActionInterval* move = CCMoveBy::create(10, ccpMult( ccp(300,250), 1/CC_CONTENT_SCALE_FACTOR() ) );
     CCActionInterval* back = move->reverse();
     CCSequence* seq = CCSequence::create(move, back,NULL);
-    m_tamara->runAction( CCRepeatForever::create(seq) );
+    _tamara->runAction( CCRepeatForever::create(seq) );
     
     schedule( schedule_selector(TMXIsoVertexZ::repositionSprite));
     
@@ -955,17 +955,17 @@ TMXIsoVertexZ::TMXIsoVertexZ()
 
 TMXIsoVertexZ::~TMXIsoVertexZ()
 {
-    m_tamara->release();
+    _tamara->release();
 }
 
 void TMXIsoVertexZ::repositionSprite(float dt)
 {
     // tile height is 64x32
     // map size: 30x30
-    CCPoint p = m_tamara->getPosition();
+    CCPoint p = _tamara->getPosition();
     p = CC_POINT_POINTS_TO_PIXELS(p);
     float newZ = -(p.y+32) /16;
-    m_tamara->setVertexZ( newZ );
+    _tamara->setVertexZ( newZ );
 }
 
 void TMXIsoVertexZ::onEnter()
@@ -1010,14 +1010,14 @@ TMXOrthoVertexZ::TMXOrthoVertexZ()
     // because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
     // can use any CCSprite and it will work OK.
     CCTMXLayer* layer = map->layerNamed("trees");
-    m_tamara = layer->tileAt(ccp(0,11));
-    CCLOG("%p vertexZ: %f", m_tamara, m_tamara->getVertexZ());
-    m_tamara->retain();
+    _tamara = layer->tileAt(ccp(0,11));
+    CCLOG("%p vertexZ: %f", _tamara, _tamara->getVertexZ());
+    _tamara->retain();
 
     CCActionInterval* move = CCMoveBy::create(10, ccpMult( ccp(400,450), 1/CC_CONTENT_SCALE_FACTOR()));
     CCActionInterval* back = move->reverse();
     CCSequence* seq = CCSequence::create(move, back,NULL);
-    m_tamara->runAction( CCRepeatForever::create(seq));
+    _tamara->runAction( CCRepeatForever::create(seq));
     
     schedule(schedule_selector(TMXOrthoVertexZ::repositionSprite));
     
@@ -1025,16 +1025,16 @@ TMXOrthoVertexZ::TMXOrthoVertexZ()
 
 TMXOrthoVertexZ::~TMXOrthoVertexZ()
 {
-    m_tamara->release();
+    _tamara->release();
 }
 
 void TMXOrthoVertexZ::repositionSprite(float dt)
 {
     // tile height is 101x81
     // map size: 12x12
-    CCPoint p = m_tamara->getPosition();
+    CCPoint p = _tamara->getPosition();
     p = CC_POINT_POINTS_TO_PIXELS(p);
-    m_tamara->setVertexZ( -( (p.y+81) /81) );
+    _tamara->setVertexZ( -( (p.y+81) /81) );
 }
 
 void TMXOrthoVertexZ::onEnter()

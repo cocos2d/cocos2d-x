@@ -122,9 +122,9 @@ protected:
     void update(float dt);
 
 protected:
-    struct _hashElement    *m_pTargets;
-    struct _hashElement    *m_pCurrentTarget;
-    bool            m_bCurrentTargetSalvaged;
+    struct _hashElement    *_targets;
+    struct _hashElement    *_currentTarget;
+    bool            _currentTargetSalvaged;
 };
 
 // end of actions group

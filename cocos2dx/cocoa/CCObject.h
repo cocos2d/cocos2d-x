@@ -50,18 +50,27 @@ public:
 	
 };
 
+/** Interface that defines how to clone an object */
+class CC_DLL CCClonable
+{
+public:
+	/** returns a copy of the object */
+    virtual CCClonable* clone() const = 0;
+	virtual ~CCClonable() {};
+};
+
 class CC_DLL CCObject : public CCCopying
 {
 public:
-    // object id, CCScriptSupport need public m_uID
-    unsigned int        m_uID;
+    // object id, CCScriptSupport need public _ID
+    unsigned int        _ID;
     // Lua reference id
-    int                 m_nLuaID;
+    int                 _luaID;
 protected:
     // count of references
-    unsigned int        m_uReference;
+    unsigned int        _reference;
     // count of autorelease
-    unsigned int        m_uAutoReleaseCount;
+    unsigned int        _autoReleaseCount;
 public:
     CCObject(void);
     virtual ~CCObject(void);

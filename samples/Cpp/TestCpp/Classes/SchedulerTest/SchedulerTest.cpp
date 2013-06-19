@@ -221,14 +221,14 @@ std::string SchedulerPauseResume::subtitle()
 //------------------------------------------------------------------
 
 SchedulerPauseResumeAll::SchedulerPauseResumeAll()
-: m_pPausedTargets(NULL)
+: _pausedTargets(NULL)
 {
     
 }
 
 SchedulerPauseResumeAll::~SchedulerPauseResumeAll()
 {
-    CC_SAFE_RELEASE(m_pPausedTargets);
+    CC_SAFE_RELEASE(_pausedTargets);
 }
 
 void SchedulerPauseResumeAll::onEnter()
@@ -253,9 +253,9 @@ void SchedulerPauseResumeAll::update(float delta)
 
 void SchedulerPauseResumeAll::onExit()
 {
-    if(m_pPausedTargets != NULL)
+    if(_pausedTargets != NULL)
     {
-        CCDirector::sharedDirector()->getScheduler()->resumeTargets(m_pPausedTargets);
+        CCDirector::sharedDirector()->getScheduler()->resumeTargets(_pausedTargets);
     }
 }
 
@@ -273,10 +273,10 @@ void SchedulerPauseResumeAll::pause(float dt)
 {
     CCLog("Pausing");
     CCDirector* pDirector = CCDirector::sharedDirector();
-    m_pPausedTargets = pDirector->getScheduler()->pauseAllTargets();
-    CC_SAFE_RETAIN(m_pPausedTargets);
+    _pausedTargets = pDirector->getScheduler()->pauseAllTargets();
+    CC_SAFE_RETAIN(_pausedTargets);
     
-    unsigned int c = m_pPausedTargets->count();
+    unsigned int c = _pausedTargets->count();
     
     if (c > 2)
     {
@@ -289,8 +289,8 @@ void SchedulerPauseResumeAll::resume(float dt)
 {
     CCLog("Resuming");
     CCDirector* pDirector = CCDirector::sharedDirector();
-    pDirector->getScheduler()->resumeTargets(m_pPausedTargets);
-    CC_SAFE_RELEASE_NULL(m_pPausedTargets);
+    pDirector->getScheduler()->resumeTargets(_pausedTargets);
+    CC_SAFE_RELEASE_NULL(_pausedTargets);
 }
 
 std::string SchedulerPauseResumeAll::title()
@@ -310,14 +310,14 @@ std::string SchedulerPauseResumeAll::subtitle()
 //------------------------------------------------------------------
 
 SchedulerPauseResumeAllUser::SchedulerPauseResumeAllUser()
-: m_pPausedTargets(NULL)
+: _pausedTargets(NULL)
 {
 
 }
 
 SchedulerPauseResumeAllUser::~SchedulerPauseResumeAllUser()
 {
-    CC_SAFE_RELEASE(m_pPausedTargets);
+    CC_SAFE_RELEASE(_pausedTargets);
 }
 
 void SchedulerPauseResumeAllUser::onEnter()
@@ -339,9 +339,9 @@ void SchedulerPauseResumeAllUser::onEnter()
 
 void SchedulerPauseResumeAllUser::onExit()
 {
-    if(m_pPausedTargets != NULL)
+    if(_pausedTargets != NULL)
     {
-        CCDirector::sharedDirector()->getScheduler()->resumeTargets(m_pPausedTargets);
+        CCDirector::sharedDirector()->getScheduler()->resumeTargets(_pausedTargets);
     }
 }
 
@@ -359,16 +359,16 @@ void SchedulerPauseResumeAllUser::pause(float dt)
 {
     CCLog("Pausing");
     CCDirector* pDirector = CCDirector::sharedDirector();
-    m_pPausedTargets = pDirector->getScheduler()->pauseAllTargetsWithMinPriority(kCCPriorityNonSystemMin);
-    CC_SAFE_RETAIN(m_pPausedTargets);
+    _pausedTargets = pDirector->getScheduler()->pauseAllTargetsWithMinPriority(kCCPriorityNonSystemMin);
+    CC_SAFE_RETAIN(_pausedTargets);
 }
 
 void SchedulerPauseResumeAllUser::resume(float dt)
 {
     CCLog("Resuming");
     CCDirector* pDirector = CCDirector::sharedDirector();
-    pDirector->getScheduler()->resumeTargets(m_pPausedTargets);
-    CC_SAFE_RELEASE_NULL(m_pPausedTargets);
+    pDirector->getScheduler()->resumeTargets(_pausedTargets);
+    CC_SAFE_RELEASE_NULL(_pausedTargets);
 }
 
 std::string SchedulerPauseResumeAllUser::title()
@@ -449,7 +449,7 @@ void SchedulerUnscheduleAllHard::onEnter()
     this->addChild(sprite);
     sprite->runAction(CCRepeatForever::create(CCRotateBy::create(3.0, 360)));
 
-    m_bActionManagerActive = true;
+    _actionManagerActive = true;
 
     schedule(schedule_selector(SchedulerUnscheduleAllHard::tick1), 0.5f);
     schedule(schedule_selector(SchedulerUnscheduleAllHard::tick2), 1.0f);
@@ -460,7 +460,7 @@ void SchedulerUnscheduleAllHard::onEnter()
 
 void SchedulerUnscheduleAllHard::onExit()
 {
-    if(!m_bActionManagerActive) {
+    if(!_actionManagerActive) {
         // Restore the director's action manager.
         CCDirector* director = CCDirector::sharedDirector();
         director->getScheduler()->scheduleUpdateForTarget(director->getActionManager(), kCCPrioritySystem, false);
@@ -490,7 +490,7 @@ void SchedulerUnscheduleAllHard::tick4(float dt)
 void SchedulerUnscheduleAllHard::unscheduleAll(float dt)
 {
     CCDirector::sharedDirector()->getScheduler()->unscheduleAll();
-    m_bActionManagerActive = false;
+    _actionManagerActive = false;
 }
 
 std::string SchedulerUnscheduleAllHard::title()
@@ -622,20 +622,20 @@ void SchedulerSchedulesAndRemove::scheduleAndUnschedule(float dt)
 //------------------------------------------------------------------
 void TestNode::initWithString(CCString* pStr, int priority)
 {
-    m_pstring = pStr;
-    m_pstring->retain();
+    _pstring = pStr;
+    _pstring->retain();
     scheduleUpdateWithPriority(priority);
 }
 
 TestNode::~TestNode()
 {
-    m_pstring->release();
+    _pstring->release();
 }
 
 void TestNode::update(float dt)
 {
     CC_UNUSED_PARAM(dt);
-    CCLog("%s", m_pstring->getCString());
+    CCLog("%s", _pstring->getCString());
 }
 
 //------------------------------------------------------------------
@@ -807,9 +807,9 @@ void RescheduleSelector::onEnter()
 {
     SchedulerTestLayer::onEnter();
 
-    m_fInterval = 1.0f;
-    m_nTicks    = 0;
-    schedule(schedule_selector(RescheduleSelector::schedUpdate), m_fInterval);
+    _interval = 1.0f;
+    _ticks    = 0;
+    schedule(schedule_selector(RescheduleSelector::schedUpdate), _interval);
 }
 
 std::string RescheduleSelector::title()
@@ -824,14 +824,14 @@ std::string RescheduleSelector::subtitle()
 
 void RescheduleSelector::schedUpdate(float dt)
 {
-    m_nTicks++;
+    _ticks++;
 
     CCLOG("schedUpdate: %.4f", dt);
-    if ( m_nTicks > 3 )
+    if ( _ticks > 3 )
     {
-        m_fInterval += 1.0f;
-        schedule(schedule_selector(RescheduleSelector::schedUpdate), m_fInterval);
-        m_nTicks = 0;
+        _interval += 1.0f;
+        schedule(schedule_selector(RescheduleSelector::schedUpdate), _interval);
+        _ticks = 0;
     }
 }
 
@@ -900,8 +900,8 @@ void SchedulerTimeScale::onEnter()
     CCFiniteTimeAction* spawn = CCSpawn::create(seq3_1, seq3_2, NULL);
     CCRepeat* action = CCRepeat::create(spawn, 50);
 
-    CCRepeat* action2 = (CCRepeat*)action->copy()->autorelease();
-    CCRepeat* action3 = (CCRepeat*)action->copy()->autorelease();
+    CCRepeat* action2 = action->clone();
+    CCRepeat* action3 = action->clone();
 
     CCSprite *grossini = CCSprite::create("Images/grossini.png");
     CCSprite *tamara = CCSprite::create("Images/grossinis_sister1.png");
@@ -923,10 +923,10 @@ void SchedulerTimeScale::onEnter()
     emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_stars1) );
     addChild(emitter);
 
-    m_pSliderCtl = sliderCtl();
-    m_pSliderCtl->setPosition(ccp(s.width / 2.0f, s.height / 3.0f));
+    _sliderCtl = sliderCtl();
+    _sliderCtl->setPosition(ccp(s.width / 2.0f, s.height / 3.0f));
 
-    addChild(m_pSliderCtl);
+    addChild(_sliderCtl);
 }
 
 void SchedulerTimeScale::onExit()
@@ -998,9 +998,7 @@ void TwoSchedulers::onEnter()
     CCSprite *grossini = CCSprite::create("Images/grossini.png");
     addChild(grossini);
     grossini->setPosition(ccp(s.width/2,100));
-    grossini->runAction((CCAction*)action->copy()->autorelease());
-
-
+    grossini->runAction(action->clone());
 
     CCScheduler *defaultScheduler = CCDirector::sharedDirector()->getScheduler();
 
@@ -1027,7 +1025,7 @@ void TwoSchedulers::onEnter()
         addChild(sprite);
         sprite->setPosition(ccp(30+15*i,100));
 
-        sprite->runAction((CCAction*)action->copy()->autorelease());
+        sprite->runAction(action->clone());
     }
 
 
@@ -1052,7 +1050,7 @@ void TwoSchedulers::onEnter()
         addChild(sprite);
         sprite->setPosition(ccp(s.width-30-15*i,100));
 
-        sprite->runAction((CCAction*)action->copy()->autorelease());
+        sprite->runAction(action->clone());
     }
 
     sliderCtl1 = sliderCtl();

@@ -40,6 +40,16 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+class AsyncStruct
+{
+public:
+    AsyncStruct(const std::string& fn, CCObject *t, SEL_CallFuncO s) : filename(fn), target(t), selector(s) {}
+
+    std::string            filename;
+    CCObject    *target;
+    SEL_CallFuncO        selector;
+};
+
 class CCLock;
 class CCImage;
 
@@ -55,8 +65,8 @@ class CCImage;
 class CC_DLL CCTextureCache : public CCObject
 {
 protected:
-    CCDictionary* m_pTextures;
-    //pthread_mutex_t                *m_pDictLock;
+    CCDictionary* _textures;
+    //pthread_mutex_t                *_dictLock;
 
 
 private:
@@ -96,7 +106,7 @@ public:
     * @since v0.8
     */
     
-    void addImageAsync(const char *path, CCObject *target, SEL_CallFuncO selector);
+    virtual void addImageAsync(const char *path, CCObject *target, SEL_CallFuncO selector);
 
     /* Returns a Texture2D object given an CGImageRef image
     * If the image was not previously loaded, it will create a new CCTexture2D object and it will return it.
@@ -105,6 +115,7 @@ public:
     * If "key" is nil, then a new texture will be created each time.
     * @since v0.8
     */
+
     // todo: CGImageRef CCTexture2D* addCGImage(CGImageRef image, string &  key);
     /** Returns a Texture2D object given an UIImage image
     * If the image was not previously loaded, it will create a new CCTexture2D object and it will return it.
@@ -207,22 +218,22 @@ protected:
     
     CCImage *uiImage;
 
-    ccCachedImageType m_eCashedImageType;
+    ccCachedImageType _cashedImageType;
 
-    void *m_pTextureData;
-    CCSize m_TextureSize;
-    CCTexture2DPixelFormat m_PixelFormat;
+    void *_textureData;
+    CCSize _textureSize;
+    CCTexture2DPixelFormat _pixelFormat;
 
-    std::string m_strFileName;
-    CCImage::EImageFormat m_FmtImage;
+    std::string _fileName;
+    CCImage::EImageFormat _fmtImage;
 
-    ccTexParams     m_texParams;
-    CCSize          m_size;
-    CCTextAlignment m_alignment;
-    CCVerticalTextAlignment m_vAlignment;
-    std::string     m_strFontName;
-    std::string     m_strText;
-    float           m_fFontSize;
+    ccTexParams     _texParams;
+    CCSize          _size;
+    CCTextAlignment _alignment;
+    CCVerticalTextAlignment _vAlignment;
+    std::string     _fontName;
+    std::string     _text;
+    float           _fontSize;
 };
 
 #endif

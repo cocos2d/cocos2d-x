@@ -36,13 +36,13 @@
 NS_CC_EXT_BEGIN
 
 CCControl::CCControl()
-: m_bIsOpacityModifyRGB(false)
-, m_eState(CCControlStateNormal)
-, m_hasVisibleParents(false)
-, m_bEnabled(false)
-, m_bSelected(false)
-, m_bHighlighted(false)
-, m_pDispatchTable(NULL)
+: _isOpacityModifyRGB(false)
+, _state(CCControlStateNormal)
+, _hasVisibleParents(false)
+, _enabled(false)
+, _selected(false)
+, _highlighted(false)
+, _dispatchTable(NULL)
 {
 
 }
@@ -67,9 +67,9 @@ bool CCControl::init()
     if (CCLayer::init())
     {
         //this->setTouchEnabled(true);
-        //m_bIsTouchEnabled=true;
+        //_isTouchEnabled=true;
         // Initialise instance variables
-        m_eState=CCControlStateNormal;
+        _state=CCControlStateNormal;
         setEnabled(true);
         setSelected(false);
         setHighlighted(false);
@@ -77,9 +77,9 @@ bool CCControl::init()
         // Set the touch dispatcher priority by default to 1
         this->setTouchPriority(1);
         // Initialise the tables
-        m_pDispatchTable = new CCDictionary(); 
+        _dispatchTable = new CCDictionary(); 
         // Initialise the mapHandleOfControlEvents
-        m_mapHandleOfControlEvent.clear();
+        _mapHandleOfControlEvent.clear();
         
         return true;
     }
@@ -91,7 +91,7 @@ bool CCControl::init()
 
 CCControl::~CCControl()
 {
-    CC_SAFE_RELEASE(m_pDispatchTable);
+    CC_SAFE_RELEASE(_dispatchTable);
 }
 
     //Menu - Events
@@ -128,7 +128,7 @@ void CCControl::sendActionsForControlEvents(CCControlEvent controlEvents)
                 invocation->invoke(this);
             }
             //Call ScriptFunc
-            if (kScriptTypeNone != m_eScriptType)
+            if (kScriptTypeNone != _scriptType)
             {
                 int nHandler = this->getHandleOfControlEvent(controlEvents);
                 if (-1 != nHandler) {
@@ -232,7 +232,7 @@ void CCControl::removeTargetWithActionForControlEvent(CCObject* target, SEL_CCCo
 //CRGBA protocol
 void CCControl::setOpacityModifyRGB(bool bOpacityModifyRGB)
 {
-    m_bIsOpacityModifyRGB=bOpacityModifyRGB;
+    _isOpacityModifyRGB=bOpacityModifyRGB;
     CCObject* child;
     CCArray* children=getChildren();
     CCARRAY_FOREACH(children, child)
@@ -247,7 +247,7 @@ void CCControl::setOpacityModifyRGB(bool bOpacityModifyRGB)
 
 bool CCControl::isOpacityModifyRGB()
 {
-    return m_bIsOpacityModifyRGB;
+    return _isOpacityModifyRGB;
 }
 
 
@@ -269,13 +269,13 @@ bool CCControl::isTouchInside(CCTouch* touch)
 
 CCArray* CCControl::dispatchListforControlEvent(CCControlEvent controlEvent)
 {
-    CCArray* invocationList = (CCArray*)m_pDispatchTable->objectForKey(controlEvent);
+    CCArray* invocationList = (CCArray*)_dispatchTable->objectForKey(controlEvent);
 
     // If the invocation list does not exist for the  dispatch table, we create it
     if (invocationList == NULL)
     {
         invocationList = CCArray::createWithCapacity(1);
-        m_pDispatchTable->setObject(invocationList, controlEvent);
+        _dispatchTable->setObject(invocationList, controlEvent);
     }    
     return invocationList;
 }
@@ -286,11 +286,11 @@ void CCControl::needsLayout()
 
 void CCControl::setEnabled(bool bEnabled)
 {
-    m_bEnabled = bEnabled;
-    if(m_bEnabled) {
-        m_eState = CCControlStateNormal;
+    _enabled = bEnabled;
+    if(_enabled) {
+        _state = CCControlStateNormal;
     } else {
-        m_eState = CCControlStateDisabled;
+        _state = CCControlStateDisabled;
     }
 
     this->needsLayout();
@@ -298,29 +298,29 @@ void CCControl::setEnabled(bool bEnabled)
 
 bool CCControl::isEnabled()
 {
-    return m_bEnabled;
+    return _enabled;
 }
 
 void CCControl::setSelected(bool bSelected)
 {
-    m_bSelected = bSelected;
+    _selected = bSelected;
     this->needsLayout();
 }
 
 bool CCControl::isSelected()
 {
-    return m_bSelected;
+    return _selected;
 }
 
 void CCControl::setHighlighted(bool bHighlighted)
 {
-    m_bHighlighted = bHighlighted;
+    _highlighted = bHighlighted;
     this->needsLayout();
 }
 
 bool CCControl::isHighlighted()
 {
-    return m_bHighlighted;
+    return _highlighted;
 }
 
 bool CCControl::hasVisibleParents()
@@ -338,25 +338,25 @@ bool CCControl::hasVisibleParents()
 
 void CCControl::addHandleOfControlEvent(int nFunID,CCControlEvent controlEvent)
 {
-    m_mapHandleOfControlEvent[controlEvent] = nFunID;
+    _mapHandleOfControlEvent[controlEvent] = nFunID;
 }
 
 void CCControl::removeHandleOfControlEvent(CCControlEvent controlEvent)
 {
-    std::map<int,int>::iterator Iter = m_mapHandleOfControlEvent.find(controlEvent);
+    std::map<int,int>::iterator Iter = _mapHandleOfControlEvent.find(controlEvent);
     
-    if (m_mapHandleOfControlEvent.end() != Iter)
+    if (_mapHandleOfControlEvent.end() != Iter)
     {
-        m_mapHandleOfControlEvent.erase(Iter);
+        _mapHandleOfControlEvent.erase(Iter);
     }
     
 }
 
 int  CCControl::getHandleOfControlEvent(CCControlEvent controlEvent)
 {
-    std::map<int,int>::iterator Iter = m_mapHandleOfControlEvent.find(controlEvent);
+    std::map<int,int>::iterator Iter = _mapHandleOfControlEvent.find(controlEvent);
     
-    if (m_mapHandleOfControlEvent.end() != Iter)
+    if (_mapHandleOfControlEvent.end() != Iter)
         return Iter->second;
     
     return -1;

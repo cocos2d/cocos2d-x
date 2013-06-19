@@ -66,16 +66,16 @@ private:
 	void		showKeyboard();
 	void		hideKeyboard();
 
-	static bool 		m_initializedFunctions;
-	static const GLubyte *m_extensions;
+	static bool 		_initializedFunctions;
+	static const GLubyte *_extensions;
 
-	bool			 m_isGLInitialized;
-	bool 		     m_isWindowActive;
+	bool			 _isGLInitialized;
+	bool 		     _isWindowActive;
 	
-	EGLDisplay 		 m_eglDisplay;
-	EGLContext 		 m_eglContext;
-	EGLSurface 		 m_eglSurface;
-    char 			 m_windowGroupID[16];
+	EGLDisplay 		 _eglDisplay;
+	EGLContext 		 _eglContext;
+	EGLSurface 		 _eglSurface;
+    char 			 _windowGroupID[16];
 };
 
 NS_CC_END

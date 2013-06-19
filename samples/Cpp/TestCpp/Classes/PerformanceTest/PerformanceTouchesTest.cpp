@@ -15,16 +15,16 @@ static int s_nTouchCurCase = 0;
 void TouchesMainScene::showCurrentTest()
 {
     CCLayer* pLayer = NULL;
-    switch (m_nCurCase)
+    switch (_curCase)
     {
     case 0:
-        pLayer = new TouchesPerformTest1(true, TEST_COUNT, m_nCurCase);
+        pLayer = new TouchesPerformTest1(true, TEST_COUNT, _curCase);
         break;
     case 1:
-        pLayer = new TouchesPerformTest2(true, TEST_COUNT, m_nCurCase);
+        pLayer = new TouchesPerformTest2(true, TEST_COUNT, _curCase);
         break;
     }
-    s_nTouchCurCase = m_nCurCase;
+    s_nTouchCurCase = _curCase;
 
     if (pLayer)
     {
@@ -49,9 +49,9 @@ void TouchesMainScene::onEnter()
 
     scheduleUpdate();
 
-    m_plabel = CCLabelBMFont::create("00.0", "fonts/arial16.fnt");
-    m_plabel->setPosition(ccp(s.width/2, s.height/2));
-    addChild(m_plabel);
+    _plabel = CCLabelBMFont::create("00.0", "fonts/arial16.fnt");
+    _plabel->setPosition(ccp(s.width/2, s.height/2));
+    addChild(_plabel);
 
     elapsedTime = 0;
     numberOfTouchesB = numberOfTouchesM = numberOfTouchesE = numberOfTouchesC = 0;    
@@ -72,7 +72,7 @@ void TouchesMainScene::update(float dt)
 
         char str[32] = {0};
         sprintf(str, "%.1f %.1f %.1f %.1f", frameRateB, frameRateM, frameRateE, frameRateC);
-        m_plabel->setString(str);
+        _plabel->setString(str);
     }
 }
 

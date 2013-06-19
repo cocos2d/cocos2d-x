@@ -28,7 +28,7 @@ NS_CC_EXT_BEGIN
 
 CCComController::CCComController(void)
 {
-    m_strName = "Constoller";
+    _name = "Constoller";
 }
 
 CCComController::~CCComController(void)
@@ -54,12 +54,12 @@ void CCComController::update(float delta)
 
 bool CCComController::isEnabled() const
 {
-    return m_bEnabled;
+    return _enabled;
 }
 
 void CCComController::setEnabled(bool b)
 {
-    m_bEnabled = b;
+    _enabled = b;
 }
 
 CCComController* CCComController::create(void)

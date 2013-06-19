@@ -154,17 +154,17 @@ public:
     void resume(CCObject* sender);
 
 
-    bool isDragging() {return m_bDragging;}
-    bool isTouchMoved() { return m_bTouchMoved; }
-    bool isBounceable() { return m_bBounceable; }
-    void setBounceable(bool bBounceable) { m_bBounceable = bBounceable; }
+    bool isDragging() {return _dragging;}
+    bool isTouchMoved() { return _touchMoved; }
+    bool isBounceable() { return _bounceable; }
+    void setBounceable(bool bBounceable) { _bounceable = bBounceable; }
 
     /**
      * size to clip. CCNode boundingBox uses contentSize directly.
      * It's semantically different what it actually means to common scroll views.
      * Hence, this scroll view will use a separate size property.
      */
-    CCSize getViewSize() { return m_tViewSize; } 
+    CCSize getViewSize() { return _viewSize; } 
     void setViewSize(CCSize size);
 
     CCNode * getContainer();
@@ -173,11 +173,11 @@ public:
     /**
      * direction allowed to scroll. CCScrollViewDirectionBoth by default.
      */
-    CCScrollViewDirection getDirection() { return m_eDirection; }
-    virtual void setDirection(CCScrollViewDirection eDirection) { m_eDirection = eDirection; }
+    CCScrollViewDirection getDirection() { return _direction; }
+    virtual void setDirection(CCScrollViewDirection eDirection) { _direction = eDirection; }
 
-    CCScrollViewDelegate* getDelegate() { return m_pDelegate; }
-    void setDelegate(CCScrollViewDelegate* pDelegate) { m_pDelegate = pDelegate; }
+    CCScrollViewDelegate* getDelegate() { return _delegate; }
+    void setDelegate(CCScrollViewDelegate* pDelegate) { _delegate = pDelegate; }
 
     /** override functions */
     // optional
@@ -193,8 +193,8 @@ public:
     /**
      * Determines whether it clips its children or not.
      */
-    bool isClippingToBounds() { return m_bClippingToBounds; }
-    void setClippingToBounds(bool bClippingToBounds) { m_bClippingToBounds = bClippingToBounds; }
+    bool isClippingToBounds() { return _clippingToBounds; }
+    void setClippingToBounds(bool bClippingToBounds) { _clippingToBounds = bClippingToBounds; }
 
     virtual void visit();
     virtual void addChild(CCNode * child, int zOrder, int tag);
@@ -243,85 +243,85 @@ protected:
     /**
      * current zoom scale
      */
-    float m_fZoomScale;
+    float _zoomScale;
     /**
      * min zoom scale
      */
-    float m_fMinZoomScale;
+    float _minZoomScale;
     /**
      * max zoom scale
      */
-    float m_fMaxZoomScale;
+    float _maxZoomScale;
     /**
      * scroll view delegate
      */
-    CCScrollViewDelegate* m_pDelegate;
+    CCScrollViewDelegate* _delegate;
 
-    CCScrollViewDirection m_eDirection;
+    CCScrollViewDirection _direction;
     /**
      * If YES, the view is being dragged.
      */
-    bool m_bDragging;
+    bool _dragging;
 
     /**
      * Content offset. Note that left-bottom point is the origin
      */
-    CCPoint m_tContentOffset;
+    CCPoint _contentOffset;
 
     /**
      * Container holds scroll view contents, Sets the scrollable container object of the scroll view
      */
-    CCNode* m_pContainer;
+    CCNode* _container;
     /**
      * Determiens whether user touch is moved after begin phase.
      */
-    bool m_bTouchMoved;
+    bool _touchMoved;
     /**
      * max inset point to limit scrolling by touch
      */
-    CCPoint m_fMaxInset;
+    CCPoint _maxInset;
     /**
      * min inset point to limit scrolling by touch
      */
-    CCPoint m_fMinInset;
+    CCPoint _minInset;
     /**
      * Determines whether the scroll view is allowed to bounce or not.
      */
-    bool m_bBounceable;
+    bool _bounceable;
 
-    bool m_bClippingToBounds;
+    bool _clippingToBounds;
 
     /**
      * scroll speed
      */
-    CCPoint m_tScrollDistance;
+    CCPoint _scrollDistance;
     /**
      * Touch point
      */
-    CCPoint m_tTouchPoint;
+    CCPoint _touchPoint;
     /**
      * length between two fingers
      */
-    float m_fTouchLength;
+    float _touchLength;
     /**
      * UITouch objects to detect multitouch
      */
-    CCArray* m_pTouches;
+    CCArray* _touches;
     /**
      * size to clip. CCNode boundingBox uses contentSize directly.
      * It's semantically different what it actually means to common scroll views.
      * Hence, this scroll view will use a separate size property.
      */
-    CCSize m_tViewSize;
+    CCSize _viewSize;
     /**
      * max and min scale
      */
-    float m_fMinScale, m_fMaxScale;
+    float _minScale, _maxScale;
     /**
      * scissor rect for parent, just for restoring GL_SCISSOR_BOX
      */
-    CCRect m_tParentScissorRect;
-    bool m_bScissorRestored;
+    CCRect _parentScissorRect;
+    bool _scissorRestored;
 };
 
 // end of GUI group

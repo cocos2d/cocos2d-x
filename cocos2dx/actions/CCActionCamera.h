@@ -45,34 +45,35 @@ class CC_DLL CCActionCamera : public CCActionInterval //<NSCopying>
 {
 public:
     CCActionCamera()
-		:m_fCenterXOrig(0)
-        ,m_fCenterYOrig(0)
-        ,m_fCenterZOrig(0)
-        ,m_fEyeXOrig(0)
-        ,m_fEyeYOrig(0)
-        ,m_fEyeZOrig(0)
-        ,m_fUpXOrig(0)
-        ,m_fUpYOrig(0)
-        ,m_fUpZOrig(0)
+		:_centerXOrig(0)
+        ,_centerYOrig(0)
+        ,_centerZOrig(0)
+        ,_eyeXOrig(0)
+        ,_eyeYOrig(0)
+        ,_eyeZOrig(0)
+        ,_upXOrig(0)
+        ,_upYOrig(0)
+        ,_upZOrig(0)
     {}
     virtual ~CCActionCamera(){}
     // super methods
     virtual void startWithTarget(CCNode *pTarget);
-    virtual CCActionInterval * reverse();
+	/** returns a new reversed action */
+    virtual CCActionCamera * reverse() const;
 	/** returns a new clone of the action */
-	CCActionCamera *clone() const;
+	virtual CCActionCamera *clone() const;
 protected:
-    float m_fCenterXOrig;
-    float m_fCenterYOrig;
-    float m_fCenterZOrig;
+    float _centerXOrig;
+    float _centerYOrig;
+    float _centerZOrig;
 
-    float m_fEyeXOrig;
-    float m_fEyeYOrig;
-    float m_fEyeZOrig;
+    float _eyeXOrig;
+    float _eyeYOrig;
+    float _eyeZOrig;
 
-    float m_fUpXOrig;
-    float m_fUpYOrig;
-    float m_fUpZOrig;
+    float _upXOrig;
+    float _upYOrig;
+    float _upZOrig;
 };
 
 /** 
@@ -84,16 +85,16 @@ class CC_DLL CCOrbitCamera : public CCActionCamera //<NSCopying>
 {
 public:
     CCOrbitCamera()
-		: m_fRadius(0.0)
-        , m_fDeltaRadius(0.0)
-        , m_fAngleZ(0.0)
-        , m_fDeltaAngleZ(0.0)
-        , m_fAngleX(0.0)            
-        , m_fDeltaAngleX(0.0)
-        , m_fRadZ(0.0)
-        , m_fRadDeltaZ(0.0)
-        , m_fRadX(0.0)                        
-        , m_fRadDeltaX(0.0)        
+		: _radius(0.0)
+        , _deltaRadius(0.0)
+        , _angleZ(0.0)
+        , _deltaAngleZ(0.0)
+        , _angleX(0.0)            
+        , _deltaAngleX(0.0)
+        , _radZ(0.0)
+        , _radDeltaZ(0.0)
+        , _radX(0.0)                        
+        , _radDeltaX(0.0)        
     {}
     ~CCOrbitCamera(){}
     
@@ -112,17 +113,17 @@ public:
     virtual void update(float time);
 
 protected:
-    float m_fRadius;
-    float m_fDeltaRadius;
-    float m_fAngleZ;
-    float m_fDeltaAngleZ;
-    float m_fAngleX;
-    float m_fDeltaAngleX;
+    float _radius;
+    float _deltaRadius;
+    float _angleZ;
+    float _deltaAngleZ;
+    float _angleX;
+    float _deltaAngleX;
 
-    float m_fRadZ;
-    float m_fRadDeltaZ;
-    float m_fRadX;
-    float m_fRadDeltaX;
+    float _radZ;
+    float _radDeltaZ;
+    float _radX;
+    float _radDeltaX;
 };
 
 // end of actions group

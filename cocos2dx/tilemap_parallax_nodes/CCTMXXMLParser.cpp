@@ -66,44 +66,44 @@ static const char* valueForKey(const char *key, std::map<std::string, std::strin
 }
 // implementation CCTMXLayerInfo
 CCTMXLayerInfo::CCTMXLayerInfo()
-: m_sName("")
-, m_pTiles(NULL)
-, m_bOwnTiles(true)
-, m_uMinGID(100000)
-, m_uMaxGID(0)        
-, m_tOffset(CCPointZero)
+: _name("")
+, _tiles(NULL)
+, _ownTiles(true)
+, _minGID(100000)
+, _maxGID(0)        
+, _offset(CCPointZero)
 {
-    m_pProperties= new CCDictionary();;
+    _properties= new CCDictionary();;
 }
 
 CCTMXLayerInfo::~CCTMXLayerInfo()
 {
     CCLOGINFO("cocos2d: deallocing: %p", this);
-    CC_SAFE_RELEASE(m_pProperties);
-    if( m_bOwnTiles && m_pTiles )
+    CC_SAFE_RELEASE(_properties);
+    if( _ownTiles && _tiles )
     {
-        delete [] m_pTiles;
-        m_pTiles = NULL;
+        delete [] _tiles;
+        _tiles = NULL;
     }
 }
 CCDictionary * CCTMXLayerInfo::getProperties()
 {
-    return m_pProperties;
+    return _properties;
 }
 void CCTMXLayerInfo::setProperties(CCDictionary* var)
 {
     CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(m_pProperties);
-    m_pProperties = var;
+    CC_SAFE_RELEASE(_properties);
+    _properties = var;
 }
 
 // implementation CCTMXTilesetInfo
 CCTMXTilesetInfo::CCTMXTilesetInfo()
-    :m_uFirstGid(0)
-    ,m_tTileSize(CCSizeZero)
-    ,m_uSpacing(0)
-    ,m_uMargin(0)
-    ,m_tImageSize(CCSizeZero)
+    :_firstGid(0)
+    ,_tileSize(CCSizeZero)
+    ,_spacing(0)
+    ,_margin(0)
+    ,_imageSize(CCSizeZero)
 {
 }
 CCTMXTilesetInfo::~CCTMXTilesetInfo()
@@ -113,13 +113,13 @@ CCTMXTilesetInfo::~CCTMXTilesetInfo()
 CCRect CCTMXTilesetInfo::rectForGID(unsigned int gid)
 {
     CCRect rect;
-    rect.size = m_tTileSize;
+    rect.size = _tileSize;
     gid &= kCCFlippedMask;
-    gid = gid - m_uFirstGid;
-    int max_x = (int)((m_tImageSize.width - m_uMargin*2 + m_uSpacing) / (m_tTileSize.width + m_uSpacing));
+    gid = gid - _firstGid;
+    int max_x = (int)((_imageSize.width - _margin*2 + _spacing) / (_tileSize.width + _spacing));
     //    int max_y = (imageSize.height - margin*2 + spacing) / (tileSize.height + spacing);
-    rect.origin.x = (gid % max_x) * (m_tTileSize.width + m_uSpacing) + m_uMargin;
-    rect.origin.y = (gid / max_x) * (m_tTileSize.height + m_uSpacing) + m_uMargin;
+    rect.origin.x = (gid % max_x) * (_tileSize.width + _spacing) + _margin;
+    rect.origin.y = (gid / max_x) * (_tileSize.height + _spacing) + _margin;
     return rect;
 }
 
@@ -151,34 +151,34 @@ CCTMXMapInfo * CCTMXMapInfo::formatWithXML(const char* tmxString, const char* re
 
 void CCTMXMapInfo::internalInit(const char* tmxFileName, const char* resourcePath)
 {
-    m_pTilesets = CCArray::create();
-    m_pTilesets->retain();
+    _tilesets = CCArray::create();
+    _tilesets->retain();
 
-    m_pLayers = CCArray::create();
-    m_pLayers->retain();
+    _layers = CCArray::create();
+    _layers->retain();
 
     if (tmxFileName != NULL)
     {
-        m_sTMXFileName = CCFileUtils::sharedFileUtils()->fullPathForFilename(tmxFileName);
+        _TMXFileName = CCFileUtils::sharedFileUtils()->fullPathForFilename(tmxFileName);
     }
     
     if (resourcePath != NULL)
     {
-        m_sResources = resourcePath;
+        _resources = resourcePath;
     }
     
-    m_pObjectGroups = CCArray::createWithCapacity(4);
-    m_pObjectGroups->retain();
+    _objectGroups = CCArray::createWithCapacity(4);
+    _objectGroups->retain();
 
-    m_pProperties = new CCDictionary();
-    m_pTileProperties = new CCDictionary();
+    _properties = new CCDictionary();
+    _tileProperties = new CCDictionary();
 
     // tmp vars
-    m_sCurrentString = "";
-    m_bStoringCharacters = false;
-    m_nLayerAttribs = TMXLayerAttribNone;
-    m_nParentElement = TMXPropertyNone;
-    m_uCurrentFirstGID = 0;
+    _currentString = "";
+    _storingCharacters = false;
+    _layerAttribs = TMXLayerAttribNone;
+    _parentElement = TMXPropertyNone;
+    _currentFirstGID = 0;
 }
 bool CCTMXMapInfo::initWithXML(const char* tmxString, const char* resourcePath)
 {
@@ -189,91 +189,91 @@ bool CCTMXMapInfo::initWithXML(const char* tmxString, const char* resourcePath)
 bool CCTMXMapInfo::initWithTMXFile(const char *tmxFile)
 {
     internalInit(tmxFile, NULL);
-    return parseXMLFile(m_sTMXFileName.c_str());
+    return parseXMLFile(_TMXFileName.c_str());
 }
 
 CCTMXMapInfo::CCTMXMapInfo()
-: m_tMapSize(CCSizeZero)    
-, m_tTileSize(CCSizeZero)
-, m_pLayers(NULL)
-, m_pTilesets(NULL)
-, m_pObjectGroups(NULL)
-, m_nLayerAttribs(0)
-, m_bStoringCharacters(false)
-, m_pProperties(NULL)
-, m_pTileProperties(NULL)
-, m_uCurrentFirstGID(0)
+: _mapSize(CCSizeZero)    
+, _tileSize(CCSizeZero)
+, _layers(NULL)
+, _tilesets(NULL)
+, _objectGroups(NULL)
+, _layerAttribs(0)
+, _storingCharacters(false)
+, _properties(NULL)
+, _tileProperties(NULL)
+, _currentFirstGID(0)
 {
 }
 
 CCTMXMapInfo::~CCTMXMapInfo()
 {
     CCLOGINFO("cocos2d: deallocing: %p", this);
-    CC_SAFE_RELEASE(m_pTilesets);
-    CC_SAFE_RELEASE(m_pLayers);
-    CC_SAFE_RELEASE(m_pProperties);
-    CC_SAFE_RELEASE(m_pTileProperties);
-    CC_SAFE_RELEASE(m_pObjectGroups);
+    CC_SAFE_RELEASE(_tilesets);
+    CC_SAFE_RELEASE(_layers);
+    CC_SAFE_RELEASE(_properties);
+    CC_SAFE_RELEASE(_tileProperties);
+    CC_SAFE_RELEASE(_objectGroups);
 }
 
 CCArray* CCTMXMapInfo::getLayers()
 {
-    return m_pLayers;
+    return _layers;
 }
 
 void CCTMXMapInfo::setLayers(CCArray* var)
 {
     CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(m_pLayers);
-    m_pLayers = var;
+    CC_SAFE_RELEASE(_layers);
+    _layers = var;
 }
 
 CCArray* CCTMXMapInfo::getTilesets()
 {
-    return m_pTilesets;
+    return _tilesets;
 }
 
 void CCTMXMapInfo::setTilesets(CCArray* var)
 {
     CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(m_pTilesets);
-    m_pTilesets = var;
+    CC_SAFE_RELEASE(_tilesets);
+    _tilesets = var;
 }
 
 CCArray* CCTMXMapInfo::getObjectGroups()
 {
-    return m_pObjectGroups;
+    return _objectGroups;
 }
 
 void CCTMXMapInfo::setObjectGroups(CCArray* var)
 {
     CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(m_pObjectGroups);
-    m_pObjectGroups = var;
+    CC_SAFE_RELEASE(_objectGroups);
+    _objectGroups = var;
 }
 
 CCDictionary * CCTMXMapInfo::getProperties()
 {
-    return m_pProperties;
+    return _properties;
 }
 
 void CCTMXMapInfo::setProperties(CCDictionary* var)
 {
     CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(m_pProperties);
-    m_pProperties = var;
+    CC_SAFE_RELEASE(_properties);
+    _properties = var;
 }
 
 CCDictionary* CCTMXMapInfo::getTileProperties()
 {
-    return m_pTileProperties;
+    return _tileProperties;
 }
 
 void CCTMXMapInfo::setTileProperties(CCDictionary* tileProperties)
 {
     CC_SAFE_RETAIN(tileProperties);
-    CC_SAFE_RELEASE(m_pTileProperties);
-    m_pTileProperties = tileProperties;
+    CC_SAFE_RELEASE(_tileProperties);
+    _tileProperties = tileProperties;
 }
 
 bool CCTMXMapInfo::parseXMLString(const char *xmlString)
@@ -363,40 +363,40 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         if (externalTilesetFilename != "")
         {
             // Tileset file will be relative to the map file. So we need to convert it to an absolute path
-            if (m_sTMXFileName.find_last_of("/") != string::npos)
+            if (_TMXFileName.find_last_of("/") != string::npos)
             {
-                string dir = m_sTMXFileName.substr(0, m_sTMXFileName.find_last_of("/") + 1);
+                string dir = _TMXFileName.substr(0, _TMXFileName.find_last_of("/") + 1);
                 externalTilesetFilename = dir + externalTilesetFilename;
             }
             else 
             {
-                externalTilesetFilename = m_sResources + "/" + externalTilesetFilename;
+                externalTilesetFilename = _resources + "/" + externalTilesetFilename;
             }
             externalTilesetFilename = CCFileUtils::sharedFileUtils()->fullPathForFilename(externalTilesetFilename.c_str());
             
-            m_uCurrentFirstGID = (unsigned int)atoi(valueForKey("firstgid", attributeDict));
+            _currentFirstGID = (unsigned int)atoi(valueForKey("firstgid", attributeDict));
             
             pTMXMapInfo->parseXMLFile(externalTilesetFilename.c_str());
         }
         else
         {
             CCTMXTilesetInfo *tileset = new CCTMXTilesetInfo();
-            tileset->m_sName = valueForKey("name", attributeDict);
-            if (m_uCurrentFirstGID == 0)
+            tileset->_name = valueForKey("name", attributeDict);
+            if (_currentFirstGID == 0)
             {
-                tileset->m_uFirstGid = (unsigned int)atoi(valueForKey("firstgid", attributeDict));
+                tileset->_firstGid = (unsigned int)atoi(valueForKey("firstgid", attributeDict));
             }
             else
             {
-                tileset->m_uFirstGid = m_uCurrentFirstGID;
-                m_uCurrentFirstGID = 0;
+                tileset->_firstGid = _currentFirstGID;
+                _currentFirstGID = 0;
             }
-            tileset->m_uSpacing = (unsigned int)atoi(valueForKey("spacing", attributeDict));
-            tileset->m_uMargin = (unsigned int)atoi(valueForKey("margin", attributeDict));
+            tileset->_spacing = (unsigned int)atoi(valueForKey("spacing", attributeDict));
+            tileset->_margin = (unsigned int)atoi(valueForKey("margin", attributeDict));
             CCSize s;
             s.width = (float)atof(valueForKey("tilewidth", attributeDict));
             s.height = (float)atof(valueForKey("tileheight", attributeDict));
-            tileset->m_tTileSize = s;
+            tileset->_tileSize = s;
 
             pTMXMapInfo->getTilesets()->addObject(tileset);
             tileset->release();
@@ -406,7 +406,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     {
         CCTMXTilesetInfo* info = (CCTMXTilesetInfo*)pTMXMapInfo->getTilesets()->lastObject();
         CCDictionary *dict = new CCDictionary();
-        pTMXMapInfo->setParentGID(info->m_uFirstGid + atoi(valueForKey("id", attributeDict)));
+        pTMXMapInfo->setParentGID(info->_firstGid + atoi(valueForKey("id", attributeDict)));
         pTMXMapInfo->getTileProperties()->setObject(dict, pTMXMapInfo->getParentGID());
         CC_SAFE_RELEASE(dict);
         
@@ -416,29 +416,29 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     else if (elementName == "layer")
     {
         CCTMXLayerInfo *layer = new CCTMXLayerInfo();
-        layer->m_sName = valueForKey("name", attributeDict);
+        layer->_name = valueForKey("name", attributeDict);
 
         CCSize s;
         s.width = (float)atof(valueForKey("width", attributeDict));
         s.height = (float)atof(valueForKey("height", attributeDict));
-        layer->m_tLayerSize = s;
+        layer->_layerSize = s;
 
         std::string visible = valueForKey("visible", attributeDict);
-        layer->m_bVisible = !(visible == "0");
+        layer->_visible = !(visible == "0");
 
         std::string opacity = valueForKey("opacity", attributeDict);
         if( opacity != "" )
         {
-            layer->m_cOpacity = (unsigned char)(255 * atof(opacity.c_str()));
+            layer->_opacity = (unsigned char)(255 * atof(opacity.c_str()));
         }
         else
         {
-            layer->m_cOpacity = 255;
+            layer->_opacity = 255;
         }
 
         float x = (float)atof(valueForKey("x", attributeDict));
         float y = (float)atof(valueForKey("y", attributeDict));
-        layer->m_tOffset = ccp(x,y);
+        layer->_offset = ccp(x,y);
 
         pTMXMapInfo->getLayers()->addObject(layer);
         layer->release();
@@ -470,14 +470,14 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         // build full path
         std::string imagename = valueForKey("source", attributeDict);
 
-        if (m_sTMXFileName.find_last_of("/") != string::npos)
+        if (_TMXFileName.find_last_of("/") != string::npos)
         {
-            string dir = m_sTMXFileName.substr(0, m_sTMXFileName.find_last_of("/") + 1);
-            tileset->m_sSourceImage = dir + imagename;
+            string dir = _TMXFileName.substr(0, _TMXFileName.find_last_of("/") + 1);
+            tileset->_sourceImage = dir + imagename;
         }
         else 
         {
-            tileset->m_sSourceImage = m_sResources + (m_sResources.size() ? "/" : "") + imagename;
+            tileset->_sourceImage = _resources + (_resources.size() ? "/" : "") + imagename;
         }
     } 
     else if (elementName == "data")
@@ -547,7 +547,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             int y = atoi(value) + (int)objectGroup->getPositionOffset().y;
 
             // Correct y position. (Tiled uses Flipped, cocos2d uses Standard)
-            y = (int)(m_tMapSize.height * m_tTileSize.height) - y - atoi(valueForKey("height", attributeDict));
+            y = (int)(_mapSize.height * _tileSize.height) - y - atoi(valueForKey("height", attributeDict));
             sprintf(buffer, "%d", y);
             CCString* pStr = new CCString(buffer);
             pStr->autorelease();
@@ -623,7 +623,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     else if (elementName == "polygon") 
     {
         // find parent object's dict and add polygon-points to it
-        CCTMXObjectGroup* objectGroup = (CCTMXObjectGroup*)m_pObjectGroups->lastObject();
+        CCTMXObjectGroup* objectGroup = (CCTMXObjectGroup*)_objectGroups->lastObject();
         CCDictionary* dict = (CCDictionary*)objectGroup->getObjects()->lastObject();
 
         // get points value string
@@ -676,7 +676,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     else if (elementName == "polyline")
     {
         // find parent object's dict and add polyline-points to it
-        // CCTMXObjectGroup* objectGroup = (CCTMXObjectGroup*)m_pObjectGroups->lastObject();
+        // CCTMXObjectGroup* objectGroup = (CCTMXObjectGroup*)_objectGroups->lastObject();
         // CCDictionary* dict = (CCDictionary*)objectGroup->getObjects()->lastObject();
         // TODO: dict->setObject:[attributeDict objectForKey:@"points"] forKey:@"polylinePoints"];
     }
@@ -714,7 +714,7 @@ void CCTMXMapInfo::endElement(void *ctx, const char *name)
         if( pTMXMapInfo->getLayerAttribs() & (TMXLayerAttribGzip | TMXLayerAttribZlib) )
         {
             unsigned char *deflated;
-            CCSize s = layer->m_tLayerSize;
+            CCSize s = layer->_layerSize;
             // int sizeHint = s.width * s.height * sizeof(uint32_t);
             int sizeHint = (int)(s.width * s.height * sizeof(unsigned int));
 
@@ -732,11 +732,11 @@ void CCTMXMapInfo::endElement(void *ctx, const char *name)
                 return;
             }
 
-            layer->m_pTiles = (unsigned int*) deflated;
+            layer->_tiles = (unsigned int*) deflated;
         }
         else
         {
-            layer->m_pTiles = (unsigned int*) buffer;
+            layer->_tiles = (unsigned int*) buffer;
         }
 
         pTMXMapInfo->setCurrentString("");

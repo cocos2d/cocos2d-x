@@ -101,7 +101,7 @@ void SceneTestLayer1::onQuit(CCObject* pSender)
 
 SceneTestLayer2::SceneTestLayer2()
 {
-    m_timeCounter = 0;
+    _timeCounter = 0;
 
     CCMenuItemFont* item1 = CCMenuItemFont::create( "replaceScene", CC_CALLBACK_1(SceneTestLayer2::onReplaceScene, this));
     CCMenuItemFont* item2 = CCMenuItemFont::create( "replaceScene w/transition", CC_CALLBACK_1(SceneTestLayer2::onReplaceSceneTran, this));
@@ -125,8 +125,8 @@ SceneTestLayer2::SceneTestLayer2()
 
 void SceneTestLayer2::testDealloc(float dt)
 {
-    //m_timeCounter += dt;
-    //if( m_timeCounter > 10 )
+    //_timeCounter += dt;
+    //if( _timeCounter > 10 )
     //    onReplaceScene(this);
 }
 

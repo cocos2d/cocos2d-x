@@ -46,7 +46,7 @@ public:
 
 class CC_DLL CCSAXParser
 {
-    CCSAXDelegator*    m_pDelegator;
+    CCSAXDelegator*    _delegator;
 public:
 
     CCSAXParser();

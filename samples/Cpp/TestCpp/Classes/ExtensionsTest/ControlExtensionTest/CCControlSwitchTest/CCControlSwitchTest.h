@@ -33,7 +33,7 @@ public:
     bool init();
     /** Callback for the change value. */
     void valueChanged(CCObject* sender, CCControlEvent controlEvent);
-    CCLabelTTF *m_pDisplayValueLabel;
+    CCLabelTTF *_displayValueLabel;
     CONTROL_SCENE_CREATE_FUNC(CCControlSwitchTest)
 };
 

@@ -14,8 +14,8 @@ class CC_DLL CCInteger : public CCObject
 {
 public:
     CCInteger(int v)
-        : m_nValue(v) {}
-    int getValue() const {return m_nValue;}
+        : _value(v) {}
+    int getValue() const {return _value;}
 
     static CCInteger* create(int v)
     {
@@ -28,7 +28,7 @@ public:
     virtual void acceptVisitor(CCDataVisitor &visitor) { visitor.visit(this); }
 
 private:
-    int m_nValue;
+    int _value;
 };
 
 // end of data_structure group

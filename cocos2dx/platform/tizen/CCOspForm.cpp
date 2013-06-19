@@ -39,8 +39,8 @@ using namespace Tizen::Graphics;
 
 CCOspForm::CCOspForm()
     : __pKeypad(null)
-    , m_pfEditTextCallback(null)
-    , m_pCtx(null)
+    , _editTextCallback(null)
+    , _ctx(null)
 {
 }
 
@@ -64,6 +64,8 @@ CCOspForm::OnTerminating(void)
 
     if (__pKeypad)
         __pKeypad->Destroy();
+
+    CCDirector::sharedDirector()->getAccelerometer()->stopSensor();
 
     return r;
 }
@@ -124,9 +126,9 @@ void CCOspForm::OnTextValueChanged(const Tizen::Ui::Control& source)
     if (buffer)
         pText = (const char *)buffer->GetPointer();
 
-    if (m_pfEditTextCallback)
+    if (_editTextCallback)
     {
-        m_pfEditTextCallback(pText, m_pCtx);
+        _editTextCallback(pText, _ctx);
     }
     else
     {
@@ -161,9 +163,9 @@ void CCOspForm::OnTextValueChanged(const Tizen::Ui::Control& source)
 
 void CCOspForm::OnTextValueChangeCanceled(const Tizen::Ui::Control& source)
 {
-    if (m_pfEditTextCallback)
+    if (_editTextCallback)
     {
-        m_pfEditTextCallback("", m_pCtx);
+        _editTextCallback("", _ctx);
     }
     else
     {
@@ -179,8 +181,8 @@ void CCOspForm::OnTextValueChangeCanceled(const Tizen::Ui::Control& source)
 void
 CCOspForm::ShowKeypad(const char* pMessage, KeypadStyle keypadStyle, KeypadInputModeCategory keypadCategory, bool bSingleLineEnabled, bool bTextPrediction, int nMaxLength, EditTextCallback pfEditTextCallback, void* pCtx)
 {
-    m_pfEditTextCallback = pfEditTextCallback;
-    m_pCtx = pCtx;
+    _editTextCallback = pfEditTextCallback;
+    _ctx = pCtx;
 
     if (__pKeypad)
     {

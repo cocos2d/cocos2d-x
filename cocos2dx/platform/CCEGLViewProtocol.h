@@ -146,20 +146,20 @@ private:
     void getSetOfTouchesEndOrCancel(CCSet& set, int num, int ids[], float xs[], float ys[]);
 
 protected:
-    EGLTouchDelegate* m_pDelegate;
+    EGLTouchDelegate* _delegate;
 
     // real screen size
-    CCSize m_obScreenSize;
+    CCSize _screenSize;
     // resolution size, it is the size appropriate for the app resources.
-    CCSize m_obDesignResolutionSize;
+    CCSize _designResolutionSize;
     // the view port size
-    CCRect m_obViewPortRect;
+    CCRect _viewPortRect;
     // the view name
-    char   m_szViewName[50];
+    char   _viewName[50];
 
-    float  m_fScaleX;
-    float  m_fScaleY;
-    ResolutionPolicy m_eResolutionPolicy;
+    float  _scaleX;
+    float  _scaleY;
+    ResolutionPolicy _resolutionPolicy;
 };
 
 // end of platform group

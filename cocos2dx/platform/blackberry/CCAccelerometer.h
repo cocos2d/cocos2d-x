@@ -40,9 +40,9 @@ public:
     void update(long sensorTimeStamp, double x, double y, double z);
 
 private:
-    CCAccelerometerDelegate* m_pAccelDelegate;
-    CCAcceleration 			 m_accelerationValue;
-    static int				 m_initialOrientationAngle;
+    CCAccelerometerDelegate* _accelDelegate;
+    CCAcceleration 			 _accelerationValue;
+    static int				 _initialOrientationAngle;
 };
 
 NS_CC_END

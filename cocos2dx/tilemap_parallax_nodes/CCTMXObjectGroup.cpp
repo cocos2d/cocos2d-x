@@ -32,29 +32,29 @@ NS_CC_BEGIN
 //implementation CCTMXObjectGroup
 
 CCTMXObjectGroup::CCTMXObjectGroup()
-    :m_tPositionOffset(CCPointZero)
-    ,m_sGroupName("")        
+    :_positionOffset(CCPointZero)
+    ,_groupName("")        
 {
-    m_pObjects = CCArray::create();
-    m_pObjects->retain();
-    m_pProperties = new CCDictionary();
+    _objects = CCArray::create();
+    _objects->retain();
+    _properties = new CCDictionary();
 }
 CCTMXObjectGroup::~CCTMXObjectGroup()
 {
     CCLOGINFO( "cocos2d: deallocing: %p", this);
-    CC_SAFE_RELEASE(m_pObjects);
-    CC_SAFE_RELEASE(m_pProperties);
+    CC_SAFE_RELEASE(_objects);
+    CC_SAFE_RELEASE(_properties);
 }
 CCDictionary* CCTMXObjectGroup::objectNamed(const char *objectName)
 {
-    if (m_pObjects && m_pObjects->count() > 0)
+    if (_objects && _objects->count() > 0)
     {
         CCObject* pObj = NULL;
-        CCARRAY_FOREACH(m_pObjects, pObj)
+        CCARRAY_FOREACH(_objects, pObj)
         {
             CCDictionary* pDict = (CCDictionary*)pObj;
             CCString *name = (CCString*)pDict->objectForKey("name");
-            if (name && name->m_sString == objectName)
+            if (name && name->_string == objectName)
             {
                 return pDict;
             }
@@ -65,28 +65,28 @@ CCDictionary* CCTMXObjectGroup::objectNamed(const char *objectName)
 }
 CCString* CCTMXObjectGroup::propertyNamed(const char* propertyName)
 {
-    return (CCString*)m_pProperties->objectForKey(propertyName);
+    return (CCString*)_properties->objectForKey(propertyName);
 }
 
 CCDictionary* CCTMXObjectGroup::getProperties()
 { 
-    return m_pProperties;
+    return _properties;
 }
 void CCTMXObjectGroup::setProperties(CCDictionary * properties)
 {
     CC_SAFE_RETAIN(properties);
-    CC_SAFE_RELEASE(m_pProperties);
-    m_pProperties = properties;
+    CC_SAFE_RELEASE(_properties);
+    _properties = properties;
 }
 CCArray* CCTMXObjectGroup::getObjects()
 {
-    return m_pObjects;
+    return _objects;
 }
 void CCTMXObjectGroup::setObjects(CCArray* objects)
 {
     CC_SAFE_RETAIN(objects);
-    CC_SAFE_RELEASE(m_pObjects);
-    m_pObjects = objects;
+    CC_SAFE_RELEASE(_objects);
+    _objects = objects;
 }
 
 NS_CC_END
