@@ -52,7 +52,7 @@ class CCZone;
     CCSpriteFrame *frame = CCSpriteFrame::frameWithTexture(texture, rect, offset);
     sprite->setDisplayFrame(frame);
  */
-class CC_DLL CCSpriteFrame : public CCObject
+class CC_DLL CCSpriteFrame : public CCObject, public CCClonable
 {
 public:
     // attributes
@@ -93,6 +93,10 @@ public:
 
 public:
     ~CCSpriteFrame(void);
+
+	/** returns a clone of the SpriteFrame */
+	virtual CCSpriteFrame *clone() const;
+
     virtual CCObject* copyWithZone(CCZone *pZone);
 
     /** Create a CCSpriteFrame with a texture filename, rect in points.
