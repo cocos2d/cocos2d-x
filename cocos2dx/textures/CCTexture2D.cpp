@@ -543,7 +543,7 @@ bool CCTexture2D::initWithString(const char *text, ccFontDefinition *textDefinit
         }
         
         // handle shadow parameters
-        bool  shadowEnabled =  false;
+        bool  shadowEnabled = false;
         float shadowDX      = 0.0;
         float shadowDY      = 0.0;
         float shadowBlur    = 0.0;
@@ -568,9 +568,9 @@ bool CCTexture2D::initWithString(const char *text, ccFontDefinition *textDefinit
         if ( textDefinition->_stroke._strokeEnabled )
         {
             strokeEnabled = true;
-            strokeColorR = textDefinition->_stroke._strokeColor.r / 255;
-            strokeColorG = textDefinition->_stroke._strokeColor.g / 255;
-            strokeColorB = textDefinition->_stroke._strokeColor.b / 255;
+            strokeColorR = textDefinition->_stroke._strokeColor.r / 255.0f;
+            strokeColorG = textDefinition->_stroke._strokeColor.g / 255.0f;
+            strokeColorB = textDefinition->_stroke._strokeColor.b / 255.0f;
             strokeSize   = textDefinition->_stroke._strokeSize;
         }
         
@@ -585,9 +585,9 @@ bool CCTexture2D::initWithString(const char *text, ccFontDefinition *textDefinit
                                                       eAlign,
                                                       textDefinition->_fontName.c_str(),
                                                       textDefinition->_fontSize,
-                                                      textDefinition->_fontFillColor.r / 255,
-                                                      textDefinition->_fontFillColor.g / 255,
-                                                      textDefinition->_fontFillColor.b / 255,
+                                                      textDefinition->_fontFillColor.r / 255.0f,
+                                                      textDefinition->_fontFillColor.g / 255.0f,
+                                                      textDefinition->_fontFillColor.b / 255.0f,
                                                       shadowEnabled,
                                                       shadowDX,
                                                       shadowDY,
