@@ -206,7 +206,7 @@ function Atlas3.create()
     label2:setColor(ccc3(255, 0, 0 ))
     layer:addChild(label2, 0, kTagBitmapAtlas2)
 
-    label2:runAction( tolua.cast(repeatAction:copy():autorelease(), "CCAction") )
+    label2:runAction( tolua.cast(repeatAction:clone(), "CCAction") )
 
     local label3 = CCLabelBMFont:create("Test", "fonts/bitmapFontTest2.fnt")
     -- testing anchors
@@ -322,7 +322,7 @@ function Atlas4.create()
     label2:setPosition( ccp(s.width/2.0, 80) )
 
     local lastChar = label2:getChildByTag(3)
-    lastChar:runAction(tolua.cast( rot_4ever:copy():autorelease(), "CCAction" ))
+    lastChar:runAction(tolua.cast( rot_4ever:clone(), "CCAction" ))
 
     layer:registerScriptHandler(Atlas4.onNodeEvent)
 

@@ -376,8 +376,8 @@ local function MenuLayer3()
     item2:runAction( CCRepeatForever:create(CCSequence:create( arr)))
 
     local  spin1 = CCRotateBy:create(3, 360)
-    local  spin2 = tolua.cast(spin1:copy():autorelease(), "CCActionInterval")
-    local  spin3 = tolua.cast(spin1:copy():autorelease(), "CCActionInterval")
+    local  spin2 = tolua.cast(spin1:clone(), "CCActionInterval")
+    local  spin3 = tolua.cast(spin1:clone(), "CCActionInterval")
 
     item1:runAction( CCRepeatForever:create(spin1) )
     item2:runAction( CCRepeatForever:create(spin2) )

@@ -1085,7 +1085,7 @@ SpriteAnchorPoint::SpriteAnchorPoint()
         
         point->setPosition( sprite->getPosition() );
         
-        CCAction* copy = (CCAction*)(action->copy()->autorelease());
+        CCAction* copy = action->clone();
         sprite->runAction(copy);
         addChild(sprite, i);
     }        
@@ -1138,7 +1138,7 @@ SpriteBatchNodeAnchorPoint::SpriteBatchNodeAnchorPoint()
 
         point->setPosition( sprite->getPosition() );
         
-        CCAction* copy = (CCAction*)(action->copy()->autorelease());
+        CCAction* copy = action->clone();
         sprite->runAction(copy);
         batch->addChild(sprite, i);
     }
@@ -1190,7 +1190,7 @@ Sprite6::Sprite6()
         CCSprite* sprite = CCSprite::createWithTexture(batch->getTexture(), CCRectMake(85*i, 121*1, 85, 121));
         sprite->setPosition( ccp( (i+1)*step, s.height/2) );
 
-        sprite->runAction( (CCAction*)(action->copy()->autorelease()) );
+        sprite->runAction( action->clone());
         batch->addChild(sprite, i);
     }
     
@@ -1308,7 +1308,7 @@ SpriteAliased::SpriteAliased()
     CCActionInterval* seq = CCSequence::create( scale, scale_back, NULL);
     CCAction* repeat = CCRepeatForever::create(seq);
     
-    CCAction* repeat2 = (CCAction*)(repeat->copy()->autorelease());
+    CCAction* repeat2 = repeat->clone();
     
     sprite1->runAction(repeat);
     sprite2->runAction(repeat2);
@@ -1367,7 +1367,7 @@ SpriteBatchNodeAliased::SpriteBatchNodeAliased()
     CCActionInterval* seq = CCSequence::create( scale, scale_back, NULL);
     CCAction* repeat = CCRepeatForever::create(seq);
     
-    CCAction* repeat2 = (CCAction*)(repeat->copy()->autorelease());
+    CCAction* repeat2 = repeat->clone();
     
     sprite1->runAction(repeat);
     sprite2->runAction(repeat2);
@@ -2139,11 +2139,11 @@ SpriteAnimationSplit::SpriteAnimationSplit()
             
     CCAnimation *animation = CCAnimation::createWithSpriteFrames(animFrames, 0.2f);
     CCAnimate *animate = CCAnimate::create(animation);
-    CCActionInterval* seq = CCSequence::create( animate,
-                       CCFlipX::create(true),
-                       animate->copy()->autorelease(),
-                       CCFlipX::create(false),
-                       NULL);
+	auto seq = CCSequence::create(animate,
+								  CCFlipX::create(true),
+								  animate->clone(),
+								  CCFlipX::create(false),
+								  NULL);
     
     sprite->runAction(CCRepeatForever::create( seq ) );
 }
@@ -2846,7 +2846,7 @@ SpriteBatchNodeChildrenScale::SpriteBatchNodeChildrenScale()
     sprite1->setPosition( ccp( 3*s.width/4, s.height/4) );
     sprite1->setScaleX( -0.5f );
     sprite1->setScaleY( 2.0f );
-    sprite1->runAction( (CCAction*)(seq->copy()->autorelease()) );
+    sprite1->runAction( seq->clone() );
     
     sprite2 = CCSprite::createWithSpriteFrameName("grossinis_sister2.png");
     sprite2->setPosition( ccp( 50,0) );
@@ -2866,7 +2866,7 @@ SpriteBatchNodeChildrenScale::SpriteBatchNodeChildrenScale()
     sprite1->setPosition( ccp( s.width/4, 2*s.height/3) );
     sprite1->setScaleX( 1.5f );
     sprite1->setScaleY( -0.5f );
-    sprite1->runAction( (CCAction*)(seq->copy()->autorelease()) );
+    sprite1->runAction( seq->clone() );
     
     sprite2 = CCSprite::createWithSpriteFrameName("grossinis_sister2.png");
     sprite2->setPosition( ccp( 50,0) );
@@ -2885,7 +2885,7 @@ SpriteBatchNodeChildrenScale::SpriteBatchNodeChildrenScale()
     sprite1->setPosition( ccp( 3*s.width/4, 2*s.height/3) );
     sprite1->setScaleX( 1.5f );
     sprite1->setScaleY( -0.5f);
-    sprite1->runAction( (CCAction*)(seq->copy()->autorelease()) );
+    sprite1->runAction( seq->clone() );
     
     sprite2 = CCSprite::createWithSpriteFrameName("grossinis_sister2.png");
     sprite2->setPosition( ccp( 50,0) );
@@ -2930,14 +2930,14 @@ SpriteChildrenChildren::SpriteChildrenChildren()
     // parent
     l1 = CCSprite::createWithSpriteFrameName("father.gif");
     l1->setPosition( ccp( s.width/2, s.height/2) );
-    l1->runAction( (CCAction*)(seq->copy()->autorelease()) );
+    l1->runAction( seq->clone() );
     aParent->addChild(l1);
     CCSize l1Size = l1->getContentSize();
     
     // child left
     l2a = CCSprite::createWithSpriteFrameName("sister1.gif");
     l2a->setPosition( ccp( -50 + l1Size.width/2, 0 + l1Size.height/2) );
-    l2a->runAction( (CCAction*)(rot_back_fe->copy()->autorelease()) );
+    l2a->runAction( rot_back_fe->clone() );
     l1->addChild(l2a);
     CCSize l2aSize = l2a->getContentSize();        
     
@@ -2945,7 +2945,7 @@ SpriteChildrenChildren::SpriteChildrenChildren()
     // child right
     l2b = CCSprite::createWithSpriteFrameName("sister2.gif");
     l2b->setPosition( ccp( +50 + l1Size.width/2, 0 + l1Size.height/2) );
-    l2b->runAction( (CCAction*)(rot_back_fe->copy()->autorelease()) );
+    l2b->runAction( rot_back_fe->clone() );
     l1->addChild(l2b);
     CCSize l2bSize = l2a->getContentSize();        
     
@@ -3014,14 +3014,14 @@ SpriteBatchNodeChildrenChildren::SpriteBatchNodeChildrenChildren()
     // parent
     l1 = CCSprite::createWithSpriteFrameName("father.gif");
     l1->setPosition( ccp( s.width/2, s.height/2) );
-    l1->runAction( (CCAction*)(seq->copy()->autorelease()) );
+    l1->runAction( seq->clone() );
     aParent->addChild(l1);
     CCSize l1Size = l1->getContentSize();
 
     // child left
     l2a = CCSprite::createWithSpriteFrameName("sister1.gif");
     l2a->setPosition( ccp( -50 + l1Size.width/2, 0 + l1Size.height/2) );
-    l2a->runAction( (CCAction*)(rot_back_fe->copy()->autorelease()) );
+    l2a->runAction( rot_back_fe->clone() );
     l1->addChild(l2a);
     CCSize l2aSize = l2a->getContentSize();        
 
@@ -3029,7 +3029,7 @@ SpriteBatchNodeChildrenChildren::SpriteBatchNodeChildrenChildren()
     // child right
     l2b = CCSprite::createWithSpriteFrameName("sister2.gif");
     l2b->setPosition( ccp( +50 + l1Size.width/2, 0 + l1Size.height/2) );
-    l2b->runAction( (CCAction*)(rot_back_fe->copy()->autorelease()) );
+    l2b->runAction( rot_back_fe->clone() );
     l1->addChild(l2b);
     CCSize l2bSize = l2a->getContentSize();        
 
@@ -3407,7 +3407,7 @@ SpriteDoubleResolution::SpriteDoubleResolution()
     CCScaleBy* scale_back = (CCScaleBy*)scale->reverse();
     CCSequence* seq = CCSequence::create(scale, scale_back, NULL);
 
-    CCSequence* seq_copy = (CCSequence*)seq->copy()->autorelease();
+    CCSequence* seq_copy = seq->clone();
 
     spriteSD->runAction(seq);
     spriteHD->runAction(seq_copy);
@@ -4004,7 +4004,7 @@ SpriteOffsetAnchorFlip::SpriteOffsetAnchorFlip()
         CCFlipY *flip = CCFlipY::create(true);
         CCFlipY *flip_back = CCFlipY::create(false);
         CCDelayTime *delay = CCDelayTime::create(1);
-        CCSequence *seq = CCSequence::create(delay, flip, delay->copy()->autorelease(), flip_back, NULL);
+        CCSequence *seq = CCSequence::create(delay, flip, delay->clone(), flip_back, NULL);
         sprite->runAction(CCRepeatForever::create(seq));
 
         addChild(sprite, 0);

@@ -27,6 +27,14 @@ THE SOFTWARE.
 
 #include "cocoa/CCObject.h"
 
+// premultiply alpha, or the effect will wrong when want to use other pixel format in CCTexture2D,
+// such as RGB888, RGB5A1
+#define CC_RGB_PREMULTIPLY_ALPHA(vr, vg, vb, va) \
+    (unsigned)(((unsigned)((unsigned char)(vr) * ((unsigned char)(va) + 1)) >> 8) | \
+    ((unsigned)((unsigned char)(vg) * ((unsigned char)(va) + 1) >> 8) << 8) | \
+    ((unsigned)((unsigned char)(vb) * ((unsigned char)(va) + 1) >> 8) << 16) | \
+    ((unsigned)(unsigned char)(va) << 24))
+
 NS_CC_BEGIN
 
 /**
@@ -95,6 +103,9 @@ public:
                            int nWidth = 0,
                            int nHeight = 0,
                            int nBitsPerComponent = 8);
+
+    // @warning kFmtRawData only support RGBA8888
+    bool initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti);
 
     /**
     @brief    Create image with specified string.
@@ -165,8 +176,6 @@ protected:
     bool _initWithPngData(void *pData, int nDatalen);
     bool _initWithTiffData(void *pData, int nDataLen);
     bool _initWithWebpData(void *pData, int nDataLen);
-    // @warning kFmtRawData only support RGBA8888
-    bool _initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti);
 
     bool _saveImageToPNG(const char *pszFilePath, bool bIsToRGB = true);
     bool _saveImageToJPG(const char *pszFilePath);
