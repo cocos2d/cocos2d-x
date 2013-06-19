@@ -36,8 +36,8 @@ typedef enum
 {
     kAdsReceived = 0,            // The ad is received
 
-    kFullScreenViewShown,       // The full screen advertisement shown
-    kFullScreenViewDismissed,   // The full screen advertisement dismissed
+    kAdsShown,                  // The advertisement shown
+    kAdsDismissed,              // The advertisement dismissed
 
     kPointsSpendSucceed,        // The points spend succeed
     kPointsSpendFailed,         // The points spend failed
@@ -72,6 +72,7 @@ public:
     typedef enum {
         kBannerAd = 0,
         kFullScreenAd,
+        kMoreApp,
     } AdsType;
 
     typedef enum {
@@ -110,6 +111,11 @@ public:
     @param type The adview type need to hide.
     */
     void hideAds(AdsType type);
+
+    /**
+    @brief Query the points of player
+    */
+    void queryPoints();
 
     /**
     @brief Spend the points.
