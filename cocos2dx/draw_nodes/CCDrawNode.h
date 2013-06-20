@@ -35,13 +35,13 @@
 
 NS_CC_BEGIN
 
-/** CCDrawNode
+/** DrawNode
  Node that draws dots, segments and polygons.
  Faster than the "drawing primitives" since they it draws everything in one single batch.
  
  @since v2.1
  */
-class CC_DLL CCDrawNode : public CCNode
+class CC_DLL DrawNode : public Node
 {
 protected:
     GLuint      _vao;
@@ -56,20 +56,20 @@ protected:
     bool            _dirty;
     
 public:
-    static CCDrawNode* create();
-    virtual ~CCDrawNode();
+    static DrawNode* create();
+    virtual ~DrawNode();
     
     virtual bool init();
     virtual void draw();
     
     /** draw a dot at a position, with a given radius and color */
-    void drawDot(const CCPoint &pos, float radius, const ccColor4F &color);
+    void drawDot(const Point &pos, float radius, const ccColor4F &color);
     
     /** draw a segment with a radius and color */
-    void drawSegment(const CCPoint &from, const CCPoint &to, float radius, const ccColor4F &color);
+    void drawSegment(const Point &from, const Point &to, float radius, const ccColor4F &color);
     
     /** draw a polygon with a fill color and line color */
-    void drawPolygon(CCPoint *verts, unsigned int count, const ccColor4F &fillColor, float borderWidth, const ccColor4F &borderColor);
+    void drawPolygon(Point *verts, unsigned int count, const ccColor4F &fillColor, float borderWidth, const ccColor4F &borderColor);
     
     /** Clear the geometry in the node's buffer. */
     void clear();
@@ -77,7 +77,7 @@ public:
     ccBlendFunc getBlendFunc() const;
     void setBlendFunc(const ccBlendFunc &blendFunc);
     
-    CCDrawNode();
+    DrawNode();
     
 private:
     void ensureCapacity(unsigned int count);

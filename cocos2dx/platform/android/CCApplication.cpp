@@ -13,21 +13,21 @@
 NS_CC_BEGIN
 
 // sharedApplication pointer
-CCApplication * CCApplication::sm_pSharedApplication = 0;
+Application * Application::sm_pSharedApplication = 0;
 
-CCApplication::CCApplication()
+Application::Application()
 {
     CCAssert(! sm_pSharedApplication, "");
     sm_pSharedApplication = this;
 }
 
-CCApplication::~CCApplication()
+Application::~Application()
 {
     CCAssert(this == sm_pSharedApplication, "");
     sm_pSharedApplication = NULL;
 }
 
-int CCApplication::run()
+int Application::run()
 {
     // Initialize instance and cocos2d.
     if (! applicationDidFinishLaunching())
@@ -38,7 +38,7 @@ int CCApplication::run()
     return -1;
 }
 
-void CCApplication::setAnimationInterval(double interval)
+void Application::setAnimationInterval(double interval)
 {
     JniMethodInfo methodInfo;
     if (! JniHelper::getStaticMethodInfo(methodInfo, "org/cocos2dx/lib/Cocos2dxRenderer", "setAnimationInterval", 
@@ -55,13 +55,13 @@ void CCApplication::setAnimationInterval(double interval)
 //////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////
-CCApplication* CCApplication::sharedApplication()
+Application* Application::sharedApplication()
 {
     CCAssert(sm_pSharedApplication, "");
     return sm_pSharedApplication;
 }
 
-ccLanguageType CCApplication::getCurrentLanguage()
+ccLanguageType Application::getCurrentLanguage()
 {
     std::string languageName = getCurrentLanguageJNI();
     const char* pLanguageName = languageName.c_str();
@@ -126,7 +126,7 @@ ccLanguageType CCApplication::getCurrentLanguage()
     return ret;
 }
 
-TargetPlatform CCApplication::getTargetPlatform()
+TargetPlatform Application::getTargetPlatform()
 {
     return kTargetAndroid;
 }

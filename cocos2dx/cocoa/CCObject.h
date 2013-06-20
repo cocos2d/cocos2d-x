@@ -38,31 +38,31 @@ NS_CC_BEGIN
  * @{
  */
 
-class CCZone;
-class CCObject;
-class CCNode;
-class CCEvent;
+class Zone;
+class Object;
+class Node;
+class Event;
 
-class CC_DLL CCCopying
+class CC_DLL Copying
 {
 public:
-    virtual CCObject* copyWithZone(CCZone* pZone);
+    virtual Object* copyWithZone(Zone* pZone);
 	
 };
 
 /** Interface that defines how to clone an object */
-class CC_DLL CCClonable
+class CC_DLL Clonable
 {
 public:
 	/** returns a copy of the object */
-    virtual CCClonable* clone() const = 0;
-	virtual ~CCClonable() {};
+    virtual Clonable* clone() const = 0;
+	virtual ~Clonable() {};
 };
 
-class CC_DLL CCObject : public CCCopying
+class CC_DLL Object : public Copying
 {
 public:
-    // object id, CCScriptSupport need public _ID
+    // object id, ScriptSupport need public _ID
     unsigned int        _ID;
     // Lua reference id
     int                 _luaID;
@@ -72,33 +72,33 @@ protected:
     // count of autorelease
     unsigned int        _autoReleaseCount;
 public:
-    CCObject(void);
-    virtual ~CCObject(void);
+    Object(void);
+    virtual ~Object(void);
     
     void release(void);
     void retain(void);
-    CCObject* autorelease(void);
-    CCObject* copy(void);
+    Object* autorelease(void);
+    Object* copy(void);
     bool isSingleReference(void) const;
     unsigned int retainCount(void) const;
-    virtual bool isEqual(const CCObject* pObject);
+    virtual bool isEqual(const Object* pObject);
 
-    virtual void acceptVisitor(CCDataVisitor &visitor);
+    virtual void acceptVisitor(DataVisitor &visitor);
 
     virtual void update(float dt) {CC_UNUSED_PARAM(dt);};
     
-    friend class CCAutoreleasePool;
+    friend class AutoreleasePool;
 };
 
 
-typedef void (CCObject::*SEL_SCHEDULE)(float);
-typedef void (CCObject::*SEL_CallFunc)();
-typedef void (CCObject::*SEL_CallFuncN)(CCNode*);
-typedef void (CCObject::*SEL_CallFuncND)(CCNode*, void*);
-typedef void (CCObject::*SEL_CallFuncO)(CCObject*);
-typedef void (CCObject::*SEL_MenuHandler)(CCObject*);
-typedef void (CCObject::*SEL_EventHandler)(CCEvent*);
-typedef int (CCObject::*SEL_Compare)(CCObject*);
+typedef void (Object::*SEL_SCHEDULE)(float);
+typedef void (Object::*SEL_CallFunc)();
+typedef void (Object::*SEL_CallFuncN)(Node*);
+typedef void (Object::*SEL_CallFuncND)(Node*, void*);
+typedef void (Object::*SEL_CallFuncO)(Object*);
+typedef void (Object::*SEL_MenuHandler)(Object*);
+typedef void (Object::*SEL_EventHandler)(Event*);
+typedef int (Object::*SEL_Compare)(Object*);
 
 #define schedule_selector(_SELECTOR) (SEL_SCHEDULE)(&_SELECTOR)
 #define callfunc_selector(_SELECTOR) (SEL_CallFunc)(&_SELECTOR)

@@ -60,8 +60,8 @@ PFNGLGETBUFFERPOINTERVOESPROC glGetBufferPointerv = 0;
 
 NS_CC_BEGIN
 
-bool CCEGLView::_initializedFunctions = false;
-const GLubyte *CCEGLView::_extensions = 0;
+bool EGLView::_initializedFunctions = false;
+const GLubyte *EGLView::_extensions = 0;
 
 enum Orientation
 {
@@ -73,10 +73,10 @@ enum Orientation
 static Orientation orientation = LANDSCAPE;
 
 #define MAX_TOUCHES         4
-static CCTouch *s_pTouches[MAX_TOUCHES] = { NULL };
-static CCEGLView* s_pInstance = NULL;
+static Touch *s_pTouches[MAX_TOUCHES] = { NULL };
+static EGLView* s_pInstance = NULL;
 
-CCEGLView::CCEGLView()
+EGLView::EGLView()
 	: _eventHandler(NULL)
 {
 	_eglDisplay = EGL_NO_DISPLAY;
@@ -102,21 +102,21 @@ CCEGLView::CCEGLView()
     	initEGLFunctions();
 }
 
-CCEGLView::~CCEGLView()
+EGLView::~EGLView()
 {
 }
 
-void CCEGLView::setEventHandler(EventHandler* pHandler)
+void EGLView::setEventHandler(EventHandler* pHandler)
 {
 	_eventHandler = pHandler;
 }
 
-const char* CCEGLView::getWindowGroupId() const
+const char* EGLView::getWindowGroupId() const
 {
 	return _windowGroupID;
 }
 
-void CCEGLView::release()
+void EGLView::release()
 {
 	screen_stop_events(_screenContext);
 
@@ -170,7 +170,7 @@ void CCEGLView::release()
 	exit(0);
 }
 
-void CCEGLView::initEGLFunctions()
+void EGLView::initEGLFunctions()
 {
 	_extensions = glGetString(GL_EXTENSIONS);
 
@@ -191,34 +191,34 @@ void CCEGLView::initEGLFunctions()
 	_initializedFunctions = true;
 }
 
-bool CCEGLView::isOpenGLReady()
+bool EGLView::isOpenGLReady()
 {
 //	return (_isGLInitialized && _screenWidth != 0 && _screenHeight != 0);
 	return (_isGLInitialized && _screenSize.height != 0 && _screenSize.width != 0);
 }
 
-void CCEGLView::end()
+void EGLView::end()
 {
     release();
 }
 
-void CCEGLView::swapBuffers()
+void EGLView::swapBuffers()
 {
 	eglSwapBuffers(_eglDisplay, _eglSurface);
 }
 
-CCEGLView* CCEGLView::sharedOpenGLView()
+EGLView* EGLView::sharedOpenGLView()
 {
 	if (!s_pInstance)
 	{
-		s_pInstance = new CCEGLView();
+		s_pInstance = new EGLView();
 	}
 
 	CCAssert(s_pInstance != NULL, "CCEGLView wasn't constructed yet");
 	return s_pInstance;
 }
 
-void CCEGLView::showKeyboard()
+void EGLView::showKeyboard()
 {
 	int height;
 
@@ -227,25 +227,25 @@ void CCEGLView::showKeyboard()
 	float factor = _scaleY / CC_CONTENT_SCALE_FACTOR();
 	height = (float)height / factor;
 
-	CCRect rect_begin(0, 0 - height, _screenSize.width / factor, height);
-	CCRect rect_end(0, 0, _screenSize.width / factor, height);
+	Rect rect_begin(0, 0 - height, _screenSize.width / factor, height);
+	Rect rect_end(0, 0, _screenSize.width / factor, height);
 
-    CCIMEKeyboardNotificationInfo info;
+    IMEKeyboardNotificationInfo info;
     info.begin = rect_begin;
     info.end = rect_end;
     info.duration = 0;
 
-    CCIMEDispatcher::sharedDispatcher()->dispatchKeyboardWillShow(info);
+    IMEDispatcher::sharedDispatcher()->dispatchKeyboardWillShow(info);
     virtualkeyboard_show();
-    CCIMEDispatcher::sharedDispatcher()->dispatchKeyboardDidShow(info);
+    IMEDispatcher::sharedDispatcher()->dispatchKeyboardDidShow(info);
 }
 
-void CCEGLView::hideKeyboard()
+void EGLView::hideKeyboard()
 {
 	virtualkeyboard_hide();
 }
 
-void CCEGLView::setIMEKeyboardState(bool bOpen)
+void EGLView::setIMEKeyboardState(bool bOpen)
 {
 	if (bOpen)
 		showKeyboard();
@@ -253,7 +253,7 @@ void CCEGLView::setIMEKeyboardState(bool bOpen)
 		hideKeyboard();
 }
 
-bool CCEGLView::isGLExtension(const char *searchName) const
+bool EGLView::isGLExtension(const char *searchName) const
 {
 	const GLubyte *start;
 	GLubyte *where, *terminator;
@@ -306,7 +306,7 @@ static EGLenum checkErrorEGL(const char* msg)
     return error;
 }
 
-bool CCEGLView::initGL()
+bool EGLView::initGL()
 {
     int rc = 0;
     int screenFormat = SCREEN_FORMAT_RGBA8888;
@@ -578,7 +578,7 @@ static long time2millis(struct timespec *times)
     return times->tv_sec*1000 + times->tv_nsec/1000000;
 }
 
-bool CCEGLView::handleEvents()
+bool EGLView::handleEvents()
 {
 	bps_event_t*    event = NULL;
 	mtouch_event_t  mtouch_event;
@@ -607,7 +607,7 @@ bool CCEGLView::handleEvents()
 			switch (bps_event_get_code(event))
 			{
 				case NAVIGATOR_SWIPE_DOWN:
-					CCDirector::sharedDirector()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeMenuClicked);
+					Director::sharedDirector()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeMenuClicked);
 					break;
 
 				case NAVIGATOR_EXIT:
@@ -619,7 +619,7 @@ bool CCEGLView::handleEvents()
 				case NAVIGATOR_WINDOW_INACTIVE:
 					if (_isWindowActive)
 					{
-						CCApplication::sharedApplication()->applicationDidEnterBackground();
+						Application::sharedApplication()->applicationDidEnterBackground();
 						_isWindowActive = false;
 					}
 					break;
@@ -627,7 +627,7 @@ bool CCEGLView::handleEvents()
 				case NAVIGATOR_WINDOW_ACTIVE:
 					if (!_isWindowActive)
 					{
-						CCApplication::sharedApplication()->applicationWillEnterForeground();
+						Application::sharedApplication()->applicationWillEnterForeground();
 						_isWindowActive = true;
 					}
 					break;
@@ -639,14 +639,14 @@ bool CCEGLView::handleEvents()
 						case NAVIGATOR_WINDOW_FULLSCREEN:
 							if (!_isWindowActive)
 							{
-								CCApplication::sharedApplication()->applicationWillEnterForeground();
+								Application::sharedApplication()->applicationWillEnterForeground();
 								_isWindowActive = true;
 							}
 							break;
 						case NAVIGATOR_WINDOW_THUMBNAIL:
 							if (_isWindowActive)
 							{
-								CCApplication::sharedApplication()->applicationDidEnterBackground();
+								Application::sharedApplication()->applicationDidEnterBackground();
 								_isWindowActive = false;
 							}
 							break;
@@ -750,7 +750,7 @@ bool CCEGLView::handleEvents()
 						{
 							buf[0] = val;
 							buf[1]=  '\0';
-							CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(buf, 1);
+							IMEDispatcher::sharedDispatcher()->dispatchInsertText(buf, 1);
 						}
 						else
 						{
@@ -761,12 +761,12 @@ bool CCEGLView::handleEvents()
 							switch (val)
 							{
 								case 8: // backspace
-									//		CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
-									CCIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+									//		KeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
+									IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
 									break;
 
 								default:
-									CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(buf, 1);
+									IMEDispatcher::sharedDispatcher()->dispatchInsertText(buf, 1);
 									break;
 							}
 						}
@@ -790,7 +790,7 @@ bool CCEGLView::handleEvents()
                 current_time = time2millis(&time_struct);
 
                 sensor_event_get_xyz(event, &x, &y, &z);
-                CCDirector::sharedDirector()->getAccelerometer()->update(current_time, -x, -y, z);
+                Director::sharedDirector()->getAccelerometer()->update(current_time, -x, -y, z);
             }
         }
 	}
@@ -798,7 +798,7 @@ bool CCEGLView::handleEvents()
 	return true;
 }
 
-screen_display_t CCEGLView::getScreenDisplay() const
+screen_display_t EGLView::getScreenDisplay() const
 {
     return _screen_display;
 }

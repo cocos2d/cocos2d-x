@@ -36,34 +36,34 @@ NS_CC_BEGIN
  * @{
  */
 
-// for CCPoint assignement operator and copy constructor
-class CC_DLL CCSize;
+// for Point assignement operator and copy constructor
+class CC_DLL Size;
 
-class CC_DLL CCPoint
+class CC_DLL Point
 {
 public:
     float x;
     float y;
 
 public:
-    CCPoint();
-    CCPoint(float x, float y);
-    CCPoint(const CCPoint& other);
-    CCPoint(const CCSize& size);
-    CCPoint& operator= (const CCPoint& other);
-    CCPoint& operator= (const CCSize& size);
-    CCPoint operator+(const CCPoint& right) const;
-    CCPoint operator-(const CCPoint& right) const;
-    CCPoint operator-() const;
-    CCPoint operator*(float a) const;
-    CCPoint operator/(float a) const;
+    Point();
+    Point(float x, float y);
+    Point(const Point& other);
+    Point(const Size& size);
+    Point& operator= (const Point& other);
+    Point& operator= (const Size& size);
+    Point operator+(const Point& right) const;
+    Point operator-(const Point& right) const;
+    Point operator-() const;
+    Point operator*(float a) const;
+    Point operator/(float a) const;
     void setPoint(float x, float y);
-    bool equals(const CCPoint& target) const;
+    bool equals(const Point& target) const;
     
     /** @returns if points have fuzzy equality which means equal with some degree of variance.
      @since v2.1.4
      */
-    bool fuzzyEquals(const CCPoint& target, float variance) const;
+    bool fuzzyEquals(const Point& target, float variance) const;
 
     /** Calculates distance between point an origin
      @return float
@@ -73,7 +73,7 @@ public:
         return sqrtf(x*x + y*y);
     };
 
-    /** Calculates the square length of a CCPoint (not calling sqrt() )
+    /** Calculates the square length of a Point (not calling sqrt() )
      @return float
      @since v2.1.4
      */
@@ -85,7 +85,7 @@ public:
      @return float
      @since v2.1.4
     */
-    inline float getDistanceSq(const CCPoint& other) const {
+    inline float getDistanceSq(const Point& other) const {
         return (*this - other).getLengthSq();
     };
 
@@ -93,7 +93,7 @@ public:
      @return float
      @since v2.1.4
      */
-    inline float getDistance(const CCPoint& other) const {
+    inline float getDistance(const Point& other) const {
         return (*this - other).getLength();
     };
 
@@ -107,13 +107,13 @@ public:
     /** @returns the angle in radians between two vector directions
      @since v2.1.4
     */
-    float getAngle(const CCPoint& other) const;
+    float getAngle(const Point& other) const;
 
     /** Calculates dot product of two points.
      @return float
      @since v2.1.4
      */
-    inline float dot(const CCPoint& other) const {
+    inline float dot(const Point& other) const {
         return x*other.x + y*other.y;
     };
 
@@ -121,60 +121,60 @@ public:
      @return float
      @since v2.1.4
      */
-    inline float cross(const CCPoint& other) const {
+    inline float cross(const Point& other) const {
         return x*other.y - y*other.x;
     };
 
     /** Calculates perpendicular of v, rotated 90 degrees counter-clockwise -- cross(v, perp(v)) >= 0
-     @return CCPoint
+     @return Point
      @since v2.1.4
      */
-    inline CCPoint getPerp() const {
-        return CCPoint(-y, x);
+    inline Point getPerp() const {
+        return Point(-y, x);
     };
 
     /** Calculates perpendicular of v, rotated 90 degrees clockwise -- cross(v, rperp(v)) <= 0
-     @return CCPoint
+     @return Point
      @since v2.1.4
      */
-    inline CCPoint getRPerp() const {
-        return CCPoint(y, -x);
+    inline Point getRPerp() const {
+        return Point(y, -x);
     };
 
     /** Calculates the projection of this over other.
-     @return CCPoint
+     @return Point
      @since v2.1.4
      */
-    inline CCPoint project(const CCPoint& other) const {
+    inline Point project(const Point& other) const {
         return other * (dot(other)/other.dot(other));
     };
 
     /** Complex multiplication of two points ("rotates" two points).
-     @return CCPoint vector with an angle of this.getAngle() + other.getAngle(),
+     @return Point vector with an angle of this.getAngle() + other.getAngle(),
      and a length of this.getLength() * other.getLength().
      @since v2.1.4
      */
-    inline CCPoint rotate(const CCPoint& other) const {
-        return CCPoint(x*other.x - y*other.y, x*other.y + y*other.x);
+    inline Point rotate(const Point& other) const {
+        return Point(x*other.x - y*other.y, x*other.y + y*other.x);
     };
 
     /** Unrotates two points.
-     @return CCPoint vector with an angle of this.getAngle() - other.getAngle(),
+     @return Point vector with an angle of this.getAngle() - other.getAngle(),
      and a length of this.getLength() * other.getLength().
      @since v2.1.4
      */
-    inline CCPoint unrotate(const CCPoint& other) const {
-        return CCPoint(x*other.x + y*other.y, y*other.x - x*other.y);
+    inline Point unrotate(const Point& other) const {
+        return Point(x*other.x + y*other.y, y*other.x - x*other.y);
     };
 
     /** Returns point multiplied to a length of 1.
      * If the point is 0, it returns (1, 0)
-     @return CCPoint
+     @return Point
      @since v2.1.4
      */
-    inline CCPoint normalize() const {
+    inline Point normalize() const {
         float length = getLength();
-        if(length == 0.) return CCPoint(1.f, 0);
+        if(length == 0.) return Point(1.f, 0);
         return *this / getLength();
     };
 
@@ -185,7 +185,7 @@ public:
         otherwise a value between a..b
      @since v2.1.4
      */
-    inline CCPoint lerp(const CCPoint& other, float alpha) const {
+    inline Point lerp(const Point& other, float alpha) const {
         return *this * (1.f - alpha) + other * alpha;
     };
 
@@ -195,46 +195,46 @@ public:
      @returns the rotated point
      @since v2.1.4
      */
-    CCPoint rotateByAngle(const CCPoint& pivot, float angle) const;
+    Point rotateByAngle(const Point& pivot, float angle) const;
 
-    static inline CCPoint forAngle(const float a)
+    static inline Point forAngle(const float a)
     {
-    	return CCPoint(cosf(a), sinf(a));
+    	return Point(cosf(a), sinf(a));
     }
 };
 
-class CC_DLL CCSize
+class CC_DLL Size
 {
 public:
     float width;
     float height;
 
 public:
-    CCSize();
-    CCSize(float width, float height);
-    CCSize(const CCSize& other);
-    CCSize(const CCPoint& point);
-    CCSize& operator= (const CCSize& other);
-    CCSize& operator= (const CCPoint& point);
-    CCSize operator+(const CCSize& right) const;
-    CCSize operator-(const CCSize& right) const;
-    CCSize operator*(float a) const;
-    CCSize operator/(float a) const;
+    Size();
+    Size(float width, float height);
+    Size(const Size& other);
+    Size(const Point& point);
+    Size& operator= (const Size& other);
+    Size& operator= (const Point& point);
+    Size operator+(const Size& right) const;
+    Size operator-(const Size& right) const;
+    Size operator*(float a) const;
+    Size operator/(float a) const;
     void setSize(float width, float height);
-    bool equals(const CCSize& target) const;
+    bool equals(const Size& target) const;
 };
 
-class CC_DLL CCRect
+class CC_DLL Rect
 {
 public:
-    CCPoint origin;
-    CCSize  size;
+    Point origin;
+    Size  size;
 
 public:
-    CCRect();
-    CCRect(float x, float y, float width, float height);
-    CCRect(const CCRect& other);
-    CCRect& operator= (const CCRect& other);
+    Rect();
+    Rect(float x, float y, float width, float height);
+    Rect(const Rect& other);
+    Rect& operator= (const Rect& other);
     void setRect(float x, float y, float width, float height);
     float getMinX() const; /// return the leftmost x-value of current rect
     float getMidX() const; /// return the midpoint x-value of current rect
@@ -242,24 +242,24 @@ public:
     float getMinY() const; /// return the bottommost y-value of current rect
     float getMidY() const; /// return the midpoint y-value of current rect
     float getMaxY() const; /// return the topmost y-value of current rect
-    bool equals(const CCRect& rect) const;   
-    bool containsPoint(const CCPoint& point) const;
-    bool intersectsRect(const CCRect& rect) const;
+    bool equals(const Rect& rect) const;   
+    bool containsPoint(const Point& point) const;
+    bool intersectsRect(const Rect& rect) const;
 };
 
 
-#define CCPointMake(x, y) CCPoint((float)(x), (float)(y))
-#define CCSizeMake(width, height) CCSize((float)(width), (float)(height))
-#define CCRectMake(x, y, width, height) CCRect((float)(x), (float)(y), (float)(width), (float)(height))
+#define CCPointMake(x, y) Point((float)(x), (float)(y))
+#define CCSizeMake(width, height) Size((float)(width), (float)(height))
+#define CCRectMake(x, y, width, height) Rect((float)(x), (float)(y), (float)(width), (float)(height))
 
 
-const CCPoint CCPointZero = CCPointMake(0,0);
+const Point PointZero = CCPointMake(0,0);
 
 /* The "zero" size -- equivalent to CCSizeMake(0, 0). */ 
-const CCSize CCSizeZero = CCSizeMake(0,0);
+const Size SizeZero = CCSizeMake(0,0);
 
 /* The "zero" rectangle -- equivalent to CCRectMake(0, 0, 0, 0). */ 
-const CCRect CCRectZero = CCRectMake(0,0,0,0);
+const Rect RectZero = CCRectMake(0,0,0,0);
 
 // end of data_structure group
 /// @}

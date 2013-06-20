@@ -37,15 +37,15 @@
 
 NS_CC_BEGIN
 
-CCEGLView* CCEGLView::_instance = 0;
+EGLView* EGLView::_instance = 0;
 
 
-CCEGLView::CCEGLView()
+EGLView::EGLView()
 : _captured(false)
 , _accelState(false)
 , _key(s3eKeyFirst)
 {
-	IW_CALLSTACK("CCEGLView::CCEGLView");
+	IW_CALLSTACK("CCEGLView::EGLView");
 	
 	IwGLInit();
 
@@ -74,12 +74,12 @@ CCEGLView::CCEGLView()
 //	s3eKeyboardRegister(S3E_KEYBOARD_CHAR_EVENT, &CharEventHandler, this);
 }
 
-CCEGLView::~CCEGLView()
+EGLView::~EGLView()
 {
-	IW_CALLSTACK("CCEGLView::~CCEGLView");
+	IW_CALLSTACK("CCEGLView::~EGLView");
 }
 	
-void CCEGLView::setTouch(void* systemData)
+void EGLView::setTouch(void* systemData)
 {
 	s3ePointerEvent* event =(s3ePointerEvent*)systemData;
     int id = 0;
@@ -101,7 +101,7 @@ void CCEGLView::setTouch(void* systemData)
 	}
 }
 
-void CCEGLView::setMotionTouch(void* systemData)
+void EGLView::setMotionTouch(void* systemData)
 {
 		s3ePointerMotionEvent* event =(s3ePointerMotionEvent*)systemData;
 		if (_captured)
@@ -113,7 +113,7 @@ void CCEGLView::setMotionTouch(void* systemData)
 		}
 }
 
-void CCEGLView::setMultiTouch(void* systemData)
+void EGLView::setMultiTouch(void* systemData)
 {
 	s3ePointerTouchEvent* event =(s3ePointerTouchEvent*)systemData;
     int id = (int)event->_touchID;
@@ -136,7 +136,7 @@ void CCEGLView::setMultiTouch(void* systemData)
 	}
 }
 
-void CCEGLView::setMultiMotionTouch(void* systemData)
+void EGLView::setMultiMotionTouch(void* systemData)
 {
     s3ePointerTouchMotionEvent* event =(s3ePointerTouchMotionEvent*)systemData;
     int id = (int)event->_touchID;
@@ -146,37 +146,37 @@ void CCEGLView::setMultiMotionTouch(void* systemData)
 }
 
 
-void CCEGLView::setKeyTouch(void* systemData)
+void EGLView::setKeyTouch(void* systemData)
 {
 // 	s3eKeyboardEvent* event = (s3eKeyboardEvent*)systemData;
 // 	if (event->_pressed)
 // 	{
 // 		if (event->_key!=_key)
 // 		{
-// 			CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeMenuClicked);
+// 			KeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeMenuClicked);
 // 		}
 // 		else
 // 		{
-// 			CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
+// 			KeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
 // 
 // 		}
 // 		_key =event->_key;
 // 	}
 }
 
-void CCEGLView::setCharTouch( void* systemData )
+void EGLView::setCharTouch( void* systemData )
 {
 //     s3eKeyboardCharEvent* event = (s3eKeyboardCharEvent*)systemData;
 // 	s3eWChar c = event->_char ;
-// 	CCIMEDispatcher::sharedDispatcher()->dispatchInsertText((const char *)&c, 1);
+// 	IMEDispatcher::sharedDispatcher()->dispatchInsertText((const char *)&c, 1);
 }
 
-bool CCEGLView::isOpenGLReady()
+bool EGLView::isOpenGLReady()
 {
     return (IwGLIsInitialised());
 }
 
-void CCEGLView::end()
+void EGLView::end()
 {
 	IW_CALLSTACK("CCEGLView::end");
 
@@ -202,26 +202,26 @@ void CCEGLView::end()
 	 delete this;
 }
 
-void CCEGLView::swapBuffers()
+void EGLView::swapBuffers()
 {
 	IW_CALLSTACK("CCEGLView::swapBuffers(");
 	IwGLSwapBuffers();
 }
 
-void CCEGLView::setIMEKeyboardState(bool bOpen)
+void EGLView::setIMEKeyboardState(bool bOpen)
 {
 	if(bOpen && s3eOSReadStringAvailable() == S3E_TRUE) {
 		const char* inputText = s3eOSReadStringUTF8("") ;
 		if( inputText!=0 ) {
-			CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(inputText, strlen(inputText));
+			IMEDispatcher::sharedDispatcher()->dispatchInsertText(inputText, strlen(inputText));
 		}
 	}
 }
 
-CCEGLView* CCEGLView::sharedOpenGLView()		// MH: Cocos2D now uses pointer instead of ref
+EGLView* EGLView::sharedOpenGLView()		// MH: Cocos2D now uses pointer instead of ref
 {
 	if( !_instance ) {
-		_instance = new CCEGLView() ;
+		_instance = new EGLView() ;
 	}
 	return _instance;							// MH: Cocos2D now uses pointer instead of ref
 }

@@ -38,12 +38,12 @@ struct _ccArray;
  * @{
  */
 
-/** @brief CCParallaxNode: A node that simulates a parallax scroller
+/** @brief ParallaxNode: A node that simulates a parallax scroller
 
 The children will be moved faster / slower than the parent according the the parallax ratio.
 
 */
-class CC_DLL CCParallaxNode : public CCNode 
+class CC_DLL ParallaxNode : public Node 
 {
     /** array that holds the offset / ratio of the children */
     CC_SYNTHESIZE(struct _ccArray *, _parallaxArray, ParallaxArray)
@@ -53,20 +53,20 @@ public:
     It returns self, so you can chain several addChilds.
     @since v0.8
     */
-    CCParallaxNode();
-    virtual ~CCParallaxNode();
+    ParallaxNode();
+    virtual ~ParallaxNode();
 
-    static CCParallaxNode * create();
-    virtual void addChild(CCNode * child, unsigned int z, const CCPoint& parallaxRatio, const CCPoint& positionOffset);
+    static ParallaxNode * create();
+    virtual void addChild(Node * child, unsigned int z, const Point& parallaxRatio, const Point& positionOffset);
     // super methods
-    virtual void addChild(CCNode * child, unsigned int zOrder, int tag);
-    virtual void removeChild(CCNode* child, bool cleanup);
+    virtual void addChild(Node * child, unsigned int zOrder, int tag);
+    virtual void removeChild(Node* child, bool cleanup);
     virtual void removeAllChildrenWithCleanup(bool cleanup);
     virtual void visit(void);
 private:
-    CCPoint absolutePosition();
+    Point absolutePosition();
 protected:
-    CCPoint    _lastPosition;
+    Point    _lastPosition;
 };
 
 // end of tilemap_parallax_nodes group

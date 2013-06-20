@@ -130,7 +130,7 @@ public:
 	 * while -1 means fail
 	 *
 	 */
-	int computeLineStart(TTF_Font *face, CCImage::ETextAlign eAlignMask, char cText,
+	int computeLineStart(TTF_Font *face, Image::ETextAlign eAlignMask, char cText,
                          int iLineIndex) {
         return 0;
         /*
@@ -141,11 +141,11 @@ public:
 			return -1;
 		}
         
-		if (eAlignMask == CCImage::kAlignCenter) {
+		if (eAlignMask == Image::kAlignCenter) {
 			iRet = (iMaxLineWidth - vLines[iLineIndex].iLineWidth) / 2
 			- RSHIFT6(face->glyph->metrics.horiBearingX );
             
-		} else if (eAlignMask == CCImage::kAlignRight) {
+		} else if (eAlignMask == Image::kAlignRight) {
 			iRet = (iMaxLineWidth - vLines[iLineIndex].iLineWidth)
 			- RSHIFT6(face->glyph->metrics.horiBearingX );
 		} else {
@@ -156,18 +156,18 @@ public:
         */
 	}
 		
-	int computeLineStartY( TTF_Font *face, CCImage::ETextAlign eAlignMask, int txtHeight, int borderHeight ){
+	int computeLineStartY( TTF_Font *face, Image::ETextAlign eAlignMask, int txtHeight, int borderHeight ){
         return 0;
         /*
 		int iRet;
-		if (eAlignMask == CCImage::kAlignCenter || eAlignMask == CCImage::kAlignLeft ||
-			eAlignMask == CCImage::kAlignRight ) {
+		if (eAlignMask == Image::kAlignCenter || eAlignMask == Image::kAlignLeft ||
+			eAlignMask == Image::kAlignRight ) {
 			//vertical center
 			iRet = (borderHeight - txtHeight)/2 + RSHIFT6(face->size->metrics.ascender);
 
-		} else if (eAlignMask == CCImage::kAlignBottomRight || 
-				   eAlignMask == CCImage::kAlignBottom || 
-				   eAlignMask == CCImage::kAlignBottomLeft ) {
+		} else if (eAlignMask == Image::kAlignBottomRight || 
+				   eAlignMask == Image::kAlignBottom || 
+				   eAlignMask == Image::kAlignBottomLeft ) {
 			//vertical bottom
 			iRet = borderHeight - txtHeight + RSHIFT6(face->size->metrics.ascender);
 		} else {
@@ -178,7 +178,7 @@ public:
         */
 	}
     
-	bool getBitmap(const char *text, int nWidth, int nHeight, CCImage::ETextAlign eAlignMask, const char * pFontName, float fontSize) {
+	bool getBitmap(const char *text, int nWidth, int nHeight, Image::ETextAlign eAlignMask, const char * pFontName, float fontSize) {
 		const char* pText = text;
         int pxSize = (int)fontSize;
 
@@ -280,7 +280,7 @@ static BitmapDC& sharedBitmapDC()
     return s_BmpDC;
 }
 
-bool CCImage::initWithString(
+bool Image::initWithString(
                              const char *    pText,
                              int             nWidth/* = 0*/,
                              int             nHeight/* = 0*/,

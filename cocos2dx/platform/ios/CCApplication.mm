@@ -31,45 +31,45 @@
 
 NS_CC_BEGIN
 
-CCApplication* CCApplication::sm_pSharedApplication = 0;
+Application* Application::sm_pSharedApplication = 0;
 
-CCApplication::CCApplication()
+Application::Application()
 {
     CC_ASSERT(! sm_pSharedApplication);
     sm_pSharedApplication = this;
 }
 
-CCApplication::~CCApplication()
+Application::~Application()
 {
     CC_ASSERT(this == sm_pSharedApplication);
     sm_pSharedApplication = 0;
 }
 
-int CCApplication::run()
+int Application::run()
 {
     if (applicationDidFinishLaunching()) 
     {
-        [[CCDirectorCaller sharedDirectorCaller] startMainLoop];
+        [[DirectorCaller sharedDirectorCaller] startMainLoop];
     }
     return 0;
 }
 
-void CCApplication::setAnimationInterval(double interval)
+void Application::setAnimationInterval(double interval)
 {
-    [[CCDirectorCaller sharedDirectorCaller] setAnimationInterval: interval ];
+    [[DirectorCaller sharedDirectorCaller] setAnimationInterval: interval ];
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-CCApplication* CCApplication::sharedApplication()
+Application* Application::sharedApplication()
 {
     CC_ASSERT(sm_pSharedApplication);
     return sm_pSharedApplication;
 }
 
-ccLanguageType CCApplication::getCurrentLanguage()
+ccLanguageType Application::getCurrentLanguage()
 {
     // get the current language and country config
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -128,7 +128,7 @@ ccLanguageType CCApplication::getCurrentLanguage()
     return ret;
 }
 
-TargetPlatform CCApplication::getTargetPlatform()
+TargetPlatform Application::getTargetPlatform()
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) // idiom for iOS <= 3.2, otherwise: [UIDevice userInterfaceIdiom] is faster.
     {

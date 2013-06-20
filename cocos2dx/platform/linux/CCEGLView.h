@@ -1,12 +1,12 @@
 /*
- * CCEGLView.h
+ * EGLView.h
  *
  *  Created on: Aug 8, 2011
  *      Author: laschweinski
  */
 
-#ifndef CCEGLVIEW_H_
-#define CCEGLVIEW_H_
+#ifndef EGLVIEW_H_
+#define EGLVIEW_H_
 
 #include "platform/CCCommon.h"
 #include "cocoa/CCGeometry.h"
@@ -16,10 +16,10 @@ bool initExtensions();
 
 NS_CC_BEGIN
 
-class CCEGLView : public CCEGLViewProtocol{
+class EGLView : public EGLViewProtocol{
 public:
-	CCEGLView();
-	virtual ~CCEGLView();
+	EGLView();
+	virtual ~EGLView();
 
 	friend void keyEventHandle(int,int);
 	friend void mouseButtonEventHandle(int,int);
@@ -48,17 +48,17 @@ public:
 	/**
 	 @brief	get the shared main open gl window
 	 */
-	static CCEGLView* sharedOpenGLView();
+	static EGLView* sharedOpenGLView();
 private:
 	bool initGL();
 	void destroyGL();
 private:
 	//store current mouse point for moving, valid if and only if the mouse pressed
-	CCPoint _mousePoint;
+	Point _mousePoint;
 	bool bIsInit;
 	float _frameZoomFactor;
 };
 
 NS_CC_END
 
-#endif /* CCEGLVIEW_H_ */
+#endif /* EGLVIEW_H_ */

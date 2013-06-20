@@ -109,7 +109,7 @@ namespace
 
     void myAccelerometerKeyHook( UINT message,WPARAM wParam,LPARAM lParam )
     {
-        cocos2d::CCAccelerometer    *pAccelerometer = cocos2d::CCDirector::sharedDirector()->getAccelerometer();
+        cocos2d::Accelerometer    *pAccelerometer = cocos2d::Director::sharedDirector()->getAccelerometer();
         bool                        sendUpdate=false;
         switch( message )
         {
@@ -147,18 +147,18 @@ namespace
 
 NS_CC_BEGIN
 
-CCAccelerometer::CCAccelerometer() : 
+Accelerometer::Accelerometer() : 
     _function(nullptr)
 {
     memset(&_accelerationValue, 0, sizeof(_accelerationValue));
 }
 
-CCAccelerometer::~CCAccelerometer() 
+Accelerometer::~Accelerometer() 
 {
 
 }
 
-void CCAccelerometer::setDelegate(std::function<void(CCAcceleration*)> function) 
+void Accelerometer::setDelegate(std::function<void(Acceleration*)> function) 
 {
     _function = function;
 
@@ -168,22 +168,22 @@ void CCAccelerometer::setDelegate(std::function<void(CCAcceleration*)> function)
     if (_function)
     {
         // Register our handler
-        CCEGLView::sharedOpenGLView()->setAccelerometerKeyHook( &myAccelerometerKeyHook );
+        EGLView::sharedOpenGLView()->setAccelerometerKeyHook( &myAccelerometerKeyHook );
     }
     else
     {
         // De-register our handler
-        CCEGLView::sharedOpenGLView()->setAccelerometerKeyHook( NULL );
+        EGLView::sharedOpenGLView()->setAccelerometerKeyHook( NULL );
         resetAccelerometer();
     }
 }
 
-void CCAccelerometer::setAccelerometerInterval(float interval)
+void Accelerometer::setAccelerometerInterval(float interval)
 {
 
 }
 
-void CCAccelerometer::update( double x,double y,double z,double timestamp ) 
+void Accelerometer::update( double x,double y,double z,double timestamp ) 
 {
     if (_function)
     {

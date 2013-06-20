@@ -31,14 +31,14 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CC_DLL CCApplication : public CCApplicationProtocol
+class CC_DLL Application : public ApplicationProtocol
 {
 public:
-    CCApplication();
-    virtual ~CCApplication();
+    Application();
+    virtual ~Application();
         
     /**
-    @brief	Callback by CCDirector for limit FPS.
+    @brief	Callback by Director for limit FPS.
     @interval       The time, which expressed in second in second, between current frame and next. 
     */
     virtual void setAnimationInterval(double interval);
@@ -56,7 +56,7 @@ public:
     @brief	Get current applicaiton instance.
     @return Current application instance pointer.
     */
-    static CCApplication* sharedApplication();
+    static Application* sharedApplication();
 
     /**
     @brief Get current language config
@@ -71,13 +71,13 @@ public:
 
     /**
      *  Sets the Resource root path.
-     *  @deprecated Please use CCFileUtils::sharedFileUtils()->setSearchPaths() instead.
+     *  @deprecated Please use FileUtils::sharedFileUtils()->setSearchPaths() instead.
      */
     CC_DEPRECATED_ATTRIBUTE void setResourceRootPath(const std::string& rootResDir);
     
     /** 
      *  Gets the Resource root path.
-     *  @deprecated Please use CCFileUtils::sharedFileUtils()->getSearchPaths() instead. 
+     *  @deprecated Please use FileUtils::sharedFileUtils()->getSearchPaths() instead. 
      */
     CC_DEPRECATED_ATTRIBUTE const std::string& getResourceRootPath(void);
     
@@ -86,7 +86,7 @@ public:
     const std::string& getStartupScriptFilename(void);
     
 protected:
-    static CCApplication * sm_pSharedApplication;
+    static Application * sm_pSharedApplication;
     
     std::string _resourceRootPath;
     std::string _startupScriptFilename;
