@@ -504,16 +504,16 @@ void Node::setGLServerState(ccGLServerState glServerState)
 
 void Node::setUserObject(Object *pUserObject)
 {
-    CC_SAFE_RELEASE(_userObject);
     CC_SAFE_RETAIN(pUserObject);
+    CC_SAFE_RELEASE(_userObject);
     _userObject = pUserObject;
 }
 
 void Node::setShaderProgram(GLProgram *pShaderProgram)
 {
+    CC_SAFE_RETAIN(pShaderProgram);
     CC_SAFE_RELEASE(_shaderProgram);
     _shaderProgram = pShaderProgram;
-    CC_SAFE_RETAIN(_shaderProgram);
 }
 
 Rect Node::boundingBox()
