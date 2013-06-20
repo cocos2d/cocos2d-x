@@ -38,4 +38,6 @@ files
     "Lua_extensions_CCB.h"
     "tolua_fix.c"
     "tolua_fix.h"
+    "LuaOpengl.cpp"
+    "LuaOpengl.h"
 }
