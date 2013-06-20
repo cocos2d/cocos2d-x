@@ -17,7 +17,7 @@ static std::function<CCLayer*()> createFunctions[] =
     CL(TexturePVRNonSquare),
     CL(TexturePVRNPOT4444),
     CL(TexturePVRNPOT8888),
-    CL(TexturePVR),
+    CL(TexturePVRTest),
     CL(TexturePVR2BPP),
     CL(TexturePVR2BPPv3),
     CL(TexturePVR4BPP),

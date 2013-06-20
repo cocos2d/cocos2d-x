@@ -466,10 +466,10 @@ public:
     virtual std::string subtitle();
 };
 
-class AnimationCache : public SpriteTestDemo
+class AnimationCacheTest : public SpriteTestDemo
 {
 public:
-    AnimationCache();
+    AnimationCacheTest();
     virtual std::string title();
     virtual std::string subtitle();
 };
