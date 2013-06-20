@@ -57,16 +57,16 @@ public:
     CREATE_FUNC(HelloWorld);
 
 private:
-    cocos2d::plugin::ProtocolAds* m_pAdmob;
-    MyAdsListener* m_pListener;
+    cocos2d::plugin::ProtocolAds* _admob;
+    MyAdsListener* _listener;
 
-    cocos2d::MenuItemToggle* m_pCaseItem;
-    cocos2d::MenuItemToggle* m_pTypeItem;
-    cocos2d::MenuItemToggle* m_pPosItem;
+    cocos2d::MenuItemToggle* _caseItem;
+    cocos2d::MenuItemToggle* _typeItem;
+    cocos2d::MenuItemToggle* _posItem;
 
-    cocos2d::plugin::ProtocolAds* m_pAds;
-    cocos2d::plugin::ProtocolAds::AdsPos m_ePos;
-    cocos2d::plugin::ProtocolAds::AdsType m_eType;
+    cocos2d::plugin::ProtocolAds* _ads;
+    cocos2d::plugin::ProtocolAds::AdsPos _pos;
+    cocos2d::plugin::ProtocolAds::AdsType _type;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

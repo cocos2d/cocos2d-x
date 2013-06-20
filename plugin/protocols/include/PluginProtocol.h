@@ -41,7 +41,7 @@ public:
     /**
     @brief plug-in info methods(name, version, SDK version)
     */
-    inline const char* getPluginName() { return m_pPluginName.c_str(); }
+    inline const char* getPluginName() { return _pluginName.c_str(); }
     const char* getPluginVersion();
     const char* getSDKVersion();
 
@@ -74,9 +74,9 @@ protected:
 private:
     friend class PluginFactory;
     inline void setPluginName(const char* name) {
-    	m_pPluginName = name;
+    	_pluginName = name;
     }
-    std::string m_pPluginName;
+    std::string _pluginName;
 };
 
 }} //namespace cocos2d { namespace plugin {
