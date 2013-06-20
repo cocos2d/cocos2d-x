@@ -5,7 +5,7 @@
 #include "cocos-ext.h"
 
 
-class EnemyController : public cocos2d::extension::CCComController
+class EnemyController : public cocos2d::extension::ComController
 {
 protected:
     EnemyController(void);

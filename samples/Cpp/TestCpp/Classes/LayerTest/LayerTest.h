@@ -18,9 +18,9 @@ public:
     virtual std::string subtitle();
     virtual void onEnter();
 
-    void restartCallback(CCObject* pSender);
-    void nextCallback(CCObject* pSender);
-    void backCallback(CCObject* pSender);
+    void restartCallback(Object* pSender);
+    void nextCallback(Object* pSender);
+    void backCallback(Object* pSender);
 };
 
 class LayerTestCascadingOpacityA : public LayerTest
@@ -72,11 +72,11 @@ public:
     virtual void onEnter();
     virtual std::string title();
 
-    void updateSize(CCPoint &touchLocation);
+    void updateSize(Point &touchLocation);
 
-    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
+    virtual void ccTouchesBegan(Set *pTouches, Event *pEvent);
+    virtual void ccTouchesMoved(Set *pTouches, Event *pEvent);
+    virtual void ccTouchesEnded(Set *pTouches, Event *pEvent);
 };
 
 class LayerTest2 : public LayerTest
@@ -99,17 +99,17 @@ class LayerGradientTest : public LayerTest
 {
 public:
     LayerGradientTest();
-    virtual void ccTouchesMoved(CCSet * touches, CCEvent *event);
+    virtual void ccTouchesMoved(Set * touches, Event *event);
     virtual std::string title();
     virtual std::string subtitle();
-    void toggleItem(cocos2d::CCObject *sender);
+    void toggleItem(cocos2d::Object *sender);
 };
 
 class LayerIgnoreAnchorPointPos : public LayerTest
 {
 public:
     virtual void onEnter();
-    void onToggle(CCObject* pObject);
+    void onToggle(Object* pObject);
     virtual std::string title();
     virtual std::string subtitle();
 };
@@ -118,7 +118,7 @@ class LayerIgnoreAnchorPointRot : public LayerTest
 {
 public:
     virtual void onEnter();
-    void onToggle(CCObject* pObject);
+    void onToggle(Object* pObject);
     virtual std::string title();
     virtual std::string subtitle();
 };
@@ -127,7 +127,7 @@ class LayerIgnoreAnchorPointScale : public LayerTest
 {
 public:
     virtual void onEnter();
-    void onToggle(CCObject* pObject);
+    void onToggle(Object* pObject);
     virtual std::string title();
     virtual std::string subtitle();
 };
