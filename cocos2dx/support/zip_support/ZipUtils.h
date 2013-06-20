@@ -25,6 +25,7 @@ THE SOFTWARE.
 #define __SUPPORT_ZIPUTILS_H__
 
 #include <string>
+#include "platform/CCPlatformConfig.h"
 #include "CCPlatformDefine.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
