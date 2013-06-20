@@ -194,6 +194,7 @@ CCDirector::~CCDirector(void)
     // pop the autorelease pool
     CCPoolManager::sharedPoolManager()->pop();
     CCPoolManager::purgePoolManager();
+    CCScriptEngineManager::purgeSharedManager();
 
     // delete _lastUpdate
     CC_SAFE_DELETE(_lastUpdate);
@@ -722,6 +723,7 @@ void CCDirector::purgeDirector()
     // cocos2d-x specific data structures
     CCUserDefault::purgeSharedUserDefault();
     CCNotificationCenter::purgeNotificationCenter();
+    CCScriptEngineManager::purgeSharedManager();
 
     ccGLInvalidateStateCache();
     
