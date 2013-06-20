@@ -51,7 +51,7 @@ OspApplication::~OspApplication()
     sm_pSharedOspApplication = NULL;
 }
 
-Application*
+Tizen::App::Application*
 OspApplication::CreateInstance(void)
 {
     // Create the instance through the constructor.
@@ -135,30 +135,30 @@ OspApplication::OnAppTerminating(AppRegistry& appRegistry, bool forcedTerminatio
 void
 OspApplication::OnForeground(void)
 {
-    Timer* timer = EGLView::sharedOpenGLView()->getTimer();
+    Tizen::Base::Runtime::Timer* timer = EGLView::sharedOpenGLView()->getTimer();
 
     if (timer != null)
     {
-        timer->Start(Application::sharedApplication()->getAnimationInterval());
+        timer->Start(cocos2d::Application::sharedApplication()->getAnimationInterval());
     }
 
     if (Director::sharedDirector()->getOpenGLView())
     {
-        Application::sharedApplication()->applicationWillEnterForeground();
+        cocos2d::Application::sharedApplication()->applicationWillEnterForeground();
     }
 }
 
 void
 OspApplication::OnBackground(void)
 {
-    Timer* timer = EGLView::sharedOpenGLView()->getTimer();
+    Tizen::Base::Runtime::Timer* timer = EGLView::sharedOpenGLView()->getTimer();
 
     if (timer != null)
     {
         timer->Cancel();
     }
 
-    Application::sharedApplication()->applicationDidEnterBackground();
+    cocos2d::Application::sharedApplication()->applicationDidEnterBackground();
 }
 
 void

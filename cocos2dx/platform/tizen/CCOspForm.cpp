@@ -71,27 +71,27 @@ OspForm::OnTerminating(void)
 }
 
 void
-OspForm:: OnTouchDoublePressed(const Control& source, const Point& currentPosition, const TouchEventInfo& touchInfo)
+OspForm:: OnTouchDoublePressed(const Control& source, const  Tizen::Graphics::Point& currentPosition, const TouchEventInfo& touchInfo)
 {
 }
 
 void
-OspForm:: OnTouchFocusIn(const Control& source, const Point& currentPosition, const TouchEventInfo& touchInfo)
+OspForm:: OnTouchFocusIn(const Control& source, const  Tizen::Graphics::Point& currentPosition, const TouchEventInfo& touchInfo)
 {
 }
 
 void
-OspForm::OnTouchFocusOut(const Control& source, const Point& currentPosition, const TouchEventInfo& touchInfo)
+OspForm::OnTouchFocusOut(const Control& source, const  Tizen::Graphics::Point& currentPosition, const TouchEventInfo& touchInfo)
 {
 }
 
 void
-OspForm::OnTouchLongPressed(const Control& source, const Point& currentPosition, const TouchEventInfo& touchInfo)
+OspForm::OnTouchLongPressed(const Control& source, const  Tizen::Graphics::Point& currentPosition, const TouchEventInfo& touchInfo)
 {
 }
 
 void
-OspForm::OnTouchMoved(const Control& source, const Point& currentPosition, const TouchEventInfo& touchInfo)
+OspForm::OnTouchMoved(const Control& source, const  Tizen::Graphics::Point& currentPosition, const TouchEventInfo& touchInfo)
 {
     int id = touchInfo.GetPointId();
     float x = currentPosition.x;
@@ -100,7 +100,7 @@ OspForm::OnTouchMoved(const Control& source, const Point& currentPosition, const
 }
 
 void
-OspForm::OnTouchPressed(const Control& source, const Point& currentPosition, const TouchEventInfo& touchInfo)
+OspForm::OnTouchPressed(const Control& source, const  Tizen::Graphics::Point& currentPosition, const TouchEventInfo& touchInfo)
 {
     int id = touchInfo.GetPointId();
     float x = currentPosition.x;
@@ -109,7 +109,7 @@ OspForm::OnTouchPressed(const Control& source, const Point& currentPosition, con
 }
 
 void
-OspForm::OnTouchReleased(const Control& source, const Point& currentPosition, const TouchEventInfo& touchInfo)
+OspForm::OnTouchReleased(const Control& source, const  Tizen::Graphics::Point& currentPosition, const TouchEventInfo& touchInfo)
 {
     int id = touchInfo.GetPointId();
     float x = currentPosition.x;
@@ -119,7 +119,7 @@ OspForm::OnTouchReleased(const Control& source, const Point& currentPosition, co
 
 void OspForm::OnTextValueChanged(const Tizen::Ui::Control& source)
 {
-    String text = __pKeypad->GetText();
+    Tizen::Base::String text = __pKeypad->GetText();
     Utf8Encoding utf8;
     ByteBuffer* buffer = utf8.GetBytesN(text);
     const char* pText = "";
@@ -202,7 +202,7 @@ OspForm::ShowKeypad(const char* pMessage, KeypadStyle keypadStyle, KeypadInputMo
 
     __pKeypad->SetTextPredictionEnabled(bTextPrediction);
     __pKeypad->SetSingleLineEnabled(bSingleLineEnabled);
-    __pKeypad->SetText(String(pMessage));
+    __pKeypad->SetText(Tizen::Base::String(pMessage));
     __pKeypad->SetShowState(true);
     __pKeypad->Show();
 }
