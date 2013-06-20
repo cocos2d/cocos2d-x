@@ -47,10 +47,10 @@ const std::string s_aTestPoses[] = {
 	"Pos: BottomRight",
 };
 
-CCScene* HelloWorld::scene()
+Scene* HelloWorld::scene()
 {
     // 'scene' is an autorelease object
-    CCScene *scene = CCScene::create();
+    Scene *scene = Scene::create();
     
     // 'layer' is an autorelease object
     HelloWorld *layer = HelloWorld::create();
@@ -67,7 +67,7 @@ bool HelloWorld::init()
 {
     //////////////////////////////
     // 1. super init first
-    if ( !CCLayer::init() )
+    if ( !Layer::init() )
     {
         return false;
     }
@@ -86,16 +86,16 @@ bool HelloWorld::init()
     m_pAdmob->setAdsListener(m_pListener);
     m_pAdmob->setDebugMode(true);
 
-    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
-    CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
-    CCPoint posMid = ccp(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
+    Size visibleSize = Director::sharedDirector()->getVisibleSize();
+    Point origin = Director::sharedDirector()->getVisibleOrigin();
+    Point posMid = ccp(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
     //    you may modify it.
 
     // add a "close" icon to exit the progress. it's an autorelease object
-    CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
+    MenuItemImage *pCloseItem = MenuItemImage::create(
                                         "CloseNormal.png",
                                         "CloseSelected.png",
                                         CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
@@ -104,54 +104,54 @@ bool HelloWorld::init()
                                 origin.y + pCloseItem->getContentSize().height/2));
 
     // create menu, it's an autorelease object
-    CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
-    pMenu->setPosition(CCPointZero);
+    Menu* pMenu = Menu::create(pCloseItem, NULL);
+    pMenu->setPosition(PointZero);
 
-	CCLabelTTF* label1 = CCLabelTTF::create("ShowAds", "Arial", 24);
-	CCMenuItemLabel* pItemShow = CCMenuItemLabel::create(label1, CC_CALLBACK_1(HelloWorld::testShow, this));
+	LabelTTF* label1 = LabelTTF::create("ShowAds", "Arial", 24);
+	MenuItemLabel* pItemShow = MenuItemLabel::create(label1, CC_CALLBACK_1(HelloWorld::testShow, this));
 	pItemShow->setAnchorPoint(ccp(0.5f, 0));
 	pMenu->addChild(pItemShow, 0);
 	pItemShow->setPosition(ccpAdd(posMid, ccp(-100, -120)));
 
-	CCLabelTTF* label2 = CCLabelTTF::create("HideAds", "Arial", 24);
-	CCMenuItemLabel* pItemHide = CCMenuItemLabel::create(label2, CC_CALLBACK_1(HelloWorld::testHide, this));
+	LabelTTF* label2 = LabelTTF::create("HideAds", "Arial", 24);
+	MenuItemLabel* pItemHide = MenuItemLabel::create(label2, CC_CALLBACK_1(HelloWorld::testHide, this));
 	pItemHide->setAnchorPoint(ccp(0.5f, 0));
 	pMenu->addChild(pItemHide, 0);
 	pItemHide->setPosition(ccpAdd(posMid, ccp(100, -120)));
 
 	// create optional menu
 	// cases item
-	m_pCaseItem = CCMenuItemToggle::createWithCallback(CC_CALLBACK_1(HelloWorld::caseChanged, this),
-												CCMenuItemFont::create( s_aTestCases[0].c_str() ),
+	m_pCaseItem = MenuItemToggle::createWithCallback(CC_CALLBACK_1(HelloWorld::caseChanged, this),
+												MenuItemFont::create( s_aTestCases[0].c_str() ),
 												NULL );
 	int caseLen = sizeof(s_aTestCases) / sizeof(std::string);
 	for (int i = 1; i < caseLen; ++i)
 	{
-		m_pCaseItem->getSubItems()->addObject( CCMenuItemFont::create( s_aTestCases[i].c_str() ) );
+		m_pCaseItem->getSubItems()->addObject( MenuItemFont::create( s_aTestCases[i].c_str() ) );
 	}
 	m_pCaseItem->setPosition(ccpAdd(posMid, ccp(-200, 120)));
 	pMenu->addChild(m_pCaseItem);
 
 	// type item
-	m_pTypeItem = CCMenuItemToggle::createWithCallback(CC_CALLBACK_1(HelloWorld::typeChanged, this),
-												CCMenuItemFont::create( s_aTestTypes[0].c_str() ),
+	m_pTypeItem = MenuItemToggle::createWithCallback(CC_CALLBACK_1(HelloWorld::typeChanged, this),
+												MenuItemFont::create( s_aTestTypes[0].c_str() ),
 												NULL );
 	int typeLen = sizeof(s_aTestTypes) / sizeof(std::string);
 	for (int i = 1; i < typeLen; ++i)
 	{
-		m_pTypeItem->getSubItems()->addObject( CCMenuItemFont::create( s_aTestTypes[i].c_str() ) );
+		m_pTypeItem->getSubItems()->addObject( MenuItemFont::create( s_aTestTypes[i].c_str() ) );
 	}
 	m_pTypeItem->setPosition(ccpAdd(posMid, ccp(0, 120)));
 	pMenu->addChild(m_pTypeItem);
 
 	// poses item
-	m_pPosItem = CCMenuItemToggle::createWithCallback(CC_CALLBACK_1(HelloWorld::posChanged, this),
-												CCMenuItemFont::create( s_aTestPoses[0].c_str() ),
+	m_pPosItem = MenuItemToggle::createWithCallback(CC_CALLBACK_1(HelloWorld::posChanged, this),
+												MenuItemFont::create( s_aTestPoses[0].c_str() ),
 												NULL );
 	int posLen = sizeof(s_aTestPoses) / sizeof(std::string);
 	for (int i = 1; i < posLen; ++i)
 	{
-		m_pPosItem->getSubItems()->addObject( CCMenuItemFont::create( s_aTestPoses[i].c_str() ) );
+		m_pPosItem->getSubItems()->addObject( MenuItemFont::create( s_aTestPoses[i].c_str() ) );
 	}
 	m_pPosItem->setPosition(ccpAdd(posMid, ccp(200, 120)));
 	pMenu->addChild(m_pPosItem);
@@ -166,7 +166,7 @@ bool HelloWorld::init()
     return true;
 }
 
-void HelloWorld::testShow(CCObject* pSender)
+void HelloWorld::testShow(Object* pSender)
 {
     int nSize = 0;
 	if (m_pAds == m_pAdmob)
@@ -180,14 +180,14 @@ void HelloWorld::testShow(CCObject* pSender)
 	}
 }
 
-void HelloWorld::testHide(CCObject* pSender)
+void HelloWorld::testHide(Object* pSender)
 {
 	m_pAds->hideAds(m_eType);
 }
 
-void HelloWorld::menuCloseCallback(CCObject* pSender)
+void HelloWorld::menuCloseCallback(Object* pSender)
 {
-    CCDirector::sharedDirector()->end();
+    Director::sharedDirector()->end();
 
     if (m_pAdmob != NULL)
     {
@@ -207,7 +207,7 @@ void HelloWorld::menuCloseCallback(CCObject* pSender)
 #endif
 }
 
-void HelloWorld::caseChanged(CCObject* pSender)
+void HelloWorld::caseChanged(Object* pSender)
 {
 	std::string strLog = "";
 	switch (m_pCaseItem->getSelectedIndex())
@@ -222,14 +222,14 @@ void HelloWorld::caseChanged(CCObject* pSender)
 	CCLog("case selected change to : %s", strLog.c_str());
 }
 
-void HelloWorld::typeChanged(CCObject* pSender)
+void HelloWorld::typeChanged(Object* pSender)
 {
 	int selectIndex = m_pTypeItem->getSelectedIndex();
 	m_eType = (ProtocolAds::AdsType) selectIndex;
 	CCLog("type selected change to : %d", m_eType);
 }
 
-void HelloWorld::posChanged(CCObject* pSender)
+void HelloWorld::posChanged(Object* pSender)
 {
 	int selectIndex = m_pPosItem->getSelectedIndex();
 	m_ePos = (ProtocolAds::AdsPos) selectIndex;

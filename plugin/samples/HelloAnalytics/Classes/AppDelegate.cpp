@@ -52,7 +52,7 @@ AppDelegate::~AppDelegate()
 void AppDelegate::loadAnalyticsPlugin()
 {
     PluginProtocol* pPlugin = NULL;
-    ccLanguageType langType = CCApplication::sharedApplication()->getCurrentLanguage();
+    ccLanguageType langType = Application::sharedApplication()->getCurrentLanguage();
 
     std::string umengKey  = "";
     std::string flurryKey = "";
@@ -113,8 +113,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 	g_pAnalytics->callFuncWithParam("setUseHttps", &pParam6, NULL);
 
     // initialize director
-    CCDirector *pDirector = CCDirector::sharedDirector();
-    pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
+    Director *pDirector = Director::sharedDirector();
+    pDirector->setOpenGLView(EGLView::sharedOpenGLView());
 
     // turn on display FPS
     //pDirector->setDisplayStats(true);
@@ -123,7 +123,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setAnimationInterval(1.0 / 60);
 
     // create a scene. it's an autorelease object
-    CCScene *pScene = HelloWorld::scene();
+    Scene *pScene = HelloWorld::scene();
 
     // run
     pDirector->runWithScene(pScene);
@@ -134,7 +134,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    CCDirector::sharedDirector()->pause();
+    Director::sharedDirector()->pause();
 
     // if you use SimpleAudioEngine, it must be pause
     // SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
@@ -144,7 +144,7 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    CCDirector::sharedDirector()->resume();
+    Director::sharedDirector()->resume();
     if (g_pAnalytics)
     {
         g_pAnalytics->startSession(s_strAppKey.c_str());

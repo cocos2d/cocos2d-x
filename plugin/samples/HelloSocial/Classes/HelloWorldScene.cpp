@@ -44,10 +44,10 @@ static EventMenuItem s_EventMenuItem[] = {
     {"weibo.png", TAG_SHARE_BY_WEIBO}
 };
 
-CCScene* HelloWorld::scene()
+Scene* HelloWorld::scene()
 {
     // 'scene' is an autorelease object
-    CCScene *scene = CCScene::create();
+    Scene *scene = Scene::create();
     
     // 'layer' is an autorelease object
     HelloWorld *layer = HelloWorld::create();
@@ -64,27 +64,27 @@ bool HelloWorld::init()
 {
     //////////////////////////////
     // 1. super init first
-    if ( !CCLayer::init() )
+    if ( !Layer::init() )
     {
         return false;
     }
 
-    CCSize size = CCDirector::sharedDirector()->getVisibleSize();
+    Size size = Director::sharedDirector()->getVisibleSize();
 
-    CCSprite* pBackground = CCSprite::create("background.png");
+    Sprite* pBackground = Sprite::create("background.png");
     pBackground->setPosition(ccp(size.width / 2, size.height / 2));
     addChild(pBackground);
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
     //    you may modify it.
 
-    CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
-    CCPoint posBR = ccp(pEGLView->getVisibleOrigin().x + pEGLView->getVisibleSize().width, pEGLView->getVisibleOrigin().y);
-    CCPoint posBC = ccp(pEGLView->getVisibleOrigin().x + pEGLView->getVisibleSize().width/2, pEGLView->getVisibleOrigin().y);
-    CCPoint posTL = ccp(pEGLView->getVisibleOrigin().x, pEGLView->getVisibleOrigin().y + pEGLView->getVisibleSize().height);
+    EGLView* pEGLView = EGLView::sharedOpenGLView();
+    Point posBR = ccp(pEGLView->getVisibleOrigin().x + pEGLView->getVisibleSize().width, pEGLView->getVisibleOrigin().y);
+    Point posBC = ccp(pEGLView->getVisibleOrigin().x + pEGLView->getVisibleSize().width/2, pEGLView->getVisibleOrigin().y);
+    Point posTL = ccp(pEGLView->getVisibleOrigin().x, pEGLView->getVisibleOrigin().y + pEGLView->getVisibleSize().height);
 
     // add a "close" icon to exit the progress. it's an autorelease object
-    CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
+    MenuItemImage *pCloseItem = MenuItemImage::create(
                                         "CloseNormal.png",
                                         "CloseSelected.png",
                                         this,
@@ -92,21 +92,21 @@ bool HelloWorld::init()
     pCloseItem->setPosition( ccp(posBR.x - 20, posBR.y + 20) );
 
     // create menu, it's an autorelease object
-    CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
-    pMenu->setPosition( CCPointZero );
+    Menu* pMenu = Menu::create(pCloseItem, NULL);
+    pMenu->setPosition( PointZero );
     this->addChild(pMenu, 1);
 
-    CCPoint posStep = ccp(150, -150);
-    CCPoint beginPos = ccpAdd(posTL, ccpMult(posStep, 0.5f));
+    Point posStep = ccp(150, -150);
+    Point beginPos = ccpAdd(posTL, ccpMult(posStep, 0.5f));
     int line = 0;
     int row = 0;
     for (int i = 0; i < sizeof(s_EventMenuItem)/sizeof(s_EventMenuItem[0]); i++) {
-    	CCMenuItemImage* pMenuItem = CCMenuItemImage::create(s_EventMenuItem[i].id.c_str(), s_EventMenuItem[i].id.c_str(),
+    	MenuItemImage* pMenuItem = MenuItemImage::create(s_EventMenuItem[i].id.c_str(), s_EventMenuItem[i].id.c_str(),
     			this, menu_selector(HelloWorld::eventMenuCallback));
         pMenu->addChild(pMenuItem, 0, s_EventMenuItem[i].tag);
 
-        CCPoint pos = ccpAdd(beginPos, ccp(posStep.x * row, posStep.y * line));
-        CCSize itemSize = pMenuItem->getContentSize();
+        Point pos = ccpAdd(beginPos, ccp(posStep.x * row, posStep.y * line));
+        Size itemSize = pMenuItem->getContentSize();
         if ((pos.x + itemSize.width / 2) > posBR.x)
 		{
 			line += 1;
@@ -117,8 +117,8 @@ bool HelloWorld::init()
         pMenuItem->setPosition(pos);
     }
 
-    CCLabelTTF* label = CCLabelTTF::create("Reload all plugins", "Arial", 24);
-    CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, this, menu_selector(HelloWorld::reloadPluginMenuCallback));
+    LabelTTF* label = LabelTTF::create("Reload all plugins", "Arial", 24);
+    MenuItemLabel* pMenuItem = MenuItemLabel::create(label, this, menu_selector(HelloWorld::reloadPluginMenuCallback));
     pMenuItem->setAnchorPoint(ccp(0.5f, 0));
     pMenu->addChild(pMenuItem, 0);
     pMenuItem->setPosition(posBC);
@@ -126,15 +126,15 @@ bool HelloWorld::init()
     return true;
 }
 
-void HelloWorld::reloadPluginMenuCallback(CCObject* pSender)
+void HelloWorld::reloadPluginMenuCallback(Object* pSender)
 {
     MySocialManager::sharedSocialManager()->unloadSocialPlugin();
     MySocialManager::sharedSocialManager()->loadSocialPlugin();
 }
 
-void HelloWorld::eventMenuCallback(CCObject* pSender)
+void HelloWorld::eventMenuCallback(Object* pSender)
 {
-	CCMenuItemLabel* pMenuItem = (CCMenuItemLabel*)pSender;
+	MenuItemLabel* pMenuItem = (MenuItemLabel*)pSender;
     TShareInfo pInfo;
     pInfo["SharedText"] = "Share message : HelloSocial!";
     // pInfo["SharedImagePath"] = "Full/path/to/image";
@@ -142,10 +142,10 @@ void HelloWorld::eventMenuCallback(CCObject* pSender)
     MySocialManager::sharedSocialManager()->shareByMode(pInfo, mode);
 }
 
-void HelloWorld::menuCloseCallback(CCObject* pSender)
+void HelloWorld::menuCloseCallback(Object* pSender)
 {
     MySocialManager::purgeManager();
-    CCDirector::sharedDirector()->end();
+    Director::sharedDirector()->end();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
 #endif

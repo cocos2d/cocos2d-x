@@ -34,24 +34,24 @@ public:
 	virtual void onPlayerGetPoints(cocos2d::plugin::ProtocolAds* pAdsPlugin, int points);
 };
 
-class HelloWorld : public cocos2d::CCLayer
+class HelloWorld : public cocos2d::Layer
 {
 public:
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
     virtual bool init();  
 
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
-    static cocos2d::CCScene* scene();
+    static cocos2d::Scene* scene();
     
     // a selector callback
-    void menuCloseCallback(CCObject* pSender);
-    void testShow(CCObject* pSender);
-	void testHide(CCObject* pSender);
+    void menuCloseCallback(Object* pSender);
+    void testShow(Object* pSender);
+	void testHide(Object* pSender);
 
 	// option changed callback
-	void caseChanged(CCObject* pSender);
-	void posChanged(CCObject* pSender);
-	void typeChanged(CCObject* pSender);
+	void caseChanged(Object* pSender);
+	void posChanged(Object* pSender);
+	void typeChanged(Object* pSender);
 
     // implement the "static node()" method manually
     CREATE_FUNC(HelloWorld);
@@ -60,9 +60,9 @@ private:
     cocos2d::plugin::ProtocolAds* m_pAdmob;
     MyAdsListener* m_pListener;
 
-    cocos2d::CCMenuItemToggle* m_pCaseItem;
-    cocos2d::CCMenuItemToggle* m_pTypeItem;
-    cocos2d::CCMenuItemToggle* m_pPosItem;
+    cocos2d::MenuItemToggle* m_pCaseItem;
+    cocos2d::MenuItemToggle* m_pTypeItem;
+    cocos2d::MenuItemToggle* m_pPosItem;
 
     cocos2d::plugin::ProtocolAds* m_pAds;
     cocos2d::plugin::ProtocolAds::AdsPos m_ePos;
