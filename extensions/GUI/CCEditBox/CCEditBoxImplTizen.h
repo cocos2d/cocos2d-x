@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2012 James Chen
+ Copyright (c) 2013 Lee, Jae-Hong
  
  http://www.cocos2d-x.org
  
@@ -35,15 +36,15 @@
 
 NS_CC_EXT_BEGIN
 
-class CCEditBox;
+class EditBox;
 
-class CCEditBoxImplTizen : public CCEditBoxImpl
+class EditBoxImplTizen : public EditBoxImpl
 {
 public:
-    CCEditBoxImplTizen(CCEditBox* pEditText);
-    virtual ~CCEditBoxImplTizen();
-    
-    virtual bool initWithSize(const CCSize& size);
+    EditBoxImplTizen(EditBox* pEditText);
+    virtual ~EditBoxImplTizen();
+
+    virtual bool initWithSize(const Size& size);
     virtual void setFont(const char* pFontName, int fontSize);
     virtual void setFontColor(const ccColor3B& color);
     virtual void setPlaceholderFont(const char* pFontName, int fontSize);
@@ -54,35 +55,35 @@ public:
     virtual int  getMaxLength();
     virtual void setReturnType(KeyboardReturnType returnType);
     virtual bool isEditing();
-    
+
     virtual void setText(const char* pText);
     virtual const char* getText(void);
     virtual void setPlaceHolder(const char* pText);
-    virtual void setPosition(const CCPoint& pos);
+    virtual void setPosition(const Point& pos);
     virtual void setVisible(bool visible);
-    virtual void setContentSize(const CCSize& size);
-	virtual void setAnchorPoint(const CCPoint& anchorPoint);
+    virtual void setContentSize(const Size& size);
+    virtual void setAnchorPoint(const Point& anchorPoint);
     virtual void visit(void);
-	virtual void onEnter(void);
+    virtual void onEnter(void);
     virtual void doAnimationWhenKeyboardMove(float duration, float distance);
     virtual void openKeyboard();
     virtual void closeKeyboard();
-    
-private:
-    CCLabelTTF* m_pLabel;
-    CCLabelTTF* m_pLabelPlaceHolder;
-    EditBoxInputMode    m_eEditBoxInputMode;
-    EditBoxInputFlag    m_eEditBoxInputFlag;
-    KeyboardReturnType  m_eKeyboardReturnType;
-    
-    std::string m_strText;
-    std::string m_strPlaceHolder;
-    
-    ccColor3B m_colText;
-    ccColor3B m_colPlaceHolder;
 
-    int   m_nMaxLength;
-    CCSize m_EditSize;
+private:
+    LabelTTF* _label;
+    LabelTTF* _labelPlaceHolder;
+    EditBoxInputMode    _editBoxInputMode;
+    EditBoxInputFlag    _editBoxInputFlag;
+    KeyboardReturnType  _keyboardReturnType;
+
+    std::string _text;
+    std::string _placeHolder;
+
+    ccColor3B _colText;
+    ccColor3B _colPlaceHolder;
+
+    int   _maxLength;
+    Size _editSize;
 };
 
 

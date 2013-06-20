@@ -16,7 +16,6 @@
 		15C153FD1683112E00D239F2 /* CCBValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C1538A1683112E00D239F2 /* CCBValue.cpp */; };
 		15C153FE1683112E00D239F2 /* CCControlButtonLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C1538C1683112E00D239F2 /* CCControlButtonLoader.cpp */; };
 		15C153FF1683112E00D239F2 /* CCControlLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C1538E1683112E00D239F2 /* CCControlLoader.cpp */; };
-		15C154001683112E00D239F2 /* CCData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C153901683112E00D239F2 /* CCData.cpp */; };
 		15C154011683112E00D239F2 /* CCLabelBMFontLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C153921683112E00D239F2 /* CCLabelBMFontLoader.cpp */; };
 		15C154021683112E00D239F2 /* CCLabelTTFLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C153941683112E00D239F2 /* CCLabelTTFLoader.cpp */; };
 		15C154031683112E00D239F2 /* CCLayerColorLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C153961683112E00D239F2 /* CCLayerColorLoader.cpp */; };
@@ -165,6 +164,10 @@
 		1A40E7F01727C47E006D4861 /* SlotData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40E7DA1727C47E006D4861 /* SlotData.cpp */; };
 		1A40E7F11727C47E006D4861 /* spine-cocos2dx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40E7DC1727C47E006D4861 /* spine-cocos2dx.cpp */; };
 		1A9D7E63171E38B2000B3B9A /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9D7E62171E38B2000B3B9A /* libluajit.a */; };
+		1AB87024175E0A2D005D39BF /* WebSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB87022175E0A2D005D39BF /* WebSocket.cpp */; };
+		1AB87029175E0A40005D39BF /* CCSkeleton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB87025175E0A40005D39BF /* CCSkeleton.cpp */; };
+		1AB8702A175E0A40005D39BF /* CCSkeletonAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB87027175E0A40005D39BF /* CCSkeletonAnimation.cpp */; };
+		1AB87031175E0A5B005D39BF /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB87030175E0A5B005D39BF /* libwebsockets.a */; };
 		1AC3622F16D47C5C000847F2 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1AC3622316D47C5C000847F2 /* background.mp3 */; };
 		1AC3623016D47C5C000847F2 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1AC3622416D47C5C000847F2 /* background.ogg */; };
 		1AC3623116D47C5C000847F2 /* crop.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC3622516D47C5C000847F2 /* crop.png */; };
@@ -238,8 +241,6 @@
 		15C1538D1683112E00D239F2 /* CCControlButtonLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlButtonLoader.h; sourceTree = "<group>"; };
 		15C1538E1683112E00D239F2 /* CCControlLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControlLoader.cpp; sourceTree = "<group>"; };
 		15C1538F1683112E00D239F2 /* CCControlLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlLoader.h; sourceTree = "<group>"; };
-		15C153901683112E00D239F2 /* CCData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCData.cpp; sourceTree = "<group>"; };
-		15C153911683112E00D239F2 /* CCData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCData.h; sourceTree = "<group>"; };
 		15C153921683112E00D239F2 /* CCLabelBMFontLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelBMFontLoader.cpp; sourceTree = "<group>"; };
 		15C153931683112E00D239F2 /* CCLabelBMFontLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelBMFontLoader.h; sourceTree = "<group>"; };
 		15C153941683112E00D239F2 /* CCLabelTTFLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelTTFLoader.cpp; sourceTree = "<group>"; };
@@ -536,6 +537,14 @@
 		1A9D7E5F171E38B2000B3B9A /* luaconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luaconf.h; sourceTree = "<group>"; };
 		1A9D7E60171E38B2000B3B9A /* lualib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lualib.h; sourceTree = "<group>"; };
 		1A9D7E62171E38B2000B3B9A /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libluajit.a; sourceTree = "<group>"; };
+		1AB87022175E0A2D005D39BF /* WebSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocket.cpp; sourceTree = "<group>"; };
+		1AB87023175E0A2D005D39BF /* WebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebSocket.h; sourceTree = "<group>"; };
+		1AB87025175E0A40005D39BF /* CCSkeleton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSkeleton.cpp; sourceTree = "<group>"; };
+		1AB87026175E0A40005D39BF /* CCSkeleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSkeleton.h; sourceTree = "<group>"; };
+		1AB87027175E0A40005D39BF /* CCSkeletonAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSkeletonAnimation.cpp; sourceTree = "<group>"; };
+		1AB87028175E0A40005D39BF /* CCSkeletonAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSkeletonAnimation.h; sourceTree = "<group>"; };
+		1AB8702E175E0A5B005D39BF /* libwebsockets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libwebsockets.h; sourceTree = "<group>"; };
+		1AB87030175E0A5B005D39BF /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwebsockets.a; sourceTree = "<group>"; };
 		1AC3622316D47C5C000847F2 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = background.mp3; path = ../Resources/background.mp3; sourceTree = "<group>"; };
 		1AC3622416D47C5C000847F2 /* background.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = background.ogg; path = ../Resources/background.ogg; sourceTree = "<group>"; };
 		1AC3622516D47C5C000847F2 /* crop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = crop.png; path = ../Resources/crop.png; sourceTree = "<group>"; };
@@ -599,6 +608,7 @@
 				F293B3D915EB7BE500256477 /* Foundation.framework in Frameworks */,
 				F293B3DB15EB7BE500256477 /* CoreGraphics.framework in Frameworks */,
 				1A9D7E63171E38B2000B3B9A /* libluajit.a in Frameworks */,
+				1AB87031175E0A5B005D39BF /* libwebsockets.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -651,8 +661,6 @@
 				15C1538D1683112E00D239F2 /* CCControlButtonLoader.h */,
 				15C1538E1683112E00D239F2 /* CCControlLoader.cpp */,
 				15C1538F1683112E00D239F2 /* CCControlLoader.h */,
-				15C153901683112E00D239F2 /* CCData.cpp */,
-				15C153911683112E00D239F2 /* CCData.h */,
 				15C153921683112E00D239F2 /* CCLabelBMFontLoader.cpp */,
 				15C153931683112E00D239F2 /* CCLabelBMFontLoader.h */,
 				15C153941683112E00D239F2 /* CCLabelTTFLoader.cpp */,
@@ -763,6 +771,8 @@
 				15C153E21683112E00D239F2 /* HttpClient.h */,
 				15C153E31683112E00D239F2 /* HttpRequest.h */,
 				15C153E41683112E00D239F2 /* HttpResponse.h */,
+				1AB87022175E0A2D005D39BF /* WebSocket.cpp */,
+				1AB87023175E0A2D005D39BF /* WebSocket.h */,
 			);
 			path = network;
 			sourceTree = "<group>";
@@ -1119,6 +1129,10 @@
 				1A40E7C71727C47D006D4861 /* Bone.h */,
 				1A40E7C81727C47D006D4861 /* BoneData.cpp */,
 				1A40E7C91727C47D006D4861 /* BoneData.h */,
+				1AB87025175E0A40005D39BF /* CCSkeleton.cpp */,
+				1AB87026175E0A40005D39BF /* CCSkeleton.h */,
+				1AB87027175E0A40005D39BF /* CCSkeletonAnimation.cpp */,
+				1AB87028175E0A40005D39BF /* CCSkeletonAnimation.h */,
 				1A40E7CA1727C47E006D4861 /* extension.cpp */,
 				1A40E7CB1727C47E006D4861 /* extension.h */,
 				1A40E7CC1727C47E006D4861 /* Json.cpp */,
@@ -1174,6 +1188,40 @@
 			path = luajit/ios;
 			sourceTree = "<group>";
 		};
+		1AB8702B175E0A5B005D39BF /* libwebsockets */ = {
+			isa = PBXGroup;
+			children = (
+				1AB8702C175E0A5B005D39BF /* ios */,
+			);
+			name = libwebsockets;
+			path = ../../../external/libwebsockets;
+			sourceTree = "<group>";
+		};
+		1AB8702C175E0A5B005D39BF /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				1AB8702D175E0A5B005D39BF /* include */,
+				1AB8702F175E0A5B005D39BF /* lib */,
+			);
+			path = ios;
+			sourceTree = "<group>";
+		};
+		1AB8702D175E0A5B005D39BF /* include */ = {
+			isa = PBXGroup;
+			children = (
+				1AB8702E175E0A5B005D39BF /* libwebsockets.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		1AB8702F175E0A5B005D39BF /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				1AB87030175E0A5B005D39BF /* libwebsockets.a */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
 		46C1007916BF786A00F74D54 /* cocos2dx_support */ = {
 			isa = PBXGroup;
 			children = (
@@ -1223,6 +1271,7 @@
 				15C1555A168311AA00D239F2 /* CocosDenshion */,
 				15C153791683112E00D239F2 /* extensions */,
 				F293B3CB15EB7BE500256477 /* Frameworks */,
+				1AB8702B175E0A5B005D39BF /* libwebsockets */,
 				15C155FF168311CB00D239F2 /* lua */,
 				F293B6E815EB807E00256477 /* Other Sources */,
 				F293B3C915EB7BE500256477 /* Products */,
@@ -1412,7 +1461,6 @@
 				15C153FD1683112E00D239F2 /* CCBValue.cpp in Sources */,
 				15C153FE1683112E00D239F2 /* CCControlButtonLoader.cpp in Sources */,
 				15C153FF1683112E00D239F2 /* CCControlLoader.cpp in Sources */,
-				15C154001683112E00D239F2 /* CCData.cpp in Sources */,
 				15C154011683112E00D239F2 /* CCLabelBMFontLoader.cpp in Sources */,
 				15C154021683112E00D239F2 /* CCLabelTTFLoader.cpp in Sources */,
 				15C154031683112E00D239F2 /* CCLayerColorLoader.cpp in Sources */,
@@ -1559,6 +1607,9 @@
 				1A40E7EF1727C47E006D4861 /* Slot.cpp in Sources */,
 				1A40E7F01727C47E006D4861 /* SlotData.cpp in Sources */,
 				1A40E7F11727C47E006D4861 /* spine-cocos2dx.cpp in Sources */,
+				1AB87024175E0A2D005D39BF /* WebSocket.cpp in Sources */,
+				1AB87029175E0A40005D39BF /* CCSkeleton.cpp in Sources */,
+				1AB8702A175E0A40005D39BF /* CCSkeletonAnimation.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1645,6 +1696,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1675,11 +1728,12 @@
 					"\"$(SRCROOT)/../../../extensions\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries",
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../scripting/lua/luajit/ios\"",
+					"\"$(SRCROOT)/../../../external/libwebsockets/ios/lib\"",
 				);
 				OTHER_LDFLAGS = (
 					"-lxml2",
@@ -1695,6 +1749,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
@@ -1723,11 +1779,12 @@
 					"\"$(SRCROOT)/../../../extensions\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries",
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../scripting/lua/luajit/ios\"",
+					"\"$(SRCROOT)/../../../external/libwebsockets/ios/lib\"",
 				);
 				OTHER_LDFLAGS = (
 					"-lxml2",

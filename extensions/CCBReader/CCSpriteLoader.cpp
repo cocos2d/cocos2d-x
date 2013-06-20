@@ -8,48 +8,48 @@
 
 NS_CC_EXT_BEGIN
 
-void CCSpriteLoader::onHandlePropTypeSpriteFrame(CCNode * pNode, CCNode * pParent, const char * pPropertyName, CCSpriteFrame * pCCSpriteFrame, CCBReader * pCCBReader) {
+void SpriteLoader::onHandlePropTypeSpriteFrame(Node * pNode, Node * pParent, const char * pPropertyName, SpriteFrame * pSpriteFrame, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_DISPLAYFRAME) == 0) {
-        if(pCCSpriteFrame != NULL) {
-            ((CCSprite *)pNode)->setDisplayFrame(pCCSpriteFrame);
+        if(pSpriteFrame != NULL) {
+            ((Sprite *)pNode)->setDisplayFrame(pSpriteFrame);
         } else {
             CCLOG("ERROR: SpriteFrame NULL");
         }
     } else {
-        CCNodeLoader::onHandlePropTypeSpriteFrame(pNode, pParent, pPropertyName, pCCSpriteFrame, pCCBReader);
+        NodeLoader::onHandlePropTypeSpriteFrame(pNode, pParent, pPropertyName, pSpriteFrame, pCCBReader);
     }
 }
 
-void CCSpriteLoader::onHandlePropTypeFlip(CCNode * pNode, CCNode * pParent, const char * pPropertyName, bool * pFlip, CCBReader * pCCBReader) {
+void SpriteLoader::onHandlePropTypeFlip(Node * pNode, Node * pParent, const char * pPropertyName, bool * pFlip, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_FLIP) == 0) {
-        ((CCSprite *)pNode)->setFlipX(pFlip[0]);
-        ((CCSprite *)pNode)->setFlipY(pFlip[1]);
+        ((Sprite *)pNode)->setFlipX(pFlip[0]);
+        ((Sprite *)pNode)->setFlipY(pFlip[1]);
     } else {
-        CCNodeLoader::onHandlePropTypeFlip(pNode, pParent, pPropertyName, pFlip, pCCBReader);
+        NodeLoader::onHandlePropTypeFlip(pNode, pParent, pPropertyName, pFlip, pCCBReader);
     }
 }
 
-void CCSpriteLoader::onHandlePropTypeColor3(CCNode * pNode, CCNode * pParent, const char * pPropertyName, ccColor3B pCCColor3B, CCBReader * pCCBReader) {
+void SpriteLoader::onHandlePropTypeColor3(Node * pNode, Node * pParent, const char * pPropertyName, ccColor3B pColor3B, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_COLOR) == 0) {
-        ((CCSprite *)pNode)->setColor(pCCColor3B);
+        ((Sprite *)pNode)->setColor(pColor3B);
     } else {
-        CCNodeLoader::onHandlePropTypeColor3(pNode, pParent, pPropertyName, pCCColor3B, pCCBReader);
+        NodeLoader::onHandlePropTypeColor3(pNode, pParent, pPropertyName, pColor3B, pCCBReader);
     }
 }
 
-void CCSpriteLoader::onHandlePropTypeByte(CCNode * pNode, CCNode * pParent, const char * pPropertyName, unsigned char pByte, CCBReader * pCCBReader) {
+void SpriteLoader::onHandlePropTypeByte(Node * pNode, Node * pParent, const char * pPropertyName, unsigned char pByte, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_OPACITY) == 0) {
-        ((CCSprite *)pNode)->setOpacity(pByte);
+        ((Sprite *)pNode)->setOpacity(pByte);
     } else {
-        CCNodeLoader::onHandlePropTypeByte(pNode, pParent, pPropertyName, pByte, pCCBReader);
+        NodeLoader::onHandlePropTypeByte(pNode, pParent, pPropertyName, pByte, pCCBReader);
     }
 }
 
-void CCSpriteLoader::onHandlePropTypeBlendFunc(CCNode * pNode, CCNode * pParent, const char * pPropertyName, ccBlendFunc pCCBlendFunc, CCBReader * pCCBReader) {
+void SpriteLoader::onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const char * pPropertyName, ccBlendFunc pBlendFunc, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_BLENDFUNC) == 0) {
-        ((CCSprite *)pNode)->setBlendFunc(pCCBlendFunc);
+        ((Sprite *)pNode)->setBlendFunc(pBlendFunc);
     } else {
-        CCNodeLoader::onHandlePropTypeBlendFunc(pNode, pParent, pPropertyName, pCCBlendFunc, pCCBReader);
+        NodeLoader::onHandlePropTypeBlendFunc(pNode, pParent, pPropertyName, pBlendFunc, pCCBReader);
     }
 }
 

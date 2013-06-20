@@ -75,40 +75,47 @@ void MySocialManager::loadSocialPlugin()
 
 	{
 		// init twitter plugin
-		s_pTwitter = dynamic_cast<SocialTwitter*>(PluginManager::getInstance()->loadPlugin("SocialTwitter"));
-		TSocialDeveloperInfo pTwitterInfo;
-
-        /* Warning: must set your twiiter dev info here */
-		// pTwitterInfo["TwitterKey"] = "your consumerkey";
-        // pTwitterInfo["TwitterSecret"] = "your consumersecret";
-
-		if (pTwitterInfo.empty())
+		s_pTwitter = dynamic_cast<ProtocolSocial*>(PluginManager::getInstance()->loadPlugin("SocialTwitter"));
+		if (NULL != s_pTwitter)
 		{
-			char msg[256] = { 0 };
-			sprintf(msg, "Developer info is empty. PLZ fill your twitter info in %s(nearby line %d)", __FILE__, __LINE__);
-			CCMessageBox(msg, "Twitter Warning");
+			TSocialDeveloperInfo pTwitterInfo;
+
+			/* Warning: must set your twiiter dev info here */
+			// pTwitterInfo["TwitterKey"] = "your consumerkey";
+			// pTwitterInfo["TwitterSecret"] = "your consumersecret";
+
+			if (pTwitterInfo.empty())
+			{
+				char msg[256] = { 0 };
+				sprintf(msg, "Developer info is empty. PLZ fill your twitter info in %s(nearby line %d)", __FILE__, __LINE__);
+				MessageBox(msg, "Twitter Warning");
+			}
+			s_pTwitter->setDebugMode(true);
+			s_pTwitter->configDeveloperInfo(pTwitterInfo);
+			s_pTwitter->setResultListener(s_pRetListener);
 		}
-		s_pTwitter->setDebugMode(true);
-		s_pTwitter->configDeveloperInfo(pTwitterInfo);
-		s_pTwitter->setResultListener(s_pRetListener);
 	}
 
 	{
-		s_pWeibo = dynamic_cast<SocialWeibo*>(PluginManager::getInstance()->loadPlugin("SocialWeibo"));
-		TSocialDeveloperInfo pWeiboInfo;
-		// pWeiboInfo["WeiboAppKey"] = "your app key";
-		// pWeiboInfo["WeiboRedirectUrl"] = "your redirect url";
-
-		if (pWeiboInfo.empty())
+		s_pWeibo = dynamic_cast<ProtocolSocial*>(PluginManager::getInstance()->loadPlugin("SocialWeibo"));
+		if (NULL != s_pWeibo)
 		{
-			char msg[256] = { 0 };
-			sprintf(msg, "Developer info is empty. PLZ fill your weibo info in %s(nearby line %d)", __FILE__, __LINE__);
-			CCMessageBox(msg, "Weibo Warning");
-		}
+			TSocialDeveloperInfo pWeiboInfo;
+			// pWeiboInfo["WeiboAppKey"] = "your app key";
+            // pWeiboInfo["WeiboAppSecret"] = "your app secret";
+			// pWeiboInfo["WeiboRedirectUrl"] = "your redirect url";
 
-		s_pWeibo->setDebugMode(true);
-		s_pWeibo->configDeveloperInfo(pWeiboInfo);
-		s_pWeibo->setResultListener(s_pRetListener);
+			if (pWeiboInfo.empty())
+			{
+				char msg[256] = { 0 };
+				sprintf(msg, "Developer info is empty. PLZ fill your weibo info in %s(nearby line %d)", __FILE__, __LINE__);
+				MessageBox(msg, "Weibo Warning");
+			}
+
+			s_pWeibo->setDebugMode(true);
+			s_pWeibo->configDeveloperInfo(pWeiboInfo);
+			s_pWeibo->setResultListener(s_pRetListener);
+		}
 	}
 }
 
@@ -151,5 +158,5 @@ void MyShareResult::onShareResult(ShareResultCode ret, const char* msg)
 {
     char shareStatus[1024] = { 0 };
     sprintf(shareStatus, "Share %s", (ret == kShareSuccess)? "Successed" : "Failed");
-    CCMessageBox(msg, shareStatus);
+    MessageBox(msg, shareStatus);
 }

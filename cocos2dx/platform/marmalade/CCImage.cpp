@@ -61,11 +61,11 @@ struct TextLine {
 
 NS_CC_BEGIN;
 
-class CC_DLL CCImageHelper
+class CC_DLL ImageHelper
 {
 public:
-	CCImageHelper();
-	~CCImageHelper();
+	ImageHelper();
+	~ImageHelper();
 	// dummy funcs to help libjpeg
 	static void JPEGInitSource(j_decompress_ptr cinfo)
 	{
@@ -95,12 +95,12 @@ public:
 	~BitmapDC();
 
 	void reset();
-	bool getBitmap(const char *text, int nWidth, int nHeight, CCImage::ETextAlign eAlignMask, const char * pFontName, uint fontSize);
+	bool getBitmap(const char *text, int nWidth, int nHeight, Image::ETextAlign eAlignMask, const char * pFontName, uint fontSize);
 
 public:
-	unsigned char*		m_pData;
-	int					m_iMaxLineWidth;
-	int					m_iMaxLineHeight;
+	unsigned char*		_data;
+	int					_maxLineWidth;
+	int					_maxLineHeight;
 
 private:
 	void buildLine(std::stringstream& ss, FT_Face face, int iCurXCursor, char cLastChar);
@@ -111,7 +111,7 @@ private:
 	 * compute the start pos of every line
 	 * return value>0 represents the start x pos of the line, while -1 means fail
 	 */
-	int computeLineStart(FT_Face face, CCImage::ETextAlign eAlignMask, char cText, int iLineIndex);
+	int computeLineStart(FT_Face face, Image::ETextAlign eAlignMask, char cText, int iLineIndex);
 
 	bool startsWith(const std::string& str, const std::string& what);
 	bool endsWith(const std::string& str, const std::string& what);
@@ -120,14 +120,14 @@ private:
 	int openFont(const std::string& fontName, uint fontSize);
 
 private:
-	FT_Library		m_library;
-	FT_Face			m_face ;
-	std::string		m_fontName ;
-	uint			m_fontSize ;
+	FT_Library		_library;
+	FT_Face			_face ;
+	std::string		_fontName ;
+	uint			_fontSize ;
 
-	int				m_libError;
-	int				m_iInterval;
-	std::vector<TextLine> m_vLines;
+	int				_libError;
+	int				_interval;
+	std::vector<TextLine> _vLines;
 };
 
 bool BitmapDC::startsWith(const std::string& str, const std::string& what)
@@ -168,36 +168,36 @@ std::string BitmapDC::basename(const std::string& pathName)
 }
 
 BitmapDC::BitmapDC() :
-	m_face(NULL)
-	,m_fontName()
-	,m_fontSize(0)
-	,m_iInterval(FONT_KERNING)
-	,m_pData(NULL)
+	_face(NULL)
+	,_fontName()
+	,_fontSize(0)
+	,_interval(FONT_KERNING)
+	,_data(NULL)
 {
-	m_libError = FT_Init_FreeType( &m_library );
+	_libError = FT_Init_FreeType( &_library );
 	reset();
 }
 
 BitmapDC::~BitmapDC()
 {
 	//  free face
-	if( m_face ) {
-		FT_Done_Face(m_face);
-		m_face = NULL;
+	if( _face ) {
+		FT_Done_Face(_face);
+		_face = NULL;
 	}
 
-	FT_Done_FreeType(m_library);
-	//data will be deleted by CCImage
-	//	if (m_pData) {
-	//		delete [] m_pData;
+	FT_Done_FreeType(_library);
+	//data will be deleted by Image
+	//	if (_data) {
+	//		delete [] _data;
 	//	}
 }
 
 void BitmapDC::reset()
 {
-	m_iMaxLineWidth = 0;
-	m_iMaxLineHeight = 0;
-	m_vLines.clear();
+	_maxLineWidth = 0;
+	_maxLineHeight = 0;
+	_vLines.clear();
 }
 
 void BitmapDC::buildLine(std::stringstream& ss, FT_Face face, int iCurXCursor, char cLastChar )
@@ -214,10 +214,10 @@ void BitmapDC::buildLine(std::stringstream& ss, FT_Face face, int iCurXCursor, c
 		face->glyph->metrics.horiBearingX
 		- face->glyph->metrics.width)/*-iInterval*/;	//TODO interval
 
-	m_iMaxLineWidth = MAX(m_iMaxLineWidth, oTempLine.iLineWidth);
+	_maxLineWidth = MAX(_maxLineWidth, oTempLine.iLineWidth);
 	ss.clear();
 	ss.str("");
-	m_vLines.push_back(oTempLine);
+	_vLines.push_back(oTempLine);
 }
 
 bool BitmapDC::divideString( FT_Face face, const char* sText, int iMaxWidth, int iMaxHeight )
@@ -265,7 +265,7 @@ bool BitmapDC::divideString( FT_Face face, const char* sText, int iMaxWidth, int
 
 		cLastCh = *pText;
 		ss << *pText;
-		iCurXCursor += RSHIFT6(face->glyph->metrics.horiAdvance) + m_iInterval;
+		iCurXCursor += RSHIFT6(face->glyph->metrics.horiAdvance) + _interval;
 		pText++;
 
 /*
@@ -303,7 +303,7 @@ bool BitmapDC::divideString( FT_Face face, const char* sText, int iMaxWidth, int
 	return true;
 }
 
-int BitmapDC::computeLineStart( FT_Face face, CCImage::ETextAlign eAlignMask, char cText, int iLineIndex )
+int BitmapDC::computeLineStart( FT_Face face, Image::ETextAlign eAlignMask, char cText, int iLineIndex )
 {
 	int iRet;
 	int iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, cText), FT_LOAD_DEFAULT);
@@ -311,11 +311,11 @@ int BitmapDC::computeLineStart( FT_Face face, CCImage::ETextAlign eAlignMask, ch
 		return -1;
 	}
 
-	if (eAlignMask == CCImage::kAlignCenter) {
-		iRet = (m_iMaxLineWidth - m_vLines[iLineIndex].iLineWidth) / 2 - RSHIFT6(face->glyph->metrics.horiBearingX );
+	if (eAlignMask == Image::kAlignCenter) {
+		iRet = (_maxLineWidth - _vLines[iLineIndex].iLineWidth) / 2 - RSHIFT6(face->glyph->metrics.horiBearingX );
 
-	} else if (eAlignMask == CCImage::kAlignRight) {
-		iRet = (m_iMaxLineWidth - m_vLines[iLineIndex].iLineWidth) - RSHIFT6(face->glyph->metrics.horiBearingX );
+	} else if (eAlignMask == Image::kAlignRight) {
+		iRet = (_maxLineWidth - _vLines[iLineIndex].iLineWidth) - RSHIFT6(face->glyph->metrics.horiBearingX );
 	} else {
 		// left or other situation
 		iRet = -RSHIFT6(face->glyph->metrics.horiBearingX );
@@ -328,23 +328,23 @@ int BitmapDC::openFont(const std::string& fontName, uint fontSize)
 	FT_Face aFace ;
 
 	int iError = 0 ;
-	if( m_fontName != basename(fontName) || m_fontSize != fontSize ) {
-		iError = FT_New_Face( m_library, fontName.c_str(), 0, &aFace );
+	if( _fontName != basename(fontName) || _fontSize != fontSize ) {
+		iError = FT_New_Face( _library, fontName.c_str(), 0, &aFace );
 		if( !iError ) {
-			if(m_face) {
-				FT_Done_Face(m_face);
+			if(_face) {
+				FT_Done_Face(_face);
 			}
 
-			m_face = aFace ;
-			m_fontName = basename(fontName) ;
-			m_fontSize = fontSize ;
+			_face = aFace ;
+			_fontName = basename(fontName) ;
+			_fontSize = fontSize ;
 		}
 	}
 
 	return iError ;
 }
 
-bool BitmapDC::getBitmap( const char *text, int nWidth, int nHeight, CCImage::ETextAlign eAlignMask, const char * pFontName, uint fontSize )
+bool BitmapDC::getBitmap( const char *text, int nWidth, int nHeight, Image::ETextAlign eAlignMask, const char * pFontName, uint fontSize )
 {
 	FT_Error iError;
 
@@ -352,14 +352,14 @@ bool BitmapDC::getBitmap( const char *text, int nWidth, int nHeight, CCImage::ET
 	int iY, iX, iTemp ;
 	uint32 offset, rowOffset ;
 
-	//data will be deleted by CCImage
-	//		if (m_pData) {
-	//			delete m_pData;
+	//data will be deleted by Image
+	//		if (_data) {
+	//			delete _data;
 	//		}
 
 	int iCurXCursor, iCurYCursor;
 	bool bRet = false;
-	if (m_libError) {
+	if (_libError) {
 		return false;
 	}
 
@@ -371,7 +371,7 @@ bool BitmapDC::getBitmap( const char *text, int nWidth, int nHeight, CCImage::ET
 			fName += ".ttf" ;
 		}
 
-		if( !m_face || (m_fontName != basename(fName) || m_fontSize != fontSize) ) {
+		if( !_face || (_fontName != basename(fName) || _fontSize != fontSize) ) {
 
 			iError = openFont( fName, fontSize );
 			if (iError) {		// try loading from "fonts" folder
@@ -390,63 +390,63 @@ bool BitmapDC::getBitmap( const char *text, int nWidth, int nHeight, CCImage::ET
 			CC_BREAK_IF(iError);
 
 			//select utf8 charmap
-			iError = FT_Select_Charmap(m_face,FT_ENCODING_UNICODE);
+			iError = FT_Select_Charmap(_face,FT_ENCODING_UNICODE);
 			CC_BREAK_IF(iError);
 
-			iError = FT_Set_Pixel_Sizes(m_face, fontSize,fontSize);
+			iError = FT_Set_Pixel_Sizes(_face, fontSize,fontSize);
 			CC_BREAK_IF(iError);
 		}
 
-		iError = divideString(m_face, text, nWidth, nHeight) ? 0 : 1 ;
+		iError = divideString(_face, text, nWidth, nHeight) ? 0 : 1 ;
 
 		//compute the final line width
-		m_iMaxLineWidth = MAX(m_iMaxLineWidth, nWidth);
+		_maxLineWidth = MAX(_maxLineWidth, nWidth);
 
-		FT_Pos ascenderPixels = RSHIFT6(m_face->size->metrics.ascender) ;
-		FT_Pos descenderPixels = RSHIFT6(m_face->size->metrics.descender) ;
+		FT_Pos ascenderPixels = RSHIFT6(_face->size->metrics.ascender) ;
+		FT_Pos descenderPixels = RSHIFT6(_face->size->metrics.descender) ;
 
-		m_iMaxLineHeight = ascenderPixels - descenderPixels;
-		m_iMaxLineHeight *= m_vLines.size();
+		_maxLineHeight = ascenderPixels - descenderPixels;
+		_maxLineHeight *= _vLines.size();
 
 		//compute the final line height
-		m_iMaxLineHeight = MAX(m_iMaxLineHeight, nHeight);
+		_maxLineHeight = MAX(_maxLineHeight, nHeight);
 
-		uint bitmapSize = m_iMaxLineWidth * m_iMaxLineHeight*4 ;
+		uint bitmapSize = _maxLineWidth * _maxLineHeight*4 ;
 
-		m_pData = new unsigned char[bitmapSize];
-		memset(m_pData,0, bitmapSize);
+		_data = new unsigned char[bitmapSize];
+		memset(_data,0, bitmapSize);
 
 		const char* pText = text;
 		iCurYCursor = ascenderPixels;
 
-		for (size_t i = 0; i < m_vLines.size(); i++) {
-			pText = m_vLines[i].sLineStr.c_str();
+		for (size_t i = 0; i < _vLines.size(); i++) {
+			pText = _vLines[i].sLineStr.c_str();
 			//initialize the origin cursor
-			iCurXCursor = computeLineStart(m_face, eAlignMask, *pText, i);
+			iCurXCursor = computeLineStart(_face, eAlignMask, *pText, i);
 
 			while (*pText != 0) {
-				int iError = FT_Load_Glyph(m_face, FT_Get_Char_Index(m_face, *pText), FT_LOAD_RENDER);
+				int iError = FT_Load_Glyph(_face, FT_Get_Char_Index(_face, *pText), FT_LOAD_RENDER);
 				if (iError) {
 					break;
 				}
 
 				//  convert glyph to bitmap with 256 gray
 				//  and get the bitmap
-				FT_Bitmap & bitmap = m_face->glyph->bitmap;
+				FT_Bitmap & bitmap = _face->glyph->bitmap;
 
-				FT_Pos horiBearingYPixels = RSHIFT6(m_face->glyph->metrics.horiBearingY) ;
-				FT_Pos horiBearingXPixels = RSHIFT6(m_face->glyph->metrics.horiBearingX) ;
-				FT_Pos horiAdvancePixels = RSHIFT6(m_face->glyph->metrics.horiAdvance) ;
+				FT_Pos horiBearingYPixels = RSHIFT6(_face->glyph->metrics.horiBearingY) ;
+				FT_Pos horiBearingXPixels = RSHIFT6(_face->glyph->metrics.horiBearingX) ;
+				FT_Pos horiAdvancePixels = RSHIFT6(_face->glyph->metrics.horiAdvance) ;
 
 				for (int i = 0; i < bitmap.rows; ++i) {
 
 					iY = iCurYCursor + i - horiBearingYPixels;
-					if (iY < 0 || iY>=m_iMaxLineHeight) {
+					if (iY < 0 || iY>=_maxLineHeight) {
 						//exceed the height truncate
 						continue;
 					}
 
-					rowOffset = iY * m_iMaxLineWidth ;
+					rowOffset = iY * _maxLineWidth ;
 
 					// if it has gray>0 we set show it as 1, otherwise 0 
 					for (int j = 0; j < bitmap.width; ++j) {
@@ -460,20 +460,20 @@ bool BitmapDC::getBitmap( const char *text, int nWidth, int nHeight, CCImage::ET
 							IwAssert( GAME, ((offset + 3) < bitmapSize) ) ;
 
 							iTemp = cTemp << 24 | cTemp << 16 | cTemp << 8 | cTemp;
- 							*(int*) &m_pData[ offset ] = iTemp ;	// ARGB
+ 							*(int*) &_data[ offset ] = iTemp ;	// ARGB
 						}
 					}
 				}
 
 				//step to next glyph
-				iCurXCursor += horiAdvancePixels + m_iInterval;
+				iCurXCursor += horiAdvancePixels + _interval;
 				pText++;
 			}
 			iCurYCursor += ascenderPixels - descenderPixels ;
 		}
 
 		//clear all lines
-		m_vLines.clear();
+		_vLines.clear();
 
 		//success;
 		if (iError) {
@@ -499,30 +499,30 @@ static BitmapDC& sharedBitmapDC()
 }
  
 //////////////////////////////////////////////////////////////////////////
-// Implement CCImage
+// Implement Image
 //////////////////////////////////////////////////////////////////////////
 
-CCImage::CCImage()
-: m_nWidth(0)
-, m_nHeight(0)
-, m_nBitsPerComponent(0)
-, m_pData(0)
-, m_bHasAlpha(false)
-, m_bPreMulti(false)
+Image::Image()
+: _width(0)
+, _height(0)
+, _bitsPerComponent(0)
+, _data(0)
+, _hasAlpha(false)
+, _preMulti(false)
 {
 	
 }
 
-CCImage::~CCImage()
+Image::~Image()
 {
-    CC_SAFE_DELETE_ARRAY(m_pData);
+    CC_SAFE_DELETE_ARRAY(_data);
 }
-bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
+bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
 {
 	IW_CALLSTACK("UIImage::initWithImageFile");
     bool bRet = false;
     unsigned long nSize = 0;
-    unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(strPath, "rb", &nSize);
+    unsigned char* pBuffer = FileUtils::sharedFileUtils()->getFileData(strPath, "rb", &nSize);
     if (pBuffer != NULL && nSize > 0)
     {
         bRet = initWithImageData(pBuffer, nSize, eImgFmt);
@@ -531,12 +531,12 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
     return bRet;
 }
 
-bool CCImage::initWithImageFileThreadSafe( const char *fullpath, EImageFormat imageType /*= kFmtPng*/ )
+bool Image::initWithImageFileThreadSafe( const char *fullpath, EImageFormat imageType /*= kFmtPng*/ )
 {
 	CC_UNUSED_PARAM(imageType);
     bool bRet = false;
     unsigned long nSize = 0;
-    unsigned char *pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullpath, "rb", &nSize);
+    unsigned char *pBuffer = FileUtils::sharedFileUtils()->getFileData(fullpath, "rb", &nSize);
     if (pBuffer != NULL && nSize > 0)
     {
         bRet = initWithImageData(pBuffer, nSize, imageType);
@@ -545,7 +545,7 @@ bool CCImage::initWithImageFileThreadSafe( const char *fullpath, EImageFormat im
     return bRet;
 }
 
-bool CCImage::initWithImageData(void * pData, 
+bool Image::initWithImageData(void * pData, 
 								int nDataLen, 
 								EImageFormat eFmt,
 								int nWidth,
@@ -579,7 +579,7 @@ bool CCImage::initWithImageData(void * pData,
         }
         else if (kFmtRawData == eFmt)
         {
-            bRet = _initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent);
+            bRet = initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false);
             break;
         }
         else
@@ -631,7 +631,7 @@ bool CCImage::initWithImageData(void * pData,
     return bRet;
 }
 
-bool CCImage::_initWithJpgData(void * data, int nSize)
+bool Image::_initWithJpgData(void * data, int nSize)
 {	
 	IW_CALLSTACK("CCImage::_initWithJpgData");
 
@@ -656,11 +656,11 @@ bool CCImage::_initWithJpgData(void * data, int nSize)
 
 		srcmgr.bytes_in_buffer = nSize;
 		srcmgr.next_input_byte = (JOCTET*) data;
-		srcmgr.init_source = CCImageHelper::JPEGInitSource;
-		srcmgr.fill_input_buffer = CCImageHelper::JPEGFillInputBuffer;
-		srcmgr.skip_input_data = CCImageHelper::JPEGSkipInputData;
+		srcmgr.init_source = ImageHelper::JPEGInitSource;
+		srcmgr.fill_input_buffer = ImageHelper::JPEGFillInputBuffer;
+		srcmgr.skip_input_data = ImageHelper::JPEGSkipInputData;
 		srcmgr.resync_to_restart = jpeg_resync_to_restart;
-		srcmgr.term_source = CCImageHelper::JPEGTermSource;
+		srcmgr.term_source = ImageHelper::JPEGTermSource;
 		cinfo.src = &srcmgr;
 //      jpeg_mem_src( &cinfo, (unsigned char *) data, nSize );
 
@@ -684,16 +684,16 @@ bool CCImage::_initWithJpgData(void * data, int nSize)
         jpeg_start_decompress( &cinfo );
 
         /* init image info */
-        m_nWidth  = (short)(cinfo.image_width);
-        m_nHeight = (short)(cinfo.image_height);
-		m_bHasAlpha = false;
-        m_bPreMulti = false;
-        m_nBitsPerComponent = 8;
+        _width  = (short)(cinfo.image_width);
+        _height = (short)(cinfo.image_height);
+		_hasAlpha = false;
+        _preMulti = false;
+        _bitsPerComponent = 8;
         row_pointer[0] = new unsigned char[cinfo.output_width*cinfo.output_components];
         CC_BREAK_IF(! row_pointer[0]);
 
-        m_pData = new unsigned char[cinfo.output_width*cinfo.output_height*cinfo.output_components];
-        CC_BREAK_IF(! m_pData);
+        _data = new unsigned char[cinfo.output_width*cinfo.output_height*cinfo.output_components];
+        CC_BREAK_IF(! _data);
 
         /* now actually read the jpeg into the raw buffer */
         /* read one scan line at a time */
@@ -702,7 +702,7 @@ bool CCImage::_initWithJpgData(void * data, int nSize)
             jpeg_read_scanlines( &cinfo, row_pointer, 1 );
             for( i=0; i<cinfo.image_width*cinfo.output_components;i++) 
             {
-                m_pData[location++] = row_pointer[0][i];
+                _data[location++] = row_pointer[0][i];
 			}
 		}
 
@@ -722,7 +722,7 @@ void userReadData(png_structp pngPtr, png_bytep data, png_size_t length) {
 }
 
 #define PNGSIGSIZE 8
-bool CCImage::_initWithPngData(void * pData, int nDatalen)
+bool Image::_initWithPngData(void * pData, int nDatalen)
 {
 	IW_CALLSTACK("CCImage::_initWithPngData");
 	
@@ -754,12 +754,12 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
 		return false;
 	
 	png_bytep* rowPtrs = NULL;
-	m_pData = NULL;
+	_data = NULL;
 	
 	if (setjmp(png_jmpbuf(pngPtr))) {
 		png_destroy_read_struct(&pngPtr, &infoPtr,(png_infopp)0);
 		if (rowPtrs != NULL) delete [] rowPtrs;
-		if (m_pData != NULL) delete [] m_pData;
+		if (_data != NULL) delete [] _data;
 		
 		CCLog("ERROR: An error occured while reading the PNG file");
 		
@@ -803,30 +803,30 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
 	png_read_update_info(pngPtr, infoPtr);
 	
 	// init image info
-	m_bPreMulti	= true;
+	_preMulti	= true;
 	
 	unsigned int bytesPerComponent = png_get_channels(pngPtr, infoPtr);
 	
-	m_bHasAlpha = (bytesPerComponent == 4 ? true : false);
+	_hasAlpha = (bytesPerComponent == 4 ? true : false);
 	
-	m_nHeight = (unsigned int)png_get_image_height(pngPtr, infoPtr);
-	m_nWidth = (unsigned int) png_get_image_width(pngPtr, infoPtr);
+	_height = (unsigned int)png_get_image_height(pngPtr, infoPtr);
+	_width = (unsigned int) png_get_image_width(pngPtr, infoPtr);
 	
-	m_nBitsPerComponent = (unsigned int)png_get_bit_depth(pngPtr, infoPtr);
+	_bitsPerComponent = (unsigned int)png_get_bit_depth(pngPtr, infoPtr);
 	
-	m_pData = new unsigned char[m_nHeight * m_nWidth * bytesPerComponent];
+	_data = new unsigned char[_height * _width * bytesPerComponent];
 	
-	unsigned int bytesPerRow = m_nWidth * bytesPerComponent;
+	unsigned int bytesPerRow = _width * bytesPerComponent;
 	
 	{
-		unsigned char *ptr = m_pData;
-		rowPtrs = new png_bytep[m_nHeight];
+		unsigned char *ptr = _data;
+		rowPtrs = new png_bytep[_height];
 				
-		for (int i = 0; i < m_nHeight; i++) {
+		for (int i = 0; i < _height; i++) {
 			
 			int q = (i) * bytesPerRow;
 			
-			rowPtrs[i] = (png_bytep)m_pData + q;
+			rowPtrs[i] = (png_bytep)_data + q;
 		}
 		
 		png_read_image(pngPtr, rowPtrs);
@@ -839,12 +839,12 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
 	}
 	
 	// premultiplay if alpha
-	if(m_bHasAlpha)
-		for(unsigned int i = 0; i < m_nHeight*bytesPerRow; i += bytesPerComponent){
-			*(m_pData + i + 0)	=  (*(m_pData + i + 0) * *(m_pData + i + 3) + 1) >> 8;
-			*(m_pData + i + 1)	=  (*(m_pData + i + 1) * *(m_pData + i + 3) + 1) >> 8;					
-			*(m_pData + i + 2)	=  (*(m_pData + i + 2) * *(m_pData + i + 3) + 1) >> 8;
-			*(m_pData + i + 3)	=   *(m_pData + i + 3);
+	if(_hasAlpha)
+		for(unsigned int i = 0; i < _height*bytesPerRow; i += bytesPerComponent){
+			*(_data + i + 0)	=  (*(_data + i + 0) * *(_data + i + 3) + 1) >> 8;
+			*(_data + i + 1)	=  (*(_data + i + 1) * *(_data + i + 3) + 1) >> 8;					
+			*(_data + i + 2)	=  (*(_data + i + 2) * *(_data + i + 3) + 1) >> 8;
+			*(_data + i + 3)	=   *(_data + i + 3);
 	}
 	
 
@@ -853,7 +853,7 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
     return bRet;
 }
 
-bool CCImage::initWithString(
+bool Image::initWithString(
 							 const char *    pText, 
 							 int             nWidth/* = 0*/, 
 							 int             nHeight/* = 0*/,
@@ -873,20 +873,20 @@ bool CCImage::initWithString(
     	std::transform(lowerCasePath.begin(), lowerCasePath.end(), lowerCasePath.begin(), ::tolower);
         
     	if ( lowerCasePath.find(".ttf") != std::string::npos ) {
-    		fullFontName = CCFileUtils::sharedFileUtils()->fullPathForFilename(pFontName);
+    		fullFontName = FileUtils::sharedFileUtils()->fullPathForFilename(pFontName);
     	}
 
 		CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, fullFontName.c_str(), nSize));
 
-		// assign the dc.m_pData to m_pData in order to save time
-		m_pData = dc.m_pData;
-		CC_BREAK_IF(! m_pData);
+		// assign the dc._data to _data in order to save time
+		_data = dc._data;
+		CC_BREAK_IF(! _data);
 
-		m_nWidth = (short)dc.m_iMaxLineWidth;
-		m_nHeight = (short)dc.m_iMaxLineHeight;
-		m_bHasAlpha = true;
-		m_bPreMulti = true;
-		m_nBitsPerComponent = 8;
+		_width = (short)dc._maxLineWidth;
+		_height = (short)dc._maxLineHeight;
+		_hasAlpha = true;
+		_preMulti = true;
+		_bitsPerComponent = 8;
 
 		bRet = true;
 
@@ -1004,7 +1004,7 @@ static void _tiffUnmapProc(thandle_t fd, void* base, toff_t size)
     CC_UNUSED_PARAM(size);
 }
 
-bool CCImage::_initWithTiffData(void* pData, int nDataLen)
+bool Image::_initWithTiffData(void* pData, int nDataLen)
 {
     bool bRet = false;
     do 
@@ -1035,12 +1035,12 @@ bool CCImage::_initWithTiffData(void* pData, int nDataLen)
 
         npixels = w * h;
         
-        m_bHasAlpha = true;
-        m_nWidth = w;
-        m_nHeight = h;
-        m_nBitsPerComponent = 8;
+        _hasAlpha = true;
+        _width = w;
+        _height = h;
+        _bitsPerComponent = 8;
 
-        m_pData = new unsigned char[npixels * sizeof (uint32)];
+        _data = new unsigned char[npixels * sizeof (uint32)];
 
         uint32* raster = (uint32*) _TIFFmalloc(npixels * sizeof (uint32));
         if (raster != NULL) 
@@ -1048,19 +1048,19 @@ bool CCImage::_initWithTiffData(void* pData, int nDataLen)
            if (TIFFReadRGBAImageOriented(tif, w, h, raster, ORIENTATION_TOPLEFT, 0))
            {
                 unsigned char* src = (unsigned char*)raster;
-                unsigned int* tmp = (unsigned int*)m_pData;
+                unsigned int* tmp = (unsigned int*)_data;
 
                 /* the raster data is pre-multiplied by the alpha component 
                    after invoking TIFFReadRGBAImageOriented
-                for(int j = 0; j < m_nWidth * m_nHeight * 4; j += 4)
+                for(int j = 0; j < _width * _height * 4; j += 4)
                 {
                     *tmp++ = CC_RGB_PREMULTIPLY_ALPHA( src[j], src[j + 1], 
                         src[j + 2], src[j + 3] );
                 }
                 */
-                m_bPreMulti = true;
+                _preMulti = true;
 
-               memcpy(m_pData, raster, npixels*sizeof (uint32));
+               memcpy(_data, raster, npixels*sizeof (uint32));
            }
 
           _TIFFfree(raster);
@@ -1074,43 +1074,43 @@ bool CCImage::_initWithTiffData(void* pData, int nDataLen)
     return bRet;
 }
 
-bool CCImage::_initWithRawData(void * pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent)
+bool Image::initWithRawData(void * pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti)
 {
     bool bRet = false;
     do 
     {
         CC_BREAK_IF(0 == nWidth || 0 == nHeight);
 
-        m_nBitsPerComponent = nBitsPerComponent;
-        m_nHeight   = (short)nHeight;
-        m_nWidth    = (short)nWidth;
-        m_bHasAlpha = true;
+        _bitsPerComponent = nBitsPerComponent;
+        _height   = (short)nHeight;
+        _width    = (short)nWidth;
+        _hasAlpha = true;
 
         // only RGBA8888 supported
         int nBytesPerComponent = 4;
         int nSize = nHeight * nWidth * nBytesPerComponent;
-        m_pData = new unsigned char[nSize];
-        CC_BREAK_IF(! m_pData);
-        memcpy(m_pData, pData, nSize);
+        _data = new unsigned char[nSize];
+        CC_BREAK_IF(! _data);
+        memcpy(_data, pData, nSize);
 
         bRet = true;
     } while (0);
     return bRet;
 }
 
-bool CCImage::saveToFile(const char *pszFilePath, bool bIsToRGB)
+bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
 {
 	// todo
 	return false;
 }
 
-bool CCImage::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
+bool Image::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
 {
 	// todo
 	return false;
 }
 
-bool CCImage::_saveImageToJPG(const char * pszFilePath)
+bool Image::_saveImageToJPG(const char * pszFilePath)
 {
 	// todo
 	return false;

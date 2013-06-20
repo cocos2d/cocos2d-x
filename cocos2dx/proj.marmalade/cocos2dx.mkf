@@ -188,6 +188,11 @@ files
 	[support/zip_support]
 	"*.h"
 	"*.cpp"
+    
+    ("../support/component")
+	[support/component]
+	"*.h"
+	"*.cpp"
 	
 	("../text_input_node")
 	[text_input_node]

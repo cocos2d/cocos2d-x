@@ -32,8 +32,8 @@
 #include "CCPlatformDefine.h"
 
 /**
- * define a create function for a specific type, such as CCLayer
- * @__TYPE__ class type to add create(), such as CCLayer
+ * define a create function for a specific type, such as Layer
+ * @__TYPE__ class type to add create(), such as Layer
  */
 #define CREATE_FUNC(__TYPE__) \
 static __TYPE__* create() \
@@ -53,8 +53,8 @@ static __TYPE__* create() \
 }
 
 /**
- * define a node function for a specific type, such as CCLayer
- * @__TYPE__ class type to add node(), such as CCLayer
+ * define a node function for a specific type, such as Layer
+ * @__TYPE__ class type to add node(), such as Layer
  * @deprecated: This interface will be deprecated sooner or later.
  */
 #define NODE_FUNC(__TYPE__) \
@@ -76,11 +76,12 @@ CC_DEPRECATED_ATTRIBUTE static __TYPE__* node() \
 
 /** @def CC_ENABLE_CACHE_TEXTURE_DATA
 Enable it if you want to cache the texture data.
-Basically, it's only enabled for Emscripten.
+Not enabling for Emscripten any more -- doesn't seem necessary and don't want
+to be different from other platforms unless there's a good reason.
 
 It's new in cocos2d-x since v0.99.5
 */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN)
+#if 0
     #define CC_ENABLE_CACHE_TEXTURE_DATA       1
 #else
     #define CC_ENABLE_CACHE_TEXTURE_DATA       0
@@ -119,11 +120,11 @@ It's new in cocos2d-x since v0.99.5
  */
 #define CC_PROPERTY_READONLY(varType, varName, funName)\
 protected: varType varName;\
-public: virtual varType get##funName(void);
+public: virtual varType get##funName(void) const;
 
 #define CC_PROPERTY_READONLY_PASS_BY_REF(varType, varName, funName)\
 protected: varType varName;\
-public: virtual const varType& get##funName(void);
+public: virtual const varType& get##funName(void) const;
 
 /** CC_PROPERTY is used to declare a protected variable.
  We can use getter to read the variable, and use the setter to change the variable.
@@ -204,7 +205,7 @@ public: virtual void set##funName(varType var)   \
 #define CC_BREAK_IF(cond)            if(cond) break
 
 #define __CCLOGWITHFUNCTION(s, ...) \
-    CCLog("%s : %s",__FUNCTION__, CCString::createWithFormat(s, ##__VA_ARGS__)->getCString())
+    CCLog("%s : %s",__FUNCTION__, String::createWithFormat(s, ##__VA_ARGS__)->getCString())
 
 // cocos2d debug
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0

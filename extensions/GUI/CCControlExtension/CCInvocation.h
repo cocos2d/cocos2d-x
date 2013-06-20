@@ -25,7 +25,7 @@
  */
 /*
  *
- * Helper class to store targets and selectors (and eventually, params?) in the same CCMutableArray. Basically a very crude form of a NSInvocation
+ * Helper class to store targets and selectors (and eventually, params?) in the same MutableArray. Basically a very crude form of a NSInvocation
  */
 #ifndef __CCINVOCATION_H__
 #define __CCINVOCATION_H__
@@ -42,23 +42,23 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-typedef unsigned int CCControlEvent;
+typedef unsigned int ControlEvent;
 
-typedef void (CCObject::*SEL_CCControlHandler)(CCObject*, CCControlEvent);
+typedef void (Object::*SEL_CCControlHandler)(Object*, ControlEvent);
 
 #define cccontrol_selector(_SELECTOR) (SEL_CCControlHandler)(&_SELECTOR)
 
-class CCInvocation : public CCObject
+class Invocation : public Object
 {
-    CC_SYNTHESIZE_READONLY(SEL_CCControlHandler, m_action, Action);
-    CC_SYNTHESIZE_READONLY(CCObject*, m_target, Target);
-    CC_SYNTHESIZE_READONLY(CCControlEvent, m_controlEvent, ControlEvent);
+    CC_SYNTHESIZE_READONLY(SEL_CCControlHandler, _action, Action);
+    CC_SYNTHESIZE_READONLY(Object*, _target, Target);
+    CC_SYNTHESIZE_READONLY(ControlEvent, _controlEvent, ControlEvent);
     
 public:
-    static CCInvocation* create(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvent);
-    CCInvocation(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvent);
+    static Invocation* create(Object* target, SEL_CCControlHandler action, ControlEvent controlEvent);
+    Invocation(Object* target, SEL_CCControlHandler action, ControlEvent controlEvent);
 
-    void invoke(CCObject* sender);
+    void invoke(Object* sender);
 };
 
 // end of GUI group

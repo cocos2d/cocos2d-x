@@ -10,25 +10,25 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL CCInteger : public CCObject
+class CC_DLL Integer : public Object
 {
 public:
-    CCInteger(int v)
-        : m_nValue(v) {}
-    int getValue() const {return m_nValue;}
+    Integer(int v)
+        : _value(v) {}
+    int getValue() const {return _value;}
 
-    static CCInteger* create(int v)
+    static Integer* create(int v)
     {
-        CCInteger* pRet = new CCInteger(v);
+        Integer* pRet = new Integer(v);
         pRet->autorelease();
         return pRet;
     }
 
     /* override functions */
-    virtual void acceptVisitor(CCDataVisitor &visitor) { visitor.visit(this); }
+    virtual void acceptVisitor(DataVisitor &visitor) { visitor.visit(this); }
 
 private:
-    int m_nValue;
+    int _value;
 };
 
 // end of data_structure group

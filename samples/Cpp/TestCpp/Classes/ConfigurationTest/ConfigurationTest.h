@@ -2,6 +2,7 @@
 #define __CONFIGURATIONTEST_H__
 
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
 USING_NS_CC;
 
@@ -15,7 +16,7 @@ public:
     virtual void runThisTest();
 };
 
-class ConfigurationBase : public CCLayer
+class ConfigurationBase : public BaseTest
 {
 protected:
 
@@ -26,9 +27,9 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 
-    void restartCallback(CCObject* pSender);
-    void nextCallback(CCObject* pSender);
-    void backCallback(CCObject* pSender);
+    void restartCallback(Object* pSender);
+    void nextCallback(Object* pSender);
+    void backCallback(Object* pSender);
 };
 
 class ConfigurationLoadConfig : public ConfigurationBase
@@ -44,5 +45,27 @@ public:
     virtual void onEnter();
     virtual std::string subtitle();
 };
+
+class ConfigurationInvalid : public ConfigurationBase
+{
+public:
+    virtual void onEnter();
+    virtual std::string subtitle();
+};
+
+class ConfigurationDefault : public ConfigurationBase
+{
+public:
+    virtual void onEnter();
+    virtual std::string subtitle();
+};
+
+class ConfigurationSet : public ConfigurationBase
+{
+public:
+    virtual void onEnter();
+    virtual std::string subtitle();
+};
+
 
 #endif // __CONFIGURATIONTEST_H__

@@ -35,7 +35,7 @@ NS_CC_BEGIN
 
 enum {
     //! Default tag
-    kCCActionTagInvalid = -1,
+    kActionTagInvalid = -1,
 };
 
 /**
@@ -44,23 +44,25 @@ enum {
  */
 
 /** 
-@brief Base class for CCAction objects.
+@brief Base class for Action objects.
  */
-class CC_DLL CCAction : public CCObject 
+class CC_DLL Action : public Clonable, public Object
 {
 public:
-    CCAction(void);
-    virtual ~CCAction(void);
+    Action(void);
+
+    virtual ~Action(void);
 
     const char* description();
 
-    virtual CCObject* copyWithZone(CCZone *pZone);
+	/** returns a clone of action */
+	virtual Action* clone() const = 0;
 
     //! return true if the action has finished
     virtual bool isDone(void);
 
     //! called before the action start. It will also set the target.
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(Node *pTarget);
 
     /** 
     called after the action has finished. It will set the 'target' to nil.
@@ -81,34 +83,33 @@ public:
     */
     virtual void update(float time);
     
-    inline CCNode* getTarget(void) { return m_pTarget; }
+    inline Node* getTarget(void) { return _target; }
     /** The action will modify the target properties. */
-    inline void setTarget(CCNode *pTarget) { m_pTarget = pTarget; }
+    inline void setTarget(Node *pTarget) { _target = pTarget; }
     
-    inline CCNode* getOriginalTarget(void) { return m_pOriginalTarget; } 
+    inline Node* getOriginalTarget(void) { return _originalTarget; } 
     /** Set the original target, since target can be nil.
-    Is the target that were used to run the action. Unless you are doing something complex, like CCActionManager, you should NOT call this method.
+    Is the target that were used to run the action. Unless you are doing something complex, like ActionManager, you should NOT call this method.
     The target is 'assigned', it is not 'retained'.
     @since v0.8.2
     */
-    inline void setOriginalTarget(CCNode *pOriginalTarget) { m_pOriginalTarget = pOriginalTarget; }
+    inline void setOriginalTarget(Node *pOriginalTarget) { _originalTarget = pOriginalTarget; }
 
-    inline int getTag(void) { return m_nTag; }
-    inline void setTag(int nTag) { m_nTag = nTag; }
+    inline int getTag(void) { return _tag; }
+    inline void setTag(int nTag) { _tag = nTag; }
 
 public:
-    /** Create an action */
-    static CCAction* create();
+
 protected:
-    CCNode    *m_pOriginalTarget;
+    Node    *_originalTarget;
     /** The "target".
     The target will be set with the 'startWithTarget' method.
     When the 'stop' method is called, target will be set to nil.
     The target is 'assigned', it is not 'retained'.
     */
-    CCNode    *m_pTarget;
+    Node    *_target;
     /** The action tag. An identifier of the action */
-    int     m_nTag;
+    int     _tag;
 };
 
 /** 
@@ -120,131 +121,142 @@ protected:
 
  Infinite time actions are valid
  */
-class CC_DLL CCFiniteTimeAction : public CCAction
+class CC_DLL FiniteTimeAction : public Action
 {
 public:
-    CCFiniteTimeAction()
-        : m_fDuration(0)
+    FiniteTimeAction()
+	: _duration(0)
     {}
-    virtual ~CCFiniteTimeAction(){}
+    virtual ~FiniteTimeAction(){}
     //! get duration in seconds of the action
-    inline float getDuration(void) { return m_fDuration; }
+    inline float getDuration(void) { return _duration; }
     //! set duration in seconds of the action
-    inline void setDuration(float duration) { m_fDuration = duration; }
+    inline void setDuration(float duration) { _duration = duration; }
 
-    /** returns a reversed action */
-    virtual CCFiniteTimeAction* reverse(void);
+    /** returns a new reversed action */
+    virtual FiniteTimeAction* reverse() const = 0;
+
+	/** returns a clone of action */
+	virtual FiniteTimeAction* clone() const = 0;
+
 protected:
     //! duration in seconds
-    float m_fDuration;
+    float _duration;
 };
 
-class CCActionInterval;
-class CCRepeatForever;
+class ActionInterval;
+class RepeatForever;
 
 /** 
  @brief Changes the speed of an action, making it take longer (speed>1)
  or less (speed<1) time.
  Useful to simulate 'slow motion' or 'fast forward' effect.
- @warning This action can't be Sequenceable because it is not an CCIntervalAction
+ @warning This action can't be Sequenceable because it is not an IntervalAction
  */
-class CC_DLL CCSpeed : public CCAction
+class CC_DLL Speed : public Action
 {
 public:
-    CCSpeed()
-        : m_fSpeed(0.0)
-        , m_pInnerAction(NULL)
-    {}
-    virtual ~CCSpeed(void);
+    Speed();
+    virtual ~Speed(void);
 
-    inline float getSpeed(void) { return m_fSpeed; }
+    inline float getSpeed(void) { return _speed; }
     /** alter the speed of the inner function in runtime */
-    inline void setSpeed(float fSpeed) { m_fSpeed = fSpeed; }
+    inline void setSpeed(float fSpeed) { _speed = fSpeed; }
 
     /** initializes the action */
-    bool initWithAction(CCActionInterval *pAction, float fSpeed);
+    bool initWithAction(ActionInterval *pAction, float fSpeed);
 
-    virtual CCObject* copyWithZone(CCZone *pZone);
-    virtual void startWithTarget(CCNode* pTarget);
+    virtual Object* copyWithZone(Zone *pZone);
+
+	/** returns a new clone of the action */
+	virtual Speed* clone() const;
+    /** returns a new reversed action */
+    virtual Speed* reverse(void) const;
+
+    virtual void startWithTarget(Node* pTarget);
     virtual void stop();
     virtual void step(float dt);
     virtual bool isDone(void);
-    virtual CCActionInterval* reverse(void);
 
-    void setInnerAction(CCActionInterval *pAction);
+    void setInnerAction(ActionInterval *pAction);
 
-    inline CCActionInterval* getInnerAction()
+    inline ActionInterval* getInnerAction()
     {
-        return m_pInnerAction;
+        return _innerAction;
     }
 
 public:
     /** create the action */
-    static CCSpeed* create(CCActionInterval* pAction, float fSpeed);
+    static Speed* create(ActionInterval* pAction, float fSpeed);
 protected:
-    float m_fSpeed;
-    CCActionInterval *m_pInnerAction;
+    float _speed;
+    ActionInterval *_innerAction;
 };
 
 /** 
-@brief CCFollow is an action that "follows" a node.
+@brief Follow is an action that "follows" a node.
 
 Eg:
-layer->runAction(CCFollow::actionWithTarget(hero));
+layer->runAction(Follow::actionWithTarget(hero));
 
-Instead of using CCCamera as a "follower", use this action instead.
+Instead of using Camera as a "follower", use this action instead.
 @since v0.99.2
 */
-class CC_DLL CCFollow : public CCAction
+class CC_DLL Follow : public Action
 {
 public:
-    CCFollow()
-        : m_pobFollowedNode(NULL)
-        , m_bBoundarySet(false)
-        , m_bBoundaryFullyCovered(false)        
-        , m_fLeftBoundary(0.0)
-        , m_fRightBoundary(0.0)
-        , m_fTopBoundary(0.0)
-        , m_fBottomBoundary(0.0)
+    Follow()
+		: _followedNode(NULL)
+        , _boundarySet(false)
+        , _boundaryFullyCovered(false)        
+        , _leftBoundary(0.0)
+        , _rightBoundary(0.0)
+        , _topBoundary(0.0)
+        , _bottomBoundary(0.0)
+		, _worldRect(RectZero)
     {}
-    virtual ~CCFollow(void);
+    virtual ~Follow(void);
     
-    inline bool isBoundarySet(void) { return m_bBoundarySet; }
+    inline bool isBoundarySet(void) { return _boundarySet; }
     /** alter behavior - turn on/off boundary */
-    inline void setBoudarySet(bool bValue) { m_bBoundarySet = bValue; }
+    inline void setBoudarySet(bool bValue) { _boundarySet = bValue; }
 
     /** initializes the action with a set boundary */
-    bool initWithTarget(CCNode *pFollowedNode, const CCRect& rect = CCRectZero);
+    bool initWithTarget(Node *pFollowedNode, const Rect& rect = RectZero);
 
-    virtual CCObject* copyWithZone(CCZone *pZone);
+    virtual Object* copyWithZone(Zone *pZone);
+	/** returns a clone of action */
+	virtual Follow* clone() const;
     virtual void step(float dt);
     virtual bool isDone(void);
     virtual void stop(void);
 
 public:
     /** creates the action with a set boundary,
-    It will work with no boundary if @param rect is equal to CCRectZero.
+    It will work with no boundary if @param rect is equal to RectZero.
     */
-    static CCFollow* create(CCNode *pFollowedNode, const CCRect& rect = CCRectZero);
+    static Follow* create(Node *pFollowedNode, const Rect& rect = RectZero);
 protected:
     // node to follow
-    CCNode *m_pobFollowedNode;
+    Node *_followedNode;
 
     // whether camera should be limited to certain area
-    bool m_bBoundarySet;
+    bool _boundarySet;
 
     // if screen size is bigger than the boundary - update not needed
-    bool m_bBoundaryFullyCovered;
+    bool _boundaryFullyCovered;
 
     // fast access to the screen dimensions
-    CCPoint m_obHalfScreenSize;
-    CCPoint m_obFullScreenSize;
+    Point _halfScreenSize;
+    Point _fullScreenSize;
 
     // world boundaries
-    float m_fLeftBoundary;
-    float m_fRightBoundary;
-    float m_fTopBoundary;
-    float m_fBottomBoundary;
+    float _leftBoundary;
+    float _rightBoundary;
+    float _topBoundary;
+    float _bottomBoundary;
+	Rect _worldRect;
+
 };
 
 // end of actions group

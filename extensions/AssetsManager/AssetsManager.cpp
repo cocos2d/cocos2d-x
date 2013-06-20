@@ -140,7 +140,7 @@ bool AssetsManager::checkUpdate()
         return false;
     }
     
-    string recordedVersion = CCUserDefault::sharedUserDefault()->getStringForKey(KEY_OF_VERSION);
+    string recordedVersion = UserDefault::sharedUserDefault()->getStringForKey(KEY_OF_VERSION);
     if (recordedVersion == _version)
     {
         sendErrorMessage(kNoNewVersion);
@@ -213,7 +213,7 @@ void AssetsManager::update()
     if (! checkUpdate()) return;
     
     // Is package already downloaded?
-    _downloadedVersion = CCUserDefault::sharedUserDefault()->getStringForKey(KEY_OF_DOWNLOADED_VERSION);
+    _downloadedVersion = UserDefault::sharedUserDefault()->getStringForKey(KEY_OF_DOWNLOADED_VERSION);
     
     _tid = new pthread_t();
     pthread_create(&(*_tid), NULL, assetsManagerDownloadAndUncompress, this);
@@ -370,10 +370,10 @@ bool AssetsManager::createDirectory(const char *path)
 
 void AssetsManager::setSearchPath()
 {
-    vector<string> searchPaths = CCFileUtils::sharedFileUtils()->getSearchPaths();
+    vector<string> searchPaths = FileUtils::sharedFileUtils()->getSearchPaths();
     vector<string>::iterator iter = searchPaths.begin();
     searchPaths.insert(iter, _storagePath);
-    CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
+    FileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
 }
 
 static size_t downLoadPackage(void *ptr, size_t size, size_t nmemb, void *userdata)
@@ -470,12 +470,12 @@ void AssetsManager::setVersionFileUrl(const char *versionFileUrl)
 
 string AssetsManager::getVersion()
 {
-    return CCUserDefault::sharedUserDefault()->getStringForKey(KEY_OF_VERSION);
+    return UserDefault::sharedUserDefault()->getStringForKey(KEY_OF_VERSION);
 }
 
 void AssetsManager::deleteVersion()
 {
-    CCUserDefault::sharedUserDefault()->setStringForKey(KEY_OF_VERSION, "");
+    UserDefault::sharedUserDefault()->setStringForKey(KEY_OF_VERSION, "");
 }
 
 void AssetsManager::setDelegate(AssetsManagerDelegateProtocol *delegate)
@@ -512,12 +512,12 @@ AssetsManager::Helper::Helper()
 {
     _messageQueue = new list<Message*>();
     pthread_mutex_init(&_messageQueueMutex, NULL);
-    CCDirector::sharedDirector()->getScheduler()->scheduleUpdateForTarget(this, 0, false);
+    Director::sharedDirector()->getScheduler()->scheduleUpdateForTarget(this, 0, false);
 }
 
 AssetsManager::Helper::~Helper()
 {
-    CCDirector::sharedDirector()->getScheduler()->unscheduleAllForTarget(this);
+    Director::sharedDirector()->getScheduler()->unscheduleAllForTarget(this);
     delete _messageQueue;
 }
 
@@ -551,9 +551,9 @@ void AssetsManager::Helper::update(float dt)
             
             break;
         case ASSETSMANAGER_MESSAGE_RECORD_DOWNLOADED_VERSION:
-            CCUserDefault::sharedUserDefault()->setStringForKey(KEY_OF_DOWNLOADED_VERSION,
+            UserDefault::sharedUserDefault()->setStringForKey(KEY_OF_DOWNLOADED_VERSION,
                                                                 ((AssetsManager*)msg->obj)->_version.c_str());
-            CCUserDefault::sharedUserDefault()->flush();
+            UserDefault::sharedUserDefault()->flush();
             
             break;
         case ASSETSMANAGER_MESSAGE_PROGRESS:
@@ -587,11 +587,11 @@ void AssetsManager::Helper::handleUpdateSucceed(Message *msg)
     AssetsManager* manager = (AssetsManager*)msg->obj;
     
     // Record new version code.
-    CCUserDefault::sharedUserDefault()->setStringForKey(KEY_OF_VERSION, manager->_version.c_str());
+    UserDefault::sharedUserDefault()->setStringForKey(KEY_OF_VERSION, manager->_version.c_str());
     
     // Unrecord downloaded version code.
-    CCUserDefault::sharedUserDefault()->setStringForKey(KEY_OF_DOWNLOADED_VERSION, "");
-    CCUserDefault::sharedUserDefault()->flush();
+    UserDefault::sharedUserDefault()->setStringForKey(KEY_OF_DOWNLOADED_VERSION, "");
+    UserDefault::sharedUserDefault()->flush();
     
     // Set resource search path.
     manager->setSearchPath();

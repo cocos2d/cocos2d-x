@@ -8,7 +8,7 @@
 
 using namespace cocos2d;
 
-JSBool jsval_to_CCPoint( JSContext *cx, jsval vp, CCPoint *ret )
+JSBool jsval_to_CCPoint( JSContext *cx, jsval vp, Point *ret )
 {
 #ifdef JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
     
@@ -48,7 +48,7 @@ JSBool jsval_to_CCPoint( JSContext *cx, jsval vp, CCPoint *ret )
 	
 	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg, cx ) == sizeof(cpVect), "Invalid length");
 	
-	*ret = *(CCPoint*)JS_GetArrayBufferViewData( tmp_arg, cx );
+	*ret = *(Point*)JS_GetArrayBufferViewData( tmp_arg, cx );
 	
 	return JS_TRUE;
 #endif // #! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES

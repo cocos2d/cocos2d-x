@@ -50,96 +50,99 @@ NS_CC_BEGIN
  */
 typedef enum {
     /// sets a 2D projection (orthogonal projection)
-    kCCDirectorProjection2D,
+    kDirectorProjection2D,
     
     /// sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.
-    kCCDirectorProjection3D,
+    kDirectorProjection3D,
     
     /// it calls "updateProjection" on the projection delegate.
-    kCCDirectorProjectionCustom,
+    kDirectorProjectionCustom,
     
     /// Default projection is 3D projection
-    kCCDirectorProjectionDefault = kCCDirectorProjection3D,
+    kDirectorProjectionDefault = kDirectorProjection3D,
 } ccDirectorProjection;
 
 /* Forward declarations. */
-class CCLabelAtlas;
-class CCScene;
-class CCEGLView;
-class CCDirectorDelegate;
-class CCNode;
-class CCScheduler;
-class CCActionManager;
-class CCTouchDispatcher;
-class CCKeypadDispatcher;
-class CCAccelerometer;
+class LabelAtlas;
+class Scene;
+class EGLView;
+class DirectorDelegate;
+class Node;
+class Scheduler;
+class ActionManager;
+class TouchDispatcher;
+#ifdef KEYBOARD_SUPPORT
+class KeyboardDispatcher;
+#endif
+class KeypadDispatcher;
+class Accelerometer;
 
 /**
 @brief Class that creates and handle the main Window and manages how
 and when to execute the Scenes.
  
- The CCDirector is also responsible for:
+ The Director is also responsible for:
   - initializing the OpenGL context
   - setting the OpenGL pixel format (default on is RGB565)
   - setting the OpenGL buffer depth (default one is 0-bit)
   - setting the projection (default one is 3D)
   - setting the orientation (default one is Portrait)
  
- Since the CCDirector is a singleton, the standard way to use it is by calling:
-  _ CCDirector::sharedDirector()->methodName();
+ Since the Director is a singleton, the standard way to use it is by calling:
+  _ Director::sharedDirector()->methodName();
  
- The CCDirector also sets the default OpenGL context:
+ The Director also sets the default OpenGL context:
   - GL_TEXTURE_2D is enabled
   - GL_VERTEX_ARRAY is enabled
   - GL_COLOR_ARRAY is enabled
   - GL_TEXTURE_COORD_ARRAY is enabled
 */
-class CC_DLL CCDirector : public CCObject, public TypeInfo
+class CC_DLL Director : public Object, public TypeInfo
 {
 public:
-    CCDirector(void);
-    virtual ~CCDirector(void);
+    Director(void);
+    virtual ~Director(void);
     virtual bool init(void);
     virtual long getClassTypeInfo() {
-		static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CCDirector).name());
+		static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::Director).name());
 		return id;
     }
 
     // attribute
 
     /** Get current running Scene. Director can only run one Scene at the time */
-    inline CCScene* getRunningScene(void) { return m_pRunningScene; }
+    inline Scene* getRunningScene(void) { return _runningScene; }
 
     /** Get the FPS value */
-    inline double getAnimationInterval(void) { return m_dAnimationInterval; }
+    inline double getAnimationInterval(void) { return _animationInterval; }
     /** Set the FPS value. */
     virtual void setAnimationInterval(double dValue) = 0;
 
     /** Whether or not to display the FPS on the bottom-left corner */
-    inline bool isDisplayStats(void) { return m_bDisplayStats; }
+    inline bool isDisplayStats(void) { return _displayStats; }
     /** Display the FPS on the bottom-left corner */
-    inline void setDisplayStats(bool bDisplayStats) { m_bDisplayStats = bDisplayStats; }
+    inline void setDisplayStats(bool bDisplayStats) { _displayStats = bDisplayStats; }
     
     /** seconds per frame */
-    inline float getSecondsPerFrame() { return m_fSecondsPerFrame; }
+    inline float getSecondsPerFrame() { return _secondsPerFrame; }
 
-    /** Get the CCEGLView, where everything is rendered */
-    inline CCEGLView* getOpenGLView(void) { return m_pobOpenGLView; }
-    void setOpenGLView(CCEGLView *pobOpenGLView);
+    /** Get the EGLView, where everything is rendered */
+    inline EGLView* getOpenGLView(void) { return _openGLView; }
+    void setOpenGLView(EGLView *pobOpenGLView);
 
-    inline bool isNextDeltaTimeZero(void) { return m_bNextDeltaTimeZero; }
+    inline bool isNextDeltaTimeZero(void) { return _nextDeltaTimeZero; }
     void setNextDeltaTimeZero(bool bNextDeltaTimeZero);
 
     /** Whether or not the Director is paused */
-    inline bool isPaused(void) { return m_bPaused; }
+    inline bool isPaused(void) { return _paused; }
 
     /** How many frames were called since the director started */
-    inline unsigned int getTotalFrames(void) { return m_uTotalFrames; }
+    inline unsigned int getTotalFrames(void) { return _totalFrames; }
     
     /** Sets an OpenGL projection
      @since v0.8.2
      */
-    inline ccDirectorProjection getProjection(void) { return m_eProjection; }
+    inline ccDirectorProjection getProjection(void) { return _projection; }
     void setProjection(ccDirectorProjection kProjection);
     
     /** Sets the glViewport*/
@@ -153,51 +156,51 @@ public:
      If the new scene replaces the old one, the it will receive the "cleanup" message.
      @since v0.99.0
      */
-    inline bool isSendCleanupToScene(void) { return m_bSendCleanupToScene; }
+    inline bool isSendCleanupToScene(void) { return _sendCleanupToScene; }
 
     /** This object will be visited after the main scene is visited.
      This object MUST implement the "visit" selector.
-     Useful to hook a notification object, like CCNotifications (http://github.com/manucorporat/CCNotifications)
+     Useful to hook a notification object, like Notifications (http://github.com/manucorporat/CCNotifications)
      @since v0.99.5
      */
-    CCNode* getNotificationNode();
-    void setNotificationNode(CCNode *node);
+    Node* getNotificationNode();
+    void setNotificationNode(Node *node);
     
-    /** CCDirector delegate. It shall implemente the CCDirectorDelegate protocol
+    /** Director delegate. It shall implemente the DirectorDelegate protocol
      @since v0.99.5
      */
-    CCDirectorDelegate* getDelegate() const;
-    void setDelegate(CCDirectorDelegate* pDelegate);
+    DirectorDelegate* getDelegate() const;
+    void setDelegate(DirectorDelegate* pDelegate);
 
     // window size
 
     /** returns the size of the OpenGL view in points.
     */
-    CCSize getWinSize(void);
+    Size getWinSize(void);
 
     /** returns the size of the OpenGL view in pixels.
     */
-    CCSize getWinSizeInPixels(void);
+    Size getWinSizeInPixels(void);
     
     /** returns visible size of the OpenGL view in points.
      *  the value is equal to getWinSize if don't invoke
-     *  CCEGLView::setDesignResolutionSize()
+     *  EGLView::setDesignResolutionSize()
      */
-    CCSize getVisibleSize();
+    Size getVisibleSize();
     
     /** returns visible origin of the OpenGL view in points.
      */
-    CCPoint getVisibleOrigin();
+    Point getVisibleOrigin();
 
     /** converts a UIKit coordinate to an OpenGL coordinate
      Useful to convert (multi) touch coordinates to the current layout (portrait or landscape)
      */
-    CCPoint convertToGL(const CCPoint& obPoint);
+    Point convertToGL(const Point& obPoint);
 
     /** converts an OpenGL coordinate to a UIKit coordinate
      Useful to convert node points to window points for calls such as glScissor
      */
-    CCPoint convertToUI(const CCPoint& obPoint);
+    Point convertToUI(const Point& obPoint);
 
     /// XXX: missing description 
     float getZEye(void);
@@ -210,14 +213,14 @@ public:
      *
      * It will call pushScene: and then it will call startAnimation
      */
-    void runWithScene(CCScene *pScene);
+    void runWithScene(Scene *pScene);
 
     /** Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
      * The new scene will be executed.
      * Try to avoid big stacks of pushed scenes to reduce memory allocation. 
      * ONLY call it if there is a running scene.
      */
-    void pushScene(CCScene *pScene);
+    void pushScene(Scene *pScene);
 
     /** Pops out a scene from the queue.
      * This scene will replace the running one.
@@ -242,7 +245,7 @@ public:
     /** Replaces the running scene with a new one. The running scene is terminated.
      * ONLY call it if there is a running scene.
      */
-    void replaceScene(CCScene *pScene);
+    void replaceScene(Scene *pScene);
 
     /** Ends the execution, releases the running scene.
      It doesn't remove the OpenGL view from its parent. You have to do it manually.
@@ -280,10 +283,13 @@ public:
     // Memory Helper
 
     /** Removes cached all cocos2d cached data.
-     It will purge the CCTextureCache, CCSpriteFrameCache, CCLabelBMFont cache
+     It will purge the TextureCache, SpriteFrameCache, LabelBMFont cache
      @since v0.99.3
      */
     void purgeCachedData(void);
+
+	/** sets the default values based on the Configuration info */
+    void setDefaultValues(void);
 
     // OpenGL Helper
 
@@ -307,42 +313,48 @@ public:
     float getContentScaleFactor(void);
 
 public:
-    /** CCScheduler associated with this director
+    /** Scheduler associated with this director
      @since v2.0
      */
-    CC_PROPERTY(CCScheduler*, m_pScheduler, Scheduler);
+    CC_PROPERTY(Scheduler*, _scheduler, Scheduler);
 
-    /** CCActionManager associated with this director
+    /** ActionManager associated with this director
      @since v2.0
      */
-    CC_PROPERTY(CCActionManager*, m_pActionManager, ActionManager);
+    CC_PROPERTY(ActionManager*, _actionManager, ActionManager);
 
-    /** CCTouchDispatcher associated with this director
+    /** TouchDispatcher associated with this director
      @since v2.0
      */
-    CC_PROPERTY(CCTouchDispatcher*, m_pTouchDispatcher, TouchDispatcher);
+    CC_PROPERTY(TouchDispatcher*, _touchDispatcher, TouchDispatcher);
 
-    /** CCKeypadDispatcher associated with this director
+#ifdef KEYBOARD_SUPPORT
+    /** KeyboardDispatcher associated with this director
+     @since v?.?
+     */
+    CC_PROPERTY(KeyboardDispatcher*, _keyboardDispatcher, KeyboardDispatcher);
+#endif
+    /** KeypadDispatcher associated with this director
      @since v2.0
      */
-    CC_PROPERTY(CCKeypadDispatcher*, m_pKeypadDispatcher, KeypadDispatcher);
+    CC_PROPERTY(KeypadDispatcher*, _keypadDispatcher, KeypadDispatcher);
 
-    /** CCAccelerometer associated with this director
+    /** Accelerometer associated with this director
      @since v2.0
      */
-    CC_PROPERTY(CCAccelerometer*, m_pAccelerometer, Accelerometer);
+    CC_PROPERTY(Accelerometer*, _accelerometer, Accelerometer);
 
     /* delta time since last tick to main loop */
-	CC_PROPERTY_READONLY(float, m_fDeltaTime, DeltaTime);
+	CC_PROPERTY_READONLY(float, _deltaTime, DeltaTime);
 	
 public:
     /** returns a shared instance of the director */
-    static CCDirector* sharedDirector(void);
+    static Director* sharedDirector(void);
 
 protected:
 
     void purgeDirector();
-    bool m_bPurgeDirecotorInNextLoop; // this flag will be set to true in end()
+    bool _purgeDirecotorInNextLoop; // this flag will be set to true in end()
     
     void setNextScene(void);
     
@@ -354,70 +366,70 @@ protected:
     /** calculates delta time since last time it was called */    
     void calculateDeltaTime();
 protected:
-    /* The CCEGLView, where everything is rendered */
-    CCEGLView    *m_pobOpenGLView;
+    /* The EGLView, where everything is rendered */
+    EGLView    *_openGLView;
 
-    double m_dAnimationInterval;
-    double m_dOldAnimationInterval;
+    double _animationInterval;
+    double _oldAnimationInterval;
 
     /* landscape mode ? */
-    bool m_bLandscape;
+    bool _landscape;
     
-    bool m_bDisplayStats;
-    float m_fAccumDt;
-    float m_fFrameRate;
+    bool _displayStats;
+    float _accumDt;
+    float _frameRate;
     
-    CCLabelAtlas *m_pFPSLabel;
-    CCLabelAtlas *m_pSPFLabel;
-    CCLabelAtlas *m_pDrawsLabel;
+    LabelAtlas *_FPSLabel;
+    LabelAtlas *_SPFLabel;
+    LabelAtlas *_drawsLabel;
     
     /** Whether or not the Director is paused */
-    bool m_bPaused;
+    bool _paused;
 
     /* How many frames were called since the director started */
-    unsigned int m_uTotalFrames;
-    unsigned int m_uFrames;
-    float m_fSecondsPerFrame;
+    unsigned int _totalFrames;
+    unsigned int _frames;
+    float _secondsPerFrame;
      
     /* The running scene */
-    CCScene *m_pRunningScene;
+    Scene *_runningScene;
     
     /* will be the next 'runningScene' in the next frame
      nextScene is a weak reference. */
-    CCScene *m_pNextScene;
+    Scene *_nextScene;
     
     /* If YES, then "old" scene will receive the cleanup message */
-    bool    m_bSendCleanupToScene;
+    bool    _sendCleanupToScene;
 
     /* scheduled scenes */
-    CCArray* m_pobScenesStack;
+    Array* _scenesStack;
     
     /* last time the main loop was updated */
-    struct cc_timeval *m_pLastUpdate;
+    struct cc_timeval *_lastUpdate;
 
     /* whether or not the next delta time will be zero */
-    bool m_bNextDeltaTimeZero;
+    bool _nextDeltaTimeZero;
     
     /* projection used */
-    ccDirectorProjection m_eProjection;
+    ccDirectorProjection _projection;
 
     /* window size in points */
-    CCSize    m_obWinSizeInPoints;
+    Size    _winSizeInPoints;
     
     /* content scale factor */
-    float    m_fContentScaleFactor;
+    float    _contentScaleFactor;
 
     /* store the fps string */
-    char *m_pszFPS;
+    char *_FPS;
 
     /* This object will be visited after the scene. Useful to hook a notification node */
-    CCNode *m_pNotificationNode;
+    Node *_notificationNode;
 
     /* Projection protocol delegate */
-    CCDirectorDelegate *m_pProjectionDelegate;
+    DirectorDelegate *_projectionDelegate;
     
-    // CCEGLViewProtocol will recreate stats labels to fit visible rect
-    friend class CCEGLViewProtocol;
+    // EGLViewProtocol will recreate stats labels to fit visible rect
+    friend class EGLViewProtocol;
 };
 
 /** 
@@ -429,11 +441,11 @@ protected:
  
  @since v0.8.2
  */
-class CCDisplayLinkDirector : public CCDirector
+class DisplayLinkDirector : public Director
 {
 public:
-    CCDisplayLinkDirector(void) 
-        : m_bInvalid(false)
+    DisplayLinkDirector(void) 
+        : _invalid(false)
     {}
 
     virtual void mainLoop(void);
@@ -442,7 +454,7 @@ public:
     virtual void stopAnimation();
 
 protected:
-    bool m_bInvalid;
+    bool _invalid;
 };
 
 // end of base_node group

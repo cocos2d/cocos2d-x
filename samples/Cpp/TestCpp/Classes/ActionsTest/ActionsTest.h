@@ -2,6 +2,7 @@
 #define _ActionsTest_H_
 
 #include "../testBasic.h"
+#include "../BaseTest.h"
 ////----#include "cocos2d.h"
 
 USING_NS_CC;
@@ -36,6 +37,7 @@ enum
     ACTION_ROTATEJERK_LAYER,
     ACTION_CALLFUNC_LAYER,
     ACTION_CALLFUNCND_LAYER,
+    ACTION_CALLFUNCTION_LAYER,
     ACTION_REVERSESEQUENCE_LAYER,
     ACTION_REVERSESEQUENCE2_LAYER,
     ACTION_ORBIT_LAYER,
@@ -62,12 +64,12 @@ public:
     virtual void runThisTest();
 };
 
-class ActionsDemo : public CCLayer
+class ActionsDemo : public BaseTest
 {
 protected:
-    CCSprite*    m_grossini;
-    CCSprite*    m_tamara;
-    CCSprite*    m_kathia;
+    Sprite*    _grossini;
+    Sprite*    _tamara;
+    Sprite*    _kathia;
 public:
     virtual void onEnter();
     virtual void onExit();
@@ -77,9 +79,9 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 
-    void restartCallback(CCObject* pSender);
-    void nextCallback(CCObject* pSender);
-    void backCallback(CCObject* pSender);
+    void restartCallback(Object* pSender);
+    void nextCallback(Object* pSender);
+    void backCallback(Object* pSender);
 };
 
 class ActionManual : public ActionsDemo
@@ -196,8 +198,8 @@ public:
     virtual std::string subtitle();
 
     void callback1();
-    void callback2(CCNode* sender);
-    void callback3(CCNode* sender, void* data);
+    void callback2(Node* sender);
+    void callback3(Node* sender, void* data);
 };
 
 class ActionSpawn : public ActionsDemo
@@ -262,7 +264,7 @@ public:
     virtual void onEnter();
     virtual std::string subtitle();
 
-    void repeatForever(CCNode* pTarget);
+    void repeatForever(Node* pTarget);
 };
 
 class ActionRotateToRepeat : public ActionsDemo
@@ -286,8 +288,8 @@ public:
     virtual std::string subtitle();
 
     void callback1();
-    void callback2(CCNode* pTarget);
-    void callback3(CCNode* pTarget, void* data);
+    void callback2(Node* pTarget);
+    void callback3(Node* pTarget, void* data);
 };
 
 class ActionCallFuncND : public ActionsDemo
@@ -296,8 +298,20 @@ public:
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
-    void removeFromParentAndCleanup(CCNode* pSender, void* data);
+    void removeFromParentAndCleanup(Node* pSender, void* data);
 };
+
+class ActionCallFunction : public ActionsDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string subtitle();
+
+    void callback1();
+    void callback2(Node* pTarget);
+    void callback3(Node* pTarget, void* data);
+};
+
 
 class ActionFollow : public ActionsDemo
 {
@@ -321,30 +335,30 @@ public:
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
-    virtual void addNewSpriteWithCoords(CCPoint p);
-    virtual void runActionsInSprite(CCSprite* sprite);
-    virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
+    virtual void addNewSpriteWithCoords(Point p);
+    virtual void runActionsInSprite(Sprite* sprite);
+    virtual void ccTouchesEnded(Set* touches, Event* event);
 };
 
 class ActionMoveStacked : public ActionStacked
 {
 public:
     virtual std::string title();
-    virtual void runActionsInSprite(CCSprite* sprite);
+    virtual void runActionsInSprite(Sprite* sprite);
 };
 
 class ActionMoveJumpStacked : public ActionStacked
 {
 public:
     virtual std::string title();
-    virtual void runActionsInSprite(CCSprite* sprite);
+    virtual void runActionsInSprite(Sprite* sprite);
 };
 
 class ActionMoveBezierStacked : public ActionStacked
 {
 public:
     virtual std::string title();
-    virtual void runActionsInSprite(CCSprite* sprite);
+    virtual void runActionsInSprite(Sprite* sprite);
 };
 
 class ActionCatmullRomStacked : public ActionsDemo
@@ -356,8 +370,8 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 private:
-    CCPointArray* _array1;
-    CCPointArray* _array2;
+    PointArray* _array1;
+    PointArray* _array2;
 };
 
 class ActionCardinalSplineStacked : public ActionsDemo
@@ -369,7 +383,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 private:
-    CCPointArray* _array;
+    PointArray* _array;
 };
 
 class Issue1305 : public ActionsDemo
@@ -377,12 +391,12 @@ class Issue1305 : public ActionsDemo
 public:
     virtual void onEnter();
     virtual void onExit();
-    void log(CCNode* pSender);
+    void log(Node* pSender);
     void addSprite(float dt);
     virtual std::string title();
     virtual std::string subtitle();
 private:
-    CCSprite* m_pSpriteTmp;
+    Sprite* _spriteTmp;
 };
 
 class Issue1305_2 : public ActionsDemo
@@ -419,19 +433,19 @@ public:
     virtual void onEnter();
     virtual std::string subtitle();
     virtual std::string title();
-    void logSprRotation(CCNode* pSender);
+    void logSprRotation(Node* pSender);
 };
 
 class Issue1398 : public ActionsDemo
 {
 public:
     void incrementInteger();
-    void incrementIntegerCallback(CCNode* pSender, void* data);
+    void incrementIntegerCallback(void* data);
     virtual void onEnter();
     virtual std::string subtitle();
     virtual std::string title();
 private:
-    int m_nTestInteger;
+    int _testInteger;
 };
 
 class ActionCatmullRom : public ActionsDemo
@@ -444,8 +458,8 @@ public:
     virtual std::string subtitle();
     virtual std::string title();
 private:
-    CCPointArray *m_pArray1;
-    CCPointArray *m_pArray2;
+    PointArray *_array1;
+    PointArray *_array2;
 };
 
 class ActionCardinalSpline : public ActionsDemo
@@ -458,7 +472,7 @@ public:
     virtual std::string subtitle();
     virtual std::string title();
 private:
-    CCPointArray *m_pArray;
+    PointArray *_array;
 };
 
 class PauseResumeActions : public ActionsDemo
@@ -473,7 +487,7 @@ public:
     void pause(float dt);
     void resume(float dt);
 private:
-    CCSet *m_pPausedTargets;
+    Set *_pausedTargets;
 };
 
 #endif

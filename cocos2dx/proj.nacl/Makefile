@@ -2,12 +2,7 @@ COCOS_ROOT = ../..
 COCOS_SRC_ROOT = $(COCOS_ROOT)/cocos2dx
 
 INCLUDES = \
-	-I$(COCOS_ROOT)/extensions \
-	-I$(COCOS_ROOT)/extensions/CCBReader \
-	-I$(COCOS_ROOT)/extensions/GUI/CCControlExtension \
-	-I$(COCOS_ROOT)/external/chipmunk/include/chipmunk \
-	-I$(COCOS_ROOT)/extensions/network \
-	-I$(NACL_SDK_ROOT)/include \
+	-I$(NACL_SDK_ROOT)/include
 
 SOURCES = ../actions/CCAction.cpp \
 ../actions/CCActionCamera.cpp \
@@ -35,6 +30,7 @@ SOURCES = ../actions/CCAction.cpp \
 ../cocoa/CCDictionary.cpp \
 ../cocoa/CCString.cpp \
 ../cocoa/CCDataVisitor.cpp \
+../cocoa/CCData.cpp \
 ../draw_nodes/CCDrawingPrimitives.cpp \
 ../draw_nodes/CCDrawNode.cpp \
 ../effects/CCGrabber.cpp \
@@ -94,11 +90,14 @@ SOURCES = ../actions/CCAction.cpp \
 ../support/zip_support/ioapi.cpp \
 ../support/zip_support/unzip.cpp \
 ../support/data_support/ccCArray.cpp \
+../support/component/CCComponent.cpp \
+../support/component/CCComponentContainer.cpp \
 ../text_input_node/CCIMEDispatcher.cpp \
 ../text_input_node/CCTextFieldTTF.cpp \
 ../textures/CCTexture2D.cpp \
 ../textures/CCTextureAtlas.cpp \
 ../textures/CCTextureCache.cpp \
+../textures/CCTextureETC.cpp \
 ../textures/CCTexturePVR.cpp \
 ../tilemap_parallax_nodes/CCParallaxNode.cpp \
 ../tilemap_parallax_nodes/CCTMXLayer.cpp \

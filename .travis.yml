@@ -4,8 +4,10 @@ env:
   matrix: 
   - GEN_JSB=YES
   - PLATFORM=linux DEBUG=1
-  - PLATFORM=nacl DEBUG=1
+  # Native client port doesn't support c++ 11 fully, it seems that it doesn't support lambda, please refer to https://github.com/cocos2d/cocos2d-x/blob/develop/samples/Cpp/TestCpp/Classes/ActionsTest/ActionsTest.cpp#L982
+  # - PLATFORM=nacl DEBUG=1
   - PLATFORM=android
+  - PLATFORM=emscripten DEBUG=1
   global: 
   - secure: |-
       cHXOjAda+t2tmBVuVAiQfvhDN+unToO6hX1rc3dJeGDOk4rlQnylJacjA7o/
@@ -23,6 +25,9 @@ script:
 - export NACL_SDK_ROOT=$HOME/bin/nacl_sdk/pepper_canary
 - export PATH=$PATH:$NACL_SDK_ROOT/toolchain/linux_x86_newlib/bin
 - export NDK_ROOT=$HOME/bin/android-ndk
+- export PYTHON=/usr/bin/python
+- export LLVM=$HOME/bin/clang+llvm-3.2/bin
+- export LLVM_ROOT=$LLVM
 - ./tools/travis-scripts/run-script.sh
 
 before_install: 

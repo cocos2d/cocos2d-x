@@ -30,40 +30,40 @@
 
 NS_CC_BEGIN
 
-CCEGLView* CCEGLView::s_sharedView = NULL;
+EGLView* EGLView::s_sharedView = NULL;
 
-CCEGLView* CCEGLView::sharedOpenGLView(void)
+EGLView* EGLView::sharedOpenGLView(void)
 {
     if (!s_sharedView)
     {
-        s_sharedView = new CCEGLView();
+        s_sharedView = new EGLView();
     }
     return s_sharedView;
 }
 
-CCEGLView::CCEGLView(void)
+EGLView::EGLView(void)
 {
 }
 
-CCEGLView::~CCEGLView(void)
+EGLView::~EGLView(void)
 {
-    CCLOG("cocos2d: deallocing CCEGLView %0x", this);
+    CCLOG("cocos2d: deallocing EGLView %p", this);
     s_sharedView = NULL;
 }
 
-bool CCEGLView::isOpenGLReady(void)
+bool EGLView::isOpenGLReady(void)
 {
     return [EAGLView sharedEGLView] != NULL;
 }
 
-bool CCEGLView::setContentScaleFactor(float contentScaleFactor)
+bool EGLView::setContentScaleFactor(float contentScaleFactor)
 {
     return false;
 }
 
-void CCEGLView::end(void)
+void EGLView::end(void)
 {
-    [[CCDirectorCaller sharedDirectorCaller] end];
+    [[DirectorCaller sharedDirectorCaller] end];
     
     // destroy EAGLView
     [[EAGLView sharedEGLView] removeFromSuperview];
@@ -71,12 +71,12 @@ void CCEGLView::end(void)
     delete this;
 }
 
-void CCEGLView::swapBuffers()
+void EGLView::swapBuffers()
 {
 	[[EAGLView sharedEGLView] swapBuffers];
 }
 
-void CCEGLView::setIMEKeyboardState(bool bOpen)
+void EGLView::setIMEKeyboardState(bool bOpen)
 {
     if (bOpen)
     {
@@ -88,27 +88,27 @@ void CCEGLView::setIMEKeyboardState(bool bOpen)
     }
 }
 
-void CCEGLView::setViewPortInPoints(float x , float y , float w , float h)
+void EGLView::setViewPortInPoints(float x , float y , float w , float h)
 {
     float frameZoomFactor = [[EAGLView sharedEGLView] frameZoomFactor];
     
-    glViewport((GLint)(x * m_fScaleX * frameZoomFactor + m_obViewPortRect.origin.x * frameZoomFactor),
-               (GLint)(y * m_fScaleY * frameZoomFactor + m_obViewPortRect.origin.y * frameZoomFactor),
-               (GLsizei)(w * m_fScaleX * frameZoomFactor),
-               (GLsizei)(h * m_fScaleY * frameZoomFactor));
+    glViewport((GLint)(x * _scaleX * frameZoomFactor + _viewPortRect.origin.x * frameZoomFactor),
+               (GLint)(y * _scaleY * frameZoomFactor + _viewPortRect.origin.y * frameZoomFactor),
+               (GLsizei)(w * _scaleX * frameZoomFactor),
+               (GLsizei)(h * _scaleY * frameZoomFactor));
 }
 
-void CCEGLView::setScissorInPoints(float x , float y , float w , float h)
+void EGLView::setScissorInPoints(float x , float y , float w , float h)
 {
     float frameZoomFactor = [[EAGLView sharedEGLView] frameZoomFactor];
     
-    glScissor((GLint)(x * m_fScaleX * frameZoomFactor + m_obViewPortRect.origin.x * frameZoomFactor),
-              (GLint)(y * m_fScaleY * frameZoomFactor + m_obViewPortRect.origin.y * frameZoomFactor),
-              (GLsizei)(w * m_fScaleX * frameZoomFactor),
-              (GLsizei)(h * m_fScaleY * frameZoomFactor));
+    glScissor((GLint)(x * _scaleX * frameZoomFactor + _viewPortRect.origin.x * frameZoomFactor),
+              (GLint)(y * _scaleY * frameZoomFactor + _viewPortRect.origin.y * frameZoomFactor),
+              (GLsizei)(w * _scaleX * frameZoomFactor),
+              (GLsizei)(h * _scaleY * frameZoomFactor));
 }
 
-void CCEGLView::setMultiTouchMask(bool mask)
+void EGLView::setMultiTouchMask(bool mask)
 {
 	//EAGLView *glView = [EAGLView sharedEGLView];
 	//glView.multipleTouchEnabled = mask ? YES : NO;

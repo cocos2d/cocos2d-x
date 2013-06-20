@@ -35,6 +35,11 @@ copy_src_and_jni() {
 
     # replace Android.mk
     sh $COCOS2DX_ROOT/template/android/gamemk.sh $APP_DIR/proj.android/jni/Android.mk $USE_BOX2D $USE_CHIPMUNK $USE_LUA
+
+    if [ $USE_LUA = "true" ]; then
+        # copy lua script
+        cp "$COCOS2DX_ROOT"/scripting/lua/script/* "$APP_DIR"/Resources
+    fi
 }
 
 # copy build_native.sh and replace something

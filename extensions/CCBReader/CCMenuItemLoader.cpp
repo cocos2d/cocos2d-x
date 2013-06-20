@@ -7,22 +7,23 @@
 
 NS_CC_EXT_BEGIN
 
-void CCMenuItemLoader::onHandlePropTypeBlock(CCNode * pNode, CCNode * pParent, const char * pPropertyName, BlockData * pBlockData, CCBReader * pCCBReader) {
+void MenuItemLoader::onHandlePropTypeBlock(Node * pNode, Node * pParent, const char * pPropertyName, BlockData * pBlockData, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_BLOCK) == 0) {
-        if (NULL != pBlockData) // Add this condition to allow CCMenuItemImage without target/selector predefined 
+        if (NULL != pBlockData) // Add this condition to allow MenuItemImage without target/selector predefined 
         {
-            ((CCMenuItem *)pNode)->setTarget(pBlockData->mTarget, pBlockData->mSELMenuHandler);
+            ((MenuItem *)pNode)->setCallback( std::bind( pBlockData->mSELMenuHandler, pBlockData->mTarget, std::placeholders::_1) );
+//            ((MenuItem *)pNode)->setTarget(pBlockData->mTarget, pBlockData->mSELMenuHandler);
         }
     } else {
-        CCNodeLoader::onHandlePropTypeBlock(pNode, pParent, pPropertyName, pBlockData, pCCBReader);
+        NodeLoader::onHandlePropTypeBlock(pNode, pParent, pPropertyName, pBlockData, pCCBReader);
     }
 }
 
-void CCMenuItemLoader::onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, const char * pPropertyName, bool pCheck, CCBReader * pCCBReader) {
+void MenuItemLoader::onHandlePropTypeCheck(Node * pNode, Node * pParent, const char * pPropertyName, bool pCheck, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_ISENABLED) == 0) {
-        ((CCMenuItem *)pNode)->setEnabled(pCheck);
+        ((MenuItem *)pNode)->setEnabled(pCheck);
     } else {
-        CCNodeLoader::onHandlePropTypeCheck(pNode, pParent, pPropertyName, pCheck, pCCBReader);
+        NodeLoader::onHandlePropTypeCheck(pNode, pParent, pPropertyName, pCheck, pCCBReader);
     }
 }
 

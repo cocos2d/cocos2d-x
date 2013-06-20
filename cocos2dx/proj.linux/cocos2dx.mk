@@ -2,11 +2,16 @@ all:
 
 CC = gcc
 CXX = g++
-CCFLAGS += -MMD -Wall -Werror -fPIC
-CXXFLAGS += -MMD -Wall -Werror -fPIC
+# Remove -Wall, because it enables -Wunused-function, and this warning exists in webp.h
+# when enable c++11. I don't know why.
+# GCC 4.6 is primary platform for cocos2d v.3, because it's default compiler for Android, 
+# Blackberry, some Linux distributions.It supports all important features of c++11, but have 
+# no flag "-std=c++11" (which was turned on in version 4.7).
+CCFLAGS += -MMD -Werror -Wno-deprecated-declarations -fPIC
+CXXFLAGS += -MMD -Werror -Wno-deprecated-declarations -fPIC -std=gnu++0x
 ARFLAGS = cr
 
-DEFINES += -DLINUX
+DEFINES += -DLINUX -DKEYBOARD_SUPPORT
 
 ifdef USE_BOX2D
 DEFINES += -DCC_ENABLE_BOX2D_INTEGRATION=1
@@ -99,7 +104,7 @@ SHAREDLIBS += -lglfw -lGLEW -lfontconfig -lpthread -lGL
 SHAREDLIBS += -L$(FMOD_LIBDIR) -Wl,-rpath,$(abspath $(FMOD_LIBDIR))
 SHAREDLIBS += -L$(LIB_DIR) -Wl,-rpath,$(abspath $(LIB_DIR))
 
-LIBS = -lrt -lz
+LIBS = -lrt -lz -lX11
 
 clean:
 	rm -rf $(OBJ_DIR)

@@ -49,21 +49,21 @@ typedef enum _ccConfigurationType {
  * @{
  */
 /**
- @brief CCConfiguration contains some openGL variables
+ @brief Configuration contains some openGL variables
  @since v0.99.0
  */
-class CC_DLL CCConfiguration : public CCObject
+class CC_DLL Configuration : public Object
 {
 public:
-    /** returns a shared instance of CCConfiguration */
-    static CCConfiguration *sharedConfiguration(void);
+    /** returns a shared instance of Configuration */
+    static Configuration *sharedConfiguration(void);
 
-    /** purge the shared instance of CCConfiguration */
+    /** purge the shared instance of Configuration */
     static void purgeConfiguration(void);
 
 public:
 
-	virtual ~CCConfiguration(void);
+	virtual ~Configuration(void);
 
     /** OpenGL Max texture size. */
 	int getMaxTextureSize(void) const;
@@ -106,17 +106,23 @@ public:
 
     bool init(void);
 
-	/** returns the value of a given key as a string */
-	const char* getCString( const char *key ) const;
+	/** returns the value of a given key as a string.
+	 If the key is not found, it will return the default value */
+	const char* getCString( const char *key, const char *default_value=NULL ) const;
 
-	/** returns the value of a given key as a boolean */
-	bool getBool( const char *key ) const;
+	/** returns the value of a given key as a boolean.
+	 If the key is not found, it will return the default value */
+	bool getBool( const char *key, bool default_value=false ) const;
+
+	/** returns the value of a given key as a double.
+	 If the key is not found, it will return the default value */
+	double getNumber( const char *key, double default_value=0.0 ) const;
 
 	/** returns the value of a given key as a double */
-	double getNumber( const char *key ) const;
+	Object * getObject( const char *key ) const;
 
-	/** returns the value of a given key as a double */
-	CCObject * getObject( const char *key ) const;
+	/** sets a new key/value pair  in the configuration dictionary */
+	void setObject( const char *key, Object *value );
 
 	/** dumps the current configuration on the console */
 	void dumpInfo(void) const;
@@ -128,22 +134,23 @@ public:
 	void loadConfigFile( const char *filename );
 
 private:
-    CCConfiguration(void);
-    static CCConfiguration *s_gSharedConfiguration;
+    Configuration(void);
+    static Configuration *s_gSharedConfiguration;
 	static std::string		s_sConfigfile;
     
 protected:
-    GLint           m_nMaxTextureSize;
-    GLint           m_nMaxModelviewStackDepth;
-    bool            m_bSupportsPVRTC;
-    bool            m_bSupportsNPOT;
-    bool            m_bSupportsBGRA8888;
-    bool            m_bSupportsDiscardFramebuffer;
-    bool            m_bSupportsShareableVAO;
-    GLint           m_nMaxSamplesAllowed;
-    GLint           m_nMaxTextureUnits;
-    char *          m_pGlExtensions;
-	CCDictionary	*m_pDefaults;
+    GLint           _maxTextureSize;
+    GLint           _maxModelviewStackDepth;
+    bool            _supportsPVRTC;
+    bool            _supportsNPOT;
+    bool            _supportsBGRA8888;
+    bool            _supportsDiscardFramebuffer;
+    bool            _supportsShareableVAO;
+    GLint           _maxSamplesAllowed;
+    GLint           _maxTextureUnits;
+    char *          _glExtensions;
+	
+	Dictionary	*_valueDict;
 };
 
 // end of global group

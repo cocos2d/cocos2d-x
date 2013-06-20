@@ -30,11 +30,11 @@
 #elif CC_ENABLE_BOX2D_INTEGRATION
 class b2Body;
 #else // CC_ENABLE_BOX2D_INTEGRATION
-#error "You must define either CC_ENABLE_CHIPMUNK_INTEGRATION or CC_ENABLE_BOX2D_INTEGRATION to use CCPhysicsSprite.h"
+#error "You must define either CC_ENABLE_CHIPMUNK_INTEGRATION or CC_ENABLE_BOX2D_INTEGRATION to use PhysicsSprite.h"
 #endif
 
 NS_CC_EXT_BEGIN
-/** A CCSprite subclass that is bound to a physics body.
+/** A Sprite subclass that is bound to a physics body.
  It works with:
  - Chipmunk: Preprocessor macro CC_ENABLE_CHIPMUNK_INTEGRATION should be defined
  - Objective-Chipmunk: Preprocessor macro CC_ENABLE_CHIPMUNK_INTEGRATION should be defined
@@ -46,54 +46,54 @@ NS_CC_EXT_BEGIN
  - If you update the rotation or position manually, the physics body will be updated
  - You can't enble both Chipmunk support and Box2d support at the same time. Only one can be enabled at compile time
  */
-class CCPhysicsSprite : public CCSprite
+class PhysicsSprite : public Sprite
 {
 protected:
-    bool    m_bIgnoreBodyRotation;
+    bool    _ignoreBodyRotation;
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
-    cpBody  *m_pCPBody;
+    cpBody  *_CPBody;
 
 #elif CC_ENABLE_BOX2D_INTEGRATION
-    b2Body  *m_pB2Body;
+    b2Body  *_pB2Body;
 
     // Pixels to Meters ratio
-    float   m_fPTMRatio;
+    float   _PTMRatio;
 #endif // CC_ENABLE_CHIPMUNK_INTEGRATION
 public:
-    CCPhysicsSprite();
+    PhysicsSprite();
 
-    static CCPhysicsSprite* create();
+    static PhysicsSprite* create();
     /** Creates an sprite with a texture.
      The rect used will be the size of the texture.
      The offset will be (0,0).
      */
-    static CCPhysicsSprite* createWithTexture(CCTexture2D *pTexture);
+    static PhysicsSprite* createWithTexture(Texture2D *pTexture);
 
     /** Creates an sprite with a texture and a rect.
      The offset will be (0,0).
      */
-    static CCPhysicsSprite* createWithTexture(CCTexture2D *pTexture, const CCRect& rect);
+    static PhysicsSprite* createWithTexture(Texture2D *pTexture, const Rect& rect);
 
     /** Creates an sprite with an sprite frame. */
-    static CCPhysicsSprite* createWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
+    static PhysicsSprite* createWithSpriteFrame(SpriteFrame *pSpriteFrame);
 
     /** Creates an sprite with an sprite frame name.
-     An CCSpriteFrame will be fetched from the CCSpriteFrameCache by name.
-     If the CCSpriteFrame doesn't exist it will raise an exception.
+     An SpriteFrame will be fetched from the SpriteFrameCache by name.
+     If the SpriteFrame doesn't exist it will raise an exception.
      @since v0.9
      */
-    static CCPhysicsSprite* createWithSpriteFrameName(const char *pszSpriteFrameName);
+    static PhysicsSprite* createWithSpriteFrameName(const char *pszSpriteFrameName);
 
     /** Creates an sprite with an image filename.
      The rect used will be the size of the image.
      The offset will be (0,0).
      */
-    static CCPhysicsSprite* create(const char *pszFileName);
+    static PhysicsSprite* create(const char *pszFileName);
 
     /** Creates an sprite with an image filename and a rect.
      The offset will be (0,0).
      */
-    static CCPhysicsSprite* create(const char *pszFileName, const CCRect& rect);
+    static PhysicsSprite* create(const char *pszFileName, const Rect& rect);
 
     virtual bool isDirty();
 
@@ -101,14 +101,14 @@ public:
     bool isIgnoreBodyRotation() const;
     void setIgnoreBodyRotation(bool bIgnoreBodyRotation);
 
-    virtual const CCPoint& getPosition();
+    virtual const Point& getPosition();
     virtual void getPosition(float* x, float* y);
     virtual float getPositionX();
     virtual float getPositionY();
-    virtual void setPosition(const CCPoint &position);
+    virtual void setPosition(const Point &position);
     virtual float getRotation();
     virtual void setRotation(float fRotation);
-    virtual CCAffineTransform nodeToParentTransform();
+    virtual AffineTransform nodeToParentTransform();
 
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
     /** Body accessor when using regular Chipmunk */

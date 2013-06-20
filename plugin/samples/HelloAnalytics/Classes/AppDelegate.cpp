@@ -25,8 +25,7 @@ THE SOFTWARE.
 #include "cocos2d.h"
 #include "HelloWorldScene.h"
 #include "PluginManager.h"
-#include "AnalyticsFlurry.h"
-#include "AnalyticsUmeng.h"
+#include "ProtocolAnalytics.h"
 
 using namespace cocos2d::plugin;
 USING_NS_CC;
@@ -53,7 +52,7 @@ AppDelegate::~AppDelegate()
 void AppDelegate::loadAnalyticsPlugin()
 {
     PluginProtocol* pPlugin = NULL;
-    ccLanguageType langType = CCApplication::sharedApplication()->getCurrentLanguage();
+    ccLanguageType langType = Application::sharedApplication()->getCurrentLanguage();
 
     std::string umengKey  = "";
     std::string flurryKey = "";
@@ -91,29 +90,31 @@ bool AppDelegate::applicationDidFinishLaunching()
     const char* sdkVer = g_pAnalytics->getSDKVersion();
     CCLog("SDK version : %s", sdkVer);
 
-    AnalyticsUmeng* pUmeng = dynamic_cast<AnalyticsUmeng*>(g_pAnalytics);
-    AnalyticsFlurry* pFlurry = dynamic_cast<AnalyticsFlurry*>(g_pAnalytics);
-    if (pUmeng != NULL)
-    {
-        pUmeng->updateOnlineConfig();
-        pUmeng->setDefaultReportPolicy(AnalyticsUmeng::REALTIME);
-    }
+    g_pAnalytics->callFuncWithParam("updateOnlineConfig", NULL);
 
-    if (pFlurry != NULL)
-    {
-        pFlurry->setReportLocation(true);
-        pFlurry->logPageView();
-        // const char* sdkVersion = pFlurry->getSDKVersion();
-        pFlurry->setVersionName("1.1");
-        pFlurry->setAge(20);
-        pFlurry->setGender(AnalyticsFlurry::MALE);
-        pFlurry->setUserId("123456");
-        pFlurry->setUseHttps(false);
-    }
+    PluginParam pParam1(true);
+    g_pAnalytics->callFuncWithParam("setReportLocation", &pParam1, NULL);
+
+	g_pAnalytics->callFuncWithParam("logPageView", NULL);
+
+	PluginParam pParam2("1.1");
+	g_pAnalytics->callFuncWithParam("setVersionName", &pParam2, NULL);
+
+	PluginParam pParam3(20);
+	g_pAnalytics->callFuncWithParam("setAge", &pParam3, NULL);
+
+	PluginParam pParam4(1);
+	g_pAnalytics->callFuncWithParam("setGender", &pParam4, NULL);
+
+	PluginParam pParam5("123456");
+	g_pAnalytics->callFuncWithParam("setUserId", &pParam5, NULL);
+
+	PluginParam pParam6(false);
+	g_pAnalytics->callFuncWithParam("setUseHttps", &pParam6, NULL);
 
     // initialize director
-    CCDirector *pDirector = CCDirector::sharedDirector();
-    pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
+    Director *pDirector = Director::sharedDirector();
+    pDirector->setOpenGLView(EGLView::sharedOpenGLView());
 
     // turn on display FPS
     //pDirector->setDisplayStats(true);
@@ -122,7 +123,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setAnimationInterval(1.0 / 60);
 
     // create a scene. it's an autorelease object
-    CCScene *pScene = HelloWorld::scene();
+    Scene *pScene = HelloWorld::scene();
 
     // run
     pDirector->runWithScene(pScene);
@@ -133,7 +134,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    CCDirector::sharedDirector()->pause();
+    Director::sharedDirector()->pause();
 
     // if you use SimpleAudioEngine, it must be pause
     // SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
@@ -143,7 +144,7 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    CCDirector::sharedDirector()->resume();
+    Director::sharedDirector()->resume();
     if (g_pAnalytics)
     {
         g_pAnalytics->startSession(s_strAppKey.c_str());

@@ -28,12 +28,13 @@ THE SOFTWARE.
 #include "CCGL.h"
 #include "CCDirector.h"
 #include "CCOspApplication.h"
+#include "CCOspForm.h"
 
 NS_CC_BEGIN
 using namespace Tizen::App;
 using namespace Tizen::Base::Runtime;
 
-CCEGLView::CCEGLView()
+EGLView::EGLView()
     : __eglDisplay(EGL_DEFAULT_DISPLAY)
     , __eglSurface(EGL_NO_SURFACE)
     , __eglConfig(null)
@@ -43,24 +44,24 @@ CCEGLView::CCEGLView()
 
 }
 
-CCEGLView::~CCEGLView()
+EGLView::~EGLView()
 {
 
 }
 
-bool CCEGLView::isOpenGLReady()
+bool EGLView::isOpenGLReady()
 {
-    return (m_obScreenSize.width != 0 && m_obScreenSize.height != 0);
+    return (_screenSize.width != 0 && _screenSize.height != 0);
 }
 
-Timer*
-CCEGLView::getTimer()
+Tizen::Base::Runtime::Timer*
+EGLView::getTimer()
 {
     return __pTimer;
 }
 
 void
-CCEGLView::cleanup()
+EGLView::cleanup()
 {
     if (__pTimer != null)
     {
@@ -72,7 +73,7 @@ CCEGLView::cleanup()
     destroyGL();
 }
 
-void CCEGLView::end()
+void EGLView::end()
 {
     cleanup();
 
@@ -81,21 +82,29 @@ void CCEGLView::end()
     pApp->Terminate();
 }
 
-void CCEGLView::swapBuffers()
+void EGLView::swapBuffers()
 {
     eglSwapBuffers(__eglDisplay, __eglSurface);
 }
 
-void CCEGLView::setIMEKeyboardState(bool bOpen)
+void EGLView::setIMEKeyboardState(bool bOpen)
 {
+    if (bOpen)
+    {
+        ((OspForm *)OspApplication::GetInstance()->getOspForm())->ShowKeypad();
+    }
+    else
+    {
+        ((OspForm *)OspApplication::GetInstance()->getOspForm())->CloseKeypad();
+    }
 }
 
-CCEGLView* CCEGLView::sharedOpenGLView()
+EGLView* EGLView::sharedOpenGLView()
 {
-    static CCEGLView* s_pEglView = NULL;
+    static EGLView* s_pEglView = NULL;
     if (s_pEglView == NULL)
     {
-        s_pEglView = new CCEGLView();
+        s_pEglView = new EGLView();
         if(!s_pEglView->create())
         {
             delete s_pEglView;
@@ -107,29 +116,29 @@ CCEGLView* CCEGLView::sharedOpenGLView()
 }
 
 void
-CCEGLView::OnTimerExpired(Timer& timer)
+EGLView::OnTimerExpired(Tizen::Base::Runtime::Timer& timer)
 {
     if (__pTimer == null)
     {
         return;
     }
-    __pTimer->Start(CCApplication::sharedApplication()->getAnimationInterval());
+    __pTimer->Start(Application::sharedApplication()->getAnimationInterval());
 
-    CCDirector::sharedDirector()->mainLoop();
+    Director::sharedDirector()->mainLoop();
 }
 
 bool
-CCEGLView::create()
+EGLView::create()
 {
     result r = E_SUCCESS;
 
-    TryCatch(initEGL(), , "[CCEGLView] CCEGLView::create() failed.");
+    TryCatch(initEGL(), , "[EGLView] EGLView::create() failed.");
 
-    __pTimer = new (std::nothrow) Timer;
-    TryCatch(__pTimer != null, , "[CCEGLView] Failed to allocate memory.");
+    __pTimer = new (std::nothrow) Tizen::Base::Runtime::Timer;
+    TryCatch(__pTimer != null, , "[EGLView] Failed to allocate memory.");
 
     r = __pTimer->Construct(*this);
-    TryCatch(!IsFailed(r), , "[CCEGLView] __pTimer->Construct(*this) failed.");
+    TryCatch(!IsFailed(r), , "[EGLView] __pTimer->Construct(*this) failed.");
 
     return true;
 
@@ -138,7 +147,7 @@ CATCH:
 }
 
 bool
-CCEGLView::initEGL()
+EGLView::initEGL()
 {
     EGLint numConfigs = 1;
 
@@ -168,35 +177,35 @@ CCEGLView::initEGL()
     }
 
     __eglDisplay = eglGetDisplay((EGLNativeDisplayType)EGL_DEFAULT_DISPLAY);
-    TryCatch(__eglDisplay != EGL_NO_DISPLAY, , "[CCEGLView] eglGetDisplay() failed.");
+    TryCatch(__eglDisplay != EGL_NO_DISPLAY, , "[EGLView] eglGetDisplay() failed.");
 
-    TryCatch(!(eglInitialize(__eglDisplay, null, null) == EGL_FALSE || eglGetError() != EGL_SUCCESS), , "[CCEGLView] eglInitialize() failed.");
+    TryCatch(!(eglInitialize(__eglDisplay, null, null) == EGL_FALSE || eglGetError() != EGL_SUCCESS), , "[EGLView] eglInitialize() failed.");
 
     TryCatch(!(eglChooseConfig(__eglDisplay, eglConfigList, &__eglConfig, 1, &numConfigs) == EGL_FALSE ||
-        eglGetError() != EGL_SUCCESS), , "[CCEGLView] eglChooseConfig() failed.");
+        eglGetError() != EGL_SUCCESS), , "[EGLView] eglChooseConfig() failed.");
 
-    TryCatch(numConfigs, , "[CCEGLView] eglChooseConfig() failed. because of matching config doesn't exist");
+    TryCatch(numConfigs, , "[EGLView] eglChooseConfig() failed. because of matching config doesn't exist");
 
-    __eglSurface = eglCreateWindowSurface(__eglDisplay, __eglConfig, (EGLNativeWindowType)CCOspApplication::GetInstance()->getCCOspForm(), null);
-    TryCatch(!(__eglSurface == EGL_NO_SURFACE || eglGetError() != EGL_SUCCESS), , "[CCEGLView] eglCreateWindowSurface() failed.");
+    __eglSurface = eglCreateWindowSurface(__eglDisplay, __eglConfig, (EGLNativeWindowType)OspApplication::GetInstance()->getOspForm(), null);
+    TryCatch(!(__eglSurface == EGL_NO_SURFACE || eglGetError() != EGL_SUCCESS), , "[EGLView] eglCreateWindowSurface() failed.");
 
     __eglContext = eglCreateContext(__eglDisplay, __eglConfig, EGL_NO_CONTEXT, eglContextList);
-    TryCatch(!(__eglContext == EGL_NO_CONTEXT || eglGetError() != EGL_SUCCESS), , "[CCEGLView] eglCreateContext() failed.");
+    TryCatch(!(__eglContext == EGL_NO_CONTEXT || eglGetError() != EGL_SUCCESS), , "[EGLView] eglCreateContext() failed.");
 
     TryCatch(!(eglMakeCurrent(__eglDisplay, __eglSurface, __eglSurface, __eglContext) == EGL_FALSE ||
-        eglGetError() != EGL_SUCCESS), , "[CCEGLView] eglMakeCurrent() failed.");
+        eglGetError() != EGL_SUCCESS), , "[EGLView] eglMakeCurrent() failed.");
 
     return true;
 
 CATCH:
     {
-        AppLog("[CCEGLView] CCEGLView can run on systems which supports OpenGL ES(R) 2.0.");
-        AppLog("[CCEGLView] When CCEGLView does not correctly execute, there are a few reasons.");
-        AppLog("[CCEGLView]    1. The current device(real-target or emulator) does not support OpenGL ES(R) 2.0.\n"
+        AppLog("[EGLView] EGLView can run on systems which supports OpenGL ES(R) 2.0.");
+        AppLog("[EGLView] When EGLView does not correctly execute, there are a few reasons.");
+        AppLog("[EGLView]    1. The current device(real-target or emulator) does not support OpenGL ES(R) 2.0.\n"
                " Check the Release Notes.");
-        AppLog("[CCEGLView]    2. The system running on emulator cannot support OpenGL(R) 2.1 or later.\n"
+        AppLog("[EGLView]    2. The system running on emulator cannot support OpenGL(R) 2.1 or later.\n"
                " Try with other system.");
-        AppLog("[CCEGLView]    3. The system running on emulator does not maintain the latest graphics driver.\n"
+        AppLog("[EGLView]    3. The system running on emulator does not maintain the latest graphics driver.\n"
                " Update the graphics driver.");
     }
 
@@ -206,7 +215,7 @@ CATCH:
 }
 
 void
-CCEGLView::destroyGL(void)
+EGLView::destroyGL(void)
 {
     if (__eglDisplay)
     {

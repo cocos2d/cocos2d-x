@@ -37,6 +37,7 @@ cocoa/CCString.cpp \
 cocoa/CCZone.cpp \
 cocoa/CCArray.cpp \
 cocoa/CCDataVisitor.cpp \
+cocoa/CCData.cpp \
 cocos2d.cpp \
 CCDirector.cpp \
 draw_nodes/CCDrawingPrimitives.cpp \
@@ -123,11 +124,14 @@ support/tinyxml2/tinyxml2.cpp \
 support/zip_support/ZipUtils.cpp \
 support/zip_support/ioapi.cpp \
 support/zip_support/unzip.cpp \
+support/component/CCComponent.cpp \
+support/component/CCComponentContainer.cpp \
 text_input_node/CCIMEDispatcher.cpp \
 text_input_node/CCTextFieldTTF.cpp \
 textures/CCTexture2D.cpp \
 textures/CCTextureAtlas.cpp \
 textures/CCTextureCache.cpp \
+textures/CCTextureETC.cpp \
 textures/CCTexturePVR.cpp \
 tilemap_parallax_nodes/CCParallaxNode.cpp \
 tilemap_parallax_nodes/CCTMXLayer.cpp \
@@ -164,8 +168,8 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libtiff_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libwebp_static
 
 # define the macro to compile through support/zip_support/ioapi.c
-LOCAL_CFLAGS := -Wno-psabi -DUSE_FILE32API
-LOCAL_EXPORT_CFLAGS := -Wno-psabi -DUSE_FILE32API
+LOCAL_CFLAGS   := -Wno-psabi -Wno-deprecated-declarations -DUSE_FILE32API
+LOCAL_EXPORT_CFLAGS   := -Wno-psabi -Wno-deprecated-declarations -DUSE_FILE32API
 
 include $(BUILD_STATIC_LIBRARY)
 

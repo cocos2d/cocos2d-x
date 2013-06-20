@@ -29,22 +29,22 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-CCGrabber::CCGrabber(void)
-    : m_FBO(0)
-    , m_oldFBO(0)
+Grabber::Grabber(void)
+    : _FBO(0)
+    , _oldFBO(0)
 {
-    memset(m_oldClearColor, 0, sizeof(m_oldClearColor));
+    memset(_oldClearColor, 0, sizeof(_oldClearColor));
 
     // generate FBO
-    glGenFramebuffers(1, &m_FBO);
+    glGenFramebuffers(1, &_FBO);
 }
 
-void CCGrabber::grab(CCTexture2D *pTexture)
+void Grabber::grab(Texture2D *pTexture)
 {
-    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_oldFBO);
+    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
 
     // bind
-    glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
+    glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
 
     // associate texture with FBO
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, pTexture->getName(), 0);
@@ -56,24 +56,24 @@ void CCGrabber::grab(CCTexture2D *pTexture)
         CCAssert(0, "Frame Grabber: could not attach texture to framebuffer");
     }
 
-    glBindFramebuffer(GL_FRAMEBUFFER, m_oldFBO);
+    glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 }
 
-void CCGrabber::beforeRender(CCTexture2D *pTexture)
+void Grabber::beforeRender(Texture2D *pTexture)
 {
     CC_UNUSED_PARAM(pTexture);
 
-    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_oldFBO);
-    glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
+    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
+    glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
     
     // save clear color
-    glGetFloatv(GL_COLOR_CLEAR_VALUE, m_oldClearColor);
+    glGetFloatv(GL_COLOR_CLEAR_VALUE, _oldClearColor);
     // BUG XXX: doesn't work with RGB565.
 
     glClearColor(0, 0, 0, 0);
 
     // BUG #631: To fix #631, uncomment the lines with #631
-    // Warning: But it CCGrabber won't work with 2 effects at the same time
+    // Warning: But it Grabber won't work with 2 effects at the same time
 //  glClearColor(0.0f,0.0f,0.0f,1.0f);    // #631
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -81,21 +81,21 @@ void CCGrabber::beforeRender(CCTexture2D *pTexture)
 //  glColorMask(true, true, true, false);    // #631
 }
 
-void CCGrabber::afterRender(cocos2d::CCTexture2D *pTexture)
+void Grabber::afterRender(cocos2d::Texture2D *pTexture)
 {
     CC_UNUSED_PARAM(pTexture);
 
-    glBindFramebuffer(GL_FRAMEBUFFER, m_oldFBO);
+    glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 //  glColorMask(true, true, true, true);    // #631
     
     // Restore clear color
-    glClearColor(m_oldClearColor[0], m_oldClearColor[1], m_oldClearColor[2], m_oldClearColor[3]);
+    glClearColor(_oldClearColor[0], _oldClearColor[1], _oldClearColor[2], _oldClearColor[3]);
 }
 
-CCGrabber::~CCGrabber()
+Grabber::~Grabber()
 {
     CCLOGINFO("cocos2d: deallocing %p", this);
-    glDeleteFramebuffers(1, &m_FBO);
+    glDeleteFramebuffers(1, &_FBO);
 }
 
 NS_CC_END

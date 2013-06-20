@@ -27,13 +27,13 @@ typedef void (*sc_register_sth)(JSContext* cx, JSObject* global);
 void registerDefaultClasses(JSContext* cx, JSObject* global);
 
 
-class SimpleRunLoop : public CCObject
+class SimpleRunLoop : public Object
 {
 public:
 	void update(float d);
 };
 
-class ScriptingCore : public CCScriptEngineProtocol
+class ScriptingCore : public ScriptEngineProtocol
 {
 	JSRuntime *rt_;
 	JSContext *cx_;
@@ -56,10 +56,10 @@ public:
     virtual ccScriptType getScriptType() { return kScriptTypeJavascript; };
 
     /**
-     @brief Remove CCObject from lua state
+     @brief Remove Object from lua state
      @param object to remove
      */
-    virtual void removeScriptObjectByCCObject(CCObject* pObj);
+    virtual void removeScriptObjectByObject(Object* pObj);
 
     /**
      @brief Execute script code contained in the given string.
@@ -86,20 +86,20 @@ public:
      */
 	virtual int executeGlobalFunction(const char* functionName) { return 0; }
 
-    virtual int executeNodeEvent(CCNode* pNode, int nAction);
-    virtual int executeMenuItemEvent(CCMenuItem* pMenuItem);
-    virtual int executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName);
-    virtual int executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget = NULL);
-    virtual int executeSchedule(int nHandler, float dt, CCNode* pNode = NULL);
-    virtual int executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet *pTouches);
-    virtual int executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch);
-    virtual int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue);
-    virtual int executeLayerKeypadEvent(CCLayer* pLayer, int eventType);
-    virtual int executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource = NULL, const char* pEventSourceClassName = NULL) { return 0; }
+    virtual int executeNodeEvent(Node* pNode, int nAction);
+    virtual int executeMenuItemEvent(MenuItem* pMenuItem);
+    virtual int executeNotificationEvent(NotificationCenter* pNotificationCenter, const char* pszName);
+    virtual int executeCallFuncActionEvent(CallFunc* pAction, Object* pTarget = NULL);
+    virtual int executeSchedule(int nHandler, float dt, Node* pNode = NULL);
+    virtual int executeLayerTouchesEvent(Layer* pLayer, int eventType, Set *pTouches);
+    virtual int executeLayerTouchEvent(Layer* pLayer, int eventType, Touch *pTouch);
+    virtual int executeAccelerometerEvent(Layer* pLayer, Acceleration* pAccelerationValue);
+    virtual int executeLayerKeypadEvent(Layer* pLayer, int eventType);
+    virtual int executeEvent(int nHandler, const char* pEventName, Object* pEventSource = NULL, const char* pEventSourceClassName = NULL) { return 0; }
 
     virtual bool handleAssert(const char *msg) { return false; }
 
-    bool executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj);
+    bool executeFunctionWithObjectData(Node *self, const char *name, JSObject *obj);
     JSBool executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc = 0, jsval* vp = NULL, jsval* retVal = NULL);
 
     void executeJSFunctionWithThisObj(jsval thisObj, jsval callback, jsval *data);
@@ -149,11 +149,11 @@ public:
 
 
     int executeCustomTouchEvent(int eventType,
-                                CCTouch *pTouch, JSObject *obj, jsval &retval);
+                                Touch *pTouch, JSObject *obj, jsval &retval);
     int executeCustomTouchEvent(int eventType,
-                                CCTouch *pTouch, JSObject *obj);
+                                Touch *pTouch, JSObject *obj);
     int executeCustomTouchesEvent(int eventType,
-                                  CCSet *pTouches, JSObject *obj);
+                                  Set *pTouches, JSObject *obj);
 	/**
 	 * @return the global context
 	 */
@@ -213,18 +213,18 @@ JSBool jsval_to_uint32( JSContext *cx, jsval vp, uint32_t *ret );
 JSBool jsval_to_uint16( JSContext *cx, jsval vp, uint16_t *ret );
 JSBool jsval_to_long_long(JSContext *cx, jsval v, long long* ret);
 JSBool jsval_to_std_string(JSContext *cx, jsval v, std::string* ret);
-JSBool jsval_to_ccpoint(JSContext *cx, jsval v, CCPoint* ret);
-JSBool jsval_to_ccrect(JSContext *cx, jsval v, CCRect* ret);
-JSBool jsval_to_ccsize(JSContext *cx, jsval v, CCSize* ret);
+JSBool jsval_to_ccpoint(JSContext *cx, jsval v, Point* ret);
+JSBool jsval_to_ccrect(JSContext *cx, jsval v, Rect* ret);
+JSBool jsval_to_ccsize(JSContext *cx, jsval v, Size* ret);
 JSBool jsval_to_cccolor4b(JSContext *cx, jsval v, ccColor4B* ret);
 JSBool jsval_to_cccolor4f(JSContext *cx, jsval v, ccColor4F* ret);
 JSBool jsval_to_cccolor3b(JSContext *cx, jsval v, ccColor3B* ret);
-JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, CCPoint **points, int *numPoints);
-JSBool jsval_to_ccarray(JSContext* cx, jsval v, CCArray** ret);
-JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, CCDictionary** ret);
-JSBool jsval_to_ccacceleration(JSContext* cx,jsval v, CCAcceleration* ret);
-JSBool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, CCArray** ret);
-JSBool jsval_to_ccaffinetransform(JSContext* cx, jsval v, CCAffineTransform* ret);
+JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, Point **points, int *numPoints);
+JSBool jsval_to_ccarray(JSContext* cx, jsval v, Array** ret);
+JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, Dictionary** ret);
+JSBool jsval_to_ccacceleration(JSContext* cx,jsval v, Acceleration* ret);
+JSBool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, Array** ret);
+JSBool jsval_to_ccaffinetransform(JSContext* cx, jsval v, AffineTransform* ret);
 JSBool jsval_to_ccfontdefinition( JSContext *cx, jsval vp, ccFontDefinition *out );
 
 // from native
@@ -233,16 +233,16 @@ jsval uint32_to_jsval( JSContext *cx, uint32_t number );
 jsval long_long_to_jsval(JSContext* cx, long long v);
 jsval std_string_to_jsval(JSContext* cx, string& v);
 jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length = -1);
-jsval ccpoint_to_jsval(JSContext* cx, CCPoint& v);
-jsval ccrect_to_jsval(JSContext* cx, CCRect& v);
-jsval ccsize_to_jsval(JSContext* cx, CCSize& v);
+jsval ccpoint_to_jsval(JSContext* cx, Point& v);
+jsval ccrect_to_jsval(JSContext* cx, Rect& v);
+jsval ccsize_to_jsval(JSContext* cx, Size& v);
 jsval cccolor4b_to_jsval(JSContext* cx, ccColor4B& v);
 jsval cccolor4f_to_jsval(JSContext* cx, ccColor4F& v);
 jsval cccolor3b_to_jsval(JSContext* cx, const ccColor3B& v);
-jsval ccdictionary_to_jsval(JSContext* cx, CCDictionary *dict);
-jsval ccarray_to_jsval(JSContext* cx, CCArray *arr);
-jsval ccacceleration_to_jsval(JSContext* cx, CCAcceleration& v);
-jsval ccaffinetransform_to_jsval(JSContext* cx, CCAffineTransform& t);
+jsval ccdictionary_to_jsval(JSContext* cx, Dictionary *dict);
+jsval ccarray_to_jsval(JSContext* cx, Array *arr);
+jsval ccacceleration_to_jsval(JSContext* cx, Acceleration& v);
+jsval ccaffinetransform_to_jsval(JSContext* cx, AffineTransform& t);
 
 
 JSObject* NewGlobalObject(JSContext* cx, bool debug = false);
@@ -313,4 +313,10 @@ private:
 JSBool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value);
 JSBool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret);
 
-#endif
+js_proxy_t* jsb_new_proxy(void* nativeObj, JSObject* jsObj);
+js_proxy_t* jsb_get_native_proxy(void* nativeObj);
+js_proxy_t* jsb_get_js_proxy(JSObject* jsObj);
+void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy);
+
+
+#endif /* __SCRIPTING_CORE_H__ */

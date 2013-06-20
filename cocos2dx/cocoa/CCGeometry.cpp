@@ -25,76 +25,76 @@ THE SOFTWARE.
 #include "CCGeometry.h"
 #include "ccMacros.h"
 
-// implementation of CCPoint
+// implementation of Point
 NS_CC_BEGIN
 
-CCPoint::CCPoint(void) : x(0), y(0)
+Point::Point(void) : x(0), y(0)
 {
 }
 
-CCPoint::CCPoint(float x, float y) : x(x), y(y)
+Point::Point(float x, float y) : x(x), y(y)
 {
 }
 
-CCPoint::CCPoint(const CCPoint& other) : x(other.x), y(other.y)
+Point::Point(const Point& other) : x(other.x), y(other.y)
 {
 }
 
-CCPoint::CCPoint(const CCSize& size) : x(size.width), y(size.height)
+Point::Point(const Size& size) : x(size.width), y(size.height)
 {
 }
 
-CCPoint& CCPoint::operator= (const CCPoint& other)
+Point& Point::operator= (const Point& other)
 {
     setPoint(other.x, other.y);
     return *this;
 }
 
-CCPoint& CCPoint::operator= (const CCSize& size)
+Point& Point::operator= (const Size& size)
 {
     setPoint(size.width, size.height);
     return *this;
 }
 
-CCPoint CCPoint::operator+(const CCPoint& right) const
+Point Point::operator+(const Point& right) const
 {
-    return CCPoint(this->x + right.x, this->y + right.y);
+    return Point(this->x + right.x, this->y + right.y);
 }
 
-CCPoint CCPoint::operator-(const CCPoint& right) const
+Point Point::operator-(const Point& right) const
 {
-    return CCPoint(this->x - right.x, this->y - right.y);
+    return Point(this->x - right.x, this->y - right.y);
 }
 
-CCPoint CCPoint::operator-() const
+Point Point::operator-() const
 {
-	return CCPoint(-x, -y);
+	return Point(-x, -y);
 }
 
-CCPoint CCPoint::operator*(float a) const
+Point Point::operator*(float a) const
 {
-    return CCPoint(this->x * a, this->y * a);
+    return Point(this->x * a, this->y * a);
 }
 
-CCPoint CCPoint::operator/(float a) const
+Point Point::operator/(float a) const
 {
 	CCAssert(a, "CCPoint division by 0.");
-    return CCPoint(this->x / a, this->y / a);
+    return Point(this->x / a, this->y / a);
 }
 
-void CCPoint::setPoint(float x, float y)
+void Point::setPoint(float x, float y)
 {
     this->x = x;
     this->y = y;
 }
 
-bool CCPoint::equals(const CCPoint& target) const
+bool Point::equals(const Point& target) const
 {
     return (fabs(this->x - target.x) < FLT_EPSILON)
         && (fabs(this->y - target.y) < FLT_EPSILON);
 }
 
-bool CCPoint::fuzzyEquals(const CCPoint& b, float var) const
+bool Point::fuzzyEquals(const Point& b, float var) const
 {
     if(x - var <= b.x && b.x <= x + var)
         if(y - var <= b.y && b.y <= y + var)
@@ -102,107 +102,107 @@ bool CCPoint::fuzzyEquals(const CCPoint& b, float var) const
     return false;
 }
 
-float CCPoint::getAngle(const CCPoint& other) const
+float Point::getAngle(const Point& other) const
 {
-    CCPoint a2 = normalize();
-    CCPoint b2 = other.normalize();
+    Point a2 = normalize();
+    Point b2 = other.normalize();
     float angle = atan2f(a2.cross(b2), a2.dot(b2));
     if( fabs(angle) < FLT_EPSILON ) return 0.f;
     return angle;
 }
 
-CCPoint CCPoint::rotateByAngle(const CCPoint& pivot, float angle) const
+Point Point::rotateByAngle(const Point& pivot, float angle) const
 {
-    return pivot + (*this - pivot).rotate(CCPoint::forAngle(angle));
+    return pivot + (*this - pivot).rotate(Point::forAngle(angle));
 }
 
-// implementation of CCSize
+// implementation of Size
 
-CCSize::CCSize(void) : width(0), height(0)
-{
-}
-
-CCSize::CCSize(float width, float height) : width(width), height(height)
+Size::Size(void) : width(0), height(0)
 {
 }
 
-CCSize::CCSize(const CCSize& other) : width(other.width), height(other.height)
+Size::Size(float width, float height) : width(width), height(height)
 {
 }
 
-CCSize::CCSize(const CCPoint& point) : width(point.x), height(point.y)
+Size::Size(const Size& other) : width(other.width), height(other.height)
 {
 }
 
-CCSize& CCSize::operator= (const CCSize& other)
+Size::Size(const Point& point) : width(point.x), height(point.y)
+{
+}
+
+Size& Size::operator= (const Size& other)
 {
     setSize(other.width, other.height);
     return *this;
 }
 
-CCSize& CCSize::operator= (const CCPoint& point)
+Size& Size::operator= (const Point& point)
 {
     setSize(point.x, point.y);
     return *this;
 }
 
-CCSize CCSize::operator+(const CCSize& right) const
+Size Size::operator+(const Size& right) const
 {
-    return CCSize(this->width + right.width, this->height + right.height);
+    return Size(this->width + right.width, this->height + right.height);
 }
 
-CCSize CCSize::operator-(const CCSize& right) const
+Size Size::operator-(const Size& right) const
 {
-    return CCSize(this->width - right.width, this->height - right.height);
+    return Size(this->width - right.width, this->height - right.height);
 }
 
-CCSize CCSize::operator*(float a) const
+Size Size::operator*(float a) const
 {
-    return CCSize(this->width * a, this->height * a);
+    return Size(this->width * a, this->height * a);
 }
 
-CCSize CCSize::operator/(float a) const
+Size Size::operator/(float a) const
 {
 	CCAssert(a, "CCSize division by 0.");
-    return CCSize(this->width / a, this->height / a);
+    return Size(this->width / a, this->height / a);
 }
 
-void CCSize::setSize(float width, float height)
+void Size::setSize(float width, float height)
 {
     this->width = width;
     this->height = height;
 }
 
-bool CCSize::equals(const CCSize& target) const
+bool Size::equals(const Size& target) const
 {
     return (fabs(this->width  - target.width)  < FLT_EPSILON)
         && (fabs(this->height - target.height) < FLT_EPSILON);
 }
 
-// implementation of CCRect
+// implementation of Rect
 
-CCRect::CCRect(void)
+Rect::Rect(void)
 {
     setRect(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
-CCRect::CCRect(float x, float y, float width, float height)
+Rect::Rect(float x, float y, float width, float height)
 {
     setRect(x, y, width, height);
 }
 
-CCRect::CCRect(const CCRect& other)
+Rect::Rect(const Rect& other)
 {
     setRect(other.origin.x, other.origin.y, other.size.width, other.size.height);
 }
 
-CCRect& CCRect::operator= (const CCRect& other)
+Rect& Rect::operator= (const Rect& other)
 {
     setRect(other.origin.x, other.origin.y, other.size.width, other.size.height);
     return *this;
 }
 
-void CCRect::setRect(float x, float y, float width, float height)
+void Rect::setRect(float x, float y, float width, float height)
 {
     // CGRect can support width<0 or height<0
     // CCAssert(width >= 0.0f && height >= 0.0f, "width and height of Rect must not less than 0.");
@@ -214,43 +214,43 @@ void CCRect::setRect(float x, float y, float width, float height)
     size.height = height;
 }
 
-bool CCRect::equals(const CCRect& rect) const
+bool Rect::equals(const Rect& rect) const
 {
     return (origin.equals(rect.origin) && 
             size.equals(rect.size));
 }
 
-float CCRect::getMaxX() const
+float Rect::getMaxX() const
 {
     return (float)(origin.x + size.width);
 }
 
-float CCRect::getMidX() const
+float Rect::getMidX() const
 {
     return (float)(origin.x + size.width / 2.0);
 }
 
-float CCRect::getMinX() const
+float Rect::getMinX() const
 {
     return origin.x;
 }
 
-float CCRect::getMaxY() const
+float Rect::getMaxY() const
 {
     return origin.y + size.height;
 }
 
-float CCRect::getMidY() const
+float Rect::getMidY() const
 {
     return (float)(origin.y + size.height / 2.0);
 }
 
-float CCRect::getMinY() const
+float Rect::getMinY() const
 {
     return origin.y;
 }
 
-bool CCRect::containsPoint(const CCPoint& point) const
+bool Rect::containsPoint(const Point& point) const
 {
     bool bRet = false;
 
@@ -263,7 +263,7 @@ bool CCRect::containsPoint(const CCPoint& point) const
     return bRet;
 }
 
-bool CCRect::intersectsRect(const CCRect& rect) const
+bool Rect::intersectsRect(const Rect& rect) const
 {
     return !(     getMaxX() < rect.getMinX() ||
              rect.getMaxX() <      getMinX() ||

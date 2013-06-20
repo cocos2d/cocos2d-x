@@ -106,9 +106,15 @@ extern "C"
             }
 
             jclass classID = getClassID_(className, pEnv);
+
+            if(pEnv->ExceptionCheck()) pEnv->ExceptionClear();
             methodID = pEnv->GetStaticMethodID(classID, methodName, paramCode);
             if (! methodID)
             {
+            	if(pEnv->ExceptionCheck())
+				{
+					pEnv->ExceptionClear();
+				}
                 LOGD("Failed to find static method id of %s", methodName);
                 break;
             }
@@ -137,10 +143,15 @@ extern "C"
 
             jclass classID = getClassID_(className, pEnv);
 
+            if(pEnv->ExceptionCheck()) pEnv->ExceptionClear();
             methodID = pEnv->GetMethodID(classID, methodName, paramCode);
             if (! methodID)
             {
-                LOGD("Failed to find method id of %s", methodName);
+            	if(pEnv->ExceptionCheck())
+            	{
+            		pEnv->ExceptionClear();
+            	}
+                LOGD("Failed to find method %s in class %s", methodName, className);
                 break;
             }
 
@@ -178,26 +189,16 @@ extern "C"
 
 namespace cocos2d {
 
-JavaVM* PluginJniHelper::m_psJavaVM = NULL;
+JavaVM* PluginJniHelper::_psJavaVM = NULL;
 
 JavaVM* PluginJniHelper::getJavaVM()
 {
-    return m_psJavaVM;
+    return _psJavaVM;
 }
 
 void PluginJniHelper::setJavaVM(JavaVM *javaVM)
 {
-    m_psJavaVM = javaVM;
-}
-
-string PluginJniHelper::m_externalAssetPath;
-
-const char* PluginJniHelper::getExternalAssetPath() {
-    return m_externalAssetPath.c_str();
-}
-
-void PluginJniHelper::setExternalAssetPath(const char * externalAssetPath) {
-    m_externalAssetPath = externalAssetPath;
+    _psJavaVM = javaVM;
 }
 
 jclass PluginJniHelper::getClassID(const char *className, JNIEnv *env)

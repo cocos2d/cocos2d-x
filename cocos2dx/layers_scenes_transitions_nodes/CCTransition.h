@@ -41,66 +41,66 @@ NS_CC_BEGIN
 //c/c++ don't support object creation of using class name
 //so, all classes need creation method.
 
-class CCActionInterval;
-class CCNode;
+class ActionInterval;
+class Node;
 
-/** @brief CCTransitionEaseScene can ease the actions of the scene protocol.
+/** @brief TransitionEaseScene can ease the actions of the scene protocol.
 @since v0.8.2
 */
-class CC_DLL CCTransitionEaseScene// : public CCObject
+class CC_DLL TransitionEaseScene// : public Object
 {
 public:
     /** returns the Ease action that will be performed on a linear action.
     @since v0.8.2
     */
-    virtual CCActionInterval * easeActionWithAction(CCActionInterval * action) = 0;
+    virtual ActionInterval * easeActionWithAction(ActionInterval * action) = 0;
 };
 
 /** Orientation Type used by some transitions
 */
 typedef enum {
     /// An horizontal orientation where the Left is nearer
-	kCCTransitionOrientationLeftOver = 0,
+	kTransitionOrientationLeftOver = 0,
 	/// An horizontal orientation where the Right is nearer
-	kCCTransitionOrientationRightOver = 1,
+	kTransitionOrientationRightOver = 1,
 	/// A vertical orientation where the Up is nearer
-	kCCTransitionOrientationUpOver = 0,
+	kTransitionOrientationUpOver = 0,
 	/// A vertical orientation where the Bottom is nearer
-	kCCTransitionOrientationDownOver = 1,
+	kTransitionOrientationDownOver = 1,
     
 	// Deprecated
-    //	kOrientationLeftOver = kCCTransitionOrientationLeftOver,
-    //	kOrientationRightOver = kCCTransitionOrientationRightOver,
-    //	kOrientationUpOver = kCCTransitionOrientationUpOver,
-    //	kOrientationDownOver = kCCTransitionOrientationDownOver,
+    //	kOrientationLeftOver = kTransitionOrientationLeftOver,
+    //	kOrientationRightOver = kTransitionOrientationRightOver,
+    //	kOrientationUpOver = kTransitionOrientationUpOver,
+    //	kOrientationDownOver = kTransitionOrientationDownOver,
 } tOrientation;
 
-/** @brief Base class for CCTransition scenes
+/** @brief Base class for Transition scenes
 */
-class CC_DLL CCTransitionScene : public CCScene
+class CC_DLL TransitionScene : public Scene
 {
 
 protected:
-    CCScene    * m_pInScene;
-    CCScene    * m_pOutScene;
-    float    m_fDuration;
-    bool    m_bIsInSceneOnTop;
-    bool    m_bIsSendCleanupToScene;
+    Scene    * _inScene;
+    Scene    * _outScene;
+    float    _duration;
+    bool    _isInSceneOnTop;
+    bool    _isSendCleanupToScene;
 
 public:
 
-    CCTransitionScene();
-    virtual ~CCTransitionScene();
+    TransitionScene();
+    virtual ~TransitionScene();
     virtual void draw();
     virtual void onEnter();
     virtual void onExit();
     virtual void cleanup();
 
     /** creates a base transition with duration and incoming scene */
-    static CCTransitionScene * create(float t, CCScene *scene);
+    static TransitionScene * create(float t, Scene *scene);
 
     /** initializes a transition with duration and incoming scene */
-    virtual bool initWithDuration(float t,CCScene* scene);
+    virtual bool initWithDuration(float t,Scene* scene);
 
     /** called after the transition finishes */
     void finish(void);
@@ -115,186 +115,186 @@ private:
 
 };
 
-/** @brief A CCTransition that supports orientation like.
+/** @brief A Transition that supports orientation like.
 * Possible orientation: LeftOver, RightOver, UpOver, DownOver
 */
-class CC_DLL CCTransitionSceneOriented : public CCTransitionScene
+class CC_DLL TransitionSceneOriented : public TransitionScene
 {
 protected:
-    tOrientation m_eOrientation;
+    tOrientation _orientation;
 
 public:
-    CCTransitionSceneOriented();
-    virtual ~CCTransitionSceneOriented();
+    TransitionSceneOriented();
+    virtual ~TransitionSceneOriented();
 
     /** creates a base transition with duration and incoming scene */
-    static CCTransitionSceneOriented * create(float t,CCScene* scene, tOrientation orientation);
+    static TransitionSceneOriented * create(float t,Scene* scene, tOrientation orientation);
 
     /** initializes a transition with duration and incoming scene */
-    virtual bool initWithDuration(float t,CCScene* scene,tOrientation orientation);
+    virtual bool initWithDuration(float t,Scene* scene,tOrientation orientation);
 };
 
-/** @brief CCTransitionRotoZoom:
+/** @brief TransitionRotoZoom:
 Rotate and zoom out the outgoing scene, and then rotate and zoom in the incoming 
 */
-class CC_DLL CCTransitionRotoZoom : public CCTransitionScene
+class CC_DLL TransitionRotoZoom : public TransitionScene
 {
 public:
-    CCTransitionRotoZoom();
-    virtual ~CCTransitionRotoZoom();
+    TransitionRotoZoom();
+    virtual ~TransitionRotoZoom();
     virtual void onEnter();
 
-    static CCTransitionRotoZoom* create(float t, CCScene* scene);
+    static TransitionRotoZoom* create(float t, Scene* scene);
 };
 
-/** @brief CCTransitionJumpZoom:
+/** @brief TransitionJumpZoom:
 Zoom out and jump the outgoing scene, and then jump and zoom in the incoming 
 */
-class CC_DLL CCTransitionJumpZoom : public CCTransitionScene
+class CC_DLL TransitionJumpZoom : public TransitionScene
 {
 public:
-    CCTransitionJumpZoom();
-    virtual ~CCTransitionJumpZoom();
+    TransitionJumpZoom();
+    virtual ~TransitionJumpZoom();
     virtual void onEnter();
 
-    static CCTransitionJumpZoom* create(float t, CCScene* scene);
+    static TransitionJumpZoom* create(float t, Scene* scene);
 };
 
-/** @brief CCTransitionMoveInL:
+/** @brief TransitionMoveInL:
 Move in from to the left the incoming scene.
 */
-class CC_DLL CCTransitionMoveInL : public CCTransitionScene, public CCTransitionEaseScene
+class CC_DLL TransitionMoveInL : public TransitionScene, public TransitionEaseScene
 {
 public:
-    CCTransitionMoveInL();
-    virtual ~CCTransitionMoveInL();
+    TransitionMoveInL();
+    virtual ~TransitionMoveInL();
     /** initializes the scenes */
     virtual void initScenes(void);
     /** returns the action that will be performed */
-    virtual CCActionInterval* action(void);
+    virtual ActionInterval* action(void);
 
-    virtual CCActionInterval* easeActionWithAction(CCActionInterval * action);
+    virtual ActionInterval* easeActionWithAction(ActionInterval * action);
 
     virtual void onEnter();
 
-    static CCTransitionMoveInL* create(float t, CCScene* scene);
+    static TransitionMoveInL* create(float t, Scene* scene);
 };
 
-/** @brief CCTransitionMoveInR:
+/** @brief TransitionMoveInR:
 Move in from to the right the incoming scene.
 */
-class CC_DLL CCTransitionMoveInR : public CCTransitionMoveInL
+class CC_DLL TransitionMoveInR : public TransitionMoveInL
 {
 public:
-    CCTransitionMoveInR();
-    virtual ~CCTransitionMoveInR();
+    TransitionMoveInR();
+    virtual ~TransitionMoveInR();
     virtual void initScenes();
 
-    static CCTransitionMoveInR* create(float t, CCScene* scene);
+    static TransitionMoveInR* create(float t, Scene* scene);
 };
 
-/** @brief CCTransitionMoveInT:
+/** @brief TransitionMoveInT:
 Move in from to the top the incoming scene.
 */
-class CC_DLL CCTransitionMoveInT : public CCTransitionMoveInL 
+class CC_DLL TransitionMoveInT : public TransitionMoveInL 
 {
 public:
-    CCTransitionMoveInT();
-    virtual ~CCTransitionMoveInT();
+    TransitionMoveInT();
+    virtual ~TransitionMoveInT();
     virtual void initScenes();
 
-    static CCTransitionMoveInT* create(float t, CCScene* scene);
+    static TransitionMoveInT* create(float t, Scene* scene);
 };
 
-/** @brief CCTransitionMoveInB:
+/** @brief TransitionMoveInB:
 Move in from to the bottom the incoming scene.
 */
-class CC_DLL CCTransitionMoveInB : public CCTransitionMoveInL
+class CC_DLL TransitionMoveInB : public TransitionMoveInL
 {
 public:
-    CCTransitionMoveInB();
-    virtual ~CCTransitionMoveInB();
+    TransitionMoveInB();
+    virtual ~TransitionMoveInB();
     virtual void initScenes();
 
-    static CCTransitionMoveInB* create(float t, CCScene* scene);
+    static TransitionMoveInB* create(float t, Scene* scene);
 };
 
-/** @brief CCTransitionSlideInL:
+/** @brief TransitionSlideInL:
 Slide in the incoming scene from the left border.
 */
-class CC_DLL CCTransitionSlideInL : public CCTransitionScene, public CCTransitionEaseScene
+class CC_DLL TransitionSlideInL : public TransitionScene, public TransitionEaseScene
 {
 public:
-    CCTransitionSlideInL();
-    virtual ~CCTransitionSlideInL();
+    TransitionSlideInL();
+    virtual ~TransitionSlideInL();
 
     /** initializes the scenes */
     virtual void initScenes(void);
     /** returns the action that will be performed by the incoming and outgoing scene */
-    virtual CCActionInterval* action(void);
+    virtual ActionInterval* action(void);
 
     virtual void onEnter();
     
-    virtual CCActionInterval* easeActionWithAction(CCActionInterval * action);
+    virtual ActionInterval* easeActionWithAction(ActionInterval * action);
 
-    static CCTransitionSlideInL* create(float t, CCScene* scene);
+    static TransitionSlideInL* create(float t, Scene* scene);
 protected:
     virtual void sceneOrder();
 };
 
-/** @brief CCTransitionSlideInR:
+/** @brief TransitionSlideInR:
 Slide in the incoming scene from the right border.
 */
-class CC_DLL CCTransitionSlideInR : public CCTransitionSlideInL 
+class CC_DLL TransitionSlideInR : public TransitionSlideInL 
 {
 public:
-    CCTransitionSlideInR();
-    virtual ~CCTransitionSlideInR();
+    TransitionSlideInR();
+    virtual ~TransitionSlideInR();
 
     /** initializes the scenes */
     virtual void initScenes(void);
     /** returns the action that will be performed by the incoming and outgoing scene */
-    virtual CCActionInterval* action(void);
+    virtual ActionInterval* action(void);
 
-    static CCTransitionSlideInR* create(float t, CCScene* scene);
+    static TransitionSlideInR* create(float t, Scene* scene);
 protected:
     virtual void sceneOrder();
 };
 
-/** @brief CCTransitionSlideInB:
+/** @brief TransitionSlideInB:
 Slide in the incoming scene from the bottom border.
 */
-class CC_DLL CCTransitionSlideInB : public CCTransitionSlideInL
+class CC_DLL TransitionSlideInB : public TransitionSlideInL
 {
 public:
-    CCTransitionSlideInB();
-    virtual ~CCTransitionSlideInB();
+    TransitionSlideInB();
+    virtual ~TransitionSlideInB();
 
     /** initializes the scenes */
     virtual void initScenes(void);
     /** returns the action that will be performed by the incoming and outgoing scene */
-    virtual CCActionInterval* action(void);
+    virtual ActionInterval* action(void);
 
-    static CCTransitionSlideInB* create(float t, CCScene* scene);
+    static TransitionSlideInB* create(float t, Scene* scene);
 protected: 
     virtual void sceneOrder();
 };
 
-/** @brief CCTransitionSlideInT:
+/** @brief TransitionSlideInT:
 Slide in the incoming scene from the top border.
 */
-class CC_DLL CCTransitionSlideInT : public CCTransitionSlideInL
+class CC_DLL TransitionSlideInT : public TransitionSlideInL
 {
 public:
-    CCTransitionSlideInT();
-    virtual ~CCTransitionSlideInT();
+    TransitionSlideInT();
+    virtual ~TransitionSlideInT();
 
     /** initializes the scenes */
     virtual void initScenes(void);
     /** returns the action that will be performed by the incoming and outgoing scene */
-    virtual CCActionInterval* action(void);
+    virtual ActionInterval* action(void);
 
-    static CCTransitionSlideInT* create(float t, CCScene* scene);
+    static TransitionSlideInT* create(float t, Scene* scene);
 protected:
     virtual void sceneOrder();
 };
@@ -302,274 +302,274 @@ protected:
 /**
 @brief Shrink the outgoing scene while grow the incoming scene
 */
-class CC_DLL CCTransitionShrinkGrow : public CCTransitionScene , public CCTransitionEaseScene
+class CC_DLL TransitionShrinkGrow : public TransitionScene , public TransitionEaseScene
 {
 public:
-    CCTransitionShrinkGrow();
-    virtual ~CCTransitionShrinkGrow();
+    TransitionShrinkGrow();
+    virtual ~TransitionShrinkGrow();
 
     virtual void onEnter();
-    virtual CCActionInterval* easeActionWithAction(CCActionInterval * action);
+    virtual ActionInterval* easeActionWithAction(ActionInterval * action);
 
-    static CCTransitionShrinkGrow* create(float t, CCScene* scene);
+    static TransitionShrinkGrow* create(float t, Scene* scene);
 };
 
-/** @brief CCTransitionFlipX:
+/** @brief TransitionFlipX:
 Flips the screen horizontally.
 The front face is the outgoing scene and the back face is the incoming scene.
 */
-class CC_DLL CCTransitionFlipX : public CCTransitionSceneOriented
+class CC_DLL TransitionFlipX : public TransitionSceneOriented
 {
 public:
-    CCTransitionFlipX();
-    virtual ~CCTransitionFlipX();
+    TransitionFlipX();
+    virtual ~TransitionFlipX();
 
     virtual void onEnter();
 
-    static CCTransitionFlipX* create(float t, CCScene* s, tOrientation o);
-    static CCTransitionFlipX* create(float t, CCScene* s);
+    static TransitionFlipX* create(float t, Scene* s, tOrientation o);
+    static TransitionFlipX* create(float t, Scene* s);
 };
 
-/** @brief CCTransitionFlipY:
+/** @brief TransitionFlipY:
 Flips the screen vertically.
 The front face is the outgoing scene and the back face is the incoming scene.
 */
-class CC_DLL CCTransitionFlipY : public CCTransitionSceneOriented
+class CC_DLL TransitionFlipY : public TransitionSceneOriented
 {
 public:
-    CCTransitionFlipY();
-    virtual ~CCTransitionFlipY();
+    TransitionFlipY();
+    virtual ~TransitionFlipY();
 
     virtual void onEnter();
 
-    static CCTransitionFlipY* create(float t, CCScene* s, tOrientation o);
-    static CCTransitionFlipY* create(float t, CCScene* s);
+    static TransitionFlipY* create(float t, Scene* s, tOrientation o);
+    static TransitionFlipY* create(float t, Scene* s);
 };
 
-/** @brief CCTransitionFlipAngular:
+/** @brief TransitionFlipAngular:
 Flips the screen half horizontally and half vertically.
 The front face is the outgoing scene and the back face is the incoming scene.
 */
-class CC_DLL CCTransitionFlipAngular : public CCTransitionSceneOriented
+class CC_DLL TransitionFlipAngular : public TransitionSceneOriented
 {
 public:
-    CCTransitionFlipAngular();
-    virtual ~CCTransitionFlipAngular();
+    TransitionFlipAngular();
+    virtual ~TransitionFlipAngular();
 
     virtual void onEnter();
     
-    static CCTransitionFlipAngular* create(float t, CCScene* s, tOrientation o);
-    static CCTransitionFlipAngular* create(float t, CCScene* s);
+    static TransitionFlipAngular* create(float t, Scene* s, tOrientation o);
+    static TransitionFlipAngular* create(float t, Scene* s);
 };
 
-/** @brief CCTransitionZoomFlipX:
+/** @brief TransitionZoomFlipX:
 Flips the screen horizontally doing a zoom out/in
 The front face is the outgoing scene and the back face is the incoming scene.
 */
-class CC_DLL CCTransitionZoomFlipX : public CCTransitionSceneOriented
+class CC_DLL TransitionZoomFlipX : public TransitionSceneOriented
 {
 public:
-    CCTransitionZoomFlipX();
-    virtual ~CCTransitionZoomFlipX();
+    TransitionZoomFlipX();
+    virtual ~TransitionZoomFlipX();
 
     virtual void onEnter();
 
-    static CCTransitionZoomFlipX* create(float t, CCScene* s, tOrientation o);
-    static CCTransitionZoomFlipX* create(float t, CCScene* s);
+    static TransitionZoomFlipX* create(float t, Scene* s, tOrientation o);
+    static TransitionZoomFlipX* create(float t, Scene* s);
 };
 
-/** @brief CCTransitionZoomFlipY:
+/** @brief TransitionZoomFlipY:
 Flips the screen vertically doing a little zooming out/in
 The front face is the outgoing scene and the back face is the incoming scene.
 */
-class CC_DLL CCTransitionZoomFlipY : public CCTransitionSceneOriented
+class CC_DLL TransitionZoomFlipY : public TransitionSceneOriented
 {
 public:
-    CCTransitionZoomFlipY();
-    virtual ~CCTransitionZoomFlipY();
+    TransitionZoomFlipY();
+    virtual ~TransitionZoomFlipY();
 
     virtual void onEnter();
 
-    static CCTransitionZoomFlipY* create(float t, CCScene* s, tOrientation o);
-    static CCTransitionZoomFlipY* create(float t, CCScene* s);
+    static TransitionZoomFlipY* create(float t, Scene* s, tOrientation o);
+    static TransitionZoomFlipY* create(float t, Scene* s);
 };
 
-/** @brief CCTransitionZoomFlipAngular:
+/** @brief TransitionZoomFlipAngular:
 Flips the screen half horizontally and half vertically doing a little zooming out/in.
 The front face is the outgoing scene and the back face is the incoming scene.
 */
-class CC_DLL CCTransitionZoomFlipAngular : public CCTransitionSceneOriented
+class CC_DLL TransitionZoomFlipAngular : public TransitionSceneOriented
 {
 public:
-    CCTransitionZoomFlipAngular();
-    virtual ~CCTransitionZoomFlipAngular();
+    TransitionZoomFlipAngular();
+    virtual ~TransitionZoomFlipAngular();
 
     virtual void onEnter();
 
-    static CCTransitionZoomFlipAngular* create(float t, CCScene* s, tOrientation o);
-    static CCTransitionZoomFlipAngular* create(float t, CCScene* s);
+    static TransitionZoomFlipAngular* create(float t, Scene* s, tOrientation o);
+    static TransitionZoomFlipAngular* create(float t, Scene* s);
 };
 
-/** @brief CCTransitionFade:
+/** @brief TransitionFade:
 Fade out the outgoing scene and then fade in the incoming scene.'''
 */
-class CC_DLL CCTransitionFade : public CCTransitionScene
+class CC_DLL TransitionFade : public TransitionScene
 {
 protected:
-    ccColor4B    m_tColor;
+    ccColor4B    _color;
 
 public:
 
-    CCTransitionFade();
-    virtual ~CCTransitionFade();
+    TransitionFade();
+    virtual ~TransitionFade();
     
     /** creates the transition with a duration and with an RGB color
     * Example: FadeTransition::create(2, scene, ccc3(255,0,0); // red color
     */
-    static CCTransitionFade* create(float duration,CCScene* scene, const ccColor3B& color);
-    static CCTransitionFade* create(float duration,CCScene* scene);
+    static TransitionFade* create(float duration,Scene* scene, const ccColor3B& color);
+    static TransitionFade* create(float duration,Scene* scene);
 
     /** initializes the transition with a duration and with an RGB color */
-    virtual bool initWithDuration(float t, CCScene*scene ,const ccColor3B& color);
+    virtual bool initWithDuration(float t, Scene*scene ,const ccColor3B& color);
 
-    virtual bool initWithDuration(float t,CCScene* scene); 
+    virtual bool initWithDuration(float t,Scene* scene); 
     virtual void onEnter();
     virtual void onExit();
 };
 
-class CCRenderTexture;
+class RenderTexture;
 /**
-@brief CCTransitionCrossFade:
-Cross fades two scenes using the CCRenderTexture object.
+@brief TransitionCrossFade:
+Cross fades two scenes using the RenderTexture object.
 */
-class CC_DLL CCTransitionCrossFade : public CCTransitionScene
+class CC_DLL TransitionCrossFade : public TransitionScene
 {
 public :
-    CCTransitionCrossFade();
-    virtual ~CCTransitionCrossFade();
+    TransitionCrossFade();
+    virtual ~TransitionCrossFade();
 
     virtual void draw();
     virtual void onEnter();
     virtual void onExit();
 
 public:
-    static CCTransitionCrossFade* create(float t, CCScene* scene);
+    static TransitionCrossFade* create(float t, Scene* scene);
 };
 
-/** @brief CCTransitionTurnOffTiles:
+/** @brief TransitionTurnOffTiles:
 Turn off the tiles of the outgoing scene in random order
 */
-class CC_DLL CCTransitionTurnOffTiles : public CCTransitionScene ,public CCTransitionEaseScene
+class CC_DLL TransitionTurnOffTiles : public TransitionScene ,public TransitionEaseScene
 {
 public :
-    CCTransitionTurnOffTiles();
-    virtual ~CCTransitionTurnOffTiles();
+    TransitionTurnOffTiles();
+    virtual ~TransitionTurnOffTiles();
 
     virtual void onEnter();
-    virtual CCActionInterval * easeActionWithAction(CCActionInterval * action);
+    virtual ActionInterval * easeActionWithAction(ActionInterval * action);
 
 public:
-    static CCTransitionTurnOffTiles* create(float t, CCScene* scene);
+    static TransitionTurnOffTiles* create(float t, Scene* scene);
 protected:
     virtual void sceneOrder();
 };
 
-/** @brief CCTransitionSplitCols:
+/** @brief TransitionSplitCols:
 The odd columns goes upwards while the even columns goes downwards.
 */
-class CC_DLL CCTransitionSplitCols : public CCTransitionScene , public CCTransitionEaseScene
+class CC_DLL TransitionSplitCols : public TransitionScene , public TransitionEaseScene
 {
 public:
-    CCTransitionSplitCols();
-    virtual ~CCTransitionSplitCols();
+    TransitionSplitCols();
+    virtual ~TransitionSplitCols();
 
-    virtual CCActionInterval* action(void);
+    virtual ActionInterval* action(void);
     virtual void onEnter();
-    virtual CCActionInterval * easeActionWithAction(CCActionInterval * action);
+    virtual ActionInterval * easeActionWithAction(ActionInterval * action);
 
 public:
 
-    static CCTransitionSplitCols* create(float t, CCScene* scene);
+    static TransitionSplitCols* create(float t, Scene* scene);
 };
 
-/** @brief CCTransitionSplitRows:
+/** @brief TransitionSplitRows:
 The odd rows goes to the left while the even rows goes to the right.
 */
-class CC_DLL CCTransitionSplitRows : public CCTransitionSplitCols
+class CC_DLL TransitionSplitRows : public TransitionSplitCols
 {
 public:
-    CCTransitionSplitRows();
-    virtual ~CCTransitionSplitRows();
+    TransitionSplitRows();
+    virtual ~TransitionSplitRows();
 
-    virtual CCActionInterval* action(void);
+    virtual ActionInterval* action(void);
 
 public:
 
-    static CCTransitionSplitRows* create(float t, CCScene* scene);
+    static TransitionSplitRows* create(float t, Scene* scene);
 };
 
-/** @brief CCTransitionFadeTR:
+/** @brief TransitionFadeTR:
 Fade the tiles of the outgoing scene from the left-bottom corner the to top-right corner.
 */
-class CC_DLL CCTransitionFadeTR : public CCTransitionScene , public CCTransitionEaseScene
+class CC_DLL TransitionFadeTR : public TransitionScene , public TransitionEaseScene
 {
 public:
-    CCTransitionFadeTR();
-    virtual ~CCTransitionFadeTR();
-    virtual CCActionInterval* actionWithSize(const CCSize& size);
+    TransitionFadeTR();
+    virtual ~TransitionFadeTR();
+    virtual ActionInterval* actionWithSize(const Size& size);
     virtual void onEnter();
-    virtual CCActionInterval* easeActionWithAction(CCActionInterval * action);
+    virtual ActionInterval* easeActionWithAction(ActionInterval * action);
 
 public:
 
-    static CCTransitionFadeTR* create(float t, CCScene* scene);
+    static TransitionFadeTR* create(float t, Scene* scene);
 protected:
     virtual void sceneOrder();
 };
 
-/** @brief CCTransitionFadeBL:
+/** @brief TransitionFadeBL:
 Fade the tiles of the outgoing scene from the top-right corner to the bottom-left corner.
 */
-class CC_DLL CCTransitionFadeBL : public CCTransitionFadeTR
+class CC_DLL TransitionFadeBL : public TransitionFadeTR
 {
 public:
-    CCTransitionFadeBL();
-    virtual ~CCTransitionFadeBL();
-    virtual CCActionInterval* actionWithSize(const CCSize& size);
+    TransitionFadeBL();
+    virtual ~TransitionFadeBL();
+    virtual ActionInterval* actionWithSize(const Size& size);
 
 public:
 
-    static CCTransitionFadeBL* create(float t, CCScene* scene);
+    static TransitionFadeBL* create(float t, Scene* scene);
 };
 
-/** @brief CCTransitionFadeUp:
+/** @brief TransitionFadeUp:
 * Fade the tiles of the outgoing scene from the bottom to the top.
 */
-class CC_DLL CCTransitionFadeUp : public CCTransitionFadeTR
+class CC_DLL TransitionFadeUp : public TransitionFadeTR
 {
 public:
-    CCTransitionFadeUp();
-    virtual ~CCTransitionFadeUp();
-    virtual CCActionInterval* actionWithSize(const CCSize& size);
+    TransitionFadeUp();
+    virtual ~TransitionFadeUp();
+    virtual ActionInterval* actionWithSize(const Size& size);
 
 public:
 
-    static CCTransitionFadeUp* create(float t, CCScene* scene);
+    static TransitionFadeUp* create(float t, Scene* scene);
 };
 
-/** @brief CCTransitionFadeDown:
+/** @brief TransitionFadeDown:
 * Fade the tiles of the outgoing scene from the top to the bottom.
 */
-class CC_DLL CCTransitionFadeDown : public CCTransitionFadeTR
+class CC_DLL TransitionFadeDown : public TransitionFadeTR
 {
 public:
-    CCTransitionFadeDown();
-    virtual ~CCTransitionFadeDown();
-    virtual CCActionInterval* actionWithSize(const CCSize& size);
+    TransitionFadeDown();
+    virtual ~TransitionFadeDown();
+    virtual ActionInterval* actionWithSize(const Size& size);
 
 public:
 
-    static CCTransitionFadeDown* create(float t, CCScene* scene);
+    static TransitionFadeDown* create(float t, Scene* scene);
 };
 
 // end of transition group

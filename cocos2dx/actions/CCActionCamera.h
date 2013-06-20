@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CCCamera;
+class Camera;
 
 /**
  * @addtogroup actions
@@ -38,87 +38,92 @@ class CCCamera;
  */
 
 /** 
-@brief Base class for CCCamera actions
+@brief Base class for Camera actions
 @ingroup Actions
 */
-class CC_DLL CCActionCamera : public CCActionInterval //<NSCopying> 
+class CC_DLL ActionCamera : public ActionInterval //<NSCopying> 
 {
 public:
-    CCActionCamera()
-        :m_fCenterXOrig(0)
-        ,m_fCenterYOrig(0)
-        ,m_fCenterZOrig(0)
-        ,m_fEyeXOrig(0)
-        ,m_fEyeYOrig(0)
-        ,m_fEyeZOrig(0)
-        ,m_fUpXOrig(0)
-        ,m_fUpYOrig(0)
-        ,m_fUpZOrig(0)
+    ActionCamera()
+		:_centerXOrig(0)
+        ,_centerYOrig(0)
+        ,_centerZOrig(0)
+        ,_eyeXOrig(0)
+        ,_eyeYOrig(0)
+        ,_eyeZOrig(0)
+        ,_upXOrig(0)
+        ,_upYOrig(0)
+        ,_upZOrig(0)
     {}
-    virtual ~CCActionCamera(){}
+    virtual ~ActionCamera(){}
     // super methods
-    virtual void startWithTarget(CCNode *pTarget);
-    virtual CCActionInterval * reverse();
+    virtual void startWithTarget(Node *pTarget);
+	/** returns a new reversed action */
+    virtual ActionCamera * reverse() const;
+	/** returns a new clone of the action */
+	virtual ActionCamera *clone() const;
 protected:
-    float m_fCenterXOrig;
-    float m_fCenterYOrig;
-    float m_fCenterZOrig;
+    float _centerXOrig;
+    float _centerYOrig;
+    float _centerZOrig;
 
-    float m_fEyeXOrig;
-    float m_fEyeYOrig;
-    float m_fEyeZOrig;
+    float _eyeXOrig;
+    float _eyeYOrig;
+    float _eyeZOrig;
 
-    float m_fUpXOrig;
-    float m_fUpYOrig;
-    float m_fUpZOrig;
+    float _upXOrig;
+    float _upYOrig;
+    float _upZOrig;
 };
 
 /** 
-@brief CCOrbitCamera action
+@brief OrbitCamera action
 Orbits the camera around the center of the screen using spherical coordinates
 @ingroup Actions
 */
-class CC_DLL CCOrbitCamera : public CCActionCamera //<NSCopying> 
+class CC_DLL OrbitCamera : public ActionCamera //<NSCopying> 
 {
 public:
-    CCOrbitCamera()
-        : m_fRadius(0.0)
-        , m_fDeltaRadius(0.0)
-        , m_fAngleZ(0.0)
-        , m_fDeltaAngleZ(0.0)
-        , m_fAngleX(0.0)            
-        , m_fDeltaAngleX(0.0)
-        , m_fRadZ(0.0)
-        , m_fRadDeltaZ(0.0)
-        , m_fRadX(0.0)                        
-        , m_fRadDeltaX(0.0)        
+    OrbitCamera()
+		: _radius(0.0)
+        , _deltaRadius(0.0)
+        , _angleZ(0.0)
+        , _deltaAngleZ(0.0)
+        , _angleX(0.0)            
+        , _deltaAngleX(0.0)
+        , _radZ(0.0)
+        , _radDeltaZ(0.0)
+        , _radX(0.0)                        
+        , _radDeltaX(0.0)        
     {}
-    ~CCOrbitCamera(){}
+    ~OrbitCamera(){}
     
-    /** creates a CCOrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
-    static CCOrbitCamera* create(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
+    /** creates a OrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
+    static OrbitCamera* create(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
     
-    /** initializes a CCOrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
+    /** initializes a OrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
     bool initWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
     /** positions the camera according to spherical coordinates */
     void sphericalRadius(float *r, float *zenith, float *azimuth);
     // super methods
-    virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void startWithTarget(CCNode *pTarget);
+	/** returns a new clone of the action */
+	OrbitCamera *clone() const;
+    virtual Object* copyWithZone(Zone* pZone);
+    virtual void startWithTarget(Node *pTarget);
     virtual void update(float time);
 
 protected:
-    float m_fRadius;
-    float m_fDeltaRadius;
-    float m_fAngleZ;
-    float m_fDeltaAngleZ;
-    float m_fAngleX;
-    float m_fDeltaAngleX;
+    float _radius;
+    float _deltaRadius;
+    float _angleZ;
+    float _deltaAngleZ;
+    float _angleX;
+    float _deltaAngleX;
 
-    float m_fRadZ;
-    float m_fRadDeltaZ;
-    float m_fRadX;
-    float m_fRadDeltaX;
+    float _radZ;
+    float _radDeltaZ;
+    float _radX;
+    float _radDeltaX;
 };
 
 // end of actions group

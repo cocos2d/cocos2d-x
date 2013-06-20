@@ -9,37 +9,41 @@
 #include "Bug-1159.h"
 #include "Bug-1174.h"
 
-#define TEST_BUG(bugNO)                                 \
-{                                                       \
-CCScene* pScene = CCScene::create();                      \
-Bug##bugNO##Layer* pLayer = new Bug##bugNO##Layer();    \
-pLayer->init();                                         \
-pScene->addChild(pLayer);                               \
-CCDirector::sharedDirector()->replaceScene(pScene);     \
-pLayer->autorelease();                                  \
+#define TEST_BUG(__bug__)									\
+{															\
+	Scene* pScene = Scene::create();					\
+	Bug##__bug__##Layer* pLayer = new Bug##__bug__##Layer();	\
+	pLayer->init();                                         \
+	pScene->addChild(pLayer);                               \
+	Director::sharedDirector()->replaceScene(pScene);     \
+	pLayer->autorelease();                                  \
 }
 
 enum
 {
-    MAX_COUNT = 9,
     LINE_SPACE = 40,
     kItemTagBasic = 5432,
 };
 
-static CCPoint s_tCurPos = CCPointZero;
+static Point s_tCurPos = PointZero;
 
-const std::string testsName[MAX_COUNT] = 
-{
-    "Bug-350",
-    "Bug-422",
-    "Bug-458",
-    "Bug-624",
-    "Bug-886",
-    "Bug-899",
-    "Bug-914",
-    "Bug-1159",
-    "Bug-1174"
+struct {
+	const char *test_name;
+	std::function<void(Object*)> callback;
+} g_bugs[] = {
+	{ "Bug-350", [](Object* sender){ TEST_BUG(350)} },
+	{ "Bug-422", [](Object* sender){ TEST_BUG(422)} },
+	{ "Bug-458", [](Object* sender){ TEST_BUG(458)} },
+	{ "Bug-624", [](Object* sender){ TEST_BUG(624)} },
+	{ "Bug-886", [](Object* sender){ TEST_BUG(886)} },
+	{ "Bug-899", [](Object* sender){ TEST_BUG(899)} },
+	{ "Bug-914", [](Object* sender){ TEST_BUG(914)} },
+	{ "Bug-1159", [](Object* sender){ TEST_BUG(1159)} },
+	{ "Bug-1174", [](Object* sender){ TEST_BUG(1174)} },
 };
+
+static const int g_maxitems = sizeof(g_bugs) / sizeof(g_bugs[0]);
+
 
 ////////////////////////////////////////////////////////
 //
@@ -48,97 +52,57 @@ const std::string testsName[MAX_COUNT] =
 ////////////////////////////////////////////////////////
 void BugsTestMainLayer::onEnter()
 {
-    CCLayer::onEnter();
+    Layer::onEnter();
 
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-    m_pItmeMenu = CCMenu::create();
-    CCMenuItemFont::setFontName("Arial");
-    CCMenuItemFont::setFontSize(24);
-    for (int i = 0; i < MAX_COUNT; ++i)
+    Size s = Director::sharedDirector()->getWinSize();
+    _itmeMenu = Menu::create();
+    MenuItemFont::setFontName("Arial");
+    MenuItemFont::setFontSize(24);
+    for (int i = 0; i < g_maxitems; ++i)
     {
-        CCMenuItemFont* pItem = CCMenuItemFont::create(testsName[i].c_str(), this,
-                                                    menu_selector(BugsTestMainLayer::menuCallback));
+        MenuItemFont* pItem = MenuItemFont::create(g_bugs[i].test_name, g_bugs[i].callback);
         pItem->setPosition(ccp(s.width / 2, s.height - (i + 1) * LINE_SPACE));
-        m_pItmeMenu->addChild(pItem, kItemTagBasic + i);
+        _itmeMenu->addChild(pItem, kItemTagBasic + i);
     }
 
-    m_pItmeMenu->setPosition(s_tCurPos);
-    addChild(m_pItmeMenu);
+    _itmeMenu->setPosition(s_tCurPos);
+    addChild(_itmeMenu);
     setTouchEnabled(true);
 }
 
-void BugsTestMainLayer::menuCallback(CCObject* pSender)
+void BugsTestMainLayer::ccTouchesBegan(Set *pTouches, Event *pEvent)
 {
-    CCMenuItemFont* pItem = (CCMenuItemFont*)pSender;
-    int nIndex = pItem->getZOrder() - kItemTagBasic;
+    SetIterator it = pTouches->begin();
+    Touch* touch = (Touch*)(*it);
 
-    switch (nIndex)
-    {
-    case 0:
-        TEST_BUG(350);
-        break;
-    case 1:
-        TEST_BUG(422);
-        break;
-    case 2:
-        TEST_BUG(458);
-        break;
-    case 3:
-        TEST_BUG(624);
-        break;
-    case 4:
-        TEST_BUG(886);
-        break;
-    case 5:
-        TEST_BUG(899);
-        break;
-    case 6:
-        TEST_BUG(914);
-        break;
-    case 7:
-        TEST_BUG(1159);
-        break;
-    case 8:
-        TEST_BUG(1174);
-        break;
-    default:
-        break;
-    }
+    _beginPos = touch->getLocation();    
 }
 
-void BugsTestMainLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
+void BugsTestMainLayer::ccTouchesMoved(Set *pTouches, Event *pEvent)
 {
-    CCSetIterator it = pTouches->begin();
-    CCTouch* touch = (CCTouch*)(*it);
+    SetIterator it = pTouches->begin();
+    Touch* touch = (Touch*)(*it);
 
-    m_tBeginPos = touch->getLocation();    
-}
+    Point touchLocation = touch->getLocation();    
+    float nMoveY = touchLocation.y - _beginPos.y;
 
-void BugsTestMainLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
-{
-    CCSetIterator it = pTouches->begin();
-    CCTouch* touch = (CCTouch*)(*it);
-
-    CCPoint touchLocation = touch->getLocation();    
-    float nMoveY = touchLocation.y - m_tBeginPos.y;
-
-    CCPoint curPos  = m_pItmeMenu->getPosition();
-    CCPoint nextPos = ccp(curPos.x, curPos.y + nMoveY);
-    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    Point curPos  = _itmeMenu->getPosition();
+    Point nextPos = ccp(curPos.x, curPos.y + nMoveY);
+    Size winSize = Director::sharedDirector()->getWinSize();
     if (nextPos.y < 0.0f)
     {
-        m_pItmeMenu->setPosition(CCPointZero);
+        _itmeMenu->setPosition(PointZero);
         return;
     }
 
-    if (nextPos.y > ((MAX_COUNT + 1)* LINE_SPACE - winSize.height))
+    if (nextPos.y > ((g_maxitems + 1)* LINE_SPACE - winSize.height))
     {
-        m_pItmeMenu->setPosition(ccp(0, ((MAX_COUNT + 1)* LINE_SPACE - winSize.height)));
+        _itmeMenu->setPosition(ccp(0, ((g_maxitems + 1)* LINE_SPACE - winSize.height)));
         return;
     }
 
-    m_pItmeMenu->setPosition(nextPos);
-    m_tBeginPos = touchLocation;
+    _itmeMenu->setPosition(nextPos);
+    _beginPos = touchLocation;
     s_tCurPos   = nextPos;
 }
 
@@ -149,21 +113,20 @@ void BugsTestMainLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 ////////////////////////////////////////////////////////
 void BugsTestBaseLayer::onEnter()
 {
-    CCLayer::onEnter();
+    Layer::onEnter();
 
-    CCMenuItemFont::setFontName("Arial");
-    CCMenuItemFont::setFontSize(24);
-    CCMenuItemFont* pMainItem = CCMenuItemFont::create("Back", this,
-        menu_selector(BugsTestBaseLayer::backCallback));
+    MenuItemFont::setFontName("Arial");
+    MenuItemFont::setFontSize(24);
+    MenuItemFont* pMainItem = MenuItemFont::create("Back", CC_CALLBACK_1(BugsTestBaseLayer::backCallback, this));
     pMainItem->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-    CCMenu* pMenu = CCMenu::create(pMainItem, NULL);
-    pMenu->setPosition( CCPointZero );
+    Menu* pMenu = Menu::create(pMainItem, NULL);
+    pMenu->setPosition( PointZero );
     addChild(pMenu);
 }
 
-void BugsTestBaseLayer::backCallback(CCObject* pSender)
+void BugsTestBaseLayer::backCallback(Object* pSender)
 {
-//    CCDirector::sharedDirector()->enableRetinaDisplay(false);
+//    Director::sharedDirector()->enableRetinaDisplay(false);
     BugsTestScene* pScene = new BugsTestScene();
     pScene->runThisTest();
     pScene->autorelease();
@@ -176,9 +139,9 @@ void BugsTestBaseLayer::backCallback(CCObject* pSender)
 ////////////////////////////////////////////////////////
 void BugsTestScene::runThisTest()
 {
-    CCLayer* pLayer = new BugsTestMainLayer();
+    Layer* pLayer = new BugsTestMainLayer();
     addChild(pLayer);
     pLayer->release();
 
-    CCDirector::sharedDirector()->replaceScene(this);
+    Director::sharedDirector()->replaceScene(this);
 }

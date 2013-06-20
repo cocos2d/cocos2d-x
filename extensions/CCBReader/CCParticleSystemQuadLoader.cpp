@@ -27,109 +27,109 @@
 
 NS_CC_EXT_BEGIN
 
-void CCParticleSystemQuadLoader::onHandlePropTypeIntegerLabeled(CCNode * pNode, CCNode * pParent, const char * pPropertyName, int pIntegerLabeled, CCBReader * pCCBReader) {
+void ParticleSystemQuadLoader::onHandlePropTypeIntegerLabeled(Node * pNode, Node * pParent, const char * pPropertyName, int pIntegerLabeled, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_EMITERMODE) == 0) {
-        ((CCParticleSystemQuad *)pNode)->setEmitterMode(pIntegerLabeled);
+        ((ParticleSystemQuad *)pNode)->setEmitterMode(pIntegerLabeled);
     } else {
-        CCNodeLoader::onHandlePropTypeIntegerLabeled(pNode, pParent, pPropertyName, pIntegerLabeled, pCCBReader);
+        NodeLoader::onHandlePropTypeIntegerLabeled(pNode, pParent, pPropertyName, pIntegerLabeled, pCCBReader);
     }
 }
 
-void CCParticleSystemQuadLoader::onHandlePropTypePoint(CCNode * pNode, CCNode * pParent, const char * pPropertyName, CCPoint pPoint, CCBReader * pCCBReader) {
+void ParticleSystemQuadLoader::onHandlePropTypePoint(Node * pNode, Node * pParent, const char * pPropertyName, Point pPoint, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_POSVAR) == 0) {
-        ((CCParticleSystemQuad *)pNode)->setPosVar(pPoint);
+        ((ParticleSystemQuad *)pNode)->setPosVar(pPoint);
     } else if(strcmp(pPropertyName, PROPERTY_GRAVITY) == 0) {
-        ((CCParticleSystemQuad *)pNode)->setGravity(pPoint);
+        ((ParticleSystemQuad *)pNode)->setGravity(pPoint);
     } else {
-        CCNodeLoader::onHandlePropTypePoint(pNode, pParent, pPropertyName, pPoint, pCCBReader);
+        NodeLoader::onHandlePropTypePoint(pNode, pParent, pPropertyName, pPoint, pCCBReader);
     }
 }
 
-void CCParticleSystemQuadLoader::onHandlePropTypeFloat(CCNode * pNode, CCNode * pParent, const char * pPropertyName, float pFloat, CCBReader * pCCBReader) {
+void ParticleSystemQuadLoader::onHandlePropTypeFloat(Node * pNode, Node * pParent, const char * pPropertyName, float pFloat, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_EMISSIONRATE) == 0) {
-        ((CCParticleSystemQuad *)pNode)->setEmissionRate(pFloat);
+        ((ParticleSystemQuad *)pNode)->setEmissionRate(pFloat);
     } else if(strcmp(pPropertyName, PROPERTY_DURATION) == 0) {
-        ((CCParticleSystemQuad *)pNode)->setDuration(pFloat);
+        ((ParticleSystemQuad *)pNode)->setDuration(pFloat);
     } else {
-        CCNodeLoader::onHandlePropTypeFloat(pNode, pParent, pPropertyName, pFloat, pCCBReader);
+        NodeLoader::onHandlePropTypeFloat(pNode, pParent, pPropertyName, pFloat, pCCBReader);
     }
 }
 
-void CCParticleSystemQuadLoader::onHandlePropTypeInteger(CCNode * pNode, CCNode * pParent, const char * pPropertyName, int pInteger, CCBReader * pCCBReader) {
+void ParticleSystemQuadLoader::onHandlePropTypeInteger(Node * pNode, Node * pParent, const char * pPropertyName, int pInteger, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_TOTALPARTICLES) == 0) {
-        ((CCParticleSystemQuad *)pNode)->setTotalParticles(pInteger);
+        ((ParticleSystemQuad *)pNode)->setTotalParticles(pInteger);
     } else {
-        CCNodeLoader::onHandlePropTypeInteger(pNode, pParent, pPropertyName, pInteger, pCCBReader);
+        NodeLoader::onHandlePropTypeInteger(pNode, pParent, pPropertyName, pInteger, pCCBReader);
     }
 }
 
-void CCParticleSystemQuadLoader::onHandlePropTypeFloatVar(CCNode * pNode, CCNode * pParent, const char * pPropertyName, float * pFloatVar, CCBReader * pCCBReader) {
+void ParticleSystemQuadLoader::onHandlePropTypeFloatVar(Node * pNode, Node * pParent, const char * pPropertyName, float * pFloatVar, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_LIFE) == 0) {
-        ((CCParticleSystemQuad *)pNode)->setLife(pFloatVar[0]);
-        ((CCParticleSystemQuad *)pNode)->setLifeVar(pFloatVar[1]);
+        ((ParticleSystemQuad *)pNode)->setLife(pFloatVar[0]);
+        ((ParticleSystemQuad *)pNode)->setLifeVar(pFloatVar[1]);
     } else if(strcmp(pPropertyName, PROPERTY_STARTSIZE) == 0) {
-        ((CCParticleSystemQuad *)pNode)->setStartSize(pFloatVar[0]);
-        ((CCParticleSystemQuad *)pNode)->setStartSizeVar(pFloatVar[1]);
+        ((ParticleSystemQuad *)pNode)->setStartSize(pFloatVar[0]);
+        ((ParticleSystemQuad *)pNode)->setStartSizeVar(pFloatVar[1]);
     } else if(strcmp(pPropertyName, PROPERTY_ENDSIZE) == 0) {
-        ((CCParticleSystemQuad *)pNode)->setEndSize(pFloatVar[0]);
-        ((CCParticleSystemQuad *)pNode)->setEndSizeVar(pFloatVar[1]);
+        ((ParticleSystemQuad *)pNode)->setEndSize(pFloatVar[0]);
+        ((ParticleSystemQuad *)pNode)->setEndSizeVar(pFloatVar[1]);
     } else if(strcmp(pPropertyName, PROPERTY_STARTSPIN) == 0) {
-        ((CCParticleSystemQuad *)pNode)->setStartSpin(pFloatVar[0]);
-        ((CCParticleSystemQuad *)pNode)->setStartSpinVar(pFloatVar[1]);
+        ((ParticleSystemQuad *)pNode)->setStartSpin(pFloatVar[0]);
+        ((ParticleSystemQuad *)pNode)->setStartSpinVar(pFloatVar[1]);
     } else if(strcmp(pPropertyName, PROPERTY_ENDSPIN) == 0) {
-        ((CCParticleSystemQuad *)pNode)->setEndSpin(pFloatVar[0]);
-        ((CCParticleSystemQuad *)pNode)->setEndSpinVar(pFloatVar[1]);
+        ((ParticleSystemQuad *)pNode)->setEndSpin(pFloatVar[0]);
+        ((ParticleSystemQuad *)pNode)->setEndSpinVar(pFloatVar[1]);
     } else if(strcmp(pPropertyName, PROPERTY_ANGLE) == 0) {
-        ((CCParticleSystemQuad *)pNode)->setAngle(pFloatVar[0]);
-        ((CCParticleSystemQuad *)pNode)->setAngleVar(pFloatVar[1]);
+        ((ParticleSystemQuad *)pNode)->setAngle(pFloatVar[0]);
+        ((ParticleSystemQuad *)pNode)->setAngleVar(pFloatVar[1]);
     } else if(strcmp(pPropertyName, PROPERTY_SPEED) == 0) {
-        ((CCParticleSystemQuad *)pNode)->setSpeed(pFloatVar[0]);
-        ((CCParticleSystemQuad *)pNode)->setSpeedVar(pFloatVar[1]);
+        ((ParticleSystemQuad *)pNode)->setSpeed(pFloatVar[0]);
+        ((ParticleSystemQuad *)pNode)->setSpeedVar(pFloatVar[1]);
     } else if(strcmp(pPropertyName, PROPERTY_TANGENTIALACCEL) == 0) {
-        ((CCParticleSystemQuad *)pNode)->setTangentialAccel(pFloatVar[0]);
-        ((CCParticleSystemQuad *)pNode)->setTangentialAccelVar(pFloatVar[1]);
+        ((ParticleSystemQuad *)pNode)->setTangentialAccel(pFloatVar[0]);
+        ((ParticleSystemQuad *)pNode)->setTangentialAccelVar(pFloatVar[1]);
     } else if(strcmp(pPropertyName, PROPERTY_RADIALACCEL) == 0) {
-        ((CCParticleSystemQuad *)pNode)->setRadialAccel(pFloatVar[0]);
-        ((CCParticleSystemQuad *)pNode)->setRadialAccelVar(pFloatVar[1]);
+        ((ParticleSystemQuad *)pNode)->setRadialAccel(pFloatVar[0]);
+        ((ParticleSystemQuad *)pNode)->setRadialAccelVar(pFloatVar[1]);
     } else if(strcmp(pPropertyName, PROPERTY_STARTRADIUS) == 0) {
-        ((CCParticleSystemQuad *)pNode)->setStartRadius(pFloatVar[0]);
-        ((CCParticleSystemQuad *)pNode)->setStartRadiusVar(pFloatVar[1]);
+        ((ParticleSystemQuad *)pNode)->setStartRadius(pFloatVar[0]);
+        ((ParticleSystemQuad *)pNode)->setStartRadiusVar(pFloatVar[1]);
     } else if(strcmp(pPropertyName, PROPERTY_ENDRADIUS) == 0) {
-        ((CCParticleSystemQuad *)pNode)->setEndRadius(pFloatVar[0]);
-        ((CCParticleSystemQuad *)pNode)->setEndRadiusVar(pFloatVar[1]);
+        ((ParticleSystemQuad *)pNode)->setEndRadius(pFloatVar[0]);
+        ((ParticleSystemQuad *)pNode)->setEndRadiusVar(pFloatVar[1]);
     } else if(strcmp(pPropertyName, PROPERTY_ROTATEPERSECOND) == 0) {
-        ((CCParticleSystemQuad *)pNode)->setRotatePerSecond(pFloatVar[0]);
-        ((CCParticleSystemQuad *)pNode)->setRotatePerSecondVar(pFloatVar[1]);
+        ((ParticleSystemQuad *)pNode)->setRotatePerSecond(pFloatVar[0]);
+        ((ParticleSystemQuad *)pNode)->setRotatePerSecondVar(pFloatVar[1]);
     } else {
-        CCNodeLoader::onHandlePropTypeFloatVar(pNode, pParent, pPropertyName, pFloatVar, pCCBReader);
+        NodeLoader::onHandlePropTypeFloatVar(pNode, pParent, pPropertyName, pFloatVar, pCCBReader);
     }
 }
 
-void CCParticleSystemQuadLoader::onHandlePropTypeColor4FVar(CCNode * pNode, CCNode * pParent, const char * pPropertyName, ccColor4F * pCCColor4FVar, CCBReader * pCCBReader) {
+void ParticleSystemQuadLoader::onHandlePropTypeColor4FVar(Node * pNode, Node * pParent, const char * pPropertyName, ccColor4F * pColor4FVar, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_STARTCOLOR) == 0) {
-        ((CCParticleSystemQuad *)pNode)->setStartColor(pCCColor4FVar[0]);
-        ((CCParticleSystemQuad *)pNode)->setStartColorVar(pCCColor4FVar[1]);
+        ((ParticleSystemQuad *)pNode)->setStartColor(pColor4FVar[0]);
+        ((ParticleSystemQuad *)pNode)->setStartColorVar(pColor4FVar[1]);
     } else if(strcmp(pPropertyName, PROPERTY_ENDCOLOR) == 0) {
-        ((CCParticleSystemQuad *)pNode)->setEndColor(pCCColor4FVar[0]);
-        ((CCParticleSystemQuad *)pNode)->setEndColorVar(pCCColor4FVar[1]);
+        ((ParticleSystemQuad *)pNode)->setEndColor(pColor4FVar[0]);
+        ((ParticleSystemQuad *)pNode)->setEndColorVar(pColor4FVar[1]);
     } else {
-        CCNodeLoader::onHandlePropTypeColor4FVar(pNode, pParent, pPropertyName, pCCColor4FVar, pCCBReader);
+        NodeLoader::onHandlePropTypeColor4FVar(pNode, pParent, pPropertyName, pColor4FVar, pCCBReader);
     }
 }
 
-void CCParticleSystemQuadLoader::onHandlePropTypeBlendFunc(CCNode * pNode, CCNode * pParent, const char * pPropertyName, ccBlendFunc pCCBlendFunc, CCBReader * pCCBReader) {
+void ParticleSystemQuadLoader::onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const char * pPropertyName, ccBlendFunc pBlendFunc, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_BLENDFUNC) == 0) {
-        ((CCParticleSystemQuad *)pNode)->setBlendFunc(pCCBlendFunc);
+        ((ParticleSystemQuad *)pNode)->setBlendFunc(pBlendFunc);
     } else {
-        CCNodeLoader::onHandlePropTypeBlendFunc(pNode, pParent, pPropertyName, pCCBlendFunc, pCCBReader);
+        NodeLoader::onHandlePropTypeBlendFunc(pNode, pParent, pPropertyName, pBlendFunc, pCCBReader);
     }
 }
 
-void CCParticleSystemQuadLoader::onHandlePropTypeTexture(CCNode * pNode, CCNode * pParent, const char * pPropertyName, CCTexture2D * pCCTexture2D, CCBReader * pCCBReader) {
+void ParticleSystemQuadLoader::onHandlePropTypeTexture(Node * pNode, Node * pParent, const char * pPropertyName, Texture2D * pTexture2D, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_TEXTURE) == 0) {
-        ((CCParticleSystemQuad *)pNode)->setTexture(pCCTexture2D);
+        ((ParticleSystemQuad *)pNode)->setTexture(pTexture2D);
     } else {
-        CCNodeLoader::onHandlePropTypeTexture(pNode, pParent, pPropertyName, pCCTexture2D, pCCBReader);
+        NodeLoader::onHandlePropTypeTexture(pNode, pParent, pPropertyName, pTexture2D, pCCBReader);
     }
 }
 

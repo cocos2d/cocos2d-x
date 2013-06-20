@@ -20,7 +20,6 @@ EXTENSIONS_SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CCBReader/CCBSequence.cpp \
 ../CCBReader/CCBSequenceProperty.cpp \
 ../CCBReader/CCBValue.cpp \
-../CCBReader/CCData.cpp \
 ../CCBReader/CCNode+CCBRelativePositioning.cpp \
 ../GUI/CCScrollView/CCScrollView.cpp \
 ../GUI/CCScrollView/CCSorting.cpp \
@@ -60,6 +59,8 @@ EXTENSIONS_SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../spine/Slot.cpp \
 ../spine/SlotData.cpp \
 ../spine/extension.cpp \
+../spine/CCSkeleton.cpp \
+../spine/CCSkeletonAnimation.cpp \
 ../spine/spine-cocos2dx.cpp
 
 all:
