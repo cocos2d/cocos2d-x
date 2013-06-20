@@ -823,7 +823,7 @@ public:
     /** initializes the action with an Animation and will restore the original frame when the animation is over */
     bool initWithAnimation(CCAnimation *pAnimation);
 	
-	int getNextFrame();
+	int getNextFrame() const;
 
 	/** returns a new clone of the action */
     virtual CCAnimate* clone() const;

@@ -2620,7 +2620,7 @@ void CCAnimate::startWithTarget(CCNode *pTarget)
     _executedLoops = 0;
 }
 
-int CCAnimate::getNextFrame(){
+int CCAnimate::getNextFrame() const {
 	return _nextFrame;
 }
 
