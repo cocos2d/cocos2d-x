@@ -14,11 +14,11 @@ public:
     virtual std::string subtitle();
     virtual void onEnter();
 
-    void restartCallback(CCObject* pSender);
-    void nextCallback(CCObject* pSender);
-    void backCallback(CCObject* pSender);
+    void restartCallback(Object* pSender);
+    void nextCallback(Object* pSender);
+    void backCallback(Object* pSender);
 
-    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
+    virtual void ccTouchesMoved(Set *pTouches, Event *pEvent);
 };
 
 class TileMapTest : public TileDemo
@@ -77,7 +77,7 @@ public:
     TMXReadWriteTest(void);
     virtual std::string title();
 
-    void removeSprite(CCNode* sender);
+    void removeSprite(Node* sender);
     void updateCol(float dt);
     void repaintWithGID(float dt);
     void removeTiles(float dt);
@@ -158,7 +158,7 @@ public:
 
 class TMXIsoZorder : public TileDemo
 {
-    CCSprite*    _tamara;
+    Sprite*    _tamara;
 public:
     TMXIsoZorder(void);
     virtual std::string title();
@@ -171,7 +171,7 @@ public:
 
 class TMXOrthoZorder : public TileDemo
 {
-    CCSprite*    _tamara;
+    Sprite*    _tamara;
 public:
     TMXOrthoZorder(void);
     virtual std::string title();
@@ -183,7 +183,7 @@ public:
 
 class TMXIsoVertexZ : public TileDemo
 {
-    CCSprite*    _tamara;
+    Sprite*    _tamara;
 public:
     TMXIsoVertexZ(void);
     virtual std::string title();
@@ -197,7 +197,7 @@ public:
 
 class TMXOrthoVertexZ : public TileDemo
 {
-    CCSprite*    _tamara;
+    Sprite*    _tamara;
 public:
     TMXOrthoVertexZ(void);
     virtual std::string title();

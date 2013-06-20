@@ -4,7 +4,7 @@
 #include "cocos2d.h"
 #include "cocos-ext.h"
 
-class SpriteTestLayer : public cocos2d::CCLayer {
+class SpriteTestLayer : public cocos2d::Layer {
     public:
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(SpriteTestLayer, create);
 };

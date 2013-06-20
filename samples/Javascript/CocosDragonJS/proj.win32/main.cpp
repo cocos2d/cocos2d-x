@@ -24,11 +24,11 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
     // create the application instance
     AppDelegate app;
-    CCEGLView* eglView = CCEGLView::sharedOpenGLView();
+    EGLView* eglView = EGLView::sharedOpenGLView();
     eglView->setViewName("CocosDragonJS");
     eglView->setFrameSize(320, 480);
 
-    int ret = CCApplication::sharedApplication()->run();
+    int ret = Application::sharedApplication()->run();
 
 #ifdef USE_WIN32_CONSOLE
     FreeConsole();

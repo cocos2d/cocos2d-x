@@ -32,8 +32,8 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    CCDirector *pDirector = CCDirector::sharedDirector();
-    pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
+    Director *pDirector = Director::sharedDirector();
+    pDirector->setOpenGLView(EGLView::sharedOpenGLView());
 
     // turn on display FPS
     //pDirector->setDisplayStats(true);
@@ -47,7 +47,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     sc->start();
     
-    CCScene *scene = CCScene::create();
+    Scene *scene = Scene::create();
     UpdateLayer *updateLayer = new UpdateLayer();
     scene->addChild(updateLayer);
     updateLayer->release();
@@ -60,7 +60,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    CCDirector::sharedDirector()->stopAnimation();
+    Director::sharedDirector()->stopAnimation();
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
     SimpleAudioEngine::sharedEngine()->pauseAllEffects();
 }
@@ -68,7 +68,7 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    CCDirector::sharedDirector()->startAnimation();
+    Director::sharedDirector()->startAnimation();
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
     SimpleAudioEngine::sharedEngine()->resumeAllEffects();
 }
@@ -89,7 +89,7 @@ UpdateLayer::~UpdateLayer()
     CC_SAFE_DELETE(pAssetsManager);
 }
 
-void UpdateLayer::update(cocos2d::CCObject *pSender)
+void UpdateLayer::update(cocos2d::Object *pSender)
 {
     pProgressLabel->setString("");
     
@@ -99,7 +99,7 @@ void UpdateLayer::update(cocos2d::CCObject *pSender)
     isUpdateItemClicked = true;
 }
 
-void UpdateLayer::reset(cocos2d::CCObject *pSender)
+void UpdateLayer::reset(cocos2d::Object *pSender)
 {
     pProgressLabel->setString(" ");
     
@@ -121,43 +121,43 @@ void UpdateLayer::reset(cocos2d::CCObject *pSender)
     createDownloadedDir();
 }
 
-void UpdateLayer::enter(cocos2d::CCObject *pSender)
+void UpdateLayer::enter(cocos2d::Object *pSender)
 {
     // Should set search resource path before running script if "update" is not clicked.
     // Because AssetsManager will set 
     if (! isUpdateItemClicked)
     {
-        vector<string> searchPaths = CCFileUtils::sharedFileUtils()->getSearchPaths();
+        vector<string> searchPaths = FileUtils::sharedFileUtils()->getSearchPaths();
         searchPaths.insert(searchPaths.begin(), pathToSave);
-        CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
+        FileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
     }
     
-    CCScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
-    CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
+    ScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
+    ScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
     ScriptingCore::getInstance()->runScript("main.js");
 }
 
 bool UpdateLayer::init()
 {
-    CCLayer::init();
+    Layer::init();
     
     createDownloadedDir();
     
-    CCSize size = CCDirector::sharedDirector()->getWinSize();
+    Size size = Director::sharedDirector()->getWinSize();
 
-    pItemReset = CCMenuItemFont::create("reset", this, menu_selector(UpdateLayer::reset));
-    pItemEnter = CCMenuItemFont::create("enter", this, menu_selector(UpdateLayer::enter));
-    pItemUpdate = CCMenuItemFont::create("update", this, menu_selector(UpdateLayer::update));
+    pItemReset = MenuItemFont::create("reset", this, menu_selector(UpdateLayer::reset));
+    pItemEnter = MenuItemFont::create("enter", this, menu_selector(UpdateLayer::enter));
+    pItemUpdate = MenuItemFont::create("update", this, menu_selector(UpdateLayer::update));
     
     pItemEnter->setPosition(ccp(size.width/2, size.height/2 + 50));
     pItemReset->setPosition(ccp(size.width/2, size.height/2));
     pItemUpdate->setPosition(ccp(size.width/2, size.height/2 - 50));
     
-    CCMenu *menu = CCMenu::create(pItemUpdate, pItemEnter, pItemReset, NULL);
+    Menu *menu = Menu::create(pItemUpdate, pItemEnter, pItemReset, NULL);
     menu->setPosition(ccp(0,0));
     addChild(menu);
     
-    pProgressLabel = CCLabelTTF::create("", "Arial", 20);
+    pProgressLabel = LabelTTF::create("", "Arial", 20);
     pProgressLabel->setPosition(ccp(100, 50));
     addChild(pProgressLabel);
     
@@ -182,7 +182,7 @@ AssetsManager* UpdateLayer::getAssetsManager()
 
 void UpdateLayer::createDownloadedDir()
 {
-    pathToSave = CCFileUtils::sharedFileUtils()->getWritablePath();
+    pathToSave = FileUtils::sharedFileUtils()->getWritablePath();
     pathToSave += "tmpdir";
     
     // Create the folder if it doesn't exist

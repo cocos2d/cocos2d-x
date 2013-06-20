@@ -19,9 +19,9 @@ public:
     virtual std::string subtitle();
     virtual void onEnter();
 
-    void restartCallback(CCObject* pSender);
-    void nextCallback(CCObject* pSender);
-    void backCallback(CCObject* pSender);
+    void restartCallback(Object* pSender);
+    void nextCallback(Object* pSender);
+    void backCallback(Object* pSender);
 };
 
 class Sprite1 : public SpriteTestDemo
@@ -30,16 +30,16 @@ public:
     Sprite1();
     virtual std::string title();
 
-    void addNewSpriteWithCoords(CCPoint p);
-    void ccTouchesEnded(CCSet* touches, CCEvent* event);
+    void addNewSpriteWithCoords(Point p);
+    void ccTouchesEnded(Set* touches, Event* event);
 };
 
 class SpriteBatchNode1: public SpriteTestDemo
 {
 public:
     SpriteBatchNode1();
-    void addNewSpriteWithCoords(CCPoint p);
-    virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
+    void addNewSpriteWithCoords(Point p);
+    virtual void ccTouchesEnded(Set* touches, Event* event);
     virtual std::string title();
 };
 
@@ -100,13 +100,13 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
     void reorderSprite(float dt);
-    CCSprite* makeSpriteZ(int aZ);
+    Sprite* makeSpriteZ(int aZ);
 
 private:
-    CCSpriteBatchNode *batchNode;
-    CCSprite *sprite1;
-    CCSprite *sprite2;
-    CCSprite *sprite3;    
+    SpriteBatchNode *batchNode;
+    Sprite *sprite1;
+    Sprite *sprite2;
+    Sprite *sprite3;    
 };
 
 class SpriteBatchNodeReorderIssue767 : public SpriteTestDemo
@@ -198,27 +198,27 @@ public:
 class SpriteNewTexture : public SpriteTestDemo
 {
     bool                        _usingTexture1;
-    CCTexture2D*    _texture1;
-    CCTexture2D*    _texture2; 
+    Texture2D*    _texture1;
+    Texture2D*    _texture2; 
 
 public:
     SpriteNewTexture();
     virtual ~SpriteNewTexture();
     void addNewSprite();
-    void ccTouchesEnded(CCSet* touches, CCEvent* event);
+    void ccTouchesEnded(Set* touches, Event* event);
     virtual std::string title();
 };
 
 class SpriteBatchNodeNewTexture : public SpriteTestDemo
 {
-    CCTexture2D*    _texture1;
-    CCTexture2D*    _texture2; 
+    Texture2D*    _texture1;
+    Texture2D*    _texture2; 
 
 public:
     SpriteBatchNodeNewTexture();
     virtual ~SpriteBatchNodeNewTexture();
     void addNewSprite();
-    void ccTouchesEnded(CCSet* touches, CCEvent* event);
+    void ccTouchesEnded(Set* touches, Event* event);
     virtual std::string title();
 };
 
@@ -233,8 +233,8 @@ public:
     void startIn05Secs(float dt);
     void flipSprites(float dt);
 private:
-    CCSprite *_sprite1;
-    CCSprite *_sprite2;
+    Sprite *_sprite1;
+    Sprite *_sprite2;
     int      _counter;
 };
 
@@ -484,12 +484,12 @@ public:
     void reorderSprite(float dt);
 
 private:
-    CCNode *_node;
-    CCSprite *_sprite1;
-    CCSprite *_sprite2;
-    CCSprite *_sprite3;
-    CCSprite *_sprite4;
-    CCSprite *_sprite5;
+    Node *_node;
+    Sprite *_sprite1;
+    Sprite *_sprite2;
+    Sprite *_sprite3;
+    Sprite *_sprite4;
+    Sprite *_sprite5;
 };
 
 class SpriteBatchNodeReorderSameIndex : public SpriteTestDemo
@@ -502,12 +502,12 @@ public:
     void reorderSprite(float dt);
 
 private:
-    CCSpriteBatchNode *_batchNode;
-    CCSprite *_sprite1;
-    CCSprite *_sprite2;
-    CCSprite *_sprite3;
-    CCSprite *_sprite4;
-    CCSprite *_sprite5;
+    SpriteBatchNode *_batchNode;
+    Sprite *_sprite1;
+    Sprite *_sprite2;
+    Sprite *_sprite3;
+    Sprite *_sprite4;
+    Sprite *_sprite5;
 };
 
 class SpriteBatchNodeReorderOneChild : public SpriteTestDemo
@@ -517,8 +517,8 @@ public:
     void reorderSprite(float dt);
     virtual std::string title();
 private:
-    CCSpriteBatchNode *_batchNode;
-    CCSprite *_reorderSprite;
+    SpriteBatchNode *_batchNode;
+    Sprite *_reorderSprite;
 };
 
 class SpriteBatchNodeSkewNegativeScaleChildren : public SpriteTestDemo

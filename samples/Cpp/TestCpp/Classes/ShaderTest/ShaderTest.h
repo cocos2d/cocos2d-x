@@ -15,9 +15,9 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 
-    void restartCallback(CCObject* pSender);
-    void nextCallback(CCObject* pSender);
-    void backCallback(CCObject* pSender);
+    void restartCallback(Object* pSender);
+    void nextCallback(Object* pSender);
+    void backCallback(Object* pSender);
 
     CREATE_FUNC(ShaderTestDemo);
 };
@@ -90,11 +90,11 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
     virtual bool init();
-    CCControlSlider* createSliderCtl();
-    void sliderAction(CCObject* sender, CCControlEvent controlEvent);
+    ControlSlider* createSliderCtl();
+    void sliderAction(Object* sender, ControlEvent controlEvent);
 protected:
     SpriteBlur* _blurSprite;
-    CCControlSlider* _sliderCtl;
+    ControlSlider* _sliderCtl;
 };
 
 class ShaderRetroEffect : public ShaderTestDemo
@@ -106,11 +106,11 @@ public:
     bool init();
     void update(float dt);
 protected:
-    CCLabelBMFont* _label;
+    LabelBMFont* _label;
     float           _accum;
 };
 
-class ShaderNode : public CCNode
+class ShaderNode : public Node
 {
 public:
     ShaderNode();
@@ -118,10 +118,10 @@ public:
 
     bool initWithVertex(const char *vert, const char *frag);
     void loadShaderVertex(const char *vert, const char *frag);
-    void listenBackToForeground(CCObject *obj);
+    void listenBackToForeground(Object *obj);
 
     virtual void update(float dt);
-    virtual void setPosition(const CCPoint &newPosition);
+    virtual void setPosition(const Point &newPosition);
     virtual void draw();
 
     static ShaderNode* shaderNodeWithVertex(const char *vert, const char *frag);

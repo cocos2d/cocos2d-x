@@ -17,7 +17,7 @@ public:
     virtual void update(float dt);
 
 protected:
-    CCLabelBMFont * _plabel;
+    LabelBMFont * _plabel;
     int                numberOfTouchesB;
     int                numberOfTouchesM;
     int                numberOfTouchesE;
@@ -37,10 +37,10 @@ public:
     virtual std::string title();
     virtual void registerWithTouchDispatcher();
 
-    virtual bool ccTouchBegan(CCTouch* touch, CCEvent* event);
-    virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
-    virtual void ccTouchEnded(CCTouch* touch, CCEvent* event);
-    virtual void ccTouchCancelled(CCTouch* touch, CCEvent* event);
+    virtual bool ccTouchBegan(Touch* touch, Event* event);
+    virtual void ccTouchMoved(Touch* touch, Event* event);
+    virtual void ccTouchEnded(Touch* touch, Event* event);
+    virtual void ccTouchCancelled(Touch* touch, Event* event);
 };
 
 class TouchesPerformTest2 : public TouchesMainScene
@@ -55,10 +55,10 @@ public:
     virtual std::string title();
     virtual void registerWithTouchDispatcher();
 
-    virtual void ccTouchesBegan(CCSet* touches, CCEvent* event);
-    virtual void ccTouchesMoved(CCSet* touches, CCEvent* event);
-    virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
-    virtual void ccTouchesCancelled(CCSet* touches, CCEvent* event);
+    virtual void ccTouchesBegan(Set* touches, Event* event);
+    virtual void ccTouchesMoved(Set* touches, Event* event);
+    virtual void ccTouchesEnded(Set* touches, Event* event);
+    virtual void ccTouchesCancelled(Set* touches, Event* event);
 };
 
 void runTouchesTest();

@@ -8,13 +8,13 @@ Paddle::~Paddle(void)
 {
 }
 
-CCRect Paddle::rect()
+Rect Paddle::rect()
 {
-    CCSize s = getTexture()->getContentSize();
+    Size s = getTexture()->getContentSize();
     return CCRectMake(-s.width / 2, -s.height / 2, s.width, s.height);
 }
 
-Paddle* Paddle::paddleWithTexture(CCTexture2D* aTexture)
+Paddle* Paddle::paddleWithTexture(Texture2D* aTexture)
 {
     Paddle* pPaddle = new Paddle();
     pPaddle->initWithTexture( aTexture );
@@ -23,9 +23,9 @@ Paddle* Paddle::paddleWithTexture(CCTexture2D* aTexture)
     return pPaddle;
 }
 
-bool Paddle::initWithTexture(CCTexture2D* aTexture)
+bool Paddle::initWithTexture(Texture2D* aTexture)
 {
-    if( CCSprite::initWithTexture(aTexture) ) 
+    if( Sprite::initWithTexture(aTexture) ) 
     {
         _state = kPaddleStateUngrabbed;
     }
@@ -35,24 +35,24 @@ bool Paddle::initWithTexture(CCTexture2D* aTexture)
 
 void Paddle::onEnter()
 {
-    CCDirector* pDirector = CCDirector::sharedDirector();
+    Director* pDirector = Director::sharedDirector();
     pDirector->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
-    CCSprite::onEnter();
+    Sprite::onEnter();
 }
 
 void Paddle::onExit()
 {
-    CCDirector* pDirector = CCDirector::sharedDirector();
+    Director* pDirector = Director::sharedDirector();
     pDirector->getTouchDispatcher()->removeDelegate(this);
-    CCSprite::onExit();
+    Sprite::onExit();
 }    
 
-bool Paddle::containsTouchLocation(CCTouch* touch)
+bool Paddle::containsTouchLocation(Touch* touch)
 {
     return rect().containsPoint(convertTouchToNodeSpaceAR(touch));
 }
 
-bool Paddle::ccTouchBegan(CCTouch* touch, CCEvent* event)
+bool Paddle::ccTouchBegan(Touch* touch, Event* event)
 {
     if (_state != kPaddleStateUngrabbed) return false;
     if ( !containsTouchLocation(touch) ) return false;
@@ -61,29 +61,29 @@ bool Paddle::ccTouchBegan(CCTouch* touch, CCEvent* event)
     return true;
 }
 
-void Paddle::ccTouchMoved(CCTouch* touch, CCEvent* event)
+void Paddle::ccTouchMoved(Touch* touch, Event* event)
 {
     // If it weren't for the TouchDispatcher, you would need to keep a reference
     // to the touch from touchBegan and check that the current touch is the same
     // as that one.
     // Actually, it would be even more complicated since in the Cocos dispatcher
-    // you get CCSets instead of 1 UITouch, so you'd need to loop through the set
+    // you get Sets instead of 1 UITouch, so you'd need to loop through the set
     // in each touchXXX method.
     
     CCAssert(_state == kPaddleStateGrabbed, "Paddle - Unexpected state!");    
     
-    CCPoint touchPoint = touch->getLocation();
+    Point touchPoint = touch->getLocation();
     
     setPosition( ccp(touchPoint.x, getPosition().y) );
 }
 
-CCObject* Paddle::copyWithZone(CCZone *pZone)
+Object* Paddle::copyWithZone(Zone *pZone)
 {
     this->retain();
     return this;
 }
 
-void Paddle::ccTouchEnded(CCTouch* touch, CCEvent* event)
+void Paddle::ccTouchEnded(Touch* touch, Event* event)
 {
     CCAssert(_state == kPaddleStateGrabbed, "Paddle - Unexpected state!");    
     

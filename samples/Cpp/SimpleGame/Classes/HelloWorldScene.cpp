@@ -29,13 +29,13 @@ HelloWorld::HelloWorld()
 {
 }
 
-CCScene* HelloWorld::scene()
+Scene* HelloWorld::scene()
 {
-	CCScene * scene = NULL;
+	Scene * scene = NULL;
 	do 
 	{
 		// 'scene' is an autorelease object
-		scene = CCScene::create();
+		scene = Scene::create();
 		CC_BREAK_IF(! scene);
 
 		// 'layer' is an autorelease object
@@ -60,7 +60,7 @@ bool HelloWorld::init()
 		// super init first
 		//////////////////////////////////////////////////////////////////////////
 
-		CC_BREAK_IF(! CCLayerColor::initWithColor( ccc4(255,255,255,255) ) );
+		CC_BREAK_IF(! LayerColor::initWithColor( ccc4(255,255,255,255) ) );
 
 		//////////////////////////////////////////////////////////////////////////
 		// add your codes below...
@@ -69,7 +69,7 @@ bool HelloWorld::init()
 		// 1. Add a menu item with "X" image, which is clicked to quit the program.
 
 		// Create a "close" menu item with close icon, it's an auto release object.
-		CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
+		MenuItemImage *pCloseItem = MenuItemImage::create(
 			"CloseNormal.png",
 			"CloseSelected.png",
 			this,
@@ -77,15 +77,15 @@ bool HelloWorld::init()
 		CC_BREAK_IF(! pCloseItem);
         
 		// Place the menu item bottom-right conner.
-        CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
-        CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
+        Size visibleSize = Director::sharedDirector()->getVisibleSize();
+        Point origin = Director::sharedDirector()->getVisibleOrigin();
         
 		pCloseItem->setPosition(ccp(origin.x + visibleSize.width - pCloseItem->getContentSize().width/2,
                                     origin.y + pCloseItem->getContentSize().height/2));
 
 		// Create a menu with the "close" menu item, it's an auto release object.
-		CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
-		pMenu->setPosition(CCPointZero);
+		Menu* pMenu = Menu::create(pCloseItem, NULL);
+		pMenu->setPosition(PointZero);
 		CC_BREAK_IF(! pMenu);
 
 		// Add the menu to HelloWorld layer as a child layer.
@@ -93,7 +93,7 @@ bool HelloWorld::init()
 
 		/////////////////////////////
 		// 2. add your codes below...
-		CCSprite *player = CCSprite::create("Player.png", CCRectMake(0, 0, 27, 40) );
+		Sprite *player = Sprite::create("Player.png", CCRectMake(0, 0, 27, 40) );
         
 		player->setPosition( ccp(origin.x + player->getContentSize().width/2,
                                  origin.y + visibleSize.height/2) );
@@ -103,8 +103,8 @@ bool HelloWorld::init()
 
 		this->setTouchEnabled(true);
 
-		_targets = new CCArray;
-		_projectiles = new CCArray;
+		_targets = new Array;
+		_projectiles = new Array;
 
 		// use updateGame instead of update, otherwise it will conflit with SelectorProtocol::update
 		// see http://www.cocos2d-x.org/boards/6/topics/1478
@@ -118,19 +118,19 @@ bool HelloWorld::init()
 	return bRet;
 }
 
-void HelloWorld::menuCloseCallback(CCObject* pSender)
+void HelloWorld::menuCloseCallback(Object* pSender)
 {
 	// "close" menu item clicked
-	CCDirector::sharedDirector()->end();
+	Director::sharedDirector()->end();
 }
 
 // cpp with cocos2d-x
 void HelloWorld::addTarget()
 {
-	CCSprite *target = CCSprite::create("Target.png", CCRectMake(0,0,27,40) );
+	Sprite *target = Sprite::create("Target.png", CCRectMake(0,0,27,40) );
     
 	// Determine where to spawn the target along the Y axis
-	CCSize winSize = CCDirector::sharedDirector()->getVisibleSize();
+	Size winSize = Director::sharedDirector()->getVisibleSize();
 	float minY = target->getContentSize().height/2;
 	float maxY = winSize.height -  target->getContentSize().height/2;
 	int rangeY = (int)(maxY - minY);
@@ -141,7 +141,7 @@ void HelloWorld::addTarget()
 	// and along a random position along the Y axis as calculated
 	target->setPosition( 
 		ccp(winSize.width + (target->getContentSize().width/2), 
-            CCDirector::sharedDirector()->getVisibleOrigin().y + actualY) );
+            Director::sharedDirector()->getVisibleOrigin().y + actualY) );
 	this->addChild(target);
 
 	// Determine speed of the target
@@ -152,20 +152,20 @@ void HelloWorld::addTarget()
 	int actualDuration = ( rand() % rangeDuration ) + minDuration;
 
 	// Create the actions
-	CCFiniteTimeAction* actionMove = CCMoveTo::create( (float)actualDuration,
+	FiniteTimeAction* actionMove = MoveTo::create( (float)actualDuration,
                                             ccp(0 - target->getContentSize().width/2, actualY) );
-	CCFiniteTimeAction* actionMoveDone = CCCallFuncN::create( this, 
+	FiniteTimeAction* actionMoveDone = CallFuncN::create( this, 
                                             callfuncN_selector(HelloWorld::spriteMoveFinished));
-	target->runAction( CCSequence::create(actionMove, actionMoveDone, NULL) );
+	target->runAction( Sequence::create(actionMove, actionMoveDone, NULL) );
 
 	// Add to targets array
 	target->setTag(1);
 	_targets->addObject(target);
 }
 
-void HelloWorld::spriteMoveFinished(CCNode* sender)
+void HelloWorld::spriteMoveFinished(Node* sender)
 {
-	CCSprite *sprite = (CCSprite *)sender;
+	Sprite *sprite = (Sprite *)sender;
 	this->removeChild(sprite, true);
 
 	if (sprite->getTag() == 1)  // target
@@ -174,7 +174,7 @@ void HelloWorld::spriteMoveFinished(CCNode* sender)
         
 		GameOverScene *gameOverScene = GameOverScene::create();
 		gameOverScene->getLayer()->getLabel()->setString("You Lose :[");
-		CCDirector::sharedDirector()->replaceScene(gameOverScene);
+		Director::sharedDirector()->replaceScene(gameOverScene);
 
 	}
 	else if (sprite->getTag() == 2) // projectile
@@ -189,18 +189,18 @@ void HelloWorld::gameLogic(float dt)
 }
 
 // cpp with cocos2d-x
-void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event)
+void HelloWorld::ccTouchesEnded(Set* touches, Event* event)
 {
 	// Choose one of the touches to work with
-	CCTouch* touch = (CCTouch*)( touches->anyObject() );
-	CCPoint location = touch->getLocation();
+	Touch* touch = (Touch*)( touches->anyObject() );
+	Point location = touch->getLocation();
     
 	CCLog("++++++++after  x:%f, y:%f", location.x, location.y);
 
 	// Set up initial location of projectile
-	CCSize winSize = CCDirector::sharedDirector()->getVisibleSize();
-    CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
-	CCSprite *projectile = CCSprite::create("Projectile.png", CCRectMake(0, 0, 20, 20));
+	Size winSize = Director::sharedDirector()->getVisibleSize();
+    Point origin = Director::sharedDirector()->getVisibleOrigin();
+	Sprite *projectile = Sprite::create("Projectile.png", CCRectMake(0, 0, 20, 20));
 	projectile->setPosition( ccp(origin.x+20, origin.y+winSize.height/2) );
 
 	// Determinie offset of location to projectile
@@ -217,7 +217,7 @@ void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event)
 	float realX = origin.x+winSize.width + (projectile->getContentSize().width/2);
 	float ratio = offY / offX;
 	float realY = (realX * ratio) + projectile->getPosition().y;
-	CCPoint realDest = ccp(realX, realY);
+	Point realDest = ccp(realX, realY);
 
 	// Determine the length of how far we're shooting
 	float offRealX = realX - projectile->getPosition().x;
@@ -227,9 +227,9 @@ void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event)
 	float realMoveDuration = length/velocity;
 
 	// Move projectile to actual endpoint
-	projectile->runAction( CCSequence::create(
-		CCMoveTo::create(realMoveDuration, realDest),
-		CCCallFuncN::create(this, 
+	projectile->runAction( Sequence::create(
+		MoveTo::create(realMoveDuration, realDest),
+		CallFuncN::create(this, 
                             callfuncN_selector(HelloWorld::spriteMoveFinished)), 
         NULL) );
 
@@ -242,33 +242,33 @@ void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event)
 
 void HelloWorld::updateGame(float dt)
 {
-	CCArray *projectilesToDelete = new CCArray;
-    CCObject* it = NULL;
-    CCObject* jt = NULL;
+	Array *projectilesToDelete = new Array;
+    Object* it = NULL;
+    Object* jt = NULL;
 
 	// for (it = _projectiles->begin(); it != _projectiles->end(); it++)
     CCARRAY_FOREACH(_projectiles, it)
 	{
-		CCSprite *projectile = dynamic_cast<CCSprite*>(it);
-		CCRect projectileRect = CCRectMake(
+		Sprite *projectile = dynamic_cast<Sprite*>(it);
+		Rect projectileRect = CCRectMake(
 			projectile->getPosition().x - (projectile->getContentSize().width/2),
 			projectile->getPosition().y - (projectile->getContentSize().height/2),
 			projectile->getContentSize().width,
 			projectile->getContentSize().height);
 
-		CCArray* targetsToDelete =new CCArray;
+		Array* targetsToDelete =new Array;
 
 		// for (jt = _targets->begin(); jt != _targets->end(); jt++)
         CCARRAY_FOREACH(_targets, jt)
 		{
-			CCSprite *target = dynamic_cast<CCSprite*>(jt);
-			CCRect targetRect = CCRectMake(
+			Sprite *target = dynamic_cast<Sprite*>(jt);
+			Rect targetRect = CCRectMake(
 				target->getPosition().x - (target->getContentSize().width/2),
 				target->getPosition().y - (target->getContentSize().height/2),
 				target->getContentSize().width,
 				target->getContentSize().height);
 
-			// if (CCRect::CCRectIntersectsRect(projectileRect, targetRect))
+			// if (Rect::RectIntersectsRect(projectileRect, targetRect))
             if (projectileRect.intersectsRect(targetRect))
 			{
 				targetsToDelete->addObject(target);
@@ -278,7 +278,7 @@ void HelloWorld::updateGame(float dt)
 		// for (jt = targetsToDelete->begin(); jt != targetsToDelete->end(); jt++)
         CCARRAY_FOREACH(targetsToDelete, jt)
 		{
-			CCSprite *target = dynamic_cast<CCSprite*>(jt);
+			Sprite *target = dynamic_cast<Sprite*>(jt);
 			_targets->removeObject(target);
 			this->removeChild(target, true);
 
@@ -287,7 +287,7 @@ void HelloWorld::updateGame(float dt)
 			{
 				GameOverScene *gameOverScene = GameOverScene::create();
 				gameOverScene->getLayer()->getLabel()->setString("You Win!");
-				CCDirector::sharedDirector()->replaceScene(gameOverScene);
+				Director::sharedDirector()->replaceScene(gameOverScene);
 			}
 		}
 
@@ -301,7 +301,7 @@ void HelloWorld::updateGame(float dt)
 	// for (it = projectilesToDelete->begin(); it != projectilesToDelete->end(); it++)
     CCARRAY_FOREACH(projectilesToDelete, it)
 	{
-		CCSprite* projectile = dynamic_cast<CCSprite*>(it);
+		Sprite* projectile = dynamic_cast<Sprite*>(it);
 		_projectiles->removeObject(projectile);
 		this->removeChild(projectile, true);
 	}
@@ -310,6 +310,6 @@ void HelloWorld::updateGame(float dt)
 
 void HelloWorld::registerWithTouchDispatcher()
 {
-	// CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this,0,true);
-    CCDirector::sharedDirector()->getTouchDispatcher()->addStandardDelegate(this,0);
+	// TouchDispatcher::sharedDispatcher()->addTargetedDelegate(this,0,true);
+    Director::sharedDirector()->getTouchDispatcher()->addStandardDelegate(this,0);
 }

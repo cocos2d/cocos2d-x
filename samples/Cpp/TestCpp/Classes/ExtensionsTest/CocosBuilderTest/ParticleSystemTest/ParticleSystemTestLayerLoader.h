@@ -6,7 +6,7 @@
 /* Forward declaration. */
 class CCBReader;
 
-class ParticleSystemTestLayerLoader : public cocos2d::extension::CCLayerLoader {
+class ParticleSystemTestLayerLoader : public cocos2d::extension::LayerLoader {
     public:
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(ParticleSystemTestLayerLoader, loader);
 
