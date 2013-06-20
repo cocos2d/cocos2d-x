@@ -402,7 +402,7 @@ void Layer::onExit()
     // remove this layer from the delegates who concern Accelerometer Sensor
     if (_accelerometerEnabled)
     {
-        pDirector->getAccelerometer()->setDelegate(NULL);
+		pDirector->getAccelerometer()->setDelegate(nullptr);
     }
 
     // remove this layer from the delegates who concern the keypad msg
