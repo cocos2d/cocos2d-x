@@ -29,20 +29,20 @@ THE SOFTWARE.
 
 namespace cocos2d { namespace extension { namespace armature {
 
-class CCBatchNode : public CCNode
+class BatchNode : public Node
 {
 public:
-    static CCBatchNode *create();
+    static BatchNode *create();
 public:
-    CCBatchNode();
+    BatchNode();
 
     virtual bool init();
-    virtual void addChild(CCNode *child, int zOrder, int tag);
+    virtual void addChild(Node *child, int zOrder, int tag);
     virtual void visit();
     void draw();
 
 protected:
-    CCTextureAtlas *_atlas;
+    TextureAtlas *_atlas;
 };
 
 }}} // namespace cocos2d { namespace extension { namespace armature {

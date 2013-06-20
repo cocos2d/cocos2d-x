@@ -5,9 +5,9 @@ using namespace cocos2d;
 
 NS_CC_EXT_BEGIN
 
-CCPoint getAbsolutePosition(const CCPoint &pt, int nType, const CCSize &containerSize, const char *pPropName)
+Point getAbsolutePosition(const Point &pt, int nType, const Size &containerSize, const char *pPropName)
 {
-    CCPoint absPt = ccp(0,0);
+    Point absPt = ccp(0,0);
     if (nType == kCCBPositionTypeRelativeBottomLeft)
     {
         absPt = pt;
@@ -43,7 +43,7 @@ CCPoint getAbsolutePosition(const CCPoint &pt, int nType, const CCSize &containe
     return absPt;
 }
 
-void setRelativeScale(CCNode *pNode, float fScaleX, float fScaleY, int nType, const char* pPropName)
+void setRelativeScale(Node *pNode, float fScaleX, float fScaleY, int nType, const char* pPropName)
 {
     CCAssert(pNode, "pNode should not be null");
     

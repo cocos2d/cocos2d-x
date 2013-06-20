@@ -35,13 +35,13 @@ using namespace Tizen::Ui::Controls;
 
 NS_CC_EXT_BEGIN
 
-CCEditBoxImpl* __createSystemEditBox(CCEditBox* pEditBox)
+EditBoxImpl* __createSystemEditBox(EditBox* pEditBox)
 {
-    return new CCEditBoxImplTizen(pEditBox);
+    return new EditBoxImplTizen(pEditBox);
 }
 
-CCEditBoxImplTizen::CCEditBoxImplTizen(CCEditBox* pEditText)
-: CCEditBoxImpl(pEditText)
+EditBoxImplTizen::EditBoxImplTizen(EditBox* pEditText)
+: EditBoxImpl(pEditText)
 , _label(NULL)
 , _labelPlaceHolder(NULL)
 , _editBoxInputMode(kEditBoxInputModeSingleLine)
@@ -53,27 +53,27 @@ CCEditBoxImplTizen::CCEditBoxImplTizen(CCEditBox* pEditText)
 {
 }
 
-CCEditBoxImplTizen::~CCEditBoxImplTizen()
+EditBoxImplTizen::~EditBoxImplTizen()
 {
 }
 
-void CCEditBoxImplTizen::doAnimationWhenKeyboardMove(float duration, float distance)
+void EditBoxImplTizen::doAnimationWhenKeyboardMove(float duration, float distance)
 {
 }
 
 static const int CC_EDIT_BOX_PADDING = 5;
 
-bool CCEditBoxImplTizen::initWithSize(const CCSize& size)
+bool EditBoxImplTizen::initWithSize(const Size& size)
 {
     int fontSize = (int)size.height-12;
-    _label = CCLabelTTF::create("", "", size.height-12);
+    _label = LabelTTF::create("", "", size.height-12);
     // align the text vertically center
     _label->setAnchorPoint(ccp(0, 0.5f));
     _label->setPosition(ccp(CC_EDIT_BOX_PADDING, size.height / 2.0f));
     _label->setColor(_colText);
     _editBox->addChild(_label);
 
-    _labelPlaceHolder = CCLabelTTF::create("", "", size.height-12);
+    _labelPlaceHolder = LabelTTF::create("", "", size.height-12);
     // align the text vertically center
     _labelPlaceHolder->setAnchorPoint(ccp(0, 0.5f));
     _labelPlaceHolder->setPosition(ccp(CC_EDIT_BOX_PADDING, size.height / 2.0f));
@@ -85,7 +85,7 @@ bool CCEditBoxImplTizen::initWithSize(const CCSize& size)
     return true;
 }
 
-void CCEditBoxImplTizen::setFont(const char* pFontName, int fontSize)
+void EditBoxImplTizen::setFont(const char* pFontName, int fontSize)
 {
     if(_label != NULL) {
         _label->setFontName(pFontName);
@@ -98,13 +98,13 @@ void CCEditBoxImplTizen::setFont(const char* pFontName, int fontSize)
     }
 }
 
-void CCEditBoxImplTizen::setFontColor(const ccColor3B& color)
+void EditBoxImplTizen::setFontColor(const ccColor3B& color)
 {
     _colText = color;
     _label->setColor(color);
 }
 
-void CCEditBoxImplTizen::setPlaceholderFont(const char* pFontName, int fontSize)
+void EditBoxImplTizen::setPlaceholderFont(const char* pFontName, int fontSize)
 {
     if(_labelPlaceHolder != NULL) {
         _labelPlaceHolder->setFontName(pFontName);
@@ -112,43 +112,43 @@ void CCEditBoxImplTizen::setPlaceholderFont(const char* pFontName, int fontSize)
     }
 }
 
-void CCEditBoxImplTizen::setPlaceholderFontColor(const ccColor3B& color)
+void EditBoxImplTizen::setPlaceholderFontColor(const ccColor3B& color)
 {
     _colPlaceHolder = color;
     _labelPlaceHolder->setColor(color);
 }
 
-void CCEditBoxImplTizen::setInputMode(EditBoxInputMode inputMode)
+void EditBoxImplTizen::setInputMode(EditBoxInputMode inputMode)
 {
     _editBoxInputMode = inputMode;
 }
 
-void CCEditBoxImplTizen::setMaxLength(int maxLength)
+void EditBoxImplTizen::setMaxLength(int maxLength)
 {
     _maxLength = maxLength;
 }
 
-int CCEditBoxImplTizen::getMaxLength()
+int EditBoxImplTizen::getMaxLength()
 {
     return _maxLength;
 }
 
-void CCEditBoxImplTizen::setInputFlag(EditBoxInputFlag inputFlag)
+void EditBoxImplTizen::setInputFlag(EditBoxInputFlag inputFlag)
 {
     _editBoxInputFlag = inputFlag;
 }
 
-void CCEditBoxImplTizen::setReturnType(KeyboardReturnType returnType)
+void EditBoxImplTizen::setReturnType(KeyboardReturnType returnType)
 {
     _keyboardReturnType = returnType;
 }
 
-bool CCEditBoxImplTizen::isEditing()
+bool EditBoxImplTizen::isEditing()
 {
     return false;
 }
 
-void CCEditBoxImplTizen::setText(const char* pText)
+void EditBoxImplTizen::setText(const char* pText)
 {
     if (pText != NULL)
     {
@@ -177,7 +177,7 @@ void CCEditBoxImplTizen::setText(const char* pText)
 
             // Clip the text width to fit to the text box
             float fMaxWidth = _editSize.width - CC_EDIT_BOX_PADDING * 2;
-            CCRect clippingRect = _label->getTextureRect();
+            Rect clippingRect = _label->getTextureRect();
             if(clippingRect.size.width > fMaxWidth) {
                 clippingRect.size.width = fMaxWidth;
                 _label->setTextureRect(clippingRect);
@@ -193,12 +193,12 @@ void CCEditBoxImplTizen::setText(const char* pText)
     }
 }
 
-const char*  CCEditBoxImplTizen::getText(void)
+const char*  EditBoxImplTizen::getText(void)
 {
     return _text.c_str();
 }
 
-void CCEditBoxImplTizen::setPlaceHolder(const char* pText)
+void EditBoxImplTizen::setPlaceHolder(const char* pText)
 {
     if (pText != NULL)
     {
@@ -212,62 +212,62 @@ void CCEditBoxImplTizen::setPlaceHolder(const char* pText)
     }
 }
 
-void CCEditBoxImplTizen::setPosition(const CCPoint& pos)
+void EditBoxImplTizen::setPosition(const Point& pos)
 {
 }
 
-void CCEditBoxImplTizen::setVisible(bool visible)
+void EditBoxImplTizen::setVisible(bool visible)
 {
 }
 
-void CCEditBoxImplTizen::setContentSize(const CCSize& size)
+void EditBoxImplTizen::setContentSize(const Size& size)
 {
 }
 
-void CCEditBoxImplTizen::setAnchorPoint(const CCPoint& anchorPoint)
+void EditBoxImplTizen::setAnchorPoint(const Point& anchorPoint)
 {
 }
 
-void CCEditBoxImplTizen::visit(void)
+void EditBoxImplTizen::visit(void)
 {
 }
 
-void CCEditBoxImplTizen::onEnter(void)
+void EditBoxImplTizen::onEnter(void)
 {
 }
 
 static void editBoxCallbackFunc(const char* pText, void* ctx)
 {
-    CCEditBoxImplTizen* thiz = (CCEditBoxImplTizen*)ctx;
+    EditBoxImplTizen* thiz = (EditBoxImplTizen*)ctx;
     thiz->setText(pText);
 
     if (thiz->getDelegate() != NULL)
     {
-        thiz->getDelegate()->editBoxTextChanged(thiz->getCCEditBox(), thiz->getText());
-        thiz->getDelegate()->editBoxEditingDidEnd(thiz->getCCEditBox());
-        thiz->getDelegate()->editBoxReturn(thiz->getCCEditBox());
+        thiz->getDelegate()->editBoxTextChanged(thiz->getEditBox(), thiz->getText());
+        thiz->getDelegate()->editBoxEditingDidEnd(thiz->getEditBox());
+        thiz->getDelegate()->editBoxReturn(thiz->getEditBox());
     }
     
-    CCEditBox* pEditBox = thiz->getCCEditBox();
+    EditBox* pEditBox = thiz->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
-        cocos2d::CCScriptEngineProtocol* pEngine = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine();
+        cocos2d::ScriptEngineProtocol* pEngine = cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine();
         pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
         pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "ended",pEditBox);
         pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "return",pEditBox);
     }
 }
 
-void CCEditBoxImplTizen::openKeyboard()
+void EditBoxImplTizen::openKeyboard()
 {
     if (_delegate != NULL)
     {
         _delegate->editBoxEditingDidBegin(_editBox);
     }
-    CCEditBox* pEditBox = this->getCCEditBox();
+    EditBox* pEditBox = this->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
-        cocos2d::CCScriptEngineProtocol* pEngine = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine();
+        cocos2d::ScriptEngineProtocol* pEngine = cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine();
         pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
     }
 
@@ -314,7 +314,7 @@ void CCEditBoxImplTizen::openKeyboard()
         break;
     }
 
-    ((CCOspForm *)CCOspApplication::GetInstance()->getCCOspForm())->ShowKeypad(
+    ((OspForm *)OspApplication::GetInstance()->getOspForm())->ShowKeypad(
         _text.c_str(),
         keypadStyle,
         keypadCategory,
@@ -325,9 +325,9 @@ void CCEditBoxImplTizen::openKeyboard()
         (void*)this);
 }
 
-void CCEditBoxImplTizen::closeKeyboard()
+void EditBoxImplTizen::closeKeyboard()
 {
-    ((CCOspForm *)CCOspApplication::GetInstance()->getCCOspForm())->CloseKeypad();
+    ((OspForm *)OspApplication::GetInstance()->getOspForm())->CloseKeypad();
 }
 
 NS_CC_EXT_END

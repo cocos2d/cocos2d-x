@@ -50,25 +50,25 @@ NS_CC_EXT_BEGIN
  *
  * @see http://yannickloriot.com/library/ios/cccontrolextension/Classes/CCScale9Sprite.html
  */
-class CCScale9Sprite : public CCNodeRGBA
+class Scale9Sprite : public NodeRGBA
 {
 public:
-    CCScale9Sprite();
-    virtual ~CCScale9Sprite();
+    Scale9Sprite();
+    virtual ~Scale9Sprite();
 
 public:
     /** Original sprite's size. */
-    CC_SYNTHESIZE_READONLY(CCSize, _originalSize, OriginalSize);
+    CC_SYNTHESIZE_READONLY(Size, _originalSize, OriginalSize);
     /** Prefered sprite's size. By default the prefered size is the original size. */
 
     //if the preferredSize component is given as -1, it is ignored
-    CC_PROPERTY(CCSize, _preferredSize, PreferredSize); 
+    CC_PROPERTY(Size, _preferredSize, PreferredSize); 
     /** 
      * The end-cap insets. 
      * On a non-resizeable sprite, this property is set to CGRectZero; the sprite 
      * does not use end caps and the entire sprite is subject to stretching. 
      */
-    CC_PROPERTY(CCRect, _capInsets, CapInsets);
+    CC_PROPERTY(Rect, _capInsets, CapInsets);
     /** Sets the left side inset */
     CC_PROPERTY(float, _insetLeft, InsetLeft);
     /** Sets the top side inset */
@@ -80,21 +80,21 @@ public:
 
 protected:
     bool _spritesGenerated;
-    CCRect _spriteRect;
+    Rect _spriteRect;
     bool   _spriteFrameRotated;
-    CCRect _capInsetsInternal;
+    Rect _capInsetsInternal;
     bool _positionsAreDirty;
     
-    CCSpriteBatchNode* _scale9Image;
-    CCSprite* _topLeft;
-    CCSprite* _top;
-    CCSprite* _topRight;
-    CCSprite* _left;
-    CCSprite* _centre;
-    CCSprite* _right;
-    CCSprite* _bottomLeft;
-    CCSprite* _bottom;
-    CCSprite* _bottomRight;
+    SpriteBatchNode* _scale9Image;
+    Sprite* _topLeft;
+    Sprite* _top;
+    Sprite* _topRight;
+    Sprite* _left;
+    Sprite* _centre;
+    Sprite* _right;
+    Sprite* _bottomLeft;
+    Sprite* _bottom;
+    Sprite* _bottomRight;
 
     bool _opacityModifyRGB;
     GLubyte _opacity;
@@ -105,13 +105,13 @@ protected:
 
 public:
     
-    virtual void setContentSize(const CCSize & size);
+    virtual void setContentSize(const Size & size);
     virtual void visit();
     
     virtual bool init();
 
-    virtual bool initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, bool rotated, CCRect capInsets);
-    virtual bool initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, CCRect capInsets);
+    virtual bool initWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bool rotated, Rect capInsets);
+    virtual bool initWithBatchNode(SpriteBatchNode* batchnode, Rect rect, Rect capInsets);
     /**
      * Initializes a 9-slice sprite with a texture file, a delimitation zone and
      * with the specified cap insets.
@@ -125,7 +125,7 @@ public:
      * texture's full rect.
      * @param capInsets The values to use for the cap insets.
      */
-    virtual bool initWithFile(const char* file, CCRect rect,  CCRect capInsets);
+    virtual bool initWithFile(const char* file, Rect rect,  Rect capInsets);
     
     /** 
      * Creates a 9-slice sprite with a texture file, a delimitation zone and
@@ -133,7 +133,7 @@ public:
      *
      * @see initWithFile:rect:centerRegion:
      */
-    static CCScale9Sprite* create(const char* file, CCRect rect,  CCRect capInsets);
+    static Scale9Sprite* create(const char* file, Rect rect,  Rect capInsets);
 
     /**
      * Initializes a 9-slice sprite with a texture file and a delimitation zone. The
@@ -147,7 +147,7 @@ public:
      * is the whole image. If the shape is the whole texture, set this to the 
      * texture's full rect.
      */
-    virtual bool initWithFile(const char* file, CCRect rect);
+    virtual bool initWithFile(const char* file, Rect rect);
     
      /** 
      * Creates a 9-slice sprite with a texture file and a delimitation zone. The
@@ -155,7 +155,7 @@ public:
      *
      * @see initWithFile:rect:
      */
-    static CCScale9Sprite* create(const char* file, CCRect rect);
+    static Scale9Sprite* create(const char* file, Rect rect);
 
     /**
      * Initializes a 9-slice sprite with a texture file and with the specified cap
@@ -167,7 +167,7 @@ public:
      * @param file The name of the texture file.
      * @param capInsets The values to use for the cap insets.
      */
-    virtual bool initWithFile(CCRect capInsets, const char* file);
+    virtual bool initWithFile(Rect capInsets, const char* file);
 
     /** 
      * Creates a 9-slice sprite with a texture file. The whole texture will be
@@ -175,7 +175,7 @@ public:
      *
      * @see initWithFile:capInsets:
      */
-    static CCScale9Sprite* create(CCRect capInsets, const char* file);
+    static Scale9Sprite* create(Rect capInsets, const char* file);
 
     
     /**
@@ -195,7 +195,7 @@ public:
      *
      * @see initWithFile:
      */
-    static CCScale9Sprite* create(const char* file);
+    static Scale9Sprite* create(const char* file);
     
     /**
      * Initializes a 9-slice sprite with an sprite frame and with the specified 
@@ -207,7 +207,7 @@ public:
      * @param spriteFrame The sprite frame object.
      * @param capInsets The values to use for the cap insets.
      */
-    virtual bool initWithSpriteFrame(CCSpriteFrame* spriteFrame, CCRect capInsets);
+    virtual bool initWithSpriteFrame(SpriteFrame* spriteFrame, Rect capInsets);
 
     /**
      * Creates a 9-slice sprite with an sprite frame and the centre of its zone.
@@ -217,7 +217,7 @@ public:
      *
      * @see initWithSpriteFrame:centerRegion:
      */
-    static CCScale9Sprite* createWithSpriteFrame(CCSpriteFrame* spriteFrame, CCRect capInsets); 
+    static Scale9Sprite* createWithSpriteFrame(SpriteFrame* spriteFrame, Rect capInsets); 
     /**
      * Initializes a 9-slice sprite with an sprite frame.
      * Once the sprite is created, you can then call its "setContentSize:" method
@@ -226,7 +226,7 @@ public:
      *
      * @param spriteFrame The sprite frame object.
      */
-    virtual bool initWithSpriteFrame(CCSpriteFrame* spriteFrame);
+    virtual bool initWithSpriteFrame(SpriteFrame* spriteFrame);
 
     /**
      * Creates a 9-slice sprite with an sprite frame.
@@ -236,7 +236,7 @@ public:
      *
      * @see initWithSpriteFrame:
      */
-    static CCScale9Sprite* createWithSpriteFrame(CCSpriteFrame* spriteFrame);  
+    static Scale9Sprite* createWithSpriteFrame(SpriteFrame* spriteFrame);  
 
     /**
      * Initializes a 9-slice sprite with an sprite frame name and with the specified 
@@ -248,7 +248,7 @@ public:
      * @param spriteFrameName The sprite frame name.
      * @param capInsets The values to use for the cap insets.
      */
-    virtual bool initWithSpriteFrameName(const char*spriteFrameName, CCRect capInsets);
+    virtual bool initWithSpriteFrameName(const char*spriteFrameName, Rect capInsets);
 
     /**
      * Creates a 9-slice sprite with an sprite frame name and the centre of its
@@ -259,7 +259,7 @@ public:
      *
      * @see initWithSpriteFrameName:centerRegion:
      */
-    static CCScale9Sprite* createWithSpriteFrameName(const char*spriteFrameName, CCRect capInsets); 
+    static Scale9Sprite* createWithSpriteFrameName(const char*spriteFrameName, Rect capInsets); 
 
     /**
      * Initializes a 9-slice sprite with an sprite frame name.
@@ -279,7 +279,7 @@ public:
      *
      * @see initWithSpriteFrameName:
      */
-    static CCScale9Sprite* createWithSpriteFrameName(const char*spriteFrameName);
+    static Scale9Sprite* createWithSpriteFrameName(const char*spriteFrameName);
     
     /**
      * Creates and returns a new sprite object with the specified cap insets.
@@ -289,9 +289,9 @@ public:
      *
      * @param capInsets The values to use for the cap insets.
      */
-    CCScale9Sprite* resizableSpriteWithCapInsets(CCRect capInsets);
+    Scale9Sprite* resizableSpriteWithCapInsets(Rect capInsets);
     
-    static CCScale9Sprite* create();
+    static Scale9Sprite* create();
 
     // optional
     
@@ -312,9 +312,9 @@ public:
     virtual void setColor(const ccColor3B& color);
 	virtual const ccColor3B& getColor();
 
-    virtual bool updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, bool rotated, CCRect capInsets);
+    virtual bool updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bool rotated, Rect capInsets);
 
-    virtual void setSpriteFrame(CCSpriteFrame * spriteFrame);
+    virtual void setSpriteFrame(SpriteFrame * spriteFrame);
 };
 
 // end of GUI group

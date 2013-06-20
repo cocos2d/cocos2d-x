@@ -47,19 +47,19 @@ namespace cocos2d { namespace extension { namespace armature {
 class ContactListener;
 class GLESDebugDraw;
 
-class CCPhysicsWorld
+class PhysicsWorld
 {
 public:
-    static CCPhysicsWorld *sharedPhysicsWorld();
+    static PhysicsWorld *sharedPhysicsWorld();
     static void purgePhysicsWorld();
 
     void initNoGravityWorld();
 private:
-    CCPhysicsWorld();
-    ~CCPhysicsWorld();
+    PhysicsWorld();
+    ~PhysicsWorld();
 
 private:
-    static CCPhysicsWorld *s_PhysicsWorld;
+    static PhysicsWorld *s_PhysicsWorld;
 
     b2World *_noGravityWorld;
 
@@ -72,7 +72,7 @@ public:
 
     b2World *getNoGravityWorld();
 
-    sigslot::signal2<CCBone *, CCBone *> BoneColliderSignal;
+    sigslot::signal2<Bone *, Bone *> BoneColliderSignal;
 };
 
 }}} // namespace cocos2d { namespace extension { namespace armature {

@@ -36,18 +36,18 @@ namespace cocos2d { namespace extension { namespace armature {
 
 
 //! hit test function
-bool isSpriteContainPoint(CCSprite *sprite, CCPoint point);
-bool isSpriteContainPoint(CCSprite *sprite, CCPoint point, CCPoint &outPoint);
+bool isSpriteContainPoint(Sprite *sprite, Point point);
+bool isSpriteContainPoint(Sprite *sprite, Point point, Point &outPoint);
 
 #define CC_SPRITE_CONTAIN_POINT(sprite, point) isSpriteContainPoint((sprite), (point))
 #define CC_SPRITE_CONTAIN_POINT_WITH_RETURN(sprite, point, outPoint) isSpriteContainPoint((sprite), (point), outPoint)
 
 
 //! motion curve function
-CCPoint bezierTo(float t, CCPoint &point1, CCPoint &point2, CCPoint &point3);
-CCPoint bezierTo(float t, CCPoint &point1, CCPoint &point2, CCPoint &point3, CCPoint &point4);
+Point bezierTo(float t, Point &point1, Point &point2, Point &point3);
+Point bezierTo(float t, Point &point1, Point &point2, Point &point3, Point &point4);
 
-CCPoint circleTo(float t, CCPoint &center, float radius, float fromRadian, float radianDif);
+Point circleTo(float t, Point &center, float radius, float fromRadian, float radianDif);
 
 
 }}} // namespace cocos2d { namespace extension { namespace armature {

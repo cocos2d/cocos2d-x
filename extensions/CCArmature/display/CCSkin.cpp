@@ -33,9 +33,9 @@ namespace cocos2d { namespace extension { namespace armature {
 #define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
 #endif
 
-CCSkin *CCSkin::create()
+Skin *Skin::create()
 {
-    CCSkin *skin = new CCSkin();
+    Skin *skin = new Skin();
     if(skin && skin->init())
     {
         skin->autorelease();
@@ -45,9 +45,9 @@ CCSkin *CCSkin::create()
     return NULL;
 }
 
-CCSkin *CCSkin::createWithSpriteFrameName(const char *pszSpriteFrameName)
+Skin *Skin::createWithSpriteFrameName(const char *pszSpriteFrameName)
 {
-    CCSkin *skin = new CCSkin();
+    Skin *skin = new Skin();
     if(skin && skin->initWithSpriteFrameName(pszSpriteFrameName))
     {
         skin->autorelease();
@@ -57,12 +57,12 @@ CCSkin *CCSkin::createWithSpriteFrameName(const char *pszSpriteFrameName)
     return NULL;
 }
 
-CCSkin::CCSkin()
+Skin::Skin()
     : _bone(NULL)
 {
 }
 
-void CCSkin::setSkinData(const CCBaseData &var)
+void Skin::setSkinData(const BaseData &var)
 {
     _skinData = var;
 
@@ -74,17 +74,17 @@ void CCSkin::setSkinData(const CCBaseData &var)
     _skinTransform = nodeToParentTransform();
 }
 
-const CCBaseData &CCSkin::getSkinData()
+const BaseData &Skin::getSkinData()
 {
     return _skinData;
 }
 
-void CCSkin::updateTransform()
+void Skin::updateTransform()
 {
-    _transform = CCAffineTransformConcat(_skinTransform, _bone->nodeToArmatureTransform());
+    _transform = AffineTransformConcat(_skinTransform, _bone->nodeToArmatureTransform());
 }
 
-void CCSkin::draw()
+void Skin::draw()
 {
     // If it is not visible, or one of its ancestors is not visible, then do nothing:
     if( !_visible)
@@ -97,7 +97,7 @@ void CCSkin::draw()
         // calculate the Quad based on the Affine Matrix
         //
 
-        CCSize size = _rect.size;
+        Size size = _rect.size;
 
         float x1 = _offsetPosition.x;
         float y1 = _offsetPosition.y;

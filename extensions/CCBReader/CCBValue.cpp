@@ -94,7 +94,7 @@ CCBValue* CCBValue::create(const char *pStringValue)
 }
 
 
-CCBValue* CCBValue::create(CCArray *pArrValue)
+CCBValue* CCBValue::create(Array *pArrValue)
 {
     CCBValue *ret = new CCBValue();
     if (ret)
@@ -136,7 +136,7 @@ unsigned char CCBValue::getByteValue()
     return (unsigned char)(mValue.nValue);
 }
 
-CCArray* CCBValue::getArrayValue() {
+Array* CCBValue::getArrayValue() {
     assert(mType == kArrayValue);
     
     return _arrValue;

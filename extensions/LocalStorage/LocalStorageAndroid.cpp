@@ -114,11 +114,11 @@ const char* localStorageGetItem( const char *key )
 {
 	assert( _initialized );
     JniMethodInfo t;
-    CCString* pStr = NULL;
+    String* pStr = NULL;
     if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxLocalStorage", "getItem", "(Ljava/lang/String;)Ljava/lang/String;")) {
         jstring jkey = t.env->NewStringUTF(key);
         jstring ret = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID, jkey);
-        pStr = CCString::create(JniHelper::jstring2string(ret));
+        pStr = String::create(JniHelper::jstring2string(ret));
         t.env->DeleteLocalRef(ret);
         t.env->DeleteLocalRef(jkey);
         t.env->DeleteLocalRef(t.classID);

@@ -60,7 +60,7 @@ void CCSkeleton::initialize () {
 	blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
 	setOpacityModifyRGB(true);
 
-	setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
+	setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColor));
 	scheduleUpdate();
 }
 
@@ -132,7 +132,7 @@ void CCSkeleton::draw () {
 		skeleton->b *= skeleton->a;
 	}
 
-	CCTextureAtlas* textureAtlas = 0;
+	TextureAtlas* textureAtlas = 0;
 	ccV3F_C4B_T2F_Quad quad;
 	quad.tl.vertices.z = 0;
 	quad.tr.vertices.z = 0;
@@ -142,7 +142,7 @@ void CCSkeleton::draw () {
 		Slot* slot = skeleton->slots[i];
 		if (!slot->attachment || slot->attachment->type != ATTACHMENT_REGION) continue;
 		RegionAttachment* attachment = (RegionAttachment*)slot->attachment;
-		CCTextureAtlas* regionTextureAtlas = getTextureAtlas(attachment);
+		TextureAtlas* regionTextureAtlas = getTextureAtlas(attachment);
 		if (regionTextureAtlas != textureAtlas) {
 			if (textureAtlas) {
 				textureAtlas->drawQuads();
@@ -164,7 +164,7 @@ void CCSkeleton::draw () {
 		// Slots.
 		ccDrawColor4B(0, 0, 255, 255);
 		glLineWidth(1);
-		CCPoint points[4];
+		Point points[4];
 		ccV3F_C4B_T2F_Quad quad;
 		for (int i = 0, n = skeleton->slotCount; i < n; i++) {
 			Slot* slot = skeleton->slots[i];
@@ -199,11 +199,11 @@ void CCSkeleton::draw () {
 	}
 }
 
-CCTextureAtlas* CCSkeleton::getTextureAtlas (RegionAttachment* regionAttachment) const {
-	return (CCTextureAtlas*)((AtlasRegion*)regionAttachment->rendererObject)->page->rendererObject;
+TextureAtlas* CCSkeleton::getTextureAtlas (RegionAttachment* regionAttachment) const {
+	return (TextureAtlas*)((AtlasRegion*)regionAttachment->rendererObject)->page->rendererObject;
 }
 
-CCRect CCSkeleton::boundingBox () {
+Rect CCSkeleton::boundingBox () {
 	float minX = FLT_MAX, minY = FLT_MAX, maxX = FLT_MIN, maxY = FLT_MIN;
 	float scaleX = getScaleX();
 	float scaleY = getScaleY();
@@ -230,7 +230,7 @@ CCRect CCSkeleton::boundingBox () {
 		maxX = max(maxX, vertices[VERTEX_X3] * scaleX);
 		maxY = max(maxY, vertices[VERTEX_Y3] * scaleY);
 	}
-	CCPoint position = getPosition();
+	Point position = getPosition();
 	return CCRectMake(position.x + minX, position.y + minY, maxX - minX, maxY - minY);
 }
 
@@ -269,7 +269,7 @@ bool CCSkeleton::setAttachment (const char* slotName, const char* attachmentName
 	return Skeleton_setAttachment(skeleton, slotName, attachmentName) ? true : false;
 }
 
-// --- CCBlendProtocol
+// --- BlendProtocol
 
 ccBlendFunc CCSkeleton::getBlendFunc () {
     return blendFunc;

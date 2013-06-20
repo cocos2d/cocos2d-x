@@ -14,69 +14,69 @@
 
 NS_CC_EXT_BEGIN
 
-void CCLabelTTFLoader::onHandlePropTypeColor3(CCNode * pNode, CCNode * pParent, const char * pPropertyName, ccColor3B pCCColor3B, CCBReader * pCCBReader) {
+void LabelTTFLoader::onHandlePropTypeColor3(Node * pNode, Node * pParent, const char * pPropertyName, ccColor3B pColor3B, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_COLOR) == 0) {
-        ((CCLabelTTF *)pNode)->setColor(pCCColor3B);
+        ((LabelTTF *)pNode)->setColor(pColor3B);
     } else {
-        CCNodeLoader::onHandlePropTypeColor3(pNode, pParent, pPropertyName, pCCColor3B, pCCBReader);
+        NodeLoader::onHandlePropTypeColor3(pNode, pParent, pPropertyName, pColor3B, pCCBReader);
     }
 }
 
-void CCLabelTTFLoader::onHandlePropTypeByte(CCNode * pNode, CCNode * pParent, const char * pPropertyName, unsigned char pByte, CCBReader * pCCBReader) {
+void LabelTTFLoader::onHandlePropTypeByte(Node * pNode, Node * pParent, const char * pPropertyName, unsigned char pByte, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_OPACITY) == 0) {
-        ((CCLabelTTF *)pNode)->setOpacity(pByte);
+        ((LabelTTF *)pNode)->setOpacity(pByte);
     } else {
-        CCNodeLoader::onHandlePropTypeByte(pNode, pParent, pPropertyName, pByte, pCCBReader);
+        NodeLoader::onHandlePropTypeByte(pNode, pParent, pPropertyName, pByte, pCCBReader);
     }
 }
 
-void CCLabelTTFLoader::onHandlePropTypeBlendFunc(CCNode * pNode, CCNode * pParent, const char * pPropertyName, ccBlendFunc pCCBlendFunc, CCBReader * pCCBReader) {
+void LabelTTFLoader::onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const char * pPropertyName, ccBlendFunc pBlendFunc, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_BLENDFUNC) == 0) {
-        ((CCLabelTTF *)pNode)->setBlendFunc(pCCBlendFunc);
+        ((LabelTTF *)pNode)->setBlendFunc(pBlendFunc);
     } else {
-        CCNodeLoader::onHandlePropTypeBlendFunc(pNode, pParent, pPropertyName, pCCBlendFunc, pCCBReader);
+        NodeLoader::onHandlePropTypeBlendFunc(pNode, pParent, pPropertyName, pBlendFunc, pCCBReader);
     }
 }
 
-void CCLabelTTFLoader::onHandlePropTypeFontTTF(CCNode * pNode, CCNode * pParent, const char * pPropertyName, const char * pFontTTF, CCBReader * pCCBReader) {
+void LabelTTFLoader::onHandlePropTypeFontTTF(Node * pNode, Node * pParent, const char * pPropertyName, const char * pFontTTF, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_FONTNAME) == 0) {
-        ((CCLabelTTF *)pNode)->setFontName(pFontTTF);
+        ((LabelTTF *)pNode)->setFontName(pFontTTF);
     } else {
-        CCNodeLoader::onHandlePropTypeFontTTF(pNode, pParent, pPropertyName, pFontTTF, pCCBReader);
+        NodeLoader::onHandlePropTypeFontTTF(pNode, pParent, pPropertyName, pFontTTF, pCCBReader);
     }
 }
 
-void CCLabelTTFLoader::onHandlePropTypeText(CCNode * pNode, CCNode * pParent, const char * pPropertyName, const char * pText, CCBReader * pCCBReader) {
+void LabelTTFLoader::onHandlePropTypeText(Node * pNode, Node * pParent, const char * pPropertyName, const char * pText, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_STRING) == 0) {
-        ((CCLabelTTF *)pNode)->setString(pText);
+        ((LabelTTF *)pNode)->setString(pText);
     } else {
-        CCNodeLoader::onHandlePropTypeText(pNode, pParent, pPropertyName, pText, pCCBReader);
+        NodeLoader::onHandlePropTypeText(pNode, pParent, pPropertyName, pText, pCCBReader);
     }
 }
 
-void CCLabelTTFLoader::onHandlePropTypeFloatScale(CCNode * pNode, CCNode * pParent, const char * pPropertyName, float pFloatScale, CCBReader * pCCBReader) {
+void LabelTTFLoader::onHandlePropTypeFloatScale(Node * pNode, Node * pParent, const char * pPropertyName, float pFloatScale, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_FONTSIZE) == 0) {
-        ((CCLabelTTF *)pNode)->setFontSize(pFloatScale);
+        ((LabelTTF *)pNode)->setFontSize(pFloatScale);
     } else {
-        CCNodeLoader::onHandlePropTypeFloatScale(pNode, pParent, pPropertyName, pFloatScale, pCCBReader);
+        NodeLoader::onHandlePropTypeFloatScale(pNode, pParent, pPropertyName, pFloatScale, pCCBReader);
     }
 }
 
-void CCLabelTTFLoader::onHandlePropTypeIntegerLabeled(CCNode * pNode, CCNode * pParent, const char * pPropertyName, int pIntegerLabeled, CCBReader * pCCBReader) {
+void LabelTTFLoader::onHandlePropTypeIntegerLabeled(Node * pNode, Node * pParent, const char * pPropertyName, int pIntegerLabeled, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_HORIZONTALALIGNMENT) == 0) {
-        ((CCLabelTTF *)pNode)->setHorizontalAlignment(CCTextAlignment(pIntegerLabeled));
+        ((LabelTTF *)pNode)->setHorizontalAlignment(TextAlignment(pIntegerLabeled));
     } else if(strcmp(pPropertyName, PROPERTY_VERTICALALIGNMENT) == 0) {
-        ((CCLabelTTF *)pNode)->setVerticalAlignment(CCVerticalTextAlignment(pIntegerLabeled));
+        ((LabelTTF *)pNode)->setVerticalAlignment(VerticalTextAlignment(pIntegerLabeled));
     } else {
-        CCNodeLoader::onHandlePropTypeFloatScale(pNode, pParent, pPropertyName, pIntegerLabeled, pCCBReader);
+        NodeLoader::onHandlePropTypeFloatScale(pNode, pParent, pPropertyName, pIntegerLabeled, pCCBReader);
     }
 }
 
-void CCLabelTTFLoader::onHandlePropTypeSize(CCNode * pNode, CCNode * pParent, const char * pPropertyName, CCSize pSize, CCBReader * pCCBReader) {
+void LabelTTFLoader::onHandlePropTypeSize(Node * pNode, Node * pParent, const char * pPropertyName, Size pSize, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_DIMENSIONS) == 0) {
-        ((CCLabelTTF *)pNode)->setDimensions(pSize);
+        ((LabelTTF *)pNode)->setDimensions(pSize);
     } else {
-        CCNodeLoader::onHandlePropTypeSize(pNode, pParent, pPropertyName, pSize, pCCBReader);
+        NodeLoader::onHandlePropTypeSize(pNode, pParent, pPropertyName, pSize, pCCBReader);
     }
 }
 

@@ -45,7 +45,7 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-class CCControlHuePicker : public CCControl
+class ControlHuePicker : public Control
 {
     //maunally put in the setters
     CC_SYNTHESIZE_READONLY(float, _hue, Hue);
@@ -55,23 +55,23 @@ class CCControlHuePicker : public CCControl
 
 
     //not sure if these need to be there actually. I suppose someone might want to access the sprite?
-    CC_SYNTHESIZE_RETAIN(CCSprite*, _background, Background);
-    CC_SYNTHESIZE_RETAIN(CCSprite*, _slider, Slider);
-    CC_SYNTHESIZE_READONLY(CCPoint, _startPos, StartPos);
+    CC_SYNTHESIZE_RETAIN(Sprite*, _background, Background);
+    CC_SYNTHESIZE_RETAIN(Sprite*, _slider, Slider);
+    CC_SYNTHESIZE_READONLY(Point, _startPos, StartPos);
 
 public:
-    CCControlHuePicker();
-    virtual ~CCControlHuePicker();
-    virtual bool initWithTargetAndPos(CCNode* target, CCPoint pos);
+    ControlHuePicker();
+    virtual ~ControlHuePicker();
+    virtual bool initWithTargetAndPos(Node* target, Point pos);
 
-    static CCControlHuePicker* create(CCNode* target, CCPoint pos);
+    static ControlHuePicker* create(Node* target, Point pos);
     virtual void setEnabled(bool enabled);
 protected:    
-    void updateSliderPosition(CCPoint location);
-    bool checkSliderPosition(CCPoint location);
+    void updateSliderPosition(Point location);
+    bool checkSliderPosition(Point location);
 
-    virtual bool ccTouchBegan(CCTouch* touch, CCEvent* pEvent);
-    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
+    virtual bool ccTouchBegan(Touch* touch, Event* pEvent);
+    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent);
 };
 
 // end of GUI group

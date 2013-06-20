@@ -30,13 +30,13 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
-class CCComController : public cocos2d::CCComponent, public CCInputDelegate
+class ComController : public cocos2d::Component, public InputDelegate
 {
 protected:
-    CCComController(void);
+    ComController(void);
     
 public:
-   virtual ~CCComController(void);
+   virtual ~ComController(void);
    virtual bool init();
    virtual void onEnter();
    virtual void onExit();
@@ -44,7 +44,7 @@ public:
    virtual bool isEnabled() const;
    virtual void setEnabled(bool b);
     
-   static CCComController* create(void);
+   static ComController* create(void);
 };
 
 NS_CC_EXT_END

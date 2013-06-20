@@ -28,9 +28,9 @@ THE SOFTWARE.
 
 namespace cocos2d { namespace extension { namespace armature {
 
-CCBatchNode *CCBatchNode::create()
+BatchNode *BatchNode::create()
 {
-    CCBatchNode *batchNode = new CCBatchNode();
+    BatchNode *batchNode = new BatchNode();
     if (batchNode && batchNode->init())
     {
         batchNode->autorelease();
@@ -40,29 +40,29 @@ CCBatchNode *CCBatchNode::create()
     return NULL;
 }
 
-CCBatchNode::CCBatchNode()
+BatchNode::BatchNode()
     : _atlas(NULL)
 {
 }
 
-bool CCBatchNode::init()
+bool BatchNode::init()
 {
-    bool ret = CCNode::init();
-    setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
+    bool ret = Node::init();
+    setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColor));
     return ret;
 }
 
-void CCBatchNode::addChild(CCNode *child, int zOrder, int tag)
+void BatchNode::addChild(Node *child, int zOrder, int tag)
 {
-    CCNode::addChild(child, zOrder, tag);
-    CCArmature *armature = dynamic_cast<CCArmature *>(child);
+    Node::addChild(child, zOrder, tag);
+    Armature *armature = dynamic_cast<Armature *>(child);
     if (armature != NULL)
     {
         armature->setBatchNode(this);
     }
 }
 
-void CCBatchNode::visit()
+void BatchNode::visit()
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)
@@ -91,13 +91,13 @@ void CCBatchNode::visit()
     kmGLPopMatrix();
 }
 
-void CCBatchNode::draw()
+void BatchNode::draw()
 {
     CC_NODE_DRAW_SETUP();
-    CCObject *object = NULL;
+    Object *object = NULL;
     CCARRAY_FOREACH(_children, object)
     {
-        CCArmature *armature = dynamic_cast<CCArmature *>(object);
+        Armature *armature = dynamic_cast<Armature *>(object);
         if (armature)
         {
             armature->visit();
@@ -105,7 +105,7 @@ void CCBatchNode::draw()
         }
         else
         {
-            ((CCNode *)object)->visit();
+            ((Node *)object)->visit();
         }
     }
 

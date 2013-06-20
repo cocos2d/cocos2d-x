@@ -37,23 +37,23 @@ THE SOFTWARE.
 
 namespace cocos2d { namespace extension { namespace armature {
 
-class  CCDecorativeDisplay: public CCObject, public sigslot::has_slots<>
+class  DecorativeDisplay: public Object, public sigslot::has_slots<>
 {
 public:
-    static CCDecorativeDisplay *create();
+    static DecorativeDisplay *create();
 public:
-    CCDecorativeDisplay(void);
-    ~CCDecorativeDisplay(void);
+    DecorativeDisplay(void);
+    ~DecorativeDisplay(void);
 
     virtual bool init();
 
 protected:
 
-    CC_SYNTHESIZE_RETAIN(CCNode *, _display, Display);
-    CC_SYNTHESIZE_RETAIN(CCDisplayData *, _displayData, DisplayData);
+    CC_SYNTHESIZE_RETAIN(Node *, _display, Display);
+    CC_SYNTHESIZE_RETAIN(DisplayData *, _displayData, DisplayData);
 
 #if ENABLE_PHYSICS_DETECT
-    CC_SYNTHESIZE_RETAIN(CCColliderDetector *, _colliderDetector, ColliderDetector);
+    CC_SYNTHESIZE_RETAIN(ColliderDetector *, _colliderDetector, ColliderDetector);
 #endif
 public:
     void anchorPointChanged(float pointX, float pointY);

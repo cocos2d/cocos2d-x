@@ -33,12 +33,12 @@ struct b2Filter;
 
 namespace cocos2d { namespace extension { namespace armature {
 
-class CCBone;
+class Bone;
 
-class ColliderBody : public CCObject
+class ColliderBody : public Object
 {
 public:
-	ColliderBody(b2Body *b2b, CCContourData *contourData)
+	ColliderBody(b2Body *b2b, ContourData *contourData)
 		:_pB2b(NULL)
 		,_contourData(NULL)
 	{
@@ -57,46 +57,46 @@ public:
 		return _pB2b;
 	}
 
-	inline CCContourData *getContourData()
+	inline ContourData *getContourData()
 	{
 		return _contourData;
 	}
 
 private:
 	b2Body *_pB2b;
-	CCContourData *_contourData;
+	ContourData *_contourData;
 };
 
 /*
  *  @brief  ContourSprite used to draw the contour of the display
  */
-class CCColliderDetector : public CCObject
+class ColliderDetector : public Object
 {
 public:
-	static CCColliderDetector *create();
-    static CCColliderDetector *create(CCBone *bone);
+	static ColliderDetector *create();
+    static ColliderDetector *create(Bone *bone);
 public:
-	CCColliderDetector();
-	~CCColliderDetector(void);
+	ColliderDetector();
+	~ColliderDetector(void);
     
     virtual bool init();
-	virtual bool init(CCBone *bone);
+	virtual bool init(Bone *bone);
     
-    void addContourData(CCContourData *contourData);
-    void addContourDataList(CCArray *contourDataList);
+    void addContourData(ContourData *contourData);
+    void addContourDataList(Array *contourDataList);
     
-	void removeContourData(CCContourData *contourData);
+	void removeContourData(ContourData *contourData);
 	void removeAll();
     
-    void updateTransform(CCAffineTransform &t);
+    void updateTransform(AffineTransform &t);
 
 	void setColliderFilter(b2Filter &filter);
 
     void setActive(bool active);
 private:
-    CCArray *_colliderBodyList;
+    Array *_colliderBodyList;
     
-	CC_SYNTHESIZE(CCBone*, _bone, Bone);
+	CC_SYNTHESIZE(Bone*, _bone, Bone);
 
 };
 		

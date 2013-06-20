@@ -34,13 +34,13 @@
 
 NS_CC_EXT_BEGIN
 
-CCEditBoxImpl* __createSystemEditBox(CCEditBox* pEditBox)
+EditBoxImpl* __createSystemEditBox(EditBox* pEditBox)
 {
-    return new CCEditBoxImplAndroid(pEditBox);
+    return new EditBoxImplAndroid(pEditBox);
 }
 
-CCEditBoxImplAndroid::CCEditBoxImplAndroid(CCEditBox* pEditText)
-: CCEditBoxImpl(pEditText)
+EditBoxImplAndroid::EditBoxImplAndroid(EditBox* pEditText)
+: EditBoxImpl(pEditText)
 , _label(NULL)
 , _labelPlaceHolder(NULL)
 , _editBoxInputMode(kEditBoxInputModeSingleLine)
@@ -53,29 +53,29 @@ CCEditBoxImplAndroid::CCEditBoxImplAndroid(CCEditBox* pEditText)
     
 }
 
-CCEditBoxImplAndroid::~CCEditBoxImplAndroid()
+EditBoxImplAndroid::~EditBoxImplAndroid()
 {
 	
 }
 
-void CCEditBoxImplAndroid::doAnimationWhenKeyboardMove(float duration, float distance)
+void EditBoxImplAndroid::doAnimationWhenKeyboardMove(float duration, float distance)
 { // don't need to be implemented on android platform.
 	
 }
 
 static const int CC_EDIT_BOX_PADDING = 5;
 
-bool CCEditBoxImplAndroid::initWithSize(const CCSize& size)
+bool EditBoxImplAndroid::initWithSize(const Size& size)
 {
     int fontSize = getFontSizeAccordingHeightJni(size.height-12);
-    _label = CCLabelTTF::create("", "", size.height-12);
+    _label = LabelTTF::create("", "", size.height-12);
 	// align the text vertically center
     _label->setAnchorPoint(ccp(0, 0.5f));
     _label->setPosition(ccp(CC_EDIT_BOX_PADDING, size.height / 2.0f));
     _label->setColor(_colText);
     _editBox->addChild(_label);
 	
-    _labelPlaceHolder = CCLabelTTF::create("", "", size.height-12);
+    _labelPlaceHolder = LabelTTF::create("", "", size.height-12);
 	// align the text vertically center
     _labelPlaceHolder->setAnchorPoint(ccp(0, 0.5f));
     _labelPlaceHolder->setPosition(ccp(CC_EDIT_BOX_PADDING, size.height / 2.0f));
@@ -87,7 +87,7 @@ bool CCEditBoxImplAndroid::initWithSize(const CCSize& size)
     return true;
 }
 
-void CCEditBoxImplAndroid::setFont(const char* pFontName, int fontSize)
+void EditBoxImplAndroid::setFont(const char* pFontName, int fontSize)
 {
 	if(_label != NULL) {
 		_label->setFontName(pFontName);
@@ -100,13 +100,13 @@ void CCEditBoxImplAndroid::setFont(const char* pFontName, int fontSize)
 	}
 }
 
-void CCEditBoxImplAndroid::setFontColor(const ccColor3B& color)
+void EditBoxImplAndroid::setFontColor(const ccColor3B& color)
 {
     _colText = color;
     _label->setColor(color);
 }
 
-void CCEditBoxImplAndroid::setPlaceholderFont(const char* pFontName, int fontSize)
+void EditBoxImplAndroid::setPlaceholderFont(const char* pFontName, int fontSize)
 {
 	if(_labelPlaceHolder != NULL) {
 		_labelPlaceHolder->setFontName(pFontName);
@@ -114,43 +114,43 @@ void CCEditBoxImplAndroid::setPlaceholderFont(const char* pFontName, int fontSiz
 	}
 }
 
-void CCEditBoxImplAndroid::setPlaceholderFontColor(const ccColor3B& color)
+void EditBoxImplAndroid::setPlaceholderFontColor(const ccColor3B& color)
 {
     _colPlaceHolder = color;
     _labelPlaceHolder->setColor(color);
 }
 
-void CCEditBoxImplAndroid::setInputMode(EditBoxInputMode inputMode)
+void EditBoxImplAndroid::setInputMode(EditBoxInputMode inputMode)
 {
     _editBoxInputMode = inputMode;
 }
 
-void CCEditBoxImplAndroid::setMaxLength(int maxLength)
+void EditBoxImplAndroid::setMaxLength(int maxLength)
 {
     _maxLength = maxLength;
 }
 
-int CCEditBoxImplAndroid::getMaxLength()
+int EditBoxImplAndroid::getMaxLength()
 {
     return _maxLength;
 }
 
-void CCEditBoxImplAndroid::setInputFlag(EditBoxInputFlag inputFlag)
+void EditBoxImplAndroid::setInputFlag(EditBoxInputFlag inputFlag)
 {
     _editBoxInputFlag = inputFlag;
 }
 
-void CCEditBoxImplAndroid::setReturnType(KeyboardReturnType returnType)
+void EditBoxImplAndroid::setReturnType(KeyboardReturnType returnType)
 {
     _keyboardReturnType = returnType;
 }
 
-bool CCEditBoxImplAndroid::isEditing()
+bool EditBoxImplAndroid::isEditing()
 {
     return false;
 }
 
-void CCEditBoxImplAndroid::setText(const char* pText)
+void EditBoxImplAndroid::setText(const char* pText)
 {
     if (pText != NULL)
     {
@@ -179,7 +179,7 @@ void CCEditBoxImplAndroid::setText(const char* pText)
 
 			// Clip the text width to fit to the text box
 			float fMaxWidth = _editSize.width - CC_EDIT_BOX_PADDING * 2;
-			CCRect clippingRect = _label->getTextureRect();
+			Rect clippingRect = _label->getTextureRect();
 			if(clippingRect.size.width > fMaxWidth) {
 				clippingRect.size.width = fMaxWidth;
 				_label->setTextureRect(clippingRect);
@@ -195,12 +195,12 @@ void CCEditBoxImplAndroid::setText(const char* pText)
     }
 }
 
-const char*  CCEditBoxImplAndroid::getText(void)
+const char*  EditBoxImplAndroid::getText(void)
 {
     return _text.c_str();
 }
 
-void CCEditBoxImplAndroid::setPlaceHolder(const char* pText)
+void EditBoxImplAndroid::setPlaceHolder(const char* pText)
 {
     if (pText != NULL)
     {
@@ -214,68 +214,68 @@ void CCEditBoxImplAndroid::setPlaceHolder(const char* pText)
     }
 }
 
-void CCEditBoxImplAndroid::setPosition(const CCPoint& pos)
+void EditBoxImplAndroid::setPosition(const Point& pos)
 { // don't need to be implemented on android platform.
 	
 }
 
-void CCEditBoxImplAndroid::setVisible(bool visible)
+void EditBoxImplAndroid::setVisible(bool visible)
 { // don't need to be implemented on android platform.
 
 }
 
-void CCEditBoxImplAndroid::setContentSize(const CCSize& size)
-{ // don't need to be implemented on android platform.
-	
-}
-
-void CCEditBoxImplAndroid::setAnchorPoint(const CCPoint& anchorPoint)
+void EditBoxImplAndroid::setContentSize(const Size& size)
 { // don't need to be implemented on android platform.
 	
 }
 
-void CCEditBoxImplAndroid::visit(void)
+void EditBoxImplAndroid::setAnchorPoint(const Point& anchorPoint)
+{ // don't need to be implemented on android platform.
+	
+}
+
+void EditBoxImplAndroid::visit(void)
 { // don't need to be implemented on android platform.
     
 }
 
-void CCEditBoxImplAndroid::onEnter(void)
+void EditBoxImplAndroid::onEnter(void)
 { // don't need to be implemented on android platform.
     
 }
 
 static void editBoxCallbackFunc(const char* pText, void* ctx)
 {
-    CCEditBoxImplAndroid* thiz = (CCEditBoxImplAndroid*)ctx;
+    EditBoxImplAndroid* thiz = (EditBoxImplAndroid*)ctx;
     thiz->setText(pText);
 	
     if (thiz->getDelegate() != NULL)
     {
-        thiz->getDelegate()->editBoxTextChanged(thiz->getCCEditBox(), thiz->getText());
-        thiz->getDelegate()->editBoxEditingDidEnd(thiz->getCCEditBox());
-        thiz->getDelegate()->editBoxReturn(thiz->getCCEditBox());
+        thiz->getDelegate()->editBoxTextChanged(thiz->getEditBox(), thiz->getText());
+        thiz->getDelegate()->editBoxEditingDidEnd(thiz->getEditBox());
+        thiz->getDelegate()->editBoxReturn(thiz->getEditBox());
     }
     
-    CCEditBox* pEditBox = thiz->getCCEditBox();
+    EditBox* pEditBox = thiz->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
-        cocos2d::CCScriptEngineProtocol* pEngine = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine();
+        cocos2d::ScriptEngineProtocol* pEngine = cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine();
         pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
         pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "ended",pEditBox);
         pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "return",pEditBox);
     }
 }
 
-void CCEditBoxImplAndroid::openKeyboard()
+void EditBoxImplAndroid::openKeyboard()
 {
     if (_delegate != NULL)
     {
         _delegate->editBoxEditingDidBegin(_editBox);
     }
-    CCEditBox* pEditBox = this->getCCEditBox();
+    EditBox* pEditBox = this->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
-        cocos2d::CCScriptEngineProtocol* pEngine = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine();
+        cocos2d::ScriptEngineProtocol* pEngine = cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine();
         pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
     }
 	
@@ -290,7 +290,7 @@ void CCEditBoxImplAndroid::openKeyboard()
 	
 }
 
-void CCEditBoxImplAndroid::closeKeyboard()
+void EditBoxImplAndroid::closeKeyboard()
 {
 	
 }

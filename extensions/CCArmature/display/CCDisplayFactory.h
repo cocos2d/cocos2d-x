@@ -30,32 +30,32 @@ THE SOFTWARE.
 
 namespace cocos2d { namespace extension { namespace armature {
 
-class CCSkin;
-class CCBone;
-class CCDecorativeDisplay;
-class CCDisplayData;
+class Skin;
+class Bone;
+class DecorativeDisplay;
+class DisplayData;
 
-class CCDisplayFactory
+class DisplayFactory
 {
 public:
-	static void addDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
-	static void createDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay);
-	static void updateDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty);
+	static void addDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData);
+	static void createDisplay(Bone *bone, DecorativeDisplay *decoDisplay);
+	static void updateDisplay(Bone *bone, DecorativeDisplay *decoDisplay, float dt, bool dirty);
 
-	static void addSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
-	static void createSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay);
-	static void updateSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty);
+	static void addSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData);
+	static void createSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisplay);
+	static void updateSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisplay, float dt, bool dirty);
 
-	static void addArmatureDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
-	static void createArmatureDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay);
-	static void updateArmatureDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty);
+	static void addArmatureDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData);
+	static void createArmatureDisplay(Bone *bone, DecorativeDisplay *decoDisplay);
+	static void updateArmatureDisplay(Bone *bone, DecorativeDisplay *decoDisplay, float dt, bool dirty);
 
-	static void addParticleDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
-	static void createParticleDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay);
-	static void updateParticleDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty);
+	static void addParticleDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData);
+	static void createParticleDisplay(Bone *bone, DecorativeDisplay *decoDisplay);
+	static void updateParticleDisplay(Bone *bone, DecorativeDisplay *decoDisplay, float dt, bool dirty);
 
-	static void addShaderDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
-	static void createShaderDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay);
+	static void addShaderDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData);
+	static void createShaderDisplay(Bone *bone, DecorativeDisplay *decoDisplay);
 
 };
 

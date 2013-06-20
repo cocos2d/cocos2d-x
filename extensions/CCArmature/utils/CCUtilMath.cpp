@@ -27,27 +27,27 @@ THE SOFTWARE.
 
 namespace cocos2d { namespace extension { namespace armature {
 
-bool isSpriteContainPoint(CCSprite *_sprite, CCPoint _point, CCPoint &_outPoint)
+bool isSpriteContainPoint(Sprite *_sprite, Point _point, Point &_outPoint)
 {
     _outPoint = _sprite->convertToNodeSpace(_point);
 
-    CCSize _s  = _sprite->getContentSize();
-    CCRect _r(0, 0, _s.width, _s.height);
+    Size _s  = _sprite->getContentSize();
+    Rect _r(0, 0, _s.width, _s.height);
 
     return _r.containsPoint(_outPoint);
 }
 
-bool isSpriteContainPoint(CCSprite *_sprite, CCPoint _point)
+bool isSpriteContainPoint(Sprite *_sprite, Point _point)
 {
-    CCPoint _p = ccp(0, 0);
+    Point _p = ccp(0, 0);
     return isSpriteContainPoint(_sprite, _point, _p);
 }
 
 
-CCPoint bezierTo(float t, CCPoint &point1, CCPoint &point2, CCPoint &point3)
+Point bezierTo(float t, Point &point1, Point &point2, Point &point3)
 {
 
-    CCPoint p;
+    Point p;
 
     p.x = pow((1 - t), 2) * point1.x + 2 * t * (1 - t) * point2.x + pow(t, 2) * point3.x;
     p.y = pow((1 - t), 2) * point1.y + 2 * t * (1 - t) * point2.y + pow(t, 2) * point3.y;
@@ -55,9 +55,9 @@ CCPoint bezierTo(float t, CCPoint &point1, CCPoint &point2, CCPoint &point3)
     return p;
 }
 
-CCPoint bezierTo(float t, CCPoint &point1, CCPoint &point2, CCPoint &point3, CCPoint &point4)
+Point bezierTo(float t, Point &point1, Point &point2, Point &point3, Point &point4)
 {
-    CCPoint p;
+    Point p;
 
     p.x = point1.x * pow((1 - t), 3) + 3 * t * point2.x * pow((1 - t), 2) + 3 * point3.x * pow(t, 2) * (1 - t) + point4.x * pow(t, 3);
     p.y = point1.y * pow((1 - t), 3) + 3 * t * point2.y * pow((1 - t), 2) + 3 * point3.y * pow(t, 2) * (1 - t) + point4.y * pow(t, 3);
@@ -65,9 +65,9 @@ CCPoint bezierTo(float t, CCPoint &point1, CCPoint &point2, CCPoint &point3, CCP
     return p;
 }
 
-CCPoint circleTo(float t, CCPoint &center, float radius, float fromRadian, float radianDif)
+Point circleTo(float t, Point &center, float radius, float fromRadian, float radianDif)
 {
-    CCPoint p;
+    Point p;
 
     p.x = center.x + radius * cos(fromRadian + radianDif * t);
     p.y = center.y + radius * sin(fromRadian + radianDif * t);

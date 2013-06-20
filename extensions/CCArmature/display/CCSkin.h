@@ -30,22 +30,22 @@ THE SOFTWARE.
 
 namespace cocos2d { namespace extension { namespace armature {
 
-class CCSkin : public CCSprite
+class Skin : public Sprite
 {
 public:
-    static CCSkin *create();
-    static CCSkin *createWithSpriteFrameName(const char *pszSpriteFrameName);
+    static Skin *create();
+    static Skin *createWithSpriteFrameName(const char *pszSpriteFrameName);
 public:
-    CCSkin();
+    Skin();
 
     void updateTransform();
     void draw();
 
-    CC_PROPERTY_PASS_BY_REF(CCBaseData, _skinData, SkinData);
-    CC_SYNTHESIZE(CCBone *, _bone, Bone);
+    CC_PROPERTY_PASS_BY_REF(BaseData, _skinData, SkinData);
+    CC_SYNTHESIZE(Bone *, _bone, Bone);
 
 protected:
-    CCAffineTransform _skinTransform;
+    AffineTransform _skinTransform;
 };
 
 }}} // namespace cocos2d { namespace extension { namespace armature {

@@ -47,34 +47,34 @@ enum AnimationType
 };
 
 
-class  CCProcessBase : public CCObject
+class  ProcessBase : public Object
 {
 public:
-    CCProcessBase(void);
-    ~CCProcessBase(void);
+    ProcessBase(void);
+    ~ProcessBase(void);
 
     /**
      * Play animation by animation name.
      *
-     * @param  animation  It will not used in the CCProcessBase Class
+     * @param  animation  It will not used in the ProcessBase Class
      * @param  durationTo The frames between two animation changing-over.
      *         It's meaning is changing to this animation need how many frames
      *
-     *         -1 : use the value from CCMovementData get from flash design panel
+     *         -1 : use the value from MovementData get from flash design panel
      * @param  durationTween  The frame count you want to play in the game.
      *         if  _durationTween is 80, then the animation will played 80 frames in a loop
      *
-     *         -1 : use the value from CCMovementData get from flash design panel
+     *         -1 : use the value from MovementData get from flash design panel
      *
      * @param  loop   Whether the animation is loop
      *
-     *         loop < 0 : use the value from CCMovementData get from flash design panel
+     *         loop < 0 : use the value from MovementData get from flash design panel
      *         loop = 0 : this animation is not loop
      *         loop > 0 : this animation is loop
      *
-     * @param  tweenEasing CCTween easing is used for calculate easing effect
+     * @param  tweenEasing Tween easing is used for calculate easing effect
      *
-     *         TWEEN_EASING_MAX : use the value from CCMovementData get from flash design panel
+     *         TWEEN_EASING_MAX : use the value from MovementData get from flash design panel
      *         -1 : fade out
      *         0  : line
      *         1  : fade in
@@ -140,7 +140,7 @@ protected:
     CC_SYNTHESIZE_PASS_BY_REF(AnimationType, _loopType, LoopType);
 
     //! The tween easing effect
-    CC_SYNTHESIZE_PASS_BY_REF(CCTweenType, _tweenEasing, TweenEasing);
+    CC_SYNTHESIZE_PASS_BY_REF(TweenType, _tweenEasing, TweenEasing);
 
     //! The animation update speed
     CC_SYNTHESIZE_PASS_BY_REF(float, _animationInternal, AnimationInternal);

@@ -27,9 +27,9 @@ THE SOFTWARE.
 
 namespace cocos2d { namespace extension { namespace armature {
 
-CCDecorativeDisplay *CCDecorativeDisplay::create()
+DecorativeDisplay *DecorativeDisplay::create()
 {
-    CCDecorativeDisplay *pDisplay = new CCDecorativeDisplay();
+    DecorativeDisplay *pDisplay = new DecorativeDisplay();
     if (pDisplay && pDisplay->init())
     {
         pDisplay->autorelease();
@@ -39,7 +39,7 @@ CCDecorativeDisplay *CCDecorativeDisplay::create()
     return NULL;
 }
 
-CCDecorativeDisplay::CCDecorativeDisplay()
+DecorativeDisplay::DecorativeDisplay()
     : _display(NULL)
     , _displayData(NULL)
 
@@ -50,7 +50,7 @@ CCDecorativeDisplay::CCDecorativeDisplay()
 }
 
 
-CCDecorativeDisplay::~CCDecorativeDisplay(void)
+DecorativeDisplay::~DecorativeDisplay(void)
 {
     CC_SAFE_RELEASE_NULL(_displayData);
     CC_SAFE_RELEASE_NULL(_display);
@@ -60,13 +60,13 @@ CCDecorativeDisplay::~CCDecorativeDisplay(void)
 #endif
 }
 
-bool CCDecorativeDisplay::init()
+bool DecorativeDisplay::init()
 {
     return true;
 }
 
 
-void CCDecorativeDisplay::anchorPointChanged(float pointX, float pointY)
+void DecorativeDisplay::anchorPointChanged(float pointX, float pointY)
 {
 }
 

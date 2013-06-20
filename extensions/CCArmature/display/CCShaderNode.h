@@ -29,20 +29,20 @@ THE SOFTWARE.
 
 namespace cocos2d { namespace extension { namespace armature {
 
-class CCShaderNode : public CCNode
+class ShaderNode : public Node
 {
 public:
-    CCShaderNode();
+    ShaderNode();
 
     bool initWithVertex(const char *vert, const char *frag);
     void loadShaderVertex(const char *vert, const char *frag);
 
     virtual void update(float dt);
-    virtual void setPosition(const CCPoint &newPosition);
-    virtual void translateFormOtherNode(CCAffineTransform &transform);
+    virtual void setPosition(const Point &newPosition);
+    virtual void translateFormOtherNode(AffineTransform &transform);
     virtual void draw();
 
-    static CCShaderNode *shaderNodeWithVertex(const char *vert, const char *frag);
+    static ShaderNode *shaderNodeWithVertex(const char *vert, const char *frag);
 
 private:
 
