@@ -23,14 +23,14 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
-    CCScriptEngineManager::purgeSharedManager();
+    ScriptEngineManager::purgeSharedManager();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    CCDirector *pDirector = CCDirector::sharedDirector();
-    pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
+    Director *pDirector = Director::sharedDirector();
+    pDirector->setOpenGLView(EGLView::sharedOpenGLView());
     
     // turn on display FPS
     pDirector->setDisplayStats(true);
@@ -50,8 +50,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_pluginx_js_extensions);
     sc->start();
     CCLOG("applicationDidFinishLaunching 02");
-    CCScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
-    CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
+    ScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
+    ScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
     ScriptingCore::getInstance()->runScript("main.js");
        CCLOG("applicationDidFinishLaunching 03");
     return true;
@@ -60,7 +60,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    CCDirector::sharedDirector()->stopAnimation();
+    Director::sharedDirector()->stopAnimation();
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
     SimpleAudioEngine::sharedEngine()->pauseAllEffects();
 
@@ -75,7 +75,7 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    CCDirector::sharedDirector()->startAnimation();
+    Director::sharedDirector()->startAnimation();
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
     SimpleAudioEngine::sharedEngine()->resumeAllEffects();
 

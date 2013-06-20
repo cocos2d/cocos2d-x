@@ -49,7 +49,7 @@ extern "C" {
 }
 
 ProtocolSocial::ProtocolSocial()
-: m_pListener(NULL)
+: _listener(NULL)
 {
 }
 
@@ -88,7 +88,7 @@ void ProtocolSocial::share(TShareInfo info)
 {
     if (info.empty())
     {
-        if (NULL != m_pListener)
+        if (NULL != _listener)
         {
             onShareResult(kShareFail, "Share info error");
         }
@@ -117,14 +117,14 @@ void ProtocolSocial::share(TShareInfo info)
 
 void ProtocolSocial::setResultListener(ShareResultListener* pListener)
 {
-	m_pListener = pListener;
+	_listener = pListener;
 }
 
 void ProtocolSocial::onShareResult(ShareResultCode ret, const char* msg)
 {
-    if (m_pListener)
+    if (_listener)
     {
-    	m_pListener->onShareResult(ret, msg);
+    	_listener->onShareResult(ret, msg);
     }
     else
     {

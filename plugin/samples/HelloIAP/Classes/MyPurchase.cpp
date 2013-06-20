@@ -81,7 +81,7 @@ void MyPurchase::loadIAPPlugin()
 		{
 			char msg[256] = { 0 };
 			sprintf(msg, "Developer info is empty. PLZ fill your alipay info in %s(nearby line %d)", __FILE__, __LINE__);
-			CCMessageBox(msg, "Alipay Warning");
+			MessageBox(msg, "Alipay Warning");
 		}
 		s_pAlipay->setDebugMode(true);
 		s_pAlipay->configDeveloperInfo(pAlipayInfo);
@@ -96,7 +96,7 @@ void MyPurchase::loadIAPPlugin()
 		if (pNdInfo.empty()) {
 			char msg[256] = { 0 };
 			sprintf(msg, "Developer info is empty. PLZ fill your Nd91 info in %s(nearby line %d)", __FILE__, __LINE__);
-			CCMessageBox(msg, "Nd91 Warning");
+			MessageBox(msg, "Nd91 Warning");
 		}
 		s_pNd91 = dynamic_cast<ProtocolIAP*>(PluginManager::getInstance()->loadPlugin("IAPNd91"));
 		s_pNd91->setDebugMode(true);
@@ -147,5 +147,5 @@ void MyPurchaseResult::onPayResult(PayResultCode ret, const char* msg, TProductI
 			info.find("productName")->second.c_str(),
 			info.find("productPrice")->second.c_str(),
 			info.find("productDesc")->second.c_str());
-	CCMessageBox(goodInfo , msg);
+	MessageBox(goodInfo , msg);
 }
