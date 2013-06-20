@@ -621,8 +621,7 @@ local function OpenGLTestMainLayer()
                 i = i + 1
             end
 
-            glNode:_texImage2D(GLConstant.TEXTURE_2D, 0, GLConstant.RGBA, 32, 32, 0, GLConstant.RGBA, GLConstant.UNSIGNED_BYTE, 4096,pixels)
-            print(glNode:getError())
+            glNode:_texImage2D(GLConstant.TEXTURE_2D, 0, GLConstant.RGBA, 32, 32, 0, GLConstant.RGBA, GLConstant.UNSIGNED_BYTE, table.getn(pixels),pixels)
             glNode:texParameteri(GLConstant.TEXTURE_2D, GLConstant.TEXTURE_MAG_FILTER, GLConstant.NEAREST)
             glNode:texParameteri(GLConstant.TEXTURE_2D, GLConstant.TEXTURE_MIN_FILTER, GLConstant.NEAREST)
             glNode:_bindTexture(GLConstant.TEXTURE_2D, 0)
@@ -631,12 +630,12 @@ local function OpenGLTestMainLayer()
             squareVertexPositionBuffer.buffer_id = glNode:_createBuffer()
             glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, squareVertexPositionBuffer.buffer_id)
             local vertices = { 128, 128, 0, 128, 128, 0, 0, 0 }
-            glNode:bufferData(GLConstant.ARRAY_BUFFER,8,vertices,GLConstant.STATIC_DRAW)
+            glNode:bufferData(GLConstant.ARRAY_BUFFER,table.getn(vertices),vertices,GLConstant.STATIC_DRAW)
 
             squareVertexTextureBuffer.buffer_id = glNode:_createBuffer()
             glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, squareVertexTextureBuffer.buffer_id)
             local texcoords = { 1, 1, 0, 1, 1, 0, 0, 0 }
-            glNode:bufferData(GLConstant.ARRAY_BUFFER,8,texcoords,GLConstant.STATIC_DRAW)
+            glNode:bufferData(GLConstant.ARRAY_BUFFER,table.getn(texcoords),texcoords,GLConstant.STATIC_DRAW)
             glNode:_bindBuffer(GLConstant.ARRAY_BUFFER,0)
         end
 
