@@ -17,6 +17,7 @@ SOURCES = main.cpp \
         ../Classes/AppDelegate.cpp \
         $(COCOS_ROOT)/scripting/lua/cocos2dx_support/CCLuaEngine.cpp \
         $(COCOS_ROOT)/scripting/lua/cocos2dx_support/CCLuaStack.cpp \
+        $(COCOS_ROOT)/scripting/lua/cocos2dx_support/CCLuaValue.cpp \
         $(COCOS_ROOT)/scripting/lua/cocos2dx_support/Cocos2dxLuaLoader.cpp \
         $(COCOS_ROOT)/scripting/lua/cocos2dx_support/LuaCocos2d.cpp \
         $(COCOS_ROOT)/scripting/lua/cocos2dx_support/tolua_fix.c \

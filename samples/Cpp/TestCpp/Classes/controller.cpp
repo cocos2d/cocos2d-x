@@ -33,9 +33,11 @@ struct {
 	{ "CocosDenshionTest", []() { return new CocosDenshionTestScene(); } },
 	{ "ConfigurationTest", []() { return new ConfigurationTestScene(); } },
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
 	{ "CurlTest", []() { return new CurlTestScene(); } },
+#endif
 #endif
 #endif
 #endif
