@@ -26,7 +26,7 @@ using namespace CocosDenshion;
 
 CocosDenshionTest::CocosDenshionTest()
 : _itmeMenu(NULL),
-_beginPos(CCPointZero),
+_beginPos(PointZero),
 _soundId(0)
 {
     std::string testItems[] = {
@@ -52,25 +52,25 @@ _soundId(0)
     };
 
     // add menu items for tests
-    _itmeMenu = CCMenu::create();
+    _itmeMenu = Menu::create();
 
     _testCount = sizeof(testItems) / sizeof(testItems[0]);
 
     for (int i = 0; i < _testCount; ++i)
     {
 //#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-//        CCLabelBMFont* label = CCLabelBMFont::create(testItems[i].c_str(),  "fonts/arial16.fnt");
+//        LabelBMFont* label = LabelBMFont::create(testItems[i].c_str(),  "fonts/arial16.fnt");
 //#else
-        CCLabelTTF* label = CCLabelTTF::create(testItems[i].c_str(), "Arial", 24);
+        LabelTTF* label = LabelTTF::create(testItems[i].c_str(), "Arial", 24);
 //#endif        
-        CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, CC_CALLBACK_1(CocosDenshionTest::menuCallback, this));
+        MenuItemLabel* pMenuItem = MenuItemLabel::create(label, CC_CALLBACK_1(CocosDenshionTest::menuCallback, this));
         
         _itmeMenu->addChild(pMenuItem, i + 10000);
         pMenuItem->setPosition( ccp( VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE) ));
     }
 
     _itmeMenu->setContentSize(CCSizeMake(VisibleRect::getVisibleRect().size.width, (_testCount + 1) * LINE_SPACE));
-    _itmeMenu->setPosition(CCPointZero);
+    _itmeMenu->setPosition(PointZero);
     addChild(_itmeMenu);
 
     setTouchEnabled(true);
@@ -90,15 +90,15 @@ CocosDenshionTest::~CocosDenshionTest()
 
 void CocosDenshionTest::onExit()
 {
-    CCLayer::onExit();
+    Layer::onExit();
 
     SimpleAudioEngine::sharedEngine()->end();
 }
 
-void CocosDenshionTest::menuCallback(CCObject * pSender)
+void CocosDenshionTest::menuCallback(Object * pSender)
 {
     // get the userdata, it's the index of the menu item clicked
-    CCMenuItem* pMenuItem = (CCMenuItem *)(pSender);
+    MenuItem* pMenuItem = (MenuItem *)(pSender);
     int nIdx = pMenuItem->getZOrder() - 10000;
 
     switch(nIdx)
@@ -186,28 +186,28 @@ void CocosDenshionTest::menuCallback(CCObject * pSender)
     
 }
 
-void CocosDenshionTest::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
+void CocosDenshionTest::ccTouchesBegan(Set *pTouches, Event *pEvent)
 {
-    CCSetIterator it = pTouches->begin();
-    CCTouch* touch = (CCTouch*)(*it);
+    SetIterator it = pTouches->begin();
+    Touch* touch = (Touch*)(*it);
 
     _beginPos = touch->getLocation();    
 }
 
-void CocosDenshionTest::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
+void CocosDenshionTest::ccTouchesMoved(Set *pTouches, Event *pEvent)
 {
-    CCSetIterator it = pTouches->begin();
-    CCTouch* touch = (CCTouch*)(*it);
+    SetIterator it = pTouches->begin();
+    Touch* touch = (Touch*)(*it);
 
-    CCPoint touchLocation = touch->getLocation();
+    Point touchLocation = touch->getLocation();
     float nMoveY = touchLocation.y - _beginPos.y;
 
-    CCPoint curPos  = _itmeMenu->getPosition();
-    CCPoint nextPos = ccp(curPos.x, curPos.y + nMoveY);
+    Point curPos  = _itmeMenu->getPosition();
+    Point nextPos = ccp(curPos.x, curPos.y + nMoveY);
 
     if (nextPos.y < 0.0f)
     {
-        _itmeMenu->setPosition(CCPointZero);
+        _itmeMenu->setPosition(PointZero);
         return;
     }
 
@@ -223,9 +223,9 @@ void CocosDenshionTest::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 
 void CocosDenshionTestScene::runThisTest()
 {
-    CCLayer* pLayer = new CocosDenshionTest();
+    Layer* pLayer = new CocosDenshionTest();
     addChild(pLayer);
     pLayer->autorelease();
 
-    CCDirector::sharedDirector()->replaceScene(this);
+    Director::sharedDirector()->replaceScene(this);
 }

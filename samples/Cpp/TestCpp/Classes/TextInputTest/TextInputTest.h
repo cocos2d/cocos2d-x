@@ -15,9 +15,9 @@ class TextInputTest : public BaseTest
 public:
     TextInputTest();
 
-    void restartCallback(CCObject* pSender);
-    void nextCallback(CCObject* pSender);
-    void backCallback(CCObject* pSender);
+    void restartCallback(Object* pSender);
+    void nextCallback(Object* pSender);
+    void backCallback(Object* pSender);
 
     std::string title();
     void addKeyboardNotificationLayer(KeyboardNotificationLayer * pLayer);
@@ -29,7 +29,7 @@ public:
 // KeyboardNotificationLayer for test IME keyboard notification.
 //////////////////////////////////////////////////////////////////////////
 
-class KeyboardNotificationLayer : public CCLayer, public CCIMEDelegate
+class KeyboardNotificationLayer : public Layer, public IMEDelegate
 {
 public:
     KeyboardNotificationLayer();
@@ -38,15 +38,15 @@ public:
     virtual void onClickTrackNode(bool bClicked) = 0;
 
     virtual void registerWithTouchDispatcher();
-    virtual void keyboardWillShow(CCIMEKeyboardNotificationInfo& info);
+    virtual void keyboardWillShow(IMEKeyboardNotificationInfo& info);
 
-    // CCLayer
-    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
-    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
+    // Layer
+    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent);
+    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent);
 
 protected:
-    CCNode * _trackNode;
-    CCPoint  _beginPos;
+    Node * _trackNode;
+    Point  _beginPos;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -60,7 +60,7 @@ public:
     virtual std::string subtitle();
     virtual void onClickTrackNode(bool bClicked);
 
-    // CCLayer
+    // Layer
     virtual void onEnter();
 };
 
@@ -68,30 +68,30 @@ public:
 // TextFieldTTFActionTest
 //////////////////////////////////////////////////////////////////////////
 
-class TextFieldTTFActionTest : public KeyboardNotificationLayer, public CCTextFieldDelegate
+class TextFieldTTFActionTest : public KeyboardNotificationLayer, public TextFieldDelegate
 {
-    CCTextFieldTTF *    _textField;
-    CCAction *          _textFieldAction;
+    TextFieldTTF *    _textField;
+    Action *          _textFieldAction;
     bool                _action;
     int                 _charLimit;       // the textfield max char limit
 
 public:
-    void callbackRemoveNodeWhenDidAction(CCNode * pNode);
+    void callbackRemoveNodeWhenDidAction(Node * pNode);
 
     // KeyboardNotificationLayer
     virtual std::string subtitle();
     virtual void onClickTrackNode(bool bClicked);
 
-    // CCLayer
+    // Layer
     virtual void onEnter();
     virtual void onExit();
 
-    // CCTextFieldDelegate
-    virtual bool onTextFieldAttachWithIME(CCTextFieldTTF * pSender);
-    virtual bool onTextFieldDetachWithIME(CCTextFieldTTF * pSender);
-    virtual bool onTextFieldInsertText(CCTextFieldTTF * pSender, const char * text, int nLen);
-    virtual bool onTextFieldDeleteBackward(CCTextFieldTTF * pSender, const char * delText, int nLen);
-    virtual bool onDraw(CCTextFieldTTF * pSender);
+    // TextFieldDelegate
+    virtual bool onTextFieldAttachWithIME(TextFieldTTF * pSender);
+    virtual bool onTextFieldDetachWithIME(TextFieldTTF * pSender);
+    virtual bool onTextFieldInsertText(TextFieldTTF * pSender, const char * text, int nLen);
+    virtual bool onTextFieldDeleteBackward(TextFieldTTF * pSender, const char * delText, int nLen);
+    virtual bool onDraw(TextFieldTTF * pSender);
 };
 
 class TextInputTestScene : public TestScene

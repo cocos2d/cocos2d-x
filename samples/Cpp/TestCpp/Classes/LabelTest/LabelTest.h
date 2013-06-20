@@ -16,15 +16,15 @@ public:
     virtual std::string subtitle();
     virtual void onEnter();
 
-    void restartCallback(CCObject* pSender);
-    void nextCallback(CCObject* pSender);
-    void backCallback(CCObject* pSender);
+    void restartCallback(Object* pSender);
+    void nextCallback(Object* pSender);
+    void backCallback(Object* pSender);
 };
 
 
 class Atlas1 : public AtlasDemo
 {
-    CCTextureAtlas*        _textureAtlas;
+    TextureAtlas*        _textureAtlas;
 public:
     Atlas1();
     ~Atlas1();
@@ -181,18 +181,18 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 private:
-    void  setAlignmentLeft(CCObject* pSender);
-    void  setAlignmentCenter(CCObject* pSender);
-    void  setAlignmentRight(CCObject* pSender);
-    void  setAlignmentTop(CCObject* pSender);
-    void  setAlignmentMiddle(CCObject* pSender);
-    void  setAlignmentBottom(CCObject* pSender);
+    void  setAlignmentLeft(Object* pSender);
+    void  setAlignmentCenter(Object* pSender);
+    void  setAlignmentRight(Object* pSender);
+    void  setAlignmentTop(Object* pSender);
+    void  setAlignmentMiddle(Object* pSender);
+    void  setAlignmentBottom(Object* pSender);
     void  updateAlignment();
     const char* getCurrentAlignment();
 private:
-    CCLabelTTF* _plabel;
-    CCTextAlignment _horizAlign;
-    CCVerticalTextAlignment _vertAlign;
+    LabelTTF* _plabel;
+    TextAlignment _horizAlign;
+    VerticalTextAlignment _vertAlign;
 };
 
 class LabelTTFMultiline : public AtlasDemo
@@ -225,17 +225,17 @@ public:
     void snapArrowsToEdge();
     virtual std::string title();
     virtual std::string subtitle();
-    void stringChanged(CCObject *sender);
-    void alignmentChanged(CCObject *sender);
-    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
+    void stringChanged(Object *sender);
+    void alignmentChanged(Object *sender);
+    virtual void ccTouchesBegan(Set *pTouches, Event *pEvent);
+    virtual void ccTouchesEnded(Set *pTouches, Event *pEvent);
+    virtual void ccTouchesMoved(Set *pTouches, Event *pEvent);
 
 public:
-    CCLabelBMFont *_labelShouldRetain;
-    CCSprite *_arrowsBarShouldRetain;
-    CCSprite *_arrowsShouldRetain;
-    CCMenuItemFont *_lastSentenceItem, *_lastAlignmentItem;
+    LabelBMFont *_labelShouldRetain;
+    Sprite *_arrowsBarShouldRetain;
+    Sprite *_arrowsShouldRetain;
+    MenuItemFont *_lastSentenceItem, *_lastAlignmentItem;
     bool _drag;
 };
 
@@ -312,7 +312,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 private:
-    CCLabelBMFont *label1;
+    LabelBMFont *label1;
 };
 
 // we don't support linebreak mode

@@ -35,11 +35,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-// implementation CCTileMapAtlas
+// implementation TileMapAtlas
 
-CCTileMapAtlas * CCTileMapAtlas::create(const char *tile, const char *mapFile, int tileWidth, int tileHeight)
+TileMapAtlas * TileMapAtlas::create(const char *tile, const char *mapFile, int tileWidth, int tileHeight)
 {
-    CCTileMapAtlas *pRet = new CCTileMapAtlas();
+    TileMapAtlas *pRet = new TileMapAtlas();
     if (pRet->initWithTileFile(tile, mapFile, tileWidth, tileHeight))
     {
         pRet->autorelease();
@@ -49,14 +49,14 @@ CCTileMapAtlas * CCTileMapAtlas::create(const char *tile, const char *mapFile, i
     return NULL;
 }
 
-bool CCTileMapAtlas::initWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight)
+bool TileMapAtlas::initWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight)
 {
     this->loadTGAfile(mapFile);
     this->calculateItemsToRender();
 
-    if( CCAtlasNode::initWithTileFile(tile, tileWidth, tileHeight, _itemsToRender) )
+    if( AtlasNode::initWithTileFile(tile, tileWidth, tileHeight, _itemsToRender) )
     {
-        _posToAtlasIndex = new CCDictionary();
+        _posToAtlasIndex = new Dictionary();
         this->updateAtlasValues();
         this->setContentSize(CCSizeMake((float)(_TGAInfo->width*_itemWidth),
                                         (float)(_TGAInfo->height*_itemHeight)));
@@ -65,14 +65,14 @@ bool CCTileMapAtlas::initWithTileFile(const char *tile, const char *mapFile, int
     return false;
 }
 
-CCTileMapAtlas::CCTileMapAtlas()
+TileMapAtlas::TileMapAtlas()
     :_TGAInfo(NULL)
     ,_posToAtlasIndex(NULL)
     ,_itemsToRender(0)
 {
 }
 
-CCTileMapAtlas::~CCTileMapAtlas()
+TileMapAtlas::~TileMapAtlas()
 {
     if (_TGAInfo)
     {
@@ -81,7 +81,7 @@ CCTileMapAtlas::~CCTileMapAtlas()
     CC_SAFE_RELEASE(_posToAtlasIndex);
 }
 
-void CCTileMapAtlas::releaseMap()
+void TileMapAtlas::releaseMap()
 {
     if (_TGAInfo)
     {
@@ -92,7 +92,7 @@ void CCTileMapAtlas::releaseMap()
     CC_SAFE_RELEASE_NULL(_posToAtlasIndex);
 }
 
-void CCTileMapAtlas::calculateItemsToRender()
+void TileMapAtlas::calculateItemsToRender()
 {
     CCAssert( _TGAInfo != NULL, "tgaInfo must be non-nil");
 
@@ -111,16 +111,16 @@ void CCTileMapAtlas::calculateItemsToRender()
     }
 }
 
-void CCTileMapAtlas::loadTGAfile(const char *file)
+void TileMapAtlas::loadTGAfile(const char *file)
 {
     CCAssert( file != NULL, "file must be non-nil");
 
-    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(file);
+    std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(file);
 
     //    //Find the path of the file
-    //    NSBundle *mainBndl = [CCDirector sharedDirector].loadingBundle;
-    //    CCString *resourcePath = [mainBndl resourcePath];
-    //    CCString * path = [resourcePath stringByAppendingPathComponent:file];
+    //    NSBundle *mainBndl = [Director sharedDirector].loadingBundle;
+    //    String *resourcePath = [mainBndl resourcePath];
+    //    String * path = [resourcePath stringByAppendingPathComponent:file];
 
     _TGAInfo = tgaLoad( fullPath.c_str() );
 #if 1
@@ -131,8 +131,8 @@ void CCTileMapAtlas::loadTGAfile(const char *file)
 #endif
 }
 
-// CCTileMapAtlas - Atlas generation / updates
-void CCTileMapAtlas::setTile(const ccColor3B& tile, const CCPoint& position)
+// TileMapAtlas - Atlas generation / updates
+void TileMapAtlas::setTile(const ccColor3B& tile, const Point& position)
 {
     CCAssert(_TGAInfo != NULL, "tgaInfo must not be nil");
     CCAssert(_posToAtlasIndex != NULL, "posToAtlasIndex must not be nil");
@@ -152,14 +152,14 @@ void CCTileMapAtlas::setTile(const ccColor3B& tile, const CCPoint& position)
 
         // XXX: this method consumes a lot of memory
         // XXX: a tree of something like that shall be implemented
-        CCInteger *num = (CCInteger*)_posToAtlasIndex->objectForKey(CCString::createWithFormat("%ld,%ld", 
+        Integer *num = (Integer*)_posToAtlasIndex->objectForKey(String::createWithFormat("%ld,%ld", 
                                                                                                  (long)position.x, 
                                                                                                  (long)position.y)->getCString());
         this->updateAtlasValueAt(position, tile, num->getValue());
     }    
 }
 
-ccColor3B CCTileMapAtlas::tileAt(const CCPoint& position)
+ccColor3B TileMapAtlas::tileAt(const Point& position)
 {
     CCAssert( _TGAInfo != NULL, "tgaInfo must not be nil");
     CCAssert( position.x < _TGAInfo->width, "Invalid position.x");
@@ -171,7 +171,7 @@ ccColor3B CCTileMapAtlas::tileAt(const CCPoint& position)
     return value;    
 }
 
-void CCTileMapAtlas::updateAtlasValueAt(const CCPoint& pos, const ccColor3B& value, unsigned int index)
+void TileMapAtlas::updateAtlasValueAt(const Point& pos, const ccColor3B& value, unsigned int index)
 {
     CCAssert( index >= 0 && index < _textureAtlas->getCapacity(), "updateAtlasValueAt: Invalid index");
 
@@ -235,7 +235,7 @@ void CCTileMapAtlas::updateAtlasValueAt(const CCPoint& pos, const ccColor3B& val
     }
 }
 
-void CCTileMapAtlas::updateAtlasValues()
+void TileMapAtlas::updateAtlasValues()
 {
     CCAssert( _TGAInfo != NULL, "tgaInfo must be non-nil");
 
@@ -254,8 +254,8 @@ void CCTileMapAtlas::updateAtlasValues()
                 {
                     this->updateAtlasValueAt(ccp(x,y), value, total);
 
-                    CCString *key = CCString::createWithFormat("%d,%d", x,y);
-                    CCInteger *num = CCInteger::create(total);
+                    String *key = String::createWithFormat("%d,%d", x,y);
+                    Integer *num = Integer::create(total);
                     _posToAtlasIndex->setObject(num, key->getCString());
 
                     total++;
@@ -265,12 +265,12 @@ void CCTileMapAtlas::updateAtlasValues()
     }
 }
 
-void CCTileMapAtlas::setTGAInfo(struct sImageTGA* var)
+void TileMapAtlas::setTGAInfo(struct sImageTGA* var)
 {
     _TGAInfo = var;
 }
 
-struct sImageTGA * CCTileMapAtlas::getTGAInfo()
+struct sImageTGA * TileMapAtlas::getTGAInfo()
 {
     return _TGAInfo;
 }

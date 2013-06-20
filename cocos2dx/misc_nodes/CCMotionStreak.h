@@ -43,24 +43,24 @@ NS_CC_BEGIN
 /** MotionStreak.
  Creates a trailing path.
  */
-class CC_DLL CCMotionStreak : public CCNodeRGBA, public CCTextureProtocol
+class CC_DLL MotionStreak : public NodeRGBA, public TextureProtocol
 #ifdef EMSCRIPTEN
-, public CCGLBufferedNode
+, public GLBufferedNode
 #endif // EMSCRIPTEN
 {
 public:
-    CCMotionStreak();
-    virtual ~CCMotionStreak();
+    MotionStreak();
+    virtual ~MotionStreak();
 
     /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename */
-    static CCMotionStreak* create(float fade, float minSeg, float stroke, ccColor3B color, const char* path);
+    static MotionStreak* create(float fade, float minSeg, float stroke, ccColor3B color, const char* path);
     /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture */
-    static CCMotionStreak* create(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture);
+    static MotionStreak* create(float fade, float minSeg, float stroke, ccColor3B color, Texture2D* texture);
 
     /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture filename */
     bool initWithFade(float fade, float minSeg, float stroke, ccColor3B color, const char* path);
     /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture  */
-    bool initWithFade(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture);
+    bool initWithFade(float fade, float minSeg, float stroke, ccColor3B color, Texture2D* texture);
 
     /** color used for the tint */
     void tintWithColor(ccColor3B colors);
@@ -69,13 +69,13 @@ public:
     void reset();
 
     /** Override super methods */
-    virtual void setPosition(const CCPoint& position);
+    virtual void setPosition(const Point& position);
     virtual void draw();
     virtual void update(float delta);
 
     /* Implement interfaces */
-    virtual CCTexture2D* getTexture(void);
-    virtual void setTexture(CCTexture2D *texture);
+    virtual Texture2D* getTexture(void);
+    virtual void setTexture(Texture2D *texture);
     virtual void setBlendFunc(ccBlendFunc blendFunc);
     virtual ccBlendFunc getBlendFunc(void);
     virtual GLubyte getOpacity(void);
@@ -97,9 +97,9 @@ protected:
     bool _startingPositionInitialized;
 private:
     /** texture used for the motion streak */
-    CCTexture2D* _texture;
+    Texture2D* _texture;
     ccBlendFunc _blendFunc;
-    CCPoint _positionR;
+    Point _positionR;
 
     float _stroke;
     float _fadeDelta;
@@ -110,7 +110,7 @@ private:
     unsigned int _previousNuPoints;
 
     /** Pointers */
-    CCPoint* _pointVertexes;
+    Point* _pointVertexes;
     float* _pointState;
 
     // Opengl

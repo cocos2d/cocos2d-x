@@ -3,14 +3,14 @@
 
 #include "../testBasic.h"
 
-class IntervalLayer : public CCLayer
+class IntervalLayer : public Layer
 {
 protected:
-    CCLabelBMFont*    _label0;
-    CCLabelBMFont*    _label1;
-    CCLabelBMFont*    _label2;
-    CCLabelBMFont*    _label3;
-    CCLabelBMFont*    _label4;
+    LabelBMFont*    _label0;
+    LabelBMFont*    _label1;
+    LabelBMFont*    _label2;
+    LabelBMFont*    _label3;
+    LabelBMFont*    _label4;
     
     float        _time0, _time1, _time2, _time3, _time4;
 

@@ -15,7 +15,7 @@ float Ball::radius()
     return getTexture()->getContentSize().width / 2;
 }
 
-Ball* Ball::ballWithTexture(CCTexture2D* aTexture)
+Ball* Ball::ballWithTexture(Texture2D* aTexture)
 {
     Ball* pBall = new Ball();
     pBall->initWithTexture(aTexture);
@@ -42,7 +42,7 @@ void Ball::move(float delta)
 
 void Ball::collideWithPaddle(Paddle* paddle)
 {
-    CCRect paddleRect = paddle->rect();
+    Rect paddleRect = paddle->rect();
     paddleRect.origin.x += paddle->getPosition().x;
     paddleRect.origin.y += paddle->getPosition().y;
     

@@ -3,20 +3,20 @@
 
 #include "../testBasic.h"
 
-class CocosDenshionTest : public CCLayer
+class CocosDenshionTest : public Layer
 {
 public:
     CocosDenshionTest(void);
     ~CocosDenshionTest(void);
 
-    void menuCallback(CCObject * pSender);
-    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
+    void menuCallback(Object * pSender);
+    virtual void ccTouchesMoved(Set *pTouches, Event *pEvent);
+    virtual void ccTouchesBegan(Set *pTouches, Event *pEvent);
     virtual void onExit();
 
 private:
-    CCMenu* _itmeMenu;
-    CCPoint _beginPos;
+    Menu* _itmeMenu;
+    Point _beginPos;
     int _testCount;
     unsigned int _soundId;
 };

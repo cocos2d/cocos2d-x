@@ -31,32 +31,32 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
-class CCComAttribute : public cocos2d::CCComponent
+class ComAttribute : public cocos2d::Component
 {
 protected:
-    CCComAttribute(void);
-    virtual ~CCComAttribute(void);
+    ComAttribute(void);
+    virtual ~ComAttribute(void);
     
 public:
    virtual bool init();
-   static CCComAttribute* create(void);
+   static ComAttribute* create(void);
 
    void setInt(const char *key, int value);
    void setDouble(const char *key, double value);
    void setFloat(const char *key, float value);
    void setBool(const char *key, bool value);
    void setCString(const char *key, const char *value);
-   void setObject(const char *key, CCObject *value);
+   void setObject(const char *key, Object *value);
    
    int    getInt(const char *key) const;
    double getDouble(const char *key) const;
    float  getFloat(const char *key) const;
    bool   getBool(const char *key) const;
    const char* getCString(const char *key) const;
-   CCObject* getObject(const char *key) const;
+   Object* getObject(const char *key) const;
    
 private:
-   CCDictionary *_attributes;  
+   Dictionary *_attributes;  
    
 };
 

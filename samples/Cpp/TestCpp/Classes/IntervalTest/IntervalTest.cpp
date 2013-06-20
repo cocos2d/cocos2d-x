@@ -13,10 +13,10 @@ IntervalLayer::IntervalLayer()
 {
     _time0 = _time1 = _time2 = _time3 = _time4 = 0.0f;
 
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
     // sun
-    CCParticleSystem* sun = CCParticleSun::create();
-    sun->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+    ParticleSystem* sun = ParticleSun::create();
+    sun->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
     sun->setPosition( ccp(VisibleRect::rightTop().x-32,VisibleRect::rightTop().y-32) );
 
     sun->setTotalParticles(130);
@@ -24,11 +24,11 @@ IntervalLayer::IntervalLayer()
     this->addChild(sun);
 
     // timers
-    _label0 = CCLabelBMFont::create("0", "fonts/bitmapFontTest4.fnt");
-    _label1 = CCLabelBMFont::create("0", "fonts/bitmapFontTest4.fnt");
-    _label2 = CCLabelBMFont::create("0", "fonts/bitmapFontTest4.fnt");
-    _label3 = CCLabelBMFont::create("0", "fonts/bitmapFontTest4.fnt");
-    _label4 = CCLabelBMFont::create("0", "fonts/bitmapFontTest4.fnt");
+    _label0 = LabelBMFont::create("0", "fonts/bitmapFontTest4.fnt");
+    _label1 = LabelBMFont::create("0", "fonts/bitmapFontTest4.fnt");
+    _label2 = LabelBMFont::create("0", "fonts/bitmapFontTest4.fnt");
+    _label3 = LabelBMFont::create("0", "fonts/bitmapFontTest4.fnt");
+    _label4 = LabelBMFont::create("0", "fonts/bitmapFontTest4.fnt");
 
     scheduleUpdate();
     schedule(schedule_selector(IntervalLayer::step1));
@@ -49,21 +49,21 @@ IntervalLayer::IntervalLayer()
     addChild(_label4);
 
     // Sprite
-    CCSprite* sprite = CCSprite::create(s_pPathGrossini);
+    Sprite* sprite = Sprite::create(s_pPathGrossini);
     sprite->setPosition( ccp(VisibleRect::left().x + 40, VisibleRect::bottom().y + 50) );
     
-    CCJumpBy* jump = CCJumpBy::create(3, ccp(s.width-80,0), 50, 4);
+    JumpBy* jump = JumpBy::create(3, ccp(s.width-80,0), 50, 4);
     
     addChild(sprite);
-    sprite->runAction( CCRepeatForever::create(CCSequence::create(jump, jump->reverse(), NULL) ));
+    sprite->runAction( RepeatForever::create(Sequence::create(jump, jump->reverse(), NULL) ));
     // pause button
-    CCMenuItem* item1 = CCMenuItemFont::create("Pause", [&](CCObject* sender) {
-		if(CCDirector::sharedDirector()->isPaused())
-			CCDirector::sharedDirector()->resume();
+    MenuItem* item1 = MenuItemFont::create("Pause", [&](Object* sender) {
+		if(Director::sharedDirector()->isPaused())
+			Director::sharedDirector()->resume();
 		else
-			CCDirector::sharedDirector()->pause();
+			Director::sharedDirector()->pause();
 	});
-    CCMenu* menu = CCMenu::create(item1, NULL);
+    Menu* menu = Menu::create(item1, NULL);
     menu->setPosition( ccp(s.width/2, s.height-50) );
 
     addChild( menu );
@@ -71,9 +71,9 @@ IntervalLayer::IntervalLayer()
 
 IntervalLayer::~IntervalLayer()
 {
-    if(CCDirector::sharedDirector()->isPaused())
+    if(Director::sharedDirector()->isPaused())
     {
-        CCDirector::sharedDirector()->resume();
+        Director::sharedDirector()->resume();
     }
 }
 
@@ -123,9 +123,9 @@ void IntervalLayer::step4(float dt)
 
 void IntervalTestScene::runThisTest()
 {
-    CCLayer* pLayer = new IntervalLayer();
+    Layer* pLayer = new IntervalLayer();
     addChild(pLayer);
     pLayer->release();
 
-    CCDirector::sharedDirector()->replaceScene(this);
+    Director::sharedDirector()->replaceScene(this);
 }

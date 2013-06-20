@@ -40,11 +40,11 @@ void SceneController::onEnter()
 {
     _fAddTargetTime = 1.0f;
     
-    _targets = new CCArray;
-    _projectiles = new CCArray;
+    _targets = new Array;
+    _projectiles = new Array;
    
-    ((CCComAudio*)(_owner->getComponent("Audio")))->playBackgroundMusic("background-music-aac.wav", true);
-    ((CCComAttribute*)(_owner->getComponent("ComAttribute")))->setInt("KillCount", 0);
+    ((ComAudio*)(_owner->getComponent("Audio")))->playBackgroundMusic("background-music-aac.wav", true);
+    ((ComAttribute*)(_owner->getComponent("ComAttribute")))->setInt("KillCount", 0);
 }
 
 void SceneController::onExit()
@@ -80,7 +80,7 @@ SceneController* SceneController::create(void)
 
 void SceneController::addTarget()
 {
-	CCSprite *target = CCSprite::create("components/Target.png", CCRectMake(0,0,27,40));
+	Sprite *target = Sprite::create("components/Target.png", CCRectMake(0,0,27,40));
     _owner->addChild(target, 1, 2);
     
     target->addComponent(EnemyController::create());
@@ -88,9 +88,9 @@ void SceneController::addTarget()
     _targets->addObject(target);
 }
 
-void SceneController::spriteMoveFinished(CCNode* sender)
+void SceneController::spriteMoveFinished(Node* sender)
 {
-	CCSprite *sprite = (CCSprite *)sender;
+	Sprite *sprite = (Sprite *)sender;
 	_owner->removeChild(sprite, true);
     
 	if (sprite->getTag() == 2)  // target
@@ -98,7 +98,7 @@ void SceneController::spriteMoveFinished(CCNode* sender)
         _targets->removeObject(sprite);
 		GameOverScene *gameOverScene = GameOverScene::create();
 		gameOverScene->getLayer()->getLabel()->setString("You Lose :[");
-		CCDirector::sharedDirector()->replaceScene(gameOverScene);
+		Director::sharedDirector()->replaceScene(gameOverScene);
 	}
 	else if (sprite->getTag() == 3) 
 	{
@@ -109,15 +109,15 @@ void SceneController::spriteMoveFinished(CCNode* sender)
 
 void SceneController::increaseKillCount()
 {
-    int nProjectilesDestroyed = ((CCComAttribute*)(_owner->getComponent("ComAttribute")))->getInt("KillCount");
+    int nProjectilesDestroyed = ((ComAttribute*)(_owner->getComponent("ComAttribute")))->getInt("KillCount");
     
-    CCComAttribute *p = (CCComAttribute*)(_owner->getComponent("ComAttribute"));
+    ComAttribute *p = (ComAttribute*)(_owner->getComponent("ComAttribute"));
     p->setInt("KillCount", ++nProjectilesDestroyed);
 
     if (nProjectilesDestroyed >= 5)
     {
             GameOverScene *gameOverScene = GameOverScene::create();
             gameOverScene->getLayer()->getLabel()->setString("You Win!");
-            CCDirector::sharedDirector()->replaceScene(gameOverScene);
+            Director::sharedDirector()->replaceScene(gameOverScene);
     }
 }

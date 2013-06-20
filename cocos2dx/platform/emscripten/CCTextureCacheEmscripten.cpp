@@ -33,7 +33,7 @@ using namespace std;
 
 #define MULTILINE(...) #__VA_ARGS__
 
-// Following methods are implemented in CCTextureCacheEmscripten.js:
+// Following methods are implemented in TextureCacheEmscripten.js:
 extern "C" {
 void cocos2dx_newAsyncImageLoader(int textureCache, int callback__ignored);
 void cocos2dx_asyncImageLoader_LoadImage(const char *path, AsyncStruct *asyncData);
@@ -42,29 +42,29 @@ void cocos2dx_shutdownAsyncImageLoader();
 
 extern "C" {
 // This C interface is exposed so that the JavaScript in
-// CCTextureCacheEmscripten.js is able to call into these functions.
-void CCTextureCacheEmscripten_addImageAsyncCallBack(CCTextureCacheEmscripten *tc, AsyncStruct *data, unsigned char *imgData, int width, int height);
-void CCTextureCacheEmscripten_preMultiplyImageRegion( unsigned char *in, int win, int hin, unsigned char *out, int wout, int hout, int xout, int yout);
+// TextureCacheEmscripten.js is able to call into these functions.
+void TextureCacheEmscripten_addImageAsyncCallBack(TextureCacheEmscripten *tc, AsyncStruct *data, unsigned char *imgData, int width, int height);
+void TextureCacheEmscripten_preMultiplyImageRegion( unsigned char *in, int win, int hin, unsigned char *out, int wout, int hout, int xout, int yout);
 };
 
-void CCTextureCacheEmscripten_addImageAsyncCallBack(CCTextureCacheEmscripten *tc, AsyncStruct *data, unsigned char *imgData, int width, int height)
+void TextureCacheEmscripten_addImageAsyncCallBack(TextureCacheEmscripten *tc, AsyncStruct *data, unsigned char *imgData, int width, int height)
 {
     tc->addImageAsyncCallBack_emscripten(data, imgData, width, height);
 }
 
 /**
- * Construct a new CCTextureCacheEmscripten object. Note that the code in
- * CCTextureCacheEmscripten.js will be injected into the JavaScript runtime as
+ * Construct a new TextureCacheEmscripten object. Note that the code in
+ * TextureCacheEmscripten.js will be injected into the JavaScript runtime as
  * a side-affect.
  */
-CCTextureCacheEmscripten::CCTextureCacheEmscripten()
+TextureCacheEmscripten::TextureCacheEmscripten()
 {
     // Add dummy references to these functions so that the compiler will emit
     // code for them prior to this point (which is before when we will call
     // them.
     int deps[] = {
-        (int)&CCTextureCacheEmscripten_addImageAsyncCallBack,
-        (int)&CCTextureCacheEmscripten_preMultiplyImageRegion
+        (int)&TextureCacheEmscripten_addImageAsyncCallBack,
+        (int)&TextureCacheEmscripten_preMultiplyImageRegion
     };
 
     cocos2dx_newAsyncImageLoader((int)this, (int)&deps);
@@ -76,7 +76,7 @@ CCTextureCacheEmscripten::CCTextureCacheEmscripten()
  * unload the classes and objects instantiated in JavaScript to make this class
  * work.
  */
-CCTextureCacheEmscripten::~CCTextureCacheEmscripten()
+TextureCacheEmscripten::~TextureCacheEmscripten()
 {
     cocos2dx_shutdownAsyncImageLoader();
 }
@@ -94,7 +94,7 @@ CCTextureCacheEmscripten::~CCTextureCacheEmscripten()
  * @xout:   x-offset into target image where blitted image should be placed
  * @yout:   y-offset into target image where blitted image should be placed
  */
-void CCTextureCacheEmscripten_preMultiplyImageRegion(
+void TextureCacheEmscripten_preMultiplyImageRegion(
     unsigned char *in, int win, int hin, // Input image, its width and height
     unsigned char *out, int wout, int hout, // Output image, its width and height
     int xout, int yout) // x and y offsets into the output image
@@ -117,32 +117,32 @@ void CCTextureCacheEmscripten_preMultiplyImageRegion(
 
 /**
  * "Private" callback method to load a texture based on the image data
- * generated in CCTextureCacheEmscripten.js. Exposed here as public so that it
+ * generated in TextureCacheEmscripten.js. Exposed here as public so that it
  * can be called from the C wrapper method
- * @CCTextureCacheEmscripten_addImageAsyncCallBack, above.
+ * @TextureCacheEmscripten_addImageAsyncCallBack, above.
  */
-void CCTextureCacheEmscripten::addImageAsyncCallBack_emscripten(AsyncStruct *data, unsigned char *imgData, int width, int height)
+void TextureCacheEmscripten::addImageAsyncCallBack_emscripten(AsyncStruct *data, unsigned char *imgData, int width, int height)
 {
     const char *filename = data->filename.c_str();
 
-    CCImage *pImage = new CCImage();
+    Image *pImage = new Image();
     pImage->initWithRawData((unsigned char*) imgData, 4 * width * height, width, height, 8, true);
 
     free(imgData);
 
-    CCTexture2D *texture = new CCTexture2D();
+    Texture2D *texture = new Texture2D();
     texture->initWithImage(pImage); 
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // cache the texture file name
-    VolatileTexture::addImageTexture(texture, filename, CCImage::kFmtRawData);
+    VolatileTexture::addImageTexture(texture, filename, Image::kFmtRawData);
 #endif
 
     // cache the texture
     _textures->setObject(texture, filename);
     texture->autorelease();
 
-    CCObject *target = data->target;
+    Object *target = data->target;
     SEL_CallFuncO selector = data->selector;
 
     if (target && selector)
@@ -155,15 +155,15 @@ void CCTextureCacheEmscripten::addImageAsyncCallBack_emscripten(AsyncStruct *dat
     delete data;
 }
 
-void CCTextureCacheEmscripten::addImageAsync(const char *path, CCObject *target, SEL_CallFuncO selector)
+void TextureCacheEmscripten::addImageAsync(const char *path, Object *target, SEL_CallFuncO selector)
 {
     CCAssert(path != NULL, "TextureCache: fileimage MUST not be NULL");    
 
-    CCTexture2D *texture = NULL;
+    Texture2D *texture = NULL;
 
     // optimization
-    std::string pathKey = CCFileUtils::sharedFileUtils()->fullPathForFilename(path);
-    texture = (CCTexture2D*)_textures->objectForKey(pathKey.c_str());
+    std::string pathKey = FileUtils::sharedFileUtils()->fullPathForFilename(path);
+    texture = (Texture2D*)_textures->objectForKey(pathKey.c_str());
 
     std::string fullpath = pathKey;
     if (texture != NULL)
@@ -184,7 +184,7 @@ void CCTextureCacheEmscripten::addImageAsync(const char *path, CCObject *target,
     // generate async struct
     AsyncStruct *data = new AsyncStruct(fullpath, target, selector);
 
-    // Call into JavaScript code in CCTextureCacheEmscripten.js to do the rest.
+    // Call into JavaScript code in TextureCacheEmscripten.js to do the rest.
     cocos2dx_asyncImageLoader_LoadImage(data->filename.c_str(), data);
 
     return;

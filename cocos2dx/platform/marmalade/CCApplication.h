@@ -37,17 +37,17 @@
 NS_CC_BEGIN;
 
 
-class CCRect;
+class Rect;
 
-class CC_DLL CCApplication  : public CCApplicationProtocol
+class CC_DLL Application  : public ApplicationProtocol
 {
 public:
 
-    CCApplication();
-    virtual ~CCApplication();
+    Application();
+    virtual ~Application();
 	
 	/**
-    @brief	Implement CCDirector and sense init code here.
+    @brief	Implement Director and sense init code here.
     @return true    Initialize success, app continue.
     @return false   Initialize failed, app terminate.
     */
@@ -77,7 +77,7 @@ public:
 	@brief	Get current applicaiton instance.
 	@return Current application instance pointer.
 	*/
-    static CCApplication* sharedApplication();			// MH Cocos2dx CCDirector class expects this to return a pointer and not a reference
+    static Application* sharedApplication();			// MH Cocos2dx Director class expects this to return a pointer and not a reference
 
     /**
     @brief Get current language config
@@ -93,7 +93,7 @@ public:
 protected:
 	uint64       _animationInterval;
 
-	static CCApplication * sm_pSharedApplication;
+	static Application * sm_pSharedApplication;
 };
 
 NS_CC_END;

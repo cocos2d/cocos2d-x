@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "CCShaderNode.h"
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
 
 enum
 {
@@ -32,7 +32,7 @@ enum
     SIZE_Y = 128,
 };
 
-CCShaderNode::CCShaderNode()
+ShaderNode::ShaderNode()
     : _center(vertex2(0.0f, 0.0f))
     , _resolution(vertex2(0.0f, 0.0f))
     , _time(0.0f)
@@ -42,16 +42,16 @@ CCShaderNode::CCShaderNode()
 {
 }
 
-CCShaderNode *CCShaderNode::shaderNodeWithVertex(const char *vert, const char *frag)
+ShaderNode *ShaderNode::shaderNodeWithVertex(const char *vert, const char *frag)
 {
-    CCShaderNode *node = new CCShaderNode();
+    ShaderNode *node = new ShaderNode();
     node->initWithVertex(vert, frag);
     node->autorelease();
 
     return node;
 }
 
-bool CCShaderNode::initWithVertex(const char *vert, const char *frag)
+bool ShaderNode::initWithVertex(const char *vert, const char *frag)
 {
 
     loadShaderVertex(vert, frag);
@@ -67,12 +67,12 @@ bool CCShaderNode::initWithVertex(const char *vert, const char *frag)
     return true;
 }
 
-void CCShaderNode::loadShaderVertex(const char *vert, const char *frag)
+void ShaderNode::loadShaderVertex(const char *vert, const char *frag)
 {
-    CCGLProgram *shader = new CCGLProgram();
+    GLProgram *shader = new GLProgram();
     shader->initWithVertexShaderFilename(vert, frag);
 
-    shader->addAttribute("aVertex", kCCVertexAttrib_Position);
+    shader->addAttribute("aVertex", kVertexAttrib_Position);
     shader->link();
 
     shader->updateUniforms();
@@ -86,27 +86,27 @@ void CCShaderNode::loadShaderVertex(const char *vert, const char *frag)
     shader->release();
 }
 
-void CCShaderNode::update(float dt)
+void ShaderNode::update(float dt)
 {
     _time += dt;
 }
 
-void CCShaderNode::translateFormOtherNode(CCAffineTransform &transform)
+void ShaderNode::translateFormOtherNode(AffineTransform &transform)
 {
-    CCNode::setAdditionalTransform(transform);
+    Node::setAdditionalTransform(transform);
 
     _center = vertex2(_additionalTransform.tx * CC_CONTENT_SCALE_FACTOR(), _additionalTransform.ty * CC_CONTENT_SCALE_FACTOR());
     _resolution = vertex2( SIZE_X * _additionalTransform.a, SIZE_Y * _additionalTransform.d);
 }
 
-void CCShaderNode::setPosition(const CCPoint &newPosition)
+void ShaderNode::setPosition(const Point &newPosition)
 {
-    CCNode::setPosition(newPosition);
-    CCPoint position = getPosition();
+    Node::setPosition(newPosition);
+    Point position = getPosition();
     _center = vertex2(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
 }
 
-void CCShaderNode::draw()
+void ShaderNode::draw()
 {
     CC_NODE_DRAW_SETUP();
 
@@ -123,9 +123,9 @@ void CCShaderNode::draw()
     // time changes all the time, so it is Ok to call OpenGL directly, and not the "cached" version
     glUniform1f(_uniformTime, _time);
 
-    ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
+    ccGLEnableVertexAttribs( kVertexAttribFlag_Position );
 
-    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
 
     glDrawArrays(GL_TRIANGLES, 0, 6);
 
@@ -133,4 +133,4 @@ void CCShaderNode::draw()
 }
 
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {

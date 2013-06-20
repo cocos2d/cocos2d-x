@@ -46,7 +46,7 @@ public:
 /**
  *  @brief Websocket thread helper, it's used for sending message between UI thread and websocket thread.
  */
-class WsThreadHelper : public cocos2d::CCObject
+class WsThreadHelper : public cocos2d::Object
 {
 public:
     WsThreadHelper();
@@ -114,12 +114,12 @@ WsThreadHelper::WsThreadHelper()
     _subThreadWsMessageQueue = new std::list<WsMessage*>();
     pthread_mutex_init(&_subThreadWsMessageQueueMutex, NULL);
     
-    CCDirector::sharedDirector()->getScheduler()->scheduleUpdateForTarget(this, 0, false);
+    Director::sharedDirector()->getScheduler()->scheduleUpdateForTarget(this, 0, false);
 }
 
 WsThreadHelper::~WsThreadHelper()
 {
-    CCDirector::sharedDirector()->getScheduler()->unscheduleAllForTarget(this);
+    Director::sharedDirector()->getScheduler()->unscheduleAllForTarget(this);
     pthread_mutex_destroy(&_UIWsMessageQueueMutex);
     pthread_mutex_destroy(&_subThreadWsMessageQueueMutex);
     delete _UIWsMessageQueue;
@@ -281,7 +281,7 @@ bool WebSocket::init(const Delegate& delegate,
         port = atoi(host.substr(pos+1, host.size()).c_str());
     }
     
-    pos = host.find("/", pos);
+    pos = host.find("/", 0);
     std::string path = "/";
     if(pos >= 0){
         path += host.substr(pos + 1, host.size());
@@ -290,14 +290,17 @@ bool WebSocket::init(const Delegate& delegate,
     pos = host.find(":");
     if(pos >= 0){
         host.erase(pos, host.size());
+    }else if((pos = host.find("/"))>=0) {
+    	host.erase(pos, host.size());
     }
-
     
     _host = host;
     _port = port;
     _path = path;
     _SSLConnection = useSSL ? 1 : 0;
     
+    CCLOG("[WebSocket::init] _host: %s, _port: %d, _path: %s", _host.c_str(), _port, _path.c_str());
+
     int protocolCount = 0;
     if (protocols && protocols->size() > 0)
     {
@@ -372,7 +375,7 @@ void WebSocket::send(const unsigned char* binaryMsg, unsigned int len)
 
 void WebSocket::close()
 {
-    CCDirector::sharedDirector()->getScheduler()->unscheduleAllForTarget(_wsHelper);
+    Director::sharedDirector()->getScheduler()->unscheduleAllForTarget(_wsHelper);
     
     if (_readyState == kStateClosing || _readyState == kStateClosed)
         return;

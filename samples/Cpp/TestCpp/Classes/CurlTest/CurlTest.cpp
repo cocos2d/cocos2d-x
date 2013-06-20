@@ -5,14 +5,14 @@
 
 CurlTest::CurlTest()
 {
-    CCLabelTTF* label = CCLabelTTF::create("Curl Test", "Arial", 28);
+    LabelTTF* label = LabelTTF::create("Curl Test", "Arial", 28);
     addChild(label, 0);
     label->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y-50) );
 
     setTouchEnabled(true);
 
     // create a label to display the tip string
-    _label = CCLabelTTF::create("Touch the screen to connect", "Arial", 22);
+    _label = LabelTTF::create("Touch the screen to connect", "Arial", 22);
     _label->setPosition(VisibleRect::center());
     addChild(_label, 0);
     
@@ -22,7 +22,7 @@ CurlTest::CurlTest()
 
 // the test code is
 // http://curl.haxx.se/mail/lib-2009-12/0071.html
-void CurlTest::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
+void CurlTest::ccTouchesEnded(Set *pTouches, Event *pEvent)
 {
     CURL *curl;
     CURLcode res;
@@ -58,9 +58,9 @@ CurlTest::~CurlTest()
 
 void CurlTestScene::runThisTest()
 {
-    CCLayer* pLayer = new CurlTest();
+    Layer* pLayer = new CurlTest();
     addChild(pLayer);
 
-    CCDirector::sharedDirector()->replaceScene(this);
+    Director::sharedDirector()->replaceScene(this);
     pLayer->release();
 }

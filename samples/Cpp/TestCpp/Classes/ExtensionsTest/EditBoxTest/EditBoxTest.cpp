@@ -1,5 +1,5 @@
 //
-//  CCEditBoxTest.cpp
+//  EditBoxTest.cpp
 //  TestCpp
 //
 //  Created by James on 8/14/12.
@@ -15,28 +15,28 @@ USING_NS_CC_EXT;
 
 EditBoxTest::EditBoxTest()
 {
-    CCPoint visibleOrigin = CCEGLView::sharedOpenGLView()->getVisibleOrigin();
-    CCSize visibleSize = CCEGLView::sharedOpenGLView()->getVisibleSize();
+    Point visibleOrigin = EGLView::sharedOpenGLView()->getVisibleOrigin();
+    Size visibleSize = EGLView::sharedOpenGLView()->getVisibleSize();
     
-    CCSprite* pBg = CCSprite::create("Images/HelloWorld.png");
+    Sprite* pBg = Sprite::create("Images/HelloWorld.png");
     pBg->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
     addChild(pBg);
     
-    _TTFShowEditReturn = CCLabelTTF::create("No edit control return!", "", 30);
+    _TTFShowEditReturn = LabelTTF::create("No edit control return!", "", 30);
     _TTFShowEditReturn->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y + visibleSize.height - 50));
     addChild(_TTFShowEditReturn);
     
     // Back Menu
-    CCMenuItemFont *itemBack = CCMenuItemFont::create("Back", CC_CALLBACK_1(EditBoxTest::toExtensionsMainLayer, this));
+    MenuItemFont *itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(EditBoxTest::toExtensionsMainLayer, this));
     itemBack->setPosition(ccp(visibleOrigin.x+visibleSize.width - 50, visibleOrigin.y+25));
-    CCMenu *menuBack = CCMenu::create(itemBack, NULL);
-    menuBack->setPosition(CCPointZero);
+    Menu *menuBack = Menu::create(itemBack, NULL);
+    menuBack->setPosition(PointZero);
     addChild(menuBack);
     
-    CCSize editBoxSize = CCSizeMake(visibleSize.width - 100, 60);
+    Size editBoxSize = CCSizeMake(visibleSize.width - 100, 60);
 
     // top
-    _editName = CCEditBox::create(editBoxSize, CCScale9Sprite::create("extensions/green_edit.png"));
+    _editName = EditBox::create(editBoxSize, Scale9Sprite::create("extensions/green_edit.png"));
     _editName->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height*3/4));
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     _editName->setFontName("Paint Boy");
@@ -53,7 +53,7 @@ EditBoxTest::EditBoxTest()
     addChild(_editName);
     
     // middle
-    _editPassword = CCEditBox::create(editBoxSize, CCScale9Sprite::create("extensions/orange_edit.png"));
+    _editPassword = EditBox::create(editBoxSize, Scale9Sprite::create("extensions/orange_edit.png"));
     _editPassword->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	_editPassword->setFont("American Typewriter", 30);
@@ -69,7 +69,7 @@ EditBoxTest::EditBoxTest()
     addChild(_editPassword);
     
     // bottom
-    _editEmail = CCEditBox::create(CCSizeMake(editBoxSize.width, editBoxSize.height), CCScale9Sprite::create("extensions/yellow_edit.png"));
+    _editEmail = EditBox::create(CCSizeMake(editBoxSize.width, editBoxSize.height), Scale9Sprite::create("extensions/yellow_edit.png"));
     _editEmail->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/4));
     _editEmail->setAnchorPoint(ccp(0.5, 1.0f));
     _editEmail->setPlaceHolder("Email:");
@@ -85,29 +85,29 @@ EditBoxTest::~EditBoxTest()
     
 }
 
-void EditBoxTest::toExtensionsMainLayer(cocos2d::CCObject *sender)
+void EditBoxTest::toExtensionsMainLayer(cocos2d::Object *sender)
 {
     ExtensionsTestScene *pScene = new ExtensionsTestScene();
     pScene->runThisTest();
     pScene->release();
 }
 
-void EditBoxTest::editBoxEditingDidBegin(cocos2d::extension::CCEditBox* editBox)
+void EditBoxTest::editBoxEditingDidBegin(cocos2d::extension::EditBox* editBox)
 {
     CCLog("editBox %p DidBegin !", editBox);
 }
 
-void EditBoxTest::editBoxEditingDidEnd(cocos2d::extension::CCEditBox* editBox)
+void EditBoxTest::editBoxEditingDidEnd(cocos2d::extension::EditBox* editBox)
 {
     CCLog("editBox %p DidEnd !", editBox);
 }
 
-void EditBoxTest::editBoxTextChanged(cocos2d::extension::CCEditBox* editBox, const std::string& text)
+void EditBoxTest::editBoxTextChanged(cocos2d::extension::EditBox* editBox, const std::string& text)
 {
     CCLog("editBox %p TextChanged, text: %s ", editBox, text.c_str());
 }
 
-void EditBoxTest::editBoxReturn(CCEditBox* editBox)
+void EditBoxTest::editBoxReturn(EditBox* editBox)
 {
     CCLog("editBox %p was returned !",editBox);
     
@@ -127,10 +127,10 @@ void EditBoxTest::editBoxReturn(CCEditBox* editBox)
 
 void runEditBoxTest()
 {
-    CCScene *pScene = CCScene::create();
+    Scene *pScene = Scene::create();
     EditBoxTest *pLayer = new EditBoxTest();
     pScene->addChild(pLayer);
     
-    CCDirector::sharedDirector()->replaceScene(pScene);
+    Director::sharedDirector()->replaceScene(pScene);
     pLayer->release();
 }

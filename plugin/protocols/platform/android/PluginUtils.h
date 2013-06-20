@@ -100,13 +100,7 @@ public:
             , funcName
             , paramCode))
         {
-            jstring strRet = NULL;
-            if (param != NULL)
-            {
-                strRet = (jstring) t.env->CallObjectMethod(pData->jobj, t.methodID, param);
-            } else {
-                strRet = (jstring) t.env->CallObjectMethod(pData->jobj, t.methodID);
-            }
+            jstring strRet = (jstring)t.env->CallObjectMethod(pData->jobj, t.methodID, param);
             ret = PluginJniHelper::jstring2string(strRet).c_str();
             t.env->DeleteLocalRef(t.classID);
         }

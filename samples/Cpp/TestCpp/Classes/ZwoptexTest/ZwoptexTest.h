@@ -9,9 +9,9 @@ class ZwoptexTest : public BaseTest
 public:
     virtual void onEnter();
 
-    void restartCallback(CCObject* pSender);
-    void nextCallback(CCObject* pSender);
-    void backCallback(CCObject* pSender);
+    void restartCallback(Object* pSender);
+    void nextCallback(Object* pSender);
+    void backCallback(Object* pSender);
 
     virtual std::string title();
     virtual std::string subtitle();
@@ -29,8 +29,8 @@ public:
     virtual std::string subtitle();
 
 protected:
-    CCSprite * sprite1;
-    CCSprite * sprite2;
+    Sprite * sprite1;
+    Sprite * sprite2;
     int counter;
 };
 

@@ -12,9 +12,9 @@ static void PVRFrameEnableControlWindow(bool bEnable);
 NS_CC_BEGIN
 
 // sharedApplication pointer
-CCApplication * CCApplication::sm_pSharedApplication = 0;
+Application * Application::sm_pSharedApplication = 0;
 
-CCApplication::CCApplication()
+Application::Application()
 : _instance(NULL)
 , _accelTable(NULL)
 {
@@ -24,13 +24,13 @@ CCApplication::CCApplication()
     sm_pSharedApplication = this;
 }
 
-CCApplication::~CCApplication()
+Application::~Application()
 {
     CC_ASSERT(this == sm_pSharedApplication);
     sm_pSharedApplication = NULL;
 }
 
-int CCApplication::run()
+int Application::run()
 {
     PVRFrameEnableControlWindow(false);
 
@@ -49,7 +49,7 @@ int CCApplication::run()
         return 0;
     }
 
-    CCEGLView* pMainWnd = CCEGLView::sharedOpenGLView();
+    EGLView* pMainWnd = EGLView::sharedOpenGLView();
     pMainWnd->centerWindow();
     ShowWindow(pMainWnd->getHWnd(), SW_SHOW);
 
@@ -64,7 +64,7 @@ int CCApplication::run()
             if (nNow.QuadPart - nLast.QuadPart > _animationInterval.QuadPart)
             {
                 nLast.QuadPart = nNow.QuadPart;
-                CCDirector::sharedDirector()->mainLoop();
+                Director::sharedDirector()->mainLoop();
             }
             else
             {
@@ -90,7 +90,7 @@ int CCApplication::run()
     return (int) msg.wParam;
 }
 
-void CCApplication::setAnimationInterval(double interval)
+void Application::setAnimationInterval(double interval)
 {
     LARGE_INTEGER nFreq;
     QueryPerformanceFrequency(&nFreq);
@@ -100,13 +100,13 @@ void CCApplication::setAnimationInterval(double interval)
 //////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////
-CCApplication* CCApplication::sharedApplication()
+Application* Application::sharedApplication()
 {
     CC_ASSERT(sm_pSharedApplication);
     return sm_pSharedApplication;
 }
 
-ccLanguageType CCApplication::getCurrentLanguage()
+ccLanguageType Application::getCurrentLanguage()
 {
     ccLanguageType ret = kLanguageEnglish;
 
@@ -162,12 +162,12 @@ ccLanguageType CCApplication::getCurrentLanguage()
     return ret;
 }
 
-TargetPlatform CCApplication::getTargetPlatform()
+TargetPlatform Application::getTargetPlatform()
 {
     return kTargetWindows;
 }
 
-void CCApplication::setResourceRootPath(const std::string& rootResDir)
+void Application::setResourceRootPath(const std::string& rootResDir)
 {
     _resourceRootPath = rootResDir;
     std::replace(_resourceRootPath.begin(), _resourceRootPath.end(), '\\', '/');
@@ -175,18 +175,18 @@ void CCApplication::setResourceRootPath(const std::string& rootResDir)
     {
         _resourceRootPath += '/';
     }
-    CCFileUtils* pFileUtils = CCFileUtils::sharedFileUtils();
+    FileUtils* pFileUtils = FileUtils::sharedFileUtils();
     std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
     searchPaths.insert(searchPaths.begin(), _resourceRootPath);
     pFileUtils->setSearchPaths(searchPaths);
 }
 
-const std::string& CCApplication::getResourceRootPath(void)
+const std::string& Application::getResourceRootPath(void)
 {
     return _resourceRootPath;
 }
 
-void CCApplication::setStartupScriptFilename(const std::string& startupScriptFile)
+void Application::setStartupScriptFilename(const std::string& startupScriptFile)
 {
     _startupScriptFilename = startupScriptFile;
     std::replace(_startupScriptFilename.begin(), _startupScriptFilename.end(), '\\', '/');

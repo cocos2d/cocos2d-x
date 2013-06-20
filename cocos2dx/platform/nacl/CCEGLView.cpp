@@ -138,25 +138,25 @@ void OpenGLContext::FlushContext()
 
 NS_CC_BEGIN
 
-CCEGLView::CCEGLView() : bIsInit(false), bIsMouseDown(false), _frameZoomFactor(1.0f), _context(NULL)
+EGLView::EGLView() : bIsInit(false), bIsMouseDown(false), _frameZoomFactor(1.0f), _context(NULL)
 {
-    CCLOG("CCEGLView::CCEGLView");
+    CCLOG("CCEGLView::EGLView");
     pthread_mutex_init(&_mutex, NULL);
     initGL();
 }
 
-CCEGLView::~CCEGLView()
+EGLView::~EGLView()
 {
 }
 
-void CCEGLView::setFrameSize(float width, float height)
+void EGLView::setFrameSize(float width, float height)
 {
-    CCEGLViewProtocol::setFrameSize(width, height);
+    EGLViewProtocol::setFrameSize(width, height);
     if (_context)
       _context->ResizeContext(width, height);
 }
 
-void CCEGLView::setViewPortInPoints(float x , float y , float w , float h)
+void EGLView::setViewPortInPoints(float x , float y , float w , float h)
 {
     glViewport((GLint)(x * _scaleX * _frameZoomFactor+ _viewPortRect.origin.x * _frameZoomFactor),
             (GLint)(y * _scaleY * _frameZoomFactor + _viewPortRect.origin.y * _frameZoomFactor),
@@ -164,7 +164,7 @@ void CCEGLView::setViewPortInPoints(float x , float y , float w , float h)
             (GLsizei)(h * _scaleY * _frameZoomFactor));
 }
 
-void CCEGLView::setScissorInPoints(float x , float y , float w , float h)
+void EGLView::setScissorInPoints(float x , float y , float w , float h)
 {
     glScissor((GLint)(x * _scaleX * _frameZoomFactor + _viewPortRect.origin.x * _frameZoomFactor),
             (GLint)(y * _scaleY * _frameZoomFactor + _viewPortRect.origin.y * _frameZoomFactor),
@@ -173,18 +173,18 @@ void CCEGLView::setScissorInPoints(float x , float y , float w , float h)
 }
 
 
-bool CCEGLView::isOpenGLReady()
+bool EGLView::isOpenGLReady()
 {
     return bIsInit;
 }
 
-void CCEGLView::end()
+void EGLView::end()
 {
     delete this;
     exit(0);
 }
 
-void CCEGLView::swapBuffers()
+void EGLView::swapBuffers()
 {
     if (!bIsInit)
         return;
@@ -192,11 +192,11 @@ void CCEGLView::swapBuffers()
     _context->FlushContext();
 }
 
-void CCEGLView::setIMEKeyboardState(bool bOpen)
+void EGLView::setIMEKeyboardState(bool bOpen)
 {
 }
 
-bool CCEGLView::initGL()
+bool EGLView::initGL()
 {
     CCLOG("initGL: instance=%p", g_instance);
     assert(g_instance);
@@ -214,25 +214,25 @@ bool CCEGLView::initGL()
     return true;
 }
 
-void CCEGLView::destroyGL()
+void EGLView::destroyGL()
 {
     delete _context;
     bIsInit = false;
     CCLOG("destroyGL");
 }
 
-CCEGLView* CCEGLView::sharedOpenGLView()
+EGLView* EGLView::sharedOpenGLView()
 {
-    static CCEGLView* s_pEglView = NULL;
+    static EGLView* s_pEglView = NULL;
     if (s_pEglView == NULL)
     {
-        CCLOG("creating CCEGLView");
-        s_pEglView = new CCEGLView();
+        CCLOG("creating EGLView");
+        s_pEglView = new EGLView();
     }
     return s_pEglView;
 }
 
-void CCEGLView::HandleMouseEvent(const pp::MouseInputEvent* event)
+void EGLView::HandleMouseEvent(const pp::MouseInputEvent* event)
 {
     pp::Point pos = event->GetPosition();
     float x = pos.x();
@@ -240,7 +240,7 @@ void CCEGLView::HandleMouseEvent(const pp::MouseInputEvent* event)
     int touchID = 1;
 
     // Clamp event position to be within cocos2dx window size
-    CCSize frame_size = getFrameSize();
+    Size frame_size = getFrameSize();
     float max_y = frame_size.height;
     float max_x = frame_size.width;
 
@@ -272,7 +272,7 @@ void CCEGLView::HandleMouseEvent(const pp::MouseInputEvent* event)
     }
 }
 
-void CCEGLView::ProcessEventQueue()
+void EGLView::ProcessEventQueue()
 {
     const pp::Size& size = g_instance->Size();
     // If the size of the global instance has changed then
@@ -322,13 +322,13 @@ void CCEGLView::ProcessEventQueue()
     pthread_mutex_unlock(&_mutex);
 }
 
-void CCEGLView::AddEvent(const pp::InputEvent& event)
+void EGLView::AddEvent(const pp::InputEvent& event)
 {
     pthread_mutex_lock(&_mutex);
     _event_queue.push(event);
     pthread_mutex_unlock(&_mutex);
 }
 
-CocosPepperInstance* CCEGLView::g_instance;
+CocosPepperInstance* EGLView::g_instance;
 
 NS_CC_END

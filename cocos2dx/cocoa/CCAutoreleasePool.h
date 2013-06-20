@@ -34,39 +34,39 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL CCAutoreleasePool : public CCObject
+class CC_DLL AutoreleasePool : public Object
 {
-    CCArray*    _managedObjectArray;    
+    Array*    _managedObjectArray;    
 public:
-    CCAutoreleasePool(void);
-    ~CCAutoreleasePool(void);
+    AutoreleasePool(void);
+    ~AutoreleasePool(void);
 
-    void addObject(CCObject *pObject);
-    void removeObject(CCObject *pObject);
+    void addObject(Object *pObject);
+    void removeObject(Object *pObject);
 
     void clear();
 };
 
-class CC_DLL CCPoolManager
+class CC_DLL PoolManager
 {
-    CCArray*    _releasePoolStack;    
-    CCAutoreleasePool*                    _curReleasePool;
+    Array*    _releasePoolStack;    
+    AutoreleasePool*                    _curReleasePool;
 
-    CCAutoreleasePool* getCurReleasePool();
+    AutoreleasePool* getCurReleasePool();
 public:
-    CCPoolManager();
-    ~CCPoolManager();
+    PoolManager();
+    ~PoolManager();
     void finalize();
     void push();
     void pop();
 
-    void removeObject(CCObject* pObject);
-    void addObject(CCObject* pObject);
+    void removeObject(Object* pObject);
+    void addObject(Object* pObject);
 
-    static CCPoolManager* sharedPoolManager();
+    static PoolManager* sharedPoolManager();
     static void purgePoolManager();
 
-    friend class CCAutoreleasePool;
+    friend class AutoreleasePool;
 };
 
 // end of base_nodes group

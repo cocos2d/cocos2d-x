@@ -31,11 +31,11 @@ THE SOFTWARE.
 #include "../datas/CCDatas.h"
 
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
 
-CCArmatureAnimation *CCArmatureAnimation::create(CCArmature *armature)
+ArmatureAnimation *ArmatureAnimation::create(Armature *armature)
 {
-    CCArmatureAnimation *pArmatureAnimation = new CCArmatureAnimation();
+    ArmatureAnimation *pArmatureAnimation = new ArmatureAnimation();
     if (pArmatureAnimation && pArmatureAnimation->init(armature))
     {
         pArmatureAnimation->autorelease();
@@ -46,7 +46,7 @@ CCArmatureAnimation *CCArmatureAnimation::create(CCArmature *armature)
 }
 
 
-CCArmatureAnimation::CCArmatureAnimation()
+ArmatureAnimation::ArmatureAnimation()
 	: _animationData(NULL)
 	, _armature(NULL)
     , _movementID("")
@@ -55,20 +55,20 @@ CCArmatureAnimation::CCArmatureAnimation()
 
 }
 
-CCArmatureAnimation::~CCArmatureAnimation(void)
+ArmatureAnimation::~ArmatureAnimation(void)
 {
     CC_SAFE_RELEASE_NULL(_tweenList);
     CC_SAFE_RELEASE_NULL(_animationData);
 }
 
-bool CCArmatureAnimation::init(CCArmature *armature)
+bool ArmatureAnimation::init(Armature *armature)
 {
     bool bRet = false;
     do
     {
         _armature = armature;
 
-        _tweenList = new CCArray();
+        _tweenList = new Array();
         _tweenList->init();
 
         bRet = true;
@@ -79,38 +79,38 @@ bool CCArmatureAnimation::init(CCArmature *armature)
 }
 
 
-void CCArmatureAnimation:: pause()
+void ArmatureAnimation:: pause()
 {
-    CCObject *object = NULL;
+    Object *object = NULL;
     CCARRAY_FOREACH(_tweenList, object)
     {
-        ((CCTween *)object)->pause();
+        ((Tween *)object)->pause();
     }
-    CCProcessBase::pause();
+    ProcessBase::pause();
 }
 
-void CCArmatureAnimation::resume()
+void ArmatureAnimation::resume()
 {
-    CCObject *object = NULL;
+    Object *object = NULL;
     CCARRAY_FOREACH(_tweenList, object)
     {
-        ((CCTween *)object)->resume();
+        ((Tween *)object)->resume();
     }
-    CCProcessBase::resume();
+    ProcessBase::resume();
 }
 
-void CCArmatureAnimation::stop()
+void ArmatureAnimation::stop()
 {
-    CCObject *object = NULL;
+    Object *object = NULL;
     CCARRAY_FOREACH(_tweenList, object)
     {
-        ((CCTween *)object)->stop();
+        ((Tween *)object)->stop();
     }
     _tweenList->removeAllObjects();
-    CCProcessBase::stop();
+    ProcessBase::stop();
 }
 
-void CCArmatureAnimation::setAnimationScale(float animationScale )
+void ArmatureAnimation::setAnimationScale(float animationScale )
 {
     if(animationScale == _animationScale)
     {
@@ -119,11 +119,11 @@ void CCArmatureAnimation::setAnimationScale(float animationScale )
 
     _animationScale = animationScale;
 
-    CCDictElement *element = NULL;
-    CCDictionary *dict = _armature->getBoneDic();
+    DictElement *element = NULL;
+    Dictionary *dict = _armature->getBoneDic();
     CCDICT_FOREACH(dict, element)
     {
-        CCBone *bone = (CCBone *)element->getObject();
+        Bone *bone = (Bone *)element->getObject();
         bone->getTween()->setAnimationScale(_animationScale);
         if (bone->getChildArmature())
         {
@@ -133,7 +133,7 @@ void CCArmatureAnimation::setAnimationScale(float animationScale )
 }
 
 
-void CCArmatureAnimation::play(const char *animationName, int durationTo, int durationTween,  int loop, int tweenEasing)
+void ArmatureAnimation::play(const char *animationName, int durationTo, int durationTween,  int loop, int tweenEasing)
 {
     CCAssert(_animationData, "_animationData can not be null");
 
@@ -155,7 +155,7 @@ void CCArmatureAnimation::play(const char *animationName, int durationTo, int du
     loop = (loop < 0) ? _movementData->loop : loop;
 
 
-    CCProcessBase::play((void *)animationName, durationTo, durationTween, loop, tweenEasing);
+    ProcessBase::play((void *)animationName, durationTo, durationTween, loop, tweenEasing);
 
 
     if (_rawDuration == 1)
@@ -176,18 +176,18 @@ void CCArmatureAnimation::play(const char *animationName, int durationTo, int du
         _durationTween = durationTween;
     }
 
-    CCMovementBoneData *movementBoneData = NULL;
+    MovementBoneData *movementBoneData = NULL;
     _tweenList->removeAllObjects();
 
-    CCDictElement *element = NULL;
-    CCDictionary *dict = _armature->getBoneDic();
+    DictElement *element = NULL;
+    Dictionary *dict = _armature->getBoneDic();
 
     CCDICT_FOREACH(dict, element)
     {
-        CCBone *bone = (CCBone *)element->getObject();
-        movementBoneData = (CCMovementBoneData *)_movementData->movBoneDataDic.objectForKey(bone->getName());
+        Bone *bone = (Bone *)element->getObject();
+        movementBoneData = (MovementBoneData *)_movementData->movBoneDataDic.objectForKey(bone->getName());
 
-        CCTween *tween = bone->getTween();
+        Tween *tween = bone->getTween();
         if(movementBoneData && movementBoneData->frameList.count() > 0)
         {
             _tweenList->addObject(tween);
@@ -215,7 +215,7 @@ void CCArmatureAnimation::play(const char *animationName, int durationTo, int du
 }
 
 
-void CCArmatureAnimation::playByIndex(int animationIndex, int durationTo, int durationTween,  int loop, int tweenEasing)
+void ArmatureAnimation::playByIndex(int animationIndex, int durationTo, int durationTween,  int loop, int tweenEasing)
 {
     std::vector<std::string> &movName = _animationData->movementNames;
     CC_ASSERT((animationIndex > -1) && ((unsigned int)animationIndex < movName.size()));
@@ -226,22 +226,22 @@ void CCArmatureAnimation::playByIndex(int animationIndex, int durationTo, int du
 
 
 
-int CCArmatureAnimation::getMovementCount()
+int ArmatureAnimation::getMovementCount()
 {
     return _animationData->getMovementCount();
 }
 
-void CCArmatureAnimation::update(float dt)
+void ArmatureAnimation::update(float dt)
 {
-    CCProcessBase::update(dt);
-    CCObject *object = NULL;
+    ProcessBase::update(dt);
+    Object *object = NULL;
     CCARRAY_FOREACH(_tweenList, object)
     {
-        ((CCTween *)object)->update(dt);
+        ((Tween *)object)->update(dt);
     }
 }
 
-void CCArmatureAnimation::updateHandler()
+void ArmatureAnimation::updateHandler()
 {
     if (_currentPercent >= 1)
     {
@@ -304,7 +304,7 @@ void CCArmatureAnimation::updateHandler()
 }
 
 
-void CCArmatureAnimation::updateFrameData(float currentPercent)
+void ArmatureAnimation::updateFrameData(float currentPercent)
 {
     _prevFrameIndex = _curFrameIndex;
     _curFrameIndex = _rawDuration * currentPercent;
@@ -312,4 +312,4 @@ void CCArmatureAnimation::updateFrameData(float currentPercent)
 }
 
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {

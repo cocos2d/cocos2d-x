@@ -124,40 +124,40 @@ enum EditBoxInputFlag
 };
 
 
-class CCEditBox;
-class CCEditBoxImpl;
+class EditBox;
+class EditBoxImpl;
 
 
-class CCEditBoxDelegate 
+class EditBoxDelegate 
 {
 public:
-    virtual ~CCEditBoxDelegate() {};
+    virtual ~EditBoxDelegate() {};
     
     /**
      * This method is called when an edit box gains focus after keyboard is shown.
      * @param editBox The edit box object that generated the event.
      */
-    virtual void editBoxEditingDidBegin(CCEditBox* editBox) {};
+    virtual void editBoxEditingDidBegin(EditBox* editBox) {};
     
     
     /**
      * This method is called when an edit box loses focus after keyboard is hidden.
      * @param editBox The edit box object that generated the event.
      */
-    virtual void editBoxEditingDidEnd(CCEditBox* editBox) {};
+    virtual void editBoxEditingDidEnd(EditBox* editBox) {};
     
     /**
      * This method is called when the edit box text was changed.
      * @param editBox The edit box object that generated the event.
      * @param text The new text.
      */
-    virtual void editBoxTextChanged(CCEditBox* editBox, const std::string& text) {};
+    virtual void editBoxTextChanged(EditBox* editBox, const std::string& text) {};
     
     /**
      * This method is called when the return button was pressed or the outside area of keyboard was touched.
      * @param editBox The edit box object that generated the event.
      */
-    virtual void editBoxReturn(CCEditBox* editBox) = 0;
+    virtual void editBoxReturn(EditBox* editBox) = 0;
     
 };
 
@@ -168,38 +168,38 @@ public:
  * 
  */
  
-class CCEditBox
-: public CCControlButton
-, public CCIMEDelegate
+class EditBox
+: public ControlButton
+, public IMEDelegate
 {
 public:
     /**
      * Constructor.
      */
-    CCEditBox(void);
+    EditBox(void);
     
     /**
      * Destructor.
      */
-    virtual ~CCEditBox(void);
+    virtual ~EditBox(void);
 
     /**
      * create a edit box with size.
-     * @return An autorelease pointer of CCEditBox, you don't need to release it only if you retain it again.
+     * @return An autorelease pointer of EditBox, you don't need to release it only if you retain it again.
      */
-    static CCEditBox* create(const CCSize& size, CCScale9Sprite* pNormal9SpriteBg, CCScale9Sprite* pPressed9SpriteBg = NULL, CCScale9Sprite* pDisabled9SpriteBg = NULL);
+    static EditBox* create(const Size& size, Scale9Sprite* pNormal9SpriteBg, Scale9Sprite* pPressed9SpriteBg = NULL, Scale9Sprite* pDisabled9SpriteBg = NULL);
     
     /**
      * Init edit box with specified size. This method should be invoked right after constructor.
      * @param size The size of edit box.
      */
-    bool initWithSizeAndBackgroundSprite(const CCSize& size, CCScale9Sprite* pNormal9SpriteBg);
+    bool initWithSizeAndBackgroundSprite(const Size& size, Scale9Sprite* pNormal9SpriteBg);
     
     /**
      * Gets/Sets the delegate for edit box.
      */
-    void setDelegate(CCEditBoxDelegate* pDelegate);
-    CCEditBoxDelegate* getDelegate();
+    void setDelegate(EditBoxDelegate* pDelegate);
+    EditBoxDelegate* getDelegate();
     /**
      * Registers a script function that will be called for EditBox events.
      *
@@ -218,7 +218,7 @@ public:
      *     end
      * end
      *
-     * local editbox = CCEditBox:create(CCSize(...), CCScale9Sprite:create(...))
+     * local editbox = EditBox:create(Size(...), Scale9Sprite:create(...))
      * editbox = registerScriptEditBoxHandler(editboxEventHandler)
      * @endcode
      *
@@ -338,29 +338,29 @@ public:
     
     /**
      * Set the return type that are to be applied to the edit box.
-     * @param returnType One of the CCKeyboardReturnType constants.
+     * @param returnType One of the KeyboardReturnType constants.
      */
     void setReturnType(KeyboardReturnType returnType);
     
     /* override functions */
-    virtual void setPosition(const CCPoint& pos);
+    virtual void setPosition(const Point& pos);
     virtual void setVisible(bool visible);
-    virtual void setContentSize(const CCSize& size);
-	virtual void setAnchorPoint(const CCPoint& anchorPoint);
+    virtual void setContentSize(const Size& size);
+	virtual void setAnchorPoint(const Point& anchorPoint);
     virtual void visit(void);
 	virtual void onEnter(void);
     virtual void onExit(void);
-    virtual void keyboardWillShow(CCIMEKeyboardNotificationInfo& info);
-    virtual void keyboardDidShow(CCIMEKeyboardNotificationInfo& info);
-    virtual void keyboardWillHide(CCIMEKeyboardNotificationInfo& info);
-    virtual void keyboardDidHide(CCIMEKeyboardNotificationInfo& info);
+    virtual void keyboardWillShow(IMEKeyboardNotificationInfo& info);
+    virtual void keyboardDidShow(IMEKeyboardNotificationInfo& info);
+    virtual void keyboardWillHide(IMEKeyboardNotificationInfo& info);
+    virtual void keyboardDidHide(IMEKeyboardNotificationInfo& info);
     
     /* callback funtions */
-    void touchDownAction(CCObject *sender, CCControlEvent controlEvent);
+    void touchDownAction(Object *sender, ControlEvent controlEvent);
     
 protected:
-    CCEditBoxImpl*      _editBoxImpl;
-    CCEditBoxDelegate*  _delegate;
+    EditBoxImpl*      _editBoxImpl;
+    EditBoxDelegate*  _delegate;
     
     EditBoxInputMode    _editBoxInputMode;
     EditBoxInputFlag    _editBoxInputFlag;

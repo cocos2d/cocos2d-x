@@ -38,11 +38,11 @@ NS_CC_BEGIN
 
 typedef enum eImageFormat
 {
-    kCCImageFormatJPEG      = 0,
-    kCCImageFormatPNG       = 1,
-} tCCImageFormat;
+    kImageFormatJPEG      = 0,
+    kImageFormatPNG       = 1,
+} tImageFormat;
 /**
-@brief CCRenderTexture is a generic rendering target. To render things into it,
+@brief RenderTexture is a generic rendering target. To render things into it,
 simply construct a render target, call begin on it, call visit on any cocos
 scenes or objects to render them, and call end. For convenience, render texture
 adds a sprite as it's display child with the results, so you can simply add
@@ -51,35 +51,35 @@ There are also functions for saving the render texture to disk in PNG or JPG for
 
 @since v0.8.1
 */
-class CC_DLL CCRenderTexture : public CCNode 
+class CC_DLL RenderTexture : public Node 
 {
-    /** The CCSprite being used.
+    /** The Sprite being used.
     The sprite, by default, will use the following blending function: GL_ONE, GL_ONE_MINUS_SRC_ALPHA.
     The blending function can be changed in runtime by calling:
     - [[renderTexture sprite] setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
     */
-    CC_PROPERTY(CCSprite*, _sprite, Sprite)
+    CC_PROPERTY(Sprite*, _sprite, Sprite)
 public:
-    CCRenderTexture();
-    virtual ~CCRenderTexture();
+    RenderTexture();
+    virtual ~RenderTexture();
     
     virtual void visit();
     virtual void draw();
 
     /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
-    static CCRenderTexture * create(int w ,int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat);
+    static RenderTexture * create(int w ,int h, Texture2DPixelFormat eFormat, GLuint uDepthStencilFormat);
 
     /** creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
-    static CCRenderTexture * create(int w, int h, CCTexture2DPixelFormat eFormat);
+    static RenderTexture * create(int w, int h, Texture2DPixelFormat eFormat);
 
     /** creates a RenderTexture object with width and height in Points, pixel format is RGBA8888 */
-    static CCRenderTexture * create(int w, int h);
+    static RenderTexture * create(int w, int h);
 
     /** initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
-    bool initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat);
+    bool initWithWidthAndHeight(int w, int h, Texture2DPixelFormat eFormat);
 
     /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
-    bool initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat);
+    bool initWithWidthAndHeight(int w, int h, Texture2DPixelFormat eFormat, GLuint uDepthStencilFormat);
 
     /** starts grabbing */
     void begin();
@@ -110,10 +110,10 @@ public:
 
     /** clears the texture with a specified stencil value */
     void clearStencil(int stencilValue);
-    /* creates a new CCImage from with the texture's data.
+    /* creates a new Image from with the texture's data.
        Caller is responsible for releasing it by calling delete.
      */
-    CCImage* newCCImage(bool flipImage = true);
+    Image* newImage(bool flipImage = true);
 
     /** saves the texture into a file using JPEG format. The file will be saved in the Documents folder.
         Returns YES if the operation is successful.
@@ -123,17 +123,17 @@ public:
     /** saves the texture into a file. The format could be JPG or PNG. The file will be saved in the Documents folder.
         Returns YES if the operation is successful.
      */
-    bool saveToFile(const char *name, tCCImageFormat format);
+    bool saveToFile(const char *name, tImageFormat format);
     
     /** Listen "come to background" message, and save render texture.
      It only has effect on Android.
      */
-    void listenToBackground(CCObject *obj);
+    void listenToBackground(Object *obj);
     
     /** Listen "come to foreground" message and restore the frame buffer object
      It only has effect on Android.
      */
-    void listenToForeground(CCObject *obj);
+    void listenToForeground(Object *obj);
     
     /** Valid flags: GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_STENCIL_BUFFER_BIT. They can be OR'ed. Valid when "autoDraw is YES. */
     unsigned int getClearFlags() const;
@@ -164,9 +164,9 @@ protected:
     GLuint       _FBO;
     GLuint       _depthRenderBufffer;
     GLint        _oldFBO;
-    CCTexture2D* _texture;
-    CCTexture2D* _textureCopy;    // a copy of _texture
-    CCImage*     _UITextureImage;
+    Texture2D* _texture;
+    Texture2D* _textureCopy;    // a copy of _texture
+    Image*     _UITextureImage;
     GLenum       _pixelFormat;
     
     // code for "auto" update

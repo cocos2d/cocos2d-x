@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "CCGLBufferedNode.h"
 
-CCGLBufferedNode::CCGLBufferedNode()
+GLBufferedNode::GLBufferedNode()
 {
     for(int i = 0; i < BUFFER_SLOTS; i++)
     {
@@ -35,7 +35,7 @@ CCGLBufferedNode::CCGLBufferedNode()
     }
 }
 
-CCGLBufferedNode::~CCGLBufferedNode()
+GLBufferedNode::~GLBufferedNode()
 {
     for(int i = 0; i < BUFFER_SLOTS; i++)
     {
@@ -50,7 +50,7 @@ CCGLBufferedNode::~CCGLBufferedNode()
     }
 }
 
-void CCGLBufferedNode::setGLBufferData(void *buf, GLuint bufSize, int slot)
+void GLBufferedNode::setGLBufferData(void *buf, GLuint bufSize, int slot)
 {
     // WebGL doesn't support client-side arrays, so generate a buffer and load the data first.
     if(_bufferSize[slot] < bufSize)
@@ -72,7 +72,7 @@ void CCGLBufferedNode::setGLBufferData(void *buf, GLuint bufSize, int slot)
     }
 }
 
-void CCGLBufferedNode::setGLIndexData(void *buf, GLuint bufSize, int slot)
+void GLBufferedNode::setGLIndexData(void *buf, GLuint bufSize, int slot)
 {
     // WebGL doesn't support client-side arrays, so generate a buffer and load the data first.
     if(_indexBufferSize[slot] < bufSize)

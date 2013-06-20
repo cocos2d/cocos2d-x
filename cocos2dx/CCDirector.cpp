@@ -75,7 +75,7 @@ THE SOFTWARE.
  Default: 0,0 (bottom-left corner)
  */
 #ifndef CC_DIRECTOR_STATS_POSITION
-#define CC_DIRECTOR_STATS_POSITION CCDirector::sharedDirector()->getVisibleOrigin()
+#define CC_DIRECTOR_STATS_POSITION Director::sharedDirector()->getVisibleOrigin()
 #endif
 
 using namespace std;
@@ -86,28 +86,28 @@ NS_CC_BEGIN
 // XXX it should be a Director ivar. Move it there once support for multiple directors is added
 
 // singleton stuff
-static CCDisplayLinkDirector *s_SharedDirector = NULL;
+static DisplayLinkDirector *s_SharedDirector = NULL;
 
 #define kDefaultFPS        60  // 60 frames per second
 extern const char* cocos2dVersion(void);
 
-CCDirector* CCDirector::sharedDirector(void)
+Director* Director::sharedDirector(void)
 {
     if (!s_SharedDirector)
     {
-        s_SharedDirector = new CCDisplayLinkDirector();
+        s_SharedDirector = new DisplayLinkDirector();
         s_SharedDirector->init();
     }
 
     return s_SharedDirector;
 }
 
-CCDirector::CCDirector(void)
+Director::Director(void)
 {
 
 }
 
-bool CCDirector::init(void)
+bool Director::init(void)
 {
 	setDefaultValues();
 
@@ -117,7 +117,7 @@ bool CCDirector::init(void)
 
     _notificationNode = NULL;
 
-    _scenesStack = new CCArray();
+    _scenesStack = new Array();
     _scenesStack->init();
 
     // projection delegate if "Custom" projection is used
@@ -139,41 +139,41 @@ bool CCDirector::init(void)
     // purge ?
     _purgeDirecotorInNextLoop = false;
 
-    _winSizeInPoints = CCSizeZero;    
+    _winSizeInPoints = SizeZero;    
 
     _openGLView = NULL;
 
     _contentScaleFactor = 1.0f;
 
     // scheduler
-    _scheduler = new CCScheduler();
+    _scheduler = new Scheduler();
     // action manager
-    _actionManager = new CCActionManager();
-    _scheduler->scheduleUpdateForTarget(_actionManager, kCCPrioritySystem, false);
+    _actionManager = new ActionManager();
+    _scheduler->scheduleUpdateForTarget(_actionManager, kPrioritySystem, false);
     // touchDispatcher
-    _touchDispatcher = new CCTouchDispatcher();
+    _touchDispatcher = new TouchDispatcher();
     _touchDispatcher->init();
 
 #ifdef KEYBOARD_SUPPORT
     // KeyboardDispatcher
-    _keyboardDispatcher = new CCKeyboardDispatcher();
+    _keyboardDispatcher = new KeyboardDispatcher();
 #endif
 
     // KeypadDispatcher
-    _keypadDispatcher = new CCKeypadDispatcher();
+    _keypadDispatcher = new KeypadDispatcher();
 
     // Accelerometer
-    _accelerometer = new CCAccelerometer();
+    _accelerometer = new Accelerometer();
 
     // create autorelease pool
-    CCPoolManager::sharedPoolManager()->push();
+    PoolManager::sharedPoolManager()->push();
 
     return true;
 }
     
-CCDirector::~CCDirector(void)
+Director::~Director(void)
 {
-    CCLOG("cocos2d: deallocing CCDirector %p", this);
+    CCLOG("cocos2d: deallocing Director %p", this);
 
     CC_SAFE_RELEASE(_FPSLabel);
     CC_SAFE_RELEASE(_SPFLabel);
@@ -192,8 +192,8 @@ CCDirector::~CCDirector(void)
     CC_SAFE_DELETE(_accelerometer);
 
     // pop the autorelease pool
-    CCPoolManager::sharedPoolManager()->pop();
-    CCPoolManager::purgePoolManager();
+    PoolManager::sharedPoolManager()->pop();
+    PoolManager::purgePoolManager();
 
     // delete _lastUpdate
     CC_SAFE_DELETE(_lastUpdate);
@@ -203,9 +203,9 @@ CCDirector::~CCDirector(void)
     s_SharedDirector = NULL;
 }
 
-void CCDirector::setDefaultValues(void)
+void Director::setDefaultValues(void)
 {
-	CCConfiguration *conf = CCConfiguration::sharedConfiguration();
+	Configuration *conf = Configuration::sharedConfiguration();
 
 	// default FPS
 	double fps = conf->getNumber("cocos2d.x.fps", kDefaultFPS);
@@ -217,29 +217,29 @@ void CCDirector::setDefaultValues(void)
 	// GL projection
 	const char *projection = conf->getCString("cocos2d.x.gl.projection", "3d");
 	if( strcmp(projection, "3d") == 0 )
-		_projection = kCCDirectorProjection3D;
+		_projection = kDirectorProjection3D;
 	else if (strcmp(projection, "2d") == 0)
-		_projection = kCCDirectorProjection2D;
+		_projection = kDirectorProjection2D;
 	else if (strcmp(projection, "custom") == 0)
-		_projection = kCCDirectorProjectionCustom;
+		_projection = kDirectorProjectionCustom;
 	else
 		CCAssert(false, "Invalid projection value");
 
 	// Default pixel format for PNG images with alpha
 	const char *pixel_format = conf->getCString("cocos2d.x.texture.pixel_format_for_png", "rgba8888");
 	if( strcmp(pixel_format, "rgba8888") == 0 )
-		CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
+		Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA8888);
 	else if( strcmp(pixel_format, "rgba4444") == 0 )
-		CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
+		Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA4444);
 	else if( strcmp(pixel_format, "rgba5551") == 0 )
-		CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB5A1);
+		Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGB5A1);
 
 	// PVR v2 has alpha premultiplied ?
 	bool pvr_alpha_premultipled = conf->getBool("cocos2d.x.texture.pvrv2_has_alpha_premultiplied", false);
-	CCTexture2D::PVRImagesHavePremultipliedAlpha(pvr_alpha_premultipled);
+	Texture2D::PVRImagesHavePremultipliedAlpha(pvr_alpha_premultipled);
 }
 
-void CCDirector::setGLDefaultValues(void)
+void Director::setGLDefaultValues(void)
 {
     // This method SHOULD be called only after openGLView_ was initialized
     CCAssert(_openGLView, "opengl view should not be null");
@@ -255,7 +255,7 @@ void CCDirector::setGLDefaultValues(void)
 }
 
 // Draw the Scene
-void CCDirector::drawScene(void)
+void Director::drawScene(void)
 {
     // calculate "global" dt
     calculateDeltaTime();
@@ -310,11 +310,11 @@ void CCDirector::drawScene(void)
     }
 }
 
-void CCDirector::calculateDeltaTime(void)
+void Director::calculateDeltaTime(void)
 {
     struct cc_timeval now;
 
-    if (CCTime::gettimeofdayCocos2d(&now, NULL) != 0)
+    if (Time::gettimeofdayCocos2d(&now, NULL) != 0)
     {
         CCLOG("error in gettimeofday");
         _deltaTime = 0;
@@ -343,22 +343,22 @@ void CCDirector::calculateDeltaTime(void)
 
     *_lastUpdate = now;
 }
-float CCDirector::getDeltaTime() const
+float Director::getDeltaTime() const
 {
 	return _deltaTime;
 }
-void CCDirector::setOpenGLView(CCEGLView *pobOpenGLView)
+void Director::setOpenGLView(EGLView *pobOpenGLView)
 {
     CCAssert(pobOpenGLView, "opengl view should not be null");
 
     if (_openGLView != pobOpenGLView)
     {
 		// Configuration. Gather GPU info
-		CCConfiguration *conf = CCConfiguration::sharedConfiguration();
+		Configuration *conf = Configuration::sharedConfiguration();
 		conf->gatherGPUInfo();
 		conf->dumpInfo();
 
-        // EAGLView is not a CCObject
+        // EAGLView is not a Object
         delete _openGLView; // [openGLView_ release]
         _openGLView = pobOpenGLView;
 
@@ -379,7 +379,7 @@ void CCDirector::setOpenGLView(CCEGLView *pobOpenGLView)
     }
 }
 
-void CCDirector::setViewport()
+void Director::setViewport()
 {
     if (_openGLView)
     {
@@ -387,20 +387,20 @@ void CCDirector::setViewport()
     }
 }
 
-void CCDirector::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
+void Director::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
 {
     _nextDeltaTimeZero = bNextDeltaTimeZero;
 }
 
-void CCDirector::setProjection(ccDirectorProjection kProjection)
+void Director::setProjection(ccDirectorProjection kProjection)
 {
-    CCSize size = _winSizeInPoints;
+    Size size = _winSizeInPoints;
 
     setViewport();
 
     switch (kProjection)
     {
-    case kCCDirectorProjection2D:
+    case kDirectorProjection2D:
         {
             kmGLMatrixMode(KM_GL_PROJECTION);
             kmGLLoadIdentity();
@@ -412,7 +412,7 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
         }
         break;
 
-    case kCCDirectorProjection3D:
+    case kDirectorProjection3D:
         {
             float zeye = this->getZEye();
 
@@ -438,7 +438,7 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
         }
         break;
             
-    case kCCDirectorProjectionCustom:
+    case kDirectorProjectionCustom:
         if (_projectionDelegate)
         {
             _projectionDelegate->updateProjection();
@@ -454,22 +454,22 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
     ccSetProjectionMatrixDirty();
 }
 
-void CCDirector::purgeCachedData(void)
+void Director::purgeCachedData(void)
 {
-    CCLabelBMFont::purgeCachedData();
+    LabelBMFont::purgeCachedData();
     if (s_SharedDirector->getOpenGLView())
     {
-        CCTextureCache::sharedTextureCache()->removeUnusedTextures();
+        TextureCache::sharedTextureCache()->removeUnusedTextures();
     }
-    CCFileUtils::sharedFileUtils()->purgeCachedEntries();
+    FileUtils::sharedFileUtils()->purgeCachedEntries();
 }
 
-float CCDirector::getZEye(void)
+float Director::getZEye(void)
 {
     return (_winSizeInPoints.height / 1.1566f);
 }
 
-void CCDirector::setAlphaBlending(bool bOn)
+void Director::setAlphaBlending(bool bOn)
 {
     if (bOn)
     {
@@ -483,7 +483,7 @@ void CCDirector::setAlphaBlending(bool bOn)
     CHECK_GL_ERROR_DEBUG();
 }
 
-void CCDirector::setDepthTest(bool bOn)
+void Director::setDepthTest(bool bOn)
 {
     if (bOn)
     {
@@ -511,7 +511,7 @@ GLToClipTransform(kmMat4 *transformOut)
 	kmMat4Multiply(transformOut, &projection, &modelview);
 }
 
-CCPoint CCDirector::convertToGL(const CCPoint& uiPoint)
+Point Director::convertToGL(const Point& uiPoint)
 {
     kmMat4 transform;
 	GLToClipTransform(&transform);
@@ -522,7 +522,7 @@ CCPoint CCDirector::convertToGL(const CCPoint& uiPoint)
 	// Calculate z=0 using -> transform*[0, 0, 0, 1]/w
 	kmScalar zClip = transform.mat[14]/transform.mat[15];
 	
-    CCSize glSize = _openGLView->getDesignResolutionSize();
+    Size glSize = _openGLView->getDesignResolutionSize();
 	kmVec3 clipCoord = {2.0f*uiPoint.x/glSize.width - 1.0f, 1.0f - 2.0f*uiPoint.y/glSize.height, zClip};
 	
 	kmVec3 glCoord;
@@ -531,7 +531,7 @@ CCPoint CCDirector::convertToGL(const CCPoint& uiPoint)
 	return ccp(glCoord.x, glCoord.y);
 }
 
-CCPoint CCDirector::convertToUI(const CCPoint& glPoint)
+Point Director::convertToUI(const Point& glPoint)
 {
     kmMat4 transform;
 	GLToClipTransform(&transform);
@@ -541,21 +541,21 @@ CCPoint CCDirector::convertToUI(const CCPoint& glPoint)
 	kmVec3 glCoord = {glPoint.x, glPoint.y, 0.0};
 	kmVec3TransformCoord(&clipCoord, &glCoord, &transform);
 	
-	CCSize glSize = _openGLView->getDesignResolutionSize();
+	Size glSize = _openGLView->getDesignResolutionSize();
 	return ccp(glSize.width*(clipCoord.x*0.5 + 0.5), glSize.height*(-clipCoord.y*0.5 + 0.5));
 }
 
-CCSize CCDirector::getWinSize(void)
+Size Director::getWinSize(void)
 {
     return _winSizeInPoints;
 }
 
-CCSize CCDirector::getWinSizeInPixels()
+Size Director::getWinSizeInPixels()
 {
     return CCSizeMake(_winSizeInPoints.width * _contentScaleFactor, _winSizeInPoints.height * _contentScaleFactor);
 }
 
-CCSize CCDirector::getVisibleSize()
+Size Director::getVisibleSize()
 {
     if (_openGLView)
     {
@@ -563,11 +563,11 @@ CCSize CCDirector::getVisibleSize()
     }
     else 
     {
-        return CCSizeZero;
+        return SizeZero;
     }
 }
 
-CCPoint CCDirector::getVisibleOrigin()
+Point Director::getVisibleOrigin()
 {
     if (_openGLView)
     {
@@ -575,22 +575,22 @@ CCPoint CCDirector::getVisibleOrigin()
     }
     else 
     {
-        return CCPointZero;
+        return PointZero;
     }
 }
 
 // scene management
 
-void CCDirector::runWithScene(CCScene *pScene)
+void Director::runWithScene(Scene *pScene)
 {
-    CCAssert(pScene != NULL, "This command can only be used to start the CCDirector. There is already a scene present.");
+    CCAssert(pScene != NULL, "This command can only be used to start the Director. There is already a scene present.");
     CCAssert(_runningScene == NULL, "_runningScene should be null");
 
     pushScene(pScene);
     startAnimation();
 }
 
-void CCDirector::replaceScene(CCScene *pScene)
+void Director::replaceScene(Scene *pScene)
 {
     CCAssert(_runningScene, "Use runWithScene: instead to start the director");
     CCAssert(pScene != NULL, "the scene should not be null");
@@ -603,7 +603,7 @@ void CCDirector::replaceScene(CCScene *pScene)
     _nextScene = pScene;
 }
 
-void CCDirector::pushScene(CCScene *pScene)
+void Director::pushScene(Scene *pScene)
 {
     CCAssert(pScene, "the scene should not null");
 
@@ -613,7 +613,7 @@ void CCDirector::pushScene(CCScene *pScene)
     _nextScene = pScene;
 }
 
-void CCDirector::popScene(void)
+void Director::popScene(void)
 {
     CCAssert(_runningScene != NULL, "running scene should not null");
 
@@ -627,16 +627,16 @@ void CCDirector::popScene(void)
     else
     {
         _sendCleanupToScene = true;
-        _nextScene = (CCScene*)_scenesStack->objectAtIndex(c - 1);
+        _nextScene = (Scene*)_scenesStack->objectAtIndex(c - 1);
     }
 }
 
-void CCDirector::popToRootScene(void)
+void Director::popToRootScene(void)
 {
     popToSceneStackLevel(1);
 }
 
-void CCDirector::popToSceneStackLevel(int level)
+void Director::popToSceneStackLevel(int level)
 {
     CCAssert(_runningScene != NULL, "A running Scene is needed");
     int c = (int)_scenesStack->count();
@@ -655,7 +655,7 @@ void CCDirector::popToSceneStackLevel(int level)
 	// pop stack until reaching desired level
 	while (c > level)
     {
-		CCScene *current = (CCScene*)_scenesStack->lastObject();
+		Scene *current = (Scene*)_scenesStack->lastObject();
 
 		if (current->isRunning())
         {
@@ -668,16 +668,16 @@ void CCDirector::popToSceneStackLevel(int level)
 		c--;
 	}
 
-	_nextScene = (CCScene*)_scenesStack->lastObject();
+	_nextScene = (Scene*)_scenesStack->lastObject();
 	_sendCleanupToScene = false;
 }
 
-void CCDirector::end()
+void Director::end()
 {
     _purgeDirecotorInNextLoop = true;
 }
 
-void CCDirector::purgeDirector()
+void Director::purgeDirector()
 {
     // cleanup scheduler
     getScheduler()->unscheduleAll();
@@ -708,20 +708,20 @@ void CCDirector::purgeDirector()
     CC_SAFE_RELEASE_NULL(_drawsLabel);
 
     // purge bitmap cache
-    CCLabelBMFont::purgeCachedData();
+    LabelBMFont::purgeCachedData();
 
     // purge all managed caches
     ccDrawFree();
-    CCAnimationCache::purgeSharedAnimationCache();
-    CCSpriteFrameCache::purgeSharedSpriteFrameCache();
-    CCTextureCache::purgeSharedTextureCache();
-    CCShaderCache::purgeSharedShaderCache();
-    CCFileUtils::purgeFileUtils();
-    CCConfiguration::purgeConfiguration();
+    AnimationCache::purgeSharedAnimationCache();
+    SpriteFrameCache::purgeSharedSpriteFrameCache();
+    TextureCache::purgeSharedTextureCache();
+    ShaderCache::purgeSharedShaderCache();
+    FileUtils::purgeFileUtils();
+    Configuration::purgeConfiguration();
 
     // cocos2d-x specific data structures
-    CCUserDefault::purgeSharedUserDefault();
-    CCNotificationCenter::purgeNotificationCenter();
+    UserDefault::purgeSharedUserDefault();
+    NotificationCenter::purgeNotificationCenter();
 
     ccGLInvalidateStateCache();
     
@@ -731,14 +731,14 @@ void CCDirector::purgeDirector()
     _openGLView->end();
     _openGLView = NULL;
 
-    // delete CCDirector
+    // delete Director
     release();
 }
 
-void CCDirector::setNextScene(void)
+void Director::setNextScene(void)
 {
-    bool runningIsTransition = dynamic_cast<CCTransitionScene*>(_runningScene) != NULL;
-    bool newIsTransition = dynamic_cast<CCTransitionScene*>(_nextScene) != NULL;
+    bool runningIsTransition = dynamic_cast<TransitionScene*>(_runningScene) != NULL;
+    bool newIsTransition = dynamic_cast<TransitionScene*>(_nextScene) != NULL;
 
     // If it is not a transition, call onExit/cleanup
      if (! newIsTransition)
@@ -772,7 +772,7 @@ void CCDirector::setNextScene(void)
     }
 }
 
-void CCDirector::pause(void)
+void Director::pause(void)
 {
     if (_paused)
     {
@@ -786,7 +786,7 @@ void CCDirector::pause(void)
     _paused = true;
 }
 
-void CCDirector::resume(void)
+void Director::resume(void)
 {
     if (! _paused)
     {
@@ -795,7 +795,7 @@ void CCDirector::resume(void)
 
     setAnimationInterval(_oldAnimationInterval);
 
-    if (CCTime::gettimeofdayCocos2d(_lastUpdate, NULL) != 0)
+    if (Time::gettimeofdayCocos2d(_lastUpdate, NULL) != 0)
     {
         CCLOG("cocos2d: Director: Error in gettimeofday");
     }
@@ -806,7 +806,7 @@ void CCDirector::resume(void)
 
 // display the FPS using a LabelAtlas
 // updates the FPS every frame
-void CCDirector::showStats(void)
+void Director::showStats(void)
 {
     _frames++;
     _accumDt += _deltaTime;
@@ -840,26 +840,26 @@ void CCDirector::showStats(void)
     g_uNumberOfDraws = 0;
 }
 
-void CCDirector::calculateMPF()
+void Director::calculateMPF()
 {
     struct cc_timeval now;
-    CCTime::gettimeofdayCocos2d(&now, NULL);
+    Time::gettimeofdayCocos2d(&now, NULL);
     
     _secondsPerFrame = (now.tv_sec - _lastUpdate->tv_sec) + (now.tv_usec - _lastUpdate->tv_usec) / 1000000.0f;
 }
 
 // returns the FPS image data pointer and len
-void CCDirector::getFPSImageData(unsigned char** datapointer, unsigned int* length)
+void Director::getFPSImageData(unsigned char** datapointer, unsigned int* length)
 {
     // XXX fixed me if it should be used 
     *datapointer = cc_fps_images_png;
 	*length = cc_fps_images_len();
 }
 
-void CCDirector::createStatsLabel()
+void Director::createStatsLabel()
 {
-    CCTexture2D *texture = NULL;
-    CCTextureCache *textureCache = CCTextureCache::sharedTextureCache();
+    Texture2D *texture = NULL;
+    TextureCache *textureCache = TextureCache::sharedTextureCache();
 
     if( _FPSLabel && _SPFLabel )
     {
@@ -867,16 +867,16 @@ void CCDirector::createStatsLabel()
         CC_SAFE_RELEASE_NULL(_SPFLabel);
         CC_SAFE_RELEASE_NULL(_drawsLabel);
         textureCache->removeTextureForKey("cc_fps_images");
-        CCFileUtils::sharedFileUtils()->purgeCachedEntries();
+        FileUtils::sharedFileUtils()->purgeCachedEntries();
     }
 
-    CCTexture2DPixelFormat currentFormat = CCTexture2D::defaultAlphaPixelFormat();
-    CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
+    Texture2DPixelFormat currentFormat = Texture2D::defaultAlphaPixelFormat();
+    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA4444);
     unsigned char *data = NULL;
     unsigned int data_len = 0;
     getFPSImageData(&data, &data_len);
 
-    CCImage* image = new CCImage();
+    Image* image = new Image();
     bool isOK = image->initWithImageData(data, data_len);
     if (!isOK) {
         CCLOGERROR("%s", "Fails: init fps_images");
@@ -892,43 +892,43 @@ void CCDirector::createStatsLabel()
      
      To achieve this,
      
-     Firstly, we need to ignore 'contentScaleFactor' in 'CCAtlasNode' and 'CCLabelAtlas'.
-     So I added a new method called 'setIgnoreContentScaleFactor' for 'CCAtlasNode',
+     Firstly, we need to ignore 'contentScaleFactor' in 'AtlasNode' and 'LabelAtlas'.
+     So I added a new method called 'setIgnoreContentScaleFactor' for 'AtlasNode',
      this is not exposed to game developers, it's only used for displaying FPS now.
      
      Secondly, the size of this image is 480*320, to display the FPS label with correct size, 
      a factor of design resolution ratio of 480x320 is also needed.
      */
-    float factor = CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height / 320.0f;
+    float factor = EGLView::sharedOpenGLView()->getDesignResolutionSize().height / 320.0f;
 
-    _FPSLabel = new CCLabelAtlas();
+    _FPSLabel = new LabelAtlas();
     _FPSLabel->setIgnoreContentScaleFactor(true);
     _FPSLabel->initWithString("00.0", texture, 12, 32 , '.');
     _FPSLabel->setScale(factor);
 
-    _SPFLabel = new CCLabelAtlas();
+    _SPFLabel = new LabelAtlas();
     _SPFLabel->setIgnoreContentScaleFactor(true);
     _SPFLabel->initWithString("0.000", texture, 12, 32, '.');
     _SPFLabel->setScale(factor);
 
-    _drawsLabel = new CCLabelAtlas();
+    _drawsLabel = new LabelAtlas();
     _drawsLabel->setIgnoreContentScaleFactor(true);
     _drawsLabel->initWithString("000", texture, 12, 32, '.');
     _drawsLabel->setScale(factor);
 
-    CCTexture2D::setDefaultAlphaPixelFormat(currentFormat);
+    Texture2D::setDefaultAlphaPixelFormat(currentFormat);
 
     _drawsLabel->setPosition(ccpAdd(ccp(0, 34*factor), CC_DIRECTOR_STATS_POSITION));
     _SPFLabel->setPosition(ccpAdd(ccp(0, 17*factor), CC_DIRECTOR_STATS_POSITION));
     _FPSLabel->setPosition(CC_DIRECTOR_STATS_POSITION);
 }
 
-float CCDirector::getContentScaleFactor(void)
+float Director::getContentScaleFactor(void)
 {
     return _contentScaleFactor;
 }
 
-void CCDirector::setContentScaleFactor(float scaleFactor)
+void Director::setContentScaleFactor(float scaleFactor)
 {
     if (scaleFactor != _contentScaleFactor)
     {
@@ -937,29 +937,29 @@ void CCDirector::setContentScaleFactor(float scaleFactor)
     }
 }
 
-CCNode* CCDirector::getNotificationNode() 
+Node* Director::getNotificationNode() 
 { 
     return _notificationNode; 
 }
 
-void CCDirector::setNotificationNode(CCNode *node)
+void Director::setNotificationNode(Node *node)
 {
     CC_SAFE_RELEASE(_notificationNode);
     _notificationNode = node;
     CC_SAFE_RETAIN(_notificationNode);
 }
 
-CCDirectorDelegate* CCDirector::getDelegate() const
+DirectorDelegate* Director::getDelegate() const
 {
     return _projectionDelegate;
 }
 
-void CCDirector::setDelegate(CCDirectorDelegate* pDelegate)
+void Director::setDelegate(DirectorDelegate* pDelegate)
 {
     _projectionDelegate = pDelegate;
 }
 
-void CCDirector::setScheduler(CCScheduler* pScheduler)
+void Director::setScheduler(Scheduler* pScheduler)
 {
     if (_scheduler != pScheduler)
     {
@@ -969,12 +969,12 @@ void CCDirector::setScheduler(CCScheduler* pScheduler)
     }
 }
 
-CCScheduler* CCDirector::getScheduler()
+Scheduler* Director::getScheduler()
 {
     return _scheduler;
 }
 
-void CCDirector::setActionManager(CCActionManager* pActionManager)
+void Director::setActionManager(ActionManager* pActionManager)
 {
     if (_actionManager != pActionManager)
     {
@@ -984,12 +984,12 @@ void CCDirector::setActionManager(CCActionManager* pActionManager)
     }    
 }
 
-CCActionManager* CCDirector::getActionManager()
+ActionManager* Director::getActionManager()
 {
     return _actionManager;
 }
 
-void CCDirector::setTouchDispatcher(CCTouchDispatcher* pTouchDispatcher)
+void Director::setTouchDispatcher(TouchDispatcher* pTouchDispatcher)
 {
     if (_touchDispatcher != pTouchDispatcher)
     {
@@ -999,38 +999,38 @@ void CCDirector::setTouchDispatcher(CCTouchDispatcher* pTouchDispatcher)
     }    
 }
 
-CCTouchDispatcher* CCDirector::getTouchDispatcher()
+TouchDispatcher* Director::getTouchDispatcher()
 {
     return _touchDispatcher;
 }
 
 #ifdef KEYBOARD_SUPPORT
-void CCDirector::setKeyboardDispatcher(CCKeyboardDispatcher* pKeyboardDispatcher)
+void Director::setKeyboardDispatcher(KeyboardDispatcher* pKeyboardDispatcher)
 {
     CC_SAFE_RETAIN(pKeyboardDispatcher);
     CC_SAFE_RELEASE(_keyboardDispatcher);
     _keyboardDispatcher = pKeyboardDispatcher;
 }
 
-CCKeyboardDispatcher* CCDirector::getKeyboardDispatcher()
+KeyboardDispatcher* Director::getKeyboardDispatcher()
 {
     return _keyboardDispatcher;
 }
 #endif
 
-void CCDirector::setKeypadDispatcher(CCKeypadDispatcher* pKeypadDispatcher)
+void Director::setKeypadDispatcher(KeypadDispatcher* pKeypadDispatcher)
 {
     CC_SAFE_RETAIN(pKeypadDispatcher);
     CC_SAFE_RELEASE(_keypadDispatcher);
     _keypadDispatcher = pKeypadDispatcher;
 }
 
-CCKeypadDispatcher* CCDirector::getKeypadDispatcher()
+KeypadDispatcher* Director::getKeypadDispatcher()
 {
     return _keypadDispatcher;
 }
 
-void CCDirector::setAccelerometer(CCAccelerometer* pAccelerometer)
+void Director::setAccelerometer(Accelerometer* pAccelerometer)
 {
     if (_accelerometer != pAccelerometer)
     {
@@ -1039,7 +1039,7 @@ void CCDirector::setAccelerometer(CCAccelerometer* pAccelerometer)
     }
 }
 
-CCAccelerometer* CCDirector::getAccelerometer()
+Accelerometer* Director::getAccelerometer()
 {
     return _accelerometer;
 }
@@ -1051,20 +1051,20 @@ CCAccelerometer* CCDirector::getAccelerometer()
 // should we implement 4 types of director ??
 // I think DisplayLinkDirector is enough
 // so we now only support DisplayLinkDirector
-void CCDisplayLinkDirector::startAnimation(void)
+void DisplayLinkDirector::startAnimation(void)
 {
-    if (CCTime::gettimeofdayCocos2d(_lastUpdate, NULL) != 0)
+    if (Time::gettimeofdayCocos2d(_lastUpdate, NULL) != 0)
     {
         CCLOG("cocos2d: DisplayLinkDirector: Error on gettimeofday");
     }
 
     _invalid = false;
 #ifndef EMSCRIPTEN
-    CCApplication::sharedApplication()->setAnimationInterval(_animationInterval);
+    Application::sharedApplication()->setAnimationInterval(_animationInterval);
 #endif // EMSCRIPTEN
 }
 
-void CCDisplayLinkDirector::mainLoop(void)
+void DisplayLinkDirector::mainLoop(void)
 {
     if (_purgeDirecotorInNextLoop)
     {
@@ -1076,16 +1076,16 @@ void CCDisplayLinkDirector::mainLoop(void)
          drawScene();
      
          // release the objects
-         CCPoolManager::sharedPoolManager()->pop();        
+         PoolManager::sharedPoolManager()->pop();        
      }
 }
 
-void CCDisplayLinkDirector::stopAnimation(void)
+void DisplayLinkDirector::stopAnimation(void)
 {
     _invalid = true;
 }
 
-void CCDisplayLinkDirector::setAnimationInterval(double dValue)
+void DisplayLinkDirector::setAnimationInterval(double dValue)
 {
     _animationInterval = dValue;
     if (! _invalid)
