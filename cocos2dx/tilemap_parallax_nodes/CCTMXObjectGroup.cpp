@@ -29,31 +29,31 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-//implementation CCTMXObjectGroup
+//implementation TMXObjectGroup
 
-CCTMXObjectGroup::CCTMXObjectGroup()
-    :_positionOffset(CCPointZero)
+TMXObjectGroup::TMXObjectGroup()
+    :_positionOffset(PointZero)
     ,_groupName("")        
 {
-    _objects = CCArray::create();
+    _objects = Array::create();
     _objects->retain();
-    _properties = new CCDictionary();
+    _properties = new Dictionary();
 }
-CCTMXObjectGroup::~CCTMXObjectGroup()
+TMXObjectGroup::~TMXObjectGroup()
 {
     CCLOGINFO( "cocos2d: deallocing: %p", this);
     CC_SAFE_RELEASE(_objects);
     CC_SAFE_RELEASE(_properties);
 }
-CCDictionary* CCTMXObjectGroup::objectNamed(const char *objectName)
+Dictionary* TMXObjectGroup::objectNamed(const char *objectName)
 {
     if (_objects && _objects->count() > 0)
     {
-        CCObject* pObj = NULL;
+        Object* pObj = NULL;
         CCARRAY_FOREACH(_objects, pObj)
         {
-            CCDictionary* pDict = (CCDictionary*)pObj;
-            CCString *name = (CCString*)pDict->objectForKey("name");
+            Dictionary* pDict = (Dictionary*)pObj;
+            String *name = (String*)pDict->objectForKey("name");
             if (name && name->_string == objectName)
             {
                 return pDict;
@@ -63,26 +63,26 @@ CCDictionary* CCTMXObjectGroup::objectNamed(const char *objectName)
     // object not found
     return NULL;    
 }
-CCString* CCTMXObjectGroup::propertyNamed(const char* propertyName)
+String* TMXObjectGroup::propertyNamed(const char* propertyName)
 {
-    return (CCString*)_properties->objectForKey(propertyName);
+    return (String*)_properties->objectForKey(propertyName);
 }
 
-CCDictionary* CCTMXObjectGroup::getProperties()
+Dictionary* TMXObjectGroup::getProperties()
 { 
     return _properties;
 }
-void CCTMXObjectGroup::setProperties(CCDictionary * properties)
+void TMXObjectGroup::setProperties(Dictionary * properties)
 {
     CC_SAFE_RETAIN(properties);
     CC_SAFE_RELEASE(_properties);
     _properties = properties;
 }
-CCArray* CCTMXObjectGroup::getObjects()
+Array* TMXObjectGroup::getObjects()
 {
     return _objects;
 }
-void CCTMXObjectGroup::setObjects(CCArray* objects)
+void TMXObjectGroup::setObjects(Array* objects)
 {
     CC_SAFE_RETAIN(objects);
     CC_SAFE_RELEASE(_objects);

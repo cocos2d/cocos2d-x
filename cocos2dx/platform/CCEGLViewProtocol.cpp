@@ -8,9 +8,9 @@
 
 NS_CC_BEGIN
 
-static CCTouch* s_pTouches[CC_MAX_TOUCHES] = { NULL };
+static Touch* s_pTouches[CC_MAX_TOUCHES] = { NULL };
 static unsigned int s_indexBitsUsed = 0;
-static CCDictionary s_TouchesIntergerDict;
+static Dictionary s_TouchesIntergerDict;
 
 static int getUnUsedIndex()
 {
@@ -42,7 +42,7 @@ static void removeUsedIndexBit(int index)
     s_indexBitsUsed &= temp;
 }
 
-CCEGLViewProtocol::CCEGLViewProtocol()
+EGLViewProtocol::EGLViewProtocol()
 : _delegate(NULL)
 , _scaleX(1.0f)
 , _scaleY(1.0f)
@@ -50,12 +50,12 @@ CCEGLViewProtocol::CCEGLViewProtocol()
 {
 }
 
-CCEGLViewProtocol::~CCEGLViewProtocol()
+EGLViewProtocol::~EGLViewProtocol()
 {
 
 }
 
-void CCEGLViewProtocol::setDesignResolutionSize(float width, float height, ResolutionPolicy resolutionPolicy)
+void EGLViewProtocol::setDesignResolutionSize(float width, float height, ResolutionPolicy resolutionPolicy)
 {
     CCAssert(resolutionPolicy != kResolutionUnKnown, "should set resolutionPolicy");
     
@@ -98,27 +98,27 @@ void CCEGLViewProtocol::setDesignResolutionSize(float width, float height, Resol
     _resolutionPolicy = resolutionPolicy;
     
 	// reset director's member variables to fit visible rect
-    CCDirector::sharedDirector()->_winSizeInPoints = getDesignResolutionSize();
-    CCDirector::sharedDirector()->createStatsLabel();
-    CCDirector::sharedDirector()->setGLDefaultValues();
+    Director::sharedDirector()->_winSizeInPoints = getDesignResolutionSize();
+    Director::sharedDirector()->createStatsLabel();
+    Director::sharedDirector()->setGLDefaultValues();
 }
 
-const CCSize& CCEGLViewProtocol::getDesignResolutionSize() const 
+const Size& EGLViewProtocol::getDesignResolutionSize() const 
 {
     return _designResolutionSize;
 }
 
-const CCSize& CCEGLViewProtocol::getFrameSize() const
+const Size& EGLViewProtocol::getFrameSize() const
 {
     return _screenSize;
 }
 
-void CCEGLViewProtocol::setFrameSize(float width, float height)
+void EGLViewProtocol::setFrameSize(float width, float height)
 {
     _designResolutionSize = _screenSize = CCSizeMake(width, height);
 }
 
-CCSize  CCEGLViewProtocol::getVisibleSize() const
+Size  EGLViewProtocol::getVisibleSize() const
 {
     if (_resolutionPolicy == kResolutionNoBorder)
     {
@@ -130,7 +130,7 @@ CCSize  CCEGLViewProtocol::getVisibleSize() const
     }
 }
 
-CCPoint CCEGLViewProtocol::getVisibleOrigin() const
+Point EGLViewProtocol::getVisibleOrigin() const
 {
     if (_resolutionPolicy == kResolutionNoBorder)
     {
@@ -139,16 +139,16 @@ CCPoint CCEGLViewProtocol::getVisibleOrigin() const
     }
     else 
     {
-        return CCPointZero;
+        return PointZero;
     }
 }
 
-void CCEGLViewProtocol::setTouchDelegate(EGLTouchDelegate * pDelegate)
+void EGLViewProtocol::setTouchDelegate(EGLTouchDelegate * pDelegate)
 {
     _delegate = pDelegate;
 }
 
-void CCEGLViewProtocol::setViewPortInPoints(float x , float y , float w , float h)
+void EGLViewProtocol::setViewPortInPoints(float x , float y , float w , float h)
 {
     glViewport((GLint)(x * _scaleX + _viewPortRect.origin.x),
                (GLint)(y * _scaleY + _viewPortRect.origin.y),
@@ -156,7 +156,7 @@ void CCEGLViewProtocol::setViewPortInPoints(float x , float y , float w , float 
                (GLsizei)(h * _scaleY));
 }
 
-void CCEGLViewProtocol::setScissorInPoints(float x , float y , float w , float h)
+void EGLViewProtocol::setScissorInPoints(float x , float y , float w , float h)
 {
     glScissor((GLint)(x * _scaleX + _viewPortRect.origin.x),
               (GLint)(y * _scaleY + _viewPortRect.origin.y),
@@ -164,12 +164,12 @@ void CCEGLViewProtocol::setScissorInPoints(float x , float y , float w , float h
               (GLsizei)(h * _scaleY));
 }
 
-bool CCEGLViewProtocol::isScissorEnabled()
+bool EGLViewProtocol::isScissorEnabled()
 {
 	return (GL_FALSE == glIsEnabled(GL_SCISSOR_TEST)) ? false : true;
 }
 
-CCRect CCEGLViewProtocol::getScissorRect()
+Rect EGLViewProtocol::getScissorRect()
 {
 	GLfloat params[4];
 	glGetFloatv(GL_SCISSOR_BOX, params);
@@ -180,7 +180,7 @@ CCRect CCEGLViewProtocol::getScissorRect()
 	return CCRectMake(x, y, w, h);
 }
 
-void CCEGLViewProtocol::setViewName(const char* pszViewName)
+void EGLViewProtocol::setViewName(const char* pszViewName)
 {
     if (pszViewName != NULL && strlen(pszViewName) > 0)
     {
@@ -188,21 +188,21 @@ void CCEGLViewProtocol::setViewName(const char* pszViewName)
     }
 }
 
-const char* CCEGLViewProtocol::getViewName()
+const char* EGLViewProtocol::getViewName()
 {
     return _viewName;
 }
 
-void CCEGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float ys[])
+void EGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float ys[])
 {
-    CCSet set;
+    Set set;
     for (int i = 0; i < num; ++i)
     {
         int id = ids[i];
         float x = xs[i];
         float y = ys[i];
 
-        CCInteger* pIndex = (CCInteger*)s_TouchesIntergerDict.objectForKey(id);
+        Integer* pIndex = (Integer*)s_TouchesIntergerDict.objectForKey(id);
         int nUnusedIndex = 0;
 
         // it is a new touch
@@ -216,13 +216,13 @@ void CCEGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float
                 continue;
             }
 
-            CCTouch* pTouch = s_pTouches[nUnusedIndex] = new CCTouch();
+            Touch* pTouch = s_pTouches[nUnusedIndex] = new Touch();
 			pTouch->setTouchInfo(nUnusedIndex, (x - _viewPortRect.origin.x) / _scaleX, 
                                      (y - _viewPortRect.origin.y) / _scaleY);
             
             //CCLOG("x = %f y = %f", pTouch->getLocationInView().x, pTouch->getLocationInView().y);
             
-            CCInteger* pInterObj = new CCInteger(nUnusedIndex);
+            Integer* pInterObj = new Integer(nUnusedIndex);
             s_TouchesIntergerDict.setObject(pInterObj, id);
             set.addObject(pTouch);
             pInterObj->release();
@@ -238,23 +238,23 @@ void CCEGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float
     _delegate->touchesBegan(&set, NULL);
 }
 
-void CCEGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float ys[])
+void EGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float ys[])
 {
-    CCSet set;
+    Set set;
     for (int i = 0; i < num; ++i)
     {
         int id = ids[i];
         float x = xs[i];
         float y = ys[i];
 
-        CCInteger* pIndex = (CCInteger*)s_TouchesIntergerDict.objectForKey(id);
+        Integer* pIndex = (Integer*)s_TouchesIntergerDict.objectForKey(id);
         if (pIndex == NULL) {
             CCLOG("if the index doesn't exist, it is an error");
             continue;
         }
 
         CCLOGINFO("Moving touches with id: %d, x=%f, y=%f", id, x, y);
-        CCTouch* pTouch = s_pTouches[pIndex->getValue()];
+        Touch* pTouch = s_pTouches[pIndex->getValue()];
         if (pTouch)
         {
 			pTouch->setTouchInfo(pIndex->getValue(), (x - _viewPortRect.origin.x) / _scaleX, 
@@ -279,7 +279,7 @@ void CCEGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float 
     _delegate->touchesMoved(&set, NULL);
 }
 
-void CCEGLViewProtocol::getSetOfTouchesEndOrCancel(CCSet& set, int num, int ids[], float xs[], float ys[])
+void EGLViewProtocol::getSetOfTouchesEndOrCancel(Set& set, int num, int ids[], float xs[], float ys[])
 {
     for (int i = 0; i < num; ++i)
     {
@@ -287,14 +287,14 @@ void CCEGLViewProtocol::getSetOfTouchesEndOrCancel(CCSet& set, int num, int ids[
         float x = xs[i];
         float y = ys[i];
 
-        CCInteger* pIndex = (CCInteger*)s_TouchesIntergerDict.objectForKey(id);
+        Integer* pIndex = (Integer*)s_TouchesIntergerDict.objectForKey(id);
         if (pIndex == NULL)
         {
             CCLOG("if the index doesn't exist, it is an error");
             continue;
         }
         /* Add to the set to send to the director */
-        CCTouch* pTouch = s_pTouches[pIndex->getValue()];        
+        Touch* pTouch = s_pTouches[pIndex->getValue()];        
         if (pTouch)
         {
             CCLOGINFO("Ending touches with id: %d, x=%f, y=%f", id, x, y);
@@ -326,31 +326,31 @@ void CCEGLViewProtocol::getSetOfTouchesEndOrCancel(CCSet& set, int num, int ids[
     }
 }
 
-void CCEGLViewProtocol::handleTouchesEnd(int num, int ids[], float xs[], float ys[])
+void EGLViewProtocol::handleTouchesEnd(int num, int ids[], float xs[], float ys[])
 {
-    CCSet set;
+    Set set;
     getSetOfTouchesEndOrCancel(set, num, ids, xs, ys);
     _delegate->touchesEnded(&set, NULL);
 }
 
-void CCEGLViewProtocol::handleTouchesCancel(int num, int ids[], float xs[], float ys[])
+void EGLViewProtocol::handleTouchesCancel(int num, int ids[], float xs[], float ys[])
 {
-    CCSet set;
+    Set set;
     getSetOfTouchesEndOrCancel(set, num, ids, xs, ys);
     _delegate->touchesCancelled(&set, NULL);
 }
 
-const CCRect& CCEGLViewProtocol::getViewPortRect() const
+const Rect& EGLViewProtocol::getViewPortRect() const
 {
     return _viewPortRect;
 }
 
-float CCEGLViewProtocol::getScaleX() const
+float EGLViewProtocol::getScaleX() const
 {
     return _scaleX;
 }
 
-float CCEGLViewProtocol::getScaleY() const
+float EGLViewProtocol::getScaleY() const
 {
     return _scaleY;
 }

@@ -29,18 +29,18 @@ using namespace Tizen::Uix::Sensor;
 
 NS_CC_BEGIN
 
-CCAccelerometer::CCAccelerometer()
+Accelerometer::Accelerometer()
     : _function(nullptr)
     , __sensorMgr(nullptr)
 {
 }
 
-CCAccelerometer::~CCAccelerometer()
+Accelerometer::~Accelerometer()
 {
 
 }
 
-void CCAccelerometer::setDelegate(std::function<void(CCAcceleration*)> function)
+void Accelerometer::setDelegate(std::function<void(Acceleration*)> function)
 {
     _function = function;
 
@@ -54,7 +54,7 @@ void CCAccelerometer::setDelegate(std::function<void(CCAcceleration*)> function)
     }
 }
 
-void CCAccelerometer::setAccelerometerInterval(float interval)
+void Accelerometer::setAccelerometerInterval(float interval)
 {
     if (__sensorMgr)
     {
@@ -62,7 +62,7 @@ void CCAccelerometer::setAccelerometerInterval(float interval)
     }
 }
 
-void CCAccelerometer::startSensor()
+void Accelerometer::startSensor()
 {
     long interval = 0L;
 
@@ -85,7 +85,7 @@ void CCAccelerometer::startSensor()
 
 }
 
-void CCAccelerometer::stopSensor()
+void Accelerometer::stopSensor()
 {
     if (__sensorMgr)
     {
@@ -95,7 +95,7 @@ void CCAccelerometer::stopSensor()
     }
 }
 
-void CCAccelerometer::OnDataReceived(SensorType sensorType, SensorData& sensorData , result r)
+void Accelerometer::OnDataReceived(SensorType sensorType, SensorData& sensorData , result r)
 {
     if (_function)
     {

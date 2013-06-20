@@ -34,28 +34,28 @@
 
 NS_CC_BEGIN
 
-class CCTexture2D;
-class CCTextureAtlas;
-class CCParticleSystem;
+class Texture2D;
+class TextureAtlas;
+class ParticleSystem;
 
 /**
  * @addtogroup particle_nodes
  * @{
  */
 
-#define kCCParticleDefaultCapacity 500
+#define kParticleDefaultCapacity 500
 
-/** CCParticleBatchNode is like a batch node: if it contains children, it will draw them in 1 single OpenGL call
+/** ParticleBatchNode is like a batch node: if it contains children, it will draw them in 1 single OpenGL call
  * (often known as "batch draw").
  *
- * A CCParticleBatchNode can reference one and only one texture (one image file, one texture atlas).
- * Only the CCParticleSystems that are contained in that texture can be added to the CCSpriteBatchNode.
- * All CCParticleSystems added to a CCSpriteBatchNode are drawn in one OpenGL ES draw call.
- * If the CCParticleSystems are not added to a CCParticleBatchNode then an OpenGL ES draw call will be needed for each one, which is less efficient.
+ * A ParticleBatchNode can reference one and only one texture (one image file, one texture atlas).
+ * Only the ParticleSystems that are contained in that texture can be added to the SpriteBatchNode.
+ * All ParticleSystems added to a SpriteBatchNode are drawn in one OpenGL ES draw call.
+ * If the ParticleSystems are not added to a ParticleBatchNode then an OpenGL ES draw call will be needed for each one, which is less efficient.
  *
  *
  * Limitations:
- * - At the moment only CCParticleSystemQuad is supported
+ * - At the moment only ParticleSystemQuad is supported
  * - All systems need to be drawn with the same parameters, blend function, aliasing, texture
  *
  * Most efficient usage
@@ -64,44 +64,44 @@ class CCParticleSystem;
  * @since v1.1
  */
 
-class CC_DLL CCParticleBatchNode : public CCNode, public CCTextureProtocol
+class CC_DLL ParticleBatchNode : public Node, public TextureProtocol
 {
 public:
-    CCParticleBatchNode();
-    virtual ~CCParticleBatchNode();
+    ParticleBatchNode();
+    virtual ~ParticleBatchNode();
 
-    /** initializes the particle system with CCTexture2D, a capacity of particles, which particle system to use */
-    static CCParticleBatchNode* createWithTexture(CCTexture2D *tex, unsigned int capacity = kCCParticleDefaultCapacity);
+    /** initializes the particle system with Texture2D, a capacity of particles, which particle system to use */
+    static ParticleBatchNode* createWithTexture(Texture2D *tex, unsigned int capacity = kParticleDefaultCapacity);
 
-    /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the CCTexture2D class), a capacity of particles */
-    static CCParticleBatchNode* create(const char* fileImage, unsigned int capacity = kCCParticleDefaultCapacity);
+    /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles */
+    static ParticleBatchNode* create(const char* fileImage, unsigned int capacity = kParticleDefaultCapacity);
 
-    /** initializes the particle system with CCTexture2D, a capacity of particles */
-    bool initWithTexture(CCTexture2D *tex, unsigned int capacity);
+    /** initializes the particle system with Texture2D, a capacity of particles */
+    bool initWithTexture(Texture2D *tex, unsigned int capacity);
 
-    /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the CCTexture2D class), a capacity of particles */
+    /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles */
     bool initWithFile(const char* fileImage, unsigned int capacity);
 
-    /** Add a child into the CCParticleBatchNode */
-    virtual void addChild(CCNode * child);
-    virtual void addChild(CCNode * child, int zOrder);
-    virtual void addChild(CCNode * child, int zOrder, int tag);
+    /** Add a child into the ParticleBatchNode */
+    virtual void addChild(Node * child);
+    virtual void addChild(Node * child, int zOrder);
+    virtual void addChild(Node * child, int zOrder, int tag);
 
-    /** Inserts a child into the CCParticleBatchNode */
-    void insertChild(CCParticleSystem* pSystem, unsigned int index);
+    /** Inserts a child into the ParticleBatchNode */
+    void insertChild(ParticleSystem* pSystem, unsigned int index);
 
-    /** remove child from the CCParticleBatchNode */
-    virtual void removeChild(CCNode* child, bool cleanup);
-    virtual void reorderChild(CCNode * child, int zOrder);
+    /** remove child from the ParticleBatchNode */
+    virtual void removeChild(Node* child, bool cleanup);
+    virtual void reorderChild(Node * child, int zOrder);
     void removeChildAtIndex(unsigned int index, bool doCleanup);
     void removeAllChildrenWithCleanup(bool doCleanup);
     /** disables a particle by inserting a 0'd quad into the texture atlas */
     void disableParticle(unsigned int particleIndex);
     virtual void draw(void);
     // returns the used texture
-    virtual CCTexture2D* getTexture(void);
+    virtual Texture2D* getTexture(void);
     // sets a new texture. it will be retained
-    virtual void setTexture(CCTexture2D *texture);
+    virtual void setTexture(Texture2D *texture);
     virtual void setBlendFunc(ccBlendFunc blendFunc);
     // returns the blending function used for the texture
     virtual ccBlendFunc getBlendFunc(void);
@@ -112,11 +112,11 @@ private:
     void updateAllAtlasIndexes();
     void increaseAtlasCapacityTo(unsigned int quantity);
     unsigned int searchNewPositionInChildrenForZ(int z);
-    void getCurrentIndex(unsigned int* oldIndex, unsigned int* newIndex, CCNode* child, int z);
-    unsigned int addChildHelper(CCParticleSystem* child, int z, int aTag);
+    void getCurrentIndex(unsigned int* oldIndex, unsigned int* newIndex, Node* child, int z);
+    unsigned int addChildHelper(ParticleSystem* child, int z, int aTag);
     void updateBlendFunc(void);
     /** the texture atlas used for drawing the quads */
-    CC_SYNTHESIZE(CCTextureAtlas*, _textureAtlas, TextureAtlas);
+    CC_SYNTHESIZE(TextureAtlas*, _textureAtlas, TextureAtlas);
 private:
     /** the blend function used for drawing the quads */
     ccBlendFunc _blendFunc;

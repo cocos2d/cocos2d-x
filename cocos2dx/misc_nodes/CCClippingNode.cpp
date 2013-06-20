@@ -37,32 +37,32 @@ NS_CC_BEGIN
 
 static GLint g_sStencilBits = -1;
 
-static void setProgram(CCNode *n, CCGLProgram *p)
+static void setProgram(Node *n, GLProgram *p)
 {
     n->setShaderProgram(p);
     if (!n->getChildren()) return;
     
-    CCObject* pObj = NULL;
+    Object* pObj = NULL;
     CCARRAY_FOREACH(n->getChildren(), pObj)
     {
-        setProgram((CCNode*)pObj, p);
+        setProgram((Node*)pObj, p);
     }
 }
 
-CCClippingNode::CCClippingNode()
+ClippingNode::ClippingNode()
 : _stencil(NULL)
 , _alphaThreshold(0.0f)
 , _inverted(false)
 {}
 
-CCClippingNode::~CCClippingNode()
+ClippingNode::~ClippingNode()
 {
     CC_SAFE_RELEASE(_stencil);
 }
 
-CCClippingNode* CCClippingNode::create()
+ClippingNode* ClippingNode::create()
 {
-    CCClippingNode *pRet = new CCClippingNode();
+    ClippingNode *pRet = new ClippingNode();
     if (pRet && pRet->init())
     {
         pRet->autorelease();
@@ -75,9 +75,9 @@ CCClippingNode* CCClippingNode::create()
     return pRet;
 }
 
-CCClippingNode* CCClippingNode::create(CCNode *pStencil)
+ClippingNode* ClippingNode::create(Node *pStencil)
 {
-    CCClippingNode *pRet = new CCClippingNode();
+    ClippingNode *pRet = new ClippingNode();
     if (pRet && pRet->init(pStencil))
     {
         pRet->autorelease();
@@ -90,12 +90,12 @@ CCClippingNode* CCClippingNode::create(CCNode *pStencil)
     return pRet;
 }
 
-bool CCClippingNode::init()
+bool ClippingNode::init()
 {
     return init(NULL);
 }
 
-bool CCClippingNode::init(CCNode *pStencil)
+bool ClippingNode::init(Node *pStencil)
 {
     CC_SAFE_RELEASE(_stencil);
     _stencil = pStencil;
@@ -118,37 +118,37 @@ bool CCClippingNode::init(CCNode *pStencil)
     return true;
 }
 
-void CCClippingNode::onEnter()
+void ClippingNode::onEnter()
 {
-    CCNode::onEnter();
+    Node::onEnter();
     _stencil->onEnter();
 }
 
-void CCClippingNode::onEnterTransitionDidFinish()
+void ClippingNode::onEnterTransitionDidFinish()
 {
-    CCNode::onEnterTransitionDidFinish();
+    Node::onEnterTransitionDidFinish();
     _stencil->onEnterTransitionDidFinish();
 }
 
-void CCClippingNode::onExitTransitionDidStart()
+void ClippingNode::onExitTransitionDidStart()
 {
     _stencil->onExitTransitionDidStart();
-    CCNode::onExitTransitionDidStart();
+    Node::onExitTransitionDidStart();
 }
 
-void CCClippingNode::onExit()
+void ClippingNode::onExit()
 {
     _stencil->onExit();
-    CCNode::onExit();
+    Node::onExit();
 }
 
-void CCClippingNode::visit()
+void ClippingNode::visit()
 {
     // if stencil buffer disabled
     if (g_sStencilBits < 1)
     {
         // draw everything, as if there where no stencil
-        CCNode::visit();
+        Node::visit();
         return;
     }
     
@@ -160,13 +160,13 @@ void CCClippingNode::visit()
         if (_inverted)
         {
             // draw everything
-            CCNode::visit();
+            Node::visit();
         }
         return;
     }
     
     // store the current stencil layer (position in the stencil buffer),
-    // this will allow nesting up to n CCClippingNode,
+    // this will allow nesting up to n ClippingNode,
     // where n is the number of bits of the stencil buffer.
     static GLint layer = -1;
     
@@ -184,7 +184,7 @@ void CCClippingNode::visit()
             once = false;
         }
         // draw everything, as if there where no stencil
-        CCNode::visit();
+        Node::visit();
         return;
     }
     
@@ -255,8 +255,8 @@ void CCClippingNode::visit()
     glStencilOp(!_inverted ? GL_ZERO : GL_REPLACE, GL_KEEP, GL_KEEP);
     
     // draw a fullscreen solid rectangle to clear the stencil buffer
-    //ccDrawSolidRect(CCPointZero, ccpFromSize([[CCDirector sharedDirector] winSize]), ccc4f(1, 1, 1, 1));
-    ccDrawSolidRect(CCPointZero, ccpFromSize(CCDirector::sharedDirector()->getWinSize()), ccc4f(1, 1, 1, 1));
+    //ccDrawSolidRect(PointZero, ccpFromSize([[Director sharedDirector] winSize]), ccc4f(1, 1, 1, 1));
+    ccDrawSolidRect(PointZero, ccpFromSize(Director::sharedDirector()->getWinSize()), ccc4f(1, 1, 1, 1));
     
     ///////////////////////////////////
     // DRAW CLIPPING STENCIL
@@ -291,8 +291,8 @@ void CCClippingNode::visit()
 #else
         // since glAlphaTest do not exists in OES, use a shader that writes
         // pixel only if greater than an alpha threshold
-        CCGLProgram *program = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColorAlphaTest);
-        GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), kCCUniformAlphaTestValue);
+        GLProgram *program = ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColorAlphaTest);
+        GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), kUniformAlphaTestValue);
         // set our alphaThreshold
         program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
         // we need to recursively apply this shader to all the nodes in the stencil node
@@ -343,7 +343,7 @@ void CCClippingNode::visit()
     glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
     
     // draw (according to the stencil test func) this node and its childs
-    CCNode::visit();
+    Node::visit();
     
     ///////////////////////////////////
     // CLEANUP
@@ -361,34 +361,34 @@ void CCClippingNode::visit()
     layer--;
 }
 
-CCNode* CCClippingNode::getStencil() const
+Node* ClippingNode::getStencil() const
 {
     return _stencil;
 }
 
-void CCClippingNode::setStencil(CCNode *pStencil)
+void ClippingNode::setStencil(Node *pStencil)
 {
     CC_SAFE_RELEASE(_stencil);
     _stencil = pStencil;
     CC_SAFE_RETAIN(_stencil);
 }
 
-GLfloat CCClippingNode::getAlphaThreshold() const
+GLfloat ClippingNode::getAlphaThreshold() const
 {
     return _alphaThreshold;
 }
 
-void CCClippingNode::setAlphaThreshold(GLfloat fAlphaThreshold)
+void ClippingNode::setAlphaThreshold(GLfloat fAlphaThreshold)
 {
     _alphaThreshold = fAlphaThreshold;
 }
 
-bool CCClippingNode::isInverted() const
+bool ClippingNode::isInverted() const
 {
     return _inverted;
 }
 
-void CCClippingNode::setInverted(bool bInverted)
+void ClippingNode::setInverted(bool bInverted)
 {
     _inverted = bInverted;
 }

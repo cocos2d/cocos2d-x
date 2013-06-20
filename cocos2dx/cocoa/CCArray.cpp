@@ -29,21 +29,21 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 
-CCArray::CCArray()
+Array::Array()
 : data(NULL)
 {
     init();
 }
 
-CCArray::CCArray(unsigned int capacity)
+Array::Array(unsigned int capacity)
 : data(NULL)
 {
     initWithCapacity(capacity);
 }
 
-CCArray* CCArray::create()
+Array* Array::create()
 {
-    CCArray* pArray = new CCArray();
+    Array* pArray = new Array();
 
     if (pArray && pArray->init())
     {
@@ -57,9 +57,9 @@ CCArray* CCArray::create()
     return pArray;
 }
 
-CCArray* CCArray::createWithObject(CCObject* pObject)
+Array* Array::createWithObject(Object* pObject)
 {
-    CCArray* pArray = new CCArray();
+    Array* pArray = new Array();
 
     if (pArray && pArray->initWithObject(pObject))
     {
@@ -73,20 +73,20 @@ CCArray* CCArray::createWithObject(CCObject* pObject)
     return pArray;
 }
 
-CCArray* CCArray::create(CCObject* pObject, ...)
+Array* Array::create(Object* pObject, ...)
 {
     va_list args;
     va_start(args,pObject);
 
-    CCArray* pArray = create();
+    Array* pArray = create();
     if (pArray && pObject)
     {
         pArray->addObject(pObject);
-        CCObject *i = va_arg(args, CCObject*);
+        Object *i = va_arg(args, Object*);
         while(i) 
         {
             pArray->addObject(i);
-            i = va_arg(args, CCObject*);
+            i = va_arg(args, Object*);
         }
     }
     else
@@ -99,16 +99,16 @@ CCArray* CCArray::create(CCObject* pObject, ...)
     return pArray;
 }
 
-CCArray* CCArray::createWithArray(CCArray* otherArray)
+Array* Array::createWithArray(Array* otherArray)
 {
-    CCArray* pRet = (CCArray*)otherArray->copy();
+    Array* pRet = (Array*)otherArray->copy();
     pRet->autorelease();
     return pRet;
 }
 
-CCArray* CCArray::createWithCapacity(unsigned int capacity)
+Array* Array::createWithCapacity(unsigned int capacity)
 {
-    CCArray* pArray = new CCArray();
+    Array* pArray = new Array();
     
     if (pArray && pArray->initWithCapacity(capacity))
     {
@@ -122,9 +122,9 @@ CCArray* CCArray::createWithCapacity(unsigned int capacity)
     return pArray;
 }
 
-CCArray* CCArray::createWithContentsOfFile(const char* pFileName)
+Array* Array::createWithContentsOfFile(const char* pFileName)
 {
-    CCArray* pRet = CCArray::createWithContentsOfFileThreadSafe(pFileName);
+    Array* pRet = Array::createWithContentsOfFileThreadSafe(pFileName);
     if (pRet != NULL)
     {
         pRet->autorelease();
@@ -132,17 +132,17 @@ CCArray* CCArray::createWithContentsOfFile(const char* pFileName)
     return pRet;
 }
 
-CCArray* CCArray::createWithContentsOfFileThreadSafe(const char* pFileName)
+Array* Array::createWithContentsOfFileThreadSafe(const char* pFileName)
 {
-    return CCFileUtils::sharedFileUtils()->createCCArrayWithContentsOfFile(pFileName);
+    return FileUtils::sharedFileUtils()->createArrayWithContentsOfFile(pFileName);
 }
 
-bool CCArray::init()
+bool Array::init()
 {
     return initWithCapacity(1);
 }
 
-bool CCArray::initWithObject(CCObject* pObject)
+bool Array::initWithObject(Object* pObject)
 {
     ccArrayFree(data);
     bool bRet = initWithCapacity(1);
@@ -154,7 +154,7 @@ bool CCArray::initWithObject(CCObject* pObject)
 }
 
 /** Initializes an array with some objects */
-bool CCArray::initWithObjects(CCObject* pObject, ...)
+bool Array::initWithObjects(Object* pObject, ...)
 {
     ccArrayFree(data);
     bool bRet = false;
@@ -168,11 +168,11 @@ bool CCArray::initWithObjects(CCObject* pObject, ...)
         if (pObject)
         {
             this->addObject(pObject);
-            CCObject* i = va_arg(args, CCObject*);
+            Object* i = va_arg(args, Object*);
             while(i) 
             {
                 this->addObject(i);
-                i = va_arg(args, CCObject*);
+                i = va_arg(args, Object*);
             }
             bRet = true;
         }
@@ -183,14 +183,14 @@ bool CCArray::initWithObjects(CCObject* pObject, ...)
     return bRet;
 }
 
-bool CCArray::initWithCapacity(unsigned int capacity)
+bool Array::initWithCapacity(unsigned int capacity)
 {
     ccArrayFree(data);
     data = ccArrayNew(capacity);
     return true;
 }
 
-bool CCArray::initWithArray(CCArray* otherArray)
+bool Array::initWithArray(Array* otherArray)
 {
     ccArrayFree(data);
     bool bRet = false;
@@ -205,29 +205,29 @@ bool CCArray::initWithArray(CCArray* otherArray)
     return bRet;
 }
 
-unsigned int CCArray::count() const
+unsigned int Array::count() const
 {
     return data->num;
 }
 
-unsigned int CCArray::capacity() const
+unsigned int Array::capacity() const
 {
     return data->max;
 }
 
-unsigned int CCArray::indexOfObject(CCObject* object) const
+unsigned int Array::indexOfObject(Object* object) const
 {
     return ccArrayGetIndexOfObject(data, object);
 }
 
-CCObject* CCArray::objectAtIndex(unsigned int index)
+Object* Array::objectAtIndex(unsigned int index)
 {
     CCAssert(index < data->num, "index out of range in objectAtIndex()");
 
     return data->arr[index];
 }
 
-CCObject* CCArray::lastObject()
+Object* Array::lastObject()
 {
     if( data->num > 0 )
         return data->arr[data->num-1];
@@ -235,7 +235,7 @@ CCObject* CCArray::lastObject()
     return NULL;
 }
 
-CCObject* CCArray::randomObject()
+Object* Array::randomObject()
 {
     if (data->num==0)
     {
@@ -252,12 +252,12 @@ CCObject* CCArray::randomObject()
     return data->arr[(int)(data->num * r)];
 }
 
-bool CCArray::containsObject(CCObject* object) const
+bool Array::containsObject(Object* object) const
 {
     return ccArrayContainsObject(data, object);
 }
 
-bool CCArray::isEqualToArray(CCArray* otherArray)
+bool Array::isEqualToArray(Array* otherArray)
 {
     for (unsigned int i = 0; i< this->count(); i++)
     {
@@ -269,58 +269,58 @@ bool CCArray::isEqualToArray(CCArray* otherArray)
     return true;
 }
 
-void CCArray::addObject(CCObject* object)
+void Array::addObject(Object* object)
 {
     ccArrayAppendObjectWithResize(data, object);
 }
 
-void CCArray::addObjectsFromArray(CCArray* otherArray)
+void Array::addObjectsFromArray(Array* otherArray)
 {
     ccArrayAppendArrayWithResize(data, otherArray->data);
 }
 
-void CCArray::insertObject(CCObject* object, unsigned int index)
+void Array::insertObject(Object* object, unsigned int index)
 {
     ccArrayInsertObjectAtIndex(data, object, index);
 }
 
-void CCArray::removeLastObject(bool bReleaseObj)
+void Array::removeLastObject(bool bReleaseObj)
 {
     CCAssert(data->num, "no objects added");
     ccArrayRemoveObjectAtIndex(data, data->num-1, bReleaseObj);
 }
 
-void CCArray::removeObject(CCObject* object, bool bReleaseObj/* = true*/)
+void Array::removeObject(Object* object, bool bReleaseObj/* = true*/)
 {
     ccArrayRemoveObject(data, object, bReleaseObj);
 }
 
-void CCArray::removeObjectAtIndex(unsigned int index, bool bReleaseObj)
+void Array::removeObjectAtIndex(unsigned int index, bool bReleaseObj)
 {
     ccArrayRemoveObjectAtIndex(data, index, bReleaseObj);
 }
 
-void CCArray::removeObjectsInArray(CCArray* otherArray)
+void Array::removeObjectsInArray(Array* otherArray)
 {
     ccArrayRemoveArray(data, otherArray->data);
 }
 
-void CCArray::removeAllObjects()
+void Array::removeAllObjects()
 {
     ccArrayRemoveAllObjects(data);
 }
 
-void CCArray::fastRemoveObjectAtIndex(unsigned int index)
+void Array::fastRemoveObjectAtIndex(unsigned int index)
 {
     ccArrayFastRemoveObjectAtIndex(data, index);
 }
 
-void CCArray::fastRemoveObject(CCObject* object)
+void Array::fastRemoveObject(Object* object)
 {
     ccArrayFastRemoveObject(data, object);
 }
 
-void CCArray::exchangeObject(CCObject* object1, CCObject* object2)
+void Array::exchangeObject(Object* object1, Object* object2)
 {
     unsigned int index1 = ccArrayGetIndexOfObject(data, object1);
     if(index1 == UINT_MAX)
@@ -337,18 +337,18 @@ void CCArray::exchangeObject(CCObject* object1, CCObject* object2)
     ccArraySwapObjectsAtIndexes(data, index1, index2);
 }
 
-void CCArray::exchangeObjectAtIndex(unsigned int index1, unsigned int index2)
+void Array::exchangeObjectAtIndex(unsigned int index1, unsigned int index2)
 {
     ccArraySwapObjectsAtIndexes(data, index1, index2);
 }
 
-void CCArray::replaceObjectAtIndex(unsigned int index, CCObject* pObject, bool bReleaseObject/* = true*/)
+void Array::replaceObjectAtIndex(unsigned int index, Object* pObject, bool bReleaseObject/* = true*/)
 {
     ccArrayInsertObjectAtIndex(data, pObject, index);
     ccArrayRemoveObjectAtIndex(data, index+1);
 }
 
-void CCArray::reverseObjects()
+void Array::reverseObjects()
 {
     if (data->num > 1)
     {
@@ -364,24 +364,24 @@ void CCArray::reverseObjects()
     }
 }
 
-void CCArray::reduceMemoryFootprint()
+void Array::reduceMemoryFootprint()
 {
     ccArrayShrink(data);
 }
 
-CCArray::~CCArray()
+Array::~Array()
 {
     ccArrayFree(data);
 }
 
-CCObject* CCArray::copyWithZone(CCZone* pZone)
+Object* Array::copyWithZone(Zone* pZone)
 {
     CCAssert(pZone == NULL, "CCArray should not be inherited.");
-    CCArray* pArray = new CCArray();
+    Array* pArray = new Array();
     pArray->initWithCapacity(this->data->num > 0 ? this->data->num : 1);
 
-    CCObject* pObj = NULL;
-    CCObject* pTmpObj = NULL;
+    Object* pObj = NULL;
+    Object* pTmpObj = NULL;
     CCARRAY_FOREACH(this, pObj)
     {
         pTmpObj = pObj->copy();
@@ -391,7 +391,7 @@ CCObject* CCArray::copyWithZone(CCZone* pZone)
     return pArray;
 }
 
-void CCArray::acceptVisitor(CCDataVisitor &visitor)
+void Array::acceptVisitor(DataVisitor &visitor)
 {
     visitor.visit(this);
 }

@@ -35,47 +35,47 @@ using namespace std;
 
 NS_CC_BEGIN
 
-CCAnimationCache* CCAnimationCache::s_pSharedAnimationCache = NULL;
+AnimationCache* AnimationCache::s_pSharedAnimationCache = NULL;
 
-CCAnimationCache* CCAnimationCache::sharedAnimationCache(void)
+AnimationCache* AnimationCache::sharedAnimationCache(void)
 {
     if (! s_pSharedAnimationCache)
     {
-        s_pSharedAnimationCache = new CCAnimationCache();
+        s_pSharedAnimationCache = new AnimationCache();
         s_pSharedAnimationCache->init();
     }
 
     return s_pSharedAnimationCache;
 }
 
-void CCAnimationCache::purgeSharedAnimationCache(void)
+void AnimationCache::purgeSharedAnimationCache(void)
 {
     CC_SAFE_RELEASE_NULL(s_pSharedAnimationCache);
 }
 
-bool CCAnimationCache::init()
+bool AnimationCache::init()
 {
-    _animations = new CCDictionary();
+    _animations = new Dictionary();
     return true;
 }
 
-CCAnimationCache::CCAnimationCache()
+AnimationCache::AnimationCache()
 : _animations(NULL)
 {
 }
 
-CCAnimationCache::~CCAnimationCache()
+AnimationCache::~AnimationCache()
 {
     CCLOGINFO("cocos2d: deallocing %p", this);
     CC_SAFE_RELEASE(_animations);
 }
 
-void CCAnimationCache::addAnimation(CCAnimation *animation, const char * name)
+void AnimationCache::addAnimation(Animation *animation, const char * name)
 {
     _animations->setObject(animation, name);
 }
 
-void CCAnimationCache::removeAnimationByName(const char* name)
+void AnimationCache::removeAnimationByName(const char* name)
 {
     if (! name)
     {
@@ -85,106 +85,106 @@ void CCAnimationCache::removeAnimationByName(const char* name)
     _animations->removeObjectForKey(name);
 }
 
-CCAnimation* CCAnimationCache::animationByName(const char* name)
+Animation* AnimationCache::animationByName(const char* name)
 {
-    return (CCAnimation*)_animations->objectForKey(name);
+    return (Animation*)_animations->objectForKey(name);
 }
 
-void CCAnimationCache::parseVersion1(CCDictionary* animations)
+void AnimationCache::parseVersion1(Dictionary* animations)
 {
-    CCSpriteFrameCache *frameCache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    SpriteFrameCache *frameCache = SpriteFrameCache::sharedSpriteFrameCache();
 
-    CCDictElement* pElement = NULL;
+    DictElement* pElement = NULL;
     CCDICT_FOREACH(animations, pElement)
     {
-        CCDictionary* animationDict = (CCDictionary*)pElement->getObject();
-        CCArray* frameNames = (CCArray*)animationDict->objectForKey("frames");
+        Dictionary* animationDict = (Dictionary*)pElement->getObject();
+        Array* frameNames = (Array*)animationDict->objectForKey("frames");
         float delay = animationDict->valueForKey("delay")->floatValue();
-        CCAnimation* animation = NULL;
+        Animation* animation = NULL;
 
         if ( frameNames == NULL ) 
         {
-            CCLOG("cocos2d: CCAnimationCache: Animation '%s' found in dictionary without any frames - cannot add to animation cache.", pElement->getStrKey());
+            CCLOG("cocos2d: AnimationCache: Animation '%s' found in dictionary without any frames - cannot add to animation cache.", pElement->getStrKey());
             continue;
         }
 
-        CCArray* frames = CCArray::createWithCapacity(frameNames->count());
+        Array* frames = Array::createWithCapacity(frameNames->count());
         frames->retain();
 
-        CCObject* pObj = NULL;
+        Object* pObj = NULL;
         CCARRAY_FOREACH(frameNames, pObj)
         {
-            const char* frameName = ((CCString*)pObj)->getCString();
-            CCSpriteFrame* spriteFrame = frameCache->spriteFrameByName(frameName);
+            const char* frameName = ((String*)pObj)->getCString();
+            SpriteFrame* spriteFrame = frameCache->spriteFrameByName(frameName);
 
             if ( ! spriteFrame ) {
-                CCLOG("cocos2d: CCAnimationCache: Animation '%s' refers to frame '%s' which is not currently in the CCSpriteFrameCache. This frame will not be added to the animation.", pElement->getStrKey(), frameName);
+                CCLOG("cocos2d: AnimationCache: Animation '%s' refers to frame '%s' which is not currently in the SpriteFrameCache. This frame will not be added to the animation.", pElement->getStrKey(), frameName);
 
                 continue;
             }
 
-            CCAnimationFrame* animFrame = new CCAnimationFrame();
+            AnimationFrame* animFrame = new AnimationFrame();
             animFrame->initWithSpriteFrame(spriteFrame, 1, NULL);
             frames->addObject(animFrame);
             animFrame->release();
         }
 
         if ( frames->count() == 0 ) {
-            CCLOG("cocos2d: CCAnimationCache: None of the frames for animation '%s' were found in the CCSpriteFrameCache. Animation is not being added to the Animation Cache.", pElement->getStrKey());
+            CCLOG("cocos2d: AnimationCache: None of the frames for animation '%s' were found in the SpriteFrameCache. Animation is not being added to the Animation Cache.", pElement->getStrKey());
             continue;
         } else if ( frames->count() != frameNames->count() ) {
-            CCLOG("cocos2d: CCAnimationCache: An animation in your dictionary refers to a frame which is not in the CCSpriteFrameCache. Some or all of the frames for the animation '%s' may be missing.", pElement->getStrKey());
+            CCLOG("cocos2d: AnimationCache: An animation in your dictionary refers to a frame which is not in the SpriteFrameCache. Some or all of the frames for the animation '%s' may be missing.", pElement->getStrKey());
         }
 
-        animation = CCAnimation::create(frames, delay, 1);
+        animation = Animation::create(frames, delay, 1);
 
-        CCAnimationCache::sharedAnimationCache()->addAnimation(animation, pElement->getStrKey());
+        AnimationCache::sharedAnimationCache()->addAnimation(animation, pElement->getStrKey());
         frames->release();
     }    
 }
 
-void CCAnimationCache::parseVersion2(CCDictionary* animations)
+void AnimationCache::parseVersion2(Dictionary* animations)
 {
-    CCSpriteFrameCache *frameCache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    SpriteFrameCache *frameCache = SpriteFrameCache::sharedSpriteFrameCache();
 
-    CCDictElement* pElement = NULL;
+    DictElement* pElement = NULL;
     CCDICT_FOREACH(animations, pElement)
     {
         const char* name = pElement->getStrKey();
-        CCDictionary* animationDict = (CCDictionary*)pElement->getObject();
+        Dictionary* animationDict = (Dictionary*)pElement->getObject();
 
-        const CCString* loops = animationDict->valueForKey("loops");
+        const String* loops = animationDict->valueForKey("loops");
         bool restoreOriginalFrame = animationDict->valueForKey("restoreOriginalFrame")->boolValue();
 
-        CCArray* frameArray = (CCArray*)animationDict->objectForKey("frames");
+        Array* frameArray = (Array*)animationDict->objectForKey("frames");
 
         if ( frameArray == NULL ) {
-            CCLOG("cocos2d: CCAnimationCache: Animation '%s' found in dictionary without any frames - cannot add to animation cache.", name);
+            CCLOG("cocos2d: AnimationCache: Animation '%s' found in dictionary without any frames - cannot add to animation cache.", name);
             continue;
         }
 
         // Array of AnimationFrames
-        CCArray* array = CCArray::createWithCapacity(frameArray->count());
+        Array* array = Array::createWithCapacity(frameArray->count());
         array->retain();
 
-        CCObject* pObj = NULL;
+        Object* pObj = NULL;
         CCARRAY_FOREACH(frameArray, pObj)
         {
-            CCDictionary* entry = (CCDictionary*)(pObj);
+            Dictionary* entry = (Dictionary*)(pObj);
 
             const char* spriteFrameName = entry->valueForKey("spriteframe")->getCString();
-            CCSpriteFrame *spriteFrame = frameCache->spriteFrameByName(spriteFrameName);
+            SpriteFrame *spriteFrame = frameCache->spriteFrameByName(spriteFrameName);
 
             if( ! spriteFrame ) {
-                CCLOG("cocos2d: CCAnimationCache: Animation '%s' refers to frame '%s' which is not currently in the CCSpriteFrameCache. This frame will not be added to the animation.", name, spriteFrameName);
+                CCLOG("cocos2d: AnimationCache: Animation '%s' refers to frame '%s' which is not currently in the SpriteFrameCache. This frame will not be added to the animation.", name, spriteFrameName);
 
                 continue;
             }
 
             float delayUnits = entry->valueForKey("delayUnits")->floatValue();
-            CCDictionary* userInfo = (CCDictionary*)entry->objectForKey("notification");
+            Dictionary* userInfo = (Dictionary*)entry->objectForKey("notification");
 
-            CCAnimationFrame *animFrame = new CCAnimationFrame();
+            AnimationFrame *animFrame = new AnimationFrame();
             animFrame->initWithSpriteFrame(spriteFrame, delayUnits, userInfo);
 
             array->addObject(animFrame);
@@ -192,38 +192,38 @@ void CCAnimationCache::parseVersion2(CCDictionary* animations)
         }
 
         float delayPerUnit = animationDict->valueForKey("delayPerUnit")->floatValue();
-        CCAnimation *animation = new CCAnimation();
+        Animation *animation = new Animation();
         animation->initWithAnimationFrames(array, delayPerUnit, 0 != loops->length() ? loops->intValue() : 1);
         array->release();
 
         animation->setRestoreOriginalFrame(restoreOriginalFrame);
 
-        CCAnimationCache::sharedAnimationCache()->addAnimation(animation, name);
+        AnimationCache::sharedAnimationCache()->addAnimation(animation, name);
         animation->release();
     }
 }
 
-void CCAnimationCache::addAnimationsWithDictionary(CCDictionary* dictionary)
+void AnimationCache::addAnimationsWithDictionary(Dictionary* dictionary)
 {
-    CCDictionary* animations = (CCDictionary*)dictionary->objectForKey("animations");
+    Dictionary* animations = (Dictionary*)dictionary->objectForKey("animations");
 
     if ( animations == NULL ) {
-        CCLOG("cocos2d: CCAnimationCache: No animations were found in provided dictionary.");
+        CCLOG("cocos2d: AnimationCache: No animations were found in provided dictionary.");
         return;
     }
 
     unsigned int version = 1;
-    CCDictionary* properties = (CCDictionary*)dictionary->objectForKey("properties");
+    Dictionary* properties = (Dictionary*)dictionary->objectForKey("properties");
     if( properties )
     {
         version = properties->valueForKey("format")->intValue();
-        CCArray* spritesheets = (CCArray*)properties->objectForKey("spritesheets");
+        Array* spritesheets = (Array*)properties->objectForKey("spritesheets");
 
-        CCObject* pObj = NULL;
+        Object* pObj = NULL;
         CCARRAY_FOREACH(spritesheets, pObj)
         {
-            CCString* name = (CCString*)(pObj);
-            CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(name->getCString());
+            String* name = (String*)(pObj);
+            SpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(name->getCString());
         }
     }
 
@@ -240,12 +240,12 @@ void CCAnimationCache::addAnimationsWithDictionary(CCDictionary* dictionary)
 }
 
 /** Read an NSDictionary from a plist file and parse it automatically for animations */
-void CCAnimationCache::addAnimationsWithFile(const char* plist)
+void AnimationCache::addAnimationsWithFile(const char* plist)
 {
     CCAssert( plist, "Invalid texture file name");
 
-    std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename(plist);
-    CCDictionary* dict = CCDictionary::createWithContentsOfFile(path.c_str());
+    std::string path = FileUtils::sharedFileUtils()->fullPathForFilename(plist);
+    Dictionary* dict = Dictionary::createWithContentsOfFile(path.c_str());
 
     CCAssert( dict, "CCAnimationCache: File could not be found");
 

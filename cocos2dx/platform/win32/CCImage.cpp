@@ -111,7 +111,7 @@ public:
                 int nFindTTF = fontName.find(".TTF");
                 if (nFindttf >= 0 || nFindTTF >= 0)
                 {
-                    fontPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fontName.c_str());
+                    fontPath = FileUtils::sharedFileUtils()->fullPathForFilename(fontName.c_str());
                     int nFindPos = fontName.rfind("/");
                     fontName = &fontName[nFindPos+1];
                     nFindPos = fontName.rfind(".");
@@ -240,7 +240,7 @@ public:
         return true;
     }
 
-    int drawText(const char * pszText, SIZE& tSize, CCImage::ETextAlign eAlign)
+    int drawText(const char * pszText, SIZE& tSize, Image::ETextAlign eAlign)
     {
         int nRet = 0;
         wchar_t * pwszBuffer = 0;
@@ -354,7 +354,7 @@ public:
     CC_SYNTHESIZE_READONLY(HDC, _DC, DC);
     CC_SYNTHESIZE_READONLY(HBITMAP, _bmp, Bitmap);
 private:
-    friend class CCImage;
+    friend class Image;
     HFONT   _font;
     HWND    _wnd;
     std::string _curFontPath;
@@ -366,7 +366,7 @@ static BitmapDC& sharedBitmapDC()
     return s_BmpDC;
 }
 
-bool CCImage::initWithString(
+bool Image::initWithString(
                                const char *    pText, 
                                int             nWidth/* = 0*/, 
                                int             nHeight/* = 0*/,

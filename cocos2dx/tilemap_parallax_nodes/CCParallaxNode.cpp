@@ -29,21 +29,21 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CCPointObject : CCObject
+class PointObject : Object
 {
-    CC_SYNTHESIZE(CCPoint, _ratio, Ratio)
-    CC_SYNTHESIZE(CCPoint, _offset, Offset)
-    CC_SYNTHESIZE(CCNode *,_child, Child)    // weak ref
+    CC_SYNTHESIZE(Point, _ratio, Ratio)
+    CC_SYNTHESIZE(Point, _offset, Offset)
+    CC_SYNTHESIZE(Node *,_child, Child)    // weak ref
 
 public:
-    static CCPointObject * pointWithCCPoint(CCPoint ratio, CCPoint offset)
+    static PointObject * pointWithPoint(Point ratio, Point offset)
     {
-        CCPointObject *pRet = new CCPointObject();
-        pRet->initWithCCPoint(ratio, offset);
+        PointObject *pRet = new PointObject();
+        pRet->initWithPoint(ratio, offset);
         pRet->autorelease();
         return pRet;
     }
-    bool initWithCCPoint(CCPoint ratio, CCPoint offset)
+    bool initWithPoint(Point ratio, Point offset)
     {
         _ratio = ratio;
         _offset = offset;
@@ -52,12 +52,12 @@ public:
     }
 };
 
-CCParallaxNode::CCParallaxNode()
+ParallaxNode::ParallaxNode()
 {
     _parallaxArray = ccArrayNew(5);        
     _lastPosition = CCPointMake(-100,-100);
 }
-CCParallaxNode::~CCParallaxNode()
+ParallaxNode::~ParallaxNode()
 {
     if( _parallaxArray )
     {
@@ -66,56 +66,56 @@ CCParallaxNode::~CCParallaxNode()
     }
 }
 
-CCParallaxNode * CCParallaxNode::create()
+ParallaxNode * ParallaxNode::create()
 {
-    CCParallaxNode *pRet = new CCParallaxNode();
+    ParallaxNode *pRet = new ParallaxNode();
     pRet->autorelease();
     return pRet;
 }
 
-void CCParallaxNode::addChild(CCNode * child, unsigned int zOrder, int tag)
+void ParallaxNode::addChild(Node * child, unsigned int zOrder, int tag)
 {
     CC_UNUSED_PARAM(zOrder);
     CC_UNUSED_PARAM(child);
     CC_UNUSED_PARAM(tag);
     CCAssert(0,"ParallaxNode: use addChild:z:parallaxRatio:positionOffset instead");
 }
-void CCParallaxNode::addChild(CCNode *child, unsigned int z, const CCPoint& ratio, const CCPoint& offset)
+void ParallaxNode::addChild(Node *child, unsigned int z, const Point& ratio, const Point& offset)
 {
     CCAssert( child != NULL, "Argument must be non-nil");
-    CCPointObject *obj = CCPointObject::pointWithCCPoint(ratio, offset);
+    PointObject *obj = PointObject::pointWithPoint(ratio, offset);
     obj->setChild(child);
-    ccArrayAppendObjectWithResize(_parallaxArray, (CCObject*)obj);
+    ccArrayAppendObjectWithResize(_parallaxArray, (Object*)obj);
 
-    CCPoint pos = _position;
+    Point pos = _position;
     pos.x = pos.x * ratio.x + offset.x;
     pos.y = pos.y * ratio.y + offset.y;
     child->setPosition(pos);
 
-    CCNode::addChild(child, z, child->getTag());
+    Node::addChild(child, z, child->getTag());
 }
-void CCParallaxNode::removeChild(CCNode* child, bool cleanup)
+void ParallaxNode::removeChild(Node* child, bool cleanup)
 {
     for( unsigned int i=0;i < _parallaxArray->num;i++)
     {
-        CCPointObject *point = (CCPointObject*)_parallaxArray->arr[i];
+        PointObject *point = (PointObject*)_parallaxArray->arr[i];
         if( point->getChild()->isEqual(child)) 
         {
             ccArrayRemoveObjectAtIndex(_parallaxArray, i, true);
             break;
         }
     }
-    CCNode::removeChild(child, cleanup);
+    Node::removeChild(child, cleanup);
 }
-void CCParallaxNode::removeAllChildrenWithCleanup(bool cleanup)
+void ParallaxNode::removeAllChildrenWithCleanup(bool cleanup)
 {
     ccArrayRemoveAllObjects(_parallaxArray);
-    CCNode::removeAllChildrenWithCleanup(cleanup);
+    Node::removeAllChildrenWithCleanup(cleanup);
 }
-CCPoint CCParallaxNode::absolutePosition()
+Point ParallaxNode::absolutePosition()
 {
-    CCPoint ret = _position;
-    CCNode *cn = this;
+    Point ret = _position;
+    Node *cn = this;
     while (cn->getParent() != NULL)
     {
         cn = cn->getParent();
@@ -129,23 +129,23 @@ The positions are updated at visit because:
 - using a timer is not guaranteed that it will called after all the positions were updated
 - overriding "draw" will only precise if the children have a z > 0
 */
-void CCParallaxNode::visit()
+void ParallaxNode::visit()
 {
-    //    CCPoint pos = position_;
-    //    CCPoint    pos = [self convertToWorldSpace:CCPointZero];
-    CCPoint pos = this->absolutePosition();
+    //    Point pos = position_;
+    //    Point    pos = [self convertToWorldSpace:PointZero];
+    Point pos = this->absolutePosition();
     if( ! pos.equals(_lastPosition) )
     {
         for(unsigned int i=0; i < _parallaxArray->num; i++ ) 
         {
-            CCPointObject *point = (CCPointObject*)_parallaxArray->arr[i];
+            PointObject *point = (PointObject*)_parallaxArray->arr[i];
             float x = -pos.x + pos.x * point->getRatio().x + point->getOffset().x;
             float y = -pos.y + pos.y * point->getRatio().y + point->getOffset().y;            
             point->getChild()->setPosition(ccp(x,y));
         }
         _lastPosition = pos;
     }
-    CCNode::visit();
+    Node::visit();
 }
 
 NS_CC_END

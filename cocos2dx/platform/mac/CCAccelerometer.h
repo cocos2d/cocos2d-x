@@ -30,13 +30,13 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CC_DLL CCAccelerometer
+class CC_DLL Accelerometer
 {
 public:
-    CCAccelerometer() {}
-    ~CCAccelerometer() {}
+    Accelerometer() {}
+    ~Accelerometer() {}
 
-    void setDelegate(std::function<void(CCAcceleration*)> function) { CC_UNUSED_PARAM(function); }
+    void setDelegate(std::function<void(Acceleration*)> function) { CC_UNUSED_PARAM(function); }
     void setAccelerometerInterval(float interval) {CC_UNUSED_PARAM(interval);};
 };
 

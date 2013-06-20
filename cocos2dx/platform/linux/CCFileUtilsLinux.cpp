@@ -1,5 +1,5 @@
 /*
- * CCFileUtilsLinux.cpp
+ * FileUtilsLinux.cpp
  *
  *  Created on: Aug 9, 2011
  *      Author: laschweinski
@@ -18,20 +18,20 @@ using namespace std;
 
 NS_CC_BEGIN
 
-CCFileUtils* CCFileUtils::sharedFileUtils()
+FileUtils* FileUtils::sharedFileUtils()
 {
     if (s_sharedFileUtils == NULL)
     {
-        s_sharedFileUtils = new CCFileUtilsLinux();
+        s_sharedFileUtils = new FileUtilsLinux();
         s_sharedFileUtils->init();
     }
     return s_sharedFileUtils;
 }
 
-CCFileUtilsLinux::CCFileUtilsLinux()
+FileUtilsLinux::FileUtilsLinux()
 {}
 
-bool CCFileUtilsLinux::init()
+bool FileUtilsLinux::init()
 {
     // get application path
     char fullpath[256] = {0};
@@ -59,10 +59,10 @@ bool CCFileUtilsLinux::init()
     _writablePath += appPath.substr(appPath.find_last_of("/"));
     _writablePath += "/";
 
-    return CCFileUtils::init();
+    return FileUtils::init();
 }
 
-string CCFileUtilsLinux::getWritablePath()
+string FileUtilsLinux::getWritablePath()
 {
     struct stat st;
     stat(_writablePath.c_str(), &st);
@@ -73,7 +73,7 @@ string CCFileUtilsLinux::getWritablePath()
     return _writablePath;
 }
 
-bool CCFileUtilsLinux::isFileExist(const std::string& strFilePath)
+bool FileUtilsLinux::isFileExist(const std::string& strFilePath)
 {
     if (0 == strFilePath.length())
     {

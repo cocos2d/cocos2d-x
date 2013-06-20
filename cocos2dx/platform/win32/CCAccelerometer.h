@@ -30,18 +30,18 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CC_DLL CCAccelerometer
+class CC_DLL Accelerometer
 {
 public:
-    CCAccelerometer();
-    ~CCAccelerometer();
+    Accelerometer();
+    ~Accelerometer();
 
-    void setDelegate(std::function<void(CCAcceleration*)> function);
+    void setDelegate(std::function<void(Acceleration*)> function);
     void setAccelerometerInterval(float interval);
     void update( double x,double y,double z,double timestamp );
 private:
-    CCAcceleration _accelerationValue;
-    std::function<void(CCAcceleration*)> _function;
+    Acceleration _accelerationValue;
+    std::function<void(Acceleration*)> _function;
 };
 
 NS_CC_END

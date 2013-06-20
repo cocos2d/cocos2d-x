@@ -39,11 +39,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-// implementation CCAtlasNode
+// implementation AtlasNode
 
-// CCAtlasNode - Creation & Init
+// AtlasNode - Creation & Init
 
-CCAtlasNode::CCAtlasNode()
+AtlasNode::AtlasNode()
 : _itemsPerRow(0)
 , _itemsPerColumn(0)
 , _itemWidth(0)
@@ -56,15 +56,15 @@ CCAtlasNode::CCAtlasNode()
 {
 }
 
-CCAtlasNode::~CCAtlasNode()
+AtlasNode::~AtlasNode()
 {
     CC_SAFE_RELEASE(_textureAtlas);
 }
 
-CCAtlasNode * CCAtlasNode::create(const char *tile, unsigned int tileWidth, unsigned int tileHeight, 
+AtlasNode * AtlasNode::create(const char *tile, unsigned int tileWidth, unsigned int tileHeight, 
 											 unsigned int itemsToRender)
 {
-	CCAtlasNode * pRet = new CCAtlasNode();
+	AtlasNode * pRet = new AtlasNode();
 	if (pRet->initWithTileFile(tile, tileWidth, tileHeight, itemsToRender))
 	{
 		pRet->autorelease();
@@ -74,14 +74,14 @@ CCAtlasNode * CCAtlasNode::create(const char *tile, unsigned int tileWidth, unsi
 	return NULL;
 }
 
-bool CCAtlasNode::initWithTileFile(const char *tile, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender)
+bool AtlasNode::initWithTileFile(const char *tile, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender)
 {
     CCAssert(tile != NULL, "title should not be null");
-    CCTexture2D *texture = CCTextureCache::sharedTextureCache()->addImage(tile);
+    Texture2D *texture = TextureCache::sharedTextureCache()->addImage(tile);
 	return initWithTexture(texture, tileWidth, tileHeight, itemsToRender);
 }
 
-bool CCAtlasNode::initWithTexture(CCTexture2D* texture, unsigned int tileWidth, unsigned int tileHeight, 
+bool AtlasNode::initWithTexture(Texture2D* texture, unsigned int tileWidth, unsigned int tileHeight, 
                                    unsigned int itemsToRender)
 {
     _itemWidth  = tileWidth;
@@ -93,12 +93,12 @@ bool CCAtlasNode::initWithTexture(CCTexture2D* texture, unsigned int tileWidth, 
     _blendFunc.src = CC_BLEND_SRC;
     _blendFunc.dst = CC_BLEND_DST;
 
-    _textureAtlas = new CCTextureAtlas();
+    _textureAtlas = new TextureAtlas();
     _textureAtlas->initWithTexture(texture, itemsToRender);
 
     if (! _textureAtlas)
     {
-        CCLOG("cocos2d: Could not initialize CCAtlasNode. Invalid Texture.");
+        CCLOG("cocos2d: Could not initialize AtlasNode. Invalid Texture.");
         return false;
     }
 
@@ -110,18 +110,18 @@ bool CCAtlasNode::initWithTexture(CCTexture2D* texture, unsigned int tileWidth, 
     _quadsToDraw = itemsToRender;
 
     // shader stuff
-    setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture_uColor));
+    setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTexture_uColor));
     _uniformColor = glGetUniformLocation( getShaderProgram()->getProgram(), "u_color");
 
     return true;
 }
 
 
-// CCAtlasNode - Atlas generation
+// AtlasNode - Atlas generation
 
-void CCAtlasNode::calculateMaxItems()
+void AtlasNode::calculateMaxItems()
 {
-    CCSize s = _textureAtlas->getTexture()->getContentSize();
+    Size s = _textureAtlas->getTexture()->getContentSize();
     
     if (_ignoreContentScaleFactor)
     {
@@ -132,13 +132,13 @@ void CCAtlasNode::calculateMaxItems()
     _itemsPerRow = (int)(s.width / _itemWidth);
 }
 
-void CCAtlasNode::updateAtlasValues()
+void AtlasNode::updateAtlasValues()
 {
     CCAssert(false, "CCAtlasNode:Abstract updateAtlasValue not overridden");
 }
 
-// CCAtlasNode - draw
-void CCAtlasNode::draw(void)
+// AtlasNode - draw
+void AtlasNode::draw(void)
 {
     CC_NODE_DRAW_SETUP();
 
@@ -150,18 +150,18 @@ void CCAtlasNode::draw(void)
     _textureAtlas->drawNumberOfQuads(_quadsToDraw, 0);
 }
 
-// CCAtlasNode - RGBA protocol
+// AtlasNode - RGBA protocol
 
-const ccColor3B& CCAtlasNode::getColor()
+const ccColor3B& AtlasNode::getColor()
 {
     if(_isOpacityModifyRGB)
     {
         return _colorUnmodified;
     }
-    return CCNodeRGBA::getColor();
+    return NodeRGBA::getColor();
 }
 
-void CCAtlasNode::setColor(const ccColor3B& color3)
+void AtlasNode::setColor(const ccColor3B& color3)
 {
     ccColor3B tmp = color3;
     _colorUnmodified = color3;
@@ -172,53 +172,53 @@ void CCAtlasNode::setColor(const ccColor3B& color3)
         tmp.g = tmp.g * _displayedOpacity/255;
         tmp.b = tmp.b * _displayedOpacity/255;
     }
-    CCNodeRGBA::setColor(tmp);
+    NodeRGBA::setColor(tmp);
 }
 
-void CCAtlasNode::setOpacity(GLubyte opacity)
+void AtlasNode::setOpacity(GLubyte opacity)
 {
-    CCNodeRGBA::setOpacity(opacity);
+    NodeRGBA::setOpacity(opacity);
 
     // special opacity for premultiplied textures
     if( _isOpacityModifyRGB )
         this->setColor(_colorUnmodified);
 }
 
-void CCAtlasNode::setOpacityModifyRGB(bool bValue)
+void AtlasNode::setOpacityModifyRGB(bool bValue)
 {
     ccColor3B oldColor = this->getColor();
     _isOpacityModifyRGB = bValue;
     this->setColor(oldColor);
 }
 
-bool CCAtlasNode::isOpacityModifyRGB()
+bool AtlasNode::isOpacityModifyRGB()
 {
     return _isOpacityModifyRGB;
 }
 
-void CCAtlasNode::updateOpacityModifyRGB()
+void AtlasNode::updateOpacityModifyRGB()
 {
     _isOpacityModifyRGB = _textureAtlas->getTexture()->hasPremultipliedAlpha();
 }
 
-void CCAtlasNode::setIgnoreContentScaleFactor(bool bIgnoreContentScaleFactor)
+void AtlasNode::setIgnoreContentScaleFactor(bool bIgnoreContentScaleFactor)
 {
     _ignoreContentScaleFactor = bIgnoreContentScaleFactor;
 }
 
-// CCAtlasNode - CocosNodeTexture protocol
+// AtlasNode - CocosNodeTexture protocol
 
-ccBlendFunc CCAtlasNode::getBlendFunc()
+ccBlendFunc AtlasNode::getBlendFunc()
 {
     return _blendFunc;
 }
 
-void CCAtlasNode::setBlendFunc(ccBlendFunc blendFunc)
+void AtlasNode::setBlendFunc(ccBlendFunc blendFunc)
 {
     _blendFunc = blendFunc;
 }
 
-void CCAtlasNode::updateBlendFunc()
+void AtlasNode::updateBlendFunc()
 {
     if( ! _textureAtlas->getTexture()->hasPremultipliedAlpha() ) {
         _blendFunc.src = GL_SRC_ALPHA;
@@ -226,36 +226,36 @@ void CCAtlasNode::updateBlendFunc()
     }
 }
 
-void CCAtlasNode::setTexture(CCTexture2D *texture)
+void AtlasNode::setTexture(Texture2D *texture)
 {
     _textureAtlas->setTexture(texture);
     this->updateBlendFunc();
     this->updateOpacityModifyRGB();
 }
 
-CCTexture2D * CCAtlasNode::getTexture()
+Texture2D * AtlasNode::getTexture()
 {
     return _textureAtlas->getTexture();
 }
 
-void CCAtlasNode::setTextureAtlas(CCTextureAtlas* var)
+void AtlasNode::setTextureAtlas(TextureAtlas* var)
 {
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE(_textureAtlas);
     _textureAtlas = var;
 }
 
-CCTextureAtlas * CCAtlasNode::getTextureAtlas()
+TextureAtlas * AtlasNode::getTextureAtlas()
 {
     return _textureAtlas;
 }
 
-unsigned int CCAtlasNode::getQuadsToDraw()
+unsigned int AtlasNode::getQuadsToDraw()
 {
     return _quadsToDraw;
 }
 
-void CCAtlasNode::setQuadsToDraw(unsigned int uQuadsToDraw)
+void AtlasNode::setQuadsToDraw(unsigned int uQuadsToDraw)
 {
     _quadsToDraw = uQuadsToDraw;
 }
