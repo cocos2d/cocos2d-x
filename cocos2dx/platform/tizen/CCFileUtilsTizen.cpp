@@ -62,7 +62,7 @@ bool FileUtilsTizen::init()
         return false;
     }
 
-    String resPath = pApp->GetAppResourcePath();
+    Tizen::Base::String resPath = pApp->GetAppResourcePath();
     if (resPath.IsEmpty())
     {
         return false;
@@ -85,7 +85,7 @@ string FileUtilsTizen::getWritablePath()
 
     string path("");
     AsciiEncoding ascii;
-    String dataPath = pApp->GetAppDataPath();
+    Tizen::Base::String dataPath = pApp->GetAppDataPath();
     if (!dataPath.IsEmpty())
     {
         ByteBuffer* buffer = ascii.GetBytesN(dataPath);
