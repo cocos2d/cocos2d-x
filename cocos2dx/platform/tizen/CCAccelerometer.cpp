@@ -29,22 +29,22 @@ using namespace Tizen::Uix::Sensor;
 
 NS_CC_BEGIN
 
-CCAccelerometer::CCAccelerometer()
-    : _accelDelegate(NULL)
-    , __sensorMgr(NULL)
+Accelerometer::Accelerometer()
+    : _function(nullptr)
+    , __sensorMgr(nullptr)
 {
 }
 
-CCAccelerometer::~CCAccelerometer()
+Accelerometer::~Accelerometer()
 {
 
 }
 
-void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
+void Accelerometer::setDelegate(std::function<void(Acceleration*)> function)
 {
-    _accelDelegate = pDelegate;
+    _function = function;
 
-    if (pDelegate)
+    if (_function)
     {
         startSensor();
     }
@@ -54,7 +54,7 @@ void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
     }
 }
 
-void CCAccelerometer::setAccelerometerInterval(float interval)
+void Accelerometer::setAccelerometerInterval(float interval)
 {
     if (__sensorMgr)
     {
@@ -62,7 +62,7 @@ void CCAccelerometer::setAccelerometerInterval(float interval)
     }
 }
 
-void CCAccelerometer::startSensor()
+void Accelerometer::startSensor()
 {
     long interval = 0L;
 
@@ -85,7 +85,7 @@ void CCAccelerometer::startSensor()
 
 }
 
-void CCAccelerometer::stopSensor()
+void Accelerometer::stopSensor()
 {
     if (__sensorMgr)
     {
@@ -95,9 +95,9 @@ void CCAccelerometer::stopSensor()
     }
 }
 
-void CCAccelerometer::OnDataReceived(SensorType sensorType, SensorData& sensorData , result r)
+void Accelerometer::OnDataReceived(SensorType sensorType, SensorData& sensorData , result r)
 {
-    if (_accelDelegate)
+    if (_function)
     {
         AccelerationSensorData& data = static_cast<AccelerationSensorData&>(sensorData);
         AppLog("AccelerationSensorData    x = %5.4f , y = %5.4f,  z = %5.4f ", data.x,data.y,data.z);
@@ -107,7 +107,7 @@ void CCAccelerometer::OnDataReceived(SensorType sensorType, SensorData& sensorDa
         _accelerationValue.z = -data.z;
         _accelerationValue.timestamp = data.timestamp;
 
-        _accelDelegate->didAccelerate(&_accelerationValue);
+        _function(&_accelerationValue);
     }
 }
 

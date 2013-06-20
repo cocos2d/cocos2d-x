@@ -5,7 +5,7 @@
 #include "../testBasic.h"
 #include <string>
 
-class TextureAtlasEncryptionDemo : public CCLayer
+class TextureAtlasEncryptionDemo : public Layer
 {
 public:
     virtual std::string title();

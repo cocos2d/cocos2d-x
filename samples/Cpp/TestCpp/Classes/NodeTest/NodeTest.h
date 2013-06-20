@@ -15,9 +15,9 @@ public:
     virtual std::string subtitle();
     virtual void onEnter();
 
-    void restartCallback(CCObject* pSender);
-    void nextCallback(CCObject* pSender);
-    void backCallback(CCObject* pSender);
+    void restartCallback(Object* pSender);
+    void nextCallback(Object* pSender);
+    void backCallback(Object* pSender);
 };
 
 class Test2 : public TestCocosNodeDemo
@@ -58,7 +58,7 @@ public:
 class StressTest1 : public TestCocosNodeDemo
 {
     void shouldNotCrash(float dt);
-    void removeMe(CCNode* node);
+    void removeMe(Node* node);
 public:
     StressTest1();
 
@@ -125,7 +125,7 @@ class ConvertToNode : public TestCocosNodeDemo
 {
 public:
     ConvertToNode();
-    virtual void ccTouchesEnded(CCSet* touches, CCEvent *event);
+    virtual void ccTouchesEnded(Set* touches, Event *event);
     virtual std::string title();
     virtual std::string subtitle();
 };

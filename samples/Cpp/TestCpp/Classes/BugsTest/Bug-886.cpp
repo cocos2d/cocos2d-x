@@ -10,16 +10,16 @@ bool Bug886Layer::init()
     if(BugsTestBaseLayer::init())
     {
         // ask director the the window size
-        //        CGSize size = [[CCDirector sharedDirector] winSize];
+        //        CGSize size = [[Director sharedDirector] winSize];
         
-        CCSprite* sprite = CCSprite::create("Images/bugs/bug886.jpg");
-        sprite->setAnchorPoint(CCPointZero);
-        sprite->setPosition(CCPointZero);
+        Sprite* sprite = Sprite::create("Images/bugs/bug886.jpg");
+        sprite->setAnchorPoint(PointZero);
+        sprite->setPosition(PointZero);
         sprite->setScaleX(0.6f);
         addChild(sprite);
 
-        CCSprite* sprite2 = CCSprite::create("Images/bugs/bug886.png");
-        sprite2->setAnchorPoint(CCPointZero);
+        Sprite* sprite2 = Sprite::create("Images/bugs/bug886.png");
+        sprite2->setAnchorPoint(PointZero);
         sprite2->setScaleX(0.6f);
         sprite2->setPosition(ccp(sprite->getContentSize().width * 0.6f + 10, 0));
         addChild(sprite2);

@@ -34,7 +34,7 @@ namespace cocos2d { namespace extension {
 /**
 Draws a skeleton.
 */
-class CCSkeleton: public cocos2d::CCNodeRGBA, public cocos2d::CCBlendProtocol {
+class CCSkeleton: public cocos2d::NodeRGBA, public cocos2d::BlendProtocol {
 public:
 	Skeleton* skeleton;
 	Bone* rootBone;
@@ -55,7 +55,7 @@ public:
 
 	virtual void update (float deltaTime);
 	virtual void draw ();
-	virtual cocos2d::CCRect boundingBox ();
+	virtual cocos2d::Rect boundingBox ();
 
 	// --- Convenience methods for common Skeleton_* functions.
 	void updateWorldTransform ();
@@ -79,7 +79,7 @@ public:
 	/* Returns false if the slot or attachment was not found. */
 	bool setAttachment (const char* slotName, const char* attachmentName);
 
-	// --- CCBlendProtocol
+	// --- BlendProtocol
 	CC_PROPERTY(cocos2d::ccBlendFunc, blendFunc, BlendFunc);
 	virtual void setOpacityModifyRGB (bool value);
 	virtual bool isOpacityModifyRGB ();
@@ -87,7 +87,7 @@ public:
 protected:
 	CCSkeleton ();
 	void setSkeletonData (SkeletonData* skeletonData, bool ownsSkeletonData);
-	cocos2d::CCTextureAtlas* getTextureAtlas (RegionAttachment* regionAttachment) const;
+	cocos2d::TextureAtlas* getTextureAtlas (RegionAttachment* regionAttachment) const;
 
 private:
 	bool ownsSkeletonData;

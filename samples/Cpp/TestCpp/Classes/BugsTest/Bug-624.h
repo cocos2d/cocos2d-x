@@ -8,7 +8,7 @@ class Bug624Layer : public BugsTestBaseLayer
 public:
     virtual bool init();
     void switchLayer(float dt);
-    virtual void didAccelerate(CCAcceleration* pAccelerationValue);
+    virtual void didAccelerate(Acceleration* pAccelerationValue);
 
     CREATE_FUNC(Bug624Layer);
 };
@@ -18,7 +18,7 @@ class Bug624Layer2 : public BugsTestBaseLayer
 public:
     virtual bool init();
     void switchLayer(float dt);
-    virtual void didAccelerate(CCAcceleration* pAccelerationValue);
+    virtual void didAccelerate(Acceleration* pAccelerationValue);
 
     CREATE_FUNC(Bug624Layer2);
 };

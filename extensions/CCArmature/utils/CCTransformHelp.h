@@ -28,34 +28,34 @@ THE SOFTWARE.
 #include "CCArmatureDefine.h"
 #include "../datas/CCDatas.h"
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
 
 /*
  * use to calculate the matrix of node from parent node
  */
-class  CCTransformHelp
+class  TransformHelp
 {
 public:
-    CCTransformHelp();
+    TransformHelp();
 
-    static void transformFromParent(CCBaseData &node, const CCBaseData &parentNode);
-    static void transformToParent(CCBaseData &node, const CCBaseData &parentNode);
+    static void transformFromParent(BaseData &node, const BaseData &parentNode);
+    static void transformToParent(BaseData &node, const BaseData &parentNode);
 
-    static void transformFromParentWithoutScale(CCBaseData &node, const CCBaseData &parentNode);
-    static void transformToParentWithoutScale(CCBaseData &node, const CCBaseData &parentNode);
+    static void transformFromParentWithoutScale(BaseData &node, const BaseData &parentNode);
+    static void transformToParentWithoutScale(BaseData &node, const BaseData &parentNode);
 
-    static void nodeToMatrix(const CCBaseData &_node, CCAffineTransform &_matrix);
-    static void matrixToNode(const CCAffineTransform &_matrix, CCBaseData &_node);
+    static void nodeToMatrix(const BaseData &_node, AffineTransform &_matrix);
+    static void matrixToNode(const AffineTransform &_matrix, BaseData &_node);
 
-    static void nodeConcat(CCBaseData &target, CCBaseData &source);
+    static void nodeConcat(BaseData &target, BaseData &source);
 public:
-    static CCAffineTransform helpMatrix1;
-    static CCAffineTransform helpMatrix2;
+    static AffineTransform helpMatrix1;
+    static AffineTransform helpMatrix2;
 
-    static CCPoint helpPoint1;
-    static CCPoint helpPoint2;
+    static Point helpPoint1;
+    static Point helpPoint2;
 };
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {
 
 #endif /*__CCTRANSFORMHELP_H__*/

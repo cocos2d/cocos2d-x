@@ -43,10 +43,10 @@ static bool        s_bVertexAttribTexCoords = false;
 
 #if CC_ENABLE_GL_STATE_CACHE
 
-#define kCCMaxActiveTexture 16
+#define kMaxActiveTexture 16
 
 static GLuint    s_uCurrentShaderProgram = -1;
-static GLuint    s_uCurrentBoundTexture[kCCMaxActiveTexture] =  {(GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, (GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, (GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, (GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, };
+static GLuint    s_uCurrentBoundTexture[kMaxActiveTexture] =  {(GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, (GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, (GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, (GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, };
 static GLenum    s_eBlendingSource = -1;
 static GLenum    s_eBlendingDest = -1;
 static int       s_eGLServerState = 0;
@@ -68,7 +68,7 @@ void ccGLInvalidateStateCache( void )
     
 #if CC_ENABLE_GL_STATE_CACHE
     s_uCurrentShaderProgram = -1;
-    for( int i=0; i < kCCMaxActiveTexture; i++ )
+    for( int i=0; i < kMaxActiveTexture; i++ )
     {
         s_uCurrentBoundTexture[i] = -1;
     }
@@ -148,7 +148,7 @@ void ccGLBindTexture2D(GLuint textureId)
 void ccGLBindTexture2DN(GLuint textureUnit, GLuint textureId)
 {
 #if CC_ENABLE_GL_STATE_CACHE
-    CCAssert(textureUnit < kCCMaxActiveTexture, "textureUnit is too big");
+    CCAssert(textureUnit < kMaxActiveTexture, "textureUnit is too big");
     if (s_uCurrentBoundTexture[textureUnit] != textureId)
     {
         s_uCurrentBoundTexture[textureUnit] = textureId;
@@ -228,37 +228,37 @@ void ccGLEnableVertexAttribs( unsigned int flags )
     ccGLBindVAO(0);
     
     /* Position */
-    bool enablePosition = flags & kCCVertexAttribFlag_Position;
+    bool enablePosition = flags & kVertexAttribFlag_Position;
 
     if( enablePosition != s_bVertexAttribPosition ) {
         if( enablePosition )
-            glEnableVertexAttribArray( kCCVertexAttrib_Position );
+            glEnableVertexAttribArray( kVertexAttrib_Position );
         else
-            glDisableVertexAttribArray( kCCVertexAttrib_Position );
+            glDisableVertexAttribArray( kVertexAttrib_Position );
 
         s_bVertexAttribPosition = enablePosition;
     }
 
     /* Color */
-    bool enableColor = (flags & kCCVertexAttribFlag_Color) != 0 ? true : false;
+    bool enableColor = (flags & kVertexAttribFlag_Color) != 0 ? true : false;
 
     if( enableColor != s_bVertexAttribColor ) {
         if( enableColor )
-            glEnableVertexAttribArray( kCCVertexAttrib_Color );
+            glEnableVertexAttribArray( kVertexAttrib_Color );
         else
-            glDisableVertexAttribArray( kCCVertexAttrib_Color );
+            glDisableVertexAttribArray( kVertexAttrib_Color );
 
         s_bVertexAttribColor = enableColor;
     }
 
     /* Tex Coords */
-    bool enableTexCoords = (flags & kCCVertexAttribFlag_TexCoords) != 0 ? true : false;
+    bool enableTexCoords = (flags & kVertexAttribFlag_TexCoords) != 0 ? true : false;
 
     if( enableTexCoords != s_bVertexAttribTexCoords ) {
         if( enableTexCoords )
-            glEnableVertexAttribArray( kCCVertexAttrib_TexCoords );
+            glEnableVertexAttribArray( kVertexAttrib_TexCoords );
         else
-            glDisableVertexAttribArray( kCCVertexAttrib_TexCoords );
+            glDisableVertexAttribArray( kVertexAttrib_TexCoords );
 
         s_bVertexAttribTexCoords = enableTexCoords;
     }

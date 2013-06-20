@@ -47,32 +47,32 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-class CCControlColourPicker: public CCControl
+class ControlColourPicker: public Control
 {
 public:
-    CCControlColourPicker();
-    virtual ~CCControlColourPicker();
+    ControlColourPicker();
+    virtual ~ControlColourPicker();
     virtual void setColor(const ccColor3B& colorValue);
     virtual void setEnabled(bool bEnabled);
 protected:
     HSV _hsv;
-    CC_SYNTHESIZE_RETAIN(CCControlSaturationBrightnessPicker*, _colourPicker, colourPicker)
-    CC_SYNTHESIZE_RETAIN(CCControlHuePicker*, _huePicker, HuePicker)
-    CC_SYNTHESIZE_RETAIN(CCSprite*, _background, Background)
+    CC_SYNTHESIZE_RETAIN(ControlSaturationBrightnessPicker*, _colourPicker, colourPicker)
+    CC_SYNTHESIZE_RETAIN(ControlHuePicker*, _huePicker, HuePicker)
+    CC_SYNTHESIZE_RETAIN(Sprite*, _background, Background)
     
 public:
 
-    static CCControlColourPicker* create();
+    static ControlColourPicker* create();
 
     virtual bool init();
-    //virtual ~CCControlColourPicker();
-    void hueSliderValueChanged(CCObject * sender, CCControlEvent controlEvent);
-    void colourSliderValueChanged(CCObject * sender, CCControlEvent controlEvent);
+    //virtual ~ControlColourPicker();
+    void hueSliderValueChanged(Object * sender, ControlEvent controlEvent);
+    void colourSliderValueChanged(Object * sender, ControlEvent controlEvent);
 
 protected:    
     void updateControlPicker();
     void updateHueAndControlPicker();
-    virtual bool ccTouchBegan(CCTouch* touch, CCEvent* pEvent);
+    virtual bool ccTouchBegan(Touch* touch, Event* pEvent);
     
 };
 

@@ -4,15 +4,15 @@
 
 KeyboardTest::KeyboardTest()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-    CCLabelTTF* label = CCLabelTTF::create("Keyboard Test", "Arial", 28);
+    Size s = Director::sharedDirector()->getWinSize();
+    LabelTTF* label = LabelTTF::create("Keyboard Test", "Arial", 28);
     addChild(label, 0);
     label->setPosition( ccp(s.width/2, s.height-50) );
 
     setKeyboardEnabled(true);
 
     // create a label to display the tip string
-    _label = CCLabelTTF::create("Please press any key and see console log...", "Arial", 22);
+    _label = LabelTTF::create("Please press any key and see console log...", "Arial", 22);
     _label->setPosition(ccp(s.width / 2, s.height / 2));
     addChild(_label, 0);
     
@@ -36,10 +36,10 @@ void KeyboardTest::keyReleased(int keyCode)
 
 void KeyboardTestScene::runThisTest()
 {
-    CCLayer* pLayer = new KeyboardTest();
+    Layer* pLayer = new KeyboardTest();
     addChild(pLayer);
 
-    CCDirector::sharedDirector()->replaceScene(this);
+    Director::sharedDirector()->replaceScene(this);
     pLayer->release();
 }
 

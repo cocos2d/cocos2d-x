@@ -16,16 +16,16 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 
-    void backCallback(CCObject* pSender);
-    void nextCallback(CCObject* pSender);
-    void restartCallback(CCObject* pSender);
+    void backCallback(Object* pSender);
+    void nextCallback(Object* pSender);
+    void restartCallback(Object* pSender);
 };
 
-// class SchedulerTestLayer : CCLayer
+// class SchedulerTestLayer : Layer
 // {
 // }
-// -(CCString*) title;
-// -(CCString*) subtitle;
+// -(String*) title;
+// -(String*) subtitle;
 // 
 // -(void) backCallback:(id) sender;
 // -(void) nextCallback:(id) sender;
@@ -73,7 +73,7 @@ public:
     void pause(float dt);
     void resume(float dt);
 private:
-    CCSet* _pausedTargets;
+    Set* _pausedTargets;
 };
 
 class SchedulerPauseResumeAllUser : public SchedulerTestLayer
@@ -91,7 +91,7 @@ public:
     void pause(float dt);
     void resume(float dt);
 private:
-    CCSet* _pausedTargets;
+    Set* _pausedTargets;
 };
 
 class SchedulerUnscheduleAll : public SchedulerTestLayer
@@ -187,15 +187,15 @@ public:
     void stopUpdate(float dt);
 };
 
-class TestNode : public CCNode
+class TestNode : public Node
 {
 public:
     ~TestNode();
 
-    void initWithString(CCString* pStr, int priority);
+    void initWithString(String* pStr, int priority);
     virtual void update(float dt);
 private:
-    CCString* _pstring;
+    String* _pstring;
 };
 
 class RescheduleSelector : public SchedulerTestLayer
@@ -227,9 +227,9 @@ public:
     void onExit();
     virtual std::string title();
     virtual std::string subtitle();
-    CCControlSlider* sliderCtl();
-    void sliderAction(CCObject* pSender, CCControlEvent controlEvent);
-    CCControlSlider* _sliderCtl;
+    ControlSlider* sliderCtl();
+    void sliderAction(Object* pSender, ControlEvent controlEvent);
+    ControlSlider* _sliderCtl;
 };
 
 
@@ -240,15 +240,15 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
     void onEnter();
-    CCControlSlider* sliderCtl();
-    void sliderAction(CCObject* sender, CCControlEvent controlEvent);
-    CCScheduler *sched1;
-    CCScheduler *sched2;
-    CCActionManager *actionManager1;
-    CCActionManager *actionManager2;
+    ControlSlider* sliderCtl();
+    void sliderAction(Object* sender, ControlEvent controlEvent);
+    Scheduler *sched1;
+    Scheduler *sched2;
+    ActionManager *actionManager1;
+    ActionManager *actionManager2;
 
-    CCControlSlider    *sliderCtl1;
-    CCControlSlider    *sliderCtl2;
+    ControlSlider    *sliderCtl1;
+    ControlSlider    *sliderCtl2;
 };
 
 class SchedulerIssue2268 : public SchedulerTestLayer
@@ -260,7 +260,7 @@ class SchedulerIssue2268 : public SchedulerTestLayer
 		void onEnter();
 		void update(float dt);
 	private:
-		CCNode *testNode;
+		Node *testNode;
 };
 
 class SchedulerTestScene : public TestScene

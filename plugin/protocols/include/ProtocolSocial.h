@@ -85,7 +85,7 @@ public:
     void onShareResult(ShareResultCode ret, const char* msg);
 
 protected:
-    ShareResultListener* m_pListener;
+    ShareResultListener* _listener;
 };
 
 }} // namespace cocos2d { namespace plugin {

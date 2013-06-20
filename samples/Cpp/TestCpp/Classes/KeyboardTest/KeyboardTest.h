@@ -6,7 +6,7 @@
 #include "cocos2d.h"
 #include "../testBasic.h"
 
-class KeyboardTest : public CCLayer
+class KeyboardTest : public Layer
 {
 public:
     KeyboardTest();
@@ -16,7 +16,7 @@ public:
     virtual void keyReleased(int keyCode);
 
 private:
-    CCLabelTTF*            _label;
+    LabelTTF*            _label;
 };
 
 class KeyboardTestScene : public TestScene

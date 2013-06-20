@@ -16,9 +16,9 @@ public:
 class ParticleDemo : public BaseTest
 {
 protected:
-    CCParticleSystem*    _emitter;
-    CCSprite*            _background;
-	CCLayerColor*		 _color;
+    ParticleSystem*    _emitter;
+    Sprite*            _background;
+	LayerColor*		 _color;
 
 public:
     ~ParticleDemo(void);
@@ -28,14 +28,14 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 
-    void restartCallback(CCObject* pSender);
-    void nextCallback(CCObject* pSender);
-    void backCallback(CCObject* pSender);
-    void toggleCallback(CCObject* pSender);
+    void restartCallback(Object* pSender);
+    void nextCallback(Object* pSender);
+    void backCallback(Object* pSender);
+    void toggleCallback(Object* pSender);
 
-    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
+    virtual void ccTouchesBegan(Set *pTouches, Event *pEvent);
+    virtual void ccTouchesMoved(Set *pTouches, Event *pEvent);
+    virtual void ccTouchesEnded(Set *pTouches, Event *pEvent);
 
     virtual void update(float dt);
     void setEmitterPosition();
@@ -218,8 +218,8 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 private:
-    CCNode* _parent1;
-    CCNode* _parent2;
+    Node* _parent1;
+    Node* _parent2;
 };
 
 class ParticleBatchMultipleEmitters : public ParticleDemo
@@ -258,7 +258,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 private:
-    CCParticleBatchNode* _batchNode;
+    ParticleBatchNode* _batchNode;
 };
 
 class AddAndDeleteParticleSystems : public ParticleDemo
@@ -270,7 +270,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 private:
-    CCParticleBatchNode* _batchNode;
+    ParticleBatchNode* _batchNode;
 };
 
 class ReorderParticleSystems : public ParticleDemo
@@ -282,7 +282,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 private:
-    CCParticleBatchNode* _batchNode;
+    ParticleBatchNode* _batchNode;
 };
 
 class PremultipliedAlphaTest : public ParticleDemo

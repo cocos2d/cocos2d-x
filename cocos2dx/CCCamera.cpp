@@ -35,26 +35,26 @@ using namespace std;
 
 NS_CC_BEGIN
 
-CCCamera::CCCamera(void)
+Camera::Camera(void)
 {
     init();
 }
 
-CCCamera::~CCCamera(void)
+Camera::~Camera(void)
 {
 }
 
-const char* CCCamera::description(void)
+const char* Camera::description(void)
 {
-    return CCString::createWithFormat("<CCCamera | center = (%.2f,%.2f,%.2f)>", _centerX, _centerY, _centerZ)->getCString();
+    return String::createWithFormat("<Camera | center = (%.2f,%.2f,%.2f)>", _centerX, _centerY, _centerZ)->getCString();
 }
 
-void CCCamera::init(void)
+void Camera::init(void)
 {
     restore();
 }
 
-void CCCamera::restore(void)
+void Camera::restore(void)
 {
     _eyeX = _eyeY = 0.0f;
     _eyeZ = getZEye();
@@ -70,7 +70,7 @@ void CCCamera::restore(void)
     _dirty = false;
 }
 
-void CCCamera::locate(void)
+void Camera::locate(void)
 {
     if (_dirty)
     {
@@ -87,12 +87,12 @@ void CCCamera::locate(void)
     kmGLMultMatrix( &_lookupMatrix );
 }
 
-float CCCamera::getZEye(void)
+float Camera::getZEye(void)
 {
     return FLT_EPSILON;
 }
 
-void CCCamera::setEyeXYZ(float fEyeX, float fEyeY, float fEyeZ)
+void Camera::setEyeXYZ(float fEyeX, float fEyeY, float fEyeZ)
 {
     _eyeX = fEyeX;
     _eyeY = fEyeY;
@@ -101,7 +101,7 @@ void CCCamera::setEyeXYZ(float fEyeX, float fEyeY, float fEyeZ)
     _dirty = true;
 }
 
-void CCCamera::setCenterXYZ(float fCenterX, float fCenterY, float fCenterZ)
+void Camera::setCenterXYZ(float fCenterX, float fCenterY, float fCenterZ)
 {
     _centerX = fCenterX;
     _centerY = fCenterY;
@@ -110,7 +110,7 @@ void CCCamera::setCenterXYZ(float fCenterX, float fCenterY, float fCenterZ)
     _dirty = true;
 }
 
-void CCCamera::setUpXYZ(float fUpX, float fUpY, float fUpZ)
+void Camera::setUpXYZ(float fUpX, float fUpY, float fUpZ)
 {
     _upX = fUpX;
     _upY = fUpY;
@@ -119,21 +119,21 @@ void CCCamera::setUpXYZ(float fUpX, float fUpY, float fUpZ)
     _dirty = true;
 }
 
-void CCCamera::getEyeXYZ(float *pEyeX, float *pEyeY, float *pEyeZ)
+void Camera::getEyeXYZ(float *pEyeX, float *pEyeY, float *pEyeZ)
 {
     *pEyeX = _eyeX;
     *pEyeY = _eyeY;
     *pEyeZ = _eyeZ;
 }
 
-void CCCamera::getCenterXYZ(float *pCenterX, float *pCenterY, float *pCenterZ)
+void Camera::getCenterXYZ(float *pCenterX, float *pCenterY, float *pCenterZ)
 {
     *pCenterX = _centerX;
     *pCenterY = _centerY;
     *pCenterZ = _centerZ;
 }
 
-void CCCamera::getUpXYZ(float *pUpX, float *pUpY, float *pUpZ)
+void Camera::getUpXYZ(float *pUpX, float *pUpY, float *pUpZ)
 {
     *pUpX = _upX;
     *pUpY = _upY;

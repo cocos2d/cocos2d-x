@@ -238,8 +238,8 @@ JSBool jsval_to_charptr( JSContext *cx, jsval vp, const char **ret )
 
     JSStringWrapper strWrapper(jsstr);
     
-    // XXX: It is converted to CCString and then back to char* to autorelease the created object.
-    CCString *tmp = CCString::create(strWrapper.get());
+    // XXX: It is converted to String and then back to char* to autorelease the created object.
+    String *tmp = String::create(strWrapper.get());
 
     JSB_PRECONDITION2( tmp, cx, JS_FALSE, "Error creating string from UTF8");
 

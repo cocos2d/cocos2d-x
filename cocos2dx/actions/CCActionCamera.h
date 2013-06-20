@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CCCamera;
+class Camera;
 
 /**
  * @addtogroup actions
@@ -38,13 +38,13 @@ class CCCamera;
  */
 
 /** 
-@brief Base class for CCCamera actions
+@brief Base class for Camera actions
 @ingroup Actions
 */
-class CC_DLL CCActionCamera : public CCActionInterval //<NSCopying> 
+class CC_DLL ActionCamera : public ActionInterval //<NSCopying> 
 {
 public:
-    CCActionCamera()
+    ActionCamera()
 		:_centerXOrig(0)
         ,_centerYOrig(0)
         ,_centerZOrig(0)
@@ -55,13 +55,13 @@ public:
         ,_upYOrig(0)
         ,_upZOrig(0)
     {}
-    virtual ~CCActionCamera(){}
+    virtual ~ActionCamera(){}
     // super methods
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(Node *pTarget);
 	/** returns a new reversed action */
-    virtual CCActionCamera * reverse() const;
+    virtual ActionCamera * reverse() const;
 	/** returns a new clone of the action */
-	virtual CCActionCamera *clone() const;
+	virtual ActionCamera *clone() const;
 protected:
     float _centerXOrig;
     float _centerYOrig;
@@ -77,14 +77,14 @@ protected:
 };
 
 /** 
-@brief CCOrbitCamera action
+@brief OrbitCamera action
 Orbits the camera around the center of the screen using spherical coordinates
 @ingroup Actions
 */
-class CC_DLL CCOrbitCamera : public CCActionCamera //<NSCopying> 
+class CC_DLL OrbitCamera : public ActionCamera //<NSCopying> 
 {
 public:
-    CCOrbitCamera()
+    OrbitCamera()
 		: _radius(0.0)
         , _deltaRadius(0.0)
         , _angleZ(0.0)
@@ -96,20 +96,20 @@ public:
         , _radX(0.0)                        
         , _radDeltaX(0.0)        
     {}
-    ~CCOrbitCamera(){}
+    ~OrbitCamera(){}
     
-    /** creates a CCOrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
-    static CCOrbitCamera* create(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
+    /** creates a OrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
+    static OrbitCamera* create(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
     
-    /** initializes a CCOrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
+    /** initializes a OrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
     bool initWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
     /** positions the camera according to spherical coordinates */
     void sphericalRadius(float *r, float *zenith, float *azimuth);
     // super methods
 	/** returns a new clone of the action */
-	CCOrbitCamera *clone() const;
-    virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void startWithTarget(CCNode *pTarget);
+	OrbitCamera *clone() const;
+    virtual Object* copyWithZone(Zone* pZone);
+    virtual void startWithTarget(Node *pTarget);
     virtual void update(float time);
 
 protected:

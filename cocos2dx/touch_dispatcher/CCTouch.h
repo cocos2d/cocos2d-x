@@ -35,28 +35,28 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL CCTouch : public CCObject
+class CC_DLL Touch : public Object
 {
 public:
-    CCTouch() 
+    Touch() 
         : _id(0),
         _startPointCaptured(false)
     {}
 
     /** returns the current touch location in OpenGL coordinates */
-    CCPoint getLocation() const;
+    Point getLocation() const;
     /** returns the previous touch location in OpenGL coordinates */
-    CCPoint getPreviousLocation() const;
+    Point getPreviousLocation() const;
     /** returns the start touch location in OpenGL coordinates */
-    CCPoint getStartLocation() const;
+    Point getStartLocation() const;
     /** returns the delta of 2 current touches locations in screen coordinates */
-    CCPoint getDelta() const;
+    Point getDelta() const;
     /** returns the current touch location in screen coordinates */
-    CCPoint getLocationInView() const;
+    Point getLocationInView() const;
     /** returns the previous touch location in screen coordinates */
-    CCPoint getPreviousLocationInView() const;
+    Point getPreviousLocationInView() const;
     /** returns the start touch location in screen coordinates */
-    CCPoint getStartLocationInView() const;
+    Point getStartLocationInView() const;
     
     void setTouchInfo(int id, float x, float y)
     {
@@ -79,12 +79,12 @@ public:
 private:
     int _id;
     bool _startPointCaptured;
-    CCPoint _startPoint;
-    CCPoint _point;
-    CCPoint _prevPoint;
+    Point _startPoint;
+    Point _point;
+    Point _prevPoint;
 };
 
-class CC_DLL CCEvent : public CCObject
+class CC_DLL Event : public Object
 {
 };
 

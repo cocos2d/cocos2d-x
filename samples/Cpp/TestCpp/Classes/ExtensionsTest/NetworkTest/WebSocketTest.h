@@ -14,7 +14,7 @@
 #include "WebSocket.h"
 
 class WebSocketTestLayer
-: public cocos2d::CCLayer
+: public cocos2d::Layer
 , public cocos2d::extension::WebSocket::Delegate
 {
 public:
@@ -26,20 +26,20 @@ public:
     virtual void onClose(cocos2d::extension::WebSocket* ws);
     virtual void onError(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::ErrorCode& error);
     
-    void toExtensionsMainLayer(cocos2d::CCObject *sender);
+    void toExtensionsMainLayer(cocos2d::Object *sender);
     
     // Menu Callbacks
-    void onMenuSendTextClicked(cocos2d::CCObject *sender);
-    void onMenuSendBinaryClicked(cocos2d::CCObject *sender);
+    void onMenuSendTextClicked(cocos2d::Object *sender);
+    void onMenuSendBinaryClicked(cocos2d::Object *sender);
 
 private:
     cocos2d::extension::WebSocket* _wsiSendText;
     cocos2d::extension::WebSocket* _wsiSendBinary;
     cocos2d::extension::WebSocket* _wsiError;
     
-    cocos2d::CCLabelTTF* _sendTextStatus;
-    cocos2d::CCLabelTTF* _sendBinaryStatus;
-    cocos2d::CCLabelTTF* _errorStatus;
+    cocos2d::LabelTTF* _sendTextStatus;
+    cocos2d::LabelTTF* _sendBinaryStatus;
+    cocos2d::LabelTTF* _errorStatus;
     
     int _sendTextTimes;
     int _sendBinaryTimes;

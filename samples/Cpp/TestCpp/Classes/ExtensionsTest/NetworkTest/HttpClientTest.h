@@ -4,25 +4,25 @@
 #include "cocos2d.h"
 #include "cocos-ext.h"
 
-class HttpClientTest : public cocos2d::CCLayer
+class HttpClientTest : public cocos2d::Layer
 {
 public:
     HttpClientTest();
     virtual ~HttpClientTest();
-    void toExtensionsMainLayer(cocos2d::CCObject *sender);
+    void toExtensionsMainLayer(cocos2d::Object *sender);
     
     //Menu Callbacks
-    void onMenuGetTestClicked(cocos2d::CCObject *sender);
-    void onMenuPostTestClicked(cocos2d::CCObject *sender);
-    void onMenuPostBinaryTestClicked(cocos2d::CCObject *sender);
-    void onMenuPutTestClicked(cocos2d::CCObject *sender);
-    void onMenuDeleteTestClicked(cocos2d::CCObject *sender);
+    void onMenuGetTestClicked(cocos2d::Object *sender);
+    void onMenuPostTestClicked(cocos2d::Object *sender);
+    void onMenuPostBinaryTestClicked(cocos2d::Object *sender);
+    void onMenuPutTestClicked(cocos2d::Object *sender);
+    void onMenuDeleteTestClicked(cocos2d::Object *sender);
     
     //Http Response Callback
-    void onHttpRequestCompleted(cocos2d::extension::CCHttpClient *sender, cocos2d::extension::CCHttpResponse *response);
+    void onHttpRequestCompleted(cocos2d::extension::HttpClient *sender, cocos2d::extension::HttpResponse *response);
 
 private:
-    cocos2d::CCLabelTTF* _labelStatusCode;
+    cocos2d::LabelTTF* _labelStatusCode;
 };
 
 void runHttpClientTest();

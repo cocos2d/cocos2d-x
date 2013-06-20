@@ -6,7 +6,7 @@
 /* Forward declaration. */
 class CCBReader;
 
-class ScrollViewTestLayerLoader : public cocos2d::extension::CCLayerLoader {
+class ScrollViewTestLayerLoader : public cocos2d::extension::LayerLoader {
     public:
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(ScrollViewTestLayerLoader, loader);
 

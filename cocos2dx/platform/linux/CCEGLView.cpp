@@ -1,5 +1,5 @@
 /*
- * CCEGLViewlinux.cpp
+ * EGLViewlinux.cpp
  *
  *  Created on: Aug 8, 2011
  *      Author: laschweinski
@@ -78,13 +78,13 @@ bool initExtensions() {
 
 NS_CC_BEGIN
 
-CCEGLView::CCEGLView()
+EGLView::EGLView()
 : bIsInit(false)
 , _frameZoomFactor(1.0f)
 {
 }
 
-CCEGLView::~CCEGLView()
+EGLView::~EGLView()
 {
 }
 
@@ -94,9 +94,9 @@ void keyEventHandle(int iKeyID,int iKeyState) {
 	}
 
 	if (iKeyID == GLFW_KEY_DEL) {
-		CCIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+		IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
 	} else if (iKeyID == GLFW_KEY_ENTER) {
-		CCIMEDispatcher::sharedDispatcher()->dispatchInsertText("\n", 1);
+		IMEDispatcher::sharedDispatcher()->dispatchInsertText("\n", 1);
 	} else if (iKeyID == GLFW_KEY_TAB) {
 
 	}
@@ -108,18 +108,18 @@ void charEventHandle(int iCharID,int iCharState) {
 	}
 
 	// ascii char
-	CCIMEDispatcher::sharedDispatcher()->dispatchInsertText((const char *)&iCharID, 1);
+	IMEDispatcher::sharedDispatcher()->dispatchInsertText((const char *)&iCharID, 1);
 }
 
 void mouseButtonEventHandle(int iMouseID,int iMouseState) {
 	if (iMouseID == GLFW_MOUSE_BUTTON_LEFT) {
-        CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
+        EGLView* pEGLView = EGLView::sharedOpenGLView();
 		//get current mouse pos
 		int x,y;
 		glfwGetMousePos(&x, &y);
-		CCPoint oPoint((float)x,(float)y);
+		Point oPoint((float)x,(float)y);
 		/*
-		if (!CCRect::CCRectContainsPoint(s_pMainWindow->_rcViewPort,oPoint))
+		if (!Rect::RectContainsPoint(s_pMainWindow->_rcViewPort,oPoint))
 		{
 			CCLOG("not in the viewport");
 			return;
@@ -142,7 +142,7 @@ void mousePosEventHandle(int iPosX,int iPosY) {
 
 	//to test move
 	if (iButtonState == GLFW_PRESS) {
-            CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
+            EGLView* pEGLView = EGLView::sharedOpenGLView();
             int id = 0;
             float x = (float)iPosX;
             float y = (float)iPosY;
@@ -153,14 +153,14 @@ void mousePosEventHandle(int iPosX,int iPosY) {
 }
 
 int closeEventHandle() {
-	CCDirector::sharedDirector()->end();
+	Director::sharedDirector()->end();
 	return GL_TRUE;
 }
 
 #ifdef KEYBOARD_SUPPORT
 void GLFWCALL keyboardEventHandle(int keyCode, int action)
 {
-    CCKeyboardDispatcher *kbDisp = CCDirector::sharedDirector()->getKeyboardDispatcher();
+    KeyboardDispatcher *kbDisp = Director::sharedDirector()->getKeyboardDispatcher();
 
     switch (action)
     {   
@@ -174,7 +174,7 @@ void GLFWCALL keyboardEventHandle(int keyCode, int action)
 }
 #endif
 
-void CCEGLView::setFrameSize(float width, float height)
+void EGLView::setFrameSize(float width, float height)
 {
 	bool eResult = false;
 	int u32GLFWFlags = GLFW_WINDOW;
@@ -232,7 +232,7 @@ void CCEGLView::setFrameSize(float width, float height)
 		/* Updates actual size */
 	  //		glfwGetWindowSize(&width, &height);
 
-		CCEGLViewProtocol::setFrameSize(width, height);		
+		EGLViewProtocol::setFrameSize(width, height);		
 
 		/* Updates its title */
 		glfwSetWindowTitle("Cocos2dx-Linux");
@@ -265,19 +265,19 @@ void CCEGLView::setFrameSize(float width, float height)
 	}
 }
 
-void CCEGLView::setFrameZoomFactor(float fZoomFactor)
+void EGLView::setFrameZoomFactor(float fZoomFactor)
 {
     _frameZoomFactor = fZoomFactor;
     glfwSetWindowSize(_screenSize.width * fZoomFactor, _screenSize.height * fZoomFactor);
-    CCDirector::sharedDirector()->setProjection(CCDirector::sharedDirector()->getProjection());
+    Director::sharedDirector()->setProjection(Director::sharedDirector()->getProjection());
 }
 
-float CCEGLView::getFrameZoomFactor()
+float EGLView::getFrameZoomFactor()
 {
     return _frameZoomFactor;
 }
 
-void CCEGLView::setViewPortInPoints(float x , float y , float w , float h)
+void EGLView::setViewPortInPoints(float x , float y , float w , float h)
 {
     glViewport((GLint)(x * _scaleX * _frameZoomFactor+ _viewPortRect.origin.x * _frameZoomFactor),
         (GLint)(y * _scaleY * _frameZoomFactor + _viewPortRect.origin.y * _frameZoomFactor),
@@ -285,7 +285,7 @@ void CCEGLView::setViewPortInPoints(float x , float y , float w , float h)
         (GLsizei)(h * _scaleY * _frameZoomFactor));
 }
 
-void CCEGLView::setScissorInPoints(float x , float y , float w , float h)
+void EGLView::setScissorInPoints(float x , float y , float w , float h)
 {
     glScissor((GLint)(x * _scaleX * _frameZoomFactor + _viewPortRect.origin.x * _frameZoomFactor),
               (GLint)(y * _scaleY * _frameZoomFactor + _viewPortRect.origin.y * _frameZoomFactor),
@@ -294,12 +294,12 @@ void CCEGLView::setScissorInPoints(float x , float y , float w , float h)
 }
 
 
-bool CCEGLView::isOpenGLReady()
+bool EGLView::isOpenGLReady()
 {
 	return bIsInit;
 }
 
-void CCEGLView::end()
+void EGLView::end()
 {
 	/* Exits from GLFW */
 	glfwTerminate();
@@ -307,18 +307,18 @@ void CCEGLView::end()
 	exit(0);
 }
 
-void CCEGLView::swapBuffers() {
+void EGLView::swapBuffers() {
 	if (bIsInit) {
 		/* Swap buffers */
 		glfwSwapBuffers();
 	}
 }
 
-void CCEGLView::setIMEKeyboardState(bool bOpen) {
+void EGLView::setIMEKeyboardState(bool bOpen) {
 
 }
 
-bool CCEGLView::initGL()
+bool EGLView::initGL()
 {
     GLenum GlewInitResult = glewInit();
     if (GLEW_OK != GlewInitResult) 
@@ -351,7 +351,7 @@ bool CCEGLView::initGL()
     return true;
 }
 
-void CCEGLView::destroyGL()
+void EGLView::destroyGL()
 {
 	/*
     if (_DC != NULL && _RC != NULL)
@@ -363,12 +363,12 @@ void CCEGLView::destroyGL()
 	*/
 }
 
-CCEGLView* CCEGLView::sharedOpenGLView()
+EGLView* EGLView::sharedOpenGLView()
 {
-    static CCEGLView* s_pEglView = NULL;
+    static EGLView* s_pEglView = NULL;
     if (s_pEglView == NULL)
     {
-        s_pEglView = new CCEGLView();
+        s_pEglView = new EGLView();
     }
     return s_pEglView;
 }

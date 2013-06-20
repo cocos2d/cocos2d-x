@@ -30,18 +30,18 @@
 
 NS_CC_EXT_BEGIN
 
-class CCHttpClient;
-class CCHttpResponse;
-typedef void (CCObject::*SEL_HttpResponse)(CCHttpClient* client, CCHttpResponse* response);
+class HttpClient;
+class HttpResponse;
+typedef void (Object::*SEL_HttpResponse)(HttpClient* client, HttpResponse* response);
 #define httpresponse_selector(_SELECTOR) (cocos2d::extension::SEL_HttpResponse)(&_SELECTOR)
 
 /** 
- @brief defines the object which users must packed for CCHttpClient::send(HttpRequest*) method.
+ @brief defines the object which users must packed for HttpClient::send(HttpRequest*) method.
  Please refer to samples/TestCpp/Classes/ExtensionTest/NetworkTest/HttpClientTest.cpp as a sample
  @since v2.0.2
  */
 
-class CCHttpRequest : public CCObject
+class HttpRequest : public Object
 {
 public:
     /** Use this enum type as param in setReqeustType(param) */
@@ -56,11 +56,11 @@ public:
     
     /** Constructor 
         Because HttpRequest object will be used between UI thead and network thread,
-        requestObj->autorelease() is forbidden to avoid crashes in CCAutoreleasePool
+        requestObj->autorelease() is forbidden to avoid crashes in AutoreleasePool
         new/retain/release still works, which means you need to release it manually
         Please refer to HttpRequestTest.cpp to find its usage
      */
-    CCHttpRequest()
+    HttpRequest()
     {
         _requestType = kHttpUnkown;
         _url.clear();
@@ -72,7 +72,7 @@ public:
     };
     
     /** Destructor */
-    virtual ~CCHttpRequest()
+    virtual ~HttpRequest()
     {
         if (_pTarget)
         {
@@ -81,7 +81,7 @@ public:
     };
     
     /** Override autorelease method to avoid developers to call it */
-    CCObject* autorelease(void)
+    Object* autorelease(void)
     {
         CCAssert(false, "HttpResponse is used between network thread and ui thread \
                  therefore, autorelease is forbidden here");
@@ -163,12 +163,12 @@ public:
     
     /** Required field. You should set the callback selector function at ack the http request completed
      */
-    CC_DEPRECATED_ATTRIBUTE inline void setResponseCallback(CCObject* pTarget, SEL_CallFuncND pSelector)
+    CC_DEPRECATED_ATTRIBUTE inline void setResponseCallback(Object* pTarget, SEL_CallFuncND pSelector)
     {
         setResponseCallback(pTarget, (SEL_HttpResponse) pSelector);
     }
 
-    inline void setResponseCallback(CCObject* pTarget, SEL_HttpResponse pSelector)
+    inline void setResponseCallback(Object* pTarget, SEL_HttpResponse pSelector)
     {
         _pTarget = pTarget;
         _pSelector = pSelector;
@@ -178,8 +178,8 @@ public:
             _pTarget->retain();
         }
     }    
-    /** Get the target of callback selector funtion, mainly used by CCHttpClient */
-    inline CCObject* getTarget()
+    /** Get the target of callback selector funtion, mainly used by HttpClient */
+    inline Object* getTarget()
     {
         return _pTarget;
     }
@@ -197,7 +197,7 @@ public:
         SEL_HttpResponse _cb;
     };
     
-    /** Get the selector function pointer, mainly used by CCHttpClient */
+    /** Get the selector function pointer, mainly used by HttpClient */
     inline _prxy getSelector()
     {
         return _prxy(_pSelector);
@@ -222,8 +222,8 @@ protected:
     std::string                 _url;            /// target url that this request is sent to
     std::vector<char>           _requestData;    /// used for POST
     std::string                 _tag;            /// user defined tag, to identify different requests in response callback
-    CCObject*          _pTarget;        /// callback target of pSelector function
-    SEL_HttpResponse            _pSelector;      /// callback function, e.g. MyLayer::onHttpResponse(CCHttpClient *sender, CCHttpResponse * response)
+    Object*          _pTarget;        /// callback target of pSelector function
+    SEL_HttpResponse            _pSelector;      /// callback function, e.g. MyLayer::onHttpResponse(HttpClient *sender, HttpResponse * response)
     void*                       _pUserData;      /// You can add your customed data here 
     std::vector<std::string>    _headers;		      /// custom http headers
 };

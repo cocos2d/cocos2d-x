@@ -50,6 +50,7 @@ typedef enum {
 - (void) configDeveloperInfo: (NSMutableDictionary*) devInfo;
 - (void) showAds: (int) type size:(int) sizeEnum position:(int) pos;
 - (void) hideAds: (int) type;
+- (void) queryPoints;
 - (void) spendPoints: (int) points;
 - (void) setDebugMode: (BOOL) isDebugMode;
 - (NSString*) getSDKVersion;

@@ -1,5 +1,5 @@
 /*
- * CCControlScene.m
+ * ControlScene.m
  *
  * Copyright (c) 2011 Yannick Loriot
  *
@@ -27,50 +27,50 @@
 #include "CCControlSceneManager.h"
 #include "../ExtensionsTest.h"
 
-CCControlScene::CCControlScene()
+ControlScene::ControlScene()
 : _sceneTitleLabel(NULL)
 {
 
 }
 
-CCControlScene::~CCControlScene()
+ControlScene::~ControlScene()
 {
     CC_SAFE_RELEASE_NULL(_sceneTitleLabel);
 }
 
-bool CCControlScene::init()
+bool ControlScene::init()
 {
-    if (CCLayer::init())
+    if (Layer::init())
     {    
-        CCMenuItemFont* pBackItem = CCMenuItemFont::create("Back", CC_CALLBACK_1(CCControlScene::toExtensionsMainLayer, this));
+        MenuItemFont* pBackItem = MenuItemFont::create("Back", CC_CALLBACK_1(ControlScene::toExtensionsMainLayer, this));
         pBackItem->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-        CCMenu* pBackMenu = CCMenu::create(pBackItem, NULL);
-        pBackMenu->setPosition( CCPointZero );
+        Menu* pBackMenu = Menu::create(pBackItem, NULL);
+        pBackMenu->setPosition( PointZero );
         addChild(pBackMenu, 10);
 
         // Add the generated background
-        CCSprite *background = CCSprite::create("extensions/background.png");
+        Sprite *background = Sprite::create("extensions/background.png");
         background->setPosition(VisibleRect::center());
         addChild(background);
         
         // Add the ribbon
-        CCScale9Sprite *ribbon = CCScale9Sprite::create("extensions/ribbon.png", CCRectMake(1, 1, 48, 55));
+        Scale9Sprite *ribbon = Scale9Sprite::create("extensions/ribbon.png", CCRectMake(1, 1, 48, 55));
         ribbon->setContentSize(CCSizeMake(VisibleRect::getVisibleRect().size.width, 57));
         ribbon->setPosition(ccp(VisibleRect::center().x, VisibleRect::top().y - ribbon->getContentSize().height / 2.0f));
         addChild(ribbon);
         
         // Add the title
-        setSceneTitleLabel(CCLabelTTF::create("Title", "Arial", 12));
+        setSceneTitleLabel(LabelTTF::create("Title", "Arial", 12));
         _sceneTitleLabel->setPosition(ccp (VisibleRect::center().x, VisibleRect::top().y - _sceneTitleLabel->getContentSize().height / 2 - 5));
         addChild(_sceneTitleLabel, 1);
         
         // Add the menu
-        CCMenuItemImage *item1 = CCMenuItemImage::create("Images/b1.png", "Images/b2.png", CC_CALLBACK_1(CCControlScene::previousCallback, this));
-        CCMenuItemImage *item2 = CCMenuItemImage::create("Images/r1.png", "Images/r2.png", CC_CALLBACK_1(CCControlScene::restartCallback, this));
-        CCMenuItemImage *item3 = CCMenuItemImage::create("Images/f1.png", "Images/f2.png", CC_CALLBACK_1(CCControlScene::nextCallback, this));
+        MenuItemImage *item1 = MenuItemImage::create("Images/b1.png", "Images/b2.png", CC_CALLBACK_1(ControlScene::previousCallback, this));
+        MenuItemImage *item2 = MenuItemImage::create("Images/r1.png", "Images/r2.png", CC_CALLBACK_1(ControlScene::restartCallback, this));
+        MenuItemImage *item3 = MenuItemImage::create("Images/f1.png", "Images/f2.png", CC_CALLBACK_1(ControlScene::nextCallback, this));
         
-        CCMenu *menu = CCMenu::create(item1, item3, item2, NULL);
-        menu->setPosition(CCPointZero);
+        Menu *menu = Menu::create(item1, item3, item2, NULL);
+        menu->setPosition(PointZero);
         item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
         item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
         item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
@@ -82,25 +82,25 @@ bool CCControlScene::init()
     return false;
 }
 
-void CCControlScene::toExtensionsMainLayer(CCObject* sender)
+void ControlScene::toExtensionsMainLayer(Object* sender)
 {
     ExtensionsTestScene* pScene = new ExtensionsTestScene();
     pScene->runThisTest();
     pScene->release();
 }
 
-void CCControlScene::previousCallback(CCObject* sender)
+void ControlScene::previousCallback(Object* sender)
 {
-    CCDirector::sharedDirector()->replaceScene(CCControlSceneManager::sharedControlSceneManager()->previousControlScene());
+    Director::sharedDirector()->replaceScene(ControlSceneManager::sharedControlSceneManager()->previousControlScene());
 }
 
-void CCControlScene::restartCallback(CCObject* sender)
+void ControlScene::restartCallback(Object* sender)
 {
-    CCDirector::sharedDirector()->replaceScene(CCControlSceneManager::sharedControlSceneManager()->currentControlScene());
+    Director::sharedDirector()->replaceScene(ControlSceneManager::sharedControlSceneManager()->currentControlScene());
 }
 
-void CCControlScene::nextCallback(CCObject* sender)
+void ControlScene::nextCallback(Object* sender)
 {
-    CCDirector::sharedDirector()->replaceScene(CCControlSceneManager::sharedControlSceneManager()->nextControlScene());
+    Director::sharedDirector()->replaceScene(ControlSceneManager::sharedControlSceneManager()->nextControlScene());
 }
 

@@ -9,9 +9,9 @@
 
 #include "Bug-1159.h"
 
-CCScene* Bug1159Layer::scene()
+Scene* Bug1159Layer::scene()
 {
-    CCScene *pScene = CCScene::create();
+    Scene *pScene = Scene::create();
     Bug1159Layer* layer = Bug1159Layer::create();
     pScene->addChild(layer);
 
@@ -22,31 +22,31 @@ bool Bug1159Layer::init()
 {
     if (BugsTestBaseLayer::init())
     {
-        CCDirector::sharedDirector()->setDepthTest(true);
-        CCSize s = CCDirector::sharedDirector()->getWinSize();
+        Director::sharedDirector()->setDepthTest(true);
+        Size s = Director::sharedDirector()->getWinSize();
 
-        CCLayerColor *background = CCLayerColor::create(ccc4(255, 0, 255, 255));
+        LayerColor *background = LayerColor::create(ccc4(255, 0, 255, 255));
         addChild(background);
 
-        CCLayerColor *sprite_a = CCLayerColor::create(ccc4(255, 0, 0, 255), 700, 700);
+        LayerColor *sprite_a = LayerColor::create(ccc4(255, 0, 0, 255), 700, 700);
         sprite_a->setAnchorPoint(ccp(0.5f, 0.5f));
         sprite_a->ignoreAnchorPointForPosition(false);
         sprite_a->setPosition(ccp(0.0f, s.height/2));
         addChild(sprite_a);
 
-        sprite_a->runAction(CCRepeatForever::create(CCSequence::create(
-                                                        CCMoveTo::create(1.0f, ccp(1024.0f, 384.0f)),
-                                                        CCMoveTo::create(1.0f, ccp(0.0f, 384.0f)),
+        sprite_a->runAction(RepeatForever::create(Sequence::create(
+                                                        MoveTo::create(1.0f, ccp(1024.0f, 384.0f)),
+                                                        MoveTo::create(1.0f, ccp(0.0f, 384.0f)),
                                                         NULL)));
 
-        CCLayerColor *sprite_b = CCLayerColor::create(ccc4(0, 0, 255, 255), 400, 400);
+        LayerColor *sprite_b = LayerColor::create(ccc4(0, 0, 255, 255), 400, 400);
         sprite_b->setAnchorPoint(ccp(0.5f, 0.5f));
         sprite_b->ignoreAnchorPointForPosition(false);
         sprite_b->setPosition(ccp(s.width/2, s.height/2));
         addChild(sprite_b);
 
-        CCMenuItemLabel *label = CCMenuItemLabel::create(CCLabelTTF::create("Flip Me", "Helvetica", 24), CC_CALLBACK_1(Bug1159Layer::callBack, this) );
-        CCMenu *menu = CCMenu::create(label, NULL);
+        MenuItemLabel *label = MenuItemLabel::create(LabelTTF::create("Flip Me", "Helvetica", 24), CC_CALLBACK_1(Bug1159Layer::callBack, this) );
+        Menu *menu = Menu::create(label, NULL);
         menu->setPosition(ccp(s.width - 200.0f, 50.0f));
         addChild(menu);
 
@@ -56,13 +56,13 @@ bool Bug1159Layer::init()
     return false;
 }
 
-void Bug1159Layer::callBack(CCObject* pSender)
+void Bug1159Layer::callBack(Object* pSender)
 {
-    CCDirector::sharedDirector()->replaceScene(CCTransitionPageTurn::create(1.0f, Bug1159Layer::scene(), false));
+    Director::sharedDirector()->replaceScene(TransitionPageTurn::create(1.0f, Bug1159Layer::scene(), false));
 }
 
 void Bug1159Layer::onExit()
 {
-    CCDirector::sharedDirector()->setDepthTest(false);
+    Director::sharedDirector()->setDepthTest(false);
     BugsTestBaseLayer::onExit();
 }
