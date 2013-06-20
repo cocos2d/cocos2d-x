@@ -56,7 +56,7 @@ public:
     virtual void onEnter();
 };
 
-class TexturePVR : public TextureDemo
+class TexturePVRTest : public TextureDemo
 {
 public:
     virtual std::string title();

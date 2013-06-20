@@ -427,7 +427,7 @@ std::string TexturePVR2BPP::title()
 // http://developer.apple.com/iphone/library/qa/qa2008/qa1611.html
 //
 //------------------------------------------------------------------
-void TexturePVR::onEnter()
+void TexturePVRTest::onEnter()
 {
     TextureDemo::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
@@ -447,7 +447,7 @@ void TexturePVR::onEnter()
     
 }
 
-std::string TexturePVR::title()
+std::string TexturePVRTest::title()
 {
     return "PVR TC 4bpp Test #2";
 }
