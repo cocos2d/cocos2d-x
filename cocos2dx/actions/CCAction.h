@@ -46,7 +46,7 @@ enum {
 /** 
 @brief Base class for Action objects.
  */
-class CC_DLL Action : public Object, public Clonable
+class CC_DLL Action : public Clonable, public Object
 {
 public:
     Action(void);
