@@ -14,7 +14,7 @@ USING_NS_CC;
 USING_NS_CC_EXT;
 
 class JSB_ScrollViewDelegate
-: public Node
+: public Object
 , public ScrollViewDelegate
 {
 public:
@@ -82,12 +82,7 @@ static JSBool js_cocos2dx_CCScrollView_setDelegate(JSContext *cx, uint32_t argc,
         JSB_ScrollViewDelegate* nativeDelegate = new JSB_ScrollViewDelegate();
         nativeDelegate->setJSDelegate(jsDelegate);
         
-        JSB_ScrollViewDelegate* oldDelegate = (JSB_ScrollViewDelegate*)cobj->getDelegate();
-        if (oldDelegate)
-        {
-            oldDelegate->removeFromParent();
-        }
-        cobj->addChild(nativeDelegate);
+        cobj->setUserObject(nativeDelegate);
         cobj->setDelegate(nativeDelegate);
         
         nativeDelegate->release();
@@ -99,8 +94,12 @@ static JSBool js_cocos2dx_CCScrollView_setDelegate(JSContext *cx, uint32_t argc,
     return JS_FALSE;
 }
 
+
+#define KEY_TABLEVIEW_DATA_SOURCE  "TableViewDataSource"
+#define KEY_TABLEVIEW_DELEGATE     "TableViewDelegate"
+
 class JSB_TableViewDelegate
-: public Node
+: public Object
 , public TableViewDelegate
 {
 public:
@@ -206,13 +205,16 @@ static JSBool js_cocos2dx_CCTableView_setDelegate(JSContext *cx, uint32_t argc, 
         JSB_TableViewDelegate* nativeDelegate = new JSB_TableViewDelegate();
         nativeDelegate->setJSDelegate(jsDelegate);
         
-        
-        JSB_TableViewDelegate* oldDelegate = (JSB_TableViewDelegate*)cobj->getDelegate();
-        if (oldDelegate)
+        Dictionary* userDict = static_cast<Dictionary*>(cobj->getUserObject());
+        if (NULL == userDict)
         {
-            oldDelegate->removeFromParent();
+            userDict = new Dictionary();
+            cobj->setUserObject(userDict);
+            userDict->release();
         }
-        cobj->addChild(nativeDelegate);
+        
+        userDict->setObject(nativeDelegate, KEY_TABLEVIEW_DELEGATE);
+        
         cobj->setDelegate(nativeDelegate);
         
         nativeDelegate->release();
@@ -225,7 +227,7 @@ static JSBool js_cocos2dx_CCTableView_setDelegate(JSContext *cx, uint32_t argc, 
 }
 
 class JSB_TableViewDataSource
-: public Node
+: public Object
 , public TableViewDataSource
 {
 public:
@@ -384,12 +386,16 @@ static JSBool js_cocos2dx_CCTableView_setDataSource(JSContext *cx, uint32_t argc
         JSB_TableViewDataSource* pNativeSource = new JSB_TableViewDataSource();
         pNativeSource->setTableViewDataSource(JSVAL_TO_OBJECT(argv[0]));
     
-        JSB_TableViewDataSource* oldDataSource = (JSB_TableViewDataSource*)cobj->getDataSource();
-        if (oldDataSource)
+        Dictionary* userDict = static_cast<Dictionary*>(cobj->getUserObject());
+        if (NULL == userDict)
         {
-            oldDataSource->removeFromParent();
+            userDict = new Dictionary();
+            cobj->setUserObject(userDict);
+            userDict->release();
         }
-        cobj->addChild(pNativeSource);
+
+        userDict->setObject(pNativeSource, KEY_TABLEVIEW_DATA_SOURCE);
+
         cobj->setDataSource(pNativeSource);
         
         pNativeSource->release();
@@ -416,12 +422,6 @@ static JSBool js_cocos2dx_CCTableView_create(JSContext *cx, uint32_t argc, jsval
         cocos2d::extension::TableView* ret = NULL;
         ret = new TableView();
         ret->autorelease();
-        
-        JSB_TableViewDataSource* oldDataSource = (JSB_TableViewDataSource*)ret->getDataSource();
-        if (oldDataSource)
-        {
-            oldDataSource->removeFromParent();
-        }
         
         ret->setDataSource(pNativeSource);
         
@@ -454,7 +454,11 @@ static JSBool js_cocos2dx_CCTableView_create(JSContext *cx, uint32_t argc, jsval
         }
         ret->reloadData();
         
-        ret->addChild(pNativeSource);
+        Dictionary* userDict = new Dictionary();
+        userDict->setObject(pNativeSource, KEY_TABLEVIEW_DATA_SOURCE);
+        ret->setUserObject(userDict);
+        userDict->release();
+        
         pNativeSource->release();
         
         JS_SET_RVAL(cx, vp, jsret);
@@ -466,7 +470,7 @@ static JSBool js_cocos2dx_CCTableView_create(JSContext *cx, uint32_t argc, jsval
 }
 
 class JSB_EditBoxDelegate
-: public Node
+: public Object
 , public EditBoxDelegate
 {
 public:
@@ -556,12 +560,7 @@ static JSBool js_cocos2dx_CCEditBox_setDelegate(JSContext *cx, uint32_t argc, js
         JSB_EditBoxDelegate* nativeDelegate = new JSB_EditBoxDelegate();
         nativeDelegate->setJSDelegate(jsDelegate);
         
-        JSB_EditBoxDelegate* oldDelegate = (JSB_EditBoxDelegate*)cobj->getDelegate();
-        if (oldDelegate)
-        {
-            oldDelegate->removeFromParent();
-        }
-        cobj->addChild(nativeDelegate);
+        cobj->setUserObject(nativeDelegate);
         cobj->setDelegate(nativeDelegate);
         
         nativeDelegate->release();
