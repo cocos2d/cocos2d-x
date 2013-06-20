@@ -95,10 +95,10 @@ public:
     virtual std::string title();
 };
 
-class LayerGradient : public LayerTest
+class LayerGradientTest : public LayerTest
 {
 public:
-    LayerGradient();
+    LayerGradientTest();
     virtual void ccTouchesMoved(CCSet * touches, CCEvent *event);
     virtual std::string title();
     virtual std::string subtitle();

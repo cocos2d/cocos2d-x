@@ -584,7 +584,7 @@ std::string LayerTestBlend::title()
 // LayerGradient
 //
 //------------------------------------------------------------------
-LayerGradient::LayerGradient()
+LayerGradientTest::LayerGradientTest()
 {
     CCLayerGradient* layer1 = CCLayerGradient::create(ccc4(255,0,0,255), ccc4(0,255,0,255), ccp(0.9f, 0.9f));
     addChild(layer1, 0, kTagLayer);
@@ -603,13 +603,13 @@ LayerGradient::LayerGradient()
     menu->setPosition(ccp(s.width / 2, 100));
 }
 
-void LayerGradient::toggleItem(CCObject *sender)
+void LayerGradientTest::toggleItem(CCObject *sender)
 {
     CCLayerGradient *gradient = (CCLayerGradient*)getChildByTag(kTagLayer);
     gradient->setCompressedInterpolation(! gradient->isCompressedInterpolation());
 }
 
-void LayerGradient::ccTouchesMoved(CCSet * touches, CCEvent *event)
+void LayerGradientTest::ccTouchesMoved(CCSet * touches, CCEvent *event)
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
@@ -624,12 +624,12 @@ void LayerGradient::ccTouchesMoved(CCSet * touches, CCEvent *event)
     gradient->setVector(diff);
 }
 
-std::string LayerGradient::title()
+std::string LayerGradientTest::title()
 {
-    return "LayerGradient";
+    return "LayerGradientTest";
 }
 
-string LayerGradient::subtitle()
+string LayerGradientTest::subtitle()
 {
     return "Touch the screen and move your finger";
 }
