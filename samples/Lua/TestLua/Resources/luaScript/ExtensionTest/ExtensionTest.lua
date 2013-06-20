@@ -12,7 +12,8 @@ local ExtensionTestEnum =
     TEST_WEBSOCKET          = 3,
     TEST_EDITBOX            = 4,
 	TEST_TABLEVIEW          = 5,
-    TEST_MAX_COUNT          = 6,
+    TEST_SCROLLVIEW         = 6,
+    TEST_MAX_COUNT          = 7,
 }
 
 local testsName =
@@ -23,6 +24,7 @@ local testsName =
     "WebSocketTest",
     "EditBoxTest",
     "TableViewTest",
+    "ScrollViewTest",
 }
 
 --Create toMainLayr MenuItem
@@ -60,10 +62,10 @@ local function runNotificationCenterTest()
 		local pNewScene = CCScene:create()
 		local pNewLayer = CCLayer:create()
 		local function BaseInitSceneLayer(pLayer)
-		  if nil == pLayer then
-			  return
-		  end
-		  local s = CCDirector:sharedDirector():getWinSize()
+		if nil == pLayer then
+			return
+		end
+		local s = CCDirector:sharedDirector():getWinSize()
     	
     	local function toggleSwitch(tag,menuItem)
     		local toggleItem = tolua.cast(menuItem,"CCMenuItemToggle")
@@ -995,21 +997,96 @@ local function runEditBoxTest()
 	return newScene
 end
 
+local function runScrollViewTest()
+    local newScene = CCScene:create()
+    local newLayer = CCLayer:create()
+
+    -- Back Menu
+    local pToMainMenu = CCMenu:create()
+    CreateExtensionsBasicLayerMenu(pToMainMenu)
+    pToMainMenu:setPosition(ccp(0, 0))
+    newLayer:addChild(pToMainMenu,10)
+
+    local layerColor = CCLayerColor:create(ccc4(128,64,0,255))
+    newLayer:addChild(layerColor)
+
+    local scrollView1 = CCScrollView:create()
+    local screenSize = CCDirector:sharedDirector():getWinSize()
+    local function scrollView1DidScroll()
+        print("scrollView1DidScroll")
+    end
+    local function scrollView1DidZoom()
+        print("scrollView1DidZoom")
+    end
+    if nil ~= scrollView1 then
+        scrollView1:setViewSize(CCSizeMake(240,320))
+        scrollView1:setPosition(CCPointMake(0,0))
+        scrollView1:setScale(1.0)
+        scrollView1:ignoreAnchorPointForPosition(true)
+        local flowersprite1 =  CCSprite:create("ccb/flower.jpg")
+        if nil ~= flowersprite1 then
+            scrollView1:setContainer(flowersprite1)
+            scrollView1:updateInset()
+        end
+        scrollView1:setDirection(kCCScrollViewDirectionBoth)
+        scrollView1:setClippingToBounds(true)
+        scrollView1:setBounceable(true)
+        scrollView1:setDelegate()
+        scrollView1:registerScriptHandler(scrollView1DidScroll,kScrollViewScriptScroll)
+        scrollView1:registerScriptHandler(scrollView1DidZoom,kScrollViewScriptZoom)
+    end
+    newLayer:addChild(scrollView1)
+
+    local scrollView2 = CCScrollView:create()
+    local function scrollView2DidScroll()
+        print("scrollView2DidScroll")
+    end
+    local function scrollView2DidZoom()
+        print("scrollView2DidZoom")
+    end
+    if nil ~= scrollView2 then
+        scrollView2:setViewSize(CCSizeMake(240,320))
+        scrollView2:setPosition(CCPointMake(screenSize.width / 2,0))
+        scrollView2:setScale(1.0)
+        scrollView2:ignoreAnchorPointForPosition(true)
+        local flowersprite2 =  CCSprite:create("ccb/flower.jpg")
+        if nil ~= flowersprite2 then
+            scrollView2:setContainer(flowersprite2)
+            scrollView2:updateInset()
+        end
+        scrollView2:setDirection(kCCScrollViewDirectionBoth)
+        scrollView2:setClippingToBounds(true)
+        scrollView2:setBounceable(true)
+        scrollView2:setDelegate()
+        scrollView2:registerScriptHandler(scrollView2DidScroll,kScrollViewScriptScroll)
+        scrollView2:registerScriptHandler(scrollView2DidZoom,kScrollViewScriptZoom)
+    end
+    newLayer:addChild(scrollView2)
+
+    newScene:addChild(newLayer)
+    return newScene
+end
+
+
+
 local CreateExtensionsTestTable = 
 {
-	runNotificationCenterTest,
-	runCCControlTest,
-	runCocosBuilder,
-	runWebSocketTest,
-	runEditBoxTest,
-	runTableViewTest,	
+    runNotificationCenterTest,
+    runCCControlTest,
+    runCocosBuilder,
+    runWebSocketTest,
+    runEditBoxTest,
+    runTableViewTest,
+    runScrollViewTest,
 }
 
-local s = CCDirector:sharedDirector():getWinSize()
 
 local function ExtensionsMainLayer()
-	
+
+	local s = CCDirector:sharedDirector():getWinSize()
+
 	local function CreateExtensionsTestScene(nPerformanceNo)
+        print(nPerformanceNo)
 	  	local pNewscene = CreateExtensionsTestTable[nPerformanceNo]()
   		return pNewscene
 	end
