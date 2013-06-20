@@ -3685,7 +3685,7 @@ static int tolua_Cocos2d_GLNode_glUniform2iv00(lua_State* tolua_S)
         {
             intArray[i-1] = (int)tolua_tofieldnumber(tolua_S, 5, i, 0);
         }
-        glUniform2iv((GLint)arg0 , (GLsizei)arg1 , (GLint*)arg2  );
+        glUniform2iv((GLint)arg0 , (GLsizei)arg1 , (GLint*)intArray  );
         CC_SAFE_DELETE_ARRAY(intArray);
     }
     return 0;
@@ -3835,7 +3835,7 @@ static int tolua_Cocos2d_GLNode_glUniform3iv00(lua_State* tolua_S)
         {
             intArray[i-1] = (int)tolua_tofieldnumber(tolua_S, 5, i, 0);
         }
-        glUniform3iv((GLint)arg0 , (GLsizei)arg1 , (GLint*)arg2  );
+        glUniform3iv((GLint)arg0 , (GLsizei)arg1 , (GLint*)intArray  );
         CC_SAFE_DELETE_ARRAY(intArray);
     }
     return 0;
@@ -3912,7 +3912,7 @@ static int tolua_Cocos2d_GLNode_glUniform4fv00(lua_State* tolua_S)
         {
             floatArray[i-1] = (float)tolua_tofieldnumber(tolua_S, 5, i, 0);
         }
-        glUniform4fv((GLint)arg0 , (GLsizei)arg1 , (GLfloat*)arg2  );
+        glUniform4fv((GLint)arg0 , (GLsizei)arg1 , (GLfloat*)floatArray  );
         CC_SAFE_DELETE_ARRAY(floatArray);
     }
     return 0;
@@ -3989,7 +3989,7 @@ static int tolua_Cocos2d_GLNode_glUniform4iv00(lua_State* tolua_S)
         {
             intArray[i-1] = (int)tolua_tofieldnumber(tolua_S, 5, i, 0);
         }
-        glUniform4iv((GLint)arg0 , (GLsizei)arg1 , (GLint*)arg2  );
+        glUniform4iv((GLint)arg0 , (GLsizei)arg1 , (GLint*)intArray  );
         CC_SAFE_DELETE_ARRAY(intArray);
     }
     return 0;
@@ -4511,7 +4511,7 @@ static int tolua_Cocos2d_GLNode_glVertexAttribPointer00(lua_State* tolua_S)
         bool arg3 = tolua_toboolean(tolua_S, 5, 0);
         int arg4 = (int)tolua_tonumber(tolua_S, 6, 0);
         int arg5 = (int)tolua_tonumber(tolua_S, 7, 0);
-        glVertexAttribPointer((GLuint)arg0 , (GLint)arg1 , (GLenum)arg2 , (GLboolean)arg3 , (GLsizei)arg4 , (GLvoid*)arg5  );
+        glVertexAttribPointer((GLuint)arg0 , (GLint)arg1 , (GLenum)arg2 , (GLboolean)arg3 , (GLsizei)arg4 , (GLvoid*)NULL);
     }
     return 0;
 #ifndef TOLUA_RELEASE
