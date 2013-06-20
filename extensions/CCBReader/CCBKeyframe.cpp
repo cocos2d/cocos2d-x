@@ -16,12 +16,12 @@ CCBKeyframe::~CCBKeyframe()
     CC_SAFE_RELEASE_NULL(mValue);
 }
 
-CCObject* CCBKeyframe::getValue()
+Object* CCBKeyframe::getValue()
 {
     return mValue;
 }
 
-void CCBKeyframe::setValue(CCObject *pValue)
+void CCBKeyframe::setValue(Object *pValue)
 {
     CC_SAFE_RELEASE(mValue);
     mValue = pValue;

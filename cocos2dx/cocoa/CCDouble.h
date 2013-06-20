@@ -34,16 +34,16 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL CCDouble : public CCObject
+class CC_DLL Double : public Object
 {
 public:
-    CCDouble(double v)
+    Double(double v)
         : _value(v) {}
     double getValue() const {return _value;}
 
-    static CCDouble* create(double v)
+    static Double* create(double v)
     {
-        CCDouble* pRet = new CCDouble(v);
+        Double* pRet = new Double(v);
         if (pRet)
         {
             pRet->autorelease();
@@ -52,7 +52,7 @@ public:
     }
 
     /* override functions */
-    virtual void acceptVisitor(CCDataVisitor &visitor) { visitor.visit(this); }
+    virtual void acceptVisitor(DataVisitor &visitor) { visitor.visit(this); }
 
 private:
     double _value;

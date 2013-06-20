@@ -40,20 +40,20 @@ THE SOFTWARE.
 
 //According to some tests GL_TRIANGLE_STRIP is slower, MUCH slower. Probably I'm doing something very wrong
 
-// implementation CCTextureAtlas
+// implementation TextureAtlas
 
 NS_CC_BEGIN
 
-CCTextureAtlas::CCTextureAtlas()
+TextureAtlas::TextureAtlas()
     :_indices(NULL)
     ,_dirty(false)
     ,_texture(NULL)
     ,_quads(NULL)
 {}
 
-CCTextureAtlas::~CCTextureAtlas()
+TextureAtlas::~TextureAtlas()
 {
-    CCLOGINFO("cocos2d: CCTextureAtlas deallocing %p.", this);
+    CCLOGINFO("cocos2d: TextureAtlas deallocing %p.", this);
 
     CC_SAFE_FREE(_quads);
     CC_SAFE_FREE(_indices);
@@ -65,48 +65,48 @@ CCTextureAtlas::~CCTextureAtlas()
 #endif
     CC_SAFE_RELEASE(_texture);
     
-    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
+    NotificationCenter::sharedNotificationCenter()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
 }
 
-unsigned int CCTextureAtlas::getTotalQuads() const
+unsigned int TextureAtlas::getTotalQuads() const
 {
     return _totalQuads;
 }
 
-unsigned int CCTextureAtlas::getCapacity() const
+unsigned int TextureAtlas::getCapacity() const
 {
     return _capacity;
 }
 
-CCTexture2D* CCTextureAtlas::getTexture()
+Texture2D* TextureAtlas::getTexture()
 {
     return _texture;
 }
 
-void CCTextureAtlas::setTexture(CCTexture2D * var)
+void TextureAtlas::setTexture(Texture2D * var)
 {
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE(_texture);
     _texture = var;
 }
 
-ccV3F_C4B_T2F_Quad* CCTextureAtlas::getQuads()
+ccV3F_C4B_T2F_Quad* TextureAtlas::getQuads()
 {
     //if someone accesses the quads directly, presume that changes will be made
     _dirty = true;
     return _quads;
 }
 
-void CCTextureAtlas::setQuads(ccV3F_C4B_T2F_Quad *var)
+void TextureAtlas::setQuads(ccV3F_C4B_T2F_Quad *var)
 {
     _quads = var;
 }
 
 // TextureAtlas - alloc & init
 
-CCTextureAtlas * CCTextureAtlas::create(const char* file, unsigned int capacity)
+TextureAtlas * TextureAtlas::create(const char* file, unsigned int capacity)
 {
-    CCTextureAtlas * pTextureAtlas = new CCTextureAtlas();
+    TextureAtlas * pTextureAtlas = new TextureAtlas();
     if(pTextureAtlas && pTextureAtlas->initWithFile(file, capacity))
     {
         pTextureAtlas->autorelease();
@@ -116,9 +116,9 @@ CCTextureAtlas * CCTextureAtlas::create(const char* file, unsigned int capacity)
     return NULL;
 }
 
-CCTextureAtlas * CCTextureAtlas::createWithTexture(CCTexture2D *texture, unsigned int capacity)
+TextureAtlas * TextureAtlas::createWithTexture(Texture2D *texture, unsigned int capacity)
 {
-    CCTextureAtlas * pTextureAtlas = new CCTextureAtlas();
+    TextureAtlas * pTextureAtlas = new TextureAtlas();
     if (pTextureAtlas && pTextureAtlas->initWithTexture(texture, capacity))
     {
         pTextureAtlas->autorelease();
@@ -128,10 +128,10 @@ CCTextureAtlas * CCTextureAtlas::createWithTexture(CCTexture2D *texture, unsigne
     return NULL;
 }
 
-bool CCTextureAtlas::initWithFile(const char * file, unsigned int capacity)
+bool TextureAtlas::initWithFile(const char * file, unsigned int capacity)
 {
     // retained in property
-    CCTexture2D *texture = CCTextureCache::sharedTextureCache()->addImage(file);
+    Texture2D *texture = TextureCache::sharedTextureCache()->addImage(file);
 
     if (texture)
     {
@@ -144,7 +144,7 @@ bool CCTextureAtlas::initWithFile(const char * file, unsigned int capacity)
     }
 }
 
-bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity)
+bool TextureAtlas::initWithTexture(Texture2D *texture, unsigned int capacity)
 {
 //    CCAssert(texture != NULL, "texture should not be null");
     _capacity = capacity;
@@ -162,7 +162,7 @@ bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity
     
     if( ! ( _quads && _indices) && _capacity > 0) 
     {
-        //CCLOG("cocos2d: CCTextureAtlas: not enough memory");
+        //CCLOG("cocos2d: TextureAtlas: not enough memory");
         CC_SAFE_FREE(_quads);
         CC_SAFE_FREE(_indices);
 
@@ -176,8 +176,8 @@ bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity
     memset( _indices, 0, _capacity * 6 * sizeof(GLushort) );
     
     // listen the event when app go to background
-    CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
-                                                           callfuncO_selector(CCTextureAtlas::listenBackToForeground),
+    NotificationCenter::sharedNotificationCenter()->addObserver(this,
+                                                           callfuncO_selector(TextureAtlas::listenBackToForeground),
                                                            EVNET_COME_TO_FOREGROUND,
                                                            NULL);
 
@@ -194,7 +194,7 @@ bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity
     return true;
 }
 
-void CCTextureAtlas::listenBackToForeground(CCObject *obj)
+void TextureAtlas::listenBackToForeground(Object *obj)
 {  
 #if CC_TEXTURE_ATLAS_USE_VAO
     setupVBOandVAO();    
@@ -206,13 +206,13 @@ void CCTextureAtlas::listenBackToForeground(CCObject *obj)
     _dirty = true;
 }
 
-const char* CCTextureAtlas::description()
+const char* TextureAtlas::description()
 {
-    return CCString::createWithFormat("<CCTextureAtlas | totalQuads = %u>", _totalQuads)->getCString();
+    return String::createWithFormat("<TextureAtlas | totalQuads = %u>", _totalQuads)->getCString();
 }
 
 
-void CCTextureAtlas::setupIndices()
+void TextureAtlas::setupIndices()
 {
     if (_capacity == 0)
         return;
@@ -242,7 +242,7 @@ void CCTextureAtlas::setupIndices()
 //TextureAtlas - VAO / VBO specific
 
 #if CC_TEXTURE_ATLAS_USE_VAO
-void CCTextureAtlas::setupVBOandVAO()
+void TextureAtlas::setupVBOandVAO()
 {
     glGenVertexArrays(1, &_VAOname);
     ccGLBindVAO(_VAOname);
@@ -255,16 +255,16 @@ void CCTextureAtlas::setupVBOandVAO()
     glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _capacity, _quads, GL_DYNAMIC_DRAW);
 
     // vertices
-    glEnableVertexAttribArray(kCCVertexAttrib_Position);
-    glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, vertices));
+    glEnableVertexAttribArray(kVertexAttrib_Position);
+    glVertexAttribPointer(kVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, vertices));
 
     // colors
-    glEnableVertexAttribArray(kCCVertexAttrib_Color);
-    glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, colors));
+    glEnableVertexAttribArray(kVertexAttrib_Color);
+    glVertexAttribPointer(kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, colors));
 
     // tex coords
-    glEnableVertexAttribArray(kCCVertexAttrib_TexCoords);
-    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
+    glEnableVertexAttribArray(kVertexAttrib_TexCoords);
+    glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _capacity * 6, _indices, GL_STATIC_DRAW);
@@ -277,7 +277,7 @@ void CCTextureAtlas::setupVBOandVAO()
     CHECK_GL_ERROR_DEBUG();
 }
 #else // CC_TEXTURE_ATLAS_USE_VAO
-void CCTextureAtlas::setupVBO()
+void TextureAtlas::setupVBO()
 {
     glGenBuffers(2, &_buffersVBO[0]);
 
@@ -285,7 +285,7 @@ void CCTextureAtlas::setupVBO()
 }
 #endif // ! // CC_TEXTURE_ATLAS_USE_VAO
 
-void CCTextureAtlas::mapBuffers()
+void TextureAtlas::mapBuffers()
 {
     // Avoid changing the element buffer for whatever VAO might be bound.
 	ccGLBindVAO(0);
@@ -303,7 +303,7 @@ void CCTextureAtlas::mapBuffers()
 
 // TextureAtlas - Update, Insert, Move & Remove
 
-void CCTextureAtlas::updateQuad(ccV3F_C4B_T2F_Quad *quad, unsigned int index)
+void TextureAtlas::updateQuad(ccV3F_C4B_T2F_Quad *quad, unsigned int index)
 {
     CCAssert( index >= 0 && index < _capacity, "updateQuadWithTexture: Invalid index");
 
@@ -316,7 +316,7 @@ void CCTextureAtlas::updateQuad(ccV3F_C4B_T2F_Quad *quad, unsigned int index)
 
 }
 
-void CCTextureAtlas::insertQuad(ccV3F_C4B_T2F_Quad *quad, unsigned int index)
+void TextureAtlas::insertQuad(ccV3F_C4B_T2F_Quad *quad, unsigned int index)
 {
     CCAssert( index < _capacity, "insertQuadWithTexture: Invalid index");
 
@@ -340,7 +340,7 @@ void CCTextureAtlas::insertQuad(ccV3F_C4B_T2F_Quad *quad, unsigned int index)
 
 }
 
-void CCTextureAtlas::insertQuads(ccV3F_C4B_T2F_Quad* quads, unsigned int index, unsigned int amount)
+void TextureAtlas::insertQuads(ccV3F_C4B_T2F_Quad* quads, unsigned int index, unsigned int amount)
 {
     CCAssert(index + amount <= _capacity, "insertQuadWithTexture: Invalid index + amount");
 
@@ -371,7 +371,7 @@ void CCTextureAtlas::insertQuads(ccV3F_C4B_T2F_Quad* quads, unsigned int index, 
     _dirty = true;
 }
 
-void CCTextureAtlas::insertQuadFromIndex(unsigned int oldIndex, unsigned int newIndex)
+void TextureAtlas::insertQuadFromIndex(unsigned int oldIndex, unsigned int newIndex)
 {
     CCAssert( newIndex >= 0 && newIndex < _totalQuads, "insertQuadFromIndex:atIndex: Invalid index");
     CCAssert( oldIndex >= 0 && oldIndex < _totalQuads, "insertQuadFromIndex:atIndex: Invalid index");
@@ -401,7 +401,7 @@ void CCTextureAtlas::insertQuadFromIndex(unsigned int oldIndex, unsigned int new
 
 }
 
-void CCTextureAtlas::removeQuadAtIndex(unsigned int index)
+void TextureAtlas::removeQuadAtIndex(unsigned int index)
 {
     CCAssert( index < _totalQuads, "removeQuadAtIndex: Invalid index");
 
@@ -422,7 +422,7 @@ void CCTextureAtlas::removeQuadAtIndex(unsigned int index)
 
 }
 
-void CCTextureAtlas::removeQuadsAtIndex(unsigned int index, unsigned int amount)
+void TextureAtlas::removeQuadsAtIndex(unsigned int index, unsigned int amount)
 {
     CCAssert(index + amount <= _totalQuads, "removeQuadAtIndex: index + amount out of bounds");
 
@@ -438,13 +438,13 @@ void CCTextureAtlas::removeQuadsAtIndex(unsigned int index, unsigned int amount)
     _dirty = true;
 }
 
-void CCTextureAtlas::removeAllQuads()
+void TextureAtlas::removeAllQuads()
 {
     _totalQuads = 0;
 }
 
 // TextureAtlas - Resize
-bool CCTextureAtlas::resizeCapacity(unsigned int newCapacity)
+bool TextureAtlas::resizeCapacity(unsigned int newCapacity)
 {
     if( newCapacity == _capacity )
     {
@@ -496,7 +496,7 @@ bool CCTextureAtlas::resizeCapacity(unsigned int newCapacity)
     }
 
     if( ! ( tmpQuads && tmpIndices) ) {
-        CCLOG("cocos2d: CCTextureAtlas: not enough memory");
+        CCLOG("cocos2d: TextureAtlas: not enough memory");
         CC_SAFE_FREE(tmpQuads);
         CC_SAFE_FREE(tmpIndices);
         CC_SAFE_FREE(_quads);
@@ -517,12 +517,12 @@ bool CCTextureAtlas::resizeCapacity(unsigned int newCapacity)
     return true;
 }
 
-void CCTextureAtlas::increaseTotalQuadsWith(unsigned int amount)
+void TextureAtlas::increaseTotalQuadsWith(unsigned int amount)
 {
     _totalQuads += amount;
 }
 
-void CCTextureAtlas::moveQuadsFromIndex(unsigned int oldIndex, unsigned int amount, unsigned int newIndex)
+void TextureAtlas::moveQuadsFromIndex(unsigned int oldIndex, unsigned int amount, unsigned int newIndex)
 {
     CCAssert(newIndex + amount <= _totalQuads, "insertQuadFromIndex:atIndex: Invalid index");
     CCAssert(oldIndex < _totalQuads, "insertQuadFromIndex:atIndex: Invalid index");
@@ -553,14 +553,14 @@ void CCTextureAtlas::moveQuadsFromIndex(unsigned int oldIndex, unsigned int amou
     _dirty = true;
 }
 
-void CCTextureAtlas::moveQuadsFromIndex(unsigned int index, unsigned int newIndex)
+void TextureAtlas::moveQuadsFromIndex(unsigned int index, unsigned int newIndex)
 {
     CCAssert(newIndex + (_totalQuads - index) <= _capacity, "moveQuadsFromIndex move is out of bounds");
 
     memmove(_quads + newIndex,_quads + index, (_totalQuads - index) * sizeof(_quads[0]));
 }
 
-void CCTextureAtlas::fillWithEmptyQuadsFromIndex(unsigned int index, unsigned int amount)
+void TextureAtlas::fillWithEmptyQuadsFromIndex(unsigned int index, unsigned int amount)
 {
     ccV3F_C4B_T2F_Quad quad;
     memset(&quad, 0, sizeof(quad));
@@ -574,17 +574,17 @@ void CCTextureAtlas::fillWithEmptyQuadsFromIndex(unsigned int index, unsigned in
 
 // TextureAtlas - Drawing
 
-void CCTextureAtlas::drawQuads()
+void TextureAtlas::drawQuads()
 {
     this->drawNumberOfQuads(_totalQuads, 0);
 }
 
-void CCTextureAtlas::drawNumberOfQuads(unsigned int n)
+void TextureAtlas::drawNumberOfQuads(unsigned int n)
 {
     this->drawNumberOfQuads(n, 0);
 }
 
-void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
+void TextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
 {    
     if (0 == n) 
     {
@@ -653,16 +653,16 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
         _dirty = false;
     }
 
-    ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex);
+    ccGLEnableVertexAttribs(kVertexAttribFlag_PosColorTex);
 
     // vertices
-    glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(ccV3F_C4B_T2F, vertices));
+    glVertexAttribPointer(kVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(ccV3F_C4B_T2F, vertices));
 
     // colors
-    glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof(ccV3F_C4B_T2F, colors));
+    glVertexAttribPointer(kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof(ccV3F_C4B_T2F, colors));
 
     // tex coords
-    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(ccV3F_C4B_T2F, texCoords));
+    glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(ccV3F_C4B_T2F, texCoords));
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
 

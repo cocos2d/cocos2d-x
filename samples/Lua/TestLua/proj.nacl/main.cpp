@@ -133,7 +133,7 @@ void* cocos_main(void* arg)
 #endif
 
     fprintf(stderr, "calling application->run\n");
-    int rtn = CCApplication::sharedApplication()->run();
+    int rtn = Application::sharedApplication()->run();
     fprintf(stderr, "app run returned: %d\n", rtn);
     return NULL;
 }

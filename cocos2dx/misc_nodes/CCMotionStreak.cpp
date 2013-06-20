@@ -34,11 +34,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-CCMotionStreak::CCMotionStreak()
+MotionStreak::MotionStreak()
 : _fastMode(false)
 , _startingPositionInitialized(false)
 , _texture(NULL)
-, _positionR(CCPointZero)
+, _positionR(PointZero)
 , _stroke(0.0f)
 , _fadeDelta(0.0f)
 , _minSeg(0.0f)
@@ -55,7 +55,7 @@ CCMotionStreak::CCMotionStreak()
     _blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
 }
 
-CCMotionStreak::~CCMotionStreak()
+MotionStreak::~MotionStreak()
 {
     CC_SAFE_RELEASE(_texture);
     CC_SAFE_FREE(_pointState);
@@ -65,9 +65,9 @@ CCMotionStreak::~CCMotionStreak()
     CC_SAFE_FREE(_texCoords);
 }
 
-CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, ccColor3B color, const char* path)
+MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, ccColor3B color, const char* path)
 {
-    CCMotionStreak *pRet = new CCMotionStreak();
+    MotionStreak *pRet = new MotionStreak();
     if (pRet && pRet->initWithFade(fade, minSeg, stroke, color, path))
     {
         pRet->autorelease();
@@ -78,9 +78,9 @@ CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, c
     return NULL;
 }
 
-CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture)
+MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, ccColor3B color, Texture2D* texture)
 {
-    CCMotionStreak *pRet = new CCMotionStreak();
+    MotionStreak *pRet = new MotionStreak();
     if (pRet && pRet->initWithFade(fade, minSeg, stroke, color, texture))
     {
         pRet->autorelease();
@@ -91,22 +91,22 @@ CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, c
     return NULL;
 }
 
-bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, ccColor3B color, const char* path)
+bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, ccColor3B color, const char* path)
 {
     CCAssert(path != NULL, "Invalid filename");
 
-    CCTexture2D *texture = CCTextureCache::sharedTextureCache()->addImage(path);
+    Texture2D *texture = TextureCache::sharedTextureCache()->addImage(path);
     return initWithFade(fade, minSeg, stroke, color, texture);
 }
 
-bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture)
+bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, ccColor3B color, Texture2D* texture)
 {
-    CCNode::setPosition(CCPointZero);
-    setAnchorPoint(CCPointZero);
+    Node::setPosition(PointZero);
+    setAnchorPoint(PointZero);
     ignoreAnchorPointForPosition(true);
     _startingPositionInitialized = false;
 
-    _positionR = CCPointZero;
+    _positionR = PointZero;
     _fastMode = true;
     _minSeg = (minSeg == -1.0f) ? stroke/5.0f : minSeg;
     _minSeg *= _minSeg;
@@ -117,7 +117,7 @@ bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, ccColo
     _maxPoints = (int)(fade*60.0f)+2;
     _nuPoints = 0;
     _pointState = (float *)malloc(sizeof(float) * _maxPoints);
-    _pointVertexes = (CCPoint*)malloc(sizeof(CCPoint) * _maxPoints);
+    _pointVertexes = (Point*)malloc(sizeof(Point) * _maxPoints);
 
     _vertices = (ccVertex2F*)malloc(sizeof(ccVertex2F) * _maxPoints * 2);
     _texCoords = (ccTex2F*)malloc(sizeof(ccTex2F) * _maxPoints * 2);
@@ -128,7 +128,7 @@ bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, ccColo
     _blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
 
     // shader program
-    setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
+    setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColor));
 
     setTexture(texture);
     setColor(color);
@@ -137,13 +137,13 @@ bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, ccColo
     return true;
 }
 
-void CCMotionStreak::setPosition(const CCPoint& position)
+void MotionStreak::setPosition(const Point& position)
 {
     _startingPositionInitialized = true;
     _positionR = position;
 }
 
-void CCMotionStreak::tintWithColor(ccColor3B colors)
+void MotionStreak::tintWithColor(ccColor3B colors)
 {
     setColor(colors);
 
@@ -154,12 +154,12 @@ void CCMotionStreak::tintWithColor(ccColor3B colors)
     }
 }
 
-CCTexture2D* CCMotionStreak::getTexture(void)
+Texture2D* MotionStreak::getTexture(void)
 {
     return _texture;
 }
 
-void CCMotionStreak::setTexture(CCTexture2D *texture)
+void MotionStreak::setTexture(Texture2D *texture)
 {
     if (_texture != texture)
     {
@@ -169,38 +169,38 @@ void CCMotionStreak::setTexture(CCTexture2D *texture)
     }
 }
 
-void CCMotionStreak::setBlendFunc(ccBlendFunc blendFunc)
+void MotionStreak::setBlendFunc(ccBlendFunc blendFunc)
 {
     _blendFunc = blendFunc;
 }
 
-ccBlendFunc CCMotionStreak::getBlendFunc(void)
+ccBlendFunc MotionStreak::getBlendFunc(void)
 {
     return _blendFunc;
 }
 
-void CCMotionStreak::setOpacity(GLubyte opacity)
+void MotionStreak::setOpacity(GLubyte opacity)
 {
     CCAssert(false, "Set opacity no supported");
 }
 
-GLubyte CCMotionStreak::getOpacity(void)
+GLubyte MotionStreak::getOpacity(void)
 {
     CCAssert(false, "Opacity no supported");
     return 0;
 }
 
-void CCMotionStreak::setOpacityModifyRGB(bool bValue)
+void MotionStreak::setOpacityModifyRGB(bool bValue)
 {
     CC_UNUSED_PARAM(bValue);
 }
 
-bool CCMotionStreak::isOpacityModifyRGB(void)
+bool MotionStreak::isOpacityModifyRGB(void)
 {
     return false;
 }
 
-void CCMotionStreak::update(float delta)
+void MotionStreak::update(float delta)
 {
     if (!_startingPositionInitialized)
     {
@@ -320,19 +320,19 @@ void CCMotionStreak::update(float delta)
     }
 }
 
-void CCMotionStreak::reset()
+void MotionStreak::reset()
 {
     _nuPoints = 0;
 }
 
-void CCMotionStreak::draw()
+void MotionStreak::draw()
 {
     if(_nuPoints <= 1)
         return;
 
     CC_NODE_DRAW_SETUP();
 
-    ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
+    ccGLEnableVertexAttribs(kVertexAttribFlag_PosColorTex );
     ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
 
     ccGLBindTexture2D( _texture->getName() );
@@ -340,17 +340,17 @@ void CCMotionStreak::draw()
 #ifdef EMSCRIPTEN
     // Size calculations from ::initWithFade
     setGLBufferData(_vertices, (sizeof(ccVertex2F) * _maxPoints * 2), 0);
-    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
     setGLBufferData(_texCoords, (sizeof(ccTex2F) * _maxPoints * 2), 1);
-    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
     setGLBufferData(_colorPointer, (sizeof(GLubyte) * _maxPoints * 2 * 4), 2);
-    glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, 0);
+    glVertexAttribPointer(kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, 0);
 #else
-    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, _vertices);
-    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, _texCoords);
-    glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, _colorPointer);
+    glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, _vertices);
+    glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, _texCoords);
+    glVertexAttribPointer(kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, _colorPointer);
 #endif // EMSCRIPTEN
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei)_nuPoints*2);

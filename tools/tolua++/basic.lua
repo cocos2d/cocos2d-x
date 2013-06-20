@@ -319,5 +319,35 @@ TOLUA_API int  tolua_Cocos2d_open (lua_State* tolua_S);]], [[]])
 
       replace('\t', '    ')
 
+
+    local skip_contents = { "CCPointMake", "CCSizeMake", "CCRectMake", "CCLOG", "CCLog", "CCAssert" }
+
+    local function remove_prefix()
+        result = string.gsub(result, '[^_\"k]CC%u%w+', function(m)
+            local s, e
+            local count = table.getn(skip_contents)
+            local i = 1
+
+            for  i = 1, count do
+                s, e = string.find(m, skip_contents[i])
+                if s ~= nil then
+                    return m
+                end
+            end
+
+            return string.gsub(m, 'CC(%u%w+)', '%1')
+        end)
+    end
+    remove_prefix()
+
+    result = string.gsub(result, '([^\"]k)CC(%u%w*)', '%1%2')
+
+    replace("Animation*", "cocos2d::Animation*")
+    replace("Animation::create", "cocos2d::Animation::create")
+
+    replace("\"const Point", "\"const CCPoint")
+    replace("\"const Size", "\"const CCSize")
+    replace("\"const Rect", "\"const CCRect")
+
     WRITE(result)
 end

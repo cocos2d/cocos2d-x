@@ -25,9 +25,9 @@ THE SOFTWARE.
 #include "CCProcessBase.h"
 #include "../utils/CCUtilMath.h"
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
 
-CCProcessBase::CCProcessBase(void)
+ProcessBase::ProcessBase(void)
     : _animationScale(1)
     , _isPause(true)
     , _isComplete(true)
@@ -42,37 +42,37 @@ CCProcessBase::CCProcessBase(void)
     , _isLoopBack(false)
 {
     /*
-     *  set _animationInternal defualt value to CCDirector::sharedDirector()
+     *  set _animationInternal defualt value to Director::sharedDirector()
      *  ->getAnimationInterval(), in line with game update speed
      */
-    _animationInternal = CCDirector::sharedDirector()->getAnimationInterval();
+    _animationInternal = Director::sharedDirector()->getAnimationInterval();
 }
 
 
-CCProcessBase::~CCProcessBase(void)
+ProcessBase::~ProcessBase(void)
 {
 }
 
 
-void CCProcessBase::pause()
+void ProcessBase::pause()
 {
     _isPause = true;
 }
 
 
-void CCProcessBase::resume()
+void ProcessBase::resume()
 {
     _isPause = false;
 }
 
-void CCProcessBase::stop()
+void ProcessBase::stop()
 {
     _isComplete = true;
     _currentFrame = 0;
     _currentPercent = 0;
 }
 
-void CCProcessBase::play(void *animation, int durationTo, int durationTween,  int loop, int tweenEasing)
+void ProcessBase::play(void *animation, int durationTo, int durationTween,  int loop, int tweenEasing)
 {
     _isComplete = false;
     _isPause = false;
@@ -84,11 +84,11 @@ void CCProcessBase::play(void *animation, int durationTo, int durationTween,  in
      *  When changing end, _totalFrames will be setted to _durationTween
      */
     _nextFrameIndex = durationTo;
-    _tweenEasing = (CCTweenType)tweenEasing;
+    _tweenEasing = (TweenType)tweenEasing;
 
 }
 
-void CCProcessBase::update(float dt)
+void ProcessBase::update(float dt)
 {
 
     if (_isComplete || _isPause)
@@ -131,15 +131,15 @@ void CCProcessBase::update(float dt)
 
 
 
-void CCProcessBase::gotoFrame(int frameIndex)
+void ProcessBase::gotoFrame(int frameIndex)
 {
     _curFrameIndex = frameIndex;
     stop();
 }
 
-int CCProcessBase::getCurrentFrameIndex()
+int ProcessBase::getCurrentFrameIndex()
 {
     return _curFrameIndex;
 }
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {

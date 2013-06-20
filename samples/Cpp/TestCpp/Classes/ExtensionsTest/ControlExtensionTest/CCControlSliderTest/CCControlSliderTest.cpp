@@ -1,5 +1,5 @@
 /*
- * CCControlSliderTest.m
+ * ControlSliderTest.m
  *
  * Copyright (c) 2011 Yannick Loriot
  *
@@ -26,31 +26,31 @@
 
 #include "CCControlSliderTest.h"
 
-CCControlSliderTest::CCControlSliderTest()
+ControlSliderTest::ControlSliderTest()
 {
  
 }
 
-CCControlSliderTest::~CCControlSliderTest()
+ControlSliderTest::~ControlSliderTest()
 {
     CC_SAFE_RELEASE_NULL(_displayValueLabel);
 }
 
-bool CCControlSliderTest::init()
+bool ControlSliderTest::init()
 {
-    if (CCControlScene::init())
+    if (ControlScene::init())
     {
-        CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+        Size screenSize = Director::sharedDirector()->getWinSize();
 
         // Add a label in which the slider value will be displayed
-        _displayValueLabel = CCLabelTTF::create("Move the slider thumb!\nThe lower slider is restricted." ,"Marker Felt", 32);
+        _displayValueLabel = LabelTTF::create("Move the slider thumb!\nThe lower slider is restricted." ,"Marker Felt", 32);
         _displayValueLabel->retain();
         _displayValueLabel->setAnchorPoint(ccp(0.5f, -1.0f));
         _displayValueLabel->setPosition(ccp(screenSize.width / 1.7f, screenSize.height / 2.0f));
         addChild(_displayValueLabel);
 
         // Add the slider
-        CCControlSlider *slider = CCControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
+        ControlSlider *slider = ControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
         slider->setAnchorPoint(ccp(0.5f, 1.0f));
         slider->setMinimumValue(0.0f); // Sets the min value of range
         slider->setMaximumValue(5.0f); // Sets the max value of range
@@ -58,9 +58,9 @@ bool CCControlSliderTest::init()
 		slider->setTag(1);
 
         // When the value of the slider will change, the given selector will be call
-        slider->addTargetWithActionForControlEvents(this, cccontrol_selector(CCControlSliderTest::valueChanged), CCControlEventValueChanged);
+        slider->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlSliderTest::valueChanged), ControlEventValueChanged);
 
-		CCControlSlider *restrictSlider = CCControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
+		ControlSlider *restrictSlider = ControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
         restrictSlider->setAnchorPoint(ccp(0.5f, 1.0f));
         restrictSlider->setMinimumValue(0.0f); // Sets the min value of range
         restrictSlider->setMaximumValue(5.0f); // Sets the max value of range
@@ -71,7 +71,7 @@ bool CCControlSliderTest::init()
 		restrictSlider->setTag(2);
 
 	//same with restricted
-		restrictSlider->addTargetWithActionForControlEvents(this, cccontrol_selector(CCControlSliderTest::valueChanged), CCControlEventValueChanged);
+		restrictSlider->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlSliderTest::valueChanged), ControlEventValueChanged);
 
         addChild(slider);    
 		addChild(restrictSlider);
@@ -80,13 +80,13 @@ bool CCControlSliderTest::init()
     return false;
 }
 
-void CCControlSliderTest::valueChanged(CCObject *sender, CCControlEvent controlEvent)
+void ControlSliderTest::valueChanged(Object *sender, ControlEvent controlEvent)
 {
-    CCControlSlider* pSlider = (CCControlSlider*)sender;
+    ControlSlider* pSlider = (ControlSlider*)sender;
     // Change value of label.
 	if(pSlider->getTag() == 1)
-		_displayValueLabel->setString(CCString::createWithFormat("Upper slider value = %.02f", pSlider->getValue())->getCString());  
+		_displayValueLabel->setString(String::createWithFormat("Upper slider value = %.02f", pSlider->getValue())->getCString());  
 	if(pSlider->getTag() == 2)
-		_displayValueLabel->setString(CCString::createWithFormat("Lower slider value = %.02f", pSlider->getValue())->getCString());  
+		_displayValueLabel->setString(String::createWithFormat("Lower slider value = %.02f", pSlider->getValue())->getCString());  
 }
 

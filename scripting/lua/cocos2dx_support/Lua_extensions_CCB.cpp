@@ -155,7 +155,7 @@ static int tolua_Cocos2d_CCBReader_getOwnerCallbackNames00(lua_State* tolua_S)
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getOwnerCallbackNames'", NULL);
 #endif
         {
-            CCArray* tolua_ret = (CCArray*)  self->getOwnerCallbackNames();
+            Array* tolua_ret = (Array*)  self->getOwnerCallbackNames();
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
@@ -222,7 +222,7 @@ static int tolua_Cocos2d_CCBReader_getOwnerCallbackNodes00(lua_State* tolua_S)
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getOwnerCallbackNodes'", NULL);
 #endif
         {
-            CCArray* tolua_ret = (CCArray*)  self->getOwnerCallbackNodes();
+            Array* tolua_ret = (Array*)  self->getOwnerCallbackNodes();
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
@@ -288,7 +288,7 @@ static int tolua_Cocos2d_CCBReader_getOwnerOutletNodes00(lua_State* tolua_S)
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getOwnerOutletNodes'", NULL);
 #endif
         {
-            CCArray* tolua_ret = (CCArray*)  self->getOwnerOutletNodes();
+            Array* tolua_ret = (Array*)  self->getOwnerOutletNodes();
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
@@ -354,7 +354,7 @@ static int tolua_Cocos2d_CCBReader_getOwnerOutletNames00(lua_State* tolua_S)
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getOwnerOutletNames'", NULL);
 #endif
         {
-            CCArray* tolua_ret = (CCArray*)  self->getOwnerOutletNames();
+            Array* tolua_ret = (Array*)  self->getOwnerOutletNames();
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
@@ -385,7 +385,7 @@ static int tolua_Cocos2d_CCBReader_setAnimationManagers00(lua_State* tolua_S)
 #endif
     {
         CCBReader* self = (CCBReader*)  tolua_tousertype(tolua_S,1,0);
-        CCDictionary* x = ((CCDictionary*)  tolua_tousertype(tolua_S,2,0));
+        Dictionary* x = ((Dictionary*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAnimationManagers'", NULL);
 #endif
@@ -421,7 +421,7 @@ static int tolua_Cocos2d_CCBReader_getAnimationManagersForNodes00(lua_State* tol
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getAnimationManagersForNodes'", NULL);
 #endif
         {
-            CCArray* tolua_ret = (CCArray*)  self->getAnimationManagersForNodes();
+            Array* tolua_ret = (Array*)  self->getAnimationManagersForNodes();
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
@@ -455,7 +455,7 @@ static int tolua_Cocos2d_CCBReader_getNodesWithAnimationManagers00(lua_State* to
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getNodesWithAnimationManagers'", NULL);
 #endif
         {
-            CCArray* tolua_ret = (CCArray*)  self->getNodesWithAnimationManagers();
+            Array* tolua_ret = (Array*)  self->getNodesWithAnimationManagers();
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
@@ -603,7 +603,7 @@ static int tolua_Cocos2d_ccbreader_getOwner00(lua_State* tolua_S)
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getOwner'", NULL);
 #endif
         {
-            CCObject* tolua_ret = (CCObject*)self->getOwner();
+            Object* tolua_ret = (Object*)self->getOwner();
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
@@ -725,8 +725,8 @@ static int tolua_Cocos2d_CCBAnimationManager_moveAnimationsFromNode00(lua_State*
 #endif
     {
         CCBAnimationManager* self = (CCBAnimationManager*)  tolua_tousertype(tolua_S,1,0);
-        CCNode* fromNode = ((CCNode*)  tolua_tousertype(tolua_S,2,0));
-        CCNode* toNode = ((CCNode*)  tolua_tousertype(tolua_S,3,0));
+        Node* fromNode = ((Node*)  tolua_tousertype(tolua_S,2,0));
+        Node* toNode = ((Node*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'moveAnimationsFromNode'", NULL);
 #endif
@@ -795,7 +795,7 @@ static int tolua_Cocos2d_CCBAnimationManager_getDocumentCallbackNames00(lua_Stat
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDocumentCallbackNames'", NULL);
 #endif
         {
-            CCArray* tolua_ret = (CCArray*)  self->getDocumentCallbackNames();
+            Array* tolua_ret = (Array*)  self->getDocumentCallbackNames();
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
@@ -828,8 +828,8 @@ static int tolua_Cocos2d_CCBAnimationManager_setBaseValue00(lua_State* tolua_S)
 #endif
     {
         CCBAnimationManager* self = (CCBAnimationManager*)  tolua_tousertype(tolua_S,1,0);
-        CCObject* pValue = ((CCObject*)  tolua_tousertype(tolua_S,2,0));
-        CCNode* pNode = ((CCNode*)  tolua_tousertype(tolua_S,3,0));
+        Object* pValue = ((Object*)  tolua_tousertype(tolua_S,2,0));
+        Node* pNode = ((Node*)  tolua_tousertype(tolua_S,3,0));
         const char* pPropName = ((const char*)  tolua_tostring(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setBaseValue'", NULL);
@@ -866,7 +866,7 @@ static int tolua_Cocos2d_CCBAnimationManager_getDocumentOutletNodes00(lua_State*
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDocumentOutletNodes'", NULL);
 #endif
         {
-            CCArray* tolua_ret = (CCArray*)  self->getDocumentOutletNodes();
+            Array* tolua_ret = (Array*)  self->getDocumentOutletNodes();
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
@@ -898,8 +898,8 @@ static int tolua_Cocos2d_CCBAnimationManager_addNode00(lua_State* tolua_S)
 #endif
     {
         CCBAnimationManager* self = (CCBAnimationManager*)  tolua_tousertype(tolua_S,1,0);
-        CCNode* pNode = ((CCNode*)  tolua_tousertype(tolua_S,2,0));
-        CCDictionary* pSeq = ((CCDictionary*)  tolua_tousertype(tolua_S,3,0));
+        Node* pNode = ((Node*)  tolua_tousertype(tolua_S,2,0));
+        Dictionary* pSeq = ((Dictionary*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addNode'", NULL);
 #endif
@@ -964,7 +964,7 @@ static int tolua_Cocos2d_CCBAnimationManager_setRootNode00(lua_State* tolua_S)
 #endif
     {
         CCBAnimationManager* self = (CCBAnimationManager*)  tolua_tousertype(tolua_S,1,0);
-        CCNode* pRootNode = ((CCNode*)  tolua_tousertype(tolua_S,2,0));
+        Node* pRootNode = ((Node*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setRootNode'", NULL);
 #endif
@@ -1033,7 +1033,7 @@ static int tolua_Cocos2d_CCBAnimationManager_getSequences00(lua_State* tolua_S)
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSequences'", NULL);
 #endif
         {
-            CCArray* tolua_ret = (CCArray*)  self->getSequences();
+            Array* tolua_ret = (Array*)  self->getSequences();
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
@@ -1067,8 +1067,8 @@ static int tolua_Cocos2d_CCBAnimationManager_getRootContainerSize00(lua_State* t
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getRootContainerSize'", NULL);
 #endif
         {
-            const CCSize& tolua_ret = (const CCSize&)  self->getRootContainerSize();
-            tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const CCSize");
+            const Size& tolua_ret = (const Size&)  self->getRootContainerSize();
+            tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const Size");
         }
     }
     return 1;
@@ -1130,13 +1130,13 @@ static int tolua_Cocos2d_CCBAnimationManager_getContainerSize00(lua_State* tolua
 #endif
     {
         CCBAnimationManager* self = (CCBAnimationManager*)  tolua_tousertype(tolua_S,1,0);
-        CCNode* pNode = ((CCNode*)  tolua_tousertype(tolua_S,2,0));
+        Node* pNode = ((Node*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getContainerSize'", NULL);
 #endif
         {
-            const CCSize& tolua_ret = (const CCSize&)  self->getContainerSize(pNode);
-            tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const CCSize");
+            const Size& tolua_ret = (const Size&)  self->getContainerSize(pNode);
+            tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const Size");
         }
     }
     return 1;
@@ -1167,7 +1167,7 @@ static int tolua_Cocos2d_CCBAnimationManager_getDocumentOutletNames00(lua_State*
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDocumentOutletNames'", NULL);
 #endif
         {
-            CCArray* tolua_ret = (CCArray*)  self->getDocumentOutletNames();
+            Array* tolua_ret = (Array*)  self->getDocumentOutletNames();
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
@@ -1233,7 +1233,7 @@ static int tolua_Cocos2d_CCBAnimationManager_getKeyframeCallbacks00(lua_State* t
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getKeyframeCallbacks'", NULL);
 #endif
         {
-            CCArray* tolua_ret = (CCArray*)  self->getKeyframeCallbacks();
+            Array* tolua_ret = (Array*)  self->getKeyframeCallbacks();
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
@@ -1291,7 +1291,7 @@ static int tolua_Cocos2d_CCBAnimationManager_setRootContainerSize00(lua_State* t
     tolua_Error tolua_err;
     if (
         !tolua_isusertype(tolua_S,1,"CCBAnimationManager",0,&tolua_err) ||
-        (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCSize",0,&tolua_err)) ||
+        (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const Size",0,&tolua_err)) ||
         !tolua_isnoobj(tolua_S,3,&tolua_err)
         )
         goto tolua_lerror;
@@ -1299,7 +1299,7 @@ static int tolua_Cocos2d_CCBAnimationManager_setRootContainerSize00(lua_State* t
 #endif
     {
         CCBAnimationManager* self = (CCBAnimationManager*)  tolua_tousertype(tolua_S,1,0);
-        const CCSize* rootContainerSize = ((const CCSize*)  tolua_tousertype(tolua_S,2,0));
+        const Size* rootContainerSize = ((const Size*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setRootContainerSize'", NULL);
 #endif
@@ -1467,7 +1467,7 @@ static int tolua_Cocos2d_CCBAnimationManager_getRootNode00(lua_State* tolua_S)
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getRootNode'", NULL);
 #endif
         {
-            CCNode* tolua_ret = (CCNode*)  self->getRootNode();
+            Node* tolua_ret = (Node*)  self->getRootNode();
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
@@ -1498,7 +1498,7 @@ static int tolua_Cocos2d_CCBAnimationManager_addDocumentOutletNode00(lua_State* 
 #endif
     {
         CCBAnimationManager* self = (CCBAnimationManager*)  tolua_tousertype(tolua_S,1,0);
-        CCNode* node = ((CCNode*)  tolua_tousertype(tolua_S,2,0));
+        Node* node = ((Node*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addDocumentOutletNode'", NULL);
 #endif
@@ -1531,7 +1531,7 @@ static int tolua_Cocos2d_CCBAnimationManager_addDocumentCallbackNode00(lua_State
 #endif
     {
         CCBAnimationManager* self = (CCBAnimationManager*)  tolua_tousertype(tolua_S,1,0);
-        CCNode* node = ((CCNode*)  tolua_tousertype(tolua_S,2,0));
+        Node* node = ((Node*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addDocumentCallbackNode'", NULL);
 #endif
@@ -1630,7 +1630,7 @@ static int tolua_Cocos2d_CCBAnimationManager_getDocumentCallbackNodes00(lua_Stat
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDocumentCallbackNodes'", NULL);
 #endif
         {
-            CCArray* tolua_ret = (CCArray*)  self->getDocumentCallbackNodes();
+            Array* tolua_ret = (Array*)  self->getDocumentCallbackNodes();
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
@@ -1661,7 +1661,7 @@ static int tolua_Cocos2d_CCBAnimationManager_setSequences00(lua_State* tolua_S)
 #endif
     {
         CCBAnimationManager* self = (CCBAnimationManager*)  tolua_tousertype(tolua_S,1,0);
-        CCArray* seq = ((CCArray*)  tolua_tousertype(tolua_S,2,0));
+        Array* seq = ((Array*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSequences'", NULL);
 #endif
@@ -1762,7 +1762,7 @@ static int tolua_Cocos2d_CCBAnimationManager_setCallFuncForLuaCallbackNamed00(lu
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setCallFuncForLuaCallbackNamed'", NULL);
 #endif
         {
-            CCCallFunc* pCallFunc = ((CCCallFunc*)  tolua_tousertype(tolua_S,2,0));
+            CallFunc* pCallFunc = ((CallFunc*)  tolua_tousertype(tolua_S,2,0));
             const char* keyframeCallback = ((const char*)  tolua_tostring(tolua_S,3,0));
             std::string strKey = "";
             if (NULL != keyframeCallback) {
@@ -1902,8 +1902,8 @@ tolua_lerror:
 #endif //#ifndef TOLUA_DISABLE
 
 /* method: getOwnerCallbackNodes of class  CCBReader */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCBProxy_createCCBreader00
-static int tolua_Cocos2d_CCBProxy_createCCBreader00(lua_State* tolua_S)
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCBProxy_createBreader00
+static int tolua_Cocos2d_CCBProxy_createBreader00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -1917,10 +1917,10 @@ static int tolua_Cocos2d_CCBProxy_createCCBreader00(lua_State* tolua_S)
     {
         CCBProxy* self = (CCBProxy*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'CreateCCBreader'", NULL);
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'CreateBreader'", NULL);
 #endif
         {
-            CCBReader* tolua_ret = (CCBReader*) self->createCCBreader();
+            CCBReader* tolua_ret = (CCBReader*) self->createBreader();
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCBReader");
@@ -1929,7 +1929,7 @@ static int tolua_Cocos2d_CCBProxy_createCCBreader00(lua_State* tolua_S)
     return 1;
 #ifndef TOLUA_RELEASE
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'CreateCCBreader'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'CreateBreader'.",&tolua_err);
     return 0;
 #endif
 }
@@ -1960,7 +1960,7 @@ static int tolua_Cocos2d_CCBProxy_readCCBFromFile00(lua_State* tolua_S)
             const char* pCCBFilePath = ((const char*)  tolua_tostring(tolua_S,2,0));
             CCBReader*  pCCBReader   = ((CCBReader*)  tolua_tousertype(tolua_S,3,0));
             bool  bSetOwner = (bool)  tolua_toboolean(tolua_S,4,0);
-            CCNode* tolua_ret = (CCNode*) self->readCCBFromFile(pCCBFilePath, pCCBReader,bSetOwner);
+            Node* tolua_ret = (Node*) self->readCCBFromFile(pCCBFilePath, pCCBReader,bSetOwner);
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
@@ -1995,7 +1995,7 @@ static int tolua_Cocos2d_CCBProxy_getNodeTypeName00(lua_State* tolua_S)
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getNodeTypeName'", NULL);
 #endif
         {
-            CCNode* pNode = ((CCNode*)  tolua_tousertype(tolua_S,2,0));
+            Node* pNode = ((Node*)  tolua_tousertype(tolua_S,2,0));
             const char* tolua_ret = (const char*)self->getNodeTypeName(pNode);
             tolua_pushstring(tolua_S,(const char*)tolua_ret);
         }
@@ -2032,7 +2032,7 @@ static int tolua_Cocos2d_CCBProxy_setCallback00(lua_State* tolua_S)
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setCallback'", NULL);
 #endif
         {
-            CCNode* pNode = ((CCNode*)tolua_tousertype(tolua_S,2,0));
+            Node* pNode = ((Node*)tolua_tousertype(tolua_S,2,0));
             LUA_FUNCTION nFunID = (  toluafix_ref_function(tolua_S,3,0));
             self->setCallback(pNode, nFunID);
         }
@@ -2133,7 +2133,7 @@ TOLUA_API int tolua_extensions_ccb_open(lua_State* tolua_S){
       tolua_function(tolua_S,".call",tolua_Cocos2d_CCBProxy_new00_local);
       tolua_function(tolua_S,"delete",tolua_Cocos2d_CCBProxy_delete00);
       tolua_function(tolua_S, "create", tolua_Cocos2d_CCBProxy_create00);
-      tolua_function(tolua_S, "createCCBReader", tolua_Cocos2d_CCBProxy_createCCBreader00);
+      tolua_function(tolua_S, "createCCBReader", tolua_Cocos2d_CCBProxy_createBreader00);
       tolua_function(tolua_S, "readCCBFromFile", tolua_Cocos2d_CCBProxy_readCCBFromFile00);
       tolua_function(tolua_S, "getNodeTypeName", tolua_Cocos2d_CCBProxy_getNodeTypeName00);
       tolua_function(tolua_S, "setCallback", tolua_Cocos2d_CCBProxy_setCallback00);

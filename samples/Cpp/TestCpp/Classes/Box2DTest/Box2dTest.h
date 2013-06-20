@@ -5,20 +5,20 @@
 #include "Box2D/Box2D.h"
 #include "../testBasic.h"
 
-class PhysicsSprite : public CCSprite
+class PhysicsSprite : public Sprite
 {
 public:
     PhysicsSprite();
     void setPhysicsBody(b2Body * body);
     virtual bool isDirty(void);
-    virtual CCAffineTransform nodeToParentTransform(void);
+    virtual AffineTransform nodeToParentTransform(void);
 private:
     b2Body* _body;    // strong ref
 };
 
-class Box2DTestLayer : public CCLayer
+class Box2DTestLayer : public Layer
 {
-    CCTexture2D* _spriteTexture;    // weak ref
+    Texture2D* _spriteTexture;    // weak ref
     b2World* world;
 //    GLESDebugDraw* _debugDraw;
 
@@ -30,9 +30,9 @@ public:
     void createResetButton();
     virtual void draw();
 
-    void addNewSpriteAtPosition(CCPoint p);
+    void addNewSpriteAtPosition(Point p);
     void update(float dt);
-    virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
+    virtual void ccTouchesEnded(Set* touches, Event* event);
 
     //CREATE_NODE(Box2DTestLayer);
 } ;

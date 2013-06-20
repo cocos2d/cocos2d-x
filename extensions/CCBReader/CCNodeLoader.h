@@ -23,101 +23,101 @@ NS_CC_EXT_BEGIN
 #define ASSERT_FAIL_UNEXPECTED_PROPERTY(PROPERTY) CCLog("Unexpected property: '%s'!\n", PROPERTY); assert(false)
 #define ASSERT_FAIL_UNEXPECTED_PROPERTYTYPE(PROPERTYTYPE) CCLog("Unexpected property type: '%d'!\n", PROPERTYTYPE); assert(false)
 
-#define CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(T) virtual T * createCCNode(cocos2d::CCNode * pParent, cocos2d::extension::CCBReader * pCCBReader) { \
+#define CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(T) virtual T * createNode(cocos2d::Node * pParent, cocos2d::extension::CCBReader * pCCBReader) { \
     return T::create(); \
 }
 
-#define CCB_PURE_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(T) virtual T * createCCNode(cocos2d::CCNode * pParent, cocos2d::extension::CCBReader * pCCBReader) = 0
+#define CCB_PURE_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(T) virtual T * createNode(cocos2d::Node * pParent, cocos2d::extension::CCBReader * pCCBReader) = 0
 
 struct BlockData {
     SEL_MenuHandler mSELMenuHandler;
-    CCObject * mTarget;
+    Object * mTarget;
 };
 
-struct BlockCCControlData {
-    SEL_CCControlHandler mSELCCControlHandler;
-    CCObject * mTarget;
+struct BlockControlData {
+    SEL_CCControlHandler mSELControlHandler;
+    Object * mTarget;
     int mControlEvents;
 };
 
 /* Forward declaration. */
 class CCBReader;
 
-class CCNodeLoader : public CCObject {
+class NodeLoader : public Object {
     public:
-        CCNodeLoader();
-        virtual ~CCNodeLoader();
-        CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCNodeLoader, loader);
+        NodeLoader();
+        virtual ~NodeLoader();
+        CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(NodeLoader, loader);
 
-        virtual CCNode * loadCCNode(CCNode *, CCBReader * pCCBReader);
-        virtual void parseProperties(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
-        virtual CCDictionary* getCustomProperties();
+        virtual Node * loadNode(Node *, CCBReader * pCCBReader);
+        virtual void parseProperties(Node * pNode, Node * pParent, CCBReader * pCCBReader);
+        virtual Dictionary* getCustomProperties();
     
     protected:
-        CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(CCNode);
+        CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(Node);
 
-        virtual CCPoint parsePropTypePosition(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader, const char *pPropertyName);
-        virtual CCPoint parsePropTypePoint(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
-        virtual CCPoint parsePropTypePointLock(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
-        virtual CCSize parsePropTypeSize(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
-        virtual float * parsePropTypeScaleLock(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader, const char *pPropertyName);
-        virtual float parsePropTypeFloat(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
-        virtual float parsePropTypeDegrees(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader, const char *pPropertyName);
-        virtual float parsePropTypeFloatScale(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
-        virtual int parsePropTypeInteger(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
-        virtual int parsePropTypeIntegerLabeled(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
-        virtual float * parsePropTypeFloatVar(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
-        virtual bool parsePropTypeCheck(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader, const char *pPropertyName);
-        virtual CCSpriteFrame * parsePropTypeSpriteFrame(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader, const char *pPropertyName);
-        virtual CCAnimation * parsePropTypeAnimation(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
-        virtual CCTexture2D * parsePropTypeTexture(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
-        virtual unsigned char parsePropTypeByte(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader, const char *pPropertyName);
-        virtual ccColor3B parsePropTypeColor3(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader, const char *pPropertyName);
-        virtual ccColor4F * parsePropTypeColor4FVar(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
-        virtual bool * parsePropTypeFlip(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
-        virtual ccBlendFunc parsePropTypeBlendFunc(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
-        virtual std::string parsePropTypeFntFile(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
-        virtual std::string parsePropTypeString(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
-        virtual std::string parsePropTypeText(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
-        virtual std::string parsePropTypeFontTTF(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
-        virtual BlockData * parsePropTypeBlock(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
-        virtual BlockCCControlData * parsePropTypeBlockCCControl(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
-        virtual CCNode * parsePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
-        virtual float * parsePropTypeFloatXY(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
+        virtual Point parsePropTypePosition(Node * pNode, Node * pParent, CCBReader * pCCBReader, const char *pPropertyName);
+        virtual Point parsePropTypePoint(Node * pNode, Node * pParent, CCBReader * pCCBReader);
+        virtual Point parsePropTypePointLock(Node * pNode, Node * pParent, CCBReader * pCCBReader);
+        virtual Size parsePropTypeSize(Node * pNode, Node * pParent, CCBReader * pCCBReader);
+        virtual float * parsePropTypeScaleLock(Node * pNode, Node * pParent, CCBReader * pCCBReader, const char *pPropertyName);
+        virtual float parsePropTypeFloat(Node * pNode, Node * pParent, CCBReader * pCCBReader);
+        virtual float parsePropTypeDegrees(Node * pNode, Node * pParent, CCBReader * pCCBReader, const char *pPropertyName);
+        virtual float parsePropTypeFloatScale(Node * pNode, Node * pParent, CCBReader * pCCBReader);
+        virtual int parsePropTypeInteger(Node * pNode, Node * pParent, CCBReader * pCCBReader);
+        virtual int parsePropTypeIntegerLabeled(Node * pNode, Node * pParent, CCBReader * pCCBReader);
+        virtual float * parsePropTypeFloatVar(Node * pNode, Node * pParent, CCBReader * pCCBReader);
+        virtual bool parsePropTypeCheck(Node * pNode, Node * pParent, CCBReader * pCCBReader, const char *pPropertyName);
+        virtual SpriteFrame * parsePropTypeSpriteFrame(Node * pNode, Node * pParent, CCBReader * pCCBReader, const char *pPropertyName);
+        virtual Animation * parsePropTypeAnimation(Node * pNode, Node * pParent, CCBReader * pCCBReader);
+        virtual Texture2D * parsePropTypeTexture(Node * pNode, Node * pParent, CCBReader * pCCBReader);
+        virtual unsigned char parsePropTypeByte(Node * pNode, Node * pParent, CCBReader * pCCBReader, const char *pPropertyName);
+        virtual ccColor3B parsePropTypeColor3(Node * pNode, Node * pParent, CCBReader * pCCBReader, const char *pPropertyName);
+        virtual ccColor4F * parsePropTypeColor4FVar(Node * pNode, Node * pParent, CCBReader * pCCBReader);
+        virtual bool * parsePropTypeFlip(Node * pNode, Node * pParent, CCBReader * pCCBReader);
+        virtual ccBlendFunc parsePropTypeBlendFunc(Node * pNode, Node * pParent, CCBReader * pCCBReader);
+        virtual std::string parsePropTypeFntFile(Node * pNode, Node * pParent, CCBReader * pCCBReader);
+        virtual std::string parsePropTypeString(Node * pNode, Node * pParent, CCBReader * pCCBReader);
+        virtual std::string parsePropTypeText(Node * pNode, Node * pParent, CCBReader * pCCBReader);
+        virtual std::string parsePropTypeFontTTF(Node * pNode, Node * pParent, CCBReader * pCCBReader);
+        virtual BlockData * parsePropTypeBlock(Node * pNode, Node * pParent, CCBReader * pCCBReader);
+        virtual BlockControlData * parsePropTypeBlockControl(Node * pNode, Node * pParent, CCBReader * pCCBReader);
+        virtual Node * parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader * pCCBReader);
+        virtual float * parsePropTypeFloatXY(Node * pNode, Node * pParent, CCBReader * pCCBReader);
 
 
-        virtual void onHandlePropTypePosition(CCNode * pNode, CCNode * pParent, const char* pPropertyName, CCPoint pPosition, CCBReader * pCCBReader);
-        virtual void onHandlePropTypePoint(CCNode * pNode, CCNode * pParent, const char* pPropertyName, CCPoint pPoint, CCBReader * pCCBReader);
-        virtual void onHandlePropTypePointLock(CCNode * pNode, CCNode * pParent, const char* pPropertyName, CCPoint pPointLock, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeSize(CCNode * pNode, CCNode * pParent, const char* pPropertyName, CCSize pSize, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeScaleLock(CCNode * pNode, CCNode * pParent, const char* pPropertyName, float * pScaleLock, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeFloat(CCNode * pNode, CCNode * pParent, const char* pPropertyName, float pFloat, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeDegrees(CCNode * pNode, CCNode * pParent, const char* pPropertyName, float pDegrees, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeFloatScale(CCNode * pNode, CCNode * pParent, const char* pPropertyName, float pFloatScale, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeInteger(CCNode * pNode, CCNode * pParent, const char* pPropertyName, int pInteger, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeIntegerLabeled(CCNode * pNode, CCNode * pParent, const char* pPropertyName, int pIntegerLabeled, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeFloatVar(CCNode * pNode, CCNode * pParent, const char* pPropertyName, float * pFoatVar, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeFloatXY(CCNode * pNode, CCNode * pParent, const char* pPropertyName, float * pFoatVar, CCBReader * pCCBReader);
+        virtual void onHandlePropTypePosition(Node * pNode, Node * pParent, const char* pPropertyName, Point pPosition, CCBReader * pCCBReader);
+        virtual void onHandlePropTypePoint(Node * pNode, Node * pParent, const char* pPropertyName, Point pPoint, CCBReader * pCCBReader);
+        virtual void onHandlePropTypePointLock(Node * pNode, Node * pParent, const char* pPropertyName, Point pPointLock, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeSize(Node * pNode, Node * pParent, const char* pPropertyName, Size pSize, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeScaleLock(Node * pNode, Node * pParent, const char* pPropertyName, float * pScaleLock, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeFloat(Node * pNode, Node * pParent, const char* pPropertyName, float pFloat, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeDegrees(Node * pNode, Node * pParent, const char* pPropertyName, float pDegrees, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeFloatScale(Node * pNode, Node * pParent, const char* pPropertyName, float pFloatScale, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeInteger(Node * pNode, Node * pParent, const char* pPropertyName, int pInteger, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeIntegerLabeled(Node * pNode, Node * pParent, const char* pPropertyName, int pIntegerLabeled, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeFloatVar(Node * pNode, Node * pParent, const char* pPropertyName, float * pFoatVar, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeFloatXY(Node * pNode, Node * pParent, const char* pPropertyName, float * pFoatVar, CCBReader * pCCBReader);
 
-        virtual void onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, const char* pPropertyName, bool pCheck, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeSpriteFrame(CCNode * pNode, CCNode * pParent, const char* pPropertyName, CCSpriteFrame * pCCSpriteFrame, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeAnimation(CCNode * pNode, CCNode * pParent, const char* pPropertyName, CCAnimation * pCCAnimation, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeTexture(CCNode * pNode, CCNode * pParent, const char* pPropertyName, CCTexture2D * pCCTexture2D, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeByte(CCNode * pNode, CCNode * pParent, const char* pPropertyName, unsigned char pByte, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeColor3(CCNode * pNode, CCNode * pParent, const char* pPropertyName, ccColor3B pCCColor3B, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeColor4FVar(CCNode * pNode, CCNode * pParent, const char* pPropertyName, ccColor4F * pCCColor4FVar, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeFlip(CCNode * pNode, CCNode * pParent, const char* pPropertyName, bool * pFlip, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeBlendFunc(CCNode * pNode, CCNode * pParent, const char* pPropertyName, ccBlendFunc pCCBlendFunc, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeFntFile(CCNode * pNode, CCNode * pParent, const char* pPropertyName, const char * pFntFile, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeString(CCNode * pNode, CCNode * pParent, const char* pPropertyName, const char * pString, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeText(CCNode * pNode, CCNode * pParent, const char* pPropertyName, const char * pText, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeFontTTF(CCNode * pNode, CCNode * pParent, const char* pPropertyName, const char * pFontTTF, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeBlock(CCNode * pNode, CCNode * pParent, const char* pPropertyName, BlockData * pBlockData, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeBlockCCControl(CCNode * pNode, CCNode * pParent, const char* pPropertyName, BlockCCControlData * pBlockCCControlData, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeCCBFile(CCNode * pNode, CCNode * pParent, const char* pPropertyName, CCNode * pCCBFileNode, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeCheck(Node * pNode, Node * pParent, const char* pPropertyName, bool pCheck, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeSpriteFrame(Node * pNode, Node * pParent, const char* pPropertyName, SpriteFrame * pSpriteFrame, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeAnimation(Node * pNode, Node * pParent, const char* pPropertyName, Animation * pAnimation, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeTexture(Node * pNode, Node * pParent, const char* pPropertyName, Texture2D * pTexture2D, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeByte(Node * pNode, Node * pParent, const char* pPropertyName, unsigned char pByte, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeColor3(Node * pNode, Node * pParent, const char* pPropertyName, ccColor3B pColor3B, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeColor4FVar(Node * pNode, Node * pParent, const char* pPropertyName, ccColor4F * pColor4FVar, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeFlip(Node * pNode, Node * pParent, const char* pPropertyName, bool * pFlip, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const char* pPropertyName, ccBlendFunc pBlendFunc, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeFntFile(Node * pNode, Node * pParent, const char* pPropertyName, const char * pFntFile, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeString(Node * pNode, Node * pParent, const char* pPropertyName, const char * pString, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeText(Node * pNode, Node * pParent, const char* pPropertyName, const char * pText, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeFontTTF(Node * pNode, Node * pParent, const char* pPropertyName, const char * pFontTTF, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeBlock(Node * pNode, Node * pParent, const char* pPropertyName, BlockData * pBlockData, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeBlockControl(Node * pNode, Node * pParent, const char* pPropertyName, BlockControlData * pBlockControlData, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeCCBFile(Node * pNode, Node * pParent, const char* pPropertyName, Node * pCCBFileNode, CCBReader * pCCBReader);
 
 protected:
-        CCDictionary* _customProperties;
+        Dictionary* _customProperties;
 };
 
 NS_CC_EXT_END

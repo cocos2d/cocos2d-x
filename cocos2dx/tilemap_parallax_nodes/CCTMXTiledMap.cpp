@@ -31,11 +31,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-// implementation CCTMXTiledMap
+// implementation TMXTiledMap
 
-CCTMXTiledMap * CCTMXTiledMap::create(const char *tmxFile)
+TMXTiledMap * TMXTiledMap::create(const char *tmxFile)
 {
-    CCTMXTiledMap *pRet = new CCTMXTiledMap();
+    TMXTiledMap *pRet = new TMXTiledMap();
     if (pRet->initWithTMXFile(tmxFile))
     {
         pRet->autorelease();
@@ -45,9 +45,9 @@ CCTMXTiledMap * CCTMXTiledMap::create(const char *tmxFile)
     return NULL;
 }
 
-CCTMXTiledMap* CCTMXTiledMap::createWithXML(const char* tmxString, const char* resourcePath)
+TMXTiledMap* TMXTiledMap::createWithXML(const char* tmxString, const char* resourcePath)
 {
-    CCTMXTiledMap *pRet = new CCTMXTiledMap();
+    TMXTiledMap *pRet = new TMXTiledMap();
     if (pRet->initWithXML(tmxString, resourcePath))
     {
         pRet->autorelease();
@@ -57,13 +57,13 @@ CCTMXTiledMap* CCTMXTiledMap::createWithXML(const char* tmxString, const char* r
     return NULL;
 }
 
-bool CCTMXTiledMap::initWithTMXFile(const char *tmxFile)
+bool TMXTiledMap::initWithTMXFile(const char *tmxFile)
 {
     CCAssert(tmxFile != NULL && strlen(tmxFile)>0, "TMXTiledMap: tmx file should not bi NULL");
     
-    setContentSize(CCSizeZero);
+    setContentSize(SizeZero);
 
-    CCTMXMapInfo *mapInfo = CCTMXMapInfo::formatWithTMXFile(tmxFile);
+    TMXMapInfo *mapInfo = TMXMapInfo::formatWithTMXFile(tmxFile);
 
     if (! mapInfo)
     {
@@ -75,11 +75,11 @@ bool CCTMXTiledMap::initWithTMXFile(const char *tmxFile)
     return true;
 }
 
-bool CCTMXTiledMap::initWithXML(const char* tmxString, const char* resourcePath)
+bool TMXTiledMap::initWithXML(const char* tmxString, const char* resourcePath)
 {
-    setContentSize(CCSizeZero);
+    setContentSize(SizeZero);
 
-    CCTMXMapInfo *mapInfo = CCTMXMapInfo::formatWithXML(tmxString, resourcePath);
+    TMXMapInfo *mapInfo = TMXMapInfo::formatWithXML(tmxString, resourcePath);
 
     CCAssert( mapInfo->getTilesets()->count() != 0, "TMXTiledMap: Map not found. Please check the filename.");
     buildWithMapInfo(mapInfo);
@@ -87,39 +87,39 @@ bool CCTMXTiledMap::initWithXML(const char* tmxString, const char* resourcePath)
     return true;
 }
 
-CCTMXTiledMap::CCTMXTiledMap()
-    :_mapSize(CCSizeZero)
-    ,_tileSize(CCSizeZero)        
+TMXTiledMap::TMXTiledMap()
+    :_mapSize(SizeZero)
+    ,_tileSize(SizeZero)        
     ,_objectGroups(NULL)
     ,_properties(NULL)
     ,_tileProperties(NULL)
 {
 }
-CCTMXTiledMap::~CCTMXTiledMap()
+TMXTiledMap::~TMXTiledMap()
 {
     CC_SAFE_RELEASE(_properties);
     CC_SAFE_RELEASE(_objectGroups);
     CC_SAFE_RELEASE(_tileProperties);
 }
 
-CCArray* CCTMXTiledMap::getObjectGroups()
+Array* TMXTiledMap::getObjectGroups()
 {
     return _objectGroups;
 }
 
-void CCTMXTiledMap::setObjectGroups(CCArray* var)
+void TMXTiledMap::setObjectGroups(Array* var)
 {
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE(_objectGroups);
     _objectGroups = var;
 }
 
-CCDictionary * CCTMXTiledMap::getProperties()
+Dictionary * TMXTiledMap::getProperties()
 {
     return _properties;
 }
 
-void CCTMXTiledMap::setProperties(CCDictionary* var)
+void TMXTiledMap::setProperties(Dictionary* var)
 {
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE(_properties);
@@ -127,10 +127,10 @@ void CCTMXTiledMap::setProperties(CCDictionary* var)
 }
 
 // private
-CCTMXLayer * CCTMXTiledMap::parseLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo)
+TMXLayer * TMXTiledMap::parseLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
 {
-    CCTMXTilesetInfo *tileset = tilesetForLayer(layerInfo, mapInfo);
-    CCTMXLayer *layer = CCTMXLayer::create(tileset, layerInfo, mapInfo);
+    TMXTilesetInfo *tileset = tilesetForLayer(layerInfo, mapInfo);
+    TMXLayer *layer = TMXLayer::create(tileset, layerInfo, mapInfo);
 
     // tell the layerinfo to release the ownership of the tiles map.
     layerInfo->_ownTiles = false;
@@ -139,17 +139,17 @@ CCTMXLayer * CCTMXTiledMap::parseLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *
     return layer;
 }
 
-CCTMXTilesetInfo * CCTMXTiledMap::tilesetForLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo)
+TMXTilesetInfo * TMXTiledMap::tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
 {
-    CCSize size = layerInfo->_layerSize;
-    CCArray* tilesets = mapInfo->getTilesets();
+    Size size = layerInfo->_layerSize;
+    Array* tilesets = mapInfo->getTilesets();
     if (tilesets && tilesets->count()>0)
     {
-        CCTMXTilesetInfo* tileset = NULL;
-        CCObject* pObj = NULL;
+        TMXTilesetInfo* tileset = NULL;
+        Object* pObj = NULL;
         CCARRAY_FOREACH_REVERSE(tilesets, pObj)
         {
-            tileset = (CCTMXTilesetInfo*)pObj;
+            tileset = (TMXTilesetInfo*)pObj;
             if (tileset)
             {
                 for( unsigned int y=0; y < size.height; y++ )
@@ -170,7 +170,7 @@ CCTMXTilesetInfo * CCTMXTiledMap::tilesetForLayer(CCTMXLayerInfo *layerInfo, CCT
                         {
                             // Optimization: quick return
                             // if the layer is invalid (more than 1 tileset per layer) an CCAssert will be thrown later
-                            if( (gid & kCCFlippedMask) >= tileset->_firstGid )
+                            if( (gid & kFlippedMask) >= tileset->_firstGid )
                                 return tileset;
                         }
                     }
@@ -184,7 +184,7 @@ CCTMXTilesetInfo * CCTMXTiledMap::tilesetForLayer(CCTMXLayerInfo *layerInfo, CCT
     return NULL;
 }
 
-void CCTMXTiledMap::buildWithMapInfo(CCTMXMapInfo* mapInfo)
+void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
 {
     _mapSize = mapInfo->getMapSize();
     _tileSize = mapInfo->getTileSize();
@@ -204,22 +204,22 @@ void CCTMXTiledMap::buildWithMapInfo(CCTMXMapInfo* mapInfo)
 
     int idx=0;
 
-    CCArray* layers = mapInfo->getLayers();
+    Array* layers = mapInfo->getLayers();
     if (layers && layers->count()>0)
     {
-        CCTMXLayerInfo* layerInfo = NULL;
-        CCObject* pObj = NULL;
+        TMXLayerInfo* layerInfo = NULL;
+        Object* pObj = NULL;
         CCARRAY_FOREACH(layers, pObj)
         {
-            layerInfo = (CCTMXLayerInfo*)pObj;
+            layerInfo = (TMXLayerInfo*)pObj;
             if (layerInfo && layerInfo->_visible)
             {
-                CCTMXLayer *child = parseLayer(layerInfo, mapInfo);
-                addChild((CCNode*)child, idx, idx);
+                TMXLayer *child = parseLayer(layerInfo, mapInfo);
+                addChild((Node*)child, idx, idx);
 
                 // update content size with the max size
-                const CCSize& childSize = child->getContentSize();
-                CCSize currentSize = this->getContentSize();
+                const Size& childSize = child->getContentSize();
+                Size currentSize = this->getContentSize();
                 currentSize.width = MAX( currentSize.width, childSize.width );
                 currentSize.height = MAX( currentSize.height, childSize.height );
                 this->setContentSize(currentSize);
@@ -231,13 +231,13 @@ void CCTMXTiledMap::buildWithMapInfo(CCTMXMapInfo* mapInfo)
 }
 
 // public
-CCTMXLayer * CCTMXTiledMap::layerNamed(const char *layerName)
+TMXLayer * TMXTiledMap::layerNamed(const char *layerName)
 {
     CCAssert(layerName != NULL && strlen(layerName) > 0, "Invalid layer name!");
-    CCObject* pObj = NULL;
+    Object* pObj = NULL;
     CCARRAY_FOREACH(_children, pObj) 
     {
-        CCTMXLayer* layer = dynamic_cast<CCTMXLayer*>(pObj);
+        TMXLayer* layer = dynamic_cast<TMXLayer*>(pObj);
         if(layer)
         {
             if(0 == strcmp(layer->getLayerName(), layerName))
@@ -251,18 +251,18 @@ CCTMXLayer * CCTMXTiledMap::layerNamed(const char *layerName)
     return NULL;
 }
 
-CCTMXObjectGroup * CCTMXTiledMap::objectGroupNamed(const char *groupName)
+TMXObjectGroup * TMXTiledMap::objectGroupNamed(const char *groupName)
 {
     CCAssert(groupName != NULL && strlen(groupName) > 0, "Invalid group name!");
 
     std::string sGroupName = groupName;
     if (_objectGroups && _objectGroups->count()>0)
     {
-        CCTMXObjectGroup* objectGroup = NULL;
-        CCObject* pObj = NULL;
+        TMXObjectGroup* objectGroup = NULL;
+        Object* pObj = NULL;
         CCARRAY_FOREACH(_objectGroups, pObj)
         {
-            objectGroup = (CCTMXObjectGroup*)(pObj);
+            objectGroup = (TMXObjectGroup*)(pObj);
             if (objectGroup && objectGroup->getGroupName() == sGroupName)
             {
                 return objectGroup;
@@ -274,14 +274,14 @@ CCTMXObjectGroup * CCTMXTiledMap::objectGroupNamed(const char *groupName)
     return NULL;
 }
 
-CCString* CCTMXTiledMap::propertyNamed(const char *propertyName)
+String* TMXTiledMap::propertyNamed(const char *propertyName)
 {
-    return (CCString*)_properties->objectForKey(propertyName);
+    return (String*)_properties->objectForKey(propertyName);
 }
 
-CCDictionary* CCTMXTiledMap::propertiesForGID(int GID)
+Dictionary* TMXTiledMap::propertiesForGID(int GID)
 {
-    return (CCDictionary*)_tileProperties->objectForKey(GID);
+    return (Dictionary*)_tileProperties->objectForKey(GID);
 }
         
 

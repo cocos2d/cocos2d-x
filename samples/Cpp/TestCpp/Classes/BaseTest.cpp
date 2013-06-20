@@ -15,32 +15,32 @@ USING_NS_CC;
 
 void BaseTest::onEnter()
 {
-	CCLayer::onEnter();
+	Layer::onEnter();
 
 	// add title and subtitle
     std::string str = title();
     const char * pTitle = str.c_str();
-    CCLabelTTF* label = CCLabelTTF::create(pTitle, "Arial", 32);
+    LabelTTF* label = LabelTTF::create(pTitle, "Arial", 32);
     addChild(label, 1);
     label->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - 30) );
 
     std::string strSubtitle = subtitle();
     if( ! strSubtitle.empty() )
     {
-        CCLabelTTF* l = CCLabelTTF::create(strSubtitle.c_str(), "Thonburi", 16);
+        LabelTTF* l = LabelTTF::create(strSubtitle.c_str(), "Thonburi", 16);
         addChild(l, 1);
         l->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - 60) );
     }
 
     // add menu
 	// CC_CALLBACK_1 == std::bind( function_ptr, instance, std::placeholders::_1, ...)
-    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, CC_CALLBACK_1(BaseTest::backCallback, this) );
-    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, CC_CALLBACK_1(BaseTest::restartCallback, this) );
-    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, CC_CALLBACK_1(BaseTest::nextCallback, this) );
+    MenuItemImage *item1 = MenuItemImage::create(s_pPathB1, s_pPathB2, CC_CALLBACK_1(BaseTest::backCallback, this) );
+    MenuItemImage *item2 = MenuItemImage::create(s_pPathR1, s_pPathR2, CC_CALLBACK_1(BaseTest::restartCallback, this) );
+    MenuItemImage *item3 = MenuItemImage::create(s_pPathF1, s_pPathF2, CC_CALLBACK_1(BaseTest::nextCallback, this) );
 
-    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
+    Menu *menu = Menu::create(item1, item2, item3, NULL);
 
-    menu->setPosition(CCPointZero);
+    menu->setPosition(PointZero);
     item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
     item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
     item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
@@ -51,7 +51,7 @@ void BaseTest::onEnter()
 
 void BaseTest::onExit()
 {
-	CCLayer::onExit();
+	Layer::onExit();
 }
 
 std::string BaseTest::title()
@@ -64,17 +64,17 @@ std::string BaseTest::subtitle()
 	return "";
 }
 
-void BaseTest::restartCallback(CCObject* pSender)
+void BaseTest::restartCallback(Object* pSender)
 {
 	CCLog("override restart!");
 }
 
-void BaseTest::nextCallback(CCObject* pSender)
+void BaseTest::nextCallback(Object* pSender)
 {
 	CCLog("override next!");
 }
 
-void BaseTest::backCallback(CCObject* pSender)
+void BaseTest::backCallback(Object* pSender)
 {
 	CCLog("override back!");
 }

@@ -27,25 +27,25 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-int	CCAccelerometer::_initialOrientationAngle = 0;
+int	Accelerometer::_initialOrientationAngle = 0;
 
-CCAccelerometer::CCAccelerometer()
+Accelerometer::Accelerometer()
 {
 	_function = nullptr;
 	_initialOrientationAngle = atoi(getenv("ORIENTATION"));
 }
 
-CCAccelerometer::~CCAccelerometer()
+Accelerometer::~Accelerometer()
 {
 
 }
 
-void CCAccelerometer::setDelegate(std::function<void(CCAcceleration*)> function)
+void Accelerometer::setDelegate(std::function<void(Acceleration*)> function)
 {
 	_function = function;
 }
 
-void CCAccelerometer::update(long timeStamp, double x, double y, double z)
+void Accelerometer::update(long timeStamp, double x, double y, double z)
 {
 	if ( _function != NULL)
 	{

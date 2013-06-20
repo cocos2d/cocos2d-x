@@ -39,15 +39,15 @@ PongLayer::PongLayer()
 {
     _ballStartingVelocity = ccp(20.0f, -100.0f);
     
-    _ball = Ball::ballWithTexture( CCTextureCache::sharedTextureCache()->addImage(s_Ball) );
+    _ball = Ball::ballWithTexture( TextureCache::sharedTextureCache()->addImage(s_Ball) );
     _ball->setPosition( VisibleRect::center() );
     _ball->setVelocity( _ballStartingVelocity );
     addChild( _ball );
     _ball->retain();
     
-    CCTexture2D* paddleTexture = CCTextureCache::sharedTextureCache()->addImage(s_Paddle);
+    Texture2D* paddleTexture = TextureCache::sharedTextureCache()->addImage(s_Paddle);
     
-    CCArray *paddlesM = CCArray::createWithCapacity(4);
+    Array *paddlesM = Array::createWithCapacity(4);
     
     Paddle* paddle = Paddle::paddleWithTexture(paddleTexture);
     paddle->setPosition( ccp(VisibleRect::center().x, VisibleRect::bottom().y + 15) );
@@ -65,9 +65,9 @@ PongLayer::PongLayer()
     paddle->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - kStatusBarHeight - 100) );
     paddlesM->addObject( paddle );
     
-    _paddles = (CCArray*)paddlesM->copy();
+    _paddles = (Array*)paddlesM->copy();
     
-    CCObject* pObj = NULL;
+    Object* pObj = NULL;
     CCARRAY_FOREACH(_paddles, pObj)
     {
         paddle = (Paddle*)(pObj);
@@ -101,7 +101,7 @@ void PongLayer::doStep(float delta)
     _ball->move(delta);
 
     Paddle* paddle = NULL;
-    CCObject* pObj = NULL;
+    Object* pObj = NULL;
     CCARRAY_FOREACH(_paddles, pObj)
     {
         paddle = (Paddle*)(pObj);
@@ -121,5 +121,5 @@ void PongLayer::doStep(float delta)
 
 void PongScene::runThisTest()
 {
-    CCDirector::sharedDirector()->replaceScene(this);
+    Director::sharedDirector()->replaceScene(this);
 }

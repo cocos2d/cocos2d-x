@@ -29,12 +29,12 @@ THE SOFTWARE.
 #include "utils/CCTransformHelp.h"
 #include "display/CCDisplayManager.h"
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
 
-CCBone *CCBone::create()
+Bone *Bone::create()
 {
 
-    CCBone *pBone = new CCBone();
+    Bone *pBone = new Bone();
     if (pBone && pBone->init())
     {
         pBone->autorelease();
@@ -45,10 +45,10 @@ CCBone *CCBone::create()
 
 }
 
-CCBone *CCBone::create(const char *name)
+Bone *Bone::create(const char *name)
 {
 
-    CCBone *pBone = new CCBone();
+    Bone *pBone = new Bone();
     if (pBone && pBone->init(name))
     {
         pBone->autorelease();
@@ -58,7 +58,7 @@ CCBone *CCBone::create(const char *name)
     return NULL;
 }
 
-CCBone::CCBone()
+Bone::Bone()
 {
     _tweenData = NULL;
     _parent = NULL;
@@ -70,12 +70,12 @@ CCBone::CCBone()
     _children = NULL;
     _displayManager = NULL;
     _ignoreMovementBoneData = false;
-    _worldTransform = CCAffineTransformMake(1, 0, 0, 1, 0, 0);
+    _worldTransform = AffineTransformMake(1, 0, 0, 1, 0, 0);
     _transformDirty = true;
 }
 
 
-CCBone::~CCBone(void)
+Bone::~Bone(void)
 {
     CC_SAFE_DELETE(_tweenData);
     CC_SAFE_DELETE(_children);
@@ -90,13 +90,13 @@ CCBone::~CCBone(void)
     CC_SAFE_RELEASE(_childArmature);
 }
 
-bool CCBone::init()
+bool Bone::init()
 {
-    return CCBone::init(NULL);
+    return Bone::init(NULL);
 }
 
 
-bool CCBone::init(const char *name)
+bool Bone::init(const char *name)
 {
     bool bRet = false;
     do
@@ -108,14 +108,14 @@ bool CCBone::init(const char *name)
         }
 
         CC_SAFE_DELETE(_tweenData);
-        _tweenData = new CCFrameData();
+        _tweenData = new FrameData();
 
         CC_SAFE_DELETE(_tween);
-        _tween = new CCTween();
+        _tween = new Tween();
         _tween->init(this);
 
         CC_SAFE_DELETE(_displayManager);
-        _displayManager = new CCDisplayManager();
+        _displayManager = new DisplayManager();
         _displayManager->init(this);
 
 
@@ -126,7 +126,7 @@ bool CCBone::init(const char *name)
     return bRet;
 }
 
-void CCBone::setBoneData(CCBoneData *boneData)
+void Bone::setBoneData(BoneData *boneData)
 {
     CCAssert(NULL != boneData, "_boneData must not be NULL");
 
@@ -139,24 +139,24 @@ void CCBone::setBoneData(CCBoneData *boneData)
     _displayManager->initDisplayList(boneData);
 }
 
-CCBoneData *CCBone::getBoneData()
+BoneData *Bone::getBoneData()
 {
     return _boneData;
 }
 
-void CCBone::setArmature(CCArmature *armature)
+void Bone::setArmature(Armature *armature)
 {
 	_armature = armature;
 	_tween->setAnimation(_armature->getAnimation());
 }
 
 
-CCArmature *CCBone::getArmature()
+Armature *Bone::getArmature()
 {
 	return _armature;
 }
 
-void CCBone::update(float delta)
+void Bone::update(float delta)
 {
     if (_parent)
         _transformDirty = _transformDirty || _parent->isTransformDirty();
@@ -175,20 +175,20 @@ void CCBone::update(float delta)
         _worldTransform.tx = _tweenData->x;
         _worldTransform.ty = _tweenData->y;
 
-        _worldTransform = CCAffineTransformConcat(nodeToParentTransform(), _worldTransform);
+        _worldTransform = AffineTransformConcat(nodeToParentTransform(), _worldTransform);
 
         if(_parent)
         {
-            _worldTransform = CCAffineTransformConcat(_worldTransform, _parent->_worldTransform);
+            _worldTransform = AffineTransformConcat(_worldTransform, _parent->_worldTransform);
         }
     }
 
-    CCDisplayFactory::updateDisplay(this, _displayManager->getCurrentDecorativeDisplay(), delta, _transformDirty);
+    DisplayFactory::updateDisplay(this, _displayManager->getCurrentDecorativeDisplay(), delta, _transformDirty);
 
-    CCObject *object = NULL;
+    Object *object = NULL;
     CCARRAY_FOREACH(_children, object)
     {
-        CCBone *childBone = (CCBone *)object;
+        Bone *childBone = (Bone *)object;
         childBone->update(delta);
     }
 
@@ -196,22 +196,22 @@ void CCBone::update(float delta)
 }
 
 
-void CCBone::updateDisplayedColor(const ccColor3B &parentColor)
+void Bone::updateDisplayedColor(const ccColor3B &parentColor)
 {
-    CCNodeRGBA::updateDisplayedColor(parentColor);
+    NodeRGBA::updateDisplayedColor(parentColor);
     updateColor();
 }
 
-void CCBone::updateDisplayedOpacity(GLubyte parentOpacity)
+void Bone::updateDisplayedOpacity(GLubyte parentOpacity)
 {
-    CCNodeRGBA::updateDisplayedOpacity(parentOpacity);
+    NodeRGBA::updateDisplayedOpacity(parentOpacity);
     updateColor();
 }
 
-void CCBone::updateColor()
+void Bone::updateColor()
 {
-    CCNode *display = _displayManager->getDisplayRenderNode();
-    CCRGBAProtocol *protocol = dynamic_cast<CCRGBAProtocol *>(display);
+    Node *display = _displayManager->getDisplayRenderNode();
+    RGBAProtocol *protocol = dynamic_cast<RGBAProtocol *>(display);
     if(protocol != NULL)
     {
         protocol->setColor(ccc3(_displayedColor.r * _tweenData->r / 255, _displayedColor.g * _tweenData->g / 255, _displayedColor.b * _tweenData->b / 255));
@@ -220,7 +220,7 @@ void CCBone::updateColor()
 }
 
 
-void CCBone::addChildBone(CCBone *child)
+void Bone::addChildBone(Bone *child)
 {
     CCAssert( NULL != child, "Argument must be non-nil");
     CCAssert( NULL == child->_parent, "child already added. It can't be added again");
@@ -237,17 +237,17 @@ void CCBone::addChildBone(CCBone *child)
     }
 }
 
-void CCBone::removeChildBone(CCBone *bone, bool recursion)
+void Bone::removeChildBone(Bone *bone, bool recursion)
 {
     if ( _children->indexOfObject(bone) != UINT_MAX )
     {
         if(recursion)
         {
-            CCArray *_ccbones = bone->_children;
-            CCObject *_object = NULL;
+            Array *_ccbones = bone->_children;
+            Object *_object = NULL;
             CCARRAY_FOREACH(_ccbones, _object)
             {
-                CCBone *_ccBone = (CCBone *)_object;
+                Bone *_ccBone = (Bone *)_object;
                 bone->removeChildBone(_ccBone, recursion);
             }
         }
@@ -260,7 +260,7 @@ void CCBone::removeChildBone(CCBone *bone, bool recursion)
     }
 }
 
-void CCBone::removeFromParent(bool recursion)
+void Bone::removeFromParent(bool recursion)
 {
     if (NULL != _parent)
     {
@@ -268,25 +268,25 @@ void CCBone::removeFromParent(bool recursion)
     }
 }
 
-void CCBone::setParentBone(CCBone *parent)
+void Bone::setParentBone(Bone *parent)
 {
     _parent = parent;
 }
 
-CCBone *CCBone::getParentBone()
+Bone *Bone::getParentBone()
 {
     return _parent;
 }
 
-void CCBone::childrenAlloc(void)
+void Bone::childrenAlloc(void)
 {
     CC_SAFE_DELETE(_children);
-    _children = CCArray::createWithCapacity(4);
+    _children = Array::createWithCapacity(4);
     _children->retain();
 }
 
 
-void CCBone::setChildArmature(CCArmature *armature)
+void Bone::setChildArmature(Armature *armature)
 {
     if (_childArmature != armature)
     {
@@ -296,50 +296,50 @@ void CCBone::setChildArmature(CCArmature *armature)
     }
 }
 
-CCArmature *CCBone::getChildArmature()
+Armature *Bone::getChildArmature()
 {
     return _childArmature;
 }
 
-CCArray *CCBone::getChildren()
+Array *Bone::getChildren()
 {
     return _children;
 }
 
-CCTween *CCBone::getTween()
+Tween *Bone::getTween()
 {
     return _tween;
 }
 
-void CCBone::setZOrder(int zOrder)
+void Bone::setZOrder(int zOrder)
 {
     if (_ZOrder != zOrder)
-        CCNode::setZOrder(zOrder);
+        Node::setZOrder(zOrder);
 }
 
-void CCBone::setTransformDirty(bool dirty)
+void Bone::setTransformDirty(bool dirty)
 {
 	_transformDirty = dirty;
 }
 
-bool CCBone::isTransformDirty()
+bool Bone::isTransformDirty()
 {
 	return _transformDirty;
 }
 
-CCAffineTransform CCBone::nodeToArmatureTransform()
+AffineTransform Bone::nodeToArmatureTransform()
 {
 	return _worldTransform;
 }
 
-void CCBone::addDisplay(CCDisplayData *_displayData, int _index)
+void Bone::addDisplay(DisplayData *_displayData, int _index)
 {
     _displayManager->addDisplay(_displayData, _index);
 }
 
-void CCBone::changeDisplayByIndex(int _index, bool _force)
+void Bone::changeDisplayByIndex(int _index, bool _force)
 {
     _displayManager->changeDisplayByIndex(_index, _force);
 }
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {

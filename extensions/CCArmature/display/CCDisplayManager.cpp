@@ -28,11 +28,11 @@ THE SOFTWARE.
 #include "../utils/CCUtilMath.h"
 #include "../display/CCSkin.h"
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
 
-CCDisplayManager *CCDisplayManager::create(CCBone *bone)
+DisplayManager *DisplayManager::create(Bone *bone)
 {
-    CCDisplayManager *pDisplayManager = new CCDisplayManager();
+    DisplayManager *pDisplayManager = new DisplayManager();
     if (pDisplayManager && pDisplayManager->init(bone))
     {
         pDisplayManager->autorelease();
@@ -43,7 +43,7 @@ CCDisplayManager *CCDisplayManager::create(CCBone *bone)
 }
 
 
-CCDisplayManager::CCDisplayManager()
+DisplayManager::DisplayManager()
 	: _decoDisplayList(NULL)
 	, _displayRenderNode(NULL)
     , _currentDecoDisplay(NULL)
@@ -54,7 +54,7 @@ CCDisplayManager::CCDisplayManager()
 {
 }
 
-CCDisplayManager::~CCDisplayManager()
+DisplayManager::~DisplayManager()
 {
     CC_SAFE_DELETE(_decoDisplayList);
 
@@ -67,7 +67,7 @@ CCDisplayManager::~CCDisplayManager()
 
 }
 
-bool CCDisplayManager::init(CCBone *bone)
+bool DisplayManager::init(Bone *bone)
 {
     bool ret = false;
 
@@ -86,21 +86,21 @@ bool CCDisplayManager::init(CCBone *bone)
 }
 
 
-void CCDisplayManager::addDisplay(CCDisplayData *displayData, int index)
+void DisplayManager::addDisplay(DisplayData *displayData, int index)
 {
-    CCDecorativeDisplay *decoDisplay = NULL;
+    DecorativeDisplay *decoDisplay = NULL;
 
     if(index >= 0 && (unsigned int)index < _decoDisplayList->count())
     {
-        decoDisplay = (CCDecorativeDisplay *)_decoDisplayList->objectAtIndex(index);
+        decoDisplay = (DecorativeDisplay *)_decoDisplayList->objectAtIndex(index);
     }
     else
     {
-        decoDisplay = CCDecorativeDisplay::create();
+        decoDisplay = DecorativeDisplay::create();
         _decoDisplayList->addObject(decoDisplay);
     }
 
-    CCDisplayFactory::addDisplay(_bone, decoDisplay, displayData);
+    DisplayFactory::addDisplay(_bone, decoDisplay, displayData);
 
     //! if changed display index is current display index, then change current display to the new display
     if(index == _displayIndex)
@@ -110,7 +110,7 @@ void CCDisplayManager::addDisplay(CCDisplayData *displayData, int index)
     }
 }
 
-void CCDisplayManager::removeDisplay(int index)
+void DisplayManager::removeDisplay(int index)
 {
     _decoDisplayList->removeObjectAtIndex(index);
 
@@ -120,7 +120,7 @@ void CCDisplayManager::removeDisplay(int index)
     }
 }
 
-void CCDisplayManager::changeDisplayByIndex(int index, bool force)
+void DisplayManager::changeDisplayByIndex(int index, bool force)
 {
     CCAssert( (_decoDisplayList ? index < (int)_decoDisplayList->count() : true), "the _index value is out of range");
 
@@ -145,12 +145,12 @@ void CCDisplayManager::changeDisplayByIndex(int index, bool force)
     }
 
 
-    CCDecorativeDisplay *decoDisplay = (CCDecorativeDisplay *)_decoDisplayList->objectAtIndex(_displayIndex);
+    DecorativeDisplay *decoDisplay = (DecorativeDisplay *)_decoDisplayList->objectAtIndex(_displayIndex);
 
     setCurrentDecorativeDisplay(decoDisplay);
 }
 
-void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisplay)
+void DisplayManager::setCurrentDecorativeDisplay(DecorativeDisplay *decoDisplay)
 {
 #if ENABLE_PHYSICS_DETECT
     if (_currentDecoDisplay && _currentDecoDisplay->getColliderDetector())
@@ -168,10 +168,10 @@ void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisp
     }
 #endif
 
-    CCNode *displayRenderNode = _currentDecoDisplay == NULL ? NULL : _currentDecoDisplay->getDisplay();
+    Node *displayRenderNode = _currentDecoDisplay == NULL ? NULL : _currentDecoDisplay->getDisplay();
     if (_displayRenderNode)
     {
-        if (dynamic_cast<CCArmature *>(_displayRenderNode) != NULL)
+        if (dynamic_cast<Armature *>(_displayRenderNode) != NULL)
         {
             _bone->setChildArmature(NULL);
         }
@@ -184,60 +184,60 @@ void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisp
 
     if(_displayRenderNode)
     {
-        if (dynamic_cast<CCArmature *>(_displayRenderNode) != NULL)
+        if (dynamic_cast<Armature *>(_displayRenderNode) != NULL)
         {
-            _bone->setChildArmature((CCArmature *)_displayRenderNode);
+            _bone->setChildArmature((Armature *)_displayRenderNode);
         }
         _displayRenderNode->retain();
 		_displayRenderNode->setVisible(_visible);
     }
 }
 
-CCNode *CCDisplayManager::getDisplayRenderNode()
+Node *DisplayManager::getDisplayRenderNode()
 {
     return _displayRenderNode;
 }
 
-int CCDisplayManager::getCurrentDisplayIndex()
+int DisplayManager::getCurrentDisplayIndex()
 {
     return _displayIndex;
 }
 
-CCDecorativeDisplay *CCDisplayManager::getCurrentDecorativeDisplay()
+DecorativeDisplay *DisplayManager::getCurrentDecorativeDisplay()
 {
     return _currentDecoDisplay;
 }
 
-CCDecorativeDisplay *CCDisplayManager::getDecorativeDisplayByIndex( int index)
+DecorativeDisplay *DisplayManager::getDecorativeDisplayByIndex( int index)
 {
-    return (CCDecorativeDisplay *)_decoDisplayList->objectAtIndex(index);
+    return (DecorativeDisplay *)_decoDisplayList->objectAtIndex(index);
 }
 
-void CCDisplayManager::initDisplayList(CCBoneData *boneData)
+void DisplayManager::initDisplayList(BoneData *boneData)
 {
     CC_SAFE_DELETE(_decoDisplayList);
-    _decoDisplayList = CCArray::create();
+    _decoDisplayList = Array::create();
     _decoDisplayList->retain();
 
     CS_RETURN_IF(!boneData);
 
-    CCObject *object = NULL;
-    CCArray *displayDataList = &boneData->displayDataList;
+    Object *object = NULL;
+    Array *displayDataList = &boneData->displayDataList;
     CCARRAY_FOREACH(displayDataList, object)
     {
-        CCDisplayData *displayData = (CCDisplayData *)object;
+        DisplayData *displayData = (DisplayData *)object;
 
-        CCDecorativeDisplay *decoDisplay = CCDecorativeDisplay::create();
+        DecorativeDisplay *decoDisplay = DecorativeDisplay::create();
         decoDisplay->setDisplayData(displayData);
 
-        CCDisplayFactory::createDisplay(_bone, decoDisplay);
+        DisplayFactory::createDisplay(_bone, decoDisplay);
 
         _decoDisplayList->addObject(decoDisplay);
     }
 }
 
 
-bool CCDisplayManager::containPoint(CCPoint &point)
+bool DisplayManager::containPoint(Point &point)
 {
     if(!_visible || _displayIndex < 0)
     {
@@ -256,10 +256,10 @@ bool CCDisplayManager::containPoint(CCPoint &point)
          *
          */
 
-        CCPoint outPoint = ccp(0, 0);
+        Point outPoint = ccp(0, 0);
 
-        CCSprite *sprite = (CCSprite *)_currentDecoDisplay->getDisplay();
-        sprite = (CCSprite *)sprite->getChildByTag(0);
+        Sprite *sprite = (Sprite *)_currentDecoDisplay->getDisplay();
+        sprite = (Sprite *)sprite->getChildByTag(0);
 
         ret = CC_SPRITE_CONTAIN_POINT_WITH_RETURN(sprite, point, outPoint);
 
@@ -272,14 +272,14 @@ bool CCDisplayManager::containPoint(CCPoint &point)
     return ret;
 }
 
-bool CCDisplayManager::containPoint(float x, float y)
+bool DisplayManager::containPoint(float x, float y)
 {
-    CCPoint p = ccp(x, y);
+    Point p = ccp(x, y);
     return containPoint(p);
 }
 
 
-void CCDisplayManager::setVisible(bool visible)
+void DisplayManager::setVisible(bool visible)
 {
     if(!_displayRenderNode)
         return;
@@ -288,36 +288,36 @@ void CCDisplayManager::setVisible(bool visible)
     _displayRenderNode->setVisible(visible);
 }
 
-bool CCDisplayManager::isVisible()
+bool DisplayManager::isVisible()
 {
     return _visible;
 }
 
 
-CCSize CCDisplayManager::getContentSize()
+Size DisplayManager::getContentSize()
 {
     CS_RETURN_IF(!_displayRenderNode) CCSizeMake(0, 0);
     return _displayRenderNode->getContentSize();
 }
 
-CCRect CCDisplayManager::getBoundingBox()
+Rect DisplayManager::getBoundingBox()
 {
     CS_RETURN_IF(!_displayRenderNode) CCRectMake(0, 0, 0, 0);
     return _displayRenderNode->boundingBox();
 }
 
 
-CCPoint CCDisplayManager::getAnchorPoint()
+Point DisplayManager::getAnchorPoint()
 {
     CS_RETURN_IF(!_displayRenderNode) ccp(0, 0);
     return _displayRenderNode->getAnchorPoint();
 }
 
-CCPoint CCDisplayManager::getAnchorPointInPoints()
+Point DisplayManager::getAnchorPointInPoints()
 {
     CS_RETURN_IF(!_displayRenderNode) ccp(0, 0);
     return _displayRenderNode->getAnchorPointInPoints();
 }
 
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {

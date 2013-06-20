@@ -33,9 +33,9 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * RGBA protocol that affects CCNode's color and opacity
+ * RGBA protocol that affects Node's color and opacity
  */
-class CC_DLL CCRGBAProtocol
+class CC_DLL RGBAProtocol
 {
 public:
     /** 
@@ -130,7 +130,7 @@ public:
  * Please refer to glBlendFunc in OpenGL ES Manual
  * http://www.khronos.org/opengles/sdk/docs/man/xhtml/glBlendFunc.xml for more details.
  */
-class CC_DLL CCBlendProtocol
+class CC_DLL BlendProtocol
 {
 public:
     /**
@@ -151,7 +151,7 @@ public:
 };
 
 /** 
- * CCNode objects that uses a CCTexture2D to render the images.
+ * Node objects that uses a Texture2D to render the images.
  * The texture can have a blending function.
  * If the texture has alpha premultiplied the default blending function is:
  *   src=GL_ONE dst= GL_ONE_MINUS_SRC_ALPHA
@@ -159,7 +159,7 @@ public:
  *   src=GL_SRC_ALPHA dst= GL_ONE_MINUS_SRC_ALPHA
  * But you can change the blending function at any time.
  */
-class CC_DLL CCTextureProtocol : public CCBlendProtocol
+class CC_DLL TextureProtocol : public BlendProtocol
 {
 public:
     /**
@@ -167,20 +167,20 @@ public:
      *
      * @return  The texture that is currenlty being used.
      */
-    virtual CCTexture2D* getTexture(void) = 0;
+    virtual Texture2D* getTexture(void) = 0;
 
     /**
      * Sets a new texuture. It will be retained.
      *
-     * @param   texture A valid CCTexture2D object, which will be applied to this sprite object.
+     * @param   texture A valid Texture2D object, which will be applied to this sprite object.
      */
-    virtual void setTexture(CCTexture2D *texture) = 0;
+    virtual void setTexture(Texture2D *texture) = 0;
 };
 
 /**
  * Common interface for Labels
  */
-class CC_DLL CCLabelProtocol
+class CC_DLL LabelProtocol
 {
 public:
     /**
@@ -201,11 +201,11 @@ public:
 /** 
  * OpenGL projection protocol 
  */
-class CC_DLL CCDirectorDelegate
+class CC_DLL DirectorDelegate
 {
 public:
     /** 
-     * Will be called by CCDirector when the projection is updated, and "custom" projection is used
+     * Will be called by Director when the projection is updated, and "custom" projection is used
      */
     virtual void updateProjection(void) = 0;
 };

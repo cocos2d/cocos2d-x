@@ -44,7 +44,7 @@ void CCLog(const char * pszFormat, ...)
 }
 
 // ios no MessageBox, use CCLog instead
-void CCMessageBox(const char * pszMsg, const char * pszTitle)
+void MessageBox(const char * pszMsg, const char * pszTitle)
 {
     NSString * title = (pszTitle) ? [NSString stringWithUTF8String : pszTitle] : nil;
     NSString * msg = (pszMsg) ? [NSString stringWithUTF8String : pszMsg] : nil;
@@ -57,7 +57,7 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
     [messageBox show];
 }
 
-void CCLuaLog(const char * pszFormat)
+void LuaLog(const char * pszFormat)
 {
     puts(pszFormat);
 }

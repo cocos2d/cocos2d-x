@@ -57,8 +57,8 @@ static const int glutMouseUp = 1;
 
 NS_CC_BEGIN
 
-bool CCEGLView::_initializedFunctions = false;
-const GLubyte *CCEGLView::_extensions = 0;
+bool EGLView::_initializedFunctions = false;
+const GLubyte *EGLView::_extensions = 0;
 
 enum Orientation
 {
@@ -70,14 +70,14 @@ enum Orientation
 static Orientation orientation = LANDSCAPE;
 
 #define MAX_TOUCHES         4
-static CCEGLView* s_pInstance = NULL;
+static EGLView* s_pInstance = NULL;
 
 static bool buttonDepressed = false;
 extern "C" void mouseCB(int button, int state, int x, int y)
 {
     float fx = x;
     float fy = y;
-    CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
+    EGLView* pEGLView = EGLView::sharedOpenGLView();
     int id = 0;
 
     if(button != glutLeftButton) return;
@@ -98,7 +98,7 @@ extern "C" void motionCB(int x, int y)
 {
     float fx = x;
     float fy = y;
-    CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
+    EGLView* pEGLView = EGLView::sharedOpenGLView();
     int id = 0;
 
     if(buttonDepressed)
@@ -107,7 +107,7 @@ extern "C" void motionCB(int x, int y)
     }
 }
 
-CCEGLView::CCEGLView()
+EGLView::EGLView()
 {
 	_eglDisplay = EGL_NO_DISPLAY;
 	_eglContext = EGL_NO_CONTEXT;
@@ -141,16 +141,16 @@ CCEGLView::CCEGLView()
     glutPassiveMotionFunc(&motionCB);
 }
 
-CCEGLView::~CCEGLView()
+EGLView::~EGLView()
 {
 }
 
-const char* CCEGLView::getWindowGroupId() const
+const char* EGLView::getWindowGroupId() const
 {
 	return _windowGroupID;
 }
 
-void CCEGLView::release()
+void EGLView::release()
 {
     if (_eglDisplay != EGL_NO_DISPLAY)
     {
@@ -180,51 +180,51 @@ void CCEGLView::release()
 	exit(0);
 }
 
-void CCEGLView::initEGLFunctions()
+void EGLView::initEGLFunctions()
 {
 	_extensions = glGetString(GL_EXTENSIONS);
 	_initializedFunctions = true;
 }
 
-bool CCEGLView::isOpenGLReady()
+bool EGLView::isOpenGLReady()
 {
 	return (_isGLInitialized && _screenSize.height != 0 && _screenSize.width != 0);
 }
 
-void CCEGLView::end()
+void EGLView::end()
 {
     release();
 }
 
-void CCEGLView::swapBuffers()
+void EGLView::swapBuffers()
 {
 	eglSwapBuffers(_eglDisplay, _eglSurface);
 }
 
-CCEGLView* CCEGLView::sharedOpenGLView()
+EGLView* EGLView::sharedOpenGLView()
 {
 	if (!s_pInstance)
 	{
-		s_pInstance = new CCEGLView();
+		s_pInstance = new EGLView();
 	}
 
 	CCAssert(s_pInstance != NULL, "CCEGLView wasn't constructed yet");
 	return s_pInstance;
 }
 
-void CCEGLView::showKeyboard()
+void EGLView::showKeyboard()
 {
 }
 
-void CCEGLView::hideKeyboard()
+void EGLView::hideKeyboard()
 {
 }
 
-void CCEGLView::setIMEKeyboardState(bool bOpen)
+void EGLView::setIMEKeyboardState(bool bOpen)
 {
 }
 
-bool CCEGLView::isGLExtension(const char *searchName) const
+bool EGLView::isGLExtension(const char *searchName) const
 {
 	const GLubyte *start;
 	GLubyte *where, *terminator;
@@ -277,7 +277,7 @@ static EGLenum checkErrorEGL(const char* msg)
     return error;
 }
 
-bool CCEGLView::initGL()
+bool EGLView::initGL()
 {
     EGLint eglConfigCount;
     EGLConfig config;
@@ -376,7 +376,7 @@ static long time2millis(struct timespec *times)
     return times->tv_sec*1000 + times->tv_nsec/1000000;
 }
 
-bool CCEGLView::handleEvents()
+bool EGLView::handleEvents()
 {
 	return true;
 }

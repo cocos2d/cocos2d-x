@@ -25,11 +25,11 @@ static int SendBinaryMessageToLua(int nHandler,const unsigned char* pTable,int n
         return 0;
     }
     
-    if (NULL == CCScriptEngineManager::sharedManager()->getScriptEngine()) {
+    if (NULL == ScriptEngineManager::sharedManager()->getScriptEngine()) {
         return 0;
     }
     
-    CCLuaStack *pStack = CCLuaEngine::defaultEngine()->getLuaStack();
+    LuaStack *pStack = LuaEngine::defaultEngine()->getLuaStack();
     if (NULL == pStack) {
         return 0;
     }
@@ -40,13 +40,13 @@ static int SendBinaryMessageToLua(int nHandler,const unsigned char* pTable,int n
     }
     
     int nRet = 0;
-    CCLuaValueArray array;
+    LuaValueArray array;
     for (int i = 0 ; i < nLength; i++) {
-        CCLuaValue value = CCLuaValue::intValue(pTable[i]);
+        LuaValue value = LuaValue::intValue(pTable[i]);
         array.push_back(value);
     }
     
-    pStack->pushCCLuaValueArray(array);
+    pStack->pushLuaValueArray(array);
     nRet = pStack->executeFunctionByHandler(nHandler, 1);
     pStack->clean();
     return nRet;
@@ -116,7 +116,7 @@ public:
         if (NULL != luaWs) {
             int nHandler = luaWs->getScriptHandler(LuaWebSocket::kWebSocketScriptHandlerOpen);
             if (-1 != nHandler) {
-                CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(nHandler,"");
+                ScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(nHandler,"");
             }
         }
     }
@@ -135,7 +135,7 @@ public:
                 
                 int nHandler = luaWs->getScriptHandler(LuaWebSocket::kWebSocketScriptHandlerMessage);
                 if (-1 != nHandler) {
-                    CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(nHandler,data.bytes);
+                    ScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(nHandler,data.bytes);
                 }
             }
         }
@@ -147,7 +147,7 @@ public:
         if (NULL != luaWs) {
             int nHandler = luaWs->getScriptHandler(LuaWebSocket::kWebSocketScriptHandlerClose);
             if (-1 != nHandler) {
-                CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(nHandler,"");
+                ScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(nHandler,"");
             }
         }
     }
@@ -158,7 +158,7 @@ public:
         if (NULL != luaWs) {
             int nHandler = luaWs->getScriptHandler(LuaWebSocket::kWebSocketScriptHandlerError);
             if (-1 != nHandler) {
-                CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(nHandler,"");
+                ScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(nHandler,"");
             }
         }
     }
@@ -263,13 +263,13 @@ static int tolua_Cocos2d_WebSocket_createByProtocolArray00(lua_State* tolua_S)
 #endif
     {
         const char *urlName  = ((const char*)  tolua_tostring(tolua_S,2,0));
-        CCArray*    protocolArray = ((CCArray*)  tolua_tousertype(tolua_S,3,0));
+        Array*    protocolArray = ((Array*)  tolua_tousertype(tolua_S,3,0));
         std::vector<std::string> protocols;
         if (NULL != protocolArray) {
-            CCObject* pObj = NULL;
+            Object* pObj = NULL;
             CCARRAY_FOREACH(protocolArray, pObj)
             {
-                CCString* pStr = (CCString*)pObj;
+                String* pStr = (String*)pObj;
                 if (NULL != pStr) {
                     protocols.push_back(pStr->getCString());
                 }

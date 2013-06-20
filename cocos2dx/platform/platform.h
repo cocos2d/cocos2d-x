@@ -45,7 +45,7 @@ struct CC_DLL cc_timeval
     int tv_usec;    // microSeconds
 };
 
-class CC_DLL CCTime
+class CC_DLL Time
 {
 public:
     static int gettimeofdayCocos2d(struct cc_timeval *tp, void *tzp);
