@@ -42,11 +42,11 @@ NS_CC_BEGIN
 
 #define kProgressTextureCoordsCount 4
 //  kProgressTextureCoords holds points {0,1} {0,0} {1,0} {1,1} we can represent it as bits
-const char kCCProgressTextureCoords = 0x4b;
+const char kProgressTextureCoords = 0x4b;
 
 
-CCProgressTimer::CCProgressTimer()
-:_type(kCCProgressTimerTypeRadial)
+ProgressTimer::ProgressTimer()
+:_type(kProgressTimerTypeRadial)
 ,_percentage(0.0f)
 ,_sprite(NULL)
 ,_vertexDataCount(0)
@@ -56,9 +56,9 @@ CCProgressTimer::CCProgressTimer()
 ,_reverseDirection(false)
 {}
 
-CCProgressTimer* CCProgressTimer::create(CCSprite* sp)
+ProgressTimer* ProgressTimer::create(Sprite* sp)
 {
-    CCProgressTimer *pProgressTimer = new CCProgressTimer();
+    ProgressTimer *pProgressTimer = new ProgressTimer();
     if (pProgressTimer->initWithSprite(sp))
     {
         pProgressTimer->autorelease();
@@ -72,30 +72,30 @@ CCProgressTimer* CCProgressTimer::create(CCSprite* sp)
     return pProgressTimer;
 }
 
-bool CCProgressTimer::initWithSprite(CCSprite* sp)
+bool ProgressTimer::initWithSprite(Sprite* sp)
 {
     setPercentage(0.0f);
     _vertexData = NULL;
     _vertexDataCount = 0;
 
     setAnchorPoint(ccp(0.5f,0.5f));
-    _type = kCCProgressTimerTypeRadial;
+    _type = kProgressTimerTypeRadial;
     _reverseDirection = false;
     setMidpoint(ccp(0.5f, 0.5f));
     setBarChangeRate(ccp(1,1));
     setSprite(sp);
     // shader program
-    setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
+    setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColor));
     return true;
 }
 
-CCProgressTimer::~CCProgressTimer(void)
+ProgressTimer::~ProgressTimer(void)
 {
     CC_SAFE_FREE(_vertexData);
     CC_SAFE_RELEASE(_sprite);
 }
 
-void CCProgressTimer::setPercentage(float fPercentage)
+void ProgressTimer::setPercentage(float fPercentage)
 {
     if (_percentage != fPercentage)
     {
@@ -104,7 +104,7 @@ void CCProgressTimer::setPercentage(float fPercentage)
     }
 }
 
-void CCProgressTimer::setSprite(CCSprite *pSprite)
+void ProgressTimer::setSprite(Sprite *pSprite)
 {
     if (_sprite != pSprite)
     {
@@ -122,7 +122,7 @@ void CCProgressTimer::setSprite(CCSprite *pSprite)
     }        
 }
 
-void CCProgressTimer::setType(CCProgressTimerType type)
+void ProgressTimer::setType(ProgressTimerType type)
 {
     if (type != _type)
     {
@@ -138,7 +138,7 @@ void CCProgressTimer::setType(CCProgressTimerType type)
     }
 }
 
-void CCProgressTimer::setReverseProgress(bool reverse)
+void ProgressTimer::setReverseProgress(bool reverse)
 {
     if( _reverseDirection != reverse ) {
         _reverseDirection = reverse;
@@ -149,12 +149,12 @@ void CCProgressTimer::setReverseProgress(bool reverse)
     }
 }
 
-void CCProgressTimer::setOpacityModifyRGB(bool bValue)
+void ProgressTimer::setOpacityModifyRGB(bool bValue)
 {
     CC_UNUSED_PARAM(bValue);
 }
 
-bool CCProgressTimer::isOpacityModifyRGB(void)
+bool ProgressTimer::isOpacityModifyRGB(void)
 {
     return false;
 }
@@ -164,15 +164,15 @@ bool CCProgressTimer::isOpacityModifyRGB(void)
 ///
 //    @returns the vertex position from the texture coordinate
 ///
-ccTex2F CCProgressTimer::textureCoordFromAlphaPoint(CCPoint alpha)
+ccTex2F ProgressTimer::textureCoordFromAlphaPoint(Point alpha)
 {
     ccTex2F ret = {0.0f, 0.0f};
     if (!_sprite) {
         return ret;
     }
     ccV3F_C4B_T2F_Quad quad = _sprite->getQuad();
-    CCPoint min = ccp(quad.bl.texCoords.u,quad.bl.texCoords.v);
-    CCPoint max = ccp(quad.tr.texCoords.u,quad.tr.texCoords.v);
+    Point min = ccp(quad.bl.texCoords.u,quad.bl.texCoords.v);
+    Point max = ccp(quad.tr.texCoords.u,quad.tr.texCoords.v);
     //  Fix bug #1303 so that progress timer handles sprite frame texture rotation
     if (_sprite->isTextureRectRotated()) {
         CC_SWAP(alpha.x, alpha.y, float);
@@ -180,21 +180,21 @@ ccTex2F CCProgressTimer::textureCoordFromAlphaPoint(CCPoint alpha)
     return tex2(min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y);
 }
 
-ccVertex2F CCProgressTimer::vertexFromAlphaPoint(CCPoint alpha)
+ccVertex2F ProgressTimer::vertexFromAlphaPoint(Point alpha)
 {
     ccVertex2F ret = {0.0f, 0.0f};
     if (!_sprite) {
         return ret;
     }
     ccV3F_C4B_T2F_Quad quad = _sprite->getQuad();
-    CCPoint min = ccp(quad.bl.vertices.x,quad.bl.vertices.y);
-    CCPoint max = ccp(quad.tr.vertices.x,quad.tr.vertices.y);
+    Point min = ccp(quad.bl.vertices.x,quad.bl.vertices.y);
+    Point max = ccp(quad.tr.vertices.x,quad.tr.vertices.y);
     ret.x = min.x * (1.f - alpha.x) + max.x * alpha.x;
     ret.y = min.y * (1.f - alpha.y) + max.y * alpha.y;
     return ret;
 }
 
-void CCProgressTimer::updateColor(void)
+void ProgressTimer::updateColor(void)
 {
     if (!_sprite) {
         return;
@@ -210,14 +210,14 @@ void CCProgressTimer::updateColor(void)
     }
 }
 
-void CCProgressTimer::updateProgress(void)
+void ProgressTimer::updateProgress(void)
 {
     switch (_type)
     {
-    case kCCProgressTimerTypeRadial:
+    case kProgressTimerTypeRadial:
         updateRadial();
         break;
-    case kCCProgressTimerTypeBar:
+    case kProgressTimerTypeBar:
         updateBar();
         break;
     default:
@@ -225,19 +225,19 @@ void CCProgressTimer::updateProgress(void)
     }
 }
 
-void CCProgressTimer::setAnchorPoint(CCPoint anchorPoint)
+void ProgressTimer::setAnchorPoint(Point anchorPoint)
 {
-    CCNode::setAnchorPoint(anchorPoint);
+    Node::setAnchorPoint(anchorPoint);
 }
 
-CCPoint CCProgressTimer::getMidpoint(void)
+Point ProgressTimer::getMidpoint(void)
 {
     return _midpoint;
 }
 
-void CCProgressTimer::setMidpoint(CCPoint midPoint)
+void ProgressTimer::setMidpoint(Point midPoint)
 {
-    _midpoint = ccpClamp(midPoint, CCPointZero, ccp(1,1));
+    _midpoint = ccpClamp(midPoint, PointZero, ccp(1,1));
 }
 
 ///
@@ -249,7 +249,7 @@ void CCProgressTimer::setMidpoint(CCPoint midPoint)
 //    It now deals with flipped texture. If you run into this problem, just use the
 //    sprite property and enable the methods flipX, flipY.
 ///
-void CCProgressTimer::updateRadial(void)
+void ProgressTimer::updateRadial(void)
 {
     if (!_sprite) {
         return;
@@ -261,12 +261,12 @@ void CCProgressTimer::updateRadial(void)
     //    We find the vector to do a hit detection based on the percentage
     //    We know the first vector is the one @ 12 o'clock (top,mid) so we rotate
     //    from that by the progress angle around the _midpoint pivot
-    CCPoint topMid = ccp(_midpoint.x, 1.f);
-    CCPoint percentagePt = ccpRotateByAngle(topMid, _midpoint, angle);
+    Point topMid = ccp(_midpoint.x, 1.f);
+    Point percentagePt = ccpRotateByAngle(topMid, _midpoint, angle);
 
 
     int index = 0;
-    CCPoint hit = CCPointZero;
+    Point hit = PointZero;
 
     if (alpha == 0.f) {
         //    More efficient since we don't always need to check intersection
@@ -288,8 +288,8 @@ void CCProgressTimer::updateRadial(void)
         for (int i = 0; i <= kProgressTextureCoordsCount; ++i) {
             int pIndex = (i + (kProgressTextureCoordsCount - 1))%kProgressTextureCoordsCount;
 
-            CCPoint edgePtA = boundaryTexCoord(i % kProgressTextureCoordsCount);
-            CCPoint edgePtB = boundaryTexCoord(pIndex);
+            Point edgePtA = boundaryTexCoord(i % kProgressTextureCoordsCount);
+            Point edgePtB = boundaryTexCoord(pIndex);
 
             //    Remember that the top edge is split in half for the 12 o'clock position
             //    Let's deal with that here by finding the correct endpoints
@@ -360,7 +360,7 @@ void CCProgressTimer::updateRadial(void)
         _vertexData[1].vertices = vertexFromAlphaPoint(topMid);
 
         for(int i = 0; i < index; ++i){
-            CCPoint alphaPoint = boundaryTexCoord(i);
+            Point alphaPoint = boundaryTexCoord(i);
             _vertexData[i+2].texCoords = textureCoordFromAlphaPoint(alphaPoint);
             _vertexData[i+2].vertices = vertexFromAlphaPoint(alphaPoint);
         }
@@ -381,15 +381,15 @@ void CCProgressTimer::updateRadial(void)
 //    It now deals with flipped texture. If you run into this problem, just use the
 //    sprite property and enable the methods flipX, flipY.
 ///
-void CCProgressTimer::updateBar(void)
+void ProgressTimer::updateBar(void)
 {
     if (!_sprite) {
         return;
     }
     float alpha = _percentage / 100.0f;
-    CCPoint alphaOffset = ccpMult(ccp(1.0f * (1.0f - _barChangeRate.x) + alpha * _barChangeRate.x, 1.0f * (1.0f - _barChangeRate.y) + alpha * _barChangeRate.y), 0.5f);
-    CCPoint min = ccpSub(_midpoint, alphaOffset);
-    CCPoint max = ccpAdd(_midpoint, alphaOffset);
+    Point alphaOffset = ccpMult(ccp(1.0f * (1.0f - _barChangeRate.x) + alpha * _barChangeRate.x, 1.0f * (1.0f - _barChangeRate.y) + alpha * _barChangeRate.y), 0.5f);
+    Point min = ccpSub(_midpoint, alphaOffset);
+    Point max = ccpAdd(_midpoint, alphaOffset);
 
     if (min.x < 0.f) {
         max.x += -min.x;
@@ -474,19 +474,19 @@ void CCProgressTimer::updateBar(void)
     updateColor();
 }
 
-CCPoint CCProgressTimer::boundaryTexCoord(char index)
+Point ProgressTimer::boundaryTexCoord(char index)
 {
     if (index < kProgressTextureCoordsCount) {
         if (_reverseDirection) {
-            return ccp((kCCProgressTextureCoords>>(7-(index<<1)))&1,(kCCProgressTextureCoords>>(7-((index<<1)+1)))&1);
+            return ccp((kProgressTextureCoords>>(7-(index<<1)))&1,(kProgressTextureCoords>>(7-((index<<1)+1)))&1);
         } else {
-            return ccp((kCCProgressTextureCoords>>((index<<1)+1))&1,(kCCProgressTextureCoords>>(index<<1))&1);
+            return ccp((kProgressTextureCoords>>((index<<1)+1))&1,(kProgressTextureCoords>>(index<<1))&1);
         }
     }
-    return CCPointZero;
+    return PointZero;
 }
 
-void CCProgressTimer::draw(void)
+void ProgressTimer::draw(void)
 {
     if( ! _vertexData || ! _sprite)
         return;
@@ -495,7 +495,7 @@ void CCProgressTimer::draw(void)
 
     ccGLBlendFunc( _sprite->getBlendFunc().src, _sprite->getBlendFunc().dst );
 
-    ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
+    ccGLEnableVertexAttribs(kVertexAttribFlag_PosColorTex );
 
     ccGLBindTexture2D( _sprite->getTexture()->getName() );
 
@@ -503,24 +503,24 @@ void CCProgressTimer::draw(void)
     setGLBufferData((void*) _vertexData, (_vertexDataCount * sizeof(ccV2F_C4B_T2F)), 0);
 
     int offset = 0;
-    glVertexAttribPointer( kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid*)offset);
+    glVertexAttribPointer( kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid*)offset);
 
     offset += sizeof(ccVertex2F);
-    glVertexAttribPointer( kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(ccV2F_C4B_T2F), (GLvoid*)offset);
+    glVertexAttribPointer( kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(ccV2F_C4B_T2F), (GLvoid*)offset);
 
     offset += sizeof(ccColor4B);
-    glVertexAttribPointer( kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid*)offset);
+    glVertexAttribPointer( kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid*)offset);
 #else
-    glVertexAttribPointer( kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]) , &_vertexData[0].vertices);
-    glVertexAttribPointer( kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]), &_vertexData[0].texCoords);
-    glVertexAttribPointer( kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(_vertexData[0]), &_vertexData[0].colors);
+    glVertexAttribPointer( kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]) , &_vertexData[0].vertices);
+    glVertexAttribPointer( kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]), &_vertexData[0].texCoords);
+    glVertexAttribPointer( kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(_vertexData[0]), &_vertexData[0].colors);
 #endif // EMSCRIPTEN
 
-    if(_type == kCCProgressTimerTypeRadial)
+    if(_type == kProgressTimerTypeRadial)
     {
         glDrawArrays(GL_TRIANGLE_FAN, 0, _vertexDataCount);
     } 
-    else if (_type == kCCProgressTimerTypeBar)
+    else if (_type == kProgressTimerTypeBar)
     {
         if (!_reverseDirection) 
         {

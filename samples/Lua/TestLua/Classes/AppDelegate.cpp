@@ -25,8 +25,8 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    CCDirector *pDirector = CCDirector::sharedDirector();
-    pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
+    Director *pDirector = Director::sharedDirector();
+    pDirector->setOpenGLView(EGLView::sharedOpenGLView());
 
     // turn on display FPS
     pDirector->setDisplayStats(true);
@@ -35,10 +35,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setAnimationInterval(1.0 / 60);
     
     // register lua engine
-    CCLuaEngine* pEngine = CCLuaEngine::defaultEngine();
-    CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
+    LuaEngine* pEngine = LuaEngine::defaultEngine();
+    ScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
     
-    CCLuaStack *pStack = pEngine->getLuaStack();
+    LuaStack *pStack = pEngine->getLuaStack();
     lua_State *tolua_s = pStack->getLuaState();
     tolua_extensions_ccb_open(tolua_s);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)    
@@ -55,7 +55,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     searchPaths.push_back("TestCppResources");
     searchPaths.push_back("script");
 #endif
-    CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
+    FileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
 
     pEngine->executeScriptFile("luaScript/controller.lua");
 
@@ -65,7 +65,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    CCDirector::sharedDirector()->stopAnimation();
+    Director::sharedDirector()->stopAnimation();
 
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
 }
@@ -73,7 +73,7 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    CCDirector::sharedDirector()->startAnimation();
+    Director::sharedDirector()->startAnimation();
 
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
 }

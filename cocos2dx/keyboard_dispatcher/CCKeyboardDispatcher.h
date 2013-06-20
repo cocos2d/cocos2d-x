@@ -36,26 +36,26 @@ NS_CC_BEGIN
  * @{
  */
 
-typedef std::function<void(int)> CCKeyboardDelegate;
+typedef std::function<void(int)> KeyboardDelegate;
 
 /**
-@class CCKeyboardDispatcher
+@class KeyboardDispatcher
 @brief Dispatch the keypad message from the phone
 */
-class CC_DLL CCKeyboardDispatcher : public CCObject
+class CC_DLL KeyboardDispatcher : public Object
 {
 public:
-    CCKeyboardDispatcher();
-    ~CCKeyboardDispatcher();
+    KeyboardDispatcher();
+    ~KeyboardDispatcher();
 
     /**
     @brief set delagate to key press event
     */
-    void setKeyPressDelegate(CCKeyboardDelegate delegate);
+    void setKeyPressDelegate(KeyboardDelegate delegate);
     /**
     @brief set delagate to key release event
     */
-    void setKeyReleaseDelegate(CCKeyboardDelegate delegate);
+    void setKeyReleaseDelegate(KeyboardDelegate delegate);
 
     /**
     @brief dispatch the key stroke event
@@ -64,8 +64,8 @@ public:
 
 protected:
 
-    CCKeyboardDelegate _keyPressDelegate;
-    CCKeyboardDelegate _keyReleaseDelegate;
+    KeyboardDelegate _keyPressDelegate;
+    KeyboardDelegate _keyReleaseDelegate;
 };
 
 // end of input group

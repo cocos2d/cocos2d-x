@@ -13,8 +13,8 @@
 NS_CC_BEGIN;
 
 // sharedApplication pointer
-CCApplication * CCApplication::sm_pSharedApplication = 0;
-long CCApplication::_animationInterval = 1000;
+Application * Application::sm_pSharedApplication = 0;
+long Application::_animationInterval = 1000;
 
 // convert the timespec into milliseconds
 static long time2millis(struct timespec *times)
@@ -22,13 +22,13 @@ static long time2millis(struct timespec *times)
     return times->tv_sec*1000 + times->tv_nsec/1000000;
 }
 
-CCApplication::CCApplication()
+Application::Application()
 {
     CC_ASSERT(! sm_pSharedApplication);
     sm_pSharedApplication = this;
 }
 
-CCApplication::~CCApplication()
+Application::~Application()
 {
     CC_ASSERT(this == sm_pSharedApplication);
     sm_pSharedApplication = NULL;
@@ -37,11 +37,11 @@ CCApplication::~CCApplication()
 
 extern "C" void mainLoopIter(void)
 {
-    CCEGLView::sharedOpenGLView()->handleEvents();
-    CCDirector::sharedDirector()->mainLoop();
+    EGLView::sharedOpenGLView()->handleEvents();
+    Director::sharedDirector()->mainLoop();
 }
 
-int CCApplication::run()
+int Application::run()
 {
 	struct timespec time_struct;
 	long update_time;
@@ -61,31 +61,31 @@ int CCApplication::run()
 	return -1;
 }
 
-void CCApplication::setAnimationInterval(double interval)
+void Application::setAnimationInterval(double interval)
 {
 	// interval in milliseconds
 	_animationInterval = (long)(interval * 1000);
 }
 
-void CCApplication::setResourceRootPath(const std::string& rootResDir)
+void Application::setResourceRootPath(const std::string& rootResDir)
 {
     _resourceRootPath = rootResDir;
     if (_resourceRootPath[_resourceRootPath.length() - 1] != '/')
     {
         _resourceRootPath += '/';
     }
-    CCFileUtils* pFileUtils = CCFileUtils::sharedFileUtils();
+    FileUtils* pFileUtils = FileUtils::sharedFileUtils();
     std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
     searchPaths.insert(searchPaths.begin(), _resourceRootPath);
     pFileUtils->setSearchPaths(searchPaths);
 }
 
-const std::string& CCApplication::getResourceRootPath(void)
+const std::string& Application::getResourceRootPath(void)
 {
     return _resourceRootPath;
 }
 
-TargetPlatform CCApplication::getTargetPlatform()
+TargetPlatform Application::getTargetPlatform()
 {
     return kTargetEmscripten;
 }
@@ -93,13 +93,13 @@ TargetPlatform CCApplication::getTargetPlatform()
 //////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////
-CCApplication* CCApplication::sharedApplication()
+Application* Application::sharedApplication()
 {
     CC_ASSERT(sm_pSharedApplication);
     return sm_pSharedApplication;
 }
 
-ccLanguageType CCApplication::getCurrentLanguage()
+ccLanguageType Application::getCurrentLanguage()
 {
     return kLanguageEnglish;
 }

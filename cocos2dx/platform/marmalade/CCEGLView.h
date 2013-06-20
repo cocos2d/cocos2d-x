@@ -26,18 +26,18 @@
 #define __CC_EGLVIEW_MARMALADE_H__
 
 #include "CCGeometry.h"
-#include "CCEGLViewProtocol.h"					// MH: Added because CCEGLView should be derived from CCEGLViewProtocol
+#include "CCEGLViewProtocol.h"					// MH: Added because EGLView should be derived from EGLViewProtocol
 #include "s3eKeyboard.h"
 #include "s3ePointer.h"
 #include "IwUtil.h"
 
 NS_CC_BEGIN
 
-class CC_DLL CCEGLView : public CCEGLViewProtocol		// MH: Added because CCEGLView should be derived from CCEGLViewProtocol
+class CC_DLL EGLView : public EGLViewProtocol		// MH: Added because EGLView should be derived from EGLViewProtocol
 {
 public:
-    CCEGLView();
-    virtual ~CCEGLView();
+    EGLView();
+    virtual ~EGLView();
 
     virtual bool isOpenGLReady();
     virtual void end();
@@ -48,7 +48,7 @@ public:
 	/**
 	 @brief	get the shared main open gl window
 	 */
-	static CCEGLView* sharedOpenGLView();			// MH: Cocos2D now uses pointer instead of ref
+	static EGLView* sharedOpenGLView();			// MH: Cocos2D now uses pointer instead of ref
 
 private:
 	bool				_accelState;
@@ -56,7 +56,7 @@ private:
 	s3eKey				_key;
     bool				_isMultiTouch;
 	
-	static CCEGLView*	_instance ;
+	static EGLView*	_instance ;
 	
 	void	setTouch(void* systemData);
 	void	setMotionTouch(void* systemData);
@@ -67,37 +67,37 @@ private:
 
 	static int32 TouchEventHandler(void* systemData, void* userData)
 	{
-		((CCEGLView*)userData)->setTouch(systemData);
+		((EGLView*)userData)->setTouch(systemData);
 		return 0;
 	}
 
 	static int32 MotionEventHandler(void* systemData, void* userData)
 	{
-		((CCEGLView*)userData)->setMotionTouch(systemData);
+		((EGLView*)userData)->setMotionTouch(systemData);
 		return 0;
 	}
 	
     static int32 MultiTouchEventHandler(void* systemData, void* userData)
 	{
-		((CCEGLView*)userData)->setMultiTouch(systemData);
+		((EGLView*)userData)->setMultiTouch(systemData);
 		return 0;
 	}
 	
     static int32 MultiMotionEventHandler(void* systemData, void* userData)
 	{
-		((CCEGLView*)userData)->setMultiMotionTouch(systemData);
+		((EGLView*)userData)->setMultiMotionTouch(systemData);
 		return 0;
 	}
 
 	static int32 KeyEventHandler(void* systemData, void* userData)
 	{
-		((CCEGLView*)userData)->setKeyTouch(systemData);
+		((EGLView*)userData)->setKeyTouch(systemData);
 		return 0;
 	}
 
 	static int32 CharEventHandler(void* systemData, void* userData)
 	{
-		((CCEGLView*)userData)->setCharTouch(systemData);
+		((EGLView*)userData)->setCharTouch(systemData);
 		return 0;
 	}
 };

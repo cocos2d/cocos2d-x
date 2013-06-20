@@ -36,24 +36,24 @@ NS_CC_BEGIN
  * @{
  */
 
-/** @brief CCScene is a subclass of CCNode that is used only as an abstract concept.
+/** @brief Scene is a subclass of Node that is used only as an abstract concept.
 
-CCScene an CCNode are almost identical with the difference that CCScene has it's
+Scene an Node are almost identical with the difference that Scene has it's
 anchor point (by default) at the center of the screen.
 
-For the moment CCScene has no other logic than that, but in future releases it might have
+For the moment Scene has no other logic than that, but in future releases it might have
 additional logic.
 
-It is a good practice to use and CCScene as the parent of all your nodes.
+It is a good practice to use and Scene as the parent of all your nodes.
 */
-class CC_DLL CCScene : public CCNode
+class CC_DLL Scene : public Node
 {
 public:
-    CCScene();
-    virtual ~CCScene();
+    Scene();
+    virtual ~Scene();
     bool init();
 
-    static CCScene *create(void);
+    static Scene *create(void);
 };
 
 // end of scene group

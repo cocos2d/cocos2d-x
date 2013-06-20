@@ -33,13 +33,13 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CC_DLL CCAccelerometer : public Tizen::Uix::Sensor::ISensorEventListener
+class CC_DLL Accelerometer : public Tizen::Uix::Sensor::ISensorEventListener
 {
 public:
-    CCAccelerometer();
-    ~CCAccelerometer();
+    Accelerometer();
+    ~Accelerometer();
 
-    void setDelegate(std::function<void(CCAcceleration*)> function);
+    void setDelegate(std::function<void(Acceleration*)> function);
     void setAccelerometerInterval(float interval);
     void startSensor();
     void stopSensor();
@@ -47,8 +47,8 @@ public:
     virtual void OnDataReceived(Tizen::Uix::Sensor::SensorType sensorType, Tizen::Uix::Sensor::SensorData& sensorData , result r);
 
 private:
-    std::function<void(CCAcceleration*)> _function;
-    CCAcceleration _accelerationValue;
+    std::function<void(Acceleration*)> _function;
+    Acceleration _accelerationValue;
     Tizen::Uix::Sensor::SensorManager* __sensorMgr;
 };
 

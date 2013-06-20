@@ -35,15 +35,15 @@ NS_CC_BEGIN
  * @{
  */
 
-class CCObject;
+class Object;
 
-class CC_DLL CCZone
+class CC_DLL Zone
 {
 public:
-    CCZone(CCObject *pObject = NULL);
+    Zone(Object *pObject = NULL);
 
 public:
-    CCObject *_copyObject;
+    Object *_copyObject;
 };
 
 // end of data_structure group

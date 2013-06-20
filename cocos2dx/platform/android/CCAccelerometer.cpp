@@ -32,16 +32,16 @@ THE SOFTWARE.
 
 namespace cocos2d
 {
-    CCAccelerometer::CCAccelerometer() : _function(nullptr)
+    Accelerometer::Accelerometer() : _function(nullptr)
     {
     }
 
-    CCAccelerometer::~CCAccelerometer() 
+    Accelerometer::~Accelerometer() 
     {
 
     }
 
-    void CCAccelerometer::setDelegate(std::function<void(CCAcceleration*)> function) 
+    void Accelerometer::setDelegate(std::function<void(Acceleration*)> function) 
     {
         _function = function;
 
@@ -55,13 +55,13 @@ namespace cocos2d
         }
     }
 
-    void CCAccelerometer::setAccelerometerInterval(float interval) 
+    void Accelerometer::setAccelerometerInterval(float interval) 
     {
         setAccelerometerIntervalJNI(interval);
     }
 
 
-    void CCAccelerometer::update(float x, float y, float z, long sensorTimeStamp) 
+    void Accelerometer::update(float x, float y, float z, long sensorTimeStamp) 
     {
         if (_function)
         {

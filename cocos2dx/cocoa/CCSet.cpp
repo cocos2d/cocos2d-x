@@ -28,17 +28,17 @@ using namespace std;
 
 NS_CC_BEGIN
 
-CCSet::CCSet(void)
+Set::Set(void)
 {
-    _set = new set<CCObject *>;
+    _set = new set<Object *>;
 }
 
-CCSet::CCSet(const CCSet &rSetObject)
+Set::Set(const Set &rSetObject)
 {
-    _set = new set<CCObject *>(*rSetObject._set);
+    _set = new set<Object *>(*rSetObject._set);
 
     // call retain of members
-    CCSetIterator iter;
+    SetIterator iter;
     for (iter = _set->begin(); iter != _set->end(); ++iter)
     {
         if (! (*iter))
@@ -50,20 +50,20 @@ CCSet::CCSet(const CCSet &rSetObject)
     }
 }
 
-CCSet::~CCSet(void)
+Set::~Set(void)
 {
     removeAllObjects();
     CC_SAFE_DELETE(_set);
 }
 
-void CCSet::acceptVisitor(CCDataVisitor &visitor)
+void Set::acceptVisitor(DataVisitor &visitor)
 {
     visitor.visit(this);
 }
 
-CCSet * CCSet::create()
+Set * Set::create()
 {
-    CCSet * pRet = new CCSet();
+    Set * pRet = new Set();
     
     if (pRet != NULL)
     {
@@ -73,38 +73,38 @@ CCSet * CCSet::create()
     return pRet;
 }
 
-CCSet* CCSet::copy(void)
+Set* Set::copy(void)
 {
-    CCSet *pSet = new CCSet(*this);
+    Set *pSet = new Set(*this);
 
     return pSet;
 }
 
-CCSet* CCSet::mutableCopy(void)
+Set* Set::mutableCopy(void)
 {
     return copy();
 }
 
-int CCSet::count(void)
+int Set::count(void)
 {
     return (int)_set->size();
 }
 
-void CCSet::addObject(CCObject *pObject)
+void Set::addObject(Object *pObject)
 {
     CC_SAFE_RETAIN(pObject);
     _set->insert(pObject);
 }
 
-void CCSet::removeObject(CCObject *pObject)
+void Set::removeObject(Object *pObject)
 {
     _set->erase(pObject);
     CC_SAFE_RELEASE(pObject);
 }
 
-void CCSet::removeAllObjects()
+void Set::removeAllObjects()
 {
-    CCSetIterator it;
+    SetIterator it;
     for (it = _set->begin(); it != _set->end(); ++it)
     {
         if (! (*it))
@@ -116,29 +116,29 @@ void CCSet::removeAllObjects()
     }
 }
 
-bool CCSet::containsObject(CCObject *pObject)
+bool Set::containsObject(Object *pObject)
 {
     return _set->find(pObject) != _set->end();
 }
 
-CCSetIterator CCSet::begin(void)
+SetIterator Set::begin(void)
 {
     return _set->begin();
 }
 
-CCSetIterator CCSet::end(void)
+SetIterator Set::end(void)
 {
     return _set->end();
 }
 
-CCObject* CCSet::anyObject()
+Object* Set::anyObject()
 {
     if (!_set || _set->empty())
     {
         return 0;
     }
     
-    CCSetIterator it;
+    SetIterator it;
 
     for( it = _set->begin(); it != _set->end(); ++it)
     {

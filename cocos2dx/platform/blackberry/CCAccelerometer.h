@@ -30,19 +30,19 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CC_DLL CCAccelerometer
+class CC_DLL Accelerometer
 {
 public:
-    CCAccelerometer();
-    ~CCAccelerometer();
+    Accelerometer();
+    ~Accelerometer();
 
-    void setDelegate(std::function<void(CCAcceleration*)> function);
+    void setDelegate(std::function<void(Acceleration*)> function);
     void setAccelerometerInterval(float interval) {CC_UNUSED_PARAM(interval);};
     void update(long sensorTimeStamp, double x, double y, double z);
 
 private:
-    std::function<void(CCAcceleration*)> _function;
-    CCAcceleration 			 _accelerationValue;
+    std::function<void(Acceleration*)> _function;
+    Acceleration 			 _accelerationValue;
     static int				 _initialOrientationAngle;
 };
 

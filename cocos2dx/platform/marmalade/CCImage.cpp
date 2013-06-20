@@ -61,11 +61,11 @@ struct TextLine {
 
 NS_CC_BEGIN;
 
-class CC_DLL CCImageHelper
+class CC_DLL ImageHelper
 {
 public:
-	CCImageHelper();
-	~CCImageHelper();
+	ImageHelper();
+	~ImageHelper();
 	// dummy funcs to help libjpeg
 	static void JPEGInitSource(j_decompress_ptr cinfo)
 	{
@@ -95,7 +95,7 @@ public:
 	~BitmapDC();
 
 	void reset();
-	bool getBitmap(const char *text, int nWidth, int nHeight, CCImage::ETextAlign eAlignMask, const char * pFontName, uint fontSize);
+	bool getBitmap(const char *text, int nWidth, int nHeight, Image::ETextAlign eAlignMask, const char * pFontName, uint fontSize);
 
 public:
 	unsigned char*		_data;
@@ -111,7 +111,7 @@ private:
 	 * compute the start pos of every line
 	 * return value>0 represents the start x pos of the line, while -1 means fail
 	 */
-	int computeLineStart(FT_Face face, CCImage::ETextAlign eAlignMask, char cText, int iLineIndex);
+	int computeLineStart(FT_Face face, Image::ETextAlign eAlignMask, char cText, int iLineIndex);
 
 	bool startsWith(const std::string& str, const std::string& what);
 	bool endsWith(const std::string& str, const std::string& what);
@@ -187,7 +187,7 @@ BitmapDC::~BitmapDC()
 	}
 
 	FT_Done_FreeType(_library);
-	//data will be deleted by CCImage
+	//data will be deleted by Image
 	//	if (_data) {
 	//		delete [] _data;
 	//	}
@@ -303,7 +303,7 @@ bool BitmapDC::divideString( FT_Face face, const char* sText, int iMaxWidth, int
 	return true;
 }
 
-int BitmapDC::computeLineStart( FT_Face face, CCImage::ETextAlign eAlignMask, char cText, int iLineIndex )
+int BitmapDC::computeLineStart( FT_Face face, Image::ETextAlign eAlignMask, char cText, int iLineIndex )
 {
 	int iRet;
 	int iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, cText), FT_LOAD_DEFAULT);
@@ -311,10 +311,10 @@ int BitmapDC::computeLineStart( FT_Face face, CCImage::ETextAlign eAlignMask, ch
 		return -1;
 	}
 
-	if (eAlignMask == CCImage::kAlignCenter) {
+	if (eAlignMask == Image::kAlignCenter) {
 		iRet = (_maxLineWidth - _vLines[iLineIndex].iLineWidth) / 2 - RSHIFT6(face->glyph->metrics.horiBearingX );
 
-	} else if (eAlignMask == CCImage::kAlignRight) {
+	} else if (eAlignMask == Image::kAlignRight) {
 		iRet = (_maxLineWidth - _vLines[iLineIndex].iLineWidth) - RSHIFT6(face->glyph->metrics.horiBearingX );
 	} else {
 		// left or other situation
@@ -344,7 +344,7 @@ int BitmapDC::openFont(const std::string& fontName, uint fontSize)
 	return iError ;
 }
 
-bool BitmapDC::getBitmap( const char *text, int nWidth, int nHeight, CCImage::ETextAlign eAlignMask, const char * pFontName, uint fontSize )
+bool BitmapDC::getBitmap( const char *text, int nWidth, int nHeight, Image::ETextAlign eAlignMask, const char * pFontName, uint fontSize )
 {
 	FT_Error iError;
 
@@ -352,7 +352,7 @@ bool BitmapDC::getBitmap( const char *text, int nWidth, int nHeight, CCImage::ET
 	int iY, iX, iTemp ;
 	uint32 offset, rowOffset ;
 
-	//data will be deleted by CCImage
+	//data will be deleted by Image
 	//		if (_data) {
 	//			delete _data;
 	//		}
@@ -499,10 +499,10 @@ static BitmapDC& sharedBitmapDC()
 }
  
 //////////////////////////////////////////////////////////////////////////
-// Implement CCImage
+// Implement Image
 //////////////////////////////////////////////////////////////////////////
 
-CCImage::CCImage()
+Image::Image()
 : _width(0)
 , _height(0)
 , _bitsPerComponent(0)
@@ -513,16 +513,16 @@ CCImage::CCImage()
 	
 }
 
-CCImage::~CCImage()
+Image::~Image()
 {
     CC_SAFE_DELETE_ARRAY(_data);
 }
-bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
+bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
 {
 	IW_CALLSTACK("UIImage::initWithImageFile");
     bool bRet = false;
     unsigned long nSize = 0;
-    unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(strPath, "rb", &nSize);
+    unsigned char* pBuffer = FileUtils::sharedFileUtils()->getFileData(strPath, "rb", &nSize);
     if (pBuffer != NULL && nSize > 0)
     {
         bRet = initWithImageData(pBuffer, nSize, eImgFmt);
@@ -531,12 +531,12 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
     return bRet;
 }
 
-bool CCImage::initWithImageFileThreadSafe( const char *fullpath, EImageFormat imageType /*= kFmtPng*/ )
+bool Image::initWithImageFileThreadSafe( const char *fullpath, EImageFormat imageType /*= kFmtPng*/ )
 {
 	CC_UNUSED_PARAM(imageType);
     bool bRet = false;
     unsigned long nSize = 0;
-    unsigned char *pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullpath, "rb", &nSize);
+    unsigned char *pBuffer = FileUtils::sharedFileUtils()->getFileData(fullpath, "rb", &nSize);
     if (pBuffer != NULL && nSize > 0)
     {
         bRet = initWithImageData(pBuffer, nSize, imageType);
@@ -545,7 +545,7 @@ bool CCImage::initWithImageFileThreadSafe( const char *fullpath, EImageFormat im
     return bRet;
 }
 
-bool CCImage::initWithImageData(void * pData, 
+bool Image::initWithImageData(void * pData, 
 								int nDataLen, 
 								EImageFormat eFmt,
 								int nWidth,
@@ -631,7 +631,7 @@ bool CCImage::initWithImageData(void * pData,
     return bRet;
 }
 
-bool CCImage::_initWithJpgData(void * data, int nSize)
+bool Image::_initWithJpgData(void * data, int nSize)
 {	
 	IW_CALLSTACK("CCImage::_initWithJpgData");
 
@@ -656,11 +656,11 @@ bool CCImage::_initWithJpgData(void * data, int nSize)
 
 		srcmgr.bytes_in_buffer = nSize;
 		srcmgr.next_input_byte = (JOCTET*) data;
-		srcmgr.init_source = CCImageHelper::JPEGInitSource;
-		srcmgr.fill_input_buffer = CCImageHelper::JPEGFillInputBuffer;
-		srcmgr.skip_input_data = CCImageHelper::JPEGSkipInputData;
+		srcmgr.init_source = ImageHelper::JPEGInitSource;
+		srcmgr.fill_input_buffer = ImageHelper::JPEGFillInputBuffer;
+		srcmgr.skip_input_data = ImageHelper::JPEGSkipInputData;
 		srcmgr.resync_to_restart = jpeg_resync_to_restart;
-		srcmgr.term_source = CCImageHelper::JPEGTermSource;
+		srcmgr.term_source = ImageHelper::JPEGTermSource;
 		cinfo.src = &srcmgr;
 //      jpeg_mem_src( &cinfo, (unsigned char *) data, nSize );
 
@@ -722,7 +722,7 @@ void userReadData(png_structp pngPtr, png_bytep data, png_size_t length) {
 }
 
 #define PNGSIGSIZE 8
-bool CCImage::_initWithPngData(void * pData, int nDatalen)
+bool Image::_initWithPngData(void * pData, int nDatalen)
 {
 	IW_CALLSTACK("CCImage::_initWithPngData");
 	
@@ -853,7 +853,7 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
     return bRet;
 }
 
-bool CCImage::initWithString(
+bool Image::initWithString(
 							 const char *    pText, 
 							 int             nWidth/* = 0*/, 
 							 int             nHeight/* = 0*/,
@@ -873,7 +873,7 @@ bool CCImage::initWithString(
     	std::transform(lowerCasePath.begin(), lowerCasePath.end(), lowerCasePath.begin(), ::tolower);
         
     	if ( lowerCasePath.find(".ttf") != std::string::npos ) {
-    		fullFontName = CCFileUtils::sharedFileUtils()->fullPathForFilename(pFontName);
+    		fullFontName = FileUtils::sharedFileUtils()->fullPathForFilename(pFontName);
     	}
 
 		CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, fullFontName.c_str(), nSize));
@@ -1004,7 +1004,7 @@ static void _tiffUnmapProc(thandle_t fd, void* base, toff_t size)
     CC_UNUSED_PARAM(size);
 }
 
-bool CCImage::_initWithTiffData(void* pData, int nDataLen)
+bool Image::_initWithTiffData(void* pData, int nDataLen)
 {
     bool bRet = false;
     do 
@@ -1074,7 +1074,7 @@ bool CCImage::_initWithTiffData(void* pData, int nDataLen)
     return bRet;
 }
 
-bool CCImage::initWithRawData(void * pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti)
+bool Image::initWithRawData(void * pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti)
 {
     bool bRet = false;
     do 
@@ -1098,19 +1098,19 @@ bool CCImage::initWithRawData(void * pData, int nDatalen, int nWidth, int nHeigh
     return bRet;
 }
 
-bool CCImage::saveToFile(const char *pszFilePath, bool bIsToRGB)
+bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
 {
 	// todo
 	return false;
 }
 
-bool CCImage::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
+bool Image::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
 {
 	// todo
 	return false;
 }
 
-bool CCImage::_saveImageToJPG(const char * pszFilePath)
+bool Image::_saveImageToJPG(const char * pszFilePath)
 {
 	// todo
 	return false;

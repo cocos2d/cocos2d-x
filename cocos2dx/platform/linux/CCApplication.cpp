@@ -1,5 +1,5 @@
 /*
- * CCAplication_linux.cpp
+ * Aplication_linux.cpp
  *
  *  Created on: Aug 8, 2011
  *      Author: laschweinski
@@ -15,7 +15,7 @@ NS_CC_BEGIN
 
 
 // sharedApplication pointer
-CCApplication * CCApplication::sm_pSharedApplication = 0;
+Application * Application::sm_pSharedApplication = 0;
 
 static long getCurrentMillSecond() {
 	long lLastTime;
@@ -26,20 +26,20 @@ static long getCurrentMillSecond() {
 	return lLastTime;
 }
 
-CCApplication::CCApplication()
+Application::Application()
 {
 	CC_ASSERT(! sm_pSharedApplication);
 	sm_pSharedApplication = this;
 }
 
-CCApplication::~CCApplication()
+Application::~Application()
 {
 	CC_ASSERT(this == sm_pSharedApplication);
 	sm_pSharedApplication = NULL;
 	_animationInterval = 1.0f/60.0f*1000.0f;
 }
 
-int CCApplication::run()
+int Application::run()
 {
 	// Initialize instance and cocos2d.
 	if (! applicationDidFinishLaunching())
@@ -50,7 +50,7 @@ int CCApplication::run()
 
 	for (;;) {
 		long iLastTime = getCurrentMillSecond();
-		CCDirector::sharedDirector()->mainLoop();
+		Director::sharedDirector()->mainLoop();
 		long iCurTime = getCurrentMillSecond();
 		if (iCurTime-iLastTime<_animationInterval){
 			usleep((_animationInterval - iCurTime+iLastTime)*1000);
@@ -60,31 +60,31 @@ int CCApplication::run()
 	return -1;
 }
 
-void CCApplication::setAnimationInterval(double interval)
+void Application::setAnimationInterval(double interval)
 {
 	//TODO do something else
 	_animationInterval = interval*1000.0f;
 }
 
-void CCApplication::setResourceRootPath(const std::string& rootResDir)
+void Application::setResourceRootPath(const std::string& rootResDir)
 {
     _resourceRootPath = rootResDir;
     if (_resourceRootPath[_resourceRootPath.length() - 1] != '/')
     {
         _resourceRootPath += '/';
     }
-    CCFileUtils* pFileUtils = CCFileUtils::sharedFileUtils();
+    FileUtils* pFileUtils = FileUtils::sharedFileUtils();
     std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
     searchPaths.insert(searchPaths.begin(), _resourceRootPath);
     pFileUtils->setSearchPaths(searchPaths);
 }
 
-const std::string& CCApplication::getResourceRootPath(void)
+const std::string& Application::getResourceRootPath(void)
 {
     return _resourceRootPath;
 }
 
-TargetPlatform CCApplication::getTargetPlatform()
+TargetPlatform Application::getTargetPlatform()
 {
     return kTargetLinux;
 }
@@ -92,13 +92,13 @@ TargetPlatform CCApplication::getTargetPlatform()
 //////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////
-CCApplication* CCApplication::sharedApplication()
+Application* Application::sharedApplication()
 {
 	CC_ASSERT(sm_pSharedApplication);
 	return sm_pSharedApplication;
 }
 
-ccLanguageType CCApplication::getCurrentLanguage()
+ccLanguageType Application::getCurrentLanguage()
 {
 	char *pLanguageName = getenv("LANG");
 	ccLanguageType ret = kLanguageEnglish;

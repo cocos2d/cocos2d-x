@@ -31,7 +31,7 @@ NS_CC_BEGIN
 /**
 @brief The device accelerometer reports values for each axis in units of g-force 
 */
-class CCAcceleration
+class Acceleration
 {
 public:
     double x;
@@ -40,7 +40,7 @@ public:
 
     double timestamp;
     
-    CCAcceleration(): x(0), y(0), z(0), timestamp(0) {}
+    Acceleration(): x(0), y(0), z(0), timestamp(0) {}
 };
 
 NS_CC_END

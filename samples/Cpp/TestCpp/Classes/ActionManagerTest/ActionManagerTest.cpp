@@ -9,15 +9,15 @@ enum
     kTagSequence,
 }; 
 
-CCLayer* nextActionManagerAction();
-CCLayer* backActionManagerAction();
-CCLayer* restartActionManagerAction();
+Layer* nextActionManagerAction();
+Layer* backActionManagerAction();
+Layer* restartActionManagerAction();
 
 static int sceneIdx = -1; 
 
 #define MAX_LAYER    5
 
-CCLayer* createActionManagerLayer(int nIndex)
+Layer* createActionManagerLayer(int nIndex)
 {
     switch(nIndex)
     {
@@ -31,33 +31,33 @@ CCLayer* createActionManagerLayer(int nIndex)
     return NULL;
 }
 
-CCLayer* nextActionManagerAction()
+Layer* nextActionManagerAction()
 {
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    CCLayer* pLayer = createActionManagerLayer(sceneIdx);
+    Layer* pLayer = createActionManagerLayer(sceneIdx);
     pLayer->autorelease();
 
     return pLayer;
 }
 
-CCLayer* backActionManagerAction()
+Layer* backActionManagerAction()
 {
     sceneIdx--;
     int total = MAX_LAYER;
     if( sceneIdx < 0 )
         sceneIdx += total;    
     
-    CCLayer* pLayer = createActionManagerLayer(sceneIdx);
+    Layer* pLayer = createActionManagerLayer(sceneIdx);
     pLayer->autorelease();
 
     return pLayer;
 }
 
-CCLayer* restartActionManagerAction()
+Layer* restartActionManagerAction()
 {
-    CCLayer* pLayer = createActionManagerLayer(sceneIdx);
+    Layer* pLayer = createActionManagerLayer(sceneIdx);
     pLayer->autorelease();
 
     return pLayer;
@@ -82,28 +82,28 @@ std::string ActionManagerTest::title()
     return "No title";
 }
 
-void ActionManagerTest::restartCallback(CCObject* pSender)
+void ActionManagerTest::restartCallback(Object* pSender)
 {
-    CCScene* s = new ActionManagerTestScene();
+    Scene* s = new ActionManagerTestScene();
     s->addChild(restartActionManagerAction()); 
 
-    CCDirector::sharedDirector()->replaceScene(s);
+    Director::sharedDirector()->replaceScene(s);
     s->release();
 }
 
-void ActionManagerTest::nextCallback(CCObject* pSender)
+void ActionManagerTest::nextCallback(Object* pSender)
 {
-    CCScene* s = new ActionManagerTestScene();
+    Scene* s = new ActionManagerTestScene();
     s->addChild( nextActionManagerAction() );
-    CCDirector::sharedDirector()->replaceScene(s);
+    Director::sharedDirector()->replaceScene(s);
     s->release();
 }
 
-void ActionManagerTest::backCallback(CCObject* pSender)
+void ActionManagerTest::backCallback(Object* pSender)
 {
-    CCScene* s = new ActionManagerTestScene();
+    Scene* s = new ActionManagerTestScene();
     s->addChild( backActionManagerAction() );
-    CCDirector::sharedDirector()->replaceScene(s);
+    Director::sharedDirector()->replaceScene(s);
     s->release();
 } 
 
@@ -117,22 +117,22 @@ void CrashTest::onEnter()
 {
     ActionManagerTest::onEnter();
 
-    CCSprite* child = CCSprite::create(s_pPathGrossini);
+    Sprite* child = Sprite::create(s_pPathGrossini);
     child->setPosition( VisibleRect::center() );
     addChild(child, 1);
 
     //Sum of all action's duration is 1.5 second.
-    child->runAction(CCRotateBy::create(1.5f, 90));
-    child->runAction(CCSequence::create(
-                                            CCDelayTime::create(1.4f),
-                                            CCFadeOut::create(1.1f),
+    child->runAction(RotateBy::create(1.5f, 90));
+    child->runAction(Sequence::create(
+                                            DelayTime::create(1.4f),
+                                            FadeOut::create(1.1f),
                                             NULL)
                     );
     
     //After 1.5 second, self will be removed.
-    runAction( CCSequence::create(
-                                    CCDelayTime::create(1.4f),
-                                    CCCallFunc::create(this, callfunc_selector(CrashTest::removeThis)),
+    runAction( Sequence::create(
+                                    DelayTime::create(1.4f),
+                                    CallFunc::create(this, callfunc_selector(CrashTest::removeThis)),
                                     NULL)
              );
 }
@@ -158,21 +158,21 @@ void LogicTest::onEnter()
 {
     ActionManagerTest::onEnter();
 
-    CCSprite* grossini = CCSprite::create(s_pPathGrossini);
+    Sprite* grossini = Sprite::create(s_pPathGrossini);
     addChild(grossini, 0, 2);
     grossini->setPosition(VisibleRect::center());
 
-    grossini->runAction( CCSequence::create( 
-                                                CCMoveBy::create(1, ccp(150,0)),
-                                                CCCallFuncN::create(this, callfuncN_selector(LogicTest::bugMe)),
+    grossini->runAction( Sequence::create( 
+                                                MoveBy::create(1, ccp(150,0)),
+                                                CallFuncN::create(this, callfuncN_selector(LogicTest::bugMe)),
                                                 NULL) 
                         );
 }
 
-void LogicTest::bugMe(CCNode* node)
+void LogicTest::bugMe(Node* node)
 {
     node->stopAllActions(); //After this stop next action not working, if remove this stop everything is working
-    node->runAction(CCScaleTo::create(2, 2));
+    node->runAction(ScaleTo::create(2, 2));
 }
 
 std::string LogicTest::title()
@@ -195,7 +195,7 @@ void PauseTest::onEnter()
     ActionManagerTest::onEnter();
     
 
-    CCLabelTTF* l = CCLabelTTF::create("After 5 seconds grossini should move", "Thonburi", 16);
+    LabelTTF* l = LabelTTF::create("After 5 seconds grossini should move", "Thonburi", 16);
     addChild(l);
     l->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y-75) );
     
@@ -203,13 +203,13 @@ void PauseTest::onEnter()
     //
     // Also, this test MUST be done, after [super onEnter]
     //
-    CCSprite* grossini = CCSprite::create(s_pPathGrossini);
+    Sprite* grossini = Sprite::create(s_pPathGrossini);
     addChild(grossini, 0, kTagGrossini);
     grossini->setPosition(VisibleRect::center() );
     
-    CCAction* action = CCMoveBy::create(1, ccp(150,0));
+    Action* action = MoveBy::create(1, ccp(150,0));
 
-    CCDirector* pDirector = CCDirector::sharedDirector();
+    Director* pDirector = Director::sharedDirector();
     pDirector->getActionManager()->addAction(action, grossini, true);
 
     schedule( schedule_selector(PauseTest::unpause), 3); 
@@ -218,8 +218,8 @@ void PauseTest::onEnter()
 void PauseTest::unpause(float dt)
 {
     unschedule( schedule_selector(PauseTest::unpause) );
-    CCNode* node = getChildByTag( kTagGrossini );
-    CCDirector* pDirector = CCDirector::sharedDirector();
+    Node* node = getChildByTag( kTagGrossini );
+    Director* pDirector = Director::sharedDirector();
     pDirector->getActionManager()->resumeTarget(node);
 }
 
@@ -237,16 +237,16 @@ void RemoveTest::onEnter()
 {
     ActionManagerTest::onEnter();
 
-    CCLabelTTF* l = CCLabelTTF::create("Should not crash", "Thonburi", 16);
+    LabelTTF* l = LabelTTF::create("Should not crash", "Thonburi", 16);
     addChild(l);
     l->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - 75) );
 
-    CCMoveBy* pMove = CCMoveBy::create(2, ccp(200, 0));
-    CCCallFunc* pCallback = CCCallFunc::create(this, callfunc_selector(RemoveTest::stopAction));
-    CCActionInterval* pSequence = CCSequence::create(pMove, pCallback, NULL);
+    MoveBy* pMove = MoveBy::create(2, ccp(200, 0));
+    CallFunc* pCallback = CallFunc::create(this, callfunc_selector(RemoveTest::stopAction));
+    ActionInterval* pSequence = Sequence::create(pMove, pCallback, NULL);
     pSequence->setTag(kTagSequence);
 
-    CCSprite* pChild = CCSprite::create(s_pPathGrossini);
+    Sprite* pChild = Sprite::create(s_pPathGrossini);
     pChild->setPosition( VisibleRect::center() );
 
     addChild(pChild, 1, kTagGrossini);
@@ -255,7 +255,7 @@ void RemoveTest::onEnter()
 
 void RemoveTest::stopAction()
 {
-    CCNode* pSprite = getChildByTag(kTagGrossini);
+    Node* pSprite = getChildByTag(kTagGrossini);
     pSprite->stopActionByTag(kTagSequence);
 }
 
@@ -278,19 +278,19 @@ void ResumeTest::onEnter()
 {
     ActionManagerTest::onEnter();
 
-    CCLabelTTF* l = CCLabelTTF::create("Grossini only rotate/scale in 3 seconds", "Thonburi", 16);
+    LabelTTF* l = LabelTTF::create("Grossini only rotate/scale in 3 seconds", "Thonburi", 16);
     addChild(l);
     l->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - 75));
 
-    CCSprite* pGrossini = CCSprite::create(s_pPathGrossini);
+    Sprite* pGrossini = Sprite::create(s_pPathGrossini);
     addChild(pGrossini, 0, kTagGrossini);
     pGrossini->setPosition(VisibleRect::center());
 
-    pGrossini->runAction(CCScaleBy::create(2, 2));
+    pGrossini->runAction(ScaleBy::create(2, 2));
 
-    CCDirector* pDirector = CCDirector::sharedDirector();
+    Director* pDirector = Director::sharedDirector();
     pDirector->getActionManager()->pauseTarget(pGrossini);
-    pGrossini->runAction(CCRotateBy::create(2, 360));
+    pGrossini->runAction(RotateBy::create(2, 360));
 
     this->schedule(schedule_selector(ResumeTest::resumeGrossini), 3.0f);
 }
@@ -299,8 +299,8 @@ void ResumeTest::resumeGrossini(float time)
 {
     this->unschedule(schedule_selector(ResumeTest::resumeGrossini));
 
-    CCNode* pGrossini = getChildByTag(kTagGrossini);
-    CCDirector* pDirector = CCDirector::sharedDirector();
+    Node* pGrossini = getChildByTag(kTagGrossini);
+    Director* pDirector = Director::sharedDirector();
     pDirector->getActionManager()->resumeTarget(pGrossini);
 }
 
@@ -311,8 +311,8 @@ void ResumeTest::resumeGrossini(float time)
 //------------------------------------------------------------------
 void ActionManagerTestScene::runThisTest()
 {
-    CCLayer* pLayer = nextActionManagerAction();
+    Layer* pLayer = nextActionManagerAction();
     addChild(pLayer);
 
-    CCDirector::sharedDirector()->replaceScene(this);
+    Director::sharedDirector()->replaceScene(this);
 }

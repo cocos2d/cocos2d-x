@@ -31,18 +31,18 @@
 
 NS_CC_EXT_BEGIN
 
-class CCSortableObject
+class SortableObject
 {
 public:
-    virtual ~CCSortableObject() {}
+    virtual ~SortableObject() {}
     virtual void setObjectID(unsigned int objectID) = 0;
     virtual unsigned int getObjectID() = 0;
 };
 
-class CCArrayForObjectSorting : public CCArray
+class ArrayForObjectSorting : public Array
 {
 public:
-    CCArrayForObjectSorting() : CCArray() {}
+    ArrayForObjectSorting() : Array() {}
     /*!
      * Inserts a given object into array.
      * 
@@ -54,7 +54,7 @@ public:
      *
      * @param object to insert
      */
-    void insertSortedObject(CCSortableObject* object);
+    void insertSortedObject(SortableObject* object);
 
     /*!
      * Removes an object in array.
@@ -64,7 +64,7 @@ public:
      *
      * @param value to remove
      */
-    void removeSortedObject(CCSortableObject* object);
+    void removeSortedObject(SortableObject* object);
     /*!
      * Sets a new value of the key for the given object.
      * 
@@ -75,9 +75,9 @@ public:
      * @param value to set
      * @param object the object which has the value
      */
-    void setObjectID_ofSortedObject(unsigned int tag, CCSortableObject* object);
+    void setObjectID_ofSortedObject(unsigned int tag, SortableObject* object);
 
-    CCSortableObject* objectWithObjectID(unsigned int tag);
+    SortableObject* objectWithObjectID(unsigned int tag);
     /*!
      * Returns an object with given key and value.
      * 
@@ -87,7 +87,7 @@ public:
      * @param value to locate object
      * @return object found or nil.
      */
-    CCSortableObject* getObjectWithObjectID(unsigned int tag);
+    SortableObject* getObjectWithObjectID(unsigned int tag);
 
     /*!
      * Returns an index of the object with given key and value.
@@ -100,7 +100,7 @@ public:
      * @param value to locate object
      * @return index of an object found
      */
-    unsigned int indexOfSortedObject(CCSortableObject* obj);
+    unsigned int indexOfSortedObject(SortableObject* obj);
 
 };
 

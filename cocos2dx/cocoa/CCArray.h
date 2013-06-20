@@ -33,7 +33,7 @@ THE SOFTWARE.
  */
 
 /** @def CCARRAY_FOREACH
-A convenience macro to iterate over a CCArray using. It is faster than the "fast enumeration" interface.
+A convenience macro to iterate over a Array using. It is faster than the "fast enumeration" interface.
 @since v0.99.4
 */
 
@@ -50,13 +50,13 @@ I found that it's not work in C++. So it keep what it's look like in version 1.0
 */
 #define CCARRAY_FOREACH(__array__, __object__)                                                                         \
     if ((__array__) && (__array__)->data->num > 0)                                                                     \
-    for(CCObject** __arr__ = (__array__)->data->arr, **__end__ = (__array__)->data->arr + (__array__)->data->num-1;    \
+    for(Object** __arr__ = (__array__)->data->arr, **__end__ = (__array__)->data->arr + (__array__)->data->num-1;    \
     __arr__ <= __end__ && (((__object__) = *__arr__) != NULL/* || true*/);                                             \
     __arr__++)
 
 #define CCARRAY_FOREACH_REVERSE(__array__, __object__)                                                                  \
     if ((__array__) && (__array__)->data->num > 0)                                                                      \
-    for(CCObject** __arr__ = (__array__)->data->arr + (__array__)->data->num-1, **__end__ = (__array__)->data->arr;     \
+    for(Object** __arr__ = (__array__)->data->arr + (__array__)->data->num-1, **__end__ = (__array__)->data->arr;     \
     __arr__ >= __end__ && (((__object__) = *__arr__) != NULL/* || true*/);                                              \
     __arr__--)
 
@@ -64,7 +64,7 @@ I found that it's not work in C++. So it keep what it's look like in version 1.0
 #define CCARRAY_VERIFY_TYPE(__array__, __type__)                                                                 \
     do {                                                                                                         \
         if ((__array__) && (__array__)->data->num > 0)                                                           \
-            for(CCObject** __arr__ = (__array__)->data->arr,                                                     \
+            for(Object** __arr__ = (__array__)->data->arr,                                                     \
                 **__end__ = (__array__)->data->arr + (__array__)->data->num-1; __arr__ <= __end__; __arr__++)    \
                 CCAssert(dynamic_cast<__type__>(*__arr__), "element type is wrong!");                            \
     } while(false)
@@ -76,7 +76,7 @@ I found that it's not work in C++. So it keep what it's look like in version 1.0
 do {                                                                  \
     if(pArray && pArray->count() > 0)                                 \
     {                                                                 \
-        CCObject* child;                                              \
+        Object* child;                                              \
         CCARRAY_FOREACH(pArray, child)                                \
         {                                                             \
             elementType pNode = (elementType) child;                  \
@@ -93,7 +93,7 @@ while(false)
 do {                                                                  \
     if(pArray && pArray->count() > 0)                                 \
     {                                                                 \
-        CCObject* child = NULL;                                       \
+        Object* child = NULL;                                       \
         CCARRAY_FOREACH(pArray, child)                                \
         {                                                             \
             elementType pNode = (elementType) child;                  \
@@ -109,44 +109,44 @@ while(false)
 
 NS_CC_BEGIN
 
-class CC_DLL CCArray : public CCObject
+class CC_DLL Array : public Object
 {
 public:
-    ~CCArray();
+    ~Array();
 
     /** Create an array */
-    static CCArray* create();
+    static Array* create();
     /** Create an array with some objects */
-    static CCArray* create(CCObject* pObject, ...);
+    static Array* create(Object* pObject, ...);
     /** Create an array with one object */
-    static CCArray* createWithObject(CCObject* pObject);
+    static Array* createWithObject(Object* pObject);
     /** Create an array with capacity */
-    static CCArray* createWithCapacity(unsigned int capacity);
+    static Array* createWithCapacity(unsigned int capacity);
     /** Create an array with an existing array */
-    static CCArray* createWithArray(CCArray* otherArray);
+    static Array* createWithArray(Array* otherArray);
     /**
-     @brief   Generate a CCArray pointer by file
+     @brief   Generate a Array pointer by file
      @param   pFileName  The file name of *.plist file
-     @return  The CCArray pointer generated from the file
+     @return  The Array pointer generated from the file
      */
-    static CCArray* createWithContentsOfFile(const char* pFileName);
+    static Array* createWithContentsOfFile(const char* pFileName);
     
     /*
      @brief The same meaning as arrayWithContentsOfFile(), but it doesn't call autorelease, so the
      invoker should call release().
      */
-    static CCArray* createWithContentsOfFileThreadSafe(const char* pFileName);
+    static Array* createWithContentsOfFileThreadSafe(const char* pFileName);
 
     /** Initializes an array */
     bool init();
     /** Initializes an array with one object */
-    bool initWithObject(CCObject* pObject);
+    bool initWithObject(Object* pObject);
     /** Initializes an array with some objects */
-    bool initWithObjects(CCObject* pObject, ...);
+    bool initWithObjects(Object* pObject, ...);
     /** Initializes an array with capacity */
     bool initWithCapacity(unsigned int capacity);
     /** Initializes an array with an existing array */
-    bool initWithArray(CCArray* otherArray);
+    bool initWithArray(Array* otherArray);
 
     // Querying an Array
 
@@ -155,52 +155,52 @@ public:
     /** Returns capacity of the array */
     unsigned int capacity() const;
     /** Returns index of a certain object, return UINT_MAX if doesn't contain the object */
-    unsigned int indexOfObject(CCObject* object) const;
+    unsigned int indexOfObject(Object* object) const;
     /** Returns an element with a certain index */
-    CCObject* objectAtIndex(unsigned int index);
+    Object* objectAtIndex(unsigned int index);
     /** Returns last element */
-    CCObject* lastObject();
+    Object* lastObject();
     /** Returns a random element */
-    CCObject* randomObject();
+    Object* randomObject();
     /** Returns a Boolean value that indicates whether object is present in array. */
-    bool containsObject(CCObject* object) const;
+    bool containsObject(Object* object) const;
     /** @since 1.1 */
-    bool isEqualToArray(CCArray* pOtherArray);
+    bool isEqualToArray(Array* pOtherArray);
     // Adding Objects
 
     /** Add a certain object */
-    void addObject(CCObject* object);
+    void addObject(Object* object);
     /** Add all elements of an existing array */
-    void addObjectsFromArray(CCArray* otherArray);
+    void addObjectsFromArray(Array* otherArray);
     /** Insert a certain object at a certain index */
-    void insertObject(CCObject* object, unsigned int index);
+    void insertObject(Object* object, unsigned int index);
 
     // Removing Objects
 
     /** Remove last object */
     void removeLastObject(bool bReleaseObj = true);
     /** Remove a certain object */
-    void removeObject(CCObject* object, bool bReleaseObj = true);
+    void removeObject(Object* object, bool bReleaseObj = true);
     /** Remove an element with a certain index */
     void removeObjectAtIndex(unsigned int index, bool bReleaseObj = true);
     /** Remove all elements */
-    void removeObjectsInArray(CCArray* otherArray);
+    void removeObjectsInArray(Array* otherArray);
     /** Remove all objects */
     void removeAllObjects();
     /** Fast way to remove a certain object */
-    void fastRemoveObject(CCObject* object);
+    void fastRemoveObject(Object* object);
     /** Fast way to remove an element with a certain index */
     void fastRemoveObjectAtIndex(unsigned int index);
 
     // Rearranging Content
 
     /** Swap two elements */
-    void exchangeObject(CCObject* object1, CCObject* object2);
+    void exchangeObject(Object* object1, Object* object2);
     /** Swap two elements with certain indexes */
     void exchangeObjectAtIndex(unsigned int index1, unsigned int index2);
 
     /** Replace object at index with another object. */
-    void replaceObjectAtIndex(unsigned int uIndex, CCObject* pObject, bool bReleaseObject = true);
+    void replaceObjectAtIndex(unsigned int uIndex, Object* pObject, bool bReleaseObject = true);
 
     /** Revers the array */
     void reverseObjects();
@@ -208,15 +208,15 @@ public:
     void reduceMemoryFootprint();
   
     /* override functions */
-    virtual CCObject* copyWithZone(CCZone* pZone);
+    virtual Object* copyWithZone(Zone* pZone);
 
     /* override functions */
-    virtual void acceptVisitor(CCDataVisitor &visitor);
+    virtual void acceptVisitor(DataVisitor &visitor);
 
 public:
     ccArray* data;
-    CCArray();
-    CCArray(unsigned int capacity);
+    Array();
+    Array(unsigned int capacity);
 };
 
 // end of data_structure group

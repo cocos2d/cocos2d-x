@@ -22,14 +22,14 @@ static void removeSelector(std::string &str) {
     }
 }
 
-SEL_MenuHandler CCBScriptCallbackProxy::onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget,
+SEL_MenuHandler CCBScriptCallbackProxy::onResolveCCBMenuItemSelector(cocos2d::Object * pTarget,
                                                                        const char * pSelectorName) {
     this->callBackProp = pSelectorName;
     removeSelector(this->callBackProp);
     return menu_selector(CCBScriptCallbackProxy::menuItemCallback);
 }
 
-SEL_CCControlHandler CCBScriptCallbackProxy::onResolveCCBCCControlSelector(CCObject * pTarget,
+SEL_CCControlHandler CCBScriptCallbackProxy::onResolveCCBControlSelector(Object * pTarget,
                                                                            const char * pSelectorName) {
     
     this->callBackProp = pSelectorName;
@@ -37,14 +37,14 @@ SEL_CCControlHandler CCBScriptCallbackProxy::onResolveCCBCCControlSelector(CCObj
     return cccontrol_selector(CCBScriptCallbackProxy::controlCallback);
 }
 
-bool CCBScriptCallbackProxy::onAssignCCBMemberVariable(CCObject * pTarget,
+bool CCBScriptCallbackProxy::onAssignCCBMemberVariable(Object * pTarget,
                                                        const char * pMemberVariableName,
-                                                       CCNode * pNode) {
+                                                       Node * pNode) {
     return true;
 }
 
-void CCBScriptCallbackProxy::onNodeLoaded(CCNode * pNode,
-                                          CCNodeLoader * pNodeLoader) {}
+void CCBScriptCallbackProxy::onNodeLoaded(Node * pNode,
+                                          NodeLoader * pNodeLoader) {}
 
 CCBSelectorResolver * CCBScriptCallbackProxy::createNew() {
     CCBScriptCallbackProxy * ret = new CCBScriptCallbackProxy();
@@ -52,11 +52,11 @@ CCBSelectorResolver * CCBScriptCallbackProxy::createNew() {
     return dynamic_cast<CCBSelectorResolver *>(ret);
 }
 
-void CCBScriptCallbackProxy::menuItemCallback(CCObject *pSender) {
+void CCBScriptCallbackProxy::menuItemCallback(Object *pSender) {
     ScriptingCore::getInstance()->executeFunctionWithOwner(owner, callBackProp.c_str() );
 }
 
-void CCBScriptCallbackProxy::controlCallback(CCObject *pSender, CCControlEvent event) {
+void CCBScriptCallbackProxy::controlCallback(Object *pSender, ControlEvent event) {
     ScriptingCore::getInstance()->executeFunctionWithOwner(owner, callBackProp.c_str() );
 }
 
@@ -112,21 +112,21 @@ JSBool js_cocos2dx_CCBReader_readNodeGraphFromFile(JSContext *cx, uint32_t argc,
     if (argc == 2) {
         const char* arg0;
         std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
-        cocos2d::CCObject* arg1;
+        cocos2d::Object* arg1;
         do {
             js_proxy_t *proxy;
             JSObject *tmpObj = JSVAL_TO_OBJECT(argv[1]);
             proxy = jsb_get_js_proxy(tmpObj);
-            arg1 = (cocos2d::CCObject*)(proxy ? proxy->ptr : NULL);
+            arg1 = (cocos2d::Object*)(proxy ? proxy->ptr : NULL);
             TEST_NATIVE_OBJECT(cx, arg1)
         } while (0);
         
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 
-        cocos2d::CCNode* ret = cobj->readNodeGraphFromFile(arg0, arg1);
+        cocos2d::Node* ret = cobj->readNodeGraphFromFile(arg0, arg1);
         jsval jsret; do {
             if (ret) {
-                js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCNode>(cx, ret);
+                js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Node>(cx, ret);
                 jsret = OBJECT_TO_JSVAL(proxy->obj);
             } else {
                 jsret = JSVAL_NULL;
@@ -140,10 +140,10 @@ JSBool js_cocos2dx_CCBReader_readNodeGraphFromFile(JSContext *cx, uint32_t argc,
 		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         
-        cocos2d::CCNode* ret = cobj->readNodeGraphFromFile(arg0);
+        cocos2d::Node* ret = cobj->readNodeGraphFromFile(arg0);
         jsval jsret; do {
             if (ret) {
-                js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCNode>(cx, ret);
+                js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Node>(cx, ret);
                 jsret = OBJECT_TO_JSVAL(proxy->obj);
             } else {
                 jsret = JSVAL_NULL;
@@ -155,23 +155,23 @@ JSBool js_cocos2dx_CCBReader_readNodeGraphFromFile(JSContext *cx, uint32_t argc,
     if (argc == 3) {
         const char* arg0;
         std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
-        cocos2d::CCObject* arg1;
+        cocos2d::Object* arg1;
         do {
             js_proxy_t *proxy;
             JSObject *tmpObj = JSVAL_TO_OBJECT(argv[1]);
             proxy = jsb_get_js_proxy(tmpObj);
-            arg1 = (cocos2d::CCObject*)(proxy ? proxy->ptr : NULL);
+            arg1 = (cocos2d::Object*)(proxy ? proxy->ptr : NULL);
             TEST_NATIVE_OBJECT(cx, arg1)
         } while (0);
-        cocos2d::CCSize arg2;
+        cocos2d::Size arg2;
         ok &= jsval_to_ccsize(cx, argv[2], &arg2);
         
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         
-        cocos2d::CCNode* ret = cobj->readNodeGraphFromFile(arg0, arg1, arg2);
+        cocos2d::Node* ret = cobj->readNodeGraphFromFile(arg0, arg1, arg2);
         jsval jsret; do {
             if (ret) {
-                js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCNode>(cx, ret);
+                js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Node>(cx, ret);
                 jsret = OBJECT_TO_JSVAL(proxy->obj);
             } else {
                 jsret = JSVAL_NULL;
@@ -197,21 +197,21 @@ JSBool js_cocos2dx_CCBReader_createSceneWithNodeGraphFromFile(JSContext *cx, uin
 	if (argc == 2) {
 		const char* arg0;
 		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
-		cocos2d::CCObject* arg1;
+		cocos2d::Object* arg1;
 		do {
 			js_proxy_t *proxy;
 			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[1]);
 			proxy = jsb_get_js_proxy(tmpObj);
-			arg1 = (cocos2d::CCObject*)(proxy ? proxy->ptr : NULL);
+			arg1 = (cocos2d::Object*)(proxy ? proxy->ptr : NULL);
 			TEST_NATIVE_OBJECT(cx, arg1)
 		} while (0);
         
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         
-		cocos2d::CCScene* ret = cobj->createSceneWithNodeGraphFromFile(arg0, arg1);
+		cocos2d::Scene* ret = cobj->createSceneWithNodeGraphFromFile(arg0, arg1);
 		jsval jsret; do {
 			if (ret) {
-				js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCScene>(cx, ret);
+				js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Scene>(cx, ret);
 				jsret = OBJECT_TO_JSVAL(proxy->obj);
 			} else {
 				jsret = JSVAL_NULL;
@@ -225,10 +225,10 @@ JSBool js_cocos2dx_CCBReader_createSceneWithNodeGraphFromFile(JSContext *cx, uin
 		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         
-		cocos2d::CCScene* ret = cobj->createSceneWithNodeGraphFromFile(arg0);
+		cocos2d::Scene* ret = cobj->createSceneWithNodeGraphFromFile(arg0);
 		jsval jsret; do {
 			if (ret) {
-				js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCScene>(cx, ret);
+				js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Scene>(cx, ret);
 				jsret = OBJECT_TO_JSVAL(proxy->obj);
 			} else {
 				jsret = JSVAL_NULL;
@@ -240,23 +240,23 @@ JSBool js_cocos2dx_CCBReader_createSceneWithNodeGraphFromFile(JSContext *cx, uin
 	if (argc == 3) {
 		const char* arg0;
 		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
-		cocos2d::CCObject* arg1;
+		cocos2d::Object* arg1;
 		do {
 			js_proxy_t *proxy;
 			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[1]);
 			proxy = jsb_get_js_proxy(tmpObj);
-			arg1 = (cocos2d::CCObject*)(proxy ? proxy->ptr : NULL);
+			arg1 = (cocos2d::Object*)(proxy ? proxy->ptr : NULL);
 			TEST_NATIVE_OBJECT(cx, arg1)
 		} while (0);
-		cocos2d::CCSize arg2;
+		cocos2d::Size arg2;
         ok &= jsval_to_ccsize(cx, argv[2], &arg2);
         
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         
-		cocos2d::CCScene* ret = cobj->createSceneWithNodeGraphFromFile(arg0, arg1, arg2);
+		cocos2d::Scene* ret = cobj->createSceneWithNodeGraphFromFile(arg0, arg1, arg2);
 		jsval jsret; do {
 			if (ret) {
-				js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCScene>(cx, ret);
+				js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Scene>(cx, ret);
 				jsret = OBJECT_TO_JSVAL(proxy->obj);
 			} else {
 				jsret = JSVAL_NULL;
@@ -273,9 +273,9 @@ JSBool js_cocos2dx_CCBReader_createSceneWithNodeGraphFromFile(JSContext *cx, uin
 JSBool js_CocosBuilder_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
-    CCNodeLoaderLibrary * ccNodeLoaderLibrary = CCNodeLoaderLibrary::sharedCCNodeLoaderLibrary();
+    NodeLoaderLibrary * ccNodeLoaderLibrary = NodeLoaderLibrary::sharedNodeLoaderLibrary();
     
-    ccNodeLoaderLibrary->registerCCNodeLoader("", JSLayerLoader::loader());
+    ccNodeLoaderLibrary->registerNodeLoader("", JSLayerLoader::loader());
     
     cocos2d::extension::CCBReader * ret = new cocos2d::extension::CCBReader(ccNodeLoaderLibrary);
     ret->autorelease();

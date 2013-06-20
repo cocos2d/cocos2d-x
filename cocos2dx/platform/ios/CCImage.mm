@@ -167,12 +167,12 @@ static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize
     return dim;
 }
 
-// refer CCImage::ETextAlign
+// refer Image::ETextAlign
 #define ALIGN_TOP    1
 #define ALIGN_CENTER 3
 #define ALIGN_BOTTOM 2
 
-static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAlign, const char * pFontName, int nSize, tImageInfo* pInfo)
+static bool _initWithString(const char * pText, cocos2d::Image::ETextAlign eAlign, const char * pFontName, int nSize, tImageInfo* pInfo)
 {
     bool bRet = false;
     do 
@@ -392,7 +392,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 
 NS_CC_BEGIN
 
-CCImage::CCImage()
+Image::Image()
 : _width(0)
 , _height(0)
 , _bitsPerComponent(0)
@@ -403,17 +403,17 @@ CCImage::CCImage()
     
 }
 
-CCImage::~CCImage()
+Image::~Image()
 {
     CC_SAFE_DELETE_ARRAY(_data);
 }
 
-bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
+bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
 {
 	bool bRet = false;
     unsigned long nSize = 0;
-    unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(
-				CCFileUtils::sharedFileUtils()->fullPathForFilename(strPath).c_str(),
+    unsigned char* pBuffer = FileUtils::sharedFileUtils()->getFileData(
+				FileUtils::sharedFileUtils()->fullPathForFilename(strPath).c_str(),
 				"rb",
 				&nSize);
 				
@@ -425,14 +425,14 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
     return bRet;
 }
 
-bool CCImage::initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType)
+bool Image::initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType)
 {
     /*
-     * CCFileUtils::fullPathFromRelativePath() is not thread-safe, it use autorelease().
+     * FileUtils::fullPathFromRelativePath() is not thread-safe, it use autorelease().
      */
     bool bRet = false;
     unsigned long nSize = 0;
-    unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullpath, "rb", &nSize);
+    unsigned char* pBuffer = FileUtils::sharedFileUtils()->getFileData(fullpath, "rb", &nSize);
     if (pBuffer != NULL && nSize > 0)
     {
         bRet = initWithImageData(pBuffer, nSize, imageType);
@@ -441,7 +441,7 @@ bool CCImage::initWithImageFileThreadSafe(const char *fullpath, EImageFormat ima
     return bRet;
 }
 
-bool CCImage::initWithImageData(void * pData, 
+bool Image::initWithImageData(void * pData, 
                                 int nDataLen, 
                                 EImageFormat eFmt,
                                 int nWidth,
@@ -483,7 +483,7 @@ bool CCImage::initWithImageData(void * pData,
     return bRet;
 }
 
-bool CCImage::initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti)
+bool Image::initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti)
 {
     bool bRet = false;
     do 
@@ -507,31 +507,31 @@ bool CCImage::initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight
     return bRet;
 }
 
-bool CCImage::_initWithJpgData(void *pData, int nDatalen)
+bool Image::_initWithJpgData(void *pData, int nDatalen)
 {
     assert(0);
 	return false;
 }
 
-bool CCImage::_initWithPngData(void *pData, int nDatalen)
+bool Image::_initWithPngData(void *pData, int nDatalen)
 {
     assert(0);
 	return false;
 }
 
-bool CCImage::_saveImageToPNG(const char *pszFilePath, bool bIsToRGB)
+bool Image::_saveImageToPNG(const char *pszFilePath, bool bIsToRGB)
 {
     assert(0);
 	return false;
 }
 
-bool CCImage::_saveImageToJPG(const char *pszFilePath)
+bool Image::_saveImageToJPG(const char *pszFilePath)
 {
     assert(0);
 	return false;
 }
 
-bool CCImage::initWithString(
+bool Image::initWithString(
                             const char * pText,
                             int         nWidth /* = 0 */,
                             int         nHeight /* = 0 */,
@@ -542,7 +542,7 @@ bool CCImage::initWithString(
     return initWithStringShadowStroke(pText, nWidth, nHeight, eAlignMask , pFontName, nSize);
 }
 
-bool CCImage::initWithStringShadowStroke(
+bool Image::initWithStringShadowStroke(
                                          const char * pText,
                                          int         nWidth ,
                                          int         nHeight ,
@@ -599,7 +599,7 @@ bool CCImage::initWithStringShadowStroke(
 }
 
 
-bool CCImage::saveToFile(const char *pszFilePath, bool bIsToRGB)
+bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
 {
     bool saveToPNG = false;
     bool needToCopyPixels = false;

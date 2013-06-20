@@ -56,9 +56,9 @@ static JSBool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
 #pragma mark - convertions
 
 /*
- * CCPhysicsSprite
+ * PhysicsSprite
  */
-#pragma mark - CCPhysicsSprite
+#pragma mark - PhysicsSprite
 
 JSClass* JSPROXY_CCPhysicsSprite_class = NULL;
 JSObject* JSPROXY_CCPhysicsSprite_object = NULL;
@@ -67,7 +67,7 @@ JSObject* JSPROXY_CCPhysicsSprite_object = NULL;
 // Destructor
 void JSPROXY_CCPhysicsSprite_finalize(JSFreeOp *fop, JSObject *obj)
 {
-    CCLOGINFO("jsbindings: finalizing JS object %p (CCPhysicsSprite)", obj);
+    CCLOGINFO("jsbindings: finalizing JS object %p (PhysicsSprite)", obj);
 }
 
 // Arguments:
@@ -76,7 +76,7 @@ JSBool JSPROXY_CCPhysicsSprite_getCPBody(JSContext *cx, uint32_t argc, jsval *vp
     
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CCPhysicsSprite* real = (CCPhysicsSprite *)(proxy ? proxy->ptr : NULL);
+    PhysicsSprite* real = (PhysicsSprite *)(proxy ? proxy->ptr : NULL);
 	TEST_NATIVE_OBJECT(cx, real)
 	cpBody* ret_val;
     
@@ -93,7 +93,7 @@ JSBool JSPROXY_CCPhysicsSprite_ignoreBodyRotation(JSContext *cx, uint32_t argc, 
     
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	CCPhysicsSprite* real = (CCPhysicsSprite *)(proxy ? proxy->ptr : NULL);
+	PhysicsSprite* real = (PhysicsSprite *)(proxy ? proxy->ptr : NULL);
 	TEST_NATIVE_OBJECT(cx, real)
     
 	bool ret_val;
@@ -109,7 +109,7 @@ JSBool JSPROXY_CCPhysicsSprite_setCPBody_(JSContext *cx, uint32_t argc, jsval *v
     
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	CCPhysicsSprite* real = (CCPhysicsSprite *)(proxy ? proxy->ptr : NULL);
+	PhysicsSprite* real = (PhysicsSprite *)(proxy ? proxy->ptr : NULL);
 	TEST_NATIVE_OBJECT(cx, real)
     
 	jsval *argvp = JS_ARGV(cx,vp);
@@ -131,7 +131,7 @@ JSBool JSPROXY_CCPhysicsSprite_setIgnoreBodyRotation_(JSContext *cx, uint32_t ar
     
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	CCPhysicsSprite* real = (CCPhysicsSprite *)(proxy ? proxy->ptr : NULL);
+	PhysicsSprite* real = (PhysicsSprite *)(proxy ? proxy->ptr : NULL);
 	TEST_NATIVE_OBJECT(cx, real)
     
 	jsval *argvp = JS_ARGV(cx,vp);
@@ -147,9 +147,9 @@ JSBool JSPROXY_CCPhysicsSprite_setIgnoreBodyRotation_(JSContext *cx, uint32_t ar
 }
 
 /*
- * CCPhysicsDebugNode
+ * PhysicsDebugNode
  */
-//#pragma mark - CCPhysicsDebugNode
+//#pragma mark - PhysicsDebugNode
 
 JSClass* JSB_CCPhysicsDebugNode_class = NULL;
 JSObject* JSB_CCPhysicsDebugNode_object = NULL;
@@ -160,11 +160,11 @@ extern JSObject *js_cocos2dx_CCDrawNode_prototype;
 // Destructor
 void JSB_CCPhysicsDebugNode_finalize(JSFreeOp *fop, JSObject *obj)
 {
-	CCLOGINFO("jsbindings: finalizing JS object %p (CCPhysicsDebugNode)", obj);
+	CCLOGINFO("jsbindings: finalizing JS object %p (PhysicsDebugNode)", obj);
 }
 
 // Arguments: cpSpace*
-// Ret value: CCPhysicsDebugNode* (o)
+// Ret value: PhysicsDebugNode* (o)
 JSBool JSB_CCPhysicsDebugNode_debugNodeForCPSpace__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION2( argc == 1, cx, JS_FALSE, "Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
@@ -174,11 +174,11 @@ JSBool JSB_CCPhysicsDebugNode_debugNodeForCPSpace__static(JSContext *cx, uint32_
 	ok &= jsval_to_opaque( cx, *argvp++, (void**)&arg0 );
 	JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 
-	CCPhysicsDebugNode* ret = CCPhysicsDebugNode::create(arg0);
+	PhysicsDebugNode* ret = PhysicsDebugNode::create(arg0);
     jsval jsret;
     do {
         if (ret) {
-            TypeTest<CCPhysicsDebugNode> t;
+            TypeTest<PhysicsDebugNode> t;
             js_type_class_t *typeClass;
             uint32_t typeId = t.s_id();
             HASH_FIND_INT(_js_global_type_ht, &typeId, typeClass);
@@ -202,7 +202,7 @@ JSBool JSB_CCPhysicsDebugNode_setSpace_(JSContext *cx, uint32_t argc, jsval *vp)
 
 	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(jsthis);
-    CCPhysicsDebugNode* real = (CCPhysicsDebugNode *)(proxy ? proxy->ptr : NULL);
+    PhysicsDebugNode* real = (PhysicsDebugNode *)(proxy ? proxy->ptr : NULL);
     TEST_NATIVE_OBJECT(cx, real)
 
 	JSB_PRECONDITION2( argc == 1, cx, JS_FALSE, "Invalid number of arguments" );
@@ -224,7 +224,7 @@ JSBool JSB_CCPhysicsDebugNode_space(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(jsthis);
-    CCPhysicsDebugNode* real = (CCPhysicsDebugNode *)(proxy ? proxy->ptr : NULL);
+    PhysicsDebugNode* real = (PhysicsDebugNode *)(proxy ? proxy->ptr : NULL);
     TEST_NATIVE_OBJECT(cx, real)
 	JSB_PRECONDITION2( argc == 0, cx, JS_FALSE, "Invalid number of arguments" );
 	cpSpace* ret_val;
@@ -264,15 +264,15 @@ void JSB_CCPhysicsDebugNode_createClass(JSContext *cx, JSObject* globalObj, cons
 		JS_FS_END
 	};
 
-    TypeTest<cocos2d::CCDrawNode> t1;
+    TypeTest<cocos2d::DrawNode> t1;
     js_type_class_t *typeClass;
     uint32_t typeId = t1.s_id();
     HASH_FIND_INT(_js_global_type_ht, &typeId, typeClass);
     assert(typeClass);
 
-    JSB_CCPhysicsDebugNode_object = JS_InitClass(cx, globalObj, typeClass->proto, JSB_CCPhysicsDebugNode_class, dummy_constructor<CCPhysicsDebugNode>, 0,properties,funcs,NULL,st_funcs);
+    JSB_CCPhysicsDebugNode_object = JS_InitClass(cx, globalObj, typeClass->proto, JSB_CCPhysicsDebugNode_class, dummy_constructor<PhysicsDebugNode>, 0,properties,funcs,NULL,st_funcs);
 
-    TypeTest<CCPhysicsDebugNode> t;
+    TypeTest<PhysicsDebugNode> t;
     js_type_class_t *p;
     typeId = t.s_id();
     HASH_FIND_INT(_js_global_type_ht, &typeId, p);
@@ -287,7 +287,7 @@ void JSB_CCPhysicsDebugNode_createClass(JSContext *cx, JSObject* globalObj, cons
 }
 
 // Arguments: NSString*, CGRect
-// Ret value: CCPhysicsSprite* (o)
+// Ret value: PhysicsSprite* (o)
 JSBool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32_t argc, jsval *vp) {
 
     jsval *argv = JS_ARGV(cx, vp);
@@ -295,16 +295,16 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32
 	if (argc == 2) {
 		const char* arg0;
 		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
-		cocos2d::CCRect arg1;
+		cocos2d::Rect arg1;
 		ok &= jsval_to_ccrect(cx, argv[1], &arg1);
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         
-        CCPhysicsSprite* ret = CCPhysicsSprite::create(arg0, arg1);
+        PhysicsSprite* ret = PhysicsSprite::create(arg0, arg1);
 
 		jsval jsret;
 		do {
 			if (ret) {
-                TypeTest<CCPhysicsSprite> t;
+                TypeTest<PhysicsSprite> t;
                 js_type_class_t *typeClass;
                 uint32_t typeId = t.s_id();
                 HASH_FIND_INT(_js_global_type_ht, &typeId, typeClass);
@@ -325,12 +325,12 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32
 		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         
-		CCPhysicsSprite* ret = CCPhysicsSprite::create(arg0);
+		PhysicsSprite* ret = PhysicsSprite::create(arg0);
 
 		jsval jsret;
 		do {
 			if (ret) {
-				TypeTest<CCPhysicsSprite> t;
+				TypeTest<PhysicsSprite> t;
                 js_type_class_t *typeClass;
                 uint32_t typeId = t.s_id();
                 HASH_FIND_INT(_js_global_type_ht, &typeId, typeClass);
@@ -350,26 +350,26 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32
 
 }
 
-// Arguments: CCSpriteFrame*
-// Ret value: CCPhysicsSprite* (o)
+// Arguments: SpriteFrame*
+// Ret value: PhysicsSprite* (o)
 JSBool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrame__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argv = JS_ARGV(cx, vp);
-	cocos2d::CCSpriteFrame* arg0;
+	cocos2d::SpriteFrame* arg0;
 	if (argc >= 1) {
 		do {
 			js_proxy_t *proxy;
 			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
 			proxy = jsb_get_js_proxy(tmpObj);
-			arg0 = (cocos2d::CCSpriteFrame*)(proxy ? proxy->ptr : NULL);
+			arg0 = (cocos2d::SpriteFrame*)(proxy ? proxy->ptr : NULL);
 			TEST_NATIVE_OBJECT(cx, arg0)
 		} while (0);
 	}
-    CCPhysicsSprite* ret = CCPhysicsSprite::createWithSpriteFrame(arg0);
+    PhysicsSprite* ret = PhysicsSprite::createWithSpriteFrame(arg0);
 
 	jsval jsret;
 	do {
 		if (ret) {
-            TypeTest<CCPhysicsSprite> t;
+            TypeTest<PhysicsSprite> t;
             js_type_class_t *typeClass;
             uint32_t typeId = t.s_id();
             HASH_FIND_INT(_js_global_type_ht, &typeId, typeClass);
@@ -387,7 +387,7 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrame__static(JSContext *cx, uint
 }
 
 // Arguments: NSString*
-// Ret value: CCPhysicsSprite* (o)
+// Ret value: PhysicsSprite* (o)
 JSBool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrameName__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argv = JS_ARGV(cx, vp);
     JSBool ok = JS_TRUE;
@@ -396,12 +396,12 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrameName__static(JSContext *cx, 
 	if (argc >= 1) {
 		ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
 	}
-    CCPhysicsSprite* ret = CCPhysicsSprite::createWithSpriteFrameName(arg0);
+    PhysicsSprite* ret = PhysicsSprite::createWithSpriteFrameName(arg0);
 
 	jsval jsret;
 	do {
 		if (ret) {
-            TypeTest<CCPhysicsSprite> t;
+            TypeTest<PhysicsSprite> t;
             js_type_class_t *typeClass;
             uint32_t typeId = t.s_id();
             HASH_FIND_INT(_js_global_type_ht, &typeId, typeClass);
@@ -449,15 +449,15 @@ void JSPROXY_CCPhysicsSprite_createClass(JSContext *cx, JSObject* globalObj)
 		JS_FS_END
 	};
 
-    TypeTest<cocos2d::CCSprite> t1;
+    TypeTest<cocos2d::Sprite> t1;
     js_type_class_t *typeClass;
     uint32_t typeId = t1.s_id();
     HASH_FIND_INT(_js_global_type_ht, &typeId, typeClass);
     assert(typeClass);
 
-	JSPROXY_CCPhysicsSprite_object = JS_InitClass(cx, globalObj, typeClass->proto, JSPROXY_CCPhysicsSprite_class, dummy_constructor<CCPhysicsSprite>, 0,properties,funcs,NULL,st_funcs);
+	JSPROXY_CCPhysicsSprite_object = JS_InitClass(cx, globalObj, typeClass->proto, JSPROXY_CCPhysicsSprite_class, dummy_constructor<PhysicsSprite>, 0,properties,funcs,NULL,st_funcs);
 
-    TypeTest<CCPhysicsSprite> t;
+    TypeTest<PhysicsSprite> t;
 	js_type_class_t *p;
 	typeId = t.s_id();
 	HASH_FIND_INT(_js_global_type_ht, &typeId, p);

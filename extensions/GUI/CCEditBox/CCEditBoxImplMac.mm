@@ -30,7 +30,7 @@
 #include "CCEditBox.h"
 #import "EAGLView.h"
 
-#define getEditBoxImplMac() ((cocos2d::extension::CCEditBoxImplMac*)editBox_)
+#define getEditBoxImplMac() ((cocos2d::extension::EditBoxImplMac*)editBox_)
 
 @implementation CustomNSTextField
 
@@ -141,16 +141,16 @@
 - (BOOL)textFieldShouldBeginEditing:(NSTextField *)sender        // return NO to disallow editing.
 {
     editState_ = YES;
-    cocos2d::extension::CCEditBoxDelegate* pDelegate = getEditBoxImplMac()->getDelegate();
+    cocos2d::extension::EditBoxDelegate* pDelegate = getEditBoxImplMac()->getDelegate();
     if (pDelegate != NULL)
     {
-        pDelegate->editBoxEditingDidBegin(getEditBoxImplMac()->getCCEditBox());
+        pDelegate->editBoxEditingDidBegin(getEditBoxImplMac()->getEditBox());
     }
     
-    cocos2d::extension::CCEditBox*  pEditBox= getEditBoxImplMac()->getCCEditBox();
+    cocos2d::extension::EditBox*  pEditBox= getEditBoxImplMac()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
-        cocos2d::CCScriptEngineProtocol* pEngine = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine();
+        cocos2d::ScriptEngineProtocol* pEngine = cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine();
         pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
     }
     return YES;
@@ -159,17 +159,17 @@
 - (BOOL)textFieldShouldEndEditing:(NSTextField *)sender
 {
     editState_ = NO;
-    cocos2d::extension::CCEditBoxDelegate* pDelegate = getEditBoxImplMac()->getDelegate();
+    cocos2d::extension::EditBoxDelegate* pDelegate = getEditBoxImplMac()->getDelegate();
     if (pDelegate != NULL)
     {
-        pDelegate->editBoxEditingDidEnd(getEditBoxImplMac()->getCCEditBox());
-        pDelegate->editBoxReturn(getEditBoxImplMac()->getCCEditBox());
+        pDelegate->editBoxEditingDidEnd(getEditBoxImplMac()->getEditBox());
+        pDelegate->editBoxReturn(getEditBoxImplMac()->getEditBox());
     }
     
-    cocos2d::extension::CCEditBox*  pEditBox= getEditBoxImplMac()->getCCEditBox();
+    cocos2d::extension::EditBox*  pEditBox= getEditBoxImplMac()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
-        cocos2d::CCScriptEngineProtocol* pEngine = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine();
+        cocos2d::ScriptEngineProtocol* pEngine = cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine();
         pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "ended",pEditBox);
         pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "return",pEditBox);
     }
@@ -204,16 +204,16 @@
  */
 - (void)controlTextDidChange:(NSNotification *)notification
 {
-    cocos2d::extension::CCEditBoxDelegate* pDelegate = getEditBoxImplMac()->getDelegate();
+    cocos2d::extension::EditBoxDelegate* pDelegate = getEditBoxImplMac()->getDelegate();
     if (pDelegate != NULL)
     {
-        pDelegate->editBoxTextChanged(getEditBoxImplMac()->getCCEditBox(), getEditBoxImplMac()->getText());
+        pDelegate->editBoxTextChanged(getEditBoxImplMac()->getEditBox(), getEditBoxImplMac()->getText());
     }
     
-    cocos2d::extension::CCEditBox*  pEditBox= getEditBoxImplMac()->getCCEditBox();
+    cocos2d::extension::EditBox*  pEditBox= getEditBoxImplMac()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
-        cocos2d::CCScriptEngineProtocol* pEngine = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine();
+        cocos2d::ScriptEngineProtocol* pEngine = cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine();
         pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
     }
 }
@@ -222,13 +222,13 @@
 
 NS_CC_EXT_BEGIN
 
-CCEditBoxImpl* __createSystemEditBox(CCEditBox* pEditBox)
+EditBoxImpl* __createSystemEditBox(EditBox* pEditBox)
 {
-    return new CCEditBoxImplMac(pEditBox);
+    return new EditBoxImplMac(pEditBox);
 }
 
-CCEditBoxImplMac::CCEditBoxImplMac(CCEditBox* pEditText)
-: CCEditBoxImpl(pEditText), _sysEdit(NULL), _maxTextLength(-1)
+EditBoxImplMac::EditBoxImplMac(EditBox* pEditText)
+: EditBoxImpl(pEditText), _sysEdit(NULL), _maxTextLength(-1)
 , _anchorPoint(ccp(0.5f, 0.5f))
 {
     //! TODO: Retina on Mac
@@ -236,20 +236,20 @@ CCEditBoxImplMac::CCEditBoxImplMac(CCEditBox* pEditText)
     _inRetinaMode = false;
 }
 
-CCEditBoxImplMac::~CCEditBoxImplMac()
+EditBoxImplMac::~EditBoxImplMac()
 {
     [_sysEdit release];
 }
 
-void CCEditBoxImplMac::doAnimationWhenKeyboardMove(float duration, float distance)
+void EditBoxImplMac::doAnimationWhenKeyboardMove(float duration, float distance)
 {
     if ([_sysEdit isEditState] || distance < 0.0f)
         [_sysEdit doAnimationWhenKeyboardMoveWithDuration:duration distance:distance];
 }
 
-bool CCEditBoxImplMac::initWithSize(const CCSize& size)
+bool EditBoxImplMac::initWithSize(const Size& size)
 {
-    CCEGLViewProtocol* eglView = CCEGLView::sharedOpenGLView();
+    EGLViewProtocol* eglView = EGLView::sharedOpenGLView();
 
     NSRect rect = NSMakeRect(0, 0, size.width * eglView->getScaleX(),size.height * eglView->getScaleY());
 
@@ -266,7 +266,7 @@ bool CCEditBoxImplMac::initWithSize(const CCSize& size)
     return true;
 }
 
-void CCEditBoxImplMac::setFont(const char* pFontName, int fontSize)
+void EditBoxImplMac::setFont(const char* pFontName, int fontSize)
 {
     //TODO:
 //	if(pFontName == NULL)
@@ -277,73 +277,73 @@ void CCEditBoxImplMac::setFont(const char* pFontName, int fontSize)
 //		[_sysEdit.textField setFont:textFont];
 }
 
-void CCEditBoxImplMac::setPlaceholderFont(const char* pFontName, int fontSize)
+void EditBoxImplMac::setPlaceholderFont(const char* pFontName, int fontSize)
 {
 	// TODO need to be implemented.
 }
 
-void CCEditBoxImplMac::setFontColor(const ccColor3B& color)
+void EditBoxImplMac::setFontColor(const ccColor3B& color)
 {
     _sysEdit.textField.textColor = [NSColor colorWithCalibratedRed:color.r / 255.0f green:color.g / 255.0f blue:color.b / 255.0f alpha:1.0f];
 }
 
-void CCEditBoxImplMac::setPlaceholderFontColor(const ccColor3B& color)
+void EditBoxImplMac::setPlaceholderFontColor(const ccColor3B& color)
 {
     // TODO need to be implemented.
 }
 
-void CCEditBoxImplMac::setInputMode(EditBoxInputMode inputMode)
+void EditBoxImplMac::setInputMode(EditBoxInputMode inputMode)
 {
 }
 
-void CCEditBoxImplMac::setMaxLength(int maxLength)
+void EditBoxImplMac::setMaxLength(int maxLength)
 {
     _maxTextLength = maxLength;
 }
 
-int CCEditBoxImplMac::getMaxLength()
+int EditBoxImplMac::getMaxLength()
 {
     return _maxTextLength;
 }
 
-void CCEditBoxImplMac::setInputFlag(EditBoxInputFlag inputFlag)
+void EditBoxImplMac::setInputFlag(EditBoxInputFlag inputFlag)
 {
     // TODO: NSSecureTextField
 }
 
-void CCEditBoxImplMac::setReturnType(KeyboardReturnType returnType)
+void EditBoxImplMac::setReturnType(KeyboardReturnType returnType)
 {
 }
 
-bool CCEditBoxImplMac::isEditing()
+bool EditBoxImplMac::isEditing()
 {
     return [_sysEdit isEditState] ? true : false;
 }
 
-void CCEditBoxImplMac::setText(const char* pText)
+void EditBoxImplMac::setText(const char* pText)
 {
     _sysEdit.textField.stringValue = [NSString stringWithUTF8String:pText];
 }
 
-const char*  CCEditBoxImplMac::getText(void)
+const char*  EditBoxImplMac::getText(void)
 {
     return [_sysEdit.textField.stringValue UTF8String];
 }
 
-void CCEditBoxImplMac::setPlaceHolder(const char* pText)
+void EditBoxImplMac::setPlaceHolder(const char* pText)
 {
     [[_sysEdit.textField cell] setPlaceholderString:[NSString stringWithUTF8String:pText]];
 }
 
-NSPoint CCEditBoxImplMac::convertDesignCoordToScreenCoord(const CCPoint& designCoord, bool bInRetinaMode)
+NSPoint EditBoxImplMac::convertDesignCoordToScreenCoord(const Point& designCoord, bool bInRetinaMode)
 {
     NSRect frame = [_sysEdit.textField frame];
     CGFloat height = frame.size.height;
     
-    CCEGLViewProtocol* eglView = CCEGLView::sharedOpenGLView();
+    EGLViewProtocol* eglView = EGLView::sharedOpenGLView();
 
-    CCPoint visiblePos = ccp(designCoord.x * eglView->getScaleX(), designCoord.y * eglView->getScaleY());
-    CCPoint screenGLPos = ccpAdd(visiblePos, eglView->getViewPortRect().origin);
+    Point visiblePos = ccp(designCoord.x * eglView->getScaleX(), designCoord.y * eglView->getScaleY());
+    Point screenGLPos = ccpAdd(visiblePos, eglView->getViewPortRect().origin);
     
     //TODO: I don't know why here needs to substract `height`.
     NSPoint screenPos = NSMakePoint(screenGLPos.x, screenGLPos.y-height);
@@ -357,57 +357,57 @@ NSPoint CCEditBoxImplMac::convertDesignCoordToScreenCoord(const CCPoint& designC
     return screenPos;
 }
 
-void CCEditBoxImplMac::adjustTextFieldPosition()
+void EditBoxImplMac::adjustTextFieldPosition()
 {
-	CCSize contentSize = _editBox->getContentSize();
-	CCRect rect = CCRectMake(0, 0, contentSize.width, contentSize.height);
+	Size contentSize = _editBox->getContentSize();
+	Rect rect = CCRectMake(0, 0, contentSize.width, contentSize.height);
 
-    rect = CCRectApplyAffineTransform(rect, _editBox->nodeToWorldTransform());
+    rect = RectApplyAffineTransform(rect, _editBox->nodeToWorldTransform());
 	
-	CCPoint designCoord = ccp(rect.origin.x, rect.origin.y + rect.size.height);
+	Point designCoord = ccp(rect.origin.x, rect.origin.y + rect.size.height);
     [_sysEdit setPosition:convertDesignCoordToScreenCoord(designCoord, _inRetinaMode)];
 }
 
-void CCEditBoxImplMac::setPosition(const CCPoint& pos)
+void EditBoxImplMac::setPosition(const Point& pos)
 {
     _position = pos;
     adjustTextFieldPosition();
 }
 
-void CCEditBoxImplMac::setVisible(bool visible)
+void EditBoxImplMac::setVisible(bool visible)
 {
     [_sysEdit.textField setHidden:!visible];
 }
 
-void CCEditBoxImplMac::setContentSize(const CCSize& size)
+void EditBoxImplMac::setContentSize(const Size& size)
 {
     _contentSize = size;
     CCLOG("[Edit text] content size = (%f, %f)", size.width, size.height);
 }
 
-void CCEditBoxImplMac::setAnchorPoint(const CCPoint& anchorPoint)
+void EditBoxImplMac::setAnchorPoint(const Point& anchorPoint)
 {
     CCLOG("[Edit text] anchor point = (%f, %f)", anchorPoint.x, anchorPoint.y);
 	_anchorPoint = anchorPoint;
 	setPosition(_position);
 }
 
-void CCEditBoxImplMac::visit(void)
+void EditBoxImplMac::visit(void)
 {
     
 }
 
-void CCEditBoxImplMac::openKeyboard()
+void EditBoxImplMac::openKeyboard()
 {
     [_sysEdit openKeyboard];
 }
 
-void CCEditBoxImplMac::closeKeyboard()
+void EditBoxImplMac::closeKeyboard()
 {
     [_sysEdit closeKeyboard];
 }
 
-void CCEditBoxImplMac::onEnter(void)
+void EditBoxImplMac::onEnter(void)
 {
     adjustTextFieldPosition();
 }

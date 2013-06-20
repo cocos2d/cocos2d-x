@@ -29,22 +29,22 @@ NS_CC_BEGIN
 
 //------------------------------------------------------------------
 //
-// CCKeypadDispatcher
+// KeypadDispatcher
 //
 //------------------------------------------------------------------
-CCKeypadDispatcher::CCKeypadDispatcher()
+KeypadDispatcher::KeypadDispatcher()
 : _locked(false)
 , _toAdd(false)
 , _toRemove(false)
 {
-    _delegates = CCArray::create();
+    _delegates = Array::create();
     _delegates->retain();
 
     _handlersToAdd    = ccCArrayNew(8);
     _handlersToRemove = ccCArrayNew(8);
 }
 
-CCKeypadDispatcher::~CCKeypadDispatcher()
+KeypadDispatcher::~KeypadDispatcher()
 {
     CC_SAFE_RELEASE(_delegates);
     if (_handlersToAdd)
@@ -58,7 +58,7 @@ CCKeypadDispatcher::~CCKeypadDispatcher()
     }    
 }
 
-void CCKeypadDispatcher::removeDelegate(CCKeypadDelegate* pDelegate)
+void KeypadDispatcher::removeDelegate(KeypadDelegate* pDelegate)
 {
     if (!pDelegate)
     {
@@ -75,7 +75,7 @@ void CCKeypadDispatcher::removeDelegate(CCKeypadDelegate* pDelegate)
     }
 }
 
-void CCKeypadDispatcher::addDelegate(CCKeypadDelegate* pDelegate)
+void KeypadDispatcher::addDelegate(KeypadDelegate* pDelegate)
 {
     if (!pDelegate)
     {
@@ -93,9 +93,9 @@ void CCKeypadDispatcher::addDelegate(CCKeypadDelegate* pDelegate)
     }
 }
 
-void CCKeypadDispatcher::forceAddDelegate(CCKeypadDelegate* pDelegate)
+void KeypadDispatcher::forceAddDelegate(KeypadDelegate* pDelegate)
 {
-    CCKeypadHandler* pHandler = CCKeypadHandler::handlerWithDelegate(pDelegate);
+    KeypadHandler* pHandler = KeypadHandler::handlerWithDelegate(pDelegate);
 
     if (pHandler)
     {
@@ -103,13 +103,13 @@ void CCKeypadDispatcher::forceAddDelegate(CCKeypadDelegate* pDelegate)
     }
 }
 
-void CCKeypadDispatcher::forceRemoveDelegate(CCKeypadDelegate* pDelegate)
+void KeypadDispatcher::forceRemoveDelegate(KeypadDelegate* pDelegate)
 {
-    CCKeypadHandler* pHandler = NULL;
-    CCObject* pObj = NULL;
+    KeypadHandler* pHandler = NULL;
+    Object* pObj = NULL;
     CCARRAY_FOREACH(_delegates, pObj)
     {
-        pHandler = (CCKeypadHandler*)pObj;
+        pHandler = (KeypadHandler*)pObj;
         if (pHandler && pHandler->getDelegate() == pDelegate)
         {
             _delegates->removeObject(pHandler);
@@ -118,21 +118,21 @@ void CCKeypadDispatcher::forceRemoveDelegate(CCKeypadDelegate* pDelegate)
     }
 }
 
-bool CCKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
+bool KeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
 {
-    CCKeypadHandler*  pHandler = NULL;
-    CCKeypadDelegate* pDelegate = NULL;
+    KeypadHandler*  pHandler = NULL;
+    KeypadDelegate* pDelegate = NULL;
 
     _locked = true;
 
     if (_delegates->count() > 0)
     {
-        CCObject* pObj = NULL;
+        Object* pObj = NULL;
         CCARRAY_FOREACH(_delegates, pObj)
         {
             CC_BREAK_IF(!pObj);
 
-            pHandler = (CCKeypadHandler*)pObj;
+            pHandler = (KeypadHandler*)pObj;
             pDelegate = pHandler->getDelegate();
 
             switch (nMsgType)
@@ -155,7 +155,7 @@ bool CCKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
         _toRemove = false;
         for (unsigned int i = 0; i < _handlersToRemove->num; ++i)
         {
-            forceRemoveDelegate((CCKeypadDelegate*)_handlersToRemove->arr[i]);
+            forceRemoveDelegate((KeypadDelegate*)_handlersToRemove->arr[i]);
         }
         ccCArrayRemoveAllValues(_handlersToRemove);
     }
@@ -165,7 +165,7 @@ bool CCKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
         _toAdd = false;
         for (unsigned int i = 0; i < _handlersToAdd->num; ++i)
         {
-            forceAddDelegate((CCKeypadDelegate*)_handlersToAdd->arr[i]);
+            forceAddDelegate((KeypadDelegate*)_handlersToAdd->arr[i]);
         }
         ccCArrayRemoveAllValues(_handlersToAdd);
     }

@@ -30,89 +30,89 @@ THE SOFTWARE.
 #include "../datas/CCDatas.h"
 
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
 
 /**
  *	@brief	format and manage armature configuration and armature animation
  */
-class  CCArmatureDataManager : public CCObject 
+class  ArmatureDataManager : public Object 
 {
 public:
-    static CCArmatureDataManager *sharedArmatureDataManager();
+    static ArmatureDataManager *sharedArmatureDataManager();
     static void purgeArmatureSystem();
 private:
-    CCArmatureDataManager(void);
-    ~CCArmatureDataManager(void);
+    ArmatureDataManager(void);
+    ~ArmatureDataManager(void);
 
 public:
 	/**
-     * Init CCArmatureDataManager
+     * Init ArmatureDataManager
      */
     virtual bool init();
     
     /**
      * Add armature data
      * @param id The id of the armature data
-	 * @param armatureData CCArmatureData *
+	 * @param armatureData ArmatureData *
      */
-    void addArmatureData(const char *id, CCArmatureData *armatureData);
+    void addArmatureData(const char *id, ArmatureData *armatureData);
     
 	/**
      *	@brief	get armature data
      *
      *	@param	id the id of the armature data you want to get
 	 *  
-	 *  @return	CCArmatureData *
+	 *  @return	ArmatureData *
      */
-    CCArmatureData *getArmatureData(const char *id);
+    ArmatureData *getArmatureData(const char *id);
 
     /**
      *	@brief	add animation data 
      *
      *	@param 	id the id of the animation data 
 	 *
-	 *  @return CCAnimationData *
+	 *  @return AnimationData *
      */
-    void addAnimationData(const char *id, CCAnimationData *animationData);
+    void addAnimationData(const char *id, AnimationData *animationData);
     
 	/**
-     *	@brief	get animation data from _animationDatas(CCDictionary)
+     *	@brief	get animation data from _animationDatas(Dictionary)
      *
      *	@param 	id the id of the animation data you want to get
 	 *  
-	 *  @return CCAnimationData *
+	 *  @return AnimationData *
      */
-    CCAnimationData *getAnimationData(const char *id);
+    AnimationData *getAnimationData(const char *id);
 
     /**
      *	@brief	add texture data 
      *
      *	@param 	id the id of the texture data
 	 *
-	 *  @return CCTextureData *
+	 *  @return TextureData *
      */
-    void addTextureData(const char *id, CCTextureData *textureData);
+    void addTextureData(const char *id, TextureData *textureData);
     
 	/**
      *	@brief	get texture data
      *
      *	@param 	_id the id of the texture data you want to get
 	 *  
-	 *  @return CCTextureData *
+	 *  @return TextureData *
      */
-    CCTextureData *getTextureData(const char *id);
+    TextureData *getTextureData(const char *id);
     
     /**
-	 *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.
+	 *	@brief	Add ArmatureFileInfo, it is managed by ArmatureDataManager.
      */
 	void addArmatureFileInfo(const char *armatureName, const char *useExistFileInfo, const char *imagePath, const char *plistPath, const char *configFilePath);
     /**
-	 *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.
+	 *	@brief	Add ArmatureFileInfo, it is managed by ArmatureDataManager.
      */
 	void addArmatureFileInfo(const char *imagePath, const char *plistPath, const char *configFilePath);
 
     /**
-     *	@brief	Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name
+     *	@brief	Add sprite frame to SpriteFrameCache, it will save display name and it's relative image name
      */
     void addSpriteFrameFromFile(const char *plistPath, const char *imagePath);
     
@@ -127,27 +127,27 @@ private:
     /**
 	 *	@brief	save amature datas
 	 *  @key	std::string
-	 *  @value	CCArmatureData *
+	 *  @value	ArmatureData *
      */
-	CC_SYNTHESIZE_READONLY(CCDictionary *, _armarureDatas, ArmarureDatas);
+	CC_SYNTHESIZE_READONLY(Dictionary *, _armarureDatas, ArmarureDatas);
 
     /**
 	 *	@brief	save animation datas
 	 *  @key	std::string
-	 *  @value	CCAnimationData *
+	 *  @value	AnimationData *
      */
-	CC_SYNTHESIZE_READONLY(CCDictionary *, _animationDatas, AnimationDatas);
+	CC_SYNTHESIZE_READONLY(Dictionary *, _animationDatas, AnimationDatas);
 
 	/**
 	 *	@brief	save texture datas
 	 *  @key	std::string
-	 *  @value	CCTextureData *
+	 *  @value	TextureData *
      */
-	CC_SYNTHESIZE_READONLY(CCDictionary *, _textureDatas, TextureDatas);
+	CC_SYNTHESIZE_READONLY(Dictionary *, _textureDatas, TextureDatas);
 
 };
 
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {
 
 #endif/*__CCARMATUREDATAMANAGER_H__*/

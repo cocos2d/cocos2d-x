@@ -39,10 +39,10 @@ NS_CC_BEGIN
  */
 
 //! @brief  Helper class to handle file operations
-class CC_DLL CCFileUtilsLinux : public CCFileUtils
+class CC_DLL FileUtilsLinux : public FileUtils
 {
-    friend class CCFileUtils;
-    CCFileUtilsLinux();
+    friend class FileUtils;
+    FileUtilsLinux();
     std::string _writablePath;
 public:
     /* override funtions */

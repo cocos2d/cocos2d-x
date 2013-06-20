@@ -30,13 +30,13 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CCAccelerometer
+class Accelerometer
 {
 public:
-    CCAccelerometer();
-    ~CCAccelerometer();
+    Accelerometer();
+    ~Accelerometer();
     
-    void setDelegate(std::function<void(CCAcceleration*)> function);
+    void setDelegate(std::function<void(Acceleration*)> function);
     void setAccelerometerInterval(float interval);
 };
 

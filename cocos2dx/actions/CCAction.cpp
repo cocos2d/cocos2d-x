@@ -36,45 +36,45 @@ NS_CC_BEGIN
 // Action Base Class
 //
 
-CCAction::CCAction()
+Action::Action()
 :_originalTarget(NULL)
 ,_target(NULL)
-,_tag(kCCActionTagInvalid)
+,_tag(kActionTagInvalid)
 {
 }
 
-CCAction::~CCAction()
+Action::~Action()
 {
     CCLOGINFO("cocos2d: deallocing");
 }
 
-const char* CCAction::description()
+const char* Action::description()
 {
-    return CCString::createWithFormat("<CCAction | Tag = %d>", _tag)->getCString();
+    return String::createWithFormat("<Action | Tag = %d>", _tag)->getCString();
 }
 
-void CCAction::startWithTarget(CCNode *aTarget)
+void Action::startWithTarget(Node *aTarget)
 {
     _originalTarget = _target = aTarget;
 }
 
-void CCAction::stop()
+void Action::stop()
 {
     _target = NULL;
 }
 
-bool CCAction::isDone()
+bool Action::isDone()
 {
     return true;
 }
 
-void CCAction::step(float dt)
+void Action::step(float dt)
 {
     CC_UNUSED_PARAM(dt);
     CCLOG("[Action step]. override me");
 }
 
-void CCAction::update(float time)
+void Action::update(float time)
 {
     CC_UNUSED_PARAM(time);
     CCLOG("[Action update]. override me");
@@ -83,20 +83,20 @@ void CCAction::update(float time)
 //
 // Speed
 //
-CCSpeed::CCSpeed()
+Speed::Speed()
 : _speed(0.0)
 , _innerAction(NULL)
 {
 }
 
-CCSpeed::~CCSpeed()
+Speed::~Speed()
 {
     CC_SAFE_RELEASE(_innerAction);
 }
 
-CCSpeed* CCSpeed::create(CCActionInterval* pAction, float fSpeed)
+Speed* Speed::create(ActionInterval* pAction, float fSpeed)
 {
-    CCSpeed *pRet = new CCSpeed();
+    Speed *pRet = new Speed();
     if (pRet && pRet->initWithAction(pAction, fSpeed))
     {
         pRet->autorelease();
@@ -106,7 +106,7 @@ CCSpeed* CCSpeed::create(CCActionInterval* pAction, float fSpeed)
     return NULL;
 }
 
-bool CCSpeed::initWithAction(CCActionInterval *pAction, float fSpeed)
+bool Speed::initWithAction(ActionInterval *pAction, float fSpeed)
 {
     CCAssert(pAction != NULL, "");
     pAction->retain();
@@ -115,65 +115,65 @@ bool CCSpeed::initWithAction(CCActionInterval *pAction, float fSpeed)
     return true;
 }
 
-CCSpeed *CCSpeed::clone() const
+Speed *Speed::clone() const
 {
 	// no copy constructor
-	auto a = new CCSpeed();
+	auto a = new Speed();
 	a->initWithAction(_innerAction->clone(), _speed);
 	a->autorelease();
 	return  a;
 }
 
-CCObject *CCSpeed::copyWithZone(CCZone *pZone)
+Object *Speed::copyWithZone(Zone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCSpeed* pRet = NULL;
+    Zone* pNewZone = NULL;
+    Speed* pRet = NULL;
     if(pZone && pZone->_copyObject) //in case of being called at sub class
     {
-        pRet = (CCSpeed*)(pZone->_copyObject);
+        pRet = (Speed*)(pZone->_copyObject);
     }
     else
     {
-        pRet = new CCSpeed();
-        pZone = pNewZone = new CCZone(pRet);
+        pRet = new Speed();
+        pZone = pNewZone = new Zone(pRet);
     }
-    CCAction::copyWithZone(pZone);
+    Action::copyWithZone(pZone);
 
-    pRet->initWithAction( (CCActionInterval*)(_innerAction->copy()->autorelease()) , _speed );
+    pRet->initWithAction( (ActionInterval*)(_innerAction->copy()->autorelease()) , _speed );
     
     CC_SAFE_DELETE(pNewZone);
     return pRet;
 }
 
-void CCSpeed::startWithTarget(CCNode* pTarget)
+void Speed::startWithTarget(Node* pTarget)
 {
-    CCAction::startWithTarget(pTarget);
+    Action::startWithTarget(pTarget);
     _innerAction->startWithTarget(pTarget);
 }
 
-void CCSpeed::stop()
+void Speed::stop()
 {
     _innerAction->stop();
-    CCAction::stop();
+    Action::stop();
 }
 
-void CCSpeed::step(float dt)
+void Speed::step(float dt)
 {
     _innerAction->step(dt * _speed);
 }
 
-bool CCSpeed::isDone()
+bool Speed::isDone()
 {
     return _innerAction->isDone();
 }
 
-CCSpeed *CCSpeed::reverse() const
+Speed *Speed::reverse() const
 {
 
-	return CCSpeed::create(_innerAction->reverse(), _speed);
+	return Speed::create(_innerAction->reverse(), _speed);
 }
 
-void CCSpeed::setInnerAction(CCActionInterval *pAction)
+void Speed::setInnerAction(ActionInterval *pAction)
 {
     if (_innerAction != pAction)
     {
@@ -186,14 +186,14 @@ void CCSpeed::setInnerAction(CCActionInterval *pAction)
 //
 // Follow
 //
-CCFollow::~CCFollow()
+Follow::~Follow()
 {
     CC_SAFE_RELEASE(_followedNode);
 }
 
-CCFollow* CCFollow::create(CCNode *pFollowedNode, const CCRect& rect/* = CCRectZero*/)
+Follow* Follow::create(Node *pFollowedNode, const Rect& rect/* = RectZero*/)
 {
-    CCFollow *pRet = new CCFollow();
+    Follow *pRet = new Follow();
     if (pRet && pRet->initWithTarget(pFollowedNode, rect))
     {
         pRet->autorelease();
@@ -203,23 +203,23 @@ CCFollow* CCFollow::create(CCNode *pFollowedNode, const CCRect& rect/* = CCRectZ
     return NULL;
 }
 
-CCFollow* CCFollow::clone() const
+Follow* Follow::clone() const
 {
 	// no copy constructor
-	auto a = new CCFollow();
+	auto a = new Follow();
 	a->initWithTarget(_followedNode, _worldRect);
 	a->autorelease();
 	return a;
 }
 
-bool CCFollow::initWithTarget(CCNode *pFollowedNode, const CCRect& rect/* = CCRectZero*/)
+bool Follow::initWithTarget(Node *pFollowedNode, const Rect& rect/* = RectZero*/)
 {
     CCAssert(pFollowedNode != NULL, "");
  
     pFollowedNode->retain();
     _followedNode = pFollowedNode;
 	_worldRect = rect;
-    if (rect.equals(CCRectZero))
+    if (rect.equals(RectZero))
     {
         _boundarySet = false;
     }
@@ -230,7 +230,7 @@ bool CCFollow::initWithTarget(CCNode *pFollowedNode, const CCRect& rect/* = CCRe
     
     _boundaryFullyCovered = false;
 
-    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    Size winSize = Director::sharedDirector()->getWinSize();
     _fullScreenSize = CCPointMake(winSize.width, winSize.height);
     _halfScreenSize = ccpMult(_fullScreenSize, 0.5f);
 
@@ -263,27 +263,27 @@ bool CCFollow::initWithTarget(CCNode *pFollowedNode, const CCRect& rect/* = CCRe
     return true;
 }
 
-CCObject *CCFollow::copyWithZone(CCZone *pZone)
+Object *Follow::copyWithZone(Zone *pZone)
 {
-    CCZone *pNewZone = NULL;
-    CCFollow *pRet = NULL;
+    Zone *pNewZone = NULL;
+    Follow *pRet = NULL;
     if(pZone && pZone->_copyObject) //in case of being called at sub class
     {
-        pRet = (CCFollow*)(pZone->_copyObject);
+        pRet = (Follow*)(pZone->_copyObject);
     }
     else
     {
-        pRet = new CCFollow();
-        pZone = pNewZone = new CCZone(pRet);
+        pRet = new Follow();
+        pZone = pNewZone = new Zone(pRet);
     }
-    CCAction::copyWithZone(pZone);
+    Action::copyWithZone(pZone);
     // copy member data
     pRet->_tag = _tag;
     CC_SAFE_DELETE(pNewZone);
     return pRet;
 }
 
-void CCFollow::step(float dt)
+void Follow::step(float dt)
 {
     CC_UNUSED_PARAM(dt);
 
@@ -293,7 +293,7 @@ void CCFollow::step(float dt)
         if(_boundaryFullyCovered)
             return;
 
-        CCPoint tempPos = ccpSub( _halfScreenSize, _followedNode->getPosition());
+        Point tempPos = ccpSub( _halfScreenSize, _followedNode->getPosition());
 
         _target->setPosition(ccp(clampf(tempPos.x, _leftBoundary, _rightBoundary), 
                                    clampf(tempPos.y, _bottomBoundary, _topBoundary)));
@@ -304,15 +304,15 @@ void CCFollow::step(float dt)
     }
 }
 
-bool CCFollow::isDone()
+bool Follow::isDone()
 {
     return ( !_followedNode->isRunning() );
 }
 
-void CCFollow::stop()
+void Follow::stop()
 {
     _target = NULL;
-    CCAction::stop();
+    Action::stop();
 }
 
 NS_CC_END

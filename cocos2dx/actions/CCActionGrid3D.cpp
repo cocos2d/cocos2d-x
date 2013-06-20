@@ -29,11 +29,11 @@ THE SOFTWARE.
 #include <stdlib.h>
 
 NS_CC_BEGIN
-// implementation of CCWaves3D
+// implementation of Waves3D
 
-CCWaves3D* CCWaves3D::create(float duration, const CCSize& gridSize, unsigned int waves, float amplitude)
+Waves3D* Waves3D::create(float duration, const Size& gridSize, unsigned int waves, float amplitude)
 {
-    CCWaves3D *pAction = new CCWaves3D();
+    Waves3D *pAction = new Waves3D();
 
     if (pAction)
     {
@@ -50,9 +50,9 @@ CCWaves3D* CCWaves3D::create(float duration, const CCSize& gridSize, unsigned in
     return pAction;    
 }
 
-bool CCWaves3D::initWithDuration(float duration, const CCSize& gridSize, unsigned int waves, float amplitude)
+bool Waves3D::initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude)
 {
-    if (CCGrid3DAction::initWithDuration(duration, gridSize))
+    if (Grid3DAction::initWithDuration(duration, gridSize))
     {
         _waves = waves;
         _amplitude = amplitude;
@@ -64,31 +64,31 @@ bool CCWaves3D::initWithDuration(float duration, const CCSize& gridSize, unsigne
     return false;
 }
 
-CCWaves3D* CCWaves3D::clone() const
+Waves3D* Waves3D::clone() const
 {
 	// no copy constructor
-	auto a = new CCWaves3D();
+	auto a = new Waves3D();
     a->initWithDuration(_duration, _gridSize, _waves, _amplitude);
 	a->autorelease();
 	return a;
 }
 
-CCObject* CCWaves3D::copyWithZone(CCZone *pZone)
+Object* Waves3D::copyWithZone(Zone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCWaves3D* pCopy = NULL;
+    Zone* pNewZone = NULL;
+    Waves3D* pCopy = NULL;
     if(pZone && pZone->_copyObject) 
     {
         //in case of being called at sub class
-        pCopy = (CCWaves3D*)(pZone->_copyObject);
+        pCopy = (Waves3D*)(pZone->_copyObject);
     }
     else
     {
-        pCopy = new CCWaves3D();
-        pZone = pNewZone = new CCZone(pCopy);
+        pCopy = new Waves3D();
+        pZone = pNewZone = new Zone(pCopy);
     }
 
-    CCGrid3DAction::copyWithZone(pZone);
+    Grid3DAction::copyWithZone(pZone);
 
 
     pCopy->initWithDuration(_duration, _gridSize, _waves, _amplitude);
@@ -97,7 +97,7 @@ CCObject* CCWaves3D::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCWaves3D::update(float time)
+void Waves3D::update(float time)
 {
     int i, j;
     for (i = 0; i < _gridSize.width + 1; ++i)
@@ -112,11 +112,11 @@ void CCWaves3D::update(float time)
     }
 }
 
-// implementation of CCFlipX3D
+// implementation of FlipX3D
 
-CCFlipX3D* CCFlipX3D::create(float duration)
+FlipX3D* FlipX3D::create(float duration)
 {
-    CCFlipX3D *pAction = new CCFlipX3D();
+    FlipX3D *pAction = new FlipX3D();
 
     if (pAction)
     {
@@ -133,12 +133,12 @@ CCFlipX3D* CCFlipX3D::create(float duration)
     return pAction;
 }
 
-bool CCFlipX3D::initWithDuration(float duration)
+bool FlipX3D::initWithDuration(float duration)
 {
-    return CCGrid3DAction::initWithDuration(duration, CCSizeMake(1, 1));
+    return Grid3DAction::initWithDuration(duration, CCSizeMake(1, 1));
 }
 
-bool CCFlipX3D::initWithSize(const CCSize& gridSize, float duration)
+bool FlipX3D::initWithSize(const Size& gridSize, float duration)
 {
     if (gridSize.width != 1 || gridSize.height != 1)
     {
@@ -148,34 +148,34 @@ bool CCFlipX3D::initWithSize(const CCSize& gridSize, float duration)
         return false;
     }
 
-    return CCGrid3DAction::initWithDuration(duration, gridSize);
+    return Grid3DAction::initWithDuration(duration, gridSize);
 }
 
-CCFlipX3D* CCFlipX3D::clone() const
+FlipX3D* FlipX3D::clone() const
 {
 	// no copy constructor	
-	auto a = new CCFlipX3D();
+	auto a = new FlipX3D();
     a->initWithSize(_gridSize, _duration);
 	a->autorelease();
 	return a;
 }
 
-CCObject* CCFlipX3D::copyWithZone(CCZone *pZone)
+Object* FlipX3D::copyWithZone(Zone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCFlipX3D* pCopy = NULL;
+    Zone* pNewZone = NULL;
+    FlipX3D* pCopy = NULL;
     if(pZone && pZone->_copyObject) 
     {
         //in case of being called at sub class
-        pCopy = (CCFlipX3D*)(pZone->_copyObject);
+        pCopy = (FlipX3D*)(pZone->_copyObject);
     }
     else
     {
-        pCopy = new CCFlipX3D();
-        pZone = pNewZone = new CCZone(pCopy);
+        pCopy = new FlipX3D();
+        pZone = pNewZone = new Zone(pCopy);
     }
 
-    CCGrid3DAction::copyWithZone(pZone);
+    Grid3DAction::copyWithZone(pZone);
 
     pCopy->initWithSize(_gridSize, _duration);
 
@@ -183,7 +183,7 @@ CCObject* CCFlipX3D::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCFlipX3D::update(float time)
+void FlipX3D::update(float time)
 {
     float angle = (float)M_PI * time; // 180 degrees
     float mz = sinf(angle);
@@ -198,7 +198,7 @@ void CCFlipX3D::update(float time)
     float    x0 = v0.x;
     float    x1 = v1.x;
     float x;
-    CCPoint    a, b, c, d;
+    Point    a, b, c, d;
 
     if ( x0 > x1 )
     {
@@ -249,9 +249,9 @@ void CCFlipX3D::update(float time)
 
 // implementation of FlipY3D
 
-CCFlipY3D* CCFlipY3D::create(float duration)
+FlipY3D* FlipY3D::create(float duration)
 {
-    CCFlipY3D *pAction = new CCFlipY3D();
+    FlipY3D *pAction = new FlipY3D();
 
     if (pAction)
     {
@@ -268,22 +268,22 @@ CCFlipY3D* CCFlipY3D::create(float duration)
     return pAction;
 }
 
-CCObject* CCFlipY3D::copyWithZone(CCZone* pZone)
+Object* FlipY3D::copyWithZone(Zone* pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCFlipY3D* pCopy = NULL;
+    Zone* pNewZone = NULL;
+    FlipY3D* pCopy = NULL;
     if(pZone && pZone->_copyObject) 
     {
         //in case of being called at sub class
-        pCopy = (CCFlipY3D*)(pZone->_copyObject);
+        pCopy = (FlipY3D*)(pZone->_copyObject);
     }
     else
     {
-        pCopy = new CCFlipY3D();
-        pZone = pNewZone = new CCZone(pCopy);
+        pCopy = new FlipY3D();
+        pZone = pNewZone = new Zone(pCopy);
     }
 
-    CCFlipX3D::copyWithZone(pZone);
+    FlipX3D::copyWithZone(pZone);
 
     pCopy->initWithSize(_gridSize, _duration);
 
@@ -291,7 +291,7 @@ CCObject* CCFlipY3D::copyWithZone(CCZone* pZone)
     return pCopy;
 }
 
-void CCFlipY3D::update(float time)
+void FlipY3D::update(float time)
 {
     float angle = (float)M_PI * time; // 180 degrees
     float mz = sinf( angle );
@@ -306,7 +306,7 @@ void CCFlipY3D::update(float time)
     float    y0 = v0.y;
     float    y1 = v1.y;
     float y;
-    CCPoint    a, b, c, d;
+    Point    a, b, c, d;
     
     if (y0 > y1)
     {
@@ -358,9 +358,9 @@ void CCFlipY3D::update(float time)
 
 // implementation of Lens3D
 
-CCLens3D* CCLens3D::create(float duration, const CCSize& gridSize, const CCPoint& position, float radius)
+Lens3D* Lens3D::create(float duration, const Size& gridSize, const Point& position, float radius)
 {
-    CCLens3D *pAction = new CCLens3D();
+    Lens3D *pAction = new Lens3D();
 
     if (pAction)
     {
@@ -377,9 +377,9 @@ CCLens3D* CCLens3D::create(float duration, const CCSize& gridSize, const CCPoint
     return pAction;
 }
 
-bool CCLens3D::initWithDuration(float duration, const CCSize& gridSize, const CCPoint& position, float radius)
+bool Lens3D::initWithDuration(float duration, const Size& gridSize, const Point& position, float radius)
 {
-    if (CCGrid3DAction::initWithDuration(duration, gridSize))
+    if (Grid3DAction::initWithDuration(duration, gridSize))
     {
         _position = ccp(-1, -1);
         setPosition(position);
@@ -394,31 +394,31 @@ bool CCLens3D::initWithDuration(float duration, const CCSize& gridSize, const CC
     return false;
 }
 
-CCLens3D* CCLens3D::clone() const
+Lens3D* Lens3D::clone() const
 {
 	// no copy constructor
-	auto a = new CCLens3D();
+	auto a = new Lens3D();
 	a->initWithDuration(_duration, _gridSize, _position, _radius);
 	a->autorelease();
 	return a;
 }
 
-CCObject* CCLens3D::copyWithZone(CCZone *pZone)
+Object* Lens3D::copyWithZone(Zone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCLens3D* pCopy = NULL;
+    Zone* pNewZone = NULL;
+    Lens3D* pCopy = NULL;
     if(pZone && pZone->_copyObject) 
     {
         //in case of being called at sub class
-        pCopy = (CCLens3D*)(pZone->_copyObject);
+        pCopy = (Lens3D*)(pZone->_copyObject);
     }
     else
     {
-        pCopy = new CCLens3D();
-        pZone = pNewZone = new CCZone(pCopy);
+        pCopy = new Lens3D();
+        pZone = pNewZone = new Zone(pCopy);
     }
 
-    CCGrid3DAction::copyWithZone(pZone);
+    Grid3DAction::copyWithZone(pZone);
 
     pCopy->initWithDuration(_duration, _gridSize, _position, _radius);
     
@@ -426,7 +426,7 @@ CCObject* CCLens3D::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCLens3D::setPosition(const CCPoint& pos)
+void Lens3D::setPosition(const Point& pos)
 {
     if( !pos.equals(_position))
     {
@@ -435,7 +435,7 @@ void CCLens3D::setPosition(const CCPoint& pos)
     }
 }
 
-void CCLens3D::update(float time)
+void Lens3D::update(float time)
 {
     CC_UNUSED_PARAM(time);
     if (_dirty)
@@ -447,7 +447,7 @@ void CCLens3D::update(float time)
             for (j = 0; j < _gridSize.height + 1; ++j)
             {
                 ccVertex3F v = originalVertex(ccp(i, j));
-                CCPoint vect = ccpSub(_position, ccp(v.x, v.y));
+                Point vect = ccpSub(_position, ccp(v.x, v.y));
                 float r = ccpLength(vect);
                 
                 if (r < _radius)
@@ -465,7 +465,7 @@ void CCLens3D::update(float time)
                     if (ccpLength(vect) > 0)
                     {
                         vect = ccpNormalize(vect);
-                        CCPoint new_vect = ccpMult(vect, new_r);
+                        Point new_vect = ccpMult(vect, new_r);
                         v.z += (_concave ? -1.0f : 1.0f) * ccpLength(new_vect) * _lensEffect;
                     }
                 }
@@ -480,9 +480,9 @@ void CCLens3D::update(float time)
 
 // implementation of Ripple3D
 
-CCRipple3D* CCRipple3D::create(float duration, const CCSize& gridSize, const CCPoint& position, float radius, unsigned int waves, float amplitude)
+Ripple3D* Ripple3D::create(float duration, const Size& gridSize, const Point& position, float radius, unsigned int waves, float amplitude)
 {
-    CCRipple3D *pAction = new CCRipple3D();
+    Ripple3D *pAction = new Ripple3D();
 
     if (pAction)
     {
@@ -499,9 +499,9 @@ CCRipple3D* CCRipple3D::create(float duration, const CCSize& gridSize, const CCP
     return pAction;
 }
 
-bool CCRipple3D::initWithDuration(float duration, const CCSize& gridSize, const CCPoint& position, float radius, unsigned int waves, float amplitude)
+bool Ripple3D::initWithDuration(float duration, const Size& gridSize, const Point& position, float radius, unsigned int waves, float amplitude)
 {
-    if (CCGrid3DAction::initWithDuration(duration, gridSize))
+    if (Grid3DAction::initWithDuration(duration, gridSize))
     {
         setPosition(position);
         _radius = radius;
@@ -515,37 +515,37 @@ bool CCRipple3D::initWithDuration(float duration, const CCSize& gridSize, const 
     return false;
 }
 
-void CCRipple3D::setPosition(const CCPoint& position)
+void Ripple3D::setPosition(const Point& position)
 {
     _position = position;
 }
 
 
-CCRipple3D* CCRipple3D::clone() const
+Ripple3D* Ripple3D::clone() const
 {
 	// no copy constructor
-	auto a = new CCRipple3D();
+	auto a = new Ripple3D();
 	a->initWithDuration(_duration, _gridSize, _position, _radius, _waves, _amplitude);
 	a->autorelease();
 	return a;
 }
 
-CCObject* CCRipple3D::copyWithZone(CCZone *pZone)
+Object* Ripple3D::copyWithZone(Zone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCRipple3D* pCopy = NULL;
+    Zone* pNewZone = NULL;
+    Ripple3D* pCopy = NULL;
     if(pZone && pZone->_copyObject)
     {
         //in case of being called at sub class
-        pCopy = (CCRipple3D*)(pZone->_copyObject);
+        pCopy = (Ripple3D*)(pZone->_copyObject);
     }
     else
     {
-        pCopy = new CCRipple3D();
-        pZone = pNewZone = new CCZone(pCopy);
+        pCopy = new Ripple3D();
+        pZone = pNewZone = new Zone(pCopy);
     }
 
-    CCGrid3DAction::copyWithZone(pZone);
+    Grid3DAction::copyWithZone(pZone);
 
     pCopy->initWithDuration(_duration, _gridSize, _position, _radius, _waves, _amplitude);
     
@@ -553,7 +553,7 @@ CCObject* CCRipple3D::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCRipple3D::update(float time)
+void Ripple3D::update(float time)
 {
     int i, j;
 
@@ -562,7 +562,7 @@ void CCRipple3D::update(float time)
         for (j = 0; j < (_gridSize.height+1); ++j)
         {
             ccVertex3F v = originalVertex(ccp(i, j));
-            CCPoint vect = ccpSub(_position, ccp(v.x,v.y));
+            Point vect = ccpSub(_position, ccp(v.x,v.y));
             float r = ccpLength(vect);
             
             if (r < _radius)
@@ -579,9 +579,9 @@ void CCRipple3D::update(float time)
 
 // implementation of Shaky3D
 
-CCShaky3D* CCShaky3D::create(float duration, const CCSize& gridSize, int range, bool shakeZ)
+Shaky3D* Shaky3D::create(float duration, const Size& gridSize, int range, bool shakeZ)
 {
-    CCShaky3D *pAction = new CCShaky3D();
+    Shaky3D *pAction = new Shaky3D();
 
     if (pAction)
     {
@@ -598,9 +598,9 @@ CCShaky3D* CCShaky3D::create(float duration, const CCSize& gridSize, int range, 
     return pAction;
 }
 
-bool CCShaky3D::initWithDuration(float duration, const CCSize& gridSize, int range, bool shakeZ)
+bool Shaky3D::initWithDuration(float duration, const Size& gridSize, int range, bool shakeZ)
 {
-    if (CCGrid3DAction::initWithDuration(duration, gridSize))
+    if (Grid3DAction::initWithDuration(duration, gridSize))
     {
         _randrange = range;
         _shakeZ = shakeZ;
@@ -611,31 +611,31 @@ bool CCShaky3D::initWithDuration(float duration, const CCSize& gridSize, int ran
     return false;
 }
 
-CCShaky3D* CCShaky3D::clone() const
+Shaky3D* Shaky3D::clone() const
 {
 	// no copy constructor
-	auto a = new CCShaky3D();
+	auto a = new Shaky3D();
     a->initWithDuration(_duration, _gridSize, _randrange, _shakeZ);
 	a->autorelease();
 	return a;
 }
 
-CCObject* CCShaky3D::copyWithZone(CCZone *pZone)
+Object* Shaky3D::copyWithZone(Zone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCShaky3D* pCopy = NULL;
+    Zone* pNewZone = NULL;
+    Shaky3D* pCopy = NULL;
     if(pZone && pZone->_copyObject)
     {
         //in case of being called at sub class
-        pCopy = (CCShaky3D*)(pZone->_copyObject);
+        pCopy = (Shaky3D*)(pZone->_copyObject);
     }
     else
     {
-        pCopy = new CCShaky3D();
-        pZone = pNewZone = new CCZone(pCopy);
+        pCopy = new Shaky3D();
+        pZone = pNewZone = new Zone(pCopy);
     }
 
-    CCGrid3DAction::copyWithZone(pZone);
+    Grid3DAction::copyWithZone(pZone);
 
     pCopy->initWithDuration(_duration, _gridSize, _randrange, _shakeZ);
     
@@ -643,7 +643,7 @@ CCObject* CCShaky3D::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCShaky3D::update(float time)
+void Shaky3D::update(float time)
 {
     CC_UNUSED_PARAM(time);
     int i, j;
@@ -667,9 +667,9 @@ void CCShaky3D::update(float time)
 
 // implementation of Liquid
 
-CCLiquid* CCLiquid::create(float duration, const CCSize& gridSize, unsigned int waves, float amplitude)
+Liquid* Liquid::create(float duration, const Size& gridSize, unsigned int waves, float amplitude)
 {
-    CCLiquid *pAction = new CCLiquid();
+    Liquid *pAction = new Liquid();
 
     if (pAction)
     {
@@ -686,9 +686,9 @@ CCLiquid* CCLiquid::create(float duration, const CCSize& gridSize, unsigned int 
     return pAction;
 }
 
-bool CCLiquid::initWithDuration(float duration, const CCSize& gridSize, unsigned int waves, float amplitude)
+bool Liquid::initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude)
 {
-    if (CCGrid3DAction::initWithDuration(duration, gridSize))
+    if (Grid3DAction::initWithDuration(duration, gridSize))
     {
         _waves = waves;
         _amplitude = amplitude;
@@ -700,31 +700,31 @@ bool CCLiquid::initWithDuration(float duration, const CCSize& gridSize, unsigned
     return false;
 }
 
-CCLiquid* CCLiquid::clone() const
+Liquid* Liquid::clone() const
 {
 	// no copy constructor
-	auto a = new CCLiquid();
+	auto a = new Liquid();
 	a->initWithDuration(_duration, _gridSize, _waves, _amplitude);
 	a->autorelease();
 	return a;
 }
 
-CCObject* CCLiquid::copyWithZone(CCZone *pZone)
+Object* Liquid::copyWithZone(Zone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCLiquid* pCopy = NULL;
+    Zone* pNewZone = NULL;
+    Liquid* pCopy = NULL;
     if(pZone && pZone->_copyObject) 
     {
         //in case of being called at sub class
-        pCopy = (CCLiquid*)(pZone->_copyObject);
+        pCopy = (Liquid*)(pZone->_copyObject);
     }
     else
     {
-        pCopy = new CCLiquid();
-        pZone = pNewZone = new CCZone(pCopy);
+        pCopy = new Liquid();
+        pZone = pNewZone = new Zone(pCopy);
     }
 
-    CCGrid3DAction::copyWithZone(pZone);
+    Grid3DAction::copyWithZone(pZone);
 
     pCopy->initWithDuration(_duration, _gridSize, _waves, _amplitude);
 
@@ -732,7 +732,7 @@ CCObject* CCLiquid::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCLiquid::update(float time)
+void Liquid::update(float time)
 {
     int i, j;
 
@@ -750,9 +750,9 @@ void CCLiquid::update(float time)
 
 // implementation of Waves
 
-CCWaves* CCWaves::create(float duration, const CCSize& gridSize, unsigned int waves, float amplitude, bool horizontal, bool vertical)
+Waves* Waves::create(float duration, const Size& gridSize, unsigned int waves, float amplitude, bool horizontal, bool vertical)
 {
-    CCWaves *pAction = new CCWaves();
+    Waves *pAction = new Waves();
 
     if (pAction)
     {
@@ -769,9 +769,9 @@ CCWaves* CCWaves::create(float duration, const CCSize& gridSize, unsigned int wa
     return pAction;
 }
 
-bool CCWaves::initWithDuration(float duration, const CCSize& gridSize, unsigned int waves, float amplitude, bool horizontal, bool vertical)
+bool Waves::initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude, bool horizontal, bool vertical)
 {
-    if (CCGrid3DAction::initWithDuration(duration, gridSize))
+    if (Grid3DAction::initWithDuration(duration, gridSize))
     {
         _waves = waves;
         _amplitude = amplitude;
@@ -785,31 +785,31 @@ bool CCWaves::initWithDuration(float duration, const CCSize& gridSize, unsigned 
     return false;
 }
 
-CCWaves* CCWaves::clone() const
+Waves* Waves::clone() const
 {
 	// no copy constructor
-	auto a = new CCWaves();
+	auto a = new Waves();
 	a->initWithDuration(_duration, _gridSize, _waves, _amplitude, _horizontal, _vertical);
 	a->autorelease();
 	return a;
 }
 
-CCObject* CCWaves::copyWithZone(CCZone *pZone)
+Object* Waves::copyWithZone(Zone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCWaves* pCopy = NULL;
+    Zone* pNewZone = NULL;
+    Waves* pCopy = NULL;
     if(pZone && pZone->_copyObject) 
     {
         //in case of being called at sub class
-        pCopy = (CCWaves*)(pZone->_copyObject);
+        pCopy = (Waves*)(pZone->_copyObject);
     }
     else
     {
-        pCopy = new CCWaves();
-        pZone = pNewZone = new CCZone(pCopy);
+        pCopy = new Waves();
+        pZone = pNewZone = new Zone(pCopy);
     }
 
-    CCGrid3DAction::copyWithZone(pZone);
+    Grid3DAction::copyWithZone(pZone);
 
     pCopy->initWithDuration(_duration, _gridSize, _waves, _amplitude, _horizontal, _vertical);
     
@@ -817,7 +817,7 @@ CCObject* CCWaves::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCWaves::update(float time)
+void Waves::update(float time)
 {
     int i, j;
 
@@ -844,9 +844,9 @@ void CCWaves::update(float time)
 
 // implementation of Twirl
 
-CCTwirl* CCTwirl::create(float duration, const CCSize& gridSize, CCPoint position, unsigned int twirls, float amplitude)
+Twirl* Twirl::create(float duration, const Size& gridSize, Point position, unsigned int twirls, float amplitude)
 {
-    CCTwirl *pAction = new CCTwirl();
+    Twirl *pAction = new Twirl();
 
     if (pAction)
     {
@@ -863,9 +863,9 @@ CCTwirl* CCTwirl::create(float duration, const CCSize& gridSize, CCPoint positio
     return pAction;
 }
 
-bool CCTwirl::initWithDuration(float duration, const CCSize& gridSize, CCPoint position, unsigned int twirls, float amplitude)
+bool Twirl::initWithDuration(float duration, const Size& gridSize, Point position, unsigned int twirls, float amplitude)
 {
-    if (CCGrid3DAction::initWithDuration(duration, gridSize))
+    if (Grid3DAction::initWithDuration(duration, gridSize))
     {
         setPosition(position);
         _twirls = twirls;
@@ -878,36 +878,36 @@ bool CCTwirl::initWithDuration(float duration, const CCSize& gridSize, CCPoint p
     return false;
 }
 
-void CCTwirl::setPosition(const CCPoint& position)
+void Twirl::setPosition(const Point& position)
 {
     _position = position;
 }
 
-CCTwirl *CCTwirl::clone() const
+Twirl *Twirl::clone() const
 {
 	// no copy constructor	
-	auto a = new CCTwirl();
+	auto a = new Twirl();
 	a->initWithDuration(_duration, _gridSize, _position, _twirls, _amplitude);
 	a->autorelease();
 	return a;
 }
 
-CCObject* CCTwirl::copyWithZone(CCZone *pZone)
+Object* Twirl::copyWithZone(Zone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCTwirl* pCopy = NULL;
+    Zone* pNewZone = NULL;
+    Twirl* pCopy = NULL;
     if(pZone && pZone->_copyObject)
     {
         //in case of being called at sub class
-        pCopy = (CCTwirl*)(pZone->_copyObject);
+        pCopy = (Twirl*)(pZone->_copyObject);
     }
     else
     {
-        pCopy = new CCTwirl();
-        pZone = pNewZone = new CCZone(pCopy);
+        pCopy = new Twirl();
+        pZone = pNewZone = new Zone(pCopy);
     }
 
-    CCGrid3DAction::copyWithZone(pZone);
+    Grid3DAction::copyWithZone(pZone);
 
 
     pCopy->initWithDuration(_duration, _gridSize, _position, _twirls, _amplitude);
@@ -916,10 +916,10 @@ CCObject* CCTwirl::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCTwirl::update(float time)
+void Twirl::update(float time)
 {
     int i, j;
-    CCPoint    c = _position;
+    Point    c = _position;
     
     for (i = 0; i < (_gridSize.width+1); ++i)
     {
@@ -927,13 +927,13 @@ void CCTwirl::update(float time)
         {
             ccVertex3F v = originalVertex(ccp(i ,j));
             
-            CCPoint    avg = ccp(i-(_gridSize.width/2.0f), j-(_gridSize.height/2.0f));
+            Point    avg = ccp(i-(_gridSize.width/2.0f), j-(_gridSize.height/2.0f));
             float r = ccpLength(avg);
             
             float amp = 0.1f * _amplitude * _amplitudeRate;
             float a = r * cosf( (float)M_PI/2.0f + time * (float)M_PI * _twirls * 2 ) * amp;
             
-            CCPoint d = ccp(
+            Point d = ccp(
                 sinf(a) * (v.y-c.y) + cosf(a) * (v.x-c.x),
                 cosf(a) * (v.y-c.y) - sinf(a) * (v.x-c.x));
             
