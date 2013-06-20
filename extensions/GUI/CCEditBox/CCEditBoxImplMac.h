@@ -65,15 +65,15 @@
 
 NS_CC_EXT_BEGIN
 
-class CCEditBox;
+class EditBox;
 
-class CCEditBoxImplMac : public CCEditBoxImpl
+class EditBoxImplMac : public EditBoxImpl
 {
 public:
-    CCEditBoxImplMac(CCEditBox* pEditText);
-    virtual ~CCEditBoxImplMac();
+    EditBoxImplMac(EditBox* pEditText);
+    virtual ~EditBoxImplMac();
     
-    virtual bool initWithSize(const CCSize& size);
+    virtual bool initWithSize(const Size& size);
     virtual void setFont(const char* pFontName, int fontSize);
     virtual void setFontColor(const ccColor3B& color);
     virtual void setPlaceholderFont(const char* pFontName, int fontSize);
@@ -88,24 +88,24 @@ public:
     virtual void setText(const char* pText);
     virtual const char* getText(void);
     virtual void setPlaceHolder(const char* pText);
-    virtual void setPosition(const CCPoint& pos);
+    virtual void setPosition(const Point& pos);
     virtual void setVisible(bool visible);
-    virtual void setContentSize(const CCSize& size);
-    virtual void setAnchorPoint(const CCPoint& anchorPoint);
+    virtual void setContentSize(const Size& size);
+    virtual void setAnchorPoint(const Point& anchorPoint);
     virtual void visit(void);
     virtual void doAnimationWhenKeyboardMove(float duration, float distance);
     virtual void openKeyboard();
     virtual void closeKeyboard();
     virtual void onEnter(void);
 private:
-    NSPoint    convertDesignCoordToScreenCoord(const CCPoint& designCoord, bool bInRetinaMode);
+    NSPoint    convertDesignCoordToScreenCoord(const Point& designCoord, bool bInRetinaMode);
     void       adjustTextFieldPosition();
-    CCSize     m_tContentSize;
-    CCPoint    m_obPosition;
-    CCPoint    m_obAnchorPoint;
-    int        m_nMaxTextLength;
-    bool       m_bInRetinaMode;
-    EditBoxImplMac*  m_pSysEdit;
+    Size     _contentSize;
+    Point    _position;
+    Point    _anchorPoint;
+    int        _maxTextLength;
+    bool       _inRetinaMode;
+    EditBoxImplMac*  _sysEdit;
 };
 
 

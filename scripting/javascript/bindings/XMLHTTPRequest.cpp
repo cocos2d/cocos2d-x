@@ -167,7 +167,7 @@ void MinXmlHttpRequest::_setHttpRequestHeader() {
  *  @param sender   Object which initialized callback
  *  @param respone  Response object
  */
-void MinXmlHttpRequest::handle_requestResponse(cocos2d::extension::CCHttpClient *sender, cocos2d::extension::CCHttpResponse *response) {
+void MinXmlHttpRequest::handle_requestResponse(cocos2d::extension::HttpClient *sender, cocos2d::extension::HttpResponse *response) {
 
     if (0 != strlen(response->getHttpRequest()->getTag()))
     {
@@ -223,7 +223,7 @@ void MinXmlHttpRequest::handle_requestResponse(cocos2d::extension::CCHttpClient 
     
     js_proxy_t * p;
     void* ptr = (void*)this;
-    JS_GET_PROXY(p, ptr);
+    p = jsb_get_native_proxy(ptr);
     
     if(p){
         JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
@@ -245,7 +245,7 @@ void MinXmlHttpRequest::handle_requestResponse(cocos2d::extension::CCHttpClient 
 void MinXmlHttpRequest::_sendRequest(JSContext *cx) {
     
     cc_request->setResponseCallback(this, httpresponse_selector(MinXmlHttpRequest::handle_requestResponse));
-    cocos2d::extension::CCHttpClient::getInstance()->send(cc_request);
+    cocos2d::extension::HttpClient::getInstance()->send(cc_request);
     cc_request->release();
 
 }
@@ -260,7 +260,7 @@ MinXmlHttpRequest::MinXmlHttpRequest() : onreadystateCallback(NULL), isNetwork(t
     request_header.clear();
     withCredentialsValue = true;
     cx = ScriptingCore::getInstance()->getGlobalContext();
-    cc_request = new cocos2d::extension::CCHttpRequest();
+    cc_request = new cocos2d::extension::HttpRequest();
 }
 
 /**
@@ -310,7 +310,7 @@ JS_BINDED_CONSTRUCTOR_IMPL(MinXmlHttpRequest)
     }
 
     JS_SET_RVAL(cx, vp, out);
-    JS_NEW_PROXY(p, req, obj);
+    p =jsb_new_proxy(req, obj);
     
     JS_AddNamedObjectRoot(cx, &p->obj, "XMLHttpRequest");
     return JS_TRUE;
@@ -601,10 +601,10 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, open)
         }
 
         if (meth.compare("post") == 0 || meth.compare("POST") == 0) {
-            cc_request->setRequestType(cocos2d::extension::CCHttpRequest::kHttpPost);
+            cc_request->setRequestType(cocos2d::extension::HttpRequest::kHttpPost);
         }
         else {
-            cc_request->setRequestType(cocos2d::extension::CCHttpRequest::kHttpGet);
+            cc_request->setRequestType(cocos2d::extension::HttpRequest::kHttpGet);
         }
         
         cc_request->setUrl(url.c_str());
@@ -628,7 +628,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
 {
 
     JSString *str = NULL;
-    char *data = NULL;
+    std::string data;
     
     // Clean up header map. New request, new headers!
     http_header.clear();
@@ -636,12 +636,13 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
         if (!JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &str)) {
             return JS_FALSE;
         };
-        data = JS_EncodeString(cx, str);
+        JSStringWrapper strWrap(str);
+        data = strWrap.get();
     }
 
 
-    if (data != NULL && meth.compare("post") == 0 || meth.compare("POST") == 0) {
-        cc_request->setRequestData(data, strlen(data));
+    if (data.length() > 0 && (meth.compare("post") == 0 || meth.compare("POST") == 0)) {
+        cc_request->setRequestData(data.c_str(), data.length());
     }
 
     _setHttpRequestHeader();
@@ -700,7 +701,10 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, getResponseHeader)
         return JS_FALSE;
     };
     
-    char *data = JS_EncodeString(cx, header_value);
+    std::string data;
+    JSStringWrapper strWrap(header_value);
+    data = strWrap.get();
+    
     stringstream streamdata;
     
     streamdata << data;

@@ -36,19 +36,21 @@ ProtocolAnalytics::~ProtocolAnalytics()
     PluginUtilsIOS::erasePluginOCData(this);
 }
 
-bool ProtocolAnalytics::init()
-{
-    return true;
-}
-
 /**
  @brief Start a new session.
  @param appKey The identity of the application.
  */
 void ProtocolAnalytics::startSession(const char* appKey)
 {
-    NSString* pStrKey = [NSString stringWithUTF8String:appKey];
-    PluginUtilsIOS::callOCFunctionWithName_Object(this, "startSession:", pStrKey);
+    PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
+    assert(pData != NULL);
+    
+    id ocObj = pData->obj;
+    if ([ocObj conformsToProtocol:@protocol(InterfaceAnalytics)]) {
+        NSObject<InterfaceAnalytics>* curObj = ocObj;
+        NSString* pStrKey = [NSString stringWithUTF8String:appKey];
+        [curObj startSession:pStrKey];
+    }
 }
 
 /**
@@ -57,18 +59,14 @@ void ProtocolAnalytics::startSession(const char* appKey)
  */
 void ProtocolAnalytics::stopSession()
 {
-    PluginUtilsIOS::callOCFunctionWithName(this, "stopSession");
-}
-
-/**
- @brief Set whether needs to output logs to console.
- @param debug if true debug mode enabled, or debug mode disabled.
- @note It must be invoked before calling startSession.
- */
-void ProtocolAnalytics::setDebugMode(bool debug)
-{
-    NSNumber* bDebug = [NSNumber numberWithBool:debug];
-    PluginUtilsIOS::callOCFunctionWithName_Object(this, "setDebugMode:", bDebug);
+    PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
+    assert(pData != NULL);
+    
+    id ocObj = pData->obj;
+    if ([ocObj conformsToProtocol:@protocol(InterfaceAnalytics)]) {
+        NSObject<InterfaceAnalytics>* curObj = ocObj;
+        [curObj stopSession];
+    }
 }
 
 /**
@@ -78,8 +76,14 @@ void ProtocolAnalytics::setDebugMode(bool debug)
  */
 void ProtocolAnalytics::setSessionContinueMillis(long millis)
 {
-    NSNumber* lMillis = [NSNumber numberWithLong:millis];
-    PluginUtilsIOS::callOCFunctionWithName_Object(this, "setSessionContinueMillis:", lMillis);
+    PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
+    assert(pData != NULL);
+    
+    id ocObj = pData->obj;
+    if ([ocObj conformsToProtocol:@protocol(InterfaceAnalytics)]) {
+        NSObject<InterfaceAnalytics>* curObj = ocObj;
+        [curObj setSessionContinueMillis:millis];
+    }
 }
 
 /**
@@ -90,18 +94,14 @@ void ProtocolAnalytics::setSessionContinueMillis(long millis)
 void ProtocolAnalytics::logError(const char* errorId, const char* message)
 {
     PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
-    if (! pData) {
-        return;
-    }
+    assert(pData != NULL);
     
-    id pOCObj = pData->obj;
-    SEL selector = NSSelectorFromString(@"logError:withMsg:");
-    if ([pOCObj respondsToSelector:selector]) {
-        
-        NSString* strErrID = [NSString stringWithUTF8String:errorId];
-        NSString* strMsg = [NSString stringWithUTF8String:message];
-        [pOCObj logError:strErrID withMsg:strMsg];
-        NSLog(@"logError withMsg in OC class invoked!");
+    id ocObj = pData->obj;
+    if ([ocObj conformsToProtocol:@protocol(InterfaceAnalytics)]) {
+        NSObject<InterfaceAnalytics>* curObj = ocObj;
+        NSString* pError = [NSString stringWithUTF8String:errorId];
+        NSString* pMsg = [NSString stringWithUTF8String:message];
+        [curObj logError:pError withMsg:pMsg];
     }
 }
 
@@ -113,24 +113,14 @@ void ProtocolAnalytics::logError(const char* errorId, const char* message)
 void ProtocolAnalytics::logEvent(const char* eventId, LogEventParamMap* paramMap)
 {
     PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
-    if (! pData) {
-        return;
-    }
+    assert(pData != NULL);
     
-    id pOCObj = pData->obj;
-    NSString* strEventID = [NSString stringWithUTF8String:eventId];
-
-    if (paramMap == NULL) {
-        PluginUtilsIOS::callOCFunctionWithName_Object(this, "logEvent:", strEventID);
-        NSLog(@"logEvent(no paramsters) in OC class invoked!");
-    } else {
-        SEL selector = NSSelectorFromString(@"logEvent:withParam:");
-        if ([pOCObj respondsToSelector:selector]) {
-
-            NSMutableDictionary* dict = PluginUtilsIOS::createDictFromMap(paramMap);
-            [pOCObj logEvent:strEventID withParam:dict];
-            NSLog(@"logEvent(with parameters) in OC class invoked!");
-        }
+    id ocObj = pData->obj;
+    if ([ocObj conformsToProtocol:@protocol(InterfaceAnalytics)]) {
+        NSObject<InterfaceAnalytics>* curObj = ocObj;
+        NSString* pId = [NSString stringWithUTF8String:eventId];
+        NSMutableDictionary* dict = PluginUtilsIOS::createDictFromMap(paramMap);
+        [curObj logEvent:pId withParam:dict];
     }
 }
 
@@ -140,8 +130,15 @@ void ProtocolAnalytics::logEvent(const char* eventId, LogEventParamMap* paramMap
  */
 void ProtocolAnalytics::logTimedEventBegin(const char* eventId)
 {
-    NSString* pStrID = [NSString stringWithUTF8String:eventId];
-    PluginUtilsIOS::callOCFunctionWithName_Object(this, "logTimedEventBegin:", pStrID);
+    PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
+    assert(pData != NULL);
+    
+    id ocObj = pData->obj;
+    if ([ocObj conformsToProtocol:@protocol(InterfaceAnalytics)]) {
+        NSObject<InterfaceAnalytics>* curObj = ocObj;
+        NSString* pEvent = [NSString stringWithUTF8String:eventId];
+        [curObj logTimedEventBegin:pEvent];
+    }
 }
 
 /**
@@ -150,8 +147,15 @@ void ProtocolAnalytics::logTimedEventBegin(const char* eventId)
  */
 void ProtocolAnalytics::logTimedEventEnd(const char* eventId)
 {
-    NSString* pStrID = [NSString stringWithUTF8String:eventId];
-    PluginUtilsIOS::callOCFunctionWithName_Object(this, "logTimedEventEnd:", pStrID);
+    PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
+    assert(pData != NULL);
+    
+    id ocObj = pData->obj;
+    if ([ocObj conformsToProtocol:@protocol(InterfaceAnalytics)]) {
+        NSObject<InterfaceAnalytics>* curObj = ocObj;
+        NSString* pEvent = [NSString stringWithUTF8String:eventId];
+        [curObj logTimedEventEnd:pEvent];
+    }
 }
 
 /**
@@ -160,27 +164,14 @@ void ProtocolAnalytics::logTimedEventEnd(const char* eventId)
  */
 void ProtocolAnalytics::setCaptureUncaughtException(bool enabled)
 {
-    NSNumber* bEnable = [NSNumber numberWithBool:enabled];
-    PluginUtilsIOS::callOCFunctionWithName_Object(this, "setCaptureUncaughtException:", bEnable);
-}
-
-const char* ProtocolAnalytics::getSDKVersion()
-{
-    const char* pRet = "";
-
-    do {
-        PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
-        if (! pData) break;
-
-        id pOCObj = pData->obj;
-        SEL selector = NSSelectorFromString(@"getSDKVersion");
-        if ([pOCObj respondsToSelector:selector]) {
-            NSString* strRet = [pOCObj performSelector:selector];
-            pRet = [strRet UTF8String];
-        }
-    } while (0);
-
-    return pRet;
+    PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
+    assert(pData != NULL);
+    
+    id ocObj = pData->obj;
+    if ([ocObj conformsToProtocol:@protocol(InterfaceAnalytics)]) {
+        NSObject<InterfaceAnalytics>* curObj = ocObj;
+        [curObj setCaptureUncaughtException:enabled];
+    }
 }
 
 }} //namespace cocos2d { namespace plugin {

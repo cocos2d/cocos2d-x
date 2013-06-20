@@ -26,20 +26,21 @@ THE SOFTWARE.
 #define __CCACCELEROMETER_H__
 
 #include "platform/CCAccelerometerDelegate.h"
+#include <functional>
 
 namespace   cocos2d {
 
-class CCAccelerometer
+class Accelerometer
 {
 public:
-    CCAccelerometer(){}
-    ~CCAccelerometer(){}
+    Accelerometer(){}
+    ~Accelerometer(){}
 
-    static CCAccelerometer* sharedAccelerometer() { return NULL; };
+    static Accelerometer* sharedAccelerometer() { return NULL; };
 
-    void removeDelegate(CCAccelerometerDelegate* pDelegate) {CC_UNUSED_PARAM(pDelegate);};
-    void addDelegate(CCAccelerometerDelegate* pDelegate) {CC_UNUSED_PARAM(pDelegate);};
-    void setDelegate(CCAccelerometerDelegate* pDelegate) {CC_UNUSED_PARAM(pDelegate);};
+    void removeDelegate(std::function<void(Acceleration*)> function) {CC_UNUSED_PARAM(function);};
+    void addDelegate(std::function<void(Acceleration*)> function) {CC_UNUSED_PARAM(function);};
+    void setDelegate(AccelerometerDelegate* pDelegate) {CC_UNUSED_PARAM(pDelegate);};
     void setAccelerometerInterval(float interval) {CC_UNUSED_PARAM(interval);};
 };
 

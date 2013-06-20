@@ -29,9 +29,9 @@ THE SOFTWARE.
 #include <FApp.h>
 #include <FUi.h>
 
-typedef void (*CCOspApplicationInitialized)(void);
+typedef void (*OspApplicationInitialized)(void);
 
-class CCOspApplication
+class OspApplication
     : public Tizen::App::Application
 {
 public:
@@ -39,15 +39,15 @@ public:
      * [OspApplication] application must have a factory method that creates an instance of itself.
      */
     static Tizen::App::Application* CreateInstance(void);
-    static CCOspApplication* GetInstance(void);
-    static void SetApplicationInitializedCallback(CCOspApplicationInitialized p);
+    static OspApplication* GetInstance(void);
+    static void SetApplicationInitializedCallback(OspApplicationInitialized p);
     static void SetScreenOrientation(Tizen::Ui::Orientation orientation);
 
 public:
-    CCOspApplication();
-    ~CCOspApplication();
+    OspApplication();
+    ~OspApplication();
 
-    Tizen::Ui::Controls::Form* getCCOspForm();
+    Tizen::Ui::Controls::Form* getOspForm();
 
     virtual bool OnAppInitializing(Tizen::App::AppRegistry& appRegistry);
     virtual bool OnAppInitialized(void);
@@ -60,8 +60,8 @@ public:
     virtual void OnScreenOff(void);
 
 protected:
-    static CCOspApplication* sm_pSharedCCOspApplication;
-    static CCOspApplicationInitialized sm_pApplicationInitialized;
+    static OspApplication* sm_pSharedOspApplication;
+    static OspApplicationInitialized sm_pApplicationInitialized;
     static Tizen::Ui::Orientation sm_eScreenOrientation;
 
 private:

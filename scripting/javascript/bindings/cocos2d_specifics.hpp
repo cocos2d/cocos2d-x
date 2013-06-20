@@ -6,25 +6,25 @@
 
 class JSScheduleWrapper;
 
-// JSScheduleWrapper* --> CCArray* since one js function may correspond to many targets.
+// JSScheduleWrapper* --> Array* since one js function may correspond to many targets.
 // To debug this, you could refer to JSScheduleWrapper::dump function.
 // It will prove that i'm right. :)
 typedef struct jsScheduleFunc_proxy {
     JSObject* jsfuncObj;
-    CCArray*  targets; 
+    Array*  targets; 
     UT_hash_handle hh;
 } schedFunc_proxy_t;
 
 typedef struct jsScheduleTarget_proxy {
     JSObject* jsTargetObj;
-    CCArray*  targets;
+    Array*  targets;
     UT_hash_handle hh;
 } schedTarget_proxy_t;
 
 
 typedef struct jsCallFuncTarget_proxy {
     void * ptr;
-    CCArray *obj;
+    Array *obj;
     UT_hash_handle hh;
 } callfuncTarget_proxy_t;
 
@@ -55,7 +55,7 @@ inline js_type_class_t *js_get_type_from_native(T* native_obj) {
 }
 
 /**
- * The returned pointer should be deleted using JS_REMOVE_PROXY. Most of the
+ * The returned pointer should be deleted using jsb_remove_proxy. Most of the
  * time you do that in the C++ destructor.
  */
 template<class T>
@@ -72,7 +72,7 @@ inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
         }
         
         JSObject* js_obj = JS_NewObject(cx, typeProxy->jsclass, typeProxy->proto, typeProxy->parentProto);
-        JS_NEW_PROXY(proxy, native_obj, js_obj);
+        proxy = jsb_new_proxy(native_obj, js_obj);
 #ifdef DEBUG
         JS_AddNamedObjectRoot(cx, &proxy->obj, typeid(*native_obj).name());
 #else
@@ -89,7 +89,7 @@ jsval anonEvaluate(JSContext *cx, JSObject *thisObj, const char* string);
 void register_cocos2dx_js_extensions(JSContext* cx, JSObject* obj);
 
 
-class JSCallbackWrapper: public CCObject {
+class JSCallbackWrapper: public Object {
 public:
     JSCallbackWrapper();
     virtual ~JSCallbackWrapper();
@@ -132,10 +132,10 @@ public:
         return;
     }
 
-    static void setTargetForNativeNode(CCNode *pNode, JSCallFuncWrapper *target);
-    static CCArray * getTargetForNativeNode(CCNode *pNode);
+    static void setTargetForNativeNode(Node *pNode, JSCallFuncWrapper *target);
+    static Array * getTargetForNativeNode(Node *pNode);
 
-    void callbackFunc(CCNode *node) const;
+    void callbackFunc(Node *node) const;
 };
 
 
@@ -146,9 +146,9 @@ public:
     virtual ~JSScheduleWrapper();
 
     static void setTargetForSchedule(jsval sched, JSScheduleWrapper *target);
-    static CCArray * getTargetForSchedule(jsval sched);
+    static Array * getTargetForSchedule(jsval sched);
     static void setTargetForJSObject(JSObject* jsTargetObj, JSScheduleWrapper *target);
-    static CCArray * getTargetForJSObject(JSObject* jsTargetObj);
+    static Array * getTargetForJSObject(JSObject* jsTargetObj);
     
     // Remove all targets.
     static void removeAllTargets();
@@ -165,8 +165,8 @@ public:
     void scheduleFunc(float dt) const;
     virtual void update(float dt);
     
-    CCObject* getTarget();
-    void setTarget(CCObject* pTarget);
+    Object* getTarget();
+    void setTarget(Object* pTarget);
     
     void setPureJSTarget(JSObject* jstarget);
     JSObject* getPureJSTarget();
@@ -178,14 +178,14 @@ public:
     bool isUpdateSchedule();
     
 protected:
-    CCObject* _pTarget;
+    Object* _pTarget;
     JSObject* _pPureJSTarget;
     int _priority;
     bool _isUpdateSchedule;
 };
 
 
-class JSTouchDelegate: public CCObject, public CCTouchDelegate
+class JSTouchDelegate: public Object, public TouchDelegate
 {
 public:
 	// Set the touch delegate to map by using the key (pJSObj).
@@ -203,16 +203,16 @@ public:
 	// So this function need to be binded.
     void unregisterTouchDelegate();
 
-    bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
-    void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
-    void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
-    void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
+    bool ccTouchBegan(Touch *pTouch, Event *pEvent);
+    void ccTouchMoved(Touch *pTouch, Event *pEvent);
+    void ccTouchEnded(Touch *pTouch, Event *pEvent);
+    void ccTouchCancelled(Touch *pTouch, Event *pEvent);
     
     // optional
-    void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
-    void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
-    void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
-    void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent);
+    void ccTouchesBegan(Set *pTouches, Event *pEvent);
+    void ccTouchesMoved(Set *pTouches, Event *pEvent);
+    void ccTouchesEnded(Set *pTouches, Event *pEvent);
+    void ccTouchesCancelled(Set *pTouches, Event *pEvent);
 
 private:
     JSObject *_mObj;

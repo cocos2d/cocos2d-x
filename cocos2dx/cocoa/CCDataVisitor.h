@@ -30,15 +30,16 @@
 
 NS_CC_BEGIN
 
-class CCObject;
-class CCBool;
-class CCInteger;
-class CCFloat;
-class CCDouble;
-class CCString;
-class CCArray;
-class CCDictionary;
-class CCSet;
+class Object;
+class Bool;
+class Integer;
+class Float;
+class Double;
+class String;
+class Array;
+class Dictionary;
+class Set;
+class Data;
 
 /**
  * @addtogroup data_structures
@@ -50,51 +51,53 @@ class CCSet;
  *
  * Use cases:
  *  - data serialization,
- *  - pretty printing of \a CCObject *
- *  - safe value reading from \a CCArray, \a CCDictionary, \a CCSet
+ *  - pretty printing of \a Object *
+ *  - safe value reading from \a Array, \a Dictionary, \a Set
  *
  * Usage:
- *  1. subclass CCDataVisitor
+ *  1. subclass DataVisitor
  *  2. overload visit() methods for object that you need to handle
  *  3. handle other objects in \a visitObject()
- *  4. pass your visitor to \a CCObject::acceptVisitor()
+ *  4. pass your visitor to \a Object::acceptVisitor()
  */
-class CC_DLL CCDataVisitor
+class CC_DLL DataVisitor
 {
 public:
-    virtual ~CCDataVisitor() {}
+    virtual ~DataVisitor() {}
 
     /** default method, called from non-overloaded methods and for unrecognized objects */
-    virtual void visitObject(const CCObject *p) = 0;
+    virtual void visitObject(const Object *p) = 0;
 
-    virtual void visit(const CCBool *p);
-    virtual void visit(const CCInteger *p);
-    virtual void visit(const CCFloat *p);
-    virtual void visit(const CCDouble *p);
-    virtual void visit(const CCString *p);
-    virtual void visit(const CCArray *p);
-    virtual void visit(const CCDictionary *p);
-    virtual void visit(const CCSet *p);
+    virtual void visit(const Bool *p);
+    virtual void visit(const Integer *p);
+    virtual void visit(const Float *p);
+    virtual void visit(const Double *p);
+    virtual void visit(const String *p);
+    virtual void visit(const Array *p);
+    virtual void visit(const Dictionary *p);
+    virtual void visit(const Set *p);
+    virtual void visit(const Data *p);
 };
 
 
-class CC_DLL CCPrettyPrinter : public CCDataVisitor
+class CC_DLL PrettyPrinter : public DataVisitor
 {
 public:
-    CCPrettyPrinter(int indentLevel = 0);
+    PrettyPrinter(int indentLevel = 0);
     
     virtual void clear();
     virtual std::string getResult();
     
-    virtual void visitObject(const CCObject *p);
-    virtual void visit(const CCBool * p);
-    virtual void visit(const CCInteger *p);
-    virtual void visit(const CCFloat *p);
-    virtual void visit(const CCDouble *p);
-    virtual void visit(const CCString *p);
-    virtual void visit(const CCArray *p);
-    virtual void visit(const CCDictionary *p);
-    virtual void visit(const CCSet *p);
+    virtual void visitObject(const Object *p);
+    virtual void visit(const Bool * p);
+    virtual void visit(const Integer *p);
+    virtual void visit(const Float *p);
+    virtual void visit(const Double *p);
+    virtual void visit(const String *p);
+    virtual void visit(const Array *p);
+    virtual void visit(const Dictionary *p);
+    virtual void visit(const Set *p);
+    virtual void visit(const Data *p);
 private:
     void setIndentLevel(int indentLevel);
     int _indentLevel;

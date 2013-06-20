@@ -35,6 +35,7 @@ require "luaScript/BugsTest/BugsTest"
 require "luaScript/ExtensionTest/ExtensionTest"
 require "luaScript/AccelerometerTest/AccelerometerTest"
 require "luaScript/KeypadTest/KeypadTest"
+require "luaScript/OpenGLTest/OpenGLTest"
 
 
 local LINE_SPACE = 40
@@ -87,7 +88,8 @@ local _allTests = {
     { isSupported = false,  name = "TextureCacheTest"       , create_func=      TextureCacheTestMain      },
     { isSupported = true,  name = "ExtensionsTest"         , create_func=        ExtensionsTestMain      },
     { isSupported = false,  name = "ShaderTest"             , create_func=            ShaderTestMain      },
-    { isSupported = false,  name = "MutiTouchTest"          , create_func=          MutiTouchTestMain          }
+    { isSupported = false,  name = "MutiTouchTest"          , create_func=          MutiTouchTestMain     },
+    { isSupported = true,   name = "OpenGLTest"             , create_func=          OpenGLTestMain     }
 }
 
 local TESTS_COUNT = table.getn(_allTests)

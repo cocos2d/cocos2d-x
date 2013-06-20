@@ -27,130 +27,130 @@
 
 NS_CC_BEGIN
 
-const CCLuaValue CCLuaValue::intValue(const int intValue)
+const LuaValue LuaValue::intValue(const int intValue)
 {
-    CCLuaValue value;
-    value.m_type = CCLuaValueTypeInt;
-    value.m_field.intValue = intValue;
+    LuaValue value;
+    value._type = LuaValueTypeInt;
+    value._field.intValue = intValue;
     return value;
 }
 
-const CCLuaValue CCLuaValue::floatValue(const float floatValue)
+const LuaValue LuaValue::floatValue(const float floatValue)
 {
-    CCLuaValue value;
-    value.m_type = CCLuaValueTypeFloat;
-    value.m_field.floatValue = floatValue;
+    LuaValue value;
+    value._type = LuaValueTypeFloat;
+    value._field.floatValue = floatValue;
     return value;
 }
 
-const CCLuaValue CCLuaValue::booleanValue(const bool booleanValue)
+const LuaValue LuaValue::booleanValue(const bool booleanValue)
 {
-    CCLuaValue value;
-    value.m_type = CCLuaValueTypeBoolean;
-    value.m_field.booleanValue = booleanValue;
+    LuaValue value;
+    value._type = LuaValueTypeBoolean;
+    value._field.booleanValue = booleanValue;
     return value;
 }
 
-const CCLuaValue CCLuaValue::stringValue(const char* stringValue)
+const LuaValue LuaValue::stringValue(const char* stringValue)
 {
-    CCLuaValue value;
-    value.m_type = CCLuaValueTypeString;
-    value.m_field.stringValue = new std::string(stringValue ? stringValue : "");
+    LuaValue value;
+    value._type = LuaValueTypeString;
+    value._field.stringValue = new std::string(stringValue ? stringValue : "");
     return value;
 }
 
-const CCLuaValue CCLuaValue::stringValue(const std::string& stringValue)
+const LuaValue LuaValue::stringValue(const std::string& stringValue)
 {
-    CCLuaValue value;
-    value.m_type = CCLuaValueTypeString;
-    value.m_field.stringValue = new std::string(stringValue);
+    LuaValue value;
+    value._type = LuaValueTypeString;
+    value._field.stringValue = new std::string(stringValue);
     return value;
 }
 
-const CCLuaValue CCLuaValue::dictValue(const CCLuaValueDict& dictValue)
+const LuaValue LuaValue::dictValue(const LuaValueDict& dictValue)
 {
-    CCLuaValue value;
-    value.m_type = CCLuaValueTypeDict;
-    value.m_field.dictValue = new CCLuaValueDict(dictValue);
+    LuaValue value;
+    value._type = LuaValueTypeDict;
+    value._field.dictValue = new LuaValueDict(dictValue);
     return value;
 }
 
-const CCLuaValue CCLuaValue::arrayValue(const CCLuaValueArray& arrayValue)
+const LuaValue LuaValue::arrayValue(const LuaValueArray& arrayValue)
 {
-    CCLuaValue value;
-    value.m_type = CCLuaValueTypeArray;
-    value.m_field.arrayValue = new CCLuaValueArray(arrayValue);
+    LuaValue value;
+    value._type = LuaValueTypeArray;
+    value._field.arrayValue = new LuaValueArray(arrayValue);
     return value;
 }
 
-const CCLuaValue CCLuaValue::ccobjectValue(CCObject* ccobjectValue, const char* objectTypename)
+const LuaValue LuaValue::ccobjectValue(Object* ccobjectValue, const char* objectTypename)
 {
-    CCLuaValue value;
-    value.m_type = CCLuaValueTypeCCObject;
-    value.m_field.ccobjectValue = ccobjectValue;
+    LuaValue value;
+    value._type = LuaValueTypeObject;
+    value._field.ccobjectValue = ccobjectValue;
     ccobjectValue->retain();
-    value.m_ccobjectType = new std::string(objectTypename);
+    value._ccobjectType = new std::string(objectTypename);
     return value;
 }
 
-const CCLuaValue CCLuaValue::ccobjectValue(CCObject* ccobjectValue, const std::string& objectTypename)
+const LuaValue LuaValue::ccobjectValue(Object* ccobjectValue, const std::string& objectTypename)
 {
-    return CCLuaValue::ccobjectValue(ccobjectValue, objectTypename.c_str());
+    return LuaValue::ccobjectValue(ccobjectValue, objectTypename.c_str());
 }
 
-CCLuaValue::CCLuaValue(const CCLuaValue& rhs)
+LuaValue::LuaValue(const LuaValue& rhs)
 {
     copy(rhs);
 }
 
-CCLuaValue& CCLuaValue::operator=(const CCLuaValue& rhs)
+LuaValue& LuaValue::operator=(const LuaValue& rhs)
 {
     if (this != &rhs) copy(rhs);
     return *this;
 }
 
-CCLuaValue::~CCLuaValue(void)
+LuaValue::~LuaValue(void)
 {
-    if (m_type == CCLuaValueTypeString)
+    if (_type == LuaValueTypeString)
     {
-        delete m_field.stringValue;
+        delete _field.stringValue;
     }
-    else if (m_type == CCLuaValueTypeDict)
+    else if (_type == LuaValueTypeDict)
     {
-        delete m_field.dictValue;
+        delete _field.dictValue;
     }
-    else if (m_type == CCLuaValueTypeArray)
+    else if (_type == LuaValueTypeArray)
     {
-        delete m_field.arrayValue;
+        delete _field.arrayValue;
     }
-    else if (m_type == CCLuaValueTypeCCObject)
+    else if (_type == LuaValueTypeObject)
     {
-        m_field.ccobjectValue->release();
-        delete m_ccobjectType;
+        _field.ccobjectValue->release();
+        delete _ccobjectType;
     }
 }
 
-void CCLuaValue::copy(const CCLuaValue& rhs)
+void LuaValue::copy(const LuaValue& rhs)
 {
-    memcpy(&m_field, &rhs.m_field, sizeof(m_field));
-    m_type = rhs.m_type;
-    if (m_type == CCLuaValueTypeString)
+    memcpy(&_field, &rhs._field, sizeof(_field));
+    _type = rhs._type;
+    if (_type == LuaValueTypeString)
     {
-        m_field.stringValue = new std::string(*rhs.m_field.stringValue);
+        _field.stringValue = new std::string(*rhs._field.stringValue);
     }
-    else if (m_type == CCLuaValueTypeDict)
+    else if (_type == LuaValueTypeDict)
     {
-        m_field.dictValue = new CCLuaValueDict(*rhs.m_field.dictValue);
+        _field.dictValue = new LuaValueDict(*rhs._field.dictValue);
     }
-    else if (m_type == CCLuaValueTypeArray)
+    else if (_type == LuaValueTypeArray)
     {
-        m_field.arrayValue = new CCLuaValueArray(*rhs.m_field.arrayValue);
+        _field.arrayValue = new LuaValueArray(*rhs._field.arrayValue);
     }
-    else if (m_type == CCLuaValueTypeCCObject)
+    else if (_type == LuaValueTypeObject)
     {
-        m_field.ccobjectValue = rhs.m_field.ccobjectValue;
-        m_field.ccobjectValue->retain();
-        m_ccobjectType = new std::string(*rhs.m_ccobjectType);
+        _field.ccobjectValue = rhs._field.ccobjectValue;
+        _field.ccobjectValue->retain();
+        _ccobjectType = new std::string(*rhs._ccobjectType);
     }
 }
 

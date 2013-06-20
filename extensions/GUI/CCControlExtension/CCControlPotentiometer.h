@@ -38,24 +38,24 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-/** @class CCControlPotentiometer Potentiometer control for Cocos2D. */
-class CCControlPotentiometer : public CCControl
+/** @class ControlPotentiometer Potentiometer control for Cocos2D. */
+class ControlPotentiometer : public Control
 {
 public:
-    CCControlPotentiometer();
-    virtual ~CCControlPotentiometer();
+    ControlPotentiometer();
+    virtual ~ControlPotentiometer();
     /** 
      * Creates potentiometer with a track filename and a progress filename.
      */
-    static CCControlPotentiometer* create(const char* backgroundFile, const char* progressFile, const char* thumbFile);
+    static ControlPotentiometer* create(const char* backgroundFile, const char* progressFile, const char* thumbFile);
 
     /** 
      * Initializes a potentiometer with a track sprite and a progress bar.
      *
-     * @param trackSprite CCSprite, that is used as a background.
-     * @param progressSprite CCProgressTimer, that is used as a progress bar.
+     * @param trackSprite Sprite, that is used as a background.
+     * @param progressSprite ProgressTimer, that is used as a progress bar.
      */
-    bool initWithTrackSprite_ProgressTimer_ThumbSprite(CCSprite* trackSprite, CCProgressTimer* progressTimer, CCSprite* thumbSprite);
+    bool initWithTrackSprite_ProgressTimer_ThumbSprite(Sprite* trackSprite, ProgressTimer* progressTimer, Sprite* thumbSprite);
     void setValue(float value);
     float getValue();
      
@@ -67,37 +67,37 @@ public:
 
     void setEnabled(bool enabled);
 
-    virtual bool isTouchInside(CCTouch * touch);
+    virtual bool isTouchInside(Touch * touch);
 
-    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
-    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
-    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
+    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent);
+    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent);
+    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent);
 
 protected:
-    CC_SYNTHESIZE_RETAIN(CCSprite*, m_pThumbSprite, ThumbSprite)
-    CC_SYNTHESIZE_RETAIN(CCProgressTimer*, m_pProgressTimer, ProgressTimer)
-    CC_SYNTHESIZE(CCPoint, m_tPreviousLocation, PreviousLocation)
+    CC_SYNTHESIZE_RETAIN(Sprite*, _thumbSprite, ThumbSprite)
+    CC_SYNTHESIZE_RETAIN(ProgressTimer*, _progressTimer, ProgressTimer)
+    CC_SYNTHESIZE(Point, _previousLocation, PreviousLocation)
     /** Contains the receiver’s current value. */
-    float           m_fValue; 
+    float           _value; 
     /** Contains the minimum value of the receiver. 
     * The default value of this property is 0.0. */
-    float           m_fMinimumValue;
+    float           _minimumValue;
     /** Contains the maximum value of the receiver. 
     * The default value of this property is 1.0. */
-    float           m_fMaximumValue;
+    float           _maximumValue;
     /** Factorize the event dispath into these methods. */
-    void potentiometerBegan(CCPoint location);
-    void potentiometerMoved(CCPoint location);
-    void potentiometerEnded(CCPoint location);
+    void potentiometerBegan(Point location);
+    void potentiometerMoved(Point location);
+    void potentiometerEnded(Point location);
 
     /** Returns the distance between the point1 and point2. */
-    float distanceBetweenPointAndPoint(CCPoint point1, CCPoint point2);
+    float distanceBetweenPointAndPoint(Point point1, Point point2);
     /** Returns the angle in degree between line1 and line2. */
     float angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint(
-        CCPoint beginLineA, 
-        CCPoint endLineA,
-        CCPoint beginLineB,
-        CCPoint endLineB);
+        Point beginLineA, 
+        Point endLineA,
+        Point beginLineB,
+        Point endLineB);
 
 };
 

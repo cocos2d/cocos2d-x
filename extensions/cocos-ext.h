@@ -29,7 +29,6 @@
 #include "CCBReader/CCBSequence.h"
 #include "CCBReader/CCBSequenceProperty.h"
 #include "CCBReader/CCBValue.h"
-#include "CCBReader/CCData.h"
 #include "CCBReader/CCNode+CCBRelativePositioning.h"
 
 #include "GUI/CCControlExtension/CCControlExtensions.h"
@@ -48,5 +47,9 @@
 #endif
 
 #include "spine/spine-cocos2dx.h"
+
+#include "Components/CCComAttribute.h"
+#include "Components/CCComAudio.h"
+#include "Components/CCComController.h"
 
 #endif /* __COCOS2D_EXT_H__ */

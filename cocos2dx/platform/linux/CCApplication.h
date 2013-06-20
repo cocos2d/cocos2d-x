@@ -1,5 +1,5 @@
 /*
- * CCAplication.h
+ * Aplication.h
  *
  *  Created on: Aug 8, 2011
  *      Author: laschweinski
@@ -13,16 +13,16 @@
 #include <string>
 
 NS_CC_BEGIN
-class CCRect;
+class Rect;
 
-class CCApplication : public CCApplicationProtocol
+class Application : public ApplicationProtocol
 {
 public:
-	CCApplication();
-	virtual ~CCApplication();
+	Application();
+	virtual ~Application();
 
 	/**
-	 @brief	Callback by CCDirector for limit FPS.
+	 @brief	Callback by Director for limit FPS.
 	 @interval       The time, which expressed in second in second, between current frame and next.
 	 */
 	void setAnimationInterval(double interval);
@@ -36,20 +36,20 @@ public:
 	 @brief	Get current applicaiton instance.
 	 @return Current application instance pointer.
 	 */
-	static CCApplication* sharedApplication();
+	static Application* sharedApplication();
 
 	/* override functions */
 	virtual ccLanguageType getCurrentLanguage();
 
 	/**
      *  Sets the Resource root path.
-     *  @deprecated Please use CCFileUtils::sharedFileUtils()->setSearchPaths() instead.
+     *  @deprecated Please use FileUtils::sharedFileUtils()->setSearchPaths() instead.
      */
     CC_DEPRECATED_ATTRIBUTE void setResourceRootPath(const std::string& rootResDir);
     
 	/** 
      *  Gets the Resource root path.
-     *  @deprecated Please use CCFileUtils::sharedFileUtils()->getSearchPaths() instead. 
+     *  @deprecated Please use FileUtils::sharedFileUtils()->getSearchPaths() instead. 
      */
     CC_DEPRECATED_ATTRIBUTE const std::string& getResourceRootPath(void);
     
@@ -58,10 +58,10 @@ public:
      */
     virtual TargetPlatform getTargetPlatform();
 protected:
-    long       m_nAnimationInterval;  //micro second
-    std::string m_resourceRootPath;
+    long       _animationInterval;  //micro second
+    std::string _resourceRootPath;
     
-	static CCApplication * sm_pSharedApplication;
+	static Application * sm_pSharedApplication;
 };
 
 NS_CC_END

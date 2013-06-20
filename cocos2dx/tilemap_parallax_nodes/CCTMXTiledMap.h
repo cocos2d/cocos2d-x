@@ -31,11 +31,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CCTMXObjectGroup;
-class CCTMXLayer;
-class CCTMXLayerInfo;
-class CCTMXTilesetInfo;
-class CCTMXMapInfo;
+class TMXObjectGroup;
+class TMXLayer;
+class TMXLayerInfo;
+class TMXTilesetInfo;
+class TMXMapInfo;
 
 /**
  * @addtogroup tilemap_parallax_nodes
@@ -46,35 +46,35 @@ class CCTMXMapInfo;
 enum
 {
     /** Orthogonal orientation */
-    CCTMXOrientationOrtho,
+    TMXOrientationOrtho,
 
     /** Hexagonal orientation */
-    CCTMXOrientationHex,
+    TMXOrientationHex,
 
     /** Isometric orientation */
-    CCTMXOrientationIso,
+    TMXOrientationIso,
 };
 
-/** @brief CCTMXTiledMap knows how to parse and render a TMX map.
+/** @brief TMXTiledMap knows how to parse and render a TMX map.
 
 It adds support for the TMX tiled map format used by http://www.mapeditor.org
 It supports isometric, hexagonal and orthogonal tiles.
 It also supports object groups, objects, and properties.
 
 Features:
-- Each tile will be treated as an CCSprite
+- Each tile will be treated as an Sprite
 - The sprites are created on demand. They will be created only when you call "layer->tileAt(position)"
-- Each tile can be rotated / moved / scaled / tinted / "opaqued", since each tile is a CCSprite
+- Each tile can be rotated / moved / scaled / tinted / "opaqued", since each tile is a Sprite
 - Tiles can be added/removed in runtime
 - The z-order of the tiles can be modified in runtime
 - Each tile has an anchorPoint of (0,0)
 - The anchorPoint of the TMXTileMap is (0,0)
 - The TMX layers will be added as a child
 - The TMX layers will be aliased by default
-- The tileset image will be loaded using the CCTextureCache
+- The tileset image will be loaded using the TextureCache
 - Each tile will have a unique tag
 - Each tile will have a unique z value. top-left: z=1, bottom-right: z=max z
-- Each object group will be treated as an CCMutableArray
+- Each object group will be treated as an MutableArray
 - Object class which will contain all the properties in a dictionary
 - Properties can be assigned to the Map, Layer, Object Group, and Object
 
@@ -84,19 +84,19 @@ Limitations:
 - It only supports the XML format (the JSON format is not supported)
 
 Technical description:
-Each layer is created using an CCTMXLayer (subclass of CCSpriteBatchNode). If you have 5 layers, then 5 CCTMXLayer will be created,
+Each layer is created using an TMXLayer (subclass of SpriteBatchNode). If you have 5 layers, then 5 TMXLayer will be created,
 unless the layer visibility is off. In that case, the layer won't be created at all.
-You can obtain the layers (CCTMXLayer objects) at runtime by:
+You can obtain the layers (TMXLayer objects) at runtime by:
 - map->getChildByTag(tag_number);  // 0=1st layer, 1=2nd layer, 2=3rd layer, etc...
 - map->layerNamed(name_of_the_layer);
 
-Each object group is created using a CCTMXObjectGroup which is a subclass of CCMutableArray.
+Each object group is created using a TMXObjectGroup which is a subclass of MutableArray.
 You can obtain the object groups at runtime by:
 - map->objectGroupNamed(name_of_the_object_group);
 
-Each object is a CCTMXObject.
+Each object is a TMXObject.
 
-Each property is stored as a key-value pair in an CCMutableDictionary.
+Each property is stored as a key-value pair in an MutableDictionary.
 You can obtain the properties at runtime by:
 
 map->propertyNamed(name_of_the_property);
@@ -106,27 +106,27 @@ object->propertyNamed(name_of_the_property);
 
 @since v0.8.1
 */
-class CC_DLL CCTMXTiledMap : public CCNode
+class CC_DLL TMXTiledMap : public Node
 {
     /** the map's size property measured in tiles */
-    CC_SYNTHESIZE_PASS_BY_REF(CCSize, m_tMapSize, MapSize);
+    CC_SYNTHESIZE_PASS_BY_REF(Size, _mapSize, MapSize);
     /** the tiles's size property measured in pixels */
-    CC_SYNTHESIZE_PASS_BY_REF(CCSize, m_tTileSize, TileSize);
+    CC_SYNTHESIZE_PASS_BY_REF(Size, _tileSize, TileSize);
     /** map orientation */
-    CC_SYNTHESIZE(int, m_nMapOrientation, MapOrientation);
+    CC_SYNTHESIZE(int, _mapOrientation, MapOrientation);
     /** object groups */
-    CC_PROPERTY(CCArray*, m_pObjectGroups, ObjectGroups);
+    CC_PROPERTY(Array*, _objectGroups, ObjectGroups);
     /** properties */
-    CC_PROPERTY(CCDictionary*, m_pProperties, Properties);
+    CC_PROPERTY(Dictionary*, _properties, Properties);
 public:
-    CCTMXTiledMap();
-    virtual ~CCTMXTiledMap();
+    TMXTiledMap();
+    virtual ~TMXTiledMap();
 
     /** creates a TMX Tiled Map with a TMX file.*/
-    static CCTMXTiledMap* create(const char *tmxFile);
+    static TMXTiledMap* create(const char *tmxFile);
 
     /** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources */
-    static CCTMXTiledMap* createWithXML(const char* tmxString, const char* resourcePath);
+    static TMXTiledMap* createWithXML(const char* tmxString, const char* resourcePath);
 
     /** initializes a TMX Tiled Map with a TMX file */
     bool initWithTMXFile(const char *tmxFile);
@@ -135,24 +135,24 @@ public:
     bool initWithXML(const char* tmxString, const char* resourcePath);
 
     /** return the TMXLayer for the specific layer */
-    CCTMXLayer* layerNamed(const char *layerName);
+    TMXLayer* layerNamed(const char *layerName);
 
     /** return the TMXObjectGroup for the specific group */
-    CCTMXObjectGroup* objectGroupNamed(const char *groupName);
+    TMXObjectGroup* objectGroupNamed(const char *groupName);
 
     /** return the value for the specific property name */
-    CCString *propertyNamed(const char *propertyName);
+    String *propertyNamed(const char *propertyName);
 
     /** return properties dictionary for tile GID */
-    CCDictionary* propertiesForGID(int GID);
+    Dictionary* propertiesForGID(int GID);
 
 private:
-    CCTMXLayer * parseLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
-    CCTMXTilesetInfo * tilesetForLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
-    void buildWithMapInfo(CCTMXMapInfo* mapInfo);
+    TMXLayer * parseLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
+    TMXTilesetInfo * tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
+    void buildWithMapInfo(TMXMapInfo* mapInfo);
 protected:
     //! tile properties
-    CCDictionary* m_pTileProperties;
+    Dictionary* _tileProperties;
 
 };
 

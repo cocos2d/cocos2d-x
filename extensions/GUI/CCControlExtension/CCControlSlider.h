@@ -42,51 +42,51 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-class CCControlSlider: public CCControl
+class ControlSlider: public Control
 {
     //maunally put in the setters
     /** Contains the receiver¡¯s current value. */
-    CC_SYNTHESIZE_READONLY(float, m_value, Value);
+    CC_SYNTHESIZE_READONLY(float, _value, Value);
     virtual void setValue(float val);
     /** Contains the minimum value of the receiver. 
     * The default value of this property is 0.0. */
-    CC_SYNTHESIZE_READONLY(float, m_minimumValue, MinimumValue);
+    CC_SYNTHESIZE_READONLY(float, _minimumValue, MinimumValue);
     virtual void setMinimumValue(float val);
     /** Contains the maximum value of the receiver. 
     * The default value of this property is 1.0. */
-    CC_SYNTHESIZE_READONLY(float, m_maximumValue, MaximumValue);
+    CC_SYNTHESIZE_READONLY(float, _maximumValue, MaximumValue);
     virtual void setMaximumValue(float val);
     virtual void setEnabled(bool enabled);
-    virtual bool isTouchInside(CCTouch * touch);
-    CCPoint locationFromTouch(CCTouch* touch);
+    virtual bool isTouchInside(Touch * touch);
+    Point locationFromTouch(Touch* touch);
 
-    CC_SYNTHESIZE(float, m_minimumAllowedValue, MinimumAllowedValue);
-    CC_SYNTHESIZE(float, m_maximumAllowedValue, MaximumAllowedValue);
+    CC_SYNTHESIZE(float, _minimumAllowedValue, MinimumAllowedValue);
+    CC_SYNTHESIZE(float, _maximumAllowedValue, MaximumAllowedValue);
 
     // maybe this should be read-only
-    CC_SYNTHESIZE_RETAIN(CCSprite*, m_thumbSprite, ThumbSprite);
-    CC_SYNTHESIZE_RETAIN(CCSprite*, m_progressSprite, ProgressSprite);
-    CC_SYNTHESIZE_RETAIN(CCSprite*, m_backgroundSprite, BackgroundSprite);
+    CC_SYNTHESIZE_RETAIN(Sprite*, _thumbSprite, ThumbSprite);
+    CC_SYNTHESIZE_RETAIN(Sprite*, _progressSprite, ProgressSprite);
+    CC_SYNTHESIZE_RETAIN(Sprite*, _backgroundSprite, BackgroundSprite);
 
 public:
-    CCControlSlider();
-    virtual ~CCControlSlider();
+    ControlSlider();
+    virtual ~ControlSlider();
 
     /** 
     * Initializes a slider with a background sprite, a progress bar and a thumb
     * item.
     *
-    * @param backgroundSprite  CCSprite, that is used as a background.
-    * @param progressSprite    CCSprite, that is used as a progress bar.
-    * @param thumbItem         CCSprite, that is used as a thumb.
+    * @param backgroundSprite  Sprite, that is used as a background.
+    * @param progressSprite    Sprite, that is used as a progress bar.
+    * @param thumbItem         Sprite, that is used as a thumb.
     */
-    virtual bool initWithSprites(CCSprite * backgroundSprite, CCSprite* progressSprite, CCSprite* thumbSprite);
+    virtual bool initWithSprites(Sprite * backgroundSprite, Sprite* progressSprite, Sprite* thumbSprite);
 
     /** 
     * Creates slider with a background filename, a progress filename and a 
     * thumb image filename.
     */
-    static CCControlSlider* create(const char* bgFile, const char* progressFile, const char* thumbFile);
+    static ControlSlider* create(const char* bgFile, const char* progressFile, const char* thumbFile);
 
     /** 
     * Creates a slider with a given background sprite and a progress bar and a
@@ -94,20 +94,20 @@ public:
     *
     * @see initWithBackgroundSprite:progressSprite:thumbMenuItem:
     */
-    static CCControlSlider* create(CCSprite * backgroundSprite, CCSprite* pogressSprite, CCSprite* thumbSprite);
+    static ControlSlider* create(Sprite * backgroundSprite, Sprite* pogressSprite, Sprite* thumbSprite);
 
     virtual void needsLayout();
 protected:
-    void sliderBegan(CCPoint location);
-    void sliderMoved(CCPoint location);
-    void sliderEnded(CCPoint location);
+    void sliderBegan(Point location);
+    void sliderMoved(Point location);
+    void sliderEnded(Point location);
 
-    virtual bool ccTouchBegan(CCTouch* touch, CCEvent* pEvent);
-    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
-    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
+    virtual bool ccTouchBegan(Touch* touch, Event* pEvent);
+    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent);
+    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent);
 
 /** Returns the value for the given location. */
-    float valueForLocation(CCPoint location);
+    float valueForLocation(Point location);
 };
 
 // end of GUI group

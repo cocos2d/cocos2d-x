@@ -26,9 +26,9 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-CCZone::CCZone(CCObject *pObject)
+Zone::Zone(Object *pObject)
 {
-    m_pCopyObject = pObject;
+    _copyObject = pObject;
 }
 
 NS_CC_END

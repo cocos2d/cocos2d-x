@@ -3,6 +3,8 @@
 #include "cocos2d.h"
 #include "controller.h"
 #include "SimpleAudioEngine.h"
+#include "cocos-ext.h"
+#include "CCArmature/utils/CCArmatureDataManager.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -14,42 +16,39 @@ AppDelegate::AppDelegate()
 AppDelegate::~AppDelegate()
 {
 //    SimpleAudioEngine::end();
+	cocos2d::extension::armature::ArmatureDataManager::purgeArmatureSystem();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
+	// As an example, load config file
+	// XXX: This should be loaded before the Director is initialized,
+	// XXX: but at this point, the director is already initialized
+	Configuration::sharedConfiguration()->loadConfigFile("configs/config-example.plist");
+
     // initialize director
-    CCDirector *pDirector = CCDirector::sharedDirector();
-    pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
+    Director *pDirector = Director::sharedDirector();
+    pDirector->setOpenGLView(EGLView::sharedOpenGLView());
 
-    CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
+    Size screenSize = EGLView::sharedOpenGLView()->getFrameSize();
 
-#ifdef TIZEN
-    CCSize designSize = CCSizeMake(1280, 720);
-#else
-    CCSize designSize = CCSizeMake(480, 320);
-#endif
-    CCFileUtils* pFileUtils = CCFileUtils::sharedFileUtils();
+    Size designSize = CCSizeMake(480, 320);
+
+    FileUtils* pFileUtils = FileUtils::sharedFileUtils();
     
     if (screenSize.height > 320)
     {
-        CCSize resourceSize = CCSizeMake(960, 640);
+        Size resourceSize = CCSizeMake(960, 640);
         std::vector<std::string> searchPaths;
         searchPaths.push_back("hd");
         pFileUtils->setSearchPaths(searchPaths);
         pDirector->setContentScaleFactor(resourceSize.height/designSize.height);
     }
 
-    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
+    EGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
 
-    // turn on display FPS
-    pDirector->setDisplayStats(true);
-
-    // set FPS. the default value is 1.0/60 if you don't call this
-    pDirector->setAnimationInterval(1.0 / 60);
-
-    CCScene * pScene = CCScene::create();
-    CCLayer * pLayer = new TestController();
+    Scene * pScene = Scene::create();
+    Layer * pLayer = new TestController();
     pLayer->autorelease();
 
     pScene->addChild(pLayer);
@@ -61,7 +60,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    CCDirector::sharedDirector()->stopAnimation();
+    Director::sharedDirector()->stopAnimation();
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
     SimpleAudioEngine::sharedEngine()->pauseAllEffects();
 }
@@ -69,7 +68,7 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    CCDirector::sharedDirector()->startAnimation();
+    Director::sharedDirector()->startAnimation();
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
     SimpleAudioEngine::sharedEngine()->resumeAllEffects();
 }

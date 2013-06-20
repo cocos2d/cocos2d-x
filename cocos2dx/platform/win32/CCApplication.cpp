@@ -12,25 +12,25 @@ static void PVRFrameEnableControlWindow(bool bEnable);
 NS_CC_BEGIN
 
 // sharedApplication pointer
-CCApplication * CCApplication::sm_pSharedApplication = 0;
+Application * Application::sm_pSharedApplication = 0;
 
-CCApplication::CCApplication()
-: m_hInstance(NULL)
-, m_hAccelTable(NULL)
+Application::Application()
+: _instance(NULL)
+, _accelTable(NULL)
 {
-    m_hInstance    = GetModuleHandle(NULL);
-    m_nAnimationInterval.QuadPart = 0;
+    _instance    = GetModuleHandle(NULL);
+    _animationInterval.QuadPart = 0;
     CC_ASSERT(! sm_pSharedApplication);
     sm_pSharedApplication = this;
 }
 
-CCApplication::~CCApplication()
+Application::~Application()
 {
     CC_ASSERT(this == sm_pSharedApplication);
     sm_pSharedApplication = NULL;
 }
 
-int CCApplication::run()
+int Application::run()
 {
     PVRFrameEnableControlWindow(false);
 
@@ -49,7 +49,7 @@ int CCApplication::run()
         return 0;
     }
 
-    CCEGLView* pMainWnd = CCEGLView::sharedOpenGLView();
+    EGLView* pMainWnd = EGLView::sharedOpenGLView();
     pMainWnd->centerWindow();
     ShowWindow(pMainWnd->getHWnd(), SW_SHOW);
 
@@ -61,10 +61,10 @@ int CCApplication::run()
             QueryPerformanceCounter(&nNow);
 
             // If it's the time to draw next frame, draw it, else sleep a while.
-            if (nNow.QuadPart - nLast.QuadPart > m_nAnimationInterval.QuadPart)
+            if (nNow.QuadPart - nLast.QuadPart > _animationInterval.QuadPart)
             {
                 nLast.QuadPart = nNow.QuadPart;
-                CCDirector::sharedDirector()->mainLoop();
+                Director::sharedDirector()->mainLoop();
             }
             else
             {
@@ -80,7 +80,7 @@ int CCApplication::run()
         }
 
         // Deal with windows message.
-        if (! m_hAccelTable || ! TranslateAccelerator(msg.hwnd, m_hAccelTable, &msg))
+        if (! _accelTable || ! TranslateAccelerator(msg.hwnd, _accelTable, &msg))
         {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
@@ -90,23 +90,23 @@ int CCApplication::run()
     return (int) msg.wParam;
 }
 
-void CCApplication::setAnimationInterval(double interval)
+void Application::setAnimationInterval(double interval)
 {
     LARGE_INTEGER nFreq;
     QueryPerformanceFrequency(&nFreq);
-    m_nAnimationInterval.QuadPart = (LONGLONG)(interval * nFreq.QuadPart);
+    _animationInterval.QuadPart = (LONGLONG)(interval * nFreq.QuadPart);
 }
 
 //////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////
-CCApplication* CCApplication::sharedApplication()
+Application* Application::sharedApplication()
 {
     CC_ASSERT(sm_pSharedApplication);
     return sm_pSharedApplication;
 }
 
-ccLanguageType CCApplication::getCurrentLanguage()
+ccLanguageType Application::getCurrentLanguage()
 {
     ccLanguageType ret = kLanguageEnglish;
 
@@ -151,39 +151,45 @@ ccLanguageType CCApplication::getCurrentLanguage()
         case LANG_ARABIC:
             ret = kLanguageArabic;
             break;
+	    case LANG_NORWEGIAN:
+            ret = kLanguageNorwegian;
+            break;
+ 	    case LANG_POLISH:
+            ret = kLanguagePolish;
+            break;
     }
 
     return ret;
 }
 
-TargetPlatform CCApplication::getTargetPlatform()
+TargetPlatform Application::getTargetPlatform()
 {
     return kTargetWindows;
 }
 
-void CCApplication::setResourceRootPath(const std::string& rootResDir)
+void Application::setResourceRootPath(const std::string& rootResDir)
 {
-    m_resourceRootPath = rootResDir;
-    std::replace(m_resourceRootPath.begin(), m_resourceRootPath.end(), '\\', '/');
-    if (m_resourceRootPath[m_resourceRootPath.length() - 1] != '/')
+    _resourceRootPath = rootResDir;
+    std::replace(_resourceRootPath.begin(), _resourceRootPath.end(), '\\', '/');
+    if (_resourceRootPath[_resourceRootPath.length() - 1] != '/')
     {
-        m_resourceRootPath += '/';
+        _resourceRootPath += '/';
     }
-    CCFileUtils* pFileUtils = CCFileUtils::sharedFileUtils();
+    FileUtils* pFileUtils = FileUtils::sharedFileUtils();
     std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
-    searchPaths.insert(searchPaths.begin(), m_resourceRootPath);
+    searchPaths.insert(searchPaths.begin(), _resourceRootPath);
     pFileUtils->setSearchPaths(searchPaths);
 }
 
-const std::string& CCApplication::getResourceRootPath(void)
+const std::string& Application::getResourceRootPath(void)
 {
-    return m_resourceRootPath;
+    return _resourceRootPath;
 }
 
-void CCApplication::setStartupScriptFilename(const std::string& startupScriptFile)
+void Application::setStartupScriptFilename(const std::string& startupScriptFile)
 {
-    m_startupScriptFilename = startupScriptFile;
-    std::replace(m_startupScriptFilename.begin(), m_startupScriptFilename.end(), '\\', '/');
+    _startupScriptFilename = startupScriptFile;
+    std::replace(_startupScriptFilename.begin(), _startupScriptFilename.end(), '\\', '/');
 }
 
 NS_CC_END

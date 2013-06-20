@@ -29,49 +29,49 @@ NS_CC_BEGIN
 
 //------------------------------------------------------------------
 //
-// CCKeypadHandler
+// KeypadHandler
 //
 //------------------------------------------------------------------
-CCKeypadDelegate* CCKeypadHandler::getDelegate()
+KeypadDelegate* KeypadHandler::getDelegate()
 {
-    return m_pDelegate;
+    return _delegate;
 }
 
-CCKeypadHandler::~CCKeypadHandler()
+KeypadHandler::~KeypadHandler()
 {
-    if (m_pDelegate)
+    if (_delegate)
     {
-        dynamic_cast<CCObject*>(m_pDelegate)->release();
+        dynamic_cast<Object*>(_delegate)->release();
     }  
 }
 
-void CCKeypadHandler::setDelegate(CCKeypadDelegate *pDelegate)
+void KeypadHandler::setDelegate(KeypadDelegate *pDelegate)
 {
     if (pDelegate)
     {
-        dynamic_cast<CCObject*>(pDelegate)->retain();
+        dynamic_cast<Object*>(pDelegate)->retain();
     }
 
-    if (m_pDelegate)
+    if (_delegate)
     {
-        dynamic_cast<CCObject*>(m_pDelegate)->release();
+        dynamic_cast<Object*>(_delegate)->release();
     }
-    m_pDelegate = pDelegate;
+    _delegate = pDelegate;
 }
 
-bool CCKeypadHandler::initWithDelegate(CCKeypadDelegate *pDelegate)
+bool KeypadHandler::initWithDelegate(KeypadDelegate *pDelegate)
 {
     CCAssert(pDelegate != NULL, "It's a wrong delegate!");
 
-    m_pDelegate = pDelegate;
-    dynamic_cast<CCObject*>(pDelegate)->retain();
+    _delegate = pDelegate;
+    dynamic_cast<Object*>(pDelegate)->retain();
 
     return true;
 }
 
-CCKeypadHandler* CCKeypadHandler::handlerWithDelegate(CCKeypadDelegate *pDelegate)
+KeypadHandler* KeypadHandler::handlerWithDelegate(KeypadDelegate *pDelegate)
 {
-    CCKeypadHandler* pHandler = new CCKeypadHandler;
+    KeypadHandler* pHandler = new KeypadHandler;
 
     if (pHandler)
     {

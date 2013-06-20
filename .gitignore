@@ -80,6 +80,10 @@ Device-Release/
 
 # Ignore vim swaps
 *.swp
+*.swo
+
+# Ignore files created by create_project.py
+projects/
 
 # Ignore config files in javascript bindings generator
 tools/tojs/user.cfg

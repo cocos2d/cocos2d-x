@@ -7,8 +7,14 @@
 #include "NetworkTest/HttpClientTest.h"
 #endif
 #include "TableViewTest/TableViewTestScene.h"
+#include "ComponentsTest/ComponentsTestScene.h"
+#include "ArmatureTest/ArmatureScene.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#include "NetworkTest/WebSocketTest.h"
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
 #include "EditBoxTest/EditBoxTest.h"
 #endif
 
@@ -18,32 +24,49 @@ enum
     kItemTagBasic = 1000,
 };
 
-enum
-{
-    TEST_NOTIFICATIONCENTER = 0,
-    TEST_CCCONTROLBUTTON,
-    TEST_COCOSBUILDER,
-    TEST_HTTPCLIENT,
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    TEST_EDITBOX,
+static struct {
+	const char *name;
+	std::function<void(Object* sender)> callback;
+} g_extensionsTests[] = {
+	{ "NotificationCenterTest", [](Object* sender) { runNotificationCenterTest(); }
+	},
+	{ "CCControlButtonTest", [](Object *sender){
+		ControlSceneManager* pManager = ControlSceneManager::sharedControlSceneManager();
+		Scene* pScene = pManager->currentControlScene();
+		Director::sharedDirector()->replaceScene(pScene);
+	}},
+	{ "CocosBuilderTest", [](Object *sender) {
+		TestScene* pScene = new CocosBuilderTestScene();
+		if (pScene)
+		{
+			pScene->runThisTest();
+			pScene->release();
+		}
+	}},
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
+	{ "HttpClientTest", [](Object *sender){ runHttpClientTest();}
+	},
 #endif
-	TEST_TABLEVIEW,
-    TEST_MAX_COUNT,
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+	{ "WebSocketTest", [](Object *sender){ runWebSocketTest();}
+	},
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
+	{ "EditBoxTest", [](Object *sender){ runEditBoxTest();}
+	},
+#endif
+	{ "TableViewTest", [](Object *sender){ runTableViewTest();}
+	},
+    { "CommponentTest", [](Object *sender) { runComponentsTestLayerTest(); }
+    },
+    { "ArmatureTest", [](Object *sender) { ArmatureTestScene *pScene = new ArmatureTestScene();
+                                             pScene->runThisTest();
+                                             pScene->release();
+                                        }
+    },
 };
 
-static const std::string testsName[TEST_MAX_COUNT] = 
-{
-    "NotificationCenterTest",
-    "CCControlButtonTest",
-    "CocosBuilderTest",
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
-    "HttpClientTest",
-#endif
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    "EditBoxTest",
-#endif
-	"TableViewTest"
-};
+static const int g_maxTests = sizeof(g_extensionsTests) / sizeof(g_extensionsTests[0]);
 
 ////////////////////////////////////////////////////////
 //
@@ -52,78 +75,22 @@ static const std::string testsName[TEST_MAX_COUNT] =
 ////////////////////////////////////////////////////////
 void ExtensionsMainLayer::onEnter()
 {
-    CCLayer::onEnter();
-
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-
-    CCMenu* pMenu = CCMenu::create();
-    pMenu->setPosition( CCPointZero );
-    CCMenuItemFont::setFontName("Arial");
-    CCMenuItemFont::setFontSize(24);
-    for (int i = 0; i < TEST_MAX_COUNT; ++i)
+    Layer::onEnter();
+    
+    Size s = Director::sharedDirector()->getWinSize();
+    
+    Menu* pMenu = Menu::create();
+    pMenu->setPosition( PointZero );
+    MenuItemFont::setFontName("Arial");
+    MenuItemFont::setFontSize(24);
+    for (int i = 0; i < g_maxTests; ++i)
     {
-        CCMenuItemFont* pItem = CCMenuItemFont::create(testsName[i].c_str(), this,
-                                                    menu_selector(ExtensionsMainLayer::menuCallback));
+        MenuItemFont* pItem = MenuItemFont::create(g_extensionsTests[i].name, g_extensionsTests[i].callback);
         pItem->setPosition(ccp(s.width / 2, s.height - (i + 1) * LINE_SPACE));
         pMenu->addChild(pItem, kItemTagBasic + i);
     }
-
+    
     addChild(pMenu);
-}
-
-void ExtensionsMainLayer::menuCallback(CCObject* pSender)
-{
-    CCMenuItemFont* pItem = (CCMenuItemFont*)pSender;
-    int nIndex = pItem->getZOrder() - kItemTagBasic;
-
-    switch (nIndex)
-    {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)	// MARMALADE CHANGE: Not yet avaiable on Marmalade
-    case TEST_NOTIFICATIONCENTER:
-        {
-            runNotificationCenterTest();
-        }
-        break;
-#endif
-    case TEST_CCCONTROLBUTTON:
-        {
-            CCControlSceneManager* pManager = CCControlSceneManager::sharedControlSceneManager();
-            CCScene* pScene = pManager->currentControlScene();
-            CCDirector::sharedDirector()->replaceScene(pScene);
-        }
-        break;
-    case TEST_COCOSBUILDER:
-        {
-            TestScene* pScene = new CocosBuilderTestScene();
-            if (pScene)
-            {
-                pScene->runThisTest();
-                pScene->release();
-            }
-        }
-        break;
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE && CC_TARGET_PLATFORM != CC_PLATFORM_NACL && CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
-    case TEST_HTTPCLIENT:
-        {
-            runHttpClientTest();
-        }
-        break;
-#endif
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    case TEST_EDITBOX:
-        {
-            runEditBoxTest();
-        }
-        break;
-#endif
-	case TEST_TABLEVIEW:
-		{
-			runTableViewTest();
-		}
-		break;
-    default:
-        break;
-    }
 }
 
 ////////////////////////////////////////////////////////
@@ -134,9 +101,9 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
 
 void ExtensionsTestScene::runThisTest()
 {
-    CCLayer* pLayer = new ExtensionsMainLayer();
+    Layer* pLayer = new ExtensionsMainLayer();
     addChild(pLayer);
     pLayer->release();
-
-    CCDirector::sharedDirector()->replaceScene(this);
+    
+    Director::sharedDirector()->replaceScene(this);
 }

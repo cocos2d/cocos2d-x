@@ -23,30 +23,30 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
-    CCScriptEngineManager::sharedManager()->purgeSharedManager();
+    ScriptEngineManager::purgeSharedManager();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    CCDirector *pDirector = CCDirector::sharedDirector();
-    pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
-    pDirector->setProjection(kCCDirectorProjection2D);
+    Director *pDirector = Director::sharedDirector();
+    pDirector->setOpenGLView(EGLView::sharedOpenGLView());
+    pDirector->setProjection(kDirectorProjection2D);
 
 
-    CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
+    Size screenSize = EGLView::sharedOpenGLView()->getFrameSize();
 
-    CCSize designSize = CCSizeMake(320, 480);
-    CCSize resourceSize = CCSizeMake(320, 480);
+    Size designSize = CCSizeMake(320, 480);
+    Size resourceSize = CCSizeMake(320, 480);
     
     std::vector<std::string> resDirOrders;
     
-    TargetPlatform platform = CCApplication::sharedApplication()->getTargetPlatform();
+    TargetPlatform platform = Application::sharedApplication()->getTargetPlatform();
     if (platform == kTargetIphone || platform == kTargetIpad)
     {
-        std::vector<std::string> searchPaths = CCFileUtils::sharedFileUtils()->getSearchPaths();
+        std::vector<std::string> searchPaths = FileUtils::sharedFileUtils()->getSearchPaths();
         searchPaths.insert(searchPaths.begin(), "Published files iOS");
-        CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
+        FileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
         if (screenSize.height > 1024)
         {
             resourceSize = CCSizeMake(1536, 2048);
@@ -103,11 +103,11 @@ bool AppDelegate::applicationDidFinishLaunching()
         }
     }
     
-    CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
+    FileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
     
     pDirector->setContentScaleFactor(resourceSize.width/designSize.width);
 
-    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
+    EGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
     
     // turn on display FPS
     pDirector->setDisplayStats(true);
@@ -126,8 +126,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->start();
 
     js_log("RUNNING Main");
-    CCScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
-    CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
+    ScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
+    ScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
     ScriptingCore::getInstance()->runScript("main.js");
        
     return true;
@@ -137,11 +137,11 @@ void handle_signal(int signal) {
     static int internal_state = 0;
     ScriptingCore* sc = ScriptingCore::getInstance();
     // should start everything back
-    CCDirector* director = CCDirector::sharedDirector();
+    Director* director = Director::sharedDirector();
     if (director->getRunningScene()) {
         director->popToRootScene();
     } else {
-        CCPoolManager::sharedPoolManager()->finalize();
+        PoolManager::sharedPoolManager()->finalize();
         if (internal_state == 0) {
             //sc->dumpRoot(NULL, 0, NULL);
             sc->start();
@@ -156,7 +156,7 @@ void handle_signal(int signal) {
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    CCDirector::sharedDirector()->stopAnimation();
+    Director::sharedDirector()->stopAnimation();
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
     SimpleAudioEngine::sharedEngine()->pauseAllEffects();
 }
@@ -164,7 +164,7 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    CCDirector::sharedDirector()->startAnimation();
+    Director::sharedDirector()->startAnimation();
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
     SimpleAudioEngine::sharedEngine()->resumeAllEffects();
 }

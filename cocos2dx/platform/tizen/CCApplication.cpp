@@ -33,22 +33,22 @@ using namespace Tizen::Base;
 using namespace Tizen::System;
 
 // sharedApplication pointer
-CCApplication * CCApplication::sm_pSharedApplication = 0;
-long CCApplication::m_nAnimationInterval = 1000;
+Application * Application::sm_pSharedApplication = 0;
+long Application::_animationInterval = 1000;
 
-CCApplication::CCApplication()
+Application::Application()
 {
     CCAssert(! sm_pSharedApplication, "");
     sm_pSharedApplication = this;
 }
 
-CCApplication::~CCApplication()
+Application::~Application()
 {
     CCAssert(this == sm_pSharedApplication, "");
     sm_pSharedApplication = NULL;
 }
 
-int CCApplication::run()
+int Application::run()
 {
     // Initialize instance and cocos2d.
     if (!applicationDidFinishLaunching())
@@ -59,30 +59,30 @@ int CCApplication::run()
     return -1;
 }
 
-void CCApplication::setAnimationInterval(double interval)
+void Application::setAnimationInterval(double interval)
 {
-    m_nAnimationInterval = interval * 1000.0f;
+    _animationInterval = interval * 1000.0f;
 }
 
-long CCApplication::getAnimationInterval()
+long Application::getAnimationInterval()
 {
-    return m_nAnimationInterval;
+    return _animationInterval;
 }
 
 //////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////
-CCApplication* CCApplication::sharedApplication()
+Application* Application::sharedApplication()
 {
     CCAssert(sm_pSharedApplication, "");
     return sm_pSharedApplication;
 }
 
-ccLanguageType CCApplication::getCurrentLanguage()
+ccLanguageType Application::getCurrentLanguage()
 {
     result r = E_SUCCESS;
     int index = 0;
-    String localelanguageCode, languageCode;
+    Tizen::Base::String localelanguageCode, languageCode;
     ccLanguageType ret = kLanguageEnglish;
 
     r = SettingInfo::GetValue(L"http://tizen.org/setting/locale.language", localelanguageCode);
@@ -138,11 +138,18 @@ ccLanguageType CCApplication::getCurrentLanguage()
     {
         ret = kLanguageArabic;
     }
-
+    else if (0 == languageCode.CompareTo(L"nor"))
+    {
+        ret = kLanguageNorwegian;
+    }
+    else if (0 == languageCode.CompareTo(L"pol"))
+    {
+        ret = kLanguagePolish;
+    }
     return ret;
 }
 
-TargetPlatform CCApplication::getTargetPlatform()
+TargetPlatform Application::getTargetPlatform()
 {
     return kTargetTizen;
 }

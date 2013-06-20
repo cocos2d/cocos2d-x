@@ -74,11 +74,11 @@ static inline ccVertex2F v2fforangle(float _a_)
 
 static inline ccVertex2F v2fnormalize(const ccVertex2F &p)
 {
-	CCPoint r = ccpNormalize(ccp(p.x, p.y));
+	Point r = ccpNormalize(ccp(p.x, p.y));
 	return v2f(r.x, r.y);
 }
 
-static inline ccVertex2F __v2f(const CCPoint &v)
+static inline ccVertex2F __v2f(const Point &v)
 {
 //#ifdef __LP64__
 	return v2f(v.x, v.y);
@@ -92,37 +92,37 @@ static inline ccTex2F __t(const ccVertex2F &v)
 	return *(ccTex2F*)&v;
 }
 
-// implementation of CCDrawNode
+// implementation of DrawNode
 
-CCDrawNode::CCDrawNode()
-: m_uVao(0)
-, m_uVbo(0)
-, m_uBufferCapacity(0)
-, m_nBufferCount(0)
-, m_pBuffer(NULL)
-, m_bDirty(false)
+DrawNode::DrawNode()
+: _vao(0)
+, _vbo(0)
+, _bufferCapacity(0)
+, _bufferCount(0)
+, _buffer(NULL)
+, _dirty(false)
 {
-    m_sBlendFunc.src = CC_BLEND_SRC;
-    m_sBlendFunc.dst = CC_BLEND_DST;
+    _blendFunc.src = CC_BLEND_SRC;
+    _blendFunc.dst = CC_BLEND_DST;
 }
 
-CCDrawNode::~CCDrawNode()
+DrawNode::~DrawNode()
 {
-    free(m_pBuffer);
-    m_pBuffer = NULL;
+    free(_buffer);
+    _buffer = NULL;
     
-    glDeleteBuffers(1, &m_uVbo);
-    m_uVbo = 0;
+    glDeleteBuffers(1, &_vbo);
+    _vbo = 0;
     
 #if CC_TEXTURE_ATLAS_USE_VAO      
-    glDeleteVertexArrays(1, &m_uVao);
-    m_uVao = 0;
+    glDeleteVertexArrays(1, &_vao);
+    _vao = 0;
 #endif
 }
 
-CCDrawNode* CCDrawNode::create()
+DrawNode* DrawNode::create()
 {
-    CCDrawNode* pRet = new CCDrawNode();
+    DrawNode* pRet = new DrawNode();
     if (pRet && pRet->init())
     {
         pRet->autorelease();
@@ -135,41 +135,41 @@ CCDrawNode* CCDrawNode::create()
     return pRet;
 }
 
-void CCDrawNode::ensureCapacity(unsigned int count)
+void DrawNode::ensureCapacity(unsigned int count)
 {
-    if(m_nBufferCount + count > m_uBufferCapacity)
+    if(_bufferCount + count > _bufferCapacity)
     {
-		m_uBufferCapacity += MAX(m_uBufferCapacity, count);
-		m_pBuffer = (ccV2F_C4B_T2F*)realloc(m_pBuffer, m_uBufferCapacity*sizeof(ccV2F_C4B_T2F));
+		_bufferCapacity += MAX(_bufferCapacity, count);
+		_buffer = (ccV2F_C4B_T2F*)realloc(_buffer, _bufferCapacity*sizeof(ccV2F_C4B_T2F));
 	}
 }
 
-bool CCDrawNode::init()
+bool DrawNode::init()
 {
-    m_sBlendFunc.src = CC_BLEND_SRC;
-    m_sBlendFunc.dst = CC_BLEND_DST;
+    _blendFunc.src = CC_BLEND_SRC;
+    _blendFunc.dst = CC_BLEND_DST;
 
-    setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionLengthTexureColor));
+    setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionLengthTexureColor));
     
     ensureCapacity(512);
     
 #if CC_TEXTURE_ATLAS_USE_VAO    
-    glGenVertexArrays(1, &m_uVao);
-    ccGLBindVAO(m_uVao);
+    glGenVertexArrays(1, &_vao);
+    ccGLBindVAO(_vao);
 #endif
     
-    glGenBuffers(1, &m_uVbo);
-    glBindBuffer(GL_ARRAY_BUFFER, m_uVbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(ccV2F_C4B_T2F)* m_uBufferCapacity, m_pBuffer, GL_STREAM_DRAW);
+    glGenBuffers(1, &_vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(ccV2F_C4B_T2F)* _bufferCapacity, _buffer, GL_STREAM_DRAW);
     
-    glEnableVertexAttribArray(kCCVertexAttrib_Position);
-    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid *)offsetof(ccV2F_C4B_T2F, vertices));
+    glEnableVertexAttribArray(kVertexAttrib_Position);
+    glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid *)offsetof(ccV2F_C4B_T2F, vertices));
     
-    glEnableVertexAttribArray(kCCVertexAttrib_Color);
-    glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(ccV2F_C4B_T2F), (GLvoid *)offsetof(ccV2F_C4B_T2F, colors));
+    glEnableVertexAttribArray(kVertexAttrib_Color);
+    glVertexAttribPointer(kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(ccV2F_C4B_T2F), (GLvoid *)offsetof(ccV2F_C4B_T2F, colors));
     
-    glEnableVertexAttribArray(kCCVertexAttrib_TexCoords);
-    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid *)offsetof(ccV2F_C4B_T2F, texCoords));
+    glEnableVertexAttribArray(kVertexAttrib_TexCoords);
+    glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid *)offsetof(ccV2F_C4B_T2F, texCoords));
     
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
@@ -179,44 +179,44 @@ bool CCDrawNode::init()
     
     CHECK_GL_ERROR_DEBUG();
     
-    m_bDirty = true;
+    _dirty = true;
     
     return true;
 }
 
-void CCDrawNode::render()
+void DrawNode::render()
 {
-    if (m_bDirty)
+    if (_dirty)
     {
-        glBindBuffer(GL_ARRAY_BUFFER, m_uVbo);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(ccV2F_C4B_T2F)*m_uBufferCapacity, m_pBuffer, GL_STREAM_DRAW);
-        m_bDirty = false;
+        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(ccV2F_C4B_T2F)*_bufferCapacity, _buffer, GL_STREAM_DRAW);
+        _dirty = false;
     }
 #if CC_TEXTURE_ATLAS_USE_VAO     
-    ccGLBindVAO(m_uVao);
+    ccGLBindVAO(_vao);
 #else
-    ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex);
-    glBindBuffer(GL_ARRAY_BUFFER, m_uVbo);
+    ccGLEnableVertexAttribs(kVertexAttribFlag_PosColorTex);
+    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
     // vertex
-    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid *)offsetof(ccV2F_C4B_T2F, vertices));
+    glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid *)offsetof(ccV2F_C4B_T2F, vertices));
     
     // color
-    glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(ccV2F_C4B_T2F), (GLvoid *)offsetof(ccV2F_C4B_T2F, colors));
+    glVertexAttribPointer(kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(ccV2F_C4B_T2F), (GLvoid *)offsetof(ccV2F_C4B_T2F, colors));
     
     // texcood
-    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid *)offsetof(ccV2F_C4B_T2F, texCoords));
+    glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid *)offsetof(ccV2F_C4B_T2F, texCoords));
 #endif
 
-    glDrawArrays(GL_TRIANGLES, 0, m_nBufferCount);
+    glDrawArrays(GL_TRIANGLES, 0, _bufferCount);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     CC_INCREMENT_GL_DRAWS(1);
     CHECK_GL_ERROR_DEBUG();
 }
 
-void CCDrawNode::draw()
+void DrawNode::draw()
 {
-    ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
+    ccGLBlendFunc(_blendFunc.src, _blendFunc.dst);
     
     getShaderProgram()->use();
     getShaderProgram()->setUniformsForBuiltins();
@@ -224,7 +224,7 @@ void CCDrawNode::draw()
     render();
 }
 
-void CCDrawNode::drawDot(const CCPoint &pos, float radius, const ccColor4F &color)
+void DrawNode::drawDot(const Point &pos, float radius, const ccColor4F &color)
 {
     unsigned int vertex_count = 2*3;
     ensureCapacity(vertex_count);
@@ -234,18 +234,18 @@ void CCDrawNode::drawDot(const CCPoint &pos, float radius, const ccColor4F &colo
 	ccV2F_C4B_T2F c = {{pos.x + radius, pos.y + radius}, ccc4BFromccc4F(color), { 1.0,  1.0} };
 	ccV2F_C4B_T2F d = {{pos.x + radius, pos.y - radius}, ccc4BFromccc4F(color), { 1.0, -1.0} };
 	
-	ccV2F_C4B_T2F_Triangle *triangles = (ccV2F_C4B_T2F_Triangle *)(m_pBuffer + m_nBufferCount);
+	ccV2F_C4B_T2F_Triangle *triangles = (ccV2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
     ccV2F_C4B_T2F_Triangle triangle0 = {a, b, c};
     ccV2F_C4B_T2F_Triangle triangle1 = {a, c, d};
 	triangles[0] = triangle0;
 	triangles[1] = triangle1;
 	
-	m_nBufferCount += vertex_count;
+	_bufferCount += vertex_count;
 	
-	m_bDirty = true;
+	_dirty = true;
 }
 
-void CCDrawNode::drawSegment(const CCPoint &from, const CCPoint &to, float radius, const ccColor4F &color)
+void DrawNode::drawSegment(const Point &from, const Point &to, float radius, const ccColor4F &color)
 {
     unsigned int vertex_count = 6*3;
     ensureCapacity(vertex_count);
@@ -269,7 +269,7 @@ void CCDrawNode::drawSegment(const CCPoint &from, const CCPoint &to, float radiu
 	ccVertex2F v7 = v2fadd(a, v2fadd(nw, tw));
 	
 	
-	ccV2F_C4B_T2F_Triangle *triangles = (ccV2F_C4B_T2F_Triangle *)(m_pBuffer + m_nBufferCount);
+	ccV2F_C4B_T2F_Triangle *triangles = (ccV2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
 	
     ccV2F_C4B_T2F_Triangle triangles0 = {
         {v0, ccc4BFromccc4F(color), __t(v2fneg(v2fadd(n, t)))},
@@ -313,12 +313,12 @@ void CCDrawNode::drawSegment(const CCPoint &from, const CCPoint &to, float radiu
     };
 	triangles[5] = triangles5;
 	
-	m_nBufferCount += vertex_count;
+	_bufferCount += vertex_count;
 	
-	m_bDirty = true;
+	_dirty = true;
 }
 
-void CCDrawNode::drawPolygon(CCPoint *verts, unsigned int count, const ccColor4F &fillColor, float borderWidth, const ccColor4F &borderColor)
+void DrawNode::drawPolygon(Point *verts, unsigned int count, const ccColor4F &fillColor, float borderWidth, const ccColor4F &borderColor)
 {
     struct ExtrudeVerts {ccVertex2F offset, n;};
 	struct ExtrudeVerts* extrude = (struct ExtrudeVerts*)malloc(sizeof(struct ExtrudeVerts)*count);
@@ -338,13 +338,13 @@ void CCDrawNode::drawPolygon(CCPoint *verts, unsigned int count, const ccColor4F
 		extrude[i] = tmp;
 	}
 	
-	bool outline = (fillColor.a > 0.0 && borderWidth > 0.0);
+	bool outline = (borderColor.a > 0.0 && borderWidth > 0.0);
 	
 	unsigned int triangle_count = 3*count - 2;
 	unsigned int vertex_count = 3*triangle_count;
     ensureCapacity(vertex_count);
 	
-	ccV2F_C4B_T2F_Triangle *triangles = (ccV2F_C4B_T2F_Triangle *)(m_pBuffer + m_nBufferCount);
+	ccV2F_C4B_T2F_Triangle *triangles = (ccV2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
 	ccV2F_C4B_T2F_Triangle *cursor = triangles;
 	
 	float inset = (outline == 0.0 ? 0.5 : 0.0);
@@ -417,27 +417,27 @@ void CCDrawNode::drawPolygon(CCPoint *verts, unsigned int count, const ccColor4F
 		}
 	}
 	
-	m_nBufferCount += vertex_count;
+	_bufferCount += vertex_count;
 	
-	m_bDirty = true;
+	_dirty = true;
 
     free(extrude);
 }
 
-void CCDrawNode::clear()
+void DrawNode::clear()
 {
-    m_nBufferCount = 0;
-    m_bDirty = true;
+    _bufferCount = 0;
+    _dirty = true;
 }
 
-ccBlendFunc CCDrawNode::getBlendFunc() const
+ccBlendFunc DrawNode::getBlendFunc() const
 {
-    return m_sBlendFunc;
+    return _blendFunc;
 }
 
-void CCDrawNode::setBlendFunc(const ccBlendFunc &blendFunc)
+void DrawNode::setBlendFunc(const ccBlendFunc &blendFunc)
 {
-    m_sBlendFunc = blendFunc;
+    _blendFunc = blendFunc;
 }
 
 NS_CC_END

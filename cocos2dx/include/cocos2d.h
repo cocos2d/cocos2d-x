@@ -70,6 +70,7 @@ THE SOFTWARE.
 #include "cocoa/CCString.h"
 #include "cocoa/CCNS.h"
 #include "cocoa/CCZone.h"
+#include "cocoa/CCData.h"
 
 // draw nodes
 #include "draw_nodes/CCDrawingPrimitives.h"
@@ -271,6 +272,10 @@ THE SOFTWARE.
 #include "CCConfiguration.h"
 #include "CCDirector.h"
 #include "CCScheduler.h"
+
+// component
+#include "support/component/CCComponent.h"
+#include "support/component/CCComponentContainer.h"
 
 NS_CC_BEGIN
 

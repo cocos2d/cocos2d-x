@@ -40,7 +40,7 @@ typedef struct {
 SlotData* SlotData_create (const char* name, BoneData* boneData);
 void SlotData_dispose (SlotData* self);
 
-/* @param attachmentName May be 0 for no bind pose attachment. */
+/* @param attachmentName May be 0 for no setup pose attachment. */
 void SlotData_setAttachmentName (SlotData* self, const char* attachmentName);
 
 }} // namespace cocos2d { namespace extension {

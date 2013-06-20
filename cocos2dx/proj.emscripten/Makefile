@@ -8,6 +8,7 @@ INCLUDES += \
 			-I../../extensions/GUI/CCControlExtension \
 			-I../../external/chipmunk/include/chipmunk \
 			-I../../extensions/network \
+            -I../../extensions/Components \
 
 DEFINES += -D__CC_PLATFORM_FILEUTILS_CPP__
 DEFINES += -DCC_ENABLE_CHIPMUNK_INTEGRATION
@@ -36,6 +37,7 @@ SOURCES = ../actions/CCAction.cpp \
 ../cocoa/CCSet.cpp \
 ../cocoa/CCZone.cpp \
 ../cocoa/CCArray.cpp \
+../cocoa/CCData.cpp \
 ../cocoa/CCDictionary.cpp \
 ../cocoa/CCString.cpp \
 ../cocoa/CCDataVisitor.cpp \
@@ -75,6 +77,7 @@ SOURCES = ../actions/CCAction.cpp \
 ../platform/emscripten/CCImage.cpp \
 ../platform/emscripten/CCDevice.cpp \
 ../platform/emscripten/CCFileUtilsEmscripten.cpp \
+../platform/emscripten/CCTextureCacheEmscripten.cpp \
 ../script_support/CCScriptSupport.cpp \
 ../sprite_nodes/CCAnimation.cpp \
 ../sprite_nodes/CCAnimationCache.cpp \
@@ -97,11 +100,14 @@ SOURCES = ../actions/CCAction.cpp \
 ../support/zip_support/ioapi.cpp \
 ../support/zip_support/unzip.cpp \
 ../support/data_support/ccCArray.cpp \
+../support/component/CCComponent.cpp \
+../support/component/CCComponentContainer.cpp \
 ../text_input_node/CCIMEDispatcher.cpp \
 ../text_input_node/CCTextFieldTTF.cpp \
 ../textures/CCTexture2D.cpp \
 ../textures/CCTextureAtlas.cpp \
 ../textures/CCTextureCache.cpp \
+../textures/CCTextureETC.cpp \
 ../textures/CCTexturePVR.cpp \
 ../tilemap_parallax_nodes/CCParallaxNode.cpp \
 ../tilemap_parallax_nodes/CCTMXLayer.cpp \

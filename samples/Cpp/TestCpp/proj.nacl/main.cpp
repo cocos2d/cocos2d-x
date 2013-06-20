@@ -128,11 +128,11 @@ void* cocos_main(void* arg)
                                 "zwoptex/grossini.plist",
                                 "zwoptex/grossini.png" };
 
-    downloadFiles(instance->m_runner, filenames, sizeof(filenames)/sizeof(char*));
+    downloadFiles(instance->_runner, filenames, sizeof(filenames)/sizeof(char*));
 #endif
 
     fprintf(stderr, "calling application->run\n");
-    int rtn = CCApplication::sharedApplication()->run();
+    int rtn = Application::sharedApplication()->run();
     fprintf(stderr, "app run returned: %d\n", rtn);
     return NULL;
 }

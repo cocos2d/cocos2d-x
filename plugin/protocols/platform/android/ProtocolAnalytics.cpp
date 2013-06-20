@@ -27,13 +27,6 @@ THE SOFTWARE.
 #include "PluginUtils.h"
 #include "PluginJavaData.h"
 
-#if 1
-#define  LOG_TAG    "ProtocolAnalytics"
-#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
-#else
-#define  LOGD(...) 
-#endif
-
 namespace cocos2d { namespace plugin {
 
 static void callJavaFunctionWithName_string_map(ProtocolAnalytics* thiz, const char* funcName, const char* keyParam, LogEventParamMap* paramMap)
@@ -65,7 +58,7 @@ static void callJavaFunctionWithName_string_map(ProtocolAnalytics* thiz, const c
     		, "(Ljava/lang/String;Ljava/util/Hashtable;)V"))
     	{
     		jstring jeventId = t.env->NewStringUTF(keyParam);
-    		jobject obj_Map = PluginUtils::createJavaMapObject(t, paramMap);
+    		jobject obj_Map = PluginUtils::createJavaMapObject(paramMap);
     		t.env->CallVoidMethod(pData->jobj, t.methodID, jeventId, obj_Map);
     		t.env->DeleteLocalRef(jeventId);
     		t.env->DeleteLocalRef(obj_Map);
@@ -80,12 +73,6 @@ ProtocolAnalytics::ProtocolAnalytics()
 
 ProtocolAnalytics::~ProtocolAnalytics()
 {
-    PluginUtils::erasePluginJavaData(this);
-}
-
-bool ProtocolAnalytics::init()
-{
-    return true;
 }
 
 void ProtocolAnalytics::startSession(const char* appKey)
@@ -109,17 +96,12 @@ void ProtocolAnalytics::stopSession()
 
 void ProtocolAnalytics::setSessionContinueMillis(long millis)
 {
-	PluginUtils::callJavaFunctionWithName_oneBaseType(this, "setSessionContinueMillis", "(I)V", millis);
+	PluginUtils::callJavaFunctionWithName_oneParam(this, "setSessionContinueMillis", "(I)V", millis);
 }
 
 void ProtocolAnalytics::setCaptureUncaughtException(bool isEnabled)
 {
-	PluginUtils::callJavaFunctionWithName_oneBaseType(this, "setCaptureUncaughtException", "(Z)V", isEnabled);
-}
-
-void ProtocolAnalytics::setDebugMode(bool isDebugMode)
-{
-    PluginUtils::callJavaFunctionWithName_oneBaseType(this, "setDebugMode", "(Z)V", isDebugMode);
+	PluginUtils::callJavaFunctionWithName_oneParam(this, "setCaptureUncaughtException", "(Z)V", isEnabled);
 }
 
 void ProtocolAnalytics::logError(const char* errorId, const char* message)
@@ -142,23 +124,6 @@ void ProtocolAnalytics::logError(const char* errorId, const char* message)
 		t.env->DeleteLocalRef(jmessage);
 		t.env->DeleteLocalRef(t.classID);
 	}
-}
-
-const char* ProtocolAnalytics::getSDKVersion()
-{
-    std::string verName;
-
-    PluginJavaData* pData = PluginUtils::getPluginJavaData(this);
-    PluginJniMethodInfo t;
-    if (PluginJniHelper::getMethodInfo(t
-        , pData->jclassName.c_str()
-        , "getSDKVersion"
-        , "()Ljava/lang/String;"))
-    {
-        jstring ret = (jstring)(t.env->CallObjectMethod(pData->jobj, t.methodID));
-        verName = PluginJniHelper::jstring2string(ret);
-    }
-    return verName.c_str();
 }
 
 void ProtocolAnalytics::logEvent(const char* eventId, LogEventParamMap* pParams/* = NULL */)

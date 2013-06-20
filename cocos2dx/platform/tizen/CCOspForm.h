@@ -29,12 +29,19 @@ THE SOFTWARE.
 #include <FBase.h>
 #include <FUi.h>
 
-class CCOspForm
+typedef void (*EditTextCallback)(const char* pText, void* ctx);
+
+class OspForm
     : public Tizen::Ui::Controls::Form
     , public Tizen::Ui::ITouchEventListener
+    , public Tizen::Ui::ITextEventListener
 {
 public:
+    OspForm();
+    ~OspForm();
+
     virtual result OnInitializing(void);
+    virtual result OnTerminating(void);
     virtual void  OnTouchDoublePressed(const Tizen::Ui::Control& source, const Tizen::Graphics::Point& currentPosition, const Tizen::Ui::TouchEventInfo& touchInfo);
     virtual void  OnTouchFocusIn(const Tizen::Ui::Control& source, const Tizen::Graphics::Point& currentPosition, const Tizen::Ui::TouchEventInfo& touchInfo);
     virtual void  OnTouchFocusOut(const Tizen::Ui::Control& source, const Tizen::Graphics::Point& currentPosition, const Tizen::Ui::TouchEventInfo& touchInfo);
@@ -42,6 +49,18 @@ public:
     virtual void  OnTouchMoved(const Tizen::Ui::Control& source, const Tizen::Graphics::Point& currentPosition, const Tizen::Ui::TouchEventInfo& touchInfo);
     virtual void  OnTouchPressed(const Tizen::Ui::Control& source, const Tizen::Graphics::Point& currentPosition, const Tizen::Ui::TouchEventInfo& touchInfo);
     virtual void  OnTouchReleased(const Tizen::Ui::Control& source, const Tizen::Graphics::Point& currentPosition, const Tizen::Ui::TouchEventInfo& touchInfo);
+
+    // ITextEventListener
+    virtual void OnTextValueChanged(const Tizen::Ui::Control& source);
+    virtual void OnTextValueChangeCanceled(const Tizen::Ui::Control& source);
+
+    void ShowKeypad(const char* pMessage, Tizen::Ui::Controls::KeypadStyle keypadStyle, Tizen::Ui::Controls::KeypadInputModeCategory keypadCategory, bool bSingleLineEnabled, bool bTextPrediction, int nMaxLength, EditTextCallback pfEditTextCallback, void* pCtx);
+    void ShowKeypad();
+    void CloseKeypad();
+
+    Tizen::Ui::Controls::Keypad*__pKeypad;
+    EditTextCallback _editTextCallback;
+    void* _ctx;
 };
 
 #endif  // _CCOSPFORM_H_
