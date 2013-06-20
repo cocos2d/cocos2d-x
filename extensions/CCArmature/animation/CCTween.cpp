@@ -31,11 +31,11 @@ THE SOFTWARE.
 #include "../utils/CCTweenFunction.h"
 
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
 
-CCTween *CCTween::create(CCBone *bone)
+Tween *Tween::create(Bone *bone)
 {
-    CCTween *pTween = new CCTween();
+    Tween *pTween = new Tween();
     if (pTween && pTween->init(bone))
     {
         pTween->autorelease();
@@ -48,7 +48,7 @@ CCTween *CCTween::create(CCBone *bone)
 
 
 
-CCTween::CCTween()
+Tween::Tween()
     : _movementBoneData(NULL)
     , _tweenData(NULL)
 	, _from(NULL)
@@ -66,20 +66,20 @@ CCTween::CCTween()
 }
 
 
-CCTween::~CCTween(void)
+Tween::~Tween(void)
 {
     CC_SAFE_DELETE( _from );
     CC_SAFE_DELETE( _between );
 }
 
 
-bool CCTween::init(CCBone *bone)
+bool Tween::init(Bone *bone)
 {
     bool bRet = false;
     do
     {
-        _from = new CCFrameData();
-        _between = new CCFrameData();
+        _from = new FrameData();
+        _between = new FrameData();
 
         _bone = bone;
         _tweenData = _bone->getTweenData();
@@ -94,9 +94,9 @@ bool CCTween::init(CCBone *bone)
 }
 
 
-void CCTween::play(CCMovementBoneData *_movementBoneData, int _durationTo, int _durationTween,  int _loop, int _tweenEasing)
+void Tween::play(MovementBoneData *_movementBoneData, int _durationTo, int _durationTween,  int _loop, int _tweenEasing)
 {
-    CCProcessBase::play(NULL, _durationTo, _durationTween, _loop, _tweenEasing);
+    ProcessBase::play(NULL, _durationTo, _durationTween, _loop, _tweenEasing);
 
     _loopType = (AnimationType)_loop;
 
@@ -113,7 +113,7 @@ void CCTween::play(CCMovementBoneData *_movementBoneData, int _durationTo, int _
     if (_movementBoneData->frameList.count() == 1)
     {
         _loopType = SINGLE_FRAME;
-        CCFrameData *_nextKeyFrame = _movementBoneData->getFrameData(0);
+        FrameData *_nextKeyFrame = _movementBoneData->getFrameData(0);
         if(_durationTo == 0)
         {
             setBetween(_nextKeyFrame, _nextKeyFrame);
@@ -150,14 +150,14 @@ void CCTween::play(CCMovementBoneData *_movementBoneData, int _durationTo, int _
         }
         else
         {
-            CCFrameData *_nextKeyFrame = _movementBoneData->getFrameData(0);
+            FrameData *_nextKeyFrame = _movementBoneData->getFrameData(0);
             setBetween(_tweenData, _nextKeyFrame);
             _isTweenKeyFrame = true;
         }
     }
 }
 
-void CCTween::updateHandler()
+void Tween::updateHandler()
 {
 
 
@@ -269,7 +269,7 @@ void CCTween::updateHandler()
     }
 }
 
-void CCTween::setBetween(CCFrameData *from, CCFrameData *to)
+void Tween::setBetween(FrameData *from, FrameData *to)
 {
     do
     {
@@ -295,7 +295,7 @@ void CCTween::setBetween(CCFrameData *from, CCFrameData *to)
 }
 
 
-void CCTween::arriveKeyFrame(CCFrameData *keyFrameData)
+void Tween::arriveKeyFrame(FrameData *keyFrameData)
 {
     if(keyFrameData)
     {
@@ -309,7 +309,7 @@ void CCTween::arriveKeyFrame(CCFrameData *keyFrameData)
 
         _bone->setZOrder(keyFrameData->zOrder);
 
-        CCArmature *childAramture = _bone->getChildArmature();
+        Armature *childAramture = _bone->getChildArmature();
 
         if(childAramture)
         {
@@ -331,7 +331,7 @@ void CCTween::arriveKeyFrame(CCFrameData *keyFrameData)
 }
 
 
-CCFrameData *CCTween::tweenNodeTo(float percent, CCFrameData *node)
+FrameData *Tween::tweenNodeTo(float percent, FrameData *node)
 {
     node = node == NULL ? _tweenData : node;
 
@@ -353,26 +353,26 @@ CCFrameData *CCTween::tweenNodeTo(float percent, CCFrameData *node)
         _bone->updateColor();
     }
 
-    //    CCPoint p1 = ccp(_from->x, _from->y);
-    //    CCPoint p2 = ccp(100, 0);
-    //    CCPoint p3 = ccp(200, 400);
-    //    CCPoint p4 = ccp(_from->x + _between->x, _from->y + _between->y);
+    //    Point p1 = ccp(_from->x, _from->y);
+    //    Point p2 = ccp(100, 0);
+    //    Point p3 = ccp(200, 400);
+    //    Point p4 = ccp(_from->x + _between->x, _from->y + _between->y);
     //
-    //    CCPoint p = bezierTo(percent, p1, p2, p3, p4);
+    //    Point p = bezierTo(percent, p1, p2, p3, p4);
     //    node->x = p.x;
     //    node->y = p.y;
 
     return node;
 }
 
-float CCTween::updateFrameData(float currentPrecent, bool activeFrame)
+float Tween::updateFrameData(float currentPrecent, bool activeFrame)
 {
 
     float playedTime = (float)_rawDuration * currentPrecent;
 
 
-    CCFrameData *from;
-    CCFrameData *to;
+    FrameData *from;
+    FrameData *to;
     bool isListEnd;
 
     //! If play to current frame's front or back, then find current frame again
@@ -421,18 +421,18 @@ float CCTween::updateFrameData(float currentPrecent, bool activeFrame)
      *  If frame tween easing equal to TWEEN_EASING_MAX, then it will not do tween.
      */
 
-    CCTweenType tweenType;
+    TweenType tweenType;
 
     if ( _frameTweenEasing != TWEEN_EASING_MAX)
     {
         tweenType = (_tweenEasing == TWEEN_EASING_MAX) ? _frameTweenEasing : _tweenEasing;
         if (tweenType != TWEEN_EASING_MAX)
         {
-            currentPrecent = CCTweenFunction::tweenTo(0, 1, currentPrecent, 1, tweenType);
+            currentPrecent = TweenFunction::tweenTo(0, 1, currentPrecent, 1, tweenType);
         }
     }
 
     return currentPrecent;
 }
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {

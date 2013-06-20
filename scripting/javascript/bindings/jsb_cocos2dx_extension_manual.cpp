@@ -14,8 +14,8 @@ USING_NS_CC;
 USING_NS_CC_EXT;
 
 class JSB_ScrollViewDelegate
-: public CCNode
-, public CCScrollViewDelegate
+: public Node
+, public ScrollViewDelegate
 {
 public:
     JSB_ScrollViewDelegate()
@@ -32,7 +32,7 @@ public:
         }
     }
     
-    virtual void scrollViewDidScroll(CCScrollView* view)
+    virtual void scrollViewDidScroll(ScrollView* view)
     {
         js_proxy_t * p = jsb_get_native_proxy(view);
         if (!p) return;
@@ -41,7 +41,7 @@ public:
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "scrollViewDidScroll", 1, &arg, NULL);
     }
     
-    virtual void scrollViewDidZoom(CCScrollView* view)
+    virtual void scrollViewDidZoom(ScrollView* view)
     {
         js_proxy_t * p = jsb_get_native_proxy(view);
         if (!p) return;
@@ -73,7 +73,7 @@ static JSBool js_cocos2dx_CCScrollView_setDelegate(JSContext *cx, uint32_t argc,
     jsval *argv = JS_ARGV(cx, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::extension::CCScrollView* cobj = (cocos2d::extension::CCScrollView *)(proxy ? proxy->ptr : NULL);
+    cocos2d::extension::ScrollView* cobj = (cocos2d::extension::ScrollView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
     
     if (argc == 1) {
@@ -100,8 +100,8 @@ static JSBool js_cocos2dx_CCScrollView_setDelegate(JSContext *cx, uint32_t argc,
 }
 
 class JSB_TableViewDelegate
-: public CCNode
-, public CCTableViewDelegate
+: public Node
+, public TableViewDelegate
 {
 public:
     JSB_TableViewDelegate()
@@ -118,32 +118,32 @@ public:
         }
     }
     
-    virtual void scrollViewDidScroll(CCScrollView* view)
+    virtual void scrollViewDidScroll(ScrollView* view)
     {
         callJSDelegate(view, "scrollViewDidScroll");
     }
     
-    virtual void scrollViewDidZoom(CCScrollView* view)
+    virtual void scrollViewDidZoom(ScrollView* view)
     {
         callJSDelegate(view, "scrollViewDidZoom");
     }
     
-    virtual void tableCellTouched(CCTableView* table, CCTableViewCell* cell)
+    virtual void tableCellTouched(TableView* table, TableViewCell* cell)
     {
         callJSDelegate(table, cell, "tableCellTouched");
     }
     
-    virtual void tableCellHighlight(CCTableView* table, CCTableViewCell* cell)
+    virtual void tableCellHighlight(TableView* table, TableViewCell* cell)
     {
         callJSDelegate(table, cell, "tableCellHighlight");
     }
     
-    virtual void tableCellUnhighlight(CCTableView* table, CCTableViewCell* cell)
+    virtual void tableCellUnhighlight(TableView* table, TableViewCell* cell)
     {
         callJSDelegate(table, cell, "tableCellUnhighlight");
     }
     
-    virtual void tableCellWillRecycle(CCTableView* table, CCTableViewCell* cell)
+    virtual void tableCellWillRecycle(TableView* table, TableViewCell* cell)
     {
         callJSDelegate(table, cell, "tableCellWillRecycle");
     }
@@ -164,7 +164,7 @@ public:
     
     
 private:
-    void callJSDelegate(CCScrollView* view, std::string jsFunctionName)
+    void callJSDelegate(ScrollView* view, std::string jsFunctionName)
     {
         js_proxy_t * p = jsb_get_native_proxy(view);
         if (!p) return;
@@ -173,7 +173,7 @@ private:
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), jsFunctionName.c_str(), 1, &arg, NULL);
     }
     
-    void callJSDelegate(CCTableView* table, CCTableViewCell* cell, std::string jsFunctionName)
+    void callJSDelegate(TableView* table, TableViewCell* cell, std::string jsFunctionName)
     {
         js_proxy_t * p = jsb_get_native_proxy(table);
         if (!p) return;
@@ -197,7 +197,7 @@ static JSBool js_cocos2dx_CCTableView_setDelegate(JSContext *cx, uint32_t argc, 
     jsval *argv = JS_ARGV(cx, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::extension::CCTableView* cobj = (cocos2d::extension::CCTableView *)(proxy ? proxy->ptr : NULL);
+    cocos2d::extension::TableView* cobj = (cocos2d::extension::TableView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
     
     if (argc == 1) {
@@ -225,8 +225,8 @@ static JSBool js_cocos2dx_CCTableView_setDelegate(JSContext *cx, uint32_t argc, 
 }
 
 class JSB_TableViewDataSource
-: public CCNode
-, public CCTableViewDataSource
+: public Node
+, public TableViewDataSource
 {
 public:
     JSB_TableViewDataSource()
@@ -243,7 +243,7 @@ public:
         }
     }
     
-    virtual CCSize tableCellSizeForIndex(CCTableView *table, unsigned int idx)
+    virtual Size tableCellSizeForIndex(TableView *table, unsigned int idx)
     {
         jsval ret;
         bool ok = callJSDelegate(table, idx, "tableCellSizeForIndex", ret);
@@ -252,27 +252,27 @@ public:
         }
         if (ok) {
             JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-            CCSize size;
+            Size size;
             JSBool isSucceed = jsval_to_ccsize(cx, ret, &size);
             if (isSucceed) return size;
         }
-        return CCSizeZero;
+        return SizeZero;
         
     }
     
-    virtual CCTableViewCell* tableCellAtIndex(CCTableView *table, unsigned int idx)
+    virtual TableViewCell* tableCellAtIndex(TableView *table, unsigned int idx)
     {
         jsval ret;
         bool ok = callJSDelegate(table, idx, "tableCellAtIndex", ret);
         if (ok)
         {
             JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-            cocos2d::extension::CCTableViewCell* arg0;
+            cocos2d::extension::TableViewCell* arg0;
             do {
                 js_proxy_t *proxy;
                 JSObject *tmpObj = JSVAL_TO_OBJECT(ret);
                 proxy = jsb_get_js_proxy(tmpObj);
-                arg0 = (cocos2d::extension::CCTableViewCell*)(proxy ? proxy->ptr : NULL);
+                arg0 = (cocos2d::extension::TableViewCell*)(proxy ? proxy->ptr : NULL);
                 JSB_PRECONDITION2( arg0, cx, NULL, "Invalid Native Object");
             } while (0);
             return arg0;
@@ -280,7 +280,7 @@ public:
         return NULL;
     }
     
-    virtual unsigned int numberOfCellsInTableView(CCTableView *table)
+    virtual unsigned int numberOfCellsInTableView(TableView *table)
     {
         jsval ret;
         bool ok = callJSDelegate(table, "numberOfCellsInTableView", ret);
@@ -310,7 +310,7 @@ public:
     }
     
 private:
-    bool callJSDelegate(CCTableView* table, std::string jsFunctionName, jsval& retVal)
+    bool callJSDelegate(TableView* table, std::string jsFunctionName, jsval& retVal)
     {
         js_proxy_t * p = jsb_get_native_proxy(table);
         if (!p) return false;
@@ -337,7 +337,7 @@ private:
         return false;
     }
     
-    bool callJSDelegate(CCTableView* table, int idx, std::string jsFunctionName, jsval& retVal)
+    bool callJSDelegate(TableView* table, int idx, std::string jsFunctionName, jsval& retVal)
     {
         js_proxy_t * p = jsb_get_native_proxy(table);
         if (!p) return false;
@@ -377,7 +377,7 @@ static JSBool js_cocos2dx_CCTableView_setDataSource(JSContext *cx, uint32_t argc
     jsval *argv = JS_ARGV(cx, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::extension::CCTableView* cobj = (cocos2d::extension::CCTableView *)(proxy ? proxy->ptr : NULL);
+    cocos2d::extension::TableView* cobj = (cocos2d::extension::TableView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
     if (argc == 1)
     {
@@ -411,10 +411,10 @@ static JSBool js_cocos2dx_CCTableView_create(JSContext *cx, uint32_t argc, jsval
         JSB_TableViewDataSource* pNativeSource = new JSB_TableViewDataSource();
         pNativeSource->setTableViewDataSource(JSVAL_TO_OBJECT(argv[0]));
         
-        cocos2d::CCSize arg1;
+        cocos2d::Size arg1;
         ok &= jsval_to_ccsize(cx, argv[1], &arg1);
-        cocos2d::extension::CCTableView* ret = NULL;
-        ret = new CCTableView();
+        cocos2d::extension::TableView* ret = NULL;
+        ret = new TableView();
         ret->autorelease();
         
         JSB_TableViewDataSource* oldDataSource = (JSB_TableViewDataSource*)ret->getDataSource();
@@ -428,7 +428,7 @@ static JSBool js_cocos2dx_CCTableView_create(JSContext *cx, uint32_t argc, jsval
         jsval jsret;
         do {
             if (ret) {
-                js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::extension::CCTableView>(cx, ret);
+                js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::extension::TableView>(cx, ret);
                 jsret = OBJECT_TO_JSVAL(proxy->obj);
             } else {
                 jsret = JSVAL_NULL;
@@ -441,12 +441,12 @@ static JSBool js_cocos2dx_CCTableView_create(JSContext *cx, uint32_t argc, jsval
         }
         else
         {
-            cocos2d::CCNode* arg2;
+            cocos2d::Node* arg2;
             do {
                 js_proxy_t *proxy;
                 JSObject *tmpObj = JSVAL_TO_OBJECT(argv[2]);
                 proxy = jsb_get_js_proxy(tmpObj);
-                arg2 = (cocos2d::CCNode*)(proxy ? proxy->ptr : NULL);
+                arg2 = (cocos2d::Node*)(proxy ? proxy->ptr : NULL);
                 JSB_PRECONDITION2( arg2, cx, JS_FALSE, "Invalid Native Object");
             } while (0);
             JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
@@ -466,8 +466,8 @@ static JSBool js_cocos2dx_CCTableView_create(JSContext *cx, uint32_t argc, jsval
 }
 
 class JSB_EditBoxDelegate
-: public CCNode
-, public CCEditBoxDelegate
+: public Node
+, public EditBoxDelegate
 {
 public:
     JSB_EditBoxDelegate()
@@ -484,7 +484,7 @@ public:
         }
     }
     
-    virtual void editBoxEditingDidBegin(CCEditBox* editBox)
+    virtual void editBoxEditingDidBegin(EditBox* editBox)
     {
         js_proxy_t * p = jsb_get_native_proxy(editBox);
         if (!p) return;
@@ -493,7 +493,7 @@ public:
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "editBoxEditingDidBegin", 1, &arg, NULL);
     }
     
-    virtual void editBoxEditingDidEnd(CCEditBox* editBox)
+    virtual void editBoxEditingDidEnd(EditBox* editBox)
     {
         js_proxy_t * p = jsb_get_native_proxy(editBox);
         if (!p) return;
@@ -502,7 +502,7 @@ public:
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "editBoxEditingDidEnd", 1, &arg, NULL);
     }
     
-    virtual void editBoxTextChanged(CCEditBox* editBox, const std::string& text)
+    virtual void editBoxTextChanged(EditBox* editBox, const std::string& text)
     {
         js_proxy_t * p = jsb_get_native_proxy(editBox);
         if (!p) return;
@@ -515,7 +515,7 @@ public:
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "editBoxTextChanged", 2, dataVal, NULL);
     }
     
-    virtual void editBoxReturn(CCEditBox* editBox)
+    virtual void editBoxReturn(EditBox* editBox)
     {
         js_proxy_t * p = jsb_get_native_proxy(editBox);
         if (!p) return;
@@ -547,7 +547,7 @@ static JSBool js_cocos2dx_CCEditBox_setDelegate(JSContext *cx, uint32_t argc, js
     jsval *argv = JS_ARGV(cx, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::extension::CCEditBox* cobj = (cocos2d::extension::CCEditBox *)(proxy ? proxy->ptr : NULL);
+    cocos2d::extension::EditBox* cobj = (cocos2d::extension::EditBox *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
     
     if (argc == 1) {
@@ -574,16 +574,16 @@ static JSBool js_cocos2dx_CCEditBox_setDelegate(JSContext *cx, uint32_t argc, js
 }
 
 
-extern JSObject* jsb_CCScrollView_prototype;
-extern JSObject* jsb_CCTableView_prototype;
-extern JSObject* jsb_CCEditBox_prototype;
+extern JSObject* jsb_ScrollView_prototype;
+extern JSObject* jsb_TableView_prototype;
+extern JSObject* jsb_EditBox_prototype;
 
 void register_all_cocos2dx_extension_manual(JSContext* cx, JSObject* global)
 {
-    JS_DefineFunction(cx, jsb_CCScrollView_prototype, "setDelegate", js_cocos2dx_CCScrollView_setDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, jsb_CCTableView_prototype, "setDelegate", js_cocos2dx_CCTableView_setDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, jsb_CCTableView_prototype, "setDataSource", js_cocos2dx_CCTableView_setDataSource, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, jsb_CCEditBox_prototype, "setDelegate", js_cocos2dx_CCEditBox_setDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_ScrollView_prototype, "setDelegate", js_cocos2dx_CCScrollView_setDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_TableView_prototype, "setDelegate", js_cocos2dx_CCTableView_setDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_TableView_prototype, "setDataSource", js_cocos2dx_CCTableView_setDataSource, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_EditBox_prototype, "setDelegate", js_cocos2dx_CCEditBox_setDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     
     JSObject *tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.TableView; })()"));
 	JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCTableView_create, 3, JSPROP_READONLY | JSPROP_PERMANENT);

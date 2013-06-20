@@ -29,16 +29,16 @@
 
 NS_CC_EXT_BEGIN
 
-#define CCControlStepperLabelColorEnabled   ccc3(55, 55, 55)
-#define CCControlStepperLabelColorDisabled  ccc3(147, 147, 147)
+#define ControlStepperLabelColorEnabled   ccc3(55, 55, 55)
+#define ControlStepperLabelColorDisabled  ccc3(147, 147, 147)
 
-#define CCControlStepperLabelFont           "CourierNewPSMT"
+#define ControlStepperLabelFont           "CourierNewPSMT"
 
 
 #define kAutorepeatDeltaTime                0.15f
 #define kAutorepeatIncreaseTimeIncrement    12
 
-CCControlStepper::CCControlStepper()
+ControlStepper::ControlStepper()
 : _minusSprite(NULL)
 , _plusSprite(NULL)
 , _minusLabel(NULL)
@@ -51,13 +51,13 @@ CCControlStepper::CCControlStepper()
 , _maximumValue(0.0)
 , _stepValue(0.0)
 , _touchInsideFlag(false)
-, _touchedPart(kCCControlStepperPartNone)
+, _touchedPart(kControlStepperPartNone)
 , _autorepeatCount(0)
 {
 
 }
 
-CCControlStepper::~CCControlStepper()
+ControlStepper::~ControlStepper()
 {
     unscheduleAllSelectors();
     
@@ -67,9 +67,9 @@ CCControlStepper::~CCControlStepper()
     CC_SAFE_RELEASE(_plusLabel);
 }
 
-bool CCControlStepper::initWithMinusSpriteAndPlusSprite(CCSprite *minusSprite, CCSprite *plusSprite)
+bool ControlStepper::initWithMinusSpriteAndPlusSprite(Sprite *minusSprite, Sprite *plusSprite)
 {
-    if (CCControl::init())
+    if (Control::init())
     {
         CCAssert(minusSprite,   "Minus sprite must be not nil");
         CCAssert(plusSprite,    "Plus sprite must be not nil");
@@ -91,8 +91,8 @@ bool CCControlStepper::initWithMinusSpriteAndPlusSprite(CCSprite *minusSprite, C
 		_minusSprite->setPosition( ccp(minusSprite->getContentSize().width / 2, minusSprite->getContentSize().height / 2) );
 		this->addChild(_minusSprite);
         
-        this->setMinusLabel( CCLabelTTF::create("-", CCControlStepperLabelFont, 40));
-        _minusLabel->setColor(CCControlStepperLabelColorDisabled);
+        this->setMinusLabel( LabelTTF::create("-", ControlStepperLabelFont, 40));
+        _minusLabel->setColor(ControlStepperLabelColorDisabled);
         _minusLabel->setPosition(CCPointMake(_minusSprite->getContentSize().width / 2, _minusSprite->getContentSize().height / 2) );
         _minusSprite->addChild(_minusLabel);
         
@@ -102,22 +102,22 @@ bool CCControlStepper::initWithMinusSpriteAndPlusSprite(CCSprite *minusSprite, C
                                                   minusSprite->getContentSize().height / 2) );
 		this->addChild(_plusSprite);
         
-        this->setPlusLabel( CCLabelTTF::create("+", CCControlStepperLabelFont, 40 ));
-        _plusLabel->setColor( CCControlStepperLabelColorEnabled );
+        this->setPlusLabel( LabelTTF::create("+", ControlStepperLabelFont, 40 ));
+        _plusLabel->setColor( ControlStepperLabelColorEnabled );
         _plusLabel->setPosition( CCPointMake(_plusSprite->getContentSize().width / 2, _plusSprite->getContentSize().height / 2) );
         _plusSprite->addChild(_plusLabel);
         
         // Defines the content size
-        CCRect maxRect = CCControlUtils::CCRectUnion(_minusSprite->boundingBox(), _plusSprite->boundingBox());
+        Rect maxRect = ControlUtils::RectUnion(_minusSprite->boundingBox(), _plusSprite->boundingBox());
         this->setContentSize( CCSizeMake(_minusSprite->getContentSize().width + _plusSprite->getContentSize().height, maxRect.size.height) );
         return true;
     }
     return false;
 }
 
-CCControlStepper* CCControlStepper::create(CCSprite *minusSprite, CCSprite *plusSprite)
+ControlStepper* ControlStepper::create(Sprite *minusSprite, Sprite *plusSprite)
 {
-    CCControlStepper* pRet = new CCControlStepper();
+    ControlStepper* pRet = new ControlStepper();
     if (pRet != NULL && pRet->initWithMinusSpriteAndPlusSprite(minusSprite, plusSprite))
     {
         pRet->autorelease();
@@ -131,20 +131,20 @@ CCControlStepper* CCControlStepper::create(CCSprite *minusSprite, CCSprite *plus
 
 //#pragma mark Properties
 
-void CCControlStepper::setWraps(bool wraps)
+void ControlStepper::setWraps(bool wraps)
 {
     _wraps = wraps;
     
     if (_wraps)
     {
-        _minusLabel->setColor( CCControlStepperLabelColorEnabled );
-        _plusLabel->setColor(CCControlStepperLabelColorEnabled );
+        _minusLabel->setColor( ControlStepperLabelColorEnabled );
+        _plusLabel->setColor(ControlStepperLabelColorEnabled );
     }
     
     this->setValue( _value );
 }
 
-void CCControlStepper::setMinimumValue(double minimumValue)
+void ControlStepper::setMinimumValue(double minimumValue)
 {
     if (minimumValue >= _maximumValue)
     {
@@ -155,7 +155,7 @@ void CCControlStepper::setMinimumValue(double minimumValue)
     this->setValue( _value );
 }
 
-void CCControlStepper::setMaximumValue(double maximumValue)
+void ControlStepper::setMaximumValue(double maximumValue)
 {
     if (maximumValue <= _minimumValue)
     {
@@ -166,17 +166,17 @@ void CCControlStepper::setMaximumValue(double maximumValue)
     this->setValue(_value);
 }
 
-void CCControlStepper::setValue(double value)
+void ControlStepper::setValue(double value)
 {
     this->setValueWithSendingEvent(value, true);
 }
 
-double CCControlStepper::getValue()
+double ControlStepper::getValue()
 {
     return _value;
 }
 
-void CCControlStepper::setStepValue(double stepValue)
+void ControlStepper::setStepValue(double stepValue)
 {
     if (stepValue <= 0)
     {
@@ -186,14 +186,14 @@ void CCControlStepper::setStepValue(double stepValue)
     _stepValue  = stepValue;
 }
 
-bool CCControlStepper::isContinuous()
+bool ControlStepper::isContinuous()
 {
     return _continuous;
 }
 //#pragma mark -
-//#pragma mark CCControlStepper Public Methods
+//#pragma mark ControlStepper Public Methods
 
-void CCControlStepper::setValueWithSendingEvent(double value, bool send)
+void ControlStepper::setValueWithSendingEvent(double value, bool send)
 {
     if (value < _minimumValue)
     {
@@ -207,66 +207,66 @@ void CCControlStepper::setValueWithSendingEvent(double value, bool send)
     
     if (!_wraps)
     {
-        _minusLabel->setColor((value == _minimumValue) ? CCControlStepperLabelColorDisabled : CCControlStepperLabelColorEnabled);
-        _plusLabel->setColor((value == _maximumValue) ? CCControlStepperLabelColorDisabled : CCControlStepperLabelColorEnabled);
+        _minusLabel->setColor((value == _minimumValue) ? ControlStepperLabelColorDisabled : ControlStepperLabelColorEnabled);
+        _plusLabel->setColor((value == _maximumValue) ? ControlStepperLabelColorDisabled : ControlStepperLabelColorEnabled);
     }
     
     if (send)
     {
-        this->sendActionsForControlEvents(CCControlEventValueChanged);
+        this->sendActionsForControlEvents(ControlEventValueChanged);
     }
 }
 
-void CCControlStepper::startAutorepeat()
+void ControlStepper::startAutorepeat()
 {
     _autorepeatCount    = -1;
     
-    this->schedule(schedule_selector(CCControlStepper::update), kAutorepeatDeltaTime, kCCRepeatForever, kAutorepeatDeltaTime * 3);
+    this->schedule(schedule_selector(ControlStepper::update), kAutorepeatDeltaTime, kRepeatForever, kAutorepeatDeltaTime * 3);
 }
 
 /** Stop the autorepeat. */
-void CCControlStepper::stopAutorepeat()
+void ControlStepper::stopAutorepeat()
 {
-    this->unschedule(schedule_selector(CCControlStepper::update));
+    this->unschedule(schedule_selector(ControlStepper::update));
 }
 
-void CCControlStepper::update(float dt)
+void ControlStepper::update(float dt)
 {
     _autorepeatCount++;
     
     if ((_autorepeatCount < kAutorepeatIncreaseTimeIncrement) && (_autorepeatCount % 3) != 0)
         return;
     
-    if (_touchedPart == kCCControlStepperPartMinus)
+    if (_touchedPart == kControlStepperPartMinus)
     {
         this->setValueWithSendingEvent(_value - _stepValue, _continuous);
-    } else if (_touchedPart == kCCControlStepperPartPlus)
+    } else if (_touchedPart == kControlStepperPartPlus)
     {
         this->setValueWithSendingEvent(_value + _stepValue, _continuous);
     }
 }
 
-//#pragma mark CCControlStepper Private Methods
+//#pragma mark ControlStepper Private Methods
 
-void CCControlStepper::updateLayoutUsingTouchLocation(CCPoint location)
+void ControlStepper::updateLayoutUsingTouchLocation(Point location)
 {
     if (location.x < _minusSprite->getContentSize().width
         && _value > _minimumValue)
     {
-        _touchedPart        = kCCControlStepperPartMinus;
+        _touchedPart        = kControlStepperPartMinus;
         
         _minusSprite->setColor(ccGRAY);
         _plusSprite->setColor(ccWHITE);
     } else if (location.x >= _minusSprite->getContentSize().width
                && _value < _maximumValue)
     {
-        _touchedPart        = kCCControlStepperPartPlus;
+        _touchedPart        = kControlStepperPartPlus;
         
         _minusSprite->setColor(ccWHITE);
         _plusSprite->setColor(ccGRAY);
     } else
     {
-        _touchedPart        = kCCControlStepperPartNone;
+        _touchedPart        = kControlStepperPartNone;
         
         _minusSprite->setColor(ccWHITE);
         _plusSprite->setColor(ccWHITE);
@@ -274,14 +274,14 @@ void CCControlStepper::updateLayoutUsingTouchLocation(CCPoint location)
 }
 
 
-bool CCControlStepper::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
+bool ControlStepper::ccTouchBegan(Touch *pTouch, Event *pEvent)
 {
     if (!isTouchInside(pTouch) || !isEnabled() || !isVisible())
     {
         return false;
     }
     
-    CCPoint location    = this->getTouchLocation(pTouch);
+    Point location    = this->getTouchLocation(pTouch);
     this->updateLayoutUsingTouchLocation(location);
     
     _touchInsideFlag = true;
@@ -294,11 +294,11 @@ bool CCControlStepper::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
     return true;
 }
 
-void CCControlStepper::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
+void ControlStepper::ccTouchMoved(Touch *pTouch, Event *pEvent)
 {
     if (this->isTouchInside(pTouch))
     {
-        CCPoint location    = this->getTouchLocation(pTouch);
+        Point location    = this->getTouchLocation(pTouch);
         this->updateLayoutUsingTouchLocation(location);
         
         if (!_touchInsideFlag)
@@ -314,7 +314,7 @@ void CCControlStepper::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
     {
         _touchInsideFlag    = false;
         
-        _touchedPart        = kCCControlStepperPartNone;
+        _touchedPart        = kControlStepperPartNone;
         
         _minusSprite->setColor(ccWHITE);
         _plusSprite->setColor(ccWHITE);
@@ -326,7 +326,7 @@ void CCControlStepper::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
     }
 }
 
-void CCControlStepper::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
+void ControlStepper::ccTouchEnded(Touch *pTouch, Event *pEvent)
 {
     _minusSprite->setColor(ccWHITE);
     _plusSprite->setColor(ccWHITE);
@@ -338,7 +338,7 @@ void CCControlStepper::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
     
     if (this->isTouchInside(pTouch))
     {
-        CCPoint location    = this->getTouchLocation(pTouch);
+        Point location    = this->getTouchLocation(pTouch);
         
         this->setValue(_value + ((location.x < _minusSprite->getContentSize().width) ? (0.0-_stepValue) : _stepValue));
     }

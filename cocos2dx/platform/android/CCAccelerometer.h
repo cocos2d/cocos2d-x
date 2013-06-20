@@ -31,19 +31,19 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
-class CCAccelerometer
+class Accelerometer
 {
 public:
-    CCAccelerometer();
-    ~CCAccelerometer();
+    Accelerometer();
+    ~Accelerometer();
 
-    void setDelegate(std::function<void(CCAcceleration*)> function);
+    void setDelegate(std::function<void(Acceleration*)> function);
     void setAccelerometerInterval(float interval);
     void update(float x, float y, float z, long sensorTimeStamp);
 
 private:
-    std::function<void(CCAcceleration*)> _function;
-    CCAcceleration _accelerationValue;
+    std::function<void(Acceleration*)> _function;
+    Acceleration _accelerationValue;
 };
 
 }//namespace cocos2d

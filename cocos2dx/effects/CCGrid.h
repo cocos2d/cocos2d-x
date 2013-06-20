@@ -38,9 +38,9 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CCTexture2D;
-class CCGrabber;
-class CCGLProgram;
+class Texture2D;
+class Grabber;
+class GLProgram;
 
 /**
  * @addtogroup effects
@@ -49,10 +49,10 @@ class CCGLProgram;
 
 /** Base class for other
 */
-class CC_DLL CCGridBase : public CCObject
+class CC_DLL GridBase : public Object
 {
 public:
-    virtual ~CCGridBase(void);
+    virtual ~GridBase(void);
 
     /** whether or not the grid is active */
     inline bool isActive(void) { return _active; }
@@ -63,22 +63,22 @@ public:
     inline void setReuseGrid(int nReuseGrid) { _reuseGrid = nReuseGrid; }
 
     /** size of the grid */
-    inline const CCSize& getGridSize(void) { return _gridSize; }
-    inline void setGridSize(const CCSize& gridSize) { _gridSize = gridSize; }
+    inline const Size& getGridSize(void) { return _gridSize; }
+    inline void setGridSize(const Size& gridSize) { _gridSize = gridSize; }
 
     /** pixels between the grids */
-    inline const CCPoint& getStep(void) { return _step; }
-    inline void setStep(const CCPoint& step) { _step = step; }
+    inline const Point& getStep(void) { return _step; }
+    inline void setStep(const Point& step) { _step = step; }
 
     /** is texture flipped */
     inline bool isTextureFlipped(void) { return _isTextureFlipped; }
     void setTextureFlipped(bool bFlipped);
 
-    bool initWithSize(const CCSize& gridSize, CCTexture2D *pTexture, bool bFlipped);
-    bool initWithSize(const CCSize& gridSize);
+    bool initWithSize(const Size& gridSize, Texture2D *pTexture, bool bFlipped);
+    bool initWithSize(const Size& gridSize);
 
     void beforeDraw(void);
-    void afterDraw(CCNode *pTarget);
+    void afterDraw(Node *pTarget);
     virtual void blit(void);
     virtual void reuse(void);
     virtual void calculateVertexPoints(void);
@@ -86,42 +86,42 @@ public:
 public:
 
     /** create one Grid */
-    static CCGridBase* create(const CCSize& gridSize, CCTexture2D *texture, bool flipped);
+    static GridBase* create(const Size& gridSize, Texture2D *texture, bool flipped);
     /** create one Grid */
-    static CCGridBase* create(const CCSize& gridSize);
+    static GridBase* create(const Size& gridSize);
 
     void set2DProjection(void);
 
 protected:
     bool _active;
     int  _reuseGrid;
-    CCSize _gridSize;
-    CCTexture2D *_texture;
-    CCPoint _step;
-    CCGrabber *_grabber;
+    Size _gridSize;
+    Texture2D *_texture;
+    Point _step;
+    Grabber *_grabber;
     bool _isTextureFlipped;
-    CCGLProgram* _shaderProgram;
+    GLProgram* _shaderProgram;
     ccDirectorProjection _directorProjection;
 };
 
 /**
- CCGrid3D is a 3D grid implementation. Each vertex has 3 dimensions: x,y,z
+ Grid3D is a 3D grid implementation. Each vertex has 3 dimensions: x,y,z
  */
-class CC_DLL CCGrid3D : public CCGridBase
+class CC_DLL Grid3D : public GridBase
 #ifdef EMSCRIPTEN
-, public CCGLBufferedNode
+, public GLBufferedNode
 #endif // EMSCRIPTEN
 {
 public:
-    CCGrid3D();
-    ~CCGrid3D(void);
+    Grid3D();
+    ~Grid3D(void);
 
     /** returns the vertex at a given position */
-    ccVertex3F vertex(const CCPoint& pos);
+    ccVertex3F vertex(const Point& pos);
     /** returns the original (non-transformed) vertex at a given position */
-    ccVertex3F originalVertex(const CCPoint& pos);
+    ccVertex3F originalVertex(const Point& pos);
     /** sets a new vertex at a given position */
-    void setVertex(const CCPoint& pos, const ccVertex3F& vertex);
+    void setVertex(const Point& pos, const ccVertex3F& vertex);
 
     virtual void blit(void);
     virtual void reuse(void);
@@ -129,9 +129,9 @@ public:
 
 public:
     /** create one Grid */
-    static CCGrid3D* create(const CCSize& gridSize, CCTexture2D *pTexture, bool bFlipped);
+    static Grid3D* create(const Size& gridSize, Texture2D *pTexture, bool bFlipped);
     /** create one Grid */
-    static CCGrid3D* create(const CCSize& gridSize);
+    static Grid3D* create(const Size& gridSize);
     
 protected:
     GLvoid *_texCoordinates;
@@ -141,24 +141,24 @@ protected:
 };
 
 /**
- CCTiledGrid3D is a 3D grid implementation. It differs from Grid3D in that
+ TiledGrid3D is a 3D grid implementation. It differs from Grid3D in that
  the tiles can be separated from the grid.
 */
-class CC_DLL CCTiledGrid3D : public CCGridBase
+class CC_DLL TiledGrid3D : public GridBase
 #ifdef EMSCRIPTEN
-, public CCGLBufferedNode
+, public GLBufferedNode
 #endif // EMSCRIPTEN
 {
 public:
-    CCTiledGrid3D();
-    ~CCTiledGrid3D(void);
+    TiledGrid3D();
+    ~TiledGrid3D(void);
 
     /** returns the tile at the given position */
-    ccQuad3 tile(const CCPoint& pos);
+    ccQuad3 tile(const Point& pos);
     /** returns the original tile (untransformed) at the given position */
-    ccQuad3 originalTile(const CCPoint& pos);
+    ccQuad3 originalTile(const Point& pos);
     /** sets a new tile */
-    void setTile(const CCPoint& pos, const ccQuad3& coords);
+    void setTile(const Point& pos, const ccQuad3& coords);
 
     virtual void blit(void);
     virtual void reuse(void);
@@ -167,9 +167,9 @@ public:
 public:
 
     /** create one Grid */
-    static CCTiledGrid3D* create(const CCSize& gridSize, CCTexture2D *pTexture, bool bFlipped);
+    static TiledGrid3D* create(const Size& gridSize, Texture2D *pTexture, bool bFlipped);
     /** create one Grid */
-    static CCTiledGrid3D* create(const CCSize& gridSize);
+    static TiledGrid3D* create(const Size& gridSize);
     
 protected:
     GLvoid *_texCoordinates;

@@ -35,21 +35,21 @@ void PlayerController::update(float delta)
 
 }
 
-void PlayerController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
+void PlayerController::ccTouchesEnded(Set *pTouches, Event *pEvent)
 {
     // Choose one of the touches to work with
-	CCTouch* touch = (CCTouch*)( pTouches->anyObject() );
-	CCPoint location = touch->getLocation();
+	Touch* touch = (Touch*)( pTouches->anyObject() );
+	Point location = touch->getLocation();
     
 
-	CCSprite *projectile = CCSprite::create("components/Projectile.png", CCRectMake(0, 0, 20, 20));
+	Sprite *projectile = Sprite::create("components/Projectile.png", CCRectMake(0, 0, 20, 20));
     _owner->getParent()->addChild(projectile, 1, 4);
     
     ProjectileController *com = ProjectileController::create();
     projectile->addComponent(com);
     com->move(location.x, location.y);
 
-    ((CCComAudio*)(_owner->getComponent("Audio")))->playEffect("pew-pew-lei.wav");
+    ((ComAudio*)(_owner->getComponent("Audio")))->playEffect("pew-pew-lei.wav");
 }
 
 PlayerController* PlayerController::create(void)

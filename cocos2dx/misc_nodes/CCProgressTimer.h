@@ -42,45 +42,45 @@ NS_CC_BEGIN
  */
 typedef enum {
     /// Radial Counter-Clockwise
-    kCCProgressTimerTypeRadial,
+    kProgressTimerTypeRadial,
     /// Bar
-    kCCProgressTimerTypeBar,
-} CCProgressTimerType;
+    kProgressTimerTypeBar,
+} ProgressTimerType;
 
 /**
- @brief CCProgressTimer is a subclass of CCNode.
+ @brief ProgressTimer is a subclass of Node.
  It renders the inner sprite according to the percentage.
  The progress can be Radial, Horizontal or vertical.
  @since v0.99.1
  */
-class CC_DLL CCProgressTimer : public CCNodeRGBA
+class CC_DLL ProgressTimer : public NodeRGBA
 #ifdef EMSCRIPTEN
-, public CCGLBufferedNode
+, public GLBufferedNode
 #endif // EMSCRIPTEN
 {
 public:
-    CCProgressTimer();
-    ~CCProgressTimer(void);
+    ProgressTimer();
+    ~ProgressTimer(void);
 
     /**    Change the percentage to change progress. */
-    inline CCProgressTimerType getType(void) { return _type; }
+    inline ProgressTimerType getType(void) { return _type; }
 
     /** Percentages are from 0 to 100 */
     inline float getPercentage(void) {return _percentage; }
 
     /** The image to show the progress percentage, retain */
-    inline CCSprite* getSprite(void) { return _sprite; }
+    inline Sprite* getSprite(void) { return _sprite; }
 
     /** Initializes a progress timer with the sprite as the shape the timer goes through */
-    bool initWithSprite(CCSprite* sp);
+    bool initWithSprite(Sprite* sp);
 
     void setPercentage(float fPercentage);
-    void setSprite(CCSprite *pSprite);
-    void setType(CCProgressTimerType type);
+    void setSprite(Sprite *pSprite);
+    void setType(ProgressTimerType type);
     void setReverseProgress(bool reverse);
 
     virtual void draw(void);
-    void setAnchorPoint(CCPoint anchorPoint);
+    void setAnchorPoint(Point anchorPoint);
 
     virtual void setOpacityModifyRGB(bool bValue);
     virtual bool isOpacityModifyRGB(void);
@@ -90,20 +90,20 @@ public:
 
 public:
     /** Creates a progress timer with the sprite as the shape the timer goes through */
-    static CCProgressTimer* create(CCSprite* sp);
+    static ProgressTimer* create(Sprite* sp);
 protected:
-    ccTex2F textureCoordFromAlphaPoint(CCPoint alpha);
-    ccVertex2F vertexFromAlphaPoint(CCPoint alpha);
+    ccTex2F textureCoordFromAlphaPoint(Point alpha);
+    ccVertex2F vertexFromAlphaPoint(Point alpha);
     void updateProgress(void);
     void updateBar(void);
     void updateRadial(void);
     void updateColor(void);
-    CCPoint boundaryTexCoord(char index);
+    Point boundaryTexCoord(char index);
 
 protected:
-    CCProgressTimerType _type;
+    ProgressTimerType _type;
     float _percentage;
-    CCSprite *_sprite;
+    Sprite *_sprite;
     int _vertexDataCount;
     ccV2F_C4B_T2F *_vertexData;
 
@@ -117,7 +117,7 @@ protected:
      *        you want a bottom to top then set the midpoint all the way to ccp(x,0)
      *        you want a top to bottom then set the midpoint all the way to ccp(x,1)
      */
-    CC_PROPERTY(CCPoint, _midpoint, Midpoint);
+    CC_PROPERTY(Point, _midpoint, Midpoint);
 
     /**
      *    This allows the bar type to move the component at a specific rate
@@ -125,7 +125,7 @@ protected:
      *    For example you want a left to right bar but not have the height stay 100%
      *    Set the rate to be ccp(0,1); and set the midpoint to = ccp(0,.5f);
      */
-    CC_SYNTHESIZE(CCPoint, _barChangeRate, BarChangeRate);
+    CC_SYNTHESIZE(Point, _barChangeRate, BarChangeRate);
 
     bool _reverseDirection;
 };

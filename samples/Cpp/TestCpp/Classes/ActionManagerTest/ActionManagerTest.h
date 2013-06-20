@@ -7,7 +7,7 @@
 class ActionManagerTest: public BaseTest
 {
 protected:
-    CCTextureAtlas* _atlas;
+    TextureAtlas* _atlas;
 
     std::string    _title;
 
@@ -17,9 +17,9 @@ public:
 
     virtual std::string title();
 
-    void restartCallback(CCObject* pSender);
-    void nextCallback(CCObject* pSender);
-    void backCallback(CCObject* pSender);
+    void restartCallback(Object* pSender);
+    void nextCallback(Object* pSender);
+    void backCallback(Object* pSender);
 };
 
 class CrashTest : public ActionManagerTest
@@ -35,7 +35,7 @@ class LogicTest : public ActionManagerTest
 public:
     virtual std::string title();
     virtual void onEnter();
-    void bugMe(CCNode* node);
+    void bugMe(Node* node);
 };
 
 class PauseTest : public ActionManagerTest

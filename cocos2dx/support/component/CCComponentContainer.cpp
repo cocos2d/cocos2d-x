@@ -29,31 +29,31 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-CCComponentContainer::CCComponentContainer(CCNode *pNode)
+ComponentContainer::ComponentContainer(Node *pNode)
 : _components(NULL)
 , _owner(pNode)
 {
 }
 
-CCComponentContainer::~CCComponentContainer(void)
+ComponentContainer::~ComponentContainer(void)
 {
     CC_SAFE_RELEASE(_components);
 }
 
-CCComponent* CCComponentContainer::get(const char *pName) const
+Component* ComponentContainer::get(const char *pName) const
 {
-    CCComponent* pRet = NULL;
+    Component* pRet = NULL;
     CCAssert(pName != NULL, "Argument must be non-nil");
     do {
         CC_BREAK_IF(NULL == pName);
         CC_BREAK_IF(NULL == _components);
-        pRet = dynamic_cast<CCComponent*>(_components->objectForKey(pName));
+        pRet = dynamic_cast<Component*>(_components->objectForKey(pName));
         
     } while (0);
     return pRet;
 }
 
-bool CCComponentContainer::add(CCComponent *pCom)
+bool ComponentContainer::add(Component *pCom)
 {
     bool bRet = false;
     CCAssert(pCom != NULL, "Argument must be non-nil");
@@ -62,11 +62,11 @@ bool CCComponentContainer::add(CCComponent *pCom)
     {
         if (_components == NULL)
         {
-            _components = CCDictionary::create();
+            _components = Dictionary::create();
             _components->retain();
             _owner->scheduleUpdate();
         }
-        CCComponent *pComponent = dynamic_cast<CCComponent*>(_components->objectForKey(pCom->getName()));
+        Component *pComponent = dynamic_cast<Component*>(_components->objectForKey(pCom->getName()));
         
         CCAssert(pComponent == NULL, "Component already added. It can't be added again");
         CC_BREAK_IF(pComponent);
@@ -78,21 +78,21 @@ bool CCComponentContainer::add(CCComponent *pCom)
     return bRet;
 }
 
-bool CCComponentContainer::remove(const char *pName)
+bool ComponentContainer::remove(const char *pName)
 {
     bool bRet = false;
     CCAssert(pName != NULL, "Argument must be non-nil");
     do 
     {        
         CC_BREAK_IF(!_components);
-        CCObject* pRetObject = NULL;
-        CCDictElement *pElement = NULL;
+        Object* pRetObject = NULL;
+        DictElement *pElement = NULL;
         HASH_FIND_PTR(_components->_elements, pName, pElement);
         if (pElement != NULL)
         {
            pRetObject = pElement->getObject();
         }
-        CCComponent *com = dynamic_cast<CCComponent*>(pRetObject);
+        Component *com = dynamic_cast<Component*>(pRetObject);
         CC_BREAK_IF(!com);
         com->onExit();
         com->setOwner(NULL);
@@ -104,16 +104,16 @@ bool CCComponentContainer::remove(const char *pName)
     return bRet;
  }
 
-void CCComponentContainer::removeAll()
+void ComponentContainer::removeAll()
 {
     if (_components != NULL)
     {
-        CCDictElement *pElement, *tmp;
+        DictElement *pElement, *tmp;
         HASH_ITER(hh, _components->_elements, pElement, tmp)
         {
             HASH_DEL(_components->_elements, pElement);
-            ((CCComponent*)pElement->getObject())->onExit();
-            ((CCComponent*)pElement->getObject())->setOwner(NULL);
+            ((Component*)pElement->getObject())->onExit();
+            ((Component*)pElement->getObject())->setOwner(NULL);
             pElement->getObject()->release();
             CC_SAFE_DELETE(pElement);
         }
@@ -121,25 +121,25 @@ void CCComponentContainer::removeAll()
     }
 }
 
-void CCComponentContainer::alloc(void)
+void ComponentContainer::alloc(void)
 {
-    _components = CCDictionary::create();
+    _components = Dictionary::create();
     _components->retain();
 }
 
-void CCComponentContainer::visit(float fDelta)
+void ComponentContainer::visit(float fDelta)
 {
     if (_components != NULL)
     {
-        CCDictElement *pElement, *tmp;
+        DictElement *pElement, *tmp;
         HASH_ITER(hh, _components->_elements, pElement, tmp)
         {
-            ((CCComponent*)pElement->getObject())->update(fDelta);
+            ((Component*)pElement->getObject())->update(fDelta);
         }
     }
 }
 
-bool CCComponentContainer::isEmpty() const
+bool ComponentContainer::isEmpty() const
 {
     return (bool)(!(_components && _components->count()));
 }

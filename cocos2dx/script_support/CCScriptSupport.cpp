@@ -27,7 +27,7 @@
 
 bool CC_DLL cc_assert_script_compatible(const char *msg)
 {
-    cocos2d::CCScriptEngineProtocol* pEngine = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine();
+    cocos2d::ScriptEngineProtocol* pEngine = cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine();
     if (pEngine && pEngine->handleAssert(msg))
     {
         return true;
@@ -38,34 +38,34 @@ bool CC_DLL cc_assert_script_compatible(const char *msg)
 NS_CC_BEGIN
 
 // #pragma mark -
-// #pragma mark CCScriptHandlerEntry
+// #pragma mark ScriptHandlerEntry
 
-CCScriptHandlerEntry* CCScriptHandlerEntry::create(int nHandler)
+ScriptHandlerEntry* ScriptHandlerEntry::create(int nHandler)
 {
-    CCScriptHandlerEntry* entry = new CCScriptHandlerEntry(nHandler);
+    ScriptHandlerEntry* entry = new ScriptHandlerEntry(nHandler);
     entry->autorelease();
     return entry;
 }
 
-CCScriptHandlerEntry::~CCScriptHandlerEntry(void)
+ScriptHandlerEntry::~ScriptHandlerEntry(void)
 {
-    CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(_handler);
+    ScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(_handler);
 }
 
 // #pragma mark -
-// #pragma mark CCSchedulerScriptHandlerEntry
+// #pragma mark SchedulerScriptHandlerEntry
 
-CCSchedulerScriptHandlerEntry* CCSchedulerScriptHandlerEntry::create(int nHandler, float fInterval, bool bPaused)
+SchedulerScriptHandlerEntry* SchedulerScriptHandlerEntry::create(int nHandler, float fInterval, bool bPaused)
 {
-    CCSchedulerScriptHandlerEntry* pEntry = new CCSchedulerScriptHandlerEntry(nHandler);
+    SchedulerScriptHandlerEntry* pEntry = new SchedulerScriptHandlerEntry(nHandler);
     pEntry->init(fInterval, bPaused);
     pEntry->autorelease();
     return pEntry;
 }
 
-bool CCSchedulerScriptHandlerEntry::init(float fInterval, bool bPaused)
+bool SchedulerScriptHandlerEntry::init(float fInterval, bool bPaused)
 {
-    _timer = new CCTimer();
+    _timer = new Timer();
     _timer->initWithScriptHandler(_handler, fInterval);
     _timer->autorelease();
     _timer->retain();
@@ -74,7 +74,7 @@ bool CCSchedulerScriptHandlerEntry::init(float fInterval, bool bPaused)
     return true;
 }
 
-CCSchedulerScriptHandlerEntry::~CCSchedulerScriptHandlerEntry(void)
+SchedulerScriptHandlerEntry::~SchedulerScriptHandlerEntry(void)
 {
     _timer->release();
     LUALOG("[LUA] DEL script schedule %d, entryID: %d", _handler, _entryId);
@@ -82,26 +82,26 @@ CCSchedulerScriptHandlerEntry::~CCSchedulerScriptHandlerEntry(void)
 
 
 // #pragma mark -
-// #pragma mark CCTouchScriptHandlerEntry
+// #pragma mark TouchScriptHandlerEntry
 
-CCTouchScriptHandlerEntry* CCTouchScriptHandlerEntry::create(int nHandler,
+TouchScriptHandlerEntry* TouchScriptHandlerEntry::create(int nHandler,
                                                              bool bIsMultiTouches,
                                                              int nPriority,
                                                              bool bSwallowsTouches)
 {
-    CCTouchScriptHandlerEntry* pEntry = new CCTouchScriptHandlerEntry(nHandler);
+    TouchScriptHandlerEntry* pEntry = new TouchScriptHandlerEntry(nHandler);
     pEntry->init(bIsMultiTouches, nPriority, bSwallowsTouches);
     pEntry->autorelease();
     return pEntry;
 }
 
-CCTouchScriptHandlerEntry::~CCTouchScriptHandlerEntry(void)
+TouchScriptHandlerEntry::~TouchScriptHandlerEntry(void)
 {
-    CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(_handler);
+    ScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(_handler);
     LUALOG("[LUA] Remove touch event handler: %d", _handler);
 }
 
-bool CCTouchScriptHandlerEntry::init(bool bIsMultiTouches, int nPriority, bool bSwallowsTouches)
+bool TouchScriptHandlerEntry::init(bool bIsMultiTouches, int nPriority, bool bSwallowsTouches)
 {
     _isMultiTouches = bIsMultiTouches;
     _priority = nPriority;
@@ -111,23 +111,23 @@ bool CCTouchScriptHandlerEntry::init(bool bIsMultiTouches, int nPriority, bool b
 }
 
 // #pragma mark -
-// #pragma mark CCScriptEngineManager
+// #pragma mark ScriptEngineManager
 
-static CCScriptEngineManager* s_pSharedScriptEngineManager = NULL;
+static ScriptEngineManager* s_pSharedScriptEngineManager = NULL;
 
 
-CCScriptEngineManager::~CCScriptEngineManager(void)
+ScriptEngineManager::~ScriptEngineManager(void)
 {
     removeScriptEngine();
 }
 
-void CCScriptEngineManager::setScriptEngine(CCScriptEngineProtocol *pScriptEngine)
+void ScriptEngineManager::setScriptEngine(ScriptEngineProtocol *pScriptEngine)
 {
     removeScriptEngine();
     _scriptEngine = pScriptEngine;
 }
 
-void CCScriptEngineManager::removeScriptEngine(void)
+void ScriptEngineManager::removeScriptEngine(void)
 {
     if (_scriptEngine)
     {
@@ -136,16 +136,16 @@ void CCScriptEngineManager::removeScriptEngine(void)
     }
 }
 
-CCScriptEngineManager* CCScriptEngineManager::sharedManager(void)
+ScriptEngineManager* ScriptEngineManager::sharedManager(void)
 {
     if (!s_pSharedScriptEngineManager)
     {
-        s_pSharedScriptEngineManager = new CCScriptEngineManager();
+        s_pSharedScriptEngineManager = new ScriptEngineManager();
     }
     return s_pSharedScriptEngineManager;
 }
 
-void CCScriptEngineManager::purgeSharedManager(void)
+void ScriptEngineManager::purgeSharedManager(void)
 {
     if (s_pSharedScriptEngineManager)
     {

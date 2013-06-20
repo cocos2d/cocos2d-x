@@ -30,14 +30,14 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-CCObject* CCCopying::copyWithZone(CCZone *pZone)
+Object* Copying::copyWithZone(Zone *pZone)
 {
     CC_UNUSED_PARAM(pZone);
     CCAssert(0, "not implement");
     return 0;
 }
 
-CCObject::CCObject(void)
+Object::Object(void)
 : _luaID(0)
 , _reference(1) // when the object is created, the reference count of it is 1
 , _autoReleaseCount(0)
@@ -47,36 +47,36 @@ CCObject::CCObject(void)
     _ID = ++uObjectCount;
 }
 
-CCObject::~CCObject(void)
+Object::~Object(void)
 {
     // if the object is managed, we should remove it
     // from pool manager
     if (_autoReleaseCount > 0)
     {
-        CCPoolManager::sharedPoolManager()->removeObject(this);
+        PoolManager::sharedPoolManager()->removeObject(this);
     }
 
     // if the object is referenced by Lua engine, remove it
     if (_luaID)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptObjectByCCObject(this);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptObjectByObject(this);
     }
     else
     {
-        CCScriptEngineProtocol* pEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
+        ScriptEngineProtocol* pEngine = ScriptEngineManager::sharedManager()->getScriptEngine();
         if (pEngine != NULL && pEngine->getScriptType() == kScriptTypeJavascript)
         {
-            pEngine->removeScriptObjectByCCObject(this);
+            pEngine->removeScriptObjectByObject(this);
         }
     }
 }
 
-CCObject* CCObject::copy()
+Object* Object::copy()
 {
     return copyWithZone(0);
 }
 
-void CCObject::release(void)
+void Object::release(void)
 {
     CCAssert(_reference > 0, "reference count should greater than 0");
     --_reference;
@@ -87,35 +87,35 @@ void CCObject::release(void)
     }
 }
 
-void CCObject::retain(void)
+void Object::retain(void)
 {
     CCAssert(_reference > 0, "reference count should greater than 0");
 
     ++_reference;
 }
 
-CCObject* CCObject::autorelease(void)
+Object* Object::autorelease(void)
 {
-    CCPoolManager::sharedPoolManager()->addObject(this);
+    PoolManager::sharedPoolManager()->addObject(this);
     return this;
 }
 
-bool CCObject::isSingleReference(void) const
+bool Object::isSingleReference(void) const
 {
     return _reference == 1;
 }
 
-unsigned int CCObject::retainCount(void) const
+unsigned int Object::retainCount(void) const
 {
     return _reference;
 }
 
-bool CCObject::isEqual(const CCObject *pObject)
+bool Object::isEqual(const Object *pObject)
 {
     return this == pObject;
 }
 
-void CCObject::acceptVisitor(CCDataVisitor &visitor)
+void Object::acceptVisitor(DataVisitor &visitor)
 {
     visitor.visitObject(this);
 }

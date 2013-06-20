@@ -40,11 +40,11 @@ class CocosPepperInstance;
 
 NS_CC_BEGIN
 
-class CCEGLView : public CCEGLViewProtocol
+class EGLView : public EGLViewProtocol
 {
 public:
-    CCEGLView();
-    virtual ~CCEGLView();
+    EGLView();
+    virtual ~EGLView();
 
     /**
      * iPixelWidth, height: the window's size
@@ -70,7 +70,7 @@ public:
     /**
      @brief get the shared main open gl window
      */
-    static CCEGLView* sharedOpenGLView();
+    static EGLView* sharedOpenGLView();
     static CocosPepperInstance* g_instance;
 private:
     void HandleMouseEvent(const pp::MouseInputEvent* event);

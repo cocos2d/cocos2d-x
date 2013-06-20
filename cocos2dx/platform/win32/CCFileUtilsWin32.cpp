@@ -43,28 +43,28 @@ static void _checkPath()
     }
 }
 
-CCFileUtils* CCFileUtils::sharedFileUtils()
+FileUtils* FileUtils::sharedFileUtils()
 {
     if (s_sharedFileUtils == NULL)
     {
-        s_sharedFileUtils = new CCFileUtilsWin32();
+        s_sharedFileUtils = new FileUtilsWin32();
         s_sharedFileUtils->init();
     }
     return s_sharedFileUtils;
 }
 
-CCFileUtilsWin32::CCFileUtilsWin32()
+FileUtilsWin32::FileUtilsWin32()
 {
 }
 
-bool CCFileUtilsWin32::init()
+bool FileUtilsWin32::init()
 {
     _checkPath();
     _defaultResRootPath = s_pszResourcePath;
-    return CCFileUtils::init();
+    return FileUtils::init();
 }
 
-bool CCFileUtilsWin32::isFileExist(const std::string& strFilePath)
+bool FileUtilsWin32::isFileExist(const std::string& strFilePath)
 {
     if (0 == strFilePath.length())
     {
@@ -79,7 +79,7 @@ bool CCFileUtilsWin32::isFileExist(const std::string& strFilePath)
     return GetFileAttributesA(strPath.c_str()) != -1 ? true : false;
 }
 
-bool CCFileUtilsWin32::isAbsolutePath(const std::string& strPath)
+bool FileUtilsWin32::isAbsolutePath(const std::string& strPath)
 {
     if (   strPath.length() > 2 
         && ( (strPath[0] >= 'a' && strPath[0] <= 'z') || (strPath[0] >= 'A' && strPath[0] <= 'Z') )
@@ -90,7 +90,7 @@ bool CCFileUtilsWin32::isAbsolutePath(const std::string& strPath)
     return false;
 }
 
-string CCFileUtilsWin32::getWritablePath()
+string FileUtilsWin32::getWritablePath()
 {
     // Get full path of executable, e.g. c:\Program Files (x86)\My Game Folder\MyGame.exe
     char full_path[_MAX_PATH + 1];

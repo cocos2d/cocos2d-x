@@ -25,7 +25,7 @@ float calculateDeltaTime( struct timeval *lastUpdate )
 ////////////////////////////////////////////////////////
 void TextureMenuLayer::showCurrentTest()
 {
-    CCScene* pScene = NULL;
+    Scene* pScene = NULL;
 
     switch (_curCase)
     {
@@ -37,7 +37,7 @@ void TextureMenuLayer::showCurrentTest()
 
     if (pScene)
     {
-        CCDirector::sharedDirector()->replaceScene(pScene);
+        Director::sharedDirector()->replaceScene(pScene);
     }
 }
 
@@ -45,10 +45,10 @@ void TextureMenuLayer::onEnter()
 {
     PerformBasicLayer::onEnter();
 
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
 
     // Title
-    CCLabelTTF *label = CCLabelTTF::create(title().c_str(), "Arial", 40);
+    LabelTTF *label = LabelTTF::create(title().c_str(), "Arial", 40);
     addChild(label, 1);
     label->setPosition(ccp(s.width/2, s.height-32));
     label->setColor(ccc3(255,255,40));
@@ -57,7 +57,7 @@ void TextureMenuLayer::onEnter()
     std::string strSubTitle = subtitle();
     if(strSubTitle.length())
     {
-        CCLabelTTF *l = CCLabelTTF::create(strSubTitle.c_str(), "Thonburi", 16);
+        LabelTTF *l = LabelTTF::create(strSubTitle.c_str(), "Thonburi", 16);
         addChild(l, 1);
         l->setPosition(ccp(s.width/2, s.height-80));
     }
@@ -83,11 +83,11 @@ std::string TextureMenuLayer::subtitle()
 void TextureTest::performTestsPNG(const char* filename)
 {
     struct timeval now;
-    CCTexture2D *texture;
-    CCTextureCache *cache = CCTextureCache::sharedTextureCache();
+    Texture2D *texture;
+    TextureCache *cache = TextureCache::sharedTextureCache();
 
     CCLog("RGBA 8888");
-    CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
+    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA8888);
     gettimeofday(&now, NULL);
     texture = cache->addImage(filename);
     if( texture )
@@ -97,7 +97,7 @@ void TextureTest::performTestsPNG(const char* filename)
     cache->removeTexture(texture);
 
     CCLog("RGBA 4444");
-    CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
+    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA4444);
     gettimeofday(&now, NULL);
     texture = cache->addImage(filename);
     if( texture )
@@ -107,7 +107,7 @@ void TextureTest::performTestsPNG(const char* filename)
     cache->removeTexture(texture);
 
     CCLog("RGBA 5551");
-    CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB5A1);
+    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGB5A1);
     gettimeofday(&now, NULL);
     texture = cache->addImage(filename);
     if( texture )
@@ -117,7 +117,7 @@ void TextureTest::performTestsPNG(const char* filename)
     cache->removeTexture(texture);
 
     CCLog("RGB 565");
-    CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB565);
+    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGB565);
     gettimeofday(&now, NULL);    
     texture = cache->addImage(filename);
     if( texture )
@@ -129,9 +129,9 @@ void TextureTest::performTestsPNG(const char* filename)
 
 void TextureTest::performTests()
 {
-//     CCTexture2D *texture;
+//     Texture2D *texture;
 //     struct timeval now;
-//     CCTextureCache *cache = CCTextureCache::sharedTextureCache();
+//     TextureCache *cache = TextureCache::sharedTextureCache();
 
     CCLog("--------");
 
@@ -342,9 +342,9 @@ std::string TextureTest::subtitle()
     return "See console for results";
 }
 
-CCScene* TextureTest::scene()
+Scene* TextureTest::scene()
 {
-    CCScene *pScene = CCScene::create();
+    Scene *pScene = Scene::create();
     TextureTest *layer = new TextureTest(false, TEST_COUNT, s_nTexCurCase);
     pScene->addChild(layer);
     layer->release();
@@ -355,6 +355,6 @@ CCScene* TextureTest::scene()
 void runTextureTest()
 {
     s_nTexCurCase = 0;
-    CCScene* pScene = TextureTest::scene();
-    CCDirector::sharedDirector()->replaceScene(pScene);
+    Scene* pScene = TextureTest::scene();
+    Director::sharedDirector()->replaceScene(pScene);
 }

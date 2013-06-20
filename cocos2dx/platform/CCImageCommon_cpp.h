@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #ifndef __CC_PLATFORM_IMAGE_CPP__
-#error "CCFileUtilsCommon_cpp.h can only be included for CCFileUtils.cpp in platform/win32(android,...)"
+#error "CCFileUtilsCommon_cpp.h can only be included for FileUtils.cpp in platform/win32(android,...)"
 #endif /* __CC_PLATFORM_IMAGE_CPP__ */
 
 #include "CCImage.h"
@@ -72,10 +72,10 @@ static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t leng
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Implement CCImage
+// Implement Image
 //////////////////////////////////////////////////////////////////////////
 
-CCImage::CCImage()
+Image::Image()
 : _width(0)
 , _height(0)
 , _bitsPerComponent(0)
@@ -86,12 +86,12 @@ CCImage::CCImage()
 
 }
 
-CCImage::~CCImage()
+Image::~Image()
 {
     CC_SAFE_DELETE_ARRAY(_data);
 }
 
-bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
+bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
 {
     bool bRet = false;
 
@@ -116,8 +116,8 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
     SDL_FreeSurface(iSurf);
 #else
     unsigned long nSize = 0;
-    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(strPath);
-    unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str(), "rb", &nSize);
+    std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(strPath);
+    unsigned char* pBuffer = FileUtils::sharedFileUtils()->getFileData(fullPath.c_str(), "rb", &nSize);
     if (pBuffer != NULL && nSize > 0)
     {
         bRet = initWithImageData(pBuffer, nSize, eImgFmt);
@@ -128,15 +128,15 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
     return bRet;
 }
 
-bool CCImage::initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType)
+bool Image::initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType)
 {
     bool bRet = false;
     unsigned long nSize = 0;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    CCFileUtilsAndroid *fileUitls = (CCFileUtilsAndroid*)CCFileUtils::sharedFileUtils();
+    FileUtilsAndroid *fileUitls = (FileUtilsAndroid*)FileUtils::sharedFileUtils();
     unsigned char *pBuffer = fileUitls->getFileDataForAsync(fullpath, "rb", &nSize);
 #else
-    unsigned char *pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullpath, "rb", &nSize);
+    unsigned char *pBuffer = FileUtils::sharedFileUtils()->getFileData(fullpath, "rb", &nSize);
 #endif
     if (pBuffer != NULL && nSize > 0)
     {
@@ -146,7 +146,7 @@ bool CCImage::initWithImageFileThreadSafe(const char *fullpath, EImageFormat ima
     return bRet;
 }
 
-bool CCImage::initWithImageData(void * pData, 
+bool Image::initWithImageData(void * pData, 
                                 int nDataLen, 
                                 EImageFormat eFmt/* = eSrcFmtPng*/, 
                                 int nWidth/* = 0*/,
@@ -281,7 +281,7 @@ my_error_exit (j_common_ptr cinfo)
   longjmp(myerr->setjmp_buffer, 1);
 }
 
-bool CCImage::_initWithJpgData(void * data, int nSize)
+bool Image::_initWithJpgData(void * data, int nSize)
 {
     /* these are standard libjpeg structures for reading(decompression) */
     struct jpeg_decompress_struct cinfo;
@@ -378,7 +378,7 @@ bool CCImage::_initWithJpgData(void * data, int nSize)
     return bRet;
 }
 
-bool CCImage::_initWithPngData(void * pData, int nDatalen)
+bool Image::_initWithPngData(void * pData, int nDatalen)
 {
 // length of bytes to check if it is a valid png file
 #define PNGSIGSIZE  8
@@ -611,7 +611,7 @@ static void _tiffUnmapProc(thandle_t fd, void* base, toff_t size)
     CC_UNUSED_PARAM(size);
 }
 
-bool CCImage::_initWithTiffData(void* pData, int nDataLen)
+bool Image::_initWithTiffData(void* pData, int nDataLen)
 {
     bool bRet = false;
     do 
@@ -681,7 +681,7 @@ bool CCImage::_initWithTiffData(void* pData, int nDataLen)
     return bRet;
 }
 
-bool CCImage::initWithRawData(void * pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti)
+bool Image::initWithRawData(void * pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti)
 {
     bool bRet = false;
     do 
@@ -707,7 +707,7 @@ bool CCImage::initWithRawData(void * pData, int nDatalen, int nWidth, int nHeigh
     return bRet;
 }
 
-bool CCImage::saveToFile(const char *pszFilePath, bool bIsToRGB)
+bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
 {
     bool bRet = false;
 
@@ -743,7 +743,7 @@ bool CCImage::saveToFile(const char *pszFilePath, bool bIsToRGB)
     return bRet;
 }
 
-bool CCImage::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
+bool Image::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
 {
     bool bRet = false;
     do 
@@ -883,7 +883,7 @@ bool CCImage::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
     } while (0);
     return bRet;
 }
-bool CCImage::_saveImageToJPG(const char * pszFilePath)
+bool Image::_saveImageToJPG(const char * pszFilePath)
 {
     bool bRet = false;
     do 

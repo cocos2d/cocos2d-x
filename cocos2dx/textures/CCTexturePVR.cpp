@@ -46,35 +46,35 @@ NS_CC_BEGIN
 static const ccPVRTexturePixelFormatInfo PVRTableFormats[] = {
 	
 	// 0: BGRA_8888
-	{GL_RGBA, GL_BGRA, GL_UNSIGNED_BYTE, 32, false, true, kCCTexture2DPixelFormat_RGBA8888},
+	{GL_RGBA, GL_BGRA, GL_UNSIGNED_BYTE, 32, false, true, kTexture2DPixelFormat_RGBA8888},
 	// 1: RGBA_8888
-	{GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, 32, false, true, kCCTexture2DPixelFormat_RGBA8888},
+	{GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, 32, false, true, kTexture2DPixelFormat_RGBA8888},
 	// 2: RGBA_4444
-	{GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, 16, false, true, kCCTexture2DPixelFormat_RGBA4444},
+	{GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, 16, false, true, kTexture2DPixelFormat_RGBA4444},
 	// 3: RGBA_5551
-	{GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, 16, false, true, kCCTexture2DPixelFormat_RGB5A1},
+	{GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, 16, false, true, kTexture2DPixelFormat_RGB5A1},
 	// 4: RGB_565
-	{GL_RGB, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, 16, false, false, kCCTexture2DPixelFormat_RGB565},
+	{GL_RGB, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, 16, false, false, kTexture2DPixelFormat_RGB565},
 	// 5: RGB_888
-	{GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, 24, false, false, kCCTexture2DPixelFormat_RGB888},
+	{GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, 24, false, false, kTexture2DPixelFormat_RGB888},
 	// 6: A_8
-	{GL_ALPHA, GL_ALPHA, GL_UNSIGNED_BYTE, 8, false, false, kCCTexture2DPixelFormat_A8},
+	{GL_ALPHA, GL_ALPHA, GL_UNSIGNED_BYTE, 8, false, false, kTexture2DPixelFormat_A8},
 	// 7: L_8
-	{GL_LUMINANCE, GL_LUMINANCE, GL_UNSIGNED_BYTE, 8, false, false, kCCTexture2DPixelFormat_I8},
+	{GL_LUMINANCE, GL_LUMINANCE, GL_UNSIGNED_BYTE, 8, false, false, kTexture2DPixelFormat_I8},
 	// 8: LA_88
-	{GL_LUMINANCE_ALPHA, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, 16, false, true, kCCTexture2DPixelFormat_AI88},
+	{GL_LUMINANCE_ALPHA, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, 16, false, true, kTexture2DPixelFormat_AI88},
 
 // Not all platforms include GLES/gl2ext.h so these PVRTC enums are not always
 // available.
 #ifdef GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG
 	// 9: PVRTC 2BPP RGB
-	{GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 2, true, false, kCCTexture2DPixelFormat_PVRTC2},
+	{GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 2, true, false, kTexture2DPixelFormat_PVRTC2},
 	// 10: PVRTC 2BPP RGBA
-	{GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 2, true, true, kCCTexture2DPixelFormat_PVRTC2},
+	{GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 2, true, true, kTexture2DPixelFormat_PVRTC2},
 	// 11: PVRTC 4BPP RGB
-	{GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false, kCCTexture2DPixelFormat_PVRTC4},
+	{GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false, kTexture2DPixelFormat_PVRTC4},
 	// 12: PVRTC 4BPP RGBA
-	{GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, true, kCCTexture2DPixelFormat_PVRTC4},
+	{GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, true, kTexture2DPixelFormat_PVRTC4},
 #endif
 };
 
@@ -226,7 +226,7 @@ typedef struct {
 #endif
 
 
-CCTexturePVR::CCTexturePVR() 
+TexturePVR::TexturePVR() 
 : _numberOfMipmaps(0)
 , _width(0)
 , _height(0)
@@ -235,14 +235,14 @@ CCTexturePVR::CCTexturePVR()
 , _hasPremultipliedAlpha(false)
 , _forcePremultipliedAlpha(false)
 , _retainName(false)
-, _format(kCCTexture2DPixelFormat_Default)
+, _format(kTexture2DPixelFormat_Default)
 , _pixelFormatInfo(NULL)
 {
 }
 
-CCTexturePVR::~CCTexturePVR()
+TexturePVR::~TexturePVR()
 {
-    CCLOGINFO( "cocos2d: deallocing CCTexturePVR: %p", this );
+    CCLOGINFO( "cocos2d: deallocing TexturePVR: %p", this );
 
     if (_name != 0 && ! _retainName)
     {
@@ -250,7 +250,7 @@ CCTexturePVR::~CCTexturePVR()
     }
 }
 
-bool CCTexturePVR::unpackPVRv2Data(unsigned char* data, unsigned int len)
+bool TexturePVR::unpackPVRv2Data(unsigned char* data, unsigned int len)
 {
     bool success = false;
     ccPVRv2TexHeader *header = NULL;
@@ -275,7 +275,7 @@ bool CCTexturePVR::unpackPVRv2Data(unsigned char* data, unsigned int len)
         return false;
     }
     
-    CCConfiguration *configuration = CCConfiguration::sharedConfiguration();
+    Configuration *configuration = Configuration::sharedConfiguration();
 
     flags = CC_SWAP_INT32_LITTLE_TO_HOST(header->flags);
     formatFlags = flags & PVR_TEXTURE_FLAG_TYPE_MASK;
@@ -293,7 +293,7 @@ bool CCTexturePVR::unpackPVRv2Data(unsigned char* data, unsigned int len)
     }
     
     unsigned int pvr2TableElements = PVR2_MAX_TABLE_ELEMENTS;
-    if (! CCConfiguration::sharedConfiguration()->supportsPVRTC())
+    if (! Configuration::sharedConfiguration()->supportsPVRTC())
     {
         pvr2TableElements = 9;
     }
@@ -345,7 +345,7 @@ bool CCTexturePVR::unpackPVRv2Data(unsigned char* data, unsigned int len)
                         heightBlocks = height / 4;
                         break;
                     case kPVR2TexturePixelFormat_BGRA_8888:
-                        if (CCConfiguration::sharedConfiguration()->supportsBGRA8888() == false) 
+                        if (Configuration::sharedConfiguration()->supportsBGRA8888() == false) 
                         {
                             CCLOG("cocos2d: TexturePVR. BGRA8888 not supported on this device");
                             return false;
@@ -401,7 +401,7 @@ bool CCTexturePVR::unpackPVRv2Data(unsigned char* data, unsigned int len)
     return success;
 }
 
-bool CCTexturePVR::unpackPVRv3Data(unsigned char* dataPointer, unsigned int dataLength)
+bool TexturePVR::unpackPVRv3Data(unsigned char* dataPointer, unsigned int dataLength)
 {
     if (dataLength < sizeof(ccPVRv3TexHeader))
     {
@@ -424,7 +424,7 @@ bool CCTexturePVR::unpackPVRv3Data(unsigned char* dataPointer, unsigned int data
 	bool infoValid = false;
     
     unsigned int pvr3TableElements = PVR3_MAX_TABLE_ELEMENTS;
-    if (! CCConfiguration::sharedConfiguration()->supportsPVRTC())
+    if (! Configuration::sharedConfiguration()->supportsPVRTC())
     {
         pvr3TableElements = 9;
     }
@@ -490,7 +490,7 @@ bool CCTexturePVR::unpackPVRv3Data(unsigned char* dataPointer, unsigned int data
 				heightBlocks = height / 4;
 				break;
 			case kPVR3TexturePixelFormat_BGRA_8888:
-				if( ! CCConfiguration::sharedConfiguration()->supportsBGRA8888())
+				if( ! Configuration::sharedConfiguration()->supportsBGRA8888())
                 {
 					CCLOG("cocos2d: TexturePVR. BGRA8888 not supported on this device");
 					return false;
@@ -530,7 +530,7 @@ bool CCTexturePVR::unpackPVRv3Data(unsigned char* dataPointer, unsigned int data
 	return true;
 }
 
-bool CCTexturePVR::createGLTexture()
+bool TexturePVR::createGLTexture()
 {
     unsigned int width = _width;
     unsigned int height = _height;
@@ -574,7 +574,7 @@ bool CCTexturePVR::createGLTexture()
     // Generate textures with mipmaps
     for (unsigned int i = 0; i < _numberOfMipmaps; ++i)
     {
-        if (compressed && ! CCConfiguration::sharedConfiguration()->supportsPVRTC()) 
+        if (compressed && ! Configuration::sharedConfiguration()->supportsPVRTC()) 
         {
 			CCLOG("cocos2d: WARNING: PVRTC images are not supported");
 			return false;
@@ -612,7 +612,7 @@ bool CCTexturePVR::createGLTexture()
 }
 
 
-bool CCTexturePVR::initWithContentsOfFile(const char* path)
+bool TexturePVR::initWithContentsOfFile(const char* path)
 {
     unsigned char* pvrdata = NULL;
     int pvrlen = 0;
@@ -633,7 +633,7 @@ bool CCTexturePVR::initWithContentsOfFile(const char* path)
     }
     else
     {
-        pvrdata = CCFileUtils::sharedFileUtils()->getFileData(path, "rb", (unsigned long *)(&pvrlen));
+        pvrdata = FileUtils::sharedFileUtils()->getFileData(path, "rb", (unsigned long *)(&pvrlen));
     }
     
     if (pvrlen < 0)
@@ -665,9 +665,9 @@ bool CCTexturePVR::initWithContentsOfFile(const char* path)
     return true;
 }
 
-CCTexturePVR * CCTexturePVR::create(const char* path)
+TexturePVR * TexturePVR::create(const char* path)
 {
-    CCTexturePVR * pTexture = new CCTexturePVR();
+    TexturePVR * pTexture = new TexturePVR();
     if (pTexture)
     {
         if (pTexture->initWithContentsOfFile(path))

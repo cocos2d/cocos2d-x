@@ -58,7 +58,7 @@ void ParticleMenuLayer::showCurrentTest()
     {
         pNewScene->initWithSubTest(subTest, parNum);
 
-        CCDirector::sharedDirector()->replaceScene(pNewScene);
+        Director::sharedDirector()->replaceScene(pNewScene);
         pNewScene->release();
     }
 }
@@ -73,13 +73,13 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     //srandom(0);
 
     subtestNumber = asubtest;
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
 
     lastRenderedCount = 0;
     quantityParticles = particles;
 
-    CCMenuItemFont::setFontSize(65);
-    CCMenuItemFont *decrease = CCMenuItemFont::create(" - ", [&](CCObject *sender) {
+    MenuItemFont::setFontSize(65);
+    MenuItemFont *decrease = MenuItemFont::create(" - ", [&](Object *sender) {
 		quantityParticles -= kNodesIncrease;
 		if( quantityParticles < 0 )
 			quantityParticles = 0;
@@ -88,7 +88,7 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
 		createParticleSystem();
 	});
     decrease->setColor(ccc3(0,200,20));
-    CCMenuItemFont *increase = CCMenuItemFont::create(" + ", [&](CCObject *sender) {
+    MenuItemFont *increase = MenuItemFont::create(" + ", [&](Object *sender) {
 		quantityParticles += kNodesIncrease;
 		if( quantityParticles > kMaxParticles )
 			quantityParticles = kMaxParticles;
@@ -98,18 +98,18 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
 	});
     increase->setColor(ccc3(0,200,20));
 
-    CCMenu *menu = CCMenu::create(decrease, increase, NULL);
+    Menu *menu = Menu::create(decrease, increase, NULL);
     menu->alignItemsHorizontally();
     menu->setPosition(ccp(s.width/2, s.height/2+15));
     addChild(menu, 1);
 
-    CCLabelTTF *infoLabel = CCLabelTTF::create("0 nodes", "Marker Felt", 30);
+    LabelTTF *infoLabel = LabelTTF::create("0 nodes", "Marker Felt", 30);
     infoLabel->setColor(ccc3(0,200,20));
     infoLabel->setPosition(ccp(s.width/2, s.height - 90));
     addChild(infoLabel, 1, kTagInfoLayer);
 
     // particles on stage
-    CCLabelAtlas *labelAtlas = CCLabelAtlas::create("0000", "fps_images.png", 12, 32, '.');
+    LabelAtlas *labelAtlas = LabelAtlas::create("0000", "fps_images.png", 12, 32, '.');
     addChild(labelAtlas, 0, kTagLabelAtlas);
     labelAtlas->setPosition(ccp(s.width-66,50));
 
@@ -119,13 +119,13 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     pMenu->release();
 
     // Sub Tests
-    CCMenuItemFont::setFontSize(40);
-    CCMenu* pSubMenu = CCMenu::create();
+    MenuItemFont::setFontSize(40);
+    Menu* pSubMenu = Menu::create();
     for (int i = 1; i <= 6; ++i)
     {
         char str[10] = {0};
         sprintf(str, "%d ", i);
-        CCMenuItemFont* itemFont = CCMenuItemFont::create(str, CC_CALLBACK_1(ParticleMainScene::testNCallback, this));
+        MenuItemFont* itemFont = MenuItemFont::create(str, CC_CALLBACK_1(ParticleMainScene::testNCallback, this));
         itemFont->setTag(i);
         pSubMenu->addChild(itemFont, 10);
 
@@ -142,7 +142,7 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     pSubMenu->setPosition(ccp(s.width/2, 80));
     addChild(pSubMenu, 2);
 
-    CCLabelTTF *label = CCLabelTTF::create(title().c_str(), "Arial", 40);
+    LabelTTF *label = LabelTTF::create(title().c_str(), "Arial", 40);
     addChild(label, 1);
     label->setPosition(ccp(s.width/2, s.height-32));
     label->setColor(ccc3(255,255,40));
@@ -160,8 +160,8 @@ std::string ParticleMainScene::title()
 
 void ParticleMainScene::step(float dt)
 {
-    CCLabelAtlas *atlas = (CCLabelAtlas*) getChildByTag(kTagLabelAtlas);
-    CCParticleSystem *emitter = (CCParticleSystem*) getChildByTag(kTagParticleSystem);
+    LabelAtlas *atlas = (LabelAtlas*) getChildByTag(kTagLabelAtlas);
+    ParticleSystem *emitter = (ParticleSystem*) getChildByTag(kTagParticleSystem);
 
     char str[10] = {0};
     sprintf(str, "%4d", emitter->getParticleCount());
@@ -170,7 +170,7 @@ void ParticleMainScene::step(float dt)
 
 void ParticleMainScene::createParticleSystem()
 {
-    CCParticleSystem *particleSystem = NULL;
+    ParticleSystem *particleSystem = NULL;
 
     /*
     * Tests:
@@ -187,59 +187,59 @@ void ParticleMainScene::createParticleSystem()
     removeChildByTag(kTagParticleSystem, true);
 
     // remove the "fire.png" from the TextureCache cache. 
-    CCTexture2D *texture = CCTextureCache::sharedTextureCache()->addImage("Images/fire.png");
-    CCTextureCache::sharedTextureCache()->removeTexture(texture);
+    Texture2D *texture = TextureCache::sharedTextureCache()->addImage("Images/fire.png");
+    TextureCache::sharedTextureCache()->removeTexture(texture);
 
 //TODO:     if (subtestNumber <= 3)
 //     {
-//         particleSystem = new CCParticleSystemPoint();
+//         particleSystem = new ParticleSystemPoint();
 //     }
 //     else
     {
-        particleSystem = new CCParticleSystemQuad();
+        particleSystem = new ParticleSystemQuad();
     }
     
     switch( subtestNumber)
     {
     case 1:
-        CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
+        Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA8888);
         particleSystem->initWithTotalParticles(quantityParticles);
-        particleSystem->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+        particleSystem->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
         break;
     case 2:
-        CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
+        Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA4444);
         particleSystem->initWithTotalParticles(quantityParticles);
-        particleSystem->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+        particleSystem->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
         break;            
     case 3:
-        CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_A8);
+        Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_A8);
         particleSystem->initWithTotalParticles(quantityParticles);
-        particleSystem->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+        particleSystem->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
         break;                        
 //     case 4:
 //         particleSystem->initWithTotalParticles(quantityParticles);
-//         ////---- particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.pvr"];
-//         particleSystem->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+//         ////---- particleSystem.texture = [[TextureCache sharedTextureCache] addImage:@"fire.pvr"];
+//         particleSystem->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
 //         break;
     case 4:
-        CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
+        Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA8888);
         particleSystem->initWithTotalParticles(quantityParticles);
-        particleSystem->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+        particleSystem->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
         break;
     case 5:
-        CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
+        Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA4444);
         particleSystem->initWithTotalParticles(quantityParticles);
-        particleSystem->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+        particleSystem->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
         break;            
     case 6:
-        CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_A8);
+        Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_A8);
         particleSystem->initWithTotalParticles(quantityParticles);
-        particleSystem->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+        particleSystem->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
         break;                        
 //     case 8:
 //         particleSystem->initWithTotalParticles(quantityParticles);
-//         ////---- particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.pvr"];
-//         particleSystem->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+//         ////---- particleSystem.texture = [[TextureCache sharedTextureCache] addImage:@"fire.pvr"];
+//         particleSystem->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
 //         break;
     default:
         particleSystem = NULL;
@@ -252,12 +252,12 @@ void ParticleMainScene::createParticleSystem()
     doTest();
 
     // restore the default pixel format
-    CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
+    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA8888);
 }
 
-void ParticleMainScene::testNCallback(CCObject* pSender)
+void ParticleMainScene::testNCallback(Object* pSender)
 {
-    subtestNumber = ((CCNode*)pSender)->getTag();
+    subtestNumber = ((Node*)pSender)->getTag();
 
     ParticleMenuLayer* pMenu = (ParticleMenuLayer*)getChildByTag(kTagMenuLayer);
     pMenu->restartCallback(pSender);
@@ -267,7 +267,7 @@ void ParticleMainScene::updateQuantityLabel()
 {
     if( quantityParticles != lastRenderedCount )
     {
-        CCLabelTTF *infoLabel = (CCLabelTTF *) getChildByTag(kTagInfoLayer);
+        LabelTTF *infoLabel = (LabelTTF *) getChildByTag(kTagInfoLayer);
         char str[20] = {0};
         sprintf(str, "%u particles", quantityParticles);
         infoLabel->setString(str);
@@ -291,8 +291,8 @@ std::string ParticlePerformTest1::title()
 
 void ParticlePerformTest1::doTest()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-    CCParticleSystem *particleSystem = (CCParticleSystem*)getChildByTag(kTagParticleSystem);
+    Size s = Director::sharedDirector()->getWinSize();
+    ParticleSystem *particleSystem = (ParticleSystem*)getChildByTag(kTagParticleSystem);
 
     // duration
     particleSystem->setDuration(-1);
@@ -361,8 +361,8 @@ std::string ParticlePerformTest2::title()
 
 void ParticlePerformTest2::doTest()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-    CCParticleSystem *particleSystem = (CCParticleSystem*) getChildByTag(kTagParticleSystem);
+    Size s = Director::sharedDirector()->getWinSize();
+    ParticleSystem *particleSystem = (ParticleSystem*) getChildByTag(kTagParticleSystem);
 
     // duration
     particleSystem->setDuration(-1);
@@ -431,8 +431,8 @@ std::string ParticlePerformTest3::title()
 
 void ParticlePerformTest3::doTest()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-    CCParticleSystem *particleSystem = (CCParticleSystem*)getChildByTag(kTagParticleSystem);
+    Size s = Director::sharedDirector()->getWinSize();
+    ParticleSystem *particleSystem = (ParticleSystem*)getChildByTag(kTagParticleSystem);
 
     // duration
     particleSystem->setDuration(-1);
@@ -501,8 +501,8 @@ std::string ParticlePerformTest4::title()
 
 void ParticlePerformTest4::doTest()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-    CCParticleSystem *particleSystem = (CCParticleSystem*) getChildByTag(kTagParticleSystem);
+    Size s = Director::sharedDirector()->getWinSize();
+    ParticleSystem *particleSystem = (ParticleSystem*) getChildByTag(kTagParticleSystem);
 
     // duration
     particleSystem->setDuration(-1);
@@ -562,6 +562,6 @@ void runParticleTest()
     ParticleMainScene* pScene = new ParticlePerformTest1;
     pScene->initWithSubTest(1, kNodesIncrease);
 
-    CCDirector::sharedDirector()->replaceScene(pScene);
+    Director::sharedDirector()->replaceScene(pScene);
     pScene->release();
 }

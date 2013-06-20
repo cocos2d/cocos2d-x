@@ -68,8 +68,8 @@ void CocosPepperInstance::DidChangeView(const pp::View& view)
     }
 
     _size = position.size();
-    assert(!CCEGLView::g_instance);
-    CCEGLView::g_instance = this;
+    assert(!EGLView::g_instance);
+    EGLView::g_instance = this;
     CCLOG("DidChangeView %dx%d", _size.width(), _size.height());
     pthread_create(&_cocos_thread, NULL, cocos_main, this);
     _running = true;
@@ -106,8 +106,8 @@ bool CocosPepperInstance::Init(uint32_t argc, const char* argn[], const char* ar
 
 bool CocosPepperInstance::HandleInputEvent(const pp::InputEvent& event)
 {
-    if (!CCApplication::isRunning())
+    if (!Application::isRunning())
       return false;
-    CCEGLView::sharedOpenGLView()->AddEvent(event);
+    EGLView::sharedOpenGLView()->AddEvent(event);
     return true;
 }

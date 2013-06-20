@@ -62,7 +62,7 @@ public:
     bool getBitmapFromJavaShadowStroke(	const char *text,
     									int nWidth,
     									int nHeight,
-    									CCImage::ETextAlign eAlignMask,
+    									Image::ETextAlign eAlignMask,
     									const char * pFontName,
     									float fontSize,
     									float textTintR 		= 1.0,
@@ -89,9 +89,9 @@ public:
         
         
         
-           // Do a full lookup for the font path using CCFileUtils in case the given font name is a relative path to a font file asset,
+           // Do a full lookup for the font path using FileUtils in case the given font name is a relative path to a font file asset,
            // or the path has been mapped to a different location in the app package:
-           std::string fullPathOrFontName = CCFileUtils::sharedFileUtils()->fullPathForFilename(pFontName);
+           std::string fullPathOrFontName = FileUtils::sharedFileUtils()->fullPathForFilename(pFontName);
         
 		   // If the path name returned includes the 'assets' dir then that needs to be removed, because the android.content.Context
 		   // requires this portion of the path to be omitted for assets inside the app package.
@@ -120,7 +120,7 @@ public:
     }
 
 
-    bool getBitmapFromJava(const char *text, int nWidth, int nHeight, CCImage::ETextAlign eAlignMask, const char * pFontName, float fontSize)
+    bool getBitmapFromJava(const char *text, int nWidth, int nHeight, Image::ETextAlign eAlignMask, const char * pFontName, float fontSize)
     {
     	return  getBitmapFromJavaShadowStroke(	text, nWidth, nHeight, eAlignMask, pFontName, fontSize );
     }
@@ -144,7 +144,7 @@ static BitmapDC& sharedBitmapDC()
     return s_BmpDC;
 }
 
-bool CCImage::initWithString(
+bool Image::initWithString(
                                const char *    pText, 
                                int             nWidth/* = 0*/, 
                                int             nHeight/* = 0*/,
@@ -178,7 +178,7 @@ bool CCImage::initWithString(
     return bRet;
 }
 
-bool CCImage::initWithStringShadowStroke(
+bool Image::initWithStringShadowStroke(
                                          const char * pText,
                                          int         nWidth ,
                                          int         nHeight ,

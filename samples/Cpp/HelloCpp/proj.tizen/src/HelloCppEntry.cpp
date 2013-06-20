@@ -56,9 +56,9 @@ OspMain(int argc, char* pArgv[])
         args.Add(*(new (std::nothrow) String(pArgv[i])));
     }
 
-    CCOspApplication::SetApplicationInitializedCallback(ApplicationInitialized);
-    CCOspApplication::SetScreenOrientation(Tizen::Ui::ORIENTATION_LANDSCAPE);
-    result r = Tizen::App::Application::Execute(CCOspApplication::CreateInstance, &args);
+    OspApplication::SetApplicationInitializedCallback(ApplicationInitialized);
+    OspApplication::SetScreenOrientation(Tizen::Ui::ORIENTATION_LANDSCAPE);
+    result r = Tizen::App::Application::Execute(OspApplication::CreateInstance, &args);
 
     TryLog(r == E_SUCCESS, "[%s] Application execution failed", GetErrorMessage(r));
 
@@ -73,10 +73,10 @@ ApplicationInitialized(void)
 {
     AppDelegate* pAppDelegate = new AppDelegate;
 
-    CCEGLView* eglView = CCEGLView::sharedOpenGLView();
+    EGLView* eglView = EGLView::sharedOpenGLView();
     eglView->setFrameSize(1280, 720);
 
-    CCApplication::sharedApplication()->run();
+    Application::sharedApplication()->run();
 }
 
 

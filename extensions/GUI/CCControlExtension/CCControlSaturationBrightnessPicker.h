@@ -45,7 +45,7 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-class CCControlSaturationBrightnessPicker : public CCControl
+class ControlSaturationBrightnessPicker : public Control
 {
     /** Contains the receiver¡¯s current saturation value. */
     CC_SYNTHESIZE_READONLY(float, _saturation, Saturation);
@@ -53,33 +53,33 @@ class CCControlSaturationBrightnessPicker : public CCControl
     CC_SYNTHESIZE_READONLY(float, _brightness, Brightness);
 
     //not sure if these need to be there actually. I suppose someone might want to access the sprite?
-    CC_SYNTHESIZE_READONLY(CCSprite*, _background, Background);
-    CC_SYNTHESIZE_READONLY(CCSprite*, _overlay, Overlay);
-    CC_SYNTHESIZE_READONLY(CCSprite*, _shadow, Shadow);
-    CC_SYNTHESIZE_READONLY(CCSprite*, _slider, Slider);
-    CC_SYNTHESIZE_READONLY(CCPoint, _startPos, StartPos);
+    CC_SYNTHESIZE_READONLY(Sprite*, _background, Background);
+    CC_SYNTHESIZE_READONLY(Sprite*, _overlay, Overlay);
+    CC_SYNTHESIZE_READONLY(Sprite*, _shadow, Shadow);
+    CC_SYNTHESIZE_READONLY(Sprite*, _slider, Slider);
+    CC_SYNTHESIZE_READONLY(Point, _startPos, StartPos);
 
 protected:
     int         boxPos;
     int         boxSize;
     
 public:
-    CCControlSaturationBrightnessPicker();
-    virtual ~CCControlSaturationBrightnessPicker();
-    virtual bool initWithTargetAndPos(CCNode* target, CCPoint pos);
+    ControlSaturationBrightnessPicker();
+    virtual ~ControlSaturationBrightnessPicker();
+    virtual bool initWithTargetAndPos(Node* target, Point pos);
 
-    static CCControlSaturationBrightnessPicker* create(CCNode* target, CCPoint pos);
+    static ControlSaturationBrightnessPicker* create(Node* target, Point pos);
 
     virtual void setEnabled(bool enabled);
     virtual void updateWithHSV(HSV hsv);
     virtual void updateDraggerWithHSV(HSV hsv);
 
 protected:    
-    void updateSliderPosition(CCPoint location);
-    bool checkSliderPosition(CCPoint location);
+    void updateSliderPosition(Point location);
+    bool checkSliderPosition(Point location);
 
-    virtual bool ccTouchBegan(CCTouch* touch, CCEvent* pEvent);
-    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
+    virtual bool ccTouchBegan(Touch* touch, Event* pEvent);
+    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent);
 };
 
 // end of GUI group

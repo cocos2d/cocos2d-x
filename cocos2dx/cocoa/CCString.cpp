@@ -8,34 +8,34 @@ NS_CC_BEGIN
 
 #define kMaxStringLen (1024*100)
 
-CCString::CCString()
+String::String()
     :_string("")
 {}
 
-CCString::CCString(const char * str)
+String::String(const char * str)
     :_string(str)
 {}
 
-CCString::CCString(const std::string& str)
+String::String(const std::string& str)
     :_string(str)
 {}
 
-CCString::CCString(const CCString& str)
+String::String(const String& str)
     :_string(str.getCString())
 {}
 
-CCString::~CCString()
+String::~String()
 { 
     _string.clear();
 }
 
-CCString& CCString::operator= (const CCString& other)
+String& String::operator= (const String& other)
 {
     _string = other._string;
     return *this;
 }
 
-bool CCString::initWithFormatAndValist(const char* format, va_list ap)
+bool String::initWithFormatAndValist(const char* format, va_list ap)
 {
     bool bRet = false;
     char* pBuf = (char*)malloc(kMaxStringLen);
@@ -49,7 +49,7 @@ bool CCString::initWithFormatAndValist(const char* format, va_list ap)
     return bRet;
 }
 
-bool CCString::initWithFormat(const char* format, ...)
+bool String::initWithFormat(const char* format, ...)
 {
     bool bRet = false;
     _string.clear();
@@ -64,7 +64,7 @@ bool CCString::initWithFormat(const char* format, ...)
     return bRet;
 }
 
-int CCString::intValue() const
+int String::intValue() const
 {
     if (length() == 0)
     {
@@ -73,7 +73,7 @@ int CCString::intValue() const
     return atoi(_string.c_str());
 }
 
-unsigned int CCString::uintValue() const
+unsigned int String::uintValue() const
 {
     if (length() == 0)
     {
@@ -82,7 +82,7 @@ unsigned int CCString::uintValue() const
     return (unsigned int)atoi(_string.c_str());
 }
 
-float CCString::floatValue() const
+float String::floatValue() const
 {
     if (length() == 0)
     {
@@ -91,7 +91,7 @@ float CCString::floatValue() const
     return (float)atof(_string.c_str());
 }
 
-double CCString::doubleValue() const
+double String::doubleValue() const
 {
     if (length() == 0)
     {
@@ -100,7 +100,7 @@ double CCString::doubleValue() const
     return atof(_string.c_str());
 }
 
-bool CCString::boolValue() const
+bool String::boolValue() const
 {
     if (length() == 0)
     {
@@ -114,32 +114,32 @@ bool CCString::boolValue() const
     return true;
 }
 
-const char* CCString::getCString() const
+const char* String::getCString() const
 {
     return _string.c_str();
 }
 
-unsigned int CCString::length() const
+unsigned int String::length() const
 {
     return _string.length();
 }
 
-int CCString::compare(const char * pStr) const
+int String::compare(const char * pStr) const
 {
     return strcmp(getCString(), pStr);
 }
 
-CCObject* CCString::copyWithZone(CCZone* pZone)
+Object* String::copyWithZone(Zone* pZone)
 {
     CCAssert(pZone == NULL, "CCString should not be inherited.");
-    CCString* pStr = new CCString(_string.c_str());
+    String* pStr = new String(_string.c_str());
     return pStr;
 }
 
-bool CCString::isEqual(const CCObject* pObject)
+bool String::isEqual(const Object* pObject)
 {
     bool bRet = false;
-    const CCString* pStr = dynamic_cast<const CCString*>(pObject);
+    const String* pStr = dynamic_cast<const String*>(pObject);
     if (pStr != NULL)
     {
         if (0 == _string.compare(pStr->_string))
@@ -150,16 +150,16 @@ bool CCString::isEqual(const CCObject* pObject)
     return bRet;
 }
 
-CCString* CCString::create(const std::string& str)
+String* String::create(const std::string& str)
 {
-    CCString* pRet = new CCString(str);
+    String* pRet = new String(str);
     pRet->autorelease();
     return pRet;
 }
 
-CCString* CCString::createWithData(const unsigned char* pData, unsigned long nLen)
+String* String::createWithData(const unsigned char* pData, unsigned long nLen)
 {
-    CCString* pRet = NULL;
+    String* pRet = NULL;
     if (pData != NULL)
     {
         char* pStr = (char*)malloc(nLen+1);
@@ -171,16 +171,16 @@ CCString* CCString::createWithData(const unsigned char* pData, unsigned long nLe
                 memcpy(pStr, pData, nLen);
             }
             
-            pRet = CCString::create(pStr);
+            pRet = String::create(pStr);
             free(pStr);
         }
     }
     return pRet;
 }
 
-CCString* CCString::createWithFormat(const char* format, ...)
+String* String::createWithFormat(const char* format, ...)
 {
-    CCString* pRet = CCString::create("");
+    String* pRet = String::create("");
     va_list ap;
     va_start(ap, format);
     pRet->initWithFormatAndValist(format, ap);
@@ -189,18 +189,18 @@ CCString* CCString::createWithFormat(const char* format, ...)
     return pRet;
 }
 
-CCString* CCString::createWithContentsOfFile(const char* pszFileName)
+String* String::createWithContentsOfFile(const char* pszFileName)
 {
     unsigned long size = 0;
     unsigned char* pData = 0;
-    CCString* pRet = NULL;
-    pData = CCFileUtils::sharedFileUtils()->getFileData(pszFileName, "rb", &size);
-    pRet = CCString::createWithData(pData, size);
+    String* pRet = NULL;
+    pData = FileUtils::sharedFileUtils()->getFileData(pszFileName, "rb", &size);
+    pRet = String::createWithData(pData, size);
     CC_SAFE_DELETE_ARRAY(pData);
     return pRet;
 }
 
-void CCString::acceptVisitor(CCDataVisitor &visitor)
+void String::acceptVisitor(DataVisitor &visitor)
 {
     visitor.visit(this);
 }

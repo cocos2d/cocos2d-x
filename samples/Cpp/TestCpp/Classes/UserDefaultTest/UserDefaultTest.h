@@ -4,7 +4,7 @@
 #include "cocos2d.h"
 #include "../testBasic.h"
 
-class UserDefaultTest : public CCLayer
+class UserDefaultTest : public Layer
 {
 public:
     UserDefaultTest();

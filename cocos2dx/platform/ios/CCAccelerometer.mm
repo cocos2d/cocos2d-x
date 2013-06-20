@@ -31,13 +31,13 @@
 
 @interface AccelerometerDispatcher : NSObject<UIAccelerometerDelegate>
 {
-    std::function<void(cocos2d::CCAcceleration*)> _function;
-    cocos2d::CCAcceleration *_acceleration;
+    std::function<void(cocos2d::Acceleration*)> _function;
+    cocos2d::Acceleration *_acceleration;
 }
 
 + (id) sharedAccelerometerDispather;
 - (id) init;
-- (void) addDelegate: (std::function<void(cocos2d::CCAcceleration*)>) function;
+- (void) addDelegate: (std::function<void(cocos2d::Acceleration*)>) function;
 - (void) setAccelerometerInterval:(float)interval;
 
 @end
@@ -57,7 +57,7 @@ static AccelerometerDispatcher* s_pAccelerometerDispatcher;
 
 - (id) init
 {
-    _acceleration = new cocos2d::CCAcceleration();
+    _acceleration = new cocos2d::Acceleration();
     return self;
 }
 
@@ -69,7 +69,7 @@ static AccelerometerDispatcher* s_pAccelerometerDispatcher;
     [super dealloc];
 }
 
-- (void) addDelegate: (std::function<void(cocos2d::CCAcceleration*)>) function
+- (void) addDelegate: (std::function<void(cocos2d::Acceleration*)>) function
 {
     _function = function;
     
@@ -128,22 +128,22 @@ static AccelerometerDispatcher* s_pAccelerometerDispatcher;
 
 @end
 
-/** Implementation of CCAccelerometer
+/** Implementation of Accelerometer
  */
 
 NS_CC_BEGIN
 
 
-CCAccelerometer::CCAccelerometer() {}
+Accelerometer::Accelerometer() {}
 
-CCAccelerometer::~CCAccelerometer() {}
+Accelerometer::~Accelerometer() {}
 
-void CCAccelerometer::setDelegate(std::function<void (CCAcceleration *)> function)
+void Accelerometer::setDelegate(std::function<void (Acceleration *)> function)
 {
     [[AccelerometerDispatcher sharedAccelerometerDispather] addDelegate:function];
 }
 
-void CCAccelerometer::setAccelerometerInterval(float interval)
+void Accelerometer::setAccelerometerInterval(float interval)
 {
     [[AccelerometerDispatcher sharedAccelerometerDispather] setAccelerometerInterval:interval];
 }

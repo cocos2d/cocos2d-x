@@ -29,13 +29,13 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CC_DLL CCTextureCacheEmscripten : public CCTextureCache
+class CC_DLL TextureCacheEmscripten : public TextureCache
 {
 public:
-    CCTextureCacheEmscripten();
-    virtual ~CCTextureCacheEmscripten();
+    TextureCacheEmscripten();
+    virtual ~TextureCacheEmscripten();
 
-    void addImageAsync(const char *path, CCObject *target, SEL_CallFuncO selector);
+    void addImageAsync(const char *path, Object *target, SEL_CallFuncO selector);
 
     /* Public method since we need to call it from C code to workaround linkage from JS.
     */

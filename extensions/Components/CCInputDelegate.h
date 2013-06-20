@@ -30,24 +30,24 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
-class CCInputDelegate : public CCTouchDelegate, public CCKeypadDelegate
+class InputDelegate : public TouchDelegate, public KeypadDelegate
 {
 protected:
-    CCInputDelegate(void);
-    virtual ~CCInputDelegate(void);
+    InputDelegate(void);
+    virtual ~InputDelegate(void);
     
 public:
-    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
-    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
-    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
-    virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
+    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent);
+    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent);
+    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent);
+    virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent);
 
-    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent);
+    virtual void ccTouchesBegan(Set *pTouches, Event *pEvent);
+    virtual void ccTouchesMoved(Set *pTouches, Event *pEvent);
+    virtual void ccTouchesEnded(Set *pTouches, Event *pEvent);
+    virtual void ccTouchesCancelled(Set *pTouches, Event *pEvent);
     
-    virtual void didAccelerate(CCAcceleration* pAccelerationValue);
+    virtual void didAccelerate(Acceleration* pAccelerationValue);
 public:
     virtual bool isTouchEnabled();
     virtual void setTouchEnabled(bool value);
