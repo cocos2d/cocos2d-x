@@ -2,7 +2,7 @@
 #include "../../testResource.h"
 
 using namespace cocos2d;
-using namespace cocos2d::extension;
+using namespace cocos2d::extension::armature;
 
 CCLayer* NextTest();
 CCLayer* BackTest();
