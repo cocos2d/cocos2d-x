@@ -88,7 +88,7 @@ void MySocialManager::loadSocialPlugin()
 			{
 				char msg[256] = { 0 };
 				sprintf(msg, "Developer info is empty. PLZ fill your twitter info in %s(nearby line %d)", __FILE__, __LINE__);
-				CCMessageBox(msg, "Twitter Warning");
+				MessageBox(msg, "Twitter Warning");
 			}
 			s_pTwitter->setDebugMode(true);
 			s_pTwitter->configDeveloperInfo(pTwitterInfo);
@@ -109,7 +109,7 @@ void MySocialManager::loadSocialPlugin()
 			{
 				char msg[256] = { 0 };
 				sprintf(msg, "Developer info is empty. PLZ fill your weibo info in %s(nearby line %d)", __FILE__, __LINE__);
-				CCMessageBox(msg, "Weibo Warning");
+				MessageBox(msg, "Weibo Warning");
 			}
 
 			s_pWeibo->setDebugMode(true);
@@ -158,5 +158,5 @@ void MyShareResult::onShareResult(ShareResultCode ret, const char* msg)
 {
     char shareStatus[1024] = { 0 };
     sprintf(shareStatus, "Share %s", (ret == kShareSuccess)? "Successed" : "Failed");
-    CCMessageBox(msg, shareStatus);
+    MessageBox(msg, shareStatus);
 }

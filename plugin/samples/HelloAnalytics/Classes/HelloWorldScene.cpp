@@ -57,10 +57,10 @@ static EventMenuItem s_EventMenuItem[] = {
     {"MakeMeCrash", TAG_MAKE_ME_CRASH}
 };
 
-CCScene* HelloWorld::scene()
+Scene* HelloWorld::scene()
 {
     // 'scene' is an autorelease object
-    CCScene *scene = CCScene::create();
+    Scene *scene = Scene::create();
     
     // 'layer' is an autorelease object
     HelloWorld *layer = HelloWorld::create();
@@ -77,19 +77,19 @@ bool HelloWorld::init()
 {
     //////////////////////////////
     // 1. super init first
-    if ( !CCLayer::init() )
+    if ( !Layer::init() )
     {
         return false;
     }
 
-    CCSize size = CCDirector::sharedDirector()->getWinSize();
+    Size size = Director::sharedDirector()->getWinSize();
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
     //    you may modify it.
 
     // add a "close" icon to exit the progress. it's an autorelease object
-    CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
+    MenuItemImage *pCloseItem = MenuItemImage::create(
                                         "CloseNormal.png",
                                         "CloseSelected.png",
                                         this,
@@ -97,14 +97,14 @@ bool HelloWorld::init()
     pCloseItem->setPosition( ccp(size.width - 20, 20) );
 
     // create menu, it's an autorelease object
-    CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
-    pMenu->setPosition( CCPointZero );
+    Menu* pMenu = Menu::create(pCloseItem, NULL);
+    pMenu->setPosition( PointZero );
     this->addChild(pMenu, 1);
 
     float yPos = 0;
     for (int i = 0; i < sizeof(s_EventMenuItem)/sizeof(s_EventMenuItem[0]); i++) {
-        CCLabelTTF* label = CCLabelTTF::create(s_EventMenuItem[i].id.c_str(), "Arial", 24);
-        CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, this, menu_selector(HelloWorld::eventMenuCallback));
+        LabelTTF* label = LabelTTF::create(s_EventMenuItem[i].id.c_str(), "Arial", 24);
+        MenuItemLabel* pMenuItem = MenuItemLabel::create(label, this, menu_selector(HelloWorld::eventMenuCallback));
         pMenu->addChild(pMenuItem, 0, s_EventMenuItem[i].tag);
         yPos = size.height - 35*i - 100;
         pMenuItem->setPosition( ccp(size.width / 2, yPos));
@@ -114,12 +114,12 @@ bool HelloWorld::init()
     std::string strVer = g_pAnalytics->getSDKVersion();
     char ret[256] = { 0 };
     sprintf(ret, "Plugin : %s, Ver : %s", strName.c_str(), strVer.c_str());
-    CCLabelTTF* pLabel = CCLabelTTF::create(ret, "Arial", 18, CCSizeMake(size.width, 0), kCCTextAlignmentCenter);
+    LabelTTF* pLabel = LabelTTF::create(ret, "Arial", 18, CCSizeMake(size.width, 0), kTextAlignmentCenter);
     pLabel->setPosition(ccp(size.width / 2, yPos - 80));
     addChild(pLabel);
 
-    CCLabelTTF* label = CCLabelTTF::create("reload all plugins", "Arial", 24);
-    CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, this, menu_selector(HelloWorld::reloadPluginMenuCallback));
+    LabelTTF* label = LabelTTF::create("reload all plugins", "Arial", 24);
+    MenuItemLabel* pMenuItem = MenuItemLabel::create(label, this, menu_selector(HelloWorld::reloadPluginMenuCallback));
     pMenuItem->setAnchorPoint(ccp(0.5f, 0));
     pMenu->addChild(pMenuItem, 0);
     pMenuItem->setPosition( ccp(size.width / 2, 0));
@@ -127,7 +127,7 @@ bool HelloWorld::init()
     return true;
 }
 
-void HelloWorld::reloadPluginMenuCallback(CCObject* pSender)
+void HelloWorld::reloadPluginMenuCallback(Object* pSender)
 {
     PluginManager::getInstance()->unloadPlugin("AnalyticsFlurry");
     PluginManager::getInstance()->unloadPlugin("AnalyticsUmeng");
@@ -135,9 +135,9 @@ void HelloWorld::reloadPluginMenuCallback(CCObject* pSender)
     AppDelegate::loadAnalyticsPlugin();
 }
 
-void HelloWorld::eventMenuCallback(CCObject* pSender)
+void HelloWorld::eventMenuCallback(Object* pSender)
 {
-    CCMenuItemLabel* pMenuItem = (CCMenuItemLabel*)pSender;
+    MenuItemLabel* pMenuItem = (MenuItemLabel*)pSender;
 
     switch (pMenuItem->getTag())
     {
@@ -228,13 +228,13 @@ void HelloWorld::eventMenuCallback(CCObject* pSender)
     }
 }
 
-void HelloWorld::menuCloseCallback(CCObject* pSender)
+void HelloWorld::menuCloseCallback(Object* pSender)
 {
     if (g_pAnalytics)
         g_pAnalytics->stopSession();
 
     PluginManager::end();
-    CCDirector::sharedDirector()->end();
+    Director::sharedDirector()->end();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
 #endif

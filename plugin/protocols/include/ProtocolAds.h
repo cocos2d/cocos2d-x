@@ -134,7 +134,7 @@ public:
     void onPlayerGetPoints(int points);
 
 protected:
-    AdsListener* m_pListener;
+    AdsListener* _listener;
 };
 
 }} // namespace cocos2d { namespace plugin {
