@@ -4601,8 +4601,8 @@ static int tolua_Cocos2d_CCGLProgram_new00(lua_State* tolua_S)
     {
         {
             CCGLProgram* tolua_ret = (CCGLProgram*)  Mtolua_new((CCGLProgram)());
-            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCGLProgram");
         }
     }
@@ -4631,8 +4631,8 @@ static int tolua_Cocos2d_CCGLProgram_new00_local(lua_State* tolua_S)
     {
         {
             CCGLProgram* tolua_ret = (CCGLProgram*)  Mtolua_new((CCGLProgram)());
-            int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCGLProgram");
             tolua_register_gc(tolua_S,lua_gettop(tolua_S));
         }
@@ -5692,8 +5692,8 @@ static int tolua_Cocos2d_CCGLProgram_create00(lua_State* tolua_S)
         CCGLProgram* tolua_ret = new CCGLProgram();
         tolua_ret->autorelease();
         tolua_ret->initWithVertexShaderFilename(arg0, arg1);
-        int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-        int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+        int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+        int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
         toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCGLProgram");
     }
     return 1;
@@ -5721,8 +5721,8 @@ static int tolua_Cocos2d_CCShaderCache_new00(lua_State* tolua_S)
  {
   {
    CCShaderCache* tolua_ret = (CCShaderCache*)  Mtolua_new((CCShaderCache)());
-    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
     toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCShaderCache");
   }
  }
@@ -5751,8 +5751,8 @@ static int tolua_Cocos2d_CCShaderCache_new00_local(lua_State* tolua_S)
  {
   {
    CCShaderCache* tolua_ret = (CCShaderCache*)  Mtolua_new((CCShaderCache)());
-    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
     toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCShaderCache");
     tolua_register_gc(tolua_S,lua_gettop(tolua_S));
   }
@@ -5811,8 +5811,8 @@ static int tolua_Cocos2d_CCShaderCache_sharedShaderCache00(lua_State* tolua_S)
  {
   {
    CCShaderCache* tolua_ret = (CCShaderCache*)  CCShaderCache::sharedShaderCache();
-    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
     toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCShaderCache");
   }
  }
