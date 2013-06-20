@@ -30,7 +30,7 @@ public:
         dataVal[1] = std_string_to_jsval(cx, strMsgInfo);
         dataVal[2] = TProductInfo_to_jsval(cx, info);
         
-        JSObject* obj = m_pJSDelegate;
+        JSObject* obj = _JSDelegate;
         
         if (JS_HasProperty(cx, obj, "onPayResult", &hasAction) && hasAction) {
             if(!JS_GetProperty(cx, obj, "onPayResult", &temp_retval)) {
@@ -47,11 +47,11 @@ public:
 
     void setJSDelegate(JSObject* pJSDelegate)
     {
-        m_pJSDelegate = pJSDelegate;
+        _JSDelegate = pJSDelegate;
     }
 
 private:
-    JSObject* m_pJSDelegate;
+    JSObject* _JSDelegate;
 };
 
 JSBool js_pluginx_ProtocolIAP_setResultListener(JSContext *cx, uint32_t argc, jsval *vp)
@@ -94,7 +94,7 @@ public:
         std::string strMsgInfo = msg;
         dataVal[1] = std_string_to_jsval(cx, strMsgInfo);
         
-        JSObject* obj = m_pJSDelegate;
+        JSObject* obj = _JSDelegate;
         JSBool bRet = JS_HasProperty(cx, obj, "onAdsResult", &hasAction);
         if (bRet && hasAction) {
             if(!JS_GetProperty(cx, obj, "onAdsResult", &temp_retval)) {
@@ -126,7 +126,7 @@ public:
         dataVal[0] = arg;
         dataVal[1] = INT_TO_JSVAL(points);
         
-        JSObject* obj = m_pJSDelegate;
+        JSObject* obj = _JSDelegate;
         JSBool bRet = JS_HasProperty(cx, obj, "onPlayerGetPoints", &hasAction);
         if (bRet && hasAction) {
             if(!JS_GetProperty(cx, obj, "onPlayerGetPoints", &temp_retval)) {
@@ -143,11 +143,11 @@ public:
 
     void setJSDelegate(JSObject* pJSDelegate)
     {
-        m_pJSDelegate = pJSDelegate;
+        _JSDelegate = pJSDelegate;
     }
 
 private:
-    JSObject* m_pJSDelegate;
+    JSObject* _JSDelegate;
 };
 
 JSBool js_pluginx_ProtocolAds_setAdsListener(JSContext *cx, uint32_t argc, jsval *vp)
@@ -188,7 +188,7 @@ public:
         std::string strMsgInfo = msg;
         dataVal[1] = std_string_to_jsval(cx, strMsgInfo);
         
-        JSObject* obj = m_pJSDelegate;
+        JSObject* obj = _JSDelegate;
         
         if (JS_HasProperty(cx, obj, "onShareResult", &hasAction) && hasAction) {
             if(!JS_GetProperty(cx, obj, "onShareResult", &temp_retval)) {
@@ -205,11 +205,11 @@ public:
 
     void setJSDelegate(JSObject* pJSDelegate)
     {
-        m_pJSDelegate = pJSDelegate;
+        _JSDelegate = pJSDelegate;
     }
 
 private:
-    JSObject* m_pJSDelegate;
+    JSObject* _JSDelegate;
 };
 
 JSBool js_pluginx_ProtocolSocial_setResultListener(JSContext *cx, uint32_t argc, jsval *vp)

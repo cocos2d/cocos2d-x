@@ -63,7 +63,7 @@ extern "C" {
 }
 
 ProtocolAds::ProtocolAds()
-: m_pListener(NULL)
+: _listener(NULL)
 {
 }
 
@@ -131,24 +131,24 @@ void ProtocolAds::spendPoints(int points)
 
 void ProtocolAds::setAdsListener(AdsListener* pListener)
 {
-	m_pListener = pListener;
+	_listener = pListener;
 }
 
 void ProtocolAds::onAdsResult(AdsResultCode code, const char* msg)
 {
 	PluginUtils::outputLog("ProtocolAds", "ProtocolAds::adsResult invoked!");
-	if (m_pListener != NULL)
+	if (_listener != NULL)
 	{
-		m_pListener->onAdsResult(code, msg);
+		_listener->onAdsResult(code, msg);
 	}
 }
 
 void ProtocolAds::onPlayerGetPoints(int points)
 {
 	PluginUtils::outputLog("ProtocolAds", "ProtocolAds::onPlayerGetPoints invoked!");
-	if (m_pListener != NULL)
+	if (_listener != NULL)
 	{
-		m_pListener->onPlayerGetPoints(this, points);
+		_listener->onPlayerGetPoints(this, points);
 	}
 }
 

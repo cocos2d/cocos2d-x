@@ -27,10 +27,10 @@
 
 namespace cocos2d { namespace plugin {
 
-bool ProtocolIAP::m_bPaying = false;
+bool ProtocolIAP::_paying = false;
 
 ProtocolIAP::ProtocolIAP()
-: m_pListener(NULL)
+: _listener(NULL)
 {
 }
 
@@ -62,7 +62,7 @@ void ProtocolIAP::configDeveloperInfo(TIAPDeveloperInfo devInfo)
 
 void ProtocolIAP::payForProduct(TProductInfo info)
 {
-    if (m_bPaying)
+    if (_paying)
     {
         PluginUtilsIOS::outputLog("Now is paying");
         return;
@@ -70,7 +70,7 @@ void ProtocolIAP::payForProduct(TProductInfo info)
 
     if (info.empty())
     {
-        if (NULL != m_pListener)
+        if (NULL != _listener)
         {
             onPayResult(kPayFail, "Product info error");
         }
@@ -79,8 +79,8 @@ void ProtocolIAP::payForProduct(TProductInfo info)
     }
     else
     {
-        m_bPaying = true;
-        m_curInfo = info;
+        _paying = true;
+        _curInfo = info;
         
         PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
         assert(pData != NULL);
@@ -96,22 +96,22 @@ void ProtocolIAP::payForProduct(TProductInfo info)
 
 void ProtocolIAP::setResultListener(PayResultListener* pListener)
 {
-    m_pListener = pListener;
+    _listener = pListener;
 }
 
 void ProtocolIAP::onPayResult(PayResultCode ret, const char* msg)
 {
-    m_bPaying = false;
-    if (m_pListener)
+    _paying = false;
+    if (_listener)
     {
-        m_pListener->onPayResult(ret, msg, m_curInfo);
+        _listener->onPayResult(ret, msg, _curInfo);
     }
     else
     {
         PluginUtilsIOS::outputLog("Pay result listener of %s is null!", this->getPluginName());
     }
 
-    m_curInfo.clear();
+    _curInfo.clear();
     PluginUtilsIOS::outputLog("Pay result of %s is : %d(%s)", this->getPluginName(), (int) ret, msg);
 }
 
