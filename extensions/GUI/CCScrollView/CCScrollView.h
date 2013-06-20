@@ -322,6 +322,17 @@ protected:
      */
     Rect _parentScissorRect;
     bool _scissorRestored;
+public:
+    enum ScrollViewScriptHandlerType
+    {
+        kScrollViewScriptScroll   = 0,
+        kScrollViewScriptZoom,
+    };
+    void registerScriptHandler(int nFunID,ScrollViewScriptHandlerType scriptHandlerType);
+    void unregisterScriptHandler(ScrollViewScriptHandlerType scriptHandlerType);
+    int  getScriptHandler(ScrollViewScriptHandlerType scriptHandlerType);
+private:
+    std::map<int,int> _mapScriptHandler;
 };
 
 // end of GUI group
