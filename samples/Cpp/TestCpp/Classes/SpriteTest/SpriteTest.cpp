@@ -100,7 +100,7 @@ static std::function<CCLayer*()> createFunctions[] =
 	CL(SpriteSubclass),
 	CL(SpriteDoubleResolution),
 	CL(SpriteBatchBug1217),
-	CL(AnimationCache),
+	CL(AnimationCacheTest),
 	CL(AnimationCacheFile),
 };
 
@@ -3429,7 +3429,7 @@ std::string SpriteDoubleResolution::subtitle()
 // AnimationCache
 //
 //------------------------------------------------------------------
-AnimationCache::AnimationCache()
+AnimationCacheTest::AnimationCacheTest()
 {
     CCSpriteFrameCache *frameCache = CCSpriteFrameCache::sharedSpriteFrameCache();
     frameCache->addSpriteFramesWithFile("animations/grossini.plist");
@@ -3516,12 +3516,12 @@ AnimationCache::AnimationCache()
     grossini->runAction(seq);
 }
 
-std::string AnimationCache::title()
+std::string AnimationCacheTest::title()
 {
     return "AnimationCache";
 }
 
-std::string AnimationCache::subtitle()
+std::string AnimationCacheTest::subtitle()
 {
     return "Sprite should be animated";
 }
