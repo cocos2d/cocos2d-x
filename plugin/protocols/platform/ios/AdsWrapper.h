@@ -28,8 +28,8 @@ THE SOFTWARE.
 typedef enum {
     kAdsReceived = 0,
     
-    kFullScreenViewShown,
-    kFullScreenViewDismissed,
+    kAdsShown,
+    kAdsDismissed,
     
     kPointsSpendSucceed,
     kPointsSpendFailed,
@@ -41,6 +41,7 @@ typedef enum {
 typedef enum {
     kTypeBanner = 0,
     kTypeFullScreen,
+    kTypeMoreApp,
 } AdsTypeEnum;
 
 typedef enum {

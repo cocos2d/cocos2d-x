@@ -474,6 +474,7 @@ Developers:
     edwardzhou (Edward Zhou)
         Correcting the type detecting order for Lua CCBProxy::getNodeTypeName.
         Casting variables to their own type, and print warning info if no corresponding lua callback function instead of crash.
+        fix of WebSocket url parse error for 'ws://domain.com/websocket' pattern.
 
     musikov
         Fixing a bug that missing precision when getting strokeColor and fontFillColor

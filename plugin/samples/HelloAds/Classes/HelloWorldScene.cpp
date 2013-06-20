@@ -34,6 +34,7 @@ const std::string s_aTestCases[] = {
 const std::string s_aTestTypes[] = {
 	"Banner",
 	"Full Screen",
+    "More App",
 };
 
 const std::string s_aTestPoses[] = {
