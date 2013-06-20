@@ -43,7 +43,7 @@
 @end
 
 
-@interface EditBoxImplIOS : NSObject <UITextFieldDelegate>
+@interface EditBoxImplIOS_objc : NSObject <UITextFieldDelegate>
 {
     CustomUITextField* textField_;
     void* editBox_;
@@ -112,7 +112,7 @@ private:
     CCSize          _contentSize;
     CCPoint         _position;
     CCPoint         _anchorPoint;
-    EditBoxImplIOS* _systemControl;
+    EditBoxImplIOS_objc* _systemControl;
     int             _maxTextLength;
     bool            _inRetinaMode;
 };

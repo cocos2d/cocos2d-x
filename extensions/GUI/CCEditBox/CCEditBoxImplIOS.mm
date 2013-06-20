@@ -47,7 +47,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
 @end
 
 
-@implementation EditBoxImplIOS
+@implementation EditBoxImplIOS_objc
 
 @synthesize textField = textField_;
 @synthesize editState = editState_;
@@ -284,7 +284,7 @@ bool CCEditBoxImplIOS::initWithSize(const CCSize& size)
             rect.size.height /= 2.0f;
         }
         
-        _systemControl = [[EditBoxImplIOS alloc] initWithFrame:rect editBox:this];
+        _systemControl = [[EditBoxImplIOS_objc alloc] initWithFrame:rect editBox:this];
         if (!_systemControl) break;
         
 		initInactiveLabels(size);
