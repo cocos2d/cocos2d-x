@@ -54,7 +54,7 @@ bool EGLView::isOpenGLReady()
     return (_screenSize.width != 0 && _screenSize.height != 0);
 }
 
-Timer*
+Tizen::Base::Runtime::Timer*
 EGLView::getTimer()
 {
     return __pTimer;
@@ -116,7 +116,7 @@ EGLView* EGLView::sharedOpenGLView()
 }
 
 void
-EGLView::OnTimerExpired(Timer& timer)
+EGLView::OnTimerExpired(Tizen::Base::Runtime::Timer& timer)
 {
     if (__pTimer == null)
     {
@@ -134,7 +134,7 @@ EGLView::create()
 
     TryCatch(initEGL(), , "[EGLView] EGLView::create() failed.");
 
-    __pTimer = new (std::nothrow) Timer;
+    __pTimer = new (std::nothrow) Tizen::Base::Runtime::Timer;
     TryCatch(__pTimer != null, , "[EGLView] Failed to allocate memory.");
 
     r = __pTimer->Construct(*this);
