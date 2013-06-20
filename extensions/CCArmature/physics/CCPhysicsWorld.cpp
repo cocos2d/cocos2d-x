@@ -75,40 +75,40 @@ public:
 
 
 
-CCPhysicsWorld *CCPhysicsWorld::s_PhysicsWorld = NULL;
+PhysicsWorld *PhysicsWorld::s_PhysicsWorld = NULL;
 
 
-CCPhysicsWorld *CCPhysicsWorld::sharedPhysicsWorld()
+PhysicsWorld *PhysicsWorld::sharedPhysicsWorld()
 {
     if (s_PhysicsWorld == NULL)
     {
-        s_PhysicsWorld = new CCPhysicsWorld();
+        s_PhysicsWorld = new PhysicsWorld();
         s_PhysicsWorld->initNoGravityWorld();
     }
 
     return s_PhysicsWorld;
 }
 
-void CCPhysicsWorld::purgePhysicsWorld()
+void PhysicsWorld::purgePhysicsWorld()
 {
     delete s_PhysicsWorld;
     s_PhysicsWorld = NULL;
 }
 
-CCPhysicsWorld::CCPhysicsWorld()
+PhysicsWorld::PhysicsWorld()
     : _noGravityWorld(NULL)
     , _debugDraw(NULL)
 {
 }
 
-CCPhysicsWorld::~CCPhysicsWorld()
+PhysicsWorld::~PhysicsWorld()
 {
     CC_SAFE_DELETE(_debugDraw);
     CC_SAFE_DELETE(_noGravityWorld);
     CC_SAFE_DELETE(_contactListener);
 }
 
-void CCPhysicsWorld::initNoGravityWorld()
+void PhysicsWorld::initNoGravityWorld()
 {
     b2Vec2 noGravity(0, 0);
 
@@ -133,12 +133,12 @@ void CCPhysicsWorld::initNoGravityWorld()
 #endif
 }
 
-b2World *CCPhysicsWorld::getNoGravityWorld()
+b2World *PhysicsWorld::getNoGravityWorld()
 {
     return _noGravityWorld;
 }
 
-void CCPhysicsWorld::update(float dt)
+void PhysicsWorld::update(float dt)
 {
     _noGravityWorld->Step(dt, 0, 0);
 
@@ -149,15 +149,15 @@ void CCPhysicsWorld::update(float dt)
         b2Body *b2a = contact.fixtureA->GetBody();
         b2Body *b2b = contact.fixtureB->GetBody();
 
-        CCBone *ba = (CCBone *)b2a->GetUserData();
-        CCBone *bb = (CCBone *)b2b->GetUserData();
+        Bone *ba = (Bone *)b2a->GetUserData();
+        Bone *bb = (Bone *)b2b->GetUserData();
 
         BoneColliderSignal.emit(ba, bb);
     }
 
 }
 
-void CCPhysicsWorld::drawDebug()
+void PhysicsWorld::drawDebug()
 {
     _noGravityWorld->DrawDebugData();
 }

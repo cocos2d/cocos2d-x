@@ -46,7 +46,7 @@ public:
 /**
  *  @brief Websocket thread helper, it's used for sending message between UI thread and websocket thread.
  */
-class WsThreadHelper : public cocos2d::CCObject
+class WsThreadHelper : public cocos2d::Object
 {
 public:
     WsThreadHelper();
@@ -114,12 +114,12 @@ WsThreadHelper::WsThreadHelper()
     _subThreadWsMessageQueue = new std::list<WsMessage*>();
     pthread_mutex_init(&_subThreadWsMessageQueueMutex, NULL);
     
-    CCDirector::sharedDirector()->getScheduler()->scheduleUpdateForTarget(this, 0, false);
+    Director::sharedDirector()->getScheduler()->scheduleUpdateForTarget(this, 0, false);
 }
 
 WsThreadHelper::~WsThreadHelper()
 {
-    CCDirector::sharedDirector()->getScheduler()->unscheduleAllForTarget(this);
+    Director::sharedDirector()->getScheduler()->unscheduleAllForTarget(this);
     pthread_mutex_destroy(&_UIWsMessageQueueMutex);
     pthread_mutex_destroy(&_subThreadWsMessageQueueMutex);
     delete _UIWsMessageQueue;
@@ -375,7 +375,7 @@ void WebSocket::send(const unsigned char* binaryMsg, unsigned int len)
 
 void WebSocket::close()
 {
-    CCDirector::sharedDirector()->getScheduler()->unscheduleAllForTarget(_wsHelper);
+    Director::sharedDirector()->getScheduler()->unscheduleAllForTarget(_wsHelper);
     
     if (_readyState == kStateClosing || _readyState == kStateClosed)
         return;

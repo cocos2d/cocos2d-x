@@ -10,7 +10,7 @@
 
 NS_CC_EXT_BEGIN
 
-class ccColor3BWapper : public CCObject
+class ccColor3BWapper : public Object
 {
 private:
     ccColor3B color;
@@ -31,7 +31,7 @@ enum
     kArrayValue
 };
 
-class CCBValue : public CCObject
+class CCBValue : public Object
 {
 private:
     union 
@@ -41,7 +41,7 @@ private:
     } mValue;
     
     std::string _value;
-    CCArray* _arrValue;
+    Array* _arrValue;
     int mType;
     
 public:
@@ -50,7 +50,7 @@ public:
     static CCBValue* create(float fValue);
     static CCBValue* create(unsigned char byte);
     static CCBValue* create(const char* pStr);
-    static CCBValue* create(CCArray* pArr);
+    static CCBValue* create(Array* pArr);
 
     
     int getIntValue();
@@ -58,7 +58,7 @@ public:
     bool getBoolValue();
     unsigned char getByteValue();
     const char* getStringValue();
-    CCArray *getArrayValue();
+    Array *getArrayValue();
     
     int getType();
 };

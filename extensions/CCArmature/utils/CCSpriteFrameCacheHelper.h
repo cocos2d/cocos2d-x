@@ -31,36 +31,36 @@ using namespace std;
 
 namespace cocos2d { namespace extension { namespace armature {
 
-class  CCSpriteFrameCacheHelper
+class  SpriteFrameCacheHelper
 {
 public:
-    static CCSpriteFrameCacheHelper *sharedSpriteFrameCacheHelper();
+    static SpriteFrameCacheHelper *sharedSpriteFrameCacheHelper();
 
     static void purgeSpriteFrameCacheHelper();
 public:
 
     /**
-     *	@brief	Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name
+     *	@brief	Add sprite frame to SpriteFrameCache, it will save display name and it's relative image name
      *
      */
     void addSpriteFrameFromFile(const char *plistPath, const char *imagePath);
 
-    void addSpriteFrameFromDict(CCDictionary *dictionary, CCTexture2D *pobTexture, const char *imagePath);
+    void addSpriteFrameFromDict(Dictionary *dictionary, Texture2D *pobTexture, const char *imagePath);
 
     /**
      * Get this display in which image
      */
     const char *getDisplayImagePath(const char *displayName);
-    CCTextureAtlas *getTextureAtlas(const char *displayName);
+    TextureAtlas *getTextureAtlas(const char *displayName);
 
 private:
-    CCSpriteFrameCacheHelper();
-    ~CCSpriteFrameCacheHelper();
+    SpriteFrameCacheHelper();
+    ~SpriteFrameCacheHelper();
 
     std::map<std::string, std::string> _display2ImageMap;
-    CCDictionary *_display2TextureAtlas;
+    Dictionary *_display2TextureAtlas;
 
-    static CCSpriteFrameCacheHelper *s_SpriteFrameCacheHelper;
+    static SpriteFrameCacheHelper *s_SpriteFrameCacheHelper;
 };
 
 }}} // namespace cocos2d { namespace extension { namespace armature {

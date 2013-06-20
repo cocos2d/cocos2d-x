@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 namespace cocos2d { namespace extension { namespace armature {
     
-enum CCTweenType{
+enum TweenType{
     TWEEN_EASING_MIN = -1,
     
     Linear,
@@ -80,10 +80,10 @@ enum CCTweenType{
     TWEEN_EASING_MAX = 10000
 };
     
-class  CCTweenFunction{
+class  TweenFunction{
 public:
     
-    static float tweenTo(float from, float change, float time, float duration, CCTweenType tweenType);
+    static float tweenTo(float from, float change, float time, float duration, TweenType tweenType);
     
     static float linear(float t, float b, float c, float d);
     

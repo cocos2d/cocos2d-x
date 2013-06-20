@@ -40,26 +40,26 @@ enum MovementEventType
 };
 
 
-class CCArmature;
-class CCBone;
+class Armature;
+class Bone;
 
-class  CCArmatureAnimation : public CCProcessBase
+class  ArmatureAnimation : public ProcessBase
 {
 public:
     /**
-     * Create with a CCArmature
-     * @param armature The CCArmature CCArmatureAnimation will bind to
+     * Create with a Armature
+     * @param armature The Armature ArmatureAnimation will bind to
      */
-    static CCArmatureAnimation *create(CCArmature *armature);
+    static ArmatureAnimation *create(Armature *armature);
 public:
-    CCArmatureAnimation();
-    virtual ~CCArmatureAnimation(void);
+    ArmatureAnimation();
+    virtual ~ArmatureAnimation(void);
 
     /**
-     * Init with a CCArmature
-     * @param armature The CCArmature CCArmatureAnimation will bind to
+     * Init with a Armature
+     * @param armature The Armature ArmatureAnimation will bind to
      */
-    virtual bool init(CCArmature *armature);
+    virtual bool init(Armature *armature);
 
     /**
      * Scale animation play speed.
@@ -74,21 +74,21 @@ public:
      * @param  durationTo The frames between two animation changing-over.
      *         It's meaning is changing to this animation need how many frames
      *
-     *         -1 : use the value from CCMovementData get from flash design panel
+     *         -1 : use the value from MovementData get from flash design panel
      * @param  durationTween  The frame count you want to play in the game.
      *         if  _durationTween is 80, then the animation will played 80 frames in a loop
      *
-     *         -1 : use the value from CCMovementData get from flash design panel
+     *         -1 : use the value from MovementData get from flash design panel
      *
      * @param  loop   Whether the animation is loop
      *
-     *         loop < 0 : use the value from CCMovementData get from flash design panel
+     *         loop < 0 : use the value from MovementData get from flash design panel
      *         loop = 0 : this animation is not loop
      *         loop > 0 : this animation is loop
      *
-     * @param  tweenEasing CCTween easing is used for calculate easing effect
+     * @param  tweenEasing Tween easing is used for calculate easing effect
      *
-     *         TWEEN_EASING_MAX : use the value from CCMovementData get from flash design panel
+     *         TWEEN_EASING_MAX : use the value from MovementData get from flash design panel
      *         -1 : fade out
      *         0  : line
      *         1  : fade in
@@ -136,28 +136,28 @@ protected:
     void updateFrameData(float currentPercent);
 
 protected:
-    //! CCAnimationData save all MovementDatas this animation used.
-    CC_SYNTHESIZE_RETAIN(CCAnimationData *, _animationData, AnimationData);
+    //! AnimationData save all MovementDatas this animation used.
+    CC_SYNTHESIZE_RETAIN(AnimationData *, _animationData, AnimationData);
 
 
-    CCMovementData *_movementData;				//! CCMovementData save all MovementFrameDatas this animation used.
+    MovementData *_movementData;				//! MovementData save all MovementFrameDatas this animation used.
 
-    CCArmature *_armature;						//! A weak reference of armature
+    Armature *_armature;						//! A weak reference of armature
 
     std::string _movementID;				//! Current movment's name
 
     int _prevFrameIndex;						//! Prev key frame index
-    int _toIndex;								//! The frame index in CCMovementData->_movFrameDataArr, it's different from _frameIndex.
+    int _toIndex;								//! The frame index in MovementData->_movFrameDataArr, it's different from _frameIndex.
 
-    CCArray *_tweenList;
+    Array *_tweenList;
 public:
     /**
      * MovementEvent signal. This will emit a signal when trigger a event.
-     * The 1st param is the CCArmature. The 2nd param is Event Type, like START, COMPLETE. The 3rd param is Movement ID, also called Movement Name.
+     * The 1st param is the Armature. The 2nd param is Event Type, like START, COMPLETE. The 3rd param is Movement ID, also called Movement Name.
      */
-    sigslot::signal3<CCArmature *, MovementEventType, const char *> MovementEventSignal;
+    sigslot::signal3<Armature *, MovementEventType, const char *> MovementEventSignal;
 
-    sigslot::signal2<CCBone *, const char *> FrameEventSignal;
+    sigslot::signal2<Bone *, const char *> FrameEventSignal;
 };
 
 }}} // namespace cocos2d { namespace extension { namespace armature {
