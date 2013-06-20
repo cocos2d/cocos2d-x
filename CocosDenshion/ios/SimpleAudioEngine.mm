@@ -177,14 +177,14 @@ void SimpleAudioEngine::end()
 void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 {
     // Changing file path to full path
-    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
     static_preloadBackgroundMusic(fullPath.c_str());
 }
 
 void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 {
     // Changing file path to full path
-    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
     static_playBackgroundMusic(fullPath.c_str(), bLoop);
 }
 
@@ -241,7 +241,7 @@ void SimpleAudioEngine::setEffectsVolume(float volume)
 unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
 {
     // Changing file path to full path
-    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
     return static_playEffect(fullPath.c_str(), bLoop);
 }
 
@@ -253,14 +253,14 @@ void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 {
     // Changing file path to full path
-    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
     static_preloadEffect(fullPath.c_str());
 }
 
 void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 {
     // Changing file path to full path
-    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
     static_unloadEffect(fullPath.c_str());
 }
 
