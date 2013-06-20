@@ -65,6 +65,8 @@ CCOspForm::OnTerminating(void)
     if (__pKeypad)
         __pKeypad->Destroy();
 
+    CCDirector::sharedDirector()->getAccelerometer()->stopSensor();
+
     return r;
 }
 

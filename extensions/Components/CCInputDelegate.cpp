@@ -174,11 +174,11 @@ void CCInputDelegate::setAccelerometerEnabled(bool enabled)
         CCDirector* pDirector = CCDirector::sharedDirector();
         if (enabled)
         {
-            pDirector->getAccelerometer()->setDelegate(this);
+            pDirector->getAccelerometer()->setDelegate(CC_CALLBACK_1(CCInputDelegate::didAccelerate, this));
         }
         else
         {
-            pDirector->getAccelerometer()->setDelegate(NULL);
+            pDirector->getAccelerometer()->setDelegate(nullptr);
         }
     }
 }

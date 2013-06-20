@@ -46,7 +46,7 @@ enum {
 /** 
 @brief Base class for CCAction objects.
  */
-class CC_DLL CCAction : public CCObject 
+class CC_DLL CCAction : public CCObject, public CCClonable
 {
 public:
     CCAction(void);
@@ -55,9 +55,8 @@ public:
 
     const char* description();
 
-    virtual CCObject* copyWithZone(CCZone *pZone);
 	/** returns a clone of action */
-	virtual CCAction* clone() const;
+	virtual CCAction* clone() const = 0;
 
     //! return true if the action has finished
     virtual bool isDone(void);
@@ -100,8 +99,7 @@ public:
     inline void setTag(int nTag) { _tag = nTag; }
 
 public:
-    /** Create an action */
-    static CCAction* create();
+
 protected:
     CCNode    *_originalTarget;
     /** The "target".
@@ -135,11 +133,11 @@ public:
     //! set duration in seconds of the action
     inline void setDuration(float duration) { _duration = duration; }
 
-    /** returns a reversed action */
-    virtual CCFiniteTimeAction* reverse(void);
+    /** returns a new reversed action */
+    virtual CCFiniteTimeAction* reverse() const = 0;
 
 	/** returns a clone of action */
-	virtual CCFiniteTimeAction* clone() const;
+	virtual CCFiniteTimeAction* clone() const = 0;
 
 protected:
     //! duration in seconds
@@ -170,13 +168,15 @@ public:
 
     virtual CCObject* copyWithZone(CCZone *pZone);
 
-	/** returns a clone of action */
+	/** returns a new clone of the action */
 	virtual CCSpeed* clone() const;
+    /** returns a new reversed action */
+    virtual CCSpeed* reverse(void) const;
+
     virtual void startWithTarget(CCNode* pTarget);
     virtual void stop();
     virtual void step(float dt);
     virtual bool isDone(void);
-    virtual CCActionInterval* reverse(void);
 
     void setInnerAction(CCActionInterval *pAction);
 

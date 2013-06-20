@@ -27,21 +27,22 @@ THE SOFTWARE.
 
 #include "platform/CCCommon.h"
 #include "platform/CCAccelerometerDelegate.h"
+#include <functional>
 
 namespace   cocos2d {
 
-class CC_DLL CCAccelerometer
+class CCAccelerometer
 {
 public:
     CCAccelerometer();
     ~CCAccelerometer();
 
-    void setDelegate(CCAccelerometerDelegate* pDelegate);
+    void setDelegate(std::function<void(CCAcceleration*)> function);
     void setAccelerometerInterval(float interval);
     void update(float x, float y, float z, long sensorTimeStamp);
 
 private:
-    CCAccelerometerDelegate* _accelDelegate;
+    std::function<void(CCAcceleration*)> _function;
     CCAcceleration _accelerationValue;
 };
 

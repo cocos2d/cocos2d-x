@@ -123,29 +123,6 @@ static bool _initWithImage(CGImageRef cgImage, tImageInfo *pImageinfo)
     return true;
 }
 
-static bool _initWithFile(const char* path, tImageInfo *pImageinfo)
-{
-    CGImageRef                CGImage;    
-    UIImage                    *jpg;
-    UIImage                    *png;
-    bool            ret;
-    
-    // convert jpg to png before loading the texture
-    
-    NSString *fullPath = [NSString stringWithUTF8String:path];
-    jpg = [[UIImage alloc] initWithContentsOfFile: fullPath];
-    png = [[UIImage alloc] initWithData:UIImagePNGRepresentation(jpg)];
-    CGImage = png.CGImage;    
-    
-    ret = _initWithImage(CGImage, pImageinfo);
-    
-    [png release];
-    [jpg release];
-    
-    return ret;
-}
-
-
 static bool _initWithData(void * pBuffer, int length, tImageInfo *pImageinfo)
 {
     bool ret = false;
@@ -282,8 +259,8 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         
         if ( pInfo->hasShadow )
         {
-            shadowStrokePaddingX = std::max(shadowStrokePaddingX, (float)abs(pInfo->shadowOffset.width));
-            shadowStrokePaddingY = std::max(shadowStrokePaddingY, (float)abs(pInfo->shadowOffset.height));
+            shadowStrokePaddingX = std::max(shadowStrokePaddingX, (float)fabs(pInfo->shadowOffset.width));
+            shadowStrokePaddingY = std::max(shadowStrokePaddingY, (float)fabs(pInfo->shadowOffset.height));
         }
         
         // add the padding (this could be 0 if no shadow and no stroke)
@@ -482,7 +459,7 @@ bool CCImage::initWithImageData(void * pData,
         CC_BREAK_IF(! pData || nDataLen <= 0);
         if (eFmt == kFmtRawData)
         {
-            bRet = _initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false);
+            bRet = initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false);
         }
         else if (eFmt == kFmtWebp)
         {
@@ -506,7 +483,7 @@ bool CCImage::initWithImageData(void * pData,
     return bRet;
 }
 
-bool CCImage::_initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti)
+bool CCImage::initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti)
 {
     bool bRet = false;
     do 

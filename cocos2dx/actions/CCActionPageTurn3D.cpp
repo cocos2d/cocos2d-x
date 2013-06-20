@@ -47,6 +47,15 @@ CCPageTurn3D* CCPageTurn3D::create(float duration, const CCSize& gridSize)
     return pAction;
 }
 
+CCPageTurn3D *CCPageTurn3D::clone() const
+{
+	// no copy constructor	
+	auto a = new CCPageTurn3D();
+	a->initWithDuration(_duration, _gridSize);
+	a->autorelease();
+	return a;
+}
+
 /*
  * Update each tick
  * Time is the percentage of the way through the duration

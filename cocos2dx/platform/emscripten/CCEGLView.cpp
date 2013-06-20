@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "CCAccelerometer.h"
 #include "CCApplication.h"
 
+#include <emscripten/emscripten.h>
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_mixer.h>

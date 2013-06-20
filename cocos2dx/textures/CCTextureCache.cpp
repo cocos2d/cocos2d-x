@@ -43,16 +43,14 @@ THE SOFTWARE.
 #include <list>
 #include <pthread.h>
 
+#ifdef EMSCRIPTEN
+#include <emscripten/emscripten.h>
+#include "platform/emscripten/CCTextureCacheEmscripten.h"
+#endif // EMSCRIPTEN
+
 using namespace std;
 
 NS_CC_BEGIN
-
-typedef struct _AsyncStruct
-{
-    std::string            filename;
-    CCObject    *target;
-    SEL_CallFuncO        selector;
-} AsyncStruct;
 
 typedef struct _ImageInfo
 {
@@ -193,7 +191,11 @@ CCTextureCache * CCTextureCache::sharedTextureCache()
 {
     if (!g_sharedTextureCache)
     {
+#ifdef EMSCRIPTEN
+        g_sharedTextureCache = new CCTextureCacheEmscripten();
+#else
         g_sharedTextureCache = new CCTextureCache();
+#endif // EMSCRIPTEN
     }
     return g_sharedTextureCache;
 }
@@ -238,10 +240,6 @@ CCDictionary* CCTextureCache::snapshotTextures()
 
 void CCTextureCache::addImageAsync(const char *path, CCObject *target, SEL_CallFuncO selector)
 {
-#ifdef EMSCRIPTEN
-    CCLOGWARN("Cannot load image %s asynchronously in Emscripten builds.", path);
-    return;
-#endif // EMSCRIPTEN
 
     CCAssert(path != NULL, "TextureCache: fileimage MUST not be NULL");    
 
@@ -293,10 +291,7 @@ void CCTextureCache::addImageAsync(const char *path, CCObject *target, SEL_CallF
     }
 
     // generate async struct
-    AsyncStruct *data = new AsyncStruct();
-    data->filename = fullpath.c_str();
-    data->target = target;
-    data->selector = selector;
+    AsyncStruct *data = new AsyncStruct(fullpath, target, selector);
 
     // add async struct into queue
     pthread_mutex_lock(&s_asyncStructQueueMutex);

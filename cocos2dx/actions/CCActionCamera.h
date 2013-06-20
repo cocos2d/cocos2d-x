@@ -58,9 +58,10 @@ public:
     virtual ~CCActionCamera(){}
     // super methods
     virtual void startWithTarget(CCNode *pTarget);
-    virtual CCActionInterval * reverse();
+	/** returns a new reversed action */
+    virtual CCActionCamera * reverse() const;
 	/** returns a new clone of the action */
-	CCActionCamera *clone() const;
+	virtual CCActionCamera *clone() const;
 protected:
     float _centerXOrig;
     float _centerYOrig;

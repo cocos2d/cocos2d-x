@@ -28,22 +28,28 @@ THE SOFTWARE.
 
 #include "platform/CCCommon.h"
 #include "platform/CCAccelerometerDelegate.h"
+#include <FUix.h>
+#include <functional>
 
 NS_CC_BEGIN
 
-class CC_DLL CCAccelerometer
+class CC_DLL CCAccelerometer : public Tizen::Uix::Sensor::ISensorEventListener
 {
 public:
     CCAccelerometer();
     ~CCAccelerometer();
 
-    void setDelegate(CCAccelerometerDelegate* pDelegate);
+    void setDelegate(std::function<void(CCAcceleration*)> function);
     void setAccelerometerInterval(float interval);
-    void update(float x, float y, float z, long sensorTimeStamp);
+    void startSensor();
+    void stopSensor();
+
+    virtual void OnDataReceived(Tizen::Uix::Sensor::SensorType sensorType, Tizen::Uix::Sensor::SensorData& sensorData , result r);
 
 private:
-    CCAccelerometerDelegate* _accelDelegate;
+    std::function<void(CCAcceleration*)> _function;
     CCAcceleration _accelerationValue;
+    Tizen::Uix::Sensor::SensorManager* __sensorMgr;
 };
 
 NS_CC_END

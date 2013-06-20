@@ -27,7 +27,7 @@
 #include "CCAccelerometerDelegate.h"
 //#include "CCMutableArray.h"
 #include "ccCommon.h"
-
+#include <functional>
 
 namespace   cocos2d {
 
@@ -47,13 +47,13 @@ public:
     */
     static CCAccelerometer* sharedAccelerometer();
 
-	void setDelegate(CCAccelerometerDelegate* pDelegate);
+	void setDelegate(std::function<void(CCAcceleration*)> function);
     void setAccelerometerInterval(float interval) {CC_UNUSED_PARAM(interval);};
 	void update(float x, float y, float z, uint64 sensorTimeStamp);
 
 private:
 	static CCAccelerometer* _spCCAccelerometer;
-	CCAccelerometerDelegate* _accelDelegate;
+	std::function<void(CCAcceleration*)> _function;
 	CCAcceleration _accelerationValue;
 };
 

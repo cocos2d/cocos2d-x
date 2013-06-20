@@ -24,11 +24,14 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCAccelerometer.h"
-#include <stdio.h>
+
+using namespace Tizen::Uix::Sensor;
 
 NS_CC_BEGIN
 
-CCAccelerometer::CCAccelerometer() : _accelDelegate(NULL)
+CCAccelerometer::CCAccelerometer()
+    : _function(nullptr)
+    , __sensorMgr(nullptr)
 {
 }
 
@@ -37,28 +40,76 @@ CCAccelerometer::~CCAccelerometer()
 
 }
 
-void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
+void CCAccelerometer::setDelegate(std::function<void(CCAcceleration*)> function)
 {
-    _accelDelegate = pDelegate;
+    _function = function;
 
-    if (pDelegate)
+    if (_function)
     {
+        startSensor();
     }
     else
     {
+        stopSensor();
     }
 }
 
 void CCAccelerometer::setAccelerometerInterval(float interval)
 {
-}
-
-
-void CCAccelerometer::update(float x, float y, float z, long sensorTimeStamp)
-{
-    if (_accelDelegate)
+    if (__sensorMgr)
     {
+        __sensorMgr->SetInterval(SENSOR_TYPE_ACCELERATION, interval * 1000);
     }
 }
+
+void CCAccelerometer::startSensor()
+{
+    long interval = 0L;
+
+    if (__sensorMgr)
+    {
+        __sensorMgr->RemoveSensorListener(*this);
+        delete __sensorMgr;
+        __sensorMgr = null;
+    }
+
+    __sensorMgr = new SensorManager();
+    __sensorMgr->Construct();
+    __sensorMgr->GetMinInterval(SENSOR_TYPE_ACCELERATION, interval);
+
+    if (interval < 50)
+    {
+        interval = 50;
+    }
+    __sensorMgr->AddSensorListener(*this, SENSOR_TYPE_ACCELERATION, interval, true);
+
+}
+
+void CCAccelerometer::stopSensor()
+{
+    if (__sensorMgr)
+    {
+        __sensorMgr->RemoveSensorListener(*this);
+        delete __sensorMgr;
+        __sensorMgr = null;
+    }
+}
+
+void CCAccelerometer::OnDataReceived(SensorType sensorType, SensorData& sensorData , result r)
+{
+    if (_function)
+    {
+        AccelerationSensorData& data = static_cast<AccelerationSensorData&>(sensorData);
+        AppLog("AccelerationSensorData    x = %5.4f , y = %5.4f,  z = %5.4f ", data.x,data.y,data.z);
+
+        _accelerationValue.x = -data.x;
+        _accelerationValue.y = -data.y;
+        _accelerationValue.z = -data.z;
+        _accelerationValue.timestamp = data.timestamp;
+
+        _function(&_accelerationValue);
+    }
+}
+
 NS_CC_END
 
