@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
-class CCInputDelegate : public CCTouchDelegate, public CCAccelerometerDelegate, public CCKeypadDelegate
+class CCInputDelegate : public CCTouchDelegate, public CCKeypadDelegate
 {
 protected:
     CCInputDelegate(void);
