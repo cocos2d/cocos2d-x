@@ -24,7 +24,7 @@
 #import <Foundation/Foundation.h>
 #import <QuartzCore/CVDisplayLink.h>
 
-@interface DirectorCaller : NSObject {
+@interface CCDirectorCaller : NSObject {
         CVDisplayLinkRef displayLink;
 		NSTimer *renderTimer;
         int interval;

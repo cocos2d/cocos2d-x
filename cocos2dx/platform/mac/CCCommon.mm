@@ -63,7 +63,7 @@ void MessageBox(const char * pszMsg, const char * pszTitle)
 	[alert setInformativeText:title];
 	[alert setAlertStyle:NSWarningAlertStyle];
 
-	NSWindow *window = [[EAGLView sharedEGLView] window];
+	NSWindow *window = [[CCEAGLView sharedEGLView] window];
 	[alert beginSheetModalForWindow:window
 					  modalDelegate:[window delegate]
 					 didEndSelector:nil
