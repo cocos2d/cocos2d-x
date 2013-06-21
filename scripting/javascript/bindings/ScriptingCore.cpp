@@ -53,15 +53,15 @@
 
 #define BYTE_CODE_FILE_EXT ".jsc"
 
-pthread_t debugThread;
-string inData;
-string outData;
-vector<string> queue;
-pthread_mutex_t g_qMutex;
-pthread_mutex_t g_rwMutex;
-bool vmLock = false;
-jsval frame = JSVAL_NULL, script = JSVAL_NULL;
-int clientSocket;
+static pthread_t debugThread;
+static string inData;
+static string outData;
+static vector<string> g_queue;
+static pthread_mutex_t g_qMutex;
+static pthread_mutex_t g_rwMutex;
+static bool vmLock = false;
+static jsval frame = JSVAL_NULL, script = JSVAL_NULL;
+static int clientSocket = -1;
 
 // server entry point for the bg thread
 void* serverEntryPoint(void*);
@@ -69,16 +69,16 @@ void* serverEntryPoint(void*);
 js_proxy_t *_native_js_global_ht = NULL;
 js_proxy_t *_js_native_global_ht = NULL;
 js_type_class_t *_js_global_type_ht = NULL;
-char *_js_log_buf = NULL;
+static char *_js_log_buf = NULL;
 
-std::vector<sc_register_sth> registrationList;
+static std::vector<sc_register_sth> registrationList;
 
 // name ~> JSScript map
-std::map<std::string, JSScript*> filename_script;
+static std::map<std::string, JSScript*> filename_script;
 // port ~> socket map
-std::map<int,int> ports_sockets;
+static std::map<int,int> ports_sockets;
 // name ~> globals
-std::map<std::string, js::RootedObject*> globals;
+static std::map<std::string, js::RootedObject*> globals;
 
 static void executeJSFunctionFromReservedSpot(JSContext *cx, JSObject *obj,
                                               jsval &dataVal, jsval &retval) {
@@ -1714,11 +1714,11 @@ jsval ccaffinetransform_to_jsval(JSContext* cx, AffineTransform& t)
 
 void SimpleRunLoop::update(float dt) {
     pthread_mutex_lock(&g_qMutex);
-    while (queue.size() > 0) {
-        vector<string>::iterator first = queue.begin();
+    while (g_queue.size() > 0) {
+        vector<string>::iterator first = g_queue.begin();
         string str = *first;
         ScriptingCore::getInstance()->debugProcessInput(str);
-        queue.erase(first);
+        g_queue.erase(first);
     }
     pthread_mutex_unlock(&g_qMutex);
 }
@@ -1933,11 +1933,11 @@ JSBool JSBDebug_LockExecution(JSContext* cx, unsigned argc, jsval* vp)
         while (vmLock) {
             // try to read the input, if there's anything
             pthread_mutex_lock(&g_qMutex);
-            while (queue.size() > 0) {
-                vector<string>::iterator first = queue.begin();
+            while (g_queue.size() > 0) {
+                vector<string>::iterator first = g_queue.begin();
                 string str = *first;
                 ScriptingCore::getInstance()->debugProcessInput(str);
-                queue.erase(first);
+                g_queue.erase(first);
             }
             pthread_mutex_unlock(&g_qMutex);
             sched_yield();
@@ -1959,7 +1959,7 @@ JSBool JSBDebug_UnlockExecution(JSContext* cx, unsigned argc, jsval* vp)
 
 void processInput(string data) {
     pthread_mutex_lock(&g_qMutex);
-    queue.push_back(string(data));
+    g_queue.push_back(string(data));
     pthread_mutex_unlock(&g_qMutex);
 }
 
