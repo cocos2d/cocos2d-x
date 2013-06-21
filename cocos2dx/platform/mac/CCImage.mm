@@ -73,14 +73,6 @@ typedef enum {
     kTexture2DPixelFormat_Default = kTexture2DPixelFormat_RGBA8888,
     
         // backward compatibility stuff
-    kTexture2DPixelFormat_Automatic = kTexture2DPixelFormat_Automatic,
-    kTexture2DPixelFormat_RGBA8888 = kTexture2DPixelFormat_RGBA8888,
-    kTexture2DPixelFormat_RGB888 = kTexture2DPixelFormat_RGB888,
-    kTexture2DPixelFormat_RGB565 = kTexture2DPixelFormat_RGB565,
-    kTexture2DPixelFormat_A8 = kTexture2DPixelFormat_A8,
-    kTexture2DPixelFormat_RGBA4444 = kTexture2DPixelFormat_RGBA4444,
-    kTexture2DPixelFormat_RGB5A1 = kTexture2DPixelFormat_RGB5A1,
-    kTexture2DPixelFormat_Default = kTexture2DPixelFormat_Default
     
 } Texture2DPixelFormat;
 

@@ -42,9 +42,9 @@ THE SOFTWARE.
 
 
 //USING_NS_CC;
-static EAGLView *view;
+static CCEAGLView *view;
 
-@implementation EAGLView
+@implementation CCEAGLView
 
 @synthesize eventDelegate = eventDelegate_, isFullScreen = isFullScreen_, frameZoomFactor=frameZoomFactor_;
 
@@ -82,7 +82,7 @@ static EAGLView *view;
 			[self setOpenGLContext:context];
 
 		// event delegate
-		eventDelegate_ = [EventDispatcher sharedDispatcher];
+		eventDelegate_ = [CCEventDispatcher sharedDispatcher];
 	}
     
     cocos2d::EGLView::sharedOpenGLView()->setFrameSize(frameRect.size.width, frameRect.size.height);
@@ -95,7 +95,7 @@ static EAGLView *view;
 
 - (id) initWithFrame:(NSRect)frameRect pixelFormat:(NSOpenGLPixelFormat *)format{
     // event delegate
-    eventDelegate_ = [EventDispatcher sharedDispatcher];
+    eventDelegate_ = [CCEventDispatcher sharedDispatcher];
     
     cocos2d::EGLView::sharedOpenGLView()->setFrameSize(frameRect.size.width, frameRect.size.height);
     
@@ -232,7 +232,7 @@ static EAGLView *view;
     if (isFullScreen_ == fullscreen)
 		return;
 
-	EAGLView *openGLview = [[self class] sharedEGLView];
+	CCEAGLView *openGLview = [[self class] sharedEGLView];
 
     if( fullscreen ) {
         originalWinRect_ = [openGLview frame];
@@ -249,7 +249,7 @@ static EAGLView *view;
         NSRect displayRect = [[NSScreen mainScreen] frame];
 
         // Create a screen-sized window on the display you want to take over
-        fullScreenWindow_ = [[Window alloc] initWithFrame:displayRect fullscreen:YES];
+        fullScreenWindow_ = [[CCWindow alloc] initWithFrame:displayRect fullscreen:YES];
 
         // Remove glView from window
         [openGLview removeFromSuperview];

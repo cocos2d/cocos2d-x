@@ -32,7 +32,7 @@
 
 #define getEditBoxImplMac() ((cocos2d::extension::EditBoxImplMac*)editBox_)
 
-@implementation CustomNSTextField
+@implementation CCCustomNSTextField
 
 - (CGRect)textRectForBounds:(CGRect)bounds {
     float padding = 5.0f;
@@ -52,7 +52,7 @@
 @end
 
 
-@implementation EditBoxImplMac
+@implementation CCEditBoxImplMac
 
 @synthesize textField = textField_;
 @synthesize editState = editState_;
@@ -74,7 +74,7 @@
     {
         if (self == nil) break;
         editState_ = NO;
-        self.textField = [[[CustomNSTextField alloc] initWithFrame: frameRect] autorelease];
+        self.textField = [[[CCCustomNSTextField alloc] initWithFrame: frameRect] autorelease];
         if (!textField_) break;
         [textField_ setTextColor:[NSColor whiteColor]];
         textField_.font = [NSFont systemFontOfSize:frameRect.size.height*2/3]; //TODO need to delete hard code here.
@@ -84,7 +84,7 @@
         [textField_ setDelegate:self];
         self.editBox = editBox;
         
-        [[EAGLView sharedEGLView] addSubview:textField_];
+        [[CCEAGLView sharedEGLView] addSubview:textField_];
         
         return self;
     }while(0);
@@ -94,7 +94,7 @@
 
 -(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance
 {
-    id eglView = [EAGLView sharedEGLView];
+    id eglView = [CCEAGLView sharedEGLView];
     [eglView doAnimationWhenKeyboardMoveWithDuration:duration distance:distance];
 }
 
@@ -258,7 +258,7 @@ bool EditBoxImplMac::initWithSize(const Size& size)
          rect.size.height /= 2.0f;
     }
     
-    _sysEdit = [[EditBoxImplMac alloc] initWithFrame:rect editBox:this];
+    _sysEdit = [[CCEditBoxImplMac alloc] initWithFrame:rect editBox:this];
     
     if (!_sysEdit)
         return false;
