@@ -53,7 +53,7 @@ public:
         }
     }
     
-    void InitLuaScrollView()
+    void initLuaScrollView()
     {
         _mapScriptHandler.clear();
     }
@@ -219,7 +219,7 @@ static int tolua_Cocos2d_ScrollView_create00(lua_State* tolua_S)
             LuaScrollView* tolua_ret = new LuaScrollView();
             if (NULL != tolua_ret && tolua_ret->initWithViewSize(size,container) )
             {
-                tolua_ret->InitLuaScrollView();
+                tolua_ret->initLuaScrollView();
                 tolua_ret->autorelease();
                 int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
                 int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
@@ -256,7 +256,7 @@ static int tolua_Cocos2d_ScrollView_create01(lua_State* tolua_S)
         LuaScrollView* tolua_ret = new LuaScrollView();
         if (NULL != tolua_ret && tolua_ret->init() )
         {
-            tolua_ret->InitLuaScrollView();
+            tolua_ret->initLuaScrollView();
             tolua_ret->autorelease();
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
