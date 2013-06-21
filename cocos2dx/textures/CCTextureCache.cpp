@@ -24,6 +24,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include <errno.h>
+#include <stack>
+#include <cctype>
+#include <list>
+#include <thread>
+
 #include "CCTextureCache.h"
 #include "CCTexture2D.h"
 #include "ccMacros.h"
@@ -31,17 +37,10 @@ THE SOFTWARE.
 #include "platform/platform.h"
 #include "platform/CCFileUtils.h"
 #include "platform/CCThread.h"
-#include "platform/CCImage.h"
 #include "support/ccUtils.h"
 #include "CCScheduler.h"
 #include "cocoa/CCString.h"
-#include <errno.h>
-#include <stack>
-#include <string>
-#include <cctype>
-#include <queue>
-#include <list>
-#include <pthread.h>
+
 
 #ifdef EMSCRIPTEN
 #include <emscripten/emscripten.h>
@@ -52,60 +51,136 @@ using namespace std;
 
 NS_CC_BEGIN
 
-typedef struct _ImageInfo
+// implementation TextureCache
+
+TextureCache* TextureCache::_sharedTextureCache = nullptr;
+
+
+TextureCache * TextureCache::sharedTextureCache()
 {
-    AsyncStruct *asyncStruct;
-    Image        *image;
-    Image::EImageFormat imageType;
-} ImageInfo;
-
-static pthread_t s_loadingThread;
-
-static pthread_mutex_t		s_SleepMutex;
-static pthread_cond_t		s_SleepCondition;
-
-static pthread_mutex_t      s_asyncStructQueueMutex;
-static pthread_mutex_t      s_ImageInfoMutex;
-
+    if (!_sharedTextureCache)
+    {
 #ifdef EMSCRIPTEN
-// Hack to get ASM.JS validation (no undefined symbols allowed).
-#define pthread_cond_signal(_)
+        _sharedTextureCache = new TextureCacheEmscripten();
+#else
+        _sharedTextureCache = new TextureCache();
 #endif // EMSCRIPTEN
-
-static unsigned long s_nAsyncRefCount = 0;
-
-static bool need_quit = false;
-
-static std::queue<AsyncStruct*>* s_pAsyncStructQueue = NULL;
-static std::queue<ImageInfo*>*   s_pImageQueue = NULL;
-
-static Image::EImageFormat computeImageFormatType(string& filename)
-{
-    Image::EImageFormat ret = Image::kFmtUnKnown;
-
-    if ((std::string::npos != filename.find(".jpg")) || (std::string::npos != filename.find(".jpeg")))
-    {
-        ret = Image::kFmtJpg;
     }
-    else if ((std::string::npos != filename.find(".png")) || (std::string::npos != filename.find(".PNG")))
-    {
-        ret = Image::kFmtPng;
-    }
-    else if ((std::string::npos != filename.find(".tiff")) || (std::string::npos != filename.find(".TIFF")))
-    {
-        ret = Image::kFmtTiff;
-    }
-    else if ((std::string::npos != filename.find(".webp")) || (std::string::npos != filename.find(".WEBP")))
-    {
-        ret = Image::kFmtWebp;
-    }
-   
-    return ret;
+    return _sharedTextureCache;
 }
 
-static void* loadImage(void* data)
+TextureCache::TextureCache()
+: _asyncStructQueue(nullptr)
+, _imageInfoQueue(nullptr)
+, _needQuit(false)
+, _asyncRefCount(0)
+, _textures(new Dictionary())
 {
-    AsyncStruct *pAsyncStruct = NULL;
+	CCAssert(_sharedTextureCache == nullptr, "Attempted to allocate a second instance of a singleton.");
+}
+
+TextureCache::~TextureCache()
+{
+    CCLOGINFO("cocos2d: deallocing TextureCache: %p", this);
+
+    CC_SAFE_RELEASE(_textures);
+
+	_sharedTextureCache = nullptr;
+}
+
+void TextureCache::purgeSharedTextureCache()
+{
+	// notify sub thread to quick
+	_sharedTextureCache->_needQuit = true;
+	std::lock_guard<std::mutex> lk(_sharedTextureCache->_sleepMutex);
+	_sharedTextureCache->_sleepCondition.notify_one();
+
+    CC_SAFE_RELEASE_NULL(_sharedTextureCache);
+}
+
+const char* TextureCache::description()
+{
+    return String::createWithFormat("<TextureCache | Number of textures = %u>", _textures->count())->getCString();
+}
+
+Dictionary* TextureCache::snapshotTextures()
+{ 
+    Dictionary* pRet = new Dictionary();
+    DictElement* pElement = NULL;
+    CCDICT_FOREACH(_textures, pElement)
+    {
+        pRet->setObject(pElement->getObject(), pElement->getStrKey());
+    }
+    pRet->autorelease();
+    return pRet;
+}
+
+void TextureCache::addImageAsync(const char *path, Object *target, SEL_CallFuncO selector)
+{
+    CCAssert(path != NULL, "TextureCache: fileimage MUST not be NULL");    
+
+    Texture2D *texture = NULL;
+
+    // optimization
+
+    std::string pathKey = path;
+
+    pathKey = FileUtils::sharedFileUtils()->fullPathForFilename(pathKey.c_str());
+    texture = (Texture2D*)_textures->objectForKey(pathKey.c_str());
+
+    std::string fullpath = pathKey;
+    if (texture != NULL)
+    {
+        if (target && selector)
+        {
+            (target->*selector)(texture);
+        }
+        
+        return;
+    }
+
+    // lazy init
+    if (_asyncStructQueue == NULL)
+    {             
+        _asyncStructQueue = new queue<AsyncStruct*>();
+        _imageInfoQueue = new queue<ImageInfo*>();        
+
+		// create a new thread to load images
+		auto t = std::thread(&TextureCache::loadImage, this);
+		t.detach();
+		// should retain here, because sub thread use invoke TextureCache::loadImage()
+		retain();
+
+        _needQuit = false;
+    }
+
+    if (0 == _asyncRefCount)
+    {
+        Director::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(TextureCache::addImageAsyncCallBack), this, 0, false);
+    }
+
+    ++_asyncRefCount;
+
+    if (target)
+    {
+        target->retain();
+    }
+
+    // generate async struct
+    AsyncStruct *data = new AsyncStruct(fullpath, target, selector);
+
+    // add async struct into queue
+	_asyncStructQueueMutex.lock();
+    _asyncStructQueue->push(data);
+	_asyncStructQueueMutex.unlock();
+
+	std::lock_guard<std::mutex> lk(_sleepMutex);
+	_sleepCondition.notify_one();
+}
+
+void TextureCache::loadImage()
+{
+	AsyncStruct *pAsyncStruct = nullptr;
 
     while (true)
     {
@@ -113,16 +188,17 @@ static void* loadImage(void* data)
         Thread thread;
         thread.createAutoreleasePool();
 
-        std::queue<AsyncStruct*> *pQueue = s_pAsyncStructQueue;
-        pthread_mutex_lock(&s_asyncStructQueueMutex);// get async struct from queue
+        std::queue<AsyncStruct*> *pQueue = _asyncStructQueue;
+		_asyncStructQueueMutex.lock();
         if (pQueue->empty())
         {
-            pthread_mutex_unlock(&s_asyncStructQueueMutex);
-            if (need_quit) {
+			_asyncStructQueueMutex.unlock();
+            if (_needQuit) {
                 break;
             }
             else {
-            	pthread_cond_wait(&s_SleepCondition, &s_SleepMutex);
+				std::unique_lock<std::mutex> lk(_sleepMutex);
+				_sleepCondition.wait(lk);
                 continue;
             }
         }
@@ -130,7 +206,7 @@ static void* loadImage(void* data)
         {
             pAsyncStruct = pQueue->front();
             pQueue->pop();
-            pthread_mutex_unlock(&s_asyncStructQueueMutex);
+			_asyncStructQueueMutex.unlock();
         }        
 
         const char *filename = pAsyncStruct->filename.c_str();
@@ -161,161 +237,62 @@ static void* loadImage(void* data)
         pImageInfo->imageType = imageType;
 
         // put the image info into the queue
-        pthread_mutex_lock(&s_ImageInfoMutex);
-        s_pImageQueue->push(pImageInfo);
-        pthread_mutex_unlock(&s_ImageInfoMutex);    
+		_imageInfoMutex.lock();
+        _imageInfoQueue->push(pImageInfo);
+		_imageInfoMutex.unlock();
     }
     
-    if( s_pAsyncStructQueue != NULL )
+	if(_asyncStructQueue != nullptr)
     {
-        delete s_pAsyncStructQueue;
-        s_pAsyncStructQueue = NULL;
-        delete s_pImageQueue;
-        s_pImageQueue = NULL;
-
-        pthread_mutex_destroy(&s_asyncStructQueueMutex);
-        pthread_mutex_destroy(&s_ImageInfoMutex);
-        pthread_mutex_destroy(&s_SleepMutex);
-        pthread_cond_destroy(&s_SleepCondition);
+        delete _asyncStructQueue;
+		_asyncStructQueue = nullptr;
+        delete _imageInfoQueue;
+		_imageInfoQueue = nullptr;
     }
-    
-    return 0;
+
+	// should release here, because we retain it when creating a sub thread in addImageAsync()
+	release();
 }
 
-// implementation TextureCache
-
-// TextureCache - Alloc, Init & Dealloc
-static TextureCache *g_sharedTextureCache = NULL;
-
-TextureCache * TextureCache::sharedTextureCache()
+Image::EImageFormat TextureCache::computeImageFormatType(string& filename)
 {
-    if (!g_sharedTextureCache)
+    Image::EImageFormat ret = Image::kFmtUnKnown;
+
+    if ((std::string::npos != filename.find(".jpg")) || (std::string::npos != filename.find(".jpeg")))
     {
-#ifdef EMSCRIPTEN
-        g_sharedTextureCache = new TextureCacheEmscripten();
-#else
-        g_sharedTextureCache = new TextureCache();
-#endif // EMSCRIPTEN
+        ret = Image::kFmtJpg;
     }
-    return g_sharedTextureCache;
-}
-
-TextureCache::TextureCache()
-{
-    CCAssert(g_sharedTextureCache == NULL, "Attempted to allocate a second instance of a singleton.");
-    
-    _textures = new Dictionary();
-}
-
-TextureCache::~TextureCache()
-{
-    CCLOGINFO("cocos2d: deallocing TextureCache: %p", this);
-    need_quit = true;
-
-    pthread_cond_signal(&s_SleepCondition);
-    CC_SAFE_RELEASE(_textures);
-}
-
-void TextureCache::purgeSharedTextureCache()
-{
-    CC_SAFE_RELEASE_NULL(g_sharedTextureCache);
-}
-
-const char* TextureCache::description()
-{
-    return String::createWithFormat("<TextureCache | Number of textures = %u>", _textures->count())->getCString();
-}
-
-Dictionary* TextureCache::snapshotTextures()
-{ 
-    Dictionary* pRet = new Dictionary();
-    DictElement* pElement = NULL;
-    CCDICT_FOREACH(_textures, pElement)
+    else if ((std::string::npos != filename.find(".png")) || (std::string::npos != filename.find(".PNG")))
     {
-        pRet->setObject(pElement->getObject(), pElement->getStrKey());
+        ret = Image::kFmtPng;
     }
-    pRet->autorelease();
-    return pRet;
-}
-
-void TextureCache::addImageAsync(const char *path, Object *target, SEL_CallFuncO selector)
-{
-
-    CCAssert(path != NULL, "TextureCache: fileimage MUST not be NULL");    
-
-    Texture2D *texture = NULL;
-
-    // optimization
-
-    std::string pathKey = path;
-
-    pathKey = FileUtils::sharedFileUtils()->fullPathForFilename(pathKey.c_str());
-    texture = (Texture2D*)_textures->objectForKey(pathKey.c_str());
-
-    std::string fullpath = pathKey;
-    if (texture != NULL)
+    else if ((std::string::npos != filename.find(".tiff")) || (std::string::npos != filename.find(".TIFF")))
     {
-        if (target && selector)
-        {
-            (target->*selector)(texture);
-        }
-        
-        return;
+        ret = Image::kFmtTiff;
     }
-
-    // lazy init
-    if (s_pAsyncStructQueue == NULL)
-    {             
-        s_pAsyncStructQueue = new queue<AsyncStruct*>();
-        s_pImageQueue = new queue<ImageInfo*>();        
-        
-        pthread_mutex_init(&s_asyncStructQueueMutex, NULL);
-        pthread_mutex_init(&s_ImageInfoMutex, NULL);
-        pthread_mutex_init(&s_SleepMutex, NULL);
-        pthread_cond_init(&s_SleepCondition, NULL);
-        pthread_create(&s_loadingThread, NULL, loadImage, NULL);
-
-        need_quit = false;
-    }
-
-    if (0 == s_nAsyncRefCount)
+    else if ((std::string::npos != filename.find(".webp")) || (std::string::npos != filename.find(".WEBP")))
     {
-        Director::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(TextureCache::addImageAsyncCallBack), this, 0, false);
+        ret = Image::kFmtWebp;
     }
-
-    ++s_nAsyncRefCount;
-
-    if (target)
-    {
-        target->retain();
-    }
-
-    // generate async struct
-    AsyncStruct *data = new AsyncStruct(fullpath, target, selector);
-
-    // add async struct into queue
-    pthread_mutex_lock(&s_asyncStructQueueMutex);
-    s_pAsyncStructQueue->push(data);
-    pthread_mutex_unlock(&s_asyncStructQueueMutex);
-
-    pthread_cond_signal(&s_SleepCondition);
+   
+    return ret;
 }
 
 void TextureCache::addImageAsyncCallBack(float dt)
 {
     // the image is generated in loading thread
-    std::queue<ImageInfo*> *imagesQueue = s_pImageQueue;
+    std::queue<ImageInfo*> *imagesQueue = _imageInfoQueue;
 
-    pthread_mutex_lock(&s_ImageInfoMutex);
+	_imageInfoMutex.lock();
     if (imagesQueue->empty())
     {
-        pthread_mutex_unlock(&s_ImageInfoMutex);
+		_imageInfoMutex.unlock();
     }
     else
     {
         ImageInfo *pImageInfo = imagesQueue->front();
         imagesQueue->pop();
-        pthread_mutex_unlock(&s_ImageInfoMutex);
+		_imageInfoMutex.unlock();
 
         AsyncStruct *pAsyncStruct = pImageInfo->asyncStruct;
         Image *pImage = pImageInfo->image;
@@ -326,17 +303,13 @@ void TextureCache::addImageAsyncCallBack(float dt)
 
         // generate texture in render thread
         Texture2D *texture = new Texture2D();
-#if 0 //TODO: (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        texture->initWithImage(pImage, kResolutioniPhone);
-#else
+
         texture->initWithImage(pImage);
-#endif
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
        // cache the texture file name
        VolatileTexture::addImageTexture(texture, filename, pImageInfo->imageType);
 #endif
-
         // cache the texture
         _textures->setObject(texture, filename);
         texture->autorelease();
@@ -351,8 +324,8 @@ void TextureCache::addImageAsyncCallBack(float dt)
         delete pAsyncStruct;
         delete pImageInfo;
 
-        --s_nAsyncRefCount;
-        if (0 == s_nAsyncRefCount)
+        --_asyncRefCount;
+        if (0 == _asyncRefCount)
         {
             Director::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(TextureCache::addImageAsyncCallBack), this);
         }
@@ -368,8 +341,6 @@ Texture2D * TextureCache::addImage(const char * path)
     // Split up directory and filename
     // MUTEX:
     // Needed since addImageAsync calls this method from a different thread
-    
-    //pthread_mutex_lock(_dictLock);
 
     std::string pathKey = path;
 
@@ -380,7 +351,7 @@ Texture2D * TextureCache::addImage(const char * path)
     }
     texture = (Texture2D*)_textures->objectForKey(pathKey.c_str());
 
-    std::string fullpath = pathKey; // (FileUtils::sharedFileUtils()->fullPathFromRelativePath(path));
+    std::string fullpath = pathKey;
     if (! texture) 
     {
         std::string lowerCase(pathKey);
@@ -448,7 +419,6 @@ Texture2D * TextureCache::addImage(const char * path)
 
     CC_SAFE_RELEASE(pImage);
 
-    //pthread_mutex_unlock(_dictLock);
     return texture;
 }
 
