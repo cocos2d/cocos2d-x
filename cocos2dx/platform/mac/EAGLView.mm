@@ -201,7 +201,7 @@ static CCEAGLView *view;
 
 - (void) dealloc
 {
-	CCLOGINFO(@"cocos2d: deallocing EAGLView %@", self);
+	CCLOGINFO(@"cocos2d: deallocing CCEAGLView %@", self);
 	[super dealloc];
 }
 	
@@ -317,7 +317,7 @@ static CCEAGLView *view;
 	   waitUntilDone:NO];
 #endif
 
-#pragma mark EAGLView - Mouse events
+#pragma mark CCEAGLView - Mouse events
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
@@ -428,7 +428,7 @@ static CCEAGLView *view;
 	[super scrollWheel:theEvent];
 }
 
-#pragma mark EAGLView - Key events
+#pragma mark CCEAGLView - Key events
 
 -(BOOL) becomeFirstResponder
 {
@@ -466,7 +466,7 @@ static CCEAGLView *view;
 	DISPATCH_EVENT(theEvent, _cmd);
 }
 
-#pragma mark EAGLView - Touch events
+#pragma mark CCEAGLView - Touch events
 - (void)touchesBeganWithEvent:(NSEvent *)theEvent
 {
 	DISPATCH_EVENT(theEvent, _cmd);
