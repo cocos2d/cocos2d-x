@@ -167,10 +167,16 @@ showAds : function () {},
 hideAds : function () {},
 
 /**
- * @method configDeveloperInfo
- * @param {TAdsDeveloperInfo}
+ * @method queryPoints
  */
-configDeveloperInfo : function () {},
+queryPoints : function () {},
+
+/**
+ * @method onAdsResult
+ * @param {cocos2d::plugin::AdsResultCode}
+ * @param {const char*}
+ */
+onAdsResult : function () {},
 
 /**
  * @method spendPoints
@@ -179,11 +185,10 @@ configDeveloperInfo : function () {},
 spendPoints : function () {},
 
 /**
- * @method onAdsResult
- * @param {cocos2d::plugin::AdsResultCode}
- * @param {const char*}
+ * @method configDeveloperInfo
+ * @param {TAdsDeveloperInfo}
  */
-onAdsResult : function () {},
+configDeveloperInfo : function () {},
 
 /**
  * @method onPlayerGetPoints
