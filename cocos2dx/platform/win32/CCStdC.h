@@ -105,5 +105,9 @@ NS_CC_END
 
 #endif // __MINGW32__
 
+#ifdef MessageBox
+#undef MessageBox
+#endif
+
 #endif  // __CC_STD_C_H__
 
