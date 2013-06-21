@@ -345,7 +345,7 @@ static CCEAGLView *view = 0;
     return pFormat;
 }
 
-#pragma mark EAGLView - Point conversion
+#pragma mark CCEAGLView - Point conversion
 
 - (CGPoint) convertPointFromViewToSurface:(CGPoint)point
 {
@@ -390,7 +390,7 @@ static CCEAGLView *view = 0;
 }
 
 // Pass the touches to the superview
-#pragma mark EAGLView - Touch Delegate
+#pragma mark CCEAGLView - Touch Delegate
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     if (isKeyboardShown_)
