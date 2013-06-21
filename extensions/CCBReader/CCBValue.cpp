@@ -93,6 +93,21 @@ CCBValue* CCBValue::create(const char *pStringValue)
     return ret;
 }
 
+
+CCBValue* CCBValue::create(CCArray *pArrValue)
+{
+    CCBValue *ret = new CCBValue();
+    if (ret)
+    {
+        ret->m_arrValue = pArrValue;
+        ret->mType = kArrayValue;
+        ret->autorelease();
+    }
+    
+    return ret;
+}
+
+
 int CCBValue::getIntValue()
 {
     assert(mType == kIntValue);
@@ -116,10 +131,17 @@ bool CCBValue::getBoolValue()
 
 unsigned char CCBValue::getByteValue()
 {
-    assert(mType = kUnsignedCharValue);
+    assert(mType == kUnsignedCharValue);
     
     return (unsigned char)(mValue.nValue);
 }
+
+CCArray* CCBValue::getArrayValue() {
+    assert(mType == kArrayValue);
+    
+    return m_arrValue;
+}
+
 
 const char* CCBValue::getStringValue()
 {

@@ -156,6 +156,17 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
                 }
                 break;
             }
+	    case kCCBPropTypeFloatXY:
+	      {
+                float * xy =  this->parsePropTypeFloatXY(pNode, pParent, pCCBReader);
+                if(setProp)
+                {
+                    this->onHandlePropTypeFloatXY(pNode, pParent, propertyName.c_str(), xy, pCCBReader);
+                }
+                CC_SAFE_DELETE_ARRAY(xy);
+                break;
+	      }
+
             case kCCBPropTypeDegrees: 
             {
                 float degrees = this->parsePropTypeDegrees(pNode, pParent, pCCBReader, propertyName.c_str());
@@ -435,6 +446,19 @@ CCSize CCNodeLoader::parsePropTypeSize(CCNode * pNode, CCNode * pParent, CCBRead
     return CCSize(width, height);
 }
 
+
+
+float * CCNodeLoader::parsePropTypeFloatXY(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
+    float x = pCCBReader->readFloat();
+    float y = pCCBReader->readFloat();
+
+    float * floatXY = new float[2];
+    floatXY[0] = x;
+    floatXY[1] = y;
+
+    return floatXY;
+}
+
 float * CCNodeLoader::parsePropTypeScaleLock(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader, const char *pPropertyName) {
     float x = pCCBReader->readFloat();
     float y = pCCBReader->readFloat();
@@ -542,8 +566,10 @@ CCSpriteFrame * CCNodeLoader::parsePropTypeSpriteFrame(CCNode * pNode, CCNode * 
         {
             spriteFile = pCCBReader->getCCBRootPath() + spriteFile;
             CCTexture2D * texture = CCTextureCache::sharedTextureCache()->addImage(spriteFile.c_str());
-            CCRect bounds = CCRectMake(0, 0, texture->getContentSize().width, texture->getContentSize().height);
-            spriteFrame = CCSpriteFrame::createWithTexture(texture, bounds);
+            if(texture != NULL) {
+                CCRect bounds = CCRectMake(0, 0, texture->getContentSize().width, texture->getContentSize().height);
+                spriteFrame = CCSpriteFrame::createWithTexture(texture, bounds);
+            }
         }
         else 
         {
@@ -858,6 +884,12 @@ CCNode * CCNodeLoader::parsePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CC
     ccbReader->mCurrentBit = 0;
     CC_SAFE_RETAIN(pCCBReader->mOwner);
     ccbReader->mOwner = pCCBReader->mOwner;
+    
+    if (NULL != ccbReader->mOwner) {
+        CCLOG("DDD");
+    }
+    
+    ccbReader->getAnimationManager()->mOwner = ccbReader->mOwner;
 
     // The assignments below are done in the CCBReader constructor.
 //     ccbReader->mOwnerOutletNames = pCCBReader->mOwnerOutletNames;
@@ -877,6 +909,36 @@ CCNode * CCNodeLoader::parsePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CC
         ccbReader->getAnimationManager()->runAnimationsForSequenceIdTweenDuration(ccbReader->getAnimationManager()->getAutoPlaySequenceId(), 0);
     }
     
+    if (ccbReader->isJSControlled() && pCCBReader->isJSControlled() && NULL != ccbReader->mOwner)
+    {
+        //set variables and callback to owner
+        //set callback
+        CCArray *ownerCallbackNames = ccbReader->getOwnerCallbackNames();
+        CCArray *ownerCallbackNodes = ccbReader->getOwnerCallbackNodes();
+        if (NULL != ownerCallbackNames && ownerCallbackNames->count() > 0 &&
+            NULL != ownerCallbackNodes && ownerCallbackNodes->count() > 0)
+        {
+            assert(ownerCallbackNames->count() == ownerCallbackNodes->count());
+            int nCount = ownerCallbackNames->count();
+            for (int i = 0 ; i < nCount; i++) {
+                pCCBReader->addOwnerCallbackName((dynamic_cast<CCString*>(ownerCallbackNames->objectAtIndex(i)))->getCString());
+                pCCBReader->addOwnerCallbackNode(dynamic_cast<CCNode*>(ownerCallbackNames->objectAtIndex(i)) );
+            }
+        }
+        //set variables
+        CCArray *ownerOutletNames = ccbReader->getOwnerOutletNames();
+        CCArray *ownerOutletNodes = ccbReader->getOwnerOutletNodes();
+        if (NULL != ownerOutletNames && ownerOutletNames->count() > 0 &&
+            NULL != ownerOutletNodes && ownerOutletNodes->count() > 0)
+        {
+            assert(ownerOutletNames->count() == ownerOutletNodes->count());
+            int nCount = ownerOutletNames->count();
+            for (int i = 0 ; i < nCount; i++) {
+                pCCBReader->addOwnerOutletName((dynamic_cast<CCString*>(ownerOutletNames->objectAtIndex(i)))->getCString());
+                pCCBReader->addOwnerOutletNode(dynamic_cast<CCNode*>(ownerOutletNodes->objectAtIndex(i)) );
+            }
+        }
+    }
     return ccbFileNode;
 }
 
@@ -910,6 +972,16 @@ void CCNodeLoader::onHandlePropTypeSize(CCNode * pNode, CCNode * pParent, const 
     }
 }
 
+void CCNodeLoader::onHandlePropTypeFloatXY(CCNode * pNode, CCNode * pParent, const char* pPropertyName, float * pFloat, CCBReader * pCCBReader) {
+    if(strcmp(pPropertyName, PROPERTY_SKEW) == 0) {
+        pNode->setSkewX(pFloat[0]);
+        pNode->setSkewY(pFloat[1]);
+    } else {
+        ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
+    }
+}
+
+
 void CCNodeLoader::onHandlePropTypeScaleLock(CCNode * pNode, CCNode * pParent, const char* pPropertyName, float * pScaleLock, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_SCALE) == 0) {
         pNode->setScaleX(pScaleLock[0]);
@@ -925,10 +997,16 @@ void CCNodeLoader::onHandlePropTypeFloat(CCNode * pNode, CCNode * pParent, const
     m_pCustomProperties->setObject(CCBValue::create(pFloat), pPropertyName);
 }
 
+
 void CCNodeLoader::onHandlePropTypeDegrees(CCNode * pNode, CCNode * pParent, const char* pPropertyName, float pDegrees, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_ROTATION) == 0) {
         pNode->setRotation(pDegrees);
-    } else {
+    } else if(strcmp(pPropertyName, PROPERTY_ROTATIONX) == 0) {
+        pNode->setRotationX(pDegrees);
+    } else if(strcmp(pPropertyName, PROPERTY_ROTATIONY) == 0) {
+        pNode->setRotationY(pDegrees);
+    }
+    else {
         ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
     }
 }

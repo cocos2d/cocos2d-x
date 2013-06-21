@@ -8,16 +8,20 @@ ARFLAGS = cr
 
 DEFINES += -DLINUX
 
+ifdef USE_BOX2D
+DEFINES += -DCC_ENABLE_BOX2D_INTEGRATION=1
+else
+DEFINES += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
+endif
+
 THIS_MAKEFILE := $(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
 ifndef COCOS_ROOT
-COCOS_ROOT ?= $(realpath $(dir $(THIS_MAKEFILE))/../..)
-else
-RPATH_REL = ../..
+COCOS_ROOT := $(realpath $(dir $(THIS_MAKEFILE))/../..)
 endif
 COCOS_SRC = $(COCOS_ROOT)/cocos2dx
 OBJ_DIR ?= obj
 
-LIB_DIR = $(COCOS_SRC)/lib/linux
+LIB_DIR = $(COCOS_ROOT)/lib/linux
 BIN_DIR = bin
 
 INCLUDES +=  \
@@ -81,6 +85,7 @@ STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
     $(STATICLIBS_DIR)/libtiff.a \
     $(STATICLIBS_DIR)/libwebp.a
 
+ifneq ($(OPENAL),1)
 ifeq ($(LBITS),64)
 FMOD_LIBDIR = $(COCOS_ROOT)/CocosDenshion/third_party/fmod/lib64/api/lib
 SHAREDLIBS += -lfmodex64
@@ -88,11 +93,13 @@ else
 FMOD_LIBDIR = $(COCOS_ROOT)/CocosDenshion/third_party/fmod/api/lib
 SHAREDLIBS += -lfmodex
 endif
+endif
 
-SHAREDLIBS += -lglfw -lGLEW -lfontconfig
-SHAREDLIBS += -L$(FMOD_LIBDIR) -Wl,-rpath,$(RPATH_REL)/$(FMOD_LIBDIR)
-SHAREDLIBS += -L$(LIB_DIR) -Wl,-rpath,$(RPATH_REL)/$(LIB_DIR)
-LIBS = -lrt -lz
+SHAREDLIBS += -lglfw -lGLEW -lfontconfig -lpthread -lGL
+SHAREDLIBS += -L$(FMOD_LIBDIR) -Wl,-rpath,$(abspath $(FMOD_LIBDIR))
+SHAREDLIBS += -L$(LIB_DIR) -Wl,-rpath,$(abspath $(LIB_DIR))
+
+LIBS = -lrt -lz -lX11
 
 clean:
 	rm -rf $(OBJ_DIR)

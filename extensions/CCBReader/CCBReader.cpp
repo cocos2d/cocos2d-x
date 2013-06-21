@@ -270,14 +270,14 @@ CCNode* CCBReader::readNodeGraphFromData(CCData *pData, CCObject *pOwner, const 
     CC_SAFE_RETAIN(mOwner);
 
     mActionManager->setRootContainerSize(parentSize);
-    
+    mActionManager->mOwner = mOwner;
     mOwnerOutletNodes = new CCArray();
     mOwnerCallbackNodes = new CCArray();
     
     CCDictionary* animationManagers = CCDictionary::create();
     CCNode *pNodeGraph = readFileWithCleanUp(true, animationManagers);
     
-    if (pNodeGraph && mActionManager->getAutoPlaySequenceId() != -1)
+    if (pNodeGraph && mActionManager->getAutoPlaySequenceId() != -1 && !jsControlled)
     {
         // Auto play animations
         mActionManager->runAnimationsForSequenceIdTweenDuration(mActionManager->getAutoPlaySequenceId(), 0);
@@ -400,6 +400,7 @@ bool CCBReader::readHeader()
 
     // Read JS check
     jsControlled = this->readBool();
+    mActionManager->jsControlled = jsControlled;
 
     return true;
 }
@@ -555,8 +556,9 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
     if(memberVarAssignmentType != kCCBTargetTypeNone) {
         memberVarAssignmentName = this->readCachedString();
     }
-
+    
     CCNodeLoader *ccNodeLoader = this->mCCNodeLoaderLibrary->getCCNodeLoader(className.c_str());
+     
     if (! ccNodeLoader)
     {
         CCLog("no corresponding node loader for %s", className.c_str());
@@ -621,18 +623,20 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
     // Read properties
     ccNodeLoader->parseProperties(node, pParent, this);
     
+    bool isCCBFileNode = (NULL == dynamic_cast<CCBFile*>(node)) ? false : true;
     // Handle sub ccb files (remove middle node)
-    if (dynamic_cast<CCBFile*>(node))
+    if (isCCBFileNode)
     {
         CCBFile *ccbFileNode = (CCBFile*)node;
         
         CCNode *embeddedNode = ccbFileNode->getCCBFileNode();
         embeddedNode->setPosition(ccbFileNode->getPosition());
         embeddedNode->setRotation(ccbFileNode->getRotation());
-        embeddedNode->setScale(ccbFileNode->getScale());
+        embeddedNode->setScaleX(ccbFileNode->getScaleX());
+        embeddedNode->setScaleY(ccbFileNode->getScaleY());
         embeddedNode->setTag(ccbFileNode->getTag());
         embeddedNode->setVisible(true);
-        embeddedNode->ignoreAnchorPointForPosition(ccbFileNode->isIgnoreAnchorPointForPosition());
+        //embeddedNode->ignoreAnchorPointForPosition(ccbFileNode->isIgnoreAnchorPointForPosition());
         
         mActionManager->moveAnimationsFromNode(ccbFileNode, embeddedNode);
 
@@ -732,14 +736,18 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
         node->addChild(child);
     }
 
-    // Call onNodeLoaded
-    CCNodeLoaderListener * nodeAsCCNodeLoaderListener = dynamic_cast<CCNodeLoaderListener *>(node);
-    if(nodeAsCCNodeLoaderListener != NULL) {
-        nodeAsCCNodeLoaderListener->onNodeLoaded(node, ccNodeLoader);
-    } else if(this->mCCNodeLoaderListener != NULL) {
-        this->mCCNodeLoaderListener->onNodeLoaded(node, ccNodeLoader);
+    // FIX ISSUE #1860: "onNodeLoaded will be called twice if ccb was added as a CCBFile".
+    // If it's a sub-ccb node, skip notification to CCNodeLoaderListener since it will be
+    // notified at LINE #734: CCNode * child = this->readNodeGraph(node);
+    if (!isCCBFileNode) {
+        // Call onNodeLoaded
+        CCNodeLoaderListener * nodeAsCCNodeLoaderListener = dynamic_cast<CCNodeLoaderListener *>(node);
+        if(nodeAsCCNodeLoaderListener != NULL) {
+            nodeAsCCNodeLoaderListener->onNodeLoaded(node, ccNodeLoader);
+        } else if(this->mCCNodeLoaderListener != NULL) {
+            this->mCCNodeLoaderListener->onNodeLoaded(node, ccNodeLoader);
+        }
     }
-
     return node;
 }
 
@@ -787,7 +795,8 @@ CCBKeyframe* CCBReader::readKeyframe(int type)
     {
         value = CCBValue::create(readFloat());
     }
-    else if (type == kCCBPropTypeScaleLock || type == kCCBPropTypePosition)
+    else if (type == kCCBPropTypeScaleLock || type == kCCBPropTypePosition
+	     || type == kCCBPropTypeFloatXY)
     {
         float a = readFloat();
         float b = readFloat();
@@ -832,6 +841,79 @@ CCBKeyframe* CCBReader::readKeyframe(int type)
     return  keyframe;
 }
 
+
+bool CCBReader::readCallbackKeyframesForSeq(CCBSequence* seq) {
+    int numKeyframes = readInt(false);
+    if(!numKeyframes) return true;
+    
+    CCBSequenceProperty* channel = new CCBSequenceProperty();
+    channel->autorelease();
+
+    for(int i = 0; i < numKeyframes; ++i) {
+      
+        float time = readFloat();
+        std::string callbackName = readCachedString();
+      
+        int callbackType = readInt(false);
+      
+        CCArray* value = CCArray::create();
+        value->addObject(CCString::create(callbackName));
+        value->addObject(CCString::createWithFormat("%d", callbackType));
+        
+        CCBKeyframe* keyframe = new CCBKeyframe();
+        keyframe->autorelease();
+        
+        keyframe->setTime(time);
+        keyframe->setValue(value);
+        
+        if(jsControlled) {
+            string callbackIdentifier;
+            mActionManager->getKeyframeCallbacks()->addObject(CCString::createWithFormat("%d:%s",callbackType, callbackName.c_str()));
+        }
+    
+        channel->getKeyframes()->addObject(keyframe);
+    }
+    
+    seq->setCallbackChannel(channel);
+    
+    return true;
+}
+
+bool CCBReader::readSoundKeyframesForSeq(CCBSequence* seq) {
+    int numKeyframes = readInt(false);
+    if(!numKeyframes) return true;
+    
+    CCBSequenceProperty* channel = new CCBSequenceProperty();
+    channel->autorelease();
+
+    for(int i = 0; i < numKeyframes; ++i) {
+        
+        float time = readFloat();
+        std::string soundFile = readCachedString();
+        float pitch = readFloat();
+        float pan = readFloat();
+        float gain = readFloat();
+                
+        CCArray* value = CCArray::create();
+        
+        value->addObject(CCString::create(soundFile));
+        value->addObject(CCString::createWithFormat("%f", pitch));
+        value->addObject(CCString::createWithFormat("%f", pan));
+        value->addObject(CCString::createWithFormat("%f", gain));
+        
+        CCBKeyframe* keyframe = new CCBKeyframe();
+        keyframe->setTime(time);
+        keyframe->setValue(value);
+        channel->getKeyframes()->addObject(keyframe);
+        keyframe->release();
+    }
+    
+    seq->setSoundChannel(channel);
+    
+    return true;
+}
+
+
 CCNode * CCBReader::readNodeGraph() {
     return this->readNodeGraph(NULL);
 }
@@ -851,6 +933,9 @@ bool CCBReader::readSequences()
         seq->setName(readCachedString().c_str());
         seq->setSequenceId(readInt(false));
         seq->setChainedSequenceId(readInt(true));
+        
+        if(!readCallbackKeyframesForSeq(seq)) return false;
+        if(!readSoundKeyframesForSeq(seq)) return false;
         
         sequences->addObject(seq);
     }
@@ -952,13 +1037,33 @@ CCArray* CCBReader::getAnimationManagersForNodes() {
     return mAnimationManagersForNodes;
 }
 
+void CCBReader::addOwnerOutletName(std::string name)
+{
+    mOwnerOutletNames.push_back(name);
+
+}
+void CCBReader::addOwnerOutletNode(CCNode *node)
+{
+    if (NULL != node)
+        return;
+    
+    mOwnerOutletNodes->addObject(node);
+}
+
 /************************************************************************
  Static functions
  ************************************************************************/
 
+static float __ccbResolutionScale = 1.0f;
+
 float CCBReader::getResolutionScale()
 {
-    return 1;
+    return __ccbResolutionScale;
+}
+
+void CCBReader::setResolutionScale(float scale)
+{
+    __ccbResolutionScale = scale;
 }
 
 NS_CC_EXT_END;

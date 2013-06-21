@@ -19,6 +19,8 @@
 #include "js/Utility.h"
 #include "js/Vector.h"
 
+class nsISupports;      // This is needed for ObjectPrivateVisitor.
+
 namespace js {
 
 // In memory reporting, we have concept of "sundries", line items which are too
@@ -34,21 +36,33 @@ JS_FRIEND_API(size_t) MemoryReportingSundriesThreshold();
 
 namespace JS {
 
+// Data for tracking memory usage of things hanging off objects.
+struct ObjectsExtraSizes {
+    size_t slots;
+    size_t elements;
+    size_t argumentsData;
+    size_t regExpStatics;
+    size_t propertyIteratorData;
+    size_t ctypesData;
+    size_t private_;    // The '_' suffix is required because |private| is a keyword.
+                        // Note that this field is measured separately from the others.
+
+    ObjectsExtraSizes() { memset(this, 0, sizeof(ObjectsExtraSizes)); }
+
+    void add(ObjectsExtraSizes &sizes) {
+        this->slots                += sizes.slots;
+        this->elements             += sizes.elements;
+        this->argumentsData        += sizes.argumentsData;
+        this->regExpStatics        += sizes.regExpStatics;
+        this->propertyIteratorData += sizes.propertyIteratorData;
+        this->ctypesData           += sizes.ctypesData;
+        this->private_             += sizes.private_;
+    }
+};
+
 // Data for tracking analysis/inference memory usage.
 struct TypeInferenceSizes
 {
-    TypeInferenceSizes()
-      : typeScripts(0)
-      , typeResults(0)
-      , analysisPool(0)
-      , typePool(0)
-      , pendingArrays(0)
-      , allocationSiteTables(0)
-      , arrayTypeTables(0)
-      , objectTypeTables(0)
-      , typeObjects(0)
-    {}
-
     size_t typeScripts;
     size_t typeResults;
     size_t analysisPool;
@@ -58,6 +72,8 @@ struct TypeInferenceSizes
     size_t arrayTypeTables;
     size_t objectTypeTables;
     size_t typeObjects;
+
+    TypeInferenceSizes() { memset(this, 0, sizeof(TypeInferenceSizes)); }
 
     void add(TypeInferenceSizes &sizes) {
         this->typeScripts          += sizes.typeScripts;
@@ -104,22 +120,7 @@ struct HugeStringInfo
 // compartments within it.
 struct RuntimeSizes
 {
-    RuntimeSizes()
-      : object(0)
-      , atomsTable(0)
-      , contexts(0)
-      , dtoa(0)
-      , temporary(0)
-      , jaegerCode(0)
-      , ionCode(0)
-      , regexpCode(0)
-      , unusedCode(0)
-      , stack(0)
-      , gcMarker(0)
-      , mathCache(0)
-      , scriptFilenames(0)
-      , scriptSources(0)
-    {}
+    RuntimeSizes() { memset(this, 0, sizeof(RuntimeSizes)); }
 
     size_t object;
     size_t atomsTable;
@@ -130,10 +131,12 @@ struct RuntimeSizes
     size_t ionCode;
     size_t regexpCode;
     size_t unusedCode;
+    size_t regexpData;
     size_t stack;
     size_t gcMarker;
     size_t mathCache;
     size_t scriptFilenames;
+    size_t scriptData;
     size_t scriptSources;
 };
 
@@ -158,15 +161,7 @@ struct CompartmentStats
       , gcHeapScripts(0)
       , gcHeapTypeObjects(0)
       , gcHeapIonCodes(0)
-#if JS_HAS_XML_SUPPORT
-      , gcHeapXML(0)
-#endif
-      , objectsExtraSlots(0)
-      , objectsExtraElements(0)
-      , objectsExtraArgumentsData(0)
-      , objectsExtraRegExpStatics(0)
-      , objectsExtraPropertyIteratorData(0)
-      , objectsExtraPrivate(0)
+      , objectsExtra()
       , stringCharsNonHuge(0)
       , shapesExtraTreeTables(0)
       , shapesExtraDictTables(0)
@@ -179,6 +174,8 @@ struct CompartmentStats
       , crossCompartmentWrappersTable(0)
       , regexpCompartment(0)
       , debuggeesSet(0)
+      , typeInference()
+      , hugeStrings()
     {}
 
     CompartmentStats(const CompartmentStats &other)
@@ -200,15 +197,7 @@ struct CompartmentStats
       , gcHeapScripts(other.gcHeapScripts)
       , gcHeapTypeObjects(other.gcHeapTypeObjects)
       , gcHeapIonCodes(other.gcHeapIonCodes)
-#if JS_HAS_XML_SUPPORT
-      , gcHeapXML(other.gcHeapXML)
-#endif
-      , objectsExtraSlots(other.objectsExtraSlots)
-      , objectsExtraElements(other.objectsExtraElements)
-      , objectsExtraArgumentsData(other.objectsExtraArgumentsData)
-      , objectsExtraRegExpStatics(other.objectsExtraRegExpStatics)
-      , objectsExtraPropertyIteratorData(other.objectsExtraPropertyIteratorData)
-      , objectsExtraPrivate(other.objectsExtraPrivate)
+      , objectsExtra(other.objectsExtra)
       , stringCharsNonHuge(other.stringCharsNonHuge)
       , shapesExtraTreeTables(other.shapesExtraTreeTables)
       , shapesExtraDictTables(other.shapesExtraDictTables)
@@ -221,7 +210,7 @@ struct CompartmentStats
       , crossCompartmentWrappersTable(other.crossCompartmentWrappersTable)
       , regexpCompartment(other.regexpCompartment)
       , debuggeesSet(other.debuggeesSet)
-      , typeInferenceSizes(other.typeInferenceSizes)
+      , typeInference(other.typeInference)
     {
       hugeStrings.append(other.hugeStrings);
     }
@@ -249,16 +238,8 @@ struct CompartmentStats
     size_t gcHeapScripts;
     size_t gcHeapTypeObjects;
     size_t gcHeapIonCodes;
-#if JS_HAS_XML_SUPPORT
-    size_t gcHeapXML;
-#endif
+    ObjectsExtraSizes objectsExtra;
 
-    size_t objectsExtraSlots;
-    size_t objectsExtraElements;
-    size_t objectsExtraArgumentsData;
-    size_t objectsExtraRegExpStatics;
-    size_t objectsExtraPropertyIteratorData;
-    size_t objectsExtraPrivate;
     size_t stringCharsNonHuge;
     size_t shapesExtraTreeTables;
     size_t shapesExtraDictTables;
@@ -272,7 +253,7 @@ struct CompartmentStats
     size_t regexpCompartment;
     size_t debuggeesSet;
 
-    TypeInferenceSizes typeInferenceSizes;
+    TypeInferenceSizes typeInference;
     js::Vector<HugeStringInfo, 0, js::SystemAllocPolicy> hugeStrings;
 
     // Add cStats's numbers to this object's numbers.
@@ -297,16 +278,8 @@ struct CompartmentStats
         ADD(gcHeapScripts);
         ADD(gcHeapTypeObjects);
         ADD(gcHeapIonCodes);
-    #if JS_HAS_XML_SUPPORT
-        ADD(gcHeapXML);
-    #endif
+        objectsExtra.add(cStats.objectsExtra);
 
-        ADD(objectsExtraSlots);
-        ADD(objectsExtraElements);
-        ADD(objectsExtraArgumentsData);
-        ADD(objectsExtraRegExpStatics);
-        ADD(objectsExtraPropertyIteratorData);
-        ADD(objectsExtraPrivate);
         ADD(stringCharsNonHuge);
         ADD(shapesExtraTreeTables);
         ADD(shapesExtraDictTables);
@@ -322,7 +295,7 @@ struct CompartmentStats
 
         #undef ADD
 
-        typeInferenceSizes.add(cStats.typeInferenceSizes);
+        typeInference.add(cStats.typeInference);
         hugeStrings.append(cStats.hugeStrings);
     }
 
@@ -344,7 +317,7 @@ struct RuntimeStats
       , totals()
       , compartmentStatsVector()
       , currCompartmentStats(NULL)
-      , mallocSizeOf(mallocSizeOf)
+      , mallocSizeOf_(mallocSizeOf)
     {}
 
     RuntimeSizes runtime;
@@ -384,7 +357,7 @@ struct RuntimeStats
     js::Vector<CompartmentStats, 0, js::SystemAllocPolicy> compartmentStatsVector;
     CompartmentStats *currCompartmentStats;
 
-    JSMallocSizeOfFun mallocSizeOf;
+    JSMallocSizeOfFun mallocSizeOf_;
 
     virtual void initExtraCompartmentStats(JSCompartment *c, CompartmentStats *cstats) = 0;
 };
@@ -395,8 +368,17 @@ class ObjectPrivateVisitor
 {
 public:
     // Within CollectRuntimeStats, this method is called for each JS object
-    // that has a private slot containing an nsISupports pointer.
-    virtual size_t sizeOfIncludingThis(void *aSupports) = 0;
+    // that has an nsISupports pointer.
+    virtual size_t sizeOfIncludingThis(nsISupports *aSupports) = 0;
+
+    // A callback that gets a JSObject's nsISupports pointer, if it has one.
+    // Note: this function does *not* addref |iface|.
+    typedef JSBool(*GetISupportsFun)(JSObject *obj, nsISupports **iface);
+    GetISupportsFun getISupports_;
+
+    ObjectPrivateVisitor(GetISupportsFun getISupports)
+      : getISupports_(getISupports)
+    {}
 };
 
 extern JS_PUBLIC_API(bool)

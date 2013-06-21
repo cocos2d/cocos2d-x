@@ -148,24 +148,18 @@ public:
     * @since v1.0
     */
     void dumpCachedTextureInfo();
-
-#ifdef CC_SUPPORT_PVRTC
-    /** Returns a Texture2D object given an PVRTC RAW filename
-    * If the file image was not previously loaded, it will create a new CCTexture2D
-    *  object and it will return it. Otherwise it will return a reference of a previously loaded image
-    *
-    * It can only load square images: width == height, and it must be a power of 2 (128,256,512...)
-    * bpp can only be 2 or 4. 2 means more compression but lower quality.
-    * hasAlpha: whether or not the image contains alpha channel
-    */
-    CCTexture2D* addPVRTCImage(const char* fileimage, int bpp, bool hasAlpha, int width);
-#endif // CC_SUPPORT_PVRTC
     
     /** Returns a Texture2D object given an PVR filename
     * If the file image was not previously loaded, it will create a new CCTexture2D
     *  object and it will return it. Otherwise it will return a reference of a previously loaded image
     */
     CCTexture2D* addPVRImage(const char* filename);
+    
+    /** Returns a Texture2D object given an ETC filename
+     * If the file image was not previously loaded, it will create a new CCTexture2D
+     *  object and it will return it. Otherwise it will return a reference of a previously loaded image
+     */
+    CCTexture2D* addETCImage(const char* filename);
 
     /** Reload all textures
     It's only useful when the value of CC_ENABLE_CACHE_TEXTURE_DATA is 1

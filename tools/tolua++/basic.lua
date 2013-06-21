@@ -8,6 +8,7 @@ _push_functions = _push_functions or {}
 local CCObjectTypes = {
     "CCObject",
     "CCAction",
+    "CCImage",
     "CCFiniteTimeAction",
     "CCActionInstant",
     "CCCallFunc",
@@ -189,6 +190,16 @@ local CCObjectTypes = {
     "CCParticleSmoke",
     "CCParticleSnow",
     "CCParticleRain",
+    "CCScale9Sprite",
+    "CCControl",
+    "CCControlButton",
+    "CCControlColourPicker",
+    "CCControlPotentiometer",
+    "CCControlSlider",
+    "CCControlStepper",
+    "CCControlSwitch",
+    "CCEditBox",
+    "CCInteger",
 }
 
 -- register CCObject types
@@ -270,7 +281,22 @@ function post_output_hook(package)
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
- ****************************************************************************/]])
+ ****************************************************************************/
+
+extern "C" {
+#include "tolua_fix.h"
+}
+
+#include <map>
+#include <string>
+#include "cocos2d.h"
+#include "CCLuaEngine.h"
+#include "SimpleAudioEngine.h"
+#include "cocos-ext.h"
+
+using namespace cocos2d;
+using namespace cocos2d::extension;
+using namespace CocosDenshion;]])
 
       replace([[/* Exported function */
 TOLUA_API int  tolua_Cocos2d_open (lua_State* tolua_S);]], [[]])

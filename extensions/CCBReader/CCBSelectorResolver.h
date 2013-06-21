@@ -16,11 +16,15 @@ NS_CC_EXT_BEGIN
     return cccontrol_selector(METHOD); \
 }
 
+#define CCB_SELECTORRESOLVER_CALLFUNC_GLUE(TARGET, SELECTORNAME, METHOD) if(pTarget == TARGET && strcmp(pSelectorName, SELECTORNAME) == 0) { \
+    return callfuncN_selector(METHOD); \
+}
+
 class CCBSelectorResolver {
     public:
         virtual ~CCBSelectorResolver() {};
     virtual SEL_MenuHandler onResolveCCBCCMenuItemSelector(CCObject * pTarget, const char* pSelectorName) = 0;
-    
+    virtual SEL_CallFuncN onResolveCCBCCCallFuncSelector(CCObject * pTarget, const char* pSelectorName) { return NULL; };
     virtual SEL_CCControlHandler onResolveCCBCCControlSelector(CCObject * pTarget, const char* pSelectorName) = 0;
 };
 

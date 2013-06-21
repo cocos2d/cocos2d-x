@@ -31,6 +31,7 @@ TESTLAYER_CREATE_FUNC(ActionCallFunc);
 TESTLAYER_CREATE_FUNC(ActionCallFuncND);
 TESTLAYER_CREATE_FUNC(ActionReverseSequence);
 TESTLAYER_CREATE_FUNC(ActionReverseSequence2);
+TESTLAYER_CREATE_FUNC(ActionRemoveSelf);
 TESTLAYER_CREATE_FUNC(ActionOrbit);
 TESTLAYER_CREATE_FUNC(ActionFollow);
 TESTLAYER_CREATE_FUNC(ActionTargeted);
@@ -67,6 +68,7 @@ static NEWTESTFUNC createFunctions[] = {
     CF(ActionAnimate),
     CF(ActionSequence),
     CF(ActionSequence2),
+	CF(ActionRemoveSelf),
     CF(ActionSpawn),
     CF(ActionReverse),
     CF(ActionDelayTime),
@@ -1398,11 +1400,11 @@ void ActionMoveStacked::runActionsInSprite(CCSprite *sprite)
     sprite->runAction(
         CCRepeatForever::create(
                 CCSequence::create(
-                CCMoveBy::create(0.05, ccp(10,10)),
-                CCMoveBy::create(0.05, ccp(-10,-10)),
+                CCMoveBy::create(0.05f, ccp(10,10)),
+                CCMoveBy::create(0.05f, ccp(-10,-10)),
        NULL)));
     
-    CCMoveBy* action = CCMoveBy::create(2, ccp(400,0));
+    CCMoveBy* action = CCMoveBy::create(2.0f, ccp(400,0));
     CCMoveBy* action_back = (CCMoveBy*)action->reverse();
     
     sprite->runAction(
@@ -1424,11 +1426,11 @@ void ActionMoveJumpStacked::runActionsInSprite(CCSprite *sprite)
     sprite->runAction(
           CCRepeatForever::create(
             CCSequence::create(
-             CCMoveBy::create(0.05, ccp(10,2)),
-             CCMoveBy::create(0.05, ccp(-10,-2)),
+             CCMoveBy::create(0.05f, ccp(10,2)),
+             CCMoveBy::create(0.05f, ccp(-10,-2)),
              NULL)));
     
-    CCJumpBy* jump = CCJumpBy::create(2, ccp(400,0), 100, 5);
+    CCJumpBy* jump = CCJumpBy::create(2.0f, ccp(400,0), 100, 5);
     CCJumpBy* jump_back = (CCJumpBy*)jump->reverse();
     
     sprite->runAction(
@@ -1463,8 +1465,8 @@ void ActionMoveBezierStacked::runActionsInSprite(CCSprite *sprite)
     sprite->runAction(
      CCRepeatForever::create(
       CCSequence::create(
-       CCMoveBy::create(0.05, ccp(10,0)),
-       CCMoveBy::create(0.05, ccp(-10,0)),
+       CCMoveBy::create(0.05f, ccp(10,0)),
+       CCMoveBy::create(0.05f, ccp(-10,0)),
        NULL)));
 }
 
@@ -1514,8 +1516,8 @@ void ActionCatmullRomStacked::onEnter()
     m_tamara->runAction(
      CCRepeatForever::create(
       CCSequence::create(
-       CCMoveBy::create(0.05, ccp(10,0)),
-       CCMoveBy::create(0.05, ccp(-10,0)),
+       CCMoveBy::create(0.05f, ccp(10,0)),
+       CCMoveBy::create(0.05f, ccp(-10,0)),
        NULL)));
     
     
@@ -1546,8 +1548,8 @@ void ActionCatmullRomStacked::onEnter()
     m_kathia->runAction(
      CCRepeatForever::create(
       CCSequence::create(
-       CCMoveBy::create(0.05, ccp(10,0)),
-       CCMoveBy::create(0.05, ccp(-10,0)),
+       CCMoveBy::create(0.05f, ccp(10,0)),
+       CCMoveBy::create(0.05f, ccp(-10,0)),
        NULL)));
     
     
@@ -1624,8 +1626,8 @@ void ActionCardinalSplineStacked::onEnter()
     m_tamara->runAction(
      CCRepeatForever::create(
       CCSequence::create(
-       CCMoveBy::create(0.05, ccp(10,0)),
-       CCMoveBy::create(0.05, ccp(-10,0)),
+       CCMoveBy::create(0.05f, ccp(10,0)),
+       CCMoveBy::create(0.05f, ccp(-10,0)),
        NULL)));
     
     
@@ -1647,8 +1649,8 @@ void ActionCardinalSplineStacked::onEnter()
     m_kathia->runAction(
      CCRepeatForever::create(
       CCSequence::create(
-       CCMoveBy::create(0.05, ccp(10,0)),
-       CCMoveBy::create(0.05, ccp(-10,0)),
+       CCMoveBy::create(0.05f, ccp(10,0)),
+       CCMoveBy::create(0.05f, ccp(-10,0)),
        NULL)));
     
     
@@ -1929,7 +1931,7 @@ void Issue1398::onEnter()
 void Issue1398::incrementIntegerCallback(CCNode* pSender, void* data)
 {
     this->incrementInteger();
-    CCLog((char*)data);
+    CCLog("%s", (char*)data);
 }
 
 std::string Issue1398::subtitle()
@@ -2172,4 +2174,30 @@ void PauseResumeActions::resume(float dt)
     CCLog("Resuming");
     CCDirector *director = CCDirector::sharedDirector();
     director->getActionManager()->resumeTargets(m_pPausedTargets);
+}
+
+//------------------------------------------------------------------
+//
+//    ActionRemoveSelf
+//
+//------------------------------------------------------------------
+void ActionRemoveSelf::onEnter()
+{
+	ActionsDemo::onEnter();
+
+	alignSpritesLeft(1);
+
+	CCFiniteTimeAction*  action = CCSequence::create(
+		CCMoveBy::create( 2, ccp(240,0)),
+		CCRotateBy::create( 2,  540),
+		CCScaleTo::create(1,0.1f),
+		CCRemoveSelf::create(),
+		NULL);
+
+	m_grossini->runAction(action);
+}
+
+std::string ActionRemoveSelf::subtitle()
+{
+	return "Sequence: Move + Rotate + Scale + RemoveSelf";
 }

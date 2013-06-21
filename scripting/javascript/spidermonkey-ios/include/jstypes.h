@@ -74,8 +74,7 @@
 
 #if defined(_MSC_VER) && defined(_M_IX86)
 #define JS_FASTCALL __fastcall
-#elif defined(__GNUC__) && defined(__i386__) &&                         \
-  ((__GNUC__ >= 4) || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4))
+#elif defined(__GNUC__) && defined(__i386__)
 #define JS_FASTCALL __attribute__((fastcall))
 #else
 #define JS_FASTCALL
@@ -209,7 +208,7 @@ typedef int JSBool;
 **      }
 **
 ***********************************************************************/
-#if defined(__GNUC__) && (__GNUC__ > 2)
+#ifdef __GNUC__
 
 # define JS_LIKELY(x)   (__builtin_expect((x), 1))
 # define JS_UNLIKELY(x) (__builtin_expect((x), 0))

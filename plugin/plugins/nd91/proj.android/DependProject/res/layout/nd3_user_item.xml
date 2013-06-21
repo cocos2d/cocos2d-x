@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.nd.commplatform.widget.NdUserListItem
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:paddingBottom="@dimen/nd3_margin_size"
+  >
+  
+ 
+  <ImageView
+  android:id="@+id/nd3_user_image"
+  android:layout_alignParentLeft="true"
+  android:layout_alignParentTop="true"
+  android:layout_width="@dimen/nd3_image_size"
+  android:layout_height="@dimen/nd3_image_size"
+  android:scaleType="fitXY"
+  android:layout_margin="@dimen/nd3_margin_size"/>
+  
+ 
+  <ImageView
+  android:id="@+id/nd3_user_action_btn"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:src="@drawable/nd3_switch_image"
+  android:layout_margin="@dimen/nd3_margin_size"
+  android:layout_alignParentRight="true"
+  android:layout_centerVertical="true"/>
+  
+  <RelativeLayout
+  android:id="@+id/nd3_user_item_content_rl"
+  android:layout_width="0dip"
+  android:layout_height="wrap_content"
+  android:layout_toRightOf="@id/nd3_user_image"
+  android:layout_toLeftOf="@+id/nd3_user_action_btn"
+  android:layout_alignTop="@id/nd3_user_image"
+  android:layout_marginBottom="@dimen/nd3_margin_size">
+	  <TextView
+	  android:id="@+id/nd3_user_name_txt"
+	  android:layout_width="wrap_content"
+	  android:layout_height="wrap_content"
+	  android:layout_alignParentLeft="true"
+      android:layout_alignParentTop="true"
+      android:maxLines="1"
+      android:singleLine="true"
+      android:ellipsize="end"  
+      style="@style/nd3_textview_1"/> 
+	  <TextView
+	  android:id="@+id/nd3_user_content"
+	  android:layout_width="wrap_content"
+	  android:layout_height="wrap_content"
+	  android:layout_alignLeft="@id/nd3_user_name_txt"
+	  android:layout_below="@id/nd3_user_name_txt"
+	  android:maxLines="1"
+      android:singleLine="true"
+      android:ellipsize="end"  
+	  style="@style/nd3_textview_2"/>
+  </RelativeLayout>
+</com.nd.commplatform.widget.NdUserListItem>

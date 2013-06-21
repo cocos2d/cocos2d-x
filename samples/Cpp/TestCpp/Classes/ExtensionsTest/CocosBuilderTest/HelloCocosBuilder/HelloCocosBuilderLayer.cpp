@@ -8,6 +8,7 @@
 #include "../ParticleSystemTest/ParticleSystemTestLayerLoader.h"
 #include "../ScrollViewTest/ScrollViewTestLayerLoader.h"
 #include "../AnimationsTest/AnimationsLayerLoader.h"
+#include "../TimelineCallbackTest/TimelineCallbackLayerLoader.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -78,7 +79,8 @@ SEL_CCControlHandler HelloCocosBuilderLayer::onResolveCCBCCControlSelector(CCObj
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onAnimationsTestClicked", HelloCocosBuilderLayer::onAnimationsTestClicked);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onParticleSystemTestClicked", HelloCocosBuilderLayer::onParticleSystemTestClicked);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onScrollViewTestClicked", HelloCocosBuilderLayer::onScrollViewTestClicked);
-
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onTimelineCallbackSoundClicked", HelloCocosBuilderLayer::onTimelineCallbackSoundClicked);
+    
     return NULL;
 }
 
@@ -184,4 +186,9 @@ void HelloCocosBuilderLayer::onParticleSystemTestClicked(CCObject * pSender, coc
 void HelloCocosBuilderLayer::onScrollViewTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent)
 {
     this->openTest("ccb/ccb/TestScrollViews.ccbi", "TestScrollViewsLayer", ScrollViewTestLayerLoader::loader());
+}
+
+void HelloCocosBuilderLayer::onTimelineCallbackSoundClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent)
+{
+    this->openTest("ccb/ccb/TestTimelineCallback.ccbi", "TimelineCallbackTestLayer", TimelineCallbackTestLayerLoader::loader());
 }

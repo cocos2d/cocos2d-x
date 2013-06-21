@@ -55,7 +55,7 @@ inline js_type_class_t *js_get_type_from_native(T* native_obj) {
 }
 
 /**
- * The returned pointer should be deleted using JS_REMOVE_PROXY. Most of the
+ * The returned pointer should be deleted using jsb_remove_proxy. Most of the
  * time you do that in the C++ destructor.
  */
 template<class T>
@@ -67,12 +67,12 @@ inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
         // Return NULL if can't find its type rather than making an assert.
 //        assert(typeProxy);
         if (!typeProxy) {
-            CCLOGWARN("Could not find the type of native object.");
+            CCLOGINFO("Could not find the type of native object.");
             return NULL;
         }
         
         JSObject* js_obj = JS_NewObject(cx, typeProxy->jsclass, typeProxy->proto, typeProxy->parentProto);
-        JS_NEW_PROXY(proxy, native_obj, js_obj);
+        proxy = jsb_new_proxy(native_obj, js_obj);
 #ifdef DEBUG
         JS_AddNamedObjectRoot(cx, &proxy->obj, typeid(*native_obj).name());
 #else
@@ -142,13 +142,18 @@ public:
 class JSScheduleWrapper: public JSCallbackWrapper {
     
 public:
-    JSScheduleWrapper() : _pTarget(NULL), _pPureJSTarget(NULL) {}
+    JSScheduleWrapper() : _pTarget(NULL), _pPureJSTarget(NULL), _priority(0), _isUpdateSchedule(false) {}
     virtual ~JSScheduleWrapper();
 
     static void setTargetForSchedule(jsval sched, JSScheduleWrapper *target);
     static CCArray * getTargetForSchedule(jsval sched);
     static void setTargetForJSObject(JSObject* jsTargetObj, JSScheduleWrapper *target);
     static CCArray * getTargetForJSObject(JSObject* jsTargetObj);
+    
+    // Remove all targets.
+    static void removeAllTargets();
+    // Remove all targets for priority.
+    static void removeAllTargetsForMinPriority(int minPriority);
 	// Remove all targets by js object from hash table(_schedFunc_target_ht and _schedObj_target_ht).	
     static void removeAllTargetsForJSObject(JSObject* jsTargetObj);
 	// Remove the target by js object and the wrapper for native schedule.
@@ -158,14 +163,25 @@ public:
     void pause();
     
     void scheduleFunc(float dt) const;
+    virtual void update(float dt);
+    
     CCObject* getTarget();
     void setTarget(CCObject* pTarget);
     
     void setPureJSTarget(JSObject* jstarget);
     JSObject* getPureJSTarget();
+    
+    void setPriority(int priority);
+    int  getPriority();
+    
+    void setUpdateSchedule(bool isUpdateSchedule);
+    bool isUpdateSchedule();
+    
 protected:
     CCObject* _pTarget;
     JSObject* _pPureJSTarget;
+    int _priority;
+    bool _isUpdateSchedule;
 };
 
 

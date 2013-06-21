@@ -383,7 +383,7 @@ bool BitmapDC::getBitmap( const char *text, int nWidth, int nHeight, CCImage::ET
 				if (iError) { //no valid font found, try to use default
 					
 					fName = "fonts/Marker Felt.ttf" ;
-					//CCLog("No valid font, use default %s\n", fName.c_str());
+					//CCLog("No valid font, use default %s", fName.c_str());
 					iError = openFont( fName, fontSize );
 				}
 			}
@@ -579,7 +579,7 @@ bool CCImage::initWithImageData(void * pData,
         }
         else if (kFmtRawData == eFmt)
         {
-            bRet = _initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent);
+            bRet = _initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false);
             break;
         }
         else
@@ -1074,7 +1074,7 @@ bool CCImage::_initWithTiffData(void* pData, int nDataLen)
     return bRet;
 }
 
-bool CCImage::_initWithRawData(void * pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent)
+bool CCImage::_initWithRawData(void * pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti)
 {
     bool bRet = false;
     do 

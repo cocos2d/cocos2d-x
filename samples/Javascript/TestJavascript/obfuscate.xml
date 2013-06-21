@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<project name="Javascript compress project" basedir="../../../" default="compile">
+
+    <taskdef name="jscomp" classname="com.google.javascript.jscomp.ant.CompileTask"
+             classpath="${basedir}/tools/closure-compiler/compiler.jar"/>
+
+    <target name="compile">
+        <!--advanced / simple-->
+        <jscomp compilationLevel="advanced" warning="quiet"
+                debug="false" output="${basedir}/samples/Javascript/TestJavascript/game.js">
+            <externs dir="${basedir}/scripting/javascript/bindings/obfuscate">
+                <file name="obfuscate_exclude_cocos2d.js"/>
+                <file name="obfuscate_exclude_chipmunk.js"/>
+            </externs>
+            <sources dir="${basedir}/scripting/javascript/bindings/js/">
+                <file name="jsb_cocos2d_constants.js"/>
+                <file name="jsb_cocos2d.js"/>
+                <file name="jsb_cocos2d_extension.js"/>
+                <file name="jsb_chipmunk_constants.js"/>
+                <file name="jsb_chipmunk.js"/>
+                <file name="jsb_opengl_constants.js"/>
+                <file name="jsb_opengl.js"/>
+                <file name="jsb_cocosbuilder.js"/>
+                <file name="jsb_sys.js"/>
+            </sources>
+            <sources dir="${basedir}/samples/Javascript/Shared/tests/">
+                <file name="tests_resources-jsb.js"/>
+                <file name="tests-main.js"/>
+                <file name="BaseTestLayer/BaseTestLayer.js"/>
+                <file name="ActionManagerTest/ActionManagerTest.js"/>
+                <file name="ActionsTest/ActionsTest.js"/>
+                <file name="ChipmunkTest/ChipmunkTest.js"/>
+                <file name="ClickAndMoveTest/ClickAndMoveTest.js"/>
+                <file name="CocosDenshionTest/CocosDenshionTest.js"/>
+                <file name="CocosNodeTest/CocosNodeTest.js"/>
+                <file name="DrawPrimitivesTest/DrawPrimitivesTest.js"/>
+                <file name="EaseActionsTest/EaseActionsTest.js"/>
+                <file name="EffectsTest/EffectsTest.js"/>
+                <file name="EventTest/EventTest.js"/>
+                <file name="FileUtils/FileUtilsTest.js"/>
+                <file name="FontTest/FontTest.js"/>
+                <file name="IntervalTest/IntervalTest.js"/>
+                <file name="LabelTest/LabelTest.js"/>
+                <file name="LayerTest/LayerTest.js"/>
+                <file name="MenuTest/MenuTest.js"/>
+                <file name="OpenGLTest/OpenGLTest.js"/>
+                <file name="ParallaxTest/ParallaxTest.js"/>
+                <file name="ParticleTest/ParticleTest.js"/>
+                <file name="PerformanceTest/PerformanceTest.js"/>
+                <file name="PerformanceTest/PerformanceNodeChildrenTest.js"/>
+                <file name="PerformanceTest/PerformanceParticleTest.js"/>
+                <file name="PerformanceTest/PerformanceSpriteTest.js"/>
+                <file name="PerformanceTest/PerformanceSpriteTest2.js"/>
+                <file name="PerformanceTest/PerformanceTextureTest.js"/>
+                <file name="PerformanceTest/PerformanceTouchesTest.js"/>
+                <file name="PerformanceTest/PerformanceAnimationTest.js"/>
+                <file name="PerformanceTest/seedrandom.js"/>
+                <file name="Presentation/Presentation.js"/>
+                <file name="ProgressActionsTest/ProgressActionsTest.js"/>
+                <file name="RenderTextureTest/RenderTextureTest.js"/>
+                <file name="RotateWorldTest/RotateWorldTest.js"/>
+                <file name="SceneTest/SceneTest.js"/>
+                <file name="SchedulerTest/SchedulerTest.js"/>
+                <file name="SpriteTest/SpriteTest.js"/>
+                <file name="ExtensionsTest/S9SpriteTest/S9SpriteTest.js"/>
+                <file name="ExtensionsTest/ExtensionsTest.js"/>
+                <file name="ExtensionsTest/TableViewTest/TableViewTestScene.js"/>
+                <file name="TileMapTest/TileMapTest.js"/>
+                <file name="TransitionsTest/TransitionsTest.js"/>
+                <file name="UnitTest/UnitTest.js"/>
+                <file name="SysTest/SysTest.js"/>
+                <file name="tests-boot-jsb-for-obfuscation.js"/>
+            </sources>
+        </jscomp>
+    </target>
+</project>

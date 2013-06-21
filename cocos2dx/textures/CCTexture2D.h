@@ -30,6 +30,9 @@ THE SOFTWARE.
 #include "cocoa/CCObject.h"
 #include "cocoa/CCGeometry.h"
 #include "ccTypes.h"
+#ifdef EMSCRIPTEN
+#include "base_nodes/CCGLBufferedNode.h"
+#endif // EMSCRIPTEN
 
 NS_CC_BEGIN
 
@@ -68,6 +71,7 @@ typedef enum {
     //! 2-bit PVRTC-compressed texture: PVRTC2
     kCCTexture2DPixelFormat_PVRTC2,
 
+
     //! Default texture format: RGBA8888
     kCCTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_RGBA8888,
 
@@ -103,6 +107,9 @@ typedef struct _ccTexParams {
 * Be aware that the content of the generated textures will be upside-down!
 */
 class CC_DLL CCTexture2D : public CCObject
+#ifdef EMSCRIPTEN
+, public CCGLBufferedNode
+#endif // EMSCRIPTEN
 {
 public:
     CCTexture2D();
@@ -138,18 +145,14 @@ public:
     bool initWithString(const char *text,  const char *fontName, float fontSize, const CCSize& dimensions, CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment);
     /** Initializes a texture from a string with font name and font size */
     bool initWithString(const char *text, const char *fontName, float fontSize);
-
-#ifdef CC_SUPPORT_PVRTC    
-    /**
-    Extensions to make it easy to create a CCTexture2D object from a PVRTC file
-    Note that the generated textures don't have their alpha premultiplied - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
-    */
-    /** Initializes a texture from a PVRTC buffer */
-    bool initWithPVRTCData(const void *data, int level, int bpp, bool hasAlpha, int length, CCTexture2DPixelFormat pixelFormat);
-#endif // CC_SUPPORT_PVRTC
+    /** Initializes a texture from a string using a text definition*/
+    bool initWithString(const char *text, ccFontDefinition *textDefinition);
     
     /** Initializes a texture from a PVR file */
     bool initWithPVRFile(const char* file);
+    
+    /** Initializes a texture from a ETC file */
+    bool initWithETCFile(const char* file);
 
     /** sets the min filter, mag filter, wrap s and wrap t texture parameters.
     If the texture size is NPOT (non power of 2), then in can only use GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}.

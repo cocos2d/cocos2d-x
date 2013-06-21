@@ -1,6 +1,5 @@
 	<key>Project</key>
 	<dict>
-
 		<key>Configurations</key>
 		<dict>
 			<key>Debug</key>
@@ -8,9 +7,8 @@
 				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
 				<array>
 					<string>COCOS2D_JAVASCRIPT</string>
-                                        <string>CC_ENABLE_CHIPMUNK_INTEGRATION</string>
 				</array>
-                                <key>GCC_OPTIMIZATION_LEVEL</key>
+                <key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>1</string>
 			</dict>
 			<key>Release</key>
@@ -18,7 +16,6 @@
 				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
 				<array>
 					<string>COCOS2D_JAVASCRIPT</string>
-                                        <string>CC_ENABLE_CHIPMUNK_INTEGRATION</string>
 				</array>
 			</dict>
 

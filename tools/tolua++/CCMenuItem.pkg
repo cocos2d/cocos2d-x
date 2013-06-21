@@ -1,5 +1,5 @@
 
-class CCMenuItem : public CCNode
+class CCMenuItem : public CCNodeRGBA
 {
     CCRect rect();
     void activate();
@@ -113,15 +113,15 @@ class CCMenuItemToggle : public CCMenuItem
     ccColor3B getColor();
     void setOpacity(GLubyte opacity);
     GLubyte getOpacity();
-	void setSelectedIndex(unsigned int index);
-	unsigned int getSelectedIndex();
-	void setSubItems(CCArray* pArrayOfItems);
-	CCArray* getSubItems();
+    void setSelectedIndex(unsigned int index);
+    unsigned int getSelectedIndex();
+    void setSubItems(CCArray* pArrayOfItems);
+    CCArray* getSubItems();
 
-	void addSubItem(CCMenuItem *item);
+    void addSubItem(CCMenuItem *item);
     CCMenuItem* selectedItem();
 
-	void activate();
+    void activate();
     void selected();
     void unselected();
     void setEnabled(bool var);

@@ -13,7 +13,6 @@
 #include "cocos2d.h"
 #include "js_bindings_config.h"
 #include "js_bindings_core.h"
-#include "uthash.h"
 #include "jsapi.h"
 #include "jsfriendapi.h"
 #include "spidermonkey_specifics.h"
@@ -97,7 +96,8 @@ public:
     virtual int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue);
     virtual int executeLayerKeypadEvent(CCLayer* pLayer, int eventType);
     virtual int executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource = NULL, const char* pEventSourceClassName = NULL) { return 0; }
-    virtual bool executeAssert(bool cond, const char *msg = NULL) {return false;}
+
+    virtual bool handleAssert(const char *msg) { return false; }
 
     bool executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj);
     JSBool executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc = 0, jsval* vp = NULL, jsval* retVal = NULL);
@@ -224,13 +224,15 @@ JSBool jsval_to_ccarray(JSContext* cx, jsval v, CCArray** ret);
 JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, CCDictionary** ret);
 JSBool jsval_to_ccacceleration(JSContext* cx,jsval v, CCAcceleration* ret);
 JSBool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, CCArray** ret);
+JSBool jsval_to_ccaffinetransform(JSContext* cx, jsval v, CCAffineTransform* ret);
+JSBool jsval_to_ccfontdefinition( JSContext *cx, jsval vp, ccFontDefinition *out );
 
 // from native
 jsval int32_to_jsval( JSContext *cx, int32_t l);
 jsval uint32_to_jsval( JSContext *cx, uint32_t number );
 jsval long_long_to_jsval(JSContext* cx, long long v);
 jsval std_string_to_jsval(JSContext* cx, string& v);
-jsval c_string_to_jsval(JSContext* cx, const char* v);
+jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length = -1);
 jsval ccpoint_to_jsval(JSContext* cx, CCPoint& v);
 jsval ccrect_to_jsval(JSContext* cx, CCRect& v);
 jsval ccsize_to_jsval(JSContext* cx, CCSize& v);
@@ -240,6 +242,8 @@ jsval cccolor3b_to_jsval(JSContext* cx, const ccColor3B& v);
 jsval ccdictionary_to_jsval(JSContext* cx, CCDictionary *dict);
 jsval ccarray_to_jsval(JSContext* cx, CCArray *arr);
 jsval ccacceleration_to_jsval(JSContext* cx, CCAcceleration& v);
+jsval ccaffinetransform_to_jsval(JSContext* cx, CCAffineTransform& t);
+
 
 JSObject* NewGlobalObject(JSContext* cx, bool debug = false);
 JSBool jsStartDebugger(JSContext* cx, unsigned argc, jsval* vp);
@@ -309,4 +313,10 @@ private:
 JSBool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value);
 JSBool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret);
 
-#endif
+js_proxy_t* jsb_new_proxy(void* nativeObj, JSObject* jsObj);
+js_proxy_t* jsb_get_native_proxy(void* nativeObj);
+js_proxy_t* jsb_get_js_proxy(JSObject* jsObj);
+void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy);
+
+
+#endif /* __SCRIPTING_CORE_H__ */
