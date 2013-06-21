@@ -35,10 +35,10 @@ install_llvm()
     LLVM_VERSION="3.3"
     if [ "$PLATFORM"x = "ios"x ]; then
         LLVM_PACKAGE="clang+llvm-3.3-x86_64-apple-darwin12"
-        LLVM_PACKAGE_SUFFIX = ".tar.gz"
+        LLVM_PACKAGE_SUFFIX=".tar.gz"
     else
         LLVM_PACKAGE="clang+llvm-3.3-Ubuntu-13.04-x86_64-linux-gnu"
-        LLVM_PACKAGE_SUFFIX = ".tar.bz2"
+        LLVM_PACKAGE_SUFFIX=".tar.bz2"
     fi
     
     # Download llvm
