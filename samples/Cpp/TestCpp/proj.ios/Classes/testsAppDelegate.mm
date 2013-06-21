@@ -29,7 +29,7 @@ static AppDelegate s_sharedApplication;
     window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
     
     // Init the EAGLView
-    EAGLView *__glView = [EAGLView viewWithFrame: [window bounds]
+    CCEAGLView *__glView = [CCEAGLView viewWithFrame: [window bounds]
                                      pixelFormat: kEAGLColorFormatRGB565
                                      depthFormat: GL_DEPTH24_STENCIL8_OES
                               preserveBackbuffer: NO

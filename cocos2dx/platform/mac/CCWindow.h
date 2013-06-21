@@ -28,7 +28,7 @@ THE SOFTWARE.
 #import <Cocoa/Cocoa.h>
 
 
-@interface Window : NSWindow
+@interface CCWindow : NSWindow
 {
 }
 - (id) initWithFrame:(NSRect)frame fullscreen:(BOOL)fullscreen;

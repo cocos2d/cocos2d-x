@@ -75,14 +75,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #define IOS_MAX_TOUCHES_COUNT     10
 
-static EAGLView *view = 0;
+static CCEAGLView *view = 0;
 
-@interface EAGLView (Private)
+@interface CCEAGLView (Private)
 - (BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup;
 - (unsigned int) convertPixelFormat:(NSString*) pixelFormat;
 @end
 
-@implementation EAGLView
+@implementation CCEAGLView
 
 @synthesize surfaceSize=size_;
 @synthesize pixelFormat=pixelformat_, depthFormat=depthFormat_;
