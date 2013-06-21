@@ -53,7 +53,7 @@
 		
 		// allocate our GL view
 		// (isn't there already a shared EAGLView?)
-		glView = [[EAGLView alloc] initWithFrame:rect pixelFormat:pixelFormat];
+		glView = [[CCEAGLView alloc] initWithFrame:rect pixelFormat:pixelFormat];
 
 		// set window parameters
 		[window becomeFirstResponder];
@@ -81,13 +81,13 @@
 
 	-(IBAction) toggleFullScreen:(id)sender
 	{
-		EAGLView* pView = [EAGLView sharedEGLView];
+		CCEAGLView* pView = [CCEAGLView sharedEGLView];
 		[pView setFullScreen:!pView.isFullScreen];
 	}
 
 	-(IBAction) exitFullScreen:(id)sender
 	{
-		[[EAGLView sharedEGLView] setFullScreen:NO];
+		[[CCEAGLView sharedEGLView] setFullScreen:NO];
 	}
 
 @end
