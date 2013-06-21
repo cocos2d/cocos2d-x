@@ -216,7 +216,7 @@ static int tolua_Cocos2d_ScrollView_create00(lua_State* tolua_S)
         Size size = *((Size*)  tolua_tousertype(tolua_S,2,0));
         Node* container = ((Node*)  tolua_tousertype(tolua_S,3,NULL));
         {
-            LuaScrollView* tolua_ret = (LuaScrollView*)  new LuaScrollView();
+            LuaScrollView* tolua_ret = new LuaScrollView();
             if (NULL != tolua_ret && tolua_ret->initWithViewSize(size,container) )
             {
                 tolua_ret->InitLuaScrollView();
@@ -253,7 +253,7 @@ static int tolua_Cocos2d_ScrollView_create01(lua_State* tolua_S)
         goto tolua_lerror;
     else
     {
-        LuaScrollView* tolua_ret = (LuaScrollView*)  new LuaScrollView();
+        LuaScrollView* tolua_ret = new LuaScrollView();
         if (NULL != tolua_ret && tolua_ret->init() )
         {
             tolua_ret->InitLuaScrollView();
