@@ -35,7 +35,7 @@
 #include "keyboard_dispatcher/CCKeyboardDispatcher.h"
 
 //NS_CC_BEGIN;
-static EventDispatcher *sharedDispatcher = nil;
+static CCEventDispatcher *sharedDispatcher = nil;
 
 enum  {
 	// mouse
@@ -88,12 +88,12 @@ static int		eventQueueCount;
 #endif // CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
 
 
-@implementation EventDispatcher
+@implementation CCEventDispatcher
 
 @synthesize dispatchEvents=dispatchEvents_;
 
 
-+(EventDispatcher*) sharedDispatcher
++(CCEventDispatcher*) sharedDispatcher
 {
 	@synchronized(self) {
 		if (sharedDispatcher == nil)
@@ -204,7 +204,7 @@ static int		eventQueueCount;
 }
 
 
--(void) addMouseDelegate:(id<MouseEventDelegate>) delegate priority:(NSInteger)priority
+-(void) addMouseDelegate:(id<CCMouseEventDelegate>) delegate priority:(NSInteger)priority
 {
 	NSUInteger flags = 0;
 	
@@ -239,7 +239,7 @@ static int		eventQueueCount;
 	[self removeAllDelegatesFromList:&mouseDelegates_];
 }
 
--(void) addKeyboardDelegate:(id<KeyboardEventDelegate>) delegate priority:(NSInteger)priority
+-(void) addKeyboardDelegate:(id<CCKeyboardEventDelegate>) delegate priority:(NSInteger)priority
 {
 	NSUInteger flags = 0;
 	
@@ -260,7 +260,7 @@ static int		eventQueueCount;
 	[self removeAllDelegatesFromList:&keyboardDelegates_];
 }
 
--(void) addTouchDelegate:(id<TouchEventDelegate>) delegate priority:(NSInteger)priority
+-(void) addTouchDelegate:(id<CCTouchEventDelegate>) delegate priority:(NSInteger)priority
 {
 	NSUInteger flags = 0;
 	

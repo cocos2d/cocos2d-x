@@ -36,16 +36,16 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface CustomUITextField : UITextField
+@interface CCCustomUITextField : UITextField
 {
 }
 
 @end
 
 
-@interface EditBoxImplIOS_objc : NSObject <UITextFieldDelegate>
+@interface CCEditBoxImplIOS_objc : NSObject <UITextFieldDelegate>
 {
-    CustomUITextField* textField_;
+    CCCustomUITextField* textField_;
     void* editBox_;
     BOOL editState_;
 }
@@ -112,7 +112,7 @@ private:
     Size          _contentSize;
     Point         _position;
     Point         _anchorPoint;
-    EditBoxImplIOS_objc* _systemControl;
+    CCEditBoxImplIOS_objc* _systemControl;
     int             _maxTextLength;
     bool            _inRetinaMode;
 };

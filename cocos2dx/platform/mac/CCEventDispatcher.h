@@ -43,7 +43,7 @@
 /** MouseEventDelegate protocol.
  Implement it in your node to receive any of mouse events
  */
-@protocol MouseEventDelegate <NSObject>
+@protocol CCMouseEventDelegate <NSObject>
 @optional
 
 //
@@ -141,7 +141,7 @@
 /** KeyboardEventDelegate protocol.
  Implement it in your node to receive any of keyboard events
  */
-@protocol KeyboardEventDelegate <NSObject>
+@protocol CCKeyboardEventDelegate <NSObject>
 @optional
 /** called when the "keyUp" event is received.
  Return YES to avoid propagating the event to other delegates.
@@ -164,7 +164,7 @@
 /** TouchEventDelegate protocol.
  Implement it in your node to receive any of touch events
  */
-@protocol TouchEventDelegate <NSObject>
+@protocol CCTouchEventDelegate <NSObject>
 @optional
 /** called when the "touchesBegan" event is received.
  Return YES to avoid propagating the event to other delegates.
@@ -203,7 +203,7 @@ struct _listEntry;
  
  Only available on Mac
  */
-@interface EventDispatcher : NSObject <MacEventDelegate> {
+@interface CCEventDispatcher : NSObject <CCMacEventDelegate> {
 
 	BOOL					dispatchEvents_;
 	
@@ -216,7 +216,7 @@ struct _listEntry;
 
 
 /** EventDispatcher singleton */
-+(EventDispatcher*) sharedDispatcher;
++(CCEventDispatcher*) sharedDispatcher;
 
 #pragma mark EventDispatcher - Mouse
 
@@ -226,7 +226,7 @@ struct _listEntry;
 
  IMPORTANT: The delegate will be retained.
  */
--(void) addMouseDelegate:(id<MouseEventDelegate>) delegate priority:(NSInteger)priority;
+-(void) addMouseDelegate:(id<CCMouseEventDelegate>) delegate priority:(NSInteger)priority;
 
 /** removes a mouse delegate */
 -(void) removeMouseDelegate:(id) delegate;
@@ -242,7 +242,7 @@ struct _listEntry;
  
  IMPORTANT: The delegate will be retained.
  */
--(void) addKeyboardDelegate:(id<KeyboardEventDelegate>) delegate priority:(NSInteger)priority;
+-(void) addKeyboardDelegate:(id<CCKeyboardEventDelegate>) delegate priority:(NSInteger)priority;
 
 /** removes a mouse delegate */
 -(void) removeKeyboardDelegate:(id) delegate;
@@ -258,7 +258,7 @@ struct _listEntry;
  
  IMPORTANT: The delegate will be retained.
  */
-- (void)addTouchDelegate:(id<TouchEventDelegate>)delegate priority:(NSInteger)priority;
+- (void)addTouchDelegate:(id<CCTouchEventDelegate>)delegate priority:(NSInteger)priority;
 
 /** Removes a touch delegate */
 - (void)removeTouchDelegate:(id) delegate;

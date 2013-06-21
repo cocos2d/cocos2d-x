@@ -77,7 +77,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  * The view content is basically an EAGL surface you render your OpenGL scene into.
  * Note that setting the view non-opaque will only work if the EAGL surface has an alpha channel.
  */
-@interface EAGLView : UIView <UIKeyInput, UITextInput>
+@interface CCEAGLView : UIView <UIKeyInput, UITextInput>
 {
     id                        <CCESRenderer> renderer_;    
     EAGLContext                *context_; // weak ref
