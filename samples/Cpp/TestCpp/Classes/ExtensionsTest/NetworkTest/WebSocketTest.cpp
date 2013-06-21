@@ -37,13 +37,13 @@ WebSocketTestLayer::WebSocketTestLayer()
     
     // Send Text
     LabelTTF *labelSendText = LabelTTF::create("Send Text", "Arial", 22);
-    MenuItemLabel *itemSendText = MenuItemLabel::create(labelSendText, this, menu_selector(WebSocketTestLayer::onMenuSendTextClicked));
+    MenuItemLabel *itemSendText = MenuItemLabel::create(labelSendText, CC_CALLBACK_1(WebSocketTestLayer::onMenuSendTextClicked, this));
     itemSendText->setPosition(ccp(winSize.width / 2, winSize.height - MARGIN - SPACE));
     menuRequest->addChild(itemSendText);
     
     // Send Binary
     LabelTTF *labelSendBinary = LabelTTF::create("Send Binary", "Arial", 22);
-    MenuItemLabel *itemSendBinary = MenuItemLabel::create(labelSendBinary, this, menu_selector(WebSocketTestLayer::onMenuSendBinaryClicked));
+    MenuItemLabel *itemSendBinary = MenuItemLabel::create(labelSendBinary, CC_CALLBACK_1(WebSocketTestLayer::onMenuSendBinaryClicked, this));
     itemSendBinary->setPosition(ccp(winSize.width / 2, winSize.height - MARGIN - 2 * SPACE));
     menuRequest->addChild(itemSendBinary);
     
@@ -67,7 +67,7 @@ WebSocketTestLayer::WebSocketTestLayer()
     this->addChild(_errorStatus);
     
     // Back Menu
-    MenuItemFont *itemBack = MenuItemFont::create("Back", this, menu_selector(WebSocketTestLayer::toExtensionsMainLayer));
+    MenuItemFont *itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(WebSocketTestLayer::toExtensionsMainLayer, this));
     itemBack->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
     Menu *menuBack = Menu::create(itemBack, NULL);
     menuBack->setPosition(PointZero);
