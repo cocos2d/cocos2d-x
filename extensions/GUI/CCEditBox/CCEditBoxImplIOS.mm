@@ -35,9 +35,9 @@
 
 static const int CC_EDIT_BOX_PADDING = 5;
 
-@implementation CustomUITextField
+@implementation CCCustomUITextField
 - (CGRect)textRectForBounds:(CGRect)bounds {
-    float padding = CC_EDIT_BOX_PADDING * cocos2d::EGLView::sharedOpenGLView()->getScaleX() / [[EAGLView sharedEGLView] contentScaleFactor ];
+    float padding = CC_EDIT_BOX_PADDING * cocos2d::EGLView::sharedOpenGLView()->getScaleX() / [[CCEAGLView sharedEGLView] contentScaleFactor ];
     return CGRectMake(bounds.origin.x + padding, bounds.origin.y + padding,
                       bounds.size.width - padding*2, bounds.size.height - padding*2);
 }
@@ -47,7 +47,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
 @end
 
 
-@implementation EditBoxImplIOS_objc
+@implementation CCEditBoxImplIOS_objc
 
 @synthesize textField = textField_;
 @synthesize editState = editState_;
@@ -69,7 +69,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
     {
         if (self == nil) break;
         editState_ = NO;
-        self.textField = [[[CustomUITextField alloc] initWithFrame: frameRect] autorelease];
+        self.textField = [[[CCCustomUITextField alloc] initWithFrame: frameRect] autorelease];
         if (!textField_) break;
         [textField_ setTextColor:[UIColor whiteColor]];
         textField_.font = [UIFont systemFontOfSize:frameRect.size.height*2/3]; //TODO need to delete hard code here.
@@ -91,7 +91,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
 
 -(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance
 {
-    id eglView = [EAGLView sharedEGLView];
+    id eglView = [CCEAGLView sharedEGLView];
     [eglView doAnimationWhenKeyboardMoveWithDuration:duration distance:distance];
 }
 
@@ -116,7 +116,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
 
 -(void) openKeyboard
 {
-    [[EAGLView sharedEGLView] addSubview:textField_];
+    [[CCEAGLView sharedEGLView] addSubview:textField_];
     [textField_ becomeFirstResponder];
 }
 
@@ -136,7 +136,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
 
 -(void)animationSelector
 {
-    id eglView = [EAGLView sharedEGLView];
+    id eglView = [CCEAGLView sharedEGLView];
     [eglView doAnimationWhenAnotherEditBeClicked];
 }
 
@@ -144,7 +144,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
 {
     CCLOG("textFieldShouldBeginEditing...");
     editState_ = YES;
-    id eglView = [EAGLView sharedEGLView];
+    id eglView = [CCEAGLView sharedEGLView];
     if ([eglView isKeyboardShown])
     {
         [self performSelector:@selector(animationSelector) withObject:nil afterDelay:0.0f];
@@ -254,7 +254,7 @@ EditBoxImplIOS::EditBoxImplIOS(EditBox* pEditText)
 , _anchorPoint(ccp(0.5f, 0.5f))
 , _maxTextLength(-1)
 {
-    _inRetinaMode = [[EAGLView sharedEGLView] contentScaleFactor] == 2.0f ? true : false;
+    _inRetinaMode = [[CCEAGLView sharedEGLView] contentScaleFactor] == 2.0f ? true : false;
 }
 
 EditBoxImplIOS::~EditBoxImplIOS()
@@ -284,7 +284,7 @@ bool EditBoxImplIOS::initWithSize(const Size& size)
             rect.size.height /= 2.0f;
         }
         
-        _systemControl = [[EditBoxImplIOS_objc alloc] initWithFrame:rect editBox:this];
+        _systemControl = [[CCEditBoxImplIOS_objc alloc] initWithFrame:rect editBox:this];
         if (!_systemControl) break;
         
 		initInactiveLabels(size);
@@ -510,7 +510,7 @@ void EditBoxImplIOS::setPlaceHolder(const char* pText)
 static CGPoint convertDesignCoordToScreenCoord(const Point& designCoord, bool bInRetinaMode)
 {
     EGLViewProtocol* eglView = EGLView::sharedOpenGLView();
-    float viewH = (float)[[EAGLView sharedEGLView] getHeight];
+    float viewH = (float)[[CCEAGLView sharedEGLView] getHeight];
     
     Point visiblePos = ccp(designCoord.x * eglView->getScaleX(), designCoord.y * eglView->getScaleY());
     Point screenGLPos = ccpAdd(visiblePos, eglView->getViewPortRect().origin);
