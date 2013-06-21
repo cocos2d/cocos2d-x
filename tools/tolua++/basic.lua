@@ -319,6 +319,7 @@ TOLUA_API int  tolua_Cocos2d_open (lua_State* tolua_S);]], [[]])
 
       replace('\t', '    ')
 
+    result = string.gsub(result, '(\"const )(CC%u%w*)', '%1_%2')
 
     local skip_contents = { "CCPointMake", "CCSizeMake", "CCRectMake", "CCLOG", "CCLog", "CCAssert" }
 
@@ -345,9 +346,7 @@ TOLUA_API int  tolua_Cocos2d_open (lua_State* tolua_S);]], [[]])
     replace("Animation*", "cocos2d::Animation*")
     replace("Animation::create", "cocos2d::Animation::create")
 
-    replace("\"const Point", "\"const CCPoint")
-    replace("\"const Size", "\"const CCSize")
-    replace("\"const Rect", "\"const CCRect")
+    result = string.gsub(result, '(\"const )_(CC%u%w*)', '%1%2')
 
     WRITE(result)
 end

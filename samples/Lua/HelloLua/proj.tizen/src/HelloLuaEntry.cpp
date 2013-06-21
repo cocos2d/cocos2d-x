@@ -35,7 +35,7 @@ OspMain(int argc, char *pArgv[])
     args.Construct();
     for (int i = 0; i < argc; i++)
     {
-        args.Add(new (std::nothrow) String(pArgv[i]));
+        args.Add(new (std::nothrow) Tizen::Base::String(pArgv[i]));
     }
 
     OspApplication::SetApplicationInitializedCallback(ApplicationInitialized);
