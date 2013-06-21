@@ -4,8 +4,6 @@
 
 static std::function<Layer*()> createFunctions[] = {
 
-    CL(ActionMoveStacked),
-
     CL(ActionManual),
     CL(ActionMove),
     CL(ActionRotate),
@@ -33,8 +31,9 @@ static std::function<Layer*()> createFunctions[] = {
     CL(ActionRotateToRepeat),
     CL(ActionRotateJerk),
     CL(ActionCallFunction),
-    CL(ActionCallFunc),
+    CL(ActionCallFuncN),
     CL(ActionCallFuncND),
+    CL(ActionCallFuncO),
     CL(ActionReverseSequence),
     CL(ActionReverseSequence2),
     CL(ActionOrbit),
@@ -751,7 +750,7 @@ void ActionSequence2::onEnter()
 		MoveBy::create(1, ccp(100,0)),
 		CallFunc::create( CC_CALLBACK_0(ActionSequence2::callback1,this)),
 		CallFunc::create( CC_CALLBACK_0(ActionSequence2::callback2,this,_grossini)),
-		CallFunc::create( CC_CALLBACK_0(ActionSequence2::callback3,this,_grossini,(void*)0xbebabeba)),
+		CallFunc::create( CC_CALLBACK_0(ActionSequence2::callback3,this,_grossini,0xbebabeba)),
 		NULL);
 
     _grossini->runAction(action);
@@ -775,7 +774,7 @@ void ActionSequence2::callback2(Node* sender)
     addChild(label);
 }
 
-void ActionSequence2::callback3(Node* sender, void* data)
+void ActionSequence2::callback3(Node* sender, long data)
 {
     auto s = Director::sharedDirector()->getWinSize();
     auto label = LabelTTF::create("callback 3 called", "Marker Felt", 16);
@@ -791,74 +790,42 @@ std::string ActionSequence2::subtitle()
 
 //------------------------------------------------------------------
 //
-//    ActionCallFunc
-//    DEPRECATED. Use the std::function() API instead
+// ActionCallFuncN
 //
 //------------------------------------------------------------------
-void ActionCallFunc::onEnter()
+void ActionCallFuncN::onEnter()
 {
     ActionsDemo::onEnter();
 
-    centerSprites(3);
+    centerSprites(1);
 
     auto action = Sequence::create(
-        MoveBy::create(2, ccp(200,0)),
-        CallFunc::create(this, callfunc_selector(ActionCallFunc::callback1)),
-        NULL);
-
-    auto action2 = Sequence::create(
-        ScaleBy::create(2 ,  2),
-        FadeOut::create(2),
-        CallFuncN::create(this, callfuncN_selector(ActionSequence2::callback2)), 
-        NULL);
-
-    auto action3 = Sequence::create(
-        RotateBy::create(3 , 360),
-        FadeOut::create(2),
-        CallFuncND::create(this, callfuncND_selector(ActionSequence2::callback3), (void*)0xbebabeba), 
+        MoveBy::create(2.0f, ccp(150,0)),
+        CallFuncN::create( CC_CALLBACK_1(ActionCallFuncN::callback, this)),
         NULL);
 
     _grossini->runAction(action);
-    _tamara->runAction(action2);
-    _kathia->runAction(action3);
 }
 
-
-void ActionCallFunc::callback1()
+std::string ActionCallFuncN::title()
 {
-    auto s = Director::sharedDirector()->getWinSize();
-    auto label = LabelTTF::create("callback 1 called", "Marker Felt", 16);
-    label->setPosition(ccp( s.width/4*1,s.height/2));
-
-    addChild(label);
+    return "CallFuncN";
 }
 
-void ActionCallFunc::callback2(Node* pSender)
+std::string ActionCallFuncN::subtitle()
 {
-    auto s = Director::sharedDirector()->getWinSize();
-    auto label = LabelTTF::create("callback 2 called", "Marker Felt", 16);
-    label->setPosition(ccp( s.width/4*2,s.height/2));
-
-    addChild(label);
+    return "Grossini should jump after moving";
 }
 
-void ActionCallFunc::callback3(Node* pTarget, void* data)
+void ActionCallFuncN::callback(Node* sender )
 {
-    auto s = Director::sharedDirector()->getWinSize();
-    auto label = LabelTTF::create("callback 3 called", "Marker Felt", 16);
-    label->setPosition(ccp( s.width/4*3,s.height/2));
-    addChild(label);
+    auto a = JumpBy::create(5, ccp(0,0), 100, 5);
+    sender->runAction(a);
 }
-
-std::string ActionCallFunc::subtitle()
-{
-    return "Callbacks: CallFunc. Old way. Avoid it";
-}
-
 //------------------------------------------------------------------
 //
 // ActionCallFuncND
-// DEPRECATED. Use the std::function() API instead
+// CallFuncND is no longer needed. It can simulated with std::bind()
 //
 //------------------------------------------------------------------
 void ActionCallFuncND::onEnter()
@@ -867,8 +834,9 @@ void ActionCallFuncND::onEnter()
 
     centerSprites(1);
 
-    auto action = Sequence::create(MoveBy::create(2.0f, ccp(200,0)),
-        CallFuncND::create(this, callfuncND_selector(ActionCallFuncND::removeFromParentAndCleanup), (void*)true),
+    auto action = Sequence::create(
+        MoveBy::create(2.0f, ccp(200,0)),
+        CallFuncN::create( CC_CALLBACK_1(ActionCallFuncND::removeFromParentAndCleanup, this, true)),
         NULL);
 
     _grossini->runAction(action);
@@ -881,13 +849,46 @@ std::string ActionCallFuncND::title()
 
 std::string ActionCallFuncND::subtitle()
 {
-    return "CallFuncND + removeFromParentAndCleanup. Grossini dissapears in 2s";
+    return "simulates CallFuncND with std::bind()";
 }
 
-void ActionCallFuncND::removeFromParentAndCleanup(Node* pSender, void* data)
+void ActionCallFuncND::removeFromParentAndCleanup(Node* pSender, bool cleanup)
 {
-    bool bCleanUp = data != NULL;
-    _grossini->removeFromParentAndCleanup(bCleanUp);
+    _grossini->removeFromParentAndCleanup(cleanup);
+}
+
+//------------------------------------------------------------------
+//
+// ActionCallFuncO
+// CallFuncO is no longer needed. It can simulated with std::bind()
+//
+//------------------------------------------------------------------
+void ActionCallFuncO::onEnter()
+{
+    ActionsDemo::onEnter();
+
+    centerSprites(1);
+
+    auto action = Sequence::create(
+        MoveBy::create(2.0f, ccp(200,0)),
+        CallFunc::create( CC_CALLBACK_0(ActionCallFuncO::callback, this, _grossini, true)),
+        NULL);
+    _grossini->runAction(action);
+}
+
+std::string ActionCallFuncO::title()
+{
+    return "CallFuncO + autoremove";
+}
+
+std::string ActionCallFuncO::subtitle()
+{
+    return "simulates CallFuncO with std::bind()";
+}
+
+void ActionCallFuncO::callback(Node* node, bool cleanup)
+{
+    node->removeFromParentAndCleanup(cleanup);
 }
 
 //------------------------------------------------------------------
@@ -924,7 +925,7 @@ void ActionCallFunction::onEnter()
     auto action3 = Sequence::create(
                         RotateBy::create(3 , 360),
                         FadeOut::create(2),
-                        CallFunc::create( std::bind(&ActionCallFunction::callback3, this, _kathia, (void*)42) ),
+                        CallFunc::create( std::bind(&ActionCallFunction::callback3, this, _kathia, 42) ),
                         NULL);
 
     _grossini->runAction(action1);
@@ -953,14 +954,14 @@ void ActionCallFunction::callback2(Node* sender)
 	CCLOG("sender is: %p", sender);
 }
 
-void ActionCallFunction::callback3(Node* sender, void* data)
+void ActionCallFunction::callback3(Node* sender, long data)
 {
     auto s = Director::sharedDirector()->getWinSize();
     auto label = LabelTTF::create("callback 3 called", "Marker Felt", 16);
     label->setPosition(ccp( s.width/4*3,s.height/2));
     addChild(label);
 
-	CCLOG("target is: %p, data is: %ld", sender, (long)data);
+	CCLOG("target is: %p, data is: %ld", sender, data);
 }
 
 std::string ActionCallFunction::subtitle()
