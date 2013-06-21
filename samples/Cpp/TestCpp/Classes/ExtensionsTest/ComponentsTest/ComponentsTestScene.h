@@ -24,9 +24,6 @@ public:
 
     // init scene
     cocos2d::Node* createGameScene();
-    
-    //back to Extensions Main Layer
-    void toExtensionsMainLayer(cocos2d::Object *sender);
 };
 
 #endif  // __HELLOWORLD_SCENE_H__
