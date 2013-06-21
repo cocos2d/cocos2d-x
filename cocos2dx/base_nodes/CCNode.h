@@ -442,9 +442,9 @@ public:
      * 0 is the default rotation angle. 
      * Positive values rotate node clockwise, and negative values for anti-clockwise.
      * 
-     * @param fRotation     The roration of the node in degrees.
+     * @param rotation     The rotation of the node in degrees.
      */
-    virtual void setRotation(float fRotation);
+    virtual void setRotation(float rotation);
     /**
      * Returns the rotation of the node in degrees.
      *
@@ -785,7 +785,7 @@ public:
      * @warning Don't forget to release the memroy manually, 
      *          especially before you change this data pointer, and before this node is autoreleased.
      *
-     * @return A custom user data pointer
+     * @param A custom user data pointer
      */
     virtual void setUserData(void *pUserData);
     
