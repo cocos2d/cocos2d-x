@@ -37,7 +37,7 @@ bool PhysicsSprite::isDirty(void)
 }
 
 // returns the transform matrix according the Chipmunk Body values
-CCAffineTransform PhysicsSprite::nodeToParentTransform(void)
+AffineTransform PhysicsSprite::nodeToParentTransform(void)
 {
     b2Vec2 pos  = _body->GetPosition();
 
@@ -54,13 +54,13 @@ CCAffineTransform PhysicsSprite::nodeToParentTransform(void)
     float c = cosf(radians);
     float s = sinf(radians);
 
-    if( ! _anchorPointInPoints.equals(CCPointZero) ){
+    if( ! _anchorPointInPoints.equals(PointZero) ){
         x += c*-_anchorPointInPoints.x + -s*-_anchorPointInPoints.y;
         y += s*-_anchorPointInPoints.x + c*-_anchorPointInPoints.y;
     }
 
     // Rot, Translate Matrix
-    _transform = CCAffineTransformMake( c,  s,
+    _transform = AffineTransformMake( c,  s,
         -s,    c,
         x,    y );
 
@@ -72,11 +72,11 @@ HelloWorld::HelloWorld()
     setTouchEnabled( true );
     setAccelerometerEnabled( true );
 
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
     // init physics
     this->initPhysics();
 
-    CCSpriteBatchNode *parent = CCSpriteBatchNode::create("blocks.png", 100);
+    SpriteBatchNode *parent = SpriteBatchNode::create("blocks.png", 100);
     _spriteTexture = parent->getTexture();
 
     addChild(parent, 0, kTagParentNode);
@@ -84,7 +84,7 @@ HelloWorld::HelloWorld()
 
     addNewSpriteAtPosition(ccp(s.width/2, s.height/2));
 
-    CCLabelTTF *label = CCLabelTTF::create("Tap screen", "Marker Felt", 32);
+    LabelTTF *label = LabelTTF::create("Tap screen", "Marker Felt", 32);
     addChild(label, 0);
     label->setColor(ccc3(0,0,255));
     label->setPosition(ccp( s.width/2, s.height-50));
@@ -103,7 +103,7 @@ HelloWorld::~HelloWorld()
 void HelloWorld::initPhysics()
 {
 
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
 
     b2Vec2 gravity;
     gravity.Set(0.0f, -10.0f);
@@ -163,9 +163,9 @@ void HelloWorld::draw()
     // This is only for debug purposes
     // It is recommend to disable it
     //
-    CCLayer::draw();
+    Layer::draw();
 
-    ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
+    ccGLEnableVertexAttribs( kVertexAttribFlag_Position );
 
     kmGLPushMatrix();
 
@@ -174,10 +174,10 @@ void HelloWorld::draw()
     kmGLPopMatrix();
 }
 
-void HelloWorld::addNewSpriteAtPosition(CCPoint p)
+void HelloWorld::addNewSpriteAtPosition(Point p)
 {
     CCLOG("Add sprite %0.2f x %02.f",p.x,p.y);
-    CCNode* parent = getChildByTag(kTagParentNode);
+    Node* parent = getChildByTag(kTagParentNode);
     
     //We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
     //just randomly picking one of the images
@@ -233,41 +233,41 @@ void HelloWorld::update(float dt)
     {
         if (b->GetUserData() != NULL) {
             //Synchronize the AtlasSprites position and rotation with the corresponding body
-            CCSprite* myActor = (CCSprite*)b->GetUserData();
+            Sprite* myActor = (Sprite*)b->GetUserData();
             myActor->setPosition( CCPointMake( b->GetPosition().x * PTM_RATIO, b->GetPosition().y * PTM_RATIO) );
             myActor->setRotation( -1 * CC_RADIANS_TO_DEGREES(b->GetAngle()) );
         }    
     }
 }
 
-void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event)
+void HelloWorld::ccTouchesEnded(Set* touches, Event* event)
 {
     //Add a new body/atlas sprite at the touched location
-    CCSetIterator it;
-    CCTouch* touch;
+    SetIterator it;
+    Touch* touch;
     
     for( it = touches->begin(); it != touches->end(); it++) 
     {
-        touch = (CCTouch*)(*it);
+        touch = (Touch*)(*it);
         
         if(!touch)
             break;
         
-        CCPoint location = touch->getLocationInView();
+        Point location = touch->getLocationInView();
         
-        location = CCDirector::sharedDirector()->convertToGL(location);
+        location = Director::sharedDirector()->convertToGL(location);
         
         addNewSpriteAtPosition( location );
     }
 }
 
-CCScene* HelloWorld::scene()
+Scene* HelloWorld::scene()
 {
     // 'scene' is an autorelease object
-    CCScene *scene = CCScene::create();
+    Scene *scene = Scene::create();
     
     // add layer as a child to scene
-    CCLayer* layer = new HelloWorld();
+    Layer* layer = new HelloWorld();
     scene->addChild(layer);
     layer->release();
     

@@ -23,8 +23,8 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    CCDirector *pDirector = CCDirector::sharedDirector();
-    pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
+    Director *pDirector = Director::sharedDirector();
+    pDirector->setOpenGLView(EGLView::sharedOpenGLView());
     
     // turn on display FPS
     pDirector->setDisplayStats(true);
@@ -33,10 +33,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setAnimationInterval(1.0 / 60);
 
     // register lua engine
-    CCLuaEngine* pEngine = CCLuaEngine::defaultEngine();
-    CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
+    LuaEngine* pEngine = LuaEngine::defaultEngine();
+    ScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
 
-    std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("hello.lua");
+    std::string path = FileUtils::sharedFileUtils()->fullPathForFilename("hello.lua");
     pEngine->executeScriptFile(path.c_str());
 
     return true;
@@ -45,7 +45,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    CCDirector::sharedDirector()->stopAnimation();
+    Director::sharedDirector()->stopAnimation();
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
     SimpleAudioEngine::sharedEngine()->pauseAllEffects();
 }
@@ -53,7 +53,7 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    CCDirector::sharedDirector()->startAnimation();
+    Director::sharedDirector()->startAnimation();
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
     SimpleAudioEngine::sharedEngine()->resumeAllEffects();
 }

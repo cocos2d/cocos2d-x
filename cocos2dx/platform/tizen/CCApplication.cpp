@@ -82,7 +82,7 @@ ccLanguageType Application::getCurrentLanguage()
 {
     result r = E_SUCCESS;
     int index = 0;
-    String localelanguageCode, languageCode;
+    Tizen::Base::String localelanguageCode, languageCode;
     ccLanguageType ret = kLanguageEnglish;
 
     r = SettingInfo::GetValue(L"http://tizen.org/setting/locale.language", localelanguageCode);
