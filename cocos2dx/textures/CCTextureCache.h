@@ -174,7 +174,7 @@ private:
         Image::EImageFormat imageType;
     } ImageInfo;
 
-	std::queue<AsyncStruct*>* _asyncStructQueue;
+    std::queue<AsyncStruct*>* _asyncStructQueue;
     std::queue<ImageInfo*>* _imageInfoQueue;
 
 	std::mutex _asyncStructQueueMutex;

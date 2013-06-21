@@ -76,7 +76,7 @@ TextureCache::TextureCache()
 , _asyncRefCount(0)
 , _textures(new Dictionary())
 {
-	CCAssert(_sharedTextureCache == nullptr, "Attempted to allocate a second instance of a singleton.");
+    CCAssert(_sharedTextureCache == nullptr, "Attempted to allocate a second instance of a singleton.");
 }
 
 TextureCache::~TextureCache()
@@ -85,15 +85,15 @@ TextureCache::~TextureCache()
 
     CC_SAFE_RELEASE(_textures);
 
-	_sharedTextureCache = nullptr;
+    _sharedTextureCache = nullptr;
 }
 
 void TextureCache::purgeSharedTextureCache()
 {
-	// notify sub thread to quick
-	_sharedTextureCache->_needQuit = true;
-	std::lock_guard<std::mutex> lk(_sharedTextureCache->_sleepMutex);
-	_sharedTextureCache->_sleepCondition.notify_one();
+    // notify sub thread to quick
+    _sharedTextureCache->_needQuit = true;
+    std::lock_guard<std::mutex> lk(_sharedTextureCache->_sleepMutex);
+    _sharedTextureCache->_sleepCondition.notify_one();
 
     CC_SAFE_RELEASE_NULL(_sharedTextureCache);
 }
@@ -146,10 +146,10 @@ void TextureCache::addImageAsync(const char *path, Object *target, SEL_CallFuncO
         _imageInfoQueue = new queue<ImageInfo*>();        
 
 		// create a new thread to load images
-		auto t = std::thread(&TextureCache::loadImage, this);
-		t.detach();
+        auto t = std::thread(&TextureCache::loadImage, this);
+        t.detach();
 		// should retain here, because sub thread use invoke TextureCache::loadImage()
-		retain();
+        retain();
 
         _needQuit = false;
     }
@@ -170,17 +170,17 @@ void TextureCache::addImageAsync(const char *path, Object *target, SEL_CallFuncO
     AsyncStruct *data = new AsyncStruct(fullpath, target, selector);
 
     // add async struct into queue
-	_asyncStructQueueMutex.lock();
+    _asyncStructQueueMutex.lock();
     _asyncStructQueue->push(data);
-	_asyncStructQueueMutex.unlock();
+    _asyncStructQueueMutex.unlock();
 
-	std::lock_guard<std::mutex> lk(_sleepMutex);
-	_sleepCondition.notify_one();
+    std::lock_guard<std::mutex> lk(_sleepMutex);
+    _sleepCondition.notify_one();
 }
 
 void TextureCache::loadImage()
 {
-	AsyncStruct *pAsyncStruct = nullptr;
+    AsyncStruct *pAsyncStruct = nullptr;
 
     while (true)
     {
@@ -189,16 +189,16 @@ void TextureCache::loadImage()
         thread.createAutoreleasePool();
 
         std::queue<AsyncStruct*> *pQueue = _asyncStructQueue;
-		_asyncStructQueueMutex.lock();
+        _asyncStructQueueMutex.lock();
         if (pQueue->empty())
         {
-			_asyncStructQueueMutex.unlock();
+            _asyncStructQueueMutex.unlock();
             if (_needQuit) {
                 break;
             }
             else {
-				std::unique_lock<std::mutex> lk(_sleepMutex);
-				_sleepCondition.wait(lk);
+                std::unique_lock<std::mutex> lk(_sleepMutex);
+                _sleepCondition.wait(lk);
                 continue;
             }
         }
@@ -206,7 +206,7 @@ void TextureCache::loadImage()
         {
             pAsyncStruct = pQueue->front();
             pQueue->pop();
-			_asyncStructQueueMutex.unlock();
+            _asyncStructQueueMutex.unlock();
         }        
 
         const char *filename = pAsyncStruct->filename.c_str();
@@ -237,21 +237,21 @@ void TextureCache::loadImage()
         pImageInfo->imageType = imageType;
 
         // put the image info into the queue
-		_imageInfoMutex.lock();
+	    _imageInfoMutex.lock();
         _imageInfoQueue->push(pImageInfo);
-		_imageInfoMutex.unlock();
+	    _imageInfoMutex.unlock();
     }
     
 	if(_asyncStructQueue != nullptr)
     {
         delete _asyncStructQueue;
-		_asyncStructQueue = nullptr;
+	    _asyncStructQueue = nullptr;
         delete _imageInfoQueue;
-		_imageInfoQueue = nullptr;
+	    _imageInfoQueue = nullptr;
     }
 
-	// should release here, because we retain it when creating a sub thread in addImageAsync()
-	release();
+    // should release here, because we retain it when creating a sub thread in addImageAsync()
+    release();
 }
 
 Image::EImageFormat TextureCache::computeImageFormatType(string& filename)
@@ -283,16 +283,16 @@ void TextureCache::addImageAsyncCallBack(float dt)
     // the image is generated in loading thread
     std::queue<ImageInfo*> *imagesQueue = _imageInfoQueue;
 
-	_imageInfoMutex.lock();
+    _imageInfoMutex.lock();
     if (imagesQueue->empty())
     {
-		_imageInfoMutex.unlock();
+        _imageInfoMutex.unlock();
     }
     else
     {
         ImageInfo *pImageInfo = imagesQueue->front();
         imagesQueue->pop();
-		_imageInfoMutex.unlock();
+        _imageInfoMutex.unlock();
 
         AsyncStruct *pAsyncStruct = pImageInfo->asyncStruct;
         Image *pImage = pImageInfo->image;
