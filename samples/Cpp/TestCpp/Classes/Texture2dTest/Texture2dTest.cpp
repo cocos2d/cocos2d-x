@@ -279,8 +279,7 @@ void TextureMipMap::onEnter()
     EaseOut* scale1 = EaseOut::create(ScaleBy::create(4, 0.01f), 3);
     ActionInterval* sc_back = scale1->reverse();
     
-    EaseOut* scale2 = (EaseOut*) (scale1->copy());
-    scale2->autorelease();
+    EaseOut* scale2 = scale1->clone();
     ActionInterval* sc_back2 = scale2->reverse();
 
     img0->runAction(RepeatForever::create(Sequence::create(scale1, sc_back, NULL)));
@@ -330,8 +329,7 @@ void TexturePVRMipMap::onEnter()
         EaseOut* scale1 = EaseOut::create(ScaleBy::create(4, 0.01f), 3);
         ActionInterval* sc_back = scale1->reverse();
 
-        EaseOut* scale2 = (EaseOut*) (scale1->copy());
-        scale2->autorelease();
+        EaseOut* scale2 = scale1->clone();
         ActionInterval* sc_back2 = scale2->reverse();
         
         imgMipMap->runAction(RepeatForever::create(Sequence::create(scale1, sc_back, NULL)));
@@ -374,8 +372,7 @@ void TexturePVRMipMap2::onEnter()
     EaseOut* scale1 = EaseOut::create(ScaleBy::create(4, 0.01f), 3);
     ActionInterval* sc_back = scale1->reverse();
 
-    EaseOut* scale2 = (EaseOut*) (scale1->copy());
-    scale2->autorelease();
+    EaseOut* scale2 = scale1->clone();
     ActionInterval* sc_back2 = scale2->reverse();
     
     imgMipMap->runAction(RepeatForever::create(Sequence::create(scale1, sc_back, NULL)));
@@ -1277,8 +1274,7 @@ void TextureAlias::onEnter()
     ScaleBy* sc = ScaleBy::create(3, 8.0f);
     ScaleBy* sc_back = (ScaleBy*) (sc->reverse());
     RepeatForever* scaleforever = RepeatForever::create(Sequence::create(sc, sc_back, NULL));
-    RepeatForever* scaleToo = (RepeatForever*) (scaleforever->copy());
-    scaleToo->autorelease();
+    RepeatForever* scaleToo = scaleforever->clone();
 
     sprite2->runAction(scaleforever);
     sprite->runAction(scaleToo);
@@ -1374,10 +1370,10 @@ void TexturePixelFormat::onEnter()
     FadeIn*  fadein  = FadeIn::create(2);
     Sequence* seq = Sequence::create(DelayTime::create(2), fadeout, fadein, NULL);
     RepeatForever* seq_4ever = RepeatForever::create(seq);
-    RepeatForever* seq_4ever2 = (RepeatForever*) (seq_4ever->copy()); seq_4ever2->autorelease();
-    RepeatForever* seq_4ever3 = (RepeatForever*) (seq_4ever->copy()); seq_4ever3->autorelease();
-    RepeatForever* seq_4ever4 = (RepeatForever*) (seq_4ever->copy()); seq_4ever4->autorelease();
-    RepeatForever* seq_4ever5 = (RepeatForever*) (seq_4ever->copy()); seq_4ever5->autorelease();
+    RepeatForever* seq_4ever2 = seq_4ever->clone();
+    RepeatForever* seq_4ever3 = seq_4ever->clone();
+    RepeatForever* seq_4ever4 = seq_4ever->clone();
+    RepeatForever* seq_4ever5 = seq_4ever->clone();
     
     sprite1->runAction(seq_4ever);
     sprite2->runAction(seq_4ever2);
