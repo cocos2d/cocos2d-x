@@ -18,93 +18,78 @@ extern "C" {
 using namespace cocos2d;
 using namespace cocos2d::extension;
 
-class LuaScrollViewDelegate:public Node,public ScrollViewDelegate
+class LuaScrollView:public ScrollView,public ScrollViewDelegate
 {
-    
-    
 public:
-    virtual ~LuaScrollViewDelegate()
+    virtual ~LuaScrollView()
     {
+        unregisterScriptHandler(LuaScrollView::kScrollViewScriptScroll);
+        unregisterScriptHandler(LuaScrollView::kScrollViewScriptZoom);
+    }
+    
+    virtual void scrollViewDidScroll(ScrollView* view)
+    {
+        LuaScrollView* luaView = dynamic_cast<LuaScrollView*>(view);
+        if (NULL != luaView)
+        {
+            int nHandler = luaView->getScriptHandler(LuaScrollView::kScrollViewScriptScroll);
+            if (-1 != nHandler)
+            {
+                ScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(nHandler,"");
+            }
+        }
+    }
+    
+    virtual void scrollViewDidZoom(ScrollView* view)
+    {
+        LuaScrollView* luaView = dynamic_cast<LuaScrollView*>(view);
+        if (NULL != luaView)
+        {
+            int nHandler = luaView->getScriptHandler(LuaScrollView::kScrollViewScriptZoom);
+            if (-1 != nHandler)
+            {
+                ScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(nHandler,"");
+            }
+        }
+    }
+    
+    void InitLuaScrollView()
+    {
+        _mapScriptHandler.clear();
+    }
+    
+    enum ScrollViewScriptHandlerType
+    {
+        kScrollViewScriptScroll   = 0,
+        kScrollViewScriptZoom,
+    };
+    
+    void registerScriptHandler(int nFunID,ScrollViewScriptHandlerType scriptHandlerType)
+    {
+        unregisterScriptHandler(scriptHandlerType);
+        _mapScriptHandler[scriptHandlerType] = nFunID;
+    }
+    
+    void unregisterScriptHandler(ScrollViewScriptHandlerType scriptHandlerType)
+    {
+        std::map<int,int>::iterator Iter = _mapScriptHandler.find(scriptHandlerType);
         
-    }
-    
-    virtual void scrollViewDidScroll(ScrollView* view)
-    {
-        if (NULL != view)
+        if (_mapScriptHandler.end() != Iter)
         {
-            int nHandler = view->getScriptHandler(ScrollView::kScrollViewScriptScroll);
-            if (-1 != nHandler)
-            {
-                ScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(nHandler,"");
-            }
+            _mapScriptHandler.erase(Iter);
         }
     }
     
-    virtual void scrollViewDidZoom(ScrollView* view)
+    int  getScriptHandler(ScrollViewScriptHandlerType scriptHandlerType)
     {
-        if (NULL != view)
-        {
-            int nHandler = view->getScriptHandler(ScrollView::kScrollViewScriptZoom);
-            if (-1 != nHandler)
-            {
-                ScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(nHandler,"");
-            }
-        }
+        std::map<int,int>::iterator Iter = _mapScriptHandler.find(scriptHandlerType);
+        
+        if (_mapScriptHandler.end() != Iter)
+            return Iter->second;
+        return -1;
     }
-};
-
-class LuaTabTableViewDelegate:public Node,public TableViewDelegate
-{
-public:
-    virtual ~LuaTabTableViewDelegate()
-    {}
-    
-    virtual void scrollViewDidScroll(ScrollView* view)
-    {}
-    
-    virtual void scrollViewDidZoom(ScrollView* view)
-    {}
-    
-    virtual void tableCellTouched(TableView* table, TableViewCell* cell)
-    {}
-    
-    virtual void tableCellHighlight(TableView* table, TableViewCell* cell)
-    {}
-    
-    virtual void tableCellUnhighlight(TableView* table, TableViewCell* cell)
-    {}
-    
-    virtual void tableCellWillRecycle(TableView* table, TableViewCell* cell)
-    {}
-};
-
-class LuaTableViewDataSource:public Node,public TableViewDataSource
-{
-public:
-    virtual ~LuaTableViewDataSource()
-    {}
-    
-
-    virtual Size tableCellSizeForIndex(TableView *table, unsigned int idx)
-    {
-        return cellSizeForTable(table);
-    }
-
-    virtual Size cellSizeForTable(TableView *table)
-    {
-        return SizeZero;
-    }
-
-    virtual TableViewCell* tableCellAtIndex(TableView *table, unsigned int idx)
-    {
-        return NULL;
-    }
-
-    virtual unsigned int numberOfCellsInTableView(TableView *table)
-    {
-        return 0;
-    }
-    
+private:
+    std::map<int,int> _mapScriptHandler;
 };
 
 #ifdef __cplusplus
@@ -137,7 +122,7 @@ static int tolua_Cocos2d_ScrollView_new00(lua_State* tolua_S)
 #endif
     {
         {
-            ScrollView* tolua_ret = (ScrollView*)  Mtolua_new((ScrollView)());
+            LuaScrollView* tolua_ret = (LuaScrollView*)  Mtolua_new((ScrollView)());
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScrollView");
@@ -167,7 +152,7 @@ static int tolua_Cocos2d_ScrollView_new00_local(lua_State* tolua_S)
 #endif
     {
         {
-            ScrollView* tolua_ret = (ScrollView*)  Mtolua_new((ScrollView)());
+            LuaScrollView* tolua_ret = (LuaScrollView*)  Mtolua_new((ScrollView)());
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScrollView");
@@ -197,7 +182,7 @@ static int tolua_Cocos2d_ScrollView_delete00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
 #endif
@@ -231,13 +216,23 @@ static int tolua_Cocos2d_ScrollView_create00(lua_State* tolua_S)
         Size size = *((Size*)  tolua_tousertype(tolua_S,2,0));
         Node* container = ((Node*)  tolua_tousertype(tolua_S,3,NULL));
         {
-            ScrollView* tolua_ret = (ScrollView*)  ScrollView::create(size,container);
-            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScrollView");
+            LuaScrollView* tolua_ret = (LuaScrollView*)  new LuaScrollView();
+            if (NULL != tolua_ret && tolua_ret->initWithViewSize(size,container) )
+            {
+                tolua_ret->InitLuaScrollView();
+                tolua_ret->autorelease();
+                int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+                int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
+                toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScrollView");
+                return 1;
+            }
+            else
+            {
+                CC_SAFE_DELETE(tolua_ret);
+                return 0;
+            }
         }
     }
-    return 1;
 #ifndef TOLUA_RELEASE
 tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
@@ -258,14 +253,22 @@ static int tolua_Cocos2d_ScrollView_create01(lua_State* tolua_S)
         goto tolua_lerror;
     else
     {
+        LuaScrollView* tolua_ret = (LuaScrollView*)  new LuaScrollView();
+        if (NULL != tolua_ret && tolua_ret->init() )
         {
-            ScrollView* tolua_ret = (ScrollView*)  ScrollView::create();
+            tolua_ret->InitLuaScrollView();
+            tolua_ret->autorelease();
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScrollView");
+            return 1;
+        }
+        else
+        {
+            CC_SAFE_DELETE(tolua_ret);
+            return 0;
         }
     }
-    return 1;
 tolua_lerror:
     return tolua_Cocos2d_ScrollView_create00(tolua_S);
 }
@@ -286,7 +289,7 @@ static int tolua_Cocos2d_ScrollView_isClippingToBounds00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isClippingToBounds'", NULL);
 #endif
@@ -319,7 +322,7 @@ static int tolua_Cocos2d_ScrollView_setContainer00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
         Node* pContainer = ((Node*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setContainer'", NULL);
@@ -353,7 +356,7 @@ static int tolua_Cocos2d_ScrollView_setContentOffsetInDuration00(lua_State* tolu
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
         Point offset = *((Point*)  tolua_tousertype(tolua_S,2,0));
         float dt = ((float)  tolua_tonumber(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
@@ -388,7 +391,7 @@ static int tolua_Cocos2d_ScrollView_setZoomScaleInDuration00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
         float s = ((float)  tolua_tonumber(tolua_S,2,0));
         float dt = ((float)  tolua_tonumber(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
@@ -424,7 +427,7 @@ static int tolua_Cocos2d_ScrollView_addChild00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
         Node* child = ((Node*)  tolua_tousertype(tolua_S,2,0));
         int zOrder = ((int)  tolua_tonumber(tolua_S,3,0));
         int tag = ((int)  tolua_tonumber(tolua_S,4,0));
@@ -458,7 +461,7 @@ static int tolua_Cocos2d_ScrollView_addChild01(lua_State* tolua_S)
         goto tolua_lerror;
     else
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
         Node* child = ((Node*)  tolua_tousertype(tolua_S,2,0));
         int zOrder = ((int)  tolua_tonumber(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
@@ -487,7 +490,7 @@ static int tolua_Cocos2d_ScrollView_addChild02(lua_State* tolua_S)
         goto tolua_lerror;
     else
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
         Node* child = ((Node*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addChild'", NULL);
@@ -518,7 +521,7 @@ static int tolua_Cocos2d_ScrollView_ccTouchBegan00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
         Touch* pTouch = ((Touch*)  tolua_tousertype(tolua_S,2,0));
         Event* pEvent = ((Event*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
@@ -552,7 +555,7 @@ static int tolua_Cocos2d_ScrollView_getContainer00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getContainer'", NULL);
 #endif
@@ -588,7 +591,7 @@ static int tolua_Cocos2d_ScrollView_ccTouchEnded00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
         Touch* pTouch = ((Touch*)  tolua_tousertype(tolua_S,2,0));
         Event* pEvent = ((Event*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
@@ -621,7 +624,7 @@ static int tolua_Cocos2d_ScrollView_getDirection00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDirection'", NULL);
 #endif
@@ -653,7 +656,7 @@ static int tolua_Cocos2d_ScrollView_getZoomScale00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getZoomScale'", NULL);
 #endif
@@ -685,7 +688,7 @@ static int tolua_Cocos2d_ScrollView_updateInset00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'updateInset'", NULL);
 #endif
@@ -718,7 +721,7 @@ static int tolua_Cocos2d_ScrollView_initWithViewSize00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
         Size size = *((Size*)  tolua_tousertype(tolua_S,2,0));
         Node* container = ((Node*)  tolua_tousertype(tolua_S,3,NULL));
 #ifndef TOLUA_RELEASE
@@ -753,7 +756,7 @@ static int tolua_Cocos2d_ScrollView_pause00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
         Object* sender = ((Object*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'pause'", NULL);
@@ -786,7 +789,7 @@ static int tolua_Cocos2d_ScrollView_setDirection00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
         ScrollViewDirection eDirection = ((ScrollViewDirection) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDirection'", NULL);
@@ -819,7 +822,7 @@ static int tolua_Cocos2d_ScrollView_setBounceable00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
         bool bBounceable = ((bool)  tolua_toboolean(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setBounceable'", NULL);
@@ -853,7 +856,7 @@ static int tolua_Cocos2d_ScrollView_setContentOffset00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
         Point offset = *((Point*)  tolua_tousertype(tolua_S,2,0));
         bool animated = ((bool)  tolua_toboolean(tolua_S,3,false));
 #ifndef TOLUA_RELEASE
@@ -886,7 +889,7 @@ static int tolua_Cocos2d_ScrollView_isDragging00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isDragging'", NULL);
 #endif
@@ -918,7 +921,7 @@ static int tolua_Cocos2d_ScrollView_init00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'init'", NULL);
 #endif
@@ -950,7 +953,7 @@ static int tolua_Cocos2d_ScrollView_isBounceable00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isBounceable'", NULL);
 #endif
@@ -982,7 +985,7 @@ static int tolua_Cocos2d_ScrollView_getContentSize00(lua_State* tolua_S)
     else
 #endif
     {
-        const ScrollView* self = (const ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        const LuaScrollView* self = (const LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getContentSize'", NULL);
 #endif
@@ -1016,7 +1019,7 @@ static int tolua_Cocos2d_ScrollView_ccTouchMoved00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
         Touch* pTouch = ((Touch*)  tolua_tousertype(tolua_S,2,0));
         Event* pEvent = ((Event*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
@@ -1050,7 +1053,7 @@ static int tolua_Cocos2d_ScrollView_setTouchEnabled00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
         bool e = ((bool)  tolua_toboolean(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTouchEnabled'", NULL);
@@ -1082,7 +1085,7 @@ static int tolua_Cocos2d_ScrollView_getContentOffset00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getContentOffset'", NULL);
 #endif
@@ -1125,7 +1128,7 @@ static int tolua_Cocos2d_ScrollView_resume00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
         Object* sender = ((Object*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'resume'", NULL);
@@ -1158,7 +1161,7 @@ static int tolua_Cocos2d_ScrollView_setClippingToBounds00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
         bool bClippingToBounds = ((bool)  tolua_toboolean(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setClippingToBounds'", NULL);
@@ -1191,7 +1194,7 @@ static int tolua_Cocos2d_ScrollView_setViewSize00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
         Size size = *((Size*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setViewSize'", NULL);
@@ -1223,7 +1226,7 @@ static int tolua_Cocos2d_ScrollView_getViewSize00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getViewSize'", NULL);
 #endif
@@ -1265,7 +1268,7 @@ static int tolua_Cocos2d_ScrollView_maxContainerOffset00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'maxContainerOffset'", NULL);
 #endif
@@ -1308,7 +1311,7 @@ static int tolua_Cocos2d_ScrollView_setContentSize00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
         const Size* size = ((const Size*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setContentSize'", NULL);
@@ -1340,7 +1343,7 @@ static int tolua_Cocos2d_ScrollView_isTouchMoved00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isTouchMoved'", NULL);
 #endif
@@ -1373,7 +1376,7 @@ static int tolua_Cocos2d_ScrollView_isNodeVisible00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
         Node* node = ((Node*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isNodeVisible'", NULL);
@@ -1408,7 +1411,7 @@ static int tolua_Cocos2d_ScrollView_ccTouchCancelled00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
         Touch* pTouch = ((Touch*)  tolua_tousertype(tolua_S,2,0));
         Event* pEvent = ((Event*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
@@ -1441,7 +1444,7 @@ static int tolua_Cocos2d_ScrollView_minContainerOffset00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'minContainerOffset'", NULL);
 #endif
@@ -1483,7 +1486,7 @@ static int tolua_Cocos2d_ScrollView_registerWithTouchDispatcher00(lua_State* tol
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'registerWithTouchDispatcher'", NULL);
 #endif
@@ -1515,7 +1518,7 @@ static int tolua_Cocos2d_ScrollView_setZoomScale00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
         float s = ((float)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setZoomScale'", NULL);
@@ -1547,7 +1550,7 @@ static int tolua_Cocos2d_ScrollView_setZoomScale01(lua_State* tolua_S)
         goto tolua_lerror;
     else
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
         float s = ((float)  tolua_tonumber(tolua_S,2,0));
         bool animated = ((bool)  tolua_toboolean(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
@@ -1575,20 +1578,12 @@ static int tolua_Cocos2d_ScrollView_setDelegate00(lua_State* tolua_S)
         goto tolua_lerror;
     else
     {
-        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDelegate'", NULL);
 #endif
         {
-            LuaScrollViewDelegate* nativeDelegate = new LuaScrollViewDelegate();            
-            LuaScrollViewDelegate* oldDelegate    = (LuaScrollViewDelegate*)self->getDelegate();
-            if (NULL != oldDelegate)
-            {
-                oldDelegate->removeFromParent();
-            }
-            self->addChild(nativeDelegate);
-            self->setDelegate(nativeDelegate);
-            nativeDelegate->release();
+            self->setDelegate(self);
         }
 
     }
@@ -1614,10 +1609,10 @@ static int tolua_Cocos2d_ScrollView_registerScriptHandler00(lua_State* tolua_S)
     else
 #endif
     {
-        ScrollView* self    = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self    = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
         if (NULL != self ) {
             int nFunID = (  toluafix_ref_function(tolua_S,2,0));
-            ScrollView::ScrollViewScriptHandlerType handlerType = ((ScrollView::ScrollViewScriptHandlerType) (int)  tolua_tonumber(tolua_S,3,0));
+            LuaScrollView::ScrollViewScriptHandlerType handlerType = ((LuaScrollView::ScrollViewScriptHandlerType) (int)  tolua_tonumber(tolua_S,3,0));
             self->registerScriptHandler(nFunID, handlerType);
         }
     }
@@ -1645,9 +1640,9 @@ static int tolua_Cocos2d_ScrollView_unregisterScriptHandler00(lua_State* tolua_S
     else
 #endif
     {
-        ScrollView* self    = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+        LuaScrollView* self    = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
         if (NULL != self ) {
-            ScrollView::ScrollViewScriptHandlerType handlerType = ((ScrollView::ScrollViewScriptHandlerType) (int)  tolua_tonumber(tolua_S,2,0));
+            LuaScrollView::ScrollViewScriptHandlerType handlerType = ((LuaScrollView::ScrollViewScriptHandlerType) (int)  tolua_tonumber(tolua_S,2,0));
             self->unregisterScriptHandler(handlerType);
         }
     }
@@ -1671,8 +1666,8 @@ TOLUA_API int tolua_scroll_view_open(lua_State* tolua_S)
      tolua_constant(tolua_S,"kScrollViewDirectionHorizontal",kScrollViewDirectionHorizontal);
      tolua_constant(tolua_S,"kScrollViewDirectionVertical",kScrollViewDirectionVertical);
      tolua_constant(tolua_S,"kScrollViewDirectionBoth",kScrollViewDirectionBoth);
-     tolua_constant(tolua_S,"kScrollViewScriptScroll",ScrollView::kScrollViewScriptScroll);
-     tolua_constant(tolua_S,"kScrollViewScriptZoom",ScrollView::kScrollViewScriptZoom);
+     tolua_constant(tolua_S,"kScrollViewScriptScroll",LuaScrollView::kScrollViewScriptScroll);
+     tolua_constant(tolua_S,"kScrollViewScriptZoom",LuaScrollView::kScrollViewScriptZoom);
      #ifdef __cplusplus
      tolua_cclass(tolua_S,"CCScrollView","CCScrollView","CCLayer",tolua_collect_ScrollView);
      #else

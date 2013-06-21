@@ -1086,7 +1086,6 @@ local function ExtensionsMainLayer()
 	local s = CCDirector:sharedDirector():getWinSize()
 
 	local function CreateExtensionsTestScene(nPerformanceNo)
-        print(nPerformanceNo)
 	  	local pNewscene = CreateExtensionsTestTable[nPerformanceNo]()
   		return pNewscene
 	end
