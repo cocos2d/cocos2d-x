@@ -145,10 +145,10 @@ void TextureCache::addImageAsync(const char *path, Object *target, SEL_CallFuncO
         _asyncStructQueue = new queue<AsyncStruct*>();
         _imageInfoQueue = new queue<ImageInfo*>();        
 
-		// create a new thread to load images
+        // create a new thread to load images
         auto t = std::thread(&TextureCache::loadImage, this);
         t.detach();
-		// should retain here, because sub thread use invoke TextureCache::loadImage()
+        // should retain here, because sub thread use invoke TextureCache::loadImage()
         retain();
 
         _needQuit = false;
@@ -237,9 +237,9 @@ void TextureCache::loadImage()
         pImageInfo->imageType = imageType;
 
         // put the image info into the queue
-	    _imageInfoMutex.lock();
+        _imageInfoMutex.lock();
         _imageInfoQueue->push(pImageInfo);
-	    _imageInfoMutex.unlock();
+        _imageInfoMutex.unlock();
     }
     
 	if(_asyncStructQueue != nullptr)
