@@ -40,4 +40,6 @@ files
     "tolua_fix.h"
     "LuaOpengl.cpp"
     "LuaOpengl.h"
+    "LuaScrollView.cpp"
+    "LuaScrollView.h"
 }
