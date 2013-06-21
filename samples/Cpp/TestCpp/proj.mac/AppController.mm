@@ -52,7 +52,7 @@
         NSOpenGLPixelFormat *pixelFormat = [[[NSOpenGLPixelFormat alloc] initWithAttributes:attributes] autorelease];
 		
 		// allocate our GL view
-		// (isn't there already a shared EAGLView?)
+		// (isn't there already a shared CCEAGLView?)
 		glView = [[CCEAGLView alloc] initWithFrame:rect pixelFormat:pixelFormat];
 
 		// set window parameters

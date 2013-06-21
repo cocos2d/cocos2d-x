@@ -171,7 +171,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
      CVDisplayLinkSetOutputCallback(displayLink, &MyDisplayLinkCallback, self);
      
      // Set the display link for the current renderer
-     EAGLView *openGLView_ = (EAGLView*)[EAGLView sharedEGLView];
+     CCEAGLView *openGLView_ = (CCEAGLView*)[CCEAGLView sharedEGLView];
      CGLContextObj cglContext = (CGLContextObj)[[openGLView_ openGLContext] CGLContextObj];
      CGLPixelFormatObj cglPixelFormat = (CGLPixelFormatObj)[[openGLView_ pixelFormat] CGLPixelFormatObj];
      CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext(displayLink, cglContext, cglPixelFormat);
