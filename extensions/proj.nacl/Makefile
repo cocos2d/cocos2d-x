@@ -59,9 +59,38 @@ EXTENSIONS_SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../spine/Slot.cpp \
 ../spine/SlotData.cpp \
 ../spine/extension.cpp \
+../spine/spine-cocos2dx.cpp \
 ../spine/CCSkeleton.cpp \
 ../spine/CCSkeletonAnimation.cpp \
-../spine/spine-cocos2dx.cpp
+../CCArmature/CCArmature.cpp \
+../CCArmature/CCBone.cpp \
+../CCArmature/animation/CCArmatureAnimation.cpp \
+../CCArmature/animation/CCProcessBase.cpp \
+../CCArmature/animation/CCTween.cpp \
+../CCArmature/datas/CCDatas.cpp \
+../CCArmature/display/CCBatchNode.cpp \
+../CCArmature/display/CCDecorativeDisplay.cpp \
+../CCArmature/display/CCDisplayFactory.cpp \
+../CCArmature/display/CCDisplayManager.cpp \
+../CCArmature/display/CCShaderNode.cpp \
+../CCArmature/display/CCSkin.cpp \
+../CCArmature/external_tool/GLES-Render.cpp \
+../CCArmature/external_tool/Json/CSContentJsonDictionary.cpp \
+../CCArmature/external_tool/Json/lib_json/json_value.cpp \
+../CCArmature/external_tool/Json/lib_json/json_reader.cpp \
+../CCArmature/external_tool/Json/lib_json/json_writer.cpp \
+../CCArmature/physics/CCColliderDetector.cpp \
+../CCArmature/physics/CCPhysicsWorld.cpp \
+../CCArmature/utils/CCArmatureDataManager.cpp \
+../CCArmature/utils/CCDataReaderHelper.cpp \
+../CCArmature/utils/CCSpriteFrameCacheHelper.cpp \
+../CCArmature/utils/CCTransformHelp.cpp \
+../CCArmature/utils/CCTweenFunction.cpp \
+../CCArmature/utils/CCUtilMath.cpp \
+../Components/CCComAttribute.cpp \
+../Components/CCComAudio.cpp \
+../Components/CCComController.cpp \
+../Components/CCInputDelegate.cpp
 
 all:
 
