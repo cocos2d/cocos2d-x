@@ -62,8 +62,6 @@ ScrollView::ScrollView()
 ScrollView::~ScrollView()
 {
     _touches->release();
-    unregisterScriptHandler(kScrollViewScriptScroll);
-    unregisterScriptHandler(kScrollViewScriptZoom);
 }
 
 ScrollView* ScrollView::create(Size size, Node* container/* = NULL*/)
@@ -122,7 +120,6 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
         
         this->addChild(_container);
         _minScale = _maxScale = 1.0f;
-        _mapScriptHandler.clear();
         return true;
     }
     return false;
@@ -782,28 +779,4 @@ Rect ScrollView::getViewRect()
 
     return CCRectMake(screenPos.x, screenPos.y, _viewSize.width*scaleX, _viewSize.height*scaleY);
 }
-
-void ScrollView::registerScriptHandler(int nFunID,ScrollViewScriptHandlerType scriptHandlerType)
-{
-    this->unregisterScriptHandler(scriptHandlerType);
-    _mapScriptHandler[scriptHandlerType] = nFunID;
-}
-void ScrollView::unregisterScriptHandler(ScrollViewScriptHandlerType scriptHandlerType)
-{
-    std::map<int,int>::iterator Iter = _mapScriptHandler.find(scriptHandlerType);
-    
-    if (_mapScriptHandler.end() != Iter)
-    {
-        _mapScriptHandler.erase(Iter);
-    }
-}
-int  ScrollView::getScriptHandler(ScrollViewScriptHandlerType scriptHandlerType)
-{
-    std::map<int,int>::iterator Iter = _mapScriptHandler.find(scriptHandlerType);
-    
-    if (_mapScriptHandler.end() != Iter)
-        return Iter->second;
-    return -1;
-}
-
 NS_CC_EXT_END
