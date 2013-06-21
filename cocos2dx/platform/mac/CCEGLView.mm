@@ -110,7 +110,7 @@ void EGLView::setScissorInPoints(float x , float y , float w , float h)
 
 void EGLView::setMultiTouchMask(bool mask)
 {
-	//EAGLView *glView = [EAGLView sharedEGLView];
+	//CCEAGLView *glView = [CCEAGLView sharedEGLView];
 	//glView.multipleTouchEnabled = mask ? YES : NO;
 }
 

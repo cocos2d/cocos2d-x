@@ -232,7 +232,7 @@ EditBoxImplMac::EditBoxImplMac(EditBox* pEditText)
 , _anchorPoint(ccp(0.5f, 0.5f))
 {
     //! TODO: Retina on Mac
-    //! _inRetinaMode = [[EAGLView sharedEGLView] contentScaleFactor] == 2.0f ? true : false;
+    //! _inRetinaMode = [[CCEAGLView sharedEGLView] contentScaleFactor] == 2.0f ? true : false;
     _inRetinaMode = false;
 }
 
