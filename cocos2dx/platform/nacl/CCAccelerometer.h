@@ -40,7 +40,7 @@ public:
 
     void removeDelegate(std::function<void(Acceleration*)> function) {CC_UNUSED_PARAM(function);};
     void addDelegate(std::function<void(Acceleration*)> function) {CC_UNUSED_PARAM(function);};
-    void setDelegate(AccelerometerDelegate* pDelegate) {CC_UNUSED_PARAM(pDelegate);};
+    void setDelegate(std::function<void(Acceleration*)> function) {CC_UNUSED_PARAM(function);};
     void setAccelerometerInterval(float interval) {CC_UNUSED_PARAM(interval);};
 };
 
