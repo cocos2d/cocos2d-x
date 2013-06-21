@@ -153,12 +153,12 @@ public:
 
 private:
     void addImageAsyncCallBack(float dt);
-	void loadImage();
-	Image::EImageFormat computeImageFormatType(std::string& filename);
+    void loadImage();
+    Image::EImageFormat computeImageFormatType(std::string& filename);
 
 private:
-	struct AsyncStruct
-	{
+    struct AsyncStruct
+    {
     public:
         AsyncStruct(const std::string& fn, Object *t, SEL_CallFuncO s) : filename(fn), target(t), selector(s) {}
 
@@ -167,7 +167,7 @@ private:
         SEL_CallFuncO        selector;
     };
 
-	typedef struct _ImageInfo
+    typedef struct _ImageInfo
     {
         AsyncStruct *asyncStruct;
         Image        *image;
@@ -177,19 +177,19 @@ private:
     std::queue<AsyncStruct*>* _asyncStructQueue;
     std::queue<ImageInfo*>* _imageInfoQueue;
 
-	std::mutex _asyncStructQueueMutex;
-	std::mutex _imageInfoMutex;
+    std::mutex _asyncStructQueueMutex;
+    std::mutex _imageInfoMutex;
 
-	std::mutex _sleepMutex;
-	std::condition_variable _sleepCondition;
+    std::mutex _sleepMutex;
+    std::condition_variable _sleepCondition;
 
-	bool _needQuit;
+    bool _needQuit;
 
-	int _asyncRefCount;
+    int _asyncRefCount;
 
-	Dictionary* _textures;
+    Dictionary* _textures;
 
-	static TextureCache *_sharedTextureCache;
+    static TextureCache *_sharedTextureCache;
 };
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
