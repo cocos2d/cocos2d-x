@@ -32,8 +32,8 @@ NS_CC_BEGIN
 
 EGLView::EGLView()
 {
-    _screenSize.width = _designResolutionSize.width = [[EAGLView sharedEGLView] getWidth];
-    _screenSize.height = _designResolutionSize.height = [[EAGLView sharedEGLView] getHeight];
+    _screenSize.width = _designResolutionSize.width = [[CCEAGLView sharedEGLView] getWidth];
+    _screenSize.height = _designResolutionSize.height = [[CCEAGLView sharedEGLView] getHeight];
 }
 
 EGLView::~EGLView()
@@ -43,7 +43,7 @@ EGLView::~EGLView()
 
 bool EGLView::isOpenGLReady()
 {
-    return [EAGLView sharedEGLView] != NULL;
+    return [CCEAGLView sharedEGLView] != NULL;
 }
     
 bool EGLView::setContentScaleFactor(float contentScaleFactor)
@@ -51,34 +51,34 @@ bool EGLView::setContentScaleFactor(float contentScaleFactor)
     assert(_resolutionPolicy == kResolutionUnKnown); // cannot enable retina mode
 	
 	_scaleX = _scaleY = contentScaleFactor;
-	[[EAGLView sharedEGLView] setNeedsLayout];
+	[[CCEAGLView sharedEGLView] setNeedsLayout];
         
 	return true;
 }
 
 void EGLView::end()
 {
-    [DirectorCaller destroy];
+    [CCDirectorCaller destroy];
     
     // destroy EAGLView
-    [[EAGLView sharedEGLView] removeFromSuperview];
+    [[CCEAGLView sharedEGLView] removeFromSuperview];
 }
 
 
 void EGLView::swapBuffers()
 {
-    [[EAGLView sharedEGLView] swapBuffers];
+    [[CCEAGLView sharedEGLView] swapBuffers];
 }
 
 void EGLView::setIMEKeyboardState(bool bOpen)
 {
     if (bOpen)
     {
-        [[EAGLView sharedEGLView] becomeFirstResponder];
+        [[CCEAGLView sharedEGLView] becomeFirstResponder];
     }
     else
     {
-        [[EAGLView sharedEGLView] resignFirstResponder];
+        [[CCEAGLView sharedEGLView] resignFirstResponder];
     }
 }
 
