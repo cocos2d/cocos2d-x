@@ -238,7 +238,7 @@ static int tolua_Cocos2d_GLNode_glGetSupportedExtensions00(lua_State* tolua_S)
         
         int start_extension=0;
         LuaValueArray array;
-        for( int i=0; i < len+1; i++)
+        for (unsigned int i=0; i < len+1; i++)
         {
             if( copy[i]==' ' || copy[i]==',' || i == len )
             {
@@ -387,6 +387,7 @@ tolua_lerror:
 #endif //#ifndef TOLUA_DISABLE
 
 /* method: glBindFramebuffer of class  GLNode */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_GLNode_glBindFramebuffer00
 static int tolua_Cocos2d_GLNode_glBindFramebuffer00(lua_State* tolua_S)
 {
@@ -414,6 +415,7 @@ tolua_lerror:
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: glBindRenderbuffer of class  GLNode */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_GLNode_glBindRenderbuffer00
@@ -1579,7 +1581,7 @@ static int tolua_Cocos2d_GLNode_glDrawElements00(lua_State* tolua_S)
             {
                 return 0;
             }
-            for (int i = 1; i <= arg3; i++)
+            for (unsigned int i = 1; i <= arg3; i++)
             {
                 unit8Array[i-1] = (unsigned char)tolua_tofieldnumber(tolua_S, 6, i, 0);
             }
@@ -1593,7 +1595,7 @@ static int tolua_Cocos2d_GLNode_glDrawElements00(lua_State* tolua_S)
             {
                 return 0;
             }
-            for (int i = 1; i <= arg3; i++)
+            for (unsigned int i = 1; i <= arg3; i++)
             {
                 shortArray[i-1] = (unsigned short)tolua_tofieldnumber(tolua_S, 6, i, 0);
             }
@@ -1607,7 +1609,7 @@ static int tolua_Cocos2d_GLNode_glDrawElements00(lua_State* tolua_S)
             {
                 return 0;
             }
-            for (int i = 1; i <= arg3; i++)
+            for (unsigned int i = 1; i <= arg3; i++)
             {
                 intArray[i-1] = (unsigned int)tolua_tofieldnumber(tolua_S, 6, i, 0);
             }
@@ -3254,7 +3256,7 @@ static int tolua_Cocos2d_GLNode_glTexImage2D00(lua_State* tolua_S)
             return  0;
         }
         
-        for (int i = 1; i <= arg8; i++)
+        for (unsigned int i = 1; i <= arg8; i++)
         {
             unit8Array[i-1] = (unsigned char)tolua_tofieldnumber(tolua_S, 11, i, 0);
         }
@@ -3382,7 +3384,7 @@ static int tolua_Cocos2d_GLNode_glTexSubImage2D00(lua_State* tolua_S)
         {
             return  0;
         }
-        for (int i = 0; i < arg8; i++)
+        for (unsigned int i = 0; i < arg8; i++)
         {
             unit8Array[i] = 0;
         }
@@ -3391,7 +3393,7 @@ static int tolua_Cocos2d_GLNode_glTexSubImage2D00(lua_State* tolua_S)
         
         lua_newtable(tolua_S);                                         /* L: table */
         int index = 1;
-        for (int i = 0; i < arg8; i++)
+        for (unsigned int i = 0; i < arg8; i++)
         {
             lua_pushnumber(tolua_S, unit8Array[i]);                   /* L: unit8 value */
             lua_rawseti(tolua_S, -2, index);                          /* table[index] = value, L: table */
@@ -4510,7 +4512,7 @@ static int tolua_Cocos2d_GLNode_glVertexAttribPointer00(lua_State* tolua_S)
         unsigned int arg2 = (unsigned int)tolua_tonumber(tolua_S, 4, 0);
         bool arg3 = tolua_toboolean(tolua_S, 5, 0);
         int arg4 = (int)tolua_tonumber(tolua_S, 6, 0);
-        int arg5 = (int)tolua_tonumber(tolua_S, 7, 0);
+        //int arg5 = (int)tolua_tonumber(tolua_S, 7, 0);
         glVertexAttribPointer((GLuint)arg0 , (GLint)arg1 , (GLenum)arg2 , (GLboolean)arg3 , (GLsizei)arg4 , (GLvoid*)NULL);
     }
     return 0;

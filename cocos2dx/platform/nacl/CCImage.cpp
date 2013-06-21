@@ -57,7 +57,7 @@ NS_CC_BEGIN
 class BitmapDC
 {
 public:
-    BitmapDC() : _data(NULL), _cachedSize(0), _cachedFont(NULL)
+    BitmapDC() : _data(NULL), _cachedFont(NULL)
     {
         libError = FT_Init_FreeType(&_library);
         iInterval = szFont_kenning;
@@ -343,24 +343,24 @@ public:
             fontfile += ".ttf" ;
         }
 
-        iError = openFont(fontfile, fontSize, fontfileOrig);
+        iError = openFont(fontfile, fontfileOrig);
         // try with fonts prefixed
         if (iError && !startsWith(fontfile,"fonts/") )
         {
             fontfile = std::string("fonts/") + fontfile;
-            iError = openFont(fontfile, fontSize, fontfileOrig);
+            iError = openFont(fontfile, fontfileOrig);
         }
 
         if (iError)
         {
             // try lowercase version
             std::transform(fontfile.begin(), fontfile.end(), fontfile.begin(), ::tolower);
-            iError = openFont(fontfile, fontSize, fontfileOrig);
+            iError = openFont(fontfile, fontfileOrig);
             if (iError)
             {
                 // try default font
                 CCLOG("font missing (%s) falling back to default font", fontfileOrig.c_str());
-                iError = openFont("fonts/Marker Felt.ttf", fontSize, fontfileOrig);
+                iError = openFont("fonts/Marker Felt.ttf", fontfileOrig);
                 if (iError)
                     CCLOG("default font missing (fonts/Marker Felt.ttf)");
             }
@@ -423,10 +423,9 @@ private:
     /**
      * Attempt to open font file, and cache it if successful.
      */
-    int openFont(const std::string& fontName, uint fontSize, const std::string& fontNameOrig);
+    int openFont(const std::string& fontName, const std::string& fontNameOrig);
     std::string fileNameExtension(const std::string& pathName);
 
-    uint _cachedSize;
     FT_Face _cachedFont;
     std::string _cachedFontname;
     std::string _cachedFontnameOrig;
@@ -501,17 +500,14 @@ bool BitmapDC::startsWith(const std::string& str, const std::string& what)
     return result ;
 }
 
-int BitmapDC::openFont(const std::string& fontName, uint fontSize, const std::string& fontNameOrig)
+int BitmapDC::openFont(const std::string& fontName, const std::string& fontNameOrig)
 {
     // try to satisfy request based on currently cached font.
-    if (_cachedSize == fontSize)
-    {
-        if (fontNameOrig == _cachedFontnameOrig)
-          return 0;
+    if (fontNameOrig == _cachedFontnameOrig)
+      return 0;
 
-        if (fontName == _cachedFontname)
-          return 0;
-    }
+    if (fontName == _cachedFontname)
+      return 0;
 
     FT_Face face;
     int iError = FT_New_Face(_library, fontName.c_str(), 0, &face);
@@ -526,7 +522,6 @@ int BitmapDC::openFont(const std::string& fontName, uint fontSize, const std::st
     _cachedFontnameOrig = fontNameOrig;
     _cachedFontname = fontName;
     _cachedFont = face;
-    _cachedSize = fontSize;
     return 0;
 }
 
