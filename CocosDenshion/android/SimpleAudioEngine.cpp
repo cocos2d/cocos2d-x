@@ -80,7 +80,7 @@ SimpleAudioEngine::SimpleAudioEngine()
 	{
 		LOGD("i9100 model\nSwitch to OpenSLES");
 		s_bI9100 = true;
-	}
+    }
     
 	methodInfo.env->ReleaseStringUTFChars(jstr, deviceModel);
 	methodInfo.env->DeleteLocalRef(jstr);
@@ -198,11 +198,11 @@ unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop,
 	std::string fullPath = getFullPathWithoutAssetsPrefix(pszFilePath);
 	if (s_bI9100)
 	{
-		return SimpleAudioEngineOpenSL::sharedEngine()->playEffect(fullPath.c_str(), bLoop);
+        return SimpleAudioEngineOpenSL::sharedEngine()->playEffect(fullPath.c_str(), bLoop, pitch, pan, gain);
 	}
 	else 
 	{
-		return playEffectJNI(fullPath.c_str(), bLoop);
+        return playEffectJNI(fullPath.c_str(), bLoop, pitch, pan, gain);
 	}
 }
 
