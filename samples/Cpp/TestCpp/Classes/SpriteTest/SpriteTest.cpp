@@ -235,24 +235,17 @@ void Sprite1::addNewSpriteWithCoords(Point p)
         action = TintBy::create(2, 0, -255, -255);
     else 
         action = FadeOut::create(2);
-    ActionInterval* action_back = action->reverse();
-    ActionInterval* seq = Sequence::create( action, action_back, NULL );
+    auto action_back = action->reverse();
+    auto seq = Sequence::create( action, action_back, NULL );
     
     sprite->runAction( RepeatForever::create(seq) );
 }
 
 void Sprite1::ccTouchesEnded(Set* touches, Event* event)
 {
-    SetIterator it;
-    Touch* touch;
-
-    for( it = touches->begin(); it != touches->end(); it++) 
+    for (auto &item: *touches)
     {
-        touch = (Touch*)(*it);
-
-        if(!touch)
-            break;
-
+        Touch *touch = static_cast<Touch*>(item);
         Point location = touch->getLocation();
     
         addNewSpriteWithCoords( location );
@@ -309,24 +302,17 @@ void SpriteBatchNode1::addNewSpriteWithCoords(Point p)
     else 
         action = FadeOut::create(2);
 
-    ActionInterval* action_back = action->reverse();
-    ActionInterval* seq = Sequence::create(action, action_back, NULL);
+    auto action_back = action->reverse();
+    auto seq = Sequence::create(action, action_back, NULL);
     
     sprite->runAction( RepeatForever::create(seq));
 }
 
 void SpriteBatchNode1::ccTouchesEnded(Set* touches, Event* event)
 {
-    SetIterator it;
-    Touch* touch;
-
-    for( it = touches->begin(); it != touches->end(); it++) 
+    for (auto &item: *touches)
     {
-        touch = (Touch*)(*it);
-
-        if(!touch)
-            break;
-
+        Touch *touch = static_cast<Touch*>(item);
         Point location = touch->getLocation();
             
         addNewSpriteWithCoords( location );
@@ -368,21 +354,21 @@ SpriteColorOpacity::SpriteColorOpacity()
     sprite7->setPosition( ccp( (s.width/5)*3, (s.height/3)*2) );
     sprite8->setPosition( ccp( (s.width/5)*4, (s.height/3)*2) );
     
-    ActionInterval* action = FadeIn::create(2);
-    ActionInterval* action_back = action->reverse();
-    Action* fade = RepeatForever::create( Sequence::create( action, action_back, NULL) );
+    auto action = FadeIn::create(2);
+    auto action_back = action->reverse();
+    auto fade = RepeatForever::create( Sequence::create( action, action_back, NULL) );
     
-    ActionInterval* tintred = TintBy::create(2, 0, -255, -255);
-    ActionInterval* tintred_back = tintred->reverse();
-    Action* red = RepeatForever::create( Sequence::create( tintred, tintred_back, NULL) );
+    auto tintred = TintBy::create(2, 0, -255, -255);
+    auto tintred_back = tintred->reverse();
+    auto red = RepeatForever::create( Sequence::create( tintred, tintred_back, NULL) );
     
-    ActionInterval* tintgreen = TintBy::create(2, -255, 0, -255);
-    ActionInterval* tintgreen_back = tintgreen->reverse();
-    Action* green = RepeatForever::create( Sequence::create( tintgreen, tintgreen_back, NULL) );
+    auto tintgreen = TintBy::create(2, -255, 0, -255);
+    auto tintgreen_back = tintgreen->reverse();
+    auto green = RepeatForever::create( Sequence::create( tintgreen, tintgreen_back, NULL) );
     
-    ActionInterval* tintblue = TintBy::create(2, -255, -255, 0);
-    ActionInterval* tintblue_back = tintblue->reverse();
-    Action* blue = RepeatForever::create( Sequence::create( tintblue, tintblue_back, NULL) );
+    auto tintblue = TintBy::create(2, -255, -255, 0);
+    auto tintblue_back = tintblue->reverse();
+    auto blue = RepeatForever::create( Sequence::create( tintblue, tintblue_back, NULL) );
     
     sprite5->runAction(red);
     sprite6->runAction(green);
@@ -454,21 +440,21 @@ SpriteBatchNodeColorOpacity::SpriteBatchNodeColorOpacity()
     sprite7->setPosition( ccp( (s.width/5)*3, (s.height/3)*2) );
     sprite8->setPosition( ccp( (s.width/5)*4, (s.height/3)*2) );
 
-    ActionInterval* action = FadeIn::create(2);
-    ActionInterval* action_back = action->reverse();
-    Action* fade = RepeatForever::create( Sequence::create( action, action_back,NULL) );
+    auto action = FadeIn::create(2);
+    auto action_back = action->reverse();
+    auto fade = RepeatForever::create( Sequence::create( action, action_back,NULL) );
 
-    ActionInterval* tintred = TintBy::create(2, 0, -255, -255);
-    ActionInterval* tintred_back = tintred->reverse();
-    Action* red = RepeatForever::create( Sequence::create( tintred, tintred_back,NULL) );
+    auto tintred = TintBy::create(2, 0, -255, -255);
+    auto tintred_back = tintred->reverse();
+    auto red = RepeatForever::create( Sequence::create( tintred, tintred_back,NULL) );
 
-    ActionInterval* tintgreen = TintBy::create(2, -255, 0, -255);
-    ActionInterval* tintgreen_back = tintgreen->reverse();
-    Action* green = RepeatForever::create( Sequence::create( tintgreen, tintgreen_back,NULL) );
+    auto tintgreen = TintBy::create(2, -255, 0, -255);
+    auto tintgreen_back = tintgreen->reverse();
+    auto green = RepeatForever::create( Sequence::create( tintgreen, tintgreen_back,NULL) );
 
-    ActionInterval* tintblue = TintBy::create(2, -255, -255, 0);
-    ActionInterval* tintblue_back = tintblue->reverse();
-    Action* blue = RepeatForever::create( Sequence::create( tintblue, tintblue_back,NULL) );
+    auto tintblue = TintBy::create(2, -255, -255, 0);
+    auto tintblue_back = tintblue->reverse();
+    auto blue = RepeatForever::create( Sequence::create( tintblue, tintblue_back,NULL) );
     
     
     sprite5->runAction(red);
@@ -1084,9 +1070,8 @@ SpriteAnchorPoint::SpriteAnchorPoint()
         }
         
         point->setPosition( sprite->getPosition() );
-        
-        Action* copy = action->clone();
-        sprite->runAction(copy);
+
+        sprite->runAction( action->clone() );
         addChild(sprite, i);
     }        
 }
@@ -1137,9 +1122,8 @@ SpriteBatchNodeAnchorPoint::SpriteBatchNodeAnchorPoint()
         }
 
         point->setPosition( sprite->getPosition() );
-        
-        Action* copy = action->clone();
-        sprite->runAction(copy);
+
+        sprite->runAction( action->clone() );
         batch->addChild(sprite, i);
     }
 }
@@ -1194,8 +1178,8 @@ Sprite6::Sprite6()
         batch->addChild(sprite, i);
     }
     
-    batch->runAction( scale_forever);
-    batch->runAction( rotate_forever);
+    batch->runAction(scale_forever);
+    batch->runAction(rotate_forever);
 }
 
 std::string Sprite6::title()
@@ -1303,12 +1287,12 @@ SpriteAliased::SpriteAliased()
     sprite2->setPosition( ccp( s.width/2 + 100, s.height/2 ) );
     addChild(sprite2, 0, kTagSprite2);
     
-    ActionInterval* scale = ScaleBy::create(2, 5);
-    ActionInterval* scale_back = scale->reverse();
-    ActionInterval* seq = Sequence::create( scale, scale_back, NULL);
-    Action* repeat = RepeatForever::create(seq);
+    auto scale = ScaleBy::create(2, 5);
+    auto scale_back = scale->reverse();
+    auto seq = Sequence::create( scale, scale_back, NULL);
+    auto repeat = RepeatForever::create(seq);
     
-    Action* repeat2 = repeat->clone();
+    auto repeat2 = repeat->clone();
     
     sprite1->runAction(repeat);
     sprite2->runAction(repeat2);
@@ -1362,12 +1346,12 @@ SpriteBatchNodeAliased::SpriteBatchNodeAliased()
     sprite2->setPosition( ccp( s.width/2 + 100, s.height/2 ) );
     batch->addChild(sprite2, 0, kTagSprite2);
     
-    ActionInterval* scale = ScaleBy::create(2, 5);
-    ActionInterval* scale_back = scale->reverse();
-    ActionInterval* seq = Sequence::create( scale, scale_back, NULL);
-    Action* repeat = RepeatForever::create(seq);
+    auto scale = ScaleBy::create(2, 5);
+    auto scale_back = scale->reverse();
+    auto seq = Sequence::create( scale, scale_back, NULL);
+    auto repeat = RepeatForever::create(seq);
     
-    Action* repeat2 = repeat->clone();
+    auto repeat2 = repeat->clone();
     
     sprite1->runAction(repeat);
     sprite2->runAction(repeat2);
@@ -1454,8 +1438,8 @@ void SpriteNewTexture::addNewSprite()
     else 
         action = FadeOut::create(2);
 
-    ActionInterval* action_back = action->reverse();
-    ActionInterval* seq = Sequence::create(action, action_back, NULL);
+    auto action_back = action->reverse();
+    auto seq = Sequence::create(action, action_back, NULL);
     
     sprite->runAction( RepeatForever::create(seq) );
 }
@@ -1560,8 +1544,8 @@ void SpriteBatchNodeNewTexture::addNewSprite()
         action = TintBy::create(2, 0, -255, -255);
     else 
         action = FadeOut::create(2);
-    ActionInterval* action_back = action->reverse();
-    ActionInterval* seq = Sequence::create(action, action_back, NULL);
+    auto action_back = action->reverse();
+    auto seq = Sequence::create(action, action_back, NULL);
     
     sprite->runAction( RepeatForever::create(seq) );
 }
@@ -1621,7 +1605,7 @@ void SpriteFrameTest::onEnter()
         animFrames->addObject(frame);
     }
 
-    Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
+    auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
     _sprite1->runAction( RepeatForever::create( Animate::create(animation) ) );
 
     // to test issue #732, uncomment the following line
@@ -2002,9 +1986,9 @@ SpriteOffsetAnchorScale::SpriteOffsetAnchorScale()
         Animation *animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
         sprite->runAction(RepeatForever::create( Animate::create(animation) ));            
         
-        ActionInterval* scale = ScaleBy::create(2, 2);
-        ActionInterval* scale_back = scale->reverse();
-        ActionInterval* seq_scale = Sequence::create(scale, scale_back, NULL);
+        auto scale = ScaleBy::create(2, 2);
+        auto scale_back = scale->reverse();
+        auto seq_scale = Sequence::create(scale, scale_back, NULL);
         sprite->runAction(RepeatForever::create(seq_scale));
         
         addChild(sprite, 0);
@@ -2076,12 +2060,12 @@ SpriteBatchNodeOffsetAnchorScale::SpriteBatchNodeOffsetAnchorScale()
             animFrames->addObject(frame);
         }
 
-        Animation *animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
+        auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
         sprite->runAction(RepeatForever::create( Animate::create(animation) ) );
 
-        ActionInterval* scale = ScaleBy::create(2, 2);
-        ActionInterval* scale_back = scale->reverse();
-        ActionInterval* seq_scale = Sequence::create(scale, scale_back, NULL);
+        auto scale = ScaleBy::create(2, 2);
+        auto scale_back = scale->reverse();
+        auto seq_scale = Sequence::create(scale, scale_back, NULL);
         sprite->runAction(RepeatForever::create(seq_scale) );
         
         spritesheet->addChild(sprite, i);
@@ -2306,13 +2290,13 @@ SpriteBatchNodeChildren::SpriteBatchNodeChildren()
     sprite1->runAction(RepeatForever::create( Animate::create(animation) ) );
     // END NEW CODE
     
-    ActionInterval* action = MoveBy::create(2, ccp(200,0));
-    ActionInterval* action_back = action->reverse();
-    ActionInterval* action_rot = RotateBy::create(2, 360);
-    ActionInterval* action_s = ScaleBy::create(2, 2);
-    ActionInterval* action_s_back = action_s->reverse();
+    auto action = MoveBy::create(2, ccp(200,0));
+    auto action_back = action->reverse();
+    auto action_rot = RotateBy::create(2, 360);
+    auto action_s = ScaleBy::create(2, 2);
+    auto action_s_back = action_s->reverse();
     
-    ActionInterval* seq2 = action_rot->reverse();
+    auto seq2 = action_rot->reverse();
     sprite2->runAction( RepeatForever::create(seq2) );
     
     sprite1->runAction( RepeatForever::create(action_rot));
@@ -3090,9 +3074,9 @@ SpriteBatchNodeSkewNegativeScaleChildren::SpriteBatchNodeSkewNegativeScaleChildr
 
         // Skew
         SkewBy* skewX = SkewBy::create(2, 45, 0);
-        SkewBy* skewX_back = (SkewBy*)skewX->reverse();
+        SkewBy* skewX_back = skewX->reverse();
         SkewBy* skewY = SkewBy::create(2, 0, 45);
-        SkewBy* skewY_back = (SkewBy*)skewY->reverse();
+        SkewBy* skewY_back = skewY->reverse();
 
         if(i == 1)
         {
@@ -4086,7 +4070,7 @@ SpriteBatchNodeOffsetAnchorFlip::SpriteBatchNodeOffsetAnchorFlip()
         FlipY *flip = FlipY::create(true);
         FlipY *flip_back = FlipY::create(false);
         DelayTime *delay = DelayTime::create(1);
-        Sequence *seq = Sequence::create(delay, flip, delay->copyWithZone(NULL)->autorelease(), flip_back, NULL);
+        Sequence *seq = Sequence::create(delay, flip, delay->clone(), flip_back, NULL);
         sprite->runAction(RepeatForever::create(seq));
 
         spritebatch->addChild(sprite, i);

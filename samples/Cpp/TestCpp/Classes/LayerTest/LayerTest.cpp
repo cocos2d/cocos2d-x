@@ -613,8 +613,7 @@ void LayerGradientTest::ccTouchesMoved(Set * touches, Event *event)
 {
     Size s = Director::sharedDirector()->getWinSize();
 
-    SetIterator it = touches->begin();
-    Touch* touch = (Touch*)(*it);
+    Touch* touch = (Touch*) touches->anyObject();
     Point start = touch->getLocation();    
 
     Point diff = ccpSub( ccp(s.width/2,s.height/2), start);    
