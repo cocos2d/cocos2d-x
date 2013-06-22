@@ -276,11 +276,11 @@ void TextureMipMap::onEnter()
     addChild(img1);
     
     
-    EaseOut* scale1 = EaseOut::create(ScaleBy::create(4, 0.01f), 3);
-    ActionInterval* sc_back = scale1->reverse();
+    auto scale1 = EaseOut::create(ScaleBy::create(4, 0.01f), 3);
+    auto sc_back = scale1->reverse();
     
-    EaseOut* scale2 = scale1->clone();
-    ActionInterval* sc_back2 = scale2->reverse();
+    auto scale2 = scale1->clone();
+    auto sc_back2 = scale2->reverse();
 
     img0->runAction(RepeatForever::create(Sequence::create(scale1, sc_back, NULL)));
     img1->runAction(RepeatForever::create(Sequence::create(scale2, sc_back2, NULL)));
@@ -326,11 +326,11 @@ void TexturePVRMipMap::onEnter()
         img->setPosition(ccp( s.width/2.0f+100, s.height/2.0f));
         addChild(img);
 
-        EaseOut* scale1 = EaseOut::create(ScaleBy::create(4, 0.01f), 3);
-        ActionInterval* sc_back = scale1->reverse();
+        auto scale1 = EaseOut::create(ScaleBy::create(4, 0.01f), 3);
+        auto sc_back = scale1->reverse();
 
-        EaseOut* scale2 = scale1->clone();
-        ActionInterval* sc_back2 = scale2->reverse();
+        auto scale2 = scale1->clone();
+        auto sc_back2 = scale2->reverse();
         
         imgMipMap->runAction(RepeatForever::create(Sequence::create(scale1, sc_back, NULL)));
         img->runAction(RepeatForever::create(Sequence::create(scale2, sc_back2, NULL)));
@@ -369,11 +369,11 @@ void TexturePVRMipMap2::onEnter()
     img->setPosition(ccp( s.width/2.0f+100, s.height/2.0f));
     addChild(img);
     
-    EaseOut* scale1 = EaseOut::create(ScaleBy::create(4, 0.01f), 3);
-    ActionInterval* sc_back = scale1->reverse();
+    auto scale1 = EaseOut::create(ScaleBy::create(4, 0.01f), 3);
+    auto sc_back = scale1->reverse();
 
-    EaseOut* scale2 = scale1->clone();
-    ActionInterval* sc_back2 = scale2->reverse();
+    auto scale2 = scale1->clone();
+    auto sc_back2 = scale2->reverse();
     
     imgMipMap->runAction(RepeatForever::create(Sequence::create(scale1, sc_back, NULL)));
     img->runAction(RepeatForever::create(Sequence::create(scale2, sc_back2, NULL)));
@@ -1271,10 +1271,10 @@ void TextureAlias::onEnter()
     sprite2->getTexture()->setAliasTexParameters();
         
     // scale them to show
-    ScaleBy* sc = ScaleBy::create(3, 8.0f);
-    ScaleBy* sc_back = (ScaleBy*) (sc->reverse());
-    RepeatForever* scaleforever = RepeatForever::create(Sequence::create(sc, sc_back, NULL));
-    RepeatForever* scaleToo = scaleforever->clone();
+    auto sc = ScaleBy::create(3, 8.0f);
+    auto sc_back = sc->reverse();
+    auto scaleforever = RepeatForever::create(Sequence::create(sc, sc_back, NULL));
+    auto scaleToo = scaleforever->clone();
 
     sprite2->runAction(scaleforever);
     sprite->runAction(scaleToo);
@@ -1366,14 +1366,14 @@ void TexturePixelFormat::onEnter()
     // remove texture from texture manager    
     TextureCache::sharedTextureCache()->removeTexture(sprite6->getTexture());
 
-    FadeOut* fadeout = FadeOut::create(2);
-    FadeIn*  fadein  = FadeIn::create(2);
-    Sequence* seq = Sequence::create(DelayTime::create(2), fadeout, fadein, NULL);
-    RepeatForever* seq_4ever = RepeatForever::create(seq);
-    RepeatForever* seq_4ever2 = seq_4ever->clone();
-    RepeatForever* seq_4ever3 = seq_4ever->clone();
-    RepeatForever* seq_4ever4 = seq_4ever->clone();
-    RepeatForever* seq_4ever5 = seq_4ever->clone();
+    auto fadeout = FadeOut::create(2);
+    auto fadein  = FadeIn::create(2);
+    auto seq = Sequence::create(DelayTime::create(2), fadeout, fadein, NULL);
+    auto seq_4ever = RepeatForever::create(seq);
+    auto seq_4ever2 = seq_4ever->clone();
+    auto seq_4ever3 = seq_4ever->clone();
+    auto seq_4ever4 = seq_4ever->clone();
+    auto seq_4ever5 = seq_4ever->clone();
     
     sprite1->runAction(seq_4ever);
     sprite2->runAction(seq_4ever2);
@@ -1456,15 +1456,15 @@ void TextureAsync::onEnter()
 
     _imageOffset = 0;
 
-    Size size =Director::sharedDirector()->getWinSize();
+    Size size = Director::sharedDirector()->getWinSize();
 
     LabelTTF *label = LabelTTF::create("Loading...", "Marker Felt", 32);
     label->setPosition(ccp( size.width/2, size.height/2));
     addChild(label, 10);
 
-    ScaleBy* scale = ScaleBy::create(0.3f, 2);
-    ScaleBy* scale_back = (ScaleBy*)scale->reverse();
-    Sequence* seq = Sequence::create(scale, scale_back, NULL);
+    auto scale = ScaleBy::create(0.3f, 2);
+    auto scale_back = scale->reverse();
+    auto seq = Sequence::create(scale, scale_back, NULL);
     label->runAction(RepeatForever::create(seq));
 
     scheduleOnce(schedule_selector(TextureAsync::loadImages), 1.0f);
@@ -1547,11 +1547,11 @@ void TextureGlClamp::onEnter()
     ccTexParams params = {GL_LINEAR,GL_LINEAR,GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE};
     sprite->getTexture()->setTexParameters(&params);
 
-    RotateBy* rotate = RotateBy::create(4, 360);
+    auto rotate = RotateBy::create(4, 360);
     sprite->runAction(rotate);
-    ScaleBy* scale = ScaleBy::create(2, 0.04f);
-    ScaleBy* scaleBack = (ScaleBy*) (scale->reverse());
-    Sequence* seq = Sequence::create(scale, scaleBack, NULL);
+    auto scale = ScaleBy::create(2, 0.04f);
+    auto scaleBack = scale->reverse();
+    auto seq = Sequence::create(scale, scaleBack, NULL);
     sprite->runAction(seq);
 }
 
@@ -1584,11 +1584,11 @@ void TextureGlRepeat::onEnter()
     ccTexParams params = {GL_LINEAR,GL_LINEAR,GL_REPEAT,GL_REPEAT};
     sprite->getTexture()->setTexParameters(&params);
     
-    RotateBy* rotate = RotateBy::create(4, 360);
+    auto rotate = RotateBy::create(4, 360);
     sprite->runAction(rotate);
-    ScaleBy* scale = ScaleBy::create(2, 0.04f);
-    ScaleBy* scaleBack = (ScaleBy*) (scale->reverse());
-    Sequence* seq = Sequence::create(scale, scaleBack, NULL);
+    auto scale = ScaleBy::create(2, 0.04f);
+    auto scaleBack = scale->reverse();
+    auto seq = Sequence::create(scale, scaleBack, NULL);
     sprite->runAction(seq);
 }
 
@@ -1957,11 +1957,11 @@ std::string TexturePVRv3Premult::subtitle()
 
 void TexturePVRv3Premult::transformSprite(cocos2d::Sprite *sprite)
 {
-    FadeOut *fade = FadeOut::create(2);
-    DelayTime *dl = DelayTime::create(2);
-    FadeOut *fadein = (FadeOut*)fade->reverse();
-    Sequence *seq = Sequence::create(fade, fadein, dl, NULL);
-    RepeatForever *repeat = RepeatForever::create(seq);
+    auto fade = FadeOut::create(2);
+    auto dl = DelayTime::create(2);
+    auto fadein = fade->reverse();
+    auto seq = Sequence::create(fade, fadein, dl, NULL);
+    auto repeat = RepeatForever::create(seq);
     sprite->runAction(repeat);
 }
 
