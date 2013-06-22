@@ -1375,6 +1375,8 @@ protected:
     
     int _tag;                         ///< a tag. Can be any number you assigned just to identify this node
     
+    string _id;                    ///< an id. Can be any string you assigned just to identify this node
+    
     void *_userData;                  ///< A user assingned void pointer, Can be point to any cpp object
     Object *_userObject;            ///< A user assigned Object
     
