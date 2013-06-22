@@ -1371,6 +1371,22 @@ void ActionStacked::runActionsInSprite(Sprite *sprite)
 
 void ActionStacked::ccTouchesEnded(Set* touches, Event* event)
 {
+#ifdef CC_PLATFORM_TIZEN
+    SetIterator it;
+    Touch* touch;
+
+    for( it = touches->begin(); it != touches->end(); it++)
+    {
+        touch = (Touch*)(*it);
+
+        if(!touch)
+            break;
+
+        Point location = touch->getLocation();
+
+        addNewSpriteWithCoords( location );
+    }
+#else
     for ( auto &item: *touches ) {
 
         const Touch *touch = static_cast<Touch*>(item);
@@ -1378,6 +1394,7 @@ void ActionStacked::ccTouchesEnded(Set* touches, Event* event)
         Point location = touch->getLocation();
         addNewSpriteWithCoords( location );
     }
+#endif
 }
 
 std::string ActionStacked::title()
