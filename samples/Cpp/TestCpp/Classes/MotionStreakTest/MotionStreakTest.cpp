@@ -92,8 +92,7 @@ void MotionStreakTest2::onEnter()
 
 void MotionStreakTest2::ccTouchesMoved(Set* touches, Event* event)
 {
-    SetIterator it = touches->begin();
-    Touch* touch = (Touch*)(*it);
+    Touch* touch = (Touch*) touches->anyObject();
 
     Point touchLocation = touch->getLocation();    
     

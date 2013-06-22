@@ -72,7 +72,7 @@ bool PointArray::initWithCapacity(unsigned int capacity)
     return true;
 }
 
-Object* PointArray::copyWithZone(cocos2d::Zone *zone)
+PointArray* PointArray::clone() const
 {
     vector<Point*> *newArray = new vector<Point*>();
     vector<Point*>::iterator iter;
@@ -84,7 +84,8 @@ Object* PointArray::copyWithZone(cocos2d::Zone *zone)
     PointArray *points = new PointArray();
     points->initWithCapacity(10);
     points->setControlPoints(newArray);
-    
+
+    points->autorelease();
     return points;
 }
 
@@ -153,12 +154,12 @@ void PointArray::removeControlPointAtIndex(unsigned int index)
     delete pRemovedPoint;
 }
 
-unsigned int PointArray::count()
+unsigned int PointArray::count() const
 {
     return _controlPoints->size();
 }
 
-PointArray* PointArray::reverse()
+PointArray* PointArray::reverse() const
 {
     vector<Point*> *newArray = new vector<Point*>();
     vector<Point*>::reverse_iterator iter;
@@ -398,7 +399,7 @@ void CardinalSplineBy::updatePosition(cocos2d::Point &newPos)
 
 CardinalSplineBy* CardinalSplineBy::reverse() const
 {
-    PointArray *copyConfig = (PointArray*)_points->copy();
+    PointArray *copyConfig = _points->clone();
 	
 	//
 	// convert "absolutes" to "diffs"
@@ -417,7 +418,6 @@ CardinalSplineBy* CardinalSplineBy::reverse() const
 	// convert to "diffs" to "reverse absolute"
 	
     PointArray *pReverse = copyConfig->reverse();
-    copyConfig->release();
 	
 	// 1st element (which should be 0,0) should be here too
     
@@ -450,7 +450,7 @@ CardinalSplineBy* CardinalSplineBy::clone() const
 {
 	// no copy constructor
 	auto a = new CardinalSplineBy();
-	a->initWithDuration(this->_duration, (PointArray*)this->_points->copy()->autorelease(), this->_tension);
+	a->initWithDuration(this->_duration, this->_points->clone(), this->_tension);
 	a->autorelease();
 	return a;
 }
@@ -490,7 +490,7 @@ CatmullRomTo* CatmullRomTo::clone() const
 {
 	// no copy constructor
 	auto a = new CatmullRomTo();
-	a->initWithDuration(this->_duration, (PointArray*)this->_points->copy()->autorelease());
+	a->initWithDuration(this->_duration, this->_points->clone());
 	a->autorelease();
 	return a;
 }
@@ -537,14 +537,14 @@ CatmullRomBy* CatmullRomBy::clone() const
 {
 	// no copy constructor	
 	auto a = new CatmullRomBy();
-	a->initWithDuration(this->_duration, (PointArray*)this->_points->copy()->autorelease());
+	a->initWithDuration(this->_duration, this->_points->clone());
 	a->autorelease();
 	return a;
 }
 
 CatmullRomBy* CatmullRomBy::reverse() const
 {
-    PointArray *copyConfig = (PointArray*)_points->copy();
+    PointArray *copyConfig = _points->clone();
 
 	//
 	// convert "absolutes" to "diffs"
@@ -563,7 +563,6 @@ CatmullRomBy* CatmullRomBy::reverse() const
 	// convert to "diffs" to "reverse absolute"
 
     PointArray *pReverse = copyConfig->reverse();
-    copyConfig->release();
 
 	// 1st element (which should be 0,0) should be here too
 
