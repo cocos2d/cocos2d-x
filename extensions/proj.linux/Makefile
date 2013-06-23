@@ -55,6 +55,7 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../GUI/CCEditBox/CCEditBox.cpp \
 ../GUI/CCEditBox/CCEditBoxImplNone.cpp \
 ../network/HttpClient.cpp \
+../network/WebSocket.cpp \
 ../physics_nodes/CCPhysicsDebugNode.cpp \
 ../physics_nodes/CCPhysicsSprite.cpp \
 ../spine/Animation.cpp \
