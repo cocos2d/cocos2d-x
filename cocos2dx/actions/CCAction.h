@@ -46,7 +46,7 @@ enum {
 /** 
 @brief Base class for Action objects.
  */
-class CC_DLL Action : public Object//, public Clonable // XXX: Why not to make it be inherited from Clonable, please refer to https://groups.google.com/forum/?hl=en#!topic/cocos2d-js-devel/dGJYz9wIb4Q , but we need to find out the real reason why VS compiler generate linking errors.
+class CC_DLL Action : public Object, public Clonable
 {
 public:
     Action(void);
