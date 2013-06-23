@@ -423,7 +423,7 @@ MovementData *DataReaderHelper::decodeMovement(tinyxml2::XMLElement *movementXML
     }
     if( movementXML->QueryIntAttribute(A_LOOP, &(loop)) == tinyxml2::XML_SUCCESS)
     {
-        movementData->loop = (bool)loop;
+        movementData->loop = loop != 0;
     }
 
     const char *_easing = movementXML->Attribute(A_TWEEN_EASING);
