@@ -72,8 +72,7 @@ bool HelloWorld::init()
 		MenuItemImage *pCloseItem = MenuItemImage::create(
 			"CloseNormal.png",
 			"CloseSelected.png",
-			this,
-			menu_selector(HelloWorld::menuCloseCallback));
+            CC_CALLBACK_1(HelloWorld::menuCloseCallback,this));
 		CC_BREAK_IF(! pCloseItem);
         
 		// Place the menu item bottom-right conner.

@@ -7,11 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1A6B059A177828E700FFE52B /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A6B0595177828E700FFE52B /* libchipmunk.a */; };
-		1A6B059B177828E700FFE52B /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A6B0596177828E700FFE52B /* libcocos2dx.a */; };
-		1A6B059C177828E700FFE52B /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A6B0597177828E700FFE52B /* libCocosDenshion.a */; };
-		1A6B059D177828E700FFE52B /* libextensions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A6B0598177828E700FFE52B /* libextensions.a */; };
-		1A6B059E177828E700FFE52B /* libjsbindings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A6B0599177828E700FFE52B /* libjsbindings.a */; };
 		1A6B05B81778293600FFE52B /* jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A6B05A01778291500FFE52B /* jsb.js */; };
 		1A6B05B91778293600FFE52B /* jsb_chipmunk.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A6B05A11778291500FFE52B /* jsb_chipmunk.js */; };
 		1A6B05BA1778293600FFE52B /* jsb_chipmunk_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A6B05A21778291500FFE52B /* jsb_chipmunk_constants.js */; };
@@ -50,14 +45,14 @@
 		46A212B316D4A43400723F2B /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 46A212B116D4A41700723F2B /* main.js */; };
 		46A212BE16D4A4C000723F2B /* myApp.js in Resources */ = {isa = PBXBuildFile; fileRef = 46A212BC16D4A4B100723F2B /* myApp.js */; };
 		46A2146116D4B04A00723F2B /* Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A2146016D4B04A00723F2B /* Background.png */; };
+		A0F3A9B8177905F600CF0EB6 /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F3A9B3177905F600CF0EB6 /* libchipmunk.a */; };
+		A0F3A9B9177905F600CF0EB6 /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F3A9B4177905F600CF0EB6 /* libcocos2dx.a */; };
+		A0F3A9BA177905F600CF0EB6 /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F3A9B5177905F600CF0EB6 /* libCocosDenshion.a */; };
+		A0F3A9BB177905F600CF0EB6 /* libextensions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F3A9B6177905F600CF0EB6 /* libextensions.a */; };
+		A0F3A9BC177905F600CF0EB6 /* libjsbindings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F3A9B7177905F600CF0EB6 /* libjsbindings.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1A6B0595177828E700FFE52B /* libchipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libchipmunk.a; path = "../../../../external/chipmunk/proj.ios/build/Release-iphoneos/libchipmunk.a"; sourceTree = "<group>"; };
-		1A6B0596177828E700FFE52B /* libcocos2dx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcocos2dx.a; path = "../../../../cocos2dx/proj.ios/build/Release-iphoneos/libcocos2dx.a"; sourceTree = "<group>"; };
-		1A6B0597177828E700FFE52B /* libCocosDenshion.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCocosDenshion.a; path = "../../../../CocosDenshion/proj.ios/build/Release-iphoneos/libCocosDenshion.a"; sourceTree = "<group>"; };
-		1A6B0598177828E700FFE52B /* libextensions.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libextensions.a; path = "../../../../extensions/proj.ios/build/Release-iphoneos/libextensions.a"; sourceTree = "<group>"; };
-		1A6B0599177828E700FFE52B /* libjsbindings.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjsbindings.a; path = "../../../../scripting/javascript/bindings/proj.ios/build/Release-iphoneos/libjsbindings.a"; sourceTree = "<group>"; };
 		1A6B05A01778291500FFE52B /* jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb.js; sourceTree = "<group>"; };
 		1A6B05A11778291500FFE52B /* jsb_chipmunk.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_chipmunk.js; sourceTree = "<group>"; };
 		1A6B05A21778291500FFE52B /* jsb_chipmunk_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_chipmunk_constants.js; sourceTree = "<group>"; };
@@ -99,6 +94,11 @@
 		46A212B116D4A41700723F2B /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.js; sourceTree = "<group>"; };
 		46A212BC16D4A4B100723F2B /* myApp.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = myApp.js; sourceTree = "<group>"; };
 		46A2146016D4B04A00723F2B /* Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background.png; sourceTree = "<group>"; };
+		A0F3A9B3177905F600CF0EB6 /* libchipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libchipmunk.a; path = "../../../../external/chipmunk/proj.ios/build/Release-iphoneos/libchipmunk.a"; sourceTree = "<group>"; };
+		A0F3A9B4177905F600CF0EB6 /* libcocos2dx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcocos2dx.a; path = "../../../../../../Library/Developer/Xcode/DerivedData/cocos2d-ios-efgwnjcjlugbweaakhyrdehqseht/Build/Products/Debug-iphoneos/libcocos2dx.a"; sourceTree = "<group>"; };
+		A0F3A9B5177905F600CF0EB6 /* libCocosDenshion.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCocosDenshion.a; path = "../../../../../../Library/Developer/Xcode/DerivedData/cocos2d-ios-efgwnjcjlugbweaakhyrdehqseht/Build/Products/Debug-iphoneos/libCocosDenshion.a"; sourceTree = "<group>"; };
+		A0F3A9B6177905F600CF0EB6 /* libextensions.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libextensions.a; path = "../../../../extensions/proj.ios/build/Release-iphoneos/libextensions.a"; sourceTree = "<group>"; };
+		A0F3A9B7177905F600CF0EB6 /* libjsbindings.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjsbindings.a; path = "../../../../../../Library/Developer/Xcode/DerivedData/cocos2d-ios-efgwnjcjlugbweaakhyrdehqseht/Build/Products/Debug-iphoneos/libjsbindings.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,13 +106,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0F3A9B8177905F600CF0EB6 /* libchipmunk.a in Frameworks */,
+				A0F3A9B9177905F600CF0EB6 /* libcocos2dx.a in Frameworks */,
+				A0F3A9BA177905F600CF0EB6 /* libCocosDenshion.a in Frameworks */,
+				A0F3A9BB177905F600CF0EB6 /* libextensions.a in Frameworks */,
+				A0F3A9BC177905F600CF0EB6 /* libjsbindings.a in Frameworks */,
 				1A6B05CB17782B8700FFE52B /* libsqlite3.dylib in Frameworks */,
 				1A6B05C917782B8100FFE52B /* libz.dylib in Frameworks */,
-				1A6B059A177828E700FFE52B /* libchipmunk.a in Frameworks */,
-				1A6B059B177828E700FFE52B /* libcocos2dx.a in Frameworks */,
-				1A6B059C177828E700FFE52B /* libCocosDenshion.a in Frameworks */,
-				1A6B059D177828E700FFE52B /* libextensions.a in Frameworks */,
-				1A6B059E177828E700FFE52B /* libjsbindings.a in Frameworks */,
 				469A7A0216C0F242006FFCB2 /* QuartzCore.framework in Frameworks */,
 				469A7A0416C0F242006FFCB2 /* OpenGLES.framework in Frameworks */,
 				469A7A0616C0F242006FFCB2 /* OpenAL.framework in Frameworks */,
@@ -169,13 +169,13 @@
 		469A7A0016C0F242006FFCB2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A0F3A9B3177905F600CF0EB6 /* libchipmunk.a */,
+				A0F3A9B4177905F600CF0EB6 /* libcocos2dx.a */,
+				A0F3A9B5177905F600CF0EB6 /* libCocosDenshion.a */,
+				A0F3A9B6177905F600CF0EB6 /* libextensions.a */,
+				A0F3A9B7177905F600CF0EB6 /* libjsbindings.a */,
 				1A6B05CA17782B8700FFE52B /* libsqlite3.dylib */,
 				1A6B05C817782B8100FFE52B /* libz.dylib */,
-				1A6B0595177828E700FFE52B /* libchipmunk.a */,
-				1A6B0596177828E700FFE52B /* libcocos2dx.a */,
-				1A6B0597177828E700FFE52B /* libCocosDenshion.a */,
-				1A6B0598177828E700FFE52B /* libextensions.a */,
-				1A6B0599177828E700FFE52B /* libjsbindings.a */,
 				469A7A0116C0F242006FFCB2 /* QuartzCore.framework */,
 				469A7A0316C0F242006FFCB2 /* OpenGLES.framework */,
 				469A7A0516C0F242006FFCB2 /* OpenAL.framework */,
@@ -424,6 +424,7 @@
 					"\"$(SRCROOT)/../../../../CocosDenshion/third_party/blackberry/libraries/armle-v7\"",
 					"\"$(SRCROOT)/../../../../CocosDenshion/third_party/blackberry/libraries/x86\"",
 					"\"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/lib\"",
+					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/cocos2d-ios-efgwnjcjlugbweaakhyrdehqseht/Build/Products/Debug-iphoneos\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
@@ -470,6 +471,7 @@
 					"\"$(SRCROOT)/../../../../CocosDenshion/third_party/blackberry/libraries/armle-v7\"",
 					"\"$(SRCROOT)/../../../../CocosDenshion/third_party/blackberry/libraries/x86\"",
 					"\"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/lib\"",
+					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/cocos2d-ios-efgwnjcjlugbweaakhyrdehqseht/Build/Products/Debug-iphoneos\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
