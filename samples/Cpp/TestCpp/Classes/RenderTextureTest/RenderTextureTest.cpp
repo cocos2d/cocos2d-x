@@ -363,11 +363,10 @@ string RenderTextureZbuffer::subtitle()
 
 void RenderTextureZbuffer::ccTouchesBegan(cocos2d::Set *touches, cocos2d::Event *event)
 {
-    SetIterator iter;
-    Touch *touch;
-    for (iter = touches->begin(); iter != touches->end(); ++iter)
+
+    for (auto &item: *touches)
     {
-        touch = (Touch *)(*iter);
+        Touch *touch = static_cast<Touch*>(item);
         Point location = touch->getLocation();
 
         sp1->setPosition(location);
@@ -384,11 +383,9 @@ void RenderTextureZbuffer::ccTouchesBegan(cocos2d::Set *touches, cocos2d::Event 
 
 void RenderTextureZbuffer::ccTouchesMoved(Set* touches, Event* event)
 {
-    SetIterator iter;
-    Touch *touch;
-    for (iter = touches->begin(); iter != touches->end(); ++iter)
+    for (auto &item: *touches)
     {
-        touch = (Touch *)(*iter);
+        Touch *touch = static_cast<Touch*>(item);
         Point location = touch->getLocation();
 
         sp1->setPosition(location);
@@ -675,10 +672,10 @@ SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::addNewSpriteWithCo
 
 void SpriteRenderTextureBug::ccTouchesEnded(Set* touches, Event* event)
 {
-    SetIterator iter = touches->begin();
-    for(; iter != touches->end(); ++iter)
+    for (auto &item: *touches)
     {
-        Point location = ((Touch*)(*iter))->getLocation();
+        Touch *touch = static_cast<Touch*>(item);
+        Point location = touch->getLocation();
         addNewSpriteWithCoords(location);
     }
 }

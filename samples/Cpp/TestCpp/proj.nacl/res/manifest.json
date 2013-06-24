@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Cocos2dx Test App",
-  "version": "2.1",
+  "version": "2.1.1",
   "app": {
     "background": {
       "scripts": ["main.js"]

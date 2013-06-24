@@ -250,6 +250,7 @@
 		1A9FE97B17277E9D00B21905 /* Slot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9FE96417277E9D00B21905 /* Slot.cpp */; };
 		1A9FE97C17277E9D00B21905 /* SlotData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9FE96617277E9D00B21905 /* SlotData.cpp */; };
 		1A9FE97D17277E9D00B21905 /* spine-cocos2dx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9FE96817277E9D00B21905 /* spine-cocos2dx.cpp */; };
+		1AA3E47E177422C1008A36C1 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1AA3E47D177422C1008A36C1 /* components */; };
 		1AB2D71716B649C200D72C48 /* FileUtilsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB2D71516B649C200D72C48 /* FileUtilsTest.cpp */; };
 		1AB2D71B16B64DC600D72C48 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 1AB2D71A16B64DC600D72C48 /* Misc */; };
 		1ACB3244164770DE00914215 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACB3243164770DE00914215 /* libcurl.a */; };
@@ -905,6 +906,7 @@
 		1A9FE96817277E9D00B21905 /* spine-cocos2dx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "spine-cocos2dx.cpp"; sourceTree = "<group>"; };
 		1A9FE96917277E9D00B21905 /* spine-cocos2dx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "spine-cocos2dx.h"; sourceTree = "<group>"; };
 		1A9FE96A17277E9D00B21905 /* spine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spine.h; sourceTree = "<group>"; };
+		1AA3E47D177422C1008A36C1 /* components */ = {isa = PBXFileReference; lastKnownFileType = folder; path = components; sourceTree = "<group>"; };
 		1AB2D71516B649C200D72C48 /* FileUtilsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileUtilsTest.cpp; sourceTree = "<group>"; };
 		1AB2D71616B649C200D72C48 /* FileUtilsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileUtilsTest.h; sourceTree = "<group>"; };
 		1AB2D71A16B64DC600D72C48 /* Misc */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Misc; sourceTree = "<group>"; };
@@ -2714,37 +2716,38 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				465E216D176AEE9D001D853C /* armature */,
-				46DBCD23176AC3B0006FE29A /* configs */,
 				789B560C15197BE00038CD1E /* animations */,
-				15FC61A716095C2B00AE81F8 /* ccb */,
-				78ED2F84153D5BC500330E29 /* extensions */,
-				789B560E15197BF30038CD1E /* fonts */,
-				15BA623015E4EAC3002BC3A5 /* hd */,
-				789B561015197BFB0038CD1E /* Images */,
-				15D2551915E5FD6B000D5E89 /* ipad */,
-				15BA623415E4EAD7002BC3A5 /* ipadhd */,
-				1AB2D71A16B64DC600D72C48 /* Misc */,
-				78CAE768156F8124002A7A68 /* Particles */,
-				1552794F157C64F9007CC855 /* Shaders */,
-				1A144285172788660096438B /* spine */,
-				789B561215197C040038CD1E /* TileMaps */,
-				789B561315197C040038CD1E /* zwoptex */,
-				78C7DEBD14EBA5060085D0C2 /* music.mid */,
+				465E216D176AEE9D001D853C /* armature */,
 				78C7DDBE14EBA5050085D0C2 /* background.mp3 */,
 				78C7DDBF14EBA5050085D0C2 /* background.ogg */,
-				78C7DDC214EBA5050085D0C2 /* effect2.ogg */,
+				15FC61A716095C2B00AE81F8 /* ccb */,
+				1AA3E47D177422C1008A36C1 /* components */,
+				46DBCD23176AC3B0006FE29A /* configs */,
 				D41A0AD0160F154A004552AE /* Default-568h@2x.png */,
 				7855E0DF153FEF240059DD9A /* Default.png */,
 				D446FD6D16102124000ADA7B /* Default@2x.png */,
+				78C7DDC014EBA5050085D0C2 /* effect1.raw */,
+				78C7DDC114EBA5050085D0C2 /* effect1.wav */,
+				78C7DDC214EBA5050085D0C2 /* effect2.ogg */,
+				78ED2F84153D5BC500330E29 /* extensions */,
+				789B560E15197BF30038CD1E /* fonts */,
 				15384F131611A44F0021DC07 /* fps_images.png */,
+				15BA623015E4EAC3002BC3A5 /* hd */,
 				78C7DDEB14EBA5050085D0C2 /* Hello.png */,
 				D4EF949B15BD2D8E00D803EB /* Icon-114.png */,
 				D4EF949F15BD2D9800D803EB /* Icon-144.png */,
 				D4EF949915BD2D8B00D803EB /* Icon-57.png */,
 				D4EF949D15BD2D9600D803EB /* Icon-72.png */,
-				78C7DDC014EBA5050085D0C2 /* effect1.raw */,
-				78C7DDC114EBA5050085D0C2 /* effect1.wav */,
+				789B561015197BFB0038CD1E /* Images */,
+				15D2551915E5FD6B000D5E89 /* ipad */,
+				15BA623415E4EAD7002BC3A5 /* ipadhd */,
+				1AB2D71A16B64DC600D72C48 /* Misc */,
+				78C7DEBD14EBA5060085D0C2 /* music.mid */,
+				78CAE768156F8124002A7A68 /* Particles */,
+				1552794F157C64F9007CC855 /* Shaders */,
+				1A144285172788660096438B /* spine */,
+				789B561215197C040038CD1E /* TileMaps */,
+				789B561315197C040038CD1E /* zwoptex */,
 			);
 			name = Resources;
 			path = ../Resources;
@@ -2877,6 +2880,7 @@
 				465E2091176ABD8D001D853C /* sconscript in Resources */,
 				465E216E176AEE9D001D853C /* armature in Resources */,
 				A0B7466D17712A2A0021A776 /* configs in Resources */,
+				1AA3E47E177422C1008A36C1 /* components in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

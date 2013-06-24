@@ -307,8 +307,6 @@ protected:
     {
         SEL_CallFunc    _callFunc;
         SEL_CallFuncN    _callFuncN;
-        SEL_CallFuncND    _callFuncND;
-        SEL_CallFuncO   _callFuncO;
     };
     
     /** function that will be called */
@@ -322,112 +320,47 @@ N means Node
 class CC_DLL CallFuncN : public CallFunc, public TypeInfo
 {
 public:
-    CallFuncN(){}
+    CallFuncN():_functionN(nullptr){}
     virtual ~CallFuncN(){}
     virtual long getClassTypeInfo() {
 		static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CallFunc).name());
 		return id;
     }
 
+    /** creates the action with the callback of type std::function<void()>.
+	 This is the preferred way to create the callback.
+	 */
+    static CallFuncN * create(const std::function<void(Node*)>& func);
+
     /** creates the action with the callback 
 
     typedef void (Object::*SEL_CallFuncN)(Node*);
+     @deprecated Use the std::function API instead.
     */
     static CallFuncN * create(Object* pSelectorTarget, SEL_CallFuncN selector);
 
 	/** creates the action with the handler script function */
 	static CallFuncN * create(int nHandler);
 
+
+    /** initializes the action with the std::function<void(Node*)>
+	 */
+    virtual bool initWithFunction(const std::function<void(Node*)>& func);
+
     /** initializes the action with the callback 
 
     typedef void (Object::*SEL_CallFuncN)(Node*);
+    @deprecated Use the std::function API instead.
     */
     virtual bool initWithTarget(Object* pSelectorTarget, SEL_CallFuncN selector);
     // super methods
 	virtual CallFuncN* clone() const;
     virtual Object* copyWithZone(Zone *pZone);
     virtual void execute();
-};
-
-
-/** 
-@brief Calls a 'callback' with the node as the first argument and the 2nd argument is data
-* ND means: Node and Data. Data is void *, so it could be anything.
-*/
-class CC_DLL CallFuncND : public CallFuncN
-{
-public:
-    virtual long getClassTypeInfo() {
-        static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CallFunc).name());
-		return id;
-    }
-
-    /** creates the action with the callback and the data to pass as an argument */
-    static CallFuncND * create(Object* pSelectorTarget, SEL_CallFuncND selector, void* d);
-
-    /** initializes the action with the callback and the data to pass as an argument */
-    virtual bool initWithTarget(Object* pSelectorTarget, SEL_CallFuncND selector, void* d);
-    // super methods
-	virtual CallFuncND* clone() const;
-    virtual Object* copyWithZone(Zone *pZone);
-    virtual void execute();
 
 protected:
-    void            *_data;
-};
-
-
-/**
-@brief Calls a 'callback' with an object as the first argument.
-O means Object.
-@since v0.99.5
-*/
-
-class CC_DLL CallFuncO : public CallFunc, public TypeInfo
-{
-public:
-    CallFuncO();
-    virtual ~CallFuncO();
-
-    virtual long getClassTypeInfo() {
-	    static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CallFunc).name());
-		return id;
-    }
-
-    /** creates the action with the callback 
-
-    typedef void (Object::*SEL_CallFuncO)(Object*);
-    */
-    static CallFuncO * create(Object* pSelectorTarget, SEL_CallFuncO selector, Object* pObject);
-
-    /** initializes the action with the callback 
-
-    typedef void (Object::*SEL_CallFuncO)(Object*);
-    */
-    virtual bool initWithTarget(Object* pSelectorTarget, SEL_CallFuncO selector, Object* pObject);
-    // super methods
-	virtual CallFuncO* clone() const;
-    virtual Object* copyWithZone(Zone *pZone);
-    virtual void execute();
-
-    inline Object* getObject()
-    {
-        return _object;
-    }
-
-    inline void setObject(Object* pObj)
-    {
-        if (pObj != _object)
-        {
-            CC_SAFE_RELEASE(_object);
-            _object = pObj;
-            CC_SAFE_RETAIN(_object);
-        }
-    }
-
-protected:
-    /** object to be passed as argument */
-    Object* _object;
+    /** function that will be called with the "sender" as the 1st argument */
+    std::function<void(Node*)> _functionN;
 };
 
 // end of actions group

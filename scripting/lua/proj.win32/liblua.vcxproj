@@ -19,7 +19,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
@@ -64,8 +63,8 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\cocos2dx;$(ProjectDir)..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;$(ProjectDir)..\..\..\extensions\network;$(ProjectDir)..\..\..\external\libwebsockets\win32\include;$(ProjectDir)..\tolua;$(ProjectDir)..\luajit\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -77,6 +76,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <DisableSpecificWarnings>4996;4800;4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Lib>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -107,6 +107,7 @@ xcopy /Y /Q "$(ProjectDir)..\luajit\win32\*.*" "$(OutDir)"</Command>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4996;4800;4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Lib>
       <AdditionalLibraryDirectories>libcocos2d.lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -128,6 +129,8 @@ xcopy /Y /Q "$(ProjectDir)..\luajit\win32\*.*" "$(OutDir)"</Command>
     <ClCompile Include="..\cocos2dx_support\CCLuaValue.cpp" />
     <ClCompile Include="..\cocos2dx_support\Cocos2dxLuaLoader.cpp" />
     <ClCompile Include="..\cocos2dx_support\LuaCocos2d.cpp" />
+    <ClCompile Include="..\cocos2dx_support\LuaOpengl.cpp" />
+    <ClCompile Include="..\cocos2dx_support\LuaScrollView.cpp" />
     <ClCompile Include="..\cocos2dx_support\Lua_extensions_CCB.cpp" />
     <ClCompile Include="..\cocos2dx_support\Lua_web_socket.cpp" />
     <ClCompile Include="..\cocos2dx_support\tolua_fix.c" />
@@ -145,6 +148,8 @@ xcopy /Y /Q "$(ProjectDir)..\luajit\win32\*.*" "$(OutDir)"</Command>
     <ClInclude Include="..\cocos2dx_support\CCLuaValue.h" />
     <ClInclude Include="..\cocos2dx_support\Cocos2dxLuaLoader.h" />
     <ClInclude Include="..\cocos2dx_support\LuaCocos2d.h" />
+    <ClInclude Include="..\cocos2dx_support\LuaOpengl.h" />
+    <ClInclude Include="..\cocos2dx_support\LuaScrollView.h" />
     <ClInclude Include="..\cocos2dx_support\Lua_extensions_CCB.h" />
     <ClInclude Include="..\cocos2dx_support\Lua_web_socket.h" />
     <ClInclude Include="..\cocos2dx_support\tolua_fix.h" />
