@@ -1063,11 +1063,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "extensions-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
 					"COCOS2D_DEBUG=1",
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 					CC_TARGET_OS_IPHONE,
-					"$(inherited)",
 				);
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../cocos2dx\"",
@@ -1080,14 +1078,17 @@
 					"\"$(SRCROOT)/../../external\"",
 					"\"$(SRCROOT)/../../extensions\"",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../external/libwebsockets/ios/lib\"",
 					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/ios/libraries\"",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1114,14 +1115,17 @@
 					"\"$(SRCROOT)/../../external\"",
 					"\"$(SRCROOT)/../../extensions\"",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../external/libwebsockets/ios/lib\"",
 					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/ios/libraries\"",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
