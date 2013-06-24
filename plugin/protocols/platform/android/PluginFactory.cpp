@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "ProtocolAnalytics.h"
 #include "ProtocolIAP.h"
 #include "ProtocolSocial.h"
+#include "ProtocolUser.h"
 
 namespace cocos2d { namespace plugin {
 
@@ -36,6 +37,7 @@ enum {
 	kPluginAnalytics,
 	kPluginIAP,
 	kPluginSocial,
+	kPluginUser,
 };
 
 #define ANDROID_PLUGIN_PACKAGE_PREFIX			"org/cocos2dx/plugin/"
@@ -129,6 +131,9 @@ PluginProtocol* PluginFactory::createPlugin(const char* name)
 		case kPluginSocial:
 			pRet = new ProtocolSocial();
 			break;
+		case kPluginUser:
+		    pRet = new ProtocolUser();
+		    break;
 		default:
 			break;
 		}
