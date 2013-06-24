@@ -162,11 +162,9 @@ unsigned char* FileUtilsAndroid::doGetFileData(const char* pszFileName, const ch
     {
         if (forAsync)
         {
-            // pData = s_pZipFile->getFileData(fullPath.c_str(), pSize, s_pZipFile->_dataThread);
-            abort();
+            // Nothing to do when using the Android assetmanager APIs???
         }
-        else
-        {
+
         string fullPath = fullPathForFilename(pszFileName);
 
         const char* relativepath = fullPath.c_str();
@@ -200,7 +198,6 @@ unsigned char* FileUtilsAndroid::doGetFileData(const char* pszFileName, const ch
         }
 
         AAsset_close(asset);
-        }
     }
     else
     {
