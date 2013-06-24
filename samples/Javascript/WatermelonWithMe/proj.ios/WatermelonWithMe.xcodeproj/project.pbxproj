@@ -7,29 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		159004B2166DE190006BF838 /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = 159004B1166DE18F006BF838 /* Icon-57.png */; };
-		159004B4166DE19C006BF838 /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = 159004B3166DE19C006BF838 /* Icon-114.png */; };
-		159004B6166DE1A8006BF838 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 159004B5166DE1A8006BF838 /* Icon-72.png */; };
-		159004B8166DE1AF006BF838 /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = 159004B7166DE1AF006BF838 /* Icon-144.png */; };
-		1A6E469E177813130055514D /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A6E4698177813130055514D /* libchipmunk.a */; };
-		1A6E469F177813130055514D /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A6E4699177813130055514D /* libcocos2dx.a */; };
-		1A6E46A0177813130055514D /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A6E469A177813130055514D /* libCocosDenshion.a */; };
-		1A6E46A1177813130055514D /* libextensions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A6E469B177813130055514D /* libextensions.a */; };
-		1A6E46A2177813130055514D /* libjsbindings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A6E469C177813130055514D /* libjsbindings.a */; };
-		1A6E46BC177814880055514D /* jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A6E46A41778147D0055514D /* jsb.js */; };
-		1A6E46BD177814880055514D /* jsb_chipmunk.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A6E46A51778147D0055514D /* jsb_chipmunk.js */; };
-		1A6E46BE177814880055514D /* jsb_chipmunk_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A6E46A61778147D0055514D /* jsb_chipmunk_constants.js */; };
-		1A6E46BF177814880055514D /* jsb_cocos2d.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A6E46A71778147D0055514D /* jsb_cocos2d.js */; };
-		1A6E46C0177814880055514D /* jsb_cocos2d_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A6E46A81778147D0055514D /* jsb_cocos2d_constants.js */; };
-		1A6E46C1177814880055514D /* jsb_cocos2d_extension.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A6E46A91778147D0055514D /* jsb_cocos2d_extension.js */; };
-		1A6E46C2177814880055514D /* jsb_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A6E46AA1778147D0055514D /* jsb_cocosbuilder.js */; };
-		1A6E46C3177814880055514D /* jsb_debugger.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A6E46AB1778147D0055514D /* jsb_debugger.js */; };
-		1A6E46C4177814880055514D /* jsb_opengl.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A6E46AC1778147D0055514D /* jsb_opengl.js */; };
-		1A6E46C5177814880055514D /* jsb_opengl_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A6E46AD1778147D0055514D /* jsb_opengl_constants.js */; };
-		1A6E46C6177814880055514D /* jsb_sys.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A6E46AE1778147D0055514D /* jsb_sys.js */; };
-		1A6E46C7177814880055514D /* main.debug.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A6E46AF1778147D0055514D /* main.debug.js */; };
-		1A82F5D1169AC71F00C4B13A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A82F5D0169AC71F00C4B13A /* libsqlite3.dylib */; };
-		1AD74D8316F80FE200F7F1B4 /* Published files iOS in Resources */ = {isa = PBXBuildFile; fileRef = 1AD74D8216F80FE200F7F1B4 /* Published files iOS */; };
+		159004CC166DE338006BF838 /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = 159004CB166DE338006BF838 /* Icon-57.png */; };
+		159004CE166DE33E006BF838 /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = 159004CD166DE33E006BF838 /* Icon-114.png */; };
+		159004D0166DE346006BF838 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 159004CF166DE346006BF838 /* Icon-72.png */; };
+		159004D2166DE34B006BF838 /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = 159004D1166DE34B006BF838 /* Icon-144.png */; };
+		15A3D7881682F456002FB0C5 /* res in Resources */ = {isa = PBXBuildFile; fileRef = 15A3D7871682F456002FB0C5 /* res */; };
+		15A3D7981682F4A3002FB0C5 /* boot-jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = 15A3D7891682F470002FB0C5 /* boot-jsb.js */; };
+		15A3D7991682F4A3002FB0C5 /* levels.js in Resources */ = {isa = PBXBuildFile; fileRef = 15A3D78A1682F470002FB0C5 /* levels.js */; };
+		15A3D79A1682F4A3002FB0C5 /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 15A3D78B1682F470002FB0C5 /* main.js */; };
+		15A3D79B1682F4A3002FB0C5 /* resources-jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = 15A3D78C1682F470002FB0C5 /* resources-jsb.js */; };
+		15A3D79C1682F4A3002FB0C5 /* watermelon_with_me.js in Resources */ = {isa = PBXBuildFile; fileRef = 15A3D78D1682F470002FB0C5 /* watermelon_with_me.js */; };
+		1A6E4731177818E90055514D /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A6E472C177818E90055514D /* libchipmunk.a */; };
+		1A6E4732177818E90055514D /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A6E472D177818E90055514D /* libcocos2dx.a */; };
+		1A6E4733177818E90055514D /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A6E472E177818E90055514D /* libCocosDenshion.a */; };
+		1A6E4734177818E90055514D /* libextensions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A6E472F177818E90055514D /* libextensions.a */; };
+		1A6E4735177818E90055514D /* libjsbindings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A6E4730177818E90055514D /* libjsbindings.a */; };
+		1A6E474F177819070055514D /* jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A6E4737177818FC0055514D /* jsb.js */; };
+		1A6E4750177819070055514D /* jsb_chipmunk.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A6E4738177818FC0055514D /* jsb_chipmunk.js */; };
+		1A6E4751177819070055514D /* jsb_chipmunk_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A6E4739177818FC0055514D /* jsb_chipmunk_constants.js */; };
+		1A6E4752177819070055514D /* jsb_cocos2d.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A6E473A177818FC0055514D /* jsb_cocos2d.js */; };
+		1A6E4753177819070055514D /* jsb_cocos2d_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A6E473B177818FC0055514D /* jsb_cocos2d_constants.js */; };
+		1A6E4754177819070055514D /* jsb_cocos2d_extension.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A6E473C177818FC0055514D /* jsb_cocos2d_extension.js */; };
+		1A6E4755177819070055514D /* jsb_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A6E473D177818FC0055514D /* jsb_cocosbuilder.js */; };
+		1A6E4756177819070055514D /* jsb_debugger.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A6E473E177818FC0055514D /* jsb_debugger.js */; };
+		1A6E4757177819070055514D /* jsb_opengl.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A6E473F177818FC0055514D /* jsb_opengl.js */; };
+		1A6E4758177819070055514D /* jsb_opengl_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A6E4740177818FC0055514D /* jsb_opengl_constants.js */; };
+		1A6E4759177819070055514D /* jsb_sys.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A6E4741177818FC0055514D /* jsb_sys.js */; };
+		1A6E475A177819070055514D /* main.debug.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A6E4742177818FC0055514D /* main.debug.js */; };
+		1A82F606169AC9C800C4B13A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A82F605169AC9C800C4B13A /* libsqlite3.dylib */; };
 		A92275421517C094001B78AA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275411517C094001B78AA /* QuartzCore.framework */; };
 		A92275441517C094001B78AA /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275431517C094001B78AA /* OpenGLES.framework */; };
 		A92275461517C094001B78AA /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275451517C094001B78AA /* OpenAL.framework */; };
@@ -49,30 +54,35 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		159004B1166DE18F006BF838 /* Icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-57.png"; sourceTree = "<group>"; };
-		159004B3166DE19C006BF838 /* Icon-114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-114.png"; sourceTree = "<group>"; };
-		159004B5166DE1A8006BF838 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
-		159004B7166DE1AF006BF838 /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-144.png"; sourceTree = "<group>"; };
-		1A6E4698177813130055514D /* libchipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libchipmunk.a; path = "../../../../external/chipmunk/proj.ios/build/Release-iphoneos/libchipmunk.a"; sourceTree = "<group>"; };
-		1A6E4699177813130055514D /* libcocos2dx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcocos2dx.a; path = "../../../../cocos2dx/proj.ios/build/Release-iphoneos/libcocos2dx.a"; sourceTree = "<group>"; };
-		1A6E469A177813130055514D /* libCocosDenshion.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCocosDenshion.a; path = "../../../../CocosDenshion/proj.ios/build/Release-iphoneos/libCocosDenshion.a"; sourceTree = "<group>"; };
-		1A6E469B177813130055514D /* libextensions.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libextensions.a; path = "../../../../extensions/proj.ios/build/Release-iphoneos/libextensions.a"; sourceTree = "<group>"; };
-		1A6E469C177813130055514D /* libjsbindings.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjsbindings.a; path = "../../../../scripting/javascript/bindings/proj.ios/build/Release-iphoneos/libjsbindings.a"; sourceTree = "<group>"; };
-		1A6E46A41778147D0055514D /* jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb.js; sourceTree = "<group>"; };
-		1A6E46A51778147D0055514D /* jsb_chipmunk.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_chipmunk.js; sourceTree = "<group>"; };
-		1A6E46A61778147D0055514D /* jsb_chipmunk_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_chipmunk_constants.js; sourceTree = "<group>"; };
-		1A6E46A71778147D0055514D /* jsb_cocos2d.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2d.js; sourceTree = "<group>"; };
-		1A6E46A81778147D0055514D /* jsb_cocos2d_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2d_constants.js; sourceTree = "<group>"; };
-		1A6E46A91778147D0055514D /* jsb_cocos2d_extension.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2d_extension.js; sourceTree = "<group>"; };
-		1A6E46AA1778147D0055514D /* jsb_cocosbuilder.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocosbuilder.js; sourceTree = "<group>"; };
-		1A6E46AB1778147D0055514D /* jsb_debugger.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_debugger.js; sourceTree = "<group>"; };
-		1A6E46AC1778147D0055514D /* jsb_opengl.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_opengl.js; sourceTree = "<group>"; };
-		1A6E46AD1778147D0055514D /* jsb_opengl_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_opengl_constants.js; sourceTree = "<group>"; };
-		1A6E46AE1778147D0055514D /* jsb_sys.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_sys.js; sourceTree = "<group>"; };
-		1A6E46AF1778147D0055514D /* main.debug.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.debug.js; sourceTree = "<group>"; };
-		1A82F5D0169AC71F00C4B13A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		1AD74D8216F80FE200F7F1B4 /* Published files iOS */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Published files iOS"; path = "../../Shared/games/CocosDragonJS/Published files iOS"; sourceTree = "<group>"; };
-		A922753D1517C094001B78AA /* CocosDragonJS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CocosDragonJS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		159004CB166DE338006BF838 /* Icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-57.png"; sourceTree = "<group>"; };
+		159004CD166DE33E006BF838 /* Icon-114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-114.png"; sourceTree = "<group>"; };
+		159004CF166DE346006BF838 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		159004D1166DE34B006BF838 /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-144.png"; sourceTree = "<group>"; };
+		15A3D7871682F456002FB0C5 /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = ../../Shared/games/WatermelonWithMe/res; sourceTree = "<group>"; };
+		15A3D7891682F470002FB0C5 /* boot-jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "boot-jsb.js"; path = "../../Shared/games/WatermelonWithMe/boot-jsb.js"; sourceTree = "<group>"; };
+		15A3D78A1682F470002FB0C5 /* levels.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = levels.js; path = ../../Shared/games/WatermelonWithMe/levels.js; sourceTree = "<group>"; };
+		15A3D78B1682F470002FB0C5 /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = ../../Shared/games/WatermelonWithMe/main.js; sourceTree = "<group>"; };
+		15A3D78C1682F470002FB0C5 /* resources-jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "resources-jsb.js"; path = "../../Shared/games/WatermelonWithMe/resources-jsb.js"; sourceTree = "<group>"; };
+		15A3D78D1682F470002FB0C5 /* watermelon_with_me.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = watermelon_with_me.js; path = ../../Shared/games/WatermelonWithMe/watermelon_with_me.js; sourceTree = "<group>"; };
+		1A6E472C177818E90055514D /* libchipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libchipmunk.a; path = "../../../../external/chipmunk/proj.ios/build/Release-iphoneos/libchipmunk.a"; sourceTree = "<group>"; };
+		1A6E472D177818E90055514D /* libcocos2dx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcocos2dx.a; path = "../../../../cocos2dx/proj.ios/build/Release-iphoneos/libcocos2dx.a"; sourceTree = "<group>"; };
+		1A6E472E177818E90055514D /* libCocosDenshion.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCocosDenshion.a; path = "../../../../CocosDenshion/proj.ios/build/Release-iphoneos/libCocosDenshion.a"; sourceTree = "<group>"; };
+		1A6E472F177818E90055514D /* libextensions.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libextensions.a; path = "../../../../extensions/proj.ios/build/Release-iphoneos/libextensions.a"; sourceTree = "<group>"; };
+		1A6E4730177818E90055514D /* libjsbindings.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjsbindings.a; path = "../../../../scripting/javascript/bindings/proj.ios/build/Release-iphoneos/libjsbindings.a"; sourceTree = "<group>"; };
+		1A6E4737177818FC0055514D /* jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb.js; sourceTree = "<group>"; };
+		1A6E4738177818FC0055514D /* jsb_chipmunk.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_chipmunk.js; sourceTree = "<group>"; };
+		1A6E4739177818FC0055514D /* jsb_chipmunk_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_chipmunk_constants.js; sourceTree = "<group>"; };
+		1A6E473A177818FC0055514D /* jsb_cocos2d.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2d.js; sourceTree = "<group>"; };
+		1A6E473B177818FC0055514D /* jsb_cocos2d_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2d_constants.js; sourceTree = "<group>"; };
+		1A6E473C177818FC0055514D /* jsb_cocos2d_extension.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2d_extension.js; sourceTree = "<group>"; };
+		1A6E473D177818FC0055514D /* jsb_cocosbuilder.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocosbuilder.js; sourceTree = "<group>"; };
+		1A6E473E177818FC0055514D /* jsb_debugger.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_debugger.js; sourceTree = "<group>"; };
+		1A6E473F177818FC0055514D /* jsb_opengl.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_opengl.js; sourceTree = "<group>"; };
+		1A6E4740177818FC0055514D /* jsb_opengl_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_opengl_constants.js; sourceTree = "<group>"; };
+		1A6E4741177818FC0055514D /* jsb_sys.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_sys.js; sourceTree = "<group>"; };
+		1A6E4742177818FC0055514D /* main.debug.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.debug.js; sourceTree = "<group>"; };
+		1A82F605169AC9C800C4B13A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		A922753D1517C094001B78AA /* WatermelonWithMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatermelonWithMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A92275411517C094001B78AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A92275431517C094001B78AA /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		A92275451517C094001B78AA /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -101,12 +111,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A6E469E177813130055514D /* libchipmunk.a in Frameworks */,
-				1A6E469F177813130055514D /* libcocos2dx.a in Frameworks */,
-				1A6E46A0177813130055514D /* libCocosDenshion.a in Frameworks */,
-				1A6E46A1177813130055514D /* libextensions.a in Frameworks */,
-				1A6E46A2177813130055514D /* libjsbindings.a in Frameworks */,
-				1A82F5D1169AC71F00C4B13A /* libsqlite3.dylib in Frameworks */,
+				1A6E4731177818E90055514D /* libchipmunk.a in Frameworks */,
+				1A6E4732177818E90055514D /* libcocos2dx.a in Frameworks */,
+				1A6E4733177818E90055514D /* libCocosDenshion.a in Frameworks */,
+				1A6E4734177818E90055514D /* libextensions.a in Frameworks */,
+				1A6E4735177818E90055514D /* libjsbindings.a in Frameworks */,
+				1A82F606169AC9C800C4B13A /* libsqlite3.dylib in Frameworks */,
 				D454520C156E22BD00887EB5 /* libz.dylib in Frameworks */,
 				A92275421517C094001B78AA /* QuartzCore.framework in Frameworks */,
 				A92275441517C094001B78AA /* OpenGLES.framework in Frameworks */,
@@ -125,12 +135,17 @@
 		15628F5B15F0F5C2000CF24B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				1A6E46A31778147D0055514D /* js */,
-				1AD74D8216F80FE200F7F1B4 /* Published files iOS */,
-				159004B7166DE1AF006BF838 /* Icon-144.png */,
-				159004B5166DE1A8006BF838 /* Icon-72.png */,
-				159004B3166DE19C006BF838 /* Icon-114.png */,
-				159004B1166DE18F006BF838 /* Icon-57.png */,
+				1A6E4736177818FC0055514D /* js */,
+				15A3D7891682F470002FB0C5 /* boot-jsb.js */,
+				15A3D78A1682F470002FB0C5 /* levels.js */,
+				15A3D78B1682F470002FB0C5 /* main.js */,
+				15A3D78C1682F470002FB0C5 /* resources-jsb.js */,
+				15A3D78D1682F470002FB0C5 /* watermelon_with_me.js */,
+				15A3D7871682F456002FB0C5 /* res */,
+				159004D1166DE34B006BF838 /* Icon-144.png */,
+				159004CF166DE346006BF838 /* Icon-72.png */,
+				159004CD166DE33E006BF838 /* Icon-114.png */,
+				159004CB166DE338006BF838 /* Icon-57.png */,
 				D446FDA616102D86000ADA7B /* Default-568h@2x.png */,
 				D446FDA416102D82000ADA7B /* Default@2x.png */,
 				D446FDA216102D7D000ADA7B /* Default.png */,
@@ -138,21 +153,21 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		1A6E46A31778147D0055514D /* js */ = {
+		1A6E4736177818FC0055514D /* js */ = {
 			isa = PBXGroup;
 			children = (
-				1A6E46A41778147D0055514D /* jsb.js */,
-				1A6E46A51778147D0055514D /* jsb_chipmunk.js */,
-				1A6E46A61778147D0055514D /* jsb_chipmunk_constants.js */,
-				1A6E46A71778147D0055514D /* jsb_cocos2d.js */,
-				1A6E46A81778147D0055514D /* jsb_cocos2d_constants.js */,
-				1A6E46A91778147D0055514D /* jsb_cocos2d_extension.js */,
-				1A6E46AA1778147D0055514D /* jsb_cocosbuilder.js */,
-				1A6E46AB1778147D0055514D /* jsb_debugger.js */,
-				1A6E46AC1778147D0055514D /* jsb_opengl.js */,
-				1A6E46AD1778147D0055514D /* jsb_opengl_constants.js */,
-				1A6E46AE1778147D0055514D /* jsb_sys.js */,
-				1A6E46AF1778147D0055514D /* main.debug.js */,
+				1A6E4737177818FC0055514D /* jsb.js */,
+				1A6E4738177818FC0055514D /* jsb_chipmunk.js */,
+				1A6E4739177818FC0055514D /* jsb_chipmunk_constants.js */,
+				1A6E473A177818FC0055514D /* jsb_cocos2d.js */,
+				1A6E473B177818FC0055514D /* jsb_cocos2d_constants.js */,
+				1A6E473C177818FC0055514D /* jsb_cocos2d_extension.js */,
+				1A6E473D177818FC0055514D /* jsb_cocosbuilder.js */,
+				1A6E473E177818FC0055514D /* jsb_debugger.js */,
+				1A6E473F177818FC0055514D /* jsb_opengl.js */,
+				1A6E4740177818FC0055514D /* jsb_opengl_constants.js */,
+				1A6E4741177818FC0055514D /* jsb_sys.js */,
+				1A6E4742177818FC0055514D /* main.debug.js */,
 			);
 			name = js;
 			path = ../../../../scripting/javascript/bindings/js;
@@ -172,7 +187,7 @@
 		A922753E1517C094001B78AA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A922753D1517C094001B78AA /* CocosDragonJS.app */,
+				A922753D1517C094001B78AA /* WatermelonWithMe.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -180,12 +195,12 @@
 		A92275401517C094001B78AA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1A6E4698177813130055514D /* libchipmunk.a */,
-				1A6E4699177813130055514D /* libcocos2dx.a */,
-				1A6E469A177813130055514D /* libCocosDenshion.a */,
-				1A6E469B177813130055514D /* libextensions.a */,
-				1A6E469C177813130055514D /* libjsbindings.a */,
-				1A82F5D0169AC71F00C4B13A /* libsqlite3.dylib */,
+				1A6E472C177818E90055514D /* libchipmunk.a */,
+				1A6E472D177818E90055514D /* libcocos2dx.a */,
+				1A6E472E177818E90055514D /* libCocosDenshion.a */,
+				1A6E472F177818E90055514D /* libextensions.a */,
+				1A6E4730177818E90055514D /* libjsbindings.a */,
+				1A82F605169AC9C800C4B13A /* libsqlite3.dylib */,
 				D454520B156E22BD00887EB5 /* libz.dylib */,
 				A92275411517C094001B78AA /* QuartzCore.framework */,
 				A92275431517C094001B78AA /* OpenGLES.framework */,
@@ -226,9 +241,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A922753C1517C094001B78AA /* CocosDragonJS */ = {
+		A922753C1517C094001B78AA /* WatermelonWithMe */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A92277001517C097001B78AA /* Build configuration list for PBXNativeTarget "CocosDragonJS" */;
+			buildConfigurationList = A92277001517C097001B78AA /* Build configuration list for PBXNativeTarget "WatermelonWithMe" */;
 			buildPhases = (
 				A92275391517C094001B78AA /* Sources */,
 				A922753A1517C094001B78AA /* Frameworks */,
@@ -238,9 +253,9 @@
 			);
 			dependencies = (
 			);
-			name = CocosDragonJS;
-			productName = CocosDragonJS;
-			productReference = A922753D1517C094001B78AA /* CocosDragonJS.app */;
+			name = WatermelonWithMe;
+			productName = WatermelonWithMe;
+			productReference = A922753D1517C094001B78AA /* WatermelonWithMe.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -251,7 +266,7 @@
 			attributes = {
 				LastUpgradeCheck = 0430;
 			};
-			buildConfigurationList = A92275371517C094001B78AA /* Build configuration list for PBXProject "CocosDragonJS" */;
+			buildConfigurationList = A92275371517C094001B78AA /* Build configuration list for PBXProject "WatermelonWithMe" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -263,7 +278,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A922753C1517C094001B78AA /* CocosDragonJS */,
+				A922753C1517C094001B78AA /* WatermelonWithMe */,
 			);
 		};
 /* End PBXProject section */
@@ -273,26 +288,31 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A6E46BC177814880055514D /* jsb.js in Resources */,
-				1A6E46BD177814880055514D /* jsb_chipmunk.js in Resources */,
-				1A6E46BE177814880055514D /* jsb_chipmunk_constants.js in Resources */,
-				1A6E46BF177814880055514D /* jsb_cocos2d.js in Resources */,
-				1A6E46C0177814880055514D /* jsb_cocos2d_constants.js in Resources */,
-				1A6E46C1177814880055514D /* jsb_cocos2d_extension.js in Resources */,
-				1A6E46C2177814880055514D /* jsb_cocosbuilder.js in Resources */,
-				1A6E46C3177814880055514D /* jsb_debugger.js in Resources */,
-				1A6E46C4177814880055514D /* jsb_opengl.js in Resources */,
-				1A6E46C5177814880055514D /* jsb_opengl_constants.js in Resources */,
-				1A6E46C6177814880055514D /* jsb_sys.js in Resources */,
-				1A6E46C7177814880055514D /* main.debug.js in Resources */,
+				1A6E474F177819070055514D /* jsb.js in Resources */,
+				1A6E4750177819070055514D /* jsb_chipmunk.js in Resources */,
+				1A6E4751177819070055514D /* jsb_chipmunk_constants.js in Resources */,
+				1A6E4752177819070055514D /* jsb_cocos2d.js in Resources */,
+				1A6E4753177819070055514D /* jsb_cocos2d_constants.js in Resources */,
+				1A6E4754177819070055514D /* jsb_cocos2d_extension.js in Resources */,
+				1A6E4755177819070055514D /* jsb_cocosbuilder.js in Resources */,
+				1A6E4756177819070055514D /* jsb_debugger.js in Resources */,
+				1A6E4757177819070055514D /* jsb_opengl.js in Resources */,
+				1A6E4758177819070055514D /* jsb_opengl_constants.js in Resources */,
+				1A6E4759177819070055514D /* jsb_sys.js in Resources */,
+				1A6E475A177819070055514D /* main.debug.js in Resources */,
+				15A3D7981682F4A3002FB0C5 /* boot-jsb.js in Resources */,
+				15A3D7991682F4A3002FB0C5 /* levels.js in Resources */,
+				15A3D79A1682F4A3002FB0C5 /* main.js in Resources */,
+				15A3D79B1682F4A3002FB0C5 /* resources-jsb.js in Resources */,
+				15A3D79C1682F4A3002FB0C5 /* watermelon_with_me.js in Resources */,
 				D446FDA316102D7D000ADA7B /* Default.png in Resources */,
 				D446FDA516102D82000ADA7B /* Default@2x.png in Resources */,
 				D446FDA716102D86000ADA7B /* Default-568h@2x.png in Resources */,
-				159004B2166DE190006BF838 /* Icon-57.png in Resources */,
-				159004B4166DE19C006BF838 /* Icon-114.png in Resources */,
-				159004B6166DE1A8006BF838 /* Icon-72.png in Resources */,
-				159004B8166DE1AF006BF838 /* Icon-144.png in Resources */,
-				1AD74D8316F80FE200F7F1B4 /* Published files iOS in Resources */,
+				159004CC166DE338006BF838 /* Icon-57.png in Resources */,
+				159004CE166DE33E006BF838 /* Icon-114.png in Resources */,
+				159004D0166DE346006BF838 /* Icon-72.png in Resources */,
+				159004D2166DE34B006BF838 /* Icon-144.png in Resources */,
+				15A3D7881682F456002FB0C5 /* res in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,11 +340,21 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					DEBUG,
+					"COCOS2D_DEBUG=1",
+					USE_FILE32API,
+					TARGET_OS_IPHONE,
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../cocos2dx",
+					"$(SRCROOT)/../../../cocos2dx/include",
+					"$(SRCROOT)/../../../cocos2dx/platform/ios",
+					"$(SRCROOT)/../../../scripting/javascript/spidermonkey-ios/include1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				SDKROOT = iphoneos;
 			};
@@ -336,10 +366,19 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_FILE32API,
+					TARGET_OS_IPHONE,
+				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../cocos2dx",
+					"$(SRCROOT)/../../../cocos2dx/include",
+					"$(SRCROOT)/../../../cocos2dx/platform/ios",
+					"$(SRCROOT)/../../../scripting/javascript/spidermonkey-ios/include1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
@@ -363,7 +402,7 @@
 					"COCOS2D_DEBUG=1",
 					USE_FILE32API,
 					CC_TARGET_OS_IPHONE,
-					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
+					CC_ENABLE_CHIPMUNK_INTEGRATION,
 				);
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
@@ -371,8 +410,8 @@
 					"\"$(SRCROOT)/../../../../cocos2dx\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/kazmath/include\"",
 					"\"$(SRCROOT)/../../../../CocosDenshion/include\"",
-					"$(SRCROOT)/../../../../extensions",
 					"$(SRCROOT)/../../../../cocos2dx/include",
+					"$(SRCROOT)/../../../../extensions",
 					"$(SRCROOT)/../../../../cocos2dx/platform/ios",
 					"$(SRCROOT)/../../../../external/chipmunk/include/chipmunk",
 					"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/include",
@@ -383,7 +422,7 @@
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/lib\"";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = CocosDragonJS;
+				PRODUCT_NAME = WatermelonWithMe;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -403,7 +442,7 @@
 					NDEBUG,
 					USE_FILE32API,
 					CC_TARGET_OS_IPHONE,
-					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
+					CC_ENABLE_CHIPMUNK_INTEGRATION,
 				);
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
@@ -411,8 +450,8 @@
 					"\"$(SRCROOT)/../../../../cocos2dx\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/kazmath/include\"",
 					"\"$(SRCROOT)/../../../../CocosDenshion/include\"",
-					"$(SRCROOT)/../../../../extensions",
 					"$(SRCROOT)/../../../../cocos2dx/include",
+					"$(SRCROOT)/../../../../extensions",
 					"$(SRCROOT)/../../../../cocos2dx/platform/ios",
 					"$(SRCROOT)/../../../../external/chipmunk/include/chipmunk",
 					"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/include",
@@ -423,7 +462,7 @@
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/lib\"";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = CocosDragonJS;
+				PRODUCT_NAME = WatermelonWithMe;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
@@ -433,7 +472,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A92275371517C094001B78AA /* Build configuration list for PBXProject "CocosDragonJS" */ = {
+		A92275371517C094001B78AA /* Build configuration list for PBXProject "WatermelonWithMe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A92276FE1517C097001B78AA /* Debug */,
@@ -442,7 +481,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A92277001517C097001B78AA /* Build configuration list for PBXNativeTarget "CocosDragonJS" */ = {
+		A92277001517C097001B78AA /* Build configuration list for PBXNativeTarget "WatermelonWithMe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A92277011517C097001B78AA /* Debug */,
