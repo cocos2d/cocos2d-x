@@ -69,12 +69,12 @@ void MutiTouchTestLayer::registerWithTouchDispatcher(void)
     Director::sharedDirector()->getTouchDispatcher()->addStandardDelegate(this, 0);
 }
 
-void MutiTouchTestLayer::ccTouchesBegan(Set *pTouches, Event *pEvent)
+void MutiTouchTestLayer::ccTouchesBegan(Set *touches, Event *pEvent)
 {
-    SetIterator iter = pTouches->begin();
-    for (; iter != pTouches->end(); iter++)
+
+    for ( auto &item: *touches )
     {
-        Touch* pTouch = (Touch*)(*iter);
+        Touch* pTouch = (Touch*)item;
         TouchPoint* pTouchPoint = TouchPoint::touchPointWithParent(this);
         Point location = pTouch->getLocation();
 
@@ -88,24 +88,22 @@ void MutiTouchTestLayer::ccTouchesBegan(Set *pTouches, Event *pEvent)
 
 }
 
-void MutiTouchTestLayer::ccTouchesMoved(Set *pTouches, Event *pEvent)
+void MutiTouchTestLayer::ccTouchesMoved(Set *touches, Event *pEvent)
 {
-    SetIterator iter = pTouches->begin();
-    for (; iter != pTouches->end(); iter++)
+    for( auto &item: *touches)
     {
-        Touch* pTouch = (Touch*)(*iter);
+        Touch* pTouch = (Touch*)item;
         TouchPoint* pTP = (TouchPoint*)s_dic.objectForKey(pTouch->getID());
         Point location = pTouch->getLocation();
         pTP->setTouchPos(location);
     }
 }
 
-void MutiTouchTestLayer::ccTouchesEnded(Set *pTouches, Event *pEvent)
+void MutiTouchTestLayer::ccTouchesEnded(Set *touches, Event *pEvent)
 {
-    SetIterator iter = pTouches->begin();
-    for (; iter != pTouches->end(); iter++)
+    for ( auto &item: *touches )
     {
-        Touch* pTouch = (Touch*)(*iter);
+        Touch* pTouch = (Touch*)item;
         TouchPoint* pTP = (TouchPoint*)s_dic.objectForKey(pTouch->getID());
         removeChild(pTP, true);
         s_dic.removeObjectForKey(pTouch->getID());

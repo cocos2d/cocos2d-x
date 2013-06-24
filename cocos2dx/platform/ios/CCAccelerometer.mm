@@ -29,7 +29,7 @@
 #import <UIKit/UIKit.h>
 #import <functional>
 
-@interface AccelerometerDispatcher : NSObject<UIAccelerometerDelegate>
+@interface CCAccelerometerDispatcher : NSObject<UIAccelerometerDelegate>
 {
     std::function<void(cocos2d::Acceleration*)> _function;
     cocos2d::Acceleration *_acceleration;
@@ -42,9 +42,9 @@
 
 @end
 
-@implementation AccelerometerDispatcher
+@implementation CCAccelerometerDispatcher
 
-static AccelerometerDispatcher* s_pAccelerometerDispatcher;
+static CCAccelerometerDispatcher* s_pAccelerometerDispatcher;
 
 + (id) sharedAccelerometerDispather
 {
@@ -140,12 +140,12 @@ Accelerometer::~Accelerometer() {}
 
 void Accelerometer::setDelegate(std::function<void (Acceleration *)> function)
 {
-    [[AccelerometerDispatcher sharedAccelerometerDispather] addDelegate:function];
+    [[CCAccelerometerDispatcher sharedAccelerometerDispather] addDelegate:function];
 }
 
 void Accelerometer::setAccelerometerInterval(float interval)
 {
-    [[AccelerometerDispatcher sharedAccelerometerDispather] setAccelerometerInterval:interval];
+    [[CCAccelerometerDispatcher sharedAccelerometerDispather] setAccelerometerInterval:interval];
 }
 
 NS_CC_END

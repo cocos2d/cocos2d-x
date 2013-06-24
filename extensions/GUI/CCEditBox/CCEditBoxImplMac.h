@@ -36,15 +36,15 @@
 #include "ExtensionMacros.h"
 #include "CCEditBoxImpl.h"
 
-@interface CustomNSTextField : NSTextField
+@interface CCCustomNSTextField : NSTextField
 {
 }
 
 @end
 
-@interface EditBoxImplMac : NSObject <NSTextFieldDelegate>
+@interface CCEditBoxImplMac : NSObject <NSTextFieldDelegate>
 {
-    CustomNSTextField* textField_;
+    CCCustomNSTextField* textField_;
     void* editBox_;
     BOOL editState_;
 }
@@ -105,7 +105,7 @@ private:
     Point    _anchorPoint;
     int        _maxTextLength;
     bool       _inRetinaMode;
-    EditBoxImplMac*  _sysEdit;
+    CCEditBoxImplMac*  _sysEdit;
 };
 
 

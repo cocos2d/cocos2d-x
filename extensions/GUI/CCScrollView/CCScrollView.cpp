@@ -779,5 +779,4 @@ Rect ScrollView::getViewRect()
 
     return CCRectMake(screenPos.x, screenPos.y, _viewSize.width*scaleX, _viewSize.height*scaleY);
 }
-
 NS_CC_EXT_END

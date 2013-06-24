@@ -80,7 +80,12 @@ cocos2d::Node* ComponentsTestLayer::createGameScene()
         root->addChild(player, 1, 1);
         
 
-        MenuItemFont *itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(ComponentsTestLayer::toExtensionsMainLayer,this));
+        MenuItemFont *itemBack = MenuItemFont::create("Back", [](Object* sender){
+        	ExtensionsTestScene *pScene = new ExtensionsTestScene();
+            pScene->runThisTest();
+            pScene->release();
+        });
+        
         itemBack->setColor(ccc3(0, 0, 0));
         itemBack->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
         Menu *menuBack = Menu::create(itemBack, NULL);
@@ -91,14 +96,6 @@ cocos2d::Node* ComponentsTestLayer::createGameScene()
     
     return root;
 }
-
-void ComponentsTestLayer::toExtensionsMainLayer(cocos2d::Object *sender)
-{
-	ExtensionsTestScene *pScene = new ExtensionsTestScene();
-	pScene->runThisTest();
-	pScene->release();
-}
-
 
 void runComponentsTestLayerTest()
 {

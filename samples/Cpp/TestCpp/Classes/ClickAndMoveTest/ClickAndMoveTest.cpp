@@ -39,8 +39,7 @@ MainLayer::MainLayer()
 
 void MainLayer::ccTouchesEnded(Set *pTouches, Event *pEvent)
 {
-    SetIterator it = pTouches->begin();
-    Touch* touch = (Touch*)(*it);
+    Touch* touch = (Touch*) pTouches->anyObject();
     
     Point location = touch->getLocation();
 
