@@ -420,6 +420,7 @@
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/lib\"";
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = WatermelonWithMe;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -459,6 +460,7 @@
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/lib\"";
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = WatermelonWithMe;
 				TARGETED_DEVICE_FAMILY = "1,2";

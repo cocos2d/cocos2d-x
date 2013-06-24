@@ -3189,12 +3189,13 @@
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../../external/libwebsockets/ios/lib\"",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-O2";
 				PRODUCT_NAME = TestCpp;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
-				VALID_ARCHS = "armv6 armv7 i386";
+				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -3233,6 +3234,7 @@
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../../external/libwebsockets/ios/lib\"",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = TestCpp;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

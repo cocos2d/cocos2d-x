@@ -356,14 +356,14 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries\"",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = HelloLua;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = NO;
-				VALID_ARCHS = "armv6 armv7";
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "";
 			};
 			name = Debug;
@@ -407,14 +407,14 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries\"",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = HelloLua;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = NO;
-				VALID_ARCHS = "armv6 armv7";
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "";
 			};
 			name = Release;
