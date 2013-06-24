@@ -199,9 +199,9 @@ onPlayerGetPoints : function () {},
 };
 
 /**
- * @class ProtocolSocial
+ * @class ProtocolShare
  */
-plugin.ProtocolSocial = {
+plugin.ProtocolShare = {
 
 /**
  * @method onShareResult
@@ -218,7 +218,7 @@ share : function () {},
 
 /**
  * @method configDeveloperInfo
- * @param {TSocialDeveloperInfo}
+ * @param {TShareDeveloperInfo}
  */
 configDeveloperInfo : function () {},
 
