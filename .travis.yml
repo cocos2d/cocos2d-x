@@ -6,7 +6,8 @@ env:
   - PLATFORM=linux DEBUG=1
   # Since switching to C++11 only the ARM version of the nactive client
   # port currently builds.  TODO(sbc): Re-enable all architectures.
-  - PLATFORM=nacl DEBUG=1 NACL_ARCH=arm
+  # Disabled travis-ci build for native client port since it doesn't support std::thread, std::mutex.
+  # - PLATFORM=nacl DEBUG=1 NACL_ARCH=arm
   - PLATFORM=android
   - PLATFORM=emscripten DEBUG=1
   global: 
