@@ -27,7 +27,6 @@
 
 #include <string>
 #include <curl/curl.h>
-//#include <pthread.h>
 #include <mutex>
 
 #include "cocos2d.h"
@@ -171,7 +170,6 @@ private:
         void handleUpdateSucceed(Message *msg);
         
         std::list<Message*> *_messageQueue;
-        //pthread_mutex_t _messageQueueMutex;
         std::mutex _messageQueueMutex;
     };
     
