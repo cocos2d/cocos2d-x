@@ -39,7 +39,7 @@ public:
 
     /* Public method since we need to call it from C code to workaround linkage from JS.
     */
-    void addImageAsyncCallBack_emscripten(AsyncStruct *data, unsigned char *imgData, int width, int height);
+    void addImageAsyncCallBack_emscripten(TextureCache::AsyncStruct *data, unsigned char *imgData, int width, int height);
 
 };
 

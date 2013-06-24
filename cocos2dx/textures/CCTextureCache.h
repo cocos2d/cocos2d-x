@@ -150,6 +150,16 @@ public:
     It's only useful when the value of CC_ENABLE_CACHE_TEXTURE_DATA is 1
     */
     static void reloadAllTextures();
+    
+    struct AsyncStruct
+    {
+    public:
+        AsyncStruct(const std::string& fn, Object *t, SEL_CallFuncO s) : filename(fn), target(t), selector(s) {}
+        
+        std::string            filename;
+        Object    *target;
+        SEL_CallFuncO        selector;
+    };
 
 private:
     void addImageAsyncCallBack(float dt);
@@ -157,16 +167,6 @@ private:
     Image::EImageFormat computeImageFormatType(std::string& filename);
 
 private:
-    struct AsyncStruct
-    {
-    public:
-        AsyncStruct(const std::string& fn, Object *t, SEL_CallFuncO s) : filename(fn), target(t), selector(s) {}
-
-        std::string            filename;
-        Object    *target;
-        SEL_CallFuncO        selector;
-    };
-
     typedef struct _ImageInfo
     {
         AsyncStruct *asyncStruct;
