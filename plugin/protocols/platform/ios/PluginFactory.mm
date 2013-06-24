@@ -25,14 +25,14 @@ THE SOFTWARE.
 #include "ProtocolAds.h"
 #include "ProtocolAnalytics.h"
 #include "ProtocolIAP.h"
-#include "ProtocolSocial.h"
+#include "ProtocolShare.h"
 #include "PluginUtilsIOS.h"
 
 #import <Foundation/Foundation.h>
 #import "InterfaceAds.h"
 #import "InterfaceAnalytics.h"
 #import "InterfaceIAP.h"
-#import "InterfaceSocial.h"
+#import "InterfaceShare.h"
 
 namespace cocos2d { namespace plugin {
 
@@ -88,8 +88,8 @@ PluginProtocol* PluginFactory::createPlugin(const char* name)
         if ([obj conformsToProtocol:@protocol(InterfaceIAP)]) {
             pRet = new ProtocolIAP();
         } else
-        if ([obj conformsToProtocol:@protocol(InterfaceSocial)]) {
-            pRet = new ProtocolSocial();
+        if ([obj conformsToProtocol:@protocol(InterfaceShare)]) {
+            pRet = new ProtocolShare();
         } else {
             PluginUtilsIOS::outputLog("Plugin %s not implements a right protocol", name);
         }

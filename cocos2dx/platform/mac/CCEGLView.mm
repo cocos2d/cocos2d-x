@@ -53,7 +53,7 @@ EGLView::~EGLView(void)
 
 bool EGLView::isOpenGLReady(void)
 {
-    return [EAGLView sharedEGLView] != NULL;
+    return [CCEAGLView sharedEGLView] != NULL;
 }
 
 bool EGLView::setContentScaleFactor(float contentScaleFactor)
@@ -63,34 +63,34 @@ bool EGLView::setContentScaleFactor(float contentScaleFactor)
 
 void EGLView::end(void)
 {
-    [[DirectorCaller sharedDirectorCaller] end];
+    [[CCDirectorCaller sharedDirectorCaller] end];
     
     // destroy EAGLView
-    [[EAGLView sharedEGLView] removeFromSuperview];
+    [[CCEAGLView sharedEGLView] removeFromSuperview];
     
     delete this;
 }
 
 void EGLView::swapBuffers()
 {
-	[[EAGLView sharedEGLView] swapBuffers];
+	[[CCEAGLView sharedEGLView] swapBuffers];
 }
 
 void EGLView::setIMEKeyboardState(bool bOpen)
 {
     if (bOpen)
     {
-        [[EAGLView sharedEGLView] becomeFirstResponder];
+        [[CCEAGLView sharedEGLView] becomeFirstResponder];
     }
     else
     {
-        [[EAGLView sharedEGLView] resignFirstResponder];
+        [[CCEAGLView sharedEGLView] resignFirstResponder];
     }
 }
 
 void EGLView::setViewPortInPoints(float x , float y , float w , float h)
 {
-    float frameZoomFactor = [[EAGLView sharedEGLView] frameZoomFactor];
+    float frameZoomFactor = [[CCEAGLView sharedEGLView] frameZoomFactor];
     
     glViewport((GLint)(x * _scaleX * frameZoomFactor + _viewPortRect.origin.x * frameZoomFactor),
                (GLint)(y * _scaleY * frameZoomFactor + _viewPortRect.origin.y * frameZoomFactor),
@@ -100,7 +100,7 @@ void EGLView::setViewPortInPoints(float x , float y , float w , float h)
 
 void EGLView::setScissorInPoints(float x , float y , float w , float h)
 {
-    float frameZoomFactor = [[EAGLView sharedEGLView] frameZoomFactor];
+    float frameZoomFactor = [[CCEAGLView sharedEGLView] frameZoomFactor];
     
     glScissor((GLint)(x * _scaleX * frameZoomFactor + _viewPortRect.origin.x * frameZoomFactor),
               (GLint)(y * _scaleY * frameZoomFactor + _viewPortRect.origin.y * frameZoomFactor),
@@ -110,7 +110,7 @@ void EGLView::setScissorInPoints(float x , float y , float w , float h)
 
 void EGLView::setMultiTouchMask(bool mask)
 {
-	//EAGLView *glView = [EAGLView sharedEGLView];
+	//CCEAGLView *glView = [CCEAGLView sharedEGLView];
 	//glView.multipleTouchEnabled = mask ? YES : NO;
 }
 

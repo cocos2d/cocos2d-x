@@ -75,14 +75,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #define IOS_MAX_TOUCHES_COUNT     10
 
-static EAGLView *view = 0;
+static CCEAGLView *view = 0;
 
-@interface EAGLView (Private)
+@interface CCEAGLView (Private)
 - (BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup;
 - (unsigned int) convertPixelFormat:(NSString*) pixelFormat;
 @end
 
-@implementation EAGLView
+@implementation CCEAGLView
 
 @synthesize surfaceSize=size_;
 @synthesize pixelFormat=pixelformat_, depthFormat=depthFormat_;
@@ -345,7 +345,7 @@ static EAGLView *view = 0;
     return pFormat;
 }
 
-#pragma mark EAGLView - Point conversion
+#pragma mark CCEAGLView - Point conversion
 
 - (CGPoint) convertPointFromViewToSurface:(CGPoint)point
 {
@@ -390,7 +390,7 @@ static EAGLView *view = 0;
 }
 
 // Pass the touches to the superview
-#pragma mark EAGLView - Touch Delegate
+#pragma mark CCEAGLView - Touch Delegate
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     if (isKeyboardShown_)

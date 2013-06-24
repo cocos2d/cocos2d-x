@@ -199,7 +199,7 @@ public:
 
     void callback1();
     void callback2(Node* sender);
-    void callback3(Node* sender, void* data);
+    void callback3(Node* sender, long data);
 };
 
 class ActionSpawn : public ActionsDemo
@@ -281,15 +281,13 @@ public:
     virtual std::string subtitle();
 };
 
-class ActionCallFunc : public ActionsDemo
+class ActionCallFuncN : public ActionsDemo
 {
 public:
     virtual void onEnter();
+    virtual std::string title();
     virtual std::string subtitle();
-
-    void callback1();
-    void callback2(Node* pTarget);
-    void callback3(Node* pTarget, void* data);
+    void callback(Node* pSender);
 };
 
 class ActionCallFuncND : public ActionsDemo
@@ -298,7 +296,16 @@ public:
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
-    void removeFromParentAndCleanup(Node* pSender, void* data);
+    void removeFromParentAndCleanup(Node* pSender, bool cleanup);
+};
+
+class ActionCallFuncO : public ActionsDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+    void callback(Node* object, bool cleanup);
 };
 
 class ActionCallFunction : public ActionsDemo
@@ -309,7 +316,7 @@ public:
 
     void callback1();
     void callback2(Node* pTarget);
-    void callback3(Node* pTarget, void* data);
+    void callback3(Node* pTarget, long data);
 };
 
 

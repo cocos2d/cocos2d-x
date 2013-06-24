@@ -6,6 +6,10 @@ set -e
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR"/../..
 HOST_NAME=""
+LLVM_VERSION=""
+LLVM_PACKAGE=""
+LLVM_PACKAGE_SUFFIX=""
+
 mkdir -p $HOME/bin
 pushd $HOME/bin
 
@@ -28,18 +32,27 @@ install_android_ndk()
 
 install_llvm()
 {
+    LLVM_VERSION="3.3"
     if [ "$PLATFORM"x = "ios"x ]; then
-        HOST_NAME="apple-darwin11"
+        LLVM_PACKAGE="clang+llvm-3.3-x86_64-apple-darwin12"
+        LLVM_PACKAGE_SUFFIX=".tar.gz"
     else
-        HOST_NAME="linux-ubuntu_12.04"
+        LLVM_PACKAGE="clang+llvm-3.3-Ubuntu-13.04-x86_64-linux-gnu"
+        LLVM_PACKAGE_SUFFIX=".tar.bz2"
     fi
-    # Download llvm3.1
-    echo "Download clang+llvm-3.1-x86_64-${HOST_NAME}.tar.gz"
-    curl -O http://llvm.org/releases/3.1/clang+llvm-3.1-x86_64-${HOST_NAME}.tar.gz
-    echo "Decompress clang+llvm-3.1-x86_64-${HOST_NAME}.tar.gz ..."
-    tar xzf clang+llvm-3.1-x86_64-${HOST_NAME}.tar.gz
+    
+    # Download llvm
+    echo "Download ${LLVM_PACKAGE} ..."
+    curl -O http://llvm.org/releases/${LLVM_VERSION}/${LLVM_PACKAGE}${LLVM_PACKAGE_SUFFIX}
+    echo "Decompress ${LLVM_PACKAGE} ..."
+    if [ "$PLATFORM"x = "ios"x ]; then
+        tar xzf ${LLVM_PACKAGE}${LLVM_PACKAGE_SUFFIX}
+    else
+        tar xjf ${LLVM_PACKAGE}${LLVM_PACKAGE_SUFFIX}
+    fi
+    
     # Rename llvm
-    mv clang+llvm-3.1-x86_64-${HOST_NAME} clang+llvm-3.1
+    mv ${LLVM_PACKAGE} clang+llvm-${LLVM_VERSION}
 }
 
 install_llvm_3_2()
@@ -71,8 +84,10 @@ if [ "$PLATFORM"x = "linux"x ]; then
 fi
 
 if [ "$PLATFORM"x = "nacl"x ]; then
+    # NaCl compilers are built for 32-bit linux so we need to install
+    # the runtime support for this.
     sudo apt-get update
-    sudo apt-get install libc6:i386
+    sudo apt-get install libc6:i386 libstdc++6:i386
     echo "Download nacl_sdk ..."
     wget http://storage.googleapis.com/nativeclient-mirror/nacl/nacl_sdk/nacl_sdk.zip
     echo "Decompress nacl_sdk.zip" 

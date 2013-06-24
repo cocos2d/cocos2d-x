@@ -568,15 +568,21 @@ void CallFunc::execute() {
 //
 // CallFuncN
 //
-void CallFuncN::execute() {
-    if (_callFuncN) {
-        (_selectorTarget->*_callFuncN)(_target);
+
+CallFuncN * CallFuncN::create(const std::function<void(Node*)> &func)
+{
+    auto ret = new CallFuncN();
+
+    if (ret && ret->initWithFunction(func) ) {
+        ret->autorelease();
+        return ret;
     }
-	if (_scriptHandler) {
-		ScriptEngineManager::sharedManager()->getScriptEngine()->executeCallFuncActionEvent(this, _target);
-	}
+
+    CC_SAFE_DELETE(ret);
+    return NULL;
 }
 
+// XXX deprecated
 CallFuncN * CallFuncN::create(Object* pSelectorTarget, SEL_CallFuncN selector)
 {
     CallFuncN *pRet = new CallFuncN();
@@ -605,8 +611,27 @@ CallFuncN * CallFuncN::create(int nHandler)
 	return pRet;
 }
 
-bool CallFuncN::initWithTarget(Object* pSelectorTarget,
-        SEL_CallFuncN selector) {
+
+void CallFuncN::execute() {
+    if (_callFuncN) {
+        (_selectorTarget->*_callFuncN)(_target);
+    }
+    else if (_functionN) {
+        _functionN(_target);
+    }
+	if (_scriptHandler) {
+		ScriptEngineManager::sharedManager()->getScriptEngine()->executeCallFuncActionEvent(this, _target);
+	}
+}
+
+bool CallFuncN::initWithFunction(const std::function<void (Node *)> &func)
+{
+    _functionN = func;
+    return true;
+}
+
+bool CallFuncN::initWithTarget(Object* pSelectorTarget, SEL_CallFuncN selector)
+{
     if (CallFunc::initWithTarget(pSelectorTarget)) {
         _callFuncN = selector;
         return true;
@@ -624,7 +649,8 @@ CallFuncN * CallFuncN::clone() const
 	return a;
 }
 
-Object * CallFuncN::copyWithZone(Zone* zone) {
+Object * CallFuncN::copyWithZone(Zone* zone)
+{
     Zone* pNewZone = NULL;
     CallFuncN* pRet = NULL;
 
@@ -638,137 +664,6 @@ Object * CallFuncN::copyWithZone(Zone* zone) {
 
     CallFunc::copyWithZone(zone);
     pRet->initWithTarget(_selectorTarget, _callFuncN);
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
-}
-
-//
-// CallFuncND
-//
-
-CallFuncND * CallFuncND::create(Object* pSelectorTarget, SEL_CallFuncND selector, void* d)
-{
-    CallFuncND* pRet = new CallFuncND();
-
-    if (pRet && pRet->initWithTarget(pSelectorTarget, selector, d)) {
-        pRet->autorelease();
-        return pRet;
-    }
-
-    CC_SAFE_DELETE(pRet);
-    return NULL;
-}
-
-bool CallFuncND::initWithTarget(Object* pSelectorTarget,
-        SEL_CallFuncND selector, void* d) {
-    if (CallFunc::initWithTarget(pSelectorTarget)) {
-        _data = d;
-        _callFuncND = selector;
-        return true;
-    }
-
-    return false;
-}
-
-CallFuncND * CallFuncND::clone() const
-{
-	// no copy constructor
-	auto a = new CallFuncND();
-	a->initWithTarget(_selectorTarget, _callFuncND, _data);
-	a->autorelease();
-	return a;
-}
-
-Object * CallFuncND::copyWithZone(Zone* zone) {
-    Zone* pNewZone = NULL;
-    CallFuncND* pRet = NULL;
-
-    if (zone && zone->_copyObject) {
-        //in case of being called at sub class
-        pRet = (CallFuncND*) (zone->_copyObject);
-    } else {
-        pRet = new CallFuncND();
-        zone = pNewZone = new Zone(pRet);
-    }
-
-    CallFunc::copyWithZone(zone);
-    pRet->initWithTarget(_selectorTarget, _callFuncND, _data);
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
-}
-
-void CallFuncND::execute() {
-    if (_callFuncND) {
-        (_selectorTarget->*_callFuncND)(_target, _data);
-    }
-}
-
-//
-// CallFuncO
-//
-CallFuncO::CallFuncO() :
-        _object(NULL) {
-}
-
-CallFuncO::~CallFuncO() {
-    CC_SAFE_RELEASE(_object);
-}
-
-void CallFuncO::execute() {
-    if (_callFuncO) {
-        (_selectorTarget->*_callFuncO)(_object);
-    }
-}
-
-CallFuncO * CallFuncO::create(Object* pSelectorTarget, SEL_CallFuncO selector, Object* pObject)
-{
-    CallFuncO *pRet = new CallFuncO();
-
-    if (pRet && pRet->initWithTarget(pSelectorTarget, selector, pObject)) {
-        pRet->autorelease();
-        return pRet;
-    }
-
-    CC_SAFE_DELETE(pRet);
-    return NULL;
-}
-
-bool CallFuncO::initWithTarget(Object* pSelectorTarget,
-        SEL_CallFuncO selector, Object* pObject) {
-    if (CallFunc::initWithTarget(pSelectorTarget)) {
-        _object = pObject;
-        CC_SAFE_RETAIN(_object);
-
-        _callFuncO = selector;
-        return true;
-    }
-
-    return false;
-}
-
-CallFuncO * CallFuncO::clone() const
-{
-	// no copy constructor	
-	auto a = new CallFuncO();
-	a->initWithTarget(_selectorTarget, _callFuncO, _object);
-	a->autorelease();
-	return a;
-}
-
-Object * CallFuncO::copyWithZone(Zone* zone) {
-    Zone* pNewZone = NULL;
-    CallFuncO* pRet = NULL;
-
-    if (zone && zone->_copyObject) {
-        //in case of being called at sub class
-        pRet = (CallFuncO*) (zone->_copyObject);
-    } else {
-        pRet = new CallFuncO();
-        zone = pNewZone = new Zone(pRet);
-    }
-
-    CallFunc::copyWithZone(zone);
-    pRet->initWithTarget(_selectorTarget, _callFuncO, _object);
     CC_SAFE_DELETE(pNewZone);
     return pRet;
 }

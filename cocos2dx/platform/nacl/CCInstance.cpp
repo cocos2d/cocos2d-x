@@ -26,11 +26,10 @@ THE SOFTWARE.
 #include "CCInstance.h"
 #include "CCApplication.h"
 #include "CCEGLView.h"
+
 #include <ppapi/cpp/instance.h>
 #include <ppapi/cpp/module.h>
-#ifndef OLD_NACL_MOUNTS
-#include "nacl_io/nacl_io.h"
-#endif
+#include <nacl_io/nacl_io.h>
 
 #include <errno.h>
 #include <fcntl.h>
@@ -42,9 +41,6 @@ THE SOFTWARE.
 USING_NS_CC;
 
 CocosPepperInstance::CocosPepperInstance(PP_Instance instance) : pp::Instance(instance),
-#ifdef OLD_NACL_MOUNTS
-    _runner(NULL),
-#endif
     _running(false)
 {
     RequestInputEvents(PP_INPUTEVENT_CLASS_MOUSE);
@@ -78,14 +74,10 @@ void CocosPepperInstance::DidChangeView(const pp::View& view)
 
 bool CocosPepperInstance::Init(uint32_t argc, const char* argn[], const char* argv[])
 {
-    CCLog("CocosPepperInstance::Init");
-#ifdef OLD_NACL_MOUNTS
-    _runner = new MainThreadRunner(this);
-#else
-    CCLOG("%p %p", (void*)pp_instance(), (void*)pp::Module::Get()->get_browser_interface());
-    nacl_io_init_ppapi(pp_instance(), pp::Module::Get()->get_browser_interface());
-    CCLOG("done nacl_mounts_init_ppapi");
-
+    CCLog("CocosPepperInstance::Init: %x %p", pp_instance(),
+          pp::Module::Get()->get_browser_interface());
+    nacl_io_init_ppapi(pp_instance(),
+                       pp::Module::Get()->get_browser_interface());
 
     umount("/");
     int rtn = mount("Resources",  /* source. Use relative URL */
@@ -100,7 +92,6 @@ bool CocosPepperInstance::Init(uint32_t argc, const char* argn[], const char* ar
         return false;
     }
 
-#endif
     return true;
 }
 

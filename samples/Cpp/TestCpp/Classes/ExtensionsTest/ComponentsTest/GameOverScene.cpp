@@ -73,7 +73,12 @@ bool GameOverLayer::init()
                                 NULL));
 		
         
-        MenuItemFont *itemBack = MenuItemFont::create("Back", this, menu_selector(ComponentsTestLayer::toExtensionsMainLayer));
+        MenuItemFont *itemBack = MenuItemFont::create("Back", [](Object* sender){
+            ExtensionsTestScene *pScene = new ExtensionsTestScene();
+            pScene->runThisTest();
+            pScene->release();
+        });
+        
         itemBack->setColor(ccc3(0, 0, 0));
         itemBack->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
         Menu *menuBack = Menu::create(itemBack, NULL);
