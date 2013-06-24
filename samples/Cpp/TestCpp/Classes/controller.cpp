@@ -33,9 +33,11 @@ struct {
 	{ "CocosDenshionTest", []() { return new CocosDenshionTestScene(); } },
 	{ "ConfigurationTest", []() { return new ConfigurationTestScene(); } },
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
 	{ "CurlTest", []() { return new CurlTestScene(); } },
+#endif
 #endif
 #endif
 #endif
@@ -156,16 +158,14 @@ void TestController::closeCallback(Object * pSender)
 
 void TestController::ccTouchesBegan(Set *pTouches, Event *pEvent)
 {
-    SetIterator it = pTouches->begin();
-    Touch* touch = (Touch*)(*it);
+    Touch* touch = (Touch*)pTouches->anyObject();
 
     _beginPos = touch->getLocation();    
 }
 
 void TestController::ccTouchesMoved(Set *pTouches, Event *pEvent)
 {
-    SetIterator it = pTouches->begin();
-    Touch* touch = (Touch*)(*it);
+    Touch* touch = (Touch*)pTouches->anyObject();
 
     Point touchLocation = touch->getLocation();    
     float nMoveY = touchLocation.y - _beginPos.y;

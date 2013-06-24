@@ -27,11 +27,16 @@ THE SOFTWARE.
 #ifndef __CCTEXTURE_CACHE_H__
 #define __CCTEXTURE_CACHE_H__
 
+#include <string>
+#include <mutex>
+#include <condition_variable>
+#include <queue>
+#include <string>
+
 #include "cocoa/CCObject.h"
 #include "cocoa/CCDictionary.h"
 #include "textures/CCTexture2D.h"
-#include <string>
-
+#include "platform/CCImage.h"
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     #include "platform/CCImage.h"
@@ -39,19 +44,6 @@ THE SOFTWARE.
 #endif
 
 NS_CC_BEGIN
-
-class AsyncStruct
-{
-public:
-    AsyncStruct(const std::string& fn, Object *t, SEL_CallFuncO s) : filename(fn), target(t), selector(s) {}
-
-    std::string            filename;
-    Object    *target;
-    SEL_CallFuncO        selector;
-};
-
-class Lock;
-class Image;
 
 /**
  * @addtogroup textures
@@ -64,15 +56,6 @@ class Image;
 */
 class CC_DLL TextureCache : public Object
 {
-protected:
-    Dictionary* _textures;
-    //pthread_mutex_t                *_dictLock;
-
-
-private:
-    /// todo: void addImageWithAsyncObject(AsyncObject* async);
-    void addImageAsyncCallBack(float dt);
-
 public:
 
     TextureCache();
@@ -105,18 +88,8 @@ public:
     * Supported image extensions: .png, .jpg
     * @since v0.8
     */
-    
     virtual void addImageAsync(const char *path, Object *target, SEL_CallFuncO selector);
 
-    /* Returns a Texture2D object given an CGImageRef image
-    * If the image was not previously loaded, it will create a new Texture2D object and it will return it.
-    * Otherwise it will return a reference of a previously loaded image
-    * The "key" parameter will be used as the "key" for the cache.
-    * If "key" is nil, then a new texture will be created each time.
-    * @since v0.8
-    */
-
-    // todo: CGImageRef Texture2D* addCGImage(CGImageRef image, string &  key);
     /** Returns a Texture2D object given an UIImage image
     * If the image was not previously loaded, it will create a new Texture2D object and it will return it.
     * Otherwise it will return a reference of a previously loaded image
@@ -129,6 +102,7 @@ public:
     @since v0.99.5
     */
     Texture2D* textureForKey(const char* key);
+
     /** Purges the dictionary of loaded textures.
     * Call this method if you receive the "Memory Warning"
     * In the short term: it will free some resources preventing your app from being killed
@@ -176,6 +150,47 @@ public:
     It's only useful when the value of CC_ENABLE_CACHE_TEXTURE_DATA is 1
     */
     static void reloadAllTextures();
+
+private:
+    void addImageAsyncCallBack(float dt);
+    void loadImage();
+    Image::EImageFormat computeImageFormatType(std::string& filename);
+
+public:
+    struct AsyncStruct
+    {
+    public:
+        AsyncStruct(const std::string& fn, Object *t, SEL_CallFuncO s) : filename(fn), target(t), selector(s) {}
+
+        std::string            filename;
+        Object    *target;
+        SEL_CallFuncO        selector;
+    };
+
+protected:
+    typedef struct _ImageInfo
+    {
+        AsyncStruct *asyncStruct;
+        Image        *image;
+        Image::EImageFormat imageType;
+    } ImageInfo;
+
+    std::queue<AsyncStruct*>* _asyncStructQueue;
+    std::queue<ImageInfo*>* _imageInfoQueue;
+
+    std::mutex _asyncStructQueueMutex;
+    std::mutex _imageInfoMutex;
+
+    std::mutex _sleepMutex;
+    std::condition_variable _sleepCondition;
+
+    bool _needQuit;
+
+    int _asyncRefCount;
+
+    Dictionary* _textures;
+
+    static TextureCache *_sharedTextureCache;
 };
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA

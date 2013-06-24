@@ -37,7 +37,7 @@ static id s_sharedDirectorCaller;
 -(void) invalidate;
 @end
 
-@implementation DirectorCaller
+@implementation CCDirectorCaller
 
 @synthesize interval;
 
@@ -45,7 +45,7 @@ static id s_sharedDirectorCaller;
 {
 	if (s_sharedDirectorCaller == nil)
 	{
-		s_sharedDirectorCaller = [[DirectorCaller alloc] init];
+		s_sharedDirectorCaller = [[CCDirectorCaller alloc] init];
 	}
 	
 	return s_sharedDirectorCaller;
@@ -81,7 +81,7 @@ static id s_sharedDirectorCaller;
 	
 	cocos2d::Director::sharedDirector()->drawScene();
 	cocos2d::PoolManager::sharedPoolManager()->pop();
-	[[EventDispatcher sharedDispatcher] dispatchQueuedEvents];
+	[[CCEventDispatcher sharedDispatcher] dispatchQueuedEvents];
 	
 	[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:nil];
 	
@@ -115,7 +115,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
 	// get the opengl view
-	EAGLView *openGLView = [EAGLView sharedEGLView];
+	CCEAGLView *openGLView = [CCEAGLView sharedEGLView];
 	[openGLView lockOpenGLContext];
     
 	// run the main cocos2d loop
@@ -127,7 +127,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	[openGLView unlockOpenGLContext];
     
 	// send any queued events
-	[[EventDispatcher sharedDispatcher] dispatchQueuedEvents];
+	[[CCEventDispatcher sharedDispatcher] dispatchQueuedEvents];
     
 	[pool release];
 }
@@ -171,7 +171,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
      CVDisplayLinkSetOutputCallback(displayLink, &MyDisplayLinkCallback, self);
      
      // Set the display link for the current renderer
-     EAGLView *openGLView_ = (EAGLView*)[EAGLView sharedEGLView];
+     CCEAGLView *openGLView_ = (CCEAGLView*)[CCEAGLView sharedEGLView];
      CGLContextObj cglContext = (CGLContextObj)[[openGLView_ openGLContext] CGLContextObj];
      CGLPixelFormatObj cglPixelFormat = (CGLPixelFormatObj)[[openGLView_ pixelFormat] CGLPixelFormatObj];
      CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext(displayLink, cglContext, cglPixelFormat);

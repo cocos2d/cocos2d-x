@@ -212,15 +212,10 @@ void ChipmunkTestLayer::onEnter()
 void ChipmunkTestLayer::ccTouchesEnded(Set* touches, Event* event)
 {
     //Add a new body/atlas sprite at the touched location
-    SetIterator it;
-    Touch* touch;
 
-    for( it = touches->begin(); it != touches->end(); it++) 
+    for( auto &item: *touches)
     {
-        touch = (Touch*)(*it);
-
-        if(!touch)
-            break;
+        Touch* touch = static_cast<Touch*>(item);
 
         Point location = touch->getLocation();
 

@@ -72,16 +72,14 @@ void BugsTestMainLayer::onEnter()
 
 void BugsTestMainLayer::ccTouchesBegan(Set *pTouches, Event *pEvent)
 {
-    SetIterator it = pTouches->begin();
-    Touch* touch = (Touch*)(*it);
+    Touch* touch = (Touch*) pTouches->anyObject();
 
     _beginPos = touch->getLocation();    
 }
 
 void BugsTestMainLayer::ccTouchesMoved(Set *pTouches, Event *pEvent)
 {
-    SetIterator it = pTouches->begin();
-    Touch* touch = (Touch*)(*it);
+    Touch* touch = (Touch*) pTouches->anyObject();
 
     Point touchLocation = touch->getLocation();    
     float nMoveY = touchLocation.y - _beginPos.y;

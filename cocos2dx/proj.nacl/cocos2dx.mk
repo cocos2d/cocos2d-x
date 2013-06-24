@@ -2,18 +2,33 @@
 # when building for Native Client.  It defines a set of variables that all
 # cocos2dx projects have in common.
 
+ifeq ($(NACL_SDK_ROOT),)
+  $(error $$NACL_SDK_ROOT not set)
+endif
+
+NACL_SDK_VERSION_MIN=27.186236
+VERSION_CHECK:=$(shell $(NACL_SDK_ROOT)/tools/getos.py --check-version=$(NACL_SDK_VERSION_MIN) 2>&1)
+ifneq ($(VERSION_CHECK),)
+  $(error $(VERSION_CHECK))
+endif
+
 all:
 
+ifeq ($(NACL_GLIBC),1)
+NACL_LIBC = glibc
+else
 NACL_LIBC = newlib
+endif
+
 NACL_ARCH ?= x86_64
 NACL_AR ?= $(NACL_ARCH)-nacl-ar
 NACL_CC ?= $(NACL_ARCH)-nacl-gcc
 NACL_CXX ?= $(NACL_ARCH)-nacl-g++
-CCFLAGS += -Wall -Werror
+CCFLAGS += -Wall -Werror -Wno-deprecated-declarations
 # GCC 4.6 is primary platform for cocos2d v.3, because it's default compiler for Android, 
 # Blackberry, some Linux distributions.It supports all important features of c++11, but have 
 # no flag "-std=c++11" (which was turned on in version 4.7).
-CXXFLAGS += -Wall -Werror -std=gnu++0x 
+CXXFLAGS += -Wall -Werror -Wno-deprecated-declarations -std=gnu++0x
 ARFLAGS = cr
 
 THIS_MAKEFILE := $(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
@@ -37,6 +52,14 @@ NACLPORTS_INCLUDE ?= $(NACLPORTS_ROOT)/include
 OUT_DIR ?= obj
 OBJ_DIR ?= $(OUT_DIR)/$(NACL_ARCH)
 LIB_DIR ?= $(COCOS_ROOT)/lib/nacl/$(ARCH_DIR)
+
+NMF_FLAGS = --objdump=i686-nacl-objdump
+NMF_FLAGS += -L$(NACL_SDK_ROOT)/toolchain/linux_x86_$(NACL_LIBC)/x86_64-nacl/lib32/
+NMF_FLAGS += -L$(NACL_SDK_ROOT)/toolchain/linux_x86_$(NACL_LIBC)/x86_64-nacl/lib64/
+NMF_FLAGS += -L$(NACL_SDK_ROOT)/lib/$(NACL_LIBC)_x86_32/Release
+NMF_FLAGS += -L$(NACL_SDK_ROOT)/lib/$(NACL_LIBC)_x86_64/Release
+NMF_FLAGS += -L$(NACLPORTS_ROOT)/lib/$(NACL_LIBC)_x86_32/Release
+NMF_FLAGS += -L$(NACLPORTS_ROOT)/lib/$(NACL_LIBC)_x86_64/Release
 
 ifdef USE_BOX2D
 DEFINES += -DCC_ENABLE_BOX2D_INTEGRATION=1
@@ -95,16 +118,9 @@ CCFLAGS += -Wno-psabi
 CXXFLAGS += -Wno-psabi
 endif
 
-ifdef NACL_MOUNTS
-DEFINES += -DOLD_NACL_MOUNTS
-STATICLIBS += -lnacl-mounts
-else
-STATICLIBS += -lnacl_io
-endif
-
 SOUNDLIBS := -lalut -lopenal -lvorbisfile -lvorbis -logg
 STATICLIBS += $(SOUNDLIBS) -lfreetype -lxml2 -lwebp -lpng -ljpeg -ltiff -llua -lchipmunk
-STATICLIBS += -lppapi_gles2 -lppapi -lppapi_cpp -lnosys
+STATICLIBS += -lnacl_io -lppapi_gles2 -lppapi -lppapi_cpp
 SHAREDLIBS += -lpthread -lcocosdenshion -lcocos2d -lz
 
 OBJECTS := $(SOURCES:.cpp=.o)
