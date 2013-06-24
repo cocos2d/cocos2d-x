@@ -10,7 +10,7 @@ public:
     virtual void showCurrentTest();
 };
 
-class ParticleMainScene : public CCScene
+class ParticleMainScene : public Scene
 {
 public:
     virtual void initWithSubTest(int subtest, int particles);
@@ -18,9 +18,7 @@ public:
 
     void step(float dt);
     void createParticleSystem();
-    void onDecrease(CCObject* pSender);
-    void onIncrease(CCObject* pSender);
-    void testNCallback(CCObject* pSender);
+    void testNCallback(Object* pSender);
     void updateQuantityLabel();
     int getSubTestNum() { return subtestNumber; }
     int getParticlesNum() { return quantityParticles; }

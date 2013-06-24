@@ -13,12 +13,23 @@ OBJ_DIR ?= obj
 
 EMSCRIPTEN_ROOT := $(realpath $(COCOS_ROOT)/external/emscripten)
 PACKAGER := $(EMSCRIPTEN_ROOT)/tools/file_packager.py
+
+AR := EMSCRIPTEN=$(EMSCRIPTEN_ROOT) $(COCOS_ROOT)/external/emscripten/emar
+CCFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s TOTAL_MEMORY=268435456 -s VERBOSE=1 -U__native_client__ -Wno-deprecated-declarations
+CXXFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s TOTAL_MEMORY=268435456 -s VERBOSE=1 -U__native_client__ -std=c++11 -Wno-deprecated-declarations
+ARFLAGS = cr
+
 CC := EMSCRIPTEN=$(EMSCRIPTEN_ROOT) $(COCOS_ROOT)/external/emscripten/emcc
 CXX := EMSCRIPTEN=$(EMSCRIPTEN_ROOT) $(COCOS_ROOT)/external/emscripten/em++
-AR := EMSCRIPTEN=$(EMSCRIPTEN_ROOT) $(COCOS_ROOT)/external/emscripten/emar
-CCFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s TOTAL_MEMORY=268435456 -s VERBOSE=1 -U__native_client__ -g
-CXXFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s TOTAL_MEMORY=268435456 -s VERBOSE=1 -U__native_client__ -g
-ARFLAGS = cr
+
+# XXX: Not entirely sure why main, malloc and free need to be explicitly listed
+# here, but after adding a --js-library library, these symbols seem to get
+# stripped unless enumerated here.
+EXPORTED_FLAGS := -s EXPORTED_FUNCTIONS="['_CCTextureCacheEmscripten_addImageAsyncCallBack','_CCTextureCacheEmscripten_preMultiplyImageRegion','_malloc','_free','_main']"
+JSLIBS := --js-library $(COCOS_SRC)/platform/emscripten/CCTextureCacheEmscripten.js
+
+CCFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s TOTAL_MEMORY=268435456 -s VERBOSE=1 -U__native_client__ $(EXPORTED_FLAGS) $(JSLIBS)
+CXXFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s TOTAL_MEMORY=268435456 -s VERBOSE=1 -U__native_client__ $(EXPORTED_FLAGS) $(JSLIBS)
 
 LIB_DIR = $(COCOS_SRC)/lib/emscripten
 BIN_DIR = bin
@@ -48,6 +59,9 @@ OBJ_DIR := $(OBJ_DIR)/debug
 LIB_DIR := $(LIB_DIR)/debug
 BIN_DIR := $(BIN_DIR)/debug
 else
+# Async image loading code incompatible with asm.js for now. Disable until
+# we've had time to investigate. --closure 0 so that symbols don't get mangled,
+# rendering them inaccessible from JS code.
 CCFLAGS += -O2 --jcache -s GL_UNSAFE_OPTS=0 -s ASM_JS=1
 CXXFLAGS += -O2 --jcache -s GL_UNSAFE_OPTS=0 -s ASM_JS=1
 DEFINES += -DNDEBUG -DCP_USE_DOUBLES=0

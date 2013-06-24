@@ -39,10 +39,10 @@ NS_CC_BEGIN
  */
 
 //! @brief  Helper class to handle file operations
-class CC_DLL CCFileUtilsMarmalade : public CCFileUtils
+class CC_DLL FileUtilsMarmalade : public FileUtils
 {
-    friend class CCFileUtils;
-    CCFileUtilsMarmalade();
+    friend class FileUtils;
+    FileUtilsMarmalade();
 public:
     /* override funtions */
     virtual std::string getWritablePath();

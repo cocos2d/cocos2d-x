@@ -43,68 +43,68 @@ NS_CC_BEGIN
 
 #define kDefaultSpriteBatchCapacity   29
 
-class CCSprite;
+class Sprite;
 
-/** CCSpriteBatchNode is like a batch node: if it contains children, it will draw them in 1 single OpenGL call
+/** SpriteBatchNode is like a batch node: if it contains children, it will draw them in 1 single OpenGL call
 * (often known as "batch draw").
 *
-* A CCSpriteBatchNode can reference one and only one texture (one image file, one texture atlas).
-* Only the CCSprites that are contained in that texture can be added to the CCSpriteBatchNode.
-* All CCSprites added to a CCSpriteBatchNode are drawn in one OpenGL ES draw call.
-* If the CCSprites are not added to a CCSpriteBatchNode then an OpenGL ES draw call will be needed for each one, which is less efficient.
+* A SpriteBatchNode can reference one and only one texture (one image file, one texture atlas).
+* Only the Sprites that are contained in that texture can be added to the SpriteBatchNode.
+* All Sprites added to a SpriteBatchNode are drawn in one OpenGL ES draw call.
+* If the Sprites are not added to a SpriteBatchNode then an OpenGL ES draw call will be needed for each one, which is less efficient.
 *
 *
 * Limitations:
-*  - The only object that is accepted as child (or grandchild, grand-grandchild, etc...) is CCSprite or any subclass of CCSprite. eg: particles, labels and layer can't be added to a CCSpriteBatchNode.
+*  - The only object that is accepted as child (or grandchild, grand-grandchild, etc...) is Sprite or any subclass of Sprite. eg: particles, labels and layer can't be added to a SpriteBatchNode.
 *  - Either all its children are Aliased or Antialiased. It can't be a mix. This is because "alias" is a property of the texture, and all the sprites share the same texture.
 * 
 * @since v0.7.1
 */
-class CC_DLL CCSpriteBatchNode : public CCNode, public CCTextureProtocol
+class CC_DLL SpriteBatchNode : public Node, public TextureProtocol
 {
 public:
 
-    CCSpriteBatchNode();
-    ~CCSpriteBatchNode();
+    SpriteBatchNode();
+    ~SpriteBatchNode();
 
     // property
     
     // retain
-    inline CCTextureAtlas* getTextureAtlas(void) { return m_pobTextureAtlas; }
-    inline void setTextureAtlas(CCTextureAtlas* textureAtlas) 
+    inline TextureAtlas* getTextureAtlas(void) { return _textureAtlas; }
+    inline void setTextureAtlas(TextureAtlas* textureAtlas) 
     { 
-        if (textureAtlas != m_pobTextureAtlas)
+        if (textureAtlas != _textureAtlas)
         {
             CC_SAFE_RETAIN(textureAtlas);
-            CC_SAFE_RELEASE(m_pobTextureAtlas);
-            m_pobTextureAtlas = textureAtlas;
+            CC_SAFE_RELEASE(_textureAtlas);
+            _textureAtlas = textureAtlas;
         }
     }
 
-    inline CCArray* getDescendants(void) { return m_pobDescendants; }
+    inline Array* getDescendants(void) { return _descendants; }
 
-    /** creates a CCSpriteBatchNode with a texture2d and capacity of children.
+    /** creates a SpriteBatchNode with a texture2d and capacity of children.
     The capacity will be increased in 33% in runtime if it run out of space.
     */
-    static CCSpriteBatchNode* createWithTexture(CCTexture2D* tex, unsigned int capacity);
-    static CCSpriteBatchNode* createWithTexture(CCTexture2D* tex) {
-        return CCSpriteBatchNode::createWithTexture(tex, kDefaultSpriteBatchCapacity);
+    static SpriteBatchNode* createWithTexture(Texture2D* tex, unsigned int capacity);
+    static SpriteBatchNode* createWithTexture(Texture2D* tex) {
+        return SpriteBatchNode::createWithTexture(tex, kDefaultSpriteBatchCapacity);
     }
 
-    /** creates a CCSpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and capacity of children.
+    /** creates a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and capacity of children.
     The capacity will be increased in 33% in runtime if it run out of space.
     The file will be loaded using the TextureMgr.
     */
-    static CCSpriteBatchNode* create(const char* fileImage, unsigned int capacity);
-    static CCSpriteBatchNode* create(const char* fileImage) {
-        return CCSpriteBatchNode::create(fileImage, kDefaultSpriteBatchCapacity);
+    static SpriteBatchNode* create(const char* fileImage, unsigned int capacity);
+    static SpriteBatchNode* create(const char* fileImage) {
+        return SpriteBatchNode::create(fileImage, kDefaultSpriteBatchCapacity);
     }
 
-    /** initializes a CCSpriteBatchNode with a texture2d and capacity of children.
+    /** initializes a SpriteBatchNode with a texture2d and capacity of children.
     The capacity will be increased in 33% in runtime if it run out of space.
     */
-    bool initWithTexture(CCTexture2D *tex, unsigned int capacity);
-    /** initializes a CCSpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.
+    bool initWithTexture(Texture2D *tex, unsigned int capacity);
+    /** initializes a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.
     The capacity will be increased in 33% in runtime if it run out of space.
     The file will be loaded using the TextureMgr.
     */
@@ -114,64 +114,64 @@ public:
     void increaseAtlasCapacity();
 
     /** removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter.
-    @warning Removing a child from a CCSpriteBatchNode is very slow
+    @warning Removing a child from a SpriteBatchNode is very slow
     */
     void removeChildAtIndex(unsigned int index, bool doCleanup);
 
-    void insertChild(CCSprite *child, unsigned int index);
-    void appendChild(CCSprite* sprite);
-    void removeSpriteFromAtlas(CCSprite *sprite);
+    void insertChild(Sprite *child, unsigned int index);
+    void appendChild(Sprite* sprite);
+    void removeSpriteFromAtlas(Sprite *sprite);
 
-    unsigned int rebuildIndexInOrder(CCSprite *parent, unsigned int index);
-    unsigned int highestAtlasIndexInChild(CCSprite *sprite);
-    unsigned int lowestAtlasIndexInChild(CCSprite *sprite);
-    unsigned int atlasIndexForChild(CCSprite *sprite, int z);
+    unsigned int rebuildIndexInOrder(Sprite *parent, unsigned int index);
+    unsigned int highestAtlasIndexInChild(Sprite *sprite);
+    unsigned int lowestAtlasIndexInChild(Sprite *sprite);
+    unsigned int atlasIndexForChild(Sprite *sprite, int z);
     /* Sprites use this to start sortChildren, don't call this manually */
     void reorderBatch(bool reorder);
-    // CCTextureProtocol
-    virtual CCTexture2D* getTexture(void);
-    virtual void setTexture(CCTexture2D *texture);
+    // TextureProtocol
+    virtual Texture2D* getTexture(void);
+    virtual void setTexture(Texture2D *texture);
     virtual void setBlendFunc(ccBlendFunc blendFunc);
     virtual ccBlendFunc getBlendFunc(void);
 
     virtual void visit(void);
-    virtual void addChild(CCNode * child);
-    virtual void addChild(CCNode * child, int zOrder);
-    virtual void addChild(CCNode * child, int zOrder, int tag);
-    virtual void reorderChild(CCNode * child, int zOrder);
+    virtual void addChild(Node * child);
+    virtual void addChild(Node * child, int zOrder);
+    virtual void addChild(Node * child, int zOrder, int tag);
+    virtual void reorderChild(Node * child, int zOrder);
         
-    virtual void removeChild(CCNode* child, bool cleanup);
+    virtual void removeChild(Node* child, bool cleanup);
     virtual void removeAllChildrenWithCleanup(bool cleanup);
     virtual void sortAllChildren();
     virtual void draw(void);
 
 protected:
-    /** Inserts a quad at a certain index into the texture atlas. The CCSprite won't be added into the children array.
-     This method should be called only when you are dealing with very big AtlasSrite and when most of the CCSprite won't be updated.
-     For example: a tile map (CCTMXMap) or a label with lots of characters (CCLabelBMFont)
+    /** Inserts a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.
+     This method should be called only when you are dealing with very big AtlasSrite and when most of the Sprite won't be updated.
+     For example: a tile map (TMXMap) or a label with lots of characters (LabelBMFont)
      */
-    void insertQuadFromSprite(CCSprite *sprite, unsigned int index);
-    /** Updates a quad at a certain index into the texture atlas. The CCSprite won't be added into the children array.
-     This method should be called only when you are dealing with very big AtlasSrite and when most of the CCSprite won't be updated.
-     For example: a tile map (CCTMXMap) or a label with lots of characters (CCLabelBMFont)
+    void insertQuadFromSprite(Sprite *sprite, unsigned int index);
+    /** Updates a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.
+     This method should be called only when you are dealing with very big AtlasSrite and when most of the Sprite won't be updated.
+     For example: a tile map (TMXMap) or a label with lots of characters (LabelBMFont)
      */
-    void updateQuadFromSprite(CCSprite *sprite, unsigned int index);
+    void updateQuadFromSprite(Sprite *sprite, unsigned int index);
     /* This is the opposite of "addQuadFromSprite.
     It add the sprite to the children and descendants array, but it doesn't update add it to the texture atlas
     */
-    CCSpriteBatchNode * addSpriteWithoutQuad(CCSprite*child, unsigned int z, int aTag);
+    SpriteBatchNode * addSpriteWithoutQuad(Sprite*child, unsigned int z, int aTag);
 
 private:
-    void updateAtlasIndex(CCSprite* sprite, int* curIndex);
+    void updateAtlasIndex(Sprite* sprite, int* curIndex);
     void swap(int oldIndex, int newIndex);
     void updateBlendFunc();
 
 protected:
-    CCTextureAtlas *m_pobTextureAtlas;
-    ccBlendFunc m_blendFunc;
+    TextureAtlas *_textureAtlas;
+    ccBlendFunc _blendFunc;
 
     // all descendants: children, gran children, etc...
-    CCArray* m_pobDescendants;
+    Array* _descendants;
 };
 
 // end of sprite_nodes group

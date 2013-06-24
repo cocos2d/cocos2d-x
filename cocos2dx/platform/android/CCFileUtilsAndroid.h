@@ -30,6 +30,12 @@
 #include "ccTypeInfo.h"
 #include <string>
 #include <vector>
+#include "jni.h"
+#include "android/asset_manager.h"
+
+extern "C" {
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetAssetManager(JNIEnv*  env, jobject thiz, jobject java_assetmanager);
+}
 
 NS_CC_BEGIN
 
@@ -39,12 +45,12 @@ NS_CC_BEGIN
  */
 
 //! @brief  Helper class to handle file operations
-class CC_DLL CCFileUtilsAndroid : public CCFileUtils
+class CC_DLL FileUtilsAndroid : public FileUtils
 {
-    friend class CCFileUtils;
-    CCFileUtilsAndroid();
+    friend class FileUtils;
+    FileUtilsAndroid();
 public:
-    virtual ~CCFileUtilsAndroid();
+    virtual ~FileUtilsAndroid();
 
     /* override funtions */
     bool init();
@@ -52,6 +58,14 @@ public:
     virtual std::string getWritablePath();
     virtual bool isFileExist(const std::string& strFilePath);
     virtual bool isAbsolutePath(const std::string& strPath);
+    
+    /** This function is android specific. It is used for TextureCache::addImageAsync(). 
+     Don't use it in your codes.
+     */
+    unsigned char* getFileDataForAsync(const char* pszFileName, const char* pszMode, unsigned long * pSize);
+    
+private:
+    unsigned char* doGetFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize, bool forAsync);
 };
 
 // end of platform group
@@ -60,4 +74,3 @@ public:
 NS_CC_END
 
 #endif    // __CC_FILEUTILS_ANDROID_H__
-

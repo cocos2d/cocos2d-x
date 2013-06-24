@@ -8,19 +8,23 @@
 
 enum
 {
-    MAX_COUNT = 5,
     LINE_SPACE = 40,
     kItemTagBasic = 1000,
 };
 
-const std::string testsName[MAX_COUNT] = 
+struct {
+	const char *name;
+	std::function<void(Object*)> callback;
+} g_testsName[] =
 {
-    "PerformanceNodeChildrenTest",
-    "PerformanceParticleTest",
-    "PerformanceSpriteTest",
-    "PerformanceTextureTest",
-    "PerformanceTouchesTest"
+    { "PerformanceNodeChildrenTest", [](Object*sender){runNodeChildrenTest();} },
+	{ "PerformanceParticleTest",[](Object*sender){runParticleTest();} },
+	{ "PerformanceSpriteTest",[](Object*sender){runSpriteTest();} },
+	{ "PerformanceTextureTest",[](Object*sender){runTextureTest();} },
+	{ "PerformanceTouchesTest",[](Object*sender){runTouchesTest();} },
 };
+
+static const int g_testMax = sizeof(g_testsName)/sizeof(g_testsName[0]);
 
 ////////////////////////////////////////////////////////
 //
@@ -29,50 +33,22 @@ const std::string testsName[MAX_COUNT] =
 ////////////////////////////////////////////////////////
 void PerformanceMainLayer::onEnter()
 {
-    CCLayer::onEnter();
+    Layer::onEnter();
 
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
 
-    CCMenu* pMenu = CCMenu::create();
-    pMenu->setPosition( CCPointZero );
-    CCMenuItemFont::setFontName("Arial");
-    CCMenuItemFont::setFontSize(24);
-    for (int i = 0; i < MAX_COUNT; ++i)
+    Menu* pMenu = Menu::create();
+    pMenu->setPosition( PointZero );
+    MenuItemFont::setFontName("Arial");
+    MenuItemFont::setFontSize(24);
+    for (int i = 0; i < g_testMax; ++i)
     {
-        CCMenuItemFont* pItem = CCMenuItemFont::create(testsName[i].c_str(), this,
-                                                    menu_selector(PerformanceMainLayer::menuCallback));
+        MenuItemFont* pItem = MenuItemFont::create(g_testsName[i].name, g_testsName[i].callback);
         pItem->setPosition(ccp(s.width / 2, s.height - (i + 1) * LINE_SPACE));
         pMenu->addChild(pItem, kItemTagBasic + i);
     }
 
     addChild(pMenu);
-}
-
-void PerformanceMainLayer::menuCallback(CCObject* pSender)
-{
-    CCMenuItemFont* pItem = (CCMenuItemFont*)pSender;
-    int nIndex = pItem->getZOrder() - kItemTagBasic;
-
-    switch (nIndex)
-    {
-    case 0:
-        runNodeChildrenTest();
-        break;
-    case 1:
-        runParticleTest();
-        break;
-    case 2:
-        runSpriteTest();
-        break;
-    case 3:
-        runTextureTest();
-        break;
-    case 4:
-        runTouchesTest();
-        break;
-    default:
-        break;
-    }
 }
 
 ////////////////////////////////////////////////////////
@@ -81,30 +57,29 @@ void PerformanceMainLayer::menuCallback(CCObject* pSender)
 //
 ////////////////////////////////////////////////////////
 PerformBasicLayer::PerformBasicLayer(bool bControlMenuVisible, int nMaxCases, int nCurCase)
-: m_bControlMenuVisible(bControlMenuVisible)
-, m_nMaxCases(nMaxCases)
-, m_nCurCase(nCurCase)
+: _controlMenuVisible(bControlMenuVisible)
+, _maxCases(nMaxCases)
+, _curCase(nCurCase)
 {
 
 }
 
 void PerformBasicLayer::onEnter()
 {
-    CCLayer::onEnter();
+    Layer::onEnter();
 
-    CCMenuItemFont::setFontName("Arial");
-    CCMenuItemFont::setFontSize(24);
-    CCMenuItemFont* pMainItem = CCMenuItemFont::create("Back", this,
-                                                    menu_selector(PerformBasicLayer::toMainLayer));
+    MenuItemFont::setFontName("Arial");
+    MenuItemFont::setFontSize(24);
+    MenuItemFont* pMainItem = MenuItemFont::create("Back", CC_CALLBACK_1(PerformBasicLayer::toMainLayer, this));
     pMainItem->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-    CCMenu* pMenu = CCMenu::create(pMainItem, NULL);
-    pMenu->setPosition( CCPointZero );
+    Menu* pMenu = Menu::create(pMainItem, NULL);
+    pMenu->setPosition( PointZero );
 
-    if (m_bControlMenuVisible)
+    if (_controlMenuVisible)
     {
-        CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(PerformBasicLayer::backCallback) );
-        CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(PerformBasicLayer::restartCallback) );
-        CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(PerformBasicLayer::nextCallback) );
+        MenuItemImage *item1 = MenuItemImage::create(s_pPathB1, s_pPathB2, CC_CALLBACK_1(PerformBasicLayer::backCallback, this));
+        MenuItemImage *item2 = MenuItemImage::create(s_pPathR1, s_pPathR2, CC_CALLBACK_1(PerformBasicLayer::restartCallback, this));
+        MenuItemImage *item3 = MenuItemImage::create(s_pPathF1, s_pPathF2, CC_CALLBACK_1(PerformBasicLayer::nextCallback, this));
         item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
         item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
         item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
@@ -116,7 +91,7 @@ void PerformBasicLayer::onEnter()
     addChild(pMenu);
 }
 
-void PerformBasicLayer::toMainLayer(CCObject* pSender)
+void PerformBasicLayer::toMainLayer(Object* pSender)
 {
     PerformanceTestScene* pScene = new PerformanceTestScene();
     pScene->runThisTest();
@@ -124,24 +99,24 @@ void PerformBasicLayer::toMainLayer(CCObject* pSender)
     pScene->release();
 }
 
-void PerformBasicLayer::restartCallback(CCObject* pSender)
+void PerformBasicLayer::restartCallback(Object* pSender)
 {
     showCurrentTest();
 }
 
-void PerformBasicLayer::nextCallback(CCObject* pSender)
+void PerformBasicLayer::nextCallback(Object* pSender)
 {
-    m_nCurCase++;
-    m_nCurCase = m_nCurCase % m_nMaxCases;
+    _curCase++;
+    _curCase = _curCase % _maxCases;
 
     showCurrentTest();
 }
 
-void PerformBasicLayer::backCallback(CCObject* pSender)
+void PerformBasicLayer::backCallback(Object* pSender)
 {
-    m_nCurCase--;
-    if( m_nCurCase < 0 )
-        m_nCurCase += m_nMaxCases;
+    _curCase--;
+    if( _curCase < 0 )
+        _curCase += _maxCases;
 
     showCurrentTest();
 }
@@ -154,9 +129,9 @@ void PerformBasicLayer::backCallback(CCObject* pSender)
 
 void PerformanceTestScene::runThisTest()
 {
-    CCLayer* pLayer = new PerformanceMainLayer();
+    Layer* pLayer = new PerformanceMainLayer();
     addChild(pLayer);
     pLayer->release();
 
-    CCDirector::sharedDirector()->replaceScene(this);
+    Director::sharedDirector()->replaceScene(this);
 }

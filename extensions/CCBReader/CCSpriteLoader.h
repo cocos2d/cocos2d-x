@@ -8,19 +8,19 @@ NS_CC_EXT_BEGIN
 /* Forward declaration. */
 class CCBReader;
 
-class CCSpriteLoader : public CCNodeLoader {
+class SpriteLoader : public NodeLoader {
     public:
-        virtual ~CCSpriteLoader() {};
-        CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCSpriteLoader, loader);
+        virtual ~SpriteLoader() {};
+        CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(SpriteLoader, loader);
 
     protected:
-        CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(CCSprite);
+        CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(Sprite);
 
-        virtual void onHandlePropTypeColor3(CCNode * pNode, CCNode * pParent, const char * pPropertyName, ccColor3B pCCColor3B, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeByte(CCNode * pNode, CCNode * pParent, const char * pPropertyName, unsigned char pByte, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeBlendFunc(CCNode * pNode, CCNode * pParent, const char * pPropertyName, ccBlendFunc pCCBBlendFunc, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeSpriteFrame(CCNode * pNode, CCNode * pParent, const char * pPropertyName, CCSpriteFrame * pCCSpriteFrame, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeFlip(CCNode * pNode, CCNode * pParent, const char * pPropertyName, bool * pFlip, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeColor3(Node * pNode, Node * pParent, const char * pPropertyName, ccColor3B pColor3B, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeByte(Node * pNode, Node * pParent, const char * pPropertyName, unsigned char pByte, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const char * pPropertyName, ccBlendFunc pCCBBlendFunc, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeSpriteFrame(Node * pNode, Node * pParent, const char * pPropertyName, SpriteFrame * pSpriteFrame, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeFlip(Node * pNode, Node * pParent, const char * pPropertyName, bool * pFlip, CCBReader * pCCBReader);
 };
 
 NS_CC_EXT_END

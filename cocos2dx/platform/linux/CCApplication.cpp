@@ -1,5 +1,5 @@
 /*
- * CCAplication_linux.cpp
+ * Aplication_linux.cpp
  *
  *  Created on: Aug 8, 2011
  *      Author: laschweinski
@@ -15,7 +15,7 @@ NS_CC_BEGIN
 
 
 // sharedApplication pointer
-CCApplication * CCApplication::sm_pSharedApplication = 0;
+Application * Application::sm_pSharedApplication = 0;
 
 static long getCurrentMillSecond() {
 	long lLastTime;
@@ -26,20 +26,20 @@ static long getCurrentMillSecond() {
 	return lLastTime;
 }
 
-CCApplication::CCApplication()
+Application::Application()
 {
 	CC_ASSERT(! sm_pSharedApplication);
 	sm_pSharedApplication = this;
 }
 
-CCApplication::~CCApplication()
+Application::~Application()
 {
 	CC_ASSERT(this == sm_pSharedApplication);
 	sm_pSharedApplication = NULL;
-	m_nAnimationInterval = 1.0f/60.0f*1000.0f;
+	_animationInterval = 1.0f/60.0f*1000.0f;
 }
 
-int CCApplication::run()
+int Application::run()
 {
 	// Initialize instance and cocos2d.
 	if (! applicationDidFinishLaunching())
@@ -50,41 +50,41 @@ int CCApplication::run()
 
 	for (;;) {
 		long iLastTime = getCurrentMillSecond();
-		CCDirector::sharedDirector()->mainLoop();
+		Director::sharedDirector()->mainLoop();
 		long iCurTime = getCurrentMillSecond();
-		if (iCurTime-iLastTime<m_nAnimationInterval){
-			usleep((m_nAnimationInterval - iCurTime+iLastTime)*1000);
+		if (iCurTime-iLastTime<_animationInterval){
+			usleep((_animationInterval - iCurTime+iLastTime)*1000);
 		}
 
 	}
 	return -1;
 }
 
-void CCApplication::setAnimationInterval(double interval)
+void Application::setAnimationInterval(double interval)
 {
 	//TODO do something else
-	m_nAnimationInterval = interval*1000.0f;
+	_animationInterval = interval*1000.0f;
 }
 
-void CCApplication::setResourceRootPath(const std::string& rootResDir)
+void Application::setResourceRootPath(const std::string& rootResDir)
 {
-    m_resourceRootPath = rootResDir;
-    if (m_resourceRootPath[m_resourceRootPath.length() - 1] != '/')
+    _resourceRootPath = rootResDir;
+    if (_resourceRootPath[_resourceRootPath.length() - 1] != '/')
     {
-        m_resourceRootPath += '/';
+        _resourceRootPath += '/';
     }
-    CCFileUtils* pFileUtils = CCFileUtils::sharedFileUtils();
+    FileUtils* pFileUtils = FileUtils::sharedFileUtils();
     std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
-    searchPaths.insert(searchPaths.begin(), m_resourceRootPath);
+    searchPaths.insert(searchPaths.begin(), _resourceRootPath);
     pFileUtils->setSearchPaths(searchPaths);
 }
 
-const std::string& CCApplication::getResourceRootPath(void)
+const std::string& Application::getResourceRootPath(void)
 {
-    return m_resourceRootPath;
+    return _resourceRootPath;
 }
 
-TargetPlatform CCApplication::getTargetPlatform()
+TargetPlatform Application::getTargetPlatform()
 {
     return kTargetLinux;
 }
@@ -92,13 +92,13 @@ TargetPlatform CCApplication::getTargetPlatform()
 //////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////
-CCApplication* CCApplication::sharedApplication()
+Application* Application::sharedApplication()
 {
 	CC_ASSERT(sm_pSharedApplication);
 	return sm_pSharedApplication;
 }
 
-ccLanguageType CCApplication::getCurrentLanguage()
+ccLanguageType Application::getCurrentLanguage()
 {
 	char *pLanguageName = getenv("LANG");
 	ccLanguageType ret = kLanguageEnglish;
@@ -159,6 +159,14 @@ ccLanguageType CCApplication::getCurrentLanguage()
     else if (0 == strcmp("ar", pLanguageName))
 	{
 		ret = kLanguageArabic;
+	}
+	else if (0 == strcmp("nb", pLanguageName))
+	{
+		ret = kLanguageNorwegian;
+	}
+	else if (0 == strcmp("pl", pLanguageName))
+	{
+		ret = kLanguagePolish;
 	}
 	
 	return ret;

@@ -80,7 +80,7 @@ simple macro that swaps 2 variables
  */
 #define CC_RADIANS_TO_DEGREES(__ANGLE__) ((__ANGLE__) * 57.29577951f) // PI * 180
 
-#define kCCRepeatForever (UINT_MAX -1)
+#define kRepeatForever (UINT_MAX -1)
 
 /** @def CC_BLEND_SRC
 default gl blend src function. Compatible with premultiplied alpha images.
@@ -95,7 +95,7 @@ default gl blend src function. Compatible with premultiplied alpha images.
  */
 #define CC_NODE_DRAW_SETUP() \
 do { \
-    ccGLEnable(m_eGLServerState); \
+    ccGLEnable(_GLServerState); \
     CCAssert(getShaderProgram(), "No shader program set for this node"); \
     { \
         getShaderProgram()->use(); \
@@ -106,13 +106,13 @@ do { \
 
  /** @def CC_DIRECTOR_END
   Stops and removes the director from memory.
-  Removes the CCGLView from its parent
+  Removes the GLView from its parent
 
   @since v0.99.4
   */
 #define CC_DIRECTOR_END()                                        \
 do {                                                            \
-    CCDirector *__director = CCDirector::sharedDirector();        \
+    Director *__director = Director::sharedDirector();        \
     __director->end();                                            \
 } while(0)
 
@@ -120,7 +120,7 @@ do {                                                            \
 On Mac it returns 1;
 On iPhone it returns 2 if RetinaDisplay is On. Otherwise it returns 1
 */
-#define CC_CONTENT_SCALE_FACTOR() CCDirector::sharedDirector()->getContentScaleFactor()
+#define CC_CONTENT_SCALE_FACTOR() Director::sharedDirector()->getContentScaleFactor()
 
 /****************************/
 /** RETINA DISPLAY ENABLED **/
@@ -194,20 +194,20 @@ It should work same as apples CFSwapInt32LittleToHost(..)
 /**********************/
 #if CC_ENABLE_PROFILERS
 
-#define CC_PROFILER_DISPLAY_TIMERS() CCProfiler::sharedProfiler()->displayTimers()
-#define CC_PROFILER_PURGE_ALL() CCProfiler::sharedProfiler()->releaseAllTimers()
+#define CC_PROFILER_DISPLAY_TIMERS() Profiler::sharedProfiler()->displayTimers()
+#define CC_PROFILER_PURGE_ALL() Profiler::sharedProfiler()->releaseAllTimers()
 
-#define CC_PROFILER_START(__name__) CCProfilingBeginTimingBlock(__name__)
-#define CC_PROFILER_STOP(__name__) CCProfilingEndTimingBlock(__name__)
-#define CC_PROFILER_RESET(__name__) CCProfilingResetTimingBlock(__name__)
+#define CC_PROFILER_START(__name__) ProfilingBeginTimingBlock(__name__)
+#define CC_PROFILER_STOP(__name__) ProfilingEndTimingBlock(__name__)
+#define CC_PROFILER_RESET(__name__) ProfilingResetTimingBlock(__name__)
 
-#define CC_PROFILER_START_CATEGORY(__cat__, __name__) do{ if(__cat__) CCProfilingBeginTimingBlock(__name__); } while(0)
-#define CC_PROFILER_STOP_CATEGORY(__cat__, __name__) do{ if(__cat__) CCProfilingEndTimingBlock(__name__); } while(0)
-#define CC_PROFILER_RESET_CATEGORY(__cat__, __name__) do{ if(__cat__) CCProfilingResetTimingBlock(__name__); } while(0)
+#define CC_PROFILER_START_CATEGORY(__cat__, __name__) do{ if(__cat__) ProfilingBeginTimingBlock(__name__); } while(0)
+#define CC_PROFILER_STOP_CATEGORY(__cat__, __name__) do{ if(__cat__) ProfilingEndTimingBlock(__name__); } while(0)
+#define CC_PROFILER_RESET_CATEGORY(__cat__, __name__) do{ if(__cat__) ProfilingResetTimingBlock(__name__); } while(0)
 
-#define CC_PROFILER_START_INSTANCE(__id__, __name__) do{ CCProfilingBeginTimingBlock( CCString::createWithFormat("%08X - %s", __id__, __name__)->getCString() ); } while(0)
-#define CC_PROFILER_STOP_INSTANCE(__id__, __name__) do{ CCProfilingEndTimingBlock(    CCString::createWithFormat("%08X - %s", __id__, __name__)->getCString() ); } while(0)
-#define CC_PROFILER_RESET_INSTANCE(__id__, __name__) do{ CCProfilingResetTimingBlock( CCString::createWithFormat("%08X - %s", __id__, __name__)->getCString() ); } while(0)
+#define CC_PROFILER_START_INSTANCE(__id__, __name__) do{ ProfilingBeginTimingBlock( String::createWithFormat("%08X - %s", __id__, __name__)->getCString() ); } while(0)
+#define CC_PROFILER_STOP_INSTANCE(__id__, __name__) do{ ProfilingEndTimingBlock(    String::createWithFormat("%08X - %s", __id__, __name__)->getCString() ); } while(0)
+#define CC_PROFILER_RESET_INSTANCE(__id__, __name__) do{ ProfilingResetTimingBlock( String::createWithFormat("%08X - %s", __id__, __name__)->getCString() ); } while(0)
 
 
 #else
@@ -243,7 +243,7 @@ It should work same as apples CFSwapInt32LittleToHost(..)
 
 /** @def CC_INCREMENT_GL_DRAWS_BY_ONE
  Increments the GL Draws counts by one.
- The number of calls per frame are displayed on the screen when the CCDirector's stats are enabled.
+ The number of calls per frame are displayed on the screen when the Director's stats are enabled.
  */
 extern unsigned int CC_DLL g_uNumberOfDraws;
 #define CC_INCREMENT_GL_DRAWS(__n__) g_uNumberOfDraws += __n__
@@ -251,9 +251,9 @@ extern unsigned int CC_DLL g_uNumberOfDraws;
 /*******************/
 /** Notifications **/
 /*******************/
-/** @def CCAnimationFrameDisplayedNotification
- Notification name when a CCSpriteFrame is displayed
+/** @def AnimationFrameDisplayedNotification
+ Notification name when a SpriteFrame is displayed
  */
-#define CCAnimationFrameDisplayedNotification "CCAnimationFrameDisplayedNotification"
+#define AnimationFrameDisplayedNotification "CCAnimationFrameDisplayedNotification"
 
 #endif // __CCMACROS_H__

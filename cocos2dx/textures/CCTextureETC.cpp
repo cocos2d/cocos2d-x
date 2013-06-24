@@ -33,38 +33,38 @@
 
 NS_CC_BEGIN
 
-CCTextureETC::CCTextureETC()
+TextureETC::TextureETC()
 : _name(0)
 , _width(0)
 , _height(0)
 {}
 
-CCTextureETC::~CCTextureETC()
+TextureETC::~TextureETC()
 {
 }
 
-bool CCTextureETC::initWithFile(const char *file)
+bool TextureETC::initWithFile(const char *file)
 {
     // Only Android supports ETC file format
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    bool ret = loadTexture(CCFileUtils::sharedFileUtils()->fullPathForFilename(file).c_str());
+    bool ret = loadTexture(FileUtils::sharedFileUtils()->fullPathForFilename(file).c_str());
     return ret;
 #else
     return false;
 #endif
 }
 
-unsigned int CCTextureETC::getName() const
+unsigned int TextureETC::getName() const
 {
     return _name;
 }
 
-unsigned int CCTextureETC::getWidth() const
+unsigned int TextureETC::getWidth() const
 {
     return _width;
 }
 
-unsigned int CCTextureETC::getHeight() const
+unsigned int TextureETC::getHeight() const
 {
     return _height;
 }
@@ -92,7 +92,7 @@ extern "C"
 }
 #endif
 
-bool CCTextureETC::loadTexture(const char* file)
+bool TextureETC::loadTexture(const char* file)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     JniMethodInfo t;

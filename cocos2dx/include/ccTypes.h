@@ -317,25 +317,25 @@ typedef struct _ccBlendFunc
     GLenum dst;
 } ccBlendFunc;
 
-static const ccBlendFunc kCCBlendFuncDisable = {GL_ONE, GL_ZERO};
+static const ccBlendFunc kBlendFuncDisable = {GL_ONE, GL_ZERO};
 
-// XXX: If any of these enums are edited and/or reordered, update CCTexture2D.m
+// XXX: If any of these enums are edited and/or reordered, update Texture2D.m
 //! Vertical text alignment type
 typedef enum
 {
-    kCCVerticalTextAlignmentTop,
-    kCCVerticalTextAlignmentCenter,
-    kCCVerticalTextAlignmentBottom,
-} CCVerticalTextAlignment;
+    kVerticalTextAlignmentTop,
+    kVerticalTextAlignmentCenter,
+    kVerticalTextAlignmentBottom,
+} VerticalTextAlignment;
 
-// XXX: If any of these enums are edited and/or reordered, update CCTexture2D.m
+// XXX: If any of these enums are edited and/or reordered, update Texture2D.m
 //! Horizontal text alignment type
 typedef enum
 {
-    kCCTextAlignmentLeft,
-    kCCTextAlignmentCenter,
-    kCCTextAlignmentRight,
-} CCTextAlignment;
+    kTextAlignmentLeft,
+    kTextAlignmentCenter,
+    kTextAlignmentRight,
+} TextAlignment;
 
 // types for animation in particle systems
 
@@ -352,12 +352,12 @@ typedef struct _ccT2F_Quad
     ccTex2F    tr;
 } ccT2F_Quad;
 
-// struct that holds the size in pixels, texture coordinates and delays for animated CCParticleSystemQuad
+// struct that holds the size in pixels, texture coordinates and delays for animated ParticleSystemQuad
 typedef struct
 {
     ccT2F_Quad texCoords;
     float delay;
-    CCSize size; 
+    Size size; 
 } ccAnimationFrameData;
 
 
@@ -372,16 +372,16 @@ typedef struct _ccFontShadow
 public:
     
     // shadow is not enabled by default
-    _ccFontShadow(): m_shadowEnabled(false) {}
+    _ccFontShadow(): _shadowEnabled(false) {}
     
     // true if shadow enabled
-    bool   m_shadowEnabled;
+    bool   _shadowEnabled;
     // shadow x and y offset
-	CCSize m_shadowOffset;
+	Size _shadowOffset;
     // shadow blurrines
-	float  m_shadowBlur;
+	float  _shadowBlur;
     // shadow opacity
-	float  m_shadowOpacity;
+	float  _shadowOpacity;
     
 } ccFontShadow;
 
@@ -391,14 +391,14 @@ typedef struct _ccFontStroke
 public:
     
     // stroke is disabled by default
-    _ccFontStroke(): m_strokeEnabled(false) {}
+    _ccFontStroke(): _strokeEnabled(false) {}
     
     // true if stroke enabled
-    bool        m_strokeEnabled;
+    bool        _strokeEnabled;
     // stroke color
-	ccColor3B   m_strokeColor;
+	ccColor3B   _strokeColor;
     // stroke size
-    float       m_strokeSize;
+    float       _strokeSize;
     
 } ccFontStroke;
 
@@ -407,27 +407,27 @@ typedef struct _ccFontDefinition
 {
 public:
     
-    _ccFontDefinition():  m_alignment(kCCTextAlignmentCenter),
-    m_vertAlignment(kCCVerticalTextAlignmentTop),
-    m_fontFillColor(ccWHITE)
-    { m_dimensions = CCSizeMake(0,0); }
+    _ccFontDefinition():  _alignment(kTextAlignmentCenter),
+    _vertAlignment(kVerticalTextAlignmentTop),
+    _fontFillColor(ccWHITE)
+    { _dimensions = CCSizeMake(0,0); }
     
     // font name
-    std::string             m_fontName;
+    std::string             _fontName;
     // font size
-    int                     m_fontSize;
+    int                     _fontSize;
     // horizontal alignment
-    CCTextAlignment         m_alignment;
+    TextAlignment         _alignment;
     // vertical alignment
-    CCVerticalTextAlignment m_vertAlignment;
+    VerticalTextAlignment _vertAlignment;
     // renering box
-    CCSize                  m_dimensions;
+    Size                  _dimensions;
     // font color
-    ccColor3B               m_fontFillColor;
+    ccColor3B               _fontFillColor;
     // font shadow
-    ccFontShadow            m_shadow;
+    ccFontShadow            _shadow;
     // font stroke
-    ccFontStroke            m_stroke;
+    ccFontStroke            _stroke;
     
 } ccFontDefinition;
 

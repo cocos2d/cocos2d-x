@@ -31,11 +31,11 @@
 
 NS_CC_BEGIN
 
-class CC_DLL CCTextureETC : public CCObject
+class CC_DLL TextureETC : public Object
 {
 public:
-    CCTextureETC();
-    virtual ~CCTextureETC();
+    TextureETC();
+    virtual ~TextureETC();
 
     bool initWithFile(const char* file);
 

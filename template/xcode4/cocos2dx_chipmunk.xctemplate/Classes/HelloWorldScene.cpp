@@ -24,20 +24,20 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 }
 
 ChipmunkPhysicsSprite::ChipmunkPhysicsSprite()
-: m_pBody(NULL)
+: _body(NULL)
 {
 
 }
 
 ChipmunkPhysicsSprite::~ChipmunkPhysicsSprite()
 {
-    cpBodyEachShape(m_pBody, removeShape, NULL);
-    cpBodyFree( m_pBody );
+    cpBodyEachShape(_body, removeShape, NULL);
+    cpBodyFree( _body );
 }
 
 void ChipmunkPhysicsSprite::setPhysicsBody(cpBody * body)
 {
-    m_pBody = body;
+    _body = body;
 }
 
 // this method will only get called if the sprite is batched.
@@ -48,31 +48,31 @@ bool ChipmunkPhysicsSprite::isDirty(void)
     return true;
 }
 
-CCAffineTransform ChipmunkPhysicsSprite::nodeToParentTransform(void)
+AffineTransform ChipmunkPhysicsSprite::nodeToParentTransform(void)
 {
-    float x = m_pBody->p.x;
-    float y = m_pBody->p.y;
+    float x = _body->p.x;
+    float y = _body->p.y;
 
     if ( isIgnoreAnchorPointForPosition() ) {
-        x += m_obAnchorPointInPoints.x;
-        y += m_obAnchorPointInPoints.y;
+        x += _anchorPointInPoints.x;
+        y += _anchorPointInPoints.y;
     }
 
     // Make matrix
-    float c = m_pBody->rot.x;
-    float s = m_pBody->rot.y;
+    float c = _body->rot.x;
+    float s = _body->rot.y;
 
-    if( ! m_obAnchorPointInPoints.equals(CCPointZero) ){
-        x += c*-m_obAnchorPointInPoints.x + -s*-m_obAnchorPointInPoints.y;
-        y += s*-m_obAnchorPointInPoints.x + c*-m_obAnchorPointInPoints.y;
+    if( ! _anchorPointInPoints.equals(PointZero) ){
+        x += c*-_anchorPointInPoints.x + -s*-_anchorPointInPoints.y;
+        y += s*-_anchorPointInPoints.x + c*-_anchorPointInPoints.y;
     }
 
     // Rot, Translate Matrix
-    m_sTransform = CCAffineTransformMake( c,  s,
+    _transform = AffineTransformMake( c,  s,
         -s,    c,
         x,    y );
 
-    return m_sTransform;
+    return _transform;
 }
 
 HelloWorld::HelloWorld()
@@ -83,17 +83,17 @@ HelloWorld::~HelloWorld()
 {
     // manually Free rogue shapes
     for( int i=0;i<4;i++) {
-        cpShapeFree( m_pWalls[i] );
+        cpShapeFree( _walls[i] );
     }
     
-    cpSpaceFree( m_pSpace );
+    cpSpaceFree( _space );
     
 }
 
-CCScene* HelloWorld::scene()
+Scene* HelloWorld::scene()
 {
     // 'scene' is an autorelease object.
-    CCScene *scene = CCScene::create();
+    Scene *scene = Scene::create();
 
     // 'layer' is an autorelease object.
     HelloWorld *layer = HelloWorld::create();
@@ -107,7 +107,7 @@ CCScene* HelloWorld::scene()
 
 bool HelloWorld::init()
 {
-    if (!CCLayer::init())
+    if (!Layer::init())
     {
         return false;
     }
@@ -116,10 +116,10 @@ bool HelloWorld::init()
     setTouchEnabled(true);
     setAccelerometerEnabled(true);
 
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
 
     // title
-    CCLabelTTF *label = CCLabelTTF::create("Multi touch the screen", "Marker Felt", 36);
+    LabelTTF *label = LabelTTF::create("Multi touch the screen", "Marker Felt", 36);
     label->setPosition(ccp( s.width / 2, s.height - 30));
     this->addChild(label, -1);
 
@@ -128,12 +128,12 @@ bool HelloWorld::init()
 
 #if 1
     // Use batch node. Faster
-    CCSpriteBatchNode *parent = CCSpriteBatchNode::create("grossini_dance_atlas.png", 100);
-    m_pSpriteTexture = parent->getTexture();
+    SpriteBatchNode *parent = SpriteBatchNode::create("grossini_dance_atlas.png", 100);
+    _spriteTexture = parent->getTexture();
 #else
     // doesn't use batch node. Slower
-    m_pSpriteTexture = CCTextureCache::sharedTextureCache()->addImage("grossini_dance_atlas.png");
-    CCNode *parent = CCNode::node();
+    _spriteTexture = TextureCache::sharedTextureCache()->addImage("grossini_dance_atlas.png");
+    Node *parent = Node::node();
 #endif
     addChild(parent, 0, kTagParentNode);
 
@@ -147,35 +147,35 @@ bool HelloWorld::init()
 
 void HelloWorld::initPhysics()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
 
     // init chipmunk
     cpInitChipmunk();
 
-    m_pSpace = cpSpaceNew();
+    _space = cpSpaceNew();
 
-    m_pSpace->gravity = cpv(0, -100);
+    _space->gravity = cpv(0, -100);
 
     //
     // rogue shapes
     // We have to free them manually
     //
     // bottom
-    m_pWalls[0] = cpSegmentShapeNew( m_pSpace->staticBody, cpv(0,0), cpv(s.width,0), 0.0f);
+    _walls[0] = cpSegmentShapeNew( _space->staticBody, cpv(0,0), cpv(s.width,0), 0.0f);
 
     // top
-    m_pWalls[1] = cpSegmentShapeNew( m_pSpace->staticBody, cpv(0,s.height), cpv(s.width,s.height), 0.0f);
+    _walls[1] = cpSegmentShapeNew( _space->staticBody, cpv(0,s.height), cpv(s.width,s.height), 0.0f);
 
     // left
-    m_pWalls[2] = cpSegmentShapeNew( m_pSpace->staticBody, cpv(0,0), cpv(0,s.height), 0.0f);
+    _walls[2] = cpSegmentShapeNew( _space->staticBody, cpv(0,0), cpv(0,s.height), 0.0f);
 
     // right
-    m_pWalls[3] = cpSegmentShapeNew( m_pSpace->staticBody, cpv(s.width,0), cpv(s.width,s.height), 0.0f);
+    _walls[3] = cpSegmentShapeNew( _space->staticBody, cpv(s.width,0), cpv(s.width,s.height), 0.0f);
 
     for( int i=0;i<4;i++) {
-        m_pWalls[i]->e = 1.0f;
-        m_pWalls[i]->u = 1.0f;
-        cpSpaceAddStaticShape(m_pSpace, m_pWalls[i] );
+        _walls[i]->e = 1.0f;
+        _walls[i]->u = 1.0f;
+        cpSpaceAddStaticShape(_space, _walls[i] );
     }
 }
 
@@ -183,18 +183,18 @@ void HelloWorld::update(float delta)
 {
     // Should use a fixed size step based on the animation interval.
     int steps = 2;
-    float dt = CCDirector::sharedDirector()->getAnimationInterval()/(float)steps;
+    float dt = Director::sharedDirector()->getAnimationInterval()/(float)steps;
 
     for(int i=0; i<steps; i++){
-        cpSpaceStep(m_pSpace, dt);
+        cpSpaceStep(_space, dt);
     }
 }
 
-void HelloWorld::addNewSpriteAtPosition(CCPoint pos)
+void HelloWorld::addNewSpriteAtPosition(Point pos)
 {
     int posx, posy;
 
-    CCNode *parent = getChildByTag(kTagParentNode);
+    Node *parent = getChildByTag(kTagParentNode);
 
     posx = CCRANDOM_0_1() * 200.0f;
     posy = CCRANDOM_0_1() * 200.0f;
@@ -203,7 +203,7 @@ void HelloWorld::addNewSpriteAtPosition(CCPoint pos)
     posy = (posy % 3) * 121;
 
     ChipmunkPhysicsSprite *sprite = new ChipmunkPhysicsSprite();
-    sprite->initWithTexture(m_pSpriteTexture, CCRectMake(posx, posy, 85, 121));
+    sprite->initWithTexture(_spriteTexture, CCRectMake(posx, posy, 85, 121));
     sprite->autorelease();
 
     parent->addChild(sprite);
@@ -221,37 +221,37 @@ void HelloWorld::addNewSpriteAtPosition(CCPoint pos)
     cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, cpvzero));
 
     body->p = cpv(pos.x, pos.y);
-    cpSpaceAddBody(m_pSpace, body);
+    cpSpaceAddBody(_space, body);
 
     cpShape* shape = cpPolyShapeNew(body, num, verts, cpvzero);
     shape->e = 0.5f; shape->u = 0.5f;
-    cpSpaceAddShape(m_pSpace, shape);
+    cpSpaceAddShape(_space, shape);
 
     sprite->setPhysicsBody(body);
 }
 
-void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event)
+void HelloWorld::ccTouchesEnded(Set* touches, Event* event)
 {
     //Add a new body/atlas sprite at the touched location
-    CCSetIterator it;
-    CCTouch* touch;
+    SetIterator it;
+    Touch* touch;
 
     for( it = touches->begin(); it != touches->end(); it++) 
     {
-        touch = (CCTouch*)(*it);
+        touch = (Touch*)(*it);
 
         if(!touch)
             break;
 
-        CCPoint location = touch->getLocationInView();
+        Point location = touch->getLocationInView();
 
-        location = CCDirector::sharedDirector()->convertToGL(location);
+        location = Director::sharedDirector()->convertToGL(location);
 
         addNewSpriteAtPosition( location );
     }
 }
 
-void HelloWorld::didAccelerate(CCAcceleration* pAccelerationValue)
+void HelloWorld::didAccelerate(Acceleration* pAccelerationValue)
 {
     static float prevX=0, prevY=0;
 
@@ -263,9 +263,9 @@ void HelloWorld::didAccelerate(CCAcceleration* pAccelerationValue)
     prevX = accelX;
     prevY = accelY;
 
-    CCPoint v = ccp( accelX, accelY);
+    Point v = ccp( accelX, accelY);
     v = ccpMult(v, 200);
-    m_pSpace->gravity = cpv(v.x, v.y);
+    _space->gravity = cpv(v.x, v.y);
 }
 
 

@@ -1,3 +1,8 @@
+cocos2d-x-3.0alpha0-pre @Jul.24 2013
+[all platforms]
+     Feature  #XXXX: Add support for std::function<> in CCMemuItem and CCCallFunc
+
+
 2.1rc0-x-2.1.4 @Jnue.12 2013
 [all platforms]
      Bug      #2098: fix TouchPriority issue of CCScrollView

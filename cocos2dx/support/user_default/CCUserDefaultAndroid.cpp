@@ -24,6 +24,7 @@ THE SOFTWARE.
 #include "CCUserDefault.h"
 #include "platform/CCPlatformConfig.h"
 #include "platform/CCCommon.h"
+#include "support/base64.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
@@ -45,12 +46,12 @@ using namespace std;
 NS_CC_BEGIN
 
 /**
- * implements of CCUserDefault
+ * implements of UserDefault
  */
 
-CCUserDefault* CCUserDefault::m_spUserDefault = 0;
-string CCUserDefault::m_sFilePath = string("");
-bool CCUserDefault::m_sbIsFilePathInitialized = false;
+UserDefault* UserDefault::_spUserDefault = 0;
+string UserDefault::_filePath = string("");
+bool UserDefault::_sbIsFilePathInitialized = false;
 
 #ifdef KEEP_COMPATABILITY
 static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDocument **doc)
@@ -58,7 +59,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
     tinyxml2::XMLElement* curNode = NULL;
     tinyxml2::XMLElement* rootNode = NULL;
     
-    if (! CCUserDefault::isXMLFileExist())
+    if (! UserDefault::isXMLFileExist())
     {
         return NULL;
     }
@@ -74,7 +75,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
         tinyxml2::XMLDocument* xmlDoc = new tinyxml2::XMLDocument();
         *doc = xmlDoc;
         unsigned long nSize;
-        const char* pXmlBuffer = (const char*)CCFileUtils::sharedFileUtils()->getFileData(CCUserDefault::sharedUserDefault()->getXMLFilePath().c_str(), "rb", &nSize);
+        const char* pXmlBuffer = (const char*)FileUtils::sharedFileUtils()->getFileData(UserDefault::sharedUserDefault()->getXMLFilePath().c_str(), "rb", &nSize);
         //const char* pXmlBuffer = (const char*)data.getBuffer();
         if(NULL == pXmlBuffer)
         {
@@ -95,7 +96,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
         if (!curNode)
         {
             // There is not xml node, delete xml file.
-            remove(CCUserDefault::sharedUserDefault()->getXMLFilePath().c_str());
+            remove(UserDefault::sharedUserDefault()->getXMLFilePath().c_str());
             
             return NULL;
         }
@@ -121,7 +122,7 @@ static void deleteNode(tinyxml2::XMLDocument* doc, tinyxml2::XMLElement* node)
     if (node)
     {
         doc->DeleteNode(node);
-        doc->SaveFile(CCUserDefault::sharedUserDefault()->getXMLFilePath().c_str());
+        doc->SaveFile(UserDefault::sharedUserDefault()->getXMLFilePath().c_str());
         delete doc;
     }
 }
@@ -135,31 +136,31 @@ static void deleteNodeByKey(const char *pKey)
 #endif
 
 /**
- * If the user invoke delete CCUserDefault::sharedUserDefault(), should set m_spUserDefault
- * to null to avoid error when he invoke CCUserDefault::sharedUserDefault() later.
+ * If the user invoke delete UserDefault::sharedUserDefault(), should set _spUserDefault
+ * to null to avoid error when he invoke UserDefault::sharedUserDefault() later.
  */
-CCUserDefault::~CCUserDefault()
+UserDefault::~UserDefault()
 {
-	CC_SAFE_DELETE(m_spUserDefault);
-    m_spUserDefault = NULL;
+	CC_SAFE_DELETE(_spUserDefault);
+    _spUserDefault = NULL;
 }
 
-CCUserDefault::CCUserDefault()
+UserDefault::UserDefault()
 {
-	m_spUserDefault = NULL;
+	_spUserDefault = NULL;
 }
 
-void CCUserDefault::purgeSharedUserDefault()
+void UserDefault::purgeSharedUserDefault()
 {
-    m_spUserDefault = NULL;
+    _spUserDefault = NULL;
 }
 
- bool CCUserDefault::getBoolForKey(const char* pKey)
+ bool UserDefault::getBoolForKey(const char* pKey)
  {
      return getBoolForKey(pKey, false);
  }
 
-bool CCUserDefault::getBoolForKey(const char* pKey, bool defaultValue)
+bool UserDefault::getBoolForKey(const char* pKey, bool defaultValue)
 {
 #ifdef KEEP_COMPATABILITY
     tinyxml2::XMLDocument* doc = NULL;
@@ -191,12 +192,12 @@ bool CCUserDefault::getBoolForKey(const char* pKey, bool defaultValue)
     return getBoolForKeyJNI(pKey, defaultValue);
 }
 
-int CCUserDefault::getIntegerForKey(const char* pKey)
+int UserDefault::getIntegerForKey(const char* pKey)
 {
     return getIntegerForKey(pKey, 0);
 }
 
-int CCUserDefault::getIntegerForKey(const char* pKey, int defaultValue)
+int UserDefault::getIntegerForKey(const char* pKey, int defaultValue)
 {
 #ifdef KEEP_COMPATABILITY
     tinyxml2::XMLDocument* doc = NULL;
@@ -227,12 +228,12 @@ int CCUserDefault::getIntegerForKey(const char* pKey, int defaultValue)
 	return getIntegerForKeyJNI(pKey, defaultValue);
 }
 
-float CCUserDefault::getFloatForKey(const char* pKey)
+float UserDefault::getFloatForKey(const char* pKey)
 {
     return getFloatForKey(pKey, 0.0f);
 }
 
-float CCUserDefault::getFloatForKey(const char* pKey, float defaultValue)
+float UserDefault::getFloatForKey(const char* pKey, float defaultValue)
 {
 #ifdef KEEP_COMPATABILITY
     tinyxml2::XMLDocument* doc = NULL;
@@ -263,12 +264,12 @@ float CCUserDefault::getFloatForKey(const char* pKey, float defaultValue)
     return getFloatForKeyJNI(pKey, defaultValue);
 }
 
-double  CCUserDefault::getDoubleForKey(const char* pKey)
+double  UserDefault::getDoubleForKey(const char* pKey)
 {
     return getDoubleForKey(pKey, 0.0);
 }
 
-double CCUserDefault::getDoubleForKey(const char* pKey, double defaultValue)
+double UserDefault::getDoubleForKey(const char* pKey, double defaultValue)
 {
 #ifdef KEEP_COMPATABILITY
     tinyxml2::XMLDocument* doc = NULL;
@@ -299,12 +300,12 @@ double CCUserDefault::getDoubleForKey(const char* pKey, double defaultValue)
 	return getDoubleForKeyJNI(pKey, defaultValue);
 }
 
-std::string CCUserDefault::getStringForKey(const char* pKey)
+std::string UserDefault::getStringForKey(const char* pKey)
 {
     return getStringForKey(pKey, "");
 }
 
-string CCUserDefault::getStringForKey(const char* pKey, const std::string & defaultValue)
+string UserDefault::getStringForKey(const char* pKey, const std::string & defaultValue)
 {
 #ifdef KEEP_COMPATABILITY
     tinyxml2::XMLDocument* doc = NULL;
@@ -335,7 +336,81 @@ string CCUserDefault::getStringForKey(const char* pKey, const std::string & defa
     return getStringForKeyJNI(pKey, defaultValue.c_str());
 }
 
-void CCUserDefault::setBoolForKey(const char* pKey, bool value)
+Data* UserDefault::getDataForKey(const char* pKey)
+{
+    return getDataForKey(pKey, NULL);
+}
+
+Data* UserDefault::getDataForKey(const char* pKey, Data* defaultValue)
+{
+#ifdef KEEP_COMPATABILITY
+    tinyxml2::XMLDocument* doc = NULL;
+    tinyxml2::XMLElement* node = getXMLNodeForKey(pKey, &doc);
+    if (node)
+    {
+        if (node->FirstChild())
+        {
+            const char * encodedData = node->FirstChild()->Value();
+            
+            unsigned char * decodedData;
+            int decodedDataLen = base64Decode((unsigned char*)encodedData, (unsigned int)strlen(encodedData), &decodedData);
+            
+            if (decodedData) {
+                Data *ret = Data::create(decodedData, decodedDataLen);
+                
+                // set value in NSUserDefaults
+                setDataForKey(pKey, ret);
+                
+                CC_SAFE_DELETE_ARRAY(decodedData);
+                
+                delete decodedData;
+                
+                flush();
+                
+                // delete xmle node
+                deleteNode(doc, node);
+                
+                return ret;
+            }
+        }
+        else
+        {
+            // delete xmle node
+            deleteNode(doc, node);
+        }
+    }
+#endif
+    
+    char * encodedDefaultData = NULL;
+    unsigned int encodedDefaultDataLen = defaultValue ? base64Encode(defaultValue->getBytes(), defaultValue->getSize(), &encodedDefaultData) : 0;
+    
+    string encodedStr = getStringForKeyJNI(pKey, encodedDefaultData);
+
+    if (encodedDefaultData) {
+        delete encodedDefaultData;
+    }
+
+    CCLOG("ENCODED STRING: --%s--%d", encodedStr.c_str(), encodedStr.length());
+    
+    Data *ret = defaultValue;
+    
+    unsigned char * decodedData = NULL;
+    int decodedDataLen = base64Decode((unsigned char*)encodedStr.c_str(), (unsigned int)encodedStr.length(), &decodedData);
+
+    CCLOG("AFTER DECoDE. ret %p defaultValue %p", ret, defaultValue);
+    CCLOG("DECoDED DATA: %s %d", decodedData, decodedDataLen);
+    
+    if (decodedData && decodedDataLen) {
+        ret = Data::create(decodedData, decodedDataLen);
+    }
+
+    CCLOG("RETURNED %p!", ret);
+    
+    return ret;
+}
+
+
+void UserDefault::setBoolForKey(const char* pKey, bool value)
 {
 #ifdef KEEP_COMPATABILITY
     deleteNodeByKey(pKey);
@@ -344,7 +419,7 @@ void CCUserDefault::setBoolForKey(const char* pKey, bool value)
     return setBoolForKeyJNI(pKey, value);
 }
 
-void CCUserDefault::setIntegerForKey(const char* pKey, int value)
+void UserDefault::setIntegerForKey(const char* pKey, int value)
 {
 #ifdef KEEP_COMPATABILITY
     deleteNodeByKey(pKey);
@@ -353,7 +428,7 @@ void CCUserDefault::setIntegerForKey(const char* pKey, int value)
     return setIntegerForKeyJNI(pKey, value);
 }
 
-void CCUserDefault::setFloatForKey(const char* pKey, float value)
+void UserDefault::setFloatForKey(const char* pKey, float value)
 {
 #ifdef KEEP_COMPATABILITY
     deleteNodeByKey(pKey);
@@ -362,7 +437,7 @@ void CCUserDefault::setFloatForKey(const char* pKey, float value)
     return setFloatForKeyJNI(pKey, value);
 }
 
-void CCUserDefault::setDoubleForKey(const char* pKey, double value)
+void UserDefault::setDoubleForKey(const char* pKey, double value)
 {
 #ifdef KEEP_COMPATABILITY
     deleteNodeByKey(pKey);
@@ -371,7 +446,7 @@ void CCUserDefault::setDoubleForKey(const char* pKey, double value)
     return setDoubleForKeyJNI(pKey, value);
 }
 
-void CCUserDefault::setStringForKey(const char* pKey, const std::string & value)
+void UserDefault::setStringForKey(const char* pKey, const std::string & value)
 {
 #ifdef KEEP_COMPATABILITY
     deleteNodeByKey(pKey);
@@ -380,23 +455,43 @@ void CCUserDefault::setStringForKey(const char* pKey, const std::string & value)
     return setStringForKeyJNI(pKey, value.c_str());
 }
 
-CCUserDefault* CCUserDefault::sharedUserDefault()
+void UserDefault::setDataForKey(const char* pKey, const Data& value)
+{
+#ifdef KEEP_COMPATABILITY
+    deleteNodeByKey(pKey);
+#endif
+    
+    CCLOG("SET DATA FOR KEY: --%s--%d", value.getBytes(), value.getSize());
+    char * encodedData = NULL;
+    unsigned int encodedDataLen = base64Encode(value.getBytes(), value.getSize(), &encodedData);
+
+    CCLOG("SET DATA ENCODED: --%s", encodedData);
+    
+    return setStringForKeyJNI(pKey, encodedData);
+    
+    if (encodedData) {
+        delete encodedData;
+    }
+}
+
+
+UserDefault* UserDefault::sharedUserDefault()
 {
 #ifdef KEEP_COMPATABILITY
     initXMLFilePath();
 #endif
     
-    if (! m_spUserDefault)
+    if (! _spUserDefault)
     {
-        m_spUserDefault = new CCUserDefault();
+        _spUserDefault = new UserDefault();
     }
 
-    return m_spUserDefault;
+    return _spUserDefault;
 }
 
-bool CCUserDefault::isXMLFileExist()
+bool UserDefault::isXMLFileExist()
 {
-    FILE *fp = fopen(m_sFilePath.c_str(), "r");
+    FILE *fp = fopen(_filePath.c_str(), "r");
     bool bRet = false;
     
     if (fp)
@@ -408,30 +503,30 @@ bool CCUserDefault::isXMLFileExist()
     return bRet;
 }
 
-void CCUserDefault::initXMLFilePath()
+void UserDefault::initXMLFilePath()
 {
 #ifdef KEEP_COMPATABILITY
-    if (! m_sbIsFilePathInitialized)
+    if (! _sbIsFilePathInitialized)
     {
         // UserDefault.xml is stored in /data/data/<package-path>/ before v2.1.2
-        m_sFilePath += "/data/data/" + getPackageNameJNI() + "/" + XML_FILE_NAME;
-        m_sbIsFilePathInitialized = true;
+        _filePath += "/data/data/" + getPackageNameJNI() + "/" + XML_FILE_NAME;
+        _sbIsFilePathInitialized = true;
     }
 #endif
 }
 
 // create new xml file
-bool CCUserDefault::createXMLFile()
+bool UserDefault::createXMLFile()
 {
     return false;
 }
 
-const string& CCUserDefault::getXMLFilePath()
+const string& UserDefault::getXMLFilePath()
 {
-    return m_sFilePath;
+    return _filePath;
 }
 
-void CCUserDefault::flush()
+void UserDefault::flush()
 {
 }
 

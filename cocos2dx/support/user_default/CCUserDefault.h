@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 #include "platform/CCPlatformMacros.h"
 #include <string>
+#include "cocoa/CCData.h"
 
 NS_CC_BEGIN
 
@@ -35,17 +36,17 @@ NS_CC_BEGIN
  */
 
 /**
- * CCUserDefault acts as a tiny database. You can save and get base type values by it.
+ * UserDefault acts as a tiny database. You can save and get base type values by it.
  * For example, setBoolForKey("played", true) will add a bool value true into the database.
  * Its key is "played". You can get the value of the key by getBoolForKey("played").
  * 
  * It supports the following base types:
  * bool, int, float, double, string
  */
-class CC_DLL CCUserDefault
+class CC_DLL UserDefault
 {
 public:
-    ~CCUserDefault();
+    ~UserDefault();
 
     // get value methods
 
@@ -79,6 +80,12 @@ public:
     */
     std::string getStringForKey(const char* pKey);
     std::string getStringForKey(const char* pKey, const std::string & defaultValue);
+    /**
+     @brief Get binary data value by key, if the key doesn't exist, a default value will return.
+     You can set the default value, or it is null.
+     */
+    Data* getDataForKey(const char* pKey);
+    Data* getDataForKey(const char* pKey, Data* defaultValue);
 
     // set value methods
 
@@ -103,23 +110,27 @@ public:
     */
     void    setStringForKey(const char* pKey, const std::string & value);
     /**
+     @brief Set binary data value by key.
+     */
+    void    setDataForKey(const char* pKey, const Data& value);
+    /**
      @brief Save content to xml file
      */
     void    flush();
 
-    static CCUserDefault* sharedUserDefault();
+    static UserDefault* sharedUserDefault();
     static void purgeSharedUserDefault();
     const static std::string& getXMLFilePath();
     static bool isXMLFileExist();
 
 private:
-    CCUserDefault();
+    UserDefault();
     static bool createXMLFile();
     static void initXMLFilePath();
     
-    static CCUserDefault* m_spUserDefault;
-    static std::string m_sFilePath;
-    static bool m_sbIsFilePathInitialized;
+    static UserDefault* _spUserDefault;
+    static std::string _filePath;
+    static bool _sbIsFilePathInitialized;
 };
 
 // end of data_storage group

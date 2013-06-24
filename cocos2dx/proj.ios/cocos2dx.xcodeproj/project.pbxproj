@@ -156,8 +156,6 @@
 		1551A724158F2ADE00E66CFE /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A477158F2ADE00E66CFE /* CCSAXParser.cpp */; };
 		1551A725158F2ADE00E66CFE /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A478158F2ADE00E66CFE /* CCSAXParser.h */; };
 		1551A727158F2ADE00E66CFE /* CCThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A47A158F2ADE00E66CFE /* CCThread.h */; };
-		1551A728158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A47C158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h */; };
-		1551A729158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1551A47D158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm */; };
 		1551A72A158F2ADE00E66CFE /* CCAccelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A47E158F2ADE00E66CFE /* CCAccelerometer.h */; };
 		1551A72B158F2ADE00E66CFE /* CCAccelerometer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1551A47F158F2ADE00E66CFE /* CCAccelerometer.mm */; };
 		1551A72C158F2ADE00E66CFE /* CCApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A480158F2ADE00E66CFE /* CCApplication.h */; };
@@ -291,10 +289,12 @@
 		1AC6CE8816B910CD00330EFD /* CCFileUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC6CE8616B910CD00330EFD /* CCFileUtils.cpp */; };
 		1AC6CE8916B910CD00330EFD /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC6CE8716B910CD00330EFD /* CCFileUtils.h */; };
 		2628297A15EC7064002C4240 /* ccTypeInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 2628297915EC7064002C4240 /* ccTypeInfo.h */; };
-		37EEEBF8175DDF3A003C1193 /* CCComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37EEEBF4175DDF3A003C1193 /* CCComponent.cpp */; };
-		37EEEBF9175DDF3A003C1193 /* CCComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 37EEEBF5175DDF3A003C1193 /* CCComponent.h */; };
-		37EEEBFA175DDF3A003C1193 /* CCComponentContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37EEEBF6175DDF3A003C1193 /* CCComponentContainer.cpp */; };
-		37EEEBFB175DDF3A003C1193 /* CCComponentContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 37EEEBF7175DDF3A003C1193 /* CCComponentContainer.h */; };
+		36B713C717557CB900A2554C /* CCData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36B713C517557CB900A2554C /* CCData.cpp */; };
+		36B713C817557CB900A2554C /* CCData.h in Headers */ = {isa = PBXBuildFile; fileRef = 36B713C617557CB900A2554C /* CCData.h */; };
+		465E20AC176ABE63001D853C /* CCComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 465E20A8176ABE63001D853C /* CCComponent.cpp */; };
+		465E20AD176ABE63001D853C /* CCComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 465E20A9176ABE63001D853C /* CCComponent.h */; };
+		465E20AE176ABE63001D853C /* CCComponentContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 465E20AA176ABE63001D853C /* CCComponentContainer.cpp */; };
+		465E20AF176ABE63001D853C /* CCComponentContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 465E20AB176ABE63001D853C /* CCComponentContainer.h */; };
 		4698CFA9174CBB700066A57B /* CCTextureETC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4698CFA7174CBB700066A57B /* CCTextureETC.cpp */; };
 		4698CFAA174CBB700066A57B /* CCTextureETC.h in Headers */ = {isa = PBXBuildFile; fileRef = 4698CFA8174CBB700066A57B /* CCTextureETC.h */; };
 		469A7DF316C24787006FFCB2 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 469A7DF116C24787006FFCB2 /* tinyxml2.cpp */; };
@@ -471,8 +471,6 @@
 		1551A477158F2ADE00E66CFE /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
 		1551A478158F2ADE00E66CFE /* CCSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSAXParser.h; sourceTree = "<group>"; };
 		1551A47A158F2ADE00E66CFE /* CCThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCThread.h; sourceTree = "<group>"; };
-		1551A47C158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerometerDelegateWrapper.h; sourceTree = "<group>"; };
-		1551A47D158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AccelerometerDelegateWrapper.mm; sourceTree = "<group>"; };
 		1551A47E158F2ADE00E66CFE /* CCAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAccelerometer.h; sourceTree = "<group>"; };
 		1551A47F158F2ADE00E66CFE /* CCAccelerometer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCAccelerometer.mm; sourceTree = "<group>"; };
 		1551A480158F2ADE00E66CFE /* CCApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCApplication.h; sourceTree = "<group>"; };
@@ -606,10 +604,12 @@
 		1AC6CE8616B910CD00330EFD /* CCFileUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFileUtils.cpp; sourceTree = "<group>"; };
 		1AC6CE8716B910CD00330EFD /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtils.h; sourceTree = "<group>"; };
 		2628297915EC7064002C4240 /* ccTypeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypeInfo.h; sourceTree = "<group>"; };
-		37EEEBF4175DDF3A003C1193 /* CCComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCComponent.cpp; sourceTree = "<group>"; };
-		37EEEBF5175DDF3A003C1193 /* CCComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComponent.h; sourceTree = "<group>"; };
-		37EEEBF6175DDF3A003C1193 /* CCComponentContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCComponentContainer.cpp; sourceTree = "<group>"; };
-		37EEEBF7175DDF3A003C1193 /* CCComponentContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComponentContainer.h; sourceTree = "<group>"; };
+		36B713C517557CB900A2554C /* CCData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCData.cpp; sourceTree = "<group>"; };
+		36B713C617557CB900A2554C /* CCData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCData.h; sourceTree = "<group>"; };
+		465E20A8176ABE63001D853C /* CCComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCComponent.cpp; sourceTree = "<group>"; };
+		465E20A9176ABE63001D853C /* CCComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComponent.h; sourceTree = "<group>"; };
+		465E20AA176ABE63001D853C /* CCComponentContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCComponentContainer.cpp; sourceTree = "<group>"; };
+		465E20AB176ABE63001D853C /* CCComponentContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComponentContainer.h; sourceTree = "<group>"; };
 		4698CFA7174CBB700066A57B /* CCTextureETC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextureETC.cpp; sourceTree = "<group>"; };
 		4698CFA8174CBB700066A57B /* CCTextureETC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextureETC.h; sourceTree = "<group>"; };
 		469A7DF116C24787006FFCB2 /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml2.cpp; sourceTree = "<group>"; };
@@ -787,6 +787,8 @@
 				1551A392158F2ADE00E66CFE /* CCString.h */,
 				1551A393158F2ADE00E66CFE /* CCZone.cpp */,
 				1551A394158F2ADE00E66CFE /* CCZone.h */,
+				36B713C517557CB900A2554C /* CCData.cpp */,
+				36B713C617557CB900A2554C /* CCData.h */,
 			);
 			path = cocoa;
 			sourceTree = "<group>";
@@ -1003,8 +1005,6 @@
 		1551A47B158F2ADE00E66CFE /* ios */ = {
 			isa = PBXGroup;
 			children = (
-				1551A47C158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h */,
-				1551A47D158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm */,
 				1551A47E158F2ADE00E66CFE /* CCAccelerometer.h */,
 				1551A47F158F2ADE00E66CFE /* CCAccelerometer.mm */,
 				1551A480158F2ADE00E66CFE /* CCApplication.h */,
@@ -1120,7 +1120,7 @@
 				1551A5F1158F2ADE00E66CFE /* ccUtils.h */,
 				1551A5F3158F2ADE00E66CFE /* CCVertex.h */,
 				1551A5FD158F2ADE00E66CFE /* TransformUtils.h */,
-				37EEEBF3175DDF3A003C1193 /* component */,
+				465E20A7176ABE63001D853C /* component */,
 				1551A5F4158F2ADE00E66CFE /* data_support */,
 				1551A5F9158F2ADE00E66CFE /* image_support */,
 				469A7DF016C24787006FFCB2 /* tinyxml2 */,
@@ -1262,13 +1262,13 @@
 			path = webp;
 			sourceTree = "<group>";
 		};
-		37EEEBF3175DDF3A003C1193 /* component */ = {
+		465E20A7176ABE63001D853C /* component */ = {
 			isa = PBXGroup;
 			children = (
-				37EEEBF4175DDF3A003C1193 /* CCComponent.cpp */,
-				37EEEBF5175DDF3A003C1193 /* CCComponent.h */,
-				37EEEBF6175DDF3A003C1193 /* CCComponentContainer.cpp */,
-				37EEEBF7175DDF3A003C1193 /* CCComponentContainer.h */,
+				465E20A8176ABE63001D853C /* CCComponent.cpp */,
+				465E20A9176ABE63001D853C /* CCComponent.h */,
+				465E20AA176ABE63001D853C /* CCComponentContainer.cpp */,
+				465E20AB176ABE63001D853C /* CCComponentContainer.h */,
 			);
 			path = component;
 			sourceTree = "<group>";
@@ -1380,7 +1380,6 @@
 				1551A723158F2ADE00E66CFE /* CCPlatformMacros.h in Headers */,
 				1551A725158F2ADE00E66CFE /* CCSAXParser.h in Headers */,
 				1551A727158F2ADE00E66CFE /* CCThread.h in Headers */,
-				1551A728158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h in Headers */,
 				1551A72A158F2ADE00E66CFE /* CCAccelerometer.h in Headers */,
 				1551A72C158F2ADE00E66CFE /* CCApplication.h in Headers */,
 				1551A72F158F2ADE00E66CFE /* CCDirectorCaller.h in Headers */,
@@ -1471,8 +1470,9 @@
 				1A5B48EC16F084CC008568FC /* CCFloat.h in Headers */,
 				1A5429001720F0650074EC5C /* CCDataVisitor.h in Headers */,
 				4698CFAA174CBB700066A57B /* CCTextureETC.h in Headers */,
-				37EEEBF9175DDF3A003C1193 /* CCComponent.h in Headers */,
-				37EEEBFB175DDF3A003C1193 /* CCComponentContainer.h in Headers */,
+				36B713C817557CB900A2554C /* CCData.h in Headers */,
+				465E20AD176ABE63001D853C /* CCComponent.h in Headers */,
+				465E20AF176ABE63001D853C /* CCComponentContainer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1502,7 +1502,7 @@
 		1551A336158F2AB200E66CFE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "cocos2d-x";
 			};
 			buildConfigurationList = 1551A339158F2AB200E66CFE /* Build configuration list for PBXProject "cocos2dx" */;
@@ -1593,7 +1593,6 @@
 				1551A6F7158F2ADE00E66CFE /* CCParticleSystemQuad.cpp in Sources */,
 				1551A71C158F2ADE00E66CFE /* CCEGLViewProtocol.cpp in Sources */,
 				1551A724158F2ADE00E66CFE /* CCSAXParser.cpp in Sources */,
-				1551A729158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm in Sources */,
 				1551A72B158F2ADE00E66CFE /* CCAccelerometer.mm in Sources */,
 				1551A72D158F2ADE00E66CFE /* CCApplication.mm in Sources */,
 				1551A72E158F2ADE00E66CFE /* CCCommon.mm in Sources */,
@@ -1659,8 +1658,9 @@
 				46A393F916E5D01B00210B16 /* CCUserDefaultAndroid.cpp in Sources */,
 				1A5428FF1720F0650074EC5C /* CCDataVisitor.cpp in Sources */,
 				4698CFA9174CBB700066A57B /* CCTextureETC.cpp in Sources */,
-				37EEEBF8175DDF3A003C1193 /* CCComponent.cpp in Sources */,
-				37EEEBFA175DDF3A003C1193 /* CCComponentContainer.cpp in Sources */,
+				36B713C717557CB900A2554C /* CCData.cpp in Sources */,
+				465E20AC176ABE63001D853C /* CCComponent.cpp in Sources */,
+				465E20AE176ABE63001D853C /* CCComponentContainer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1671,11 +1671,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1687,9 +1691,12 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-fdiagnostics-show-option";
 			};
@@ -1699,11 +1706,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1712,9 +1723,12 @@
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				WARNING_CFLAGS = "-fdiagnostics-show-option";
@@ -1725,6 +1739,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/cocos2dx.dst;
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cocos2dx-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1738,6 +1753,7 @@
 					"\"$(SRCROOT)/../kazmath/include\"",
 					"\"$(SDKROOT)/usr/include/libxml2\"",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../platform/third_party/ios/libraries\"",
@@ -1752,6 +1768,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/cocos2dx.dst;
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cocos2dx-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1764,6 +1781,7 @@
 					"\"$(SRCROOT)/../kazmath/include\"",
 					"\"$(SDKROOT)/usr/include/libxml2\"",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../platform/third_party/ios/libraries\"",

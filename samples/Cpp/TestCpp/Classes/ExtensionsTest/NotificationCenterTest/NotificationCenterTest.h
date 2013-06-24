@@ -3,16 +3,16 @@
 
 #include "cocos2d.h"
 
-class NotificationCenterTest : public cocos2d::CCLayer
+class NotificationCenterTest : public cocos2d::Layer
 {
 public:
     NotificationCenterTest();
-    void toExtensionsMainLayer(cocos2d::CCObject* sender);
-    void toggleSwitch(cocos2d::CCObject *sender);
-    void connectToSwitch(cocos2d::CCObject *sender);
-    void doNothing(cocos2d::CCObject *sender);
+    void toExtensionsMainLayer(cocos2d::Object* sender);
+    void toggleSwitch(cocos2d::Object *sender);
+    void connectToSwitch(cocos2d::Object *sender);
+    void doNothing(cocos2d::Object *sender);
 private:
-    bool m_bShowImage;
+    bool _showImage;
 };
 
 void runNotificationCenterTest();

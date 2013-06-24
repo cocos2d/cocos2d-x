@@ -38,57 +38,67 @@ NS_CC_BEGIN
  * @{
  */
 
-class CCZone;
-class CCObject;
-class CCNode;
-class CCEvent;
+class Zone;
+class Object;
+class Node;
+class Event;
 
-class CC_DLL CCCopying
+class CC_DLL Copying
 {
 public:
-    virtual CCObject* copyWithZone(CCZone* pZone);
+    virtual Object* copyWithZone(Zone* pZone);
+	
 };
 
-class CC_DLL CCObject : public CCCopying
+/** Interface that defines how to clone an object */
+class CC_DLL Clonable
 {
 public:
-    // object id, CCScriptSupport need public m_uID
-    unsigned int        m_uID;
+	/** returns a copy of the object */
+    virtual Clonable* clone() const = 0;
+	virtual ~Clonable() {};
+};
+
+class CC_DLL Object : public Copying
+{
+public:
+    // object id, ScriptSupport need public _ID
+    unsigned int        _ID;
     // Lua reference id
-    int                 m_nLuaID;
+    int                 _luaID;
 protected:
     // count of references
-    unsigned int        m_uReference;
+    unsigned int        _reference;
     // count of autorelease
-    unsigned int        m_uAutoReleaseCount;
+    unsigned int        _autoReleaseCount;
 public:
-    CCObject(void);
-    virtual ~CCObject(void);
+    Object(void);
+    virtual ~Object(void);
     
     void release(void);
     void retain(void);
-    CCObject* autorelease(void);
-    CCObject* copy(void);
+    Object* autorelease(void);
+    Object* copy(void);
     bool isSingleReference(void) const;
     unsigned int retainCount(void) const;
-    virtual bool isEqual(const CCObject* pObject);
+    virtual bool isEqual(const Object* pObject);
 
-    virtual void acceptVisitor(CCDataVisitor &visitor);
+    virtual void acceptVisitor(DataVisitor &visitor);
 
     virtual void update(float dt) {CC_UNUSED_PARAM(dt);};
     
-    friend class CCAutoreleasePool;
+    friend class AutoreleasePool;
 };
 
 
-typedef void (CCObject::*SEL_SCHEDULE)(float);
-typedef void (CCObject::*SEL_CallFunc)();
-typedef void (CCObject::*SEL_CallFuncN)(CCNode*);
-typedef void (CCObject::*SEL_CallFuncND)(CCNode*, void*);
-typedef void (CCObject::*SEL_CallFuncO)(CCObject*);
-typedef void (CCObject::*SEL_MenuHandler)(CCObject*);
-typedef void (CCObject::*SEL_EventHandler)(CCEvent*);
-typedef int (CCObject::*SEL_Compare)(CCObject*);
+typedef void (Object::*SEL_SCHEDULE)(float);
+typedef void (Object::*SEL_CallFunc)();
+typedef void (Object::*SEL_CallFuncN)(Node*);
+typedef void (Object::*SEL_CallFuncND)(Node*, void*);
+typedef void (Object::*SEL_CallFuncO)(Object*);
+typedef void (Object::*SEL_MenuHandler)(Object*);
+typedef void (Object::*SEL_EventHandler)(Event*);
+typedef int (Object::*SEL_Compare)(Object*);
 
 #define schedule_selector(_SELECTOR) (SEL_SCHEDULE)(&_SELECTOR)
 #define callfunc_selector(_SELECTOR) (SEL_CallFunc)(&_SELECTOR)
@@ -98,6 +108,11 @@ typedef int (CCObject::*SEL_Compare)(CCObject*);
 #define menu_selector(_SELECTOR) (SEL_MenuHandler)(&_SELECTOR)
 #define event_selector(_SELECTOR) (SEL_EventHandler)(&_SELECTOR)
 #define compare_selector(_SELECTOR) (SEL_Compare)(&_SELECTOR)
+
+// new callbacks based on C++11
+#define CC_CALLBACK_0(__selector__,__target__, ...) std::bind(&__selector__,__target__, ##__VA_ARGS__)
+#define CC_CALLBACK_1(__selector__,__target__, ...) std::bind(&__selector__,__target__, std::placeholders::_1, ##__VA_ARGS__)
+#define CC_CALLBACK_2(__selector__,__target__, ...) std::bind(&__selector__,__target__, std::placeholders::_1, std::placeholders::_2, ##__VA_ARGS__)
 
 // end of base_nodes group
 /// @}

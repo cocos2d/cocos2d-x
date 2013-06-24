@@ -28,31 +28,13 @@ THE SOFTWARE.
 #include "cocoa/CCZone.h"
 
 NS_CC_BEGIN
-// implementation of CCGridAction
+// implementation of GridAction
 
-CCGridAction* CCGridAction::create(float duration, const CCSize& gridSize)
+bool GridAction::initWithDuration(float duration, const Size& gridSize)
 {
-    CCGridAction *pAction = new CCGridAction();
-    if (pAction)
+    if (ActionInterval::initWithDuration(duration))
     {
-        if (pAction->initWithDuration(duration, gridSize))
-        {
-            pAction->autorelease();
-        }
-        else
-        {
-            CC_SAFE_DELETE(pAction);
-        }
-    }
-
-    return pAction;
-}
-
-bool CCGridAction::initWithDuration(float duration, const CCSize& gridSize)
-{
-    if (CCActionInterval::initWithDuration(duration))
-    {
-        m_sGridSize = gridSize;
+        _gridSize = gridSize;
 
         return true;
     }
@@ -60,19 +42,19 @@ bool CCGridAction::initWithDuration(float duration, const CCSize& gridSize)
     return false;
 }
 
-void CCGridAction::startWithTarget(CCNode *pTarget)
+void GridAction::startWithTarget(Node *pTarget)
 {
-    CCActionInterval::startWithTarget(pTarget);
+    ActionInterval::startWithTarget(pTarget);
 
-    CCGridBase *newgrid = this->getGrid();
+    GridBase *newgrid = this->getGrid();
 
-    CCNode *t = m_pTarget;
-    CCGridBase *targetGrid = t->getGrid();
+    Node *t = _target;
+    GridBase *targetGrid = t->getGrid();
 
     if (targetGrid && targetGrid->getReuseGrid() > 0)
     {
-        if (targetGrid->isActive() && targetGrid->getGridSize().width == m_sGridSize.width
-            && targetGrid->getGridSize().height == m_sGridSize.height /*&& dynamic_cast<CCGridBase*>(targetGrid) != NULL*/)
+        if (targetGrid->isActive() && targetGrid->getGridSize().width == _gridSize.width
+            && targetGrid->getGridSize().height == _gridSize.height /*&& dynamic_cast<GridBase*>(targetGrid) != NULL*/)
         {
             targetGrid->reuse();
         }
@@ -93,7 +75,12 @@ void CCGridAction::startWithTarget(CCNode *pTarget)
     }
 }
 
-CCGridBase* CCGridAction::getGrid(void)
+GridAction* GridAction::reverse() const
+{
+	return (GridAction*)ReverseTime::create( this->clone() );
+}
+
+GridBase* GridAction::getGrid(void)
 {
     // Abstract class needs implementation
     CCAssert(0, "");
@@ -101,103 +88,61 @@ CCGridBase* CCGridAction::getGrid(void)
     return NULL;
 }
 
-CCActionInterval* CCGridAction::reverse(void)
-{
-    return CCReverseTime::create(this);
-}
-
-CCObject* CCGridAction::copyWithZone(CCZone *pZone)
-{
-    CCZone* pNewZone = NULL;
-    CCGridAction* pCopy = NULL;
-    if(pZone && pZone->m_pCopyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (CCGridAction*)(pZone->m_pCopyObject);
-    }
-    else
-    {
-        pCopy = new CCGridAction();
-        pZone = pNewZone = new CCZone(pCopy);
-    }
-
-    CCActionInterval::copyWithZone(pZone);
-
-    pCopy->initWithDuration(m_fDuration, m_sGridSize);
-    
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 // implementation of Grid3DAction
 
-CCGridBase* CCGrid3DAction::getGrid(void)
+GridBase* Grid3DAction::getGrid(void)
 {
-    return CCGrid3D::create(m_sGridSize);
+    return Grid3D::create(_gridSize);
 }
 
-ccVertex3F CCGrid3DAction::vertex(const CCPoint& position)
+ccVertex3F Grid3DAction::vertex(const Point& position)
 {
-    CCGrid3D *g = (CCGrid3D*)m_pTarget->getGrid();
+    Grid3D *g = (Grid3D*)_target->getGrid();
     return g->vertex(position);
 }
 
-ccVertex3F CCGrid3DAction::originalVertex(const CCPoint& position)
+ccVertex3F Grid3DAction::originalVertex(const Point& position)
 {
-    CCGrid3D *g = (CCGrid3D*)m_pTarget->getGrid();
+    Grid3D *g = (Grid3D*)_target->getGrid();
     return g->originalVertex(position);
 }
 
-void CCGrid3DAction::setVertex(const CCPoint& position, const ccVertex3F& vertex)
+void Grid3DAction::setVertex(const Point& position, const ccVertex3F& vertex)
 {
-    CCGrid3D *g = (CCGrid3D*)m_pTarget->getGrid();
+    Grid3D *g = (Grid3D*)_target->getGrid();
     g->setVertex(position, vertex);
 }
 
 // implementation of TiledGrid3DAction
 
-CCGridBase* CCTiledGrid3DAction::getGrid(void)
+GridBase* TiledGrid3DAction::getGrid(void)
 {
-    return CCTiledGrid3D::create(m_sGridSize);
+    return TiledGrid3D::create(_gridSize);
 }
 
-ccQuad3 CCTiledGrid3DAction::tile(const CCPoint& pos)
+ccQuad3 TiledGrid3DAction::tile(const Point& pos)
 {
-    CCTiledGrid3D *g = (CCTiledGrid3D*)m_pTarget->getGrid();
+    TiledGrid3D *g = (TiledGrid3D*)_target->getGrid();
     return g->tile(pos);
 }
 
-ccQuad3 CCTiledGrid3DAction::originalTile(const CCPoint& pos)
+ccQuad3 TiledGrid3DAction::originalTile(const Point& pos)
 {
-    CCTiledGrid3D *g = (CCTiledGrid3D*)m_pTarget->getGrid();
+    TiledGrid3D *g = (TiledGrid3D*)_target->getGrid();
     return g->originalTile(pos);
 }
 
-void CCTiledGrid3DAction::setTile(const CCPoint& pos, const ccQuad3& coords)
+void TiledGrid3DAction::setTile(const Point& pos, const ccQuad3& coords)
 {
-    CCTiledGrid3D *g = (CCTiledGrid3D*)m_pTarget->getGrid();
+    TiledGrid3D *g = (TiledGrid3D*)_target->getGrid();
     return g->setTile(pos, coords);
 }
 
-CCTiledGrid3DAction* CCTiledGrid3DAction::create(float duration, const CCSize& gridSize)
-{
-    CCTiledGrid3DAction* pRet = new CCTiledGrid3DAction();
-    if (pRet && pRet->initWithDuration(duration, gridSize))
-    {
-        pRet->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(pRet);
-    }
-    return pRet;
-}
+// implementation AccelDeccelAmplitude
 
-// implementation CCAccelDeccelAmplitude
-
-CCAccelDeccelAmplitude* CCAccelDeccelAmplitude::create(CCAction *pAction, float duration)
+AccelDeccelAmplitude* AccelDeccelAmplitude::create(Action *pAction, float duration)
 {
-    CCAccelDeccelAmplitude *pRet = new CCAccelDeccelAmplitude();
+    AccelDeccelAmplitude *pRet = new AccelDeccelAmplitude();
     if (pRet)
     {
         if (pRet->initWithAction(pAction, duration))
@@ -213,12 +158,12 @@ CCAccelDeccelAmplitude* CCAccelDeccelAmplitude::create(CCAction *pAction, float 
     return pRet;
 }
 
-bool CCAccelDeccelAmplitude::initWithAction(CCAction *pAction, float duration)
+bool AccelDeccelAmplitude::initWithAction(Action *pAction, float duration)
 {
-    if (CCActionInterval::initWithDuration(duration))
+    if (ActionInterval::initWithDuration(duration))
     {
-        m_fRate = 1.0f;
-        m_pOther = (CCActionInterval*)(pAction);
+        _rate = 1.0f;
+        _other = (ActionInterval*)(pAction);
         pAction->retain();
 
         return true;
@@ -227,18 +172,27 @@ bool CCAccelDeccelAmplitude::initWithAction(CCAction *pAction, float duration)
     return false;
 }
 
-CCAccelDeccelAmplitude::~CCAccelDeccelAmplitude(void)
+AccelDeccelAmplitude* AccelDeccelAmplitude::clone() const
 {
-    CC_SAFE_RELEASE(m_pOther);
+	// no copy constructor
+	auto a = new AccelDeccelAmplitude();
+	a->initWithAction(_other->clone(), _rate);
+	a->autorelease();
+	return a;
 }
 
-void CCAccelDeccelAmplitude::startWithTarget(CCNode *pTarget)
+AccelDeccelAmplitude::~AccelDeccelAmplitude(void)
 {
-    CCActionInterval::startWithTarget(pTarget);
-    m_pOther->startWithTarget(pTarget);
+    CC_SAFE_RELEASE(_other);
 }
 
-void CCAccelDeccelAmplitude::update(float time)
+void AccelDeccelAmplitude::startWithTarget(Node *pTarget)
+{
+    ActionInterval::startWithTarget(pTarget);
+    _other->startWithTarget(pTarget);
+}
+
+void AccelDeccelAmplitude::update(float time)
 {
     float f = time * 2;
 
@@ -248,19 +202,19 @@ void CCAccelDeccelAmplitude::update(float time)
         f = 1 - f;
     }
 
-    ((CCAccelDeccelAmplitude*)(m_pOther))->setAmplitudeRate(powf(f, m_fRate));
+    ((AccelDeccelAmplitude*)(_other))->setAmplitudeRate(powf(f, _rate));
 }
 
-CCActionInterval* CCAccelDeccelAmplitude::reverse(void)
+AccelDeccelAmplitude* AccelDeccelAmplitude::reverse() const
 {
-    return CCAccelDeccelAmplitude::create(m_pOther->reverse(), m_fDuration);
+    return AccelDeccelAmplitude::create(_other->reverse(), _duration);
 }
 
 // implementation of AccelAmplitude
 
-CCAccelAmplitude* CCAccelAmplitude::create(CCAction *pAction, float duration)
+AccelAmplitude* AccelAmplitude::create(Action *pAction, float duration)
 {
-    CCAccelAmplitude *pRet = new CCAccelAmplitude();
+    AccelAmplitude *pRet = new AccelAmplitude();
     if (pRet)
     {
         if (pRet->initWithAction(pAction, duration))
@@ -276,12 +230,12 @@ CCAccelAmplitude* CCAccelAmplitude::create(CCAction *pAction, float duration)
     return pRet;
 }
 
-bool CCAccelAmplitude::initWithAction(CCAction *pAction, float duration)
+bool AccelAmplitude::initWithAction(Action *pAction, float duration)
 {
-    if (CCActionInterval::initWithDuration(duration))
+    if (ActionInterval::initWithDuration(duration))
     {
-        m_fRate = 1.0f;
-        m_pOther = (CCActionInterval*)(pAction);
+        _rate = 1.0f;
+        _other = (ActionInterval*)(pAction);
         pAction->retain();
 
         return true;
@@ -290,33 +244,42 @@ bool CCAccelAmplitude::initWithAction(CCAction *pAction, float duration)
     return false;
 }
 
-CCAccelAmplitude::~CCAccelAmplitude(void)
+AccelAmplitude* AccelAmplitude::clone() const
 {
-    CC_SAFE_DELETE(m_pOther);
+	// no copy constructor
+	auto a = new AccelAmplitude();
+	a->initWithAction(_other->clone(), _duration);
+	a->autorelease();
+	return a;
 }
 
-void CCAccelAmplitude::startWithTarget(CCNode *pTarget)
+AccelAmplitude::~AccelAmplitude(void)
 {
-    CCActionInterval::startWithTarget(pTarget);
-    m_pOther->startWithTarget(pTarget);
+    CC_SAFE_DELETE(_other);
 }
 
-void CCAccelAmplitude::update(float time)
+void AccelAmplitude::startWithTarget(Node *pTarget)
 {
-    ((CCAccelAmplitude*)(m_pOther))->setAmplitudeRate(powf(time, m_fRate));
-    m_pOther->update(time);
+    ActionInterval::startWithTarget(pTarget);
+    _other->startWithTarget(pTarget);
 }
 
-CCActionInterval* CCAccelAmplitude::reverse(void)
+void AccelAmplitude::update(float time)
 {
-    return CCAccelAmplitude::create(m_pOther->reverse(), m_fDuration);
+    ((AccelAmplitude*)(_other))->setAmplitudeRate(powf(time, _rate));
+    _other->update(time);
+}
+
+AccelAmplitude* AccelAmplitude::reverse() const
+{
+    return AccelAmplitude::create(_other->reverse(), _duration);
 }
 
 // DeccelAmplitude
 
-CCDeccelAmplitude* CCDeccelAmplitude::create(CCAction *pAction, float duration)
+DeccelAmplitude* DeccelAmplitude::create(Action *pAction, float duration)
 {
-    CCDeccelAmplitude *pRet = new CCDeccelAmplitude();
+    DeccelAmplitude *pRet = new DeccelAmplitude();
     if (pRet)
     {
         if (pRet->initWithAction(pAction, duration))
@@ -332,13 +295,12 @@ CCDeccelAmplitude* CCDeccelAmplitude::create(CCAction *pAction, float duration)
     return pRet;
 }
 
-
-bool CCDeccelAmplitude::initWithAction(CCAction *pAction, float duration)
+bool DeccelAmplitude::initWithAction(Action *pAction, float duration)
 {
-    if (CCActionInterval::initWithDuration(duration))
+    if (ActionInterval::initWithDuration(duration))
     {
-        m_fRate = 1.0f;
-        m_pOther = (CCActionInterval*)(pAction);
+        _rate = 1.0f;
+        _other = (ActionInterval*)(pAction);
         pAction->retain();
 
         return true;
@@ -347,53 +309,74 @@ bool CCDeccelAmplitude::initWithAction(CCAction *pAction, float duration)
     return false;
 }
 
-CCDeccelAmplitude::~CCDeccelAmplitude(void)
+DeccelAmplitude::~DeccelAmplitude(void)
 {
-    CC_SAFE_RELEASE(m_pOther);
+    CC_SAFE_RELEASE(_other);
 }
 
-void CCDeccelAmplitude::startWithTarget(CCNode *pTarget)
+void DeccelAmplitude::startWithTarget(Node *pTarget)
 {
-    CCActionInterval::startWithTarget(pTarget);
-    m_pOther->startWithTarget(pTarget);
+    ActionInterval::startWithTarget(pTarget);
+    _other->startWithTarget(pTarget);
 }
 
-void CCDeccelAmplitude::update(float time)
+void DeccelAmplitude::update(float time)
 {
-    ((CCDeccelAmplitude*)(m_pOther))->setAmplitudeRate(powf((1 - time), m_fRate));
-    m_pOther->update(time);
+    ((DeccelAmplitude*)(_other))->setAmplitudeRate(powf((1 - time), _rate));
+    _other->update(time);
 }
 
-CCActionInterval* CCDeccelAmplitude::reverse(void)
+DeccelAmplitude* DeccelAmplitude::clone() const
 {
-    return CCDeccelAmplitude::create(m_pOther->reverse(), m_fDuration);
+	// no copy constructor	
+	auto a = new DeccelAmplitude();
+	a->initWithAction(_other->clone(), _duration);
+	a->autorelease();
+	return a;
+}
+
+DeccelAmplitude* DeccelAmplitude::reverse() const
+{
+    return DeccelAmplitude::create(_other->reverse(), _duration);
 }
 
 // implementation of StopGrid
 
-void CCStopGrid::startWithTarget(CCNode *pTarget)
+void StopGrid::startWithTarget(Node *pTarget)
 {
-    CCActionInstant::startWithTarget(pTarget);
+    ActionInstant::startWithTarget(pTarget);
 
-    CCGridBase *pGrid = m_pTarget->getGrid();
+    GridBase *pGrid = _target->getGrid();
     if (pGrid && pGrid->isActive())
     {
         pGrid->setActive(false);
     }
 }
 
-CCStopGrid* CCStopGrid::create(void)
+StopGrid* StopGrid::create(void)
 {
-    CCStopGrid* pAction = new CCStopGrid();
+    StopGrid* pAction = new StopGrid();
     pAction->autorelease();
 
     return pAction;
 }
-// implementation of CCReuseGrid
 
-CCReuseGrid* CCReuseGrid::create(int times)
+StopGrid* StopGrid::clone() const
 {
-    CCReuseGrid *pAction = new CCReuseGrid();
+	return StopGrid::create();
+}
+
+StopGrid* StopGrid::reverse() const
+{
+	// no reverse, just clone it
+	return this->clone();
+}
+
+// implementation of ReuseGrid
+
+ReuseGrid* ReuseGrid::create(int times)
+{
+    ReuseGrid *pAction = new ReuseGrid();
     if (pAction)
     {
         if (pAction->initWithTimes(times))
@@ -409,21 +392,32 @@ CCReuseGrid* CCReuseGrid::create(int times)
     return pAction;
 }
 
-bool CCReuseGrid::initWithTimes(int times)
+bool ReuseGrid::initWithTimes(int times)
 {
-    m_nTimes = times;
+    _times = times;
 
     return true;
 }
 
-void CCReuseGrid::startWithTarget(CCNode *pTarget)
+void ReuseGrid::startWithTarget(Node *pTarget)
 {
-    CCActionInstant::startWithTarget(pTarget);
+    ActionInstant::startWithTarget(pTarget);
 
-    if (m_pTarget->getGrid() && m_pTarget->getGrid()->isActive())
+    if (_target->getGrid() && _target->getGrid()->isActive())
     {
-        m_pTarget->getGrid()->setReuseGrid(m_pTarget->getGrid()->getReuseGrid() + m_nTimes);
+        _target->getGrid()->setReuseGrid(_target->getGrid()->getReuseGrid() + _times);
     }
+}
+
+ReuseGrid* ReuseGrid::clone() const
+{
+	return ReuseGrid::create(_times);
+}
+
+ReuseGrid* ReuseGrid::reverse() const
+{
+	// no reverse, just clone it
+	return this->clone();
 }
 
 NS_CC_END
