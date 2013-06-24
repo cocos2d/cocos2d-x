@@ -71,15 +71,15 @@ JSBool js_pluginx_protocols_ProtocolAds_spendPoints(JSContext *cx, uint32_t argc
 JSBool js_pluginx_protocols_ProtocolAds_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_ProtocolAds_onPlayerGetPoints(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *jsb_ProtocolSocial_class;
-extern JSObject *jsb_ProtocolSocial_prototype;
+extern JSClass  *jsb_ProtocolShare_class;
+extern JSObject *jsb_ProtocolShare_prototype;
 
-JSBool js_pluginx_protocols_ProtocolSocial_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_pluginx_protocols_ProtocolSocial_finalize(JSContext *cx, JSObject *obj);
-void js_register_pluginx_protocols_ProtocolSocial(JSContext *cx, JSObject *global);
+JSBool js_pluginx_protocols_ProtocolShare_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_pluginx_protocols_ProtocolShare_finalize(JSContext *cx, JSObject *obj);
+void js_register_pluginx_protocols_ProtocolShare(JSContext *cx, JSObject *global);
 void register_all_pluginx_protocols(JSContext* cx, JSObject* obj);
-JSBool js_pluginx_protocols_ProtocolSocial_onShareResult(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_ProtocolSocial_share(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_ProtocolSocial_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_pluginx_protocols_ProtocolShare_onShareResult(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_pluginx_protocols_ProtocolShare_share(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_pluginx_protocols_ProtocolShare_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
 #endif
 
