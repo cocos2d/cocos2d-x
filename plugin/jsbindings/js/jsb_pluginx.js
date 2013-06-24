@@ -36,9 +36,9 @@ plugin.ProtocolIAP.PayResultCode.PayFail = 1;
 plugin.ProtocolIAP.PayResultCode.PayCancel = 2;
 plugin.ProtocolIAP.PayResultCode.PayTimeOut = 3;
 
-plugin.ProtocolSocial.ShareResultCode = {};
-plugin.ProtocolSocial.ShareResultCode.ShareSuccess = 0;
-plugin.ProtocolSocial.ShareResultCode.ShareFail = 1;
-plugin.ProtocolSocial.ShareResultCode.ShareCancel = 2;
-plugin.ProtocolSocial.ShareResultCode.ShareTimeOut = 3;
+plugin.ProtocolShare.ShareResultCode = {};
+plugin.ProtocolShare.ShareResultCode.ShareSuccess = 0;
+plugin.ProtocolShare.ShareResultCode.ShareFail = 1;
+plugin.ProtocolShare.ShareResultCode.ShareCancel = 2;
+plugin.ProtocolShare.ShareResultCode.ShareTimeOut = 3;
 
