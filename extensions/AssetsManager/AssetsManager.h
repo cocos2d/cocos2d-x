@@ -27,7 +27,8 @@
 
 #include <string>
 #include <curl/curl.h>
-#include <pthread.h>
+//#include <pthread.h>
+#include <mutex>
 
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
@@ -137,7 +138,6 @@ public:
     
     /* downloadAndUncompress is the entry of a new thread 
      */
-    friend void* assetsManagerDownloadAndUncompress(void*);
     friend int assetsManagerProgressFunc(void *, double, double, double, double);
     
 protected:
@@ -147,6 +147,7 @@ protected:
     bool createDirectory(const char *path);
     void setSearchPath();
     void sendErrorMessage(ErrorCode code);
+    void downloadAndUncompress();
     
 private:
     typedef struct _Message
@@ -170,7 +171,7 @@ private:
         void handleUpdateSucceed(Message *msg);
         
         std::list<Message*> *_messageQueue;
-        pthread_mutex_t _messageQueueMutex;
+        std::mutex _messageQueueMutex;
     };
     
 private:
@@ -187,10 +188,11 @@ private:
     
     CURL *_curl;
     Helper *_schedule;
-    pthread_t *_tid;
     unsigned int _connectionTimeout;
     
     AssetsManagerDelegateProtocol *_delegate; // weak reference
+    
+    bool _isDownloading;
 };
 
 class AssetsManagerDelegateProtocol
