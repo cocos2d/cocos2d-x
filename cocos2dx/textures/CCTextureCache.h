@@ -156,7 +156,7 @@ private:
     void loadImage();
     Image::EImageFormat computeImageFormatType(std::string& filename);
 
-private:
+public:
     struct AsyncStruct
     {
     public:
@@ -167,6 +167,7 @@ private:
         SEL_CallFuncO        selector;
     };
 
+protected:
     typedef struct _ImageInfo
     {
         AsyncStruct *asyncStruct;
