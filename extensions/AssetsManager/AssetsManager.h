@@ -171,7 +171,6 @@ private:
         void handleUpdateSucceed(Message *msg);
         
         std::list<Message*> *_messageQueue;
-        //pthread_mutex_t _messageQueueMutex;
         std::mutex _messageQueueMutex;
     };
     
