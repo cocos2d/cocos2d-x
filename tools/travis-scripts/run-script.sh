@@ -5,14 +5,6 @@ set -e
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR"/../..
 
-if [ "$GEN_JSB"x = "YES"x ]; then
-    if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
-        exit 0
-    fi
-    cd $COCOS2DX_ROOT/tools/travis-scripts
-    ./generate-jsbindings.sh
-fi
-
 build_android()
 {
     cd $COCOS2DX_ROOT/samples/$1/$2/proj.android
@@ -20,10 +12,35 @@ build_android()
     ./build_native.sh
 }
 
-if [ "$PLATFORM"x = "android"x ]; then
+if [ "$GEN_JSB"x = "YES"x ]; then
+    # Re-generation of the javascript bindings can perform push of the new
+    # version back to github.  We don't do this for pull requests, or if
+    # GH_USER/GH_EMAIL/GH_PASSWORD environment variables are not set correctly
+    # by the encoded variables in the .travis.yml file.  (e.g. if cloned repo's
+    # want to use travis).
+    if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
+        exit 0
+    fi
+    if [ -z "${GH_EMAIL}" ]; then
+        echo "GH_EMAIL not set"
+        exit 0
+    fi
+    if [ -z "${GH_USER}" ]; then
+        echo "GH_USER not set"
+        exit 0
+    fi
+    if [ -z "${GH_PASSWORD}" ]; then
+        echo "GH_USER not set"
+        exit 0
+    fi
+    export NDK_ROOT=$HOME/bin/android-ndk
     cd $COCOS2DX_ROOT/tools/travis-scripts
     ./generate-jsbindings.sh
-    
+elif [ "$PLATFORM"x = "android"x ]; then
+    export NDK_ROOT=$HOME/bin/android-ndk
+    cd $COCOS2DX_ROOT/tools/travis-scripts
+    ./generate-jsbindings.sh
+
     cd $COCOS2DX_ROOT
     mkdir android_build_objs
     build_android Cpp HelloCpp
@@ -32,19 +49,16 @@ if [ "$PLATFORM"x = "android"x ]; then
     build_android Javascript TestJavascript
     build_android Lua HelloLua
     build_android Lua TestLua
-fi
-
-if [ "$PLATFORM"x = "nacl"x ]; then
+elif [ "$PLATFORM"x = "nacl"x ]; then
+    export NACL_SDK_ROOT=$HOME/bin/nacl_sdk/pepper_canary
+    export PATH=$PATH:$NACL_SDK_ROOT/toolchain/linux_x86_newlib/bin
+    export PATH=$PATH:$NACL_SDK_ROOT/toolchain/linux_arm_newlib/bin
     cd $COCOS2DX_ROOT
     make -j4
-fi
-
-if [ "$PLATFORM"x = "linux"x ]; then
+elif [ "$PLATFORM"x = "linux"x ]; then
     cd $COCOS2DX_ROOT
     make -j4
-fi
-
-if [ "$PLATFORM"x = "emscripten"x ]; then
+elif [ "$PLATFORM"x = "emscripten"x ]; then
     cd $COCOS2DX_ROOT
     export PYTHON=/usr/bin/python
     export LLVM=$HOME/bin/clang+llvm-3.2/bin
@@ -52,9 +66,7 @@ if [ "$PLATFORM"x = "emscripten"x ]; then
     sudo mkdir -p /Library/Fonts
     sudo cp samples/Cpp/TestCpp/Resources/fonts/arial.ttf /Library/Fonts/Arial.ttf
     EMCC_DEBUG=1 make -f Makefile.emscripten -j 8
-fi
-
-if [ "$PLATFORM"x = "ios"x ]; then
+elif [ "$PLATFORM"x = "ios"x ]; then
     cd $COCOS2DX_ROOT/tools/travis-scripts
     ./generate-jsbindings.sh
 
@@ -70,4 +82,7 @@ if [ "$PLATFORM"x = "ios"x ]; then
     #xctool/xctool.sh -project samples/Javascript/WatermelonWithMe/proj.ios/WatermelonWithMe.xcodeproj -scheme WatermelonWithMe test
     xctool/xctool.sh -project samples/Lua/HelloLua/proj.ios/HelloLua.xcodeproj -scheme HelloLua test
     xctool/xctool.sh -project samples/Lua/TestLua/proj.ios/TestLua.xcodeproj -scheme TestLua test
+else
+    echo "Unknown \$PLATFORM: '$PLATFORM'"
+    exit 1
 fi
