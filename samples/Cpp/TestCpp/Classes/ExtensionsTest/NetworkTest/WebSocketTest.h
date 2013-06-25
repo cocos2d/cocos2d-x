@@ -11,7 +11,7 @@
 
 #include "cocos2d.h"
 #include "cocos-ext.h"
-#include "WebSocket.h"
+#include "network/WebSocket.h"
 
 class WebSocketTestLayer
 : public cocos2d::Layer
