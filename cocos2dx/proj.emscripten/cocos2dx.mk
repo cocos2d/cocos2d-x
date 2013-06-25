@@ -31,7 +31,7 @@ JSLIBS := --js-library $(COCOS_SRC)/platform/emscripten/CCTextureCacheEmscripten
 CCFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s TOTAL_MEMORY=268435456 -s VERBOSE=1 -U__native_client__ $(EXPORTED_FLAGS) $(JSLIBS)
 CXXFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s TOTAL_MEMORY=268435456 -s VERBOSE=1 -U__native_client__ $(EXPORTED_FLAGS) $(JSLIBS)
 
-LIB_DIR = $(COCOS_SRC)/lib/emscripten
+LIB_DIR = $(COCOS_ROOT)/lib/emscripten
 BIN_DIR = bin
 
 INCLUDES +=  \
