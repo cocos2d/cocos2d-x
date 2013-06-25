@@ -3,16 +3,21 @@
 #include <map>
 #include <cstdlib>
 
-#include "MciPlayer.h"
-#include "cocos2d.h"
+//#include "MciPlayer.h"
+#include "DirectSoundPlayer.h"
 USING_NS_CC;
 
 using namespace std;
+#define WIN_CLASS_NAME        "CocosDenshionCallbackWnd"
+#define BREAK_IF(cond)      if (cond) break;
 
 namespace CocosDenshion {
 
-typedef map<unsigned int, MciPlayer *> EffectList;
-typedef pair<unsigned int, MciPlayer *> Effect;
+static HINSTANCE s_hInstance;
+static LRESULT WINAPI _SoundPlayProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
+
+typedef map<unsigned int, DSPlayer*> EffectList;
+typedef pair<unsigned int, DSPlayer*> Effect;
 
 static char     s_szRootPath[MAX_PATH];
 static DWORD    s_dwRootLen;
@@ -29,18 +34,112 @@ static EffectList& sharedList()
     return s_List;
 }
 
-static MciPlayer& sharedMusic()
+static DSPlayer& sharedMusic()
 {
-    static MciPlayer s_Music;
+    static DSPlayer s_Music;
     return s_Music;
 }
 
-SimpleAudioEngine::SimpleAudioEngine()
+SimpleAudioEngine::SimpleAudioEngine() : m_hWnd(NULL)
 {
+	if (! s_hInstance)
+    {
+        s_hInstance = GetModuleHandle( NULL );            // Grab An Instance For Our Window
+
+        WNDCLASS  wc;        // Windows Class Structure
+
+        // Redraw On Size, And Own DC For Window.
+        wc.style          = 0;  
+        wc.lpfnWndProc    = _SoundPlayProc;                    // WndProc Handles Messages
+        wc.cbClsExtra     = 0;                              // No Extra Window Data
+        wc.cbWndExtra     = 0;                                // No Extra Window Data
+        wc.hInstance      = s_hInstance;                    // Set The Instance
+        wc.hIcon          = 0;                                // Load The Default Icon
+        wc.hCursor        = LoadCursor( NULL, IDC_ARROW );    // Load The Arrow Pointer
+        wc.hbrBackground  = NULL;                           // No Background Required For GL
+        wc.lpszMenuName   = NULL;                           // We Don't Want A Menu
+        wc.lpszClassName  = WIN_CLASS_NAME;                 // Set The Class Name
+
+        if (! RegisterClass(&wc)
+            && 1410 != GetLastError())
+        {
+            return;
+        }
+    }
+
+    m_hWnd = CreateWindowEx(
+        WS_EX_APPWINDOW,                                    // Extended Style For The Window
+        WIN_CLASS_NAME,                                        // Class Name
+        NULL,                                        // Window Title
+        WS_POPUPWINDOW,/*WS_OVERLAPPEDWINDOW*/               // Defined Window Style
+        0, 0,                                                // Window Position
+        0,                                                    // Window Width
+        0,                                                    // Window Height
+        NULL,                                                // No Parent Window
+        NULL,                                                // No Menu
+        s_hInstance,                                        // Instance
+        NULL );
+    if (m_hWnd)
+    {
+        SetWindowLong(m_hWnd, GWL_USERDATA, (LONG)this);
+    }
+
+	if(FAILED(DirectSoundCreate8(NULL, &g_pDS, NULL))) {
+		//MessageBoxA(NULL, "No sound device!", "ERROR", MB_ICONERROR);
+		g_pDS = NULL;
+		g_pDSPrimary = NULL;
+		return;
+	}
+
+	if(FAILED(g_pDS->SetCooperativeLevel(m_hWnd, DSSCL_PRIORITY))) {
+		//MessageBoxA(NULL, "No sound device!", "ERROR", MB_ICONERROR);
+		g_pDS = NULL;
+		g_pDSPrimary = NULL;
+		return;
+	}
+
+	DSBUFFERDESC       dsbd;         // Описание буфера
+
+	ZeroMemory(&dsbd, sizeof(DSBUFFERDESC)); // Обнуляем структуру
+
+	dsbd.dwSize        = sizeof(DSBUFFERDESC); // Устанавливаем размер структуры
+	dsbd.dwFlags       = DSBCAPS_PRIMARYBUFFER | DSBCAPS_CTRLVOLUME;
+	dsbd.dwBufferBytes = 0;                    // Не задаем размер буфера
+	dsbd.lpwfxFormat   = NULL;                 // Не задаем формат
+	if(FAILED(g_pDS->CreateSoundBuffer(&dsbd, &g_pDSPrimary, NULL))) {
+		int i = 1;
+		// Произошла ошибка
+	}
+
+	WAVEFORMATEX wfex;
+	ZeroMemory(&wfex, sizeof(WAVEFORMATEX));
+
+	wfex.wFormatTag      = WAVE_FORMAT_PCM;
+	wfex.nChannels       = 2;           // моно
+	wfex.nSamplesPerSec  = 44100;       // 22050 Гц
+	wfex.wBitsPerSample  = 16;          // 16 бит
+	wfex.nBlockAlign     = (wfex.wBitsPerSample / 8) * wfex.nChannels;
+	wfex.nAvgBytesPerSec = wfex.nSamplesPerSec * wfex.nBlockAlign;
+
+	if(FAILED(g_pDSPrimary->SetFormat(&wfex))) {
+		int i = 1;
+		// Произошла ошибка
+	}
+
+	if(FAILED(g_pDSPrimary->Play(0, 0, DSBPLAY_LOOPING))) {
+		int i = 1;
+		// Произошла ошибка
+	}
 }
 
 SimpleAudioEngine::~SimpleAudioEngine()
 {
+	if (g_pDSPrimary) 
+	{
+		g_pDSPrimary->Stop();
+		g_pDSPrimary->Release();
+	}
+	DestroyWindow(m_hWnd);
 }
 
 SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
@@ -52,6 +151,7 @@ SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
 void SimpleAudioEngine::end()
 {
     sharedMusic().Close();
+	sharedMusic().~DSPlayer();
 
     EffectList::iterator p = sharedList().begin();
     while (p != sharedList().end())
@@ -60,7 +160,8 @@ void SimpleAudioEngine::end()
         p->second = NULL;
         p++;
     }   
-    sharedList().clear();
+    sharedList().clear();	
+
     return;
 }
 
@@ -75,7 +176,9 @@ void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
         return;
     }
 
-    sharedMusic().Open(_FullPath(pszFilePath).c_str(), _Hash(pszFilePath));
+	sharedMusic().Stop();
+    sharedMusic().Open(_FullPath(pszFilePath), _Hash(pszFilePath));
+	sharedMusic().SetVolume(musicVolume);
     sharedMusic().Play((bLoop) ? -1 : 1);
 }
 
@@ -128,8 +231,9 @@ unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
 
     EffectList::iterator p = sharedList().find(nRet);
     if (p != sharedList().end())
-    {
+    {	
         p->second->Play((bLoop) ? -1 : 1);
+		p->second->SetVolume(effectsVolume);
     }
 
     return nRet;
@@ -155,8 +259,8 @@ void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 
         BREAK_IF(sharedList().end() != sharedList().find(nRet));
 
-        sharedList().insert(Effect(nRet, new MciPlayer()));
-        MciPlayer * pPlayer = sharedList()[nRet];
+        sharedList().insert(Effect(nRet, new DSPlayer()));
+        DSPlayer * pPlayer = sharedList()[nRet];
         pPlayer->Open(_FullPath(pszFilePath).c_str(), nRet);
 
         BREAK_IF(nRet == pPlayer->GetSoundID());
@@ -191,6 +295,7 @@ void SimpleAudioEngine::resumeEffect(unsigned int nSoundId)
     if (p != sharedList().end())
     {
         p->second->Resume();
+		p->second->SetVolume(effectsVolume);
     }
 }
 
@@ -200,6 +305,7 @@ void SimpleAudioEngine::resumeAllEffects()
     for (iter = sharedList().begin(); iter != sharedList().end(); iter++)
     {
         iter->second->Resume();
+		iter->second->SetVolume(effectsVolume);
     }
 }
 
@@ -236,20 +342,30 @@ void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 
 float SimpleAudioEngine::getBackgroundMusicVolume()
 {
-    return 1.0;
+    return 1.0 - (musicVolume/(DSBVOLUME_MIN/3.5));  
 }
 
 void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
 {
+	musicVolume = DSBVOLUME_MIN/3.5 * (1.0 - volume);
+	if (volume == 0.0) musicVolume = DSBVOLUME_MIN; 
+	sharedMusic().SetVolume(musicVolume);
 }
 
 float SimpleAudioEngine::getEffectsVolume()
 {
-    return 1.0;
+    return 1.0 - (effectsVolume/(DSBVOLUME_MIN/3.5)); 
 }
 
 void SimpleAudioEngine::setEffectsVolume(float volume)
 {
+	effectsVolume = DSBVOLUME_MIN/3.5 * (1.0 - volume);
+	if (volume == 0.0) effectsVolume = DSBVOLUME_MIN;	
+	EffectList::iterator p = sharedList().begin();
+    if (p != sharedList().end())
+    {
+        p->second->SetVolume(effectsVolume);
+    }    
 }
 
 //////////////////////////////////////////////////////////////////////////
