@@ -39,8 +39,7 @@ bool HelloWorld::init()
     MenuItemImage *pCloseItem = MenuItemImage::create(
                                         "CloseNormal.png",
                                         "CloseSelected.png",
-                                        this,
-                                        menu_selector(HelloWorld::menuCloseCallback));
+                                        CC_CALLBACK_1(HelloWorld::menuCloseCallback,this));
     
 	pCloseItem->setPosition(ccp(origin.x + visibleSize.width - pCloseItem->getContentSize().width/2 ,
                                 origin.y + pCloseItem->getContentSize().height/2));
