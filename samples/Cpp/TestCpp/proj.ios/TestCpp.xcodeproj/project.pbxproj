@@ -1774,7 +1774,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../../external/libwebsockets/ios/lib\"",
-					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/cocos2d-ios-efgwnjcjlugbweaakhyrdehqseht/Build/Products/Debug-iphoneos\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-O2";
@@ -1820,7 +1819,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../../external/libwebsockets/ios/lib\"",
-					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/cocos2d-ios-efgwnjcjlugbweaakhyrdehqseht/Build/Products/Debug-iphoneos\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = TestCpp;
