@@ -43,7 +43,7 @@ public class TwitterDialog extends Dialog {
     private static final String LOG_TAG = "Twitter-WebView";
     
 	protected static void LogD(String msg) {
-		if (SocialTwitter.bDebug) {
+		if (ShareTwitter.bDebug) {
 			Log.d(LOG_TAG, msg);
 		}
 	}

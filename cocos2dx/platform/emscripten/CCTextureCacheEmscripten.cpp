@@ -36,18 +36,18 @@ using namespace std;
 // Following methods are implemented in TextureCacheEmscripten.js:
 extern "C" {
 void cocos2dx_newAsyncImageLoader(int textureCache, int callback__ignored);
-void cocos2dx_asyncImageLoader_LoadImage(const char *path, AsyncStruct *asyncData);
+void cocos2dx_asyncImageLoader_LoadImage(const char *path, TextureCache::AsyncStruct *asyncData);
 void cocos2dx_shutdownAsyncImageLoader();
 };
 
 extern "C" {
 // This C interface is exposed so that the JavaScript in
 // TextureCacheEmscripten.js is able to call into these functions.
-void TextureCacheEmscripten_addImageAsyncCallBack(TextureCacheEmscripten *tc, AsyncStruct *data, unsigned char *imgData, int width, int height);
+void TextureCacheEmscripten_addImageAsyncCallBack(TextureCacheEmscripten *tc, TextureCache::AsyncStruct *data, unsigned char *imgData, int width, int height);
 void TextureCacheEmscripten_preMultiplyImageRegion( unsigned char *in, int win, int hin, unsigned char *out, int wout, int hout, int xout, int yout);
 };
 
-void TextureCacheEmscripten_addImageAsyncCallBack(TextureCacheEmscripten *tc, AsyncStruct *data, unsigned char *imgData, int width, int height)
+void TextureCacheEmscripten_addImageAsyncCallBack(TextureCacheEmscripten *tc, TextureCache::AsyncStruct *data, unsigned char *imgData, int width, int height)
 {
     tc->addImageAsyncCallBack_emscripten(data, imgData, width, height);
 }
