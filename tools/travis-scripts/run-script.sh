@@ -65,7 +65,7 @@ elif [ "$PLATFORM"x = "emscripten"x ]; then
     export LLVM_ROOT=$LLVM
     sudo mkdir -p /Library/Fonts
     sudo cp samples/Cpp/TestCpp/Resources/fonts/arial.ttf /Library/Fonts/Arial.ttf
-    EMCC_DEBUG=1 make -f Makefile.emscripten -j 8
+    EMCC_DEBUG=1 make PLATFORM=emscripten -j 8
 elif [ "$PLATFORM"x = "ios"x ]; then
     cd $COCOS2DX_ROOT/tools/travis-scripts
     ./generate-jsbindings.sh
