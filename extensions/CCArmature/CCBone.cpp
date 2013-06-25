@@ -61,7 +61,7 @@ CCBone *CCBone::create(const char *name)
 CCBone::CCBone()
 {
     m_pTweenData = NULL;
-    m_pParent = NULL;
+    m_pParentBone = NULL;
     m_pArmature = NULL;
     m_pChildArmature = NULL;
     m_pBoneData = NULL;
@@ -71,7 +71,7 @@ CCBone::CCBone()
     m_pDisplayManager = NULL;
     m_bIgnoreMovementBoneData = false;
     m_tWorldTransform = CCAffineTransformMake(1, 0, 0, 1, 0, 0);
-    m_bTransformDirty = true;
+    m_bBoneTransformDirty = true;
 }
 
 
@@ -158,10 +158,10 @@ CCArmature *CCBone::getArmature()
 
 void CCBone::update(float delta)
 {
-    if (m_pParent)
-        m_bTransformDirty = m_bTransformDirty || m_pParent->isTransformDirty();
+    if (m_pParentBone)
+        m_bBoneTransformDirty = m_bBoneTransformDirty || m_pParentBone->isTransformDirty();
 
-    if (m_bTransformDirty)
+    if (m_bBoneTransformDirty)
     {
         float cosX	= cos(m_pTweenData->skewX);
         float cosY	= cos(m_pTweenData->skewY);
@@ -177,13 +177,13 @@ void CCBone::update(float delta)
 
         m_tWorldTransform = CCAffineTransformConcat(nodeToParentTransform(), m_tWorldTransform);
 
-        if(m_pParent)
+        if(m_pParentBone)
         {
-            m_tWorldTransform = CCAffineTransformConcat(m_tWorldTransform, m_pParent->m_tWorldTransform);
+            m_tWorldTransform = CCAffineTransformConcat(m_tWorldTransform, m_pParentBone->m_tWorldTransform);
         }
     }
 
-    CCDisplayFactory::updateDisplay(this, m_pDisplayManager->getCurrentDecorativeDisplay(), delta, m_bTransformDirty);
+    CCDisplayFactory::updateDisplay(this, m_pDisplayManager->getCurrentDecorativeDisplay(), delta, m_bBoneTransformDirty);
 
     CCObject *object = NULL;
     CCARRAY_FOREACH(m_pChildren, object)
@@ -192,7 +192,7 @@ void CCBone::update(float delta)
         childBone->update(delta);
     }
 
-    m_bTransformDirty = false;
+    m_bBoneTransformDirty = false;
 }
 
 
@@ -223,11 +223,12 @@ void CCBone::updateColor()
 void CCBone::addChildBone(CCBone *child)
 {
     CCAssert( NULL != child, "Argument must be non-nil");
-    CCAssert( NULL == child->m_pParent, "child already added. It can't be added again");
+    CCAssert( NULL == child->m_pParentBone, "child already added. It can't be added again");
 
     if(!m_pChildren)
     {
-        childrenAlloc();
+		m_pChildren = CCArray::createWithCapacity(4);
+		m_pChildren->retain();
     }
 
     if (m_pChildren->indexOfObject(child) == UINT_MAX)
@@ -262,29 +263,21 @@ void CCBone::removeChildBone(CCBone *bone, bool recursion)
 
 void CCBone::removeFromParent(bool recursion)
 {
-    if (NULL != m_pParent)
+    if (NULL != m_pParentBone)
     {
-        m_pParent->removeChildBone(this, recursion);
+        m_pParentBone->removeChildBone(this, recursion);
     }
 }
 
 void CCBone::setParentBone(CCBone *parent)
 {
-    m_pParent = parent;
+    m_pParentBone = parent;
 }
 
 CCBone *CCBone::getParentBone()
 {
-    return m_pParent;
+    return m_pParentBone;
 }
-
-void CCBone::childrenAlloc(void)
-{
-    CC_SAFE_DELETE(m_pChildren);
-    m_pChildren = CCArray::createWithCapacity(4);
-    m_pChildren->retain();
-}
-
 
 void CCBone::setChildArmature(CCArmature *armature)
 {
@@ -301,11 +294,6 @@ CCArmature *CCBone::getChildArmature()
     return m_pChildArmature;
 }
 
-CCArray *CCBone::getChildren()
-{
-    return m_pChildren;
-}
-
 CCTween *CCBone::getTween()
 {
     return m_pTween;
@@ -319,12 +307,12 @@ void CCBone::setZOrder(int zOrder)
 
 void CCBone::setTransformDirty(bool dirty)
 {
-	m_bTransformDirty = dirty;
+	m_bBoneTransformDirty = dirty;
 }
 
 bool CCBone::isTransformDirty()
 {
-	return m_bTransformDirty;
+	return m_bBoneTransformDirty;
 }
 
 CCAffineTransform CCBone::nodeToArmatureTransform()

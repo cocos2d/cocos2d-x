@@ -124,7 +124,6 @@ public:
     //! Update color to render display
     void updateColor();
 
-    CCArray *getChildren();
     CCTween *getTween();
 
     virtual void setZOrder(int zOrder);
@@ -166,12 +165,8 @@ protected:
 
     CC_SYNTHESIZE_PASS_BY_REF(std::string, m_strName, Name);
 
-    //! Lazy allocs
-    void childrenAlloc(void);
-    CCArray *m_pChildren;
-
-    CCBone *m_pParent;				//! A weak reference to it's parent
-    bool m_bTransformDirty;			//! Whether or not transform dirty
+    CCBone *m_pParentBone;			//! A weak reference to it's parent
+    bool m_bBoneTransformDirty;			//! Whether or not transform dirty
 
     //! self Transform, use this to change display's state
     CCAffineTransform m_tWorldTransform;

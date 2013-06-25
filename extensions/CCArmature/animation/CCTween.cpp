@@ -155,12 +155,12 @@ void CCTween::play(CCMovementBoneData *_movementBoneData, int _durationTo, int _
             m_bIsTweenKeyFrame = true;
         }
     }
+
+	tweenColorTo(0, m_pTweenData, true);
 }
 
 void CCTween::updateHandler()
 {
-
-
     if (m_fCurrentPercent >= 1)
     {
         switch(m_eLoopType)
@@ -245,7 +245,6 @@ void CCTween::updateHandler()
         break;
         }
     }
-
 
     if (m_fCurrentPercent < 1 && m_eLoopType <= ANIMATION_TO_LOOP_BACK)
     {
@@ -344,25 +343,21 @@ CCFrameData *CCTween::tweenNodeTo(float percent, CCFrameData *node)
 
     m_pBone->setTransformDirty(true);
 
-    if(m_pBetween->isUseColorInfo)
-    {
-        node->a = m_pFrom->a + percent * m_pBetween->a;
-        node->r = m_pFrom->r + percent * m_pBetween->r;
-        node->g = m_pFrom->g + percent * m_pBetween->g;
-        node->b = m_pFrom->b + percent * m_pBetween->b;
-        m_pBone->updateColor();
-    }
-
-    //    CCPoint p1 = ccp(m_pFrom->x, m_pFrom->y);
-    //    CCPoint p2 = ccp(100, 0);
-    //    CCPoint p3 = ccp(200, 400);
-    //    CCPoint p4 = ccp(m_pFrom->x + m_pBetween->x, m_pFrom->y + m_pBetween->y);
-    //
-    //    CCPoint p = bezierTo(percent, p1, p2, p3, p4);
-    //    node->x = p.x;
-    //    node->y = p.y;
+    tweenColorTo(percent, node, m_pTweenData->isUseColorInfo);
 
     return node;
+}
+
+void CCTween::tweenColorTo(float percent, CCFrameData *node, bool dirty)
+{
+	if(node && dirty)
+	{
+		node->a = m_pFrom->a + percent * m_pBetween->a;
+		node->r = m_pFrom->r + percent * m_pBetween->r;
+		node->g = m_pFrom->g + percent * m_pBetween->g;
+		node->b = m_pFrom->b + percent * m_pBetween->b;
+		m_pBone->updateColor();
+	}
 }
 
 float CCTween::updateFrameData(float currentPrecent, bool activeFrame)

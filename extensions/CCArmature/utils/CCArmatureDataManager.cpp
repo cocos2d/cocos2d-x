@@ -159,7 +159,6 @@ void CCArmatureDataManager::addArmatureFileInfo(const char *armatureName, const 
 
 void CCArmatureDataManager::addArmatureFileInfo(const char *imagePath, const char *plistPath, const char *configFilePath)
 {
-
     CCDataReaderHelper::addDataFromFile(configFilePath);
     addSpriteFrameFromFile(plistPath, imagePath);
 }
