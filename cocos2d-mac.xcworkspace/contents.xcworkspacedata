@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <Group
+      location = "container:"
+      name = "samples">
+      <Group
+         location = "container:"
+         name = "Javascript">
+      </Group>
+      <Group
+         location = "container:"
+         name = "Lua">
+      </Group>
+      <Group
+         location = "container:"
+         name = "Cpp">
+         <FileRef
+            location = "group:samples/Cpp/TestCpp/proj.mac/TestCpp.xcodeproj">
+         </FileRef>
+      </Group>
+   </Group>
+   <Group
+      location = "container:"
+      name = "libs">
+      <FileRef
+         location = "group:extensions/proj.mac/extensions.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:external/Box2D/proj.mac/Box2D.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:external/chipmunk/proj.mac/chipmunk.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CocosDenshion/proj.mac/CocosDenshion.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:cocos2dx/proj.mac/cocos2dx.xcodeproj">
+      </FileRef>
+   </Group>
+</Workspace>
