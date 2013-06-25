@@ -16,13 +16,13 @@ getPluginName : function () {},
 
 /**
  * @method getPluginVersion
- * @return A value converted from C/C++ "const char*"
+ * @return A value converted from C/C++ "std::string"
  */
 getPluginVersion : function () {},
 
 /**
  * @method getSDKVersion
- * @return A value converted from C/C++ "const char*"
+ * @return A value converted from C/C++ "std::string"
  */
 getSDKVersion : function () {},
 

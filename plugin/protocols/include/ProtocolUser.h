@@ -38,13 +38,13 @@ typedef enum
     kLoginFailed,
 
     kLogoutSucceed,
-    kLogoutFailed,
 } UserActionResultCode;
 
+class ProtocolUser;
 class UserActionListener
 {
 public:
-    virtual void onActionResult(UserActionResultCode code, const char* msg) = 0;
+    virtual void onActionResult(ProtocolUser* pPlugin, UserActionResultCode code, const char* msg) = 0;
 };
 
 class ProtocolUser : public PluginProtocol
@@ -76,6 +76,13 @@ public:
      @brief Check whether the user logined or not
      */
     bool isLogined();
+
+    /**
+     @brief Get session ID
+     @return If user logined, return value is session ID;
+             else return value is empty string.
+     */
+    std::string getSessionID();
 
     inline void setActionListener(UserActionListener* listener)
     {

@@ -45,7 +45,7 @@ extern "C" {
 			    UserActionListener* listener = pUser->getActionListener();
 			    if (NULL != listener)
 			    {
-			        listener->onActionResult((UserActionResultCode) ret, strMsg.c_str());
+			        listener->onActionResult(pUser, (UserActionResultCode) ret, strMsg.c_str());
 			    }
 			    else
 			    {
@@ -105,6 +105,11 @@ void ProtocolUser::logout()
 bool ProtocolUser::isLogined()
 {
     return PluginUtils::callJavaBoolFuncWithName(this, "isLogined");
+}
+
+std::string ProtocolUser::getSessionID()
+{
+    return PluginUtils::callJavaStringFuncWithName(this, "getSessionID");
 }
 
 }} // namespace cocos2d { namespace plugin {

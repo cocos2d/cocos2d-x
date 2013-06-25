@@ -169,7 +169,6 @@
 				FA7C6D0017251C10008A0ECC /* PluginFlurry.xcodeproj */,
 				FA7C6CED17251BEA008A0ECC /* cocos2dx.xcodeproj */,
 				FA3FC126168D6ADC00F56319 /* PluginProtocol.xcodeproj */,
-				FA0CB87D168D2FB200E36B11 /* SystemConfiguration.framework */,
 				FA0CB872168D2F5400E36B11 /* Classes */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				BF5681CC1313A84D0055EEAC /* ios */,
@@ -182,6 +181,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FA0CB87D168D2FB200E36B11 /* SystemConfiguration.framework */,
 				BF492B6912891AC600A09262 /* libz.dylib */,
 				BF137426128A8E4600D9F789 /* QuartzCore.framework */,
 				BF492D4B1289302400A09262 /* OpenGLES.framework */,
