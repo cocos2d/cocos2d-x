@@ -91,6 +91,11 @@
 		1A144286172788660096438B /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 1A144285172788660096438B /* spine */; };
 		1A144289172788AF0096438B /* SpineTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A144287172788AF0096438B /* SpineTest.cpp */; };
 		1A14AE0615DA5E780064E300 /* EditBoxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A14AE0415DA5E780064E300 /* EditBoxTest.cpp */; };
+		1A1A08D11779A69D00AC9E48 /* libextensions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A1A08D01779A69D00AC9E48 /* libextensions.a */; };
+		1A1A08D61779A6DE00AC9E48 /* libBox2D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A1A08D21779A6DE00AC9E48 /* libBox2D.a */; };
+		1A1A08D71779A6DE00AC9E48 /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A1A08D31779A6DE00AC9E48 /* libchipmunk.a */; };
+		1A1A08D81779A6DE00AC9E48 /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A1A08D41779A6DE00AC9E48 /* libcocos2dx.a */; };
+		1A1A08D91779A6DE00AC9E48 /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A1A08D51779A6DE00AC9E48 /* libCocosDenshion.a */; };
 		1A4D4A2615FD7E2200F61EEB /* CustomTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4D4A2215FD7E2200F61EEB /* CustomTableViewCell.cpp */; };
 		1A4D4A2715FD7E2200F61EEB /* TableViewTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4D4A2415FD7E2200F61EEB /* TableViewTestScene.cpp */; };
 		1A60BF54173CCCF80054773B /* DataVisitorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A60BF52173CCCF80054773B /* DataVisitorTest.cpp */; };
@@ -98,7 +103,6 @@
 		1AA3E47E177422C1008A36C1 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1AA3E47D177422C1008A36C1 /* components */; };
 		1AB2D71716B649C200D72C48 /* FileUtilsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB2D71516B649C200D72C48 /* FileUtilsTest.cpp */; };
 		1AB2D71B16B64DC600D72C48 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 1AB2D71A16B64DC600D72C48 /* Misc */; };
-		1AF5AE8B1758421B009C997A /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AF5AE8A1758421B009C997A /* libwebsockets.a */; };
 		1AF5AE8E1758426A009C997A /* WebSocketTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AF5AE8C1758426A009C997A /* WebSocketTest.cpp */; };
 		1D3623260D0F684500981E51 /* testsAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* testsAppDelegate.mm */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
@@ -140,13 +144,7 @@
 		A0C2187417790FDD00BE78B5 /* CCControlColourPickerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9CE015B7EC460033D6C2 /* CCControlColourPickerTest.cpp */; };
 		A0C2187517790FE500BE78B5 /* CCControlSliderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9CE715B7EC460033D6C2 /* CCControlSliderTest.cpp */; };
 		A0C2187617790FE500BE78B5 /* CCControlSwitchTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9CEA15B7EC460033D6C2 /* CCControlSwitchTest.cpp */; };
-		A0F3A9CC1779070900CF0EB6 /* libBox2D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F3A9C71779070800CF0EB6 /* libBox2D.a */; };
-		A0F3A9CD1779070900CF0EB6 /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F3A9C81779070800CF0EB6 /* libchipmunk.a */; };
-		A0F3A9CE1779070900CF0EB6 /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F3A9C91779070800CF0EB6 /* libcocos2dx.a */; };
-		A0F3A9CF1779070900CF0EB6 /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F3A9CA1779070900CF0EB6 /* libCocosDenshion.a */; };
-		A0F3A9D01779070900CF0EB6 /* libextensions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F3A9CB1779070900CF0EB6 /* libextensions.a */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
-		BF1712461292920000B8313A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB212928DE900B8313A /* libxml2.dylib */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		BF3326F413690DA4007CAA22 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF3326F313690DA4007CAA22 /* RootViewController.mm */; };
@@ -399,6 +397,11 @@
 		1A144288172788AF0096438B /* SpineTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpineTest.h; sourceTree = "<group>"; };
 		1A14AE0415DA5E780064E300 /* EditBoxTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditBoxTest.cpp; sourceTree = "<group>"; };
 		1A14AE0515DA5E780064E300 /* EditBoxTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditBoxTest.h; sourceTree = "<group>"; };
+		1A1A08D01779A69D00AC9E48 /* libextensions.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libextensions.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A1A08D21779A6DE00AC9E48 /* libBox2D.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libBox2D.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A1A08D31779A6DE00AC9E48 /* libchipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libchipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A1A08D41779A6DE00AC9E48 /* libcocos2dx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libcocos2dx.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A1A08D51779A6DE00AC9E48 /* libCocosDenshion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libCocosDenshion.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A4D4A2215FD7E2200F61EEB /* CustomTableViewCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomTableViewCell.cpp; sourceTree = "<group>"; };
 		1A4D4A2315FD7E2200F61EEB /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
 		1A4D4A2415FD7E2200F61EEB /* TableViewTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TableViewTestScene.cpp; sourceTree = "<group>"; };
@@ -412,8 +415,6 @@
 		1AB2D71516B649C200D72C48 /* FileUtilsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileUtilsTest.cpp; sourceTree = "<group>"; };
 		1AB2D71616B649C200D72C48 /* FileUtilsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileUtilsTest.h; sourceTree = "<group>"; };
 		1AB2D71A16B64DC600D72C48 /* Misc */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Misc; sourceTree = "<group>"; };
-		1AF5AE881758421B009C997A /* libwebsockets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libwebsockets.h; sourceTree = "<group>"; };
-		1AF5AE8A1758421B009C997A /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwebsockets.a; sourceTree = "<group>"; };
 		1AF5AE8C1758426A009C997A /* WebSocketTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocketTest.cpp; sourceTree = "<group>"; };
 		1AF5AE8D1758426A009C997A /* WebSocketTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebSocketTest.h; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -461,13 +462,7 @@
 		A059B9AC174D9B8E0078F84F /* ConfigurationTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigurationTest.h; sourceTree = "<group>"; };
 		A076DDF4176143F300ACDC32 /* BaseTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BaseTest.cpp; path = ../Classes/BaseTest.cpp; sourceTree = "<group>"; };
 		A076DDF5176143F300ACDC32 /* BaseTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseTest.h; path = ../Classes/BaseTest.h; sourceTree = "<group>"; };
-		A0F3A9C71779070800CF0EB6 /* libBox2D.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBox2D.a; path = "../../../../../../Library/Developer/Xcode/DerivedData/cocos2d-ios-efgwnjcjlugbweaakhyrdehqseht/Build/Products/Debug-iphoneos/libBox2D.a"; sourceTree = "<group>"; };
-		A0F3A9C81779070800CF0EB6 /* libchipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libchipmunk.a; path = "../../../../external/chipmunk/proj.ios/build/Release-iphoneos/libchipmunk.a"; sourceTree = "<group>"; };
-		A0F3A9C91779070800CF0EB6 /* libcocos2dx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcocos2dx.a; path = "../../../../../../Library/Developer/Xcode/DerivedData/cocos2d-ios-efgwnjcjlugbweaakhyrdehqseht/Build/Products/Debug-iphoneos/libcocos2dx.a"; sourceTree = "<group>"; };
-		A0F3A9CA1779070900CF0EB6 /* libCocosDenshion.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCocosDenshion.a; path = "../../../../../../Library/Developer/Xcode/DerivedData/cocos2d-ios-efgwnjcjlugbweaakhyrdehqseht/Build/Products/Debug-iphoneos/libCocosDenshion.a"; sourceTree = "<group>"; };
-		A0F3A9CB1779070900CF0EB6 /* libextensions.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libextensions.a; path = "../../../../extensions/proj.ios/build/Release-iphoneos/libextensions.a"; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		BF170DB212928DE900B8313A /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		BF3326F213690DA4007CAA22 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
@@ -491,22 +486,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0F3A9CC1779070900CF0EB6 /* libBox2D.a in Frameworks */,
-				A0F3A9CD1779070900CF0EB6 /* libchipmunk.a in Frameworks */,
-				A0F3A9CE1779070900CF0EB6 /* libcocos2dx.a in Frameworks */,
-				A0F3A9CF1779070900CF0EB6 /* libCocosDenshion.a in Frameworks */,
-				A0F3A9D01779070900CF0EB6 /* libextensions.a in Frameworks */,
+				1A1A08D61779A6DE00AC9E48 /* libBox2D.a in Frameworks */,
+				1A1A08D71779A6DE00AC9E48 /* libchipmunk.a in Frameworks */,
+				1A1A08D81779A6DE00AC9E48 /* libcocos2dx.a in Frameworks */,
+				1A1A08D91779A6DE00AC9E48 /* libCocosDenshion.a in Frameworks */,
+				1A1A08D11779A69D00AC9E48 /* libextensions.a in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
 				BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */,
-				BF1712461292920000B8313A /* libxml2.dylib in Frameworks */,
 				BF1712471292920000B8313A /* libz.dylib in Frameworks */,
 				BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */,
 				D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */,
 				D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */,
 				D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */,
-				1AF5AE8B1758421B009C997A /* libwebsockets.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1362,47 +1355,12 @@
 			path = ../Classes/FileUtilsTest;
 			sourceTree = "<group>";
 		};
-		1AF5AE851758421B009C997A /* libwebsockets */ = {
-			isa = PBXGroup;
-			children = (
-				1AF5AE861758421B009C997A /* ios */,
-			);
-			name = libwebsockets;
-			path = ../../../../external/libwebsockets;
-			sourceTree = "<group>";
-		};
-		1AF5AE861758421B009C997A /* ios */ = {
-			isa = PBXGroup;
-			children = (
-				1AF5AE871758421B009C997A /* include */,
-				1AF5AE891758421B009C997A /* lib */,
-			);
-			path = ios;
-			sourceTree = "<group>";
-		};
-		1AF5AE871758421B009C997A /* include */ = {
-			isa = PBXGroup;
-			children = (
-				1AF5AE881758421B009C997A /* libwebsockets.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		1AF5AE891758421B009C997A /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				1AF5AE8A1758421B009C997A /* libwebsockets.a */,
-			);
-			path = lib;
-			sourceTree = "<group>";
-		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
 				15AA9C4015B7EC450033D6C2 /* Classes */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				080E96DDFE201D6D7F000001 /* ios */,
-				1AF5AE851758421B009C997A /* libwebsockets */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				78C7DDAA14EBA5050085D0C2 /* Resources */,
 			);
@@ -1412,12 +1370,11 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A0F3A9C71779070800CF0EB6 /* libBox2D.a */,
-				A0F3A9C81779070800CF0EB6 /* libchipmunk.a */,
-				A0F3A9C91779070800CF0EB6 /* libcocos2dx.a */,
-				A0F3A9CA1779070900CF0EB6 /* libCocosDenshion.a */,
-				A0F3A9CB1779070900CF0EB6 /* libextensions.a */,
-				BF170DB212928DE900B8313A /* libxml2.dylib */,
+				1A1A08D21779A6DE00AC9E48 /* libBox2D.a */,
+				1A1A08D31779A6DE00AC9E48 /* libchipmunk.a */,
+				1A1A08D41779A6DE00AC9E48 /* libcocos2dx.a */,
+				1A1A08D51779A6DE00AC9E48 /* libCocosDenshion.a */,
+				1A1A08D01779A69D00AC9E48 /* libextensions.a */,
 				BF170DB412928DE900B8313A /* libz.dylib */,
 				D44C620F132DFF4E0009C878 /* AudioToolbox.framework */,
 				D44C620D132DFF430009C878 /* AVFoundation.framework */,
@@ -1762,6 +1719,7 @@
 					"\"$(SRCROOT)/../../../../external/chipmunk/include/chipmunk\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/kazmath/include\"",
 					"\"$(SRCROOT)/../../../../external\"",
+					"\"$(SRCROOT)/../../../../external/libwebsockets/ios/include\"",
 					"\"$(SRCROOT)/../../../../extensions\"",
 					"\"$(SRCROOT)/../../../../cocos2dx\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/include\"",
@@ -1807,6 +1765,7 @@
 					"\"$(SRCROOT)/../../../../external/chipmunk/include/chipmunk\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/kazmath/include\"",
 					"\"$(SRCROOT)/../../../../external\"",
+					"\"$(SRCROOT)/../../../../external/libwebsockets/ios/include\"",
 					"\"$(SRCROOT)/../../../../extensions\"",
 					"\"$(SRCROOT)/../../../../cocos2dx\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/include\"",
