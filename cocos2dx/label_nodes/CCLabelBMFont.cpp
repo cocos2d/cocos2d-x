@@ -1225,6 +1225,7 @@ void CCLabelBMFont::setFntFile(const char* fntFile)
 
         this->setTexture(CCTextureCache::sharedTextureCache()->addImage(m_pConfiguration->getAtlasName()));
         this->createFontChars();
+        this->setOpacityModifyRGB(m_pobTextureAtlas->getTexture()->hasPremultipliedAlpha());
     }
 }
 
