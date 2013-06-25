@@ -27,7 +27,6 @@ public class UserWrapper {
 	public static final int ACTION_RET_LOGIN_SUCCEED = 0;
     public static final int ACTION_RET_LOGIN_FAILED = 1;
     public static final int ACTION_RET_LOGOUT_SUCCEED = 2;
-    public static final int ACTION_RET_LOGOUT_FAILED = 3;
 
 	public static void onActionResult(InterfaceUser obj, int ret, String msg) {
 		final int curRet = ret;
