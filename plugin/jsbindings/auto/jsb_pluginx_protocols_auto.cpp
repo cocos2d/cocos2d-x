@@ -6,7 +6,7 @@ using namespace pluginx;
 #include "ProtocolAnalytics.h"
 #include "ProtocolIAP.h"
 #include "ProtocolAds.h"
-#include "ProtocolSocial.h"
+#include "ProtocolShare.h"
 
 template<class T>
 static JSBool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -970,16 +970,16 @@ void js_register_pluginx_protocols_ProtocolAds(JSContext *cx, JSObject *global) 
 }
 
 
-JSClass  *jsb_ProtocolSocial_class;
-JSObject *jsb_ProtocolSocial_prototype;
+JSClass  *jsb_ProtocolShare_class;
+JSObject *jsb_ProtocolShare_prototype;
 
-JSBool js_pluginx_protocols_ProtocolSocial_onShareResult(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool js_pluginx_protocols_ProtocolShare_onShareResult(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::plugin::ProtocolSocial* cobj = (cocos2d::plugin::ProtocolSocial *)(proxy ? proxy->ptr : NULL);
+	cocos2d::plugin::ProtocolShare* cobj = (cocos2d::plugin::ProtocolShare *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 2) {
 		cocos2d::plugin::ShareResultCode arg0;
@@ -995,13 +995,13 @@ JSBool js_pluginx_protocols_ProtocolSocial_onShareResult(JSContext *cx, uint32_t
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
 	return JS_FALSE;
 }
-JSBool js_pluginx_protocols_ProtocolSocial_share(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool js_pluginx_protocols_ProtocolShare_share(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::plugin::ProtocolSocial* cobj = (cocos2d::plugin::ProtocolSocial *)(proxy ? proxy->ptr : NULL);
+	cocos2d::plugin::ProtocolShare* cobj = (cocos2d::plugin::ProtocolShare *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 1) {
 		TShareInfo arg0;
@@ -1015,17 +1015,17 @@ JSBool js_pluginx_protocols_ProtocolSocial_share(JSContext *cx, uint32_t argc, j
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
 	return JS_FALSE;
 }
-JSBool js_pluginx_protocols_ProtocolSocial_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool js_pluginx_protocols_ProtocolShare_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::plugin::ProtocolSocial* cobj = (cocos2d::plugin::ProtocolSocial *)(proxy ? proxy->ptr : NULL);
+	cocos2d::plugin::ProtocolShare* cobj = (cocos2d::plugin::ProtocolShare *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 1) {
-		TSocialDeveloperInfo arg0;
-		ok &= jsval_to_TSocialDeveloperInfo(cx, argv[0], &arg0);
+		TShareDeveloperInfo arg0;
+		ok &= jsval_to_TShareDeveloperInfo(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 		cobj->configDeveloperInfo(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1039,15 +1039,15 @@ JSBool js_pluginx_protocols_ProtocolSocial_configDeveloperInfo(JSContext *cx, ui
 
 extern JSObject *jsb_PluginProtocol_prototype;
 
-void js_pluginx_protocols_ProtocolSocial_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (ProtocolSocial)", obj);
+void js_pluginx_protocols_ProtocolShare_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (ProtocolShare)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
     jsproxy = jsb_get_js_proxy(obj);
     if (jsproxy) {
         nproxy = jsb_get_native_proxy(jsproxy->ptr);
 
-//        cocos2d::plugin::ProtocolSocial *nobj = static_cast<cocos2d::plugin::ProtocolSocial *>(nproxy->ptr);
+//        cocos2d::plugin::ProtocolShare *nobj = static_cast<cocos2d::plugin::ProtocolShare *>(nproxy->ptr);
 //        if (nobj)
 //            delete nobj;
         
@@ -1055,36 +1055,36 @@ void js_pluginx_protocols_ProtocolSocial_finalize(JSFreeOp *fop, JSObject *obj) 
     }
 }
 
-void js_register_pluginx_protocols_ProtocolSocial(JSContext *cx, JSObject *global) {
-	jsb_ProtocolSocial_class = (JSClass *)calloc(1, sizeof(JSClass));
-	jsb_ProtocolSocial_class->name = "ProtocolSocial";
-	jsb_ProtocolSocial_class->addProperty = JS_PropertyStub;
-	jsb_ProtocolSocial_class->delProperty = JS_PropertyStub;
-	jsb_ProtocolSocial_class->getProperty = JS_PropertyStub;
-	jsb_ProtocolSocial_class->setProperty = JS_StrictPropertyStub;
-	jsb_ProtocolSocial_class->enumerate = JS_EnumerateStub;
-	jsb_ProtocolSocial_class->resolve = JS_ResolveStub;
-	jsb_ProtocolSocial_class->convert = JS_ConvertStub;
-	jsb_ProtocolSocial_class->finalize = js_pluginx_protocols_ProtocolSocial_finalize;
-	jsb_ProtocolSocial_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+void js_register_pluginx_protocols_ProtocolShare(JSContext *cx, JSObject *global) {
+	jsb_ProtocolShare_class = (JSClass *)calloc(1, sizeof(JSClass));
+	jsb_ProtocolShare_class->name = "ProtocolShare";
+	jsb_ProtocolShare_class->addProperty = JS_PropertyStub;
+	jsb_ProtocolShare_class->delProperty = JS_PropertyStub;
+	jsb_ProtocolShare_class->getProperty = JS_PropertyStub;
+	jsb_ProtocolShare_class->setProperty = JS_StrictPropertyStub;
+	jsb_ProtocolShare_class->enumerate = JS_EnumerateStub;
+	jsb_ProtocolShare_class->resolve = JS_ResolveStub;
+	jsb_ProtocolShare_class->convert = JS_ConvertStub;
+	jsb_ProtocolShare_class->finalize = js_pluginx_protocols_ProtocolShare_finalize;
+	jsb_ProtocolShare_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
 	};
 
 	static JSFunctionSpec funcs[] = {
-		JS_FN("onShareResult", js_pluginx_protocols_ProtocolSocial_onShareResult, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("share", js_pluginx_protocols_ProtocolSocial_share, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("configDeveloperInfo", js_pluginx_protocols_ProtocolSocial_configDeveloperInfo, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("onShareResult", js_pluginx_protocols_ProtocolShare_onShareResult, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("share", js_pluginx_protocols_ProtocolShare_share, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("configDeveloperInfo", js_pluginx_protocols_ProtocolShare_configDeveloperInfo, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
 	JSFunctionSpec *st_funcs = NULL;
 
-	jsb_ProtocolSocial_prototype = JS_InitClass(
+	jsb_ProtocolShare_prototype = JS_InitClass(
 		cx, global,
 		jsb_PluginProtocol_prototype,
-		jsb_ProtocolSocial_class,
+		jsb_ProtocolShare_class,
 		empty_constructor, 0,
 		properties,
 		funcs,
@@ -1092,18 +1092,18 @@ void js_register_pluginx_protocols_ProtocolSocial(JSContext *cx, JSObject *globa
 		st_funcs);
 	// make the class enumerable in the registered namespace
 	JSBool found;
-	JS_SetPropertyAttributes(cx, global, "ProtocolSocial", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+	JS_SetPropertyAttributes(cx, global, "ProtocolShare", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 
 	// add the proto and JSClass to the type->js info hash table
-	TypeTest<cocos2d::plugin::ProtocolSocial> t;
+	TypeTest<cocos2d::plugin::ProtocolShare> t;
 	js_type_class_t *p;
 	uint32_t typeId = t.s_id();
 	HASH_FIND_INT(_js_global_type_ht, &typeId, p);
 	if (!p) {
 		p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
 		p->type = typeId;
-		p->jsclass = jsb_ProtocolSocial_class;
-		p->proto = jsb_ProtocolSocial_prototype;
+		p->jsclass = jsb_ProtocolShare_class;
+		p->proto = jsb_ProtocolShare_prototype;
 		p->parentProto = jsb_PluginProtocol_prototype;
 		HASH_ADD_INT(_js_global_type_ht, type, p);
 	}
@@ -1124,8 +1124,8 @@ void register_all_pluginx_protocols(JSContext* cx, JSObject* obj) {
 	obj = ns;
 
 	js_register_pluginx_protocols_PluginProtocol(cx, obj);
+	js_register_pluginx_protocols_ProtocolShare(cx, obj);
 	js_register_pluginx_protocols_ProtocolIAP(cx, obj);
-	js_register_pluginx_protocols_ProtocolSocial(cx, obj);
 	js_register_pluginx_protocols_ProtocolAnalytics(cx, obj);
 	js_register_pluginx_protocols_ProtocolAds(cx, obj);
 	js_register_pluginx_protocols_PluginManager(cx, obj);
