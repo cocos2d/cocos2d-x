@@ -106,6 +106,11 @@ protected:
      */
     virtual CCFrameData *tweenNodeTo(float percent, CCFrameData *node = NULL);
 
+	/**
+     * According to the percent to calculate current color with tween effect
+     */
+	virtual void tweenColorTo(float percent, CCFrameData *node = NULL, bool dirty = false);
+
     /**
      * Update display index and process the key frame event when arrived a key frame
      */
