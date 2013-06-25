@@ -128,6 +128,8 @@ public:
     virtual void ccTouchCancelled(Touch *touch, Event* event);
     virtual void ccTouchMoved(Touch* touch, Event* event);
 
+    virtual void setTouchEnabled(bool value);
+
     /**
     @since v0.99.5
     override onExit

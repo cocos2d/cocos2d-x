@@ -293,6 +293,15 @@ void Menu::ccTouchMoved(Touch* touch, Event* event)
     }
 }
 
+void Menu::setTouchEnabled(bool value)
+{
+  Layer::setTouchEnabled(value);
+  
+  if (_state == kMenuStateTrackingTouch) {
+    ccTouchCancelled(NULL, NULL);
+  }
+}
+
 //Menu - Alignment
 void Menu::alignItemsVertically()
 {
