@@ -45,6 +45,7 @@
 		46A212B316D4A43400723F2B /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 46A212B116D4A41700723F2B /* main.js */; };
 		46A212BE16D4A4C000723F2B /* myApp.js in Resources */ = {isa = PBXBuildFile; fileRef = 46A212BC16D4A4B100723F2B /* myApp.js */; };
 		46A2146116D4B04A00723F2B /* Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A2146016D4B04A00723F2B /* Background.png */; };
+		A0C2189D1779272900BE78B5 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C2189C1779272900BE78B5 /* Default-568h@2x.png */; };
 		A0F3A9B8177905F600CF0EB6 /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F3A9B3177905F600CF0EB6 /* libchipmunk.a */; };
 		A0F3A9B9177905F600CF0EB6 /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F3A9B4177905F600CF0EB6 /* libcocos2dx.a */; };
 		A0F3A9BA177905F600CF0EB6 /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F3A9B5177905F600CF0EB6 /* libCocosDenshion.a */; };
@@ -94,10 +95,11 @@
 		46A212B116D4A41700723F2B /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.js; sourceTree = "<group>"; };
 		46A212BC16D4A4B100723F2B /* myApp.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = myApp.js; sourceTree = "<group>"; };
 		46A2146016D4B04A00723F2B /* Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background.png; sourceTree = "<group>"; };
-		A0F3A9B3177905F600CF0EB6 /* libchipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libchipmunk.a; path = "../../../../external/chipmunk/proj.ios/build/Release-iphoneos/libchipmunk.a"; sourceTree = "<group>"; };
+		A0C2189C1779272900BE78B5 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		A0F3A9B3177905F600CF0EB6 /* libchipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libchipmunk.a; path = "../../../../external/chipmunk/proj.ios/build/Release-iphoneos/libchipmunk.a"; sourceTree = "<group>"; };
 		A0F3A9B4177905F600CF0EB6 /* libcocos2dx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcocos2dx.a; path = "../../../../../../Library/Developer/Xcode/DerivedData/cocos2d-ios-efgwnjcjlugbweaakhyrdehqseht/Build/Products/Debug-iphoneos/libcocos2dx.a"; sourceTree = "<group>"; };
 		A0F3A9B5177905F600CF0EB6 /* libCocosDenshion.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCocosDenshion.a; path = "../../../../../../Library/Developer/Xcode/DerivedData/cocos2d-ios-efgwnjcjlugbweaakhyrdehqseht/Build/Products/Debug-iphoneos/libCocosDenshion.a"; sourceTree = "<group>"; };
-		A0F3A9B6177905F600CF0EB6 /* libextensions.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libextensions.a; path = "../../../../extensions/proj.ios/build/Release-iphoneos/libextensions.a"; sourceTree = "<group>"; };
+		A0F3A9B6177905F600CF0EB6 /* libextensions.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libextensions.a; path = "../../../../extensions/proj.ios/build/Release-iphoneos/libextensions.a"; sourceTree = "<group>"; };
 		A0F3A9B7177905F600CF0EB6 /* libjsbindings.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjsbindings.a; path = "../../../../../../Library/Developer/Xcode/DerivedData/cocos2d-ios-efgwnjcjlugbweaakhyrdehqseht/Build/Products/Debug-iphoneos/libjsbindings.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -150,6 +152,7 @@
 		469A79F516C0F242006FFCB2 = {
 			isa = PBXGroup;
 			children = (
+				A0C2189C1779272900BE78B5 /* Default-568h@2x.png */,
 				469A7D0516C0F429006FFCB2 /* Classes */,
 				469A7A0016C0F242006FFCB2 /* Frameworks */,
 				469A7CEE16C0F311006FFCB2 /* ios */,
@@ -304,6 +307,7 @@
 				469A7DD716C0F74F006FFCB2 /* Icon.png in Resources */,
 				469A7DD816C0F74F006FFCB2 /* Icon@2x.png in Resources */,
 				46A2146116D4B04A00723F2B /* Background.png in Resources */,
+				A0C2189D1779272900BE78B5 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,7 +428,6 @@
 					"\"$(SRCROOT)/../../../../CocosDenshion/third_party/blackberry/libraries/armle-v7\"",
 					"\"$(SRCROOT)/../../../../CocosDenshion/third_party/blackberry/libraries/x86\"",
 					"\"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/lib\"",
-					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/cocos2d-ios-efgwnjcjlugbweaakhyrdehqseht/Build/Products/Debug-iphoneos\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
@@ -471,7 +474,6 @@
 					"\"$(SRCROOT)/../../../../CocosDenshion/third_party/blackberry/libraries/armle-v7\"",
 					"\"$(SRCROOT)/../../../../CocosDenshion/third_party/blackberry/libraries/x86\"",
 					"\"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/lib\"",
-					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/cocos2d-ios-efgwnjcjlugbweaakhyrdehqseht/Build/Products/Debug-iphoneos\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
