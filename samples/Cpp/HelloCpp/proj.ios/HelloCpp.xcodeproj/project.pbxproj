@@ -34,7 +34,7 @@
 
 /* Begin PBXFileReference section */
 		15003FA215D2601D00B6775A /* iphone */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone; sourceTree = "<group>"; };
-		1A0C0A6A1777F65600838530 /* libcocos2dx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcocos2dx.a; path = "../../../../cocos2dx/proj.ios/build/Release-iphoneos/libcocos2dx.a"; sourceTree = "<group>"; };
+		1A0C0A6A1777F65600838530 /* libcocos2dx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; name = libcocos2dx.a; path = "libcocos2dx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A1CF3661626CB6000AFC938 /* AppMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppMacros.h; sourceTree = "<group>"; };
 		1A1CF3671626CEFF00AFC938 /* ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipad; sourceTree = "<group>"; };
 		1A1CF3681626CEFF00AFC938 /* ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipadhd; sourceTree = "<group>"; };

@@ -53,11 +53,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1A6B0595177828E700FFE52B /* libchipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libchipmunk.a; path = "../../../../external/chipmunk/proj.ios/build/Release-iphoneos/libchipmunk.a"; sourceTree = "<group>"; };
-		1A6B0596177828E700FFE52B /* libcocos2dx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcocos2dx.a; path = "../../../../cocos2dx/proj.ios/build/Release-iphoneos/libcocos2dx.a"; sourceTree = "<group>"; };
-		1A6B0597177828E700FFE52B /* libCocosDenshion.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCocosDenshion.a; path = "../../../../CocosDenshion/proj.ios/build/Release-iphoneos/libCocosDenshion.a"; sourceTree = "<group>"; };
-		1A6B0598177828E700FFE52B /* libextensions.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libextensions.a; path = "../../../../extensions/proj.ios/build/Release-iphoneos/libextensions.a"; sourceTree = "<group>"; };
-		1A6B0599177828E700FFE52B /* libjsbindings.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjsbindings.a; path = "../../../../scripting/javascript/bindings/proj.ios/build/Release-iphoneos/libjsbindings.a"; sourceTree = "<group>"; };
+		1A6B0595177828E700FFE52B /* libchipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; name = libchipmunk.a; path = "libchipmunk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A6B0596177828E700FFE52B /* libcocos2dx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; name = libcocos2dx.a; path = "libcocos2dx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A6B0597177828E700FFE52B /* libCocosDenshion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; name = libCocosDenshion.a; path = "libCocosDenshion.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A6B0598177828E700FFE52B /* libextensions.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; name = libextensions.a; path = "libextensions.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A6B0599177828E700FFE52B /* libjsbindings.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; name = libjsbindings.a; path = "libjsbindings.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A6B05A01778291500FFE52B /* jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb.js; sourceTree = "<group>"; };
 		1A6B05A11778291500FFE52B /* jsb_chipmunk.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_chipmunk.js; sourceTree = "<group>"; };
 		1A6B05A21778291500FFE52B /* jsb_chipmunk_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_chipmunk_constants.js; sourceTree = "<group>"; };

@@ -30,6 +30,12 @@
 #include "ccTypeInfo.h"
 #include <string>
 #include <vector>
+#include "jni.h"
+#include "android/asset_manager.h"
+
+extern "C" {
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetAssetManager(JNIEnv*  env, jobject thiz, jobject java_assetmanager);
+}
 
 NS_CC_BEGIN
 
@@ -68,4 +74,3 @@ private:
 NS_CC_END
 
 #endif    // __CC_FILEUTILS_ANDROID_H__
-
