@@ -299,10 +299,6 @@
 				);
 				INFOPLIST_FILE = "SimpleGame-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/cocos2d-ios-efgwnjcjlugbweaakhyrdehqseht/Build/Products/Debug-iphoneos\"",
-				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = SimpleGame;
 				PROVISIONING_PROFILE = "";
@@ -340,10 +336,6 @@
 				);
 				INFOPLIST_FILE = "SimpleGame-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/cocos2d-ios-efgwnjcjlugbweaakhyrdehqseht/Build/Products/Debug-iphoneos\"",
-				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = SimpleGame;
 				PROVISIONING_PROFILE = "";
