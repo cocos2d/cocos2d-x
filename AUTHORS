@@ -359,6 +359,7 @@ Developers:
         Renaming CCScriptSupport::executeAssert to CCScriptSupport::handleAssert.
         Adding Native Client support for develop branch (cocos2d-x 3.0) and some warnings fixes.
         Cleanup travis build scripts.
+        Refactoring emscripten building script.
 
     Peter Young (young40)
         Implements setVisible() for CCEditBox
