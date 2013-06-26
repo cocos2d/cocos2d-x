@@ -92,13 +92,8 @@ bool FileUtilsAndroid::isFileExist(const std::string& strFilePath)
     {
         const char* s = strFilePath.c_str();
 
-        if (strFilePath.find(_defaultResRootPath) != 0)
-        {
-            // Didn't find "assets/" at the beginning of the path
-        } else {
-            // Found "assets/" at the beginning of the path and we don't want it
-            s += strlen("assets/");
-        }
+        // Found "assets/" at the beginning of the path and we don't want it
+        if (strFilePath.find(_defaultResRootPath) == 0) s += strlen("assets/");
 
         if (s_assetmanager) {
             AAsset* aa = AAssetManager_open(s_assetmanager, s, AASSET_MODE_UNKNOWN);
@@ -160,12 +155,13 @@ unsigned char* FileUtilsAndroid::doGetFileData(const char* pszFileName, const ch
     
     if (fullPath[0] != '/')
     {
-        if (forAsync)
+        
+        string fullPath(pszFileName);
+        // fullPathForFilename is not thread safe.
+        if (! forAsync)
         {
-            // Nothing to do when using the Android assetmanager APIs???
+            fullPath = fullPathForFilename(pszFileName);
         }
-
-        string fullPath = fullPathForFilename(pszFileName);
 
         const char* relativepath = fullPath.c_str();
 
