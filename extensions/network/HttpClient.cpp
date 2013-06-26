@@ -105,13 +105,24 @@ static void networkThread(void)
         request = NULL;
         
         s_requestQueueMutex.lock();
-        request = dynamic_cast<HttpRequest*>(s_requestQueue->objectAtIndex(0));
-        s_requestQueue->removeObjectAtIndex(0);
+        
+        //Get request task from queue
+        
+        if (0 != s_requestQueue->count())
+        {
+            request = dynamic_cast<HttpRequest*>(s_requestQueue->objectAtIndex(0));
+            s_requestQueue->removeObjectAtIndex(0);
+        }
+        
         s_requestQueueMutex.unlock();
         
-        std::unique_lock<std::mutex> lk(s_SleepMutex); //Get request task from queue
-        s_SleepCondition.wait(lk, []{ return 0 != s_requestQueue->count(); });
-
+        if (NULL == request)
+        {
+            // Wait for http request tasks from main thread
+            std::unique_lock<std::mutex> lk(s_SleepMutex); 
+            s_SleepCondition.wait(lk);
+            continue;
+        }
         
         // step 2: libcurl sync access
         
