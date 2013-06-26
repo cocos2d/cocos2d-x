@@ -27,7 +27,6 @@
 
 #include <string>
 #include <curl/curl.h>
-//#include <pthread.h>
 #include <mutex>
 
 #include "cocos2d.h"

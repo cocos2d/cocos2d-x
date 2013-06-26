@@ -28,7 +28,6 @@ THE SOFTWARE.
 #include <stack>
 #include <cctype>
 #include <list>
-#include <thread>
 
 #include "CCTextureCache.h"
 #include "CCTexture2D.h"
@@ -70,7 +69,8 @@ TextureCache * TextureCache::sharedTextureCache()
 }
 
 TextureCache::TextureCache()
-: _asyncStructQueue(nullptr)
+: _loadingThread(nullptr)
+, _asyncStructQueue(nullptr)
 , _imageInfoQueue(nullptr)
 , _needQuit(false)
 , _asyncRefCount(0)
@@ -85,6 +85,7 @@ TextureCache::~TextureCache()
 
     CC_SAFE_RELEASE(_textures);
 
+    CC_SAFE_DELETE(_loadingThread);
     _sharedTextureCache = nullptr;
 }
 
@@ -92,8 +93,8 @@ void TextureCache::purgeSharedTextureCache()
 {
     // notify sub thread to quick
     _sharedTextureCache->_needQuit = true;
-    std::lock_guard<std::mutex> lk(_sharedTextureCache->_sleepMutex);
     _sharedTextureCache->_sleepCondition.notify_one();
+    if (_sharedTextureCache->_loadingThread) _sharedTextureCache->_loadingThread->join();
 
     CC_SAFE_RELEASE_NULL(_sharedTextureCache);
 }
@@ -146,10 +147,7 @@ void TextureCache::addImageAsync(const char *path, Object *target, SEL_CallFuncO
         _imageInfoQueue = new queue<ImageInfo*>();        
 
         // create a new thread to load images
-        auto t = std::thread(&TextureCache::loadImage, this);
-        t.detach();
-        // should retain here, because sub thread use invoke TextureCache::loadImage()
-        retain();
+        _loadingThread = new std::thread(&TextureCache::loadImage, this);
 
         _needQuit = false;
     }
@@ -174,7 +172,6 @@ void TextureCache::addImageAsync(const char *path, Object *target, SEL_CallFuncO
     _asyncStructQueue->push(data);
     _asyncStructQueueMutex.unlock();
 
-    std::lock_guard<std::mutex> lk(_sleepMutex);
     _sleepCondition.notify_one();
 }
 
@@ -249,9 +246,6 @@ void TextureCache::loadImage()
         delete _imageInfoQueue;
 	    _imageInfoQueue = nullptr;
     }
-
-    // should release here, because we retain it when creating a sub thread in addImageAsync()
-    release();
 }
 
 Image::EImageFormat TextureCache::computeImageFormatType(string& filename)
