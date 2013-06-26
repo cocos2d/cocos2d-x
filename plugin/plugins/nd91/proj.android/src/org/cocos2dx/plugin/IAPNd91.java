@@ -131,7 +131,7 @@ public class IAPNd91 implements InterfaceIAP {
 
 	@Override
 	public String getSDKVersion() {
-		return "Unknown version";
+		return "20130607_3.2.5.1";
 	}
 
 	private boolean networkReachable() {
