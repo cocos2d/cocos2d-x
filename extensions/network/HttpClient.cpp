@@ -183,19 +183,18 @@ static void networkThread(void)
 
         
         // add response packet into queue
-        {
-            std::lock_guard<std::mutex> lk(s_responseQueueMutex);
-            s_responseQueue->addObject(response);
-        }
+        s_responseQueueMutex.lock();
+        s_responseQueue->addObject(response);
+        s_responseQueueMutex.unlock();
+        
         // resume dispatcher selector
         Director::sharedDirector()->getScheduler()->resumeTarget(HttpClient::getInstance());
     }
     
     // cleanup: if worker thread received quit signal, clean up un-completed request queue
-    {
-        std::lock_guard<std::mutex> lk(s_requestQueueMutex);
-        s_requestQueue->removeAllObjects();
-    }
+    s_requestQueueMutex.lock();
+    s_requestQueue->removeAllObjects();
+    s_requestQueueMutex.unlock();
     
     s_asyncRequestCount -= s_requestQueue->count();
     
@@ -433,10 +432,10 @@ void HttpClient::send(HttpRequest* request)
     
     request->retain();
     
-    {
-        std::lock_guard<std::mutex> lk(s_requestQueueMutex);
-        s_requestQueue->addObject(request);
-    }
+    s_requestQueueMutex.lock();
+    s_requestQueue->addObject(request);
+    s_requestQueueMutex.unlock();
+    
     // Notify thread start to work
     s_SleepCondition.notify_one();
 }
@@ -448,15 +447,15 @@ void HttpClient::dispatchResponseCallbacks(float delta)
     
     HttpResponse* response = NULL;
     
-    {
-        std::lock_guard<std::mutex> lk(s_responseQueueMutex);
+    s_responseQueueMutex.lock();
 
-        if (s_responseQueue->count())
-        {
-            response = dynamic_cast<HttpResponse*>(s_responseQueue->objectAtIndex(0));
-            s_responseQueue->removeObjectAtIndex(0);
-        }
+    if (s_responseQueue->count())
+    {
+        response = dynamic_cast<HttpResponse*>(s_responseQueue->objectAtIndex(0));
+        s_responseQueue->removeObjectAtIndex(0);
     }
+    
+    s_responseQueueMutex.unlock();
     
     if (response)
     {
