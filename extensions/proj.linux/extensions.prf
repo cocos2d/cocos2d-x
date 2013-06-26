@@ -1,0 +1,20 @@
+################################################################################
+# Do not include this file in your project: see cocos2dx.pri.
+################################################################################
+
+linux {
+    # We will compile extensions on demand using Makefile.
+    build_extension.name = Build extension static library
+    build_extension.input = $$PWD/Makefile
+    build_extension.output = $$CC_LIBRARY_DIR/libextension.a
+    build_extension.target = $$CC_LIBRARY_DIR/libextension.a
+    build_extension.CONFIG = no_link target_predeps
+    build_extension.commands = cd $$PWD && make $$CC_MAKE_FLAGS
+
+    QMAKE_EXTRA_COMPILERS += build_extension
+    QMAKE_EXTRA_TARGETS += build_extension
+
+    PRE_TARGETDEPS += $$CC_LIBRARY_DIR/libextension.a
+    LIBS += -Wl,-Bstatic -lextension -Wl,-Bdynamic
+}
+
