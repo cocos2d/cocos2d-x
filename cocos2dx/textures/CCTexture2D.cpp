@@ -875,7 +875,6 @@ const char* CCTexture2D::stringForFormat()
 	return  NULL;
 }
 
-
 //
 // Texture options for images that contains alpha
 //
@@ -885,7 +884,6 @@ void CCTexture2D::setDefaultAlphaPixelFormat(CCTexture2DPixelFormat format)
 {
     g_defaultAlphaPixelFormat = format;
 }
-
 
 CCTexture2DPixelFormat CCTexture2D::defaultAlphaPixelFormat()
 {

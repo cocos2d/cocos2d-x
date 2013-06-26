@@ -21,9 +21,14 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
+
+"[WebSocket module] is based in part on the work of the libwebsockets  project
+(http://libwebsockets.org)"
+
  ****************************************************************************/
 
 #include "WebSocket.h"
+#include <pthread.h>
 #include <queue>
 #include <signal.h>
 #include <errno.h>
@@ -217,7 +222,6 @@ void WsThreadHelper::update(float dt)
 enum WS_MSG {
     WS_MSG_TO_SUBTRHEAD_SENDING_STRING = 0,
     WS_MSG_TO_SUBTRHEAD_SENDING_BINARY,
-    WS_MSG_TO_SUBTRHEAD_CLOSING,
     WS_MSG_TO_UITHREAD_OPEN,
     WS_MSG_TO_UITHREAD_MESSAGE,
     WS_MSG_TO_UITHREAD_ERROR,
@@ -324,7 +328,6 @@ bool WebSocket::init(const Delegate& delegate,
         _wsProtocols[0].name = name;
         _wsProtocols[0].callback = WebSocketCallbackWrapper::onSocketCallback;
     }
-
     
     // WebSocket thread needs to be invoked at the end of this method.
     _wsHelper = new WsThreadHelper();
@@ -377,10 +380,6 @@ void WebSocket::close()
     CCLOG("websocket (%p) connection closed by client", this);
     _readyState = kStateClosed;
 
-    WsMessage* msg = new WsMessage();
-    msg->what = WS_MSG_TO_SUBTRHEAD_CLOSING;
-
-    _wsHelper->sendMessageToSubThread(msg);
     _wsHelper->joinSubThread();
     
     // onClose callback needs to be invoked at the end of this method
@@ -462,7 +461,6 @@ void WebSocket::onSubThreadEnded()
 
 }
 
-
 int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                      struct libwebsocket *wsi,
                      enum libwebsocket_callback_reasons reason,
@@ -478,20 +476,26 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
         case LWS_CALLBACK_PROTOCOL_DESTROY:
         case LWS_CALLBACK_CLIENT_CONNECTION_ERROR:
             {
-                WsMessage* msg = new WsMessage();
+                WsMessage* msg = NULL;
                 if (reason == LWS_CALLBACK_CLIENT_CONNECTION_ERROR
                     || (reason == LWS_CALLBACK_PROTOCOL_DESTROY && _readyState == kStateConnecting)
                     || (reason == LWS_CALLBACK_DEL_POLL_FD && _readyState == kStateConnecting)
                     )
                 {
+                    msg = new WsMessage();
                     msg->what = WS_MSG_TO_UITHREAD_ERROR;
                     _readyState = kStateClosing;
                 }
                 else if (reason == LWS_CALLBACK_PROTOCOL_DESTROY && _readyState == kStateClosing)
                 {
+                    msg = new WsMessage();
                     msg->what = WS_MSG_TO_UITHREAD_CLOSE;
                 }
-                _wsHelper->sendMessageToUIThread(msg);
+
+                if (msg)
+                {
+                    _wsHelper->sendMessageToUIThread(msg);
+                }
             }
             break;
         case LWS_CALLBACK_CLIENT_ESTABLISHED:
@@ -553,6 +557,8 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                         CC_SAFE_DELETE(data);
                         CC_SAFE_DELETE_ARRAY(buf);
                     }
+                    
+                    CC_SAFE_DELETE(subThreadMsg);
                 }
 
                 _wsHelper->_subThreadWsMessageQueue->clear();

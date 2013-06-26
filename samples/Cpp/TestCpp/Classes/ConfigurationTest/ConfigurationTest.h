@@ -59,5 +59,12 @@ public:
     virtual std::string subtitle();
 };
 
+class ConfigurationSet : public ConfigurationBase
+{
+public:
+    virtual void onEnter();
+    virtual std::string subtitle();
+};
+
 
 #endif // __CONFIGURATIONTEST_H__

@@ -676,6 +676,102 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/extensions/Components/CCComAttribute.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>Components</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/Components/CCComAttribute.cpp</string>
+		</dict>
+		<key>libs/extensions/Components/CCComAttribute.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>Components</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/Components/CCComAttribute.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/extensions/Components/CCComAudio.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>Components</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/Components/CCComAudio.cpp</string>
+		</dict>
+		<key>libs/extensions/Components/CCComAudio.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>Components</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/Components/CCComAudio.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/extensions/Components/CCComController.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>Components</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/Components/CCComController.cpp</string>
+		</dict>
+		<key>libs/extensions/Components/CCComController.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>Components</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/Components/CCComController.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/extensions/Components/CCInputDelegate.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>Components</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/Components/CCInputDelegate.cpp</string>
+		</dict>
+		<key>libs/extensions/Components/CCInputDelegate.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>Components</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/Components/CCInputDelegate.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/extensions/ExtensionMacros.h</key>
 		<dict>
 			<key>Group</key>
@@ -1106,6 +1202,44 @@
 			<key>Path</key>
 			<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplMac.mm</string>
 		</dict>
+		<key>libs/extensions/GUI/CCEditBox/CCEditBoxImplNone.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>GUI</string>
+				<string>CCEditBox</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplNone.cpp</string>
+		</dict>
+		<key>libs/extensions/GUI/CCEditBox/CCEditBoxImplTizen.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>GUI</string>
+				<string>CCEditBox</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplTizen.cpp</string>
+		</dict>
+		<key>libs/extensions/GUI/CCEditBox/CCEditBoxImplTizen.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>GUI</string>
+				<string>CCEditBox</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplTizen.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/extensions/GUI/CCEditBox/CCEditBoxImplWin.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -1318,6 +1452,30 @@
 			</array>
 			<key>Path</key>
 			<string>libs/extensions/network/HttpResponse.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/extensions/network/WebSocket.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>network</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/network/WebSocket.cpp</string>
+		</dict>
+		<key>libs/extensions/network/WebSocket.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>network</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/network/WebSocket.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -1582,6 +1740,54 @@
 			</array>
 			<key>Path</key>
 			<string>libs/extensions/spine/BoneData.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/extensions/spine/CCSkeleton.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>spine</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/spine/CCSkeleton.cpp</string>
+		</dict>
+		<key>libs/extensions/spine/CCSkeleton.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>spine</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/spine/CCSkeleton.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/extensions/spine/CCSkeletonAnimation.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>spine</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/spine/CCSkeletonAnimation.cpp</string>
+		</dict>
+		<key>libs/extensions/spine/CCSkeletonAnimation.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>spine</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/spine/CCSkeletonAnimation.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -1896,6 +2102,14 @@
 		<string>libs/extensions/CCBReader/CCSpriteLoader.cpp</string>
 		<string>libs/extensions/CCBReader/CCSpriteLoader.h</string>
 		<string>libs/extensions/cocos-ext.h</string>
+		<string>libs/extensions/Components/CCComAttribute.cpp</string>
+		<string>libs/extensions/Components/CCComAttribute.h</string>
+		<string>libs/extensions/Components/CCComAudio.cpp</string>
+		<string>libs/extensions/Components/CCComAudio.h</string>
+		<string>libs/extensions/Components/CCComController.cpp</string>
+		<string>libs/extensions/Components/CCComController.h</string>
+		<string>libs/extensions/Components/CCInputDelegate.cpp</string>
+		<string>libs/extensions/Components/CCInputDelegate.h</string>
 		<string>libs/extensions/ExtensionMacros.h</string>
 		<string>libs/extensions/GUI/CCControlExtension/CCControl.cpp</string>
 		<string>libs/extensions/GUI/CCControlExtension/CCControl.h</string>
@@ -1929,6 +2143,9 @@
 		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplIOS.mm</string>
 		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplMac.h</string>
 		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplMac.mm</string>
+		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplNone.cpp</string>
+		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplTizen.cpp</string>
+		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplTizen.h</string>
 		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplWin.cpp</string>
 		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplWin.h</string>
 		<string>libs/extensions/GUI/CCScrollView/CCScrollView.cpp</string>
@@ -1946,6 +2163,8 @@
 		<string>libs/extensions/network/HttpClient.h</string>
 		<string>libs/extensions/network/HttpRequest.h</string>
 		<string>libs/extensions/network/HttpResponse.h</string>
+		<string>libs/extensions/network/WebSocket.cpp</string>
+		<string>libs/extensions/network/WebSocket.h</string>
 		<string>libs/extensions/physics_nodes/CCPhysicsDebugNode.cpp</string>
 		<string>libs/extensions/physics_nodes/CCPhysicsDebugNode.h</string>
 		<string>libs/extensions/physics_nodes/CCPhysicsSprite.cpp</string>
@@ -1968,6 +2187,10 @@
 		<string>libs/extensions/spine/Bone.h</string>
 		<string>libs/extensions/spine/BoneData.cpp</string>
 		<string>libs/extensions/spine/BoneData.h</string>
+		<string>libs/extensions/spine/CCSkeleton.cpp</string>
+		<string>libs/extensions/spine/CCSkeleton.h</string>
+		<string>libs/extensions/spine/CCSkeletonAnimation.cpp</string>
+		<string>libs/extensions/spine/CCSkeletonAnimation.h</string>
 		<string>libs/extensions/spine/extension.cpp</string>
 		<string>libs/extensions/spine/extension.h</string>
 		<string>libs/extensions/spine/Json.cpp</string>

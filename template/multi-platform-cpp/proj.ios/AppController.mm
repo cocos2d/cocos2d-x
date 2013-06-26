@@ -1,11 +1,3 @@
-//
-//  iphoneAppDelegate.m
-//  iphone
-//
-//  Created by Walzer on 10-11-16.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
-//
-
 #import "AppController.h"
 #import "EAGLView.h"
 #import "cocos2d.h"
@@ -35,7 +27,6 @@ static AppDelegate s_sharedApplication;
                                       sharegroup: nil
                                    multiSampling: NO
                                  numberOfSamples: 0];
-    [__glView setMultipleTouchEnabled:YES];
 
     // Use RootViewController manage EAGLView 
     viewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];

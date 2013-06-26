@@ -332,6 +332,11 @@ files
 	SceneController.cpp
 	SceneController.h
 
+	[Test/ExtensionsTest/ArmatureTest]
+	(../Classes/ExtensionsTest/ArmatureTest)
+	ArmatureScene.cpp
+	ArmatureScene.h
+
 	[Test/FontTest]
 	(../Classes/FontTest)
 	FontTest.cpp
@@ -447,10 +452,10 @@ files
 	TextureCacheTest.cpp
 	TextureCacheTest.h
 
-    [Test/TexturePackerEncryptionTest]
-	[../Classes/TexturePackerEncryptionTest]
-	TexturePackerEncryptionTest.cpp
-	TexturePackerEncryptionTest.h
+	[Test/TexturePackerEncryptionTest]
+	(../Classes/TexturePackerEncryptionTest)
+	TextureAtlasEncryptionTest.cpp
+	TextureAtlasEncryptionTest.h
 
 	[Test/TileMapTest]
 	(../Classes/TileMapTest)

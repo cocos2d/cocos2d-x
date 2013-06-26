@@ -20,5 +20,31 @@ unsigned int getHashCodeByString(const char *key)
     return (hash);
 }
 
+js_proxy_t* jsb_new_proxy(void* nativeObj, JSObject* jsObj)
+{
+    js_proxy_t* p;
+    JS_NEW_PROXY(p, nativeObj, jsObj);
+    return p;
+}
+
+js_proxy_t* jsb_get_native_proxy(void* nativeObj)
+{
+    js_proxy_t* p;
+    JS_GET_PROXY(p, nativeObj);
+    return p;
+}
+
+js_proxy_t* jsb_get_js_proxy(JSObject* jsObj)
+{
+    js_proxy_t* p;
+    JS_GET_NATIVE_PROXY(p, jsObj);
+    return p;
+}
+
+void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy)
+{
+    JS_REMOVE_PROXY(nativeProxy, jsProxy);
+}
 
 } // namespace pluginx {
+
