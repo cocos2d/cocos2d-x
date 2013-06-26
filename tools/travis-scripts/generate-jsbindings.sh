@@ -49,14 +49,13 @@ if [ "$GEN_JSB"x != "YES"x ]; then
     exit 0
 fi
 
-#Set git user
-git config --global user.email ${GH_EMAIL}
-git config --global user.name ${GH_USER}
-
 # Update submodule of auto-gen JSBinding repo.
 pushd "$GENERATED_WORKTREE"
 
 git checkout -B master
+#Set git user
+git config user.email ${GH_EMAIL}
+git config user.name ${GH_USER}
 #Set remotes
 git remote add upstream https://${GH_USER}:${GH_PASSWORD}@github.com/folecr/cocos2dx-autogen-bindings.git 2> /dev/null > /dev/null
 

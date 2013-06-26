@@ -145,9 +145,9 @@ bool UpdateLayer::init()
     
     Size size = Director::sharedDirector()->getWinSize();
 
-    pItemReset = MenuItemFont::create("reset", this, menu_selector(UpdateLayer::reset));
-    pItemEnter = MenuItemFont::create("enter", this, menu_selector(UpdateLayer::enter));
-    pItemUpdate = MenuItemFont::create("update", this, menu_selector(UpdateLayer::update));
+    pItemReset = MenuItemFont::create("reset", CC_CALLBACK_1(UpdateLayer::reset,this));
+    pItemEnter = MenuItemFont::create("enter", CC_CALLBACK_1(UpdateLayer::enter, this));
+    pItemUpdate = MenuItemFont::create("update", CC_CALLBACK_1(UpdateLayer::update, this));
     
     pItemEnter->setPosition(ccp(size.width/2, size.height/2 + 50));
     pItemReset->setPosition(ccp(size.width/2, size.height/2));

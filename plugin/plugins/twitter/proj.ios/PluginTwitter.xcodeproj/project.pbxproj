@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FAC2A8001777F9D400035D22 /* ShareTwitter.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC2A7FF1777F9D400035D22 /* ShareTwitter.m */; };
 		FACAD88C1762C1B500D75ADE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FACAD88B1762C1B500D75ADE /* Foundation.framework */; };
-		FACAD89F1762C22300D75ADE /* SocialTwitter.m in Sources */ = {isa = PBXBuildFile; fileRef = FACAD89E1762C22300D75ADE /* SocialTwitter.m */; };
 		FACAD8BA1762C61A00D75ADE /* FHSTwitterEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = FACAD8A51762C61A00D75ADE /* FHSTwitterEngine.m */; };
 		FACAD8BB1762C61A00D75ADE /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FACAD8A91762C61A00D75ADE /* NSString+URLEncoding.m */; };
 		FACAD8BC1762C61A00D75ADE /* Base64TranscoderFHS.c in Sources */ = {isa = PBXBuildFile; fileRef = FACAD8AB1762C61A00D75ADE /* Base64TranscoderFHS.c */; };
@@ -34,10 +34,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FAC2A7FE1777F9D400035D22 /* ShareTwitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareTwitter.h; sourceTree = "<group>"; };
+		FAC2A7FF1777F9D400035D22 /* ShareTwitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareTwitter.m; sourceTree = "<group>"; };
 		FACAD8881762C1B500D75ADE /* libPluginTwitter.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPluginTwitter.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FACAD88B1762C1B500D75ADE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		FACAD89D1762C22300D75ADE /* SocialTwitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialTwitter.h; sourceTree = "<group>"; };
-		FACAD89E1762C22300D75ADE /* SocialTwitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialTwitter.m; sourceTree = "<group>"; };
 		FACAD8A41762C61A00D75ADE /* FHSTwitterEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FHSTwitterEngine.h; sourceTree = "<group>"; };
 		FACAD8A51762C61A00D75ADE /* FHSTwitterEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FHSTwitterEngine.m; sourceTree = "<group>"; };
 		FACAD8A81762C61A00D75ADE /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding.h"; sourceTree = "<group>"; };
@@ -77,10 +77,10 @@
 		FACAD87D1762C1B500D75ADE = {
 			isa = PBXGroup;
 			children = (
+				FAC2A7FE1777F9D400035D22 /* ShareTwitter.h */,
+				FAC2A7FF1777F9D400035D22 /* ShareTwitter.m */,
 				FACAD8CB1762C76800D75ADE /* PluginTwitter-Prefix.pch */,
 				FACAD8A31762C61A00D75ADE /* FHSTwitterEngine */,
-				FACAD89D1762C22300D75ADE /* SocialTwitter.h */,
-				FACAD89E1762C22300D75ADE /* SocialTwitter.m */,
 				FACAD88A1762C1B500D75ADE /* Frameworks */,
 				FACAD8891762C1B500D75ADE /* Products */,
 			);
@@ -204,7 +204,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FACAD89F1762C22300D75ADE /* SocialTwitter.m in Sources */,
 				FACAD8BA1762C61A00D75ADE /* FHSTwitterEngine.m in Sources */,
 				FACAD8BB1762C61A00D75ADE /* NSString+URLEncoding.m in Sources */,
 				FACAD8BC1762C61A00D75ADE /* Base64TranscoderFHS.c in Sources */,
@@ -214,6 +213,7 @@
 				FACAD8C01762C61A00D75ADE /* OARequestParameter.m in Sources */,
 				FACAD8C11762C61A00D75ADE /* OAServiceTicket.m in Sources */,
 				FACAD8C21762C61A00D75ADE /* OAToken.m in Sources */,
+				FAC2A8001777F9D400035D22 /* ShareTwitter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

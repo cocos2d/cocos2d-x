@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <Group
+      location = "container:"
+      name = "samples">
+      <Group
+         location = "container:"
+         name = "Javascript">
+         <FileRef
+            location = "group:samples/Javascript/WatermelonWithMe/proj.ios/WatermelonWithMe.xcodeproj">
+         </FileRef>
+         <FileRef
+            location = "group:samples/Javascript/MoonWarriors/proj.ios/MoonWarriors.xcodeproj">
+         </FileRef>
+         <FileRef
+            location = "group:samples/Javascript/CrystalCraze/proj.ios/CrystalCraze.xcodeproj">
+         </FileRef>
+         <FileRef
+            location = "group:samples/Javascript/CocosDragonJS/proj.ios/CocosDragonJS.xcodeproj">
+         </FileRef>
+         <FileRef
+            location = "group:samples/Javascript/TestJavascript/proj.ios/TestJavascript.xcodeproj">
+         </FileRef>
+      </Group>
+      <Group
+         location = "container:"
+         name = "Lua">
+         <FileRef
+            location = "group:samples/Lua/HelloLua/proj.ios/HelloLua.xcodeproj">
+         </FileRef>
+         <FileRef
+            location = "group:samples/Lua/TestLua/proj.ios/TestLua.xcodeproj">
+         </FileRef>
+      </Group>
+      <Group
+         location = "container:"
+         name = "Cpp">
+         <FileRef
+            location = "group:samples/Cpp/TestCpp/proj.ios/TestCpp.xcodeproj">
+         </FileRef>
+         <FileRef
+            location = "group:samples/Cpp/SimpleGame/proj.ios/SimpleGame.xcodeproj">
+         </FileRef>
+         <FileRef
+            location = "group:samples/Cpp/AssetsManagerTest/proj.ios/AssetsManagerTest.xcodeproj">
+         </FileRef>
+         <FileRef
+            location = "group:samples/Cpp/HelloCpp/proj.ios/HelloCpp.xcodeproj">
+         </FileRef>
+      </Group>
+   </Group>
+   <Group
+      location = "container:"
+      name = "libs">
+      <FileRef
+         location = "group:external/Box2D/proj.ios/Box2D.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:external/chipmunk/proj.ios/chipmunk.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:cocos2dx/proj.ios/cocos2dx.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CocosDenshion/proj.ios/CocosDenshion.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:extensions/proj.ios/extensions.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:scripting/javascript/bindings/proj.ios/jsbindings.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:scripting/lua/proj.ios/luabindings.xcodeproj">
+      </FileRef>
+   </Group>
+</Workspace>
