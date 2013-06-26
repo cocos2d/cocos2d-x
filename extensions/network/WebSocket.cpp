@@ -391,11 +391,8 @@ int WebSocket::onSubThreadLoop()
     }
     
     // Sleep 50 ms
-#ifdef WIN32
-	Sleep(50);
-#else
-    usleep(50000);
-#endif
+    std::this_thread::sleep_for(std::chrono::milliseconds(50));
+
     // return 0 to continue the loop.
     return 0;
 }
