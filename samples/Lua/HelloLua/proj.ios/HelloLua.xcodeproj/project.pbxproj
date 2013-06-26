@@ -49,12 +49,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1A6E48DC17781C0F0055514D /* libcocos2dx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcocos2dx.a; path = "../../../../cocos2dx/proj.ios/build/Release-iphoneos/libcocos2dx.a"; sourceTree = "<group>"; };
-		1A6E48DD17781C0F0055514D /* libCocosDenshion.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCocosDenshion.a; path = "../../../../CocosDenshion/proj.ios/build/Release-iphoneos/libCocosDenshion.a"; sourceTree = "<group>"; };
-		1A6E48DE17781C0F0055514D /* libluabindings.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libluabindings.a; path = "../../../../scripting/lua/proj.ios/build/Release-iphoneos/libluabindings.a"; sourceTree = "<group>"; };
-		1A6E48EE17781D600055514D /* libchipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libchipmunk.a; path = "../../../../external/chipmunk/proj.ios/build/Release-iphoneos/libchipmunk.a"; sourceTree = "<group>"; };
-		1A6E48F217781D920055514D /* libBox2D.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBox2D.a; path = "../../../../external/Box2D/proj.ios/build/Release-iphoneos/libBox2D.a"; sourceTree = "<group>"; };
-		1A6E4901177821FB0055514D /* libextensions.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libextensions.a; path = "../../../../extensions/proj.ios/build/Release-iphoneos/libextensions.a"; sourceTree = "<group>"; };
+		1A6E48DC17781C0F0055514D /* libcocos2dx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; name = libcocos2dx.a; path = "libcocos2dx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A6E48DD17781C0F0055514D /* libCocosDenshion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; name = libCocosDenshion.a; path = "libCocosDenshion.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A6E48DE17781C0F0055514D /* libluabindings.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; name = libluabindings.a; path = "libluabindings.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A6E48EE17781D600055514D /* libchipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; name = libchipmunk.a; path = "libchipmunk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A6E48F217781D920055514D /* libBox2D.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; name = libBox2D.a; path = "libBox2D.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A6E4901177821FB0055514D /* libextensions.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; name = libextensions.a; path = "libextensions.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A6E49041778251B0055514D /* AudioEngine.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AudioEngine.lua; sourceTree = "<group>"; };
 		1A6E49051778251B0055514D /* CCBReaderLoad.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CCBReaderLoad.lua; sourceTree = "<group>"; };
 		1A6E49061778251B0055514D /* Cocos2dConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cocos2dConstants.lua; sourceTree = "<group>"; };
