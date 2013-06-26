@@ -54,7 +54,6 @@
 				FAB6DFDF1756F29800C90D89 /* AnalyticsFlurry.m */,
 				FAB6DFD81756F22200C90D89 /* Flurry.h */,
 				FAB6DFDB1756F22200C90D89 /* libFlurry.a */,
-				FA86650E168BE22D0073E055 /* SystemConfiguration.framework */,
 				FA09A374168AFD41008C1C7B /* Frameworks */,
 				FA09A373168AFD41008C1C7B /* Products */,
 			);
@@ -71,6 +70,7 @@
 		FA09A374168AFD41008C1C7B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FA86650E168BE22D0073E055 /* SystemConfiguration.framework */,
 				FA09A375168AFD41008C1C7B /* Foundation.framework */,
 			);
 			name = Frameworks;
