@@ -166,6 +166,7 @@
     <ClCompile Include="..\GUI\CCScrollView\CCTableViewCell.cpp" />
     <ClCompile Include="..\LocalStorage\LocalStorage.cpp" />
     <ClCompile Include="..\network\HttpClient.cpp" />
+    <ClCompile Include="..\network\SocketIO.cpp" />
     <ClCompile Include="..\network\Websocket.cpp" />
     <ClCompile Include="..\physics_nodes\CCPhysicsDebugNode.cpp" />
     <ClCompile Include="..\physics_nodes\CCPhysicsSprite.cpp" />
@@ -287,6 +288,7 @@
     <ClInclude Include="..\network\HttpClient.h" />
     <ClInclude Include="..\network\HttpRequest.h" />
     <ClInclude Include="..\network\HttpResponse.h" />
+    <ClInclude Include="..\network\SocketIO.h" />
     <ClInclude Include="..\network\Websocket.h" />
     <ClInclude Include="..\physics_nodes\CCPhysicsDebugNode.h" />
     <ClInclude Include="..\physics_nodes\CCPhysicsSprite.h" />

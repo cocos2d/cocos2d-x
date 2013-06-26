@@ -549,6 +549,9 @@
     <ClCompile Include="..\Classes\ExtensionsTest\Scale9SpriteTest\Scale9SpriteTest.cpp">
       <Filter>Classes\ExtensionsTest\Scale9SpriteTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\SocketIOTest.cpp">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -1042,6 +1045,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\Scale9SpriteTest\Scale9SpriteTest.h">
       <Filter>Classes\ExtensionsTest\Scale9SpriteTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\SocketIOTest.h">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
