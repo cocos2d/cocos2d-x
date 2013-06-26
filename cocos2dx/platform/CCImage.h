@@ -45,6 +45,8 @@ NS_CC_BEGIN
 class CC_DLL Image : public Object
 {
 public:
+    friend class TextureCache;
+    
     Image();
     ~Image();
 
@@ -78,15 +80,6 @@ public:
     @return  true if loaded correctly.
     */
     bool initWithImageFile(const char * strPath, EImageFormat imageType = kFmtPng);
-
-    /*
-     @brief The same result as with initWithImageFile, but thread safe. It is caused by
-            loadImage() in TextureCache.cpp.
-     @param fullpath  full path of the file.
-     @param imageType the type of image, currently only supporting two types.
-     @return  true if loaded correctly.
-     */
-    bool initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType = kFmtPng);
 
     /**
     @brief  Load image from stream buffer.
@@ -189,6 +182,15 @@ private:
     // noncopyable
     Image(const Image&    rImg);
     Image & operator=(const Image&);
+    
+    /*
+     @brief The same result as with initWithImageFile, but thread safe. It is caused by
+     loadImage() in TextureCache.cpp.
+     @param fullpath  full path of the file.
+     @param imageType the type of image, currently only supporting two types.
+     @return  true if loaded correctly.
+     */
+    bool initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType = kFmtPng);
 };
 
 // end of platform group
