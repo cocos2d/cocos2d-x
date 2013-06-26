@@ -24,22 +24,19 @@
  ****************************************************************************/
 
 #include "HttpClient.h"
-// #include "platform/CCThread.h"
-
+#include <thread>
 #include <queue>
-#include <pthread.h>
 #include <errno.h>
 
 #include "curl/curl.h"
 
 NS_CC_EXT_BEGIN
 
-static pthread_t        s_networkThread;
-static pthread_mutex_t  s_requestQueueMutex;
-static pthread_mutex_t  s_responseQueueMutex;
+static std::mutex       s_requestQueueMutex;
+static std::mutex       s_responseQueueMutex;
 
-static pthread_mutex_t		s_SleepMutex;
-static pthread_cond_t		s_SleepCondition;
+static std::mutex		s_SleepMutex;
+static std::condition_variable		s_SleepCondition;
 
 static unsigned long    s_asyncRequestCount = 0;
 
@@ -93,7 +90,7 @@ static int processDeleteTask(HttpRequest *request, write_callback callback, void
 
 
 // Worker thread
-static void* networkThread(void *data)
+static void networkThread(void)
 {    
     HttpRequest *request = NULL;
     
@@ -107,20 +104,12 @@ static void* networkThread(void *data)
         // step 1: send http request if the requestQueue isn't empty
         request = NULL;
         
-        pthread_mutex_lock(&s_requestQueueMutex); //Get request task from queue
-        if (0 != s_requestQueue->count())
         {
+            std::unique_lock<std::mutex> lk(s_requestQueueMutex); //Get request task from queue
+            s_SleepCondition.wait(lk, []{ return 0 != s_requestQueue->count(); });
+            
             request = dynamic_cast<HttpRequest*>(s_requestQueue->objectAtIndex(0));
-            s_requestQueue->removeObjectAtIndex(0);  
-            // request's refcount = 1 here
-        }
-        pthread_mutex_unlock(&s_requestQueueMutex);
-        
-        if (NULL == request)
-        {
-        	// Wait for http request tasks from main thread
-        	pthread_cond_wait(&s_SleepCondition, &s_SleepMutex);
-            continue;
+            s_requestQueue->removeObjectAtIndex(0);
         }
         
         // step 2: libcurl sync access
@@ -194,37 +183,30 @@ static void* networkThread(void *data)
 
         
         // add response packet into queue
-        pthread_mutex_lock(&s_responseQueueMutex);
-        s_responseQueue->addObject(response);
-        pthread_mutex_unlock(&s_responseQueueMutex);
-        
+        {
+            std::lock_guard<std::mutex> lk(s_responseQueueMutex);
+            s_responseQueue->addObject(response);
+        }
         // resume dispatcher selector
         Director::sharedDirector()->getScheduler()->resumeTarget(HttpClient::getInstance());
     }
     
     // cleanup: if worker thread received quit signal, clean up un-completed request queue
-    pthread_mutex_lock(&s_requestQueueMutex);
-    s_requestQueue->removeAllObjects();
-    pthread_mutex_unlock(&s_requestQueueMutex);
+    {
+        std::lock_guard<std::mutex> lk(s_requestQueueMutex);
+        s_requestQueue->removeAllObjects();
+    }
+    
     s_asyncRequestCount -= s_requestQueue->count();
     
     if (s_requestQueue != NULL) {
-        
-        pthread_mutex_destroy(&s_requestQueueMutex);
-        pthread_mutex_destroy(&s_responseQueueMutex);
-        
-        pthread_mutex_destroy(&s_SleepMutex);
-        pthread_cond_destroy(&s_SleepCondition);
 
         s_requestQueue->release();
         s_requestQueue = NULL;
         s_responseQueue->release();
         s_responseQueue = NULL;
     }
-
-    pthread_exit(NULL);
     
-    return 0;
 }
 
 //Configure curl's timeout property
@@ -405,7 +387,7 @@ HttpClient::~HttpClient()
     need_quit = true;
     
     if (s_requestQueue != NULL) {
-    	pthread_cond_signal(&s_SleepCondition);
+    	s_SleepCondition.notify_one();
     }
     
     s_pHttpClient = NULL;
@@ -423,15 +405,10 @@ bool HttpClient::lazyInitThreadSemphore()
         
         s_responseQueue = new Array();
         s_responseQueue->init();
-        
-        pthread_mutex_init(&s_requestQueueMutex, NULL);
-        pthread_mutex_init(&s_responseQueueMutex, NULL);
-        
-        pthread_mutex_init(&s_SleepMutex, NULL);
-        pthread_cond_init(&s_SleepCondition, NULL);
 
-        pthread_create(&s_networkThread, NULL, networkThread, NULL);
-        pthread_detach(s_networkThread);
+        
+        auto t = std::thread(&networkThread);
+        t.detach();
         
         need_quit = false;
     }
@@ -455,13 +432,13 @@ void HttpClient::send(HttpRequest* request)
     ++s_asyncRequestCount;
     
     request->retain();
-        
-    pthread_mutex_lock(&s_requestQueueMutex);
-    s_requestQueue->addObject(request);
-    pthread_mutex_unlock(&s_requestQueueMutex);
     
+    {
+        std::lock_guard<std::mutex> lk(s_requestQueueMutex);
+        s_requestQueue->addObject(request);
+    }
     // Notify thread start to work
-    pthread_cond_signal(&s_SleepCondition);
+    s_SleepCondition.notify_one();
 }
 
 // Poll and notify main thread if responses exists in queue
@@ -471,13 +448,15 @@ void HttpClient::dispatchResponseCallbacks(float delta)
     
     HttpResponse* response = NULL;
     
-    pthread_mutex_lock(&s_responseQueueMutex);
-    if (s_responseQueue->count())
     {
-        response = dynamic_cast<HttpResponse*>(s_responseQueue->objectAtIndex(0));
-        s_responseQueue->removeObjectAtIndex(0);
+        std::lock_guard<std::mutex> lk(s_responseQueueMutex);
+
+        if (s_responseQueue->count())
+        {
+            response = dynamic_cast<HttpResponse*>(s_responseQueue->objectAtIndex(0));
+            s_responseQueue->removeObjectAtIndex(0);
+        }
     }
-    pthread_mutex_unlock(&s_responseQueueMutex);
     
     if (response)
     {
