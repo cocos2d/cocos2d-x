@@ -29,6 +29,7 @@ THE SOFTWARE.
 
 #include <string>
 #include <mutex>
+#include <thread>
 #include <condition_variable>
 #include <queue>
 #include <string>
@@ -174,6 +175,8 @@ protected:
         Image        *image;
         Image::EImageFormat imageType;
     } ImageInfo;
+    
+    std::thread* _loadingThread;
 
     std::queue<AsyncStruct*>* _asyncStructQueue;
     std::queue<ImageInfo*>* _imageInfoQueue;
