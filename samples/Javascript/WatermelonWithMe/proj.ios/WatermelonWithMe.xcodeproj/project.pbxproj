@@ -64,11 +64,11 @@
 		15A3D78B1682F470002FB0C5 /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = ../../Shared/games/WatermelonWithMe/main.js; sourceTree = "<group>"; };
 		15A3D78C1682F470002FB0C5 /* resources-jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "resources-jsb.js"; path = "../../Shared/games/WatermelonWithMe/resources-jsb.js"; sourceTree = "<group>"; };
 		15A3D78D1682F470002FB0C5 /* watermelon_with_me.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = watermelon_with_me.js; path = ../../Shared/games/WatermelonWithMe/watermelon_with_me.js; sourceTree = "<group>"; };
-		1A6E472C177818E90055514D /* libchipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; name = libchipmunk.a; path = "libchipmunk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1A6E472D177818E90055514D /* libcocos2dx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; name = libcocos2dx.a; path = "libcocos2dx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1A6E472E177818E90055514D /* libCocosDenshion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; name = libCocosDenshion.a; path = "libCocosDenshion.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1A6E472F177818E90055514D /* libextensions.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; name = libextensions.a; path = "libextensions.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1A6E4730177818E90055514D /* libjsbindings.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; name = libjsbindings.a; path = "libjsbindings.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A6E472C177818E90055514D /* libchipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libchipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A6E472D177818E90055514D /* libcocos2dx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libcocos2dx.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A6E472E177818E90055514D /* libCocosDenshion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libCocosDenshion.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A6E472F177818E90055514D /* libextensions.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libextensions.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A6E4730177818E90055514D /* libjsbindings.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libjsbindings.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A6E4737177818FC0055514D /* jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb.js; sourceTree = "<group>"; };
 		1A6E4738177818FC0055514D /* jsb_chipmunk.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_chipmunk.js; sourceTree = "<group>"; };
 		1A6E4739177818FC0055514D /* jsb_chipmunk_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_chipmunk_constants.js; sourceTree = "<group>"; };
@@ -392,6 +392,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -435,6 +436,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
