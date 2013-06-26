@@ -779,10 +779,10 @@
 	
 	
 	
-	<string name="nd_softpromotion_title">推广墙</string>
+	<string name="nd_softpromotion_title">精品游戏推荐</string>
 	<string name="nd_softpromotion_download">立即下载</string>
 	<string name="nd_softpromotion_none">暂时没有待推广的应用</string>
-	<string name="nd_softpromotion_fail">获取推广墙数据失败</string>
+	<string name="nd_softpromotion_fail">获取精品游戏推荐数据失败</string>
 	<string name="nd_softpromotion_download_url_start">正在请求下载地址……</string>
 	<string name="nd_softpromotion_download_url_fail">获取下载地址失败</string>
 	<string name="nd_softpromotion_download_fail">%1$s 下载失败</string>
@@ -790,4 +790,40 @@
 	<string name="nd_softpromotion_download_start">开始下载 %1$s</string>
 	<string name="nd_softpromotion_download_finish">%1$s 下载完成</string>
 	
+	
+	
+	<string name="nd_feedback_title">意见反馈</string> 
+	<string name="nd_feedback_reply">客服答复</string> 
+	<string name="nd_feedback_reply_0">新回复</string> 
+	<string name="nd_feedback_i_fb">我要反馈</string>
+	<string name="nd_feedback_choose_problem_type">请选择问题类型</string> 
+	<string name="nd_star">*</string>
+	<string name="nd_feedback_problem">您遇到的问题</string> 
+	<string name="nd_feedback_input_tip">输入要求最少10字</string>
+	<string name="nd_feedback_input_count">500</string>
+	<string name="nd_feedback_phoneno">您的联系电话</string>
+	<string name="nd_feedback_service_phone">客服电话：</string>
+	<string name="nd_feedback_service_time">服务时间：%1$s</string>
+	<string name="nd_feedback_reply1">您对我的服务是否满意？</string>
+	<string name="nd_feedback_reply2">麻烦亲抽一点时间帮我打一下分哦</string>
+	<string name="nd_feedback_reply3">满意</string>
+	<string name="nd_feedback_reply4">问题未解决</string>
+	<string name="nd_feedback_reply5">态度不满意</string>
+	<string name="nd_feedback_reply6">客服答复</string> 
+	<string name="nd_feedback_reply7">请输入您的反馈信息</string>
+	<string name="nd_feedback_reply8">亲，上面常见问题，可能有您的答案哦</string>
+	<string name="nd_feedback_phoneno1">请输入您的联系电话</string>
+	<string name="nd_feedback_faq">常见问题</string>
+	<string name="nd_feedback_my_fb">我的反馈</string>
+	<string name="nd_feedback_status0">处理中</string>
+	<string name="nd_feedback_status1">未评价</string>
+	<string name="nd_feedback_status2">已评价</string>
+	<string name="nd_feedback_tips0">谢谢亲的肯定！我一定再接再厉为您提供更优质的服务</string>
+	<string name="nd_feedback_tips1">您可以继续说明问题</string>
+	<string name="nd_feedback_tips2">谢谢亲的反馈！我一定尽力改正，期待下次给我好评噢~</string>
+	<string name="nd_feedback_tips3">谢谢您的回复，我们将在3个工作日之内给你回复，请注意查询回复结果。</string>
+	<string name="nd_feedback_tips4">暂时没有信息</string>
+	<string name="nd_feedback_tips5">联系电话格式不正确</string>
+	<string name="nd_feedback_tips6">您有新的回复</string>
+	<string name="nd_detail">详情</string>
 </resources>
