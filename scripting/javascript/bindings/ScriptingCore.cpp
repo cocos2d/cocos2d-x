@@ -1942,7 +1942,7 @@ JSBool JSBDebug_LockExecution(JSContext* cx, unsigned argc, jsval* vp)
                 g_queue.erase(first);
             }
             g_qMutex.unlock();
-            sched_yield();
+            std::this_thread::yield();
         }
         printf("vm unlocked\n");
         frame = JSVAL_NULL;
