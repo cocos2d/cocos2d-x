@@ -94,7 +94,7 @@ void TextureCache::purgeSharedTextureCache()
     // notify sub thread to quick
     _sharedTextureCache->_needQuit = true;
     _sharedTextureCache->_sleepCondition.notify_one();
-    _sharedTextureCache->_loadingThread->join();
+    if (_sharedTextureCache->_loadingThread) _sharedTextureCache->_loadingThread->join();
 
     CC_SAFE_RELEASE_NULL(_sharedTextureCache);
 }
