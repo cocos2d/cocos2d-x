@@ -119,6 +119,7 @@ WsThreadHelper::WsThreadHelper()
 WsThreadHelper::~WsThreadHelper()
 {
     Director::sharedDirector()->getScheduler()->unscheduleAllForTarget(this);
+    joinSubThread();
     CC_SAFE_DELETE(_subThreadInstance);
     delete _UIWsMessageQueue;
     delete _subThreadWsMessageQueue;
@@ -130,7 +131,6 @@ bool WsThreadHelper::createThread(const WebSocket& ws)
     
     // Creates websocket thread
     _subThreadInstance = new std::thread(&WsThreadHelper::wsThreadEntryFunc, this);
-    
     return true;
 }
 
@@ -156,16 +156,14 @@ void WsThreadHelper::wsThreadEntryFunc()
 
 void WsThreadHelper::sendMessageToUIThread(WsMessage *msg)
 {
-    _UIWsMessageQueueMutex.lock();
+    std::lock_guard<std::mutex> lk(_UIWsMessageQueueMutex);
     _UIWsMessageQueue->push_back(msg);
-    _UIWsMessageQueueMutex.unlock();
 }
 
 void WsThreadHelper::sendMessageToSubThread(WsMessage *msg)
 {
-    _subThreadWsMessageQueueMutex.lock();
+    std::lock_guard<std::mutex> lk(_subThreadWsMessageQueueMutex);
     _subThreadWsMessageQueue->push_back(msg);
-    _subThreadWsMessageQueueMutex.unlock();
 }
 
 void WsThreadHelper::joinSubThread()
@@ -181,17 +179,16 @@ void WsThreadHelper::update(float dt)
     WsMessage *msg = NULL;
 
     // Returns quickly if no message
-    _UIWsMessageQueueMutex.lock();
+    std::lock_guard<std::mutex> lk(_UIWsMessageQueueMutex);
+
     if (0 == _UIWsMessageQueue->size())
     {
-        _UIWsMessageQueueMutex.unlock();
         return;
     }
     
     // Gets message
     msg = *(_UIWsMessageQueue->begin());
     _UIWsMessageQueue->pop_front();
-    _UIWsMessageQueueMutex.unlock();
     
     if (_ws)
     {
@@ -501,7 +498,8 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
             
         case LWS_CALLBACK_CLIENT_WRITEABLE:
             {
-                _wsHelper->_subThreadWsMessageQueueMutex.lock();
+                std::lock_guard<std::mutex> lk(_wsHelper->_subThreadWsMessageQueueMutex);
+                                               
                 std::list<WsMessage*>::iterator iter = _wsHelper->_subThreadWsMessageQueue->begin();
                 
                 int bytesWrite = 0;
@@ -550,7 +548,6 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
 
                 _wsHelper->_subThreadWsMessageQueue->clear();
                 
-                _wsHelper->_subThreadWsMessageQueueMutex.unlock();
                 
                 /* get notified as soon as we can write again */
                 
