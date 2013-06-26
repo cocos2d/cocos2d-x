@@ -158,7 +158,7 @@ void HelloWorld::eventMenuCallback(Object* pSender)
     case TAG_LOG_ONLINE_CONFIG:
         {
             PluginParam param("abc");
-            CCLog("Online config = %s", g_pAnalytics->callStringFuncWithParam("getConfigParams", &param, NULL));
+            CCLog("Online config = %s", g_pAnalytics->callStringFuncWithParam("getConfigParams", &param, NULL).c_str());
         }
         break;
     case TAG_LOG_EVENT_ID_DURATION:
