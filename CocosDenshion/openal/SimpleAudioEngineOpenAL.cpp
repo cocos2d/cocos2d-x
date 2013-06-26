@@ -219,7 +219,6 @@ namespace CocosDenshion
                 return;
             }
 
-            /// TODO: check that there are no AL buffer leaks.
             const std::vector<OpenALDecoder *> &decoders = OpenALDecoder::getDecoders();
             for (size_t i = 0, n = decoders.size(); !success && i < n; ++i)
                 success = decoders[i]->decode(file, buffer);
@@ -293,10 +292,15 @@ namespace CocosDenshion
     {
         ALint state;
         alGetSourcei(s_backgroundSource, AL_SOURCE_STATE, &state);
+        alSourceRewind(s_backgroundSource);
         if (state == AL_PLAYING)
         {
-            alSourceRewind(s_backgroundSource);
             alSourcePlay(s_backgroundSource);
+        }
+        else if (state == AL_PAUSED)
+        {
+            alSourcePlay(s_backgroundSource);
+            alSourcePause(s_backgroundSource);
         }
         checkALError("rewindBackgroundMusic:alSourceRewind");
     }
@@ -419,7 +423,6 @@ namespace CocosDenshion
             }
 
             bool success = false;
-            /// TODO: check that there are no AL buffer leaks.
             const std::vector<OpenALDecoder *> &decoders = OpenALDecoder::getDecoders();
             for (size_t i = 0, n = decoders.size(); !success && i < n; ++i)
                 success = decoders[i]->decode(file, buffer);

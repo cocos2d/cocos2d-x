@@ -23,7 +23,10 @@ struct OpenALFile
     OpenALFile() : file(0), mappedFile(0), fileSize(0) {}
     ~OpenALFile() { clear(); }
 
+    /// Unmaps from memory and closes file.
     void clear();
+    /// Performs memory map, if was not mapped before.
+    bool mapToMemory();
 };
 
 class OpenALDecoder
@@ -52,9 +55,8 @@ protected:
     static void addDecoder(OpenALDecoder *decoder);
     bool initALBuffer(ALuint &result, ALenum format,
                       const ALvoid* data, ALsizei size, ALsizei freq);
-    bool ensureFileIsMemoryMapped(OpenALFile &file);
 
-    static std::vector<OpenALDecoder *> m_decoders;
+    static std::vector<OpenALDecoder *> _decoders;
 };
 
 } // namespace CocosDenshion

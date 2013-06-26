@@ -59,7 +59,7 @@ class AlutDecoder : public OpenALDecoder
 {
     bool decode(OpenALFile &file, ALuint &result)
     {
-        if (!ensureFileIsMemoryMapped(file))
+        if (!file.mapToMemory())
             return false;
         result = alutCreateBufferFromFileImage(file.mappedFile, file.fileSize);
         if (AL_NONE == result)
@@ -244,7 +244,7 @@ public:
 
     bool decode(OpenALFile &file, ALuint &result)
     {
-        if (!ensureFileIsMemoryMapped(file))
+        if (!file.mapToMemory())
             return false;
         ByteBuffer inputBuffer;
         inputBuffer.Construct(/*capacity*/ file.fileSize);
@@ -256,10 +256,10 @@ public:
         AudioSampleType sampleType = AUDIO_TYPE_NONE;
         AudioChannelType channelType = AUDIO_CHANNEL_TYPE_NONE;
         int sampleRate = 0;
-        if (E_SUCCESS != m_decoder.Probe(inputBuffer, sampleType, channelType, sampleRate))
+        if (E_SUCCESS != _decoder.Probe(inputBuffer, sampleType, channelType, sampleRate))
             return false;
         while (inputBuffer.GetRemaining()) {
-        	auto ret = m_decoder.Decode(inputBuffer, pcm);
+            auto ret = _decoder.Decode(inputBuffer, pcm);
         	if (ret == E_OUT_OF_MEMORY) {
         		pcm.ExpandCapacity(2 * pcm.GetCapacity());
         	} else if (IsFailed(ret)) {
@@ -274,12 +274,12 @@ public:
 
     bool acceptsFormat(Format format) const
     {
-        return m_format == format;
+        return _format == format;
     }
 
 private:
     TizenDecoder(Format format)
-        : m_format(format)
+        : _format(format)
     {
     }
 
@@ -290,7 +290,7 @@ private:
         option.Add(*(new Integer(MEDIA_PROPERTY_AUDIO_CHANNEL_TYPE)), *(new Integer(AUDIO_CHANNEL_TYPE_NONE)));
         option.Add(*(new Integer(MEDIA_PROPERTY_AUDIO_SAMPLE_RATE)), *(new Integer(44100)));
 
-        result r = m_decoder.Construct(getCodecType());
+        result r = _decoder.Construct(getCodecType());
         if (IsFailed(r))
             return false;
         else
@@ -316,7 +316,7 @@ private:
 
     CodecType getCodecType() const
     {
-        switch (m_format) {
+        switch (_format) {
         case Mp3:
             return CODEC_MP3;
         case Vorbis:
@@ -335,7 +335,7 @@ private:
 
     const char *getCodecName() const
     {
-        switch (m_format) {
+        switch (_format) {
         case Mp3:
             return "mp3";
         case Vorbis:
@@ -352,12 +352,12 @@ private:
         return "unknown";
     }
 
-    Format m_format;
-    AudioDecoder m_decoder;
+    Format _format;
+    AudioDecoder _decoder;
 };
 #endif
 
-std::vector<OpenALDecoder *> OpenALDecoder::m_decoders;
+std::vector<OpenALDecoder *> OpenALDecoder::_decoders;
 
 void OpenALDecoder::installDecoders()
 {
@@ -381,7 +381,7 @@ void OpenALDecoder::installDecoders()
 void OpenALDecoder::addDecoder(OpenALDecoder *decoder)
 {
     if (decoder)
-        m_decoders.push_back(decoder);
+        _decoders.push_back(decoder);
 }
 
 bool OpenALDecoder::initALBuffer(ALuint &result, ALenum format,
@@ -401,30 +401,9 @@ bool OpenALDecoder::initALBuffer(ALuint &result, ALenum format,
     return true;
 }
 
-/// Ensures that mmap() called (and calls if it wasn't)
-/// @return False if file cannot be memory mapped.
-bool OpenALDecoder::ensureFileIsMemoryMapped(OpenALFile &file)
-{
-    if (!file.file)
-        return false;
-    if (file.mappedFile != NULL)
-        return true;
-
-    const int fd = fileno(file.file);
-    struct stat fileStats;
-    if (0 != fstat(fd, &fileStats))
-        return false;
-    file.fileSize = fileStats.st_size;
-    file.mappedFile = ::mmap(NULL, file.fileSize, PROT_READ, MAP_PRIVATE, fd, 0);
-    if (file.mappedFile != MAP_FAILED)
-        return true;
-    file.mappedFile = NULL;
-    return false;
-}
-
 const std::vector<OpenALDecoder *> &OpenALDecoder::getDecoders()
 {
-    return m_decoders;
+    return _decoders;
 }
 
 void OpenALFile::clear()
@@ -438,6 +417,25 @@ void OpenALFile::clear()
         fclose(file);
         file = 0;
     }
+}
+
+bool OpenALFile::mapToMemory()
+{
+    if (!file)
+        return false;
+    if (mappedFile != NULL)
+        return true;
+
+    const int fd = fileno(file);
+    struct stat fileStats;
+    if (0 != fstat(fd, &fileStats))
+        return false;
+    fileSize = fileStats.st_size;
+    mappedFile = ::mmap(NULL, fileSize, PROT_READ, MAP_PRIVATE, fd, 0);
+    if (mappedFile != MAP_FAILED)
+        return true;
+    mappedFile = NULL;
+    return false;
 }
 
 } // namespace CocosDenshion
