@@ -84,7 +84,6 @@
 			isa = PBXGroup;
 			children = (
 				FAB6DF951755D7E500C90D89 /* PluginParam.cpp */,
-				FA8CC2031737A3CE00464206 /* CoreFoundation.framework */,
 				FA0CB8B5168D3CC200E36B11 /* ios */,
 				FA09A33C168ADC1F008C1C7B /* PluginManager.cpp */,
 				FA09A336168ADC05008C1C7B /* include */,
@@ -104,6 +103,7 @@
 		FA09A323168ADBC2008C1C7B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FA8CC2031737A3CE00464206 /* CoreFoundation.framework */,
 				FA09A324168ADBC2008C1C7B /* Foundation.framework */,
 			);
 			name = Frameworks;
