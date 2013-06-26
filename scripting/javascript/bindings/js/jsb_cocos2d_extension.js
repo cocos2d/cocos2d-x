@@ -13,6 +13,16 @@ cc.SCROLLVIEW_DIRECTION_BOTH = 2;
 cc.TABLEVIEW_FILL_TOPDOWN = 0;
 cc.TABLEVIEW_FILL_BOTTOMUP = 1;
 
+cc.CONTROL_EVENT_TOUCH_DOWN            = 1 << 0;    // A touch-down event in the control.
+cc.CONTROL_EVENT_TOUCH_DRAGINSIDE     = 1 << 1;    // An event where a finger is dragged inside the bounds of the control.
+cc.CONTROL_EVENT_TOUCH_DRAGOUTSIDE    = 1 << 2;    // An event where a finger is dragged just outside the bounds of the control. 
+cc.CONTROL_EVENT_TOUCH_DRAGENTER      = 1 << 3;    // An event where a finger is dragged into the bounds of the control.
+cc.CONTROL_EVENT_TOUCH_DRAGEXIT       = 1 << 4;    // An event where a finger is dragged from within a control to outside its bounds.
+cc.CONTROL_EVENT_TOUCH_UPINSIDE       = 1 << 5;    // A touch-up event in the control where the finger is inside the bounds of the control. 
+cc.CONTROL_EVENT_TOUCH_UPOUTSIDE      = 1 << 6;    // A touch-up event in the control where the finger is outside the bounds of the control.
+cc.CONTROL_EVENT_TOUCH_CANCEL          = 1 << 7;    // A system event canceling the current touches for the control.
+cc.CONTROL_EVENT_VALUE_CHANGED         = 1 << 8;    // A touch dragging or otherwise manipulating a control, causing it to emit a series of different values.
+
 
 /**
  * @constant

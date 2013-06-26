@@ -573,10 +573,104 @@ static JSBool js_cocos2dx_CCEditBox_setDelegate(JSContext *cx, uint32_t argc, js
     return JS_FALSE;
 }
 
+class JSB_ControlButtonTarget : public CCObject {
+public:
+    virtual void onEvent(CCObject *controlButton, CCControlEvent event) {
+        js_proxy_t * p;
+        JS_GET_PROXY(p, controlButton);
+        if (!p) {
+            CCLog("Failed to get proxy for control button");
+            return;
+        }
+        
+        jsval dataVal[2];
+        dataVal[0] = OBJECT_TO_JSVAL(p->obj);
+        int arg1 = event;
+        dataVal[1] = INT_TO_JSVAL(arg1);
+        
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(m_pJSTarget), m_JSAction.c_str(), 2, dataVal, NULL);
+    }
+
+    void setJSTarget(JSObject* pJSTarget)
+    {
+        m_pJSTarget = pJSTarget;
+    }
+
+    void setJSAction(std::string JSAction) {
+        m_JSAction = JSAction;
+    }
+private:
+    JSObject* m_pJSTarget;
+    std::string m_JSAction;
+};
+
+static JSBool js_cocos2dx_CCControl_addTargetWithActionForControlEvents(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+    cocos2d::extension::CCControl* cobj = (cocos2d::extension::CCControl *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+
+    if (argc == 3) {
+        JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+        JS_GET_NATIVE_PROXY(proxy, tmpObj);
+        cocos2d::CCObject *arg0 = (cocos2d::CCObject *)(proxy ? proxy->ptr : NULL);
+        TEST_NATIVE_OBJECT(cx, arg0);
+
+        std::string arg1;
+        JSBool ok = jsval_to_std_string(cx, argv[1], &arg1);
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing control function name");
+
+        int arg2;
+        ok &= jsval_to_int32(cx, argv[2], (int32_t *)&arg2);
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing control event");
+        
+        // save the delegate
+        JSObject *jsDelegate = JSVAL_TO_OBJECT(argv[0]);
+        JSB_ControlButtonTarget* nativeDelegate = new JSB_ControlButtonTarget();
+        nativeDelegate->setJSTarget(jsDelegate);
+        nativeDelegate->setJSAction(arg1);
+        cobj->addTargetWithActionForControlEvents(nativeDelegate, cccontrol_selector(JSB_ControlButtonTarget::onEvent), arg2);
+        
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+
+        return JS_TRUE;
+    }
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 3);
+    return JS_FALSE;
+}
+
+static JSBool js_cocos2dx_CCControl_removeTargetWithActionForControlEvents(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+    cocos2d::extension::CCControl* cobj = (cocos2d::extension::CCControl *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+
+    if (argc == 3) {
+        obj = JSVAL_TO_OBJECT(argv[0]);
+        JS_GET_NATIVE_PROXY(proxy, obj);
+        cocos2d::CCObject *arg0 = (cocos2d::CCObject *)(proxy ? proxy->ptr : NULL);
+        TEST_NATIVE_OBJECT(cx, arg0);
+
+        obj = JSVAL_TO_OBJECT(argv[2]);
+        JS_GET_NATIVE_PROXY(proxy, obj);
+        cocos2d::extension::CCControlEvent *arg2 = (cocos2d::extension::CCControlEvent *)(proxy ? proxy->ptr : NULL);
+        TEST_NATIVE_OBJECT(cx, arg2);
+
+        return JS_TRUE;
+    }
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 3);
+    return JS_FALSE;
+}
+
 
 extern JSObject* jsb_CCScrollView_prototype;
 extern JSObject* jsb_CCTableView_prototype;
 extern JSObject* jsb_CCEditBox_prototype;
+extern JSObject* jsb_CCControl_prototype;
 
 void register_all_cocos2dx_extension_manual(JSContext* cx, JSObject* global)
 {
@@ -584,6 +678,8 @@ void register_all_cocos2dx_extension_manual(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, jsb_CCTableView_prototype, "setDelegate", js_cocos2dx_CCTableView_setDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_CCTableView_prototype, "setDataSource", js_cocos2dx_CCTableView_setDataSource, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_CCEditBox_prototype, "setDelegate", js_cocos2dx_CCEditBox_setDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_CCControl_prototype, "addTargetWithActionForControlEvents", js_cocos2dx_CCControl_addTargetWithActionForControlEvents, 3, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_CCControl_prototype, "removeTargetWithActionForControlEvents", js_cocos2dx_CCControl_removeTargetWithActionForControlEvents, 3, JSPROP_READONLY | JSPROP_PERMANENT);
     
     JSObject *tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.TableView; })()"));
 	JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCTableView_create, 3, JSPROP_READONLY | JSPROP_PERMANENT);
