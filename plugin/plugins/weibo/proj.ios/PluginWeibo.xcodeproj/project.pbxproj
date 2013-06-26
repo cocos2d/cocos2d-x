@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FAC2A7FD1777F99900035D22 /* ShareWeibo.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC2A7FC1777F99900035D22 /* ShareWeibo.m */; };
 		FAE27534175D9D2900F5DA8E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE27533175D9D2900F5DA8E /* Foundation.framework */; };
-		FAE27547175D9DCF00F5DA8E /* SocialWeibo.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE27546175D9DCF00F5DA8E /* SocialWeibo.m */; };
 		FAE27561175DC52900F5DA8E /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE27557175DC52900F5DA8E /* JSONKit.m */; };
 		FAE27562175DC52900F5DA8E /* SinaWeibo.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE2755B175DC52900F5DA8E /* SinaWeibo.m */; };
 		FAE27563175DC52900F5DA8E /* SinaWeiboAuthorizeView.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE2755D175DC52900F5DA8E /* SinaWeiboAuthorizeView.m */; };
@@ -30,10 +30,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FAC2A7FB1777F99900035D22 /* ShareWeibo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareWeibo.h; sourceTree = "<group>"; };
+		FAC2A7FC1777F99900035D22 /* ShareWeibo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareWeibo.m; sourceTree = "<group>"; };
 		FAE27530175D9D2900F5DA8E /* libPluginWeibo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPluginWeibo.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAE27533175D9D2900F5DA8E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		FAE27545175D9DCF00F5DA8E /* SocialWeibo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialWeibo.h; sourceTree = "<group>"; };
-		FAE27546175D9DCF00F5DA8E /* SocialWeibo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialWeibo.m; sourceTree = "<group>"; };
 		FAE27556175DC52900F5DA8E /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		FAE27557175DC52900F5DA8E /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		FAE27559175DC52900F5DA8E /* SinaWeibo.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SinaWeibo.bundle; sourceTree = "<group>"; };
@@ -65,10 +65,10 @@
 		FAE27525175D9D2900F5DA8E = {
 			isa = PBXGroup;
 			children = (
+				FAC2A7FB1777F99900035D22 /* ShareWeibo.h */,
+				FAC2A7FC1777F99900035D22 /* ShareWeibo.m */,
 				FAE27555175DC52900F5DA8E /* JSONKit */,
 				FAE27558175DC52900F5DA8E /* SinaWeibo */,
-				FAE27545175D9DCF00F5DA8E /* SocialWeibo.h */,
-				FAE27546175D9DCF00F5DA8E /* SocialWeibo.m */,
 				FAE27532175D9D2900F5DA8E /* Frameworks */,
 				FAE27531175D9D2900F5DA8E /* Products */,
 			);
@@ -167,11 +167,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAE27547175D9DCF00F5DA8E /* SocialWeibo.m in Sources */,
 				FAE27561175DC52900F5DA8E /* JSONKit.m in Sources */,
 				FAE27562175DC52900F5DA8E /* SinaWeibo.m in Sources */,
 				FAE27563175DC52900F5DA8E /* SinaWeiboAuthorizeView.m in Sources */,
 				FAE27564175DC52900F5DA8E /* SinaWeiboRequest.m in Sources */,
+				FAC2A7FD1777F99900035D22 /* ShareWeibo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

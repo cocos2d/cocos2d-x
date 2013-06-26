@@ -62,6 +62,7 @@ Developers:
         Added __attribute__(__format__()) for CCLog and CCString
         Refactoring network extension and fixing unlikely memory leaks.
         Adding PUT/DELETE methods for CCHttpRequest.
+        Adding project part for QtCreator.
 
     savdalion 
         Added example for russian language in TestCpp
@@ -357,6 +358,8 @@ Developers:
         Logging assert messages to the console.
         Renaming CCScriptSupport::executeAssert to CCScriptSupport::handleAssert.
         Adding Native Client support for develop branch (cocos2d-x 3.0) and some warnings fixes.
+        Cleanup travis build scripts.
+        Refactoring emscripten building script.
 
     Peter Young (young40)
         Implements setVisible() for CCEditBox
