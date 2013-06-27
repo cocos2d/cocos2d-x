@@ -7,6 +7,9 @@
       <Group
          location = "container:"
          name = "Javascript">
+         <FileRef
+            location = "group:samples/Javascript/TestJavascript/proj.mac/TestJavascript.xcodeproj">
+         </FileRef>
       </Group>
       <Group
          location = "container:"
