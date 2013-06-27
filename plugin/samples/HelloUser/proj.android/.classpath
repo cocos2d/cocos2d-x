@@ -7,5 +7,7 @@
 	<classpathentry exported="true" kind="lib" path="plugin-x/protocols/android/libPluginProtocol.jar"/>
 	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/qh360/android/360SDK.jar"/>
 	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/qh360/android/libPluginQH360.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/nd91/android/libPluginNd91.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/nd91/android/NdComPlatform.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
