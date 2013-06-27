@@ -159,6 +159,11 @@ public:
      @since v0.99.3
      */
     void scheduleUpdateForTarget(Object *pTarget, int nPriority, bool bPaused);
+    
+    /** Checks whether a selector for a given taget is scheduled.
+     @since v3.0.0
+     */
+    bool isScheduledForTarget(SEL_SCHEDULE pfnSelector, Object *pTarget);
 
     /** Unschedule a selector for a given target.
      If you want to unschedule the "update", use unscheudleUpdateForTarget.

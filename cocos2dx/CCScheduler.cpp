@@ -491,6 +491,40 @@ void Scheduler::scheduleUpdateForTarget(Object *pTarget, int nPriority, bool bPa
     }
 }
 
+bool Scheduler::isScheduledForTarget(SEL_SCHEDULE pfnSelector, Object *pTarget)
+{
+    CCAssert(pfnSelector, "Argument selector must be non-NULL");
+    CCAssert(pTarget, "Argument target must be non-NULL");
+    
+    tHashTimerEntry *pElement = NULL;
+    HASH_FIND_INT(_hashForTimers, &pTarget, pElement);
+    
+    if (!pElement)
+    {
+        return false;
+    }
+    
+    if (pElement->timers == NULL)
+    {
+        return false;
+    }else
+    {
+        for (unsigned int i = 0; i < pElement->timers->num; ++i)
+        {
+            Timer *timer = (Timer*)pElement->timers->arr[i];
+            
+            if (pfnSelector == timer->getSelector())
+            {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    return false;  // should never get here
+}
+
 void Scheduler::removeUpdateFromHash(struct _listEntry *entry)
 {
     tHashUpdateEntry *element = NULL;
