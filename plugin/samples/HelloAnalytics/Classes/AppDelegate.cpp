@@ -87,7 +87,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     g_pAnalytics->setCaptureUncaughtException(true);
     g_pAnalytics->setSessionContinueMillis(10000);
 
-    const char* sdkVer = g_pAnalytics->getSDKVersion();
+    const char* sdkVer = g_pAnalytics->getSDKVersion().c_str();
     CCLog("SDK version : %s", sdkVer);
 
     g_pAnalytics->callFuncWithParam("updateOnlineConfig", NULL);

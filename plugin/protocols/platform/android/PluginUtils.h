@@ -86,9 +86,9 @@ public:
 
     // methods return value is string
     template <typename T>
-    static const char* callJavaStringFuncWithName_oneParam(PluginProtocol* thiz, const char* funcName, const char* paramCode, T param)
+    static std::string callJavaStringFuncWithName_oneParam(PluginProtocol* thiz, const char* funcName, const char* paramCode, T param)
     {
-        const char* ret = "";
+        std::string ret = "";
         return_val_if_fails(funcName != NULL && strlen(funcName) > 0, ret);
         return_val_if_fails(paramCode != NULL && strlen(paramCode) > 0, ret);
         PluginJavaData* pData = PluginUtils::getPluginJavaData(thiz);
@@ -101,14 +101,14 @@ public:
             , paramCode))
         {
             jstring strRet = (jstring)t.env->CallObjectMethod(pData->jobj, t.methodID, param);
-            ret = PluginJniHelper::jstring2string(strRet).c_str();
+            ret = PluginJniHelper::jstring2string(strRet);
             t.env->DeleteLocalRef(t.classID);
         }
         return ret;
     }
-    static const char* callJavaStringFuncWithName(PluginProtocol* thiz, const char* funcName)
+    static std::string callJavaStringFuncWithName(PluginProtocol* thiz, const char* funcName)
     {
-        const char* ret = "";
+        std::string ret = "";
         return_val_if_fails(funcName != NULL && strlen(funcName) > 0, ret);
         PluginJavaData* pData = PluginUtils::getPluginJavaData(thiz);
         return_val_if_fails(pData != NULL, ret);
@@ -120,7 +120,7 @@ public:
             , "()Ljava/lang/String;"))
         {
             jstring strRet = (jstring) t.env->CallObjectMethod(pData->jobj, t.methodID);
-            ret = PluginJniHelper::jstring2string(strRet).c_str();
+            ret = PluginJniHelper::jstring2string(strRet);
             t.env->DeleteLocalRef(t.classID);
         }
         return ret;

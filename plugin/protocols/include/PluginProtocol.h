@@ -42,8 +42,8 @@ public:
     @brief plug-in info methods(name, version, SDK version)
     */
     inline const char* getPluginName() { return _pluginName.c_str(); }
-    const char* getPluginVersion();
-    const char* getSDKVersion();
+    std::string getPluginVersion();
+    std::string getSDKVersion();
 
     /**
     @brief switch debug plug-in on/off
@@ -56,8 +56,8 @@ public:
     void callFuncWithParam(const char* funcName, PluginParam* param, ...);
     void callFuncWithParam(const char* funcName, std::vector<PluginParam*> params);
 
-    const char* callStringFuncWithParam(const char* funcName, PluginParam* param, ...);
-    const char* callStringFuncWithParam(const char* funcName, std::vector<PluginParam*> params);
+    std::string callStringFuncWithParam(const char* funcName, PluginParam* param, ...);
+    std::string callStringFuncWithParam(const char* funcName, std::vector<PluginParam*> params);
 
     int callIntFuncWithParam(const char* funcName, PluginParam* param, ...);
     int callIntFuncWithParam(const char* funcName, std::vector<PluginParam*> params);
