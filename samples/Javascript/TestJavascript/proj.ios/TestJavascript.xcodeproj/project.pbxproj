@@ -117,11 +117,11 @@
 		15A3D4621682F14C002FB0C5 /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = ../../Shared/tests/main.js; sourceTree = "<group>"; };
 		15A3D4711682F14C002FB0C5 /* tests_resources-jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "tests_resources-jsb.js"; path = "../../Shared/tests/tests_resources-jsb.js"; sourceTree = "<group>"; };
 		15A3D4741682F14C002FB0C5 /* tests-main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "tests-main.js"; path = "../../Shared/tests/tests-main.js"; sourceTree = "<group>"; };
-		1A4C3F0E17784B6000EDFB3B /* libchipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libchipmunk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1A4C3F0F17784B6000EDFB3B /* libcocos2dx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libcocos2dx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1A4C3F1017784B6000EDFB3B /* libCocosDenshion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libCocosDenshion.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1A4C3F1117784B6000EDFB3B /* libextensions.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libextensions.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1A4C3F1217784B6000EDFB3B /* libjsbindings.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libjsbindings.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A4C3F0E17784B6000EDFB3B /* libchipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libchipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A4C3F0F17784B6000EDFB3B /* libcocos2dx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libcocos2dx.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A4C3F1017784B6000EDFB3B /* libCocosDenshion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libCocosDenshion.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A4C3F1117784B6000EDFB3B /* libextensions.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libextensions.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A4C3F1217784B6000EDFB3B /* libjsbindings.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libjsbindings.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A6B05C417782A2400FFE52B /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		1A6B05C617782B0500FFE52B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		1A6E4672177812AF0055514D /* jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb.js; sourceTree = "<group>"; };
@@ -670,6 +670,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -719,6 +720,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
