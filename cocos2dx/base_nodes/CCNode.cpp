@@ -1039,6 +1039,11 @@ Scheduler* Node::getScheduler()
     return _scheduler;
 }
 
+bool Node::isScheduled(SEL_SCHEDULE selector)
+{
+    return _scheduler->isScheduledForTarget(selector, this);
+}
+
 void Node::scheduleUpdate()
 {
     scheduleUpdateWithPriority(0);
