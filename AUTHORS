@@ -488,6 +488,9 @@ Developers:
         
     hawkwood (Justin Hawkwood)
         Fixing a bug that EditBox doesn't show any text if it's initialized with text.
+        
+    wtyqm (zhang peng)
+        Fixing a bug that ccbRootPath wasn't passed to sub ccb nodes.
 
 Retired Core Developers:
     WenSheng Yang
