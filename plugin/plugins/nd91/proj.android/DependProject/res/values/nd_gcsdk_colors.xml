@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="nd_gcsdk_android_white">#FFFFFF</color>
+    <!-- 半透明 -->
+    <color name="nd_gcsdk_translucent">#90000000</color>
+    <!-- 全透明 -->
+    <color name="nd_gcsdk_transparent">#00000000</color>
+    
+    <!-- 背景颜色 -->
+    <color name="nd_gcsdk_box_bg">#0C64AB</color>
+</resources>
