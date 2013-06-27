@@ -428,7 +428,7 @@ bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFm
 bool Image::initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType)
 {
     /*
-     * FileUtils::fullPathFromRelativePath() is not thread-safe, it use autorelease().
+     * FileUtils::fullPathFromRelativePath() is not thread-safe.
      */
     bool bRet = false;
     unsigned long nSize = 0;
