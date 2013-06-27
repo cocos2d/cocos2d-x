@@ -4,16 +4,16 @@
   android:layout_width="fill_parent"
   android:layout_height="wrap_content">
   <TextView
-  android:id="@+id/nd3_empty_listview_txt"
-  android:text="@string/nd3_list_item_loading"
-  android:textColor="@color/nd3_black"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-  android:layout_margin="@dimen/nd3_margin_size"/>
+	  android:id="@+id/nd3_empty_listview_txt"
+	  android:text="@string/nd3_list_item_loading"
+	  android:textColor="@color/nd3_black"
+	  android:layout_width="wrap_content"
+	  android:layout_height="wrap_content"
+	  android:layout_margin="@dimen/nd3_margin_size"/>
   
   <ImageView
-  android:layout_width="fill_parent"
-  android:layout_height="wrap_content"
-  android:background="@drawable/nd3_horizontal_line"
-  android:layout_below="@id/nd3_empty_listview_txt"/>
+	  android:layout_width="fill_parent"
+	  android:layout_height="wrap_content"
+	  android:background="@drawable/nd3_horizontal_line"
+	  android:layout_below="@id/nd3_empty_listview_txt"/>
 </RelativeLayout>
