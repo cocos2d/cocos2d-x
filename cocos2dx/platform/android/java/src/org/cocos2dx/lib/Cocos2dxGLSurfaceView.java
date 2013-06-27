@@ -53,7 +53,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	private static Cocos2dxGLSurfaceView mCocos2dxGLSurfaceView;
 	private static Cocos2dxTextInputWraper sCocos2dxTextInputWraper;
 
-	private Cocos2dxRenderer mCocos2dxRenderer;
 	private Cocos2dxEditText mCocos2dxEditText;
 
 	// ===========================================================
@@ -129,15 +128,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	    });
 	}
 
-	public void setCocos2dxRenderer(final Cocos2dxRenderer renderer) {
-		this.mCocos2dxRenderer = renderer;
-		this.setRenderer(this.mCocos2dxRenderer);
-	}
-
-	private String getContentText() {
-		return this.mCocos2dxRenderer.getContentText();
-	}
-
 	public Cocos2dxEditText getCocos2dxEditText() {
 		return this.mCocos2dxEditText;
 	}
@@ -162,7 +152,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 		this.queueEvent(new Runnable() {
 			@Override
 			public void run() {
-				Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleOnResume();
 			}
 		});
 	}
@@ -172,7 +161,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 		this.queueEvent(new Runnable() {
 			@Override
 			public void run() {
-				Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleOnPause();
 			}
 		});
 
@@ -203,7 +191,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 				this.queueEvent(new Runnable() {
 					@Override
 					public void run() {
-						Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleActionDown(idPointerDown, xPointerDown, yPointerDown);
 					}
 				});
 				break;
@@ -217,7 +204,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 				this.queueEvent(new Runnable() {
 					@Override
 					public void run() {
-						Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleActionDown(idDown, xDown, yDown);
 					}
 				});
 				break;
@@ -226,7 +212,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 				this.queueEvent(new Runnable() {
 					@Override
 					public void run() {
-						Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleActionMove(ids, xs, ys);
 					}
 				});
 				break;
@@ -240,7 +225,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 				this.queueEvent(new Runnable() {
 					@Override
 					public void run() {
-						Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleActionUp(idPointerUp, xPointerUp, yPointerUp);
 					}
 				});
 				break;
@@ -254,7 +238,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 				this.queueEvent(new Runnable() {
 					@Override
 					public void run() {
-						Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleActionUp(idUp, xUp, yUp);
 					}
 				});
 				break;
@@ -263,7 +246,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 				this.queueEvent(new Runnable() {
 					@Override
 					public void run() {
-						Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleActionCancel(ids, xs, ys);
 					}
 				});
 				break;
@@ -284,7 +266,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	@Override
 	protected void onSizeChanged(final int pNewSurfaceWidth, final int pNewSurfaceHeight, final int pOldSurfaceWidth, final int pOldSurfaceHeight) {
 		if(!this.isInEditMode()) {
-			this.mCocos2dxRenderer.setScreenWidthAndHeight(pNewSurfaceWidth, pNewSurfaceHeight);
 		}
 	}
 
@@ -296,7 +277,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 				this.queueEvent(new Runnable() {
 					@Override
 					public void run() {
-						Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleKeyDown(pKeyCode);
 					}
 				});
 				return true;
@@ -316,7 +296,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	public static void openIMEKeyboard() {
 		final Message msg = new Message();
 		msg.what = Cocos2dxGLSurfaceView.HANDLER_OPEN_IME_KEYBOARD;
-		msg.obj = Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContentText();
 		Cocos2dxGLSurfaceView.sHandler.sendMessage(msg);
 	}
 
@@ -330,7 +309,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 		this.queueEvent(new Runnable() {
 			@Override
 			public void run() {
-				Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleInsertText(pText);
 			}
 		});
 	}
@@ -339,7 +317,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 		this.queueEvent(new Runnable() {
 			@Override
 			public void run() {
-				Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleDeleteBackward();
 			}
 		});
 	}
