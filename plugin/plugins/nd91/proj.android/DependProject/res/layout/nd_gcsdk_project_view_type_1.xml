@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 靓点推荐——图片类型 -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    <!-- 大号图片 -->
+    <ImageView 
+        android:id="@+id/img_logo"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="fitXY"
+        />
+    <!-- 主标题 -->
+    <TextView 
+        android:id="@+id/txt_main_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/img_logo"
+        android:padding="2dip"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:textColor="@color/nd_gcsdk_android_white"
+        android:gravity="center"
+        android:background="@color/nd_gcsdk_translucent"
+        />
+</RelativeLayout>
