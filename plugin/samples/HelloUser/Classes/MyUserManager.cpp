@@ -33,6 +33,7 @@ MyUserManager* MyUserManager::s_pManager = NULL;
 MyUserManager::MyUserManager()
 : _retListener(NULL)
 , _qh360(NULL)
+, _nd91(NULL)
 {
 
 }
@@ -81,6 +82,25 @@ void MyUserManager::loadPlugin()
 			_qh360->setActionListener(_retListener);
 		}
 	}
+
+	{
+	    _nd91 = dynamic_cast<ProtocolUser*>(PluginManager::getInstance()->loadPlugin("UserNd91"));
+        if (NULL != _nd91)
+        {
+            TUserDeveloperInfo pNdInfo;
+            pNdInfo["Nd91AppId"] = "100010";
+            pNdInfo["Nd91AppKey"] = "C28454605B9312157C2F76F27A9BCA2349434E546A6E9C75";
+            pNdInfo["Nd91Orientation"] = "landscape";
+            if (pNdInfo.empty()) {
+                char msg[256] = { 0 };
+                sprintf(msg, "Developer info is empty. PLZ fill your Nd91 info in %s(nearby line %d)", __FILE__, __LINE__);
+                MessageBox(msg, "Nd91 Warning");
+            }
+            _nd91->configDeveloperInfo(pNdInfo);
+            _nd91->setDebugMode(true);
+            _nd91->setActionListener(_retListener);
+        }
+	}
 }
 
 void MyUserManager::unloadPlugin()
@@ -90,6 +110,12 @@ void MyUserManager::unloadPlugin()
 		PluginManager::getInstance()->unloadPlugin("UserQH360");
 		_qh360 = NULL;
 	}
+
+	if (_nd91)
+    {
+        PluginManager::getInstance()->unloadPlugin("UserNd91");
+        _nd91 = NULL;
+    }
 }
 
 void MyUserManager::loginByMode(MyUserMode mode)
@@ -100,6 +126,9 @@ void MyUserManager::loginByMode(MyUserMode mode)
 	case kQH360:
 		pUser = _qh360;
 		break;
+	case kND91:
+	    pUser = _nd91;
+	    break;
 	default:
 		break;
 	}
@@ -116,6 +145,9 @@ void MyUserManager::logoutByMode(MyUserMode mode)
     {
     case kQH360:
         pUser = _qh360;
+        break;
+    case kND91:
+        pUser = _nd91;
         break;
     default:
         break;
@@ -146,4 +178,7 @@ void MyUserActionResult::onActionResult(ProtocolUser* pPlugin, UserActionResultC
     // get session ID
     std::string sessionID = pPlugin->getSessionID();
     CCLog("User Session ID of plugin %s is : %s", pPlugin->getPluginName(), sessionID.c_str());
+
+    std::string strStatus = pPlugin->isLogined() ? "online" : "offline";
+    CCLog("User status of plugin %s is : %s", pPlugin->getPluginName(), strStatus.c_str());
 }

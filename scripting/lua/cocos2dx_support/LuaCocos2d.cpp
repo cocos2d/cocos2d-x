@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Thu Jun 20 18:58:36 2013.
+** Generated automatically by tolua++-1.0.92 on Wed Jun 26 17:33:51 2013.
 */
 
 /****************************************************************************
@@ -13294,42 +13294,6 @@ static int tolua_Cocos2d_CCImage_initWithImageFile00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'initWithImageFile'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: initWithImageFileThreadSafe of class  Image */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCImage_initWithImageFileThreadSafe00
-static int tolua_Cocos2d_CCImage_initWithImageFileThreadSafe00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"CCImage",0,&tolua_err) ||
-     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,3,1,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,4,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Image* self = (Image*)  tolua_tousertype(tolua_S,1,0);
-  const char* fullpath = ((const char*)  tolua_tostring(tolua_S,2,0));
-  Image::EImageFormat imageType = ((Image::EImageFormat) (int)  tolua_tonumber(tolua_S,3,Image::kFmtPng));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'initWithImageFileThreadSafe'", NULL);
-#endif
-  {
-   bool tolua_ret = (bool)  self->initWithImageFileThreadSafe(fullpath,imageType);
-   tolua_pushboolean(tolua_S,(bool)tolua_ret);
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'initWithImageFileThreadSafe'.",&tolua_err);
  return 0;
 #endif
 }
@@ -65032,7 +64996,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_constant(tolua_S,"kAlignLeft",Image::kAlignLeft);
    tolua_constant(tolua_S,"kAlignTopLeft",Image::kAlignTopLeft);
    tolua_function(tolua_S,"initWithImageFile",tolua_Cocos2d_CCImage_initWithImageFile00);
-   tolua_function(tolua_S,"initWithImageFileThreadSafe",tolua_Cocos2d_CCImage_initWithImageFileThreadSafe00);
    tolua_function(tolua_S,"initWithImageData",tolua_Cocos2d_CCImage_initWithImageData00);
    tolua_function(tolua_S,"initWithString",tolua_Cocos2d_CCImage_initWithString00);
    tolua_function(tolua_S,"getData",tolua_Cocos2d_CCImage_getData00);
