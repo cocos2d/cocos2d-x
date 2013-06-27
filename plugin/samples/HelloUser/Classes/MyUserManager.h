@@ -41,6 +41,7 @@ public:
     typedef enum {
     	kNoneMode = 0,
     	kQH360,
+    	kND91,
     } MyUserMode;
 
 	void unloadPlugin();
@@ -55,6 +56,7 @@ private:
     static MyUserManager* s_pManager;
 
     cocos2d::plugin::ProtocolUser* _qh360;
+    cocos2d::plugin::ProtocolUser* _nd91;
     MyUserActionResult* _retListener;
 };
 
