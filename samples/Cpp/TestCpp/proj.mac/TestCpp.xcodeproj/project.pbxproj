@@ -1725,10 +1725,7 @@
 				);
 				INFOPLIST_FILE = Test_Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/mac/libraries\"",
-					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/cocos2d-mac-blqttkqyviynothdlzeunztbshad/Build/Products/Debug\"",
-				);
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/mac/libraries\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CFLAGS = "-O2";
 				PRODUCT_NAME = TestCpp;
@@ -1770,10 +1767,7 @@
 				);
 				INFOPLIST_FILE = Test_Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/mac/libraries\"",
-					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/cocos2d-mac-blqttkqyviynothdlzeunztbshad/Build/Products/Debug\"",
-				);
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/mac/libraries\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = TestCpp;
 				SDKROOT = macosx;

@@ -112,6 +112,8 @@
 		1A0C0D4F1777F9CD00838530 /* Slot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A0C0CE31777F9CD00838530 /* Slot.cpp */; };
 		1A0C0D501777F9CD00838530 /* SlotData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A0C0CE51777F9CD00838530 /* SlotData.cpp */; };
 		1A0C0D511777F9CD00838530 /* spine-cocos2dx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A0C0CE71777F9CD00838530 /* spine-cocos2dx.cpp */; };
+		A05FCAE8177C1A1400BE600E /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A05FCAE7177C1A1400BE600E /* libwebsockets.a */; };
+		A05FCAEA177C1F8E00BE600E /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A05FCAE9177C1F8E00BE600E /* libcurl.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -361,9 +363,9 @@
 		1A0C0CE71777F9CD00838530 /* spine-cocos2dx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "spine-cocos2dx.cpp"; sourceTree = "<group>"; };
 		1A0C0CE81777F9CD00838530 /* spine-cocos2dx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "spine-cocos2dx.h"; sourceTree = "<group>"; };
 		1A0C0CE91777F9CD00838530 /* spine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spine.h; sourceTree = "<group>"; };
-		1A0C0D551777FAAD00838530 /* libwebsockets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libwebsockets.h; sourceTree = "<group>"; };
-		1A0C0D571777FAAD00838530 /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwebsockets.a; sourceTree = "<group>"; };
-		1A0C0D591777FB1300838530 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
+		A05FCAE5177C1A1400BE600E /* libwebsockets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libwebsockets.h; sourceTree = "<group>"; };
+		A05FCAE7177C1A1400BE600E /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwebsockets.a; sourceTree = "<group>"; };
+		A05FCAE9177C1F8E00BE600E /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -371,7 +373,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A05FCAEA177C1F8E00BE600E /* libcurl.dylib in Frameworks */,
 				1A0C0A7E1777F79700838530 /* Foundation.framework in Frameworks */,
+				A05FCAE8177C1A1400BE600E /* libwebsockets.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,8 +413,8 @@
 		1A0C0A7C1777F79700838530 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1A0C0D591777FB1300838530 /* libcurl.a */,
-				1A0C0D521777FAAD00838530 /* libwebsockets */,
+				A05FCAE9177C1F8E00BE600E /* libcurl.dylib */,
+				A05FCAE3177C1A1400BE600E /* libwebsockets */,
 				1A0C0A7D1777F79700838530 /* Foundation.framework */,
 			);
 			name = Frameworks;
@@ -805,36 +809,28 @@
 			path = ../spine;
 			sourceTree = "<group>";
 		};
-		1A0C0D521777FAAD00838530 /* libwebsockets */ = {
+		A05FCAE3177C1A1400BE600E /* libwebsockets */ = {
 			isa = PBXGroup;
 			children = (
-				1A0C0D531777FAAD00838530 /* ios */,
+				A05FCAE4177C1A1400BE600E /* include */,
+				A05FCAE6177C1A1400BE600E /* lib */,
 			);
 			name = libwebsockets;
-			path = ../../external/libwebsockets;
+			path = ../../external/libwebsockets/mac;
 			sourceTree = "<group>";
 		};
-		1A0C0D531777FAAD00838530 /* ios */ = {
+		A05FCAE4177C1A1400BE600E /* include */ = {
 			isa = PBXGroup;
 			children = (
-				1A0C0D541777FAAD00838530 /* include */,
-				1A0C0D561777FAAD00838530 /* lib */,
-			);
-			path = ios;
-			sourceTree = "<group>";
-		};
-		1A0C0D541777FAAD00838530 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				1A0C0D551777FAAD00838530 /* libwebsockets.h */,
+				A05FCAE5177C1A1400BE600E /* libwebsockets.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
 		};
-		1A0C0D561777FAAD00838530 /* lib */ = {
+		A05FCAE6177C1A1400BE600E /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				1A0C0D571777FAAD00838530 /* libwebsockets.a */,
+				A05FCAE7177C1A1400BE600E /* libwebsockets.a */,
 			);
 			path = lib;
 			sourceTree = "<group>";
