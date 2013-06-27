@@ -108,6 +108,9 @@ CCBReader::CCBReader(CCBReader * pCCBReader)
     this->mOwnerOutletNames = pCCBReader->mOwnerOutletNames;
     this->mOwnerOutletNodes = pCCBReader->mOwnerOutletNodes;
     this->mOwnerOutletNodes->retain();
+    
+    this->mCCBRootPath = pCCBReader->getCCBRootPath();
+    
     init();
 }
 
