@@ -19,6 +19,8 @@
 		FAB6DF9A1755D93600C90D89 /* PluginProtocol.mm in Sources */ = {isa = PBXBuildFile; fileRef = FAB6DF991755D93600C90D89 /* PluginProtocol.mm */; };
 		FAC2A7F91777F8C200035D22 /* ProtocolShare.mm in Sources */ = {isa = PBXBuildFile; fileRef = FAC2A7F61777F8C200035D22 /* ProtocolShare.mm */; };
 		FAC2A7FA1777F8C200035D22 /* ShareWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = FAC2A7F81777F8C200035D22 /* ShareWrapper.mm */; };
+		FAD55520177D1FA900968F54 /* ProtocolUser.mm in Sources */ = {isa = PBXBuildFile; fileRef = FAD5551D177D1FA900968F54 /* ProtocolUser.mm */; };
+		FAD55521177D1FA900968F54 /* UserWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = FAD5551F177D1FA900968F54 /* UserWrapper.mm */; };
 		FADC44CA176EABCF00B2D5ED /* AdsWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = FADC44C9176EABCF00B2D5ED /* AdsWrapper.mm */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +65,11 @@
 		FAC2A7F61777F8C200035D22 /* ProtocolShare.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ProtocolShare.mm; sourceTree = "<group>"; };
 		FAC2A7F71777F8C200035D22 /* ShareWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareWrapper.h; sourceTree = "<group>"; };
 		FAC2A7F81777F8C200035D22 /* ShareWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ShareWrapper.mm; sourceTree = "<group>"; };
+		FAD5551C177D1FA900968F54 /* InterfaceUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterfaceUser.h; sourceTree = "<group>"; };
+		FAD5551D177D1FA900968F54 /* ProtocolUser.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ProtocolUser.mm; sourceTree = "<group>"; };
+		FAD5551E177D1FA900968F54 /* UserWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserWrapper.h; sourceTree = "<group>"; };
+		FAD5551F177D1FA900968F54 /* UserWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UserWrapper.mm; sourceTree = "<group>"; };
+		FAD55522177D213F00968F54 /* ProtocolUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtocolUser.h; sourceTree = "<group>"; };
 		FADC44C8176EABCF00B2D5ED /* AdsWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdsWrapper.h; sourceTree = "<group>"; };
 		FADC44C9176EABCF00B2D5ED /* AdsWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AdsWrapper.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -112,6 +119,7 @@
 		FA09A336168ADC05008C1C7B /* include */ = {
 			isa = PBXGroup;
 			children = (
+				FAD55522177D213F00968F54 /* ProtocolUser.h */,
 				FAC2A7F41777F88700035D22 /* ProtocolShare.h */,
 				FAB6DF931755D7D100C90D89 /* PluginFactory.h */,
 				FAB6DF941755D7D100C90D89 /* PluginParam.h */,
@@ -128,6 +136,10 @@
 		FA0CB8B5168D3CC200E36B11 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				FAD5551C177D1FA900968F54 /* InterfaceUser.h */,
+				FAD5551D177D1FA900968F54 /* ProtocolUser.mm */,
+				FAD5551E177D1FA900968F54 /* UserWrapper.h */,
+				FAD5551F177D1FA900968F54 /* UserWrapper.mm */,
 				FAC2A7F51777F8C200035D22 /* InterfaceShare.h */,
 				FAC2A7F61777F8C200035D22 /* ProtocolShare.mm */,
 				FAC2A7F71777F8C200035D22 /* ShareWrapper.h */,
@@ -212,6 +224,8 @@
 				FADC44CA176EABCF00B2D5ED /* AdsWrapper.mm in Sources */,
 				FAC2A7F91777F8C200035D22 /* ProtocolShare.mm in Sources */,
 				FAC2A7FA1777F8C200035D22 /* ShareWrapper.mm in Sources */,
+				FAD55520177D1FA900968F54 /* ProtocolUser.mm in Sources */,
+				FAD55521177D1FA900968F54 /* UserWrapper.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
