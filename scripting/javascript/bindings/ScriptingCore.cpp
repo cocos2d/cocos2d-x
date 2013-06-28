@@ -488,28 +488,30 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
 	options.setUTF8(true).setFileAndLine(fullPath.c_str(), 1);
     
     // a) check js file first
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    String* content = String::createWithContentsOfFile(path);
-    if (content) {
-        // Not supported in SpiderMonkey 19.0
-        //JSScript* script = JS_CompileScript(cx, global, (char*)content, contentSize, path, 1);
-        const char* contentCStr = content->getCString();
-        script = JS::Compile(cx, obj, options, contentCStr, strlen(contentCStr));
+    std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
+    unsigned long length = 0;
+    void *data = futil->getFileData(byteCodePath.c_str(),
+                                    "rb",
+                                    &length);
+    if (data) {
+        script = JS_DecodeScript(cx, data, length, NULL, NULL);
     }
-#else
-    script = JS::Compile(cx, obj, options, fullPath.c_str());
-#endif
-    // b) no js file, check jsc file
+    
+    // b) no jsc file, check js file
     if (!script) {
-        std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
-        unsigned long length = 0;
-        void *data = futil->getFileData(byteCodePath.c_str(),
-                                        "rb",
-                                        &length);
-        if (data) {
-            script = JS_DecodeScript(cx, data, length, NULL, NULL);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        String* content = String::createWithContentsOfFile(path);
+        if (content) {
+            // Not supported in SpiderMonkey 19.0
+            //JSScript* script = JS_CompileScript(cx, global, (char*)content, contentSize, path, 1);
+            const char* contentCStr = content->getCString();
+            script = JS::Compile(cx, obj, options, contentCStr, strlen(contentCStr));
         }
+#else
+        script = JS::Compile(cx, obj, options, fullPath.c_str());
+#endif
     }
+    
     JSBool evaluatedOK = false;
     if (script) {
         jsval rval;

@@ -43,7 +43,8 @@ namespace JS {
     D(INTER_SLICE_GC)                           \
     D(REFRESH_FRAME)                            \
     D(FULL_GC_TIMER)                            \
-    D(SHUTDOWN_CC)
+    D(SHUTDOWN_CC)                              \
+    D(FINISH_LARGE_EVALUTE)
 
 namespace gcreason {
 
@@ -152,6 +153,9 @@ IsIncrementalGCInProgress(JSRuntime *rt);
 extern JS_FRIEND_API(void)
 DisableIncrementalGC(JSRuntime *rt);
 
+extern JS_FRIEND_API(void)
+DisableGenerationalGC(JSRuntime *rt);
+
 extern JS_FRIEND_API(bool)
 IsIncrementalBarrierNeeded(JSRuntime *rt);
 
@@ -198,6 +202,10 @@ class ObjectPtr
 
     void writeBarrierPre(JSRuntime *rt) {
         IncrementalObjectBarrier(value);
+    }
+
+    bool isAboutToBeFinalized() {
+        return JS_IsAboutToBeFinalized(&value);
     }
 
     ObjectPtr &operator=(JSObject *obj) {
