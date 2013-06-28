@@ -287,8 +287,10 @@
 		FA09A330168ADBC2008C1C7B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/PluginProtocol.dst;
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PluginProtocol-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
@@ -300,8 +302,10 @@
 		FA09A331168ADBC2008C1C7B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/PluginProtocol.dst;
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PluginProtocol-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
