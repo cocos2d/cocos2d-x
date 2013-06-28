@@ -79,8 +79,6 @@
 		A05FCAD9177C129100BE600E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A05FCAD1177C129100BE600E /* MainMenu.xib */; };
 		A05FCADA177C129100BE600E /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A05FCAD3177C129100BE600E /* Icon.icns */; };
 		A05FCADB177C129100BE600E /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A05FCAD3177C129100BE600E /* Icon.icns */; };
-		A05FCADC177C129100BE600E /* Test_Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A05FCAD4177C129100BE600E /* Test_Info.plist */; };
-		A05FCADD177C129100BE600E /* Test_Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A05FCAD4177C129100BE600E /* Test_Info.plist */; };
 		A05FCAE1177C12B500BE600E /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A05FCAE0177C12B500BE600E /* AppController.mm */; };
 		A05FCAE2177C12B500BE600E /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A05FCAE0177C12B500BE600E /* AppController.mm */; };
 		A05FCAEC177C1FBB00BE600E /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A05FCAEB177C1FBB00BE600E /* libcurl.dylib */; };
@@ -551,7 +549,6 @@
 				A05FCAD6177C129100BE600E /* InfoPlist.strings in Resources */,
 				A05FCAD8177C129100BE600E /* MainMenu.xib in Resources */,
 				A05FCADA177C129100BE600E /* Icon.icns in Resources */,
-				A05FCADC177C129100BE600E /* Test_Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -563,7 +560,6 @@
 				A05FCAD7177C129100BE600E /* InfoPlist.strings in Resources */,
 				A05FCAD9177C129100BE600E /* MainMenu.xib in Resources */,
 				A05FCADB177C129100BE600E /* Icon.icns in Resources */,
-				A05FCADD177C129100BE600E /* Test_Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -713,7 +709,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Test_Prefix.pch;
 				GCC_VERSION = "";
