@@ -32,6 +32,9 @@ THE SOFTWARE.
 #include "keypad_dispatcher/CCKeypadDispatcher.h"
 #include "support/CCPointExtension.h"
 #include "CCApplication.h"
+#ifdef KEYBOARD_SUPPORT
+#include "keyboard_dispatcher/CCKeyboardDispatcher.h"
+#endif
 
 NS_CC_BEGIN
 
@@ -449,6 +452,10 @@ LRESULT EGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
     case WM_KEYDOWN:
+#ifdef KEYBOARD_SUPPORT
+        KeyboardDispatcher *kbDisp = Director::sharedDirector()->getKeyboardDispatcher();
+        kbDisp->dispatchKeyboardEvent(wParam, true);
+#endif
         if (wParam == VK_F1 || wParam == VK_F2)
         {
             Director* pDirector = Director::sharedDirector();
@@ -466,6 +473,10 @@ LRESULT EGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
     case WM_KEYUP:
+#ifdef KEYBOARD_SUPPORT
+        KeyboardDispatcher *kbDisp = Director::sharedDirector()->getKeyboardDispatcher();
+        kbDisp->dispatchKeyboardEvent(wParam, false);
+#endif
         if ( _lpfnAccelerometerKeyHook!=NULL )
         {
             (*_lpfnAccelerometerKeyHook)( message,wParam,lParam );
