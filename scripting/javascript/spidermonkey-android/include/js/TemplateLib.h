@@ -64,17 +64,17 @@ template <class T> struct BitSize {
     static const size_t result = sizeof(T) * JS_BITS_PER_BYTE;
 };
 
-/* Allow Assertions by only including the 'result' typedef if 'true'. */
-template <bool> struct StaticAssert {};
-template <> struct StaticAssert<true> { typedef int result; };
-
 /*
  * Produce an N-bit mask, where N <= BitSize<size_t>::result.  Handle the
  * language-undefined edge case when N = BitSize<size_t>::result.
  */
 template <size_t N> struct NBitMask {
-    typedef typename StaticAssert<N < BitSize<size_t>::result>::result _;
-    static const size_t result = (size_t(1) << N) - 1;
+    // Assert the precondition.  On success this evaluates to 0.  Otherwise it
+    // triggers divide-by-zero at compile time: a guaranteed compile error in
+    // C++11, and usually one in C++98.  Add this value to |result| to assure
+    // its computation.
+    static const size_t checkPrecondition = 0 / size_t(N < BitSize<size_t>::result);
+    static const size_t result = (size_t(1) << N) - 1 + checkPrecondition;
 };
 template <> struct NBitMask<BitSize<size_t>::result> {
     static const size_t result = size_t(-1);
