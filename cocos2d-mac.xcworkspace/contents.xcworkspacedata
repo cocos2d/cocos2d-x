@@ -27,7 +27,7 @@
       location = "container:"
       name = "libs">
       <FileRef
-         location = "group:cocos2dx/proj.mac/cocos2dx.xcodeproj">
+         location = "group:scripting/javascript/bindings/proj.mac/jsbindings.xcodeproj">
       </FileRef>
       <FileRef
          location = "group:extensions/proj.mac/extensions.xcodeproj">
@@ -42,7 +42,7 @@
          location = "group:CocosDenshion/proj.mac/CocosDenshion.xcodeproj">
       </FileRef>
       <FileRef
-         location = "group:scripting/javascript/bindings/proj.mac/jsbindings.xcodeproj">
+         location = "group:cocos2dx/proj.mac/cocos2dx.xcodeproj">
       </FileRef>
    </Group>
 </Workspace>
