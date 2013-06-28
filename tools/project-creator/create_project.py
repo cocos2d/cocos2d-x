@@ -5,16 +5,7 @@
 # Author: WangZhe
 
 # define global variables
-context = {
-"language"          : "undefined",
-"src_project_name"  : "undefined",
-"src_package_name"  : "undefined", 
-"dst_project_name"  : "undeifned",
-"dst_package_name"  : "undefined",
-"src_project_path"  : "undefined",
-"dst_project_path"  : "undefined",
-"script_dir"        : "undefined",
-}
+context = {}.fromkeys(("language", "src_project_name", "src_package_name", "dst_project_name", "dst_package_name", "src_project_path", "dst_project_path", "script_dir"));
 platforms_list = []
 
 # begin
@@ -23,52 +14,42 @@ import os, os.path
 import json
 import shutil
 
-def dumpUsage():
-    print "Usage: create_project.py -project PROJECT_NAME -package PACKAGE_NAME -language PROGRAMING_LANGUAGE"
-    print "Options:"
-    print "  -project   PROJECT_NAME          Project name, for example: MyGame"
-    print "  -package   PACKAGE_NAME          Package name, for example: com.MyCompany.MyAwesomeGame"
-    print "  -language  PROGRAMING_LANGUAGE   Major programing lanauge you want to used, should be [cpp | lua | javascript]"
-    print ""
-    print "Sample : ./create_project.py -project MyGame -package com.MyCompany.AwesomeGame -language javascript"
-    print ""
-
 def checkParams(context):
+    from optparse import OptionParser
+    
+    # set the parser to parse input params
+    # the correspond variable name of "-x, --xxx" is parser.xxx
+    parser = OptionParser(usage="Usage: ./%prog -p PROJECT_NAME -k PACKAGE_NAME -l PROGRAMING_LANGUAGE\nSample : ./%prog -p MyGame -k com.MyCompany.AwesomeGame -l javascript")
+    parser.add_option("-p", "--project", metavar="PROJECT_NAME", help="Set a project name")
+    parser.add_option("-k", "--package", metavar="PACKAGE_NAME", help="Set a package name for project")
+    parser.add_option("-l", "--language",
+                      metavar="PROGRAMMING_NAME",
+                      type="choice",
+                      choices=["cpp", "lua", "javascript"],
+                      help="Major programing lanauge you want to used, should be [cpp | lua | javascript]")
+    
+    #parse the params
+    (opts, args) = parser.parse_args()
+
     # generate our internal params
     context["script_dir"] = os.getcwd() + "/"
     global platforms_list
     
-    # invalid invoke, tell users how to input params
-    if len(sys.argv) < 7:
-        dumpUsage()
-        sys.exit()
-    
-    # find our params
-    for i in range(1, len(sys.argv)):
-        if "-project" == sys.argv[i]:
-            # read the next param as project_name
-            context["dst_project_name"] = sys.argv[i+1]
-            context["dst_project_path"] = os.getcwd() + "/../../projects/" + context["dst_project_name"]
-        elif "-package" == sys.argv[i]:
-            # read the next param as g_PackageName
-            context["dst_package_name"] = sys.argv[i+1]
-        elif "-language" == sys.argv[i]:
-            # choose a scripting language
-            context["language"] = sys.argv[i+1]
-    
-    # pinrt error log our required paramters are not ready
-    raise_error = False
-    if context["dst_project_name"] == "undefined":
-        print "Invalid -project parameter"
-        raise_error = True
-    if context["dst_package_name"] == "undefined":
-        print "Invalid -package parameter"
-        raise_error = True
-    if context["language"] == "undefined":
-        print "Invalid -language parameter"
-        raise_error = True
-    if raise_error != False:
-        sys.exit()
+    if opts.project:
+        context["dst_project_name"] = opts.project
+        context["dst_project_path"] = os.getcwd() + "/../../projects/" + context["dst_project_name"]
+    else:
+        parser.error("-p or --project is not specified")
+
+    if opts.package:
+        context["dst_package_name"] = opts.package
+    else:
+        parser.error("-k or --package is not specified")
+
+    if opts.language:
+        context["language"] = opts.language
+    else:
+        parser.error("-k or --package is not specified")
                                  
     # fill in src_project_name and src_package_name according to "language"
     if ("cpp" == context["language"]):
