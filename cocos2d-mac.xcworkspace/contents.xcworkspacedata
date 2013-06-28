@@ -7,6 +7,9 @@
       <Group
          location = "container:"
          name = "Javascript">
+         <FileRef
+            location = "group:samples/Javascript/TestJavascript/proj.mac/TestJavascript.xcodeproj">
+         </FileRef>
       </Group>
       <Group
          location = "container:"
@@ -24,6 +27,9 @@
       location = "container:"
       name = "libs">
       <FileRef
+         location = "group:cocos2dx/proj.mac/cocos2dx.xcodeproj">
+      </FileRef>
+      <FileRef
          location = "group:extensions/proj.mac/extensions.xcodeproj">
       </FileRef>
       <FileRef
@@ -36,7 +42,7 @@
          location = "group:CocosDenshion/proj.mac/CocosDenshion.xcodeproj">
       </FileRef>
       <FileRef
-         location = "group:cocos2dx/proj.mac/cocos2dx.xcodeproj">
+         location = "group:scripting/javascript/bindings/proj.mac/jsbindings.xcodeproj">
       </FileRef>
    </Group>
 </Workspace>
