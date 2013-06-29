@@ -29,7 +29,7 @@
 #include "EffectsAdvancedTest/EffectsAdvancedTest.h"
 #include "AccelerometerTest/AccelerometerTest.h"
 #include "KeypadTest/KeypadTest.h"
-#ifdef KEYBOARD_SUPPORT
+#ifdef CC_KEYBOARD_SUPPORT
 #include "KeyboardTest/KeyboardTest.h"
 #endif
 #include "PerformanceTest/PerformanceTest.h"
