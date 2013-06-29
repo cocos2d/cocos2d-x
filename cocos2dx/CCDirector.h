@@ -71,7 +71,7 @@ class Node;
 class Scheduler;
 class ActionManager;
 class TouchDispatcher;
-#ifdef KEYBOARD_SUPPORT
+#ifdef CC_KEYBOARD_SUPPORT
 class KeyboardDispatcher;
 #endif
 class KeypadDispatcher;
@@ -328,7 +328,7 @@ public:
      */
     CC_PROPERTY(TouchDispatcher*, _touchDispatcher, TouchDispatcher);
 
-#ifdef KEYBOARD_SUPPORT
+#ifdef CC_KEYBOARD_SUPPORT
     /** KeyboardDispatcher associated with this director
      @since v?.?
      */

@@ -38,7 +38,7 @@ THE SOFTWARE.
 #include "support/TransformUtils.h"
 // extern
 #include "kazmath/GL/matrix.h"
-#ifdef KEYBOARD_SUPPORT
+#ifdef CC_KEYBOARD_SUPPORT
 #include "keyboard_dispatcher/CCKeyboardDispatcher.h"
 #endif
 
@@ -48,7 +48,7 @@ NS_CC_BEGIN
 Layer::Layer()
 : _touchEnabled(false)
 , _accelerometerEnabled(false)
-#ifdef KEYBOARD_SUPPORT
+#ifdef CC_KEYBOARD_SUPPORT
 , _keyboardEnabled(false)
 #endif
 , _keypadEnabled(false)
@@ -279,7 +279,7 @@ void Layer::unregisterScriptAccelerateHandler(void)
     CC_SAFE_RELEASE_NULL(_scriptAccelerateHandlerEntry);
 }
 
-#ifdef KEYBOARD_SUPPORT
+#ifdef CC_KEYBOARD_SUPPORT
 /// isKeyboardEnabled getter
 bool Layer::isKeyboardEnabled()
 {
@@ -845,7 +845,6 @@ void LayerColor::setOpacity(GLubyte opacity)
 //
 // LayerGradient
 // 
-
 LayerGradient* LayerGradient::create(const ccColor4B& start, const ccColor4B& end)
 {
     LayerGradient * pLayer = new LayerGradient();
