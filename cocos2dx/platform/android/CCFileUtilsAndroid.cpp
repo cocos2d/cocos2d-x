@@ -22,16 +22,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCFileUtilsAndroid.h"
-#include "support/zip_support/ZipUtils.h"
 #include "platform/CCCommon.h"
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
+#include "android/asset_manager.h"
+#include "android/asset_manager_jni.h"
+
+#include <stdlib.h>
+
+#define  LOG_TAG    "CCFileUtilsAndroid.cpp"
+#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
 using namespace std;
 
-NS_CC_BEGIN
+static AAssetManager* s_assetmanager;
 
-// record the zip on the resource path
-static ZipFile *s_pZipFile = NULL;
+extern "C" {
+    JNIEXPORT void JNICALL
+    Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetAssetManager(JNIEnv* env,
+                                                               jobject thiz,
+                                                               jobject java_assetmanager) {
+        AAssetManager* assetmanager =
+            AAssetManager_fromJava(env, java_assetmanager);
+        if (NULL == assetmanager) {
+            LOGD("assetmanager : is NULL");
+            return;
+        }
+
+        s_assetmanager = assetmanager;
+    }
+}
+
+NS_CC_BEGIN
 
 FileUtils* FileUtils::sharedFileUtils()
 {
@@ -39,8 +60,6 @@ FileUtils* FileUtils::sharedFileUtils()
     {
         s_sharedFileUtils = new FileUtilsAndroid();
         s_sharedFileUtils->init();
-        std::string resourcePath = getApkPath();
-        s_pZipFile = new ZipFile(resourcePath, "assets/");
     }
     return s_sharedFileUtils;
 }
@@ -51,7 +70,6 @@ FileUtilsAndroid::FileUtilsAndroid()
 
 FileUtilsAndroid::~FileUtilsAndroid()
 {
-    CC_SAFE_DELETE(s_pZipFile);
 }
 
 bool FileUtilsAndroid::init()
@@ -72,16 +90,21 @@ bool FileUtilsAndroid::isFileExist(const std::string& strFilePath)
     // Check whether file exists in apk.
     if (strFilePath[0] != '/')
     {
-        std::string strPath = strFilePath;
-        if (strPath.find(_defaultResRootPath) != 0)
-        {// Didn't find "assets/" at the beginning of the path, adding it.
-            strPath.insert(0, _defaultResRootPath);
-        }
+        const char* s = strFilePath.c_str();
 
-        if (s_pZipFile->fileExists(strPath))
-        {
-            bFound = true;
-        } 
+        // Found "assets/" at the beginning of the path and we don't want it
+        if (strFilePath.find(_defaultResRootPath) == 0) s += strlen("assets/");
+
+        if (s_assetmanager) {
+            AAsset* aa = AAssetManager_open(s_assetmanager, s, AASSET_MODE_UNKNOWN);
+            if (aa)
+            {
+                bFound = true;
+                AAsset_close(aa);
+            } else {
+                // CCLOG("[AssetManager] ... in APK %s, found = false!", strFilePath.c_str());
+            }
+        }
     }
     else
     {
@@ -132,14 +155,45 @@ unsigned char* FileUtilsAndroid::doGetFileData(const char* pszFileName, const ch
     
     if (fullPath[0] != '/')
     {
-        if (forAsync)
+        
+        string fullPath(pszFileName);
+        // fullPathForFilename is not thread safe.
+        if (! forAsync)
         {
-            pData = s_pZipFile->getFileData(fullPath.c_str(), pSize, s_pZipFile->_dataThread);
+            fullPath = fullPathForFilename(pszFileName);
         }
-        else
+
+        const char* relativepath = fullPath.c_str();
+
+        // "assets/" is at the beginning of the path and we don't want it
+        relativepath += strlen("assets/");
+
+        if (NULL == s_assetmanager) {
+            LOGD("... s_assetmanager is NULL");
+            return NULL;
+        }
+
+        // read asset data
+        AAsset* asset =
+            AAssetManager_open(s_assetmanager,
+                               relativepath,
+                               AASSET_MODE_UNKNOWN);
+        if (NULL == asset) {
+            LOGD("asset : is NULL");
+            return NULL;
+        }
+
+        off_t size = AAsset_getLength(asset);
+
+        pData = new unsigned char[size];
+
+        int bytesread = AAsset_read(asset, (void*)pData, size);
+        if (pSize)
         {
-            pData = s_pZipFile->getFileData(fullPath.c_str(), pSize);
+            *pSize = bytesread;
         }
+
+        AAsset_close(asset);
     }
     else
     {

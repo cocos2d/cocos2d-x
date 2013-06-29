@@ -1,5 +1,6 @@
 require "OpenglConstants"
 require "Cocos2dConstants"
+require "Opengl"
 local function OpenGLTestMainLayer()
     local kItemTagBasic = 1000
     local testCount = 16
@@ -190,19 +191,19 @@ local function OpenGLTestMainLayer()
 
         local program = shader:getProgram()
 
-        local glNode  = GLNode:create()
+        local glNode  = gl.glNodeCreate()
         glNode:setContentSize(CCSizeMake(256,256))
         glNode:setAnchorPoint(ccp(0.5, 0.5))
-        uniformCenter = glNode:_getUniformLocation(program,"center")
-        uniformResolution  = glNode:_getUniformLocation( program, "resolution")
+        uniformCenter = gl.getUniformLocation(program,"center")
+        uniformResolution  = gl.getUniformLocation( program, "resolution")
         glNode:setShaderProgram(shader)
 
         local function initBuffer()
-            squareVertexPositionBuffer.buffer_id = glNode:_createBuffer()
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER,squareVertexPositionBuffer.buffer_id)
+            squareVertexPositionBuffer = gl.createBuffer()
+            gl.bindBuffer(gl.ARRAY_BUFFER,squareVertexPositionBuffer)
             local vertices = { 256,256,0,256,256,0,0,0}
-            glNode:bufferData(GLConstant.ARRAY_BUFFER,8,vertices,GLConstant.STATIC_DRAW)
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, 0)
+            gl.bufferData(gl.ARRAY_BUFFER,8,vertices,gl.STATIC_DRAW)
+            gl.bindBuffer(gl.ARRAY_BUFFER, 0)
         end
 
         local function updateMajori(fTime)
@@ -217,13 +218,13 @@ local function OpenGLTestMainLayer()
                 shader:setUniformLocationWith2f( uniformCenter, size.width/2, size.height/2)
                 shader:setUniformLocationWith2f( uniformResolution, 256, 256)
 
-                glNode:glEnableVertexAttribs(CCConstants.VERTEX_ATTRIB_FLAG_POSITION)
+                gl.glEnableVertexAttribs(CCConstants.VERTEX_ATTRIB_FLAG_POSITION)
 
                 --Draw fullscreen Square
-                glNode:_bindBuffer(GLConstant.ARRAY_BUFFER,squareVertexPositionBuffer.buffer_id)
-                glNode:vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, GLConstant.FLOAT, false, 0, 0)
-                glNode:drawArrays(GLConstant.TRIANGLE_STRIP,0,4)
-                glNode:_bindBuffer(GLConstant.ARRAY_BUFFER,0)
+                gl.bindBuffer(gl.ARRAY_BUFFER,squareVertexPositionBuffer)
+                gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
+                gl.drawArrays(gl.TRIANGLE_STRIP,0,4)
+                gl.bindBuffer(gl.ARRAY_BUFFER,0)
             end
         end
         initBuffer()
@@ -252,19 +253,19 @@ local function OpenGLTestMainLayer()
 
         local program = shader:getProgram()
 
-        local glNode  = GLNode:create()
+        local glNode  = gl.glNodeCreate()
         glNode:setContentSize(CCSizeMake(256,256))
         glNode:setAnchorPoint(ccp(0.5, 0.5))
-        uniformCenter = glNode:_getUniformLocation(program,"center")
-        uniformResolution  = glNode:_getUniformLocation( program, "resolution")
+        uniformCenter = gl.getUniformLocation(program,"center")
+        uniformResolution  = gl.getUniformLocation( program, "resolution")
         glNode:setShaderProgram(shader)
 
         local function initBuffer()
-            squareVertexPositionBuffer.buffer_id = glNode:_createBuffer()
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER,squareVertexPositionBuffer.buffer_id)
+            squareVertexPositionBuffer.buffer_id = gl.createBuffer()
+            gl.bindBuffer(gl.ARRAY_BUFFER,squareVertexPositionBuffer.buffer_id)
             local vertices = { 256,256,0,256,256,0,0,0}
-            glNode:bufferData(GLConstant.ARRAY_BUFFER,8,vertices,GLConstant.STATIC_DRAW)
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, 0)
+            gl.bufferData(gl.ARRAY_BUFFER,8,vertices,gl.STATIC_DRAW)
+            gl.bindBuffer(gl.ARRAY_BUFFER, 0)
         end
 
         local function updateMandelbrot(fTime)
@@ -279,13 +280,13 @@ local function OpenGLTestMainLayer()
                 shader:setUniformLocationWith2f( uniformCenter, size.width/2, size.height/2)
                 shader:setUniformLocationWith2f( uniformResolution, 256, 256)
 
-                glNode:glEnableVertexAttribs(0x1)
+                gl.glEnableVertexAttribs(0x1)
 
                 --Draw fullscreen Square
-                glNode:_bindBuffer(GLConstant.ARRAY_BUFFER,squareVertexPositionBuffer.buffer_id)
-                glNode:vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, GLConstant.FLOAT, false, 0, 0)
-                glNode:drawArrays(GLConstant.TRIANGLE_STRIP,0,4)
-                glNode:_bindBuffer(GLConstant.ARRAY_BUFFER,0)
+                gl.bindBuffer(gl.ARRAY_BUFFER,squareVertexPositionBuffer.buffer_id)
+                gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
+                gl.drawArrays(gl.TRIANGLE_STRIP,0,4)
+                gl.bindBuffer(gl.ARRAY_BUFFER,0)
             end
         end
         initBuffer()
@@ -314,19 +315,19 @@ local function OpenGLTestMainLayer()
 
         local program = shader:getProgram()
 
-        local glNode  = GLNode:create()
+        local glNode  = gl.glNodeCreate()
         glNode:setContentSize(CCSizeMake(256,256))
         glNode:setAnchorPoint(ccp(0.5, 0.5))
-        uniformCenter = glNode:_getUniformLocation(program,"center")
-        uniformResolution  = glNode:_getUniformLocation( program, "resolution")
+        uniformCenter = gl.getUniformLocation(program,"center")
+        uniformResolution  = gl.getUniformLocation( program, "resolution")
         glNode:setShaderProgram(shader)
 
         local function initBuffer()
-            squareVertexPositionBuffer.buffer_id = glNode:_createBuffer()
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER,squareVertexPositionBuffer.buffer_id)
+            squareVertexPositionBuffer.buffer_id = gl.createBuffer()
+            gl.bindBuffer(gl.ARRAY_BUFFER,squareVertexPositionBuffer.buffer_id)
             local vertices = { 256,256,0,256,256,0,0,0}
-            glNode:bufferData(GLConstant.ARRAY_BUFFER,8,vertices,GLConstant.STATIC_DRAW)
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, 0)
+            gl.bufferData(gl.ARRAY_BUFFER,8,vertices,gl.STATIC_DRAW)
+            gl.bindBuffer(gl.ARRAY_BUFFER, 0)
         end
 
         local function updateHeart(fTime)
@@ -341,13 +342,13 @@ local function OpenGLTestMainLayer()
                 shader:setUniformLocationWith2f( uniformCenter, size.width/2, size.height/2)
                 shader:setUniformLocationWith2f( uniformResolution, 256, 256)
 
-                glNode:glEnableVertexAttribs(0x1)
+                gl.glEnableVertexAttribs(0x1)
 
                 --Draw fullscreen Square
-                glNode:_bindBuffer(GLConstant.ARRAY_BUFFER,squareVertexPositionBuffer.buffer_id)
-                glNode:vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, GLConstant.FLOAT, false, 0, 0)
-                glNode:drawArrays(GLConstant.TRIANGLE_STRIP,0,4)
-                glNode:_bindBuffer(GLConstant.ARRAY_BUFFER,0)
+                gl.bindBuffer(gl.ARRAY_BUFFER,squareVertexPositionBuffer.buffer_id)
+                gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
+                gl.drawArrays(gl.TRIANGLE_STRIP,0,4)
+                gl.bindBuffer(gl.ARRAY_BUFFER,0)
             end
         end
         initBuffer()
@@ -376,19 +377,19 @@ local function OpenGLTestMainLayer()
 
         local program = shader:getProgram()
 
-        local glNode  = GLNode:create()
+        local glNode  = gl.glNodeCreate()
         glNode:setContentSize(CCSizeMake(256,256))
         glNode:setAnchorPoint(ccp(0.5, 0.5))
-        uniformCenter = glNode:_getUniformLocation(program,"center")
-        uniformResolution  = glNode:_getUniformLocation( program, "resolution")
+        uniformCenter = gl.getUniformLocation(program,"center")
+        uniformResolution  = gl.getUniformLocation( program, "resolution")
         glNode:setShaderProgram(shader)
 
         local function initBuffer()
-            squareVertexPositionBuffer.buffer_id = glNode:_createBuffer()
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER,squareVertexPositionBuffer.buffer_id)
+            squareVertexPositionBuffer.buffer_id = gl.createBuffer()
+            gl.bindBuffer(gl.ARRAY_BUFFER,squareVertexPositionBuffer.buffer_id)
             local vertices = { 256,256,0,256,256,0,0,0}
-            glNode:bufferData(GLConstant.ARRAY_BUFFER,8,vertices,GLConstant.STATIC_DRAW)
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, 0)
+            gl.bufferData(gl.ARRAY_BUFFER,8,vertices,gl.STATIC_DRAW)
+            gl.bindBuffer(gl.ARRAY_BUFFER, 0)
         end
 
         local function updatePlasma(fTime)
@@ -403,13 +404,13 @@ local function OpenGLTestMainLayer()
                 shader:setUniformLocationWith2f( uniformCenter, size.width/2, size.height/2)
                 shader:setUniformLocationWith2f( uniformResolution, 256, 256)
 
-                glNode:glEnableVertexAttribs(0x1)
+                gl.glEnableVertexAttribs(0x1)
 
                 --Draw fullscreen Square
-                glNode:_bindBuffer(GLConstant.ARRAY_BUFFER,squareVertexPositionBuffer.buffer_id)
-                glNode:vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, GLConstant.FLOAT, false, 0, 0)
-                glNode:drawArrays(GLConstant.TRIANGLE_STRIP,0,4)
-                glNode:_bindBuffer(GLConstant.ARRAY_BUFFER,0)
+                gl.bindBuffer(gl.ARRAY_BUFFER,squareVertexPositionBuffer.buffer_id)
+                gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
+                gl.drawArrays(gl.TRIANGLE_STRIP,0,4)
+                gl.bindBuffer(gl.ARRAY_BUFFER,0)
             end
         end
         initBuffer()
@@ -438,19 +439,19 @@ local function OpenGLTestMainLayer()
 
         local program = shader:getProgram()
 
-        local glNode  = GLNode:create()
+        local glNode  = gl.glNodeCreate()
         glNode:setContentSize(CCSizeMake(256,256))
         glNode:setAnchorPoint(ccp(0.5, 0.5))
-        uniformCenter = glNode:_getUniformLocation(program,"center")
-        uniformResolution  = glNode:_getUniformLocation( program, "resolution")
+        uniformCenter = gl.getUniformLocation(program,"center")
+        uniformResolution  = gl.getUniformLocation( program, "resolution")
         glNode:setShaderProgram(shader)
 
         local function initBuffer()
-            squareVertexPositionBuffer.buffer_id = glNode:_createBuffer()
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER,squareVertexPositionBuffer.buffer_id)
+            squareVertexPositionBuffer.buffer_id = gl.createBuffer()
+            gl.bindBuffer(gl.ARRAY_BUFFER,squareVertexPositionBuffer.buffer_id)
             local vertices = { 256,256,0,256,256,0,0,0}
-            glNode:bufferData(GLConstant.ARRAY_BUFFER,8,vertices,GLConstant.STATIC_DRAW)
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, 0)
+            gl.bufferData(gl.ARRAY_BUFFER,8,vertices,gl.STATIC_DRAW)
+            gl.bindBuffer(gl.ARRAY_BUFFER, 0)
         end
 
         local function updateFlower(fTime)
@@ -465,13 +466,13 @@ local function OpenGLTestMainLayer()
                 shader:setUniformLocationWith2f( uniformCenter, size.width/2, size.height/2)
                 shader:setUniformLocationWith2f( uniformResolution, 256, 256)
 
-                glNode:glEnableVertexAttribs(0x1)
+                gl.glEnableVertexAttribs(0x1)
 
                 --Draw fullscreen Square
-                glNode:_bindBuffer(GLConstant.ARRAY_BUFFER,squareVertexPositionBuffer.buffer_id)
-                glNode:vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, GLConstant.FLOAT, false, 0, 0)
-                glNode:drawArrays(GLConstant.TRIANGLE_STRIP,0,4)
-                glNode:_bindBuffer(GLConstant.ARRAY_BUFFER,0)
+                gl.bindBuffer(gl.ARRAY_BUFFER,squareVertexPositionBuffer.buffer_id)
+                gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
+                gl.drawArrays(gl.TRIANGLE_STRIP,0,4)
+                gl.bindBuffer(gl.ARRAY_BUFFER,0)
             end
         end
         initBuffer()
@@ -500,19 +501,19 @@ local function OpenGLTestMainLayer()
 
         local program = shader:getProgram()
 
-        local glNode  = GLNode:create()
+        local glNode  = gl.glNodeCreate()
         glNode:setContentSize(CCSizeMake(256,256))
         glNode:setAnchorPoint(ccp(0.5, 0.5))
-        uniformCenter = glNode:_getUniformLocation(program,"center")
-        uniformResolution  = glNode:_getUniformLocation( program, "resolution")
+        uniformCenter = gl.getUniformLocation(program,"center")
+        uniformResolution  = gl.getUniformLocation( program, "resolution")
         glNode:setShaderProgram(shader)
 
         local function initBuffer()
-            squareVertexPositionBuffer.buffer_id = glNode:_createBuffer()
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER,squareVertexPositionBuffer.buffer_id)
+            squareVertexPositionBuffer.buffer_id = gl.createBuffer()
+            gl.bindBuffer(gl.ARRAY_BUFFER,squareVertexPositionBuffer.buffer_id)
             local vertices = { 256,256,0,256,256,0,0,0}
-            glNode:bufferData(GLConstant.ARRAY_BUFFER,8,vertices,GLConstant.STATIC_DRAW)
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, 0)
+            gl.bufferData(gl.ARRAY_BUFFER,8,vertices,gl.STATIC_DRAW)
+            gl.bindBuffer(gl.ARRAY_BUFFER, 0)
         end
 
         local function updateJulia(fTime)
@@ -527,13 +528,13 @@ local function OpenGLTestMainLayer()
                 shader:setUniformLocationWith2f( uniformCenter, size.width/2, size.height/2)
                 shader:setUniformLocationWith2f( uniformResolution, 256, 256)
 
-                glNode:glEnableVertexAttribs(0x1)
+                gl.glEnableVertexAttribs(0x1)
 
                 --Draw fullscreen Square
-                glNode:_bindBuffer(GLConstant.ARRAY_BUFFER,squareVertexPositionBuffer.buffer_id)
-                glNode:vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, GLConstant.FLOAT, false, 0, 0)
-                glNode:drawArrays(GLConstant.TRIANGLE_STRIP,0,4)
-                glNode:_bindBuffer(GLConstant.ARRAY_BUFFER,0)
+                gl.bindBuffer(gl.ARRAY_BUFFER,squareVertexPositionBuffer.buffer_id)
+                gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
+                gl.drawArrays(gl.TRIANGLE_STRIP,0,4)
+                gl.bindBuffer(gl.ARRAY_BUFFER,0)
             end
         end
         initBuffer()
@@ -551,7 +552,7 @@ local function OpenGLTestMainLayer()
         local sprite = CCSprite:create("Images/grossini.png")
         sprite:setPosition( size.width/2, size.height/2)
         glGetActiveLayer:addChild(sprite)
-        local glNode = GLNode:create()
+        local glNode = gl.glNodeCreate()
         glGetActiveLayer:addChild(glNode,-10)
         local scheduler = CCDirector:sharedDirector():getScheduler()
 
@@ -560,13 +561,13 @@ local function OpenGLTestMainLayer()
             local glProgam = tolua.cast(sprite:getShaderProgram(),"CCGLProgram")
             if nil ~= glProgam then
                 local p = glProgam:getProgram()
-                local aaSize,aaType,aaName = glNode:_getActiveAttrib(p,0)
+                local aaSize,aaType,aaName = gl.getActiveAttrib(p,0)
                 local strFmt = "size:"..aaSize.." type:"..aaType.." name:"..aaName
                 print(strFmt)
-                local auSize,auType,auName = glNode:_getActiveUniform(p,0)
+                local auSize,auType,auName = gl.getActiveUniform(p,0)
                 strFmt = "size:"..auSize.." type:"..auType.." name:"..auName
                 print(strFmt)
-                local shadersTable         = glNode:_getAttachedShaders(p)
+                local shadersTable         = gl.getAttachedShaders(p)
                 if type(shadersTable) == "table" then
                     local count = table.getn(shadersTable)
                     local i = 1
@@ -598,7 +599,7 @@ local function OpenGLTestMainLayer()
         local squareVertexTextureBuffer  = {}
         local texImage2dLayer = CCLayer:create()
         InitTitle(texImage2dLayer)
-        local glNode   = GLNode:create()
+        local glNode   = gl.glNodeCreate()
         texImage2dLayer:addChild(glNode, 10)
         glNode:setPosition(size.width/2, size.height/2)
         glNode:setContentSize(CCSizeMake(128,128))
@@ -606,8 +607,8 @@ local function OpenGLTestMainLayer()
         local shaderCache = CCShaderCache:getInstance()
         local shader = shaderCache:getProgram("ShaderPositionTexture")
         local function initGL()
-            texture.texture_id  = glNode:_createTexture()
-            glNode:_bindTexture(GLConstant.TEXTURE_2D,texture.texture_id )
+            texture.texture_id  = gl.createTexture()
+            gl.bindTexture(gl.TEXTURE_2D,texture.texture_id )
             local pixels = {}
             local i = 1
             while i <= 4096 do
@@ -621,22 +622,22 @@ local function OpenGLTestMainLayer()
                 i = i + 1
             end
 
-            glNode:_texImage2D(GLConstant.TEXTURE_2D, 0, GLConstant.RGBA, 32, 32, 0, GLConstant.RGBA, GLConstant.UNSIGNED_BYTE, table.getn(pixels),pixels)
-            glNode:texParameteri(GLConstant.TEXTURE_2D, GLConstant.TEXTURE_MAG_FILTER, GLConstant.NEAREST)
-            glNode:texParameteri(GLConstant.TEXTURE_2D, GLConstant.TEXTURE_MIN_FILTER, GLConstant.NEAREST)
-            glNode:_bindTexture(GLConstant.TEXTURE_2D, 0)
+            gl._texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 32, 32, 0, gl.RGBA, gl.UNSIGNED_BYTE, table.getn(pixels),pixels)
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST)
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST)
+            gl.bindTexture(gl.TEXTURE_2D, 0)
 
             --Square
-            squareVertexPositionBuffer.buffer_id = glNode:_createBuffer()
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, squareVertexPositionBuffer.buffer_id)
+            squareVertexPositionBuffer.buffer_id = gl.createBuffer()
+            gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer.buffer_id)
             local vertices = { 128, 128, 0, 128, 128, 0, 0, 0 }
-            glNode:bufferData(GLConstant.ARRAY_BUFFER,table.getn(vertices),vertices,GLConstant.STATIC_DRAW)
+            gl.bufferData(gl.ARRAY_BUFFER,table.getn(vertices),vertices,gl.STATIC_DRAW)
 
-            squareVertexTextureBuffer.buffer_id = glNode:_createBuffer()
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, squareVertexTextureBuffer.buffer_id)
+            squareVertexTextureBuffer.buffer_id = gl.createBuffer()
+            gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexTextureBuffer.buffer_id)
             local texcoords = { 1, 1, 0, 1, 1, 0, 0, 0 }
-            glNode:bufferData(GLConstant.ARRAY_BUFFER,table.getn(texcoords),texcoords,GLConstant.STATIC_DRAW)
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER,0)
+            gl.bufferData(gl.ARRAY_BUFFER,table.getn(texcoords),texcoords,gl.STATIC_DRAW)
+            gl.bindBuffer(gl.ARRAY_BUFFER,0)
         end
 
         local function TexImage2DDraw()
@@ -644,20 +645,20 @@ local function OpenGLTestMainLayer()
                 shader:use()
                 shader:setUniformsForBuiltins()
 
-                glNode:_bindTexture(GLConstant.TEXTURE_2D, texture.texture_id)
-                glNode:glEnableVertexAttribs(CCConstants.VERTEX_ATTRIB_FLAG_TEX_COORDS or CCConstants.VERTEX_ATTRIB_FLAG_POSITION)
+                gl.bindTexture(gl.TEXTURE_2D, texture.texture_id)
+                gl.glEnableVertexAttribs(CCConstants.VERTEX_ATTRIB_FLAG_TEX_COORDS or CCConstants.VERTEX_ATTRIB_FLAG_POSITION)
 
-                glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, squareVertexPositionBuffer.buffer_id)
-                glNode:vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION,2,GLConstant.FLOAT,false,0,0)
+                gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer.buffer_id)
+                gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION,2,gl.FLOAT,false,0,0)
 
 
-                glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, squareVertexTextureBuffer.buffer_id)
-                glNode:vertexAttribPointer(CCConstants.VERTEX_ATTRIB_TEX_COORDS,2,GLConstant.FLOAT,false,0,0)
+                gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexTextureBuffer.buffer_id)
+                gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_TEX_COORDS,2,gl.FLOAT,false,0,0)
 
-                glNode:drawArrays(GLConstant.TRIANGLE_STRIP,0,4)
+                gl.drawArrays(gl.TRIANGLE_STRIP,0,4)
 
-                glNode:_bindTexture(GLConstant.TEXTURE_2D,0)
-                glNode:_bindBuffer(GLConstant.ARRAY_BUFFER,0)
+                gl.bindTexture(gl.TEXTURE_2D,0)
+                gl.bindBuffer(gl.ARRAY_BUFFER,0)
             end
         end
 
@@ -669,9 +670,9 @@ local function OpenGLTestMainLayer()
     local function CreateSupportedExtensionsLayer()
         local extensionsLayer = CCLayer:create()
         InitTitle(extensionsLayer)
-        local glNode = GLNode:create()
+        local glNode = gl.glNodeCreate()
         extensionsLayer:addChild(glNode,-10)
-        local supportExtensions = glNode:getSupportedExtensions()
+        local supportExtensions = gl.getSupportedExtensions()
         if type(supportExtensions) ~= "table" then
             print("error:return value not table")
             return
@@ -688,7 +689,7 @@ local function OpenGLTestMainLayer()
     local function CreateReadPixelsTest()
         local readPixelsLayer = CCLayer:create()
         InitTitle(readPixelsLayer)
-        local glNode = GLNode:create()
+        local glNode = gl.glNodeCreate()
         readPixelsLayer:addChild(glNode,-10)
 
         local x = size.width
@@ -726,7 +727,7 @@ local function OpenGLTestMainLayer()
             local i = 1
             local strFmt = ""
             --blue
-            local bPixels = glNode:readPixels(0,   0,   1, 1, GLConstant.RGBA, GLConstant.UNSIGNED_BYTE, pixelCount)
+            local bPixels = gl.readPixels(0,   0,   1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixelCount)
             for i=1,pixelCount do
                 local strTmp = string.format("%d:%d ",i,bPixels[i])
                 strFmt = strFmt .. strTmp
@@ -734,7 +735,7 @@ local function OpenGLTestMainLayer()
             print(strFmt)
             strFmt = ""
             --red
-            local rPixels = glNode:readPixels(x-1, 0,   1, 1, GLConstant.RGBA, GLConstant.UNSIGNED_BYTE, pixelCount)
+            local rPixels = gl.readPixels(x-1, 0,   1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixelCount)
             for i=1,pixelCount do
                 local strTmp = string.format("%d:%d ",i,rPixels[i])
                 strFmt = strFmt .. strTmp
@@ -742,7 +743,7 @@ local function OpenGLTestMainLayer()
             print(strFmt)
             strFmt = ""
             --green
-            local gPixels = glNode:readPixels(0,   y-1, 1, 1, GLConstant.RGBA, GLConstant.UNSIGNED_BYTE, pixelCount)
+            local gPixels = gl.readPixels(0,   y-1, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixelCount)
             for i=1,pixelCount do
                 local strTmp = string.format("%d:%d ",i,gPixels[i])
                 strFmt = strFmt .. strTmp
@@ -750,7 +751,7 @@ local function OpenGLTestMainLayer()
             print(strFmt)
             strFmt = ""
             --white
-            local wPixels = glNode:readPixels(x-1, y-1, 1, 1, GLConstant.RGBA, GLConstant.UNSIGNED_BYTE, pixelCount)
+            local wPixels = gl.readPixels(x-1, y-1, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixelCount)
             for i=1,pixelCount do
                 local strTmp = string.format("%d:%d ",i,wPixels[i])
                 strFmt = strFmt .. strTmp
@@ -778,18 +779,18 @@ local function OpenGLTestMainLayer()
         local blue = CCLayerColor:create(ccc4(0, 0, 255, 255))
         clearLayer:addChild( blue, 1 )
 
-        local glNode = GLNode:create()
+        local glNode = gl.glNodeCreate()
         clearLayer:addChild(glNode,10)
-        --glNode:init()
+        --gl.init()
         local scheduler = CCDirector:sharedDirector():getScheduler()
 
         local function clearDraw()
-            glNode:clear(GLConstant.COLOR_BUFFER_BIT)
+            gl.clear(gl.COLOR_BUFFER_BIT)
         end
 
         local function getCurrentResult()
 
-            local pixels = glNode:readPixels(math.floor(size.width/2), math.floor(size.height/2), 1, 1, GLConstant.RGBA, GLConstant.UNSIGNED_BYTE, 4)
+            local pixels = gl.readPixels(math.floor(size.width/2), math.floor(size.height/2), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, 4)
             local strFmt = ""
             for i=1,4 do
                 local strTmp = string.format("%d:%d ",i,pixels[i])
@@ -814,7 +815,7 @@ local function OpenGLTestMainLayer()
     local function createNodeWebGLAPITest()
         local nodeWebGLAPILayer = CCLayer:create()
         InitTitle(nodeWebGLAPILayer)
-        local glNode = GLNode:create()
+        local glNode = gl.glNodeCreate()
         nodeWebGLAPILayer:addChild(glNode,10)
         local shaderProgram = {}
         local triangleVertexPositionBuffer = {}
@@ -841,13 +842,13 @@ local function OpenGLTestMainLayer()
         local function compileShader(source,type)
             local shader
             if type == "fragment" then
-                shader = glNode:_createShader(GLConstant.FRAGMENT_SHADER)
+                shader = gl.createShader(gl.FRAGMENT_SHADER)
             else
-                shader = glNode:_createShader(GLConstant.VERTEX_SHADER)
+                shader = gl.createShader(gl.VERTEX_SHADER)
             end
-            glNode:_shaderSource(shader,source)
-            glNode:_compileShader(shader)
-            local ret = glNode:_getShaderParameter(shader,GLConstant.COMPILE_STATUS)
+            gl.shaderSource(shader,source)
+            gl.compileShader(shader)
+            local ret = gl.getShaderParameter(shader,gl.COMPILE_STATUS)
             if not ret then
                 --throw
                 print("Could not compile "..type.." shader")
@@ -856,111 +857,111 @@ local function OpenGLTestMainLayer()
         end
 
         local function initBuffers()
-            triangleVertexPositionBuffer.buffer_id = glNode:_createBuffer()
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, triangleVertexPositionBuffer.buffer_id)
+            triangleVertexPositionBuffer.buffer_id = gl.createBuffer()
+            gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer.buffer_id)
             local vertices = {
              0.0,  1.0,  0.0,
             -1.0, -1.0,  0.0,
              1.0, -1.0,  0.0
             }
-            glNode:bufferData(GLConstant.ARRAY_BUFFER, 9, vertices,GLConstant.STATIC_DRAW)
+            gl.bufferData(gl.ARRAY_BUFFER, 9, vertices,gl.STATIC_DRAW)
             triangleVertexPositionBuffer.itemSize = 3
             triangleVertexPositionBuffer.numItems = 3
 
-            triangleVertexColorBuffer.buffer_id = glNode:_createBuffer()
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, triangleVertexColorBuffer.buffer_id)
+            triangleVertexColorBuffer.buffer_id = gl.createBuffer()
+            gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexColorBuffer.buffer_id)
             local colors = {
             1.0, 0.0, 0.0, 1.0,
             1.0, 0.0, 0.0, 1.0,
             1.0, 0.0, 0.0, 1.0
             }
-            glNode:bufferData(GLConstant.ARRAY_BUFFER, 12, colors , GLConstant.STATIC_DRAW)
+            gl.bufferData(gl.ARRAY_BUFFER, 12, colors , gl.STATIC_DRAW)
             triangleVertexColorBuffer.itemSize = 4
             triangleVertexColorBuffer.numItems = 3
 
-            squareVertexPositionBuffer.buffer_id = glNode:_createBuffer()
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, squareVertexPositionBuffer.buffer_id)
+            squareVertexPositionBuffer.buffer_id = gl.createBuffer()
+            gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer.buffer_id)
             vertices = {
              1.0,  1.0,  0.0,
             -1.0,  1.0,  0.0,
              1.0, -1.0,  0.0,
             -1.0, -1.0,  0.0
             }
-            glNode:bufferData(GLConstant.ARRAY_BUFFER, 12, vertices,GLConstant.STATIC_DRAW)
+            gl.bufferData(gl.ARRAY_BUFFER, 12, vertices,gl.STATIC_DRAW)
             squareVertexPositionBuffer.itemSize = 3
             squareVertexPositionBuffer.numItems = 4
 
-            squareVertexColorBuffer.buffer_id = glNode:_createBuffer()
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, squareVertexColorBuffer.buffer_id)
+            squareVertexColorBuffer.buffer_id = gl.createBuffer()
+            gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexColorBuffer.buffer_id)
             colors = {
                 0.0, 0.0, 1.0, 1.0,
                 0.0, 0.0, 1.0, 1.0,
                 0.0, 0.0, 1.0, 1.0,
                 0.0, 0.0, 1.0, 1.0
             }
-            glNode:bufferData(GLConstant.ARRAY_BUFFER, 16,colors, GLConstant.STATIC_DRAW)
+            gl.bufferData(gl.ARRAY_BUFFER, 16,colors, gl.STATIC_DRAW)
             squareVertexColorBuffer.itemSize = 4
             squareVertexColorBuffer.numItems = 4
 
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, 0)
+            gl.bindBuffer(gl.ARRAY_BUFFER, 0)
         end
 
         local function setMatrixUniforms()
-            glNode:uniformMatrix4fv(shaderProgram.pMatrixUniform,false,table.getn(pMatrix), pMatrix)
-            glNode:uniformMatrix4fv(shaderProgram.mvMatrixUniform,false,table.getn(mvMatrix),mvMatrix)
+            gl.uniformMatrix4fv(shaderProgram.pMatrixUniform,false,table.getn(pMatrix), pMatrix)
+            gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform,false,table.getn(mvMatrix),mvMatrix)
         end
 
         local function nodeWebGLDraw()
-            glNode:_useProgram(shaderProgram.program_id)
-            glNode:uniformMatrix4fv(shaderProgram.pMatrixUniform,false,table.getn(pMatrix),pMatrix)
-            glNode:uniformMatrix4fv(shaderProgram.mvMatrixUniform,false,table.getn(mvMatrix),mvMatrix)
+            gl.useProgram(shaderProgram.program_id)
+            gl.uniformMatrix4fv(shaderProgram.pMatrixUniform,false,table.getn(pMatrix),pMatrix)
+            gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform,false,table.getn(mvMatrix),mvMatrix)
 
-            glNode:enableVertexAttribArray(shaderProgram.vertexPositionAttribute)
-            glNode:enableVertexAttribArray(shaderProgram.vertexColorAttribute)
+            gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute)
+            gl.enableVertexAttribArray(shaderProgram.vertexColorAttribute)
 
             --Draw
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, squareVertexPositionBuffer.buffer_id)
-            glNode:vertexAttribPointer(shaderProgram.vertexPositionAttribute, squareVertexPositionBuffer.itemSize, GLConstant.FLOAT, false, 0, 0)
+            gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer.buffer_id)
+            gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, squareVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0)
 
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, squareVertexColorBuffer.buffer_id)
-            glNode:vertexAttribPointer(shaderProgram.vertexColorAttribute, squareVertexColorBuffer.itemSize, GLConstant.FLOAT, false, 0, 0)
+            gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexColorBuffer.buffer_id)
+            gl.vertexAttribPointer(shaderProgram.vertexColorAttribute, squareVertexColorBuffer.itemSize, gl.FLOAT, false, 0, 0)
 
             setMatrixUniforms()
 
-            glNode:drawArrays(GLConstant.TRIANGLE_STRIP, 0, squareVertexPositionBuffer.numItems)
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, squareVertexPositionBuffer.numItems)
 
             --DrawArray
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, triangleVertexPositionBuffer.buffer_id)
-            glNode:vertexAttribPointer(shaderProgram.vertexPositionAttribute, triangleVertexPositionBuffer.itemSize, GLConstant.FLOAT, false, 0, 0)
+            gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer.buffer_id)
+            gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, triangleVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0)
 
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, triangleVertexColorBuffer.buffer_id)
-            glNode:vertexAttribPointer(shaderProgram.vertexColorAttribute, triangleVertexColorBuffer.itemSize, GLConstant.FLOAT, false, 0, 0)
+            gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexColorBuffer.buffer_id)
+            gl.vertexAttribPointer(shaderProgram.vertexColorAttribute, triangleVertexColorBuffer.itemSize, gl.FLOAT, false, 0, 0)
 
-            glNode:drawArrays(GLConstant.TRIANGLES, 0, triangleVertexPositionBuffer.numItems)
+            gl.drawArrays(gl.TRIANGLES, 0, triangleVertexPositionBuffer.numItems)
 
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, 0)          
+            gl.bindBuffer(gl.ARRAY_BUFFER, 0)          
         end
 
         local fshader = compileShader(fsh, 'fragment')
         local vshader = compileShader(vsh, 'vertex')
-        shaderProgram.program_id = glNode:_createProgram()
-        glNode:_attachShader(shaderProgram.program_id,vshader)
-        glNode:_attachShader(shaderProgram.program_id,fshader)
-        glNode:_linkProgram(shaderProgram.program_id)
-        if not glNode:_getProgramParameter(shaderProgram.program_id, GLConstant.LINK_STATUS) then
+        shaderProgram.program_id = gl.createProgram()
+        gl.attachShader(shaderProgram.program_id,vshader)
+        gl.attachShader(shaderProgram.program_id,fshader)
+        gl.linkProgram(shaderProgram.program_id)
+        if not gl.getProgramParameter(shaderProgram.program_id, gl.LINK_STATUS) then
             --throw
             print("Could not initialise shaders")
         end
-        glNode:_useProgram(shaderProgram.program_id)
+        gl.useProgram(shaderProgram.program_id)
 
-        shaderProgram.vertexPositionAttribute = glNode:_getAttribLocation(shaderProgram.program_id,"aVertexPosition")
-        glNode:enableVertexAttribArray(shaderProgram.vertexPositionAttribute)
+        shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram.program_id,"aVertexPosition")
+        gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute)
 
-        shaderProgram.vertexColorAttribute = glNode:_getAttribLocation(shaderProgram.program_id,"aVertexColor")
-        glNode:enableVertexAttribArray(shaderProgram.vertexColorAttribute)
+        shaderProgram.vertexColorAttribute = gl.getAttribLocation(shaderProgram.program_id,"aVertexColor")
+        gl.enableVertexAttribArray(shaderProgram.vertexColorAttribute)
 
-        shaderProgram.pMatrixUniform = glNode:_getUniformLocation(shaderProgram.program_id, "uPMatrix")
-        shaderProgram.mvMatrixUniform = glNode:_getUniformLocation(shaderProgram.program_id, "uMVMatrix")
+        shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram.program_id, "uPMatrix")
+        shaderProgram.mvMatrixUniform = gl.getUniformLocation(shaderProgram.program_id, "uMVMatrix")
 
         initBuffers()
 
@@ -972,7 +973,7 @@ local function OpenGLTestMainLayer()
     local function createGLNodeCCAPITest()
         local nodeCCAPILayer = CCLayer:create()
         InitTitle(nodeCCAPILayer)
-        local glNode = GLNode:create()
+        local glNode = gl.glNodeCreate()
         nodeCCAPILayer:addChild(glNode,10)
         local shader = CCShaderCache:getInstance():getProgram("ShaderPositionColor")
         local triangleVertexPositionBuffer = {}
@@ -981,70 +982,70 @@ local function OpenGLTestMainLayer()
         local squareVertexColorBuffer    = {}
 
         local function initBuffers()
-            triangleVertexPositionBuffer.buffer_id = glNode:_createBuffer()
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, triangleVertexPositionBuffer.buffer_id)  
+            triangleVertexPositionBuffer.buffer_id = gl.createBuffer()
+            gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer.buffer_id)  
             local vertices = {
              size.width / 2,   size.height,
              0,                 0,
              size.width,     0
             }
-            glNode:bufferData(GLConstant.ARRAY_BUFFER, table.getn(vertices), vertices, GLConstant.STATIC_DRAW)
+            gl.bufferData(gl.ARRAY_BUFFER, table.getn(vertices), vertices, gl.STATIC_DRAW)
 
-            triangleVertexColorBuffer.buffer_id = glNode:_createBuffer()
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, triangleVertexColorBuffer.buffer_id) 
+            triangleVertexColorBuffer.buffer_id = gl.createBuffer()
+            gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexColorBuffer.buffer_id) 
             local colors = {
             1.0, 0.0, 0.0, 1.0,
             1.0, 0.0, 0.0, 1.0,
             1.0, 0.0, 0.0, 1.0
             }
-            glNode:bufferData(GLConstant.ARRAY_BUFFER, table.getn(colors),colors, GLConstant.STATIC_DRAW)
+            gl.bufferData(gl.ARRAY_BUFFER, table.getn(colors),colors, gl.STATIC_DRAW)
 
             --Square
-            squareVertexPositionBuffer.buffer_id = glNode:_createBuffer()
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, squareVertexPositionBuffer.buffer_id)
+            squareVertexPositionBuffer.buffer_id = gl.createBuffer()
+            gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer.buffer_id)
             vertices = {
                 size.width,  size.height,
                 0,           size.height,
                 size.width,  0,
                 0,           0
             }
-            glNode:bufferData(GLConstant.ARRAY_BUFFER, table.getn(vertices), vertices, GLConstant.STATIC_DRAW)
+            gl.bufferData(gl.ARRAY_BUFFER, table.getn(vertices), vertices, gl.STATIC_DRAW)
             
-            squareVertexColorBuffer.buffer_id = glNode:_createBuffer()
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, squareVertexColorBuffer.buffer_id)
+            squareVertexColorBuffer.buffer_id = gl.createBuffer()
+            gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexColorBuffer.buffer_id)
             colors = {
             0.0, 0.0, 1.0, 1.0,
             0.0, 0.0, 1.0, 1.0,
             0.0, 0.0, 1.0, 1.0,
             0.0, 0.0, 1.0, 1.0
             };
-            glNode:bufferData(GLConstant.ARRAY_BUFFER, table.getn(colors), colors, GLConstant.STATIC_DRAW)
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, 0)
+            gl.bufferData(gl.ARRAY_BUFFER, table.getn(colors), colors, gl.STATIC_DRAW)
+            gl.bindBuffer(gl.ARRAY_BUFFER, 0)
         end
 
         local function GLNodeCCAPIDraw()
             shader:use()
             shader:setUniformsForBuiltins()
-            glNode:glEnableVertexAttribs(CCConstants.VERTEX_ATTRIB_FLAG_COLOR or CCConstants.VERTEX_ATTRIB_FLAG_POSITION)
+            gl.glEnableVertexAttribs(CCConstants.VERTEX_ATTRIB_FLAG_COLOR or CCConstants.VERTEX_ATTRIB_FLAG_POSITION)
 
             --
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, squareVertexPositionBuffer.buffer_id)
-            glNode:vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, GLConstant.FLOAT, false, 0, 0)
+            gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer.buffer_id)
+            gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
 
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, squareVertexColorBuffer.buffer_id)
-            glNode:vertexAttribPointer(CCConstants.VERTEX_ATTRIB_COLOR, 4, GLConstant.FLOAT, false, 0, 0)
+            gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexColorBuffer.buffer_id)
+            gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_COLOR, 4, gl.FLOAT, false, 0, 0)
 
-            glNode:drawArrays(GLConstant.TRIANGLE_STRIP, 0, 4)
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
 
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, triangleVertexPositionBuffer.buffer_id)
-            glNode:vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, GLConstant.FLOAT, false, 0, 0)
+            gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer.buffer_id)
+            gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
 
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, triangleVertexColorBuffer.buffer_id)
-            glNode:vertexAttribPointer(CCConstants.VERTEX_ATTRIB_COLOR, 4, GLConstant.FLOAT, false, 0, 0)
+            gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexColorBuffer.buffer_id)
+            gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_COLOR, 4, gl.FLOAT, false, 0, 0)
 
-            glNode:drawArrays(GLConstant.TRIANGLE_STRIP, 0, 3)
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 3)
 
-            glNode:_bindBuffer(GLConstant.ARRAY_BUFFER, 0)
+            gl.bindBuffer(gl.ARRAY_BUFFER, 0)
 
         end
 
@@ -1057,19 +1058,19 @@ local function OpenGLTestMainLayer()
     local function createGLTexParamterTest()
         local glTexParamLayer = CCLayer:create()
         InitTitle(glTexParamLayer)
-        local glNode  = GLNode:create()
+        local glNode  = gl.glNodeCreate()
         glTexParamLayer:addChild(glNode,10)
         local function getTexValues()
-            glNode:_bindTexture(GLConstant.TEXTURE_2D, 0)
-            glNode:texParameteri(GLConstant.TEXTURE_2D, GLConstant.TEXTURE_MAG_FILTER, GLConstant.NEAREST)
-            glNode:texParameteri(GLConstant.TEXTURE_2D, GLConstant.TEXTURE_MIN_FILTER, GLConstant.NEAREST)
-            glNode:texParameteri( GLConstant.TEXTURE_2D, GLConstant.TEXTURE_WRAP_S, GLConstant.CLAMP_TO_EDGE )
-            glNode:texParameteri( GLConstant.TEXTURE_2D, GLConstant.TEXTURE_WRAP_S, GLConstant.CLAMP_TO_EDGE )
+            gl.bindTexture(gl.TEXTURE_2D, 0)
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST)
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST)
+            gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE )
+            gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE )
 
-            local mag = glNode:getTexParameter(GLConstant.TEXTURE_2D, GLConstant.TEXTURE_MAG_FILTER)
-            local min = glNode:getTexParameter(GLConstant.TEXTURE_2D, GLConstant.TEXTURE_MIN_FILTER)
-            local w_s = glNode:getTexParameter(GLConstant.TEXTURE_2D, GLConstant.TEXTURE_WRAP_S)
-            local w_t = glNode:getTexParameter(GLConstant.TEXTURE_2D, GLConstant.TEXTURE_WRAP_S)
+            local mag = gl.getTexParameter(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER)
+            local min = gl.getTexParameter(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER)
+            local w_s = gl.getTexParameter(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S)
+            local w_t = gl.getTexParameter(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S)
             local strFmt = string.format("%d %d %d %d",mag,min,w_s,w_t)
             print(strFmt)
         end
@@ -1080,7 +1081,7 @@ local function OpenGLTestMainLayer()
     local function createGetUniformTest()
         local getUniformLayer = CCLayer:create()
         InitTitle(getUniformLayer)
-        local glNode  = GLNode:create()
+        local glNode  = gl.glNodeCreate()
         getUniformLayer:addChild(glNode,10)
         local pMatrix = {1,2,3,4, 4,3,2,1, 1,2,4,8, 1.1,1.2,1.3,1.4}
 
@@ -1090,11 +1091,11 @@ local function OpenGLTestMainLayer()
 
             shader:use()
 
-            local loc = glNode:_getUniformLocation( program, "CC_MVPMatrix")
+            local loc = gl.getUniformLocation( program, "CC_MVPMatrix")
 
-            glNode:uniformMatrix4fv(loc, false, table.getn(pMatrix), pMatrix)
+            gl.uniformMatrix4fv(loc, false, table.getn(pMatrix), pMatrix)
 
-            local uniformTable = glNode:_getUniform( program, loc )
+            local uniformTable = gl.getUniform( program, loc )
             local count = table.getn(uniformTable)
             local strFmt = ""
             for i=1,count do
