@@ -82,7 +82,6 @@
 		15AA9F3C15B7EF960033D6C2 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9F3A15B7EF960033D6C2 /* AppDelegate.cpp */; };
 		15C647EC165F2B39007D4F18 /* ClippingNodeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C647EA165F2B39007D4F18 /* ClippingNodeTest.cpp */; };
 		15C647F5165F2BC0007D4F18 /* ChipmunkTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C647F3165F2BC0007D4F18 /* ChipmunkTest.cpp */; };
-		15C64823165F391E007D4F18 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
 		15C64825165F3934007D4F18 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64824165F3934007D4F18 /* OpenGL.framework */; };
 		15C64827165F394E007D4F18 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64826165F394E007D4F18 /* QuartzCore.framework */; };
 		15C64829165F396B007D4F18 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64828165F396B007D4F18 /* OpenAL.framework */; };
@@ -145,6 +144,8 @@
 		465E216B176AEE4C001D853C /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 465E216A176AEE4C001D853C /* armature */; };
 		467373111739F4270034BF94 /* TextureAtlasEncryptionTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4673730F1739F4270034BF94 /* TextureAtlasEncryptionTest.cpp */; };
 		8C583FA6169DB64700F63A10 /* EditBoxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8C583FA4169DB64700F63A10 /* EditBoxTest.cpp */; };
+		A05FCACA177C124500BE600E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
+		A076D313177E74B500C02D72 /* KeyboardTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A076D311177E74B500C02D72 /* KeyboardTest.cpp */; };
 		A076DDF917615C0100ACDC32 /* BaseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A076DDF717615C0100ACDC32 /* BaseTest.cpp */; };
 		A0C2187917791C2D00BE78B5 /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C2187817791C2D00BE78B5 /* libcocos2dx.a */; };
 		A0C21894177920B500BE78B5 /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C21893177920B500BE78B5 /* libCocosDenshion.a */; };
@@ -456,9 +457,11 @@
 		467373101739F4270034BF94 /* TextureAtlasEncryptionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureAtlasEncryptionTest.h; sourceTree = "<group>"; };
 		8C583FA4169DB64700F63A10 /* EditBoxTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EditBoxTest.cpp; path = ../../Classes/ExtensionsTest/EditBoxTest/EditBoxTest.cpp; sourceTree = "<group>"; };
 		8C583FA5169DB64700F63A10 /* EditBoxTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditBoxTest.h; path = ../../Classes/ExtensionsTest/EditBoxTest/EditBoxTest.h; sourceTree = "<group>"; };
+		A076D311177E74B500C02D72 /* KeyboardTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KeyboardTest.cpp; sourceTree = "<group>"; };
+		A076D312177E74B500C02D72 /* KeyboardTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardTest.h; sourceTree = "<group>"; };
 		A076DDF717615C0100ACDC32 /* BaseTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BaseTest.cpp; path = ../Classes/BaseTest.cpp; sourceTree = "<group>"; };
 		A076DDF817615C0100ACDC32 /* BaseTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseTest.h; path = ../Classes/BaseTest.h; sourceTree = "<group>"; };
-		A0C2187817791C2D00BE78B5 /* libcocos2dx.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libcocos2dx.a; path = ../../../../cocos2dx/proj.mac/build/Release/libcocos2dx.a; sourceTree = "<group>"; };
+		A0C2187817791C2D00BE78B5 /* libcocos2dx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcocos2dx.a; path = ../../../../cocos2dx/proj.mac/build/Release/libcocos2dx.a; sourceTree = "<group>"; };
 		A0C21893177920B500BE78B5 /* libCocosDenshion.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCocosDenshion.a; path = "../../../../../../Library/Developer/Xcode/DerivedData/cocos2d-mac-blqttkqyviynothdlzeunztbshad/Build/Products/Debug/libCocosDenshion.a"; sourceTree = "<group>"; };
 		A0C218951779221400BE78B5 /* libBox2D.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBox2D.a; path = "../../../../../../Library/Developer/Xcode/DerivedData/cocos2d-mac-blqttkqyviynothdlzeunztbshad/Build/Products/Debug/libBox2D.a"; sourceTree = "<group>"; };
 		A0C218961779221400BE78B5 /* libchipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libchipmunk.a; path = "../../../../../../Library/Developer/Xcode/DerivedData/cocos2d-mac-blqttkqyviynothdlzeunztbshad/Build/Products/Debug/libchipmunk.a"; sourceTree = "<group>"; };
@@ -486,7 +489,7 @@
 				15C64829165F396B007D4F18 /* OpenAL.framework in Frameworks */,
 				15C64827165F394E007D4F18 /* QuartzCore.framework in Frameworks */,
 				15C64825165F3934007D4F18 /* OpenGL.framework in Frameworks */,
-				15C64823165F391E007D4F18 /* Cocoa.framework in Frameworks */,
+				A05FCACA177C124500BE600E /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,6 +539,7 @@
 				1AB2D72516B6804D00D72C48 /* FileUtilsTest */,
 				15AA9CF115B7EC460033D6C2 /* FontTest */,
 				15AA9CF415B7EC460033D6C2 /* IntervalTest */,
+				A076D310177E74B500C02D72 /* KeyboardTest */,
 				15AA9CF715B7EC460033D6C2 /* KeypadTest */,
 				15AA9CFA15B7EC460033D6C2 /* LabelTest */,
 				15AA9CFD15B7EC460033D6C2 /* LayerTest */,
@@ -1465,6 +1469,16 @@
 			name = EditboxTest;
 			sourceTree = "<group>";
 		};
+		A076D310177E74B500C02D72 /* KeyboardTest */ = {
+			isa = PBXGroup;
+			children = (
+				A076D311177E74B500C02D72 /* KeyboardTest.cpp */,
+				A076D312177E74B500C02D72 /* KeyboardTest.h */,
+			);
+			name = KeyboardTest;
+			path = ../Classes/KeyboardTest;
+			sourceTree = "<group>";
+		};
 		D4EFE03415D27336002D3DA0 /* NetworkTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -1668,6 +1682,7 @@
 				465E2159176AE89F001D853C /* PlayerController.cpp in Sources */,
 				465E215A176AE89F001D853C /* ProjectileController.cpp in Sources */,
 				465E215B176AE89F001D853C /* SceneController.cpp in Sources */,
+				A076D313177E74B500C02D72 /* KeyboardTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1697,12 +1712,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Test_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1711,7 +1722,6 @@
 					CC_ENABLE_CHIPMUNK_INTEGRATION,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../../../CocosDenshion/include",
 					"\"$(SRCROOT)/../../../../external/chipmunk/include/constraints\"",
@@ -1724,18 +1734,9 @@
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/mac\"",
 				);
 				INFOPLIST_FILE = Test_Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/mac/libraries\"",
-					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/cocos2d-mac-blqttkqyviynothdlzeunztbshad/Build/Products/Debug\"",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				OTHER_CFLAGS = "-O2";
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/mac/libraries\"";
 				PRODUCT_NAME = TestCpp;
-				SDKROOT = macosx;
-				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
-				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
 		};
@@ -1743,11 +1744,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Test_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1756,7 +1753,6 @@
 					CC_ENABLE_CHIPMUNK_INTEGRATION,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../../../CocosDenshion/include",
 					"\"$(SRCROOT)/../../../../external/chipmunk/include/constraints\"",
@@ -1769,18 +1765,10 @@
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/mac\"",
 				);
 				INFOPLIST_FILE = Test_Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/mac/libraries\"",
-					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/cocos2d-mac-blqttkqyviynothdlzeunztbshad/Build/Products/Debug\"",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/mac/libraries\"";
 				PRODUCT_NAME = TestCpp;
-				SDKROOT = macosx;
-				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = x86_64;
 			};
 			name = Release;
 		};
@@ -1790,12 +1778,15 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					CC_TARGET_OS_MAC,
 					"DEBUG=1",
 					"COCOS2D_DEBUG=1",
+					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -1810,14 +1801,15 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					CC_TARGET_OS_MAC,
 					NDEBUG,
+					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = macosx;
 			};
 			name = Release;

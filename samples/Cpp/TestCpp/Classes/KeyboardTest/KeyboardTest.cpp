@@ -1,6 +1,6 @@
 #include "KeyboardTest.h"
 
-#ifdef KEYBOARD_SUPPORT
+#ifdef CC_KEYBOARD_SUPPORT
 
 KeyboardTest::KeyboardTest()
 {
