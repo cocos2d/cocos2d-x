@@ -31,6 +31,9 @@ THE SOFTWARE.
 #include <typeinfo>
 #include <ctype.h>
 #include <string.h>
+#if defined(_WIN32)
+#include "dsound.h"
+#endif
 
 namespace CocosDenshion {
 
@@ -61,9 +64,29 @@ static inline unsigned int getHashCodeByString(const char *key)
 
 class EXPORT_DLL SimpleAudioEngine : public TypeInfo
 {
+#if defined(_WIN32)
+private:
+	IDirectSound8 *g_pDS; // Глобальный объект IDirectSound8
+	IDirectSoundBuffer* g_pDSPrimary; // Глобальный доступ
+	HWND m_hWnd;
+	LONG effectsVolume;
+	LONG musicVolume;
+
+	friend LRESULT WINAPI _SoundPlayProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
+
+	void _SendGenericCommand(int nCommand);
+#endif
+
 public:
     SimpleAudioEngine();
     ~SimpleAudioEngine();
+
+#if defined(_WIN32)
+	IDirectSound8* getDS()
+	{
+		return g_pDS;
+	}
+#endif
 
     virtual long getClassTypeInfo() {
         return getHashCodeByString(typeid(CocosDenshion::SimpleAudioEngine).name());

@@ -18,7 +18,7 @@
     <ClInclude Include="..\include\Export.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\win32\MciPlayer.h">
+    <ClInclude Include="..\win32\DirectSoundPlayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\SimpleAudioEngine.h">
@@ -26,7 +26,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\win32\MciPlayer.cpp">
+    <ClCompile Include="..\win32\DirectSoundPlayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\win32\SimpleAudioEngine.cpp">
