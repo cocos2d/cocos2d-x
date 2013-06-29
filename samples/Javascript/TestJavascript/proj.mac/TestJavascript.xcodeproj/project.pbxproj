@@ -639,6 +639,7 @@
 					CC_ENABLE_CHIPMUNK_INTEGRATION,
 					CC_TARGET_OS_MAC,
 					DEBUG,
+					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -678,6 +679,7 @@
 					CC_ENABLE_CHIPMUNK_INTEGRATION,
 					CC_TARGET_OS_MAC,
 					NDEBUG,
+					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -698,7 +700,6 @@
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/mac/libraries\"",
 					"\"$(SRCROOT)/../../../../external/libwebsockets/mac/lib\"",
 				);
-				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = macosx;
 			};
 			name = Release;
