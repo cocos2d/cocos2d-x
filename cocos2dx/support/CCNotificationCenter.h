@@ -92,7 +92,7 @@ public:
      *  @note Only supports Lua Binding now.
      *  @return The script handle.
      */
-    inline int getScriptHandler() { return m_scriptHandler; };
+    inline int getScriptHandler() { return _scriptHandler; };
     
     /** @brief Gets observer script handler.
      *  @param name The name of this notification.
@@ -107,8 +107,8 @@ private:
     
     // variables
     //
-    CCArray *m_observers;
-    int     m_scriptHandler;
+    CCArray *_observers;
+    int     _scriptHandler;
 };
 
 class CC_DLL CCNotificationObserver : public CCObject
@@ -131,11 +131,11 @@ public:
     /** Invokes the callback function of this observer */
     void performSelector(CCObject *obj);
 private:
-    CC_PROPERTY_READONLY(CCObject *, m_target, Target);
-    CC_PROPERTY_READONLY(SEL_CallFuncO, m_selector, Selector);
-    CC_PROPERTY_READONLY(char *, m_name, Name);
-    CC_PROPERTY_READONLY(CCObject *, m_object, Object);
-    CC_PROPERTY(int, m_nHandler,Handler);
+    CC_PROPERTY_READONLY(CCObject *, _target, Target);
+    CC_PROPERTY_READONLY(SEL_CallFuncO, _selector, Selector);
+    CC_PROPERTY_READONLY(char *, _name, Name);
+    CC_PROPERTY_READONLY(CCObject *, _object, Object);
+    CC_PROPERTY(int, _handler,Handler);
 };
 
 NS_CC_END

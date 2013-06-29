@@ -11,7 +11,7 @@ CCFLAGS += -MMD -Werror -Wno-deprecated-declarations -fPIC
 CXXFLAGS += -MMD -Werror -Wno-deprecated-declarations -fPIC -std=gnu++0x
 ARFLAGS = cr
 
-DEFINES += -DLINUX
+DEFINES += -DLINUX -DKEYBOARD_SUPPORT
 
 ifdef USE_BOX2D
 DEFINES += -DCC_ENABLE_BOX2D_INTEGRATION=1

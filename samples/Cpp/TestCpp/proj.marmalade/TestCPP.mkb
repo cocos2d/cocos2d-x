@@ -45,6 +45,8 @@ files
 	tests.h
 	VisibleRect.cpp
 	VisibleRect.h
+	BaseTest.cpp
+	BaseTest.h
 
 	[Test/AccelerometerTest]
 	(../Classes/AccelerometerTest)
@@ -317,6 +319,26 @@ files
 	TableViewTestScene.cpp
 	TableViewTestScene.h
 
+	[Test/ExtensionsTest/ComponentsTest]
+	(../Classes/ExtensionsTest/ComponentsTest)
+	ComponentsTestScene.cpp
+	ComponentsTestScene.h
+	EnemyController.cpp
+	EnemyController.h
+	GameOverScene.cpp
+        GameOverScene.h
+        PlayerController.cpp
+        PlayerController.h
+        ProjectileController.cpp
+ 	ProjectileController.h
+	SceneController.cpp
+	SceneController.h
+
+	[Test/ExtensionsTest/ArmatureTest]
+	(../Classes/ExtensionsTest/ArmatureTest)
+	ArmatureScene.cpp
+	ArmatureScene.h
+
 	[Test/FontTest]
 	(../Classes/FontTest)
 	FontTest.cpp
@@ -432,10 +454,10 @@ files
 	TextureCacheTest.cpp
 	TextureCacheTest.h
 
-    [Test/TexturePackerEncryptionTest]
-	[../Classes/TexturePackerEncryptionTest]
-	TexturePackerEncryptionTest.cpp
-	TexturePackerEncryptionTest.h
+	[Test/TexturePackerEncryptionTest]
+	(../Classes/TexturePackerEncryptionTest)
+	TextureAtlasEncryptionTest.cpp
+	TextureAtlasEncryptionTest.h
 
 	[Test/TileMapTest]
 	(../Classes/TileMapTest)

@@ -161,13 +161,13 @@ public:
     /**
      * data source
      */
-    CCTableViewDataSource* getDataSource() { return m_pDataSource; }
-    void setDataSource(CCTableViewDataSource* source) { m_pDataSource = source; }
+    CCTableViewDataSource* getDataSource() { return _dataSource; }
+    void setDataSource(CCTableViewDataSource* source) { _dataSource = source; }
     /**
      * delegate
      */
-    CCTableViewDelegate* getDelegate() { return m_pTableViewDelegate; }
-    void setDelegate(CCTableViewDelegate* pDelegate) { m_pTableViewDelegate = pDelegate; }
+    CCTableViewDelegate* getDelegate() { return _tableViewDelegate; }
+    void setDelegate(CCTableViewDelegate* pDelegate) { _tableViewDelegate = pDelegate; }
 
     /**
      * determines how cell is ordered and filled in the view.
@@ -225,40 +225,40 @@ public:
 
 protected:
 
-    CCTableViewCell *m_pTouchedCell;
+    CCTableViewCell *_touchedCell;
     /**
      * vertical direction of cell filling
      */
-    CCTableViewVerticalFillOrder m_eVordering;
+    CCTableViewVerticalFillOrder _vordering;
 
     /**
      * index set to query the indexes of the cells used.
      */
-    std::set<unsigned int>* m_pIndices;
+    std::set<unsigned int>* _indices;
 
     /**
      * vector with all cell positions
      */
-    std::vector<float> m_vCellsPositions;
+    std::vector<float> _vCellsPositions;
     //NSMutableIndexSet *indices_;
     /**
      * cells that are currently in the table
      */
-    CCArrayForObjectSorting* m_pCellsUsed;
+    CCArrayForObjectSorting* _cellsUsed;
     /**
      * free list of cells
      */
-    CCArrayForObjectSorting* m_pCellsFreed;
+    CCArrayForObjectSorting* _cellsFreed;
     /**
      * weak link to the data source object
      */
-    CCTableViewDataSource* m_pDataSource;
+    CCTableViewDataSource* _dataSource;
     /**
      * weak link to the delegate object
      */
-    CCTableViewDelegate* m_pTableViewDelegate;
+    CCTableViewDelegate* _tableViewDelegate;
 
-	CCScrollViewDirection m_eOldDirection;
+	CCScrollViewDirection _oldDirection;
 
     int __indexFromOffset(CCPoint offset);
     unsigned int _indexFromOffset(CCPoint offset);

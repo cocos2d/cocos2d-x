@@ -175,9 +175,9 @@ emitter.startSpin = 0;
 class CC_DLL CCParticleSystem : public CCNode, public CCTextureProtocol
 {    
 protected:
-    std::string m_sPlistFile;
+    std::string _plistFile;
     //! time elapsed since the start of the system (in seconds)
-    float m_fElapsed;
+    float _elapsed;
 
     // Different modes
     //! Mode A:Gravity + Tangential Accel + Radial Accel
@@ -217,50 +217,50 @@ protected:
     } modeB;
 
     //! Array of particles
-    tCCParticle *m_pParticles;
+    tCCParticle *_particles;
 
     // color modulate
     //    BOOL colorModulate;
 
     //! How many particles can be emitted per second
-    float m_fEmitCounter;
+    float _emitCounter;
 
     //!  particle idx
-    unsigned int m_uParticleIdx;
+    unsigned int _particleIdx;
 
     // Optimization
     //CC_UPDATE_PARTICLE_IMP    updateParticleImp;
     //SEL                        updateParticleSel;
 
     /** weak reference to the CCSpriteBatchNode that renders the CCSprite */
-    CC_PROPERTY(CCParticleBatchNode*, m_pBatchNode, BatchNode);
+    CC_PROPERTY(CCParticleBatchNode*, _batchNode, BatchNode);
 
     // index of system in batch node array
-    CC_SYNTHESIZE(unsigned int, m_uAtlasIndex, AtlasIndex);
+    CC_SYNTHESIZE(unsigned int, _atlasIndex, AtlasIndex);
 
     //true if scaled or rotated
-    bool m_bTransformSystemDirty;
+    bool _transformSystemDirty;
     // Number of allocated particles
-    unsigned int m_uAllocatedParticles;
+    unsigned int _allocatedParticles;
 
     /** Is the emitter active */
-    bool m_bIsActive;
+    bool _isActive;
     /** Quantity of particles that are being simulated at the moment */
-    CC_PROPERTY_READONLY(unsigned int, m_uParticleCount, ParticleCount)
+    CC_PROPERTY_READONLY(unsigned int, _particleCount, ParticleCount)
     /** How many seconds the emitter will run. -1 means 'forever' */
-    CC_PROPERTY(float, m_fDuration, Duration)
+    CC_PROPERTY(float, _duration, Duration)
     /** sourcePosition of the emitter */
-    CC_PROPERTY_PASS_BY_REF(CCPoint, m_tSourcePosition, SourcePosition)
+    CC_PROPERTY_PASS_BY_REF(CCPoint, _sourcePosition, SourcePosition)
     /** Position variance of the emitter */
-    CC_PROPERTY_PASS_BY_REF(CCPoint, m_tPosVar, PosVar)
+    CC_PROPERTY_PASS_BY_REF(CCPoint, _posVar, PosVar)
     /** life, and life variation of each particle */
-    CC_PROPERTY(float, m_fLife, Life)
+    CC_PROPERTY(float, _life, Life)
     /** life variance of each particle */
-    CC_PROPERTY(float, m_fLifeVar, LifeVar)
+    CC_PROPERTY(float, _lifeVar, LifeVar)
     /** angle and angle variation of each particle */
-    CC_PROPERTY(float, m_fAngle, Angle)
+    CC_PROPERTY(float, _angle, Angle)
     /** angle variance of each particle */
-    CC_PROPERTY(float, m_fAngleVar, AngleVar)
+    CC_PROPERTY(float, _angleVar, AngleVar)
 
 //////////////////////////////////////////////////////////////////////////
 public:
@@ -306,39 +306,39 @@ public:
 //////////////////////////////////////////////////////////////////////////
     
     /** start size in pixels of each particle */
-    CC_PROPERTY(float, m_fStartSize, StartSize)
+    CC_PROPERTY(float, _startSize, StartSize)
     /** size variance in pixels of each particle */
-    CC_PROPERTY(float, m_fStartSizeVar, StartSizeVar)
+    CC_PROPERTY(float, _startSizeVar, StartSizeVar)
     /** end size in pixels of each particle */
-    CC_PROPERTY(float, m_fEndSize, EndSize)
+    CC_PROPERTY(float, _endSize, EndSize)
     /** end size variance in pixels of each particle */
-    CC_PROPERTY(float, m_fEndSizeVar, EndSizeVar)
+    CC_PROPERTY(float, _endSizeVar, EndSizeVar)
     /** start color of each particle */
-    CC_PROPERTY_PASS_BY_REF(ccColor4F, m_tStartColor, StartColor)
+    CC_PROPERTY_PASS_BY_REF(ccColor4F, _startColor, StartColor)
     /** start color variance of each particle */
-    CC_PROPERTY_PASS_BY_REF(ccColor4F, m_tStartColorVar, StartColorVar)
+    CC_PROPERTY_PASS_BY_REF(ccColor4F, _startColorVar, StartColorVar)
     /** end color and end color variation of each particle */
-    CC_PROPERTY_PASS_BY_REF(ccColor4F, m_tEndColor, EndColor)
+    CC_PROPERTY_PASS_BY_REF(ccColor4F, _endColor, EndColor)
     /** end color variance of each particle */
-    CC_PROPERTY_PASS_BY_REF(ccColor4F, m_tEndColorVar, EndColorVar)
+    CC_PROPERTY_PASS_BY_REF(ccColor4F, _endColorVar, EndColorVar)
     //* initial angle of each particle
-    CC_PROPERTY(float, m_fStartSpin, StartSpin)
+    CC_PROPERTY(float, _startSpin, StartSpin)
     //* initial angle of each particle
-    CC_PROPERTY(float, m_fStartSpinVar, StartSpinVar)
+    CC_PROPERTY(float, _startSpinVar, StartSpinVar)
     //* initial angle of each particle
-    CC_PROPERTY(float, m_fEndSpin, EndSpin)
+    CC_PROPERTY(float, _endSpin, EndSpin)
     //* initial angle of each particle
-    CC_PROPERTY(float, m_fEndSpinVar, EndSpinVar)
+    CC_PROPERTY(float, _endSpinVar, EndSpinVar)
     /** emission rate of the particles */
-    CC_PROPERTY(float, m_fEmissionRate, EmissionRate)
+    CC_PROPERTY(float, _emissionRate, EmissionRate)
     /** maximum particles of the system */
-    CC_PROPERTY(unsigned int, m_uTotalParticles, TotalParticles)
+    CC_PROPERTY(unsigned int, _totalParticles, TotalParticles)
     /** conforms to CocosNodeTexture protocol */
-    CC_PROPERTY(CCTexture2D*, m_pTexture, Texture)
+    CC_PROPERTY(CCTexture2D*, _texture, Texture)
     /** conforms to CocosNodeTexture protocol */
-    CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
+    CC_PROPERTY(ccBlendFunc, _blendFunc, BlendFunc)
     /** does the alpha value modify color */
-    CC_PROPERTY(bool, m_bOpacityModifyRGB, OpacityModifyRGB)
+    CC_PROPERTY(bool, _opacityModifyRGB, OpacityModifyRGB)
 
     /** whether or not the particles are using blend additive.
     If enabled, the following blending function will be used.
@@ -347,17 +347,17 @@ public:
     dest blend function = GL_ONE;
     @endcode
     */
-    bool m_bIsBlendAdditive;
+    bool _isBlendAdditive;
     /** particles movement type: Free or Grouped
     @since v0.8
     */
-    CC_PROPERTY(tCCPositionType, m_ePositionType, PositionType)
+    CC_PROPERTY(tCCPositionType, _positionType, PositionType)
     /** whether or not the node will be auto-removed when it has no particles left.
     By default it is false.
     @since v0.8
     */
 protected:
-    bool m_bIsAutoRemoveOnFinish;
+    bool _isAutoRemoveOnFinish;
 public:
     virtual bool isAutoRemoveOnFinish();
     virtual void setAutoRemoveOnFinish(bool var);
@@ -366,7 +366,7 @@ public:
     - kCCParticleModeGravity: uses gravity, speed, radial and tangential acceleration
     - kCCParticleModeRadius: uses radius movement + rotation
     */
-    CC_PROPERTY(int, m_nEmitterMode, EmitterMode)
+    CC_PROPERTY(int, _emitterMode, EmitterMode)
 
 public:
     CCParticleSystem();

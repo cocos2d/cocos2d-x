@@ -109,14 +109,14 @@ CCControlButton *CCControlButtonTest_HelloVariableSize::standardButtonWithTitle(
 }
 
 CCControlButtonTest_Event::CCControlButtonTest_Event()
-: m_pDisplayValueLabel(NULL)
+: _displayValueLabel(NULL)
 {
 
 }
 
 CCControlButtonTest_Event::~CCControlButtonTest_Event()
 {
-    CC_SAFE_RELEASE_NULL(m_pDisplayValueLabel);
+    CC_SAFE_RELEASE_NULL(_displayValueLabel);
 }
 
 bool CCControlButtonTest_Event::init()
@@ -127,9 +127,9 @@ bool CCControlButtonTest_Event::init()
 
         // Add a label in which the button events will be displayed
         setDisplayValueLabel(CCLabelTTF::create("No Event", "Marker Felt", 32));
-        m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
-        m_pDisplayValueLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
-        addChild(m_pDisplayValueLabel, 1);
+        _displayValueLabel->setAnchorPoint(ccp(0.5f, -1));
+        _displayValueLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
+        addChild(_displayValueLabel, 1);
         
         // Add the button
         CCScale9Sprite *backgroundButton = CCScale9Sprite::create("extensions/button.png");
@@ -169,42 +169,42 @@ bool CCControlButtonTest_Event::init()
 
 void CCControlButtonTest_Event::touchDownAction(CCObject *senderz, CCControlEvent controlEvent)
 {
-    m_pDisplayValueLabel->setString(CCString::createWithFormat("Touch Down")->getCString());
+    _displayValueLabel->setString(CCString::createWithFormat("Touch Down")->getCString());
 }
 
 void CCControlButtonTest_Event::touchDragInsideAction(CCObject *sender, CCControlEvent controlEvent)
 {
-    m_pDisplayValueLabel->setString(CCString::createWithFormat("Drag Inside")->getCString());
+    _displayValueLabel->setString(CCString::createWithFormat("Drag Inside")->getCString());
 }
 
 void CCControlButtonTest_Event::touchDragOutsideAction(CCObject *sender, CCControlEvent controlEvent)
 {
-    m_pDisplayValueLabel->setString(CCString::createWithFormat("Drag Outside")->getCString());
+    _displayValueLabel->setString(CCString::createWithFormat("Drag Outside")->getCString());
 }
 
 void CCControlButtonTest_Event::touchDragEnterAction(CCObject *sender, CCControlEvent controlEvent)
 {
-    m_pDisplayValueLabel->setString(CCString::createWithFormat("Drag Enter")->getCString());
+    _displayValueLabel->setString(CCString::createWithFormat("Drag Enter")->getCString());
 }
 
 void CCControlButtonTest_Event::touchDragExitAction(CCObject *sender, CCControlEvent controlEvent)
 {
-    m_pDisplayValueLabel->setString(CCString::createWithFormat("Drag Exit")->getCString());
+    _displayValueLabel->setString(CCString::createWithFormat("Drag Exit")->getCString());
 }
 
 void CCControlButtonTest_Event::touchUpInsideAction(CCObject *sender, CCControlEvent controlEvent)
 {
-    m_pDisplayValueLabel->setString(CCString::createWithFormat("Touch Up Inside.")->getCString());
+    _displayValueLabel->setString(CCString::createWithFormat("Touch Up Inside.")->getCString());
 }
 
 void CCControlButtonTest_Event::touchUpOutsideAction(CCObject *sender, CCControlEvent controlEvent)
 {
-    m_pDisplayValueLabel->setString(CCString::createWithFormat("Touch Up Outside.")->getCString());
+    _displayValueLabel->setString(CCString::createWithFormat("Touch Up Outside.")->getCString());
 }
 
 void CCControlButtonTest_Event::touchCancelAction(CCObject *sender, CCControlEvent controlEvent)
 {
-    m_pDisplayValueLabel->setString(CCString::createWithFormat("Touch Cancel")->getCString());
+    _displayValueLabel->setString(CCString::createWithFormat("Touch Cancel")->getCString());
 }
 
 

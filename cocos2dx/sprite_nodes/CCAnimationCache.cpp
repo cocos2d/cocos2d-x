@@ -55,24 +55,24 @@ void CCAnimationCache::purgeSharedAnimationCache(void)
 
 bool CCAnimationCache::init()
 {
-    m_pAnimations = new CCDictionary();
+    _animations = new CCDictionary();
     return true;
 }
 
 CCAnimationCache::CCAnimationCache()
-: m_pAnimations(NULL)
+: _animations(NULL)
 {
 }
 
 CCAnimationCache::~CCAnimationCache()
 {
     CCLOGINFO("cocos2d: deallocing %p", this);
-    CC_SAFE_RELEASE(m_pAnimations);
+    CC_SAFE_RELEASE(_animations);
 }
 
 void CCAnimationCache::addAnimation(CCAnimation *animation, const char * name)
 {
-    m_pAnimations->setObject(animation, name);
+    _animations->setObject(animation, name);
 }
 
 void CCAnimationCache::removeAnimationByName(const char* name)
@@ -82,12 +82,12 @@ void CCAnimationCache::removeAnimationByName(const char* name)
         return;
     }
 
-    m_pAnimations->removeObjectForKey(name);
+    _animations->removeObjectForKey(name);
 }
 
 CCAnimation* CCAnimationCache::animationByName(const char* name)
 {
-    return (CCAnimation*)m_pAnimations->objectForKey(name);
+    return (CCAnimation*)_animations->objectForKey(name);
 }
 
 void CCAnimationCache::parseVersion1(CCDictionary* animations)

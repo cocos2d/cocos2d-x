@@ -31,6 +31,9 @@
 #import "ccConfig.h"
 #include "support/data_support/utlist.h"
 
+#include "CCDirector.h"
+#include "keyboard_dispatcher/CCKeyboardDispatcher.h"
+
 //NS_CC_BEGIN;
 static CCEventDispatcher *sharedDispatcher = nil;
 
@@ -502,7 +505,9 @@ static int		eventQueueCount;
 {
 	if( dispatchEvents_ ) {
 		tListEntry *entry, *tmp;
-		
+
+      cocos2d::CCKeyboardDispatcher *kbDisp = cocos2d::CCDirector::sharedDirector()->getKeyboardDispatcher();
+      kbDisp->dispatchKeyboardEvent(event.keyCode, true);		
 		DL_FOREACH_SAFE( keyboardDelegates_, entry, tmp ) {
 			if ( entry->flags & kCCImplementsKeyDown ) {
 				void *swallows = [entry->delegate performSelector:@selector(ccKeyDown:) withObject:event];
@@ -518,6 +523,8 @@ static int		eventQueueCount;
 	if( dispatchEvents_ ) {
 		tListEntry *entry, *tmp;
 		
+      cocos2d::CCKeyboardDispatcher *kbDisp = cocos2d::CCDirector::sharedDirector()->getKeyboardDispatcher();
+      kbDisp->dispatchKeyboardEvent(event.keyCode, true);
 		DL_FOREACH_SAFE( keyboardDelegates_, entry, tmp ) {
 			if ( entry->flags & kCCImplementsKeyUp ) {
 				void *swallows = [entry->delegate performSelector:@selector(ccKeyUp:) withObject:event];

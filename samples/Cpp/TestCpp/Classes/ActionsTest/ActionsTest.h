@@ -2,6 +2,7 @@
 #define _ActionsTest_H_
 
 #include "../testBasic.h"
+#include "../BaseTest.h"
 ////----#include "cocos2d.h"
 
 USING_NS_CC;
@@ -63,12 +64,12 @@ public:
     virtual void runThisTest();
 };
 
-class ActionsDemo : public CCLayer
+class ActionsDemo : public BaseTest
 {
 protected:
-    CCSprite*    m_grossini;
-    CCSprite*    m_tamara;
-    CCSprite*    m_kathia;
+    CCSprite*    _grossini;
+    CCSprite*    _tamara;
+    CCSprite*    _kathia;
 public:
     virtual void onEnter();
     virtual void onExit();
@@ -395,7 +396,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 private:
-    CCSprite* m_pSpriteTmp;
+    CCSprite* _spriteTmp;
 };
 
 class Issue1305_2 : public ActionsDemo
@@ -444,7 +445,7 @@ public:
     virtual std::string subtitle();
     virtual std::string title();
 private:
-    int m_nTestInteger;
+    int _testInteger;
 };
 
 class ActionCatmullRom : public ActionsDemo
@@ -457,8 +458,8 @@ public:
     virtual std::string subtitle();
     virtual std::string title();
 private:
-    CCPointArray *m_pArray1;
-    CCPointArray *m_pArray2;
+    CCPointArray *_array1;
+    CCPointArray *_array2;
 };
 
 class ActionCardinalSpline : public ActionsDemo
@@ -471,7 +472,7 @@ public:
     virtual std::string subtitle();
     virtual std::string title();
 private:
-    CCPointArray *m_pArray;
+    CCPointArray *_array;
 };
 
 class PauseResumeActions : public ActionsDemo
@@ -486,7 +487,7 @@ public:
     void pause(float dt);
     void resume(float dt);
 private:
-    CCSet *m_pPausedTargets;
+    CCSet *_pausedTargets;
 };
 
 #endif

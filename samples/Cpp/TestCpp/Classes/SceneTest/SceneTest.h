@@ -23,7 +23,7 @@ public:
 
 class SceneTestLayer2 : public CCLayer
 {
-    float    m_timeCounter;
+    float    _timeCounter;
 public:
     SceneTestLayer2();
 

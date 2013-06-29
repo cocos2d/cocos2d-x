@@ -68,10 +68,10 @@ void SpriteLayer::onEnter()
     CCActionInterval *rot2 = rot1->reverse();
     
     spriteSister1->runAction(CCRepeat::create( CCSequence::create(jump2, jump1, NULL), 5 ));
-    spriteSister2->runAction(CCRepeat::create( CCSequence::create((CCFiniteTimeAction *)(jump1->copy()->autorelease()), (CCFiniteTimeAction *)(jump2->copy()->autorelease()), NULL), 5 ));
+    spriteSister2->runAction(CCRepeat::create( CCSequence::create(jump1->clone(), jump2->clone(), NULL), 5 ));
     
     spriteSister1->runAction(CCRepeat::create( CCSequence::create(rot1, rot2, NULL), 5 ));
-    spriteSister2->runAction(CCRepeat::create( CCSequence::create((CCFiniteTimeAction *)(rot2->copy()->autorelease()), (CCFiniteTimeAction *)(rot1->copy()->autorelease()), NULL), 5 ));
+    spriteSister2->runAction(CCRepeat::create( CCSequence::create(rot2->clone(), rot1->clone(), NULL), 5 ));
 }
 
 //------------------------------------------------------------------
@@ -119,9 +119,9 @@ void RotateWorldMainLayer::onEnter()
     CCAction* rot = CCRotateBy::create(8, 720);
     
     blue->runAction(rot);
-    red->runAction((CCAction *)(rot->copy()->autorelease()));
-    green->runAction((CCAction *)(rot->copy()->autorelease()) );
-    white->runAction((CCAction *)(rot->copy()->autorelease()) );
+    red->runAction(rot->clone());
+    green->runAction(rot->clone());
+    white->runAction(rot->clone());
 }
 
 void RotateWorldTestScene::runThisTest()

@@ -44,6 +44,12 @@ public:
     /** Initializes with a duration and a percent */
     bool initWithDuration(float duration, float fPercent);
 
+	/** returns a new clone of the action */
+	virtual CCProgressTo* clone() const;
+
+	/** returns a new reversed action */
+	virtual CCProgressTo* reverse(void) const;
+
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
@@ -52,8 +58,8 @@ public:
     /** Creates and initializes with a duration and a percent */
     static CCProgressTo* create(float duration, float fPercent);
 protected:
-    float m_fTo;
-    float m_fFrom;
+    float _to;
+    float _from;
 };
 
 /**
@@ -66,8 +72,13 @@ public:
     /** Initializes the action with a duration, a "from" percentage and a "to" percentage */
     bool initWithDuration(float duration, float fFromPercentage, float fToPercentage);
 
+	/** returns a new clone of the action */
+	virtual CCProgressFromTo* clone() const;
+
+	/** returns a new reversed action */
+	virtual CCProgressFromTo* reverse(void) const;
+
     virtual CCObject* copyWithZone(CCZone *pZone);
-    virtual CCActionInterval* reverse(void);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
 
@@ -76,8 +87,8 @@ public:
     /** Creates and initializes the action with a duration, a "from" percentage and a "to" percentage */
     static CCProgressFromTo* create(float duration, float fFromPercentage, float fToPercentage);
 protected:
-    float m_fTo;
-    float m_fFrom;
+    float _to;
+    float _from;
 };
 
 // end of actions group

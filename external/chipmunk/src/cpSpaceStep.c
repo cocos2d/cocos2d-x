@@ -29,7 +29,7 @@ cpSpaceGetPostStepCallback(cpSpace *space, void *key)
 	cpArray *arr = space->postStepCallbacks;
 	for(int i=0; i<arr->num; i++){
 		cpPostStepCallback *callback = (cpPostStepCallback *)arr->arr[i];
-		if(callback->key == key) return callback;
+		if(callback && callback->key == key) return callback;
 	}
 	
 	return NULL;
@@ -71,31 +71,36 @@ cpSpaceUnlock(cpSpace *space, cpBool runPostStep)
 	space->locked--;
 	cpAssertHard(space->locked >= 0, "Internal Error: Space lock underflow.");
 	
-	if(space->locked == 0 && runPostStep && !space->skipPostStep){
-		space->skipPostStep = cpTrue;
-		
+	if(space->locked == 0){
 		cpArray *waking = space->rousedBodies;
+		
 		for(int i=0, count=waking->num; i<count; i++){
 			cpSpaceActivateBody(space, (cpBody *)waking->arr[i]);
 			waking->arr[i] = NULL;
 		}
 		
-		cpArray *arr = space->postStepCallbacks;
-		for(int i=0; i<arr->num; i++){
-			cpPostStepCallback *callback = (cpPostStepCallback *)arr->arr[i];
-			cpPostStepFunc func = callback->func;
-			
-			// Mark the func as NULL in case calling it calls cpSpaceRunPostStepCallbacks() again.
-			callback->func = NULL;
-			if(func) func(space, callback->key, callback->data);
-			
-			arr->arr[i] = NULL;
-			cpfree(callback);
-		}
-		
 		waking->num = 0;
-		arr->num = 0;
-		space->skipPostStep = cpFalse;
+		
+		if(space->locked == 0 && runPostStep && !space->skipPostStep){
+			space->skipPostStep = cpTrue;
+			
+			cpArray *arr = space->postStepCallbacks;
+			for(int i=0; i<arr->num; i++){
+				cpPostStepCallback *callback = (cpPostStepCallback *)arr->arr[i];
+				cpPostStepFunc func = callback->func;
+				
+				// Mark the func as NULL in case calling it calls cpSpaceRunPostStepCallbacks() again.
+				// TODO need more tests around this case I think.
+				callback->func = NULL;
+				if(func) func(space, callback->key, callback->data);
+				
+				arr->arr[i] = NULL;
+				cpfree(callback);
+			}
+			
+			arr->num = 0;
+			space->skipPostStep = cpFalse;
+		}
 	}
 }
 

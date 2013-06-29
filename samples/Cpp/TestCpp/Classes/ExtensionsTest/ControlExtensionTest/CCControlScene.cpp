@@ -28,22 +28,21 @@
 #include "../ExtensionsTest.h"
 
 CCControlScene::CCControlScene()
-: m_pSceneTitleLabel(NULL)
+: _sceneTitleLabel(NULL)
 {
 
 }
 
 CCControlScene::~CCControlScene()
 {
-    CC_SAFE_RELEASE_NULL(m_pSceneTitleLabel);
+    CC_SAFE_RELEASE_NULL(_sceneTitleLabel);
 }
 
 bool CCControlScene::init()
 {
     if (CCLayer::init())
     {    
-        CCMenuItemFont* pBackItem = CCMenuItemFont::create("Back", this,
-            menu_selector(CCControlScene::toExtensionsMainLayer));
+        CCMenuItemFont* pBackItem = CCMenuItemFont::create("Back", CC_CALLBACK_1(CCControlScene::toExtensionsMainLayer, this));
         pBackItem->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
         CCMenu* pBackMenu = CCMenu::create(pBackItem, NULL);
         pBackMenu->setPosition( CCPointZero );
@@ -62,13 +61,13 @@ bool CCControlScene::init()
         
         // Add the title
         setSceneTitleLabel(CCLabelTTF::create("Title", "Arial", 12));
-        m_pSceneTitleLabel->setPosition(ccp (VisibleRect::center().x, VisibleRect::top().y - m_pSceneTitleLabel->getContentSize().height / 2 - 5));
-        addChild(m_pSceneTitleLabel, 1);
+        _sceneTitleLabel->setPosition(ccp (VisibleRect::center().x, VisibleRect::top().y - _sceneTitleLabel->getContentSize().height / 2 - 5));
+        addChild(_sceneTitleLabel, 1);
         
         // Add the menu
-        CCMenuItemImage *item1 = CCMenuItemImage::create("Images/b1.png", "Images/b2.png", this, menu_selector(CCControlScene::previousCallback));
-        CCMenuItemImage *item2 = CCMenuItemImage::create("Images/r1.png", "Images/r2.png", this, menu_selector(CCControlScene::restartCallback));
-        CCMenuItemImage *item3 = CCMenuItemImage::create("Images/f1.png", "Images/f2.png", this, menu_selector(CCControlScene::nextCallback));
+        CCMenuItemImage *item1 = CCMenuItemImage::create("Images/b1.png", "Images/b2.png", CC_CALLBACK_1(CCControlScene::previousCallback, this));
+        CCMenuItemImage *item2 = CCMenuItemImage::create("Images/r1.png", "Images/r2.png", CC_CALLBACK_1(CCControlScene::restartCallback, this));
+        CCMenuItemImage *item3 = CCMenuItemImage::create("Images/f1.png", "Images/f2.png", CC_CALLBACK_1(CCControlScene::nextCallback, this));
         
         CCMenu *menu = CCMenu::create(item1, item3, item2, NULL);
         menu->setPosition(CCPointZero);

@@ -47,6 +47,15 @@ CCPageTurn3D* CCPageTurn3D::create(float duration, const CCSize& gridSize)
     return pAction;
 }
 
+CCPageTurn3D *CCPageTurn3D::clone() const
+{
+	// no copy constructor	
+	auto a = new CCPageTurn3D();
+	a->initWithDuration(_duration, _gridSize);
+	a->autorelease();
+	return a;
+}
+
 /*
  * Update each tick
  * Time is the percentage of the way through the duration
@@ -63,9 +72,9 @@ void CCPageTurn3D::update(float time)
     float sinTheta = sinf(theta);
     float cosTheta = cosf(theta);
     
-    for (int i = 0; i <= m_sGridSize.width; ++i)
+    for (int i = 0; i <= _gridSize.width; ++i)
     {
-        for (int j = 0; j <= m_sGridSize.height; ++j)
+        for (int j = 0; j <= _gridSize.height; ++j)
         {
             // Get original vertex
             ccVertex3F p = originalVertex(ccp(i ,j));

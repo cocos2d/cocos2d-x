@@ -129,7 +129,7 @@ void* cocos_main(void* arg)
                                 "luaScript/ActionsTest/ActionsName.lua",
                                 "luaScript/controller.lua" };
 
-    downloadFiles(instance->m_runner, filenames, sizeof(filenames)/sizeof(char*));
+    downloadFiles(instance->_runner, filenames, sizeof(filenames)/sizeof(char*));
 #endif
 
     fprintf(stderr, "calling application->run\n");

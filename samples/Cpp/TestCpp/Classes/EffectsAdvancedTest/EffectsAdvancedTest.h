@@ -3,13 +3,14 @@
 
 #include "cocos2d.h"
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
-class EffectAdvanceTextLayer: public CCLayer
+class EffectAdvanceTextLayer: public BaseTest
 {
 protected:
-    CCTextureAtlas* m_atlas;
+    CCTextureAtlas* _atlas;
 
-    std::string    m_strTitle;
+    std::string    _title;
 
 public:
     virtual void onEnter();

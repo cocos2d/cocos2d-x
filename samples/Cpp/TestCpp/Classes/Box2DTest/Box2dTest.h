@@ -13,14 +13,14 @@ public:
     virtual bool isDirty(void);
     virtual CCAffineTransform nodeToParentTransform(void);
 private:
-    b2Body* m_pBody;    // strong ref
+    b2Body* _body;    // strong ref
 };
 
 class Box2DTestLayer : public CCLayer
 {
-    CCTexture2D* m_pSpriteTexture;    // weak ref
+    CCTexture2D* _spriteTexture;    // weak ref
     b2World* world;
-//    GLESDebugDraw* m_debugDraw;
+//    GLESDebugDraw* _debugDraw;
 
 public:
     Box2DTestLayer();
@@ -28,7 +28,6 @@ public:
 
     void initPhysics();
     void createResetButton();
-    void reset(CCObject* sender);
     virtual void draw();
 
     void addNewSpriteAtPosition(CCPoint p);

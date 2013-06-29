@@ -91,7 +91,7 @@ public:
     TargetPlatform getTargetPlatform();			// MH: Cocos2dx 2.0.3 added this new function to the protocol
 
 protected:
-	uint64       m_nAnimationInterval;
+	uint64       _animationInterval;
 
 	static CCApplication * sm_pSharedApplication;
 };

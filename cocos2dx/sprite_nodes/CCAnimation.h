@@ -52,7 +52,7 @@ class CCSpriteFrame;
  
  @since v2.0
  */
-class CC_DLL CCAnimationFrame : public CCObject
+class CC_DLL CCAnimationFrame : public CCObject, public CCClonable
 {
 public:
     CCAnimationFrame();
@@ -60,15 +60,18 @@ public:
     virtual CCObject* copyWithZone(CCZone* pZone);
     /** initializes the animation frame with a spriteframe, number of delay units and a notification user info */
     bool initWithSpriteFrame(CCSpriteFrame* spriteFrame, float delayUnits, CCDictionary* userInfo);
-    
+
+	/** returns a copy of the CCAnimationFrame */
+	virtual CCAnimationFrame *clone() const;
+
     /** CCSpriteFrameName to be used */
-    CC_SYNTHESIZE_RETAIN(CCSpriteFrame*, m_pSpriteFrame, SpriteFrame)
+    CC_SYNTHESIZE_RETAIN(CCSpriteFrame*, _spriteFrame, SpriteFrame)
 
     /**  how many units of time the frame takes */
-    CC_SYNTHESIZE(float, m_fDelayUnits, DelayUnits)
+    CC_SYNTHESIZE(float, _delayUnits, DelayUnits)
 
     /**  A CCAnimationFrameDisplayedNotification notification will be broadcast when the frame is displayed with this dictionary as UserInfo. If UserInfo is nil, then no notification will be broadcast. */
-    CC_SYNTHESIZE_RETAIN(CCDictionary*, m_pUserInfo, UserInfo)
+    CC_SYNTHESIZE_RETAIN(CCDictionary*, _userInfo, UserInfo)
 };
 
 
@@ -82,7 +85,7 @@ You can animate a CCAnimation object by using the CCAnimate action. Example:
 [sprite runAction:[CCAnimate actionWithAnimation:animation]];
 
 */
-class CC_DLL CCAnimation : public CCObject
+class CC_DLL CCAnimation : public CCObject, public CCClonable
 {
 public:
     CCAnimation();
@@ -136,25 +139,28 @@ public:
     */
     bool initWithAnimationFrames(CCArray* arrayOfAnimationFrames, float delayPerUnit, unsigned int loops);
 
+	/** returns a clone fo the animation */
+	virtual CCAnimation *clone() const;
+
     virtual CCObject* copyWithZone(CCZone* pZone);
 
     /** total Delay units of the CCAnimation. */
-    CC_SYNTHESIZE_READONLY(float, m_fTotalDelayUnits, TotalDelayUnits)
+    CC_SYNTHESIZE_READONLY(float, _totalDelayUnits, TotalDelayUnits)
 
     /** Delay in seconds of the "delay unit" */
-    CC_SYNTHESIZE(float, m_fDelayPerUnit, DelayPerUnit)
+    CC_SYNTHESIZE(float, _delayPerUnit, DelayPerUnit)
 
     /** duration in seconds of the whole animation. It is the result of totalDelayUnits * delayPerUnit */
-    CC_PROPERTY_READONLY(float, m_fDuration, Duration)
+    CC_PROPERTY_READONLY(float, _duration, Duration)
 
     /** array of CCAnimationFrames */
-    CC_SYNTHESIZE_RETAIN(CCArray*, m_pFrames, Frames)
+    CC_SYNTHESIZE_RETAIN(CCArray*, _frames, Frames)
 
     /** whether or not it shall restore the original frame when the animation finishes */
-    CC_SYNTHESIZE(bool, m_bRestoreOriginalFrame, RestoreOriginalFrame)
+    CC_SYNTHESIZE(bool, _restoreOriginalFrame, RestoreOriginalFrame)
 
     /** how many times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ... */
-    CC_SYNTHESIZE(unsigned int, m_uLoops, Loops)
+    CC_SYNTHESIZE(unsigned int, _loops, Loops)
 };
 
 // end of sprite_nodes group

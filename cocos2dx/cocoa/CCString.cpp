@@ -9,29 +9,29 @@ NS_CC_BEGIN
 #define kMaxStringLen (1024*100)
 
 CCString::CCString()
-    :m_sString("")
+    :_string("")
 {}
 
 CCString::CCString(const char * str)
-    :m_sString(str)
+    :_string(str)
 {}
 
 CCString::CCString(const std::string& str)
-    :m_sString(str)
+    :_string(str)
 {}
 
 CCString::CCString(const CCString& str)
-    :m_sString(str.getCString())
+    :_string(str.getCString())
 {}
 
 CCString::~CCString()
 { 
-    m_sString.clear();
+    _string.clear();
 }
 
 CCString& CCString::operator= (const CCString& other)
 {
-    m_sString = other.m_sString;
+    _string = other._string;
     return *this;
 }
 
@@ -42,7 +42,7 @@ bool CCString::initWithFormatAndValist(const char* format, va_list ap)
     if (pBuf != NULL)
     {
         vsnprintf(pBuf, kMaxStringLen, format, ap);
-        m_sString = pBuf;
+        _string = pBuf;
         free(pBuf);
         bRet = true;
     }
@@ -52,7 +52,7 @@ bool CCString::initWithFormatAndValist(const char* format, va_list ap)
 bool CCString::initWithFormat(const char* format, ...)
 {
     bool bRet = false;
-    m_sString.clear();
+    _string.clear();
 
     va_list ap;
     va_start(ap, format);
@@ -70,7 +70,7 @@ int CCString::intValue() const
     {
         return 0;
     }
-    return atoi(m_sString.c_str());
+    return atoi(_string.c_str());
 }
 
 unsigned int CCString::uintValue() const
@@ -79,7 +79,7 @@ unsigned int CCString::uintValue() const
     {
         return 0;
     }
-    return (unsigned int)atoi(m_sString.c_str());
+    return (unsigned int)atoi(_string.c_str());
 }
 
 float CCString::floatValue() const
@@ -88,7 +88,7 @@ float CCString::floatValue() const
     {
         return 0.0f;
     }
-    return (float)atof(m_sString.c_str());
+    return (float)atof(_string.c_str());
 }
 
 double CCString::doubleValue() const
@@ -97,7 +97,7 @@ double CCString::doubleValue() const
     {
         return 0.0;
     }
-    return atof(m_sString.c_str());
+    return atof(_string.c_str());
 }
 
 bool CCString::boolValue() const
@@ -107,7 +107,7 @@ bool CCString::boolValue() const
         return false;
     }
 
-    if (0 == strcmp(m_sString.c_str(), "0") || 0 == strcmp(m_sString.c_str(), "false"))
+    if (0 == strcmp(_string.c_str(), "0") || 0 == strcmp(_string.c_str(), "false"))
     {
         return false;
     }
@@ -116,12 +116,12 @@ bool CCString::boolValue() const
 
 const char* CCString::getCString() const
 {
-    return m_sString.c_str();
+    return _string.c_str();
 }
 
 unsigned int CCString::length() const
 {
-    return m_sString.length();
+    return _string.length();
 }
 
 int CCString::compare(const char * pStr) const
@@ -132,7 +132,7 @@ int CCString::compare(const char * pStr) const
 CCObject* CCString::copyWithZone(CCZone* pZone)
 {
     CCAssert(pZone == NULL, "CCString should not be inherited.");
-    CCString* pStr = new CCString(m_sString.c_str());
+    CCString* pStr = new CCString(_string.c_str());
     return pStr;
 }
 
@@ -142,7 +142,7 @@ bool CCString::isEqual(const CCObject* pObject)
     const CCString* pStr = dynamic_cast<const CCString*>(pObject);
     if (pStr != NULL)
     {
-        if (0 == m_sString.compare(pStr->m_sString))
+        if (0 == _string.compare(pStr->_string))
         {
             bRet = true;
         }

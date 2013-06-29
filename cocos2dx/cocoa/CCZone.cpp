@@ -28,7 +28,7 @@ NS_CC_BEGIN
 
 CCZone::CCZone(CCObject *pObject)
 {
-    m_pCopyObject = pObject;
+    _copyObject = pObject;
 }
 
 NS_CC_END
