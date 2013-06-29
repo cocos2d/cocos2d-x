@@ -38,67 +38,67 @@ NS_CC_BEGIN
  * @{
  */
 
-class CCProfilingTimer;
+class ProfilingTimer;
 
-/** CCProfiler
+/** Profiler
  cocos2d builtin profiler.
 
  To use it, enable set the CC_ENABLE_PROFILERS=1 in the ccConfig.h file
  */
 
-class CC_DLL CCProfiler : public CCObject
+class CC_DLL Profiler : public Object
 {
 public:
-    ~CCProfiler(void);
+    ~Profiler(void);
     /** display the timers */
     void displayTimers(void);
     bool init(void);
 
 public:
-    static CCProfiler* sharedProfiler(void);
+    static Profiler* sharedProfiler(void);
     /** Creates and adds a new timer */
-    CCProfilingTimer* createAndAddTimerWithName(const char* timerName);
+    ProfilingTimer* createAndAddTimerWithName(const char* timerName);
     /** releases a timer */
     void releaseTimer(const char* timerName);
     /** releases all timers */
     void releaseAllTimers();
 
-    CCDictionary* m_pActiveTimers;
+    Dictionary* _activeTimers;
 };
 
-class CCProfilingTimer : public CCObject
+class ProfilingTimer : public Object
 {
 public:
     bool initWithName(const char* timerName);
-    ~CCProfilingTimer(void);
+    ~ProfilingTimer(void);
     const char* description(void);
-    inline struct cc_timeval * getStartTime(void) { return &m_sStartTime; };
-    inline void setAverageTime(double value) { m_dAverageTime = value; }
-    inline double getAverageTime(void) { return m_dAverageTime; }
+    inline struct cc_timeval * getStartTime(void) { return &_startTime; };
+    inline void setAverageTime(double value) { _averageTime = value; }
+    inline double getAverageTime(void) { return _averageTime; }
     /** resets the timer properties */
     void reset();
 
-    std::string m_NameStr;
-    struct cc_timeval m_sStartTime;
-    double m_dAverageTime;
+    std::string _nameStr;
+    struct cc_timeval _startTime;
+    double _averageTime;
     double            minTime;
     double            maxTime;
     double            totalTime;
     unsigned int    numberOfCalls;
 };
 
-extern void CCProfilingBeginTimingBlock(const char *timerName);
-extern void CCProfilingEndTimingBlock(const char *timerName);
-extern void CCProfilingResetTimingBlock(const char *timerName);
+extern void ProfilingBeginTimingBlock(const char *timerName);
+extern void ProfilingEndTimingBlock(const char *timerName);
+extern void ProfilingResetTimingBlock(const char *timerName);
 
 /*
  * cocos2d profiling categories
  * used to enable / disable profilers with granularity
  */
 
-extern bool kCCProfilerCategorySprite;
-extern bool kCCProfilerCategoryBatchSprite;
-extern bool kCCProfilerCategoryParticles;
+extern bool kProfilerCategorySprite;
+extern bool kProfilerCategoryBatchSprite;
+extern bool kProfilerCategoryParticles;
 
 // end of global group
 /// @}

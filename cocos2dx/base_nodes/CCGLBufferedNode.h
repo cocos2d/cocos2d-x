@@ -26,23 +26,24 @@ THE SOFTWARE.
 
 #include <CCGL.h>
 
-class CCGLBufferedNode
+class GLBufferedNode
 {
 public:
-    CCGLBufferedNode(void);
+    GLBufferedNode();
+    virtual ~GLBufferedNode();
 
     /**
-     * Load the given data into this CCNode's GL Buffer. Needed for WebGL, as it does not support client-side arrays.
+     * Load the given data into this Node's GL Buffer. Needed for WebGL, as it does not support client-side arrays.
      */
     void setGLBufferData(void *buf, GLuint bufSize, int slot);
     void setGLIndexData(void *buf, GLuint bufSize, int slot);
 
     // We allocate 4 buffer objs per node, and index into them as slots.
 #define BUFFER_SLOTS 4
-    GLuint m_bufferObject[BUFFER_SLOTS];
-    GLuint m_bufferSize[BUFFER_SLOTS];
+    GLuint _bufferObject[BUFFER_SLOTS];
+    GLuint _bufferSize[BUFFER_SLOTS];
 
-    GLuint m_indexBufferObject[BUFFER_SLOTS];
-    GLuint m_indexBufferSize[BUFFER_SLOTS];
+    GLuint _indexBufferObject[BUFFER_SLOTS];
+    GLuint _indexBufferSize[BUFFER_SLOTS];
 };
 #endif // __CC_GL_BUFFERED_NODE__

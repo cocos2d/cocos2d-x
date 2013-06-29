@@ -23,8 +23,8 @@ int main(int argc, char **argv)
 		height = 600;
 	}
 
-    CCEGLView* eglView = CCEGLView::sharedOpenGLView();
+    EGLView* eglView = EGLView::sharedOpenGLView();
     eglView->setFrameSize(width, height);
 
-    return CCApplication::sharedApplication()->run();
+    return Application::sharedApplication()->run();
 }

@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __CCGL_H__						// MH: Added
 
 
-#define CC_GLVIEW                   cocos2d::CCEGLView
+#define CC_GLVIEW                   cocos2d::EGLView
 #define ccglOrtho					glOrthof
 #define	ccglClearDepth				glClearDepthf
 #define	glClearDepth				glClearDepthf	// MH: Added to fix compile error (glClearDepth not available under GLES 2.0)

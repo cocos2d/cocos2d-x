@@ -109,6 +109,7 @@
 						android:maxLength="70"
 						android:hint="@string/nd3_account_register_hint_account"
 						style="@style/nd3_option_edittext_style"
+						android:imeOptions="actionNext"
 						>
 					</AutoCompleteTextView>		
 						
@@ -188,6 +189,7 @@
 						android:maxLength="12"
 						android:hint="@string/nd3_account_register_hint_password"
 						style="@style/nd3_option_edittext_style"
+						android:imeOptions="actionDone"
 						>
 					</EditText>
 							

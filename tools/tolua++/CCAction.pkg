@@ -10,9 +10,9 @@ class CCAction : public CCObject
     // void setTarget(CCNode *pTarget);
     CCNode* getOriginalTarget(void);
     // void setOriginalTarget(CCNode *pOriginalTarget);
-	// static CCAction* create();
     int getTag(void);
     void setTag(int nTag);
+    CCAction* clone();
 };
 
 class CCFiniteTimeAction : public CCAction
@@ -29,8 +29,6 @@ class CCActionInterval : public CCFiniteTimeAction
     void setAmplitudeRate(float amp);
     float getAmplitudeRate(void);
     CCActionInterval* reverse(void);
-
-    CCActionInterval* create(float d);
 };
 
 // CCActionInterval

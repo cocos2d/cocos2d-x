@@ -27,61 +27,61 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-int	CCAccelerometer::m_initialOrientationAngle = 0;
+int	Accelerometer::_initialOrientationAngle = 0;
 
-CCAccelerometer::CCAccelerometer()
+Accelerometer::Accelerometer()
 {
-	m_pAccelDelegate = NULL;
-	m_initialOrientationAngle = atoi(getenv("ORIENTATION"));
+	_function = nullptr;
+	_initialOrientationAngle = atoi(getenv("ORIENTATION"));
 }
 
-CCAccelerometer::~CCAccelerometer()
+Accelerometer::~Accelerometer()
 {
 
 }
 
-void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
+void Accelerometer::setDelegate(std::function<void(Acceleration*)> function)
 {
-	m_pAccelDelegate = pDelegate;
+	_function = function;
 }
 
-void CCAccelerometer::update(long timeStamp, double x, double y, double z)
+void Accelerometer::update(long timeStamp, double x, double y, double z)
 {
-	if ( m_pAccelDelegate != NULL)
+	if ( _function != NULL)
 	{
 		if (getenv("WIDTH"))
 		{
-			m_accelerationValue.x = x;
-			m_accelerationValue.y = y;
+			_accelerationValue.x = x;
+			_accelerationValue.y = y;
 		}
 		else // for PlayBook we need to take into account the initial orientation
 		{
-			if (m_initialOrientationAngle == 270)
+			if (_initialOrientationAngle == 270)
 			{
-				m_accelerationValue.x = y;
-				m_accelerationValue.y = -x;
+				_accelerationValue.x = y;
+				_accelerationValue.y = -x;
 			}
-			else if (m_initialOrientationAngle == 90)
+			else if (_initialOrientationAngle == 90)
 			{
-				m_accelerationValue.x = -y;
-				m_accelerationValue.y = x;
+				_accelerationValue.x = -y;
+				_accelerationValue.y = x;
 			}
-			else if (m_initialOrientationAngle == 0)
+			else if (_initialOrientationAngle == 0)
 			{
-				m_accelerationValue.x = x;
-				m_accelerationValue.y = y;
+				_accelerationValue.x = x;
+				_accelerationValue.y = y;
 			}
-			else if (m_initialOrientationAngle == 180)
+			else if (_initialOrientationAngle == 180)
 			{
-				m_accelerationValue.x = -x;
-				m_accelerationValue.y = -y;
+				_accelerationValue.x = -x;
+				_accelerationValue.y = -y;
 			}
 		}
 
-		m_accelerationValue.z = z;
-		m_accelerationValue.timestamp = (double)timeStamp;
+		_accelerationValue.z = z;
+		_accelerationValue.timestamp = (double)timeStamp;
 
-		m_pAccelDelegate->didAccelerate(&m_accelerationValue);
+		_function(&_accelerationValue);
 	}
 }
 

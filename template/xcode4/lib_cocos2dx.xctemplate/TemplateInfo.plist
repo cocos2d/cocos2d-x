@@ -798,6 +798,30 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/cocos2dx/cocoa/CCData.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>cocoa</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/cocoa/CCData.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/cocoa/CCData.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>cocoa</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/cocoa/CCData.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/cocos2dx/cocos2d.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -3335,6 +3359,58 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/cocos2dx/support/component/CCComponent.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>support</string>
+				<string>component</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/support/component/CCComponent.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/support/component/CCComponent.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>support</string>
+				<string>component</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/support/component/CCComponent.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/support/component/CCComponentContainer.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>support</string>
+				<string>component</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/support/component/CCComponentContainer.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/support/component/CCComponentContainer.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>support</string>
+				<string>component</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/support/component/CCComponentContainer.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/cocos2dx/support/data_support/ccCArray.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -3464,18 +3540,6 @@
 			<string>libs/cocos2dx/support/TransformUtils.h</string>
 			<key>TargetIndices</key>
 			<array/>
-		</dict>
-		<key>libs/cocos2dx/support/user_default/Archive.zip</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2dx</string>
-				<string>support</string>
-				<string>user_default</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2dx/support/user_default/Archive.zip</string>
 		</dict>
 		<key>libs/cocos2dx/support/user_default/CCUserDefault.h</key>
 		<dict>
@@ -4060,6 +4124,8 @@
 		<string>libs/cocos2dx/cocoa/CCString.h</string>
 		<string>libs/cocos2dx/cocoa/CCZone.cpp</string>
 		<string>libs/cocos2dx/cocoa/CCZone.h</string>
+		<string>libs/cocos2dx/cocoa/CCData.cpp</string>
+		<string>libs/cocos2dx/cocoa/CCData.h</string>
 		<string>libs/cocos2dx/cocos2d.cpp</string>
 		<string>libs/cocos2dx/draw_nodes/CCDrawingPrimitives.cpp</string>
 		<string>libs/cocos2dx/draw_nodes/CCDrawingPrimitives.h</string>
@@ -4258,6 +4324,10 @@
 		<string>libs/cocos2dx/support/ccUtils.h</string>
 		<string>libs/cocos2dx/support/CCVertex.cpp</string>
 		<string>libs/cocos2dx/support/CCVertex.h</string>
+		<string>libs/cocos2dx/support/component/CCComponent.cpp</string>
+		<string>libs/cocos2dx/support/component/CCComponent.h</string>
+		<string>libs/cocos2dx/support/component/CCComponentContainer.cpp</string>
+		<string>libs/cocos2dx/support/component/CCComponentContainer.h</string>
 		<string>libs/cocos2dx/support/data_support/ccCArray.cpp</string>
 		<string>libs/cocos2dx/support/data_support/ccCArray.h</string>
 		<string>libs/cocos2dx/support/data_support/uthash.h</string>
@@ -4268,7 +4338,6 @@
 		<string>libs/cocos2dx/support/tinyxml2/tinyxml2.h</string>
 		<string>libs/cocos2dx/support/TransformUtils.cpp</string>
 		<string>libs/cocos2dx/support/TransformUtils.h</string>
-		<string>libs/cocos2dx/support/user_default/Archive.zip</string>
 		<string>libs/cocos2dx/support/user_default/CCUserDefault.h</string>
 		<string>libs/cocos2dx/support/user_default/CCUserDefault.mm</string>
 		<string>libs/cocos2dx/support/zip_support/ioapi.cpp</string>

@@ -27,9 +27,9 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-CCActionTween* CCActionTween::create(float aDuration, const char* key, float from, float to)
+ActionTween* ActionTween::create(float aDuration, const char* key, float from, float to)
 {
-    CCActionTween* pRet = new CCActionTween();
+    ActionTween* pRet = new ActionTween();
     if (pRet && pRet->initWithDuration(aDuration, key, from, to))
     {
         pRet->autorelease();
@@ -41,34 +41,43 @@ CCActionTween* CCActionTween::create(float aDuration, const char* key, float fro
     return pRet;
 }
 
-bool CCActionTween::initWithDuration(float aDuration, const char* key, float from, float to)
+bool ActionTween::initWithDuration(float aDuration, const char* key, float from, float to)
 {
-    if (CCActionInterval::initWithDuration(aDuration)) 
+    if (ActionInterval::initWithDuration(aDuration)) 
     {
-        m_strKey    = key;
-        m_fTo       = to;
-        m_fFrom     = from;
+        _key    = key;
+        _to       = to;
+        _from     = from;
         return true;
     }
 
     return false;
 }
 
-void CCActionTween::startWithTarget(CCNode *pTarget)
+ActionTween *ActionTween::clone() const
 {
-    CCAssert(dynamic_cast<CCActionTweenDelegate*>(pTarget), "target must implement CCActionTweenDelegate");
-    CCActionInterval::startWithTarget(pTarget);
-    m_fDelta = m_fTo - m_fFrom;
+	// no copy constructor	
+	auto a = new ActionTween();
+	a->initWithDuration(_duration, _key.c_str(), _from, _to);
+	a->autorelease();
+	return a;
 }
 
-void CCActionTween::update(float dt)
+void ActionTween::startWithTarget(Node *pTarget)
 {
-    dynamic_cast<CCActionTweenDelegate*>(m_pTarget)->updateTweenAction(m_fTo  - m_fDelta * (1 - dt), m_strKey.c_str());
+    CCAssert(dynamic_cast<ActionTweenDelegate*>(pTarget), "target must implement ActionTweenDelegate");
+    ActionInterval::startWithTarget(pTarget);
+    _delta = _to - _from;
 }
 
-CCActionInterval* CCActionTween::reverse()
+void ActionTween::update(float dt)
 {
-    return CCActionTween::create(m_fDuration, m_strKey.c_str(), m_fTo, m_fFrom);
+    dynamic_cast<ActionTweenDelegate*>(_target)->updateTweenAction(_to  - _delta * (1 - dt), _key.c_str());
+}
+
+ActionTween* ActionTween::reverse() const
+{
+    return ActionTween::create(_duration, _key.c_str(), _to, _from);
 }
 
 

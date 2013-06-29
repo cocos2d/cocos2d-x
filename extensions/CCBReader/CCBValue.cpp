@@ -85,7 +85,7 @@ CCBValue* CCBValue::create(const char *pStringValue)
     CCBValue *ret = new CCBValue();
     if (ret)
     {
-        ret->m_strValue = pStringValue;
+        ret->_value = pStringValue;
         ret->mType = kStringValue;
         ret->autorelease();
     }
@@ -94,12 +94,12 @@ CCBValue* CCBValue::create(const char *pStringValue)
 }
 
 
-CCBValue* CCBValue::create(CCArray *pArrValue)
+CCBValue* CCBValue::create(Array *pArrValue)
 {
     CCBValue *ret = new CCBValue();
     if (ret)
     {
-        ret->m_arrValue = pArrValue;
+        ret->_arrValue = pArrValue;
         ret->mType = kArrayValue;
         ret->autorelease();
     }
@@ -136,10 +136,10 @@ unsigned char CCBValue::getByteValue()
     return (unsigned char)(mValue.nValue);
 }
 
-CCArray* CCBValue::getArrayValue() {
+Array* CCBValue::getArrayValue() {
     assert(mType == kArrayValue);
     
-    return m_arrValue;
+    return _arrValue;
 }
 
 
@@ -147,7 +147,7 @@ const char* CCBValue::getStringValue()
 {
     assert(mType == kStringValue);
     
-    return m_strValue.c_str();
+    return _value.c_str();
 }
 
 int CCBValue::getType()

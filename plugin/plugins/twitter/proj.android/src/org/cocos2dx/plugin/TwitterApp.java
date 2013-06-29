@@ -48,7 +48,7 @@ public class TwitterApp {
 	}
 
 	protected static void LogD(String msg) {
-		if (SocialTwitter.bDebug) {
+		if (ShareTwitter.bDebug) {
 			Log.d(LOG_TAG, msg);
 		}
 	}

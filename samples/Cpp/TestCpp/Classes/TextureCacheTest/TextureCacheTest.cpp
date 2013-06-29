@@ -6,88 +6,88 @@
 USING_NS_CC;
 
 TextureCacheTest::TextureCacheTest()
-: m_nNumberOfSprites(20)
-, m_nNumberOfLoadedSprites(0)
+: _numberOfSprites(20)
+, _numberOfLoadedSprites(0)
 {
-    CCSize size = CCDirector::sharedDirector()->getWinSize();
+    Size size = Director::sharedDirector()->getWinSize();
 
-    m_pLabelLoading = CCLabelTTF::create("loading...", "Arial", 15);
-    m_pLabelPercent = CCLabelTTF::create("%0", "Arial", 15);
+    _labelLoading = LabelTTF::create("loading...", "Arial", 15);
+    _labelPercent = LabelTTF::create("%0", "Arial", 15);
 
-    m_pLabelLoading->setPosition(ccp(size.width / 2, size.height / 2 - 20));
-    m_pLabelPercent->setPosition(ccp(size.width / 2, size.height / 2 + 20));
+    _labelLoading->setPosition(ccp(size.width / 2, size.height / 2 - 20));
+    _labelPercent->setPosition(ccp(size.width / 2, size.height / 2 + 20));
 
-    this->addChild(m_pLabelLoading);
-    this->addChild(m_pLabelPercent);
+    this->addChild(_labelLoading);
+    this->addChild(_labelPercent);
 
     // load textrues
-    CCTextureCache::sharedTextureCache()->addImageAsync("Images/HelloWorld.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    CCTextureCache::sharedTextureCache()->addImageAsync("Images/grossini.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    CCTextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_01.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    CCTextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_02.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    CCTextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_03.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    CCTextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_04.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    CCTextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_05.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    CCTextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_06.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    CCTextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_07.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    CCTextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_08.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    CCTextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_09.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    CCTextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_10.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    CCTextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_11.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    CCTextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_12.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    CCTextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_13.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    CCTextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_14.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    CCTextureCache::sharedTextureCache()->addImageAsync("Images/background1.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    CCTextureCache::sharedTextureCache()->addImageAsync("Images/background2.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    CCTextureCache::sharedTextureCache()->addImageAsync("Images/background3.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    CCTextureCache::sharedTextureCache()->addImageAsync("Images/blocks.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
+    TextureCache::sharedTextureCache()->addImageAsync("Images/HelloWorld.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
+    TextureCache::sharedTextureCache()->addImageAsync("Images/grossini.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
+    TextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_01.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
+    TextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_02.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
+    TextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_03.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
+    TextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_04.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
+    TextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_05.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
+    TextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_06.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
+    TextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_07.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
+    TextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_08.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
+    TextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_09.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
+    TextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_10.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
+    TextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_11.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
+    TextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_12.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
+    TextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_13.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
+    TextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_14.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
+    TextureCache::sharedTextureCache()->addImageAsync("Images/background1.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
+    TextureCache::sharedTextureCache()->addImageAsync("Images/background2.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
+    TextureCache::sharedTextureCache()->addImageAsync("Images/background3.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
+    TextureCache::sharedTextureCache()->addImageAsync("Images/blocks.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
 }
 
-void TextureCacheTest::loadingCallBack(CCObject *obj)
+void TextureCacheTest::loadingCallBack(Object *obj)
 {
-    ++m_nNumberOfLoadedSprites;
+    ++_numberOfLoadedSprites;
     char tmp[10];
-    sprintf(tmp,"%%%d", (int)(((float)m_nNumberOfLoadedSprites / m_nNumberOfSprites) * 100));
-    m_pLabelPercent->setString(tmp);
+    sprintf(tmp,"%%%d", (int)(((float)_numberOfLoadedSprites / _numberOfSprites) * 100));
+    _labelPercent->setString(tmp);
 
-    if (m_nNumberOfLoadedSprites == m_nNumberOfSprites)
+    if (_numberOfLoadedSprites == _numberOfSprites)
     {
-        this->removeChild(m_pLabelLoading, true);
-        this->removeChild(m_pLabelPercent, true);
+        this->removeChild(_labelLoading, true);
+        this->removeChild(_labelPercent, true);
         addSprite();
     }
 }
 
 void TextureCacheTest::addSprite()
 {
-    CCSize size = CCDirector::sharedDirector()->getWinSize();
+    Size size = Director::sharedDirector()->getWinSize();
 
     // create sprites
 
-    CCSprite *bg = CCSprite::create("Images/HelloWorld.png");
+    Sprite *bg = Sprite::create("Images/HelloWorld.png");
     bg->setPosition(ccp(size.width / 2, size.height / 2));
 
-    CCSprite *s1 = CCSprite::create("Images/grossini.png");
-    CCSprite *s2 = CCSprite::create("Images/grossini_dance_01.png");
-    CCSprite *s3 = CCSprite::create("Images/grossini_dance_02.png");
-    CCSprite *s4 = CCSprite::create("Images/grossini_dance_03.png");
-    CCSprite *s5 = CCSprite::create("Images/grossini_dance_04.png");
-    CCSprite *s6 = CCSprite::create("Images/grossini_dance_05.png");
-    CCSprite *s7 = CCSprite::create("Images/grossini_dance_06.png");
-    CCSprite *s8 = CCSprite::create("Images/grossini_dance_07.png");
-    CCSprite *s9 = CCSprite::create("Images/grossini_dance_08.png");
-    CCSprite *s10 = CCSprite::create("Images/grossini_dance_09.png");
-    CCSprite *s11 = CCSprite::create("Images/grossini_dance_10.png");
-    CCSprite *s12 = CCSprite::create("Images/grossini_dance_11.png");
-    CCSprite *s13 = CCSprite::create("Images/grossini_dance_12.png");
-    CCSprite *s14 = CCSprite::create("Images/grossini_dance_13.png");
-    CCSprite *s15 = CCSprite::create("Images/grossini_dance_14.png");
+    Sprite *s1 = Sprite::create("Images/grossini.png");
+    Sprite *s2 = Sprite::create("Images/grossini_dance_01.png");
+    Sprite *s3 = Sprite::create("Images/grossini_dance_02.png");
+    Sprite *s4 = Sprite::create("Images/grossini_dance_03.png");
+    Sprite *s5 = Sprite::create("Images/grossini_dance_04.png");
+    Sprite *s6 = Sprite::create("Images/grossini_dance_05.png");
+    Sprite *s7 = Sprite::create("Images/grossini_dance_06.png");
+    Sprite *s8 = Sprite::create("Images/grossini_dance_07.png");
+    Sprite *s9 = Sprite::create("Images/grossini_dance_08.png");
+    Sprite *s10 = Sprite::create("Images/grossini_dance_09.png");
+    Sprite *s11 = Sprite::create("Images/grossini_dance_10.png");
+    Sprite *s12 = Sprite::create("Images/grossini_dance_11.png");
+    Sprite *s13 = Sprite::create("Images/grossini_dance_12.png");
+    Sprite *s14 = Sprite::create("Images/grossini_dance_13.png");
+    Sprite *s15 = Sprite::create("Images/grossini_dance_14.png");
 
     // just loading textures to slow down
-    CCSprite::create("Images/background1.png");
-    CCSprite::create("Images/background2.png");
-    CCSprite::create("Images/background3.png");
-    CCSprite::create("Images/blocks.png");
+    Sprite::create("Images/background1.png");
+    Sprite::create("Images/background2.png");
+    Sprite::create("Images/background3.png");
+    Sprite::create("Images/blocks.png");
 
     s1->setPosition(ccp(50, 50));
     s2->setPosition(ccp(60, 50));
@@ -129,9 +129,9 @@ void TextureCacheTest::addSprite()
 
 void TextureCacheTestScene::runThisTest()
 {
-    CCLayer* pLayer = new TextureCacheTest();
+    Layer* pLayer = new TextureCacheTest();
     addChild(pLayer);
 
-    CCDirector::sharedDirector()->replaceScene(this);
+    Director::sharedDirector()->replaceScene(this);
     pLayer->release();
 }

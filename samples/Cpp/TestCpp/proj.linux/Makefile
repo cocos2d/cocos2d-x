@@ -1,5 +1,7 @@
 EXECUTABLE = TestCpp
 
+DEFINES += -DCC_KEYBOARD_SUPPORT
+
 SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ActionManagerTest/ActionManagerTest.cpp \
 	../Classes/ActionsEaseTest/ActionsEaseTest.cpp \
@@ -59,6 +61,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ExtensionsTest/ArmatureTest/ArmatureScene.cpp \
 	../Classes/FontTest/FontTest.cpp \
 	../Classes/IntervalTest/IntervalTest.cpp \
+	../Classes/KeyboardTest/KeyboardTest.cpp \
 	../Classes/KeypadTest/KeypadTest.cpp \
 	../Classes/LabelTest/LabelTest.cpp \
 	../Classes/LayerTest/LayerTest.cpp \
@@ -98,6 +101,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/controller.cpp \
 	../Classes/testBasic.cpp \
 	../Classes/AppDelegate.cpp \
+	../Classes/BaseTest.cpp \
 	../Classes/VisibleRect.cpp \
 	main.cpp
 

@@ -8,7 +8,7 @@
 
 NS_CC_EXT_BEGIN
 
-class CCBSequence : public CCObject
+class CCBSequence : public Object
 {
 private:
     float mDuration;

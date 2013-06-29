@@ -15,5 +15,5 @@ int main()
 {
 	AppDelegate app;
 
-	return cocos2d::CCApplication::sharedApplication()->Run();
+	return cocos2d::Application::sharedApplication()->Run();
 }

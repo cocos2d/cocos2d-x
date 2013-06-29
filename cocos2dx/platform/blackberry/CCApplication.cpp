@@ -12,8 +12,8 @@
 NS_CC_BEGIN;
 
 // sharedApplication pointer
-CCApplication * CCApplication::sm_pSharedApplication = 0;
-long CCApplication::m_animationInterval = 1000;
+Application * Application::sm_pSharedApplication = 0;
+long Application::_animationInterval = 1000;
 
 // convert the timespec into milliseconds
 static long time2millis(struct timespec *times)
@@ -21,19 +21,19 @@ static long time2millis(struct timespec *times)
     return times->tv_sec*1000 + times->tv_nsec/1000000;
 }
 
-CCApplication::CCApplication()
+Application::Application()
 {
     CC_ASSERT(! sm_pSharedApplication);
     sm_pSharedApplication = this;
 }
 
-CCApplication::~CCApplication()
+Application::~Application()
 {
     CC_ASSERT(this == sm_pSharedApplication);
     sm_pSharedApplication = NULL;
 }
 
-int CCApplication::run()
+int Application::run()
 {
 	struct timespec time_struct;
 	long current_time, update_time;
@@ -50,15 +50,15 @@ int CCApplication::run()
 
 	while (1) // or device wants to quit
 	{
-		CCEGLView::sharedOpenGLView()->handleEvents();
+		EGLView::sharedOpenGLView()->handleEvents();
 
 		clock_gettime(CLOCK_REALTIME, &time_struct);
 		current_time = time2millis(&time_struct);
 
-		if ((current_time - update_time) > m_animationInterval)
+		if ((current_time - update_time) > _animationInterval)
 		{
 			update_time = current_time;
-			CCDirector::sharedDirector()->mainLoop();
+			Director::sharedDirector()->mainLoop();
 		}
 		else
 		{
@@ -69,31 +69,31 @@ int CCApplication::run()
 	return -1;
 }
 
-void CCApplication::setAnimationInterval(double interval)
+void Application::setAnimationInterval(double interval)
 {
 	// interval in milliseconds
-	m_animationInterval = (long)(interval * 1000);
+	_animationInterval = (long)(interval * 1000);
 }
 
-void CCApplication::setResourceRootPath(const std::string& rootResDir)
+void Application::setResourceRootPath(const std::string& rootResDir)
 {
-    m_resourceRootPath = rootResDir;
-    if (m_resourceRootPath[m_resourceRootPath.length() - 1] != '/')
+    _resourceRootPath = rootResDir;
+    if (_resourceRootPath[_resourceRootPath.length() - 1] != '/')
     {
-        m_resourceRootPath += '/';
+        _resourceRootPath += '/';
     }
-    CCFileUtils* pFileUtils = CCFileUtils::sharedFileUtils();
+    FileUtils* pFileUtils = FileUtils::sharedFileUtils();
     std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
-    searchPaths.insert(searchPaths.begin(), m_resourceRootPath);
+    searchPaths.insert(searchPaths.begin(), _resourceRootPath);
     pFileUtils->setSearchPaths(searchPaths);
 }
 
-const std::string& CCApplication::getResourceRootPath(void)
+const std::string& Application::getResourceRootPath(void)
 {
-    return m_resourceRootPath;
+    return _resourceRootPath;
 }
 
-TargetPlatform CCApplication::getTargetPlatform()
+TargetPlatform Application::getTargetPlatform()
 {
     return kTargetBlackBerry;
 }
@@ -101,13 +101,13 @@ TargetPlatform CCApplication::getTargetPlatform()
 //////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////
-CCApplication* CCApplication::sharedApplication()
+Application* Application::sharedApplication()
 {
     CC_ASSERT(sm_pSharedApplication);
     return sm_pSharedApplication;
 }
 
-ccLanguageType CCApplication::getCurrentLanguage()
+ccLanguageType Application::getCurrentLanguage()
 {
 	ccLanguageType ret_language = kLanguageEnglish;
 	char *language, *country;
@@ -162,7 +162,14 @@ ccLanguageType CCApplication::getCurrentLanguage()
     {
         ret_language = kLanguageArabic;
     }
-
+    else if (strcmp(language, "nb") == 0)
+    {
+        ret_language = kLanguageNorwegian;
+    }
+    else if (strcmp(language, "pl") == 0)
+    {
+        ret_language = kLanguagePolish;
+    }
 	free(language);
 	free(country);
 

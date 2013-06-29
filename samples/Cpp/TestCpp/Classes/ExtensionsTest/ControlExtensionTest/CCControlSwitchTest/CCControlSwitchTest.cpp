@@ -1,5 +1,5 @@
 /*
- * CCControlSwitchTest.m
+ * ControlSwitchTest.m
  *
  * Copyright (c) 2012 Yannick Loriot
  * http://yannickloriot.com
@@ -26,73 +26,73 @@
 
 #include "CCControlSwitchTest.h"
 
-CCControlSwitchTest::~CCControlSwitchTest()
+ControlSwitchTest::~ControlSwitchTest()
 {
-    CC_SAFE_RELEASE(m_pDisplayValueLabel);
+    CC_SAFE_RELEASE(_displayValueLabel);
 }
 
-bool CCControlSwitchTest::init()
+bool ControlSwitchTest::init()
 {
-    if (CCControlScene::init())
+    if (ControlScene::init())
     {
-        CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+        Size screenSize = Director::sharedDirector()->getWinSize();
         
-        CCNode *layer = CCNode::create();
+        Node *layer = Node::create();
         layer->setPosition(ccp (screenSize.width / 2, screenSize.height / 2));
         addChild(layer, 1);
         
         double layer_width = 0;
         
         // Add the black background for the text
-        CCScale9Sprite *background = CCScale9Sprite::create("extensions/buttonBackground.png");
+        Scale9Sprite *background = Scale9Sprite::create("extensions/buttonBackground.png");
         background->setContentSize(CCSizeMake(80, 50));
         background->setPosition(ccp(layer_width + background->getContentSize().width / 2.0f, 0));
         layer->addChild(background);
         
         layer_width += background->getContentSize().width;
         
-        m_pDisplayValueLabel  = CCLabelTTF::create("#color" ,"Marker Felt" ,30);
-        m_pDisplayValueLabel->retain();
+        _displayValueLabel  = LabelTTF::create("#color" ,"Marker Felt" ,30);
+        _displayValueLabel->retain();
 
-        m_pDisplayValueLabel->setPosition(background->getPosition());
-        layer->addChild(m_pDisplayValueLabel);
+        _displayValueLabel->setPosition(background->getPosition());
+        layer->addChild(_displayValueLabel);
         
         // Create the switch
-        CCControlSwitch *switchControl = CCControlSwitch::create
+        ControlSwitch *switchControl = ControlSwitch::create
             (
-                CCSprite::create("extensions/switch-mask.png"),
-                CCSprite::create("extensions/switch-on.png"),
-                CCSprite::create("extensions/switch-off.png"),
-                CCSprite::create("extensions/switch-thumb.png"),
-                CCLabelTTF::create("On", "Arial-BoldMT", 16),
-                CCLabelTTF::create("Off", "Arial-BoldMT", 16)
+                Sprite::create("extensions/switch-mask.png"),
+                Sprite::create("extensions/switch-on.png"),
+                Sprite::create("extensions/switch-off.png"),
+                Sprite::create("extensions/switch-thumb.png"),
+                LabelTTF::create("On", "Arial-BoldMT", 16),
+                LabelTTF::create("Off", "Arial-BoldMT", 16)
             );
         switchControl->setPosition(ccp (layer_width + 10 + switchControl->getContentSize().width / 2, 0));
         layer->addChild(switchControl);
 
-        switchControl->addTargetWithActionForControlEvents(this, cccontrol_selector(CCControlSwitchTest::valueChanged), CCControlEventValueChanged);
+        switchControl->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlSwitchTest::valueChanged), ControlEventValueChanged);
         
         // Set the layer size
         layer->setContentSize(CCSizeMake(layer_width, 0));
         layer->setAnchorPoint(ccp (0.5f, 0.5f));
         
         // Update the value label
-        valueChanged(switchControl, CCControlEventValueChanged);
+        valueChanged(switchControl, ControlEventValueChanged);
         return true;
     }
     return false;
 }
 
-void CCControlSwitchTest::valueChanged(CCObject* sender, CCControlEvent controlEvent)
+void ControlSwitchTest::valueChanged(Object* sender, ControlEvent controlEvent)
 {
-    CCControlSwitch* pSwitch = (CCControlSwitch*)sender;
+    ControlSwitch* pSwitch = (ControlSwitch*)sender;
     if (pSwitch->isOn())
     {
-        m_pDisplayValueLabel->setString("On");
+        _displayValueLabel->setString("On");
     } 
     else
     {
-        m_pDisplayValueLabel->setString("Off");
+        _displayValueLabel->setString("Off");
     }
 }
 

@@ -24,15 +24,13 @@ THE SOFTWARE.
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "base64.h"
+#include "support/base64.h"
 
 namespace cocos2d {
 
 unsigned char alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-
-int _base64Decode( unsigned char *input, unsigned int input_len, unsigned char *output, unsigned int *output_len );
-
-int _base64Decode( unsigned char *input, unsigned int input_len, unsigned char *output, unsigned int *output_len )
+    
+int _base64Decode(const unsigned char *input, unsigned int input_len, unsigned char *output, unsigned int *output_len )
 {
     static char inalphabet[256], decoder[256];
     int i, bits, c = 0, char_count, errors = 0;
@@ -94,8 +92,51 @@ int _base64Decode( unsigned char *input, unsigned int input_len, unsigned char *
     *output_len = output_idx;
     return errors;
 }
+    
+void _base64Encode( const unsigned char *input, unsigned int input_len, char *output )
+{
+    unsigned int char_count;
+    unsigned int bits;
+    unsigned int input_idx = 0;
+    unsigned int output_idx = 0;
+    
+    char_count = 0;
+    bits = 0;    
+    for( input_idx=0; input_idx < input_len ; input_idx++ ) {
+        bits |= input[ input_idx ];
+        
+        char_count++;
+        if (char_count == 3) {
+            output[ output_idx++ ] = alphabet[(bits >> 18) & 0x3f];
+            output[ output_idx++ ] = alphabet[(bits >> 12) & 0x3f];
+            output[ output_idx++ ] = alphabet[(bits >> 6) & 0x3f];
+            output[ output_idx++ ] = alphabet[bits & 0x3f];
+            bits = 0;
+            char_count = 0;
+        } else {
+            bits <<= 8;
+        }
+    }
+    
+    if (char_count) {
+        if (char_count == 1) {
+            bits <<= 8;
+        }
 
-int base64Decode(unsigned char *in, unsigned int inLength, unsigned char **out)
+        output[ output_idx++ ] = alphabet[(bits >> 18) & 0x3f];
+        output[ output_idx++ ] = alphabet[(bits >> 12) & 0x3f];
+        if (char_count > 1) {
+            output[ output_idx++ ] = alphabet[(bits >> 6) & 0x3f];
+        } else {
+            output[ output_idx++ ] = '=';
+        }
+        output[ output_idx++ ] = '=';
+    }
+    
+    output[ output_idx++ ] = 0;
+}
+    
+int base64Decode(const unsigned char *in, unsigned int inLength, unsigned char **out)
 {
     unsigned int outLength = 0;
     
@@ -117,4 +158,15 @@ int base64Decode(unsigned char *in, unsigned int inLength, unsigned char **out)
     return outLength;
 }
 
+int base64Encode(const unsigned char *in, unsigned int inLength, char **out) {
+    unsigned int outLength = inLength * 4 / 3 + (inLength % 3 > 0 ? 4 : 0);
+    
+    //should be enough to store 8-bit buffers in 6-bit buffers
+    *out = new char[outLength+1];
+    if( *out ) {
+        _base64Encode(in, inLength, *out);
+    }
+    return outLength;
+}
+    
 }//namespace   cocos2d 

@@ -5,13 +5,13 @@ using namespace std;
 static int sceneIdx = -1;
 
 
-CCLayer* nextSpriteTestAction();
-CCLayer* backSpriteTestAction();
-CCLayer* restartSpriteTestAction();
+Layer* nextSpriteTestAction();
+Layer* backSpriteTestAction();
+Layer* restartSpriteTestAction();
 
-typedef CCLayer* (*NEWDRAWPRIMITIVESFUNC)();
+typedef Layer* (*NEWDRAWPRIMITIVESFUNC)();
 #define DRAWPRIMITIVES_CREATE_FUNC(className) \
-static CCLayer* create##className() \
+static Layer* create##className() \
 { return new className(); }
 
 DRAWPRIMITIVES_CREATE_FUNC(DrawPrimitivesTest);
@@ -25,33 +25,33 @@ static NEWDRAWPRIMITIVESFUNC createFunctions[] =
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
 
-static CCLayer* nextAction()
+static Layer* nextAction()
 {
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
     
-    CCLayer* pLayer = (createFunctions[sceneIdx])();
+    Layer* pLayer = (createFunctions[sceneIdx])();
     pLayer->autorelease();
     
     return pLayer;
 }
 
-static CCLayer* backAction()
+static Layer* backAction()
 {
     sceneIdx--;
     int total = MAX_LAYER;
     if( sceneIdx < 0 )
         sceneIdx += total;
     
-    CCLayer* pLayer = (createFunctions[sceneIdx])();
+    Layer* pLayer = (createFunctions[sceneIdx])();
     pLayer->autorelease();
     
     return pLayer;
 }
 
-static CCLayer* restartAction()
+static Layer* restartAction()
 {
-    CCLayer* pLayer = (createFunctions[sceneIdx])();
+    Layer* pLayer = (createFunctions[sceneIdx])();
     pLayer->autorelease();
     
     return pLayer;
@@ -66,59 +66,33 @@ BaseLayer::BaseLayer()
 
 void BaseLayer::onEnter()
 {
-    CCLayer::onEnter();
-    
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-    
-    CCLabelTTF *label = CCLabelTTF::create(title().c_str(), "Arial", 32);
-    addChild(label);
-    label->setPosition(ccp(s.width/2, s.height-50));
-    
-    string subTitle = subtitle();
-    if (subTitle.size() > 0)
-    {
-        CCLabelTTF *l = CCLabelTTF::create(subTitle.c_str(), "Thonburi", 16);
-        addChild(l, 1);
-        l->setPosition(ccp(s.width/2, s.height-80));
-    }
-    
-    CCMenuItemImage *item1 = CCMenuItemImage::create("Images/b1.png", "Images/b2.png", this, menu_selector(BaseLayer::backCallback));
-    CCMenuItemImage *item2 = CCMenuItemImage::create("Images/r1.png", "Images/r2.png", this, menu_selector(BaseLayer::restartCallback));
-    CCMenuItemImage *item3 = CCMenuItemImage::create("Images/f1.png", "Images/f2.png", this, menu_selector(BaseLayer::nextCallback));
-    
-    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
-    menu->setPosition(CCPointZero);
-    
-    item1->setPosition(ccp(s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2));
-    item2->setPosition(ccp(s.width/2, item2->getContentSize().height/2));
-    item3->setPosition(ccp(s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2));
-    addChild(menu, 100);
+    BaseTest::onEnter();
 }
 
-void BaseLayer::restartCallback(cocos2d::CCObject *pSender)
+void BaseLayer::restartCallback(cocos2d::Object *pSender)
 {
-    CCScene *s = new DrawPrimitivesTestScene();
+    Scene *s = new DrawPrimitivesTestScene();
     s->addChild(restartAction());
     
-    CCDirector::sharedDirector()->replaceScene(s);
+    Director::sharedDirector()->replaceScene(s);
     s->release();
 }
 
-void BaseLayer::nextCallback(cocos2d::CCObject *pSender)
+void BaseLayer::nextCallback(cocos2d::Object *pSender)
 {
-    CCScene *s = new DrawPrimitivesTestScene();;
+    Scene *s = new DrawPrimitivesTestScene();;
     s->addChild(nextAction());
     
-    CCDirector::sharedDirector()->replaceScene(s);
+    Director::sharedDirector()->replaceScene(s);
     s->release();
 }
 
-void BaseLayer::backCallback(cocos2d::CCObject *pSender)
+void BaseLayer::backCallback(cocos2d::Object *pSender)
 {
-    CCScene *s = new DrawPrimitivesTestScene();
+    Scene *s = new DrawPrimitivesTestScene();
     s->addChild(backAction());
     
-    CCDirector::sharedDirector()->replaceScene(s);
+    Director::sharedDirector()->replaceScene(s);
     s->release();
 }
 
@@ -177,7 +151,7 @@ void DrawPrimitivesTest::draw()
 	CHECK_GL_ERROR_DEBUG();
     
 	// draw 4 small points
-	CCPoint points[] = { ccp(60,60), ccp(70,70), ccp(60,70), ccp(70,60) };
+	Point points[] = { ccp(60,60), ccp(70,70), ccp(60,70), ccp(70,60) };
 	ccPointSize(4);
 	ccDrawColor4B(0,255,255,255);
 	ccDrawPoints( points, 4);
@@ -201,21 +175,21 @@ void DrawPrimitivesTest::draw()
 	// open yellow poly
 	ccDrawColor4B(255, 255, 0, 255);
 	glLineWidth(10);
-	CCPoint vertices[] = { ccp(0,0), ccp(50,50), ccp(100,50), ccp(100,100), ccp(50,100) };
+	Point vertices[] = { ccp(0,0), ccp(50,50), ccp(100,50), ccp(100,100), ccp(50,100) };
 	ccDrawPoly( vertices, 5, false);
     
 	CHECK_GL_ERROR_DEBUG();
 	
 	// filled poly
 	glLineWidth(1);
-	CCPoint filledVertices[] = { ccp(0,120), ccp(50,120), ccp(50,170), ccp(25,200), ccp(0,170) };
+	Point filledVertices[] = { ccp(0,120), ccp(50,120), ccp(50,170), ccp(25,200), ccp(0,170) };
 	ccDrawSolidPoly(filledVertices, 5, ccc4f(0.5f, 0.5f, 1, 1 ) );
     
     
 	// closed purble poly
 	ccDrawColor4B(255, 0, 255, 255);
 	glLineWidth(2);
-	CCPoint vertices2[] = { ccp(30,130), ccp(30,230), ccp(50,200) };
+	Point vertices2[] = { ccp(30,130), ccp(30,230), ccp(50,200) };
 	ccDrawPoly( vertices2, 3, true);
     
 	CHECK_GL_ERROR_DEBUG();
@@ -231,7 +205,7 @@ void DrawPrimitivesTest::draw()
 	CHECK_GL_ERROR_DEBUG();
     
     //draw a solid polygon
-	CCPoint vertices3[] = {ccp(60,160), ccp(70,190), ccp(100,190), ccp(90,160)};
+	Point vertices3[] = {ccp(60,160), ccp(70,190), ccp(100,190), ccp(90,160)};
     ccDrawSolidPoly( vertices3, 4, ccc4f(1,1,0,1) );
     
 	// restore original values
@@ -249,15 +223,15 @@ string DrawPrimitivesTest::title()
 
 string DrawPrimitivesTest::subtitle()
 {
-    return "Drawing Primitives. Use CCDrawNode instead";
+    return "Drawing Primitives. Use DrawNode instead";
 }
 
 // DrawNodeTest
 DrawNodeTest::DrawNodeTest()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
     
-    CCDrawNode *draw = CCDrawNode::create();
+    DrawNode *draw = DrawNode::create();
     addChild(draw, 10);
     
     // Draw 10 circles
@@ -267,7 +241,7 @@ DrawNodeTest::DrawNodeTest()
     }
     
     // Draw polygons
-    CCPoint points[] = { CCPoint(s.height/4,0), CCPoint(s.width,s.height/5), CCPoint(s.width/3*2,s.height) };
+    Point points[] = { Point(s.height/4,0), Point(s.width,s.height/5), Point(s.width/3*2,s.height) };
     draw->drawPolygon(points, sizeof(points)/sizeof(points[0]), ccc4f(1,0,0,0.5), 4, ccc4f(0,0,1,1));
     
     // star poly (triggers buggs)
@@ -275,9 +249,9 @@ DrawNodeTest::DrawNodeTest()
         const float o=80;
         const float w=20;
         const float h=50;
-        CCPoint star[] = {
-            CCPoint(o+w,o-h), CCPoint(o+w*2, o),						// lower spike
-            CCPoint(o + w*2 + h, o+w ), CCPoint(o + w*2, o+w*2),		// right spike
+        Point star[] = {
+            Point(o+w,o-h), Point(o+w*2, o),						// lower spike
+            Point(o + w*2 + h, o+w ), Point(o + w*2, o+w*2),		// right spike
             //				{o +w, o+w*2+h}, {o,o+w*2},					// top spike
             //				{o -h, o+w}, {o,o},							// left spike
         };
@@ -290,11 +264,11 @@ DrawNodeTest::DrawNodeTest()
         const float o=180;
         const float w=20;
         const float h=50;
-        CCPoint star[] = {
-            CCPoint(o,o), CCPoint(o+w,o-h), CCPoint(o+w*2, o),		// lower spike
-            CCPoint(o + w*2 + h, o+w ), CCPoint(o + w*2, o+w*2),	// right spike
-            CCPoint(o +w, o+w*2+h), CCPoint(o,o+w*2),				// top spike
-            CCPoint(o -h, o+w),                                     // left spike
+        Point star[] = {
+            Point(o,o), Point(o+w,o-h), Point(o+w*2, o),		// lower spike
+            Point(o + w*2 + h, o+w ), Point(o + w*2, o+w*2),	// right spike
+            Point(o +w, o+w*2+h), Point(o,o+w*2),				// top spike
+            Point(o -h, o+w),                                     // left spike
         };
         
         draw->drawPolygon(star, sizeof(star)/sizeof(star[0]), ccc4f(1,0,0,0.5), 1, ccc4f(0,0,1,1));
@@ -309,7 +283,7 @@ DrawNodeTest::DrawNodeTest()
 
 string DrawNodeTest::title()
 {
-    return "Test CCDrawNode";
+    return "Test DrawNode";
 }
 
 string DrawNodeTest::subtitle()
@@ -319,8 +293,8 @@ string DrawNodeTest::subtitle()
 
 void DrawPrimitivesTestScene::runThisTest()
 {
-    CCLayer* pLayer = nextAction();
+    Layer* pLayer = nextAction();
     addChild(pLayer);
 
-    CCDirector::sharedDirector()->replaceScene(this);
+    Director::sharedDirector()->replaceScene(this);
 }

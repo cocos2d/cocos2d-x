@@ -522,7 +522,7 @@ local function ActionAnimate()
     local action2 = CCAnimate:create(animation2)
     tamara:runAction(CCSequence:createWithTwoActions(action2, action2:reverse()))
 
-	local animation3 = animation2:copy():autorelease()
+	local animation3 = animation2:clone()
 	-- problem
     tolua.cast(animation3,"CCAnimation"):setLoops(4)
 
@@ -724,7 +724,7 @@ local function ActionRotateToRepeat()
     local act2 = CCRotateTo:create(1, 0)
     local seq  = CCSequence:createWithTwoActions(act1, act2)
     local rep1 = CCRepeatForever:create(seq)
-    local rep2 = CCRepeat:create(tolua.cast(seq:copy():autorelease(), "CCSequence"), 10)
+    local rep2 = CCRepeat:create(tolua.cast(seq:clone(), "CCSequence"), 10)
 
     tamara:runAction(rep1)
     kathia:runAction(rep2)
@@ -929,8 +929,8 @@ local function ActionOrbit()
     local seq = CCSequence:createWithTwoActions(move, move_back)
     local rfe = CCRepeatForever:create(seq)
     kathia:runAction(rfe)
-    tamara:runAction(tolua.cast(rfe:copy():autorelease(), "CCActionInterval"))
-    grossini:runAction(tolua.cast(rfe:copy():autorelease(), "CCActionInterval"))
+    tamara:runAction(tolua.cast(rfe:clone(), "CCActionInterval"))
+    grossini:runAction(tolua.cast(rfe:clone(), "CCActionInterval"))
 
 
 	Helper.subtitleLabel:setString("OrbitCamera action")

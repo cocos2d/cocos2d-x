@@ -6,18 +6,18 @@
 #include "../testBasic.h"
 #include "platform/platform.h"
 
-class TextureCacheTest : public CCLayer
+class TextureCacheTest : public Layer
 {
 public:
     TextureCacheTest();
     void addSprite();
-    void loadingCallBack(cocos2d::CCObject *obj);
+    void loadingCallBack(cocos2d::Object *obj);
 
 private:
-    cocos2d::CCLabelTTF *m_pLabelLoading;
-    cocos2d::CCLabelTTF *m_pLabelPercent;
-    int m_nNumberOfSprites;
-    int m_nNumberOfLoadedSprites;
+    cocos2d::LabelTTF *_labelLoading;
+    cocos2d::LabelTTF *_labelPercent;
+    int _numberOfSprites;
+    int _numberOfLoadedSprites;
 };
 
 class TextureCacheTestScene : public TestScene
