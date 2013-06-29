@@ -54,7 +54,7 @@ NS_CC_BEGIN;
  Used by CardinalSplineTo and (By) and CatmullRomTo (and By) actions.
 @ingroup Actions
  */
-class CC_DLL PointArray : public Object
+class CC_DLL PointArray : public Object, public Clonable
 {
 public:
     
@@ -83,16 +83,16 @@ public:
     void removeControlPointAtIndex(unsigned int index);
     
     /** returns the number of objects of the control point array */
-    unsigned int count();
+    unsigned int count() const;
     
     /** returns a new copy of the array reversed. User is responsible for releasing this copy */
-    PointArray* reverse();
+    PointArray* reverse() const;
     
     /** reverse the current control point array inline, without generating a new one */
     void reverseInline();
 
-    virtual Object* copyWithZone(Zone *zone);
-    
+    virtual PointArray* clone() const;
+
     const std::vector<Point*>* getControlPoints();
 
     void setControlPoints(std::vector<Point*> *controlPoints);

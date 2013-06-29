@@ -28,7 +28,8 @@
 #include <unistd.h>
 #include <netdb.h>
 #endif
-#include <pthread.h>
+
+#include <thread>
 
 #ifdef ANDROID
 #include <android/log.h>
@@ -53,32 +54,31 @@
 
 #define BYTE_CODE_FILE_EXT ".jsc"
 
-pthread_t debugThread;
-string inData;
-string outData;
-vector<string> queue;
-pthread_mutex_t g_qMutex;
-pthread_mutex_t g_rwMutex;
-bool vmLock = false;
-jsval frame = JSVAL_NULL, script = JSVAL_NULL;
-int clientSocket;
+static string inData;
+static string outData;
+static vector<string> g_queue;
+static std::mutex g_qMutex;
+static std::mutex g_rwMutex;
+static bool vmLock = false;
+static jsval frame = JSVAL_NULL, script = JSVAL_NULL;
+static int clientSocket = -1;
 
 // server entry point for the bg thread
-void* serverEntryPoint(void*);
+static void serverEntryPoint(void);
 
 js_proxy_t *_native_js_global_ht = NULL;
 js_proxy_t *_js_native_global_ht = NULL;
 js_type_class_t *_js_global_type_ht = NULL;
-char *_js_log_buf = NULL;
+static char *_js_log_buf = NULL;
 
-std::vector<sc_register_sth> registrationList;
+static std::vector<sc_register_sth> registrationList;
 
 // name ~> JSScript map
-std::map<std::string, JSScript*> filename_script;
+static std::map<std::string, JSScript*> filename_script;
 // port ~> socket map
-std::map<int,int> ports_sockets;
+static std::map<int,int> ports_sockets;
 // name ~> globals
-std::map<std::string, js::RootedObject*> globals;
+static std::map<std::string, js::RootedObject*> globals;
 
 static void executeJSFunctionFromReservedSpot(JSContext *cx, JSObject *obj,
                                               jsval &dataVal, jsval &retval) {
@@ -488,28 +488,30 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
 	options.setUTF8(true).setFileAndLine(fullPath.c_str(), 1);
     
     // a) check js file first
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    String* content = String::createWithContentsOfFile(path);
-    if (content) {
-        // Not supported in SpiderMonkey 19.0
-        //JSScript* script = JS_CompileScript(cx, global, (char*)content, contentSize, path, 1);
-        const char* contentCStr = content->getCString();
-        script = JS::Compile(cx, obj, options, contentCStr, strlen(contentCStr));
+    std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
+    unsigned long length = 0;
+    void *data = futil->getFileData(byteCodePath.c_str(),
+                                    "rb",
+                                    &length);
+    if (data) {
+        script = JS_DecodeScript(cx, data, length, NULL, NULL);
     }
-#else
-    script = JS::Compile(cx, obj, options, fullPath.c_str());
-#endif
-    // b) no js file, check jsc file
+    
+    // b) no jsc file, check js file
     if (!script) {
-        std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
-        unsigned long length = 0;
-        void *data = futil->getFileData(byteCodePath.c_str(),
-                                        "rb",
-                                        &length);
-        if (data) {
-            script = JS_DecodeScript(cx, data, length, NULL, NULL);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        String* content = String::createWithContentsOfFile(path);
+        if (content) {
+            // Not supported in SpiderMonkey 19.0
+            //JSScript* script = JS_CompileScript(cx, global, (char*)content, contentSize, path, 1);
+            const char* contentCStr = content->getCString();
+            script = JS::Compile(cx, obj, options, contentCStr, strlen(contentCStr));
         }
+#else
+        script = JS::Compile(cx, obj, options, fullPath.c_str());
+#endif
     }
+    
     JSBool evaluatedOK = false;
     if (script) {
         jsval rval;
@@ -1713,14 +1715,14 @@ jsval ccaffinetransform_to_jsval(JSContext* cx, AffineTransform& t)
 #pragma mark - Debug
 
 void SimpleRunLoop::update(float dt) {
-    pthread_mutex_lock(&g_qMutex);
-    while (queue.size() > 0) {
-        vector<string>::iterator first = queue.begin();
+    std::lock_guard<std::mutex> lk(g_qMutex);
+
+    while (g_queue.size() > 0) {
+        vector<string>::iterator first = g_queue.begin();
         string str = *first;
         ScriptingCore::getInstance()->debugProcessInput(str);
-        queue.erase(first);
+        g_queue.erase(first);
     }
-    pthread_mutex_unlock(&g_qMutex);
 }
 
 void ScriptingCore::debugProcessInput(string str) {
@@ -1759,7 +1761,9 @@ void ScriptingCore::enableDebugger() {
         // define the start debugger function
         JS_DefineFunction(cx_, global_, "startDebugger", JSBDebug_StartDebugger, 3, JSPROP_READONLY | JSPROP_PERMANENT);
         // start bg thread
-        pthread_create(&debugThread, NULL, serverEntryPoint, NULL);
+        
+        auto t = std::thread(&serverEntryPoint);
+        t.detach();
 
         Scheduler* scheduler = Director::sharedDirector()->getScheduler();
         scheduler->scheduleUpdateForTarget(this->runLoop, 0, false);
@@ -1887,12 +1891,12 @@ JSBool JSBDebug_BufferRead(JSContext* cx, unsigned argc, jsval* vp)
         JSString* str;
         // this is safe because we're already inside a lock (from clearBuffers)
         if (vmLock) {
-            pthread_mutex_lock(&g_rwMutex);
+            g_rwMutex.lock();
         }
         str = JS_NewStringCopyZ(cx, inData.c_str());
         inData.clear();
         if (vmLock) {
-            pthread_mutex_unlock(&g_rwMutex);
+            g_rwMutex.unlock();
         }
         JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(str));
     } else {
@@ -1932,15 +1936,15 @@ JSBool JSBDebug_LockExecution(JSContext* cx, unsigned argc, jsval* vp)
         vmLock = true;
         while (vmLock) {
             // try to read the input, if there's anything
-            pthread_mutex_lock(&g_qMutex);
-            while (queue.size() > 0) {
-                vector<string>::iterator first = queue.begin();
+            g_qMutex.lock();
+            while (g_queue.size() > 0) {
+                vector<string>::iterator first = g_queue.begin();
                 string str = *first;
                 ScriptingCore::getInstance()->debugProcessInput(str);
-                queue.erase(first);
+                g_queue.erase(first);
             }
-            pthread_mutex_unlock(&g_qMutex);
-            sched_yield();
+            g_qMutex.unlock();
+            std::this_thread::yield();
         }
         printf("vm unlocked\n");
         frame = JSVAL_NULL;
@@ -1957,32 +1961,25 @@ JSBool JSBDebug_UnlockExecution(JSContext* cx, unsigned argc, jsval* vp)
     return JS_TRUE;
 }
 
-void processInput(string data) {
-    pthread_mutex_lock(&g_qMutex);
-    queue.push_back(string(data));
-    pthread_mutex_unlock(&g_qMutex);
+static void processInput(string data) {
+    std::lock_guard<std::mutex> lk(g_qMutex);
+    g_queue.push_back(string(data));
 }
 
-void clearBuffers() {
-    pthread_mutex_lock(&g_rwMutex);
-    {
-        // only process input if there's something and we're not locked
-        if (inData.length() > 0) {
-            processInput(inData);
-            inData.clear();
-        }
-        if (outData.length() > 0) {
-            _clientSocketWriteAndClearString(outData);
-        }
+static void clearBuffers() {
+    std::lock_guard<std::mutex> lk(g_rwMutex);
+    // only process input if there's something and we're not locked
+    if (inData.length() > 0) {
+        processInput(inData);
+        inData.clear();
     }
-    pthread_mutex_unlock(&g_rwMutex);
+    if (outData.length() > 0) {
+        _clientSocketWriteAndClearString(outData);
+    }
 }
 
-void* serverEntryPoint(void*)
+static void serverEntryPoint(void)
 {
-    // init the mutex
-    assert(pthread_mutex_init(&g_rwMutex, NULL) == 0);
-    assert(pthread_mutex_init(&g_qMutex, NULL) == 0);
     // start a server, accept the connection and keep reading data from it
     struct addrinfo hints, *result, *rp;
     int s;
@@ -2007,14 +2004,14 @@ void* serverEntryPoint(void*)
         if ((setsockopt(s, SOL_SOCKET, SO_REUSEADDR, (char*)&optval, sizeof(optval))) < 0) {
             close(s);
 			TRACE_DEBUGGER_SERVER("debug server : error setting socket option SO_REUSEADDR");
-            return NULL;
+            return;
         }
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 		if ((setsockopt(s, SOL_SOCKET, SO_NOSIGPIPE, &optval, sizeof(optval))) < 0) {
 			close(s);
 			TRACE_DEBUGGER_SERVER("debug server : error setting socket option SO_NOSIGPIPE");
-			return NULL;
+			return;
 		}
 #endif //(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
@@ -2026,7 +2023,7 @@ void* serverEntryPoint(void*)
     }
     if (s < 0 || rp == NULL) {
 		TRACE_DEBUGGER_SERVER("debug server : error creating/binding socket");
-        return NULL;
+        return;
     }
 
     freeaddrinfo(result);
@@ -2038,7 +2035,7 @@ void* serverEntryPoint(void*)
         if (clientSocket < 0)
             {
                 TRACE_DEBUGGER_SERVER("debug server : error on accept");
-                return NULL;
+                return;
             } else {
             // read/write data
             TRACE_DEBUGGER_SERVER("debug server : client connected");
@@ -2055,11 +2052,6 @@ void* serverEntryPoint(void*)
             close(clientSocket);
         }
 	} // while(true)
-
-    // we're done, destroy the mutex
-    pthread_mutex_destroy(&g_rwMutex);
-    pthread_mutex_destroy(&g_qMutex);
-    return NULL;
 }
 
 ccColor3B getColorFromJSObject(JSContext *cx, JSObject *colorObject)

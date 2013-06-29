@@ -171,10 +171,6 @@ namespace cocos2d
     class ZipFile
     {
     public:
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-        friend class FileUtilsAndroid;
-#endif
-        
         /**
         * Constructor, open zip file and store file list.
         *
@@ -220,13 +216,8 @@ namespace cocos2d
         unsigned char *getFileData(const std::string &fileName, unsigned long *pSize);
 
     private:
-        bool setFilter(const std::string &filer, ZipFilePrivate *data);
-        unsigned char *getFileData(const std::string &fileName, unsigned long *pSize, ZipFilePrivate *data);
-        
         /** Internal data like zip file pointer / file list array and so on */
         ZipFilePrivate *_data;
-        /** Another data used not in main thread */
-        ZipFilePrivate *_dataThread;
     };
 } // end of namespace cocos2d
 #endif // __SUPPORT_ZIPUTILS_H__

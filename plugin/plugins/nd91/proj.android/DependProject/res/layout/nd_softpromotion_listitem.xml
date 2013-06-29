@@ -38,9 +38,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/nd_app_desc"
         android:textSize="14sp"
-        android:textColor="#f43f00"
-        android:singleLine="true"
+        android:textColor="#f43f00" 
         android:ellipsize="end"
+        android:maxLines="2"
        />
     </LinearLayout>
     

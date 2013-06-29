@@ -212,13 +212,13 @@ private:
     JSObject* _JSDelegate;
 };
 
-JSBool js_pluginx_ProtocolSocial_setResultListener(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool js_pluginx_ProtocolShare_setResultListener(JSContext *cx, uint32_t argc, jsval *vp)
 {
     s_cx = cx;
     jsval *argv = JS_ARGV(cx, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
-    cocos2d::plugin::ProtocolSocial* cobj = (cocos2d::plugin::ProtocolSocial *)(proxy ? proxy->ptr : NULL);
+    cocos2d::plugin::ProtocolShare* cobj = (cocos2d::plugin::ProtocolShare *)(proxy ? proxy->ptr : NULL);
     JSBool ok = JS_TRUE;
 
     if (argc == 1) {

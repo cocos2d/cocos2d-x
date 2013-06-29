@@ -16,13 +16,13 @@ getPluginName : function () {},
 
 /**
  * @method getPluginVersion
- * @return A value converted from C/C++ "const char*"
+ * @return A value converted from C/C++ "std::string"
  */
 getPluginVersion : function () {},
 
 /**
  * @method getSDKVersion
- * @return A value converted from C/C++ "const char*"
+ * @return A value converted from C/C++ "std::string"
  */
 getSDKVersion : function () {},
 
@@ -199,9 +199,9 @@ onPlayerGetPoints : function () {},
 };
 
 /**
- * @class ProtocolSocial
+ * @class ProtocolShare
  */
-plugin.ProtocolSocial = {
+plugin.ProtocolShare = {
 
 /**
  * @method onShareResult
@@ -218,7 +218,7 @@ share : function () {},
 
 /**
  * @method configDeveloperInfo
- * @param {TSocialDeveloperInfo}
+ * @param {TShareDeveloperInfo}
  */
 configDeveloperInfo : function () {},
 

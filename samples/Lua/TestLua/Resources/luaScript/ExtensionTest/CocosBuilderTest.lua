@@ -49,6 +49,12 @@ ccb["TestTimelineLayer"] = TestTimelineLayer
 TestTimelineLayerOwner = TestTimelineLayerOwner or {}
 ccb["TestTimelineLayerOwner"] = TestTimelineLayerOwner
 
+TestScrollViewsLayer = TestScrollViewsLayer or {}
+ccb["TestScrollViewsLayer"] = TestScrollViewsLayer
+
+TestScrollViewsLayerOwner = TestScrollViewsLayerOwner or {}
+ccb["TestScrollViewsLayerOwner"] = TestScrollViewsLayerOwner
+
 local function onMenuItemAClicked()
     if nil ~= TestMenusLayer["mMenuItemStatusLabelBMFont"] then
         local labelBmFt = tolua.cast(TestMenusLayer["mMenuItemStatusLabelBMFont"],"CCLabelBMFont")
@@ -231,7 +237,21 @@ TestAnimationsLayer["onCCControlButtonFunkyClicked"] = onCCControlButtonFunkyCli
 
 
 local function onScrollViewTestClicked()
-    print("onScrollViewTestClicked")
+    local scene  = CCScene:create()
+    local  proxy = CCBProxy:create()
+    local  node  = CCBReaderLoad("cocosbuilderRes/ccb/ccb/TestScrollViews.ccbi",proxy,true,"TestScrollViewsLayerOwner")
+    local  layer = tolua.cast(node,"CCLayer")
+    if nil ~= TestScrollViewsLayerOwner["mTestTitleLabelTTF"] then
+        local ccLabelTTF = tolua.cast(TestScrollViewsLayerOwner["mTestTitleLabelTTF"],"CCLabelTTF")
+        if nil ~= ccLabelTTF then
+            ccLabelTTF:setString("ccb/ccb/TestScrollViews.ccbi")
+        end
+    end
+    if nil ~= scene then
+        scene:addChild(layer)
+        scene:addChild(CreateBackMenuItem())
+        CCDirector:sharedDirector():pushScene(CCTransitionFade:create(0.5, scene, ccc3(0,0,0))); 
+    end
 end
 
 local function onTimelineCallbackSoundClicked()

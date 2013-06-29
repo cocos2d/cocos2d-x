@@ -16,7 +16,9 @@ static std::function<Layer*()> createFunctions[] = {
     CL(LayerTest1),
     CL(LayerTest2),
     CL(LayerTestBlend),
-    CL(LayerGradient),
+    CL(LayerGradientTest),
+    CL(LayerGradientTest2),
+    CL(LayerGradientTest3),
     CL(LayerIgnoreAnchorPointPos),
     CL(LayerIgnoreAnchorPointRot),
     CL(LayerIgnoreAnchorPointScale),
@@ -581,7 +583,7 @@ std::string LayerTestBlend::title()
 
 //------------------------------------------------------------------
 //
-// LayerGradient
+// LayerGradientTest
 //
 //------------------------------------------------------------------
 LayerGradientTest::LayerGradientTest()
@@ -613,8 +615,7 @@ void LayerGradientTest::ccTouchesMoved(Set * touches, Event *event)
 {
     Size s = Director::sharedDirector()->getWinSize();
 
-    SetIterator it = touches->begin();
-    Touch* touch = (Touch*)(*it);
+    Touch* touch = (Touch*) touches->anyObject();
     Point start = touch->getLocation();    
 
     Point diff = ccpSub( ccp(s.width/2,s.height/2), start);    
@@ -632,6 +633,51 @@ std::string LayerGradientTest::title()
 string LayerGradientTest::subtitle()
 {
     return "Touch the screen and move your finger";
+}
+
+//------------------------------------------------------------------
+//
+// LayerGradientTest2
+//
+//------------------------------------------------------------------
+LayerGradientTest2::LayerGradientTest2()
+{
+    LayerGradient* layer = new LayerGradient;
+    layer->initWithColor(ccc4(255,0,0,255), ccc4(255,255,0,255));
+    layer->autorelease();
+    addChild(layer);
+}
+
+std::string LayerGradientTest2::title()
+{
+    return "LayerGradientTest 2";
+}
+
+string LayerGradientTest2::subtitle()
+{
+    return "You should see a gradient";
+}
+
+
+//------------------------------------------------------------------
+//
+// LayerGradientTest3
+//
+//------------------------------------------------------------------
+LayerGradientTest3::LayerGradientTest3()
+{
+    LayerGradient* layer1 = LayerGradient::create(ccc4(255,0,0,255), ccc4(255,255,0,255));
+    addChild(layer1);
+}
+
+std::string LayerGradientTest3::title()
+{
+    return "LayerGradientTest 3";
+}
+
+string LayerGradientTest3::subtitle()
+{
+    return "You should see a gradient";
 }
 
 // LayerIgnoreAnchorPointPos
