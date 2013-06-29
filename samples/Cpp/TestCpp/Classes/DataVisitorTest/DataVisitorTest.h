@@ -13,7 +13,7 @@ public:
     virtual void onEnter();
     void addSprite();
 protected:
-    std::string    m_strTitle;
+    std::string    _title;
 };
 
 class DataVisitorTestScene : public TestScene

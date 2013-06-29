@@ -61,7 +61,7 @@ if (NULL == pData) {                                                            
 int nParamNum = params.size();                                                                  \
 if (0 == nParamNum)                                                                             \
 {                                                                                               \
-    ret = PluginUtilsIOS::callOC##retCode##FunctionWithName_oneParam(this, funcName, NULL);     \
+    ret = PluginUtilsIOS::callOC##retCode##FunctionWithName(this, funcName);                    \
 } else                                                                                          \
 {                                                                                               \
     PluginParam* pRetParam = NULL;                                                              \

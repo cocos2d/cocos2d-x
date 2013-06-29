@@ -7,7 +7,7 @@
 
 NS_CC_BEGIN
 
-class CCData : public CCObject
+class CC_DLL CCData : public CCObject
 {
 public:
     CCData(unsigned char *pBytes, const unsigned long nSize);
@@ -31,8 +31,8 @@ public:
     virtual void acceptVisitor(CCDataVisitor &visitor) { visitor.visit(this); }
 
 private:
-    unsigned char* m_pBytes;
-    unsigned long m_nSize;
+    unsigned char* _bytes;
+    unsigned long _size;
 };
 
 NS_CC_END

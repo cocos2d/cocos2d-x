@@ -5,11 +5,12 @@
     <Type>C++App</Type>
     <Requirements>
         <Feature Name="http://tizen.org/feature/platform.core.cpu.arch.x86">true</Feature>
+        <Feature Name="http://tizen.org/feature/platform.core.fpu.arch.vfpv3">true</Feature>
     </Requirements>
     <Apps>
         <ApiVersion>2.1</ApiVersion>
         <Privileges/>
-        <UiApp LaunchingHistoryVisible="True" Main="True" MenuIconVisible="True" Name="TestLua">
+        <UiApp HwAcceleration="On" LaunchingHistoryVisible="True" Main="True" MenuIconVisible="True" Name="TestLua">
             <UiScalability BaseScreenSize="Normal" CoordinateSystem="Logical" LogicalCoordinate="720"/>
             <UiTheme SystemTheme="White"/>
             <DisplayNames>

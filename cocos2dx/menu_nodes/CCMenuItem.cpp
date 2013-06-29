@@ -52,7 +52,7 @@ const unsigned int    kDisableTag = 0x3;
 
 CCMenuItem* CCMenuItem::create()
 {
-    return CCMenuItem::create((const ccMenuCallback&)NULL);
+    return CCMenuItem::create((const ccMenuCallback&)nullptr);
 }
 
 // XXX deprecated
@@ -84,8 +84,8 @@ bool CCMenuItem::initWithCallback(const ccMenuCallback& callback)
 {
     setAnchorPoint(ccp(0.5f, 0.5f));
 	_callback = callback;
-    m_bEnabled = true;
-    m_bSelected = false;
+    _enabled = true;
+    _selected = false;
     return true;
 }
 
@@ -98,41 +98,41 @@ CCMenuItem::~CCMenuItem()
 
 void CCMenuItem::selected()
 {
-    m_bSelected = true;
+    _selected = true;
 }
 
 void CCMenuItem::unselected()
 {
-    m_bSelected = false;
+    _selected = false;
 }
 
 void CCMenuItem::registerScriptTapHandler(int nHandler)
 {
     unregisterScriptTapHandler();
-    m_nScriptTapHandler = nHandler;
-    LUALOG("[LUA] Add CCMenuItem script handler: %d", m_nScriptTapHandler);
+    _scriptTapHandler = nHandler;
+    LUALOG("[LUA] Add CCMenuItem script handler: %d", _scriptTapHandler);
 }
 
 void CCMenuItem::unregisterScriptTapHandler(void)
 {
-    if (m_nScriptTapHandler)
+    if (_scriptTapHandler)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nScriptTapHandler);
-        LUALOG("[LUA] Remove CCMenuItem script handler: %d", m_nScriptTapHandler);
-        m_nScriptTapHandler = 0;
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(_scriptTapHandler);
+        LUALOG("[LUA] Remove CCMenuItem script handler: %d", _scriptTapHandler);
+        _scriptTapHandler = 0;
     }
 }
 
 void CCMenuItem::activate()
 {
-    if (m_bEnabled)
+    if (_enabled)
     {
         if( _callback )
         {
 			_callback(this);
         }
         
-        if (kScriptTypeNone != m_eScriptType)
+        if (kScriptTypeNone != _scriptType)
         {
             CCScriptEngineManager::sharedManager()->getScriptEngine()->executeMenuItemEvent(this);
         }
@@ -141,26 +141,27 @@ void CCMenuItem::activate()
 
 void CCMenuItem::setEnabled(bool enabled)
 {
-    m_bEnabled = enabled;
+    _enabled = enabled;
 }
 
 bool CCMenuItem::isEnabled()
 {
-    return m_bEnabled;
+    return _enabled;
 }
 
 CCRect CCMenuItem::rect()
 {
-    return CCRectMake( m_obPosition.x - m_obContentSize.width * m_obAnchorPoint.x,
-                      m_obPosition.y - m_obContentSize.height * m_obAnchorPoint.y,
-                      m_obContentSize.width, m_obContentSize.height);
+    return CCRectMake( _position.x - _contentSize.width * _anchorPoint.x,
+                      _position.y - _contentSize.height * _anchorPoint.y,
+                      _contentSize.width, _contentSize.height);
 }
 
 bool CCMenuItem::isSelected()
 {
-    return m_bSelected;
+    return _selected;
 }
 
+// XXX deprecated
 void CCMenuItem::setTarget(CCObject *target, SEL_MenuHandler selector)
 {
 	_target = target;
@@ -180,15 +181,15 @@ void CCMenuItem::setCallback(const ccMenuCallback& callback)
 
 const ccColor3B& CCMenuItemLabel::getDisabledColor()
 {
-    return m_tDisabledColor;
+    return _disabledColor;
 }
 void CCMenuItemLabel::setDisabledColor(const ccColor3B& var)
 {
-    m_tDisabledColor = var;
+    _disabledColor = var;
 }
 CCNode *CCMenuItemLabel::getLabel()
 {
-    return m_pLabel;
+    return _label;
 }
 void CCMenuItemLabel::setLabel(CCNode* var)
 {
@@ -199,12 +200,12 @@ void CCMenuItemLabel::setLabel(CCNode* var)
         setContentSize(var->getContentSize());
     }
     
-    if (m_pLabel)
+    if (_label)
     {
-        removeChild(m_pLabel, true);
+        removeChild(_label, true);
     }
     
-    m_pLabel = var;
+    _label = var;
 }
 
 // XXX: deprecated
@@ -227,7 +228,7 @@ CCMenuItemLabel * CCMenuItemLabel::create(CCNode*label, const ccMenuCallback& ca
 CCMenuItemLabel* CCMenuItemLabel::create(CCNode *label)
 {
     CCMenuItemLabel *pRet = new CCMenuItemLabel();
-    pRet->initWithLabel(label, (const ccMenuCallback&) NULL);
+    pRet->initWithLabel(label, (const ccMenuCallback&) nullptr);
     pRet->autorelease();
     return pRet;
 }
@@ -243,8 +244,8 @@ bool CCMenuItemLabel::initWithLabel(CCNode* label, CCObject* target, SEL_MenuHan
 bool CCMenuItemLabel::initWithLabel(CCNode* label, const ccMenuCallback& callback)
 {
     CCMenuItem::initWithCallback(callback);
-    m_fOriginalScale = 1.0f;
-    m_tColorBackup = ccWHITE;
+    _originalScale = 1.0f;
+    _colorBackup = ccWHITE;
     setDisabledColor(ccc3(126,126,126));
     this->setLabel(label);
 
@@ -261,16 +262,16 @@ CCMenuItemLabel::~CCMenuItemLabel()
 
 void CCMenuItemLabel::setString(const char * label)
 {
-    dynamic_cast<CCLabelProtocol*>(m_pLabel)->setString(label);
-    this->setContentSize(m_pLabel->getContentSize());
+    dynamic_cast<CCLabelProtocol*>(_label)->setString(label);
+    this->setContentSize(_label->getContentSize());
 }
 
 void CCMenuItemLabel::activate()
 {
-    if(m_bEnabled)
+    if(_enabled)
     {
         this->stopAllActions();
-        this->setScale( m_fOriginalScale );
+        this->setScale( _originalScale );
         CCMenuItem::activate();
     }
 }
@@ -278,7 +279,7 @@ void CCMenuItemLabel::activate()
 void CCMenuItemLabel::selected()
 {
     // subclass to change the default action
-    if(m_bEnabled)
+    if(_enabled)
     {
         CCMenuItem::selected();
         
@@ -289,10 +290,10 @@ void CCMenuItemLabel::selected()
         }
         else
         {
-            m_fOriginalScale = this->getScale();
+            _originalScale = this->getScale();
         }
         
-        CCAction *zoomAction = CCScaleTo::create(0.1f, m_fOriginalScale * 1.2f);
+        CCAction *zoomAction = CCScaleTo::create(0.1f, _originalScale * 1.2f);
         zoomAction->setTag(kZoomActionTag);
         this->runAction(zoomAction);
     }
@@ -301,11 +302,11 @@ void CCMenuItemLabel::selected()
 void CCMenuItemLabel::unselected()
 {
     // subclass to change the default action
-    if(m_bEnabled)
+    if(_enabled)
     {
         CCMenuItem::unselected();
         this->stopActionByTag(kZoomActionTag);
-        CCAction *zoomAction = CCScaleTo::create(0.1f, m_fOriginalScale);
+        CCAction *zoomAction = CCScaleTo::create(0.1f, _originalScale);
         zoomAction->setTag(kZoomActionTag);
         this->runAction(zoomAction);
     }
@@ -313,16 +314,16 @@ void CCMenuItemLabel::unselected()
 
 void CCMenuItemLabel::setEnabled(bool enabled)
 {
-    if( m_bEnabled != enabled ) 
+    if( _enabled != enabled ) 
     {
         if(enabled == false)
         {
-            m_tColorBackup = dynamic_cast<CCRGBAProtocol*>(m_pLabel)->getColor();
-            dynamic_cast<CCRGBAProtocol*>(m_pLabel)->setColor(m_tDisabledColor);
+            _colorBackup = dynamic_cast<CCRGBAProtocol*>(_label)->getColor();
+            dynamic_cast<CCRGBAProtocol*>(_label)->setColor(_disabledColor);
         }
         else
         {
-            dynamic_cast<CCRGBAProtocol*>(m_pLabel)->setColor(m_tColorBackup);
+            dynamic_cast<CCRGBAProtocol*>(_label)->setColor(_colorBackup);
         }
     }
     CCMenuItem::setEnabled(enabled);
@@ -334,7 +335,7 @@ void CCMenuItemLabel::setEnabled(bool enabled)
 
 CCMenuItemAtlasFont * CCMenuItemAtlasFont::create(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap)
 {
-    return CCMenuItemAtlasFont::create(value, charMapFile, itemWidth, itemHeight, startCharMap, (const ccMenuCallback&)NULL);
+    return CCMenuItemAtlasFont::create(value, charMapFile, itemWidth, itemHeight, startCharMap, (const ccMenuCallback&)nullptr);
 }
 
 // XXX: deprecated
@@ -427,11 +428,12 @@ CCMenuItemFont * CCMenuItemFont::create(const char *value, const ccMenuCallback&
 CCMenuItemFont * CCMenuItemFont::create(const char *value)
 {
     CCMenuItemFont *pRet = new CCMenuItemFont();
-    pRet->initWithString(value, (const ccMenuCallback&)NULL);
+    pRet->initWithString(value, (const ccMenuCallback&)nullptr);
     pRet->autorelease();
     return pRet;
 }
 
+// XXX: deprecated
 bool CCMenuItemFont::initWithString(const char *value, CCObject* target, SEL_MenuHandler selector)
 {
     CCAssert( value != NULL && strlen(value) != 0, "Value length must be greater than 0");
@@ -445,10 +447,10 @@ bool CCMenuItemFont::initWithString(const char *value, const ccMenuCallback& cal
 {
     CCAssert( value != NULL && strlen(value) != 0, "Value length must be greater than 0");
 
-    m_strFontName = _globalFontName;
-    m_uFontSize = _globalFontSize;
+    _fontName = _globalFontName;
+    _fontSize = _globalFontSize;
 
-    CCLabelTTF *label = CCLabelTTF::create(value, m_strFontName.c_str(), (float)m_uFontSize);
+    CCLabelTTF *label = CCLabelTTF::create(value, _fontName.c_str(), (float)_fontSize);
     if (CCMenuItemLabel::initWithLabel(label, callback))
     {
         // do something ?
@@ -458,31 +460,31 @@ bool CCMenuItemFont::initWithString(const char *value, const ccMenuCallback& cal
 
 void CCMenuItemFont::recreateLabel()
 {
-    CCLabelTTF *label = CCLabelTTF::create(dynamic_cast<CCLabelProtocol*>(m_pLabel)->getString(), 
-                                                    m_strFontName.c_str(), (float)m_uFontSize);
+    CCLabelTTF *label = CCLabelTTF::create(dynamic_cast<CCLabelProtocol*>(_label)->getString(), 
+                                                    _fontName.c_str(), (float)_fontSize);
     this->setLabel(label);
 }
 
 void CCMenuItemFont::setFontSizeObj(unsigned int s)
 {
-    m_uFontSize = s;
+    _fontSize = s;
     recreateLabel();
 }
 
 unsigned int CCMenuItemFont::fontSizeObj()
 {
-    return m_uFontSize;
+    return _fontSize;
 }
 
 void CCMenuItemFont::setFontNameObj(const char* name)
 {
-    m_strFontName = name;
+    _fontName = name;
     recreateLabel();
 }
 
 const char* CCMenuItemFont::fontNameObj()
 {
-    return m_strFontName.c_str();
+    return _fontName.c_str();
 }
 
 //
@@ -491,12 +493,12 @@ const char* CCMenuItemFont::fontNameObj()
 
 CCNode * CCMenuItemSprite::getNormalImage()
 {
-    return m_pNormalImage;
+    return _normalImage;
 }
 
 void CCMenuItemSprite::setNormalImage(CCNode* pImage)
 {
-    if (pImage != m_pNormalImage)
+    if (pImage != _normalImage)
     {
         if (pImage)
         {
@@ -504,25 +506,25 @@ void CCMenuItemSprite::setNormalImage(CCNode* pImage)
             pImage->setAnchorPoint(ccp(0, 0));
         }
 
-        if (m_pNormalImage)
+        if (_normalImage)
         {
-            removeChild(m_pNormalImage, true);
+            removeChild(_normalImage, true);
         }
 
-        m_pNormalImage = pImage;
-        this->setContentSize(m_pNormalImage->getContentSize());
+        _normalImage = pImage;
+        this->setContentSize(_normalImage->getContentSize());
         this->updateImagesVisibility();
     }
 }
 
 CCNode * CCMenuItemSprite::getSelectedImage()
 {
-    return m_pSelectedImage;
+    return _selectedImage;
 }
 
 void CCMenuItemSprite::setSelectedImage(CCNode* pImage)
 {
-    if (pImage != m_pNormalImage)
+    if (pImage != _normalImage)
     {
         if (pImage)
         {
@@ -530,24 +532,24 @@ void CCMenuItemSprite::setSelectedImage(CCNode* pImage)
             pImage->setAnchorPoint(ccp(0, 0));
         }
 
-        if (m_pSelectedImage)
+        if (_selectedImage)
         {
-            removeChild(m_pSelectedImage, true);
+            removeChild(_selectedImage, true);
         }
 
-        m_pSelectedImage = pImage;
+        _selectedImage = pImage;
         this->updateImagesVisibility();
     }
 }
 
 CCNode * CCMenuItemSprite::getDisabledImage()
 {
-    return m_pDisabledImage;
+    return _disabledImage;
 }
 
 void CCMenuItemSprite::setDisabledImage(CCNode* pImage)
 {
-    if (pImage != m_pNormalImage)
+    if (pImage != _normalImage)
     {
         if (pImage)
         {
@@ -555,12 +557,12 @@ void CCMenuItemSprite::setDisabledImage(CCNode* pImage)
             pImage->setAnchorPoint(ccp(0, 0));
         }
 
-        if (m_pDisabledImage)
+        if (_disabledImage)
         {
-            removeChild(m_pDisabledImage, true);
+            removeChild(_disabledImage, true);
         }
 
-        m_pDisabledImage = pImage;
+        _disabledImage = pImage;
         this->updateImagesVisibility();
     }
 }
@@ -571,7 +573,7 @@ void CCMenuItemSprite::setDisabledImage(CCNode* pImage)
 
 CCMenuItemSprite * CCMenuItemSprite::create(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite)
 {
-    return CCMenuItemSprite::create(normalSprite, selectedSprite, disabledSprite, (const ccMenuCallback&)NULL);
+    return CCMenuItemSprite::create(normalSprite, selectedSprite, disabledSprite, (const ccMenuCallback&)nullptr);
 }
 
 // XXX deprecated
@@ -617,9 +619,9 @@ bool CCMenuItemSprite::initWithNormalSprite(CCNode* normalSprite, CCNode* select
     setSelectedImage(selectedSprite);
     setDisabledImage(disabledSprite);
 
-    if(m_pNormalImage)
+    if(_normalImage)
     {
-        this->setContentSize(m_pNormalImage->getContentSize());
+        this->setContentSize(_normalImage->getContentSize());
     }
 
     setCascadeColorEnabled(true);
@@ -635,21 +637,21 @@ void CCMenuItemSprite::selected()
 {
     CCMenuItem::selected();
 
-    if (m_pNormalImage)
+    if (_normalImage)
     {
-        if (m_pDisabledImage)
+        if (_disabledImage)
         {
-            m_pDisabledImage->setVisible(false);
+            _disabledImage->setVisible(false);
         }
 
-        if (m_pSelectedImage)
+        if (_selectedImage)
         {
-            m_pNormalImage->setVisible(false);
-            m_pSelectedImage->setVisible(true);
+            _normalImage->setVisible(false);
+            _selectedImage->setVisible(true);
         }
         else
         {
-            m_pNormalImage->setVisible(true);
+            _normalImage->setVisible(true);
         }
     }
 }
@@ -657,25 +659,25 @@ void CCMenuItemSprite::selected()
 void CCMenuItemSprite::unselected()
 {
     CCMenuItem::unselected();
-    if (m_pNormalImage)
+    if (_normalImage)
     {
-        m_pNormalImage->setVisible(true);
+        _normalImage->setVisible(true);
 
-        if (m_pSelectedImage)
+        if (_selectedImage)
         {
-            m_pSelectedImage->setVisible(false);
+            _selectedImage->setVisible(false);
         }
 
-        if (m_pDisabledImage)
+        if (_disabledImage)
         {
-            m_pDisabledImage->setVisible(false);
+            _disabledImage->setVisible(false);
         }
     }
 }
 
 void CCMenuItemSprite::setEnabled(bool bEnabled)
 {
-    if( m_bEnabled != bEnabled ) 
+    if( _enabled != bEnabled ) 
     {
         CCMenuItem::setEnabled(bEnabled);
         this->updateImagesVisibility();
@@ -685,25 +687,25 @@ void CCMenuItemSprite::setEnabled(bool bEnabled)
 // Helper 
 void CCMenuItemSprite::updateImagesVisibility()
 {
-    if (m_bEnabled)
+    if (_enabled)
     {
-        if (m_pNormalImage)   m_pNormalImage->setVisible(true);
-        if (m_pSelectedImage) m_pSelectedImage->setVisible(false);
-        if (m_pDisabledImage) m_pDisabledImage->setVisible(false);
+        if (_normalImage)   _normalImage->setVisible(true);
+        if (_selectedImage) _selectedImage->setVisible(false);
+        if (_disabledImage) _disabledImage->setVisible(false);
     }
     else
     {
-        if (m_pDisabledImage)
+        if (_disabledImage)
         {
-            if (m_pNormalImage)   m_pNormalImage->setVisible(false);
-            if (m_pSelectedImage) m_pSelectedImage->setVisible(false);
-            if (m_pDisabledImage) m_pDisabledImage->setVisible(true);
+            if (_normalImage)   _normalImage->setVisible(false);
+            if (_selectedImage) _selectedImage->setVisible(false);
+            if (_disabledImage) _disabledImage->setVisible(true);
         }
         else
         {
-            if (m_pNormalImage)   m_pNormalImage->setVisible(true);
-            if (m_pSelectedImage) m_pSelectedImage->setVisible(false);
-            if (m_pDisabledImage) m_pDisabledImage->setVisible(false);
+            if (_normalImage)   _normalImage->setVisible(true);
+            if (_selectedImage) _selectedImage->setVisible(false);
+            if (_disabledImage) _disabledImage->setVisible(false);
         }
     }
 }
@@ -726,12 +728,12 @@ CCMenuItemImage* CCMenuItemImage::create()
 
 bool CCMenuItemImage::init(void)
 {
-    return initWithNormalImage(NULL, NULL, NULL, (const ccMenuCallback&)NULL);
+    return initWithNormalImage(NULL, NULL, NULL, (const ccMenuCallback&)nullptr);
 }
 
 CCMenuItemImage * CCMenuItemImage::create(const char *normalImage, const char *selectedImage)
 {
-    return CCMenuItemImage::create(normalImage, selectedImage, NULL, (const ccMenuCallback&)NULL);
+    return CCMenuItemImage::create(normalImage, selectedImage, NULL, (const ccMenuCallback&)nullptr);
 }
 
 // XXX deprecated
@@ -773,7 +775,7 @@ CCMenuItemImage * CCMenuItemImage::create(const char *normalImage, const char *s
 CCMenuItemImage * CCMenuItemImage::create(const char *normalImage, const char *selectedImage, const char *disabledImage)
 {
     CCMenuItemImage *pRet = new CCMenuItemImage();
-    if (pRet && pRet->initWithNormalImage(normalImage, selectedImage, disabledImage, (const ccMenuCallback&)NULL))
+    if (pRet && pRet->initWithNormalImage(normalImage, selectedImage, disabledImage, (const ccMenuCallback&)nullptr))
     {
         pRet->autorelease();
         return pRet;
@@ -837,39 +839,70 @@ void CCMenuItemImage::setDisabledSpriteFrame(CCSpriteFrame * frame)
 void CCMenuItemToggle::setSubItems(CCArray* var)
 {
     CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(m_pSubItems);
-    m_pSubItems = var;
+    CC_SAFE_RELEASE(_subItems);
+    _subItems = var;
 }
 
 CCArray* CCMenuItemToggle::getSubItems()
 {
-    return m_pSubItems;
+    return _subItems;
 }
 
+// XXX: deprecated
 CCMenuItemToggle * CCMenuItemToggle::createWithTarget(CCObject* target, SEL_MenuHandler selector, CCArray* menuItems)
 {
     CCMenuItemToggle *pRet = new CCMenuItemToggle();
     pRet->CCMenuItem::initWithTarget(target, selector);
-    pRet->m_pSubItems = CCArray::create();
-    pRet->m_pSubItems->retain();
+    pRet->_subItems = CCArray::create();
+    pRet->_subItems->retain();
     
     for (unsigned int z=0; z < menuItems->count(); z++)
     {
         CCMenuItem* menuItem = (CCMenuItem*)menuItems->objectAtIndex(z);
-        pRet->m_pSubItems->addObject(menuItem);
+        pRet->_subItems->addObject(menuItem);
     }
     
-    pRet->m_uSelectedIndex = UINT_MAX;
+    pRet->_selectedIndex = UINT_MAX;
     pRet->setSelectedIndex(0);
     return pRet;
 }
 
+CCMenuItemToggle * CCMenuItemToggle::createWithCallback(const ccMenuCallback &callback, CCArray* menuItems)
+{
+    CCMenuItemToggle *pRet = new CCMenuItemToggle();
+    pRet->CCMenuItem::initWithCallback(callback);
+    pRet->_subItems = CCArray::create();
+    pRet->_subItems->retain();
+
+    for (unsigned int z=0; z < menuItems->count(); z++)
+    {
+        CCMenuItem* menuItem = (CCMenuItem*)menuItems->objectAtIndex(z);
+        pRet->_subItems->addObject(menuItem);
+    }
+
+    pRet->_selectedIndex = UINT_MAX;
+    pRet->setSelectedIndex(0);
+    return pRet;
+}
+
+// XXX: deprecated
 CCMenuItemToggle * CCMenuItemToggle::createWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, ...)
 {
     va_list args;
     va_start(args, item);
     CCMenuItemToggle *pRet = new CCMenuItemToggle();
     pRet->initWithTarget(target, selector, item, args);
+    pRet->autorelease();
+    va_end(args);
+    return pRet;
+}
+
+CCMenuItemToggle * CCMenuItemToggle::createWithCallback(const ccMenuCallback &callback, CCMenuItem* item, ...)
+{
+    va_list args;
+    va_start(args, item);
+    CCMenuItemToggle *pRet = new CCMenuItemToggle();
+    pRet->initWithCallback(callback, item, args);
     pRet->autorelease();
     va_end(args);
     return pRet;
@@ -883,20 +916,28 @@ CCMenuItemToggle * CCMenuItemToggle::create()
     return pRet;
 }
 
+// XXX: deprecated
 bool CCMenuItemToggle::initWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, va_list args)
 {
-    CCMenuItem::initWithTarget(target, selector);
-    this->m_pSubItems = CCArray::create();
-    this->m_pSubItems->retain();
+	_target = target;
+	CC_SAFE_RETAIN(_target);
+	return initWithCallback(std::bind( selector, target, std::placeholders::_1), item, args);
+}
+
+bool CCMenuItemToggle::initWithCallback(const ccMenuCallback &callback, CCMenuItem *item, va_list args)
+{
+    CCMenuItem::initWithCallback(callback);
+    this->_subItems = CCArray::create();
+    this->_subItems->retain();
     int z = 0;
     CCMenuItem *i = item;
-    while(i) 
+    while(i)
     {
         z++;
-        m_pSubItems->addObject(i);
+        _subItems->addObject(i);
         i = va_arg(args, CCMenuItem*);
     }
-    m_uSelectedIndex = UINT_MAX;
+    _selectedIndex = UINT_MAX;
     this->setSelectedIndex(0);
     return true;
 }
@@ -911,14 +952,14 @@ CCMenuItemToggle* CCMenuItemToggle::create(CCMenuItem *item)
 
 bool CCMenuItemToggle::initWithItem(CCMenuItem *item)
 {
-    CCMenuItem::initWithCallback((const ccMenuCallback&)NULL);
+    CCMenuItem::initWithCallback((const ccMenuCallback&)nullptr);
     setSubItems(CCArray::create());
 
     if (item)
     {
-        m_pSubItems->addObject(item);
+        _subItems->addObject(item);
     }
-    m_uSelectedIndex = UINT_MAX;
+    _selectedIndex = UINT_MAX;
     this->setSelectedIndex(0);
     
     setCascadeColorEnabled(true);
@@ -929,25 +970,25 @@ bool CCMenuItemToggle::initWithItem(CCMenuItem *item)
 
 void CCMenuItemToggle::addSubItem(CCMenuItem *item)
 {
-    m_pSubItems->addObject(item);
+    _subItems->addObject(item);
 }
 
 CCMenuItemToggle::~CCMenuItemToggle()
 {
-    CC_SAFE_RELEASE(m_pSubItems);
+    CC_SAFE_RELEASE(_subItems);
 }
 void CCMenuItemToggle::setSelectedIndex(unsigned int index)
 {
-    if( index != m_uSelectedIndex && m_pSubItems->count() > 0 )
+    if( index != _selectedIndex && _subItems->count() > 0 )
     {
-        m_uSelectedIndex = index;
+        _selectedIndex = index;
         CCMenuItem *currentItem = (CCMenuItem*)getChildByTag(kCurrentItem);
         if( currentItem )
         {
             currentItem->removeFromParentAndCleanup(false);
         }
 
-        CCMenuItem* item = (CCMenuItem*)m_pSubItems->objectAtIndex(m_uSelectedIndex);
+        CCMenuItem* item = (CCMenuItem*)_subItems->objectAtIndex(_selectedIndex);
         this->addChild(item, 0, kCurrentItem);
         CCSize s = item->getContentSize();
         this->setContentSize(s);
@@ -956,38 +997,38 @@ void CCMenuItemToggle::setSelectedIndex(unsigned int index)
 }
 unsigned int CCMenuItemToggle::getSelectedIndex()
 {
-    return m_uSelectedIndex;
+    return _selectedIndex;
 }
 void CCMenuItemToggle::selected()
 {
     CCMenuItem::selected();
-    ((CCMenuItem*)(m_pSubItems->objectAtIndex(m_uSelectedIndex)))->selected();
+    ((CCMenuItem*)(_subItems->objectAtIndex(_selectedIndex)))->selected();
 }
 void CCMenuItemToggle::unselected()
 {
     CCMenuItem::unselected();
-    ((CCMenuItem*)(m_pSubItems->objectAtIndex(m_uSelectedIndex)))->unselected();
+    ((CCMenuItem*)(_subItems->objectAtIndex(_selectedIndex)))->unselected();
 }
 void CCMenuItemToggle::activate()
 {
     // update index
-    if( m_bEnabled ) 
+    if( _enabled ) 
     {
-        unsigned int newIndex = (m_uSelectedIndex + 1) % m_pSubItems->count();
+        unsigned int newIndex = (_selectedIndex + 1) % _subItems->count();
         this->setSelectedIndex(newIndex);
     }
     CCMenuItem::activate();
 }
 void CCMenuItemToggle::setEnabled(bool enabled)
 {
-    if (m_bEnabled != enabled)
+    if (_enabled != enabled)
     {
         CCMenuItem::setEnabled(enabled);
 
-        if(m_pSubItems && m_pSubItems->count() > 0)
+        if(_subItems && _subItems->count() > 0)
         {
             CCObject* pObj = NULL;
-            CCARRAY_FOREACH(m_pSubItems, pObj)
+            CCARRAY_FOREACH(_subItems, pObj)
             {
                 CCMenuItem* pItem = (CCMenuItem*)pObj;
                 pItem->setEnabled(enabled);
@@ -998,7 +1039,7 @@ void CCMenuItemToggle::setEnabled(bool enabled)
 
 CCMenuItem* CCMenuItemToggle::selectedItem()
 {
-    return (CCMenuItem*)m_pSubItems->objectAtIndex(m_uSelectedIndex);
+    return (CCMenuItem*)_subItems->objectAtIndex(_selectedIndex);
 }
 
 NS_CC_END

@@ -234,7 +234,7 @@ void SpriteMenuLayer::showCurrentTest()
     int nSubTest = pPreScene->getSubTestNum();
     int nNodes   = pPreScene->getNodesNum();
 
-    switch (m_nCurCase)
+    switch (_curCase)
     {
     case 0:
         pScene = new SpritePerformTest1;
@@ -258,7 +258,7 @@ void SpriteMenuLayer::showCurrentTest()
         pScene = new SpritePerformTest7;
         break;
     }
-    s_nSpriteCurCase = m_nCurCase;
+    s_nSpriteCurCase = _curCase;
 
     if (pScene)
     {
@@ -278,8 +278,8 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     //srandom(0);
 
     subtestNumber = asubtest;
-    m_pSubTest = new SubTest;
-    m_pSubTest->initWithSubTest(asubtest, this);
+    _subTest = new SubTest;
+    _subTest->initWithSubTest(asubtest, this);
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
@@ -287,9 +287,9 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     quantityNodes = 0;
 
     CCMenuItemFont::setFontSize(65);
-    CCMenuItemFont *decrease = CCMenuItemFont::create(" - ", this, menu_selector(SpriteMainScene::onDecrease));
+    CCMenuItemFont *decrease = CCMenuItemFont::create(" - ", CC_CALLBACK_1(SpriteMainScene::onDecrease, this));
     decrease->setColor(ccc3(0,200,20));
-    CCMenuItemFont *increase = CCMenuItemFont::create(" + ", this, menu_selector(SpriteMainScene::onIncrease));
+    CCMenuItemFont *increase = CCMenuItemFont::create(" + ", CC_CALLBACK_1(SpriteMainScene::onIncrease, this));
     increase->setColor(ccc3(0,200,20));
 
     CCMenu *menu = CCMenu::create(decrease, increase, NULL);
@@ -314,7 +314,7 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     {
         char str[10] = {0};
         sprintf(str, "%d ", i);
-        CCMenuItemFont* itemFont = CCMenuItemFont::create(str, this, menu_selector(SpriteMainScene::testNCallback));
+        CCMenuItemFont* itemFont = CCMenuItemFont::create(str, CC_CALLBACK_1(SpriteMainScene::testNCallback, this));
         itemFont->setTag(i);
         pSubMenu->addChild(itemFont, 10);
 
@@ -347,10 +347,10 @@ std::string SpriteMainScene::title()
 
 SpriteMainScene::~SpriteMainScene()
 {
-    if (m_pSubTest)
+    if (_subTest)
     {
-        delete m_pSubTest;
-        m_pSubTest = NULL;
+        delete _subTest;
+        _subTest = NULL;
     }
 }
 
@@ -381,7 +381,7 @@ void SpriteMainScene::onIncrease(CCObject* pSender)
 
     for( int i=0;i< kNodesIncrease;i++)
     {
-        CCSprite *sprite = m_pSubTest->createSpriteWithTag(quantityNodes);
+        CCSprite *sprite = _subTest->createSpriteWithTag(quantityNodes);
         doTest(sprite);
         quantityNodes++;
     }
@@ -397,7 +397,7 @@ void SpriteMainScene::onDecrease(CCObject* pSender)
     for( int i=0;i < kNodesIncrease;i++)
     {
         quantityNodes--;
-        m_pSubTest->removeByTag(quantityNodes);
+        _subTest->removeByTag(quantityNodes);
     }
 
     updateNodes();

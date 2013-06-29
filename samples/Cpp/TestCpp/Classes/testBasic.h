@@ -14,9 +14,6 @@ public:
     virtual void onEnter();
 
     virtual void runThisTest() = 0;
-
-    // The CallBack for back to the main menu scene
-    virtual void MainMenuCallback(CCObject* pSender);
 };
 
 typedef CCLayer* (*NEWTESTFUNC)();
@@ -25,5 +22,9 @@ static CCLayer* create##className() \
 { return new className(); }
 
 #define CF(className) create##className
+
+// C++ 11
+
+#define CL(__className__) [](){ return new __className__();}
 
 #endif

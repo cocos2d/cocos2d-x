@@ -53,14 +53,14 @@ Special features and Limitations:
 class CC_DLL CCParticleSystemQuad : public CCParticleSystem
 {
 protected:
-    ccV3F_C4B_T2F_Quad    *m_pQuads;        // quads to be rendered
-    GLushort            *m_pIndices;    // indices
+    ccV3F_C4B_T2F_Quad    *_quads;        // quads to be rendered
+    GLushort            *_indices;    // indices
 
 #if CC_TEXTURE_ATLAS_USE_VAO
-    GLuint                m_uVAOname;
+    GLuint                _VAOname;
 #endif
 
-    GLuint                m_pBuffersVBO[2]; //0: vertex  1: indices
+    GLuint                _buffersVBO[2]; //0: vertex  1: indices
 
 public:
     CCParticleSystemQuad();

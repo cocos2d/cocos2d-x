@@ -52,6 +52,7 @@ public class AdsAdmob implements InterfaceAds {
 	private static final int ADMOB_SIZE_IABMRect = 1;
 	private static final int ADMOB_SIZE_IABBanner = 2;
 	private static final int ADMOB_SIZE_IABLeaderboard = 3;
+	private static final int ADMOB_SIZE_Skyscraper = 4;
 
 	protected static void LogE(String msg, Exception e) {
 		Log.e(LOG_TAG, msg, e);
@@ -152,6 +153,9 @@ public class AdsAdmob implements InterfaceAds {
 				case AdsAdmob.ADMOB_SIZE_IABLeaderboard:
 					size = AdSize.IAB_LEADERBOARD;
 					break;
+				case AdsAdmob.ADMOB_SIZE_Skyscraper:
+				    size = AdSize.IAB_WIDE_SKYSCRAPER;
+				    break;
 				default:
 					break;
 				}

@@ -2,13 +2,10 @@
 #define _TILEMAP_TEST_H_
 
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
-class TileDemo : public CCLayer
+class TileDemo : public BaseTest
 {
-protected:
-    CCLabelTTF* m_label;
-    CCLabelTTF* m_subtitle;
-
 public:
     TileDemo(void);
     virtual ~TileDemo(void);
@@ -74,8 +71,8 @@ public:
 
 class TMXReadWriteTest : public TileDemo
 {
-    unsigned int m_gid;
-    unsigned int m_gid2;
+    unsigned int _gid;
+    unsigned int _gid2;
 public:
     TMXReadWriteTest(void);
     virtual std::string title();
@@ -161,7 +158,7 @@ public:
 
 class TMXIsoZorder : public TileDemo
 {
-    CCSprite*    m_tamara;
+    CCSprite*    _tamara;
 public:
     TMXIsoZorder(void);
     virtual std::string title();
@@ -174,7 +171,7 @@ public:
 
 class TMXOrthoZorder : public TileDemo
 {
-    CCSprite*    m_tamara;
+    CCSprite*    _tamara;
 public:
     TMXOrthoZorder(void);
     virtual std::string title();
@@ -186,7 +183,7 @@ public:
 
 class TMXIsoVertexZ : public TileDemo
 {
-    CCSprite*    m_tamara;
+    CCSprite*    _tamara;
 public:
     TMXIsoVertexZ(void);
     virtual std::string title();
@@ -200,7 +197,7 @@ public:
 
 class TMXOrthoVertexZ : public TileDemo
 {
-    CCSprite*    m_tamara;
+    CCSprite*    _tamara;
 public:
     TMXOrthoVertexZ(void);
     virtual std::string title();

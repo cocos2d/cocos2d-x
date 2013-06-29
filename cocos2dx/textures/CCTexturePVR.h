@@ -102,22 +102,22 @@ public:
     // properties 
     
     /** texture id name */
-    inline unsigned int getName() { return m_uName; }
+    inline unsigned int getName() { return _name; }
     /** texture width */
-    inline unsigned int getWidth() { return m_uWidth; }
+    inline unsigned int getWidth() { return _width; }
     /** texture height */
-    inline unsigned int getHeight() { return m_uHeight; }
+    inline unsigned int getHeight() { return _height; }
     /** whether or not the texture has alpha */
-    inline bool hasAlpha() { return m_bHasAlpha; }
+    inline bool hasAlpha() { return _hasAlpha; }
     /** whether or not the texture has premultiplied alpha */
-    inline bool hasPremultipliedAlpha() { return m_bHasPremultipliedAlpha; }
+    inline bool hasPremultipliedAlpha() { return _hasPremultipliedAlpha; }
     /** whether or not the texture should use hasPremultipliedAlpha instead of global default */
-    inline bool isForcePremultipliedAlpha() { return m_bForcePremultipliedAlpha; }
+    inline bool isForcePremultipliedAlpha() { return _forcePremultipliedAlpha; }
     /** how many mipmaps the texture has. 1 means one level (level 0 */
-    inline unsigned int getNumberOfMipmaps() { return m_uNumberOfMipmaps; }
-    inline CCTexture2DPixelFormat getFormat() { return m_eFormat; }
-    inline bool isRetainName() { return m_bRetainName; }
-    inline void setRetainName(bool retainName) { m_bRetainName = retainName; }
+    inline unsigned int getNumberOfMipmaps() { return _numberOfMipmaps; }
+    inline CCTexture2DPixelFormat getFormat() { return _format; }
+    inline bool isRetainName() { return _retainName; }
+    inline void setRetainName(bool retainName) { _retainName = retainName; }
 
 private:
     bool unpackPVRv2Data(unsigned char* data, unsigned int len);
@@ -125,20 +125,20 @@ private:
     bool createGLTexture();
     
 protected:
-    struct CCPVRMipmap m_asMipmaps[CC_PVRMIPMAP_MAX];   // pointer to mipmap images    
-    unsigned int m_uNumberOfMipmaps;                    // number of mipmap used
+    struct CCPVRMipmap _asMipmaps[CC_PVRMIPMAP_MAX];   // pointer to mipmap images    
+    unsigned int _numberOfMipmaps;                    // number of mipmap used
     
-    unsigned int m_uWidth, m_uHeight;
-    GLuint m_uName;
-    bool m_bHasAlpha;
-    bool m_bHasPremultipliedAlpha;
-    bool m_bForcePremultipliedAlpha;
+    unsigned int _width, _height;
+    GLuint _name;
+    bool _hasAlpha;
+    bool _hasPremultipliedAlpha;
+    bool _forcePremultipliedAlpha;
     
     // cocos2d integration
-    bool m_bRetainName;
-    CCTexture2DPixelFormat m_eFormat;
+    bool _retainName;
+    CCTexture2DPixelFormat _format;
     
-   const ccPVRTexturePixelFormatInfo *m_pPixelFormatInfo;
+   const ccPVRTexturePixelFormatInfo *_pixelFormatInfo;
 };
 
 // end of textures group

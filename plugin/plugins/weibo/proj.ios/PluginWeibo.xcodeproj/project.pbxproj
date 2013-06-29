@@ -225,14 +225,12 @@
 		FAE2753F175D9D2B00F5DA8E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/PluginWeibo.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PluginWeibo-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../../../protocols/include",
-					"$(SRCROOT)/../../../protocols/platform/ios",
-				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../protocols/platform/ios";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -242,14 +240,12 @@
 		FAE27540175D9D2B00F5DA8E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/PluginWeibo.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PluginWeibo-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../../../protocols/include",
-					"$(SRCROOT)/../../../protocols/platform/ios",
-				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../protocols/platform/ios";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

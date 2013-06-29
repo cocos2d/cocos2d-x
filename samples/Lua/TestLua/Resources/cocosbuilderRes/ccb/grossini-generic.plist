@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>frames</key>
+	<dict>
+		<key>grossini_dance_generic_01.png</key>
+		<dict>
+			<key>aliases</key>
+			<array/>
+			<key>spriteColorRect</key>
+			<string>{{17, 7}, {51, 109}}</string>
+			<key>spriteOffset</key>
+			<string>{0, 0}</string>
+			<key>spriteSize</key>
+			<string>{85, 121}</string>
+			<key>spriteSourceSize</key>
+			<string>{85, 121}</string>
+			<key>spriteTrimmed</key>
+			<false/>
+			<key>textureRect</key>
+			<string>{{2, 125}, {121, 85}}</string>
+			<key>textureRotated</key>
+			<true/>
+		</dict>
+		<key>grossini_dance_generic_02.png</key>
+		<dict>
+			<key>aliases</key>
+			<array/>
+			<key>spriteColorRect</key>
+			<string>{{5, 7}, {63, 109}}</string>
+			<key>spriteOffset</key>
+			<string>{0, 0}</string>
+			<key>spriteSize</key>
+			<string>{85, 121}</string>
+			<key>spriteSourceSize</key>
+			<string>{85, 121}</string>
+			<key>spriteTrimmed</key>
+			<false/>
+			<key>textureRect</key>
+			<string>{{299, 2}, {85, 121}}</string>
+			<key>textureRotated</key>
+			<false/>
+		</dict>
+		<key>grossini_dance_generic_03.png</key>
+		<dict>
+			<key>aliases</key>
+			<array/>
+			<key>spriteColorRect</key>
+			<string>{{5, 7}, {63, 109}}</string>
+			<key>spriteOffset</key>
+			<string>{-6, -1}</string>
+			<key>spriteSize</key>
+			<string>{63, 109}</string>
+			<key>spriteSourceSize</key>
+			<string>{85, 121}</string>
+			<key>spriteTrimmed</key>
+			<true/>
+			<key>textureRect</key>
+			<string>{{2, 236}, {109, 63}}</string>
+			<key>textureRotated</key>
+			<true/>
+		</dict>
+		<key>grossini_dance_generic_04.png</key>
+		<dict>
+			<key>aliases</key>
+			<array/>
+			<key>spriteColorRect</key>
+			<string>{{5, 7}, {75, 109}}</string>
+			<key>spriteOffset</key>
+			<string>{0, -1}</string>
+			<key>spriteSize</key>
+			<string>{75, 109}</string>
+			<key>spriteSourceSize</key>
+			<string>{85, 121}</string>
+			<key>spriteTrimmed</key>
+			<true/>
+			<key>textureRect</key>
+			<string>{{202, 125}, {75, 109}}</string>
+			<key>textureRotated</key>
+			<false/>
+		</dict>
+		<key>grossini_dance_generic_05.png</key>
+		<dict>
+			<key>aliases</key>
+			<array/>
+			<key>spriteColorRect</key>
+			<string>{{5, 7}, {75, 109}}</string>
+			<key>spriteOffset</key>
+			<string>{0, -1}</string>
+			<key>spriteSize</key>
+			<string>{75, 109}</string>
+			<key>spriteSourceSize</key>
+			<string>{85, 121}</string>
+			<key>spriteTrimmed</key>
+			<true/>
+			<key>textureRect</key>
+			<string>{{125, 125}, {75, 109}}</string>
+			<key>textureRotated</key>
+			<false/>
+		</dict>
+		<key>grossini_dance_generic_06.png</key>
+		<dict>
+			<key>aliases</key>
+			<array/>
+			<key>spriteColorRect</key>
+			<string>{{5, 7}, {63, 109}}</string>
+			<key>spriteOffset</key>
+			<string>{0, 0}</string>
+			<key>spriteSize</key>
+			<string>{85, 121}</string>
+			<key>spriteSourceSize</key>
+			<string>{85, 121}</string>
+			<key>spriteTrimmed</key>
+			<false/>
+			<key>textureRect</key>
+			<string>{{212, 2}, {85, 121}}</string>
+			<key>textureRotated</key>
+			<false/>
+		</dict>
+		<key>grossini_dance_generic_07.png</key>
+		<dict>
+			<key>aliases</key>
+			<array/>
+			<key>spriteColorRect</key>
+			<string>{{5, 7}, {63, 109}}</string>
+			<key>spriteOffset</key>
+			<string>{-6, -1}</string>
+			<key>spriteSize</key>
+			<string>{63, 109}</string>
+			<key>spriteSourceSize</key>
+			<string>{85, 121}</string>
+			<key>spriteTrimmed</key>
+			<true/>
+			<key>textureRect</key>
+			<string>{{279, 125}, {63, 109}}</string>
+			<key>textureRotated</key>
+			<false/>
+		</dict>
+		<key>grossini_dance_generic_08.png</key>
+		<dict>
+			<key>aliases</key>
+			<array/>
+			<key>spriteColorRect</key>
+			<string>{{17, 7}, {51, 109}}</string>
+			<key>spriteOffset</key>
+			<string>{0, -1}</string>
+			<key>spriteSize</key>
+			<string>{51, 109}</string>
+			<key>spriteSourceSize</key>
+			<string>{85, 121}</string>
+			<key>spriteTrimmed</key>
+			<true/>
+			<key>textureRect</key>
+			<string>{{409, 125}, {51, 109}}</string>
+			<key>textureRotated</key>
+			<false/>
+		</dict>
+		<key>grossini_dance_generic_09.png</key>
+		<dict>
+			<key>aliases</key>
+			<array/>
+			<key>spriteColorRect</key>
+			<string>{{17, 7}, {51, 109}}</string>
+			<key>spriteOffset</key>
+			<string>{0, -1}</string>
+			<key>spriteSize</key>
+			<string>{51, 109}</string>
+			<key>spriteSourceSize</key>
+			<string>{85, 121}</string>
+			<key>spriteTrimmed</key>
+			<true/>
+			<key>textureRect</key>
+			<string>{{224, 236}, {109, 51}}</string>
+			<key>textureRotated</key>
+			<true/>
+		</dict>
+		<key>grossini_dance_generic_10.png</key>
+		<dict>
+			<key>aliases</key>
+			<array/>
+			<key>spriteColorRect</key>
+			<string>{{17, 7}, {63, 109}}</string>
+			<key>spriteOffset</key>
+			<string>{6, -1}</string>
+			<key>spriteSize</key>
+			<string>{63, 109}</string>
+			<key>spriteSourceSize</key>
+			<string>{85, 121}</string>
+			<key>spriteTrimmed</key>
+			<true/>
+			<key>textureRect</key>
+			<string>{{344, 125}, {63, 109}}</string>
+			<key>textureRotated</key>
+			<false/>
+		</dict>
+		<key>grossini_dance_generic_11.png</key>
+		<dict>
+			<key>aliases</key>
+			<array/>
+			<key>spriteColorRect</key>
+			<string>{{17, 7}, {63, 109}}</string>
+			<key>spriteOffset</key>
+			<string>{6, -1}</string>
+			<key>spriteSize</key>
+			<string>{63, 109}</string>
+			<key>spriteSourceSize</key>
+			<string>{85, 121}</string>
+			<key>spriteTrimmed</key>
+			<true/>
+			<key>textureRect</key>
+			<string>{{113, 236}, {109, 63}}</string>
+			<key>textureRotated</key>
+			<true/>
+		</dict>
+		<key>grossini_dance_generic_12.png</key>
+		<dict>
+			<key>aliases</key>
+			<array/>
+			<key>spriteColorRect</key>
+			<string>{{17, 10}, {51, 107}}</string>
+			<key>spriteOffset</key>
+			<string>{0, 0}</string>
+			<key>spriteSize</key>
+			<string>{85, 121}</string>
+			<key>spriteSourceSize</key>
+			<string>{85, 121}</string>
+			<key>spriteTrimmed</key>
+			<false/>
+			<key>textureRect</key>
+			<string>{{2, 2}, {85, 121}}</string>
+			<key>textureRotated</key>
+			<false/>
+		</dict>
+		<key>grossini_dance_generic_13.png</key>
+		<dict>
+			<key>aliases</key>
+			<array/>
+			<key>spriteColorRect</key>
+			<string>{{17, 7}, {51, 109}}</string>
+			<key>spriteOffset</key>
+			<string>{0, 0}</string>
+			<key>spriteSize</key>
+			<string>{85, 121}</string>
+			<key>spriteSourceSize</key>
+			<string>{85, 121}</string>
+			<key>spriteTrimmed</key>
+			<false/>
+			<key>textureRect</key>
+			<string>{{386, 2}, {121, 85}}</string>
+			<key>textureRotated</key>
+			<true/>
+		</dict>
+		<key>grossini_dance_generic_14.png</key>
+		<dict>
+			<key>aliases</key>
+			<array/>
+			<key>spriteColorRect</key>
+			<string>{{17, 10}, {51, 107}}</string>
+			<key>spriteOffset</key>
+			<string>{0, 0}</string>
+			<key>spriteSize</key>
+			<string>{85, 121}</string>
+			<key>spriteSourceSize</key>
+			<string>{85, 121}</string>
+			<key>spriteTrimmed</key>
+			<false/>
+			<key>textureRect</key>
+			<string>{{89, 2}, {121, 85}}</string>
+			<key>textureRotated</key>
+			<true/>
+		</dict>
+	</dict>
+	<key>metadata</key>
+	<dict>
+		<key>format</key>
+		<integer>3</integer>
+		<key>size</key>
+		<string>{512, 512}</string>
+	</dict>
+</dict>
+</plist>

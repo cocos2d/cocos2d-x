@@ -12,6 +12,9 @@ Developers:
     Ricardo Quesada
     Rolando Abarca
         Javascript Binding and testjs
+        
+    simpliplant
+        Hardware keyboard support
     
     liuyq
         CCTextureAtlas::updateQuad modify for the memcpy hot spot.
@@ -24,12 +27,14 @@ Developers:
         
     carlomorgantinizynga
         CCLabelTTF supports for shadow and stroke
+        Adding CCLabelTTF::createWithFontDefinition.
         
     James Gregory (j4m3z0r, Zynga)
         Maintainer of Emscripten port.
         Initial Emscripten port.
         Use browser font rendering instead of FreeType.
         Add destructor to CCGLBufferedNode.
+        Asynchronous Image loading for Emscripten
         
     DarraghCoy
         Fix a potential crash SimpleAudioEngineOpenSL::playEffect
@@ -96,6 +101,7 @@ Developers:
     Waiter
         fix an error that OpenSLEngine can't load resources from SD card
         add CCRemoveSelf action
+        Fixing a bug that CCLabelTTF setString crash on android.
 
     billy1380
         make CCLens3d support concave effect.
@@ -183,6 +189,9 @@ Developers:
         Simpler, correct handling of spritesheet sources for CCScale9Sprite.
         Clean up linked libraries for android.
         JavaScript debugger improved and bugfixed.
+        Fix flags for debugger server socket.
+        Fix flags for debugger server socket.
+        When user has built with JS Debugger support ScriptingCore will handle necessary runtime changes.
 
     Nicolas Gramlich (nicolasgramlich, Zynga)
         fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF
@@ -309,6 +318,7 @@ Developers:
         Fixed a bug that CCControlSwitch::setOn(isOn,false) doesn't work.
         Adds VS2012 Express template installing support.
         Fixing a logical error in CCDrawNode::drawPolygon.
+        Fixing a bug that Jsb function getCPBody return type is not right.
 
     DarraghCoy
         Fix for unaligned memory access crash in CCBReader::readFloat().
@@ -460,6 +470,13 @@ Developers:
         
     sunxiaoyu
         Refactoring CCEditBox to add UITextField only when keyboard was opened, remove it when keyboard was closed.
+        
+    edwardzhou (Edward Zhou)
+        Correcting the type detecting order for Lua CCBProxy::getNodeTypeName.
+        Casting variables to their own type, and print warning info if no corresponding lua callback function instead of crash.
+
+    musikov
+        Fixing a bug that missing precision when getting strokeColor and fontFillColor
 
 Retired Core Developers:
     WenSheng Yang

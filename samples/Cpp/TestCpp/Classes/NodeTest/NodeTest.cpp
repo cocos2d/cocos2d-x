@@ -100,34 +100,7 @@ std::string TestCocosNodeDemo::subtitle()
 
 void TestCocosNodeDemo::onEnter()
 {
-    CCLayer::onEnter();
-
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-
-    CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 32);
-    addChild(label, 10);
-    label->setPosition( ccp(s.width/2, s.height-50) );
-
-    std::string strSubtitle = subtitle();
-    if( ! strSubtitle.empty() ) 
-    {
-        CCLabelTTF* l = CCLabelTTF::create(strSubtitle.c_str(), "Thonburi", 16);
-        addChild(l, 1);
-        l->setPosition( ccp(s.width/2, s.height-80) );
-    }    
-
-    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(TestCocosNodeDemo::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1,s_pPathR2, this, menu_selector(TestCocosNodeDemo::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(TestCocosNodeDemo::nextCallback) );
-
-    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
-
-    menu->setPosition( CCPointZero );
-    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    
-    addChild(menu, 11);    
+    BaseTest::onEnter();
 }
 
 void TestCocosNodeDemo::restartCallback(CCObject* pSender)
@@ -187,13 +160,12 @@ void Test2::onEnter()
     CCActionInterval* a2 = CCScaleBy::create(2, 2);
     
     CCAction* action1 = CCRepeatForever::create( CCSequence::create(a1, a2, a2->reverse(), NULL) );
-    CCAction* action2 = CCRepeatForever::create(
-                                                    CCSequence::create(
-                                                        (CCActionInterval*)(a1->copy()->autorelease()), 
-                                                        (CCActionInterval*)(a2->copy()->autorelease()), 
-                                                        a2->reverse(), 
-                                                        NULL)
-                                                );
+    CCAction* action2 = CCRepeatForever::create( CCSequence::create(
+																	a1->clone(),
+																	a2->clone(),
+																	a2->reverse(),
+																	NULL)
+												);
     
     sp2->setAnchorPoint(ccp(0,0));
     
@@ -265,7 +237,7 @@ Test5::Test5()
     CCRotateBy* rot = CCRotateBy::create(2, 360);
     CCActionInterval* rot_back = rot->reverse();
     CCAction* forever = CCRepeatForever::create(CCSequence::create(rot, rot_back, NULL));
-    CCAction* forever2 = (CCAction*)(forever->copy()->autorelease());
+    CCAction* forever2 = forever->clone();
     forever->setTag(101);
     forever2->setTag(102);
                                                   
@@ -320,10 +292,10 @@ Test6::Test6()
     CCActionInterval* rot = CCRotateBy::create(2, 360);
     CCActionInterval* rot_back = rot->reverse();
     CCAction* forever1 = CCRepeatForever::create(CCSequence::create(rot, rot_back, NULL));
-    CCAction* forever11 =  (CCAction*)(forever1->copy()->autorelease());
+    CCAction* forever11 = forever1->clone();
 
-    CCAction* forever2 =  (CCAction*)(forever1->copy()->autorelease());
-    CCAction* forever21 =  (CCAction*)(forever1->copy()->autorelease());
+    CCAction* forever2 = forever1->clone();
+    CCAction* forever21 = forever1->clone();
     
     addChild(sp1, 0, kTagSprite1);
     sp1->addChild(sp11);
@@ -430,7 +402,7 @@ StressTest2::StressTest2()
     sp1->setPosition( ccp(80, s.height/2) );
     
     CCActionInterval* move = CCMoveBy::create(3, ccp(350,0));
-    CCActionInterval* move_ease_inout3 = CCEaseInOut::create((CCActionInterval*)(move->copy()->autorelease()), 2.0f);
+    CCActionInterval* move_ease_inout3 = CCEaseInOut::create(move->clone(), 2.0f);
     CCActionInterval* move_ease_inout_back3 = move_ease_inout3->reverse();
     CCSequence* seq3 = CCSequence::create( move_ease_inout3, move_ease_inout_back3, NULL);
     sp1->runAction( CCRepeatForever::create(seq3) );
@@ -440,7 +412,7 @@ StressTest2::StressTest2()
     fire->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
     fire->setPosition( ccp(80, s.height/2-50) );
     
-    CCActionInterval* copy_seq3 = (CCActionInterval*)(seq3->copy()->autorelease());
+    CCActionInterval* copy_seq3 = seq3->clone();
     
     fire->runAction( CCRepeatForever::create(copy_seq3) );
     sublayer->addChild(fire, 2);
@@ -646,7 +618,7 @@ CameraZoomTest::CameraZoomTest()
     addChild( sprite, 0, 20);
     sprite->setPosition(ccp(s.width/4*3, s.height/2));
 
-    m_z = 0;
+    _z = 0;
     scheduleUpdate();
 }
 
@@ -655,15 +627,15 @@ void CameraZoomTest::update(float dt)
     CCNode *sprite;
     CCCamera *cam;
     
-    m_z += dt * 100;
+    _z += dt * 100;
     
     sprite = getChildByTag(20);
     cam = sprite->getCamera();
-    cam->setEyeXYZ(0, 0, m_z);
+    cam->setEyeXYZ(0, 0, _z);
     
     sprite = getChildByTag(40);
     cam = sprite->getCamera();
-    cam->setEyeXYZ(0, 0, -m_z);    
+    cam->setEyeXYZ(0, 0, -_z);    
 }
 
 std::string CameraZoomTest::title()

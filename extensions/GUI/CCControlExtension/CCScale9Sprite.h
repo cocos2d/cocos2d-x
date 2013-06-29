@@ -58,32 +58,32 @@ public:
 
 public:
     /** Original sprite's size. */
-    CC_SYNTHESIZE_READONLY(CCSize, m_originalSize, OriginalSize);
+    CC_SYNTHESIZE_READONLY(CCSize, _originalSize, OriginalSize);
     /** Prefered sprite's size. By default the prefered size is the original size. */
 
     //if the preferredSize component is given as -1, it is ignored
-    CC_PROPERTY(CCSize, m_preferredSize, PreferredSize); 
+    CC_PROPERTY(CCSize, _preferredSize, PreferredSize); 
     /** 
      * The end-cap insets. 
      * On a non-resizeable sprite, this property is set to CGRectZero; the sprite 
      * does not use end caps and the entire sprite is subject to stretching. 
      */
-    CC_PROPERTY(CCRect, m_capInsets, CapInsets);
+    CC_PROPERTY(CCRect, _capInsets, CapInsets);
     /** Sets the left side inset */
-    CC_PROPERTY(float, m_insetLeft, InsetLeft);
+    CC_PROPERTY(float, _insetLeft, InsetLeft);
     /** Sets the top side inset */
-    CC_PROPERTY(float, m_insetTop, InsetTop);
+    CC_PROPERTY(float, _insetTop, InsetTop);
     /** Sets the right side inset */
-    CC_PROPERTY(float, m_insetRight, InsetRight);
+    CC_PROPERTY(float, _insetRight, InsetRight);
     /** Sets the bottom side inset */
-    CC_PROPERTY(float, m_insetBottom, InsetBottom);
+    CC_PROPERTY(float, _insetBottom, InsetBottom);
 
 protected:
-    bool m_bSpritesGenerated;
-    CCRect m_spriteRect;
-    bool   m_bSpriteFrameRotated;
-    CCRect m_capInsetsInternal;
-    bool m_positionsAreDirty;
+    bool _spritesGenerated;
+    CCRect _spriteRect;
+    bool   _spriteFrameRotated;
+    CCRect _capInsetsInternal;
+    bool _positionsAreDirty;
     
     CCSpriteBatchNode* _scale9Image;
     CCSprite* _topLeft;

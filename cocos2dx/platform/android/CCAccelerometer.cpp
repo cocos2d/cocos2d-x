@@ -32,7 +32,7 @@ THE SOFTWARE.
 
 namespace cocos2d
 {
-    CCAccelerometer::CCAccelerometer() : m_pAccelDelegate(NULL)
+    CCAccelerometer::CCAccelerometer() : _accelDelegate(NULL)
     {
     }
 
@@ -43,7 +43,7 @@ namespace cocos2d
 
     void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate) 
     {
-        m_pAccelDelegate = pDelegate;
+        _accelDelegate = pDelegate;
 
         if (pDelegate)
         {        
@@ -63,14 +63,14 @@ namespace cocos2d
 
     void CCAccelerometer::update(float x, float y, float z, long sensorTimeStamp) 
     {
-        if (m_pAccelDelegate)
+        if (_accelDelegate)
         {
-            m_obAccelerationValue.x = -((double)x / TG3_GRAVITY_EARTH);
-            m_obAccelerationValue.y = -((double)y / TG3_GRAVITY_EARTH);
-            m_obAccelerationValue.z = -((double)z / TG3_GRAVITY_EARTH);
-            m_obAccelerationValue.timestamp = (double)sensorTimeStamp;
+            _accelerationValue.x = -((double)x / TG3_GRAVITY_EARTH);
+            _accelerationValue.y = -((double)y / TG3_GRAVITY_EARTH);
+            _accelerationValue.z = -((double)z / TG3_GRAVITY_EARTH);
+            _accelerationValue.timestamp = (double)sensorTimeStamp;
 
-            m_pAccelDelegate->didAccelerate(&m_obAccelerationValue);
+            _accelDelegate->didAccelerate(&_accelerationValue);
         }    
     }
 } // end of namespace cococs2d

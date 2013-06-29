@@ -22,14 +22,14 @@ public:
     void updateLightState();
 
 private:
-    bool m_bConnected;
+    bool _connected;
     static bool s_bSwitchOn;
 };
 
 bool Light::s_bSwitchOn = false;
 
 Light::Light()
-    : m_bConnected(false)
+    : _connected(false)
 {}
 
 Light::~Light()
@@ -47,8 +47,8 @@ Light* Light::lightWithFile(const char* name)
 
 void Light::setIsConnectToSwitch(bool bConnectToSwitch)
 {
-    m_bConnected = bConnectToSwitch;
-    if (m_bConnected)
+    _connected = bConnectToSwitch;
+    if (_connected)
     {
         CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(Light::switchStateChanged), MSG_SWITCH_STATE, NULL);
     }
@@ -67,7 +67,7 @@ void Light::switchStateChanged(CCObject* obj)
 
 void Light::updateLightState()
 {
-    if (s_bSwitchOn && m_bConnected)
+    if (s_bSwitchOn && _connected)
     {
         this->setOpacity(255);
     }
@@ -78,12 +78,11 @@ void Light::updateLightState()
 }
 
 NotificationCenterTest::NotificationCenterTest()
-: m_bShowImage(false)
+: _showImage(false)
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCMenuItemFont* pBackItem = CCMenuItemFont::create("Back", this,
-        menu_selector(NotificationCenterTest::toExtensionsMainLayer));
+    CCMenuItemFont* pBackItem = CCMenuItemFont::create("Back", CC_CALLBACK_1(NotificationCenterTest::toExtensionsMainLayer, this));
     pBackItem->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
     CCMenu* pBackMenu = CCMenu::create(pBackItem, NULL);
     pBackMenu->setPosition( CCPointZero );
@@ -93,7 +92,7 @@ NotificationCenterTest::NotificationCenterTest()
     CCLabelTTF *label2 = CCLabelTTF::create("switch on", "Marker Felt", 26);
     CCMenuItemLabel *item1 = CCMenuItemLabel::create(label1);
     CCMenuItemLabel *item2 = CCMenuItemLabel::create(label2);
-    CCMenuItemToggle *item = CCMenuItemToggle::createWithTarget(this, menu_selector(NotificationCenterTest::toggleSwitch), item1, item2, NULL);
+    CCMenuItemToggle *item = CCMenuItemToggle::createWithCallback( CC_CALLBACK_1(NotificationCenterTest::toggleSwitch, this), item1, item2, NULL);
     // turn on
     item->setSelectedIndex(1);
     CCMenu *menu = CCMenu::create(item, NULL);
@@ -115,7 +114,7 @@ NotificationCenterTest::NotificationCenterTest()
         CCLabelTTF *label2 = CCLabelTTF::create("connected", "Marker Felt", 26);
         CCMenuItemLabel *item1 = CCMenuItemLabel::create(label1);
         CCMenuItemLabel *item2 = CCMenuItemLabel::create(label2);
-        CCMenuItemToggle *item = CCMenuItemToggle::createWithTarget(this, menu_selector(NotificationCenterTest::connectToSwitch), item1, item2, NULL);
+        CCMenuItemToggle *item = CCMenuItemToggle::createWithCallback( CC_CALLBACK_1(NotificationCenterTest::connectToSwitch, this), item1, item2, NULL);
         item->setTag(kTagConnect+i);
         item->setPosition(ccp(light->getPosition().x, light->getPosition().y+50));
         menuConnect->addChild(item, 0);

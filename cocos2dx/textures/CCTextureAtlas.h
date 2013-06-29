@@ -56,22 +56,22 @@ To render the quads using an interleaved vertex array list, you should modify th
 class CC_DLL CCTextureAtlas : public CCObject 
 {
 protected:
-    GLushort*           m_pIndices;
+    GLushort*           _indices;
 #if CC_TEXTURE_ATLAS_USE_VAO
-    GLuint              m_uVAOname;
+    GLuint              _VAOname;
 #endif
-    GLuint              m_pBuffersVBO[2]; //0: vertex  1: indices
-    bool                m_bDirty; //indicates whether or not the array buffer of the VBO needs to be updated
+    GLuint              _buffersVBO[2]; //0: vertex  1: indices
+    bool                _dirty; //indicates whether or not the array buffer of the VBO needs to be updated
 
 
     /** quantity of quads that are going to be drawn */
-    CC_PROPERTY_READONLY(unsigned int, m_uTotalQuads, TotalQuads)
+    CC_PROPERTY_READONLY(unsigned int, _totalQuads, TotalQuads)
     /** quantity of quads that can be stored with the current texture atlas size */
-    CC_PROPERTY_READONLY(unsigned int, m_uCapacity, Capacity)
+    CC_PROPERTY_READONLY(unsigned int, _capacity, Capacity)
     /** Texture of the texture atlas */
-    CC_PROPERTY(CCTexture2D *, m_pTexture, Texture)
+    CC_PROPERTY(CCTexture2D *, _texture, Texture)
     /** Quads that are going to be rendered */
-    CC_PROPERTY(ccV3F_C4B_T2F_Quad *, m_pQuads, Quads)
+    CC_PROPERTY(ccV3F_C4B_T2F_Quad *, _quads, Quads)
 
 public:
 
@@ -202,6 +202,12 @@ public:
     /** listen the event that coming to foreground on Android
      */
     void listenBackToForeground(CCObject *obj);
+
+    /** whether or not the array buffer of the VBO needs to be updated*/
+    inline bool isDirty(void) { return _dirty; }
+    /** specify if the array buffer of the VBO needs to be updated */
+    inline void setDirty(bool bDirty) { _dirty = bDirty; }
+
 private:
     void setupIndices();
     void mapBuffers();

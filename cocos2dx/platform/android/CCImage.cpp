@@ -45,17 +45,17 @@ class BitmapDC
 public:
 
     BitmapDC()
-    : m_pData(NULL)
-    , m_nWidth(0)
-    , m_nHeight(0)
+    : _data(NULL)
+    , _width(0)
+    , _height(0)
     {
     }
 
     ~BitmapDC(void)
     {
-        if (m_pData)
+        if (_data)
         {
-            delete [] m_pData;
+            delete [] _data;
         }
     }
 
@@ -132,9 +132,9 @@ public:
     }
 
 public:
-    int m_nWidth;
-    int m_nHeight;
-    unsigned char *m_pData;
+    int _width;
+    int _height;
+    unsigned char *_data;
     JNIEnv *env;
 };
 
@@ -162,15 +162,15 @@ bool CCImage::initWithString(
 
         CC_BREAK_IF(! dc.getBitmapFromJava(pText, nWidth, nHeight, eAlignMask, pFontName, nSize));
 
-        // assign the dc.m_pData to m_pData in order to save time
-        m_pData = dc.m_pData;
-        CC_BREAK_IF(! m_pData);
+        // assign the dc._data to _data in order to save time
+        _data = dc._data;
+        CC_BREAK_IF(! _data);
 
-        m_nWidth    = (short)dc.m_nWidth;
-        m_nHeight   = (short)dc.m_nHeight;
-        m_bHasAlpha = true;
-        m_bPreMulti = true;
-        m_nBitsPerComponent = 8;
+        _width    = (short)dc._width;
+        _height   = (short)dc._height;
+        _hasAlpha = true;
+        _preMulti = true;
+        _bitsPerComponent = 8;
 
         bRet = true;
     } while (0);
@@ -213,19 +213,19 @@ bool CCImage::initWithStringShadowStroke(
 	        											   stroke, strokeR, strokeG, strokeB, strokeSize ));
 
 
-	        // assign the dc.m_pData to m_pData in order to save time
-	        m_pData = dc.m_pData;
+	        // assign the dc._data to _data in order to save time
+	        _data = dc._data;
 
-	        CC_BREAK_IF(! m_pData);
+	        CC_BREAK_IF(! _data);
 
-	        m_nWidth    = (short)dc.m_nWidth;
-	        m_nHeight   = (short)dc.m_nHeight;
-	        m_bHasAlpha = true;
-	        m_bPreMulti = true;
-	        m_nBitsPerComponent = 8;
+	        _width    = (short)dc._width;
+	        _height   = (short)dc._height;
+	        _hasAlpha = true;
+	        _preMulti = true;
+	        _bitsPerComponent = 8;
 
 	        // swap the alpha channel (ARGB to RGBA)
-	        swapAlphaChannel((unsigned int *)m_pData, (m_nWidth * m_nHeight) );
+	        swapAlphaChannel((unsigned int *)_data, (_width * _height) );
 
 	        // ok
 	        bRet = true;
@@ -260,13 +260,13 @@ extern "C"
     {
         int size = width * height * 4;
         cocos2d::BitmapDC& bitmapDC = cocos2d::sharedBitmapDC();
-        bitmapDC.m_nWidth = width;
-        bitmapDC.m_nHeight = height;
-        bitmapDC.m_pData = new unsigned char[size];
-        env->GetByteArrayRegion(pixels, 0, size, (jbyte*)bitmapDC.m_pData);
+        bitmapDC._width = width;
+        bitmapDC._height = height;
+        bitmapDC._data = new unsigned char[size];
+        env->GetByteArrayRegion(pixels, 0, size, (jbyte*)bitmapDC._data);
 
         // swap data
-        unsigned int *tempPtr = (unsigned int*)bitmapDC.m_pData;
+        unsigned int *tempPtr = (unsigned int*)bitmapDC._data;
         unsigned int tempdata = 0;
         for (int i = 0; i < height; ++i)
         {

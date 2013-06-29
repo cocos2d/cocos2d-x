@@ -8,120 +8,60 @@ enum {
     kTagSprite2 = 3,
 };
 
-typedef CCLayer* (*NEWTEXTURE2DTESTFUNC)();
-#define TEXTURE2D_CREATE_FUNC(className) \
-static CCLayer* create##className() \
-{ return new className(); }
-
-TEXTURE2D_CREATE_FUNC(TextureMemoryAlloc);
-
-TEXTURE2D_CREATE_FUNC(TextureAlias);
-TEXTURE2D_CREATE_FUNC(TexturePVRMipMap);
-TEXTURE2D_CREATE_FUNC(TexturePVRMipMap2);
-TEXTURE2D_CREATE_FUNC(TexturePVRNonSquare);
-TEXTURE2D_CREATE_FUNC(TexturePVRNPOT4444);
-TEXTURE2D_CREATE_FUNC(TexturePVRNPOT8888);
-TEXTURE2D_CREATE_FUNC(TexturePVR);
-
-TEXTURE2D_CREATE_FUNC(TexturePVR2BPP);
-TEXTURE2D_CREATE_FUNC(TexturePVR2BPPv3);
-TEXTURE2D_CREATE_FUNC(TexturePVR4BPP);
-TEXTURE2D_CREATE_FUNC(TexturePVR4BPPv3);
-TEXTURE2D_CREATE_FUNC(TexturePVRII4BPPv3);
-TEXTURE2D_CREATE_FUNC(TexturePVRRGBA8888);
-TEXTURE2D_CREATE_FUNC(TexturePVRRGBA8888v3);
-TEXTURE2D_CREATE_FUNC(TexturePVRBGRA8888);
-TEXTURE2D_CREATE_FUNC(TexturePVRBGRA8888v3);
-TEXTURE2D_CREATE_FUNC(TexturePVRRGBA4444);
-TEXTURE2D_CREATE_FUNC(TexturePVRRGBA4444v3);
-TEXTURE2D_CREATE_FUNC(TexturePVRRGBA4444GZ);
-TEXTURE2D_CREATE_FUNC(TexturePVRRGBA4444CCZ);
-TEXTURE2D_CREATE_FUNC(TexturePVRRGBA5551);
-TEXTURE2D_CREATE_FUNC(TexturePVRRGBA5551v3);
-TEXTURE2D_CREATE_FUNC(TexturePVRRGB565);
-TEXTURE2D_CREATE_FUNC(TexturePVRRGB565v3);
-TEXTURE2D_CREATE_FUNC(TexturePVRRGB888);
-TEXTURE2D_CREATE_FUNC(TexturePVRRGB888v3);
-TEXTURE2D_CREATE_FUNC(TexturePVRA8);
-TEXTURE2D_CREATE_FUNC(TexturePVRA8v3);
-TEXTURE2D_CREATE_FUNC(TexturePVRI8);
-TEXTURE2D_CREATE_FUNC(TexturePVRI8v3);
-TEXTURE2D_CREATE_FUNC(TexturePVRAI88);
-TEXTURE2D_CREATE_FUNC(TexturePVRAI88v3);
-
-TEXTURE2D_CREATE_FUNC(TexturePVRv3Premult);
-
-TEXTURE2D_CREATE_FUNC(TexturePVRBadEncoding);
-TESTLAYER_CREATE_FUNC(TexturePNG);
-TESTLAYER_CREATE_FUNC(TextureJPEG);
-TESTLAYER_CREATE_FUNC(TextureTIFF);
-TESTLAYER_CREATE_FUNC(TextureWEBP);
-TESTLAYER_CREATE_FUNC(TexturePixelFormat);
-TESTLAYER_CREATE_FUNC(TextureBlend);
-TESTLAYER_CREATE_FUNC(TextureAsync);
-TESTLAYER_CREATE_FUNC(TextureGlClamp);
-TESTLAYER_CREATE_FUNC(TextureGlRepeat);
-TESTLAYER_CREATE_FUNC(TextureSizeTest);
-TESTLAYER_CREATE_FUNC(TextureCache1);
-TESTLAYER_CREATE_FUNC(TextureDrawAtPoint);
-TESTLAYER_CREATE_FUNC(TextureDrawInRect);
-
-TESTLAYER_CREATE_FUNC(TextureETC1);
-
-static NEWTEXTURE2DTESTFUNC createFunctions[] =
+static std::function<CCLayer*()> createFunctions[] =
 {
-    createTextureMemoryAlloc,
-    createTextureAlias,
-    createTexturePVRMipMap,
-    createTexturePVRMipMap2,
-    createTexturePVRNonSquare,
-    createTexturePVRNPOT4444,
-    createTexturePVRNPOT8888,
-    createTexturePVR,
-    createTexturePVR2BPP,
-    createTexturePVR2BPPv3,
-    createTexturePVR4BPP,
-    createTexturePVR4BPPv3,
-    createTexturePVRII4BPPv3,
-    createTexturePVRRGBA8888,
-    createTexturePVRRGBA8888v3,
-    createTexturePVRBGRA8888,
-    createTexturePVRBGRA8888v3,
-    createTexturePVRRGBA4444,
-    createTexturePVRRGBA4444v3,
-    createTexturePVRRGBA4444GZ,
-    createTexturePVRRGBA4444CCZ,
-    createTexturePVRRGBA5551,
-    createTexturePVRRGBA5551v3,
-    createTexturePVRRGB565,
-    createTexturePVRRGB565v3,
-    createTexturePVRRGB888,
-    createTexturePVRRGB888v3,
-    createTexturePVRA8,
-    createTexturePVRA8v3,
-    createTexturePVRI8,
-    createTexturePVRI8v3,
-    createTexturePVRAI88,
-    createTexturePVRAI88v3,
+    CL(TextureMemoryAlloc),
+    CL(TextureAlias),
+    CL(TexturePVRMipMap),
+    CL(TexturePVRMipMap2),
+    CL(TexturePVRNonSquare),
+    CL(TexturePVRNPOT4444),
+    CL(TexturePVRNPOT8888),
+    CL(TexturePVR),
+    CL(TexturePVR2BPP),
+    CL(TexturePVR2BPPv3),
+    CL(TexturePVR4BPP),
+    CL(TexturePVR4BPPv3),
+    CL(TexturePVRII4BPPv3),
+    CL(TexturePVRRGBA8888),
+    CL(TexturePVRRGBA8888v3),
+    CL(TexturePVRBGRA8888),
+    CL(TexturePVRBGRA8888v3),
+    CL(TexturePVRRGBA4444),
+    CL(TexturePVRRGBA4444v3),
+    CL(TexturePVRRGBA4444GZ),
+    CL(TexturePVRRGBA4444CCZ),
+    CL(TexturePVRRGBA5551),
+    CL(TexturePVRRGBA5551v3),
+    CL(TexturePVRRGB565),
+    CL(TexturePVRRGB565v3),
+    CL(TexturePVRRGB888),
+    CL(TexturePVRRGB888v3),
+    CL(TexturePVRA8),
+    CL(TexturePVRA8v3),
+    CL(TexturePVRI8),
+    CL(TexturePVRI8v3),
+    CL(TexturePVRAI88),
+    CL(TexturePVRAI88v3),
     
-    createTexturePVRv3Premult,
+    CL(TexturePVRv3Premult),
     
-    createTexturePVRBadEncoding,
-    createTexturePNG,
-    createTextureJPEG,
-    createTextureTIFF,
-    createTextureWEBP,
-    createTexturePixelFormat,
-    createTextureBlend,
-    createTextureAsync,
-    createTextureGlClamp,
-    createTextureGlRepeat,
-    createTextureSizeTest,
-    createTextureCache1,
-    createTextureDrawAtPoint,
-    createTextureDrawInRect,
+    CL(TexturePVRBadEncoding),
+    CL(TexturePNG),
+    CL(TextureJPEG),
+    CL(TextureTIFF),
+    CL(TextureWEBP),
+    CL(TexturePixelFormat),
+    CL(TextureBlend),
+    CL(TextureAsync),
+    CL(TextureGlClamp),
+    CL(TextureGlRepeat),
+    CL(TextureSizeTest),
+    CL(TextureCache1),
+    CL(TextureDrawAtPoint),
+    CL(TextureDrawInRect),
     
-    createTextureETC1,
+    CL(TextureETC1),
 };
 
 static unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[0]);
@@ -172,33 +112,10 @@ CCLayer* restartTextureTest()
 //------------------------------------------------------------------
 void TextureDemo::onEnter()
 {
-    CCLayer::onEnter();
+    BaseTest::onEnter();
 
     CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
-    CCSize s = CCDirector::sharedDirector()->getWinSize();    
-    CCLabelTTF *label = CCLabelTTF::create(title().c_str(), "Arial", 26);
-    addChild(label, 1, kTagLabel);
-    label->setPosition(ccp(s.width/2, s.height-50));
 
-    std::string strSubtitle = subtitle();
-    if(strSubtitle.length())
-    {
-        CCLabelTTF *l = CCLabelTTF::create(strSubtitle.c_str(), "Thonburi", 16);
-        addChild(l, 1);
-        l->setPosition(ccp(s.width/2, s.height-80));
-    }
-
-    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(TextureDemo::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(TextureDemo::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(TextureDemo::nextCallback) );
-    
-    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
-    menu->setPosition(CCPointZero);
-    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    addChild(menu, 1);
-    
     CCLayerColor *col = CCLayerColor::create(ccc4(128,128,128,255));
     addChild(col, -10);
     
@@ -1393,10 +1310,7 @@ void TexturePixelFormat::onEnter()
     // 3- 16-bit RGB5A1
     // 4- 16-bit RGB565
     TextureDemo::onEnter();
-    
-    CCLabelTTF *label = (CCLabelTTF*) getChildByTag(kTagLabel);
-    label->setColor(ccc3(16,16,255));
-    
+        
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     CCLayerColor *background = CCLayerColor::create(ccc4(128,128,128,255), s.width, s.height);
@@ -1544,7 +1458,7 @@ void TextureAsync::onEnter()
 {
     TextureDemo::onEnter();
 
-    m_nImageOffset = 0;
+    _imageOffset = 0;
 
     CCSize size =CCDirector::sharedDirector()->getWinSize();
 
@@ -1599,10 +1513,10 @@ void TextureAsync::imageLoaded(CCObject* pObj)
     addChild(sprite, -1);
 
     CCSize size = director->getWinSize();
-    int i = m_nImageOffset * 32;
+    int i = _imageOffset * 32;
     sprite->setPosition(ccp( i % (int)size.width, (i / (int)size.width) * 32 ));
 
-    m_nImageOffset++;
+    _imageOffset++;
 
     CCLog("Image loaded: %p", tex);
 }
@@ -1800,17 +1714,17 @@ void TextureDrawAtPoint::onEnter()
 {
     TextureDemo::onEnter();
 
-    m_pTex1 = CCTextureCache::sharedTextureCache()->addImage("Images/grossinis_sister1.png");
-    m_pTex2 = CCTextureCache::sharedTextureCache()->addImage("Images/grossinis_sister2.png");
+    _tex1 = CCTextureCache::sharedTextureCache()->addImage("Images/grossinis_sister1.png");
+    _tex2 = CCTextureCache::sharedTextureCache()->addImage("Images/grossinis_sister2.png");
 
-    m_pTex1->retain();
-    m_pTex2->retain();
+    _tex1->retain();
+    _tex2->retain();
 }
 
 TextureDrawAtPoint::~TextureDrawAtPoint()
 {
-    m_pTex1->release();
-    m_pTex2->release();
+    _tex1->release();
+    _tex2->release();
 }
 
 std::string TextureDrawAtPoint::title()
@@ -1829,8 +1743,8 @@ void TextureDrawAtPoint::draw()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    m_pTex1->drawAtPoint(ccp(s.width/2-50, s.height/2 - 50));
-    m_pTex2->drawAtPoint(ccp(s.width/2+50, s.height/2 - 50));
+    _tex1->drawAtPoint(ccp(s.width/2-50, s.height/2 - 50));
+    _tex2->drawAtPoint(ccp(s.width/2+50, s.height/2 - 50));
 
 }
 
@@ -1839,17 +1753,17 @@ void TextureDrawAtPoint::draw()
 void TextureDrawInRect::onEnter()
 {
     TextureDemo::onEnter();
-    m_pTex1 = CCTextureCache::sharedTextureCache()->addImage("Images/grossinis_sister1.png");
-    m_pTex2 = CCTextureCache::sharedTextureCache()->addImage("Images/grossinis_sister2.png");
+    _tex1 = CCTextureCache::sharedTextureCache()->addImage("Images/grossinis_sister1.png");
+    _tex2 = CCTextureCache::sharedTextureCache()->addImage("Images/grossinis_sister2.png");
 
-    m_pTex1->retain();
-    m_pTex2->retain();
+    _tex1->retain();
+    _tex2->retain();
 }
 
 TextureDrawInRect::~TextureDrawInRect()
 {
-    m_pTex1->release();
-    m_pTex2->release();
+    _tex1->release();
+    _tex2->release();
 }
 
 void TextureDrawInRect::draw()
@@ -1858,11 +1772,11 @@ void TextureDrawInRect::draw()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCRect rect1 = CCRectMake( s.width/2 - 80, 20, m_pTex1->getContentSize().width * 0.5f, m_pTex1->getContentSize().height *2 );
-    CCRect rect2 = CCRectMake( s.width/2 + 80, s.height/2, m_pTex1->getContentSize().width * 2, m_pTex1->getContentSize().height * 0.5f );
+    CCRect rect1 = CCRectMake( s.width/2 - 80, 20, _tex1->getContentSize().width * 0.5f, _tex1->getContentSize().height *2 );
+    CCRect rect2 = CCRectMake( s.width/2 + 80, s.height/2, _tex1->getContentSize().width * 2, _tex1->getContentSize().height * 0.5f );
 
-    m_pTex1->drawInRect(rect1);
-    m_pTex2->drawInRect(rect2);
+    _tex1->drawInRect(rect1);
+    _tex2->drawInRect(rect2);
 
 }
 
@@ -1896,23 +1810,23 @@ void TextureTestScene::runThisTest()
 void TextureMemoryAlloc::onEnter()
 {
     TextureDemo::onEnter();
-    m_pBackground = NULL;
+    _background = NULL;
     
     CCMenuItemFont::setFontSize(24);
     
-    CCMenuItem *item1 = CCMenuItemFont::create("PNG", this, menu_selector(TextureMemoryAlloc::updateImage));
+    CCMenuItem *item1 = CCMenuItemFont::create("PNG", CC_CALLBACK_1(TextureMemoryAlloc::updateImage, this));
     item1->setTag(0);
     
-    CCMenuItem *item2 = CCMenuItemFont::create("RGBA8", this, menu_selector(TextureMemoryAlloc::updateImage));
+    CCMenuItem *item2 = CCMenuItemFont::create("RGBA8", CC_CALLBACK_1(TextureMemoryAlloc::updateImage, this));
     item2->setTag(1);
     
-    CCMenuItem *item3 = CCMenuItemFont::create("RGB8", this, menu_selector(TextureMemoryAlloc::updateImage));
+    CCMenuItem *item3 = CCMenuItemFont::create("RGB8", CC_CALLBACK_1(TextureMemoryAlloc::updateImage, this));
     item3->setTag(2);
     
-    CCMenuItem *item4 = CCMenuItemFont::create("RGBA4", this, menu_selector(TextureMemoryAlloc::updateImage));
+    CCMenuItem *item4 = CCMenuItemFont::create("RGBA4", CC_CALLBACK_1(TextureMemoryAlloc::updateImage, this));
     item4->setTag(3);
     
-    CCMenuItem *item5 = CCMenuItemFont::create("A8", this, menu_selector(TextureMemoryAlloc::updateImage));
+    CCMenuItem *item5 = CCMenuItemFont::create("A8", CC_CALLBACK_1(TextureMemoryAlloc::updateImage, this));
     item5->setTag(4);
     
     CCMenu *menu = CCMenu::create(item1, item2, item3, item4, item5, NULL);
@@ -1920,7 +1834,7 @@ void TextureMemoryAlloc::onEnter()
     
     addChild(menu);
     
-    CCMenuItemFont *warmup = CCMenuItemFont::create("warm up texture", this, menu_selector(TextureMemoryAlloc::changeBackgroundVisible));
+    CCMenuItemFont *warmup = CCMenuItemFont::create("warm up texture", CC_CALLBACK_1(TextureMemoryAlloc::changeBackgroundVisible, this));
     
     CCMenu *menu2 = CCMenu::create(warmup, NULL);
 
@@ -1934,17 +1848,17 @@ void TextureMemoryAlloc::onEnter()
 
 void TextureMemoryAlloc::changeBackgroundVisible(cocos2d::CCObject *sender)
 {
-    if (m_pBackground)
+    if (_background)
     {
-        m_pBackground->setVisible(true);
+        _background->setVisible(true);
     }
 }
 
 void TextureMemoryAlloc::updateImage(cocos2d::CCObject *sender)
 {
-    if (m_pBackground)
+    if (_background)
     {
-        m_pBackground->removeFromParentAndCleanup(true);
+        _background->removeFromParentAndCleanup(true);
     }
     
     CCTextureCache::sharedTextureCache()->removeUnusedTextures();
@@ -1986,13 +1900,13 @@ void TextureMemoryAlloc::updateImage(cocos2d::CCObject *sender)
 #endif
 	}
 
-    m_pBackground = CCSprite::create(file.c_str());
-    addChild(m_pBackground, -10);
+    _background = CCSprite::create(file.c_str());
+    addChild(_background, -10);
 	
-    m_pBackground->setVisible(false);
+    _background->setVisible(false);
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
-    m_pBackground->setPosition(ccp(s.width/2, s.height/2));
+    _background->setPosition(ccp(s.width/2, s.height/2));
 }
 
 string TextureMemoryAlloc::title()

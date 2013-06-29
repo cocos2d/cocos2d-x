@@ -248,25 +248,25 @@ CCEditBoxImpl* __createSystemEditBox(CCEditBox* pEditBox)
 
 CCEditBoxImplIOS::CCEditBoxImplIOS(CCEditBox* pEditText)
 : CCEditBoxImpl(pEditText)
-, m_pLabel(NULL)
-, m_pLabelPlaceHolder(NULL)
-, m_systemControl(NULL)
-, m_obAnchorPoint(ccp(0.5f, 0.5f))
-, m_nMaxTextLength(-1)
+, _label(NULL)
+, _labelPlaceHolder(NULL)
+, _systemControl(NULL)
+, _anchorPoint(ccp(0.5f, 0.5f))
+, _maxTextLength(-1)
 {
-    m_bInRetinaMode = [[EAGLView sharedEGLView] contentScaleFactor] == 2.0f ? true : false;
+    _inRetinaMode = [[EAGLView sharedEGLView] contentScaleFactor] == 2.0f ? true : false;
 }
 
 CCEditBoxImplIOS::~CCEditBoxImplIOS()
 {
-    [m_systemControl release];
+    [_systemControl release];
 }
 
 void CCEditBoxImplIOS::doAnimationWhenKeyboardMove(float duration, float distance)
 {
-    if ([m_systemControl isEditState] || distance < 0.0f)
+    if ([_systemControl isEditState] || distance < 0.0f)
     {
-        [m_systemControl doAnimationWhenKeyboardMoveWithDuration:duration distance:distance];
+        [_systemControl doAnimationWhenKeyboardMoveWithDuration:duration distance:distance];
     }
 }
 
@@ -278,14 +278,14 @@ bool CCEditBoxImplIOS::initWithSize(const CCSize& size)
 
         CGRect rect = CGRectMake(0, 0, size.width * eglView->getScaleX(),size.height * eglView->getScaleY());
 
-        if (m_bInRetinaMode)
+        if (_inRetinaMode)
         {
             rect.size.width /= 2.0f;
             rect.size.height /= 2.0f;
         }
         
-        m_systemControl = [[EditBoxImplIOS alloc] initWithFrame:rect editBox:this];
-        if (!m_systemControl) break;
+        _systemControl = [[EditBoxImplIOS alloc] initWithFrame:rect editBox:this];
+        if (!_systemControl) break;
         
 		initInactiveLabels(size);
         setContentSize(size);
@@ -298,47 +298,47 @@ bool CCEditBoxImplIOS::initWithSize(const CCSize& size)
 
 void CCEditBoxImplIOS::initInactiveLabels(const CCSize& size)
 {
-	const char* pDefaultFontName = [[m_systemControl.textField.font fontName] UTF8String];
+	const char* pDefaultFontName = [[_systemControl.textField.font fontName] UTF8String];
 
-	m_pLabel = CCLabelTTF::create("", "", 0.0f);
-    m_pLabel->setAnchorPoint(ccp(0, 0.5f));
-    m_pLabel->setColor(ccWHITE);
-    m_pLabel->setVisible(false);
-    m_pEditBox->addChild(m_pLabel, kLabelZOrder);
+	_label = CCLabelTTF::create("", "", 0.0f);
+    _label->setAnchorPoint(ccp(0, 0.5f));
+    _label->setColor(ccWHITE);
+    _label->setVisible(false);
+    _editBox->addChild(_label, kLabelZOrder);
 	
-    m_pLabelPlaceHolder = CCLabelTTF::create("", "", 0.0f);
+    _labelPlaceHolder = CCLabelTTF::create("", "", 0.0f);
 	// align the text vertically center
-    m_pLabelPlaceHolder->setAnchorPoint(ccp(0, 0.5f));
-    m_pLabelPlaceHolder->setColor(ccGRAY);
-    m_pEditBox->addChild(m_pLabelPlaceHolder, kLabelZOrder);
+    _labelPlaceHolder->setAnchorPoint(ccp(0, 0.5f));
+    _labelPlaceHolder->setColor(ccGRAY);
+    _editBox->addChild(_labelPlaceHolder, kLabelZOrder);
     
     setFont(pDefaultFontName, size.height*2/3);
     setPlaceholderFont(pDefaultFontName, size.height*2/3);
 }
 
 void CCEditBoxImplIOS::placeInactiveLabels() {
-    m_pLabel->setPosition(ccp(CC_EDIT_BOX_PADDING, m_tContentSize.height / 2.0f));
-    m_pLabelPlaceHolder->setPosition(ccp(CC_EDIT_BOX_PADDING, m_tContentSize.height / 2.0f));
+    _label->setPosition(ccp(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f));
+    _labelPlaceHolder->setPosition(ccp(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f));
 }
 
 void CCEditBoxImplIOS::setInactiveText(const char* pText)
 {
-	if(m_systemControl.textField.secureTextEntry == YES)
+	if(_systemControl.textField.secureTextEntry == YES)
 	{
 		std::string passwordString;
 		for(int i = 0; i < strlen(pText); ++i)
 			passwordString.append("\u25CF");
-		m_pLabel->setString(passwordString.c_str());
+		_label->setString(passwordString.c_str());
 	}
 	else
-		m_pLabel->setString(getText());
+		_label->setString(getText());
 	
 	// Clip the text width to fit to the text box
-	float fMaxWidth = m_pEditBox->getContentSize().width - CC_EDIT_BOX_PADDING * 2;
-	CCRect clippingRect = m_pLabel->getTextureRect();
+	float fMaxWidth = _editBox->getContentSize().width - CC_EDIT_BOX_PADDING * 2;
+	CCRect clippingRect = _label->getTextureRect();
 	if(clippingRect.size.width > fMaxWidth) {
 		clippingRect.size.width = fMaxWidth;
-		m_pLabel->setTextureRect(clippingRect);
+		_label->setTextureRect(clippingRect);
 	}
 }
 
@@ -349,7 +349,7 @@ void CCEditBoxImplIOS::setFont(const char* pFontName, int fontSize)
         isValidFontName = false;
     }
 
-    float retinaFactor = m_bInRetinaMode ? 2.0f : 1.0f;
+    float retinaFactor = _inRetinaMode ? 2.0f : 1.0f;
 	NSString * fntName = [NSString stringWithUTF8String:pFontName];
     float scaleFactor = CCEGLView::sharedOpenGLView()->getScaleX();
     UIFont *textFont = nil;
@@ -362,19 +362,19 @@ void CCEditBoxImplIOS::setFont(const char* pFontName, int fontSize)
     }
 
 	if(textFont != nil) {
-		[m_systemControl.textField setFont:textFont];
+		[_systemControl.textField setFont:textFont];
     }
 
-	m_pLabel->setFontName(pFontName);
-	m_pLabel->setFontSize(fontSize);
-	m_pLabelPlaceHolder->setFontName(pFontName);
-	m_pLabelPlaceHolder->setFontSize(fontSize);
+	_label->setFontName(pFontName);
+	_label->setFontSize(fontSize);
+	_labelPlaceHolder->setFontName(pFontName);
+	_labelPlaceHolder->setFontSize(fontSize);
 }
 
 void CCEditBoxImplIOS::setFontColor(const ccColor3B& color)
 {
-    m_systemControl.textField.textColor = [UIColor colorWithRed:color.r / 255.0f green:color.g / 255.0f blue:color.b / 255.0f alpha:1.0f];
-	m_pLabel->setColor(color);
+    _systemControl.textField.textColor = [UIColor colorWithRed:color.r / 255.0f green:color.g / 255.0f blue:color.b / 255.0f alpha:1.0f];
+	_label->setColor(color);
 }
 
 void CCEditBoxImplIOS::setPlaceholderFont(const char* pFontName, int fontSize)
@@ -384,7 +384,7 @@ void CCEditBoxImplIOS::setPlaceholderFont(const char* pFontName, int fontSize)
 
 void CCEditBoxImplIOS::setPlaceholderFontColor(const ccColor3B& color)
 {
-	m_pLabelPlaceHolder->setColor(color);
+	_labelPlaceHolder->setColor(color);
 }
 
 void CCEditBoxImplIOS::setInputMode(EditBoxInputMode inputMode)
@@ -392,37 +392,37 @@ void CCEditBoxImplIOS::setInputMode(EditBoxInputMode inputMode)
     switch (inputMode)
     {
         case kEditBoxInputModeEmailAddr:
-            m_systemControl.textField.keyboardType = UIKeyboardTypeEmailAddress;
+            _systemControl.textField.keyboardType = UIKeyboardTypeEmailAddress;
             break;
         case kEditBoxInputModeNumeric:
-            m_systemControl.textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+            _systemControl.textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
             break;
         case kEditBoxInputModePhoneNumber:
-            m_systemControl.textField.keyboardType = UIKeyboardTypePhonePad;
+            _systemControl.textField.keyboardType = UIKeyboardTypePhonePad;
             break;
         case kEditBoxInputModeUrl:
-            m_systemControl.textField.keyboardType = UIKeyboardTypeURL;
+            _systemControl.textField.keyboardType = UIKeyboardTypeURL;
             break;
         case kEditBoxInputModeDecimal:
-            m_systemControl.textField.keyboardType = UIKeyboardTypeDecimalPad;
+            _systemControl.textField.keyboardType = UIKeyboardTypeDecimalPad;
             break;
         case kEditBoxInputModeSingleLine:
-            m_systemControl.textField.keyboardType = UIKeyboardTypeDefault;
+            _systemControl.textField.keyboardType = UIKeyboardTypeDefault;
             break;
         default:
-            m_systemControl.textField.keyboardType = UIKeyboardTypeDefault;
+            _systemControl.textField.keyboardType = UIKeyboardTypeDefault;
             break;
     }
 }
 
 void CCEditBoxImplIOS::setMaxLength(int maxLength)
 {
-    m_nMaxTextLength = maxLength;
+    _maxTextLength = maxLength;
 }
 
 int CCEditBoxImplIOS::getMaxLength()
 {
-    return m_nMaxTextLength;
+    return _maxTextLength;
 }
 
 void CCEditBoxImplIOS::setInputFlag(EditBoxInputFlag inputFlag)
@@ -430,19 +430,19 @@ void CCEditBoxImplIOS::setInputFlag(EditBoxInputFlag inputFlag)
     switch (inputFlag)
     {
         case kEditBoxInputFlagPassword:
-            m_systemControl.textField.secureTextEntry = YES;
+            _systemControl.textField.secureTextEntry = YES;
             break;
         case kEditBoxInputFlagInitialCapsWord:
-            m_systemControl.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+            _systemControl.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
             break;
         case kEditBoxInputFlagInitialCapsSentence:
-            m_systemControl.textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+            _systemControl.textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
             break;
         case kEditBoxInputFlagInitialCapsAllCharacters:
-            m_systemControl.textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
+            _systemControl.textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
             break;
         case kEditBoxInputFlagSensitive:
-            m_systemControl.textField.autocorrectionType = UITextAutocorrectionTypeNo;
+            _systemControl.textField.autocorrectionType = UITextAutocorrectionTypeNo;
             break;
         default:
             break;
@@ -453,58 +453,58 @@ void CCEditBoxImplIOS::setReturnType(KeyboardReturnType returnType)
 {
     switch (returnType) {
         case kKeyboardReturnTypeDefault:
-            m_systemControl.textField.returnKeyType = UIReturnKeyDefault;
+            _systemControl.textField.returnKeyType = UIReturnKeyDefault;
             break;
         case kKeyboardReturnTypeDone:
-            m_systemControl.textField.returnKeyType = UIReturnKeyDone;
+            _systemControl.textField.returnKeyType = UIReturnKeyDone;
             break;
         case kKeyboardReturnTypeSend:
-            m_systemControl.textField.returnKeyType = UIReturnKeySend;
+            _systemControl.textField.returnKeyType = UIReturnKeySend;
             break;
         case kKeyboardReturnTypeSearch:
-            m_systemControl.textField.returnKeyType = UIReturnKeySearch;
+            _systemControl.textField.returnKeyType = UIReturnKeySearch;
             break;
         case kKeyboardReturnTypeGo:
-            m_systemControl.textField.returnKeyType = UIReturnKeyGo;
+            _systemControl.textField.returnKeyType = UIReturnKeyGo;
             break;
         default:
-            m_systemControl.textField.returnKeyType = UIReturnKeyDefault;
+            _systemControl.textField.returnKeyType = UIReturnKeyDefault;
             break;
     }
 }
 
 bool CCEditBoxImplIOS::isEditing()
 {
-    return [m_systemControl isEditState] ? true : false;
+    return [_systemControl isEditState] ? true : false;
 }
 
 void CCEditBoxImplIOS::setText(const char* pText)
 {
-    m_systemControl.textField.text = [NSString stringWithUTF8String:pText];
-	if(m_systemControl.textField.hidden == YES) {
+    _systemControl.textField.text = [NSString stringWithUTF8String:pText];
+	if(_systemControl.textField.hidden == YES) {
 		setInactiveText(pText);
 		if(strlen(pText) == 0)
 		{
-			m_pLabel->setVisible(false);
-			m_pLabelPlaceHolder->setVisible(true);
+			_label->setVisible(false);
+			_labelPlaceHolder->setVisible(true);
 		}
 		else
 		{
-			m_pLabel->setVisible(true);
-			m_pLabelPlaceHolder->setVisible(false);
+			_label->setVisible(true);
+			_labelPlaceHolder->setVisible(false);
 		}
 	}
 }
 
 const char*  CCEditBoxImplIOS::getText(void)
 {
-    return [m_systemControl.textField.text UTF8String];
+    return [_systemControl.textField.text UTF8String];
 }
 
 void CCEditBoxImplIOS::setPlaceHolder(const char* pText)
 {
-    m_systemControl.textField.placeholder = [NSString stringWithUTF8String:pText];
-	m_pLabelPlaceHolder->setString(pText);
+    _systemControl.textField.placeholder = [NSString stringWithUTF8String:pText];
+	_labelPlaceHolder->setString(pText);
 }
 
 static CGPoint convertDesignCoordToScreenCoord(const CCPoint& designCoord, bool bInRetinaMode)
@@ -528,36 +528,36 @@ static CGPoint convertDesignCoordToScreenCoord(const CCPoint& designCoord, bool 
 
 void CCEditBoxImplIOS::setPosition(const CCPoint& pos)
 {
-	m_obPosition = pos;
+	_position = pos;
 	adjustTextFieldPosition();
 }
 
 void CCEditBoxImplIOS::setVisible(bool visible)
 {
-//    m_systemControl.textField.hidden = !visible;
+//    _systemControl.textField.hidden = !visible;
 }
 
 void CCEditBoxImplIOS::setContentSize(const CCSize& size)
 {
-    m_tContentSize = size;
+    _contentSize = size;
     CCLOG("[Edit text] content size = (%f, %f)", size.width, size.height);
     placeInactiveLabels();
     CCEGLViewProtocol* eglView = CCEGLView::sharedOpenGLView();
     CGSize controlSize = CGSizeMake(size.width * eglView->getScaleX(),size.height * eglView->getScaleY());
     
-    if (m_bInRetinaMode)
+    if (_inRetinaMode)
     {
         controlSize.width /= 2.0f;
         controlSize.height /= 2.0f;
     }
-    [m_systemControl setContentSize:controlSize];
+    [_systemControl setContentSize:controlSize];
 }
 
 void CCEditBoxImplIOS::setAnchorPoint(const CCPoint& anchorPoint)
 {
     CCLOG("[Edit text] anchor point = (%f, %f)", anchorPoint.x, anchorPoint.y);
-	m_obAnchorPoint = anchorPoint;
-	setPosition(m_obPosition);
+	_anchorPoint = anchorPoint;
+	setPosition(_position);
 }
 
 void CCEditBoxImplIOS::visit(void)
@@ -576,40 +576,40 @@ void CCEditBoxImplIOS::onEnter(void)
 
 void CCEditBoxImplIOS::adjustTextFieldPosition()
 {
-	CCSize contentSize = m_pEditBox->getContentSize();
+	CCSize contentSize = _editBox->getContentSize();
 	CCRect rect = CCRectMake(0, 0, contentSize.width, contentSize.height);
-    rect = CCRectApplyAffineTransform(rect, m_pEditBox->nodeToWorldTransform());
+    rect = CCRectApplyAffineTransform(rect, _editBox->nodeToWorldTransform());
 	
 	CCPoint designCoord = ccp(rect.origin.x, rect.origin.y + rect.size.height);
-    [m_systemControl setPosition:convertDesignCoordToScreenCoord(designCoord, m_bInRetinaMode)];
+    [_systemControl setPosition:convertDesignCoordToScreenCoord(designCoord, _inRetinaMode)];
 }
 
 void CCEditBoxImplIOS::openKeyboard()
 {
-	m_pLabel->setVisible(false);
-	m_pLabelPlaceHolder->setVisible(false);
+	_label->setVisible(false);
+	_labelPlaceHolder->setVisible(false);
 
-	m_systemControl.textField.hidden = NO;
-    [m_systemControl openKeyboard];
+	_systemControl.textField.hidden = NO;
+    [_systemControl openKeyboard];
 }
 
 void CCEditBoxImplIOS::closeKeyboard()
 {
-    [m_systemControl closeKeyboard];
+    [_systemControl closeKeyboard];
 }
 
 void CCEditBoxImplIOS::onEndEditing()
 {
-	m_systemControl.textField.hidden = YES;
+	_systemControl.textField.hidden = YES;
 	if(strlen(getText()) == 0)
 	{
-		m_pLabel->setVisible(false);
-		m_pLabelPlaceHolder->setVisible(true);
+		_label->setVisible(false);
+		_labelPlaceHolder->setVisible(true);
 	}
 	else
 	{
-		m_pLabel->setVisible(true);
-		m_pLabelPlaceHolder->setVisible(false);
+		_label->setVisible(true);
+		_labelPlaceHolder->setVisible(false);
 		setInactiveText(getText());
 	}
 }

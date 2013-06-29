@@ -24,7 +24,7 @@ CCFileUtilsBlackberry::CCFileUtilsBlackberry()
 
 bool CCFileUtilsBlackberry::init()
 {
-    m_strDefaultResRootPath = "app/native/Resources/";
+    _defaultResRootPath = "app/native/Resources/";
     return CCFileUtils::init();
 }
 
@@ -44,7 +44,7 @@ string CCFileUtilsBlackberry::getWritablePath()
 
 bool CCFileUtilsBlackberry::isAbsolutePath(const std::string& strPath)
 {
-    if (strPath[0] == '/' || strPath.find(m_strDefaultResRootPath) == 0)
+    if (strPath[0] == '/' || strPath.find(_defaultResRootPath) == 0)
     {
         return true;
     }
@@ -61,9 +61,9 @@ bool CCFileUtilsBlackberry::isFileExist(const std::string& strFilePath)
     std::string strPath = strFilePath;
     if (strPath[0] != '/')
     { // Not absolute path, add the default root path at the beginning.
-        if (strPath.find(m_strDefaultResRootPath) != 0)
+        if (strPath.find(_defaultResRootPath) != 0)
         {// Didn't find "assets/" at the beginning of the path, adding it.
-            strPath.insert(0, m_strDefaultResRootPath);
+            strPath.insert(0, _defaultResRootPath);
         }
     }
 
