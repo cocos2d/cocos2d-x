@@ -102,8 +102,8 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
         if (!this->_container)
         {
             _container = Layer::create();
-            this->_container->ignoreAnchorPointForPosition(false);
-            this->_container->setAnchorPoint(ccp(0.0f, 0.0f));
+            // this->_container->ignoreAnchorPointForPosition(false);
+            // this->_container->setAnchorPoint(ccp(0.0f, 0.0f));
         }
 
         this->setViewSize(size);
@@ -313,8 +313,8 @@ void ScrollView::setContainer(Node * pContainer)
     this->removeAllChildrenWithCleanup(true);
     this->_container = pContainer;
 
-    this->_container->ignoreAnchorPointForPosition(false);
-    this->_container->setAnchorPoint(ccp(0.0f, 0.0f));
+    // this->_container->ignoreAnchorPointForPosition(false);
+    // this->_container->setAnchorPoint(ccp(0.0f, 0.0f));
 
     this->addChild(this->_container);
 
@@ -468,11 +468,13 @@ void ScrollView::updateInset()
  */
 void ScrollView::addChild(Node * child, int zOrder, int tag)
 {
-    child->ignoreAnchorPointForPosition(false);
-    child->setAnchorPoint(ccp(0.0f, 0.0f));
+    // child->ignoreAnchorPointForPosition(false);
+    // child->setAnchorPoint(ccp(0.0f, 0.0f));
     if (_container != child) {
         _container->addChild(child, zOrder, tag);
     } else {
+		child->ignoreAnchorPointForPosition(false);
+		child->setAnchorPoint(ccp(0.0f, 0.0f));
         Layer::addChild(child, zOrder, tag);
     }
 }
