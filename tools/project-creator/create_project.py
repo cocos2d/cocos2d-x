@@ -49,7 +49,7 @@ def checkParams(context):
     if opts.language:
         context["language"] = opts.language
     else:
-        parser.error("-k or --package is not specified")
+        parser.error("-l or --language is not specified")
                                  
     # fill in src_project_name and src_package_name according to "language"
     if ("cpp" == context["language"]):
