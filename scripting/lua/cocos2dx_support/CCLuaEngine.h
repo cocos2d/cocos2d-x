@@ -118,6 +118,11 @@ public:
 
     virtual bool handleAssert(const char *msg);
     
+    virtual int handleEvent(int handler,void* nativeObject,EventMessage* message);
+private:
+    int handleNodeEvent(void* nativeObject,void* data);
+    int handleMenuItemEvent(void* nativeObject,void* data);
+    
 private:
     LuaEngine(void)
     : _stack(NULL)

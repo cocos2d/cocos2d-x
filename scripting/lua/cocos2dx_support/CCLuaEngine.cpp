@@ -331,4 +331,92 @@ int LuaEngine::reallocateScriptHandler(int nHandler)
     return nRet;
 }
 
+int LuaEngine::handleEvent(int handler,void* nativeObject,EventMessage* message)
+{
+    if (NULL == nativeObject || NULL == message || 0 == handler)
+        return 0;
+    
+    switch (message->type)
+    {
+        case ScriptEngineProtocol::kNodeEvent:
+        {
+            handleNodeEvent(nativeObject,message->data);
+        }
+        break;
+        case ScriptEngineProtocol::kMenuItemEvent:
+        {
+            handleMenuItemEvent(nativeObject, message->data);
+        }
+        break;
+        default:
+        break;
+    }
+    
+    return 0;
+}
+
+int LuaEngine::handleNodeEvent(void* nativeObject,void* data)
+{
+    if (NULL == nativeObject || NULL == data)
+        return 0;
+    
+    Node* node = (Node*)(nativeObject);
+    if (NULL == node)
+        return 0;
+    
+    int handler = node->getScriptHandler();
+    if (0 == handler)
+        return 0;
+    
+    int action = *((int*)(data));
+    switch (action)
+    {
+        case kNodeOnEnter:
+            _stack->pushString("enter");
+            break;
+            
+        case kNodeOnExit:
+            _stack->pushString("exit");
+            break;
+            
+        case kNodeOnEnterTransitionDidFinish:
+            _stack->pushString("enterTransitionFinish");
+            break;
+            
+        case kNodeOnExitTransitionDidStart:
+            _stack->pushString("exitTransitionStart");
+            break;
+            
+        case kNodeOnCleanup:
+            _stack->pushString("cleanup");
+            break;
+            
+        default:
+            return 0;
+    }
+    int ret = _stack->executeFunctionByHandler(handler, 1);
+    _stack->clean();
+    return ret;
+}
+
+int LuaEngine::handleMenuItemEvent(void* nativeObject,void* data)
+{
+    if (NULL == nativeObject || NULL == data)
+        return 0;
+    
+    MenuItem* menuItem = (MenuItem*)(nativeObject);
+    if (NULL == menuItem)
+        return 0;
+    
+    int handler = menuItem->getScriptTapHandler();
+    if (0 == handler)
+        return 0;
+    
+    _stack->pushInt(menuItem->getTag());
+    _stack->pushObject(menuItem, "CCMenuItem");
+    int ret = _stack->executeFunctionByHandler(handler, 2);
+    _stack->clean();
+    return ret;
+}
+
 NS_CC_END
