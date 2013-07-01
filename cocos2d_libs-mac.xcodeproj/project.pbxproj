@@ -28,6 +28,7 @@
 /* Begin PBXBuildFile section */
 		1A94D35016C2072800D79D09 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A94D34C16C2014900D79D09 /* libwebp.a */; };
 		1A94D35116C2072800D79D09 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
+		A035A5431782286100987F6C /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A035A5421782286100987F6C /* libwebsockets.a */; };
 		A03F25661780BAE8006731B9 /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F1DDC1780BAE4006731B9 /* CCAction.cpp */; };
 		A03F25671780BAE8006731B9 /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1DDD1780BAE4006731B9 /* CCAction.h */; };
 		A03F25681780BAE8006731B9 /* CCActionCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F1DDE1780BAE4006731B9 /* CCActionCamera.cpp */; };
@@ -732,10 +733,8 @@
 		A03F338917814804006731B9 /* cocosjs_manual_conversions.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F320817814803006731B9 /* cocosjs_manual_conversions.h */; };
 		A03F338A17814804006731B9 /* jsb_cocos2dx_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F320A17814803006731B9 /* jsb_cocos2dx_auto.cpp */; };
 		A03F338B17814804006731B9 /* jsb_cocos2dx_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = A03F320B17814803006731B9 /* jsb_cocos2dx_auto.hpp */; };
-		A03F338C17814804006731B9 /* jsb_cocos2dx_auto_api.js in Sources */ = {isa = PBXBuildFile; fileRef = A03F320C17814803006731B9 /* jsb_cocos2dx_auto_api.js */; };
 		A03F338D17814804006731B9 /* jsb_cocos2dx_extension_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F320D17814803006731B9 /* jsb_cocos2dx_extension_auto.cpp */; };
 		A03F338E17814804006731B9 /* jsb_cocos2dx_extension_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = A03F320E17814803006731B9 /* jsb_cocos2dx_extension_auto.hpp */; };
-		A03F338F17814804006731B9 /* jsb_cocos2dx_extension_auto_api.js in Sources */ = {isa = PBXBuildFile; fileRef = A03F320F17814803006731B9 /* jsb_cocos2dx_extension_auto_api.js */; };
 		A03F339C17814804006731B9 /* js_bindings_ccbreader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F321E17814803006731B9 /* js_bindings_ccbreader.cpp */; };
 		A03F339D17814804006731B9 /* js_bindings_ccbreader.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F321F17814803006731B9 /* js_bindings_ccbreader.h */; };
 		A03F339E17814804006731B9 /* js_bindings_chipmunk_auto_classes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F322017814803006731B9 /* js_bindings_chipmunk_auto_classes.cpp */; };
@@ -771,8 +770,6 @@
 		A03F33BC17814804006731B9 /* jsb_opengl_registration.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F323E17814803006731B9 /* jsb_opengl_registration.h */; };
 		A03F33BD17814804006731B9 /* jsb_websocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F323F17814803006731B9 /* jsb_websocket.cpp */; };
 		A03F33BE17814804006731B9 /* jsb_websocket.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F324017814803006731B9 /* jsb_websocket.h */; };
-		A03F33BF17814804006731B9 /* obfuscate_exclude_chipmunk.js in Sources */ = {isa = PBXBuildFile; fileRef = A03F324217814803006731B9 /* obfuscate_exclude_chipmunk.js */; };
-		A03F33C017814804006731B9 /* obfuscate_exclude_cocos2d.js in Sources */ = {isa = PBXBuildFile; fileRef = A03F324317814803006731B9 /* obfuscate_exclude_cocos2d.js */; };
 		A03F33C317814804006731B9 /* ScriptingCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F325217814803006731B9 /* ScriptingCore.cpp */; };
 		A03F33C417814804006731B9 /* ScriptingCore.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F325317814803006731B9 /* ScriptingCore.h */; };
 		A03F33C517814804006731B9 /* spidermonkey_specifics.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F325417814803006731B9 /* spidermonkey_specifics.h */; };
@@ -897,6 +894,8 @@
 		1551A33F158F2AB200E66CFE /* libcocos2dx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2dx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1A94D34C16C2014900D79D09 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../platform/third_party/mac/libraries/libwebp.a; sourceTree = "<group>"; };
+		A035A5421782286100987F6C /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = external/libwebsockets/mac/lib/libwebsockets.a; sourceTree = "<group>"; };
+		A035A70F17822E8500987F6C /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		A03F1DDC1780BAE4006731B9 /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAction.cpp; sourceTree = "<group>"; };
 		A03F1DDD1780BAE4006731B9 /* CCAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAction.h; sourceTree = "<group>"; };
 		A03F1DDE1780BAE4006731B9 /* CCActionCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionCamera.cpp; sourceTree = "<group>"; };
@@ -1784,6 +1783,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A035A5431782286100987F6C /* libwebsockets.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1801,6 +1801,7 @@
 		1551A334158F2AB200E66CFE = {
 			isa = PBXGroup;
 			children = (
+				A035A70F17822E8500987F6C /* libsqlite3.dylib */,
 				A03F320217814803006731B9 /* javascript */,
 				A03F2FD7178145F2006731B9 /* extensions */,
 				A03F2ED7178143BA006731B9 /* CocosDenshion */,
@@ -1828,6 +1829,7 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A035A5421782286100987F6C /* libwebsockets.a */,
 				1A94D34C16C2014900D79D09 /* libwebp.a */,
 				1551A342158F2AB200E66CFE /* Foundation.framework */,
 			);
@@ -4010,7 +4012,7 @@
 				LastUpgradeCheck = 0440;
 				ORGANIZATIONNAME = "";
 			};
-			buildConfigurationList = 1551A339158F2AB200E66CFE /* Build configuration list for PBXProject "cocos2dx-mac" */;
+			buildConfigurationList = 1551A339158F2AB200E66CFE /* Build configuration list for PBXProject "cocos2d_libs-mac" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -4395,9 +4397,7 @@
 				A03F338617814804006731B9 /* cocos2d_specifics.cpp in Sources */,
 				A03F338817814804006731B9 /* cocosjs_manual_conversions.cpp in Sources */,
 				A03F338A17814804006731B9 /* jsb_cocos2dx_auto.cpp in Sources */,
-				A03F338C17814804006731B9 /* jsb_cocos2dx_auto_api.js in Sources */,
 				A03F338D17814804006731B9 /* jsb_cocos2dx_extension_auto.cpp in Sources */,
-				A03F338F17814804006731B9 /* jsb_cocos2dx_extension_auto_api.js in Sources */,
 				A03F339C17814804006731B9 /* js_bindings_ccbreader.cpp in Sources */,
 				A03F339E17814804006731B9 /* js_bindings_chipmunk_auto_classes.cpp in Sources */,
 				A03F33A117814804006731B9 /* js_bindings_chipmunk_functions.cpp in Sources */,
@@ -4413,8 +4413,6 @@
 				A03F33B917814804006731B9 /* jsb_opengl_manual.cpp in Sources */,
 				A03F33BB17814804006731B9 /* jsb_opengl_registration.cpp in Sources */,
 				A03F33BD17814804006731B9 /* jsb_websocket.cpp in Sources */,
-				A03F33BF17814804006731B9 /* obfuscate_exclude_chipmunk.js in Sources */,
-				A03F33C017814804006731B9 /* obfuscate_exclude_cocos2d.js in Sources */,
 				A03F33C317814804006731B9 /* ScriptingCore.cpp in Sources */,
 				A03F33C617814804006731B9 /* XMLHTTPRequest.cpp in Sources */,
 			);
@@ -4642,6 +4640,10 @@
 					"\"$(SRCROOT)/external\"",
 					"\"$(SRCROOT)/external/libwebsockets/mac/include\"",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/external/libwebsockets/mac/lib\"",
+				);
 				PRODUCT_NAME = "cocos2dx-extensions";
 			};
 			name = Debug;
@@ -4659,6 +4661,10 @@
 					"\"$(SRCROOT)/external\"",
 					"\"$(SRCROOT)/external/libwebsockets/mac/include\"",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/external/libwebsockets/mac/lib\"",
+				);
 				PRODUCT_NAME = "cocos2dx-extensions";
 			};
 			name = Release;
@@ -4667,6 +4673,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					COCOS2D_JAVASCRIPT,
+				);
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/cocos2dx/platform/mac\"",
 					"\"$(SRCROOT)/cocos2dx/include\"",
@@ -4691,6 +4701,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					COCOS2D_JAVASCRIPT,
+				);
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/cocos2dx/platform/mac\"",
 					"\"$(SRCROOT)/cocos2dx/include\"",
@@ -4714,7 +4728,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1551A339158F2AB200E66CFE /* Build configuration list for PBXProject "cocos2dx-mac" */ = {
+		1551A339158F2AB200E66CFE /* Build configuration list for PBXProject "cocos2d_libs-mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1551A34A158F2AB200E66CFE /* Debug */,
@@ -4757,6 +4771,7 @@
 				A03F2E91178141C1006731B9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A03F2ED317814268006731B9 /* Build configuration list for PBXNativeTarget "CocosDenshion" */ = {
 			isa = XCConfigurationList;
