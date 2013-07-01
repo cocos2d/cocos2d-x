@@ -103,6 +103,9 @@
     <Filter Include="support\component">
       <UniqueIdentifier>{caa78ce0-9b58-4314-b117-1acae278691e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="textures\etc">
+      <UniqueIdentifier>{5e6e45aa-50ef-451b-9bb1-f98b9b78259b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\base_nodes\CCAtlasNode.cpp">
@@ -476,6 +479,9 @@
     </ClCompile>
     <ClCompile Include="..\support\component\CCComponentContainer.cpp">
       <Filter>support\component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\textures\etc\etc1.cpp">
+      <Filter>textures\etc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -957,6 +963,9 @@
     </ClInclude>
     <ClInclude Include="..\support\component\CCComponent.h">
       <Filter>support\component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\textures\etc\etc1.h">
+      <Filter>textures\etc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
