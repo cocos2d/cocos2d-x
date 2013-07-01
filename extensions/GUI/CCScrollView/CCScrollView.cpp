@@ -55,6 +55,7 @@ ScrollView::ScrollView()
 , _touches(NULL)
 , _minScale(0.0f)
 , _maxScale(0.0f)
+, _useDefaultAnchorPointWhenAddingChild(true)
 {
 
 }
@@ -102,8 +103,6 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
         if (!this->_container)
         {
             _container = Layer::create();
-            // this->_container->ignoreAnchorPointForPosition(false);
-            // this->_container->setAnchorPoint(ccp(0.0f, 0.0f));
         }
 
         this->setViewSize(size);
@@ -185,6 +184,16 @@ void ScrollView::setTouchEnabled(bool e)
         _touchMoved = false;
         _touches->removeAllObjects();
     }
+}
+
+bool CCScrollView::getUseDefaultAnchorPointWhenAddingChild()
+{
+	return _useDefaultAnchorPointWhenAddingChild;
+}
+
+void CCScrollView::setUseDefaultAnchorPointWhenAddingChild(bool flag)
+{
+	_useDefaultAnchorPointWhenAddingChild = flag;
 }
 
 void ScrollView::setContentOffset(Point offset, bool animated/* = false*/)
@@ -312,9 +321,6 @@ void ScrollView::setContainer(Node * pContainer)
 
     this->removeAllChildrenWithCleanup(true);
     this->_container = pContainer;
-
-    // this->_container->ignoreAnchorPointForPosition(false);
-    // this->_container->setAnchorPoint(ccp(0.0f, 0.0f));
 
     this->addChild(this->_container);
 
@@ -468,9 +474,11 @@ void ScrollView::updateInset()
  */
 void ScrollView::addChild(Node * child, int zOrder, int tag)
 {
-    // child->ignoreAnchorPointForPosition(false);
-    // child->setAnchorPoint(ccp(0.0f, 0.0f));
     if (_container != child) {
+		if (_useDefaultAnchorPointWhenAddingChild) {
+			child->ignoreAnchorPointForPosition(false);
+			child->setAnchorPoint(ccp(0.0f, 0.0f));
+		}
         _container->addChild(child, zOrder, tag);
     } else {
 		child->ignoreAnchorPointForPosition(false);

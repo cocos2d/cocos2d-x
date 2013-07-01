@@ -201,6 +201,10 @@ public:
     virtual void addChild(Node * child, int zOrder);
     virtual void addChild(Node * child);
     void setTouchEnabled(bool e);
+	
+	bool getUseDefaultAnchorPointWhenAddingChild();
+	void setUseDefaultAnchorPointWhenAddingChild(bool flag);
+	
 private:
     /**
      * Relocates the container at the proper offset, in bounds of max/min offsets.
@@ -322,6 +326,8 @@ protected:
      */
     Rect _parentScissorRect;
     bool _scissorRestored;
+
+	bool _useDefaultAnchorPointWhenAddingChild;
 };
 
 // end of GUI group
