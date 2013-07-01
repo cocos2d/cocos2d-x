@@ -295,8 +295,8 @@ void Layer::setKeyboardEnabled(bool enabled)
         }
         else
         {
-            pDirector->getKeyboardDispatcher()->setKeyPressDelegate(NULL);
-            pDirector->getKeyboardDispatcher()->setKeyReleaseDelegate(NULL);
+            pDirector->getKeyboardDispatcher()->setKeyPressDelegate(nullptr);
+            pDirector->getKeyboardDispatcher()->setKeyReleaseDelegate(nullptr);
         }
     }
 }
