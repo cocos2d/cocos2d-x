@@ -89,7 +89,22 @@ public:
      * @return int
      */
     inline int getTimeoutForRead() {return _timeoutForRead;};
-        
+    
+    
+    /**
+     * Get option whether to ignore SSL cert verification error.
+     * @return bool
+     */
+    inline int isIgnoreSslVerification() {return _ignoreSslVerification;};
+
+    
+    /**
+     * Set option whether to ignore SSL cert verification error.
+     * @return NULL
+     */
+    inline void setIgnoreSslVerification(bool ignoreSslVerification) {_ignoreSslVerification = ignoreSslVerification;};
+    
+    
 private:
     HttpClient();
     virtual ~HttpClient();
@@ -106,6 +121,7 @@ private:
 private:
     int _timeoutForConnect;
     int _timeoutForRead;
+    bool _ignoreSslVerification;
     
     // std::string reqId;
 };

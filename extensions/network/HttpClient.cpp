@@ -240,9 +240,16 @@ static bool configureCURL(CURL *handle)
     if (code != CURLE_OK) {
         return false;
     }
-    curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0L);
-    curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 0L);
-
+    
+    if(HttpClient::getInstance()->isIgnoreSslVerification()){
+        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0L);
+        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 0L);
+    }
+    else{
+        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 1L);
+        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 2L);
+    }
+    
     return true;
 }
 
@@ -387,6 +394,7 @@ void HttpClient::destroyInstance()
 HttpClient::HttpClient()
 : _timeoutForConnect(30)
 , _timeoutForRead(60)
+, _ignoreSslVerification(false)
 {
     Director::sharedDirector()->getScheduler()->scheduleSelector(
                     schedule_selector(HttpClient::dispatchResponseCallbacks), this, 0, false);
