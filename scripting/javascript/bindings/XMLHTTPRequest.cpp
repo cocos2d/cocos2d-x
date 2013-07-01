@@ -182,44 +182,47 @@ void MinXmlHttpRequest::handle_requestResponse(cocos2d::extension::HttpClient *s
     {
         CCLOG("response failed");
         CCLOG("error buffer: %s", response->getErrorBuffer());
-        return;
-    }
-    
-    // set header
-    std::vector<char> *headers = response->getResponseHeader();
-    
-    char* concatHeader = (char*) malloc(headers->size() + 1);
-    std::string header(headers->begin(), headers->end());
-    strcpy(concatHeader, header.c_str());
-    
-    std::istringstream stream(concatHeader);
-    std::string line;
-    while(std::getline(stream, line)) {
-        _gotHeader(line);
-    }
-    
-    /** get the response data **/
-    std::vector<char> *buffer = response->getResponseData();
-    char* concatenated = (char*) malloc(buffer->size() + 1);
-    std::string s2(buffer->begin(), buffer->end());
-    
-    strcpy(concatenated, s2.c_str());
-    
-    if (statusCode == 200)
-    {
-        //Succeeded
-        status = 200;
-        readyState = DONE;
-        data << concatenated;
         
     }
     else
     {
-        status = 0;
+    
+	 // set header
+	std::vector<char> *headers = response->getResponseHeader();
+	    
+	char* concatHeader = (char*) malloc(headers->size() + 1);
+	std::string header(headers->begin(), headers->end());
+	strcpy(concatHeader, header.c_str());
+	    
+	std::istringstream stream(concatHeader);
+	std::string line;
+	while(std::getline(stream, line)) {
+	    _gotHeader(line);
+	}
+	    
+	/** get the response data **/
+	std::vector<char> *buffer = response->getResponseData();
+	char* concatenated = (char*) malloc(buffer->size() + 1);
+	std::string s2(buffer->begin(), buffer->end());
+	    
+	strcpy(concatenated, s2.c_str());
+	    
+	if (statusCode == 200)
+	{
+	    //Succeeded
+	    status = 200;
+	    readyState = DONE;
+	    data << concatenated;
+	        
+	}
+	else
+	{
+	    status = 0;
+	}
+	// Free Memory.
+	free((void*) concatHeader);
+	free((void*) concatenated);
     }
-    // Free Memory.
-    free((void*) concatHeader);
-    free((void*) concatenated);
     
     js_proxy_t * p;
     void* ptr = (void*)this;
