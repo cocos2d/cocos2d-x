@@ -13,9 +13,7 @@
 #include "touch_dispatcher/CCTouch.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
 #include "text_input_node/CCIMEDispatcher.h"
-#ifdef CC_KEYBOARD_SUPPORT
 #include "keyboard_dispatcher/CCKeyboardDispatcher.h"
-#endif
 
 PFNGLGENFRAMEBUFFERSEXTPROC glGenFramebuffersEXT = NULL;
 PFNGLDELETEFRAMEBUFFERSEXTPROC glDeleteFramebuffersEXT = NULL;
@@ -157,7 +155,6 @@ int closeEventHandle() {
 	return GL_TRUE;
 }
 
-#ifdef CC_KEYBOARD_SUPPORT
 void GLFWCALL keyboardEventHandle(int keyCode, int action)
 {
     KeyboardDispatcher *kbDisp = Director::sharedDirector()->getKeyboardDispatcher();
@@ -172,7 +169,6 @@ void GLFWCALL keyboardEventHandle(int keyCode, int action)
             break;
     }   
 }
-#endif
 
 void EGLView::setFrameSize(float width, float height)
 {
