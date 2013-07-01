@@ -13,6 +13,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
         
+    Squallium
+        Added ccFPSImages entity as linked resource on linux eclipse project setting
+        
     longlene
         Improve android project creation script
         
