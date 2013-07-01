@@ -244,6 +244,48 @@
 		A035A70D17822A8E00987F6C /* main.debug.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A70117822A8E00987F6C /* main.debug.js */; };
 		A035A70E17822E5000987F6C /* libjsbindings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B3317821DF600987F6C /* libjsbindings.a */; };
 		A035A71217822E9E00987F6C /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A035A71117822E9E00987F6C /* libsqlite3.dylib */; };
+		A035A7291782301C00987F6C /* jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6F617822A8E00987F6C /* jsb.js */; };
+		A035A72A1782301C00987F6C /* jsb_chipmunk.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6F717822A8E00987F6C /* jsb_chipmunk.js */; };
+		A035A72B1782301C00987F6C /* jsb_chipmunk_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6F817822A8E00987F6C /* jsb_chipmunk_constants.js */; };
+		A035A72C1782301C00987F6C /* jsb_cocos2d.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6F917822A8E00987F6C /* jsb_cocos2d.js */; };
+		A035A72D1782301C00987F6C /* jsb_cocos2d_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6FA17822A8E00987F6C /* jsb_cocos2d_constants.js */; };
+		A035A72E1782301C00987F6C /* jsb_cocos2d_extension.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6FB17822A8E00987F6C /* jsb_cocos2d_extension.js */; };
+		A035A72F1782301C00987F6C /* jsb_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6FC17822A8E00987F6C /* jsb_cocosbuilder.js */; };
+		A035A7301782301C00987F6C /* jsb_debugger.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6FD17822A8E00987F6C /* jsb_debugger.js */; };
+		A035A7311782301C00987F6C /* jsb_opengl.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6FE17822A8E00987F6C /* jsb_opengl.js */; };
+		A035A7321782301C00987F6C /* jsb_opengl_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6FF17822A8E00987F6C /* jsb_opengl_constants.js */; };
+		A035A7331782301C00987F6C /* jsb_sys.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A70017822A8E00987F6C /* jsb_sys.js */; };
+		A035A7341782301C00987F6C /* main.debug.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A70117822A8E00987F6C /* main.debug.js */; };
+		A035A76B1782301C00987F6C /* libjsbindings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B3317821DF600987F6C /* libjsbindings.a */; };
+		A035A76C1782301C00987F6C /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B2D17821DF600987F6C /* libchipmunk.a */; };
+		A035A76D1782301C00987F6C /* libcocos2dx-extensions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B2B17821DF600987F6C /* libcocos2dx-extensions.a */; };
+		A035A76E1782301C00987F6C /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B2917821DF600987F6C /* libcocos2dx.a */; };
+		A035A76F1782301C00987F6C /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B3117821DF600987F6C /* libCocosDenshion.a */; };
+		A035A7701782301C00987F6C /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A035A71117822E9E00987F6C /* libsqlite3.dylib */; };
+		A035A7711782301C00987F6C /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F808C177E98A600D9A1CB /* libcurl.dylib */; };
+		A035A7721782301C00987F6C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
+		A035A7731782301C00987F6C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
+		A035A7741782301C00987F6C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482C165F3988007D4F18 /* AudioToolbox.framework */; };
+		A035A7751782301C00987F6C /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482A165F3979007D4F18 /* ApplicationServices.framework */; };
+		A035A7761782301C00987F6C /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64828165F396B007D4F18 /* OpenAL.framework */; };
+		A035A7771782301C00987F6C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64826165F394E007D4F18 /* QuartzCore.framework */; };
+		A035A7781782301C00987F6C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64824165F3934007D4F18 /* OpenGL.framework */; };
+		A035A7791782301C00987F6C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
+		A035A7C21782340B00987F6C /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A035A7811782340A00987F6C /* AppDelegate.cpp */; };
+		A035A8661782343C00987F6C /* boot-html5.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A7ED1782343C00987F6C /* boot-html5.js */; };
+		A035A8671782343C00987F6C /* boot-jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A7EE1782343C00987F6C /* boot-jsb.js */; };
+		A035A8681782343C00987F6C /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = A035A7EF1782343C00987F6C /* index.html */; };
+		A035A8691782343C00987F6C /* levels.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A7F01782343C00987F6C /* levels.js */; };
+		A035A86A1782343C00987F6C /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A7F11782343C00987F6C /* main.js */; };
+		A035A8D31782343C00987F6C /* resources-html5.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A8631782343C00987F6C /* resources-html5.js */; };
+		A035A8D41782343C00987F6C /* resources-jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A8641782343C00987F6C /* resources-jsb.js */; };
+		A035A8D51782343C00987F6C /* watermelon_with_me.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A8651782343C00987F6C /* watermelon_with_me.js */; };
+		A035A9A3178234A900987F6C /* res in Resources */ = {isa = PBXBuildFile; fileRef = A035A9A2178234A900987F6C /* res */; };
+		A035A9B01782355600987F6C /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A035A9A81782355600987F6C /* AppController.mm */; };
+		A035A9B11782355600987F6C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A035A9A91782355600987F6C /* InfoPlist.strings */; };
+		A035A9B21782355600987F6C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A035A9AB1782355600987F6C /* MainMenu.xib */; };
+		A035A9B31782355600987F6C /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A035A9AD1782355600987F6C /* Icon.icns */; };
+		A035A9B51782355600987F6C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A035A9AF1782355600987F6C /* main.m */; };
 		A05FCACA177C124500BE600E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -366,6 +408,48 @@
 			proxyType = 1;
 			remoteGlobalIDString = A03F31E81781479B006731B9;
 			remoteInfo = jsbindings;
+		};
+		A035A7151782301C00987F6C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F31E81781479B006731B9;
+			remoteInfo = jsbindings;
+		};
+		A035A7171782301C00987F6C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2D5D1780BDF7006731B9;
+			remoteInfo = box2d;
+		};
+		A035A7191782301C00987F6C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
+			remoteInfo = cocos2dx;
+		};
+		A035A71B1782301C00987F6C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2FC117814595006731B9;
+			remoteInfo = "cocos2dx-extensions";
+		};
+		A035A71D1782301C00987F6C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2B781780BD04006731B9;
+			remoteInfo = chipmunk;
+		};
+		A035A71F1782301C00987F6C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2E9817814268006731B9;
+			remoteInfo = CocosDenshion;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -766,6 +850,25 @@
 		A035A70017822A8E00987F6C /* jsb_sys.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_sys.js; sourceTree = "<group>"; };
 		A035A70117822A8E00987F6C /* main.debug.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.debug.js; sourceTree = "<group>"; };
 		A035A71117822E9E00987F6C /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		A035A77D1782301C00987F6C /* WatermelonWithMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatermelonWithMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A035A7811782340A00987F6C /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
+		A035A7821782340A00987F6C /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		A035A7ED1782343C00987F6C /* boot-html5.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "boot-html5.js"; sourceTree = "<group>"; };
+		A035A7EE1782343C00987F6C /* boot-jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "boot-jsb.js"; sourceTree = "<group>"; };
+		A035A7EF1782343C00987F6C /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		A035A7F01782343C00987F6C /* levels.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = levels.js; sourceTree = "<group>"; };
+		A035A7F11782343C00987F6C /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.js; sourceTree = "<group>"; };
+		A035A8631782343C00987F6C /* resources-html5.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "resources-html5.js"; sourceTree = "<group>"; };
+		A035A8641782343C00987F6C /* resources-jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "resources-jsb.js"; sourceTree = "<group>"; };
+		A035A8651782343C00987F6C /* watermelon_with_me.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = watermelon_with_me.js; sourceTree = "<group>"; };
+		A035A9A2178234A900987F6C /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
+		A035A9A71782355600987F6C /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
+		A035A9A81782355600987F6C /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
+		A035A9AA1782355600987F6C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A035A9AC1782355600987F6C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		A035A9AD1782355600987F6C /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
+		A035A9AE1782355600987F6C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A035A9AF1782355600987F6C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -812,6 +915,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A035A76A1782301C00987F6C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A035A76B1782301C00987F6C /* libjsbindings.a in Frameworks */,
+				A035A76C1782301C00987F6C /* libchipmunk.a in Frameworks */,
+				A035A76D1782301C00987F6C /* libcocos2dx-extensions.a in Frameworks */,
+				A035A76E1782301C00987F6C /* libcocos2dx.a in Frameworks */,
+				A035A76F1782301C00987F6C /* libCocosDenshion.a in Frameworks */,
+				A035A7701782301C00987F6C /* libsqlite3.dylib in Frameworks */,
+				A035A7711782301C00987F6C /* libcurl.dylib in Frameworks */,
+				A035A7721782301C00987F6C /* libz.dylib in Frameworks */,
+				A035A7731782301C00987F6C /* Foundation.framework in Frameworks */,
+				A035A7741782301C00987F6C /* AudioToolbox.framework in Frameworks */,
+				A035A7751782301C00987F6C /* ApplicationServices.framework in Frameworks */,
+				A035A7761782301C00987F6C /* OpenAL.framework in Frameworks */,
+				A035A7771782301C00987F6C /* QuartzCore.framework in Frameworks */,
+				A035A7781782301C00987F6C /* OpenGL.framework in Frameworks */,
+				A035A7791782301C00987F6C /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -820,6 +945,7 @@
 			children = (
 				1D6058910D05DD3D006BFB54 /* TestCpp.app */,
 				A035A5EC1782290400987F6C /* TestJavaScript.app */,
+				A035A77D1782301C00987F6C /* WatermelonWithMe.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -827,10 +953,10 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				A035A71117822E9E00987F6C /* libsqlite3.dylib */,
 				A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */,
 				A0359B0B17821DB400987F6C /* TestCpp */,
 				A035A5F21782296200987F6C /* TestJavascript */,
+				A035A77F1782340A00987F6C /* WatermelonWithMe */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
@@ -840,6 +966,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A035A71117822E9E00987F6C /* libsqlite3.dylib */,
 				1A9F808C177E98A600D9A1CB /* libcurl.dylib */,
 				15C6482E165F399D007D4F18 /* libz.dylib */,
 				15C6482C165F3988007D4F18 /* AudioToolbox.framework */,
@@ -1940,6 +2067,57 @@
 			path = ../../../scripting/javascript/bindings/js;
 			sourceTree = "<group>";
 		};
+		A035A77F1782340A00987F6C /* WatermelonWithMe */ = {
+			isa = PBXGroup;
+			children = (
+				A035A9A61782355600987F6C /* proj.mac */,
+				A035A7EC1782343C00987F6C /* Resources */,
+				A035A7801782340A00987F6C /* Classes */,
+			);
+			name = WatermelonWithMe;
+			path = Javascript/WatermelonWithMe;
+			sourceTree = "<group>";
+		};
+		A035A7801782340A00987F6C /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				A035A7811782340A00987F6C /* AppDelegate.cpp */,
+				A035A7821782340A00987F6C /* AppDelegate.h */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		A035A7EC1782343C00987F6C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A035A9A2178234A900987F6C /* res */,
+				A035A7ED1782343C00987F6C /* boot-html5.js */,
+				A035A7EE1782343C00987F6C /* boot-jsb.js */,
+				A035A7EF1782343C00987F6C /* index.html */,
+				A035A7F01782343C00987F6C /* levels.js */,
+				A035A7F11782343C00987F6C /* main.js */,
+				A035A8631782343C00987F6C /* resources-html5.js */,
+				A035A8641782343C00987F6C /* resources-jsb.js */,
+				A035A8651782343C00987F6C /* watermelon_with_me.js */,
+			);
+			name = Resources;
+			path = Javascript/Shared/games/WatermelonWithMe;
+			sourceTree = SOURCE_ROOT;
+		};
+		A035A9A61782355600987F6C /* proj.mac */ = {
+			isa = PBXGroup;
+			children = (
+				A035A9A71782355600987F6C /* AppController.h */,
+				A035A9A81782355600987F6C /* AppController.mm */,
+				A035A9A91782355600987F6C /* InfoPlist.strings */,
+				A035A9AB1782355600987F6C /* MainMenu.xib */,
+				A035A9AD1782355600987F6C /* Icon.icns */,
+				A035A9AE1782355600987F6C /* Info.plist */,
+				A035A9AF1782355600987F6C /* main.m */,
+			);
+			path = proj.mac;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1988,6 +2166,29 @@
 			productReference = A035A5EC1782290400987F6C /* TestJavaScript.app */;
 			productType = "com.apple.product-type.application";
 		};
+		A035A7131782301C00987F6C /* WatermelonWithMe */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A035A77A1782301C00987F6C /* Build configuration list for PBXNativeTarget "WatermelonWithMe" */;
+			buildPhases = (
+				A035A7201782301C00987F6C /* Resources */,
+				A035A7661782301C00987F6C /* Sources */,
+				A035A76A1782301C00987F6C /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A035A7141782301C00987F6C /* PBXTargetDependency */,
+				A035A7161782301C00987F6C /* PBXTargetDependency */,
+				A035A7181782301C00987F6C /* PBXTargetDependency */,
+				A035A71A1782301C00987F6C /* PBXTargetDependency */,
+				A035A71C1782301C00987F6C /* PBXTargetDependency */,
+				A035A71E1782301C00987F6C /* PBXTargetDependency */,
+			);
+			name = WatermelonWithMe;
+			productName = iphone;
+			productReference = A035A77D1782301C00987F6C /* WatermelonWithMe.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -2019,6 +2220,7 @@
 			targets = (
 				1D6058900D05DD3D006BFB54 /* TestCpp */,
 				A035A5441782290400987F6C /* TestJavaScript */,
+				A035A7131782301C00987F6C /* WatermelonWithMe */,
 			);
 		};
 /* End PBXProject section */
@@ -2184,6 +2386,37 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A035A7201782301C00987F6C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A035A8661782343C00987F6C /* boot-html5.js in Resources */,
+				A035A8671782343C00987F6C /* boot-jsb.js in Resources */,
+				A035A8691782343C00987F6C /* levels.js in Resources */,
+				A035A86A1782343C00987F6C /* main.js in Resources */,
+				A035A8D31782343C00987F6C /* resources-html5.js in Resources */,
+				A035A8D41782343C00987F6C /* resources-jsb.js in Resources */,
+				A035A8D51782343C00987F6C /* watermelon_with_me.js in Resources */,
+				A035A7291782301C00987F6C /* jsb.js in Resources */,
+				A035A72A1782301C00987F6C /* jsb_chipmunk.js in Resources */,
+				A035A72B1782301C00987F6C /* jsb_chipmunk_constants.js in Resources */,
+				A035A72C1782301C00987F6C /* jsb_cocos2d.js in Resources */,
+				A035A72D1782301C00987F6C /* jsb_cocos2d_constants.js in Resources */,
+				A035A72E1782301C00987F6C /* jsb_cocos2d_extension.js in Resources */,
+				A035A72F1782301C00987F6C /* jsb_cocosbuilder.js in Resources */,
+				A035A7301782301C00987F6C /* jsb_debugger.js in Resources */,
+				A035A7311782301C00987F6C /* jsb_opengl.js in Resources */,
+				A035A7321782301C00987F6C /* jsb_opengl_constants.js in Resources */,
+				A035A7331782301C00987F6C /* jsb_sys.js in Resources */,
+				A035A7341782301C00987F6C /* main.debug.js in Resources */,
+				A035A8681782343C00987F6C /* index.html in Resources */,
+				A035A9A3178234A900987F6C /* res in Resources */,
+				A035A9B11782355600987F6C /* InfoPlist.strings in Resources */,
+				A035A9B21782355600987F6C /* MainMenu.xib in Resources */,
+				A035A9B31782355600987F6C /* Icon.icns in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -2309,6 +2542,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A035A7661782301C00987F6C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A035A7C21782340B00987F6C /* AppDelegate.cpp in Sources */,
+				A035A9B01782355600987F6C /* AppController.mm in Sources */,
+				A035A9B51782355600987F6C /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -2367,6 +2610,36 @@
 			name = jsbindings;
 			targetProxy = A035A5EE1782292500987F6C /* PBXContainerItemProxy */;
 		};
+		A035A7141782301C00987F6C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = jsbindings;
+			targetProxy = A035A7151782301C00987F6C /* PBXContainerItemProxy */;
+		};
+		A035A7161782301C00987F6C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = box2d;
+			targetProxy = A035A7171782301C00987F6C /* PBXContainerItemProxy */;
+		};
+		A035A7181782301C00987F6C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = cocos2dx;
+			targetProxy = A035A7191782301C00987F6C /* PBXContainerItemProxy */;
+		};
+		A035A71A1782301C00987F6C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocos2dx-extensions";
+			targetProxy = A035A71B1782301C00987F6C /* PBXContainerItemProxy */;
+		};
+		A035A71C1782301C00987F6C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = chipmunk;
+			targetProxy = A035A71D1782301C00987F6C /* PBXContainerItemProxy */;
+		};
+		A035A71E1782301C00987F6C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CocosDenshion;
+			targetProxy = A035A71F1782301C00987F6C /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -2398,6 +2671,22 @@
 			isa = PBXVariantGroup;
 			children = (
 				A035A6381782296200987F6C /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		A035A9A91782355600987F6C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A035A9AA1782355600987F6C /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A035A9AB1782355600987F6C /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A035A9AC1782355600987F6C /* en */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -2489,6 +2778,54 @@
 			};
 			name = Release;
 		};
+		A035A77B1782301C00987F6C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_ENABLE_CHIPMUNK_INTEGRATION,
+					COCOS2D_JAVASCRIPT,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../scripting/javascript/bindings\"",
+					"\"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\"",
+				);
+				INFOPLIST_FILE = Javascript/WatermelonWithMe/proj.mac/Info.plist;
+				PRODUCT_NAME = WatermelonWithMe;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Debug;
+		};
+		A035A77C1782301C00987F6C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_ENABLE_CHIPMUNK_INTEGRATION,
+					COCOS2D_JAVASCRIPT,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../scripting/javascript/bindings\"",
+					"\"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\"",
+				);
+				INFOPLIST_FILE = Javascript/WatermelonWithMe/proj.mac/Info.plist;
+				PRODUCT_NAME = WatermelonWithMe;
+				USER_HEADER_SEARCH_PATHS = "";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2574,6 +2911,15 @@
 			buildConfigurations = (
 				A035A5EA1782290400987F6C /* Debug */,
 				A035A5EB1782290400987F6C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A035A77A1782301C00987F6C /* Build configuration list for PBXNativeTarget "WatermelonWithMe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A035A77B1782301C00987F6C /* Debug */,
+				A035A77C1782301C00987F6C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
