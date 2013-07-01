@@ -134,12 +134,12 @@ public:
     You can enable / disable accelerometer events with this property.
     it's new in cocos2d-x
     */
-#ifdef CC_KEYBOARD_SUPPORT
+
     virtual bool isKeyboardEnabled();
     virtual void setKeyboardEnabled(bool value);
     virtual void keyPressed(int keyCode) {};
     virtual void keyReleased(int keyCode) {};
-#endif
+
     virtual bool isKeypadEnabled();
     virtual void setKeypadEnabled(bool value);
 
@@ -157,9 +157,7 @@ public:
 protected:   
     bool _touchEnabled;
     bool _accelerometerEnabled;
-#ifdef CC_KEYBOARD_SUPPORT
     bool _keyboardEnabled;
-#endif
     bool _keypadEnabled;
     
 private:
