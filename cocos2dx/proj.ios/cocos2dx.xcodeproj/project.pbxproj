@@ -316,6 +316,8 @@
 		4EF8999A16E207E70040A527 /* CCTMXXMLParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EF8998E16E207E70040A527 /* CCTMXXMLParser.cpp */; };
 		4EF8999B16E207E70040A527 /* CCTMXXMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF8998F16E207E70040A527 /* CCTMXXMLParser.h */; };
 		D43F7F8A15C7D8BA00D713FC /* CCTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */; };
+		ED9FA25C178127B800B9B4B0 /* etc1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9FA25A178127B800B9B4B0 /* etc1.cpp */; };
+		ED9FA25D178127B800B9B4B0 /* etc1.h in Headers */ = {isa = PBXBuildFile; fileRef = ED9FA25B178127B800B9B4B0 /* etc1.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -631,6 +633,8 @@
 		4EF8998E16E207E70040A527 /* CCTMXXMLParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTMXXMLParser.cpp; sourceTree = "<group>"; };
 		4EF8998F16E207E70040A527 /* CCTMXXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXXMLParser.h; sourceTree = "<group>"; };
 		D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouch.cpp; sourceTree = "<group>"; };
+		ED9FA25A178127B800B9B4B0 /* etc1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = etc1.cpp; path = etc/etc1.cpp; sourceTree = "<group>"; };
+		ED9FA25B178127B800B9B4B0 /* etc1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = etc1.h; path = etc/etc1.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1178,6 +1182,7 @@
 		1551A60B158F2ADE00E66CFE /* textures */ = {
 			isa = PBXGroup;
 			children = (
+				ED9FA2591781279400B9B4B0 /* etc */,
 				1551A60C158F2ADE00E66CFE /* CCTexture2D.cpp */,
 				1551A60D158F2ADE00E66CFE /* CCTexture2D.h */,
 				1551A60E158F2ADE00E66CFE /* CCTextureAtlas.cpp */,
@@ -1291,6 +1296,15 @@
 				46A393F516E5D01B00210B16 /* CCUserDefaultAndroid.cpp */,
 			);
 			path = user_default;
+			sourceTree = "<group>";
+		};
+		ED9FA2591781279400B9B4B0 /* etc */ = {
+			isa = PBXGroup;
+			children = (
+				ED9FA25A178127B800B9B4B0 /* etc1.cpp */,
+				ED9FA25B178127B800B9B4B0 /* etc1.h */,
+			);
+			name = etc;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1473,6 +1487,7 @@
 				36B713C817557CB900A2554C /* CCData.h in Headers */,
 				465E20AD176ABE63001D853C /* CCComponent.h in Headers */,
 				465E20AF176ABE63001D853C /* CCComponentContainer.h in Headers */,
+				ED9FA25D178127B800B9B4B0 /* etc1.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1661,6 +1676,7 @@
 				36B713C717557CB900A2554C /* CCData.cpp in Sources */,
 				465E20AC176ABE63001D853C /* CCComponent.cpp in Sources */,
 				465E20AE176ABE63001D853C /* CCComponentContainer.cpp in Sources */,
+				ED9FA25C178127B800B9B4B0 /* etc1.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
