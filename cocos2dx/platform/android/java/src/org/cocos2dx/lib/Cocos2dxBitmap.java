@@ -390,8 +390,11 @@ public class Cocos2dxBitmap {
 				}
 
 				/* Remove spaces at the beginning of a new line. */
-				while (pString.charAt(i) == ' ') {
-					++i;
+				if(i < charLength)
+				{
+					while (pString.charAt(i) == ' ') {
+						++i;
+					}
 				}
 
 				start = i;
