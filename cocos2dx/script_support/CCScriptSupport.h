@@ -233,6 +233,36 @@ public:
      * @return true if the assert was handled by the script engine, false otherwise.
      */
     virtual bool handleAssert(const char *msg) = 0;
+    
+    // handle the script func begin
+    enum EventType
+    {
+        kNodeEvent,
+        kMenuItemEvent,
+        kNotificationEvent,
+        kCallFuncEvent,
+        kScheduleEvent,
+        kLayerTouchesEvent,
+        kLayerTouchersEvents,
+        kLayerKeypadEvent,
+        kEcuteAccelerometerEvent,
+        kNormalEvent,
+    };
+    
+    struct EventMessage
+    {
+        EventType type;
+        void* data;
+        EventMessage(EventType inType,void* inData)
+        {
+            type = inType;
+            data = inData;
+        }
+    };
+    /* handle the script func unified
+     */
+    virtual int handleEvent(int handler,void* nativeObject,EventMessage* message){ return -1;}
+    // handle the script func end
 };
 
 /**
