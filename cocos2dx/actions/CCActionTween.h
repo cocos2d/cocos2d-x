@@ -34,46 +34,49 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL CCActionTweenDelegate
+class CC_DLL ActionTweenDelegate
 {
 public:
-    virtual ~CCActionTweenDelegate() {}
+    virtual ~ActionTweenDelegate() {}
     virtual void updateTweenAction(float value, const char* key) = 0;
 };
 
-/** CCActionTween
+/** ActionTween
 
- CCActionTween is an action that lets you update any property of an object.
+ ActionTween is an action that lets you update any property of an object.
  For example, if you want to modify the "width" property of a target from 200 to 300 in 2 seconds, then:
 
-    id modifyWidth = [CCActionTween actionWithDuration:2 key:@"width" from:200 to:300];
+    id modifyWidth = [ActionTween actionWithDuration:2 key:@"width" from:200 to:300];
     [target runAction:modifyWidth];
 
 
- Another example: CCScaleTo action could be rewritten using CCPropertyAction:
+ Another example: ScaleTo action could be rewritten using PropertyAction:
 
     // scaleA and scaleB are equivalents
-    id scaleA = [CCScaleTo actionWithDuration:2 scale:3];
-    id scaleB = [CCActionTween actionWithDuration:2 key:@"scale" from:1 to:3];
+    id scaleA = [ScaleTo actionWithDuration:2 scale:3];
+    id scaleB = [ActionTween actionWithDuration:2 key:@"scale" from:1 to:3];
 
 
  @since v0.99.2
  */
-class CC_DLL CCActionTween : public CCActionInterval
+class CC_DLL ActionTween : public ActionInterval
 {
 public:
     /** creates an initializes the action with the property name (key), and the from and to parameters. */
-    static CCActionTween* create(float aDuration, const char* key, float from, float to);
+    static ActionTween* create(float aDuration, const char* key, float from, float to);
     /** initializes the action with the property name (key), and the from and to parameters. */
     bool initWithDuration(float aDuration, const char* key, float from, float to);
 
-    void startWithTarget(CCNode *pTarget);
+    void startWithTarget(Node *pTarget);
     void update(float dt);
-    CCActionInterval* reverse();
+	/** returns a new reversed action */
+    ActionTween* reverse() const;
+	/** returns a new clone of the action */
+	ActionTween *clone() const;
 
-    std::string        m_strKey;
-    float            m_fFrom, m_fTo;
-    float            m_fDelta;
+    std::string        _key;
+    float            _from, _to;
+    float            _delta;
 };
 
 // end of actions group

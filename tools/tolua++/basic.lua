@@ -313,11 +313,40 @@ TOLUA_API int  tolua_Cocos2d_open (lua_State* tolua_S);]], [[]])
       replace([[tolua_usertype(tolua_S,"LUA_FUNCTION");]], [[]])
 
       replace([[toluafix_pushusertype_ccobject(tolua_S,(void*)tolua_ret]],
-        [[int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+        [[int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
     toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret]])
 
       replace('\t', '    ')
+
+    result = string.gsub(result, '(\"const )(CC%u%w*)', '%1_%2')
+
+    local skip_contents = { "CCPointMake", "CCSizeMake", "CCRectMake", "CCLOG", "CCLog", "CCAssert" }
+
+    local function remove_prefix()
+        result = string.gsub(result, '[^_\"k]CC%u%w+', function(m)
+            local s, e
+            local count = table.getn(skip_contents)
+            local i = 1
+
+            for  i = 1, count do
+                s, e = string.find(m, skip_contents[i])
+                if s ~= nil then
+                    return m
+                end
+            end
+
+            return string.gsub(m, 'CC(%u%w+)', '%1')
+        end)
+    end
+    remove_prefix()
+
+    result = string.gsub(result, '([^\"]k)CC(%u%w*)', '%1%2')
+
+    replace("Animation*", "cocos2d::Animation*")
+    replace("Animation::create", "cocos2d::Animation::create")
+
+    result = string.gsub(result, '(\"const )_(CC%u%w*)', '%1%2')
 
     WRITE(result)
 end

@@ -7,9 +7,9 @@ enum {
 
 static int sceneIdx = -1;
 
-CCLayer* nextSchedulerTest();
-CCLayer* backSchedulerTest();
-CCLayer* restartSchedulerTest();
+Layer* nextSchedulerTest();
+Layer* backSchedulerTest();
+Layer* restartSchedulerTest();
 
 TESTLAYER_CREATE_FUNC(SchedulerTimeScale)
 TESTLAYER_CREATE_FUNC(TwoSchedulers)
@@ -49,35 +49,35 @@ static NEWTESTFUNC createFunctions[] = {
 
 #define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
 
-CCLayer* nextSchedulerTest()
+Layer* nextSchedulerTest()
 {
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    CCLayer* pLayer = (createFunctions[sceneIdx])();
+    Layer* pLayer = (createFunctions[sceneIdx])();
     pLayer->init();
     pLayer->autorelease();
 
     return pLayer;
 }
 
-CCLayer* backSchedulerTest()
+Layer* backSchedulerTest()
 {
     sceneIdx--;
     int total = MAX_LAYER;
     if( sceneIdx < 0 )
         sceneIdx += total;    
 
-    CCLayer* pLayer = (createFunctions[sceneIdx])();
+    Layer* pLayer = (createFunctions[sceneIdx])();
     pLayer->init();
     pLayer->autorelease();
 
     return pLayer;
 }
 
-CCLayer* restartSchedulerTest()
+Layer* restartSchedulerTest()
 {
-    CCLayer* pLayer = (createFunctions[sceneIdx])();
+    Layer* pLayer = (createFunctions[sceneIdx])();
     pLayer->init();
     pLayer->autorelease();
 
@@ -91,60 +91,36 @@ CCLayer* restartSchedulerTest()
 //------------------------------------------------------------------
 void SchedulerTestLayer::onEnter()
 {
-    CCLayer::onEnter();
-
-    CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 32);
-    addChild(label);
-    label->setPosition(ccp(VisibleRect::center().x, VisibleRect::top().y-50));
-
-    std::string subTitle = subtitle();
-    if(! subTitle.empty())
-    {
-        CCLabelTTF* l = CCLabelTTF::create(subTitle.c_str(), "Thonburi", 16);
-        addChild(l, 1);
-        l->setPosition(ccp(VisibleRect::center().x, VisibleRect::top().y-80));
-    }
-
-    CCMenuItemImage *item1 = CCMenuItemImage::create("Images/b1.png", "Images/b2.png", this, menu_selector(SchedulerTestLayer::backCallback));
-    CCMenuItemImage *item2 = CCMenuItemImage::create("Images/r1.png","Images/r2.png", this, menu_selector(SchedulerTestLayer::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::create("Images/f1.png", "Images/f2.png", this, menu_selector(SchedulerTestLayer::nextCallback) );
-
-    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
-    menu->setPosition(CCPointZero);
-    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-
-    addChild(menu, 1);
+    BaseTest::onEnter();
 }
 
-void SchedulerTestLayer::backCallback(CCObject* pSender)
+void SchedulerTestLayer::backCallback(Object* pSender)
 {
-    CCScene* pScene = new SchedulerTestScene();
-    CCLayer* pLayer = backSchedulerTest();
+    Scene* pScene = new SchedulerTestScene();
+    Layer* pLayer = backSchedulerTest();
 
     pScene->addChild(pLayer);
-    CCDirector::sharedDirector()->replaceScene(pScene);
+    Director::sharedDirector()->replaceScene(pScene);
     pScene->release();
 }
 
-void SchedulerTestLayer::nextCallback(CCObject* pSender)
+void SchedulerTestLayer::nextCallback(Object* pSender)
 {
-    CCScene* pScene = new SchedulerTestScene();
-    CCLayer* pLayer = nextSchedulerTest();
+    Scene* pScene = new SchedulerTestScene();
+    Layer* pLayer = nextSchedulerTest();
 
     pScene->addChild(pLayer);
-    CCDirector::sharedDirector()->replaceScene(pScene);
+    Director::sharedDirector()->replaceScene(pScene);
     pScene->release();
 }
 
-void SchedulerTestLayer::restartCallback(CCObject* pSender)
+void SchedulerTestLayer::restartCallback(Object* pSender)
 {
-    CCScene* pScene = new SchedulerTestScene();
-    CCLayer* pLayer = restartSchedulerTest();
+    Scene* pScene = new SchedulerTestScene();
+    Layer* pLayer = restartSchedulerTest();
 
     pScene->addChild(pLayer);
-    CCDirector::sharedDirector()->replaceScene(pScene);
+    Director::sharedDirector()->replaceScene(pScene);
     pScene->release();
 }
 
@@ -225,7 +201,7 @@ void SchedulerPauseResume::tick2(float dt)
 
 void SchedulerPauseResume::pause(float dt)
 {
-    CCDirector::sharedDirector()->getScheduler()->pauseTarget(this);
+    Director::sharedDirector()->getScheduler()->pauseTarget(this);
 }
 
 std::string SchedulerPauseResume::title()
@@ -245,24 +221,24 @@ std::string SchedulerPauseResume::subtitle()
 //------------------------------------------------------------------
 
 SchedulerPauseResumeAll::SchedulerPauseResumeAll()
-: m_pPausedTargets(NULL)
+: _pausedTargets(NULL)
 {
     
 }
 
 SchedulerPauseResumeAll::~SchedulerPauseResumeAll()
 {
-    CC_SAFE_RELEASE(m_pPausedTargets);
+    CC_SAFE_RELEASE(_pausedTargets);
 }
 
 void SchedulerPauseResumeAll::onEnter()
 {
     SchedulerTestLayer::onEnter();
 
-    CCSprite *sprite = CCSprite::create("Images/grossinis_sister1.png");
+    Sprite *sprite = Sprite::create("Images/grossinis_sister1.png");
     sprite->setPosition(VisibleRect::center());
     this->addChild(sprite);
-    sprite->runAction(CCRepeatForever::create(CCRotateBy::create(3.0, 360)));
+    sprite->runAction(RepeatForever::create(RotateBy::create(3.0, 360)));
 
     scheduleUpdate();
     schedule(schedule_selector(SchedulerPauseResumeAll::tick1), 0.5f);
@@ -277,9 +253,9 @@ void SchedulerPauseResumeAll::update(float delta)
 
 void SchedulerPauseResumeAll::onExit()
 {
-    if(m_pPausedTargets != NULL)
+    if(_pausedTargets != NULL)
     {
-        CCDirector::sharedDirector()->getScheduler()->resumeTargets(m_pPausedTargets);
+        Director::sharedDirector()->getScheduler()->resumeTargets(_pausedTargets);
     }
 }
 
@@ -296,15 +272,15 @@ void SchedulerPauseResumeAll::tick2(float dt)
 void SchedulerPauseResumeAll::pause(float dt)
 {
     CCLog("Pausing");
-    CCDirector* pDirector = CCDirector::sharedDirector();
-    m_pPausedTargets = pDirector->getScheduler()->pauseAllTargets();
-    CC_SAFE_RETAIN(m_pPausedTargets);
+    Director* pDirector = Director::sharedDirector();
+    _pausedTargets = pDirector->getScheduler()->pauseAllTargets();
+    CC_SAFE_RETAIN(_pausedTargets);
     
-    unsigned int c = m_pPausedTargets->count();
+    unsigned int c = _pausedTargets->count();
     
     if (c > 2)
     {
-        // should have only 2 items: CCActionManager, self
+        // should have only 2 items: ActionManager, self
         CCLog("Error: pausedTargets should have only 2 items, and not %u", (unsigned int)c);
     }
 }
@@ -312,9 +288,9 @@ void SchedulerPauseResumeAll::pause(float dt)
 void SchedulerPauseResumeAll::resume(float dt)
 {
     CCLog("Resuming");
-    CCDirector* pDirector = CCDirector::sharedDirector();
-    pDirector->getScheduler()->resumeTargets(m_pPausedTargets);
-    CC_SAFE_RELEASE_NULL(m_pPausedTargets);
+    Director* pDirector = Director::sharedDirector();
+    pDirector->getScheduler()->resumeTargets(_pausedTargets);
+    CC_SAFE_RELEASE_NULL(_pausedTargets);
 }
 
 std::string SchedulerPauseResumeAll::title()
@@ -334,26 +310,26 @@ std::string SchedulerPauseResumeAll::subtitle()
 //------------------------------------------------------------------
 
 SchedulerPauseResumeAllUser::SchedulerPauseResumeAllUser()
-: m_pPausedTargets(NULL)
+: _pausedTargets(NULL)
 {
 
 }
 
 SchedulerPauseResumeAllUser::~SchedulerPauseResumeAllUser()
 {
-    CC_SAFE_RELEASE(m_pPausedTargets);
+    CC_SAFE_RELEASE(_pausedTargets);
 }
 
 void SchedulerPauseResumeAllUser::onEnter()
 {
     SchedulerTestLayer::onEnter();
 
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
 
-    CCSprite *sprite = CCSprite::create("Images/grossinis_sister1.png");
+    Sprite *sprite = Sprite::create("Images/grossinis_sister1.png");
     sprite->setPosition(ccp(s.width/2, s.height/2));
     this->addChild(sprite);
-    sprite->runAction(CCRepeatForever::create(CCRotateBy::create(3.0, 360)));
+    sprite->runAction(RepeatForever::create(RotateBy::create(3.0, 360)));
 
     schedule(schedule_selector(SchedulerPauseResumeAllUser::tick1), 0.5f);
     schedule(schedule_selector(SchedulerPauseResumeAllUser::tick2), 1.0f);
@@ -363,9 +339,9 @@ void SchedulerPauseResumeAllUser::onEnter()
 
 void SchedulerPauseResumeAllUser::onExit()
 {
-    if(m_pPausedTargets != NULL)
+    if(_pausedTargets != NULL)
     {
-        CCDirector::sharedDirector()->getScheduler()->resumeTargets(m_pPausedTargets);
+        Director::sharedDirector()->getScheduler()->resumeTargets(_pausedTargets);
     }
 }
 
@@ -382,17 +358,17 @@ void SchedulerPauseResumeAllUser::tick2(float dt)
 void SchedulerPauseResumeAllUser::pause(float dt)
 {
     CCLog("Pausing");
-    CCDirector* pDirector = CCDirector::sharedDirector();
-    m_pPausedTargets = pDirector->getScheduler()->pauseAllTargetsWithMinPriority(kCCPriorityNonSystemMin);
-    CC_SAFE_RETAIN(m_pPausedTargets);
+    Director* pDirector = Director::sharedDirector();
+    _pausedTargets = pDirector->getScheduler()->pauseAllTargetsWithMinPriority(kPriorityNonSystemMin);
+    CC_SAFE_RETAIN(_pausedTargets);
 }
 
 void SchedulerPauseResumeAllUser::resume(float dt)
 {
     CCLog("Resuming");
-    CCDirector* pDirector = CCDirector::sharedDirector();
-    pDirector->getScheduler()->resumeTargets(m_pPausedTargets);
-    CC_SAFE_RELEASE_NULL(m_pPausedTargets);
+    Director* pDirector = Director::sharedDirector();
+    pDirector->getScheduler()->resumeTargets(_pausedTargets);
+    CC_SAFE_RELEASE_NULL(_pausedTargets);
 }
 
 std::string SchedulerPauseResumeAllUser::title()
@@ -466,14 +442,14 @@ void SchedulerUnscheduleAllHard::onEnter()
 {
     SchedulerTestLayer::onEnter();
 
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
 
-    CCSprite *sprite = CCSprite::create("Images/grossinis_sister1.png");
+    Sprite *sprite = Sprite::create("Images/grossinis_sister1.png");
     sprite->setPosition(ccp(s.width/2, s.height/2));
     this->addChild(sprite);
-    sprite->runAction(CCRepeatForever::create(CCRotateBy::create(3.0, 360)));
+    sprite->runAction(RepeatForever::create(RotateBy::create(3.0, 360)));
 
-    m_bActionManagerActive = true;
+    _actionManagerActive = true;
 
     schedule(schedule_selector(SchedulerUnscheduleAllHard::tick1), 0.5f);
     schedule(schedule_selector(SchedulerUnscheduleAllHard::tick2), 1.0f);
@@ -484,10 +460,10 @@ void SchedulerUnscheduleAllHard::onEnter()
 
 void SchedulerUnscheduleAllHard::onExit()
 {
-    if(!m_bActionManagerActive) {
+    if(!_actionManagerActive) {
         // Restore the director's action manager.
-        CCDirector* director = CCDirector::sharedDirector();
-        director->getScheduler()->scheduleUpdateForTarget(director->getActionManager(), kCCPrioritySystem, false);
+        Director* director = Director::sharedDirector();
+        director->getScheduler()->scheduleUpdateForTarget(director->getActionManager(), kPrioritySystem, false);
     }
 }
 
@@ -513,8 +489,8 @@ void SchedulerUnscheduleAllHard::tick4(float dt)
 
 void SchedulerUnscheduleAllHard::unscheduleAll(float dt)
 {
-    CCDirector::sharedDirector()->getScheduler()->unscheduleAll();
-    m_bActionManagerActive = false;
+    Director::sharedDirector()->getScheduler()->unscheduleAll();
+    _actionManagerActive = false;
 }
 
 std::string SchedulerUnscheduleAllHard::title()
@@ -536,12 +512,12 @@ void SchedulerUnscheduleAllUserLevel::onEnter()
 {
     SchedulerTestLayer::onEnter();
 
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
 
-    CCSprite *sprite = CCSprite::create("Images/grossinis_sister1.png");
+    Sprite *sprite = Sprite::create("Images/grossinis_sister1.png");
     sprite->setPosition(ccp(s.width/2, s.height/2));
     this->addChild(sprite);
-    sprite->runAction(CCRepeatForever::create(CCRotateBy::create(3.0, 360)));
+    sprite->runAction(RepeatForever::create(RotateBy::create(3.0, 360)));
 
     schedule(schedule_selector(SchedulerUnscheduleAllUserLevel::tick1), 0.5f);
     schedule(schedule_selector(SchedulerUnscheduleAllUserLevel::tick2), 1.0f);
@@ -572,7 +548,7 @@ void SchedulerUnscheduleAllUserLevel::tick4(float dt)
 
 void SchedulerUnscheduleAllUserLevel::unscheduleAll(float dt)
 {
-    CCDirector::sharedDirector()->getScheduler()->unscheduleAllWithMinPriority(kCCPriorityNonSystemMin);
+    Director::sharedDirector()->getScheduler()->unscheduleAllWithMinPriority(kPriorityNonSystemMin);
 }
 
 std::string SchedulerUnscheduleAllUserLevel::title()
@@ -644,22 +620,22 @@ void SchedulerSchedulesAndRemove::scheduleAndUnschedule(float dt)
 // TestNode
 //
 //------------------------------------------------------------------
-void TestNode::initWithString(CCString* pStr, int priority)
+void TestNode::initWithString(String* pStr, int priority)
 {
-    m_pstring = pStr;
-    m_pstring->retain();
+    _pstring = pStr;
+    _pstring->retain();
     scheduleUpdateWithPriority(priority);
 }
 
 TestNode::~TestNode()
 {
-    m_pstring->release();
+    _pstring->release();
 }
 
 void TestNode::update(float dt)
 {
     CC_UNUSED_PARAM(dt);
-    CCLog("%s", m_pstring->getCString());
+    CCLog("%s", _pstring->getCString());
 }
 
 //------------------------------------------------------------------
@@ -672,42 +648,42 @@ void SchedulerUpdate::onEnter()
     SchedulerTestLayer::onEnter();
 
     TestNode* d = new TestNode();
-    CCString* pStr = new CCString("---");
+    String* pStr = new String("---");
     d->initWithString(pStr, 50);
     pStr->release();
     addChild(d);
     d->release();
 
     TestNode* b = new TestNode();
-    pStr = new CCString("3rd");
+    pStr = new String("3rd");
     b->initWithString(pStr, 0);
     pStr->release();
     addChild(b);
     b->release();
 
     TestNode* a = new TestNode();
-    pStr = new CCString("1st");
+    pStr = new String("1st");
     a->initWithString(pStr, -10);
     pStr->release();
     addChild(a);
     a->release();
 
     TestNode* c = new TestNode();
-    pStr = new CCString("4th");
+    pStr = new String("4th");
     c->initWithString(pStr, 10);
     pStr->release();
     addChild(c);
     c->release();
 
     TestNode* e = new TestNode();
-    pStr = new CCString("5th");
+    pStr = new String("5th");
     e->initWithString(pStr, 20);
     pStr->release();
     addChild(e);
     e->release();
 
     TestNode* f = new TestNode();
-    pStr = new CCString("2nd");
+    pStr = new String("2nd");
     f->initWithString(pStr, -5);
     pStr->release();
     addChild(f);
@@ -718,12 +694,12 @@ void SchedulerUpdate::onEnter()
 
 void SchedulerUpdate::removeUpdates(float dt)
 {
-    CCArray* children = getChildren();
-    CCNode* pNode;
-    CCObject* pObject;
+    Array* children = getChildren();
+    Node* pNode;
+    Object* pObject;
     CCARRAY_FOREACH(children, pObject)
     {
-        pNode = (CCNode*)pObject;
+        pNode = (Node*)pObject;
 
         if (! pNode)
         {
@@ -831,9 +807,9 @@ void RescheduleSelector::onEnter()
 {
     SchedulerTestLayer::onEnter();
 
-    m_fInterval = 1.0f;
-    m_nTicks    = 0;
-    schedule(schedule_selector(RescheduleSelector::schedUpdate), m_fInterval);
+    _interval = 1.0f;
+    _ticks    = 0;
+    schedule(schedule_selector(RescheduleSelector::schedUpdate), _interval);
 }
 
 std::string RescheduleSelector::title()
@@ -848,14 +824,14 @@ std::string RescheduleSelector::subtitle()
 
 void RescheduleSelector::schedUpdate(float dt)
 {
-    m_nTicks++;
+    _ticks++;
 
     CCLOG("schedUpdate: %.4f", dt);
-    if ( m_nTicks > 3 )
+    if ( _ticks > 3 )
     {
-        m_fInterval += 1.0f;
-        schedule(schedule_selector(RescheduleSelector::schedUpdate), m_fInterval);
-        m_nTicks = 0;
+        _interval += 1.0f;
+        schedule(schedule_selector(RescheduleSelector::schedUpdate), _interval);
+        _ticks = 0;
     }
 }
 
@@ -885,11 +861,11 @@ void SchedulerDelayAndRepeat::update(float dt)
 
 // SchedulerTimeScale
 
-CCControlSlider* SchedulerTimeScale::sliderCtl()
+ControlSlider* SchedulerTimeScale::sliderCtl()
 {
-    CCControlSlider * slider = CCControlSlider::create("extensions/sliderTrack2.png","extensions/sliderProgress2.png" ,"extensions/sliderThumb.png");
+    ControlSlider * slider = ControlSlider::create("extensions/sliderTrack2.png","extensions/sliderProgress2.png" ,"extensions/sliderThumb.png");
 
-    slider->addTargetWithActionForControlEvents(this, cccontrol_selector(SchedulerTimeScale::sliderAction), CCControlEventValueChanged);
+    slider->addTargetWithActionForControlEvents(this, cccontrol_selector(SchedulerTimeScale::sliderAction), ControlEventValueChanged);
 
     slider->setMinimumValue(-3.0f);
     slider->setMaximumValue(3.0f);
@@ -898,38 +874,38 @@ CCControlSlider* SchedulerTimeScale::sliderCtl()
     return slider;
 }
 
-void SchedulerTimeScale::sliderAction(CCObject* pSender, CCControlEvent controlEvent)
+void SchedulerTimeScale::sliderAction(Object* pSender, ControlEvent controlEvent)
 {
-    CCControlSlider* pSliderCtl = (CCControlSlider*)pSender;
+    ControlSlider* pSliderCtl = (ControlSlider*)pSender;
     float scale;
     scale = pSliderCtl->getValue();
 
-    CCDirector::sharedDirector()->getScheduler()->setTimeScale(scale);
+    Director::sharedDirector()->getScheduler()->setTimeScale(scale);
 }
 
 void SchedulerTimeScale::onEnter()
 {
     SchedulerTestLayer::onEnter();
 
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
 
     // rotate and jump
-    CCActionInterval *jump1 = CCJumpBy::create(4, ccp(-s.width+80,0), 100, 4);
-    CCActionInterval *jump2 = jump1->reverse();
-    CCActionInterval *rot1 = CCRotateBy::create(4, 360*2);
-    CCActionInterval *rot2 = rot1->reverse();
+    ActionInterval *jump1 = JumpBy::create(4, ccp(-s.width+80,0), 100, 4);
+    ActionInterval *jump2 = jump1->reverse();
+    ActionInterval *rot1 = RotateBy::create(4, 360*2);
+    ActionInterval *rot2 = rot1->reverse();
 
-    CCSequence* seq3_1 = CCSequence::create(jump2, jump1, NULL);
-    CCSequence* seq3_2 = CCSequence::create(rot1, rot2, NULL);
-    CCFiniteTimeAction* spawn = CCSpawn::create(seq3_1, seq3_2, NULL);
-    CCRepeat* action = CCRepeat::create(spawn, 50);
+    Sequence* seq3_1 = Sequence::create(jump2, jump1, NULL);
+    Sequence* seq3_2 = Sequence::create(rot1, rot2, NULL);
+    FiniteTimeAction* spawn = Spawn::create(seq3_1, seq3_2, NULL);
+    Repeat* action = Repeat::create(spawn, 50);
 
-    CCRepeat* action2 = (CCRepeat*)action->copy()->autorelease();
-    CCRepeat* action3 = (CCRepeat*)action->copy()->autorelease();
+    Repeat* action2 = action->clone();
+    Repeat* action3 = action->clone();
 
-    CCSprite *grossini = CCSprite::create("Images/grossini.png");
-    CCSprite *tamara = CCSprite::create("Images/grossinis_sister1.png");
-    CCSprite *kathia = CCSprite::create("Images/grossinis_sister2.png");
+    Sprite *grossini = Sprite::create("Images/grossini.png");
+    Sprite *tamara = Sprite::create("Images/grossinis_sister1.png");
+    Sprite *kathia = Sprite::create("Images/grossinis_sister2.png");
 
     grossini->setPosition(ccp(40,80));
     tamara->setPosition(ccp(40,80));
@@ -939,24 +915,24 @@ void SchedulerTimeScale::onEnter()
     addChild(tamara);
     addChild(kathia);
 
-    grossini->runAction(CCSpeed::create(action, 0.5f));
-    tamara->runAction(CCSpeed::create(action2, 1.5f));
-    kathia->runAction(CCSpeed::create(action3, 1.0f));
+    grossini->runAction(Speed::create(action, 0.5f));
+    tamara->runAction(Speed::create(action2, 1.5f));
+    kathia->runAction(Speed::create(action3, 1.0f));
 
-    CCParticleSystem *emitter = CCParticleFireworks::create();
-    emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_stars1) );
+    ParticleSystem *emitter = ParticleFireworks::create();
+    emitter->setTexture( TextureCache::sharedTextureCache()->addImage(s_stars1) );
     addChild(emitter);
 
-    m_pSliderCtl = sliderCtl();
-    m_pSliderCtl->setPosition(ccp(s.width / 2.0f, s.height / 3.0f));
+    _sliderCtl = sliderCtl();
+    _sliderCtl->setPosition(ccp(s.width / 2.0f, s.height / 3.0f));
 
-    addChild(m_pSliderCtl);
+    addChild(_sliderCtl);
 }
 
 void SchedulerTimeScale::onExit()
 {
     // restore scale
-    CCDirector::sharedDirector()->getScheduler()->setTimeScale(1);
+    Director::sharedDirector()->getScheduler()->setTimeScale(1);
     SchedulerTestLayer::onExit();
 }
 
@@ -972,12 +948,12 @@ std::string SchedulerTimeScale::subtitle()
 
 //TwoSchedulers
 
-CCControlSlider *TwoSchedulers::sliderCtl()
+ControlSlider *TwoSchedulers::sliderCtl()
 {
    // CGRect frame = CGRectMake(12.0f, 12.0f, 120.0f, 7.0f);
-    CCControlSlider *slider = CCControlSlider::create("extensions/sliderTrack2.png","extensions/sliderProgress2.png" ,"extensions/sliderThumb.png");
+    ControlSlider *slider = ControlSlider::create("extensions/sliderTrack2.png","extensions/sliderProgress2.png" ,"extensions/sliderThumb.png");
         //[[UISlider alloc] initWithFrame:frame];
-    slider->addTargetWithActionForControlEvents(this, cccontrol_selector(TwoSchedulers::sliderAction), CCControlEventValueChanged);
+    slider->addTargetWithActionForControlEvents(this, cccontrol_selector(TwoSchedulers::sliderAction), ControlEventValueChanged);
 
     // in case the parent view draws with a custom color or gradient, use a transparent color
     //slider.backgroundColor = [UIColor clearColor];
@@ -990,11 +966,11 @@ CCControlSlider *TwoSchedulers::sliderCtl()
     return slider;
 }
 
-void TwoSchedulers::sliderAction(CCObject* sender, CCControlEvent controlEvent)
+void TwoSchedulers::sliderAction(Object* sender, ControlEvent controlEvent)
 {
     float scale;
 
-    CCControlSlider *slider = (CCControlSlider*) sender;
+    ControlSlider *slider = (ControlSlider*) sender;
     scale = slider->getValue();
 
     if( sender == sliderCtl1 )
@@ -1007,43 +983,41 @@ void TwoSchedulers::onEnter()
 {
     SchedulerTestLayer::onEnter();
 
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
 
         // rotate and jump
-    CCActionInterval *jump1 = CCJumpBy::create(4, ccp(0,0), 100, 4);
-    CCActionInterval *jump2 = jump1->reverse();
+    ActionInterval *jump1 = JumpBy::create(4, ccp(0,0), 100, 4);
+    ActionInterval *jump2 = jump1->reverse();
 
-    CCSequence* seq = CCSequence::create(jump2, jump1, NULL);
-    CCRepeatForever* action = CCRepeatForever::create(seq);
+    Sequence* seq = Sequence::create(jump2, jump1, NULL);
+    RepeatForever* action = RepeatForever::create(seq);
 
         //
         // Center
         //
-    CCSprite *grossini = CCSprite::create("Images/grossini.png");
+    Sprite *grossini = Sprite::create("Images/grossini.png");
     addChild(grossini);
     grossini->setPosition(ccp(s.width/2,100));
-    grossini->runAction((CCAction*)action->copy()->autorelease());
+    grossini->runAction(action->clone());
 
-
-
-    CCScheduler *defaultScheduler = CCDirector::sharedDirector()->getScheduler();
+    Scheduler *defaultScheduler = Director::sharedDirector()->getScheduler();
 
     //
     // Left:
     //
 
     // Create a new scheduler, and link it to the main scheduler
-    sched1 = new CCScheduler();
+    sched1 = new Scheduler();
 
     defaultScheduler->scheduleUpdateForTarget(sched1, 0, false);
 
     // Create a new ActionManager, and link it to the new scheudler
-    actionManager1 = new CCActionManager();
+    actionManager1 = new ActionManager();
     sched1->scheduleUpdateForTarget(actionManager1, 0, false);
 
     for( unsigned int i=0; i < 10; i++ ) 
     {
-        CCSprite *sprite = CCSprite::create("Images/grossinis_sister1.png");
+        Sprite *sprite = Sprite::create("Images/grossinis_sister1.png");
 
         // IMPORTANT: Set the actionManager running any action
         sprite->setActionManager(actionManager1);
@@ -1051,7 +1025,7 @@ void TwoSchedulers::onEnter()
         addChild(sprite);
         sprite->setPosition(ccp(30+15*i,100));
 
-        sprite->runAction((CCAction*)action->copy()->autorelease());
+        sprite->runAction(action->clone());
     }
 
 
@@ -1060,15 +1034,15 @@ void TwoSchedulers::onEnter()
     //
 
     // Create a new scheduler, and link it to the main scheduler
-    sched2 = new CCScheduler();;
+    sched2 = new Scheduler();;
     defaultScheduler->scheduleUpdateForTarget(sched2, 0, false);
 
     // Create a new ActionManager, and link it to the new scheudler
-    actionManager2 = new CCActionManager();
+    actionManager2 = new ActionManager();
     sched2->scheduleUpdateForTarget(actionManager2, 0, false);
 
     for( unsigned int i=0; i < 10; i++ ) {
-        CCSprite *sprite = CCSprite::create("Images/grossinis_sister2.png");
+        Sprite *sprite = Sprite::create("Images/grossinis_sister2.png");
 
         // IMPORTANT: Set the actionManager running any action
         sprite->setActionManager(actionManager2);
@@ -1076,7 +1050,7 @@ void TwoSchedulers::onEnter()
         addChild(sprite);
         sprite->setPosition(ccp(s.width-30-15*i,100));
 
-        sprite->runAction((CCAction*)action->copy()->autorelease());
+        sprite->runAction(action->clone());
     }
 
     sliderCtl1 = sliderCtl();
@@ -1093,7 +1067,7 @@ void TwoSchedulers::onEnter()
 
 TwoSchedulers::~TwoSchedulers()
 {
-    CCScheduler *defaultScheduler = CCDirector::sharedDirector()->getScheduler();
+    Scheduler *defaultScheduler = Director::sharedDirector()->getScheduler();
     defaultScheduler->unscheduleAllForTarget(sched1);
     defaultScheduler->unscheduleAllForTarget(sched2);
 
@@ -1117,7 +1091,7 @@ std::string TwoSchedulers::subtitle()
     return "Three schedulers. 2 custom + 1 default. Two different time scales";
 }
 
-class TestNode2 : public CCNode
+class TestNode2 : public Node
 {
 public:
 	~TestNode2() {
@@ -1180,8 +1154,8 @@ std::string SchedulerIssue2268::subtitle()
 //------------------------------------------------------------------
 void SchedulerTestScene::runThisTest()
 {
-    CCLayer* pLayer = nextSchedulerTest();
+    Layer* pLayer = nextSchedulerTest();
     addChild(pLayer);
 
-    CCDirector::sharedDirector()->replaceScene(this);
+    Director::sharedDirector()->replaceScene(this);
 }

@@ -52,6 +52,7 @@ public class AdsAdmob implements InterfaceAds {
 	private static final int ADMOB_SIZE_IABMRect = 1;
 	private static final int ADMOB_SIZE_IABBanner = 2;
 	private static final int ADMOB_SIZE_IABLeaderboard = 3;
+	private static final int ADMOB_SIZE_Skyscraper = 4;
 
 	protected static void LogE(String msg, Exception e) {
 		Log.e(LOG_TAG, msg, e);
@@ -98,6 +99,9 @@ public class AdsAdmob implements InterfaceAds {
 		case AdsWrapper.ADS_TYPE_FULL_SCREEN:
 			LogD("Now not support full screen view in Admob");
 			break;
+		case AdsWrapper.ADS_TYPE_MORE_APP:
+		    LogD("Now not support more app ads in Admob");
+		    break;
 		default:
 			break;
 		}
@@ -105,7 +109,7 @@ public class AdsAdmob implements InterfaceAds {
 
 	@Override
 	public void spendPoints(int points) {
-		// do nothing, Admob don't have this function
+		LogD("Admob not support spend points!");
 	}
 
 	@Override
@@ -152,6 +156,9 @@ public class AdsAdmob implements InterfaceAds {
 				case AdsAdmob.ADMOB_SIZE_IABLeaderboard:
 					size = AdSize.IAB_LEADERBOARD;
 					break;
+				case AdsAdmob.ADMOB_SIZE_Skyscraper:
+				    size = AdSize.IAB_WIDE_SKYSCRAPER;
+				    break;
 				default:
 					break;
 				}
@@ -209,7 +216,7 @@ public class AdsAdmob implements InterfaceAds {
 		@Override
 		public void onDismissScreen(Ad arg0) {
 			LogD("onDismissScreen invoked");
-			AdsWrapper.onAdsResult(mAdapter, AdsWrapper.RESULT_CODE_FullScreenViewDismissed, "Full screen ads view dismissed!");
+			AdsWrapper.onAdsResult(mAdapter, AdsWrapper.RESULT_CODE_AdsDismissed, "Ads view dismissed!");
 		}
 
 		@Override
@@ -243,7 +250,7 @@ public class AdsAdmob implements InterfaceAds {
 		@Override
 		public void onPresentScreen(Ad arg0) {
 			LogD("onPresentScreen invoked");
-			AdsWrapper.onAdsResult(mAdapter, AdsWrapper.RESULT_CODE_FullScreenViewShown, "Full screen ads view shown!");
+			AdsWrapper.onAdsResult(mAdapter, AdsWrapper.RESULT_CODE_AdsShown, "Ads view shown!");
 		}
 
 		@Override
@@ -257,4 +264,9 @@ public class AdsAdmob implements InterfaceAds {
 	public String getPluginVersion() {
 		return "0.2.0";
 	}
+
+    @Override
+    public void queryPoints() {
+        LogD("Admob not support query points!");
+    }
 }

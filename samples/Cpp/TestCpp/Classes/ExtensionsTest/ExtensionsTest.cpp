@@ -3,10 +3,12 @@
 #include "NotificationCenterTest/NotificationCenterTest.h"
 #include "ControlExtensionTest/CCControlSceneManager.h"
 #include "CocosBuilderTest/CocosBuilderTest.h"
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN) && (CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
 #include "NetworkTest/HttpClientTest.h"
 #endif
 #include "TableViewTest/TableViewTestScene.h"
+#include "ComponentsTest/ComponentsTestScene.h"
+#include "ArmatureTest/ArmatureScene.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "NetworkTest/WebSocketTest.h"
@@ -24,16 +26,16 @@ enum
 
 static struct {
 	const char *name;
-	std::function<void(CCObject* sender)> callback;
+	std::function<void(Object* sender)> callback;
 } g_extensionsTests[] = {
-	{ "NotificationCenterTest", [](CCObject* sender) { runNotificationCenterTest(); }
+	{ "NotificationCenterTest", [](Object* sender) { runNotificationCenterTest(); }
 	},
-	{ "CCControlButtonTest", [](CCObject *sender){
-		CCControlSceneManager* pManager = CCControlSceneManager::sharedControlSceneManager();
-		CCScene* pScene = pManager->currentControlScene();
-		CCDirector::sharedDirector()->replaceScene(pScene);
+	{ "CCControlButtonTest", [](Object *sender){
+		ControlSceneManager* pManager = ControlSceneManager::sharedControlSceneManager();
+		Scene* pScene = pManager->currentControlScene();
+		Director::sharedDirector()->replaceScene(pScene);
 	}},
-	{ "CocosBuilderTest", [](CCObject *sender) {
+	{ "CocosBuilderTest", [](Object *sender) {
 		TestScene* pScene = new CocosBuilderTestScene();
 		if (pScene)
 		{
@@ -41,20 +43,27 @@ static struct {
 			pScene->release();
 		}
 	}},
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
-	{ "HttpClientTest", [](CCObject *sender){ runHttpClientTest();}
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN) && (CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
+	{ "HttpClientTest", [](Object *sender){ runHttpClientTest();}
 	},
 #endif
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-	{ "WebSocketTest", [](CCObject *sender){ runWebSocketTest();}
+	{ "WebSocketTest", [](Object *sender){ runWebSocketTest();}
 	},
 #endif
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
-	{ "EditBoxTest", [](CCObject *sender){ runEditBoxTest();}
+	{ "EditBoxTest", [](Object *sender){ runEditBoxTest();}
 	},
 #endif
-	{ "TableViewTest", [](CCObject *sender){ runTableViewTest();}
+	{ "TableViewTest", [](Object *sender){ runTableViewTest();}
 	},
+    { "CommponentTest", [](Object *sender) { runComponentsTestLayerTest(); }
+    },
+    { "ArmatureTest", [](Object *sender) { ArmatureTestScene *pScene = new ArmatureTestScene();
+                                             pScene->runThisTest();
+                                             pScene->release();
+                                        }
+    },
 };
 
 static const int g_maxTests = sizeof(g_extensionsTests) / sizeof(g_extensionsTests[0]);
@@ -66,21 +75,21 @@ static const int g_maxTests = sizeof(g_extensionsTests) / sizeof(g_extensionsTes
 ////////////////////////////////////////////////////////
 void ExtensionsMainLayer::onEnter()
 {
-    CCLayer::onEnter();
-
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-
-    CCMenu* pMenu = CCMenu::create();
-    pMenu->setPosition( CCPointZero );
-    CCMenuItemFont::setFontName("Arial");
-    CCMenuItemFont::setFontSize(24);
+    Layer::onEnter();
+    
+    Size s = Director::sharedDirector()->getWinSize();
+    
+    Menu* pMenu = Menu::create();
+    pMenu->setPosition( PointZero );
+    MenuItemFont::setFontName("Arial");
+    MenuItemFont::setFontSize(24);
     for (int i = 0; i < g_maxTests; ++i)
     {
-        CCMenuItemFont* pItem = CCMenuItemFont::create(g_extensionsTests[i].name, g_extensionsTests[i].callback);
+        MenuItemFont* pItem = MenuItemFont::create(g_extensionsTests[i].name, g_extensionsTests[i].callback);
         pItem->setPosition(ccp(s.width / 2, s.height - (i + 1) * LINE_SPACE));
         pMenu->addChild(pItem, kItemTagBasic + i);
     }
-
+    
     addChild(pMenu);
 }
 
@@ -92,9 +101,9 @@ void ExtensionsMainLayer::onEnter()
 
 void ExtensionsTestScene::runThisTest()
 {
-    CCLayer* pLayer = new ExtensionsMainLayer();
+    Layer* pLayer = new ExtensionsMainLayer();
     addChild(pLayer);
     pLayer->release();
-
-    CCDirector::sharedDirector()->replaceScene(this);
+    
+    Director::sharedDirector()->replaceScene(this);
 }

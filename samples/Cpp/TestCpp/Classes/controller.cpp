@@ -33,9 +33,11 @@ struct {
 	{ "CocosDenshionTest", []() { return new CocosDenshionTestScene(); } },
 	{ "ConfigurationTest", []() { return new ConfigurationTestScene(); } },
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
 	{ "CurlTest", []() { return new CurlTestScene(); } },
+#endif
 #endif
 #endif
 #endif
@@ -47,7 +49,7 @@ struct {
 	{ "FileUtilsTest", []() { return new FileUtilsTestScene(); } },
 	{ "FontTest", []() { return new FontTestScene(); } },
 	{ "IntervalTest", [](){return new IntervalTestScene(); } },
-#ifdef KEYBOARD_SUPPORT
+#ifdef CC_KEYBOARD_SUPPORT
 	{ "KeyboardTest", []() { return new KeyboardTestScene(); } },
 #endif
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
@@ -86,36 +88,36 @@ static int g_testCount = sizeof(g_aTestNames) / sizeof(g_aTestNames[0]);
 
 #define LINE_SPACE          40
 
-static CCPoint s_tCurPos = CCPointZero;
+static Point s_tCurPos = PointZero;
 
 TestController::TestController()
-: m_tBeginPos(CCPointZero)
+: _beginPos(PointZero)
 {
     // add close menu
-    CCMenuItemImage *pCloseItem = CCMenuItemImage::create(s_pPathClose, s_pPathClose, std::bind( &TestController::closeCallback, this, std::placeholders::_1) );
-    CCMenu* pMenu =CCMenu::create(pCloseItem, NULL);
+    MenuItemImage *pCloseItem = MenuItemImage::create(s_pPathClose, s_pPathClose, CC_CALLBACK_1(TestController::closeCallback, this) );
+    Menu* pMenu =Menu::create(pCloseItem, NULL);
 
-    pMenu->setPosition( CCPointZero );
+    pMenu->setPosition( PointZero );
     pCloseItem->setPosition(ccp( VisibleRect::right().x - 30, VisibleRect::top().y - 30));
 
     // add menu items for tests
-    m_pItemMenu = CCMenu::create();
+    _itemMenu = Menu::create();
     for (int i = 0; i < g_testCount; ++i)
     {
 // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-//         CCLabelBMFont* label = CCLabelBMFont::create(g_aTestNames[i].c_str(),  "fonts/arial16.fnt");
+//         LabelBMFont* label = LabelBMFont::create(g_aTestNames[i].c_str(),  "fonts/arial16.fnt");
 // #else
-        CCLabelTTF* label = CCLabelTTF::create( g_aTestNames[i].test_name, "Arial", 24);
+        LabelTTF* label = LabelTTF::create( g_aTestNames[i].test_name, "Arial", 24);
 // #endif        
-        CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, std::bind(&TestController::menuCallback, this, std::placeholders::_1));
+        MenuItemLabel* pMenuItem = MenuItemLabel::create(label, CC_CALLBACK_1(TestController::menuCallback, this));
 
-        m_pItemMenu->addChild(pMenuItem, i + 10000);
+        _itemMenu->addChild(pMenuItem, i + 10000);
         pMenuItem->setPosition( ccp( VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE) ));
     }
 
-    m_pItemMenu->setContentSize(CCSizeMake(VisibleRect::getVisibleRect().size.width, (g_testCount + 1) * (LINE_SPACE)));
-    m_pItemMenu->setPosition(s_tCurPos);
-    addChild(m_pItemMenu);
+    _itemMenu->setContentSize(CCSizeMake(VisibleRect::getVisibleRect().size.width, (g_testCount + 1) * (LINE_SPACE)));
+    _itemMenu->setPosition(s_tCurPos);
+    addChild(_itemMenu);
 
     setTouchEnabled(true);
 
@@ -127,13 +129,13 @@ TestController::~TestController()
 {
 }
 
-void TestController::menuCallback(CCObject * pSender)
+void TestController::menuCallback(Object * pSender)
 {
 
-	CCDirector::sharedDirector()->purgeCachedData();
+	Director::sharedDirector()->purgeCachedData();
 
     // get the userdata, it's the index of the menu item clicked
-    CCMenuItem* pMenuItem = (CCMenuItem *)(pSender);
+    MenuItem* pMenuItem = (MenuItem *)(pSender);
     int idx = pMenuItem->getZOrder() - 10000;
 
     // create the test scene and run it
@@ -146,46 +148,44 @@ void TestController::menuCallback(CCObject * pSender)
     }
 }
 
-void TestController::closeCallback(CCObject * pSender)
+void TestController::closeCallback(Object * pSender)
 {
-    CCDirector::sharedDirector()->end();
+    Director::sharedDirector()->end();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
 #endif
 }
 
-void TestController::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
+void TestController::ccTouchesBegan(Set *pTouches, Event *pEvent)
 {
-    CCSetIterator it = pTouches->begin();
-    CCTouch* touch = (CCTouch*)(*it);
+    Touch* touch = (Touch*)pTouches->anyObject();
 
-    m_tBeginPos = touch->getLocation();    
+    _beginPos = touch->getLocation();    
 }
 
-void TestController::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
+void TestController::ccTouchesMoved(Set *pTouches, Event *pEvent)
 {
-    CCSetIterator it = pTouches->begin();
-    CCTouch* touch = (CCTouch*)(*it);
+    Touch* touch = (Touch*)pTouches->anyObject();
 
-    CCPoint touchLocation = touch->getLocation();    
-    float nMoveY = touchLocation.y - m_tBeginPos.y;
+    Point touchLocation = touch->getLocation();    
+    float nMoveY = touchLocation.y - _beginPos.y;
 
-    CCPoint curPos  = m_pItemMenu->getPosition();
-    CCPoint nextPos = ccp(curPos.x, curPos.y + nMoveY);
+    Point curPos  = _itemMenu->getPosition();
+    Point nextPos = ccp(curPos.x, curPos.y + nMoveY);
 
     if (nextPos.y < 0.0f)
     {
-        m_pItemMenu->setPosition(CCPointZero);
+        _itemMenu->setPosition(PointZero);
         return;
     }
 
     if (nextPos.y > ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        m_pItemMenu->setPosition(ccp(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(ccp(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
         return;
     }
 
-    m_pItemMenu->setPosition(nextPos);
-    m_tBeginPos = touchLocation;
+    _itemMenu->setPosition(nextPos);
+    _beginPos = touchLocation;
     s_tCurPos   = nextPos;
 }

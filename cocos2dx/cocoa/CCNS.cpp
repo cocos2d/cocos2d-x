@@ -97,9 +97,9 @@ static bool splitWithForm(const char* pStr, strArray& strs)
 
 // implement the functions
 
-CCRect CCRectFromString(const char* pszContent)
+Rect RectFromString(const char* pszContent)
 {
-    CCRect result = CCRectZero;
+    Rect result = RectZero;
 
     do 
     {
@@ -146,9 +146,9 @@ CCRect CCRectFromString(const char* pszContent)
     return result;
 }
 
-CCPoint CCPointFromString(const char* pszContent)
+Point PointFromString(const char* pszContent)
 {
-    CCPoint ret = CCPointZero;
+    Point ret = PointZero;
 
     do 
     {
@@ -164,9 +164,9 @@ CCPoint CCPointFromString(const char* pszContent)
     return ret;
 }
 
-CCSize CCSizeFromString(const char* pszContent)
+Size SizeFromString(const char* pszContent)
 {
-    CCSize ret = CCSizeZero;
+    Size ret = SizeZero;
 
     do 
     {

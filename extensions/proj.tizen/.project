@@ -91,14 +91,44 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>src/AssetsManager</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/AssetsManager</locationURI>
+		</link>
+		<link>
+			<name>src/CCArmature</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/CCArmature</locationURI>
+		</link>
+		<link>
 			<name>src/CCBReader</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/CCBReader</locationURI>
 		</link>
 		<link>
+			<name>src/Components</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/Components</locationURI>
+		</link>
+		<link>
+			<name>src/ExtensionMacros.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/ExtensionMacros.h</locationURI>
+		</link>
+		<link>
 			<name>src/GUI</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/GUI</locationURI>
+		</link>
+		<link>
+			<name>src/LocalStorage</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/LocalStorage</locationURI>
+		</link>
+		<link>
+			<name>src/cocos-ext.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/cocos-ext.h</locationURI>
 		</link>
 		<link>
 			<name>src/network</name>

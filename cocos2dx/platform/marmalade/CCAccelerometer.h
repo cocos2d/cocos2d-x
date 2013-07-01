@@ -27,34 +27,34 @@
 #include "CCAccelerometerDelegate.h"
 //#include "CCMutableArray.h"
 #include "ccCommon.h"
-
+#include <functional>
 
 namespace   cocos2d {
 
 /**
 @brief 
-The CCAccelerometer class lets you register to receive
+The Accelerometer class lets you register to receive
 acceleration-related data from the onboard hardware.
 */
-class CC_DLL CCAccelerometer
+class CC_DLL Accelerometer
 {
 public:
-    CCAccelerometer();
-    ~CCAccelerometer();
+    Accelerometer();
+    ~Accelerometer();
 
     /**
     @brief Returns the shared accelerometer object for the system.
     */
-    static CCAccelerometer* sharedAccelerometer();
+    static Accelerometer* sharedAccelerometer();
 
-	void setDelegate(CCAccelerometerDelegate* pDelegate);
+	void setDelegate(std::function<void(Acceleration*)> function);
     void setAccelerometerInterval(float interval) {CC_UNUSED_PARAM(interval);};
 	void update(float x, float y, float z, uint64 sensorTimeStamp);
 
 private:
-	static CCAccelerometer* m_spCCAccelerometer;
-	CCAccelerometerDelegate* m_pAccelDelegate;
-	CCAcceleration m_obAccelerationValue;
+	static Accelerometer* _spAccelerometer;
+	std::function<void(Acceleration*)> _function;
+	Acceleration _accelerationValue;
 };
 
 }//namespace   cocos2d 

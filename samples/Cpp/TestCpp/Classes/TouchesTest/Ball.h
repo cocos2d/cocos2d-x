@@ -7,26 +7,26 @@ class Paddle;
 
 USING_NS_CC;
 
-class Ball : public CCSprite
+class Ball : public Sprite
 {
-    CCPoint m_velocity;
+    Point _velocity;
 public:
     Ball(void);
     virtual ~Ball(void);
 
     float radius();
-    //BOOL initWithTexture(CCTexture2D* aTexture);
-    //virtual void setTexture(CCTexture2D* newTexture);
+    //BOOL initWithTexture(Texture2D* aTexture);
+    //virtual void setTexture(Texture2D* newTexture);
     void move(float delta);
     void collideWithPaddle(Paddle* paddle);
 
 
 public:
-    void setVelocity(CCPoint velocity){m_velocity = velocity;}
-    CCPoint getVelocity(){return m_velocity;}
+    void setVelocity(Point velocity){_velocity = velocity;}
+    Point getVelocity(){return _velocity;}
 
 public:
-    static Ball* ballWithTexture(CCTexture2D* aTexture);
+    static Ball* ballWithTexture(Texture2D* aTexture);
 };
 
 #endif

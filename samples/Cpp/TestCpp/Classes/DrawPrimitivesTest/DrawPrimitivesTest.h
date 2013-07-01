@@ -12,9 +12,9 @@ class BaseLayer : public BaseTest
 public:
     BaseLayer();
     
-    void restartCallback(CCObject* pSender);
-    void nextCallback(CCObject* pSender);
-    void backCallback(CCObject* pSender);
+    void restartCallback(Object* pSender);
+    void nextCallback(Object* pSender);
+    void backCallback(Object* pSender);
     virtual std::string title();
     virtual std::string subtitle();
     virtual void onEnter();

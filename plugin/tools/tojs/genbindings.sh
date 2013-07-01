@@ -97,7 +97,7 @@ set -x
 mv $CXX_GENERATOR_ROOT/targets/spidermonkey/conversions.yaml $CXX_GENERATOR_ROOT/targets/spidermonkey/conversions.yaml.backup
 cp conversions.yaml $CXX_GENERATOR_ROOT/targets/spidermonkey
 
-LD_LIBRARY_PATH=${CLANG_ROOT}/lib
+LD_LIBRARY_PATH=${CLANG_ROOT}/lib \
 $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${PLUGINX_ROOT}/${SUB_DIR}$PLUGIN_NAME/$INI_NAME -s $PLUGIN_NAME -o $PLUGINX_ROOT/jsbindings/auto -n $OUTPUT_FILENAME
 
 mv $CXX_GENERATOR_ROOT/targets/spidermonkey/conversions.yaml.backup $CXX_GENERATOR_ROOT/targets/spidermonkey/conversions.yaml

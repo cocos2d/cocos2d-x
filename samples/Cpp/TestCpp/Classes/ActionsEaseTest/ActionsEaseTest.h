@@ -10,11 +10,11 @@ USING_NS_CC;
 class EaseSpriteDemo : public BaseTest
 {
 protected:
-    CCSprite*    m_grossini;
-    CCSprite*    m_tamara;
-    CCSprite*    m_kathia;
+    Sprite*    _grossini;
+    Sprite*    _tamara;
+    Sprite*    _kathia;
 
-    std::string    m_strTitle;
+    std::string    _title;
 
 public:
     EaseSpriteDemo(void);
@@ -23,9 +23,9 @@ public:
     virtual std::string title();
     virtual void onEnter();
 
-    void restartCallback(CCObject* pSender);
-    void nextCallback(CCObject* pSender);
-    void backCallback(CCObject* pSender);
+    void restartCallback(Object* pSender);
+    void nextCallback(Object* pSender);
+    void backCallback(Object* pSender);
 
     void positionForTwo();
 };

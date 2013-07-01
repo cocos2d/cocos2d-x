@@ -39,34 +39,34 @@ NS_CC_BEGIN
  * @{
  */
 
-/** @brief CCTMXObjectGroup represents the TMX object group.
+/** @brief TMXObjectGroup represents the TMX object group.
 @since v0.99.0
 */
-class CC_DLL CCTMXObjectGroup : public CCObject
+class CC_DLL TMXObjectGroup : public Object
 {
     /** offset position of child objects */
-    CC_SYNTHESIZE_PASS_BY_REF(CCPoint, m_tPositionOffset, PositionOffset);
+    CC_SYNTHESIZE_PASS_BY_REF(Point, _positionOffset, PositionOffset);
     /** list of properties stored in a dictionary */
-    CC_PROPERTY(CCDictionary*, m_pProperties, Properties);
+    CC_PROPERTY(Dictionary*, _properties, Properties);
     /** array of the objects */
-    CC_PROPERTY(CCArray*, m_pObjects, Objects);
+    CC_PROPERTY(Array*, _objects, Objects);
 public:
-    CCTMXObjectGroup();
-    virtual ~CCTMXObjectGroup();
+    TMXObjectGroup();
+    virtual ~TMXObjectGroup();
 
-    inline const char* getGroupName(){ return m_sGroupName.c_str(); }
-    inline void setGroupName(const char *groupName){ m_sGroupName = groupName; }
+    inline const char* getGroupName(){ return _groupName.c_str(); }
+    inline void setGroupName(const char *groupName){ _groupName = groupName; }
 
     /** return the value for the specific property name */
-    CCString *propertyNamed(const char* propertyName);
+    String *propertyNamed(const char* propertyName);
 
     /** return the dictionary for the specific object name.
     It will return the 1st object found on the array for the given name.
     */
-    CCDictionary* objectNamed(const char *objectName);
+    Dictionary* objectNamed(const char *objectName);
 protected:    
     /** name of the group */
-    std::string m_sGroupName;
+    std::string _groupName;
 };
 
 // end of tilemap_parallax_nodes group

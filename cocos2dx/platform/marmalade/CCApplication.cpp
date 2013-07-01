@@ -36,26 +36,26 @@
 NS_CC_BEGIN;
 
 // sharedApplication pointer
-CCApplication * CCApplication::sm_pSharedApplication = 0;
+Application * Application::sm_pSharedApplication = 0;
 
-CCApplication::CCApplication()
+Application::Application()
 {
-	IW_CALLSTACK("CCApplication::CCApplication");
+	IW_CALLSTACK("CCApplication::Application");
 	
-	m_nAnimationInterval = 0;
+	_animationInterval = 0;
 	CC_ASSERT(! sm_pSharedApplication);
 	sm_pSharedApplication = this;
 }
 
-CCApplication::~CCApplication()
+Application::~Application()
 {
-	IW_CALLSTACK("CCApplication::~CCApplication");
+	IW_CALLSTACK("CCApplication::~Application");
 	
 	CC_ASSERT(this == sm_pSharedApplication);		
 	sm_pSharedApplication = NULL;
 }
  
-int CCApplication::Run()
+int Application::Run()
 {
 	IW_CALLSTACK("CCApplication::Run");
 	
@@ -81,7 +81,7 @@ int CCApplication::Run()
 
 		quitRequested = s3eDeviceCheckQuitRequest();
 		if( quitRequested) {
-            CCDirector* pDirector = CCDirector::sharedDirector();
+            Director* pDirector = Director::sharedDirector();
             // if opengl view has been released, delete the director.
             if (pDirector->getOpenGLView() == NULL)
             {
@@ -98,10 +98,10 @@ int CCApplication::Run()
 			break;
 		}
 
-        CCDirector::sharedDirector()->mainLoop();
+        Director::sharedDirector()->mainLoop();
 
-		while ((s3eTimerGetMs() - updateTime) < m_nAnimationInterval) {
-			int32 yield = (int32) (m_nAnimationInterval - (s3eTimerGetMs() - updateTime));
+		while ((s3eTimerGetMs() - updateTime) < _animationInterval) {
+			int32 yield = (int32) (_animationInterval - (s3eTimerGetMs() - updateTime));
 			if (yield<0)
 				break;
 			s3eDeviceYield(yield);
@@ -111,18 +111,18 @@ int CCApplication::Run()
 	return -1;
 }
 
-void CCApplication::setAnimationInterval(double interval)
+void Application::setAnimationInterval(double interval)
 {
 	IW_CALLSTACK("CCXApplication::setAnimationInterval");
-	m_nAnimationInterval = (uint64)(1000 * interval);		// MH: Added cast to uint64
+	_animationInterval = (uint64)(1000 * interval);		// MH: Added cast to uint64
 	
 }
 
-void CCApplication::ccAccelerationUpdate()
+void Application::ccAccelerationUpdate()
 {
 // Accelerometer doesn't work on Marmalade X86 MacOS-X simulator
 #if !(defined(__APPLE__) && defined(I3D_ARCH_X86))
-	CCDirector* pDirector = CCDirector::sharedDirector();
+	Director* pDirector = Director::sharedDirector();
 	pDirector->getAccelerometer()->update((float)s3eAccelerometerGetX(), (float)s3eAccelerometerGetY(), (float)s3eAccelerometerGetZ(), s3eTimerGetMs());	// MH: Added casting to float
 #endif
 }
@@ -130,13 +130,13 @@ void CCApplication::ccAccelerationUpdate()
 //////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////
-CCApplication* CCApplication::sharedApplication()	// MH Cocos2dx CCDirector class expects this to return a pointer and not a reference
+Application* Application::sharedApplication()	// MH Cocos2dx Director class expects this to return a pointer and not a reference
 {
 	CC_ASSERT(sm_pSharedApplication);
-	return sm_pSharedApplication;					// MH Cocos2dx CCDirector class expects this to return a pointer and not a reference
+	return sm_pSharedApplication;					// MH Cocos2dx Director class expects this to return a pointer and not a reference
 }
 
-ccLanguageType CCApplication::getCurrentLanguage()
+ccLanguageType Application::getCurrentLanguage()
 {
 	int nLanguageIdx;
 	ccLanguageType currentLanguage;
@@ -193,7 +193,15 @@ ccLanguageType CCApplication::getCurrentLanguage()
         case S3E_DEVICE_LANGUAGE_ARABIC:
 			currentLanguage = kLanguageArabic;
 			break;
-
+            
+		case S3E_DEVICE_LANGUAGE_NORWEGIAN:
+			currentLanguage = kLanguageNorwegian;
+			break;
+			
+		case S3E_DEVICE_LANGUAGE_POLISH:
+			currentLanguage = kLanguagePolish;
+			break;
+			
 		default:
 			currentLanguage = kLanguageEnglish;
 			break;
@@ -201,7 +209,7 @@ ccLanguageType CCApplication::getCurrentLanguage()
 	return currentLanguage;
 }
 
-TargetPlatform CCApplication::getTargetPlatform()	// MH: Cocos2dx 2.0.3 added this new method to the protocol
+TargetPlatform Application::getTargetPlatform()	// MH: Cocos2dx 2.0.3 added this new method to the protocol
 {
 	int os = s3eDeviceGetInt(S3E_DEVICE_OS);
 

@@ -34,43 +34,43 @@
 
 NS_CC_EXT_BEGIN
 
-CCControlSaturationBrightnessPicker::CCControlSaturationBrightnessPicker()
-: m_saturation(0.0f)
-, m_brightness(0.0f)
-, m_background(NULL)
-, m_overlay(NULL)
-, m_shadow(NULL)
-, m_slider(NULL)
+ControlSaturationBrightnessPicker::ControlSaturationBrightnessPicker()
+: _saturation(0.0f)
+, _brightness(0.0f)
+, _background(NULL)
+, _overlay(NULL)
+, _shadow(NULL)
+, _slider(NULL)
 , boxPos(0)
 , boxSize(0)
 {
 
 }
 
-CCControlSaturationBrightnessPicker::~CCControlSaturationBrightnessPicker()
+ControlSaturationBrightnessPicker::~ControlSaturationBrightnessPicker()
 {
     removeAllChildrenWithCleanup(true);
 
-    m_background = NULL;
-    m_overlay    = NULL;
-    m_shadow     = NULL;
-    m_slider     = NULL;
+    _background = NULL;
+    _overlay    = NULL;
+    _shadow     = NULL;
+    _slider     = NULL;
 }
     
-bool CCControlSaturationBrightnessPicker::initWithTargetAndPos(CCNode* target, CCPoint pos)
+bool ControlSaturationBrightnessPicker::initWithTargetAndPos(Node* target, Point pos)
 {
-    if (CCControl::init())
+    if (Control::init())
     {
         setTouchEnabled(true);
         // Add background and slider sprites
-        m_background=CCControlUtils::addSpriteToTargetWithPosAndAnchor("colourPickerBackground.png", target, pos, ccp(0.0f, 0.0f));
-        m_overlay=CCControlUtils::addSpriteToTargetWithPosAndAnchor("colourPickerOverlay.png", target, pos, ccp(0.0f, 0.0f));
-        m_shadow=CCControlUtils::addSpriteToTargetWithPosAndAnchor("colourPickerShadow.png", target, pos, ccp(0.0f, 0.0f));
-        m_slider=CCControlUtils::addSpriteToTargetWithPosAndAnchor("colourPicker.png", target, pos, ccp(0.5f, 0.5f));
+        _background=ControlUtils::addSpriteToTargetWithPosAndAnchor("colourPickerBackground.png", target, pos, ccp(0.0f, 0.0f));
+        _overlay=ControlUtils::addSpriteToTargetWithPosAndAnchor("colourPickerOverlay.png", target, pos, ccp(0.0f, 0.0f));
+        _shadow=ControlUtils::addSpriteToTargetWithPosAndAnchor("colourPickerShadow.png", target, pos, ccp(0.0f, 0.0f));
+        _slider=ControlUtils::addSpriteToTargetWithPosAndAnchor("colourPicker.png", target, pos, ccp(0.5f, 0.5f));
                 
-        m_startPos=pos; // starting position of the colour picker        
+        _startPos=pos; // starting position of the colour picker        
         boxPos          = 35;    // starting position of the virtual box area for picking a colour
-        boxSize         = m_background->getContentSize().width / 2;;    // the size (width and height) of the virtual box for picking a colour from
+        boxSize         = _background->getContentSize().width / 2;;    // the size (width and height) of the virtual box for picking a colour from
         return true;
     }
     else
@@ -79,51 +79,51 @@ bool CCControlSaturationBrightnessPicker::initWithTargetAndPos(CCNode* target, C
     }
 }
 
-CCControlSaturationBrightnessPicker* CCControlSaturationBrightnessPicker::create(CCNode* target, CCPoint pos)
+ControlSaturationBrightnessPicker* ControlSaturationBrightnessPicker::create(Node* target, Point pos)
 {
-    CCControlSaturationBrightnessPicker *pRet = new CCControlSaturationBrightnessPicker();
+    ControlSaturationBrightnessPicker *pRet = new ControlSaturationBrightnessPicker();
     pRet->initWithTargetAndPos(target, pos);
     pRet->autorelease();
     return pRet;
 }
 
-void CCControlSaturationBrightnessPicker::setEnabled(bool enabled)
+void ControlSaturationBrightnessPicker::setEnabled(bool enabled)
 {
-    CCControl::setEnabled(enabled);
-    if (m_slider != NULL)
+    Control::setEnabled(enabled);
+    if (_slider != NULL)
     {
-        m_slider->setOpacity(enabled ? 255 : 128);
+        _slider->setOpacity(enabled ? 255 : 128);
     }
 }
 
-void CCControlSaturationBrightnessPicker::updateWithHSV(HSV hsv)
+void ControlSaturationBrightnessPicker::updateWithHSV(HSV hsv)
 {
     HSV hsvTemp;
     hsvTemp.s = 1;
     hsvTemp.h = hsv.h;
     hsvTemp.v = 1;
     
-    RGBA rgb = CCControlUtils::RGBfromHSV(hsvTemp);
-    m_background->setColor(ccc3((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
+    RGBA rgb = ControlUtils::RGBfromHSV(hsvTemp);
+    _background->setColor(ccc3((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
 }
 
-void CCControlSaturationBrightnessPicker::updateDraggerWithHSV(HSV hsv)
+void ControlSaturationBrightnessPicker::updateDraggerWithHSV(HSV hsv)
 {
     // Set the position of the slider to the correct saturation and brightness
-    CCPoint pos = CCPointMake(m_startPos.x + boxPos + (boxSize*(1 - hsv.s)),
-                              m_startPos.y + boxPos + (boxSize*hsv.v));
+    Point pos = CCPointMake(_startPos.x + boxPos + (boxSize*(1 - hsv.s)),
+                              _startPos.y + boxPos + (boxSize*hsv.v));
     
     // update
     updateSliderPosition(pos);
 }
 
-void CCControlSaturationBrightnessPicker::updateSliderPosition(CCPoint sliderPosition)
+void ControlSaturationBrightnessPicker::updateSliderPosition(Point sliderPosition)
 {
     // Clamp the position of the icon within the circle
     
     // Get the center point of the bkgd image
-    float centerX           = m_startPos.x + m_background->boundingBox().size.width*0.5f;
-    float centerY           = m_startPos.y + m_background->boundingBox().size.height*0.5f;
+    float centerX           = _startPos.x + _background->boundingBox().size.width*0.5f;
+    float centerY           = _startPos.y + _background->boundingBox().size.height*0.5f;
     
     // Work out the distance difference between the location and center
     float dx                = sliderPosition.x - centerX;
@@ -134,7 +134,7 @@ void CCControlSaturationBrightnessPicker::updateSliderPosition(CCPoint sliderPos
     float angle             = atan2f(dy, dx);
     
     // Set the limit to the slider movement within the colour picker
-    float limit             = m_background->boundingBox().size.width*0.5f;
+    float limit             = _background->boundingBox().size.width*0.5f;
     
     // Check distance doesn't exceed the bounds of the circle
     if (dist > limit)
@@ -144,27 +144,27 @@ void CCControlSaturationBrightnessPicker::updateSliderPosition(CCPoint sliderPos
     }
     
     // Set the position of the dragger
-    m_slider->setPosition(sliderPosition);
+    _slider->setPosition(sliderPosition);
     
     
     // Clamp the position within the virtual box for colour selection
-    if (sliderPosition.x < m_startPos.x + boxPos)                        sliderPosition.x = m_startPos.x + boxPos;
-    else if (sliderPosition.x > m_startPos.x + boxPos + boxSize - 1)    sliderPosition.x = m_startPos.x + boxPos + boxSize - 1;
-    if (sliderPosition.y < m_startPos.y + boxPos)                        sliderPosition.y = m_startPos.y + boxPos;
-    else if (sliderPosition.y > m_startPos.y + boxPos + boxSize)        sliderPosition.y = m_startPos.y + boxPos + boxSize;
+    if (sliderPosition.x < _startPos.x + boxPos)                        sliderPosition.x = _startPos.x + boxPos;
+    else if (sliderPosition.x > _startPos.x + boxPos + boxSize - 1)    sliderPosition.x = _startPos.x + boxPos + boxSize - 1;
+    if (sliderPosition.y < _startPos.y + boxPos)                        sliderPosition.y = _startPos.y + boxPos;
+    else if (sliderPosition.y > _startPos.y + boxPos + boxSize)        sliderPosition.y = _startPos.y + boxPos + boxSize;
     
     // Use the position / slider width to determin the percentage the dragger is at
-    m_saturation = 1.0f - fabs((m_startPos.x + (float)boxPos - sliderPosition.x)/(float)boxSize);
-    m_brightness = fabs((m_startPos.y + (float)boxPos - sliderPosition.y)/(float)boxSize);
+    _saturation = 1.0f - fabs((_startPos.x + (float)boxPos - sliderPosition.x)/(float)boxSize);
+    _brightness = fabs((_startPos.y + (float)boxPos - sliderPosition.y)/(float)boxSize);
 }
 
-bool CCControlSaturationBrightnessPicker::checkSliderPosition(CCPoint location)
+bool ControlSaturationBrightnessPicker::checkSliderPosition(Point location)
 {
     // Clamp the position of the icon within the circle
     
     // get the center point of the bkgd image
-    float centerX           = m_startPos.x + m_background->boundingBox().size.width*0.5f;
-    float centerY           = m_startPos.y + m_background->boundingBox().size.height*0.5f;
+    float centerX           = _startPos.x + _background->boundingBox().size.width*0.5f;
+    float centerY           = _startPos.y + _background->boundingBox().size.height*0.5f;
     
     // work out the distance difference between the location and center
     float dx                = location.x - centerX;
@@ -172,17 +172,17 @@ bool CCControlSaturationBrightnessPicker::checkSliderPosition(CCPoint location)
     float dist              = sqrtf(dx*dx+dy*dy);
     
     // check that the touch location is within the bounding rectangle before sending updates
-    if (dist <= m_background->boundingBox().size.width*0.5f)
+    if (dist <= _background->boundingBox().size.width*0.5f)
     {
         updateSliderPosition(location);
-        sendActionsForControlEvents(CCControlEventValueChanged);
+        sendActionsForControlEvents(ControlEventValueChanged);
         return true;
     }
     return false;
 }
 
 
-bool CCControlSaturationBrightnessPicker::ccTouchBegan(CCTouch* touch, CCEvent* event)
+bool ControlSaturationBrightnessPicker::ccTouchBegan(Touch* touch, Event* event)
 {
     if (!isEnabled() || !isVisible())
     {
@@ -190,21 +190,21 @@ bool CCControlSaturationBrightnessPicker::ccTouchBegan(CCTouch* touch, CCEvent* 
     }
     
     // Get the touch location
-    CCPoint touchLocation=getTouchLocation(touch);
+    Point touchLocation=getTouchLocation(touch);
 
     // Check the touch position on the slider
     return checkSliderPosition(touchLocation);
 }
 
 
-void CCControlSaturationBrightnessPicker::ccTouchMoved(CCTouch* touch, CCEvent* event)
+void ControlSaturationBrightnessPicker::ccTouchMoved(Touch* touch, Event* event)
 {
     // Get the touch location
-    CCPoint touchLocation=getTouchLocation(touch);
+    Point touchLocation=getTouchLocation(touch);
 
     //small modification: this allows changing of the colour, even if the touch leaves the bounding area
 //     updateSliderPosition(touchLocation);
-//     sendActionsForControlEvents(CCControlEventValueChanged);
+//     sendActionsForControlEvents(ControlEventValueChanged);
     // Check the touch position on the slider
     checkSliderPosition(touchLocation);
 }

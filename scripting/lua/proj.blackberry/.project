@@ -80,6 +80,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>cocos2dx_support</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/cocos2dx_support</locationURI>
+		</link>
+		<link>
 			<name>lua</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/lua</locationURI>
@@ -90,4 +95,24 @@
 			<locationURI>PARENT-1-PROJECT_LOC/tolua</locationURI>
 		</link>
 	</linkedResources>
+	<filteredResources>
+		<filter>
+			<id>1370757892580</id>
+			<name>cocos2dx_support</name>
+			<type>10</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-platform</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1370757892583</id>
+			<name>cocos2dx_support</name>
+			<type>6</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-Lua_web_socket*</arguments>
+			</matcher>
+		</filter>
+	</filteredResources>
 </projectDescription>

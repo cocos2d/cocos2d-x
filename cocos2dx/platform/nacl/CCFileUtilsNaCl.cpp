@@ -30,23 +30,23 @@ using namespace std;
 
 NS_CC_BEGIN
 
-CCFileUtils* CCFileUtils::sharedFileUtils()
+FileUtils* FileUtils::sharedFileUtils()
 {
     if (s_sharedFileUtils == NULL)
     {
-        s_sharedFileUtils = new CCFileUtilsNaCl();
+        s_sharedFileUtils = new FileUtilsNaCl();
         s_sharedFileUtils->init();
     }
     return s_sharedFileUtils;
 }
 
-std::string CCFileUtilsNaCl::getWritablePath()
+std::string FileUtilsNaCl::getWritablePath()
 {
     //return current resource path
     return "";
 }
 
-bool CCFileUtilsNaCl::isFileExist(const std::string& strFilePath)
+bool FileUtilsNaCl::isFileExist(const std::string& strFilePath)
 {
     if (0 == strFilePath.length())
     {
@@ -56,7 +56,7 @@ bool CCFileUtilsNaCl::isFileExist(const std::string& strFilePath)
     std::string strPath = strFilePath;
     if (!isAbsolutePath(strPath))
     { // Not absolute path, add the default root path at the beginning.
-        strPath.insert(0, m_strDefaultResRootPath);
+        strPath.insert(0, _defaultResRootPath);
     }
 
     struct stat sts;

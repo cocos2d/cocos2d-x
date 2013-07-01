@@ -11,7 +11,7 @@
 
 #include "cocos2d.h"
 
-class BaseTest : public cocos2d::CCLayer
+class BaseTest : public cocos2d::Layer
 {
 public:
     virtual void onEnter();
@@ -20,9 +20,9 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 
-	virtual void restartCallback(CCObject* pSender);
-	virtual void nextCallback(CCObject* pSender);
-	virtual void backCallback(CCObject* pSender);
+	virtual void restartCallback(Object* pSender);
+	virtual void nextCallback(Object* pSender);
+	virtual void backCallback(Object* pSender);
 };
 
 

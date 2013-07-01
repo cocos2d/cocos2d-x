@@ -11,43 +11,43 @@
 
 NS_CC_EXT_BEGIN
 
-void CCLayerGradientLoader::onHandlePropTypeColor3(CCNode * pNode, CCNode * pParent, const char * pPropertyName, ccColor3B pCCColor3B, CCBReader * pCCBReader) {
+void LayerGradientLoader::onHandlePropTypeColor3(Node * pNode, Node * pParent, const char * pPropertyName, ccColor3B pColor3B, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_STARTCOLOR) == 0) {
-        ((CCLayerGradient *)pNode)->setStartColor(pCCColor3B);
+        ((LayerGradient *)pNode)->setStartColor(pColor3B);
     } else if(strcmp(pPropertyName, PROPERTY_ENDCOLOR) == 0) {
-        ((CCLayerGradient *)pNode)->setEndColor(pCCColor3B);
+        ((LayerGradient *)pNode)->setEndColor(pColor3B);
     } else {
-        CCLayerLoader::onHandlePropTypeColor3(pNode, pParent, pPropertyName, pCCColor3B, pCCBReader);
+        LayerLoader::onHandlePropTypeColor3(pNode, pParent, pPropertyName, pColor3B, pCCBReader);
     }
 }
 
-void CCLayerGradientLoader::onHandlePropTypeByte(CCNode * pNode, CCNode * pParent, const char * pPropertyName, unsigned char pByte, CCBReader * pCCBReader) {
+void LayerGradientLoader::onHandlePropTypeByte(Node * pNode, Node * pParent, const char * pPropertyName, unsigned char pByte, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_STARTOPACITY) == 0) {
-        ((CCLayerGradient *)pNode)->setStartOpacity(pByte);
+        ((LayerGradient *)pNode)->setStartOpacity(pByte);
     } else if(strcmp(pPropertyName, PROPERTY_ENDOPACITY) == 0) {
-        ((CCLayerGradient *)pNode)->setEndOpacity(pByte);
+        ((LayerGradient *)pNode)->setEndOpacity(pByte);
     } else {
-        CCLayerLoader::onHandlePropTypeByte(pNode, pParent, pPropertyName, pByte, pCCBReader);
+        LayerLoader::onHandlePropTypeByte(pNode, pParent, pPropertyName, pByte, pCCBReader);
     }
 }
 
-void CCLayerGradientLoader::onHandlePropTypeBlendFunc(CCNode * pNode, CCNode * pParent, const char * pPropertyName, ccBlendFunc pCCBlendFunc, CCBReader * pCCBReader) {
+void LayerGradientLoader::onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const char * pPropertyName, ccBlendFunc pBlendFunc, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_BLENDFUNC) == 0) {
-        ((CCLayerGradient *)pNode)->setBlendFunc(pCCBlendFunc);
+        ((LayerGradient *)pNode)->setBlendFunc(pBlendFunc);
     } else {
-        CCLayerLoader::onHandlePropTypeBlendFunc(pNode, pParent, pPropertyName, pCCBlendFunc, pCCBReader);
+        LayerLoader::onHandlePropTypeBlendFunc(pNode, pParent, pPropertyName, pBlendFunc, pCCBReader);
     }
 }
 
 
-void CCLayerGradientLoader::onHandlePropTypePoint(CCNode * pNode, CCNode * pParent, const char * pPropertyName, CCPoint pPoint, CCBReader * pCCBReader) {
+void LayerGradientLoader::onHandlePropTypePoint(Node * pNode, Node * pParent, const char * pPropertyName, Point pPoint, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_VECTOR) == 0) {
-        ((CCLayerGradient *)pNode)->setVector(pPoint);
+        ((LayerGradient *)pNode)->setVector(pPoint);
 
         // TODO Not passed along the ccbi file.
-        // ((CCLayerGradient *)pNode)->setCompressedInterpolation(true);
+        // ((LayerGradient *)pNode)->setCompressedInterpolation(true);
     } else {
-        CCLayerLoader::onHandlePropTypePoint(pNode, pParent, pPropertyName, pPoint, pCCBReader);
+        LayerLoader::onHandlePropTypePoint(pNode, pParent, pPropertyName, pPoint, pCCBReader);
     }
 }
 

@@ -13,6 +13,12 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
         
+    Squallium
+        Added ccFPSImages entity as linked resource on linux eclipse project setting
+        
+    longlene
+        Improve android project creation script
+        
     simpliplant
         Hardware keyboard support
     
@@ -34,6 +40,7 @@ Developers:
         Initial Emscripten port.
         Use browser font rendering instead of FreeType.
         Add destructor to CCGLBufferedNode.
+        Asynchronous Image loading for Emscripten
         
     DarraghCoy
         Fix a potential crash SimpleAudioEngineOpenSL::playEffect
@@ -58,6 +65,7 @@ Developers:
         Added __attribute__(__format__()) for CCLog and CCString
         Refactoring network extension and fixing unlikely memory leaks.
         Adding PUT/DELETE methods for CCHttpRequest.
+        Adding project part for QtCreator.
 
     savdalion 
         Added example for russian language in TestCpp
@@ -100,6 +108,7 @@ Developers:
     Waiter
         fix an error that OpenSLEngine can't load resources from SD card
         add CCRemoveSelf action
+        Fixing a bug that CCLabelTTF setString crash on android.
 
     billy1380
         make CCLens3d support concave effect.
@@ -188,6 +197,8 @@ Developers:
         Clean up linked libraries for android.
         JavaScript debugger improved and bugfixed.
         Fix flags for debugger server socket.
+        Fix flags for debugger server socket.
+        When user has built with JS Debugger support ScriptingCore will handle necessary runtime changes.
 
     Nicolas Gramlich (nicolasgramlich, Zynga)
         fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF
@@ -314,6 +325,7 @@ Developers:
         Fixed a bug that CCControlSwitch::setOn(isOn,false) doesn't work.
         Adds VS2012 Express template installing support.
         Fixing a logical error in CCDrawNode::drawPolygon.
+        Fixing a bug that Jsb function getCPBody return type is not right.
 
     DarraghCoy
         Fix for unaligned memory access crash in CCBReader::readFloat().
@@ -348,6 +360,9 @@ Developers:
         Adding Travis build support for linux and NaCl.
         Logging assert messages to the console.
         Renaming CCScriptSupport::executeAssert to CCScriptSupport::handleAssert.
+        Adding Native Client support for develop branch (cocos2d-x 3.0) and some warnings fixes.
+        Cleanup travis build scripts.
+        Refactoring emscripten building script.
 
     Peter Young (young40)
         Implements setVisible() for CCEditBox
@@ -465,6 +480,20 @@ Developers:
         
     sunxiaoyu
         Refactoring CCEditBox to add UITextField only when keyboard was opened, remove it when keyboard was closed.
+        
+    edwardzhou (Edward Zhou)
+        Correcting the type detecting order for Lua CCBProxy::getNodeTypeName.
+        Casting variables to their own type, and print warning info if no corresponding lua callback function instead of crash.
+        fix of WebSocket url parse error for 'ws://domain.com/websocket' pattern.
+
+    musikov
+        Fixing a bug that missing precision when getting strokeColor and fontFillColor
+        
+    hawkwood (Justin Hawkwood)
+        Fixing a bug that EditBox doesn't show any text if it's initialized with text.
+        
+    wtyqm (zhang peng)
+        Fixing a bug that ccbRootPath wasn't passed to sub ccb nodes.
 
 Retired Core Developers:
     WenSheng Yang

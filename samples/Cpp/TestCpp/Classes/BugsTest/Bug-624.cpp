@@ -14,8 +14,8 @@ bool Bug624Layer::init()
 {
     if(BugsTestBaseLayer::init())
     {
-        CCSize size = CCDirector::sharedDirector()->getWinSize();
-        CCLabelTTF *label = CCLabelTTF::create("Layer1", "Marker Felt", 36);
+        Size size = Director::sharedDirector()->getWinSize();
+        LabelTTF *label = LabelTTF::create("Layer1", "Marker Felt", 36);
 
         label->setPosition(ccp(size.width/2, size.height/2));
         addChild(label);
@@ -32,12 +32,12 @@ void Bug624Layer::switchLayer(float dt)
 {
     unschedule(schedule_selector(Bug624Layer::switchLayer));
 
-    CCScene *scene = CCScene::create();    
+    Scene *scene = Scene::create();    
     scene->addChild(Bug624Layer2::create(), 0);
-    CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(2.0f, scene, ccWHITE));
+    Director::sharedDirector()->replaceScene(TransitionFade::create(2.0f, scene, ccWHITE));
 }
 
-void Bug624Layer::didAccelerate(CCAcceleration* acceleration)
+void Bug624Layer::didAccelerate(Acceleration* acceleration)
 {    
     CCLog("Layer1 accel");
 }
@@ -51,8 +51,8 @@ bool Bug624Layer2::init()
 {
     if(BugsTestBaseLayer::init())
     {
-        CCSize size = CCDirector::sharedDirector()->getWinSize();
-        CCLabelTTF *label = CCLabelTTF::create("Layer2", "Marker Felt", 36);
+        Size size = Director::sharedDirector()->getWinSize();
+        LabelTTF *label = LabelTTF::create("Layer2", "Marker Felt", 36);
 
         label->setPosition(ccp(size.width/2, size.height/2));
         addChild(label);
@@ -69,12 +69,12 @@ void Bug624Layer2::switchLayer(float dt)
 {
     unschedule(schedule_selector(Bug624Layer::switchLayer));
 
-    CCScene *scene = CCScene::create();    
+    Scene *scene = Scene::create();    
     scene->addChild(Bug624Layer::create(), 0);
-    CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(2.0f, scene, ccRED));
+    Director::sharedDirector()->replaceScene(TransitionFade::create(2.0f, scene, ccRED));
 }
 
-void Bug624Layer2::didAccelerate(CCAcceleration* acceleration)
+void Bug624Layer2::didAccelerate(Acceleration* acceleration)
 {    
     CCLog("Layer2 accel");
 }
