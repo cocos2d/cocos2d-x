@@ -33,8 +33,8 @@ NS_CC_BEGIN
 //
 //------------------------------------------------------------------
 KeyboardDispatcher::KeyboardDispatcher()
-: _keyPressDelegate(NULL)
-, _keyReleaseDelegate(NULL)
+: _keyPressDelegate(nullptr)
+, _keyReleaseDelegate(nullptr)
 {
 }
 
