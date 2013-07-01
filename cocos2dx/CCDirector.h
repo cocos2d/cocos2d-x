@@ -71,9 +71,7 @@ class Node;
 class Scheduler;
 class ActionManager;
 class TouchDispatcher;
-#ifdef CC_KEYBOARD_SUPPORT
 class KeyboardDispatcher;
-#endif
 class KeypadDispatcher;
 class Accelerometer;
 
@@ -328,12 +326,12 @@ public:
      */
     CC_PROPERTY(TouchDispatcher*, _touchDispatcher, TouchDispatcher);
 
-#ifdef CC_KEYBOARD_SUPPORT
     /** KeyboardDispatcher associated with this director
+     @note Supported on Mac and Linux only now.
      @since v?.?
      */
     CC_PROPERTY(KeyboardDispatcher*, _keyboardDispatcher, KeyboardDispatcher);
-#endif
+
     /** KeypadDispatcher associated with this director
      @since v2.0
      */
