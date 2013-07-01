@@ -14,7 +14,8 @@ Developers:
         Javascript Binding and testjs
         
     Squallium
-        Added ccFPSImages entity as linked resource on linux eclipse project setting
+        Added ccFPSImages entity as linked resource on linux eclipse project setting.
+        Added CocosDenshion dependency to libextension project for eclipse project of linux.
         
     longlene
         Improve android project creation script
