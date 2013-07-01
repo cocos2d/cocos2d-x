@@ -328,7 +328,7 @@ public:
 
     /** KeyboardDispatcher associated with this director
      @note Supported on Mac and Linux only now.
-     @since v?.?
+     @since v3.0
      */
     CC_PROPERTY(KeyboardDispatcher*, _keyboardDispatcher, KeyboardDispatcher);
 
