@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		A03F2E8E178141C1006731B9 /* build-all */ = {
+		A03F2E8E178141C1006731B9 /* build-all-libs */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = A03F2E8F178141C1006731B9 /* Build configuration list for PBXAggregateTarget "build-all" */;
+			buildConfigurationList = A03F2E8F178141C1006731B9 /* Build configuration list for PBXAggregateTarget "build-all-libs" */;
 			buildPhases = (
 			);
 			dependencies = (
@@ -20,7 +20,7 @@
 				A03F2E95178141D1006731B9 /* PBXTargetDependency */,
 				A03F2E97178141D1006731B9 /* PBXTargetDependency */,
 			);
-			name = "build-all";
+			name = "build-all-libs";
 			productName = "build-all";
 		};
 /* End PBXAggregateTarget section */
@@ -4022,7 +4022,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A03F2E8E178141C1006731B9 /* build-all */,
+				A03F2E8E178141C1006731B9 /* build-all-libs */,
 				1551A33E158F2AB200E66CFE /* cocos2dx */,
 				A03F2FC117814595006731B9 /* cocos2dx-extensions */,
 				A03F2B781780BD04006731B9 /* chipmunk */,
@@ -4762,7 +4762,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A03F2E8F178141C1006731B9 /* Build configuration list for PBXAggregateTarget "build-all" */ = {
+		A03F2E8F178141C1006731B9 /* Build configuration list for PBXAggregateTarget "build-all-libs" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A03F2E90178141C1006731B9 /* Debug */,
