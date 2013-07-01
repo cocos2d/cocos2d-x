@@ -46,13 +46,13 @@ void CCLog(const char * pszFormat, ...)
     fflush(stdout);
 }
 
-void CCLuaLog(const char * pszFormat)
+void LuaLog(const char * pszFormat)
 {
     puts(pszFormat);
 }
 
 // ios no MessageBox, use CCLog instead
-void CCMessageBox(const char * pszMsg, const char * pszTitle)
+void MessageBox(const char * pszMsg, const char * pszTitle)
 {
     NSString * title = (pszTitle) ? [NSString stringWithUTF8String : pszTitle] : nil;
     NSString * msg = (pszMsg) ? [NSString stringWithUTF8String : pszMsg] : nil;
@@ -63,7 +63,7 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
 	[alert setInformativeText:title];
 	[alert setAlertStyle:NSWarningAlertStyle];
 
-	NSWindow *window = [[EAGLView sharedEGLView] window];
+	NSWindow *window = [[CCEAGLView sharedEGLView] window];
 	[alert beginSheetModalForWindow:window
 					  modalDelegate:[window delegate]
 					 didEndSelector:nil

@@ -35,18 +35,18 @@ extern "C" {
 
 NS_CC_BEGIN
 
-class CCLuaStack : public CCObject
+class LuaStack : public Object
 {
 public:
-    static CCLuaStack *create(void);
-    static CCLuaStack *attach(lua_State *L);
+    static LuaStack *create(void);
+    static LuaStack *attach(lua_State *L);
     
     /**
      @brief Method used to get a pointer to the lua_State that the script module is attached to.
      @return A pointer to the lua_State that the script module is attached to.
      */
     lua_State* getLuaState(void) {
-        return m_state;
+        return _state;
     }
     
     /**
@@ -61,15 +61,20 @@ public:
     virtual void addLuaLoader(lua_CFunction func);
     
     /**
-     @brief Remove CCObject from lua state
+     @brief Remove Object from lua state
      @param object to remove
      */
-    virtual void removeScriptObjectByCCObject(CCObject* pObj);
+    virtual void removeScriptObjectByObject(Object* pObj);
     
     /**
      @brief Remove Lua function reference
      */
     virtual void removeScriptHandler(int nHandler);
+    
+    /**
+     @brief Remove Lua function reference
+     */
+    virtual int reallocateScriptHandler(int nHandler);
     
     /**
      @brief Execute script code contained in the given string.
@@ -100,10 +105,10 @@ public:
     virtual void pushString(const char* stringValue);
     virtual void pushString(const char* stringValue, int length);
     virtual void pushNil(void);
-    virtual void pushCCObject(CCObject* objectValue, const char* typeName);
-    virtual void pushCCLuaValue(const CCLuaValue& value);
-    virtual void pushCCLuaValueDict(const CCLuaValueDict& dict);
-    virtual void pushCCLuaValueArray(const CCLuaValueArray& array);    
+    virtual void pushObject(Object* objectValue, const char* typeName);
+    virtual void pushLuaValue(const LuaValue& value);
+    virtual void pushLuaValueDict(const LuaValueDict& dict);
+    virtual void pushLuaValueArray(const LuaValueArray& array);    
     virtual bool pushFunctionByHandler(int nHandler);
     virtual int executeFunction(int numArgs);
     
@@ -112,17 +117,17 @@ public:
     virtual bool handleAssert(const char *msg);
     
 protected:
-    CCLuaStack(void)
-    : m_state(NULL)
-    , m_callFromLua(0)
+    LuaStack(void)
+    : _state(NULL)
+    , _callFromLua(0)
     {
     }
     
     bool init(void);
     bool initWithLuaState(lua_State *L);
     
-    lua_State *m_state;
-    int m_callFromLua;
+    lua_State *_state;
+    int _callFromLua;
 };
 
 NS_CC_END

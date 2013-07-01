@@ -189,16 +189,16 @@ extern "C"
 
 namespace cocos2d {
 
-JavaVM* PluginJniHelper::m_psJavaVM = NULL;
+JavaVM* PluginJniHelper::_psJavaVM = NULL;
 
 JavaVM* PluginJniHelper::getJavaVM()
 {
-    return m_psJavaVM;
+    return _psJavaVM;
 }
 
 void PluginJniHelper::setJavaVM(JavaVM *javaVM)
 {
-    m_psJavaVM = javaVM;
+    _psJavaVM = javaVM;
 }
 
 jclass PluginJniHelper::getClassID(const char *className, JNIEnv *env)

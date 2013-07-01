@@ -60,8 +60,8 @@ PFNGLGETBUFFERPOINTERVOESPROC glGetBufferPointerv = 0;
 
 NS_CC_BEGIN
 
-bool CCEGLView::m_initializedFunctions = false;
-const GLubyte *CCEGLView::m_extensions = 0;
+bool EGLView::_initializedFunctions = false;
+const GLubyte *EGLView::_extensions = 0;
 
 enum Orientation
 {
@@ -73,20 +73,20 @@ enum Orientation
 static Orientation orientation = LANDSCAPE;
 
 #define MAX_TOUCHES         4
-static CCTouch *s_pTouches[MAX_TOUCHES] = { NULL };
-static CCEGLView* s_pInstance = NULL;
+static Touch *s_pTouches[MAX_TOUCHES] = { NULL };
+static EGLView* s_pInstance = NULL;
 
-CCEGLView::CCEGLView()
-	: m_pEventHandler(NULL)
+EGLView::EGLView()
+	: _eventHandler(NULL)
 {
-	m_eglDisplay = EGL_NO_DISPLAY;
-	m_eglContext = EGL_NO_CONTEXT;
-	m_eglSurface = EGL_NO_SURFACE;
-    m_screenEvent = 0;
-    m_screenWindow = 0;
+	_eglDisplay = EGL_NO_DISPLAY;
+	_eglContext = EGL_NO_CONTEXT;
+	_eglSurface = EGL_NO_SURFACE;
+    _screenEvent = 0;
+    _screenWindow = 0;
 
-    strcpy(m_windowGroupID, "");
-    snprintf(m_windowGroupID, sizeof(m_windowGroupID), "%d", getpid());
+    strcpy(_windowGroupID, "");
+    snprintf(_windowGroupID, sizeof(_windowGroupID), "%d", getpid());
     bps_initialize();
     navigator_request_events(0);
 
@@ -96,83 +96,83 @@ CCEGLView::CCEGLView()
 
     navigator_rotation_lock(true);
 
-    m_isGLInitialized = initGL();
+    _isGLInitialized = initGL();
 
-    if (m_isGLInitialized)
+    if (_isGLInitialized)
     	initEGLFunctions();
 }
 
-CCEGLView::~CCEGLView()
+EGLView::~EGLView()
 {
 }
 
-void CCEGLView::setEventHandler(EventHandler* pHandler)
+void EGLView::setEventHandler(EventHandler* pHandler)
 {
-	m_pEventHandler = pHandler;
+	_eventHandler = pHandler;
 }
 
-const char* CCEGLView::getWindowGroupId() const
+const char* EGLView::getWindowGroupId() const
 {
-	return m_windowGroupID;
+	return _windowGroupID;
 }
 
-void CCEGLView::release()
+void EGLView::release()
 {
-	screen_stop_events(m_screenContext);
+	screen_stop_events(_screenContext);
 
 	bps_shutdown();
 
-    if (m_eglDisplay != EGL_NO_DISPLAY)
+    if (_eglDisplay != EGL_NO_DISPLAY)
     {
-        eglMakeCurrent(m_eglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+        eglMakeCurrent(_eglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
     }
 
-    if (m_eglSurface != EGL_NO_SURFACE)
+    if (_eglSurface != EGL_NO_SURFACE)
     {
-        eglDestroySurface(m_eglDisplay, m_eglSurface);
-        m_eglSurface = EGL_NO_SURFACE;
+        eglDestroySurface(_eglDisplay, _eglSurface);
+        _eglSurface = EGL_NO_SURFACE;
     }
 
-    if (m_eglContext != EGL_NO_CONTEXT)
+    if (_eglContext != EGL_NO_CONTEXT)
     {
-        eglDestroyContext(m_eglDisplay, m_eglContext);
-        m_eglContext = EGL_NO_CONTEXT;
+        eglDestroyContext(_eglDisplay, _eglContext);
+        _eglContext = EGL_NO_CONTEXT;
     }
 
-    if (m_eglDisplay != EGL_NO_DISPLAY)
+    if (_eglDisplay != EGL_NO_DISPLAY)
     {
-        eglTerminate(m_eglDisplay);
-        m_eglDisplay = EGL_NO_DISPLAY;
+        eglTerminate(_eglDisplay);
+        _eglDisplay = EGL_NO_DISPLAY;
     }
 
-    if (m_screenWindow)
+    if (_screenWindow)
     {
-        screen_destroy_window(m_screenWindow);
-        m_screenWindow = NULL;
+        screen_destroy_window(_screenWindow);
+        _screenWindow = NULL;
     }
 
-    if (m_screenEvent)
+    if (_screenEvent)
     {
-    	screen_destroy_event(m_screenEvent);
-    	m_screenEvent = NULL;
+    	screen_destroy_event(_screenEvent);
+    	_screenEvent = NULL;
     }
 
-    if (m_screenContext)
+    if (_screenContext)
     {
-        screen_destroy_context(m_screenContext);
-        m_screenContext = NULL;
+        screen_destroy_context(_screenContext);
+        _screenContext = NULL;
     }
 
 	eglReleaseThread();
 
-	m_isGLInitialized = false;
+	_isGLInitialized = false;
 
 	exit(0);
 }
 
-void CCEGLView::initEGLFunctions()
+void EGLView::initEGLFunctions()
 {
-	m_extensions = glGetString(GL_EXTENSIONS);
+	_extensions = glGetString(GL_EXTENSIONS);
 
 #if CC_TEXTURE_ATLAS_USE_VAO
     if (isGLExtension("GL_OES_vertex_array_object") || isGLExtension("GL_ARB_vertex_array_object"))
@@ -188,64 +188,64 @@ void CCEGLView::initEGLFunctions()
     glGetBufferPointerv = (PFNGLGETBUFFERPOINTERVOESPROC)eglGetProcAddress("glGetBufferPointervOES");
 
 
-	m_initializedFunctions = true;
+	_initializedFunctions = true;
 }
 
-bool CCEGLView::isOpenGLReady()
+bool EGLView::isOpenGLReady()
 {
-//	return (m_isGLInitialized && m_screenWidth != 0 && m_screenHeight != 0);
-	return (m_isGLInitialized && m_obScreenSize.height != 0 && m_obScreenSize.width != 0);
+//	return (_isGLInitialized && _screenWidth != 0 && _screenHeight != 0);
+	return (_isGLInitialized && _screenSize.height != 0 && _screenSize.width != 0);
 }
 
-void CCEGLView::end()
+void EGLView::end()
 {
     release();
 }
 
-void CCEGLView::swapBuffers()
+void EGLView::swapBuffers()
 {
-	eglSwapBuffers(m_eglDisplay, m_eglSurface);
+	eglSwapBuffers(_eglDisplay, _eglSurface);
 }
 
-CCEGLView* CCEGLView::sharedOpenGLView()
+EGLView* EGLView::sharedOpenGLView()
 {
 	if (!s_pInstance)
 	{
-		s_pInstance = new CCEGLView();
+		s_pInstance = new EGLView();
 	}
 
 	CCAssert(s_pInstance != NULL, "CCEGLView wasn't constructed yet");
 	return s_pInstance;
 }
 
-void CCEGLView::showKeyboard()
+void EGLView::showKeyboard()
 {
 	int height;
 
 	virtualkeyboard_get_height(&height);
 
-	float factor = m_fScaleY / CC_CONTENT_SCALE_FACTOR();
+	float factor = _scaleY / CC_CONTENT_SCALE_FACTOR();
 	height = (float)height / factor;
 
-	CCRect rect_begin(0, 0 - height, m_obScreenSize.width / factor, height);
-	CCRect rect_end(0, 0, m_obScreenSize.width / factor, height);
+	Rect rect_begin(0, 0 - height, _screenSize.width / factor, height);
+	Rect rect_end(0, 0, _screenSize.width / factor, height);
 
-    CCIMEKeyboardNotificationInfo info;
+    IMEKeyboardNotificationInfo info;
     info.begin = rect_begin;
     info.end = rect_end;
     info.duration = 0;
 
-    CCIMEDispatcher::sharedDispatcher()->dispatchKeyboardWillShow(info);
+    IMEDispatcher::sharedDispatcher()->dispatchKeyboardWillShow(info);
     virtualkeyboard_show();
-    CCIMEDispatcher::sharedDispatcher()->dispatchKeyboardDidShow(info);
+    IMEDispatcher::sharedDispatcher()->dispatchKeyboardDidShow(info);
 }
 
-void CCEGLView::hideKeyboard()
+void EGLView::hideKeyboard()
 {
 	virtualkeyboard_hide();
 }
 
-void CCEGLView::setIMEKeyboardState(bool bOpen)
+void EGLView::setIMEKeyboardState(bool bOpen)
 {
 	if (bOpen)
 		showKeyboard();
@@ -253,7 +253,7 @@ void CCEGLView::setIMEKeyboardState(bool bOpen)
 		hideKeyboard();
 }
 
-bool CCEGLView::isGLExtension(const char *searchName) const
+bool EGLView::isGLExtension(const char *searchName) const
 {
 	const GLubyte *start;
 	GLubyte *where, *terminator;
@@ -261,7 +261,7 @@ bool CCEGLView::isGLExtension(const char *searchName) const
 	/* It takes a bit of care to be fool-proof about parsing the
 	 OpenGL extensions string. Don't be fooled by sub-strings,
 	 etc. */
-	start = m_extensions;
+	start = _extensions;
 	for (;;)
 	{
 		where = (GLubyte *) strstr((const char *) start, searchName);
@@ -306,7 +306,7 @@ static EGLenum checkErrorEGL(const char* msg)
     return error;
 }
 
-bool CCEGLView::initGL()
+bool EGLView::initGL()
 {
     int rc = 0;
     int screenFormat = SCREEN_FORMAT_RGBA8888;
@@ -355,7 +355,7 @@ bool CCEGLView::initGL()
     };
 
     // Create the screen context.
-    rc = screen_create_context(&m_screenContext, SCREEN_APPLICATION_CONTEXT);
+    rc = screen_create_context(&_screenContext, SCREEN_APPLICATION_CONTEXT);
     if (rc)
     {
         perror("screen_create_context");
@@ -363,28 +363,28 @@ bool CCEGLView::initGL()
     }
 
     // Create the screen window.
-    rc = screen_create_window(&m_screenWindow, m_screenContext);
+    rc = screen_create_window(&_screenWindow, _screenContext);
     if (rc)
     {
         perror("screen_create_window");
         return false;
     }
 
-    rc = screen_create_window_group(m_screenWindow, m_windowGroupID);
+    rc = screen_create_window_group(_screenWindow, _windowGroupID);
 	if (rc)
 	{
 		perror("screen_create_window_group");
 		return false;
 	}
     // Set/get any window prooperties.
-    rc = screen_set_window_property_iv(m_screenWindow, SCREEN_PROPERTY_FORMAT, &screenFormat);
+    rc = screen_set_window_property_iv(_screenWindow, SCREEN_PROPERTY_FORMAT, &screenFormat);
     if (rc)
     {
         perror("screen_set_window_property_iv(SCREEN_PROPERTY_FORMAT)");
         return false;
     }
 
-    rc = screen_set_window_property_iv(m_screenWindow, SCREEN_PROPERTY_USAGE, &screenUsage);
+    rc = screen_set_window_property_iv(_screenWindow, SCREEN_PROPERTY_USAGE, &screenUsage);
     if (rc)
     {
         perror("screen_set_window_property_iv(SCREEN_PROPERTY_USAGE)");
@@ -401,14 +401,14 @@ bool CCEGLView::initGL()
 		screen_res[0] = atoi(width_str);
 		screen_res[1] = atoi(height_str);
 
-		rc = screen_set_window_property_iv(m_screenWindow, SCREEN_PROPERTY_BUFFER_SIZE, screen_res);
+		rc = screen_set_window_property_iv(_screenWindow, SCREEN_PROPERTY_BUFFER_SIZE, screen_res);
 		if (rc)
 		{
 			fprintf(stderr, "screen_set_window_property_iv(SCREEN_PROPERTY_BUFFER_SIZE)");
 			return false;
 		}
 
-        rc = screen_get_window_property_pv(m_screenWindow, SCREEN_PROPERTY_DISPLAY, (void **)&m_screen_display);
+        rc = screen_get_window_property_pv(_screenWindow, SCREEN_PROPERTY_DISPLAY, (void **)&_screen_display);
         if (rc)
         {
             perror("screen_get_window_property_pv(SCREEN_PROPERTY_DISPLAY)");
@@ -417,7 +417,7 @@ bool CCEGLView::initGL()
 	}
 	else
 	{
-	    rc = screen_get_window_property_pv(m_screenWindow, SCREEN_PROPERTY_DISPLAY, (void **)&m_screen_display);
+	    rc = screen_get_window_property_pv(_screenWindow, SCREEN_PROPERTY_DISPLAY, (void **)&_screen_display);
 	    if (rc)
 	    {
 	        perror("screen_get_window_property_pv(SCREEN_PROPERTY_DISPLAY)");
@@ -425,7 +425,7 @@ bool CCEGLView::initGL()
 	    }
 
 	    screen_display_mode_t screen_mode;
-	    rc = screen_get_display_property_pv(m_screen_display, SCREEN_PROPERTY_MODE, (void**)&screen_mode);
+	    rc = screen_get_display_property_pv(_screen_display, SCREEN_PROPERTY_MODE, (void**)&screen_mode);
 	    if (rc)
 	    {
 	        perror("screen_get_display_property_pv(SCREEN_PROPERTY_MODE)");
@@ -433,7 +433,7 @@ bool CCEGLView::initGL()
 	    }
 
 	    int size[2];
-	    rc = screen_get_window_property_iv(m_screenWindow, SCREEN_PROPERTY_BUFFER_SIZE, size);
+	    rc = screen_get_window_property_iv(_screenWindow, SCREEN_PROPERTY_BUFFER_SIZE, size);
 	    if (rc)
 	    {
 	        perror("screen_get_window_property_iv(SCREEN_PROPERTY_BUFFER_SIZE)");
@@ -466,14 +466,14 @@ bool CCEGLView::initGL()
 			return false;
 		}
 
-	    rc = screen_set_window_property_iv(m_screenWindow, SCREEN_PROPERTY_ROTATION, &angle);
+	    rc = screen_set_window_property_iv(_screenWindow, SCREEN_PROPERTY_ROTATION, &angle);
 	    if (rc)
 	    {
 	        perror("screen_set_window_property_iv(SCREEN_PROPERTY_ROTATION)");
 	        return false;
 	    }
 
-	    rc = screen_set_window_property_iv(m_screenWindow, SCREEN_PROPERTY_BUFFER_SIZE, buffer_size);
+	    rc = screen_set_window_property_iv(_screenWindow, SCREEN_PROPERTY_BUFFER_SIZE, buffer_size);
 	    if (rc)
 	    {
 	        perror("screen_set_window_property_iv(SCREEN_PROPERTY_BUFFER_SIZE)");
@@ -483,7 +483,7 @@ bool CCEGLView::initGL()
 
     if (windowPosition[0] != 0 || windowPosition[1] != 0)
     {
-        rc = screen_set_window_property_iv(m_screenWindow, SCREEN_PROPERTY_POSITION, windowPosition);
+        rc = screen_set_window_property_iv(_screenWindow, SCREEN_PROPERTY_POSITION, windowPosition);
         if (rc)
         {
             perror("screen_set_window_property_iv(SCREEN_PROPERTY_POSITION)");
@@ -491,7 +491,7 @@ bool CCEGLView::initGL()
         }
     }
 
-    rc = screen_set_window_property_iv(m_screenWindow, SCREEN_PROPERTY_TRANSPARENCY, &screenTransparency);
+    rc = screen_set_window_property_iv(_screenWindow, SCREEN_PROPERTY_TRANSPARENCY, &screenTransparency);
     if (rc)
     {
         perror("screen_set_window_property_iv(SCREEN_PROPERTY_TRANSPARENCY)");
@@ -499,7 +499,7 @@ bool CCEGLView::initGL()
     }
 
     // Double buffered.
-    rc = screen_create_window_buffers(m_screenWindow, 2);
+    rc = screen_create_window_buffers(_screenWindow, 2);
     if (rc)
     {
         perror("screen_create_window_buffers");
@@ -507,7 +507,7 @@ bool CCEGLView::initGL()
     }
 
     // Create screen event object.
-    rc = screen_create_event(&m_screenEvent);
+    rc = screen_create_event(&_screenEvent);
     if (rc)
     {
         perror("screen_create_event");
@@ -515,42 +515,42 @@ bool CCEGLView::initGL()
     }
 
     // Request screen events.
-    screen_request_events(m_screenContext);
+    screen_request_events(_screenContext);
 
     // Get the EGL display and initialize.
-    m_eglDisplay = eglGetDisplay(EGL_DEFAULT_DISPLAY);
-    if (m_eglDisplay == EGL_NO_DISPLAY)
+    _eglDisplay = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+    if (_eglDisplay == EGL_NO_DISPLAY)
     {
         perror("eglGetDisplay");
         return false;
     }
-    if (eglInitialize(m_eglDisplay, NULL, NULL) != EGL_TRUE)
+    if (eglInitialize(_eglDisplay, NULL, NULL) != EGL_TRUE)
     {
         perror("eglInitialize");
         return false;
     }
 
-    if (eglChooseConfig(m_eglDisplay, eglConfigAttrs, &config, 1, &eglConfigCount) != EGL_TRUE || eglConfigCount == 0)
+    if (eglChooseConfig(_eglDisplay, eglConfigAttrs, &config, 1, &eglConfigCount) != EGL_TRUE || eglConfigCount == 0)
     {
         checkErrorEGL("eglChooseConfig");
         return false;
     }
 
-    m_eglContext = eglCreateContext(m_eglDisplay, config, EGL_NO_CONTEXT, eglContextAttrs);
-    if (m_eglContext == EGL_NO_CONTEXT)
+    _eglContext = eglCreateContext(_eglDisplay, config, EGL_NO_CONTEXT, eglContextAttrs);
+    if (_eglContext == EGL_NO_CONTEXT)
     {
         checkErrorEGL("eglCreateContext");
         return false;
     }
 
-    m_eglSurface = eglCreateWindowSurface(m_eglDisplay, config, m_screenWindow, eglSurfaceAttrs);
-    if (m_eglSurface == EGL_NO_SURFACE)
+    _eglSurface = eglCreateWindowSurface(_eglDisplay, config, _screenWindow, eglSurfaceAttrs);
+    if (_eglSurface == EGL_NO_SURFACE)
     {
         checkErrorEGL("eglCreateWindowSurface");
         return false;
     }
 
-    if (eglMakeCurrent(m_eglDisplay, m_eglSurface, m_eglSurface, m_eglContext) != EGL_TRUE)
+    if (eglMakeCurrent(_eglDisplay, _eglSurface, _eglSurface, _eglContext) != EGL_TRUE)
     {
         checkErrorEGL("eglMakeCurrent");
         return false;
@@ -558,17 +558,17 @@ bool CCEGLView::initGL()
 
     EGLint width, height;
 
-    if ((m_eglDisplay == EGL_NO_DISPLAY) || (m_eglSurface == EGL_NO_SURFACE) )
+    if ((_eglDisplay == EGL_NO_DISPLAY) || (_eglSurface == EGL_NO_SURFACE) )
     	return EXIT_FAILURE;
 
-	eglQuerySurface(m_eglDisplay, m_eglSurface, EGL_WIDTH, &width);
-    eglQuerySurface(m_eglDisplay, m_eglSurface, EGL_HEIGHT, &height);
+	eglQuerySurface(_eglDisplay, _eglSurface, EGL_WIDTH, &width);
+    eglQuerySurface(_eglDisplay, _eglSurface, EGL_HEIGHT, &height);
 
-    m_obScreenSize.width = width;
-    m_obScreenSize.height = height;
+    _screenSize.width = width;
+    _screenSize.height = height;
 
     // Set vsync.
-//    eglSwapInterval(m_eglDisplay, screenSwapInterval);
+//    eglSwapInterval(_eglDisplay, screenSwapInterval);
 
     return true;
 }
@@ -578,7 +578,7 @@ static long time2millis(struct timespec *times)
     return times->tv_sec*1000 + times->tv_nsec/1000000;
 }
 
-bool CCEGLView::handleEvents()
+bool EGLView::handleEvents()
 {
 	bps_event_t*    event = NULL;
 	mtouch_event_t  mtouch_event;
@@ -597,7 +597,7 @@ bool CCEGLView::handleEvents()
 		if (event == NULL)
 			break;
 			
-		if (m_pEventHandler && m_pEventHandler->HandleBPSEvent(event))
+		if (_eventHandler && _eventHandler->HandleBPSEvent(event))
 			continue;
 
 		domain = bps_event_get_domain(event);
@@ -607,7 +607,7 @@ bool CCEGLView::handleEvents()
 			switch (bps_event_get_code(event))
 			{
 				case NAVIGATOR_SWIPE_DOWN:
-					CCDirector::sharedDirector()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeMenuClicked);
+					Director::sharedDirector()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeMenuClicked);
 					break;
 
 				case NAVIGATOR_EXIT:
@@ -617,18 +617,18 @@ bool CCEGLView::handleEvents()
 					break;
 
 				case NAVIGATOR_WINDOW_INACTIVE:
-					if (m_isWindowActive)
+					if (_isWindowActive)
 					{
-						CCApplication::sharedApplication()->applicationDidEnterBackground();
-						m_isWindowActive = false;
+						Application::sharedApplication()->applicationDidEnterBackground();
+						_isWindowActive = false;
 					}
 					break;
 
 				case NAVIGATOR_WINDOW_ACTIVE:
-					if (!m_isWindowActive)
+					if (!_isWindowActive)
 					{
-						CCApplication::sharedApplication()->applicationWillEnterForeground();
-						m_isWindowActive = true;
+						Application::sharedApplication()->applicationWillEnterForeground();
+						_isWindowActive = true;
 					}
 					break;
 
@@ -637,17 +637,17 @@ bool CCEGLView::handleEvents()
 					switch(navigator_event_get_window_state(event))
 					{
 						case NAVIGATOR_WINDOW_FULLSCREEN:
-							if (!m_isWindowActive)
+							if (!_isWindowActive)
 							{
-								CCApplication::sharedApplication()->applicationWillEnterForeground();
-								m_isWindowActive = true;
+								Application::sharedApplication()->applicationWillEnterForeground();
+								_isWindowActive = true;
 							}
 							break;
 						case NAVIGATOR_WINDOW_THUMBNAIL:
-							if (m_isWindowActive)
+							if (_isWindowActive)
 							{
-								CCApplication::sharedApplication()->applicationDidEnterBackground();
-								m_isWindowActive = false;
+								Application::sharedApplication()->applicationDidEnterBackground();
+								_isWindowActive = false;
 							}
 							break;
 					}
@@ -660,8 +660,8 @@ bool CCEGLView::handleEvents()
 		}
 		else if (domain == screen_get_domain())
 		{
-			m_screenEvent = screen_event_get_event(event);
-			rc = screen_get_event_property_iv(m_screenEvent, SCREEN_PROPERTY_TYPE, &val);
+			_screenEvent = screen_event_get_event(event);
+			rc = screen_get_event_property_iv(_screenEvent, SCREEN_PROPERTY_TYPE, &val);
 			if (rc || val == SCREEN_EVENT_NONE)
 				break;
 
@@ -674,7 +674,7 @@ bool CCEGLView::handleEvents()
 					break;
 
 				case SCREEN_EVENT_MTOUCH_RELEASE:
-					screen_get_mtouch_event(m_screenEvent, &mtouch_event, 0);
+					screen_get_mtouch_event(_screenEvent, &mtouch_event, 0);
 					touch_id = mtouch_event.contact_id;
 					x = mtouch_event.x;
 					y = mtouch_event.y;
@@ -684,7 +684,7 @@ bool CCEGLView::handleEvents()
 					break;
 
 				case SCREEN_EVENT_MTOUCH_TOUCH:
-					screen_get_mtouch_event(m_screenEvent, &mtouch_event, 0);
+					screen_get_mtouch_event(_screenEvent, &mtouch_event, 0);
 					touch_id = mtouch_event.contact_id;
 					x = mtouch_event.x;
 					y = mtouch_event.y;
@@ -694,7 +694,7 @@ bool CCEGLView::handleEvents()
 					break;
 
 				case SCREEN_EVENT_MTOUCH_MOVE:
-					screen_get_mtouch_event(m_screenEvent, &mtouch_event, 0);
+					screen_get_mtouch_event(_screenEvent, &mtouch_event, 0);
 					touch_id = mtouch_event.contact_id;
 					x = mtouch_event.x;
 					y = mtouch_event.y;
@@ -711,8 +711,8 @@ bool CCEGLView::handleEvents()
 						static bool mouse_pressed = false;
 
 						// this is a mouse move event, it is applicable to a device with a usb mouse or simulator
-						screen_get_event_property_iv(m_screenEvent, SCREEN_PROPERTY_BUTTONS, &buttons);
-						screen_get_event_property_iv(m_screenEvent, SCREEN_PROPERTY_SOURCE_POSITION, pair_);
+						screen_get_event_property_iv(_screenEvent, SCREEN_PROPERTY_BUTTONS, &buttons);
+						screen_get_event_property_iv(_screenEvent, SCREEN_PROPERTY_SOURCE_POSITION, pair_);
 						pair[0] = (float)pair_[0];
 						pair[1] = (float)pair_[1];
 						if (buttons & SCREEN_LEFT_MOUSE_BUTTON)
@@ -741,16 +741,16 @@ bool CCEGLView::handleEvents()
 					break;
 
 				case SCREEN_EVENT_KEYBOARD:
-					screen_get_event_property_iv(m_screenEvent, SCREEN_PROPERTY_KEY_FLAGS, &val);
+					screen_get_event_property_iv(_screenEvent, SCREEN_PROPERTY_KEY_FLAGS, &val);
 					if (val & KEY_DOWN)
 					{
-						screen_get_event_property_iv(m_screenEvent, SCREEN_PROPERTY_KEY_SYM, &val);
+						screen_get_event_property_iv(_screenEvent, SCREEN_PROPERTY_KEY_SYM, &val);
 
 						if (val >= ' ' && val < '~')
 						{
 							buf[0] = val;
 							buf[1]=  '\0';
-							CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(buf, 1);
+							IMEDispatcher::sharedDispatcher()->dispatchInsertText(buf, 1);
 						}
 						else
 						{
@@ -761,12 +761,12 @@ bool CCEGLView::handleEvents()
 							switch (val)
 							{
 								case 8: // backspace
-									//		CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
-									CCIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+									//		KeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
+									IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
 									break;
 
 								default:
-									CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(buf, 1);
+									IMEDispatcher::sharedDispatcher()->dispatchInsertText(buf, 1);
 									break;
 							}
 						}
@@ -790,7 +790,7 @@ bool CCEGLView::handleEvents()
                 current_time = time2millis(&time_struct);
 
                 sensor_event_get_xyz(event, &x, &y, &z);
-                CCDirector::sharedDirector()->getAccelerometer()->update(current_time, -x, -y, z);
+                Director::sharedDirector()->getAccelerometer()->update(current_time, -x, -y, z);
             }
         }
 	}
@@ -798,9 +798,9 @@ bool CCEGLView::handleEvents()
 	return true;
 }
 
-screen_display_t CCEGLView::getScreenDisplay() const
+screen_display_t EGLView::getScreenDisplay() const
 {
-    return m_screen_display;
+    return _screen_display;
 }
 
 NS_CC_END

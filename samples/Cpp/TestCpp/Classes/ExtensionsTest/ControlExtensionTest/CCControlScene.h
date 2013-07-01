@@ -1,5 +1,5 @@
 /*
- * CCControlScene.h
+ * ControlScene.h
  *
  * Copyright (c) 2011 Yannick Loriot
  *
@@ -35,9 +35,9 @@ USING_NS_CC_EXT;
 
 #define CONTROL_SCENE_CREATE_FUNC(controlScene) \
 public: \
-static CCScene* sceneWithTitle(const char * title) \
+static Scene* sceneWithTitle(const char * title) \
 { \
-    CCScene* pScene = CCScene::create(); \
+    Scene* pScene = Scene::create(); \
     controlScene* controlLayer = new controlScene(); \
     if (controlLayer && controlLayer->init()) \
     { \
@@ -53,22 +53,22 @@ static CCScene* sceneWithTitle(const char * title) \
 }
 
 
-class CCControlScene : public CCLayer
+class ControlScene : public Layer
 {
 public:
-    CCControlScene();
-    ~CCControlScene();
+    ControlScene();
+    ~ControlScene();
     bool init();
     // Menu Callbacks
-    void toExtensionsMainLayer(CCObject* sender);
-    void previousCallback(CCObject* sender);
-    void restartCallback(CCObject* sender);
-    void nextCallback(CCObject* sender);
+    void toExtensionsMainLayer(Object* sender);
+    void previousCallback(Object* sender);
+    void restartCallback(Object* sender);
+    void nextCallback(Object* sender);
 
     /** Title label of the scene. */
-    CC_SYNTHESIZE_RETAIN(CCLabelTTF*, m_pSceneTitleLabel, SceneTitleLabel)
+    CC_SYNTHESIZE_RETAIN(LabelTTF*, _sceneTitleLabel, SceneTitleLabel)
 
-    CONTROL_SCENE_CREATE_FUNC(CCControlScene);
+    CONTROL_SCENE_CREATE_FUNC(ControlScene);
 };
 
 #endif /* __CCCONTROLSCENE_H__ */

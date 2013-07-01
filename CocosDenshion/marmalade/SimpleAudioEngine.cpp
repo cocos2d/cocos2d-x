@@ -105,7 +105,7 @@ namespace CocosDenshion
     void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 	{
 		// Changing file path to full path
-		std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+		std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
 		s3eFile *fileHandle = s3eFileOpen(fullPath.c_str(), "rb");
 		
 		IwAssertMsg(GAME, fileHandle, ("Open file %s Failed. s3eFileError Code : %i", fullPath.c_str(), s3eFileGetError()));
@@ -120,7 +120,7 @@ namespace CocosDenshion
 	void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 	{
 		// Changing file path to full path
-		std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+		std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
 		s3eResult result;
 		
 		result = s3eAudioPlayFromBuffer(g_AudioBuffer, g_AudioFileSize, bLoop ? 0 : 1);
@@ -197,7 +197,7 @@ namespace CocosDenshion
 	unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
 	{
 		// Changing file path to full path
-		std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+		std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
 
 		SoundFxMap::iterator it = g_pSoundFxMap->find(fullPath) ;
 		
@@ -227,7 +227,7 @@ namespace CocosDenshion
 	void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 	{
 		// Changing file path to full path
-		std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+		std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
 		SoundFxMap::iterator it = g_pSoundFxMap->find(fullPath) ;
 		if( it==g_pSoundFxMap->end() ) {
 			s3eFile *fileHandle = s3eFileOpen(fullPath.c_str(), "rb");
@@ -247,7 +247,7 @@ namespace CocosDenshion
 	void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 	{
 		// Changing file path to full path
-		std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+		std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
 		// effect must not be playing!
 
 		SoundFxMap::iterator it = g_pSoundFxMap->find(fullPath) ;

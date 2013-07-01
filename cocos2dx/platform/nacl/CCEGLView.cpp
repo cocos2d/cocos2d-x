@@ -54,22 +54,22 @@ public:
     void InvalidateContext();
     void ResizeContext(int width, int height);
     void FlushContext();
-    pp::Size GetSize() { return m_size; }
+    pp::Size GetSize() { return _size; }
 private:
-    pp::Size m_size;
-    pp::Graphics3D m_graphics3d;
-    const struct PPB_OpenGLES2* m_gles2_interface;
-    pp::Instance* m_instance;
+    pp::Size _size;
+    pp::Graphics3D _graphics3d;
+    const struct PPB_OpenGLES2* _gles2_interface;
+    pp::Instance* _instance;
 };
 
 OpenGLContext::OpenGLContext(pp::Instance* instance, pp::Size size) :
-   pp::Graphics3DClient(instance), m_size(size), m_instance(instance)
+   pp::Graphics3DClient(instance), _size(size), _instance(instance)
 {
     pp::Module* module = pp::Module::Get();
     assert(module);
-    m_gles2_interface = static_cast<const struct PPB_OpenGLES2*>(
+    _gles2_interface = static_cast<const struct PPB_OpenGLES2*>(
             module->GetBrowserInterface(PPB_OPENGLES2_INTERFACE));
-    assert(m_gles2_interface);
+    assert(_gles2_interface);
 }
 
 OpenGLContext::~OpenGLContext()
@@ -81,10 +81,10 @@ OpenGLContext::~OpenGLContext()
 bool OpenGLContext::MakeContextCurrent()
 {
     CCLOG("OpenGLContext::MakeContextCurrent %dx%d",
-          m_size.width(), m_size.height());
+          _size.width(), _size.height());
 
     // Lazily create the Pepper context.
-    if (m_graphics3d.is_null())
+    if (_graphics3d.is_null())
     {
         int32_t attribs[] = {
             PP_GRAPHICS3DATTRIB_ALPHA_SIZE, 8,
@@ -92,24 +92,24 @@ bool OpenGLContext::MakeContextCurrent()
             PP_GRAPHICS3DATTRIB_STENCIL_SIZE, 8,
             PP_GRAPHICS3DATTRIB_SAMPLES, 0,
             PP_GRAPHICS3DATTRIB_SAMPLE_BUFFERS, 0,
-            PP_GRAPHICS3DATTRIB_WIDTH, m_size.width(),
-            PP_GRAPHICS3DATTRIB_HEIGHT, m_size.height(),
+            PP_GRAPHICS3DATTRIB_WIDTH, _size.width(),
+            PP_GRAPHICS3DATTRIB_HEIGHT, _size.height(),
             PP_GRAPHICS3DATTRIB_NONE
         };
-        m_graphics3d = pp::Graphics3D(m_instance, pp::Graphics3D(), attribs);
-        if (m_graphics3d.is_null())
+        _graphics3d = pp::Graphics3D(_instance, pp::Graphics3D(), attribs);
+        if (_graphics3d.is_null())
         {
             glSetCurrentContextPPAPI(0);
             return false;
         }
-        bool rtn = m_instance->BindGraphics(m_graphics3d);
+        bool rtn = _instance->BindGraphics(_graphics3d);
         assert(rtn && "BindGraphics failed");
         if (!rtn)
           return false;
     }
 
-    CCLOG("glSetCurrentContextPPAPI: %p", (void*)m_graphics3d.pp_resource());
-    glSetCurrentContextPPAPI(m_graphics3d.pp_resource());
+    CCLOG("glSetCurrentContextPPAPI: %p", (void*)_graphics3d.pp_resource());
+    glSetCurrentContextPPAPI(_graphics3d.pp_resource());
     return true;
 }
 
@@ -122,90 +122,90 @@ void OpenGLContext::InvalidateContext()
 void OpenGLContext::ResizeContext(int width, int height)
 {
     CCLOG("OpenGLContext::ResizeContext %dx%d", width, height);
-    m_size.SetSize(width, height);
-    if (!m_graphics3d.is_null())
+    _size.SetSize(width, height);
+    if (!_graphics3d.is_null())
     {
-        m_graphics3d.ResizeBuffers(width, height);
+        _graphics3d.ResizeBuffers(width, height);
     }
 }
 
 void OpenGLContext::FlushContext()
 {
     //CCLOG("OpenGLContext::FlushContext");
-    m_graphics3d.SwapBuffers(pp::BlockUntilComplete());
+    _graphics3d.SwapBuffers(pp::BlockUntilComplete());
 }
 
 
 NS_CC_BEGIN
 
-CCEGLView::CCEGLView() : bIsInit(false), bIsMouseDown(false), m_fFrameZoomFactor(1.0f), m_context(NULL)
+EGLView::EGLView() : bIsInit(false), bIsMouseDown(false), _frameZoomFactor(1.0f), _context(NULL)
 {
-    CCLOG("CCEGLView::CCEGLView");
-    pthread_mutex_init(&m_mutex, NULL);
+    CCLOG("CCEGLView::EGLView");
+    pthread_mutex_init(&_mutex, NULL);
     initGL();
 }
 
-CCEGLView::~CCEGLView()
+EGLView::~EGLView()
 {
 }
 
-void CCEGLView::setFrameSize(float width, float height)
+void EGLView::setFrameSize(float width, float height)
 {
-    CCEGLViewProtocol::setFrameSize(width, height);
-    if (m_context)
-      m_context->ResizeContext(width, height);
+    EGLViewProtocol::setFrameSize(width, height);
+    if (_context)
+      _context->ResizeContext(width, height);
 }
 
-void CCEGLView::setViewPortInPoints(float x , float y , float w , float h)
+void EGLView::setViewPortInPoints(float x , float y , float w , float h)
 {
-    glViewport((GLint)(x * m_fScaleX * m_fFrameZoomFactor+ m_obViewPortRect.origin.x * m_fFrameZoomFactor),
-            (GLint)(y * m_fScaleY * m_fFrameZoomFactor + m_obViewPortRect.origin.y * m_fFrameZoomFactor),
-            (GLsizei)(w * m_fScaleX * m_fFrameZoomFactor),
-            (GLsizei)(h * m_fScaleY * m_fFrameZoomFactor));
+    glViewport((GLint)(x * _scaleX * _frameZoomFactor+ _viewPortRect.origin.x * _frameZoomFactor),
+            (GLint)(y * _scaleY * _frameZoomFactor + _viewPortRect.origin.y * _frameZoomFactor),
+            (GLsizei)(w * _scaleX * _frameZoomFactor),
+            (GLsizei)(h * _scaleY * _frameZoomFactor));
 }
 
-void CCEGLView::setScissorInPoints(float x , float y , float w , float h)
+void EGLView::setScissorInPoints(float x , float y , float w , float h)
 {
-    glScissor((GLint)(x * m_fScaleX * m_fFrameZoomFactor + m_obViewPortRect.origin.x * m_fFrameZoomFactor),
-            (GLint)(y * m_fScaleY * m_fFrameZoomFactor + m_obViewPortRect.origin.y * m_fFrameZoomFactor),
-            (GLsizei)(w * m_fScaleX * m_fFrameZoomFactor),
-            (GLsizei)(h * m_fScaleY * m_fFrameZoomFactor));
+    glScissor((GLint)(x * _scaleX * _frameZoomFactor + _viewPortRect.origin.x * _frameZoomFactor),
+            (GLint)(y * _scaleY * _frameZoomFactor + _viewPortRect.origin.y * _frameZoomFactor),
+            (GLsizei)(w * _scaleX * _frameZoomFactor),
+            (GLsizei)(h * _scaleY * _frameZoomFactor));
 }
 
 
-bool CCEGLView::isOpenGLReady()
+bool EGLView::isOpenGLReady()
 {
     return bIsInit;
 }
 
-void CCEGLView::end()
+void EGLView::end()
 {
     delete this;
     exit(0);
 }
 
-void CCEGLView::swapBuffers()
+void EGLView::swapBuffers()
 {
     if (!bIsInit)
         return;
 
-    m_context->FlushContext();
+    _context->FlushContext();
 }
 
-void CCEGLView::setIMEKeyboardState(bool bOpen)
+void EGLView::setIMEKeyboardState(bool bOpen)
 {
 }
 
-bool CCEGLView::initGL()
+bool EGLView::initGL()
 {
     CCLOG("initGL: instance=%p", g_instance);
     assert(g_instance);
-    assert(!m_context);
+    assert(!_context);
     const pp::Size& size = g_instance->Size();
     setFrameSize(size.width(), size.height());
-    m_context = new OpenGLContext(g_instance, size);
-    CCLOG("initGL: m_context=%p", m_context);
-    bool rtn = m_context->MakeContextCurrent();
+    _context = new OpenGLContext(g_instance, size);
+    CCLOG("initGL: _context=%p", _context);
+    bool rtn = _context->MakeContextCurrent();
     CCLOG("MakeContextCurrent returned: %d", rtn);
     assert(rtn == true && "MakeContextCurrent failed");
     if (!rtn)
@@ -214,25 +214,25 @@ bool CCEGLView::initGL()
     return true;
 }
 
-void CCEGLView::destroyGL()
+void EGLView::destroyGL()
 {
-    delete m_context;
+    delete _context;
     bIsInit = false;
     CCLOG("destroyGL");
 }
 
-CCEGLView* CCEGLView::sharedOpenGLView()
+EGLView* EGLView::sharedOpenGLView()
 {
-    static CCEGLView* s_pEglView = NULL;
+    static EGLView* s_pEglView = NULL;
     if (s_pEglView == NULL)
     {
-        CCLOG("creating CCEGLView");
-        s_pEglView = new CCEGLView();
+        CCLOG("creating EGLView");
+        s_pEglView = new EGLView();
     }
     return s_pEglView;
 }
 
-void CCEGLView::HandleMouseEvent(const pp::MouseInputEvent* event)
+void EGLView::HandleMouseEvent(const pp::MouseInputEvent* event)
 {
     pp::Point pos = event->GetPosition();
     float x = pos.x();
@@ -240,7 +240,7 @@ void CCEGLView::HandleMouseEvent(const pp::MouseInputEvent* event)
     int touchID = 1;
 
     // Clamp event position to be within cocos2dx window size
-    CCSize frame_size = getFrameSize();
+    Size frame_size = getFrameSize();
     float max_y = frame_size.height;
     float max_x = frame_size.width;
 
@@ -272,21 +272,21 @@ void CCEGLView::HandleMouseEvent(const pp::MouseInputEvent* event)
     }
 }
 
-void CCEGLView::ProcessEventQueue()
+void EGLView::ProcessEventQueue()
 {
     const pp::Size& size = g_instance->Size();
     // If the size of the global instance has changed then
     // we need to update our GL frame size accordingly
-    if (size != m_context->GetSize())
+    if (size != _context->GetSize())
     {
         setFrameSize(size.width(), size.height());
     }
 
-    pthread_mutex_lock(&m_mutex);
-    while (m_event_queue.size())
+    pthread_mutex_lock(&_mutex);
+    while (_event_queue.size())
     {
-        pp::InputEvent event = m_event_queue.front();
-        m_event_queue.pop();
+        pp::InputEvent event = _event_queue.front();
+        _event_queue.pop();
         PP_InputEvent_Type type = event.GetType();
         switch (type)
         {
@@ -319,16 +319,16 @@ void CCEGLView::ProcessEventQueue()
                 break;
         }
     }
-    pthread_mutex_unlock(&m_mutex);
+    pthread_mutex_unlock(&_mutex);
 }
 
-void CCEGLView::AddEvent(const pp::InputEvent& event)
+void EGLView::AddEvent(const pp::InputEvent& event)
 {
-    pthread_mutex_lock(&m_mutex);
-    m_event_queue.push(event);
-    pthread_mutex_unlock(&m_mutex);
+    pthread_mutex_lock(&_mutex);
+    _event_queue.push(event);
+    pthread_mutex_unlock(&_mutex);
 }
 
-CocosPepperInstance* CCEGLView::g_instance;
+CocosPepperInstance* EGLView::g_instance;
 
 NS_CC_END

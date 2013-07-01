@@ -6,8 +6,8 @@ using namespace std;
 
 
 OpenSLEngine::OpenSLEngine()
- :m_musicVolume(0),
-  m_effectVolume(0)
+ :_musicVolume(0),
+  _effectVolume(0)
 {}
 
 OpenSLEngine::~OpenSLEngine()
@@ -500,7 +500,7 @@ bool OpenSLEngine::recreatePlayer(const char* filename)
 	assert(SL_RESULT_SUCCESS == result);
 
 	// set volume 
-	setSingleEffectVolume(newPlayer, m_effectVolume);
+	setSingleEffectVolume(newPlayer, _effectVolume);
 	setSingleEffectState(newPlayer, SL_PLAYSTATE_STOPPED);
 	setSingleEffectState(newPlayer, SL_PLAYSTATE_PLAYING);
 
@@ -526,7 +526,7 @@ unsigned int OpenSLEngine::preloadEffect(const char * filename)
 	}
 	
 	// set the new player's volume as others'
-	setSingleEffectVolume(player, m_effectVolume);
+	setSingleEffectVolume(player, _effectVolume);
 
 	vector<AudioPlayer*>* vec = new vector<AudioPlayer*>;
 	vec->push_back(player);
@@ -661,7 +661,7 @@ void OpenSLEngine::setEffectLooping(unsigned int effectID, bool isLooping)
 void OpenSLEngine::setEffectsVolume(float volume)
 {
 	assert(volume <= 1.0f && volume >= 0.0f);
-	m_effectVolume = int (RANGE_VOLUME_MILLIBEL * volume) + MIN_VOLUME_MILLIBEL;
+	_effectVolume = int (RANGE_VOLUME_MILLIBEL * volume) + MIN_VOLUME_MILLIBEL;
 	
 	SLresult result;
 	EffectList::iterator p;
@@ -672,7 +672,7 @@ void OpenSLEngine::setEffectsVolume(float volume)
 		for (vector<AudioPlayer*>::iterator iter = vec->begin() ; iter != vec->end() ; ++ iter)
 		{
 			player = *iter;
-			result = (*(player->fdPlayerVolume))->SetVolumeLevel(player->fdPlayerVolume, m_effectVolume);
+			result = (*(player->fdPlayerVolume))->SetVolumeLevel(player->fdPlayerVolume, _effectVolume);
 			assert(SL_RESULT_SUCCESS == result);
 		}
 	}
@@ -680,6 +680,6 @@ void OpenSLEngine::setEffectsVolume(float volume)
 
 float OpenSLEngine::getEffectsVolume()
 {
-	float volume = (m_effectVolume - MIN_VOLUME_MILLIBEL) / (1.0f * RANGE_VOLUME_MILLIBEL);
+	float volume = (_effectVolume - MIN_VOLUME_MILLIBEL) / (1.0f * RANGE_VOLUME_MILLIBEL);
 	return volume;
 }

@@ -27,10 +27,10 @@
 
 NS_CC_EXT_BEGIN
 
-class CCSortedObject : public CCObject, public CCSortableObject
+class SortedObject : public Object, public SortableObject
 {
 public:
-    CCSortedObject() : objectID(0) {}
+    SortedObject() : objectID(0) {}
     virtual void setObjectID(unsigned int objectID) { this->objectID = objectID; }
     virtual unsigned int getObjectID() { return objectID; }
 private:
@@ -40,11 +40,11 @@ private:
 #if 0
 static int _compareObject(const void * val1, const void * val2)
 {
-    CCSortableObject* operand1;
-    CCSortableObject* operand2;
+    SortableObject* operand1;
+    SortableObject* operand2;
 
-    operand1 = (CCSortableObject*)val1;
-    operand2 = (CCSortableObject*)val2;
+    operand1 = (SortableObject*)val1;
+    operand2 = (SortableObject*)val2;
 
     if (operand1->getObjectID() > operand2->getObjectID())
     {
@@ -58,27 +58,27 @@ static int _compareObject(const void * val1, const void * val2)
 #endif
 
 
-void CCArrayForObjectSorting::insertSortedObject(CCSortableObject* object)
+void ArrayForObjectSorting::insertSortedObject(SortableObject* object)
 {
     unsigned int idx;
-    CCObject* pObj = dynamic_cast<CCObject*>(object);
+    Object* pObj = dynamic_cast<Object*>(object);
     CCAssert(pObj, "Invalid parameter.");
     idx = this->indexOfSortedObject(object);
     
     this->insertObject(pObj, idx);
 }
 
-void CCArrayForObjectSorting::removeSortedObject(CCSortableObject* object)
+void ArrayForObjectSorting::removeSortedObject(SortableObject* object)
 {
     if (this->count() == 0) {
         return;
     }
     unsigned int idx;
-    CCSortableObject* foundObj;
+    SortableObject* foundObj;
     idx = this->indexOfSortedObject(object);
     
     if (idx < this->count() && idx != CC_INVALID_INDEX) {
-        foundObj = dynamic_cast<CCSortableObject*>(this->objectAtIndex(idx));
+        foundObj = dynamic_cast<SortableObject*>(this->objectAtIndex(idx));
         
         if(foundObj->getObjectID() == object->getObjectID()) {
             this->removeObjectAtIndex(idx);
@@ -86,16 +86,16 @@ void CCArrayForObjectSorting::removeSortedObject(CCSortableObject* object)
     }
 }
 
-void CCArrayForObjectSorting::setObjectID_ofSortedObject(unsigned int tag, CCSortableObject* object)
+void ArrayForObjectSorting::setObjectID_ofSortedObject(unsigned int tag, SortableObject* object)
 {
-    CCSortableObject* foundObj;
+    SortableObject* foundObj;
     unsigned int  idx;
     
     idx = this->indexOfSortedObject(object);
     if (idx < this->count() && idx != CC_INVALID_INDEX)
     {
-        foundObj = dynamic_cast<CCSortableObject*>(this->objectAtIndex(idx));
-        CCObject* pObj = dynamic_cast<CCObject*>(foundObj);
+        foundObj = dynamic_cast<SortableObject*>(this->objectAtIndex(idx));
+        Object* pObj = dynamic_cast<Object*>(foundObj);
         pObj->retain();
         
         if(foundObj->getObjectID() == object->getObjectID()) {
@@ -109,26 +109,26 @@ void CCArrayForObjectSorting::setObjectID_ofSortedObject(unsigned int tag, CCSor
     }
 }
 
-CCSortableObject* CCArrayForObjectSorting::objectWithObjectID(unsigned int tag)
+SortableObject* ArrayForObjectSorting::objectWithObjectID(unsigned int tag)
 {
     if (this->count() == 0) {
         return NULL;
     }
     
     unsigned int  idx;
-    CCSortableObject* foundObj;
+    SortableObject* foundObj;
     
-    foundObj = new CCSortedObject();
+    foundObj = new SortedObject();
     foundObj->setObjectID(tag);
     
     idx      = this->indexOfSortedObject(foundObj);
     
-    ((CCSortedObject*)foundObj)->release();
+    ((SortedObject*)foundObj)->release();
     foundObj = NULL;
     
     if (idx < this->count() && idx != CC_INVALID_INDEX)
     {
-        foundObj = dynamic_cast<CCSortableObject*>(this->objectAtIndex(idx));
+        foundObj = dynamic_cast<SortableObject*>(this->objectAtIndex(idx));
         if (foundObj->getObjectID() != tag) {
             foundObj = NULL;
         }
@@ -137,20 +137,20 @@ CCSortableObject* CCArrayForObjectSorting::objectWithObjectID(unsigned int tag)
     return foundObj;
 }
 
-unsigned int CCArrayForObjectSorting::indexOfSortedObject(CCSortableObject* object)
+unsigned int ArrayForObjectSorting::indexOfSortedObject(SortableObject* object)
 {
     unsigned int  idx = 0;
     if (object)
     {
- //       CCObject* pObj = (CCObject*)bsearch((CCObject*)&object, data->arr, data->num, sizeof(CCObject*), _compareObject);
+ //       Object* pObj = (Object*)bsearch((Object*)&object, data->arr, data->num, sizeof(Object*), _compareObject);
         // FIXME: need to use binary search to improve performance
-        CCObject* pObj = NULL;
+        Object* pObj = NULL;
         unsigned int uPrevObjectID = 0;
         unsigned int uOfSortObjectID = object->getObjectID();
 
         CCARRAY_FOREACH(this, pObj)
         {
-            CCSortableObject* pSortableObj = dynamic_cast<CCSortableObject*>(pObj);
+            SortableObject* pSortableObj = dynamic_cast<SortableObject*>(pObj);
             unsigned int uCurObjectID = pSortableObj->getObjectID();
             if (  (uOfSortObjectID == uCurObjectID)
                   || (uOfSortObjectID >= uPrevObjectID && uOfSortObjectID < uCurObjectID))

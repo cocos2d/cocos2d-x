@@ -23,15 +23,17 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
-    CCScriptEngineManager::sharedManager()->purgeSharedManager();
+    ScriptEngineManager::purgeSharedManager();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    CCDirector *pDirector = CCDirector::sharedDirector();
-    pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
+    Director *pDirector = Director::sharedDirector();
+    pDirector->setOpenGLView(EGLView::sharedOpenGLView());
 
+    // JS-Test in Html5 uses 800x450 as design resolution
+    EGLView::sharedOpenGLView()->setDesignResolutionSize(800, 450, kResolutionFixedHeight);
     // turn on display FPS
     pDirector->setDisplayStats(true);
 
@@ -51,14 +53,11 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     sc->start();
 
-    CCScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
-    CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
+    ScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
+    ScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
 #ifdef JS_OBFUSCATED
     ScriptingCore::getInstance()->runScript("game.js");
 #else
-#if JSB_ENABLE_DEBUGGER
-    ScriptingCore::getInstance()->enableDebugger();
-#endif // JSB_ENABLE_DEBUGGER
     ScriptingCore::getInstance()->runScript("tests-boot-jsb.js");
 #endif
     return true;
@@ -68,11 +67,11 @@ void handle_signal(int signal) {
     static int internal_state = 0;
     ScriptingCore* sc = ScriptingCore::getInstance();
     // should start everything back
-    CCDirector* director = CCDirector::sharedDirector();
+    Director* director = Director::sharedDirector();
     if (director->getRunningScene()) {
         director->popToRootScene();
     } else {
-        CCPoolManager::sharedPoolManager()->finalize();
+        PoolManager::sharedPoolManager()->finalize();
         if (internal_state == 0) {
             //sc->dumpRoot(NULL, 0, NULL);
             sc->start();
@@ -87,7 +86,7 @@ void handle_signal(int signal) {
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    CCDirector::sharedDirector()->stopAnimation();
+    Director::sharedDirector()->stopAnimation();
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
     SimpleAudioEngine::sharedEngine()->pauseAllEffects();
 }
@@ -95,7 +94,7 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    CCDirector::sharedDirector()->startAnimation();
+    Director::sharedDirector()->startAnimation();
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
     SimpleAudioEngine::sharedEngine()->resumeAllEffects();
 }

@@ -28,9 +28,9 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-CCPageTurn3D* CCPageTurn3D::create(float duration, const CCSize& gridSize)
+PageTurn3D* PageTurn3D::create(float duration, const Size& gridSize)
 {
-    CCPageTurn3D *pAction = new CCPageTurn3D();
+    PageTurn3D *pAction = new PageTurn3D();
 
     if (pAction)
     {
@@ -47,11 +47,20 @@ CCPageTurn3D* CCPageTurn3D::create(float duration, const CCSize& gridSize)
     return pAction;
 }
 
+PageTurn3D *PageTurn3D::clone() const
+{
+	// no copy constructor	
+	auto a = new PageTurn3D();
+	a->initWithDuration(_duration, _gridSize);
+	a->autorelease();
+	return a;
+}
+
 /*
  * Update each tick
  * Time is the percentage of the way through the duration
  */
-void CCPageTurn3D::update(float time)
+void PageTurn3D::update(float time)
 {
     float tt = MAX(0, time - 0.25f);
     float deltaAy = (tt * tt * 500);
@@ -63,9 +72,9 @@ void CCPageTurn3D::update(float time)
     float sinTheta = sinf(theta);
     float cosTheta = cosf(theta);
     
-    for (int i = 0; i <= m_sGridSize.width; ++i)
+    for (int i = 0; i <= _gridSize.width; ++i)
     {
-        for (int j = 0; j <= m_sGridSize.height; ++j)
+        for (int j = 0; j <= _gridSize.height; ++j)
         {
             // Get original vertex
             ccVertex3F p = originalVertex(ccp(i ,j));

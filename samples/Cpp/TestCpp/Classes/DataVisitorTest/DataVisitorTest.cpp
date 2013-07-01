@@ -15,11 +15,11 @@ void PrettyPrinterDemo::addSprite()
 {
     // create sprites
     
-    CCSprite *s1 = CCSprite::create("Images/grossini.png");
-    CCSprite *s2 = CCSprite::create("Images/grossini_dance_01.png");
-    CCSprite *s3 = CCSprite::create("Images/grossini_dance_02.png");
-    CCSprite *s4 = CCSprite::create("Images/grossini_dance_03.png");
-    CCSprite *s5 = CCSprite::create("Images/grossini_dance_04.png");
+    Sprite *s1 = Sprite::create("Images/grossini.png");
+    Sprite *s2 = Sprite::create("Images/grossini_dance_01.png");
+    Sprite *s3 = Sprite::create("Images/grossini_dance_02.png");
+    Sprite *s4 = Sprite::create("Images/grossini_dance_03.png");
+    Sprite *s5 = Sprite::create("Images/grossini_dance_04.png");
     
     s1->setPosition(ccp(50, 50));
     s2->setPosition(ccp(60, 50));
@@ -36,33 +36,33 @@ void PrettyPrinterDemo::addSprite()
 
 void PrettyPrinterDemo::onEnter()
 {
-    CCLayer::onEnter();
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Layer::onEnter();
+    Size s = Director::sharedDirector()->getWinSize();
     
-    CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 28);
+    LabelTTF* label = LabelTTF::create(title().c_str(), "Arial", 28);
     label->setPosition( ccp(s.width/2, s.height * 4/5) );
     this->addChild(label, 1);
     
     std::string strSubtitle = subtitle();
     if(strSubtitle.empty() == false)
     {
-        CCLabelTTF* subLabel = CCLabelTTF::create(strSubtitle.c_str(), "Thonburi", 16);
+        LabelTTF* subLabel = LabelTTF::create(strSubtitle.c_str(), "Thonburi", 16);
         subLabel->setPosition( ccp(s.width/2, s.height * 3/5) );
         this->addChild(subLabel, 1);
     }
     
     // Test code
-    CCPrettyPrinter vistor;
+    PrettyPrinter vistor;
     
     // print dictionary
-    CCDictionary* pDict = CCDictionary::createWithContentsOfFile("animations/animations.plist");
+    Dictionary* pDict = Dictionary::createWithContentsOfFile("animations/animations.plist");
     pDict->acceptVisitor(vistor);
     CCLog("%s", vistor.getResult().c_str());
     CCLog("-------------------------------");
     
-    CCSet myset;
+    Set myset;
     for (int i = 0; i < 30; ++i) {
-        myset.addObject(CCString::createWithFormat("str: %d", i));
+        myset.addObject(String::createWithFormat("str: %d", i));
     }
     vistor.clear();
     myset.acceptVisitor(vistor);
@@ -71,16 +71,16 @@ void PrettyPrinterDemo::onEnter()
     
     vistor.clear();
     addSprite();
-    pDict = CCTextureCache::sharedTextureCache()->snapshotTextures();
+    pDict = TextureCache::sharedTextureCache()->snapshotTextures();
     pDict->acceptVisitor(vistor);
     CCLog("%s", vistor.getResult().c_str());
 }
 
 void DataVisitorTestScene::runThisTest()
 {
-    CCLayer *layer = new PrettyPrinterDemo();
+    Layer *layer = new PrettyPrinterDemo();
     layer->autorelease();
     addChild(layer);
 
-    CCDirector::sharedDirector()->replaceScene(this);
+    Director::sharedDirector()->replaceScene(this);
 }

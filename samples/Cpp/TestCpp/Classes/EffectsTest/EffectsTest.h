@@ -13,7 +13,7 @@ public:
 class TextLayer : public BaseTest
 {
 protected:
-    //UxString    m_strTitle;
+    //UxString    _title;
 
 public:
     TextLayer(void);
@@ -23,9 +23,9 @@ public:
 
     virtual void onEnter();
 
-    void restartCallback(CCObject* pSender);
-    void nextCallback(CCObject* pSender);
-    void backCallback(CCObject* pSender);
+    void restartCallback(Object* pSender);
+    void nextCallback(Object* pSender);
+    void backCallback(Object* pSender);
 
     void newScene();
 

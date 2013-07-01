@@ -1,10 +1,12 @@
 #ifndef _KEYBOARD_TEST_H_
 #define _KEYBOARD_TEST_H_
 
+#ifdef CC_KEYBOARD_SUPPORT
+
 #include "cocos2d.h"
 #include "../testBasic.h"
 
-class KeyboardTest : public CCLayer
+class KeyboardTest : public Layer
 {
 public:
     KeyboardTest();
@@ -14,7 +16,7 @@ public:
     virtual void keyReleased(int keyCode);
 
 private:
-    CCLabelTTF*            m_pLabel;
+    LabelTTF*            _label;
 };
 
 class KeyboardTestScene : public TestScene
@@ -22,5 +24,7 @@ class KeyboardTestScene : public TestScene
 public:
     virtual void runThisTest();
 };
+
+#endif
 
 #endif

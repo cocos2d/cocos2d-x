@@ -25,7 +25,12 @@ THE SOFTWARE.
 #define __SUPPORT_ZIPUTILS_H__
 
 #include <string>
+#include "platform/CCPlatformConfig.h"
 #include "CCPlatformDefine.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "platform/android/CCFileUtilsAndroid.h"
+#endif
 
 namespace cocos2d
 {
@@ -212,7 +217,7 @@ namespace cocos2d
 
     private:
         /** Internal data like zip file pointer / file list array and so on */
-        ZipFilePrivate *m_data;
+        ZipFilePrivate *_data;
     };
 } // end of namespace cocos2d
 #endif // __SUPPORT_ZIPUTILS_H__

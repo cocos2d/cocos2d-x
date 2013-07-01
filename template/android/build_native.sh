@@ -1,4 +1,10 @@
+#!/bin/sh
+PROJECT_PATH=${PWD}
 APPNAME="__projectname__"
+COCOS2DX_ROOT="__cocos2dxroot__"
+NDK_ROOT="__ndkroot__"
+DIR=$(cd `dirname $0`;pwd)
+APP_ROOT=$(cd $DIR/..;pwd)
 
 # options
 
@@ -16,35 +22,27 @@ OPTIONS:
 EOF
 }
 
-while getopts "sh" OPTION; do
-case "$OPTION" in
-s)
-buildexternalsfromsource=1
-;;
-h)
-usage
-exit 0
-;;
-esac
+while getopts "sh" OPTION ; do
+    case "$OPTION" in
+        s)
+            buildexternalsfromsource=1
+            ;;
+        h)
+            usage
+            exit 0
+            ;;
+    esac
 done
 
 # paths
 
-if [ -z "${NDK_ROOT+aaa}" ];then
-echo "please define NDK_ROOT"
-exit 1
-fi
-
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # ... use paths relative to current directory
-COCOS2DX_ROOT="$DIR/../.."
-APP_ROOT="$DIR/.."
 APP_ANDROID_ROOT="$DIR"
 
-echo "NDK_ROOT = $NDK_ROOT"
-echo "COCOS2DX_ROOT = $COCOS2DX_ROOT"
-echo "APP_ROOT = $APP_ROOT"
-echo "APP_ANDROID_ROOT = $APP_ANDROID_ROOT"
+#echo "NDK_ROOT = $NDK_ROOT"
+#echo "COCOS2DX_ROOT = $COCOS2DX_ROOT"
+#echo "APP_ROOT = $APP_ROOT"
+#echo "APP_ANDROID_ROOT = $APP_ANDROID_ROOT"
 
 # make sure assets is exist
 if [ -d "$APP_ANDROID_ROOT"/assets ]; then
@@ -54,29 +52,20 @@ fi
 mkdir "$APP_ANDROID_ROOT"/assets
 
 # copy resources
-for file in "$APP_ROOT"/Resources/*
-do
-if [ -d "$file" ]; then
-    cp -rf "$file" "$APP_ANDROID_ROOT"/assets
-fi
-
-if [ -f "$file" ]; then
-    cp "$file" "$APP_ANDROID_ROOT"/assets
-fi
-done
+cp -rf "$APP_ROOT"/Resources/* "$APP_ANDROID_ROOT"/assets
 
 # copy icons (if they exist)
 file="$APP_ANDROID_ROOT"/assets/Icon-72.png
 if [ -f "$file" ]; then
-	cp "$file" "$APP_ANDROID_ROOT"/res/drawable-hdpi/icon.png
+    cp "$file" "$APP_ANDROID_ROOT"/res/drawable-hdpi/icon.png
 fi
 file="$APP_ANDROID_ROOT"/assets/Icon-48.png
 if [ -f "$file" ]; then
-	cp "$file" "$APP_ANDROID_ROOT"/res/drawable-mdpi/icon.png
+    cp "$file" "$APP_ANDROID_ROOT"/res/drawable-mdpi/icon.png
 fi
 file="$APP_ANDROID_ROOT"/assets/Icon-32.png
 if [ -f "$file" ]; then
-	cp "$file" "$APP_ANDROID_ROOT"/res/drawable-ldpi/icon.png
+    cp "$file" "$APP_ANDROID_ROOT"/res/drawable-ldpi/icon.png
 fi
 
 

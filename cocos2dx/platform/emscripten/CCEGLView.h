@@ -33,11 +33,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CC_DLL CCEGLView : public CCEGLViewProtocol
+class CC_DLL EGLView : public EGLViewProtocol
 {
 public:
-    CCEGLView();
-    virtual ~CCEGLView();
+    EGLView();
+    virtual ~EGLView();
 
     bool    isOpenGLReady();
 	
@@ -52,7 +52,7 @@ public:
     /**
     @brief    get the shared main open gl window
     */
-    static CCEGLView* sharedOpenGLView();
+    static EGLView* sharedOpenGLView();
 
     bool    handleEvents();
 
@@ -66,16 +66,16 @@ private:
 	void		showKeyboard();
 	void		hideKeyboard();
 
-	static bool 		m_initializedFunctions;
-	static const GLubyte *m_extensions;
+	static bool 		_initializedFunctions;
+	static const GLubyte *_extensions;
 
-	bool			 m_isGLInitialized;
-	bool 		     m_isWindowActive;
+	bool			 _isGLInitialized;
+	bool 		     _isWindowActive;
 	
-	EGLDisplay 		 m_eglDisplay;
-	EGLContext 		 m_eglContext;
-	EGLSurface 		 m_eglSurface;
-    char 			 m_windowGroupID[16];
+	EGLDisplay 		 _eglDisplay;
+	EGLContext 		 _eglContext;
+	EGLSurface 		 _eglSurface;
+    char 			 _windowGroupID[16];
 };
 
 NS_CC_END
