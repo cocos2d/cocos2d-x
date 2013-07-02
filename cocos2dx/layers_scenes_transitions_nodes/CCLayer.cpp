@@ -38,9 +38,7 @@ THE SOFTWARE.
 #include "support/TransformUtils.h"
 // extern
 #include "kazmath/GL/matrix.h"
-#ifdef CC_KEYBOARD_SUPPORT
 #include "keyboard_dispatcher/CCKeyboardDispatcher.h"
-#endif
 
 NS_CC_BEGIN
 
@@ -48,9 +46,7 @@ NS_CC_BEGIN
 Layer::Layer()
 : _touchEnabled(false)
 , _accelerometerEnabled(false)
-#ifdef CC_KEYBOARD_SUPPORT
 , _keyboardEnabled(false)
-#endif
 , _keypadEnabled(false)
 , _scriptTouchHandlerEntry(NULL)
 , _scriptKeypadHandlerEntry(NULL)
@@ -279,7 +275,6 @@ void Layer::unregisterScriptAccelerateHandler(void)
     CC_SAFE_RELEASE_NULL(_scriptAccelerateHandlerEntry);
 }
 
-#ifdef CC_KEYBOARD_SUPPORT
 /// isKeyboardEnabled getter
 bool Layer::isKeyboardEnabled()
 {
@@ -300,12 +295,11 @@ void Layer::setKeyboardEnabled(bool enabled)
         }
         else
         {
-            pDirector->getKeyboardDispatcher()->setKeyPressDelegate(NULL);
-            pDirector->getKeyboardDispatcher()->setKeyReleaseDelegate(NULL);
+            pDirector->getKeyboardDispatcher()->setKeyPressDelegate(nullptr);
+            pDirector->getKeyboardDispatcher()->setKeyReleaseDelegate(nullptr);
         }
     }
 }
-#endif
 
 /// isKeypadEnabled getter
 bool Layer::isKeypadEnabled()
@@ -755,8 +749,9 @@ bool LayerColor::initWithColor(const ccColor4B& color, GLfloat w, GLfloat h)
         setContentSize(CCSizeMake(w, h));
 
         setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionColor));
+        return true;
     }
-    return true;
+    return false;
 }
 
 bool LayerColor::initWithColor(const ccColor4B& color)
