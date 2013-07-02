@@ -179,9 +179,9 @@ void NotificationCenter::postNotification(const char *name, Object *object)
         if (!strcmp(name,observer->getName()) && (observer->getObject() == object || observer->getObject() == NULL || object == NULL))
         {
             if (0 != observer->getHandler())
-            {
-                ScriptEngineProtocol* engine = ScriptEngineManager::sharedManager()->getScriptEngine();
-                engine->executeNotificationEvent(this, name);
+            {                
+                ScriptEvent scriptEvent(kNotificationEvent,(void*)name);
+                ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent,(void*)this);
             }
             else
             {

@@ -132,7 +132,12 @@ void MenuItem::activate()
 			_callback(this);
         }
         
-        if (kScriptTypeNone != _scriptType)
+        if (kScriptTypeLua == _scriptType)
+        {
+            ScriptEvent scriptEvent(kMenuItemEvent,NULL);
+            ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent,(void*)this);
+        }
+        else if (kScriptTypeJavascript == _scriptType)
         {
             ScriptEngineManager::sharedManager()->getScriptEngine()->executeMenuItemEvent(this);
         }

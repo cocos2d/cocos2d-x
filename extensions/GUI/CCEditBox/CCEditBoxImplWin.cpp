@@ -238,10 +238,17 @@ static void editBoxCallbackFunc(const char* pText, void* ctx)
     EditBox* pEditBox = thiz->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
-        cocos2d::ScriptEngineProtocol* pEngine = cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine();
-        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
-        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "ended",pEditBox);
-        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "return",pEditBox);
+        CommonScriptEvent data(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
+        ScriptEvent event(kCommonEvent,(void*)&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+        memset(data.eventName,0,64*sizeof(char));
+        strncpy(data.eventName,"ended",64);
+        event.data = (void*)&data;
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+        memset(data.eventName,0,64*sizeof(char));
+        strncpy(data.eventName,"return",64);
+        event.data = (void*)&data;
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
 }
 
@@ -255,8 +262,9 @@ void EditBoxImplWin::openKeyboard()
     EditBox* pEditBox = this->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
-        cocos2d::ScriptEngineProtocol* pEngine = cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine();
-        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
+        CommonScriptEvent data(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
+        ScriptEvent event(kCommonEvent,(void*)&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
     
 	std::string placeHolder = _labelPlaceHolder->getString();

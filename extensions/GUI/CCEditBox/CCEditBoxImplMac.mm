@@ -150,8 +150,9 @@
     cocos2d::extension::EditBox*  pEditBox= getEditBoxImplMac()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
-        cocos2d::ScriptEngineProtocol* pEngine = cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine();
-        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
+        cocos2d::CommonScriptEvent data(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
+        cocos2d::ScriptEvent event(kCommonEvent,(void*)&data);
+        cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
     return YES;
 }
@@ -169,9 +170,13 @@
     cocos2d::extension::EditBox*  pEditBox= getEditBoxImplMac()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
-        cocos2d::ScriptEngineProtocol* pEngine = cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine();
-        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "ended",pEditBox);
-        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "return",pEditBox);
+        cocos2d::CommonScriptEvent data(pEditBox->getScriptEditBoxHandler(), "ended",pEditBox);
+        cocos2d::ScriptEvent event(kCommonEvent,(void*)&data);
+        cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+        memset(data.eventName,0,64*sizeof(char));
+        strncpy(data.eventName,"return",64);
+        event.data = (void*)&data;
+        cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
     return YES;
 }
@@ -213,8 +218,9 @@
     cocos2d::extension::EditBox*  pEditBox= getEditBoxImplMac()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
-        cocos2d::ScriptEngineProtocol* pEngine = cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine();
-        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
+        cocos2d::CommonScriptEvent data(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
+        cocos2d::ScriptEvent event(kCommonEvent,(void*)&data);
+        cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
 }
 
