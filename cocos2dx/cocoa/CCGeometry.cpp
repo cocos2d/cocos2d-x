@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "CCGeometry.h"
 #include "ccMacros.h"
+#include <algorithm>
 
 // implementation of CCPoint
 NS_CC_BEGIN
@@ -269,6 +270,46 @@ bool CCRect::intersectsRect(const CCRect& rect) const
              rect.getMaxX() <      getMinX() ||
                   getMaxY() < rect.getMinY() ||
              rect.getMaxY() <      getMinY());
+}
+
+CCRect CCRect::unionWithRect(const CCRect & rect) const
+{
+    float leftX = origin.x;
+    float rightX = origin.x + size.width;
+    float topY = origin.y + size.height;
+    float bottomY = origin.y;
+
+    if (rightX < leftX)
+    {
+        std::swap(rightX, leftX);   // This rect has negative width
+    }
+
+    if (topY < bottomY)
+    {
+        std::swap(topY, bottomY);   // This rect has negative height
+    }
+
+    float otherLeftX = rect.origin.x;
+    float otherRightX = rect.origin.x + rect.size.width;
+    float otherTopY = rect.origin.y + rect.size.height;
+    float otherBottomY = rect.origin.y;
+
+    if (otherRightX < otherLeftX)
+    {
+        std::swap(otherRightX, otherLeftX);   // Other rect has negative width
+    }
+
+    if (otherTopY < otherBottomY)
+    {
+        std::swap(otherTopY, otherBottomY);   // Other rect has negative height
+    }
+
+    leftX = std::min(leftX, otherLeftX);
+    rightX = std::max(rightX, otherRightX);
+    topY = std::max(topY, otherTopY);
+    bottomY = std::min(bottomY, otherBottomY);
+
+    return CCRect(leftX, bottomY, rightX - leftX, topY - bottomY);
 }
 
 NS_CC_END

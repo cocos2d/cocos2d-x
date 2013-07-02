@@ -245,6 +245,7 @@ public:
     bool equals(const CCRect& rect) const;   
     bool containsPoint(const CCPoint& point) const;
     bool intersectsRect(const CCRect& rect) const;
+    CCRect unionWithRect(const CCRect & rect) const; /// Return the smallest rectangle which contains both this rectangle and the given rectangle.
 };
 
 
