@@ -185,7 +185,7 @@ void CCDisplayFactory::createSpriteDisplay(CCBone *bone, CCDecorativeDisplay *de
 void CCDisplayFactory::updateSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty)
 {
     CCSkin *skin = (CCSkin *)decoDisplay->getDisplay();
-    skin->updateTransform();
+    skin->updateArmatureTransform();
 }
 
 

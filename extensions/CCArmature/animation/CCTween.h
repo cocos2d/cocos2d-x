@@ -130,8 +130,6 @@ protected:
 
     CCTweenType m_eFrameTweenEasing;	//! Dedermine which tween effect current frame use
 
-    bool m_bIsTweenKeyFrame;
-
     int betweenDuration;			//! Current key frame will last betweenDuration frames
     int m_iTotalDuration;
 

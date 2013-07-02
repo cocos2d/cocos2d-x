@@ -79,12 +79,12 @@ const CCBaseData &CCSkin::getSkinData()
     return m_sSkinData;
 }
 
-void CCSkin::updateTransform()
+void CCSkin::updateArmatureTransform()
 {
     m_sTransform = CCAffineTransformConcat(m_tSkinTransform, m_pBone->nodeToArmatureTransform());
 }
 
-void CCSkin::draw()
+void CCSkin::updateTransform()
 {
     // If it is not visible, or one of its ancestors is not visible, then do nothing:
     if( !m_bVisible)
