@@ -58,7 +58,7 @@
 		// set window parameters
 		[window becomeFirstResponder];
 		[window setContentView:glView];
-		[window setTitle:@"TestCpp"];
+		[window setTitle:@"JS Test"];
 		[window makeKeyAndOrderFront:self];
 		[window setAcceptsMouseMovedEvents:NO];
 
