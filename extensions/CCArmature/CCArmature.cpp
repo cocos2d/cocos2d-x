@@ -460,7 +460,7 @@ void CCArmature::draw()
             if (m_pAtlas->getCapacity() == m_pAtlas->getTotalQuads() && !m_pAtlas->resizeCapacity(m_pAtlas->getCapacity() * 2))
                 return;
 
-            skin->draw();
+            skin->updateTransform();
         }
         else if(CCArmature *armature = dynamic_cast<CCArmature *>(node))
         {
