@@ -25,13 +25,8 @@
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
 
-#if CC_ENABLE_CHIPMUNK_INTEGRATION
-#include "chipmunk.h"
-#elif CC_ENABLE_BOX2D_INTEGRATION
+struct cpBody;
 class b2Body;
-#else // CC_ENABLE_BOX2D_INTEGRATION
-#error "You must define either CC_ENABLE_CHIPMUNK_INTEGRATION or CC_ENABLE_BOX2D_INTEGRATION to use PhysicsSprite.h"
-#endif
 
 NS_CC_EXT_BEGIN
 /** A Sprite subclass that is bound to a physics body.
@@ -50,15 +45,15 @@ class PhysicsSprite : public Sprite
 {
 protected:
     bool    _ignoreBodyRotation;
-#if CC_ENABLE_CHIPMUNK_INTEGRATION
+
+
+    // chipmunk specific
     cpBody  *_CPBody;
 
-#elif CC_ENABLE_BOX2D_INTEGRATION
+    // box2d specific
     b2Body  *_pB2Body;
-
-    // Pixels to Meters ratio
     float   _PTMRatio;
-#endif // CC_ENABLE_CHIPMUNK_INTEGRATION
+
 public:
     PhysicsSprite();
 
@@ -110,18 +105,22 @@ public:
     virtual void setRotation(float fRotation);
     virtual AffineTransform nodeToParentTransform();
 
-#if CC_ENABLE_CHIPMUNK_INTEGRATION
+    //
+    // Chipmunk specific
+    //
     /** Body accessor when using regular Chipmunk */
     cpBody* getCPBody() const;
     void setCPBody(cpBody *pBody);
-#elif CC_ENABLE_BOX2D_INTEGRATION
+
+    //
+    // Box2d specific
+    //
     /** Body accessor when using box2d */
     b2Body* getB2Body() const;
     void setB2Body(b2Body *pBody);
 
     float getPTMRatio() const;
     void setPTMRatio(float fPTMRatio);
-#endif // CC_ENABLE_BOX2D_INTEGRATION
 
 protected:
     void updatePosFromPhysics();
