@@ -105,6 +105,7 @@
     </Filter>
     <Filter Include="textures\etc">
       <UniqueIdentifier>{5e6e45aa-50ef-451b-9bb1-f98b9b78259b}</UniqueIdentifier>
+    </Filter>
     <Filter Include="keyboard_dispatcher">
       <UniqueIdentifier>{e7134ba0-4220-4dd1-b120-3533883394ac}</UniqueIdentifier>
     </Filter>
@@ -484,6 +485,7 @@
     </ClCompile>
     <ClCompile Include="..\textures\etc\etc1.cpp">
       <Filter>textures\etc</Filter>
+    </ClCompile>
     <ClCompile Include="..\keyboard_dispatcher\CCKeyboardDispatcher.cpp">
       <Filter>keyboard_dispatcher</Filter>
     </ClCompile>
@@ -970,6 +972,7 @@
     </ClInclude>
     <ClInclude Include="..\textures\etc\etc1.h">
       <Filter>textures\etc</Filter>
+    </ClInclude>
     <ClInclude Include="..\keyboard_dispatcher\CCKeyboardDispatcher.h">
       <Filter>keyboard_dispatcher</Filter>
     </ClInclude>
