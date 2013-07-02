@@ -4,6 +4,8 @@
 
 using namespace cocos2d;
 
+namespace simplegame {
+
 HelloWorld::~HelloWorld()
 {
 	if (_targets)
@@ -309,4 +311,6 @@ void HelloWorld::registerWithTouchDispatcher()
 {
 	// TouchDispatcher::sharedDispatcher()->addTargetedDelegate(this,0,true);
     Director::getInstance()->getTouchDispatcher()->addStandardDelegate(this,0);
+}
+
 }

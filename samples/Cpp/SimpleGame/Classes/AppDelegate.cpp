@@ -1,8 +1,9 @@
 #include "AppDelegate.h"
 #include "HelloWorldScene.h"
 
-USING_NS_CC;
+using namespace cocos2d;
 
+namespace simplegame {
 
 AppDelegate::AppDelegate() {
 
@@ -67,4 +68,6 @@ void AppDelegate::applicationWillEnterForeground() {
 
     // if you use SimpleAudioEngine, it must resume here
     // CocosDenshion::SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+}
+
 }
