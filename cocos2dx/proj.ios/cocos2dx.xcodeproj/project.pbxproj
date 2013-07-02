@@ -285,6 +285,8 @@
 		1A5B48EC16F084CC008568FC /* CCFloat.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5B48E916F084CC008568FC /* CCFloat.h */; };
 		1AA6226016CF6BD00028C05E /* CCDevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AA6225F16CF6BD00028C05E /* CCDevice.mm */; };
 		1AA6226216CF6BDF0028C05E /* CCDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AA6226116CF6BDF0028C05E /* CCDevice.h */; };
+		1AAE0509178173B2003522DC /* CCKeyboardDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAE0507178173B2003522DC /* CCKeyboardDispatcher.cpp */; };
+		1AAE050A178173B2003522DC /* CCKeyboardDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAE0508178173B2003522DC /* CCKeyboardDispatcher.h */; };
 		1AC6CE8116B9075B00330EFD /* CCFileUtilsIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC6CE8016B9075B00330EFD /* CCFileUtilsIOS.h */; };
 		1AC6CE8816B910CD00330EFD /* CCFileUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC6CE8616B910CD00330EFD /* CCFileUtils.cpp */; };
 		1AC6CE8916B910CD00330EFD /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC6CE8716B910CD00330EFD /* CCFileUtils.h */; };
@@ -600,6 +602,8 @@
 		1A5B48E916F084CC008568FC /* CCFloat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFloat.h; sourceTree = "<group>"; };
 		1AA6225F16CF6BD00028C05E /* CCDevice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCDevice.mm; sourceTree = "<group>"; };
 		1AA6226116CF6BDF0028C05E /* CCDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDevice.h; sourceTree = "<group>"; };
+		1AAE0507178173B2003522DC /* CCKeyboardDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCKeyboardDispatcher.cpp; sourceTree = "<group>"; };
+		1AAE0508178173B2003522DC /* CCKeyboardDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCKeyboardDispatcher.h; sourceTree = "<group>"; };
 		1AC6CE8016B9075B00330EFD /* CCFileUtilsIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtilsIOS.h; sourceTree = "<group>"; };
 		1AC6CE8616B910CD00330EFD /* CCFileUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFileUtils.cpp; sourceTree = "<group>"; };
 		1AC6CE8716B910CD00330EFD /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtils.h; sourceTree = "<group>"; };
@@ -694,6 +698,7 @@
 				1551A396158F2ADE00E66CFE /* effects */,
 				1551A3E8158F2ADE00E66CFE /* include */,
 				1551A3F0158F2ADE00E66CFE /* kazmath */,
+				1AAE0506178173B2003522DC /* keyboard_dispatcher */,
 				1551A413158F2ADE00E66CFE /* keypad_dispatcher */,
 				1551A418158F2ADE00E66CFE /* label_nodes */,
 				1551A41F158F2ADE00E66CFE /* layers_scenes_transitions_nodes */,
@@ -1262,6 +1267,15 @@
 			path = webp;
 			sourceTree = "<group>";
 		};
+		1AAE0506178173B2003522DC /* keyboard_dispatcher */ = {
+			isa = PBXGroup;
+			children = (
+				1AAE0507178173B2003522DC /* CCKeyboardDispatcher.cpp */,
+				1AAE0508178173B2003522DC /* CCKeyboardDispatcher.h */,
+			);
+			path = keyboard_dispatcher;
+			sourceTree = "<group>";
+		};
 		465E20A7176ABE63001D853C /* component */ = {
 			isa = PBXGroup;
 			children = (
@@ -1473,6 +1487,7 @@
 				36B713C817557CB900A2554C /* CCData.h in Headers */,
 				465E20AD176ABE63001D853C /* CCComponent.h in Headers */,
 				465E20AF176ABE63001D853C /* CCComponentContainer.h in Headers */,
+				1AAE050A178173B2003522DC /* CCKeyboardDispatcher.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1661,6 +1676,7 @@
 				36B713C717557CB900A2554C /* CCData.cpp in Sources */,
 				465E20AC176ABE63001D853C /* CCComponent.cpp in Sources */,
 				465E20AE176ABE63001D853C /* CCComponentContainer.cpp in Sources */,
+				1AAE0509178173B2003522DC /* CCKeyboardDispatcher.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
