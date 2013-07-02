@@ -42,7 +42,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     std::vector<std::string> resDirOrders;
     
     TargetPlatform platform = Application::sharedApplication()->getTargetPlatform();
-    if (platform == kTargetIphone || platform == kTargetIpad)
+    if (platform == kTargetIphone || platform == kTargetIpad || platform == kTargetMacOS)
     {
         std::vector<std::string> searchPaths = FileUtils::sharedFileUtils()->getSearchPaths();
         searchPaths.insert(searchPaths.begin(), "Published files iOS");

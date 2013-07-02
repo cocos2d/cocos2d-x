@@ -105,6 +105,22 @@ public:
     void toggleItem(cocos2d::Object *sender);
 };
 
+class LayerGradientTest2 : public LayerTest
+{
+public:
+    LayerGradientTest2();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class LayerGradientTest3 : public LayerTest
+{
+public:
+    LayerGradientTest3();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
 class LayerIgnoreAnchorPointPos : public LayerTest
 {
 public:
