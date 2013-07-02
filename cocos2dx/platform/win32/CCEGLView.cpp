@@ -453,8 +453,7 @@ LRESULT EGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         break;
     case WM_KEYDOWN:
 #ifdef KEYBOARD_SUPPORT
-        KeyboardDispatcher *kbDisp = Director::sharedDirector()->getKeyboardDispatcher();
-        kbDisp->dispatchKeyboardEvent(wParam, true);
+        Director::sharedDirector()->getKeyboardDispatcher()->dispatchKeyboardEvent(wParam, true);
 #endif
         if (wParam == VK_F1 || wParam == VK_F2)
         {
@@ -474,8 +473,7 @@ LRESULT EGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         break;
     case WM_KEYUP:
 #ifdef KEYBOARD_SUPPORT
-        KeyboardDispatcher *kbDisp = Director::sharedDirector()->getKeyboardDispatcher();
-        kbDisp->dispatchKeyboardEvent(wParam, false);
+        Director::sharedDirector()->getKeyboardDispatcher()->dispatchKeyboardEvent(wParam, false);
 #endif
         if ( _lpfnAccelerometerKeyHook!=NULL )
         {

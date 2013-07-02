@@ -33,8 +33,8 @@ NS_CC_BEGIN
 //
 //------------------------------------------------------------------
 KeyboardDispatcher::KeyboardDispatcher()
-: _keyPressDelegate(NULL)
-, _keyReleaseDelegate(NULL)
+: _keyPressDelegate(nullptr)
+, _keyReleaseDelegate(nullptr)
 {
 }
 
@@ -54,11 +54,11 @@ void KeyboardDispatcher::setKeyReleaseDelegate(KeyboardDelegate delegate)
 
 bool KeyboardDispatcher::dispatchKeyboardEvent(int keyCode, bool pressed)
 {
-    if (_keyPressDelegate != NULL && pressed)
+    if (_keyPressDelegate != nullptr && pressed)
     {
         _keyPressDelegate(keyCode);
     }
-    else if (_keyReleaseDelegate != NULL)
+    else if (_keyReleaseDelegate != nullptr )
     {
         _keyReleaseDelegate(keyCode);
     }
