@@ -75,4 +75,49 @@
          location = "group:scripting/lua/proj.ios/luabindings.xcodeproj">
       </FileRef>
    </Group>
+   <Group
+      location = "container:"
+      name = "plugin-x">
+      <Group
+         location = "container:"
+         name = "plugins">
+         <Group
+            location = "container:"
+            name = "Share">
+            <FileRef
+               location = "group:plugin/plugins/twitter/proj.ios/PluginTwitter.xcodeproj">
+            </FileRef>
+            <FileRef
+               location = "group:plugin/plugins/weibo/proj.ios/PluginWeibo.xcodeproj">
+            </FileRef>
+         </Group>
+         <Group
+            location = "container:"
+            name = "Ads">
+            <FileRef
+               location = "group:plugin/plugins/admob/proj.ios/PluginAdmob.xcodeproj">
+            </FileRef>
+         </Group>
+         <Group
+            location = "container:"
+            name = "Analytics">
+            <FileRef
+               location = "group:plugin/plugins/flurry/proj.ios/PluginFlurry.xcodeproj">
+            </FileRef>
+            <FileRef
+               location = "group:plugin/plugins/umeng/proj.ios/PluginUmeng.xcodeproj">
+            </FileRef>
+         </Group>
+         <FileRef
+            location = "group:plugin/protocols/proj.ios/PluginProtocol.xcodeproj">
+         </FileRef>
+      </Group>
+      <Group
+         location = "container:"
+         name = "samples">
+         <FileRef
+            location = "group:plugin/samples/HelloPlugins/proj.ios/HelloPlugins.xcodeproj">
+         </FileRef>
+      </Group>
+   </Group>
 </Workspace>
