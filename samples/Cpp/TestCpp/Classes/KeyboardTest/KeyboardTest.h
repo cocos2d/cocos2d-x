@@ -1,7 +1,7 @@
 #ifndef _KEYBOARD_TEST_H_
 #define _KEYBOARD_TEST_H_
 
-#ifdef KEYBOARD_SUPPORT
+#ifdef CC_KEYBOARD_SUPPORT
 
 #include "cocos2d.h"
 #include "../testBasic.h"
