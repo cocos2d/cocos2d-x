@@ -208,7 +208,12 @@ bool Configuration::supportsPVRTC(void) const
 
 bool Configuration::supportsETC() const
 {
+    //GL_ETC1_RGB8_OES is not defined in old opengl version
+#ifdef GL_ETC1_RGB8_OES
     return _supportsETC;
+#else
+    return false;
+#endif
 }
 
 bool Configuration::supportsBGRA8888(void) const

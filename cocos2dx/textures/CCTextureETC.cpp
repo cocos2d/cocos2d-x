@@ -46,13 +46,7 @@ TextureETC::~TextureETC()
 
 bool TextureETC::initWithFile(const char *file)
 {
-    // Only Android supports ETC file format
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    bool ret = loadTextureV2(FileUtils::sharedFileUtils()->fullPathForFilename(file).c_str());
-    return ret;
-//#else
-    //return false;
-//#endif
+    return loadTexture(FileUtils::sharedFileUtils()->fullPathForFilename(file).c_str());
 }
 
 unsigned int TextureETC::getName() const
@@ -93,78 +87,21 @@ extern "C"
 }
 #endif
 
-
-
 bool TextureETC::loadTexture(const char* file)
-{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    JniMethodInfo t;
-    if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxETCLoader", "loadTexture", "(Ljava/lang/String;)Z"))
-    {
-        jstring stringArg1 = t.env->NewStringUTF(file);
-        jboolean ret = t.env->CallStaticBooleanMethod(t.classID, t.methodID, stringArg1);
-        
-        t.env->DeleteLocalRef(stringArg1);
-        t.env->DeleteLocalRef(t.classID);
-        
-        if (ret)
-        {
-            _width = sWidth;
-            _height = sHeight;
-            
-            
-            glGenTextures(1, &_name);
-            glBindTexture(GL_TEXTURE_2D, _name);
-            
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-            
-            glCompressedTexImage2D(GL_TEXTURE_2D, 0, GL_ETC1_RGB8_OES, _width, _height, 0, sLength, sData);
-            
-            glBindTexture(GL_TEXTURE_2D, 0);
-            
-            delete [] sData;
-            sData = NULL;
-            
-            GLenum err = glGetError();
-            if (err != GL_NO_ERROR)
-            {
-                LOGD("width %d, height %d, lenght %d", _width, _height, sLength);
-                LOGD("cocos2d: TextureETC: Error uploading compressed texture %s glError: 0x%04X", file, err);
-                return false;
-            }
-            
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-#else
-    return false;
-#endif
-}
-
-bool TextureETC::loadTextureV2(const char* fileName)
 {
     unsigned long etcFileSize = 0;
     etc1_byte* etcFileData = NULL;
-    etcFileData = FileUtils::sharedFileUtils()->getFileData(fileName, "rb", &etcFileSize);
+    etcFileData = FileUtils::sharedFileUtils()->getFileData(file, "rb", &etcFileSize);
     
-    if(etcFileSize == 0)
+    if(0 == etcFileSize)
     {
-        //LOGD("open etc file %s failed",fileName);
-        this->release();
         return false;
     }
     
     if(!etc1_pkm_is_valid(etcFileData))
     {
-        //LOGD("%s is not a valid pkm file",fileName);
-        this->release();
         delete[] etcFileData;
+        etcFileData = NULL;
         return  false;
     }
     
@@ -173,17 +110,15 @@ bool TextureETC::loadTextureV2(const char* fileName)
     
     if( 0 == _width || 0 == _height )
     {
-        this->release();
         delete[] etcFileData;
+        etcFileData = NULL;
         return false;
     }
     
-
-    
     if(Configuration::sharedConfiguration()->supportsETC())
     {
+        //old opengl version has no define for GL_ETC1_RGB8_OES, add macro to make compiler happy. 
 #ifdef GL_ETC1_RGB8_OES
-        //direct set to gl
         glGenTextures(1, &_name);
         glBindTexture(GL_TEXTURE_2D, _name);
         
@@ -198,12 +133,12 @@ bool TextureETC::loadTextureV2(const char* fileName)
         
         delete[] etcFileData;
         etcFileData = NULL;
-        
         return true;
 #endif
     }
-    //if it is not gles or device do not support ETC, decode texture by software
+    else
     {
+         //if it is not gles or device do not support ETC, decode texture by software
         int bytePerPixel = 3;
         GLenum fallBackType = GL_UNSIGNED_BYTE;
         
@@ -221,7 +156,6 @@ bool TextureETC::loadTextureV2(const char* fileName)
         etc1_decode_image(etcFileData + ETC_PKM_HEADER_SIZE, &decodeImageData[0], _width, _height, bytePerPixel, stride);
         
         //set decoded data to gl
-        
         glGenTextures(1, &_name);
         glBindTexture(GL_TEXTURE_2D, _name);
         
@@ -230,19 +164,11 @@ bool TextureETC::loadTextureV2(const char* fileName)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
         
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, _width, _height, 0, GL_RGB, fallBackType, &decodeImageData[0]);
-        
         glBindTexture(GL_TEXTURE_2D, 0);
-        
         delete[] etcFileData;
         etcFileData = NULL;
-        
         return true;
-        
     }
-    
-
-    
-    
 }
 
 NS_CC_END
