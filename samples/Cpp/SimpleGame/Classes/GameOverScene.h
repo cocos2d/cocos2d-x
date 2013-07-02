@@ -28,6 +28,8 @@
 
 #include "cocos2d.h"
 
+namespace simplegame {
+
 class GameOverLayer : public cocos2d::LayerColor
 {
 public:
@@ -51,5 +53,7 @@ public:
   
     CC_SYNTHESIZE_READONLY(GameOverLayer*, _layer, Layer);
 };
+
+}
 
 #endif // _GAME_OVER_SCENE_H_
