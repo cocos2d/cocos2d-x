@@ -7,6 +7,9 @@ USING_NS_CC;
 const std::string s_aTestCases[] = {
     "QH360",
     "ND91",
+#if TEST_UC
+    "UC",
+#endif
 };
 
 Scene* TestUser::scene()
