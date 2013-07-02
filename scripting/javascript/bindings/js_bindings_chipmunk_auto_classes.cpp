@@ -2812,7 +2812,7 @@ JSBool JSB_cpSpace_pointQueryFirst(JSContext *cx, uint32_t argc, jsval *vp) {
 	cpSpace* arg0 = (cpSpace*) proxy->handle;
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
-	cpVect arg1; uint32_t arg2; cpGroup arg3; 
+	cpVect arg1; uint32_t arg2; cpGroup arg3;
 
 	ok &= jsval_to_cpVect( cx, *argvp++, (cpVect*) &arg1 );
 	ok &= jsval_to_uint32( cx, *argvp++, &arg2 );
@@ -2822,12 +2822,14 @@ JSBool JSB_cpSpace_pointQueryFirst(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpSpacePointQueryFirst((cpSpace*)arg0 , (cpVect)arg1 , (cpLayers)arg2 , (cpGroup)arg3  );
 
-	jsval ret_jsval = c_class_to_jsval( cx, ret_val, JSB_cpShape_object, JSB_cpShape_class, "cpShape" );
-	JS_SET_RVAL(cx, vp, ret_jsval);
-    
+	if(ret_val) {
+		jsval ret_jsval = c_class_to_jsval( cx, ret_val, JSB_cpShape_object, JSB_cpShape_class, "cpShape" );
+		JS_SET_RVAL(cx, vp, ret_jsval);
+	} else {
+		JS_SET_RVAL(cx, vp, JSVAL_NULL);
+	}
 	return JS_TRUE;
 }
-
 // Arguments: cpShape*
 // Ret value: void
 JSBool JSB_cpSpace_reindexShape(JSContext *cx, uint32_t argc, jsval *vp) {
