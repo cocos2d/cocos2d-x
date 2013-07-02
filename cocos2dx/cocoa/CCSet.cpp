@@ -92,27 +92,32 @@ int Set::count(void)
 
 void Set::addObject(Object *pObject)
 {
-    CC_SAFE_RETAIN(pObject);
-    _set->insert(pObject);
+    if (_set->count(pObject) == 0)
+    {
+        CC_SAFE_RETAIN(pObject);
+        _set->insert(pObject);
+    }
 }
 
 void Set::removeObject(Object *pObject)
 {
-    _set->erase(pObject);
-    CC_SAFE_RELEASE(pObject);
+    if (_set->erase(pObject) > 0)
+    {
+        CC_SAFE_RELEASE(pObject);
+    }
 }
 
 void Set::removeAllObjects()
 {
-    SetIterator it;
-    for (it = _set->begin(); it != _set->end(); ++it)
+    for (SetIterator it = _set->begin(); it != _set->end(); )
     {
-        if (! (*it))
+        if (!(*it))
         {
             break;
         }
-
+        
         (*it)->release();
+        _set->erase(it++);
     }
 }
 
