@@ -10,6 +10,7 @@
 		15A3D5631682F20C002FB0C5 /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 15A3D4621682F14C002FB0C5 /* main.js */; };
 		15A3D5651682F20C002FB0C5 /* tests_resources-jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = 15A3D4711682F14C002FB0C5 /* tests_resources-jsb.js */; };
 		15A3D5681682F20C002FB0C5 /* tests-main.js in Resources */ = {isa = PBXBuildFile; fileRef = 15A3D4741682F14C002FB0C5 /* tests-main.js */; };
+		1A42C7A81782CEA100F738F6 /* MotionStreakTest in Resources */ = {isa = PBXBuildFile; fileRef = 1A42C7A71782CEA100F738F6 /* MotionStreakTest */; };
 		1A4C3F1317784B6000EDFB3B /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A4C3F0E17784B6000EDFB3B /* libchipmunk.a */; };
 		1A4C3F1417784B6000EDFB3B /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A4C3F0F17784B6000EDFB3B /* libcocos2dx.a */; };
 		1A4C3F1517784B6000EDFB3B /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A4C3F1017784B6000EDFB3B /* libCocosDenshion.a */; };
@@ -117,6 +118,7 @@
 		15A3D4621682F14C002FB0C5 /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = ../../Shared/tests/main.js; sourceTree = "<group>"; };
 		15A3D4711682F14C002FB0C5 /* tests_resources-jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "tests_resources-jsb.js"; path = "../../Shared/tests/tests_resources-jsb.js"; sourceTree = "<group>"; };
 		15A3D4741682F14C002FB0C5 /* tests-main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "tests-main.js"; path = "../../Shared/tests/tests-main.js"; sourceTree = "<group>"; };
+		1A42C7A71782CEA100F738F6 /* MotionStreakTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = MotionStreakTest; path = ../../Shared/tests/MotionStreakTest; sourceTree = "<group>"; };
 		1A4C3F0E17784B6000EDFB3B /* libchipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libchipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A4C3F0F17784B6000EDFB3B /* libcocos2dx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libcocos2dx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A4C3F1017784B6000EDFB3B /* libCocosDenshion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libCocosDenshion.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -333,14 +335,13 @@
 		D401B5FC16FB169100F2529D /* js_src_raw */ = {
 			isa = PBXGroup;
 			children = (
-				A22656EE1743DCBB00598A2C /* ClippingNodeTest */,
-				A218F7DB1743D97E00F65883 /* XHRTest */,
 				1AA51A7816F708FA000FDF05 /* ActionManagerTest */,
 				1AA51A7916F708FA000FDF05 /* ActionsTest */,
 				1AA51A7A16F708FA000FDF05 /* BaseTestLayer */,
 				1AA51A7B16F708FA000FDF05 /* Box2dTest */,
 				1AA51A7C16F708FA000FDF05 /* ChipmunkTest */,
 				1AA51A7D16F708FA000FDF05 /* ClickAndMoveTest */,
+				A22656EE1743DCBB00598A2C /* ClippingNodeTest */,
 				1AA51A7E16F708FA000FDF05 /* CocosDenshionTest */,
 				1AA51A7F16F708FA000FDF05 /* CocosNodeTest */,
 				1AA51A8016F708FA000FDF05 /* CurrentLanguageTest */,
@@ -355,7 +356,9 @@
 				1AA51A8816F708FA000FDF05 /* IntervalTest */,
 				1AA51A8916F708FA000FDF05 /* LabelTest */,
 				1AA51A8A16F708FA000FDF05 /* LayerTest */,
+				15A3D4621682F14C002FB0C5 /* main.js */,
 				1AA51A8B16F708FA000FDF05 /* MenuTest */,
+				1A42C7A71782CEA100F738F6 /* MotionStreakTest */,
 				1AA51A8C16F708FA000FDF05 /* OpenGLTest */,
 				1AA51A8D16F708FA000FDF05 /* ParallaxTest */,
 				1AA51A8E16F708FA000FDF05 /* ParticleTest */,
@@ -368,16 +371,16 @@
 				1AA51A9616F708FA000FDF05 /* SchedulerTest */,
 				1AA51A9716F708FA000FDF05 /* SpriteTest */,
 				1AA51A9816F708FA000FDF05 /* SysTest */,
+				D401B6DE16FC071100F2529D /* tests-boot-jsb.js */,
+				15A3D4741682F14C002FB0C5 /* tests-main.js */,
+				15A3D4711682F14C002FB0C5 /* tests_resources-jsb.js */,
 				1AA51A9916F708FA000FDF05 /* TextInputTest */,
 				1AA51A9A16F708FA000FDF05 /* TextureCacheTest */,
 				1AA51A9B16F708FA000FDF05 /* TileMapTest */,
 				1AA51A9C16F708FA000FDF05 /* TouchesTest */,
 				1AA51A9D16F708FA000FDF05 /* TransitionsTest */,
 				1AA51A9E16F708FA000FDF05 /* UnitTest */,
-				15A3D4621682F14C002FB0C5 /* main.js */,
-				D401B6DE16FC071100F2529D /* tests-boot-jsb.js */,
-				15A3D4741682F14C002FB0C5 /* tests-main.js */,
-				15A3D4711682F14C002FB0C5 /* tests_resources-jsb.js */,
+				A218F7DB1743D97E00F65883 /* XHRTest */,
 			);
 			name = js_src_raw;
 			sourceTree = "<group>";
@@ -549,6 +552,7 @@
 				1A80332C1728F1FB00240CC3 /* res in Resources */,
 				A218F7DC1743D97E00F65883 /* XHRTest in Resources */,
 				A22656EF1743DCBB00598A2C /* ClippingNodeTest in Resources */,
+				1A42C7A81782CEA100F738F6 /* MotionStreakTest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
