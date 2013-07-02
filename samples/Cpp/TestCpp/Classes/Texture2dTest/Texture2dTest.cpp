@@ -1980,14 +1980,12 @@ public:
 
 TextureETC1::TextureETC1()
 {
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     Sprite *sprite = Sprite::create("Images/ETC1.pkm");
     
     Size size = Director::sharedDirector()->getWinSize();
     sprite->setPosition(ccp(size.width/2, size.height/2));
     
     addChild(sprite);
-//#endif
 }
 
 std::string TextureETC1::title()
