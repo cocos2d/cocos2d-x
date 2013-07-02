@@ -156,6 +156,82 @@ private:
     bool    _swallowsTouches;
 };
 
+enum ScriptEventType
+{
+    kNodeEvent = 0,
+    kMenuItemEvent,
+    kNotificationEvent,
+    kCallFuncEvent,
+    kScheduleEvent,
+    kLayerTouchesEvent,
+    kLayerTouchEvent,
+    kLayerKeypadEvent,
+    kAccelerometerEvent,
+    kCommonEvent,
+};
+
+struct SchedulerScriptEvent
+{
+    //lua use
+    int handler;
+    float elapse;
+    //js use
+    Node* node;
+};
+
+struct LayerTouchesScriptEvent
+{
+    int  actionType;
+    Set* touches;
+};
+
+struct LayerTouchScriptEvent
+{
+    int actionType;
+    Touch* touch;
+};
+
+struct CommonScriptEvent
+{
+    //now,only use lua 
+    int handler;
+    char eventName[64];
+    Object* eventSource;
+    char eventSourceClassName[64];
+    CommonScriptEvent(int inHandler,const char* name,Object* source = NULL,const char* className = NULL)
+    {
+        handler = inHandler;
+        strncpy(eventName, name, 64);
+        if (NULL != source)
+        {
+            eventSource = source;
+        }
+        else
+        {
+            eventSource = NULL;
+        }
+        
+        if (NULL == className)
+        {
+            memset(eventSourceClassName, 0, 64*sizeof(char));
+        }
+        else
+        {
+            strncpy(eventSourceClassName, className, 64);
+        }
+    }
+};
+
+struct ScriptEvent
+{
+    ScriptEventType type;
+    void* data;
+    ScriptEvent(ScriptEventType inType,void* inData)
+    {
+        type = inType;
+        data = inData;
+    }
+};
 
 // Don't make ScriptEngineProtocol inherits from Object since setScriptEngine is invoked only once in AppDelegate.cpp,
 // It will affect the lifecycle of ScriptCore instance, the autorelease pool will be destroyed before destructing ScriptCore.
@@ -234,35 +310,9 @@ public:
      */
     virtual bool handleAssert(const char *msg) = 0;
     
-    // handle the script func begin
-    enum EventType
-    {
-        kNodeEvent,
-        kMenuItemEvent,
-        kNotificationEvent,
-        kCallFuncEvent,
-        kScheduleEvent,
-        kLayerTouchesEvent,
-        kLayerTouchersEvents,
-        kLayerKeypadEvent,
-        kEcuteAccelerometerEvent,
-        kNormalEvent,
-    };
-    
-    struct EventMessage
-    {
-        EventType type;
-        void* data;
-        EventMessage(EventType inType,void* inData)
-        {
-            type = inType;
-            data = inData;
-        }
-    };
-    /* handle the script func unified
-     */
-    virtual int handleEvent(int handler,void* nativeObject,EventMessage* message){ return -1;}
-    // handle the script func end
+    //when trigger a script event ,call this func,add params needed into ScriptEvent object.nativeObject is object triggering the event, can be NULL in lua
+    virtual int sendEvent(ScriptEvent* message,void* nativeObject = NULL){ return -1;}
+    //
 };
 
 /**

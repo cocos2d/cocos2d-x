@@ -22,38 +22,40 @@ class GLNode:public Node
 {
 public:
     
-    GLNode():m_scriptDrawHandler(0)
+    GLNode():_scriptDrawHandler(0)
     {
         
     }
     virtual ~GLNode()
     {
-        if (0 != m_scriptDrawHandler) {
+        if (0 != _scriptDrawHandler) {
             this->unregisterScriptHandler();
         }
     }
     
     virtual void draw()
     {
-        if (0 != m_scriptDrawHandler)
+        if (0 != _scriptDrawHandler)
         {
-            ScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(m_scriptDrawHandler,"");
+            CommonScriptEvent data(_scriptDrawHandler,"");
+            ScriptEvent event(kCommonEvent,(void*)&data);
+            ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
         }
     }
     
     void registerScriptDrawHandler(int nHandler)
     {
         this->unregisterScriptDrawHandler();
-        m_scriptDrawHandler = nHandler;
+        _scriptDrawHandler = nHandler;
     }
     
     void unregisterScriptDrawHandler()
     {
-        if (0 != m_scriptDrawHandler)
+        if (0 != _scriptDrawHandler)
         {
-            ScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_scriptDrawHandler);
-            LUALOG("[LUA] Remove GLNode script handler: %d", m_scriptDrawHandler);
-            m_scriptDrawHandler = 0;
+            ScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(_scriptDrawHandler);
+            LUALOG("[LUA] Remove GLNode script handler: %d", _scriptDrawHandler);
+            _scriptDrawHandler = 0;
         }
     }
     int getScriptDrawHandler()
@@ -61,7 +63,7 @@ public:
         return 0;
     }
 private:
-    int m_scriptDrawHandler;
+    int _scriptDrawHandler;
 };
 
 /* function to release collected object via destructor */

@@ -560,8 +560,9 @@ void CallFunc::execute() {
         (_selectorTarget->*_callFunc)();
     } else if( _function )
 		_function();
-	if (_scriptHandler) {
-		ScriptEngineManager::sharedManager()->getScriptEngine()->executeCallFuncActionEvent(this);
+	if (0 != _scriptHandler) {
+        ScriptEvent event(kCallFuncEvent,NULL);
+		ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event,(void*)this);
 	}
 }
 

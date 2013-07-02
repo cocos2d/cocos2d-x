@@ -102,7 +102,7 @@ public:
         if (_mapScriptHandler.end() != Iter)
             return Iter->second;
         
-        return -1;
+        return 0;
     }
     
     void InitScriptHandleMap()
@@ -115,8 +115,10 @@ public:
         LuaWebSocket* luaWs = dynamic_cast<LuaWebSocket*>(ws);
         if (NULL != luaWs) {
             int nHandler = luaWs->getScriptHandler(LuaWebSocket::kWebSocketScriptHandlerOpen);
-            if (-1 != nHandler) {
-                ScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(nHandler,"");
+            if (0 != nHandler) {
+                CommonScriptEvent data(nHandler,"");
+                ScriptEvent event(kCommonEvent,(void*)&data);
+                ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
             }
         }
     }
@@ -127,15 +129,17 @@ public:
         if (NULL != luaWs) {
             if (data.isBinary) {
                 int nHandler = luaWs->getScriptHandler(LuaWebSocket::kWebSocketScriptHandlerMessage);
-                if (-1 != nHandler) {
+                if (0 != nHandler) {
                     SendBinaryMessageToLua(nHandler, (const unsigned char*)data.bytes, data.len);
                 }
             }
             else{
                 
                 int nHandler = luaWs->getScriptHandler(LuaWebSocket::kWebSocketScriptHandlerMessage);
-                if (-1 != nHandler) {
-                    ScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(nHandler,data.bytes);
+                if (0 != nHandler) {
+                    CommonScriptEvent commonData(nHandler,data.bytes);
+                    ScriptEvent event(kCommonEvent,(void*)&commonData);
+                    ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
                 }
             }
         }
@@ -146,8 +150,11 @@ public:
         LuaWebSocket* luaWs = dynamic_cast<LuaWebSocket*>(ws);
         if (NULL != luaWs) {
             int nHandler = luaWs->getScriptHandler(LuaWebSocket::kWebSocketScriptHandlerClose);
-            if (-1 != nHandler) {
-                ScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(nHandler,"");
+            if (0 != nHandler)
+            {
+                CommonScriptEvent data(nHandler,"");
+                ScriptEvent event(kCommonEvent,(void*)&data);
+                ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
             }
         }
     }
@@ -157,8 +164,11 @@ public:
         LuaWebSocket* luaWs = dynamic_cast<LuaWebSocket*>(ws);
         if (NULL != luaWs) {
             int nHandler = luaWs->getScriptHandler(LuaWebSocket::kWebSocketScriptHandlerError);
-            if (-1 != nHandler) {
-                ScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(nHandler,"");
+            if (0 != nHandler)
+            {
+                CommonScriptEvent data(nHandler,"");
+                ScriptEvent event(kCommonEvent,(void*)&data);
+                ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
             }
         }
     }
