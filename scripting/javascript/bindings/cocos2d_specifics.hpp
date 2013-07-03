@@ -101,9 +101,9 @@ public:
     const jsval& getJSCallbackThis() const;
     const jsval& getJSExtraData() const;
 protected:
-    jsval jsCallback;
-    jsval jsThisObj;
-    jsval extraData;
+    jsval _jsCallback;
+    jsval _jsThisObj;
+    jsval _extraData;
 };
 
 
@@ -112,13 +112,13 @@ public:
     JSCCBAnimationWrapper() {}
     virtual ~JSCCBAnimationWrapper() {}
     
-    void animationCompleteCallback() const {
+    void animationCompleteCallback() {
         
         JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
         jsval retval = JSVAL_NULL;
         
-        if(!JSVAL_IS_VOID(jsCallback)  && !JSVAL_IS_VOID(jsThisObj)) {
-            JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(jsThisObj), jsCallback, 0, NULL, &retval);
+        if(!JSVAL_IS_VOID(_jsCallback)  && !JSVAL_IS_VOID(_jsThisObj)) {
+            JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(_jsThisObj), _jsCallback, 0, NULL, &retval);
         }
     }
     
@@ -135,7 +135,7 @@ public:
     static void setTargetForNativeNode(Node *pNode, JSCallFuncWrapper *target);
     static Array * getTargetForNativeNode(Node *pNode);
 
-    void callbackFunc(Node *node) const;
+    void callbackFunc(Node *node);
 };
 
 
@@ -162,7 +162,7 @@ public:
 
     void pause();
     
-    void scheduleFunc(float dt) const;
+    void scheduleFunc(float dt);
     virtual void update(float dt);
     
     Object* getTarget();

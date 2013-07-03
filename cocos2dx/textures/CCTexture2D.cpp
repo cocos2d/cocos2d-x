@@ -65,6 +65,7 @@ Texture2D::Texture2D()
 : _PVRHaveAlphaPremultiplied(true)
 , _pixelsWide(0)
 , _pixelsHigh(0)
+, _pixelFormat(kTexture2DPixelFormat_Default)
 , _name(0)
 , _maxS(0.0)
 , _maxT(0.0)
@@ -515,7 +516,7 @@ bool Texture2D::initWithString(const char *text, ccFontDefinition *textDefinitio
     
     #if CC_ENABLE_CACHE_TEXTURE_DATA
         // cache the texture data
-        VolatileTexture::addStringTexture(this, text, dimensions, hAlignment, vAlignment, fontName, fontSize);
+        VolatileTexture::addStringTexture(this, text, textDefinition->_dimensions, textDefinition->_alignment, textDefinition->_vertAlignment, textDefinition->_fontName.c_str(), textDefinition->_fontSize);
     #endif
         
         bool bRet = false;

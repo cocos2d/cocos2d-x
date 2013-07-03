@@ -226,7 +226,11 @@ void TMXLayer::parseInternalProperties()
             GLint alphaValueLocation = glGetUniformLocation(getShaderProgram()->getProgram(), kUniformAlphaTestValue);
 
             // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
+            
+            // use shader program to set uniform
+            getShaderProgram()->use();
             getShaderProgram()->setUniformLocationWith1f(alphaValueLocation, alphaFuncValue);
+            CHECK_GL_ERROR_DEBUG();
         }
         else
         {

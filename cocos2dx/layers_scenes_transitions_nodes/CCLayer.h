@@ -67,7 +67,7 @@ public:
     virtual ~Layer();
     virtual bool init();
     
-    /** create one layer */
+    /** creates a fullscreen black layer */
     static Layer *create(void);
 
     virtual void onEnter();
@@ -134,12 +134,12 @@ public:
     You can enable / disable accelerometer events with this property.
     it's new in cocos2d-x
     */
-#ifdef KEYBOARD_SUPPORT
+
     virtual bool isKeyboardEnabled();
     virtual void setKeyboardEnabled(bool value);
     virtual void keyPressed(int keyCode) {};
     virtual void keyReleased(int keyCode) {};
-#endif
+
     virtual bool isKeypadEnabled();
     virtual void setKeypadEnabled(bool value);
 
@@ -157,9 +157,7 @@ public:
 protected:   
     bool _touchEnabled;
     bool _accelerometerEnabled;
-#ifdef KEYBOARD_SUPPORT
     bool _keyboardEnabled;
-#endif
     bool _keypadEnabled;
     
 private:
@@ -243,7 +241,8 @@ public:
 
     virtual void draw();
     virtual void setContentSize(const Size & var);
-    
+
+    /** creates a fullscreen black layer */
     static LayerColor* create();
     
     /** creates a Layer with color, width and height in Points */
@@ -304,6 +303,9 @@ class CC_DLL LayerGradient : public LayerColor
 {
 public:
 
+    /** Creates a fullscreen black layer */
+    static LayerGradient* create();
+
     /** Creates a full-screen Layer with a gradient between start and end. */
     static LayerGradient* create(const ccColor4B& start, const ccColor4B& end);
 
@@ -332,8 +334,6 @@ public:
     virtual void setCompressedInterpolation(bool bCompressedInterpolation);
     virtual bool isCompressedInterpolation();
     
-    static LayerGradient* create();
-
 protected:
     virtual void updateColor();
 };

@@ -44,6 +44,7 @@ Configuration::Configuration(void)
 : _maxTextureSize(0) 
 , _maxModelviewStackDepth(0)
 , _supportsPVRTC(false)
+, _supportsETC(false)
 , _supportsNPOT(false)
 , _supportsBGRA8888(false)
 , _supportsDiscardFramebuffer(false)
@@ -124,7 +125,10 @@ void Configuration::gatherGPUInfo()
     glGetIntegerv(GL_MAX_SAMPLES_APPLE, &_maxSamplesAllowed);
 	_valueDict->setObject( Integer::create((int)_maxSamplesAllowed), "gl.max_samples_allowed");
 #endif
-
+    
+    _supportsETC = checkForGLExtension("GL_OES_compressed_ETC1_RGB8_texture");
+    _valueDict->setObject( Bool::create(_supportsETC), "gl.supports_ETC");
+    
     _supportsPVRTC = checkForGLExtension("GL_IMG_texture_compression_pvrtc");
 	_valueDict->setObject( Bool::create(_supportsPVRTC), "gl.supports_PVRTC");
 
@@ -200,6 +204,16 @@ bool Configuration::supportsNPOT(void) const
 bool Configuration::supportsPVRTC(void) const
 {
 	return _supportsPVRTC;
+}
+
+bool Configuration::supportsETC() const
+{
+    //GL_ETC1_RGB8_OES is not defined in old opengl version
+#ifdef GL_ETC1_RGB8_OES
+    return _supportsETC;
+#else
+    return false;
+#endif
 }
 
 bool Configuration::supportsBGRA8888(void) const
