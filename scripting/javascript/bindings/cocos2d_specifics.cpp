@@ -558,13 +558,11 @@ JSBool js_cocos2dx_CCAnimation_create(JSContext *cx, uint32_t argc, jsval *vp)
 			ok &= jsval_to_ccarray(cx, argv[0], &arg0);
             JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 		}
-		cocos2d::Animation* ret;
+		cocos2d::Animation* ret = nullptr;
 		double arg1 = 0.0f;
-		if (argc > 0 && argc == 2) {
-			if (argc == 2) {
-				ok &= JS_ValueToNumber(cx, argv[1], &arg1);
-                JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-			}
+		if (argc == 2) {
+            ok &= JS_ValueToNumber(cx, argv[1], &arg1);
+            JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 			ret = cocos2d::Animation::createWithSpriteFrames(arg0, arg1);
 		} else if (argc == 3) {
 			unsigned int loops;
@@ -763,7 +761,7 @@ JSBool js_platform(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 JSCallbackWrapper::JSCallbackWrapper()
-: jsCallback(JSVAL_VOID), jsThisObj(JSVAL_VOID), extraData(JSVAL_VOID)
+: _jsCallback(JSVAL_VOID), _jsThisObj(JSVAL_VOID), _extraData(JSVAL_VOID)
 {
 
 }
@@ -771,37 +769,44 @@ JSCallbackWrapper::JSCallbackWrapper()
 JSCallbackWrapper::~JSCallbackWrapper()
 {
     JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-    JS_RemoveValueRoot(cx, &jsCallback);
+    JS_RemoveValueRoot(cx, &_jsCallback);
+    if (!JSVAL_IS_VOID(_extraData))
+    {
+        JS_RemoveValueRoot(cx, &_jsCallback);
+    }
 }
 
 void JSCallbackWrapper::setJSCallbackFunc(jsval func) {
-    jsCallback = func;
+    _jsCallback = func;
     JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
 	// Root the callback function.
-    JS_AddNamedValueRoot(cx, &jsCallback, "JSCallbackWrapper_callback_func");
+    JS_AddNamedValueRoot(cx, &_jsCallback, "JSCallbackWrapper_callback_func");
 }
 
 void JSCallbackWrapper::setJSCallbackThis(jsval thisObj) {
-    jsThisObj = thisObj;
+    _jsThisObj = thisObj;
 }
 
 void JSCallbackWrapper::setJSExtraData(jsval data) {
-    extraData = data;
+    _extraData = data;
+    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+	// Root the extra data
+    JS_AddNamedValueRoot(cx, &_extraData, "JSCallbackWrapper_extraData");
 }
 
 const jsval& JSCallbackWrapper::getJSCallbackFunc() const
 {
-    return jsCallback;
+    return _jsCallback;
 }
 
 const jsval& JSCallbackWrapper::getJSCallbackThis() const
 {
-    return jsThisObj;
+    return _jsThisObj;
 }
 
 const jsval& JSCallbackWrapper::getJSExtraData() const
 {
-    return extraData;
+    return _extraData;
 }
 
 void JSCallFuncWrapper::setTargetForNativeNode(Node *pNode, JSCallFuncWrapper *target) {
@@ -837,29 +842,29 @@ Array * JSCallFuncWrapper::getTargetForNativeNode(Node *pNode) {
 
 void JSCallFuncWrapper::callbackFunc(Node *node) const {
 
-    bool hasExtraData = !JSVAL_IS_VOID(extraData);
-    JSObject* thisObj = JSVAL_IS_VOID(jsThisObj) ? NULL : JSVAL_TO_OBJECT(jsThisObj);
+    bool hasExtraData = !JSVAL_IS_VOID(_extraData);
+    JSObject* thisObj = JSVAL_IS_VOID(_jsThisObj) ? NULL : JSVAL_TO_OBJECT(_jsThisObj);
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
     js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Node>(cx, node);
 
     jsval retval;
-    if(jsCallback != JSVAL_VOID)
+    if(_jsCallback != JSVAL_VOID)
     {
         if (hasExtraData)
         {
             jsval valArr[2];
             valArr[0] = OBJECT_TO_JSVAL(proxy->obj);
-            valArr[1] = extraData;
+            valArr[1] = _extraData;
 
             JS_AddValueRoot(cx, valArr);
-            JS_CallFunctionValue(cx, thisObj, jsCallback, 2, valArr, &retval);
+            JS_CallFunctionValue(cx, thisObj, _jsCallback, 2, valArr, &retval);
             JS_RemoveValueRoot(cx, valArr);
         }
         else
         {
             jsval senderVal = OBJECT_TO_JSVAL(proxy->obj);
             JS_AddValueRoot(cx, &senderVal);
-            JS_CallFunctionValue(cx, thisObj, jsCallback, 1, &senderVal, &retval);
+            JS_CallFunctionValue(cx, thisObj, _jsCallback, 1, &senderVal, &retval);
             JS_RemoveValueRoot(cx, &senderVal);
         }
     }
@@ -872,7 +877,7 @@ void JSCallFuncWrapper::callbackFunc(Node *node) const {
 
 // cc.CallFunc.create( func, this, [data])
 // cc.CallFunc.create( func )
-JSBool js_callFunc(JSContext *cx, uint32_t argc, jsval *vp)
+static JSBool js_callFunc(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     if (argc >= 1 && argc <= 3) {        
@@ -888,8 +893,7 @@ JSBool js_callFunc(JSContext *cx, uint32_t argc, jsval *vp)
             tmpCobj->setJSExtraData(argv[2]);
         }
         
-        CallFunc *ret = (CallFunc *)CallFuncN::create((Object *)tmpCobj, 
-                                             callfuncN_selector(JSCallFuncWrapper::callbackFunc));
+        CallFuncN *ret = CallFuncN::create(CC_CALLBACK_1(JSCallFuncWrapper::callbackFunc, tmpCobj));
         
 		js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CallFunc>(cx, ret);
 		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(proxy->obj));
@@ -1197,7 +1201,7 @@ void JSScheduleWrapper::dump()
 #endif
 }
 
-void JSScheduleWrapper::scheduleFunc(float dt) const
+void JSScheduleWrapper::scheduleFunc(float dt)
 {
     jsval retval = JSVAL_NULL;
     jsval data = DOUBLE_TO_JSVAL(dt);
@@ -1210,13 +1214,13 @@ void JSScheduleWrapper::scheduleFunc(float dt) const
         return;
     }
 
-    if(!jsCallback.isNullOrUndefined()) {
-        if (!jsThisObj.isNullOrUndefined()) {
-            JSAutoCompartment ac(cx, JSVAL_TO_OBJECT(jsThisObj));
-            JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(jsThisObj), jsCallback, 1, &data, &retval);
+    if(!_jsCallback.isNullOrUndefined()) {
+        if (!_jsThisObj.isNullOrUndefined()) {
+            JSAutoCompartment ac(cx, JSVAL_TO_OBJECT(_jsThisObj));
+            JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(_jsThisObj), _jsCallback, 1, &data, &retval);
         }
         else {
-            JS_CallFunctionValue(cx, NULL, jsCallback, 1, &data, &retval);
+            JS_CallFunctionValue(cx, NULL, _jsCallback, 1, &data, &retval);
         }
     }
 
@@ -1235,7 +1239,7 @@ void JSScheduleWrapper::update(float dt)
         return;
     }
     
-    ScriptingCore::getInstance()->executeFunctionWithOwner(jsThisObj, "update", 1, &data);
+    ScriptingCore::getInstance()->executeFunctionWithOwner(_jsThisObj, "update", 1, &data);
     
     JS_RemoveValueRoot(cx, &data);
 }
