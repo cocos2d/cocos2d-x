@@ -146,7 +146,14 @@ static cocos_dimensions engine_init_display(struct engine* engine) {
     ANativeWindow_setBuffersGeometry(engine->app->window, 0, 0, format);
 
     surface = eglCreateWindowSurface(display, config, engine->app->window, NULL);
-    context = eglCreateContext(display, config, NULL, NULL);
+
+    const EGLint eglContextAttrs[] =
+    {
+        EGL_CONTEXT_CLIENT_VERSION, 2,
+        EGL_NONE
+    };
+
+    context = eglCreateContext(display, config, NULL, eglContextAttrs);
 
     if (eglMakeCurrent(display, surface, surface, context) == EGL_FALSE) {
         LOGW("Unable to eglMakeCurrent");
