@@ -183,14 +183,7 @@ bool Sprite::initWithTexture(Texture2D *pTexture, const Rect& rect, bool rotated
         _quad.tr.colors = tmpColor;
         
         // shader program
-        if (pTexture)
-        {
-            setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColor));
-        }
-        else
-        {
-            setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionColor));
-        }
+        setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColor));
         
         // update texture (calls updateBlendFunc)
         setTexture(pTexture);
@@ -557,17 +550,22 @@ void Sprite::draw(void)
 
     CCAssert(!_batchNode, "If Sprite is being rendered by SpriteBatchNode, Sprite#draw SHOULD NOT be called");
 
-    CC_NODE_DRAW_SETUP();
-
     ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
 
     if (_texture != NULL)
     {
+        CC_NODE_DRAW_SETUP();
         ccGLBindTexture2D( _texture->getName() );
         ccGLEnableVertexAttribs( kVertexAttribFlag_PosColorTex );
     }
     else
     {
+        // If the texture is invalid, uses the PositionColor shader instead.
+        // TODO: PostionTextureColor shader should support empty texture. In that way, we could get rid of next three lines.
+        GLProgram* prog = ShaderCache::sharedShaderCache()->programForKey(kShader_PositionColor);
+        prog->use();
+        prog->setUniformsForBuiltins();
+        
         ccGLBindTexture2D(0);
         ccGLEnableVertexAttribs( kVertexAttribFlag_Position | kVertexAttribFlag_Color );
     }
