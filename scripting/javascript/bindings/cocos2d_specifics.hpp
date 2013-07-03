@@ -135,7 +135,7 @@ public:
     static void setTargetForNativeNode(Node *pNode, JSCallFuncWrapper *target);
     static Array * getTargetForNativeNode(Node *pNode);
 
-    void callbackFunc(Node *node) const;
+    void callbackFunc(Node *node);
 };
 
 
