@@ -437,6 +437,7 @@ Developers:
         Fix for broken of ccArrayGetIndexOfObject after merging this commit(076f38c).
         Explicitly initialising CCAcceleration structure.
         Add support to save/retrieve CCData into/from CCUserDefault.
+        Text Shadows fix
 
     MarcelBloemendaal
         Adding secureTextEntry property to CCTextFieldTTF.
