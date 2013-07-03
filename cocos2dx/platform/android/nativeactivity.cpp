@@ -8,10 +8,13 @@
 #include <android/log.h>
 #include <android_native_app_glue.h>
 
+#include <pthread.h>
+
 #include "CCDirector.h"
-#include "../CCApplication.h"
+#include "CCApplication.h"
 #include "CCEventType.h"
 #include "support/CCNotificationCenter.h"
+#include "CCFileUtilsAndroid.h"
 
 #define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
 #define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
@@ -54,11 +57,22 @@ struct engine {
 
 extern "C" void cocos_android_app_init(void);
 
-static void cocos_init(int w, int h) {
+typedef struct cocos_dimensions {
+    int w;
+    int h;
+} cocos_dimensions;
+
+static void cocos_init(cocos_dimensions d, AAssetManager* assetmanager) {
+    LOGI("cocos_init(...)");
+    pthread_t thisthread = pthread_self();
+    LOGI("pthread_self() = %X", thisthread);
+
+    cocos2d::FileUtilsAndroid::setassetmanager(assetmanager);
+
     if (!cocos2d::Director::sharedDirector()->getOpenGLView())
     {
         cocos2d::EGLView *view = cocos2d::EGLView::sharedOpenGLView();
-        view->setFrameSize(w, h);
+        view->setFrameSize(d.w, d.h);
 
         cocos_android_app_init();
 
@@ -78,7 +92,11 @@ static void cocos_init(int w, int h) {
 /**
  * Initialize an EGL context for the current display.
  */
-static int engine_init_display(struct engine* engine) {
+static cocos_dimensions engine_init_display(struct engine* engine) {
+    cocos_dimensions r;
+    r.w = -1;
+    r.h = -1;
+
     // initialize OpenGL ES and EGL
 
     /*
@@ -123,7 +141,7 @@ static int engine_init_display(struct engine* engine) {
 
     if (eglMakeCurrent(display, surface, surface, context) == EGL_FALSE) {
         LOGW("Unable to eglMakeCurrent");
-        return -1;
+        return r;
     }
 
     eglQuerySurface(display, surface, EGL_WIDTH, &w);
@@ -142,15 +160,20 @@ static int engine_init_display(struct engine* engine) {
     glShadeModel(GL_SMOOTH);
     glDisable(GL_DEPTH_TEST);
 
-    cocos_init(w, h);
+    r.w = w;
+    r.h = h;
 
-    return 0;
+    return r;
 }
 
 /**
  * Just the current frame in the display.
  */
 static void engine_draw_frame(struct engine* engine) {
+    LOGI("engine_draw_frame(...)");
+    pthread_t thisthread = pthread_self();
+    LOGI("pthread_self() = %X", thisthread);
+
     if (engine->display == NULL) {
         // No display.
         LOGW("engine_draw_frame : No display.");
@@ -217,7 +240,12 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
         case APP_CMD_INIT_WINDOW:
             // The window is being shown, get it ready.
             if (engine->app->window != NULL) {
-                engine_init_display(engine);
+                cocos_dimensions d = engine_init_display(engine);
+                if ((d.w > 0) &&
+                    (d.h > 0)) {
+                    cocos_init(d, app->activity->assetManager);
+                }
+
                 engine_draw_frame(engine);
             }
             break;
