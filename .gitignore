@@ -59,7 +59,6 @@ build_*_vc10/
 *.pbxuser
 *.xcbkptlist
 *.xcscheme
-*.xcworkspacedata
 *.xcuserstate
 xcschememanagement.plist
 build/
@@ -81,6 +80,9 @@ Device-Release/
 # Ignore vim swaps
 *.swp
 *.swo
+
+# Ignore files created by create_project.py
+projects/
 
 # Ignore config files in javascript bindings generator
 tools/tojs/user.cfg

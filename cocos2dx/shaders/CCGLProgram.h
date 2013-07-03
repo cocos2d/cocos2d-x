@@ -41,70 +41,70 @@ NS_CC_BEGIN
  */
 
 enum {
-    kCCVertexAttrib_Position,
-    kCCVertexAttrib_Color,
-    kCCVertexAttrib_TexCoords,
+    kVertexAttrib_Position,
+    kVertexAttrib_Color,
+    kVertexAttrib_TexCoords,
 
-    kCCVertexAttrib_MAX,
+    kVertexAttrib_MAX,
 };
 
 enum {
-	kCCUniformPMatrix,
-	kCCUniformMVMatrix,
-	kCCUniformMVPMatrix,
-	kCCUniformTime,
-	kCCUniformSinTime,
-	kCCUniformCosTime,
-	kCCUniformRandom01,
-	kCCUniformSampler,
+	kUniformPMatrix,
+	kUniformMVMatrix,
+	kUniformMVPMatrix,
+	kUniformTime,
+	kUniformSinTime,
+	kUniformCosTime,
+	kUniformRandom01,
+	kUniformSampler,
     
-	kCCUniform_MAX,
+	kUniform_MAX,
 };
 
-#define kCCShader_PositionTextureColor              "ShaderPositionTextureColor"
-#define kCCShader_PositionTextureColorAlphaTest     "ShaderPositionTextureColorAlphaTest"
-#define kCCShader_PositionColor                     "ShaderPositionColor"
-#define kCCShader_PositionTexture                   "ShaderPositionTexture"
-#define kCCShader_PositionTexture_uColor            "ShaderPositionTexture_uColor"
-#define kCCShader_PositionTextureA8Color            "ShaderPositionTextureA8Color"
-#define kCCShader_Position_uColor                   "ShaderPosition_uColor"
-#define kCCShader_PositionLengthTexureColor         "ShaderPositionLengthTextureColor"
+#define kShader_PositionTextureColor              "ShaderPositionTextureColor"
+#define kShader_PositionTextureColorAlphaTest     "ShaderPositionTextureColorAlphaTest"
+#define kShader_PositionColor                     "ShaderPositionColor"
+#define kShader_PositionTexture                   "ShaderPositionTexture"
+#define kShader_PositionTexture_uColor            "ShaderPositionTexture_uColor"
+#define kShader_PositionTextureA8Color            "ShaderPositionTextureA8Color"
+#define kShader_Position_uColor                   "ShaderPosition_uColor"
+#define kShader_PositionLengthTexureColor         "ShaderPositionLengthTextureColor"
 
 // uniform names
-#define kCCUniformPMatrix_s				"CC_PMatrix"
-#define kCCUniformMVMatrix_s			"CC_MVMatrix"
-#define kCCUniformMVPMatrix_s			"CC_MVPMatrix"
-#define kCCUniformTime_s				"CC_Time"
-#define kCCUniformSinTime_s				"CC_SinTime"
-#define kCCUniformCosTime_s				"CC_CosTime"
-#define kCCUniformRandom01_s			"CC_Random01"
-#define kCCUniformSampler_s				"CC_Texture0"
-#define kCCUniformAlphaTestValue		"CC_alpha_value"
+#define kUniformPMatrix_s				"CC_PMatrix"
+#define kUniformMVMatrix_s			"CC_MVMatrix"
+#define kUniformMVPMatrix_s			"CC_MVPMatrix"
+#define kUniformTime_s				"CC_Time"
+#define kUniformSinTime_s				"CC_SinTime"
+#define kUniformCosTime_s				"CC_CosTime"
+#define kUniformRandom01_s			"CC_Random01"
+#define kUniformSampler_s				"CC_Texture0"
+#define kUniformAlphaTestValue		"CC_alpha_value"
 
 // Attribute names
-#define    kCCAttributeNameColor           "a_color"
-#define    kCCAttributeNamePosition        "a_position"
-#define    kCCAttributeNameTexCoord        "a_texCoord"
+#define    kAttributeNameColor           "a_color"
+#define    kAttributeNamePosition        "a_position"
+#define    kAttributeNameTexCoord        "a_texCoord"
 
 struct _hashUniformEntry;
 
 typedef void (*GLInfoFunction)(GLuint program, GLenum pname, GLint* params);
 typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length, GLchar* infolog);
 
-/** CCGLProgram
+/** GLProgram
  Class that implements a glProgram
  
  
  @since v2.0.0
  */
-class CC_DLL CCGLProgram : public CCObject
+class CC_DLL GLProgram : public Object
 {
 public:
-    CCGLProgram();
-    virtual ~CCGLProgram();
-    /** Initializes the CCGLProgram with a vertex and fragment with bytes array */
+    GLProgram();
+    virtual ~GLProgram();
+    /** Initializes the GLProgram with a vertex and fragment with bytes array */
     bool initWithVertexShaderByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
-    /** Initializes the CCGLProgram with a vertex and fragment with contents of filenames */
+    /** Initializes the GLProgram with a vertex and fragment with contents of filenames */
     bool initWithVertexShaderFilename(const char* vShaderFilename, const char* fShaderFilename);
     /**  It will add a new attribute to the shader */
     void addAttribute(const char* attributeName, GLuint index);
@@ -113,12 +113,12 @@ public:
     /** it will call glUseProgram() */
     void use();
 /** It will create 4 uniforms:
-    - kCCUniformPMatrix
-    - kCCUniformMVMatrix
-    - kCCUniformMVPMatrix
-    - kCCUniformSampler
+    - kUniformPMatrix
+    - kUniformMVMatrix
+    - kUniformMVPMatrix
+    - kUniformSampler
 
- And it will bind "kCCUniformSampler" to 0
+ And it will bind "kUniformSampler" to 0
 
  */
     void updateUniforms();
@@ -198,7 +198,7 @@ private:
     GLuint            _program;
     GLuint            _vertShader;
     GLuint            _fragShader;
-    GLint             _uniforms[kCCUniform_MAX];
+    GLint             _uniforms[kUniform_MAX];
     struct _hashUniformEntry* _hashForUniforms;
     bool              _usesTime;
 };

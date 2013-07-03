@@ -39,14 +39,14 @@ using namespace std;
 //------------------------------------------------------------------
 void SpineTestScene::runThisTest()
 {
-    CCLayer* pLayer = SpineTestLayer::create();
+    Layer* pLayer = SpineTestLayer::create();
     addChild(pLayer);
     
-    CCDirector::sharedDirector()->replaceScene(this);
+    Director::sharedDirector()->replaceScene(this);
 }
 
 bool SpineTestLayer::init () {
-	if (!CCLayer::init()) return false;
+	if (!Layer::init()) return false;
 
 	skeletonNode = CCSkeletonAnimation::createWithFile("spine/spineboy.json", "spine/spineboy.atlas");
     skeletonNode->setMix("walk", "jump", 0.4f);
@@ -56,12 +56,12 @@ bool SpineTestLayer::init () {
 	skeletonNode->timeScale = 0.3f;
 	skeletonNode->debugBones = true;
 
-	skeletonNode->runAction(CCRepeatForever::create(CCSequence::create(CCFadeOut::create(1),
-		CCFadeIn::create(1),
-		CCDelayTime::create(5),
+	skeletonNode->runAction(RepeatForever::create(Sequence::create(FadeOut::create(1),
+		FadeIn::create(1),
+		DelayTime::create(5),
 		NULL)));
 
-	CCSize windowSize = CCDirector::sharedDirector()->getWinSize();
+	Size windowSize = Director::sharedDirector()->getWinSize();
 	skeletonNode->setPosition(ccp(windowSize.width / 2, 20));
 	addChild(skeletonNode);
 

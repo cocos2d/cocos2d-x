@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-CCGrabber::CCGrabber(void)
+Grabber::Grabber(void)
     : _FBO(0)
     , _oldFBO(0)
 {
@@ -39,7 +39,7 @@ CCGrabber::CCGrabber(void)
     glGenFramebuffers(1, &_FBO);
 }
 
-void CCGrabber::grab(CCTexture2D *pTexture)
+void Grabber::grab(Texture2D *pTexture)
 {
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
 
@@ -59,7 +59,7 @@ void CCGrabber::grab(CCTexture2D *pTexture)
     glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 }
 
-void CCGrabber::beforeRender(CCTexture2D *pTexture)
+void Grabber::beforeRender(Texture2D *pTexture)
 {
     CC_UNUSED_PARAM(pTexture);
 
@@ -73,7 +73,7 @@ void CCGrabber::beforeRender(CCTexture2D *pTexture)
     glClearColor(0, 0, 0, 0);
 
     // BUG #631: To fix #631, uncomment the lines with #631
-    // Warning: But it CCGrabber won't work with 2 effects at the same time
+    // Warning: But it Grabber won't work with 2 effects at the same time
 //  glClearColor(0.0f,0.0f,0.0f,1.0f);    // #631
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -81,7 +81,7 @@ void CCGrabber::beforeRender(CCTexture2D *pTexture)
 //  glColorMask(true, true, true, false);    // #631
 }
 
-void CCGrabber::afterRender(cocos2d::CCTexture2D *pTexture)
+void Grabber::afterRender(cocos2d::Texture2D *pTexture)
 {
     CC_UNUSED_PARAM(pTexture);
 
@@ -92,7 +92,7 @@ void CCGrabber::afterRender(cocos2d::CCTexture2D *pTexture)
     glClearColor(_oldClearColor[0], _oldClearColor[1], _oldClearColor[2], _oldClearColor[3]);
 }
 
-CCGrabber::~CCGrabber()
+Grabber::~Grabber()
 {
     CCLOGINFO("cocos2d: deallocing %p", this);
     glDeleteFramebuffers(1, &_FBO);

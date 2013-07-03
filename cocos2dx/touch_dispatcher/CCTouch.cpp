@@ -29,43 +29,43 @@
 NS_CC_BEGIN
 
 // returns the current touch location in screen coordinates
-CCPoint CCTouch::getLocationInView() const 
+Point Touch::getLocationInView() const 
 { 
     return _point; 
 }
 
 // returns the previous touch location in screen coordinates
-CCPoint CCTouch::getPreviousLocationInView() const 
+Point Touch::getPreviousLocationInView() const 
 { 
     return _prevPoint; 
 }
 
 // returns the start touch location in screen coordinates
-CCPoint CCTouch::getStartLocationInView() const 
+Point Touch::getStartLocationInView() const 
 { 
     return _startPoint; 
 }
 
 // returns the current touch location in OpenGL coordinates
-CCPoint CCTouch::getLocation() const
+Point Touch::getLocation() const
 { 
-    return CCDirector::sharedDirector()->convertToGL(_point); 
+    return Director::sharedDirector()->convertToGL(_point); 
 }
 
 // returns the previous touch location in OpenGL coordinates
-CCPoint CCTouch::getPreviousLocation() const
+Point Touch::getPreviousLocation() const
 { 
-    return CCDirector::sharedDirector()->convertToGL(_prevPoint);  
+    return Director::sharedDirector()->convertToGL(_prevPoint);  
 }
 
 // returns the start touch location in OpenGL coordinates
-CCPoint CCTouch::getStartLocation() const
+Point Touch::getStartLocation() const
 { 
-    return CCDirector::sharedDirector()->convertToGL(_startPoint);  
+    return Director::sharedDirector()->convertToGL(_startPoint);  
 }
 
 // returns the delta position between the current location and the previous location in OpenGL coordinates
-CCPoint CCTouch::getDelta() const
+Point Touch::getDelta() const
 {     
     return ccpSub(getLocation(), getPreviousLocation()); 
 }

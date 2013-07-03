@@ -49,12 +49,12 @@ void CCLog(const char * pszFormat, ...)
     fprintf(stderr, "cocos2d-x debug info [%s]\n",  szBuf);
 }
 
-void CCMessageBox(const char * pszMsg, const char * pszTitle)
+void MessageBox(const char * pszMsg, const char * pszTitle)
 {
     CCLog("%s: %s", pszTitle, pszMsg);
 }
 
-void CCLuaLog(const char * pszFormat)
+void LuaLog(const char * pszFormat)
 {
     puts(pszFormat);
 }

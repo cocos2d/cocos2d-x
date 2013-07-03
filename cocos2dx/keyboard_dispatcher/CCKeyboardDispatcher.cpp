@@ -29,30 +29,30 @@ NS_CC_BEGIN
 
 //------------------------------------------------------------------
 //
-// CCKeyboardDispatcher
+// KeyboardDispatcher
 //
 //------------------------------------------------------------------
-CCKeyboardDispatcher::CCKeyboardDispatcher()
-: _keyPressDelegate(NULL)
-, _keyReleaseDelegate(NULL)
+KeyboardDispatcher::KeyboardDispatcher()
+: _keyPressDelegate(nullptr)
+, _keyReleaseDelegate(nullptr)
 {
 }
 
-CCKeyboardDispatcher::~CCKeyboardDispatcher()
+KeyboardDispatcher::~KeyboardDispatcher()
 {
 }
 
-void CCKeyboardDispatcher::setKeyPressDelegate(CCKeyboardDelegate delegate)
+void KeyboardDispatcher::setKeyPressDelegate(KeyboardDelegate delegate)
 {
     _keyPressDelegate = delegate;
 }
 
-void CCKeyboardDispatcher::setKeyReleaseDelegate(CCKeyboardDelegate delegate)
+void KeyboardDispatcher::setKeyReleaseDelegate(KeyboardDelegate delegate)
 {
     _keyReleaseDelegate = delegate;
 }
 
-bool CCKeyboardDispatcher::dispatchKeyboardEvent(int keyCode, bool pressed)
+bool KeyboardDispatcher::dispatchKeyboardEvent(int keyCode, bool pressed)
 {
     if (_keyPressDelegate != NULL && pressed)
     {

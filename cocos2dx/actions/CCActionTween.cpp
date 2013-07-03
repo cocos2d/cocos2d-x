@@ -27,9 +27,9 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-CCActionTween* CCActionTween::create(float aDuration, const char* key, float from, float to)
+ActionTween* ActionTween::create(float aDuration, const char* key, float from, float to)
 {
-    CCActionTween* pRet = new CCActionTween();
+    ActionTween* pRet = new ActionTween();
     if (pRet && pRet->initWithDuration(aDuration, key, from, to))
     {
         pRet->autorelease();
@@ -41,9 +41,9 @@ CCActionTween* CCActionTween::create(float aDuration, const char* key, float fro
     return pRet;
 }
 
-bool CCActionTween::initWithDuration(float aDuration, const char* key, float from, float to)
+bool ActionTween::initWithDuration(float aDuration, const char* key, float from, float to)
 {
-    if (CCActionInterval::initWithDuration(aDuration)) 
+    if (ActionInterval::initWithDuration(aDuration)) 
     {
         _key    = key;
         _to       = to;
@@ -54,30 +54,30 @@ bool CCActionTween::initWithDuration(float aDuration, const char* key, float fro
     return false;
 }
 
-CCActionTween *CCActionTween::clone() const
+ActionTween *ActionTween::clone() const
 {
 	// no copy constructor	
-	auto a = new CCActionTween();
+	auto a = new ActionTween();
 	a->initWithDuration(_duration, _key.c_str(), _from, _to);
 	a->autorelease();
 	return a;
 }
 
-void CCActionTween::startWithTarget(CCNode *pTarget)
+void ActionTween::startWithTarget(Node *pTarget)
 {
-    CCAssert(dynamic_cast<CCActionTweenDelegate*>(pTarget), "target must implement CCActionTweenDelegate");
-    CCActionInterval::startWithTarget(pTarget);
+    CCAssert(dynamic_cast<ActionTweenDelegate*>(pTarget), "target must implement ActionTweenDelegate");
+    ActionInterval::startWithTarget(pTarget);
     _delta = _to - _from;
 }
 
-void CCActionTween::update(float dt)
+void ActionTween::update(float dt)
 {
-    dynamic_cast<CCActionTweenDelegate*>(_target)->updateTweenAction(_to  - _delta * (1 - dt), _key.c_str());
+    dynamic_cast<ActionTweenDelegate*>(_target)->updateTweenAction(_to  - _delta * (1 - dt), _key.c_str());
 }
 
-CCActionTween* CCActionTween::reverse() const
+ActionTween* ActionTween::reverse() const
 {
-    return CCActionTween::create(_duration, _key.c_str(), _to, _from);
+    return ActionTween::create(_duration, _key.c_str(), _to, _from);
 }
 
 

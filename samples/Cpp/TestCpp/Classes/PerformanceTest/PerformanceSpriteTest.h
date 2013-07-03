@@ -8,13 +8,13 @@ class SubTest
 public:
     ~SubTest();
     void removeByTag(int tag);
-    CCSprite* createSpriteWithTag(int tag);
-    void initWithSubTest(int nSubTest, CCNode* parent);
+    Sprite* createSpriteWithTag(int tag);
+    void initWithSubTest(int nSubTest, Node* parent);
 
 protected:
     int                    subtestNumber;
-    CCSpriteBatchNode    *batchNode;
-    CCNode*             parent;
+    SpriteBatchNode    *batchNode;
+    Node*             parent;
 };
 
 class SpriteMenuLayer : public PerformBasicLayer
@@ -28,7 +28,7 @@ public:
     virtual void showCurrentTest();
 };
 
-class SpriteMainScene : public CCScene
+class SpriteMainScene : public Scene
 {
 public:
     virtual ~SpriteMainScene();
@@ -37,11 +37,11 @@ public:
     void initWithSubTest(int nSubTest, int nNodes);
     void updateNodes();
 
-    void testNCallback(CCObject* pSender);
-    void onIncrease(CCObject* pSender);
-    void onDecrease(CCObject* pSender);
+    void testNCallback(Object* pSender);
+    void onIncrease(Object* pSender);
+    void onDecrease(Object* pSender);
 
-    virtual void doTest(CCSprite* sprite) = 0;
+    virtual void doTest(Sprite* sprite) = 0;
 
     int getSubTestNum() { return subtestNumber; }
     int getNodesNum() { return quantityNodes; }
@@ -56,49 +56,49 @@ protected:
 class SpritePerformTest1 : public SpriteMainScene
 {
 public:
-    virtual void doTest(CCSprite* sprite);
+    virtual void doTest(Sprite* sprite);
     virtual std::string title();
 };
 
 class SpritePerformTest2 : public SpriteMainScene
 {
 public:
-    virtual void doTest(CCSprite* sprite);
+    virtual void doTest(Sprite* sprite);
     virtual std::string title();
 };
 
 class SpritePerformTest3 : public SpriteMainScene
 {
 public:
-    virtual void doTest(CCSprite* sprite);
+    virtual void doTest(Sprite* sprite);
     virtual std::string title();
 };
 
 class SpritePerformTest4 : public SpriteMainScene
 {
 public:
-    virtual void doTest(CCSprite* sprite);
+    virtual void doTest(Sprite* sprite);
     virtual std::string title();
 };
 
 class SpritePerformTest5 : public SpriteMainScene
 {
 public:
-    virtual void doTest(CCSprite* sprite);
+    virtual void doTest(Sprite* sprite);
     virtual std::string title();
 };
 
 class SpritePerformTest6 : public SpriteMainScene
 {
 public:
-    virtual void doTest(CCSprite* sprite);
+    virtual void doTest(Sprite* sprite);
     virtual std::string title();
 };
 
 class SpritePerformTest7 : public SpriteMainScene
 {
 public:
-    virtual void doTest(CCSprite* sprite);
+    virtual void doTest(Sprite* sprite);
     virtual std::string title();
 };
 

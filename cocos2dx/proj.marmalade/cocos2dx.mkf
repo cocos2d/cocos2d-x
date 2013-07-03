@@ -109,6 +109,11 @@ files
 	"*.h"
 	"*.cpp"
 	
+	("../keyboard_dispatcher")
+	[keyboard_dispatcher]
+	"*.h"
+	"*.cpp"
+
 	("../label_nodes")
 	[label_nodes]
 	"*.h"

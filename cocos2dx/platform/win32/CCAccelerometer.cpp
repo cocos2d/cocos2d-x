@@ -109,7 +109,7 @@ namespace
 
     void myAccelerometerKeyHook( UINT message,WPARAM wParam,LPARAM lParam )
     {
-        cocos2d::CCAccelerometer    *pAccelerometer = cocos2d::CCDirector::sharedDirector()->getAccelerometer();
+        cocos2d::Accelerometer    *pAccelerometer = cocos2d::Director::sharedDirector()->getAccelerometer();
         bool                        sendUpdate=false;
         switch( message )
         {
@@ -147,45 +147,45 @@ namespace
 
 NS_CC_BEGIN
 
-CCAccelerometer::CCAccelerometer() : 
-    _accelDelegate(NULL)
+Accelerometer::Accelerometer() : 
+    _function(nullptr)
 {
     memset(&_accelerationValue, 0, sizeof(_accelerationValue));
 }
 
-CCAccelerometer::~CCAccelerometer() 
+Accelerometer::~Accelerometer() 
 {
 
 }
 
-void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate) 
+void Accelerometer::setDelegate(std::function<void(Acceleration*)> function) 
 {
-    _accelDelegate = pDelegate;
+    _function = function;
 
     // Enable/disable the accelerometer.
     // Well, there isn't one on Win32 so we don't do anything other than register
     // and deregister ourselves from the Windows Key handler.
-    if (pDelegate)
+    if (_function)
     {
         // Register our handler
-        CCEGLView::sharedOpenGLView()->setAccelerometerKeyHook( &myAccelerometerKeyHook );
+        EGLView::sharedOpenGLView()->setAccelerometerKeyHook( &myAccelerometerKeyHook );
     }
     else
     {
         // De-register our handler
-        CCEGLView::sharedOpenGLView()->setAccelerometerKeyHook( NULL );
+        EGLView::sharedOpenGLView()->setAccelerometerKeyHook( NULL );
         resetAccelerometer();
     }
 }
 
-void CCAccelerometer::setAccelerometerInterval(float interval)
+void Accelerometer::setAccelerometerInterval(float interval)
 {
 
 }
 
-void CCAccelerometer::update( double x,double y,double z,double timestamp ) 
+void Accelerometer::update( double x,double y,double z,double timestamp ) 
 {
-    if (_accelDelegate)
+    if (_function)
     {
         _accelerationValue.x            = x;
         _accelerationValue.y            = y;
@@ -193,7 +193,7 @@ void CCAccelerometer::update( double x,double y,double z,double timestamp )
         _accelerationValue.timestamp = timestamp;
 
         // Delegate
-        _accelDelegate->didAccelerate(&_accelerationValue);
+        _function(&_accelerationValue);
     }    
 }
 

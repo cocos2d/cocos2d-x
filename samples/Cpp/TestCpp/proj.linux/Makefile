@@ -1,6 +1,6 @@
 EXECUTABLE = TestCpp
 
-DEFINES += -DKEYBOARD_SUPPORT
+DEFINES += -DCC_KEYBOARD_SUPPORT
 
 SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ActionManagerTest/ActionManagerTest.cpp \

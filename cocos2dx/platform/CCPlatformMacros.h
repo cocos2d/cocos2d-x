@@ -32,8 +32,8 @@
 #include "CCPlatformDefine.h"
 
 /**
- * define a create function for a specific type, such as CCLayer
- * @__TYPE__ class type to add create(), such as CCLayer
+ * define a create function for a specific type, such as Layer
+ * @__TYPE__ class type to add create(), such as Layer
  */
 #define CREATE_FUNC(__TYPE__) \
 static __TYPE__* create() \
@@ -53,8 +53,8 @@ static __TYPE__* create() \
 }
 
 /**
- * define a node function for a specific type, such as CCLayer
- * @__TYPE__ class type to add node(), such as CCLayer
+ * define a node function for a specific type, such as Layer
+ * @__TYPE__ class type to add node(), such as Layer
  * @deprecated: This interface will be deprecated sooner or later.
  */
 #define NODE_FUNC(__TYPE__) \
@@ -200,12 +200,12 @@ public: virtual void set##funName(varType var)   \
 #define CC_SAFE_DELETE_ARRAY(p)     do { if(p) { delete[] (p); (p) = 0; } } while(0)
 #define CC_SAFE_FREE(p)                do { if(p) { free(p); (p) = 0; } } while(0)
 #define CC_SAFE_RELEASE(p)            do { if(p) { (p)->release(); } } while(0)
-#define CC_SAFE_RELEASE_NULL(p)        do { if(p) { (p)->release(); (p) = 0; } } while(0)
+#define CC_SAFE_RELEASE_NULL(p)        do { if(p) { (p)->release(); (p) = nullptr; } } while(0)
 #define CC_SAFE_RETAIN(p)            do { if(p) { (p)->retain(); } } while(0)
 #define CC_BREAK_IF(cond)            if(cond) break
 
 #define __CCLOGWITHFUNCTION(s, ...) \
-    CCLog("%s : %s",__FUNCTION__, CCString::createWithFormat(s, ##__VA_ARGS__)->getCString())
+    CCLog("%s : %s",__FUNCTION__, String::createWithFormat(s, ##__VA_ARGS__)->getCString())
 
 // cocos2d debug
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0

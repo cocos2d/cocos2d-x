@@ -57,7 +57,7 @@ NS_CC_BEGIN
 class BitmapDC
 {
 public:
-    BitmapDC() : _data(NULL), _cachedSize(0), _cachedFont(NULL)
+    BitmapDC() : _data(NULL), _cachedFont(NULL)
     {
         libError = FT_Init_FreeType(&_library);
         iInterval = szFont_kenning;
@@ -214,7 +214,7 @@ public:
      * while -1 means fail
      *
      */
-    int computeLineStart(FT_Face face, CCImage::ETextAlign eAlignMask, FT_UInt unicode,
+    int computeLineStart(FT_Face face, Image::ETextAlign eAlignMask, FT_UInt unicode,
             int iLineIndex)
     {
         int iRet;
@@ -223,11 +223,11 @@ public:
             return -1;
         }
 
-        if (eAlignMask == CCImage::kAlignCenter) {
+        if (eAlignMask == Image::kAlignCenter) {
             iRet = (iMaxLineWidth - vLines[iLineIndex].iLineWidth) / 2
             - SHIFT6(face->glyph->metrics.horiBearingX );
 
-        } else if (eAlignMask == CCImage::kAlignRight) {
+        } else if (eAlignMask == Image::kAlignRight) {
             iRet = (iMaxLineWidth - vLines[iLineIndex].iLineWidth)
             - SHIFT6(face->glyph->metrics.horiBearingX );
         } else {
@@ -237,17 +237,17 @@ public:
         return iRet;
     }
 
-    int computeLineStartY(FT_Face face, CCImage::ETextAlign eAlignMask, int txtHeight, int borderHeight)
+    int computeLineStartY(FT_Face face, Image::ETextAlign eAlignMask, int txtHeight, int borderHeight)
     {
         int iRet = 0;
-        if (eAlignMask == CCImage::kAlignCenter || eAlignMask == CCImage::kAlignLeft ||
-            eAlignMask == CCImage::kAlignRight ) {
+        if (eAlignMask == Image::kAlignCenter || eAlignMask == Image::kAlignLeft ||
+            eAlignMask == Image::kAlignRight ) {
             //vertical center
             iRet = (borderHeight - txtHeight)/2;
 
-        } else if (eAlignMask == CCImage::kAlignBottomRight ||
-                   eAlignMask == CCImage::kAlignBottom ||
-                   eAlignMask == CCImage::kAlignBottomLeft ) {
+        } else if (eAlignMask == Image::kAlignBottomRight ||
+                   eAlignMask == Image::kAlignBottom ||
+                   eAlignMask == Image::kAlignBottomLeft ) {
             //vertical bottom
             iRet = borderHeight - txtHeight;
         }
@@ -310,7 +310,7 @@ public:
         return true;
     }
 
-    bool renderLines(FT_Face face, CCImage::ETextAlign eAlignMask, int iCurYCursor)
+    bool renderLines(FT_Face face, Image::ETextAlign eAlignMask, int iCurYCursor)
     {
         size_t lines = vLines.size();
         for (size_t i = 0; i < lines; i++)
@@ -328,7 +328,7 @@ public:
         return true;
     }
 
-    bool getBitmap(const char *text, int nWidth, int nHeight, CCImage::ETextAlign eAlignMask, const char * pFontName, float fontSize)
+    bool getBitmap(const char *text, int nWidth, int nHeight, Image::ETextAlign eAlignMask, const char * pFontName, float fontSize)
     {
         FT_Error iError;
         if (libError)
@@ -343,24 +343,24 @@ public:
             fontfile += ".ttf" ;
         }
 
-        iError = openFont(fontfile, fontSize, fontfileOrig);
+        iError = openFont(fontfile, fontfileOrig);
         // try with fonts prefixed
         if (iError && !startsWith(fontfile,"fonts/") )
         {
             fontfile = std::string("fonts/") + fontfile;
-            iError = openFont(fontfile, fontSize, fontfileOrig);
+            iError = openFont(fontfile, fontfileOrig);
         }
 
         if (iError)
         {
             // try lowercase version
             std::transform(fontfile.begin(), fontfile.end(), fontfile.begin(), ::tolower);
-            iError = openFont(fontfile, fontSize, fontfileOrig);
+            iError = openFont(fontfile, fontfileOrig);
             if (iError)
             {
                 // try default font
                 CCLOG("font missing (%s) falling back to default font", fontfileOrig.c_str());
-                iError = openFont("fonts/Marker Felt.ttf", fontSize, fontfileOrig);
+                iError = openFont("fonts/Marker Felt.ttf", fontfileOrig);
                 if (iError)
                     CCLOG("default font missing (fonts/Marker Felt.ttf)");
             }
@@ -423,10 +423,9 @@ private:
     /**
      * Attempt to open font file, and cache it if successful.
      */
-    int openFont(const std::string& fontName, uint fontSize, const std::string& fontNameOrig);
+    int openFont(const std::string& fontName, const std::string& fontNameOrig);
     std::string fileNameExtension(const std::string& pathName);
 
-    uint _cachedSize;
     FT_Face _cachedFont;
     std::string _cachedFontname;
     std::string _cachedFontnameOrig;
@@ -438,7 +437,7 @@ static BitmapDC& sharedBitmapDC()
     return s_BmpDC;
 }
 
-bool CCImage::initWithString(
+bool Image::initWithString(
         const char * pText,
         int nWidth/* = 0*/,
         int nHeight/* = 0*/,
@@ -453,7 +452,7 @@ bool CCImage::initWithString(
 
         BitmapDC &dc = sharedBitmapDC();
 
-        //const char* pFullFontName = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pFontName);
+        //const char* pFullFontName = FileUtils::sharedFileUtils()->fullPathFromRelativePath(pFontName);
 
         CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, pFontName, nSize));
 
@@ -501,17 +500,14 @@ bool BitmapDC::startsWith(const std::string& str, const std::string& what)
     return result ;
 }
 
-int BitmapDC::openFont(const std::string& fontName, uint fontSize, const std::string& fontNameOrig)
+int BitmapDC::openFont(const std::string& fontName, const std::string& fontNameOrig)
 {
     // try to satisfy request based on currently cached font.
-    if (_cachedSize == fontSize)
-    {
-        if (fontNameOrig == _cachedFontnameOrig)
-          return 0;
+    if (fontNameOrig == _cachedFontnameOrig)
+      return 0;
 
-        if (fontName == _cachedFontname)
-          return 0;
-    }
+    if (fontName == _cachedFontname)
+      return 0;
 
     FT_Face face;
     int iError = FT_New_Face(_library, fontName.c_str(), 0, &face);
@@ -526,7 +522,6 @@ int BitmapDC::openFont(const std::string& fontName, uint fontSize, const std::st
     _cachedFontnameOrig = fontNameOrig;
     _cachedFontname = fontName;
     _cachedFont = face;
-    _cachedSize = fontSize;
     return 0;
 }
 

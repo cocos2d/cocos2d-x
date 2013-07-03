@@ -1,8 +1,8 @@
 //
-//  CCTexture2DMutable.cpp
+//  Texture2DMutable.cpp
 //   Ported to C++ by Dmitry Matyukhin
 //
-//  CCMutableTexture.m
+//  MutableTexture.m
 //	Created by Lam Hoang Pham.
 //  Improved by Manuel Martinez-Almeida.
 //
@@ -14,65 +14,65 @@
 using namespace cocos2d;
 
 #if CC_MUTABLE_TEXTURE_SAVE_ORIGINAL_DATA
-void* CCTexture2DMutable::getOriginalTexData() {
+void* Texture2DMutable::getOriginalTexData() {
     return originalData_;
 }
 #endif
 
-void* CCTexture2DMutable::getTexData() {
+void* Texture2DMutable::getTexData() {
     return data_;
 }
 
-void CCTexture2DMutable::setTexData(void *var) {
+void Texture2DMutable::setTexData(void *var) {
     data_ = var;
 }
 
 
-void CCTexture2DMutable::releaseData(void* data)
+void Texture2DMutable::releaseData(void* data)
 {
 	//Don't free the data
 }
 
-void* CCTexture2DMutable::keepData(void* data, unsigned int lenght)
+void* Texture2DMutable::keepData(void* data, unsigned int lenght)
 {
 	void *newData = malloc(lenght);
 	memmove(newData, data, lenght);
 	return newData;
 }
 
-bool CCTexture2DMutable::initWithImageFile(const char *imageFile, cocos2d::CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const cocos2d::CCSize& contentSize)
+bool Texture2DMutable::initWithImageFile(const char *imageFile, cocos2d::Texture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const cocos2d::Size& contentSize)
 {
-    image_ = new cocos2d::CCImage();
+    image_ = new cocos2d::Image();
     image_->initWithImageFile(imageFile);
     
     
     return initWithData(image_->getData(), pixelFormat, pixelsWide, pixelsHigh, contentSize);
 }
 
-bool CCTexture2DMutable::initWithImageFile(const char *imageFile)
+bool Texture2DMutable::initWithImageFile(const char *imageFile)
 {
-    image_ = new cocos2d::CCImage();
+    image_ = new cocos2d::Image();
     image_->initWithImageFile(imageFile);
     
     bool                      hasAlpha = image_->hasAlpha();
-    CCSize                    imageSize = CCSizeMake((float)(image_->getWidth()), (float)(image_->getHeight()));
+    Size                    imageSize = CCSizeMake((float)(image_->getWidth()), (float)(image_->getHeight()));
     size_t                    bpp = image_->getBitsPerComponent();
-    cocos2d::CCTexture2DPixelFormat pixelFormat;
+    cocos2d::Texture2DPixelFormat pixelFormat;
     
     // compute pixel format
     if(hasAlpha)
     {
-        pixelFormat = kCCTexture2DPixelFormat_Default;
+        pixelFormat = kTexture2DPixelFormat_Default;
     }
     else
     {
         if (bpp >= 8)
         {
-            pixelFormat = kCCTexture2DPixelFormat_RGB888;
+            pixelFormat = kTexture2DPixelFormat_RGB888;
         }
         else
         {
-            pixelFormat = kCCTexture2DPixelFormat_RGB565;
+            pixelFormat = kTexture2DPixelFormat_RGB565;
         }
         
     }
@@ -80,9 +80,9 @@ bool CCTexture2DMutable::initWithImageFile(const char *imageFile)
     return initWithData(image_->getData(), pixelFormat, imageSize.width, imageSize.height, imageSize);
 }
 
-bool CCTexture2DMutable::initWithData(const void* data, CCTexture2DPixelFormat pixelFormat, unsigned int width, unsigned int height, const CCSize& size)
+bool Texture2DMutable::initWithData(const void* data, Texture2DPixelFormat pixelFormat, unsigned int width, unsigned int height, const Size& size)
 {
-	if(!CCTexture2D::initWithData(data, pixelFormat, width, height, size)) {
+	if(!Texture2D::initWithData(data, pixelFormat, width, height, size)) {
         return false;
     }
         
@@ -108,7 +108,7 @@ bool CCTexture2DMutable::initWithData(const void* data, CCTexture2DPixelFormat p
     return true;
 }
 
-ccColor4B CCTexture2DMutable::pixelAt(const CCPoint& pt)
+ccColor4B Texture2DMutable::pixelAt(const Point& pt)
 {
     
 	ccColor4B c = {0, 0, 0, 0};
@@ -162,7 +162,7 @@ ccColor4B CCTexture2DMutable::pixelAt(const CCPoint& pt)
 	return c;
 }
 
-bool CCTexture2DMutable::setPixelAt(const CCPoint& pt, ccColor4B c)
+bool Texture2DMutable::setPixelAt(const Point& pt, ccColor4B c)
 {
 	if(!data_)return false;
 	if(pt.x < 0 || pt.y < 0) return false;
@@ -199,29 +199,29 @@ bool CCTexture2DMutable::setPixelAt(const CCPoint& pt, ccColor4B c)
 	return true;
 }
 
-void CCTexture2DMutable::fill(ccColor4B p)
+void Texture2DMutable::fill(ccColor4B p)
 {
 	for(int r = 0; r < _contentSize.height; ++r)
 		for(int c = 0; c < _contentSize.width; ++c)
             this->setPixelAt(CCPointMake(c, r), p);
 }
 
-CCTexture2D* CCTexture2DMutable::copyMutable(bool isMutable )
+Texture2D* Texture2DMutable::copyMutable(bool isMutable )
 {	
-	CCTexture2D* co;
+	Texture2D* co;
 	if(isMutable)
 	{
 		int mem = _pixelsWide*_pixelsHigh*bytesPerPixel_;
 		void *newData = malloc(mem);
 		memcpy(newData, data_, mem);
-        co = new CCTexture2DMutable();
+        co = new Texture2DMutable();
         if (!co->initWithData(newData, _pixelFormat, _pixelsWide, _pixelsHigh, _contentSize)) {
             delete co;
             co = NULL;
         }
 	}else {
         
-        co = new CCTexture2D();
+        co = new Texture2D();
         if (!co->initWithData(data_, _pixelFormat, _pixelsWide, _pixelsHigh, _contentSize)) {
             delete co;
             co = NULL;
@@ -231,12 +231,12 @@ CCTexture2D* CCTexture2DMutable::copyMutable(bool isMutable )
     return co;
 }
 
-CCTexture2DMutable* CCTexture2DMutable::copy()
+Texture2DMutable* Texture2DMutable::copy()
 {
-	return (CCTexture2DMutable*)this->copyMutable( true );
+	return (Texture2DMutable*)this->copyMutable( true );
 }
 
-void CCTexture2DMutable::copy(CCTexture2DMutable* textureToCopy, const CCPoint& offset)
+void Texture2DMutable::copy(Texture2DMutable* textureToCopy, const Point& offset)
 {
 	for(int r = 0; r < _contentSize.height;++r){
 		for(int c = 0; c < _contentSize.width; ++c){
@@ -245,18 +245,18 @@ void CCTexture2DMutable::copy(CCTexture2DMutable* textureToCopy, const CCPoint& 
 	}
 }
 
-void CCTexture2DMutable::restore()
+void Texture2DMutable::restore()
 {
 #if CC_MUTABLE_TEXTURE_SAVE_ORIGINAL_DATA
 	memcpy(data_, originalData_, bytesPerPixel_*_pixelsWide*_pixelsHigh);
 	this->apply();
 #else
-	//You should set CC_MUTABLE_TEXTURE_SAVE_ORIGINAL_DATA 1 in CCTexture2DMutable.h
-    CCAssert(false, "Exception:  CCMutableTexture.restore was disabled by the user.");
+	//You should set CC_MUTABLE_TEXTURE_SAVE_ORIGINAL_DATA 1 in Texture2DMutable.h
+    CCAssert(false, "Exception:  MutableTexture.restore was disabled by the user.");
 #endif
 }
 
-void CCTexture2DMutable::apply()
+void Texture2DMutable::apply()
 {
 	if(!data_) return;
     
@@ -287,17 +287,17 @@ void CCTexture2DMutable::apply()
 	dirty_ = false;
 }
 
-void *CCTexture2DMutable::getData()
+void *Texture2DMutable::getData()
 {
     return data_;
 }
 
-CCTexture2DMutable::CCTexture2DMutable(void)
+Texture2DMutable::Texture2DMutable(void)
 {
     image_ = NULL;
 }
 
-CCTexture2DMutable::~CCTexture2DMutable(void)
+Texture2DMutable::~Texture2DMutable(void)
 {
 	CCLOGINFO("cocos2d: deallocing %p", this);
     

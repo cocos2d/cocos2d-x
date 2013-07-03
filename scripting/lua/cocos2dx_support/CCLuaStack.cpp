@@ -85,23 +85,23 @@ int lua_print(lua_State * luastate)
 
 NS_CC_BEGIN
 
-CCLuaStack *CCLuaStack::create(void)
+LuaStack *LuaStack::create(void)
 {
-    CCLuaStack *stack = new CCLuaStack();
+    LuaStack *stack = new LuaStack();
     stack->init();
     stack->autorelease();
     return stack;
 }
 
-CCLuaStack *CCLuaStack::attach(lua_State *L)
+LuaStack *LuaStack::attach(lua_State *L)
 {
-    CCLuaStack *stack = new CCLuaStack();
+    LuaStack *stack = new LuaStack();
     stack->initWithLuaState(L);
     stack->autorelease();
     return stack;
 }
 
-bool CCLuaStack::init(void)
+bool LuaStack::init(void)
 {
     _state = lua_open();
     luaL_openlibs(_state);
@@ -116,7 +116,7 @@ bool CCLuaStack::init(void)
     luaL_register(_state, "_G", global_functions);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    CCLuaObjcBridge::luaopen_luaoc(_state);
+    LuaObjcBridge::luaopen_luaoc(_state);
 #endif
     
     // add cocos2dx loader
@@ -125,13 +125,13 @@ bool CCLuaStack::init(void)
     return true;
 }
 
-bool CCLuaStack::initWithLuaState(lua_State *L)
+bool LuaStack::initWithLuaState(lua_State *L)
 {
     _state = L;
     return true;
 }
 
-void CCLuaStack::addSearchPath(const char* path)
+void LuaStack::addSearchPath(const char* path)
 {
     lua_getglobal(_state, "package");                                  /* L: package */
     lua_getfield(_state, -1, "path");                /* get package.path, L: package path */
@@ -141,7 +141,7 @@ void CCLuaStack::addSearchPath(const char* path)
     lua_pop(_state, 2);                                                /* L: - */
 }
 
-void CCLuaStack::addLuaLoader(lua_CFunction func)
+void LuaStack::addLuaLoader(lua_CFunction func)
 {
     if (!func) return;
     
@@ -167,23 +167,23 @@ void CCLuaStack::addLuaLoader(lua_CFunction func)
 }
 
 
-void CCLuaStack::removeScriptObjectByCCObject(CCObject* pObj)
+void LuaStack::removeScriptObjectByObject(Object* pObj)
 {
     toluafix_remove_ccobject_by_refid(_state, pObj->_luaID);
 }
 
-void CCLuaStack::removeScriptHandler(int nHandler)
+void LuaStack::removeScriptHandler(int nHandler)
 {
     toluafix_remove_function_by_refid(_state, nHandler);
 }
 
-int CCLuaStack::executeString(const char *codes)
+int LuaStack::executeString(const char *codes)
 {
     luaL_loadstring(_state, codes);
     return executeFunction(0);
 }
 
-int CCLuaStack::executeScriptFile(const char* filename)
+int LuaStack::executeScriptFile(const char* filename)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     std::string code("require \"");
@@ -191,7 +191,7 @@ int CCLuaStack::executeScriptFile(const char* filename)
     code.append("\"");
     return executeString(code.c_str());
 #else
-    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filename);
+    std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(filename);
     ++_callFromLua;
     int nRet = luaL_dofile(_state, fullPath.c_str());
     --_callFromLua;
@@ -208,7 +208,7 @@ int CCLuaStack::executeScriptFile(const char* filename)
 #endif
 }
 
-int CCLuaStack::executeGlobalFunction(const char* functionName)
+int LuaStack::executeGlobalFunction(const char* functionName)
 {
     lua_getglobal(_state, functionName);       /* query function by name, stack: function */
     if (!lua_isfunction(_state, -1))
@@ -220,103 +220,103 @@ int CCLuaStack::executeGlobalFunction(const char* functionName)
     return executeFunction(0);
 }
 
-void CCLuaStack::clean(void)
+void LuaStack::clean(void)
 {
     lua_settop(_state, 0);
 }
 
-void CCLuaStack::pushInt(int intValue)
+void LuaStack::pushInt(int intValue)
 {
     lua_pushinteger(_state, intValue);
 }
 
-void CCLuaStack::pushFloat(float floatValue)
+void LuaStack::pushFloat(float floatValue)
 {
     lua_pushnumber(_state, floatValue);
 }
 
-void CCLuaStack::pushBoolean(bool boolValue)
+void LuaStack::pushBoolean(bool boolValue)
 {
     lua_pushboolean(_state, boolValue);
 }
 
-void CCLuaStack::pushString(const char* stringValue)
+void LuaStack::pushString(const char* stringValue)
 {
     lua_pushstring(_state, stringValue);
 }
 
-void CCLuaStack::pushString(const char* stringValue, int length)
+void LuaStack::pushString(const char* stringValue, int length)
 {
     lua_pushlstring(_state, stringValue, length);
 }
 
-void CCLuaStack::pushNil(void)
+void LuaStack::pushNil(void)
 {
     lua_pushnil(_state);
 }
 
-void CCLuaStack::pushCCObject(CCObject* objectValue, const char* typeName)
+void LuaStack::pushObject(Object* objectValue, const char* typeName)
 {
     toluafix_pushusertype_ccobject(_state, objectValue->_ID, &objectValue->_luaID, objectValue, typeName);
 }
 
-void CCLuaStack::pushCCLuaValue(const CCLuaValue& value)
+void LuaStack::pushLuaValue(const LuaValue& value)
 {
-    const CCLuaValueType type = value.getType();
-    if (type == CCLuaValueTypeInt)
+    const LuaValueType type = value.getType();
+    if (type == LuaValueTypeInt)
     {
         return pushInt(value.intValue());
     }
-    else if (type == CCLuaValueTypeFloat)
+    else if (type == LuaValueTypeFloat)
     {
         return pushFloat(value.floatValue());
     }
-    else if (type == CCLuaValueTypeBoolean)
+    else if (type == LuaValueTypeBoolean)
     {
         return pushBoolean(value.booleanValue());
     }
-    else if (type == CCLuaValueTypeString)
+    else if (type == LuaValueTypeString)
     {
         return pushString(value.stringValue().c_str());
     }
-    else if (type == CCLuaValueTypeDict)
+    else if (type == LuaValueTypeDict)
     {
-        pushCCLuaValueDict(value.dictValue());
+        pushLuaValueDict(value.dictValue());
     }
-    else if (type == CCLuaValueTypeArray)
+    else if (type == LuaValueTypeArray)
     {
-        pushCCLuaValueArray(value.arrayValue());
+        pushLuaValueArray(value.arrayValue());
     }
-    else if (type == CCLuaValueTypeCCObject)
+    else if (type == LuaValueTypeObject)
     {
-        pushCCObject(value.ccobjectValue(), value.getCCObjectTypename().c_str());
+        pushObject(value.ccobjectValue(), value.getObjectTypename().c_str());
     }
 }
 
-void CCLuaStack::pushCCLuaValueDict(const CCLuaValueDict& dict)
+void LuaStack::pushLuaValueDict(const LuaValueDict& dict)
 {
     lua_newtable(_state);                                              /* L: table */
-    for (CCLuaValueDictIterator it = dict.begin(); it != dict.end(); ++it)
+    for (LuaValueDictIterator it = dict.begin(); it != dict.end(); ++it)
     {
         lua_pushstring(_state, it->first.c_str());                     /* L: table key */
-        pushCCLuaValue(it->second);                                     /* L: table key value */
+        pushLuaValue(it->second);                                     /* L: table key value */
         lua_rawset(_state, -3);                     /* table.key = value, L: table */
     }
 }
 
-void CCLuaStack::pushCCLuaValueArray(const CCLuaValueArray& array)
+void LuaStack::pushLuaValueArray(const LuaValueArray& array)
 {
     lua_newtable(_state);                                              /* L: table */
     int index = 1;
-    for (CCLuaValueArrayIterator it = array.begin(); it != array.end(); ++it)
+    for (LuaValueArrayIterator it = array.begin(); it != array.end(); ++it)
     {
-        pushCCLuaValue(*it);                                            /* L: table value */
+        pushLuaValue(*it);                                            /* L: table value */
         lua_rawseti(_state, -2, index);          /* table[index] = value, L: table */
         ++index;
     }
 }
 
-bool CCLuaStack::pushFunctionByHandler(int nHandler)
+bool LuaStack::pushFunctionByHandler(int nHandler)
 {
     toluafix_get_function_by_refid(_state, nHandler);                  /* L: ... func */
     if (!lua_isfunction(_state, -1))
@@ -328,7 +328,7 @@ bool CCLuaStack::pushFunctionByHandler(int nHandler)
     return true;
 }
 
-int CCLuaStack::executeFunction(int numArgs)
+int LuaStack::executeFunction(int numArgs)
 {
     int functionIndex = -(numArgs + 1);
     if (!lua_isfunction(_state, functionIndex))
@@ -389,7 +389,7 @@ int CCLuaStack::executeFunction(int numArgs)
     return ret;
 }
 
-int CCLuaStack::executeFunctionByHandler(int nHandler, int numArgs)
+int LuaStack::executeFunctionByHandler(int nHandler, int numArgs)
 {
     int ret = 0;
     if (pushFunctionByHandler(nHandler))                                /* L: ... arg1 arg2 ... func */
@@ -404,7 +404,7 @@ int CCLuaStack::executeFunctionByHandler(int nHandler, int numArgs)
     return ret;
 }
 
-bool CCLuaStack::handleAssert(const char *msg)
+bool LuaStack::handleAssert(const char *msg)
 {
     if (_callFromLua == 0) return false;
     
@@ -413,7 +413,7 @@ bool CCLuaStack::handleAssert(const char *msg)
     return true;
 }
 
-int CCLuaStack::reallocateScriptHandler(int nHandler)
+int LuaStack::reallocateScriptHandler(int nHandler)
 {
     LUA_FUNCTION  nNewHandle = -1;
     

@@ -3,7 +3,7 @@
 
 #include "../testBasic.h"
 
-class ExtensionsMainLayer : public CCLayer
+class ExtensionsMainLayer : public Layer
 {
 public:
     virtual void onEnter();

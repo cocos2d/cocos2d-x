@@ -13,9 +13,9 @@ public:
     virtual std::string subtitle();
     virtual void onEnter();
 
-    void restartCallback(CCObject* pSender);
-    void nextCallback(CCObject* pSender);
-    void backCallback(CCObject* pSender);
+    void restartCallback(Object* pSender);
+    void nextCallback(Object* pSender);
+    void backCallback(Object* pSender);
 };
 
 class TextureTIFF : public TextureDemo
@@ -56,7 +56,7 @@ public:
     virtual void onEnter();
 };
 
-class TexturePVR : public TextureDemo
+class TexturePVRTest : public TextureDemo
 {
 public:
     virtual std::string title();
@@ -348,7 +348,7 @@ class TextureAsync : public TextureDemo
 public:
     virtual ~TextureAsync();
     void loadImages(float dt);
-    void imageLoaded(CCObject* pObj);
+    void imageLoaded(Object* pObj);
     virtual std::string title();
     virtual std::string subtitle();
     virtual void onEnter();
@@ -399,7 +399,7 @@ public:
     virtual void onEnter();
     virtual void draw();
 private:
-    CCTexture2D* _tex1, *_tex2;
+    Texture2D* _tex1, *_tex2;
 };
 
 class TextureDrawInRect : public TextureDemo
@@ -411,7 +411,7 @@ public:
     virtual void onEnter();
     virtual void draw();
 private:
-    CCTexture2D* _tex1, *_tex2;
+    Texture2D* _tex1, *_tex2;
 };
 
 class TextureTestScene : public TestScene
@@ -426,10 +426,10 @@ public:
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
-    void updateImage(CCObject *sender);
-    void changeBackgroundVisible(CCObject *sender);
+    void updateImage(Object *sender);
+    void changeBackgroundVisible(Object *sender);
 private:
-    CCSprite *_background;
+    Sprite *_background;
 };
 
 class TexturePVRv3Premult : public TextureDemo
@@ -440,7 +440,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
     
-    void transformSprite(cocos2d::CCSprite *sprite);
+    void transformSprite(cocos2d::Sprite *sprite);
 };
 
 // ETC1 texture format test

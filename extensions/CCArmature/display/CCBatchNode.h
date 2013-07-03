@@ -27,24 +27,24 @@ THE SOFTWARE.
 
 #include "../utils/CCArmatureDefine.h"
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
 
-class CCBatchNode : public CCNode
+class BatchNode : public Node
 {
 public:
-    static CCBatchNode *create();
+    static BatchNode *create();
 public:
-    CCBatchNode();
+    BatchNode();
 
     virtual bool init();
-    virtual void addChild(CCNode *child, int zOrder, int tag);
+    virtual void addChild(Node *child, int zOrder, int tag);
     virtual void visit();
     void draw();
 
 protected:
-    CCTextureAtlas *_atlas;
+    TextureAtlas *_atlas;
 };
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {
 
 #endif /*__CCBATCHNODE_H__*/

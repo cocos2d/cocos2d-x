@@ -23,6 +23,10 @@
 #include "CCPhysicsSprite.h"
 #include "support/CCPointExtension.h"
 
+#if defined(CC_ENABLE_CHIPMUNK_INTEGRATION) && defined(CC_ENABLE_BOX2D_INTEGRATION)
+#error "Either Chipmunk or Box2d should be enabled, but not both at the same time"
+#endif
+
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 #include "chipmunk.h"
 #elif CC_ENABLE_BOX2D_INTEGRATION
@@ -31,19 +35,16 @@
 
 NS_CC_EXT_BEGIN
 
-CCPhysicsSprite::CCPhysicsSprite()
+PhysicsSprite::PhysicsSprite()
 : _ignoreBodyRotation(false)
-#if CC_ENABLE_CHIPMUNK_INTEGRATION
 , _CPBody(NULL)
-#elif CC_ENABLE_BOX2D_INTEGRATION
 , _pB2Body(NULL)
 , _PTMRatio(0.0f)
-#endif
 {}
 
-CCPhysicsSprite* CCPhysicsSprite::create()
+PhysicsSprite* PhysicsSprite::create()
 {
-    CCPhysicsSprite* pRet = new CCPhysicsSprite();
+    PhysicsSprite* pRet = new PhysicsSprite();
     if (pRet && pRet->init())
     {
         pRet->autorelease();
@@ -56,9 +57,9 @@ CCPhysicsSprite* CCPhysicsSprite::create()
     return pRet;
 }
 
-CCPhysicsSprite* CCPhysicsSprite::createWithTexture(CCTexture2D *pTexture)
+PhysicsSprite* PhysicsSprite::createWithTexture(Texture2D *pTexture)
 {
-    CCPhysicsSprite* pRet = new CCPhysicsSprite();
+    PhysicsSprite* pRet = new PhysicsSprite();
     if (pRet && pRet->initWithTexture(pTexture))
     {
         pRet->autorelease();
@@ -71,9 +72,9 @@ CCPhysicsSprite* CCPhysicsSprite::createWithTexture(CCTexture2D *pTexture)
     return pRet;
 }
 
-CCPhysicsSprite* CCPhysicsSprite::createWithTexture(CCTexture2D *pTexture, const CCRect& rect)
+PhysicsSprite* PhysicsSprite::createWithTexture(Texture2D *pTexture, const Rect& rect)
 {
-    CCPhysicsSprite* pRet = new CCPhysicsSprite();
+    PhysicsSprite* pRet = new PhysicsSprite();
     if (pRet && pRet->initWithTexture(pTexture, rect))
     {
         pRet->autorelease();
@@ -86,9 +87,9 @@ CCPhysicsSprite* CCPhysicsSprite::createWithTexture(CCTexture2D *pTexture, const
     return pRet;
 }
 
-CCPhysicsSprite* CCPhysicsSprite::createWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
+PhysicsSprite* PhysicsSprite::createWithSpriteFrame(SpriteFrame *pSpriteFrame)
 {
-    CCPhysicsSprite* pRet = new CCPhysicsSprite();
+    PhysicsSprite* pRet = new PhysicsSprite();
     if (pRet && pRet->initWithSpriteFrame(pSpriteFrame))
     {
         pRet->autorelease();
@@ -101,9 +102,9 @@ CCPhysicsSprite* CCPhysicsSprite::createWithSpriteFrame(CCSpriteFrame *pSpriteFr
     return pRet;
 }
 
-CCPhysicsSprite* CCPhysicsSprite::createWithSpriteFrameName(const char *pszSpriteFrameName)
+PhysicsSprite* PhysicsSprite::createWithSpriteFrameName(const char *pszSpriteFrameName)
 {
-    CCPhysicsSprite* pRet = new CCPhysicsSprite();
+    PhysicsSprite* pRet = new PhysicsSprite();
     if (pRet && pRet->initWithSpriteFrameName(pszSpriteFrameName))
     {
         pRet->autorelease();
@@ -116,9 +117,9 @@ CCPhysicsSprite* CCPhysicsSprite::createWithSpriteFrameName(const char *pszSprit
     return pRet;
 }
 
-CCPhysicsSprite* CCPhysicsSprite::create(const char *pszFileName)
+PhysicsSprite* PhysicsSprite::create(const char *pszFileName)
 {
-    CCPhysicsSprite* pRet = new CCPhysicsSprite();
+    PhysicsSprite* pRet = new PhysicsSprite();
     if (pRet && pRet->initWithFile(pszFileName))
     {
         pRet->autorelease();
@@ -131,9 +132,9 @@ CCPhysicsSprite* CCPhysicsSprite::create(const char *pszFileName)
     return pRet;
 }
 
-CCPhysicsSprite* CCPhysicsSprite::create(const char *pszFileName, const CCRect& rect)
+PhysicsSprite* PhysicsSprite::create(const char *pszFileName, const Rect& rect)
 {
-    CCPhysicsSprite* pRet = new CCPhysicsSprite();
+    PhysicsSprite* pRet = new PhysicsSprite();
     if (pRet && pRet->initWithFile(pszFileName, rect))
     {
         pRet->autorelease();
@@ -149,201 +150,252 @@ CCPhysicsSprite* CCPhysicsSprite::create(const char *pszFileName, const CCRect& 
 // this method will only get called if the sprite is batched.
 // return YES if the physic's values (angles, position ) changed.
 // If you return NO, then nodeToParentTransform won't be called.
-bool CCPhysicsSprite::isDirty()
+bool PhysicsSprite::isDirty()
 {
     return true;
 }
 
-bool CCPhysicsSprite::isIgnoreBodyRotation() const
+bool PhysicsSprite::isIgnoreBodyRotation() const
 {
     return _ignoreBodyRotation;
 }
 
-void CCPhysicsSprite::setIgnoreBodyRotation(bool bIgnoreBodyRotation)
+void PhysicsSprite::setIgnoreBodyRotation(bool bIgnoreBodyRotation)
 {
     _ignoreBodyRotation = bIgnoreBodyRotation;
 }
 
 // Override the setters and getters to always reflect the body's properties.
-const CCPoint& CCPhysicsSprite::getPosition()
+const Point& PhysicsSprite::getPosition()
 {
     updatePosFromPhysics();
-    return CCNode::getPosition();
+    return Node::getPosition();
 }
 
-void CCPhysicsSprite::getPosition(float* x, float* y)
+void PhysicsSprite::getPosition(float* x, float* y)
 {
     updatePosFromPhysics();
-    return CCNode::getPosition(x, y);
+    return Node::getPosition(x, y);
 }
 
-float CCPhysicsSprite::getPositionX()
+float PhysicsSprite::getPositionX()
 {
     updatePosFromPhysics();
     return _position.x;
 }
 
-float CCPhysicsSprite::getPositionY()
+float PhysicsSprite::getPositionY()
 {
     updatePosFromPhysics();
     return _position.y;
 }
 
+//
+// Chipmunk only
+//
+
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 
-cpBody* CCPhysicsSprite::getCPBody() const
+cpBody* PhysicsSprite::getCPBody() const
 {
     return _CPBody;
 }
 
-void CCPhysicsSprite::setCPBody(cpBody *pBody)
+void PhysicsSprite::setCPBody(cpBody *pBody)
 {
     _CPBody = pBody;
 }
 
-void CCPhysicsSprite::updatePosFromPhysics()
+b2Body* PhysicsSprite::getB2Body() const
 {
-    cpVect cpPos = cpBodyGetPos(_CPBody);
-    _position = ccp(cpPos.x, cpPos.y);
+    CCAssert(false, "Can't call box2d methods when Chipmunk is enabled");
+    return NULL;
 }
 
-void CCPhysicsSprite::setPosition(const CCPoint &pos)
+void PhysicsSprite::setB2Body(b2Body *pBody)
 {
-    cpVect cpPos = cpv(pos.x, pos.y);
-    cpBodySetPos(_CPBody, cpPos);
+    CCAssert(false, "Can't call box2d methods when Chipmunk is enabled");
 }
 
-float CCPhysicsSprite::getRotation()
+float PhysicsSprite::getPTMRatio() const
 {
-    return (_ignoreBodyRotation ? CCSprite::getRotation() : -CC_RADIANS_TO_DEGREES(cpBodyGetAngle(_CPBody)));
+    CCAssert(false, "Can't call box2d methods when Chipmunk is enabled");
+    return 0;
 }
 
-void CCPhysicsSprite::setRotation(float fRotation)
+void PhysicsSprite::setPTMRatio(float fRatio)
 {
-    if (_ignoreBodyRotation)
-    {
-        CCSprite::setRotation(fRotation);
-    }
-    else
-    {
-        cpBodySetAngle(_CPBody, -CC_DEGREES_TO_RADIANS(fRotation));
-    }
+    CCAssert(false, "Can't call box2d methods when Chipmunk is enabled");
 }
 
-// returns the transform matrix according the Chipmunk Body values
-CCAffineTransform CCPhysicsSprite::nodeToParentTransform()
-{
-    // Although scale is not used by physics engines, it is calculated just in case
-	// the sprite is animated (scaled up/down) using actions.
-	// For more info see: http://www.cocos2d-iphone.org/forum/topic/68990
-	cpVect rot = (_ignoreBodyRotation ? cpvforangle(-CC_DEGREES_TO_RADIANS(_rotationX)) : _CPBody->rot);
-	float x = _CPBody->p.x + rot.x * -_anchorPointInPoints.x * _scaleX - rot.y * -_anchorPointInPoints.y * _scaleY;
-	float y = _CPBody->p.y + rot.y * -_anchorPointInPoints.x * _scaleX + rot.x * -_anchorPointInPoints.y * _scaleY;
-	
-	if (_ignoreAnchorPointForPosition)
-    {
-		x += _anchorPointInPoints.x;
-		y += _anchorPointInPoints.y;
-	}
-	
-	return (_transform = CCAffineTransformMake(rot.x * _scaleX, rot.y * _scaleX,
-                                                 -rot.y * _scaleY, rot.x * _scaleY,
-                                                 x,	y));
-}
-
+//
+// Box2d only
+//
 #elif CC_ENABLE_BOX2D_INTEGRATION
 
-b2Body* CCPhysicsSprite::getB2Body() const
+b2Body* PhysicsSprite::getB2Body() const
 {
     return _pB2Body;
 }
 
-void CCPhysicsSprite::setB2Body(b2Body *pBody)
+void PhysicsSprite::setB2Body(b2Body *pBody)
 {
     _pB2Body = pBody;
 }
 
-float CCPhysicsSprite::getPTMRatio() const
+float PhysicsSprite::getPTMRatio() const
 {
     return _PTMRatio;
 }
 
-void CCPhysicsSprite::setPTMRatio(float fRatio)
+void PhysicsSprite::setPTMRatio(float fRatio)
 {
     _PTMRatio = fRatio;
 }
 
-// Override the setters and getters to always reflect the body's properties.
-void CCPhysicsSprite::updatePosFromPhysics()
+cpBody* PhysicsSprite::getCPBody() const
 {
+    CCAssert(false, "Can't call Chipmunk methods when Box2d is enabled");
+    return NULL;
+}
+
+void PhysicsSprite::setCPBody(cpBody *pBody)
+{
+    CCAssert(false, "Can't call Chipmunk methods when Box2d is enabled");
+}
+
+#endif
+
+//
+// Common to Box2d and Chipmunk
+//
+
+void PhysicsSprite::updatePosFromPhysics()
+{
+
+#if CC_ENABLE_CHIPMUNK_INTEGRATION
+
+    cpVect cpPos = cpBodyGetPos(_CPBody);
+    _position = ccp(cpPos.x, cpPos.y);
+
+#elif CC_ENABLE_BOX2D_INTEGRATION
+
     b2Vec2 pos = _pB2Body->GetPosition();
     float x = pos.x * _PTMRatio;
     float y = pos.y * _PTMRatio;
     _position = ccp(x,y);
+#endif
+
 }
 
-void CCPhysicsSprite::setPosition(const CCPoint &pos)
+void PhysicsSprite::setPosition(const Point &pos)
 {
+#if CC_ENABLE_CHIPMUNK_INTEGRATION
+
+    cpVect cpPos = cpv(pos.x, pos.y);
+    cpBodySetPos(_CPBody, cpPos);
+
+#elif CC_ENABLE_BOX2D_INTEGRATION
+
     float angle = _pB2Body->GetAngle();
     _pB2Body->SetTransform(b2Vec2(pos.x / _PTMRatio, pos.y / _PTMRatio), angle);
+#endif
+
 }
 
-float CCPhysicsSprite::getRotation()
+float PhysicsSprite::getRotation()
 {
-    return (_ignoreBodyRotation ? CCSprite::getRotation() :
+#if CC_ENABLE_CHIPMUNK_INTEGRATION
+
+    return (_ignoreBodyRotation ? Sprite::getRotation() : -CC_RADIANS_TO_DEGREES(cpBodyGetAngle(_CPBody)));
+
+#elif CC_ENABLE_BOX2D_INTEGRATION
+    
+    return (_ignoreBodyRotation ? Sprite::getRotation() :
             CC_RADIANS_TO_DEGREES(_pB2Body->GetAngle()));
+#endif
+
 }
 
-void CCPhysicsSprite::setRotation(float fRotation)
+void PhysicsSprite::setRotation(float fRotation)
 {
     if (_ignoreBodyRotation)
     {
-        CCSprite::setRotation(fRotation);
+        Sprite::setRotation(fRotation);
     }
+
+#if CC_ENABLE_CHIPMUNK_INTEGRATION
+    else
+    {
+        cpBodySetAngle(_CPBody, -CC_DEGREES_TO_RADIANS(fRotation));
+    }
+
+#elif CC_ENABLE_BOX2D_INTEGRATION
     else
     {
         b2Vec2 p = _pB2Body->GetPosition();
         float radians = CC_DEGREES_TO_RADIANS(fRotation);
         _pB2Body->SetTransform(p, radians);
     }
+#endif
+
 }
 
-// returns the transform matrix according the Box2D Body values
-CCAffineTransform CCPhysicsSprite::nodeToParentTransform()
+// returns the transform matrix according the Chipmunk Body values
+AffineTransform PhysicsSprite::nodeToParentTransform()
 {
-    b2Vec2 pos  = _pB2Body->GetPosition();
-	
-	float x = pos.x * _PTMRatio;
-	float y = pos.y * _PTMRatio;
-	
+    // Although scale is not used by physics engines, it is calculated just in case
+	// the sprite is animated (scaled up/down) using actions.
+	// For more info see: http://www.cocos2d-iphone.org/forum/topic/68990
+
+#if CC_ENABLE_CHIPMUNK_INTEGRATION
+
+	cpVect rot = (_ignoreBodyRotation ? cpvforangle(-CC_DEGREES_TO_RADIANS(_rotationX)) : _CPBody->rot);
+	float x = _CPBody->p.x + rot.x * -_anchorPointInPoints.x * _scaleX - rot.y * -_anchorPointInPoints.y * _scaleY;
+	float y = _CPBody->p.y + rot.y * -_anchorPointInPoints.x * _scaleX + rot.x * -_anchorPointInPoints.y * _scaleY;
+
 	if (_ignoreAnchorPointForPosition)
     {
 		x += _anchorPointInPoints.x;
 		y += _anchorPointInPoints.y;
 	}
-	
+
+	return (_transform = AffineTransformMake(rot.x * _scaleX, rot.y * _scaleX,
+                                             -rot.y * _scaleY, rot.x * _scaleY,
+                                             x,	y));
+
+
+#elif CC_ENABLE_BOX2D_INTEGRATION
+
+    b2Vec2 pos  = _pB2Body->GetPosition();
+
+	float x = pos.x * _PTMRatio;
+	float y = pos.y * _PTMRatio;
+
+	if (_ignoreAnchorPointForPosition)
+    {
+		x += _anchorPointInPoints.x;
+		y += _anchorPointInPoints.y;
+	}
+
 	// Make matrix
 	float radians = _pB2Body->GetAngle();
 	float c = cosf(radians);
 	float s = sinf(radians);
-	
-	// Although scale is not used by physics engines, it is calculated just in case
-	// the sprite is animated (scaled up/down) using actions.
-	// For more info see: http://www.cocos2d-iphone.org/forum/topic/68990
-	if (!_anchorPointInPoints.equals(CCPointZero))
+
+	if (!_anchorPointInPoints.equals(PointZero))
     {
 		x += ((c * -_anchorPointInPoints.x * _scaleX) + (-s * -_anchorPointInPoints.y * _scaleY));
 		y += ((s * -_anchorPointInPoints.x * _scaleX) + (c * -_anchorPointInPoints.y * _scaleY));
 	}
-    
-	// Rot, Translate Matrix
-	_transform = CCAffineTransformMake( c * _scaleX,	s * _scaleX,
-									     -s * _scaleY,	c * _scaleY,
-									     x,	y );
-	
-	return _transform;
-}
 
+	// Rot, Translate Matrix
+	_transform = AffineTransformMake( c * _scaleX,	s * _scaleX,
+                                     -s * _scaleY,	c * _scaleY,
+                                     x,	y );
+
+	return _transform;
 #endif
+}
 
 NS_CC_EXT_END

@@ -33,29 +33,29 @@
 
 NS_CC_BEGIN
 
-/** CCClippingNode is a subclass of CCNode.
+/** ClippingNode is a subclass of Node.
  It draws its content (childs) clipped using a stencil.
- The stencil is an other CCNode that will not be drawn.
+ The stencil is an other Node that will not be drawn.
  The clipping is done using the alpha part of the stencil (adjusted with an alphaThreshold).
  */
-class CC_DLL CCClippingNode : public CCNode
+class CC_DLL ClippingNode : public Node
 {
 protected:
-    CCNode* _stencil;
+    Node* _stencil;
     GLfloat _alphaThreshold;
     bool    _inverted;
     
 public:
     /** Creates and initializes a clipping node without a stencil.
      */
-    static CCClippingNode* create();
+    static ClippingNode* create();
     
     /** Creates and initializes a clipping node with an other node as its stencil.
      The stencil node will be retained.
      */
-    static CCClippingNode* create(CCNode *pStencil);
+    static ClippingNode* create(Node *pStencil);
     
-    virtual ~CCClippingNode();
+    virtual ~ClippingNode();
     
     /** Initializes a clipping node without a stencil.
      */
@@ -64,7 +64,7 @@ public:
     /** Initializes a clipping node with an other node as its stencil.
      The stencil node will be retained, and its parent will be set to this clipping node.
      */
-    virtual bool init(CCNode *pStencil);
+    virtual bool init(Node *pStencil);
     
     virtual void onEnter();
     virtual void onEnterTransitionDidFinish();
@@ -72,12 +72,12 @@ public:
     virtual void onExit();
     virtual void visit();
     
-    /** The CCNode to use as a stencil to do the clipping.
+    /** The Node to use as a stencil to do the clipping.
      The stencil node will be retained.
      This default to nil.
      */
-    CCNode* getStencil() const;
-    void setStencil(CCNode *pStencil);
+    Node* getStencil() const;
+    void setStencil(Node *pStencil);
     
     /** The alpha threshold.
      The content is drawn only where the stencil have pixel with alpha greater than the alphaThreshold.
@@ -95,7 +95,7 @@ public:
     void setInverted(bool bInverted);
     
 private:
-    CCClippingNode();
+    ClippingNode();
 };
 
 NS_CC_END

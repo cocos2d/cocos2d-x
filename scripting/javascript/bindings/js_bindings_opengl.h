@@ -2,7 +2,7 @@
 #include "ScriptingCore.h"
 #include "cocos2d_specifics.hpp"
 
-class GLNode : public cocos2d::CCNode {
+class GLNode : public cocos2d::Node {
  public:
   void draw();
 };

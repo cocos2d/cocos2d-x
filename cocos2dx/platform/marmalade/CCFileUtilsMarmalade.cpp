@@ -9,26 +9,26 @@ using namespace std;
 
 NS_CC_BEGIN
 
-CCFileUtils* CCFileUtils::sharedFileUtils()
+FileUtils* FileUtils::sharedFileUtils()
 {
     if (s_sharedFileUtils == NULL)
     {
-        s_sharedFileUtils = new CCFileUtilsMarmalade();
+        s_sharedFileUtils = new FileUtilsMarmalade();
         s_sharedFileUtils->init();
     }
     return s_sharedFileUtils;
 }
 
-CCFileUtilsMarmalade::CCFileUtilsMarmalade()
+FileUtilsMarmalade::FileUtilsMarmalade()
 {}
 
 
-string CCFileUtilsMarmalade::getWritablePath()
+string FileUtilsMarmalade::getWritablePath()
 {
     return std::string("ram://");
 }
 
-bool CCFileUtilsMarmalade::isFileExist(const std::string& strFilePath)
+bool FileUtilsMarmalade::isFileExist(const std::string& strFilePath)
 {
     if (0 == strFilePath.length())
     {
@@ -38,7 +38,7 @@ bool CCFileUtilsMarmalade::isFileExist(const std::string& strFilePath)
     return s3eFileCheckExists(strFilePath.c_str()) == S3E_TRUE ? true : false;
 }
 
-unsigned char* CCFileUtilsMarmalade::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
+unsigned char* FileUtilsMarmalade::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
 {
 	IW_CALLSTACK("CCFileUtils::getFileData");
     
@@ -68,7 +68,7 @@ unsigned char* CCFileUtilsMarmalade::getFileData(const char* pszFileName, const 
 	return (unsigned char*)pDataToBeReadBinary;
 }
 
-bool CCFileUtilsMarmalade::isAbsolutePath(const std::string& strPath)
+bool FileUtilsMarmalade::isAbsolutePath(const std::string& strPath)
 {
     if (strPath[0] == '/' || strPath.find("ram://") == 0)
     {

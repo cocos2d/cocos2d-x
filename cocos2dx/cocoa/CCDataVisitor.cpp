@@ -35,115 +35,115 @@
 
 NS_CC_BEGIN
 
-void CCDataVisitor::visit(const CCBool *value)
+void DataVisitor::visit(const Bool *value)
 {
     visitObject(value);
 }
 
-void CCDataVisitor::visit(const CCInteger *value)
+void DataVisitor::visit(const Integer *value)
 {
     visitObject(value);
 }
 
-void CCDataVisitor::visit(const CCFloat *value)
+void DataVisitor::visit(const Float *value)
 {
     visitObject(value);
 }
 
-void CCDataVisitor::visit(const CCDouble *value)
+void DataVisitor::visit(const Double *value)
 {
     visitObject(value);
 }
 
-void CCDataVisitor::visit(const CCString *value)
+void DataVisitor::visit(const String *value)
 {
     visitObject(value);
 }
 
-void CCDataVisitor::visit(const CCArray *value)
+void DataVisitor::visit(const Array *value)
 {
     visitObject(value);
 }
 
-void CCDataVisitor::visit(const CCDictionary *value)
+void DataVisitor::visit(const Dictionary *value)
 {
     visitObject(value);
 }
 
-void CCDataVisitor::visit(const CCSet *value)
+void DataVisitor::visit(const Set *value)
 {
     visitObject(value);
 }
 
-void CCDataVisitor::visit(const CCData *value)
+void DataVisitor::visit(const Data *value)
 {
     visitObject(value);
 }
 
-// CCPrettyPrinter
-CCPrettyPrinter::CCPrettyPrinter(int indentLevel/* = 0 */)
+// PrettyPrinter
+PrettyPrinter::PrettyPrinter(int indentLevel/* = 0 */)
 {
     setIndentLevel(indentLevel);
 }
 
-void CCPrettyPrinter::clear()
+void PrettyPrinter::clear()
 {
     _result.clear();
 }
 
-std::string CCPrettyPrinter::getResult()
+std::string PrettyPrinter::getResult()
 {
     return _result;
 }
 
-void CCPrettyPrinter::visitObject(const CCObject *p)
+void PrettyPrinter::visitObject(const Object *p)
 {
     char buf[50] = {0};
     sprintf(buf, "%p", p);
     _result += buf;
 }
 
-void CCPrettyPrinter::visit(const CCBool * p)
+void PrettyPrinter::visit(const Bool * p)
 {
     char buf[50] = {0};
     sprintf(buf, "%s", p->getValue() ? "true" : "false");
    _result += buf;
 }
 
-void CCPrettyPrinter::visit(const CCInteger *p)
+void PrettyPrinter::visit(const Integer *p)
 {
     char buf[50] = {0};
     sprintf(buf, "%d", p->getValue());
     _result += buf;
 }
 
-void CCPrettyPrinter::visit(const CCFloat *p)
+void PrettyPrinter::visit(const Float *p)
 {
     char buf[50] = {0};
     sprintf(buf, "%f", p->getValue());
     _result += buf;
 }
 
-void CCPrettyPrinter::visit(const CCDouble *p)
+void PrettyPrinter::visit(const Double *p)
 {
     char buf[50] = {0};
     sprintf(buf, "%lf", p->getValue());
     _result += buf;
 }
 
-void CCPrettyPrinter::visit(const CCString *p)
+void PrettyPrinter::visit(const String *p)
 {
     _result += p->getCString();
 }
 
-void CCPrettyPrinter::visit(const CCArray *p)
+void PrettyPrinter::visit(const Array *p)
 {
     _result += "\n";
     _result += _indentStr;
     _result += "<array>\n";
 
     setIndentLevel(_indentLevel+1);
-    CCObject* obj;
+    Object* obj;
     int i = 0;
     char buf[50] = {0};
     CCARRAY_FOREACH(p, obj)
@@ -153,7 +153,7 @@ void CCPrettyPrinter::visit(const CCArray *p)
         }
         sprintf(buf, "%s%02d: ", _indentStr.c_str(), i);
         _result += buf;
-        CCPrettyPrinter v(_indentLevel);
+        PrettyPrinter v(_indentLevel);
         obj->acceptVisitor(v);
         _result += v.getResult();
         i++;
@@ -165,14 +165,14 @@ void CCPrettyPrinter::visit(const CCArray *p)
     _result += "</array>";
 }
 
-void CCPrettyPrinter::visit(const CCDictionary *p)
+void PrettyPrinter::visit(const Dictionary *p)
 {
     _result += "\n";
     _result += _indentStr;
     _result += "<dict>\n";
     
     setIndentLevel(_indentLevel+1);
-    CCDictElement* element;
+    DictElement* element;
     bool bFirstElement = true;
     char buf[1000] = {0};
     CCDICT_FOREACH(p, element)
@@ -182,7 +182,7 @@ void CCPrettyPrinter::visit(const CCDictionary *p)
         }
         sprintf(buf, "%s%s: ", _indentStr.c_str(),element->getStrKey());
         _result += buf;
-        CCPrettyPrinter v(_indentLevel);
+        PrettyPrinter v(_indentLevel);
         element->getObject()->acceptVisitor(v);
         _result += v.getResult();
         bFirstElement = false;
@@ -194,7 +194,7 @@ void CCPrettyPrinter::visit(const CCDictionary *p)
     _result += "</dict>";
 }
 
-void CCPrettyPrinter::visit(const CCSet *p)
+void PrettyPrinter::visit(const Set *p)
 {
     _result += "\n";
     _result += _indentStr;
@@ -203,15 +203,15 @@ void CCPrettyPrinter::visit(const CCSet *p)
     setIndentLevel(_indentLevel+1);
 
     int i = 0;
-    CCSet* tmp = const_cast<CCSet*>(p);
-    CCSetIterator it = tmp->begin();
+    Set* tmp = const_cast<Set*>(p);
+    SetIterator it = tmp->begin();
 
     for (; it != tmp->end(); ++it, ++i) {
         if (i > 0) {
             _result += "\n";
         }
         _result += _indentStr.c_str();
-        CCPrettyPrinter v(_indentLevel);
+        PrettyPrinter v(_indentLevel);
         (*it)->acceptVisitor(v);
         _result += v.getResult();
     }
@@ -222,13 +222,13 @@ void CCPrettyPrinter::visit(const CCSet *p)
     _result += "</set>\n";
 }
 
-void CCPrettyPrinter::visit(const CCData *p)
+void PrettyPrinter::visit(const Data *p)
 {
 	//TODO Implement
-	CCDataVisitor::visit(p);
+	DataVisitor::visit(p);
 }
 
-void CCPrettyPrinter::setIndentLevel(int indentLevel)
+void PrettyPrinter::setIndentLevel(int indentLevel)
 {
     _indentLevel = indentLevel;
     _indentStr.clear();
