@@ -34,25 +34,18 @@ THE SOFTWARE.
 
 using namespace std;
 
-static AAssetManager* s_assetmanager;
-
-extern "C" {
-    JNIEXPORT void JNICALL
-    Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetAssetManager(JNIEnv* env,
-                                                               jobject thiz,
-                                                               jobject java_assetmanager) {
-        AAssetManager* assetmanager =
-            AAssetManager_fromJava(env, java_assetmanager);
-        if (NULL == assetmanager) {
-            LOGD("assetmanager : is NULL");
-            return;
-        }
-
-        s_assetmanager = assetmanager;
-    }
-}
+AAssetManager* cocos2d::FileUtilsAndroid::assetmanager = NULL;
 
 NS_CC_BEGIN
+
+void FileUtilsAndroid::setassetmanager(AAssetManager* a) {
+    if (NULL == a) {
+        LOGD("setassetmanager : received unexpected NULL parameter");
+        return;
+    }
+
+    cocos2d::FileUtilsAndroid::assetmanager = a;
+}
 
 FileUtils* FileUtils::getInstance()
 {
@@ -100,8 +93,8 @@ bool FileUtilsAndroid::isFileExist(const std::string& strFilePath)
         // Found "assets/" at the beginning of the path and we don't want it
         if (strFilePath.find(_defaultResRootPath) == 0) s += strlen("assets/");
 
-        if (s_assetmanager) {
-            AAsset* aa = AAssetManager_open(s_assetmanager, s, AASSET_MODE_UNKNOWN);
+        if (FileUtilsAndroid::assetmanager) {
+            AAsset* aa = AAssetManager_open(FileUtilsAndroid::assetmanager, s, AASSET_MODE_UNKNOWN);
             if (aa)
             {
                 bFound = true;
@@ -173,14 +166,14 @@ unsigned char* FileUtilsAndroid::doGetFileData(const char* filename, const char*
         // "assets/" is at the beginning of the path and we don't want it
         relativepath += strlen("assets/");
 
-        if (NULL == s_assetmanager) {
-            LOGD("... s_assetmanager is NULL");
+        if (NULL == FileUtilsAndroid::assetmanager) {
+            LOGD("... FileUtilsAndroid::assetmanager is NULL");
             return NULL;
         }
 
         // read asset data
         AAsset* asset =
-            AAssetManager_open(s_assetmanager,
+            AAssetManager_open(FileUtilsAndroid::assetmanager,
                                relativepath,
                                AASSET_MODE_UNKNOWN);
         if (NULL == asset) {
