@@ -13,6 +13,7 @@
 			buildPhases = (
 			);
 			dependencies = (
+				A01E1A831784DCDC00B0CA4A /* PBXTargetDependency */,
 				A035AF731782569500987F6C /* PBXTargetDependency */,
 				A035AF751782569500987F6C /* PBXTargetDependency */,
 				A035ACC0178246BD00987F6C /* PBXTargetDependency */,
@@ -31,6 +32,7 @@
 			buildPhases = (
 			);
 			dependencies = (
+				A01E1A851784DCE300B0CA4A /* PBXTargetDependency */,
 				A01E19971784C8DD00B0CA4A /* PBXTargetDependency */,
 				A01E19991784C8DD00B0CA4A /* PBXTargetDependency */,
 				A01E199B1784C8DD00B0CA4A /* PBXTargetDependency */,
@@ -365,6 +367,96 @@
 		A01E19901784C88400B0CA4A /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A01E19851784C88400B0CA4A /* RootViewController.mm */; };
 		A01E19941784C89300B0CA4A /* Published files iOS in Resources */ = {isa = PBXBuildFile; fileRef = A035ACB8178245FD00987F6C /* Published files iOS */; };
 		A01E19951784C89E00B0CA4A /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A035AC3D178245AA00987F6C /* AppDelegate.cpp */; };
+		A01E19AC1784DA0600B0CA4A /* jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6F617822A8E00987F6C /* jsb.js */; };
+		A01E19AD1784DA0600B0CA4A /* jsb_chipmunk.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6F717822A8E00987F6C /* jsb_chipmunk.js */; };
+		A01E19AE1784DA0600B0CA4A /* jsb_chipmunk_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6F817822A8E00987F6C /* jsb_chipmunk_constants.js */; };
+		A01E19AF1784DA0600B0CA4A /* jsb_cocos2d.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6F917822A8E00987F6C /* jsb_cocos2d.js */; };
+		A01E19B01784DA0600B0CA4A /* jsb_cocos2d_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6FA17822A8E00987F6C /* jsb_cocos2d_constants.js */; };
+		A01E19B11784DA0600B0CA4A /* jsb_cocos2d_extension.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6FB17822A8E00987F6C /* jsb_cocos2d_extension.js */; };
+		A01E19B21784DA0600B0CA4A /* jsb_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6FC17822A8E00987F6C /* jsb_cocosbuilder.js */; };
+		A01E19B31784DA0600B0CA4A /* jsb_debugger.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6FD17822A8E00987F6C /* jsb_debugger.js */; };
+		A01E19B41784DA0600B0CA4A /* jsb_opengl.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6FE17822A8E00987F6C /* jsb_opengl.js */; };
+		A01E19B51784DA0600B0CA4A /* jsb_opengl_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6FF17822A8E00987F6C /* jsb_opengl_constants.js */; };
+		A01E19B61784DA0600B0CA4A /* jsb_sys.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A70017822A8E00987F6C /* jsb_sys.js */; };
+		A01E19B71784DA0600B0CA4A /* main.debug.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A70117822A8E00987F6C /* main.debug.js */; };
+		A01E19BF1784DA0600B0CA4A /* game.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A5F61782296200987F6C /* game.js */; };
+		A01E19C01784DA0600B0CA4A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A01E17771784C0DF00B0CA4A /* Default-568h@2x.png */; };
+		A01E19C11784DA0600B0CA4A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A01E17781784C0DF00B0CA4A /* Default.png */; };
+		A01E19C21784DA0600B0CA4A /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A01E17791784C0DF00B0CA4A /* Default@2x.png */; };
+		A01E19C31784DA0600B0CA4A /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = A01E177A1784C0DF00B0CA4A /* Icon-114.png */; };
+		A01E19C41784DA0600B0CA4A /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = A01E177B1784C0DF00B0CA4A /* Icon-144.png */; };
+		A01E19C51784DA0600B0CA4A /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = A01E177C1784C0DF00B0CA4A /* Icon-57.png */; };
+		A01E19C61784DA0600B0CA4A /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = A01E177D1784C0DF00B0CA4A /* Icon-72.png */; };
+		A01E19D91784DA0600B0CA4A /* build.xml in Resources */ = {isa = PBXBuildFile; fileRef = A035A690178229E400987F6C /* build.xml */; };
+		A01E19DA1784DA0600B0CA4A /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = A035A69F178229E400987F6C /* index.html */; };
+		A01E19F41784DA0600B0CA4A /* obfuscate.xml in Resources */ = {isa = PBXBuildFile; fileRef = A035A5F71782296200987F6C /* obfuscate.xml */; };
+		A01E19F61784DA0600B0CA4A /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A01E17761784C0DF00B0CA4A /* AppController.mm */; };
+		A01E19F71784DA0600B0CA4A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A01E17801784C0DF00B0CA4A /* main.m */; };
+		A01E19F81784DA0600B0CA4A /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A01E17831784C0DF00B0CA4A /* RootViewController.mm */; };
+		A01E19F91784DA0600B0CA4A /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A035A5F41782296200987F6C /* AppDelegate.cpp */; };
+		A01E19FB1784DA0600B0CA4A /* libjsbindings iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A510717839B9C0073F6A7 /* libjsbindings iOS.a */; };
+		A01E19FC1784DA0600B0CA4A /* libbox2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A510317839B9C0073F6A7 /* libbox2d iOS.a */; };
+		A01E19FD1784DA0600B0CA4A /* libchipmunk iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A510117839B9C0073F6A7 /* libchipmunk iOS.a */; };
+		A01E19FE1784DA0600B0CA4A /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50FD17839B9C0073F6A7 /* libcocos2dx iOS.a */; };
+		A01E19FF1784DA0600B0CA4A /* libcocos2dx-extensions iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50FF17839B9C0073F6A7 /* libcocos2dx-extensions iOS.a */; };
+		A01E1A001784DA0600B0CA4A /* libCocosDenshion iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A510517839B9C0073F6A7 /* libCocosDenshion iOS.a */; };
+		A01E1A011784DA0600B0CA4A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
+		A01E1A021784DA0600B0CA4A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
+		A01E1A031784DA0600B0CA4A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482C165F3988007D4F18 /* AudioToolbox.framework */; };
+		A01E1A041784DA0600B0CA4A /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64828165F396B007D4F18 /* OpenAL.framework */; };
+		A01E1A051784DA0600B0CA4A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64826165F394E007D4F18 /* QuartzCore.framework */; };
+		A01E1A061784DA0600B0CA4A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52BB1783AEB80073F6A7 /* CoreGraphics.framework */; };
+		A01E1A071784DA0600B0CA4A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B91783AE900073F6A7 /* OpenGLES.framework */; };
+		A01E1A081784DA0600B0CA4A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B71783AE6D0073F6A7 /* UIKit.framework */; };
+		A01E1A091784DA0600B0CA4A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52C11783B01F0073F6A7 /* AVFoundation.framework */; };
+		A01E1A0A1784DA0600B0CA4A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A035A71117822E9E00987F6C /* libsqlite3.dylib */; };
+		A01E1A141784DC0800B0CA4A /* res in Resources */ = {isa = PBXBuildFile; fileRef = A035A6AD178229E400987F6C /* res */; };
+		A01E1A231784DC4000B0CA4A /* game.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A5F61782296200987F6C /* game.js */; };
+		A01E1A241784DC4000B0CA4A /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6A3178229E400987F6C /* main.js */; };
+		A01E1A251784DC4000B0CA4A /* tests_resources-html5.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6B3178229E400987F6C /* tests_resources-html5.js */; };
+		A01E1A261784DC4000B0CA4A /* tests_resources-jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6B4178229E400987F6C /* tests_resources-jsb.js */; };
+		A01E1A271784DC4000B0CA4A /* tests-boot-html5.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6B5178229E400987F6C /* tests-boot-html5.js */; };
+		A01E1A281784DC4000B0CA4A /* tests-boot-jsb-for-obfuscation.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6B6178229E400987F6C /* tests-boot-jsb-for-obfuscation.js */; };
+		A01E1A291784DC4000B0CA4A /* tests-boot-jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6B7178229E400987F6C /* tests-boot-jsb.js */; };
+		A01E1A2A1784DC4000B0CA4A /* tests-main.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6B8178229E400987F6C /* tests-main.js */; };
+		A01E1A2B1784DC4000B0CA4A /* jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6F617822A8E00987F6C /* jsb.js */; };
+		A01E1A2C1784DC4000B0CA4A /* jsb_chipmunk.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6F717822A8E00987F6C /* jsb_chipmunk.js */; };
+		A01E1A2D1784DC4000B0CA4A /* jsb_chipmunk_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6F817822A8E00987F6C /* jsb_chipmunk_constants.js */; };
+		A01E1A2E1784DC4000B0CA4A /* jsb_cocos2d.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6F917822A8E00987F6C /* jsb_cocos2d.js */; };
+		A01E1A2F1784DC4000B0CA4A /* jsb_cocos2d_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6FA17822A8E00987F6C /* jsb_cocos2d_constants.js */; };
+		A01E1A301784DC4000B0CA4A /* jsb_cocos2d_extension.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6FB17822A8E00987F6C /* jsb_cocos2d_extension.js */; };
+		A01E1A311784DC4000B0CA4A /* jsb_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6FC17822A8E00987F6C /* jsb_cocosbuilder.js */; };
+		A01E1A321784DC4000B0CA4A /* jsb_debugger.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6FD17822A8E00987F6C /* jsb_debugger.js */; };
+		A01E1A331784DC4000B0CA4A /* jsb_opengl.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6FE17822A8E00987F6C /* jsb_opengl.js */; };
+		A01E1A341784DC4000B0CA4A /* jsb_opengl_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6FF17822A8E00987F6C /* jsb_opengl_constants.js */; };
+		A01E1A351784DC4000B0CA4A /* jsb_sys.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A70017822A8E00987F6C /* jsb_sys.js */; };
+		A01E1A361784DC4000B0CA4A /* main.debug.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A70117822A8E00987F6C /* main.debug.js */; };
+		A01E1A371784DC4000B0CA4A /* obfuscate.xml in Resources */ = {isa = PBXBuildFile; fileRef = A035A5F71782296200987F6C /* obfuscate.xml */; };
+		A01E1A381784DC4000B0CA4A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A035A6351782296200987F6C /* InfoPlist.strings */; };
+		A01E1A391784DC4000B0CA4A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A035A6371782296200987F6C /* MainMenu.xib */; };
+		A01E1A3A1784DC4000B0CA4A /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A035A6391782296200987F6C /* Icon.icns */; };
+		A01E1A3F1784DC4000B0CA4A /* build.xml in Resources */ = {isa = PBXBuildFile; fileRef = A035A690178229E400987F6C /* build.xml */; };
+		A01E1A4E1784DC4000B0CA4A /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = A035A69F178229E400987F6C /* index.html */; };
+		A01E1A5B1784DC4000B0CA4A /* res in Resources */ = {isa = PBXBuildFile; fileRef = A035A6AD178229E400987F6C /* res */; };
+		A01E1A691784DC4000B0CA4A /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A035A5F41782296200987F6C /* AppDelegate.cpp */; };
+		A01E1A6A1784DC4000B0CA4A /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A035A6341782296200987F6C /* AppController.mm */; };
+		A01E1A6B1784DC4000B0CA4A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A035A63B1782296200987F6C /* main.m */; };
+		A01E1A6D1784DC4000B0CA4A /* libbox2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F717839B9C0073F6A7 /* libbox2d Mac.a */; };
+		A01E1A6E1784DC4000B0CA4A /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F517839B9C0073F6A7 /* libchipmunk Mac.a */; };
+		A01E1A6F1784DC4000B0CA4A /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F117839B9C0073F6A7 /* libcocos2dx Mac.a */; };
+		A01E1A701784DC4000B0CA4A /* libcocos2dx-extensions Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F317839B9C0073F6A7 /* libcocos2dx-extensions Mac.a */; };
+		A01E1A711784DC4000B0CA4A /* libCocosDenshion Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F917839B9C0073F6A7 /* libCocosDenshion Mac.a */; };
+		A01E1A721784DC4000B0CA4A /* libjsbindings Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50FB17839B9C0073F6A7 /* libjsbindings Mac.a */; };
+		A01E1A731784DC4000B0CA4A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A035A71117822E9E00987F6C /* libsqlite3.dylib */; };
+		A01E1A741784DC4000B0CA4A /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F808C177E98A600D9A1CB /* libcurl.dylib */; };
+		A01E1A751784DC4000B0CA4A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
+		A01E1A761784DC4000B0CA4A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
+		A01E1A771784DC4000B0CA4A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482C165F3988007D4F18 /* AudioToolbox.framework */; };
+		A01E1A781784DC4000B0CA4A /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482A165F3979007D4F18 /* ApplicationServices.framework */; };
+		A01E1A791784DC4000B0CA4A /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64828165F396B007D4F18 /* OpenAL.framework */; };
+		A01E1A7A1784DC4000B0CA4A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64826165F394E007D4F18 /* QuartzCore.framework */; };
+		A01E1A7B1784DC4000B0CA4A /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64824165F3934007D4F18 /* OpenGL.framework */; };
+		A01E1A7C1784DC4000B0CA4A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
 		A0359AA417821D9C00987F6C /* AccelerometerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A035994F17821D9B00987F6C /* AccelerometerTest.cpp */; };
 		A0359AA517821D9C00987F6C /* ActionManagerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A035995217821D9B00987F6C /* ActionManagerTest.cpp */; };
 		A0359AA617821D9C00987F6C /* ActionsEaseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A035995517821D9B00987F6C /* ActionsEaseTest.cpp */; };
@@ -1276,6 +1368,104 @@
 			remoteGlobalIDString = A01E18C31784C4E000B0CA4A;
 			remoteInfo = "JS CocosDragon iOS";
 		};
+		A01E19A01784DA0600B0CA4A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A07A4FB5178387750073F6A7;
+			remoteInfo = "jsbindings iOS";
+		};
+		A01E19A21784DA0600B0CA4A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A07A4C241783777C0073F6A7;
+			remoteInfo = "cocos2dx iOS";
+		};
+		A01E19A41784DA0600B0CA4A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A07A4E111783867C0073F6A7;
+			remoteInfo = "cocos2dx-extensions iOS";
+		};
+		A01E19A61784DA0600B0CA4A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A07A4EFD178387670073F6A7;
+			remoteInfo = "chipmunk iOS";
+		};
+		A01E19A81784DA0600B0CA4A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A07A4F3C1783876B0073F6A7;
+			remoteInfo = "box2d iOS";
+		};
+		A01E19AA1784DA0600B0CA4A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A07A4F9F178387730073F6A7;
+			remoteInfo = "CocosDenshion iOS";
+		};
+		A01E1A171784DC4000B0CA4A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
+			remoteInfo = "cocos2dx Mac";
+		};
+		A01E1A191784DC4000B0CA4A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2FC117814595006731B9;
+			remoteInfo = "cocos2dx-extensions Mac";
+		};
+		A01E1A1B1784DC4000B0CA4A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2B781780BD04006731B9;
+			remoteInfo = "chipmunk Mac";
+		};
+		A01E1A1D1784DC4000B0CA4A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2D5D1780BDF7006731B9;
+			remoteInfo = "box2d Mac";
+		};
+		A01E1A1F1784DC4000B0CA4A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2E9817814268006731B9;
+			remoteInfo = "CocosDenshion Mac";
+		};
+		A01E1A211784DC4000B0CA4A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F31E81781479B006731B9;
+			remoteInfo = "jsbindings Mac";
+		};
+		A01E1A821784DCDC00B0CA4A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A01E1A151784DC4000B0CA4A;
+			remoteInfo = "Test JavaScript Obfuscated Mac";
+		};
+		A01E1A841784DCE300B0CA4A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A01E199E1784DA0600B0CA4A;
+			remoteInfo = "Test JavaScript Obfuscated iOS";
+		};
 		A035ACBF178246BD00987F6C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -1838,6 +2028,9 @@
 		A01E19831784C88400B0CA4A /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
 		A01E19841784C88400B0CA4A /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		A01E19851784C88400B0CA4A /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
+		A01E1A0E1784DA0600B0CA4A /* Test JavaScript Ofuscated iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test JavaScript Ofuscated iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A01E1A801784DC4000B0CA4A /* Test JavaScript Obfuscated Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test JavaScript Obfuscated Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A01E1A811784DC4000B0CA4A /* Test JavaScript Mac copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Test JavaScript Mac copy-Info.plist"; path = "/Users/rquesada/progs/cocos2d-x/samples/Test JavaScript Mac copy-Info.plist"; sourceTree = "<absolute>"; };
 		A035994F17821D9B00987F6C /* AccelerometerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AccelerometerTest.cpp; sourceTree = "<group>"; };
 		A035995017821D9B00987F6C /* AccelerometerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerometerTest.h; sourceTree = "<group>"; };
 		A035995217821D9B00987F6C /* ActionManagerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActionManagerTest.cpp; sourceTree = "<group>"; };
@@ -2525,6 +2718,52 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A01E19FA1784DA0600B0CA4A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A01E19FB1784DA0600B0CA4A /* libjsbindings iOS.a in Frameworks */,
+				A01E19FC1784DA0600B0CA4A /* libbox2d iOS.a in Frameworks */,
+				A01E19FD1784DA0600B0CA4A /* libchipmunk iOS.a in Frameworks */,
+				A01E19FE1784DA0600B0CA4A /* libcocos2dx iOS.a in Frameworks */,
+				A01E19FF1784DA0600B0CA4A /* libcocos2dx-extensions iOS.a in Frameworks */,
+				A01E1A001784DA0600B0CA4A /* libCocosDenshion iOS.a in Frameworks */,
+				A01E1A011784DA0600B0CA4A /* libz.dylib in Frameworks */,
+				A01E1A021784DA0600B0CA4A /* Foundation.framework in Frameworks */,
+				A01E1A031784DA0600B0CA4A /* AudioToolbox.framework in Frameworks */,
+				A01E1A041784DA0600B0CA4A /* OpenAL.framework in Frameworks */,
+				A01E1A051784DA0600B0CA4A /* QuartzCore.framework in Frameworks */,
+				A01E1A061784DA0600B0CA4A /* CoreGraphics.framework in Frameworks */,
+				A01E1A071784DA0600B0CA4A /* OpenGLES.framework in Frameworks */,
+				A01E1A081784DA0600B0CA4A /* UIKit.framework in Frameworks */,
+				A01E1A091784DA0600B0CA4A /* AVFoundation.framework in Frameworks */,
+				A01E1A0A1784DA0600B0CA4A /* libsqlite3.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A01E1A6C1784DC4000B0CA4A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A01E1A6D1784DC4000B0CA4A /* libbox2d Mac.a in Frameworks */,
+				A01E1A6E1784DC4000B0CA4A /* libchipmunk Mac.a in Frameworks */,
+				A01E1A6F1784DC4000B0CA4A /* libcocos2dx Mac.a in Frameworks */,
+				A01E1A701784DC4000B0CA4A /* libcocos2dx-extensions Mac.a in Frameworks */,
+				A01E1A711784DC4000B0CA4A /* libCocosDenshion Mac.a in Frameworks */,
+				A01E1A721784DC4000B0CA4A /* libjsbindings Mac.a in Frameworks */,
+				A01E1A731784DC4000B0CA4A /* libsqlite3.dylib in Frameworks */,
+				A01E1A741784DC4000B0CA4A /* libcurl.dylib in Frameworks */,
+				A01E1A751784DC4000B0CA4A /* libz.dylib in Frameworks */,
+				A01E1A761784DC4000B0CA4A /* Foundation.framework in Frameworks */,
+				A01E1A771784DC4000B0CA4A /* AudioToolbox.framework in Frameworks */,
+				A01E1A781784DC4000B0CA4A /* ApplicationServices.framework in Frameworks */,
+				A01E1A791784DC4000B0CA4A /* OpenAL.framework in Frameworks */,
+				A01E1A7A1784DC4000B0CA4A /* QuartzCore.framework in Frameworks */,
+				A01E1A7B1784DC4000B0CA4A /* OpenGL.framework in Frameworks */,
+				A01E1A7C1784DC4000B0CA4A /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A035A5DA1782290400987F6C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -2735,6 +2974,8 @@
 				A01E188C1784C4D600B0CA4A /* JS Moon Warriors iOS.app */,
 				A01E18C11784C4DC00B0CA4A /* JS Crystal Craze iOS.app */,
 				A01E18F61784C4E000B0CA4A /* JS CocosDragon iOS.app */,
+				A01E1A0E1784DA0600B0CA4A /* Test JavaScript Ofuscated iOS.app */,
+				A01E1A801784DC4000B0CA4A /* Test JavaScript Obfuscated Mac.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2753,6 +2994,7 @@
 				A035A9F9178240E000987F6C /* MoonWarriors */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				A01E1A811784DC4000B0CA4A /* Test JavaScript Mac copy-Info.plist */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -4540,6 +4782,52 @@
 			productReference = A01E18F61784C4E000B0CA4A /* JS CocosDragon iOS.app */;
 			productType = "com.apple.product-type.application";
 		};
+		A01E199E1784DA0600B0CA4A /* Test JavaScript Obfuscated iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A01E1A0B1784DA0600B0CA4A /* Build configuration list for PBXNativeTarget "Test JavaScript Obfuscated iOS" */;
+			buildPhases = (
+				A01E19AB1784DA0600B0CA4A /* Resources */,
+				A01E19F51784DA0600B0CA4A /* Sources */,
+				A01E19FA1784DA0600B0CA4A /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A01E199F1784DA0600B0CA4A /* PBXTargetDependency */,
+				A01E19A11784DA0600B0CA4A /* PBXTargetDependency */,
+				A01E19A31784DA0600B0CA4A /* PBXTargetDependency */,
+				A01E19A51784DA0600B0CA4A /* PBXTargetDependency */,
+				A01E19A71784DA0600B0CA4A /* PBXTargetDependency */,
+				A01E19A91784DA0600B0CA4A /* PBXTargetDependency */,
+			);
+			name = "Test JavaScript Obfuscated iOS";
+			productName = iphone;
+			productReference = A01E1A0E1784DA0600B0CA4A /* Test JavaScript Ofuscated iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A01E1A151784DC4000B0CA4A /* Test JavaScript Obfuscated Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A01E1A7D1784DC4000B0CA4A /* Build configuration list for PBXNativeTarget "Test JavaScript Obfuscated Mac" */;
+			buildPhases = (
+				A01E1A221784DC4000B0CA4A /* Resources */,
+				A01E1A681784DC4000B0CA4A /* Sources */,
+				A01E1A6C1784DC4000B0CA4A /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A01E1A161784DC4000B0CA4A /* PBXTargetDependency */,
+				A01E1A181784DC4000B0CA4A /* PBXTargetDependency */,
+				A01E1A1A1784DC4000B0CA4A /* PBXTargetDependency */,
+				A01E1A1C1784DC4000B0CA4A /* PBXTargetDependency */,
+				A01E1A1E1784DC4000B0CA4A /* PBXTargetDependency */,
+				A01E1A201784DC4000B0CA4A /* PBXTargetDependency */,
+			);
+			name = "Test JavaScript Obfuscated Mac";
+			productName = iphone;
+			productReference = A01E1A801784DC4000B0CA4A /* Test JavaScript Obfuscated Mac.app */;
+			productType = "com.apple.product-type.application";
+		};
 		A035A5441782290400987F6C /* Test JavaScript Mac */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A035A5E91782290400987F6C /* Build configuration list for PBXNativeTarget "Test JavaScript Mac" */;
@@ -4766,6 +5054,7 @@
 				A035ACCE178254A300987F6C /* Simple Game Mac */,
 				1D6058900D05DD3D006BFB54 /* Test cpp Mac */,
 				A035A5441782290400987F6C /* Test JavaScript Mac */,
+				A01E1A151784DC4000B0CA4A /* Test JavaScript Obfuscated Mac */,
 				A035A7131782301C00987F6C /* JS Watermelon With Me Mac */,
 				A035A9BA17823FE100987F6C /* JS Moon Warriors Mac */,
 				A035AA8D1782422400987F6C /* JS Crystal Craze Mac */,
@@ -4775,6 +5064,7 @@
 				A07A52CF1784AC9B0073F6A7 /* Hello cpp iOS */,
 				A01E16631784BDA100B0CA4A /* Simple Game iOS */,
 				A01E16C01784C06E00B0CA4A /* Test JavaScript iOS */,
+				A01E199E1784DA0600B0CA4A /* Test JavaScript Obfuscated iOS */,
 				A01E17E71784C45400B0CA4A /* JS Watermelon With Me iOS */,
 				A01E18591784C4D600B0CA4A /* JS Moon Warriors iOS */,
 				A01E188E1784C4DC00B0CA4A /* JS Crystal Craze iOS */,
@@ -5146,6 +5436,71 @@
 				A01E198C1784C88400B0CA4A /* Icon-57.png in Resources */,
 				A01E198D1784C88400B0CA4A /* Icon-72.png in Resources */,
 				A01E19941784C89300B0CA4A /* Published files iOS in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A01E19AB1784DA0600B0CA4A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A01E19AC1784DA0600B0CA4A /* jsb.js in Resources */,
+				A01E19AD1784DA0600B0CA4A /* jsb_chipmunk.js in Resources */,
+				A01E19AE1784DA0600B0CA4A /* jsb_chipmunk_constants.js in Resources */,
+				A01E19AF1784DA0600B0CA4A /* jsb_cocos2d.js in Resources */,
+				A01E19B01784DA0600B0CA4A /* jsb_cocos2d_constants.js in Resources */,
+				A01E19B11784DA0600B0CA4A /* jsb_cocos2d_extension.js in Resources */,
+				A01E19B21784DA0600B0CA4A /* jsb_cocosbuilder.js in Resources */,
+				A01E19B31784DA0600B0CA4A /* jsb_debugger.js in Resources */,
+				A01E19B41784DA0600B0CA4A /* jsb_opengl.js in Resources */,
+				A01E19B51784DA0600B0CA4A /* jsb_opengl_constants.js in Resources */,
+				A01E19B61784DA0600B0CA4A /* jsb_sys.js in Resources */,
+				A01E19B71784DA0600B0CA4A /* main.debug.js in Resources */,
+				A01E19BF1784DA0600B0CA4A /* game.js in Resources */,
+				A01E19C01784DA0600B0CA4A /* Default-568h@2x.png in Resources */,
+				A01E19C11784DA0600B0CA4A /* Default.png in Resources */,
+				A01E19C21784DA0600B0CA4A /* Default@2x.png in Resources */,
+				A01E19C31784DA0600B0CA4A /* Icon-114.png in Resources */,
+				A01E19C41784DA0600B0CA4A /* Icon-144.png in Resources */,
+				A01E19C51784DA0600B0CA4A /* Icon-57.png in Resources */,
+				A01E19C61784DA0600B0CA4A /* Icon-72.png in Resources */,
+				A01E19D91784DA0600B0CA4A /* build.xml in Resources */,
+				A01E19DA1784DA0600B0CA4A /* index.html in Resources */,
+				A01E19F41784DA0600B0CA4A /* obfuscate.xml in Resources */,
+				A01E1A141784DC0800B0CA4A /* res in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A01E1A221784DC4000B0CA4A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A01E1A231784DC4000B0CA4A /* game.js in Resources */,
+				A01E1A241784DC4000B0CA4A /* main.js in Resources */,
+				A01E1A251784DC4000B0CA4A /* tests_resources-html5.js in Resources */,
+				A01E1A261784DC4000B0CA4A /* tests_resources-jsb.js in Resources */,
+				A01E1A271784DC4000B0CA4A /* tests-boot-html5.js in Resources */,
+				A01E1A281784DC4000B0CA4A /* tests-boot-jsb-for-obfuscation.js in Resources */,
+				A01E1A291784DC4000B0CA4A /* tests-boot-jsb.js in Resources */,
+				A01E1A2A1784DC4000B0CA4A /* tests-main.js in Resources */,
+				A01E1A2B1784DC4000B0CA4A /* jsb.js in Resources */,
+				A01E1A2C1784DC4000B0CA4A /* jsb_chipmunk.js in Resources */,
+				A01E1A2D1784DC4000B0CA4A /* jsb_chipmunk_constants.js in Resources */,
+				A01E1A2E1784DC4000B0CA4A /* jsb_cocos2d.js in Resources */,
+				A01E1A2F1784DC4000B0CA4A /* jsb_cocos2d_constants.js in Resources */,
+				A01E1A301784DC4000B0CA4A /* jsb_cocos2d_extension.js in Resources */,
+				A01E1A311784DC4000B0CA4A /* jsb_cocosbuilder.js in Resources */,
+				A01E1A321784DC4000B0CA4A /* jsb_debugger.js in Resources */,
+				A01E1A331784DC4000B0CA4A /* jsb_opengl.js in Resources */,
+				A01E1A341784DC4000B0CA4A /* jsb_opengl_constants.js in Resources */,
+				A01E1A351784DC4000B0CA4A /* jsb_sys.js in Resources */,
+				A01E1A361784DC4000B0CA4A /* main.debug.js in Resources */,
+				A01E1A371784DC4000B0CA4A /* obfuscate.xml in Resources */,
+				A01E1A381784DC4000B0CA4A /* InfoPlist.strings in Resources */,
+				A01E1A391784DC4000B0CA4A /* MainMenu.xib in Resources */,
+				A01E1A3A1784DC4000B0CA4A /* Icon.icns in Resources */,
+				A01E1A3F1784DC4000B0CA4A /* build.xml in Resources */,
+				A01E1A4E1784DC4000B0CA4A /* index.html in Resources */,
+				A01E1A5B1784DC4000B0CA4A /* res in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5624,6 +5979,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A01E19F51784DA0600B0CA4A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A01E19F61784DA0600B0CA4A /* AppController.mm in Sources */,
+				A01E19F71784DA0600B0CA4A /* main.m in Sources */,
+				A01E19F81784DA0600B0CA4A /* RootViewController.mm in Sources */,
+				A01E19F91784DA0600B0CA4A /* AppDelegate.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A01E1A681784DC4000B0CA4A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A01E1A691784DC4000B0CA4A /* AppDelegate.cpp in Sources */,
+				A01E1A6A1784DC4000B0CA4A /* AppController.mm in Sources */,
+				A01E1A6B1784DC4000B0CA4A /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A035A5701782290400987F6C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -6019,6 +6395,76 @@
 			isa = PBXTargetDependency;
 			target = A01E18C31784C4E000B0CA4A /* JS CocosDragon iOS */;
 			targetProxy = A01E199C1784C8DD00B0CA4A /* PBXContainerItemProxy */;
+		};
+		A01E199F1784DA0600B0CA4A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "jsbindings iOS";
+			targetProxy = A01E19A01784DA0600B0CA4A /* PBXContainerItemProxy */;
+		};
+		A01E19A11784DA0600B0CA4A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocos2dx iOS";
+			targetProxy = A01E19A21784DA0600B0CA4A /* PBXContainerItemProxy */;
+		};
+		A01E19A31784DA0600B0CA4A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocos2dx-extensions iOS";
+			targetProxy = A01E19A41784DA0600B0CA4A /* PBXContainerItemProxy */;
+		};
+		A01E19A51784DA0600B0CA4A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "chipmunk iOS";
+			targetProxy = A01E19A61784DA0600B0CA4A /* PBXContainerItemProxy */;
+		};
+		A01E19A71784DA0600B0CA4A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "box2d iOS";
+			targetProxy = A01E19A81784DA0600B0CA4A /* PBXContainerItemProxy */;
+		};
+		A01E19A91784DA0600B0CA4A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "CocosDenshion iOS";
+			targetProxy = A01E19AA1784DA0600B0CA4A /* PBXContainerItemProxy */;
+		};
+		A01E1A161784DC4000B0CA4A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocos2dx Mac";
+			targetProxy = A01E1A171784DC4000B0CA4A /* PBXContainerItemProxy */;
+		};
+		A01E1A181784DC4000B0CA4A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocos2dx-extensions Mac";
+			targetProxy = A01E1A191784DC4000B0CA4A /* PBXContainerItemProxy */;
+		};
+		A01E1A1A1784DC4000B0CA4A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "chipmunk Mac";
+			targetProxy = A01E1A1B1784DC4000B0CA4A /* PBXContainerItemProxy */;
+		};
+		A01E1A1C1784DC4000B0CA4A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "box2d Mac";
+			targetProxy = A01E1A1D1784DC4000B0CA4A /* PBXContainerItemProxy */;
+		};
+		A01E1A1E1784DC4000B0CA4A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "CocosDenshion Mac";
+			targetProxy = A01E1A1F1784DC4000B0CA4A /* PBXContainerItemProxy */;
+		};
+		A01E1A201784DC4000B0CA4A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "jsbindings Mac";
+			targetProxy = A01E1A211784DC4000B0CA4A /* PBXContainerItemProxy */;
+		};
+		A01E1A831784DCDC00B0CA4A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A01E1A151784DC4000B0CA4A /* Test JavaScript Obfuscated Mac */;
+			targetProxy = A01E1A821784DCDC00B0CA4A /* PBXContainerItemProxy */;
+		};
+		A01E1A851784DCE300B0CA4A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A01E199E1784DA0600B0CA4A /* Test JavaScript Obfuscated iOS */;
+			targetProxy = A01E1A841784DCE300B0CA4A /* PBXContainerItemProxy */;
 		};
 		A035ACC0178246BD00987F6C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -6719,6 +7165,94 @@
 			};
 			name = Release;
 		};
+		A01E1A0C1784DA0600B0CA4A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_ENABLE_CHIPMUNK_INTEGRATION,
+					CC_TARGET_OS_IPHONE,
+					COCOS2D_JAVASCRIPT,
+					JS_OBFUSCATED,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "Javascript/TestJavascript/proj.ios/Info-obfuscated.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-ios/include\" \"$(SRCROOT)/../scripting/javascript/bindings\"";
+			};
+			name = Debug;
+		};
+		A01E1A0D1784DA0600B0CA4A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_ENABLE_CHIPMUNK_INTEGRATION,
+					CC_TARGET_OS_IPHONE,
+					COCOS2D_JAVASCRIPT,
+					JS_OBFUSCATED,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "Javascript/TestJavascript/proj.ios/Info-obfuscated.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-ios/include\" \"$(SRCROOT)/../scripting/javascript/bindings\"";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A01E1A7E1784DC4000B0CA4A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_ENABLE_CHIPMUNK_INTEGRATION,
+					COCOS2D_JAVASCRIPT,
+					CC_TARGET_OS_MAC,
+					CC_KEYBOARD_SUPPORT,
+					JS_OBFUSCATED,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = Javascript/TestJavascript/proj.mac/Test_Info.plist;
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
+			};
+			name = Debug;
+		};
+		A01E1A7F1784DC4000B0CA4A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_ENABLE_CHIPMUNK_INTEGRATION,
+					COCOS2D_JAVASCRIPT,
+					CC_TARGET_OS_MAC,
+					CC_KEYBOARD_SUPPORT,
+					JS_OBFUSCATED,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = Javascript/TestJavascript/proj.mac/Test_Info.plist;
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		A035A5EA1782290400987F6C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -7211,6 +7745,24 @@
 			buildConfigurations = (
 				A01E18F41784C4E000B0CA4A /* Debug */,
 				A01E18F51784C4E000B0CA4A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A01E1A0B1784DA0600B0CA4A /* Build configuration list for PBXNativeTarget "Test JavaScript Obfuscated iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A01E1A0C1784DA0600B0CA4A /* Debug */,
+				A01E1A0D1784DA0600B0CA4A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A01E1A7D1784DC4000B0CA4A /* Build configuration list for PBXNativeTarget "Test JavaScript Obfuscated Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A01E1A7E1784DC4000B0CA4A /* Debug */,
+				A01E1A7F1784DC4000B0CA4A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
