@@ -770,10 +770,6 @@ JSCallbackWrapper::~JSCallbackWrapper()
 {
     JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
     JS_RemoveValueRoot(cx, &_jsCallback);
-    if (!JSVAL_IS_VOID(_extraData))
-    {
-        JS_RemoveValueRoot(cx, &_jsCallback);
-    }
 }
 
 void JSCallbackWrapper::setJSCallbackFunc(jsval func) {
@@ -789,9 +785,6 @@ void JSCallbackWrapper::setJSCallbackThis(jsval thisObj) {
 
 void JSCallbackWrapper::setJSExtraData(jsval data) {
     _extraData = data;
-    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-	// Root the extra data
-    JS_AddNamedValueRoot(cx, &_extraData, "JSCallbackWrapper_extraData");
 }
 
 const jsval& JSCallbackWrapper::getJSCallbackFunc() const
@@ -840,8 +833,7 @@ Array * JSCallFuncWrapper::getTargetForNativeNode(Node *pNode) {
     
 }
 
-void JSCallFuncWrapper::callbackFunc(Node *node) const {
-
+void JSCallFuncWrapper::callbackFunc(Node *node) {
     bool hasExtraData = !JSVAL_IS_VOID(_extraData);
     JSObject* thisObj = JSVAL_IS_VOID(_jsThisObj) ? NULL : JSVAL_TO_OBJECT(_jsThisObj);
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
@@ -893,7 +885,7 @@ static JSBool js_callFunc(JSContext *cx, uint32_t argc, jsval *vp)
             tmpCobj->setJSExtraData(argv[2]);
         }
         
-        CallFuncN *ret = CallFuncN::create(CC_CALLBACK_1(JSCallFuncWrapper::callbackFunc, tmpCobj));
+        CallFuncN *ret = CallFuncN::create(tmpCobj, callfuncN_selector(JSCallFuncWrapper::callbackFunc));
         
 		js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CallFunc>(cx, ret);
 		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(proxy->obj));
