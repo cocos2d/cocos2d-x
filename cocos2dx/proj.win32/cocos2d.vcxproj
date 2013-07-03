@@ -172,6 +172,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\actions\CCActionProgressTimer.cpp" />
     <ClCompile Include="..\actions\CCActionTiledGrid.cpp" />
     <ClCompile Include="..\actions\CCActionTween.cpp" />
+    <ClCompile Include="..\keyboard_dispatcher\CCKeyboardDispatcher.cpp" />
     <ClCompile Include="..\label_nodes\CCLabelAtlas.cpp" />
     <ClCompile Include="..\label_nodes\CCLabelBMFont.cpp" />
     <ClCompile Include="..\label_nodes\CCLabelTTF.cpp" />
@@ -236,6 +237,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\textures\CCTextureCache.cpp" />
     <ClCompile Include="..\textures\CCTextureETC.cpp" />
     <ClCompile Include="..\textures\CCTexturePVR.cpp" />
+    <ClCompile Include="..\textures\etc\etc1.cpp" />
     <ClCompile Include="..\tileMap_parallax_nodes\CCParallaxNode.cpp" />
     <ClCompile Include="..\tileMap_parallax_nodes\CCTileMapAtlas.cpp" />
     <ClCompile Include="..\tileMap_parallax_nodes\CCTMXLayer.cpp" />
@@ -312,6 +314,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\include\CCProtocols.h" />
     <ClInclude Include="..\include\ccTypes.h" />
     <ClInclude Include="..\include\cocos2d.h" />
+    <ClInclude Include="..\keyboard_dispatcher\CCKeyboardDispatcher.h" />
     <ClInclude Include="..\label_nodes\CCLabelAtlas.h" />
     <ClInclude Include="..\label_nodes\CCLabelBMFont.h" />
     <ClInclude Include="..\label_nodes\CCLabelTTF.h" />
@@ -399,6 +402,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\textures\CCTextureCache.h" />
     <ClInclude Include="..\textures\CCTextureETC.h" />
     <ClInclude Include="..\textures\CCTexturePVR.h" />
+    <ClInclude Include="..\textures\etc\etc1.h" />
     <ClInclude Include="..\tileMap_parallax_nodes\CCParallaxNode.h" />
     <ClInclude Include="..\tileMap_parallax_nodes\CCTileMapAtlas.h" />
     <ClInclude Include="..\tileMap_parallax_nodes\CCTMXLayer.h" />
