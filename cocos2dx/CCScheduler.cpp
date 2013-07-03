@@ -162,10 +162,7 @@ void Timer::update(float dt)
 
                 if (0 != _scriptHandler)
                 {
-                    SchedulerScriptEvent data;
-                    memset(&data, 0, sizeof(SchedulerScriptEvent));
-                    data.handler = _scriptHandler;
-                    data.elapse  = _elapsed;
+                    SchedulerScriptEvent data(_scriptHandler,_elapsed);
                     ScriptEvent event(kScheduleEvent,&data);
                     ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
                 }
@@ -186,10 +183,7 @@ void Timer::update(float dt)
 
                     if (0 != _scriptHandler)
                     {
-                        SchedulerScriptEvent data;
-                        memset(&data, 0, sizeof(SchedulerScriptEvent));
-                        data.handler = _scriptHandler;
-                        data.elapse  = _elapsed;
+                        SchedulerScriptEvent data(_scriptHandler,_elapsed);
                         ScriptEvent event(kScheduleEvent,&data);
                         ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
                     }
@@ -210,10 +204,7 @@ void Timer::update(float dt)
 
                     if (0 != _scriptHandler)
                     {
-                        SchedulerScriptEvent data;
-                        memset(&data, 0, sizeof(SchedulerScriptEvent));
-                        data.handler = _scriptHandler;
-                        data.elapse  = _elapsed;
+                        SchedulerScriptEvent data(_scriptHandler,_elapsed);
                         ScriptEvent event(kScheduleEvent,&data);
                         ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
                     }

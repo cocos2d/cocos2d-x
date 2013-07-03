@@ -1154,10 +1154,7 @@ void Node::update(float fDelta)
     if (0 != _updateScriptHandler)
     {
         //only lua use
-        SchedulerScriptEvent data;
-        memset(&data, 0, sizeof(SchedulerScriptEvent));
-        data.handler = _updateScriptHandler;
-        data.elapse  = fDelta;
+        SchedulerScriptEvent data(_updateScriptHandler,fDelta);
         ScriptEvent event(kScheduleEvent,&data);
         ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
