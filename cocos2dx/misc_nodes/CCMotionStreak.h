@@ -53,17 +53,17 @@ public:
     virtual ~MotionStreak();
 
     /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename */
-    static MotionStreak* create(float fade, float minSeg, float stroke, ccColor3B color, const char* path);
+    static MotionStreak* create(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path);
     /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture */
-    static MotionStreak* create(float fade, float minSeg, float stroke, ccColor3B color, Texture2D* texture);
+    static MotionStreak* create(float fade, float minSeg, float stroke, const ccColor3B& color, Texture2D* texture);
 
     /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture filename */
-    bool initWithFade(float fade, float minSeg, float stroke, ccColor3B color, const char* path);
+    bool initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path);
     /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture  */
-    bool initWithFade(float fade, float minSeg, float stroke, ccColor3B color, Texture2D* texture);
+    bool initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, Texture2D* texture);
 
     /** color used for the tint */
-    void tintWithColor(ccColor3B colors);
+    void tintWithColor(const ccColor3B& colors);
 
     /** Remove all living segments of the ribbon */
     void reset();
