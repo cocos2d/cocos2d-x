@@ -245,6 +245,7 @@ public:
     bool equals(const Rect& rect) const;   
     bool containsPoint(const Point& point) const;
     bool intersectsRect(const Rect& rect) const;
+    Rect unionWithRect(const Rect & rect) const;
 };
 
 

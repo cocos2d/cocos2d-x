@@ -749,8 +749,9 @@ bool LayerColor::initWithColor(const ccColor4B& color, GLfloat w, GLfloat h)
         setContentSize(CCSizeMake(w, h));
 
         setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionColor));
+        return true;
     }
-    return true;
+    return false;
 }
 
 bool LayerColor::initWithColor(const ccColor4B& color)
