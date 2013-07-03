@@ -182,6 +182,16 @@ bool Sprite::initWithTexture(Texture2D *pTexture, const Rect& rect, bool rotated
         _quad.tl.colors = tmpColor;
         _quad.tr.colors = tmpColor;
         
+        // shader program
+        if (pTexture)
+        {
+            setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColor));
+        }
+        else
+        {
+            setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionColor));
+        }
+        
         // update texture (calls updateBlendFunc)
         setTexture(pTexture);
         setTextureRect(rect, rotated, rect.size);
@@ -1081,16 +1091,6 @@ void Sprite::setTexture(Texture2D *texture)
     CCAssert(! _batchNode || texture->getName() == _batchNode->getTexture()->getName(), "CCSprite: Batched sprites should use the same texture as the batchnode");
     // accept texture==nil as argument
     CCAssert( !texture || dynamic_cast<Texture2D*>(texture), "setTexture expects a Texture2D. Invalid argument");
-
-    // shader program
-    if (texture)
-    {
-        setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColor));
-    }
-    else
-    {
-        setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionColor));
-    }
     
     if (!_batchNode && _texture != texture)
     {

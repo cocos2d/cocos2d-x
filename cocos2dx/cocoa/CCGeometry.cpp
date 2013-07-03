@@ -271,4 +271,44 @@ bool Rect::intersectsRect(const Rect& rect) const
              rect.getMaxY() <      getMinY());
 }
 
+Rect Rect::unionWithRect(const Rect & rect) const
+{
+    float thisLeftX = origin.x;
+    float thisRightX = origin.x + size.width;
+    float thisTopY = origin.y + size.height;
+    float thisBottomY = origin.y;
+    
+    if (thisRightX < thisLeftX)
+    {
+        std::swap(thisRightX, thisLeftX);   // This rect has negative width
+    }
+    
+    if (thisTopY < thisBottomY)
+    {
+        std::swap(thisTopY, thisBottomY);   // This rect has negative height
+    }
+    
+    float otherLeftX = rect.origin.x;
+    float otherRightX = rect.origin.x + rect.size.width;
+    float otherTopY = rect.origin.y + rect.size.height;
+    float otherBottomY = rect.origin.y;
+    
+    if (otherRightX < otherLeftX)
+    {
+        std::swap(otherRightX, otherLeftX);   // Other rect has negative width
+    }
+    
+    if (otherTopY < otherBottomY)
+    {
+        std::swap(otherTopY, otherBottomY);   // Other rect has negative height
+    }
+    
+    float combinedLeftX = std::min(thisLeftX, otherLeftX);
+    float combinedRightX = std::max(thisRightX, otherRightX);
+    float combinedTopY = std::max(thisTopY, otherTopY);
+    float combinedBottomY = std::min(thisBottomY, otherBottomY);
+    
+    return Rect(combinedLeftX, combinedBottomY, combinedRightX - combinedLeftX, combinedTopY - combinedBottomY);
+}
+
 NS_CC_END
