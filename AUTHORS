@@ -47,6 +47,7 @@ Developers:
         Fix a potential crash SimpleAudioEngineOpenSL::playEffect
         Fix some bugs with Set class
         Add ccDrawSolidCircle
+        Add Rect::unionWithRect
 
     silverscania
         Pass correct parameter to glPixelStorei when creating a texture
