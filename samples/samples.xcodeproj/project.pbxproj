@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		A035ACBB1782469700987F6C /* build-all-samples */ = {
+		A035ACBB1782469700987F6C /* build-all-samples Mac */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = A035ACBC1782469800987F6C /* Build configuration list for PBXAggregateTarget "build-all-samples" */;
+			buildConfigurationList = A035ACBC1782469800987F6C /* Build configuration list for PBXAggregateTarget "build-all-samples Mac" */;
 			buildPhases = (
 			);
 			dependencies = (
@@ -22,8 +22,19 @@
 				A035ACC8178246BD00987F6C /* PBXTargetDependency */,
 				A035ACCA178246BD00987F6C /* PBXTargetDependency */,
 			);
-			name = "build-all-samples";
+			name = "build-all-samples Mac";
 			productName = "build-all-samples";
+		};
+		A07A517B1783A1CC0073F6A7 /* build-all-samples iOS */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = A07A517C1783A1CC0073F6A7 /* Build configuration list for PBXAggregateTarget "build-all-samples iOS" */;
+			buildPhases = (
+			);
+			dependencies = (
+				A07A526D1783AB980073F6A7 /* PBXTargetDependency */,
+			);
+			name = "build-all-samples iOS";
+			productName = "build-all-samples iOS";
 		};
 /* End PBXAggregateTarget section */
 
@@ -141,12 +152,6 @@
 		A0359B0817821D9C00987F6C /* UserDefaultTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A9D17821D9C00987F6C /* UserDefaultTest.cpp */; };
 		A0359B0917821D9C00987F6C /* VisibleRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A9F17821D9C00987F6C /* VisibleRect.cpp */; };
 		A0359B0A17821D9C00987F6C /* ZwoptexTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359AA217821D9C00987F6C /* ZwoptexTest.cpp */; };
-		A0359B1717821DCD00987F6C /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0359B0D17821DCD00987F6C /* AppController.mm */; };
-		A0359B1B17821DCD00987F6C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A0359B1417821DCD00987F6C /* main.m */; };
-		A0359B3C17821E2E00987F6C /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B2D17821DF600987F6C /* libchipmunk.a */; };
-		A0359B3D17821E2E00987F6C /* libcocos2dx-extensions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B2B17821DF600987F6C /* libcocos2dx-extensions.a */; };
-		A0359B3E17821E2E00987F6C /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B2917821DF600987F6C /* libcocos2dx.a */; };
-		A0359B3F17821E2E00987F6C /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B3117821DF600987F6C /* libCocosDenshion.a */; };
 		A035A51F1782275800987F6C /* animations in Resources */ = {isa = PBXBuildFile; fileRef = A035A4FF1782275800987F6C /* animations */; };
 		A035A5201782275800987F6C /* app.icf in Resources */ = {isa = PBXBuildFile; fileRef = A035A5001782275800987F6C /* app.icf */; };
 		A035A5211782275800987F6C /* armature in Resources */ = {isa = PBXBuildFile; fileRef = A035A5011782275800987F6C /* armature */; };
@@ -179,11 +184,6 @@
 		A035A53C1782275800987F6C /* spine in Resources */ = {isa = PBXBuildFile; fileRef = A035A51C1782275800987F6C /* spine */; };
 		A035A53D1782275800987F6C /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = A035A51D1782275800987F6C /* TileMaps */; };
 		A035A53E1782275800987F6C /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = A035A51E1782275800987F6C /* zwoptex */; };
-		A035A541178227A800987F6C /* libbox2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B2F17821DF600987F6C /* libbox2d.a */; };
-		A035A5DC1782290400987F6C /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B2D17821DF600987F6C /* libchipmunk.a */; };
-		A035A5DD1782290400987F6C /* libcocos2dx-extensions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B2B17821DF600987F6C /* libcocos2dx-extensions.a */; };
-		A035A5DE1782290400987F6C /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B2917821DF600987F6C /* libcocos2dx.a */; };
-		A035A5DF1782290400987F6C /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B3117821DF600987F6C /* libCocosDenshion.a */; };
 		A035A5E01782290400987F6C /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F808C177E98A600D9A1CB /* libcurl.dylib */; };
 		A035A5E11782290400987F6C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		A035A5E21782290400987F6C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
@@ -265,7 +265,6 @@
 		A035A70B17822A8E00987F6C /* jsb_opengl_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6FF17822A8E00987F6C /* jsb_opengl_constants.js */; };
 		A035A70C17822A8E00987F6C /* jsb_sys.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A70017822A8E00987F6C /* jsb_sys.js */; };
 		A035A70D17822A8E00987F6C /* main.debug.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A70117822A8E00987F6C /* main.debug.js */; };
-		A035A70E17822E5000987F6C /* libjsbindings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B3317821DF600987F6C /* libjsbindings.a */; };
 		A035A71217822E9E00987F6C /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A035A71117822E9E00987F6C /* libsqlite3.dylib */; };
 		A035A7291782301C00987F6C /* jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6F617822A8E00987F6C /* jsb.js */; };
 		A035A72A1782301C00987F6C /* jsb_chipmunk.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6F717822A8E00987F6C /* jsb_chipmunk.js */; };
@@ -279,11 +278,6 @@
 		A035A7321782301C00987F6C /* jsb_opengl_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6FF17822A8E00987F6C /* jsb_opengl_constants.js */; };
 		A035A7331782301C00987F6C /* jsb_sys.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A70017822A8E00987F6C /* jsb_sys.js */; };
 		A035A7341782301C00987F6C /* main.debug.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A70117822A8E00987F6C /* main.debug.js */; };
-		A035A76B1782301C00987F6C /* libjsbindings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B3317821DF600987F6C /* libjsbindings.a */; };
-		A035A76C1782301C00987F6C /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B2D17821DF600987F6C /* libchipmunk.a */; };
-		A035A76D1782301C00987F6C /* libcocos2dx-extensions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B2B17821DF600987F6C /* libcocos2dx-extensions.a */; };
-		A035A76E1782301C00987F6C /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B2917821DF600987F6C /* libcocos2dx.a */; };
-		A035A76F1782301C00987F6C /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B3117821DF600987F6C /* libCocosDenshion.a */; };
 		A035A7701782301C00987F6C /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A035A71117822E9E00987F6C /* libsqlite3.dylib */; };
 		A035A7711782301C00987F6C /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F808C177E98A600D9A1CB /* libcurl.dylib */; };
 		A035A7721782301C00987F6C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
@@ -321,11 +315,6 @@
 		A035A9D817823FE100987F6C /* jsb_opengl_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6FF17822A8E00987F6C /* jsb_opengl_constants.js */; };
 		A035A9D917823FE100987F6C /* jsb_sys.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A70017822A8E00987F6C /* jsb_sys.js */; };
 		A035A9DA17823FE100987F6C /* main.debug.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A70117822A8E00987F6C /* main.debug.js */; };
-		A035A9E517823FE100987F6C /* libjsbindings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B3317821DF600987F6C /* libjsbindings.a */; };
-		A035A9E617823FE100987F6C /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B2D17821DF600987F6C /* libchipmunk.a */; };
-		A035A9E717823FE100987F6C /* libcocos2dx-extensions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B2B17821DF600987F6C /* libcocos2dx-extensions.a */; };
-		A035A9E817823FE100987F6C /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B2917821DF600987F6C /* libcocos2dx.a */; };
-		A035A9E917823FE100987F6C /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B3117821DF600987F6C /* libCocosDenshion.a */; };
 		A035A9EA17823FE100987F6C /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A035A71117822E9E00987F6C /* libsqlite3.dylib */; };
 		A035A9EB17823FE100987F6C /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F808C177E98A600D9A1CB /* libcurl.dylib */; };
 		A035A9EC17823FE100987F6C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
@@ -358,11 +347,6 @@
 		A035AAA61782422400987F6C /* jsb_opengl_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6FF17822A8E00987F6C /* jsb_opengl_constants.js */; };
 		A035AAA71782422400987F6C /* jsb_sys.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A70017822A8E00987F6C /* jsb_sys.js */; };
 		A035AAA81782422400987F6C /* main.debug.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A70117822A8E00987F6C /* main.debug.js */; };
-		A035AAB31782422400987F6C /* libjsbindings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B3317821DF600987F6C /* libjsbindings.a */; };
-		A035AAB41782422400987F6C /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B2D17821DF600987F6C /* libchipmunk.a */; };
-		A035AAB51782422400987F6C /* libcocos2dx-extensions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B2B17821DF600987F6C /* libcocos2dx-extensions.a */; };
-		A035AAB61782422400987F6C /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B2917821DF600987F6C /* libcocos2dx.a */; };
-		A035AAB71782422400987F6C /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B3117821DF600987F6C /* libCocosDenshion.a */; };
 		A035AAB81782422400987F6C /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A035A71117822E9E00987F6C /* libsqlite3.dylib */; };
 		A035AAB91782422400987F6C /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F808C177E98A600D9A1CB /* libcurl.dylib */; };
 		A035AABA1782422400987F6C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
@@ -392,11 +376,6 @@
 		A035AC191782453000987F6C /* jsb_opengl_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A6FF17822A8E00987F6C /* jsb_opengl_constants.js */; };
 		A035AC1A1782453000987F6C /* jsb_sys.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A70017822A8E00987F6C /* jsb_sys.js */; };
 		A035AC1B1782453000987F6C /* main.debug.js in Resources */ = {isa = PBXBuildFile; fileRef = A035A70117822A8E00987F6C /* main.debug.js */; };
-		A035AC251782453000987F6C /* libjsbindings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B3317821DF600987F6C /* libjsbindings.a */; };
-		A035AC261782453000987F6C /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B2D17821DF600987F6C /* libchipmunk.a */; };
-		A035AC271782453000987F6C /* libcocos2dx-extensions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B2B17821DF600987F6C /* libcocos2dx-extensions.a */; };
-		A035AC281782453000987F6C /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B2917821DF600987F6C /* libcocos2dx.a */; };
-		A035AC291782453000987F6C /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B3117821DF600987F6C /* libCocosDenshion.a */; };
 		A035AC2A1782453000987F6C /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A035A71117822E9E00987F6C /* libsqlite3.dylib */; };
 		A035AC2B1782453000987F6C /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F808C177E98A600D9A1CB /* libcurl.dylib */; };
 		A035AC2C1782453000987F6C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
@@ -414,8 +393,6 @@
 		A035ACAC178245AB00987F6C /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A035AC7B178245AB00987F6C /* Icon.icns */; };
 		A035ACAE178245AB00987F6C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A035AC7D178245AB00987F6C /* main.m */; };
 		A035ACB9178245FD00987F6C /* Published files iOS in Resources */ = {isa = PBXBuildFile; fileRef = A035ACB8178245FD00987F6C /* Published files iOS */; };
-		A035AD68178254A300987F6C /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B2917821DF600987F6C /* libcocos2dx.a */; };
-		A035AD69178254A300987F6C /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B3117821DF600987F6C /* libCocosDenshion.a */; };
 		A035AD6A178254A300987F6C /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F808C177E98A600D9A1CB /* libcurl.dylib */; };
 		A035AD6B178254A300987F6C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		A035AD6C178254A300987F6C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
@@ -451,8 +428,6 @@
 		A035AE4E178254FF00987F6C /* Player.png in Resources */ = {isa = PBXBuildFile; fileRef = A035ADFC178254FF00987F6C /* Player.png */; };
 		A035AE4F178254FF00987F6C /* Projectile.png in Resources */ = {isa = PBXBuildFile; fileRef = A035ADFD178254FF00987F6C /* Projectile.png */; };
 		A035AE50178254FF00987F6C /* Target.png in Resources */ = {isa = PBXBuildFile; fileRef = A035ADFE178254FF00987F6C /* Target.png */; };
-		A035AE7A178255DC00987F6C /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B2917821DF600987F6C /* libcocos2dx.a */; };
-		A035AE7B178255DC00987F6C /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0359B3117821DF600987F6C /* libCocosDenshion.a */; };
 		A035AE7C178255DC00987F6C /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F808C177E98A600D9A1CB /* libcurl.dylib */; };
 		A035AE7D178255DC00987F6C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		A035AE7E178255DC00987F6C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
@@ -478,296 +453,246 @@
 		A035AF701782567A00987F6C /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = A035AF6D1782567A00987F6C /* ipadhd */; };
 		A035AF711782567A00987F6C /* iphone in Resources */ = {isa = PBXBuildFile; fileRef = A035AF6E1782567A00987F6C /* iphone */; };
 		A05FCACA177C124500BE600E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
+		A07A510B17839F040073F6A7 /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F117839B9C0073F6A7 /* libcocos2dx Mac.a */; };
+		A07A511017839FC80073F6A7 /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F117839B9C0073F6A7 /* libcocos2dx Mac.a */; };
+		A07A511117839FC80073F6A7 /* libCocosDenshion Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F917839B9C0073F6A7 /* libCocosDenshion Mac.a */; };
+		A07A511C17839FF90073F6A7 /* libbox2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F717839B9C0073F6A7 /* libbox2d Mac.a */; };
+		A07A511D17839FF90073F6A7 /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F517839B9C0073F6A7 /* libchipmunk Mac.a */; };
+		A07A511E17839FF90073F6A7 /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F117839B9C0073F6A7 /* libcocos2dx Mac.a */; };
+		A07A511F17839FF90073F6A7 /* libcocos2dx-extensions Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F317839B9C0073F6A7 /* libcocos2dx-extensions Mac.a */; };
+		A07A512017839FF90073F6A7 /* libCocosDenshion Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F917839B9C0073F6A7 /* libCocosDenshion Mac.a */; };
+		A07A512D1783A0590073F6A7 /* libbox2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F717839B9C0073F6A7 /* libbox2d Mac.a */; };
+		A07A512E1783A0590073F6A7 /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F517839B9C0073F6A7 /* libchipmunk Mac.a */; };
+		A07A512F1783A0590073F6A7 /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F117839B9C0073F6A7 /* libcocos2dx Mac.a */; };
+		A07A51301783A0590073F6A7 /* libcocos2dx-extensions Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F317839B9C0073F6A7 /* libcocos2dx-extensions Mac.a */; };
+		A07A51311783A0590073F6A7 /* libCocosDenshion Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F917839B9C0073F6A7 /* libCocosDenshion Mac.a */; };
+		A07A51321783A0590073F6A7 /* libjsbindings Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50FB17839B9C0073F6A7 /* libjsbindings Mac.a */; };
+		A07A513F1783A0810073F6A7 /* libbox2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F717839B9C0073F6A7 /* libbox2d Mac.a */; };
+		A07A51401783A0810073F6A7 /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F517839B9C0073F6A7 /* libchipmunk Mac.a */; };
+		A07A51411783A0810073F6A7 /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F117839B9C0073F6A7 /* libcocos2dx Mac.a */; };
+		A07A51421783A0810073F6A7 /* libcocos2dx-extensions Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F317839B9C0073F6A7 /* libcocos2dx-extensions Mac.a */; };
+		A07A51431783A0810073F6A7 /* libCocosDenshion Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F917839B9C0073F6A7 /* libCocosDenshion Mac.a */; };
+		A07A51441783A0810073F6A7 /* libjsbindings Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50FB17839B9C0073F6A7 /* libjsbindings Mac.a */; };
+		A07A51511783A0910073F6A7 /* libbox2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F717839B9C0073F6A7 /* libbox2d Mac.a */; };
+		A07A51521783A0910073F6A7 /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F517839B9C0073F6A7 /* libchipmunk Mac.a */; };
+		A07A51531783A0910073F6A7 /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F117839B9C0073F6A7 /* libcocos2dx Mac.a */; };
+		A07A51541783A0910073F6A7 /* libcocos2dx-extensions Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F317839B9C0073F6A7 /* libcocos2dx-extensions Mac.a */; };
+		A07A51551783A0910073F6A7 /* libCocosDenshion Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F917839B9C0073F6A7 /* libCocosDenshion Mac.a */; };
+		A07A51561783A0910073F6A7 /* libjsbindings Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50FB17839B9C0073F6A7 /* libjsbindings Mac.a */; };
+		A07A51631783A0A10073F6A7 /* libbox2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F717839B9C0073F6A7 /* libbox2d Mac.a */; };
+		A07A51641783A0A10073F6A7 /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F517839B9C0073F6A7 /* libchipmunk Mac.a */; };
+		A07A51651783A0A10073F6A7 /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F117839B9C0073F6A7 /* libcocos2dx Mac.a */; };
+		A07A51661783A0A10073F6A7 /* libcocos2dx-extensions Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F317839B9C0073F6A7 /* libcocos2dx-extensions Mac.a */; };
+		A07A51671783A0A10073F6A7 /* libCocosDenshion Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F917839B9C0073F6A7 /* libCocosDenshion Mac.a */; };
+		A07A51681783A0A10073F6A7 /* libjsbindings Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50FB17839B9C0073F6A7 /* libjsbindings Mac.a */; };
+		A07A51751783A0B10073F6A7 /* libbox2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F717839B9C0073F6A7 /* libbox2d Mac.a */; };
+		A07A51761783A0B10073F6A7 /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F517839B9C0073F6A7 /* libchipmunk Mac.a */; };
+		A07A51771783A0B10073F6A7 /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F117839B9C0073F6A7 /* libcocos2dx Mac.a */; };
+		A07A51781783A0B10073F6A7 /* libcocos2dx-extensions Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F317839B9C0073F6A7 /* libcocos2dx-extensions Mac.a */; };
+		A07A51791783A0B10073F6A7 /* libCocosDenshion Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F917839B9C0073F6A7 /* libCocosDenshion Mac.a */; };
+		A07A517A1783A0B10073F6A7 /* libjsbindings Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50FB17839B9C0073F6A7 /* libjsbindings Mac.a */; };
+		A07A518B1783A1D20073F6A7 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A035AEDB1782564100987F6C /* MainMenu.xib */; };
+		A07A518C1783A1D20073F6A7 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A035AEE21782564100987F6C /* Icon.icns */; };
+		A07A518D1783A1D20073F6A7 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = A035A4FF1782275800987F6C /* animations */; };
+		A07A518E1783A1D20073F6A7 /* app.icf in Resources */ = {isa = PBXBuildFile; fileRef = A035A5001782275800987F6C /* app.icf */; };
+		A07A518F1783A1D20073F6A7 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = A035A5011782275800987F6C /* armature */; };
+		A07A51901783A1D20073F6A7 /* background-music-aac.wav in Resources */ = {isa = PBXBuildFile; fileRef = A035A5021782275800987F6C /* background-music-aac.wav */; };
+		A07A51911783A1D20073F6A7 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A035A5031782275800987F6C /* background.mp3 */; };
+		A07A51921783A1D20073F6A7 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = A035A5041782275800987F6C /* background.ogg */; };
+		A07A51931783A1D20073F6A7 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = A035A5051782275800987F6C /* ccb */; };
+		A07A51941783A1D20073F6A7 /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = A035A5061782275800987F6C /* CocosBuilderExample.ccbproj */; };
+		A07A51951783A1D20073F6A7 /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = A035A5071782275800987F6C /* CocosBuilderExample.ccbresourcelog */; };
+		A07A51961783A1D20073F6A7 /* components in Resources */ = {isa = PBXBuildFile; fileRef = A035A5081782275800987F6C /* components */; };
+		A07A51971783A1D20073F6A7 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = A035A5091782275800987F6C /* configs */; };
+		A07A51981783A1D20073F6A7 /* development.icf in Resources */ = {isa = PBXBuildFile; fileRef = A035A50A1782275800987F6C /* development.icf */; };
+		A07A51991783A1D20073F6A7 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = A035A50B1782275800987F6C /* effect1.raw */; };
+		A07A519A1783A1D20073F6A7 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = A035A50C1782275800987F6C /* effect1.wav */; };
+		A07A519B1783A1D20073F6A7 /* effect2.ogg in Resources */ = {isa = PBXBuildFile; fileRef = A035A50D1782275800987F6C /* effect2.ogg */; };
+		A07A519C1783A1D20073F6A7 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = A035A50E1782275800987F6C /* extensions */; };
+		A07A519D1783A1D20073F6A7 /* fileLookup.plist in Resources */ = {isa = PBXBuildFile; fileRef = A035A50F1782275800987F6C /* fileLookup.plist */; };
+		A07A519E1783A1D20073F6A7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = A035A5101782275800987F6C /* fonts */; };
+		A07A519F1783A1D20073F6A7 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = A035A5111782275800987F6C /* fps_images.png */; };
+		A07A51A01783A1D20073F6A7 /* hd in Resources */ = {isa = PBXBuildFile; fileRef = A035A5121782275800987F6C /* hd */; };
+		A07A51A11783A1D20073F6A7 /* Hello.png in Resources */ = {isa = PBXBuildFile; fileRef = A035A5131782275800987F6C /* Hello.png */; };
+		A07A51A21783A1D20073F6A7 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = A035A5141782275800987F6C /* Images */; };
+		A07A51A31783A1D20073F6A7 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = A035A5151782275800987F6C /* ipad */; };
+		A07A51A41783A1D20073F6A7 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = A035A5161782275800987F6C /* ipadhd */; };
+		A07A51A51783A1D20073F6A7 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = A035A5171782275800987F6C /* Misc */; };
+		A07A51A61783A1D20073F6A7 /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = A035A5181782275800987F6C /* music.mid */; };
+		A07A51A71783A1D20073F6A7 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = A035A5191782275800987F6C /* Particles */; };
+		A07A51A81783A1D20073F6A7 /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = A035A51A1782275800987F6C /* pew-pew-lei.wav */; };
+		A07A51A91783A1D20073F6A7 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = A035A51B1782275800987F6C /* Shaders */; };
+		A07A51AA1783A1D20073F6A7 /* spine in Resources */ = {isa = PBXBuildFile; fileRef = A035A51C1782275800987F6C /* spine */; };
+		A07A51AB1783A1D20073F6A7 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = A035A51D1782275800987F6C /* TileMaps */; };
+		A07A51AC1783A1D20073F6A7 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = A035A51E1782275800987F6C /* zwoptex */; };
+		A07A51AE1783A1D20073F6A7 /* AccelerometerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A035994F17821D9B00987F6C /* AccelerometerTest.cpp */; };
+		A07A51AF1783A1D20073F6A7 /* ActionManagerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A035995217821D9B00987F6C /* ActionManagerTest.cpp */; };
+		A07A51B01783A1D20073F6A7 /* ActionsEaseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A035995517821D9B00987F6C /* ActionsEaseTest.cpp */; };
+		A07A51B11783A1D20073F6A7 /* ActionsProgressTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A035995817821D9B00987F6C /* ActionsProgressTest.cpp */; };
+		A07A51B21783A1D20073F6A7 /* ActionsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A035995B17821D9B00987F6C /* ActionsTest.cpp */; };
+		A07A51B31783A1D20073F6A7 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A035995D17821D9B00987F6C /* AppDelegate.cpp */; };
+		A07A51B41783A1D20073F6A7 /* BaseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A035995F17821D9B00987F6C /* BaseTest.cpp */; };
+		A07A51B51783A1D20073F6A7 /* Box2dTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A035996217821D9B00987F6C /* Box2dTest.cpp */; };
+		A07A51B61783A1D20073F6A7 /* Box2dView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A035996517821D9B00987F6C /* Box2dView.cpp */; };
+		A07A51B71783A1D20073F6A7 /* GLES-Render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A035996717821D9B00987F6C /* GLES-Render.cpp */; };
+		A07A51B81783A1D20073F6A7 /* Test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A035996917821D9B00987F6C /* Test.cpp */; };
+		A07A51B91783A1D20073F6A7 /* TestEntries.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A035996B17821D9B00987F6C /* TestEntries.cpp */; };
+		A07A51BA1783A1D20073F6A7 /* Bug-1159.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A035999B17821D9B00987F6C /* Bug-1159.cpp */; };
+		A07A51BB1783A1D20073F6A7 /* Bug-1174.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A035999D17821D9B00987F6C /* Bug-1174.cpp */; };
+		A07A51BC1783A1D20073F6A7 /* Bug-350.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A035999F17821D9B00987F6C /* Bug-350.cpp */; };
+		A07A51BD1783A1D20073F6A7 /* Bug-422.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599A117821D9B00987F6C /* Bug-422.cpp */; };
+		A07A51BE1783A1D20073F6A7 /* Bug-458.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599A417821D9B00987F6C /* Bug-458.cpp */; };
+		A07A51BF1783A1D20073F6A7 /* QuestionContainerSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599A617821D9B00987F6C /* QuestionContainerSprite.cpp */; };
+		A07A51C01783A1D20073F6A7 /* Bug-624.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599A817821D9B00987F6C /* Bug-624.cpp */; };
+		A07A51C11783A1D20073F6A7 /* Bug-886.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599AA17821D9B00987F6C /* Bug-886.cpp */; };
+		A07A51C21783A1D20073F6A7 /* Bug-899.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599AC17821D9B00987F6C /* Bug-899.cpp */; };
+		A07A51C31783A1D20073F6A7 /* Bug-914.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599AE17821D9B00987F6C /* Bug-914.cpp */; };
+		A07A51C41783A1D20073F6A7 /* BugsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599B017821D9B00987F6C /* BugsTest.cpp */; };
+		A07A51C51783A1D20073F6A7 /* ChipmunkTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599B317821D9B00987F6C /* ChipmunkTest.cpp */; };
+		A07A51C61783A1D20073F6A7 /* ClickAndMoveTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599B617821D9B00987F6C /* ClickAndMoveTest.cpp */; };
+		A07A51C71783A1D20073F6A7 /* ClippingNodeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599B917821D9B00987F6C /* ClippingNodeTest.cpp */; };
+		A07A51C81783A1D20073F6A7 /* CocosDenshionTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599BC17821D9B00987F6C /* CocosDenshionTest.cpp */; };
+		A07A51C91783A1D20073F6A7 /* ConfigurationTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599BF17821D9B00987F6C /* ConfigurationTest.cpp */; };
+		A07A51CA1783A1D20073F6A7 /* controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599C117821D9B00987F6C /* controller.cpp */; };
+		A07A51CB1783A1D20073F6A7 /* CurlTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599C417821D9B00987F6C /* CurlTest.cpp */; };
+		A07A51CC1783A1D20073F6A7 /* CurrentLanguageTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599C717821D9B00987F6C /* CurrentLanguageTest.cpp */; };
+		A07A51CD1783A1D20073F6A7 /* DataVisitorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599CA17821D9B00987F6C /* DataVisitorTest.cpp */; };
+		A07A51CE1783A1D20073F6A7 /* DrawPrimitivesTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599CD17821D9B00987F6C /* DrawPrimitivesTest.cpp */; };
+		A07A51CF1783A1D20073F6A7 /* EffectsAdvancedTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599D017821D9B00987F6C /* EffectsAdvancedTest.cpp */; };
+		A07A51D01783A1D20073F6A7 /* EffectsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599D317821D9B00987F6C /* EffectsTest.cpp */; };
+		A07A51D11783A1D20073F6A7 /* ArmatureScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599D717821D9B00987F6C /* ArmatureScene.cpp */; };
+		A07A51D21783A1D20073F6A7 /* AnimationsTestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599DC17821D9B00987F6C /* AnimationsTestLayer.cpp */; };
+		A07A51D31783A1D20073F6A7 /* ButtonTestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599DF17821D9B00987F6C /* ButtonTestLayer.cpp */; };
+		A07A51D41783A1D20073F6A7 /* CocosBuilderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599E217821D9B00987F6C /* CocosBuilderTest.cpp */; };
+		A07A51D51783A1D20073F6A7 /* HelloCocosBuilderLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599E517821D9B00987F6C /* HelloCocosBuilderLayer.cpp */; };
+		A07A51D61783A1D20073F6A7 /* MenuTestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599EC17821D9B00987F6C /* MenuTestLayer.cpp */; };
+		A07A51D71783A1D20073F6A7 /* TestHeaderLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599F917821D9B00987F6C /* TestHeaderLayer.cpp */; };
+		A07A51D81783A1D20073F6A7 /* TimelineCallbackTestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599FE17821D9B00987F6C /* TimelineCallbackTestLayer.cpp */; };
+		A07A51D91783A1D20073F6A7 /* ComponentsTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A0117821D9B00987F6C /* ComponentsTestScene.cpp */; };
+		A07A51DA1783A1D20073F6A7 /* EnemyController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A0317821D9B00987F6C /* EnemyController.cpp */; };
+		A07A51DB1783A1D20073F6A7 /* GameOverScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A0517821D9B00987F6C /* GameOverScene.cpp */; };
+		A07A51DC1783A1D20073F6A7 /* PlayerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A0717821D9B00987F6C /* PlayerController.cpp */; };
+		A07A51DD1783A1D20073F6A7 /* ProjectileController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A0917821D9B00987F6C /* ProjectileController.cpp */; };
+		A07A51DE1783A1D20073F6A7 /* SceneController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A0B17821D9B00987F6C /* SceneController.cpp */; };
+		A07A51DF1783A1D20073F6A7 /* CCControlButtonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A0F17821D9B00987F6C /* CCControlButtonTest.cpp */; };
+		A07A51E01783A1D20073F6A7 /* CCControlColourPickerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A1217821D9B00987F6C /* CCControlColourPickerTest.cpp */; };
+		A07A51E11783A1D20073F6A7 /* CCControlPotentiometerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A1517821D9B00987F6C /* CCControlPotentiometerTest.cpp */; };
+		A07A51E21783A1D20073F6A7 /* CCControlScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A1717821D9B00987F6C /* CCControlScene.cpp */; };
+		A07A51E31783A1D20073F6A7 /* CCControlSceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A1917821D9B00987F6C /* CCControlSceneManager.cpp */; };
+		A07A51E41783A1D20073F6A7 /* CCControlSliderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A1C17821D9B00987F6C /* CCControlSliderTest.cpp */; };
+		A07A51E51783A1D20073F6A7 /* CCControlStepperTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A1F17821D9B00987F6C /* CCControlStepperTest.cpp */; };
+		A07A51E61783A1D20073F6A7 /* CCControlSwitchTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A2217821D9B00987F6C /* CCControlSwitchTest.cpp */; };
+		A07A51E71783A1D20073F6A7 /* EditBoxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A2517821D9B00987F6C /* EditBoxTest.cpp */; };
+		A07A51E81783A1D20073F6A7 /* ExtensionsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A2717821D9B00987F6C /* ExtensionsTest.cpp */; };
+		A07A51E91783A1D20073F6A7 /* HttpClientTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A2A17821D9B00987F6C /* HttpClientTest.cpp */; };
+		A07A51EA1783A1D20073F6A7 /* WebSocketTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A2C17821D9B00987F6C /* WebSocketTest.cpp */; };
+		A07A51EB1783A1D20073F6A7 /* NotificationCenterTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A2F17821D9B00987F6C /* NotificationCenterTest.cpp */; };
+		A07A51EC1783A1D20073F6A7 /* CustomTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A3217821D9B00987F6C /* CustomTableViewCell.cpp */; };
+		A07A51ED1783A1D20073F6A7 /* TableViewTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A3417821D9B00987F6C /* TableViewTestScene.cpp */; };
+		A07A51EE1783A1D20073F6A7 /* FileUtilsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A3717821D9B00987F6C /* FileUtilsTest.cpp */; };
+		A07A51EF1783A1D20073F6A7 /* FontTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A3A17821D9B00987F6C /* FontTest.cpp */; };
+		A07A51F01783A1D20073F6A7 /* IntervalTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A3D17821D9B00987F6C /* IntervalTest.cpp */; };
+		A07A51F11783A1D20073F6A7 /* KeyboardTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A4017821D9B00987F6C /* KeyboardTest.cpp */; };
+		A07A51F21783A1D20073F6A7 /* KeypadTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A4317821D9B00987F6C /* KeypadTest.cpp */; };
+		A07A51F31783A1D20073F6A7 /* LabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A4617821D9B00987F6C /* LabelTest.cpp */; };
+		A07A51F41783A1D20073F6A7 /* LayerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A4917821D9B00987F6C /* LayerTest.cpp */; };
+		A07A51F51783A1D20073F6A7 /* MenuTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A4C17821D9B00987F6C /* MenuTest.cpp */; };
+		A07A51F61783A1D20073F6A7 /* MotionStreakTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A4F17821D9B00987F6C /* MotionStreakTest.cpp */; };
+		A07A51F71783A1D20073F6A7 /* MutiTouchTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A5217821D9B00987F6C /* MutiTouchTest.cpp */; };
+		A07A51F81783A1D20073F6A7 /* NodeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A5517821D9B00987F6C /* NodeTest.cpp */; };
+		A07A51F91783A1D20073F6A7 /* ParallaxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A5817821D9B00987F6C /* ParallaxTest.cpp */; };
+		A07A51FA1783A1D20073F6A7 /* ParticleTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A5B17821D9C00987F6C /* ParticleTest.cpp */; };
+		A07A51FB1783A1D20073F6A7 /* PerformanceNodeChildrenTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A5E17821D9C00987F6C /* PerformanceNodeChildrenTest.cpp */; };
+		A07A51FC1783A1D20073F6A7 /* PerformanceParticleTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A6017821D9C00987F6C /* PerformanceParticleTest.cpp */; };
+		A07A51FD1783A1D20073F6A7 /* PerformanceSpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A6217821D9C00987F6C /* PerformanceSpriteTest.cpp */; };
+		A07A51FE1783A1D20073F6A7 /* PerformanceTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A6417821D9C00987F6C /* PerformanceTest.cpp */; };
+		A07A51FF1783A1D20073F6A7 /* PerformanceTextureTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A6617821D9C00987F6C /* PerformanceTextureTest.cpp */; };
+		A07A52001783A1D20073F6A7 /* PerformanceTouchesTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A6817821D9C00987F6C /* PerformanceTouchesTest.cpp */; };
+		A07A52011783A1D20073F6A7 /* RenderTextureTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A6B17821D9C00987F6C /* RenderTextureTest.cpp */; };
+		A07A52021783A1D20073F6A7 /* RotateWorldTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A6E17821D9C00987F6C /* RotateWorldTest.cpp */; };
+		A07A52031783A1D20073F6A7 /* SceneTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A7117821D9C00987F6C /* SceneTest.cpp */; };
+		A07A52041783A1D20073F6A7 /* SchedulerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A7417821D9C00987F6C /* SchedulerTest.cpp */; };
+		A07A52051783A1D20073F6A7 /* ShaderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A7717821D9C00987F6C /* ShaderTest.cpp */; };
+		A07A52061783A1D20073F6A7 /* SpineTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A7A17821D9C00987F6C /* SpineTest.cpp */; };
+		A07A52071783A1D20073F6A7 /* SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A7D17821D9C00987F6C /* SpriteTest.cpp */; };
+		A07A52081783A1D20073F6A7 /* testBasic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A7F17821D9C00987F6C /* testBasic.cpp */; };
+		A07A52091783A1D20073F6A7 /* TextInputTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A8417821D9C00987F6C /* TextInputTest.cpp */; };
+		A07A520A1783A1D20073F6A7 /* Texture2dTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A8717821D9C00987F6C /* Texture2dTest.cpp */; };
+		A07A520B1783A1D20073F6A7 /* TextureCacheTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A8A17821D9C00987F6C /* TextureCacheTest.cpp */; };
+		A07A520C1783A1D20073F6A7 /* TextureAtlasEncryptionTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A8D17821D9C00987F6C /* TextureAtlasEncryptionTest.cpp */; };
+		A07A520D1783A1D20073F6A7 /* TileMapTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A9017821D9C00987F6C /* TileMapTest.cpp */; };
+		A07A520E1783A1D20073F6A7 /* Ball.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A9317821D9C00987F6C /* Ball.cpp */; };
+		A07A520F1783A1D20073F6A7 /* Paddle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A9517821D9C00987F6C /* Paddle.cpp */; };
+		A07A52101783A1D20073F6A7 /* TouchesTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A9717821D9C00987F6C /* TouchesTest.cpp */; };
+		A07A52111783A1D20073F6A7 /* TransitionsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A9A17821D9C00987F6C /* TransitionsTest.cpp */; };
+		A07A52121783A1D20073F6A7 /* UserDefaultTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A9D17821D9C00987F6C /* UserDefaultTest.cpp */; };
+		A07A52131783A1D20073F6A7 /* VisibleRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A9F17821D9C00987F6C /* VisibleRect.cpp */; };
+		A07A52141783A1D20073F6A7 /* ZwoptexTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359AA217821D9C00987F6C /* ZwoptexTest.cpp */; };
+		A07A521E1783A1D20073F6A7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
+		A07A521F1783A1D20073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
+		A07A52201783A1D20073F6A7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482C165F3988007D4F18 /* AudioToolbox.framework */; };
+		A07A52221783A1D20073F6A7 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64828165F396B007D4F18 /* OpenAL.framework */; };
+		A07A52231783A1D20073F6A7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64826165F394E007D4F18 /* QuartzCore.framework */; };
+		A07A522B1783A1EC0073F6A7 /* libbox2d Mac copy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A510317839B9C0073F6A7 /* libbox2d Mac copy.a */; };
+		A07A522C1783A1EC0073F6A7 /* libchipmunk Mac copy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A510117839B9C0073F6A7 /* libchipmunk Mac copy.a */; };
+		A07A522D1783A1EC0073F6A7 /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50FD17839B9C0073F6A7 /* libcocos2dx iOS.a */; };
+		A07A522E1783A1EC0073F6A7 /* libcocos2dx-extensions Mac copy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50FF17839B9C0073F6A7 /* libcocos2dx-extensions Mac copy.a */; };
+		A07A522F1783A1EC0073F6A7 /* libCocosDenshion Mac copy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A510517839B9C0073F6A7 /* libCocosDenshion Mac copy.a */; };
+		A07A52431783A3A90073F6A7 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A07A52331783A3A80073F6A7 /* RootViewController.mm */; };
+		A07A52441783A3A90073F6A7 /* testsAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = A07A52351783A3A80073F6A7 /* testsAppDelegate.mm */; };
+		A07A52451783A3A90073F6A7 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A07A52361783A3A80073F6A7 /* Default-568h@2x.png */; };
+		A07A52461783A3A90073F6A7 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A07A52371783A3A80073F6A7 /* Default.png */; };
+		A07A52471783A3A90073F6A7 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A07A52381783A3A80073F6A7 /* Default@2x.png */; };
+		A07A52481783A3A90073F6A7 /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = A07A52391783A3A80073F6A7 /* Icon-114.png */; };
+		A07A52491783A3A90073F6A7 /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = A07A523A1783A3A80073F6A7 /* Icon-144.png */; };
+		A07A524A1783A3A90073F6A7 /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = A07A523B1783A3A80073F6A7 /* Icon-57.png */; };
+		A07A524B1783A3A90073F6A7 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = A07A523C1783A3A80073F6A7 /* Icon-72.png */; };
+		A07A524C1783A3A90073F6A7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A07A523E1783A3A80073F6A7 /* main.m */; };
+		A07A525C1783A3D90073F6A7 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A07A52531783A3D90073F6A7 /* AppController.mm */; };
+		A07A525D1783A3D90073F6A7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A07A52541783A3D90073F6A7 /* InfoPlist.strings */; };
+		A07A525E1783A3D90073F6A7 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A07A52561783A3D90073F6A7 /* MainMenu.xib */; };
+		A07A525F1783A3D90073F6A7 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A07A52581783A3D90073F6A7 /* Icon.icns */; };
+		A07A52601783A3D90073F6A7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A07A52591783A3D90073F6A7 /* main.m */; };
+		A07A52721783ACA20073F6A7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A035AED91782564100987F6C /* InfoPlist.strings */; };
+		A07A52731783ACA20073F6A7 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A035AEDB1782564100987F6C /* MainMenu.xib */; };
+		A07A52741783ACA20073F6A7 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A035AEE21782564100987F6C /* Icon.icns */; };
+		A07A52751783ACA20073F6A7 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = A035AF021782564100987F6C /* .gitignore */; };
+		A07A52761783ACA20073F6A7 /* app.icf in Resources */ = {isa = PBXBuildFile; fileRef = A035AF031782564100987F6C /* app.icf */; };
+		A07A52771783ACA20073F6A7 /* bang.png in Resources */ = {isa = PBXBuildFile; fileRef = A035AF041782564100987F6C /* bang.png */; };
+		A07A52781783ACA20073F6A7 /* development.icf in Resources */ = {isa = PBXBuildFile; fileRef = A035AF051782564200987F6C /* development.icf */; };
+		A07A52791783ACA20073F6A7 /* Marker Felt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A035AF071782564200987F6C /* Marker Felt.ttf */; };
+		A07A527A1783ACA20073F6A7 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = A035AF6C1782567A00987F6C /* ipad */; };
+		A07A527B1783ACA20073F6A7 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = A035AF6D1782567A00987F6C /* ipadhd */; };
+		A07A527C1783ACA20073F6A7 /* iphone in Resources */ = {isa = PBXBuildFile; fileRef = A035AF6E1782567A00987F6C /* iphone */; };
+		A07A527E1783ACA20073F6A7 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A035AE8C1782564100987F6C /* AppDelegate.cpp */; };
+		A07A527F1783ACA20073F6A7 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A035AE8F1782564100987F6C /* HelloWorldScene.cpp */; };
+		A07A52861783ACA20073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
+		A07A52871783ACA20073F6A7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482C165F3988007D4F18 /* AudioToolbox.framework */; };
+		A07A52891783ACA20073F6A7 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64828165F396B007D4F18 /* OpenAL.framework */; };
+		A07A528A1783ACA20073F6A7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64826165F394E007D4F18 /* QuartzCore.framework */; };
+		A07A52941783AD5A0073F6A7 /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50FD17839B9C0073F6A7 /* libcocos2dx iOS.a */; };
+		A07A52A71783AD8B0073F6A7 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A07A52971783AD8B0073F6A7 /* AppController.mm */; };
+		A07A52A81783AD8B0073F6A7 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A07A52981783AD8B0073F6A7 /* Default-568h@2x.png */; };
+		A07A52A91783AD8B0073F6A7 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A07A52991783AD8B0073F6A7 /* Default.png */; };
+		A07A52AA1783AD8B0073F6A7 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A07A529A1783AD8B0073F6A7 /* Default@2x.png */; };
+		A07A52AC1783AD8B0073F6A7 /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = A07A52A01783AD8B0073F6A7 /* Icon-114.png */; };
+		A07A52AD1783AD8B0073F6A7 /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = A07A52A11783AD8B0073F6A7 /* Icon-144.png */; };
+		A07A52AE1783AD8B0073F6A7 /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = A07A52A21783AD8B0073F6A7 /* Icon-57.png */; };
+		A07A52AF1783AD8B0073F6A7 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = A07A52A31783AD8B0073F6A7 /* Icon-72.png */; };
+		A07A52B01783AD8B0073F6A7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A07A52A41783AD8B0073F6A7 /* main.m */; };
+		A07A52B11783AD8B0073F6A7 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A07A52A61783AD8B0073F6A7 /* RootViewController.mm */; };
+		A07A52B81783AE6E0073F6A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B71783AE6D0073F6A7 /* UIKit.framework */; };
+		A07A52BA1783AE900073F6A7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B91783AE900073F6A7 /* OpenGLES.framework */; };
+		A07A52BC1783AEB80073F6A7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52BB1783AEB80073F6A7 /* CoreGraphics.framework */; };
+		A07A52BD1783AF0E0073F6A7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
+		A07A52BE1783AF1E0073F6A7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52BB1783AEB80073F6A7 /* CoreGraphics.framework */; };
+		A07A52BF1783AF210073F6A7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B91783AE900073F6A7 /* OpenGLES.framework */; };
+		A07A52C01783AF250073F6A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B71783AE6D0073F6A7 /* UIKit.framework */; };
+		A07A52C21783B01F0073F6A7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52C11783B01F0073F6A7 /* AVFoundation.framework */; };
+		A07A52C31783B02C0073F6A7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52C11783B01F0073F6A7 /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		A0359B2817821DF600987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 1551A33F158F2AB200E66CFE;
-			remoteInfo = cocos2dx;
-		};
-		A0359B2A17821DF600987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A03F2FD617814595006731B9;
-			remoteInfo = "cocos2dx-extensions";
-		};
-		A0359B2C17821DF600987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A03F2CB81780BD04006731B9;
-			remoteInfo = chipmunk;
-		};
-		A0359B2E17821DF600987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A03F2D9B1780BDF7006731B9;
-			remoteInfo = box2d;
-		};
-		A0359B3017821DF600987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A03F2ED617814268006731B9;
-			remoteInfo = CocosDenshion;
-		};
-		A0359B3217821DF600987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A03F31FD1781479B006731B9;
-			remoteInfo = jsbindings;
-		};
-		A0359B3417821E1300987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
-			remoteInfo = cocos2dx;
-		};
-		A0359B3617821E1300987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F2FC117814595006731B9;
-			remoteInfo = "cocos2dx-extensions";
-		};
-		A0359B3817821E1300987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F2B781780BD04006731B9;
-			remoteInfo = chipmunk;
-		};
-		A0359B3A17821E1300987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F2E9817814268006731B9;
-			remoteInfo = CocosDenshion;
-		};
-		A035A53F1782279900987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F2D5D1780BDF7006731B9;
-			remoteInfo = box2d;
-		};
-		A035A5461782290400987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F2D5D1780BDF7006731B9;
-			remoteInfo = box2d;
-		};
-		A035A5481782290400987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
-			remoteInfo = cocos2dx;
-		};
-		A035A54A1782290400987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F2FC117814595006731B9;
-			remoteInfo = "cocos2dx-extensions";
-		};
-		A035A54C1782290400987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F2B781780BD04006731B9;
-			remoteInfo = chipmunk;
-		};
-		A035A54E1782290400987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F2E9817814268006731B9;
-			remoteInfo = CocosDenshion;
-		};
-		A035A5EE1782292500987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F31E81781479B006731B9;
-			remoteInfo = jsbindings;
-		};
-		A035A7151782301C00987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F31E81781479B006731B9;
-			remoteInfo = jsbindings;
-		};
-		A035A7171782301C00987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F2D5D1780BDF7006731B9;
-			remoteInfo = box2d;
-		};
-		A035A7191782301C00987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
-			remoteInfo = cocos2dx;
-		};
-		A035A71B1782301C00987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F2FC117814595006731B9;
-			remoteInfo = "cocos2dx-extensions";
-		};
-		A035A71D1782301C00987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F2B781780BD04006731B9;
-			remoteInfo = chipmunk;
-		};
-		A035A71F1782301C00987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F2E9817814268006731B9;
-			remoteInfo = CocosDenshion;
-		};
-		A035A9BC17823FE100987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F31E81781479B006731B9;
-			remoteInfo = jsbindings;
-		};
-		A035A9BE17823FE100987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F2D5D1780BDF7006731B9;
-			remoteInfo = box2d;
-		};
-		A035A9C017823FE100987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
-			remoteInfo = cocos2dx;
-		};
-		A035A9C217823FE100987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F2FC117814595006731B9;
-			remoteInfo = "cocos2dx-extensions";
-		};
-		A035A9C417823FE100987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F2B781780BD04006731B9;
-			remoteInfo = chipmunk;
-		};
-		A035A9C617823FE100987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F2E9817814268006731B9;
-			remoteInfo = CocosDenshion;
-		};
-		A035AA8F1782422400987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F31E81781479B006731B9;
-			remoteInfo = jsbindings;
-		};
-		A035AA911782422400987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F2D5D1780BDF7006731B9;
-			remoteInfo = box2d;
-		};
-		A035AA931782422400987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
-			remoteInfo = cocos2dx;
-		};
-		A035AA951782422400987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F2FC117814595006731B9;
-			remoteInfo = "cocos2dx-extensions";
-		};
-		A035AA971782422400987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F2B781780BD04006731B9;
-			remoteInfo = chipmunk;
-		};
-		A035AA991782422400987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F2E9817814268006731B9;
-			remoteInfo = CocosDenshion;
-		};
-		A035AC041782453000987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F31E81781479B006731B9;
-			remoteInfo = jsbindings;
-		};
-		A035AC061782453000987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F2D5D1780BDF7006731B9;
-			remoteInfo = box2d;
-		};
-		A035AC081782453000987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
-			remoteInfo = cocos2dx;
-		};
-		A035AC0A1782453000987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F2FC117814595006731B9;
-			remoteInfo = "cocos2dx-extensions";
-		};
-		A035AC0C1782453000987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F2B781780BD04006731B9;
-			remoteInfo = chipmunk;
-		};
-		A035AC0E1782453000987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F2E9817814268006731B9;
-			remoteInfo = CocosDenshion;
-		};
 		A035ACBF178246BD00987F6C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -810,34 +735,6 @@
 			remoteGlobalIDString = A035AC021782453000987F6C;
 			remoteInfo = "JS CocosDragon";
 		};
-		A035ACD2178254A300987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
-			remoteInfo = cocos2dx;
-		};
-		A035ACD8178254A300987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F2E9817814268006731B9;
-			remoteInfo = CocosDenshion;
-		};
-		A035AE5A178255DC00987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
-			remoteInfo = cocos2dx;
-		};
-		A035AE5C178255DC00987F6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F2E9817814268006731B9;
-			remoteInfo = CocosDenshion;
-		};
 		A035AF721782569500987F6C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -852,6 +749,405 @@
 			remoteGlobalIDString = A035ACCE178254A300987F6C;
 			remoteInfo = "Simple Game";
 		};
+		A07A50F017839B9C0073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1551A33F158F2AB200E66CFE;
+			remoteInfo = "cocos2dx Mac";
+		};
+		A07A50F217839B9C0073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A03F2FD617814595006731B9;
+			remoteInfo = "cocos2dx-extensions Mac";
+		};
+		A07A50F417839B9C0073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A03F2CB81780BD04006731B9;
+			remoteInfo = "chipmunk Mac";
+		};
+		A07A50F617839B9C0073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A03F2D9B1780BDF7006731B9;
+			remoteInfo = "box2d Mac";
+		};
+		A07A50F817839B9C0073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A03F2ED617814268006731B9;
+			remoteInfo = "CocosDenshion Mac";
+		};
+		A07A50FA17839B9C0073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A03F31FD1781479B006731B9;
+			remoteInfo = "jsbindings Mac";
+		};
+		A07A50FC17839B9C0073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A07A4D641783777C0073F6A7;
+			remoteInfo = "cocos2dx iOS";
+		};
+		A07A50FE17839B9C0073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A07A4EFC1783867C0073F6A7;
+			remoteInfo = "cocos2dx-extensions iOS";
+		};
+		A07A510017839B9C0073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A07A4F3B178387670073F6A7;
+			remoteInfo = "chipmunk iOS";
+		};
+		A07A510217839B9C0073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A07A4F9E1783876B0073F6A7;
+			remoteInfo = "box2d iOS";
+		};
+		A07A510417839B9C0073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A07A4FB4178387730073F6A7;
+			remoteInfo = "CocosDenshion iOS";
+		};
+		A07A510617839B9C0073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A07A5030178387750073F6A7;
+			remoteInfo = "jsbindings iOS";
+		};
+		A07A510817839ED50073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
+			remoteInfo = "cocos2dx Mac";
+		};
+		A07A510C17839FB60073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
+			remoteInfo = "cocos2dx Mac";
+		};
+		A07A510E17839FB60073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2E9817814268006731B9;
+			remoteInfo = "CocosDenshion Mac";
+		};
+		A07A511217839FEF0073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
+			remoteInfo = "cocos2dx Mac";
+		};
+		A07A511417839FEF0073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2FC117814595006731B9;
+			remoteInfo = "cocos2dx-extensions Mac";
+		};
+		A07A511617839FEF0073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2B781780BD04006731B9;
+			remoteInfo = "chipmunk Mac";
+		};
+		A07A511817839FEF0073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2D5D1780BDF7006731B9;
+			remoteInfo = "box2d Mac";
+		};
+		A07A511A17839FEF0073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2E9817814268006731B9;
+			remoteInfo = "CocosDenshion Mac";
+		};
+		A07A51211783A0500073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
+			remoteInfo = "cocos2dx Mac";
+		};
+		A07A51231783A0500073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2FC117814595006731B9;
+			remoteInfo = "cocos2dx-extensions Mac";
+		};
+		A07A51251783A0500073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2B781780BD04006731B9;
+			remoteInfo = "chipmunk Mac";
+		};
+		A07A51271783A0500073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2D5D1780BDF7006731B9;
+			remoteInfo = "box2d Mac";
+		};
+		A07A51291783A0500073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2E9817814268006731B9;
+			remoteInfo = "CocosDenshion Mac";
+		};
+		A07A512B1783A0500073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F31E81781479B006731B9;
+			remoteInfo = "jsbindings Mac";
+		};
+		A07A51331783A0770073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
+			remoteInfo = "cocos2dx Mac";
+		};
+		A07A51351783A0770073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2FC117814595006731B9;
+			remoteInfo = "cocos2dx-extensions Mac";
+		};
+		A07A51371783A0770073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2B781780BD04006731B9;
+			remoteInfo = "chipmunk Mac";
+		};
+		A07A51391783A0770073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2D5D1780BDF7006731B9;
+			remoteInfo = "box2d Mac";
+		};
+		A07A513B1783A0770073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2E9817814268006731B9;
+			remoteInfo = "CocosDenshion Mac";
+		};
+		A07A513D1783A0770073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F31E81781479B006731B9;
+			remoteInfo = "jsbindings Mac";
+		};
+		A07A51451783A0890073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
+			remoteInfo = "cocos2dx Mac";
+		};
+		A07A51471783A0890073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2FC117814595006731B9;
+			remoteInfo = "cocos2dx-extensions Mac";
+		};
+		A07A51491783A0890073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2B781780BD04006731B9;
+			remoteInfo = "chipmunk Mac";
+		};
+		A07A514B1783A0890073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2D5D1780BDF7006731B9;
+			remoteInfo = "box2d Mac";
+		};
+		A07A514D1783A0890073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2E9817814268006731B9;
+			remoteInfo = "CocosDenshion Mac";
+		};
+		A07A514F1783A0890073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F31E81781479B006731B9;
+			remoteInfo = "jsbindings Mac";
+		};
+		A07A51571783A0980073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
+			remoteInfo = "cocos2dx Mac";
+		};
+		A07A51591783A0980073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2FC117814595006731B9;
+			remoteInfo = "cocos2dx-extensions Mac";
+		};
+		A07A515B1783A0980073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2B781780BD04006731B9;
+			remoteInfo = "chipmunk Mac";
+		};
+		A07A515D1783A0980073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2D5D1780BDF7006731B9;
+			remoteInfo = "box2d Mac";
+		};
+		A07A515F1783A0980073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2E9817814268006731B9;
+			remoteInfo = "CocosDenshion Mac";
+		};
+		A07A51611783A0980073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F31E81781479B006731B9;
+			remoteInfo = "jsbindings Mac";
+		};
+		A07A51691783A0A80073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
+			remoteInfo = "cocos2dx Mac";
+		};
+		A07A516B1783A0A80073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2FC117814595006731B9;
+			remoteInfo = "cocos2dx-extensions Mac";
+		};
+		A07A516D1783A0A80073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2B781780BD04006731B9;
+			remoteInfo = "chipmunk Mac";
+		};
+		A07A516F1783A0A80073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2D5D1780BDF7006731B9;
+			remoteInfo = "box2d Mac";
+		};
+		A07A51711783A0A80073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F2E9817814268006731B9;
+			remoteInfo = "CocosDenshion Mac";
+		};
+		A07A51731783A0A80073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F31E81781479B006731B9;
+			remoteInfo = "jsbindings Mac";
+		};
+		A07A52621783A9980073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A07A4C241783777C0073F6A7;
+			remoteInfo = "cocos2dx iOS";
+		};
+		A07A52641783A9980073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A07A4E111783867C0073F6A7;
+			remoteInfo = "cocos2dx-extensions iOS";
+		};
+		A07A52661783A9980073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A07A4EFD178387670073F6A7;
+			remoteInfo = "chipmunk iOS";
+		};
+		A07A52681783A9980073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A07A4F3C1783876B0073F6A7;
+			remoteInfo = "box2d iOS";
+		};
+		A07A526A1783A9980073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A07A4F9F178387730073F6A7;
+			remoteInfo = "CocosDenshion iOS";
+		};
+		A07A526C1783AB980073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A07A517F1783A1D20073F6A7;
+			remoteInfo = "Test cpp iOS";
+		};
+		A07A52921783AD4C0073F6A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A07A4C241783777C0073F6A7;
+			remoteInfo = "cocos2dx iOS";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -864,7 +1160,7 @@
 		15C6482E165F399D007D4F18 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
 		15C64832165F3AFD007D4F18 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		1A9F808C177E98A600D9A1CB /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
-		1D6058910D05DD3D006BFB54 /* Test cpp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test cpp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* Test cpp Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test cpp Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A035994F17821D9B00987F6C /* AccelerometerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AccelerometerTest.cpp; sourceTree = "<group>"; };
 		A035995017821D9B00987F6C /* AccelerometerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerometerTest.h; sourceTree = "<group>"; };
 		A035995217821D9B00987F6C /* ActionManagerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActionManagerTest.cpp; sourceTree = "<group>"; };
@@ -1131,15 +1427,6 @@
 		A0359AA017821D9C00987F6C /* VisibleRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisibleRect.h; sourceTree = "<group>"; };
 		A0359AA217821D9C00987F6C /* ZwoptexTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZwoptexTest.cpp; sourceTree = "<group>"; };
 		A0359AA317821D9C00987F6C /* ZwoptexTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZwoptexTest.h; sourceTree = "<group>"; };
-		A0359B0C17821DCD00987F6C /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = Cpp/TestCpp/proj.mac/AppController.h; sourceTree = "<group>"; };
-		A0359B0D17821DCD00987F6C /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppController.mm; path = Cpp/TestCpp/proj.mac/AppController.mm; sourceTree = "<group>"; };
-		A0359B1017821DCD00987F6C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
-		A0359B1217821DCD00987F6C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = MainMenu.xib; sourceTree = "<group>"; };
-		A0359B1317821DCD00987F6C /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Icon.icns; path = Cpp/TestCpp/proj.mac/Icon.icns; sourceTree = "<group>"; };
-		A0359B1417821DCD00987F6C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Cpp/TestCpp/proj.mac/main.m; sourceTree = "<group>"; };
-		A0359B1517821DCD00987F6C /* Test_Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Test_Info.plist; path = Cpp/TestCpp/proj.mac/Test_Info.plist; sourceTree = "<group>"; };
-		A0359B1617821DCD00987F6C /* Test_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Test_Prefix.pch; path = Cpp/TestCpp/proj.mac/Test_Prefix.pch; sourceTree = "<group>"; };
-		A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "cocos2d_libs-mac.xcodeproj"; path = "../cocos2d_libs-mac.xcodeproj"; sourceTree = "<group>"; };
 		A035A4FF1782275800987F6C /* animations */ = {isa = PBXFileReference; lastKnownFileType = folder; path = animations; sourceTree = "<group>"; };
 		A035A5001782275800987F6C /* app.icf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = app.icf; sourceTree = "<group>"; };
 		A035A5011782275800987F6C /* armature */ = {isa = PBXFileReference; lastKnownFileType = folder; path = armature; sourceTree = "<group>"; };
@@ -1172,7 +1459,7 @@
 		A035A51C1782275800987F6C /* spine */ = {isa = PBXFileReference; lastKnownFileType = folder; path = spine; sourceTree = "<group>"; };
 		A035A51D1782275800987F6C /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TileMaps; sourceTree = "<group>"; };
 		A035A51E1782275800987F6C /* zwoptex */ = {isa = PBXFileReference; lastKnownFileType = folder; path = zwoptex; sourceTree = "<group>"; };
-		A035A5EC1782290400987F6C /* Test JavaScript.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test JavaScript.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A035A5EC1782290400987F6C /* Test JavaScript Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test JavaScript Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A035A5F41782296200987F6C /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		A035A5F51782296200987F6C /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A035A5F61782296200987F6C /* game.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = game.js; sourceTree = "<group>"; };
@@ -1251,7 +1538,7 @@
 		A035A70017822A8E00987F6C /* jsb_sys.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_sys.js; sourceTree = "<group>"; };
 		A035A70117822A8E00987F6C /* main.debug.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.debug.js; sourceTree = "<group>"; };
 		A035A71117822E9E00987F6C /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		A035A77D1782301C00987F6C /* JS Watermelon With Me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Watermelon With Me.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A035A77D1782301C00987F6C /* JS Watermelon With Me Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Watermelon With Me Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A035A7811782340A00987F6C /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		A035A7821782340A00987F6C /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A035A7ED1782343C00987F6C /* boot-html5.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "boot-html5.js"; sourceTree = "<group>"; };
@@ -1270,7 +1557,7 @@
 		A035A9AD1782355600987F6C /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		A035A9AE1782355600987F6C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A035A9AF1782355600987F6C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		A035A9F717823FE100987F6C /* JS Moon Warriors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Moon Warriors.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A035A9F717823FE100987F6C /* JS Moon Warriors Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Moon Warriors Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A035A9FB178240E000987F6C /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		A035A9FC178240E000987F6C /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A035AA35178240E000987F6C /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
@@ -1284,7 +1571,7 @@
 		A035AA7D1782413200987F6C /* MoonWarriors-jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "MoonWarriors-jsb.js"; path = "Javascript/Shared/games/MoonWarriors/MoonWarriors-jsb.js"; sourceTree = SOURCE_ROOT; };
 		A035AA7F1782413200987F6C /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = Javascript/Shared/games/MoonWarriors/res; sourceTree = SOURCE_ROOT; };
 		A035AA821782413200987F6C /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = Javascript/Shared/games/MoonWarriors/src; sourceTree = SOURCE_ROOT; };
-		A035AAC51782422400987F6C /* JS Crystal Craze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Crystal Craze.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A035AAC51782422400987F6C /* JS Crystal Craze Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Crystal Craze Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A035AAC9178242AE00987F6C /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		A035AACA178242AE00987F6C /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A035AB01178242AF00987F6C /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
@@ -1295,7 +1582,7 @@
 		A035AB08178242AF00987F6C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A035AB09178242AF00987F6C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A035ABFF1782435F00987F6C /* Published-iOS */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Published-iOS"; path = "Javascript/Shared/games/CrystalCraze/Published-iOS"; sourceTree = SOURCE_ROOT; };
-		A035AC371782453000987F6C /* JS CocosDragon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS CocosDragon.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A035AC371782453000987F6C /* JS CocosDragon Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS CocosDragon Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A035AC3D178245AA00987F6C /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		A035AC3E178245AA00987F6C /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A035AC75178245AB00987F6C /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
@@ -1306,7 +1593,7 @@
 		A035AC7C178245AB00987F6C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A035AC7D178245AB00987F6C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A035ACB8178245FD00987F6C /* Published files iOS */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Published files iOS"; path = "Javascript/Shared/games/CocosDragonJS/Published files iOS"; sourceTree = SOURCE_ROOT; };
-		A035AD76178254A300987F6C /* Simple Game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simple Game.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A035AD76178254A300987F6C /* Simple Game Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simple Game Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A035AD7A178254FF00987F6C /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		A035AD7B178254FF00987F6C /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A035AD7C178254FF00987F6C /* GameOverScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameOverScene.cpp; sourceTree = "<group>"; };
@@ -1339,7 +1626,7 @@
 		A035ADFC178254FF00987F6C /* Player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Player.png; sourceTree = "<group>"; };
 		A035ADFD178254FF00987F6C /* Projectile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Projectile.png; sourceTree = "<group>"; };
 		A035ADFE178254FF00987F6C /* Target.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Target.png; sourceTree = "<group>"; };
-		A035AE88178255DC00987F6C /* Hello cpp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hello cpp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A035AE88178255DC00987F6C /* Hello cpp Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hello cpp Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A035AE8C1782564100987F6C /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		A035AE8D1782564100987F6C /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A035AE8E1782564100987F6C /* AppMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppMacros.h; sourceTree = "<group>"; };
@@ -1361,6 +1648,49 @@
 		A035AF6C1782567A00987F6C /* ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipad; sourceTree = "<group>"; };
 		A035AF6D1782567A00987F6C /* ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipadhd; sourceTree = "<group>"; };
 		A035AF6E1782567A00987F6C /* iphone */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone; sourceTree = "<group>"; };
+		A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
+		A07A52291783A1D20073F6A7 /* Test cpp iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test cpp iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A07A52321783A3A80073F6A7 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		A07A52331783A3A80073F6A7 /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
+		A07A52341783A3A80073F6A7 /* testsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testsAppDelegate.h; sourceTree = "<group>"; };
+		A07A52351783A3A80073F6A7 /* testsAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = testsAppDelegate.mm; sourceTree = "<group>"; };
+		A07A52361783A3A80073F6A7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		A07A52371783A3A80073F6A7 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		A07A52381783A3A80073F6A7 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		A07A52391783A3A80073F6A7 /* Icon-114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-114.png"; sourceTree = "<group>"; };
+		A07A523A1783A3A80073F6A7 /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-144.png"; sourceTree = "<group>"; };
+		A07A523B1783A3A80073F6A7 /* Icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-57.png"; sourceTree = "<group>"; };
+		A07A523C1783A3A80073F6A7 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		A07A523D1783A3A80073F6A7 /* iphone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iphone_Prefix.pch; sourceTree = "<group>"; };
+		A07A523E1783A3A80073F6A7 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A07A523F1783A3A90073F6A7 /* Test-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Test-Info.plist"; sourceTree = "<group>"; };
+		A07A52521783A3D90073F6A7 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
+		A07A52531783A3D90073F6A7 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
+		A07A52551783A3D90073F6A7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A07A52571783A3D90073F6A7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		A07A52581783A3D90073F6A7 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
+		A07A52591783A3D90073F6A7 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A07A525A1783A3D90073F6A7 /* Test_Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Test_Info.plist; sourceTree = "<group>"; };
+		A07A525B1783A3D90073F6A7 /* Test_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test_Prefix.pch; sourceTree = "<group>"; };
+		A07A52901783ACA20073F6A7 /* Hello cpp iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hello cpp iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A07A52961783AD8B0073F6A7 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
+		A07A52971783AD8B0073F6A7 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
+		A07A52981783AD8B0073F6A7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		A07A52991783AD8B0073F6A7 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		A07A529A1783AD8B0073F6A7 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		A07A529B1783AD8B0073F6A7 /* HelloCpp-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HelloCpp-Info.plist"; sourceTree = "<group>"; };
+		A07A529F1783AD8B0073F6A7 /* HelloCpp_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloCpp_Prefix.pch; sourceTree = "<group>"; };
+		A07A52A01783AD8B0073F6A7 /* Icon-114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-114.png"; sourceTree = "<group>"; };
+		A07A52A11783AD8B0073F6A7 /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-144.png"; sourceTree = "<group>"; };
+		A07A52A21783AD8B0073F6A7 /* Icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-57.png"; sourceTree = "<group>"; };
+		A07A52A31783AD8B0073F6A7 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		A07A52A41783AD8B0073F6A7 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A07A52A51783AD8B0073F6A7 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		A07A52A61783AD8B0073F6A7 /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
+		A07A52B71783AE6D0073F6A7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		A07A52B91783AE900073F6A7 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
+		A07A52BB1783AEB80073F6A7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
+		A07A52C11783B01F0073F6A7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1368,11 +1698,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A035A541178227A800987F6C /* libbox2d.a in Frameworks */,
-				A0359B3C17821E2E00987F6C /* libchipmunk.a in Frameworks */,
-				A0359B3D17821E2E00987F6C /* libcocos2dx-extensions.a in Frameworks */,
-				A0359B3E17821E2E00987F6C /* libcocos2dx.a in Frameworks */,
-				A0359B3F17821E2E00987F6C /* libCocosDenshion.a in Frameworks */,
+				A07A511C17839FF90073F6A7 /* libbox2d Mac.a in Frameworks */,
+				A07A511D17839FF90073F6A7 /* libchipmunk Mac.a in Frameworks */,
+				A07A511E17839FF90073F6A7 /* libcocos2dx Mac.a in Frameworks */,
+				A07A511F17839FF90073F6A7 /* libcocos2dx-extensions Mac.a in Frameworks */,
+				A07A512017839FF90073F6A7 /* libCocosDenshion Mac.a in Frameworks */,
 				1A9F808D177E98A600D9A1CB /* libcurl.dylib in Frameworks */,
 				15C6482F165F399D007D4F18 /* libz.dylib in Frameworks */,
 				15C64833165F3AFD007D4F18 /* Foundation.framework in Frameworks */,
@@ -1389,11 +1719,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A035A70E17822E5000987F6C /* libjsbindings.a in Frameworks */,
-				A035A5DC1782290400987F6C /* libchipmunk.a in Frameworks */,
-				A035A5DD1782290400987F6C /* libcocos2dx-extensions.a in Frameworks */,
-				A035A5DE1782290400987F6C /* libcocos2dx.a in Frameworks */,
-				A035A5DF1782290400987F6C /* libCocosDenshion.a in Frameworks */,
+				A07A512D1783A0590073F6A7 /* libbox2d Mac.a in Frameworks */,
+				A07A512E1783A0590073F6A7 /* libchipmunk Mac.a in Frameworks */,
+				A07A512F1783A0590073F6A7 /* libcocos2dx Mac.a in Frameworks */,
+				A07A51301783A0590073F6A7 /* libcocos2dx-extensions Mac.a in Frameworks */,
+				A07A51311783A0590073F6A7 /* libCocosDenshion Mac.a in Frameworks */,
+				A07A51321783A0590073F6A7 /* libjsbindings Mac.a in Frameworks */,
 				A035A71217822E9E00987F6C /* libsqlite3.dylib in Frameworks */,
 				A035A5E01782290400987F6C /* libcurl.dylib in Frameworks */,
 				A035A5E11782290400987F6C /* libz.dylib in Frameworks */,
@@ -1411,11 +1742,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A035A76B1782301C00987F6C /* libjsbindings.a in Frameworks */,
-				A035A76C1782301C00987F6C /* libchipmunk.a in Frameworks */,
-				A035A76D1782301C00987F6C /* libcocos2dx-extensions.a in Frameworks */,
-				A035A76E1782301C00987F6C /* libcocos2dx.a in Frameworks */,
-				A035A76F1782301C00987F6C /* libCocosDenshion.a in Frameworks */,
+				A07A513F1783A0810073F6A7 /* libbox2d Mac.a in Frameworks */,
+				A07A51401783A0810073F6A7 /* libchipmunk Mac.a in Frameworks */,
+				A07A51411783A0810073F6A7 /* libcocos2dx Mac.a in Frameworks */,
+				A07A51421783A0810073F6A7 /* libcocos2dx-extensions Mac.a in Frameworks */,
+				A07A51431783A0810073F6A7 /* libCocosDenshion Mac.a in Frameworks */,
+				A07A51441783A0810073F6A7 /* libjsbindings Mac.a in Frameworks */,
 				A035A7701782301C00987F6C /* libsqlite3.dylib in Frameworks */,
 				A035A7711782301C00987F6C /* libcurl.dylib in Frameworks */,
 				A035A7721782301C00987F6C /* libz.dylib in Frameworks */,
@@ -1433,11 +1765,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A035A9E517823FE100987F6C /* libjsbindings.a in Frameworks */,
-				A035A9E617823FE100987F6C /* libchipmunk.a in Frameworks */,
-				A035A9E717823FE100987F6C /* libcocos2dx-extensions.a in Frameworks */,
-				A035A9E817823FE100987F6C /* libcocos2dx.a in Frameworks */,
-				A035A9E917823FE100987F6C /* libCocosDenshion.a in Frameworks */,
+				A07A51511783A0910073F6A7 /* libbox2d Mac.a in Frameworks */,
+				A07A51521783A0910073F6A7 /* libchipmunk Mac.a in Frameworks */,
+				A07A51531783A0910073F6A7 /* libcocos2dx Mac.a in Frameworks */,
+				A07A51541783A0910073F6A7 /* libcocos2dx-extensions Mac.a in Frameworks */,
+				A07A51551783A0910073F6A7 /* libCocosDenshion Mac.a in Frameworks */,
+				A07A51561783A0910073F6A7 /* libjsbindings Mac.a in Frameworks */,
 				A035A9EA17823FE100987F6C /* libsqlite3.dylib in Frameworks */,
 				A035A9EB17823FE100987F6C /* libcurl.dylib in Frameworks */,
 				A035A9EC17823FE100987F6C /* libz.dylib in Frameworks */,
@@ -1455,11 +1788,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A035AAB31782422400987F6C /* libjsbindings.a in Frameworks */,
-				A035AAB41782422400987F6C /* libchipmunk.a in Frameworks */,
-				A035AAB51782422400987F6C /* libcocos2dx-extensions.a in Frameworks */,
-				A035AAB61782422400987F6C /* libcocos2dx.a in Frameworks */,
-				A035AAB71782422400987F6C /* libCocosDenshion.a in Frameworks */,
+				A07A51631783A0A10073F6A7 /* libbox2d Mac.a in Frameworks */,
+				A07A51641783A0A10073F6A7 /* libchipmunk Mac.a in Frameworks */,
+				A07A51651783A0A10073F6A7 /* libcocos2dx Mac.a in Frameworks */,
+				A07A51661783A0A10073F6A7 /* libcocos2dx-extensions Mac.a in Frameworks */,
+				A07A51671783A0A10073F6A7 /* libCocosDenshion Mac.a in Frameworks */,
+				A07A51681783A0A10073F6A7 /* libjsbindings Mac.a in Frameworks */,
 				A035AAB81782422400987F6C /* libsqlite3.dylib in Frameworks */,
 				A035AAB91782422400987F6C /* libcurl.dylib in Frameworks */,
 				A035AABA1782422400987F6C /* libz.dylib in Frameworks */,
@@ -1477,11 +1811,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A035AC251782453000987F6C /* libjsbindings.a in Frameworks */,
-				A035AC261782453000987F6C /* libchipmunk.a in Frameworks */,
-				A035AC271782453000987F6C /* libcocos2dx-extensions.a in Frameworks */,
-				A035AC281782453000987F6C /* libcocos2dx.a in Frameworks */,
-				A035AC291782453000987F6C /* libCocosDenshion.a in Frameworks */,
+				A07A51751783A0B10073F6A7 /* libbox2d Mac.a in Frameworks */,
+				A07A51761783A0B10073F6A7 /* libchipmunk Mac.a in Frameworks */,
+				A07A51771783A0B10073F6A7 /* libcocos2dx Mac.a in Frameworks */,
+				A07A51781783A0B10073F6A7 /* libcocos2dx-extensions Mac.a in Frameworks */,
+				A07A51791783A0B10073F6A7 /* libCocosDenshion Mac.a in Frameworks */,
+				A07A517A1783A0B10073F6A7 /* libjsbindings Mac.a in Frameworks */,
 				A035AC2A1782453000987F6C /* libsqlite3.dylib in Frameworks */,
 				A035AC2B1782453000987F6C /* libcurl.dylib in Frameworks */,
 				A035AC2C1782453000987F6C /* libz.dylib in Frameworks */,
@@ -1499,8 +1834,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A035AD68178254A300987F6C /* libcocos2dx.a in Frameworks */,
-				A035AD69178254A300987F6C /* libCocosDenshion.a in Frameworks */,
+				A07A511017839FC80073F6A7 /* libcocos2dx Mac.a in Frameworks */,
+				A07A511117839FC80073F6A7 /* libCocosDenshion Mac.a in Frameworks */,
 				A035AD6A178254A300987F6C /* libcurl.dylib in Frameworks */,
 				A035AD6B178254A300987F6C /* libz.dylib in Frameworks */,
 				A035AD6C178254A300987F6C /* Foundation.framework in Frameworks */,
@@ -1517,8 +1852,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A035AE7A178255DC00987F6C /* libcocos2dx.a in Frameworks */,
-				A035AE7B178255DC00987F6C /* libCocosDenshion.a in Frameworks */,
+				A07A510B17839F040073F6A7 /* libcocos2dx Mac.a in Frameworks */,
 				A035AE7C178255DC00987F6C /* libcurl.dylib in Frameworks */,
 				A035AE7D178255DC00987F6C /* libz.dylib in Frameworks */,
 				A035AE7E178255DC00987F6C /* Foundation.framework in Frameworks */,
@@ -1531,20 +1865,60 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A07A52171783A1D20073F6A7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A07A522B1783A1EC0073F6A7 /* libbox2d Mac copy.a in Frameworks */,
+				A07A522C1783A1EC0073F6A7 /* libchipmunk Mac copy.a in Frameworks */,
+				A07A522D1783A1EC0073F6A7 /* libcocos2dx iOS.a in Frameworks */,
+				A07A522E1783A1EC0073F6A7 /* libcocos2dx-extensions Mac copy.a in Frameworks */,
+				A07A522F1783A1EC0073F6A7 /* libCocosDenshion Mac copy.a in Frameworks */,
+				A07A521E1783A1D20073F6A7 /* libz.dylib in Frameworks */,
+				A07A521F1783A1D20073F6A7 /* Foundation.framework in Frameworks */,
+				A07A52201783A1D20073F6A7 /* AudioToolbox.framework in Frameworks */,
+				A07A52221783A1D20073F6A7 /* OpenAL.framework in Frameworks */,
+				A07A52231783A1D20073F6A7 /* QuartzCore.framework in Frameworks */,
+				A07A52BE1783AF1E0073F6A7 /* CoreGraphics.framework in Frameworks */,
+				A07A52BF1783AF210073F6A7 /* OpenGLES.framework in Frameworks */,
+				A07A52C01783AF250073F6A7 /* UIKit.framework in Frameworks */,
+				A07A52C31783B02C0073F6A7 /* AVFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A07A52821783ACA20073F6A7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A07A52941783AD5A0073F6A7 /* libcocos2dx iOS.a in Frameworks */,
+				A07A52BC1783AEB80073F6A7 /* CoreGraphics.framework in Frameworks */,
+				A07A52BA1783AE900073F6A7 /* OpenGLES.framework in Frameworks */,
+				A07A52B81783AE6E0073F6A7 /* UIKit.framework in Frameworks */,
+				A07A52861783ACA20073F6A7 /* Foundation.framework in Frameworks */,
+				A07A52871783ACA20073F6A7 /* AudioToolbox.framework in Frameworks */,
+				A07A52891783ACA20073F6A7 /* OpenAL.framework in Frameworks */,
+				A07A528A1783ACA20073F6A7 /* QuartzCore.framework in Frameworks */,
+				A07A52C21783B01F0073F6A7 /* AVFoundation.framework in Frameworks */,
+				A07A52BD1783AF0E0073F6A7 /* libz.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* Test cpp.app */,
-				A035A5EC1782290400987F6C /* Test JavaScript.app */,
-				A035A77D1782301C00987F6C /* JS Watermelon With Me.app */,
-				A035A9F717823FE100987F6C /* JS Moon Warriors.app */,
-				A035AAC51782422400987F6C /* JS Crystal Craze.app */,
-				A035AC371782453000987F6C /* JS CocosDragon.app */,
-				A035AD76178254A300987F6C /* Simple Game.app */,
-				A035AE88178255DC00987F6C /* Hello cpp.app */,
+				1D6058910D05DD3D006BFB54 /* Test cpp Mac.app */,
+				A035A5EC1782290400987F6C /* Test JavaScript Mac.app */,
+				A035A77D1782301C00987F6C /* JS Watermelon With Me Mac.app */,
+				A035A9F717823FE100987F6C /* JS Moon Warriors Mac.app */,
+				A035AAC51782422400987F6C /* JS Crystal Craze Mac.app */,
+				A035AC371782453000987F6C /* JS CocosDragon Mac.app */,
+				A035AD76178254A300987F6C /* Simple Game Mac.app */,
+				A035AE88178255DC00987F6C /* Hello cpp Mac.app */,
+				A07A52291783A1D20073F6A7 /* Test cpp iOS.app */,
+				A07A52901783ACA20073F6A7 /* Hello cpp iOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1552,7 +1926,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */,
+				A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */,
 				A035AE8A1782564100987F6C /* HelloCpp */,
 				A035AD78178254FF00987F6C /* SimpleGame */,
 				A0359B0B17821DB400987F6C /* TestCpp */,
@@ -1573,6 +1947,10 @@
 				A035A71117822E9E00987F6C /* libsqlite3.dylib */,
 				1A9F808C177E98A600D9A1CB /* libcurl.dylib */,
 				15C6482E165F399D007D4F18 /* libz.dylib */,
+				A07A52C11783B01F0073F6A7 /* AVFoundation.framework */,
+				A07A52BB1783AEB80073F6A7 /* CoreGraphics.framework */,
+				A07A52B91783AE900073F6A7 /* OpenGLES.framework */,
+				A07A52B71783AE6D0073F6A7 /* UIKit.framework */,
 				15C6482C165F3988007D4F18 /* AudioToolbox.framework */,
 				15C6482A165F3979007D4F18 /* ApplicationServices.framework */,
 				15C64828165F396B007D4F18 /* OpenAL.framework */,
@@ -2469,48 +2847,12 @@
 		A0359B0B17821DB400987F6C /* TestCpp */ = {
 			isa = PBXGroup;
 			children = (
+				A07A52511783A3D90073F6A7 /* proj.mac */,
+				A07A52301783A3A80073F6A7 /* proj.ios */,
 				A035A0201782270800987F6C /* Resources */,
-				A0359B1D17821DD600987F6C /* mac */,
 				A035994D17821D9B00987F6C /* Classes */,
 			);
 			name = TestCpp;
-			sourceTree = "<group>";
-		};
-		A0359B0E17821DCD00987F6C /* en.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				A0359B0F17821DCD00987F6C /* InfoPlist.strings */,
-				A0359B1117821DCD00987F6C /* MainMenu.xib */,
-			);
-			name = en.lproj;
-			path = Cpp/TestCpp/proj.mac/en.lproj;
-			sourceTree = "<group>";
-		};
-		A0359B1D17821DD600987F6C /* mac */ = {
-			isa = PBXGroup;
-			children = (
-				A0359B0C17821DCD00987F6C /* AppController.h */,
-				A0359B0D17821DCD00987F6C /* AppController.mm */,
-				A0359B0E17821DCD00987F6C /* en.lproj */,
-				A0359B1317821DCD00987F6C /* Icon.icns */,
-				A0359B1417821DCD00987F6C /* main.m */,
-				A0359B1517821DCD00987F6C /* Test_Info.plist */,
-				A0359B1617821DCD00987F6C /* Test_Prefix.pch */,
-			);
-			name = mac;
-			sourceTree = "<group>";
-		};
-		A0359B1F17821DF500987F6C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				A0359B2917821DF600987F6C /* libcocos2dx.a */,
-				A0359B2B17821DF600987F6C /* libcocos2dx-extensions.a */,
-				A0359B2D17821DF600987F6C /* libchipmunk.a */,
-				A0359B2F17821DF600987F6C /* libbox2d.a */,
-				A0359B3117821DF600987F6C /* libCocosDenshion.a */,
-				A0359B3317821DF600987F6C /* libjsbindings.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		A035A0201782270800987F6C /* Resources */ = {
@@ -2942,6 +3284,7 @@
 		A035AE8A1782564100987F6C /* HelloCpp */ = {
 			isa = PBXGroup;
 			children = (
+				A07A52951783AD8B0073F6A7 /* proj.ios */,
 				A035AE8B1782564100987F6C /* Classes */,
 				A035AED61782564100987F6C /* proj.mac */,
 				A035AF011782564100987F6C /* Resources */,
@@ -3000,12 +3343,98 @@
 			path = fonts;
 			sourceTree = "<group>";
 		};
+		A07A50E017839B9B0073F6A7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A07A50F117839B9C0073F6A7 /* libcocos2dx Mac.a */,
+				A07A50F317839B9C0073F6A7 /* libcocos2dx-extensions Mac.a */,
+				A07A50F517839B9C0073F6A7 /* libchipmunk Mac.a */,
+				A07A50F717839B9C0073F6A7 /* libbox2d Mac.a */,
+				A07A50F917839B9C0073F6A7 /* libCocosDenshion Mac.a */,
+				A07A50FB17839B9C0073F6A7 /* libjsbindings Mac.a */,
+				A07A50FD17839B9C0073F6A7 /* libcocos2dx iOS.a */,
+				A07A50FF17839B9C0073F6A7 /* libcocos2dx-extensions Mac copy.a */,
+				A07A510117839B9C0073F6A7 /* libchipmunk Mac copy.a */,
+				A07A510317839B9C0073F6A7 /* libbox2d Mac copy.a */,
+				A07A510517839B9C0073F6A7 /* libCocosDenshion Mac copy.a */,
+				A07A510717839B9C0073F6A7 /* libjsbindings Mac copy.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A07A52301783A3A80073F6A7 /* proj.ios */ = {
+			isa = PBXGroup;
+			children = (
+				A07A52311783A3A80073F6A7 /* Classes */,
+				A07A52361783A3A80073F6A7 /* Default-568h@2x.png */,
+				A07A52371783A3A80073F6A7 /* Default.png */,
+				A07A52381783A3A80073F6A7 /* Default@2x.png */,
+				A07A52391783A3A80073F6A7 /* Icon-114.png */,
+				A07A523A1783A3A80073F6A7 /* Icon-144.png */,
+				A07A523B1783A3A80073F6A7 /* Icon-57.png */,
+				A07A523C1783A3A80073F6A7 /* Icon-72.png */,
+				A07A523D1783A3A80073F6A7 /* iphone_Prefix.pch */,
+				A07A523E1783A3A80073F6A7 /* main.m */,
+				A07A523F1783A3A90073F6A7 /* Test-Info.plist */,
+			);
+			name = proj.ios;
+			path = Cpp/TestCpp/proj.ios;
+			sourceTree = "<group>";
+		};
+		A07A52311783A3A80073F6A7 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				A07A52321783A3A80073F6A7 /* RootViewController.h */,
+				A07A52331783A3A80073F6A7 /* RootViewController.mm */,
+				A07A52341783A3A80073F6A7 /* testsAppDelegate.h */,
+				A07A52351783A3A80073F6A7 /* testsAppDelegate.mm */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		A07A52511783A3D90073F6A7 /* proj.mac */ = {
+			isa = PBXGroup;
+			children = (
+				A07A52521783A3D90073F6A7 /* AppController.h */,
+				A07A52531783A3D90073F6A7 /* AppController.mm */,
+				A07A52541783A3D90073F6A7 /* InfoPlist.strings */,
+				A07A52561783A3D90073F6A7 /* MainMenu.xib */,
+				A07A52581783A3D90073F6A7 /* Icon.icns */,
+				A07A52591783A3D90073F6A7 /* main.m */,
+				A07A525A1783A3D90073F6A7 /* Test_Info.plist */,
+				A07A525B1783A3D90073F6A7 /* Test_Prefix.pch */,
+			);
+			name = proj.mac;
+			path = Cpp/TestCpp/proj.mac;
+			sourceTree = "<group>";
+		};
+		A07A52951783AD8B0073F6A7 /* proj.ios */ = {
+			isa = PBXGroup;
+			children = (
+				A07A52961783AD8B0073F6A7 /* AppController.h */,
+				A07A52971783AD8B0073F6A7 /* AppController.mm */,
+				A07A52981783AD8B0073F6A7 /* Default-568h@2x.png */,
+				A07A52991783AD8B0073F6A7 /* Default.png */,
+				A07A529A1783AD8B0073F6A7 /* Default@2x.png */,
+				A07A529B1783AD8B0073F6A7 /* HelloCpp-Info.plist */,
+				A07A529F1783AD8B0073F6A7 /* HelloCpp_Prefix.pch */,
+				A07A52A01783AD8B0073F6A7 /* Icon-114.png */,
+				A07A52A11783AD8B0073F6A7 /* Icon-144.png */,
+				A07A52A21783AD8B0073F6A7 /* Icon-57.png */,
+				A07A52A31783AD8B0073F6A7 /* Icon-72.png */,
+				A07A52A41783AD8B0073F6A7 /* main.m */,
+				A07A52A51783AD8B0073F6A7 /* RootViewController.h */,
+				A07A52A61783AD8B0073F6A7 /* RootViewController.mm */,
+			);
+			path = proj.ios;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* Test cpp */ = {
+		1D6058900D05DD3D006BFB54 /* Test cpp Mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Test cpp" */;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Test cpp Mac" */;
 			buildPhases = (
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
@@ -3014,20 +3443,20 @@
 			buildRules = (
 			);
 			dependencies = (
-				A035A5401782279900987F6C /* PBXTargetDependency */,
-				A0359B3517821E1300987F6C /* PBXTargetDependency */,
-				A0359B3717821E1300987F6C /* PBXTargetDependency */,
-				A0359B3917821E1300987F6C /* PBXTargetDependency */,
-				A0359B3B17821E1300987F6C /* PBXTargetDependency */,
+				A07A511317839FEF0073F6A7 /* PBXTargetDependency */,
+				A07A511517839FEF0073F6A7 /* PBXTargetDependency */,
+				A07A511717839FEF0073F6A7 /* PBXTargetDependency */,
+				A07A511917839FEF0073F6A7 /* PBXTargetDependency */,
+				A07A511B17839FEF0073F6A7 /* PBXTargetDependency */,
 			);
-			name = "Test cpp";
+			name = "Test cpp Mac";
 			productName = iphone;
-			productReference = 1D6058910D05DD3D006BFB54 /* Test cpp.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* Test cpp Mac.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A035A5441782290400987F6C /* Test JavaScript */ = {
+		A035A5441782290400987F6C /* Test JavaScript Mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A035A5E91782290400987F6C /* Build configuration list for PBXNativeTarget "Test JavaScript" */;
+			buildConfigurationList = A035A5E91782290400987F6C /* Build configuration list for PBXNativeTarget "Test JavaScript Mac" */;
 			buildPhases = (
 				A035A54F1782290400987F6C /* Resources */,
 				A035A5701782290400987F6C /* Sources */,
@@ -3036,21 +3465,21 @@
 			buildRules = (
 			);
 			dependencies = (
-				A035A5EF1782292500987F6C /* PBXTargetDependency */,
-				A035A5451782290400987F6C /* PBXTargetDependency */,
-				A035A5471782290400987F6C /* PBXTargetDependency */,
-				A035A5491782290400987F6C /* PBXTargetDependency */,
-				A035A54B1782290400987F6C /* PBXTargetDependency */,
-				A035A54D1782290400987F6C /* PBXTargetDependency */,
+				A07A51221783A0500073F6A7 /* PBXTargetDependency */,
+				A07A51241783A0500073F6A7 /* PBXTargetDependency */,
+				A07A51261783A0500073F6A7 /* PBXTargetDependency */,
+				A07A51281783A0500073F6A7 /* PBXTargetDependency */,
+				A07A512A1783A0500073F6A7 /* PBXTargetDependency */,
+				A07A512C1783A0500073F6A7 /* PBXTargetDependency */,
 			);
-			name = "Test JavaScript";
+			name = "Test JavaScript Mac";
 			productName = iphone;
-			productReference = A035A5EC1782290400987F6C /* Test JavaScript.app */;
+			productReference = A035A5EC1782290400987F6C /* Test JavaScript Mac.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A035A7131782301C00987F6C /* JS Watermelon With Me */ = {
+		A035A7131782301C00987F6C /* JS Watermelon With Me Mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A035A77A1782301C00987F6C /* Build configuration list for PBXNativeTarget "JS Watermelon With Me" */;
+			buildConfigurationList = A035A77A1782301C00987F6C /* Build configuration list for PBXNativeTarget "JS Watermelon With Me Mac" */;
 			buildPhases = (
 				A035A7201782301C00987F6C /* Resources */,
 				A035A7661782301C00987F6C /* Sources */,
@@ -3059,21 +3488,21 @@
 			buildRules = (
 			);
 			dependencies = (
-				A035A7141782301C00987F6C /* PBXTargetDependency */,
-				A035A7161782301C00987F6C /* PBXTargetDependency */,
-				A035A7181782301C00987F6C /* PBXTargetDependency */,
-				A035A71A1782301C00987F6C /* PBXTargetDependency */,
-				A035A71C1782301C00987F6C /* PBXTargetDependency */,
-				A035A71E1782301C00987F6C /* PBXTargetDependency */,
+				A07A51341783A0770073F6A7 /* PBXTargetDependency */,
+				A07A51361783A0770073F6A7 /* PBXTargetDependency */,
+				A07A51381783A0770073F6A7 /* PBXTargetDependency */,
+				A07A513A1783A0770073F6A7 /* PBXTargetDependency */,
+				A07A513C1783A0770073F6A7 /* PBXTargetDependency */,
+				A07A513E1783A0770073F6A7 /* PBXTargetDependency */,
 			);
-			name = "JS Watermelon With Me";
+			name = "JS Watermelon With Me Mac";
 			productName = iphone;
-			productReference = A035A77D1782301C00987F6C /* JS Watermelon With Me.app */;
+			productReference = A035A77D1782301C00987F6C /* JS Watermelon With Me Mac.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A035A9BA17823FE100987F6C /* JS Moon Warriors */ = {
+		A035A9BA17823FE100987F6C /* JS Moon Warriors Mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A035A9F417823FE100987F6C /* Build configuration list for PBXNativeTarget "JS Moon Warriors" */;
+			buildConfigurationList = A035A9F417823FE100987F6C /* Build configuration list for PBXNativeTarget "JS Moon Warriors Mac" */;
 			buildPhases = (
 				A035A9C717823FE100987F6C /* Resources */,
 				A035A9E017823FE100987F6C /* Sources */,
@@ -3082,21 +3511,21 @@
 			buildRules = (
 			);
 			dependencies = (
-				A035A9BB17823FE100987F6C /* PBXTargetDependency */,
-				A035A9BD17823FE100987F6C /* PBXTargetDependency */,
-				A035A9BF17823FE100987F6C /* PBXTargetDependency */,
-				A035A9C117823FE100987F6C /* PBXTargetDependency */,
-				A035A9C317823FE100987F6C /* PBXTargetDependency */,
-				A035A9C517823FE100987F6C /* PBXTargetDependency */,
+				A07A51461783A0890073F6A7 /* PBXTargetDependency */,
+				A07A51481783A0890073F6A7 /* PBXTargetDependency */,
+				A07A514A1783A0890073F6A7 /* PBXTargetDependency */,
+				A07A514C1783A0890073F6A7 /* PBXTargetDependency */,
+				A07A514E1783A0890073F6A7 /* PBXTargetDependency */,
+				A07A51501783A0890073F6A7 /* PBXTargetDependency */,
 			);
-			name = "JS Moon Warriors";
+			name = "JS Moon Warriors Mac";
 			productName = iphone;
-			productReference = A035A9F717823FE100987F6C /* JS Moon Warriors.app */;
+			productReference = A035A9F717823FE100987F6C /* JS Moon Warriors Mac.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A035AA8D1782422400987F6C /* JS Crystal Craze */ = {
+		A035AA8D1782422400987F6C /* JS Crystal Craze Mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A035AAC21782422400987F6C /* Build configuration list for PBXNativeTarget "JS Crystal Craze" */;
+			buildConfigurationList = A035AAC21782422400987F6C /* Build configuration list for PBXNativeTarget "JS Crystal Craze Mac" */;
 			buildPhases = (
 				A035AA9A1782422400987F6C /* Resources */,
 				A035AAAE1782422400987F6C /* Sources */,
@@ -3105,21 +3534,21 @@
 			buildRules = (
 			);
 			dependencies = (
-				A035AA8E1782422400987F6C /* PBXTargetDependency */,
-				A035AA901782422400987F6C /* PBXTargetDependency */,
-				A035AA921782422400987F6C /* PBXTargetDependency */,
-				A035AA941782422400987F6C /* PBXTargetDependency */,
-				A035AA961782422400987F6C /* PBXTargetDependency */,
-				A035AA981782422400987F6C /* PBXTargetDependency */,
+				A07A51581783A0980073F6A7 /* PBXTargetDependency */,
+				A07A515A1783A0980073F6A7 /* PBXTargetDependency */,
+				A07A515C1783A0980073F6A7 /* PBXTargetDependency */,
+				A07A515E1783A0980073F6A7 /* PBXTargetDependency */,
+				A07A51601783A0980073F6A7 /* PBXTargetDependency */,
+				A07A51621783A0980073F6A7 /* PBXTargetDependency */,
 			);
-			name = "JS Crystal Craze";
+			name = "JS Crystal Craze Mac";
 			productName = iphone;
-			productReference = A035AAC51782422400987F6C /* JS Crystal Craze.app */;
+			productReference = A035AAC51782422400987F6C /* JS Crystal Craze Mac.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A035AC021782453000987F6C /* JS CocosDragon */ = {
+		A035AC021782453000987F6C /* JS CocosDragon Mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A035AC341782453000987F6C /* Build configuration list for PBXNativeTarget "JS CocosDragon" */;
+			buildConfigurationList = A035AC341782453000987F6C /* Build configuration list for PBXNativeTarget "JS CocosDragon Mac" */;
 			buildPhases = (
 				A035AC0F1782453000987F6C /* Resources */,
 				A035AC201782453000987F6C /* Sources */,
@@ -3128,21 +3557,21 @@
 			buildRules = (
 			);
 			dependencies = (
-				A035AC031782453000987F6C /* PBXTargetDependency */,
-				A035AC051782453000987F6C /* PBXTargetDependency */,
-				A035AC071782453000987F6C /* PBXTargetDependency */,
-				A035AC091782453000987F6C /* PBXTargetDependency */,
-				A035AC0B1782453000987F6C /* PBXTargetDependency */,
-				A035AC0D1782453000987F6C /* PBXTargetDependency */,
+				A07A516A1783A0A80073F6A7 /* PBXTargetDependency */,
+				A07A516C1783A0A80073F6A7 /* PBXTargetDependency */,
+				A07A516E1783A0A80073F6A7 /* PBXTargetDependency */,
+				A07A51701783A0A80073F6A7 /* PBXTargetDependency */,
+				A07A51721783A0A80073F6A7 /* PBXTargetDependency */,
+				A07A51741783A0A80073F6A7 /* PBXTargetDependency */,
 			);
-			name = "JS CocosDragon";
+			name = "JS CocosDragon Mac";
 			productName = iphone;
-			productReference = A035AC371782453000987F6C /* JS CocosDragon.app */;
+			productReference = A035AC371782453000987F6C /* JS CocosDragon Mac.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A035ACCE178254A300987F6C /* Simple Game */ = {
+		A035ACCE178254A300987F6C /* Simple Game Mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A035AD73178254A300987F6C /* Build configuration list for PBXNativeTarget "Simple Game" */;
+			buildConfigurationList = A035AD73178254A300987F6C /* Build configuration list for PBXNativeTarget "Simple Game Mac" */;
 			buildPhases = (
 				A035ACD9178254A300987F6C /* Resources */,
 				A035ACFA178254A300987F6C /* Sources */,
@@ -3151,17 +3580,17 @@
 			buildRules = (
 			);
 			dependencies = (
-				A035ACD1178254A300987F6C /* PBXTargetDependency */,
-				A035ACD7178254A300987F6C /* PBXTargetDependency */,
+				A07A510D17839FB60073F6A7 /* PBXTargetDependency */,
+				A07A510F17839FB60073F6A7 /* PBXTargetDependency */,
 			);
-			name = "Simple Game";
+			name = "Simple Game Mac";
 			productName = iphone;
-			productReference = A035AD76178254A300987F6C /* Simple Game.app */;
+			productReference = A035AD76178254A300987F6C /* Simple Game Mac.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A035AE58178255DC00987F6C /* Hello cpp */ = {
+		A035AE58178255DC00987F6C /* Hello cpp Mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A035AE85178255DC00987F6C /* Build configuration list for PBXNativeTarget "Hello cpp" */;
+			buildConfigurationList = A035AE85178255DC00987F6C /* Build configuration list for PBXNativeTarget "Hello cpp Mac" */;
 			buildPhases = (
 				A035AE5D178255DC00987F6C /* Resources */,
 				A035AE73178255DC00987F6C /* Sources */,
@@ -3170,12 +3599,51 @@
 			buildRules = (
 			);
 			dependencies = (
-				A035AE59178255DC00987F6C /* PBXTargetDependency */,
-				A035AE5B178255DC00987F6C /* PBXTargetDependency */,
+				A07A510917839ED50073F6A7 /* PBXTargetDependency */,
 			);
-			name = "Hello cpp";
+			name = "Hello cpp Mac";
 			productName = iphone;
-			productReference = A035AE88178255DC00987F6C /* Hello cpp.app */;
+			productReference = A035AE88178255DC00987F6C /* Hello cpp Mac.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A07A517F1783A1D20073F6A7 /* Test cpp iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A07A52261783A1D20073F6A7 /* Build configuration list for PBXNativeTarget "Test cpp iOS" */;
+			buildPhases = (
+				A07A518A1783A1D20073F6A7 /* Resources */,
+				A07A51AD1783A1D20073F6A7 /* Sources */,
+				A07A52171783A1D20073F6A7 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A07A52631783A9980073F6A7 /* PBXTargetDependency */,
+				A07A52651783A9980073F6A7 /* PBXTargetDependency */,
+				A07A52671783A9980073F6A7 /* PBXTargetDependency */,
+				A07A52691783A9980073F6A7 /* PBXTargetDependency */,
+				A07A526B1783A9980073F6A7 /* PBXTargetDependency */,
+			);
+			name = "Test cpp iOS";
+			productName = iphone;
+			productReference = A07A52291783A1D20073F6A7 /* Test cpp iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A07A526E1783ACA20073F6A7 /* Hello cpp iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A07A528D1783ACA20073F6A7 /* Build configuration list for PBXNativeTarget "Hello cpp iOS" */;
+			buildPhases = (
+				A07A52711783ACA20073F6A7 /* Resources */,
+				A07A527D1783ACA20073F6A7 /* Sources */,
+				A07A52821783ACA20073F6A7 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A07A52931783AD4C0073F6A7 /* PBXTargetDependency */,
+			);
+			name = "Hello cpp iOS";
+			productName = iphone;
+			productReference = A07A52901783ACA20073F6A7 /* Hello cpp iOS.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -3186,7 +3654,7 @@
 			attributes = {
 				LastUpgradeCheck = 0500;
 			};
-			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "samples-mac" */;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "samples" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -3201,66 +3669,111 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = A0359B1F17821DF500987F6C /* Products */;
-					ProjectRef = A0359B1E17821DF500987F6C /* cocos2d_libs-mac.xcodeproj */;
+					ProductGroup = A07A50E017839B9B0073F6A7 /* Products */;
+					ProjectRef = A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */;
 				},
 			);
 			projectRoot = "";
 			targets = (
-				A035ACBB1782469700987F6C /* build-all-samples */,
-				A035AE58178255DC00987F6C /* Hello cpp */,
-				A035ACCE178254A300987F6C /* Simple Game */,
-				1D6058900D05DD3D006BFB54 /* Test cpp */,
-				A035A5441782290400987F6C /* Test JavaScript */,
-				A035A7131782301C00987F6C /* JS Watermelon With Me */,
-				A035A9BA17823FE100987F6C /* JS Moon Warriors */,
-				A035AA8D1782422400987F6C /* JS Crystal Craze */,
-				A035AC021782453000987F6C /* JS CocosDragon */,
+				A035ACBB1782469700987F6C /* build-all-samples Mac */,
+				A035AE58178255DC00987F6C /* Hello cpp Mac */,
+				A035ACCE178254A300987F6C /* Simple Game Mac */,
+				1D6058900D05DD3D006BFB54 /* Test cpp Mac */,
+				A035A5441782290400987F6C /* Test JavaScript Mac */,
+				A035A7131782301C00987F6C /* JS Watermelon With Me Mac */,
+				A035A9BA17823FE100987F6C /* JS Moon Warriors Mac */,
+				A035AA8D1782422400987F6C /* JS Crystal Craze Mac */,
+				A035AC021782453000987F6C /* JS CocosDragon Mac */,
+				A07A517B1783A1CC0073F6A7 /* build-all-samples iOS */,
+				A07A517F1783A1D20073F6A7 /* Test cpp iOS */,
+				A07A526E1783ACA20073F6A7 /* Hello cpp iOS */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		A0359B2917821DF600987F6C /* libcocos2dx.a */ = {
+		A07A50F117839B9C0073F6A7 /* libcocos2dx Mac.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libcocos2dx.a;
-			remoteRef = A0359B2817821DF600987F6C /* PBXContainerItemProxy */;
+			path = "libcocos2dx Mac.a";
+			remoteRef = A07A50F017839B9C0073F6A7 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		A0359B2B17821DF600987F6C /* libcocos2dx-extensions.a */ = {
+		A07A50F317839B9C0073F6A7 /* libcocos2dx-extensions Mac.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libcocos2dx-extensions.a";
-			remoteRef = A0359B2A17821DF600987F6C /* PBXContainerItemProxy */;
+			path = "libcocos2dx-extensions Mac.a";
+			remoteRef = A07A50F217839B9C0073F6A7 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		A0359B2D17821DF600987F6C /* libchipmunk.a */ = {
+		A07A50F517839B9C0073F6A7 /* libchipmunk Mac.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libchipmunk.a;
-			remoteRef = A0359B2C17821DF600987F6C /* PBXContainerItemProxy */;
+			path = "libchipmunk Mac.a";
+			remoteRef = A07A50F417839B9C0073F6A7 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		A0359B2F17821DF600987F6C /* libbox2d.a */ = {
+		A07A50F717839B9C0073F6A7 /* libbox2d Mac.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libbox2d.a;
-			remoteRef = A0359B2E17821DF600987F6C /* PBXContainerItemProxy */;
+			path = "libbox2d Mac.a";
+			remoteRef = A07A50F617839B9C0073F6A7 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		A0359B3117821DF600987F6C /* libCocosDenshion.a */ = {
+		A07A50F917839B9C0073F6A7 /* libCocosDenshion Mac.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libCocosDenshion.a;
-			remoteRef = A0359B3017821DF600987F6C /* PBXContainerItemProxy */;
+			path = "libCocosDenshion Mac.a";
+			remoteRef = A07A50F817839B9C0073F6A7 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		A0359B3317821DF600987F6C /* libjsbindings.a */ = {
+		A07A50FB17839B9C0073F6A7 /* libjsbindings Mac.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libjsbindings.a;
-			remoteRef = A0359B3217821DF600987F6C /* PBXContainerItemProxy */;
+			path = "libjsbindings Mac.a";
+			remoteRef = A07A50FA17839B9C0073F6A7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A07A50FD17839B9C0073F6A7 /* libcocos2dx iOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libcocos2dx iOS.a";
+			remoteRef = A07A50FC17839B9C0073F6A7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A07A50FF17839B9C0073F6A7 /* libcocos2dx-extensions Mac copy.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libcocos2dx-extensions Mac copy.a";
+			remoteRef = A07A50FE17839B9C0073F6A7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A07A510117839B9C0073F6A7 /* libchipmunk Mac copy.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libchipmunk Mac copy.a";
+			remoteRef = A07A510017839B9C0073F6A7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A07A510317839B9C0073F6A7 /* libbox2d Mac copy.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libbox2d Mac copy.a";
+			remoteRef = A07A510217839B9C0073F6A7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A07A510517839B9C0073F6A7 /* libCocosDenshion Mac copy.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libCocosDenshion Mac copy.a";
+			remoteRef = A07A510417839B9C0073F6A7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A07A510717839B9C0073F6A7 /* libjsbindings Mac copy.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libjsbindings Mac copy.a";
+			remoteRef = A07A510617839B9C0073F6A7 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -3304,6 +3817,9 @@
 				A035A53C1782275800987F6C /* spine in Resources */,
 				A035A53D1782275800987F6C /* TileMaps in Resources */,
 				A035A53E1782275800987F6C /* zwoptex in Resources */,
+				A07A525D1783A3D90073F6A7 /* InfoPlist.strings in Resources */,
+				A07A525E1783A3D90073F6A7 /* MainMenu.xib in Resources */,
+				A07A525F1783A3D90073F6A7 /* Icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3532,6 +4048,79 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A07A518A1783A1D20073F6A7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A07A518B1783A1D20073F6A7 /* MainMenu.xib in Resources */,
+				A07A518C1783A1D20073F6A7 /* Icon.icns in Resources */,
+				A07A518D1783A1D20073F6A7 /* animations in Resources */,
+				A07A518E1783A1D20073F6A7 /* app.icf in Resources */,
+				A07A518F1783A1D20073F6A7 /* armature in Resources */,
+				A07A51901783A1D20073F6A7 /* background-music-aac.wav in Resources */,
+				A07A51911783A1D20073F6A7 /* background.mp3 in Resources */,
+				A07A51921783A1D20073F6A7 /* background.ogg in Resources */,
+				A07A51931783A1D20073F6A7 /* ccb in Resources */,
+				A07A51941783A1D20073F6A7 /* CocosBuilderExample.ccbproj in Resources */,
+				A07A51951783A1D20073F6A7 /* CocosBuilderExample.ccbresourcelog in Resources */,
+				A07A51961783A1D20073F6A7 /* components in Resources */,
+				A07A51971783A1D20073F6A7 /* configs in Resources */,
+				A07A51981783A1D20073F6A7 /* development.icf in Resources */,
+				A07A51991783A1D20073F6A7 /* effect1.raw in Resources */,
+				A07A519A1783A1D20073F6A7 /* effect1.wav in Resources */,
+				A07A519B1783A1D20073F6A7 /* effect2.ogg in Resources */,
+				A07A519C1783A1D20073F6A7 /* extensions in Resources */,
+				A07A519D1783A1D20073F6A7 /* fileLookup.plist in Resources */,
+				A07A519E1783A1D20073F6A7 /* fonts in Resources */,
+				A07A519F1783A1D20073F6A7 /* fps_images.png in Resources */,
+				A07A51A01783A1D20073F6A7 /* hd in Resources */,
+				A07A51A11783A1D20073F6A7 /* Hello.png in Resources */,
+				A07A51A21783A1D20073F6A7 /* Images in Resources */,
+				A07A51A31783A1D20073F6A7 /* ipad in Resources */,
+				A07A51A41783A1D20073F6A7 /* ipadhd in Resources */,
+				A07A51A51783A1D20073F6A7 /* Misc in Resources */,
+				A07A51A61783A1D20073F6A7 /* music.mid in Resources */,
+				A07A51A71783A1D20073F6A7 /* Particles in Resources */,
+				A07A51A81783A1D20073F6A7 /* pew-pew-lei.wav in Resources */,
+				A07A51A91783A1D20073F6A7 /* Shaders in Resources */,
+				A07A51AA1783A1D20073F6A7 /* spine in Resources */,
+				A07A51AB1783A1D20073F6A7 /* TileMaps in Resources */,
+				A07A51AC1783A1D20073F6A7 /* zwoptex in Resources */,
+				A07A52451783A3A90073F6A7 /* Default-568h@2x.png in Resources */,
+				A07A52461783A3A90073F6A7 /* Default.png in Resources */,
+				A07A52471783A3A90073F6A7 /* Default@2x.png in Resources */,
+				A07A52481783A3A90073F6A7 /* Icon-114.png in Resources */,
+				A07A52491783A3A90073F6A7 /* Icon-144.png in Resources */,
+				A07A524A1783A3A90073F6A7 /* Icon-57.png in Resources */,
+				A07A524B1783A3A90073F6A7 /* Icon-72.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A07A52711783ACA20073F6A7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A07A52721783ACA20073F6A7 /* InfoPlist.strings in Resources */,
+				A07A52731783ACA20073F6A7 /* MainMenu.xib in Resources */,
+				A07A52741783ACA20073F6A7 /* Icon.icns in Resources */,
+				A07A52751783ACA20073F6A7 /* .gitignore in Resources */,
+				A07A52761783ACA20073F6A7 /* app.icf in Resources */,
+				A07A52771783ACA20073F6A7 /* bang.png in Resources */,
+				A07A52781783ACA20073F6A7 /* development.icf in Resources */,
+				A07A52791783ACA20073F6A7 /* Marker Felt.ttf in Resources */,
+				A07A527A1783ACA20073F6A7 /* ipad in Resources */,
+				A07A527B1783ACA20073F6A7 /* ipadhd in Resources */,
+				A07A527C1783ACA20073F6A7 /* iphone in Resources */,
+				A07A52A81783AD8B0073F6A7 /* Default-568h@2x.png in Resources */,
+				A07A52A91783AD8B0073F6A7 /* Default.png in Resources */,
+				A07A52AA1783AD8B0073F6A7 /* Default@2x.png in Resources */,
+				A07A52AC1783AD8B0073F6A7 /* Icon-114.png in Resources */,
+				A07A52AD1783AD8B0073F6A7 /* Icon-144.png in Resources */,
+				A07A52AE1783AD8B0073F6A7 /* Icon-57.png in Resources */,
+				A07A52AF1783AD8B0073F6A7 /* Icon-72.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -3642,8 +4231,8 @@
 				A0359B0817821D9C00987F6C /* UserDefaultTest.cpp in Sources */,
 				A0359B0917821D9C00987F6C /* VisibleRect.cpp in Sources */,
 				A0359B0A17821D9C00987F6C /* ZwoptexTest.cpp in Sources */,
-				A0359B1717821DCD00987F6C /* AppController.mm in Sources */,
-				A0359B1B17821DCD00987F6C /* main.m in Sources */,
+				A07A525C1783A3D90073F6A7 /* AppController.mm in Sources */,
+				A07A52601783A3D90073F6A7 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3720,263 +4309,402 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A07A51AD1783A1D20073F6A7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A07A51AE1783A1D20073F6A7 /* AccelerometerTest.cpp in Sources */,
+				A07A51AF1783A1D20073F6A7 /* ActionManagerTest.cpp in Sources */,
+				A07A51B01783A1D20073F6A7 /* ActionsEaseTest.cpp in Sources */,
+				A07A51B11783A1D20073F6A7 /* ActionsProgressTest.cpp in Sources */,
+				A07A51B21783A1D20073F6A7 /* ActionsTest.cpp in Sources */,
+				A07A51B31783A1D20073F6A7 /* AppDelegate.cpp in Sources */,
+				A07A51B41783A1D20073F6A7 /* BaseTest.cpp in Sources */,
+				A07A51B51783A1D20073F6A7 /* Box2dTest.cpp in Sources */,
+				A07A51B61783A1D20073F6A7 /* Box2dView.cpp in Sources */,
+				A07A51B71783A1D20073F6A7 /* GLES-Render.cpp in Sources */,
+				A07A51B81783A1D20073F6A7 /* Test.cpp in Sources */,
+				A07A51B91783A1D20073F6A7 /* TestEntries.cpp in Sources */,
+				A07A51BA1783A1D20073F6A7 /* Bug-1159.cpp in Sources */,
+				A07A51BB1783A1D20073F6A7 /* Bug-1174.cpp in Sources */,
+				A07A51BC1783A1D20073F6A7 /* Bug-350.cpp in Sources */,
+				A07A51BD1783A1D20073F6A7 /* Bug-422.cpp in Sources */,
+				A07A51BE1783A1D20073F6A7 /* Bug-458.cpp in Sources */,
+				A07A51BF1783A1D20073F6A7 /* QuestionContainerSprite.cpp in Sources */,
+				A07A51C01783A1D20073F6A7 /* Bug-624.cpp in Sources */,
+				A07A51C11783A1D20073F6A7 /* Bug-886.cpp in Sources */,
+				A07A51C21783A1D20073F6A7 /* Bug-899.cpp in Sources */,
+				A07A51C31783A1D20073F6A7 /* Bug-914.cpp in Sources */,
+				A07A51C41783A1D20073F6A7 /* BugsTest.cpp in Sources */,
+				A07A51C51783A1D20073F6A7 /* ChipmunkTest.cpp in Sources */,
+				A07A51C61783A1D20073F6A7 /* ClickAndMoveTest.cpp in Sources */,
+				A07A51C71783A1D20073F6A7 /* ClippingNodeTest.cpp in Sources */,
+				A07A51C81783A1D20073F6A7 /* CocosDenshionTest.cpp in Sources */,
+				A07A51C91783A1D20073F6A7 /* ConfigurationTest.cpp in Sources */,
+				A07A51CA1783A1D20073F6A7 /* controller.cpp in Sources */,
+				A07A51CB1783A1D20073F6A7 /* CurlTest.cpp in Sources */,
+				A07A51CC1783A1D20073F6A7 /* CurrentLanguageTest.cpp in Sources */,
+				A07A51CD1783A1D20073F6A7 /* DataVisitorTest.cpp in Sources */,
+				A07A51CE1783A1D20073F6A7 /* DrawPrimitivesTest.cpp in Sources */,
+				A07A51CF1783A1D20073F6A7 /* EffectsAdvancedTest.cpp in Sources */,
+				A07A51D01783A1D20073F6A7 /* EffectsTest.cpp in Sources */,
+				A07A51D11783A1D20073F6A7 /* ArmatureScene.cpp in Sources */,
+				A07A51D21783A1D20073F6A7 /* AnimationsTestLayer.cpp in Sources */,
+				A07A51D31783A1D20073F6A7 /* ButtonTestLayer.cpp in Sources */,
+				A07A51D41783A1D20073F6A7 /* CocosBuilderTest.cpp in Sources */,
+				A07A51D51783A1D20073F6A7 /* HelloCocosBuilderLayer.cpp in Sources */,
+				A07A51D61783A1D20073F6A7 /* MenuTestLayer.cpp in Sources */,
+				A07A51D71783A1D20073F6A7 /* TestHeaderLayer.cpp in Sources */,
+				A07A51D81783A1D20073F6A7 /* TimelineCallbackTestLayer.cpp in Sources */,
+				A07A51D91783A1D20073F6A7 /* ComponentsTestScene.cpp in Sources */,
+				A07A51DA1783A1D20073F6A7 /* EnemyController.cpp in Sources */,
+				A07A51DB1783A1D20073F6A7 /* GameOverScene.cpp in Sources */,
+				A07A51DC1783A1D20073F6A7 /* PlayerController.cpp in Sources */,
+				A07A51DD1783A1D20073F6A7 /* ProjectileController.cpp in Sources */,
+				A07A51DE1783A1D20073F6A7 /* SceneController.cpp in Sources */,
+				A07A51DF1783A1D20073F6A7 /* CCControlButtonTest.cpp in Sources */,
+				A07A51E01783A1D20073F6A7 /* CCControlColourPickerTest.cpp in Sources */,
+				A07A51E11783A1D20073F6A7 /* CCControlPotentiometerTest.cpp in Sources */,
+				A07A51E21783A1D20073F6A7 /* CCControlScene.cpp in Sources */,
+				A07A51E31783A1D20073F6A7 /* CCControlSceneManager.cpp in Sources */,
+				A07A51E41783A1D20073F6A7 /* CCControlSliderTest.cpp in Sources */,
+				A07A51E51783A1D20073F6A7 /* CCControlStepperTest.cpp in Sources */,
+				A07A51E61783A1D20073F6A7 /* CCControlSwitchTest.cpp in Sources */,
+				A07A51E71783A1D20073F6A7 /* EditBoxTest.cpp in Sources */,
+				A07A51E81783A1D20073F6A7 /* ExtensionsTest.cpp in Sources */,
+				A07A51E91783A1D20073F6A7 /* HttpClientTest.cpp in Sources */,
+				A07A51EA1783A1D20073F6A7 /* WebSocketTest.cpp in Sources */,
+				A07A51EB1783A1D20073F6A7 /* NotificationCenterTest.cpp in Sources */,
+				A07A51EC1783A1D20073F6A7 /* CustomTableViewCell.cpp in Sources */,
+				A07A51ED1783A1D20073F6A7 /* TableViewTestScene.cpp in Sources */,
+				A07A51EE1783A1D20073F6A7 /* FileUtilsTest.cpp in Sources */,
+				A07A51EF1783A1D20073F6A7 /* FontTest.cpp in Sources */,
+				A07A51F01783A1D20073F6A7 /* IntervalTest.cpp in Sources */,
+				A07A51F11783A1D20073F6A7 /* KeyboardTest.cpp in Sources */,
+				A07A51F21783A1D20073F6A7 /* KeypadTest.cpp in Sources */,
+				A07A51F31783A1D20073F6A7 /* LabelTest.cpp in Sources */,
+				A07A51F41783A1D20073F6A7 /* LayerTest.cpp in Sources */,
+				A07A51F51783A1D20073F6A7 /* MenuTest.cpp in Sources */,
+				A07A51F61783A1D20073F6A7 /* MotionStreakTest.cpp in Sources */,
+				A07A51F71783A1D20073F6A7 /* MutiTouchTest.cpp in Sources */,
+				A07A51F81783A1D20073F6A7 /* NodeTest.cpp in Sources */,
+				A07A51F91783A1D20073F6A7 /* ParallaxTest.cpp in Sources */,
+				A07A51FA1783A1D20073F6A7 /* ParticleTest.cpp in Sources */,
+				A07A51FB1783A1D20073F6A7 /* PerformanceNodeChildrenTest.cpp in Sources */,
+				A07A51FC1783A1D20073F6A7 /* PerformanceParticleTest.cpp in Sources */,
+				A07A51FD1783A1D20073F6A7 /* PerformanceSpriteTest.cpp in Sources */,
+				A07A51FE1783A1D20073F6A7 /* PerformanceTest.cpp in Sources */,
+				A07A51FF1783A1D20073F6A7 /* PerformanceTextureTest.cpp in Sources */,
+				A07A52001783A1D20073F6A7 /* PerformanceTouchesTest.cpp in Sources */,
+				A07A52011783A1D20073F6A7 /* RenderTextureTest.cpp in Sources */,
+				A07A52021783A1D20073F6A7 /* RotateWorldTest.cpp in Sources */,
+				A07A52031783A1D20073F6A7 /* SceneTest.cpp in Sources */,
+				A07A52041783A1D20073F6A7 /* SchedulerTest.cpp in Sources */,
+				A07A52051783A1D20073F6A7 /* ShaderTest.cpp in Sources */,
+				A07A52061783A1D20073F6A7 /* SpineTest.cpp in Sources */,
+				A07A52071783A1D20073F6A7 /* SpriteTest.cpp in Sources */,
+				A07A52081783A1D20073F6A7 /* testBasic.cpp in Sources */,
+				A07A52091783A1D20073F6A7 /* TextInputTest.cpp in Sources */,
+				A07A520A1783A1D20073F6A7 /* Texture2dTest.cpp in Sources */,
+				A07A520B1783A1D20073F6A7 /* TextureCacheTest.cpp in Sources */,
+				A07A520C1783A1D20073F6A7 /* TextureAtlasEncryptionTest.cpp in Sources */,
+				A07A520D1783A1D20073F6A7 /* TileMapTest.cpp in Sources */,
+				A07A520E1783A1D20073F6A7 /* Ball.cpp in Sources */,
+				A07A520F1783A1D20073F6A7 /* Paddle.cpp in Sources */,
+				A07A52101783A1D20073F6A7 /* TouchesTest.cpp in Sources */,
+				A07A52111783A1D20073F6A7 /* TransitionsTest.cpp in Sources */,
+				A07A52121783A1D20073F6A7 /* UserDefaultTest.cpp in Sources */,
+				A07A52131783A1D20073F6A7 /* VisibleRect.cpp in Sources */,
+				A07A52141783A1D20073F6A7 /* ZwoptexTest.cpp in Sources */,
+				A07A52431783A3A90073F6A7 /* RootViewController.mm in Sources */,
+				A07A52441783A3A90073F6A7 /* testsAppDelegate.mm in Sources */,
+				A07A524C1783A3A90073F6A7 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A07A527D1783ACA20073F6A7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A07A527E1783ACA20073F6A7 /* AppDelegate.cpp in Sources */,
+				A07A527F1783ACA20073F6A7 /* HelloWorldScene.cpp in Sources */,
+				A07A52A71783AD8B0073F6A7 /* AppController.mm in Sources */,
+				A07A52B01783AD8B0073F6A7 /* main.m in Sources */,
+				A07A52B11783AD8B0073F6A7 /* RootViewController.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		A0359B3517821E1300987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = cocos2dx;
-			targetProxy = A0359B3417821E1300987F6C /* PBXContainerItemProxy */;
-		};
-		A0359B3717821E1300987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "cocos2dx-extensions";
-			targetProxy = A0359B3617821E1300987F6C /* PBXContainerItemProxy */;
-		};
-		A0359B3917821E1300987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = chipmunk;
-			targetProxy = A0359B3817821E1300987F6C /* PBXContainerItemProxy */;
-		};
-		A0359B3B17821E1300987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = CocosDenshion;
-			targetProxy = A0359B3A17821E1300987F6C /* PBXContainerItemProxy */;
-		};
-		A035A5401782279900987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = box2d;
-			targetProxy = A035A53F1782279900987F6C /* PBXContainerItemProxy */;
-		};
-		A035A5451782290400987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = box2d;
-			targetProxy = A035A5461782290400987F6C /* PBXContainerItemProxy */;
-		};
-		A035A5471782290400987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = cocos2dx;
-			targetProxy = A035A5481782290400987F6C /* PBXContainerItemProxy */;
-		};
-		A035A5491782290400987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "cocos2dx-extensions";
-			targetProxy = A035A54A1782290400987F6C /* PBXContainerItemProxy */;
-		};
-		A035A54B1782290400987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = chipmunk;
-			targetProxy = A035A54C1782290400987F6C /* PBXContainerItemProxy */;
-		};
-		A035A54D1782290400987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = CocosDenshion;
-			targetProxy = A035A54E1782290400987F6C /* PBXContainerItemProxy */;
-		};
-		A035A5EF1782292500987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = jsbindings;
-			targetProxy = A035A5EE1782292500987F6C /* PBXContainerItemProxy */;
-		};
-		A035A7141782301C00987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = jsbindings;
-			targetProxy = A035A7151782301C00987F6C /* PBXContainerItemProxy */;
-		};
-		A035A7161782301C00987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = box2d;
-			targetProxy = A035A7171782301C00987F6C /* PBXContainerItemProxy */;
-		};
-		A035A7181782301C00987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = cocos2dx;
-			targetProxy = A035A7191782301C00987F6C /* PBXContainerItemProxy */;
-		};
-		A035A71A1782301C00987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "cocos2dx-extensions";
-			targetProxy = A035A71B1782301C00987F6C /* PBXContainerItemProxy */;
-		};
-		A035A71C1782301C00987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = chipmunk;
-			targetProxy = A035A71D1782301C00987F6C /* PBXContainerItemProxy */;
-		};
-		A035A71E1782301C00987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = CocosDenshion;
-			targetProxy = A035A71F1782301C00987F6C /* PBXContainerItemProxy */;
-		};
-		A035A9BB17823FE100987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = jsbindings;
-			targetProxy = A035A9BC17823FE100987F6C /* PBXContainerItemProxy */;
-		};
-		A035A9BD17823FE100987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = box2d;
-			targetProxy = A035A9BE17823FE100987F6C /* PBXContainerItemProxy */;
-		};
-		A035A9BF17823FE100987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = cocos2dx;
-			targetProxy = A035A9C017823FE100987F6C /* PBXContainerItemProxy */;
-		};
-		A035A9C117823FE100987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "cocos2dx-extensions";
-			targetProxy = A035A9C217823FE100987F6C /* PBXContainerItemProxy */;
-		};
-		A035A9C317823FE100987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = chipmunk;
-			targetProxy = A035A9C417823FE100987F6C /* PBXContainerItemProxy */;
-		};
-		A035A9C517823FE100987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = CocosDenshion;
-			targetProxy = A035A9C617823FE100987F6C /* PBXContainerItemProxy */;
-		};
-		A035AA8E1782422400987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = jsbindings;
-			targetProxy = A035AA8F1782422400987F6C /* PBXContainerItemProxy */;
-		};
-		A035AA901782422400987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = box2d;
-			targetProxy = A035AA911782422400987F6C /* PBXContainerItemProxy */;
-		};
-		A035AA921782422400987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = cocos2dx;
-			targetProxy = A035AA931782422400987F6C /* PBXContainerItemProxy */;
-		};
-		A035AA941782422400987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "cocos2dx-extensions";
-			targetProxy = A035AA951782422400987F6C /* PBXContainerItemProxy */;
-		};
-		A035AA961782422400987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = chipmunk;
-			targetProxy = A035AA971782422400987F6C /* PBXContainerItemProxy */;
-		};
-		A035AA981782422400987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = CocosDenshion;
-			targetProxy = A035AA991782422400987F6C /* PBXContainerItemProxy */;
-		};
-		A035AC031782453000987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = jsbindings;
-			targetProxy = A035AC041782453000987F6C /* PBXContainerItemProxy */;
-		};
-		A035AC051782453000987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = box2d;
-			targetProxy = A035AC061782453000987F6C /* PBXContainerItemProxy */;
-		};
-		A035AC071782453000987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = cocos2dx;
-			targetProxy = A035AC081782453000987F6C /* PBXContainerItemProxy */;
-		};
-		A035AC091782453000987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "cocos2dx-extensions";
-			targetProxy = A035AC0A1782453000987F6C /* PBXContainerItemProxy */;
-		};
-		A035AC0B1782453000987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = chipmunk;
-			targetProxy = A035AC0C1782453000987F6C /* PBXContainerItemProxy */;
-		};
-		A035AC0D1782453000987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = CocosDenshion;
-			targetProxy = A035AC0E1782453000987F6C /* PBXContainerItemProxy */;
-		};
 		A035ACC0178246BD00987F6C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 1D6058900D05DD3D006BFB54 /* Test cpp */;
+			target = 1D6058900D05DD3D006BFB54 /* Test cpp Mac */;
 			targetProxy = A035ACBF178246BD00987F6C /* PBXContainerItemProxy */;
 		};
 		A035ACC2178246BD00987F6C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A035A5441782290400987F6C /* Test JavaScript */;
+			target = A035A5441782290400987F6C /* Test JavaScript Mac */;
 			targetProxy = A035ACC1178246BD00987F6C /* PBXContainerItemProxy */;
 		};
 		A035ACC4178246BD00987F6C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A035A7131782301C00987F6C /* JS Watermelon With Me */;
+			target = A035A7131782301C00987F6C /* JS Watermelon With Me Mac */;
 			targetProxy = A035ACC3178246BD00987F6C /* PBXContainerItemProxy */;
 		};
 		A035ACC6178246BD00987F6C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A035A9BA17823FE100987F6C /* JS Moon Warriors */;
+			target = A035A9BA17823FE100987F6C /* JS Moon Warriors Mac */;
 			targetProxy = A035ACC5178246BD00987F6C /* PBXContainerItemProxy */;
 		};
 		A035ACC8178246BD00987F6C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A035AA8D1782422400987F6C /* JS Crystal Craze */;
+			target = A035AA8D1782422400987F6C /* JS Crystal Craze Mac */;
 			targetProxy = A035ACC7178246BD00987F6C /* PBXContainerItemProxy */;
 		};
 		A035ACCA178246BD00987F6C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A035AC021782453000987F6C /* JS CocosDragon */;
+			target = A035AC021782453000987F6C /* JS CocosDragon Mac */;
 			targetProxy = A035ACC9178246BD00987F6C /* PBXContainerItemProxy */;
-		};
-		A035ACD1178254A300987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = cocos2dx;
-			targetProxy = A035ACD2178254A300987F6C /* PBXContainerItemProxy */;
-		};
-		A035ACD7178254A300987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = CocosDenshion;
-			targetProxy = A035ACD8178254A300987F6C /* PBXContainerItemProxy */;
-		};
-		A035AE59178255DC00987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = cocos2dx;
-			targetProxy = A035AE5A178255DC00987F6C /* PBXContainerItemProxy */;
-		};
-		A035AE5B178255DC00987F6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = CocosDenshion;
-			targetProxy = A035AE5C178255DC00987F6C /* PBXContainerItemProxy */;
 		};
 		A035AF731782569500987F6C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A035AE58178255DC00987F6C /* Hello cpp */;
+			target = A035AE58178255DC00987F6C /* Hello cpp Mac */;
 			targetProxy = A035AF721782569500987F6C /* PBXContainerItemProxy */;
 		};
 		A035AF751782569500987F6C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A035ACCE178254A300987F6C /* Simple Game */;
+			target = A035ACCE178254A300987F6C /* Simple Game Mac */;
 			targetProxy = A035AF741782569500987F6C /* PBXContainerItemProxy */;
+		};
+		A07A510917839ED50073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocos2dx Mac";
+			targetProxy = A07A510817839ED50073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A510D17839FB60073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocos2dx Mac";
+			targetProxy = A07A510C17839FB60073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A510F17839FB60073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "CocosDenshion Mac";
+			targetProxy = A07A510E17839FB60073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A511317839FEF0073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocos2dx Mac";
+			targetProxy = A07A511217839FEF0073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A511517839FEF0073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocos2dx-extensions Mac";
+			targetProxy = A07A511417839FEF0073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A511717839FEF0073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "chipmunk Mac";
+			targetProxy = A07A511617839FEF0073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A511917839FEF0073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "box2d Mac";
+			targetProxy = A07A511817839FEF0073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A511B17839FEF0073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "CocosDenshion Mac";
+			targetProxy = A07A511A17839FEF0073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A51221783A0500073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocos2dx Mac";
+			targetProxy = A07A51211783A0500073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A51241783A0500073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocos2dx-extensions Mac";
+			targetProxy = A07A51231783A0500073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A51261783A0500073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "chipmunk Mac";
+			targetProxy = A07A51251783A0500073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A51281783A0500073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "box2d Mac";
+			targetProxy = A07A51271783A0500073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A512A1783A0500073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "CocosDenshion Mac";
+			targetProxy = A07A51291783A0500073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A512C1783A0500073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "jsbindings Mac";
+			targetProxy = A07A512B1783A0500073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A51341783A0770073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocos2dx Mac";
+			targetProxy = A07A51331783A0770073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A51361783A0770073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocos2dx-extensions Mac";
+			targetProxy = A07A51351783A0770073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A51381783A0770073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "chipmunk Mac";
+			targetProxy = A07A51371783A0770073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A513A1783A0770073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "box2d Mac";
+			targetProxy = A07A51391783A0770073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A513C1783A0770073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "CocosDenshion Mac";
+			targetProxy = A07A513B1783A0770073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A513E1783A0770073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "jsbindings Mac";
+			targetProxy = A07A513D1783A0770073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A51461783A0890073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocos2dx Mac";
+			targetProxy = A07A51451783A0890073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A51481783A0890073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocos2dx-extensions Mac";
+			targetProxy = A07A51471783A0890073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A514A1783A0890073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "chipmunk Mac";
+			targetProxy = A07A51491783A0890073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A514C1783A0890073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "box2d Mac";
+			targetProxy = A07A514B1783A0890073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A514E1783A0890073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "CocosDenshion Mac";
+			targetProxy = A07A514D1783A0890073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A51501783A0890073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "jsbindings Mac";
+			targetProxy = A07A514F1783A0890073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A51581783A0980073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocos2dx Mac";
+			targetProxy = A07A51571783A0980073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A515A1783A0980073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocos2dx-extensions Mac";
+			targetProxy = A07A51591783A0980073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A515C1783A0980073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "chipmunk Mac";
+			targetProxy = A07A515B1783A0980073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A515E1783A0980073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "box2d Mac";
+			targetProxy = A07A515D1783A0980073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A51601783A0980073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "CocosDenshion Mac";
+			targetProxy = A07A515F1783A0980073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A51621783A0980073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "jsbindings Mac";
+			targetProxy = A07A51611783A0980073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A516A1783A0A80073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocos2dx Mac";
+			targetProxy = A07A51691783A0A80073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A516C1783A0A80073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocos2dx-extensions Mac";
+			targetProxy = A07A516B1783A0A80073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A516E1783A0A80073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "chipmunk Mac";
+			targetProxy = A07A516D1783A0A80073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A51701783A0A80073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "box2d Mac";
+			targetProxy = A07A516F1783A0A80073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A51721783A0A80073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "CocosDenshion Mac";
+			targetProxy = A07A51711783A0A80073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A51741783A0A80073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "jsbindings Mac";
+			targetProxy = A07A51731783A0A80073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A52631783A9980073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocos2dx iOS";
+			targetProxy = A07A52621783A9980073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A52651783A9980073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocos2dx-extensions iOS";
+			targetProxy = A07A52641783A9980073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A52671783A9980073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "chipmunk iOS";
+			targetProxy = A07A52661783A9980073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A52691783A9980073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "box2d iOS";
+			targetProxy = A07A52681783A9980073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A526B1783A9980073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "CocosDenshion iOS";
+			targetProxy = A07A526A1783A9980073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A526D1783AB980073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A07A517F1783A1D20073F6A7 /* Test cpp iOS */;
+			targetProxy = A07A526C1783AB980073F6A7 /* PBXContainerItemProxy */;
+		};
+		A07A52931783AD4C0073F6A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocos2dx iOS";
+			targetProxy = A07A52921783AD4C0073F6A7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		A0359B0F17821DCD00987F6C /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A0359B1017821DCD00987F6C /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		A0359B1117821DCD00987F6C /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A0359B1217821DCD00987F6C /* en */,
-			);
-			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
 		A035A6351782296200987F6C /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -4089,6 +4817,22 @@
 			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
+		A07A52541783A3D90073F6A7 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A07A52551783A3D90073F6A7 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A07A52561783A3D90073F6A7 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A07A52571783A3D90073F6A7 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -4102,11 +4846,12 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_ENABLE_CHIPMUNK_INTEGRATION,
+					CC_TARGET_OS_MAC,
+					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Cpp/TestCpp/proj.mac/Test_Info.plist;
-				PRODUCT_NAME = "Test cpp";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/mac\" \"$(SRCROOT)/../external/libwebsockets/mac/include\"";
 			};
 			name = Debug;
 		};
@@ -4119,11 +4864,12 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_ENABLE_CHIPMUNK_INTEGRATION,
+					CC_TARGET_OS_MAC,
+					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Cpp/TestCpp/proj.mac/Test_Info.plist;
-				PRODUCT_NAME = "Test cpp";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/mac\" \"$(SRCROOT)/../external/libwebsockets/mac/include\"";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -4139,16 +4885,12 @@
 					"$(inherited)",
 					CC_ENABLE_CHIPMUNK_INTEGRATION,
 					COCOS2D_JAVASCRIPT,
+					CC_TARGET_OS_MAC,
+					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../scripting/javascript/bindings\"",
-					"\"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\"",
-				);
 				INFOPLIST_FILE = Javascript/TestJavascript/proj.mac/Test_Info.plist;
-				PRODUCT_NAME = "Test JavaScript";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
 			};
 			name = Debug;
 		};
@@ -4162,16 +4904,12 @@
 					"$(inherited)",
 					CC_ENABLE_CHIPMUNK_INTEGRATION,
 					COCOS2D_JAVASCRIPT,
+					CC_TARGET_OS_MAC,
+					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../scripting/javascript/bindings\"",
-					"\"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\"",
-				);
 				INFOPLIST_FILE = Javascript/TestJavascript/proj.mac/Test_Info.plist;
-				PRODUCT_NAME = "Test JavaScript";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -4187,16 +4925,11 @@
 					"$(inherited)",
 					CC_ENABLE_CHIPMUNK_INTEGRATION,
 					COCOS2D_JAVASCRIPT,
+					CC_TARGET_OS_MAC,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../scripting/javascript/bindings\"",
-					"\"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\"",
-				);
 				INFOPLIST_FILE = Javascript/WatermelonWithMe/proj.mac/Info.plist;
-				PRODUCT_NAME = "JS Watermelon With Me";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
 			};
 			name = Debug;
 		};
@@ -4210,16 +4943,11 @@
 					"$(inherited)",
 					CC_ENABLE_CHIPMUNK_INTEGRATION,
 					COCOS2D_JAVASCRIPT,
+					CC_TARGET_OS_MAC,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../scripting/javascript/bindings\"",
-					"\"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\"",
-				);
 				INFOPLIST_FILE = Javascript/WatermelonWithMe/proj.mac/Info.plist;
-				PRODUCT_NAME = "JS Watermelon With Me";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -4235,16 +4963,11 @@
 					"$(inherited)",
 					CC_ENABLE_CHIPMUNK_INTEGRATION,
 					COCOS2D_JAVASCRIPT,
+					CC_TARGET_OS_MAC,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../scripting/javascript/bindings\"",
-					"\"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\"",
-				);
 				INFOPLIST_FILE = Javascript/MoonWarriors/proj.mac/Info.plist;
-				PRODUCT_NAME = "JS Moon Warriors";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
 			};
 			name = Debug;
 		};
@@ -4258,16 +4981,11 @@
 					"$(inherited)",
 					CC_ENABLE_CHIPMUNK_INTEGRATION,
 					COCOS2D_JAVASCRIPT,
+					CC_TARGET_OS_MAC,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../scripting/javascript/bindings\"",
-					"\"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\"",
-				);
 				INFOPLIST_FILE = Javascript/MoonWarriors/proj.mac/Info.plist;
-				PRODUCT_NAME = "JS Moon Warriors";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -4283,16 +5001,11 @@
 					"$(inherited)",
 					CC_ENABLE_CHIPMUNK_INTEGRATION,
 					COCOS2D_JAVASCRIPT,
+					CC_TARGET_OS_MAC,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../scripting/javascript/bindings\"",
-					"\"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\"",
-				);
 				INFOPLIST_FILE = Javascript/CrystalCraze/proj.mac/Info.plist;
-				PRODUCT_NAME = "JS Crystal Craze";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
 			};
 			name = Debug;
 		};
@@ -4306,16 +5019,11 @@
 					"$(inherited)",
 					CC_ENABLE_CHIPMUNK_INTEGRATION,
 					COCOS2D_JAVASCRIPT,
+					CC_TARGET_OS_MAC,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../scripting/javascript/bindings\"",
-					"\"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\"",
-				);
 				INFOPLIST_FILE = Javascript/CrystalCraze/proj.mac/Info.plist;
-				PRODUCT_NAME = "JS Crystal Craze";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -4331,16 +5039,11 @@
 					"$(inherited)",
 					CC_ENABLE_CHIPMUNK_INTEGRATION,
 					COCOS2D_JAVASCRIPT,
+					CC_TARGET_OS_MAC,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../scripting/javascript/bindings\"",
-					"\"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\"",
-				);
 				INFOPLIST_FILE = Javascript/CocosDragonJS/proj.mac/Info.plist;
-				PRODUCT_NAME = "JS CocosDragon";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
 			};
 			name = Debug;
 		};
@@ -4354,16 +5057,11 @@
 					"$(inherited)",
 					CC_ENABLE_CHIPMUNK_INTEGRATION,
 					COCOS2D_JAVASCRIPT,
+					CC_TARGET_OS_MAC,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../scripting/javascript/bindings\"",
-					"\"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\"",
-				);
 				INFOPLIST_FILE = Javascript/CocosDragonJS/proj.mac/Info.plist;
-				PRODUCT_NAME = "JS CocosDragon";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -4371,14 +5069,12 @@
 		A035ACBD1782469800987F6C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
 		A035ACBE1782469800987F6C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -4392,11 +5088,12 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_ENABLE_CHIPMUNK_INTEGRATION,
+					CC_TARGET_OS_MAC,
+					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Cpp/SimpleGame/proj.mac/SampleGame_Info.plist;
-				PRODUCT_NAME = "Simple Game";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/mac\"";
 			};
 			name = Debug;
 		};
@@ -4409,11 +5106,12 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_ENABLE_CHIPMUNK_INTEGRATION,
+					CC_TARGET_OS_MAC,
+					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Cpp/SimpleGame/proj.mac/SampleGame_Info.plist;
-				PRODUCT_NAME = "Simple Game";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/mac\"";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -4428,11 +5126,12 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_ENABLE_CHIPMUNK_INTEGRATION,
+					CC_TARGET_OS_MAC,
+					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Cpp/HelloCpp/proj.mac/HelloCpp_Info.plist;
-				PRODUCT_NAME = "Hello cpp";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/mac\"";
 			};
 			name = Debug;
 		};
@@ -4445,11 +5144,112 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_ENABLE_CHIPMUNK_INTEGRATION,
+					CC_TARGET_OS_MAC,
+					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Cpp/HelloCpp/proj.mac/HelloCpp_Info.plist;
-				PRODUCT_NAME = "Hello cpp";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/mac\"";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A07A517D1783A1CC0073F6A7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		A07A517E1783A1CC0073F6A7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		A07A52271783A1D20073F6A7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_ENABLE_CHIPMUNK_INTEGRATION,
+					CC_TARGET_OS_IPHONE,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "Cpp/TestCpp/proj.ios/Test-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\"";
+			};
+			name = Debug;
+		};
+		A07A52281783A1D20073F6A7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_ENABLE_CHIPMUNK_INTEGRATION,
+					CC_TARGET_OS_IPHONE,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "Cpp/TestCpp/proj.ios/Test-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\"";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A07A528E1783ACA20073F6A7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_ENABLE_CHIPMUNK_INTEGRATION,
+					CC_TARGET_OS_IPHONE,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "Cpp/HelloCpp/proj.ios/HelloCpp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\"";
+			};
+			name = Debug;
+		};
+		A07A528F1783ACA20073F6A7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_ENABLE_CHIPMUNK_INTEGRATION,
+					CC_TARGET_OS_IPHONE,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "Cpp/HelloCpp/proj.ios/HelloCpp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\"";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -4465,28 +5265,20 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					CC_TARGET_OS_MAC,
 					"DEBUG=1",
 					"COCOS2D_DEBUG=1",
-					CC_KEYBOARD_SUPPORT,
 					USE_FILE32API,
 				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../CocosDenshion/include\"",
-					"\"$(SRCROOT)/../external/chipmunk/include/chipmunk\"",
-					"\"$(SRCROOT)/../cocos2dx/\"",
-					"\"$(SRCROOT)/../cocos2dx/include\"",
-					"\"$(SRCROOT)/../cocos2dx/kazmath/include\"",
-					"\"$(SRCROOT)/../cocos2dx/platform/mac\"",
 					"\"$(SRCROOT)/../extensions\"",
 					"\"$(SRCROOT)/../external\"",
-					"\"$(SRCROOT)/../external/libwebsockets/mac/include\"",
 				);
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../cocos2dx/platform/third_party/mac/libraries\"";
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../CocosDenshion/include\" \"$(SRCROOT)/../external/chipmunk/include/chipmunk\" \"$(SRCROOT)/../cocos2dx/\" \"$(SRCROOT)/../cocos2dx/include\" \"$(SRCROOT)/../cocos2dx/kazmath/include\" \"$(SRCROOT)/../extensions\" \"$(SRCROOT)/../external\"";
 			};
 			name = Debug;
 		};
@@ -4499,33 +5291,25 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					CC_TARGET_OS_MAC,
 					NDEBUG,
-					CC_KEYBOARD_SUPPORT,
 					USE_FILE32API,
 				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../CocosDenshion/include\"",
-					"\"$(SRCROOT)/../external/chipmunk/include/chipmunk\"",
-					"\"$(SRCROOT)/../cocos2dx/\"",
-					"\"$(SRCROOT)/../cocos2dx/include\"",
-					"\"$(SRCROOT)/../cocos2dx/kazmath/include\"",
-					"\"$(SRCROOT)/../cocos2dx/platform/mac\"",
 					"\"$(SRCROOT)/../extensions\"",
 					"\"$(SRCROOT)/../external\"",
-					"\"$(SRCROOT)/../external/libwebsockets/mac/include\"",
 				);
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../cocos2dx/platform/third_party/mac/libraries\"";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../CocosDenshion/include\" \"$(SRCROOT)/../external/chipmunk/include/chipmunk\" \"$(SRCROOT)/../cocos2dx/\" \"$(SRCROOT)/../cocos2dx/include\" \"$(SRCROOT)/../cocos2dx/kazmath/include\" \"$(SRCROOT)/../extensions\" \"$(SRCROOT)/../external\"";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Test cpp" */ = {
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Test cpp Mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
@@ -4534,7 +5318,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		A035A5E91782290400987F6C /* Build configuration list for PBXNativeTarget "Test JavaScript" */ = {
+		A035A5E91782290400987F6C /* Build configuration list for PBXNativeTarget "Test JavaScript Mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A035A5EA1782290400987F6C /* Debug */,
@@ -4543,7 +5327,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		A035A77A1782301C00987F6C /* Build configuration list for PBXNativeTarget "JS Watermelon With Me" */ = {
+		A035A77A1782301C00987F6C /* Build configuration list for PBXNativeTarget "JS Watermelon With Me Mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A035A77B1782301C00987F6C /* Debug */,
@@ -4552,7 +5336,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		A035A9F417823FE100987F6C /* Build configuration list for PBXNativeTarget "JS Moon Warriors" */ = {
+		A035A9F417823FE100987F6C /* Build configuration list for PBXNativeTarget "JS Moon Warriors Mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A035A9F517823FE100987F6C /* Debug */,
@@ -4561,7 +5345,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		A035AAC21782422400987F6C /* Build configuration list for PBXNativeTarget "JS Crystal Craze" */ = {
+		A035AAC21782422400987F6C /* Build configuration list for PBXNativeTarget "JS Crystal Craze Mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A035AAC31782422400987F6C /* Debug */,
@@ -4570,7 +5354,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		A035AC341782453000987F6C /* Build configuration list for PBXNativeTarget "JS CocosDragon" */ = {
+		A035AC341782453000987F6C /* Build configuration list for PBXNativeTarget "JS CocosDragon Mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A035AC351782453000987F6C /* Debug */,
@@ -4579,7 +5363,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		A035ACBC1782469800987F6C /* Build configuration list for PBXAggregateTarget "build-all-samples" */ = {
+		A035ACBC1782469800987F6C /* Build configuration list for PBXAggregateTarget "build-all-samples Mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A035ACBD1782469800987F6C /* Debug */,
@@ -4588,7 +5372,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		A035AD73178254A300987F6C /* Build configuration list for PBXNativeTarget "Simple Game" */ = {
+		A035AD73178254A300987F6C /* Build configuration list for PBXNativeTarget "Simple Game Mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A035AD74178254A300987F6C /* Debug */,
@@ -4597,7 +5381,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		A035AE85178255DC00987F6C /* Build configuration list for PBXNativeTarget "Hello cpp" */ = {
+		A035AE85178255DC00987F6C /* Build configuration list for PBXNativeTarget "Hello cpp Mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A035AE86178255DC00987F6C /* Debug */,
@@ -4606,7 +5390,33 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "samples-mac" */ = {
+		A07A517C1783A1CC0073F6A7 /* Build configuration list for PBXAggregateTarget "build-all-samples iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A07A517D1783A1CC0073F6A7 /* Debug */,
+				A07A517E1783A1CC0073F6A7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A07A52261783A1D20073F6A7 /* Build configuration list for PBXNativeTarget "Test cpp iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A07A52271783A1D20073F6A7 /* Debug */,
+				A07A52281783A1D20073F6A7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A07A528D1783ACA20073F6A7 /* Build configuration list for PBXNativeTarget "Hello cpp iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A07A528E1783ACA20073F6A7 /* Debug */,
+				A07A528F1783ACA20073F6A7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "samples" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
