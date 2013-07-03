@@ -138,6 +138,7 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bo
     _scale9Image->removeAllChildrenWithCleanup(true);
 
     _capInsets = capInsets;
+    _spriteFrameRotated = rotated;
     
     // If there is no given rect
     if ( rect.equals(RectZero) )
