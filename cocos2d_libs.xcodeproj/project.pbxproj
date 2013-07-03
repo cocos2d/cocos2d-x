@@ -1689,6 +1689,10 @@
 		A07A50DB17838A0C0073F6A7 /* Util.h in Headers */ = {isa = PBXBuildFile; fileRef = A07A509617838A0C0073F6A7 /* Util.h */; };
 		A07A50DC17838A0C0073F6A7 /* WeakPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = A07A509717838A0C0073F6A7 /* WeakPtr.h */; };
 		A07A50DD17838A0C0073F6A7 /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A509917838A0C0073F6A7 /* libjs_static.a */; };
+		A07A52CB1784AC360073F6A7 /* etc1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A07A52C91784AC360073F6A7 /* etc1.cpp */; };
+		A07A52CC1784AC360073F6A7 /* etc1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A07A52C91784AC360073F6A7 /* etc1.cpp */; };
+		A07A52CD1784AC360073F6A7 /* etc1.h in Headers */ = {isa = PBXBuildFile; fileRef = A07A52CA1784AC360073F6A7 /* etc1.h */; };
+		A07A52CE1784AC360073F6A7 /* etc1.h in Headers */ = {isa = PBXBuildFile; fileRef = A07A52CA1784AC360073F6A7 /* etc1.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2758,6 +2762,8 @@
 		A07A509617838A0C0073F6A7 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
 		A07A509717838A0C0073F6A7 /* WeakPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeakPtr.h; sourceTree = "<group>"; };
 		A07A509917838A0C0073F6A7 /* libjs_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjs_static.a; sourceTree = "<group>"; };
+		A07A52C91784AC360073F6A7 /* etc1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = etc1.cpp; sourceTree = "<group>"; };
+		A07A52CA1784AC360073F6A7 /* etc1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = etc1.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3461,6 +3467,7 @@
 		A03F25461780BAE8006731B9 /* textures */ = {
 			isa = PBXGroup;
 			children = (
+				A07A52C81784AC360073F6A7 /* etc */,
 				A03F25471780BAE8006731B9 /* CCTexture2D.cpp */,
 				A03F25481780BAE8006731B9 /* CCTexture2D.h */,
 				A03F25491780BAE8006731B9 /* CCTextureAtlas.cpp */,
@@ -4663,6 +4670,15 @@
 			path = lib;
 			sourceTree = "<group>";
 		};
+		A07A52C81784AC360073F6A7 /* etc */ = {
+			isa = PBXGroup;
+			children = (
+				A07A52C91784AC360073F6A7 /* etc1.cpp */,
+				A07A52CA1784AC360073F6A7 /* etc1.h */,
+			);
+			path = etc;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -4845,6 +4861,7 @@
 				A07A4E051783815B0073F6A7 /* CCStdC.h in Headers */,
 				A07A4E071783815B0073F6A7 /* CCWindow.h in Headers */,
 				A07A4E091783815B0073F6A7 /* EAGLView.h in Headers */,
+				A07A52CD1784AC360073F6A7 /* etc1.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5371,6 +5388,7 @@
 				A07A4DBA17837B910073F6A7 /* decode.h in Headers */,
 				A07A4DBB17837B910073F6A7 /* encode.h in Headers */,
 				A07A4DBC17837B910073F6A7 /* types.h in Headers */,
+				A07A52CE1784AC360073F6A7 /* etc1.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6091,6 +6109,7 @@
 				A07A4E061783815B0073F6A7 /* CCThread.mm in Sources */,
 				A07A4E081783815B0073F6A7 /* CCWindow.m in Sources */,
 				A07A4E0A1783815B0073F6A7 /* EAGLView.mm in Sources */,
+				A07A52CB1784AC360073F6A7 /* etc1.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6475,6 +6494,7 @@
 				A07A4D9717837B690073F6A7 /* CCThread.mm in Sources */,
 				A07A4D9917837B690073F6A7 /* EAGLView.mm in Sources */,
 				A07A4D9C17837B690073F6A7 /* AccelerometerSimulation.m in Sources */,
+				A07A52CC1784AC360073F6A7 /* etc1.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
