@@ -177,18 +177,34 @@ struct SchedulerScriptEvent
     float elapse;
     //js use
     Node* node;
+    SchedulerScriptEvent(int inHandler,float inElapse,Node* inNode = NULL)
+    :handler(inHandler),
+    elapse(inElapse),
+    node(inNode)
+    {
+    }
 };
 
 struct LayerTouchesScriptEvent
 {
     int  actionType;
     Set* touches;
+    LayerTouchesScriptEvent(int inActiontype,Set* inTouches)
+    :actionType(inActiontype),
+    touches(inTouches)
+    {
+    }
 };
 
 struct LayerTouchScriptEvent
 {
     int actionType;
     Touch* touch;
+    LayerTouchScriptEvent(int inActionType,Touch* inTouch)
+    :actionType(inActionType),
+    touch(inTouch)
+    {
+    }
 };
 
 struct CommonScriptEvent
@@ -198,26 +214,19 @@ struct CommonScriptEvent
     char eventName[64];
     Object* eventSource;
     char eventSourceClassName[64];
-    CommonScriptEvent(int inHandler,const char* name,Object* source = NULL,const char* className = NULL)
+    CommonScriptEvent(int inHandler,const char* inName,Object* inSource = NULL,const char* inClassName = NULL)
+    :handler(inHandler),
+    eventSource(inSource)
     {
-        handler = inHandler;
-        strncpy(eventName, name, 64);
-        if (NULL != source)
-        {
-            eventSource = source;
-        }
-        else
-        {
-            eventSource = NULL;
-        }
+        strncpy(eventName, inName, 64);
         
-        if (NULL == className)
+        if (NULL == inClassName)
         {
             memset(eventSourceClassName, 0, 64*sizeof(char));
         }
         else
         {
-            strncpy(eventSourceClassName, className, 64);
+            strncpy(eventSourceClassName, inClassName, 64);
         }
     }
 };
@@ -227,9 +236,9 @@ struct ScriptEvent
     ScriptEventType type;
     void* data;
     ScriptEvent(ScriptEventType inType,void* inData)
+    :type(inType),
+    data(inData)
     {
-        type = inType;
-        data = inData;
     }
 };
 

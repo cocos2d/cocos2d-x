@@ -144,9 +144,7 @@ int Layer::excuteScriptTouchHandler(int nEventType, Touch *pTouch)
 {
     if (kScriptTypeLua == _scriptType)
     {
-        LayerTouchScriptEvent data;
-        data.actionType = nEventType;
-        data.touch = pTouch;
+        LayerTouchScriptEvent data(nEventType,pTouch);
         ScriptEvent event(kLayerTouchEvent,&data);
         return ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event,this);        
     }
@@ -162,9 +160,7 @@ int Layer::excuteScriptTouchHandler(int nEventType, Set *pTouches)
 {
     if (kScriptTypeLua == _scriptType)
     {
-        LayerTouchesScriptEvent data;
-        data.actionType = nEventType;
-        data.touches    = pTouches;
+        LayerTouchesScriptEvent data(nEventType,pTouches);
         ScriptEvent event(kLayerTouchesEvent,&data);
         return ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event,this);
     }
