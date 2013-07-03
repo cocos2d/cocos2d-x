@@ -34,16 +34,16 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL CCFloat : public CCObject
+class CC_DLL Float : public Object
 {
 public:
-    CCFloat(float v)
+    Float(float v)
         : _value(v) {}
     float getValue() const {return _value;}
 
-    static CCFloat* create(float v)
+    static Float* create(float v)
     {
-        CCFloat* pRet = new CCFloat(v);
+        Float* pRet = new Float(v);
         if (pRet)
         {
             pRet->autorelease();
@@ -52,7 +52,7 @@ public:
     }
 
     /* override functions */
-    virtual void acceptVisitor(CCDataVisitor &visitor) { visitor.visit(this); }
+    virtual void acceptVisitor(DataVisitor &visitor) { visitor.visit(this); }
 
 private:
     float _value;

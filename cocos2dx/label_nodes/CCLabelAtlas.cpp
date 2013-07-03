@@ -43,9 +43,9 @@ NS_CC_BEGIN
 
 //CCLabelAtlas - Creation & Init
 
-CCLabelAtlas* CCLabelAtlas::create(const char *string, const char *charMapFile, unsigned int itemWidth, int unsigned itemHeight, unsigned int startCharMap)
+LabelAtlas* LabelAtlas::create(const char *string, const char *charMapFile, unsigned int itemWidth, int unsigned itemHeight, unsigned int startCharMap)
 {
-    CCLabelAtlas *pRet = new CCLabelAtlas();
+    LabelAtlas *pRet = new LabelAtlas();
     if(pRet && pRet->initWithString(string, charMapFile, itemWidth, itemHeight, startCharMap))
     {
         pRet->autorelease();
@@ -55,16 +55,16 @@ CCLabelAtlas* CCLabelAtlas::create(const char *string, const char *charMapFile, 
     return NULL;
 }
 
-bool CCLabelAtlas::initWithString(const char *string, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
+bool LabelAtlas::initWithString(const char *string, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
 {
-    CCTexture2D *texture = CCTextureCache::sharedTextureCache()->addImage(charMapFile);
+    Texture2D *texture = TextureCache::sharedTextureCache()->addImage(charMapFile);
 	return initWithString(string, texture, itemWidth, itemHeight, startCharMap);
 }
 
-bool CCLabelAtlas::initWithString(const char *string, CCTexture2D* texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
+bool LabelAtlas::initWithString(const char *string, Texture2D* texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
 {
     CCAssert(string != NULL, "");
-    if (CCAtlasNode::initWithTexture(texture, itemWidth, itemHeight, strlen(string)))
+    if (AtlasNode::initWithTexture(texture, itemWidth, itemHeight, strlen(string)))
     {
         _mapStartChar = startCharMap;
         this->setString(string);
@@ -73,9 +73,9 @@ bool CCLabelAtlas::initWithString(const char *string, CCTexture2D* texture, unsi
     return false;
 }
 
-CCLabelAtlas* CCLabelAtlas::create(const char *string, const char *fntFile)
+LabelAtlas* LabelAtlas::create(const char *string, const char *fntFile)
 {    
-    CCLabelAtlas *ret = new CCLabelAtlas();
+    LabelAtlas *ret = new LabelAtlas();
     if (ret)
     {
         if (ret->initWithString(string, fntFile))
@@ -91,19 +91,19 @@ CCLabelAtlas* CCLabelAtlas::create(const char *string, const char *fntFile)
     return ret;
 }
 
-bool CCLabelAtlas::initWithString(const char *theString, const char *fntFile)
+bool LabelAtlas::initWithString(const char *theString, const char *fntFile)
 {
-  std::string pathStr = CCFileUtils::sharedFileUtils()->fullPathForFilename(fntFile);
+  std::string pathStr = FileUtils::sharedFileUtils()->fullPathForFilename(fntFile);
   std::string relPathStr = pathStr.substr(0, pathStr.find_last_of("/"))+"/";
-  CCDictionary *dict = CCDictionary::createWithContentsOfFile(pathStr.c_str());
+  Dictionary *dict = Dictionary::createWithContentsOfFile(pathStr.c_str());
   
-  CCAssert(((CCString*)dict->objectForKey("version"))->intValue() == 1, "Unsupported version. Upgrade cocos2d version");
+  CCAssert(((String*)dict->objectForKey("version"))->intValue() == 1, "Unsupported version. Upgrade cocos2d version");
     
-  std::string texturePathStr = relPathStr + ((CCString*)dict->objectForKey("textureFilename"))->getCString();
-  CCString *textureFilename = CCString::create(texturePathStr);
-  unsigned int width = ((CCString*)dict->objectForKey("itemWidth"))->intValue() / CC_CONTENT_SCALE_FACTOR();
-  unsigned int height = ((CCString*)dict->objectForKey("itemHeight"))->intValue() / CC_CONTENT_SCALE_FACTOR();
-  unsigned int startChar = ((CCString*)dict->objectForKey("firstChar"))->intValue();
+  std::string texturePathStr = relPathStr + ((String*)dict->objectForKey("textureFilename"))->getCString();
+  String *textureFilename = String::create(texturePathStr);
+  unsigned int width = ((String*)dict->objectForKey("itemWidth"))->intValue() / CC_CONTENT_SCALE_FACTOR();
+  unsigned int height = ((String*)dict->objectForKey("itemHeight"))->intValue() / CC_CONTENT_SCALE_FACTOR();
+  unsigned int startChar = ((String*)dict->objectForKey("firstChar"))->intValue();
   
 
   this->initWithString(theString, textureFilename->getCString(), width, height, startChar);
@@ -112,13 +112,13 @@ bool CCLabelAtlas::initWithString(const char *theString, const char *fntFile)
 }
 
 //CCLabelAtlas - Atlas generation
-void CCLabelAtlas::updateAtlasValues()
+void LabelAtlas::updateAtlasValues()
 {
     unsigned int n = _string.length();
 
     const unsigned char *s = (unsigned char*)_string.c_str();
 
-    CCTexture2D *texture = _textureAtlas->getTexture();
+    Texture2D *texture = _textureAtlas->getTexture();
     float textureWide = (float) texture->getPixelsWide();
     float textureHigh = (float) texture->getPixelsHigh();
     float itemWidthInPixels = _itemWidth * CC_CONTENT_SCALE_FACTOR();
@@ -186,8 +186,8 @@ void CCLabelAtlas::updateAtlasValues()
     }
 }
 
-//CCLabelAtlas - CCLabelProtocol
-void CCLabelAtlas::setString(const char *label)
+//CCLabelAtlas - LabelProtocol
+void LabelAtlas::setString(const char *label)
 {
     unsigned int len = strlen(label);
     if (len > _textureAtlas->getTotalQuads())
@@ -198,14 +198,14 @@ void CCLabelAtlas::setString(const char *label)
     _string = label;
     this->updateAtlasValues();
 
-    CCSize s = CCSizeMake(len * _itemWidth, _itemHeight);
+    Size s = CCSizeMake(len * _itemWidth, _itemHeight);
 
     this->setContentSize(s);
 
     _quadsToDraw = len;
 }
 
-const char* CCLabelAtlas::getString(void)
+const char* LabelAtlas::getString(void)
 {
     return _string.c_str();
 }
@@ -213,12 +213,12 @@ const char* CCLabelAtlas::getString(void)
 //CCLabelAtlas - draw
 
 #if CC_LABELATLAS_DEBUG_DRAW    
-void CCLabelAtlas::draw()
+void LabelAtlas::draw()
 {
-    CCAtlasNode::draw();
+    AtlasNode::draw();
 
-    const CCSize& s = this->getContentSize();
-    CCPoint vertices[4]={
+    const Size& s = this->getContentSize();
+    Point vertices[4]={
         ccp(0,0),ccp(s.width,0),
         ccp(s.width,s.height),ccp(0,s.height),
     };

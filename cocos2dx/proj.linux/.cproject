@@ -37,7 +37,6 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libfreetype2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libpng"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libxml2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
@@ -60,7 +59,6 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libfreetype2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libpng"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libxml2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
@@ -87,7 +85,6 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libfreetype.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libcurl.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libtiff.a"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libxml2.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libpng.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libjpeg.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libwebp.a"/>
@@ -170,7 +167,6 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libfreetype2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libpng"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libxml2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
@@ -192,7 +188,6 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libfreetype2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libpng"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libxml2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
@@ -218,7 +213,6 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libfreetype.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libcurl.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libtiff.a"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libxml2.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libpng.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libjpeg.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libwebp.a"/>
@@ -302,7 +296,6 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libfreetype2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libpng"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libxml2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
@@ -325,7 +318,6 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libfreetype2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libpng"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libxml2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
@@ -352,7 +344,6 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libfreetype.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libcurl.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libtiff.a"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libxml2.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libpng.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libjpeg.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libwebp.a"/>
@@ -435,7 +426,6 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libfreetype2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libpng"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libxml2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
@@ -458,7 +448,6 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libfreetype2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libpng"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libxml2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
@@ -485,7 +474,6 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libfreetype.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libcurl.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libtiff.a"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libxml2.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libpng.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libjpeg.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libwebp.a"/>

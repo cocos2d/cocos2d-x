@@ -156,8 +156,6 @@
 		1551A724158F2ADE00E66CFE /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A477158F2ADE00E66CFE /* CCSAXParser.cpp */; };
 		1551A725158F2ADE00E66CFE /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A478158F2ADE00E66CFE /* CCSAXParser.h */; };
 		1551A727158F2ADE00E66CFE /* CCThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A47A158F2ADE00E66CFE /* CCThread.h */; };
-		1551A728158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A47C158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h */; };
-		1551A729158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1551A47D158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm */; };
 		1551A72A158F2ADE00E66CFE /* CCAccelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A47E158F2ADE00E66CFE /* CCAccelerometer.h */; };
 		1551A72B158F2ADE00E66CFE /* CCAccelerometer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1551A47F158F2ADE00E66CFE /* CCAccelerometer.mm */; };
 		1551A72C158F2ADE00E66CFE /* CCApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A480158F2ADE00E66CFE /* CCApplication.h */; };
@@ -287,6 +285,8 @@
 		1A5B48EC16F084CC008568FC /* CCFloat.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5B48E916F084CC008568FC /* CCFloat.h */; };
 		1AA6226016CF6BD00028C05E /* CCDevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AA6225F16CF6BD00028C05E /* CCDevice.mm */; };
 		1AA6226216CF6BDF0028C05E /* CCDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AA6226116CF6BDF0028C05E /* CCDevice.h */; };
+		1AAE0509178173B2003522DC /* CCKeyboardDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAE0507178173B2003522DC /* CCKeyboardDispatcher.cpp */; };
+		1AAE050A178173B2003522DC /* CCKeyboardDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAE0508178173B2003522DC /* CCKeyboardDispatcher.h */; };
 		1AC6CE8116B9075B00330EFD /* CCFileUtilsIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC6CE8016B9075B00330EFD /* CCFileUtilsIOS.h */; };
 		1AC6CE8816B910CD00330EFD /* CCFileUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC6CE8616B910CD00330EFD /* CCFileUtils.cpp */; };
 		1AC6CE8916B910CD00330EFD /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC6CE8716B910CD00330EFD /* CCFileUtils.h */; };
@@ -318,6 +318,8 @@
 		4EF8999A16E207E70040A527 /* CCTMXXMLParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EF8998E16E207E70040A527 /* CCTMXXMLParser.cpp */; };
 		4EF8999B16E207E70040A527 /* CCTMXXMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF8998F16E207E70040A527 /* CCTMXXMLParser.h */; };
 		D43F7F8A15C7D8BA00D713FC /* CCTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */; };
+		ED9FA25C178127B800B9B4B0 /* etc1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9FA25A178127B800B9B4B0 /* etc1.cpp */; };
+		ED9FA25D178127B800B9B4B0 /* etc1.h in Headers */ = {isa = PBXBuildFile; fileRef = ED9FA25B178127B800B9B4B0 /* etc1.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -473,8 +475,6 @@
 		1551A477158F2ADE00E66CFE /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
 		1551A478158F2ADE00E66CFE /* CCSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSAXParser.h; sourceTree = "<group>"; };
 		1551A47A158F2ADE00E66CFE /* CCThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCThread.h; sourceTree = "<group>"; };
-		1551A47C158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerometerDelegateWrapper.h; sourceTree = "<group>"; };
-		1551A47D158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AccelerometerDelegateWrapper.mm; sourceTree = "<group>"; };
 		1551A47E158F2ADE00E66CFE /* CCAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAccelerometer.h; sourceTree = "<group>"; };
 		1551A47F158F2ADE00E66CFE /* CCAccelerometer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCAccelerometer.mm; sourceTree = "<group>"; };
 		1551A480158F2ADE00E66CFE /* CCApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCApplication.h; sourceTree = "<group>"; };
@@ -604,6 +604,8 @@
 		1A5B48E916F084CC008568FC /* CCFloat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFloat.h; sourceTree = "<group>"; };
 		1AA6225F16CF6BD00028C05E /* CCDevice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCDevice.mm; sourceTree = "<group>"; };
 		1AA6226116CF6BDF0028C05E /* CCDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDevice.h; sourceTree = "<group>"; };
+		1AAE0507178173B2003522DC /* CCKeyboardDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCKeyboardDispatcher.cpp; sourceTree = "<group>"; };
+		1AAE0508178173B2003522DC /* CCKeyboardDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCKeyboardDispatcher.h; sourceTree = "<group>"; };
 		1AC6CE8016B9075B00330EFD /* CCFileUtilsIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtilsIOS.h; sourceTree = "<group>"; };
 		1AC6CE8616B910CD00330EFD /* CCFileUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFileUtils.cpp; sourceTree = "<group>"; };
 		1AC6CE8716B910CD00330EFD /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtils.h; sourceTree = "<group>"; };
@@ -635,6 +637,8 @@
 		4EF8998E16E207E70040A527 /* CCTMXXMLParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTMXXMLParser.cpp; sourceTree = "<group>"; };
 		4EF8998F16E207E70040A527 /* CCTMXXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXXMLParser.h; sourceTree = "<group>"; };
 		D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouch.cpp; sourceTree = "<group>"; };
+		ED9FA25A178127B800B9B4B0 /* etc1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = etc1.cpp; path = etc/etc1.cpp; sourceTree = "<group>"; };
+		ED9FA25B178127B800B9B4B0 /* etc1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = etc1.h; path = etc/etc1.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -698,6 +702,7 @@
 				1551A396158F2ADE00E66CFE /* effects */,
 				1551A3E8158F2ADE00E66CFE /* include */,
 				1551A3F0158F2ADE00E66CFE /* kazmath */,
+				1AAE0506178173B2003522DC /* keyboard_dispatcher */,
 				1551A413158F2ADE00E66CFE /* keypad_dispatcher */,
 				1551A418158F2ADE00E66CFE /* label_nodes */,
 				1551A41F158F2ADE00E66CFE /* layers_scenes_transitions_nodes */,
@@ -1009,8 +1014,6 @@
 		1551A47B158F2ADE00E66CFE /* ios */ = {
 			isa = PBXGroup;
 			children = (
-				1551A47C158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h */,
-				1551A47D158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm */,
 				1551A47E158F2ADE00E66CFE /* CCAccelerometer.h */,
 				1551A47F158F2ADE00E66CFE /* CCAccelerometer.mm */,
 				1551A480158F2ADE00E66CFE /* CCApplication.h */,
@@ -1184,6 +1187,7 @@
 		1551A60B158F2ADE00E66CFE /* textures */ = {
 			isa = PBXGroup;
 			children = (
+				ED9FA2591781279400B9B4B0 /* etc */,
 				1551A60C158F2ADE00E66CFE /* CCTexture2D.cpp */,
 				1551A60D158F2ADE00E66CFE /* CCTexture2D.h */,
 				1551A60E158F2ADE00E66CFE /* CCTextureAtlas.cpp */,
@@ -1268,6 +1272,15 @@
 			path = webp;
 			sourceTree = "<group>";
 		};
+		1AAE0506178173B2003522DC /* keyboard_dispatcher */ = {
+			isa = PBXGroup;
+			children = (
+				1AAE0507178173B2003522DC /* CCKeyboardDispatcher.cpp */,
+				1AAE0508178173B2003522DC /* CCKeyboardDispatcher.h */,
+			);
+			path = keyboard_dispatcher;
+			sourceTree = "<group>";
+		};
 		465E20A7176ABE63001D853C /* component */ = {
 			isa = PBXGroup;
 			children = (
@@ -1297,6 +1310,15 @@
 				46A393F516E5D01B00210B16 /* CCUserDefaultAndroid.cpp */,
 			);
 			path = user_default;
+			sourceTree = "<group>";
+		};
+		ED9FA2591781279400B9B4B0 /* etc */ = {
+			isa = PBXGroup;
+			children = (
+				ED9FA25A178127B800B9B4B0 /* etc1.cpp */,
+				ED9FA25B178127B800B9B4B0 /* etc1.h */,
+			);
+			name = etc;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1386,7 +1408,6 @@
 				1551A723158F2ADE00E66CFE /* CCPlatformMacros.h in Headers */,
 				1551A725158F2ADE00E66CFE /* CCSAXParser.h in Headers */,
 				1551A727158F2ADE00E66CFE /* CCThread.h in Headers */,
-				1551A728158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h in Headers */,
 				1551A72A158F2ADE00E66CFE /* CCAccelerometer.h in Headers */,
 				1551A72C158F2ADE00E66CFE /* CCApplication.h in Headers */,
 				1551A72F158F2ADE00E66CFE /* CCDirectorCaller.h in Headers */,
@@ -1480,6 +1501,8 @@
 				36B713C817557CB900A2554C /* CCData.h in Headers */,
 				465E20AD176ABE63001D853C /* CCComponent.h in Headers */,
 				465E20AF176ABE63001D853C /* CCComponentContainer.h in Headers */,
+				ED9FA25D178127B800B9B4B0 /* etc1.h in Headers */,
+				1AAE050A178173B2003522DC /* CCKeyboardDispatcher.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1600,7 +1623,6 @@
 				1551A6F7158F2ADE00E66CFE /* CCParticleSystemQuad.cpp in Sources */,
 				1551A71C158F2ADE00E66CFE /* CCEGLViewProtocol.cpp in Sources */,
 				1551A724158F2ADE00E66CFE /* CCSAXParser.cpp in Sources */,
-				1551A729158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm in Sources */,
 				1551A72B158F2ADE00E66CFE /* CCAccelerometer.mm in Sources */,
 				1551A72D158F2ADE00E66CFE /* CCApplication.mm in Sources */,
 				1551A72E158F2ADE00E66CFE /* CCCommon.mm in Sources */,
@@ -1669,6 +1691,8 @@
 				36B713C717557CB900A2554C /* CCData.cpp in Sources */,
 				465E20AC176ABE63001D853C /* CCComponent.cpp in Sources */,
 				465E20AE176ABE63001D853C /* CCComponentContainer.cpp in Sources */,
+				ED9FA25C178127B800B9B4B0 /* etc1.cpp in Sources */,
+				1AAE0509178173B2003522DC /* CCKeyboardDispatcher.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1703,7 +1727,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-fdiagnostics-show-option";
@@ -1735,7 +1759,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				WARNING_CFLAGS = "-fdiagnostics-show-option";
@@ -1746,6 +1771,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/cocos2dx.dst;
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cocos2dx-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1774,6 +1800,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/cocos2dx.dst;
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cocos2dx-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (

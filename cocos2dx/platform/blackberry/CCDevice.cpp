@@ -6,12 +6,12 @@
 
 NS_CC_BEGIN
 
-int CCDevice::getDPI()
+int Device::getDPI()
 {
     static int dpi = -1;
     if (dpi == -1)
     {
-        screen_display_t screen_disp = CCEGLView::sharedOpenGLView()->getScreenDisplay();
+        screen_display_t screen_disp = EGLView::sharedOpenGLView()->getScreenDisplay();
 #ifdef BLACKBERRY10
         // Dev Alpha: 1280x768, 4.2", 356DPI, 0.6f scale
         

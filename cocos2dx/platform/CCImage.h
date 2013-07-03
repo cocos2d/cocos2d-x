@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "cocoa/CCObject.h"
 
-// premultiply alpha, or the effect will wrong when want to use other pixel format in CCTexture2D,
+// premultiply alpha, or the effect will wrong when want to use other pixel format in Texture2D,
 // such as RGB888, RGB5A1
 #define CC_RGB_PREMULTIPLY_ALPHA(vr, vg, vb, va) \
     (unsigned)(((unsigned)((unsigned char)(vr) * ((unsigned char)(va) + 1)) >> 8) | \
@@ -42,11 +42,13 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL CCImage : public CCObject
+class CC_DLL Image : public Object
 {
 public:
-    CCImage();
-    ~CCImage();
+    friend class TextureCache;
+    
+    Image();
+    ~Image();
 
     typedef enum
     {
@@ -78,15 +80,6 @@ public:
     @return  true if loaded correctly.
     */
     bool initWithImageFile(const char * strPath, EImageFormat imageType = kFmtPng);
-
-    /*
-     @brief The same result as with initWithImageFile, but thread safe. It is caused by
-            loadImage() in CCTextureCache.cpp.
-     @param fullpath  full path of the file.
-     @param imageType the type of image, currently only supporting two types.
-     @return  true if loaded correctly.
-     */
-    bool initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType = kFmtPng);
 
     /**
     @brief  Load image from stream buffer.
@@ -161,7 +154,7 @@ public:
 
 
     /**
-    @brief    Save CCImage data to the specified file, with specified format.
+    @brief    Save Image data to the specified file, with specified format.
     @param    pszFilePath        the file's absolute path, including file suffix.
     @param    bIsToRGB        whether the image is saved as RGB format.
     */
@@ -187,8 +180,17 @@ protected:
 
 private:
     // noncopyable
-    CCImage(const CCImage&    rImg);
-    CCImage & operator=(const CCImage&);
+    Image(const Image&    rImg);
+    Image & operator=(const Image&);
+    
+    /*
+     @brief The same result as with initWithImageFile, but thread safe. It is caused by
+     loadImage() in TextureCache.cpp.
+     @param fullpath  full path of the file.
+     @param imageType the type of image, currently only supporting two types.
+     @return  true if loaded correctly.
+     */
+    bool initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType = kFmtPng);
 };
 
 // end of platform group

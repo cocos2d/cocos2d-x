@@ -34,13 +34,13 @@ NS_CC_BEGIN
 
 typedef LRESULT (*CUSTOM_WND_PROC)(UINT message, WPARAM wParam, LPARAM lParam, BOOL* pProcessed);
 
-class CCEGL;
+class EGL;
 
-class CC_DLL CCEGLView : public CCEGLViewProtocol
+class CC_DLL EGLView : public EGLViewProtocol
 {
 public:
-    CCEGLView();
-    virtual ~CCEGLView();
+    EGLView();
+    virtual ~EGLView();
 
     /* override functions */
     virtual bool isOpenGLReady();
@@ -79,7 +79,7 @@ public:
     /**
     @brief    get the shared main open gl window
     */
-    static CCEGLView* sharedOpenGLView();
+    static EGLView* sharedOpenGLView();
 
 protected:
 

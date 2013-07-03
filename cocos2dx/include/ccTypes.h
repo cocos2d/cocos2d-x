@@ -317,25 +317,25 @@ typedef struct _ccBlendFunc
     GLenum dst;
 } ccBlendFunc;
 
-static const ccBlendFunc kCCBlendFuncDisable = {GL_ONE, GL_ZERO};
+static const ccBlendFunc kBlendFuncDisable = {GL_ONE, GL_ZERO};
 
-// XXX: If any of these enums are edited and/or reordered, update CCTexture2D.m
+// XXX: If any of these enums are edited and/or reordered, update Texture2D.m
 //! Vertical text alignment type
 typedef enum
 {
-    kCCVerticalTextAlignmentTop,
-    kCCVerticalTextAlignmentCenter,
-    kCCVerticalTextAlignmentBottom,
-} CCVerticalTextAlignment;
+    kVerticalTextAlignmentTop,
+    kVerticalTextAlignmentCenter,
+    kVerticalTextAlignmentBottom,
+} VerticalTextAlignment;
 
-// XXX: If any of these enums are edited and/or reordered, update CCTexture2D.m
+// XXX: If any of these enums are edited and/or reordered, update Texture2D.m
 //! Horizontal text alignment type
 typedef enum
 {
-    kCCTextAlignmentLeft,
-    kCCTextAlignmentCenter,
-    kCCTextAlignmentRight,
-} CCTextAlignment;
+    kTextAlignmentLeft,
+    kTextAlignmentCenter,
+    kTextAlignmentRight,
+} TextAlignment;
 
 // types for animation in particle systems
 
@@ -352,12 +352,12 @@ typedef struct _ccT2F_Quad
     ccTex2F    tr;
 } ccT2F_Quad;
 
-// struct that holds the size in pixels, texture coordinates and delays for animated CCParticleSystemQuad
+// struct that holds the size in pixels, texture coordinates and delays for animated ParticleSystemQuad
 typedef struct
 {
     ccT2F_Quad texCoords;
     float delay;
-    CCSize size; 
+    Size size; 
 } ccAnimationFrameData;
 
 
@@ -377,7 +377,7 @@ public:
     // true if shadow enabled
     bool   _shadowEnabled;
     // shadow x and y offset
-	CCSize _shadowOffset;
+	Size _shadowOffset;
     // shadow blurrines
 	float  _shadowBlur;
     // shadow opacity
@@ -407,8 +407,8 @@ typedef struct _ccFontDefinition
 {
 public:
     
-    _ccFontDefinition():  _alignment(kCCTextAlignmentCenter),
-    _vertAlignment(kCCVerticalTextAlignmentTop),
+    _ccFontDefinition():  _alignment(kTextAlignmentCenter),
+    _vertAlignment(kVerticalTextAlignmentTop),
     _fontFillColor(ccWHITE)
     { _dimensions = CCSizeMake(0,0); }
     
@@ -417,11 +417,11 @@ public:
     // font size
     int                     _fontSize;
     // horizontal alignment
-    CCTextAlignment         _alignment;
+    TextAlignment         _alignment;
     // vertical alignment
-    CCVerticalTextAlignment _vertAlignment;
+    VerticalTextAlignment _vertAlignment;
     // renering box
-    CCSize                  _dimensions;
+    Size                  _dimensions;
     // font color
     ccColor3B               _fontFillColor;
     // font shadow

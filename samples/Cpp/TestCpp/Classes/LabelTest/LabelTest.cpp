@@ -34,15 +34,15 @@ enum
     IDC_RESTART
 };
 
-CCLayer* nextAtlasAction();
-CCLayer* backAtlasAction();
-CCLayer* restartAtlasAction();
+Layer* nextAtlasAction();
+Layer* backAtlasAction();
+Layer* restartAtlasAction();
 
 static int sceneIdx = -1; 
 
 #define MAX_LAYER    28
 
-CCLayer* createAtlasLayer(int nIndex)
+Layer* createAtlasLayer(int nIndex)
 {
     switch(nIndex)
     {
@@ -81,33 +81,33 @@ CCLayer* createAtlasLayer(int nIndex)
     return NULL;
 }
 
-CCLayer* nextAtlasAction()
+Layer* nextAtlasAction()
 {
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    CCLayer* pLayer = createAtlasLayer(sceneIdx);
+    Layer* pLayer = createAtlasLayer(sceneIdx);
     pLayer->autorelease();
 
     return pLayer;
 }
 
-CCLayer* backAtlasAction()
+Layer* backAtlasAction()
 {
     sceneIdx--;
     int total = MAX_LAYER;
     if( sceneIdx < 0 )
         sceneIdx += total;    
     
-    CCLayer* pLayer = createAtlasLayer(sceneIdx);
+    Layer* pLayer = createAtlasLayer(sceneIdx);
     pLayer->autorelease();
 
     return pLayer;
 }
 
-CCLayer* restartAtlasAction()
+Layer* restartAtlasAction()
 {
-    CCLayer* pLayer = createAtlasLayer(sceneIdx);
+    Layer* pLayer = createAtlasLayer(sceneIdx);
     pLayer->autorelease();
 
     return pLayer;
@@ -137,28 +137,28 @@ void AtlasDemo::onEnter()
     BaseTest::onEnter();
 }
 
-void AtlasDemo::restartCallback(CCObject* pSender)
+void AtlasDemo::restartCallback(Object* pSender)
 {
-    CCScene* s = new AtlasTestScene();
+    Scene* s = new AtlasTestScene();
     s->addChild(restartAtlasAction()); 
 
-    CCDirector::sharedDirector()->replaceScene(s);
+    Director::sharedDirector()->replaceScene(s);
     s->release();
 }
 
-void AtlasDemo::nextCallback(CCObject* pSender)
+void AtlasDemo::nextCallback(Object* pSender)
 {
-    CCScene* s = new AtlasTestScene();
+    Scene* s = new AtlasTestScene();
     s->addChild( nextAtlasAction() );
-    CCDirector::sharedDirector()->replaceScene(s);
+    Director::sharedDirector()->replaceScene(s);
     s->release();
 }
 
-void AtlasDemo::backCallback(CCObject* pSender)
+void AtlasDemo::backCallback(Object* pSender)
 {
-    CCScene* s = new AtlasTestScene();
+    Scene* s = new AtlasTestScene();
     s->addChild( backAtlasAction() );
-    CCDirector::sharedDirector()->replaceScene(s);
+    Director::sharedDirector()->replaceScene(s);
     s->release();
 } 
 
@@ -170,9 +170,9 @@ void AtlasDemo::backCallback(CCObject* pSender)
 //------------------------------------------------------------------
 Atlas1::Atlas1()
 {
-    _textureAtlas = CCTextureAtlas::create(s_AtlasTest, 3); _textureAtlas->retain();
+    _textureAtlas = TextureAtlas::create(s_AtlasTest, 3); _textureAtlas->retain();
     
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
 
     //
     // Notice: u,v tex coordinates are inverted
@@ -231,7 +231,7 @@ std::string Atlas1::title()
 
 std::string Atlas1::subtitle()
 {
-    return "Manual creation of CCTextureAtlas";
+    return "Manual creation of TextureAtlas";
 }
 
 //------------------------------------------------------------------
@@ -244,12 +244,12 @@ LabelAtlasTest::LabelAtlasTest()
 {
     _time = 0;
 
-    CCLabelAtlas* label1 = CCLabelAtlas::create("123 Test", "fonts/tuffy_bold_italic-charmap.plist");
+    LabelAtlas* label1 = LabelAtlas::create("123 Test", "fonts/tuffy_bold_italic-charmap.plist");
     addChild(label1, 0, kTagSprite1);
     label1->setPosition( ccp(10,100) );
     label1->setOpacity( 200 );
 
-    CCLabelAtlas *label2 = CCLabelAtlas::create("0123456789", "fonts/tuffy_bold_italic-charmap.plist");
+    LabelAtlas *label2 = LabelAtlas::create("0123456789", "fonts/tuffy_bold_italic-charmap.plist");
     addChild(label2, 0, kTagSprite2);
     label2->setPosition( ccp(10,200) );
     label2->setOpacity( 32 );
@@ -265,10 +265,10 @@ void LabelAtlasTest::step(float dt)
     sprintf(string, "%2.2f Test", _time);
     //string.format("%2.2f Test", _time);
 
-    CCLabelAtlas* label1 = (CCLabelAtlas*)getChildByTag(kTagSprite1);
+    LabelAtlas* label1 = (LabelAtlas*)getChildByTag(kTagSprite1);
     label1->setString(string);
 
-    CCLabelAtlas*label2 = (CCLabelAtlas*)getChildByTag(kTagSprite2);
+    LabelAtlas*label2 = (LabelAtlas*)getChildByTag(kTagSprite2);
     sprintf(string, "%d", (int)_time);
     //string.format("%d", (int)_time);
     label2->setString(string);
@@ -291,21 +291,21 @@ std::string LabelAtlasTest::subtitle()
 //------------------------------------------------------------------
 LabelAtlasColorTest::LabelAtlasColorTest()
 {
-    CCLabelAtlas* label1 = CCLabelAtlas::create("123 Test", "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
+    LabelAtlas* label1 = LabelAtlas::create("123 Test", "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
     addChild(label1, 0, kTagSprite1);
     label1->setPosition( ccp(10,100) );
     label1->setOpacity( 200 );
     
-    CCLabelAtlas* label2 = CCLabelAtlas::create("0123456789", "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
+    LabelAtlas* label2 = LabelAtlas::create("0123456789", "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
     addChild(label2, 0, kTagSprite2);
     label2->setPosition( ccp(10,200) );
     label2->setColor( ccRED );
 
-    CCActionInterval* fade = CCFadeOut::create(1.0f);
-    CCActionInterval* fade_in = fade->reverse();
-    CCCallFunc* cb = CCCallFunc::create(this, callfunc_selector(LabelAtlasColorTest::actionFinishCallback));
-    CCSequence* seq = CCSequence::create(fade, fade_in, cb, NULL);
-    CCAction* repeat = CCRepeatForever::create( seq );
+    ActionInterval* fade = FadeOut::create(1.0f);
+    ActionInterval* fade_in = fade->reverse();
+    CallFunc* cb = CallFunc::create(this, callfunc_selector(LabelAtlasColorTest::actionFinishCallback));
+    Sequence* seq = Sequence::create(fade, fade_in, cb, NULL);
+    Action* repeat = RepeatForever::create( seq );
     label2->runAction( repeat );    
 
     _time = 0;
@@ -324,10 +324,10 @@ void LabelAtlasColorTest::step(float dt)
     char string[12] = {0};
     sprintf(string, "%2.2f Test", _time);
     //std::string string = std::string::createWithFormat("%2.2f Test", _time);
-    CCLabelAtlas* label1 = (CCLabelAtlas*)getChildByTag(kTagSprite1);
+    LabelAtlas* label1 = (LabelAtlas*)getChildByTag(kTagSprite1);
     label1->setString(string);
     
-    CCLabelAtlas* label2 = (CCLabelAtlas*)getChildByTag(kTagSprite2);
+    LabelAtlas* label2 = (LabelAtlas*)getChildByTag(kTagSprite2);
     sprintf(string, "%d", (int)_time);
     label2->setString( string );    
 }
@@ -350,22 +350,22 @@ std::string LabelAtlasColorTest::subtitle()
 //------------------------------------------------------------------
 LabelTTFAlignment::LabelTTFAlignment()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
 
-    CCLabelTTF* ttf0 = CCLabelTTF::create("Alignment 0\nnew line", "Helvetica", 12,
-                                          CCSizeMake(256, 32), kCCTextAlignmentLeft);
+    LabelTTF* ttf0 = LabelTTF::create("Alignment 0\nnew line", "Helvetica", 12,
+                                          CCSizeMake(256, 32), kTextAlignmentLeft);
     ttf0->setPosition(ccp(s.width/2,(s.height/6)*2));
     ttf0->setAnchorPoint(ccp(0.5f,0.5f));
     this->addChild(ttf0);
 
-    CCLabelTTF* ttf1 = CCLabelTTF::create("Alignment 1\nnew line", "Helvetica", 12,
-                                          CCSizeMake(245, 32), kCCTextAlignmentCenter);
+    LabelTTF* ttf1 = LabelTTF::create("Alignment 1\nnew line", "Helvetica", 12,
+                                          CCSizeMake(245, 32), kTextAlignmentCenter);
     ttf1->setPosition(ccp(s.width/2,(s.height/6)*3));
     ttf1->setAnchorPoint(ccp(0.5f,0.5f));
     this->addChild(ttf1);
 
-    CCLabelTTF* ttf2 = CCLabelTTF::create("Alignment 2\nnew line", "Helvetica", 12,
-                                          CCSizeMake(245, 32), kCCTextAlignmentRight);
+    LabelTTF* ttf2 = LabelTTF::create("Alignment 2\nnew line", "Helvetica", 12,
+                                          CCSizeMake(245, 32), kTextAlignmentRight);
     ttf2->setPosition(ccp(s.width/2,(s.height/6)*4));
     ttf2->setAnchorPoint(ccp(0.5f,0.5f));
     this->addChild(ttf2);
@@ -395,18 +395,18 @@ Atlas3::Atlas3()
 {
     _time = 0;
 
-    CCLayerColor* col = CCLayerColor::create( ccc4(128,128,128,255) );
+    LayerColor* col = LayerColor::create( ccc4(128,128,128,255) );
     addChild(col, -10);
     
-    CCLabelBMFont* label1 = CCLabelBMFont::create("Test",  "fonts/bitmapFontTest2.fnt");
+    LabelBMFont* label1 = LabelBMFont::create("Test",  "fonts/bitmapFontTest2.fnt");
     
     // testing anchors
     label1->setAnchorPoint( ccp(0,0) );
     addChild(label1, 0, kTagBitmapAtlas1);
-    CCActionInterval* fade = CCFadeOut::create(1.0f);
-    CCActionInterval* fade_in = fade->reverse();
-    CCSequence* seq = CCSequence::create(fade, fade_in, NULL);
-    CCAction* repeat = CCRepeatForever::create(seq);
+    ActionInterval* fade = FadeOut::create(1.0f);
+    ActionInterval* fade_in = fade->reverse();
+    Sequence* seq = Sequence::create(fade, fade_in, NULL);
+    Action* repeat = RepeatForever::create(seq);
     label1->runAction(repeat);
     
 
@@ -414,14 +414,14 @@ Atlas3::Atlas3()
     // color and opacity work OK because bitmapFontAltas2 loads a BMP image (not a PNG image)
     // If you want to use both opacity and color, it is recommended to use NON premultiplied images like BMP images
     // Of course, you can also tell XCode not to compress PNG images, but I think it doesn't work as expected
-    CCLabelBMFont *label2 = CCLabelBMFont::create("Test", "fonts/bitmapFontTest2.fnt");
+    LabelBMFont *label2 = LabelBMFont::create("Test", "fonts/bitmapFontTest2.fnt");
     // testing anchors
     label2->setAnchorPoint( ccp(0.5f, 0.5f) );
     label2->setColor( ccRED );
     addChild(label2, 0, kTagBitmapAtlas2);
     label2->runAction( repeat->clone() );
     
-    CCLabelBMFont* label3 = CCLabelBMFont::create("Test", "fonts/bitmapFontTest2.fnt");
+    LabelBMFont* label3 = LabelBMFont::create("Test", "fonts/bitmapFontTest2.fnt");
     // testing anchors
     label3->setAnchorPoint( ccp(1,1) );
     addChild(label3, 0, kTagBitmapAtlas3);
@@ -441,13 +441,13 @@ void Atlas3::step(float dt)
     sprintf(string, "%2.2f Test j", _time);
     //string.format("%2.2f Test j", _time);
     
-    CCLabelBMFont *label1 = (CCLabelBMFont*) getChildByTag(kTagBitmapAtlas1);
+    LabelBMFont *label1 = (LabelBMFont*) getChildByTag(kTagBitmapAtlas1);
     label1->setString(string);
     
-    CCLabelBMFont *label2 = (CCLabelBMFont*) getChildByTag(kTagBitmapAtlas2);
+    LabelBMFont *label2 = (LabelBMFont*) getChildByTag(kTagBitmapAtlas2);
     label2->setString(string);
     
-    CCLabelBMFont *label3 = (CCLabelBMFont*) getChildByTag(kTagBitmapAtlas3);
+    LabelBMFont *label3 = (LabelBMFont*) getChildByTag(kTagBitmapAtlas3);
     label3->setString(string);
 
 }
@@ -478,35 +478,35 @@ Atlas4::Atlas4()
     _time = 0;
 
     // Upper Label
-    CCLabelBMFont *label = CCLabelBMFont::create("Bitmap Font Atlas", "fonts/bitmapFontTest.fnt");
+    LabelBMFont *label = LabelBMFont::create("Bitmap Font Atlas", "fonts/bitmapFontTest.fnt");
     addChild(label);
     
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
     
     label->setPosition( ccp(s.width/2, s.height/2) );
     label->setAnchorPoint( ccp(0.5f, 0.5f) );
     
     
-    CCSprite* BChar = (CCSprite*) label->getChildByTag(0);
-    CCSprite* FChar = (CCSprite*) label->getChildByTag(7);
-    CCSprite* AChar = (CCSprite*) label->getChildByTag(12);
+    Sprite* BChar = (Sprite*) label->getChildByTag(0);
+    Sprite* FChar = (Sprite*) label->getChildByTag(7);
+    Sprite* AChar = (Sprite*) label->getChildByTag(12);
     
     
-    CCActionInterval* rotate = CCRotateBy::create(2, 360);
-    CCAction* rot_4ever = CCRepeatForever::create(rotate);
+    ActionInterval* rotate = RotateBy::create(2, 360);
+    Action* rot_4ever = RepeatForever::create(rotate);
     
-    CCActionInterval* scale = CCScaleBy::create(2, 1.5f);
-    CCActionInterval* scale_back = scale->reverse();
-    CCSequence* scale_seq = CCSequence::create(scale, scale_back,NULL);
-    CCAction* scale_4ever = CCRepeatForever::create(scale_seq);
+    ActionInterval* scale = ScaleBy::create(2, 1.5f);
+    ActionInterval* scale_back = scale->reverse();
+    Sequence* scale_seq = Sequence::create(scale, scale_back,NULL);
+    Action* scale_4ever = RepeatForever::create(scale_seq);
     
-    CCActionInterval* jump = CCJumpBy::create(0.5f, CCPointZero, 60, 1);
-    CCAction* jump_4ever = CCRepeatForever::create(jump);
+    ActionInterval* jump = JumpBy::create(0.5f, PointZero, 60, 1);
+    Action* jump_4ever = RepeatForever::create(jump);
     
-    CCActionInterval* fade_out = CCFadeOut::create(1);
-    CCActionInterval* fade_in = CCFadeIn::create(1);
-    CCSequence* seq = CCSequence::create(fade_out, fade_in, NULL);
-    CCAction* fade_4ever = CCRepeatForever::create(seq);
+    ActionInterval* fade_out = FadeOut::create(1);
+    ActionInterval* fade_in = FadeIn::create(1);
+    Sequence* seq = Sequence::create(fade_out, fade_in, NULL);
+    Action* fade_4ever = RepeatForever::create(seq);
     
     BChar->runAction(rot_4ever);
     BChar->runAction(scale_4ever);
@@ -515,11 +515,11 @@ Atlas4::Atlas4()
     
     
     // Bottom Label
-    CCLabelBMFont *label2 = CCLabelBMFont::create("00.0", "fonts/bitmapFontTest.fnt");
+    LabelBMFont *label2 = LabelBMFont::create("00.0", "fonts/bitmapFontTest.fnt");
     addChild(label2, 0, kTagBitmapAtlas2);
     label2->setPosition( ccp(s.width/2.0f, 80) );
     
-    CCSprite* lastChar = (CCSprite*) label2->getChildByTag(3);
+    Sprite* lastChar = (Sprite*) label2->getChildByTag(3);
     lastChar->runAction( rot_4ever->clone() );
     
     schedule( schedule_selector(Atlas4::step), 0.1f);
@@ -527,7 +527,7 @@ Atlas4::Atlas4()
 
 void Atlas4::draw()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
     ccDrawLine( ccp(0, s.height/2), ccp(s.width, s.height/2) );
     ccDrawLine( ccp(s.width/2, 0), ccp(s.width/2, s.height) );
 }
@@ -540,7 +540,7 @@ void Atlas4::step(float dt)
 //     std::string string;
 //     string.format("%04.1f", _time);
     
-    CCLabelBMFont* label1 = (CCLabelBMFont*) getChildByTag(kTagBitmapAtlas2);
+    LabelBMFont* label1 = (LabelBMFont*) getChildByTag(kTagBitmapAtlas2);
     label1->setString(string);
 }
 
@@ -551,7 +551,7 @@ std::string Atlas4::title()
 
 std::string Atlas4::subtitle()
 {
-    return "Using fonts as CCSprite objects. Some characters should rotate.";
+    return "Using fonts as Sprite objects. Some characters should rotate.";
 }
 
 //------------------------------------------------------------------
@@ -568,10 +568,10 @@ std::string Atlas4::subtitle()
 
 Atlas5::Atlas5()
 {
-    CCLabelBMFont *label = CCLabelBMFont::create("abcdefg", "fonts/bitmapFontTest4.fnt");
+    LabelBMFont *label = LabelBMFont::create("abcdefg", "fonts/bitmapFontTest4.fnt");
     addChild(label);
     
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
     
     label->setPosition( ccp(s.width/2, s.height/2) );
     label->setAnchorPoint( ccp(0.5f, 0.5f) );
@@ -600,20 +600,20 @@ std::string Atlas5::subtitle()
 
 Atlas6::Atlas6()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
 
-    CCLabelBMFont* label = NULL;
-    label = CCLabelBMFont::create("FaFeFiFoFu", "fonts/bitmapFontTest5.fnt");
+    LabelBMFont* label = NULL;
+    label = LabelBMFont::create("FaFeFiFoFu", "fonts/bitmapFontTest5.fnt");
     addChild(label);
     label->setPosition( ccp(s.width/2, s.height/2+50) );
     label->setAnchorPoint( ccp(0.5f, 0.5f) ) ;
     
-    label = CCLabelBMFont::create("fafefifofu", "fonts/bitmapFontTest5.fnt");
+    label = LabelBMFont::create("fafefifofu", "fonts/bitmapFontTest5.fnt");
     addChild(label);
     label->setPosition( ccp(s.width/2, s.height/2) );
     label->setAnchorPoint( ccp(0.5f, 0.5f) );
 
-    label = CCLabelBMFont::create("aeiou", "fonts/bitmapFontTest5.fnt");
+    label = LabelBMFont::create("aeiou", "fonts/bitmapFontTest5.fnt");
     addChild(label);
     label->setPosition( ccp(s.width/2, s.height/2-50) );
     label->setAnchorPoint( ccp(0.5f, 0.5f) ); 
@@ -642,22 +642,22 @@ std::string Atlas6::subtitle()
 //------------------------------------------------------------------
 AtlasBitmapColor::AtlasBitmapColor()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
     
-    CCLabelBMFont* label = NULL;
-    label = CCLabelBMFont::create("Blue", "fonts/bitmapFontTest5.fnt");
+    LabelBMFont* label = NULL;
+    label = LabelBMFont::create("Blue", "fonts/bitmapFontTest5.fnt");
     label->setColor( ccBLUE );
     addChild(label);
     label->setPosition( ccp(s.width/2, s.height/4) );
     label->setAnchorPoint( ccp(0.5f, 0.5f) );
 
-    label = CCLabelBMFont::create("Red", "fonts/bitmapFontTest5.fnt");
+    label = LabelBMFont::create("Red", "fonts/bitmapFontTest5.fnt");
     addChild(label);
     label->setPosition( ccp(s.width/2, 2*s.height/4) );
     label->setAnchorPoint( ccp(0.5f, 0.5f) );
     label->setColor( ccRED );
 
-    label = CCLabelBMFont::create("G", "fonts/bitmapFontTest5.fnt");
+    label = LabelBMFont::create("G", "fonts/bitmapFontTest5.fnt");
     addChild(label);
     label->setPosition( ccp(s.width/2, 3*s.height/4) );
     label->setAnchorPoint( ccp(0.5f, 0.5f) );
@@ -694,12 +694,12 @@ AtlasFastBitmap::AtlasFastBitmap()
         {
             char str[6] = {0};
             sprintf(str, "-%d-", i);
-            CCLabelBMFont* label = CCLabelBMFont::create(str, "fonts/bitmapFontTest.fnt");
+            LabelBMFont* label = LabelBMFont::create(str, "fonts/bitmapFontTest.fnt");
             addChild(label);
             
-            CCSize s = CCDirector::sharedDirector()->getWinSize();
+            Size s = Director::sharedDirector()->getWinSize();
 
-            CCPoint p = ccp( CCRANDOM_0_1() * s.width, CCRANDOM_0_1() * s.height);
+            Point p = ccp( CCRANDOM_0_1() * s.width, CCRANDOM_0_1() * s.height);
             label->setPosition( p );
             label->setAnchorPoint(ccp(0.5f, 0.5f));
         }
@@ -712,7 +712,7 @@ std::string AtlasFastBitmap::title()
 
 std::string AtlasFastBitmap::subtitle()
 {
-    return "Creating several CCLabelBMFont with the same .fnt file should be fast";
+    return "Creating several LabelBMFont with the same .fnt file should be fast";
 }
 
 //------------------------------------------------------------------
@@ -728,10 +728,10 @@ std::string AtlasFastBitmap::subtitle()
 //------------------------------------------------------------------
 BitmapFontMultiLine::BitmapFontMultiLine()
 {
-    CCSize s;
+    Size s;
 
     // Left
-    CCLabelBMFont *label1 = CCLabelBMFont::create(" Multi line\nLeft", "fonts/bitmapFontTest3.fnt");
+    LabelBMFont *label1 = LabelBMFont::create(" Multi line\nLeft", "fonts/bitmapFontTest3.fnt");
     label1->setAnchorPoint(ccp(0,0));
     addChild(label1, 0, kTagBitmapAtlas1);
 
@@ -740,7 +740,7 @@ BitmapFontMultiLine::BitmapFontMultiLine()
 
 
     // Center
-    CCLabelBMFont *label2 = CCLabelBMFont::create("Multi line\nCenter", "fonts/bitmapFontTest3.fnt");
+    LabelBMFont *label2 = LabelBMFont::create("Multi line\nCenter", "fonts/bitmapFontTest3.fnt");
     label2->setAnchorPoint(ccp(0.5f, 0.5f));
     addChild(label2, 0, kTagBitmapAtlas2);
 
@@ -748,7 +748,7 @@ BitmapFontMultiLine::BitmapFontMultiLine()
     CCLOG("content size: %.2fx%.2f", s.width, s.height);
 
     // right
-    CCLabelBMFont *label3 = CCLabelBMFont::create("Multi line\nRight\nThree lines Three", "fonts/bitmapFontTest3.fnt");
+    LabelBMFont *label3 = LabelBMFont::create("Multi line\nRight\nThree lines Three", "fonts/bitmapFontTest3.fnt");
     label3->setAnchorPoint(ccp(1, 1));
     addChild(label3, 0, kTagBitmapAtlas3);
 
@@ -777,20 +777,20 @@ std::string BitmapFontMultiLine::subtitle()
 //------------------------------------------------------------------
 LabelsEmpty::LabelsEmpty()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
 
-    // CCLabelBMFont
-    CCLabelBMFont *label1 = CCLabelBMFont::create("", "fonts/bitmapFontTest3.fnt");
+    // LabelBMFont
+    LabelBMFont *label1 = LabelBMFont::create("", "fonts/bitmapFontTest3.fnt");
     addChild(label1, 0, kTagBitmapAtlas1);
     label1->setPosition(ccp(s.width/2, s.height-100));
 
-    // CCLabelTTF
-    CCLabelTTF* label2 = CCLabelTTF::create("", "Arial", 24);
+    // LabelTTF
+    LabelTTF* label2 = LabelTTF::create("", "Arial", 24);
     addChild(label2, 0, kTagBitmapAtlas2);
     label2->setPosition(ccp(s.width/2, s.height/2));
 
-    // CCLabelAtlas
-    CCLabelAtlas *label3 = CCLabelAtlas::create("", "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
+    // LabelAtlas
+    LabelAtlas *label3 = LabelAtlas::create("", "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
     addChild(label3, 0, kTagBitmapAtlas3);
     label3->setPosition(ccp(s.width/2, 0+100));
 
@@ -801,9 +801,9 @@ LabelsEmpty::LabelsEmpty()
 
 void LabelsEmpty::updateStrings(float dt)
 {
-    CCLabelBMFont* label1 = (CCLabelBMFont*) getChildByTag(kTagBitmapAtlas1);
-    CCLabelTTF* label2 = (CCLabelTTF*) getChildByTag(kTagBitmapAtlas2);
-    CCLabelAtlas* label3 = (CCLabelAtlas*) getChildByTag(kTagBitmapAtlas3);
+    LabelBMFont* label1 = (LabelBMFont*) getChildByTag(kTagBitmapAtlas1);
+    LabelTTF* label2 = (LabelTTF*) getChildByTag(kTagBitmapAtlas2);
+    LabelAtlas* label3 = (LabelAtlas*) getChildByTag(kTagBitmapAtlas3);
 
     if( ! setEmpty )
     {
@@ -840,10 +840,10 @@ std::string LabelsEmpty::subtitle()
 //------------------------------------------------------------------
 LabelBMFontHD::LabelBMFontHD()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
 
-    // CCLabelBMFont
-    CCLabelBMFont *label1 = CCLabelBMFont::create("TESTING RETINA DISPLAY", "fonts/konqa32.fnt");
+    // LabelBMFont
+    LabelBMFont *label1 = LabelBMFont::create("TESTING RETINA DISPLAY", "fonts/konqa32.fnt");
     addChild(label1);
     label1->setPosition(ccp(s.width/2, s.height/2));
 }
@@ -865,10 +865,10 @@ std::string LabelBMFontHD::subtitle()
 //------------------------------------------------------------------
 LabelAtlasHD::LabelAtlasHD()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
 
-    // CCLabelBMFont
-    CCLabelAtlas *label1 = CCLabelAtlas::create("TESTING RETINA DISPLAY", "fonts/larabie-16.plist");
+    // LabelBMFont
+    LabelAtlas *label1 = LabelAtlas::create("TESTING RETINA DISPLAY", "fonts/larabie-16.plist");
     label1->setAnchorPoint(ccp(0.5f, 0.5f));
 
     addChild(label1);
@@ -892,13 +892,13 @@ std::string LabelAtlasHD::subtitle()
 //------------------------------------------------------------------
 LabelGlyphDesigner::LabelGlyphDesigner()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
 
-    CCLayerColor *layer = CCLayerColor::create(ccc4(128,128,128,255));
+    LayerColor *layer = LayerColor::create(ccc4(128,128,128,255));
     addChild(layer, -10);
 
-    // CCLabelBMFont
-    CCLabelBMFont *label1 = CCLabelBMFont::create("Testing Glyph Designer", "fonts/futura-48.fnt");
+    // LabelBMFont
+    LabelBMFont *label1 = LabelBMFont::create("Testing Glyph Designer", "fonts/futura-48.fnt");
     addChild(label1);
     label1->setPosition(ccp(s.width/2, s.height/2));
 }
@@ -916,10 +916,10 @@ std::string LabelGlyphDesigner::subtitle()
 void AtlasTestScene::runThisTest()
 {
     sceneIdx = -1;
-    CCLayer* pLayer = nextAtlasAction();
+    Layer* pLayer = nextAtlasAction();
     addChild(pLayer);
 
-    CCDirector::sharedDirector()->replaceScene(this);
+    Director::sharedDirector()->replaceScene(this);
 }
 
 //------------------------------------------------------------------
@@ -929,37 +929,37 @@ void AtlasTestScene::runThisTest()
 //------------------------------------------------------------------
 LabelTTFTest::LabelTTFTest()
 {
-    CCSize blockSize = CCSizeMake(200, 160);
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size blockSize = CCSizeMake(200, 160);
+    Size s = Director::sharedDirector()->getWinSize();
 
-    CCLayerColor *colorLayer = CCLayerColor::create(ccc4(100, 100, 100, 255), blockSize.width, blockSize.height);
+    LayerColor *colorLayer = LayerColor::create(ccc4(100, 100, 100, 255), blockSize.width, blockSize.height);
     colorLayer->setAnchorPoint(ccp(0,0));
     colorLayer->setPosition(ccp((s.width - blockSize.width) / 2, (s.height - blockSize.height) / 2));
 
     this->addChild(colorLayer);
 
-    CCMenuItemFont::setFontSize(30);
-    CCMenu *menu = CCMenu::create(
-		CCMenuItemFont::create("Left", CC_CALLBACK_1(LabelTTFTest::setAlignmentLeft, this)),
-		CCMenuItemFont::create("Center", CC_CALLBACK_1(LabelTTFTest::setAlignmentCenter, this)),
-		CCMenuItemFont::create("Right", CC_CALLBACK_1(LabelTTFTest::setAlignmentRight, this)),
+    MenuItemFont::setFontSize(30);
+    Menu *menu = Menu::create(
+		MenuItemFont::create("Left", CC_CALLBACK_1(LabelTTFTest::setAlignmentLeft, this)),
+		MenuItemFont::create("Center", CC_CALLBACK_1(LabelTTFTest::setAlignmentCenter, this)),
+		MenuItemFont::create("Right", CC_CALLBACK_1(LabelTTFTest::setAlignmentRight, this)),
         NULL);
     menu->alignItemsVerticallyWithPadding(4);
     menu->setPosition(ccp(50, s.height / 2 - 20));
     this->addChild(menu);
 
-    menu = CCMenu::create(
-		CCMenuItemFont::create("Top", CC_CALLBACK_1(LabelTTFTest::setAlignmentTop, this)),
-		CCMenuItemFont::create("Middle", CC_CALLBACK_1(LabelTTFTest::setAlignmentMiddle, this)),
-		CCMenuItemFont::create("Bottom", CC_CALLBACK_1(LabelTTFTest::setAlignmentBottom, this)),
+    menu = Menu::create(
+		MenuItemFont::create("Top", CC_CALLBACK_1(LabelTTFTest::setAlignmentTop, this)),
+		MenuItemFont::create("Middle", CC_CALLBACK_1(LabelTTFTest::setAlignmentMiddle, this)),
+		MenuItemFont::create("Bottom", CC_CALLBACK_1(LabelTTFTest::setAlignmentBottom, this)),
 		NULL);
     menu->alignItemsVerticallyWithPadding(4);
     menu->setPosition(ccp(s.width - 50, s.height / 2 - 20));
     this->addChild(menu);
 
     _plabel = NULL;
-    _horizAlign = kCCTextAlignmentLeft;
-    _vertAlign = kCCVerticalTextAlignmentTop;
+    _horizAlign = kTextAlignmentLeft;
+    _vertAlign = kVerticalTextAlignmentTop;
 
     this->updateAlignment();
 }
@@ -971,8 +971,8 @@ LabelTTFTest::~LabelTTFTest()
 
 void  LabelTTFTest::updateAlignment()
 {
-    CCSize blockSize = CCSizeMake(200, 160);
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size blockSize = CCSizeMake(200, 160);
+    Size s = Director::sharedDirector()->getWinSize();
 
     if (_plabel)
     {
@@ -981,7 +981,7 @@ void  LabelTTFTest::updateAlignment()
 
     CC_SAFE_RELEASE(_plabel);
 
-    _plabel = CCLabelTTF::create(this->getCurrentAlignment(), "Marker Felt", 32,
+    _plabel = LabelTTF::create(this->getCurrentAlignment(), "Marker Felt", 32,
                                   blockSize, _horizAlign, _vertAlign);
     _plabel->retain();
 
@@ -991,39 +991,39 @@ void  LabelTTFTest::updateAlignment()
     this->addChild(_plabel);
 }
 
-void LabelTTFTest::setAlignmentLeft(CCObject* pSender)
+void LabelTTFTest::setAlignmentLeft(Object* pSender)
 {
-    _horizAlign = kCCTextAlignmentLeft;
+    _horizAlign = kTextAlignmentLeft;
     this->updateAlignment();
 }
 
-void LabelTTFTest::setAlignmentCenter(CCObject* pSender)
+void LabelTTFTest::setAlignmentCenter(Object* pSender)
 {
-    _horizAlign = kCCTextAlignmentCenter;
+    _horizAlign = kTextAlignmentCenter;
     this->updateAlignment();
 }
 
-void LabelTTFTest::setAlignmentRight(CCObject* pSender)
+void LabelTTFTest::setAlignmentRight(Object* pSender)
 {
-    _horizAlign = kCCTextAlignmentRight;
+    _horizAlign = kTextAlignmentRight;
     this->updateAlignment();
 }
 
-void LabelTTFTest::setAlignmentTop(CCObject* pSender)
+void LabelTTFTest::setAlignmentTop(Object* pSender)
 {
-    _vertAlign = kCCVerticalTextAlignmentTop;
+    _vertAlign = kVerticalTextAlignmentTop;
     this->updateAlignment();
 }
 
-void LabelTTFTest::setAlignmentMiddle(CCObject* pSender)
+void LabelTTFTest::setAlignmentMiddle(Object* pSender)
 {
-    _vertAlign = kCCVerticalTextAlignmentCenter;
+    _vertAlign = kVerticalTextAlignmentCenter;
     this->updateAlignment();
 }
 
-void LabelTTFTest::setAlignmentBottom(CCObject* pSender)
+void LabelTTFTest::setAlignmentBottom(Object* pSender)
 {
-    _vertAlign = kCCVerticalTextAlignmentBottom;
+    _vertAlign = kVerticalTextAlignmentBottom;
     this->updateAlignment();
 }
 
@@ -1032,34 +1032,34 @@ const char* LabelTTFTest::getCurrentAlignment()
     const char* vertical = NULL;
     const char* horizontal = NULL;
     switch (_vertAlign) {
-        case kCCVerticalTextAlignmentTop:
+        case kVerticalTextAlignmentTop:
             vertical = "Top";
             break;
-        case kCCVerticalTextAlignmentCenter:
+        case kVerticalTextAlignmentCenter:
             vertical = "Middle";
             break;
-        case kCCVerticalTextAlignmentBottom:
+        case kVerticalTextAlignmentBottom:
             vertical = "Bottom";
             break;
     }
     switch (_horizAlign) {
-        case kCCTextAlignmentLeft:
+        case kTextAlignmentLeft:
             horizontal = "Left";
             break;
-        case kCCTextAlignmentCenter:
+        case kTextAlignmentCenter:
             horizontal = "Center";
             break;
-        case kCCTextAlignmentRight:
+        case kTextAlignmentRight:
             horizontal = "Right";
             break;
     }
 
-    return CCString::createWithFormat("Alignment %s %s", vertical, horizontal)->getCString();
+    return String::createWithFormat("Alignment %s %s", vertical, horizontal)->getCString();
 }
 
 string LabelTTFTest::title()
 {
-    return "Testing CCLabelTTF";
+    return "Testing LabelTTF";
 }
 
 string LabelTTFTest::subtitle()
@@ -1069,14 +1069,14 @@ string LabelTTFTest::subtitle()
 
 LabelTTFMultiline::LabelTTFMultiline()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
 
-    CCLabelTTF *center = CCLabelTTF::create("word wrap \"testing\" (bla0) bla1 'bla2' [bla3] (bla4) {bla5} {bla6} [bla7] (bla8) [bla9] 'bla0' \"bla1\"",
+    LabelTTF *center = LabelTTF::create("word wrap \"testing\" (bla0) bla1 'bla2' [bla3] (bla4) {bla5} {bla6} [bla7] (bla8) [bla9] 'bla0' \"bla1\"",
                                             "Paint Boy",
                                             32,
                                             CCSizeMake(s.width/2,200),
-                                            kCCTextAlignmentCenter,
-                                            kCCVerticalTextAlignmentTop);
+                                            kTextAlignmentCenter,
+                                            kVerticalTextAlignmentTop);
 
     center->setPosition(ccp(s.width / 2, 150));
 
@@ -1085,38 +1085,38 @@ LabelTTFMultiline::LabelTTFMultiline()
 
 string LabelTTFMultiline::title()
 {
-    return "Testing CCLabelTTF Word Wrap";
+    return "Testing LabelTTF Word Wrap";
 }
 
 string LabelTTFMultiline::subtitle()
 {
-    return "Word wrap using CCLabelTTF and a custom TTF font";
+    return "Word wrap using LabelTTF and a custom TTF font";
 }
 
 LabelTTFChinese::LabelTTFChinese()
 {
-    CCSize size = CCDirector::sharedDirector()->getWinSize();
-    CCLabelTTF *pLable = CCLabelTTF::create("中国", "Marker Felt", 30);
+    Size size = Director::sharedDirector()->getWinSize();
+    LabelTTF *pLable = LabelTTF::create("中国", "Marker Felt", 30);
     pLable->setPosition(ccp(size.width / 2, size.height /2));
     this->addChild(pLable);
 }
 
 string LabelTTFChinese::title()
 {
-    return "Testing CCLabelTTF with Chinese character";
+    return "Testing LabelTTF with Chinese character";
 }
 
 LabelBMFontChinese::LabelBMFontChinese()
 {
-    CCSize size = CCDirector::sharedDirector()->getWinSize();
-    CCLabelBMFont* pLable = CCLabelBMFont::create("中国", "fonts/bitmapFontChinese.fnt");
+    Size size = Director::sharedDirector()->getWinSize();
+    LabelBMFont* pLable = LabelBMFont::create("中国", "fonts/bitmapFontChinese.fnt");
     pLable->setPosition(ccp(size.width / 2, size.height /2));
     this->addChild(pLable);
 }
 
 string LabelBMFontChinese::title()
 {
-    return "Testing CCLabelBMFont with Chinese character";
+    return "Testing LabelBMFont with Chinese character";
 }
 
 /// BitmapFontMultiLineAlignment
@@ -1143,22 +1143,22 @@ BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
     this->setTouchEnabled(true);
 
     // ask director the the window size
-    CCSize size = CCDirector::sharedDirector()->getWinSize();
+    Size size = Director::sharedDirector()->getWinSize();
 
     // create and initialize a Label
-    this->_labelShouldRetain = CCLabelBMFont::create(LongSentencesExample, "fonts/markerFelt.fnt", size.width/1.5, kCCTextAlignmentCenter);
+    this->_labelShouldRetain = LabelBMFont::create(LongSentencesExample, "fonts/markerFelt.fnt", size.width/1.5, kTextAlignmentCenter);
     this->_labelShouldRetain->retain();
 
-    this->_arrowsBarShouldRetain = CCSprite::create("Images/arrowsBar.png");
+    this->_arrowsBarShouldRetain = Sprite::create("Images/arrowsBar.png");
     this->_arrowsBarShouldRetain->retain();
-    this->_arrowsShouldRetain = CCSprite::create("Images/arrows.png");
+    this->_arrowsShouldRetain = Sprite::create("Images/arrows.png");
     this->_arrowsShouldRetain->retain();
 
-    CCMenuItemFont::setFontSize(20);
-    CCMenuItemFont *longSentences = CCMenuItemFont::create("Long Flowing Sentences", CC_CALLBACK_1(BitmapFontMultiLineAlignment::stringChanged, this));
-    CCMenuItemFont *lineBreaks = CCMenuItemFont::create("Short Sentences With Intentional Line Breaks", CC_CALLBACK_1(BitmapFontMultiLineAlignment::stringChanged, this));
-    CCMenuItemFont *mixed = CCMenuItemFont::create("Long Sentences Mixed With Intentional Line Breaks", CC_CALLBACK_1(BitmapFontMultiLineAlignment::stringChanged, this));
-    CCMenu *stringMenu = CCMenu::create(longSentences, lineBreaks, mixed, NULL);
+    MenuItemFont::setFontSize(20);
+    MenuItemFont *longSentences = MenuItemFont::create("Long Flowing Sentences", CC_CALLBACK_1(BitmapFontMultiLineAlignment::stringChanged, this));
+    MenuItemFont *lineBreaks = MenuItemFont::create("Short Sentences With Intentional Line Breaks", CC_CALLBACK_1(BitmapFontMultiLineAlignment::stringChanged, this));
+    MenuItemFont *mixed = MenuItemFont::create("Long Sentences Mixed With Intentional Line Breaks", CC_CALLBACK_1(BitmapFontMultiLineAlignment::stringChanged, this));
+    Menu *stringMenu = Menu::create(longSentences, lineBreaks, mixed, NULL);
     stringMenu->alignItemsVertically();
 
     longSentences->setColor(ccRED);
@@ -1167,12 +1167,12 @@ BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
     lineBreaks->setTag(LineBreaks);
     mixed->setTag(Mixed);
 
-    CCMenuItemFont::setFontSize(30);
+    MenuItemFont::setFontSize(30);
 
-    CCMenuItemFont *left = CCMenuItemFont::create("Left", CC_CALLBACK_1(BitmapFontMultiLineAlignment::alignmentChanged, this));
-    CCMenuItemFont *center = CCMenuItemFont::create("Center", CC_CALLBACK_1(BitmapFontMultiLineAlignment::alignmentChanged, this));
-    CCMenuItemFont *right = CCMenuItemFont::create("Right", CC_CALLBACK_1(BitmapFontMultiLineAlignment::alignmentChanged, this));
-    CCMenu *alignmentMenu = CCMenu::create(left, center, right, NULL);
+    MenuItemFont *left = MenuItemFont::create("Left", CC_CALLBACK_1(BitmapFontMultiLineAlignment::alignmentChanged, this));
+    MenuItemFont *center = MenuItemFont::create("Center", CC_CALLBACK_1(BitmapFontMultiLineAlignment::alignmentChanged, this));
+    MenuItemFont *right = MenuItemFont::create("Right", CC_CALLBACK_1(BitmapFontMultiLineAlignment::alignmentChanged, this));
+    Menu *alignmentMenu = Menu::create(left, center, right, NULL);
     alignmentMenu->alignItemsHorizontallyWithPadding(alignmentItemPadding);
 
     center->setColor(ccRED);
@@ -1219,9 +1219,9 @@ std::string BitmapFontMultiLineAlignment::subtitle()
     return "";
 }
 
-void BitmapFontMultiLineAlignment::stringChanged(cocos2d::CCObject *sender)
+void BitmapFontMultiLineAlignment::stringChanged(cocos2d::Object *sender)
 {
-    CCMenuItemFont *item = (CCMenuItemFont*)sender;
+    MenuItemFont *item = (MenuItemFont*)sender;
     item->setColor(ccRED);
     this->_lastAlignmentItem->setColor(ccWHITE);
     this->_lastAlignmentItem = item;
@@ -1245,9 +1245,9 @@ void BitmapFontMultiLineAlignment::stringChanged(cocos2d::CCObject *sender)
     this->snapArrowsToEdge();
 }
 
-void BitmapFontMultiLineAlignment::alignmentChanged(cocos2d::CCObject *sender)
+void BitmapFontMultiLineAlignment::alignmentChanged(cocos2d::Object *sender)
 {
-    CCMenuItemFont *item = (CCMenuItemFont*)sender;
+    MenuItemFont *item = (MenuItemFont*)sender;
     item->setColor(ccRED);
     this->_lastAlignmentItem->setColor(ccWHITE);
     this->_lastAlignmentItem = item;
@@ -1255,13 +1255,13 @@ void BitmapFontMultiLineAlignment::alignmentChanged(cocos2d::CCObject *sender)
     switch(item->getTag())
     {
     case LeftAlign:
-        this->_labelShouldRetain->setAlignment(kCCTextAlignmentLeft);
+        this->_labelShouldRetain->setAlignment(kTextAlignmentLeft);
         break;
     case CenterAlign:
-        this->_labelShouldRetain->setAlignment(kCCTextAlignmentCenter);
+        this->_labelShouldRetain->setAlignment(kTextAlignmentCenter);
         break;
     case RightAlign:
-        this->_labelShouldRetain->setAlignment(kCCTextAlignmentRight);
+        this->_labelShouldRetain->setAlignment(kTextAlignmentRight);
         break;
 
     default:
@@ -1271,10 +1271,10 @@ void BitmapFontMultiLineAlignment::alignmentChanged(cocos2d::CCObject *sender)
     this->snapArrowsToEdge();
 }
 
-void BitmapFontMultiLineAlignment::ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
+void BitmapFontMultiLineAlignment::ccTouchesBegan(cocos2d::Set *pTouches, cocos2d::Event *pEvent)
 {
-    CCTouch *touch = (CCTouch *)pTouches->anyObject();
-    CCPoint location = touch->getLocationInView();
+    Touch *touch = (Touch *)pTouches->anyObject();
+    Point location = touch->getLocationInView();
 
     if (this->_arrowsShouldRetain->boundingBox().containsPoint(location))
     {
@@ -1283,7 +1283,7 @@ void BitmapFontMultiLineAlignment::ccTouchesBegan(cocos2d::CCSet *pTouches, coco
     }
 }
 
-void BitmapFontMultiLineAlignment::ccTouchesEnded(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
+void BitmapFontMultiLineAlignment::ccTouchesEnded(cocos2d::Set *pTouches, cocos2d::Event *pEvent)
 {
     _drag = false;
     this->snapArrowsToEdge();
@@ -1291,17 +1291,17 @@ void BitmapFontMultiLineAlignment::ccTouchesEnded(cocos2d::CCSet *pTouches, coco
     this->_arrowsBarShouldRetain->setVisible(false);
 }
 
-void BitmapFontMultiLineAlignment::ccTouchesMoved(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
+void BitmapFontMultiLineAlignment::ccTouchesMoved(cocos2d::Set *pTouches, cocos2d::Event *pEvent)
 {
     if (! _drag)
     {
         return;
     }
 
-    CCTouch *touch = (CCTouch *)pTouches->anyObject();
-    CCPoint location = touch->getLocationInView();
+    Touch *touch = (Touch *)pTouches->anyObject();
+    Point location = touch->getLocationInView();
 
-    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    Size winSize = Director::sharedDirector()->getWinSize();
 
     this->_arrowsShouldRetain->setPosition(ccp(MAX(MIN(location.x, ArrowsMax*winSize.width), ArrowsMin*winSize.width), 
         this->_arrowsShouldRetain->getPosition().y));
@@ -1320,21 +1320,21 @@ void BitmapFontMultiLineAlignment::snapArrowsToEdge()
 /// LabelTTFA8Test
 LabelTTFA8Test::LabelTTFA8Test()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
 
-    CCLayerColor *layer = CCLayerColor::create(ccc4(128, 128, 128, 255));
+    LayerColor *layer = LayerColor::create(ccc4(128, 128, 128, 255));
     addChild(layer, -10);
 
-    // CCLabelBMFont
-    CCLabelTTF *label1 = CCLabelTTF::create("Testing A8 Format", "Marker Felt", 48);
+    // LabelBMFont
+    LabelTTF *label1 = LabelTTF::create("Testing A8 Format", "Marker Felt", 48);
     addChild(label1);
     label1->setColor(ccRED);
     label1->setPosition(ccp(s.width/2, s.height/2));
 
-    CCFadeOut *fadeOut = CCFadeOut::create(2);
-    CCFadeIn *fadeIn = CCFadeIn::create(2);
-    CCSequence *seq = CCSequence::create(fadeOut, fadeIn, NULL);
-    CCRepeatForever *forever = CCRepeatForever::create(seq);
+    FadeOut *fadeOut = FadeOut::create(2);
+    FadeIn *fadeIn = FadeIn::create(2);
+    Sequence *seq = Sequence::create(fadeOut, fadeIn, NULL);
+    RepeatForever *forever = RepeatForever::create(seq);
     label1->runAction(forever);
 }
 
@@ -1351,13 +1351,13 @@ std::string LabelTTFA8Test::subtitle()
 /// BMFontOneAtlas
 BMFontOneAtlas::BMFontOneAtlas()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
 
-    CCLabelBMFont *label1 = CCLabelBMFont::create("This is Helvetica", "fonts/helvetica-32.fnt", kCCLabelAutomaticWidth, kCCTextAlignmentLeft, CCPointZero);
+    LabelBMFont *label1 = LabelBMFont::create("This is Helvetica", "fonts/helvetica-32.fnt", kLabelAutomaticWidth, kTextAlignmentLeft, PointZero);
     addChild(label1);
     label1->setPosition(ccp(s.width/2, s.height/3*2));
 
-    CCLabelBMFont *label2 = CCLabelBMFont::create("And this is Geneva", "fonts/geneva-32.fnt", kCCLabelAutomaticWidth, kCCTextAlignmentLeft, ccp(0, 128));
+    LabelBMFont *label2 = LabelBMFont::create("And this is Geneva", "fonts/geneva-32.fnt", kLabelAutomaticWidth, kTextAlignmentLeft, ccp(0, 128));
     addChild(label2);
     label2->setPosition(ccp(s.width/2, s.height/3*1));
 }
@@ -1375,29 +1375,29 @@ std::string BMFontOneAtlas::subtitle()
 /// BMFontUnicode
 BMFontUnicode::BMFontUnicode()
 {
-    CCDictionary *strings = CCDictionary::createWithContentsOfFile("fonts/strings.xml");
+    Dictionary *strings = Dictionary::createWithContentsOfFile("fonts/strings.xml");
 
-    const char *chinese  = ((CCString*)strings->objectForKey("chinese1"))->_string.c_str();
-    const char *japanese = ((CCString*)strings->objectForKey("japanese"))->_string.c_str();
-    const char *russian  = ((CCString*)strings->objectForKey("russian"))->_string.c_str();
-    const char *spanish  = ((CCString*)strings->objectForKey("spanish"))->_string.c_str();
+    const char *chinese  = ((String*)strings->objectForKey("chinese1"))->_string.c_str();
+    const char *japanese = ((String*)strings->objectForKey("japanese"))->_string.c_str();
+    const char *russian  = ((String*)strings->objectForKey("russian"))->_string.c_str();
+    const char *spanish  = ((String*)strings->objectForKey("spanish"))->_string.c_str();
 
 
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
 
-    CCLabelBMFont *label1 = CCLabelBMFont::create(spanish, "fonts/arial-unicode-26.fnt", 200, kCCTextAlignmentLeft);
+    LabelBMFont *label1 = LabelBMFont::create(spanish, "fonts/arial-unicode-26.fnt", 200, kTextAlignmentLeft);
     addChild(label1);
     label1->setPosition(ccp(s.width/2, s.height/5*4));
 
-    CCLabelBMFont *label2 = CCLabelBMFont::create(chinese, "fonts/arial-unicode-26.fnt");
+    LabelBMFont *label2 = LabelBMFont::create(chinese, "fonts/arial-unicode-26.fnt");
     addChild(label2);
     label2->setPosition(ccp(s.width/2, s.height/5*3));
 
-    CCLabelBMFont *label3 = CCLabelBMFont::create(russian, "fonts/arial-26-en-ru.fnt");
+    LabelBMFont *label3 = LabelBMFont::create(russian, "fonts/arial-26-en-ru.fnt");
     addChild(label3);
     label3->setPosition(ccp(s.width/2, s.height/5*2));
 
-    CCLabelBMFont *label4 = CCLabelBMFont::create(japanese, "fonts/arial-unicode-26.fnt");
+    LabelBMFont *label4 = LabelBMFont::create(japanese, "fonts/arial-unicode-26.fnt");
     addChild(label4);
     label4->setPosition(ccp(s.width/2, s.height/5*1));
 }
@@ -1416,12 +1416,12 @@ std::string BMFontUnicode::subtitle()
 
 BMFontInit::BMFontInit()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
 
-    CCLabelBMFont* bmFont = new CCLabelBMFont();
+    LabelBMFont* bmFont = new LabelBMFont();
     bmFont->init();
     bmFont->autorelease();
-    //CCLabelBMFont* bmFont = [CCLabelBMFont create:@"Foo" fntFile:@"arial-unicode-26.fnt"];
+    //CCLabelBMFont* bmFont = [LabelBMFont create:@"Foo" fntFile:@"arial-unicode-26.fnt"];
     bmFont->setFntFile("fonts/helvetica-32.fnt");
     bmFont->setString("It is working!");
     this->addChild(bmFont);
@@ -1442,9 +1442,9 @@ std::string BMFontInit::subtitle()
 
 TTFFontInit::TTFFontInit()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
 
-    CCLabelTTF* font = new CCLabelTTF();
+    LabelTTF* font = new LabelTTF();
     font->init();
     font->autorelease();
     font->setFontName("Marker Felt");
@@ -1466,10 +1466,10 @@ std::string TTFFontInit::subtitle()
 
 TTFFontShadowAndStroke::TTFFontShadowAndStroke()
 {
-    CCLayerColor *layer = CCLayerColor::create(ccc4(0,190,0,255));
+    LayerColor *layer = LayerColor::create(ccc4(0,190,0,255));
     addChild(layer, -10);
     
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
     
     ccColor3B tintColorRed      =  { 255, 0, 0   };
     ccColor3B tintColorYellow   =  { 255, 255, 0 };
@@ -1477,7 +1477,7 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     ccColor3B strokeColor       =  { 0, 10, 255  };
     ccColor3B strokeShadowColor =  { 255, 0, 0   };
     
-    CCSize shadowOffset(12.0, 12.0);
+    Size shadowOffset(12.0, 12.0);
     
     ccFontDefinition shadowTextDef;
     shadowTextDef._fontSize = 20;
@@ -1490,7 +1490,7 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     shadowTextDef._fontFillColor   = tintColorRed;
     
     // shadow only label
-    CCLabelTTF* fontShadow = CCLabelTTF::createWithFontDefinition("Shadow Only Red Text", shadowTextDef);
+    LabelTTF* fontShadow = LabelTTF::createWithFontDefinition("Shadow Only Red Text", shadowTextDef);
     
     // add label to the scene
     this->addChild(fontShadow);
@@ -1510,7 +1510,7 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     strokeTextDef._fontFillColor   = tintColorYellow;
     
     // stroke only label
-    CCLabelTTF* fontStroke = CCLabelTTF::createWithFontDefinition("Stroke Only Yellow Text", strokeTextDef);
+    LabelTTF* fontStroke = LabelTTF::createWithFontDefinition("Stroke Only Yellow Text", strokeTextDef);
     
     // add label to the scene
     this->addChild(fontStroke);
@@ -1536,7 +1536,7 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     strokeShaodwTextDef._fontFillColor   = tintColorBlue;
     
     // shadow + stroke label
-    CCLabelTTF* fontStrokeAndShadow = CCLabelTTF::createWithFontDefinition("Stroke & Shadow Blue Text", strokeShaodwTextDef);
+    LabelTTF* fontStrokeAndShadow = LabelTTF::createWithFontDefinition("Stroke & Shadow Blue Text", strokeShaodwTextDef);
     
     // add label to the scene
     this->addChild(fontStrokeAndShadow);
@@ -1561,9 +1561,9 @@ std::string TTFFontShadowAndStroke::subtitle()
 
 Issue1343::Issue1343()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
 
-    CCLabelBMFont* bmFont = new CCLabelBMFont();
+    LabelBMFont* bmFont = new LabelBMFont();
     bmFont->init();
     bmFont->setFntFile("fonts/font-issue1343.fnt");
     bmFont->setString("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz.,'");
@@ -1586,13 +1586,13 @@ std::string Issue1343::subtitle()
 
 LabelBMFontBounds::LabelBMFontBounds()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
     
-    CCLayerColor *layer = CCLayerColor::create(ccc4(128,128,128,255));
+    LayerColor *layer = LayerColor::create(ccc4(128,128,128,255));
     addChild(layer, -10);
     
-    // CCLabelBMFont
-    label1 = CCLabelBMFont::create("Testing Glyph Designer", "fonts/boundsTestFont.fnt");
+    // LabelBMFont
+    label1 = LabelBMFont::create("Testing Glyph Designer", "fonts/boundsTestFont.fnt");
     
     
     addChild(label1);
@@ -1611,13 +1611,13 @@ string LabelBMFontBounds::subtitle()
 
 void LabelBMFontBounds::draw()
 {
-    CCSize labelSize = label1->getContentSize();
-    CCSize origin = CCDirector::sharedDirector()->getWinSize();
+    Size labelSize = label1->getContentSize();
+    Size origin = Director::sharedDirector()->getWinSize();
     
     origin.width = origin.width / 2 - (labelSize.width / 2);
     origin.height = origin.height / 2 - (labelSize.height / 2);
     
-    CCPoint vertices[4]=
+    Point vertices[4]=
     {
         ccp(origin.width, origin.height),
         ccp(labelSize.width + origin.width, origin.height),

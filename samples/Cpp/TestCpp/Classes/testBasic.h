@@ -7,7 +7,7 @@
 USING_NS_CC;
 using namespace std;
 
-class TestScene : public CCScene
+class TestScene : public Scene
 {
 public: 
     TestScene(bool bPortrait = false);
@@ -16,9 +16,9 @@ public:
     virtual void runThisTest() = 0;
 };
 
-typedef CCLayer* (*NEWTESTFUNC)();
+typedef Layer* (*NEWTESTFUNC)();
 #define TESTLAYER_CREATE_FUNC(className) \
-static CCLayer* create##className() \
+static Layer* create##className() \
 { return new className(); }
 
 #define CF(className) create##className

@@ -19,9 +19,9 @@ public:
     virtual void onEnter();
     virtual string title();
     virtual string subtitle();
-    void backCallback(CCObject* pSender);
-    void nextCallback(CCObject* pSender);
-    void restartCallback(CCObject* pSender);
+    void backCallback(Object* pSender);
+    void nextCallback(Object* pSender);
+    void restartCallback(Object* pSender);
 };
 
 class TestResolutionDirectories : public FileUtilsDemo

@@ -53,7 +53,7 @@ typedef struct _ccPVRTexturePixelFormatInfo {
 	uint32_t bpp;
 	bool compressed;
 	bool alpha;
-	CCTexture2DPixelFormat ccPixelFormat;
+	Texture2DPixelFormat ccPixelFormat;
 } ccPVRTexturePixelFormatInfo;
 
 /**
@@ -65,7 +65,7 @@ enum {
 };
 
 
-/** CCTexturePVR
+/** TexturePVR
      
  Object that loads PVR images.
 
@@ -84,20 +84,20 @@ enum {
  Limitations:
     Pre-generated mipmaps, such as PVR textures with mipmap levels embedded in file,
     are only supported if all individual sprites are of _square_ size. 
-    To use mipmaps with non-square textures, instead call CCTexture2D#generateMipmap on the sheet texture itself
+    To use mipmaps with non-square textures, instead call Texture2D#generateMipmap on the sheet texture itself
     (and to save space, save the PVR sprite sheet without mip maps included).
 */
-class CCTexturePVR : public CCObject
+class TexturePVR : public Object
 {
 public:
-    CCTexturePVR();
-    virtual ~CCTexturePVR();
+    TexturePVR();
+    virtual ~TexturePVR();
 
-    /** initializes a CCTexturePVR with a path */
+    /** initializes a TexturePVR with a path */
     bool initWithContentsOfFile(const char* path);
 
-    /** creates and initializes a CCTexturePVR with a path */
-    static CCTexturePVR* create(const char* path);
+    /** creates and initializes a TexturePVR with a path */
+    static TexturePVR* create(const char* path);
     
     // properties 
     
@@ -115,7 +115,7 @@ public:
     inline bool isForcePremultipliedAlpha() { return _forcePremultipliedAlpha; }
     /** how many mipmaps the texture has. 1 means one level (level 0 */
     inline unsigned int getNumberOfMipmaps() { return _numberOfMipmaps; }
-    inline CCTexture2DPixelFormat getFormat() { return _format; }
+    inline Texture2DPixelFormat getFormat() { return _format; }
     inline bool isRetainName() { return _retainName; }
     inline void setRetainName(bool retainName) { _retainName = retainName; }
 
@@ -136,7 +136,7 @@ protected:
     
     // cocos2d integration
     bool _retainName;
-    CCTexture2DPixelFormat _format;
+    Texture2DPixelFormat _format;
     
    const ccPVRTexturePixelFormatInfo *_pixelFormatInfo;
 };

@@ -9,26 +9,26 @@ using namespace std;
 
 NS_CC_BEGIN
 
-CCFileUtils* CCFileUtils::sharedFileUtils()
+FileUtils* FileUtils::sharedFileUtils()
 {
     if (s_sharedFileUtils == NULL)
     {
-        s_sharedFileUtils = new CCFileUtilsEmscripten();
+        s_sharedFileUtils = new FileUtilsEmscripten();
         s_sharedFileUtils->init();
     }
     return s_sharedFileUtils;
 }
 
-CCFileUtilsEmscripten::CCFileUtilsEmscripten()
+FileUtilsEmscripten::FileUtilsEmscripten()
 {}
 
-bool CCFileUtilsEmscripten::init()
+bool FileUtilsEmscripten::init()
 {
     _defaultResRootPath = "app/native/Resources/";
-    return CCFileUtils::init();
+    return FileUtils::init();
 }
 
-string CCFileUtilsEmscripten::getWritablePath()
+string FileUtilsEmscripten::getWritablePath()
 {
     // Let's write it in the current working directory's data folder
     char cwd[FILENAME_MAX] = {0};
@@ -42,7 +42,7 @@ string CCFileUtilsEmscripten::getWritablePath()
     return path;
 }
 
-bool CCFileUtilsEmscripten::isAbsolutePath(const std::string& strPath)
+bool FileUtilsEmscripten::isAbsolutePath(const std::string& strPath)
 {
     if (strPath[0] == '/' || strPath.find(_defaultResRootPath) == 0)
     {
@@ -51,7 +51,7 @@ bool CCFileUtilsEmscripten::isAbsolutePath(const std::string& strPath)
     return false;
 }
 
-bool CCFileUtilsEmscripten::isFileExist(const std::string& strFilePath)
+bool FileUtilsEmscripten::isFileExist(const std::string& strFilePath)
 {
     std::string strPath = strFilePath;
     if (strPath[0] != '/')

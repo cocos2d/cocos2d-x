@@ -30,16 +30,16 @@ USING_NS_CC;
 USING_NS_CC_EXT;
 
 void CocosBuilderTestScene::runThisTest() {
-    /* Create an autorelease CCNodeLoaderLibrary. */
-    CCNodeLoaderLibrary * ccNodeLoaderLibrary = CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
+    /* Create an autorelease NodeLoaderLibrary. */
+    NodeLoaderLibrary * ccNodeLoaderLibrary = NodeLoaderLibrary::newDefaultNodeLoaderLibrary();
     
-    ccNodeLoaderLibrary->registerCCNodeLoader("HelloCocosBuilderLayer", HelloCocosBuilderLayerLoader::loader());
+    ccNodeLoaderLibrary->registerNodeLoader("HelloCocosBuilderLayer", HelloCocosBuilderLayerLoader::loader());
 
     /* Create an autorelease CCBReader. */
     cocos2d::extension::CCBReader * ccbReader = new cocos2d::extension::CCBReader(ccNodeLoaderLibrary);
     
     /* Read a ccbi file. */
-    CCNode * node = ccbReader->readNodeGraphFromFile("ccb/HelloCocosBuilder.ccbi", this);
+    Node * node = ccbReader->readNodeGraphFromFile("ccb/HelloCocosBuilder.ccbi", this);
     
     ccbReader->release();
 
@@ -47,22 +47,22 @@ void CocosBuilderTestScene::runThisTest() {
         this->addChild(node);
     }
 
-    CCDirector::sharedDirector()->replaceScene(this);
+    Director::sharedDirector()->replaceScene(this);
 }
 
 
 //void CocosBuilderTestScene::runThisTest() {
 //    CCBIReaderLayer * ccbiReaderLayer = CCBIReaderLayer::node();
 //    
-//    /* Create an autorelease CCNodeLoaderLibrary. */
-//    CCNodeLoaderLibrary * ccNodeLoaderLibrary = CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
+//    /* Create an autorelease NodeLoaderLibrary. */
+//    NodeLoaderLibrary * ccNodeLoaderLibrary = NodeLoaderLibrary::newDefaultNodeLoaderLibrary();
 //    
 //    /* Create an autorelease CCBReader. */
 //    CCBReader * ccbReader = new CCBReader(ccNodeLoaderLibrary, ccbiReaderLayer, ccbiReaderLayer);
 //    ccbReader->autorelease();
 //    
 //    /* Read a ccbi file. */
-//    CCNode * node = ccbReader->readNodeGraphFromFile("ccb/simple/pub/", "ccb/test.ccbi", ccbiReaderLayer);
+//    Node * node = ccbReader->readNodeGraphFromFile("ccb/simple/pub/", "ccb/test.ccbi", ccbiReaderLayer);
 //    
 //    if(node != NULL) {
 //        ccbiReaderLayer->addChild(node);
@@ -70,5 +70,5 @@ void CocosBuilderTestScene::runThisTest() {
 //    
 //    this->addChild(ccbiReaderLayer);
 //    
-//    CCDirector::sharedDirector()->replaceScene(this);
+//    Director::sharedDirector()->replaceScene(this);
 //}

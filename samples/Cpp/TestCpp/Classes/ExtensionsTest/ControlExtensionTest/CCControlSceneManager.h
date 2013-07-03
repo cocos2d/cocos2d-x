@@ -1,5 +1,5 @@
 /*
- * CCControlSceneManager.h
+ * ControlSceneManager.h
  *
  * Copyright (c) 2011 Yannick Loriot
  *
@@ -30,22 +30,22 @@
 
 USING_NS_CC;
 
-class CCControlSceneManager : public cocos2d::CCObject
+class ControlSceneManager : public cocos2d::Object
 {
 public:
-    CCControlSceneManager();
-    ~CCControlSceneManager();
+    ControlSceneManager();
+    ~ControlSceneManager();
     /** Returns the singleton of the control scene manager. */
-    static CCControlSceneManager * sharedControlSceneManager();
+    static ControlSceneManager * sharedControlSceneManager();
 
     /** Returns the next control scene. */
-    cocos2d::CCScene *nextControlScene();
+    cocos2d::Scene *nextControlScene();
 
     /** Returns the previous control scene. */
-    cocos2d::CCScene *previousControlScene();
+    cocos2d::Scene *previousControlScene();
 
     /** Returns the current control scene. */
-    cocos2d::CCScene *currentControlScene();
+    cocos2d::Scene *currentControlScene();
 
     /** Control scene id. */
     CC_SYNTHESIZE(int, _currentControlSceneId, CurrentControlSceneId)

@@ -201,7 +201,7 @@ public:
 	 * while -1 means fail
 	 *
 	 */
-	int computeLineStart(FT_Face face, CCImage::ETextAlign eAlignMask, char cText,
+	int computeLineStart(FT_Face face, Image::ETextAlign eAlignMask, char cText,
                          int iLineIndex) {
 		int iRet;
 		int iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, cText),
@@ -210,11 +210,11 @@ public:
 			return -1;
 		}
         
-		if (eAlignMask == CCImage::kAlignCenter) {
+		if (eAlignMask == Image::kAlignCenter) {
 			iRet = (iMaxLineWidth - vLines[iLineIndex].iLineWidth) / 2
 			- SHIFT6(face->glyph->metrics.horiBearingX );
             
-		} else if (eAlignMask == CCImage::kAlignRight) {
+		} else if (eAlignMask == Image::kAlignRight) {
 			iRet = (iMaxLineWidth - vLines[iLineIndex].iLineWidth)
 			- SHIFT6(face->glyph->metrics.horiBearingX );
 		} else {
@@ -224,16 +224,16 @@ public:
 		return iRet;
 	}
 		
-	int computeLineStartY( FT_Face face, CCImage::ETextAlign eAlignMask, int txtHeight, int borderHeight ){
+	int computeLineStartY( FT_Face face, Image::ETextAlign eAlignMask, int txtHeight, int borderHeight ){
 		int iRet;
-		if (eAlignMask == CCImage::kAlignCenter || eAlignMask == CCImage::kAlignLeft ||
-			eAlignMask == CCImage::kAlignRight ) {
+		if (eAlignMask == Image::kAlignCenter || eAlignMask == Image::kAlignLeft ||
+			eAlignMask == Image::kAlignRight ) {
 			//vertical center
 			iRet = (borderHeight - txtHeight)/2 + SHIFT6(face->size->metrics.ascender);
 
-		} else if (eAlignMask == CCImage::kAlignBottomRight || 
-				   eAlignMask == CCImage::kAlignBottom || 
-				   eAlignMask == CCImage::kAlignBottomLeft ) {
+		} else if (eAlignMask == Image::kAlignBottomRight || 
+				   eAlignMask == Image::kAlignBottom || 
+				   eAlignMask == Image::kAlignBottomLeft ) {
 			//vertical bottom
 			iRet = borderHeight - txtHeight + SHIFT6(face->size->metrics.ascender);
 		} else {
@@ -243,12 +243,12 @@ public:
 		return iRet;
 	}
     
-	bool getBitmap(const char *text, int nWidth, int nHeight, CCImage::ETextAlign eAlignMask, const char * pFontName, float fontSize) {
+	bool getBitmap(const char *text, int nWidth, int nHeight, Image::ETextAlign eAlignMask, const char * pFontName, float fontSize) {
 		FT_Face face;
 		FT_Error iError;
         
 		const char* pText = text;
-		//data will be deleted by CCImage
+		//data will be deleted by Image
         //		if (_data) {
         //			delete _data;
         //		}
@@ -394,7 +394,7 @@ static BitmapDC& sharedBitmapDC()
     return s_BmpDC;
 }
 
-bool CCImage::initWithString(
+bool Image::initWithString(
                              const char *    pText,
                              int             nWidth/* = 0*/,
                              int             nHeight/* = 0*/,
@@ -413,7 +413,7 @@ bool CCImage::initWithString(
     	std::transform(lowerCasePath.begin(), lowerCasePath.end(), lowerCasePath.begin(), ::tolower);
 
     	if ( lowerCasePath.find(".ttf") != std::string::npos ) {
-    		fullFontName = CCFileUtils::sharedFileUtils()->fullPathForFilename(pFontName);
+    		fullFontName = FileUtils::sharedFileUtils()->fullPathForFilename(pFontName);
     	}
         //CCLog("-----pText=%s and Font File is %s nWidth= %d,nHeight=%d",pText,fullFontName.c_str(),nWidth,nHeight);
         

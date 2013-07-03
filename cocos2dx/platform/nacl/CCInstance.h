@@ -29,23 +29,13 @@ THE SOFTWARE.
 #include <ppapi/cpp/input_event.h>
 #include <pthread.h>
 
-#ifdef OLD_NACL_MOUNTS
-#include "nacl-mounts/base/MainThreadRunner.h"
-#endif
-
 extern "C" void* cocos_main(void* arg);
 
 class CocosPepperInstance : public pp::Instance {
 public:
     explicit CocosPepperInstance(PP_Instance instance);
 
-    virtual ~CocosPepperInstance()
-    {
-#ifdef OLD_NACL_MOUNTS
-        if (_runner)
-            delete _runner;
-#endif
-    }
+    virtual ~CocosPepperInstance() {}
 
     virtual bool Init(uint32_t argc, const char* argn[], const char* argv[]);
 
@@ -55,9 +45,6 @@ public:
 
     pp::Size Size() { return _size; }
 
-#ifdef OLD_NACL_MOUNTS
-    MainThreadRunner* _runner;
-#endif
 private:
     pp::Size _size;
     pthread_t _cocos_thread;

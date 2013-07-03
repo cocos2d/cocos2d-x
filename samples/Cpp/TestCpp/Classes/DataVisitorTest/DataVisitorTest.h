@@ -5,7 +5,7 @@
 
 #include <string>
 
-class PrettyPrinterDemo : public CCLayer
+class PrettyPrinterDemo : public Layer
 {
 public:
     virtual std::string title();

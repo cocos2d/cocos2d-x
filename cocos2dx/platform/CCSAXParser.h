@@ -36,7 +36,7 @@ NS_CC_BEGIN
 
 typedef unsigned char CC_XML_CHAR;
 
-class CC_DLL CCSAXDelegator
+class CC_DLL SAXDelegator
 {
 public:
     virtual void startElement(void *ctx, const char *name, const char **atts) = 0;
@@ -44,18 +44,18 @@ public:
     virtual void textHandler(void *ctx, const char *s, int len) = 0;
 };
 
-class CC_DLL CCSAXParser
+class CC_DLL SAXParser
 {
-    CCSAXDelegator*    _delegator;
+    SAXDelegator*    _delegator;
 public:
 
-    CCSAXParser();
-    ~CCSAXParser(void);
+    SAXParser();
+    ~SAXParser(void);
 
     bool init(const char *pszEncoding);
     bool parse(const char* pXMLData, unsigned int uDataLength);
     bool parse(const char *pszFile);
-    void setDelegator(CCSAXDelegator* pDelegator);
+    void setDelegator(SAXDelegator* pDelegator);
 
     static void startElement(void *ctx, const CC_XML_CHAR *name, const CC_XML_CHAR **atts);
     static void endElement(void *ctx, const CC_XML_CHAR *name);

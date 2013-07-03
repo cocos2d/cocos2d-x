@@ -20,7 +20,7 @@ bool EnemyController::init()
 void EnemyController::onEnter()
 {
    // Determine where to spawn the target along the Y axis
-	CCSize winSize = CCDirector::sharedDirector()->getVisibleSize();
+	Size winSize = Director::sharedDirector()->getVisibleSize();
 	float minY = getOwner()->getContentSize().height/2;
 	float maxY = winSize.height -  getOwner()->getContentSize().height/2;
 	int rangeY = (int)(maxY - minY);
@@ -31,7 +31,7 @@ void EnemyController::onEnter()
 	// and along a random position along the Y axis as calculated
 	_owner->setPosition(
 		ccp(winSize.width + (getOwner()->getContentSize().width/2), 
-            CCDirector::sharedDirector()->getVisibleOrigin().y + actualY) );
+            Director::sharedDirector()->getVisibleOrigin().y + actualY) );
 	
 
 	// Determine speed of the target
@@ -42,11 +42,11 @@ void EnemyController::onEnter()
 	int actualDuration = ( rand() % rangeDuration ) + minDuration;
 
 	// Create the actions
-	CCFiniteTimeAction* actionMove = CCMoveTo::create( (float)actualDuration,
+	FiniteTimeAction* actionMove = MoveTo::create( (float)actualDuration,
                                             ccp(0 - getOwner()->getContentSize().width/2, actualY) );
-	CCFiniteTimeAction* actionMoveDone = CCCallFuncN::create(getOwner()->getParent()->getComponent("SceneController"),
+	FiniteTimeAction* actionMoveDone = CallFuncN::create(getOwner()->getParent()->getComponent("SceneController"),
                                             callfuncN_selector(SceneController::spriteMoveFinished));
-	_owner->runAction( CCSequence::create(actionMove, actionMoveDone, NULL) );
+	_owner->runAction( Sequence::create(actionMove, actionMoveDone, NULL) );
 }
 
 void EnemyController::onExit()
@@ -74,8 +74,8 @@ EnemyController* EnemyController::create(void)
 
 void EnemyController::die()
 {
-    CCComponent *com = _owner->getParent()->getComponent("SceneController");
-    cocos2d::CCArray *_targets = ((SceneController*)com)->getTargets();
+    Component *com = _owner->getParent()->getComponent("SceneController");
+    cocos2d::Array *_targets = ((SceneController*)com)->getTargets();
     _targets->removeObject(_owner);
     _owner->removeFromParentAndCleanup(true);
     ((SceneController*)com)->increaseKillCount();

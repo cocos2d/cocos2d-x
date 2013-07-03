@@ -15,12 +15,12 @@ public:
 };
 
 class Ball;
-class PongLayer : public CCLayer
+class PongLayer : public Layer
 {
 private:
     Ball*       _ball;
-    CCArray*    _paddles;
-    CCPoint     _ballStartingVelocity; 
+    Array*    _paddles;
+    Point     _ballStartingVelocity; 
 public:
     PongLayer();
     ~PongLayer();

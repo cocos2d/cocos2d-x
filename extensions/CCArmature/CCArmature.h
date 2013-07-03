@@ -30,9 +30,9 @@ THE SOFTWARE.
 #include "display/CCBatchNode.h"
 #include "animation/CCArmatureAnimation.h"
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
     
-class  CCArmature : public CCNodeRGBA, public CCBlendProtocol 
+class  Armature : public NodeRGBA, public BlendProtocol 
 {
 
 public:
@@ -40,21 +40,21 @@ public:
 	* Allocates and initializes a armature.
 	* @return A initialized armature which is marked as "autorelease".
 	*/
-	static CCArmature *create();
+	static Armature *create();
     
    /**
-	* Allocates a armature, and use the CCArmatureData named name in CCArmatureDataManager to initializes the armature. 
+	* Allocates a armature, and use the ArmatureData named name in ArmatureDataManager to initializes the armature. 
 	*
-	* @param  name CCArmature will use the name to find to the CCArmatureData to initializes it.
+	* @param  name Armature will use the name to find to the ArmatureData to initializes it.
 	* @return A initialized armature which is marked as "autorelease".
 	*/
-	static CCArmature *create(const char *name);
+	static Armature *create(const char *name);
 
-	static CCArmature *create(const char *name, CCBone *parentBone);
+	static Armature *create(const char *name, Bone *parentBone);
 
 public:
-    CCArmature();
-    ~CCArmature(void);
+    Armature();
+    ~Armature(void);
 
     /**
      * Init the empty armature
@@ -63,57 +63,57 @@ public:
     
     /**
      * Init a armature with specified name
-     * @param name CCArmature name
+     * @param name Armature name
      */
     virtual bool init(const char *name);
 
-	virtual bool init(const char *name, CCBone *parentBone);
+	virtual bool init(const char *name, Bone *parentBone);
     /**
-     * Add a CCBone to this CCArmature, 
+     * Add a Bone to this Armature, 
      *
-     * @param bone  The CCBone you want to add to CCArmature
-     * @param parentName   The parent CCBone's name you want to add to . If it's  NULL, then set CCArmature to it's parent
+     * @param bone  The Bone you want to add to Armature
+     * @param parentName   The parent Bone's name you want to add to . If it's  NULL, then set Armature to it's parent
      */
-    virtual void addBone(CCBone *bone, const char* parentName);
+    virtual void addBone(Bone *bone, const char* parentName);
     /**
      * Get a bone with the specified name
      *
      * @param name The bone's name you want to get
      */
-    virtual CCBone *getBone(const char *name) const;
+    virtual Bone *getBone(const char *name) const;
     /**
      * Change a bone's parent with the specified parent name.
      *
      * @param bone The bone you want to change parent
 	 * @param parentName The new parent's name.
      */
-    virtual void changeBoneParent(CCBone *bone, const char *parentName);
+    virtual void changeBoneParent(Bone *bone, const char *parentName);
     /**
-     * Remove a bone with the specified name. If recursion it will also remove child CCBone recursionly.
+     * Remove a bone with the specified name. If recursion it will also remove child Bone recursionly.
      *
      * @param bone The bone you want to remove
 	 * @param recursion Determine whether remove the bone's child  recursion.
      */
-    virtual void removeBone(CCBone *bone, bool recursion);
+    virtual void removeBone(Bone *bone, bool recursion);
 
     /**
-     * Get CCArmature's bone dictionary
-     * @return CCArmature's bone dictionary
+     * Get Armature's bone dictionary
+     * @return Armature's bone dictionary
      */
-	CCDictionary *getBoneDic();
+	Dictionary *getBoneDic();
 
 	/**
      * This boundingBox will calculate all bones' boundingBox every time
      */
-	virtual CCRect boundingBox();
+	virtual Rect boundingBox();
     
-    CCBone *getBoneAtPoint(float x, float y);
+    Bone *getBoneAtPoint(float x, float y);
     
 	virtual void visit();
     virtual void update(float dt);
 	virtual void draw();
 
-	virtual CCAffineTransform nodeToParentTransform();
+	virtual AffineTransform nodeToParentTransform();
 
 	/**
 	 * Set contentsize and Calculate anchor point. 
@@ -126,34 +126,34 @@ public:
 protected:
     
     /*
-     * Used to create CCBone internal
+     * Used to create Bone internal
      */
-	CCBone *createBone(const char *boneName );
+	Bone *createBone(const char *boneName );
     
 
-	CC_SYNTHESIZE_RETAIN(CCArmatureAnimation *, _animation, Animation);
+	CC_SYNTHESIZE_RETAIN(ArmatureAnimation *, _animation, Animation);
     
-    CC_SYNTHESIZE(CCArmatureData *, _armatureData, CCArmatureData);
+    CC_SYNTHESIZE(ArmatureData *, _armatureData, ArmatureData);
 
-	CC_SYNTHESIZE(CCBatchNode*, _batchNode, BatchNode);
+	CC_SYNTHESIZE(BatchNode*, _batchNode, BatchNode);
 
 	CC_SYNTHESIZE_PASS_BY_REF(std::string, _name, Name);
 
-	CC_SYNTHESIZE(CCTextureAtlas*, _atlas, TextureAtlas);
+	CC_SYNTHESIZE(TextureAtlas*, _atlas, TextureAtlas);
 
-	CC_SYNTHESIZE(CCBone*, _parentBone, ParentBone);
+	CC_SYNTHESIZE(Bone*, _parentBone, ParentBone);
 protected:
-    CCDictionary *_boneDic;                    //! The dictionary of the bones, include all bones in the armature, no matter it is the direct bone or the indirect bone. It is different from _chindren.
+    Dictionary *_boneDic;                    //! The dictionary of the bones, include all bones in the armature, no matter it is the direct bone or the indirect bone. It is different from _chindren.
 
-	CCArray *_topBoneList;
+	Array *_topBoneList;
 
-    static std::map<int, CCArmature*> _armatureIndexDic;	//! Use to save armature zorder info, 
+    static std::map<int, Armature*> _armatureIndexDic;	//! Use to save armature zorder info, 
 
-	ccBlendFunc _blendFunc;                    //! It's required for CCTextureProtocol inheritance
+	ccBlendFunc _blendFunc;                    //! It's required for TextureProtocol inheritance
 
-	CCPoint _offsetPoint;
+	Point _offsetPoint;
 };
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {
 
 #endif /*__CCARMATURE_H__*/

@@ -40,7 +40,7 @@ NS_CC_BEGIN
  */
 
 /** 
-A CCCamera is used in every CCNode.
+A Camera is used in every Node.
 Useful to look at the object from different views.
 The OpenGL gluLookAt() function is used to locate the
 camera.
@@ -53,15 +53,15 @@ World coordinates won't work if you use the camera.
 
 Limitations:
 
-- Some nodes, like CCParallaxNode, CCParticle uses world node coordinates, and they won't work properly if you move them (or any of their ancestors)
+- Some nodes, like ParallaxNode, Particle uses world node coordinates, and they won't work properly if you move them (or any of their ancestors)
 using the camera.
 
-- It doesn't work on batched nodes like CCSprite objects when they are parented to a CCSpriteBatchNode object.
+- It doesn't work on batched nodes like Sprite objects when they are parented to a SpriteBatchNode object.
 
-- It is recommended to use it ONLY if you are going to create 3D effects. For 2D effects, use the action CCFollow or position/scale/rotate.
+- It is recommended to use it ONLY if you are going to create 3D effects. For 2D effects, use the action Follow or position/scale/rotate.
 
 */
-class CC_DLL CCCamera : public CCObject
+class CC_DLL Camera : public Object
 {
 protected:
     float _eyeX;
@@ -79,8 +79,8 @@ protected:
     bool _dirty;
     kmMat4    _lookupMatrix;
 public:
-    CCCamera(void);
-    ~CCCamera(void);
+    Camera(void);
+    ~Camera(void);
 
     void init(void);
 
@@ -113,7 +113,7 @@ public:
     static float getZEye();
 
 private:
-    DISALLOW_COPY_AND_ASSIGN(CCCamera);
+    DISALLOW_COPY_AND_ASSIGN(Camera);
 };
 
 // end of base_node group

@@ -7,7 +7,7 @@
 class ParallaxDemo : public BaseTest
 {
 protected:
-    CCTextureAtlas* _atlas;
+    TextureAtlas* _atlas;
 
 public:
     ParallaxDemo(void);
@@ -16,17 +16,17 @@ public:
     virtual std::string title();
     virtual void onEnter();
 
-    void restartCallback(CCObject* pSender);
-    void nextCallback(CCObject* pSender);
-    void backCallback(CCObject* pSender);
+    void restartCallback(Object* pSender);
+    void nextCallback(Object* pSender);
+    void backCallback(Object* pSender);
 };
 
 class Parallax1 : public ParallaxDemo
 {
 protected:
-    CCNode*        _root;
-    CCNode*        _target;
-    CCMotionStreak*        _streak;
+    Node*        _root;
+    Node*        _target;
+    MotionStreak*        _streak;
 
 public:
     Parallax1();
@@ -36,14 +36,14 @@ public:
 class Parallax2 : public ParallaxDemo
 {
 protected:
-    CCNode*        _root;
-    CCNode*        _target;
-    CCMotionStreak*        _streak;
+    Node*        _root;
+    Node*        _target;
+    MotionStreak*        _streak;
 
 public:
     Parallax2();
     
-    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
+    virtual void ccTouchesMoved(Set *pTouches, Event *pEvent);
 
     virtual std::string title();
 };
