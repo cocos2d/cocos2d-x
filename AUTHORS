@@ -45,6 +45,7 @@ Developers:
         
     DarraghCoy
         Fix a potential crash SimpleAudioEngineOpenSL::playEffect
+        Fix some bugs with Set class
 
     silverscania
         Pass correct parameter to glPixelStorei when creating a texture
