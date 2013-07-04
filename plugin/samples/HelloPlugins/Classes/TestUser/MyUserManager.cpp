@@ -34,6 +34,7 @@ MyUserManager::MyUserManager()
 : _retListener(NULL)
 , _qh360(NULL)
 , _nd91(NULL)
+, _uc(NULL)
 {
 
 }
@@ -101,6 +102,27 @@ void MyUserManager::loadPlugin()
             _nd91->setActionListener(_retListener);
         }
 	}
+
+#if TEST_UC
+	{
+        _uc = dynamic_cast<ProtocolUser*>(PluginManager::getInstance()->loadPlugin("UserUC"));
+        if (NULL != _uc)
+        {
+            TUserDeveloperInfo pUCInfo;
+            pUCInfo["UCCpId"] = "20087";
+            pUCInfo["UCGameId"] = "119474";
+            pUCInfo["UCServerId"] = "1333";
+            if (pUCInfo.empty()) {
+                char msg[256] = { 0 };
+                sprintf(msg, "Developer info is empty. PLZ fill your UC info in %s(nearby line %d)", __FILE__, __LINE__);
+                MessageBox(msg, "UC Warning");
+            }
+            _uc->setDebugMode(true);
+            _uc->configDeveloperInfo(pUCInfo);
+            _uc->setActionListener(_retListener);
+        }
+    }
+#endif
 }
 
 void MyUserManager::unloadPlugin()
@@ -116,6 +138,12 @@ void MyUserManager::unloadPlugin()
         PluginManager::getInstance()->unloadPlugin("UserNd91");
         _nd91 = NULL;
     }
+
+	if (_uc)
+    {
+        PluginManager::getInstance()->unloadPlugin("UserUC");
+        _uc = NULL;
+    }
 }
 
 void MyUserManager::loginByMode(MyUserMode mode)
@@ -129,6 +157,11 @@ void MyUserManager::loginByMode(MyUserMode mode)
 	case kND91:
 	    pUser = _nd91;
 	    break;
+#if TEST_UC
+	case kUC:
+	    pUser = _uc;
+	    break;
+#endif
 	default:
 		break;
 	}
@@ -149,6 +182,11 @@ void MyUserManager::logoutByMode(MyUserMode mode)
     case kND91:
         pUser = _nd91;
         break;
+#if TEST_UC
+    case kUC:
+        pUser = _uc;
+        break;
+#endif
     default:
         break;
     }
