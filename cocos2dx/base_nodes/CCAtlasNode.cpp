@@ -208,12 +208,12 @@ void AtlasNode::setIgnoreContentScaleFactor(bool bIgnoreContentScaleFactor)
 
 // AtlasNode - CocosNodeTexture protocol
 
-ccBlendFunc AtlasNode::getBlendFunc()
+const ccBlendFunc& AtlasNode::getBlendFunc() const
 {
     return _blendFunc;
 }
 
-void AtlasNode::setBlendFunc(ccBlendFunc blendFunc)
+void AtlasNode::setBlendFunc(const ccBlendFunc &blendFunc)
 {
     _blendFunc = blendFunc;
 }

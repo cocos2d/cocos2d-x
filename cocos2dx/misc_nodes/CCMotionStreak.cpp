@@ -169,12 +169,12 @@ void MotionStreak::setTexture(Texture2D *texture)
     }
 }
 
-void MotionStreak::setBlendFunc(ccBlendFunc blendFunc)
+void MotionStreak::setBlendFunc(const ccBlendFunc &blendFunc)
 {
     _blendFunc = blendFunc;
 }
 
-ccBlendFunc MotionStreak::getBlendFunc(void)
+const ccBlendFunc& MotionStreak::getBlendFunc(void) const
 {
     return _blendFunc;
 }

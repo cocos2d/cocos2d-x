@@ -430,7 +430,7 @@ void DrawNode::clear()
     _dirty = true;
 }
 
-ccBlendFunc DrawNode::getBlendFunc() const
+const ccBlendFunc& DrawNode::getBlendFunc() const
 {
     return _blendFunc;
 }
