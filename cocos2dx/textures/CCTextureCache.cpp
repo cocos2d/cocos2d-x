@@ -746,18 +746,18 @@ void VolatileTexture::addStringTexture(Texture2D *tt, const char* text, const Si
     vt->_text     = text;
 }
 
-void VolatileTexture::setTexParameters(Texture2D *t, ccTexParams *texParams) 
+void VolatileTexture::setTexParameters(Texture2D *t, const ccTexParams &texParams)
 {
     VolatileTexture *vt = findVolotileTexture(t);
 
-    if (texParams->minFilter != GL_NONE)
-        vt->_texParams.minFilter = texParams->minFilter;
-    if (texParams->magFilter != GL_NONE)
-        vt->_texParams.magFilter = texParams->magFilter;
-    if (texParams->wrapS != GL_NONE)
-        vt->_texParams.wrapS = texParams->wrapS;
-    if (texParams->wrapT != GL_NONE)
-        vt->_texParams.wrapT = texParams->wrapT;
+    if (texParams.minFilter != GL_NONE)
+        vt->_texParams.minFilter = texParams.minFilter;
+    if (texParams.magFilter != GL_NONE)
+        vt->_texParams.magFilter = texParams.magFilter;
+    if (texParams.wrapS != GL_NONE)
+        vt->_texParams.wrapS = texParams.wrapS;
+    if (texParams.wrapT != GL_NONE)
+        vt->_texParams.wrapT = texParams.wrapT;
 }
 
 void VolatileTexture::removeTexture(Texture2D *t) 
@@ -851,7 +851,7 @@ void VolatileTexture::reloadAllTextures()
         default:
             break;
         }
-        vt->texture->setTexParameters(&vt->_texParams);
+        vt->texture->setTexParameters(vt->_texParams);
     }
 
     isReloading = false;

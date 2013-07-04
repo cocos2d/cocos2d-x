@@ -673,12 +673,12 @@ void SpriteBatchNode::updateBlendFunc(void)
 }
 
 // CocosNodeTexture protocol
-void SpriteBatchNode::setBlendFunc(ccBlendFunc blendFunc)
+void SpriteBatchNode::setBlendFunc(const ccBlendFunc &blendFunc)
 {
     _blendFunc = blendFunc;
 }
 
-ccBlendFunc SpriteBatchNode::getBlendFunc(void)
+const ccBlendFunc& SpriteBatchNode::getBlendFunc(void) const
 {
     return _blendFunc;
 }

@@ -134,21 +134,21 @@ public:
     * @warning Changing the string is as expensive as creating a new LabelTTF. To obtain better performance use LabelAtlas
     */
     virtual void setString(const char *label);
-    virtual const char* getString(void);
+    virtual const char* getString(void) const;
     
-    TextAlignment getHorizontalAlignment();
+    TextAlignment getHorizontalAlignment() const;
     void setHorizontalAlignment(TextAlignment alignment);
     
-    VerticalTextAlignment getVerticalAlignment();
+    VerticalTextAlignment getVerticalAlignment() const;
     void setVerticalAlignment(VerticalTextAlignment verticalAlignment);
     
-    Size getDimensions();
+    const Size& getDimensions() const;
     void setDimensions(const Size &dim);
     
-    float getFontSize();
+    float getFontSize() const;
     void setFontSize(float fontSize);
     
-    const char* getFontName();
+    const char* getFontName() const;
     void setFontName(const char *fontName);
     
 private:
