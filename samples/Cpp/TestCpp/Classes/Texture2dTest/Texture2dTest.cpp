@@ -261,7 +261,7 @@ void TextureMipMap::onEnter()
     Texture2D *texture0 = TextureCache::sharedTextureCache()->addImage("Images/grossini_dance_atlas.png");
     texture0->generateMipmap();
     ccTexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };    
-    texture0->setTexParameters(&texParams);
+    texture0->setTexParameters(texParams);
 
     Texture2D *texture1 = TextureCache::sharedTextureCache()->addImage("Images/grossini_dance_atlas_nomipmap.png");
 
@@ -317,7 +317,7 @@ void TexturePVRMipMap::onEnter()
 
         // support mipmap filtering
         ccTexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };    
-        imgMipMap->getTexture()->setTexParameters(&texParams);
+        imgMipMap->getTexture()->setTexParameters(texParams);
     }
 
     Sprite *img = Sprite::create("Images/logo-nomipmap.pvr");
@@ -363,7 +363,7 @@ void TexturePVRMipMap2::onEnter()
     
     // support mipmap filtering
     ccTexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };    
-    imgMipMap->getTexture()->setTexParameters(&texParams);
+    imgMipMap->getTexture()->setTexParameters(texParams);
 
     Sprite *img = Sprite::create("Images/test_image.png");
     img->setPosition(ccp( s.width/2.0f+100, s.height/2.0f));
@@ -1545,7 +1545,7 @@ void TextureGlClamp::onEnter()
     addChild(sprite, -1, kTagSprite1);
     sprite->setPosition(ccp(size.width/2,size.height/2));
     ccTexParams params = {GL_LINEAR,GL_LINEAR,GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE};
-    sprite->getTexture()->setTexParameters(&params);
+    sprite->getTexture()->setTexParameters(params);
 
     auto rotate = RotateBy::create(4, 360);
     sprite->runAction(rotate);
@@ -1582,7 +1582,7 @@ void TextureGlRepeat::onEnter()
     addChild(sprite, -1, kTagSprite1);
     sprite->setPosition(ccp(size.width/2,size.height/2));
     ccTexParams params = {GL_LINEAR,GL_LINEAR,GL_REPEAT,GL_REPEAT};
-    sprite->getTexture()->setTexParameters(&params);
+    sprite->getTexture()->setTexParameters(params);
     
     auto rotate = RotateBy::create(4, 360);
     sprite->runAction(rotate);

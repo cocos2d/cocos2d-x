@@ -151,7 +151,7 @@ public:
 
     @since v0.8
     */
-    void setTexParameters(ccTexParams* texParams);
+    void setTexParameters(const ccTexParams& texParams);
 
     /** sets antialias texture parameters:
     - GL_TEXTURE_MIN_FILTER = GL_LINEAR

@@ -776,17 +776,17 @@ bool Texture2D::hasMipmaps() const
     return _hasMipmaps;
 }
 
-void Texture2D::setTexParameters(ccTexParams *texParams)
+void Texture2D::setTexParameters(const ccTexParams &texParams)
 {
-    CCAssert( (_pixelsWide == ccNextPOT(_pixelsWide) || texParams->wrapS == GL_CLAMP_TO_EDGE) &&
-        (_pixelsHigh == ccNextPOT(_pixelsHigh) || texParams->wrapT == GL_CLAMP_TO_EDGE),
+    CCAssert( (_pixelsWide == ccNextPOT(_pixelsWide) || texParams.wrapS == GL_CLAMP_TO_EDGE) &&
+        (_pixelsHigh == ccNextPOT(_pixelsHigh) || texParams.wrapT == GL_CLAMP_TO_EDGE),
         "GL_CLAMP_TO_EDGE should be used in NPOT dimensions");
 
     ccGLBindTexture2D( _name );
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texParams->minFilter );
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams->magFilter );
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texParams->wrapS );
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, texParams->wrapT );
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texParams.minFilter );
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams.magFilter );
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texParams.wrapS );
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, texParams.wrapT );
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     VolatileTexture::setTexParameters(this, texParams);
@@ -809,7 +809,7 @@ void Texture2D::setAliasTexParameters()
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     ccTexParams texParams = {(GLuint)(_hasMipmaps?GL_NEAREST_MIPMAP_NEAREST:GL_NEAREST),GL_NEAREST,GL_NONE,GL_NONE};
-    VolatileTexture::setTexParameters(this, &texParams);
+    VolatileTexture::setTexParameters(this, texParams);
 #endif
 }
 
@@ -829,7 +829,7 @@ void Texture2D::setAntiAliasTexParameters()
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     ccTexParams texParams = {(GLuint)(_hasMipmaps?GL_LINEAR_MIPMAP_NEAREST:GL_LINEAR),GL_LINEAR,GL_NONE,GL_NONE};
-    VolatileTexture::setTexParameters(this, &texParams);
+    VolatileTexture::setTexParameters(this, texParams);
 #endif
 }
 
