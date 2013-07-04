@@ -460,8 +460,8 @@ void Sprite::updateTransform(void)
             unsigned int capacity = _textureAtlas->getCapacity();
             CCAssert(_atlasIndex >= 0 && _atlasIndex < capacity, "updateTransform: Invalid _atlasIndex");
 
-            totalQuads = m_pobTextureAtlas->getTotalQuads();
-            quad = &((m_pobTextureAtlas->getQuads())[m_uAtlasIndex]);
+            totalQuads = _textureAtlas->getTotalQuads();
+            quad = &((_textureAtlas->getQuads())[_atlasIndex]);
         }
         // If it is not visible, or one of its ancestors is not visible, then do nothing:
         if( !_visible || ( _parent && _parent != _batchNode && ((Sprite*)_parent)->_shouldBeHidden) )
@@ -521,10 +521,10 @@ void Sprite::updateTransform(void)
             _quad.tl.vertices = vertex3( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _vertexZ );
             _quad.tr.vertices = vertex3( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _vertexZ );
             if (_textureAtlas){
-                quad->br.vertices = vertex3( RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), m_fVertexZ );
-                quad->bl.vertices = vertex3( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), m_fVertexZ );
-                quad->tl.vertices = vertex3( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), m_fVertexZ );
-                quad->tr.vertices = vertex3( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), m_fVertexZ );
+                quad->br.vertices = vertex3( RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _vertexZ );
+                quad->bl.vertices = vertex3( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _vertexZ );
+                quad->tl.vertices = vertex3( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _vertexZ );
+                quad->tr.vertices = vertex3( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _vertexZ );
             }
         }
 
