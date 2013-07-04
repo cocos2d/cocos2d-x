@@ -109,15 +109,20 @@ void Set::removeObject(Object *pObject)
 
 void Set::removeAllObjects()
 {
-    for (SetIterator it = _set->begin(); it != _set->end(); )
+    SetIterator it = _set->begin();
+    SetIterator tmp;
+
+    while (it != _set->end())
     {
         if (!(*it))
         {
             break;
         }
         
-        (*it)->release();
-        _set->erase(it++);
+        tmp = it;
+        ++tmp;
+        _set->erase(it);
+        it = tmp;
     }
 }
 
