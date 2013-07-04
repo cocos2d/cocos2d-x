@@ -169,7 +169,7 @@ void* Texture2D::keepData(void *data, unsigned int length)
     return data;
 }
 
-bool Texture2D::hasPremultipliedAlpha()
+bool Texture2D::hasPremultipliedAlpha() const
 {
     return _hasPremultipliedAlpha;
 }
@@ -264,7 +264,7 @@ bool Texture2D::initWithData(const void *data, Texture2DPixelFormat pixelFormat,
 }
 
 
-const char* Texture2D::description(void)
+const char* Texture2D::description(void) const
 {
     return String::createWithFormat("<Texture2D | Name = %u | Dimensions = %u x %u | Coordinates = (%.2f, %.2f)>", _name, _pixelsWide, _pixelsHigh, _maxS, _maxT)->getCString();
 }
@@ -771,7 +771,7 @@ void Texture2D::generateMipmap()
     _hasMipmaps = true;
 }
 
-bool Texture2D::hasMipmaps()
+bool Texture2D::hasMipmaps() const
 {
     return _hasMipmaps;
 }
@@ -833,7 +833,7 @@ void Texture2D::setAntiAliasTexParameters()
 #endif
 }
 
-const char* Texture2D::stringForFormat()
+const char* Texture2D::stringForFormat() const
 {
 	switch (_pixelFormat) 
 	{
@@ -891,7 +891,7 @@ Texture2DPixelFormat Texture2D::defaultAlphaPixelFormat()
     return g_defaultAlphaPixelFormat;
 }
 
-unsigned int Texture2D::bitsPerPixelForFormat(Texture2DPixelFormat format)
+unsigned int Texture2D::bitsPerPixelForFormat(Texture2DPixelFormat format) const
 {
 	unsigned int ret=0;
 
@@ -936,7 +936,7 @@ unsigned int Texture2D::bitsPerPixelForFormat(Texture2DPixelFormat format)
 	return ret;
 }
 
-unsigned int Texture2D::bitsPerPixelForFormat()
+unsigned int Texture2D::bitsPerPixelForFormat() const
 {
 	return this->bitsPerPixelForFormat(_pixelFormat);
 }

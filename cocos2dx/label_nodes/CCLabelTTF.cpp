@@ -193,7 +193,7 @@ const char* LabelTTF::description()
     return String::createWithFormat("<LabelTTF | FontName = %s, FontSize = %.1f>", _fontName->c_str(), _fontSize)->getCString();
 }
 
-TextAlignment LabelTTF::getHorizontalAlignment()
+TextAlignment LabelTTF::getHorizontalAlignment() const
 {
     return _alignment;
 }
@@ -212,7 +212,7 @@ void LabelTTF::setHorizontalAlignment(TextAlignment alignment)
     }
 }
 
-VerticalTextAlignment LabelTTF::getVerticalAlignment()
+VerticalTextAlignment LabelTTF::getVerticalAlignment() const
 {
     return _vAlignment;
 }
@@ -231,7 +231,7 @@ void LabelTTF::setVerticalAlignment(VerticalTextAlignment verticalAlignment)
     }
 }
 
-Size LabelTTF::getDimensions()
+const Size& LabelTTF::getDimensions() const
 {
     return _dimensions;
 }
@@ -250,7 +250,7 @@ void LabelTTF::setDimensions(const Size &dim)
     }
 }
 
-float LabelTTF::getFontSize()
+float LabelTTF::getFontSize() const
 {
     return _fontSize;
 }
@@ -269,7 +269,7 @@ void LabelTTF::setFontSize(float fontSize)
     }
 }
 
-const char* LabelTTF::getFontName()
+const char* LabelTTF::getFontName() const
 {
     return _fontName->c_str();
 }
