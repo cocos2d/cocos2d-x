@@ -9,18 +9,18 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
-class CCBProxy : public CCLayer{
+class CCBProxy : public Layer{
 public:
     CCBProxy() { }
     virtual ~ CCBProxy(){ }
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(CCBProxy, create);
-    CCBReader* createCCBreader();
-    CCNode* readCCBFromFile(const char *pszFileName,CCBReader* pCCBReader,bool bSetOwner = false);
-    const char* getNodeTypeName(CCNode* pNode);
-    void setCallback(CCNode* pNode,int nHandle);
+    CCBReader* createBreader();
+    Node* readCCBFromFile(const char *pszFileName,CCBReader* pCCBReader,bool bSetOwner = false);
+    const char* getNodeTypeName(Node* pNode);
+    void setCallback(Node* pNode,int nHandle);
 };
 
-class CCBLayerLoader:public CCLayerLoader{
+class CCBLayerLoader:public LayerLoader{
 public:
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCBLayerLoader, loader);
 };

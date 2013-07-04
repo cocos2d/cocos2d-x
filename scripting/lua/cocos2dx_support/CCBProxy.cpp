@@ -24,23 +24,23 @@
 
 #include "CCBProxy.h"
 
-CCBReader* CCBProxy::createCCBreader()
+CCBReader* CCBProxy::createBreader()
 {
-    CCNodeLoaderLibrary *ccNodeLoaderLibrary = CCNodeLoaderLibrary::sharedCCNodeLoaderLibrary();
+    NodeLoaderLibrary *ccNodeLoaderLibrary = NodeLoaderLibrary::sharedNodeLoaderLibrary();
     
-    ccNodeLoaderLibrary->registerCCNodeLoader("", CCBLayerLoader::loader());
+    ccNodeLoaderLibrary->registerNodeLoader("", CCBLayerLoader::loader());
     
     CCBReader * pCCBReader = new CCBReader(ccNodeLoaderLibrary);
     pCCBReader->autorelease();
     
     return pCCBReader;
 }
-CCNode* CCBProxy::readCCBFromFile(const char *pszFileName,CCBReader* pCCBReader,bool bSetOwner)
+Node* CCBProxy::readCCBFromFile(const char *pszFileName,CCBReader* pCCBReader,bool bSetOwner)
 {
     if (NULL == pCCBReader || NULL == pszFileName || 0 == strlen(pszFileName)) {
         return NULL;
     }
-    CCNode *pNode = NULL;
+    Node *pNode = NULL;
     if (bSetOwner) {
         pNode = pCCBReader->readNodeGraphFromFile(pszFileName,this);
     }
@@ -53,106 +53,106 @@ CCNode* CCBProxy::readCCBFromFile(const char *pszFileName,CCBReader* pCCBReader,
     return pNode;
 }
 
-const char* CCBProxy::getNodeTypeName(CCNode* pNode)
+const char* CCBProxy::getNodeTypeName(Node* pNode)
 {
     if (NULL == pNode) {
         return NULL;
     }
     
-    if (NULL != dynamic_cast<CCLabelTTF*>(pNode)) {
+    if (NULL != dynamic_cast<LabelTTF*>(pNode)) {
         return "CCLabelTTF";
     }
 
-    if (NULL != dynamic_cast<CCLabelBMFont*>(pNode)) {
+    if (NULL != dynamic_cast<LabelBMFont*>(pNode)) {
         return "CCLabelBMFont";
     }
 
-    if (NULL != dynamic_cast<CCSprite*>(pNode)) {
+    if (NULL != dynamic_cast<Sprite*>(pNode)) {
         return "CCSprite";
     }
     
-    if (NULL != dynamic_cast<CCControlButton*>(pNode)) {
+    if (NULL != dynamic_cast<ControlButton*>(pNode)) {
         return "CCControlButton";
     }
     
-    if (NULL != dynamic_cast<CCLayerGradient*>(pNode)) {
+    if (NULL != dynamic_cast<LayerGradient*>(pNode)) {
         return "CCLayerGradient";
     }
     
-    if (NULL != dynamic_cast<CCLayerColor*>(pNode)) {
+    if (NULL != dynamic_cast<LayerColor*>(pNode)) {
         return "CCLayerColor";
     }
     
-    if (NULL != dynamic_cast<CCScale9Sprite*>(pNode)) {
+    if (NULL != dynamic_cast<Scale9Sprite*>(pNode)) {
         return "CCLayerGradient";
     }
     
-    if (NULL != dynamic_cast<CCMenu*>(pNode)) {
+    if (NULL != dynamic_cast<Menu*>(pNode)) {
         return "CCMenu";
     }
     
-    if (NULL != dynamic_cast<CCMenuItemAtlasFont*>(pNode)) {
+    if (NULL != dynamic_cast<MenuItemAtlasFont*>(pNode)) {
         return "CCMenuItemAtlasFont";
     }
     
-    if (NULL != dynamic_cast<CCMenuItemFont*>(pNode)) {
+    if (NULL != dynamic_cast<MenuItemFont*>(pNode)) {
         return "CCMenuItemFont";
     }
     
-    if (NULL != dynamic_cast<CCMenuItemLabel*>(pNode)) {
+    if (NULL != dynamic_cast<MenuItemLabel*>(pNode)) {
         return "CCMenuItemLabel";
     }
     
-    if (NULL != dynamic_cast<CCMenuItemImage*>(pNode)) {
+    if (NULL != dynamic_cast<MenuItemImage*>(pNode)) {
         return "CCMenuItemImage";
     }
     
-    if (NULL != dynamic_cast<CCMenuItemToggle*>(pNode)) {
+    if (NULL != dynamic_cast<MenuItemToggle*>(pNode)) {
         return "CCMenuItemToggle";
     }
     
-    if (NULL != dynamic_cast<CCMenuItemSprite*>(pNode)) {
+    if (NULL != dynamic_cast<MenuItemSprite*>(pNode)) {
         return "CCMenuItemSprite";
     }
 
-    if (NULL != dynamic_cast<CCMenuItem*>(pNode)) {
+    if (NULL != dynamic_cast<MenuItem*>(pNode)) {
         return "CCMenuItem";
     }
 
-    if (NULL != dynamic_cast<CCLayer*>(pNode)) {
+    if (NULL != dynamic_cast<Layer*>(pNode)) {
         return "CCLayer";
     }
 
-    if (NULL != dynamic_cast<CCString*>(pNode)) {
+    if (NULL != dynamic_cast<String*>(pNode)) {
         return "CCString";
     }
     
-    if (NULL != dynamic_cast<CCParticleSystemQuad*>(pNode)) {
+    if (NULL != dynamic_cast<ParticleSystemQuad*>(pNode)) {
         return "CCParticleSystemQuad";
     }
 
     return "No Support";
 }
 
-void CCBProxy::setCallback(CCNode* pNode,int nHandle)
+void CCBProxy::setCallback(Node* pNode,int nHandle)
 {
     if (NULL == pNode) {
         return;
     }
     
-    if (NULL != dynamic_cast<CCMenuItem*>(pNode))
+    if (NULL != dynamic_cast<MenuItem*>(pNode))
     {
-        CCMenuItem *pMenuItem = dynamic_cast<CCMenuItem*>(pNode);
+        MenuItem *pMenuItem = dynamic_cast<MenuItem*>(pNode);
         if (NULL != pMenuItem) {
             pMenuItem->registerScriptTapHandler(nHandle);
         }
     }
-    else  if (NULL != dynamic_cast<CCControlButton*>(pNode))
+    else  if (NULL != dynamic_cast<ControlButton*>(pNode))
     {
-        CCControlButton *pBtnItem = dynamic_cast<CCControlButton*>(pNode);
+        ControlButton *pBtnItem = dynamic_cast<ControlButton*>(pNode);
         if (NULL != pBtnItem) {
             //UNOD,need Btn Pros to addHanldeOfControlEvent
-            pBtnItem->addHandleOfControlEvent(nHandle,CCControlEventTouchUpInside);
+            pBtnItem->addHandleOfControlEvent(nHandle,ControlEventTouchUpInside);
         }
     }
     

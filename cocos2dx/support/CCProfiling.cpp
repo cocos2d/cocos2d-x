@@ -30,140 +30,140 @@ NS_CC_BEGIN
 
 //#pragma mark - Profiling Categories
 /* set to NO the categories that you don't want to profile */
-bool kCCProfilerCategorySprite = false;
-bool kCCProfilerCategoryBatchSprite = false;
-bool kCCProfilerCategoryParticles = false;
+bool kProfilerCategorySprite = false;
+bool kProfilerCategoryBatchSprite = false;
+bool kProfilerCategoryParticles = false;
 
 
-static CCProfiler* g_sSharedProfiler = NULL;
+static Profiler* g_sSharedProfiler = NULL;
 
-CCProfiler* CCProfiler::sharedProfiler(void)
+Profiler* Profiler::sharedProfiler(void)
 {
     if (! g_sSharedProfiler)
     {
-        g_sSharedProfiler = new CCProfiler();
+        g_sSharedProfiler = new Profiler();
         g_sSharedProfiler->init();
     }
 
     return g_sSharedProfiler;
 }
 
-CCProfilingTimer* CCProfiler::createAndAddTimerWithName(const char* timerName)
+ProfilingTimer* Profiler::createAndAddTimerWithName(const char* timerName)
 {
-    CCProfilingTimer *t = new CCProfilingTimer();
+    ProfilingTimer *t = new ProfilingTimer();
     t->initWithName(timerName);
-    m_pActiveTimers->setObject(t, timerName);
+    _activeTimers->setObject(t, timerName);
     t->release();
 
     return t;
 }
 
-void CCProfiler::releaseTimer(const char* timerName)
+void Profiler::releaseTimer(const char* timerName)
 {
-    m_pActiveTimers->removeObjectForKey(timerName);
+    _activeTimers->removeObjectForKey(timerName);
 }
 
-void CCProfiler::releaseAllTimers()
+void Profiler::releaseAllTimers()
 {
-    m_pActiveTimers->removeAllObjects();
+    _activeTimers->removeAllObjects();
 }
 
-bool CCProfiler::init()
+bool Profiler::init()
 {
-    m_pActiveTimers = new CCDictionary();
+    _activeTimers = new Dictionary();
     return true;
 }
 
-CCProfiler::~CCProfiler(void)
+Profiler::~Profiler(void)
 {
-    CC_SAFE_RELEASE(m_pActiveTimers);
+    CC_SAFE_RELEASE(_activeTimers);
 }
 
-void CCProfiler::displayTimers()
+void Profiler::displayTimers()
 {
-    CCDictElement* pElement = NULL;
-    CCDICT_FOREACH(m_pActiveTimers, pElement)
+    DictElement* pElement = NULL;
+    CCDICT_FOREACH(_activeTimers, pElement)
     {
-        CCProfilingTimer* timer = (CCProfilingTimer*)pElement->getObject();
+        ProfilingTimer* timer = (ProfilingTimer*)pElement->getObject();
         CCLog("%s", timer->description());
     }
 }
 
-// implementation of CCProfilingTimer
+// implementation of ProfilingTimer
 
-bool CCProfilingTimer::initWithName(const char* timerName)
+bool ProfilingTimer::initWithName(const char* timerName)
 {
-    m_NameStr = timerName;
+    _nameStr = timerName;
     numberOfCalls = 0;
-    m_dAverageTime = 0.0;
+    _averageTime = 0.0;
     totalTime = 0.0;
     minTime = 10000.0;
     maxTime = 0.0;
-    gettimeofday((struct timeval *)&m_sStartTime, NULL);
+    gettimeofday((struct timeval *)&_startTime, NULL);
 
     return true;
 }
 
-CCProfilingTimer::~CCProfilingTimer(void)
+ProfilingTimer::~ProfilingTimer(void)
 {
     
 }
 
-const char* CCProfilingTimer::description()
+const char* ProfilingTimer::description()
 {
     static char s_szDesciption[256] = {0};
-    sprintf(s_szDesciption, "%s: avg time, %fms", m_NameStr.c_str(), m_dAverageTime);
+    sprintf(s_szDesciption, "%s: avg time, %fms", _nameStr.c_str(), _averageTime);
     return s_szDesciption;
 }
 
-void CCProfilingTimer::reset()
+void ProfilingTimer::reset()
 {
     numberOfCalls = 0;
-    m_dAverageTime = 0;
+    _averageTime = 0;
     totalTime = 0;
     minTime = 10000;
     maxTime = 0;
-    gettimeofday((struct timeval *)&m_sStartTime, NULL);
+    gettimeofday((struct timeval *)&_startTime, NULL);
 }
 
-void CCProfilingBeginTimingBlock(const char *timerName)
+void ProfilingBeginTimingBlock(const char *timerName)
 {
-    CCProfiler* p = CCProfiler::sharedProfiler();
-    CCProfilingTimer* timer = (CCProfilingTimer*)p->m_pActiveTimers->objectForKey(timerName);
+    Profiler* p = Profiler::sharedProfiler();
+    ProfilingTimer* timer = (ProfilingTimer*)p->_activeTimers->objectForKey(timerName);
     if( ! timer )
     {
         timer = p->createAndAddTimerWithName(timerName);
     }
 
-    gettimeofday((struct timeval *)&timer->m_sStartTime, NULL);
+    gettimeofday((struct timeval *)&timer->_startTime, NULL);
 
     timer->numberOfCalls++;
 }
 
-void CCProfilingEndTimingBlock(const char *timerName)
+void ProfilingEndTimingBlock(const char *timerName)
 {
-    CCProfiler* p = CCProfiler::sharedProfiler();
-    CCProfilingTimer* timer = (CCProfilingTimer*)p->m_pActiveTimers->objectForKey(timerName);
+    Profiler* p = Profiler::sharedProfiler();
+    ProfilingTimer* timer = (ProfilingTimer*)p->_activeTimers->objectForKey(timerName);
 
     CCAssert(timer, "CCProfilingTimer  not found");
 
     struct timeval currentTime;
     gettimeofday(&currentTime, NULL);
 
-    double duration = CCTime::timersubCocos2d((struct cc_timeval *)&timer->m_sStartTime, (struct cc_timeval *)&currentTime);
+    double duration = Time::timersubCocos2d((struct cc_timeval *)&timer->_startTime, (struct cc_timeval *)&currentTime);
 
     // milliseconds
-    timer->m_dAverageTime = (timer->m_dAverageTime + duration) / 2.0f;
+    timer->_averageTime = (timer->_averageTime + duration) / 2.0f;
     timer->totalTime += duration;
     timer->maxTime = MAX( timer->maxTime, duration);
     timer->minTime = MIN( timer->minTime, duration);
 
 }
 
-void CCProfilingResetTimingBlock(const char *timerName)
+void ProfilingResetTimingBlock(const char *timerName)
 {
-    CCProfiler* p = CCProfiler::sharedProfiler();
-    CCProfilingTimer *timer = (CCProfilingTimer*)p->m_pActiveTimers->objectForKey(timerName);
+    Profiler* p = Profiler::sharedProfiler();
+    ProfilingTimer *timer = (ProfilingTimer*)p->_activeTimers->objectForKey(timerName);
 
     CCAssert(timer, "CCProfilingTimer not found");
 

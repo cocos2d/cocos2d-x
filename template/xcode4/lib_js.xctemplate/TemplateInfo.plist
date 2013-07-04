@@ -759,6 +759,56 @@
 			<key>Path</key>
 			<string>libs/javascript/bindings/obfuscate/obfuscate_exclude_cocos2d.js</string>
 		</dict>
+		<key>libs/javascript/bindings/proj.ios/jsbindings-Prefix.pch</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+				<string>proj.ios</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/proj.ios/jsbindings-Prefix.pch</string>
+		</dict>
+		<key>libs/javascript/bindings/proj.ios/jsbindings.xcodeproj/project.pbxproj</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+				<string>proj.ios</string>
+				<string>jsbindings.xcodeproj</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/proj.ios/jsbindings.xcodeproj/project.pbxproj</string>
+		</dict>
+		<key>libs/javascript/bindings/proj.mac/jsbindings-Prefix.pch</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+				<string>proj.mac</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/proj.mac/jsbindings-Prefix.pch</string>
+		</dict>
+		<key>libs/javascript/bindings/proj.mac/jsbindings.xcodeproj/project.pbxproj</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+				<string>proj.mac</string>
+				<string>jsbindings.xcodeproj</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/proj.mac/jsbindings.xcodeproj/project.pbxproj</string>
+		</dict>
 		<key>libs/javascript/bindings/ScriptingCore.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -883,6 +933,10 @@
 		<string>libs/javascript/bindings/jsb_websocket.h</string>
 		<string>libs/javascript/bindings/obfuscate/obfuscate_exclude_chipmunk.js</string>
 		<string>libs/javascript/bindings/obfuscate/obfuscate_exclude_cocos2d.js</string>
+		<string>libs/javascript/bindings/proj.ios/jsbindings-Prefix.pch</string>
+		<string>libs/javascript/bindings/proj.ios/jsbindings.xcodeproj/project.pbxproj</string>
+		<string>libs/javascript/bindings/proj.mac/jsbindings-Prefix.pch</string>
+		<string>libs/javascript/bindings/proj.mac/jsbindings.xcodeproj/project.pbxproj</string>
 		<string>libs/javascript/bindings/ScriptingCore.cpp</string>
 		<string>libs/javascript/bindings/ScriptingCore.h</string>
 		<string>libs/javascript/bindings/spidermonkey_specifics.h</string>

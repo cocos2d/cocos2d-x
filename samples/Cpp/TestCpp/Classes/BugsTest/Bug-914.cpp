@@ -9,10 +9,10 @@
 // Import the interfaces
 #include"Bug-914.h"
 
-CCScene* Bug914Layer::scene()
+Scene* Bug914Layer::scene()
 {
     // 'scene' is an autorelease object.
-    CCScene *pScene = CCScene::create();
+    Scene *pScene = Scene::create();
     // 'layer' is an autorelease object.
     Bug914Layer* layer = Bug914Layer::create();
 
@@ -32,11 +32,11 @@ bool Bug914Layer::init()
     {
         setTouchEnabled(true);
         // ask director the the window size
-        CCSize size = CCDirector::sharedDirector()->getWinSize();
-        CCLayerColor *layer;
+        Size size = Director::sharedDirector()->getWinSize();
+        LayerColor *layer;
         for( int i=0;i < 5;i++)
         {
-            layer = CCLayerColor::create(ccc4(i*20, i*20, i*20,255));
+            layer = LayerColor::create(ccc4(i*20, i*20, i*20,255));
             layer->setContentSize(CCSizeMake(i*100, i*100));
             layer->setPosition(ccp(size.width/2, size.height/2));
             layer->setAnchorPoint(ccp(0.5f, 0.5f));
@@ -45,10 +45,10 @@ bool Bug914Layer::init()
         }
 
         // create and initialize a Label
-        CCLabelTTF *label = CCLabelTTF::create("Hello World", "Marker Felt", 64);
-        CCMenuItem *item1 = CCMenuItemFont::create("restart", CC_CALLBACK_1(Bug914Layer::restart, this));
+        LabelTTF *label = LabelTTF::create("Hello World", "Marker Felt", 64);
+        MenuItem *item1 = MenuItemFont::create("restart", CC_CALLBACK_1(Bug914Layer::restart, this));
 
-        CCMenu *menu = CCMenu::create(item1, NULL);
+        Menu *menu = Menu::create(item1, NULL);
         menu->alignItemsVertically();
         menu->setPosition(ccp(size.width/2, 100));
         addChild(menu);
@@ -63,17 +63,17 @@ bool Bug914Layer::init()
     return false;
 }
 
-void Bug914Layer::ccTouchesMoved(CCSet *touches, CCEvent * event)
+void Bug914Layer::ccTouchesMoved(Set *touches, Event * event)
 {
     CCLog("Number of touches: %d", touches->count());
 }
 
-void Bug914Layer::ccTouchesBegan(CCSet *touches, CCEvent * event)
+void Bug914Layer::ccTouchesBegan(Set *touches, Event * event)
 {
     ccTouchesMoved(touches, event);
 }
 
-void Bug914Layer::restart(CCObject* sender)
+void Bug914Layer::restart(Object* sender)
 {
-    CCDirector::sharedDirector()->replaceScene(Bug914Layer::scene());
+    Director::sharedDirector()->replaceScene(Bug914Layer::scene());
 }

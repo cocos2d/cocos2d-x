@@ -13,7 +13,7 @@ int main(int argc, char **argv)
     // create the application instance
     AppDelegate app;
 
-    CCEGLView* eglView = CCEGLView::sharedOpenGLView();
+    EGLView* eglView = EGLView::sharedOpenGLView();
 
-    return CCApplication::sharedApplication()->run();
+    return Application::sharedApplication()->run();
 }

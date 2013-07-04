@@ -26,109 +26,109 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
-CCInputDelegate::CCInputDelegate(void)
-: m_bTouchEnabled(false)
-, m_bAccelerometerEnabled(false)
-, m_bKeypadEnabled(false)
-, m_nTouchPriority(0)
-, m_eTouchMode(kCCTouchesAllAtOnce)
+InputDelegate::InputDelegate(void)
+: _touchEnabled(false)
+, _accelerometerEnabled(false)
+, _keypadEnabled(false)
+, _touchPriority(0)
+, _touchMode(kTouchesAllAtOnce)
 {
 
 }
 
-CCInputDelegate::~CCInputDelegate(void)
+InputDelegate::~InputDelegate(void)
 {
 }
 
-bool CCInputDelegate::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
+bool InputDelegate::ccTouchBegan(Touch *pTouch, Event *pEvent)
 {
     CC_UNUSED_PARAM(pTouch);
     CC_UNUSED_PARAM(pEvent);
     return true;
 }
 
-void CCInputDelegate::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
+void InputDelegate::ccTouchMoved(Touch *pTouch, Event *pEvent)
 {
     CC_UNUSED_PARAM(pTouch);
     CC_UNUSED_PARAM(pEvent);
 }
     
-void CCInputDelegate::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
+void InputDelegate::ccTouchEnded(Touch *pTouch, Event *pEvent)
 {
     CC_UNUSED_PARAM(pTouch);
     CC_UNUSED_PARAM(pEvent);
 }
 
-void CCInputDelegate::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
+void InputDelegate::ccTouchCancelled(Touch *pTouch, Event *pEvent)
 {
     CC_UNUSED_PARAM(pTouch);
     CC_UNUSED_PARAM(pEvent);
 }    
 
-void CCInputDelegate::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
+void InputDelegate::ccTouchesBegan(Set *pTouches, Event *pEvent)
 {
     CC_UNUSED_PARAM(pTouches);
     CC_UNUSED_PARAM(pEvent);
 }
 
-void CCInputDelegate::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
+void InputDelegate::ccTouchesMoved(Set *pTouches, Event *pEvent)
 {
     CC_UNUSED_PARAM(pTouches);
     CC_UNUSED_PARAM(pEvent);
 }
 
-void CCInputDelegate::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
+void InputDelegate::ccTouchesEnded(Set *pTouches, Event *pEvent)
 {
     CC_UNUSED_PARAM(pTouches);
     CC_UNUSED_PARAM(pEvent);
 }
 
-void CCInputDelegate::ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
+void InputDelegate::ccTouchesCancelled(Set *pTouches, Event *pEvent)
 {
     CC_UNUSED_PARAM(pTouches);
     CC_UNUSED_PARAM(pEvent);
 }
 
-void CCInputDelegate::didAccelerate(CCAcceleration* pAccelerationValue)
+void InputDelegate::didAccelerate(Acceleration* pAccelerationValue)
 {
    CC_UNUSED_PARAM(pAccelerationValue);
 }
 
-bool CCInputDelegate::isTouchEnabled()
+bool InputDelegate::isTouchEnabled()
 {
-    return m_bTouchEnabled;
+    return _touchEnabled;
 }
 
-void CCInputDelegate::setTouchEnabled(bool enabled)
+void InputDelegate::setTouchEnabled(bool enabled)
 {
-    if (m_bTouchEnabled != enabled)
+    if (_touchEnabled != enabled)
     {
-        m_bTouchEnabled = enabled;
+        _touchEnabled = enabled;
         if (enabled)
         {
-            if( m_eTouchMode == kCCTouchesAllAtOnce )
+            if( _touchMode == kTouchesAllAtOnce )
             {
-                CCDirector::sharedDirector()->getTouchDispatcher()->addStandardDelegate(this, 0);
+                Director::sharedDirector()->getTouchDispatcher()->addStandardDelegate(this, 0);
             }
             else
             {
-                CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, m_nTouchPriority, true);
+                Director::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, _touchPriority, true);
             }
         }
         else
         {
-            CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
+            Director::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
         }
     }
 }
 
-void CCInputDelegate::setTouchMode(ccTouchesMode mode)
+void InputDelegate::setTouchMode(ccTouchesMode mode)
 {
-    if(m_eTouchMode != mode)
+    if(_touchMode != mode)
     {
-        m_eTouchMode = mode;
+        _touchMode = mode;
         
-		if( m_bTouchEnabled)
+		if( _touchEnabled)
         {
 			setTouchEnabled(false);
 			setTouchEnabled(true);
@@ -136,13 +136,13 @@ void CCInputDelegate::setTouchMode(ccTouchesMode mode)
     }
 }
 
-void CCInputDelegate::setTouchPriority(int priority)
+void InputDelegate::setTouchPriority(int priority)
 {
-    if (m_nTouchPriority != priority)
+    if (_touchPriority != priority)
     {
-        m_nTouchPriority = priority;
+        _touchPriority = priority;
         
-		if( m_bTouchEnabled)
+		if( _touchEnabled)
         {
 			setTouchEnabled(false);
 			setTouchEnabled(true);
@@ -150,51 +150,51 @@ void CCInputDelegate::setTouchPriority(int priority)
     }
 }
 
-int CCInputDelegate::getTouchPriority()
+int InputDelegate::getTouchPriority()
 {
-    return m_nTouchPriority;
+    return _touchPriority;
 }
 
-int CCInputDelegate::getTouchMode()
+int InputDelegate::getTouchMode()
 {
-    return m_eTouchMode;
+    return _touchMode;
 }
 
-bool CCInputDelegate::isAccelerometerEnabled()
+bool InputDelegate::isAccelerometerEnabled()
 {
-    return m_bAccelerometerEnabled;
+    return _accelerometerEnabled;
 }
 
-void CCInputDelegate::setAccelerometerEnabled(bool enabled)
+void InputDelegate::setAccelerometerEnabled(bool enabled)
 {
-    if (enabled != m_bAccelerometerEnabled)
+    if (enabled != _accelerometerEnabled)
     {
-        m_bAccelerometerEnabled = enabled;
+        _accelerometerEnabled = enabled;
 
-        CCDirector* pDirector = CCDirector::sharedDirector();
+        Director* pDirector = Director::sharedDirector();
         if (enabled)
         {
-            pDirector->getAccelerometer()->setDelegate(this);
+            pDirector->getAccelerometer()->setDelegate(CC_CALLBACK_1(InputDelegate::didAccelerate, this));
         }
         else
         {
-            pDirector->getAccelerometer()->setDelegate(NULL);
+            pDirector->getAccelerometer()->setDelegate(nullptr);
         }
     }
 }
 
-bool CCInputDelegate::isKeypadEnabled()
+bool InputDelegate::isKeypadEnabled()
 {
-    return m_bKeypadEnabled;
+    return _keypadEnabled;
 }
 
-void CCInputDelegate::setKeypadEnabled(bool enabled)
+void InputDelegate::setKeypadEnabled(bool enabled)
 {
-    if (enabled != m_bKeypadEnabled)
+    if (enabled != _keypadEnabled)
     {
-        m_bKeypadEnabled = enabled;
+        _keypadEnabled = enabled;
 
-        CCDirector* pDirector = CCDirector::sharedDirector();
+        Director* pDirector = Director::sharedDirector();
         if (enabled)
         {
             pDirector->getKeypadDispatcher()->addDelegate(this);

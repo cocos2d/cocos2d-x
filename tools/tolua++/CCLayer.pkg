@@ -6,18 +6,18 @@ typedef enum {
 class CCLayer : public CCNode
 {
     void setTouchEnabled(bool bValue);
-    bool isTouchEnabled();
+    bool isTouchEnabled() const;
 
     void setAccelerometerEnabled(bool bValue);
-    bool isAccelerometerEnabled();
+    bool isAccelerometerEnabled() const;
 
     void setKeypadEnabled(bool bValue);
-    bool isKeypadEnabled();
+    bool isKeypadEnabled() const;
 
     virtual void setTouchMode(ccTouchesMode mode);
-    virtual int getTouchMode();
+    virtual int getTouchMode() const;
     virtual void setTouchPriority(int priority);
-    virtual int getTouchPriority();
+    virtual int getTouchPriority() const;
 
     void registerScriptTouchHandler(LUA_FUNCTION nHandler,
                                     bool bIsMultiTouches = false,
@@ -43,22 +43,22 @@ class CCLayerRGBA : public CCLayer, public CCRGBAProtocol
     
     virtual bool init();
     
-    virtual GLubyte getOpacity();
-    virtual GLubyte getDisplayedOpacity();
+    virtual GLubyte getOpacity() const;
+    virtual GLubyte getDisplayedOpacity() const;
     virtual void setOpacity(GLubyte opacity);
     virtual void updateDisplayedOpacity(GLubyte parentOpacity);
-    virtual bool isCascadeOpacityEnabled();
+    virtual bool isCascadeOpacityEnabled() const;
     virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
     
-    virtual const ccColor3B& getColor();
-    virtual const ccColor3B& getDisplayedColor();
+    virtual const ccColor3B& getColor() const;
+    virtual const ccColor3B& getDisplayedColor() const;
     virtual void setColor(const ccColor3B& color);
     virtual void updateDisplayedColor(const ccColor3B& parentColor);
-    virtual bool isCascadeColorEnabled();
+    virtual bool isCascadeColorEnabled() const;
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
     
     virtual void setOpacityModifyRGB(bool bValue);
-    virtual bool isOpacityModifyRGB();
+    virtual bool isOpacityModifyRGB() const;
 };
 
 class CCLayerColor : public CCLayerRGBA
@@ -70,14 +70,12 @@ class CCLayerColor : public CCLayerRGBA
 	void setContentSize(const CCSize & var);
 
     void setOpacity(GLubyte var);
-    GLubyte getOpacity(void);
     void setColor(ccColor3B Value);
-    ccColor3B getColor(void);
     void setBlendFunc(ccBlendFunc Value);
-    ccBlendFunc getBlendFunc(void);
+    ccBlendFunc getBlendFunc(void) const;
 
 	void setOpacityModifyRGB(bool bValue);
-    bool isOpacityModifyRGB(void);
+    bool isOpacityModifyRGB(void) const;
 
     static CCLayerColor * create(ccColor4B color, GLfloat width, GLfloat height);
     static CCLayerColor * create(ccColor4B color);
@@ -86,9 +84,9 @@ class CCLayerColor : public CCLayerRGBA
 class CCLayerGradient : public CCLayerColor
 {
     void setStartColor(ccColor3B colors);
-    ccColor3B getStartColor();
+    ccColor3B getStartColor() const;
     void setEndColor(ccColor3B Value);
-    ccColor3B getEndColor(void);
+    ccColor3B getEndColor(void) const;
     void setStartOpacity(GLubyte Value);
     GLubyte getStartOpacity(void);
     void setEndOpacity(GLubyte Value);
@@ -97,7 +95,7 @@ class CCLayerGradient : public CCLayerColor
     CCPoint getVector(void);
 
     void setCompressedInterpolation(bool Value);
-    bool isCompressedInterpolation(void);
+    bool isCompressedInterpolation(void) const;
 
     static CCLayerGradient* create(ccColor4B start, ccColor4B end, CCPoint v);
     static CCLayerGradient* create(ccColor4B start, ccColor4B end);

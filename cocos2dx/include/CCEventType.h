@@ -3,7 +3,7 @@
 #define __CCEVENT_TYPE_H__
 
 /**
- * This header is used for defining event types using in CCNotificationCenter
+ * This header is used for defining event types using in NotificationCenter
  */
 
 // The application will come to foreground.
@@ -12,7 +12,7 @@
 #define EVNET_COME_TO_FOREGROUND    "event_come_to_foreground"
 
 // The application will come to background.
-// This message is used for doing something before coming to background, such as save CCRenderTexture.
+// This message is used for doing something before coming to background, such as save RenderTexture.
 // This message is posted in cocos2dx/platform/android/jni/MessageJni.cpp.
 #define EVENT_COME_TO_BACKGROUND    "event_come_to_background"
 

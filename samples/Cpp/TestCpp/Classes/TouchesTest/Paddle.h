@@ -11,28 +11,28 @@ typedef enum tagPaddleState
     kPaddleStateUngrabbed
 } PaddleState; 
 
-class Paddle : public CCSprite, public CCTargetedTouchDelegate
+class Paddle : public Sprite, public TargetedTouchDelegate
 {
-    PaddleState        m_state;
+    PaddleState        _state;
 
 public:
     Paddle(void);
     virtual ~Paddle(void);
 
-    CCRect rect();
-    bool initWithTexture(CCTexture2D* aTexture);
+    Rect rect();
+    bool initWithTexture(Texture2D* aTexture);
     virtual void onEnter();
     virtual void onExit();
-    bool containsTouchLocation(CCTouch* touch);
-    virtual bool ccTouchBegan(CCTouch* touch, CCEvent* event);
-    virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
-    virtual void ccTouchEnded(CCTouch* touch, CCEvent* event);
-    virtual CCObject* copyWithZone(CCZone *pZone);
+    bool containsTouchLocation(Touch* touch);
+    virtual bool ccTouchBegan(Touch* touch, Event* event);
+    virtual void ccTouchMoved(Touch* touch, Event* event);
+    virtual void ccTouchEnded(Touch* touch, Event* event);
+    virtual Object* copyWithZone(Zone *pZone);
 
     virtual void touchDelegateRetain();
     virtual void touchDelegateRelease();
 
-    static Paddle* paddleWithTexture(CCTexture2D* aTexture);
+    static Paddle* paddleWithTexture(Texture2D* aTexture);
 };
 
 #endif

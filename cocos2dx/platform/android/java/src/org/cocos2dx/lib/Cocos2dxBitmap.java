@@ -128,7 +128,7 @@ public class Cocos2dxBitmap {
 		
 		if ( shadow ) {
 
-			int shadowColor = 0xff7d7d7d;
+			int shadowColor = 0x54000000;
 			paint.setShadowLayer(shadowBlur, shadowDX, shadowDY, shadowColor);
 	
 			bitmapPaddingX = Math.abs(shadowDX);
@@ -390,7 +390,7 @@ public class Cocos2dxBitmap {
 				}
 
 				/* Remove spaces at the beginning of a new line. */
-				while (pString.charAt(i) == ' ') {
+				while (i < charLength && pString.charAt(i) == ' ') {
 					++i;
 				}
 

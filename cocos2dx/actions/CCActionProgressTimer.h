@@ -38,46 +38,57 @@ NS_CC_BEGIN
 @brief Progress to percentage
 @since v0.99.1
 */
-class CC_DLL CCProgressTo : public CCActionInterval
+class CC_DLL ProgressTo : public ActionInterval
 {
 public:
     /** Initializes with a duration and a percent */
     bool initWithDuration(float duration, float fPercent);
 
-    virtual CCObject* copyWithZone(CCZone *pZone);
-    virtual void startWithTarget(CCNode *pTarget);
+	/** returns a new clone of the action */
+	virtual ProgressTo* clone() const;
+
+	/** returns a new reversed action */
+	virtual ProgressTo* reverse(void) const;
+
+    virtual Object* copyWithZone(Zone *pZone);
+    virtual void startWithTarget(Node *pTarget);
     virtual void update(float time);
 
 public:
     /** Creates and initializes with a duration and a percent */
-    static CCProgressTo* create(float duration, float fPercent);
+    static ProgressTo* create(float duration, float fPercent);
 protected:
-    float m_fTo;
-    float m_fFrom;
+    float _to;
+    float _from;
 };
 
 /**
 @brief Progress from a percentage to another percentage
 @since v0.99.1
 */
-class CC_DLL CCProgressFromTo : public CCActionInterval
+class CC_DLL ProgressFromTo : public ActionInterval
 {
 public:
     /** Initializes the action with a duration, a "from" percentage and a "to" percentage */
     bool initWithDuration(float duration, float fFromPercentage, float fToPercentage);
 
-    virtual CCObject* copyWithZone(CCZone *pZone);
-    virtual CCActionInterval* reverse(void);
-    virtual void startWithTarget(CCNode *pTarget);
+	/** returns a new clone of the action */
+	virtual ProgressFromTo* clone() const;
+
+	/** returns a new reversed action */
+	virtual ProgressFromTo* reverse(void) const;
+
+    virtual Object* copyWithZone(Zone *pZone);
+    virtual void startWithTarget(Node *pTarget);
     virtual void update(float time);
 
 public:
 
     /** Creates and initializes the action with a duration, a "from" percentage and a "to" percentage */
-    static CCProgressFromTo* create(float duration, float fFromPercentage, float fToPercentage);
+    static ProgressFromTo* create(float duration, float fFromPercentage, float fToPercentage);
 protected:
-    float m_fTo;
-    float m_fFrom;
+    float _to;
+    float _from;
 };
 
 // end of actions group

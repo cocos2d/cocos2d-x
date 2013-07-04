@@ -31,8 +31,8 @@ USING_NS_CC;
 namespace cocos2d { namespace extension {
 
 void _AtlasPage_createTexture (AtlasPage* self, const char* path) {
-	CCTexture2D* texture = CCTextureCache::sharedTextureCache()->addImage(path);
-	CCTextureAtlas* textureAtlas = CCTextureAtlas::createWithTexture(texture, 4);
+	Texture2D* texture = TextureCache::sharedTextureCache()->addImage(path);
+	TextureAtlas* textureAtlas = TextureAtlas::createWithTexture(texture, 4);
 	textureAtlas->retain();
 	self->rendererObject = textureAtlas;
     // Using getContentSize to make it supports the strategy of loading resources in cocos2d-x.
@@ -43,13 +43,13 @@ void _AtlasPage_createTexture (AtlasPage* self, const char* path) {
 }
 
 void _AtlasPage_disposeTexture (AtlasPage* self) {
-	((CCTextureAtlas*)self->rendererObject)->release();
+	((TextureAtlas*)self->rendererObject)->release();
 }
 
 char* _Util_readFile (const char* path, int* length) {
 	unsigned long size;
-    char* data = reinterpret_cast<char*>(CCFileUtils::sharedFileUtils()->getFileData(
-		CCFileUtils::sharedFileUtils()->fullPathForFilename(path).c_str(), "r", &size));
+    char* data = reinterpret_cast<char*>(FileUtils::sharedFileUtils()->getFileData(
+		FileUtils::sharedFileUtils()->fullPathForFilename(path).c_str(), "r", &size));
 	*length = size;
 	return data;
 }

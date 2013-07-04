@@ -273,7 +273,7 @@ void SimpleAudioEngine::stopAllEffects()
 
 static std::string _FullPath(const char * szPath)
 {
-    return CCFileUtils::sharedFileUtils()->fullPathForFilename(szPath);
+    return FileUtils::sharedFileUtils()->fullPathForFilename(szPath);
 }
 
 unsigned int _Hash(const char *key)

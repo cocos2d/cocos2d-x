@@ -39,10 +39,10 @@ NS_CC_BEGIN
  */
 
 //! @brief  Helper class to handle file operations
-class CC_DLL CCFileUtilsBlackberry : public CCFileUtils
+class CC_DLL FileUtilsBlackberry : public FileUtils
 {
-    friend class CCFileUtils;
-    CCFileUtilsBlackberry();
+    friend class FileUtils;
+    FileUtilsBlackberry();
 public:
     /* override funtions */
     bool init();

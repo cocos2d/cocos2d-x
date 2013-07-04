@@ -56,7 +56,7 @@ public:
     {
     	libError = FT_Init_FreeType( &library );
 		iInterval = szFont_kenning;
-		m_pData = NULL;
+		_data = NULL;
 		reset();
     }
     
@@ -201,7 +201,7 @@ public:
 	 * while -1 means fail
 	 *
 	 */
-	int computeLineStart(FT_Face face, CCImage::ETextAlign eAlignMask, char cText,
+	int computeLineStart(FT_Face face, Image::ETextAlign eAlignMask, char cText,
                          int iLineIndex) {
 		int iRet;
 		int iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, cText),
@@ -210,11 +210,11 @@ public:
 			return -1;
 		}
         
-		if (eAlignMask == CCImage::kAlignCenter) {
+		if (eAlignMask == Image::kAlignCenter) {
 			iRet = (iMaxLineWidth - vLines[iLineIndex].iLineWidth) / 2
 			- SHIFT6(face->glyph->metrics.horiBearingX );
             
-		} else if (eAlignMask == CCImage::kAlignRight) {
+		} else if (eAlignMask == Image::kAlignRight) {
 			iRet = (iMaxLineWidth - vLines[iLineIndex].iLineWidth)
 			- SHIFT6(face->glyph->metrics.horiBearingX );
 		} else {
@@ -224,16 +224,16 @@ public:
 		return iRet;
 	}
 		
-	int computeLineStartY( FT_Face face, CCImage::ETextAlign eAlignMask, int txtHeight, int borderHeight ){
+	int computeLineStartY( FT_Face face, Image::ETextAlign eAlignMask, int txtHeight, int borderHeight ){
 		int iRet;
-		if (eAlignMask == CCImage::kAlignCenter || eAlignMask == CCImage::kAlignLeft ||
-			eAlignMask == CCImage::kAlignRight ) {
+		if (eAlignMask == Image::kAlignCenter || eAlignMask == Image::kAlignLeft ||
+			eAlignMask == Image::kAlignRight ) {
 			//vertical center
 			iRet = (borderHeight - txtHeight)/2 + SHIFT6(face->size->metrics.ascender);
 
-		} else if (eAlignMask == CCImage::kAlignBottomRight || 
-				   eAlignMask == CCImage::kAlignBottom || 
-				   eAlignMask == CCImage::kAlignBottomLeft ) {
+		} else if (eAlignMask == Image::kAlignBottomRight || 
+				   eAlignMask == Image::kAlignBottom || 
+				   eAlignMask == Image::kAlignBottomLeft ) {
 			//vertical bottom
 			iRet = borderHeight - txtHeight + SHIFT6(face->size->metrics.ascender);
 		} else {
@@ -243,14 +243,14 @@ public:
 		return iRet;
 	}
     
-	bool getBitmap(const char *text, int nWidth, int nHeight, CCImage::ETextAlign eAlignMask, const char * pFontName, float fontSize) {
+	bool getBitmap(const char *text, int nWidth, int nHeight, Image::ETextAlign eAlignMask, const char * pFontName, float fontSize) {
 		FT_Face face;
 		FT_Error iError;
         
 		const char* pText = text;
-		//data will be deleted by CCImage
-        //		if (m_pData) {
-        //			delete m_pData;
+		//data will be deleted by Image
+        //		if (_data) {
+        //			delete _data;
         //		}
         
 		int iCurXCursor, iCurYCursor;
@@ -289,11 +289,11 @@ public:
             
 			//compute the final line height
 			iMaxLineHeight = MAX(iMaxLineHeight, nHeight);
-			m_pData = new unsigned char[iMaxLineWidth * iMaxLineHeight*4];
+			_data = new unsigned char[iMaxLineWidth * iMaxLineHeight*4];
 //			iCurYCursor = SHIFT6(face->size->metrics.ascender);
         	iCurYCursor = computeLineStartY( face, eAlignMask, txtHeight, iMaxLineHeight );
 
-			memset(m_pData,0, iMaxLineWidth * iMaxLineHeight*4);
+			memset(_data,0, iMaxLineWidth * iMaxLineHeight*4);
             
             size_t lines = vLines.size();
             for (size_t i = 0; i < lines; i++) {
@@ -329,18 +329,18 @@ public:
 								continue;
 							}
 
-//							m_pData[(iY * iMaxLineWidth + iX) * 4 + 3] =
+//							_data[(iY * iMaxLineWidth + iX) * 4 + 3] =
 //							bitmap.buffer[i * bitmap.width + j] ?
 //							0xff : 0;//alpha
-//							m_pData[(iY * iMaxLineWidth + iX) * 4 + 1] =
+//							_data[(iY * iMaxLineWidth + iX) * 4 + 1] =
 //							bitmap.buffer[i * bitmap.width + j];//R
-//							m_pData[(iY * iMaxLineWidth + iX) * 4 + 2] =
+//							_data[(iY * iMaxLineWidth + iX) * 4 + 2] =
 //							bitmap.buffer[i * bitmap.width + j];//G
-//							m_pData[(iY * iMaxLineWidth + iX) * 4 + 0] =
+//							_data[(iY * iMaxLineWidth + iX) * 4 + 0] =
 //							bitmap.buffer[i * bitmap.width + j];//B
 
 							int iTemp = cTemp << 24 | cTemp << 16 | cTemp << 8 | cTemp;
-							*(int*) &m_pData[(iY * iMaxLineWidth + iX) * 4 + 0] = iTemp;
+							*(int*) &_data[(iY * iMaxLineWidth + iX) * 4 + 0] = iTemp;
 						}
 					}
 					//step to next glyph
@@ -356,7 +356,7 @@ public:
             //			for (int i = 0; i < iMaxLineHeight; i++) {
             //				for (int j = 0; j < iMaxLineWidth; j++) {
             //					printf("%d",
-            //							m_pData[(i * iMaxLineWidth + j) * 4] ? 1 : 0);
+            //							_data[(i * iMaxLineWidth + j) * 4] ? 1 : 0);
             //				}
             //				printf("\n");
             //			}
@@ -380,7 +380,7 @@ public:
 
 public:
 	FT_Library library;
-	unsigned char *m_pData;
+	unsigned char *_data;
 	int libError;
 	vector<TextLine> vLines;
 	int iInterval;
@@ -394,7 +394,7 @@ static BitmapDC& sharedBitmapDC()
     return s_BmpDC;
 }
 
-bool CCImage::initWithString(
+bool Image::initWithString(
                              const char *    pText,
                              int             nWidth/* = 0*/,
                              int             nHeight/* = 0*/,
@@ -413,22 +413,22 @@ bool CCImage::initWithString(
     	std::transform(lowerCasePath.begin(), lowerCasePath.end(), lowerCasePath.begin(), ::tolower);
 
     	if ( lowerCasePath.find(".ttf") != std::string::npos ) {
-    		fullFontName = CCFileUtils::sharedFileUtils()->fullPathForFilename(pFontName);
+    		fullFontName = FileUtils::sharedFileUtils()->fullPathForFilename(pFontName);
     	}
         //CCLog("-----pText=%s and Font File is %s nWidth= %d,nHeight=%d",pText,fullFontName.c_str(),nWidth,nHeight);
         
         CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, fullFontName.c_str(), nSize));
         //CCLog("---- dc.getBitmap is Succesfull...");
         
-        // assign the dc.m_pData to m_pData in order to save time
-        m_pData = dc.m_pData;
-        CC_BREAK_IF(! m_pData);
+        // assign the dc._data to _data in order to save time
+        _data = dc._data;
+        CC_BREAK_IF(! _data);
         
-        m_nWidth = (short)dc.iMaxLineWidth;
-        m_nHeight = (short)dc.iMaxLineHeight;
-        m_bHasAlpha = true;
-        m_bPreMulti = true;
-        m_nBitsPerComponent = 8;
+        _width = (short)dc.iMaxLineWidth;
+        _height = (short)dc.iMaxLineHeight;
+        _hasAlpha = true;
+        _preMulti = true;
+        _bitsPerComponent = 8;
         
         bRet = true;
         

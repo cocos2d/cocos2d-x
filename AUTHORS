@@ -13,6 +13,13 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
         
+    Squallium
+        Added ccFPSImages entity as linked resource on linux eclipse project setting.
+        Added CocosDenshion dependency to libextension project for eclipse project of linux.
+        
+    longlene
+        Improve android project creation script
+        
     simpliplant
         Hardware keyboard support
     
@@ -34,9 +41,13 @@ Developers:
         Initial Emscripten port.
         Use browser font rendering instead of FreeType.
         Add destructor to CCGLBufferedNode.
+        Asynchronous Image loading for Emscripten
         
     DarraghCoy
         Fix a potential crash SimpleAudioEngineOpenSL::playEffect
+        Fix some bugs with Set class
+        Add ccDrawSolidCircle
+        Add Rect::unionWithRect
 
     silverscania
         Pass correct parameter to glPixelStorei when creating a texture
@@ -58,6 +69,7 @@ Developers:
         Added __attribute__(__format__()) for CCLog and CCString
         Refactoring network extension and fixing unlikely memory leaks.
         Adding PUT/DELETE methods for CCHttpRequest.
+        Adding project part for QtCreator.
 
     savdalion 
         Added example for russian language in TestCpp
@@ -100,6 +112,7 @@ Developers:
     Waiter
         fix an error that OpenSLEngine can't load resources from SD card
         add CCRemoveSelf action
+        Fixing a bug that CCLabelTTF setString crash on android.
 
     billy1380
         make CCLens3d support concave effect.
@@ -316,6 +329,7 @@ Developers:
         Fixed a bug that CCControlSwitch::setOn(isOn,false) doesn't work.
         Adds VS2012 Express template installing support.
         Fixing a logical error in CCDrawNode::drawPolygon.
+        Fixing a bug that Jsb function getCPBody return type is not right.
 
     DarraghCoy
         Fix for unaligned memory access crash in CCBReader::readFloat().
@@ -350,9 +364,13 @@ Developers:
         Adding Travis build support for linux and NaCl.
         Logging assert messages to the console.
         Renaming CCScriptSupport::executeAssert to CCScriptSupport::handleAssert.
+        Adding Native Client support for develop branch (cocos2d-x 3.0) and some warnings fixes.
+        Cleanup travis build scripts.
+        Refactoring emscripten building script.
 
     Peter Young (young40)
-        Implements setVisible() for CCEditBox
+        Implements setVisible() for CCEditBox.
+        Fixing a bug that event will not be sent to server when paramMap parameter of logEvent function is nil in plugin-x.
 
     csy1988525
         Fixing a bug about display result is wrong when invoking CCControlButton:: setHighlighted.
@@ -419,6 +437,7 @@ Developers:
         Fix for broken of ccArrayGetIndexOfObject after merging this commit(076f38c).
         Explicitly initialising CCAcceleration structure.
         Add support to save/retrieve CCData into/from CCUserDefault.
+        Text Shadows fix
 
     MarcelBloemendaal
         Adding secureTextEntry property to CCTextFieldTTF.
@@ -455,6 +474,7 @@ Developers:
     smshuja
         Fixing a bug that pointQueryFirst returns invalid Shape when a shape is not found in JSB.
         Fixing a bug that New PivotJoint can't access 4 parameters like in html5 version.
+        Fixing a bug that Pivotjoint constructor and pointQueryFirst in Space class will return false instead of invalid shape object.
         
     Carsten Sandtner (casarock)
         Adding XMLHttpRequest support for JSB.
@@ -471,6 +491,22 @@ Developers:
     edwardzhou (Edward Zhou)
         Correcting the type detecting order for Lua CCBProxy::getNodeTypeName.
         Casting variables to their own type, and print warning info if no corresponding lua callback function instead of crash.
+        fix of WebSocket url parse error for 'ws://domain.com/websocket' pattern.
+
+    musikov
+        Fixing a bug that missing precision when getting strokeColor and fontFillColor
+        
+    hawkwood (Justin Hawkwood)
+        Fixing a bug that EditBox doesn't show any text if it's initialized with text.
+        
+    wtyqm (zhang peng)
+        Fixing a bug that ccbRootPath wasn't passed to sub ccb nodes.
+        
+    smilingpoplar (YangLe)
+        Fixing a bug that CCScale9Sprite doesn't support rotated spriteframe in atlas.
+        
+    xxuejie
+        Add namespace prefix to selector macros
 
 Retired Core Developers:
     WenSheng Yang

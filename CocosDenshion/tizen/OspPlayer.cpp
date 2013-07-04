@@ -29,7 +29,7 @@ using namespace Tizen::Media;
 
 OspPlayer::OspPlayer()
     : __pPlayer(null)
-    , m_nSoundID(0)
+    , _soundID(0)
 {
     Initialize();
 }
@@ -74,7 +74,7 @@ OspPlayer::Open(const char* pFileName, unsigned int uId)
         AppLog("pPlayer->OpenFile has failed\n");
     }
 
-    m_nSoundID = uId;
+    _soundID = uId;
 }
 
 void
@@ -179,7 +179,7 @@ OspPlayer::Close()
 unsigned int
 OspPlayer::GetSoundID()
 {
-    return m_nSoundID;
+    return _soundID;
 }
 
 void

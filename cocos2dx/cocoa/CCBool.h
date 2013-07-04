@@ -34,16 +34,16 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL CCBool : public CCObject
+class CC_DLL Bool : public Object
 {
 public:
-    CCBool(bool v)
-        : m_bValue(v) {}
-    bool getValue() const {return m_bValue;}
+    Bool(bool v)
+        : _value(v) {}
+    bool getValue() const {return _value;}
 
-    static CCBool* create(bool v)
+    static Bool* create(bool v)
     {
-        CCBool* pRet = new CCBool(v);
+        Bool* pRet = new Bool(v);
         if (pRet)
         {
             pRet->autorelease();
@@ -52,10 +52,10 @@ public:
     }
 
     /* override functions */
-    virtual void acceptVisitor(CCDataVisitor &visitor) { visitor.visit(this); }
+    virtual void acceptVisitor(DataVisitor &visitor) { visitor.visit(this); }
 
 private:
-    bool m_bValue;
+    bool _value;
 };
 
 // end of data_structure group

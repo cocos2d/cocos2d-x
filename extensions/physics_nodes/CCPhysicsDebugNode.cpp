@@ -59,15 +59,15 @@ static ccColor4F ColorForBody(cpBody *body)
 	}
 }
 
-static CCPoint cpVert2ccp(const cpVect &vert)
+static Point cpVert2ccp(const cpVect &vert)
 {
     return CCPointMake(vert.x, vert.y);
 }
 
-static CCPoint* cpVertArray2ccpArrayN(const cpVect* cpVertArray, unsigned int count)
+static Point* cpVertArray2ccpArrayN(const cpVect* cpVertArray, unsigned int count)
 {
     if (count == 0) return NULL;
-    CCPoint* pPoints = new CCPoint[count];
+    Point* pPoints = new Point[count];
     
     for (unsigned int i = 0; i < count; ++i)
     {
@@ -77,7 +77,7 @@ static CCPoint* cpVertArray2ccpArrayN(const cpVect* cpVertArray, unsigned int co
     return pPoints;
 }
 
-static void DrawShape(cpShape *shape, CCDrawNode *renderer)
+static void DrawShape(cpShape *shape, DrawNode *renderer)
 {
 	cpBody *body = shape->body;
 	ccColor4F color = ColorForBody(body);
@@ -104,7 +104,7 @@ static void DrawShape(cpShape *shape, CCDrawNode *renderer)
             cpPolyShape *poly = (cpPolyShape *)shape;
             ccColor4F line = color;
             line.a = cpflerp(color.a, 1.0, 0.5);
-            CCPoint* pPoints = cpVertArray2ccpArrayN(poly->tVerts, poly->numVerts);
+            Point* pPoints = cpVertArray2ccpArrayN(poly->tVerts, poly->numVerts);
             renderer->drawPolygon(pPoints, poly->numVerts, color, 1.0, line);
             CC_SAFE_DELETE_ARRAY(pPoints);
         }
@@ -116,7 +116,7 @@ static void DrawShape(cpShape *shape, CCDrawNode *renderer)
 
 static ccColor4F CONSTRAINT_COLOR = {0, 1, 0, 0.5};
 
-static void DrawConstraint(cpConstraint *constraint, CCDrawNode *renderer)
+static void DrawConstraint(cpConstraint *constraint, DrawNode *renderer)
 {
 	cpBody *body_a = constraint->a;
 	cpBody *body_b = constraint->b;
@@ -175,34 +175,34 @@ static void DrawConstraint(cpConstraint *constraint, CCDrawNode *renderer)
 	}
 }
 
-// implementation of CCPhysicsDebugNode
+// implementation of PhysicsDebugNode
 
-void CCPhysicsDebugNode::draw()
+void PhysicsDebugNode::draw()
 {
-    if (! m_pSpacePtr)
+    if (! _spacePtr)
     {
         return;
     }
     
-    cpSpaceEachShape(m_pSpacePtr, (cpSpaceShapeIteratorFunc)DrawShape, this);
-	cpSpaceEachConstraint(m_pSpacePtr, (cpSpaceConstraintIteratorFunc)DrawConstraint, this);
+    cpSpaceEachShape(_spacePtr, (cpSpaceShapeIteratorFunc)DrawShape, this);
+	cpSpaceEachConstraint(_spacePtr, (cpSpaceConstraintIteratorFunc)DrawConstraint, this);
     
-    CCDrawNode::draw();
-    CCDrawNode::clear();
+    DrawNode::draw();
+    DrawNode::clear();
 }
 
-CCPhysicsDebugNode::CCPhysicsDebugNode()
-: m_pSpacePtr(NULL)
+PhysicsDebugNode::PhysicsDebugNode()
+: _spacePtr(NULL)
 {}
 
-CCPhysicsDebugNode* CCPhysicsDebugNode::create(cpSpace *space)
+PhysicsDebugNode* PhysicsDebugNode::create(cpSpace *space)
 {
-    CCPhysicsDebugNode *node = new CCPhysicsDebugNode();
+    PhysicsDebugNode *node = new PhysicsDebugNode();
     if (node)
     {
         node->init();
         
-        node->m_pSpacePtr = space;
+        node->_spacePtr = space;
         
         node->autorelease();
     }
@@ -214,18 +214,18 @@ CCPhysicsDebugNode* CCPhysicsDebugNode::create(cpSpace *space)
     return node;
 }
 
-CCPhysicsDebugNode::~CCPhysicsDebugNode()
+PhysicsDebugNode::~PhysicsDebugNode()
 {
 }
 
-cpSpace* CCPhysicsDebugNode::getSpace() const
+cpSpace* PhysicsDebugNode::getSpace() const
 {
-    return m_pSpacePtr;
+    return _spacePtr;
 }
 
-void CCPhysicsDebugNode::setSpace(cpSpace *space)
+void PhysicsDebugNode::setSpace(cpSpace *space)
 {
-    m_pSpacePtr = space;
+    _spacePtr = space;
 }
 
 NS_CC_EXT_END

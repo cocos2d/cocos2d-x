@@ -33,18 +33,18 @@ NS_CC_BEGIN
 #define CC_MAX_TOUCHES  5
 
 class EGLTouchDelegate;
-class CCSet;
+class Set;
 
 /**
  * @addtogroup platform
  * @{
  */
 
-class CC_DLL CCEGLViewProtocol
+class CC_DLL EGLViewProtocol
 {
 public:
-    CCEGLViewProtocol();
-    virtual ~CCEGLViewProtocol();
+    EGLViewProtocol();
+    virtual ~EGLViewProtocol();
 
     /** Force destroying EGL view, subclass must implement this method. */
     virtual void    end() = 0;
@@ -62,7 +62,7 @@ public:
      * Get the frame size of EGL view.
      * In general, it returns the screen size since the EGL view is a fullscreen view.
      */
-    virtual const CCSize& getFrameSize() const;
+    virtual const Size& getFrameSize() const;
 
     /**
      * Set the frame size of EGL view.
@@ -72,12 +72,12 @@ public:
     /**
      * Get the visible area size of opengl viewport.
      */
-    virtual CCSize getVisibleSize() const;
+    virtual Size getVisibleSize() const;
 
     /**
      * Get the visible origin point of opengl viewport.
      */
-    virtual CCPoint getVisibleOrigin() const;
+    virtual Point getVisibleOrigin() const;
 
     /**
      * Set the design resolution size.
@@ -93,7 +93,7 @@ public:
     /** Get design resolution size.
      *  Default resolution size is the same as 'getFrameSize'.
      */
-    virtual const CCSize&  getDesignResolutionSize() const;
+    virtual const Size&  getDesignResolutionSize() const;
 
     /** Set touch delegate */
     virtual void setTouchDelegate(EGLTouchDelegate * pDelegate);
@@ -116,7 +116,7 @@ public:
     /**
      * Get the current scissor rectangle
      */
-    virtual CCRect getScissorRect();
+    virtual Rect getScissorRect();
 
     virtual void setViewName(const char* pszViewName);
 
@@ -131,7 +131,7 @@ public:
     /**
      * Get the opengl view port rectangle.
      */
-    const CCRect& getViewPortRect() const;
+    const Rect& getViewPortRect() const;
 
     /**
      * Get scale factor of the horizontal direction.
@@ -143,23 +143,23 @@ public:
      */
     float getScaleY() const;
 private:
-    void getSetOfTouchesEndOrCancel(CCSet& set, int num, int ids[], float xs[], float ys[]);
+    void getSetOfTouchesEndOrCancel(Set& set, int num, int ids[], float xs[], float ys[]);
 
 protected:
-    EGLTouchDelegate* m_pDelegate;
+    EGLTouchDelegate* _delegate;
 
     // real screen size
-    CCSize m_obScreenSize;
+    Size _screenSize;
     // resolution size, it is the size appropriate for the app resources.
-    CCSize m_obDesignResolutionSize;
+    Size _designResolutionSize;
     // the view port size
-    CCRect m_obViewPortRect;
+    Rect _viewPortRect;
     // the view name
-    char   m_szViewName[50];
+    char   _viewName[50];
 
-    float  m_fScaleX;
-    float  m_fScaleY;
-    ResolutionPolicy m_eResolutionPolicy;
+    float  _scaleX;
+    float  _scaleY;
+    ResolutionPolicy _resolutionPolicy;
 };
 
 // end of platform group

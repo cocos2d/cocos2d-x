@@ -26,11 +26,11 @@ THE SOFTWARE.
 #include "../utils/CCArmatureDefine.h"
 #include "../CCArmature.h"
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
 
-CCBatchNode *CCBatchNode::create()
+BatchNode *BatchNode::create()
 {
-    CCBatchNode *batchNode = new CCBatchNode();
+    BatchNode *batchNode = new BatchNode();
     if (batchNode && batchNode->init())
     {
         batchNode->autorelease();
@@ -40,40 +40,40 @@ CCBatchNode *CCBatchNode::create()
     return NULL;
 }
 
-CCBatchNode::CCBatchNode()
-    : m_pAtlas(NULL)
+BatchNode::BatchNode()
+    : _atlas(NULL)
 {
 }
 
-bool CCBatchNode::init()
+bool BatchNode::init()
 {
-    bool ret = CCNode::init();
-    setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
+    bool ret = Node::init();
+    setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColor));
     return ret;
 }
 
-void CCBatchNode::addChild(CCNode *child, int zOrder, int tag)
+void BatchNode::addChild(Node *child, int zOrder, int tag)
 {
-    CCNode::addChild(child, zOrder, tag);
-    CCArmature *armature = dynamic_cast<CCArmature *>(child);
+    Node::addChild(child, zOrder, tag);
+    Armature *armature = dynamic_cast<Armature *>(child);
     if (armature != NULL)
     {
         armature->setBatchNode(this);
     }
 }
 
-void CCBatchNode::visit()
+void BatchNode::visit()
 {
     // quick return if not visible. children won't be drawn.
-    if (!m_bVisible)
+    if (!_visible)
     {
         return;
     }
     kmGLPushMatrix();
 
-    if (m_pGrid && m_pGrid->isActive())
+    if (_grid && _grid->isActive())
     {
-        m_pGrid->beforeDraw();
+        _grid->beforeDraw();
     }
 
     transform();
@@ -81,39 +81,39 @@ void CCBatchNode::visit()
     draw();
 
     // reset for next frame
-    m_uOrderOfArrival = 0;
+    _orderOfArrival = 0;
 
-    if (m_pGrid && m_pGrid->isActive())
+    if (_grid && _grid->isActive())
     {
-        m_pGrid->afterDraw(this);
+        _grid->afterDraw(this);
     }
 
     kmGLPopMatrix();
 }
 
-void CCBatchNode::draw()
+void BatchNode::draw()
 {
     CC_NODE_DRAW_SETUP();
-    CCObject *object = NULL;
-    CCARRAY_FOREACH(m_pChildren, object)
+    Object *object = NULL;
+    CCARRAY_FOREACH(_children, object)
     {
-        CCArmature *armature = dynamic_cast<CCArmature *>(object);
+        Armature *armature = dynamic_cast<Armature *>(object);
         if (armature)
         {
             armature->visit();
-            m_pAtlas = armature->getTextureAtlas();
+            _atlas = armature->getTextureAtlas();
         }
         else
         {
-            ((CCNode *)object)->visit();
+            ((Node *)object)->visit();
         }
     }
 
-    if (m_pAtlas)
+    if (_atlas)
     {
-        m_pAtlas->drawQuads();
-        m_pAtlas->removeAllQuads();
+        _atlas->drawQuads();
+        _atlas->removeAllQuads();
     }
 }
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {

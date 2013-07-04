@@ -37,25 +37,25 @@
 
 NS_CC_BEGIN
 
-CCEGLView* CCEGLView::m_pInstance = 0;
+EGLView* EGLView::_instance = 0;
 
 
-CCEGLView::CCEGLView()
-: m_bCaptured(false)
-, m_bAccelState(false)
-, m_Key(s3eKeyFirst)
+EGLView::EGLView()
+: _captured(false)
+, _accelState(false)
+, _key(s3eKeyFirst)
 {
-	IW_CALLSTACK("CCEGLView::CCEGLView");
+	IW_CALLSTACK("CCEGLView::EGLView");
 	
 	IwGLInit();
 
 	setFrameSize((float)IwGLGetInt(IW_GL_WIDTH), (float)IwGLGetInt(IW_GL_HEIGHT));
 
     // Determine if the device supports multi-touch
-    m_isMultiTouch = s3ePointerGetInt(S3E_POINTER_MULTI_TOUCH_AVAILABLE) ? true : false;
+    _isMultiTouch = s3ePointerGetInt(S3E_POINTER_MULTI_TOUCH_AVAILABLE) ? true : false;
     
 	// For multi-touch devices we handle touch and motion events using different callbacks
-    if (m_isMultiTouch)
+    if (_isMultiTouch)
     {
         s3ePointerRegister(S3E_POINTER_TOUCH_EVENT, &MultiTouchEventHandler, this);
         s3ePointerRegister(S3E_POINTER_TOUCH_MOTION_EVENT, &MultiMotionEventHandler, this);
@@ -74,53 +74,53 @@ CCEGLView::CCEGLView()
 //	s3eKeyboardRegister(S3E_KEYBOARD_CHAR_EVENT, &CharEventHandler, this);
 }
 
-CCEGLView::~CCEGLView()
+EGLView::~EGLView()
 {
-	IW_CALLSTACK("CCEGLView::~CCEGLView");
+	IW_CALLSTACK("CCEGLView::~EGLView");
 }
 	
-void CCEGLView::setTouch(void* systemData)
+void EGLView::setTouch(void* systemData)
 {
 	s3ePointerEvent* event =(s3ePointerEvent*)systemData;
     int id = 0;
-    float x = (float)event->m_x;
-    float y = (float)event->m_y;
-	switch (event->m_Pressed)
+    float x = (float)event->_x;
+    float y = (float)event->_y;
+	switch (event->_pressed)
 	{
 	case S3E_POINTER_STATE_DOWN :
-		m_bCaptured = true;
+		_captured = true;
         handleTouchesBegin(1, &id, &x, &y);
 		break;
 	case S3E_POINTER_STATE_UP :
-		if (m_bCaptured)
+		if (_captured)
 		{
 			handleTouchesEnd(1, &id, &x, &y);
-			m_bCaptured = false;
+			_captured = false;
 		}
 		break;
 	}
 }
 
-void CCEGLView::setMotionTouch(void* systemData)
+void EGLView::setMotionTouch(void* systemData)
 {
 		s3ePointerMotionEvent* event =(s3ePointerMotionEvent*)systemData;
-		if (m_bCaptured)
+		if (_captured)
 		{
             int id = 0;
-            float x = (float)event->m_x;
-            float y = (float)event->m_y;
+            float x = (float)event->_x;
+            float y = (float)event->_y;
             handleTouchesMove(1, &id, &x, &y);
 		}
 }
 
-void CCEGLView::setMultiTouch(void* systemData)
+void EGLView::setMultiTouch(void* systemData)
 {
 	s3ePointerTouchEvent* event =(s3ePointerTouchEvent*)systemData;
-    int id = (int)event->m_TouchID;
-    float x = (float)event->m_x;
-    float y = (float)event->m_y;
+    int id = (int)event->_touchID;
+    float x = (float)event->_x;
+    float y = (float)event->_y;
 
-	switch (event->m_Pressed)
+	switch (event->_pressed)
 	{
         case S3E_POINTER_STATE_DOWN:
             {
@@ -136,51 +136,51 @@ void CCEGLView::setMultiTouch(void* systemData)
 	}
 }
 
-void CCEGLView::setMultiMotionTouch(void* systemData)
+void EGLView::setMultiMotionTouch(void* systemData)
 {
     s3ePointerTouchMotionEvent* event =(s3ePointerTouchMotionEvent*)systemData;
-    int id = (int)event->m_TouchID;
-    float x = (float)event->m_x;
-    float y = (float)event->m_y;
+    int id = (int)event->_touchID;
+    float x = (float)event->_x;
+    float y = (float)event->_y;
     handleTouchesMove(1, &id, &x, &y);
 }
 
 
-void CCEGLView::setKeyTouch(void* systemData)
+void EGLView::setKeyTouch(void* systemData)
 {
 // 	s3eKeyboardEvent* event = (s3eKeyboardEvent*)systemData;
-// 	if (event->m_Pressed)
+// 	if (event->_pressed)
 // 	{
-// 		if (event->m_Key!=m_Key)
+// 		if (event->_key!=_key)
 // 		{
-// 			CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeMenuClicked);
+// 			KeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeMenuClicked);
 // 		}
 // 		else
 // 		{
-// 			CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
+// 			KeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
 // 
 // 		}
-// 		m_Key =event->m_Key;
+// 		_key =event->_key;
 // 	}
 }
 
-void CCEGLView::setCharTouch( void* systemData )
+void EGLView::setCharTouch( void* systemData )
 {
 //     s3eKeyboardCharEvent* event = (s3eKeyboardCharEvent*)systemData;
-// 	s3eWChar c = event->m_Char ;
-// 	CCIMEDispatcher::sharedDispatcher()->dispatchInsertText((const char *)&c, 1);
+// 	s3eWChar c = event->_char ;
+// 	IMEDispatcher::sharedDispatcher()->dispatchInsertText((const char *)&c, 1);
 }
 
-bool CCEGLView::isOpenGLReady()
+bool EGLView::isOpenGLReady()
 {
     return (IwGLIsInitialised());
 }
 
-void CCEGLView::end()
+void EGLView::end()
 {
 	IW_CALLSTACK("CCEGLView::end");
 
-    if (m_isMultiTouch)
+    if (_isMultiTouch)
     {
         s3ePointerUnRegister(S3E_POINTER_TOUCH_EVENT, &MultiTouchEventHandler);
         s3ePointerUnRegister(S3E_POINTER_TOUCH_MOTION_EVENT, &MultiMotionEventHandler);
@@ -202,28 +202,28 @@ void CCEGLView::end()
 	 delete this;
 }
 
-void CCEGLView::swapBuffers()
+void EGLView::swapBuffers()
 {
 	IW_CALLSTACK("CCEGLView::swapBuffers(");
 	IwGLSwapBuffers();
 }
 
-void CCEGLView::setIMEKeyboardState(bool bOpen)
+void EGLView::setIMEKeyboardState(bool bOpen)
 {
 	if(bOpen && s3eOSReadStringAvailable() == S3E_TRUE) {
 		const char* inputText = s3eOSReadStringUTF8("") ;
 		if( inputText!=0 ) {
-			CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(inputText, strlen(inputText));
+			IMEDispatcher::sharedDispatcher()->dispatchInsertText(inputText, strlen(inputText));
 		}
 	}
 }
 
-CCEGLView* CCEGLView::sharedOpenGLView()		// MH: Cocos2D now uses pointer instead of ref
+EGLView* EGLView::sharedOpenGLView()		// MH: Cocos2D now uses pointer instead of ref
 {
-	if( !m_pInstance ) {
-		m_pInstance = new CCEGLView() ;
+	if( !_instance ) {
+		_instance = new EGLView() ;
 	}
-	return m_pInstance;							// MH: Cocos2D now uses pointer instead of ref
+	return _instance;							// MH: Cocos2D now uses pointer instead of ref
 }
 
 NS_CC_END
