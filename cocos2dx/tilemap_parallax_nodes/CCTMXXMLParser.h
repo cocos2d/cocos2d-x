@@ -99,7 +99,6 @@ public:
     unsigned int        _minGID;
     unsigned int        _maxGID;
     Point               _offset;
-    unsigned int        _currentTileIndex;                 
 public:
     TMXLayerInfo();
     virtual ~TMXLayerInfo();
