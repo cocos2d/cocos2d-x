@@ -214,7 +214,7 @@ public:
     virtual void setString(const char *newString);
     virtual void setString(const char *newString, bool needUpdateLabel);
 
-    virtual const char* getString(void);
+    virtual const char* getString(void) const;
     virtual void setCString(const char *label);
     virtual void setAnchorPoint(const Point& var);
     virtual void updateLabel();
@@ -226,18 +226,19 @@ public:
     virtual void setScaleY(float scaleY);
     
     // RGBAProtocol 
-    virtual bool isOpacityModifyRGB();
-    virtual void setOpacityModifyRGB(bool isOpacityModifyRGB); virtual GLubyte getOpacity();
-    virtual GLubyte getDisplayedOpacity();
+    virtual bool isOpacityModifyRGB() const;
+    virtual void setOpacityModifyRGB(bool isOpacityModifyRGB);
+    virtual GLubyte getOpacity() const;
+    virtual GLubyte getDisplayedOpacity() const;
     virtual void setOpacity(GLubyte opacity);
     virtual void updateDisplayedOpacity(GLubyte parentOpacity);
-    virtual bool isCascadeOpacityEnabled();
+    virtual bool isCascadeOpacityEnabled() const;
     virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
-    virtual const ccColor3B& getColor(void);
-    virtual const ccColor3B& getDisplayedColor();
+    virtual const ccColor3B& getColor(void) const;
+    virtual const ccColor3B& getDisplayedColor() const;
     virtual void setColor(const ccColor3B& color);
     virtual void updateDisplayedColor(const ccColor3B& parentColor);
-    virtual bool isCascadeColorEnabled();
+    virtual bool isCascadeColorEnabled() const;
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
 
     void setFntFile(const char* fntFile);

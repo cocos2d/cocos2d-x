@@ -509,12 +509,12 @@ Texture2D* ParticleBatchNode::getTexture(void)
     return _textureAtlas->getTexture();
 }
 
-void ParticleBatchNode::setBlendFunc(ccBlendFunc blendFunc)
+void ParticleBatchNode::setBlendFunc(const ccBlendFunc &blendFunc)
 {
     _blendFunc = blendFunc;
 }
 // returns the blending function used for the texture
-ccBlendFunc ParticleBatchNode::getBlendFunc(void)
+const ccBlendFunc& ParticleBatchNode::getBlendFunc(void) const
 {
     return _blendFunc;
 }

@@ -64,7 +64,7 @@ public:
     inline void setRotated(bool bRotated) { _rotated = bRotated; }
 
     /** get rect of the frame */
-    inline const Rect& getRect(void) { return _rect; }
+    inline const Rect& getRect(void) const { return _rect; }
     /** set rect of the frame */
     void setRect(const Rect& rect);
 
