@@ -144,7 +144,7 @@ void MenuItem::setEnabled(bool enabled)
     _enabled = enabled;
 }
 
-bool MenuItem::isEnabled()
+bool MenuItem::isEnabled() const
 {
     return _enabled;
 }
@@ -156,7 +156,7 @@ Rect MenuItem::rect()
                       _contentSize.width, _contentSize.height);
 }
 
-bool MenuItem::isSelected()
+bool MenuItem::isSelected() const
 {
     return _selected;
 }

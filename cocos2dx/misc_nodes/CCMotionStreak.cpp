@@ -184,7 +184,7 @@ void MotionStreak::setOpacity(GLubyte opacity)
     CCAssert(false, "Set opacity no supported");
 }
 
-GLubyte MotionStreak::getOpacity(void)
+GLubyte MotionStreak::getOpacity(void) const
 {
     CCAssert(false, "Opacity no supported");
     return 0;
@@ -195,7 +195,7 @@ void MotionStreak::setOpacityModifyRGB(bool bValue)
     CC_UNUSED_PARAM(bValue);
 }
 
-bool MotionStreak::isOpacityModifyRGB(void)
+bool MotionStreak::isOpacityModifyRGB(void) const
 {
     return false;
 }

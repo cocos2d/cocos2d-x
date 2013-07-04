@@ -318,6 +318,12 @@ public:
 
     /** Initializes the Layer with a gradient between start and end in the direction of v. */
     virtual bool initWithColor(const ccColor4B& start, const ccColor4B& end, const Point& v);
+    
+    /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
+     Default: YES
+     */
+    virtual void setCompressedInterpolation(bool bCompressedInterpolation);
+    virtual bool isCompressedInterpolation() const;
 
     CC_PROPERTY_PASS_BY_REF(ccColor3B, _startColor, StartColor)
     CC_PROPERTY_PASS_BY_REF(ccColor3B, _endColor, EndColor)
@@ -325,17 +331,11 @@ public:
     CC_PROPERTY(GLubyte, _endOpacity, EndOpacity)
     CC_PROPERTY_PASS_BY_REF(Point, _alongVector, Vector)
 
-    /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
-    Default: YES
-    */
-protected:
-    bool _compressedInterpolation;
-public:
-    virtual void setCompressedInterpolation(bool bCompressedInterpolation);
-    virtual bool isCompressedInterpolation();
-    
 protected:
     virtual void updateColor();
+    
+protected:
+    bool _compressedInterpolation;
 };
 
 

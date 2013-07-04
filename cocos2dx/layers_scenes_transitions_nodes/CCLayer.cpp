@@ -1013,7 +1013,7 @@ const Point& LayerGradient::getVector() const
     return _alongVector;
 }
 
-bool LayerGradient::isCompressedInterpolation()
+bool LayerGradient::isCompressedInterpolation() const
 {
     return _compressedInterpolation;
 }
