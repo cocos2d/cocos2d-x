@@ -35,6 +35,9 @@ THE SOFTWARE.
 #define glDeleteVertexArrays            glDeleteVertexArraysAPPLE
 #define glGenVertexArrays               glGenVertexArraysAPPLE
 #define glBindVertexArray               glBindVertexArrayAPPLE
+#define glClearDepthf                   glClearDepth
+#define glDepthRangef                   glDepthRange
+#define glReleaseShaderCompiler(xxx)
 
 
 #endif // __PLATFORM_MAC_CCGL_H__
