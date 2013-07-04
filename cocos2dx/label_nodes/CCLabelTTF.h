@@ -134,7 +134,7 @@ public:
     * @warning Changing the string is as expensive as creating a new LabelTTF. To obtain better performance use LabelAtlas
     */
     virtual void setString(const char *label);
-    virtual const char* getString(void);
+    virtual const char* getString(void) const;
     
     TextAlignment getHorizontalAlignment();
     void setHorizontalAlignment(TextAlignment alignment);

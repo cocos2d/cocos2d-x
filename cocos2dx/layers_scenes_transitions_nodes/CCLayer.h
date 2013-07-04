@@ -112,21 +112,21 @@ public:
     Only the touches of this node will be affected. This "method" is not propagated to it's children.
     @since v0.8.1
     */
-    virtual bool isTouchEnabled();
+    virtual bool isTouchEnabled() const;
     virtual void setTouchEnabled(bool value);
     
     virtual void setTouchMode(ccTouchesMode mode);
-    virtual int getTouchMode();
+    virtual int getTouchMode() const;
     
     /** priority of the touch events. Default is 0 */
     virtual void setTouchPriority(int priority);
-    virtual int getTouchPriority();
+    virtual int getTouchPriority() const;
 
     /** whether or not it will receive Accelerometer events
     You can enable / disable accelerometer events with this property.
     @since v0.8.1
     */
-    virtual bool isAccelerometerEnabled();
+    virtual bool isAccelerometerEnabled() const;
     virtual void setAccelerometerEnabled(bool value);
     virtual void setAccelerometerInterval(double interval);
 
@@ -135,12 +135,12 @@ public:
     it's new in cocos2d-x
     */
 
-    virtual bool isKeyboardEnabled();
+    virtual bool isKeyboardEnabled() const;
     virtual void setKeyboardEnabled(bool value);
     virtual void keyPressed(int keyCode) {};
     virtual void keyReleased(int keyCode) {};
 
-    virtual bool isKeypadEnabled();
+    virtual bool isKeypadEnabled() const;
     virtual void setKeypadEnabled(bool value);
 
     /** Register keypad events handler */
@@ -151,9 +151,9 @@ public:
     virtual void keyBackClicked(void);
     virtual void keyMenuClicked(void);
     
-    inline TouchScriptHandlerEntry* getScriptTouchHandlerEntry() { return _scriptTouchHandlerEntry; };
-    inline ScriptHandlerEntry* getScriptKeypadHandlerEntry() { return _scriptKeypadHandlerEntry; };
-    inline ScriptHandlerEntry* getScriptAccelerateHandlerEntry() { return _scriptAccelerateHandlerEntry; };
+    inline TouchScriptHandlerEntry* getScriptTouchHandlerEntry() const { return _scriptTouchHandlerEntry; };
+    inline ScriptHandlerEntry* getScriptKeypadHandlerEntry() const { return _scriptKeypadHandlerEntry; };
+    inline ScriptHandlerEntry* getScriptAccelerateHandlerEntry() const { return _scriptAccelerateHandlerEntry; };
 protected:   
     bool _touchEnabled;
     bool _accelerometerEnabled;
@@ -195,22 +195,22 @@ public:
     
     virtual bool init();
     
-    virtual GLubyte getOpacity();
-    virtual GLubyte getDisplayedOpacity();
+    virtual GLubyte getOpacity() const;
+    virtual GLubyte getDisplayedOpacity() const;
     virtual void setOpacity(GLubyte opacity);
     virtual void updateDisplayedOpacity(GLubyte parentOpacity);
-    virtual bool isCascadeOpacityEnabled();
+    virtual bool isCascadeOpacityEnabled() const;
     virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
     
-    virtual const ccColor3B& getColor();
-    virtual const ccColor3B& getDisplayedColor();
+    virtual const ccColor3B& getColor() const;
+    virtual const ccColor3B& getDisplayedColor() const;
     virtual void setColor(const ccColor3B& color);
     virtual void updateDisplayedColor(const ccColor3B& parentColor);
-    virtual bool isCascadeColorEnabled();
+    virtual bool isCascadeColorEnabled() const;
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
     
     virtual void setOpacityModifyRGB(bool bValue) {}
-    virtual bool isOpacityModifyRGB() { return false; }
+    virtual bool isOpacityModifyRGB() const { return false; }
 protected:
 	GLubyte		_displayedOpacity, _realOpacity;
 	ccColor3B	_displayedColor, _realColor;
@@ -266,10 +266,10 @@ public:
     void changeWidthAndHeight(GLfloat w ,GLfloat h);
 
     /** BlendFunction. Conforms to BlendProtocol protocol */
-    CC_PROPERTY(ccBlendFunc, _blendFunc, BlendFunc)
+    CC_PROPERTY_PASS_BY_REF(ccBlendFunc, _blendFunc, BlendFunc)
 
     virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool isOpacityModifyRGB(void) { return false;}
+    virtual bool isOpacityModifyRGB(void) const { return false;}
     virtual void setColor(const ccColor3B &color);
     virtual void setOpacity(GLubyte opacity);
 

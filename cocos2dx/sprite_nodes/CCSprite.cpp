@@ -959,7 +959,7 @@ void Sprite::setOpacityModifyRGB(bool modify)
     }
 }
 
-bool Sprite::isOpacityModifyRGB(void)
+bool Sprite::isOpacityModifyRGB(void) const
 {
     return _opacityModifyRGB;
 }
