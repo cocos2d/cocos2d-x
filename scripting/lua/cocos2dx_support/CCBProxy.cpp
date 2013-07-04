@@ -24,7 +24,7 @@
 
 #include "CCBProxy.h"
 
-CCBReader* CCBProxy::createBreader()
+CCBReader* CCBProxy::createCCBreader()
 {
     NodeLoaderLibrary *ccNodeLoaderLibrary = NodeLoaderLibrary::sharedNodeLoaderLibrary();
     
