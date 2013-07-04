@@ -72,7 +72,6 @@ TMXLayerInfo::TMXLayerInfo()
 , _minGID(100000)
 , _maxGID(0)        
 , _offset(PointZero)
-, _currentTileIndex(0)
 {
     _properties= new Dictionary();;
 }
@@ -408,9 +407,16 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         if (pTMXMapInfo->getParentElement() == TMXPropertyLayer)
         {
             TMXLayerInfo* layer = (TMXLayerInfo*)pTMXMapInfo->getLayers()->lastObject();
+            Size layerSize = layer->_layerSize;
             unsigned int gid = (unsigned int)atoi(valueForKey("gid", attributeDict));
-            layer->_tiles[layer->_currentTileIndex] = gid;
-            layer->_currentTileIndex++;
+            int tilesAmount = layerSize.width*layerSize.height;
+            int currentTileIndex = layer->_tiles[tilesAmount - 1];
+            layer->_tiles[currentTileIndex] = gid;
+
+            if (currentTileIndex != tilesAmount - 1)
+            {
+                layer->_tiles[tilesAmount - 1] = currentTileIndex + 1;
+            }
         }
         else
         {
@@ -503,7 +509,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
 
             int *tiles = (int *) malloc(tilesAmount*sizeof(int));
             for (int i = 0; i < tilesAmount; i++)
-                tiles[i] = -1;
+                tiles[i] = 0;
 
             layer->_tiles = (unsigned int*) tiles;
         }
