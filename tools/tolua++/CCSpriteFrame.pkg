@@ -7,7 +7,7 @@ class CCSpriteFrame : public CCObject
     bool isRotated(void);
     void setRotated(bool bRotated);
 
-    CCRect getRect(void);
+    CCRect getRect(void) const;
     void setRect(CCRect rect);
 
     CCPoint getOffsetInPixels(void);

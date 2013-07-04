@@ -69,7 +69,7 @@ protected:
     // protocol variables
     bool _isOpacityModifyRGB;
     
-    CC_PROPERTY(ccBlendFunc, _blendFunc, BlendFunc);
+    CC_PROPERTY_PASS_BY_REF(ccBlendFunc, _blendFunc, BlendFunc);
 
     // quads to draw
     CC_PROPERTY(unsigned int, _quadsToDraw, QuadsToDraw);
