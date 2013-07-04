@@ -491,22 +491,22 @@ class CCTexture2D : public CCObject
     GLfloat getMaxT();
     void setMaxT(GLfloat val);
 
-    bool hasPremultipliedAlpha();
-    bool hasMipmaps();
+    bool hasPremultipliedAlpha() const;
+    bool hasMipmaps() const;
 
     void drawAtPoint(CCPoint point);
     void drawInRect(CCRect rect);
 
     CCSize getContentSize(void);
 
-    void setTexParameters(ccTexParams* texParams);
+    void setTexParameters(const ccTexParams& texParams);
     void setAntiAliasTexParameters();
     void setAliasTexParameters();
     void generateMipmap();
 
-	const char* stringForFormat();
-    unsigned int bitsPerPixelForFormat();
-	unsigned int bitsPerPixelForFormat(CCTexture2DPixelFormat format);
+	const char* stringForFormat() const;
+    unsigned int bitsPerPixelForFormat() const;
+	unsigned int bitsPerPixelForFormat(CCTexture2DPixelFormat format) const;
 
     static void setDefaultAlphaPixelFormat(CCTexture2DPixelFormat format);
     static CCTexture2DPixelFormat defaultAlphaPixelFormat();

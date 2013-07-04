@@ -504,6 +504,9 @@ Developers:
         
     smilingpoplar (YangLe)
         Fixing a bug that CCScale9Sprite doesn't support rotated spriteframe in atlas.
+        
+    xxuejie
+        Add namespace prefix to selector macros
 
 Retired Core Developers:
     WenSheng Yang

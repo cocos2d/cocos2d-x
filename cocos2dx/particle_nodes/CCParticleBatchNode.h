@@ -102,9 +102,9 @@ public:
     virtual Texture2D* getTexture(void);
     // sets a new texture. it will be retained
     virtual void setTexture(Texture2D *texture);
-    virtual void setBlendFunc(ccBlendFunc blendFunc);
+    virtual void setBlendFunc(const ccBlendFunc &blendFunc);
     // returns the blending function used for the texture
-    virtual ccBlendFunc getBlendFunc(void);
+    virtual const ccBlendFunc& getBlendFunc(void) const;
 
     void visit();
 
