@@ -47,7 +47,7 @@ extern "C"
         filename.append(".lua");
         
         unsigned long codeBufferSize = 0;
-        unsigned char* codeBuffer = CCFileUtils::sharedFileUtils()->getFileData(filename.c_str(), "rb", &codeBufferSize);
+        unsigned char* codeBuffer = FileUtils::sharedFileUtils()->getFileData(filename.c_str(), "rb", &codeBufferSize);
         
         if (codeBuffer)
         {

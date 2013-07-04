@@ -300,10 +300,16 @@
 		41CD6C4715BF7382005E6F29 /* EAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41CD6C3415BF7382005E6F29 /* EAGLView.mm */; };
 		464EA09717533CDD004C192B /* CCTextureETC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 464EA09517533CDD004C192B /* CCTextureETC.cpp */; };
 		464EA09817533CDD004C192B /* CCTextureETC.h in Headers */ = {isa = PBXBuildFile; fileRef = 464EA09617533CDD004C192B /* CCTextureETC.h */; };
+		465E20BA176AC7DF001D853C /* CCComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 465E20B6176AC7DF001D853C /* CCComponent.cpp */; };
+		465E20BB176AC7DF001D853C /* CCComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 465E20B7176AC7DF001D853C /* CCComponent.h */; };
+		465E20BC176AC7DF001D853C /* CCComponentContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 465E20B8176AC7DF001D853C /* CCComponentContainer.cpp */; };
+		465E20BD176AC7DF001D853C /* CCComponentContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 465E20B9176AC7DF001D853C /* CCComponentContainer.h */; };
 		469A7DF916C247C8006FFCB2 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 469A7DF716C247C8006FFCB2 /* tinyxml2.cpp */; };
 		469A7DFA16C247C8006FFCB2 /* tinyxml2.h in Headers */ = {isa = PBXBuildFile; fileRef = 469A7DF816C247C8006FFCB2 /* tinyxml2.h */; };
 		46A3939A16E03F4D00210B16 /* ccFPSImages.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A3939816E03F4D00210B16 /* ccFPSImages.c */; };
 		46A3939B16E03F4D00210B16 /* ccFPSImages.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A3939916E03F4D00210B16 /* ccFPSImages.h */; };
+		CFAECB1C1761F5AA003E4CA9 /* CCKeyboardDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = CFAECB1A1761F5AA003E4CA9 /* CCKeyboardDispatcher.h */; };
+		CFAECB1D1761F5AA003E4CA9 /* CCKeyboardDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CFAECB1B1761F5AA003E4CA9 /* CCKeyboardDispatcher.cpp */; };
 		F4D7A74715F269D10081CE26 /* ccTypeInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = F4D7A74615F269D10081CE26 /* ccTypeInfo.h */; };
 /* End PBXBuildFile section */
 
@@ -605,10 +611,18 @@
 		41CD6C3415BF7382005E6F29 /* EAGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EAGLView.mm; sourceTree = "<group>"; };
 		464EA09517533CDD004C192B /* CCTextureETC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextureETC.cpp; sourceTree = "<group>"; };
 		464EA09617533CDD004C192B /* CCTextureETC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextureETC.h; sourceTree = "<group>"; };
+		465E20B6176AC7DF001D853C /* CCComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCComponent.cpp; sourceTree = "<group>"; };
+		465E20B7176AC7DF001D853C /* CCComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComponent.h; sourceTree = "<group>"; };
+		465E20B8176AC7DF001D853C /* CCComponentContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCComponentContainer.cpp; sourceTree = "<group>"; };
+		465E20B9176AC7DF001D853C /* CCComponentContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComponentContainer.h; sourceTree = "<group>"; };
 		469A7DF716C247C8006FFCB2 /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml2.cpp; sourceTree = "<group>"; };
 		469A7DF816C247C8006FFCB2 /* tinyxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml2.h; sourceTree = "<group>"; };
 		46A3939816E03F4D00210B16 /* ccFPSImages.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ccFPSImages.c; sourceTree = "<group>"; };
 		46A3939916E03F4D00210B16 /* ccFPSImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccFPSImages.h; sourceTree = "<group>"; };
+		A076DDE1175FED3000ACDC32 /* CHANGELOG */ = {isa = PBXFileReference; lastKnownFileType = text; name = CHANGELOG; path = ../../CHANGELOG; sourceTree = "<group>"; };
+		A076DDE2175FED3F00ACDC32 /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = AUTHORS; path = ../../AUTHORS; sourceTree = "<group>"; };
+		CFAECB1A1761F5AA003E4CA9 /* CCKeyboardDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCKeyboardDispatcher.h; sourceTree = "<group>"; };
+		CFAECB1B1761F5AA003E4CA9 /* CCKeyboardDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCKeyboardDispatcher.cpp; sourceTree = "<group>"; };
 		F4D7A74615F269D10081CE26 /* ccTypeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypeInfo.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -639,6 +653,8 @@
 		1551A334158F2AB200E66CFE = {
 			isa = PBXGroup;
 			children = (
+				A076DDE2175FED3F00ACDC32 /* AUTHORS */,
+				A076DDE1175FED3000ACDC32 /* CHANGELOG */,
 				1551A873158F2B4700E66CFE /* cocos2dx-Prefix.pch */,
 				1551A353158F2ADE00E66CFE /* cocos2dx */,
 				1551A341158F2AB200E66CFE /* Frameworks */,
@@ -685,6 +701,7 @@
 				1551A3E8158F2ADE00E66CFE /* include */,
 				1551A3F0158F2ADE00E66CFE /* kazmath */,
 				1551A413158F2ADE00E66CFE /* keypad_dispatcher */,
+				CFAECB191761F5AA003E4CA9 /* keyboard_dispatcher */,
 				1551A418158F2ADE00E66CFE /* label_nodes */,
 				1551A41F158F2ADE00E66CFE /* layers_scenes_transitions_nodes */,
 				1551A42A158F2ADE00E66CFE /* menu_nodes */,
@@ -1053,24 +1070,25 @@
 			isa = PBXGroup;
 			children = (
 				1551A5E8158F2ADE00E66CFE /* base64.cpp */,
-				1551A5E9158F2ADE00E66CFE /* base64.h */,
 				154269DA15B5653000712A7F /* CCNotificationCenter.cpp */,
-				154269DB15B5653000712A7F /* CCNotificationCenter.h */,
 				1551A5EA158F2ADE00E66CFE /* CCPointExtension.cpp */,
-				1551A5EB158F2ADE00E66CFE /* CCPointExtension.h */,
 				1551A5EC158F2ADE00E66CFE /* CCProfiling.cpp */,
-				1551A5ED158F2ADE00E66CFE /* CCProfiling.h */,
 				1A78B70416DEED020038FAD0 /* ccUTF8.cpp */,
-				1A78B70516DEED020038FAD0 /* ccUTF8.h */,
 				1551A5F0158F2ADE00E66CFE /* ccUtils.cpp */,
-				1551A5F1158F2ADE00E66CFE /* ccUtils.h */,
 				1551A5F2158F2ADE00E66CFE /* CCVertex.cpp */,
+				1551A5FC158F2ADE00E66CFE /* TransformUtils.cpp */,
+				1551A5E9158F2ADE00E66CFE /* base64.h */,
+				154269DB15B5653000712A7F /* CCNotificationCenter.h */,
+				1551A5EB158F2ADE00E66CFE /* CCPointExtension.h */,
+				1551A5ED158F2ADE00E66CFE /* CCProfiling.h */,
+				1A78B70516DEED020038FAD0 /* ccUTF8.h */,
+				1551A5F1158F2ADE00E66CFE /* ccUtils.h */,
 				1551A5F3158F2ADE00E66CFE /* CCVertex.h */,
+				1551A5FD158F2ADE00E66CFE /* TransformUtils.h */,
+				465E20B5176AC7DF001D853C /* component */,
 				1551A5F4158F2ADE00E66CFE /* data_support */,
 				1551A5F9158F2ADE00E66CFE /* image_support */,
 				469A7DF616C247C8006FFCB2 /* tinyxml2 */,
-				1551A5FC158F2ADE00E66CFE /* TransformUtils.cpp */,
-				1551A5FD158F2ADE00E66CFE /* TransformUtils.h */,
 				1A589D9E16EC7B2F00C6B691 /* user_default */,
 				1551A5FE158F2ADE00E66CFE /* zip_support */,
 			);
@@ -1245,6 +1263,17 @@
 			path = mac;
 			sourceTree = "<group>";
 		};
+		465E20B5176AC7DF001D853C /* component */ = {
+			isa = PBXGroup;
+			children = (
+				465E20B6176AC7DF001D853C /* CCComponent.cpp */,
+				465E20B7176AC7DF001D853C /* CCComponent.h */,
+				465E20B8176AC7DF001D853C /* CCComponentContainer.cpp */,
+				465E20B9176AC7DF001D853C /* CCComponentContainer.h */,
+			);
+			path = component;
+			sourceTree = "<group>";
+		};
 		469A7DF616C247C8006FFCB2 /* tinyxml2 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1252,6 +1281,15 @@
 				469A7DF816C247C8006FFCB2 /* tinyxml2.h */,
 			);
 			path = tinyxml2;
+			sourceTree = "<group>";
+		};
+		CFAECB191761F5AA003E4CA9 /* keyboard_dispatcher */ = {
+			isa = PBXGroup;
+			children = (
+				CFAECB1A1761F5AA003E4CA9 /* CCKeyboardDispatcher.h */,
+				CFAECB1B1761F5AA003E4CA9 /* CCKeyboardDispatcher.cpp */,
+			);
+			path = keyboard_dispatcher;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1429,6 +1467,9 @@
 				1A60BF60173CD9D90054773B /* CCFloat.h in Headers */,
 				464EA09817533CDD004C192B /* CCTextureETC.h in Headers */,
 				36B713CC17557CF000A2554C /* CCData.h in Headers */,
+				CFAECB1C1761F5AA003E4CA9 /* CCKeyboardDispatcher.h in Headers */,
+				465E20BB176AC7DF001D853C /* CCComponent.h in Headers */,
+				465E20BD176AC7DF001D853C /* CCComponentContainer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1459,7 +1500,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0440;
-				ORGANIZATIONNAME = "厦门雅基软件有限公司";
+				ORGANIZATIONNAME = "";
 			};
 			buildConfigurationList = 1551A339158F2AB200E66CFE /* Build configuration list for PBXProject "cocos2dx" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1611,6 +1652,9 @@
 				1A60BF5D173CD9D90054773B /* CCDataVisitor.cpp in Sources */,
 				464EA09717533CDD004C192B /* CCTextureETC.cpp in Sources */,
 				36B713CB17557CF000A2554C /* CCData.cpp in Sources */,
+				CFAECB1D1761F5AA003E4CA9 /* CCKeyboardDispatcher.cpp in Sources */,
+				465E20BA176AC7DF001D853C /* CCComponent.cpp in Sources */,
+				465E20BC176AC7DF001D853C /* CCComponentContainer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1622,21 +1666,27 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
-					"$(inherited)",
+					CC_TARGET_OS_MAC,
+					"COCOS2D_DEBUG=1",
+					USE_FILE32API,
+					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
+					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)../include";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -1646,15 +1696,21 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				COPY_PHASE_STRIP = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
+					NDEBUG,
+					CC_TARGET_OS_MAC,
+					USE_FILE32API,
+					CC_KEYBOARD_SUPPORT,
+				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)../include";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1666,11 +1722,6 @@
 				DSTROOT = /tmp/cocos2dx.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cocos2dx-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_FILE32API,
-					CC_TARGET_OS_MAC,
-					"COCOS2D_DEBUG=1",
-				);
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/..\"",
 					"\"$(SRCROOT)/../include\"",
@@ -1693,13 +1744,8 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/cocos2dx.dst;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cocos2dx-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_FILE32API,
-					CC_TARGET_OS_MAC,
-				);
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/..\"",
 					"\"$(SRCROOT)/../include\"",

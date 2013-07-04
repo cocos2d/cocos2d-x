@@ -97,6 +97,16 @@
 			<locationURI>PARENT-1-PROJECT_LOC/CCConfiguration.h</locationURI>
 		</link>
 		<link>
+			<name>ccFPSImages.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/ccFPSImages.c</locationURI>
+		</link>
+		<link>
+			<name>ccFPSImages.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/ccFPSImages.h</locationURI>
+		</link>
+		<link>
 			<name>CCDirector.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/CCDirector.cpp</locationURI>

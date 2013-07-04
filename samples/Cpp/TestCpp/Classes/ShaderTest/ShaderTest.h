@@ -3,21 +3,21 @@
 
 #include "../testBasic.h"
 #include "cocos-ext.h"
+#include "../BaseTest.h"
 
 USING_NS_CC_EXT;
 
-class ShaderTestDemo : public CCLayer
+class ShaderTestDemo : public BaseTest
 {
 public:
     ShaderTestDemo(void);
 
     virtual std::string title();
     virtual std::string subtitle();
-    virtual bool init();
 
-    void restartCallback(CCObject* pSender);
-    void nextCallback(CCObject* pSender);
-    void backCallback(CCObject* pSender);
+    void restartCallback(Object* pSender);
+    void nextCallback(Object* pSender);
+    void backCallback(Object* pSender);
 
     CREATE_FUNC(ShaderTestDemo);
 };
@@ -90,11 +90,11 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
     virtual bool init();
-    CCControlSlider* createSliderCtl();
-    void sliderAction(CCObject* sender, CCControlEvent controlEvent);
+    ControlSlider* createSliderCtl();
+    void sliderAction(Object* sender, ControlEvent controlEvent);
 protected:
-    SpriteBlur* m_pBlurSprite;
-    CCControlSlider* m_pSliderCtl;
+    SpriteBlur* _blurSprite;
+    ControlSlider* _sliderCtl;
 };
 
 class ShaderRetroEffect : public ShaderTestDemo
@@ -106,11 +106,11 @@ public:
     bool init();
     void update(float dt);
 protected:
-    CCLabelBMFont* m_pLabel;
-    float           m_fAccum;
+    LabelBMFont* _label;
+    float           _accum;
 };
 
-class ShaderNode : public CCNode
+class ShaderNode : public Node
 {
 public:
     ShaderNode();
@@ -118,22 +118,22 @@ public:
 
     bool initWithVertex(const char *vert, const char *frag);
     void loadShaderVertex(const char *vert, const char *frag);
-    void listenBackToForeground(CCObject *obj);
+    void listenBackToForeground(Object *obj);
 
     virtual void update(float dt);
-    virtual void setPosition(const CCPoint &newPosition);
+    virtual void setPosition(const Point &newPosition);
     virtual void draw();
 
     static ShaderNode* shaderNodeWithVertex(const char *vert, const char *frag);
 
 private:
 
-    ccVertex2F m_center;
-    ccVertex2F m_resolution;
-    float      m_time;
-    GLuint     m_uniformCenter, m_uniformResolution, m_uniformTime;
-    std::string m_vertFileName;
-    std::string m_fragFileName;
+    ccVertex2F _center;
+    ccVertex2F _resolution;
+    float      _time;
+    GLuint     _uniformCenter, _uniformResolution, _uniformTime;
+    std::string _vertFileName;
+    std::string _fragFileName;
 };
 
 class ShaderFail : public ShaderTestDemo

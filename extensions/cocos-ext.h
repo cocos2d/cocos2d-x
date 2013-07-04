@@ -48,4 +48,8 @@
 
 #include "spine/spine-cocos2dx.h"
 
+#include "Components/CCComAttribute.h"
+#include "Components/CCComAudio.h"
+#include "Components/CCComController.h"
+
 #endif /* __COCOS2D_EXT_H__ */

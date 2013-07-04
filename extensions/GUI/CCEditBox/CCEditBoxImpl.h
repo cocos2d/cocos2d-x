@@ -33,13 +33,13 @@
 NS_CC_EXT_BEGIN
 
 
-class CCEditBoxImpl
+class EditBoxImpl
 {
 public:
-    CCEditBoxImpl(CCEditBox* pEditBox) : m_pDelegate(NULL),m_pEditBox(pEditBox) {}
-    virtual ~CCEditBoxImpl() {}
+    EditBoxImpl(EditBox* pEditBox) : _delegate(NULL),_editBox(pEditBox) {}
+    virtual ~EditBoxImpl() {}
     
-    virtual bool initWithSize(const CCSize& size) = 0;
+    virtual bool initWithSize(const Size& size) = 0;
     virtual void setFont(const char* pFontName, int fontSize) = 0;
     virtual void setFontColor(const ccColor3B& color) = 0;
     virtual void setPlaceholderFont(const char* pFontName, int fontSize) = 0;
@@ -59,24 +59,24 @@ public:
     virtual void openKeyboard() = 0;
     virtual void closeKeyboard() = 0;
     
-    virtual void setPosition(const CCPoint& pos) = 0;
+    virtual void setPosition(const Point& pos) = 0;
     virtual void setVisible(bool visible) = 0;
-    virtual void setContentSize(const CCSize& size) = 0;
-	virtual void setAnchorPoint(const CCPoint& anchorPoint) = 0;
+    virtual void setContentSize(const Size& size) = 0;
+	virtual void setAnchorPoint(const Point& anchorPoint) = 0;
     virtual void visit(void) = 0;
     virtual void onEnter(void) = 0;
     
     
-    void setDelegate(CCEditBoxDelegate* pDelegate) { m_pDelegate = pDelegate; };
-    CCEditBoxDelegate* getDelegate() { return m_pDelegate; };
-    CCEditBox* getCCEditBox() { return m_pEditBox; };
+    void setDelegate(EditBoxDelegate* pDelegate) { _delegate = pDelegate; };
+    EditBoxDelegate* getDelegate() { return _delegate; };
+    EditBox* getEditBox() { return _editBox; };
 protected:
-    CCEditBoxDelegate* m_pDelegate;
-    CCEditBox* m_pEditBox;
+    EditBoxDelegate* _delegate;
+    EditBox* _editBox;
 };
 
-// This method must be implemented at each subclass of CCEditBoxImpl.
-extern CCEditBoxImpl* __createSystemEditBox(CCEditBox* pEditBox);
+// This method must be implemented at each subclass of EditBoxImpl.
+extern EditBoxImpl* __createSystemEditBox(EditBox* pEditBox);
 
 
 NS_CC_EXT_END

@@ -206,7 +206,7 @@ JSBool jsval_to_TAdsDeveloperInfo(JSContext *cx, jsval v, TAdsDeveloperInfo* ret
     return jsval_to_TProductInfo(cx, v, ret);
 }
 
-JSBool jsval_to_TSocialDeveloperInfo(JSContext *cx, jsval v, TSocialDeveloperInfo* ret)
+JSBool jsval_to_TShareDeveloperInfo(JSContext *cx, jsval v, TShareDeveloperInfo* ret)
 {
     return jsval_to_TProductInfo(cx, v, ret);
 }
@@ -234,6 +234,11 @@ JSBool jsval_to_LogEventParamMap(JSContext *cx, jsval v, LogEventParamMap** ret)
     }
 
     return jsret;
+}
+
+JSBool jsval_to_StringMap(JSContext *cx, jsval v, StringMap* ret)
+{
+    return jsval_to_TProductInfo(cx, v, ret);
 }
 
 // From native type to jsval

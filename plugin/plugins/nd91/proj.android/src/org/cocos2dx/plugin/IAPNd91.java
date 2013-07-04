@@ -26,21 +26,16 @@ package org.cocos2dx.plugin;
 import java.util.Hashtable;
 import java.util.UUID;
 
-import org.cocos2dx.plugin.InterfaceIAP.IAPAdapter;
-
 import com.nd.commplatform.NdCommplatform;
 import com.nd.commplatform.NdErrorCode;
 import com.nd.commplatform.NdMiscCallbackListener;
-import com.nd.commplatform.entry.NdAppInfo;
 import com.nd.commplatform.entry.NdBuyInfo;
 
 import android.app.Activity;
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.util.Log;
 
-public class IAPNd91 implements IAPAdapter {
+public class IAPNd91 implements InterfaceIAP {
 
 	private static final String LOG_TAG = "IAPNd91";
 	private static Activity mContext = null;
@@ -72,27 +67,12 @@ public class IAPNd91 implements IAPAdapter {
 			@Override
 			public void run() {
 				try {
-					String appId = curCPInfo.get("Nd91AppId");
-					String appKey = curCPInfo.get("Nd91AppKey");
-					int id = Integer.parseInt(appId);
+				    String appId = curCPInfo.get("Nd91AppId");
+                    String appKey = curCPInfo.get("Nd91AppKey");
+                    int id = Integer.parseInt(appId);
 
-					NdAppInfo appInfo = new NdAppInfo();
-					appInfo.setCtx(mContext);
-
-					appInfo.setAppId(id);
-					appInfo.setAppKey(appKey);
-					
-					NdCommplatform.getInstance().initial(0, appInfo);
-
-					String orientation = curCPInfo.get("Nd91Orientation");
-					if (null != orientation) {
-						if (orientation.equals("landscape")) {
-							NdCommplatform.getInstance().ndSetScreenOrientation(NdCommplatform.SCREEN_ORIENTATION_LANDSCAPE);
-						} else
-						if (orientation.equals("auto")) {
-							NdCommplatform.getInstance().ndSetScreenOrientation(NdCommplatform.SCREEN_ORIENTATION_AUTO);
-						}
-					}
+                    String orientation = curCPInfo.get("Nd91Orientation");
+                    Nd91Wrapper.initSDK(mContext, id, appKey, orientation);
 				} catch (Exception e) {
 					LogE("Developer info is wrong!", e);
 				}
@@ -103,21 +83,21 @@ public class IAPNd91 implements IAPAdapter {
 	@Override
 	public void payForProduct(Hashtable<String, String> info) {
 		LogD("payForProduct invoked " + info.toString());
-		if (! networkReachable()) {
-			payResult(InterfaceIAP.PAYRESULT_FAIL, "网络不可用");
+		if (! Nd91Wrapper.networkReachable(mContext)) {
+			payResult(IAPWrapper.PAYRESULT_FAIL, "网络不可用");
 			return;
 		}
 
 		curProductInfo = info;
 		if (curProductInfo == null) {
-			payResult(InterfaceIAP.PAYRESULT_FAIL, "商品信息错误");
+			payResult(IAPWrapper.PAYRESULT_FAIL, "商品信息错误");
 			return;
 		}
 
 		PluginWrapper.runOnMainThread(new Runnable() {
 			@Override
 			public void run() {
-				if (! isLogin()) {
+				if (! Nd91Wrapper.isLogined()) {
 					userLogin();
 				} else {
 					addPayment(curProductInfo);
@@ -133,24 +113,11 @@ public class IAPNd91 implements IAPAdapter {
 
 	@Override
 	public String getSDKVersion() {
-		return "Unknown version";
-	}
-
-	private boolean networkReachable() {
-		boolean bRet = false;
-		try {
-			ConnectivityManager conn = (ConnectivityManager)mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-			NetworkInfo netInfo = conn.getActiveNetworkInfo();
-			bRet = (null == netInfo) ? false : netInfo.isAvailable();
-		} catch (Exception e) {
-			LogE("Fail to check network status", e);
-		}
-		LogD("NetWork reachable : " + bRet);
-		return bRet;
+		return Nd91Wrapper.getSDKVersion();
 	}
 
 	private static void payResult(int ret, String msg) {
-		InterfaceIAP.onPayResult(mNd91, ret, msg);
+		IAPWrapper.onPayResult(mNd91, ret, msg);
 		LogD("Nd91 result : " + ret + " msg : " + msg);
 	}
 
@@ -161,29 +128,23 @@ public class IAPNd91 implements IAPAdapter {
 		return text;
 	}
 
-	private static boolean isLogin() {
-		boolean bRet = NdCommplatform.getInstance().isLogined();
-		LogD("isLogin : " + bRet);
-		return bRet;
-	}
-
 	private static void userLogin() {
 		LogD("User begin login");
 		try {
-	 		NdCommplatform.getInstance().ndLogin(mContext, new NdMiscCallbackListener.OnLoginProcessListener() {
+	 		Nd91Wrapper.userLogin(mContext, new NdMiscCallbackListener.OnLoginProcessListener() {
     			@Override
 	 			public void finishLoginProcess(int code) {
 	 				if (code == NdErrorCode.ND_COM_PLATFORM_SUCCESS) {
 	 					addPayment(curProductInfo);
 	 				} else if (code == NdErrorCode.ND_COM_PLATFORM_ERROR_CANCEL) {
-	 					payResult(InterfaceIAP.PAYRESULT_FAIL, "用户取消登录");
+	 					payResult(IAPWrapper.PAYRESULT_FAIL, "用户取消登录");
 	 				} else {
-	 					payResult(InterfaceIAP.PAYRESULT_FAIL, "用户登录失败");
+	 					payResult(IAPWrapper.PAYRESULT_FAIL, "用户登录失败");
 	 				}
 	 			}
 	 		});
 		} catch (Exception e) {
-			payResult(InterfaceIAP.PAYRESULT_FAIL, "用户登录失败");
+			payResult(IAPWrapper.PAYRESULT_FAIL, "用户登录失败");
 			LogE("User login error", e);
 		}
 	}
@@ -199,7 +160,7 @@ public class IAPNd91 implements IAPAdapter {
 				String strCount = productInfo.get("Nd91ProductCount");
 
 				if (id == null || id.length() == 0) {
-					payResult(InterfaceIAP.PAYRESULT_FAIL, "商品信息错误");
+					payResult(IAPWrapper.PAYRESULT_FAIL, "商品信息错误");
 					break;
 				}
 
@@ -230,24 +191,29 @@ public class IAPNd91 implements IAPAdapter {
 						IAPNd91.LogD("finishPayProcess code : " + code);
 						switch(code){
 						case NdErrorCode.ND_COM_PLATFORM_SUCCESS:
-							IAPNd91.payResult(InterfaceIAP.PAYRESULT_SUCCESS, "购买成功");
+							IAPNd91.payResult(IAPWrapper.PAYRESULT_SUCCESS, "购买成功"); break;
 						case NdErrorCode.ND_COM_PLATFORM_ERROR_PAY_FAILURE:
-							IAPNd91.payResult(InterfaceIAP.PAYRESULT_FAIL, "购买失败"); break;
+							IAPNd91.payResult(IAPWrapper.PAYRESULT_FAIL, "购买失败"); break;
 						case NdErrorCode.ND_COM_PLATFORM_ERROR_PAY_CANCEL:
-							IAPNd91.payResult(InterfaceIAP.PAYRESULT_CANCEL, "取消购买"); break;
+							IAPNd91.payResult(IAPWrapper.PAYRESULT_CANCEL, "取消购买"); break;
 						default:
-							IAPNd91.payResult(InterfaceIAP.PAYRESULT_FAIL, "购买失败"); break;
+							IAPNd91.payResult(IAPWrapper.PAYRESULT_FAIL, "购买失败"); break;
 						}
 					}
     			});
 
 				if (aError != 0) {
-					IAPNd91.payResult(InterfaceIAP.PAYRESULT_FAIL, "您输入参数有错,无法提交购买请求");
+					IAPNd91.payResult(IAPWrapper.PAYRESULT_FAIL, "您输入参数有错,无法提交购买请求");
 				}
 			} while (false);
 		} catch (Exception e) {
 			LogE("Error during payment", e);
-			IAPNd91.payResult(InterfaceIAP.PAYRESULT_FAIL, "支付失败");
+			IAPNd91.payResult(IAPWrapper.PAYRESULT_FAIL, "支付失败");
 		}
+	}
+
+	@Override
+	public String getPluginVersion() {
+		return Nd91Wrapper.getPluginVersion();
 	}
 }

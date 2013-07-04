@@ -109,6 +109,11 @@ files
 	"*.h"
 	"*.cpp"
 	
+	("../keyboard_dispatcher")
+	[keyboard_dispatcher]
+	"*.h"
+	"*.cpp"
+
 	("../label_nodes")
 	[label_nodes]
 	"*.h"
@@ -186,6 +191,11 @@ files
 
 	("../support/zip_support")
 	[support/zip_support]
+	"*.h"
+	"*.cpp"
+    
+    ("../support/component")
+	[support/component]
 	"*.h"
 	"*.cpp"
 	

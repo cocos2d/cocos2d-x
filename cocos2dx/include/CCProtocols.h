@@ -33,9 +33,9 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * RGBA protocol that affects CCNode's color and opacity
+ * RGBA protocol that affects Node's color and opacity
  */
-class CC_DLL CCRGBAProtocol
+class CC_DLL RGBAProtocol
 {
 public:
     /** 
@@ -50,21 +50,21 @@ public:
      *
      * @return The ccColor3B contains R,G,B bytes.
      */
-    virtual const ccColor3B& getColor(void) = 0;
+    virtual const ccColor3B& getColor(void) const = 0;
     
     /**
      * Returns the displayed color.
      *
      * @return The ccColor3B contains R,G,B bytes.
      */
-    virtual const ccColor3B& getDisplayedColor(void) = 0;
+    virtual const ccColor3B& getDisplayedColor(void) const = 0;
     
     /**
      * Returns the displayed opacity.
      *
      * @return  The opacity of sprite, from 0 ~ 255
      */
-    virtual GLubyte getDisplayedOpacity(void) = 0;
+    virtual GLubyte getDisplayedOpacity(void) const = 0;
     /**
      * Returns the opacity.
      *
@@ -73,7 +73,7 @@ public:
      *
      * @return  The opacity of sprite, from 0 ~ 255
      */
-    virtual GLubyte getOpacity(void) = 0;
+    virtual GLubyte getOpacity(void) const = 0;
 
     /**
      * Changes the opacity.
@@ -100,12 +100,12 @@ public:
      *
      * @return  Returns opacity modify flag.
      */
-    virtual bool isOpacityModifyRGB(void) = 0;
+    virtual bool isOpacityModifyRGB(void) const = 0;
     
     /**
      *  whether or not color should be propagated to its children.
      */
-    virtual bool isCascadeColorEnabled(void) = 0;
+    virtual bool isCascadeColorEnabled(void) const = 0;
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled) = 0;
     
     /** 
@@ -116,7 +116,7 @@ public:
     /** 
      *  whether or not opacity should be propagated to its children.
      */
-    virtual bool isCascadeOpacityEnabled(void) = 0;
+    virtual bool isCascadeOpacityEnabled(void) const = 0;
     virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) = 0;
     
     /**
@@ -130,7 +130,7 @@ public:
  * Please refer to glBlendFunc in OpenGL ES Manual
  * http://www.khronos.org/opengles/sdk/docs/man/xhtml/glBlendFunc.xml for more details.
  */
-class CC_DLL CCBlendProtocol
+class CC_DLL BlendProtocol
 {
 public:
     /**
@@ -140,18 +140,18 @@ public:
      *                  e.g. {GL_ONE, GL_ONE}, {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}.
      *
      */
-    virtual void setBlendFunc(ccBlendFunc blendFunc) = 0;
+    virtual void setBlendFunc(const ccBlendFunc &blendFunc) = 0;
 
     /**
      * Returns the blending function that is currently being used.
      * 
      * @return A ccBlendFunc structure with source and destination factor which specified pixel arithmetic.
      */
-    virtual ccBlendFunc getBlendFunc(void) = 0;
+    virtual const ccBlendFunc &getBlendFunc(void) const = 0;
 };
 
 /** 
- * CCNode objects that uses a CCTexture2D to render the images.
+ * Node objects that uses a Texture2D to render the images.
  * The texture can have a blending function.
  * If the texture has alpha premultiplied the default blending function is:
  *   src=GL_ONE dst= GL_ONE_MINUS_SRC_ALPHA
@@ -159,7 +159,7 @@ public:
  *   src=GL_SRC_ALPHA dst= GL_ONE_MINUS_SRC_ALPHA
  * But you can change the blending function at any time.
  */
-class CC_DLL CCTextureProtocol : public CCBlendProtocol
+class CC_DLL TextureProtocol : public BlendProtocol
 {
 public:
     /**
@@ -167,20 +167,20 @@ public:
      *
      * @return  The texture that is currenlty being used.
      */
-    virtual CCTexture2D* getTexture(void) = 0;
+    virtual Texture2D* getTexture(void) = 0;
 
     /**
      * Sets a new texuture. It will be retained.
      *
-     * @param   texture A valid CCTexture2D object, which will be applied to this sprite object.
+     * @param   texture A valid Texture2D object, which will be applied to this sprite object.
      */
-    virtual void setTexture(CCTexture2D *texture) = 0;
+    virtual void setTexture(Texture2D *texture) = 0;
 };
 
 /**
  * Common interface for Labels
  */
-class CC_DLL CCLabelProtocol
+class CC_DLL LabelProtocol
 {
 public:
     /**
@@ -195,17 +195,17 @@ public:
      *
      * @return The string that is currently being used in this label
      */
-    virtual const char* getString(void) = 0;
+    virtual const char* getString(void) const = 0;
 };
 
 /** 
  * OpenGL projection protocol 
  */
-class CC_DLL CCDirectorDelegate
+class CC_DLL DirectorDelegate
 {
 public:
     /** 
-     * Will be called by CCDirector when the projection is updated, and "custom" projection is used
+     * Will be called by Director when the projection is updated, and "custom" projection is used
      */
     virtual void updateProjection(void) = 0;
 };

@@ -33,6 +33,30 @@
 
 	<key>Definitions</key>
 	<dict>
+		<key>libs/lua/cocos2dx_support/CCBProxy.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>cocos2dx_support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/cocos2dx_support/CCBProxy.cpp</string>
+		</dict>
+		<key>libs/lua/cocos2dx_support/CCBProxy.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>cocos2dx_support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/cocos2dx_support/CCBProxy.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/lua/cocos2dx_support/CCLuaBridge.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -153,6 +177,54 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/lua/cocos2dx_support/Lua_extensions_CCB.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>cocos2dx_support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/cocos2dx_support/Lua_extensions_CCB.cpp</string>
+		</dict>
+		<key>libs/lua/cocos2dx_support/Lua_extensions_CCB.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>cocos2dx_support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/cocos2dx_support/Lua_extensions_CCB.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/lua/cocos2dx_support/Lua_web_socket.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>cocos2dx_support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/cocos2dx_support/Lua_web_socket.cpp</string>
+		</dict>
+		<key>libs/lua/cocos2dx_support/Lua_web_socket.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>cocos2dx_support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/cocos2dx_support/Lua_web_socket.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/lua/cocos2dx_support/LuaCocos2d.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -174,6 +246,54 @@
 			</array>
 			<key>Path</key>
 			<string>libs/lua/cocos2dx_support/LuaCocos2d.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/lua/cocos2dx_support/LuaOpengl.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>cocos2dx_support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/cocos2dx_support/LuaOpengl.cpp</string>
+		</dict>
+		<key>libs/lua/cocos2dx_support/LuaOpengl.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>cocos2dx_support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/cocos2dx_support/LuaOpengl.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/lua/cocos2dx_support/LuaScrollView.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>cocos2dx_support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/cocos2dx_support/LuaScrollView.cpp</string>
+		</dict>
+		<key>libs/lua/cocos2dx_support/LuaScrollView.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>cocos2dx_support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/cocos2dx_support/LuaScrollView.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -297,6 +417,84 @@
 			<key>Path</key>
 			<string>libs/lua/luajit/ios/libluajit.a</string>
 		</dict>
+		<key>libs/lua/proj.ios/luabindings-Prefix.pch</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>proj.ios</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/proj.ios/luabindings-Prefix.pch</string>
+		</dict>
+		<key>libs/lua/proj.ios/luabindings.xcodeproj/project.pbxproj</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>proj.ios</string>
+				<string>luabindings.xcodeproj</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/proj.ios/luabindings.xcodeproj/project.pbxproj</string>
+		</dict>
+		<key>libs/lua/script/AudioEngine.lua</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>script</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/script/AudioEngine.lua</string>
+		</dict>
+		<key>libs/lua/script/CCBReaderLoad.lua</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>script</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/script/CCBReaderLoad.lua</string>
+		</dict>
+		<key>libs/lua/script/Cocos2dConstants.lua</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>script</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/script/Cocos2dConstants.lua</string>
+		</dict>
+		<key>libs/lua/script/Opengl.lua</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>script</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/script/Opengl.lua</string>
+		</dict>
+		<key>libs/lua/script/OpenglConstants.lua</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>script</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/script/OpenglConstants.lua</string>
+		</dict>
 		<key>libs/lua/tolua/tolua++.h</key>
 		<dict>
 			<key>Group</key>
@@ -381,6 +579,8 @@
 	</dict>
 	<key>Nodes</key>
 	<array>
+		<string>libs/lua/cocos2dx_support/CCBProxy.cpp</string>
+		<string>libs/lua/cocos2dx_support/CCBProxy.h</string>
 		<string>libs/lua/cocos2dx_support/CCLuaBridge.cpp</string>
 		<string>libs/lua/cocos2dx_support/CCLuaBridge.h</string>
 		<string>libs/lua/cocos2dx_support/CCLuaEngine.cpp</string>
@@ -391,8 +591,16 @@
 		<string>libs/lua/cocos2dx_support/CCLuaValue.h</string>
 		<string>libs/lua/cocos2dx_support/Cocos2dxLuaLoader.cpp</string>
 		<string>libs/lua/cocos2dx_support/Cocos2dxLuaLoader.h</string>
+		<string>libs/lua/cocos2dx_support/Lua_extensions_CCB.cpp</string>
+		<string>libs/lua/cocos2dx_support/Lua_extensions_CCB.h</string>
+		<string>libs/lua/cocos2dx_support/Lua_web_socket.cpp</string>
+		<string>libs/lua/cocos2dx_support/Lua_web_socket.h</string>
 		<string>libs/lua/cocos2dx_support/LuaCocos2d.cpp</string>
 		<string>libs/lua/cocos2dx_support/LuaCocos2d.h</string>
+		<string>libs/lua/cocos2dx_support/LuaOpengl.cpp</string>
+		<string>libs/lua/cocos2dx_support/LuaOpengl.h</string>
+		<string>libs/lua/cocos2dx_support/LuaScrollView.cpp</string>
+		<string>libs/lua/cocos2dx_support/LuaScrollView.h</string>
 		<string>libs/lua/cocos2dx_support/platform/ios/CCLuaObjcBridge.h</string>
 		<string>libs/lua/cocos2dx_support/platform/ios/CCLuaObjcBridge.mm</string>
 		<string>libs/lua/cocos2dx_support/tolua_fix.c</string>
@@ -402,6 +610,13 @@
 		<string>libs/lua/luajit/include/luaconf.h</string>
 		<string>libs/lua/luajit/include/lualib.h</string>
 		<string>libs/lua/luajit/ios/libluajit.a</string>
+		<string>libs/lua/proj.ios/luabindings-Prefix.pch</string>
+		<string>libs/lua/proj.ios/luabindings.xcodeproj/project.pbxproj</string>
+		<string>libs/lua/script/AudioEngine.lua</string>
+		<string>libs/lua/script/CCBReaderLoad.lua</string>
+		<string>libs/lua/script/Cocos2dConstants.lua</string>
+		<string>libs/lua/script/Opengl.lua</string>
+		<string>libs/lua/script/OpenglConstants.lua</string>
 		<string>libs/lua/tolua/tolua++.h</string>
 		<string>libs/lua/tolua/tolua_event.c</string>
 		<string>libs/lua/tolua/tolua_event.h</string>

@@ -12,8 +12,6 @@
 #include "jsb_opengl_registration.h"
 
 #include "jsb_pluginx_protocols_auto.hpp"
-#include "jsb_pluginx_alipay_auto.hpp"
-#include "jsb_pluginx_nd91_auto.hpp"
 #include "jsb_pluginx_extension_registration.h"
 
 USING_NS_CC;
@@ -25,14 +23,14 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
-    CCScriptEngineManager::sharedManager()->purgeSharedManager();
+    ScriptEngineManager::purgeSharedManager();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    CCDirector *pDirector = CCDirector::sharedDirector();
-    pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
+    Director *pDirector = Director::sharedDirector();
+    pDirector->setOpenGLView(EGLView::sharedOpenGLView());
     
     // turn on display FPS
     pDirector->setDisplayStats(true);
@@ -50,14 +48,12 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(JSB_register_opengl);
     
     sc->addRegisterCallback(register_all_pluginx_protocols);
-    sc->addRegisterCallback(register_all_pluginx_alipay);
-    sc->addRegisterCallback(register_all_pluginx_nd91);
     sc->addRegisterCallback(register_pluginx_js_extensions);
 
     sc->start();
     
-    CCScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
-    CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
+    ScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
+    ScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
     ScriptingCore::getInstance()->runScript("main.js");
        
     return true;
@@ -66,7 +62,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    CCDirector::sharedDirector()->stopAnimation();
+    Director::sharedDirector()->stopAnimation();
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
     SimpleAudioEngine::sharedEngine()->pauseAllEffects();
 }
@@ -74,7 +70,7 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    CCDirector::sharedDirector()->startAnimation();
+    Director::sharedDirector()->startAnimation();
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
     SimpleAudioEngine::sharedEngine()->resumeAllEffects();
 }

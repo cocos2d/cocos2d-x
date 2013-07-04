@@ -7,7 +7,11 @@
 #include "ProtocolIAP.h"
 #include "ProtocolAnalytics.h"
 #include "ProtocolAds.h"
-#include "ProtocolSocial.h"
+#include "ProtocolShare.h"
+
+#ifndef CCLOGINFO
+#define CCLOGINFO(...)      
+#endif
 
 using namespace cocos2d::plugin;
 
@@ -23,10 +27,11 @@ JSBool jsval_to_std_string(JSContext *cx, jsval v, std::string* ret);
 JSBool jsval_to_TProductInfo(JSContext *cx, jsval v, TProductInfo* ret);
 JSBool jsval_to_TIAPDeveloperInfo(JSContext *cx, jsval v, TIAPDeveloperInfo* ret);
 JSBool jsval_to_TAdsDeveloperInfo(JSContext *cx, jsval v, TAdsDeveloperInfo* ret);
-JSBool jsval_to_TSocialDeveloperInfo(JSContext *cx, jsval v, TSocialDeveloperInfo* ret);
+JSBool jsval_to_TShareDeveloperInfo(JSContext *cx, jsval v, TShareDeveloperInfo* ret);
 JSBool jsval_to_TShareInfo(JSContext *cx, jsval v, TShareInfo* ret);
 JSBool jsval_to_TPaymentInfo(JSContext *cx, jsval v, std::map<std::string, std::string>* ret);
 JSBool jsval_to_LogEventParamMap(JSContext *cx, jsval v, LogEventParamMap** ret);
+JSBool jsval_to_StringMap(JSContext *cx, jsval v, StringMap* ret);
 
 // from native
 jsval int32_to_jsval( JSContext *cx, int32_t l);

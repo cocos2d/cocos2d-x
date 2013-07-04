@@ -37,6 +37,9 @@ struct AttachmentLoader {
 	const char* error2;
 
 	const void* const vtable;
+#ifdef __cplusplus
+	AttachmentLoader () : error1(0), error2(0), vtable(0) {}
+#endif
 };
 
 void AttachmentLoader_dispose (AttachmentLoader* self);

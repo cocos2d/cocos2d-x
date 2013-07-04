@@ -2,12 +2,7 @@ COCOS_ROOT = ../..
 COCOS_SRC_ROOT = $(COCOS_ROOT)/cocos2dx
 
 INCLUDES = \
-	-I$(COCOS_ROOT)/extensions \
-	-I$(COCOS_ROOT)/extensions/CCBReader \
-	-I$(COCOS_ROOT)/extensions/GUI/CCControlExtension \
-	-I$(COCOS_ROOT)/external/chipmunk/include/chipmunk \
-	-I$(COCOS_ROOT)/extensions/network \
-	-I$(NACL_SDK_ROOT)/include \
+	-I$(NACL_SDK_ROOT)/include
 
 SOURCES = ../actions/CCAction.cpp \
 ../actions/CCActionCamera.cpp \
@@ -42,6 +37,7 @@ SOURCES = ../actions/CCAction.cpp \
 ../effects/CCGrid.cpp \
 ../keypad_dispatcher/CCKeypadDelegate.cpp \
 ../keypad_dispatcher/CCKeypadDispatcher.cpp \
+../keyboard_dispatcher/CCKeyboardDispatcher.cpp \
 ../label_nodes/CCLabelAtlas.cpp \
 ../label_nodes/CCLabelBMFont.cpp \
 ../label_nodes/CCLabelTTF.cpp \
@@ -95,6 +91,8 @@ SOURCES = ../actions/CCAction.cpp \
 ../support/zip_support/ioapi.cpp \
 ../support/zip_support/unzip.cpp \
 ../support/data_support/ccCArray.cpp \
+../support/component/CCComponent.cpp \
+../support/component/CCComponentContainer.cpp \
 ../text_input_node/CCIMEDispatcher.cpp \
 ../text_input_node/CCTextFieldTTF.cpp \
 ../textures/CCTexture2D.cpp \
@@ -102,6 +100,7 @@ SOURCES = ../actions/CCAction.cpp \
 ../textures/CCTextureCache.cpp \
 ../textures/CCTextureETC.cpp \
 ../textures/CCTexturePVR.cpp \
+../textures/etc/etc1.cpp\
 ../tilemap_parallax_nodes/CCParallaxNode.cpp \
 ../tilemap_parallax_nodes/CCTMXLayer.cpp \
 ../tilemap_parallax_nodes/CCTMXObjectGroup.cpp \

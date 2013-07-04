@@ -226,6 +226,12 @@
     <Filter Include="Classes\ConfigurationTest">
       <UniqueIdentifier>{81ec2355-7efd-49e0-b6cb-b1bba23fbbc8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ExtensionsTest\ArmatureTest">
+      <UniqueIdentifier>{f0a099b9-0cf3-4217-a311-8d2f84e503c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\ComponentsTest">
+      <UniqueIdentifier>{285cdfb8-5749-4969-ae31-99ec25f15e6e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -509,6 +515,33 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ConfigurationTest\ConfigurationTest.cpp">
       <Filter>Classes\ConfigurationTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.cpp">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BaseTest.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\ArmatureTest\ArmatureScene.cpp">
+      <Filter>Classes\ExtensionsTest\ArmatureTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\ComponentsTest\ComponentsTestScene.cpp">
+      <Filter>Classes\ExtensionsTest\ComponentsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\ComponentsTest\EnemyController.cpp">
+      <Filter>Classes\ExtensionsTest\ComponentsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\ComponentsTest\GameOverScene.cpp">
+      <Filter>Classes\ExtensionsTest\ComponentsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\ComponentsTest\PlayerController.cpp">
+      <Filter>Classes\ExtensionsTest\ComponentsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\ComponentsTest\ProjectileController.cpp">
+      <Filter>Classes\ExtensionsTest\ComponentsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\ComponentsTest\SceneController.cpp">
+      <Filter>Classes\ExtensionsTest\ComponentsTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -973,6 +1006,33 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ConfigurationTest\ConfigurationTest.h">
       <Filter>Classes\ConfigurationTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.h">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BaseTest.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\ArmatureTest\ArmatureScene.h">
+      <Filter>Classes\ExtensionsTest\ArmatureTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\ComponentsTest\ComponentsTestScene.h">
+      <Filter>Classes\ExtensionsTest\ComponentsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\ComponentsTest\EnemyController.h">
+      <Filter>Classes\ExtensionsTest\ComponentsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\ComponentsTest\GameOverScene.h">
+      <Filter>Classes\ExtensionsTest\ComponentsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\ComponentsTest\PlayerController.h">
+      <Filter>Classes\ExtensionsTest\ComponentsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\ComponentsTest\ProjectileController.h">
+      <Filter>Classes\ExtensionsTest\ComponentsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\ComponentsTest\SceneController.h">
+      <Filter>Classes\ExtensionsTest\ComponentsTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

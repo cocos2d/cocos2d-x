@@ -5,11 +5,11 @@
 
 static int sceneIdx = -1;
 
-CCLayer* nextZwoptexTest();
-CCLayer* backZwoptexTest();
-CCLayer* restartZwoptexTest();
+Layer* nextZwoptexTest();
+Layer* backZwoptexTest();
+Layer* restartZwoptexTest();
 
-CCLayer* createZwoptexLayer(int nIndex)
+Layer* createZwoptexLayer(int nIndex)
 {
     switch(nIndex)
     {
@@ -19,33 +19,33 @@ CCLayer* createZwoptexLayer(int nIndex)
     return NULL;
 }
 
-CCLayer* nextZwoptexTest()
+Layer* nextZwoptexTest()
 {
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    CCLayer* pLayer = createZwoptexLayer(sceneIdx);
+    Layer* pLayer = createZwoptexLayer(sceneIdx);
     pLayer->autorelease();
 
     return pLayer;
 }
 
-CCLayer* backZwoptexTest()
+Layer* backZwoptexTest()
 {
     sceneIdx--;
     int total = MAX_LAYER;
     if( sceneIdx < 0 )
         sceneIdx += total;    
 
-    CCLayer* pLayer = createZwoptexLayer(sceneIdx);
+    Layer* pLayer = createZwoptexLayer(sceneIdx);
     pLayer->autorelease();
 
     return pLayer;
 }
 
-CCLayer* restartZwoptexTest()
+Layer* restartZwoptexTest()
 {
-    CCLayer* pLayer = createZwoptexLayer(sceneIdx);
+    Layer* pLayer = createZwoptexLayer(sceneIdx);
     pLayer->autorelease();
 
     return pLayer;
@@ -58,54 +58,28 @@ CCLayer* restartZwoptexTest()
 //------------------------------------------------------------------
 void ZwoptexTest::onEnter()
 {
-    CCLayer::onEnter();
-
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-    
-    CCLabelTTF *label = CCLabelTTF::create(title().c_str(), "Arial", 26);
-    addChild(label, 1);
-    label->setPosition(ccp(s.width/2, s.height-50));
-    
-    std::string strSubTitle = subtitle();
-    if (strSubTitle.length() > 0)
-    {
-        CCLabelTTF *l = CCLabelTTF::create(strSubTitle.c_str(), "Thonburi", 16);
-        addChild(l, 1);
-        l->setPosition(ccp(s.width/2, s.height-80));
-    }
-    
-    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(ZwoptexTest::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(ZwoptexTest::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(ZwoptexTest::nextCallback) );
-    
-    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
-    
-    menu->setPosition(CCPointZero);
-    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    addChild(menu, 1);
+    BaseTest::onEnter();
 }
 
-void ZwoptexTest::restartCallback(CCObject* pSender)
+void ZwoptexTest::restartCallback(Object* pSender)
 {
-    CCScene *s = ZwoptexTestScene::create();
+    Scene *s = ZwoptexTestScene::create();
     s->addChild(restartZwoptexTest());
-    CCDirector::sharedDirector()->replaceScene(s);
+    Director::sharedDirector()->replaceScene(s);
 }
 
-void ZwoptexTest::nextCallback(CCObject* pSender)
+void ZwoptexTest::nextCallback(Object* pSender)
 {
-    CCScene *s = ZwoptexTestScene::create();
+    Scene *s = ZwoptexTestScene::create();
     s->addChild(nextZwoptexTest());
-    CCDirector::sharedDirector()->replaceScene(s);
+    Director::sharedDirector()->replaceScene(s);
 }
 
-void ZwoptexTest::backCallback(CCObject* pSender)
+void ZwoptexTest::backCallback(Object* pSender)
 {
-    CCScene *s = ZwoptexTestScene::create();
+    Scene *s = ZwoptexTestScene::create();
     s->addChild(backZwoptexTest());
-    CCDirector::sharedDirector()->replaceScene(s);
+    Director::sharedDirector()->replaceScene(s);
 }
 
 std::string ZwoptexTest::title()
@@ -127,27 +101,27 @@ void ZwoptexGenericTest::onEnter()
 {
     ZwoptexTest::onEnter();
 
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    Size s = Director::sharedDirector()->getWinSize();
 
-    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("zwoptex/grossini.plist");
-    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("zwoptex/grossini-generic.plist");
+    SpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("zwoptex/grossini.plist");
+    SpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("zwoptex/grossini-generic.plist");
     
-    CCLayerColor *layer1 = CCLayerColor::create(ccc4(255, 0, 0, 255), 85, 121);
+    LayerColor *layer1 = LayerColor::create(ccc4(255, 0, 0, 255), 85, 121);
     layer1->setPosition(ccp(s.width/2-80 - (85.0f * 0.5f), s.height/2 - (121.0f * 0.5f)));
     addChild(layer1);
 
-    sprite1 = CCSprite::createWithSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("grossini_dance_01.png"));
+    sprite1 = Sprite::createWithSpriteFrame(SpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("grossini_dance_01.png"));
     sprite1->setPosition(ccp( s.width/2-80, s.height/2));
     addChild(sprite1);
 
     sprite1->setFlipX(false);
     sprite1->setFlipY(false);
 
-    CCLayerColor *layer2 = CCLayerColor::create(ccc4(255, 0, 0, 255), 85, 121);
+    LayerColor *layer2 = LayerColor::create(ccc4(255, 0, 0, 255), 85, 121);
     layer2->setPosition(ccp(s.width/2+80 - (85.0f * 0.5f), s.height/2 - (121.0f * 0.5f)));
     addChild(layer2);
     
-    sprite2 = CCSprite::createWithSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("grossini_dance_generic_01.png"));
+    sprite2 = Sprite::createWithSpriteFrame(SpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("grossini_dance_generic_01.png"));
     sprite2->setPosition(ccp( s.width/2 + 80, s.height/2));
     addChild(sprite2);
 
@@ -211,15 +185,15 @@ void ZwoptexGenericTest::flipSprites(float dt)
     char str2[32] = {0};
     sprintf(str1, "grossini_dance_%02d.png", spriteFrameIndex);
     sprintf(str2, "grossini_dance_generic_%02d.png", spriteFrameIndex);
-    sprite1->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(str1));
-    sprite2->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(str2));
+    sprite1->setDisplayFrame(SpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(str1));
+    sprite2->setDisplayFrame(SpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(str2));
 }
 
 ZwoptexGenericTest::~ZwoptexGenericTest()
 {
     sprite1->release();
     sprite2->release();
-    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    SpriteFrameCache *cache = SpriteFrameCache::sharedSpriteFrameCache();
     cache->removeSpriteFramesFromFile("zwoptex/grossini.plist");
     cache->removeSpriteFramesFromFile("zwoptex/grossini-generic.plist");
 }
@@ -236,8 +210,8 @@ std::string ZwoptexGenericTest::subtitle()
 
 void ZwoptexTestScene::runThisTest()
 {
-    CCLayer* pLayer = nextZwoptexTest();
+    Layer* pLayer = nextZwoptexTest();
     addChild(pLayer);
 
-    CCDirector::sharedDirector()->replaceScene(this);
+    Director::sharedDirector()->replaceScene(this);
 }

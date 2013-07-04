@@ -27,25 +27,18 @@ THE SOFTWARE.
 #include "PluginUtils.h"
 #include "PluginJavaData.h"
 
-#if 1
-#define  LOG_TAG    "ProtocolIAP"
-#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
-#else
-#define  LOGD(...) 
-#endif
-
 namespace cocos2d { namespace plugin {
 
 extern "C" {
-	JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_InterfaceIAP_nativeOnPayResult(JNIEnv*  env, jobject thiz, jstring className, jint ret, jstring msg)
+	JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_IAPWrapper_nativeOnPayResult(JNIEnv*  env, jobject thiz, jstring className, jint ret, jstring msg)
 	{
 		std::string strMsg = PluginJniHelper::jstring2string(msg);
 		std::string strClassName = PluginJniHelper::jstring2string(className);
 		PluginProtocol* pPlugin = PluginUtils::getPluginPtr(strClassName);
-		LOGD("nativeOnPayResult(), Get plugin ptr : %p", pPlugin);
+		PluginUtils::outputLog("ProtocolIAP", "nativeOnPayResult(), Get plugin ptr : %p", pPlugin);
 		if (pPlugin != NULL)
 		{
-			LOGD("nativeOnPayResult(), Get plugin name : %s", pPlugin->getPluginName());
+			PluginUtils::outputLog("ProtocolIAP", "nativeOnPayResult(), Get plugin name : %s", pPlugin->getPluginName());
 			ProtocolIAP* pIAP = dynamic_cast<ProtocolIAP*>(pPlugin);
 			if (pIAP != NULL)
 			{
@@ -55,28 +48,22 @@ extern "C" {
 	}
 }
 
-bool ProtocolIAP::m_bPaying = false;
+bool ProtocolIAP::_paying = false;
 
 ProtocolIAP::ProtocolIAP()
-: m_pListener(NULL)
+: _listener(NULL)
 {
 }
 
 ProtocolIAP::~ProtocolIAP()
 {
-    PluginUtils::erasePluginJavaData(this);
-}
-
-bool ProtocolIAP::init()
-{
-    return true;
 }
 
 void ProtocolIAP::configDeveloperInfo(TIAPDeveloperInfo devInfo)
 {
     if (devInfo.empty())
     {
-        LOGD("The developer info is empty!");
+        PluginUtils::outputLog("ProtocolIAP", "The developer info is empty!");
         return;
     }
     else
@@ -89,7 +76,7 @@ void ProtocolIAP::configDeveloperInfo(TIAPDeveloperInfo devInfo)
     		, "(Ljava/util/Hashtable;)V"))
     	{
         	// generate the hashtable from map
-        	jobject obj_Map = PluginUtils::createJavaMapObject(t, &devInfo);
+        	jobject obj_Map = PluginUtils::createJavaMapObject(&devInfo);
 
             // invoke java method
             t.env->CallVoidMethod(pData->jobj, t.methodID, obj_Map);
@@ -101,25 +88,25 @@ void ProtocolIAP::configDeveloperInfo(TIAPDeveloperInfo devInfo)
 
 void ProtocolIAP::payForProduct(TProductInfo info)
 {
-    if (m_bPaying)
+    if (_paying)
     {
-        LOGD("Now is paying");
+        PluginUtils::outputLog("ProtocolIAP", "Now is paying");
         return;
     }
 
     if (info.empty())
     {
-        if (NULL != m_pListener)
+        if (NULL != _listener)
         {
             onPayResult(kPayFail, "Product info error");
         }
-        LOGD("The product info is empty!");
+        PluginUtils::outputLog("ProtocolIAP", "The product info is empty!");
         return;
     }
     else
     {
-        m_bPaying = true;
-        m_curInfo = info;
+        _paying = true;
+        _curInfo = info;
 
         PluginJavaData* pData = PluginUtils::getPluginJavaData(this);
 		PluginJniMethodInfo t;
@@ -129,7 +116,7 @@ void ProtocolIAP::payForProduct(TProductInfo info)
 			, "(Ljava/util/Hashtable;)V"))
 		{
 			// generate the hashtable from map
-			jobject obj_Map = PluginUtils::createJavaMapObject(t, &info);
+			jobject obj_Map = PluginUtils::createJavaMapObject(&info);
 
 			// invoke java method
 			t.env->CallVoidMethod(pData->jobj, t.methodID, obj_Map);
@@ -141,44 +128,22 @@ void ProtocolIAP::payForProduct(TProductInfo info)
 
 void ProtocolIAP::setResultListener(PayResultListener* pListener)
 {
-	m_pListener = pListener;
+	_listener = pListener;
 }
 
 void ProtocolIAP::onPayResult(PayResultCode ret, const char* msg)
 {
-    m_bPaying = false;
-    if (m_pListener)
+    _paying = false;
+    if (_listener)
     {
-    	m_pListener->onPayResult(ret, msg, m_curInfo);
+    	_listener->onPayResult(ret, msg, _curInfo);
     }
     else
     {
-        LOGD("Result listener is null!");
+        PluginUtils::outputLog("ProtocolIAP", "Result listener is null!");
     }
-    m_curInfo.clear();
-    LOGD("Pay result is : %d(%s)", (int) ret, msg);
-}
-
-const char* ProtocolIAP::getSDKVersion()
-{
-	std::string verName;
-
-	PluginJavaData* pData = PluginUtils::getPluginJavaData(this);
-	PluginJniMethodInfo t;
-	if (PluginJniHelper::getMethodInfo(t
-		, pData->jclassName.c_str()
-		, "getSDKVersion"
-		, "()Ljava/lang/String;"))
-	{
-		jstring ret = (jstring)(t.env->CallObjectMethod(pData->jobj, t.methodID));
-		verName = PluginJniHelper::jstring2string(ret);
-	}
-	return verName.c_str();
-}
-
-void ProtocolIAP::setDebugMode(bool debug)
-{
-	PluginUtils::callJavaFunctionWithName_oneBaseType(this, "setDebugMode", "(Z)V", debug);
+    _curInfo.clear();
+    PluginUtils::outputLog("ProtocolIAP", "Pay result is : %d(%s)", (int) ret, msg);
 }
 
 }} // namespace cocos2d { namespace plugin {

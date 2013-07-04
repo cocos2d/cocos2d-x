@@ -28,36 +28,36 @@
 namespace cocos2d
 {
 
-CCAccelerometer* CCAccelerometer::m_spCCAccelerometer = NULL;
+Accelerometer* Accelerometer::_spAccelerometer = NULL;
 
-CCAccelerometer::CCAccelerometer() : m_pAccelDelegate(NULL)
+Accelerometer::Accelerometer() : _function(nullptr)
 {
 }
 
-CCAccelerometer::~CCAccelerometer() 
+Accelerometer::~Accelerometer() 
 {
-//	if( m_spCCAccelerometer ) {
-//		delete m_spCCAccelerometer ;
-		m_spCCAccelerometer = NULL;
+//	if( _spAccelerometer ) {
+//		delete _spAccelerometer ;
+		_spAccelerometer = NULL;
 //	}
 }
 
-CCAccelerometer* CCAccelerometer::sharedAccelerometer() 
+Accelerometer* Accelerometer::sharedAccelerometer() 
 {
 
-	if (m_spCCAccelerometer == NULL)
+	if (_spAccelerometer == NULL)
 	{
-		m_spCCAccelerometer = new CCAccelerometer();
+		_spAccelerometer = new Accelerometer();
 	}
 
-	return m_spCCAccelerometer;
+	return _spAccelerometer;
 }
 
-void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate) 
+void Accelerometer::setDelegate(std::function<void(Acceleration*)> function) 
 {
-	m_pAccelDelegate = pDelegate;
+	_function = function;
 
-	if (pDelegate)
+	if (_function)
 	{		
 		if (s3eAccelerometerStart() != S3E_RESULT_SUCCESS)
 		{
@@ -70,16 +70,16 @@ void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
 	}
 }
 
-void CCAccelerometer::update(float x, float y, float z, uint64 sensorTimeStamp) 
+void Accelerometer::update(float x, float y, float z, uint64 sensorTimeStamp) 
 {
-	if (m_pAccelDelegate)
+	if (_function)
 	{
-		m_obAccelerationValue.x = ((double)x)/S3E_ACCELEROMETER_1G ;
-		m_obAccelerationValue.y = ((double)y)/S3E_ACCELEROMETER_1G ;
-		m_obAccelerationValue.z = ((double)z)/S3E_ACCELEROMETER_1G ;
-		m_obAccelerationValue.timestamp = (double)(sensorTimeStamp / 1000.0);
+		_accelerationValue.x = ((double)x)/S3E_ACCELEROMETER_1G ;
+		_accelerationValue.y = ((double)y)/S3E_ACCELEROMETER_1G ;
+		_accelerationValue.z = ((double)z)/S3E_ACCELEROMETER_1G ;
+		_accelerationValue.timestamp = (double)(sensorTimeStamp / 1000.0);
 
-		m_pAccelDelegate->didAccelerate(&m_obAccelerationValue);
+		_function(&_accelerationValue);
 	}	
 }
 

@@ -7,16 +7,16 @@
 
 NS_CC_BEGIN
 
-class CCData : public CCObject
+class CC_DLL Data : public Object
 {
 public:
-    CCData(unsigned char *pBytes, const unsigned long nSize);
-    CCData(CCData *pData);
-    ~CCData();
+    Data(unsigned char *pBytes, const unsigned long nSize);
+    Data(Data *pData);
+    ~Data();
     
-    static CCData* create(unsigned char *pBytes, const unsigned long nSize)
+    static Data* create(unsigned char *pBytes, const unsigned long nSize)
     {
-        CCData* pRet = new CCData(pBytes, nSize);
+        Data* pRet = new Data(pBytes, nSize);
         if (pRet)
         {
             pRet->autorelease();
@@ -28,11 +28,11 @@ public:
     unsigned long getSize() const;
     
     /* override functions */
-    virtual void acceptVisitor(CCDataVisitor &visitor) { visitor.visit(this); }
+    virtual void acceptVisitor(DataVisitor &visitor) { visitor.visit(this); }
 
 private:
-    unsigned char* m_pBytes;
-    unsigned long m_nSize;
+    unsigned char* _bytes;
+    unsigned long _size;
 };
 
 NS_CC_END

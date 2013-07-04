@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
 class FontTestScene : public TestScene
 {
@@ -10,15 +11,15 @@ public:
     virtual void runThisTest();
 };
 
-class FontTest : public cocos2d::CCLayer
+class FontTest : public BaseTest
 {
 public:
     FontTest();
     void showFont(const char *pFont);
 
-    void restartCallback(CCObject* pSender);
-    void nextCallback(CCObject* pSender);
-    void backCallback(CCObject* pSender);
+    void restartCallback(Object* pSender);
+    void nextCallback(Object* pSender);
+    void backCallback(Object* pSender);
     virtual std::string title();
 
     CREATE_FUNC(FontTest);

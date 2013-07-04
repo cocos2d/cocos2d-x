@@ -3,33 +3,33 @@
 
 NS_CC_BEGIN
 
-CCData::CCData(unsigned char *pBytes, const unsigned long nSize)
+Data::Data(unsigned char *pBytes, const unsigned long nSize)
 {
-    m_nSize = nSize;
-    m_pBytes = new unsigned char[m_nSize];
-    memcpy(m_pBytes, pBytes, m_nSize);
+    _size = nSize;
+    _bytes = new unsigned char[_size];
+    memcpy(_bytes, pBytes, _size);
 }
 
-CCData::CCData(CCData *pData)
+Data::Data(Data *pData)
 {
-    m_nSize = pData->m_nSize;
-    m_pBytes = new unsigned char[m_nSize];
-    memcpy(m_pBytes, pData->m_pBytes, m_nSize);
+    _size = pData->_size;
+    _bytes = new unsigned char[_size];
+    memcpy(_bytes, pData->_bytes, _size);
 }
 
-CCData::~CCData()
+Data::~Data()
 {
-    CC_SAFE_DELETE_ARRAY(m_pBytes);
+    CC_SAFE_DELETE_ARRAY(_bytes);
 }
 
-unsigned char* CCData::getBytes() const
+unsigned char* Data::getBytes() const
 {
-    return m_pBytes;
+    return _bytes;
 }
 
-unsigned long CCData::getSize() const
+unsigned long Data::getSize() const
 {
-    return m_nSize;
+    return _size;
 }
 
 NS_CC_END

@@ -9,8 +9,8 @@ public:
     virtual bool init();
 
     void reset();
-    void check(CCNode* target);
-    void menuCallback(CCObject* sender);
+    void check(Node* target);
+    void menuCallback(Object* sender);
 };
 
 #endif // __BUG_422_H__

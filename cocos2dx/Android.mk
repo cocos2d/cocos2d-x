@@ -59,6 +59,7 @@ kazmath/src/GL/mat4stack.c \
 kazmath/src/GL/matrix.c \
 keypad_dispatcher/CCKeypadDelegate.cpp \
 keypad_dispatcher/CCKeypadDispatcher.cpp \
+keyboard_dispatcher/CCKeyboardDispatcher.cpp \
 label_nodes/CCLabelAtlas.cpp \
 label_nodes/CCLabelBMFont.cpp \
 label_nodes/CCLabelTTF.cpp \
@@ -124,6 +125,8 @@ support/tinyxml2/tinyxml2.cpp \
 support/zip_support/ZipUtils.cpp \
 support/zip_support/ioapi.cpp \
 support/zip_support/unzip.cpp \
+support/component/CCComponent.cpp \
+support/component/CCComponentContainer.cpp \
 text_input_node/CCIMEDispatcher.cpp \
 text_input_node/CCTextFieldTTF.cpp \
 textures/CCTexture2D.cpp \
@@ -131,6 +134,7 @@ textures/CCTextureAtlas.cpp \
 textures/CCTextureCache.cpp \
 textures/CCTextureETC.cpp \
 textures/CCTexturePVR.cpp \
+textures/etc/etc1.cpp\
 tilemap_parallax_nodes/CCParallaxNode.cpp \
 tilemap_parallax_nodes/CCTMXLayer.cpp \
 tilemap_parallax_nodes/CCTMXObjectGroup.cpp \
@@ -153,11 +157,13 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
 
 LOCAL_LDLIBS := -lGLESv2 \
                 -llog \
-                -lz
+                -lz \
+                -landroid
 
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
-                       -lz
+                       -lz \
+                       -landroid
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos_libpng_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_jpeg_static
@@ -166,8 +172,8 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libtiff_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libwebp_static
 
 # define the macro to compile through support/zip_support/ioapi.c
-LOCAL_CFLAGS := -Wno-psabi -DUSE_FILE32API
-LOCAL_EXPORT_CFLAGS := -Wno-psabi -DUSE_FILE32API
+LOCAL_CFLAGS   := -Wno-psabi -Wno-deprecated-declarations -DUSE_FILE32API
+LOCAL_EXPORT_CFLAGS   := -Wno-psabi -Wno-deprecated-declarations -DUSE_FILE32API
 
 include $(BUILD_STATIC_LIBRARY)
 
