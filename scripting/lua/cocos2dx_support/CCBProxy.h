@@ -14,7 +14,7 @@ public:
     CCBProxy() { }
     virtual ~ CCBProxy(){ }
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(CCBProxy, create);
-    CCBReader* createBreader();
+    CCBReader* createCCBreader();
     Node* readCCBFromFile(const char *pszFileName,CCBReader* pCCBReader,bool bSetOwner = false);
     const char* getNodeTypeName(Node* pNode);
     void setCallback(Node* pNode,int nHandle);

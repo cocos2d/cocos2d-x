@@ -549,7 +549,7 @@ void Node::cleanup()
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
         ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);
     }
-    else if(_scriptType != kScriptTypeJavascript)
+    else if(_scriptType == kScriptTypeJavascript)
     {
         ScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kNodeOnCleanup);
     }
