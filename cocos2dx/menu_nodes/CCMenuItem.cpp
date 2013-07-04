@@ -179,7 +179,7 @@ void MenuItem::setCallback(const ccMenuCallback& callback)
 //CCMenuItemLabel
 //
 
-const ccColor3B& MenuItemLabel::getDisabledColor()
+const ccColor3B& MenuItemLabel::getDisabledColor() const
 {
     return _disabledColor;
 }

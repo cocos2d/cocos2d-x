@@ -777,7 +777,7 @@ void LabelBMFont::setString(unsigned short *newString, bool needUpdateLabel)
     }
 }
 
-const char* LabelBMFont::getString(void)
+const char* LabelBMFont::getString(void) const
 {
     return _initialStringUTF8.c_str();
 }
@@ -788,12 +788,12 @@ void LabelBMFont::setCString(const char *label)
 }
 
 //LabelBMFont - RGBAProtocol protocol
-const ccColor3B& LabelBMFont::getColor()
+const ccColor3B& LabelBMFont::getColor() const
 {
     return _realColor;
 }
 
-const ccColor3B& LabelBMFont::getDisplayedColor()
+const ccColor3B& LabelBMFont::getDisplayedColor() const
 {
     return _displayedColor;
 }
@@ -813,12 +813,12 @@ void LabelBMFont::setColor(const ccColor3B& color)
 	}
 }
 
-GLubyte LabelBMFont::getOpacity(void)
+GLubyte LabelBMFont::getOpacity(void) const
 {
     return _realOpacity;
 }
 
-GLubyte LabelBMFont::getDisplayedOpacity(void)
+GLubyte LabelBMFont::getDisplayedOpacity(void) const
 {
     return _displayedOpacity;
 }
@@ -859,7 +859,7 @@ void LabelBMFont::setOpacityModifyRGB(bool var)
         }
     }
 }
-bool LabelBMFont::isOpacityModifyRGB()
+bool LabelBMFont::isOpacityModifyRGB() const
 {
     return _isOpacityModifyRGB;
 }
@@ -890,7 +890,7 @@ void LabelBMFont::updateDisplayedColor(const ccColor3B& parentColor)
 	}
 }
 
-bool LabelBMFont::isCascadeColorEnabled()
+bool LabelBMFont::isCascadeColorEnabled() const
 {
     return false;
 }
@@ -900,7 +900,7 @@ void LabelBMFont::setCascadeColorEnabled(bool cascadeColorEnabled)
     _cascadeColorEnabled = cascadeColorEnabled;
 }
 
-bool LabelBMFont::isCascadeOpacityEnabled()
+bool LabelBMFont::isCascadeOpacityEnabled() const
 {
     return false;
 }
