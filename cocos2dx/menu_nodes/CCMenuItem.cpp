@@ -134,8 +134,9 @@ void MenuItem::activate()
         
         if (kScriptTypeLua == _scriptType)
         {
-            ScriptEvent scriptEvent(kMenuItemEvent,NULL);
-            ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent,(void*)this);
+            BasicScriptData data((void*)this);
+            ScriptEvent scriptEvent(kMenuClickedEvent,&data);
+            ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);
         }
         else if (kScriptTypeJavascript == _scriptType)
         {

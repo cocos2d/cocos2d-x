@@ -35,7 +35,7 @@ public:
             int nHandler = luaView->getScriptHandler(LuaScrollView::kScrollViewScriptScroll);
             if (0 != nHandler)
             {
-                CommonScriptEvent data(nHandler,"");
+                CommonScriptData data(nHandler,"");
                 ScriptEvent event(kCommonEvent,(void*)&data);
                 ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
             }
@@ -50,7 +50,7 @@ public:
             int nHandler = luaView->getScriptHandler(LuaScrollView::kScrollViewScriptZoom);
             if (0 != nHandler)
             {
-                CommonScriptEvent data(nHandler,"");
+                CommonScriptData data(nHandler,"");
                 ScriptEvent event(kCommonEvent,(void*)&data);
                 ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
             }

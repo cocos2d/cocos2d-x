@@ -118,18 +118,19 @@ public:
 
     virtual bool handleAssert(const char *msg);
     
-    virtual int sendEvent(ScriptEvent* message,void* nativeObject = NULL);
+    virtual int sendEvent(ScriptEvent* message);
 private:
-    int handleNodeEvent(void* data,void* nativeObject);
-    int handleMenuItemEvent(void* nativeObject);
-    int handleNotificationEvent(void* data,void* nativeObject);
-    int handleCallFuncActionEvent(void* data,void* nativeObject);
+    int handleNodeEvent(void* data);
+    int handleMenuClickedEvent(void* data);
+    int handleNotificationEvent(void* data);
+    int handleCallFuncActionEvent(void* data);
     int handleScheduler(void* data);
-    int handleLayerTouchesEvent(void* data,void* nativeObject);
-    int handleLayerTouchEvent(void* data,void* nativeObject);
-    int handleLayerKeypadEvent(void* data,void* nativeObject);
-    int handleAccelerometerEvent(void* data,void* nativeObject);
+    int handleKeypadEvent(void* data);
+    int handleAccelerometerEvent(void* data);
     int handleCommonEvent(void* data);
+    int handleTouchesEvent(void* data);
+    int handleLayerTouchesEvent(Layer* layer,int actionType,Set* touches);
+    int handleLayerKeypadEvent(Layer* layer,int actionType);
 private:
     LuaEngine(void)
     : _stack(NULL)

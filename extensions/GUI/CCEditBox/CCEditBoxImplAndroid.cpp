@@ -259,7 +259,7 @@ static void editBoxCallbackFunc(const char* pText, void* ctx)
     EditBox* pEditBox = thiz->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {        
-        CommonScriptEvent data(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
+        CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
         ScriptEvent event(kCommonEvent,(void*)&data);
         ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
         memset(data.eventName,0,64*sizeof(char));
@@ -282,7 +282,7 @@ void EditBoxImplAndroid::openKeyboard()
     EditBox* pEditBox = this->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {        
-        CommonScriptEvent data(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
+        CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
         ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
         ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }

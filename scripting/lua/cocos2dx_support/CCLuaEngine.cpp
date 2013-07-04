@@ -331,7 +331,7 @@ int LuaEngine::reallocateScriptHandler(int nHandler)
     return nRet;
 }
 
-int LuaEngine::sendEvent(ScriptEvent* message,void* nativeObject)
+int LuaEngine::sendEvent(ScriptEvent* message)
 {
     if (NULL == message)
         return 0;
@@ -339,22 +339,22 @@ int LuaEngine::sendEvent(ScriptEvent* message,void* nativeObject)
     {
         case kNodeEvent:
         {
-           return handleNodeEvent(message->data,nativeObject);
+           return handleNodeEvent(message->data);
         }
         break;
-        case kMenuItemEvent:
+        case kMenuClickedEvent:
         {
-            return handleMenuItemEvent(nativeObject);
+            return handleMenuClickedEvent(message->data);
         }
         break;
         case kNotificationEvent:
         {
-            return handleNotificationEvent(message->data,nativeObject);
+            return handleNotificationEvent(message->data);
         }
         break;
         case kCallFuncEvent:
         {
-            return handleCallFuncActionEvent(message->data,nativeObject);
+            return handleCallFuncActionEvent(message->data);
         }
         break;
         case kScheduleEvent:
@@ -362,24 +362,19 @@ int LuaEngine::sendEvent(ScriptEvent* message,void* nativeObject)
             return handleScheduler(message->data);
         }
         break;
-        case kLayerTouchesEvent:
+        case kTouchesEvent:
         {
-            return handleLayerTouchesEvent(message->data, nativeObject);
+            return handleTouchesEvent(message->data);
         }
         break;
-        case kLayerTouchEvent:
+        case kKeypadEvent:
         {
-            return handleLayerTouchEvent(message->data,nativeObject);
-        }
-        break;
-        case kLayerKeypadEvent:
-        {
-            return handleLayerKeypadEvent(message->data,nativeObject);
+            return handleKeypadEvent(message->data);
         }
         break;
         case kAccelerometerEvent:
         {
-            return handleAccelerometerEvent(message->data,nativeObject);
+            return handleAccelerometerEvent(message->data);
         }
         break;
         case kCommonEvent:
@@ -394,18 +389,22 @@ int LuaEngine::sendEvent(ScriptEvent* message,void* nativeObject)
     return 0;
 }
 
-int LuaEngine::handleNodeEvent(void* data,void* nativeObject)
+int LuaEngine::handleNodeEvent(void* data)
 {
-    if (NULL == nativeObject || NULL == data)
+    if (NULL == data)
         return 0;
     
-    Node* node = (Node*)(nativeObject);
+    BasicScriptData* basicScriptData = (BasicScriptData*)data;
+    if (NULL == basicScriptData->nativeObject || NULL == basicScriptData->value)
+        return 0;
+    
+    Node* node = (Node*)(basicScriptData->nativeObject);
     
     int handler = node->getScriptHandler();
     if (0 == handler)
         return 0;
     
-    int action = *((int*)(data));
+    int action = *((int*)(basicScriptData->value));
     switch (action)
     {
         case kNodeOnEnter:
@@ -436,12 +435,16 @@ int LuaEngine::handleNodeEvent(void* data,void* nativeObject)
     return ret;
 }
 
-int LuaEngine::handleMenuItemEvent(void* nativeObject)
+int LuaEngine::handleMenuClickedEvent(void* data)
 {
-    if ( NULL == nativeObject )
+    if (NULL == data)
         return 0;
     
-    MenuItem* menuItem = (MenuItem*)(nativeObject);
+    BasicScriptData* basicScriptData = (BasicScriptData*)data;
+    if (NULL == basicScriptData->nativeObject)
+        return 0;
+        
+    MenuItem* menuItem = (MenuItem*)(basicScriptData->nativeObject);
     
     int handler = menuItem->getScriptTapHandler();
     if (0 == handler)
@@ -454,31 +457,40 @@ int LuaEngine::handleMenuItemEvent(void* nativeObject)
     return ret;
 }
 
-int LuaEngine::handleNotificationEvent(void* data,void* nativeObject)
+int LuaEngine::handleNotificationEvent(void* data)
 {
-    if (NULL == nativeObject || NULL == data)
+    if ( NULL == data)
         return 0;
     
-    NotificationCenter* center = (NotificationCenter*)(nativeObject);
+    BasicScriptData* basicScriptData = (BasicScriptData*)(data);
+    if (NULL == basicScriptData->nativeObject ||NULL == basicScriptData->value)
+        return 0;
     
-    int handler = center->getObserverHandlerByName((const char*)data);
+    NotificationCenter* center = (NotificationCenter*)(basicScriptData->nativeObject);
+    
+    int handler = center->getObserverHandlerByName((const char*)basicScriptData->value);
     
     if (0 == handler)
         return 0;
-    //Be care
-    _stack->pushString((const char*)data);
+    
+    _stack->pushString((const char*)basicScriptData->value);
     int ret = _stack->executeFunctionByHandler(handler, 1);
     _stack->clean();
     return ret;
 }
 
-int LuaEngine::handleCallFuncActionEvent(void* data,void* nativeObject)
+int LuaEngine::handleCallFuncActionEvent(void* data)
 {
-    if (NULL == nativeObject)
+    if (NULL == data)
         return 0;
-    CallFunc* callFunc = (CallFunc*)nativeObject;
+    
+    BasicScriptData* basicScriptData = (BasicScriptData*)(data);
+    if (NULL == basicScriptData->nativeObject ||NULL == basicScriptData->value)
+        return 0;
+    
+    CallFunc* callFunc = (CallFunc*)(basicScriptData->nativeObject);
     int handler        = callFunc->getScriptHandler();
-    Object* target     =  (Object*)data;
+    Object* target     =  (Object*)(basicScriptData->value);
     if (NULL != target)
     {
         _stack->pushObject(target, "CCNode");
@@ -493,7 +505,7 @@ int LuaEngine::handleScheduler(void* data)
     if (NULL == data)
         return 0;
     
-    SchedulerScriptEvent* schedulerInfo = (SchedulerScriptEvent*)data;
+    SchedulerScriptData* schedulerInfo = (SchedulerScriptData*)data;
     
     _stack->pushFloat(schedulerInfo->elapse);
     int ret = _stack->executeFunctionByHandler(schedulerInfo->handler, 1);
@@ -502,20 +514,117 @@ int LuaEngine::handleScheduler(void* data)
     return ret;
 }
 
-int LuaEngine::handleLayerTouchesEvent(void* data,void* nativeObject)
+int LuaEngine::handleKeypadEvent(void* data)
 {
-    if (NULL == nativeObject || NULL == data)
+    if (NULL == data)
         return 0;
     
-    Layer* layer = (Layer*)nativeObject;
-    LayerTouchesScriptEvent* info = (LayerTouchesScriptEvent*)data;
-    if (NULL == info->touches)
+    KeypadScriptData* keypadScriptData = (KeypadScriptData*)data;
+    if (NULL == keypadScriptData->nativeObject)
+        return 0;
+    
+    switch (keypadScriptData->objectType)
+    {
+        case kLayerKeypad:
+        {
+            Layer* layer = (Layer*)(keypadScriptData->nativeObject);
+            return handleLayerKeypadEvent(layer, keypadScriptData->actionType);
+        }
+        break;
+            
+        default:
+            break;
+    }
+    
+    return 0;
+}
+
+int LuaEngine::handleAccelerometerEvent(void* data)
+{
+    if (NULL == data)
+        return 0;
+    
+    BasicScriptData* basicScriptData = (BasicScriptData*)data;
+    if (NULL == basicScriptData->nativeObject || NULL == basicScriptData->value)
+        return 0;
+    
+    Layer* layer = (Layer*)(basicScriptData->nativeObject);
+    
+    ScriptHandlerEntry* scriptHandlerEntry = layer->getScriptAccelerateHandlerEntry();
+    if (NULL == scriptHandlerEntry || 0 == scriptHandlerEntry->getHandler())
+        return 0;
+    
+    Acceleration* accelerationValue = (Acceleration*)(basicScriptData->value);
+    _stack->pushFloat(accelerationValue->x);
+    _stack->pushFloat(accelerationValue->y);
+    _stack->pushFloat(accelerationValue->z);
+    _stack->pushFloat(accelerationValue->timestamp);
+    int ret = _stack->executeFunctionByHandler(scriptHandlerEntry->getHandler(), 4);
+    _stack->clean();
+    return ret;
+}
+
+int LuaEngine::handleCommonEvent(void* data)
+{
+    if (NULL == data)
+        return 0;
+   
+    CommonScriptData* commonInfo = (CommonScriptData*)data;
+    if (NULL == commonInfo->eventName || 0 == commonInfo->handler)
+        return 0;
+    
+    _stack->pushString(commonInfo->eventName);
+    if (NULL != commonInfo->eventSource)
+    {
+        if (NULL  != commonInfo->eventSourceClassName && strlen(commonInfo->eventSourceClassName) > 0)
+        {
+            _stack->pushObject(commonInfo->eventSource, commonInfo->eventSourceClassName);
+        }
+        else
+        {
+            _stack->pushObject(commonInfo->eventSource, "CCObject");
+        }
+    }
+    int ret = _stack->executeFunctionByHandler(commonInfo->handler, commonInfo->eventSource ? 2 : 1);
+    _stack->clean();
+    return ret;
+}
+
+int LuaEngine::handleTouchesEvent(void* data)
+{
+    if (NULL == data)
+        return 0;
+    
+    TouchesScriptData* touchesScriptData = (TouchesScriptData*)data;
+    if (NULL == touchesScriptData->nativeObject || NULL == touchesScriptData->touches)
+        return 0;
+    
+    switch (touchesScriptData->objectType)
+    {
+        case kLayerTouches:
+        {
+            Layer* layer = (Layer*)(touchesScriptData->nativeObject);
+            return handleLayerTouchesEvent(layer, touchesScriptData->actionType, touchesScriptData->touches);
+        }
+        break;
+            
+        default:
+            break;
+    }
+
+    return 0;
+}
+
+int LuaEngine::handleLayerTouchesEvent(Layer* layer,int actionType,Set* touches)
+{
+    if (NULL == layer || NULL == touches)
         return 0;
     
     TouchScriptHandlerEntry* scriptHandlerEntry = layer->getScriptTouchHandlerEntry();
     if (NULL == scriptHandlerEntry || 0 == scriptHandlerEntry->getHandler())
         return 0;
-    switch (info->actionType)
+    
+    switch (actionType)
     {
         case CCTOUCHBEGAN:
             _stack->pushString("began");
@@ -539,80 +648,47 @@ int LuaEngine::handleLayerTouchesEvent(void* data,void* nativeObject)
     
     Director* pDirector = Director::sharedDirector();
     lua_State *L = _stack->getLuaState();
-    lua_newtable(L);
-    int i = 1;
-    for (SetIterator it = info->touches->begin(); it != info->touches->end(); ++it)
+    int count = touches->count();
+    int ret = 0;
+    if (count == 1)
     {
-        Touch* pTouch = (Touch*)*it;
-        Point pt = pDirector->convertToGL(pTouch->getLocationInView());
-        lua_pushnumber(L, pt.x);
-        lua_rawseti(L, -2, i++);
-        lua_pushnumber(L, pt.y);
-        lua_rawseti(L, -2, i++);
-        lua_pushinteger(L, pTouch->getID());
-        lua_rawseti(L, -2, i++);
+        Touch* touch = (Touch*)*(touches->begin());
+        if (NULL != touch) {
+            const Point pt = Director::sharedDirector()->convertToGL(touch->getLocationInView());
+            _stack->pushFloat(pt.x);
+            _stack->pushFloat(pt.y);
+            ret = _stack->executeFunctionByHandler(scriptHandlerEntry->getHandler(), 3);
+        }
     }
-    int ret = _stack->executeFunctionByHandler(scriptHandlerEntry->getHandler(), 2);
+    else if(count > 1)
+    {
+        lua_newtable(L);
+        int i = 1;
+        for (SetIterator it = touches->begin(); it != touches->end(); ++it)
+        {
+            Touch* pTouch = (Touch*)*it;
+            Point pt = pDirector->convertToGL(pTouch->getLocationInView());
+            lua_pushnumber(L, pt.x);
+            lua_rawseti(L, -2, i++);
+            lua_pushnumber(L, pt.y);
+            lua_rawseti(L, -2, i++);
+            lua_pushinteger(L, pTouch->getID());
+            lua_rawseti(L, -2, i++);
+        }
+        ret = _stack->executeFunctionByHandler(scriptHandlerEntry->getHandler(), 2);
+    }
     _stack->clean();
     return ret;
 }
 
-int LuaEngine::handleLayerTouchEvent(void* data,void* nativeObject)
+int LuaEngine::handleLayerKeypadEvent(Layer* layer,int actionType)
 {
-    if (NULL == nativeObject || NULL == data)
+    if (NULL == layer)
         return 0;
     
-    Layer* layer = (Layer*)nativeObject;
-    LayerTouchScriptEvent* info = (LayerTouchScriptEvent*)data;
-    if (NULL == info->touch)
-        return 0;
-    
-    TouchScriptHandlerEntry* scriptHandlerEntry = layer->getScriptTouchHandlerEntry();
-    if (NULL == scriptHandlerEntry || 0 == scriptHandlerEntry->getHandler())
-        return 0;
-    
-    
-    switch (info->actionType)
-    {
-        case CCTOUCHBEGAN:
-            _stack->pushString("began");
-            break;
-            
-        case CCTOUCHMOVED:
-            _stack->pushString("moved");
-            break;
-            
-        case CCTOUCHENDED:
-            _stack->pushString("ended");
-            break;
-            
-        case CCTOUCHCANCELLED:
-            _stack->pushString("cancelled");
-            break;
-            
-        default:
-            return 0;
-    }
-    
-    const Point pt = Director::sharedDirector()->convertToGL(info->touch->getLocationInView());
-    _stack->pushFloat(pt.x);
-    _stack->pushFloat(pt.y);
-    int ret = _stack->executeFunctionByHandler(scriptHandlerEntry->getHandler(), 3);
-    _stack->clean();
-    return ret;
-}
-
-int LuaEngine::handleLayerKeypadEvent(void* data,void* nativeObject)
-{
-    if (NULL == nativeObject || NULL == data)
-        return 0;
-    
-    Layer* layer = (Layer*)(nativeObject);
     ScriptHandlerEntry* pScriptHandlerEntry = layer->getScriptKeypadHandlerEntry();
-    if (NULL == pScriptHandlerEntry || 0 == pScriptHandlerEntry->getHandler())
-        return 0;
-        
-    int action = *((int*)(data));
+    
+    int action = actionType;
     
     switch (action)
     {
@@ -631,53 +707,4 @@ int LuaEngine::handleLayerKeypadEvent(void* data,void* nativeObject)
     _stack->clean();
     return ret;
 }
-
-int LuaEngine::handleAccelerometerEvent(void* data,void* nativeObject)
-{
-    if (NULL == nativeObject || NULL == data)
-        return 0;
-    
-    Layer* layer = (Layer*)(nativeObject);
-    
-    ScriptHandlerEntry* scriptHandlerEntry = layer->getScriptAccelerateHandlerEntry();
-    if (NULL == scriptHandlerEntry || 0 == scriptHandlerEntry->getHandler())
-        return 0;
-    
-    Acceleration* accelerationValue = (Acceleration*)data;
-    _stack->pushFloat(accelerationValue->x);
-    _stack->pushFloat(accelerationValue->y);
-    _stack->pushFloat(accelerationValue->z);
-    _stack->pushFloat(accelerationValue->timestamp);
-    int ret = _stack->executeFunctionByHandler(scriptHandlerEntry->getHandler(), 4);
-    _stack->clean();
-    return ret;
-    return 0;
-}
-
-int LuaEngine::handleCommonEvent(void* data)
-{
-    if (NULL == data)
-        return 0;
-   
-    CommonScriptEvent* commonInfo = (CommonScriptEvent*)data;
-    if (NULL == commonInfo->eventName || 0 == commonInfo->handler)
-        return 0;
-    
-    _stack->pushString(commonInfo->eventName);
-    if (NULL != commonInfo->eventSource)
-    {
-        if (NULL  != commonInfo->eventSourceClassName && strlen(commonInfo->eventSourceClassName) > 0)
-        {
-            _stack->pushObject(commonInfo->eventSource, commonInfo->eventSourceClassName);
-        }
-        else
-        {
-            _stack->pushObject(commonInfo->eventSource, "CCObject");
-        }
-    }
-    int ret = _stack->executeFunctionByHandler(commonInfo->handler, commonInfo->eventSource ? 2 : 1);
-    _stack->clean();
-    return ret;
-}
-
 NS_CC_END

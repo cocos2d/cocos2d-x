@@ -150,7 +150,7 @@
     cocos2d::extension::EditBox*  pEditBox= getEditBoxImplMac()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
-        cocos2d::CommonScriptEvent data(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
+        cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
         cocos2d::ScriptEvent event(kCommonEvent,(void*)&data);
         cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
@@ -170,7 +170,7 @@
     cocos2d::extension::EditBox*  pEditBox= getEditBoxImplMac()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
-        cocos2d::CommonScriptEvent data(pEditBox->getScriptEditBoxHandler(), "ended",pEditBox);
+        cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "ended",pEditBox);
         cocos2d::ScriptEvent event(kCommonEvent,(void*)&data);
         cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
         memset(data.eventName,0,64*sizeof(char));
@@ -218,7 +218,7 @@
     cocos2d::extension::EditBox*  pEditBox= getEditBoxImplMac()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
-        cocos2d::CommonScriptEvent data(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
+        cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
         cocos2d::ScriptEvent event(kCommonEvent,(void*)&data);
         cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
