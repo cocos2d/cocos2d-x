@@ -131,8 +131,11 @@ void Control::sendActionsForControlEvents(ControlEvent controlEvents)
             if (kScriptTypeNone != _scriptType)
             {
                 int nHandler = this->getHandleOfControlEvent(controlEvents);
-                if (-1 != nHandler) {
-                    ScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(nHandler,"",this);
+                if (0 != nHandler)
+                {
+                    cocos2d::CommonScriptData data(nHandler, "",(Object*)this);
+                    cocos2d::ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
+                    cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
                 }
             }
         }
@@ -359,6 +362,6 @@ int  Control::getHandleOfControlEvent(ControlEvent controlEvent)
     if (_mapHandleOfControlEvent.end() != Iter)
         return Iter->second;
     
-    return -1;
+    return 0;
 }
 NS_CC_EXT_END
