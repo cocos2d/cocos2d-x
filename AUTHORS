@@ -500,6 +500,9 @@ Developers:
         
     wtyqm (zhang peng)
         Fixing a bug that ccbRootPath wasn't passed to sub ccb nodes.
+        
+    smilingpoplar (YangLe)
+        Fixing a bug that CCScale9Sprite doesn't support rotated spriteframe in atlas.
 
 Retired Core Developers:
     WenSheng Yang
