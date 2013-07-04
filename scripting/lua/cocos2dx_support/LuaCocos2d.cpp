@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Thu Jul  4 11:34:34 2013.
+** Generated automatically by tolua++-1.0.92 on Thu Jul  4 17:15:20 2013.
 */
 
 /****************************************************************************
@@ -65182,7 +65182,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"GL_INT",GL_INT);
   tolua_constant(tolua_S,"GL_UNSIGNED_INT",GL_UNSIGNED_INT);
   tolua_constant(tolua_S,"GL_FLOAT",GL_FLOAT);
-  tolua_constant(tolua_S,"GL_FIXED",GL_FIXED);
   tolua_constant(tolua_S,"GL_DEPTH_COMPONENT",GL_DEPTH_COMPONENT);
   tolua_constant(tolua_S,"GL_ALPHA",GL_ALPHA);
   tolua_constant(tolua_S,"GL_RGB",GL_RGB);
@@ -65195,12 +65194,9 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"GL_FRAGMENT_SHADER",GL_FRAGMENT_SHADER);
   tolua_constant(tolua_S,"GL_VERTEX_SHADER",GL_VERTEX_SHADER);
   tolua_constant(tolua_S,"GL_MAX_VERTEX_ATTRIBS",GL_MAX_VERTEX_ATTRIBS);
-  tolua_constant(tolua_S,"GL_MAX_VERTEX_UNIFORM_VECTORS",GL_MAX_VERTEX_UNIFORM_VECTORS);
-  tolua_constant(tolua_S,"GL_MAX_VARYING_VECTORS",GL_MAX_VARYING_VECTORS);
   tolua_constant(tolua_S,"GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS",GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS);
   tolua_constant(tolua_S,"GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS",GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS);
   tolua_constant(tolua_S,"GL_MAX_TEXTURE_IMAGE_UNITS",GL_MAX_TEXTURE_IMAGE_UNITS);
-  tolua_constant(tolua_S,"GL_MAX_FRAGMENT_UNIFORM_VECTORS",GL_MAX_FRAGMENT_UNIFORM_VECTORS);
   tolua_constant(tolua_S,"GL_SHADER_TYPE",GL_SHADER_TYPE);
   tolua_constant(tolua_S,"GL_DELETE_STATUS",GL_DELETE_STATUS);
   tolua_constant(tolua_S,"GL_LINK_STATUS",GL_LINK_STATUS);
@@ -65309,20 +65305,9 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"GL_VERTEX_ATTRIB_ARRAY_NORMALIZED",GL_VERTEX_ATTRIB_ARRAY_NORMALIZED);
   tolua_constant(tolua_S,"GL_VERTEX_ATTRIB_ARRAY_POINTER",GL_VERTEX_ATTRIB_ARRAY_POINTER);
   tolua_constant(tolua_S,"GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING",GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING);
-  tolua_constant(tolua_S,"GL_IMPLEMENTATION_COLOR_READ_TYPE",GL_IMPLEMENTATION_COLOR_READ_TYPE);
-  tolua_constant(tolua_S,"GL_IMPLEMENTATION_COLOR_READ_FORMAT",GL_IMPLEMENTATION_COLOR_READ_FORMAT);
   tolua_constant(tolua_S,"GL_COMPILE_STATUS",GL_COMPILE_STATUS);
   tolua_constant(tolua_S,"GL_INFO_LOG_LENGTH",GL_INFO_LOG_LENGTH);
   tolua_constant(tolua_S,"GL_SHADER_SOURCE_LENGTH",GL_SHADER_SOURCE_LENGTH);
-  tolua_constant(tolua_S,"GL_SHADER_COMPILER",GL_SHADER_COMPILER);
-  tolua_constant(tolua_S,"GL_SHADER_BINARY_FORMATS",GL_SHADER_BINARY_FORMATS);
-  tolua_constant(tolua_S,"GL_NUM_SHADER_BINARY_FORMATS",GL_NUM_SHADER_BINARY_FORMATS);
-  tolua_constant(tolua_S,"GL_LOW_FLOAT",GL_LOW_FLOAT);
-  tolua_constant(tolua_S,"GL_MEDIUM_FLOAT",GL_MEDIUM_FLOAT);
-  tolua_constant(tolua_S,"GL_HIGH_FLOAT",GL_HIGH_FLOAT);
-  tolua_constant(tolua_S,"GL_LOW_INT",GL_LOW_INT);
-  tolua_constant(tolua_S,"GL_MEDIUM_INT",GL_MEDIUM_INT);
-  tolua_constant(tolua_S,"GL_HIGH_INT",GL_HIGH_INT);
   tolua_constant(tolua_S,"GL_FRAMEBUFFER",GL_FRAMEBUFFER);
   tolua_constant(tolua_S,"GL_RENDERBUFFER",GL_RENDERBUFFER);
   tolua_constant(tolua_S,"GL_RGBA4",GL_RGBA4);
