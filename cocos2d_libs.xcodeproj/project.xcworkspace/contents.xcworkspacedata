@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:samples-mac.xcodeproj">
+      location = "self:cocos2d_libs.xcodeproj">
    </FileRef>
 </Workspace>
