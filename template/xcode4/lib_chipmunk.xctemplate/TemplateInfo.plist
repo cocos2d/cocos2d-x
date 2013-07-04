@@ -398,6 +398,52 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/chipmunk/proj.ios/chipmunk-Prefix.pch</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>chipmunk</string>
+				<string>proj.ios</string>
+			</array>
+			<key>Path</key>
+			<string>libs/chipmunk/proj.ios/chipmunk-Prefix.pch</string>
+		</dict>
+		<key>libs/chipmunk/proj.ios/chipmunk.xcodeproj/project.pbxproj</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>chipmunk</string>
+				<string>proj.ios</string>
+				<string>chipmunk.xcodeproj</string>
+			</array>
+			<key>Path</key>
+			<string>libs/chipmunk/proj.ios/chipmunk.xcodeproj/project.pbxproj</string>
+		</dict>
+		<key>libs/chipmunk/proj.mac/chipmunk-Prefix.pch</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>chipmunk</string>
+				<string>proj.mac</string>
+			</array>
+			<key>Path</key>
+			<string>libs/chipmunk/proj.mac/chipmunk-Prefix.pch</string>
+		</dict>
+		<key>libs/chipmunk/proj.mac/chipmunk.xcodeproj/project.pbxproj</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>chipmunk</string>
+				<string>proj.mac</string>
+				<string>chipmunk.xcodeproj</string>
+			</array>
+			<key>Path</key>
+			<string>libs/chipmunk/proj.mac/chipmunk.xcodeproj/project.pbxproj</string>
+		</dict>
 		<key>libs/chipmunk/README.txt</key>
 		<dict>
 			<key>Group</key>
@@ -796,6 +842,10 @@
 		<string>libs/chipmunk/include/chipmunk/cpSpatialIndex.h</string>
 		<string>libs/chipmunk/include/chipmunk/cpVect.h</string>
 		<string>libs/chipmunk/LICENSE.txt</string>
+		<string>libs/chipmunk/proj.ios/chipmunk-Prefix.pch</string>
+		<string>libs/chipmunk/proj.ios/chipmunk.xcodeproj/project.pbxproj</string>
+		<string>libs/chipmunk/proj.mac/chipmunk-Prefix.pch</string>
+		<string>libs/chipmunk/proj.mac/chipmunk.xcodeproj/project.pbxproj</string>
 		<string>libs/chipmunk/README.txt</string>
 		<string>libs/chipmunk/src/chipmunk.c</string>
 		<string>libs/chipmunk/src/CMakeLists.txt</string>
