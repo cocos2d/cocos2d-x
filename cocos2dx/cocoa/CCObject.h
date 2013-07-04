@@ -100,14 +100,14 @@ typedef void (Object::*SEL_MenuHandler)(Object*);
 typedef void (Object::*SEL_EventHandler)(Event*);
 typedef int (Object::*SEL_Compare)(Object*);
 
-#define schedule_selector(_SELECTOR) (cocos2d::SEL_SCHEDULE)(&_SELECTOR)
-#define callfunc_selector(_SELECTOR) (cocos2d::SEL_CallFunc)(&_SELECTOR)
-#define callfuncN_selector(_SELECTOR) (cocos2d::SEL_CallFuncN)(&_SELECTOR)
-#define callfuncND_selector(_SELECTOR) (cocos2d::SEL_CallFuncND)(&_SELECTOR)
-#define callfuncO_selector(_SELECTOR) (cocos2d::SEL_CallFuncO)(&_SELECTOR)
-#define menu_selector(_SELECTOR) (cocos2d::SEL_MenuHandler)(&_SELECTOR)
-#define event_selector(_SELECTOR) (cocos2d::SEL_EventHandler)(&_SELECTOR)
-#define compare_selector(_SELECTOR) (cocos2d::SEL_Compare)(&_SELECTOR)
+#define schedule_selector(_SELECTOR) static_cast<cocos2d::SEL_SCHEDULE>(&_SELECTOR)
+#define callfunc_selector(_SELECTOR) static_cast<cocos2d::SEL_CallFunc>(&_SELECTOR)
+#define callfuncN_selector(_SELECTOR) static_cast<cocos2d::SEL_CallFuncN>(&_SELECTOR)
+#define callfuncND_selector(_SELECTOR) static_cast<cocos2d::SEL_CallFuncND>(&_SELECTOR)
+#define callfuncO_selector(_SELECTOR) static_cast<cocos2d::SEL_CallFuncO>(&_SELECTOR)
+#define menu_selector(_SELECTOR) static_cast<cocos2d::SEL_MenuHandler>(&_SELECTOR)
+#define event_selector(_SELECTOR) static_cast<cocos2d::SEL_EventHandler>(&_SELECTOR)
+#define compare_selector(_SELECTOR) static_cast<cocos2d::SEL_Compare>(&_SELECTOR)
 
 // new callbacks based on C++11
 #define CC_CALLBACK_0(__selector__,__target__, ...) std::bind(&__selector__,__target__, ##__VA_ARGS__)

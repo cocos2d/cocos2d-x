@@ -36,6 +36,16 @@
         <meta-data android:name="QHOPENSDK_APPKEY" android:value="Your app_key" />
         <meta-data android:name="QHOPENSDK_PRIVATEKEY" android:value="Your app_private_key" />
         <meta-data android:name="QHOPENSDK_CHANNEL" android:value="Your channel or delete this line" />
+        <activity
+            android:name="cn.uc.gamesdk.view.SdkWebActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Translucent"
+            android:windowSoftInputMode="adjustResize" >
+            <intent-filter>
+                <action android:name="cn.uc.gamesdk.sdkweb" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
     <supports-screens android:anyDensity="true" android:largeScreens="true" android:normalScreens="true" android:smallScreens="true" />
                          
