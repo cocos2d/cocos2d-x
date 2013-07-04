@@ -172,6 +172,13 @@ void DrawPrimitivesTest::draw()
     
 	CHECK_GL_ERROR_DEBUG();
     
+	// draw a pink solid circle with 50 segments
+	glLineWidth(2);
+	ccDrawColor4B(255, 0, 255, 255);
+    ccDrawSolidCircle( VisibleRect::center() + ccp(140,0), 40, CC_DEGREES_TO_RADIANS(90), 50, 1.0f, 1.0f);
+    
+	CHECK_GL_ERROR_DEBUG();
+    
 	// open yellow poly
 	ccDrawColor4B(255, 255, 0, 255);
 	glLineWidth(10);

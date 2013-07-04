@@ -65,7 +65,7 @@ MotionStreak::~MotionStreak()
     CC_SAFE_FREE(_texCoords);
 }
 
-MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, ccColor3B color, const char* path)
+MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path)
 {
     MotionStreak *pRet = new MotionStreak();
     if (pRet && pRet->initWithFade(fade, minSeg, stroke, color, path))
@@ -78,7 +78,7 @@ MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, ccCol
     return NULL;
 }
 
-MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, ccColor3B color, Texture2D* texture)
+MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, const ccColor3B& color, Texture2D* texture)
 {
     MotionStreak *pRet = new MotionStreak();
     if (pRet && pRet->initWithFade(fade, minSeg, stroke, color, texture))
@@ -91,7 +91,7 @@ MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, ccCol
     return NULL;
 }
 
-bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, ccColor3B color, const char* path)
+bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path)
 {
     CCAssert(path != NULL, "Invalid filename");
 
@@ -99,7 +99,7 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, ccColor3
     return initWithFade(fade, minSeg, stroke, color, texture);
 }
 
-bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, ccColor3B color, Texture2D* texture)
+bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, Texture2D* texture)
 {
     Node::setPosition(PointZero);
     setAnchorPoint(PointZero);
@@ -143,7 +143,7 @@ void MotionStreak::setPosition(const Point& position)
     _positionR = position;
 }
 
-void MotionStreak::tintWithColor(ccColor3B colors)
+void MotionStreak::tintWithColor(const ccColor3B& colors)
 {
     setColor(colors);
 
