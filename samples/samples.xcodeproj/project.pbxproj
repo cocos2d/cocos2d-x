@@ -8168,7 +8168,8 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Lua/HelloLua/proj.mac\"",
 				);
-				OTHER_LDFLAGS = (
+				OTHER_LDFLAGS = "";
+				"OTHER_LDFLAGS[arch=x86_64]" = (
 					"-pagezero_size",
 					10000,
 					"-image_base",
@@ -8199,7 +8200,8 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Lua/HelloLua/proj.mac\"",
 				);
-				OTHER_LDFLAGS = (
+				OTHER_LDFLAGS = "";
+				"OTHER_LDFLAGS[arch=x86_64]" = (
 					"-pagezero_size",
 					10000,
 					"-image_base",
