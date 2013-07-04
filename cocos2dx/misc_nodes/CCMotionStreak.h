@@ -76,18 +76,18 @@ public:
     /* Implement interfaces */
     virtual Texture2D* getTexture(void);
     virtual void setTexture(Texture2D *texture);
-    virtual void setBlendFunc(ccBlendFunc blendFunc);
-    virtual ccBlendFunc getBlendFunc(void);
-    virtual GLubyte getOpacity(void);
+    virtual void setBlendFunc(const ccBlendFunc &blendFunc);
+    virtual const ccBlendFunc& getBlendFunc(void) const;
+    virtual GLubyte getOpacity(void) const;
     virtual void setOpacity(GLubyte opacity);
     virtual void setOpacityModifyRGB(bool bValue);
-    virtual bool isOpacityModifyRGB(void);
+    virtual bool isOpacityModifyRGB(void) const;
 
     /** When fast mode is enabled, new points are added faster but with lower precision */
-    inline bool isFastMode() { return _fastMode; }
+    inline bool isFastMode() const { return _fastMode; }
     inline void setFastMode(bool bFastMode) { _fastMode = bFastMode; }
 
-    inline bool isStartingPositionInitialized() { return _startingPositionInitialized; }
+    inline bool isStartingPositionInitialized() const { return _startingPositionInitialized; }
     inline void setStartingPositionInitialized(bool bStartingPositionInitialized) 
     { 
         _startingPositionInitialized = bStartingPositionInitialized; 

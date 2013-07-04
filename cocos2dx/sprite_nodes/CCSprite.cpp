@@ -877,7 +877,7 @@ void Sprite::setFlipX(bool bFlipX)
     }
 }
 
-bool Sprite::isFlipX(void)
+bool Sprite::isFlipX(void) const
 {
     return _flipX;
 }
@@ -891,7 +891,7 @@ void Sprite::setFlipY(bool bFlipY)
     }
 }
 
-bool Sprite::isFlipY(void)
+bool Sprite::isFlipY(void) const
 {
     return _flipY;
 }
@@ -959,7 +959,7 @@ void Sprite::setOpacityModifyRGB(bool modify)
     }
 }
 
-bool Sprite::isOpacityModifyRGB(void)
+bool Sprite::isOpacityModifyRGB(void) const
 {
     return _opacityModifyRGB;
 }
@@ -1011,7 +1011,7 @@ void Sprite::setDisplayFrameWithAnimationName(const char *animationName, int fra
     setDisplayFrame(frame->getSpriteFrame());
 }
 
-bool Sprite::isFrameDisplayed(SpriteFrame *pFrame)
+bool Sprite::isFrameDisplayed(SpriteFrame *pFrame) const
 {
     Rect r = pFrame->getRect();
 

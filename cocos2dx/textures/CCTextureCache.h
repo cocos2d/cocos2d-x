@@ -218,7 +218,7 @@ public:
     static void addDataTexture(Texture2D *tt, void* data, Texture2DPixelFormat pixelFormat, const Size& contentSize);
     static void addImage(Texture2D *tt, Image *image);
 
-    static void setTexParameters(Texture2D *t, ccTexParams *texParams);
+    static void setTexParameters(Texture2D *t, const ccTexParams &texParams);
     static void removeTexture(Texture2D *t);
     static void reloadAllTextures();
 
