@@ -1,3 +1,84 @@
+2.1rc0-x-2.1.4 @Jnue.12 2013
+[all platforms]
+     Bug      #2098: fix TouchPriority issue of CCScrollView
+     Bug      #2107: fix crash in HttpClient request on 64Bit
+     Bug      #2115: fix linking errors for TestCPP with libcurl
+     Bug      #2128: remove setting ignoreAnchorPoint for child CCB files and fix crash while trying to load sprite frame when the file is missing
+     Bug      #2140: fix a bug that the displayed color of CCDrawNode is incorrect when VAO is disabled
+     Bug      #2142: adding CCDataVisitor and implementing CCPrettyPrinter
+     Bug      #2143: fix a crash caused by ScrollView.setDelegate(tmp function)
+     Bug      #2146: unpack texture data correctly
+     Bug      #2147: fix null pointer access in CCBAnimationManager::getRunningSequenceName()
+     Bug      #2150: fix a bug that setColor and setOpacity of CCControlButton and CCScale9Sprite are broken
+     Bug      #2251: fix a logical error in CCDrawNode::drawPolygon()
+     Bug      #2271: fix memory leak as possible
+     Feature  #1859: make AssetsManager download resources in a new thread
+     Feature  #2086: make CCLabelTTF supports shadows and stroke
+     Feature  #2100: add CCDirector::popToSceneStackLevel(int level)
+     Feature  #2105: add Travis build support
+     Feature  #2108: add example for russian language in TestCpp
+     Feature  #2111: add CC_DISABLE_COPY macro
+     Feature  #2114: add __attribute__(__format__()) for CCLog and CCString
+     Feature  #2116: support negative node scales for CCScrollView
+     Feature  #2117: implement CCDictionary::writeToFile()
+     Feature  #2122: add method to create a CCMenuItemToggle from a CCArray with a target selector
+     Feature  #2132: add encrypted PVR.CCZ support to ZipUtils + Tests
+     Feature  #2157: add Mingw-crt Support without breaking VS SDK
+     Feature  #2265: add CCLabelTTF::createWithFontDefinition()
+     Feature  #2270: add Armature(CocoStudio runtime) support
+     Refactor #2109: add const modifier for classes CCArray, CCObject
+     Refactor #2118: move ccpX functions to CCPoint methods and operators
+     Refactor #2119: use httpresponse_selector instead of callfuncND_selector for the callback function of CCHttpRequest
+     Refactor #2123: refactor network extension, fixing unlikely memory leaks, adding PUT/DELETE methods
+     Refactor #2127: add CCLOG before original path is returned in CCFileUtils::fullPathForFileName to aid in debugging
+     Refactor #2149: add const qualification to some CCNode's getters
+     Refactor #2189: CCLabelTTF::enableShadow() const update
+     Refactor #2215: refactor CCConfiguration
+     Refactor #2217: use CCLabelAtlas instead of CCLabelTTF to show FPS
+     Refactor #2231: implement a format of CCConfiguration
+     Refactor #2233: add support for "CCString" types for boolean and integers in CCConfiguration
+     Refactor #2236: fix memory hot spot of CCTextureAtlas::updateQuad()
+[android]
+     Bug      #1284: fix a bug that SimpleAudioEngine may cause crash on i9100
+     Bug      #2151: fix custom font loading on Android for resource mapped font files
+     Bug      #2190: updat .classpath of Android project to latest ADT 22 build tool compatibility
+     Bug      #2266: fix a bug that CCFileUtils::getFileData() may not get file data correctly on Android
+     Feature  #2161: add ETC1 image format
+[iOS]
+     Bug      #2102: fix missing protocol method warning for iOS 6.0 addition
+     Bug      #2104: fix a bug that JPEG picture not displayed correctly on iOS 4.3
+     Bug      #2260: fix a bug that CCDirectory::createWithContentsOfFile() returns a valid pointer though the file is missing on iOS
+     Refactor #2101: update cocos2dx Xcode project to detect more warnings
+     Refactor #2253: add UITextField only when keyboard was opened, removing it when keyboard was closed
+[mac]
+     Bug      #2249: fix linebreaks on Mac OSX
+[win32]
+     Bug      #2131: fix memory leak of SimpleAudioEngine::preloadEffect()
+     Bug      #2145: center the window correctly on windows
+[emscripten]
+     Feature  #2120: compile c++ to js
+     Bug      #2159: use browser font rendering instead of FreeType
+     Refactor #2133: compile for Emscripten in asm.js mode
+     Document #2121: write a document to describe the usage of emscriptenate port
+[tizen]
+     Feature  #2185: add support for Tizen
+[javascript binding]
+     Bug      #2099: fix a bug in ScriptingCore::evalString() not setting the outval
+     Bug      #2179: fix a bug that pointQueryFirst returns invalid Shape when a shape is not found
+     Bug      #2186: fix a bug that new PivotJoint can't access 4 parameters like in html5 version
+     Bug      #2187: JavaScript debugger improved and bug fixed
+     Bug      #2243: fix a bug that XMLHttpRequest dones't support non-ascii characters
+     Bug      #2244: fix a bug that cc.Camera.getEyeXYZ, cc.Camera.getCenterXYZ, cc.Camera.getUpXYZ return bad values
+     Feature  #1647: Bind websocket to javascript
+     Feature  #2092: add XMLHttpRequest and bind it to JSB
+     Feature  #2106: add support for javascript byte code
+     Feature  #2162: add command line tool for generating javascript bytecode
+     Feature  #2214: upgrade Spidermonkey to Firefox v21
+     Refactor #2152: log assert messages to the console and renaming CCScriptSupport::executeAssert to CCScriptSupport::handleAssert
+     Refactor #2247: use functions instead of macros to speeding up building for JSB project
+[lua binding]
+     Feature  #2103: implement most test cases
+
 cocos2d-2.1rc0-x-2.1.3 @May.01 2013
 [all platforms]
      Bug      #1853: use SHELLOPTS instead of "-o igncr" for Android Eclipse project

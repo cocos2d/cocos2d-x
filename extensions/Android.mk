@@ -53,6 +53,31 @@ network/WebSocket.cpp \
 physics_nodes/CCPhysicsDebugNode.cpp \
 physics_nodes/CCPhysicsSprite.cpp \
 LocalStorage/LocalStorageAndroid.cpp \
+CCArmature/CCArmature.cpp \
+CCArmature/CCBone.cpp \
+CCArmature/animation/CCArmatureAnimation.cpp \
+CCArmature/animation/CCProcessBase.cpp \
+CCArmature/animation/CCTween.cpp \
+CCArmature/datas/CCDatas.cpp \
+CCArmature/display/CCBatchNode.cpp \
+CCArmature/display/CCDecorativeDisplay.cpp \
+CCArmature/display/CCDisplayFactory.cpp \
+CCArmature/display/CCDisplayManager.cpp \
+CCArmature/display/CCShaderNode.cpp \
+CCArmature/display/CCSkin.cpp \
+CCArmature/external_tool/GLES-Render.cpp \
+CCArmature/external_tool/Json/CSContentJsonDictionary.cpp \
+CCArmature/external_tool/Json/lib_json/json_value.cpp \
+CCArmature/external_tool/Json/lib_json/json_reader.cpp \
+CCArmature/external_tool/Json/lib_json/json_writer.cpp \
+CCArmature/physics/CCColliderDetector.cpp \
+CCArmature/physics/CCPhysicsWorld.cpp \
+CCArmature/utils/CCArmatureDataManager.cpp \
+CCArmature/utils/CCDataReaderHelper.cpp \
+CCArmature/utils/CCSpriteFrameCacheHelper.cpp \
+CCArmature/utils/CCTransformHelp.cpp \
+CCArmature/utils/CCTweenFunction.cpp \
+CCArmature/utils/CCUtilMath.cpp \
 spine/Animation.cpp \
 spine/AnimationState.cpp \
 spine/AnimationStateData.cpp \
@@ -71,7 +96,13 @@ spine/Skin.cpp \
 spine/Slot.cpp \
 spine/SlotData.cpp \
 spine/extension.cpp \
-spine/spine-cocos2dx.cpp
+spine/CCSkeletonAnimation.cpp \
+spine/CCSkeleton.cpp \
+spine/spine-cocos2dx.cpp \
+Components/CCComAttribute.cpp \
+Components/CCComAudio.cpp \
+Components/CCComController.cpp \
+Components/CCInputDelegate.cpp
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
@@ -82,13 +113,18 @@ LOCAL_WHOLE_STATIC_LIBRARIES += libwebsockets_static
 
 LOCAL_CFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 LOCAL_EXPORT_CFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
+LOCAL_CPPFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
+LOCAL_EXPORT_CPPFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                            $(LOCAL_PATH)/CCBReader \
                            $(LOCAL_PATH)/GUI/CCControlExtension \
                            $(LOCAL_PATH)/GUI/CCScrollView \
                            $(LOCAL_PATH)/network \
-                           $(LOCAL_PATH)/LocalStorage 
+                           $(LOCAL_PATH)/LocalStorage \
+						   $(LOCAL_PATH)/CCArmature
+
+LOCAL_CFLAGS := -fexceptions
                     
 include $(BUILD_STATIC_LIBRARY)
 

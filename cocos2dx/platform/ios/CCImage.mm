@@ -300,7 +300,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
                                                             dim.width,
                                                             dim.height,
                                                             8,
-                                                            dim.width * 4,
+                                                            (int)(dim.width) * 4,
                                                             colorSpace,
                                                             kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
         
@@ -390,7 +390,8 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         
         
         // actually draw the text in the context
-        [str drawInRect:CGRectMake(textOriginX, textOrigingY, textWidth, textHeight) withFont:font lineBreakMode:(UILineBreakMode)UILineBreakModeWordWrap alignment:align];
+		// XXX: ios7 casting
+        [str drawInRect:CGRectMake(textOriginX, textOrigingY, textWidth, textHeight) withFont:font lineBreakMode:NSLineBreakByWordWrapping alignment:(NSTextAlignment)align];
         
         // pop the context
         UIGraphicsPopContext();

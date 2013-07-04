@@ -50,7 +50,7 @@ THE SOFTWARE.
  interfaces of flurry SDK
  */
 - (void) setAge: (NSNumber*) age;
-- (void) setGender: (NSString*) gender;
+- (void) setGender: (NSNumber*) gender;
 - (void) setUserId: (NSString*) userId;
 - (void) setUseHttps: (NSNumber*) enabled;
 - (void) logPageView;

@@ -106,6 +106,8 @@ extern "C"
             }
 
             jclass classID = getClassID_(className, pEnv);
+
+            if(pEnv->ExceptionCheck()) pEnv->ExceptionClear();
             methodID = pEnv->GetStaticMethodID(classID, methodName, paramCode);
             if (! methodID)
             {
@@ -141,6 +143,7 @@ extern "C"
 
             jclass classID = getClassID_(className, pEnv);
 
+            if(pEnv->ExceptionCheck()) pEnv->ExceptionClear();
             methodID = pEnv->GetMethodID(classID, methodName, paramCode);
             if (! methodID)
             {

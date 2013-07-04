@@ -84,9 +84,6 @@ public:
     */
     void onShareResult(ShareResultCode ret, const char* msg);
 
-    const char* getPluginVersion() { return "ProtocolSocial, v0.1.0, subclass should override this interface!"; };
-    const char* getSDKVersion();
-
 protected:
     ShareResultListener* m_pListener;
 };
