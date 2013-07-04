@@ -390,22 +390,15 @@ Data* UserDefault::getDataForKey(const char* pKey, Data* defaultValue)
         delete encodedDefaultData;
     }
 
-    CCLOG("ENCODED STRING: --%s--%d", encodedStr.c_str(), encodedStr.length());
-    
     Data *ret = defaultValue;
     
     unsigned char * decodedData = NULL;
     int decodedDataLen = base64Decode((unsigned char*)encodedStr.c_str(), (unsigned int)encodedStr.length(), &decodedData);
 
-    CCLOG("AFTER DECoDE. ret %p defaultValue %p", ret, defaultValue);
-    CCLOG("DECoDED DATA: %s %d", decodedData, decodedDataLen);
-    
     if (decodedData && decodedDataLen) {
         ret = Data::create(decodedData, decodedDataLen);
     }
 
-    CCLOG("RETURNED %p!", ret);
-    
     return ret;
 }
 
@@ -461,11 +454,8 @@ void UserDefault::setDataForKey(const char* pKey, const Data& value)
     deleteNodeByKey(pKey);
 #endif
     
-    CCLOG("SET DATA FOR KEY: --%s--%d", value.getBytes(), value.getSize());
     char * encodedData = NULL;
     unsigned int encodedDataLen = base64Encode(value.getBytes(), value.getSize(), &encodedData);
-
-    CCLOG("SET DATA ENCODED: --%s", encodedData);
     
     return setStringForKeyJNI(pKey, encodedData);
     
