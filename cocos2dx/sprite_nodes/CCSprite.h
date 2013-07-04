@@ -372,7 +372,7 @@ public:
     /**
      * Returns whether or not a SpriteFrame is being displayed
      */
-    virtual bool isFrameDisplayed(SpriteFrame *pFrame);
+    virtual bool isFrameDisplayed(SpriteFrame *pFrame) const;
     
     /**
      * Returns the current displayed frame.
@@ -400,7 +400,7 @@ public:
      *
      * @return true if the sprite needs to be updated in the Atlas, false otherwise.
      */
-    inline virtual bool isDirty(void) { return _dirty; }
+    inline virtual bool isDirty(void) const { return _dirty; }
     
     /** 
      * Makes the Sprite to be updated in the Atlas.
@@ -415,12 +415,12 @@ public:
     /** 
      * Returns whether or not the texture rectangle is rotated.
      */
-    inline bool isTextureRectRotated(void) { return _rectRotated; }
+    inline bool isTextureRectRotated(void) const { return _rectRotated; }
     
     /** 
      * Returns the index used on the TextureAtlas. 
      */
-    inline unsigned int getAtlasIndex(void) { return _atlasIndex; }
+    inline unsigned int getAtlasIndex(void) const { return _atlasIndex; }
     
     /** 
      * Sets the index used on the TextureAtlas.
@@ -446,7 +446,7 @@ public:
     /** 
      * Gets the offset position of the sprite. Calculated automatically by editors like Zwoptex.
      */
-    inline const Point& getOffsetPosition(void) { return _offsetPosition; }
+    inline const Point& getOffsetPosition(void) const { return _offsetPosition; }
 
 
     /** 
@@ -459,7 +459,7 @@ public:
      *
      * @return true if the sprite is flipped horizaontally, false otherwise.
      */
-    bool isFlipX(void);
+    bool isFlipX(void) const;
     /**
      * Sets whether the sprite should be flipped horizontally or not.
      *
@@ -477,7 +477,7 @@ public:
      * 
      * @return true if the sprite is flipped vertically, flase otherwise.
      */
-    bool isFlipY(void);
+    bool isFlipY(void) const;
     /**
      * Sets whether the sprite should be flipped vertically or not.
      *
