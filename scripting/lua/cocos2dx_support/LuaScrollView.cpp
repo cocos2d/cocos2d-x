@@ -33,9 +33,11 @@ public:
         if (NULL != luaView)
         {
             int nHandler = luaView->getScriptHandler(LuaScrollView::kScrollViewScriptScroll);
-            if (-1 != nHandler)
+            if (0 != nHandler)
             {
-                ScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(nHandler,"");
+                CommonScriptData data(nHandler,"");
+                ScriptEvent event(kCommonEvent,(void*)&data);
+                ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
             }
         }
     }
@@ -46,9 +48,11 @@ public:
         if (NULL != luaView)
         {
             int nHandler = luaView->getScriptHandler(LuaScrollView::kScrollViewScriptZoom);
-            if (-1 != nHandler)
+            if (0 != nHandler)
             {
-                ScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(nHandler,"");
+                CommonScriptData data(nHandler,"");
+                ScriptEvent event(kCommonEvent,(void*)&data);
+                ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
             }
         }
     }
@@ -86,7 +90,7 @@ public:
         
         if (_mapScriptHandler.end() != Iter)
             return Iter->second;
-        return -1;
+        return 0;
     }
 private:
     std::map<int,int> _mapScriptHandler;

@@ -542,7 +542,14 @@ void Node::cleanup()
     this->stopAllActions();
     this->unscheduleAllSelectors();
     
-    if ( _scriptType != kScriptTypeNone)
+    if ( _scriptType == kScriptTypeLua)
+    {
+        int action = kNodeOnCleanup;
+        BasicScriptData data((void*)this,(void*)&action);
+        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);
+    }
+    else if(_scriptType != kScriptTypeJavascript)
     {
         ScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kNodeOnCleanup);
     }
@@ -914,7 +921,14 @@ void Node::onEnter()
 
     _running = true;
 
-    if (_scriptType != kScriptTypeNone)
+    if (_scriptType == kScriptTypeLua)
+    {
+        int action = kNodeOnEnter;
+        BasicScriptData data((void*)this,(void*)&action);
+        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);
+    }
+    else if(_scriptType == kScriptTypeJavascript)
     {
         ScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kNodeOnEnter);
     }
@@ -926,7 +940,14 @@ void Node::onEnterTransitionDidFinish()
 
     arrayMakeObjectsPerformSelector(_children, onEnterTransitionDidFinish, Node*);
 
-    if (_scriptType == kScriptTypeJavascript)
+    if (_scriptType == kScriptTypeLua)
+    {
+        int action = kNodeOnEnterTransitionDidFinish;
+        BasicScriptData data((void*)this,(void*)&action);
+        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);
+    }
+    else if (_scriptType == kScriptTypeJavascript)
     {
         ScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kNodeOnEnterTransitionDidFinish);
     }
@@ -935,8 +956,13 @@ void Node::onEnterTransitionDidFinish()
 void Node::onExitTransitionDidStart()
 {
     arrayMakeObjectsPerformSelector(_children, onExitTransitionDidStart, Node*);
-
-    if (_scriptType == kScriptTypeJavascript)
+    if (_scriptType == kScriptTypeLua)
+    {
+        int action = kNodeOnExitTransitionDidStart;
+        BasicScriptData data((void*)this,(void*)&action);
+        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);    }
+    else if (_scriptType == kScriptTypeJavascript)
     {
         ScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kNodeOnExitTransitionDidStart);
     }
@@ -947,8 +973,14 @@ void Node::onExit()
     this->pauseSchedulerAndActions();
 
     _running = false;
-
-    if ( _scriptType != kScriptTypeNone)
+    if (_scriptType == kScriptTypeLua)
+    {
+        int action = kNodeOnExit;
+        BasicScriptData data((void*)this,(void*)&action);
+        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);
+    }
+    else if ( _scriptType == kScriptTypeJavascript)
     {
         ScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kNodeOnExit);
     }
@@ -1123,9 +1155,12 @@ void Node::pauseSchedulerAndActions()
 // override me
 void Node::update(float fDelta)
 {
-    if (_updateScriptHandler)
+    if (0 != _updateScriptHandler)
     {
-        ScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(_updateScriptHandler, fDelta, this);
+        //only lua use
+        SchedulerScriptData data(_updateScriptHandler,fDelta);
+        ScriptEvent event(kScheduleEvent,&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
     
     if (_componentContainer && !_componentContainer->isEmpty())
