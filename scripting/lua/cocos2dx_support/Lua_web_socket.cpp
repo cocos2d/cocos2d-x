@@ -116,7 +116,7 @@ public:
         if (NULL != luaWs) {
             int nHandler = luaWs->getScriptHandler(LuaWebSocket::kWebSocketScriptHandlerOpen);
             if (0 != nHandler) {
-                CommonScriptEvent data(nHandler,"");
+                CommonScriptData data(nHandler,"");
                 ScriptEvent event(kCommonEvent,(void*)&data);
                 ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
             }
@@ -137,7 +137,7 @@ public:
                 
                 int nHandler = luaWs->getScriptHandler(LuaWebSocket::kWebSocketScriptHandlerMessage);
                 if (0 != nHandler) {
-                    CommonScriptEvent commonData(nHandler,data.bytes);
+                    CommonScriptData commonData(nHandler,data.bytes);
                     ScriptEvent event(kCommonEvent,(void*)&commonData);
                     ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
                 }
@@ -152,7 +152,7 @@ public:
             int nHandler = luaWs->getScriptHandler(LuaWebSocket::kWebSocketScriptHandlerClose);
             if (0 != nHandler)
             {
-                CommonScriptEvent data(nHandler,"");
+                CommonScriptData data(nHandler,"");
                 ScriptEvent event(kCommonEvent,(void*)&data);
                 ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
             }
@@ -166,7 +166,7 @@ public:
             int nHandler = luaWs->getScriptHandler(LuaWebSocket::kWebSocketScriptHandlerError);
             if (0 != nHandler)
             {
-                CommonScriptEvent data(nHandler,"");
+                CommonScriptData data(nHandler,"");
                 ScriptEvent event(kCommonEvent,(void*)&data);
                 ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
             }

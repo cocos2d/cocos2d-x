@@ -133,7 +133,7 @@ void Control::sendActionsForControlEvents(ControlEvent controlEvents)
                 int nHandler = this->getHandleOfControlEvent(controlEvents);
                 if (0 != nHandler)
                 {
-                    cocos2d::CommonScriptEvent data(nHandler, "",(Object*)this);
+                    cocos2d::CommonScriptData data(nHandler, "",(Object*)this);
                     cocos2d::ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
                     cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
                 }

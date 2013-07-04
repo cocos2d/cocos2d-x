@@ -159,25 +159,46 @@ private:
 enum ScriptEventType
 {
     kNodeEvent = 0,
-    kMenuItemEvent,
+    kMenuClickedEvent,
     kNotificationEvent,
     kCallFuncEvent,
     kScheduleEvent,
-    kLayerTouchesEvent,
-    kLayerTouchEvent,
-    kLayerKeypadEvent,
+    kTouchesEvent,
+    kKeypadEvent,
     kAccelerometerEvent,
     kCommonEvent,
 };
 
-struct SchedulerScriptEvent
+enum TouchesObjectType
+{
+    kLayerTouches = 0,
+};
+
+enum KeypadObjectType
+{
+    kLayerKeypad = 0,
+};
+
+struct BasicScriptData
+{
+    //nativeobject:to get handler for lua or to get jsobject for js
+    void* nativeObject;
+    //value: a pointer to a object that already defined
+    void* value;
+    BasicScriptData(void* inObject,void* inValue = NULL)
+    :nativeObject(inObject),value(inValue)
+    {
+    }
+};
+
+struct SchedulerScriptData
 {
     //lua use
     int handler;
     float elapse;
     //js use
     Node* node;
-    SchedulerScriptEvent(int inHandler,float inElapse,Node* inNode = NULL)
+    SchedulerScriptData(int inHandler,float inElapse,Node* inNode = NULL)
     :handler(inHandler),
     elapse(inElapse),
     node(inNode)
@@ -185,36 +206,40 @@ struct SchedulerScriptEvent
     }
 };
 
-struct LayerTouchesScriptEvent
+struct TouchesScriptData
 {
-    int  actionType;
+    int actionType;
+    int objectType;
+    void* nativeObject;
     Set* touches;
-    LayerTouchesScriptEvent(int inActiontype,Set* inTouches)
-    :actionType(inActiontype),
+    TouchesScriptData(int inActionType,int inObjectType,void* inNativeObject,Set* inTouches)
+    :actionType(inActionType),
+    objectType(inObjectType),
+    nativeObject(inNativeObject),
     touches(inTouches)
     {
     }
 };
 
-struct LayerTouchScriptEvent
+struct KeypadScriptData
 {
     int actionType;
-    Touch* touch;
-    LayerTouchScriptEvent(int inActionType,Touch* inTouch)
-    :actionType(inActionType),
-    touch(inTouch)
+    int objectType;
+    void* nativeObject;
+    KeypadScriptData(int inActionType,int inObjectType,void* inNativeObject)
+    :actionType(inActionType),objectType(inObjectType),nativeObject(inNativeObject)
     {
     }
 };
 
-struct CommonScriptEvent
+struct CommonScriptData
 {
     //now,only use lua 
     int handler;
     char eventName[64];
     Object* eventSource;
     char eventSourceClassName[64];
-    CommonScriptEvent(int inHandler,const char* inName,Object* inSource = NULL,const char* inClassName = NULL)
+    CommonScriptData(int inHandler,const char* inName,Object* inSource = NULL,const char* inClassName = NULL)
     :handler(inHandler),
     eventSource(inSource)
     {
@@ -320,7 +345,7 @@ public:
     virtual bool handleAssert(const char *msg) = 0;
     
     //when trigger a script event ,call this func,add params needed into ScriptEvent object.nativeObject is object triggering the event, can be NULL in lua
-    virtual int sendEvent(ScriptEvent* message,void* nativeObject = NULL){ return -1;}
+    virtual int sendEvent(ScriptEvent* message){ return 0;}
     //
 };
 

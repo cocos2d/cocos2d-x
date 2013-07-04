@@ -37,7 +37,7 @@ public:
     {
         if (0 != _scriptDrawHandler)
         {
-            CommonScriptEvent data(_scriptDrawHandler,"");
+            CommonScriptData data(_scriptDrawHandler,"");
             ScriptEvent event(kCommonEvent,(void*)&data);
             ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
         }

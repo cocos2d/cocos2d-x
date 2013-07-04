@@ -144,9 +144,11 @@ int Layer::excuteScriptTouchHandler(int nEventType, Touch *pTouch)
 {
     if (kScriptTypeLua == _scriptType)
     {
-        LayerTouchScriptEvent data(nEventType,pTouch);
-        ScriptEvent event(kLayerTouchEvent,&data);
-        return ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event,this);        
+        Set touches;
+        touches.addObject((Object*)pTouch);
+        TouchesScriptData data(nEventType,kLayerTouches,(void*)this,&touches);
+        ScriptEvent event(kTouchesEvent,&data);
+        return ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);        
     }
     else if(kScriptTypeJavascript == _scriptType)
     {
@@ -160,9 +162,9 @@ int Layer::excuteScriptTouchHandler(int nEventType, Set *pTouches)
 {
     if (kScriptTypeLua == _scriptType)
     {
-        LayerTouchesScriptEvent data(nEventType,pTouches);
-        ScriptEvent event(kLayerTouchesEvent,&data);
-        return ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event,this);
+        TouchesScriptData data(nEventType,kLayerTouches,(void*)this,pTouches);
+        ScriptEvent event(kTouchesEvent,&data);
+        return ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
     else if(kScriptTypeJavascript == _scriptType)
     {
@@ -280,12 +282,13 @@ void Layer::didAccelerate(Acceleration* pAccelerationValue)
    CC_UNUSED_PARAM(pAccelerationValue);
     if (kScriptTypeJavascript == _scriptType)
     {
-        ScriptEvent event(kAccelerometerEvent,(void*)pAccelerationValue);
-        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event,this);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->executeAccelerometerEvent(this, pAccelerationValue);
     }
     else if(kScriptTypeLua == _scriptType)
     {
-        ScriptEngineManager::sharedManager()->getScriptEngine()->executeAccelerometerEvent(this, pAccelerationValue);
+        BasicScriptData data((void*)this,(void*)pAccelerationValue);
+        ScriptEvent event(kAccelerometerEvent,&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
 }
 
@@ -370,9 +373,9 @@ void Layer::keyBackClicked(void)
 {
     if (NULL != _scriptKeypadHandlerEntry && 0 != _scriptKeypadHandlerEntry->getHandler())
     {
-        int action = kTypeBackClicked;
-        ScriptEvent event(kLayerKeypadEvent,(void*)&action);
-        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event,this);
+        KeypadScriptData data(kTypeBackClicked,kLayerKeypad,(void*)this);
+        ScriptEvent event(kKeypadEvent,(void*)&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
     else if(kScriptTypeJavascript == _scriptType)
     {
@@ -384,9 +387,9 @@ void Layer::keyMenuClicked(void)
 {
     if (NULL != _scriptKeypadHandlerEntry && 0 != _scriptKeypadHandlerEntry->getHandler())
     {
-        int action = kTypeMenuClicked;
-        ScriptEvent event(kLayerKeypadEvent,(void*)&action);
-        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event,this);
+        KeypadScriptData data(kTypeMenuClicked,kLayerKeypad,(void*)this);
+        ScriptEvent event(kKeypadEvent,(void*)&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
 }
 

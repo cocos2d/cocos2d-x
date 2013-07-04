@@ -561,8 +561,9 @@ void CallFunc::execute() {
     } else if( _function )
 		_function();
 	if (0 != _scriptHandler) {
-        ScriptEvent event(kCallFuncEvent,NULL);
-		ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event,(void*)this);
+        BasicScriptData data((void*)&_scriptHandler);
+        ScriptEvent event(kCallFuncEvent,(void*)&data);
+		ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
 	}
 }
 
