@@ -263,8 +263,8 @@ public:
     /// @name Functions inherited from TextureProtocol
     virtual void setTexture(Texture2D *texture);
     virtual Texture2D* getTexture(void);
-    inline void setBlendFunc(ccBlendFunc blendFunc) { _blendFunc = blendFunc; }
-    inline ccBlendFunc getBlendFunc(void) { return _blendFunc; }
+    inline void setBlendFunc(const ccBlendFunc &blendFunc) { _blendFunc = blendFunc; }
+    inline const ccBlendFunc& getBlendFunc(void) const { return _blendFunc; }
     /// @}
 
     /// @{
@@ -298,7 +298,7 @@ public:
     virtual void updateDisplayedColor(const ccColor3B& parentColor);
     virtual void setOpacity(GLubyte opacity);
     virtual void setOpacityModifyRGB(bool modify);
-    virtual bool isOpacityModifyRGB(void);
+    virtual bool isOpacityModifyRGB(void) const;
     virtual void updateDisplayedOpacity(GLubyte parentOpacity);
     /// @}
 

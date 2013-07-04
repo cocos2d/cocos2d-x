@@ -183,7 +183,7 @@ void LabelTTF::setString(const char *string)
     }
 }
 
-const char* LabelTTF::getString(void)
+const char* LabelTTF::getString(void) const
 {
     return _string.c_str();
 }
