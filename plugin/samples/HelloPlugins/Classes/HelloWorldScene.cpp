@@ -3,6 +3,7 @@
 #include "TestAnalyticsScene.h"
 #include "TestShareScene.h"
 #include "TestIAPScene.h"
+#include "TestIAPOnlineScene.h"
 #include "TestUserScene.h"
 
 USING_NS_CC;
@@ -13,6 +14,7 @@ std::string g_testCases[] = {
     "Test Share",
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     "Test IAP",
+    "Test IAP Online",
     "Test User",
 #endif
 };
@@ -94,6 +96,9 @@ void HelloWorld::menuCallback(Object* pSender)
         newScene = TestIAP::scene();
         break;
     case 4:
+        newScene = TestIAPOnline::scene();
+        break;
+    case 5:
         newScene = TestUser::scene();
         break;
     default:
