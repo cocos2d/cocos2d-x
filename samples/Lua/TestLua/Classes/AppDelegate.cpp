@@ -35,6 +35,23 @@ bool AppDelegate::applicationDidFinishLaunching()
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
     
+    Size screenSize = EGLView::sharedOpenGLView()->getFrameSize();
+    
+    Size designSize = CCSizeMake(480, 320);
+    
+    FileUtils* pFileUtils = FileUtils::sharedFileUtils();
+    
+    if (screenSize.height > 320)
+    {
+        Size resourceSize = CCSizeMake(960, 640);
+        std::vector<std::string> searchPaths;
+        searchPaths.push_back("hd");
+        pFileUtils->setSearchPaths(searchPaths);
+        pDirector->setContentScaleFactor(resourceSize.height/designSize.height);
+    }
+    
+    EGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionFixedHeight);
+    
     // register lua engine
     LuaEngine* pEngine = LuaEngine::defaultEngine();
     ScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
@@ -48,7 +65,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     tolua_opengl_open(tolua_s);
     tolua_scroll_view_open(tolua_s);
     
-    std::vector<std::string> searchPaths;
+    std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
     searchPaths.push_back("cocosbuilderRes");
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY

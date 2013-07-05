@@ -133,7 +133,7 @@ public:
     // input text property
 public:
     virtual void setString(const char *text);
-    virtual const char* getString(void);
+    virtual const char* getString(void) const;
 protected:
     std::string * _inputText;
 
