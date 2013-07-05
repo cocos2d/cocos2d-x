@@ -80,10 +80,10 @@ public:
     void setReverseProgress(bool reverse);
 
     virtual void draw(void);
-    void setAnchorPoint(Point anchorPoint);
+    void setAnchorPoint(const Point& anchorPoint);
 
     virtual void setOpacityModifyRGB(bool bValue);
-    virtual bool isOpacityModifyRGB(void);
+    virtual bool isOpacityModifyRGB(void) const;
     
     inline bool isReverseDirection() { return _reverseDirection; };
     inline void setReverseDirection(bool value) { _reverseDirection = value; };

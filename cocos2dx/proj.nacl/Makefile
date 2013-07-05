@@ -132,6 +132,7 @@ SOURCES = ../actions/CCAction.cpp \
 ../CCDirector.cpp \
 ../CCScheduler.cpp \
 ../ccFPSImages.c \
+../ccTypes.cpp \
 ../cocos2d.cpp
 
 include cocos2dx.mk

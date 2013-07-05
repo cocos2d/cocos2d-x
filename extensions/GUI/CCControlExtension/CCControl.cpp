@@ -248,7 +248,7 @@ void Control::setOpacityModifyRGB(bool bOpacityModifyRGB)
     }
 }
 
-bool Control::isOpacityModifyRGB()
+bool Control::isOpacityModifyRGB() const
 {
     return _isOpacityModifyRGB;
 }

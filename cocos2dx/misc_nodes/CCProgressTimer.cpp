@@ -154,7 +154,7 @@ void ProgressTimer::setOpacityModifyRGB(bool bValue)
     CC_UNUSED_PARAM(bValue);
 }
 
-bool ProgressTimer::isOpacityModifyRGB(void)
+bool ProgressTimer::isOpacityModifyRGB(void) const
 {
     return false;
 }
@@ -225,7 +225,7 @@ void ProgressTimer::updateProgress(void)
     }
 }
 
-void ProgressTimer::setAnchorPoint(Point anchorPoint)
+void ProgressTimer::setAnchorPoint(const Point& anchorPoint)
 {
     Node::setAnchorPoint(anchorPoint);
 }

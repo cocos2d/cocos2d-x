@@ -107,9 +107,9 @@ public:
     /** sets a new texture. it will be retained*/
     virtual void setTexture(Texture2D *texture);
     
-    virtual bool isOpacityModifyRGB();
+    virtual bool isOpacityModifyRGB() const;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB);
-    virtual const Color3B& getColor(void);
+    virtual const Color3B& getColor(void) const;
     virtual void setColor(const Color3B& color);
     virtual void setOpacity(GLubyte opacity);
 

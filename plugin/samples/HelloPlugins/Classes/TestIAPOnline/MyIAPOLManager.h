@@ -21,48 +21,47 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __MY_USER_MANAGER_H__
-#define __MY_USER_MANAGER_H__
+#ifndef __MY_IAPOL_MANAGER_H__
+#define __MY_IAPOL_MANAGER_H__
 
-#include "ProtocolUser.h"
+#include "ProtocolIAP.h"
 #include "Configs.h"
 
-class MyUserActionResult : public cocos2d::plugin::UserActionListener
+class MyIAPOnlineResult : public cocos2d::plugin::PayResultListener
 {
 public:
-    virtual void onActionResult(cocos2d::plugin::ProtocolUser* pPlugin, cocos2d::plugin::UserActionResultCode code, const char* msg);
+    virtual void onPayResult(cocos2d::plugin::PayResultCode ret, const char* msg, cocos2d::plugin::TProductInfo info);
 };
 
-class MyUserManager
+class MyIAPOLManager
 {
 public:
-	static MyUserManager* sharedManager();
-    static void purgeManager();
+    static MyIAPOLManager* sharedManager();
+    static void purge();
 
     typedef enum {
-    	kNoneMode = 0,
-    	kQH360,
-    	kND91,
+        eNoneMode = 0,
+        eQH360,
+        eND91,
 #if TEST_UC
-    	kUC,
+        eUC,
 #endif
-    } MyUserMode;
+    } MyPayMode;
 
-	void unloadPlugin();
-    void loadPlugin();
-    void loginByMode(MyUserMode mode);
-    void logoutByMode(MyUserMode mode);
+    void unloadPlugins();
+    void loadPlugins();
+    void payByMode(cocos2d::plugin::TProductInfo info, MyPayMode mode);
 
 private:
-    MyUserManager();
-    virtual ~MyUserManager();
+    MyIAPOLManager();
+    virtual ~MyIAPOLManager();
 
-    static MyUserManager* s_pManager;
+    static MyIAPOLManager* s_pIAPOnline;
 
-    cocos2d::plugin::ProtocolUser* _qh360;
-    cocos2d::plugin::ProtocolUser* _nd91;
-    cocos2d::plugin::ProtocolUser* _uc;
-    MyUserActionResult* _retListener;
+    cocos2d::plugin::ProtocolIAP* s_pQH360;
+    cocos2d::plugin::ProtocolIAP* s_pNd91;
+    cocos2d::plugin::ProtocolIAP* s_pUC;
+    MyIAPOnlineResult* s_pRetListener;
 };
 
-#endif // __MY_USER_MANAGER_H__
+#endif // __MY_IAPOL_MANAGER_H__

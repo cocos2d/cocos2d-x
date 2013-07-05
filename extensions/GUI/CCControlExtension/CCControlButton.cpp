@@ -724,7 +724,7 @@ void ControlButton::setOpacity(GLubyte opacity)
     }
 }
 
-GLubyte ControlButton::getOpacity()
+GLubyte ControlButton::getOpacity() const
 {
     return _realOpacity;
 }
@@ -741,7 +741,7 @@ void ControlButton::setColor(const Color3B & color)
     }
 }
 
-const Color3B& ControlButton::getColor()
+const Color3B& ControlButton::getColor() const
 {
 	return _realColor;
 }
