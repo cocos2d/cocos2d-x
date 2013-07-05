@@ -364,6 +364,25 @@ string RenderTextureZbuffer::subtitle()
 void RenderTextureZbuffer::ccTouchesBegan(cocos2d::Set *touches, cocos2d::Event *event)
 {
 
+#ifdef CC_PLATFORM_TIZEN
+    SetIterator iter;
+    Touch *touch;
+    for (iter = touches->begin(); iter != touches->end(); ++iter)
+    {
+        touch = (Touch *)(*iter);
+        Point location = touch->getLocation();
+
+        sp1->setPosition(location);
+        sp2->setPosition(location);
+        sp3->setPosition(location);
+        sp4->setPosition(location);
+        sp5->setPosition(location);
+        sp6->setPosition(location);
+        sp7->setPosition(location);
+        sp8->setPosition(location);
+        sp9->setPosition(location);
+    }
+#else
     for (auto &item: *touches)
     {
         Touch *touch = static_cast<Touch*>(item);
@@ -379,10 +398,30 @@ void RenderTextureZbuffer::ccTouchesBegan(cocos2d::Set *touches, cocos2d::Event 
         sp8->setPosition(location);
         sp9->setPosition(location);
     }
+#endif
 }
 
 void RenderTextureZbuffer::ccTouchesMoved(Set* touches, Event* event)
 {
+#ifdef CC_PLATFORM_TIZEN
+    SetIterator iter;
+    Touch *touch;
+    for (iter = touches->begin(); iter != touches->end(); ++iter)
+    {
+        touch = (Touch *)(*iter);
+        Point location = touch->getLocation();
+
+        sp1->setPosition(location);
+        sp2->setPosition(location);
+        sp3->setPosition(location);
+        sp4->setPosition(location);
+        sp5->setPosition(location);
+        sp6->setPosition(location);
+        sp7->setPosition(location);
+        sp8->setPosition(location);
+        sp9->setPosition(location);
+    }
+#else
     for (auto &item: *touches)
     {
         Touch *touch = static_cast<Touch*>(item);
@@ -398,6 +437,7 @@ void RenderTextureZbuffer::ccTouchesMoved(Set* touches, Event* event)
         sp8->setPosition(location);
         sp9->setPosition(location);
     }
+#endif
 }
 
 void RenderTextureZbuffer::ccTouchesEnded(Set* touches, Event* event)
@@ -672,12 +712,21 @@ SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::addNewSpriteWithCo
 
 void SpriteRenderTextureBug::ccTouchesEnded(Set* touches, Event* event)
 {
+#ifdef CC_PLATFORM_TIZEN
+    SetIterator iter = touches->begin();
+    for(; iter != touches->end(); ++iter)
+    {
+        Point location = ((Touch*)(*iter))->getLocation();
+        addNewSpriteWithCoords(location);
+    }
+#else
     for (auto &item: *touches)
     {
         Touch *touch = static_cast<Touch*>(item);
         Point location = touch->getLocation();
         addNewSpriteWithCoords(location);
     }
+#endif
 }
 
 std::string SpriteRenderTextureBug::title()

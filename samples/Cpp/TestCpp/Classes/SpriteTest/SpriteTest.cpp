@@ -243,6 +243,22 @@ void Sprite1::addNewSpriteWithCoords(Point p)
 
 void Sprite1::ccTouchesEnded(Set* touches, Event* event)
 {
+#ifdef CC_PLATFORM_TIZEN
+    SetIterator it;
+    Touch* touch;
+
+    for( it = touches->begin(); it != touches->end(); it++)
+    {
+        touch = (Touch*)(*it);
+
+        if(!touch)
+            break;
+
+        Point location = touch->getLocation();
+
+        addNewSpriteWithCoords( location );
+    }
+#else
     for (auto &item: *touches)
     {
         Touch *touch = static_cast<Touch*>(item);
@@ -250,6 +266,7 @@ void Sprite1::ccTouchesEnded(Set* touches, Event* event)
     
         addNewSpriteWithCoords( location );
     }
+#endif
 }
 
 std::string Sprite1::title()
@@ -310,6 +327,22 @@ void SpriteBatchNode1::addNewSpriteWithCoords(Point p)
 
 void SpriteBatchNode1::ccTouchesEnded(Set* touches, Event* event)
 {
+#ifdef CC_PLATFORM_TIZEN
+    SetIterator it;
+    Touch* touch;
+
+    for( it = touches->begin(); it != touches->end(); it++)
+    {
+        touch = (Touch*)(*it);
+
+        if(!touch)
+            break;
+
+        Point location = touch->getLocation();
+
+        addNewSpriteWithCoords( location );
+    }
+#else
     for (auto &item: *touches)
     {
         Touch *touch = static_cast<Touch*>(item);
@@ -317,6 +350,7 @@ void SpriteBatchNode1::ccTouchesEnded(Set* touches, Event* event)
             
         addNewSpriteWithCoords( location );
     }
+#endif
 
 }
 

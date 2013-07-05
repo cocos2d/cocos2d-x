@@ -211,6 +211,23 @@ void ChipmunkTestLayer::onEnter()
 
 void ChipmunkTestLayer::ccTouchesEnded(Set* touches, Event* event)
 {
+#ifdef CC_PLATFORM_TIZEN
+    //Add a new body/atlas sprite at the touched location
+    SetIterator it;
+    Touch* touch;
+
+    for( it = touches->begin(); it != touches->end(); it++)
+    {
+        touch = (Touch*)(*it);
+
+        if(!touch)
+            break;
+
+        Point location = touch->getLocation();
+
+        addNewSpriteAtPosition( location );
+    }
+#else
     //Add a new body/atlas sprite at the touched location
 
     for( auto &item: *touches)
@@ -221,6 +238,7 @@ void ChipmunkTestLayer::ccTouchesEnded(Set* touches, Event* event)
 
         addNewSpriteAtPosition( location );
     }
+#endif
 }
 
 void ChipmunkTestLayer::didAccelerate(Acceleration* pAccelerationValue)
