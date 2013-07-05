@@ -485,7 +485,7 @@ int LuaEngine::handleCallFuncActionEvent(void* data)
         return 0;
     
     BasicScriptData* basicScriptData = (BasicScriptData*)(data);
-    if (NULL == basicScriptData->nativeObject ||NULL == basicScriptData->value)
+    if (NULL == basicScriptData->nativeObject)
         return 0;
     
     CallFunc* callFunc = (CallFunc*)(basicScriptData->nativeObject);
