@@ -59,6 +59,7 @@ build_*_vc10/
 *.pbxuser
 *.xcbkptlist
 *.xcscheme
+*.xcworkspacedata
 *.xcuserstate
 xcschememanagement.plist
 build/

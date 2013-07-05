@@ -567,6 +567,30 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/cocos2dx/cocoa/CCData.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>cocoa</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/cocoa/CCData.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/cocoa/CCData.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>cocoa</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/cocoa/CCData.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/cocos2dx/cocoa/CCDataVisitor.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -795,30 +819,6 @@
 			</array>
 			<key>Path</key>
 			<string>libs/cocos2dx/cocoa/CCZone.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-		<key>libs/cocos2dx/cocoa/CCData.cpp</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2dx</string>
-				<string>cocoa</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2dx/cocoa/CCData.cpp</string>
-		</dict>
-		<key>libs/cocos2dx/cocoa/CCData.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2dx</string>
-				<string>cocoa</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2dx/cocoa/CCData.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -1414,6 +1414,30 @@
 			</array>
 			<key>Path</key>
 			<string>libs/cocos2dx/kazmath/src/vec4.c</string>
+		</dict>
+		<key>libs/cocos2dx/keyboard_dispatcher/CCKeyboardDispatcher.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>keyboard_dispatcher</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/keyboard_dispatcher/CCKeyboardDispatcher.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/keyboard_dispatcher/CCKeyboardDispatcher.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>keyboard_dispatcher</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/keyboard_dispatcher/CCKeyboardDispatcher.h</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/cocos2dx/keypad_dispatcher/CCKeypadDelegate.cpp</key>
 		<dict>
@@ -2094,32 +2118,6 @@
 			<string>libs/cocos2dx/platform/CCThread.h</string>
 			<key>TargetIndices</key>
 			<array/>
-		</dict>
-		<key>libs/cocos2dx/platform/ios/AccelerometerDelegateWrapper.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2dx</string>
-				<string>platform</string>
-				<string>ios</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2dx/platform/ios/AccelerometerDelegateWrapper.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-		<key>libs/cocos2dx/platform/ios/AccelerometerDelegateWrapper.mm</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2dx</string>
-				<string>platform</string>
-				<string>ios</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2dx/platform/ios/AccelerometerDelegateWrapper.mm</string>
 		</dict>
 		<key>libs/cocos2dx/platform/ios/CCAccelerometer.h</key>
 		<dict>
@@ -3541,6 +3539,18 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/cocos2dx/support/user_default/Archive.zip</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>support</string>
+				<string>user_default</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/support/user_default/Archive.zip</string>
+		</dict>
 		<key>libs/cocos2dx/support/user_default/CCUserDefault.h</key>
 		<dict>
 			<key>Group</key>
@@ -4105,6 +4115,8 @@
 		<string>libs/cocos2dx/cocoa/CCAutoreleasePool.cpp</string>
 		<string>libs/cocos2dx/cocoa/CCAutoreleasePool.h</string>
 		<string>libs/cocos2dx/cocoa/CCBool.h</string>
+		<string>libs/cocos2dx/cocoa/CCData.cpp</string>
+		<string>libs/cocos2dx/cocoa/CCData.h</string>
 		<string>libs/cocos2dx/cocoa/CCDataVisitor.cpp</string>
 		<string>libs/cocos2dx/cocoa/CCDataVisitor.h</string>
 		<string>libs/cocos2dx/cocoa/CCDictionary.cpp</string>
@@ -4124,8 +4136,6 @@
 		<string>libs/cocos2dx/cocoa/CCString.h</string>
 		<string>libs/cocos2dx/cocoa/CCZone.cpp</string>
 		<string>libs/cocos2dx/cocoa/CCZone.h</string>
-		<string>libs/cocos2dx/cocoa/CCData.cpp</string>
-		<string>libs/cocos2dx/cocoa/CCData.h</string>
 		<string>libs/cocos2dx/cocos2d.cpp</string>
 		<string>libs/cocos2dx/draw_nodes/CCDrawingPrimitives.cpp</string>
 		<string>libs/cocos2dx/draw_nodes/CCDrawingPrimitives.h</string>
@@ -4171,6 +4181,8 @@
 		<string>libs/cocos2dx/kazmath/src/vec2.c</string>
 		<string>libs/cocos2dx/kazmath/src/vec3.c</string>
 		<string>libs/cocos2dx/kazmath/src/vec4.c</string>
+		<string>libs/cocos2dx/keyboard_dispatcher/CCKeyboardDispatcher.cpp</string>
+		<string>libs/cocos2dx/keyboard_dispatcher/CCKeyboardDispatcher.h</string>
 		<string>libs/cocos2dx/keypad_dispatcher/CCKeypadDelegate.cpp</string>
 		<string>libs/cocos2dx/keypad_dispatcher/CCKeypadDelegate.h</string>
 		<string>libs/cocos2dx/keypad_dispatcher/CCKeypadDispatcher.cpp</string>
@@ -4227,8 +4239,6 @@
 		<string>libs/cocos2dx/platform/CCSAXParser.cpp</string>
 		<string>libs/cocos2dx/platform/CCSAXParser.h</string>
 		<string>libs/cocos2dx/platform/CCThread.h</string>
-		<string>libs/cocos2dx/platform/ios/AccelerometerDelegateWrapper.h</string>
-		<string>libs/cocos2dx/platform/ios/AccelerometerDelegateWrapper.mm</string>
 		<string>libs/cocos2dx/platform/ios/CCAccelerometer.h</string>
 		<string>libs/cocos2dx/platform/ios/CCAccelerometer.mm</string>
 		<string>libs/cocos2dx/platform/ios/CCApplication.h</string>
@@ -4338,6 +4348,7 @@
 		<string>libs/cocos2dx/support/tinyxml2/tinyxml2.h</string>
 		<string>libs/cocos2dx/support/TransformUtils.cpp</string>
 		<string>libs/cocos2dx/support/TransformUtils.h</string>
+		<string>libs/cocos2dx/support/user_default/Archive.zip</string>
 		<string>libs/cocos2dx/support/user_default/CCUserDefault.h</string>
 		<string>libs/cocos2dx/support/user_default/CCUserDefault.mm</string>
 		<string>libs/cocos2dx/support/zip_support/ioapi.cpp</string>

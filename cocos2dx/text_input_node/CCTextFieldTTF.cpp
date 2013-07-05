@@ -326,7 +326,7 @@ void TextFieldTTF::setString(const char *text)
     _charCount = _calcCharCount(_inputText->c_str());
 }
 
-const char* TextFieldTTF::getString(void)
+const char* TextFieldTTF::getString(void) const
 {
     return _inputText->c_str();
 }
