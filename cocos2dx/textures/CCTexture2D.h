@@ -105,7 +105,7 @@ public:
     Texture2D();
     virtual ~Texture2D();
 
-    const char* description(void);
+    const char* description(void) const;
 
     /** These functions are needed to create mutable textures */
     void releaseData(void *data);
@@ -151,7 +151,7 @@ public:
 
     @since v0.8
     */
-    void setTexParameters(ccTexParams* texParams);
+    void setTexParameters(const ccTexParams& texParams);
 
     /** sets antialias texture parameters:
     - GL_TEXTURE_MIN_FILTER = GL_LINEAR
@@ -183,17 +183,17 @@ public:
     /** returns the pixel format.
      @since v2.0
      */
-    const char* stringForFormat();
+    const char* stringForFormat() const;
 
     /** returns the bits-per-pixel of the in-memory OpenGL texture
     @since v1.0
     */
-    unsigned int bitsPerPixelForFormat();  
+    unsigned int bitsPerPixelForFormat() const;
 
     /** Helper functions that returns bits per pixels for a given format.
      @since v2.0
      */
-    unsigned int bitsPerPixelForFormat(Texture2DPixelFormat format);
+    unsigned int bitsPerPixelForFormat(Texture2DPixelFormat format) const;
 
     /** sets the default pixel format for UIImagescontains alpha channel.
     If the UIImage contains alpha channel, then the options are:
@@ -231,9 +231,9 @@ public:
 
     /** content size */
     const Size& getContentSizeInPixels();
-    
-    bool hasPremultipliedAlpha();
-    bool hasMipmaps();
+
+    bool hasPremultipliedAlpha() const;
+    bool hasMipmaps() const;
 private:
     bool initPremultipliedATextureWithImage(Image * image, unsigned int pixelsWide, unsigned int pixelsHigh);
     

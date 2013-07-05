@@ -156,6 +156,116 @@ private:
     bool    _swallowsTouches;
 };
 
+enum ScriptEventType
+{
+    kNodeEvent = 0,
+    kMenuClickedEvent,
+    kNotificationEvent,
+    kCallFuncEvent,
+    kScheduleEvent,
+    kTouchesEvent,
+    kKeypadEvent,
+    kAccelerometerEvent,
+    kCommonEvent,
+};
+
+enum TouchesObjectType
+{
+    kLayerTouches = 0,
+};
+
+enum KeypadObjectType
+{
+    kLayerKeypad = 0,
+};
+
+struct BasicScriptData
+{
+    //nativeobject:to get handler for lua or to get jsobject for js
+    void* nativeObject;
+    //value: a pointer to a object that already defined
+    void* value;
+    BasicScriptData(void* inObject,void* inValue = NULL)
+    :nativeObject(inObject),value(inValue)
+    {
+    }
+};
+
+struct SchedulerScriptData
+{
+    //lua use
+    int handler;
+    float elapse;
+    //js use
+    Node* node;
+    SchedulerScriptData(int inHandler,float inElapse,Node* inNode = NULL)
+    :handler(inHandler),
+    elapse(inElapse),
+    node(inNode)
+    {
+    }
+};
+
+struct TouchesScriptData
+{
+    int actionType;
+    int objectType;
+    void* nativeObject;
+    Set* touches;
+    TouchesScriptData(int inActionType,int inObjectType,void* inNativeObject,Set* inTouches)
+    :actionType(inActionType),
+    objectType(inObjectType),
+    nativeObject(inNativeObject),
+    touches(inTouches)
+    {
+    }
+};
+
+struct KeypadScriptData
+{
+    int actionType;
+    int objectType;
+    void* nativeObject;
+    KeypadScriptData(int inActionType,int inObjectType,void* inNativeObject)
+    :actionType(inActionType),objectType(inObjectType),nativeObject(inNativeObject)
+    {
+    }
+};
+
+struct CommonScriptData
+{
+    //now,only use lua 
+    int handler;
+    char eventName[64];
+    Object* eventSource;
+    char eventSourceClassName[64];
+    CommonScriptData(int inHandler,const char* inName,Object* inSource = NULL,const char* inClassName = NULL)
+    :handler(inHandler),
+    eventSource(inSource)
+    {
+        strncpy(eventName, inName, 64);
+        
+        if (NULL == inClassName)
+        {
+            memset(eventSourceClassName, 0, 64*sizeof(char));
+        }
+        else
+        {
+            strncpy(eventSourceClassName, inClassName, 64);
+        }
+    }
+};
+
+struct ScriptEvent
+{
+    ScriptEventType type;
+    void* data;
+    ScriptEvent(ScriptEventType inType,void* inData)
+    :type(inType),
+    data(inData)
+    {
+    }
+};
 
 // Don't make ScriptEngineProtocol inherits from Object since setScriptEngine is invoked only once in AppDelegate.cpp,
 // It will affect the lifecycle of ScriptCore instance, the autorelease pool will be destroyed before destructing ScriptCore.
@@ -233,6 +343,10 @@ public:
      * @return true if the assert was handled by the script engine, false otherwise.
      */
     virtual bool handleAssert(const char *msg) = 0;
+    
+    //when trigger a script event ,call this func,add params needed into ScriptEvent object.nativeObject is object triggering the event, can be NULL in lua
+    virtual int sendEvent(ScriptEvent* message){ return 0;}
+    //
 };
 
 /**

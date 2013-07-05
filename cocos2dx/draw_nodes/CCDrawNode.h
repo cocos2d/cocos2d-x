@@ -74,7 +74,7 @@ public:
     /** Clear the geometry in the node's buffer. */
     void clear();
     
-    ccBlendFunc getBlendFunc() const;
+    const ccBlendFunc& getBlendFunc() const;
     void setBlendFunc(const ccBlendFunc &blendFunc);
     
     DrawNode();

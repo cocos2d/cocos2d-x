@@ -327,7 +327,7 @@ public:
     /** conforms to CocosNodeTexture protocol */
     CC_PROPERTY(Texture2D*, _texture, Texture)
     /** conforms to CocosNodeTexture protocol */
-    CC_PROPERTY(ccBlendFunc, _blendFunc, BlendFunc)
+    CC_PROPERTY_PASS_BY_REF(ccBlendFunc, _blendFunc, BlendFunc)
     /** does the alpha value modify color */
     CC_PROPERTY(bool, _opacityModifyRGB, OpacityModifyRGB)
 
