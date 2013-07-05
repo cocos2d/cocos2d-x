@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "cocos2d.h"
 
 USING_NS_CC;
+
 using namespace Tizen::Base;
 using namespace Tizen::Base::Collection;
 
