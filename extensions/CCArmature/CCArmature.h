@@ -120,8 +120,8 @@ public:
      */
 	virtual void updateOffsetPoint();
 
-	inline void setBlendFunc(const ccBlendFunc& blendFunc) { _blendFunc = blendFunc; }
-	inline const ccBlendFunc& getBlendFunc(void) const { return _blendFunc; }
+	virtual void setBlendFunc(const ccBlendFunc& blendFunc) { _blendFunc = blendFunc; }
+	virtual const ccBlendFunc& getBlendFunc(void) const { return _blendFunc; }
 
 protected:
     

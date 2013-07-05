@@ -152,7 +152,7 @@ void AtlasNode::draw(void)
 
 // AtlasNode - RGBA protocol
 
-const ccColor3B& AtlasNode::getColor()
+const ccColor3B& AtlasNode::getColor() const
 {
     if(_isOpacityModifyRGB)
     {
@@ -191,7 +191,7 @@ void AtlasNode::setOpacityModifyRGB(bool bValue)
     this->setColor(oldColor);
 }
 
-bool AtlasNode::isOpacityModifyRGB()
+bool AtlasNode::isOpacityModifyRGB() const
 {
     return _isOpacityModifyRGB;
 }
