@@ -82,7 +82,7 @@ public:
 	// --- BlendProtocol
 	CC_PROPERTY_PASS_BY_REF(cocos2d::ccBlendFunc, blendFunc, BlendFunc);
 	virtual void setOpacityModifyRGB (bool value);
-	virtual bool isOpacityModifyRGB ();
+	virtual bool isOpacityModifyRGB() const;
 
 protected:
 	CCSkeleton ();
