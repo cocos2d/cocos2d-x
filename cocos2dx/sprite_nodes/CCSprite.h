@@ -263,8 +263,8 @@ public:
     /// @name Functions inherited from TextureProtocol
     virtual void setTexture(Texture2D *texture);
     virtual Texture2D* getTexture(void);
-    inline void setBlendFunc(const ccBlendFunc &blendFunc) { _blendFunc = blendFunc; }
-    inline const ccBlendFunc& getBlendFunc(void) const { return _blendFunc; }
+    virtual void setBlendFunc(const ccBlendFunc &blendFunc) { _blendFunc = blendFunc; }
+    virtual const ccBlendFunc& getBlendFunc(void) const { return _blendFunc; }
     /// @}
 
     /// @{
@@ -400,17 +400,17 @@ public:
      *
      * @return true if the sprite needs to be updated in the Atlas, false otherwise.
      */
-    inline virtual bool isDirty(void) const { return _dirty; }
+    virtual bool isDirty(void) const { return _dirty; }
     
     /** 
      * Makes the Sprite to be updated in the Atlas.
      */
-    inline virtual void setDirty(bool bDirty) { _dirty = bDirty; }
+    virtual void setDirty(bool bDirty) { _dirty = bDirty; }
     
     /**
      * Returns the quad (tex coords, vertex coords and color) information. 
      */
-    inline ccV3F_C4B_T2F_Quad getQuad(void) { return _quad; }
+    inline ccV3F_C4B_T2F_Quad getQuad(void) const { return _quad; }
 
     /** 
      * Returns whether or not the texture rectangle is rotated.

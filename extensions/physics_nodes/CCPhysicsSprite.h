@@ -90,7 +90,7 @@ public:
      */
     static PhysicsSprite* create(const char *pszFileName, const Rect& rect);
 
-    virtual bool isDirty();
+    virtual bool isDirty() const;
 
     /** Keep the sprite's rotation separate from the body. */
     bool isIgnoreBodyRotation() const;

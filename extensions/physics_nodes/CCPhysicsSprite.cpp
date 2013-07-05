@@ -150,7 +150,7 @@ PhysicsSprite* PhysicsSprite::create(const char *pszFileName, const Rect& rect)
 // this method will only get called if the sprite is batched.
 // return YES if the physic's values (angles, position ) changed.
 // If you return NO, then nodeToParentTransform won't be called.
-bool PhysicsSprite::isDirty()
+bool PhysicsSprite::isDirty() const
 {
     return true;
 }
