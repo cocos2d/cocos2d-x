@@ -25,7 +25,7 @@
 								<option id="sbi.gnu.cpp.compiler.option.debugging.level.1554282679" name="Debug level" superClass="sbi.gnu.cpp.compiler.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="sbi.gnu.cpp.compiler.option.debug.applog.1800109419" name="Enable application logging (-D_APP_LOG)" superClass="sbi.gnu.cpp.compiler.option.debug.applog" value="true" valueType="boolean"/>
 								<option id="sbi.gnu.cpp.compiler.option.796499718" name="Tizen-Target" superClass="sbi.gnu.cpp.compiler.option" valueType="userObjs">
-									<listOptionValue builtIn="false" value="tizen-emulator-2.1.native_llvm31.i386.cpp.staticLib"/>
+									<listOptionValue builtIn="false" value="tizen-emulator-2.2.native_llvm31.i386.cpp.staticLib"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.include.paths.1887202981" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
@@ -54,7 +54,7 @@
 								<option id="sbi.gnu.c.compiler.option.debugging.level.709891206" name="Debug level" superClass="sbi.gnu.c.compiler.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="sbi.gnu.c.compiler.option.debug.applog.1166511754" name="Enable application logging (-D_APP_LOG)" superClass="sbi.gnu.c.compiler.option.debug.applog" value="true" valueType="boolean"/>
 								<option id="sbi.gnu.c.compiler.option.1738169580" name="Tizen-Target" superClass="sbi.gnu.c.compiler.option" valueType="userObjs">
-									<listOptionValue builtIn="false" value="tizen-emulator-2.1.native_llvm31.i386.cpp.staticLib"/>
+									<listOptionValue builtIn="false" value="tizen-emulator-2.2.native_llvm31.i386.cpp.staticLib"/>
 								</option>
 								<option id="gnu.c.compiler.option.include.paths.821405214" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
@@ -128,7 +128,7 @@
 								<option id="sbi.gnu.cpp.compiler.option.debugging.level.412266760" name="Debug level" superClass="sbi.gnu.cpp.compiler.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="sbi.gnu.cpp.compiler.option.debug.applog.48357772" name="Enable application logging (-D_APP_LOG)" superClass="sbi.gnu.cpp.compiler.option.debug.applog" value="true" valueType="boolean"/>
 								<option id="sbi.gnu.cpp.compiler.option.738324429" name="Tizen-Target" superClass="sbi.gnu.cpp.compiler.option" valueType="userObjs">
-									<listOptionValue builtIn="false" value="tizen-device-2.1.native_llvm31.armel.cpp.staticLib"/>
+									<listOptionValue builtIn="false" value="tizen-device-2.2.native_llvm31.armel.cpp.staticLib"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.include.paths.1372067183" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
@@ -157,10 +157,11 @@
 								<option id="sbi.gnu.c.compiler.option.debugging.level.641100997" name="Debug level" superClass="sbi.gnu.c.compiler.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="sbi.gnu.c.compiler.option.debug.applog.2000116514" name="Enable application logging (-D_APP_LOG)" superClass="sbi.gnu.c.compiler.option.debug.applog" value="true" valueType="boolean"/>
 								<option id="sbi.gnu.c.compiler.option.1751855743" name="Tizen-Target" superClass="sbi.gnu.c.compiler.option" valueType="userObjs">
-									<listOptionValue builtIn="false" value="tizen-device-2.1.native_llvm31.armel.cpp.staticLib"/>
+									<listOptionValue builtIn="false" value="tizen-device-2.2.native_llvm31.armel.cpp.staticLib"/>
 								</option>
 								<option id="gnu.c.compiler.option.include.paths.1641648644" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="../../include/chipmunk"/>
 								</option>
 								<option id="sbi.gnu.c.compiler.option.frameworks.cpp.356824867" name="Tizen-Frameworks" superClass="sbi.gnu.c.compiler.option.frameworks.cpp" valueType="userObjs">
 									<listOptionValue builtIn="false" value="osp-static"/>
@@ -230,7 +231,7 @@
 								<option id="sbi.gnu.cpp.compiler.option.debugging.level.459894355" name="Debug level" superClass="sbi.gnu.cpp.compiler.option.debugging.level"/>
 								<option id="sbi.gnu.cpp.compiler.option.debug.applog.849008186" name="Enable application logging (-D_APP_LOG)" superClass="sbi.gnu.cpp.compiler.option.debug.applog"/>
 								<option id="sbi.gnu.cpp.compiler.option.74299026" name="Tizen-Target" superClass="sbi.gnu.cpp.compiler.option" valueType="userObjs">
-									<listOptionValue builtIn="false" value="tizen-emulator-2.1.native_llvm31.i386.cpp.staticLib"/>
+									<listOptionValue builtIn="false" value="tizen-emulator-2.2.native_llvm31.i386.cpp.staticLib"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.include.paths.1217915212" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
@@ -256,7 +257,7 @@
 								<option id="sbi.gnu.c.compiler.option.debugging.level.220381318" name="Debug level" superClass="sbi.gnu.c.compiler.option.debugging.level"/>
 								<option id="sbi.gnu.c.compiler.option.debug.applog.753089515" name="Enable application logging (-D_APP_LOG)" superClass="sbi.gnu.c.compiler.option.debug.applog"/>
 								<option id="sbi.gnu.c.compiler.option.215142124" name="Tizen-Target" superClass="sbi.gnu.c.compiler.option" valueType="userObjs">
-									<listOptionValue builtIn="false" value="tizen-emulator-2.1.native_llvm31.i386.cpp.staticLib"/>
+									<listOptionValue builtIn="false" value="tizen-emulator-2.2.native_llvm31.i386.cpp.staticLib"/>
 								</option>
 								<option id="gnu.c.compiler.option.include.paths.632347119" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
