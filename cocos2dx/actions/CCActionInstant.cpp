@@ -502,15 +502,15 @@ CallFunc::~CallFunc(void)
 }
 
 CallFunc * CallFunc::clone() const
-{
-	// no copy constructor
-	auto a = new CallFunc();
-	if( _selectorTarget) {
-		a->initWithTarget(_selectorTarget);
-		a->_callFunc = _callFunc;
-	}
-	else if( _function ){
-		a->initWithFunction(_function);
+    {
+    // no copy constructor
+    auto a = new CallFunc();
+    if( _selectorTarget) {
+        a->initWithTarget(_selectorTarget);
+        a->_callFunc = _callFunc;
+    }
+    else if( _function ){
+        a->initWithFunction(_function);
     }
     else if (_scriptHandler > 0 ) {
         a->_scriptHandler = cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine()->reallocateScriptHandler(_scriptHandler);
@@ -626,12 +626,12 @@ void CallFuncN::execute() {
     else if (_functionN) {
         _functionN(_target);
     }
-	if (0 != _scriptHandler)
+    if (0 != _scriptHandler)
     {
         BasicScriptData data((void*)this,(void*)_target);
         ScriptEvent event(kCallFuncEvent,(void*)&data);
-		ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
-	}
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+    }
 }
 
 bool CallFuncN::initWithFunction(const std::function<void (Node *)> &func)
