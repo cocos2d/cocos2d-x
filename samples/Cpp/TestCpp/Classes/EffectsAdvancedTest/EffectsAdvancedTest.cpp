@@ -234,17 +234,17 @@ void Issue631::onEnter()
     removeChild(bg, true);
 
     // background
-    LayerColor* layer = LayerColor::create( ccc4(255,0,0,255) );
+    LayerColor* layer = LayerColor::create( Color4B(255,0,0,255) );
     addChild(layer, -10);
     Sprite* sprite = Sprite::create("Images/grossini.png");
     sprite->setPosition( ccp(50,80) );
     layer->addChild(sprite, 10);
     
     // foreground
-    LayerColor* layer2 = LayerColor::create(ccc4( 0, 255,0,255 ) );
+    LayerColor* layer2 = LayerColor::create(Color4B( 0, 255,0,255 ) );
     Sprite* fog = Sprite::create("Images/Fog.png");
 
-    ccBlendFunc bf = {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA};
+    BlendFunc bf = {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA};
     fog->setBlendFunc(bf);
     layer2->addChild(fog, 1);
     addChild(layer2, 1);

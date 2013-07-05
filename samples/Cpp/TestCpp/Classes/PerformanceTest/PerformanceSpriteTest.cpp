@@ -288,9 +288,9 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
 
     MenuItemFont::setFontSize(65);
     MenuItemFont *decrease = MenuItemFont::create(" - ", CC_CALLBACK_1(SpriteMainScene::onDecrease, this));
-    decrease->setColor(ccc3(0,200,20));
+    decrease->setColor(Color3B(0,200,20));
     MenuItemFont *increase = MenuItemFont::create(" + ", CC_CALLBACK_1(SpriteMainScene::onIncrease, this));
-    increase->setColor(ccc3(0,200,20));
+    increase->setColor(Color3B(0,200,20));
 
     Menu *menu = Menu::create(decrease, increase, NULL);
     menu->alignItemsHorizontally();
@@ -298,7 +298,7 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     addChild(menu, 1);
 
     LabelTTF *infoLabel = LabelTTF::create("0 nodes", "Marker Felt", 30);
-    infoLabel->setColor(ccc3(0,200,20));
+    infoLabel->setColor(Color3B(0,200,20));
     infoLabel->setPosition(ccp(s.width/2, s.height-90));
     addChild(infoLabel, 1, kTagInfoLayer);
 
@@ -319,11 +319,11 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
         pSubMenu->addChild(itemFont, 10);
 
         if( i<= 3)
-            itemFont->setColor(ccc3(200,20,20));
+            itemFont->setColor(Color3B(200,20,20));
         else if(i <= 6)
-            itemFont->setColor(ccc3(0,200,20));
+            itemFont->setColor(Color3B(0,200,20));
         else
-            itemFont->setColor(ccc3(0,20,200));
+            itemFont->setColor(Color3B(0,20,200));
     }
 
     pSubMenu->alignItemsHorizontally();
@@ -334,7 +334,7 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     LabelTTF *label = LabelTTF::create(title().c_str(), "Arial", 40);
     addChild(label, 1);
     label->setPosition(ccp(s.width/2, s.height-32));
-    label->setColor(ccc3(255,255,40));
+    label->setColor(Color3B(255,255,40));
 
     while(quantityNodes < nNodes)
         onIncrease(this);

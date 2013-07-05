@@ -5,20 +5,20 @@
 #include "ExtensionMacros.h"
 
 /*
- These classes are wrapper of basic types, such as ccColor3B
+ These classes are wrapper of basic types, such as Color3B
  */
 
 NS_CC_EXT_BEGIN
 
-class ccColor3BWapper : public Object
+class Color3BWapper : public Object
 {
 private:
-    ccColor3B color;
+    Color3B color;
     
 public:
-    static ccColor3BWapper* create(const ccColor3B& color);
+    static Color3BWapper* create(const Color3B& color);
     
-    const ccColor3B& getColor() const;
+    const Color3B& getColor() const;
 };
 
 enum

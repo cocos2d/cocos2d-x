@@ -68,10 +68,10 @@ local function ActionManual()
 
 	grossini:setRotation(120)
 	grossini:setPosition(ccp(size.width / 2, size.height / 2))
-	grossini:setColor(ccc3(255, 0, 0))
+	grossini:setColor(Color3B(255, 0, 0))
 
 	kathia:setPosition(ccp(size.width - 100, size.height / 2))
-	kathia:setColor(ccc3(0, 0, 255))
+	kathia:setColor(Color3B(0, 0, 255))
 
 	Helper.subtitleLabel:setString("Manual Transformation")
 	return layer
@@ -178,7 +178,7 @@ local function ActionRotationalSkewVSStandardSkew()
 
     local s = CCDirector:sharedDirector():getWinSize();
     local boxSize = CCSizeMake(100.0, 100.0);
-    local box = CCLayerColor:create(ccc4(255,255,0,255));
+    local box = CCLayerColor:create(Color4B(255,255,0,255));
     box:setAnchorPoint(ccp(0.5,0.5));
     box:setContentSize( boxSize );
     box:ignoreAnchorPointForPosition(false);
@@ -193,7 +193,7 @@ local function ActionRotationalSkewVSStandardSkew()
 
     box:runAction(seq);
 
-    box = CCLayerColor:create(ccc4(255,255,0,255));
+    box = CCLayerColor:create(Color4B(255,255,0,255));
     box:setAnchorPoint(ccp(0.5,0.5));
     box:setContentSize(boxSize);
     box:ignoreAnchorPointForPosition(false);
@@ -224,19 +224,19 @@ local function ActionSkewRotate()
 
     local boxSize = CCSizeMake(100.0, 100.0)
 
-    local box = CCLayerColor:create(ccc4(255, 255, 0, 255))
+    local box = CCLayerColor:create(Color4B(255, 255, 0, 255))
     box:setAnchorPoint(ccp(0, 0))
     box:setPosition(190, 110)
     box:setContentSize(boxSize)
 
 	local markrside = 10.0
-    local uL = CCLayerColor:create(ccc4(255, 0, 0, 255))
+    local uL = CCLayerColor:create(Color4B(255, 0, 0, 255))
     box:addChild(uL)
     uL:setContentSize(CCSizeMake(markrside, markrside))
     uL:setPosition(0, boxSize.height - markrside)
     uL:setAnchorPoint(ccp(0, 0))
 
-    local uR = CCLayerColor:create(ccc4(0, 0, 255, 255))
+    local uR = CCLayerColor:create(Color4B(0, 0, 255, 255))
     box:addChild(uR)
     uR:setContentSize(CCSizeMake(markrside, markrside))
     uR:setPosition(boxSize.width - markrside, boxSize.height - markrside)

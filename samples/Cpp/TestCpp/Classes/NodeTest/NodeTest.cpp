@@ -659,7 +659,7 @@ CameraCenterTest::CameraCenterTest()
     sprite = Sprite::create("Images/white-512x512.png");
     addChild( sprite, 0);
     sprite->setPosition(ccp(s.width/5*1, s.height/5*1));
-    sprite->setColor(ccRED);
+    sprite->setColor(Color3B::red);
     sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
     orbit = OrbitCamera::create(10, 1, 0, 0, 360, 0, 0);
     sprite->runAction(RepeatForever::create( orbit ));
@@ -671,7 +671,7 @@ CameraCenterTest::CameraCenterTest()
     sprite = Sprite::create("Images/white-512x512.png");
     addChild( sprite, 0, 40);
     sprite->setPosition(ccp(s.width/5*1, s.height/5*4));
-    sprite->setColor(ccBLUE);
+    sprite->setColor(Color3B::blue);
     sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
     orbit = OrbitCamera::create(10, 1, 0, 0, 360, 0, 0);
     sprite->runAction(RepeatForever::create( orbit ));
@@ -681,7 +681,7 @@ CameraCenterTest::CameraCenterTest()
     sprite = Sprite::create("Images/white-512x512.png");
     addChild( sprite, 0);    
     sprite->setPosition(ccp(s.width/5*4, s.height/5*1));
-    sprite->setColor(ccYELLOW);
+    sprite->setColor(Color3B::yellow);
     sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
     orbit = OrbitCamera::create(10, 1, 0, 0, 360, 0, 0);
     sprite->runAction(RepeatForever::create( orbit) );
@@ -691,7 +691,7 @@ CameraCenterTest::CameraCenterTest()
     sprite = Sprite::create("Images/white-512x512.png");
     addChild( sprite, 0, 40);
     sprite->setPosition(ccp(s.width/5*4, s.height/5*4));
-    sprite->setColor(ccGREEN);
+    sprite->setColor(Color3B::green);
     sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
     orbit = OrbitCamera::create(10, 1, 0, 0, 360, 0, 0);
     sprite->runAction( RepeatForever::create( orbit ) );
@@ -700,7 +700,7 @@ CameraCenterTest::CameraCenterTest()
     sprite = Sprite::create("Images/white-512x512.png");
     addChild( sprite, 0, 40);
     sprite->setPosition(ccp(s.width/2, s.height/2));
-    sprite->setColor(ccWHITE);
+    sprite->setColor(Color3B::white);
     sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
     orbit = OrbitCamera::create(10, 1, 0, 0, 360, 0, 0);
     sprite->runAction(RepeatForever::create( orbit ) );
@@ -799,7 +799,7 @@ NodeOpaqueTest::NodeOpaqueTest()
     for (int i = 0; i < 50; i++)
     {
         background = Sprite::create("Images/background1.png");
-        ccBlendFunc blendFunc = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
+        BlendFunc blendFunc = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
         background->setBlendFunc(blendFunc);
         background->setAnchorPoint(PointZero);
         addChild(background);
@@ -825,7 +825,7 @@ NodeNonOpaqueTest::NodeNonOpaqueTest()
     for (int i = 0; i < 50; i++)
     {
         background = Sprite::create("Images/background1.jpg");
-        background->setBlendFunc(kBlendFuncDisable);
+        background->setBlendFunc(BlendFunc::blendFuncDisable);
         background->setAnchorPoint(PointZero);
         addChild(background);
     }

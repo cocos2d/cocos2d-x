@@ -288,12 +288,12 @@ void EditBoxImplMac::setPlaceholderFont(const char* pFontName, int fontSize)
 	// TODO need to be implemented.
 }
 
-void EditBoxImplMac::setFontColor(const ccColor3B& color)
+void EditBoxImplMac::setFontColor(const Color3B& color)
 {
     _sysEdit.textField.textColor = [NSColor colorWithCalibratedRed:color.r / 255.0f green:color.g / 255.0f blue:color.b / 255.0f alpha:1.0f];
 }
 
-void EditBoxImplMac::setPlaceholderFontColor(const ccColor3B& color)
+void EditBoxImplMac::setPlaceholderFontColor(const Color3B& color)
 {
     // TODO need to be implemented.
 }

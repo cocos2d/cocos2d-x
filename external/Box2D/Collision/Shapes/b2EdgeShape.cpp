@@ -23,9 +23,9 @@ using namespace std;
 void b2EdgeShape::Set(const b2Vec2& v1, const b2Vec2& v2)
 {
     m_vertex1 = v1;
-    m_vertex2 = v2;
+    m_Vertex2F = v2;
     m_hasVertex0 = false;
-    m_hasVertex3 = false;
+    m_hasVertex3F = false;
 }
 
 b2Shape* b2EdgeShape::Clone(b2BlockAllocator* allocator) const
@@ -63,7 +63,7 @@ bool b2EdgeShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& input,
     b2Vec2 d = p2 - p1;
 
     b2Vec2 v1 = m_vertex1;
-    b2Vec2 v2 = m_vertex2;
+    b2Vec2 v2 = m_Vertex2F;
     b2Vec2 e = v2 - v1;
     b2Vec2 normal(e.y, -e.x);
     normal.Normalize();
@@ -119,7 +119,7 @@ void b2EdgeShape::ComputeAABB(b2AABB* aabb, const b2Transform& xf, int32 childIn
     B2_NOT_USED(childIndex);
 
     b2Vec2 v1 = b2Mul(xf, m_vertex1);
-    b2Vec2 v2 = b2Mul(xf, m_vertex2);
+    b2Vec2 v2 = b2Mul(xf, m_Vertex2F);
 
     b2Vec2 lower = b2Min(v1, v2);
     b2Vec2 upper = b2Max(v1, v2);
@@ -134,6 +134,6 @@ void b2EdgeShape::ComputeMass(b2MassData* massData, float32 density) const
     B2_NOT_USED(density);
 
     massData->mass = 0.0f;
-    massData->center = 0.5f * (m_vertex1 + m_vertex2);
+    massData->center = 0.5f * (m_vertex1 + m_Vertex2F);
     massData->I = 0.0f;
 }

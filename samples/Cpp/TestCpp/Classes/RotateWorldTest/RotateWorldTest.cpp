@@ -90,10 +90,10 @@ void RotateWorldMainLayer::onEnter()
     x = size.width;
     y = size.height;
     
-    Node* blue =  LayerColor::create(ccc4(0,0,255,255));
-    Node* red =   LayerColor::create(ccc4(255,0,0,255));
-    Node* green = LayerColor::create(ccc4(0,255,0,255));
-    Node* white = LayerColor::create(ccc4(255,255,255,255));
+    Node* blue =  LayerColor::create(Color4B(0,0,255,255));
+    Node* red =   LayerColor::create(Color4B(255,0,0,255));
+    Node* green = LayerColor::create(Color4B(0,255,0,255));
+    Node* white = LayerColor::create(Color4B(255,255,255,255));
 
     blue->setScale(0.5f);
     blue->setPosition(ccp(-x/4,-y/4));

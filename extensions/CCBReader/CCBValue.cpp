@@ -4,11 +4,11 @@ using namespace cocos2d;
 
 NS_CC_EXT_BEGIN
 
-// Implementation of ccColor3BWapper
+// Implementation of Color3BWapper
 
-ccColor3BWapper* ccColor3BWapper::create(const ccColor3B& color)
+Color3BWapper* Color3BWapper::create(const Color3B& color)
 {
-    ccColor3BWapper *ret = new ccColor3BWapper();
+    Color3BWapper *ret = new Color3BWapper();
     if (ret)
     {
         ret->color.r = color.r;
@@ -21,7 +21,7 @@ ccColor3BWapper* ccColor3BWapper::create(const ccColor3B& color)
     return ret;
 }
 
-const ccColor3B& ccColor3BWapper::getColor() const
+const Color3B& Color3BWapper::getColor() const
 {
     return color;
 }

@@ -255,10 +255,10 @@ void b2Fixture::Dump(int32 bodyIndex)
             b2Log("    shape.m_radius = %.15lef;\n", s->m_radius);
             b2Log("    shape.m_vertex0.Set(%.15lef, %.15lef);\n", s->m_vertex0.x, s->m_vertex0.y);
             b2Log("    shape.m_vertex1.Set(%.15lef, %.15lef);\n", s->m_vertex1.x, s->m_vertex1.y);
-            b2Log("    shape.m_vertex2.Set(%.15lef, %.15lef);\n", s->m_vertex2.x, s->m_vertex2.y);
-            b2Log("    shape.m_vertex3.Set(%.15lef, %.15lef);\n", s->m_vertex3.x, s->m_vertex3.y);
+            b2Log("    shape.m_Vertex2F.Set(%.15lef, %.15lef);\n", s->m_Vertex2F.x, s->m_Vertex2F.y);
+            b2Log("    shape.m_Vertex3F.Set(%.15lef, %.15lef);\n", s->m_Vertex3F.x, s->m_Vertex3F.y);
             b2Log("    shape.m_hasVertex0 = bool(%d);\n", s->m_hasVertex0);
-            b2Log("    shape.m_hasVertex3 = bool(%d);\n", s->m_hasVertex3);
+            b2Log("    shape.m_hasVertex3F = bool(%d);\n", s->m_hasVertex3F);
         }
         break;
 

@@ -53,7 +53,7 @@ Special features and Limitations:
 class CC_DLL ParticleSystemQuad : public ParticleSystem
 {
 protected:
-    ccV3F_C4B_T2F_Quad    *_quads;        // quads to be rendered
+    V3F_C4B_T2F_Quad    *_quads;        // quads to be rendered
     GLushort            *_indices;    // indices
 
 #if CC_TEXTURE_ATLAS_USE_VAO
