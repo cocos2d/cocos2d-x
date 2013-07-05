@@ -135,7 +135,7 @@ public:
     virtual void onExit();
 
     virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool isOpacityModifyRGB(void) { return false;}
+    virtual bool isOpacityModifyRGB(void) const { return false;}
     
     virtual bool isEnabled() { return _enabled; }
     virtual void setEnabled(bool value) { _enabled = value; };

@@ -306,11 +306,11 @@ public:
     /** returns whether or not the opacity will be applied using glColor(R,G,B,opacity) or glColor(opacity, opacity, opacity, opacity);
      @since v0.8
      */
-    virtual bool isOpacityModifyRGB(void);
+    virtual bool isOpacityModifyRGB(void) const;
     virtual void setOpacity(GLubyte opacity);
-	virtual GLubyte getOpacity();
+	virtual GLubyte getOpacity() const;
     virtual void setColor(const ccColor3B& color);
-	virtual const ccColor3B& getColor();
+	virtual const ccColor3B& getColor() const;
 
     virtual bool updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bool rotated, Rect capInsets);
 
