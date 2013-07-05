@@ -6,8 +6,8 @@ class CCMenuItem : public CCNodeRGBA
     void selected();
     void unselected();
     void setEnabled(bool enabled);
-    bool isEnabled();
-    bool isSelected();
+    bool isEnabled() const;
+    bool isSelected() const;
 
     void registerScriptTapHandler(LUA_FUNCTION funcID);
     void unregisterScriptTapHandler(void);

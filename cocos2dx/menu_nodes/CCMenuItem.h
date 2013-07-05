@@ -90,15 +90,15 @@ public:
     /** Register menu handler script function */
     virtual void registerScriptTapHandler(int nHandler);
     virtual void unregisterScriptTapHandler(void);
-    int getScriptTapHandler() { return _scriptTapHandler; };
+    int getScriptTapHandler() const { return _scriptTapHandler; };
 
-    virtual bool isEnabled();
+    virtual bool isEnabled() const;
     //@note: It's 'setIsEnable' in cocos2d-iphone. 
     virtual void setEnabled(bool value);
-    virtual bool isSelected();
+    virtual bool isSelected() const;
     
     virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool isOpacityModifyRGB(void) { return false;}
+    virtual bool isOpacityModifyRGB(void) const { return false;}
     
     /** set the target/selector of the menu item*/
     CC_DEPRECATED_ATTRIBUTE void setTarget(Object *rec, SEL_MenuHandler selector);
@@ -292,7 +292,7 @@ public:
     virtual void setEnabled(bool bEnabled);
     
     virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool isOpacityModifyRGB(void) { return false;}
+    virtual bool isOpacityModifyRGB(void) const { return false;}
 protected:
     virtual void updateImagesVisibility();
 };
@@ -399,7 +399,7 @@ public:
     virtual void setEnabled(bool var);
     
     virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool isOpacityModifyRGB(void) { return false;}
+    virtual bool isOpacityModifyRGB(void) const { return false;}
 };
 
 

@@ -150,7 +150,7 @@ void MenuItem::setEnabled(bool enabled)
     _enabled = enabled;
 }
 
-bool MenuItem::isEnabled()
+bool MenuItem::isEnabled() const
 {
     return _enabled;
 }
@@ -162,7 +162,7 @@ Rect MenuItem::rect()
                       _contentSize.width, _contentSize.height);
 }
 
-bool MenuItem::isSelected()
+bool MenuItem::isSelected() const
 {
     return _selected;
 }
@@ -185,7 +185,7 @@ void MenuItem::setCallback(const ccMenuCallback& callback)
 //CCMenuItemLabel
 //
 
-const ccColor3B& MenuItemLabel::getDisabledColor()
+const ccColor3B& MenuItemLabel::getDisabledColor() const
 {
     return _disabledColor;
 }

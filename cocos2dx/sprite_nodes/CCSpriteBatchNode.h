@@ -131,8 +131,8 @@ public:
     // TextureProtocol
     virtual Texture2D* getTexture(void);
     virtual void setTexture(Texture2D *texture);
-    virtual void setBlendFunc(ccBlendFunc blendFunc);
-    virtual ccBlendFunc getBlendFunc(void);
+    virtual void setBlendFunc(const ccBlendFunc &blendFunc);
+    virtual const ccBlendFunc& getBlendFunc(void) const;
 
     virtual void visit(void);
     virtual void addChild(Node * child);
