@@ -109,9 +109,9 @@ void MyUserManager::loadPlugin()
         if (NULL != _uc)
         {
             TUserDeveloperInfo pUCInfo;
-            pUCInfo["UCCpId"] = "20087";
-            pUCInfo["UCGameId"] = "119474";
-            pUCInfo["UCServerId"] = "1333";
+            pUCInfo["UCCpID"] = "20087";
+            pUCInfo["UCGameID"] = "119474";
+            pUCInfo["UCServerID"] = "1333";
             if (pUCInfo.empty()) {
                 char msg[256] = { 0 };
                 sprintf(msg, "Developer info is empty. PLZ fill your UC info in %s(nearby line %d)", __FILE__, __LINE__);

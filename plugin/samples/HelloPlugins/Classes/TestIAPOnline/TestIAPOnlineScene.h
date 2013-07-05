@@ -21,48 +21,26 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __MY_USER_MANAGER_H__
-#define __MY_USER_MANAGER_H__
+#ifndef __TEST_IAP_ONLINE_SCENE_H__
+#define __TEST_IAP_ONLINE_SCENE_H__
 
-#include "ProtocolUser.h"
-#include "Configs.h"
+#include "cocos2d.h"
 
-class MyUserActionResult : public cocos2d::plugin::UserActionListener
+class TestIAPOnline : public cocos2d::Layer
 {
 public:
-    virtual void onActionResult(cocos2d::plugin::ProtocolUser* pPlugin, cocos2d::plugin::UserActionResultCode code, const char* msg);
+    // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
+    virtual bool init();  
+
+    // there's no 'id' in cpp, so we recommand to return the exactly class pointer
+    static cocos2d::Scene* scene();
+    
+    // a selector callback
+    void menuBackCallback(Object* pSender);
+    void eventMenuCallback(Object* pSender);
+
+    // implement the "static node()" method manually
+    CREATE_FUNC(TestIAPOnline);
 };
 
-class MyUserManager
-{
-public:
-	static MyUserManager* sharedManager();
-    static void purgeManager();
-
-    typedef enum {
-    	kNoneMode = 0,
-    	kQH360,
-    	kND91,
-#if TEST_UC
-    	kUC,
-#endif
-    } MyUserMode;
-
-	void unloadPlugin();
-    void loadPlugin();
-    void loginByMode(MyUserMode mode);
-    void logoutByMode(MyUserMode mode);
-
-private:
-    MyUserManager();
-    virtual ~MyUserManager();
-
-    static MyUserManager* s_pManager;
-
-    cocos2d::plugin::ProtocolUser* _qh360;
-    cocos2d::plugin::ProtocolUser* _nd91;
-    cocos2d::plugin::ProtocolUser* _uc;
-    MyUserActionResult* _retListener;
-};
-
-#endif // __MY_USER_MANAGER_H__
+#endif // __TEST_IAP_ONLINE_SCENE_H__

@@ -94,6 +94,7 @@ if [ "$GEN_JSB"x = "YES"x ]; then
     install_android_ndk
     install_llvm
 elif [ "$PLATFORM"x = "linux"x ]; then
+    sudo apt-get update
     bash $COCOS2DX_ROOT/install-deps-linux.sh
 elif [ "$PLATFORM"x = "nacl"x ]; then
     install_nacl_sdk

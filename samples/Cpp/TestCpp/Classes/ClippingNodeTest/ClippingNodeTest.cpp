@@ -663,8 +663,7 @@ void RawStencilBufferTest::setupStencilForClippingOnPlane(GLint plane)
 void RawStencilBufferTest::setupStencilForDrawingOnPlane(GLint plane)
 {
     GLint planeMask = 0x1 << plane;
-    GLint equalOrLessPlanesMask = planeMask | (planeMask - 1);
-    glStencilFunc(GL_EQUAL, equalOrLessPlanesMask, equalOrLessPlanesMask);
+    glStencilFunc(GL_EQUAL, planeMask, planeMask);
     glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
 }
 

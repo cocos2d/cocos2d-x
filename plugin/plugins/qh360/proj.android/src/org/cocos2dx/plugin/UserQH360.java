@@ -25,20 +25,9 @@ package org.cocos2dx.plugin;
 
 import java.util.Hashtable;
 
-import org.json.JSONObject;
-
-import com.qihoopay.insdk.activity.ContainerActivity;
-import com.qihoopay.insdk.matrix.Matrix;
 import com.qihoopay.sdk.protocols.IDispatcherCallback;
-import com.qihoopay.sdk.protocols.ProtocolConfigs;
-import com.qihoopay.sdk.protocols.ProtocolKeys;
-
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
-import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 
 public class UserQH360 implements InterfaceUser {
@@ -46,8 +35,6 @@ public class UserQH360 implements InterfaceUser {
     private static Context mContext = null;
     protected static String TAG = "UserQH360";
     private static InterfaceUser mAdapter = null;
-    private String mAuthCode = "";
-    private boolean mLogined = false;
 
     protected static void LogE(String msg, Exception e) {
         Log.e(TAG, msg, e);
@@ -66,14 +53,9 @@ public class UserQH360 implements InterfaceUser {
         mAdapter = this;
 
         PluginWrapper.runOnMainThread(new Runnable() {
-
             @Override
             public void run() {
-                Matrix.init((Activity) mContext, UserQH360.isLandscape(), new IDispatcherCallback() {
-                    @Override
-                    public void onFinished(String data) {
-                    }
-                });
+                QH360Wrapper.initSDK(mContext);
             }
         });
     }
@@ -90,49 +72,21 @@ public class UserQH360 implements InterfaceUser {
             return;
         }
 
-        // clear the auth code before
-        mAuthCode = "";
         PluginWrapper.runOnMainThread(new Runnable() {
             @Override
             public void run() {
-                Bundle bundle = new Bundle();
-                bundle.putBoolean(ProtocolKeys.IS_SCREEN_ORIENTATION_LANDSCAPE, isLandscape());
-                bundle.putBoolean(ProtocolKeys.IS_LOGIN_BG_TRANSPARENT, true);
-                bundle.putString(ProtocolKeys.RESPONSE_TYPE, "code");
-                bundle.putInt(ProtocolKeys.FUNCTION_CODE, ProtocolConfigs.FUNC_CODE_LOGIN);
-                Intent intent = new Intent(mContext, ContainerActivity.class);
-                intent.putExtras(bundle);
-                Matrix.invokeActivity(mContext, intent, new IDispatcherCallback() {
+                QH360Wrapper.userLogin(mContext, new IDispatcherCallback() {
                     @Override
                     public void onFinished(String data) {
                         LogD("Login callback data is " + data);
 
                         if (null == data) {
                             UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_FAILED, "User Canceled");
-                            return;
-                        }
-
-                        try {
-                            JSONObject json = new JSONObject(data);
-                            int errCode = json.optInt("error_code");
-                            switch (errCode) {
-                            case 0:
-                                {
-                                    mLogined = true;
-                                    JSONObject content = json.optJSONObject("content");
-                                    mAuthCode = content.optString("code");
-                                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, "Login Succeed");
-                                }
-                                break;
-                            default:
-                                mLogined = false;
-                                UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_FAILED, "Login Failed");
-                                break;
-                            }
-                        } catch (Exception e) {
-                            mLogined = false;
-                            e.printStackTrace();
-                            UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_FAILED, "Unknow Error");
+                        } else 
+                        if (TextUtils.isEmpty(data)) {
+                            UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, "Login Succeed");
+                        } else {
+                            UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_FAILED, data);
                         }
                     }
                 });
@@ -150,18 +104,11 @@ public class UserQH360 implements InterfaceUser {
         PluginWrapper.runOnMainThread(new Runnable() {
             @Override
             public void run() {
-                Bundle bundle = new Bundle();
-                bundle.putBoolean(ProtocolKeys.IS_SCREEN_ORIENTATION_LANDSCAPE, isLandscape());
-                bundle.putInt(ProtocolKeys.FUNCTION_CODE, ProtocolConfigs.FUNC_CODE_QUIT);
-                Intent intent = new Intent(mContext, ContainerActivity.class);
-                intent.putExtras(bundle);
-                Matrix.invokeActivity(mContext, intent, new IDispatcherCallback() {
+                QH360Wrapper.userLogout(mContext, new IDispatcherCallback() {
                     @Override
                     public void onFinished(String data) {
                         LogD("Logout callback data is " + data);
                         if (null == data) {
-                            mAuthCode = "";
-                            mLogined = false;
                             UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGOUT_SUCCEED, "User Logout");
                         }
                     }
@@ -172,13 +119,13 @@ public class UserQH360 implements InterfaceUser {
 
     @Override
     public boolean isLogined() {
-        return mLogined;
+        return QH360Wrapper.isLogined();
     }
 
     @Override
     public String getSessionID() {
-        LogD("getSessionID() " + mAuthCode);
-        return mAuthCode;
+        LogD("getSessionID() " + QH360Wrapper.getAuthCode());
+        return QH360Wrapper.getAuthCode();
     }
 
     @Override
@@ -193,20 +140,6 @@ public class UserQH360 implements InterfaceUser {
 
     @Override
     public String getSDKVersion() {
-        return "0.7.6";
-    }
-
-    private static boolean isLandscape()
-    {
-        Configuration config = mContext.getResources().getConfiguration();
-        int orientation = config.orientation;
-
-        if (orientation != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE ||
-            orientation != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
-        {
-            orientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-        }
-
-        return (orientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        return QH360Wrapper.getSDKVersion();
     }
 }
