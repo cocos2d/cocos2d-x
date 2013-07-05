@@ -105,9 +105,9 @@ void FontTest::showFont(const char *pFont)
     LabelTTF *right = LabelTTF::create("alignment right", pFont, fontSize,
                                            blockSize, kTextAlignmentRight, verticalAlignment[vAlignIdx]);
 
-    LayerColor *leftColor = LayerColor::create(ccc4(100, 100, 100, 255), blockSize.width, blockSize.height);
-    LayerColor *centerColor = LayerColor::create(ccc4(200, 100, 100, 255), blockSize.width, blockSize.height);
-    LayerColor *rightColor = LayerColor::create(ccc4(100, 100, 200, 255), blockSize.width, blockSize.height);
+    LayerColor *leftColor = LayerColor::create(Color4B(100, 100, 100, 255), blockSize.width, blockSize.height);
+    LayerColor *centerColor = LayerColor::create(Color4B(200, 100, 100, 255), blockSize.width, blockSize.height);
+    LayerColor *rightColor = LayerColor::create(Color4B(100, 100, 200, 255), blockSize.width, blockSize.height);
 
     leftColor->ignoreAnchorPointForPosition(false);
     centerColor->ignoreAnchorPointForPosition(false);

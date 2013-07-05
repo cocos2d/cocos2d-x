@@ -1048,7 +1048,7 @@ void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color
         {
             b2EdgeShape* edge = (b2EdgeShape*)fixture->GetShape();
             b2Vec2 v1 = b2Mul(xf, edge->m_vertex1);
-            b2Vec2 v2 = b2Mul(xf, edge->m_vertex2);
+            b2Vec2 v2 = b2Mul(xf, edge->m_Vertex2F);
             m_debugDraw->DrawSegment(v1, v2, color);
         }
         break;

@@ -101,7 +101,7 @@ void ColliderDetector::addContourData(ContourData *contourData)
     int i = 0;
     CCARRAY_FOREACH(array, object)
     {
-        ContourVertex2 *v = (ContourVertex2 *)object;
+        ContourVertex2F *v = (ContourVertex2F *)object;
         b2bv[i].Set(v->x / PT_RATIO, v->y / PT_RATIO);
         i++;
     }
@@ -188,7 +188,7 @@ void ColliderDetector::updateTransform(AffineTransform &t)
         int i = 0;
         CCARRAY_FOREACH(array, object)
         {
-            ContourVertex2 *cv = (ContourVertex2 *)object;
+            ContourVertex2F *cv = (ContourVertex2F *)object;
             b2Vec2 &bv = shape->m_vertices[i];
 
             helpPoint.setPoint(cv->x, cv->y);

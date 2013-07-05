@@ -167,7 +167,7 @@ SceneTestLayer3::SceneTestLayer3()
 
 bool SceneTestLayer3::init()
 {
-    if (LayerColor::initWithColor(ccc4(0,0,255,255)))
+    if (LayerColor::initWithColor(Color4B(0,0,255,255)))
     {
         Size s = Director::sharedDirector()->getWinSize();
 
@@ -202,7 +202,7 @@ void SceneTestLayer3::item0Clicked(Object* pSender)
 {
     Scene *newScene = Scene::create();
     newScene->addChild(SceneTestLayer3::create());
-    Director::sharedDirector()->pushScene(TransitionFade::create(0.5, newScene, ccc3(0,255,255)));
+    Director::sharedDirector()->pushScene(TransitionFade::create(0.5, newScene, Color3B(0,255,255)));
 }
 
 void SceneTestLayer3::item1Clicked(Object* pSender)

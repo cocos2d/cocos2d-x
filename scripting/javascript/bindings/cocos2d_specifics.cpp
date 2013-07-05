@@ -2814,7 +2814,7 @@ JSBool js_cocos2dx_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
         GLenum src, dst;
         jsval_to_int32(cx, argv[0], (int32_t*)&src);
         jsval_to_int32(cx, argv[1], (int32_t*)&dst);
-        ccBlendFunc blendFunc = {src, dst};
+        BlendFunc blendFunc = {src, dst};
         cobj->setBlendFunc(blendFunc);
         return JS_TRUE;
     }
@@ -2966,7 +2966,7 @@ JSBool js_cocos2dx_CCTMXLayer_getTileFlagsAt(JSContext *cx, uint32_t argc, jsval
 
 //#pragma mark - DrawNode
 
-// Arguments: Array of points, fill color (ccc4f), width(float), border color (ccc4f)
+// Arguments: Array of points, fill color (Color4F), width(float), border color (Color4F)
 // Ret value: void
 JSBool js_cocos2dx_CCDrawNode_drawPolygon(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -2979,22 +2979,22 @@ JSBool js_cocos2dx_CCDrawNode_drawPolygon(JSContext *cx, uint32_t argc, jsval *v
         jsval *argvp = JS_ARGV(cx,vp);
         JSBool ok = JS_TRUE;
         JSObject *argArray = NULL;
-        ccColor4F argFillColor = ccc4f(0.0f, 0.0f, 0.0f, 0.0f);
+        Color4F argFillColor = Color4F(0.0f, 0.0f, 0.0f, 0.0f);
         double argWidth = 0.0;
-        ccColor4F argBorderColor = ccc4f(0.0f, 0.0f, 0.0f, 0.0f);
+        Color4F argBorderColor = Color4F(0.0f, 0.0f, 0.0f, 0.0f);
 
         // Points
         ok &= JS_ValueToObject(cx, *argvp++, &argArray);
         JSB_PRECONDITION2( (argArray && JS_IsArrayObject(cx, argArray)) , cx, JS_FALSE, "Vertex should be anArray object");
 
         // Color 4F
-        ok &= jsval_to_cccolor4f(cx, *argvp++, &argFillColor);
+        ok &= jsval_to_Color4F(cx, *argvp++, &argFillColor);
 
         // Width
         ok &= JS_ValueToNumber( cx, *argvp++, &argWidth );
 
         // Color Border (4F)
-        ok &= jsval_to_cccolor4f(cx, *argvp++, &argBorderColor);
+        ok &= jsval_to_Color4F(cx, *argvp++, &argBorderColor);
 
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error parsing arguments");
 

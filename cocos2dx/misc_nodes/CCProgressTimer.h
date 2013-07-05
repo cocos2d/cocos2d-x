@@ -92,8 +92,8 @@ public:
     /** Creates a progress timer with the sprite as the shape the timer goes through */
     static ProgressTimer* create(Sprite* sp);
 protected:
-    ccTex2F textureCoordFromAlphaPoint(Point alpha);
-    ccVertex2F vertexFromAlphaPoint(Point alpha);
+    Tex2F textureCoordFromAlphaPoint(Point alpha);
+    Vertex2F vertexFromAlphaPoint(Point alpha);
     void updateProgress(void);
     void updateBar(void);
     void updateRadial(void);
@@ -105,7 +105,7 @@ protected:
     float _percentage;
     Sprite *_sprite;
     int _vertexDataCount;
-    ccV2F_C4B_T2F *_vertexData;
+    V2F_C4B_T2F *_vertexData;
 
     /**
      *    Midpoint is used to modify the progress start position.

@@ -53,17 +53,17 @@ public:
     virtual ~MotionStreak();
 
     /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename */
-    static MotionStreak* create(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path);
+    static MotionStreak* create(float fade, float minSeg, float stroke, const Color3B& color, const char* path);
     /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture */
-    static MotionStreak* create(float fade, float minSeg, float stroke, const ccColor3B& color, Texture2D* texture);
+    static MotionStreak* create(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture);
 
     /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture filename */
-    bool initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path);
+    bool initWithFade(float fade, float minSeg, float stroke, const Color3B& color, const char* path);
     /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture  */
-    bool initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, Texture2D* texture);
+    bool initWithFade(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture);
 
     /** color used for the tint */
-    void tintWithColor(const ccColor3B& colors);
+    void tintWithColor(const Color3B& colors);
 
     /** Remove all living segments of the ribbon */
     void reset();
@@ -76,8 +76,8 @@ public:
     /* Implement interfaces */
     virtual Texture2D* getTexture(void);
     virtual void setTexture(Texture2D *texture);
-    virtual void setBlendFunc(const ccBlendFunc &blendFunc);
-    virtual const ccBlendFunc& getBlendFunc(void) const;
+    virtual void setBlendFunc(const BlendFunc &blendFunc);
+    virtual const BlendFunc& getBlendFunc(void) const;
     virtual GLubyte getOpacity(void) const;
     virtual void setOpacity(GLubyte opacity);
     virtual void setOpacityModifyRGB(bool bValue);
@@ -98,7 +98,7 @@ protected:
 private:
     /** texture used for the motion streak */
     Texture2D* _texture;
-    ccBlendFunc _blendFunc;
+    BlendFunc _blendFunc;
     Point _positionR;
 
     float _stroke;
@@ -114,9 +114,9 @@ private:
     float* _pointState;
 
     // Opengl
-    ccVertex2F* _vertices;
+    Vertex2F* _vertices;
     GLubyte* _colorPointer;
-    ccTex2F* _texCoords;
+    Tex2F* _texCoords;
 };
 
 // end of misc_nodes group

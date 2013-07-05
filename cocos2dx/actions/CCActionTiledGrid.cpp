@@ -114,7 +114,7 @@ void ShakyTiles3D::update(float time)
     {
         for (j = 0; j < _gridSize.height; ++j)
         {
-            ccQuad3 coords = originalTile(ccp(i, j));
+            Quad3 coords = originalTile(ccp(i, j));
 
             // X
             coords.bl.x += ( rand() % (_randrange*2) ) - _randrange;
@@ -219,7 +219,7 @@ void ShatteredTiles3D::update(float time)
         {
             for (j = 0; j < _gridSize.height; ++j)
             {
-                ccQuad3 coords = originalTile(ccp(i ,j));
+                Quad3 coords = originalTile(ccp(i ,j));
                 
                 // X
                 coords.bl.x += ( rand() % (_randrange*2) ) - _randrange;
@@ -347,7 +347,7 @@ Size ShuffleTiles::getDelta(const Size& pos)
 
 void ShuffleTiles::placeTile(const Point& pos, Tile *t)
 {
-    ccQuad3 coords = originalTile(pos);
+    Quad3 coords = originalTile(pos);
 
     Point step = _target->getGrid()->getStep();
     coords.bl.x += (int)(t->position.x * step.x);
@@ -470,14 +470,14 @@ void FadeOutTRTiles::turnOnTile(const Point& pos)
 
 void FadeOutTRTiles::turnOffTile(const Point& pos)
 {
-    ccQuad3 coords;
-    memset(&coords, 0, sizeof(ccQuad3));
+    Quad3 coords;
+    memset(&coords, 0, sizeof(Quad3));
     setTile(pos, coords);
 }
 
 void FadeOutTRTiles::transformTile(const Point& pos, float distance)
 {
-    ccQuad3 coords = originalTile(pos);
+    Quad3 coords = originalTile(pos);
     Point step = _target->getGrid()->getStep();
 
     coords.bl.x += (step.x / 2) * (1.0f - distance);
@@ -604,7 +604,7 @@ float FadeOutUpTiles::testFunc(const Size& pos, float time)
 
 void FadeOutUpTiles::transformTile(const Point& pos, float distance)
 {
-    ccQuad3 coords = originalTile(pos);
+    Quad3 coords = originalTile(pos);
     Point step = _target->getGrid()->getStep();
 
     coords.bl.y += (step.y / 2) * (1.0f - distance);
@@ -759,9 +759,9 @@ void TurnOffTiles::turnOnTile(const Point& pos)
 
 void TurnOffTiles::turnOffTile(const Point& pos)
 {
-    ccQuad3 coords;
+    Quad3 coords;
 
-    memset(&coords, 0, sizeof(ccQuad3));
+    memset(&coords, 0, sizeof(Quad3));
     setTile(pos, coords);
 }
 
@@ -883,7 +883,7 @@ void WavesTiles3D::update(float time)
     {
         for( j = 0; j < _gridSize.height; j++ )
         {
-            ccQuad3 coords = originalTile(ccp(i, j));
+            Quad3 coords = originalTile(ccp(i, j));
 
             coords.bl.z = (sinf(time * (float)M_PI  *_waves * 2 + 
                 (coords.bl.y+coords.bl.x) * .01f) * _amplitude * _amplitudeRate );
@@ -972,7 +972,7 @@ void JumpTiles3D::update(float time)
     {
         for( j = 0; j < _gridSize.height; j++ )
         {
-            ccQuad3 coords = originalTile(ccp(i, j));
+            Quad3 coords = originalTile(ccp(i, j));
 
             if ( ((i+j) % 2) == 0 )
             {
@@ -1065,7 +1065,7 @@ void SplitRows::update(float time)
 
     for (j = 0; j < _gridSize.height; ++j)
     {
-        ccQuad3 coords = originalTile(ccp(0, j));
+        Quad3 coords = originalTile(ccp(0, j));
         float    direction = 1;
 
         if ( (j % 2 ) == 0 )
@@ -1151,7 +1151,7 @@ void SplitCols::update(float time)
 
     for (i = 0; i < _gridSize.width; ++i)
     {
-        ccQuad3 coords = originalTile(ccp(i, 0));
+        Quad3 coords = originalTile(ccp(i, 0));
         float    direction = 1;
 
         if ( (i % 2 ) == 0 )

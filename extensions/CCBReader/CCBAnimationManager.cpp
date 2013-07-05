@@ -312,8 +312,8 @@ ActionInterval* CCBAnimationManager::getAction(CCBKeyframe *pKeyframe0, CCBKeyfr
     }
     else if (strcmp(pPropName, "color") == 0)
     {
-        ccColor3BWapper* color = (ccColor3BWapper*)pKeyframe1->getValue();
-        ccColor3B c = color->getColor();
+        Color3BWapper* color = (Color3BWapper*)pKeyframe1->getValue();
+        Color3B c = color->getColor();
         
         return TintTo::create(duration, c.r, c.g, c.b);
     }
@@ -472,7 +472,7 @@ void CCBAnimationManager::setAnimatedProperty(const char *pPropName, Node *pNode
             }
             else if (strcmp(pPropName, "color") == 0)
             {
-                ccColor3BWapper *color = (ccColor3BWapper*)pValue;
+                Color3BWapper *color = (Color3BWapper*)pValue;
                 (dynamic_cast<RGBAProtocol*>(pNode))->setColor(color->getColor());
             }
             else if (strcmp(pPropName, "visible") == 0)

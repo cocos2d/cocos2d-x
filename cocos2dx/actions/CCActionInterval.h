@@ -727,8 +727,8 @@ public:
     /** creates an action with duration and color */
     static TintTo* create(float duration, GLubyte red, GLubyte green, GLubyte blue);
 protected:
-    ccColor3B _to;
-    ccColor3B _from;
+    Color3B _to;
+    Color3B _from;
 };
 
 /** @brief Tints a Node that implements the NodeRGB protocol from current tint to a custom one.

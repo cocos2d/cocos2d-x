@@ -416,7 +416,7 @@ Fade out the outgoing scene and then fade in the incoming scene.'''
 class CC_DLL TransitionFade : public TransitionScene
 {
 protected:
-    ccColor4B    _color;
+    Color4B    _color;
 
 public:
 
@@ -424,13 +424,13 @@ public:
     virtual ~TransitionFade();
     
     /** creates the transition with a duration and with an RGB color
-    * Example: FadeTransition::create(2, scene, ccc3(255,0,0); // red color
+    * Example: FadeTransition::create(2, scene, Color3B(255,0,0); // red color
     */
-    static TransitionFade* create(float duration,Scene* scene, const ccColor3B& color);
+    static TransitionFade* create(float duration,Scene* scene, const Color3B& color);
     static TransitionFade* create(float duration,Scene* scene);
 
     /** initializes the transition with a duration and with an RGB color */
-    virtual bool initWithDuration(float t, Scene*scene ,const ccColor3B& color);
+    virtual bool initWithDuration(float t, Scene*scene ,const Color3B& color);
 
     virtual bool initWithDuration(float t,Scene* scene); 
     virtual void onEnter();
