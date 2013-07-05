@@ -1,3 +1,5 @@
+#ifndef OPENAL
+
 #include "SimpleAudioEngine.h"
 #include "FmodAudioPlayer.h"
 #include "cocos2d.h"
@@ -135,3 +137,5 @@ void SimpleAudioEngine::setEffectsVolume(float volume) {
 
 
 } // end of namespace CocosDenshion
+
+#endif
