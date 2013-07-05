@@ -90,18 +90,18 @@ public:
      */
     static PhysicsSprite* create(const char *pszFileName, const Rect& rect);
 
-    virtual bool isDirty();
+    virtual bool isDirty() const;
 
     /** Keep the sprite's rotation separate from the body. */
     bool isIgnoreBodyRotation() const;
     void setIgnoreBodyRotation(bool bIgnoreBodyRotation);
 
-    virtual const Point& getPosition();
-    virtual void getPosition(float* x, float* y);
-    virtual float getPositionX();
-    virtual float getPositionY();
+    virtual const Point& getPosition() const;
+    virtual void getPosition(float* x, float* y) const;
+    virtual float getPositionX() const;
+    virtual float getPositionY() const;
     virtual void setPosition(const Point &position);
-    virtual float getRotation();
+    virtual float getRotation() const;
     virtual void setRotation(float fRotation);
     virtual AffineTransform nodeToParentTransform();
 
@@ -123,7 +123,7 @@ public:
     void setPTMRatio(float fPTMRatio);
 
 protected:
-    void updatePosFromPhysics();
+    const Point& getPosFromPhysics() const;
 };
 
 NS_CC_EXT_END
