@@ -150,7 +150,7 @@ PhysicsSprite* PhysicsSprite::create(const char *pszFileName, const Rect& rect)
 // this method will only get called if the sprite is batched.
 // return YES if the physic's values (angles, position ) changed.
 // If you return NO, then nodeToParentTransform won't be called.
-bool PhysicsSprite::isDirty()
+bool PhysicsSprite::isDirty() const
 {
     return true;
 }
@@ -166,28 +166,29 @@ void PhysicsSprite::setIgnoreBodyRotation(bool bIgnoreBodyRotation)
 }
 
 // Override the setters and getters to always reflect the body's properties.
-const Point& PhysicsSprite::getPosition()
+const Point& PhysicsSprite::getPosition() const
 {
-    updatePosFromPhysics();
-    return Node::getPosition();
+    return getPosFromPhysics();
 }
 
-void PhysicsSprite::getPosition(float* x, float* y)
+void PhysicsSprite::getPosition(float* x, float* y) const
 {
-    updatePosFromPhysics();
-    return Node::getPosition(x, y);
+    if (x == NULL || y == NULL) {
+        return;
+    }
+    const Point& pos = getPosFromPhysics();
+    *x = pos.x;
+    *y = pos.y;
 }
 
-float PhysicsSprite::getPositionX()
+float PhysicsSprite::getPositionX() const
 {
-    updatePosFromPhysics();
-    return _position.x;
+    return getPosFromPhysics().x;
 }
 
-float PhysicsSprite::getPositionY()
+float PhysicsSprite::getPositionY() const
 {
-    updatePosFromPhysics();
-    return _position.y;
+    return getPosFromPhysics().y;
 }
 
 //
@@ -270,22 +271,22 @@ void PhysicsSprite::setCPBody(cpBody *pBody)
 // Common to Box2d and Chipmunk
 //
 
-void PhysicsSprite::updatePosFromPhysics()
+const Point& PhysicsSprite::getPosFromPhysics() const
 {
-
+    static Point s_physicPosion;
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 
     cpVect cpPos = cpBodyGetPos(_CPBody);
-    _position = ccp(cpPos.x, cpPos.y);
+    s_physicPosion = ccp(cpPos.x, cpPos.y);
 
 #elif CC_ENABLE_BOX2D_INTEGRATION
 
     b2Vec2 pos = _pB2Body->GetPosition();
     float x = pos.x * _PTMRatio;
     float y = pos.y * _PTMRatio;
-    _position = ccp(x,y);
+    s_physicPosion = ccp(x,y);
 #endif
-
+    return s_physicPosion;
 }
 
 void PhysicsSprite::setPosition(const Point &pos)
@@ -303,7 +304,7 @@ void PhysicsSprite::setPosition(const Point &pos)
 
 }
 
-float PhysicsSprite::getRotation()
+float PhysicsSprite::getRotation() const
 {
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 

@@ -4,7 +4,13 @@
 #include "SimpleAudioEngine.h"
 #include "ScriptingCore.h"
 #include "generated/jsb_cocos2dx_auto.hpp"
+#include "generated/jsb_cocos2dx_extension_auto.hpp"
+#include "jsb_cocos2dx_extension_manual.h"
 #include "cocos2d_specifics.hpp"
+#include "js_bindings_ccbreader.h"
+#include "js_bindings_system_registration.h"
+#include "js_bindings_chipmunk_registration.h"
+#include "jsb_opengl_registration.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -36,7 +42,14 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
+    sc->addRegisterCallback(register_all_cocos2dx_extension);
     sc->addRegisterCallback(register_cocos2dx_js_extensions);
+    sc->addRegisterCallback(jsb_register_chipmunk);
+    sc->addRegisterCallback(register_all_cocos2dx_extension_manual);
+    sc->addRegisterCallback(register_CCBuilderReader);
+    sc->addRegisterCallback(jsb_register_system);
+    sc->addRegisterCallback(JSB_register_opengl);
+    
     sc->start();
     
     ScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
