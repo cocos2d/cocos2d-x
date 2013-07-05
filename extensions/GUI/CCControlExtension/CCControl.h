@@ -114,7 +114,7 @@ public:
      */
     virtual void needsLayout();
     
-    virtual bool isOpacityModifyRGB();
+    virtual bool isOpacityModifyRGB() const;
     virtual void setOpacityModifyRGB(bool bOpacityModifyRGB);
 
 protected:
