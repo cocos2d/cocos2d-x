@@ -509,8 +509,9 @@ CallFunc * CallFunc::clone() const
 		a->initWithTarget(_selectorTarget);
 		a->_callFunc = _callFunc;
 	}
-	else if( _function )
+	else if( _function ){
 		a->initWithFunction(_function);
+    }
     else if (_scriptHandler > 0 ) {
         a->_scriptHandler = cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine()->reallocateScriptHandler(_scriptHandler);
     }
