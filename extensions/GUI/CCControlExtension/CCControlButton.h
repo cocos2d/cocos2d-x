@@ -68,7 +68,7 @@ protected:
     CC_SYNTHESIZE_READONLY(String*, _currentTitle, CurrentTitle);
 
     /** The current color used to display the title. */
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(ccColor3B, _currentTitleColor, CurrentTitleColor);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(Color3B, _currentTitleColor, CurrentTitleColor);
 
     /** Adjust the background image. YES by default. If the property is set to NO, the 
     background will use the prefered size of the background image. */
@@ -93,8 +93,8 @@ protected:
     /* Override setter to affect a background sprite too */
     virtual GLubyte getOpacity(void) const;
     virtual void setOpacity(GLubyte var);
-	virtual const ccColor3B& getColor(void) const;
-	virtual void setColor(const ccColor3B&);
+	virtual const Color3B& getColor(void) const;
+	virtual void setColor(const Color3B&);
     
     /** Flag to know if the button is currently pushed.  */
 protected:
@@ -170,7 +170,7 @@ public:
     * @return The color of the title for the specified state.
     */
 
-    virtual const ccColor3B getTitleColorForState(ControlState state);
+    virtual const Color3B getTitleColorForState(ControlState state);
 
     /**
     * Sets the color of the title to use for the specified state.
@@ -179,7 +179,7 @@ public:
     * @param state The state that uses the specified color. The values are described
     * in "CCControlState".
     */
-    virtual void setTitleColorForState(ccColor3B color, ControlState state);
+    virtual void setTitleColorForState(Color3B color, ControlState state);
 
     /**
     * Returns the title label used for a state.

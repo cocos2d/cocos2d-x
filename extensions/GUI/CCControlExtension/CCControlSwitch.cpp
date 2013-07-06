@@ -178,15 +178,15 @@ void ControlSwitchSprite::draw()
 #endif // EMSCRIPTEN
 
     // vertex
-    int diff = offsetof( ccV3F_C4B_T2F, vertices);
+    int diff = offsetof( V3F_C4B_T2F, vertices);
     glVertexAttribPointer(kVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
 
     // texCoods
-    diff = offsetof( ccV3F_C4B_T2F, texCoords);
+    diff = offsetof( V3F_C4B_T2F, texCoords);
     glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
 
     // color
-    diff = offsetof( ccV3F_C4B_T2F, colors);
+    diff = offsetof( V3F_C4B_T2F, colors);
     glVertexAttribPointer(kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);    
@@ -400,7 +400,7 @@ bool ControlSwitch::ccTouchBegan(Touch *pTouch, Event *pEvent)
     
     _initialTouchXPosition = location.x - _switchSprite->getSliderXPosition();
     
-    _switchSprite->getThumbSprite()->setColor(ccGRAY);
+    _switchSprite->getThumbSprite()->setColor(Color3B::gray);
     _switchSprite->needsLayout();
     
     return true;
@@ -420,7 +420,7 @@ void ControlSwitch::ccTouchEnded(Touch *pTouch, Event *pEvent)
 {
     Point location   = this->locationFromTouch(pTouch);
     
-    _switchSprite->getThumbSprite()->setColor(ccWHITE);
+    _switchSprite->getThumbSprite()->setColor(Color3B::white);
     
     if (hasMoved())
     {
@@ -436,7 +436,7 @@ void ControlSwitch::ccTouchCancelled(Touch *pTouch, Event *pEvent)
 {
     Point location   = this->locationFromTouch(pTouch);
     
-    _switchSprite->getThumbSprite()->setColor(ccWHITE);
+    _switchSprite->getThumbSprite()->setColor(Color3B::white);
     
     if (hasMoved())
     {

@@ -185,11 +185,11 @@ void MenuItem::setCallback(const ccMenuCallback& callback)
 //CCMenuItemLabel
 //
 
-const ccColor3B& MenuItemLabel::getDisabledColor() const
+const Color3B& MenuItemLabel::getDisabledColor() const
 {
     return _disabledColor;
 }
-void MenuItemLabel::setDisabledColor(const ccColor3B& var)
+void MenuItemLabel::setDisabledColor(const Color3B& var)
 {
     _disabledColor = var;
 }
@@ -251,8 +251,8 @@ bool MenuItemLabel::initWithLabel(Node* label, const ccMenuCallback& callback)
 {
     MenuItem::initWithCallback(callback);
     _originalScale = 1.0f;
-    _colorBackup = ccWHITE;
-    setDisabledColor(ccc3(126,126,126));
+    _colorBackup = Color3B::white;
+    setDisabledColor(Color3B(126,126,126));
     this->setLabel(label);
 
     setCascadeColorEnabled(true);

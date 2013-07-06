@@ -103,7 +103,7 @@ local function LayerTestCascadingOpacityB()
     local ret = createLayerDemoLayer("CCLayerColor: cascading opacity")
 
     local s = CCDirector:sharedDirector():getWinSize()
-    local layer1 = CCLayerColor:create(ccc4(192, 0, 0, 255), s.width, s.height/2)
+    local layer1 = CCLayerColor:create(Color4B(192, 0, 0, 255), s.width, s.height/2)
     layer1:setCascadeColorEnabled(false)
 
     layer1:setPosition( ccp(0, s.height/2))
@@ -147,7 +147,7 @@ local function LayerTestCascadingOpacityC()
     local ret = createLayerDemoLayer("CCLayerColor: non-cascading opacity")
 
     local s = CCDirector:sharedDirector():getWinSize()
-    local  layer1 = CCLayerColor:create(ccc4(192, 0, 0, 255), s.width, s.height/2)
+    local  layer1 = CCLayerColor:create(Color4B(192, 0, 0, 255), s.width, s.height/2)
     layer1:setCascadeColorEnabled(false)
     layer1:setCascadeOpacityEnabled(false)
 
@@ -245,7 +245,7 @@ local function LayerTestCascadingColorB()
     local ret = createLayerDemoLayer("CCLayerColor: cascading color")
 
     local s = CCDirector:sharedDirector():getWinSize()
-    local  layer1 = CCLayerColor:create(ccc4(255, 255, 255, 255), s.width, s.height/2)
+    local  layer1 = CCLayerColor:create(Color4B(255, 255, 255, 255), s.width, s.height/2)
 
     layer1:setPosition( ccp(0, s.height/2))
 
@@ -296,7 +296,7 @@ local function LayerTestCascadingColorC()
     local ret = createLayerDemoLayer("CCLayerColor: non-cascading color")
 
     local s = CCDirector:sharedDirector():getWinSize()
-    local  layer1 = CCLayerColor:create(ccc4(255, 255, 255, 255), s.width, s.height/2)
+    local  layer1 = CCLayerColor:create(Color4B(255, 255, 255, 255), s.width, s.height/2)
     layer1:setCascadeColorEnabled(false)
     layer1:setPosition( ccp(0, s.height/2))
 
@@ -350,7 +350,7 @@ local function LayerTest1()
     ret:setTouchEnabled(true)
 
     local s = CCDirector:sharedDirector():getWinSize()
-    local  layer = CCLayerColor:create( ccc4(0xFF, 0x00, 0x00, 0x80), 200, 200)
+    local  layer = CCLayerColor:create( Color4B(0xFF, 0x00, 0x00, 0x80), 200, 200)
 
     layer:ignoreAnchorPointForPosition(false)
     layer:setPosition( ccp(s.width/2, s.height/2) )
@@ -387,12 +387,12 @@ local function LayerTest2()
     local ret = createLayerDemoLayer("ColorLayer: fade and tint")
 
     local s = CCDirector:sharedDirector():getWinSize()
-    local  layer1 = CCLayerColor:create( ccc4(255, 255, 0, 80), 100, 300)
+    local  layer1 = CCLayerColor:create( Color4B(255, 255, 0, 80), 100, 300)
     layer1:setPosition(ccp(s.width/3, s.height/2))
     layer1:ignoreAnchorPointForPosition(false)
     ret:addChild(layer1, 1)
 
-    local  layer2 = CCLayerColor:create( ccc4(0, 0, 255, 255), 100, 300)
+    local  layer2 = CCLayerColor:create( Color4B(0, 0, 255, 255), 100, 300)
     layer2:setPosition(ccp((s.width/3)*2, s.height/2))
     layer2:ignoreAnchorPointForPosition(false)
     ret:addChild(layer2, 1)
@@ -425,7 +425,7 @@ end
 local function LayerTestBlend()
     local ret = createLayerDemoLayer("ColorLayer: blend")
     local s = CCDirector:sharedDirector():getWinSize()
-    local  layer1 = CCLayerColor:create( ccc4(255, 255, 255, 80) )
+    local  layer1 = CCLayerColor:create( Color4B(255, 255, 255, 80) )
 
     local  sister1 = CCSprite:create(s_pPathSister1)
     local  sister2 = CCSprite:create(s_pPathSister2)
@@ -451,7 +451,7 @@ local function LayerTestBlend()
             dst = GL_ZERO
         end
 
-        local bf = ccBlendFunc()
+        local bf = BlendFunc()
         bf.src = src
         bf.dst = dst
         layer:setBlendFunc( bf )
@@ -478,7 +478,7 @@ end
 --------------------------------------------------------------------
 local function LayerGradient()
     local ret = createLayerDemoLayer("LayerGradient", "Touch the screen and move your finger")
-    local  layer1 = CCLayerGradient:create(ccc4(255,0,0,255), ccc4(0,255,0,255), ccp(0.9, 0.9))
+    local  layer1 = CCLayerGradient:create(Color4B(255,0,0,255), Color4B(0,255,0,255), ccp(0.9, 0.9))
     ret:addChild(layer1, 0, kTagLayer)
 
     ret:setTouchEnabled(true)
@@ -532,7 +532,7 @@ local function LayerIgnoreAnchorPointPos()
 
     local s = CCDirector:sharedDirector():getWinSize()
 
-    local l = CCLayerColor:create(ccc4(255, 0, 0, 255), 150, 150)
+    local l = CCLayerColor:create(Color4B(255, 0, 0, 255), 150, 150)
 
     l:setAnchorPoint(ccp(0.5, 0.5))
     l:setPosition(ccp( s.width/2, s.height/2))
@@ -574,7 +574,7 @@ local function LayerIgnoreAnchorPointRot()
 
     local s = CCDirector:sharedDirector():getWinSize()
 
-    local l = CCLayerColor:create(ccc4(255, 0, 0, 255), 200, 200)
+    local l = CCLayerColor:create(Color4B(255, 0, 0, 255), 200, 200)
 
     l:setAnchorPoint(ccp(0.5, 0.5))
     l:setPosition(ccp( s.width/2, s.height/2))
@@ -611,7 +611,7 @@ local function LayerIgnoreAnchorPointScale()
     local ret = createLayerDemoLayer("IgnoreAnchorPoint - Scale", "Ignoring Anchor Point for scale")
     local s = CCDirector:sharedDirector():getWinSize()
 
-    local l = CCLayerColor:create(ccc4(255, 0, 0, 255), 200, 200)
+    local l = CCLayerColor:create(Color4B(255, 0, 0, 255), 200, 200)
 
     l:setAnchorPoint(ccp(0.5, 1.0))
     l:setPosition(ccp( s.width/2, s.height/2))
@@ -653,12 +653,12 @@ end
 
 local function LayerExtendedBlendOpacityTest()
     local ret = createLayerDemoLayer("Extended Blend & Opacity", "You should see 3 layers")
-    local  layer1 = CCLayerGradient:create(ccc4(255, 0, 0, 255), ccc4(255, 0, 255, 255))
+    local  layer1 = CCLayerGradient:create(Color4B(255, 0, 0, 255), Color4B(255, 0, 255, 255))
     layer1:setContentSize(CCSizeMake(80, 80))
     layer1:setPosition(ccp(50,50))
     ret:addChild(layer1)
 
-    local  layer2 = CCLayerGradient:create(ccc4(0, 0, 0, 127), ccc4(255, 255, 255, 127))
+    local  layer2 = CCLayerGradient:create(Color4B(0, 0, 0, 127), Color4B(255, 255, 255, 127))
     layer2:setContentSize(CCSizeMake(80, 80))
     layer2:setPosition(ccp(100,90))
     ret:addChild(layer2)
@@ -666,11 +666,11 @@ local function LayerExtendedBlendOpacityTest()
     local  layer3 = CCLayerGradient:create()
     layer3:setContentSize(CCSizeMake(80, 80))
     layer3:setPosition(ccp(150,140))
-    layer3:setStartColor(ccc3(255, 0, 0))
-    layer3:setEndColor(ccc3(255, 0, 255))
+    layer3:setStartColor(Color3B(255, 0, 0))
+    layer3:setEndColor(Color3B(255, 0, 255))
     layer3:setStartOpacity(255)
     layer3:setEndOpacity(255)
-    local blend = ccBlendFunc()
+    local blend = BlendFunc()
     blend.src = GL_SRC_ALPHA
     blend.dst = GL_ONE_MINUS_SRC_ALPHA
     layer3:setBlendFunc(blend)

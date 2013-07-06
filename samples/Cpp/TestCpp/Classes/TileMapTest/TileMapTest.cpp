@@ -84,7 +84,7 @@ void TileMapEditTest::updateMap(float dt)
     // over all your tiles in every frame. It's very expensive
     //    for(int x=0; x < tilemap.tgaInfo->width; x++) {
     //        for(int y=0; y < tilemap.tgaInfo->height; y++) {
-    //            ccColor3B c =[tilemap tileAt:CCSizeMake(x,y));
+    //            Color3B c =[tilemap tileAt:CCSizeMake(x,y));
     //            if( c.r != 0 ) {
     //                ////----CCLOG("%d,%d = %d", x,y,c.r);
     //            }
@@ -92,7 +92,7 @@ void TileMapEditTest::updateMap(float dt)
     //    }
     
     // NEW since v0.7
-    ccColor3B c = tilemap->tileAt(ccp(13,21));        
+    Color3B c = tilemap->tileAt(ccp(13,21));        
     c.r++;
     c.r %= 50;
     if( c.r==0)
@@ -119,7 +119,7 @@ TMXOrthoTest::TMXOrthoTest()
     //
     // it should not flicker. No artifacts should appear
     //
-    //CCLayerColor* color = LayerColor::create( ccc4(64,64,64,255) );
+    //CCLayerColor* color = LayerColor::create( Color4B(64,64,64,255) );
     //addChild(color, -1);
 
     TMXTiledMap* map = TMXTiledMap::create("TileMaps/orthogonal-test2.tmx");
@@ -439,7 +439,7 @@ std::string TMXReadWriteTest::title()
 //------------------------------------------------------------------
 TMXHexTest::TMXHexTest()
 {
-    LayerColor* color = LayerColor::create( ccc4(64,64,64,255) );
+    LayerColor* color = LayerColor::create( Color4B(64,64,64,255) );
     addChild(color, -1);
     
     TMXTiledMap* map = TMXTiledMap::create("TileMaps/hexa-test.tmx");
@@ -461,7 +461,7 @@ std::string TMXHexTest::title()
 //------------------------------------------------------------------
 TMXIsoTest::TMXIsoTest()
 {
-    LayerColor* color = LayerColor::create( ccc4(64,64,64,255) );
+    LayerColor* color = LayerColor::create( Color4B(64,64,64,255) );
     addChild(color, -1);
     
     TMXTiledMap* map = TMXTiledMap::create("TileMaps/iso-test.tmx");
@@ -485,7 +485,7 @@ std::string TMXIsoTest::title()
 //------------------------------------------------------------------
 TMXIsoTest1::TMXIsoTest1()
 {
-    LayerColor* color = LayerColor::create( ccc4(64,64,64,255) );
+    LayerColor* color = LayerColor::create( Color4B(64,64,64,255) );
     addChild(color, -1);
     
     TMXTiledMap *map = TMXTiledMap::create("TileMaps/iso-test1.tmx");
@@ -509,7 +509,7 @@ std::string TMXIsoTest1::title()
 //------------------------------------------------------------------
 TMXIsoTest2::TMXIsoTest2()
 {
-    LayerColor* color = LayerColor::create( ccc4(64,64,64,255) );
+    LayerColor* color = LayerColor::create( Color4B(64,64,64,255) );
     addChild(color, -1);
     
     TMXTiledMap *map = TMXTiledMap::create("TileMaps/iso-test2.tmx");
@@ -536,7 +536,7 @@ std::string TMXIsoTest2::title()
 //------------------------------------------------------------------
 TMXUncompressedTest::TMXUncompressedTest()
 {
-    LayerColor* color = LayerColor::create( ccc4(64,64,64,255) );
+    LayerColor* color = LayerColor::create( Color4B(64,64,64,255) );
     addChild(color, -1);
     
     TMXTiledMap *map = TMXTiledMap::create("TileMaps/iso-test2-uncompressed.tmx");

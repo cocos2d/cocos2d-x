@@ -2199,7 +2199,7 @@ bool TintTo::initWithDuration(float duration, GLubyte red, GLubyte green, GLubyt
 {
     if (ActionInterval::initWithDuration(duration))
     {
-        _to = ccc3(red, green, blue);
+        _to = Color3B(red, green, blue);
         return true;
     }
 
@@ -2260,7 +2260,7 @@ void TintTo::update(float time)
     RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(_target);
     if (pRGBAProtocol)
     {
-        pRGBAProtocol->setColor(ccc3(GLubyte(_from.r + (_to.r - _from.r) * time), 
+        pRGBAProtocol->setColor(Color3B(GLubyte(_from.r + (_to.r - _from.r) * time), 
             (GLbyte)(_from.g + (_to.g - _from.g) * time),
             (GLbyte)(_from.b + (_to.b - _from.b) * time)));
     }    
@@ -2332,7 +2332,7 @@ void TintBy::startWithTarget(Node *pTarget)
     RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(pTarget);
     if (pRGBAProtocol)
     {
-        ccColor3B color = pRGBAProtocol->getColor();
+        Color3B color = pRGBAProtocol->getColor();
         _fromR = color.r;
         _fromG = color.g;
         _fromB = color.b;
@@ -2344,7 +2344,7 @@ void TintBy::update(float time)
     RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(_target);
     if (pRGBAProtocol)
     {
-        pRGBAProtocol->setColor(ccc3((GLubyte)(_fromR + _deltaR * time),
+        pRGBAProtocol->setColor(Color3B((GLubyte)(_fromR + _deltaR * time),
             (GLubyte)(_fromG + _deltaG * time),
             (GLubyte)(_fromB + _deltaB * time)));
     }    

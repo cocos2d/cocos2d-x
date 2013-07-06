@@ -101,7 +101,7 @@ local function TileMapEditTest()
         -- over all your tiles in every frame. It's very expensive
         --    for(int x=0 x < tilemap.tgaInfo:width x++)
         --        for(int y=0 y < tilemap.tgaInfo:height y++)
-        --            ccColor3B c =[tilemap tileAt:local Make(x,y))
+        --            Color3B c =[tilemap tileAt:local Make(x,y))
         --            if( c.r != 0 )
         --                --------cclog("%d,%d = %d", x,y,c.r)
         --            end
@@ -152,7 +152,7 @@ local function TMXOrthoTest()
     --
     -- it should not flicker. No artifacts should appear
     --
-    --local  color = CCLayerColor:create( ccc4(64,64,64,255) )
+    --local  color = CCLayerColor:create( Color4B(64,64,64,255) )
     --addChild(color, -1)
 
     local  map = CCTMXTiledMap:create("TileMaps/orthogonal-test2.tmx")
@@ -496,7 +496,7 @@ end
 --------------------------------------------------------------------
 local function TMXHexTest()
     local ret = createTileDemoLayer("TMX Hex tes")
-    local  color = CCLayerColor:create( ccc4(64,64,64,255) )
+    local  color = CCLayerColor:create( Color4B(64,64,64,255) )
     ret:addChild(color, -1)
 
     local  map = CCTMXTiledMap:create("TileMaps/hexa-test.tmx")
@@ -514,7 +514,7 @@ end
 --------------------------------------------------------------------
 local function TMXIsoTest()
     local ret = createTileDemoLayer("TMX Isometric test 0")
-    local  color = CCLayerColor:create( ccc4(64,64,64,255) )
+    local  color = CCLayerColor:create( Color4B(64,64,64,255) )
     ret:addChild(color, -1)
 
     local  map = CCTMXTiledMap:create("TileMaps/iso-test.tmx")
@@ -534,7 +534,7 @@ end
 --------------------------------------------------------------------
 local function TMXIsoTest1()
     local ret = createTileDemoLayer("TMX Isometric test + anchorPoint")
-    local  color = CCLayerColor:create( ccc4(64,64,64,255) )
+    local  color = CCLayerColor:create( Color4B(64,64,64,255) )
     ret:addChild(color, -1)
 
     local map = CCTMXTiledMap:create("TileMaps/iso-test1.tmx")
@@ -554,7 +554,7 @@ end
 --------------------------------------------------------------------
 local function TMXIsoTest2()
     local ret = createTileDemoLayer("TMX Isometric test 2")
-    local  color = CCLayerColor:create( ccc4(64,64,64,255) )
+    local  color = CCLayerColor:create( Color4B(64,64,64,255) )
     ret:addChild(color, -1)
 
     local map = CCTMXTiledMap:create("TileMaps/iso-test2.tmx")
@@ -577,7 +577,7 @@ end
 --------------------------------------------------------------------
 local function TMXUncompressedTest()
     local ret = createTileDemoLayer("TMX Uncompressed test")
-    local  color = CCLayerColor:create( ccc4(64,64,64,255) )
+    local  color = CCLayerColor:create( Color4B(64,64,64,255) )
     ret:addChild(color, -1)
 
     local map = CCTMXTiledMap:create("TileMaps/iso-test2-uncompressed.tmx")
