@@ -303,10 +303,12 @@ Rect Rect::unionWithRect(const Rect & rect) const
         std::swap(otherTopY, otherBottomY);   // Other rect has negative height
     }
     
-    float combinedLeftX = std::min(thisLeftX, otherLeftX);
-    float combinedRightX = std::max(thisRightX, otherRightX);
-    float combinedTopY = std::max(thisTopY, otherTopY);
-    float combinedBottomY = std::min(thisBottomY, otherBottomY);
+    using namespace std;
+    
+    float combinedLeftX = min(thisLeftX, otherLeftX);
+    float combinedRightX = max(thisRightX, otherRightX);
+    float combinedTopY = max(thisTopY, otherTopY);
+    float combinedBottomY = min(thisBottomY, otherBottomY);
     
     return Rect(combinedLeftX, combinedBottomY, combinedRightX - combinedLeftX, combinedTopY - combinedBottomY);
 }
