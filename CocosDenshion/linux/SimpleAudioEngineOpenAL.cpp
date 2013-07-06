@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#ifdef OPENAL
+
 #include <map>
 #include <string>
 #include <stdio.h>
@@ -604,3 +606,4 @@ namespace CocosDenshion
     }
 
 }
+#endif
