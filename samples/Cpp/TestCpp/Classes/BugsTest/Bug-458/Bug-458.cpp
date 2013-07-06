@@ -22,11 +22,11 @@ bool Bug458Layer::init()
 //        [question2 setContentSize:CGSizeMake(50,50)];
         
         MenuItemSprite* sprite = MenuItemSprite::create(question2, question, CC_CALLBACK_1(Bug458Layer::selectAnswer, this) );
-        LayerColor* layer = LayerColor::create(ccc4(0,0,255,255), 100, 100);
+        LayerColor* layer = LayerColor::create(Color4B(0,0,255,255), 100, 100);
         question->release();
         question2->release();
 
-        LayerColor* layer2 = LayerColor::create(ccc4(255,0,0,255), 100, 100);
+        LayerColor* layer2 = LayerColor::create(Color4B(255,0,0,255), 100, 100);
         MenuItemSprite* sprite2 = MenuItemSprite::create(layer, layer2, CC_CALLBACK_1(Bug458Layer::selectAnswer, this) );
         Menu* menu = Menu::create(sprite, sprite2, NULL);
         menu->alignItemsVerticallyWithPadding(100);

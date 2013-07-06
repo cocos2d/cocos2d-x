@@ -48,20 +48,20 @@ public:
 	bool initWithData(const void* data, cocos2d::Texture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const cocos2d::Size& contentSize);
     
     
-    cocos2d::ccColor4B pixelAt(const cocos2d::Point& pt);
+    cocos2d::Color4B pixelAt(const cocos2d::Point& pt);
     
     ///
     //	@param pt is a point to get a pixel (0,0) is top-left to (width,height) bottom-right
-    //	@param c is a ccColor4B which is a colour.
+    //	@param c is a Color4B which is a colour.
     //	@returns if a pixel was set
     //	Remember to call apply to actually update the texture canvas.
     ///
-    bool setPixelAt(const cocos2d::Point& pt, cocos2d::ccColor4B c);
+    bool setPixelAt(const cocos2d::Point& pt, cocos2d::Color4B c);
     
     ///
     //	Fill with specified colour
     ///
-    void fill(cocos2d::ccColor4B c);
+    void fill(cocos2d::Color4B c);
     
     ///
     //	@param textureToCopy is the texture image to copy over

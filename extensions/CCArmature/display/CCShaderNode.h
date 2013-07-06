@@ -46,8 +46,8 @@ public:
 
 private:
 
-    ccVertex2F _center;
-    ccVertex2F _resolution;
+    Vertex2F _center;
+    Vertex2F _resolution;
     float      _time;
     GLuint     _uniformCenter, _uniformResolution, _uniformTime;
 };

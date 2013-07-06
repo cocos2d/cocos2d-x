@@ -104,7 +104,7 @@ void Waves3D::update(float time)
     {
         for (j = 0; j < _gridSize.height + 1; ++j)
         {
-            ccVertex3F v = originalVertex(ccp(i ,j));
+            Vertex3F v = originalVertex(ccp(i ,j));
             v.z += (sinf((float)M_PI * time * _waves * 2 + (v.y+v.x) * 0.01f) * _amplitude * _amplitudeRate);
             //CCLOG("v.z offset is %f\n", (sinf((float)M_PI * time * _waves * 2 + (v.y+v.x) * .01f) * _amplitude * _amplitudeRate));
             setVertex(ccp(i, j), v);
@@ -190,7 +190,7 @@ void FlipX3D::update(float time)
     angle = angle / 2.0f; // x calculates degrees from 0 to 90
     float mx = cosf(angle);
 
-    ccVertex3F v0, v1, v, diff;
+    Vertex3F v0, v1, v, diff;
 
     v0 = originalVertex(ccp(1, 1));
     v1 = originalVertex(ccp(0, 0));
@@ -298,7 +298,7 @@ void FlipY3D::update(float time)
     angle = angle / 2.0f;     // x calculates degrees from 0 to 90
     float my = cosf(angle);
     
-    ccVertex3F    v0, v1, v, diff;
+    Vertex3F    v0, v1, v, diff;
     
     v0 = originalVertex(ccp(1, 1));
     v1 = originalVertex(ccp(0, 0));
@@ -446,7 +446,7 @@ void Lens3D::update(float time)
         {
             for (j = 0; j < _gridSize.height + 1; ++j)
             {
-                ccVertex3F v = originalVertex(ccp(i, j));
+                Vertex3F v = originalVertex(ccp(i, j));
                 Point vect = ccpSub(_position, ccp(v.x, v.y));
                 float r = ccpLength(vect);
                 
@@ -561,7 +561,7 @@ void Ripple3D::update(float time)
     {
         for (j = 0; j < (_gridSize.height+1); ++j)
         {
-            ccVertex3F v = originalVertex(ccp(i, j));
+            Vertex3F v = originalVertex(ccp(i, j));
             Point vect = ccpSub(_position, ccp(v.x,v.y));
             float r = ccpLength(vect);
             
@@ -652,7 +652,7 @@ void Shaky3D::update(float time)
     {
         for (j = 0; j < (_gridSize.height+1); ++j)
         {
-            ccVertex3F v = originalVertex(ccp(i ,j));
+            Vertex3F v = originalVertex(ccp(i ,j));
             v.x += (rand() % (_randrange*2)) - _randrange;
             v.y += (rand() % (_randrange*2)) - _randrange;
             if (_shakeZ)
@@ -740,7 +740,7 @@ void Liquid::update(float time)
     {
         for (j = 1; j < _gridSize.height; ++j)
         {
-            ccVertex3F v = originalVertex(ccp(i, j));
+            Vertex3F v = originalVertex(ccp(i, j));
             v.x = (v.x + (sinf(time * (float)M_PI * _waves * 2 + v.x * .01f) * _amplitude * _amplitudeRate));
             v.y = (v.y + (sinf(time * (float)M_PI * _waves * 2 + v.y * .01f) * _amplitude * _amplitudeRate));
             setVertex(ccp(i, j), v);
@@ -825,7 +825,7 @@ void Waves::update(float time)
     {
         for (j = 0; j < _gridSize.height + 1; ++j)
         {
-            ccVertex3F v = originalVertex(ccp(i, j));
+            Vertex3F v = originalVertex(ccp(i, j));
 
             if (_vertical)
             {
@@ -925,7 +925,7 @@ void Twirl::update(float time)
     {
         for (j = 0; j < (_gridSize.height+1); ++j)
         {
-            ccVertex3F v = originalVertex(ccp(i ,j));
+            Vertex3F v = originalVertex(ccp(i ,j));
             
             Point    avg = ccp(i-(_gridSize.width/2.0f), j-(_gridSize.height/2.0f));
             float r = ccpLength(avg);

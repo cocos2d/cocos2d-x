@@ -125,7 +125,7 @@ protected:
 class CC_DLL MenuItemLabel : public MenuItem
 {
     /** the color that will be used to disable the item */
-    CC_PROPERTY_PASS_BY_REF(ccColor3B, _disabledColor, DisabledColor);
+    CC_PROPERTY_PASS_BY_REF(Color3B, _disabledColor, DisabledColor);
     /** Label that is rendered. It can be any Node that implements the LabelProtocol */
     CC_PROPERTY(Node*, _label, Label);
 public:
@@ -162,8 +162,8 @@ public:
     virtual void setEnabled(bool enabled);
     
 protected:
-    ccColor3B    _colorBackup;
-    float        _originalScale;
+    Color3B    _colorBackup;
+    float      _originalScale;
 };
 
 

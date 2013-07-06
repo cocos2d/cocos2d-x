@@ -92,7 +92,7 @@ void SpriteDemo::onEnter()
 {
     BaseTest::onEnter();
 
-    LayerColor *background = LayerColor::create(ccc4(255,0,0,255));
+    LayerColor *background = LayerColor::create(Color4B(255,0,0,255));
     addChild(background, -10);
 }
 
