@@ -451,14 +451,26 @@ void Sprite::updateTransform(void)
 {
     CCAssert(_batchNode, "updateTransform is only valid when Sprite is being rendered using an SpriteBatchNode");
 
+    unsigned int totalQuads = 0;
+    ccV3F_C4B_T2F_Quad* quad = NULL;
     // recalculate matrix only if it is dirty
     if( isDirty() ) {
 
+        if (_textureAtlas){
+            unsigned int capacity = _textureAtlas->getCapacity();
+            CCAssert(_atlasIndex >= 0 && _atlasIndex < capacity, "updateTransform: Invalid _atlasIndex");
+
+            totalQuads = _textureAtlas->getTotalQuads();
+            quad = &((_textureAtlas->getQuads())[_atlasIndex]);
+        }
         // If it is not visible, or one of its ancestors is not visible, then do nothing:
         if( !_visible || ( _parent && _parent != _batchNode && ((Sprite*)_parent)->_shouldBeHidden) )
         {
             _quad.br.vertices = _quad.tl.vertices = _quad.tr.vertices = _quad.bl.vertices = vertex3(0,0,0);
             _shouldBeHidden = true;
+            if (_textureAtlas){
+                quad->br.vertices = quad->bl.vertices = quad->tr.vertices = quad->tl.vertices = vertex3(0,0,0);
+            }
         }
         else 
         {
@@ -508,14 +520,40 @@ void Sprite::updateTransform(void)
             _quad.br.vertices = vertex3( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _vertexZ );
             _quad.tl.vertices = vertex3( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _vertexZ );
             _quad.tr.vertices = vertex3( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _vertexZ );
+            if (_textureAtlas){
+                quad->br.vertices = vertex3( RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _vertexZ );
+                quad->bl.vertices = vertex3( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _vertexZ );
+                quad->tl.vertices = vertex3( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _vertexZ );
+                quad->tr.vertices = vertex3( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _vertexZ );
+            }
         }
 
         // MARMALADE CHANGE: ADDED CHECK FOR NULL, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
         if (_textureAtlas)
-		{
-            _textureAtlas->updateQuad(&_quad, _atlasIndex);
+        {
+            // Use the quad reference to update directly instead of using "m_pQuads[index] = *quad;"
+            // By doing this we can have some performance improvement on case
+            // PerformanceTest->NodeChildrenTest->B-IterateSpriteSheet(15000 nodes).
+            // The fps can be improved to 16 from the old 12.
+            // The key is the 2 level search of m_sQuad.bl.vertices,
+            // so here we define one temporary variable, and assign it to
+            // other elements of ccV3F_C4B_T2F_Quad struct to
+            // reduce the 2 level search operation.
+
+            quad->bl.colors = _quad.bl.colors;
+            quad->br.colors = _quad.br.colors;
+            quad->tl.colors = _quad.tl.colors;
+            quad->tr.colors = _quad.tr.colors;
+            quad->br.texCoords = _quad.br.texCoords;
+            quad->bl.texCoords = _quad.bl.texCoords;
+            quad->tr.texCoords = _quad.tr.texCoords;
+            quad->tl.texCoords = _quad.tl.texCoords;
+            _textureAtlas->setDirty(true);
+            if (totalQuads < (_atlasIndex + 1)){
+                _textureAtlas->increaseTotalQuadsWith(_atlasIndex + 1 - totalQuads);
+            }
         }
-		
+
         _recursiveDirty = false;
         setDirty(false);
     }
@@ -903,13 +941,13 @@ bool Sprite::isFlipY(void) const
 void Sprite::updateColor(void)
 {
     ccColor4B color4 = { _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity };
-    
+
     // special opacity for premultiplied textures
 	if (_opacityModifyRGB)
     {
-		color4.r *= _displayedOpacity/255.0f;
-		color4.g *= _displayedOpacity/255.0f;
-		color4.b *= _displayedOpacity/255.0f;
+        color4.r *= _displayedOpacity/255.0f;
+        color4.g *= _displayedOpacity/255.0f;
+        color4.b *= _displayedOpacity/255.0f;
     }
 
     _quad.bl.colors = color4;
@@ -922,7 +960,37 @@ void Sprite::updateColor(void)
     {
         if (_atlasIndex != SpriteIndexNotInitialized)
         {
-            _textureAtlas->updateQuad(&_quad, _atlasIndex);
+            // Use the quad reference to update directly instead of using "m_pQuads[index] = *quad;"
+            // By doing this we can have some performance improvement on case
+            // PerformanceTest->NodeChildrenTest->B-IterateSpriteSheet(15000 nodes).
+            // The fps can be improved to 16 from the old 12.
+            // The key is the 2 level search of m_sQuad.bl.colors,
+            // and the = assignment for the big size struct,
+            // so here we define one temporary variable, and assign it to
+            // other elements of ccV3F_C4B_T2F_Quad struct to
+            // reduce the 2 level search operation, and usage of memcpy.
+            unsigned int capacity = _textureAtlas->getCapacity();
+            CCAssert( _atlasIndex >= 0 && _atlasIndex < capacity, "updateColor: Invalid _atlasIndex");
+
+            ccV3F_C4B_T2F_Quad* quad = &((_textureAtlas->getQuads())[_atlasIndex]);
+            quad->bl.colors = color4;
+            quad->br.colors = color4;
+            quad->tl.colors = color4;
+            quad->tr.colors = color4;
+            quad->br.texCoords = _quad.br.texCoords;
+            quad->bl.texCoords = _quad.bl.texCoords;
+            quad->tr.texCoords = _quad.tr.texCoords;
+            quad->tl.texCoords = _quad.tl.texCoords;
+            quad->br.vertices = _quad.br.vertices;
+            quad->bl.vertices = _quad.bl.vertices;
+            quad->tr.vertices = _quad.tr.vertices;
+            quad->tl.vertices = _quad.tl.vertices;
+            _textureAtlas->setDirty(true);
+
+            unsigned int totalQuads = _textureAtlas->getTotalQuads();
+            if (totalQuads < (_atlasIndex + 1)){
+                _textureAtlas->increaseTotalQuadsWith( _atlasIndex + 1 - totalQuads);
+            }
         }
         else
         {
