@@ -91,7 +91,7 @@ public:
     /** initializes the action with a random seed, the grid size and the duration */
     virtual bool initWithDuration(float duration, const Size& gridSize, unsigned int seed);
     void shuffle(unsigned int *pArray, unsigned int nLen);
-    Size getDelta(const Size& pos);
+    Size getDelta(const Size& pos) const;
     void placeTile(const Point& pos, Tile *t);
 
     virtual void startWithTarget(Node *pTarget);
@@ -223,11 +223,11 @@ class CC_DLL WavesTiles3D : public TiledGrid3DAction
 {
 public:
     /** waves amplitude */
-    inline float getAmplitude(void) { return _amplitude; }
+    inline float getAmplitude(void) const { return _amplitude; }
     inline void setAmplitude(float fAmplitude) { _amplitude = fAmplitude; }
 
     /** waves amplitude rate */
-    inline float getAmplitudeRate(void) { return _amplitudeRate; }
+    inline float getAmplitudeRate(void) const { return _amplitudeRate; }
     inline void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
 
     /** initializes the action with a number of waves, the waves amplitude, the grid size and the duration */
@@ -255,11 +255,11 @@ class CC_DLL JumpTiles3D : public TiledGrid3DAction
 {
 public:
     /** amplitude of the sin*/
-    inline float getAmplitude(void) { return _amplitude; }
+    inline float getAmplitude(void) const { return _amplitude; }
     inline void setAmplitude(float fAmplitude) { _amplitude = fAmplitude; }
 
     /** amplitude rate */
-    inline float getAmplitudeRate(void) { return _amplitudeRate; }
+    inline float getAmplitudeRate(void) const { return _amplitudeRate; }
     inline void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
 
     /** initializes the action with the number of jumps, the sin amplitude, the grid size and the duration */

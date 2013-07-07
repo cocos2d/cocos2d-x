@@ -120,7 +120,7 @@ public:
     virtual void update(float time);
 
     /** get amplitude rate */
-    inline float getRate(void) { return _rate; }
+    inline float getRate(void) const { return _rate; }
     /** set amplitude rate */
     inline void setRate(float fRate) { _rate = fRate; }
 
@@ -148,7 +148,7 @@ public:
 	virtual AccelAmplitude* reverse() const;
 
     /** get amplitude rate */
-    inline float getRate(void) { return _rate; }
+    inline float getRate(void) const { return _rate; }
     /** set amplitude rate */
     inline void setRate(float fRate) { _rate = fRate; }
 
@@ -178,7 +178,7 @@ public:
 	virtual DeccelAmplitude* reverse() const;
 
     /** get amplitude rate */
-    inline float getRate(void) { return _rate; }
+    inline float getRate(void) const { return _rate; }
     /** set amplitude rate */
     inline void setRate(float fRate) { _rate = fRate; }
 

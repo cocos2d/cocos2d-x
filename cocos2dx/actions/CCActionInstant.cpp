@@ -34,7 +34,8 @@ NS_CC_BEGIN
 //
 // InstantAction
 //
-bool ActionInstant::isDone() {
+bool ActionInstant::isDone() const
+{
     return true;
 }
 

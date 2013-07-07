@@ -78,7 +78,7 @@ public:
     TextureAtlas();
     virtual ~TextureAtlas();
 
-    const char* description();
+    const char* description() const;
 
     /** creates a TextureAtlas with an filename and with an initial capacity for Quads.
     * The TextureAtlas capacity can be increased in runtime.
