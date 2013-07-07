@@ -41,7 +41,7 @@ struct Color3B
 {
     Color3B(): r(0), g(0), b(0) {}
     
-    Color3B(float _r, float _g, float _b)
+    Color3B(GLubyte _r, GLubyte _g, GLubyte _b)
     :r(_r),
     g(_g),
     b(_b)
@@ -76,7 +76,7 @@ struct Color4F;
 */
 struct Color4B
 {
-    Color4B(float _r, float _g, float _b, float _a)
+    Color4B(GLubyte _r, GLubyte _g, GLubyte _b, GLubyte _a)
     :r(_r),
     g(_g),
     b(_b),

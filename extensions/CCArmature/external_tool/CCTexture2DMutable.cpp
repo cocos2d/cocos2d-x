@@ -111,7 +111,7 @@ bool Texture2DMutable::initWithData(const void* data, Texture2DPixelFormat pixel
 Color4B Texture2DMutable::pixelAt(const Point& pt)
 {
     
-	Color4B c = {0, 0, 0, 0};
+	Color4B c(0, 0, 0, 0);
 	if(!data_) return c;
 	if(pt.x < 0 || pt.y < 0) return c;
 	if(pt.x >= _contentSize.width || pt.y >= _contentSize.height) return c;

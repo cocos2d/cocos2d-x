@@ -960,19 +960,19 @@ void LayerGradient::updateColor()
 
     float opacityf = (float)_displayedOpacity / 255.0f;
 
-    Color4F S = {
+    Color4F S(
         _displayedColor.r / 255.0f,
         _displayedColor.g / 255.0f,
         _displayedColor.b / 255.0f,
         _startOpacity * opacityf / 255.0f
-    };
+    );
 
-    Color4F E = {
+    Color4F E(
         _endColor.r / 255.0f,
         _endColor.g / 255.0f,
         _endColor.b / 255.0f,
         _endOpacity * opacityf / 255.0f
-    };
+    );
 
     // (-1, -1)
     _squareColors[0].r = E.r + (S.r - E.r) * ((c + u.x + u.y) / (2.0f * c));
