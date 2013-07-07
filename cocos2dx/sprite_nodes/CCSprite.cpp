@@ -176,7 +176,7 @@ bool Sprite::initWithTexture(Texture2D *pTexture, const Rect& rect, bool rotated
         memset(&_quad, 0, sizeof(_quad));
         
         // Atlas: Color
-        Color4B tmpColor = { 255, 255, 255, 255 };
+        Color4B tmpColor(255, 255, 255, 255);
         _quad.bl.colors = tmpColor;
         _quad.br.colors = tmpColor;
         _quad.tl.colors = tmpColor;
@@ -902,7 +902,7 @@ bool Sprite::isFlipY(void) const
 
 void Sprite::updateColor(void)
 {
-    Color4B color4 = { _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity };
+    Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
     
     // special opacity for premultiplied textures
 	if (_opacityModifyRGB)

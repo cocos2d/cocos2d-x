@@ -185,16 +185,16 @@ void DemoBigFlower::onEnter()
     _emitter->setEndSpinVar(0);
     
     // color of particles
-    Color4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColor(0.5f, 0.5f, 0.5f, 1.0f);
     _emitter->setStartColor(startColor);
     
-    Color4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColorVar(0.5f, 0.5f, 0.5f, 1.0f);
     _emitter->setStartColorVar(startColorVar);
     
-    Color4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+    Color4F endColor(0.1f, 0.1f, 0.1f, 0.2f);
     _emitter->setEndColor(endColor);
     
-    Color4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};    
+    Color4F endColorVar(0.1f, 0.1f, 0.1f, 0.2f);    
     _emitter->setEndColorVar(endColorVar);
     
     // size, in pixels
@@ -270,16 +270,16 @@ void DemoRotFlower::onEnter()
     _emitter->setEndSpinVar(2000);
     
     // color of particles
-    Color4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColor(0.5f, 0.5f, 0.5f, 1.0f);
     _emitter->setStartColor(startColor);
     
-    Color4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColorVar(0.5f, 0.5f, 0.5f, 1.0f);
     _emitter->setStartColorVar(startColorVar);
     
-    Color4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+    Color4F endColor(0.1f, 0.1f, 0.1f, 0.2f);
     _emitter->setEndColor(endColor);
     
-    Color4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};    
+    Color4F endColorVar(0.1f, 0.1f, 0.1f, 0.2f);    
     _emitter->setEndColorVar(endColorVar);
 
     // size, in pixels
@@ -527,16 +527,16 @@ void DemoModernArt::onEnter()
     _emitter->setEmissionRate(_emitter->getTotalParticles()/_emitter->getLife());
     
     // color of particles
-    Color4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColor(0.5f, 0.5f, 0.5f, 1.0f);
     _emitter->setStartColor(startColor);
     
-    Color4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColorVar(0.5f, 0.5f, 0.5f, 1.0f);
     _emitter->setStartColorVar(startColorVar);
     
-    Color4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+    Color4F endColor(0.1f, 0.1f, 0.1f, 0.2f);
     _emitter->setEndColor(endColor);
     
-    Color4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};    
+    Color4F endColorVar(0.1f, 0.1f, 0.1f, 0.2f);    
     _emitter->setEndColorVar(endColorVar);
     
     // size, in pixels
@@ -686,16 +686,16 @@ void RadiusMode1::onEnter()
     _emitter->setEndSpinVar(0);
 
     // color of particles
-    Color4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColor(0.5f, 0.5f, 0.5f, 1.0f);
     _emitter->setStartColor(startColor);
 
-    Color4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColorVar(0.5f, 0.5f, 0.5f, 1.0f);
     _emitter->setStartColorVar(startColorVar);
 
-    Color4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+    Color4F endColor(0.1f, 0.1f, 0.1f, 0.2f);
     _emitter->setEndColor(endColor);
 
-    Color4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};    
+    Color4F endColorVar(0.1f, 0.1f, 0.1f, 0.2f);    
     _emitter->setEndColorVar(endColorVar);
 
     // size, in pixels
@@ -770,16 +770,16 @@ void RadiusMode2::onEnter()
     _emitter->setEndSpinVar(0);
 
     // color of particles
-    Color4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColor(0.5f, 0.5f, 0.5f, 1.0f);
     _emitter->setStartColor(startColor);
 
-    Color4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColorVar(0.5f, 0.5f, 0.5f, 1.0f);
     _emitter->setStartColorVar(startColorVar);
 
-        Color4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+    Color4F endColor(0.1f, 0.1f, 0.1f, 0.2f);
     _emitter->setEndColor(endColor);
 
-    Color4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};    
+    Color4F endColorVar(0.1f, 0.1f, 0.1f, 0.2f);    
     _emitter->setEndColorVar(endColorVar);
 
     // size, in pixels
@@ -854,16 +854,16 @@ void Issue704::onEnter()
     _emitter->setEndSpinVar(0);
 
     // color of particles
-    Color4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColor(0.5f, 0.5f, 0.5f, 1.0f);
     _emitter->setStartColor(startColor);
 
-    Color4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColorVar(0.5f, 0.5f, 0.5f, 1.0f);
     _emitter->setStartColorVar(startColorVar);
 
-        Color4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+    Color4F endColor(0.1f, 0.1f, 0.1f, 0.2f);
     _emitter->setEndColor(endColor);
 
-    Color4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};    
+    Color4F endColorVar(0.1f, 0.1f, 0.1f, 0.2f);    
     _emitter->setEndColorVar(endColorVar);
 
     // size, in pixels
@@ -1761,10 +1761,10 @@ void ReorderParticleSystems::onEnter()
         // color of particles
         float color[3] = {0,0,0};
         color[i] = 1;
-        Color4F startColor = {color[0], color[1], color[2], 1.0f};
+        Color4F startColor(color[0], color[1], color[2], 1.0f);
         particleSystem->setStartColor(startColor);
 
-        Color4F startColorVar = {0, 0, 0, 0};
+        Color4F startColorVar(0, 0, 0, 0);
         particleSystem->setStartColorVar(startColorVar);
 
         Color4F endColor = startColor;

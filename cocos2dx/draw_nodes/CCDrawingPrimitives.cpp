@@ -56,7 +56,7 @@ NS_CC_BEGIN
 static bool s_bInitialized = false;
 static GLProgram* s_pShader = NULL;
 static int s_nColorLocation = -1;
-static Color4F s_tColor = {1.0f,1.0f,1.0f,1.0f};
+static Color4F s_tColor(1.0f,1.0f,1.0f,1.0f);
 static int s_nPointSizeLocation = -1;
 static GLfloat s_fPointSize = 1.0f;
 
@@ -198,8 +198,8 @@ void ccDrawLine( const Point& origin, const Point& destination )
     lazy_init();
 
     Vertex2F vertices[2] = {
-        {origin.x, origin.y},
-        {destination.x, destination.y}
+        Vertex2F(origin.x, origin.y),
+        Vertex2F(destination.x, destination.y)
     };
 
     s_pShader->use();

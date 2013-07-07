@@ -324,16 +324,16 @@ void ParticlePerformTest1::doTest()
     particleSystem->setEmissionRate(particleSystem->getTotalParticles() /particleSystem->getLife());
 
     // color of particles
-    Color4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColor(0.5f, 0.5f, 0.5f, 1.0f);
     particleSystem->setStartColor(startColor);
 
-    Color4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColorVar(0.5f, 0.5f, 0.5f, 1.0f);
     particleSystem->setStartColorVar( startColorVar);
 
-    Color4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+    Color4F endColor(0.1f, 0.1f, 0.1f, 0.2f);
     particleSystem->setEndColor(endColor);
 
-    Color4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};    
+    Color4F endColorVar(0.1f, 0.1f, 0.1f, 0.2f);    
     particleSystem->setEndColorVar(endColorVar);
 
     // size, in pixels
@@ -394,16 +394,16 @@ void ParticlePerformTest2::doTest()
     particleSystem->setEmissionRate(particleSystem->getTotalParticles() / particleSystem->getLife());
 
     // color of particles
-    Color4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColor(0.5f, 0.5f, 0.5f, 1.0f);
     particleSystem->setStartColor(startColor);
 
-    Color4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColorVar(0.5f, 0.5f, 0.5f, 1.0f);
     particleSystem->setStartColorVar(startColorVar);
 
-    Color4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+    Color4F endColor(0.1f, 0.1f, 0.1f, 0.2f);
     particleSystem->setEndColor(endColor);
 
-    Color4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};    
+    Color4F endColorVar(0.1f, 0.1f, 0.1f, 0.2f);    
     particleSystem->setEndColorVar(endColorVar);
 
     // size, in pixels
@@ -464,16 +464,16 @@ void ParticlePerformTest3::doTest()
     particleSystem->setEmissionRate(particleSystem->getTotalParticles() / particleSystem->getLife());
 
     // color of particles
-    Color4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColor(0.5f, 0.5f, 0.5f, 1.0f);
     particleSystem->setStartColor(startColor);
 
-    Color4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColorVar(0.5f, 0.5f, 0.5f, 1.0f);
     particleSystem->setStartColorVar(startColorVar);
 
-    Color4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+    Color4F endColor(0.1f, 0.1f, 0.1f, 0.2f);
     particleSystem->setEndColor(endColor);
 
-    Color4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};    
+    Color4F endColorVar(0.1f, 0.1f, 0.1f, 0.2f);    
     particleSystem->setEndColorVar(endColorVar);
 
     // size, in pixels
@@ -534,16 +534,16 @@ void ParticlePerformTest4::doTest()
     particleSystem->setEmissionRate(particleSystem->getTotalParticles() / particleSystem->getLife());
 
     // color of particles
-    Color4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColor(0.5f, 0.5f, 0.5f, 1.0f);
     particleSystem->setStartColor(startColor);
 
-    Color4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColorVar(0.5f, 0.5f, 0.5f, 1.0f);
     particleSystem->setStartColorVar(startColorVar);
 
-    Color4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+    Color4F endColor(0.1f, 0.1f, 0.1f, 0.2f);
     particleSystem->setEndColor(endColor);
 
-    Color4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};    
+    Color4F endColorVar(0.1f, 0.1f, 0.1f, 0.2f);   
     particleSystem->setEndColorVar(endColorVar);
 
     // size, in pixels
