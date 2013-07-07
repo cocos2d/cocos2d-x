@@ -40,10 +40,10 @@ NS_CC_BEGIN
 class CC_DLL Waves3D : public Grid3DAction
 {
 public:
-    inline float getAmplitude(void) { return _amplitude; }
+    inline float getAmplitude(void) const { return _amplitude; }
     inline void setAmplitude(float fAmplitude) { _amplitude = fAmplitude; }
 
-    inline float getAmplitudeRate(void) { return _amplitudeRate; }
+    inline float getAmplitudeRate(void) const { return _amplitudeRate; }
     inline void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
 
     /** initializes an action with duration, grid size, waves and amplitude */
@@ -100,13 +100,13 @@ class CC_DLL Lens3D : public Grid3DAction
 {
 public:
     /** Get lens center position */
-    inline float getLensEffect(void) { return _lensEffect; }
+    inline float getLensEffect(void) const { return _lensEffect; }
     /** Set lens center position */
     inline void setLensEffect(float fLensEffect) { _lensEffect = fLensEffect; }
     /** Set whether lens is concave */
     inline void setConcave(bool bConcave) { _concave = bConcave; }
   
-    inline const Point& getPosition(void) { return _position; }
+    inline const Point& getPosition(void) const { return _position; }
     void setPosition(const Point& position);
 
     /** initializes the action with center position, radius, a grid size and duration */
@@ -138,14 +138,14 @@ class CC_DLL Ripple3D : public Grid3DAction
 {
 public:
     /** get center position */
-    inline const Point& getPosition(void) { return _position; }
+    inline const Point& getPosition(void) const { return _position; }
     /** set center position */
     void setPosition(const Point& position);
 
-    inline float getAmplitude(void) { return _amplitude; }
+    inline float getAmplitude(void) const { return _amplitude; }
     inline void setAmplitude(float fAmplitude) { _amplitude = fAmplitude; }
 
-    inline float getAmplitudeRate(void) { return _amplitudeRate; }
+    inline float getAmplitudeRate(void) const { return _amplitudeRate; }
     inline void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
 
     /** initializes the action with radius, number of waves, amplitude, a grid size and duration */
@@ -194,10 +194,10 @@ protected:
 class CC_DLL Liquid : public Grid3DAction
 {
 public:
-    inline float getAmplitude(void) { return _amplitude; }
+    inline float getAmplitude(void) const { return _amplitude; }
     inline void setAmplitude(float fAmplitude) { _amplitude = fAmplitude; }
 
-    inline float getAmplitudeRate(void) { return _amplitudeRate; }
+    inline float getAmplitudeRate(void) const { return _amplitudeRate; }
     inline void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
 
     /** initializes the action with amplitude, a grid and duration */
@@ -222,10 +222,10 @@ protected:
 class CC_DLL Waves : public Grid3DAction
 {
 public:
-    inline float getAmplitude(void) { return _amplitude; }
+    inline float getAmplitude(void) const { return _amplitude; }
     inline void setAmplitude(float fAmplitude) { _amplitude = fAmplitude; }
 
-    inline float getAmplitudeRate(void) { return _amplitudeRate; }
+    inline float getAmplitudeRate(void) const { return _amplitudeRate; }
     inline void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
 
     /** initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration */
@@ -254,14 +254,14 @@ class CC_DLL Twirl : public Grid3DAction
 {
 public:
     /** get twirl center */
-    inline const Point& getPosition(void) { return _position; }
+    inline const Point& getPosition(void) const { return _position; }
     /** set twirl center */
     void setPosition(const Point& position);
 
-    inline float getAmplitude(void) { return _amplitude; }
+    inline float getAmplitude(void) const { return _amplitude; }
     inline void setAmplitude(float fAmplitude) { _amplitude = fAmplitude; }
 
-    inline float getAmplitudeRate(void) { return _amplitudeRate; }
+    inline float getAmplitudeRate(void) const { return _amplitudeRate; }
     inline void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
 
     /** initializes the action with center position, number of twirls, amplitude, a grid size and duration */

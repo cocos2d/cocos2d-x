@@ -101,7 +101,7 @@ PointArray::~PointArray()
 
 PointArray::PointArray() :_controlPoints(NULL){}
 
-const std::vector<Point*>* PointArray::getControlPoints()
+const std::vector<Point*>* PointArray::getControlPoints() const
 {
     return _controlPoints;
 }

@@ -59,7 +59,7 @@ class CC_DLL LabelTTF : public Sprite, public LabelProtocol
 public:
     LabelTTF();
     virtual ~LabelTTF();
-    const char* description();    
+    const char* description() const;
     
     /** creates a LabelTTF with a font name and font size in points
      @since v2.0.1

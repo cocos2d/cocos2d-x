@@ -458,7 +458,7 @@ void Director::purgeCachedData(void)
     FileUtils::sharedFileUtils()->purgeCachedEntries();
 }
 
-float Director::getZEye(void)
+float Director::getZEye(void) const
 {
     return (_winSizeInPoints.height / 1.1566f);
 }
@@ -539,17 +539,17 @@ Point Director::convertToUI(const Point& glPoint)
 	return ccp(glSize.width*(clipCoord.x*0.5 + 0.5), glSize.height*(-clipCoord.y*0.5 + 0.5));
 }
 
-Size Director::getWinSize(void)
+const Size& Director::getWinSize(void) const
 {
     return _winSizeInPoints;
 }
 
-Size Director::getWinSizeInPixels()
+Size Director::getWinSizeInPixels() const
 {
     return CCSizeMake(_winSizeInPoints.width * _contentScaleFactor, _winSizeInPoints.height * _contentScaleFactor);
 }
 
-Size Director::getVisibleSize()
+Size Director::getVisibleSize() const
 {
     if (_openGLView)
     {
@@ -561,7 +561,7 @@ Size Director::getVisibleSize()
     }
 }
 
-Point Director::getVisibleOrigin()
+Point Director::getVisibleOrigin() const
 {
     if (_openGLView)
     {
@@ -917,7 +917,7 @@ void Director::createStatsLabel()
     _FPSLabel->setPosition(CC_DIRECTOR_STATS_POSITION);
 }
 
-float Director::getContentScaleFactor(void)
+float Director::getContentScaleFactor(void) const
 {
     return _contentScaleFactor;
 }
