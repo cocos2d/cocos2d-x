@@ -109,7 +109,7 @@ ProfilingTimer::~ProfilingTimer(void)
     
 }
 
-const char* ProfilingTimer::description()
+const char* ProfilingTimer::description() const
 {
     static char s_szDesciption[256] = {0};
     sprintf(s_szDesciption, "%s: avg time, %fms", _nameStr.c_str(), _averageTime);

@@ -149,7 +149,7 @@ CCBMFontConfiguration::~CCBMFontConfiguration()
     CC_SAFE_DELETE(_characterSet);
 }
 
-const char* CCBMFontConfiguration::description(void)
+const char* CCBMFontConfiguration::description(void) const
 {
     return String::createWithFormat(
         "<CCBMFontConfiguration = " CC_FORMAT_PRINTF_SIZE_T " | Glphys:%d Kernings:%d | Image = %s>",

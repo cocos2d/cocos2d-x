@@ -851,7 +851,7 @@ void ParticleSystem::setBlendAdditive(bool additive)
     }
 }
 
-bool ParticleSystem::isBlendAdditive()
+bool ParticleSystem::isBlendAdditive() const
 {
     return( _blendFunc.src == GL_SRC_ALPHA && _blendFunc.dst == GL_ONE);
 }
@@ -863,7 +863,7 @@ void ParticleSystem::setTangentialAccel(float t)
     modeA.tangentialAccel = t;
 }
 
-float ParticleSystem::getTangentialAccel()
+float ParticleSystem::getTangentialAccel() const
 {
     CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     return modeA.tangentialAccel;
@@ -875,7 +875,7 @@ void ParticleSystem::setTangentialAccelVar(float t)
     modeA.tangentialAccelVar = t;
 }
 
-float ParticleSystem::getTangentialAccelVar()
+float ParticleSystem::getTangentialAccelVar() const
 {
     CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     return modeA.tangentialAccelVar;
@@ -887,7 +887,7 @@ void ParticleSystem::setRadialAccel(float t)
     modeA.radialAccel = t;
 }
 
-float ParticleSystem::getRadialAccel()
+float ParticleSystem::getRadialAccel() const
 {
     CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     return modeA.radialAccel;
@@ -899,7 +899,7 @@ void ParticleSystem::setRadialAccelVar(float t)
     modeA.radialAccelVar = t;
 }
 
-float ParticleSystem::getRadialAccelVar()
+float ParticleSystem::getRadialAccelVar() const
 {
     CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     return modeA.radialAccelVar;
@@ -911,7 +911,7 @@ void ParticleSystem::setRotationIsDir(bool t)
     modeA.rotationIsDir = t;
 }
 
-bool ParticleSystem::getRotationIsDir()
+bool ParticleSystem::getRotationIsDir() const
 {
     CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     return modeA.rotationIsDir;
@@ -935,7 +935,7 @@ void ParticleSystem::setSpeed(float speed)
     modeA.speed = speed;
 }
 
-float ParticleSystem::getSpeed()
+float ParticleSystem::getSpeed() const
 {
     CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     return modeA.speed;
@@ -947,7 +947,7 @@ void ParticleSystem::setSpeedVar(float speedVar)
     modeA.speedVar = speedVar;
 }
 
-float ParticleSystem::getSpeedVar()
+float ParticleSystem::getSpeedVar() const
 {
     CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     return modeA.speedVar;
@@ -960,7 +960,7 @@ void ParticleSystem::setStartRadius(float startRadius)
     modeB.startRadius = startRadius;
 }
 
-float ParticleSystem::getStartRadius()
+float ParticleSystem::getStartRadius() const
 {
     CCAssert( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
     return modeB.startRadius;
@@ -972,7 +972,7 @@ void ParticleSystem::setStartRadiusVar(float startRadiusVar)
     modeB.startRadiusVar = startRadiusVar;
 }
 
-float ParticleSystem::getStartRadiusVar()
+float ParticleSystem::getStartRadiusVar() const
 {
     CCAssert( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
     return modeB.startRadiusVar;
@@ -984,7 +984,7 @@ void ParticleSystem::setEndRadius(float endRadius)
     modeB.endRadius = endRadius;
 }
 
-float ParticleSystem::getEndRadius()
+float ParticleSystem::getEndRadius() const
 {
     CCAssert( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
     return modeB.endRadius;
@@ -996,7 +996,7 @@ void ParticleSystem::setEndRadiusVar(float endRadiusVar)
     modeB.endRadiusVar = endRadiusVar;
 }
 
-float ParticleSystem::getEndRadiusVar()
+float ParticleSystem::getEndRadiusVar() const
 {
     CCAssert( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
     return modeB.endRadiusVar;
@@ -1008,7 +1008,7 @@ void ParticleSystem::setRotatePerSecond(float degrees)
     modeB.rotatePerSecond = degrees;
 }
 
-float ParticleSystem::getRotatePerSecond()
+float ParticleSystem::getRotatePerSecond() const
 {
     CCAssert( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
     return modeB.rotatePerSecond;
@@ -1020,13 +1020,13 @@ void ParticleSystem::setRotatePerSecondVar(float degrees)
     modeB.rotatePerSecondVar = degrees;
 }
 
-float ParticleSystem::getRotatePerSecondVar()
+float ParticleSystem::getRotatePerSecondVar() const
 {
     CCAssert( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
     return modeB.rotatePerSecondVar;
 }
 
-bool ParticleSystem::isActive()
+bool ParticleSystem::isActive() const
 {
     return _isActive;
 }
@@ -1279,7 +1279,7 @@ void ParticleSystem::setPositionType(tPositionType var)
     _positionType = var;
 }
 
-bool ParticleSystem::isAutoRemoveOnFinish()
+bool ParticleSystem::isAutoRemoveOnFinish() const
 {
     return _isAutoRemoveOnFinish;
 }
