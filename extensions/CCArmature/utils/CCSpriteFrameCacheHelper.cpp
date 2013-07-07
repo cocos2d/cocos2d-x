@@ -157,17 +157,22 @@ const char *CCSpriteFrameCacheHelper::getDisplayImagePath(const char *displayNam
 }
 
 
-CCTextureAtlas *CCSpriteFrameCacheHelper::getTextureAtlas(const char *displayName)
+CCTextureAtlas *CCSpriteFrameCacheHelper::getTextureAtlasWithImageName(const char *imageName)
 {
-    const char *textureName = getDisplayImagePath(displayName);
-    CCTextureAtlas *atlas = (CCTextureAtlas *)m_pDisplay2TextureAtlas->objectForKey(textureName);
-    if (atlas == NULL)
-    {
-        atlas = CCTextureAtlas::createWithTexture(CCTextureCache::sharedTextureCache()->addImage(textureName), 4);
-        m_pDisplay2TextureAtlas->setObject(atlas, textureName);
-    }
+	CCTextureAtlas *atlas = (CCTextureAtlas*)m_pDisplay2TextureAtlas->objectForKey(imageName);
+	if (atlas == NULL)
+	{
+		atlas = CCTextureAtlas::createWithTexture(CCTextureCache::sharedTextureCache()->addImage(imageName), 4);
+		m_pDisplay2TextureAtlas->setObject(atlas, imageName);
+	}
 
-    return atlas;
+	return atlas;
+}
+
+CCTextureAtlas *CCSpriteFrameCacheHelper::getTextureAtlasWithDisplayName(const char *displayName)
+{
+	const char *textureName = getDisplayImagePath(displayName);
+	return getTextureAtlasWithImageName(textureName);
 }
 
 CCSpriteFrameCacheHelper::CCSpriteFrameCacheHelper()

@@ -57,6 +57,18 @@ CCSkin *CCSkin::createWithSpriteFrameName(const char *pszSpriteFrameName)
     return NULL;
 }
 
+CCSkin *CCSkin::create(const char *pszFileName)
+{
+	CCSkin *skin = new CCSkin();
+	if(skin && skin->initWithFile(pszFileName))
+	{
+		skin->autorelease();
+		return skin;
+	}
+	CC_SAFE_DELETE(skin);
+	return NULL;
+}
+
 CCSkin::CCSkin()
     : m_pBone(NULL)
 {

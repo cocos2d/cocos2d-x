@@ -122,6 +122,19 @@ void CCBaseData::subtract(CCBaseData *from, CCBaseData *to)
 	}
 }
 
+void CCBaseData::setColor(ccColor4B &color)
+{
+	r = color.r;
+	g = color.g;
+	b = color.b;
+	a = color.a;
+}
+
+ccColor4B CCBaseData::getColor()
+{
+	return ccc4(r, g, b, a);
+}
+
 
 const char *CCDisplayData::changeDisplayToTexture(const char *displayName)
 {
@@ -242,13 +255,12 @@ CCArmatureData::~CCArmatureData()
 
 bool CCArmatureData::init()
 {
-    return boneList.init();
+    return true;
 }
 
 void CCArmatureData::addBoneData(CCBoneData *boneData)
 {
     boneDataDic.setObject(boneData, boneData->name);
-    boneList.addObject(boneData);
 }
 
 CCBoneData *CCArmatureData::getBoneData(const char *boneName)
@@ -385,6 +397,14 @@ bool CCContourData::init()
 {
     return vertexList.init();
 }
+void CCContourData::addVertex(CCPoint *vertex)
+{
+	CCContourVertex2 *vertex2 = new CCContourVertex2(vertex->x, vertex->y);
+	vertex2->autorelease();
+
+	vertexList.addObject(vertex2);
+}
+
 
 CCTextureData::CCTextureData()
     : height(0.0f)
