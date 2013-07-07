@@ -62,6 +62,7 @@ static std::mutex g_rwMutex;
 static bool vmLock = false;
 static jsval frame = JSVAL_NULL, script = JSVAL_NULL;
 static int clientSocket = -1;
+static JSObject* s_modules = NULL;
 
 // server entry point for the bg thread
 static void serverEntryPoint(void);
@@ -79,6 +80,16 @@ static std::map<std::string, JSScript*> filename_script;
 static std::map<int,int> ports_sockets;
 // name ~> globals
 static std::map<std::string, js::RootedObject*> globals;
+
+static std::string RemoveFileExt(const std::string& filePath) {
+    size_t pos = filePath.rfind('.');
+    if (0 < pos) {
+        return filePath.substr(0, pos);
+    }
+    else {
+        return filePath;
+    }
+}
 
 static void executeJSFunctionFromReservedSpot(JSContext *cx, JSObject *obj,
                                               jsval &dataVal, jsval &retval) {
@@ -269,6 +280,52 @@ JSBool JSB_core_restartVM(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_TRUE;
 };
 
+JSBool JSB_loadModule(JSContext* cx, unsigned argc, JS::Value* vp)
+{
+    if( argc == 1 )
+    {
+        //read argument
+        jsval* argv = JS_ARGV(cx, vp);
+        JSString* str = JS_ValueToString(cx, argv[0]);
+        JSStringWrapper path(str);
+        string moduleName = RemoveFileExt(path);
+        
+        JSObject* modules = s_modules;
+        
+        jsval vModule;
+        JS_GetProperty(cx, modules, moduleName.c_str(), &vModule);
+        
+        if( !JSVAL_IS_PRIMITIVE(vModule) )
+        {
+            JSObject *module = JSVAL_TO_OBJECT(vModule);
+            jsval vExports;
+            JS_GetProperty(cx, module, "exports", &vExports);
+            JS_SET_RVAL(cx, vp, vExports);
+        }
+        else
+        {
+            JSObject *module = JS_NewObject(cx, NULL, NULL, NULL);
+            
+            JSObject *exports = JS_NewObject(cx, NULL, NULL, NULL);
+            jsval vExports = OBJECT_TO_JSVAL(exports);
+            JS_SetProperty(cx, module, "exports", &vExports);
+            
+            ScriptingCore::getInstance()->runScript(path, module, cx);
+            vModule = OBJECT_TO_JSVAL(module);
+            JS_SetProperty(cx, modules, moduleName.c_str(), &vModule);
+            
+            JS_SET_RVAL(cx, vp, vExports);
+        }
+        
+        return JS_TRUE;
+    }
+    else
+    {
+        CCLog("loadModule: wrong argument.");
+        return JS_FALSE;
+    }
+}
+
 void registerDefaultClasses(JSContext* cx, JSObject* global) {
     // first, try to get the ns
     jsval nsval;
@@ -305,6 +362,13 @@ void registerDefaultClasses(JSContext* cx, JSObject* global) {
     JS_DefineFunction(cx, global, "__getOS", JSBCore_os, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "__getVersion", JSBCore_version, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "__restartVM", JSB_core_restartVM, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+    
+    // loadModule
+    s_modules = JS_NewObject(cx, NULL, NULL, NULL);
+    jsval vModules = OBJECT_TO_JSVAL(s_modules);
+    JS_SetProperty(cx, global, "modules", &vModules);
+    
+    JS_DefineFunction(cx, global, "loadModule", JSB_loadModule, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 }
 
 static void sc_finalize(JSFreeOp *freeOp, JSObject *obj) {
@@ -456,16 +520,6 @@ void ScriptingCore::createGlobalContext() {
     for (std::vector<sc_register_sth>::iterator it = registrationList.begin(); it != registrationList.end(); it++) {
         sc_register_sth callback = *it;
         callback(this->cx_, this->global_);
-    }
-}
-
-static std::string RemoveFileExt(const std::string& filePath) {
-    size_t pos = filePath.rfind('.');
-    if (0 < pos) {
-        return filePath.substr(0, pos);
-    }
-    else {
-        return filePath;
     }
 }
 
