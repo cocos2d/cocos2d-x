@@ -143,7 +143,7 @@ void CCDisplayFactory::createSpriteDisplay(CCBone *bone, CCDecorativeDisplay *de
         skin = CCSkin::createWithSpriteFrameName((textureName + ".png").c_str());
     }
 
-    CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTextureAtlas((textureName + ".png").c_str());
+    CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTextureAtlasWithDisplayName((textureName + ".png").c_str());
     skin->setTextureAtlas(atlas);
 
     CCTextureData *textureData = CCArmatureDataManager::sharedArmatureDataManager()->getTextureData(textureName.c_str());

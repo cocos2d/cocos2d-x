@@ -81,6 +81,9 @@ public:
     * @param  to     to CCBaseData
     */
     virtual void subtract(CCBaseData *_from, CCBaseData *_to);
+
+	virtual void setColor(ccColor4B &color);
+	virtual ccColor4B getColor();
 public:
 	float x;					//! position x attribute
 	float y;					//! position y attribute
@@ -268,7 +271,6 @@ public:
 public:
     std::string name;
     CCDictionary boneDataDic;
-    CCArray boneList;
 	float dataVersion;
 };
 
@@ -420,6 +422,7 @@ public:
     ~CCContourData(void);
 
     virtual bool init();
+	virtual void addVertex(CCPoint *vertex);
 public:
     CCArray vertexList;	//! Save contour vertex info, vertex saved in a CCPoint
 };

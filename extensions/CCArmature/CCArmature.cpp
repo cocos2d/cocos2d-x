@@ -413,6 +413,15 @@ void CCArmature::updateOffsetPoint()
 	}
 }
 
+void CCArmature::setAnimation(CCArmatureAnimation *animation)
+{
+	m_pAnimation = animation;
+}
+
+CCArmatureAnimation *CCArmature::getAnimation()
+{
+	return m_pAnimation;
+}
 
 void CCArmature::update(float dt)
 {

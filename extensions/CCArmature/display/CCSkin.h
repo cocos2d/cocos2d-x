@@ -35,6 +35,7 @@ class CCSkin : public CCSprite
 public:
     static CCSkin *create();
     static CCSkin *createWithSpriteFrameName(const char *pszSpriteFrameName);
+	static CCSkin *create(const char *pszFileName);
 public:
     CCSkin();
 

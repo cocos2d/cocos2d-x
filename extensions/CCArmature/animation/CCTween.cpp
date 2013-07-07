@@ -104,7 +104,7 @@ void CCTween::play(CCMovementBoneData *movementBoneData, int durationTo, int dur
     m_pCurrentKeyFrame = NULL;
 
     m_iTotalDuration = 0;
-    betweenDuration = 0;
+    m_BetweenDuration = 0;
     m_iToIndex = 0;
 
 	bool difMovement = movementBoneData != m_pMovementBoneData;
@@ -200,7 +200,7 @@ void CCTween::updateHandler()
                 m_iNextFrameIndex = m_iDurationTween;
                 m_fCurrentFrame = m_fCurrentPercent * m_iNextFrameIndex;
                 m_iTotalDuration = 0;
-                betweenDuration = 0;
+                m_BetweenDuration = 0;
                 m_iToIndex = 0;
                 break;
             }
@@ -227,7 +227,7 @@ void CCTween::updateHandler()
             }
 
             m_iTotalDuration = 0;
-            betweenDuration = 0;
+            m_BetweenDuration = 0;
             m_iToIndex = 0;
         }
         break;
@@ -243,7 +243,7 @@ void CCTween::updateHandler()
             m_fCurrentFrame = fmodf(m_fCurrentFrame, m_iNextFrameIndex);
 
             m_iTotalDuration = 0;
-            betweenDuration = 0;
+            m_BetweenDuration = 0;
             m_iToIndex = 0;
         }
         break;
@@ -375,7 +375,7 @@ float CCTween::updateFrameData(float currentPrecent, bool activeFrame)
     bool isListEnd;
 
     //! If play to current frame's front or back, then find current frame again
-    if (playedTime >= m_iTotalDuration || playedTime < m_iTotalDuration - betweenDuration)
+    if (playedTime >= m_iTotalDuration || playedTime < m_iTotalDuration - m_BetweenDuration)
     {
         /*
          *  Get frame length, if m_iToIndex >= _length, then set m_iToIndex to 0, start anew.
@@ -384,8 +384,8 @@ float CCTween::updateFrameData(float currentPrecent, bool activeFrame)
         int length = m_pMovementBoneData->frameList.count();
         do
         {
-            betweenDuration = m_pMovementBoneData->getFrameData(m_iToIndex)->duration;
-            m_iTotalDuration += betweenDuration;
+            m_BetweenDuration = m_pMovementBoneData->getFrameData(m_iToIndex)->duration;
+            m_iTotalDuration += m_BetweenDuration;
             m_iFromIndex = m_iToIndex;
 
             if (++m_iToIndex >= length)
@@ -413,7 +413,7 @@ float CCTween::updateFrameData(float currentPrecent, bool activeFrame)
         setBetween(from, to);
 
     }
-    currentPrecent = 1 - (m_iTotalDuration - playedTime) / (float)betweenDuration;
+    currentPrecent = 1 - (m_iTotalDuration - playedTime) / (float)m_BetweenDuration;
 
 
     /*

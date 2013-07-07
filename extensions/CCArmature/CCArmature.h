@@ -123,6 +123,8 @@ public:
 	inline void setBlendFunc(ccBlendFunc blendFunc) { m_sBlendFunc = blendFunc; }
 	inline ccBlendFunc getBlendFunc(void) { return m_sBlendFunc; }
 
+	virtual void setAnimation(CCArmatureAnimation *animation);
+	virtual CCArmatureAnimation *getAnimation();
 protected:
     
     /*
@@ -130,8 +132,6 @@ protected:
      */
 	CCBone *createBone(const char *boneName );
     
-
-	CC_SYNTHESIZE_RETAIN(CCArmatureAnimation *, m_pAnimation, Animation);
     
     CC_SYNTHESIZE(CCArmatureData *, m_pArmatureData, ArmatureData);
 
@@ -152,6 +152,8 @@ protected:
 	ccBlendFunc m_sBlendFunc;                    //! It's required for CCTextureProtocol inheritance
 
 	CCPoint m_pOffsetPoint;
+
+	CCArmatureAnimation *m_pAnimation;
 };
 
 NS_CC_EXT_END
