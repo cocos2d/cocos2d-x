@@ -2988,13 +2988,13 @@ JSBool js_cocos2dx_CCDrawNode_drawPolygon(JSContext *cx, uint32_t argc, jsval *v
         JSB_PRECONDITION2( (argArray && JS_IsArrayObject(cx, argArray)) , cx, JS_FALSE, "Vertex should be anArray object");
 
         // Color 4F
-        ok &= jsval_to_Color4F(cx, *argvp++, &argFillColor);
+        ok &= jsval_to_cccolor4f(cx, *argvp++, &argFillColor);
 
         // Width
         ok &= JS_ValueToNumber( cx, *argvp++, &argWidth );
 
         // Color Border (4F)
-        ok &= jsval_to_Color4F(cx, *argvp++, &argBorderColor);
+        ok &= jsval_to_cccolor4f(cx, *argvp++, &argBorderColor);
 
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error parsing arguments");
 
