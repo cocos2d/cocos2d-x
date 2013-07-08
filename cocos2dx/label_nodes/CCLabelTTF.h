@@ -59,7 +59,7 @@ class CC_DLL LabelTTF : public Sprite, public LabelProtocol
 public:
     LabelTTF();
     virtual ~LabelTTF();
-    const char* description();    
+    const char* description() const;
     
     /** creates a LabelTTF with a font name and font size in points
      @since v2.0.1
@@ -99,10 +99,10 @@ public:
     bool initWithStringAndTextDefinition(const char *string, FontDefinition &textDefinition);
     
     /** set the text definition used by this label */
-    void setTextDefinition(FontDefinition *theDefinition);
+    void setTextDefinition(const FontDefinition& theDefinition);
     
     /** get the text definition used by this label */
-    FontDefinition * getTextDefinition();
+    FontDefinition getTextDefinition();
     
     
     
@@ -156,7 +156,7 @@ private:
 protected:
     
     /** set the text definition for this label */
-    void              _updateWithTextDefinition(FontDefinition & textDefinition, bool mustUpdateTexture = true);
+    void _updateWithTextDefinition(const FontDefinition& textDefinition, bool mustUpdateTexture = true);
     FontDefinition    _prepareTextDefinition(bool adjustForResolution = false);
     
     /** Dimensions of the label in Points */

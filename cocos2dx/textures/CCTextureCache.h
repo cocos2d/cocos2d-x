@@ -62,7 +62,7 @@ public:
     TextureCache();
     virtual ~TextureCache();
 
-    const char* description(void);
+    const char* description(void) const;
 
     Dictionary* snapshotTextures();
 

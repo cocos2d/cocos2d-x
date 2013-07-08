@@ -126,7 +126,7 @@ public://@public
 public:
     CCBMFontConfiguration();
     virtual ~CCBMFontConfiguration();
-    const char * description();
+    const char * description() const;
 
     /** allocates a CCBMFontConfiguration with a FNT file */
     static CCBMFontConfiguration * create(const char *FNTfile);

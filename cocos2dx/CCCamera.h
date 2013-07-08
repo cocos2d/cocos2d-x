@@ -84,12 +84,12 @@ public:
 
     void init(void);
 
-    const char* description(void);
+    const char* description(void) const;
 
     /** sets the dirty value */
     inline void setDirty(bool bValue) { _dirty = bValue; }
     /** get the dirty value */
-    inline bool isDirty(void) { return _dirty; }
+    inline bool isDirty(void) const { return _dirty; }
 
     /** sets the camera in the default position */
     void restore(void);
@@ -103,14 +103,15 @@ public:
     void setUpXYZ(float fUpX, float fUpY, float fUpZ);
 
     /** get the eye vector values in points */
-    void getEyeXYZ(float *pEyeX, float *pEyeY, float *pEyeZ);
+    void getEyeXYZ(float *pEyeX, float *pEyeY, float *pEyeZ) const;
     /** get the center vector values int points */
-    void getCenterXYZ(float *pCenterX, float *pCenterY, float *pCenterZ);
+    void getCenterXYZ(float *pCenterX, float *pCenterY, float *pCenterZ) const;
     /** get the up vector values */
-    void getUpXYZ(float *pUpX, float *pUpY, float *pUpZ);
+    void getUpXYZ(float *pUpX, float *pUpY, float *pUpZ) const;
 public:
     /** returns the Z eye */
     static float getZEye();
+    
 
 private:
     DISALLOW_COPY_AND_ASSIGN(Camera);

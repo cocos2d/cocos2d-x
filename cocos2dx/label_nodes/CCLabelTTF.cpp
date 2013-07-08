@@ -188,7 +188,7 @@ const char* LabelTTF::getString(void) const
     return _string.c_str();
 }
 
-const char* LabelTTF::description()
+const char* LabelTTF::description() const
 {
     return String::createWithFormat("<LabelTTF | FontName = %s, FontSize = %.1f>", _fontName->c_str(), _fontSize)->getCString();
 }
@@ -301,7 +301,7 @@ bool LabelTTF::updateTexture()
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
         FontDefinition texDef = _prepareTextDefinition(true);
-        tex->initWithString( _string.c_str(), &texDef );
+        tex->initWithString( _string.c_str(), texDef );
     
     #else
     
@@ -458,22 +458,17 @@ void LabelTTF::setFontFillColor(const Color3B &tintColor, bool updateTexture)
     #endif
 }
 
-void LabelTTF::setTextDefinition(FontDefinition *theDefinition)
+void LabelTTF::setTextDefinition(const FontDefinition& theDefinition)
 {
-    if (theDefinition)
-    {
-        _updateWithTextDefinition(*theDefinition, true);
-    }
+    _updateWithTextDefinition(theDefinition, true);
 }
 
-FontDefinition *LabelTTF::getTextDefinition()
+FontDefinition LabelTTF::getTextDefinition()
 {
-    FontDefinition *tempDefinition = new FontDefinition;
-    *tempDefinition = _prepareTextDefinition(false);
-    return tempDefinition;
+    return _prepareTextDefinition(false);
 }
 
-void LabelTTF::_updateWithTextDefinition(FontDefinition & textDefinition, bool mustUpdateTexture)
+void LabelTTF::_updateWithTextDefinition(const FontDefinition& textDefinition, bool mustUpdateTexture)
 {
     _dimensions = CCSizeMake(textDefinition._dimensions.width, textDefinition._dimensions.height);
     _alignment  = textDefinition._alignment;

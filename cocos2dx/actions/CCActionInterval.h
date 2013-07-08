@@ -68,7 +68,7 @@ public:
     bool initWithDuration(float d);
 
     /** returns true if the action has finished */
-    virtual bool isDone(void);
+    virtual bool isDone(void) const;
 
     virtual void step(float dt);
     virtual void startWithTarget(Node *pTarget);
@@ -147,7 +147,7 @@ public:
     virtual void startWithTarget(Node *pTarget);
     virtual void stop(void);
     virtual void update(float dt);
-    virtual bool isDone(void);
+    virtual bool isDone(void) const;
 
     inline void setInnerAction(FiniteTimeAction *pAction)
     {
@@ -200,7 +200,7 @@ public:
 
     virtual void startWithTarget(Node* pTarget);
     virtual void step(float dt);
-    virtual bool isDone(void);
+    virtual bool isDone(void) const;
 
     inline void setInnerAction(ActionInterval *pAction)
     {
@@ -843,7 +843,7 @@ protected:
     std::vector<float>* _splitTimes;
     int                _nextFrame;
     SpriteFrame*  _origFrame;
-       unsigned int    _executedLoops;
+    unsigned int    _executedLoops;
 };
 
 /** Overrides the target of an action so that it always runs on the target
