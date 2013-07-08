@@ -91,14 +91,14 @@ class CC_DLL TMXLayerInfo : public Object
     CC_PROPERTY(Dictionary*, _properties, Properties);
 public:
     std::string         _name;
-    Size              _layerSize;
-    unsigned int        *_tiles;
+    Size                _layerSize;
+    unsigned int       *_tiles;
     bool                _visible;
     unsigned char       _opacity;
     bool                _ownTiles;
     unsigned int        _minGID;
     unsigned int        _maxGID;
-    Point             _offset;
+    Point               _offset;
 public:
     TMXLayerInfo();
     virtual ~TMXLayerInfo();
