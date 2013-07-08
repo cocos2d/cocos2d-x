@@ -562,10 +562,19 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(tinyxml2::XMLElement 
         CCFrameData *frameData = decodeFrame( frameXML, parentFrameXML, boneData);
         movBoneData->addFrameData(frameData);
 
+		frameData->frameID = totalDuration;
         totalDuration += frameData->duration;
+		movBoneData->duration = totalDuration;
 
         frameXML = frameXML->NextSiblingElement(FRAME);
     }
+
+	
+	//
+	CCFrameData *frameData = CCFrameData::create();
+	frameData->copy((CCFrameData*)movBoneData->frameList.lastObject());
+	frameData->frameID = movBoneData->duration;
+	movBoneData->addFrameData(frameData);
 
 
     return movBoneData;
@@ -1049,11 +1058,21 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(cs::CSJsonDictionary 
     {
         cs::CSJsonDictionary *dic = json.getSubItemFromArray(FRAME_DATA, i);
         CCFrameData *frameData = decodeFrame(*dic);
-        movementBoneData->addFrameData(frameData);
-        //movementBoneData->duration += frameData->duration;
+
+		movementBoneData->addFrameData(frameData);
+
+		frameData->frameID = movementBoneData->duration;
+		movementBoneData->duration += frameData->duration;
 
         delete dic;
     }
+
+	//
+	CCFrameData *frameData = CCFrameData::create();
+	frameData->copy((CCFrameData*)movementBoneData->frameList.lastObject());
+	movementBoneData->addFrameData(frameData);
+
+	frameData->frameID = movementBoneData->duration;
 
     return movementBoneData;
 }
