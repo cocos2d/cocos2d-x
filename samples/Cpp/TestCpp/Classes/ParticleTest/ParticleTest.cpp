@@ -640,7 +640,7 @@ void RadiusMode1::onEnter()
 {
     ParticleDemo::onEnter();
 
-	_color->setColor(Color3B::black);
+	_color->setColor(Color3B::BLACK);
     removeChild(_background, true);
     _background = NULL;
 
@@ -724,7 +724,7 @@ void RadiusMode2::onEnter()
 {
     ParticleDemo::onEnter();
 
-    _color->setColor(Color3B::black);
+    _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
     _background = NULL;
 
@@ -808,7 +808,7 @@ void Issue704::onEnter()
 {
     ParticleDemo::onEnter();
 
-    _color->setColor(Color3B::black);
+    _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
     _background = NULL;
 
@@ -900,7 +900,7 @@ void Issue870::onEnter()
 {
     ParticleDemo::onEnter();
 
-    _color->setColor(Color3B::black);
+    _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
     _background = NULL;
 
@@ -941,7 +941,7 @@ void DemoParticleFromFile::onEnter()
 {
     ParticleDemo::onEnter();
 
-    _color->setColor(Color3B::black);
+    _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
     _background = NULL;
 
@@ -1211,7 +1211,7 @@ void ParticleBatchHybrid::onEnter()
 {
     ParticleDemo::onEnter();
 
-    _color->setColor(Color3B::black);
+    _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
     _background = NULL;
 
@@ -1259,7 +1259,7 @@ void ParticleBatchMultipleEmitters::onEnter()
 {
     ParticleDemo::onEnter();
 
-    _color->setColor(Color3B::black);
+    _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
     _background = NULL;
 
@@ -1302,7 +1302,7 @@ void ParticleReorder::onEnter()
     ParticleDemo::onEnter();
 
     _order = 0;
-    _color->setColor(Color3B::black);
+    _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
     _background = NULL;
 
@@ -1472,7 +1472,7 @@ void Issue1201::onEnter()
 {
     ParticleDemo::onEnter();
 
-    _color->setColor(Color3B::black);
+    _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
     _background = NULL;
 
@@ -1502,7 +1502,7 @@ void MultipleParticleSystems::onEnter()
 {
     ParticleDemo::onEnter();
 
-    _color->setColor(Color3B::black);
+    _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
     _background = NULL;
 
@@ -1557,7 +1557,7 @@ void MultipleParticleSystemsBatched::onEnter()
 {
     ParticleDemo::onEnter();
 
-    _color->setColor(Color3B::black);
+    _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
     _background = NULL;
 
@@ -1619,7 +1619,7 @@ void AddAndDeleteParticleSystems::onEnter()
 {
     ParticleDemo::onEnter();
 
-    _color->setColor(Color3B::black);
+    _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
     _background = NULL;
 
@@ -1708,7 +1708,7 @@ void ReorderParticleSystems::onEnter()
 {
     ParticleDemo::onEnter();
 
-    _color->setColor(Color3B::black);
+    _color->setColor(Color3B::BLACK);
     removeChild(_background ,true);
     _background = NULL;
 
@@ -1854,7 +1854,7 @@ void PremultipliedAlphaTest::onEnter()
 {
     ParticleDemo::onEnter();
 
-	_color->setColor(Color3B::blue);
+	_color->setColor(Color3B::BLUE);
     this->removeChild(_background, true);
     _background = NULL;
 
@@ -1886,7 +1886,7 @@ void PremultipliedAlphaTest2::onEnter()
 {
     ParticleDemo::onEnter();
 
-	_color->setColor(Color3B::black);
+	_color->setColor(Color3B::BLACK);
     this->removeChild(_background, true);
     _background = NULL;
 

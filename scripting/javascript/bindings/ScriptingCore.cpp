@@ -2158,7 +2158,7 @@ JSBool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
     out->_stroke._strokeEnabled = false;
     
     // white text by default
-    out->_fontFillColor = Color3B::white;
+    out->_fontFillColor = Color3B::WHITE;
     
     // font name
     jsval jsr;
@@ -2302,7 +2302,7 @@ JSBool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
         {
             // default stroke values
             out->_stroke._strokeSize  = 1;
-            out->_stroke._strokeColor = Color3B::blue;
+            out->_stroke._strokeColor = Color3B::BLUE;
             
             // stroke color
             JS_HasProperty(cx, jsobj, "strokeColor", &hasProperty);

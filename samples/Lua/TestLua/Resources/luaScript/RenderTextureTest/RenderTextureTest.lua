@@ -268,7 +268,7 @@ end
 --     sp9:setVertexZ(-400)
 
 --     sp9:setScale(2)
---     sp9:setColor(Color3B::yellow)
+--     sp9:setColor(Color3B::YELLOW)
 -- end
 
 -- local function title()
@@ -348,7 +348,7 @@ end
 -- sprite:setOpacity(182)
 -- sprite:setFlipY(1)
 -- this:addChild(sprite, 999999)
--- sprite:setColor(Color3B::green)
+-- sprite:setColor(Color3B::GREEN)
 
 -- sprite:runAction(CCSequence:create(CCFadeTo:create(2, 0),
 --                                    CCHide:create(),

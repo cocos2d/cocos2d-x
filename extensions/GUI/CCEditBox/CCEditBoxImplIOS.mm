@@ -309,14 +309,14 @@ void EditBoxImplIOS::initInactiveLabels(const Size& size)
 
 	_label = LabelTTF::create("", "", 0.0f);
     _label->setAnchorPoint(ccp(0, 0.5f));
-    _label->setColor(Color3B::white);
+    _label->setColor(Color3B::WHITE);
     _label->setVisible(false);
     _editBox->addChild(_label, kLabelZOrder);
 	
     _labelPlaceHolder = LabelTTF::create("", "", 0.0f);
 	// align the text vertically center
     _labelPlaceHolder->setAnchorPoint(ccp(0, 0.5f));
-    _labelPlaceHolder->setColor(Color3B::gray);
+    _labelPlaceHolder->setColor(Color3B::GRAY);
     _editBox->addChild(_labelPlaceHolder, kLabelZOrder);
     
     setFont(pDefaultFontName, size.height*2/3);

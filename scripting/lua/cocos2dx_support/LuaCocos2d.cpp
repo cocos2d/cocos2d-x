@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Mon Jul  8 11:21:00 2013.
+** Generated automatically by tolua++-1.0.92 on Mon Jul  8 16:22:18 2013.
 */
 
 /****************************************************************************
@@ -27151,7 +27151,7 @@ static int tolua_Cocos2d_CCTransitionFade_create00(lua_State* tolua_S)
  {
   float duration = ((float)  tolua_tonumber(tolua_S,2,0));
   Scene* scene = ((Scene*)  tolua_tousertype(tolua_S,3,0));
-  const Color3B clr = Color3B::black;
+  const Color3B clr = Color3B::BLACK;
     Color3B color = *((Color3B*)  tolua_tousertype(tolua_S,4,(void*)&clr));
   {
    TransitionFade* tolua_ret = (TransitionFade*)  TransitionFade::create(duration,scene,color);
