@@ -50,7 +50,6 @@ public:
 	/** returns a new reversed action */
 	virtual ProgressTo* reverse(void) const;
 
-    virtual Object* copyWithZone(Zone *pZone);
     virtual void startWithTarget(Node *pTarget);
     virtual void update(float time);
 
@@ -78,7 +77,6 @@ public:
 	/** returns a new reversed action */
 	virtual ProgressFromTo* reverse(void) const;
 
-    virtual Object* copyWithZone(Zone *pZone);
     virtual void startWithTarget(Node *pTarget);
     virtual void update(float time);
 

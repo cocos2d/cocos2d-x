@@ -44,7 +44,6 @@ public:
 	/** returns a new clone of the action */
 	virtual ShakyTiles3D* clone() const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void update(float time);
 
 public:
@@ -67,7 +66,6 @@ public:
 	/** returns a new clone of the action */
 	virtual ShatteredTiles3D* clone() const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void update(float time);
 
 public:
@@ -99,8 +97,6 @@ public:
 
 	/** returns a new clone of the action */
 	virtual ShuffleTiles* clone() const;
-
-    virtual Object* copyWithZone(Zone* pZone);
 
 public:
     /** creates the action with a random seed, the grid size and the duration */
@@ -201,7 +197,6 @@ public:
 	/** returns a new clone of the action */
 	virtual TurnOffTiles* clone() const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void startWithTarget(Node *pTarget);
     virtual void update(float time);
 
@@ -236,7 +231,6 @@ public:
 	/** returns a new clone of the action */
 	virtual WavesTiles3D* clone() const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void update(float time);
 
 public:
@@ -268,7 +262,6 @@ public:
 	/** returns a new clone of the action */
 	virtual JumpTiles3D* clone() const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void update(float time);
 
 public:
@@ -291,7 +284,6 @@ public :
 	/** returns a new clone of the action */
 	virtual SplitRows* clone() const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void update(float time);
     virtual void startWithTarget(Node *pTarget);
 
@@ -314,7 +306,6 @@ public:
 	/** returns a new clone of the action */
 	virtual SplitCols* clone() const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void update(float time);
     virtual void startWithTarget(Node *pTarget);
 

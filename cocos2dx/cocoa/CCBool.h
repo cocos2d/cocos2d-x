@@ -34,7 +34,7 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL Bool : public Object
+class CC_DLL Bool : public Object, public Clonable
 {
 public:
     Bool(bool v)
@@ -54,6 +54,10 @@ public:
     /* override functions */
     virtual void acceptVisitor(DataVisitor &visitor) { visitor.visit(this); }
 
+    Bool* clone() const
+    {
+        return Bool::create(_value);
+    }
 private:
     bool _value;
 };

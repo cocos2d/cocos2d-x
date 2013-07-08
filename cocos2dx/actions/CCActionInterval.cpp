@@ -41,7 +41,6 @@ class ExtraAction : public FiniteTimeAction
 public:
     static ExtraAction* create();
     virtual ExtraAction* clone() const;
-    virtual Object* copyWithZone(Zone* pZone);
     virtual ExtraAction* reverse(void) const;
     virtual void update(float time);
     virtual void step(float dt);
@@ -62,13 +61,6 @@ ExtraAction* ExtraAction::clone(void) const
 	auto a = new ExtraAction();
 	a->autorelease();
 	return a;
-}
-
-Object* ExtraAction::copyWithZone(Zone* pZone)
-{
-    CC_UNUSED_PARAM(pZone);
-    ExtraAction* pRet = new ExtraAction();
-    return pRet;
 }
 
 ExtraAction* ExtraAction::reverse(void) const
@@ -256,34 +248,9 @@ Sequence* Sequence::clone(void) const
 {
 	// no copy constructor
 	auto a = new Sequence();
-    a->initWithTwoActions((FiniteTimeAction*)(_actions[0]->clone()),
-							  (FiniteTimeAction*)(_actions[1]->clone())
-						  );
+    a->initWithTwoActions(_actions[0]->clone(), _actions[1]->clone() );
 	a->autorelease();
 	return a;
-}
-
-Object* Sequence::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    Sequence* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (Sequence*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new Sequence();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    ActionInterval::copyWithZone(pZone);
-
-    pCopy->initWithTwoActions(_actions[0]->clone(), _actions[1]->clone());
-
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
 }
 
 Sequence::~Sequence(void)
@@ -418,34 +385,9 @@ Repeat* Repeat::clone(void) const
 {
 	// no copy constructor
 	auto a = new Repeat();
-	a->initWithAction((FiniteTimeAction*)_innerAction->clone(), _times );
+	a->initWithAction(_innerAction->clone(), _times );
 	a->autorelease();
 	return a;
-}
-
-
-Object* Repeat::copyWithZone(Zone *pZone)
-{
-    
-    Zone* pNewZone = NULL;
-    Repeat* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (Repeat*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new Repeat();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    ActionInterval::copyWithZone(pZone);
-
-    pCopy->initWithAction(_innerAction->clone(), _times);
-
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
 }
 
 Repeat::~Repeat(void)
@@ -553,29 +495,9 @@ RepeatForever *RepeatForever::clone(void) const
 {
 	// no copy constructor	
 	auto a = new RepeatForever();
-	a->initWithAction((ActionInterval*)_innerAction->clone());
+	a->initWithAction(_innerAction->clone());
 	a->autorelease();
 	return a;
-}
-
-Object* RepeatForever::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    RepeatForever* pRet = NULL;
-    if(pZone && pZone->_copyObject) //in case of being called at sub class
-    {
-        pRet = (RepeatForever*)(pZone->_copyObject);
-    }
-    else
-    {
-        pRet = new RepeatForever();
-        pZone = pNewZone = new Zone(pRet);
-    }
-    ActionInterval::copyWithZone(pZone);
-    // win32 : use the _other's copy object.
-    pRet->initWithAction(_innerAction->clone());
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
 }
 
 void RepeatForever::startWithTarget(Node* pTarget)
@@ -730,30 +652,6 @@ Spawn* Spawn::clone(void) const
 	return a;
 }
 
-Object* Spawn::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    Spawn* pCopy = NULL;
-
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (Spawn*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new Spawn();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    ActionInterval::copyWithZone(pZone);
-
-    pCopy->initWithTwoActions(_one->clone(), _two->clone());
-
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 Spawn::~Spawn(void)
 {
     CC_SAFE_RELEASE(_one);
@@ -844,30 +742,6 @@ RotateTo* RotateTo::clone(void) const
 	a->initWithDuration(_duration, _dstAngleX, _dstAngleY);
 	a->autorelease();
 	return a;
-}
-
-Object* RotateTo::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    RotateTo* pCopy = NULL;
-    if(pZone && pZone->_copyObject)
-    {
-        //in case of being called at sub class
-        pCopy = (RotateTo*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new RotateTo();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    ActionInterval::copyWithZone(pZone);
-
-    pCopy->initWithDuration(_duration, _dstAngleX, _dstAngleY);
-
-    //Action *copy = [[[self class] allocWithZone: zone] initWithDuration:[self duration] angle: angle];
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
 }
 
 void RotateTo::startWithTarget(Node *pTarget)
@@ -988,29 +862,6 @@ RotateBy* RotateBy::clone(void) const
 	return a;
 }
 
-Object* RotateBy::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    RotateBy* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (RotateBy*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new RotateBy();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    ActionInterval::copyWithZone(pZone);
-
-    pCopy->initWithDuration(_duration, _angleX, _angleY);
-
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 void RotateBy::startWithTarget(Node *pTarget)
 {
     ActionInterval::startWithTarget(pTarget);
@@ -1064,29 +915,6 @@ MoveBy* MoveBy::clone(void) const
     a->initWithDuration(_duration, _positionDelta);
 	a->autorelease();
 	return a;
-}
-
-Object* MoveBy::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    MoveBy* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (MoveBy*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new MoveBy();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    ActionInterval::copyWithZone(pZone);
-
-    pCopy->initWithDuration(_duration, _positionDelta);
-
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
 }
 
 void MoveBy::startWithTarget(Node *pTarget)
@@ -1151,29 +979,6 @@ MoveTo* MoveTo::clone(void) const
 	return a;
 }
 
-Object* MoveTo::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    MoveTo* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (MoveTo*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new MoveTo();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    MoveBy::copyWithZone(pZone);
-
-    pCopy->initWithDuration(_duration, _endPosition);
-    
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 void MoveTo::startWithTarget(Node *pTarget)
 {
     MoveBy::startWithTarget(pTarget);
@@ -1230,29 +1035,6 @@ SkewTo* SkewTo::reverse() const
 {
 	CCAssert(false, "reverse() not supported in SkewTo");
 	return nullptr;
-}
-
-Object* SkewTo::copyWithZone(Zone* pZone)
-{
-    Zone* pNewZone = NULL;
-    SkewTo* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (SkewTo*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new SkewTo();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    ActionInterval::copyWithZone(pZone);
-
-    pCopy->initWithDuration(_duration, _endSkewX, _endSkewY);
-
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
 }
 
 void SkewTo::startWithTarget(Node *pTarget)
@@ -1417,29 +1199,6 @@ JumpBy* JumpBy::clone(void) const
 	return a;
 }
 
-Object* JumpBy::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    JumpBy* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (JumpBy*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new JumpBy();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    ActionInterval::copyWithZone(pZone);
-
-    pCopy->initWithDuration(_duration, _delta, _height, _jumps);
-    
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 void JumpBy::startWithTarget(Node *pTarget)
 {
     ActionInterval::startWithTarget(pTarget);
@@ -1506,29 +1265,6 @@ JumpTo* JumpTo::reverse() const
 	return nullptr;
 }
 
-Object* JumpTo::copyWithZone(Zone* pZone)
-{
-    Zone* pNewZone = NULL;
-    JumpTo* pCopy = NULL;
-    if(pZone && pZone->_copyObject)
-    {
-        //in case of being called at sub class
-        pCopy = (JumpTo*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new JumpTo();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    JumpBy::copyWithZone(pZone);
-
-    pCopy->initWithDuration(_duration, _delta, _height, _jumps);
-    
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 void JumpTo::startWithTarget(Node *pTarget)
 {
     JumpBy::startWithTarget(pTarget);
@@ -1584,29 +1320,6 @@ BezierBy* BezierBy::clone(void) const
 	a->initWithDuration(_duration, _config);
 	a->autorelease();
 	return a;
-}
-
-Object* BezierBy::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    BezierBy* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (BezierBy*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new BezierBy();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    ActionInterval::copyWithZone(pZone);
-
-    pCopy->initWithDuration(_duration, _config);
-    
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
 }
 
 void BezierBy::update(float time)
@@ -1687,29 +1400,6 @@ BezierTo* BezierTo::clone(void) const
 	return a;
 }
 
-Object* BezierTo::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    BezierBy* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (BezierTo*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new BezierTo();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    BezierBy::copyWithZone(pZone);
-
-    pCopy->initWithDuration(_duration, _config);
-    
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 void BezierTo::startWithTarget(Node *pTarget)
 {
     BezierBy::startWithTarget(pTarget);
@@ -1788,30 +1478,6 @@ ScaleTo* ScaleTo::reverse() const
 }
 
 
-Object* ScaleTo::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    ScaleTo* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (ScaleTo*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new ScaleTo();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    ActionInterval::copyWithZone(pZone);
-
-
-    pCopy->initWithDuration(_duration, _endScaleX, _endScaleY);
-
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 void ScaleTo::startWithTarget(Node *pTarget)
 {
     ActionInterval::startWithTarget(pTarget);
@@ -1859,30 +1525,6 @@ ScaleBy* ScaleBy::clone(void) const
     a->initWithDuration(_duration, _endScaleX, _endScaleY);
 	a->autorelease();
 	return a;
-}
-
-Object* ScaleBy::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    ScaleTo* pCopy = NULL;
-    if(pZone && pZone->_copyObject)
-    {
-        //in case of being called at sub class
-        pCopy = (ScaleBy*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new ScaleBy();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    ScaleTo::copyWithZone(pZone);
-
-
-    pCopy->initWithDuration(_duration, _endScaleX, _endScaleY);
-    
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
 }
 
 void ScaleBy::startWithTarget(Node *pTarget)
@@ -1942,30 +1584,6 @@ Blink* Blink::clone(void) const
 	return a;
 }
 
-Object* Blink::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    Blink* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (Blink*)(pZone->_copyObject);
-
-    }
-    else
-    {
-        pCopy = new Blink();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    ActionInterval::copyWithZone(pZone);
-
-    pCopy->initWithDuration(_duration, (unsigned int)_times);
-    
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 void Blink::update(float time)
 {
     if (_target && ! isDone())
@@ -2003,28 +1621,6 @@ FadeIn* FadeIn::clone() const
 	return a;
 }
 
-Object* FadeIn::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    FadeIn* pCopy = NULL;
-    if(pZone && pZone->_copyObject)
-    {
-        //in case of being called at sub class
-        pCopy = (FadeIn*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new FadeIn();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-    
-    ActionInterval::copyWithZone(pZone);
-
-    CC_SAFE_DELETE(pNewZone);
-
-    return pCopy;
-}
-
 void FadeIn::update(float time)
 {
     RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(_target);
@@ -2060,28 +1656,6 @@ FadeOut* FadeOut::clone() const
 	auto a = new FadeOut();
 	a->autorelease();
 	return a;
-}
-
-Object* FadeOut::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    FadeOut* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (FadeOut*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new FadeOut();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    ActionInterval::copyWithZone(pZone);
-
-    CC_SAFE_DELETE(pNewZone);
-
-    return pCopy;
 }
 
 void FadeOut::update(float time)
@@ -2136,29 +1710,6 @@ FadeTo* FadeTo::reverse() const
 {
 	CCAssert(false, "reverse() not supported in FadeTo");
 	return nullptr;
-}
-
-Object* FadeTo::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    FadeTo* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (FadeTo*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new FadeTo();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    ActionInterval::copyWithZone(pZone);
-
-    pCopy->initWithDuration(_duration, _toOpacity);
-    
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
 }
 
 void FadeTo::startWithTarget(Node *pTarget)
@@ -2221,29 +1772,6 @@ TintTo* TintTo::reverse() const
 	return nullptr;
 }
 
-Object* TintTo::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    TintTo* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (TintTo*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new TintTo();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    ActionInterval::copyWithZone(pZone);
-
-    pCopy->initWithDuration(_duration, _to.r, _to.g, _to.b);
-    
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 void TintTo::startWithTarget(Node *pTarget)
 {
     ActionInterval::startWithTarget(pTarget);
@@ -2302,29 +1830,6 @@ TintBy* TintBy::clone() const
 	return a;
 }
 
-Object* TintBy::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    TintBy* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (TintBy*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new TintBy();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    ActionInterval::copyWithZone(pZone);
-
-    pCopy->initWithDuration(_duration, (GLubyte)_deltaR, (GLubyte)_deltaG, (GLubyte)_deltaB);
-
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 void TintBy::startWithTarget(Node *pTarget)
 {
     ActionInterval::startWithTarget(pTarget);
@@ -2374,28 +1879,6 @@ DelayTime* DelayTime::clone() const
 	auto a = new DelayTime();
 	a->autorelease();
 	return a;
-}
-
-Object* DelayTime::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    DelayTime* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (DelayTime*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new DelayTime();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-    
-    ActionInterval::copyWithZone(pZone);
-
-    CC_SAFE_DELETE(pNewZone);
-
-    return pCopy;
 }
 
 void DelayTime::update(float time)
@@ -2449,29 +1932,6 @@ ReverseTime* ReverseTime::clone() const
 	a->initWithAction( _other->clone() );
 	a->autorelease();
 	return a;
-}
-
-Object* ReverseTime::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    ReverseTime* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (ReverseTime*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new ReverseTime();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    ActionInterval::copyWithZone(pZone);
-
-    pCopy->initWithAction(_other->clone());
-
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
 }
 
 ReverseTime::ReverseTime() : _other(NULL) 
@@ -2562,29 +2022,6 @@ Animate* Animate::clone() const
 	a->initWithAnimation(_animation->clone());
 	a->autorelease();
 	return a;
-}
-
-Object* Animate::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    Animate* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (Animate*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new Animate();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    ActionInterval::copyWithZone(pZone);
-
-    pCopy->initWithAnimation(_animation->clone());
-
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
 }
 
 Animate::Animate()
@@ -2751,26 +2188,6 @@ TargetedAction* TargetedAction::reverse(void) const
 {
 	// no reverse for this action, just clone it
 	return this->clone();
-}
-
-Object* TargetedAction::copyWithZone(Zone* pZone)
-{
-    Zone* pNewZone = NULL;
-    TargetedAction* pRet = NULL;
-    if(pZone && pZone->_copyObject) //in case of being called at sub class
-    {
-        pRet = (TargetedAction*)(pZone->_copyObject);
-    }
-    else
-    {
-        pRet = new TargetedAction();
-        pZone = pNewZone = new Zone(pRet);
-    }
-    ActionInterval::copyWithZone(pZone);
-    // win32 : use the _other's copy object.
-    pRet->initWithTarget(_forcedTarget, _action->clone());
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
 }
 
 void TargetedAction::startWithTarget(Node *pTarget)

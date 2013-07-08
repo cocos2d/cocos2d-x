@@ -753,7 +753,7 @@ ConvertToNode::ConvertToNode()
 
         point->setPosition(sprite->getPosition());
 
-        RepeatForever* copy = (RepeatForever*) action->copy();
+        RepeatForever* copy = action->clone();
         copy->autorelease();
         sprite->runAction(copy);
         addChild(sprite, i);

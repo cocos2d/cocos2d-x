@@ -34,7 +34,7 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL Float : public Object
+class CC_DLL Float : public Object, public Clonable
 {
 public:
     Float(float v)
@@ -53,7 +53,12 @@ public:
 
     /* override functions */
     virtual void acceptVisitor(DataVisitor &visitor) { visitor.visit(this); }
-
+    
+    Float* clone() const
+    {
+        return Float::create(_value);
+    }
+    
 private:
     float _value;
 };

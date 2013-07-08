@@ -68,29 +68,6 @@ ProgressTo* ProgressTo::reverse() const
 	return nullptr;
 }
 
-Object* ProgressTo::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    ProgressTo* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (ProgressTo*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new ProgressTo();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    ActionInterval::copyWithZone(pZone);
-
-    pCopy->initWithDuration(_duration, _to);
-
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 void ProgressTo::startWithTarget(Node *pTarget)
 {
     ActionInterval::startWithTarget(pTarget);
@@ -142,28 +119,6 @@ ProgressFromTo* ProgressFromTo::clone() const
 	return a;
 }
 
-Object* ProgressFromTo::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    ProgressFromTo* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (ProgressFromTo*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new ProgressFromTo();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    ActionInterval::copyWithZone(pZone);
-
-    pCopy->initWithDuration(_duration, _from, _to);
-
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
 
 ProgressFromTo* ProgressFromTo::reverse(void) const
 {
