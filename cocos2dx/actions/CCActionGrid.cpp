@@ -97,14 +97,24 @@ GridBase* Grid3DAction::getGrid(void)
 
 Vertex3F Grid3DAction::vertex(const Point& position)
 {
-    Grid3D *g = (Grid3D*)_target->getGrid();
-    return g->vertex(position);
+    return getVertex(position);
 }
 
 Vertex3F Grid3DAction::originalVertex(const Point& position)
 {
+    return getOriginalVertex(position);
+}
+
+Vertex3F Grid3DAction::getVertex(const Point& position)
+{
     Grid3D *g = (Grid3D*)_target->getGrid();
-    return g->originalVertex(position);
+    return g->getVertex(position);
+}
+
+Vertex3F Grid3DAction::getOriginalVertex(const Point& position)
+{
+    Grid3D *g = (Grid3D*)_target->getGrid();
+    return g->getOriginalVertex(position);
 }
 
 void Grid3DAction::setVertex(const Point& position, const Vertex3F& vertex)

@@ -74,9 +74,15 @@ public:
     /** returns the grid */
     virtual GridBase* getGrid(void);
     /** returns the vertex than belongs to certain position in the grid */
-    Vertex3F vertex(const Point& position);
+    CC_DEPRECATED_ATTRIBUTE Vertex3F vertex(const Point& position);
     /** returns the non-transformed vertex than belongs to certain position in the grid */
-    Vertex3F originalVertex(const Point& position);
+    CC_DEPRECATED_ATTRIBUTE Vertex3F originalVertex(const Point& position);
+    
+    /** returns the vertex than belongs to certain position in the grid */
+    Vertex3F getVertex(const Point& position);
+    /** returns the non-transformed vertex than belongs to certain position in the grid */
+    Vertex3F getOriginalVertex(const Point& position);
+    
     /** sets a new vertex to a certain position of the grid */
     void setVertex(const Point& position, const Vertex3F& vertex);
 };
@@ -89,9 +95,15 @@ public:
 	virtual TiledGrid3DAction * clone() const = 0;
 
     /** returns the tile that belongs to a certain position of the grid */
-    Quad3 tile(const Point& position);
+    CC_DEPRECATED_ATTRIBUTE Quad3 tile(const Point& position);
     /** returns the non-transformed tile that belongs to a certain position of the grid */
-    Quad3 originalTile(const Point& position);
+    CC_DEPRECATED_ATTRIBUTE Quad3 originalTile(const Point& position);
+    
+    /** returns the tile that belongs to a certain position of the grid */
+    Quad3 getTile(const Point& position);
+    /** returns the non-transformed tile that belongs to a certain position of the grid */
+    Quad3 getOriginalTile(const Point& position);
+    
     /** sets a new tile to a certain position of the grid */
     void setTile(const Point& position, const Quad3& coords);
 
