@@ -7,11 +7,11 @@ class CCTextureAtlas : public CCObject
     void setTexture(CCTexture2D* val);
     CCTexture2D* getTexture();
 
-    void setQuads(ccV3F_C4B_T2F_Quad* val);
-    ccV3F_C4B_T2F_Quad* getQuads();
+    void setQuads(V3F_C4B_T2F_Quad* val);
+    V3F_C4B_T2F_Quad* getQuads();
 
-    void updateQuad(ccV3F_C4B_T2F_Quad* quad, unsigned int index);
-    void insertQuad(ccV3F_C4B_T2F_Quad* quad, unsigned int index);
+    void updateQuad(V3F_C4B_T2F_Quad* quad, unsigned int index);
+    void insertQuad(V3F_C4B_T2F_Quad* quad, unsigned int index);
     void insertQuadFromIndex(unsigned int fromIndex, unsigned int newIndex);
     void removeQuadAtIndex(unsigned int index);
     void removeAllQuads();
