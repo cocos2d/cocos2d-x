@@ -29,8 +29,8 @@
 
 NS_CC_EXT_BEGIN
 
-#define ControlStepperLabelColorEnabled   ccc3(55, 55, 55)
-#define ControlStepperLabelColorDisabled  ccc3(147, 147, 147)
+#define ControlStepperLabelColorEnabled   Color3B(55, 55, 55)
+#define ControlStepperLabelColorDisabled  Color3B(147, 147, 147)
 
 #define ControlStepperLabelFont           "CourierNewPSMT"
 
@@ -255,21 +255,21 @@ void ControlStepper::updateLayoutUsingTouchLocation(Point location)
     {
         _touchedPart        = kControlStepperPartMinus;
         
-        _minusSprite->setColor(ccGRAY);
-        _plusSprite->setColor(ccWHITE);
+        _minusSprite->setColor(Color3B::gray);
+        _plusSprite->setColor(Color3B::white);
     } else if (location.x >= _minusSprite->getContentSize().width
                && _value < _maximumValue)
     {
         _touchedPart        = kControlStepperPartPlus;
         
-        _minusSprite->setColor(ccWHITE);
-        _plusSprite->setColor(ccGRAY);
+        _minusSprite->setColor(Color3B::white);
+        _plusSprite->setColor(Color3B::gray);
     } else
     {
         _touchedPart        = kControlStepperPartNone;
         
-        _minusSprite->setColor(ccWHITE);
-        _plusSprite->setColor(ccWHITE);
+        _minusSprite->setColor(Color3B::white);
+        _plusSprite->setColor(Color3B::white);
     }
 }
 
@@ -316,8 +316,8 @@ void ControlStepper::ccTouchMoved(Touch *pTouch, Event *pEvent)
         
         _touchedPart        = kControlStepperPartNone;
         
-        _minusSprite->setColor(ccWHITE);
-        _plusSprite->setColor(ccWHITE);
+        _minusSprite->setColor(Color3B::white);
+        _plusSprite->setColor(Color3B::white);
         
         if (_autorepeat)
         {
@@ -328,8 +328,8 @@ void ControlStepper::ccTouchMoved(Touch *pTouch, Event *pEvent)
 
 void ControlStepper::ccTouchEnded(Touch *pTouch, Event *pEvent)
 {
-    _minusSprite->setColor(ccWHITE);
-    _plusSprite->setColor(ccWHITE);
+    _minusSprite->setColor(Color3B::white);
+    _plusSprite->setColor(Color3B::white);
     
     if (_autorepeat)
     {

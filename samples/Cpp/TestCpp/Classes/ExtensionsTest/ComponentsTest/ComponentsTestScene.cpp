@@ -43,7 +43,7 @@ bool ComponentsTestLayer::init()
 	bool bRet = false;
 	do 
 	{
-        CC_BREAK_IF(! LayerColor::initWithColor( ccc4(255,255,255,255) ) );
+        CC_BREAK_IF(! LayerColor::initWithColor( Color4B(255,255,255,255) ) );
         
         Node *root = createGameScene();
         CC_BREAK_IF(!root);
@@ -86,7 +86,7 @@ cocos2d::Node* ComponentsTestLayer::createGameScene()
             pScene->release();
         });
         
-        itemBack->setColor(ccc3(0, 0, 0));
+        itemBack->setColor(Color3B(0, 0, 0));
         itemBack->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
         Menu *menuBack = Menu::create(itemBack, NULL);
         menuBack->setPosition(PointZero);

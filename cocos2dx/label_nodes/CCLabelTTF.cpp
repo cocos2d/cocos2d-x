@@ -47,7 +47,7 @@ LabelTTF::LabelTTF()
 , _string("")
 , _shadowEnabled(false)
 , _strokeEnabled(false)
-, _textFillColor(ccWHITE)
+, _textFillColor(Color3B::white)
 {
 }
 
@@ -96,7 +96,7 @@ LabelTTF* LabelTTF::create(const char *string, const char *fontName, float fontS
     return NULL;
 }
 
-LabelTTF * LabelTTF::createWithFontDefinition(const char *string, ccFontDefinition &textDefinition)
+LabelTTF * LabelTTF::createWithFontDefinition(const char *string, FontDefinition &textDefinition)
 {
     LabelTTF *pRet = new LabelTTF();
     if(pRet && pRet->initWithStringAndTextDefinition(string, textDefinition))
@@ -148,7 +148,7 @@ bool LabelTTF::initWithString(const char *string, const char *fontName, float fo
     return false;
 }
 
-bool LabelTTF::initWithStringAndTextDefinition(const char *string, ccFontDefinition &textDefinition)
+bool LabelTTF::initWithStringAndTextDefinition(const char *string, FontDefinition &textDefinition)
 {
     if (Sprite::init())
     {
@@ -300,8 +300,8 @@ bool LabelTTF::updateTexture()
     
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
-        ccFontDefinition texDef = _prepareTextDefinition(true);
-        tex->initWithString( _string.c_str(), &texDef );
+        FontDefinition texDef = _prepareTextDefinition(true);
+        tex->initWithString( _string.c_str(), texDef );
     
     #else
     
@@ -390,7 +390,7 @@ void LabelTTF::disableShadow(bool updateTexture)
     #endif
 }
 
-void LabelTTF::enableStroke(const ccColor3B &strokeColor, float strokeSize, bool updateTexture)
+void LabelTTF::enableStroke(const Color3B &strokeColor, float strokeSize, bool updateTexture)
 {
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
@@ -443,7 +443,7 @@ void LabelTTF::disableStroke(bool updateTexture)
     
 }
 
-void LabelTTF::setFontFillColor(const ccColor3B &tintColor, bool updateTexture)
+void LabelTTF::setFontFillColor(const Color3B &tintColor, bool updateTexture)
 {
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         if (_textFillColor.r != tintColor.r || _textFillColor.g != tintColor.g || _textFillColor.b != tintColor.b)
@@ -458,22 +458,17 @@ void LabelTTF::setFontFillColor(const ccColor3B &tintColor, bool updateTexture)
     #endif
 }
 
-void LabelTTF::setTextDefinition(ccFontDefinition *theDefinition)
+void LabelTTF::setTextDefinition(const FontDefinition& theDefinition)
 {
-    if (theDefinition)
-    {
-        _updateWithTextDefinition(*theDefinition, true);
-    }
+    _updateWithTextDefinition(theDefinition, true);
 }
 
-ccFontDefinition *LabelTTF::getTextDefinition()
+FontDefinition LabelTTF::getTextDefinition()
 {
-    ccFontDefinition *tempDefinition = new ccFontDefinition;
-    *tempDefinition = _prepareTextDefinition(false);
-    return tempDefinition;
+    return _prepareTextDefinition(false);
 }
 
-void LabelTTF::_updateWithTextDefinition(ccFontDefinition & textDefinition, bool mustUpdateTexture)
+void LabelTTF::_updateWithTextDefinition(const FontDefinition& textDefinition, bool mustUpdateTexture)
 {
     _dimensions = CCSizeMake(textDefinition._dimensions.width, textDefinition._dimensions.height);
     _alignment  = textDefinition._alignment;
@@ -502,9 +497,9 @@ void LabelTTF::_updateWithTextDefinition(ccFontDefinition & textDefinition, bool
         updateTexture();
 }
 
-ccFontDefinition LabelTTF::_prepareTextDefinition(bool adjustForResolution)
+FontDefinition LabelTTF::_prepareTextDefinition(bool adjustForResolution)
 {
-    ccFontDefinition texDef;
+    FontDefinition texDef;
     
     if (adjustForResolution)
         texDef._fontSize       =  _fontSize * CC_CONTENT_SCALE_FACTOR();

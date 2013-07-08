@@ -439,7 +439,7 @@ local function runCCControlTest()
         	pColorLabel:setString(CCString:create(strFmt):getCString())       	
         end
         local pColourPicker = CCControlColourPicker:create()
-        pColourPicker:setColor(ccc3(37, 46, 252))
+        pColourPicker:setColor(Color3B(37, 46, 252))
         pColourPicker:setPosition(ccp (pColourPicker:getContentSize().width / 2, 0))
         pColourPicker:addHandleOfControlEvent(colourValueChanged, CCControlEventValueChanged)
         pNode:addChild(pColourPicker)     
@@ -534,11 +534,11 @@ local function runCCControlTest()
     
     	pTitleButton = CCLabelTTF:create(pStrTitle, "Marker Felt", 30)
 
-    	pTitleButton:setColor(ccc3(159, 168, 176))
+    	pTitleButton:setColor(Color3B(159, 168, 176))
     
     	local pButton = CCControlButton:create(pTitleButton, pBackgroundButton)
     	pButton:setBackgroundSpriteForState(pBackgroundHighlightedButton, CCControlStateHighlighted)
-    	pButton:setTitleColorForState(ccc3(255,255,255), CCControlStateHighlighted)
+    	pButton:setTitleColorForState(Color3B(255,255,255), CCControlStateHighlighted)
     
     	return pButton
 	end
@@ -594,11 +594,11 @@ local function runCCControlTest()
     
         local pTitleButton = CCLabelTTF:create(pStrTitle, "Marker Felt", 30)
 
-    	pTitleButton:setColor(ccc3(159, 168, 176))
+    	pTitleButton:setColor(Color3B(159, 168, 176))
     
     	local pButton = CCControlButton:create(pTitleButton, pBackgroundButton)
         pButton:setBackgroundSpriteForState(pBackgroundHighlightedButton, CCControlStateHighlighted)
-    	pButton:setTitleColorForState(ccc3(255,255,255), CCControlStateHighlighted)
+    	pButton:setTitleColorForState(Color3B(255,255,255), CCControlStateHighlighted)
     
         return pButton
 	end
@@ -666,7 +666,7 @@ local function runCCControlTest()
         local pBackgroundHighlightedButton = CCScale9Sprite:create("extensions/buttonHighlighted.png")
         
         local pTitleButtonLabel = CCLabelTTF:create("Touch Me!", "Marker Felt", 30)
-        pTitleButtonLabel:setColor(ccc3(159, 168, 176))
+        pTitleButtonLabel:setColor(Color3B(159, 168, 176))
         
         local pControlButton = CCControlButton:create(pTitleButtonLabel, pBackgroundButton)
         local function touchDownAction()
@@ -728,7 +728,7 @@ local function runCCControlTest()
         
         
         pControlButton:setBackgroundSpriteForState(pBackgroundHighlightedButton, CCControlStateHighlighted)
-        pControlButton:setTitleColorForState(ccc3(255, 255, 255), CCControlStateHighlighted)
+        pControlButton:setTitleColorForState(Color3B(255, 255, 255), CCControlStateHighlighted)
         pControlButton:setAnchorPoint(ccp(0.5, 1))
         pControlButton:setPosition(ccp(screenSize.width / 2.0, screenSize.height / 2.0))
         pControlButton:addHandleOfControlEvent(touchDownAction,CCControlEventTouchDown)
@@ -955,9 +955,9 @@ local function runEditBoxTest()
 		EditName:setFontName("fonts/Paint Boy.ttf")
 	end
     EditName:setFontSize(25)
-    EditName:setFontColor(ccc3(255,0,0))
+    EditName:setFontColor(Color3B(255,0,0))
     EditName:setPlaceHolder("Name:")
-    EditName:setPlaceholderFontColor(ccc3(255,255,255))
+    EditName:setPlaceholderFontColor(Color3B(255,255,255))
     EditName:setMaxLength(8)
     EditName:setReturnType(kKeyboardReturnTypeDone)
 	--Handler
@@ -974,7 +974,7 @@ local function runEditBoxTest()
 	end
 	
 
-    EditPassword:setFontColor(ccc3(0,255,0))
+    EditPassword:setFontColor(Color3B(0,255,0))
     EditPassword:setPlaceHolder("Password:")
     EditPassword:setMaxLength(6)
     EditPassword:setInputFlag(kEditBoxInputFlagPassword)
@@ -1007,7 +1007,7 @@ local function runScrollViewTest()
     pToMainMenu:setPosition(ccp(0, 0))
     newLayer:addChild(pToMainMenu,10)
 
-    local layerColor = CCLayerColor:create(ccc4(128,64,0,255))
+    local layerColor = CCLayerColor:create(Color4B(128,64,0,255))
     newLayer:addChild(layerColor)
 
     local scrollView1 = CCScrollView:create()

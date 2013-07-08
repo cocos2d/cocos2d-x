@@ -41,23 +41,23 @@ public:
     /** 
      * Changes the color with R,G,B bytes
      *
-     * @param color Example: ccc3(255,100,0) means R=255, G=100, B=0
+     * @param color Example: Color3B(255,100,0) means R=255, G=100, B=0
      */
-    virtual void setColor(const ccColor3B& color) = 0;
+    virtual void setColor(const Color3B& color) = 0;
 
     /**
      * Returns color that is currently used.
      *
-     * @return The ccColor3B contains R,G,B bytes.
+     * @return The Color3B contains R,G,B bytes.
      */
-    virtual const ccColor3B& getColor(void) const = 0;
+    virtual const Color3B& getColor(void) const = 0;
     
     /**
      * Returns the displayed color.
      *
-     * @return The ccColor3B contains R,G,B bytes.
+     * @return The Color3B contains R,G,B bytes.
      */
-    virtual const ccColor3B& getDisplayedColor(void) const = 0;
+    virtual const Color3B& getDisplayedColor(void) const = 0;
     
     /**
      * Returns the displayed opacity.
@@ -111,7 +111,7 @@ public:
     /** 
      *  recursive method that updates display color 
      */
-    virtual void updateDisplayedColor(const ccColor3B& color) = 0;
+    virtual void updateDisplayedColor(const Color3B& color) = 0;
     
     /** 
      *  whether or not opacity should be propagated to its children.
@@ -140,14 +140,14 @@ public:
      *                  e.g. {GL_ONE, GL_ONE}, {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}.
      *
      */
-    virtual void setBlendFunc(const ccBlendFunc &blendFunc) = 0;
+    virtual void setBlendFunc(const BlendFunc &blendFunc) = 0;
 
     /**
      * Returns the blending function that is currently being used.
      * 
-     * @return A ccBlendFunc structure with source and destination factor which specified pixel arithmetic.
+     * @return A BlendFunc structure with source and destination factor which specified pixel arithmetic.
      */
-    virtual const ccBlendFunc &getBlendFunc(void) const = 0;
+    virtual const BlendFunc &getBlendFunc(void) const = 0;
 };
 
 /** 

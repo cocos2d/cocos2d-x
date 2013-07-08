@@ -39,7 +39,7 @@ Box2DTestLayer::Box2DTestLayer()
 
     LabelTTF *label = LabelTTF::create("Tap screen", "Marker Felt", 32);
     addChild(label, 0);
-    label->setColor(ccc3(0,0,255));
+    label->setColor(Color3B(0,0,255));
     label->setPosition(ccp( VisibleRect::center().x, VisibleRect::top().y-50));
     
     scheduleUpdate();

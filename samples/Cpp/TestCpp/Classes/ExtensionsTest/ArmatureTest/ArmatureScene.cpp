@@ -127,7 +127,7 @@ void ArmatureTestLayer::onEnter()
 	std::string str = title();
 	const char * pTitle = str.c_str();
 	LabelTTF* label = LabelTTF::create(pTitle, "Arial", 18);
-	label->setColor(ccc3(0, 0, 0));
+	label->setColor(Color3B(0, 0, 0));
 	addChild(label, 1, 10000);
 	label->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - 30) );
 
@@ -135,7 +135,7 @@ void ArmatureTestLayer::onEnter()
 	if( ! strSubtitle.empty() ) 
 	{
 		LabelTTF* l = LabelTTF::create(strSubtitle.c_str(), "Arial", 18);
-		l->setColor(ccc3(0, 0, 0));
+		l->setColor(Color3B(0, 0, 0));
 		addChild(l, 1, 10001);
 		l->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - 60) );
 	}    

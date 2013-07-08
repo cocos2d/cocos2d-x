@@ -44,9 +44,9 @@ EditBoxTest::EditBoxTest()
 	_editName->setFontName("fonts/Paint Boy.ttf");
 #endif
     _editName->setFontSize(25);
-    _editName->setFontColor(ccRED);
+    _editName->setFontColor(Color3B::red);
     _editName->setPlaceHolder("Name:");
-    _editName->setPlaceholderFontColor(ccWHITE);
+    _editName->setPlaceholderFontColor(Color3B::white);
     _editName->setMaxLength(8);
     _editName->setReturnType(kKeyboardReturnTypeDone);
     _editName->setDelegate(this);
@@ -60,7 +60,7 @@ EditBoxTest::EditBoxTest()
 #else
 	_editPassword->setFont("fonts/American Typewriter.ttf", 30);
 #endif
-    _editPassword->setFontColor(ccGREEN);
+    _editPassword->setFontColor(Color3B::green);
     _editPassword->setPlaceHolder("Password:");
     _editPassword->setMaxLength(6);
     _editPassword->setInputFlag(kEditBoxInputFlagPassword);
