@@ -1,9 +1,9 @@
 class CCRGBAProtocol
 {
 public:
-    virtual void setColor(const ccColor3B& color);
-    virtual const ccColor3B& getColor(void);
-    virtual const ccColor3B& getDisplayedColor(void);
+    virtual void setColor(const Color3B& color);
+    virtual const Color3B& getColor(void);
+    virtual const Color3B& getDisplayedColor(void);
     virtual GLubyte getDisplayedOpacity(void);
     virtual GLubyte getOpacity(void);
     virtual void setOpacity(GLubyte opacity);
@@ -11,7 +11,7 @@ public:
     virtual bool isOpacityModifyRGB(void);
     virtual bool isCascadeColorEnabled(void);
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
-    virtual void updateDisplayedColor(const ccColor3B& color);
+    virtual void updateDisplayedColor(const Color3B& color);
     virtual bool isCascadeOpacityEnabled(void);
     virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
     virtual void updateDisplayedOpacity(GLubyte opacity);
