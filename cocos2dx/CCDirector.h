@@ -174,21 +174,21 @@ public:
 
     /** returns the size of the OpenGL view in points.
     */
-    Size getWinSize(void);
+    const Size& getWinSize(void) const;
 
     /** returns the size of the OpenGL view in pixels.
     */
-    Size getWinSizeInPixels(void);
+    Size getWinSizeInPixels(void) const;
     
     /** returns visible size of the OpenGL view in points.
      *  the value is equal to getWinSize if don't invoke
      *  EGLView::setDesignResolutionSize()
      */
-    Size getVisibleSize();
+    Size getVisibleSize() const;
     
     /** returns visible origin of the OpenGL view in points.
      */
-    Point getVisibleOrigin();
+    Point getVisibleOrigin() const;
 
     /** converts a UIKit coordinate to an OpenGL coordinate
      Useful to convert (multi) touch coordinates to the current layout (portrait or landscape)
@@ -201,7 +201,7 @@ public:
     Point convertToUI(const Point& obPoint);
 
     /// XXX: missing description 
-    float getZEye(void);
+    float getZEye(void) const;
 
     // Scene Management
 
@@ -308,7 +308,7 @@ public:
     @since v0.99.4
     */
     void setContentScaleFactor(float scaleFactor);
-    float getContentScaleFactor(void);
+    float getContentScaleFactor(void) const;
 
 public:
     /** Scheduler associated with this director

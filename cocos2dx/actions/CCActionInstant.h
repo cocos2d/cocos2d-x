@@ -56,7 +56,7 @@ public:
     /** returns a new reversed action */
     virtual ActionInstant * reverse(void) const = 0;
 
-    virtual bool isDone(void);
+    virtual bool isDone(void) const;
     virtual void step(float dt);
     virtual void update(float time);
 };
@@ -296,7 +296,7 @@ public:
         }
     }
     
-    inline int getScriptHandler() { return _scriptHandler; };
+    inline int getScriptHandler() const { return _scriptHandler; };
 protected:
     /** Target that will be called */
     Object*   _selectorTarget;

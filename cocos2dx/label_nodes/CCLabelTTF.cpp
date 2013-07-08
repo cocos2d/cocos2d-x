@@ -188,7 +188,7 @@ const char* LabelTTF::getString(void) const
     return _string.c_str();
 }
 
-const char* LabelTTF::description()
+const char* LabelTTF::description() const
 {
     return String::createWithFormat("<LabelTTF | FontName = %s, FontSize = %.1f>", _fontName->c_str(), _fontSize)->getCString();
 }

@@ -44,7 +44,7 @@ Camera::~Camera(void)
 {
 }
 
-const char* Camera::description(void)
+const char* Camera::description(void) const
 {
     return String::createWithFormat("<Camera | center = (%.2f,%.2f,%.2f)>", _centerX, _centerY, _centerZ)->getCString();
 }
@@ -119,21 +119,21 @@ void Camera::setUpXYZ(float fUpX, float fUpY, float fUpZ)
     _dirty = true;
 }
 
-void Camera::getEyeXYZ(float *pEyeX, float *pEyeY, float *pEyeZ)
+void Camera::getEyeXYZ(float *pEyeX, float *pEyeY, float *pEyeZ) const
 {
     *pEyeX = _eyeX;
     *pEyeY = _eyeY;
     *pEyeZ = _eyeZ;
 }
 
-void Camera::getCenterXYZ(float *pCenterX, float *pCenterY, float *pCenterZ)
+void Camera::getCenterXYZ(float *pCenterX, float *pCenterY, float *pCenterZ) const
 {
     *pCenterX = _centerX;
     *pCenterY = _centerY;
     *pCenterZ = _centerZ;
 }
 
-void Camera::getUpXYZ(float *pUpX, float *pUpY, float *pUpZ)
+void Camera::getUpXYZ(float *pUpX, float *pUpY, float *pUpZ) const
 {
     *pUpX = _upX;
     *pUpY = _upY;

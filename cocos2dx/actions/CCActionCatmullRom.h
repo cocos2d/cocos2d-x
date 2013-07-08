@@ -93,7 +93,7 @@ public:
 
     virtual PointArray* clone() const;
 
-    const std::vector<Point*>* getControlPoints();
+    const std::vector<Point*>* getControlPoints() const;
 
     void setControlPoints(std::vector<Point*> *controlPoints);
 private:
