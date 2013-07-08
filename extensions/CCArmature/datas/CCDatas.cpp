@@ -269,7 +269,8 @@ CCBoneData *CCArmatureData::getBoneData(const char *boneName)
 }
 
 CCFrameData::CCFrameData(void)
-    : duration(1)
+    : frameID(0)
+	, duration(1)
     , tweenEasing(Linear)
     , displayIndex(0)
 
@@ -288,6 +289,7 @@ void CCFrameData::copy(CCFrameData *frameData)
 {
     CCBaseData::copy(frameData);
 
+	frameID = frameData->frameID;
     duration = frameData->duration;
     displayIndex = frameData->displayIndex;
     tweenEasing = frameData->tweenEasing;
@@ -313,7 +315,6 @@ bool CCMovementBoneData::init()
 void CCMovementBoneData::addFrameData(CCFrameData *frameData)
 {
     frameList.addObject(frameData);
-    duration += frameData->duration;
 }
 
 CCFrameData *CCMovementBoneData::getFrameData(int index)

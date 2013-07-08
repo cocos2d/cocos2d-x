@@ -54,7 +54,6 @@ CCTween::CCTween()
 	, m_pFrom(NULL)
 	, m_pTo(NULL)
 	, m_pBetween(NULL)
-	, m_pCurrentKeyFrame(NULL)
     , m_pBone(NULL)
     
     , m_eFrameTweenEasing(Linear)
@@ -101,11 +100,10 @@ void CCTween::play(CCMovementBoneData *movementBoneData, int durationTo, int dur
 
     m_eLoopType = (AnimationType)loop;
 
-    m_pCurrentKeyFrame = NULL;
-
     m_iTotalDuration = 0;
     m_BetweenDuration = 0;
-    m_iToIndex = 0;
+	m_iFromIndex = m_iToIndex = 0;
+
 
 	bool difMovement = movementBoneData != m_pMovementBoneData;
 
@@ -126,7 +124,6 @@ void CCTween::play(CCMovementBoneData *movementBoneData, int durationTo, int dur
         }
         m_eFrameTweenEasing = Linear;
         m_iRawDuration = m_pMovementBoneData->duration;
-        m_iFromIndex = m_iToIndex = 0;
     }
     else if (m_pMovementBoneData->frameList.count() > 1)
     {
@@ -217,8 +214,6 @@ void CCTween::updateHandler()
                 //
                 m_fCurrentFrame = (1 - m_pMovementBoneData->delay) * (float)m_iNextFrameIndex;
                 m_fCurrentPercent = m_fCurrentFrame / m_iNextFrameIndex;
-
-
             }
             else
             {
@@ -265,10 +260,6 @@ void CCTween::updateHandler()
     if(m_eFrameTweenEasing != TWEEN_EASING_MAX)
     {
         tweenNodeTo(percent);
-    }
-    else if(m_pCurrentKeyFrame)
-    {
-        tweenNodeTo(0);
     }
 }
 
@@ -328,7 +319,7 @@ void CCTween::arriveKeyFrame(CCFrameData *keyFrameData)
         }
         // 		if(keyFrameData->m_strSound.length() != 0)
         // 		{
-        // 			//soundManager.dispatchEventWith(Event.SOUND_FRAME, m_pCurrentKeyFrame->sound);
+        // 			//soundManager.dispatchEventWith(Event.SOUND_FRAME, keyFrameData->sound);
         // 		}
     }
 }
@@ -366,26 +357,33 @@ void CCTween::tweenColorTo(float percent, CCFrameData *node, bool dirty)
 
 float CCTween::updateFrameData(float currentPrecent, bool activeFrame)
 {
-
+	if (currentPrecent > 1)
+	{
+		currentPrecent = fmodf(currentPrecent,1);
+	}
+	
     float playedTime = (float)m_iRawDuration * currentPrecent;
 
 
-    CCFrameData *from;
-    CCFrameData *to;
-    bool isListEnd;
-
     //! If play to current frame's front or back, then find current frame again
-    if (playedTime >= m_iTotalDuration || playedTime < m_iTotalDuration - m_BetweenDuration)
+    if (playedTime < m_iTotalDuration || playedTime >= m_iTotalDuration + m_BetweenDuration)
     {
         /*
          *  Get frame length, if m_iToIndex >= _length, then set m_iToIndex to 0, start anew.
          *  m_iToIndex is next index will play
          */
         int length = m_pMovementBoneData->frameList.count();
+
+		CCFrameData *from = NULL;
+		CCFrameData *to = NULL;
+		bool isListEnd;
+		CCFrameData **frames = (CCFrameData**)m_pMovementBoneData->frameList.data->arr;
+
         do
         {
-            m_BetweenDuration = m_pMovementBoneData->getFrameData(m_iToIndex)->duration;
-            m_iTotalDuration += m_BetweenDuration;
+			from = frames[m_iFromIndex];
+			to = frames[m_iToIndex];
+            m_iTotalDuration  = from->frameID;
             m_iFromIndex = m_iToIndex;
 
             if (++m_iToIndex >= length)
@@ -393,27 +391,29 @@ float CCTween::updateFrameData(float currentPrecent, bool activeFrame)
                 m_iToIndex = 0;
             }
         }
-        while (playedTime >= m_iTotalDuration);
+        while (playedTime < from->frameID || playedTime>=to->frameID);
+
+		m_BetweenDuration = to->frameID - from->frameID;
 
 
         isListEnd = m_eLoopType == ANIMATION_MAX && m_iToIndex == 0;
 
         if(isListEnd)
         {
-            to = from = m_pMovementBoneData->getFrameData(m_iFromIndex);
+            to = from = frames[m_iFromIndex];
         }
-        else
-        {
-            from = m_pMovementBoneData->getFrameData(m_iFromIndex);
-            to = m_pMovementBoneData->getFrameData(m_iToIndex);
-        }
+// 		else
+// 		{
+// 			from = frames[m_iFromIndex];
+// 			to = frames[m_iToIndex];
+// 		}
 
         m_eFrameTweenEasing = from->tweenEasing;
 
         setBetween(from, to);
 
     }
-    currentPrecent = 1 - (m_iTotalDuration - playedTime) / (float)m_BetweenDuration;
+    currentPrecent = (playedTime - m_iTotalDuration) / (float)m_BetweenDuration;
 
 
     /*

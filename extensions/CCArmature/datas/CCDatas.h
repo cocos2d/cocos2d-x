@@ -285,6 +285,7 @@ public:
 
     virtual void copy(CCFrameData *frameData);
 public:
+	int frameID;
     int duration;                //! The frame will last m_iDuration frames
     CCTweenType tweenEasing;     //! Every frame's tween easing effect
 

@@ -124,7 +124,6 @@ protected:
     CCFrameData *m_pTo;				//! To frame data, used for calculate between value
     CCFrameData *m_pBetween;			//! Between frame data, used for calculate current CCFrameData(m_pNode) value
 
-    CCFrameData *m_pCurrentKeyFrame;	//! A weak reference to the current CCFrameData. The data is in the data pool
 
     CCBone *m_pBone;					//! A weak reference to the CCBone
 
