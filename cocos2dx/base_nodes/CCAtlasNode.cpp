@@ -87,7 +87,7 @@ bool AtlasNode::initWithTexture(Texture2D* texture, unsigned int tileWidth, unsi
     _itemWidth  = tileWidth;
     _itemHeight = tileHeight;
 
-    _colorUnmodified = Color3B::white;
+    _colorUnmodified = Color3B::WHITE;
     _isOpacityModifyRGB = true;
 
     _blendFunc.src = CC_BLEND_SRC;

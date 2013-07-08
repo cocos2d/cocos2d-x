@@ -251,7 +251,7 @@ bool MenuItemLabel::initWithLabel(Node* label, const ccMenuCallback& callback)
 {
     MenuItem::initWithCallback(callback);
     _originalScale = 1.0f;
-    _colorBackup = Color3B::white;
+    _colorBackup = Color3B::WHITE;
     setDisabledColor(Color3B(126,126,126));
     this->setLabel(label);
 

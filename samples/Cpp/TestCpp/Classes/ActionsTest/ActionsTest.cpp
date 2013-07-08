@@ -241,7 +241,7 @@ void ActionManual::onEnter()
     _grossini->setColor( Color3B( 255,0,0));
 
     _kathia->setPosition( ccp(s.width-100, s.height/2));
-    _kathia->setColor( Color3B::blue);
+    _kathia->setColor( Color3B::BLUE);
 }
 
 std::string ActionManual::subtitle()

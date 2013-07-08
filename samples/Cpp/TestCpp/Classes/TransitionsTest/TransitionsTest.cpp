@@ -9,7 +9,7 @@ class FadeWhiteTransition : public TransitionFade
 public:
     static TransitionScene* create(float t, Scene* s)
     {
-        return TransitionFade::create(t, s, Color3B::white); 
+        return TransitionFade::create(t, s, Color3B::WHITE); 
     }
 };
 

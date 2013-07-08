@@ -46,8 +46,8 @@ EditBoxImplAndroid::EditBoxImplAndroid(EditBox* pEditText)
 , _editBoxInputMode(kEditBoxInputModeSingleLine)
 , _editBoxInputFlag(kEditBoxInputFlagInitialCapsAllCharacters)
 , _keyboardReturnType(kKeyboardReturnTypeDefault)
-, _colText(Color3B::white)
-, _colPlaceHolder(Color3B::gray)
+, _colText(Color3B::WHITE)
+, _colPlaceHolder(Color3B::GRAY)
 , _maxLength(-1)
 {
     
