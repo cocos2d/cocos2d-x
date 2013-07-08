@@ -26,15 +26,15 @@
 
 NS_CC_BEGIN
 
-const Color3B Color3B::white(255,255,255);
-const Color3B Color3B::yellow(255,255,0);
-const Color3B Color3B::green(0,255,0);
-const Color3B Color3B::blue(0,0,255);
-const Color3B Color3B::red(255,0,0);
-const Color3B Color3B::magenta(255,0,255);
-const Color3B Color3B::black(0,0,0);
-const Color3B Color3B::orange(255,127,0);
-const Color3B Color3B::gray(166,166,166);
+const Color3B Color3B::WHITE(255,255,255);
+const Color3B Color3B::YELLOW(255,255,0);
+const Color3B Color3B::GREEN(0,255,0);
+const Color3B Color3B::BLUE(0,0,255);
+const Color3B Color3B::RED(255,0,0);
+const Color3B Color3B::MAGENTA(255,0,255);
+const Color3B Color3B::BLACK(0,0,0);
+const Color3B Color3B::ORANGE(255,127,0);
+const Color3B Color3B::GRAY(166,166,166);
 
 Color4B::Color4B(const Color4F &color4F)
 : r((GLubyte)(color4F.r * 255.0f)),
@@ -43,6 +43,6 @@ Color4B::Color4B(const Color4F &color4F)
   a((GLubyte)(color4F.a * 255.0f))
 {}
 
-const BlendFunc BlendFunc::blendFuncDisable = {GL_ONE, GL_ZERO};
+const BlendFunc BlendFunc::BLEND_FUNC_DISABLE = {GL_ONE, GL_ZERO};
 
 NS_CC_END

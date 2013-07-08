@@ -2,11 +2,11 @@
 
 
 static Color3B s_TouchColors[CC_MAX_TOUCHES] = {
-    Color3B::yellow,
-    Color3B::blue,
-    Color3B::green,
-    Color3B::red,
-    Color3B::magenta
+    Color3B::YELLOW,
+    Color3B::BLUE,
+    Color3B::GREEN,
+    Color3B::RED,
+    Color3B::MAGENTA
 };
 
 class TouchPoint : public Node

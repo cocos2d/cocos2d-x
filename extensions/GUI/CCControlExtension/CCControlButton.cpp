@@ -44,7 +44,7 @@ enum
 
 ControlButton::ControlButton()
 : _currentTitle(NULL)
-, _currentTitleColor(Color3B::white)
+, _currentTitleColor(Color3B::WHITE)
 , _doesAdjustBackgroundImage(false)
 , _titleLabel(NULL)
 , _backgroundSprite(NULL)
@@ -323,7 +323,7 @@ void ControlButton::setTitleForState(String* title, ControlState state)
 
 const Color3B ControlButton::getTitleColorForState(ControlState state)
 {
-    Color3B returnColor = Color3B::white;
+    Color3B returnColor = Color3B::WHITE;
     do 
     {
         CC_BREAK_IF(NULL == _titleColorDispatchTable);

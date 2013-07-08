@@ -255,21 +255,21 @@ void ControlStepper::updateLayoutUsingTouchLocation(Point location)
     {
         _touchedPart        = kControlStepperPartMinus;
         
-        _minusSprite->setColor(Color3B::gray);
-        _plusSprite->setColor(Color3B::white);
+        _minusSprite->setColor(Color3B::GRAY);
+        _plusSprite->setColor(Color3B::WHITE);
     } else if (location.x >= _minusSprite->getContentSize().width
                && _value < _maximumValue)
     {
         _touchedPart        = kControlStepperPartPlus;
         
-        _minusSprite->setColor(Color3B::white);
-        _plusSprite->setColor(Color3B::gray);
+        _minusSprite->setColor(Color3B::WHITE);
+        _plusSprite->setColor(Color3B::GRAY);
     } else
     {
         _touchedPart        = kControlStepperPartNone;
         
-        _minusSprite->setColor(Color3B::white);
-        _plusSprite->setColor(Color3B::white);
+        _minusSprite->setColor(Color3B::WHITE);
+        _plusSprite->setColor(Color3B::WHITE);
     }
 }
 
@@ -316,8 +316,8 @@ void ControlStepper::ccTouchMoved(Touch *pTouch, Event *pEvent)
         
         _touchedPart        = kControlStepperPartNone;
         
-        _minusSprite->setColor(Color3B::white);
-        _plusSprite->setColor(Color3B::white);
+        _minusSprite->setColor(Color3B::WHITE);
+        _plusSprite->setColor(Color3B::WHITE);
         
         if (_autorepeat)
         {
@@ -328,8 +328,8 @@ void ControlStepper::ccTouchMoved(Touch *pTouch, Event *pEvent)
 
 void ControlStepper::ccTouchEnded(Touch *pTouch, Event *pEvent)
 {
-    _minusSprite->setColor(Color3B::white);
-    _plusSprite->setColor(Color3B::white);
+    _minusSprite->setColor(Color3B::WHITE);
+    _plusSprite->setColor(Color3B::WHITE);
     
     if (_autorepeat)
     {

@@ -507,7 +507,7 @@ bool LabelBMFont::initWithString(const char *theString, const char *fntFile, flo
         _alignment = alignment;
         
         _displayedOpacity = _realOpacity = 255;
-		_displayedColor = _realColor = Color3B::white;
+		_displayedColor = _realColor = Color3B::WHITE;
         _cascadeOpacityEnabled = true;
         _cascadeColorEnabled = true;
         
@@ -540,8 +540,8 @@ LabelBMFont::LabelBMFont()
 , _reusedChar(NULL)
 , _displayedOpacity(255)
 , _realOpacity(255)
-, _displayedColor(Color3B::white)
-, _realColor(Color3B::white)
+, _displayedColor(Color3B::WHITE)
+, _realColor(Color3B::WHITE)
 , _cascadeColorEnabled(true)
 , _cascadeOpacityEnabled(true)
 , _isOpacityModifyRGB(false)
@@ -803,7 +803,7 @@ void LabelBMFont::setColor(const Color3B& color)
 	_displayedColor = _realColor = color;
 	
 	if( _cascadeColorEnabled ) {
-		Color3B parentColor = Color3B::white;
+		Color3B parentColor = Color3B::WHITE;
         RGBAProtocol* pParent = dynamic_cast<RGBAProtocol*>(_parent);
         if (pParent && pParent->isCascadeColorEnabled())
         {
