@@ -130,16 +130,26 @@ GridBase* TiledGrid3DAction::getGrid(void)
     return TiledGrid3D::create(_gridSize);
 }
 
-Quad3 TiledGrid3DAction::tile(const Point& pos)
+Quad3 TiledGrid3DAction::getTile(const Point& pos)
 {
     TiledGrid3D *g = (TiledGrid3D*)_target->getGrid();
     return g->tile(pos);
 }
 
-Quad3 TiledGrid3DAction::originalTile(const Point& pos)
+Quad3 TiledGrid3DAction::getOriginalTile(const Point& pos)
 {
     TiledGrid3D *g = (TiledGrid3D*)_target->getGrid();
     return g->originalTile(pos);
+}
+
+Quad3 TiledGrid3DAction::tile(const Point& pos)
+{
+    return getTile(pos);
+}
+
+Quad3 TiledGrid3DAction::originalTile(const Point& pos)
+{
+    return getOriginalTile(pos);
 }
 
 void TiledGrid3DAction::setTile(const Point& pos, const Quad3& coords)

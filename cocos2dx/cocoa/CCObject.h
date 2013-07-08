@@ -43,13 +43,6 @@ class Object;
 class Node;
 class Event;
 
-class CC_DLL Copying
-{
-public:
-    virtual Object* copyWithZone(Zone* pZone);
-	
-};
-
 /** Interface that defines how to clone an object */
 class CC_DLL Clonable
 {
@@ -59,7 +52,7 @@ public:
 	virtual ~Clonable() {};
 };
 
-class CC_DLL Object : public Copying
+class CC_DLL Object
 {
 public:
     // object id, ScriptSupport need public _ID
@@ -78,7 +71,6 @@ public:
     void release(void);
     void retain(void);
     Object* autorelease(void);
-    Object* copy(void);
     bool isSingleReference(void) const;
     unsigned int retainCount(void) const;
     virtual bool isEqual(const Object* pObject);

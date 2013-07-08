@@ -40,7 +40,7 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL String : public Object
+class CC_DLL String : public Object, public Clonable
 {
 public:
     String();
@@ -81,7 +81,6 @@ public:
     int compare(const char *) const;
 
     /* override functions */
-    virtual Object* copyWithZone(Zone* pZone);
     virtual bool isEqual(const Object* pObject);
 
     /** create a string with std string, you can also pass a c string pointer because the default constructor of std::string can access a c string pointer. 
@@ -110,7 +109,8 @@ public:
     static String* createWithContentsOfFile(const char* pszFileName);
 
     virtual void acceptVisitor(DataVisitor &visitor);
-
+    virtual String* clone() const;
+    
 private:
 
     /** only for internal use */
