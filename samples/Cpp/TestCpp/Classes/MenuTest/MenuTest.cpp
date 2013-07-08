@@ -541,7 +541,7 @@ void BugsTest::issue1410MenuCallback(Object *sender)
 
 void BugsTest::issue1410v2MenuCallback(cocos2d::Object *pSender)
 {
-    Menu *menu = (Menu*)((MenuItem*)pSender)->getParent();
+    Menu *menu = static_cast<Menu*>( static_cast<MenuItem*>(pSender)->getParent() );
     menu->setTouchEnabled(true);
     menu->setTouchEnabled(false);
     
@@ -550,7 +550,7 @@ void BugsTest::issue1410v2MenuCallback(cocos2d::Object *pSender)
 
 void BugsTest::backMenuCallback(cocos2d::Object *pSender)
 {
-    ((LayerMultiplex*)_parent)->switchTo(0);
+    static_cast<LayerMultiplex*>(_parent)->switchTo(0);
 }
 
 RemoveMenuItemWhenMove::RemoveMenuItemWhenMove()
@@ -577,7 +577,7 @@ RemoveMenuItemWhenMove::RemoveMenuItemWhenMove()
 
 void RemoveMenuItemWhenMove::goBack(Object *pSender)
 {
-    ((LayerMultiplex*)_parent)->switchTo(0);
+    static_cast<LayerMultiplex*>(_parent)->switchTo(0);
 }
 
 RemoveMenuItemWhenMove::~RemoveMenuItemWhenMove()
