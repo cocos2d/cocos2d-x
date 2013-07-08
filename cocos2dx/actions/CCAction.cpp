@@ -48,7 +48,7 @@ Action::~Action()
     CCLOGINFO("cocos2d: deallocing");
 }
 
-const char* Action::description()
+const char* Action::description() const
 {
     return String::createWithFormat("<Action | Tag = %d>", _tag)->getCString();
 }
@@ -63,7 +63,7 @@ void Action::stop()
     _target = NULL;
 }
 
-bool Action::isDone()
+bool Action::isDone() const
 {
     return true;
 }
@@ -162,7 +162,7 @@ void Speed::step(float dt)
     _innerAction->step(dt * _speed);
 }
 
-bool Speed::isDone()
+bool Speed::isDone() const
 {
     return _innerAction->isDone();
 }
@@ -304,7 +304,7 @@ void Follow::step(float dt)
     }
 }
 
-bool Follow::isDone()
+bool Follow::isDone() const
 {
     return ( !_followedNode->isRunning() );
 }

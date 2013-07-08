@@ -206,7 +206,7 @@ void TextureAtlas::listenBackToForeground(Object *obj)
     _dirty = true;
 }
 
-const char* TextureAtlas::description()
+const char* TextureAtlas::description() const
 {
     return String::createWithFormat("<TextureAtlas | totalQuads = %u>", _totalQuads)->getCString();
 }

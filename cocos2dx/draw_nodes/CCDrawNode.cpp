@@ -229,10 +229,10 @@ void DrawNode::drawDot(const Point &pos, float radius, const Color4F &color)
     unsigned int vertex_count = 2*3;
     ensureCapacity(vertex_count);
 	
-	V2F_C4B_T2F a = {Vertex2F(pos.x - radius, pos.y - radius), Color4F(color), Tex2F(-1.0, -1.0) };
-	V2F_C4B_T2F b = {Vertex2F(pos.x - radius, pos.y + radius), Color4F(color), Tex2F(-1.0,  1.0) };
-	V2F_C4B_T2F c = {Vertex2F(pos.x + radius, pos.y + radius), Color4F(color), Tex2F( 1.0,  1.0) };
-	V2F_C4B_T2F d = {Vertex2F(pos.x + radius, pos.y - radius), Color4F(color), Tex2F( 1.0, -1.0) };
+	V2F_C4B_T2F a = {Vertex2F(pos.x - radius, pos.y - radius), Color4B(color), Tex2F(-1.0, -1.0) };
+	V2F_C4B_T2F b = {Vertex2F(pos.x - radius, pos.y + radius), Color4B(color), Tex2F(-1.0,  1.0) };
+	V2F_C4B_T2F c = {Vertex2F(pos.x + radius, pos.y + radius), Color4B(color), Tex2F( 1.0,  1.0) };
+	V2F_C4B_T2F d = {Vertex2F(pos.x + radius, pos.y - radius), Color4B(color), Tex2F( 1.0, -1.0) };
 	
 	V2F_C4B_T2F_Triangle *triangles = (V2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
     V2F_C4B_T2F_Triangle triangle0 = {a, b, c};
@@ -272,44 +272,44 @@ void DrawNode::drawSegment(const Point &from, const Point &to, float radius, con
 	V2F_C4B_T2F_Triangle *triangles = (V2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
 	
     V2F_C4B_T2F_Triangle triangles0 = {
-        {v0, Color4F(color), __t(v2fneg(v2fadd(n, t)))},
-        {v1, Color4F(color), __t(v2fsub(n, t))},
-        {v2, Color4F(color), __t(v2fneg(n))},
+        {v0, Color4B(color), __t(v2fneg(v2fadd(n, t)))},
+        {v1, Color4B(color), __t(v2fsub(n, t))},
+        {v2, Color4B(color), __t(v2fneg(n))},
     };
 	triangles[0] = triangles0;
 	
     V2F_C4B_T2F_Triangle triangles1 = {
-        {v3, Color4F(color), __t(n)},
-        {v1, Color4F(color), __t(v2fsub(n, t))},
-        {v2, Color4F(color), __t(v2fneg(n))},
+        {v3, Color4B(color), __t(n)},
+        {v1, Color4B(color), __t(v2fsub(n, t))},
+        {v2, Color4B(color), __t(v2fneg(n))},
     };
 	triangles[1] = triangles1;
 	
     V2F_C4B_T2F_Triangle triangles2 = {
-        {v3, Color4F(color), __t(n)},
-        {v4, Color4F(color), __t(v2fneg(n))},
-        {v2, Color4F(color), __t(v2fneg(n))},
+        {v3, Color4B(color), __t(n)},
+        {v4, Color4B(color), __t(v2fneg(n))},
+        {v2, Color4B(color), __t(v2fneg(n))},
     };
 	triangles[2] = triangles2;
 
     V2F_C4B_T2F_Triangle triangles3 = {
-        {v3, Color4F(color), __t(n)},
-        {v4, Color4F(color), __t(v2fneg(n))},
-        {v5, Color4F(color), __t(n) },
+        {v3, Color4B(color), __t(n)},
+        {v4, Color4B(color), __t(v2fneg(n))},
+        {v5, Color4B(color), __t(n) },
     };
     triangles[3] = triangles3;
 
     V2F_C4B_T2F_Triangle triangles4 = {
-        {v6, Color4F(color), __t(v2fsub(t, n))},
-        {v4, Color4F(color), __t(v2fneg(n)) },
-        {v5, Color4F(color), __t(n)},
+        {v6, Color4B(color), __t(v2fsub(t, n))},
+        {v4, Color4B(color), __t(v2fneg(n)) },
+        {v5, Color4B(color), __t(n)},
     };
 	triangles[4] = triangles4;
 
     V2F_C4B_T2F_Triangle triangles5 = {
-        {v6, Color4F(color), __t(v2fsub(t, n))},
-        {v7, Color4F(color), __t(v2fadd(n, t))},
-        {v5, Color4F(color), __t(n)},
+        {v6, Color4B(color), __t(v2fsub(t, n))},
+        {v7, Color4B(color), __t(v2fadd(n, t))},
+        {v5, Color4B(color), __t(n)},
     };
 	triangles[5] = triangles5;
 	
@@ -355,9 +355,9 @@ void DrawNode::drawPolygon(Point *verts, unsigned int count, const Color4F &fill
 		Vertex2F v2 = v2fsub(__v2f(verts[i+2]), v2fmult(extrude[i+2].offset, inset));
 		
         V2F_C4B_T2F_Triangle tmp = {
-            {v0, Color4F(fillColor), __t(v2fzero)},
-            {v1, Color4F(fillColor), __t(v2fzero)},
-            {v2, Color4F(fillColor), __t(v2fzero)},
+            {v0, Color4B(fillColor), __t(v2fzero)},
+            {v1, Color4B(fillColor), __t(v2fzero)},
+            {v2, Color4B(fillColor), __t(v2fzero)},
         };
 
 		*cursor++ = tmp;
@@ -382,16 +382,16 @@ void DrawNode::drawPolygon(Point *verts, unsigned int count, const Color4F &fill
 			Vertex2F outer1 = v2fadd(v1, v2fmult(offset1, borderWidth));
 			
             V2F_C4B_T2F_Triangle tmp1 = {
-                {inner0, Color4F(borderColor), __t(v2fneg(n0))},
-                {inner1, Color4F(borderColor), __t(v2fneg(n0))},
-                {outer1, Color4F(borderColor), __t(n0)}
+                {inner0, Color4B(borderColor), __t(v2fneg(n0))},
+                {inner1, Color4B(borderColor), __t(v2fneg(n0))},
+                {outer1, Color4B(borderColor), __t(n0)}
             };
 			*cursor++ = tmp1;
 
             V2F_C4B_T2F_Triangle tmp2 = {
-                {inner0, Color4F(borderColor), __t(v2fneg(n0))},
-                {outer0, Color4F(borderColor), __t(n0)},
-                {outer1, Color4F(borderColor), __t(n0)}
+                {inner0, Color4B(borderColor), __t(v2fneg(n0))},
+                {outer0, Color4B(borderColor), __t(n0)},
+                {outer1, Color4B(borderColor), __t(n0)}
             };
 			*cursor++ = tmp2;
 		}
@@ -402,16 +402,16 @@ void DrawNode::drawPolygon(Point *verts, unsigned int count, const Color4F &fill
 			Vertex2F outer1 = v2fadd(v1, v2fmult(offset1, 0.5));
 			
             V2F_C4B_T2F_Triangle tmp1 = {
-                {inner0, Color4F(fillColor), __t(v2fzero)},
-                {inner1, Color4F(fillColor), __t(v2fzero)},
-                {outer1, Color4F(fillColor), __t(n0)}
+                {inner0, Color4B(fillColor), __t(v2fzero)},
+                {inner1, Color4B(fillColor), __t(v2fzero)},
+                {outer1, Color4B(fillColor), __t(n0)}
             };
 			*cursor++ = tmp1;
 
             V2F_C4B_T2F_Triangle tmp2 = {
-                {inner0, Color4F(fillColor), __t(v2fzero)},
-                {outer0, Color4F(fillColor), __t(n0)},
-                {outer1, Color4F(fillColor), __t(n0)}
+                {inner0, Color4B(fillColor), __t(v2fzero)},
+                {outer0, Color4B(fillColor), __t(n0)},
+                {outer1, Color4B(fillColor), __t(n0)}
             };
 			*cursor++ = tmp2;
 		}

@@ -108,7 +108,7 @@ bool ActionInterval::initWithDuration(float d)
     return true;
 }
 
-bool ActionInterval::isDone(void)
+bool ActionInterval::isDone(void) const
 {
     return _elapsed >= _duration;
 }
@@ -511,7 +511,7 @@ void Repeat::update(float dt)
     }
 }
 
-bool Repeat::isDone(void)
+bool Repeat::isDone(void) const
 {
     return _total == _times;
 }
@@ -597,7 +597,7 @@ void RepeatForever::step(float dt)
     }
 }
 
-bool RepeatForever::isDone()
+bool RepeatForever::isDone() const
 {
     return false;
 }

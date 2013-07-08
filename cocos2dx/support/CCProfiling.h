@@ -71,7 +71,7 @@ class ProfilingTimer : public Object
 public:
     bool initWithName(const char* timerName);
     ~ProfilingTimer(void);
-    const char* description(void);
+    const char* description(void) const;
     inline struct cc_timeval * getStartTime(void) { return &_startTime; };
     inline void setAverageTime(double value) { _averageTime = value; }
     inline double getAverageTime(void) { return _averageTime; }

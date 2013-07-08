@@ -333,7 +333,7 @@ void ShuffleTiles::shuffle(unsigned int *pArray, unsigned int nLen)
     }
 }
 
-Size ShuffleTiles::getDelta(const Size& pos)
+Size ShuffleTiles::getDelta(const Size& pos) const
 {
     Point    pos2;
 

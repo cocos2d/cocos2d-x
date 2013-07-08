@@ -86,7 +86,7 @@ struct Color4B
     Color4B(): r(0.f), g(0.f), b(0.f), a(0.f) {}
     
     // This function should use Color4F, so implement it in .cpp file.
-    Color4B(const Color4F &color4F);
+    explicit Color4B(const Color4F &color4F);
 
     GLubyte r;
     GLubyte g;
@@ -107,14 +107,14 @@ struct Color4F
     a(_a)
     {}
     
-    Color4F(const Color3B &color3B)
+    explicit Color4F(const Color3B &color3B)
     :r(color3B.r)
     ,g(color3B.g)
     ,b(color3B.b)
     ,a(1.f)
     {}
     
-    Color4F(const Color4B &color4B)
+    explicit Color4F(const Color4B &color4B)
     :r(color4B.r / 255.0f),
     g(color4B.g / 255.0f),
     b(color4B.b / 255.0f),

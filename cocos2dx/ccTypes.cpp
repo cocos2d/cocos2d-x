@@ -37,10 +37,10 @@ const Color3B Color3B::orange(255,127,0);
 const Color3B Color3B::gray(166,166,166);
 
 Color4B::Color4B(const Color4F &color4F)
-:r((GLubyte)color4F.r * 255),
-g((GLubyte)color4F.g * 255),
-b((GLubyte)color4F.b * 255),
-a((GLubyte)color4F.a * 255)
+: r((GLubyte)(color4F.r * 255.0f)),
+  g((GLubyte)(color4F.g * 255.0f)),
+  b((GLubyte)(color4F.b * 255.0f)),
+  a((GLubyte)(color4F.a * 255.0f))
 {}
 
 const BlendFunc BlendFunc::blendFuncDisable = {GL_ONE, GL_ZERO};
