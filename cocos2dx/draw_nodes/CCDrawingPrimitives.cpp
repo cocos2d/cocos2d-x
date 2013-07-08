@@ -383,6 +383,52 @@ void CC_DLL ccDrawCircle( const Point& center, float radius, float angle, unsign
     ccDrawCircle(center, radius, angle, segments, drawLineToCenter, 1.0f, 1.0f);
 }
 
+void ccDrawSolidCircle( const Point& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY)
+{
+    lazy_init();
+    
+    const float coef = 2.0f * (float)M_PI/segments;
+    
+    GLfloat *vertices = (GLfloat*)calloc( sizeof(GLfloat)*2*(segments+2), 1);
+    if( ! vertices )
+        return;
+    
+    for(unsigned int i = 0;i <= segments; i++) {
+        float rads = i*coef;
+        GLfloat j = radius * cosf(rads + angle) * scaleX + center.x;
+        GLfloat k = radius * sinf(rads + angle) * scaleY + center.y;
+        
+        vertices[i*2] = j;
+        vertices[i*2+1] = k;
+    }
+    vertices[(segments+1)*2] = center.x;
+    vertices[(segments+1)*2+1] = center.y;
+    
+    s_pShader->use();
+    s_pShader->setUniformsForBuiltins();
+    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
+    
+    ccGLEnableVertexAttribs( kVertexAttribFlag_Position );
+    
+#ifdef EMSCRIPTEN
+    setGLBufferData(vertices, sizeof(GLfloat)*2*(segments+2));
+    glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
+#else
+    glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+#endif // EMSCRIPTEN
+    
+    glDrawArrays(GL_TRIANGLE_FAN, 0, (GLsizei) segments+1);
+    
+    free( vertices );
+    
+    CC_INCREMENT_GL_DRAWS(1);
+}
+
+void CC_DLL ccDrawSolidCircle( const Point& center, float radius, float angle, unsigned int segments)
+{
+    ccDrawSolidCircle(center, radius, angle, segments, 1.0f, 1.0f);
+}
+
 void ccDrawQuadBezier(const Point& origin, const Point& control, const Point& destination, unsigned int segments)
 {
     lazy_init();

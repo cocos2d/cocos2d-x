@@ -138,6 +138,7 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bo
     _scale9Image->removeAllChildrenWithCleanup(true);
 
     _capInsets = capInsets;
+    _spriteFrameRotated = rotated;
     
     // If there is no given rect
     if ( rect.equals(RectZero) )
@@ -718,7 +719,7 @@ void Scale9Sprite::setOpacityModifyRGB(bool var)
         }
     }
 }
-bool Scale9Sprite::isOpacityModifyRGB()
+bool Scale9Sprite::isOpacityModifyRGB() const
 {
     return _opacityModifyRGB;
 }
@@ -805,7 +806,7 @@ void Scale9Sprite::setColor(const ccColor3B& color)
     }
 }
 
-const ccColor3B& Scale9Sprite::getColor()
+const ccColor3B& Scale9Sprite::getColor() const
 {
 	return _color;
 }
@@ -826,7 +827,7 @@ void Scale9Sprite::setOpacity(GLubyte opacity)
     }
 }
 
-GLubyte Scale9Sprite::getOpacity()
+GLubyte Scale9Sprite::getOpacity() const
 {
 	return _opacity;
 }

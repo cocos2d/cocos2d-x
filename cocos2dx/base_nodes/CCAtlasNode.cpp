@@ -152,7 +152,7 @@ void AtlasNode::draw(void)
 
 // AtlasNode - RGBA protocol
 
-const ccColor3B& AtlasNode::getColor()
+const ccColor3B& AtlasNode::getColor() const
 {
     if(_isOpacityModifyRGB)
     {
@@ -191,7 +191,7 @@ void AtlasNode::setOpacityModifyRGB(bool bValue)
     this->setColor(oldColor);
 }
 
-bool AtlasNode::isOpacityModifyRGB()
+bool AtlasNode::isOpacityModifyRGB() const
 {
     return _isOpacityModifyRGB;
 }
@@ -208,12 +208,12 @@ void AtlasNode::setIgnoreContentScaleFactor(bool bIgnoreContentScaleFactor)
 
 // AtlasNode - CocosNodeTexture protocol
 
-ccBlendFunc AtlasNode::getBlendFunc()
+const ccBlendFunc& AtlasNode::getBlendFunc() const
 {
     return _blendFunc;
 }
 
-void AtlasNode::setBlendFunc(ccBlendFunc blendFunc)
+void AtlasNode::setBlendFunc(const ccBlendFunc &blendFunc)
 {
     _blendFunc = blendFunc;
 }

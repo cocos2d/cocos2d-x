@@ -1046,7 +1046,7 @@ void ParticleSystem::setDuration(float var)
     _duration = var;
 }
 
-const Point& ParticleSystem::getSourcePosition()
+const Point& ParticleSystem::getSourcePosition() const
 {
     return _sourcePosition;
 }
@@ -1056,7 +1056,7 @@ void ParticleSystem::setSourcePosition(const Point& var)
     _sourcePosition = var;
 }
 
-const Point& ParticleSystem::getPosVar()
+const Point& ParticleSystem::getPosVar() const
 {
     return _posVar;
 }
@@ -1146,7 +1146,7 @@ void ParticleSystem::setEndSizeVar(float var)
     _endSizeVar = var;
 }
 
-const ccColor4F& ParticleSystem::getStartColor()
+const ccColor4F& ParticleSystem::getStartColor() const
 {
     return _startColor;
 }
@@ -1156,7 +1156,7 @@ void ParticleSystem::setStartColor(const ccColor4F& var)
     _startColor = var;
 }
 
-const ccColor4F& ParticleSystem::getStartColorVar()
+const ccColor4F& ParticleSystem::getStartColorVar() const
 {
     return _startColorVar;
 }
@@ -1166,7 +1166,7 @@ void ParticleSystem::setStartColorVar(const ccColor4F& var)
     _startColorVar = var;
 }
 
-const ccColor4F& ParticleSystem::getEndColor()
+const ccColor4F& ParticleSystem::getEndColor() const
 {
     return _endColor;
 }
@@ -1176,7 +1176,7 @@ void ParticleSystem::setEndColor(const ccColor4F& var)
     _endColor = var;
 }
 
-const ccColor4F& ParticleSystem::getEndColorVar()
+const ccColor4F& ParticleSystem::getEndColorVar() const
 {
     return _endColorVar;
 }
@@ -1246,12 +1246,12 @@ void ParticleSystem::setTotalParticles(unsigned int var)
     _totalParticles = var;
 }
 
-ccBlendFunc ParticleSystem::getBlendFunc()
+const ccBlendFunc& ParticleSystem::getBlendFunc() const
 {
     return _blendFunc;
 }
 
-void ParticleSystem::setBlendFunc(ccBlendFunc blendFunc)
+void ParticleSystem::setBlendFunc(const ccBlendFunc &blendFunc)
 {
     if( _blendFunc.src != blendFunc.src || _blendFunc.dst != blendFunc.dst ) {
         _blendFunc = blendFunc;

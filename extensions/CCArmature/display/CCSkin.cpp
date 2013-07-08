@@ -74,7 +74,7 @@ void Skin::setSkinData(const BaseData &var)
     _skinTransform = nodeToParentTransform();
 }
 
-const BaseData &Skin::getSkinData()
+const BaseData &Skin::getSkinData() const
 {
     return _skinData;
 }

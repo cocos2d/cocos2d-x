@@ -284,7 +284,7 @@ CardinalSplineTo* CardinalSplineTo::clone() const
 {
 	// no copy constructor
 	auto a = new CardinalSplineTo();
-	a->initWithDuration(this->_duration, this->_points, this->_tension);
+	a->initWithDuration(this->_duration, this->_points->clone(), this->_tension);
 	a->autorelease();
 	return a;
 }
