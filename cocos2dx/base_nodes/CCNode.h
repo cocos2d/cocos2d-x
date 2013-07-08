@@ -1435,10 +1435,10 @@ public:
     virtual bool isCascadeOpacityEnabled() const;
     virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
     
-    virtual const ccColor3B& getColor(void) const;
-    virtual const ccColor3B& getDisplayedColor() const;
-    virtual void setColor(const ccColor3B& color);
-    virtual void updateDisplayedColor(const ccColor3B& parentColor);
+    virtual const Color3B& getColor(void) const;
+    virtual const Color3B& getDisplayedColor() const;
+    virtual void setColor(const Color3B& color);
+    virtual void updateDisplayedColor(const Color3B& parentColor);
     virtual bool isCascadeColorEnabled() const;
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
     
@@ -1448,8 +1448,8 @@ public:
 protected:
 	GLubyte		_displayedOpacity;
     GLubyte     _realOpacity;
-	ccColor3B	_displayedColor;
-    ccColor3B   _realColor;
+	Color3B	_displayedColor;
+    Color3B   _realColor;
 	bool		_cascadeColorEnabled;
     bool        _cascadeOpacityEnabled;
 };

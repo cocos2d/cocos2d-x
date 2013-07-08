@@ -345,10 +345,10 @@ local function initWithMainTest(scene, asubtest, nNodes)
     CCMenuItemFont:setFontSize(65)
     local decrease = CCMenuItemFont:create(" - ")
 	decrease:registerScriptTapHandler(onDecrease)
-    decrease:setColor(ccc3(0, 200, 20))
+    decrease:setColor(Color3B(0, 200, 20))
     local increase = CCMenuItemFont:create(" + ")
 	increase:registerScriptTapHandler(onIncrease)
-    increase:setColor(ccc3(0, 200, 20))
+    increase:setColor(Color3B(0, 200, 20))
 
     local menu = CCMenu:create()
 	menu:addChild(decrease)
@@ -358,7 +358,7 @@ local function initWithMainTest(scene, asubtest, nNodes)
     scene:addChild(menu, 1)
 
     infoLabel = CCLabelTTF:create("0 nodes", "Marker Felt", 30)
-    infoLabel:setColor(ccc3(0, 200, 20))
+    infoLabel:setColor(Color3B(0, 200, 20))
     infoLabel:setPosition(s.width / 2, s.height - 90)
     scene:addChild(infoLabel, 1)
 
@@ -375,11 +375,11 @@ local function initWithMainTest(scene, asubtest, nNodes)
         subMenu:addChild(itemFont, kBasicZOrder + i, kBasicZOrder + i)
 
         if i <= 3 then
-            itemFont:setColor(ccc3(200, 20, 20))
+            itemFont:setColor(Color3B(200, 20, 20))
         elseif i <= 6 then
-            itemFont:setColor(ccc3(0, 200, 20))
+            itemFont:setColor(Color3B(0, 200, 20))
         else
-            itemFont:setColor(ccc3(0, 20, 200))
+            itemFont:setColor(Color3B(0, 20, 200))
 		end
 	end
 
@@ -391,7 +391,7 @@ local function initWithMainTest(scene, asubtest, nNodes)
     titleLabel = CCLabelTTF:create("No title", "Arial", 40)
     scene:addChild(titleLabel, 1)
     titleLabel:setPosition(s.width / 2, s.height - 32)
-    titleLabel:setColor(ccc3(255, 255, 40))
+    titleLabel:setColor(Color3B(255, 255, 40))
 
     while quantityNodes < nNodes do
         onIncrease()

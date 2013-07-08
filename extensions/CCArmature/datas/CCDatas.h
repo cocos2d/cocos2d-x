@@ -394,9 +394,9 @@ public:
 };
 
 
-struct ContourVertex2 : public Object
+struct ContourVertex2F : public Object
 {
-    ContourVertex2(float x, float y)
+    ContourVertex2F(float x, float y)
     {
         this->x = x;
         this->y = y;

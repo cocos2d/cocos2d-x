@@ -117,11 +117,17 @@ public:
     ~Grid3D(void);
 
     /** returns the vertex at a given position */
-    ccVertex3F vertex(const Point& pos);
+    CC_DEPRECATED_ATTRIBUTE Vertex3F vertex(const Point& pos);
     /** returns the original (non-transformed) vertex at a given position */
-    ccVertex3F originalVertex(const Point& pos);
+    CC_DEPRECATED_ATTRIBUTE Vertex3F originalVertex(const Point& pos);
+
+    /** returns the vertex at a given position */
+    Vertex3F getVertex(const Point& pos);
+    /** returns the original (non-transformed) vertex at a given position */
+    Vertex3F getOriginalVertex(const Point& pos);
+
     /** sets a new vertex at a given position */
-    void setVertex(const Point& pos, const ccVertex3F& vertex);
+    void setVertex(const Point& pos, const Vertex3F& vertex);
 
     virtual void blit(void);
     virtual void reuse(void);
@@ -154,11 +160,11 @@ public:
     ~TiledGrid3D(void);
 
     /** returns the tile at the given position */
-    ccQuad3 tile(const Point& pos);
+    Quad3 tile(const Point& pos);
     /** returns the original tile (untransformed) at the given position */
-    ccQuad3 originalTile(const Point& pos);
+    Quad3 originalTile(const Point& pos);
     /** sets a new tile */
-    void setTile(const Point& pos, const ccQuad3& coords);
+    void setTile(const Point& pos, const Quad3& coords);
 
     virtual void blit(void);
     virtual void reuse(void);

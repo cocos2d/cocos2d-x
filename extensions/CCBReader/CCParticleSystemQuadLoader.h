@@ -21,8 +21,8 @@ class ParticleSystemQuadLoader : public NodeLoader {
         virtual void onHandlePropTypeFloat(Node * pNode, Node * pParent, const char * pPropertyName, float pFloat, CCBReader * pCCBReader);
         virtual void onHandlePropTypeInteger(Node * pNode, Node * pParent, const char * pPropertyName, int pInteger, CCBReader * pCCBReader);
         virtual void onHandlePropTypeFloatVar(Node * pNode, Node * pParent, const char * pPropertyName, float * pFloatVar, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeColor4FVar(Node * pNode, Node * pParent, const char * pPropertyName, ccColor4F * pColor4FVar, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const char * pPropertyName, ccBlendFunc pBlendFunc, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeColor4FVar(Node * pNode, Node * pParent, const char * pPropertyName, Color4F * pColor4FVar, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const char * pPropertyName, BlendFunc pBlendFunc, CCBReader * pCCBReader);
         virtual void onHandlePropTypeTexture(Node * pNode, Node * pParent, const char * pPropertyName, Texture2D * pTexture2D, CCBReader * pCCBReader);
 };
 

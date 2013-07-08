@@ -10,7 +10,7 @@ NS_CC_EXT_BEGIN
 #define PROPERTY_FNTFILE "fntFile"
 #define PROPERTY_STRING "string"
 
-void LabelBMFontLoader::onHandlePropTypeColor3(Node * pNode, Node * pParent, const char * pPropertyName, ccColor3B pColor3B, CCBReader * pCCBReader) {
+void LabelBMFontLoader::onHandlePropTypeColor3(Node * pNode, Node * pParent, const char * pPropertyName, Color3B pColor3B, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_COLOR) == 0) {
         ((LabelBMFont *)pNode)->setColor(pColor3B);
     } else {
@@ -26,7 +26,7 @@ void LabelBMFontLoader::onHandlePropTypeByte(Node * pNode, Node * pParent, const
     }
 }
 
-void LabelBMFontLoader::onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const char * pPropertyName, ccBlendFunc pBlendFunc, CCBReader * pCCBReader) {
+void LabelBMFontLoader::onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const char * pPropertyName, BlendFunc pBlendFunc, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_BLENDFUNC) == 0) {
         ((LabelBMFont *)pNode)->setBlendFunc(pBlendFunc);
     } else {

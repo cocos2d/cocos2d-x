@@ -8,7 +8,7 @@ NS_CC_EXT_BEGIN
 #define PROPERTY_OPACITY "opacity"
 #define PROPERTY_BLENDFUNC "blendFunc"
 
-void LayerColorLoader::onHandlePropTypeColor3(Node * pNode, Node * pParent, const char * pPropertyName, ccColor3B pColor3B, CCBReader * pCCBReader) {
+void LayerColorLoader::onHandlePropTypeColor3(Node * pNode, Node * pParent, const char * pPropertyName, Color3B pColor3B, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_COLOR) == 0) {
         ((LayerColor *)pNode)->setColor(pColor3B);
     } else {
@@ -24,7 +24,7 @@ void LayerColorLoader::onHandlePropTypeByte(Node * pNode, Node * pParent, const 
     }
 }
 
-void LayerColorLoader::onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const char * pPropertyName, ccBlendFunc pBlendFunc, CCBReader * pCCBReader) {
+void LayerColorLoader::onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const char * pPropertyName, BlendFunc pBlendFunc, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_BLENDFUNC) == 0) {
         ((LayerColor *)pNode)->setBlendFunc(pBlendFunc);
     } else {

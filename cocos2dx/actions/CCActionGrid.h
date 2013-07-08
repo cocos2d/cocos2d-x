@@ -74,11 +74,11 @@ public:
     /** returns the grid */
     virtual GridBase* getGrid(void);
     /** returns the vertex than belongs to certain position in the grid */
-    ccVertex3F vertex(const Point& position);
+    Vertex3F vertex(const Point& position);
     /** returns the non-transformed vertex than belongs to certain position in the grid */
-    ccVertex3F originalVertex(const Point& position);
+    Vertex3F originalVertex(const Point& position);
     /** sets a new vertex to a certain position of the grid */
-    void setVertex(const Point& position, const ccVertex3F& vertex);
+    void setVertex(const Point& position, const Vertex3F& vertex);
 };
 
 /** @brief Base class for TiledGrid3D actions */
@@ -89,11 +89,11 @@ public:
 	virtual TiledGrid3DAction * clone() const = 0;
 
     /** returns the tile that belongs to a certain position of the grid */
-    ccQuad3 tile(const Point& position);
+    Quad3 tile(const Point& position);
     /** returns the non-transformed tile that belongs to a certain position of the grid */
-    ccQuad3 originalTile(const Point& position);
+    Quad3 originalTile(const Point& position);
     /** sets a new tile to a certain position of the grid */
-    void setTile(const Point& position, const ccQuad3& coords);
+    void setTile(const Point& position, const Quad3& coords);
 
     /** returns the grid */
     virtual GridBase* getGrid(void);

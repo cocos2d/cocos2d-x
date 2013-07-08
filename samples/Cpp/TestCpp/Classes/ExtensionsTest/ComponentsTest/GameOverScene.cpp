@@ -57,12 +57,12 @@ GameOverScene::~GameOverScene()
 
 bool GameOverLayer::init()
 {
-	if ( LayerColor::initWithColor( ccc4(255,255,255,255) ) )
+	if ( LayerColor::initWithColor( Color4B(255,255,255,255) ) )
 	{
 		Size winSize = Director::sharedDirector()->getWinSize();
 		this->_label = LabelTTF::create("","Artial", 32);
 		_label->retain();
-		_label->setColor( ccc3(0, 0, 0) );
+		_label->setColor( Color3B(0, 0, 0) );
 		_label->setPosition( ccp(winSize.width/2, winSize.height/2) );
 		this->addChild(_label);
 		
@@ -79,7 +79,7 @@ bool GameOverLayer::init()
             pScene->release();
         });
         
-        itemBack->setColor(ccc3(0, 0, 0));
+        itemBack->setColor(Color3B(0, 0, 0));
         itemBack->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
         Menu *menuBack = Menu::create(itemBack, NULL);
         menuBack->setPosition(PointZero);

@@ -190,7 +190,7 @@ void DrawPrimitivesTest::draw()
 	// filled poly
 	glLineWidth(1);
 	Point filledVertices[] = { ccp(0,120), ccp(50,120), ccp(50,170), ccp(25,200), ccp(0,170) };
-	ccDrawSolidPoly(filledVertices, 5, ccc4f(0.5f, 0.5f, 1, 1 ) );
+	ccDrawSolidPoly(filledVertices, 5, Color4F(0.5f, 0.5f, 1, 1 ) );
     
     
 	// closed purble poly
@@ -213,7 +213,7 @@ void DrawPrimitivesTest::draw()
     
     //draw a solid polygon
 	Point vertices3[] = {ccp(60,160), ccp(70,190), ccp(100,190), ccp(90,160)};
-    ccDrawSolidPoly( vertices3, 4, ccc4f(1,1,0,1) );
+    ccDrawSolidPoly( vertices3, 4, Color4F(1,1,0,1) );
     
 	// restore original values
 	glLineWidth(1);
@@ -244,12 +244,12 @@ DrawNodeTest::DrawNodeTest()
     // Draw 10 circles
     for( int i=0; i < 10; i++)
     {
-        draw->drawDot(ccp(s.width/2, s.height/2), 10*(10-i), ccc4f(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
+        draw->drawDot(ccp(s.width/2, s.height/2), 10*(10-i), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
     }
     
     // Draw polygons
     Point points[] = { Point(s.height/4,0), Point(s.width,s.height/5), Point(s.width/3*2,s.height) };
-    draw->drawPolygon(points, sizeof(points)/sizeof(points[0]), ccc4f(1,0,0,0.5), 4, ccc4f(0,0,1,1));
+    draw->drawPolygon(points, sizeof(points)/sizeof(points[0]), Color4F(1,0,0,0.5), 4, Color4F(0,0,1,1));
     
     // star poly (triggers buggs)
     {
@@ -263,7 +263,7 @@ DrawNodeTest::DrawNodeTest()
             //				{o -h, o+w}, {o,o},							// left spike
         };
         
-        draw->drawPolygon(star, sizeof(star)/sizeof(star[0]), ccc4f(1,0,0,0.5), 1, ccc4f(0,0,1,1));
+        draw->drawPolygon(star, sizeof(star)/sizeof(star[0]), Color4F(1,0,0,0.5), 1, Color4F(0,0,1,1));
     }
     
     // star poly (doesn't trigger bug... order is important un tesselation is supported.
@@ -278,14 +278,14 @@ DrawNodeTest::DrawNodeTest()
             Point(o -h, o+w),                                     // left spike
         };
         
-        draw->drawPolygon(star, sizeof(star)/sizeof(star[0]), ccc4f(1,0,0,0.5), 1, ccc4f(0,0,1,1));
+        draw->drawPolygon(star, sizeof(star)/sizeof(star[0]), Color4F(1,0,0,0.5), 1, Color4F(0,0,1,1));
     }
     
     
     // Draw segment
-    draw->drawSegment(ccp(20,s.height), ccp(20,s.height/2), 10, ccc4f(0, 1, 0, 1));
+    draw->drawSegment(ccp(20,s.height), ccp(20,s.height/2), 10, Color4F(0, 1, 0, 1));
 
-    draw->drawSegment(ccp(10,s.height/2), ccp(s.width/2, s.height/2), 40, ccc4f(1, 0, 1, 0.5));
+    draw->drawSegment(ccp(10,s.height/2), ccp(s.width/2, s.height/2), 40, Color4F(1, 0, 1, 0.5));
 }
 
 string DrawNodeTest::title()

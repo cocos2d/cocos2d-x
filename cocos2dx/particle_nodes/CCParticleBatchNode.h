@@ -102,9 +102,9 @@ public:
     virtual Texture2D* getTexture(void);
     // sets a new texture. it will be retained
     virtual void setTexture(Texture2D *texture);
-    virtual void setBlendFunc(const ccBlendFunc &blendFunc);
+    virtual void setBlendFunc(const BlendFunc &blendFunc);
     // returns the blending function used for the texture
-    virtual const ccBlendFunc& getBlendFunc(void) const;
+    virtual const BlendFunc& getBlendFunc(void) const;
 
     void visit();
 
@@ -119,7 +119,7 @@ private:
     CC_SYNTHESIZE(TextureAtlas*, _textureAtlas, TextureAtlas);
 private:
     /** the blend function used for drawing the quads */
-    ccBlendFunc _blendFunc;
+    BlendFunc _blendFunc;
 };
 
 // end of particle_nodes group

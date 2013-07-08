@@ -444,7 +444,7 @@ bool Texture2D::initWithString(const char *text, const char *fontName, float fon
 {
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
-        ccFontDefinition tempDef;
+        FontDefinition tempDef;
         
         tempDef._shadow._shadowEnabled = false;
         tempDef._stroke._strokeEnabled = false;
@@ -455,7 +455,7 @@ bool Texture2D::initWithString(const char *text, const char *fontName, float fon
         tempDef._dimensions    = dimensions;
         tempDef._alignment     = hAlignment;
         tempDef._vertAlignment = vAlignment;
-        tempDef._fontFillColor = ccWHITE;
+        tempDef._fontFillColor = Color3B::white;
     
         return initWithString(text, &tempDef);
     
@@ -510,7 +510,7 @@ bool Texture2D::initWithString(const char *text, const char *fontName, float fon
     
 }
 
-bool Texture2D::initWithString(const char *text, ccFontDefinition *textDefinition)
+bool Texture2D::initWithString(const char *text, FontDefinition *textDefinition)
 {
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
