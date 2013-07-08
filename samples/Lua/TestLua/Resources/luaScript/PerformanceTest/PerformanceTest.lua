@@ -342,7 +342,7 @@ local function runNodeChildrenTest()
    		local pLabel = CCLabelTTF:create(GetTitle(), "Arial", 40)
     	pNewscene:addChild(pLabel, 1)
     	pLabel:setPosition(ccp(s.width/2, s.height-32))
-    	pLabel:setColor(ccc3(255,255,40))  	
+    	pLabel:setColor(Color3B(255,255,40))  	
     	
    		if (nil ~= GetSubTitle()) and ("" ~= GetSubTitle()) then
         	local pSubLabel = CCLabelTTF:create(GetSubTitle(), "Thonburi", 16)
@@ -358,10 +358,10 @@ local function runNodeChildrenTest()
 		CCMenuItemFont:setFontSize(65)
     	local pDecrease = CCMenuItemFont:create(" - ")
     	pDecrease:registerScriptTapHandler(onDecrease)
-    	pDecrease:setColor(ccc3(0,200,20))
+    	pDecrease:setColor(Color3B(0,200,20))
     	local pIncrease = CCMenuItemFont:create(" + ")
     	pIncrease:registerScriptTapHandler(onIncrease)
-   		pIncrease:setColor(ccc3(0,200,20))
+   		pIncrease:setColor(Color3B(0,200,20))
     	
     	local pMenuAddOrSub = CCMenu:create()
     	pMenuAddOrSub:addChild(pDecrease)
@@ -372,7 +372,7 @@ local function runNodeChildrenTest()
    		
    		--InfoLayer
    		local pInfoLabel = CCLabelTTF:create("0 nodes", "Marker Felt", 30)
-    	pInfoLabel:setColor(ccc3(0,200,20))
+    	pInfoLabel:setColor(Color3B(0,200,20))
     	pInfoLabel:setPosition(ccp(s.width/2, s.height/2-15))
     	pNewscene:addChild(pInfoLabel, 1, NodeChildrenTestParam.kTagInfoLayer)
     	
@@ -555,13 +555,13 @@ local function runParticleTest()
     		  pParticleSystem:setEmissionRate(pParticleSystem:getTotalParticles() / pParticleSystem:getLife())
     		  
     		  --color of particles
-    		  pParticleSystem:setStartColor(ccc4f(0.5, 0.5, 0.5, 1.0))
+    		  pParticleSystem:setStartColor(Color4F(0.5, 0.5, 0.5, 1.0))
 
-    		  pParticleSystem:setStartColorVar( ccc4f(0.5, 0.5, 0.5, 1.0))
+    		  pParticleSystem:setStartColorVar( Color4F(0.5, 0.5, 0.5, 1.0))
 
-    		  pParticleSystem:setEndColor(ccc4f(0.1, 0.1, 0.1, 0.2))
+    		  pParticleSystem:setEndColor(Color4F(0.1, 0.1, 0.1, 0.2))
    
-    		  pParticleSystem:setEndColorVar(ccc4f(0.1, 0.1, 0.1, 0.2))
+    		  pParticleSystem:setEndColorVar(Color4F(0.1, 0.1, 0.1, 0.2))
 
     		  -- size, in pixels
     		  pParticleSystem:setEndSize(4.0)
@@ -603,13 +603,13 @@ local function runParticleTest()
     		  pParticleSystem:setEmissionRate(pParticleSystem:getTotalParticles() / pParticleSystem:getLife())
     		  
     		  --color of particles
-    		  pParticleSystem:setStartColor(ccc4f(0.5, 0.5, 0.5, 1.0))
+    		  pParticleSystem:setStartColor(Color4F(0.5, 0.5, 0.5, 1.0))
 
-    		  pParticleSystem:setStartColorVar( ccc4f(0.5, 0.5, 0.5, 1.0))
+    		  pParticleSystem:setStartColorVar( Color4F(0.5, 0.5, 0.5, 1.0))
 
-    		  pParticleSystem:setEndColor(ccc4f(0.1, 0.1, 0.1, 0.2))
+    		  pParticleSystem:setEndColor(Color4F(0.1, 0.1, 0.1, 0.2))
    
-    		  pParticleSystem:setEndColorVar(ccc4f(0.1, 0.1, 0.1, 0.2))
+    		  pParticleSystem:setEndColorVar(Color4F(0.1, 0.1, 0.1, 0.2))
 
     		  -- size, in pixels
     		  pParticleSystem:setEndSize(8.0)
@@ -650,13 +650,13 @@ local function runParticleTest()
     		  pParticleSystem:setEmissionRate(pParticleSystem:getTotalParticles() / pParticleSystem:getLife())
     		  
     		  --color of particles
-    		  pParticleSystem:setStartColor(ccc4f(0.5, 0.5, 0.5, 1.0))
+    		  pParticleSystem:setStartColor(Color4F(0.5, 0.5, 0.5, 1.0))
 
-    		  pParticleSystem:setStartColorVar( ccc4f(0.5, 0.5, 0.5, 1.0))
+    		  pParticleSystem:setStartColorVar( Color4F(0.5, 0.5, 0.5, 1.0))
 
-    		  pParticleSystem:setEndColor(ccc4f(0.1, 0.1, 0.1, 0.2))
+    		  pParticleSystem:setEndColor(Color4F(0.1, 0.1, 0.1, 0.2))
    
-    		  pParticleSystem:setEndColorVar(ccc4f(0.1, 0.1, 0.1, 0.2))
+    		  pParticleSystem:setEndColorVar(Color4F(0.1, 0.1, 0.1, 0.2))
 
     		  -- size, in pixels
     		  pParticleSystem:setEndSize(32.0)
@@ -697,13 +697,13 @@ local function runParticleTest()
     		  pParticleSystem:setEmissionRate(pParticleSystem:getTotalParticles() / pParticleSystem:getLife())
     		  
     		  --color of particles
-    		  pParticleSystem:setStartColor(ccc4f(0.5, 0.5, 0.5, 1.0))
+    		  pParticleSystem:setStartColor(Color4F(0.5, 0.5, 0.5, 1.0))
 
-    		  pParticleSystem:setStartColorVar( ccc4f(0.5, 0.5, 0.5, 1.0))
+    		  pParticleSystem:setStartColorVar( Color4F(0.5, 0.5, 0.5, 1.0))
 
-    		  pParticleSystem:setEndColor(ccc4f(0.1, 0.1, 0.1, 0.2))
+    		  pParticleSystem:setEndColor(Color4F(0.1, 0.1, 0.1, 0.2))
    
-    		  pParticleSystem:setEndColorVar(ccc4f(0.1, 0.1, 0.1, 0.2))
+    		  pParticleSystem:setEndColorVar(Color4F(0.1, 0.1, 0.1, 0.2))
 
     		  -- size, in pixels
     		  pParticleSystem:setEndSize(64.0)
@@ -815,10 +815,10 @@ local function runParticleTest()
 		CCMenuItemFont:setFontSize(65)
     	local pDecrease = CCMenuItemFont:create(" - ")
     	pDecrease:registerScriptTapHandler(onDecrease)
-    	pDecrease:setColor(ccc3(0,200,20))
+    	pDecrease:setColor(Color3B(0,200,20))
     	local pIncrease = CCMenuItemFont:create(" + ")
     	pIncrease:registerScriptTapHandler(onIncrease)
-   		pIncrease:setColor(ccc3(0,200,20))
+   		pIncrease:setColor(Color3B(0,200,20))
    		
    		local pMenuAddOrSub = CCMenu:create()
     	pMenuAddOrSub:addChild(pDecrease)
@@ -828,7 +828,7 @@ local function runParticleTest()
    		pNewScene:addChild(pMenuAddOrSub,1)
    		
    		local pInfoLabel = CCLabelTTF:create("0 nodes", "Marker Felt", 30)
-        pInfoLabel:setColor(ccc3(0,200,20))
+        pInfoLabel:setColor(Color3B(0,200,20))
     	pInfoLabel:setPosition(ccp(s.width/2, s.height - 90))
     	pNewScene:addChild(pInfoLabel, 1, ParticleTestParam.kTagInfoLayer)
     	
@@ -856,9 +856,9 @@ local function runParticleTest()
         	pItemFont:registerScriptTapHandler(TestNCallback)     	
         	pSubMenu:addChild(pItemFont, i + ParticleTestParam.kSubMenuBasicZOrder)
         	if i <= 3 then
-            	pItemFont:setColor(ccc3(200,20,20))
+            	pItemFont:setColor(Color3B(200,20,20))
         	else
-            	pItemFont:setColor(ccc3(0,200,20))
+            	pItemFont:setColor(Color3B(0,200,20))
         	end
    		end
     	pSubMenu:alignItemsHorizontally()
@@ -868,7 +868,7 @@ local function runParticleTest()
     	local pLabel = CCLabelTTF:create(GetTitle(), "Arial", 40)
     	pNewScene:addChild(pLabel, 1)
     	pLabel:setPosition(ccp(s.width/2, s.height-32))
-    	pLabel:setColor(ccc3(255,255,40))
+    	pLabel:setColor(Color3B(255,255,40))
     	
     	UpdateQuantityLabel()  	
     	CreateParticleSystem()
@@ -1268,10 +1268,10 @@ local function runSpriteTest()
 		CCMenuItemFont:setFontSize(65)
     	local pDecrease = CCMenuItemFont:create(" - ")
    		pDecrease:registerScriptTapHandler(onDecrease)
-    	pDecrease:setColor(ccc3(0,200,20))
+    	pDecrease:setColor(Color3B(0,200,20))
     	local pIncrease = CCMenuItemFont:create(" + ")
 	   	pIncrease:registerScriptTapHandler(onIncrease)
-   		pIncrease:setColor(ccc3(0,200,20))
+   		pIncrease:setColor(Color3B(0,200,20))
    		
    		local pMenuAddOrSub = CCMenu:create()
     	pMenuAddOrSub:addChild(pDecrease)
@@ -1281,7 +1281,7 @@ local function runSpriteTest()
    		pNewScene:addChild(pMenuAddOrSub,1)
    		
    		local pInfoLabel = CCLabelTTF:create("0 nodes", "Marker Felt", 30)
-        pInfoLabel:setColor(ccc3(0,200,20))
+        pInfoLabel:setColor(Color3B(0,200,20))
     	pInfoLabel:setPosition(ccp(s.width/2, s.height - 90))
     	pNewScene:addChild(pInfoLabel, 1, SpriteTestParam.kTagInfoLayer)
     	
@@ -1305,11 +1305,11 @@ local function runSpriteTest()
 	       	pItemFont:registerScriptTapHandler(TestNCallback)     	
         	pSubMenu:addChild(pItemFont, i + SpriteTestParam.kSubMenuBasicZOrder)
  			if i <= 3 then
- 				pItemFont:setColor(ccc3(200,20,20))
+ 				pItemFont:setColor(Color3B(200,20,20))
  			elseif i <= 6  then
- 				pItemFont:setColor(ccc3(0,200,20))
+ 				pItemFont:setColor(Color3B(0,200,20))
  			else
- 				pItemFont:setColor(ccc3(0,20,200))
+ 				pItemFont:setColor(Color3B(0,20,200))
  			end        	
    		end
    		
@@ -1321,7 +1321,7 @@ local function runSpriteTest()
     	local pLabel = CCLabelTTF:create(GetTitle(), "Arial", 40)
     	pNewScene:addChild(pLabel, 1)
     	pLabel:setPosition(ccp(s.width/2, s.height-32))
-    	pLabel:setColor(ccc3(255,255,40))
+    	pLabel:setColor(Color3B(255,255,40))
     	while nQuantityNodes < nNodes do
     		onIncrease()
     	end
@@ -1440,7 +1440,7 @@ local function runTextureTest()
     	local pLabel = CCLabelTTF:create(GetTitle(), "Arial", 40)
     	pLayer:addChild(pLabel, 1)
     	pLabel:setPosition(ccp(s.width/2, s.height-32))
-    	pLabel:setColor(ccc3(255,255,40))
+    	pLabel:setColor(Color3B(255,255,40))
 
     	--Subtitle
         local pSubLabel = CCLabelTTF:create(GetSubtitle(), "Thonburi", 16)
@@ -1616,7 +1616,7 @@ local function runTouchesTest()
    	    local pLabel = CCLabelTTF:create(GetTitle(), "Arial", 40)
     	pLayer:addChild(pLabel, 1)
    		pLabel:setPosition(ccp(s.width/2, s.height-32))
-	   	pLabel:setColor(ccc3(255,255,40)) 
+	   	pLabel:setColor(Color3B(255,255,40)) 
     	
     	pLayer:scheduleUpdateWithPriorityLua(update,0)	
     

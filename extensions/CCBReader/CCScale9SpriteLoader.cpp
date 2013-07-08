@@ -23,7 +23,7 @@ void Scale9SpriteLoader::onHandlePropTypeSpriteFrame(Node * pNode, Node * pParen
     }
 }
 
-void Scale9SpriteLoader::onHandlePropTypeColor3(Node * pNode, Node * pParent, const char * pPropertyName, ccColor3B pColor3B, CCBReader * pCCBReader) {
+void Scale9SpriteLoader::onHandlePropTypeColor3(Node * pNode, Node * pParent, const char * pPropertyName, Color3B pColor3B, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_COLOR) == 0) {
         ((Scale9Sprite *)pNode)->setColor(pColor3B);
     } else {
@@ -39,7 +39,7 @@ void Scale9SpriteLoader::onHandlePropTypeByte(Node * pNode, Node * pParent, cons
     }
 }
 
-void Scale9SpriteLoader::onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const char * pPropertyName, ccBlendFunc pBlendFunc, CCBReader * pCCBReader) {
+void Scale9SpriteLoader::onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const char * pPropertyName, BlendFunc pBlendFunc, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_BLENDFUNC) == 0) {
         // TODO Not exported by CocosBuilder yet!
         // ((Scale9Sprite *)pNode)->setBlendFunc(pBlendFunc);

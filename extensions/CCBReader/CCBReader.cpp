@@ -790,8 +790,8 @@ CCBKeyframe* CCBReader::readKeyframe(int type)
         int g = readByte();
         int b = readByte();
         
-        ccColor3B c = ccc3(r,g,b);
-        value = ccColor3BWapper::create(c);
+        Color3B c = Color3B(r,g,b);
+        value = Color3BWapper::create(c);
     }
     else if (type == kCCBPropTypeDegrees)
     {

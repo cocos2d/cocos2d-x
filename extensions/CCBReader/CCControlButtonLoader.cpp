@@ -100,7 +100,7 @@ void ControlButtonLoader::onHandlePropTypeSpriteFrame(Node * pNode, Node * pPare
     }
 }
 
-void ControlButtonLoader::onHandlePropTypeColor3(Node * pNode, Node * pParent, const char * pPropertyName, ccColor3B pColor3B, CCBReader * pCCBReader) {
+void ControlButtonLoader::onHandlePropTypeColor3(Node * pNode, Node * pParent, const char * pPropertyName, Color3B pColor3B, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_TITLECOLOR_NORMAL) == 0) {
         ((ControlButton *)pNode)->setTitleColorForState(pColor3B, ControlStateNormal);
     } else if(strcmp(pPropertyName, PROPERTY_TITLECOLOR_HIGHLIGHTED) == 0) {

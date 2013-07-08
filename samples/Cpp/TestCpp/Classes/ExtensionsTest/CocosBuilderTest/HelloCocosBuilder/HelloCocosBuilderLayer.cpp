@@ -52,7 +52,7 @@ void HelloCocosBuilderLayer::openTest(const char * pCCBFileName, const char * pN
     }
 
     /* Push the new scene with a fancy transition. */
-    ccColor3B transitionColor;
+    Color3B transitionColor;
     transitionColor.r = 0;
     transitionColor.g = 0;
     transitionColor.b = 0;
@@ -168,7 +168,7 @@ void HelloCocosBuilderLayer::onAnimationsTestClicked(Object * pSender, cocos2d::
     }
     
     /* Push the new scene with a fancy transition. */
-    ccColor3B transitionColor;
+    Color3B transitionColor;
     transitionColor.r = 0;
     transitionColor.g = 0;
     transitionColor.b = 0;

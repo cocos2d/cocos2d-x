@@ -119,6 +119,8 @@
 		1A6FB66817855AF300CDF010 /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A6FB53317854DD600CDF010 /* libluajit.a */; };
 		1A94D35016C2072800D79D09 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A94D34C16C2014900D79D09 /* libwebp.a */; };
 		1A94D35116C2072800D79D09 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
+		46B9C9631786763E00F808DD /* ccTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B9C9611786763E00F808DD /* ccTypes.cpp */; };
+		46B9C9641786763E00F808DD /* ccTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B9C9611786763E00F808DD /* ccTypes.cpp */; };
 		A035A5431782286100987F6C /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A035A5421782286100987F6C /* libwebsockets.a */; };
 		A03F25661780BAE8006731B9 /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F1DDC1780BAE4006731B9 /* CCAction.cpp */; };
 		A03F25671780BAE8006731B9 /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1DDD1780BAE4006731B9 /* CCAction.h */; };
@@ -1921,6 +1923,7 @@
 		1A6FB53017854BC300CDF010 /* libluabindings Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluabindings Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A6FB53317854DD600CDF010 /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libluajit.a; sourceTree = "<group>"; };
 		1A94D34C16C2014900D79D09 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../platform/third_party/mac/libraries/libwebp.a; sourceTree = "<group>"; };
+		46B9C9611786763E00F808DD /* ccTypes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccTypes.cpp; sourceTree = "<group>"; };
 		A035A5421782286100987F6C /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = external/libwebsockets/mac/lib/libwebsockets.a; sourceTree = "<group>"; };
 		A03F1DDC1780BAE4006731B9 /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAction.cpp; sourceTree = "<group>"; };
 		A03F1DDD1780BAE4006731B9 /* CCAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAction.h; sourceTree = "<group>"; };
@@ -3192,20 +3195,21 @@
 		A03F1DDA1780BAE4006731B9 /* cocos2dx */ = {
 			isa = PBXGroup;
 			children = (
+				A03F1E041780BAE4006731B9 /* ccFPSImages.c */,
+				A03F1DFE1780BAE4006731B9 /* CCCamera.cpp */,
+				A03F1E001780BAE4006731B9 /* CCConfiguration.cpp */,
+				A03F1E021780BAE4006731B9 /* CCDirector.cpp */,
+				A03F1E061780BAE4006731B9 /* CCScheduler.cpp */,
+				46B9C9611786763E00F808DD /* ccTypes.cpp */,
+				A03F1E251780BAE4006731B9 /* cocos2d.cpp */,
+				A03F1DFF1780BAE4006731B9 /* CCCamera.h */,
+				A03F1E011780BAE4006731B9 /* CCConfiguration.h */,
+				A03F1E031780BAE4006731B9 /* CCDirector.h */,
+				A03F1E051780BAE4006731B9 /* ccFPSImages.h */,
+				A03F1E071780BAE4006731B9 /* CCScheduler.h */,
 				A03F1DDB1780BAE4006731B9 /* actions */,
 				A03F1DF71780BAE4006731B9 /* base_nodes */,
-				A03F1DFE1780BAE4006731B9 /* CCCamera.cpp */,
-				A03F1DFF1780BAE4006731B9 /* CCCamera.h */,
-				A03F1E001780BAE4006731B9 /* CCConfiguration.cpp */,
-				A03F1E011780BAE4006731B9 /* CCConfiguration.h */,
-				A03F1E021780BAE4006731B9 /* CCDirector.cpp */,
-				A03F1E031780BAE4006731B9 /* CCDirector.h */,
-				A03F1E041780BAE4006731B9 /* ccFPSImages.c */,
-				A03F1E051780BAE4006731B9 /* ccFPSImages.h */,
-				A03F1E061780BAE4006731B9 /* CCScheduler.cpp */,
-				A03F1E071780BAE4006731B9 /* CCScheduler.h */,
 				A03F1E081780BAE4006731B9 /* cocoa */,
-				A03F1E251780BAE4006731B9 /* cocos2d.cpp */,
 				A03F1E261780BAE4006731B9 /* draw_nodes */,
 				A03F1E2B1780BAE4006731B9 /* effects */,
 				A03F1E301780BAE4006731B9 /* include */,
@@ -6475,6 +6479,7 @@
 				A07A4E081783815B0073F6A7 /* CCWindow.m in Sources */,
 				A07A4E0A1783815B0073F6A7 /* EAGLView.mm in Sources */,
 				A07A52CB1784AC360073F6A7 /* etc1.cpp in Sources */,
+				46B9C9631786763E00F808DD /* ccTypes.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6911,6 +6916,7 @@
 				A07A4D9917837B690073F6A7 /* EAGLView.mm in Sources */,
 				A07A4D9C17837B690073F6A7 /* AccelerometerSimulation.m in Sources */,
 				A07A52CC1784AC360073F6A7 /* etc1.cpp in Sources */,
+				46B9C9641786763E00F808DD /* ccTypes.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

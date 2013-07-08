@@ -42,8 +42,8 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     // Label Item (LabelAtlas)
     LabelAtlas* labelAtlas = LabelAtlas::create("0123456789", "fonts/labelatlas.png", 16, 24, '.');
     MenuItemLabel* item3 = MenuItemLabel::create(labelAtlas, CC_CALLBACK_1(MenuLayerMainMenu::menuCallbackDisabled, this) );
-    item3->setDisabledColor( ccc3(32,32,64) );
-    item3->setColor( ccc3(200,200,255) );
+    item3->setDisabledColor( Color3B(32,32,64) );
+    item3->setColor( Color3B(200,200,255) );
     
     // Font Item
     MenuItemFont *item4 = MenuItemFont::create("I toggle enable items", [&](Object *sender) {
@@ -499,7 +499,7 @@ MenuLayerPriorityTest::MenuLayerPriorityTest()
 		}
 	});
 
-    item1->setColor(ccc3(0,0,255));
+    item1->setColor(Color3B(0,0,255));
     _menu2->addChild(item1);
     addChild(_menu2);
 }

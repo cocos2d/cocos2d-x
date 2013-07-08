@@ -11,6 +11,7 @@ CCConfiguration.cpp \
 CCScheduler.cpp \
 CCCamera.cpp \
 ccFPSImages.c \
+ccTypes.cpp \
 actions/CCAction.cpp \
 actions/CCActionCamera.cpp \
 actions/CCActionCatmullRom.cpp \

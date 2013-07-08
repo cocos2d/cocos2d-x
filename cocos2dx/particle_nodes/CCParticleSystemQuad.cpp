@@ -163,7 +163,7 @@ void ParticleSystemQuad::initTexCoordsWithRect(const Rect& pointRect)
     // Important. Texture in cocos2d are inverted, so the Y component should be inverted
     CC_SWAP( top, bottom, float);
 
-    ccV3F_C4B_T2F_Quad *quads = NULL;
+    V3F_C4B_T2F_Quad *quads = NULL;
     unsigned int start = 0, end = 0;
     if (_batchNode)
     {
@@ -239,20 +239,20 @@ void ParticleSystemQuad::initIndices()
 
 void ParticleSystemQuad::updateQuadWithParticle(tParticle* particle, const Point& newPosition)
 {
-    ccV3F_C4B_T2F_Quad *quad;
+    V3F_C4B_T2F_Quad *quad;
 
     if (_batchNode)
     {
-        ccV3F_C4B_T2F_Quad *batchQuads = _batchNode->getTextureAtlas()->getQuads();
+        V3F_C4B_T2F_Quad *batchQuads = _batchNode->getTextureAtlas()->getQuads();
         quad = &(batchQuads[_atlasIndex+particle->atlasIndex]);
     }
     else
     {
         quad = &(_quads[_particleIdx]);
     }
-    ccColor4B color = (_opacityModifyRGB)
-        ? ccc4( particle->color.r*particle->color.a*255, particle->color.g*particle->color.a*255, particle->color.b*particle->color.a*255, particle->color.a*255)
-        : ccc4( particle->color.r*255, particle->color.g*255, particle->color.b*255, particle->color.a*255);
+    Color4B color = (_opacityModifyRGB)
+        ? Color4B( particle->color.r*particle->color.a*255, particle->color.g*particle->color.a*255, particle->color.b*particle->color.a*255, particle->color.a*255)
+        : Color4B( particle->color.r*255, particle->color.g*255, particle->color.b*255, particle->color.a*255);
 
     quad->bl.colors = color;
     quad->br.colors = color;
@@ -378,11 +378,11 @@ void ParticleSystemQuad::draw()
 
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
     // vertices
-    glVertexAttribPointer(kVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, vertices));
+    glVertexAttribPointer(kVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, vertices));
     // colors
-    glVertexAttribPointer(kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, colors));
+    glVertexAttribPointer(kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, colors));
     // tex coords
-    glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
+    glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, texCoords));
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
 
@@ -409,7 +409,7 @@ void ParticleSystemQuad::setTotalParticles(unsigned int tp)
         size_t indicesSize = sizeof(_indices[0]) * tp * 6 * 1;
 
         tParticle* particlesNew = (tParticle*)realloc(_particles, particlesSize);
-        ccV3F_C4B_T2F_Quad* quadsNew = (ccV3F_C4B_T2F_Quad*)realloc(_quads, quadsSize);
+        V3F_C4B_T2F_Quad* quadsNew = (V3F_C4B_T2F_Quad*)realloc(_quads, quadsSize);
         GLushort* indicesNew = (GLushort*)realloc(_indices, indicesSize);
 
         if (particlesNew && quadsNew && indicesNew)
@@ -483,15 +483,15 @@ void ParticleSystemQuad::setupVBOandVAO()
 
     // vertices
     glEnableVertexAttribArray(kVertexAttrib_Position);
-    glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, vertices));
+    glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, vertices));
 
     // colors
     glEnableVertexAttribArray(kVertexAttrib_Color);
-    glVertexAttribPointer(kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, colors));
+    glVertexAttribPointer(kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, colors));
 
     // tex coords
     glEnableVertexAttribArray(kVertexAttrib_TexCoords);
-    glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
+    glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, texCoords));
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _totalParticles * 6, _indices, GL_STATIC_DRAW);
@@ -541,7 +541,7 @@ bool ParticleSystemQuad::allocMemory()
     CC_SAFE_FREE(_quads);
     CC_SAFE_FREE(_indices);
 
-    _quads = (ccV3F_C4B_T2F_Quad*)malloc(_totalParticles * sizeof(ccV3F_C4B_T2F_Quad));
+    _quads = (V3F_C4B_T2F_Quad*)malloc(_totalParticles * sizeof(V3F_C4B_T2F_Quad));
     _indices = (GLushort*)malloc(_totalParticles * 6 * sizeof(GLushort));
     
     if( !_quads || !_indices) 
@@ -553,7 +553,7 @@ bool ParticleSystemQuad::allocMemory()
         return false;
     }
 
-    memset(_quads, 0, _totalParticles * sizeof(ccV3F_C4B_T2F_Quad));
+    memset(_quads, 0, _totalParticles * sizeof(V3F_C4B_T2F_Quad));
     memset(_indices, 0, _totalParticles * 6 * sizeof(GLushort));
 
     return true;
@@ -583,8 +583,8 @@ void ParticleSystemQuad::setBatchNode(ParticleBatchNode * batchNode)
         else if( !oldBatch )
         {
             // copy current state to batch
-            ccV3F_C4B_T2F_Quad *batchQuads = _batchNode->getTextureAtlas()->getQuads();
-            ccV3F_C4B_T2F_Quad *quad = &(batchQuads[_atlasIndex] );
+            V3F_C4B_T2F_Quad *batchQuads = _batchNode->getTextureAtlas()->getQuads();
+            V3F_C4B_T2F_Quad *quad = &(batchQuads[_atlasIndex] );
             memcpy( quad, _quads, _totalParticles * sizeof(_quads[0]) );
 
             CC_SAFE_FREE(_quads);

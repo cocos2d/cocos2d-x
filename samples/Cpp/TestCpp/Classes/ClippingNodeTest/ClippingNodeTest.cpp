@@ -201,7 +201,7 @@ DrawNode* BasicTest::shape()
     triangle[1] = ccp(100, -100);
     triangle[2] = ccp(0, 100);
 
-    static ccColor4F green = {0, 1, 0, 1};
+    static Color4F green(0, 1, 0, 1);
     shape->drawPolygon(triangle, 3, green, 0, green);
     return shape;
 }
@@ -514,7 +514,7 @@ void ScrollViewDemo::setup()
     rectangle[2] = ccp(clipper->getContentSize().width, clipper->getContentSize().height);
     rectangle[3] = ccp(0, clipper->getContentSize().height);
     
-    ccColor4F white = {1, 1, 1, 1};
+    Color4F white(1, 1, 1, 1);
     stencil->drawPolygon(rectangle, 4, white, 1, white);
     clipper->setStencil(stencil);
 
@@ -566,15 +566,15 @@ static GLint _stencilBits = -1;
 static const GLfloat _alphaThreshold = 0.05f;
 
 static const int _planeCount = 8;
-static const ccColor4F _planeColor[] = {
-    {0, 0, 0, 0.65f},
-    {0.7f, 0, 0, 0.6f},
-    {0, 0.7f, 0, 0.55f},
-    {0, 0, 0.7f, 0.5f},
-    {0.7f, 0.7f, 0, 0.45f},
-    {0, 0.7f, 0.7f, 0.4f},
-    {0.7f, 0, 0.7f, 0.35f},
-    {0.7f, 0.7f, 0.7f, 0.3f},
+static const Color4F _planeColor[] = {
+    Color4F(0, 0, 0, 0.65f),
+    Color4F(0.7f, 0, 0, 0.6f),
+    Color4F(0, 0.7f, 0, 0.55f),
+    Color4F(0, 0, 0.7f, 0.5f),
+    Color4F(0.7f, 0.7f, 0, 0.45f),
+    Color4F(0, 0.7f, 0.7f, 0.4f),
+    Color4F(0.7f, 0, 0.7f, 0.35f),
+    Color4F(0.7f, 0.7f, 0.7f, 0.3f),
 };
 
 RawStencilBufferTest::~RawStencilBufferTest()
@@ -627,7 +627,7 @@ void RawStencilBufferTest::draw()
         this->setupStencilForClippingOnPlane(i);
         CHECK_GL_ERROR_DEBUG();
 
-        ccDrawSolidRect(PointZero, stencilPoint, ccc4f(1, 1, 1, 1));
+        ccDrawSolidRect(PointZero, stencilPoint, Color4F(1, 1, 1, 1));
         
         kmGLPushMatrix();
         this->transform();
@@ -812,7 +812,7 @@ void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
     glStencilMask(planeMask);
     glStencilFunc(GL_NEVER, 0, planeMask);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
-    ccDrawSolidRect(PointZero, ccpFromSize(Director::sharedDirector()->getWinSize()), ccc4f(1, 1, 1, 1));
+    ccDrawSolidRect(PointZero, ccpFromSize(Director::sharedDirector()->getWinSize()), Color4F(1, 1, 1, 1));
     glStencilFunc(GL_NEVER, planeMask, planeMask);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
     glDisable(GL_DEPTH_TEST);

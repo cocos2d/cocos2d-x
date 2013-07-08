@@ -86,8 +86,8 @@ typedef struct sParticle {
     Point     pos;
     Point     startPos;
 
-    ccColor4F    color;
-    ccColor4F    deltaColor;
+    Color4F    color;
+    Color4F    deltaColor;
 
     float        size;
     float        deltaSize;
@@ -305,13 +305,13 @@ public:
     /** end size variance in pixels of each particle */
     CC_PROPERTY(float, _endSizeVar, EndSizeVar)
     /** start color of each particle */
-    CC_PROPERTY_PASS_BY_REF(ccColor4F, _startColor, StartColor)
+    CC_PROPERTY_PASS_BY_REF(Color4F, _startColor, StartColor)
     /** start color variance of each particle */
-    CC_PROPERTY_PASS_BY_REF(ccColor4F, _startColorVar, StartColorVar)
+    CC_PROPERTY_PASS_BY_REF(Color4F, _startColorVar, StartColorVar)
     /** end color and end color variation of each particle */
-    CC_PROPERTY_PASS_BY_REF(ccColor4F, _endColor, EndColor)
+    CC_PROPERTY_PASS_BY_REF(Color4F, _endColor, EndColor)
     /** end color variance of each particle */
-    CC_PROPERTY_PASS_BY_REF(ccColor4F, _endColorVar, EndColorVar)
+    CC_PROPERTY_PASS_BY_REF(Color4F, _endColorVar, EndColorVar)
     //* initial angle of each particle
     CC_PROPERTY(float, _startSpin, StartSpin)
     //* initial angle of each particle
@@ -327,7 +327,7 @@ public:
     /** conforms to CocosNodeTexture protocol */
     CC_PROPERTY(Texture2D*, _texture, Texture)
     /** conforms to CocosNodeTexture protocol */
-    CC_PROPERTY_PASS_BY_REF(ccBlendFunc, _blendFunc, BlendFunc)
+    CC_PROPERTY_PASS_BY_REF(BlendFunc, _blendFunc, BlendFunc)
     /** does the alpha value modify color */
     CC_PROPERTY(bool, _opacityModifyRGB, OpacityModifyRGB)
 

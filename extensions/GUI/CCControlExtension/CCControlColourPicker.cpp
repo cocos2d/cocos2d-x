@@ -118,7 +118,7 @@ ControlColourPicker* ControlColourPicker::create()
 }
 
 
-void ControlColourPicker::setColor(const ccColor3B& color)
+void ControlColourPicker::setColor(const Color3B& color)
 {
     // XXX fixed me if not correct
     Control::setColor(color);
@@ -169,7 +169,7 @@ void ControlColourPicker::hueSliderValueChanged(Object * sender, ControlEvent co
     // Update the value
     RGBA rgb    = ControlUtils::RGBfromHSV(_hsv);
     // XXX fixed me if not correct
-    Control::setColor(ccc3((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
+    Control::setColor(Color3B((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
     
     // Send Control callback
     sendActionsForControlEvents(ControlEventValueChanged);
@@ -185,7 +185,7 @@ void ControlColourPicker::colourSliderValueChanged(Object * sender, ControlEvent
      // Update the value
     RGBA rgb    = ControlUtils::RGBfromHSV(_hsv);
     // XXX fixed me if not correct
-    Control::setColor(ccc3((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
+    Control::setColor(Color3B((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
     
     // Send Control callback
     sendActionsForControlEvents(ControlEventValueChanged);
