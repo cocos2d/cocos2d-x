@@ -647,7 +647,7 @@ Color3B NodeLoader::parsePropTypeColor3(Node * pNode, Node * pParent, CCBReader 
     unsigned char green = pCCBReader->readByte();
     unsigned char blue = pCCBReader->readByte();
     
-    Color3B color = { red, green, blue };
+    Color3B color(red, green, blue);
     if (pCCBReader->getAnimatedProperties()->find(pPropertyName) != pCCBReader->getAnimatedProperties()->end())
     {
         Color3BWapper *value = Color3BWapper::create(color);

@@ -26,15 +26,15 @@
 
 NS_CC_BEGIN
 
-const Color3B Color3B::white = {255,255,255};
-const Color3B Color3B::yellow = {255,255,0};
-const Color3B Color3B::green = {0,255,0};
-const Color3B Color3B::blue = {0,0,255};
-const Color3B Color3B::red = {255,0,0};
-const Color3B Color3B::magenta = {255,0,255};
-const Color3B Color3B::black = {0,0,0};
-const Color3B Color3B::orange = {255,127,0};
-const Color3B Color3B::gray = {166,166,166};
+const Color3B Color3B::white(255,255,255);
+const Color3B Color3B::yellow(255,255,0);
+const Color3B Color3B::green(0,255,0);
+const Color3B Color3B::blue(0,0,255);
+const Color3B Color3B::red(255,0,0);
+const Color3B Color3B::magenta(255,0,255);
+const Color3B Color3B::black(0,0,0);
+const Color3B Color3B::orange(255,127,0);
+const Color3B Color3B::gray(166,166,166);
 
 Color4B::Color4B(const Color4F &color4F)
 :r((GLubyte)color4F.r * 255),

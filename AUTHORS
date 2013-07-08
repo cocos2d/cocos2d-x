@@ -407,6 +407,7 @@ Developers:
 
     Éloi Rivard (azmeuk)
         Linux OpenAL support.
+        Added some guards to prevent Eclipse to compile twice the same class.
 
     elmiro
         Correction of passed buffer size to readlink and verification of result return by readlink.
