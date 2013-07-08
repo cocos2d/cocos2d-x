@@ -75,7 +75,7 @@ public:
     /** set rate value for the actions */
     inline void setRate(float rate) { _rate = rate; }
     /** get rate value for the actions */
-    inline float getRate(void) { return _rate; }
+    inline float getRate(void) const { return _rate; }
 
     /** Initializes the action with the inner action and the rate parameter */
     bool initWithAction(ActionInterval *pAction, float fRate);
@@ -274,7 +274,7 @@ class CC_DLL EaseElastic : public ActionEase
 {
 public:
     /** get period of the wave in radians. default is 0.3 */
-    inline float getPeriod(void) { return _period; }
+    inline float getPeriod(void) const { return _period; }
     /** set period of the wave in radians. */
     inline void setPeriod(float fPeriod) { _period = fPeriod; }
 

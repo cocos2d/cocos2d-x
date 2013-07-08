@@ -99,7 +99,7 @@ void TextureCache::purgeSharedTextureCache()
     CC_SAFE_RELEASE_NULL(_sharedTextureCache);
 }
 
-const char* TextureCache::description()
+const char* TextureCache::description() const
 {
     return String::createWithFormat("<TextureCache | Number of textures = %u>", _textures->count())->getCString();
 }
