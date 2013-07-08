@@ -1,7 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2011 ForzeField Studios S.L
-
+ Copyright (c) 2013 cocos2d-x.org
+ 
  http://www.cocos2d-x.org
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -22,33 +21,28 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef __CCVERTEX_H__
-#define __CCVERTEX_H__
 
-#include "ccTypes.h"
+#include "include/ccTypes.h"
 
 NS_CC_BEGIN
 
-/**
- * @addtogroup data_structures
- * @{
- */
+const Color3B Color3B::white(255,255,255);
+const Color3B Color3B::yellow(255,255,0);
+const Color3B Color3B::green(0,255,0);
+const Color3B Color3B::blue(0,0,255);
+const Color3B Color3B::red(255,0,0);
+const Color3B Color3B::magenta(255,0,255);
+const Color3B Color3B::black(0,0,0);
+const Color3B Color3B::orange(255,127,0);
+const Color3B Color3B::gray(166,166,166);
 
-/** @file Vertex.h */
+Color4B::Color4B(const Color4F &color4F)
+: r((GLubyte)(color4F.r * 255.0f)),
+  g((GLubyte)(color4F.g * 255.0f)),
+  b((GLubyte)(color4F.b * 255.0f)),
+  a((GLubyte)(color4F.a * 255.0f))
+{}
 
-/** converts a line to a polygon */
-void CC_DLL ccVertexLineToPolygon(Point *points, float stroke, Vertex2F *vertices, unsigned int offset, unsigned int nuPoints);
-
-/** returns whether or not the line intersects */
-bool CC_DLL ccVertexLineIntersect(float Ax, float Ay,
-                             float Bx, float By,
-                             float Cx, float Cy,
-                             float Dx, float Dy, float *T);
-
-// end of data_structures group
-/// @}
+const BlendFunc BlendFunc::blendFuncDisable = {GL_ONE, GL_ZERO};
 
 NS_CC_END
-
-#endif /* __CCVERTEX_H__ */
-

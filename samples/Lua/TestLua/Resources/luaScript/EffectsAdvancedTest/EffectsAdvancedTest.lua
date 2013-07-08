@@ -243,17 +243,17 @@ local function Issue631()
     ret:removeChild(bg, true)
 
     -- background
-    local  layer = CCLayerColor:create( ccc4(255,0,0,255) )
+    local  layer = CCLayerColor:create( Color4B(255,0,0,255) )
     ret:addChild(layer, -10)
     local  sprite = CCSprite:create("Images/grossini.png")
     sprite:setPosition( ccp(50,80) )
     layer:addChild(sprite, 10)
 
     -- foreground
-    local  layer2 = CCLayerColor:create(ccc4( 0, 255,0,255 ) )
+    local  layer2 = CCLayerColor:create(Color4B( 0, 255,0,255 ) )
     local  fog = CCSprite:create("Images/Fog.png")
 
-    local bf = ccBlendFunc()
+    local bf = BlendFunc()
     bf.src = GL_SRC_ALPHA
     bf.dst = GL_ONE_MINUS_SRC_ALPHA
 

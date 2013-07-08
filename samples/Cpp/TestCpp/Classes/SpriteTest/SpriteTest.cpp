@@ -527,7 +527,7 @@ SpriteZOrder::SpriteZOrder()
     addChild(sprite, -1, kTagSprite1);
     sprite->setPosition( ccp(s.width/2, s.height/2 - 20) );
     sprite->setScaleX( 6 );
-    sprite->setColor(ccRED);
+    sprite->setColor(Color3B::red);
     
     schedule( schedule_selector(SpriteZOrder::reorderSprite), 1);        
 }
@@ -590,7 +590,7 @@ SpriteBatchNodeZOrder::SpriteBatchNodeZOrder()
     batch->addChild(sprite, -1, kTagSprite1);
     sprite->setPosition( ccp(s.width/2, s.height/2 - 20) );
     sprite->setScaleX( 6 );
-    sprite->setColor(ccRED);
+    sprite->setColor(Color3B::red);
     
     schedule( schedule_selector(SpriteBatchNodeZOrder::reorderSprite), 1);        
 }
@@ -3190,7 +3190,7 @@ SpriteNilTexture::SpriteNilTexture()
     sprite = new Sprite();
     sprite->init();
     sprite->setTextureRect( CCRectMake(0, 0, 300,300) );
-    sprite->setColor(ccRED);
+    sprite->setColor(Color3B::red);
     sprite->setOpacity(128);
     sprite->setPosition(ccp(3*s.width/4, s.height/2));
     addChild(sprite, 100);
@@ -3199,7 +3199,7 @@ SpriteNilTexture::SpriteNilTexture()
     sprite = new Sprite();
     sprite->init();
     sprite->setTextureRect(CCRectMake(0, 0, 300,300));
-    sprite->setColor(ccBLUE);
+    sprite->setColor(Color3B::blue);
     sprite->setOpacity(128);
     sprite->setPosition(ccp(1*s.width/4, s.height/2));
     addChild(sprite, 100);
@@ -3580,9 +3580,9 @@ SpriteBatchBug1217::SpriteBatchBug1217()
     Sprite * s2 = Sprite::createWithTexture(bn->getTexture(), CCRectMake(0, 0, 57, 57));
     Sprite * s3 = Sprite::createWithTexture(bn->getTexture(), CCRectMake(0, 0, 57, 57));
 
-    s1->setColor(ccc3(255, 0, 0));
-    s2->setColor(ccc3(0, 255, 0));
-    s3->setColor(ccc3(0, 0, 255));
+    s1->setColor(Color3B(255, 0, 0));
+    s2->setColor(Color3B(0, 255, 0));
+    s3->setColor(Color3B(0, 0, 255));
 
     s1->setPosition(ccp(20,200));
     s2->setPosition(ccp(100,0));

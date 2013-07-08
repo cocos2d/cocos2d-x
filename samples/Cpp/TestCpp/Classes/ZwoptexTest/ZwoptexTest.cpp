@@ -106,7 +106,7 @@ void ZwoptexGenericTest::onEnter()
     SpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("zwoptex/grossini.plist");
     SpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("zwoptex/grossini-generic.plist");
     
-    LayerColor *layer1 = LayerColor::create(ccc4(255, 0, 0, 255), 85, 121);
+    LayerColor *layer1 = LayerColor::create(Color4B(255, 0, 0, 255), 85, 121);
     layer1->setPosition(ccp(s.width/2-80 - (85.0f * 0.5f), s.height/2 - (121.0f * 0.5f)));
     addChild(layer1);
 
@@ -117,7 +117,7 @@ void ZwoptexGenericTest::onEnter()
     sprite1->setFlipX(false);
     sprite1->setFlipY(false);
 
-    LayerColor *layer2 = LayerColor::create(ccc4(255, 0, 0, 255), 85, 121);
+    LayerColor *layer2 = LayerColor::create(Color4B(255, 0, 0, 255), 85, 121);
     layer2->setPosition(ccp(s.width/2+80 - (85.0f * 0.5f), s.height/2 - (121.0f * 0.5f)));
     addChild(layer2);
     

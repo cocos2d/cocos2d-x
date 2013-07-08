@@ -120,8 +120,8 @@ public:
      */
 	virtual void updateOffsetPoint();
 
-	virtual void setBlendFunc(const ccBlendFunc& blendFunc) { _blendFunc = blendFunc; }
-	virtual const ccBlendFunc& getBlendFunc(void) const { return _blendFunc; }
+	inline void setBlendFunc(const BlendFunc& blendFunc) { _blendFunc = blendFunc; }
+	inline const BlendFunc& getBlendFunc(void) const { return _blendFunc; }
 
 protected:
     
@@ -149,7 +149,7 @@ protected:
 
     static std::map<int, Armature*> _armatureIndexDic;	//! Use to save armature zorder info, 
 
-	ccBlendFunc _blendFunc;                    //! It's required for TextureProtocol inheritance
+	BlendFunc _blendFunc;                    //! It's required for TextureProtocol inheritance
 
 	Point _offsetPoint;
 };

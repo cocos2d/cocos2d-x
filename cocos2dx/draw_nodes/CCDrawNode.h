@@ -49,9 +49,9 @@ protected:
     
     unsigned int    _bufferCapacity;
     GLsizei         _bufferCount;
-    ccV2F_C4B_T2F   *_buffer;
+    V2F_C4B_T2F   *_buffer;
     
-    ccBlendFunc     _blendFunc;
+    BlendFunc     _blendFunc;
     
     bool            _dirty;
     
@@ -63,19 +63,19 @@ public:
     virtual void draw();
     
     /** draw a dot at a position, with a given radius and color */
-    void drawDot(const Point &pos, float radius, const ccColor4F &color);
+    void drawDot(const Point &pos, float radius, const Color4F &color);
     
     /** draw a segment with a radius and color */
-    void drawSegment(const Point &from, const Point &to, float radius, const ccColor4F &color);
+    void drawSegment(const Point &from, const Point &to, float radius, const Color4F &color);
     
     /** draw a polygon with a fill color and line color */
-    void drawPolygon(Point *verts, unsigned int count, const ccColor4F &fillColor, float borderWidth, const ccColor4F &borderColor);
+    void drawPolygon(Point *verts, unsigned int count, const Color4F &fillColor, float borderWidth, const Color4F &borderColor);
     
     /** Clear the geometry in the node's buffer. */
     void clear();
     
-    const ccBlendFunc& getBlendFunc() const;
-    void setBlendFunc(const ccBlendFunc &blendFunc);
+    const BlendFunc& getBlendFunc() const;
+    void setBlendFunc(const BlendFunc &blendFunc);
     
     DrawNode();
     

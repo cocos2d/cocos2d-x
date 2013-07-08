@@ -68,10 +68,10 @@ local function CreateRotateWorldLayer()
     x = size.width
     y = size.height
 
-    local blue =  CCLayerColor:create(ccc4(0,0,255,255))
-    local red =   CCLayerColor:create(ccc4(255,0,0,255))
-    local green = CCLayerColor:create(ccc4(0,255,0,255))
-    local white = CCLayerColor:create(ccc4(255,255,255,255))
+    local blue =  CCLayerColor:create(Color4B(0,0,255,255))
+    local red =   CCLayerColor:create(Color4B(255,0,0,255))
+    local green = CCLayerColor:create(Color4B(0,255,0,255))
+    local white = CCLayerColor:create(Color4B(255,255,255,255))
 
     blue:setScale(0.5)
     blue:setPosition(CCPointMake(- x / 4, - y / 4))

@@ -72,10 +72,10 @@ class NodeLoader : public Object {
         virtual Animation * parsePropTypeAnimation(Node * pNode, Node * pParent, CCBReader * pCCBReader);
         virtual Texture2D * parsePropTypeTexture(Node * pNode, Node * pParent, CCBReader * pCCBReader);
         virtual unsigned char parsePropTypeByte(Node * pNode, Node * pParent, CCBReader * pCCBReader, const char *pPropertyName);
-        virtual ccColor3B parsePropTypeColor3(Node * pNode, Node * pParent, CCBReader * pCCBReader, const char *pPropertyName);
-        virtual ccColor4F * parsePropTypeColor4FVar(Node * pNode, Node * pParent, CCBReader * pCCBReader);
+        virtual Color3B parsePropTypeColor3(Node * pNode, Node * pParent, CCBReader * pCCBReader, const char *pPropertyName);
+        virtual Color4F * parsePropTypeColor4FVar(Node * pNode, Node * pParent, CCBReader * pCCBReader);
         virtual bool * parsePropTypeFlip(Node * pNode, Node * pParent, CCBReader * pCCBReader);
-        virtual ccBlendFunc parsePropTypeBlendFunc(Node * pNode, Node * pParent, CCBReader * pCCBReader);
+        virtual BlendFunc parsePropTypeBlendFunc(Node * pNode, Node * pParent, CCBReader * pCCBReader);
         virtual std::string parsePropTypeFntFile(Node * pNode, Node * pParent, CCBReader * pCCBReader);
         virtual std::string parsePropTypeString(Node * pNode, Node * pParent, CCBReader * pCCBReader);
         virtual std::string parsePropTypeText(Node * pNode, Node * pParent, CCBReader * pCCBReader);
@@ -104,10 +104,10 @@ class NodeLoader : public Object {
         virtual void onHandlePropTypeAnimation(Node * pNode, Node * pParent, const char* pPropertyName, Animation * pAnimation, CCBReader * pCCBReader);
         virtual void onHandlePropTypeTexture(Node * pNode, Node * pParent, const char* pPropertyName, Texture2D * pTexture2D, CCBReader * pCCBReader);
         virtual void onHandlePropTypeByte(Node * pNode, Node * pParent, const char* pPropertyName, unsigned char pByte, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeColor3(Node * pNode, Node * pParent, const char* pPropertyName, ccColor3B pColor3B, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeColor4FVar(Node * pNode, Node * pParent, const char* pPropertyName, ccColor4F * pColor4FVar, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeColor3(Node * pNode, Node * pParent, const char* pPropertyName, Color3B pColor3B, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeColor4FVar(Node * pNode, Node * pParent, const char* pPropertyName, Color4F * pColor4FVar, CCBReader * pCCBReader);
         virtual void onHandlePropTypeFlip(Node * pNode, Node * pParent, const char* pPropertyName, bool * pFlip, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const char* pPropertyName, ccBlendFunc pBlendFunc, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const char* pPropertyName, BlendFunc pBlendFunc, CCBReader * pCCBReader);
         virtual void onHandlePropTypeFntFile(Node * pNode, Node * pParent, const char* pPropertyName, const char * pFntFile, CCBReader * pCCBReader);
         virtual void onHandlePropTypeString(Node * pNode, Node * pParent, const char* pPropertyName, const char * pString, CCBReader * pCCBReader);
         virtual void onHandlePropTypeText(Node * pNode, Node * pParent, const char* pPropertyName, const char * pText, CCBReader * pCCBReader);
