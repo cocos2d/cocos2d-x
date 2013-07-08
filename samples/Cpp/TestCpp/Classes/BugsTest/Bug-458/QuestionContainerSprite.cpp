@@ -27,11 +27,11 @@ bool QuestionContainerSprite::init()
         static int a = 0;
         
         if (a == 0)
-            label->setColor(Color3B::blue);
+            label->setColor(Color3B::BLUE);
         else
         {
             CCLog("Color changed");
-            label->setColor(Color3B::red);
+            label->setColor(Color3B::RED);
         }
         a++;
         addChild(layer);

@@ -400,7 +400,7 @@ bool ControlSwitch::ccTouchBegan(Touch *pTouch, Event *pEvent)
     
     _initialTouchXPosition = location.x - _switchSprite->getSliderXPosition();
     
-    _switchSprite->getThumbSprite()->setColor(Color3B::gray);
+    _switchSprite->getThumbSprite()->setColor(Color3B::GRAY);
     _switchSprite->needsLayout();
     
     return true;
@@ -420,7 +420,7 @@ void ControlSwitch::ccTouchEnded(Touch *pTouch, Event *pEvent)
 {
     Point location   = this->locationFromTouch(pTouch);
     
-    _switchSprite->getThumbSprite()->setColor(Color3B::white);
+    _switchSprite->getThumbSprite()->setColor(Color3B::WHITE);
     
     if (hasMoved())
     {
@@ -436,7 +436,7 @@ void ControlSwitch::ccTouchCancelled(Touch *pTouch, Event *pEvent)
 {
     Point location   = this->locationFromTouch(pTouch);
     
-    _switchSprite->getThumbSprite()->setColor(Color3B::white);
+    _switchSprite->getThumbSprite()->setColor(Color3B::WHITE);
     
     if (hasMoved())
     {

@@ -557,8 +557,8 @@ void Layer::ccTouchesCancelled(Set *pTouches, Event *pEvent)
 LayerRGBA::LayerRGBA()
 : _displayedOpacity(255)
 , _realOpacity (255)
-, _displayedColor(Color3B::white)
-, _realColor(Color3B::white)
+, _displayedColor(Color3B::WHITE)
+, _realColor(Color3B::WHITE)
 , _cascadeOpacityEnabled(false)
 , _cascadeColorEnabled(false)
 {}
@@ -570,7 +570,7 @@ bool LayerRGBA::init()
 	if (Layer::init())
     {
         _displayedOpacity = _realOpacity = 255;
-        _displayedColor = _realColor = Color3B::white;
+        _displayedColor = _realColor = Color3B::WHITE;
         setCascadeOpacityEnabled(false);
         setCascadeColorEnabled(false);
         
@@ -625,7 +625,7 @@ void LayerRGBA::setColor(const Color3B& color)
 	
 	if (_cascadeColorEnabled)
     {
-		Color3B parentColor = Color3B::white;
+		Color3B parentColor = Color3B::WHITE;
         RGBAProtocol* parent = dynamic_cast<RGBAProtocol*>(_parent);
 		if (parent && parent->isCascadeColorEnabled())
         {

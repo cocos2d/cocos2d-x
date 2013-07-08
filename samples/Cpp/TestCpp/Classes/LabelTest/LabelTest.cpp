@@ -299,7 +299,7 @@ LabelAtlasColorTest::LabelAtlasColorTest()
     LabelAtlas* label2 = LabelAtlas::create("0123456789", "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
     addChild(label2, 0, kTagSprite2);
     label2->setPosition( ccp(10,200) );
-    label2->setColor( Color3B::red );
+    label2->setColor( Color3B::RED );
 
     ActionInterval* fade = FadeOut::create(1.0f);
     ActionInterval* fade_in = fade->reverse();
@@ -417,7 +417,7 @@ Atlas3::Atlas3()
     LabelBMFont *label2 = LabelBMFont::create("Test", "fonts/bitmapFontTest2.fnt");
     // testing anchors
     label2->setAnchorPoint( ccp(0.5f, 0.5f) );
-    label2->setColor( Color3B::red );
+    label2->setColor( Color3B::RED );
     addChild(label2, 0, kTagBitmapAtlas2);
     label2->runAction( repeat->clone() );
     
@@ -646,7 +646,7 @@ AtlasBitmapColor::AtlasBitmapColor()
     
     LabelBMFont* label = NULL;
     label = LabelBMFont::create("Blue", "fonts/bitmapFontTest5.fnt");
-    label->setColor( Color3B::blue );
+    label->setColor( Color3B::BLUE );
     addChild(label);
     label->setPosition( ccp(s.width/2, s.height/4) );
     label->setAnchorPoint( ccp(0.5f, 0.5f) );
@@ -655,13 +655,13 @@ AtlasBitmapColor::AtlasBitmapColor()
     addChild(label);
     label->setPosition( ccp(s.width/2, 2*s.height/4) );
     label->setAnchorPoint( ccp(0.5f, 0.5f) );
-    label->setColor( Color3B::red );
+    label->setColor( Color3B::RED );
 
     label = LabelBMFont::create("G", "fonts/bitmapFontTest5.fnt");
     addChild(label);
     label->setPosition( ccp(s.width/2, 3*s.height/4) );
     label->setAnchorPoint( ccp(0.5f, 0.5f) );
-    label->setColor( Color3B::green );
+    label->setColor( Color3B::GREEN );
     label->setString("Green");
 }
 
@@ -1161,7 +1161,7 @@ BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
     Menu *stringMenu = Menu::create(longSentences, lineBreaks, mixed, NULL);
     stringMenu->alignItemsVertically();
 
-    longSentences->setColor(Color3B::red);
+    longSentences->setColor(Color3B::RED);
     _lastSentenceItem = longSentences;
     longSentences->setTag(LongSentences);
     lineBreaks->setTag(LineBreaks);
@@ -1175,7 +1175,7 @@ BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
     Menu *alignmentMenu = Menu::create(left, center, right, NULL);
     alignmentMenu->alignItemsHorizontallyWithPadding(alignmentItemPadding);
 
-    center->setColor(Color3B::red);
+    center->setColor(Color3B::RED);
     _lastAlignmentItem = center;
     left->setTag(LeftAlign);
     center->setTag(CenterAlign);
@@ -1222,8 +1222,8 @@ std::string BitmapFontMultiLineAlignment::subtitle()
 void BitmapFontMultiLineAlignment::stringChanged(cocos2d::Object *sender)
 {
     MenuItemFont *item = (MenuItemFont*)sender;
-    item->setColor(Color3B::red);
-    this->_lastAlignmentItem->setColor(Color3B::white);
+    item->setColor(Color3B::RED);
+    this->_lastAlignmentItem->setColor(Color3B::WHITE);
     this->_lastAlignmentItem = item;
 
     switch(item->getTag())
@@ -1248,8 +1248,8 @@ void BitmapFontMultiLineAlignment::stringChanged(cocos2d::Object *sender)
 void BitmapFontMultiLineAlignment::alignmentChanged(cocos2d::Object *sender)
 {
     MenuItemFont *item = (MenuItemFont*)sender;
-    item->setColor(Color3B::red);
-    this->_lastAlignmentItem->setColor(Color3B::white);
+    item->setColor(Color3B::RED);
+    this->_lastAlignmentItem->setColor(Color3B::WHITE);
     this->_lastAlignmentItem = item;
 
     switch(item->getTag())
@@ -1328,7 +1328,7 @@ LabelTTFA8Test::LabelTTFA8Test()
     // LabelBMFont
     LabelTTF *label1 = LabelTTF::create("Testing A8 Format", "Marker Felt", 48);
     addChild(label1);
-    label1->setColor(Color3B::red);
+    label1->setColor(Color3B::RED);
     label1->setPosition(ccp(s.width/2, s.height/2));
 
     FadeOut *fadeOut = FadeOut::create(2);

@@ -62,7 +62,7 @@ Scale9Sprite::Scale9Sprite()
 , _bottomRight(NULL)
 , _opacityModifyRGB(false)
 , _opacity(255)
-, _color(Color3B::white)
+, _color(Color3B::WHITE)
 {
 
 }
