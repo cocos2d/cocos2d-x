@@ -56,7 +56,7 @@ class CC_DLL RenderTexture : public Node
     /** The Sprite being used.
     The sprite, by default, will use the following blending function: GL_ONE, GL_ONE_MINUS_SRC_ALPHA.
     The blending function can be changed in runtime by calling:
-    - [[renderTexture sprite] setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
+    - [[renderTexture sprite] setBlendFunc:(BlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
     */
     CC_PROPERTY(Sprite*, _sprite, Sprite)
 public:
@@ -140,8 +140,8 @@ public:
     void setClearFlags(unsigned int uClearFlags);
     
     /** Clear color value. Valid only when "autoDraw" is true. */
-    const ccColor4F& getClearColor() const;
-    void setClearColor(const ccColor4F &clearColor);
+    const Color4F& getClearColor() const;
+    void setClearColor(const Color4F &clearColor);
     
     /** Value for clearDepth. Valid only when autoDraw is true. */
     float getClearDepth() const;
@@ -171,7 +171,7 @@ protected:
     
     // code for "auto" update
     GLbitfield   _clearFlags;
-    ccColor4F    _clearColor;
+    Color4F    _clearColor;
     GLclampf     _clearDepth;
     GLint        _clearStencil;
     bool         _autoDraw;

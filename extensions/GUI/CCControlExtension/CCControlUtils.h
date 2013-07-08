@@ -61,12 +61,12 @@ typedef struct
  * @{
  */
 
-//helper class to store ccColor3B's in mutable arrays
+//helper class to store Color3B's in mutable arrays
 class Color3bObject : public Object
 {
 public:
-    ccColor3B value;
-    Color3bObject(ccColor3B s_value):value(s_value){}
+    Color3B value;
+    Color3bObject(Color3B s_value):value(s_value){}
 };
 
 class ControlUtils

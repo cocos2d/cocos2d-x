@@ -108,10 +108,10 @@ bool Texture2DMutable::initWithData(const void* data, Texture2DPixelFormat pixel
     return true;
 }
 
-ccColor4B Texture2DMutable::pixelAt(const Point& pt)
+Color4B Texture2DMutable::pixelAt(const Point& pt)
 {
     
-	ccColor4B c = {0, 0, 0, 0};
+	Color4B c(0, 0, 0, 0);
 	if(!data_) return c;
 	if(pt.x < 0 || pt.y < 0) return c;
 	if(pt.x >= _contentSize.width || pt.y >= _contentSize.height) return c;
@@ -162,7 +162,7 @@ ccColor4B Texture2DMutable::pixelAt(const Point& pt)
 	return c;
 }
 
-bool Texture2DMutable::setPixelAt(const Point& pt, ccColor4B c)
+bool Texture2DMutable::setPixelAt(const Point& pt, Color4B c)
 {
 	if(!data_)return false;
 	if(pt.x < 0 || pt.y < 0) return false;
@@ -199,7 +199,7 @@ bool Texture2DMutable::setPixelAt(const Point& pt, ccColor4B c)
 	return true;
 }
 
-void Texture2DMutable::fill(ccColor4B p)
+void Texture2DMutable::fill(Color4B p)
 {
 	for(int r = 0; r < _contentSize.height; ++r)
 		for(int c = 0; c < _contentSize.width; ++c)

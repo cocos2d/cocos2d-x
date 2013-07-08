@@ -263,8 +263,8 @@ public:
     /// @name Functions inherited from TextureProtocol
     virtual void setTexture(Texture2D *texture);
     virtual Texture2D* getTexture(void);
-    virtual void setBlendFunc(const ccBlendFunc &blendFunc) { _blendFunc = blendFunc; }
-    virtual const ccBlendFunc& getBlendFunc(void) const { return _blendFunc; }
+    inline void setBlendFunc(const BlendFunc &blendFunc) { _blendFunc = blendFunc; }
+    inline const BlendFunc& getBlendFunc(void) const { return _blendFunc; }
     /// @}
 
     /// @{
@@ -294,8 +294,8 @@ public:
     
     /// @{
     /// @name Functions inherited from NodeRGBA
-    virtual void setColor(const ccColor3B& color3);
-    virtual void updateDisplayedColor(const ccColor3B& parentColor);
+    virtual void setColor(const Color3B& color3);
+    virtual void updateDisplayedColor(const Color3B& parentColor);
     virtual void setOpacity(GLubyte opacity);
     virtual void setOpacityModifyRGB(bool modify);
     virtual bool isOpacityModifyRGB(void) const;
@@ -410,7 +410,7 @@ public:
     /**
      * Returns the quad (tex coords, vertex coords and color) information. 
      */
-    inline ccV3F_C4B_T2F_Quad getQuad(void) const { return _quad; }
+    inline V3F_C4B_T2F_Quad getQuad(void) const { return _quad; }
 
     /** 
      * Returns whether or not the texture rectangle is rotated.
@@ -510,7 +510,7 @@ protected:
     //
     // Data used when the sprite is self-rendered
     //
-    ccBlendFunc        _blendFunc;            /// It's required for TextureProtocol inheritance
+    BlendFunc        _blendFunc;            /// It's required for TextureProtocol inheritance
     Texture2D*       _texture;            /// Texture2D object that is used to render the sprite
 
     //
@@ -526,7 +526,7 @@ protected:
     Point _unflippedOffsetPositionFromCenter;
 
     // vertex coords, texture coords and color info
-    ccV3F_C4B_T2F_Quad _quad;
+    V3F_C4B_T2F_Quad _quad;
 
     // opacity and RGB protocol
     bool _opacityModifyRGB;

@@ -33,8 +33,8 @@ enum
 };
 
 ShaderNode::ShaderNode()
-    : _center(vertex2(0.0f, 0.0f))
-    , _resolution(vertex2(0.0f, 0.0f))
+    : _center(Vertex2F(0.0f, 0.0f))
+    , _resolution(Vertex2F(0.0f, 0.0f))
     , _time(0.0f)
     , _uniformCenter(0)
     , _uniformResolution(0)
@@ -57,7 +57,7 @@ bool ShaderNode::initWithVertex(const char *vert, const char *frag)
     loadShaderVertex(vert, frag);
 
     _time = 0;
-    _resolution = vertex2(SIZE_X, SIZE_Y);
+    _resolution = Vertex2F(SIZE_X, SIZE_Y);
 
     scheduleUpdate();
 
@@ -95,15 +95,15 @@ void ShaderNode::translateFormOtherNode(AffineTransform &transform)
 {
     Node::setAdditionalTransform(transform);
 
-    _center = vertex2(_additionalTransform.tx * CC_CONTENT_SCALE_FACTOR(), _additionalTransform.ty * CC_CONTENT_SCALE_FACTOR());
-    _resolution = vertex2( SIZE_X * _additionalTransform.a, SIZE_Y * _additionalTransform.d);
+    _center = Vertex2F(_additionalTransform.tx * CC_CONTENT_SCALE_FACTOR(), _additionalTransform.ty * CC_CONTENT_SCALE_FACTOR());
+    _resolution = Vertex2F( SIZE_X * _additionalTransform.a, SIZE_Y * _additionalTransform.d);
 }
 
 void ShaderNode::setPosition(const Point &newPosition)
 {
     Node::setPosition(newPosition);
     Point position = getPosition();
-    _center = vertex2(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
+    _center = Vertex2F(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
 }
 
 void ShaderNode::draw()

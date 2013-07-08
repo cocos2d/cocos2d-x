@@ -365,10 +365,10 @@ void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, int* curIndex)
 void SpriteBatchNode::swap(int oldIndex, int newIndex)
 {
     Object** x = _descendants->data->arr;
-    ccV3F_C4B_T2F_Quad* quads = _textureAtlas->getQuads();
+    V3F_C4B_T2F_Quad* quads = _textureAtlas->getQuads();
 
     Object* tempItem = x[oldIndex];
-    ccV3F_C4B_T2F_Quad tempItemQuad=quads[oldIndex];
+    V3F_C4B_T2F_Quad tempItemQuad=quads[oldIndex];
 
     //update the index of other swapped item
     ((Sprite*) x[newIndex])->setAtlasIndex(oldIndex);
@@ -566,7 +566,7 @@ void SpriteBatchNode::insertChild(Sprite *pSprite, unsigned int uIndex)
         increaseAtlasCapacity();
     }
 
-    ccV3F_C4B_T2F_Quad quad = pSprite->getQuad();
+    V3F_C4B_T2F_Quad quad = pSprite->getQuad();
     _textureAtlas->insertQuad(&quad, uIndex);
 
     ccArray *descendantsData = _descendants->data;
@@ -611,7 +611,7 @@ void SpriteBatchNode::appendChild(Sprite* sprite)
 
     sprite->setAtlasIndex(index);
 
-    ccV3F_C4B_T2F_Quad quad = sprite->getQuad();
+    V3F_C4B_T2F_Quad quad = sprite->getQuad();
     _textureAtlas->insertQuad(&quad, index);
 
     // add children recursively
@@ -673,12 +673,12 @@ void SpriteBatchNode::updateBlendFunc(void)
 }
 
 // CocosNodeTexture protocol
-void SpriteBatchNode::setBlendFunc(const ccBlendFunc &blendFunc)
+void SpriteBatchNode::setBlendFunc(const BlendFunc &blendFunc)
 {
     _blendFunc = blendFunc;
 }
 
-const ccBlendFunc& SpriteBatchNode::getBlendFunc(void) const
+const BlendFunc& SpriteBatchNode::getBlendFunc(void) const
 {
     return _blendFunc;
 }
@@ -714,7 +714,7 @@ void SpriteBatchNode::insertQuadFromSprite(Sprite *sprite, unsigned int index)
     sprite->setBatchNode(this);
     sprite->setAtlasIndex(index);
 
-    ccV3F_C4B_T2F_Quad quad = sprite->getQuad();
+    V3F_C4B_T2F_Quad quad = sprite->getQuad();
     _textureAtlas->insertQuad(&quad, index);
 
     // XXX: updateTransform will update the textureAtlas too, using updateQuad.

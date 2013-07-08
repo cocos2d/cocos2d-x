@@ -98,7 +98,7 @@ void CC_DLL ccDrawRect( Point origin, Point destination );
 /** draws a solid rectangle given the origin and destination point measured in points.
     @since 1.1
  */
-void CC_DLL ccDrawSolidRect( Point origin, Point destination, ccColor4F color );
+void CC_DLL ccDrawSolidRect( Point origin, Point destination, Color4F color );
 
 /** draws a polygon given a pointer to Point coordinates and the number of vertices measured in points.
 The polygon can be closed or open
@@ -107,7 +107,7 @@ void CC_DLL ccDrawPoly( const Point *vertices, unsigned int numOfVertices, bool 
 
 /** draws a solid polygon given a pointer to CGPoint coordinates, the number of vertices measured in points, and a color.
  */
-void CC_DLL ccDrawSolidPoly( const Point *poli, unsigned int numberOfPoints, ccColor4F color );
+void CC_DLL ccDrawSolidPoly( const Point *poli, unsigned int numberOfPoints, Color4F color );
 
 /** draws a circle given the center, radius and number of segments. */
 void CC_DLL ccDrawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY);

@@ -43,19 +43,19 @@ NS_CC_EXT_BEGIN
  as the private API may change with little or no warning.
  */
 
-static ccColor4F ColorForBody(cpBody *body)
+static Color4F ColorForBody(cpBody *body)
 {
 	if (cpBodyIsRogue(body) || cpBodyIsSleeping(body))
     {
-		return ccc4f(0.5f, 0.5f, 0.5f ,0.5f);
+		return Color4F(0.5f, 0.5f, 0.5f ,0.5f);
 	}
     else if (body->CP_PRIVATE(node).idleTime > body->CP_PRIVATE(space)->sleepTimeThreshold)
     {
-		return ccc4f(0.33f, 0.33f, 0.33f, 0.5f);
+		return Color4F(0.33f, 0.33f, 0.33f, 0.5f);
 	}
     else
     {
-		return ccc4f(1.0f, 0.0f, 0.0f, 0.5f);
+		return Color4F(1.0f, 0.0f, 0.0f, 0.5f);
 	}
 }
 
@@ -80,7 +80,7 @@ static Point* cpVertArray2ccpArrayN(const cpVect* cpVertArray, unsigned int coun
 static void DrawShape(cpShape *shape, DrawNode *renderer)
 {
 	cpBody *body = shape->body;
-	ccColor4F color = ColorForBody(body);
+	Color4F color = ColorForBody(body);
     
 	switch (shape->CP_PRIVATE(klass)->type)
     {
@@ -102,7 +102,7 @@ static void DrawShape(cpShape *shape, DrawNode *renderer)
 		case CP_POLY_SHAPE:
         {
             cpPolyShape *poly = (cpPolyShape *)shape;
-            ccColor4F line = color;
+            Color4F line = color;
             line.a = cpflerp(color.a, 1.0, 0.5);
             Point* pPoints = cpVertArray2ccpArrayN(poly->tVerts, poly->numVerts);
             renderer->drawPolygon(pPoints, poly->numVerts, color, 1.0, line);
@@ -114,7 +114,7 @@ static void DrawShape(cpShape *shape, DrawNode *renderer)
 	}
 }
 
-static ccColor4F CONSTRAINT_COLOR = {0, 1, 0, 0.5};
+static Color4F CONSTRAINT_COLOR(0, 1, 0, 0.5);
 
 static void DrawConstraint(cpConstraint *constraint, DrawNode *renderer)
 {

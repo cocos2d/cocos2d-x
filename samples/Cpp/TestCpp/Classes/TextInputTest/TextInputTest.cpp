@@ -369,7 +369,7 @@ bool TextFieldTTFActionTest::onTextFieldInsertText(TextFieldTTF * pSender, const
     // create a insert text sprite and do some action
     LabelTTF * label = LabelTTF::create(text, FONT_NAME, FONT_SIZE);
     this->addChild(label);
-    ccColor3B color = { 226, 121, 7};
+    Color3B color(226, 121, 7);
     label->setColor(color);
 
     // move the sprite from top to position

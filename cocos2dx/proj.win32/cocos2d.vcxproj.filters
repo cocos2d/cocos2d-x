@@ -489,6 +489,7 @@
     <ClCompile Include="..\keyboard_dispatcher\CCKeyboardDispatcher.cpp">
       <Filter>keyboard_dispatcher</Filter>
     </ClCompile>
+    <ClCompile Include="..\ccTypes.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\base_nodes\CCAtlasNode.h">

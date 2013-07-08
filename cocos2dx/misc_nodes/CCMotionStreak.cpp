@@ -65,7 +65,7 @@ MotionStreak::~MotionStreak()
     CC_SAFE_FREE(_texCoords);
 }
 
-MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path)
+MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, const Color3B& color, const char* path)
 {
     MotionStreak *pRet = new MotionStreak();
     if (pRet && pRet->initWithFade(fade, minSeg, stroke, color, path))
@@ -78,7 +78,7 @@ MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, const
     return NULL;
 }
 
-MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, const ccColor3B& color, Texture2D* texture)
+MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture)
 {
     MotionStreak *pRet = new MotionStreak();
     if (pRet && pRet->initWithFade(fade, minSeg, stroke, color, texture))
@@ -91,7 +91,7 @@ MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, const
     return NULL;
 }
 
-bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path)
+bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Color3B& color, const char* path)
 {
     CCAssert(path != NULL, "Invalid filename");
 
@@ -99,7 +99,7 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const cc
     return initWithFade(fade, minSeg, stroke, color, texture);
 }
 
-bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, Texture2D* texture)
+bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture)
 {
     Node::setPosition(PointZero);
     setAnchorPoint(PointZero);
@@ -119,8 +119,8 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const cc
     _pointState = (float *)malloc(sizeof(float) * _maxPoints);
     _pointVertexes = (Point*)malloc(sizeof(Point) * _maxPoints);
 
-    _vertices = (ccVertex2F*)malloc(sizeof(ccVertex2F) * _maxPoints * 2);
-    _texCoords = (ccTex2F*)malloc(sizeof(ccTex2F) * _maxPoints * 2);
+    _vertices = (Vertex2F*)malloc(sizeof(Vertex2F) * _maxPoints * 2);
+    _texCoords = (Tex2F*)malloc(sizeof(Tex2F) * _maxPoints * 2);
     _colorPointer =  (GLubyte*)malloc(sizeof(GLubyte) * _maxPoints * 2 * 4);
 
     // Set blend mode
@@ -143,14 +143,14 @@ void MotionStreak::setPosition(const Point& position)
     _positionR = position;
 }
 
-void MotionStreak::tintWithColor(const ccColor3B& colors)
+void MotionStreak::tintWithColor(const Color3B& colors)
 {
     setColor(colors);
 
     // Fast assignation
     for(unsigned int i = 0; i<_nuPoints*2; i++) 
     {
-        *((ccColor3B*) (_colorPointer+i*4)) = colors;
+        *((Color3B*) (_colorPointer+i*4)) = colors;
     }
 }
 
@@ -169,12 +169,12 @@ void MotionStreak::setTexture(Texture2D *texture)
     }
 }
 
-void MotionStreak::setBlendFunc(const ccBlendFunc &blendFunc)
+void MotionStreak::setBlendFunc(const BlendFunc &blendFunc)
 {
     _blendFunc = blendFunc;
 }
 
-const ccBlendFunc& MotionStreak::getBlendFunc(void) const
+const BlendFunc& MotionStreak::getBlendFunc(void) const
 {
     return _blendFunc;
 }
@@ -280,8 +280,8 @@ void MotionStreak::update(float delta)
 
         // Color assignment
         const unsigned int offset = _nuPoints*8;
-        *((ccColor3B*)(_colorPointer + offset)) = _displayedColor;
-        *((ccColor3B*)(_colorPointer + offset+4)) = _displayedColor;
+        *((Color3B*)(_colorPointer + offset)) = _displayedColor;
+        *((Color3B*)(_colorPointer + offset+4)) = _displayedColor;
 
         // Opacity
         _colorPointer[offset+3] = 255;
@@ -312,8 +312,8 @@ void MotionStreak::update(float delta)
     if( _nuPoints  && _previousNuPoints != _nuPoints ) {
         float texDelta = 1.0f / _nuPoints;
         for( i=0; i < _nuPoints; i++ ) {
-            _texCoords[i*2] = tex2(0, texDelta*i);
-            _texCoords[i*2+1] = tex2(1, texDelta*i);
+            _texCoords[i*2] = Tex2F(0, texDelta*i);
+            _texCoords[i*2+1] = Tex2F(1, texDelta*i);
         }
 
         _previousNuPoints = _nuPoints;
@@ -339,10 +339,10 @@ void MotionStreak::draw()
 
 #ifdef EMSCRIPTEN
     // Size calculations from ::initWithFade
-    setGLBufferData(_vertices, (sizeof(ccVertex2F) * _maxPoints * 2), 0);
+    setGLBufferData(_vertices, (sizeof(Vertex2F) * _maxPoints * 2), 0);
     glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
-    setGLBufferData(_texCoords, (sizeof(ccTex2F) * _maxPoints * 2), 1);
+    setGLBufferData(_texCoords, (sizeof(Tex2F) * _maxPoints * 2), 1);
     glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
     setGLBufferData(_colorPointer, (sizeof(GLubyte) * _maxPoints * 2 * 4), 2);

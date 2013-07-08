@@ -25,10 +25,10 @@ bool Bug1159Layer::init()
         Director::sharedDirector()->setDepthTest(true);
         Size s = Director::sharedDirector()->getWinSize();
 
-        LayerColor *background = LayerColor::create(ccc4(255, 0, 255, 255));
+        LayerColor *background = LayerColor::create(Color4B(255, 0, 255, 255));
         addChild(background);
 
-        LayerColor *sprite_a = LayerColor::create(ccc4(255, 0, 0, 255), 700, 700);
+        LayerColor *sprite_a = LayerColor::create(Color4B(255, 0, 0, 255), 700, 700);
         sprite_a->setAnchorPoint(ccp(0.5f, 0.5f));
         sprite_a->ignoreAnchorPointForPosition(false);
         sprite_a->setPosition(ccp(0.0f, s.height/2));
@@ -39,7 +39,7 @@ bool Bug1159Layer::init()
                                                         MoveTo::create(1.0f, ccp(0.0f, 384.0f)),
                                                         NULL)));
 
-        LayerColor *sprite_b = LayerColor::create(ccc4(0, 0, 255, 255), 400, 400);
+        LayerColor *sprite_b = LayerColor::create(Color4B(0, 0, 255, 255), 400, 400);
         sprite_b->setAnchorPoint(ccp(0.5f, 0.5f));
         sprite_b->ignoreAnchorPointForPosition(false);
         sprite_b->setPosition(ccp(s.width/2, s.height/2));
