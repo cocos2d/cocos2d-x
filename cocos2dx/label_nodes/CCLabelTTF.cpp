@@ -47,7 +47,7 @@ LabelTTF::LabelTTF()
 , _string("")
 , _shadowEnabled(false)
 , _strokeEnabled(false)
-, _textFillColor(Color3B::white)
+, _textFillColor(Color3B::WHITE)
 {
 }
 

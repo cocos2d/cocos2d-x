@@ -455,7 +455,7 @@ bool Texture2D::initWithString(const char *text, const char *fontName, float fon
         tempDef._dimensions    = dimensions;
         tempDef._alignment     = hAlignment;
         tempDef._vertAlignment = vAlignment;
-        tempDef._fontFillColor = Color3B::white;
+        tempDef._fontFillColor = Color3B::WHITE;
     
         return initWithString(text, tempDef);
     
