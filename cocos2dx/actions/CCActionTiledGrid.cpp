@@ -91,7 +91,7 @@ void ShakyTiles3D::update(float time)
     {
         for (j = 0; j < _gridSize.height; ++j)
         {
-            Quad3 coords = originalTile(ccp(i, j));
+            Quad3 coords = getOriginalTile(ccp(i, j));
 
             // X
             coords.bl.x += ( rand() % (_randrange*2) ) - _randrange;
@@ -279,7 +279,7 @@ Size ShuffleTiles::getDelta(const Size& pos) const
 
 void ShuffleTiles::placeTile(const Point& pos, Tile *t)
 {
-    Quad3 coords = originalTile(pos);
+    Quad3 coords = getOriginalTile(pos);
 
     Point step = _target->getGrid()->getStep();
     coords.bl.x += (int)(t->position.x * step.x);
@@ -397,7 +397,7 @@ float FadeOutTRTiles::testFunc(const Size& pos, float time)
 
 void FadeOutTRTiles::turnOnTile(const Point& pos)
 {
-    setTile(pos, originalTile(pos));
+    setTile(pos, getOriginalTile(pos));
 }
 
 void FadeOutTRTiles::turnOffTile(const Point& pos)
@@ -409,7 +409,7 @@ void FadeOutTRTiles::turnOffTile(const Point& pos)
 
 void FadeOutTRTiles::transformTile(const Point& pos, float distance)
 {
-    Quad3 coords = originalTile(pos);
+    Quad3 coords = getOriginalTile(pos);
     Point step = _target->getGrid()->getStep();
 
     coords.bl.x += (step.x / 2) * (1.0f - distance);
@@ -536,7 +536,7 @@ float FadeOutUpTiles::testFunc(const Size& pos, float time)
 
 void FadeOutUpTiles::transformTile(const Point& pos, float distance)
 {
-    Quad3 coords = originalTile(pos);
+    Quad3 coords = getOriginalTile(pos);
     Point step = _target->getGrid()->getStep();
 
     coords.bl.y += (step.y / 2) * (1.0f - distance);
@@ -664,7 +664,7 @@ void TurnOffTiles::shuffle(unsigned int *pArray, unsigned int nLen)
 
 void TurnOffTiles::turnOnTile(const Point& pos)
 {
-    setTile(pos, originalTile(pos));
+    setTile(pos, getOriginalTile(pos));
 }
 
 void TurnOffTiles::turnOffTile(const Point& pos)
@@ -839,7 +839,7 @@ void JumpTiles3D::update(float time)
     {
         for( j = 0; j < _gridSize.height; j++ )
         {
-            Quad3 coords = originalTile(ccp(i, j));
+            Quad3 coords = getOriginalTile(ccp(i, j));
 
             if ( ((i+j) % 2) == 0 )
             {
