@@ -114,7 +114,7 @@ static void DrawShape(cpShape *shape, DrawNode *renderer)
 	}
 }
 
-static Color4F CONSTRAINT_COLOR = {0, 1, 0, 0.5};
+static Color4F CONSTRAINT_COLOR(0, 1, 0, 0.5);
 
 static void DrawConstraint(cpConstraint *constraint, DrawNode *renderer)
 {

@@ -393,10 +393,10 @@ void Grid3D::calculateVertexPoints(void)
             memcpy(&idxArray[6*idx], tempidx, 6*sizeof(GLushort));
 
             int l1[4] = {a*3, b*3, c*3, d*3};
-            Vertex3F e = {x1, y1, 0};
-            Vertex3F f = {x2, y1, 0};
-            Vertex3F g = {x2, y2, 0};
-            Vertex3F h = {x1, y2, 0};
+            Vertex3F e(x1, y1, 0);
+            Vertex3F f(x2, y1, 0);
+            Vertex3F g(x2, y2, 0);
+            Vertex3F h(x1, y2, 0);
 
             Vertex3F l2[4] = {e, f, g, h};
 
@@ -427,24 +427,34 @@ void Grid3D::calculateVertexPoints(void)
 
 Vertex3F Grid3D::vertex(const Point& pos)
 {
+    return getVertex(pos);
+}
+
+Vertex3F Grid3D::getVertex(const Point& pos)
+{
     CCAssert( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     
     int index = (pos.x * (_gridSize.height+1) + pos.y) * 3;
     float *vertArray = (float*)_vertices;
 
-    Vertex3F vert = {vertArray[index], vertArray[index+1], vertArray[index+2]};
+    Vertex3F vert(vertArray[index], vertArray[index+1], vertArray[index+2]);
 
     return vert;
 }
 
 Vertex3F Grid3D::originalVertex(const Point& pos)
 {
+    return getOriginalVertex(pos);
+}
+
+Vertex3F Grid3D::getOriginalVertex(const Point& pos)
+{
     CCAssert( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     
     int index = (pos.x * (_gridSize.height+1) + pos.y) * 3;
     float *vertArray = (float*)_originalVertices;
 
-    Vertex3F vert = {vertArray[index], vertArray[index+1], vertArray[index+2]};
+    Vertex3F vert(vertArray[index], vertArray[index+1], vertArray[index+2]);
 
     return vert;
 }

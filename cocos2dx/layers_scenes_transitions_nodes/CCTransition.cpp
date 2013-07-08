@@ -1270,7 +1270,7 @@ void TransitionCrossFade::onEnter()
 
     // create a transparent color layer
     // in which we are going to add our rendertextures
-    Color4B  color = {0,0,0,0};
+    Color4B  color(0,0,0,0);
     Size size = Director::sharedDirector()->getWinSize();
     LayerColor* layer = LayerColor::create(color);
 

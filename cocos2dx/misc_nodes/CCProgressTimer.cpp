@@ -166,7 +166,7 @@ bool ProgressTimer::isOpacityModifyRGB(void) const
 ///
 Tex2F ProgressTimer::textureCoordFromAlphaPoint(Point alpha)
 {
-    Tex2F ret = {0.0f, 0.0f};
+    Tex2F ret(0.0f, 0.0f);
     if (!_sprite) {
         return ret;
     }
@@ -182,7 +182,7 @@ Tex2F ProgressTimer::textureCoordFromAlphaPoint(Point alpha)
 
 Vertex2F ProgressTimer::vertexFromAlphaPoint(Point alpha)
 {
-    Vertex2F ret = {0.0f, 0.0f};
+    Vertex2F ret(0.0f, 0.0f);
     if (!_sprite) {
         return ret;
     }

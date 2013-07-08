@@ -117,9 +117,15 @@ public:
     ~Grid3D(void);
 
     /** returns the vertex at a given position */
-    Vertex3F vertex(const Point& pos);
+    CC_DEPRECATED_ATTRIBUTE Vertex3F vertex(const Point& pos);
     /** returns the original (non-transformed) vertex at a given position */
-    Vertex3F originalVertex(const Point& pos);
+    CC_DEPRECATED_ATTRIBUTE Vertex3F originalVertex(const Point& pos);
+
+    /** returns the vertex at a given position */
+    Vertex3F getVertex(const Point& pos);
+    /** returns the original (non-transformed) vertex at a given position */
+    Vertex3F getOriginalVertex(const Point& pos);
+
     /** sets a new vertex at a given position */
     void setVertex(const Point& pos, const Vertex3F& vertex);
 

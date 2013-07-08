@@ -201,7 +201,7 @@ DrawNode* BasicTest::shape()
     triangle[1] = ccp(100, -100);
     triangle[2] = ccp(0, 100);
 
-    static Color4F green = {0, 1, 0, 1};
+    static Color4F green(0, 1, 0, 1);
     shape->drawPolygon(triangle, 3, green, 0, green);
     return shape;
 }
@@ -514,7 +514,7 @@ void ScrollViewDemo::setup()
     rectangle[2] = ccp(clipper->getContentSize().width, clipper->getContentSize().height);
     rectangle[3] = ccp(0, clipper->getContentSize().height);
     
-    Color4F white = {1, 1, 1, 1};
+    Color4F white(1, 1, 1, 1);
     stencil->drawPolygon(rectangle, 4, white, 1, white);
     clipper->setStencil(stencil);
 
@@ -567,14 +567,14 @@ static const GLfloat _alphaThreshold = 0.05f;
 
 static const int _planeCount = 8;
 static const Color4F _planeColor[] = {
-    {0, 0, 0, 0.65f},
-    {0.7f, 0, 0, 0.6f},
-    {0, 0.7f, 0, 0.55f},
-    {0, 0, 0.7f, 0.5f},
-    {0.7f, 0.7f, 0, 0.45f},
-    {0, 0.7f, 0.7f, 0.4f},
-    {0.7f, 0, 0.7f, 0.35f},
-    {0.7f, 0.7f, 0.7f, 0.3f},
+    Color4F(0, 0, 0, 0.65f),
+    Color4F(0.7f, 0, 0, 0.6f),
+    Color4F(0, 0.7f, 0, 0.55f),
+    Color4F(0, 0, 0.7f, 0.5f),
+    Color4F(0.7f, 0.7f, 0, 0.45f),
+    Color4F(0, 0.7f, 0.7f, 0.4f),
+    Color4F(0.7f, 0, 0.7f, 0.35f),
+    Color4F(0.7f, 0.7f, 0.7f, 0.3f),
 };
 
 RawStencilBufferTest::~RawStencilBufferTest()

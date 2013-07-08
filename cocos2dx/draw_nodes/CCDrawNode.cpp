@@ -29,11 +29,11 @@ NS_CC_BEGIN
 
 // Vertex2F == CGPoint in 32-bits, but not in 64-bits (OS X)
 // that's why the "v2f" functions are needed
-static Vertex2F v2fzero = {0.0f,0.0f};
+static Vertex2F v2fzero(0.0f,0.0f);
 
 static inline Vertex2F v2f(float x, float y)
 {
-    Vertex2F ret = {x, y};
+    Vertex2F ret(x, y);
 	return ret;
 }
 
@@ -229,10 +229,10 @@ void DrawNode::drawDot(const Point &pos, float radius, const Color4F &color)
     unsigned int vertex_count = 2*3;
     ensureCapacity(vertex_count);
 	
-	V2F_C4B_T2F a = {{pos.x - radius, pos.y - radius}, Color4F(color), {-1.0, -1.0} };
-	V2F_C4B_T2F b = {{pos.x - radius, pos.y + radius}, Color4F(color), {-1.0,  1.0} };
-	V2F_C4B_T2F c = {{pos.x + radius, pos.y + radius}, Color4F(color), { 1.0,  1.0} };
-	V2F_C4B_T2F d = {{pos.x + radius, pos.y - radius}, Color4F(color), { 1.0, -1.0} };
+	V2F_C4B_T2F a = {Vertex2F(pos.x - radius, pos.y - radius), Color4F(color), Tex2F(-1.0, -1.0) };
+	V2F_C4B_T2F b = {Vertex2F(pos.x - radius, pos.y + radius), Color4F(color), Tex2F(-1.0,  1.0) };
+	V2F_C4B_T2F c = {Vertex2F(pos.x + radius, pos.y + radius), Color4F(color), Tex2F( 1.0,  1.0) };
+	V2F_C4B_T2F d = {Vertex2F(pos.x + radius, pos.y - radius), Color4F(color), Tex2F( 1.0, -1.0) };
 	
 	V2F_C4B_T2F_Triangle *triangles = (V2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
     V2F_C4B_T2F_Triangle triangle0 = {a, b, c};

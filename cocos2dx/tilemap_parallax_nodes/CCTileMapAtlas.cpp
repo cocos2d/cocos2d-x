@@ -222,7 +222,7 @@ void TileMapAtlas::updateAtlasValueAt(const Point& pos, const Color3B& value, un
     quad->tr.vertices.y = (float)(y * _itemHeight + _itemHeight);
     quad->tr.vertices.z = 0.0f;
 
-    Color4B color = { _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity };
+    Color4B color(_displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity);
     quad->tr.colors = color;
     quad->tl.colors = color;
     quad->br.colors = color;
