@@ -180,8 +180,9 @@ void NotificationCenter::postNotification(const char *name, Object *object)
         {
             if (0 != observer->getHandler())
             {
-                ScriptEngineProtocol* engine = ScriptEngineManager::sharedManager()->getScriptEngine();
-                engine->executeNotificationEvent(this, name);
+                BasicScriptData data((void*)this,(void*)name);
+                ScriptEvent scriptEvent(kNotificationEvent,(void*)&data);
+                ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);
             }
             else
             {
@@ -200,7 +201,7 @@ int NotificationCenter::getObserverHandlerByName(const char* name)
 {
     if (NULL == name || strlen(name) == 0)
     {
-        return -1;
+        return 0;
     }
     
     Object* obj = NULL;
@@ -217,7 +218,7 @@ int NotificationCenter::getObserverHandlerByName(const char* name)
         }
     }
     
-    return -1;
+    return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

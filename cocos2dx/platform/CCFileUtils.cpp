@@ -617,12 +617,12 @@ std::string FileUtils::fullPathForFilename(const char* pszFileName)
     
     string fullpath = "";
     
-    for (std::vector<std::string>::iterator searchPathsIter = _searchPathArray.begin();
+    for (auto searchPathsIter = _searchPathArray.begin();
          searchPathsIter != _searchPathArray.end(); ++searchPathsIter) {
-        for (std::vector<std::string>::iterator resOrderIter = _searchResolutionsOrderArray.begin();
+        for (auto resOrderIter = _searchResolutionsOrderArray.begin();
              resOrderIter != _searchResolutionsOrderArray.end(); ++resOrderIter) {
             
-            //CCLOG("\n\nSEARCHING: %s, %s, %s", newFilename.c_str(), resOrderIter->c_str(), searchPathsIter->c_str());
+//            CCLOG("\n\nSEARCHING: %s, %s, %s", newFilename.c_str(), resOrderIter->c_str(), searchPathsIter->c_str());
             
             fullpath = this->getPathForFilename(newFilename, *resOrderIter, *searchPathsIter);
             
@@ -630,13 +630,13 @@ std::string FileUtils::fullPathForFilename(const char* pszFileName)
             {
                 // Using the filename passed in as key.
                 _fullPathCache.insert(std::pair<std::string, std::string>(pszFileName, fullpath));
-                //CCLOG("Returning path: %s", fullpath.c_str());
+//                CCLOG("Returning path: %s", fullpath.c_str());
                 return fullpath;
             }
         }
     }
     
-    //CCLOG("cocos2d: fullPathForFilename: No file found at %s. Possible missing file.", pszFileName);
+//    CCLOG("cocos2d: fullPathForFilename: No file found at %s. Possible missing file.", pszFileName);
 
     // The file wasn't found, return the file name passed in.
     return pszFileName;

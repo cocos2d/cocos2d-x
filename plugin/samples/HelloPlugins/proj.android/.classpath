@@ -24,5 +24,6 @@
 	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/weibo/android/weibosdk.jar"/>
 	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/qh360/android/360SDK.jar"/>
 	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/qh360/android/libPluginQH360.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/uc/android/libPluginUC.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

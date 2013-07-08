@@ -149,7 +149,7 @@ bool Node::init()
     return true;
 }
 
-float Node::getSkewX()
+float Node::getSkewX() const
 {
     return _skewX;
 }
@@ -160,7 +160,7 @@ void Node::setSkewX(float newSkewX)
     _transformDirty = _inverseDirty = true;
 }
 
-float Node::getSkewY()
+float Node::getSkewY() const
 {
     return _skewY;
 }
@@ -173,7 +173,7 @@ void Node::setSkewY(float newSkewY)
 }
 
 /// zOrder getter
-int Node::getZOrder()
+int Node::getZOrder() const
 {
     return _ZOrder;
 }
@@ -195,7 +195,7 @@ void Node::setZOrder(int z)
 }
 
 /// vertexZ getter
-float Node::getVertexZ()
+float Node::getVertexZ() const
 {
     return _vertexZ;
 }
@@ -209,7 +209,7 @@ void Node::setVertexZ(float var)
 
 
 /// rotation getter
-float Node::getRotation()
+float Node::getRotation() const
 {
     CCAssert(_rotationX == _rotationY, "CCNode#rotation. RotationX != RotationY. Don't know which one to return");
     return _rotationX;
@@ -222,7 +222,7 @@ void Node::setRotation(float newRotation)
     _transformDirty = _inverseDirty = true;
 }
 
-float Node::getRotationX()
+float Node::getRotationX() const
 {
     return _rotationX;
 }
@@ -233,7 +233,7 @@ void Node::setRotationX(float fRotationX)
     _transformDirty = _inverseDirty = true;
 }
 
-float Node::getRotationY()
+float Node::getRotationY() const
 {
     return _rotationY;
 }
@@ -245,7 +245,7 @@ void Node::setRotationY(float fRotationY)
 }
 
 /// scale getter
-float Node::getScale(void)
+float Node::getScale(void) const
 {
     CCAssert( _scaleX == _scaleY, "CCNode#scale. ScaleX != ScaleY. Don't know which one to return");
     return _scaleX;
@@ -259,7 +259,7 @@ void Node::setScale(float scale)
 }
 
 /// scaleX getter
-float Node::getScaleX()
+float Node::getScaleX() const
 {
     return _scaleX;
 }
@@ -272,7 +272,7 @@ void Node::setScaleX(float newScaleX)
 }
 
 /// scaleY getter
-float Node::getScaleY()
+float Node::getScaleY() const
 {
     return _scaleY;
 }
@@ -285,7 +285,7 @@ void Node::setScaleY(float newScaleY)
 }
 
 /// position getter
-const Point& Node::getPosition()
+const Point& Node::getPosition() const
 {
     return _position;
 }
@@ -297,7 +297,7 @@ void Node::setPosition(const Point& newPosition)
     _transformDirty = _inverseDirty = true;
 }
 
-void Node::getPosition(float* x, float* y)
+void Node::getPosition(float* x, float* y) const
 {
     *x = _position.x;
     *y = _position.y;
@@ -308,12 +308,12 @@ void Node::setPosition(float x, float y)
     setPosition(ccp(x, y));
 }
 
-float Node::getPositionX(void)
+float Node::getPositionX(void) const
 {
     return _position.x;
 }
 
-float Node::getPositionY(void)
+float Node::getPositionY(void) const
 {
     return  _position.y;
 }
@@ -367,7 +367,7 @@ void Node::setGrid(GridBase* pGrid)
 
 
 /// isVisible getter
-bool Node::isVisible()
+bool Node::isVisible() const
 {
     return _visible;
 }
@@ -378,13 +378,13 @@ void Node::setVisible(bool var)
     _visible = var;
 }
 
-const Point& Node::getAnchorPointInPoints()
+const Point& Node::getAnchorPointInPoints() const
 {
     return _anchorPointInPoints;
 }
 
 /// anchorPoint getter
-const Point& Node::getAnchorPoint()
+const Point& Node::getAnchorPoint() const
 {
     return _anchorPoint;
 }
@@ -417,7 +417,7 @@ void Node::setContentSize(const Size & size)
 }
 
 // isRunning getter
-bool Node::isRunning()
+bool Node::isRunning() const
 {
     return _running;
 }
@@ -434,7 +434,7 @@ void Node::setParent(Node * var)
 }
 
 /// isRelativeAnchorPoint getter
-bool Node::isIgnoreAnchorPointForPosition()
+bool Node::isIgnoreAnchorPointForPosition() const
 {
     return _ignoreAnchorPointForPosition;
 }
@@ -472,7 +472,7 @@ void Node::setUserData(void *var)
     _userData = var;
 }
 
-unsigned int Node::getOrderOfArrival()
+unsigned int Node::getOrderOfArrival() const
 {
     return _orderOfArrival;
 }
@@ -492,7 +492,7 @@ Object* Node::getUserObject()
     return _userObject;
 }
 
-ccGLServerState Node::getGLServerState()
+ccGLServerState Node::getGLServerState() const
 {
     return _GLServerState;
 }
@@ -542,7 +542,14 @@ void Node::cleanup()
     this->stopAllActions();
     this->unscheduleAllSelectors();
     
-    if ( _scriptType != kScriptTypeNone)
+    if ( _scriptType == kScriptTypeLua)
+    {
+        int action = kNodeOnCleanup;
+        BasicScriptData data((void*)this,(void*)&action);
+        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);
+    }
+    else if(_scriptType == kScriptTypeJavascript)
     {
         ScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kNodeOnCleanup);
     }
@@ -552,7 +559,7 @@ void Node::cleanup()
 }
 
 
-const char* Node::description()
+const char* Node::description() const
 {
     return String::createWithFormat("<Node | Tag = %d>", _tag)->getCString();
 }
@@ -914,7 +921,14 @@ void Node::onEnter()
 
     _running = true;
 
-    if (_scriptType != kScriptTypeNone)
+    if (_scriptType == kScriptTypeLua)
+    {
+        int action = kNodeOnEnter;
+        BasicScriptData data((void*)this,(void*)&action);
+        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);
+    }
+    else if(_scriptType == kScriptTypeJavascript)
     {
         ScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kNodeOnEnter);
     }
@@ -926,7 +940,14 @@ void Node::onEnterTransitionDidFinish()
 
     arrayMakeObjectsPerformSelector(_children, onEnterTransitionDidFinish, Node*);
 
-    if (_scriptType == kScriptTypeJavascript)
+    if (_scriptType == kScriptTypeLua)
+    {
+        int action = kNodeOnEnterTransitionDidFinish;
+        BasicScriptData data((void*)this,(void*)&action);
+        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);
+    }
+    else if (_scriptType == kScriptTypeJavascript)
     {
         ScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kNodeOnEnterTransitionDidFinish);
     }
@@ -935,8 +956,13 @@ void Node::onEnterTransitionDidFinish()
 void Node::onExitTransitionDidStart()
 {
     arrayMakeObjectsPerformSelector(_children, onExitTransitionDidStart, Node*);
-
-    if (_scriptType == kScriptTypeJavascript)
+    if (_scriptType == kScriptTypeLua)
+    {
+        int action = kNodeOnExitTransitionDidStart;
+        BasicScriptData data((void*)this,(void*)&action);
+        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);    }
+    else if (_scriptType == kScriptTypeJavascript)
     {
         ScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kNodeOnExitTransitionDidStart);
     }
@@ -947,8 +973,14 @@ void Node::onExit()
     this->pauseSchedulerAndActions();
 
     _running = false;
-
-    if ( _scriptType != kScriptTypeNone)
+    if (_scriptType == kScriptTypeLua)
+    {
+        int action = kNodeOnExit;
+        BasicScriptData data((void*)this,(void*)&action);
+        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);
+    }
+    else if ( _scriptType == kScriptTypeJavascript)
     {
         ScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kNodeOnExit);
     }
@@ -1123,9 +1155,12 @@ void Node::pauseSchedulerAndActions()
 // override me
 void Node::update(float fDelta)
 {
-    if (_updateScriptHandler)
+    if (0 != _updateScriptHandler)
     {
-        ScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(_updateScriptHandler, fDelta, this);
+        //only lua use
+        SchedulerScriptData data(_updateScriptHandler,fDelta);
+        ScriptEvent event(kScheduleEvent,&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
     
     if (_componentContainer && !_componentContainer->isEmpty())
@@ -1334,12 +1369,12 @@ bool NodeRGBA::init()
     return false;
 }
 
-GLubyte NodeRGBA::getOpacity(void)
+GLubyte NodeRGBA::getOpacity(void) const
 {
 	return _realOpacity;
 }
 
-GLubyte NodeRGBA::getDisplayedOpacity(void)
+GLubyte NodeRGBA::getDisplayedOpacity(void) const
 {
 	return _displayedOpacity;
 }
@@ -1378,7 +1413,7 @@ void NodeRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
     }
 }
 
-bool NodeRGBA::isCascadeOpacityEnabled(void)
+bool NodeRGBA::isCascadeOpacityEnabled(void) const
 {
     return _cascadeOpacityEnabled;
 }
@@ -1388,12 +1423,12 @@ void NodeRGBA::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
     _cascadeOpacityEnabled = cascadeOpacityEnabled;
 }
 
-const ccColor3B& NodeRGBA::getColor(void)
+const ccColor3B& NodeRGBA::getColor(void) const
 {
 	return _realColor;
 }
 
-const ccColor3B& NodeRGBA::getDisplayedColor()
+const ccColor3B& NodeRGBA::getDisplayedColor() const
 {
 	return _displayedColor;
 }
@@ -1435,7 +1470,7 @@ void NodeRGBA::updateDisplayedColor(const ccColor3B& parentColor)
     }
 }
 
-bool NodeRGBA::isCascadeColorEnabled(void)
+bool NodeRGBA::isCascadeColorEnabled(void) const
 {
     return _cascadeColorEnabled;
 }

@@ -205,7 +205,7 @@ void LabelAtlas::setString(const char *label)
     _quadsToDraw = len;
 }
 
-const char* LabelAtlas::getString(void)
+const char* LabelAtlas::getString(void) const
 {
     return _string.c_str();
 }

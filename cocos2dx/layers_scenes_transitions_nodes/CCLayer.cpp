@@ -142,16 +142,39 @@ void Layer::unregisterScriptTouchHandler(void)
 
 int Layer::excuteScriptTouchHandler(int nEventType, Touch *pTouch)
 {
-    return ScriptEngineManager::sharedManager()->getScriptEngine()->executeLayerTouchEvent(this, nEventType, pTouch);
+    if (kScriptTypeLua == _scriptType)
+    {
+        Set touches;
+        touches.addObject((Object*)pTouch);
+        TouchesScriptData data(nEventType,kLayerTouches,(void*)this,&touches);
+        ScriptEvent event(kTouchesEvent,&data);
+        return ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);        
+    }
+    else if(kScriptTypeJavascript == _scriptType)
+    {
+        return ScriptEngineManager::sharedManager()->getScriptEngine()->executeLayerTouchEvent(this, nEventType, pTouch);
+    }
+    //can not reach it
+    return 0;
 }
 
 int Layer::excuteScriptTouchHandler(int nEventType, Set *pTouches)
 {
-    return ScriptEngineManager::sharedManager()->getScriptEngine()->executeLayerTouchesEvent(this, nEventType, pTouches);
+    if (kScriptTypeLua == _scriptType)
+    {
+        TouchesScriptData data(nEventType,kLayerTouches,(void*)this,pTouches);
+        ScriptEvent event(kTouchesEvent,&data);
+        return ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+    }
+    else if(kScriptTypeJavascript == _scriptType)
+    {
+        return ScriptEngineManager::sharedManager()->getScriptEngine()->executeLayerTouchesEvent(this, nEventType, pTouches);
+    }
+    return 0;
 }
 
 /// isTouchEnabled getter
-bool Layer::isTouchEnabled()
+bool Layer::isTouchEnabled() const
 {
     return _touchEnabled;
 }
@@ -204,18 +227,18 @@ void Layer::setTouchPriority(int priority)
     }
 }
 
-int Layer::getTouchPriority()
+int Layer::getTouchPriority() const
 {
     return _touchPriority;
 }
 
-int Layer::getTouchMode()
+int Layer::getTouchMode() const
 {
     return _touchMode;
 }
 
 /// isAccelerometerEnabled getter
-bool Layer::isAccelerometerEnabled()
+bool Layer::isAccelerometerEnabled() const
 {
     return _accelerometerEnabled;
 }
@@ -257,10 +280,16 @@ void Layer::setAccelerometerInterval(double interval) {
 void Layer::didAccelerate(Acceleration* pAccelerationValue)
 {
    CC_UNUSED_PARAM(pAccelerationValue);
-   if ( _scriptType != kScriptTypeNone)
-   {
-       ScriptEngineManager::sharedManager()->getScriptEngine()->executeAccelerometerEvent(this, pAccelerationValue);
-   }
+    if (kScriptTypeJavascript == _scriptType)
+    {
+        ScriptEngineManager::sharedManager()->getScriptEngine()->executeAccelerometerEvent(this, pAccelerationValue);
+    }
+    else if(kScriptTypeLua == _scriptType)
+    {
+        BasicScriptData data((void*)this,(void*)pAccelerationValue);
+        ScriptEvent event(kAccelerometerEvent,&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+    }
 }
 
 void Layer::registerScriptAccelerateHandler(int nHandler)
@@ -276,7 +305,7 @@ void Layer::unregisterScriptAccelerateHandler(void)
 }
 
 /// isKeyboardEnabled getter
-bool Layer::isKeyboardEnabled()
+bool Layer::isKeyboardEnabled() const
 {
     return _keyboardEnabled;
 }
@@ -302,7 +331,7 @@ void Layer::setKeyboardEnabled(bool enabled)
 }
 
 /// isKeypadEnabled getter
-bool Layer::isKeypadEnabled()
+bool Layer::isKeypadEnabled() const
 {
     return _keypadEnabled;
 }
@@ -342,7 +371,13 @@ void Layer::unregisterScriptKeypadHandler(void)
 
 void Layer::keyBackClicked(void)
 {
-    if (_scriptKeypadHandlerEntry || _scriptType == kScriptTypeJavascript)
+    if (NULL != _scriptKeypadHandlerEntry && 0 != _scriptKeypadHandlerEntry->getHandler())
+    {
+        KeypadScriptData data(kTypeBackClicked,kLayerKeypad,(void*)this);
+        ScriptEvent event(kKeypadEvent,(void*)&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+    }
+    else if(kScriptTypeJavascript == _scriptType)
     {
         ScriptEngineManager::sharedManager()->getScriptEngine()->executeLayerKeypadEvent(this, kTypeBackClicked);
     }
@@ -350,9 +385,11 @@ void Layer::keyBackClicked(void)
 
 void Layer::keyMenuClicked(void)
 {
-    if (_scriptKeypadHandlerEntry)
+    if (NULL != _scriptKeypadHandlerEntry && 0 != _scriptKeypadHandlerEntry->getHandler())
     {
-        ScriptEngineManager::sharedManager()->getScriptEngine()->executeLayerKeypadEvent(this, kTypeMenuClicked);
+        KeypadScriptData data(kTypeMenuClicked,kLayerKeypad,(void*)this);
+        ScriptEvent event(kKeypadEvent,(void*)&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
 }
 
@@ -545,12 +582,12 @@ bool LayerRGBA::init()
     }
 }
 
-GLubyte LayerRGBA::getOpacity()
+GLubyte LayerRGBA::getOpacity() const
 {
 	return _realOpacity;
 }
 
-GLubyte LayerRGBA::getDisplayedOpacity()
+GLubyte LayerRGBA::getDisplayedOpacity() const
 {
 	return _displayedOpacity;
 }
@@ -572,12 +609,12 @@ void LayerRGBA::setOpacity(GLubyte opacity)
 	}
 }
 
-const ccColor3B& LayerRGBA::getColor()
+const ccColor3B& LayerRGBA::getColor() const
 {
 	return _realColor;
 }
 
-const ccColor3B& LayerRGBA::getDisplayedColor()
+const ccColor3B& LayerRGBA::getDisplayedColor() const
 {
 	return _displayedColor;
 }
@@ -637,7 +674,7 @@ void LayerRGBA::updateDisplayedColor(const ccColor3B& parentColor)
     }
 }
 
-bool LayerRGBA::isCascadeOpacityEnabled()
+bool LayerRGBA::isCascadeOpacityEnabled() const
 {
     return _cascadeOpacityEnabled;
 }
@@ -647,7 +684,7 @@ void LayerRGBA::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
     _cascadeOpacityEnabled = cascadeOpacityEnabled;
 }
 
-bool LayerRGBA::isCascadeColorEnabled()
+bool LayerRGBA::isCascadeColorEnabled() const
 {
     return _cascadeColorEnabled;
 }
@@ -671,12 +708,12 @@ LayerColor::~LayerColor()
 }
 
 /// blendFunc getter
-ccBlendFunc LayerColor::getBlendFunc()
+const ccBlendFunc &LayerColor::getBlendFunc() const
 {
     return _blendFunc;
 }
 /// blendFunc setter
-void LayerColor::setBlendFunc(ccBlendFunc var)
+void LayerColor::setBlendFunc(const ccBlendFunc &var)
 {
     _blendFunc = var;
 }
@@ -959,7 +996,7 @@ void LayerGradient::updateColor()
     _squareColors[3].a = E.a + (S.a - E.a) * ((c - u.x - u.y) / (2.0f * c));
 }
 
-const ccColor3B& LayerGradient::getStartColor()
+const ccColor3B& LayerGradient::getStartColor() const
 {
     return _realColor;
 }
@@ -975,7 +1012,7 @@ void LayerGradient::setEndColor(const ccColor3B& color)
     updateColor();
 }
 
-const ccColor3B& LayerGradient::getEndColor()
+const ccColor3B& LayerGradient::getEndColor() const
 {
     return _endColor;
 }
@@ -1008,12 +1045,12 @@ void LayerGradient::setVector(const Point& var)
     updateColor();
 }
 
-const Point& LayerGradient::getVector()
+const Point& LayerGradient::getVector() const
 {
     return _alongVector;
 }
 
-bool LayerGradient::isCompressedInterpolation()
+bool LayerGradient::isCompressedInterpolation() const
 {
     return _compressedInterpolation;
 }

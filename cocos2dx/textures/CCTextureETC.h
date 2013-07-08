@@ -45,7 +45,7 @@ public:
     
 private:
     bool loadTexture(const char* file);
-
+    
 private:
     GLuint _name;
     unsigned int _width;

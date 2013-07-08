@@ -69,7 +69,7 @@ protected:
     // protocol variables
     bool _isOpacityModifyRGB;
     
-    CC_PROPERTY(ccBlendFunc, _blendFunc, BlendFunc);
+    CC_PROPERTY_PASS_BY_REF(ccBlendFunc, _blendFunc, BlendFunc);
 
     // quads to draw
     CC_PROPERTY(unsigned int, _quadsToDraw, QuadsToDraw);
@@ -107,9 +107,9 @@ public:
     /** sets a new texture. it will be retained*/
     virtual void setTexture(Texture2D *texture);
     
-    virtual bool isOpacityModifyRGB();
+    virtual bool isOpacityModifyRGB() const;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB);
-    virtual const ccColor3B& getColor(void);
+    virtual const ccColor3B& getColor(void) const;
     virtual void setColor(const ccColor3B& color);
     virtual void setOpacity(GLubyte opacity);
 

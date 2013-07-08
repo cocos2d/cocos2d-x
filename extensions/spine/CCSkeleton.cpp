@@ -271,11 +271,12 @@ bool CCSkeleton::setAttachment (const char* slotName, const char* attachmentName
 
 // --- BlendProtocol
 
-ccBlendFunc CCSkeleton::getBlendFunc () {
+const ccBlendFunc& CCSkeleton::getBlendFunc() const
+{
     return blendFunc;
 }
 
-void CCSkeleton::setBlendFunc (ccBlendFunc blendFunc) {
+void CCSkeleton::setBlendFunc( const ccBlendFunc &blendFunc) {
     this->blendFunc = blendFunc;
 }
 
@@ -283,7 +284,7 @@ void CCSkeleton::setOpacityModifyRGB (bool value) {
 	premultipliedAlpha = value;
 }
 
-bool CCSkeleton::isOpacityModifyRGB () {
+bool CCSkeleton::isOpacityModifyRGB () const {
 	return premultipliedAlpha;
 }
 
