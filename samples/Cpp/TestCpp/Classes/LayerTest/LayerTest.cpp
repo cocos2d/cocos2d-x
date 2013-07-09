@@ -129,7 +129,7 @@ static void setEnableRecursiveCascading(Node* node, bool enable)
     Array* children = node->getChildren();
     CCARRAY_FOREACH(children, obj)
     {
-        Node* child = (Node*)obj;
+        Node* child = static_cast<Node*>(obj);
         setEnableRecursiveCascading(child, enable);
     }
 }

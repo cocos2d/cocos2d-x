@@ -238,7 +238,7 @@ int CCBAnimationManager::getSequenceId(const char* pSequenceName)
     string seqName(pSequenceName);
     CCARRAY_FOREACH(mSequences, pElement)
     {
-        CCBSequence *seq = (CCBSequence*)pElement;
+        CCBSequence *seq = static_cast<CCBSequence*>(pElement);
         if (seqName.compare(seq->getName()) == 0)
         {
             return seq->getSequenceId();
@@ -252,7 +252,7 @@ CCBSequence* CCBAnimationManager::getSequence(int nSequenceId)
     Object *pElement = NULL;
     CCARRAY_FOREACH(mSequences, pElement)
     {
-        CCBSequence *seq = (CCBSequence*)pElement;
+        CCBSequence *seq = static_cast<CCBSequence*>(pElement);
         if (seq->getSequenceId() == nSequenceId)
         {
             return seq;
@@ -742,7 +742,7 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
     DictElement* pElement = NULL;
     CCDICT_FOREACH(mNodeSequences, pElement)
     {
-        Node *node = (Node*)pElement->getIntKey();
+        Node *node = reinterpret_cast<Node*>(pElement->getIntKey());
         node->stopAllActions();
         
         // Refer to CCBReader::readKeyframe() for the real type of value
@@ -758,7 +758,7 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
             CCDICT_FOREACH(seqNodeProps, pElement1)
             {
                 const char *propName = pElement1->getStrKey();
-                CCBSequenceProperty *seqProp = (CCBSequenceProperty*)seqNodeProps->objectForKey(propName);
+                CCBSequenceProperty *seqProp = static_cast<CCBSequenceProperty*>(seqNodeProps->objectForKey(propName));
                 seqNodePropNames.insert(propName);
                 
                 setFirstFrame(node, seqProp, fTweenDuration);

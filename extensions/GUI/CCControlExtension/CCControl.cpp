@@ -124,7 +124,7 @@ void Control::sendActionsForControlEvents(ControlEvent controlEvents)
             Object* pObj = NULL;
             CCARRAY_FOREACH(invocationList, pObj)
             {
-                Invocation* invocation = (Invocation*)pObj;
+                Invocation* invocation = static_cast<Invocation*>(pObj);
                 invocation->invoke(this);
             }
             //Call ScriptFunc
@@ -212,7 +212,7 @@ void Control::removeTargetWithActionForControlEvent(Object* target, SEL_CCContro
             Object* pObj = NULL;
             CCARRAY_FOREACH(eventInvocationList, pObj)
             {
-                Invocation *invocation = (Invocation*)pObj;
+                Invocation *invocation = static_cast<Invocation*>(pObj);
                 bool shouldBeRemoved=true;
                 if (target)
                 {

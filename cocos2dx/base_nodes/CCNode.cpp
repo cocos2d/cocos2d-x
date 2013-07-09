@@ -128,7 +128,7 @@ Node::~Node(void)
         Object* child;
         CCARRAY_FOREACH(_children, child)
         {
-            Node* pChild = (Node*) child;
+            Node* pChild = static_cast<Node*>(child);
             if (pChild)
             {
                 pChild->_parent = NULL;
@@ -580,7 +580,7 @@ Node* Node::getChildByTag(int aTag)
         Object* child;
         CCARRAY_FOREACH(_children, child)
         {
-            Node* pNode = (Node*) child;
+            Node* pNode = static_cast<Node*>(child);
             if(pNode && pNode->_tag == aTag)
                 return pNode;
         }
@@ -701,7 +701,7 @@ void Node::removeAllChildrenWithCleanup(bool cleanup)
         Object* child;
         CCARRAY_FOREACH(_children, child)
         {
-            Node* pNode = (Node*) child;
+            Node* pNode = static_cast<Node*>(child);
             if (pNode)
             {
                 // IMPORTANT:

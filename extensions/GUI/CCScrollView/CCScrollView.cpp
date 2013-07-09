@@ -157,7 +157,7 @@ void ScrollView::pause(Object* sender)
 
     CCARRAY_FOREACH(pChildren, pObj)
     {
-        Node* pChild = (Node*)pObj;
+        Node* pChild = static_cast<Node*>(pObj);
         pChild->pauseSchedulerAndActions();
     }
 }
@@ -169,7 +169,7 @@ void ScrollView::resume(Object* sender)
 
     CCARRAY_FOREACH(pChildren, pObj)
     {
-        Node* pChild = (Node*)pObj;
+        Node* pChild = static_cast<Node*>(pObj);
         pChild->resumeSchedulerAndActions();
     }
 
