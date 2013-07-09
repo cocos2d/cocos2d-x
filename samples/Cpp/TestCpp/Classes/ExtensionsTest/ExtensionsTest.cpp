@@ -99,14 +99,14 @@ void ExtensionsMainLayer::onEnter()
 
 void ExtensionsMainLayer::ccTouchesBegan(Set *pTouches, Event *pEvent)
 {
-    Touch* touch = (Touch*)pTouches->anyObject();
+    Touch* touch = static_cast<Touch*>(pTouches->anyObject());
 
     _beginPos = touch->getLocation();    
 }
 
 void ExtensionsMainLayer::ccTouchesMoved(Set *pTouches, Event *pEvent)
 {
-    Touch* touch = (Touch*)pTouches->anyObject();
+    Touch* touch = static_cast<Touch*>(pTouches->anyObject());
 
     Point touchLocation = touch->getLocation();    
     float nMoveY = touchLocation.y - _beginPos.y;
