@@ -76,10 +76,10 @@ I found that it's not work in C++. So it keep what it's look like in version 1.0
 do {                                                                  \
     if(pArray && pArray->count() > 0)                                 \
     {                                                                 \
-        Object* child;                                              \
+        Object* child;                                                \
         CCARRAY_FOREACH(pArray, child)                                \
         {                                                             \
-            elementType pNode = (elementType) child;                  \
+            elementType pNode = static_cast<elementType>(child);      \
             if(pNode)                                                 \
             {                                                         \
                 pNode->func();                                        \
@@ -93,10 +93,10 @@ while(false)
 do {                                                                  \
     if(pArray && pArray->count() > 0)                                 \
     {                                                                 \
-        Object* child = NULL;                                       \
+        Object* child;                                                \
         CCARRAY_FOREACH(pArray, child)                                \
         {                                                             \
-            elementType pNode = (elementType) child;                  \
+            elementType pNode = static_cast<elementType>(child);      \
             if(pNode)                                                 \
             {                                                         \
                 pNode->func(pObject);                                 \

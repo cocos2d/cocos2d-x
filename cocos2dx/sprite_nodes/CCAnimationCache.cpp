@@ -114,7 +114,7 @@ void AnimationCache::parseVersion1(Dictionary* animations)
         Object* pObj = NULL;
         CCARRAY_FOREACH(frameNames, pObj)
         {
-            const char* frameName = ((String*)pObj)->getCString();
+            const char* frameName = static_cast<String*>(pObj)->getCString();
             SpriteFrame* spriteFrame = frameCache->spriteFrameByName(frameName);
 
             if ( ! spriteFrame ) {
@@ -170,7 +170,7 @@ void AnimationCache::parseVersion2(Dictionary* animations)
         Object* pObj = NULL;
         CCARRAY_FOREACH(frameArray, pObj)
         {
-            Dictionary* entry = (Dictionary*)(pObj);
+            Dictionary* entry = static_cast<Dictionary*>(pObj);
 
             const char* spriteFrameName = entry->valueForKey("spriteframe")->getCString();
             SpriteFrame *spriteFrame = frameCache->spriteFrameByName(spriteFrameName);
@@ -222,7 +222,7 @@ void AnimationCache::addAnimationsWithDictionary(Dictionary* dictionary)
         Object* pObj = NULL;
         CCARRAY_FOREACH(spritesheets, pObj)
         {
-            String* name = (String*)(pObj);
+            String* name = static_cast<String*>(pObj);
             SpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(name->getCString());
         }
     }

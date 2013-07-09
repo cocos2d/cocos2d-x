@@ -333,7 +333,7 @@ void CCBReader::cleanUpNodeGraph(Node *pNode)
     Object *pChild = NULL;
     CCARRAY_FOREACH(pNode->getChildren(), pChild)
     {
-        cleanUpNodeGraph((Node*)pChild);
+        cleanUpNodeGraph(static_cast<Node*>(pChild));
     }
 }
 

@@ -238,7 +238,7 @@ int CCBAnimationManager::getSequenceId(const char* pSequenceName)
     string seqName(pSequenceName);
     CCARRAY_FOREACH(mSequences, pElement)
     {
-        CCBSequence *seq = (CCBSequence*)pElement;
+        CCBSequence *seq = static_cast<CCBSequence*>(pElement);
         if (seqName.compare(seq->getName()) == 0)
         {
             return seq->getSequenceId();
@@ -252,7 +252,7 @@ CCBSequence* CCBAnimationManager::getSequence(int nSequenceId)
     Object *pElement = NULL;
     CCARRAY_FOREACH(mSequences, pElement)
     {
-        CCBSequence *seq = (CCBSequence*)pElement;
+        CCBSequence *seq = static_cast<CCBSequence*>(pElement);
         if (seq->getSequenceId() == nSequenceId)
         {
             return seq;

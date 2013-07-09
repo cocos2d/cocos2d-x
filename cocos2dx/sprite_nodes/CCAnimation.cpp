@@ -116,7 +116,7 @@ bool Animation::initWithSpriteFrames(Array *pFrames, float delay/* = 0.0f*/)
         Object* pObj = NULL;
         CCARRAY_FOREACH(pFrames, pObj)
         {
-            SpriteFrame* frame = (SpriteFrame*)pObj;
+            SpriteFrame* frame = static_cast<SpriteFrame*>(pObj);
             AnimationFrame *animFrame = new AnimationFrame();
             animFrame->initWithSpriteFrame(frame, 1, NULL);
             _frames->addObject(animFrame);
@@ -141,7 +141,7 @@ bool Animation::initWithAnimationFrames(Array* arrayOfAnimationFrames, float del
     Object* pObj = NULL;
     CCARRAY_FOREACH(_frames, pObj)
     {
-        AnimationFrame* animFrame = (AnimationFrame*)pObj;
+        AnimationFrame* animFrame = static_cast<AnimationFrame*>(pObj);
         _totalDelayUnits += animFrame->getDelayUnits();
     }
     return true;
