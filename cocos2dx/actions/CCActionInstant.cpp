@@ -28,7 +28,6 @@
 #include "base_nodes/CCNode.h"
 #include "sprite_nodes/CCSprite.h"
 #include "script_support/CCScriptSupport.h"
-#include "cocoa/CCZone.h"
 
 NS_CC_BEGIN
 //

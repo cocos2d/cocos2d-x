@@ -24,7 +24,6 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCActionProgressTimer.h"
 #include "misc_nodes/CCProgressTimer.h"
-#include "cocoa/CCZone.h"
 
 NS_CC_BEGIN
 
