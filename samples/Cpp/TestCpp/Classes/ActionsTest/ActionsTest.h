@@ -440,7 +440,7 @@ public:
     virtual void onEnter();
     virtual std::string subtitle();
     virtual std::string title();
-    void logSprRotation(Node* pSender);
+    void logSprRotation(Sprite* pSender);
 };
 
 class Issue1398 : public ActionsDemo

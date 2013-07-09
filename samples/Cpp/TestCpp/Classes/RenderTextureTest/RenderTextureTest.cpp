@@ -178,7 +178,7 @@ RenderTextureSave::~RenderTextureSave()
 
 void RenderTextureSave::ccTouchesMoved(Set* touches, Event* event)
 {
-    Touch *touch = (Touch *)touches->anyObject();
+    Touch *touch = static_cast<Touch*>( touches->anyObject() );
     Point start = touch->getLocation();
     Point end = touch->getPreviousLocation();
 
