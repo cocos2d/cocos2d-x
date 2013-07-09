@@ -101,7 +101,8 @@ public:
 	 @param pszFilePath The path of the effect file,or the FileName of T_SoundResInfo
 	 @bLoop Whether to loop the effect playing, default value is false
 	 */
-	virtual unsigned int playEffect(const char* pszFilePath, bool bLoop = false);
+	virtual unsigned int playEffect(const char* pszFilePath, bool bLoop,
+                                    float pitch, float pan, float gain);
 
 	/**
 	 @brief Stop playing sound effect
