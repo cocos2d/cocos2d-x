@@ -45,7 +45,7 @@ static void setProgram(Node *n, GLProgram *p)
     Object* pObj = NULL;
     CCARRAY_FOREACH(n->getChildren(), pObj)
     {
-        setProgram((Node*)pObj, p);
+        setProgram(static_cast<Node*>(pObj), p);
     }
 }
 
