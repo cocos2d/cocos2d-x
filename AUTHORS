@@ -508,6 +508,9 @@ Developers:
         
     xxuejie
         Add namespace prefix to selector macros
+        
+    hannon235 (Chris)
+        Fixing a bug that the submenu of ExtensionTest in TestCpp can't scroll.
 
 Retired Core Developers:
     WenSheng Yang
