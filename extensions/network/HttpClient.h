@@ -105,6 +105,19 @@ public:
     inline void setIgnoreSslVerification(bool ignoreSslVerification) {_ignoreSslVerification = ignoreSslVerification;};
     
     
+    /**
+     * Get optional certificates file path.
+     * @return std::string
+     */
+    inline std::string getCertificatesFilePath(){return _certificatesFilePath;}
+    
+    /**
+     * Set optional certificates file path.
+     * The file may hold one or more certificates to verify the peer with.
+     * @return NULL
+     */
+    inline void setCertificatesFilePath(const std::string& certificatesFilePath){_certificatesFilePath = certificatesFilePath;}
+    
 private:
     HttpClient();
     virtual ~HttpClient();
@@ -122,6 +135,7 @@ private:
     int _timeoutForConnect;
     int _timeoutForRead;
     bool _ignoreSslVerification;
+    std::string _certificatesFilePath;
     
     // std::string reqId;
 };
