@@ -53,10 +53,6 @@ public:
 	static void addParticleDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
 	static void createParticleDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay);
 	static void updateParticleDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty);
-
-	static void addShaderDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
-	static void createShaderDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay);
-
 };
 
 

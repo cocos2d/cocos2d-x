@@ -26,7 +26,6 @@ THE SOFTWARE.
 #include "../CCBone.h"
 #include "../CCArmature.h"
 #include "../display/CCSkin.h"
-#include "../display/CCShaderNode.h"
 #include "../utils/CCSpriteFrameCacheHelper.h"
 #include "../utils/CCArmatureDataManager.h"
 #include "../utils/CCTransformHelp.h"
@@ -250,21 +249,5 @@ void CCDisplayFactory::updateParticleDisplay(CCBone *bone, CCDecorativeDisplay *
     system->update(dt);
 }
 
-
-
-void CCDisplayFactory::addShaderDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData)
-{
-    CCShaderDisplayData *sdp = CCShaderDisplayData::create();
-    sdp->copy((CCShaderDisplayData *)displayData);
-    decoDisplay->setDisplayData(sdp);
-
-    createShaderDisplay(bone, decoDisplay);
-}
-void CCDisplayFactory::createShaderDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay)
-{
-    CCShaderDisplayData *displayData = (CCShaderDisplayData *)decoDisplay->getDisplayData();
-    CCShaderNode *sn = CCShaderNode::shaderNodeWithVertex(displayData->vert.c_str(), displayData->frag.c_str());
-    decoDisplay->setDisplay(sn);
-}
 
 NS_CC_EXT_END
