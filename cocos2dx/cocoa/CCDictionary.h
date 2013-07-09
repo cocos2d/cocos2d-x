@@ -53,7 +53,7 @@ class Dictionary;
  *  {
  *      const char*key = pElement->getStrKey();
  *      // You certainly know the type of value, so we assume that it's a Sprite.
- *      Sprite* pSprite = (Sprite*)pElement->getObject();
+ *      Sprite* pSprite = static_cast<Sprite*>(pElement->getObject());
  *      // ......
  *  }
  *  @endcode
@@ -138,7 +138,7 @@ public:
  *        It's also safe to remove elements while traversing.
  */
 #define CCDICT_FOREACH(__dict__, __el__) \
-    DictElement* pTmp##__dict__##__el__ = NULL; \
+    DictElement* pTmp##__dict__##__el__ = nullptr; \
     if (__dict__) \
     HASH_ITER(hh, (__dict__)->_elements, __el__, pTmp##__dict__##__el__)
 

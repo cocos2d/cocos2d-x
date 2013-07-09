@@ -742,7 +742,7 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
     DictElement* pElement = NULL;
     CCDICT_FOREACH(mNodeSequences, pElement)
     {
-        Node *node = (Node*)pElement->getIntKey();
+        Node *node = reinterpret_cast<Node*>(pElement->getIntKey());
         node->stopAllActions();
         
         // Refer to CCBReader::readKeyframe() for the real type of value
@@ -758,7 +758,7 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
             CCDICT_FOREACH(seqNodeProps, pElement1)
             {
                 const char *propName = pElement1->getStrKey();
-                CCBSequenceProperty *seqProp = (CCBSequenceProperty*)seqNodeProps->objectForKey(propName);
+                CCBSequenceProperty *seqProp = static_cast<CCBSequenceProperty*>(seqNodeProps->objectForKey(propName));
                 seqNodePropNames.insert(propName);
                 
                 setFirstFrame(node, seqProp, fTweenDuration);
