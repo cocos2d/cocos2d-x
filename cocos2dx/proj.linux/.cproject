@@ -46,7 +46,7 @@
 								</option>
 								<option id="gnu.cpp.compiler.option.warnings.allwarn.1620989551" name="All warnings (-Wall)" superClass="gnu.cpp.compiler.option.warnings.allwarn" value="false" valueType="boolean"/>
 								<option id="gnu.cpp.compiler.option.other.pic.1121644479" name="Position Independent Code (-fPIC)" superClass="gnu.cpp.compiler.option.other.pic" value="true" valueType="boolean"/>
-								<option id="gnu.cpp.compiler.option.other.other.1525878615" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
+								<option id="gnu.cpp.compiler.option.other.other.1525878615" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -Wno-deprecated-declarations -std=gnu++0x" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.966305124" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool command="gcc" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.452615323" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.debug">
@@ -69,6 +69,7 @@
 								</option>
 								<option id="gnu.c.compiler.option.warnings.allwarn.1446204747" name="All warnings (-Wall)" superClass="gnu.c.compiler.option.warnings.allwarn" value="false" valueType="boolean"/>
 								<option id="gnu.c.compiler.option.misc.pic.1626885407" name="Position Independent Code (-fPIC)" superClass="gnu.c.compiler.option.misc.pic" value="true" valueType="boolean"/>
+								<option id="gnu.c.compiler.option.misc.other.1947498091" name="Other flags" superClass="gnu.c.compiler.option.misc.other" value="-c -fmessage-length=0 -Wno-deprecated-declarations" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.697502414" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.1826952880" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug">
@@ -176,7 +177,7 @@
 									<listOptionValue builtIn="false" value="LINUX"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.warnings.allwarn.1658108227" name="All warnings (-Wall)" superClass="gnu.cpp.compiler.option.warnings.allwarn" value="true" valueType="boolean"/>
-								<option id="gnu.cpp.compiler.option.other.other.1465323333" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
+								<option id="gnu.cpp.compiler.option.other.other.1465323333" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -Wno-deprecated-declarations -std=gnu++0x" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1506297979" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool command="gcc" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="cdt.managedbuild.tool.gnu.c.compiler.exe.release.984270671" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.release">
@@ -198,6 +199,7 @@
 									<listOptionValue builtIn="false" value="LINUX"/>
 								</option>
 								<option id="gnu.c.compiler.option.warnings.allwarn.2077117046" name="All warnings (-Wall)" superClass="gnu.c.compiler.option.warnings.allwarn" value="false" valueType="boolean"/>
+								<option id="gnu.c.compiler.option.misc.other.1031698537" name="Other flags" superClass="gnu.c.compiler.option.misc.other" value="-c -fmessage-length=0 -Wno-deprecated-declarations" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.191330176" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" id="cdt.managedbuild.tool.gnu.c.linker.exe.release.1375796638" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.release">
@@ -307,7 +309,7 @@
 								</option>
 								<option id="gnu.cpp.compiler.option.warnings.allwarn.342084758" name="All warnings (-Wall)" superClass="gnu.cpp.compiler.option.warnings.allwarn" value="false" valueType="boolean"/>
 								<option id="gnu.cpp.compiler.option.other.pic.1479362521" name="Position Independent Code (-fPIC)" superClass="gnu.cpp.compiler.option.other.pic" value="true" valueType="boolean"/>
-								<option id="gnu.cpp.compiler.option.other.other.1396416546" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
+								<option id="gnu.cpp.compiler.option.other.other.1396416546" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -Wno-deprecated-declarations -std=gnu++0x" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.386716465" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool command="gcc" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.320530417" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.debug">
@@ -330,6 +332,7 @@
 								</option>
 								<option id="gnu.c.compiler.option.warnings.allwarn.742815361" name="All warnings (-Wall)" superClass="gnu.c.compiler.option.warnings.allwarn" value="false" valueType="boolean"/>
 								<option id="gnu.c.compiler.option.misc.pic.1135702714" name="Position Independent Code (-fPIC)" superClass="gnu.c.compiler.option.misc.pic" value="true" valueType="boolean"/>
+								<option id="gnu.c.compiler.option.misc.other.1509540325" name="Other flags" superClass="gnu.c.compiler.option.misc.other" value="-c -fmessage-length=0 -Wno-deprecated-declarations" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1931033313" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.1972290949" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug">
@@ -438,7 +441,7 @@
 								</option>
 								<option id="gnu.cpp.compiler.option.warnings.allwarn.1763578720" name="All warnings (-Wall)" superClass="gnu.cpp.compiler.option.warnings.allwarn" value="true" valueType="boolean"/>
 								<option id="gnu.cpp.compiler.option.other.pic.240673876" name="Position Independent Code (-fPIC)" superClass="gnu.cpp.compiler.option.other.pic" value="true" valueType="boolean"/>
-								<option id="gnu.cpp.compiler.option.other.other.1435671044" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
+								<option id="gnu.cpp.compiler.option.other.other.1435671044" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -Wno-deprecated-declarations -std=gnu++0x" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.854667177" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool command="gcc" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="cdt.managedbuild.tool.gnu.c.compiler.exe.release.1189084590" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.release">
@@ -461,6 +464,7 @@
 								</option>
 								<option id="gnu.c.compiler.option.warnings.allwarn.320491147" name="All warnings (-Wall)" superClass="gnu.c.compiler.option.warnings.allwarn" value="false" valueType="boolean"/>
 								<option id="gnu.c.compiler.option.misc.pic.349169503" name="Position Independent Code (-fPIC)" superClass="gnu.c.compiler.option.misc.pic" value="true" valueType="boolean"/>
+								<option id="gnu.c.compiler.option.misc.other.1812062349" name="Other flags" superClass="gnu.c.compiler.option.misc.other" value="-c -fmessage-length=0 -Wno-deprecated-declarations" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.630327615" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" id="cdt.managedbuild.tool.gnu.c.linker.exe.release.490273333" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.release">
@@ -533,35 +537,41 @@
 		<resource resourceType="PROJECT" workspacePath="/libcocos2d"/>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
+		<buildTargets/>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.release.1270689208;cdt.managedbuild.config.gnu.exe.release.1270689208.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.release.1336291657;cdt.managedbuild.tool.gnu.cpp.compiler.input.1506297979">
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.502995704;cdt.managedbuild.config.gnu.exe.debug.502995704.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.2063289710;cdt.managedbuild.tool.gnu.cpp.compiler.input.966305124">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
 		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.502995704.1534655526;cdt.managedbuild.config.gnu.exe.debug.502995704.1534655526.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1024625311;cdt.managedbuild.tool.gnu.cpp.compiler.input.1920645677">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.release.1270689208;cdt.managedbuild.config.gnu.exe.release.1270689208.;cdt.managedbuild.tool.gnu.c.compiler.exe.release.984270671;cdt.managedbuild.tool.gnu.c.compiler.input.191330176">
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.502995704.1534655526;cdt.managedbuild.config.gnu.exe.debug.502995704.1534655526.;cdt.managedbuild.tool.gnu.c.compiler.exe.debug.870071077;cdt.managedbuild.tool.gnu.c.compiler.input.132105612">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
-		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.release.1270689208.232480047;cdt.managedbuild.config.gnu.exe.release.1270689208.232480047.;cdt.managedbuild.tool.gnu.c.compiler.exe.release.518312421;cdt.managedbuild.tool.gnu.c.compiler.input.1602098267">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
-		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.502995704;cdt.managedbuild.config.gnu.exe.debug.502995704.;cdt.managedbuild.tool.gnu.c.compiler.exe.debug.452615323;cdt.managedbuild.tool.gnu.c.compiler.input.697502414">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
-		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.502995704;cdt.managedbuild.config.gnu.exe.debug.502995704.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.2063289710;cdt.managedbuild.tool.gnu.cpp.compiler.input.966305124">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
 		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.release.1270689208.232480047;cdt.managedbuild.config.gnu.exe.release.1270689208.232480047.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.release.1742516529;cdt.managedbuild.tool.gnu.cpp.compiler.input.1036435822">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.502995704.1534655526;cdt.managedbuild.config.gnu.exe.debug.502995704.1534655526.;cdt.managedbuild.tool.gnu.c.compiler.exe.debug.870071077;cdt.managedbuild.tool.gnu.c.compiler.input.132105612">
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.502995704;cdt.managedbuild.config.gnu.exe.debug.502995704.;cdt.managedbuild.tool.gnu.c.compiler.exe.debug.452615323;cdt.managedbuild.tool.gnu.c.compiler.input.697502414">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
 		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.release.1270689208;cdt.managedbuild.config.gnu.exe.release.1270689208.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.release.1336291657;cdt.managedbuild.tool.gnu.cpp.compiler.input.1506297979">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.release.1270689208;cdt.managedbuild.config.gnu.exe.release.1270689208.;cdt.managedbuild.tool.gnu.c.compiler.exe.release.984270671;cdt.managedbuild.tool.gnu.c.compiler.input.191330176">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.502995704.1339240180;cdt.managedbuild.config.gnu.exe.debug.502995704.1339240180.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1527575500;cdt.managedbuild.tool.gnu.cpp.compiler.input.386716465">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.release.1270689208.232480047;cdt.managedbuild.config.gnu.exe.release.1270689208.232480047.;cdt.managedbuild.tool.gnu.c.compiler.exe.release.518312421;cdt.managedbuild.tool.gnu.c.compiler.input.1602098267">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.502995704.1339240180;cdt.managedbuild.config.gnu.exe.debug.502995704.1339240180.;cdt.managedbuild.tool.gnu.c.compiler.exe.debug.320530417;cdt.managedbuild.tool.gnu.c.compiler.input.1931033313">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
 	</storageModule>
-	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
-		<buildTargets/>
-	</storageModule>
-	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 </cproject>
