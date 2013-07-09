@@ -208,13 +208,13 @@ Sequence* Sequence::create(Array* arrayOfActions)
         unsigned  int count = arrayOfActions->count();
         CC_BREAK_IF(count == 0);
 
-        FiniteTimeAction* prev = (FiniteTimeAction*)arrayOfActions->objectAtIndex(0);
+        FiniteTimeAction* prev = static_cast<FiniteTimeAction*>( arrayOfActions->objectAtIndex(0) );
 
         if (count > 1)
         {
             for (unsigned int i = 1; i < count; ++i)
             {
-                prev = createWithTwoActions(prev, (FiniteTimeAction*)arrayOfActions->objectAtIndex(i));
+                prev = createWithTwoActions(prev, static_cast<FiniteTimeAction*>( arrayOfActions->objectAtIndex(i)) );
             }
         }
         else
@@ -385,7 +385,7 @@ Repeat* Repeat::clone(void) const
 {
 	// no copy constructor
 	auto a = new Repeat();
-	a->initWithAction(_innerAction->clone(), _times );
+	a->initWithAction( _innerAction->clone(), _times );
 	a->autorelease();
 	return a;
 }
@@ -580,12 +580,12 @@ Spawn* Spawn::create(Array *arrayOfActions)
     {
         unsigned  int count = arrayOfActions->count();
         CC_BREAK_IF(count == 0);
-        FiniteTimeAction* prev = (FiniteTimeAction*)arrayOfActions->objectAtIndex(0);
+        FiniteTimeAction* prev = static_cast<FiniteTimeAction*>( arrayOfActions->objectAtIndex(0) );
         if (count > 1)
         {
             for (unsigned int i = 1; i < arrayOfActions->count(); ++i)
             {
-                prev = createWithTwoActions(prev, (FiniteTimeAction*)arrayOfActions->objectAtIndex(i));
+                prev = createWithTwoActions(prev, static_cast<FiniteTimeAction*>( arrayOfActions->objectAtIndex(i)) );
             }
         }
         else
@@ -1966,6 +1966,7 @@ void ReverseTime::update(float time)
 
 ReverseTime* ReverseTime::reverse() const
 {
+    // XXX: This looks like a bug
     return (ReverseTime*)_other->clone();
 }
 
@@ -2061,7 +2062,7 @@ void Animate::stop(void)
 {
     if (_animation->getRestoreOriginalFrame() && _target)
     {
-        ((Sprite*)(_target))->setDisplayFrame(_origFrame);
+        static_cast<Sprite*>(_target)->setDisplayFrame(_origFrame);
     }
 
     ActionInterval::stop();
@@ -2092,9 +2093,9 @@ void Animate::update(float t)
         float splitTime = _splitTimes->at(i);
 
         if( splitTime <= t ) {
-            AnimationFrame* frame = (AnimationFrame*)frames->objectAtIndex(i);
+            AnimationFrame* frame = static_cast<AnimationFrame*>(frames->objectAtIndex(i));
             frameToDisplay = frame->getSpriteFrame();
-            ((Sprite*)_target)->setDisplayFrame(frameToDisplay);
+            static_cast<Sprite*>(_target)->setDisplayFrame(frameToDisplay);
 
             Dictionary* dict = frame->getUserInfo();
             if( dict )
@@ -2122,7 +2123,7 @@ Animate* Animate::reverse() const
         Object* pObj = NULL;
         CCARRAY_FOREACH_REVERSE(pOldArray, pObj)
         {
-            AnimationFrame* pElement = (AnimationFrame*)pObj;
+            AnimationFrame* pElement = static_cast<AnimationFrame*>(pObj);
             if (! pElement)
             {
                 break;

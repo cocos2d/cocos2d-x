@@ -306,7 +306,7 @@ void Dictionary::removeObjectsForKeys(Array* pKeyArray)
     Object* pObj = NULL;
     CCARRAY_FOREACH(pKeyArray, pObj)
     {
-        String* pStr = (String*)pObj;
+        String* pStr = static_cast<String*>(pObj);
         removeObjectForKey(pStr->getCString());
     }
 }
@@ -344,11 +344,11 @@ Object* Dictionary::randomObject()
     
     if (_dictType == kDictInt)
     {
-        return objectForKey(((Integer*)key)->getValue());
+        return objectForKey( static_cast<Integer*>(key)->getValue());
     }
     else if (_dictType == kDictStr)
     {
-        return objectForKey(((String*)key)->getCString());
+        return objectForKey( static_cast<String*>(key)->getCString());
     }
     else
     {
@@ -368,8 +368,7 @@ Dictionary* Dictionary::create()
 
 Dictionary* Dictionary::createWithDictionary(Dictionary* srcDict)
 {
-    Dictionary* pNewDict = (Dictionary*)srcDict->clone();
-    return pNewDict;
+    return srcDict->clone();
 }
 
 Dictionary* Dictionary::createWithContentsOfFileThreadSafe(const char *pFileName)

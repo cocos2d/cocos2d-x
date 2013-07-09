@@ -493,9 +493,9 @@ void SpeedTest::onEnter()
 
 void SpeedTest::altertime(float dt)
 {    
-    Speed* action1 = (Speed*)(_grossini->getActionByTag(kTagAction1));
-    Speed* action2 = (Speed*)(_tamara->getActionByTag(kTagAction1));
-    Speed* action3 = (Speed*)(_kathia->getActionByTag(kTagAction1));
+    Speed* action1 = static_cast<Speed*>(_grossini->getActionByTag(kTagAction1));
+    Speed* action2 = static_cast<Speed*>(_tamara->getActionByTag(kTagAction1));
+    Speed* action3 = static_cast<Speed*>(_kathia->getActionByTag(kTagAction1));
     
     action1->setSpeed( CCRANDOM_MINUS1_1() * 2 );
     action2->setSpeed( CCRANDOM_MINUS1_1() * 2 );

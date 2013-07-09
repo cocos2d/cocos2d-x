@@ -684,7 +684,7 @@ void ShaderRetroEffect::update(float dt)
     Object* pObj = NULL;
     CCARRAY_FOREACH(pArray, pObj)
     {
-        Sprite *sprite = (Sprite*)pObj;
+        Sprite *sprite = static_cast<Sprite*>(pObj);
         i++;
         Point oldPosition = sprite->getPosition();
         sprite->setPosition(ccp( oldPosition.x, sinf( _accum * 2 + i/2.0) * 20  ));
