@@ -251,7 +251,7 @@ void ControlButton::setPreferredSize(Size size)
         DictElement * item = NULL;
         CCDICT_FOREACH(_backgroundSpriteDispatchTable, item)
         {
-            Scale9Sprite* sprite = (Scale9Sprite*)item->getObject();
+            Scale9Sprite* sprite = static_cast<Scale9Sprite*>(item->getObject());
             sprite->setPreferredSize(size);
         }
     }
@@ -719,7 +719,7 @@ void ControlButton::setOpacity(GLubyte opacity)
     DictElement * item = NULL;
     CCDICT_FOREACH(_backgroundSpriteDispatchTable, item)
     {
-        Scale9Sprite* sprite = (Scale9Sprite*)item->getObject();
+        Scale9Sprite* sprite = static_cast<Scale9Sprite*>(item->getObject());
         sprite->setOpacity(opacity);
     }
 }
@@ -736,7 +736,7 @@ void ControlButton::setColor(const Color3B & color)
 	DictElement * item = NULL;
     CCDICT_FOREACH(_backgroundSpriteDispatchTable, item)
     {
-        Scale9Sprite* sprite = (Scale9Sprite*)item->getObject();
+        Scale9Sprite* sprite = static_cast<Scale9Sprite*>(item->getObject());
         sprite->setColor(color);
     }
 }

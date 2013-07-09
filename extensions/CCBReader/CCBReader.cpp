@@ -294,7 +294,7 @@ Node* CCBReader::readNodeGraphFromData(Data *pData, Object *pOwner, const Size &
     CCDICT_FOREACH(animationManagers, pElement)
     {
         Node* pNode = (Node*)pElement->getIntKey();
-        CCBAnimationManager* manager = (CCBAnimationManager*)animationManagers->objectForKey((intptr_t)pNode);
+        CCBAnimationManager* manager = static_cast<CCBAnimationManager*>(animationManagers->objectForKey((intptr_t)pNode));
         pNode->setUserObject(manager);
 
         if (jsControlled)
@@ -714,11 +714,11 @@ Node * CCBReader::readNodeGraph(Node * pParent) {
                     DictElement* pElement;
                     CCDICT_FOREACH(pCustomPropeties, pElement)
                     {
-                        customAssigned = targetAsCCBMemberVariableAssigner->onAssignCCBCustomProperty(target, pElement->getStrKey(), (CCBValue*)pElement->getObject());
+                        customAssigned = targetAsCCBMemberVariableAssigner->onAssignCCBCustomProperty(target, pElement->getStrKey(), static_cast<CCBValue*>(pElement->getObject()));
 
                         if(!customAssigned && this->mCCBMemberVariableAssigner != NULL)
                         {
-                            customAssigned = this->mCCBMemberVariableAssigner->onAssignCCBCustomProperty(target, pElement->getStrKey(), (CCBValue*)pElement->getObject());
+                            customAssigned = this->mCCBMemberVariableAssigner->onAssignCCBCustomProperty(target, pElement->getStrKey(), static_cast<CCBValue*>(pElement->getObject()));
                         }
                     }
                 }
