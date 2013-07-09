@@ -2006,7 +2006,7 @@ bool Animate::initWithAnimation(Animation *pAnimation)
         Object* pObj = NULL;
         CCARRAY_FOREACH(pFrames, pObj)
         {
-            AnimationFrame* frame = (AnimationFrame*)pObj;
+            AnimationFrame* frame = static_cast<AnimationFrame*>(pObj);
             float value = (accumUnitsOfTime * newUnitOfTimeValue) / singleDuration;
             accumUnitsOfTime += frame->getDelayUnits();
             _splitTimes->push_back(value);
