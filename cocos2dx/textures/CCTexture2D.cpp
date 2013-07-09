@@ -560,15 +560,15 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
     
     
     #else
-        bool requestUnsupported = textDefinition->_shadow._shadowEnabled || textDefinition->_stroke._strokeEnabled;
+        bool requestUnsupported = textDefinition._shadow._shadowEnabled || textDefinition._stroke._strokeEnabled;
     
         CCAssert(requestUnsupported == false, "Currently shadow and stroke only supported on iOS and Android!");
     
         do
         {
-            CCImage* pImage = new CCImage();
+            Image* pImage = new Image();
             CC_BREAK_IF(NULL == pImage);
-            bRet = pImage->initWithString(text, (int)textDefinition->_dimensions.width, (int)textDefinition->_dimensions.height, eAlign, textDefinition->_fontName.c_str(), (int)textDefinition->_fontSize);
+            bRet = pImage->initWithString(text, (int)textDefinition._dimensions.width, (int)textDefinition._dimensions.height, eAlign, textDefinition._fontName.c_str(), (int)textDefinition._fontSize);
             CC_BREAK_IF(!bRet);
             bRet = initWithImage(pImage);
             CC_SAFE_RELEASE(pImage);
