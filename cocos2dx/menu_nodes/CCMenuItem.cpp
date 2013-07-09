@@ -1036,7 +1036,7 @@ void MenuItemToggle::setEnabled(bool enabled)
             Object* pObj = NULL;
             CCARRAY_FOREACH(_subItems, pObj)
             {
-                MenuItem* pItem = (MenuItem*)pObj;
+                MenuItem* pItem = static_cast<MenuItem*>(pObj);
                 pItem->setEnabled(enabled);
             }
         }

@@ -49,7 +49,7 @@ bool ControlButtonTest_HelloVariableSize::init()
         int i = 0;
         CCARRAY_FOREACH(stringArray, pObj)
         {
-            String* title = (String*)pObj;
+            String* title = static_cast<String*>(pObj);
             // Creates a button with this string as title
             ControlButton *button = standardButtonWithTitle(title->getCString());
             if (i == 0)

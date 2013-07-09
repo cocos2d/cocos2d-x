@@ -418,7 +418,7 @@ void Armature::update(float dt)
     Object *object = NULL;
     CCARRAY_FOREACH(_topBoneList, object)
     {
-        ((Bone *)object)->update(dt);
+        static_cast<Bone*>(object)->update(dt);
     }
 }
 
@@ -433,7 +433,7 @@ void Armature::draw()
     Object *object = NULL;
     CCARRAY_FOREACH(_children, object)
     {
-        Bone *bone = (Bone *)object;
+        Bone *bone = static_cast<Bone *>(object);
 
         DisplayManager *displayManager = bone->getDisplayManager();
         Node *node = displayManager->getDisplayRenderNode();
@@ -534,7 +534,7 @@ Rect Armature::boundingBox()
     Object *object = NULL;
     CCARRAY_FOREACH(_children, object)
     {
-        Bone *bone = (Bone *)object;
+        Bone *bone = static_cast<Bone *>(object);
         Rect r = bone->getDisplayManager()->getBoundingBox();
 
         if(first)

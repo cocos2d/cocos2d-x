@@ -78,7 +78,7 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * pCCBR
                 bool bFound = false;
                 CCARRAY_FOREACH(extraPropsNames, pObj)
                 {
-                    String* pStr = (String*)pObj;
+                    String* pStr = static_cast<String*>(pObj);
                     if (0 == pStr->compare(propertyName.c_str()))
                     {
                         bFound = true;
@@ -90,7 +90,7 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * pCCBR
         }
         else if (isExtraProp && pNode == pCCBReader->getAnimationManager()->getRootNode())
         {
-            Array *extraPropsNames = (Array*)pNode->getUserObject();
+            Array *extraPropsNames = static_cast<Array*>(pNode->getUserObject());
             if (! extraPropsNames)
             {
                 extraPropsNames = Array::create();

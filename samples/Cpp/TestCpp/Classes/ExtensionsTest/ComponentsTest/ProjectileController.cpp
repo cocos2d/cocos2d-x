@@ -66,7 +66,7 @@ void ProjectileController::update(float delta)
     CCARRAY_FOREACH(targetsToDelete, jt)
     {
         Sprite *target = dynamic_cast<Sprite*>(jt);
-        ((EnemyController*)(target->getComponent("EnemyController")))->die();
+        static_cast<EnemyController*>(target->getComponent("EnemyController"))->die();
     }
     
     bool isDied = targetsToDelete->count();
