@@ -442,107 +442,55 @@ bool Texture2D::initWithString(const char *text, const char *fontName, float fon
 
 bool Texture2D::initWithString(const char *text, const char *fontName, float fontSize, const Size& dimensions, TextAlignment hAlignment, VerticalTextAlignment vAlignment)
 {
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    FontDefinition tempDef;
     
-        FontDefinition tempDef;
-        
-        tempDef._shadow._shadowEnabled = false;
-        tempDef._stroke._strokeEnabled = false;
-       
-        
-        tempDef._fontName      = std::string(fontName);
-        tempDef._fontSize      = fontSize;
-        tempDef._dimensions    = dimensions;
-        tempDef._alignment     = hAlignment;
-        tempDef._vertAlignment = vAlignment;
-        tempDef._fontFillColor = Color3B::WHITE;
+    tempDef._shadow._shadowEnabled = false;
+    tempDef._stroke._strokeEnabled = false;
+   
     
-        return initWithString(text, tempDef);
-    
-    
-    #else
-    
-    
-    #if CC_ENABLE_CACHE_TEXTURE_DATA
-        // cache the texture data
-        VolatileTexture::addStringTexture(this, text, dimensions, hAlignment, vAlignment, fontName, fontSize);
-    #endif
-        
-        bool bRet = false;
-        Image::ETextAlign eAlign;
-        
-        if (kVerticalTextAlignmentTop == vAlignment)
-        {
-            eAlign = (kTextAlignmentCenter == hAlignment) ? Image::kAlignTop
-            : (kTextAlignmentLeft == hAlignment) ? Image::kAlignTopLeft : Image::kAlignTopRight;
-        }
-        else if (kVerticalTextAlignmentCenter == vAlignment)
-        {
-            eAlign = (kTextAlignmentCenter == hAlignment) ? Image::kAlignCenter
-            : (kTextAlignmentLeft == hAlignment) ? Image::kAlignLeft : Image::kAlignRight;
-        }
-        else if (kVerticalTextAlignmentBottom == vAlignment)
-        {
-            eAlign = (kTextAlignmentCenter == hAlignment) ? Image::kAlignBottom
-            : (kTextAlignmentLeft == hAlignment) ? Image::kAlignBottomLeft : Image::kAlignBottomRight;
-        }
-        else
-        {
-            CCAssert(false, "Not supported alignment format!");
-            return false;
-        }
-        
-        do
-        {
-            Image* pImage = new Image();
-            CC_BREAK_IF(NULL == pImage);
-            bRet = pImage->initWithString(text, (int)dimensions.width, (int)dimensions.height, eAlign, fontName, (int)fontSize);
-            CC_BREAK_IF(!bRet);
-            bRet = initWithImage(pImage);
-            CC_SAFE_RELEASE(pImage);
-        } while (0);
-    
-    
-        return bRet;
-    
-    
-    #endif
-    
+    tempDef._fontName      = std::string(fontName);
+    tempDef._fontSize      = fontSize;
+    tempDef._dimensions    = dimensions;
+    tempDef._alignment     = hAlignment;
+    tempDef._vertAlignment = vAlignment;
+    tempDef._fontFillColor = Color3B::WHITE;
+
+    return initWithString(text, tempDef);
 }
 
 bool Texture2D::initWithString(const char *text, const FontDefinition& textDefinition)
 {
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    
     #if CC_ENABLE_CACHE_TEXTURE_DATA
         // cache the texture data
-        VolatileTexture::addStringTexture(this, text, textDefinition._dimensions, textDefinition._alignment, textDefinition._vertAlignment, textDefinition._fontName.c_str(), textDefinition._fontSize);
+        VolatileTexture::addStringTexture(this, text, textDefinition);
     #endif
-        
-        bool bRet = false;
-        Image::ETextAlign eAlign;
-        
-        if (kVerticalTextAlignmentTop == textDefinition._vertAlignment)
-        {
-            eAlign = (kTextAlignmentCenter == textDefinition._alignment) ? Image::kAlignTop
-            : (kTextAlignmentLeft == textDefinition._alignment) ? Image::kAlignTopLeft : Image::kAlignTopRight;
-        }
-        else if (kVerticalTextAlignmentCenter == textDefinition._vertAlignment)
-        {
-            eAlign = (kTextAlignmentCenter == textDefinition._alignment) ? Image::kAlignCenter
-            : (kTextAlignmentLeft == textDefinition._alignment) ? Image::kAlignLeft : Image::kAlignRight;
-        }
-        else if (kVerticalTextAlignmentBottom == textDefinition._vertAlignment)
-        {
-            eAlign = (kTextAlignmentCenter == textDefinition._alignment) ? Image::kAlignBottom
-            : (kTextAlignmentLeft == textDefinition._alignment) ? Image::kAlignBottomLeft : Image::kAlignBottomRight;
-        }
-        else
-        {
-            CCAssert(false, "Not supported alignment format!");
-            return false;
-        }
-        
+
+    bool bRet = false;
+    Image::ETextAlign eAlign;
+    
+    if (kVerticalTextAlignmentTop == textDefinition._vertAlignment)
+    {
+        eAlign = (kTextAlignmentCenter == textDefinition._alignment) ? Image::kAlignTop
+        : (kTextAlignmentLeft == textDefinition._alignment) ? Image::kAlignTopLeft : Image::kAlignTopRight;
+    }
+    else if (kVerticalTextAlignmentCenter == textDefinition._vertAlignment)
+    {
+        eAlign = (kTextAlignmentCenter == textDefinition._alignment) ? Image::kAlignCenter
+        : (kTextAlignmentLeft == textDefinition._alignment) ? Image::kAlignLeft : Image::kAlignRight;
+    }
+    else if (kVerticalTextAlignmentBottom == textDefinition._vertAlignment)
+    {
+        eAlign = (kTextAlignmentCenter == textDefinition._alignment) ? Image::kAlignBottom
+        : (kTextAlignmentLeft == textDefinition._alignment) ? Image::kAlignBottomLeft : Image::kAlignBottomRight;
+    }
+    else
+    {
+        CCAssert(false, "Not supported alignment format!");
+        return false;
+    }
+    
+    #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    
         // handle shadow parameters
         bool  shadowEnabled = false;
         float shadowDX      = 0.0f;
@@ -612,10 +560,22 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
     
     
     #else
+        bool requestUnsupported = textDefinition->_shadow._shadowEnabled || textDefinition->_stroke._strokeEnabled;
     
-        CCAssert(false, "Currently only supported on iOS and Android!");
-        return false;
+        CCAssert(requestUnsupported == false, "Currently shadow and stroke only supported on iOS and Android!");
     
+        do
+        {
+            CCImage* pImage = new CCImage();
+            CC_BREAK_IF(NULL == pImage);
+            bRet = pImage->initWithString(text, (int)textDefinition->_dimensions.width, (int)textDefinition->_dimensions.height, eAlign, textDefinition->_fontName.c_str(), (int)textDefinition->_fontSize);
+            CC_BREAK_IF(!bRet);
+            bRet = initWithImage(pImage);
+            CC_SAFE_RELEASE(pImage);
+        } while (0);
+        
+    
+        return bRet;    
     #endif
 }
 
@@ -624,7 +584,7 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
 
 void Texture2D::drawAtPoint(const Point& point)
 {
-    GLfloat    coordinates[] = {    
+    GLfloat    coordinates[] = {
         0.0f,    _maxT,
         _maxS,_maxT,
         0.0f,    0.0f,
