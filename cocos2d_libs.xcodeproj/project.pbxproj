@@ -190,8 +190,6 @@
 		A03F25A71780BAE8006731B9 /* CCSet.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1E201780BAE4006731B9 /* CCSet.h */; };
 		A03F25A81780BAE8006731B9 /* CCString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F1E211780BAE4006731B9 /* CCString.cpp */; };
 		A03F25A91780BAE8006731B9 /* CCString.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1E221780BAE4006731B9 /* CCString.h */; };
-		A03F25AA1780BAE8006731B9 /* CCZone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F1E231780BAE4006731B9 /* CCZone.cpp */; };
-		A03F25AB1780BAE8006731B9 /* CCZone.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1E241780BAE4006731B9 /* CCZone.h */; };
 		A03F25AC1780BAE8006731B9 /* cocos2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F1E251780BAE4006731B9 /* cocos2d.cpp */; };
 		A03F25AD1780BAE8006731B9 /* CCDrawingPrimitives.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F1E271780BAE4006731B9 /* CCDrawingPrimitives.cpp */; };
 		A03F25AE1780BAE8006731B9 /* CCDrawingPrimitives.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1E281780BAE4006731B9 /* CCDrawingPrimitives.h */; };
@@ -946,7 +944,6 @@
 		A07A4C431783777C0073F6A7 /* CCObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F1E1D1780BAE4006731B9 /* CCObject.cpp */; };
 		A07A4C441783777C0073F6A7 /* CCSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F1E1F1780BAE4006731B9 /* CCSet.cpp */; };
 		A07A4C451783777C0073F6A7 /* CCString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F1E211780BAE4006731B9 /* CCString.cpp */; };
-		A07A4C461783777C0073F6A7 /* CCZone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F1E231780BAE4006731B9 /* CCZone.cpp */; };
 		A07A4C471783777C0073F6A7 /* cocos2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F1E251780BAE4006731B9 /* cocos2d.cpp */; };
 		A07A4C481783777C0073F6A7 /* CCDrawingPrimitives.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F1E271780BAE4006731B9 /* CCDrawingPrimitives.cpp */; };
 		A07A4C491783777C0073F6A7 /* CCDrawNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F1E291780BAE4006731B9 /* CCDrawNode.cpp */; };
@@ -1076,7 +1073,6 @@
 		A07A4CD31783777C0073F6A7 /* CCObject.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1E1E1780BAE4006731B9 /* CCObject.h */; };
 		A07A4CD41783777C0073F6A7 /* CCSet.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1E201780BAE4006731B9 /* CCSet.h */; };
 		A07A4CD51783777C0073F6A7 /* CCString.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1E221780BAE4006731B9 /* CCString.h */; };
-		A07A4CD61783777C0073F6A7 /* CCZone.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1E241780BAE4006731B9 /* CCZone.h */; };
 		A07A4CD71783777C0073F6A7 /* CCDrawingPrimitives.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1E281780BAE4006731B9 /* CCDrawingPrimitives.h */; };
 		A07A4CD81783777C0073F6A7 /* CCDrawNode.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1E2A1780BAE4006731B9 /* CCDrawNode.h */; };
 		A07A4CD91783777C0073F6A7 /* CCGrabber.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1E2D1780BAE4006731B9 /* CCGrabber.h */; };
@@ -1993,8 +1989,6 @@
 		A03F1E201780BAE4006731B9 /* CCSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSet.h; sourceTree = "<group>"; };
 		A03F1E211780BAE4006731B9 /* CCString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCString.cpp; sourceTree = "<group>"; };
 		A03F1E221780BAE4006731B9 /* CCString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCString.h; sourceTree = "<group>"; };
-		A03F1E231780BAE4006731B9 /* CCZone.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCZone.cpp; sourceTree = "<group>"; };
-		A03F1E241780BAE4006731B9 /* CCZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCZone.h; sourceTree = "<group>"; };
 		A03F1E251780BAE4006731B9 /* cocos2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cocos2d.cpp; sourceTree = "<group>"; };
 		A03F1E271780BAE4006731B9 /* CCDrawingPrimitives.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDrawingPrimitives.cpp; sourceTree = "<group>"; };
 		A03F1E281780BAE4006731B9 /* CCDrawingPrimitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDrawingPrimitives.h; sourceTree = "<group>"; };
@@ -3309,8 +3303,6 @@
 				A03F1E201780BAE4006731B9 /* CCSet.h */,
 				A03F1E211780BAE4006731B9 /* CCString.cpp */,
 				A03F1E221780BAE4006731B9 /* CCString.h */,
-				A03F1E231780BAE4006731B9 /* CCZone.cpp */,
-				A03F1E241780BAE4006731B9 /* CCZone.h */,
 			);
 			path = cocoa;
 			sourceTree = "<group>";
@@ -5007,7 +4999,6 @@
 				A03F25A51780BAE8006731B9 /* CCObject.h in Headers */,
 				A03F25A71780BAE8006731B9 /* CCSet.h in Headers */,
 				A03F25A91780BAE8006731B9 /* CCString.h in Headers */,
-				A03F25AB1780BAE8006731B9 /* CCZone.h in Headers */,
 				A03F25AE1780BAE8006731B9 /* CCDrawingPrimitives.h in Headers */,
 				A03F25B01780BAE8006731B9 /* CCDrawNode.h in Headers */,
 				A03F25B21780BAE8006731B9 /* CCGrabber.h in Headers */,
@@ -5570,7 +5561,6 @@
 				A07A4CD31783777C0073F6A7 /* CCObject.h in Headers */,
 				A07A4CD41783777C0073F6A7 /* CCSet.h in Headers */,
 				A07A4CD51783777C0073F6A7 /* CCString.h in Headers */,
-				A07A4CD61783777C0073F6A7 /* CCZone.h in Headers */,
 				A07A4CD71783777C0073F6A7 /* CCDrawingPrimitives.h in Headers */,
 				A07A4CD81783777C0073F6A7 /* CCDrawNode.h in Headers */,
 				A07A4CD91783777C0073F6A7 /* CCGrabber.h in Headers */,
@@ -6375,7 +6365,6 @@
 				A03F25A41780BAE8006731B9 /* CCObject.cpp in Sources */,
 				A03F25A61780BAE8006731B9 /* CCSet.cpp in Sources */,
 				A03F25A81780BAE8006731B9 /* CCString.cpp in Sources */,
-				A03F25AA1780BAE8006731B9 /* CCZone.cpp in Sources */,
 				A03F25AC1780BAE8006731B9 /* cocos2d.cpp in Sources */,
 				A03F25AD1780BAE8006731B9 /* CCDrawingPrimitives.cpp in Sources */,
 				A03F25AF1780BAE8006731B9 /* CCDrawNode.cpp in Sources */,
@@ -6810,7 +6799,6 @@
 				A07A4C431783777C0073F6A7 /* CCObject.cpp in Sources */,
 				A07A4C441783777C0073F6A7 /* CCSet.cpp in Sources */,
 				A07A4C451783777C0073F6A7 /* CCString.cpp in Sources */,
-				A07A4C461783777C0073F6A7 /* CCZone.cpp in Sources */,
 				A07A4C471783777C0073F6A7 /* cocos2d.cpp in Sources */,
 				A07A4C481783777C0073F6A7 /* CCDrawingPrimitives.cpp in Sources */,
 				A07A4C491783777C0073F6A7 /* CCDrawNode.cpp in Sources */,

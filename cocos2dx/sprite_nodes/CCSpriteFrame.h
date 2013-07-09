@@ -35,7 +35,6 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class Texture2D;
-class Zone;
 
 /**
  * @addtogroup sprite_nodes

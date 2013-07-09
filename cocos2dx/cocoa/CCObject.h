@@ -38,7 +38,6 @@ NS_CC_BEGIN
  * @{
  */
 
-class Zone;
 class Object;
 class Node;
 class Event;
