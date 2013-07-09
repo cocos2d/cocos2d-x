@@ -29,7 +29,6 @@ THE SOFTWARE.
 #include "base_nodes/CCNode.h"
 #include "support/CCPointExtension.h"
 #include "CCDirector.h"
-#include "cocoa/CCZone.h"
 
 NS_CC_BEGIN
 //

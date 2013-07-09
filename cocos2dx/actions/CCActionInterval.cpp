@@ -30,7 +30,6 @@ THE SOFTWARE.
 #include "support/CCPointExtension.h"
 #include "CCStdC.h"
 #include "CCActionInstant.h"
-#include "cocoa/CCZone.h"
 #include <stdarg.h>
 
 NS_CC_BEGIN

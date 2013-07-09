@@ -28,7 +28,6 @@ THE SOFTWARE.
 #include "textures/CCTexture2D.h"
 #include "ccMacros.h"
 #include "sprite_nodes/CCSpriteFrame.h"
-#include "cocoa/CCZone.h"
 
 NS_CC_BEGIN
 
