@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "support/tinyxml2/tinyxml2.h"
 #include "support/zip_support/unzip.h"
 #include <stack>
+#include <algorithm>
 
 using namespace std;
 
@@ -737,6 +738,28 @@ void CCFileUtils::addSearchPath(const char* path_)
         path += "/";
     }
     m_searchPathArray.push_back(path);
+}
+
+void CCFileUtils::removeSearchPath(const char *path_)
+{
+	std::string strPrefix;
+	std::string path(path_);
+	if (!isAbsolutePath(path))
+	{ // Not an absolute path
+		strPrefix = m_strDefaultResRootPath;
+	}
+	path = strPrefix + path;
+	if (path.length() > 0 && path[path.length()-1] != '/')
+	{
+		path += "/";
+	}
+	std::vector<std::string>::iterator iter = std::find(m_searchPathArray.begin(), m_searchPathArray.end(), path);
+	m_searchPathArray.erase(iter);
+}
+
+void CCFileUtils::removeAllPath()
+{
+	m_searchPathArray.clear();
 }
 
 void CCFileUtils::setFilenameLookupDictionary(CCDictionary* pFilenameLookupDict)

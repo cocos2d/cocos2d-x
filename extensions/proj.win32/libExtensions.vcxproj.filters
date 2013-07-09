@@ -61,6 +61,30 @@
     <Filter Include="Components">
       <UniqueIdentifier>{e82b14bf-eb08-4a40-a9a2-cc92a154d9b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NewFilter2">
+      <UniqueIdentifier>{7e9b0ea0-c344-484e-b2d4-c7c478c45919}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CocoGUILIB">
+      <UniqueIdentifier>{d2fb4d1c-d4fa-4270-b26d-9666ac84f652}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CocoGUILIB\Action">
+      <UniqueIdentifier>{107e4a5d-33e3-4795-9abf-18ebbf937ecd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CocoGUILIB\BaseClasses">
+      <UniqueIdentifier>{5dd0ca29-1913-4536-b72b-d5780490918a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CocoGUILIB\Drawable">
+      <UniqueIdentifier>{b351307c-e799-4487-a51d-c2e2507eb129}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CocoGUILIB\System">
+      <UniqueIdentifier>{c93885f4-1bc3-4c4b-b674-101af5c1a84a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CocoGUILIB\UIWidgets">
+      <UniqueIdentifier>{3bb395e1-a9db-4945-87d8-b57a60fb788b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CocostudioReader">
+      <UniqueIdentifier>{bb55ef06-8fad-4ca3-80f0-15c48b325da1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\GUI\CCScrollView\CCScrollView.cpp">
@@ -363,6 +387,114 @@
     <ClCompile Include="..\CCArmature\animation\CCArmatureAnimation.cpp">
       <Filter>CCArmature\animation</Filter>
     </ClCompile>
+    <ClCompile Include="..\Components\CCComRender.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\Action\UIAction.cpp">
+      <Filter>CocoGUILIB\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\Action\UIActionFrame.cpp">
+      <Filter>CocoGUILIB\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\Action\UIActionManager.cpp">
+      <Filter>CocoGUILIB\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\Action\UIActionNode.cpp">
+      <Filter>CocoGUILIB\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\BaseClasses\UIContainerWidget.cpp">
+      <Filter>CocoGUILIB\BaseClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\BaseClasses\UIRootWidget.cpp">
+      <Filter>CocoGUILIB\BaseClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\BaseClasses\UIWidget.cpp">
+      <Filter>CocoGUILIB\BaseClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\Drawable\GUINodeRGBA.cpp">
+      <Filter>CocoGUILIB\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\Drawable\UICCLabelAtlas.cpp">
+      <Filter>CocoGUILIB\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\Drawable\UICCTextField.cpp">
+      <Filter>CocoGUILIB\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\Drawable\UIClippingLayer.cpp">
+      <Filter>CocoGUILIB\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\System\CCSReader.cpp">
+      <Filter>CocoGUILIB\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\System\CocosGUI.cpp">
+      <Filter>CocoGUILIB\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\System\UIHelper.cpp">
+      <Filter>CocoGUILIB\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\System\UIInputManager.cpp">
+      <Filter>CocoGUILIB\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\System\UILayer.cpp">
+      <Filter>CocoGUILIB\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\UIWidgets\UIButton.cpp">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\UIWidgets\UICheckBox.cpp">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\UIWidgets\UIControlButton.cpp">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\UIWidgets\UIImageView.cpp">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\UIWidgets\UILabel.cpp">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\UIWidgets\UILabelAtlas.cpp">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\UIWidgets\UILabelBMFont.cpp">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\UIWidgets\UIListView.cpp">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\UIWidgets\UILoadingBar.cpp">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\UIWidgets\UINodeContainer.cpp">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\UIWidgets\UIPageView.cpp">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\UIWidgets\UIPanel.cpp">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\UIWidgets\UIScrollView.cpp">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\UIWidgets\UISlider.cpp">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\UIWidgets\UITextArea.cpp">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\UIWidgets\UITextButton.cpp">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\UIWidgets\UITextField.cpp">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocostudioReader\CCJsonReader.cpp">
+      <Filter>CocostudioReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocostudioReader\DictionaryHelper.cpp">
+      <Filter>CocostudioReader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\GUI\CCScrollView\CCScrollView.h">
@@ -642,6 +774,114 @@
     </ClInclude>
     <ClInclude Include="..\CCArmature\animation\CCArmatureAnimation.h">
       <Filter>CCArmature\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\CCComRender.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\Action\UIAction.h">
+      <Filter>CocoGUILIB\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\Action\UIActionFrame.h">
+      <Filter>CocoGUILIB\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\Action\UIActionManager.h">
+      <Filter>CocoGUILIB\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\Action\UIActionNode.h">
+      <Filter>CocoGUILIB\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\BaseClasses\UIContainerWidget.h">
+      <Filter>CocoGUILIB\BaseClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\BaseClasses\UIRootWidget.h">
+      <Filter>CocoGUILIB\BaseClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\BaseClasses\UIWidget.h">
+      <Filter>CocoGUILIB\BaseClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\Drawable\GUINodeRGBA.h">
+      <Filter>CocoGUILIB\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\Drawable\UICCLabelAtlas.h">
+      <Filter>CocoGUILIB\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\Drawable\UICCTextField.h">
+      <Filter>CocoGUILIB\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\Drawable\UIClippingLayer.h">
+      <Filter>CocoGUILIB\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\System\CCSReader.h">
+      <Filter>CocoGUILIB\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\System\CocosGUI.h">
+      <Filter>CocoGUILIB\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\System\UIHelper.h">
+      <Filter>CocoGUILIB\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\System\UIInputManager.h">
+      <Filter>CocoGUILIB\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\System\UILayer.h">
+      <Filter>CocoGUILIB\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\UIWidgets\UIButton.h">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\UIWidgets\UICheckBox.h">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\UIWidgets\UIControlButton.h">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\UIWidgets\UIImageView.h">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\UIWidgets\UILabel.h">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\UIWidgets\UILabelAtlas.h">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\UIWidgets\UILabelBMFont.h">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\UIWidgets\UIListView.h">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\UIWidgets\UILoadingBar.h">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\UIWidgets\UINodeContainer.h">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\UIWidgets\UIPageView.h">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\UIWidgets\UIPanel.h">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\UIWidgets\UIScrollView.h">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\UIWidgets\UISlider.h">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\UIWidgets\UITextArea.h">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\UIWidgets\UITextButton.h">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\UIWidgets\UITextField.h">
+      <Filter>CocoGUILIB\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocostudioReader\CCJsonReader.h">
+      <Filter>CocostudioReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocostudioReader\DictionaryHelper.h">
+      <Filter>CocostudioReader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

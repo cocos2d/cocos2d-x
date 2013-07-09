@@ -52,22 +52,26 @@ public:
     void setMenuResource(LPCWSTR menu);
     void setWndProc(CUSTOM_WND_PROC proc);
 
-private:
+protected:
     virtual bool Create();
-    bool initGL();
-    void destroyGL();
+    
 public:
+	bool initGL();
+	void destroyGL();
+
     virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
 
+	void setHWnd(HWND hWnd);
     // win32 platform function
     HWND getHWnd();
-    void resize(int width, int height);
+    virtual void resize(int width, int height);
+	
     /* 
      * Set zoom factor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
      */
     void setFrameZoomFactor(float fZoomFactor);
 	float getFrameZoomFactor();
-    void centerWindow();
+    virtual void centerWindow();
 
     typedef void (*LPFN_ACCELEROMETER_KEYHOOK)( UINT message,WPARAM wParam, LPARAM lParam );
     void setAccelerometerKeyHook( LPFN_ACCELEROMETER_KEYHOOK lpfnAccelerometerKeyHook );

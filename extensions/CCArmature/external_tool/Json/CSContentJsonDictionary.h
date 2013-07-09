@@ -79,6 +79,7 @@ namespace cs {
         int getArrayItemCount(const char *pszArrayKey);
         int getIntValueFromArray(const char *pszArrayKey, int nIndex, int nDefaultValue);
         double getFloatValueFromArray(const char *pszArrayKey, int nIndex, double fDefaultValue);
+        bool getBoolValueFromArray(const char *pszArrayKey, int nIndex, bool bDefaultValue);
         const char * getStringValueFromArray(const char *pszArrayKey, int nIndex);
         CSJsonDictionary *getSubItemFromArray(const char *pszArrayKey, int nIndex);
         DicItemType getItemTypeFromArray(const char *pszArrayKey, int nIndex);

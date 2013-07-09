@@ -43,9 +43,12 @@ public:
     virtual void serialize(void* r);
     virtual bool isEnabled() const;
     virtual void setEnabled(bool b);
+	virtual void setNode(CCNode *pNode);
+	virtual CCNode* getNode();
     static CCComponent* create(void);
     
     const char* getName() const;
+	void setName(const char *pName);
     
     void setOwner(CCNode *pOwner);
     CCNode* getOwner() const;

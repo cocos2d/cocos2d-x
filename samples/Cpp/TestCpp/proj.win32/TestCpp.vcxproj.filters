@@ -232,6 +232,12 @@
     <Filter Include="Classes\ExtensionsTest\ArmatureTest">
       <UniqueIdentifier>{710d484c-0bf8-4024-a1e7-43258671b4cd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosGUITest">
+      <UniqueIdentifier>{b98d8ceb-6b4b-441b-9438-8d112eddc2bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\SceneEditorTest">
+      <UniqueIdentifier>{9c7cc3f8-d58e-4fce-8e5a-3f32e405596f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -539,6 +545,15 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\ArmatureTest\ArmatureScene.cpp">
       <Filter>Classes\ExtensionsTest\ArmatureTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIScene.cpp">
+      <Filter>Classes\ExtensionsTest\CocosGUITest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUISlotScene.cpp">
+      <Filter>Classes\ExtensionsTest\CocosGUITest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\SceneEditorTest\SceneEditorTestScene.cpp">
+      <Filter>Classes\ExtensionsTest\SceneEditorTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1027,6 +1042,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\ArmatureTest\ArmatureScene.h">
       <Filter>Classes\ExtensionsTest\ArmatureTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIScene.h">
+      <Filter>Classes\ExtensionsTest\CocosGUITest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUISlotScene.h">
+      <Filter>Classes\ExtensionsTest\CocosGUITest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\SceneEditorTest\SceneEditorTestScene.h">
+      <Filter>Classes\ExtensionsTest\SceneEditorTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
