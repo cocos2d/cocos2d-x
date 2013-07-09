@@ -49,23 +49,24 @@ PongLayer::PongLayer()
     
     Array *paddlesM = Array::createWithCapacity(4);
     
-    Paddle* paddle = Paddle::paddleWithTexture(paddleTexture);
+    Paddle* paddle = Paddle::createWithTexture(paddleTexture);
     paddle->setPosition( ccp(VisibleRect::center().x, VisibleRect::bottom().y + 15) );
     paddlesM->addObject( paddle );
     
-    paddle = Paddle::paddleWithTexture( paddleTexture );
+    paddle = Paddle::createWithTexture( paddleTexture );
     paddle->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - kStatusBarHeight - 15) );
     paddlesM->addObject( paddle );
     
-    paddle = Paddle::paddleWithTexture( paddleTexture );
+    paddle = Paddle::createWithTexture( paddleTexture );
     paddle->setPosition( ccp(VisibleRect::center().x, VisibleRect::bottom().y + 100) );
     paddlesM->addObject( paddle );
     
-    paddle = Paddle::paddleWithTexture( paddleTexture );
+    paddle = Paddle::createWithTexture( paddleTexture );
     paddle->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - kStatusBarHeight - 100) );
     paddlesM->addObject( paddle );
     
-    _paddles = (Array*)paddlesM->copy();
+    _paddles = paddlesM->clone();
+    _paddles->retain();
     
     Object* pObj = NULL;
     CCARRAY_FOREACH(_paddles, pObj)

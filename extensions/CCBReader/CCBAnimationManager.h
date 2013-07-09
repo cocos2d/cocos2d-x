@@ -144,8 +144,6 @@ public:
 
 	/** returns a new reversed action */
 	virtual CCBSetSpriteFrame* reverse() const;
-
-    virtual Object* copyWithZone(Zone *pZone);
 };
 
 
@@ -167,8 +165,6 @@ public:
 
 	/** returns a new reversed action */
 	virtual CCBSoundEffect* reverse() const;
-
-    virtual Object* copyWithZone(Zone *pZone);
 };
 
 
@@ -189,7 +185,6 @@ public:
 	/** returns a new reversed action */
 	virtual CCBRotateTo* reverse() const;
 
-    virtual Object* copyWithZone(Zone *pZone);
     virtual void startWithTarget(Node *pNode);
 };
 
@@ -209,7 +204,6 @@ public:
 	/** returns a new reversed action */
 	virtual CCBRotateXTo* reverse() const;
 
-    virtual Object* copyWithZone(Zone *pZone);
     virtual void update(float time);
 };
 
@@ -230,7 +224,6 @@ public:
 	/** returns a new reversed action */
 	virtual CCBRotateYTo* reverse() const;
 
-    virtual Object* copyWithZone(Zone *pZone);
     virtual void update(float time);
 };
 

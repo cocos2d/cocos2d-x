@@ -97,8 +97,6 @@ public:
 	/** returns a clone of the SpriteFrame */
 	virtual SpriteFrame *clone() const;
 
-    virtual Object* copyWithZone(Zone *pZone);
-
     /** Create a SpriteFrame with a texture filename, rect in points.
      It is assumed that the frame was not trimmed.
      */

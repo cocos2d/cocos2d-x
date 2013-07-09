@@ -124,27 +124,6 @@ Speed *Speed::clone() const
 	return  a;
 }
 
-Object *Speed::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    Speed* pRet = NULL;
-    if(pZone && pZone->_copyObject) //in case of being called at sub class
-    {
-        pRet = (Speed*)(pZone->_copyObject);
-    }
-    else
-    {
-        pRet = new Speed();
-        pZone = pNewZone = new Zone(pRet);
-    }
-    Action::copyWithZone(pZone);
-
-    pRet->initWithAction( (ActionInterval*)(_innerAction->copy()->autorelease()) , _speed );
-    
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
-}
-
 void Speed::startWithTarget(Node* pTarget)
 {
     Action::startWithTarget(pTarget);
@@ -261,26 +240,6 @@ bool Follow::initWithTarget(Node *pFollowedNode, const Rect& rect/* = RectZero*/
     }
     
     return true;
-}
-
-Object *Follow::copyWithZone(Zone *pZone)
-{
-    Zone *pNewZone = NULL;
-    Follow *pRet = NULL;
-    if(pZone && pZone->_copyObject) //in case of being called at sub class
-    {
-        pRet = (Follow*)(pZone->_copyObject);
-    }
-    else
-    {
-        pRet = new Follow();
-        pZone = pNewZone = new Zone(pRet);
-    }
-    Action::copyWithZone(pZone);
-    // copy member data
-    pRet->_tag = _tag;
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
 }
 
 void Follow::step(float dt)

@@ -63,32 +63,10 @@ AnimationFrame* AnimationFrame::clone() const
 	auto frame = new AnimationFrame();
     frame->initWithSpriteFrame(_spriteFrame->clone(),
 							   _delayUnits,
-							   _userInfo != NULL ? (Dictionary*)_userInfo->copy()->autorelease() : NULL);
+							   _userInfo != NULL ? _userInfo->clone() : NULL);
 
 	frame->autorelease();
 	return frame;
-}
-
-Object* AnimationFrame::copyWithZone(Zone* pZone)
-{
-    Zone* pNewZone = NULL;
-    AnimationFrame* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (AnimationFrame*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new AnimationFrame();
-        pNewZone = new Zone(pCopy);
-    }
-
-    pCopy->initWithSpriteFrame((SpriteFrame*)_spriteFrame->copy()->autorelease(),
-        _delayUnits, _userInfo != NULL ? (Dictionary*)_userInfo->copy()->autorelease() : NULL);
-
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
 }
 
 // implementation of Animation
@@ -225,28 +203,6 @@ Animation* Animation::clone() const
     a->setRestoreOriginalFrame(_restoreOriginalFrame);
 	a->autorelease();
 	return a;
-}
-
-Object* Animation::copyWithZone(Zone* pZone)
-{
-    Zone* pNewZone = NULL;
-    Animation* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (Animation*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new Animation();
-        pNewZone = new Zone(pCopy);
-    }
-
-    pCopy->initWithAnimationFrames(_frames, _delayPerUnit, _loops);
-    pCopy->setRestoreOriginalFrame(_restoreOriginalFrame);
-
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
 }
 
 NS_CC_END

@@ -169,7 +169,7 @@ public:
  *
  */
 
-class CC_DLL Dictionary : public Object
+class CC_DLL Dictionary : public Object, public Clonable
 {
 public:
     /** 
@@ -321,15 +321,6 @@ public:
      *       removeObjectsForKeys(Array*), removeObjectForElememt(DictElement*).
      */
     void removeAllObjects();
-
-    /// @{
-    /// @name Function override
-    /**
-     *  This function is used for deepcopy elements from source dictionary to destination dictionary.
-     *  You shouldn't invoke this function manually since it's called by Object::copy.
-     */
-    virtual Object* copyWithZone(Zone* pZone);
-    /// @}
     
     /**
      *  Return a random object in the dictionary.
@@ -385,7 +376,8 @@ public:
 
     /* override functions */
     virtual void acceptVisitor(DataVisitor &visitor);
-
+    virtual Dictionary* clone() const;
+    
 private:
     /** 
      *  For internal usage, invoked by setObject.

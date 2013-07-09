@@ -82,26 +82,6 @@ OrbitCamera* OrbitCamera::clone() const
 	return a;
 }
 
-Object * OrbitCamera::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    OrbitCamera* pRet = NULL;
-    if(pZone && pZone->_copyObject) //in case of being called at sub class
-        pRet = (OrbitCamera*)(pZone->_copyObject);
-    else
-    {
-        pRet = new OrbitCamera();
-        pZone = pNewZone = new Zone(pRet);
-    }
-
-    ActionInterval::copyWithZone(pZone);
-
-    pRet->initWithDuration(_duration, _radius, _deltaRadius, _angleZ, _deltaAngleZ, _angleX, _deltaAngleX);
-
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
-}
-
 bool OrbitCamera::initWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX)
 {
     if ( ActionInterval::initWithDuration(t) )
