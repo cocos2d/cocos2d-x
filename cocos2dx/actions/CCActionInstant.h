@@ -129,7 +129,8 @@ public:
 class CC_DLL RemoveSelf : public ActionInstant
 {
 public:
-	RemoveSelf(){}
+	RemoveSelf():_isNeedCleanUp(true)
+	{}
 	virtual ~RemoveSelf(){}
 	//super methods
 	virtual void update(float time);
