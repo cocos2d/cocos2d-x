@@ -80,6 +80,8 @@ public:
      */
     void addDisplay(CCDisplayData *displayData, int index);
 
+	void addDisplay(CCNode *display, int index);
+
     void changeDisplayByIndex(int index, bool force);
 
     /**

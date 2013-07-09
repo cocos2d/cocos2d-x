@@ -228,9 +228,6 @@
     <ClCompile Include="..\CCArmature\display\CCDisplayManager.cpp">
       <Filter>CCArmature\display</Filter>
     </ClCompile>
-    <ClCompile Include="..\CCArmature\display\CCShaderNode.cpp">
-      <Filter>CCArmature\display</Filter>
-    </ClCompile>
     <ClCompile Include="..\CCArmature\display\CCSkin.cpp">
       <Filter>CCArmature\display</Filter>
     </ClCompile>
@@ -554,9 +551,6 @@
       <Filter>CCArmature\display</Filter>
     </ClInclude>
     <ClInclude Include="..\CCArmature\display\CCDisplayManager.h">
-      <Filter>CCArmature\display</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCArmature\display\CCShaderNode.h">
       <Filter>CCArmature\display</Filter>
     </ClInclude>
     <ClInclude Include="..\CCArmature\display\CCSkin.h">

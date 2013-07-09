@@ -110,6 +110,11 @@ void CCDisplayManager::addDisplay(CCDisplayData *displayData, int index)
     }
 }
 
+void CCDisplayManager::addDisplay(CCNode *display, int index)
+{
+
+}
+
 void CCDisplayManager::removeDisplay(int index)
 {
     m_pDecoDisplayList->removeObjectAtIndex(index);

@@ -320,9 +320,14 @@ CCAffineTransform CCBone::nodeToArmatureTransform()
 	return m_tWorldTransform;
 }
 
-void CCBone::addDisplay(CCDisplayData *_displayData, int _index)
+void CCBone::addDisplay(CCDisplayData *displayData, int index)
 {
-    m_pDisplayManager->addDisplay(_displayData, _index);
+    m_pDisplayManager->addDisplay(displayData, index);
+}
+
+void CCBone::addDisplay(CCNode *display, int index)
+{
+	m_pDisplayManager->addDisplay(display, index);
 }
 
 void CCBone::changeDisplayByIndex(int _index, bool _force)
