@@ -550,25 +550,12 @@ void Sprite::draw(void)
 
     CCAssert(!_batchNode, "If Sprite is being rendered by SpriteBatchNode, Sprite#draw SHOULD NOT be called");
 
+    CC_NODE_DRAW_SETUP();
+    
     ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
 
-    if (_texture != NULL)
-    {
-        CC_NODE_DRAW_SETUP();
-        ccGLBindTexture2D( _texture->getName() );
-        ccGLEnableVertexAttribs( kVertexAttribFlag_PosColorTex );
-    }
-    else
-    {
-        // If the texture is invalid, uses the PositionColor shader instead.
-        // TODO: PostionTextureColor shader should support empty texture. In that way, we could get rid of next three lines.
-        GLProgram* prog = ShaderCache::sharedShaderCache()->programForKey(kShader_PositionColor);
-        prog->use();
-        prog->setUniformsForBuiltins();
-        
-        ccGLBindTexture2D(0);
-        ccGLEnableVertexAttribs( kVertexAttribFlag_Position | kVertexAttribFlag_Color );
-    }
+    ccGLBindTexture2D( _texture->getName() );
+    ccGLEnableVertexAttribs( kVertexAttribFlag_PosColorTex );
 
 #define kQuadSize sizeof(_quad.bl)
 #ifdef EMSCRIPTEN
@@ -582,12 +569,9 @@ void Sprite::draw(void)
     int diff = offsetof( V3F_C4B_T2F, vertices);
     glVertexAttribPointer(kVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
 
-    if (_texture != NULL)
-    {
-        // texCoods
-        diff = offsetof( V3F_C4B_T2F, texCoords);
-        glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-    }
+    // texCoods
+    diff = offsetof( V3F_C4B_T2F, texCoords);
+    glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
     
     // color
     diff = offsetof( V3F_C4B_T2F, colors);
@@ -1083,12 +1067,31 @@ void Sprite::updateBlendFunc(void)
     }
 }
 
+static unsigned char cc_2x2_white_image[] = {
+    // RGBA8888
+    0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF
+};
+
 void Sprite::setTexture(Texture2D *texture)
 {
     // If batchnode, then texture id should be the same
     CCAssert(! _batchNode || texture->getName() == _batchNode->getTexture()->getName(), "CCSprite: Batched sprites should use the same texture as the batchnode");
     // accept texture==nil as argument
     CCAssert( !texture || dynamic_cast<Texture2D*>(texture), "setTexture expects a Texture2D. Invalid argument");
+    
+    if (nullptr == texture)
+    {
+        Image* image = new Image();
+        bool isOK = image->initWithImageData(cc_2x2_white_image, sizeof(cc_2x2_white_image), Image::kFmtRawData, 2, 2, 8);
+        if (isOK) {
+            texture = TextureCache::sharedTextureCache()->addUIImage(image, "cc_2x2_white_image");
+        }
+        
+        CC_SAFE_RELEASE(image);
+    }
     
     if (!_batchNode && _texture != texture)
     {
