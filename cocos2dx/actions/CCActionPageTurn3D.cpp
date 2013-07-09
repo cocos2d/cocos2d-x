@@ -23,7 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCActionPageTurn3D.h"
-#include "cocoa/CCZone.h"
 #include "support/CCPointExtension.h"
 
 NS_CC_BEGIN

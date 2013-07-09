@@ -31,7 +31,6 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class Object;
-class Zone;
 
 /**
  * @addtogroup actions

@@ -28,8 +28,6 @@ THE SOFTWARE.
 #include "base_nodes/CCNode.h"
 #include "CCCamera.h"
 #include "CCStdC.h"
-#include "cocoa/CCZone.h"
-
 
 NS_CC_BEGIN
 //
