@@ -101,7 +101,6 @@ public:
 	/** returns a new reversed action */
 	virtual EaseIn* reverse() const;
 
-    virtual Object* copyWithZone(Zone* pZone);
 public:
 
     /** Creates the action with the inner action and the rate parameter */
@@ -120,7 +119,6 @@ public:
 	virtual EaseOut* clone() const;
 	/** returns a new reversed action */
 	virtual EaseOut* reverse() const;
-    virtual Object* copyWithZone(Zone* pZone);
 
 public:
 
@@ -136,7 +134,7 @@ class CC_DLL EaseInOut : public EaseRateAction
 {
 public:
     virtual void update(float time);
-    virtual Object* copyWithZone(Zone* pZone);
+
 	/** returns a new clone of the action */
 	virtual EaseInOut* clone() const;
 	/** returns a new reversed action */
@@ -160,7 +158,6 @@ public:
 	virtual EaseExponentialIn* clone() const;
 	/** returns a new reversed action */
 	virtual ActionEase* reverse() const;
-    virtual Object* copyWithZone(Zone* pZone);
 
 public:
     /** creates the action */
@@ -179,7 +176,6 @@ public:
 	virtual EaseExponentialOut* clone() const;
 	/** returns a new reversed action */
 	virtual ActionEase* reverse() const;
-    virtual Object* copyWithZone(Zone* pZone);
 
 public:
     /** creates the action */
@@ -198,8 +194,6 @@ public:
 	virtual EaseExponentialInOut* clone() const;
 	/** returns a new reversed action */
 	virtual EaseExponentialInOut* reverse() const;
-    virtual Object* copyWithZone(Zone* pZone);
-
 public:
 
     /** creates the action */
@@ -218,8 +212,6 @@ public:
 	virtual EaseSineIn* clone() const;
 	/** returns a new reversed action */
 	virtual ActionEase* reverse() const;
-    virtual Object* copyWithZone(Zone* pZone);
-
 public:
     /** creates the action */
     static EaseSineIn* create(ActionInterval* pAction);
@@ -237,7 +229,6 @@ public:
 	virtual EaseSineOut* clone() const;
 	/** returns a new reversed action */
 	virtual ActionEase* reverse() const;
-    virtual Object* copyWithZone(Zone* pZone);
 
 public:
 
@@ -257,7 +248,6 @@ public:
 	virtual EaseSineInOut* clone() const;
 	/** returns a new reversed action */
 	virtual EaseSineInOut* reverse() const;
-    virtual Object* copyWithZone(Zone* pZone);
 
 public:
 
@@ -304,7 +294,6 @@ public:
 	virtual EaseElasticIn* clone() const;
 	/** returns a new reversed action */
 	virtual EaseElastic* reverse() const;
-    virtual Object* copyWithZone(Zone* pZone);
 
 public:
 
@@ -327,7 +316,6 @@ public:
 	virtual EaseElasticOut* clone() const;
 	/** returns a new reversed action */
 	virtual EaseElastic* reverse() const;
-    virtual Object* copyWithZone(Zone* pZone);
 
 public:
 
@@ -350,7 +338,6 @@ public:
 	virtual EaseElasticInOut* clone() const;
 	/** returns a new reversed action */
 	virtual EaseElasticInOut* reverse() const;
-    virtual Object* copyWithZone(Zone* pZone);
 
 public:
 
@@ -389,7 +376,6 @@ public:
 	virtual EaseBounceIn* clone() const;
 	/** returns a new reversed action */
 	virtual EaseBounce* reverse() const;
-    virtual Object* copyWithZone(Zone* pZone);
 
 public:
 
@@ -411,8 +397,6 @@ public:
 	virtual EaseBounceOut* clone() const;
 	/** returns a new reversed action */
 	virtual EaseBounce* reverse() const;
-    virtual Object* copyWithZone(Zone* pZone);
-
 public:
 
     /** creates the action */
@@ -433,8 +417,6 @@ public:
 	virtual EaseBounceInOut* clone() const;
 	/** returns a new reversed action */
 	virtual EaseBounceInOut* reverse() const;
-    virtual Object* copyWithZone(Zone* pZone);
-
 public:
 
     /** creates the action */
@@ -455,8 +437,6 @@ public:
 	virtual EaseBackIn* clone() const;
 	/** returns a new reversed action */
 	virtual ActionEase* reverse() const;
-    virtual Object* copyWithZone(Zone* pZone);
-
 public:
 
     /** creates the action */
@@ -477,8 +457,6 @@ public:
 	virtual EaseBackOut* clone() const;
 	/** returns a new reversed action */
 	virtual ActionEase* reverse() const;
-    virtual Object* copyWithZone(Zone* pZone);
-
 public:
 
     /** creates the action */
@@ -499,8 +477,6 @@ public:
 	virtual EaseBackInOut* clone() const;
 	/** returns a new reversed action */
 	virtual EaseBackInOut* reverse() const;
-    virtual Object* copyWithZone(Zone* pZone);
-
 public:
 
     /** creates the action */

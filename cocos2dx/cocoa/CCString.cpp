@@ -129,13 +129,6 @@ int String::compare(const char * pStr) const
     return strcmp(getCString(), pStr);
 }
 
-Object* String::copyWithZone(Zone* pZone)
-{
-    CCAssert(pZone == NULL, "CCString should not be inherited.");
-    String* pStr = new String(_string.c_str());
-    return pStr;
-}
-
 bool String::isEqual(const Object* pObject)
 {
     bool bRet = false;
@@ -203,6 +196,11 @@ String* String::createWithContentsOfFile(const char* pszFileName)
 void String::acceptVisitor(DataVisitor &visitor)
 {
     visitor.visit(this);
+}
+
+String* String::clone() const
+{
+    return String::create(_string);
 }
 
 NS_CC_END

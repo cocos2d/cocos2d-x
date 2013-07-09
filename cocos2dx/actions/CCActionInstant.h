@@ -76,7 +76,6 @@ public:
 	/** returns a new clone of the action */
 	virtual Show* clone() const;
 
-    virtual Object* copyWithZone(Zone *pZone);
 public:
 
     /** Allocates and initializes the action */
@@ -99,7 +98,6 @@ public:
 	virtual ActionInstant* reverse() const;
 	/** returns a new clone of the action */
 	virtual Hide* clone() const;
-    virtual Object* copyWithZone(Zone *pZone);
 public:
 
     /** Allocates and initializes the action */
@@ -119,7 +117,6 @@ public:
 	virtual ToggleVisibility* reverse() const;
 	/** returns a new clone of the action */
 	virtual ToggleVisibility* clone() const;
-    virtual Object* copyWithZone(Zone *pZone);
 public:
 
     /** Allocates and initializes the action */
@@ -140,7 +137,6 @@ public:
 	virtual RemoveSelf* clone() const;
 	/** returns a new reversed action */
 	virtual RemoveSelf* reverse() const;
-	virtual Object* copyWithZone(Zone *pZone);
 public:
 	/** create the action */
 	static RemoveSelf * create(bool isNeedCleanUp = true);
@@ -173,7 +169,6 @@ public:
 	virtual FlipX* reverse() const;
 	/** returns a new clone of the action */
 	virtual FlipX* clone() const;
-    virtual Object* copyWithZone(Zone *pZone);
 
 protected:
     bool    _flipX;
@@ -202,7 +197,6 @@ public:
 	virtual FlipY* reverse() const;
 	/** returns a new clone of the action */
 	virtual FlipY* clone() const;
-    virtual Object* copyWithZone(Zone *pZone);
 
 protected:
     bool    _flipY;
@@ -226,7 +220,7 @@ public:
 	virtual Place* reverse() const;
 	/** returns a new clone of the action */
 	virtual Place* clone() const;
-    virtual Object* copyWithZone(Zone *pZone);
+
 protected:
     Point _position;
 };
@@ -279,7 +273,6 @@ public:
 	virtual CallFunc* reverse() const;
 	/** returns a new clone of the action */
 	virtual CallFunc* clone() const;
-    Object * copyWithZone(Zone *pZone);
 
     inline Object* getTargetCallback()
     {
@@ -355,7 +348,6 @@ public:
     virtual bool initWithTarget(Object* pSelectorTarget, SEL_CallFuncN selector);
     // super methods
 	virtual CallFuncN* clone() const;
-    virtual Object* copyWithZone(Zone *pZone);
     virtual void execute();
 
 protected:

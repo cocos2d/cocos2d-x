@@ -925,24 +925,6 @@ CCBSetSpriteFrame* CCBSetSpriteFrame::reverse() const
 	return this->clone();
 }
 
-Object* CCBSetSpriteFrame::copyWithZone(Zone *pZone)
-{
-    Zone *pNewZone = NULL;
-    CCBSetSpriteFrame *pRet = NULL;
-    
-    if (pZone && pZone->_copyObject) {
-        pRet = (CCBSetSpriteFrame*) (pZone->_copyObject);
-    } else {
-        pRet = new CCBSetSpriteFrame();
-        pZone = pNewZone = new Zone(pRet);
-    }
-    
-    pRet->initWithSpriteFrame(mSpriteFrame);
-    ActionInstant::copyWithZone(pZone);
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
-}
-
 void CCBSetSpriteFrame::update(float time)
 {
     ((Sprite*)_target)->setDisplayFrame(mSpriteFrame);
@@ -993,25 +975,6 @@ CCBSoundEffect* CCBSoundEffect::reverse() const
 	// returns a copy of itself
 	return this->clone();
 }
-
-Object* CCBSoundEffect::copyWithZone(Zone *pZone)
-{
-    Zone *pNewZone = NULL;
-    CCBSoundEffect *pRet = NULL;
-    
-    if (pZone && pZone->_copyObject) {
-        pRet = (CCBSoundEffect*) (pZone->_copyObject);
-    } else {
-        pRet = new CCBSoundEffect();
-        pZone = pNewZone = new Zone(pRet);
-    }
-    
-    pRet->initWithSoundFile(mSoundFile, mPitch, mPan, mGain);
-    ActionInstant::copyWithZone(pZone);
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
-}
-
 
 void CCBSoundEffect::update(float time)
 {
@@ -1068,24 +1031,6 @@ CCBRotateTo* CCBRotateTo::reverse() const
 {
 	CCAssert(false, "reverse() is not supported in CCBRotateTo");
 	return nullptr;
-}
-
-Object* CCBRotateTo::copyWithZone(Zone *pZone)
-{
-    Zone *pNewZone = NULL;
-    CCBRotateTo *pRet = NULL;
-    
-    if (pZone && pZone->_copyObject) {
-        pRet = (CCBRotateTo*) (pZone->_copyObject);
-    } else {
-        pRet = new CCBRotateTo();
-        pZone = pNewZone = new Zone(pRet);
-    }
-    
-    pRet->initWithDuration(_duration, mDstAngle);
-    ActionInterval::copyWithZone(pZone);
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
 }
 
 void CCBRotateTo::startWithTarget(Node *pNode)
@@ -1168,24 +1113,6 @@ CCBRotateXTo* CCBRotateXTo::reverse() const
 	return nullptr;
 }
 
-Object* CCBRotateXTo::copyWithZone(Zone *pZone)
-{
-    Zone *pNewZone = NULL;
-    CCBRotateXTo *pRet = NULL;
-    
-    if (pZone && pZone->_copyObject) {
-        pRet = (CCBRotateXTo*) (pZone->_copyObject);
-    } else {
-        pRet = new CCBRotateXTo();
-        pZone = pNewZone = new Zone(pRet);
-    }
-    
-    pRet->initWithDuration(_duration, mDstAngle);
-    ActionInterval::copyWithZone(pZone);
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
-}
-
 void CCBRotateXTo::update(float time)
 {
     _target->setRotationX(mStartAngle + (mDiffAngle * time))
@@ -1257,25 +1184,6 @@ void CCBRotateYTo::startWithTarget(Node *pNode)
     _firstTick = true;
     mStartAngle = _target->getRotationY();
     mDiffAngle = mDstAngle - mStartAngle;
-}
-
-
-Object* CCBRotateYTo::copyWithZone(Zone *pZone)
-{
-    Zone *pNewZone = NULL;
-    CCBRotateYTo *pRet = NULL;
-    
-    if (pZone && pZone->_copyObject) {
-        pRet = (CCBRotateYTo*) (pZone->_copyObject);
-    } else {
-        pRet = new CCBRotateYTo();
-        pZone = pNewZone = new Zone(pRet);
-    }
-    
-    pRet->initWithDuration(_duration, mDstAngle);
-    ActionInterval::copyWithZone(pZone);
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
 }
 
 void CCBRotateYTo::update(float time)
