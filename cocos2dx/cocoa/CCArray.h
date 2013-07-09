@@ -109,7 +109,7 @@ while(false)
 
 NS_CC_BEGIN
 
-class CC_DLL Array : public Object
+class CC_DLL Array : public Object, public Clonable
 {
 public:
     ~Array();
@@ -208,11 +208,9 @@ public:
     void reduceMemoryFootprint();
   
     /* override functions */
-    virtual Object* copyWithZone(Zone* pZone);
-
-    /* override functions */
     virtual void acceptVisitor(DataVisitor &visitor);
-
+    virtual Array* clone() const;
+    
 public:
     ccArray* data;
     Array();

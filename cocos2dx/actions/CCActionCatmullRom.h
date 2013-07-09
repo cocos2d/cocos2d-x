@@ -125,7 +125,6 @@ public:
 	/** returns a new reversed action */
     virtual CardinalSplineTo* reverse() const;
 
-    virtual CardinalSplineTo* copyWithZone(Zone* pZone);
     virtual void startWithTarget(Node *pTarget);
     virtual void update(float time);
 

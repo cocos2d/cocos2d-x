@@ -82,22 +82,6 @@ Show * Show::clone() const
 	return a;
 }
 
-Object* Show::copyWithZone(Zone *pZone) {
-
-    Zone *pNewZone = NULL;
-    Show *pRet = NULL;
-    if (pZone && pZone->_copyObject) {
-        pRet = (Show*) (pZone->_copyObject);
-    } else {
-        pRet = new Show();
-        pZone = pNewZone = new Zone(pRet);
-    }
-
-    ActionInstant::copyWithZone(pZone);
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
-}
-
 //
 // Hide
 //
@@ -128,22 +112,6 @@ Hide * Hide::clone() const
 	auto a = new Hide();
 	a->autorelease();
 	return a;
-}
-
-Object* Hide::copyWithZone(Zone *pZone) {
-    Zone *pNewZone = NULL;
-    Hide *pRet = NULL;
-
-    if (pZone && pZone->_copyObject) {
-        pRet = (Hide*) (pZone->_copyObject);
-    } else {
-        pRet = new Hide();
-        pZone = pNewZone = new Zone(pRet);
-    }
-
-    ActionInstant::copyWithZone(pZone);
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
 }
 
 //
@@ -178,23 +146,6 @@ ToggleVisibility * ToggleVisibility::clone() const
 	auto a = new ToggleVisibility();
 	a->autorelease();
 	return a;
-}
-
-Object* ToggleVisibility::copyWithZone(Zone *pZone)
-{
-    Zone *pNewZone = NULL;
-    ToggleVisibility *pRet = NULL;
-
-    if (pZone && pZone->_copyObject) {
-        pRet = (ToggleVisibility*) (pZone->_copyObject);
-    } else {
-        pRet = new ToggleVisibility();
-        pZone = pNewZone = new Zone(pRet);
-    }
-
-    ActionInstant::copyWithZone(pZone);
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
 }
 
 //
@@ -233,23 +184,6 @@ RemoveSelf * RemoveSelf::clone() const
 	a->init(_isNeedCleanUp);
 	a->autorelease();
 	return a;
-}
-
-Object* RemoveSelf::copyWithZone(Zone *pZone) {
-	Zone *pNewZone = NULL;
-	RemoveSelf *pRet = NULL;
-
-	if (pZone && pZone->_copyObject) {
-		pRet = (RemoveSelf*) (pZone->_copyObject);
-	} else {
-		pRet = new RemoveSelf();
-		pZone = pNewZone = new Zone(pRet);
-	}
-
-	ActionInstant::copyWithZone(pZone);
-	pRet->init(_isNeedCleanUp);
-	CC_SAFE_DELETE(pNewZone);
-	return pRet;
 }
 
 //
@@ -292,24 +226,6 @@ FlipX * FlipX::clone() const
 	a->autorelease();
 	return a;
 }
-
-Object * FlipX::copyWithZone(Zone *pZone) {
-    Zone *pNewZone = NULL;
-    FlipX *pRet = NULL;
-
-    if (pZone && pZone->_copyObject) {
-        pRet = (FlipX*) (pZone->_copyObject);
-    } else {
-        pRet = new FlipX();
-        pZone = pNewZone = new Zone(pRet);
-    }
-
-    ActionInstant::copyWithZone(pZone);
-    pRet->initWithFlipX(_flipX);
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
-}
-
 //
 // FlipY
 //
@@ -351,23 +267,6 @@ FlipY * FlipY::clone() const
 	return a;
 }
 
-Object* FlipY::copyWithZone(Zone *pZone) {
-    Zone *pNewZone = NULL;
-    FlipY *pRet = NULL;
-
-    if (pZone && pZone->_copyObject) {
-        pRet = (FlipY*) (pZone->_copyObject);
-    } else {
-        pRet = new FlipY();
-        pZone = pNewZone = new Zone(pRet);
-    }
-
-    ActionInstant::copyWithZone(pZone);
-    pRet->initWithFlipY(_flipY);
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
-}
-
 //
 // Place
 //
@@ -403,23 +302,6 @@ Place * Place::reverse() const
 {
 	// no reverse, just clone
 	return this->clone();
-}
-
-Object * Place::copyWithZone(Zone *pZone) {
-    Zone *pNewZone = NULL;
-    Place *pRet = NULL;
-
-    if (pZone && pZone->_copyObject) {
-        pRet = (Place*) (pZone->_copyObject);
-    } else {
-        pRet = new Place();
-        pZone = pNewZone = new Zone(pRet);
-    }
-
-    ActionInstant::copyWithZone(pZone);
-    pRet->initWithPosition(_position);
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
 }
 
 void Place::update(float time) {
@@ -528,34 +410,6 @@ CallFunc * CallFunc::reverse() const
 	return this->clone();
 }
 
-
-Object * CallFunc::copyWithZone(Zone *pZone) {
-    Zone* pNewZone = NULL;
-    CallFunc* pRet = NULL;
-
-    if (pZone && pZone->_copyObject) {
-        //in case of being called at sub class
-        pRet = (CallFunc*) (pZone->_copyObject);
-    } else {
-        pRet = new CallFunc();
-        pZone = pNewZone = new Zone(pRet);
-    }
-
-    ActionInstant::copyWithZone(pZone);
-	if( _selectorTarget) {
-		pRet->initWithTarget(_selectorTarget);
-		pRet->_callFunc = _callFunc;
-	}
-	else if( _function )
-		pRet->initWithFunction(_function);
-
-    if (_scriptHandler > 0 ) {
-        pRet->_scriptHandler = cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine()->reallocateScriptHandler(_scriptHandler);
-    }
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
-}
-
 void CallFunc::update(float time) {
     CC_UNUSED_PARAM(time);
     this->execute();
@@ -660,23 +514,5 @@ CallFuncN * CallFuncN::clone() const
 	return a;
 }
 
-Object * CallFuncN::copyWithZone(Zone* zone)
-{
-    Zone* pNewZone = NULL;
-    CallFuncN* pRet = NULL;
-
-    if (zone && zone->_copyObject) {
-        //in case of being called at sub class
-        pRet = (CallFuncN*) (zone->_copyObject);
-    } else {
-        pRet = new CallFuncN();
-        zone = pNewZone = new Zone(pRet);
-    }
-
-    CallFunc::copyWithZone(zone);
-    pRet->initWithTarget(_selectorTarget, _callFuncN);
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
-}
 
 NS_CC_END

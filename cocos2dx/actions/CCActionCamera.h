@@ -108,7 +108,7 @@ public:
     // super methods
 	/** returns a new clone of the action */
 	OrbitCamera *clone() const;
-    virtual Object* copyWithZone(Zone* pZone);
+
     virtual void startWithTarget(Node *pTarget);
     virtual void update(float time);
 

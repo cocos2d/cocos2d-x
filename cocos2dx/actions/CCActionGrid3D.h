@@ -52,7 +52,6 @@ public:
 	/** returns a new clone of the action */
 	virtual Waves3D* clone() const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void update(float time);
 
 public:
@@ -75,7 +74,6 @@ public:
 	/** returns a new clone of the action */
 	virtual FlipX3D* clone() const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void update(float time);
 
 public:
@@ -88,8 +86,9 @@ class CC_DLL FlipY3D : public FlipX3D
 {
 public:
     virtual void update(float time);
-    virtual Object* copyWithZone(Zone* pZone);
 
+	/** returns a new clone of the action */
+	virtual FlipY3D* clone() const;
 public:
     /** creates the action with duration */
     static FlipY3D* create(float duration);
@@ -115,7 +114,6 @@ public:
 	/** returns a new clone of the action */
 	virtual Lens3D* clone() const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void update(float time);
 
 public:
@@ -154,7 +152,6 @@ public:
 	/** returns a new clone of the action */
 	virtual Ripple3D* clone() const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void update(float time);
 
 public:
@@ -179,7 +176,6 @@ public:
 	/** returns a new clone of the action */
 	virtual Shaky3D* clone() const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void update(float time);
 
 public:
@@ -206,7 +202,6 @@ public:
 	/** returns a new clone of the action */
 	virtual Liquid* clone() const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void update(float time);
 
 public:
@@ -234,7 +229,6 @@ public:
 	/** returns a new clone of the action */
 	virtual Waves* clone() const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void update(float time);
 
 public:
@@ -270,7 +264,6 @@ public:
 	/** returns a new clone of the action */
 	virtual Twirl* clone() const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void update(float time);
 
 public:

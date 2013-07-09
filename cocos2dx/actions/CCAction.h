@@ -166,8 +166,6 @@ public:
     /** initializes the action */
     bool initWithAction(ActionInterval *pAction, float fSpeed);
 
-    virtual Object* copyWithZone(Zone *pZone);
-
 	/** returns a new clone of the action */
 	virtual Speed* clone() const;
     /** returns a new reversed action */
@@ -224,7 +222,6 @@ public:
     /** initializes the action with a set boundary */
     bool initWithTarget(Node *pFollowedNode, const Rect& rect = RectZero);
 
-    virtual Object* copyWithZone(Zone *pZone);
 	/** returns a clone of action */
 	virtual Follow* clone() const;
     virtual void step(float dt);
