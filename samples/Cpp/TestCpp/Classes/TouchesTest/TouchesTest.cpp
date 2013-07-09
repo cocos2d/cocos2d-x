@@ -71,7 +71,7 @@ PongLayer::PongLayer()
     Object* pObj = NULL;
     CCARRAY_FOREACH(_paddles, pObj)
     {
-        paddle = (Paddle*)(pObj);
+        paddle = static_cast<Paddle*>(pObj);
 
         if(!paddle)
             break;
@@ -105,7 +105,7 @@ void PongLayer::doStep(float delta)
     Object* pObj = NULL;
     CCARRAY_FOREACH(_paddles, pObj)
     {
-        paddle = (Paddle*)(pObj);
+        paddle = static_cast<Paddle*>(pObj);
 
         if(!paddle)
             break;

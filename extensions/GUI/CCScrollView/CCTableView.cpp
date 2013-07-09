@@ -106,7 +106,7 @@ void TableView::reloadData()
     Object* pObj = NULL;
     CCARRAY_FOREACH(_cellsUsed, pObj)
     {
-        TableViewCell* cell = (TableViewCell*)pObj;
+        TableViewCell* cell = static_cast<TableViewCell*>(pObj);
 
         if(_tableViewDelegate != NULL) {
             _tableViewDelegate->tableCellWillRecycle(this, cell);
@@ -494,7 +494,7 @@ void TableView::scrollViewDidScroll(ScrollView* view)
     int i = 0;
     CCARRAY_FOREACH(_cellsUsed, pObj)
     {
-        TableViewCell* pCell = (TableViewCell*)pObj;
+        TableViewCell* pCell = static_cast<TableViewCell*>(pObj);
         CCLog("cells Used index %d, value = %d", i, pCell->getIdx());
         i++;
     }
@@ -502,7 +502,7 @@ void TableView::scrollViewDidScroll(ScrollView* view)
     i = 0;
     CCARRAY_FOREACH(_cellsFreed, pObj)
     {
-        TableViewCell* pCell = (TableViewCell*)pObj;
+        TableViewCell* pCell = static_cast<TableViewCell*>(pObj);
         CCLog("cells freed index %d, value = %d", i, pCell->getIdx());
         i++;
     }

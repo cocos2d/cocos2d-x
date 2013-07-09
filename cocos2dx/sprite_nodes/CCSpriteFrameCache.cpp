@@ -177,7 +177,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(Dictionary* dictionary, Tex
             Object* pObj = NULL;
             CCARRAY_FOREACH(aliases, pObj)
             {
-                std::string oneAlias = ((String*)pObj)->getCString();
+                std::string oneAlias = static_cast<String*>(pObj)->getCString();
                 if (_spriteFramesAliases->objectForKey(oneAlias.c_str()))
                 {
                     CCLOGWARN("cocos2d: WARNING: an alias with name %s already exists", oneAlias.c_str());
