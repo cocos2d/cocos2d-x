@@ -7,6 +7,14 @@ class ExtensionsMainLayer : public Layer
 {
 public:
     virtual void onEnter();
+
+	virtual void ccTouchesBegan(Set *pTouches, Event *pEvent);
+    virtual void ccTouchesMoved(Set *pTouches, Event *pEvent);
+
+	Point _beginPos;
+    Menu* _itemMenu;
+
+	int _testcount;
 };
 
 class ExtensionsTestScene : public TestScene
