@@ -135,6 +135,7 @@ static void networkThread(void)
         
         int32_t responseCode = -1;
         int retValue = 0;
+        memset(s_errorBuffer , 0, sizeof(s_errorBuffer));
 
         // Process the request -> get response packet
         switch (request->getRequestType())
