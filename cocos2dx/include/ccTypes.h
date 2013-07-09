@@ -357,7 +357,9 @@ struct FontShadow
 public:
     
     // shadow is not enabled by default
-    FontShadow(): _shadowEnabled(false) {}
+    FontShadow(): _shadowEnabled(false),
+    _shadowBlur(0),
+    _shadowOpacity(0){}
     
     // true if shadow enabled
     bool   _shadowEnabled;
@@ -375,7 +377,11 @@ struct FontStroke
 public:
     
     // stroke is disabled by default
-    FontStroke(): _strokeEnabled(false) {}
+    FontStroke()
+	    : _strokeEnabled(false)
+        , _strokeColor(Color3B::BLACK)
+        , _strokeSize(0)
+	    {}
     
     // true if stroke enabled
     bool      _strokeEnabled;
@@ -391,7 +397,8 @@ struct FontDefinition
 {
 public:
     
-    FontDefinition():  _alignment(kTextAlignmentCenter),
+    FontDefinition():_fontSize(0),
+    _alignment(kTextAlignmentCenter),
     _vertAlignment(kVerticalTextAlignmentTop),
     _fontFillColor(Color3B::WHITE)
     { _dimensions = CCSizeMake(0,0); }
