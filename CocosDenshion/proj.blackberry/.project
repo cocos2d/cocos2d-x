@@ -80,9 +80,9 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>blackberry</name>
+            <name>openal</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/blackberry</locationURI>
+            <locationURI>PARENT-1-PROJECT_LOC/openal</locationURI>
 		</link>
 		<link>
 			<name>include</name>
