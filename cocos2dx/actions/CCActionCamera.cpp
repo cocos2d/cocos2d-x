@@ -53,6 +53,7 @@ ActionCamera* ActionCamera::clone() const
 
 ActionCamera * ActionCamera::reverse() const
 {
+    // FIXME: This conversion isn't safe.
     return (ActionCamera*)ReverseTime::create(const_cast<ActionCamera*>(this));
 }
 //
