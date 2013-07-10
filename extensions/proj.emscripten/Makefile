@@ -124,8 +124,8 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CocoGUILIB/UIWidgets/UITextArea.cpp \
 ../CocoGUILIB/UIWidgets/UITextButton.cpp \
 ../CocoGUILIB/UIWidgets/UITextField.cpp \
-../JsonReader/CCJsonReader.cpp \
-../JsonReader/DictionaryHelper.cpp 
+../CocostudioReader/CCJsonReader.cpp \
+../CocostudioReader/DictionaryHelper.cpp 
 
 include $(COCOS_ROOT)/cocos2dx/proj.emscripten/cocos2dx.mk
 
