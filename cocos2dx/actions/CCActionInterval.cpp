@@ -1654,6 +1654,7 @@ FadeOut* FadeOut::clone() const
 {
 	// no copy constructor
 	auto a = new FadeOut();
+    a->initWithDuration(_duration);
 	a->autorelease();
 	return a;
 }
@@ -1877,6 +1878,7 @@ DelayTime* DelayTime::clone() const
 {
 	// no copy constructor
 	auto a = new DelayTime();
+    a->initWithDuration(_duration);
 	a->autorelease();
 	return a;
 }
