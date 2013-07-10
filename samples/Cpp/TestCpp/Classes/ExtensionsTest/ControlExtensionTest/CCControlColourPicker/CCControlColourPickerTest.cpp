@@ -46,7 +46,7 @@ bool ControlColourPickerTest::init()
 
         // Create the colour picker
         ControlColourPicker *colourPicker = ControlColourPicker::create();
-        colourPicker->setColor(ccc3(37, 46, 252));
+        colourPicker->setColor(Color3B(37, 46, 252));
         colourPicker->setPosition(ccp (colourPicker->getContentSize().width / 2, 0));
 
         // Add it to the layer

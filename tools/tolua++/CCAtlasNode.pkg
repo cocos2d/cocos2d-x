@@ -7,8 +7,8 @@ class CCAtlasNode : public CCNodeRGBA
 	CCTexture2D* getTexture(void);
     void setTexture(CCTexture2D *texture);
 
-	ccColor3B getColor();
-	void setColor(ccColor3B color);
+	Color3B getColor();
+	void setColor(Color3B color);
 
 	unsigned int getQuadsToDraw();
 	void setQuadsToDraw(unsigned int quadsToDraw);

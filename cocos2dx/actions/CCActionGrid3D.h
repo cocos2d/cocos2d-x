@@ -40,10 +40,10 @@ NS_CC_BEGIN
 class CC_DLL Waves3D : public Grid3DAction
 {
 public:
-    inline float getAmplitude(void) { return _amplitude; }
+    inline float getAmplitude(void) const { return _amplitude; }
     inline void setAmplitude(float fAmplitude) { _amplitude = fAmplitude; }
 
-    inline float getAmplitudeRate(void) { return _amplitudeRate; }
+    inline float getAmplitudeRate(void) const { return _amplitudeRate; }
     inline void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
 
     /** initializes an action with duration, grid size, waves and amplitude */
@@ -52,7 +52,6 @@ public:
 	/** returns a new clone of the action */
 	virtual Waves3D* clone() const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void update(float time);
 
 public:
@@ -75,7 +74,6 @@ public:
 	/** returns a new clone of the action */
 	virtual FlipX3D* clone() const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void update(float time);
 
 public:
@@ -88,8 +86,9 @@ class CC_DLL FlipY3D : public FlipX3D
 {
 public:
     virtual void update(float time);
-    virtual Object* copyWithZone(Zone* pZone);
 
+	/** returns a new clone of the action */
+	virtual FlipY3D* clone() const;
 public:
     /** creates the action with duration */
     static FlipY3D* create(float duration);
@@ -100,13 +99,13 @@ class CC_DLL Lens3D : public Grid3DAction
 {
 public:
     /** Get lens center position */
-    inline float getLensEffect(void) { return _lensEffect; }
+    inline float getLensEffect(void) const { return _lensEffect; }
     /** Set lens center position */
     inline void setLensEffect(float fLensEffect) { _lensEffect = fLensEffect; }
     /** Set whether lens is concave */
     inline void setConcave(bool bConcave) { _concave = bConcave; }
   
-    inline const Point& getPosition(void) { return _position; }
+    inline const Point& getPosition(void) const { return _position; }
     void setPosition(const Point& position);
 
     /** initializes the action with center position, radius, a grid size and duration */
@@ -115,7 +114,6 @@ public:
 	/** returns a new clone of the action */
 	virtual Lens3D* clone() const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void update(float time);
 
 public:
@@ -138,14 +136,14 @@ class CC_DLL Ripple3D : public Grid3DAction
 {
 public:
     /** get center position */
-    inline const Point& getPosition(void) { return _position; }
+    inline const Point& getPosition(void) const { return _position; }
     /** set center position */
     void setPosition(const Point& position);
 
-    inline float getAmplitude(void) { return _amplitude; }
+    inline float getAmplitude(void) const { return _amplitude; }
     inline void setAmplitude(float fAmplitude) { _amplitude = fAmplitude; }
 
-    inline float getAmplitudeRate(void) { return _amplitudeRate; }
+    inline float getAmplitudeRate(void) const { return _amplitudeRate; }
     inline void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
 
     /** initializes the action with radius, number of waves, amplitude, a grid size and duration */
@@ -154,7 +152,6 @@ public:
 	/** returns a new clone of the action */
 	virtual Ripple3D* clone() const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void update(float time);
 
 public:
@@ -179,7 +176,6 @@ public:
 	/** returns a new clone of the action */
 	virtual Shaky3D* clone() const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void update(float time);
 
 public:
@@ -194,10 +190,10 @@ protected:
 class CC_DLL Liquid : public Grid3DAction
 {
 public:
-    inline float getAmplitude(void) { return _amplitude; }
+    inline float getAmplitude(void) const { return _amplitude; }
     inline void setAmplitude(float fAmplitude) { _amplitude = fAmplitude; }
 
-    inline float getAmplitudeRate(void) { return _amplitudeRate; }
+    inline float getAmplitudeRate(void) const { return _amplitudeRate; }
     inline void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
 
     /** initializes the action with amplitude, a grid and duration */
@@ -206,7 +202,6 @@ public:
 	/** returns a new clone of the action */
 	virtual Liquid* clone() const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void update(float time);
 
 public:
@@ -222,10 +217,10 @@ protected:
 class CC_DLL Waves : public Grid3DAction
 {
 public:
-    inline float getAmplitude(void) { return _amplitude; }
+    inline float getAmplitude(void) const { return _amplitude; }
     inline void setAmplitude(float fAmplitude) { _amplitude = fAmplitude; }
 
-    inline float getAmplitudeRate(void) { return _amplitudeRate; }
+    inline float getAmplitudeRate(void) const { return _amplitudeRate; }
     inline void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
 
     /** initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration */
@@ -234,7 +229,6 @@ public:
 	/** returns a new clone of the action */
 	virtual Waves* clone() const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void update(float time);
 
 public:
@@ -254,14 +248,14 @@ class CC_DLL Twirl : public Grid3DAction
 {
 public:
     /** get twirl center */
-    inline const Point& getPosition(void) { return _position; }
+    inline const Point& getPosition(void) const { return _position; }
     /** set twirl center */
     void setPosition(const Point& position);
 
-    inline float getAmplitude(void) { return _amplitude; }
+    inline float getAmplitude(void) const { return _amplitude; }
     inline void setAmplitude(float fAmplitude) { _amplitude = fAmplitude; }
 
-    inline float getAmplitudeRate(void) { return _amplitudeRate; }
+    inline float getAmplitudeRate(void) const { return _amplitudeRate; }
     inline void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
 
     /** initializes the action with center position, number of twirls, amplitude, a grid size and duration */
@@ -270,7 +264,6 @@ public:
 	/** returns a new clone of the action */
 	virtual Twirl* clone() const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void update(float time);
 
 public:

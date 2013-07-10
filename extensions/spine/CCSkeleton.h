@@ -80,7 +80,7 @@ public:
 	bool setAttachment (const char* slotName, const char* attachmentName);
 
 	// --- BlendProtocol
-	CC_PROPERTY_PASS_BY_REF(cocos2d::ccBlendFunc, blendFunc, BlendFunc);
+	CC_PROPERTY_PASS_BY_REF(cocos2d::BlendFunc, blendFunc, BlendFunc);
 	virtual void setOpacityModifyRGB (bool value);
 	virtual bool isOpacityModifyRGB() const;
 

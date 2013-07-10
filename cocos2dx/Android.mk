@@ -11,6 +11,7 @@ CCConfiguration.cpp \
 CCScheduler.cpp \
 CCCamera.cpp \
 ccFPSImages.c \
+ccTypes.cpp \
 actions/CCAction.cpp \
 actions/CCActionCamera.cpp \
 actions/CCActionCatmullRom.cpp \
@@ -34,7 +35,6 @@ cocoa/CCNS.cpp \
 cocoa/CCObject.cpp \
 cocoa/CCSet.cpp \
 cocoa/CCString.cpp \
-cocoa/CCZone.cpp \
 cocoa/CCArray.cpp \
 cocoa/CCDataVisitor.cpp \
 cocoa/CCData.cpp \

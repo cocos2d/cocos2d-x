@@ -99,7 +99,7 @@ void TextureCache::purgeSharedTextureCache()
     CC_SAFE_RELEASE_NULL(_sharedTextureCache);
 }
 
-const char* TextureCache::description()
+const char* TextureCache::description() const
 {
     return String::createWithFormat("<TextureCache | Number of textures = %u>", _textures->count())->getCString();
 }
@@ -538,7 +538,7 @@ void TextureCache::removeUnusedTextures()
     CCDICT_FOREACH(_textures, pElement)
     {
         CCLOG("cocos2d: TextureCache: texture: %s", pElement->getStrKey());
-        Texture2D *value = (Texture2D*)pElement->getObject();
+        Texture2D *value = static_cast<Texture2D*>(pElement->getObject());
         if (value->retainCount() == 1)
         {
             CCLOG("cocos2d: TextureCache: removing unused texture: %s", pElement->getStrKey());
@@ -557,7 +557,7 @@ void TextureCache::removeUnusedTextures()
         CCDICT_FOREACH(_textures, pElement)
         {
             CCLOG("cocos2d: TextureCache: texture: %s", pElement->getStrKey());
-            Texture2D *value = (Texture2D*)pElement->getObject();
+            Texture2D *value = static_cast<Texture2D*>(pElement->getObject());
             if (value->retainCount() == 1)
             {
                 elementToRemove.push_back(pElement);
@@ -615,7 +615,7 @@ void TextureCache::dumpCachedTextureInfo()
     DictElement* pElement = NULL;
     CCDICT_FOREACH(_textures, pElement)
     {
-        Texture2D* tex = (Texture2D*)pElement->getObject();
+        Texture2D* tex = static_cast<Texture2D*>(pElement->getObject());
         unsigned int bpp = tex->bitsPerPixelForFormat();
         // Each texture takes up width * height * bytesPerPixel bytes.
         unsigned int bytes = tex->getPixelsWide() * tex->getPixelsHigh() * bpp / 8;

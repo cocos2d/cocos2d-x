@@ -69,7 +69,7 @@ local function MotionStreakTest1()
     root:addChild(target)
     target:setPosition(ccp(s.width / 4, 0))
 
-    streak = CCMotionStreak:create(2, 3, 32, ccc3(0, 255, 0), s_streak)
+    streak = CCMotionStreak:create(2, 3, 32, Color3B(0, 255, 0), s_streak)
     layer:addChild(streak)
 
     local a1 = CCRotateBy:create(2, 360)
@@ -103,7 +103,7 @@ end
 local function MotionStreakTest2()
 	local layer = getBaseLayer()
 
-    streak = CCMotionStreak:create(3, 3, 64, ccc3(255, 255, 255), s_streak)
+    streak = CCMotionStreak:create(3, 3, 64, Color3B(255, 255, 255), s_streak)
     layer:addChild(streak)
 
     streak:setPosition(CCPointMake(s.width / 2, s.height / 2))
@@ -163,7 +163,7 @@ end
 local function Issue1358()
 	local layer = getBaseLayer()
 
-	streak = CCMotionStreak:create(2.0, 1.0, 50.0, ccc3(255, 255, 0), "Images/Icon.png")
+	streak = CCMotionStreak:create(2.0, 1.0, 50.0, Color3B(255, 255, 0), "Images/Icon.png")
     layer:addChild(streak)
 
     center = ccp(s.width / 2, s.height / 2)

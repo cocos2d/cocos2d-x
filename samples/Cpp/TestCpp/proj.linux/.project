@@ -103,6 +103,15 @@
 	</linkedResources>
 	<filteredResources>
 		<filter>
+			<id>1373359140703</id>
+			<name></name>
+			<type>22</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-WebSocket*</arguments>
+			</matcher>
+		</filter>
+		<filter>
 			<id>1345105423456</id>
 			<name>extensions</name>
 			<type>10</type>

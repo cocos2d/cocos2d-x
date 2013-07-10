@@ -34,7 +34,7 @@ void MotionStreakTest1::onEnter()
     _target->setPosition(ccp(s.width/4, 0));
 
     // create the streak object and add it to the scene
-    streak = MotionStreak::create(2, 3, 32, ccGREEN, s_streak);
+    streak = MotionStreak::create(2, 3, 32, Color3B::GREEN, s_streak);
     addChild(streak);
     // schedule an update on each frame so we can syncronize the streak with the target
     schedule(schedule_selector(MotionStreakTest1::onUpdate));
@@ -84,7 +84,7 @@ void MotionStreakTest2::onEnter()
     Size s = Director::sharedDirector()->getWinSize();
         
     // create the streak object and add it to the scene
-    streak = MotionStreak::create(3, 3, 64, ccWHITE, s_streak );
+    streak = MotionStreak::create(3, 3, 64, Color3B::WHITE, s_streak );
     addChild(streak);
     
     streak->setPosition( ccp(s.width/2, s.height/2) ); 
@@ -92,7 +92,7 @@ void MotionStreakTest2::onEnter()
 
 void MotionStreakTest2::ccTouchesMoved(Set* touches, Event* event)
 {
-    Touch* touch = (Touch*) touches->anyObject();
+    Touch* touch = static_cast<Touch*>( touches->anyObject() );
 
     Point touchLocation = touch->getLocation();    
     
@@ -117,7 +117,7 @@ void Issue1358::onEnter()
     // ask director the the window size
     Size size = Director::sharedDirector()->getWinSize();
     
-    streak = MotionStreak::create(2.0f, 1.0f, 50.0f, ccc3(255, 255, 0), "Images/Icon.png");
+    streak = MotionStreak::create(2.0f, 1.0f, 50.0f, Color3B(255, 255, 0), "Images/Icon.png");
     addChild(streak);
     
     

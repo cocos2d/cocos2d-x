@@ -105,7 +105,7 @@ void ParticleSystemQuadLoader::onHandlePropTypeFloatVar(Node * pNode, Node * pPa
     }
 }
 
-void ParticleSystemQuadLoader::onHandlePropTypeColor4FVar(Node * pNode, Node * pParent, const char * pPropertyName, ccColor4F * pColor4FVar, CCBReader * pCCBReader) {
+void ParticleSystemQuadLoader::onHandlePropTypeColor4FVar(Node * pNode, Node * pParent, const char * pPropertyName, Color4F * pColor4FVar, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_STARTCOLOR) == 0) {
         ((ParticleSystemQuad *)pNode)->setStartColor(pColor4FVar[0]);
         ((ParticleSystemQuad *)pNode)->setStartColorVar(pColor4FVar[1]);
@@ -117,7 +117,7 @@ void ParticleSystemQuadLoader::onHandlePropTypeColor4FVar(Node * pNode, Node * p
     }
 }
 
-void ParticleSystemQuadLoader::onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const char * pPropertyName, ccBlendFunc pBlendFunc, CCBReader * pCCBReader) {
+void ParticleSystemQuadLoader::onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const char * pPropertyName, BlendFunc pBlendFunc, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_BLENDFUNC) == 0) {
         ((ParticleSystemQuad *)pNode)->setBlendFunc(pBlendFunc);
     } else {

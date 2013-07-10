@@ -204,7 +204,7 @@ Test4::Test4()
 
 void Test4::delay2(float dt)
 {
-    Sprite* node = (Sprite*)(getChildByTag(2));
+    Sprite* node = static_cast<Sprite*>(getChildByTag(2));
     Action* action1 = RotateBy::create(1, 360);
     node->runAction(action1);
 }
@@ -358,8 +358,8 @@ void StressTest1::shouldNotCrash(float dt)
     Size s = Director::sharedDirector()->getWinSize();
 
     // if the node has timers, it crashes
-    Node* explosion = ParticleSun::create();
-    ((ParticleSun*)explosion)->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+    ParticleSun* explosion = ParticleSun::create();
+    explosion->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
     
     // if it doesn't, it works Ok.
 //    CocosNode *explosion = [Sprite create:@"grossinis_sister2.png");
@@ -425,7 +425,7 @@ StressTest2::StressTest2()
 void StressTest2::shouldNotLeak(float dt)
 {
     unschedule( schedule_selector(StressTest2::shouldNotLeak) );
-    Layer* sublayer = (Layer*)getChildByTag(kTagSprite1);
+    Layer* sublayer = static_cast<Layer*>( getChildByTag(kTagSprite1) );
     sublayer->removeAllChildrenWithCleanup(true); 
 }
 
@@ -659,7 +659,7 @@ CameraCenterTest::CameraCenterTest()
     sprite = Sprite::create("Images/white-512x512.png");
     addChild( sprite, 0);
     sprite->setPosition(ccp(s.width/5*1, s.height/5*1));
-    sprite->setColor(ccRED);
+    sprite->setColor(Color3B::RED);
     sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
     orbit = OrbitCamera::create(10, 1, 0, 0, 360, 0, 0);
     sprite->runAction(RepeatForever::create( orbit ));
@@ -671,7 +671,7 @@ CameraCenterTest::CameraCenterTest()
     sprite = Sprite::create("Images/white-512x512.png");
     addChild( sprite, 0, 40);
     sprite->setPosition(ccp(s.width/5*1, s.height/5*4));
-    sprite->setColor(ccBLUE);
+    sprite->setColor(Color3B::BLUE);
     sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
     orbit = OrbitCamera::create(10, 1, 0, 0, 360, 0, 0);
     sprite->runAction(RepeatForever::create( orbit ));
@@ -681,7 +681,7 @@ CameraCenterTest::CameraCenterTest()
     sprite = Sprite::create("Images/white-512x512.png");
     addChild( sprite, 0);    
     sprite->setPosition(ccp(s.width/5*4, s.height/5*1));
-    sprite->setColor(ccYELLOW);
+    sprite->setColor(Color3B::YELLOW);
     sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
     orbit = OrbitCamera::create(10, 1, 0, 0, 360, 0, 0);
     sprite->runAction(RepeatForever::create( orbit) );
@@ -691,7 +691,7 @@ CameraCenterTest::CameraCenterTest()
     sprite = Sprite::create("Images/white-512x512.png");
     addChild( sprite, 0, 40);
     sprite->setPosition(ccp(s.width/5*4, s.height/5*4));
-    sprite->setColor(ccGREEN);
+    sprite->setColor(Color3B::GREEN);
     sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
     orbit = OrbitCamera::create(10, 1, 0, 0, 360, 0, 0);
     sprite->runAction( RepeatForever::create( orbit ) );
@@ -700,7 +700,7 @@ CameraCenterTest::CameraCenterTest()
     sprite = Sprite::create("Images/white-512x512.png");
     addChild( sprite, 0, 40);
     sprite->setPosition(ccp(s.width/2, s.height/2));
-    sprite->setColor(ccWHITE);
+    sprite->setColor(Color3B::WHITE);
     sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
     orbit = OrbitCamera::create(10, 1, 0, 0, 360, 0, 0);
     sprite->runAction(RepeatForever::create( orbit ) );
@@ -753,9 +753,7 @@ ConvertToNode::ConvertToNode()
 
         point->setPosition(sprite->getPosition());
 
-        RepeatForever* copy = (RepeatForever*) action->copy();
-        copy->autorelease();
-        sprite->runAction(copy);
+        sprite->runAction( action->clone() );
         addChild(sprite, i);
     }
 }
@@ -764,7 +762,7 @@ void ConvertToNode::ccTouchesEnded(Set* touches, Event *event)
 {
     for( SetIterator it = touches->begin(); it != touches->end(); ++it)
     {
-        Touch* touch = (Touch*)(*it);
+        Touch* touch = static_cast<Touch*>(*it);
         Point location = touch->getLocation();
 
         for( int i = 0; i < 3; i++)
@@ -799,7 +797,7 @@ NodeOpaqueTest::NodeOpaqueTest()
     for (int i = 0; i < 50; i++)
     {
         background = Sprite::create("Images/background1.png");
-        ccBlendFunc blendFunc = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
+        BlendFunc blendFunc = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
         background->setBlendFunc(blendFunc);
         background->setAnchorPoint(PointZero);
         addChild(background);
@@ -825,7 +823,7 @@ NodeNonOpaqueTest::NodeNonOpaqueTest()
     for (int i = 0; i < 50; i++)
     {
         background = Sprite::create("Images/background1.jpg");
-        background->setBlendFunc(kBlendFuncDisable);
+        background->setBlendFunc(BlendFunc::BLEND_FUNC_DISABLE);
         background->setAnchorPoint(PointZero);
         addChild(background);
     }

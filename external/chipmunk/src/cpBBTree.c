@@ -864,17 +864,17 @@ NodeRender(Node *node, int depth)
 //	glColor3f(1.0f - v, v, 0.0f);
 	glLineWidth(cpfmax(5.0f - depth, 1.0f));
 	glBegin(GL_LINES); {
-		glVertex2f(bb.l, bb.b);
-		glVertex2f(bb.l, bb.t);
+		glVertex2F(bb.l, bb.b);
+		glVertex2F(bb.l, bb.t);
 		
-		glVertex2f(bb.l, bb.t);
-		glVertex2f(bb.r, bb.t);
+		glVertex2F(bb.l, bb.t);
+		glVertex2F(bb.r, bb.t);
 		
-		glVertex2f(bb.r, bb.t);
-		glVertex2f(bb.r, bb.b);
+		glVertex2F(bb.r, bb.t);
+		glVertex2F(bb.r, bb.b);
 		
-		glVertex2f(bb.r, bb.b);
-		glVertex2f(bb.l, bb.b);
+		glVertex2F(bb.r, bb.b);
+		glVertex2F(bb.l, bb.b);
 	}; glEnd();
 }
 

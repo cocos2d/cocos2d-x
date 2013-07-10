@@ -34,7 +34,7 @@ void Bug624Layer::switchLayer(float dt)
 
     Scene *scene = Scene::create();    
     scene->addChild(Bug624Layer2::create(), 0);
-    Director::sharedDirector()->replaceScene(TransitionFade::create(2.0f, scene, ccWHITE));
+    Director::sharedDirector()->replaceScene(TransitionFade::create(2.0f, scene, Color3B::WHITE));
 }
 
 void Bug624Layer::didAccelerate(Acceleration* acceleration)
@@ -71,7 +71,7 @@ void Bug624Layer2::switchLayer(float dt)
 
     Scene *scene = Scene::create();    
     scene->addChild(Bug624Layer::create(), 0);
-    Director::sharedDirector()->replaceScene(TransitionFade::create(2.0f, scene, ccRED));
+    Director::sharedDirector()->replaceScene(TransitionFade::create(2.0f, scene, Color3B::RED));
 }
 
 void Bug624Layer2::didAccelerate(Acceleration* acceleration)

@@ -53,13 +53,13 @@ public:
 
     virtual ~Action(void);
 
-    const char* description();
+    const char* description() const;
 
 	/** returns a clone of action */
 	virtual Action* clone() const = 0;
 
     //! return true if the action has finished
-    virtual bool isDone(void);
+    virtual bool isDone(void) const;
 
     //! called before the action start. It will also set the target.
     virtual void startWithTarget(Node *pTarget);
@@ -83,11 +83,11 @@ public:
     */
     virtual void update(float time);
     
-    inline Node* getTarget(void) { return _target; }
+    inline Node* getTarget(void) const { return _target; }
     /** The action will modify the target properties. */
     inline void setTarget(Node *pTarget) { _target = pTarget; }
     
-    inline Node* getOriginalTarget(void) { return _originalTarget; } 
+    inline Node* getOriginalTarget(void) const { return _originalTarget; }
     /** Set the original target, since target can be nil.
     Is the target that were used to run the action. Unless you are doing something complex, like ActionManager, you should NOT call this method.
     The target is 'assigned', it is not 'retained'.
@@ -95,7 +95,7 @@ public:
     */
     inline void setOriginalTarget(Node *pOriginalTarget) { _originalTarget = pOriginalTarget; }
 
-    inline int getTag(void) { return _tag; }
+    inline int getTag(void) const { return _tag; }
     inline void setTag(int nTag) { _tag = nTag; }
 
 public:
@@ -129,7 +129,7 @@ public:
     {}
     virtual ~FiniteTimeAction(){}
     //! get duration in seconds of the action
-    inline float getDuration(void) { return _duration; }
+    inline float getDuration(void) const { return _duration; }
     //! set duration in seconds of the action
     inline void setDuration(float duration) { _duration = duration; }
 
@@ -159,14 +159,12 @@ public:
     Speed();
     virtual ~Speed(void);
 
-    inline float getSpeed(void) { return _speed; }
+    inline float getSpeed(void) const { return _speed; }
     /** alter the speed of the inner function in runtime */
     inline void setSpeed(float fSpeed) { _speed = fSpeed; }
 
     /** initializes the action */
     bool initWithAction(ActionInterval *pAction, float fSpeed);
-
-    virtual Object* copyWithZone(Zone *pZone);
 
 	/** returns a new clone of the action */
 	virtual Speed* clone() const;
@@ -176,7 +174,7 @@ public:
     virtual void startWithTarget(Node* pTarget);
     virtual void stop();
     virtual void step(float dt);
-    virtual bool isDone(void);
+    virtual bool isDone(void) const;
 
     void setInnerAction(ActionInterval *pAction);
 
@@ -217,18 +215,17 @@ public:
     {}
     virtual ~Follow(void);
     
-    inline bool isBoundarySet(void) { return _boundarySet; }
+    inline bool isBoundarySet(void) const { return _boundarySet; }
     /** alter behavior - turn on/off boundary */
     inline void setBoudarySet(bool bValue) { _boundarySet = bValue; }
 
     /** initializes the action with a set boundary */
     bool initWithTarget(Node *pFollowedNode, const Rect& rect = RectZero);
 
-    virtual Object* copyWithZone(Zone *pZone);
 	/** returns a clone of action */
 	virtual Follow* clone() const;
     virtual void step(float dt);
-    virtual bool isDone(void);
+    virtual bool isDone(void) const;
     virtual void stop(void);
 
 public:

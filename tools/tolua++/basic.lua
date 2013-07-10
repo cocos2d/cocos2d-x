@@ -306,9 +306,9 @@ TOLUA_API int  tolua_Cocos2d_open (lua_State* tolua_S);]], [[]])
       replace([[unsigned void* tolua_ret = (unsigned void*)  self->getTiles();]],
         [[unsigned int* tolua_ret = (unsigned int*)  self->getTiles();]])
 
-      replace([[ccColor3B color = *((ccColor3B*)  tolua_tousertype(tolua_S,4,(void*)&(const ccColor3B)ccBLACK));]],
-        [[const ccColor3B clr = ccBLACK;
-  ccColor3B color = *((ccColor3B*)  tolua_tousertype(tolua_S,4,(void*)&clr));]])
+      replace([[Color3B color = *((Color3B*)  tolua_tousertype(tolua_S,4,(void*)&(const Color3B)ccBLACK));]],
+        [[const Color3B clr = Color3B::BLACK;
+    Color3B color = *((Color3B*)  tolua_tousertype(tolua_S,4,(void*)&clr));]])
 
       replace([[tolua_usertype(tolua_S,"LUA_FUNCTION");]], [[]])
 

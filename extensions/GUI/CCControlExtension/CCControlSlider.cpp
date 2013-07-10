@@ -249,7 +249,7 @@ void ControlSlider::needsLayout()
 void ControlSlider::sliderBegan(Point location)
 {
     this->setSelected(true);
-    this->getThumbSprite()->setColor(ccGRAY);
+    this->getThumbSprite()->setColor(Color3B::GRAY);
     setValue(valueForLocation(location));
 }
 
@@ -264,7 +264,7 @@ void ControlSlider::sliderEnded(Point location)
     {
         setValue(valueForLocation(_thumbSprite->getPosition()));
     }
-    this->getThumbSprite()->setColor(ccWHITE);
+    this->getThumbSprite()->setColor(Color3B::WHITE);
     this->setSelected(false);
 }
 

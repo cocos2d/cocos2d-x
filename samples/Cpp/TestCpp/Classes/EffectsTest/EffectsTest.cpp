@@ -339,7 +339,7 @@ void EffectTestScene::runThisTest()
 TextLayer::TextLayer(void)
 : BaseTest()
 {
-	LayerColor *background = LayerColor::create( ccc4(32,128,32,255) );
+	LayerColor *background = LayerColor::create( Color4B(32,128,32,255) );
 	this->addChild(background,-20);
     
     Node* node = Node::create();

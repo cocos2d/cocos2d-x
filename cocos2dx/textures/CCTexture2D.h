@@ -136,7 +136,7 @@ public:
     /** Initializes a texture from a string with font name and font size */
     bool initWithString(const char *text, const char *fontName, float fontSize);
     /** Initializes a texture from a string using a text definition*/
-    bool initWithString(const char *text, ccFontDefinition *textDefinition);
+    bool initWithString(const char *text, const FontDefinition& textDefinition);
     
     /** Initializes a texture from a PVR file */
     bool initWithPVRFile(const char* file);

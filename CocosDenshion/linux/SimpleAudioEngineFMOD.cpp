@@ -1,3 +1,5 @@
+#ifndef OPENAL
+
 #include "SimpleAudioEngine.h"
 #include "FmodAudioPlayer.h"
 #include "cocos2d.h"
@@ -68,11 +70,11 @@ void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath) {
 // effect function
 //////////////////////////////////////////////////////////////////////////
 
-unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath,
-		bool bLoop) {
-	// Changing file path to full path
-	std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
-	return oAudioPlayer->playEffect(fullPath.c_str(), bLoop);
+unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop,
+                                           float pitch, float pan, float gain) {
+    // Changing file path to full path
+    std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    return oAudioPlayer->playEffect(fullPath.c_str(), bLoop, pitch, pan, gain);
 }
 
 void SimpleAudioEngine::stopEffect(unsigned int nSoundId) {
@@ -135,3 +137,5 @@ void SimpleAudioEngine::setEffectsVolume(float volume) {
 
 
 } // end of namespace CocosDenshion
+
+#endif

@@ -56,7 +56,7 @@ char* _Util_readFile (const char* path, int* length) {
 
 /**/
 
-void RegionAttachment_updateQuad (RegionAttachment* self, Slot* slot, ccV3F_C4B_T2F_Quad* quad, bool premultipliedAlpha) {
+void RegionAttachment_updateQuad (RegionAttachment* self, Slot* slot, V3F_C4B_T2F_Quad* quad, bool premultipliedAlpha) {
 	float vertices[8];
 	RegionAttachment_computeVertices(self, slot->skeleton->x, slot->skeleton->y, slot->bone, vertices);
 

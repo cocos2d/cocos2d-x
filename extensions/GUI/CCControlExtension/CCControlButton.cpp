@@ -44,7 +44,7 @@ enum
 
 ControlButton::ControlButton()
 : _currentTitle(NULL)
-, _currentTitleColor(ccWHITE)
+, _currentTitleColor(Color3B::WHITE)
 , _doesAdjustBackgroundImage(false)
 , _titleLabel(NULL)
 , _backgroundSprite(NULL)
@@ -118,7 +118,7 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* b
         setBackgroundSprite(backgroundSprite);
 
         // Set the default color and opacity
-        setColor(ccc3(255.0f, 255.0f, 255.0f));
+        setColor(Color3B(255.0f, 255.0f, 255.0f));
         setOpacity(255.0f);
         setOpacityModifyRGB(true);
         
@@ -251,7 +251,7 @@ void ControlButton::setPreferredSize(Size size)
         DictElement * item = NULL;
         CCDICT_FOREACH(_backgroundSpriteDispatchTable, item)
         {
-            Scale9Sprite* sprite = (Scale9Sprite*)item->getObject();
+            Scale9Sprite* sprite = static_cast<Scale9Sprite*>(item->getObject());
             sprite->setPreferredSize(size);
         }
     }
@@ -321,9 +321,9 @@ void ControlButton::setTitleForState(String* title, ControlState state)
 }
 
 
-const ccColor3B ControlButton::getTitleColorForState(ControlState state)
+const Color3B ControlButton::getTitleColorForState(ControlState state)
 {
-    ccColor3B returnColor = ccWHITE;
+    Color3B returnColor = Color3B::WHITE;
     do 
     {
         CC_BREAK_IF(NULL == _titleColorDispatchTable);
@@ -344,9 +344,9 @@ const ccColor3B ControlButton::getTitleColorForState(ControlState state)
     return returnColor;
 }
 
-void ControlButton::setTitleColorForState(ccColor3B color, ControlState state)
+void ControlButton::setTitleColorForState(Color3B color, ControlState state)
 {
-    //ccColor3B* colorValue=&color;
+    //Color3B* colorValue=&color;
     _titleColorDispatchTable->removeObjectForKey(state); 
     Color3bObject* pColor3bObject = new Color3bObject(color);
     pColor3bObject->autorelease();
@@ -719,7 +719,7 @@ void ControlButton::setOpacity(GLubyte opacity)
     DictElement * item = NULL;
     CCDICT_FOREACH(_backgroundSpriteDispatchTable, item)
     {
-        Scale9Sprite* sprite = (Scale9Sprite*)item->getObject();
+        Scale9Sprite* sprite = static_cast<Scale9Sprite*>(item->getObject());
         sprite->setOpacity(opacity);
     }
 }
@@ -729,19 +729,19 @@ GLubyte ControlButton::getOpacity() const
     return _realOpacity;
 }
 
-void ControlButton::setColor(const ccColor3B & color)
+void ControlButton::setColor(const Color3B & color)
 {
 	Control::setColor(color);
 	
 	DictElement * item = NULL;
     CCDICT_FOREACH(_backgroundSpriteDispatchTable, item)
     {
-        Scale9Sprite* sprite = (Scale9Sprite*)item->getObject();
+        Scale9Sprite* sprite = static_cast<Scale9Sprite*>(item->getObject());
         sprite->setColor(color);
     }
 }
 
-const ccColor3B& ControlButton::getColor() const
+const Color3B& ControlButton::getColor() const
 {
 	return _realColor;
 }

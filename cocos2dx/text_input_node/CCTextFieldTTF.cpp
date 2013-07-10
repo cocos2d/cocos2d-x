@@ -265,18 +265,18 @@ void TextFieldTTF::draw()
     }
 
     // draw placeholder
-    ccColor3B color = getColor();
+    Color3B color = getColor();
     setColor(_colorSpaceHolder);
     LabelTTF::draw();
     setColor(color);
 }
 
-const ccColor3B& TextFieldTTF::getColorSpaceHolder()
+const Color3B& TextFieldTTF::getColorSpaceHolder()
 {
     return _colorSpaceHolder;
 }
 
-void TextFieldTTF::setColorSpaceHolder(const ccColor3B& color)
+void TextFieldTTF::setColorSpaceHolder(const Color3B& color)
 {
     _colorSpaceHolder = color;
 }

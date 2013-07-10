@@ -194,7 +194,8 @@ namespace CocosDenshion
 		s3eSoundSetInt(S3E_SOUND_VOLUME, (int32)(volume * (float)GEOM_ONE_FP8));
 	}
 
-	unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
+	unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop,
+                                               float pitch, float pan, float gain)
 	{
 		// Changing file path to full path
 		std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);

@@ -177,26 +177,26 @@ Atlas1::Atlas1()
     //
     // Notice: u,v tex coordinates are inverted
     //
-    ccV3F_C4B_T2F_Quad quads[] = 
+    V3F_C4B_T2F_Quad quads[] = 
     {
         {
-            {{0,0,0},ccc4(0,0,255,255),{0.0f,1.0f},},                // bottom left
-            {{s.width,0,0},ccc4(0,0,255,0),{1.0f,1.0f},},            // bottom right
-            {{0,s.height,0},ccc4(0,0,255,0),{0.0f,0.0f},},            // top left
-            {{s.width,s.height,0},{0,0,255,255},{1.0f,0.0f},},    // top right
+            {Vertex3F(0,0,0),Color4B(0,0,255,255),Tex2F(0.0f,1.0f),},                // bottom left
+            {Vertex3F(s.width,0,0),Color4B(0,0,255,0),Tex2F(1.0f,1.0f),},            // bottom right
+            {Vertex3F(0,s.height,0),Color4B(0,0,255,0),Tex2F(0.0f,0.0f),},            // top left
+            {Vertex3F(s.width,s.height,0),Color4B(0,0,255,255),Tex2F(1.0f,0.0f),},    // top right
         },        
         {
-            {{40,40,0},ccc4(255,255,255,255),{0.0f,0.2f},},            // bottom left
-            {{120,80,0},ccc4(255,0,0,255),{0.5f,0.2f},},            // bottom right
-            {{40,160,0},ccc4(255,255,255,255),{0.0f,0.0f},},        // top left
-            {{160,160,0},ccc4(0,255,0,255),{0.5f,0.0f},},            // top right
+            {Vertex3F(40,40,0),Color4B(255,255,255,255),Tex2F(0.0f,0.2f),},            // bottom left
+            {Vertex3F(120,80,0),Color4B(255,0,0,255),Tex2F(0.5f,0.2f),},            // bottom right
+            {Vertex3F(40,160,0),Color4B(255,255,255,255),Tex2F(0.0f,0.0f),},        // top left
+            {Vertex3F(160,160,0),Color4B(0,255,0,255),Tex2F(0.5f,0.0f),},            // top right
         },
 
         {
-            {{s.width/2,40,0},ccc4(255,0,0,255),{0.0f,1.0f},},        // bottom left
-            {{s.width,40,0},ccc4(0,255,0,255),{1.0f,1.0f},},        // bottom right
-            {{s.width/2-50,200,0},ccc4(0,0,255,255),{0.0f,0.0f},},        // top left
-            {{s.width,100,0},ccc4(255,255,0,255),{1.0f,0.0f},},        // top right
+            {Vertex3F(s.width/2,40,0),Color4B(255,0,0,255),Tex2F(0.0f,1.0f),},        // bottom left
+            {Vertex3F(s.width,40,0),Color4B(0,255,0,255),Tex2F(1.0f,1.0f),},        // bottom right
+            {Vertex3F(s.width/2-50,200,0),Color4B(0,0,255,255),Tex2F(0.0f,0.0f),},        // top left
+            {Vertex3F(s.width,100,0),Color4B(255,255,0,255),Tex2F(1.0f,0.0f),},        // top right
         },
         
     };
@@ -299,7 +299,7 @@ LabelAtlasColorTest::LabelAtlasColorTest()
     LabelAtlas* label2 = LabelAtlas::create("0123456789", "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
     addChild(label2, 0, kTagSprite2);
     label2->setPosition( ccp(10,200) );
-    label2->setColor( ccRED );
+    label2->setColor( Color3B::RED );
 
     ActionInterval* fade = FadeOut::create(1.0f);
     ActionInterval* fade_in = fade->reverse();
@@ -395,7 +395,7 @@ Atlas3::Atlas3()
 {
     _time = 0;
 
-    LayerColor* col = LayerColor::create( ccc4(128,128,128,255) );
+    LayerColor* col = LayerColor::create( Color4B(128,128,128,255) );
     addChild(col, -10);
     
     LabelBMFont* label1 = LabelBMFont::create("Test",  "fonts/bitmapFontTest2.fnt");
@@ -417,7 +417,7 @@ Atlas3::Atlas3()
     LabelBMFont *label2 = LabelBMFont::create("Test", "fonts/bitmapFontTest2.fnt");
     // testing anchors
     label2->setAnchorPoint( ccp(0.5f, 0.5f) );
-    label2->setColor( ccRED );
+    label2->setColor( Color3B::RED );
     addChild(label2, 0, kTagBitmapAtlas2);
     label2->runAction( repeat->clone() );
     
@@ -646,7 +646,7 @@ AtlasBitmapColor::AtlasBitmapColor()
     
     LabelBMFont* label = NULL;
     label = LabelBMFont::create("Blue", "fonts/bitmapFontTest5.fnt");
-    label->setColor( ccBLUE );
+    label->setColor( Color3B::BLUE );
     addChild(label);
     label->setPosition( ccp(s.width/2, s.height/4) );
     label->setAnchorPoint( ccp(0.5f, 0.5f) );
@@ -655,13 +655,13 @@ AtlasBitmapColor::AtlasBitmapColor()
     addChild(label);
     label->setPosition( ccp(s.width/2, 2*s.height/4) );
     label->setAnchorPoint( ccp(0.5f, 0.5f) );
-    label->setColor( ccRED );
+    label->setColor( Color3B::RED );
 
     label = LabelBMFont::create("G", "fonts/bitmapFontTest5.fnt");
     addChild(label);
     label->setPosition( ccp(s.width/2, 3*s.height/4) );
     label->setAnchorPoint( ccp(0.5f, 0.5f) );
-    label->setColor( ccGREEN );
+    label->setColor( Color3B::GREEN );
     label->setString("Green");
 }
 
@@ -894,7 +894,7 @@ LabelGlyphDesigner::LabelGlyphDesigner()
 {
     Size s = Director::sharedDirector()->getWinSize();
 
-    LayerColor *layer = LayerColor::create(ccc4(128,128,128,255));
+    LayerColor *layer = LayerColor::create(Color4B(128,128,128,255));
     addChild(layer, -10);
 
     // LabelBMFont
@@ -932,7 +932,7 @@ LabelTTFTest::LabelTTFTest()
     Size blockSize = CCSizeMake(200, 160);
     Size s = Director::sharedDirector()->getWinSize();
 
-    LayerColor *colorLayer = LayerColor::create(ccc4(100, 100, 100, 255), blockSize.width, blockSize.height);
+    LayerColor *colorLayer = LayerColor::create(Color4B(100, 100, 100, 255), blockSize.width, blockSize.height);
     colorLayer->setAnchorPoint(ccp(0,0));
     colorLayer->setPosition(ccp((s.width - blockSize.width) / 2, (s.height - blockSize.height) / 2));
 
@@ -1161,7 +1161,7 @@ BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
     Menu *stringMenu = Menu::create(longSentences, lineBreaks, mixed, NULL);
     stringMenu->alignItemsVertically();
 
-    longSentences->setColor(ccRED);
+    longSentences->setColor(Color3B::RED);
     _lastSentenceItem = longSentences;
     longSentences->setTag(LongSentences);
     lineBreaks->setTag(LineBreaks);
@@ -1175,7 +1175,7 @@ BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
     Menu *alignmentMenu = Menu::create(left, center, right, NULL);
     alignmentMenu->alignItemsHorizontallyWithPadding(alignmentItemPadding);
 
-    center->setColor(ccRED);
+    center->setColor(Color3B::RED);
     _lastAlignmentItem = center;
     left->setTag(LeftAlign);
     center->setTag(CenterAlign);
@@ -1222,8 +1222,8 @@ std::string BitmapFontMultiLineAlignment::subtitle()
 void BitmapFontMultiLineAlignment::stringChanged(cocos2d::Object *sender)
 {
     MenuItemFont *item = (MenuItemFont*)sender;
-    item->setColor(ccRED);
-    this->_lastAlignmentItem->setColor(ccWHITE);
+    item->setColor(Color3B::RED);
+    this->_lastAlignmentItem->setColor(Color3B::WHITE);
     this->_lastAlignmentItem = item;
 
     switch(item->getTag())
@@ -1248,8 +1248,8 @@ void BitmapFontMultiLineAlignment::stringChanged(cocos2d::Object *sender)
 void BitmapFontMultiLineAlignment::alignmentChanged(cocos2d::Object *sender)
 {
     MenuItemFont *item = (MenuItemFont*)sender;
-    item->setColor(ccRED);
-    this->_lastAlignmentItem->setColor(ccWHITE);
+    item->setColor(Color3B::RED);
+    this->_lastAlignmentItem->setColor(Color3B::WHITE);
     this->_lastAlignmentItem = item;
 
     switch(item->getTag())
@@ -1322,13 +1322,13 @@ LabelTTFA8Test::LabelTTFA8Test()
 {
     Size s = Director::sharedDirector()->getWinSize();
 
-    LayerColor *layer = LayerColor::create(ccc4(128, 128, 128, 255));
+    LayerColor *layer = LayerColor::create(Color4B(128, 128, 128, 255));
     addChild(layer, -10);
 
     // LabelBMFont
     LabelTTF *label1 = LabelTTF::create("Testing A8 Format", "Marker Felt", 48);
     addChild(label1);
-    label1->setColor(ccRED);
+    label1->setColor(Color3B::RED);
     label1->setPosition(ccp(s.width/2, s.height/2));
 
     FadeOut *fadeOut = FadeOut::create(2);
@@ -1466,20 +1466,20 @@ std::string TTFFontInit::subtitle()
 
 TTFFontShadowAndStroke::TTFFontShadowAndStroke()
 {
-    LayerColor *layer = LayerColor::create(ccc4(0,190,0,255));
+    LayerColor *layer = LayerColor::create(Color4B(0,190,0,255));
     addChild(layer, -10);
     
     Size s = Director::sharedDirector()->getWinSize();
     
-    ccColor3B tintColorRed      =  { 255, 0, 0   };
-    ccColor3B tintColorYellow   =  { 255, 255, 0 };
-    ccColor3B tintColorBlue     =  { 0, 0, 255   };
-    ccColor3B strokeColor       =  { 0, 10, 255  };
-    ccColor3B strokeShadowColor =  { 255, 0, 0   };
+    Color3B tintColorRed(  255, 0, 0   );
+    Color3B tintColorYellow( 255, 255, 0 );
+    Color3B tintColorBlue( 0, 0, 255   );
+    Color3B strokeColor( 0, 10, 255  );
+    Color3B strokeShadowColor( 255, 0, 0   );
     
     Size shadowOffset(12.0, 12.0);
     
-    ccFontDefinition shadowTextDef;
+    FontDefinition shadowTextDef;
     shadowTextDef._fontSize = 20;
     shadowTextDef._fontName = std::string("Marker Felt");
     
@@ -1499,7 +1499,7 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     
     
     // create the stroke only label
-    ccFontDefinition strokeTextDef;
+    FontDefinition strokeTextDef;
     strokeTextDef._fontSize = 20;
     strokeTextDef._fontName = std::string("Marker Felt");
     
@@ -1519,7 +1519,7 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     
     
     // create the label stroke and shadow
-    ccFontDefinition strokeShaodwTextDef;
+    FontDefinition strokeShaodwTextDef;
     strokeShaodwTextDef._fontSize = 20;
     strokeShaodwTextDef._fontName = std::string("Marker Felt");
     
@@ -1588,7 +1588,7 @@ LabelBMFontBounds::LabelBMFontBounds()
 {
     Size s = Director::sharedDirector()->getWinSize();
     
-    LayerColor *layer = LayerColor::create(ccc4(128,128,128,255));
+    LayerColor *layer = LayerColor::create(Color4B(128,128,128,255));
     addChild(layer, -10);
     
     // LabelBMFont

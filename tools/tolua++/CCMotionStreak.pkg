@@ -1,19 +1,19 @@
 class CCMotionStreak : public CCNodeRGBA
 {
-    static CCMotionStreak* create(float fade, float minSeg, float stroke, ccColor3B color, const char* path);
-    static CCMotionStreak* create(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture);
+    static CCMotionStreak* create(float fade, float minSeg, float stroke, Color3B color, const char* path);
+    static CCMotionStreak* create(float fade, float minSeg, float stroke, Color3B color, CCTexture2D* texture);
 
-    void tintWithColor(ccColor3B colors);
+    void tintWithColor(Color3B colors);
     void reset();
 
     void setPosition(CCPoint& position);
 
     CCTexture2D* getTexture(void);
     void setTexture(CCTexture2D *texture);
-    void setBlendFunc(ccBlendFunc blendFunc);
-    ccBlendFunc getBlendFunc(void);
-    void setColor(const ccColor3B& color);
-    const ccColor3B& getColor(void);
+    void setBlendFunc(BlendFunc blendFunc);
+    BlendFunc getBlendFunc(void);
+    void setColor(const Color3B& color);
+    const Color3B& getColor(void);
     GLubyte getOpacity(void);
     void setOpacity(GLubyte opacity);
     void setOpacityModifyRGB(bool bValue);
