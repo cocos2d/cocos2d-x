@@ -425,11 +425,12 @@ void TestParticleDisplay::onEnter()
 	armature->setScale(0.48f);
 	addChild(armature);
 
-	CCParticleDisplayData displayData;
-	displayData.setParam("Particles/SmallSun.plist");
+
+	CCParticleSystem *p1 = CCParticleSystemQuad::create("Particles/SmallSun.plist");
+	CCParticleSystem *p2 = CCParticleSystemQuad::create("Particles/SmallSun.plist");
 
 	cocos2d::extension::CCBone *bone  = cocos2d::extension::CCBone::create("p1");
-	bone->addDisplay(&displayData, 0);
+	bone->addDisplay(p1, 0);
 	bone->changeDisplayByIndex(0, true);
 	bone->setIgnoreMovementBoneData(true);
 	bone->setZOrder(100);
@@ -437,7 +438,7 @@ void TestParticleDisplay::onEnter()
 	armature->addBone(bone, "bady-a3");
 	
 	bone  = cocos2d::extension::CCBone::create("p2");
-	bone->addDisplay(&displayData, 0);
+	bone->addDisplay(p2, 0);
 	bone->changeDisplayByIndex(0, true);
 	bone->setIgnoreMovementBoneData(true);
 	bone->setZOrder(100);
