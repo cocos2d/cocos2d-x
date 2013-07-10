@@ -1075,6 +1075,8 @@ static unsigned char cc_2x2_white_image[] = {
     0xFF, 0xFF, 0xFF, 0xFF
 };
 
+#define CC_2x2_WHITE_IMAGE_KEY  "cc_2x2_white_image"
+
 void Sprite::setTexture(Texture2D *texture)
 {
     // If batchnode, then texture id should be the same
@@ -1082,15 +1084,22 @@ void Sprite::setTexture(Texture2D *texture)
     // accept texture==nil as argument
     CCAssert( !texture || dynamic_cast<Texture2D*>(texture), "setTexture expects a Texture2D. Invalid argument");
     
-    if (nullptr == texture)
+    if (NULL == texture)
     {
-        Image* image = new Image();
-        bool isOK = image->initWithImageData(cc_2x2_white_image, sizeof(cc_2x2_white_image), Image::kFmtRawData, 2, 2, 8);
-        if (isOK) {
-            texture = TextureCache::sharedTextureCache()->addUIImage(image, "cc_2x2_white_image");
-        }
+        // Gets the texture by key firstly.
+        texture = TextureCache::sharedTextureCache()->textureForKey(CC_2x2_WHITE_IMAGE_KEY);
         
-        CC_SAFE_RELEASE(image);
+        // If texture wasn't in cache, create it from RAW data.
+        if (NULL == texture)
+        {
+            Image* image = new Image();
+            bool isOK = image->initWithImageData(cc_2x2_white_image, sizeof(cc_2x2_white_image), Image::kFmtRawData, 2, 2, 8);
+            if (isOK) {
+                texture = TextureCache::sharedTextureCache()->addUIImage(image, CC_2x2_WHITE_IMAGE_KEY);
+            }
+            
+            CC_SAFE_RELEASE(image);
+        }
     }
     
     if (!_batchNode && _texture != texture)
