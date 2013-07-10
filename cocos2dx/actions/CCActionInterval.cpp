@@ -1616,6 +1616,7 @@ FadeIn* FadeIn::clone() const
 {
 	// no copy constructor
 	auto a = new FadeIn();
+    a->initWithDuration(_duration);
 	a->autorelease();
 	return a;
 }
