@@ -88,9 +88,7 @@ CocoGUILIB/BaseClasses/UIWidget.cpp \
 CocoGUILIB/Drawable/GUINodeRGBA.cpp \
 CocoGUILIB/Drawable/UICCLabelAtlas.cpp \
 CocoGUILIB/Drawable/UICCTextField.cpp \
-CocoGUILIB/Drawable/UIClipAbleLayerColor.cpp \
-CocoGUILIB/Drawable/UIClipAbleLayerGradient.cpp \
-CocoGUILIB/Drawable/UIPrimitivesNode.cpp \
+CocoGUILIB/Drawable/UIClippingLayer.cpp \
 CocoGUILIB/System/CCSReader.cpp \
 CocoGUILIB/System/CocosGUI.cpp \
 CocoGUILIB/System/UIHelper.cpp \
@@ -99,7 +97,6 @@ CocoGUILIB/System/UILayer.cpp \
 CocoGUILIB/UIWidgets/UIButton.cpp \
 CocoGUILIB/UIWidgets/UICheckBox.cpp \
 CocoGUILIB/UIWidgets/UIControlButton.cpp \
-CocoGUILIB/UIWidgets/UIGradientPanel.cpp \
 CocoGUILIB/UIWidgets/UIImageView.cpp \
 CocoGUILIB/UIWidgets/UILabel.cpp \
 CocoGUILIB/UIWidgets/UILabelAtlas.cpp \
@@ -152,8 +149,6 @@ LOCAL_WHOLE_STATIC_LIBRARIES += libwebsockets_static
 
 LOCAL_CFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 LOCAL_EXPORT_CFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
-LOCAL_CPPFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
-LOCAL_EXPORT_CPPFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                            $(LOCAL_PATH)/CCBReader \
