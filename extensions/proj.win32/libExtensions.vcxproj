@@ -102,7 +102,6 @@
     <ClCompile Include="..\CCArmature\display\CCDecorativeDisplay.cpp" />
     <ClCompile Include="..\CCArmature\display\CCDisplayFactory.cpp" />
     <ClCompile Include="..\CCArmature\display\CCDisplayManager.cpp" />
-    <ClCompile Include="..\CCArmature\display\CCShaderNode.cpp" />
     <ClCompile Include="..\CCArmature\display\CCSkin.cpp" />
     <ClCompile Include="..\CCArmature\external_tool\CCTexture2DMutable.cpp" />
     <ClCompile Include="..\CCArmature\external_tool\GLES-Render.cpp" />
@@ -204,7 +203,6 @@
     <ClInclude Include="..\CCArmature\display\CCDecorativeDisplay.h" />
     <ClInclude Include="..\CCArmature\display\CCDisplayFactory.h" />
     <ClInclude Include="..\CCArmature\display\CCDisplayManager.h" />
-    <ClInclude Include="..\CCArmature\display\CCShaderNode.h" />
     <ClInclude Include="..\CCArmature\display\CCSkin.h" />
     <ClInclude Include="..\CCArmature\external_tool\CCTexture2DMutable.h" />
     <ClInclude Include="..\CCArmature\external_tool\GLES-Render.h" />

@@ -110,6 +110,31 @@ void CCDisplayManager::addDisplay(CCDisplayData *displayData, int index)
     }
 }
 
+void CCDisplayManager::addDisplay(CCNode *display, int index)
+{
+	CCDecorativeDisplay *decoDisplay = NULL;
+
+	if(index >= 0 && (unsigned int)index < m_pDecoDisplayList->count())
+	{
+		decoDisplay = (CCDecorativeDisplay *)m_pDecoDisplayList->objectAtIndex(index);
+	}
+	else
+	{
+		decoDisplay = CCDecorativeDisplay::create();
+		m_pDecoDisplayList->addObject(decoDisplay);
+	}
+
+	/*CCDisplayFactory::addDisplay(m_pBone, decoDisplay, displayData);*/
+	decoDisplay->setDisplay(display);
+
+	//! if changed display index is current display index, then change current display to the new display
+	if(index == m_iDisplayIndex)
+	{
+		m_iDisplayIndex = -1;
+		changeDisplayByIndex(index, false);
+	}
+}
+
 void CCDisplayManager::removeDisplay(int index)
 {
     m_pDecoDisplayList->removeObjectAtIndex(index);
