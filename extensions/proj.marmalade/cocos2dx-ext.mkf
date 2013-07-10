@@ -118,8 +118,8 @@ files
     "*.h"
     "*.cpp"
 
-       ["JsonReader"]
-    ("../JsonReader")
+       ["CocostudioReader"]
+    ("../CocostudioReader")
     "*.h"
     "*.cpp"
 

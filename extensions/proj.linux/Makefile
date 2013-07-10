@@ -84,6 +84,7 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../Components/CCComAudio.cpp \
 ../Components/CCComController.cpp \
 ../Components/CCInputDelegate.cpp \
+../Components/CCComRender.cpp \
 ../CCArmature/CCArmature.cpp \
 ../CCArmature/CCBone.cpp \
 ../CCArmature/animation/CCArmatureAnimation.cpp \
@@ -142,8 +143,8 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CocoGUILIB/UIWidgets/UITextArea.cpp \
 ../CocoGUILIB/UIWidgets/UITextButton.cpp \
 ../CocoGUILIB/UIWidgets/UITextField.cpp \
-../JsonReader/CCJsonReader.cpp \
-../JsonReader/DictionaryHelper.cpp 
+../CocostudioReader/CCJsonReader.cpp \
+../CocostudioReader/DictionaryHelper.cpp 
 
 include $(COCOS_ROOT)/cocos2dx/proj.linux/cocos2dx.mk
 
