@@ -86,8 +86,7 @@ public:
     static CCEGLView* sharedOpenGLView();
 
 protected:
-
-private:
+	static CCEGLView* s_pEglView;
     bool m_bCaptured;
     HWND m_hWnd;
     HDC  m_hDC;

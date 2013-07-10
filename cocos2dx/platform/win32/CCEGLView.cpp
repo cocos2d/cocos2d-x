@@ -163,7 +163,7 @@ static bool glew_dynamic_binding()
 //////////////////////////////////////////////////////////////////////////
 static CCEGLView* s_pMainWindow = NULL;
 static const WCHAR* kWindowClassName = L"Cocos2dxWin32";
-
+CCEGLView* CCEGLView::s_pEglView = NULL;
 static LRESULT CALLBACK _WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     if (s_pMainWindow && s_pMainWindow->getHWnd() == hWnd)
@@ -723,7 +723,7 @@ void CCEGLView::setScissorInPoints(float x , float y , float w , float h)
 
 CCEGLView* CCEGLView::sharedOpenGLView()
 {
-    static CCEGLView* s_pEglView = NULL;
+  
     if (s_pEglView == NULL)
     {
         s_pEglView = new CCEGLView();

@@ -85,7 +85,13 @@ THE SOFTWARE.
 
 #ifndef __MINGW32__
 
-#include <WinSock2.h>
+#ifdef COCOS2D_DEBUG
+	#include <WinSock2.h>
+#endif
+
+#ifdef COCOS2D_RELEASE
+	#include <WinSock2.h>
+#endif
 
 NS_CC_BEGIN
 
