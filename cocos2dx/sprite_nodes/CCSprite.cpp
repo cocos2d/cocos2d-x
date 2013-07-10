@@ -1067,6 +1067,16 @@ void Sprite::updateBlendFunc(void)
     }
 }
 
+/*
+ * This array is the data of a white image with 2 by 2 dimension.
+ * It's used for creating a default texture when sprite's texture is set to NULL.
+ * Supposing codes as follows:
+ *
+ *   auto sp = new Sprite();
+ *   sp->init();  // Texture was set to NULL, in order to make opacity and color to work correctly, we need to create a 2x2 white texture.
+ *
+ * The test is in "TestCpp/SpriteTest/Sprite without texture".
+ */
 static unsigned char cc_2x2_white_image[] = {
     // RGBA8888
     0xFF, 0xFF, 0xFF, 0xFF,
