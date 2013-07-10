@@ -8,11 +8,13 @@ INCLUDES = -I$(COCOS_ROOT)/external \
 	-I.. \
 	-I../CCBReader \
 	-I../GUI/CCControlExtension \
-	-I../network \
+	-I../network
 	-I../GUI/CCEditBox \
 	-I../Components \
-	-I../CCArmature
-
+	-I../CCArmature \
+        -I../JsonReader \
+	-I../CocoGUILIB \
+    
 DEFINES += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 DEFINES += -D__CC_PLATFORM_IMAGE_CPP__
 
@@ -88,7 +90,42 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CCArmature/utils/CCSpriteFrameCacheHelper.cpp \
 ../CCArmature/utils/CCTransformHelp.cpp \
 ../CCArmature/utils/CCTweenFunction.cpp \
-../CCArmature/utils/CCUtilMath.cpp
+../CCArmature/utils/CCUtilMath.cpp \
+../CocoGUILIB/Action/UIAction.cpp \
+../CocoGUILIB/Action/UIActionFrame.cpp \
+../CocoGUILIB/Action/UIActionManager.cpp \
+../CocoGUILIB/Action/UIActionNode.cpp \
+../CocoGUILIB/BaseClasses/UIContainerWidget.cpp \
+../CocoGUILIB/BaseClasses/UIRootWidget.cpp \
+../CocoGUILIB/BaseClasses/UIWidget.cpp \
+../CocoGUILIB/Drawable/GUINodeRGBA.cpp \
+../CocoGUILIB/Drawable/UICCLabelAtlas.cpp \
+../CocoGUILIB/Drawable/UICCTextField.cpp \
+../CocoGUILIB/Drawable/UIClippingLayer.cpp \
+../CocoGUILIB/System/CCSReader.cpp \
+../CocoGUILIB/System/CocosGUI.cpp \
+../CocoGUILIB/System/UIHelper.cpp \
+../CocoGUILIB/System/UIInputManager.cpp \
+../CocoGUILIB/System/UILayer.cpp \
+../CocoGUILIB/UIWidgets/UIButton.cpp \
+../CocoGUILIB/UIWidgets/UICheckBox.cpp \
+../CocoGUILIB/UIWidgets/UIControlButton.cpp \
+../CocoGUILIB/UIWidgets/UIImageView.cpp \
+../CocoGUILIB/UIWidgets/UILabel.cpp \
+../CocoGUILIB/UIWidgets/UILabelAtlas.cpp \
+../CocoGUILIB/UIWidgets/UILabelBMFont.cpp \
+../CocoGUILIB/UIWidgets/UIListView.cpp \
+../CocoGUILIB/UIWidgets/UILoadingBar.cpp \
+../CocoGUILIB/UIWidgets/UINodeContainer.cpp \
+../CocoGUILIB/UIWidgets/UIPageView.cpp \
+../CocoGUILIB/UIWidgets/UIPanel.cpp \
+../CocoGUILIB/UIWidgets/UIScrollView.cpp \
+../CocoGUILIB/UIWidgets/UISlider.cpp \
+../CocoGUILIB/UIWidgets/UITextArea.cpp \
+../CocoGUILIB/UIWidgets/UITextButton.cpp \
+../CocoGUILIB/UIWidgets/UITextField.cpp \
+../JsonReader/CCJsonReader.cpp \
+../JsonReader/DictionaryHelper.cpp 
 
 include $(COCOS_ROOT)/cocos2dx/proj.emscripten/cocos2dx.mk
 
