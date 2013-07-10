@@ -10,8 +10,9 @@ INCLUDES = -I$(COCOS_ROOT)/external \
 	-I../GUI/CCControlExtension \
 	-I../GUI/CCEditBox \
 	-I../network \
-    -I../Components \
-	-I../CCArmature
+        -I../Components \
+	-I../CCArmature \
+	-I../JsonReader \
 
 SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CCBReader/CCMenuItemImageLoader.cpp \
@@ -83,6 +84,7 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../Components/CCComAudio.cpp \
 ../Components/CCComController.cpp \
 ../Components/CCInputDelegate.cpp \
+../Components/CCComRender.cpp \
 ../CCArmature/CCArmature.cpp \
 ../CCArmature/CCBone.cpp \
 ../CCArmature/animation/CCArmatureAnimation.cpp \
@@ -108,6 +110,41 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CCArmature/utils/CCTransformHelp.cpp \
 ../CCArmature/utils/CCTweenFunction.cpp \
 ../CCArmature/utils/CCUtilMath.cpp \
+../CocoGUILIB/Action/UIAction.cpp \
+../CocoGUILIB/Action/UIActionFrame.cpp \
+../CocoGUILIB/Action/UIActionManager.cpp \
+../CocoGUILIB/Action/UIActionNode.cpp \
+../CocoGUILIB/BaseClasses/UIContainerWidget.cpp \
+../CocoGUILIB/BaseClasses/UIRootWidget.cpp \
+../CocoGUILIB/BaseClasses/UIWidget.cpp \
+../CocoGUILIB/Drawable/GUINodeRGBA.cpp \
+../CocoGUILIB/Drawable/UICCLabelAtlas.cpp \
+../CocoGUILIB/Drawable/UICCTextField.cpp \
+../CocoGUILIB/Drawable/UIClippingLayer.cpp \
+../CocoGUILIB/System/CCSReader.cpp \
+../CocoGUILIB/System/CocosGUI.cpp \
+../CocoGUILIB/System/UIHelper.cpp \
+../CocoGUILIB/System/UIInputManager.cpp \
+../CocoGUILIB/System/UILayer.cpp \
+../CocoGUILIB/UIWidgets/UIButton.cpp \
+../CocoGUILIB/UIWidgets/UICheckBox.cpp \
+../CocoGUILIB/UIWidgets/UIControlButton.cpp \
+../CocoGUILIB/UIWidgets/UIImageView.cpp \
+../CocoGUILIB/UIWidgets/UILabel.cpp \
+../CocoGUILIB/UIWidgets/UILabelAtlas.cpp \
+../CocoGUILIB/UIWidgets/UILabelBMFont.cpp \
+../CocoGUILIB/UIWidgets/UIListView.cpp \
+../CocoGUILIB/UIWidgets/UILoadingBar.cpp \
+../CocoGUILIB/UIWidgets/UINodeContainer.cpp \
+../CocoGUILIB/UIWidgets/UIPageView.cpp \
+../CocoGUILIB/UIWidgets/UIPanel.cpp \
+../CocoGUILIB/UIWidgets/UIScrollView.cpp \
+../CocoGUILIB/UIWidgets/UISlider.cpp \
+../CocoGUILIB/UIWidgets/UITextArea.cpp \
+../CocoGUILIB/UIWidgets/UITextButton.cpp \
+../CocoGUILIB/UIWidgets/UITextField.cpp \
+../CocostudioReader/CCJsonReader.cpp \
+../CocostudioReader/DictionaryHelper.cpp 
 
 include $(COCOS_ROOT)/cocos2dx/proj.linux/cocos2dx.mk
 

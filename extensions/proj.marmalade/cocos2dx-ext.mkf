@@ -1,7 +1,6 @@
 options
 {
     module_path="../../cocos2dx/proj.marmalade"
-    enable-exceptions
 }
 
 subprojects
@@ -116,6 +115,36 @@ files
 
 	["CCArmature/External_tool/Json/lib_json"]
     ("../CCArmature/external_tool/Json/lib_json")
+    "*.h"
+    "*.cpp"
+
+       ["CocostudioReader"]
+    ("../CocostudioReader")
+    "*.h"
+    "*.cpp"
+
+       ["CocoGUILIB/BaseClasses"]
+    ("../CocoGUILIB/BaseClasses")
+    "*.h"
+    "*.cpp"
+
+       ["CocoGUILIB/UIWidgets"]
+    ("../CocoGUILIB/UIWidgets")
+    "*.h"
+    "*.cpp"
+
+       ["CocoGUILIB/Drawable"]
+    ("../CocoGUILIB/Drawable")
+    "*.h"
+    "*.cpp"
+
+       ["CocoGUILIB/Action"]
+    ("../CocoGUILIB/Action")
+    "*.h"
+    "*.cpp"
+
+       ["CocoGUILIB/System"]
+    ("../CocoGUILIB/System")
     "*.h"
     "*.cpp"
 }

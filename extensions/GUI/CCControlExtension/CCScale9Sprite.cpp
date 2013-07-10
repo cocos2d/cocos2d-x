@@ -667,6 +667,10 @@ CCSize CCScale9Sprite::getPreferredSize()
 
 void CCScale9Sprite::setCapInsets(CCRect capInsets)
 {
+    if (!_scale9Image)
+    {
+        return;
+    }
     CCSize contentSize = this->m_obContentSize;
     this->updateWithBatchNode(this->_scale9Image, this->m_spriteRect, m_bSpriteFrameRotated, capInsets);
     this->setContentSize(contentSize);
@@ -706,6 +710,10 @@ void CCScale9Sprite::updateCapInset()
 
 void CCScale9Sprite::setOpacityModifyRGB(bool var)
 {
+    if (!_scale9Image)
+    {
+        return;
+    }
     _opacityModifyRGB = var;
     CCObject* child;
     CCArray* children = _scale9Image->getChildren();
@@ -791,6 +799,10 @@ void CCScale9Sprite::visit()
 
 void CCScale9Sprite::setColor(const ccColor3B& color)
 {
+    if (!_scale9Image)
+    {
+        return;
+    }
     _color = color;
 
     CCObject* child;
@@ -812,6 +824,10 @@ const ccColor3B& CCScale9Sprite::getColor()
 
 void CCScale9Sprite::setOpacity(GLubyte opacity)
 {
+    if (!_scale9Image)
+    {
+        return;
+    }
     _opacity = opacity;
 
     CCObject* child;

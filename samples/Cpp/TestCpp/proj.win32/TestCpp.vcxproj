@@ -99,7 +99,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\..\..\external;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\external\libwebsockets\win32\include;$(ProjectDir)..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\extensions;$(ProjectDir)..\..\..\..\extensions\network;..\Classes;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;COCOS2D_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>
@@ -136,6 +136,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
     <ClCompile Include="..\Classes\ExtensionsTest\ArmatureTest\ArmatureScene.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIScene.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUISlotScene.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ComponentsTest\ComponentsTestScene.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ComponentsTest\EnemyController.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ComponentsTest\GameOverScene.cpp" />
@@ -147,6 +149,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
     <ClCompile Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\SceneEditorTest\SceneEditorTestScene.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\TableViewTest\CustomTableViewCell.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.cpp" />
     <ClCompile Include="..\Classes\FileUtilsTest\FileUtilsTest.cpp" />
@@ -242,6 +245,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackLayerLoader.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIScene.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUISlotScene.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ComponentsTest\ComponentsTestScene.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ComponentsTest\EnemyController.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ComponentsTest\GameOverScene.h" />
@@ -253,6 +258,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
     <ClInclude Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\SceneEditorTest\SceneEditorTestScene.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\TableViewTest\CustomTableViewCell.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.h" />
     <ClInclude Include="..\Classes\FileUtilsTest\FileUtilsTest.h" />

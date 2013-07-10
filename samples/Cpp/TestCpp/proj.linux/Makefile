@@ -57,6 +57,9 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
     ../Classes/ExtensionsTest/ComponentsTest/ProjectileController.cpp \
     ../Classes/ExtensionsTest/ComponentsTest/SceneController.cpp \
 	../Classes/ExtensionsTest/ArmatureTest/ArmatureScene.cpp \
+    ../Classes/ExtensionsTest/SceneEditorTest/SceneEditorTestScene.cpp \
+	../Classes/ExtensionsTest/CocosGUITest/CocosGUISlotScene.cpp \
+	../Classes/ExtensionsTest/CocosGUITest/CocosGUIScene.cpp \
 	../Classes/FontTest/FontTest.cpp \
 	../Classes/IntervalTest/IntervalTest.cpp \
 	../Classes/KeypadTest/KeypadTest.cpp \
