@@ -597,7 +597,7 @@ void TextureCache::removeTextureForKey(const char *textureKeyName)
 
 Texture2D* TextureCache::textureForKey(const char* key)
 {
-    return (Texture2D*)_textures->objectForKey(FileUtils::sharedFileUtils()->fullPathForFilename(key));
+    return static_cast<Texture2D*>(_textures->objectForKey(FileUtils::sharedFileUtils()->fullPathForFilename(key)));
 }
 
 void TextureCache::reloadAllTextures()
