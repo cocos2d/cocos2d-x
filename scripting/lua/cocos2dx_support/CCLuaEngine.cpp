@@ -26,6 +26,7 @@
 #include "cocos2d.h"
 #include "cocoa/CCArray.h"
 #include "CCScheduler.h"
+#include "LuaScriptHandlerMgr.h"
 
 NS_CC_BEGIN
 
@@ -425,6 +426,7 @@ int LuaEngine::handleNodeEvent(void* data)
             
         case kNodeOnCleanup:
             _stack->pushString("cleanup");
+            ScriptHandlerMgr::getInstance()->unregisterNodeAllSchedule(node);
             break;
             
         default:
@@ -488,8 +490,11 @@ int LuaEngine::handleCallFuncActionEvent(void* data)
     if (NULL == basicScriptData->nativeObject)
         return 0;
     
-    CallFunc* callFunc = (CallFunc*)(basicScriptData->nativeObject);
-    int handler        = callFunc->getScriptHandler();
+    CallFuncHandlerDelegate* callDelegate = (CallFuncHandlerDelegate*)(basicScriptData->nativeObject);
+    
+    int handler = ScriptHandlerMgr::getInstance()->getObjecHandlerByEvent((void*)callDelegate->getCallFunc(),ScriptHandlerMgr::kCallFuncHandler);
+    if (0 == handler)
+        return 0;
     Object* target     =  (Object*)(basicScriptData->value);
     if (NULL != target)
     {
