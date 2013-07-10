@@ -9,6 +9,10 @@
 			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
 			<arguments>
 				<dictionary>
+					<key>?children?</key>
+					<value>?name?=outputEntries\|?children?=?name?=entry\\\\\\\|\\\|?name?=entry\\\\\\\|\\\|?name?=entry\\\\\\\|\\\|\||</value>
+				</dictionary>
+				<dictionary>
 					<key>?name?</key>
 					<value></value>
 				</dictionary>
@@ -94,7 +98,7 @@
 	</linkedResources>
 	<filteredResources>
 		<filter>
-			<id>1360216703005</id>
+			<id>1373007589779</id>
 			<name></name>
 			<type>26</type>
 			<matcher>
