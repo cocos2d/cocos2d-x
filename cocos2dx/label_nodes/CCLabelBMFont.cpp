@@ -73,7 +73,7 @@ CCBMFontConfiguration* FNTConfigLoadFile( const char *fntFile)
         s_pConfigurations = new Dictionary();
     }
 
-    pRet = (CCBMFontConfiguration*)s_pConfigurations->objectForKey(fntFile);
+    pRet = static_cast<CCBMFontConfiguration*>( s_pConfigurations->objectForKey(fntFile) );
     if( pRet == NULL )
     {
         pRet = CCBMFontConfiguration::create(fntFile);
@@ -149,7 +149,7 @@ CCBMFontConfiguration::~CCBMFontConfiguration()
     CC_SAFE_DELETE(_characterSet);
 }
 
-const char* CCBMFontConfiguration::description(void)
+const char* CCBMFontConfiguration::description(void) const
 {
     return String::createWithFormat(
         "<CCBMFontConfiguration = " CC_FORMAT_PRINTF_SIZE_T " | Glphys:%d Kernings:%d | Image = %s>",
@@ -507,7 +507,7 @@ bool LabelBMFont::initWithString(const char *theString, const char *fntFile, flo
         _alignment = alignment;
         
         _displayedOpacity = _realOpacity = 255;
-		_displayedColor = _realColor = ccWHITE;
+		_displayedColor = _realColor = Color3B::WHITE;
         _cascadeOpacityEnabled = true;
         _cascadeColorEnabled = true;
         
@@ -540,8 +540,8 @@ LabelBMFont::LabelBMFont()
 , _reusedChar(NULL)
 , _displayedOpacity(255)
 , _realOpacity(255)
-, _displayedColor(ccWHITE)
-, _realColor(ccWHITE)
+, _displayedColor(Color3B::WHITE)
+, _realColor(Color3B::WHITE)
 , _cascadeColorEnabled(true)
 , _cascadeOpacityEnabled(true)
 , _isOpacityModifyRGB(false)
@@ -649,7 +649,7 @@ void LabelBMFont::createFontChars()
         Sprite *fontChar;
 
         bool hasSprite = true;
-        fontChar = (Sprite*)(this->getChildByTag(i));
+        fontChar = static_cast<Sprite*>( this->getChildByTag(i) );
         if(fontChar )
         {
             // Reusing previous Sprite
@@ -763,7 +763,7 @@ void LabelBMFont::setString(unsigned short *newString, bool needUpdateLabel)
         Object* child;
         CCARRAY_FOREACH(_children, child)
         {
-            Node* pNode = (Node*) child;
+            Node* pNode = static_cast<Node*>( child );
             if (pNode)
             {
                 pNode->setVisible(false);
@@ -788,22 +788,22 @@ void LabelBMFont::setCString(const char *label)
 }
 
 //LabelBMFont - RGBAProtocol protocol
-const ccColor3B& LabelBMFont::getColor() const
+const Color3B& LabelBMFont::getColor() const
 {
     return _realColor;
 }
 
-const ccColor3B& LabelBMFont::getDisplayedColor() const
+const Color3B& LabelBMFont::getDisplayedColor() const
 {
     return _displayedColor;
 }
 
-void LabelBMFont::setColor(const ccColor3B& color)
+void LabelBMFont::setColor(const Color3B& color)
 {
 	_displayedColor = _realColor = color;
 	
 	if( _cascadeColorEnabled ) {
-		ccColor3B parentColor = ccWHITE;
+		Color3B parentColor = Color3B::WHITE;
         RGBAProtocol* pParent = dynamic_cast<RGBAProtocol*>(_parent);
         if (pParent && pParent->isCascadeColorEnabled())
         {
@@ -847,7 +847,7 @@ void LabelBMFont::setOpacityModifyRGB(bool var)
         Object* child;
         CCARRAY_FOREACH(_children, child)
         {
-            Node* pNode = (Node*) child;
+            Node* pNode = static_cast<Node*>( child );
             if (pNode)
             {
                 RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(pNode);
@@ -871,12 +871,12 @@ void LabelBMFont::updateDisplayedOpacity(GLubyte parentOpacity)
 	Object* pObj;
 	CCARRAY_FOREACH(_children, pObj)
     {
-        Sprite *item = (Sprite*)pObj;
+        Sprite *item = static_cast<Sprite*>( pObj );
 		item->updateDisplayedOpacity(_displayedOpacity);
 	}
 }
 
-void LabelBMFont::updateDisplayedColor(const ccColor3B& parentColor)
+void LabelBMFont::updateDisplayedColor(const Color3B& parentColor)
 {
 	_displayedColor.r = _realColor.r * parentColor.r/255.0;
 	_displayedColor.g = _realColor.g * parentColor.g/255.0;
@@ -885,7 +885,7 @@ void LabelBMFont::updateDisplayedColor(const ccColor3B& parentColor)
     Object* pObj;
 	CCARRAY_FOREACH(_children, pObj)
     {
-        Sprite *item = (Sprite*)pObj;
+        Sprite *item = static_cast<Sprite*>( pObj );
 		item->updateDisplayedColor(_displayedColor);
 	}
 }
@@ -946,7 +946,7 @@ void LabelBMFont::updateLabel()
             Sprite* characterSprite;
             unsigned int justSkipped = 0;
             
-            while (!(characterSprite = (Sprite*)this->getChildByTag(j + skip + justSkipped)))
+            while (!(characterSprite = static_cast<Sprite*>( this->getChildByTag(j + skip + justSkipped))) )
             {
                 justSkipped++;
             }
@@ -1118,7 +1118,7 @@ void LabelBMFont::updateLabel()
                 int index = i + line_length - 1 + lineNumber;
                 if (index < 0) continue;
 
-                Sprite* lastChar = (Sprite*)getChildByTag(index);
+                Sprite* lastChar = static_cast<Sprite*>( getChildByTag(index) );
                 if ( lastChar == NULL )
                     continue;
 
@@ -1144,7 +1144,7 @@ void LabelBMFont::updateLabel()
                         index = i + j + lineNumber;
                         if (index < 0) continue;
 
-                        Sprite* characterSprite = (Sprite*)getChildByTag(index);
+                        Sprite* characterSprite = static_cast<Sprite*>( getChildByTag(index) );
                         characterSprite->setPosition(ccpAdd(characterSprite->getPosition(), ccp(shift, 0.0f)));
                     }
                 }

@@ -11,7 +11,7 @@
 
 NS_CC_EXT_BEGIN
 
-void LayerGradientLoader::onHandlePropTypeColor3(Node * pNode, Node * pParent, const char * pPropertyName, ccColor3B pColor3B, CCBReader * pCCBReader) {
+void LayerGradientLoader::onHandlePropTypeColor3(Node * pNode, Node * pParent, const char * pPropertyName, Color3B pColor3B, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_STARTCOLOR) == 0) {
         ((LayerGradient *)pNode)->setStartColor(pColor3B);
     } else if(strcmp(pPropertyName, PROPERTY_ENDCOLOR) == 0) {
@@ -31,7 +31,7 @@ void LayerGradientLoader::onHandlePropTypeByte(Node * pNode, Node * pParent, con
     }
 }
 
-void LayerGradientLoader::onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const char * pPropertyName, ccBlendFunc pBlendFunc, CCBReader * pCCBReader) {
+void LayerGradientLoader::onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const char * pPropertyName, BlendFunc pBlendFunc, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_BLENDFUNC) == 0) {
         ((LayerGradient *)pNode)->setBlendFunc(pBlendFunc);
     } else {

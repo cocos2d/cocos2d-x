@@ -118,7 +118,7 @@ public:
 
     void update(float delta);
 
-    void updateDisplayedColor(const ccColor3B &parentColor);
+    void updateDisplayedColor(const Color3B &parentColor);
     void updateDisplayedOpacity(GLubyte parentOpacity);
 
     //! Update color to render display

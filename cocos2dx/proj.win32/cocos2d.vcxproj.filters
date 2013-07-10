@@ -144,9 +144,6 @@
     <ClCompile Include="..\cocoa\CCString.cpp">
       <Filter>cocoa</Filter>
     </ClCompile>
-    <ClCompile Include="..\cocoa\CCZone.cpp">
-      <Filter>cocoa</Filter>
-    </ClCompile>
     <ClCompile Include="..\cocoa\CCData.cpp">
       <Filter>cocoa</Filter>
     </ClCompile>
@@ -489,6 +486,7 @@
     <ClCompile Include="..\keyboard_dispatcher\CCKeyboardDispatcher.cpp">
       <Filter>keyboard_dispatcher</Filter>
     </ClCompile>
+    <ClCompile Include="..\ccTypes.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\base_nodes\CCAtlasNode.h">
@@ -525,9 +523,6 @@
       <Filter>cocoa</Filter>
     </ClInclude>
     <ClInclude Include="..\cocoa\CCString.h">
-      <Filter>cocoa</Filter>
-    </ClInclude>
-    <ClInclude Include="..\cocoa\CCZone.h">
       <Filter>cocoa</Filter>
     </ClInclude>
     <ClInclude Include="..\cocoa\CCData.h">

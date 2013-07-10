@@ -778,7 +778,7 @@ ContourData *DataReaderHelper::decodeContour(tinyxml2::XMLElement *contourXML)
 
     while (vertexDataXML)
     {
-        ContourVertex2 *vertex = new ContourVertex2(0, 0);
+        ContourVertex2F *vertex = new ContourVertex2F(0, 0);
         vertex->autorelease();
 
         vertexDataXML->QueryFloatAttribute(A_X, &vertex->x);
@@ -1096,7 +1096,7 @@ ContourData *DataReaderHelper::decodeContour(cs::CSJsonDictionary &json)
     {
         cs::CSJsonDictionary *dic = json.getSubItemFromArray(VERTEX_POINT, i);
 
-        ContourVertex2 *vertex = new ContourVertex2(0, 0);
+        ContourVertex2F *vertex = new ContourVertex2F(0, 0);
 
         vertex->x = dic->getItemFloatValue(A_X, 0);
         vertex->y = dic->getItemFloatValue(A_Y, 0);

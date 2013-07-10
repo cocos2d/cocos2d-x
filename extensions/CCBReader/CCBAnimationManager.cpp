@@ -238,7 +238,7 @@ int CCBAnimationManager::getSequenceId(const char* pSequenceName)
     string seqName(pSequenceName);
     CCARRAY_FOREACH(mSequences, pElement)
     {
-        CCBSequence *seq = (CCBSequence*)pElement;
+        CCBSequence *seq = static_cast<CCBSequence*>(pElement);
         if (seqName.compare(seq->getName()) == 0)
         {
             return seq->getSequenceId();
@@ -252,7 +252,7 @@ CCBSequence* CCBAnimationManager::getSequence(int nSequenceId)
     Object *pElement = NULL;
     CCARRAY_FOREACH(mSequences, pElement)
     {
-        CCBSequence *seq = (CCBSequence*)pElement;
+        CCBSequence *seq = static_cast<CCBSequence*>(pElement);
         if (seq->getSequenceId() == nSequenceId)
         {
             return seq;
@@ -312,8 +312,8 @@ ActionInterval* CCBAnimationManager::getAction(CCBKeyframe *pKeyframe0, CCBKeyfr
     }
     else if (strcmp(pPropName, "color") == 0)
     {
-        ccColor3BWapper* color = (ccColor3BWapper*)pKeyframe1->getValue();
-        ccColor3B c = color->getColor();
+        Color3BWapper* color = (Color3BWapper*)pKeyframe1->getValue();
+        Color3B c = color->getColor();
         
         return TintTo::create(duration, c.r, c.g, c.b);
     }
@@ -472,7 +472,7 @@ void CCBAnimationManager::setAnimatedProperty(const char *pPropName, Node *pNode
             }
             else if (strcmp(pPropName, "color") == 0)
             {
-                ccColor3BWapper *color = (ccColor3BWapper*)pValue;
+                Color3BWapper *color = (Color3BWapper*)pValue;
                 (dynamic_cast<RGBAProtocol*>(pNode))->setColor(color->getColor());
             }
             else if (strcmp(pPropName, "visible") == 0)
@@ -742,7 +742,7 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
     DictElement* pElement = NULL;
     CCDICT_FOREACH(mNodeSequences, pElement)
     {
-        Node *node = (Node*)pElement->getIntKey();
+        Node *node = reinterpret_cast<Node*>(pElement->getIntKey());
         node->stopAllActions();
         
         // Refer to CCBReader::readKeyframe() for the real type of value
@@ -758,7 +758,7 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
             CCDICT_FOREACH(seqNodeProps, pElement1)
             {
                 const char *propName = pElement1->getStrKey();
-                CCBSequenceProperty *seqProp = (CCBSequenceProperty*)seqNodeProps->objectForKey(propName);
+                CCBSequenceProperty *seqProp = static_cast<CCBSequenceProperty*>(seqNodeProps->objectForKey(propName));
                 seqNodePropNames.insert(propName);
                 
                 setFirstFrame(node, seqProp, fTweenDuration);
@@ -925,24 +925,6 @@ CCBSetSpriteFrame* CCBSetSpriteFrame::reverse() const
 	return this->clone();
 }
 
-Object* CCBSetSpriteFrame::copyWithZone(Zone *pZone)
-{
-    Zone *pNewZone = NULL;
-    CCBSetSpriteFrame *pRet = NULL;
-    
-    if (pZone && pZone->_copyObject) {
-        pRet = (CCBSetSpriteFrame*) (pZone->_copyObject);
-    } else {
-        pRet = new CCBSetSpriteFrame();
-        pZone = pNewZone = new Zone(pRet);
-    }
-    
-    pRet->initWithSpriteFrame(mSpriteFrame);
-    ActionInstant::copyWithZone(pZone);
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
-}
-
 void CCBSetSpriteFrame::update(float time)
 {
     ((Sprite*)_target)->setDisplayFrame(mSpriteFrame);
@@ -993,25 +975,6 @@ CCBSoundEffect* CCBSoundEffect::reverse() const
 	// returns a copy of itself
 	return this->clone();
 }
-
-Object* CCBSoundEffect::copyWithZone(Zone *pZone)
-{
-    Zone *pNewZone = NULL;
-    CCBSoundEffect *pRet = NULL;
-    
-    if (pZone && pZone->_copyObject) {
-        pRet = (CCBSoundEffect*) (pZone->_copyObject);
-    } else {
-        pRet = new CCBSoundEffect();
-        pZone = pNewZone = new Zone(pRet);
-    }
-    
-    pRet->initWithSoundFile(mSoundFile, mPitch, mPan, mGain);
-    ActionInstant::copyWithZone(pZone);
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
-}
-
 
 void CCBSoundEffect::update(float time)
 {
@@ -1068,24 +1031,6 @@ CCBRotateTo* CCBRotateTo::reverse() const
 {
 	CCAssert(false, "reverse() is not supported in CCBRotateTo");
 	return nullptr;
-}
-
-Object* CCBRotateTo::copyWithZone(Zone *pZone)
-{
-    Zone *pNewZone = NULL;
-    CCBRotateTo *pRet = NULL;
-    
-    if (pZone && pZone->_copyObject) {
-        pRet = (CCBRotateTo*) (pZone->_copyObject);
-    } else {
-        pRet = new CCBRotateTo();
-        pZone = pNewZone = new Zone(pRet);
-    }
-    
-    pRet->initWithDuration(_duration, mDstAngle);
-    ActionInterval::copyWithZone(pZone);
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
 }
 
 void CCBRotateTo::startWithTarget(Node *pNode)
@@ -1168,24 +1113,6 @@ CCBRotateXTo* CCBRotateXTo::reverse() const
 	return nullptr;
 }
 
-Object* CCBRotateXTo::copyWithZone(Zone *pZone)
-{
-    Zone *pNewZone = NULL;
-    CCBRotateXTo *pRet = NULL;
-    
-    if (pZone && pZone->_copyObject) {
-        pRet = (CCBRotateXTo*) (pZone->_copyObject);
-    } else {
-        pRet = new CCBRotateXTo();
-        pZone = pNewZone = new Zone(pRet);
-    }
-    
-    pRet->initWithDuration(_duration, mDstAngle);
-    ActionInterval::copyWithZone(pZone);
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
-}
-
 void CCBRotateXTo::update(float time)
 {
     _target->setRotationX(mStartAngle + (mDiffAngle * time))
@@ -1257,25 +1184,6 @@ void CCBRotateYTo::startWithTarget(Node *pNode)
     _firstTick = true;
     mStartAngle = _target->getRotationY();
     mDiffAngle = mDstAngle - mStartAngle;
-}
-
-
-Object* CCBRotateYTo::copyWithZone(Zone *pZone)
-{
-    Zone *pNewZone = NULL;
-    CCBRotateYTo *pRet = NULL;
-    
-    if (pZone && pZone->_copyObject) {
-        pRet = (CCBRotateYTo*) (pZone->_copyObject);
-    } else {
-        pRet = new CCBRotateYTo();
-        pZone = pNewZone = new Zone(pRet);
-    }
-    
-    pRet->initWithDuration(_duration, mDstAngle);
-    ActionInterval::copyWithZone(pZone);
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
 }
 
 void CCBRotateYTo::update(float time)

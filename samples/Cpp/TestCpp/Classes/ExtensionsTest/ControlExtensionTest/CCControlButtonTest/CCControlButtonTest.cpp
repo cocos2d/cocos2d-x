@@ -49,23 +49,23 @@ bool ControlButtonTest_HelloVariableSize::init()
         int i = 0;
         CCARRAY_FOREACH(stringArray, pObj)
         {
-            String* title = (String*)pObj;
+            String* title = static_cast<String*>(pObj);
             // Creates a button with this string as title
             ControlButton *button = standardButtonWithTitle(title->getCString());
             if (i == 0)
             {
                 button->setOpacity(50);
-                button->setColor(ccc3(0, 255, 0));
+                button->setColor(Color3B(0, 255, 0));
             }
             else if (i == 1)
             {
                 button->setOpacity(200);
-                button->setColor(ccc3(0, 255, 0));
+                button->setColor(Color3B(0, 255, 0));
             }
             else if (i == 2)
             {
                 button->setOpacity(100);
-                button->setColor(ccc3(0, 0, 255));
+                button->setColor(Color3B(0, 0, 255));
             }
             
             button->setPosition(ccp (total_width + button->getContentSize().width / 2, button->getContentSize().height / 2));
@@ -99,11 +99,11 @@ ControlButton *ControlButtonTest_HelloVariableSize::standardButtonWithTitle(cons
     
     LabelTTF *titleButton = LabelTTF::create(title, "Marker Felt", 30);
 
-    titleButton->setColor(ccc3(159, 168, 176));
+    titleButton->setColor(Color3B(159, 168, 176));
     
     ControlButton *button = ControlButton::create(titleButton, backgroundButton);
     button->setBackgroundSpriteForState(backgroundHighlightedButton, ControlStateHighlighted);
-    button->setTitleColorForState(ccWHITE, ControlStateHighlighted);
+    button->setTitleColorForState(Color3B::WHITE, ControlStateHighlighted);
 
     return button;
 }
@@ -137,11 +137,11 @@ bool ControlButtonTest_Event::init()
         
         LabelTTF *titleButton = LabelTTF::create("Touch Me!", "Marker Felt", 30);
 
-        titleButton->setColor(ccc3(159, 168, 176));
+        titleButton->setColor(Color3B(159, 168, 176));
         
         ControlButton *controlButton = ControlButton::create(titleButton, backgroundButton);
         controlButton->setBackgroundSpriteForState(backgroundHighlightedButton, ControlStateHighlighted);
-        controlButton->setTitleColorForState(ccWHITE, ControlStateHighlighted);
+        controlButton->setTitleColorForState(Color3B::WHITE, ControlStateHighlighted);
         
         controlButton->setAnchorPoint(ccp(0.5f, 1));
         controlButton->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
@@ -266,11 +266,11 @@ ControlButton *ControlButtonTest_Styling::standardButtonWithTitle(const char *ti
     
     LabelTTF *titleButton = LabelTTF::create(title, "Marker Felt", 30);
 
-    titleButton->setColor(ccc3(159, 168, 176));
+    titleButton->setColor(Color3B(159, 168, 176));
     
     ControlButton *button = ControlButton::create(titleButton, backgroundButton);
     button->setBackgroundSpriteForState(backgroundHighlightedButton, ControlStateHighlighted);
-    button->setTitleColorForState(ccWHITE, ControlStateHighlighted);
+    button->setTitleColorForState(Color3B::WHITE, ControlStateHighlighted);
     
     return button;
 }

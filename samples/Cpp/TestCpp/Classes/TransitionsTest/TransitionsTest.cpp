@@ -9,7 +9,7 @@ class FadeWhiteTransition : public TransitionFade
 public:
     static TransitionScene* create(float t, Scene* s)
     {
-        return TransitionFade::create(t, s, ccWHITE); 
+        return TransitionFade::create(t, s, Color3B::WHITE); 
     }
 };
 
@@ -288,11 +288,11 @@ TestLayer1::TestLayer1(void)
 
     LabelTTF* title = LabelTTF::create( (transitions[s_nSceneIdx]).c_str(), "Thonburi", 32 );
     addChild(title);
-    title->setColor( ccc3(255,32,32) );
+    title->setColor( Color3B(255,32,32) );
     title->setPosition( ccp(x/2, y-100) );
 
     LabelTTF* label = LabelTTF::create("SCENE 1", "Marker Felt", 38);
-    label->setColor( ccc3(16,16,255));
+    label->setColor( Color3B(16,16,255));
     label->setPosition( ccp(x/2,y/2));    
     addChild( label);
 
@@ -417,11 +417,11 @@ TestLayer2::TestLayer2()
 
     LabelTTF* title = LabelTTF::create((transitions[s_nSceneIdx]).c_str(), "Thonburi", 32 );
     addChild(title);
-    title->setColor( ccc3(255,32,32) );
+    title->setColor( Color3B(255,32,32) );
     title->setPosition( ccp(x/2, y-100) );
 
     LabelTTF* label = LabelTTF::create("SCENE 2", "Marker Felt", 38);
-    label->setColor( ccc3(16,16,255));
+    label->setColor( Color3B(16,16,255));
     label->setPosition( ccp(x/2,y/2));    
     addChild( label);
 

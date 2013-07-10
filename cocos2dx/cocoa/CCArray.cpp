@@ -24,6 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCArray.h"
+#include "CCString.h"
 #include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
@@ -101,9 +102,7 @@ Array* Array::create(Object* pObject, ...)
 
 Array* Array::createWithArray(Array* otherArray)
 {
-    Array* pRet = (Array*)otherArray->copy();
-    pRet->autorelease();
-    return pRet;
+    return otherArray->clone();
 }
 
 Array* Array::createWithCapacity(unsigned int capacity)
@@ -374,21 +373,32 @@ Array::~Array()
     ccArrayFree(data);
 }
 
-Object* Array::copyWithZone(Zone* pZone)
+Array* Array::clone() const
 {
-    CCAssert(pZone == NULL, "CCArray should not be inherited.");
-    Array* pArray = new Array();
-    pArray->initWithCapacity(this->data->num > 0 ? this->data->num : 1);
+    Array* ret = new Array();
+    ret->autorelease();
+    ret->initWithCapacity(this->data->num > 0 ? this->data->num : 1);
 
-    Object* pObj = NULL;
-    Object* pTmpObj = NULL;
-    CCARRAY_FOREACH(this, pObj)
+    Object* obj = NULL;
+    Object* tmpObj = NULL;
+    Clonable* clonable = NULL;
+    CCARRAY_FOREACH(this, obj)
     {
-        pTmpObj = pObj->copy();
-        pArray->addObject(pTmpObj);
-        pTmpObj->release();
+        clonable = dynamic_cast<Clonable*>(obj);
+        if (clonable)
+        {
+            tmpObj = dynamic_cast<Object*>(clonable->clone());
+            if (tmpObj)
+            {
+                ret->addObject(tmpObj);
+            }
+        }
+        else
+        {
+            CCLOGWARN("%s isn't clonable.", typeid(*obj).name());
+        }
     }
-    return pArray;
+    return ret;
 }
 
 void Array::acceptVisitor(DataVisitor &visitor)

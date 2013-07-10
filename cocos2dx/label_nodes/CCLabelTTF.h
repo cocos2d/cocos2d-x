@@ -59,7 +59,7 @@ class CC_DLL LabelTTF : public Sprite, public LabelProtocol
 public:
     LabelTTF();
     virtual ~LabelTTF();
-    const char* description();    
+    const char* description() const;
     
     /** creates a LabelTTF with a font name and font size in points
      @since v2.0.1
@@ -81,7 +81,7 @@ public:
     
     
     /** Create a lable with string and a font definition*/
-    static LabelTTF * createWithFontDefinition(const char *string, ccFontDefinition &textDefinition);
+    static LabelTTF * createWithFontDefinition(const char *string, FontDefinition &textDefinition);
     
     /** initializes the LabelTTF with a font name and font size */
     bool initWithString(const char *string, const char *fontName, float fontSize);
@@ -96,13 +96,13 @@ public:
                         VerticalTextAlignment vAlignment);
     
     /** initializes the LabelTTF with a font name, alignment, dimension and font size */
-    bool initWithStringAndTextDefinition(const char *string, ccFontDefinition &textDefinition);
+    bool initWithStringAndTextDefinition(const char *string, FontDefinition &textDefinition);
     
     /** set the text definition used by this label */
-    void setTextDefinition(ccFontDefinition *theDefinition);
+    void setTextDefinition(const FontDefinition& theDefinition);
     
     /** get the text definition used by this label */
-    ccFontDefinition * getTextDefinition();
+    FontDefinition getTextDefinition();
     
     
     
@@ -113,13 +113,13 @@ public:
     void disableShadow(bool mustUpdateTexture = true);
     
     /** enable or disable stroke */
-    void enableStroke(const ccColor3B &strokeColor, float strokeSize, bool mustUpdateTexture = true);
+    void enableStroke(const Color3B &strokeColor, float strokeSize, bool mustUpdateTexture = true);
     
     /** disable stroke */
     void disableStroke(bool mustUpdateTexture = true);
     
     /** set text tinting */
-    void setFontFillColor(const ccColor3B &tintColor, bool mustUpdateTexture = true);
+    void setFontFillColor(const Color3B &tintColor, bool mustUpdateTexture = true);
 
     
     
@@ -156,8 +156,8 @@ private:
 protected:
     
     /** set the text definition for this label */
-    void                _updateWithTextDefinition(ccFontDefinition & textDefinition, bool mustUpdateTexture = true);
-    ccFontDefinition    _prepareTextDefinition(bool adjustForResolution = false);
+    void _updateWithTextDefinition(const FontDefinition& textDefinition, bool mustUpdateTexture = true);
+    FontDefinition    _prepareTextDefinition(bool adjustForResolution = false);
     
     /** Dimensions of the label in Points */
     Size _dimensions;
@@ -174,18 +174,18 @@ protected:
     
     /** font shadow */
     bool    _shadowEnabled;
-    Size  _shadowOffset;
+    Size    _shadowOffset;
     float   _shadowOpacity;
     float   _shadowBlur;
     
     
     /** font stroke */
     bool        _strokeEnabled;
-    ccColor3B   _strokeColor;
+    Color3B     _strokeColor;
     float       _strokeSize;
         
     /** font tint */
-    ccColor3B   _textFillColor;
+    Color3B   _textFillColor;
 
     
 };

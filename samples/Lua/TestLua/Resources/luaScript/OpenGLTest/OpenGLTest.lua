@@ -128,7 +128,7 @@ local function OpenGLTestMainLayer()
         local lableTitle = CCLabelTTF:create(GetTitle(), "Arial", 40)
         layer:addChild(lableTitle, 15)
         lableTitle:setPosition(ccp(size.width/2, size.height-32))
-        lableTitle:setColor(ccc3(255,255,40))
+        lableTitle:setColor(Color3B(255,255,40))
         --SubTitle
         local subLabelTitle = CCLabelTTF:create(GetSubTitle(), "Thonburi", 16)
         layer:addChild(subLabelTitle, 15)
@@ -695,10 +695,10 @@ local function OpenGLTestMainLayer()
         local x = size.width
         local y = size.height
 
-        local blue = CCLayerColor:create(ccc4(0, 0, 255, 255))
-        local red = CCLayerColor:create(ccc4(255, 0, 0, 255))
-        local green = CCLayerColor:create(ccc4(0, 255, 0, 255))
-        local white = CCLayerColor:create(ccc4(255, 255, 255, 255))
+        local blue = CCLayerColor:create(Color4B(0, 0, 255, 255))
+        local red = CCLayerColor:create(Color4B(255, 0, 0, 255))
+        local green = CCLayerColor:create(Color4B(0, 255, 0, 255))
+        local white = CCLayerColor:create(Color4B(255, 255, 255, 255))
 
         blue:setScale(0.5)
         blue:setPosition(-x / 4, -y / 4)
@@ -776,7 +776,7 @@ local function OpenGLTestMainLayer()
         local clearLayer = CCLayer:create()
         InitTitle(clearLayer)
 
-        local blue = CCLayerColor:create(ccc4(0, 0, 255, 255))
+        local blue = CCLayerColor:create(Color4B(0, 0, 255, 255))
         clearLayer:addChild( blue, 1 )
 
         local glNode = gl.glNodeCreate()

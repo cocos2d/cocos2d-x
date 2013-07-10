@@ -123,7 +123,7 @@ function LabelAtlasColorTest.create()
     local label2 = CCLabelAtlas:create("0123456789", "fonts/tuffy_bold_italic-charmap.plist")
     layer:addChild(label2, 0, kTagSprite2)
     label2:setPosition( ccp(10,200) )
-    label2:setColor(ccc3(255, 0, 0))
+    label2:setColor(Color3B(255, 0, 0))
 
     local fade = CCFadeOut:create(1.0)
     local fade_in = fade:reverse()
@@ -176,7 +176,7 @@ function Atlas3.create()
 
     m_time = 0
 
-    local col = CCLayerColor:create( ccc4(128,128,128,255) )
+    local col = CCLayerColor:create( Color4B(128,128,128,255) )
     layer:addChild(col, -10)
 
     local label1 = CCLabelBMFont:create("Test",  "fonts/bitmapFontTest2.fnt")
@@ -203,7 +203,7 @@ function Atlas3.create()
 
     -- testing anchors
     label2:setAnchorPoint( ccp(0.5, 0.5) )
-    label2:setColor(ccc3(255, 0, 0 ))
+    label2:setColor(Color3B(255, 0, 0 ))
     layer:addChild(label2, 0, kTagBitmapAtlas2)
 
     label2:runAction( tolua.cast(repeatAction:clone(), "CCAction") )
@@ -440,7 +440,7 @@ function AtlasBitmapColor:create()
     local s = CCDirector:sharedDirector():getWinSize()
 
     local label = CCLabelBMFont:create("Blue", "fonts/bitmapFontTest5.fnt")
-    label:setColor( ccc3(0, 0, 255 ))
+    label:setColor( Color3B(0, 0, 255 ))
     layer:addChild(label)
     label:setPosition( ccp(s.width/2, s.height/4) )
     label:setAnchorPoint( ccp(0.5, 0.5) )
@@ -449,13 +449,13 @@ function AtlasBitmapColor:create()
     layer:addChild(label)
     label:setPosition( ccp(s.width/2, 2*s.height/4) )
     label:setAnchorPoint( ccp(0.5, 0.5) )
-    label:setColor( ccc3(255, 0, 0) )
+    label:setColor( Color3B(255, 0, 0) )
 
     label = CCLabelBMFont:create("G", "fonts/bitmapFontTest5.fnt")
     layer:addChild(label)
     label:setPosition( ccp(s.width/2, 3*s.height/4) )
     label:setAnchorPoint( ccp(0.5, 0.5) )
-    label:setColor( ccc3(0, 255, 0 ))
+    label:setColor( Color3B(0, 255, 0 ))
     label:setString("Green")
 
     Helper.titleLabel:setString("CCLabelBMFont")
@@ -684,7 +684,7 @@ function LabelGlyphDesigner.create()
 
     local s = CCDirector:sharedDirector():getWinSize()
 
-    local colorlayer = CCLayerColor:create(ccc4(128,128,128,255))
+    local colorlayer = CCLayerColor:create(Color4B(128,128,128,255))
     layer:addChild(colorlayer, -10)
 
     -- CCLabelBMFont
@@ -721,7 +721,7 @@ function LabelTTFTest.create()
     local blockSize = CCSizeMake(200, 160)
     local s = CCDirector:sharedDirector():getWinSize()
 
-    local colorLayer = CCLayerColor:create(ccc4(100, 100, 100, 255), blockSize.width, blockSize.height)
+    local colorLayer = CCLayerColor:create(Color4B(100, 100, 100, 255), blockSize.width, blockSize.height)
     colorLayer:setAnchorPoint(ccp(0,0))
     colorLayer:setPosition(ccp((s.width - blockSize.width) / 2, (s.height - blockSize.height) / 2))
 
@@ -863,26 +863,26 @@ end
 --    --
 --    -- Notice: u,v tex coordinates are inverted
 --    --
---    ccV3F_C4B_T2F_Quad quads[] = 
+--    V3F_C4B_T2F_Quad quads[] = 
 --    {
 --        {
---            {{0,0,0},ccc4(0,0,255,255),{0.0f,1.0f},},                -- bottom left
---            {{s.width,0,0},ccc4(0,0,255,0),{1.0f,1.0f},},            -- bottom right
---            {{0,s.height,0},ccc4(0,0,255,0),{0.0f,0.0f},},            -- top left
+--            {{0,0,0},Color4B(0,0,255,255),{0.0f,1.0f},},                -- bottom left
+--            {{s.width,0,0},Color4B(0,0,255,0),{1.0f,1.0f},},            -- bottom right
+--            {{0,s.height,0},Color4B(0,0,255,0),{0.0f,0.0f},},            -- top left
 --            {{s.width,s.height,0},{0,0,255,255},{1.0f,0.0f},},    -- top right
 --        },        
 --        {
---            {{40,40,0},ccc4(255,255,255,255),{0.0f,0.2f},},            -- bottom left
---            {{120,80,0},ccc4(255,0,0,255),{0.5f,0.2f},},            -- bottom right
---            {{40,160,0},ccc4(255,255,255,255),{0.0f,0.0f},},        -- top left
---            {{160,160,0},ccc4(0,255,0,255),{0.5f,0.0f},},            -- top right
+--            {{40,40,0},Color4B(255,255,255,255),{0.0f,0.2f},},            -- bottom left
+--            {{120,80,0},Color4B(255,0,0,255),{0.5f,0.2f},},            -- bottom right
+--            {{40,160,0},Color4B(255,255,255,255),{0.0f,0.0f},},        -- top left
+--            {{160,160,0},Color4B(0,255,0,255),{0.5f,0.0f},},            -- top right
 --        },
 --  
 --        {
---            {{s.width/2,40,0},ccc4(255,0,0,255),{0.0f,1.0f},},        -- bottom left
---            {{s.width,40,0},ccc4(0,255,0,255),{1.0f,1.0f},},        -- bottom right
---            {{s.width/2-50,200,0},ccc4(0,0,255,255),{0.0f,0.0f},},        -- top left
---            {{s.width,100,0},ccc4(255,255,0,255),{1.0f,0.0f},},        -- top right
+--            {{s.width/2,40,0},Color4B(255,0,0,255),{0.0f,1.0f},},        -- bottom left
+--            {{s.width,40,0},Color4B(0,255,0,255),{1.0f,1.0f},},        -- bottom right
+--            {{s.width/2-50,200,0},Color4B(0,0,255,255),{0.0f,0.0f},},        -- top left
+--            {{s.width,100,0},Color4B(255,255,0,255),{1.0f,0.0f},},        -- top right
 --        },
 --        
 --    };
@@ -1032,7 +1032,7 @@ function BitmapFontMultiLineAlignment.create()
     stringMenu:addChild(mixed)
     stringMenu:alignItemsVertically()
 
-    longSentences:setColor(ccc3(255, 0, 0))
+    longSentences:setColor(Color3B(255, 0, 0))
     BitmapFontMultiLineAlignment._pLastSentenceItem = longSentences
 
     longSentences:setTag(LongSentences)
@@ -1055,7 +1055,7 @@ function BitmapFontMultiLineAlignment.create()
 
     alignmentMenu:alignItemsHorizontallyWithPadding(alignmentItemPadding)
 
-    center:setColor(ccc3(255, 0, 0))
+    center:setColor(Color3B(255, 0, 0))
     BitmapFontMultiLineAlignment._pLastAlignmentItem = center
     left:setTag(LeftAlign)
     center:setTag(CenterAlign)
@@ -1097,8 +1097,8 @@ end
 
 function BitmapFontMultiLineAlignment.stringChanged(tag, sender)
     local item = tolua.cast(sender, "CCMenuItemFont")
-    item:setColor(ccc3(255, 0, 0))
-    BitmapFontMultiLineAlignment._pLastAlignmentItem:setColor(ccc3(255, 255, 255))
+    item:setColor(Color3B(255, 0, 0))
+    BitmapFontMultiLineAlignment._pLastAlignmentItem:setColor(Color3B(255, 255, 255))
     BitmapFontMultiLineAlignment._pLastAlignmentItem = item
 
     if item:getTag() == LongSentences then
@@ -1115,8 +1115,8 @@ end
 function BitmapFontMultiLineAlignment.alignmentChanged(tag, sender)
     -- cclog("BitmapFontMultiLineAlignment.alignmentChanged, tag:"..tag)
     local item = tolua.cast(sender, "CCMenuItemFont")
-    item:setColor(ccc3(255, 0, 0))
-    BitmapFontMultiLineAlignment._pLastAlignmentItem:setColor(ccc3(255, 255, 255))
+    item:setColor(Color3B(255, 0, 0))
+    BitmapFontMultiLineAlignment._pLastAlignmentItem:setColor(Color3B(255, 255, 255))
     BitmapFontMultiLineAlignment._pLastAlignmentItem = item
 
     if tag == LeftAlign then
@@ -1176,13 +1176,13 @@ function LabelTTFA8Test.create()
 
     local s = CCDirector:sharedDirector():getWinSize()
 
-    local colorlayer = CCLayerColor:create(ccc4(128, 128, 128, 255))
+    local colorlayer = CCLayerColor:create(Color4B(128, 128, 128, 255))
     layer:addChild(colorlayer, -10)
 
     -- CCLabelBMFont
     local label1 = CCLabelTTF:create("Testing A8 Format", "Marker Felt", 48)
     layer:addChild(label1)
-    label1:setColor(ccc3(255, 0, 0))
+    label1:setColor(Color3B(255, 0, 0))
     label1:setPosition(ccp(s.width/2, s.height/2))
 
     local fadeOut = CCFadeOut:create(2)
@@ -1322,7 +1322,7 @@ function LabelBMFontBounds.create()
     
     local s = CCDirector:sharedDirector():getWinSize()
     
-    local colorlayer = CCLayerColor:create(ccc4(128,128,128,255))
+    local colorlayer = CCLayerColor:create(Color4B(128,128,128,255))
     layer:addChild(colorlayer, -10)
     
     -- CCLabelBMFont

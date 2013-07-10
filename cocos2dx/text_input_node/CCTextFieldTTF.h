@@ -127,8 +127,8 @@ public:
 
     CC_SYNTHESIZE(TextFieldDelegate *, _delegate, Delegate);
     CC_SYNTHESIZE_READONLY(int, _charCount, CharCount);
-    virtual const ccColor3B& getColorSpaceHolder();
-    virtual void setColorSpaceHolder(const ccColor3B& color);
+    virtual const Color3B& getColorSpaceHolder();
+    virtual void setColorSpaceHolder(const Color3B& color);
 
     // input text property
 public:
@@ -144,7 +144,7 @@ public:
     virtual const char * getPlaceHolder(void);
 protected:
     std::string * _placeHolder;
-    ccColor3B _colorSpaceHolder;
+    Color3B _colorSpaceHolder;
 public:
     virtual void setSecureTextEntry(bool value);
     virtual bool isSecureTextEntry();

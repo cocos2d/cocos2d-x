@@ -34,7 +34,7 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL Double : public Object
+class CC_DLL Double : public Object, public Clonable
 {
 public:
     Double(double v)
@@ -53,7 +53,11 @@ public:
 
     /* override functions */
     virtual void acceptVisitor(DataVisitor &visitor) { visitor.visit(this); }
-
+    
+    Double* clone() const
+    {
+        return Double::create(_value);
+    }
 private:
     double _value;
 };

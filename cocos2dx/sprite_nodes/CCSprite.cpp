@@ -176,7 +176,7 @@ bool Sprite::initWithTexture(Texture2D *pTexture, const Rect& rect, bool rotated
         memset(&_quad, 0, sizeof(_quad));
         
         // Atlas: Color
-        ccColor4B tmpColor = { 255, 255, 255, 255 };
+        Color4B tmpColor(255, 255, 255, 255);
         _quad.bl.colors = tmpColor;
         _quad.br.colors = tmpColor;
         _quad.tl.colors = tmpColor;
@@ -351,10 +351,10 @@ void Sprite::setTextureRect(const Rect& rect, bool rotated, const Size& untrimme
         float y2 = y1 + _rect.size.height;
 
         // Don't update Z.
-        _quad.bl.vertices = vertex3(x1, y1, 0);
-        _quad.br.vertices = vertex3(x2, y1, 0);
-        _quad.tl.vertices = vertex3(x1, y2, 0);
-        _quad.tr.vertices = vertex3(x2, y2, 0);
+        _quad.bl.vertices = Vertex3F(x1, y1, 0);
+        _quad.br.vertices = Vertex3F(x2, y1, 0);
+        _quad.tl.vertices = Vertex3F(x1, y2, 0);
+        _quad.tr.vertices = Vertex3F(x2, y2, 0);
     }
 }
 
@@ -457,7 +457,7 @@ void Sprite::updateTransform(void)
         // If it is not visible, or one of its ancestors is not visible, then do nothing:
         if( !_visible || ( _parent && _parent != _batchNode && ((Sprite*)_parent)->_shouldBeHidden) )
         {
-            _quad.br.vertices = _quad.tl.vertices = _quad.tr.vertices = _quad.bl.vertices = vertex3(0,0,0);
+            _quad.br.vertices = _quad.tl.vertices = _quad.tr.vertices = _quad.bl.vertices = Vertex3F(0,0,0);
             _shouldBeHidden = true;
         }
         else 
@@ -504,10 +504,10 @@ void Sprite::updateTransform(void)
             float dx = x1 * cr - y2 * sr2 + x;
             float dy = x1 * sr + y2 * cr2 + y;
 
-            _quad.bl.vertices = vertex3( RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _vertexZ );
-            _quad.br.vertices = vertex3( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _vertexZ );
-            _quad.tl.vertices = vertex3( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _vertexZ );
-            _quad.tr.vertices = vertex3( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _vertexZ );
+            _quad.bl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _vertexZ );
+            _quad.br.vertices = Vertex3F( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _vertexZ );
+            _quad.tl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _vertexZ );
+            _quad.tr.vertices = Vertex3F( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _vertexZ );
         }
 
         // MARMALADE CHANGE: ADDED CHECK FOR NULL, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
@@ -550,25 +550,12 @@ void Sprite::draw(void)
 
     CCAssert(!_batchNode, "If Sprite is being rendered by SpriteBatchNode, Sprite#draw SHOULD NOT be called");
 
+    CC_NODE_DRAW_SETUP();
+    
     ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
 
-    if (_texture != NULL)
-    {
-        CC_NODE_DRAW_SETUP();
-        ccGLBindTexture2D( _texture->getName() );
-        ccGLEnableVertexAttribs( kVertexAttribFlag_PosColorTex );
-    }
-    else
-    {
-        // If the texture is invalid, uses the PositionColor shader instead.
-        // TODO: PostionTextureColor shader should support empty texture. In that way, we could get rid of next three lines.
-        GLProgram* prog = ShaderCache::sharedShaderCache()->programForKey(kShader_PositionColor);
-        prog->use();
-        prog->setUniformsForBuiltins();
-        
-        ccGLBindTexture2D(0);
-        ccGLEnableVertexAttribs( kVertexAttribFlag_Position | kVertexAttribFlag_Color );
-    }
+    ccGLBindTexture2D( _texture->getName() );
+    ccGLEnableVertexAttribs( kVertexAttribFlag_PosColorTex );
 
 #define kQuadSize sizeof(_quad.bl)
 #ifdef EMSCRIPTEN
@@ -579,18 +566,15 @@ void Sprite::draw(void)
 #endif // EMSCRIPTEN
 
     // vertex
-    int diff = offsetof( ccV3F_C4B_T2F, vertices);
+    int diff = offsetof( V3F_C4B_T2F, vertices);
     glVertexAttribPointer(kVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
 
-    if (_texture != NULL)
-    {
-        // texCoods
-        diff = offsetof( ccV3F_C4B_T2F, texCoords);
-        glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-    }
+    // texCoods
+    diff = offsetof( V3F_C4B_T2F, texCoords);
+    glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
     
     // color
-    diff = offsetof( ccV3F_C4B_T2F, colors);
+    diff = offsetof( V3F_C4B_T2F, colors);
     glVertexAttribPointer(kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
 
 
@@ -902,7 +886,7 @@ bool Sprite::isFlipY(void) const
 
 void Sprite::updateColor(void)
 {
-    ccColor4B color4 = { _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity };
+    Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
     
     // special opacity for premultiplied textures
 	if (_opacityModifyRGB)
@@ -943,7 +927,7 @@ void Sprite::setOpacity(GLubyte opacity)
     updateColor();
 }
 
-void Sprite::setColor(const ccColor3B& color3)
+void Sprite::setColor(const Color3B& color3)
 {
     NodeRGBA::setColor(color3);
 
@@ -964,7 +948,7 @@ bool Sprite::isOpacityModifyRGB(void) const
     return _opacityModifyRGB;
 }
 
-void Sprite::updateDisplayedColor(const ccColor3B& parentColor)
+void Sprite::updateDisplayedColor(const Color3B& parentColor)
 {
     NodeRGBA::updateDisplayedColor(parentColor);
     
@@ -1049,10 +1033,10 @@ void Sprite::setBatchNode(SpriteBatchNode *pobSpriteBatchNode)
         float y1 = _offsetPosition.y;
         float x2 = x1 + _rect.size.width;
         float y2 = y1 + _rect.size.height;
-        _quad.bl.vertices = vertex3( x1, y1, 0 );
-        _quad.br.vertices = vertex3( x2, y1, 0 );
-        _quad.tl.vertices = vertex3( x1, y2, 0 );
-        _quad.tr.vertices = vertex3( x2, y2, 0 );
+        _quad.bl.vertices = Vertex3F( x1, y1, 0 );
+        _quad.br.vertices = Vertex3F( x2, y1, 0 );
+        _quad.tl.vertices = Vertex3F( x1, y2, 0 );
+        _quad.tr.vertices = Vertex3F( x2, y2, 0 );
 
     } else {
 
@@ -1083,12 +1067,50 @@ void Sprite::updateBlendFunc(void)
     }
 }
 
+/*
+ * This array is the data of a white image with 2 by 2 dimension.
+ * It's used for creating a default texture when sprite's texture is set to NULL.
+ * Supposing codes as follows:
+ *
+ *   auto sp = new Sprite();
+ *   sp->init();  // Texture was set to NULL, in order to make opacity and color to work correctly, we need to create a 2x2 white texture.
+ *
+ * The test is in "TestCpp/SpriteTest/Sprite without texture".
+ */
+static unsigned char cc_2x2_white_image[] = {
+    // RGBA8888
+    0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF
+};
+
+#define CC_2x2_WHITE_IMAGE_KEY  "cc_2x2_white_image"
+
 void Sprite::setTexture(Texture2D *texture)
 {
     // If batchnode, then texture id should be the same
     CCAssert(! _batchNode || texture->getName() == _batchNode->getTexture()->getName(), "CCSprite: Batched sprites should use the same texture as the batchnode");
     // accept texture==nil as argument
     CCAssert( !texture || dynamic_cast<Texture2D*>(texture), "setTexture expects a Texture2D. Invalid argument");
+    
+    if (NULL == texture)
+    {
+        // Gets the texture by key firstly.
+        texture = TextureCache::sharedTextureCache()->textureForKey(CC_2x2_WHITE_IMAGE_KEY);
+        
+        // If texture wasn't in cache, create it from RAW data.
+        if (NULL == texture)
+        {
+            Image* image = new Image();
+            bool isOK = image->initWithImageData(cc_2x2_white_image, sizeof(cc_2x2_white_image), Image::kFmtRawData, 2, 2, 8);
+            if (isOK) {
+                texture = TextureCache::sharedTextureCache()->addUIImage(image, CC_2x2_WHITE_IMAGE_KEY);
+            }
+            
+            CC_SAFE_RELEASE(image);
+        }
+    }
     
     if (!_batchNode && _texture != texture)
     {

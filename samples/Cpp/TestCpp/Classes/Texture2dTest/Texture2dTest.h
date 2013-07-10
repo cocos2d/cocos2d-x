@@ -399,7 +399,7 @@ public:
     virtual void onEnter();
     virtual void draw();
 private:
-    Texture2D* _tex1, *_tex2;
+    Texture2D* _tex1, *_Tex2F;
 };
 
 class TextureDrawInRect : public TextureDemo
@@ -411,7 +411,7 @@ public:
     virtual void onEnter();
     virtual void draw();
 private:
-    Texture2D* _tex1, *_tex2;
+    Texture2D* _tex1, *_Tex2F;
 };
 
 class TextureTestScene : public TestScene

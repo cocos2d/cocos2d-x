@@ -699,7 +699,7 @@ void SchedulerUpdate::removeUpdates(float dt)
     Object* pObject;
     CCARRAY_FOREACH(children, pObject)
     {
-        pNode = (Node*)pObject;
+        pNode = static_cast<Node*>(pObject);
 
         if (! pNode)
         {
@@ -876,7 +876,7 @@ ControlSlider* SchedulerTimeScale::sliderCtl()
 
 void SchedulerTimeScale::sliderAction(Object* pSender, ControlEvent controlEvent)
 {
-    ControlSlider* pSliderCtl = (ControlSlider*)pSender;
+    ControlSlider* pSliderCtl = static_cast<ControlSlider*>(pSender);
     float scale;
     scale = pSliderCtl->getValue();
 
@@ -970,7 +970,7 @@ void TwoSchedulers::sliderAction(Object* sender, ControlEvent controlEvent)
 {
     float scale;
 
-    ControlSlider *slider = (ControlSlider*) sender;
+    ControlSlider *slider = static_cast<ControlSlider*>(sender);
     scale = slider->getValue();
 
     if( sender == sliderCtl1 )

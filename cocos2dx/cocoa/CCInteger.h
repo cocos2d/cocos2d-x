@@ -10,7 +10,7 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL Integer : public Object
+class CC_DLL Integer : public Object, public Clonable
 {
 public:
     Integer(int v)
@@ -27,6 +27,11 @@ public:
     /* override functions */
     virtual void acceptVisitor(DataVisitor &visitor) { visitor.visit(this); }
 
+    Integer* clone() const
+    {
+        return Integer::create(_value);
+    }
+    
 private:
     int _value;
 };

@@ -45,7 +45,7 @@ static void setProgram(Node *n, GLProgram *p)
     Object* pObj = NULL;
     CCARRAY_FOREACH(n->getChildren(), pObj)
     {
-        setProgram((Node*)pObj, p);
+        setProgram(static_cast<Node*>(pObj), p);
     }
 }
 
@@ -255,8 +255,8 @@ void ClippingNode::visit()
     glStencilOp(!_inverted ? GL_ZERO : GL_REPLACE, GL_KEEP, GL_KEEP);
     
     // draw a fullscreen solid rectangle to clear the stencil buffer
-    //ccDrawSolidRect(PointZero, ccpFromSize([[Director sharedDirector] winSize]), ccc4f(1, 1, 1, 1));
-    ccDrawSolidRect(PointZero, ccpFromSize(Director::sharedDirector()->getWinSize()), ccc4f(1, 1, 1, 1));
+    //ccDrawSolidRect(PointZero, ccpFromSize([[Director sharedDirector] winSize]), Color4F(1, 1, 1, 1));
+    ccDrawSolidRect(PointZero, ccpFromSize(Director::sharedDirector()->getWinSize()), Color4F(1, 1, 1, 1));
     
     ///////////////////////////////////
     // DRAW CLIPPING STENCIL

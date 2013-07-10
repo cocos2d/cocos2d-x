@@ -19,7 +19,7 @@ class CCSprite : public CCNodeRGBA
 	void setDirty(bool bDirty);
 	bool isDirty(void) const;
 
-	ccV3F_C4B_T2F_Quad getQuad(void);
+	V3F_C4B_T2F_Quad getQuad(void);
 
 	CCRect getTextureRect(void);
 	//bool isUsesBatchNode(void);
@@ -34,8 +34,8 @@ class CCSprite : public CCNodeRGBA
 	//CCSpriteBatchNode* getSpriteBatchNode(void);
 	//void setHonorParentTransform(ccHonorParentTransform eHonorParentTransform);
 	//ccHonorParentTransform getHonorParentTransform(void);
-	void setBlendFunc(const ccBlendFunc &blendFunc);
-	const ccBlendFunc& getBlendFunc(void);
+	void setBlendFunc(const BlendFunc &blendFunc);
+	const BlendFunc& getBlendFunc(void);
 
 	const CCPoint& getOffsetPosition(void) const;
 
@@ -65,8 +65,8 @@ class CCSprite : public CCNodeRGBA
 
 	void setOpacity(GLubyte opacity);
 
-	void setColor(ccColor3B color3);
-	ccColor3B getColor(void);
+	void setColor(Color3B color3);
+	Color3B getColor(void);
 	void setOpacityModifyRGB(bool bValue);
 	bool isOpacityModifyRGB(void) const;
 

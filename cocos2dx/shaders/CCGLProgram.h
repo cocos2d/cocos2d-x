@@ -124,7 +124,7 @@ public:
     void updateUniforms();
     
     /** calls retrieves the named uniform location for this shader program. */
-    GLint getUniformLocationForName(const char* name);
+    GLint getUniformLocationForName(const char* name) const;
     
     /** calls glUniform1i only if the values are different than the previous call for this same shader program. */
     void setUniformLocationWith1i(GLint location, GLint i1);
@@ -176,23 +176,23 @@ public:
     void setUniformsForBuiltins();
 
     /** returns the vertexShader error log */
-    const char* vertexShaderLog();
+    const char* vertexShaderLog() const;
     /** returns the fragmentShader error log */
-    const char* fragmentShaderLog();
+    const char* fragmentShaderLog() const;
     /** returns the program error log */
-    const char* programLog();
+    const char* programLog() const;
     
     // reload all shaders, this function is designed for android
     // when opengl context lost, so don't call it.
     void reset();
     
-    inline const GLuint getProgram() { return _program; }
+    inline const GLuint getProgram() const { return _program; }
 
 private:
     bool updateUniformLocation(GLint location, GLvoid* data, unsigned int bytes);
-    const char* description();
+    const char* description() const;
     bool compileShader(GLuint * shader, GLenum type, const GLchar* source);
-    const char* logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc);
+    const char* logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const;
 
 private:
     GLuint            _program;

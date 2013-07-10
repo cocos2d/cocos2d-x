@@ -101,8 +101,8 @@ void TileMapAtlas::calculateItemsToRender()
     {
         for( int y=0; y < _TGAInfo->height; y++ ) 
         {
-            ccColor3B *ptr = (ccColor3B*) _TGAInfo->imageData;
-            ccColor3B value = ptr[x + y * _TGAInfo->width];
+            Color3B *ptr = (Color3B*) _TGAInfo->imageData;
+            Color3B value = ptr[x + y * _TGAInfo->width];
             if( value.r )
             {
                 ++_itemsToRender;
@@ -132,7 +132,7 @@ void TileMapAtlas::loadTGAfile(const char *file)
 }
 
 // TileMapAtlas - Atlas generation / updates
-void TileMapAtlas::setTile(const ccColor3B& tile, const Point& position)
+void TileMapAtlas::setTile(const Color3B& tile, const Point& position)
 {
     CCAssert(_TGAInfo != NULL, "tgaInfo must not be nil");
     CCAssert(_posToAtlasIndex != NULL, "posToAtlasIndex must not be nil");
@@ -140,8 +140,8 @@ void TileMapAtlas::setTile(const ccColor3B& tile, const Point& position)
     CCAssert(position.y < _TGAInfo->height, "Invalid position.x");
     CCAssert(tile.r != 0, "R component must be non 0");
 
-    ccColor3B *ptr = (ccColor3B*)_TGAInfo->imageData;
-    ccColor3B value = ptr[(unsigned int)(position.x + position.y * _TGAInfo->width)];
+    Color3B *ptr = (Color3B*)_TGAInfo->imageData;
+    Color3B value = ptr[(unsigned int)(position.x + position.y * _TGAInfo->width)];
     if( value.r == 0 )
     {
         CCLOG("cocos2d: Value.r must be non 0.");
@@ -159,23 +159,23 @@ void TileMapAtlas::setTile(const ccColor3B& tile, const Point& position)
     }    
 }
 
-ccColor3B TileMapAtlas::tileAt(const Point& position)
+Color3B TileMapAtlas::tileAt(const Point& position)
 {
     CCAssert( _TGAInfo != NULL, "tgaInfo must not be nil");
     CCAssert( position.x < _TGAInfo->width, "Invalid position.x");
     CCAssert( position.y < _TGAInfo->height, "Invalid position.y");
 
-    ccColor3B *ptr = (ccColor3B*)_TGAInfo->imageData;
-    ccColor3B value = ptr[(unsigned int)(position.x + position.y * _TGAInfo->width)];
+    Color3B *ptr = (Color3B*)_TGAInfo->imageData;
+    Color3B value = ptr[(unsigned int)(position.x + position.y * _TGAInfo->width)];
 
     return value;    
 }
 
-void TileMapAtlas::updateAtlasValueAt(const Point& pos, const ccColor3B& value, unsigned int index)
+void TileMapAtlas::updateAtlasValueAt(const Point& pos, const Color3B& value, unsigned int index)
 {
     CCAssert( index >= 0 && index < _textureAtlas->getCapacity(), "updateAtlasValueAt: Invalid index");
 
-    ccV3F_C4B_T2F_Quad* quad = &((_textureAtlas->getQuads())[index]);
+    V3F_C4B_T2F_Quad* quad = &((_textureAtlas->getQuads())[index]);
 
     int x = pos.x;
     int y = pos.y;
@@ -222,7 +222,7 @@ void TileMapAtlas::updateAtlasValueAt(const Point& pos, const ccColor3B& value, 
     quad->tr.vertices.y = (float)(y * _itemHeight + _itemHeight);
     quad->tr.vertices.z = 0.0f;
 
-    ccColor4B color = { _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity };
+    Color4B color(_displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity);
     quad->tr.colors = color;
     quad->tl.colors = color;
     quad->br.colors = color;
@@ -247,8 +247,8 @@ void TileMapAtlas::updateAtlasValues()
         {
             if( total < _itemsToRender ) 
             {
-                ccColor3B *ptr = (ccColor3B*) _TGAInfo->imageData;
-                ccColor3B value = ptr[x + y * _TGAInfo->width];
+                Color3B *ptr = (Color3B*) _TGAInfo->imageData;
+                Color3B value = ptr[x + y * _TGAInfo->width];
 
                 if( value.r != 0 )
                 {

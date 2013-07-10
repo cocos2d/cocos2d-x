@@ -109,7 +109,7 @@ RenderTextureSave::RenderTextureSave()
     // create a brush image to draw into the texture with
     _brush = Sprite::create("Images/fire.png");
     _brush->retain();
-    _brush->setColor(ccRED);
+    _brush->setColor(Color3B::RED);
     _brush->setOpacity(20);
     this->setTouchEnabled(true);
 
@@ -178,7 +178,7 @@ RenderTextureSave::~RenderTextureSave()
 
 void RenderTextureSave::ccTouchesMoved(Set* touches, Event* event)
 {
-    Touch *touch = (Touch *)touches->anyObject();
+    Touch *touch = static_cast<Touch*>( touches->anyObject() );
     Point start = touch->getLocation();
     Point end = touch->getPreviousLocation();
 
@@ -200,9 +200,9 @@ void RenderTextureSave::ccTouchesMoved(Set* touches, Event* event)
             _brush->setRotation(rand() % 360);
             float r = (float)(rand() % 50 / 50.f) + 0.25f;
             _brush->setScale(r);
-            /*_brush->setColor(ccc3(CCRANDOM_0_1() * 127 + 128, 255, 255));*/
+            /*_brush->setColor(Color3B(CCRANDOM_0_1() * 127 + 128, 255, 255));*/
             // Use CCRANDOM_0_1() will cause error when loading libtests.so on android, I don't know why.
-            _brush->setColor(ccc3(rand() % 127 + 128, 255, 255));
+            _brush->setColor(Color3B(rand() % 127 + 128, 255, 255));
             // Call visit to draw the brush, don't call draw..
             _brush->visit();
         }
@@ -230,7 +230,7 @@ RenderTextureIssue937::RenderTextureIssue937()
     *  B1: non-premulti sprite
     *  B2: non-premulti render
     */
-    LayerColor *background = LayerColor::create(ccc4(200,200,200,255));
+    LayerColor *background = LayerColor::create(Color4B(200,200,200,255));
     addChild(background);
 
     Sprite *spr_premulti = Sprite::create("Images/fire.png");
@@ -251,7 +251,7 @@ RenderTextureIssue937::RenderTextureIssue937()
     }
 
     // It's possible to modify the RenderTexture blending function by
-    //        [[rend sprite] setBlendFunc:(ccBlendFunc) {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
+    //        [[rend sprite] setBlendFunc:(BlendFunc) {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
 
     rend->begin();
     spr_premulti->visit();
@@ -348,7 +348,7 @@ RenderTextureZbuffer::RenderTextureZbuffer()
     sp9->setVertexZ(-400);
 
     sp9->setScale(2);
-    sp9->setColor(ccYELLOW);
+    sp9->setColor(Color3B::YELLOW);
 }
 
 string RenderTextureZbuffer::title()
@@ -425,7 +425,7 @@ void RenderTextureZbuffer::renderScreenShot()
     sprite->setOpacity(182);
     sprite->setFlipY(1);
     this->addChild(sprite, 999999);
-    sprite->setColor(ccGREEN);
+    sprite->setColor(Color3B::GREEN);
 
     sprite->runAction(Sequence::create(FadeTo::create(2, 0),
                                           Hide::create(),
@@ -493,7 +493,7 @@ RenderTextureTargetNode::RenderTextureTargetNode()
 	 *  B1: non-premulti sprite
 	 *  B2: non-premulti render
 	 */
-    LayerColor *background = LayerColor::create(ccc4(40,40,40,255));
+    LayerColor *background = LayerColor::create(Color4B(40,40,40,255));
     addChild(background);
     
     // sprite 1
@@ -515,7 +515,7 @@ RenderTextureTargetNode::RenderTextureTargetNode()
     /* add the sprites to the render texture */
     renderTexture->addChild(sprite1);
     renderTexture->addChild(sprite2);
-    renderTexture->setClearColor(ccc4f(0, 0, 0, 0));
+    renderTexture->setClearColor(Color4F(0, 0, 0, 0));
     renderTexture->setClearFlags(GL_COLOR_BUFFER_BIT);
     
     /* add the render texture to the scene */
@@ -542,7 +542,7 @@ void RenderTextureTargetNode::touched(Object* sender)
     else
     {
         renderTexture->setClearFlags(0);
-        renderTexture->setClearColor(ccc4f( CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
+        renderTexture->setClearColor(Color4F( CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
     }
 }
 
@@ -598,7 +598,7 @@ void SpriteRenderTextureBug::SimpleSprite::draw()
     
 	CC_NODE_DRAW_SETUP();
     
-	ccBlendFunc blend = getBlendFunc();
+	BlendFunc blend = getBlendFunc();
 	ccGLBlendFunc(blend.src, blend.dst);
     
     ccGLBindTexture2D(getTexture()->getName());
@@ -613,15 +613,15 @@ void SpriteRenderTextureBug::SimpleSprite::draw()
 	long offset = (long)&_quad;
     
 	// vertex
-	int diff = offsetof( ccV3F_C4B_T2F, vertices);
+	int diff = offsetof( V3F_C4B_T2F, vertices);
 	glVertexAttribPointer(kVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
     
 	// texCoods
-	diff = offsetof( ccV3F_C4B_T2F, texCoords);
+	diff = offsetof( V3F_C4B_T2F, texCoords);
 	glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
     
 	// color
-	diff = offsetof( ccV3F_C4B_T2F, colors);
+	diff = offsetof( V3F_C4B_T2F, colors);
 	glVertexAttribPointer(kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
     
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);

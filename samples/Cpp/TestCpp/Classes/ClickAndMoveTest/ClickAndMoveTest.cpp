@@ -21,7 +21,7 @@ MainLayer::MainLayer()
     
     Sprite* sprite = Sprite::create(s_pPathGrossini);
     
-    Layer* layer = LayerColor::create(ccc4(255,255,0,255));
+    Layer* layer = LayerColor::create(Color4B(255,255,0,255));
     addChild(layer, -1);
         
     addChild(sprite, 0, kTagSprite);

@@ -97,8 +97,8 @@ void AnimationCache::parseVersion1(Dictionary* animations)
     DictElement* pElement = NULL;
     CCDICT_FOREACH(animations, pElement)
     {
-        Dictionary* animationDict = (Dictionary*)pElement->getObject();
-        Array* frameNames = (Array*)animationDict->objectForKey("frames");
+        Dictionary* animationDict = static_cast<Dictionary*>(pElement->getObject());
+        Array* frameNames = static_cast<Array*>(animationDict->objectForKey("frames"));
         float delay = animationDict->valueForKey("delay")->floatValue();
         Animation* animation = NULL;
 
@@ -114,7 +114,7 @@ void AnimationCache::parseVersion1(Dictionary* animations)
         Object* pObj = NULL;
         CCARRAY_FOREACH(frameNames, pObj)
         {
-            const char* frameName = ((String*)pObj)->getCString();
+            const char* frameName = static_cast<String*>(pObj)->getCString();
             SpriteFrame* spriteFrame = frameCache->spriteFrameByName(frameName);
 
             if ( ! spriteFrame ) {
@@ -151,12 +151,12 @@ void AnimationCache::parseVersion2(Dictionary* animations)
     CCDICT_FOREACH(animations, pElement)
     {
         const char* name = pElement->getStrKey();
-        Dictionary* animationDict = (Dictionary*)pElement->getObject();
+        Dictionary* animationDict = static_cast<Dictionary*>(pElement->getObject());
 
         const String* loops = animationDict->valueForKey("loops");
         bool restoreOriginalFrame = animationDict->valueForKey("restoreOriginalFrame")->boolValue();
 
-        Array* frameArray = (Array*)animationDict->objectForKey("frames");
+        Array* frameArray = static_cast<Array*>(animationDict->objectForKey("frames"));
 
         if ( frameArray == NULL ) {
             CCLOG("cocos2d: AnimationCache: Animation '%s' found in dictionary without any frames - cannot add to animation cache.", name);
@@ -170,7 +170,7 @@ void AnimationCache::parseVersion2(Dictionary* animations)
         Object* pObj = NULL;
         CCARRAY_FOREACH(frameArray, pObj)
         {
-            Dictionary* entry = (Dictionary*)(pObj);
+            Dictionary* entry = static_cast<Dictionary*>(pObj);
 
             const char* spriteFrameName = entry->valueForKey("spriteframe")->getCString();
             SpriteFrame *spriteFrame = frameCache->spriteFrameByName(spriteFrameName);
@@ -222,7 +222,7 @@ void AnimationCache::addAnimationsWithDictionary(Dictionary* dictionary)
         Object* pObj = NULL;
         CCARRAY_FOREACH(spritesheets, pObj)
         {
-            String* name = (String*)(pObj);
+            String* name = static_cast<String*>(pObj);
             SpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(name->getCString());
         }
     }
