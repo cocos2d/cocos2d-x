@@ -53,7 +53,7 @@ public:
     static void destroyInstance();
 
     /** Enable cookie support. **/
-    static void enableCookies(const char* cookieFile);
+    void enableCookies(const char* cookieFile);
         
     /**
      * Add a get request to task queue
