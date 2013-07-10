@@ -160,9 +160,15 @@ public:
     ~TiledGrid3D(void);
 
     /** returns the tile at the given position */
-    Quad3 tile(const Point& pos);
+    CC_DEPRECATED_ATTRIBUTE Quad3 tile(const Point& pos);
     /** returns the original tile (untransformed) at the given position */
-    Quad3 originalTile(const Point& pos);
+    CC_DEPRECATED_ATTRIBUTE Quad3 originalTile(const Point& pos);
+    
+    /** returns the tile at the given position */
+    Quad3 getTile(const Point& pos);
+    /** returns the original tile (untransformed) at the given position */
+    Quad3 getOriginalTile(const Point& pos);
+    
     /** sets a new tile */
     void setTile(const Point& pos, const Quad3& coords);
 
