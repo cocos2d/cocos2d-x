@@ -663,7 +663,7 @@ void TiledGrid3D::setTile(const Point& pos, const Quad3& coords)
     memcpy(&vertArray[idx], &coords, sizeof(Quad3));
 }
 
-Quad3 TiledGrid3D::originalTile(const Point& pos)
+Quad3 TiledGrid3D::getOriginalTile(const Point& pos)
 {
     CCAssert( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     int idx = (_gridSize.height * pos.x + pos.y) * 4 * 3;
@@ -675,7 +675,7 @@ Quad3 TiledGrid3D::originalTile(const Point& pos)
     return ret;
 }
 
-Quad3 TiledGrid3D::tile(const Point& pos)
+Quad3 TiledGrid3D::getTile(const Point& pos)
 {
     CCAssert( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     int idx = (_gridSize.height * pos.x + pos.y) * 4 * 3;
@@ -685,6 +685,16 @@ Quad3 TiledGrid3D::tile(const Point& pos)
     memcpy(&ret, &vertArray[idx], sizeof(Quad3));
 
     return ret;
+}
+
+Quad3 TiledGrid3D::originalTile(const Point& pos)
+{
+    return getOriginalTile(pos);
+}
+
+Quad3 TiledGrid3D::tile(const Point& pos)
+{
+    return getTile(pos);
 }
 
 void TiledGrid3D::reuse(void)
