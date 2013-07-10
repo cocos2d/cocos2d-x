@@ -44,19 +44,15 @@ public:
 
 	static void addSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
 	static void createSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay);
-	static void updateSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty);
+	static void updateSpriteDisplay(CCBone *bone, CCNode *display, float dt, bool dirty);
 
 	static void addArmatureDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
 	static void createArmatureDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay);
-	static void updateArmatureDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty);
+	static void updateArmatureDisplay(CCBone *bone, CCNode *display, float dt, bool dirty);
 
 	static void addParticleDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
 	static void createParticleDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay);
-	static void updateParticleDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty);
-
-	static void addShaderDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
-	static void createShaderDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay);
-
+	static void updateParticleDisplay(CCBone *bone, CCNode *display, float dt, bool dirty);
 };
 
 
