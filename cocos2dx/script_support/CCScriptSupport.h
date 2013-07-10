@@ -285,7 +285,7 @@ public:
     virtual void removeScriptHandler(int nHandler) {};
     
     /** Reallocate script function handler, only LuaEngine class need to implement this function. */
-    virtual int reallocateScriptHandler(int nHandler) { return -1;}
+    virtual int reallocateScriptHandler(int nHandler) { return 0;}
     
     /**
      @brief Execute script code contained in the given string.
