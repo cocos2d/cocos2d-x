@@ -80,6 +80,12 @@ public:
     /** compare to a c string */
     int compare(const char *) const;
 
+    /** append additional characters at the end of its current value */
+    void append(const std::string& str);
+
+    /** append(w/ format) additional characters at the end of its current value */
+    void appendWithFormat(const char* format, ...);
+
     /* override functions */
     virtual bool isEqual(const Object* pObject);
 
