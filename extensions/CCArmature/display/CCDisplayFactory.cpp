@@ -90,21 +90,20 @@ void CCDisplayFactory::updateDisplay(CCBone *bone, CCDecorativeDisplay *decoDisp
     }
 #endif
 
+	CCNode *display = decoDisplay->getDisplay();
 
-    switch(decoDisplay->getDisplayData()->displayType)
-    {
-    case CS_DISPLAY_SPRITE:
-        updateSpriteDisplay(bone, decoDisplay, dt, dirty);
-        break;
-    case CS_DISPLAY_PARTICLE:
-        updateParticleDisplay(bone, decoDisplay, dt, dirty);
-        break;
-    case CS_DISPLAY_ARMATURE:
-        updateArmatureDisplay(bone, decoDisplay, dt, dirty);
-        break;
-    default:
-        break;
-    }
+	if (dynamic_cast<CCSkin*>(display) != NULL)
+	{
+		updateSpriteDisplay(bone, display, dt, dirty);
+	}
+	else if (dynamic_cast<CCParticleSystem*>(display) != NULL)
+	{
+		updateParticleDisplay(bone, display, dt, dirty);
+	}
+	else if (dynamic_cast<CCArmature*>(display) != NULL)
+	{
+		updateArmatureDisplay(bone, display, dt, dirty);
+	}
 }
 
 
@@ -181,9 +180,9 @@ void CCDisplayFactory::createSpriteDisplay(CCBone *bone, CCDecorativeDisplay *de
 #endif
 }
 
-void CCDisplayFactory::updateSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty)
+void CCDisplayFactory::updateSpriteDisplay(CCBone *bone, CCNode *display, float dt, bool dirty)
 {
-    CCSkin *skin = (CCSkin *)decoDisplay->getDisplay();
+    CCSkin *skin = (CCSkin *)display;
     skin->updateArmatureTransform();
 }
 
@@ -210,11 +209,11 @@ void CCDisplayFactory::createArmatureDisplay(CCBone *bone, CCDecorativeDisplay *
 
     decoDisplay->setDisplay(armature);
 }
-void CCDisplayFactory::updateArmatureDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty)
+void CCDisplayFactory::updateArmatureDisplay(CCBone *bone, CCNode *display, float dt, bool dirty)
 {
     CS_RETURN_IF(!dirty);
 
-    CCArmature *armature = bone->getChildArmature();
+    CCArmature *armature = (CCArmature*)display;
     if(armature)
     {
         armature->sortAllChildren();
@@ -238,9 +237,9 @@ void CCDisplayFactory::createParticleDisplay(CCBone *bone, CCDecorativeDisplay *
     CCParticleSystem *system = CCParticleSystemQuad::create(displayData->plist.c_str());
     decoDisplay->setDisplay(system);
 }
-void CCDisplayFactory::updateParticleDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty)
+void CCDisplayFactory::updateParticleDisplay(CCBone *bone, CCNode *display, float dt, bool dirty)
 {
-    CCParticleSystem *system = (CCParticleSystem *)decoDisplay->getDisplay();
+    CCParticleSystem *system = (CCParticleSystem *)display;
     CCBaseData node;
     CCTransformHelp::matrixToNode(bone->nodeToArmatureTransform(), node);
     system->setPosition(node.x, node.y);
