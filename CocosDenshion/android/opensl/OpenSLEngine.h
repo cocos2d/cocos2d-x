@@ -62,7 +62,7 @@ public:
 
 	void resumeAllEffects();
 
-	void setEffectLooping(unsigned int effectID, bool isLooping);
+	void setEffectParameters(unsigned int effectID, bool isLooping, float pitch, float pan, float gain);
 
 	void setEffectsVolume(float volume);
 
@@ -70,7 +70,7 @@ public:
 
 private:
 	SLmillibel _musicVolume;
-	SLmillibel _effectVolume;
+    float _effectVolume;
 };
 
 #endif

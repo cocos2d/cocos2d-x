@@ -185,16 +185,16 @@ void DemoBigFlower::onEnter()
     _emitter->setEndSpinVar(0);
     
     // color of particles
-    ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColor(0.5f, 0.5f, 0.5f, 1.0f);
     _emitter->setStartColor(startColor);
     
-    ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColorVar(0.5f, 0.5f, 0.5f, 1.0f);
     _emitter->setStartColorVar(startColorVar);
     
-    ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+    Color4F endColor(0.1f, 0.1f, 0.1f, 0.2f);
     _emitter->setEndColor(endColor);
     
-    ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};    
+    Color4F endColorVar(0.1f, 0.1f, 0.1f, 0.2f);    
     _emitter->setEndColorVar(endColorVar);
     
     // size, in pixels
@@ -270,16 +270,16 @@ void DemoRotFlower::onEnter()
     _emitter->setEndSpinVar(2000);
     
     // color of particles
-    ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColor(0.5f, 0.5f, 0.5f, 1.0f);
     _emitter->setStartColor(startColor);
     
-    ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColorVar(0.5f, 0.5f, 0.5f, 1.0f);
     _emitter->setStartColorVar(startColorVar);
     
-    ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+    Color4F endColor(0.1f, 0.1f, 0.1f, 0.2f);
     _emitter->setEndColor(endColor);
     
-    ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};    
+    Color4F endColorVar(0.1f, 0.1f, 0.1f, 0.2f);    
     _emitter->setEndColorVar(endColorVar);
 
     // size, in pixels
@@ -423,13 +423,13 @@ void DemoSnow::onEnter()
     _emitter->setSpeedVar(30);
     
     
-    ccColor4F startColor = _emitter->getStartColor();
+    Color4F startColor = _emitter->getStartColor();
     startColor.r = 0.9f;
     startColor.g = 0.9f;
     startColor.b = 0.9f;
     _emitter->setStartColor(startColor);
     
-    ccColor4F startColorVar = _emitter->getStartColorVar();
+    Color4F startColorVar = _emitter->getStartColorVar();
     startColorVar.b = 0.1f;
     _emitter->setStartColorVar(startColorVar);
     
@@ -527,16 +527,16 @@ void DemoModernArt::onEnter()
     _emitter->setEmissionRate(_emitter->getTotalParticles()/_emitter->getLife());
     
     // color of particles
-    ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColor(0.5f, 0.5f, 0.5f, 1.0f);
     _emitter->setStartColor(startColor);
     
-    ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColorVar(0.5f, 0.5f, 0.5f, 1.0f);
     _emitter->setStartColorVar(startColorVar);
     
-    ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+    Color4F endColor(0.1f, 0.1f, 0.1f, 0.2f);
     _emitter->setEndColor(endColor);
     
-    ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};    
+    Color4F endColorVar(0.1f, 0.1f, 0.1f, 0.2f);    
     _emitter->setEndColorVar(endColorVar);
     
     // size, in pixels
@@ -640,7 +640,7 @@ void RadiusMode1::onEnter()
 {
     ParticleDemo::onEnter();
 
-	_color->setColor(ccBLACK);
+	_color->setColor(Color3B::BLACK);
     removeChild(_background, true);
     _background = NULL;
 
@@ -686,16 +686,16 @@ void RadiusMode1::onEnter()
     _emitter->setEndSpinVar(0);
 
     // color of particles
-    ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColor(0.5f, 0.5f, 0.5f, 1.0f);
     _emitter->setStartColor(startColor);
 
-    ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColorVar(0.5f, 0.5f, 0.5f, 1.0f);
     _emitter->setStartColorVar(startColorVar);
 
-    ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+    Color4F endColor(0.1f, 0.1f, 0.1f, 0.2f);
     _emitter->setEndColor(endColor);
 
-    ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};    
+    Color4F endColorVar(0.1f, 0.1f, 0.1f, 0.2f);    
     _emitter->setEndColorVar(endColorVar);
 
     // size, in pixels
@@ -724,7 +724,7 @@ void RadiusMode2::onEnter()
 {
     ParticleDemo::onEnter();
 
-    _color->setColor(ccBLACK);
+    _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
     _background = NULL;
 
@@ -770,16 +770,16 @@ void RadiusMode2::onEnter()
     _emitter->setEndSpinVar(0);
 
     // color of particles
-    ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColor(0.5f, 0.5f, 0.5f, 1.0f);
     _emitter->setStartColor(startColor);
 
-    ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColorVar(0.5f, 0.5f, 0.5f, 1.0f);
     _emitter->setStartColorVar(startColorVar);
 
-        ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+    Color4F endColor(0.1f, 0.1f, 0.1f, 0.2f);
     _emitter->setEndColor(endColor);
 
-    ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};    
+    Color4F endColorVar(0.1f, 0.1f, 0.1f, 0.2f);    
     _emitter->setEndColorVar(endColorVar);
 
     // size, in pixels
@@ -808,7 +808,7 @@ void Issue704::onEnter()
 {
     ParticleDemo::onEnter();
 
-    _color->setColor(ccBLACK);
+    _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
     _background = NULL;
 
@@ -854,16 +854,16 @@ void Issue704::onEnter()
     _emitter->setEndSpinVar(0);
 
     // color of particles
-    ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColor(0.5f, 0.5f, 0.5f, 1.0f);
     _emitter->setStartColor(startColor);
 
-    ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+    Color4F startColorVar(0.5f, 0.5f, 0.5f, 1.0f);
     _emitter->setStartColorVar(startColorVar);
 
-        ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+    Color4F endColor(0.1f, 0.1f, 0.1f, 0.2f);
     _emitter->setEndColor(endColor);
 
-    ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};    
+    Color4F endColorVar(0.1f, 0.1f, 0.1f, 0.2f);    
     _emitter->setEndColorVar(endColorVar);
 
     // size, in pixels
@@ -900,7 +900,7 @@ void Issue870::onEnter()
 {
     ParticleDemo::onEnter();
 
-    _color->setColor(ccBLACK);
+    _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
     _background = NULL;
 
@@ -941,7 +941,7 @@ void DemoParticleFromFile::onEnter()
 {
     ParticleDemo::onEnter();
 
-    _color->setColor(ccBLACK);
+    _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
     _background = NULL;
 
@@ -1069,7 +1069,7 @@ void ParticleDemo::onEnter(void)
 {
     BaseTest::onEnter();
 
-	_color = LayerColor::create( ccc4(127,127,127,255) );
+	_color = LayerColor::create( Color4B(127,127,127,255) );
 	this->addChild(_color);
     
     _emitter = NULL;
@@ -1211,7 +1211,7 @@ void ParticleBatchHybrid::onEnter()
 {
     ParticleDemo::onEnter();
 
-    _color->setColor(ccBLACK);
+    _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
     _background = NULL;
 
@@ -1259,16 +1259,16 @@ void ParticleBatchMultipleEmitters::onEnter()
 {
     ParticleDemo::onEnter();
 
-    _color->setColor(ccBLACK);
+    _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
     _background = NULL;
 
     ParticleSystemQuad *emitter1 = ParticleSystemQuad::create("Particles/LavaFlow.plist");
-    emitter1->setStartColor(ccc4f(1,0,0,1));
+    emitter1->setStartColor(Color4F(1,0,0,1));
     ParticleSystemQuad *emitter2 = ParticleSystemQuad::create("Particles/LavaFlow.plist");
-    emitter2->setStartColor(ccc4f(0,1,0,1));
+    emitter2->setStartColor(Color4F(0,1,0,1));
     ParticleSystemQuad *emitter3 = ParticleSystemQuad::create("Particles/LavaFlow.plist");
-    emitter3->setStartColor(ccc4f(0,0,1,1));
+    emitter3->setStartColor(Color4F(0,0,1,1));
 
     Size s = Director::sharedDirector()->getWinSize();
 
@@ -1302,7 +1302,7 @@ void ParticleReorder::onEnter()
     ParticleDemo::onEnter();
 
     _order = 0;
-    _color->setColor(ccBLACK);
+    _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
     _background = NULL;
 
@@ -1316,13 +1316,13 @@ void ParticleReorder::onEnter()
         Node *parent = ( i==0 ? parent1 : parent2 );
 
         ParticleSystemQuad *emitter1 = ParticleSystemQuad::create("Particles/SmallSun.plist");
-        emitter1->setStartColor(ccc4f(1,0,0,1));
+        emitter1->setStartColor(Color4F(1,0,0,1));
         emitter1->setBlendAdditive(false);
         ParticleSystemQuad *emitter2 = ParticleSystemQuad::create("Particles/SmallSun.plist");
-        emitter2->setStartColor(ccc4f(0,1,0,1));
+        emitter2->setStartColor(Color4F(0,1,0,1));
         emitter2->setBlendAdditive(false);
         ParticleSystemQuad *emitter3 = ParticleSystemQuad::create("Particles/SmallSun.plist");
-        emitter3->setStartColor(ccc4f(0,0,1,1));
+        emitter3->setStartColor(Color4F(0,0,1,1));
         emitter3->setBlendAdditive(false);
 
         Size s = Director::sharedDirector()->getWinSize();
@@ -1442,8 +1442,8 @@ bool RainbowEffect::initWithTotalParticles(unsigned int numberOfParticles)
         setEmissionRate(getTotalParticles()/getLife());
 
         // color of particles
-        setStartColor(ccc4FFromccc4B(ccc4(50, 50, 50, 50)));
-        setEndColor(ccc4FFromccc4B(ccc4(0, 0, 0, 0)));
+        setStartColor(Color4F(Color4B(50, 50, 50, 50)));
+        setEndColor(Color4F(Color4B(0, 0, 0, 0)));
 
         _startColorVar.r = 0.0f;
         _startColorVar.g = 0.0f;
@@ -1472,7 +1472,7 @@ void Issue1201::onEnter()
 {
     ParticleDemo::onEnter();
 
-    _color->setColor(ccBLACK);
+    _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
     _background = NULL;
 
@@ -1502,7 +1502,7 @@ void MultipleParticleSystems::onEnter()
 {
     ParticleDemo::onEnter();
 
-    _color->setColor(ccBLACK);
+    _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
     _background = NULL;
 
@@ -1557,7 +1557,7 @@ void MultipleParticleSystemsBatched::onEnter()
 {
     ParticleDemo::onEnter();
 
-    _color->setColor(ccBLACK);
+    _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
     _background = NULL;
 
@@ -1619,7 +1619,7 @@ void AddAndDeleteParticleSystems::onEnter()
 {
     ParticleDemo::onEnter();
 
-    _color->setColor(ccBLACK);
+    _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
     _background = NULL;
 
@@ -1708,7 +1708,7 @@ void ReorderParticleSystems::onEnter()
 {
     ParticleDemo::onEnter();
 
-    _color->setColor(ccBLACK);
+    _color->setColor(Color3B::BLACK);
     removeChild(_background ,true);
     _background = NULL;
 
@@ -1761,16 +1761,16 @@ void ReorderParticleSystems::onEnter()
         // color of particles
         float color[3] = {0,0,0};
         color[i] = 1;
-        ccColor4F startColor = {color[0], color[1], color[2], 1.0f};
+        Color4F startColor(color[0], color[1], color[2], 1.0f);
         particleSystem->setStartColor(startColor);
 
-        ccColor4F startColorVar = {0, 0, 0, 0};
+        Color4F startColorVar(0, 0, 0, 0);
         particleSystem->setStartColorVar(startColorVar);
 
-        ccColor4F endColor = startColor;
+        Color4F endColor = startColor;
         particleSystem->setEndColor(endColor);
 
-        ccColor4F endColorVar = startColorVar;
+        Color4F endColorVar = startColorVar;
         particleSystem->setEndColorVar(endColorVar);
 
         // size, in pixels
@@ -1854,17 +1854,17 @@ void PremultipliedAlphaTest::onEnter()
 {
     ParticleDemo::onEnter();
 
-	_color->setColor(ccBLUE);
+	_color->setColor(Color3B::BLUE);
     this->removeChild(_background, true);
     _background = NULL;
 
     _emitter = ParticleSystemQuad::create("Particles/BoilingFoam.plist");
     _emitter->retain();
     // Particle Designer "normal" blend func causes black halo on premul textures (ignores multiplication)
-    //this->emitter.blendFunc = (ccBlendFunc){ GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA };
+    //this->emitter.blendFunc = (BlendFunc){ GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA };
 
     // Cocos2d "normal" blend func for premul causes alpha to be ignored (oversaturates colors)
-    ccBlendFunc tBlendFunc = { GL_ONE, GL_ONE_MINUS_SRC_ALPHA };
+    BlendFunc tBlendFunc = { GL_ONE, GL_ONE_MINUS_SRC_ALPHA };
     _emitter->setBlendFunc(tBlendFunc);
 
     CCAssert(_emitter->getOpacityModifyRGB(), "Particle texture does not have premultiplied alpha, test is useless");
@@ -1872,10 +1872,10 @@ void PremultipliedAlphaTest::onEnter()
     // Toggle next line to see old behavior
     //	this->emitter.opacityModifyRGB = NO;
 
-    _emitter->setStartColor(ccc4f(1, 1, 1, 1));
-    _emitter->setEndColor(ccc4f(1, 1, 1, 0));
-    _emitter->setStartColorVar(ccc4f(0, 0, 0, 0));
-    _emitter->setEndColorVar(ccc4f(0, 0, 0, 0));
+    _emitter->setStartColor(Color4F(1, 1, 1, 1));
+    _emitter->setEndColor(Color4F(1, 1, 1, 0));
+    _emitter->setStartColorVar(Color4F(0, 0, 0, 0));
+    _emitter->setEndColorVar(Color4F(0, 0, 0, 0));
 
     this->addChild(_emitter, 10);
 }
@@ -1886,7 +1886,7 @@ void PremultipliedAlphaTest2::onEnter()
 {
     ParticleDemo::onEnter();
 
-	_color->setColor(ccBLACK);
+	_color->setColor(Color3B::BLACK);
     this->removeChild(_background, true);
     _background = NULL;
 

@@ -108,7 +108,7 @@ void TouchDispatcher::forceAddHandler(TouchHandler *pHandler, Array *pArray)
     Object* pObj = NULL;
     CCARRAY_FOREACH(pArray, pObj)
      {
-         TouchHandler *h = (TouchHandler *)pObj;
+         TouchHandler *h = static_cast<TouchHandler *>(pObj);
          if (h)
          {
              if (h->getPriority() < pHandler->getPriority())
@@ -183,7 +183,7 @@ void TouchDispatcher::forceRemoveDelegate(TouchDelegate *pDelegate)
     Object* pObj = NULL;
     CCARRAY_FOREACH(_standardHandlers, pObj)
     {
-        pHandler = (TouchHandler*)pObj;
+        pHandler = static_cast<TouchHandler*>(pObj);
         if (pHandler && pHandler->getDelegate() == pDelegate)
         {
             _standardHandlers->removeObject(pHandler);
@@ -194,7 +194,7 @@ void TouchDispatcher::forceRemoveDelegate(TouchDelegate *pDelegate)
     // remove handler from _targetedHandlers
     CCARRAY_FOREACH(_targetedHandlers, pObj)
     {
-        pHandler = (TouchHandler*)pObj;
+        pHandler = static_cast<TouchHandler*>(pObj);
         if (pHandler && pHandler->getDelegate() == pDelegate)
         {
             _targetedHandlers->removeObject(pHandler);
@@ -254,7 +254,7 @@ TouchHandler* TouchDispatcher::findHandler(TouchDelegate *pDelegate)
     Object* pObj = NULL;
     CCARRAY_FOREACH(_targetedHandlers, pObj)
     {
-        TouchHandler* pHandler = (TouchHandler*)pObj;
+        TouchHandler* pHandler = static_cast<TouchHandler*>(pObj);
         if (pHandler->getDelegate() == pDelegate)
         {
             return pHandler;
@@ -263,7 +263,7 @@ TouchHandler* TouchDispatcher::findHandler(TouchDelegate *pDelegate)
 
     CCARRAY_FOREACH(_standardHandlers, pObj)
     {
-        TouchHandler* pHandler = (TouchHandler*)pObj;
+        TouchHandler* pHandler = static_cast<TouchHandler*>(pObj);
         if (pHandler->getDelegate() == pDelegate)
         {
             return pHandler;
@@ -280,7 +280,7 @@ TouchHandler* TouchDispatcher::findHandler(Array* pArray, TouchDelegate *pDelega
     Object* pObj = NULL;
     CCARRAY_FOREACH(pArray, pObj)
     {
-        TouchHandler* pHandle = (TouchHandler*)pObj;
+        TouchHandler* pHandle = static_cast<TouchHandler*>(pObj);
         if (pHandle->getDelegate() == pDelegate)
         {
             return pHandle;
@@ -346,7 +346,7 @@ void TouchDispatcher::touches(Set *pTouches, Event *pEvent, unsigned int uIndex)
             Object* pObj = NULL;
             CCARRAY_FOREACH(_targetedHandlers, pObj)
             {
-                pHandler = (TargetedTouchHandler *)(pObj);
+                pHandler = static_cast<TargetedTouchHandler*>(pObj);
 
                 if (! pHandler)
                 {
@@ -403,10 +403,10 @@ void TouchDispatcher::touches(Set *pTouches, Event *pEvent, unsigned int uIndex)
     if (uStandardHandlersCount > 0 && pMutableTouches->count() > 0)
     {
         StandardTouchHandler *pHandler = NULL;
-        Object* pObj = NULL;
+        Object* pObj = nullptr;
         CCARRAY_FOREACH(_standardHandlers, pObj)
         {
-            pHandler = (StandardTouchHandler*)(pObj);
+            pHandler = static_cast<StandardTouchHandler*>(pObj);
 
             if (! pHandler)
             {
@@ -455,10 +455,10 @@ void TouchDispatcher::touches(Set *pTouches, Event *pEvent, unsigned int uIndex)
     {
         _toAdd = false;
         TouchHandler* pHandler = NULL;
-        Object* pObj = NULL;
+        Object* pObj = nullptr;
         CCARRAY_FOREACH(_handlersToAdd, pObj)
          {
-             pHandler = (TouchHandler*)pObj;
+             pHandler = static_cast<TouchHandler*>(pObj);
             if (! pHandler)
             {
                 break;

@@ -8,13 +8,13 @@ Paddle::~Paddle(void)
 {
 }
 
-Rect Paddle::rect()
+Rect Paddle::getRect()
 {
     Size s = getTexture()->getContentSize();
     return CCRectMake(-s.width / 2, -s.height / 2, s.width, s.height);
 }
 
-Paddle* Paddle::paddleWithTexture(Texture2D* aTexture)
+Paddle* Paddle::createWithTexture(Texture2D* aTexture)
 {
     Paddle* pPaddle = new Paddle();
     pPaddle->initWithTexture( aTexture );
@@ -49,7 +49,7 @@ void Paddle::onExit()
 
 bool Paddle::containsTouchLocation(Touch* touch)
 {
-    return rect().containsPoint(convertTouchToNodeSpaceAR(touch));
+    return getRect().containsPoint(convertTouchToNodeSpaceAR(touch));
 }
 
 bool Paddle::ccTouchBegan(Touch* touch, Event* event)
@@ -77,10 +77,13 @@ void Paddle::ccTouchMoved(Touch* touch, Event* event)
     setPosition( ccp(touchPoint.x, getPosition().y) );
 }
 
-Object* Paddle::copyWithZone(Zone *pZone)
+Paddle* Paddle::clone() const
 {
-    this->retain();
-    return this;
+    Paddle* ret = Paddle::createWithTexture(_texture);
+    ret->_state = _state;
+    ret->setPosition(getPosition());
+    ret->setAnchorPoint(getAnchorPoint());
+    return ret;
 }
 
 void Paddle::ccTouchEnded(Touch* touch, Event* event)
@@ -89,13 +92,3 @@ void Paddle::ccTouchEnded(Touch* touch, Event* event)
     
     _state = kPaddleStateUngrabbed;
 } 
-
-void Paddle::touchDelegateRetain()
-{
-    this->retain();
-}
-
-void Paddle::touchDelegateRelease()
-{
-    this->release();
-}

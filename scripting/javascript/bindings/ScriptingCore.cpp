@@ -1182,7 +1182,7 @@ JSBool jsval_to_ccsize(JSContext *cx, jsval v, Size* ret) {
     return JS_TRUE;
 }
 
-JSBool jsval_to_cccolor4b(JSContext *cx, jsval v, ccColor4B* ret) {
+JSBool jsval_to_cccolor4b(JSContext *cx, jsval v, Color4B* ret) {
     JSObject *tmp;
     jsval jsr, jsg, jsb, jsa;
     double r, g, b, a;
@@ -1205,7 +1205,7 @@ JSBool jsval_to_cccolor4b(JSContext *cx, jsval v, ccColor4B* ret) {
     return JS_TRUE;
 }
 
-JSBool jsval_to_cccolor4f(JSContext *cx, jsval v, ccColor4F* ret) {
+JSBool jsval_to_cccolor4f(JSContext *cx, jsval v, Color4F* ret) {
     JSObject *tmp;
     jsval jsr, jsg, jsb, jsa;
     double r, g, b, a;
@@ -1227,7 +1227,7 @@ JSBool jsval_to_cccolor4f(JSContext *cx, jsval v, ccColor4F* ret) {
     return JS_TRUE;
 }
 
-JSBool jsval_to_cccolor3b(JSContext *cx, jsval v, ccColor3B* ret) {
+JSBool jsval_to_cccolor3b(JSContext *cx, jsval v, Color3B* ret) {
     JSObject *tmp;
     jsval jsr, jsg, jsb;
     double r, g, b;
@@ -1588,7 +1588,7 @@ jsval long_long_to_jsval(JSContext* cx, long long v) {
     return OBJECT_TO_JSVAL(tmp);
 }
 
-jsval std_string_to_jsval(JSContext* cx, std::string& v) {
+jsval std_string_to_jsval(JSContext* cx, const std::string& v) {
     return c_string_to_jsval(cx, v.c_str());
 }
 
@@ -1610,7 +1610,7 @@ jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length /* = -1 */) 
     return ret;
 }
 
-jsval ccpoint_to_jsval(JSContext* cx, Point& v) {
+jsval ccpoint_to_jsval(JSContext* cx, const Point& v) {
     JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
     if (!tmp) return JSVAL_NULL;
     JSBool ok = JS_DefineProperty(cx, tmp, "x", DOUBLE_TO_JSVAL(v.x), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
@@ -1621,7 +1621,7 @@ jsval ccpoint_to_jsval(JSContext* cx, Point& v) {
     return JSVAL_NULL;
 }
 
-jsval ccacceleration_to_jsval(JSContext* cx, Acceleration& v) {
+jsval ccacceleration_to_jsval(JSContext* cx, const Acceleration& v) {
     JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
     if (!tmp) return JSVAL_NULL;
     JSBool ok = JS_DefineProperty(cx, tmp, "x", DOUBLE_TO_JSVAL(v.x), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
@@ -1634,7 +1634,7 @@ jsval ccacceleration_to_jsval(JSContext* cx, Acceleration& v) {
     return JSVAL_NULL;
 }
 
-jsval ccrect_to_jsval(JSContext* cx, Rect& v) {
+jsval ccrect_to_jsval(JSContext* cx, const Rect& v) {
     JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
     if (!tmp) return JSVAL_NULL;
     JSBool ok = JS_DefineProperty(cx, tmp, "x", DOUBLE_TO_JSVAL(v.origin.x), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
@@ -1647,7 +1647,7 @@ jsval ccrect_to_jsval(JSContext* cx, Rect& v) {
     return JSVAL_NULL;
 }
 
-jsval ccsize_to_jsval(JSContext* cx, Size& v) {
+jsval ccsize_to_jsval(JSContext* cx, const Size& v) {
     JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
     if (!tmp) return JSVAL_NULL;
     JSBool ok = JS_DefineProperty(cx, tmp, "width", DOUBLE_TO_JSVAL(v.width), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
@@ -1658,7 +1658,7 @@ jsval ccsize_to_jsval(JSContext* cx, Size& v) {
     return JSVAL_NULL;
 }
 
-jsval cccolor4b_to_jsval(JSContext* cx, ccColor4B& v) {
+jsval cccolor4b_to_jsval(JSContext* cx, const Color4B& v) {
     JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
     if (!tmp) return JSVAL_NULL;
     JSBool ok = JS_DefineProperty(cx, tmp, "r", INT_TO_JSVAL(v.r), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
@@ -1671,7 +1671,7 @@ jsval cccolor4b_to_jsval(JSContext* cx, ccColor4B& v) {
     return JSVAL_NULL;
 }
 
-jsval cccolor4f_to_jsval(JSContext* cx, ccColor4F& v) {
+jsval cccolor4f_to_jsval(JSContext* cx, const Color4F& v) {
     JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
     if (!tmp) return JSVAL_NULL;
     JSBool ok = JS_DefineProperty(cx, tmp, "r", DOUBLE_TO_JSVAL(v.r), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
@@ -1684,7 +1684,7 @@ jsval cccolor4f_to_jsval(JSContext* cx, ccColor4F& v) {
     return JSVAL_NULL;
 }
 
-jsval cccolor3b_to_jsval(JSContext* cx, const ccColor3B& v) {
+jsval cccolor3b_to_jsval(JSContext* cx, const Color3B& v) {
     JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
     if (!tmp) return JSVAL_NULL;
     JSBool ok = JS_DefineProperty(cx, tmp, "r", INT_TO_JSVAL(v.r), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
@@ -1696,7 +1696,7 @@ jsval cccolor3b_to_jsval(JSContext* cx, const ccColor3B& v) {
     return JSVAL_NULL;
 }
 
-jsval ccaffinetransform_to_jsval(JSContext* cx, AffineTransform& t)
+jsval ccaffinetransform_to_jsval(JSContext* cx, const AffineTransform& t)
 {
     JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
     if (!tmp) return JSVAL_NULL;
@@ -1706,6 +1706,46 @@ jsval ccaffinetransform_to_jsval(JSContext* cx, AffineTransform& t)
     JS_DefineProperty(cx, tmp, "d", DOUBLE_TO_JSVAL(t.d), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "tx", DOUBLE_TO_JSVAL(t.tx), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "ty", DOUBLE_TO_JSVAL(t.ty), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    if (ok) {
+        return OBJECT_TO_JSVAL(tmp);
+    }
+    return JSVAL_NULL;
+}
+
+jsval FontDefinition_to_jsval(JSContext* cx, const FontDefinition& t)
+{
+    JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
+    if (!tmp) return JSVAL_NULL;
+    JSBool ok = JS_TRUE;
+    
+    ok &= JS_DefineProperty(cx, tmp, "fontName", std_string_to_jsval(cx, t._fontName), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
+    ok &= JS_DefineProperty(cx, tmp, "fontSize", int32_to_jsval(cx, t._fontSize), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
+    ok &= JS_DefineProperty(cx, tmp, "fontAlignmentH", int32_to_jsval(cx, t._alignment), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
+    ok &= JS_DefineProperty(cx, tmp, "fontAlignmentV", int32_to_jsval(cx, t._vertAlignment), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+
+    ok &= JS_DefineProperty(cx, tmp, "fontFillColor", cccolor3b_to_jsval(cx, t._fontFillColor), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
+    ok &= JS_DefineProperty(cx, tmp, "fontDimensions", ccsize_to_jsval(cx, t._dimensions), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
+    // Shadow
+    ok &= JS_DefineProperty(cx, tmp, "shadowEnabled", BOOLEAN_TO_JSVAL(t._shadow._shadowEnabled), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
+    ok &= JS_DefineProperty(cx, tmp, "shadowOffset", ccsize_to_jsval(cx, t._shadow._shadowOffset), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+ 
+    ok &= JS_DefineProperty(cx, tmp, "shadowBlur", DOUBLE_TO_JSVAL(t._shadow._shadowBlur), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+ 
+    ok &= JS_DefineProperty(cx, tmp, "shadowOpacity", DOUBLE_TO_JSVAL(t._shadow._shadowOpacity), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
+    // Stroke
+    ok &= JS_DefineProperty(cx, tmp, "strokeEnabled", BOOLEAN_TO_JSVAL(t._stroke._strokeEnabled), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+
+    ok &= JS_DefineProperty(cx, tmp, "strokeColor", cccolor3b_to_jsval(cx, t._stroke._strokeColor), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
+    ok &= JS_DefineProperty(cx, tmp, "strokeSize", DOUBLE_TO_JSVAL(t._stroke._strokeSize), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
     if (ok) {
         return OBJECT_TO_JSVAL(tmp);
     }
@@ -2054,10 +2094,10 @@ static void serverEntryPoint(void)
 	} // while(true)
 }
 
-ccColor3B getColorFromJSObject(JSContext *cx, JSObject *colorObject)
+static Color3B getColorFromJSObject(JSContext *cx, JSObject *colorObject)
 {
     jsval jsr;
-    ccColor3B out;
+    Color3B out;
     JS_GetProperty(cx, colorObject, "r", &jsr);
     double fontR = 0.0;
     JS_ValueToNumber(cx, jsr, &fontR);
@@ -2098,7 +2138,7 @@ Size getSizeFromJSObject(JSContext *cx, JSObject *sizeObject)
     return out;
 }
 
-JSBool jsval_to_ccfontdefinition( JSContext *cx, jsval vp, ccFontDefinition *out )
+JSBool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
 {
     JSObject *jsobj;
     
@@ -2118,7 +2158,7 @@ JSBool jsval_to_ccfontdefinition( JSContext *cx, jsval vp, ccFontDefinition *out
     out->_stroke._strokeEnabled = false;
     
     // white text by default
-    out->_fontFillColor = ccWHITE;
+    out->_fontFillColor = Color3B::WHITE;
     
     // font name
     jsval jsr;
@@ -2262,7 +2302,7 @@ JSBool jsval_to_ccfontdefinition( JSContext *cx, jsval vp, ccFontDefinition *out
         {
             // default stroke values
             out->_stroke._strokeSize  = 1;
-            out->_stroke._strokeColor = ccBLUE;
+            out->_stroke._strokeColor = Color3B::BLUE;
             
             // stroke color
             JS_HasProperty(cx, jsobj, "strokeColor", &hasProperty);

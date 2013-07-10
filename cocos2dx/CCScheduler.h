@@ -83,7 +83,7 @@ public:
     /** Allocates a timer with a script callback function and an interval in seconds. */
     static Timer* timerWithScriptHandler(int nHandler, float fSeconds);
     
-    inline int getScriptHandler() { return _scriptHandler; };
+    inline int getScriptHandler() const { return _scriptHandler; };
 
 protected:
     Object *_target;

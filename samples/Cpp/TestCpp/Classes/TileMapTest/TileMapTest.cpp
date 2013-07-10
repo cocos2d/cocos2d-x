@@ -84,7 +84,7 @@ void TileMapEditTest::updateMap(float dt)
     // over all your tiles in every frame. It's very expensive
     //    for(int x=0; x < tilemap.tgaInfo->width; x++) {
     //        for(int y=0; y < tilemap.tgaInfo->height; y++) {
-    //            ccColor3B c =[tilemap tileAt:CCSizeMake(x,y));
+    //            Color3B c =[tilemap tileAt:CCSizeMake(x,y));
     //            if( c.r != 0 ) {
     //                ////----CCLOG("%d,%d = %d", x,y,c.r);
     //            }
@@ -92,7 +92,7 @@ void TileMapEditTest::updateMap(float dt)
     //    }
     
     // NEW since v0.7
-    ccColor3B c = tilemap->tileAt(ccp(13,21));        
+    Color3B c = tilemap->tileAt(ccp(13,21));        
     c.r++;
     c.r %= 50;
     if( c.r==0)
@@ -119,7 +119,7 @@ TMXOrthoTest::TMXOrthoTest()
     //
     // it should not flicker. No artifacts should appear
     //
-    //CCLayerColor* color = LayerColor::create( ccc4(64,64,64,255) );
+    //CCLayerColor* color = LayerColor::create( Color4B(64,64,64,255) );
     //addChild(color, -1);
 
     TMXTiledMap* map = TMXTiledMap::create("TileMaps/orthogonal-test2.tmx");
@@ -133,7 +133,7 @@ TMXOrthoTest::TMXOrthoTest()
     Object* pObject = NULL;
     CCARRAY_FOREACH(pChildrenArray, pObject)
     {
-        child = (SpriteBatchNode*)pObject;
+        child = static_cast<SpriteBatchNode*>(pObject);
 
         if(!child)
             break;
@@ -182,7 +182,7 @@ TMXOrthoTest2::TMXOrthoTest2()
     Object* pObject = NULL;
     CCARRAY_FOREACH(pChildrenArray, pObject)
     {
-        child = (SpriteBatchNode*)pObject;
+        child = static_cast<SpriteBatchNode*>(pObject);
 
         if(!child)
             break;
@@ -216,7 +216,7 @@ TMXOrthoTest3::TMXOrthoTest3()
     Object* pObject = NULL;
     CCARRAY_FOREACH(pChildrenArray, pObject)
     {
-        child = (SpriteBatchNode*)pObject;
+        child = static_cast<SpriteBatchNode*>(pObject);
 
         if(!child)
             break;
@@ -251,7 +251,7 @@ TMXOrthoTest4::TMXOrthoTest4()
     Object* pObject = NULL;
     CCARRAY_FOREACH(pChildrenArray, pObject)
     {
-        child = (SpriteBatchNode*)pObject;
+        child = static_cast<SpriteBatchNode*>(pObject);
 
         if(!child)
             break;
@@ -439,7 +439,7 @@ std::string TMXReadWriteTest::title()
 //------------------------------------------------------------------
 TMXHexTest::TMXHexTest()
 {
-    LayerColor* color = LayerColor::create( ccc4(64,64,64,255) );
+    LayerColor* color = LayerColor::create( Color4B(64,64,64,255) );
     addChild(color, -1);
     
     TMXTiledMap* map = TMXTiledMap::create("TileMaps/hexa-test.tmx");
@@ -461,7 +461,7 @@ std::string TMXHexTest::title()
 //------------------------------------------------------------------
 TMXIsoTest::TMXIsoTest()
 {
-    LayerColor* color = LayerColor::create( ccc4(64,64,64,255) );
+    LayerColor* color = LayerColor::create( Color4B(64,64,64,255) );
     addChild(color, -1);
     
     TMXTiledMap* map = TMXTiledMap::create("TileMaps/iso-test.tmx");
@@ -485,7 +485,7 @@ std::string TMXIsoTest::title()
 //------------------------------------------------------------------
 TMXIsoTest1::TMXIsoTest1()
 {
-    LayerColor* color = LayerColor::create( ccc4(64,64,64,255) );
+    LayerColor* color = LayerColor::create( Color4B(64,64,64,255) );
     addChild(color, -1);
     
     TMXTiledMap *map = TMXTiledMap::create("TileMaps/iso-test1.tmx");
@@ -509,7 +509,7 @@ std::string TMXIsoTest1::title()
 //------------------------------------------------------------------
 TMXIsoTest2::TMXIsoTest2()
 {
-    LayerColor* color = LayerColor::create( ccc4(64,64,64,255) );
+    LayerColor* color = LayerColor::create( Color4B(64,64,64,255) );
     addChild(color, -1);
     
     TMXTiledMap *map = TMXTiledMap::create("TileMaps/iso-test2.tmx");
@@ -536,7 +536,7 @@ std::string TMXIsoTest2::title()
 //------------------------------------------------------------------
 TMXUncompressedTest::TMXUncompressedTest()
 {
-    LayerColor* color = LayerColor::create( ccc4(64,64,64,255) );
+    LayerColor* color = LayerColor::create( Color4B(64,64,64,255) );
     addChild(color, -1);
     
     TMXTiledMap *map = TMXTiledMap::create("TileMaps/iso-test2-uncompressed.tmx");
@@ -556,7 +556,7 @@ TMXUncompressedTest::TMXUncompressedTest()
     Object* pObject = NULL;
     CCARRAY_FOREACH(pChildrenArray, pObject)
     {
-        layer= (TMXLayer*)pObject;
+        layer= static_cast<TMXLayer*>(pObject);
 
         if(!layer)
             break;
@@ -621,7 +621,7 @@ TMXOrthoObjectsTest::TMXOrthoObjectsTest()
     Object* pObj = NULL;
     CCARRAY_FOREACH(objects, pObj)
     {
-        dict = (Dictionary*)pObj;//dynamic_cast<StringToStringDictionary*>(*it);
+        dict = static_cast<Dictionary*>(pObj);
 
         if(!dict)
             break;
@@ -644,7 +644,7 @@ void TMXOrthoObjectsTest::draw()
     Object* pObj = NULL;
     CCARRAY_FOREACH(objects, pObj)
     {
-        dict = (Dictionary*)pObj;//dynamic_cast<StringToStringDictionary*>(*it);
+        dict = static_cast<Dictionary*>(pObj);
         
         if(!dict)
             break;
@@ -702,7 +702,7 @@ TMXIsoObjectsTest::TMXIsoObjectsTest()
     Object* pObj = NULL;
     CCARRAY_FOREACH(objects, pObj)
     {
-        dict = (Dictionary*)pObj;
+        dict = static_cast<Dictionary*>(pObj);
 
         if(!dict)
             break;
@@ -721,18 +721,18 @@ void TMXIsoObjectsTest::draw()
     Object* pObj = NULL;
     CCARRAY_FOREACH(objects, pObj)
     {
-        dict = (Dictionary*)pObj;//dynamic_cast<StringToStringDictionary*>(*it);
+        dict = static_cast<Dictionary*>(pObj);
 
         if(!dict)
             break;
         const char* key = "x";
-        int x = ((String*)dict->objectForKey(key))->intValue();//dynamic_cast<NSNumber*>(dict->objectForKey("x"))->getNumber();
+        int x = static_cast<String*>(dict->objectForKey(key))->intValue();
         key = "y";
-        int y = ((String*)dict->objectForKey(key))->intValue();//dynamic_cast<NSNumber*>(dict->objectForKey("y"))->getNumber();
+        int y = static_cast<String*>(dict->objectForKey(key))->intValue();
         key = "width";
-        int width = ((String*)dict->objectForKey(key))->intValue();//dynamic_cast<NSNumber*>(dict->objectForKey("width"))->getNumber();
+        int width = static_cast<String*>(dict->objectForKey(key))->intValue();
         key = "height";
-        int height = ((String*)dict->objectForKey(key))->intValue();//dynamic_cast<NSNumber*>(dict->objectForKey("height"))->getNumber();
+        int height = static_cast<String*>(dict->objectForKey(key))->intValue();
         
         glLineWidth(3);
         
@@ -1157,7 +1157,7 @@ TMXOrthoFlipTest::TMXOrthoFlipTest()
     Object* pObj = NULL;
     CCARRAY_FOREACH(map->getChildren(), pObj)
     {
-        SpriteBatchNode* child = (SpriteBatchNode*)pObj;
+        SpriteBatchNode* child = static_cast<SpriteBatchNode*>(pObj);
         child->getTexture()->setAntiAliasTexParameters();
     }
 
@@ -1187,7 +1187,7 @@ TMXOrthoFlipRunTimeTest::TMXOrthoFlipRunTimeTest()
     Object* pObj = NULL;
     CCARRAY_FOREACH(map->getChildren(), pObj)
     {
-        SpriteBatchNode* child = (SpriteBatchNode*)pObj;
+        SpriteBatchNode* child = static_cast<SpriteBatchNode*>(pObj);
         child->getTexture()->setAntiAliasTexParameters();
     }
 
@@ -1266,7 +1266,7 @@ TMXOrthoFromXMLTest::TMXOrthoFromXMLTest()
     Object* pObj = NULL;
     CCARRAY_FOREACH(map->getChildren(), pObj)
     {
-        SpriteBatchNode* child = (SpriteBatchNode*)pObj;
+        SpriteBatchNode* child = static_cast<SpriteBatchNode*>(pObj);
         child->getTexture()->setAntiAliasTexParameters();
     }
 
@@ -1297,7 +1297,7 @@ TMXBug987::TMXBug987()
     Object* pObject = NULL;
     CCARRAY_FOREACH(childs, pObject)
     {
-        pNode = (TMXLayer*) pObject;
+        pNode = static_cast<TMXLayer*>(pObject);
         CC_BREAK_IF(!pNode);
         pNode->getTexture()->setAntiAliasTexParameters();
     }
@@ -1523,7 +1523,7 @@ void TMXGIDObjectsTest::draw()
     Object* pObj = NULL;
     CCARRAY_FOREACH(array, pObj)
     {
-        dict = (Dictionary*)pObj;
+        dict = static_cast<Dictionary*>(pObj);
         if(!dict)
         {
             break;

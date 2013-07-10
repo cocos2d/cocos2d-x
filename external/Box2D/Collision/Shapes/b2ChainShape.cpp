@@ -91,7 +91,7 @@ void b2ChainShape::GetChildEdge(b2EdgeShape* edge, int32 index) const
     edge->m_radius = m_radius;
 
     edge->m_vertex1 = m_vertices[index + 0];
-    edge->m_vertex2 = m_vertices[index + 1];
+    edge->m_Vertex2F = m_vertices[index + 1];
 
     if (index > 0)
     {
@@ -106,13 +106,13 @@ void b2ChainShape::GetChildEdge(b2EdgeShape* edge, int32 index) const
 
     if (index < m_count - 2)
     {
-        edge->m_vertex3 = m_vertices[index + 2];
-        edge->m_hasVertex3 = true;
+        edge->m_Vertex3F = m_vertices[index + 2];
+        edge->m_hasVertex3F = true;
     }
     else
     {
-        edge->m_vertex3 = m_nextVertex;
-        edge->m_hasVertex3 = m_hasNextVertex;
+        edge->m_Vertex3F = m_nextVertex;
+        edge->m_hasVertex3F = m_hasNextVertex;
     }
 }
 
@@ -138,7 +138,7 @@ bool b2ChainShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& input,
     }
 
     edgeShape.m_vertex1 = m_vertices[i1];
-    edgeShape.m_vertex2 = m_vertices[i2];
+    edgeShape.m_Vertex2F = m_vertices[i2];
 
     return edgeShape.RayCast(output, input, xf, 0);
 }

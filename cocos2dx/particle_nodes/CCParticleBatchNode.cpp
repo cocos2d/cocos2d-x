@@ -437,7 +437,7 @@ void ParticleBatchNode::increaseAtlasCapacityTo(unsigned int quantity)
 //sets a 0'd quad into the quads array
 void ParticleBatchNode::disableParticle(unsigned int particleIndex)
 {
-    ccV3F_C4B_T2F_Quad* quad = &((_textureAtlas->getQuads())[particleIndex]);
+    V3F_C4B_T2F_Quad* quad = &((_textureAtlas->getQuads())[particleIndex]);
     quad->br.vertices.x = quad->br.vertices.y = quad->tr.vertices.x = quad->tr.vertices.y = quad->tl.vertices.x = quad->tl.vertices.y = quad->bl.vertices.x = quad->bl.vertices.y = 0.0f;
 }
 
@@ -476,7 +476,7 @@ void ParticleBatchNode::updateAllAtlasIndexes()
 
     CCARRAY_FOREACH(_children,pObj)
     {
-        ParticleSystem* child = (ParticleSystem*)pObj;
+        ParticleSystem* child = static_cast<ParticleSystem*>(pObj);
         child->setAtlasIndex(index);
         index += child->getTotalParticles();
     }
@@ -509,12 +509,12 @@ Texture2D* ParticleBatchNode::getTexture(void)
     return _textureAtlas->getTexture();
 }
 
-void ParticleBatchNode::setBlendFunc(const ccBlendFunc &blendFunc)
+void ParticleBatchNode::setBlendFunc(const BlendFunc &blendFunc)
 {
     _blendFunc = blendFunc;
 }
 // returns the blending function used for the texture
-const ccBlendFunc& ParticleBatchNode::getBlendFunc(void) const
+const BlendFunc& ParticleBatchNode::getBlendFunc(void) const
 {
     return _blendFunc;
 }

@@ -36,8 +36,8 @@ EditBox::EditBox(void)
 , _keyboardReturnType(kKeyboardReturnTypeDefault)
 , _fontSize(-1)
 , _placeholderFontSize(-1)
-, _colText(ccWHITE)
-, _colPlaceHolder(ccGRAY)
+, _colText(Color3B::WHITE)
+, _colPlaceHolder(Color3B::GRAY)
 , _maxLength(0)
 , _adjustHeight(0.0f)
 , _scriptEditBoxHandler(0)
@@ -167,7 +167,7 @@ void EditBox::setFontSize(int fontSize)
     }
 }
 
-void EditBox::setFontColor(const ccColor3B& color)
+void EditBox::setFontColor(const Color3B& color)
 {
     _colText = color;
     if (_editBoxImpl != NULL)
@@ -207,7 +207,7 @@ void EditBox::setPlaceholderFontSize(int fontSize)
     }
 }
 
-void EditBox::setPlaceholderFontColor(const ccColor3B& color)
+void EditBox::setPlaceholderFontColor(const Color3B& color)
 {
     _colText = color;
     if (_editBoxImpl != NULL)

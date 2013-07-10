@@ -101,7 +101,7 @@ void NotificationCenter::removeObserver(Object *target,const char *name)
     Object* obj = NULL;
     CCARRAY_FOREACH(_observers, obj)
     {
-        NotificationObserver* observer = (NotificationObserver*) obj;
+        NotificationObserver* observer = static_cast<NotificationObserver*>(obj);
         if (!observer)
             continue;
         
@@ -120,7 +120,7 @@ int NotificationCenter::removeAllObservers(Object *target)
 
     CCARRAY_FOREACH(_observers, obj)
     {
-        NotificationObserver *observer = (NotificationObserver *)obj;
+        NotificationObserver *observer = static_cast<NotificationObserver *>(obj);
         if (!observer)
             continue;
 
@@ -154,7 +154,7 @@ void NotificationCenter::unregisterScriptObserver(Object *target,const char* nam
     Object* obj = NULL;
     CCARRAY_FOREACH(_observers, obj)
     {
-        NotificationObserver* observer = (NotificationObserver*) obj;
+        NotificationObserver* observer = static_cast<NotificationObserver*>(obj);
         if (!observer)
             continue;
             
@@ -172,7 +172,7 @@ void NotificationCenter::postNotification(const char *name, Object *object)
     Object* obj = NULL;
     CCARRAY_FOREACH(ObserversCopy, obj)
     {
-        NotificationObserver* observer = (NotificationObserver*) obj;
+        NotificationObserver* observer = static_cast<NotificationObserver*>(obj);
         if (!observer)
             continue;
         
@@ -207,7 +207,7 @@ int NotificationCenter::getObserverHandlerByName(const char* name)
     Object* obj = NULL;
     CCARRAY_FOREACH(_observers, obj)
     {
-        NotificationObserver* observer = (NotificationObserver*) obj;
+        NotificationObserver* observer = static_cast<NotificationObserver*>(obj);
         if (NULL == observer)
             continue;
         

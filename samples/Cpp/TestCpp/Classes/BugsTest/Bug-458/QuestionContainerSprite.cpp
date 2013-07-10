@@ -18,7 +18,7 @@ bool QuestionContainerSprite::init()
 
         int width = size.width * 0.9f - (corner->getContentSize().width * 2);
         int height = size.height * 0.15f  - (corner->getContentSize().height * 2);
-        LayerColor* layer = LayerColor::create(ccc4(255, 255, 255, 255 * .75), width, height);
+        LayerColor* layer = LayerColor::create(Color4B(255, 255, 255, 255 * .75), width, height);
         layer->setPosition(ccp(-width / 2, -height / 2));
 
         //First button is blue,
@@ -27,11 +27,11 @@ bool QuestionContainerSprite::init()
         static int a = 0;
         
         if (a == 0)
-            label->setColor(ccBLUE);
+            label->setColor(Color3B::BLUE);
         else
         {
             CCLog("Color changed");
-            label->setColor(ccRED);
+            label->setColor(Color3B::RED);
         }
         a++;
         addChild(layer);

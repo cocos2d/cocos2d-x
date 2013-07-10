@@ -74,17 +74,17 @@ public:
     /** returns a tile from position x,y.
     For the moment only channel R is used
     */
-    ccColor3B tileAt(const Point& position);
+    Color3B tileAt(const Point& position);
     /** sets a tile at position x,y.
     For the moment only channel R is used
     */
-    void setTile(const ccColor3B& tile, const Point& position);
+    void setTile(const Color3B& tile, const Point& position);
     /** dealloc the map from memory */
     void releaseMap();
 private:
     void loadTGAfile(const char *file);
     void calculateItemsToRender();
-    void updateAtlasValueAt(const Point& pos, const ccColor3B& value, unsigned int index);
+    void updateAtlasValueAt(const Point& pos, const Color3B& value, unsigned int index);
     void updateAtlasValues();
 
 protected:

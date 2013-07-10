@@ -128,7 +128,7 @@ Node::~Node(void)
         Object* child;
         CCARRAY_FOREACH(_children, child)
         {
-            Node* pChild = (Node*) child;
+            Node* pChild = static_cast<Node*>(child);
             if (pChild)
             {
                 pChild->_parent = NULL;
@@ -580,7 +580,7 @@ Node* Node::getChildByTag(int aTag)
         Object* child;
         CCARRAY_FOREACH(_children, child)
         {
-            Node* pNode = (Node*) child;
+            Node* pNode = static_cast<Node*>(child);
             if(pNode && pNode->_tag == aTag)
                 return pNode;
         }
@@ -701,7 +701,7 @@ void Node::removeAllChildrenWithCleanup(bool cleanup)
         Object* child;
         CCARRAY_FOREACH(_children, child)
         {
-            Node* pNode = (Node*) child;
+            Node* pNode = static_cast<Node*>(child);
             if (pNode)
             {
                 // IMPORTANT:
@@ -1349,8 +1349,8 @@ void Node::removeAllComponents()
 NodeRGBA::NodeRGBA()
 : _displayedOpacity(255)
 , _realOpacity(255)
-, _displayedColor(ccWHITE)
-, _realColor(ccWHITE)
+, _displayedColor(Color3B::WHITE)
+, _realColor(Color3B::WHITE)
 , _cascadeColorEnabled(false)
 , _cascadeOpacityEnabled(false)
 {}
@@ -1362,7 +1362,7 @@ bool NodeRGBA::init()
     if (Node::init())
     {
         _displayedOpacity = _realOpacity = 255;
-        _displayedColor = _realColor = ccWHITE;
+        _displayedColor = _realColor = Color3B::WHITE;
         _cascadeOpacityEnabled = _cascadeColorEnabled = false;
         return true;
     }
@@ -1423,23 +1423,23 @@ void NodeRGBA::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
     _cascadeOpacityEnabled = cascadeOpacityEnabled;
 }
 
-const ccColor3B& NodeRGBA::getColor(void) const
+const Color3B& NodeRGBA::getColor(void) const
 {
 	return _realColor;
 }
 
-const ccColor3B& NodeRGBA::getDisplayedColor() const
+const Color3B& NodeRGBA::getDisplayedColor() const
 {
 	return _displayedColor;
 }
 
-void NodeRGBA::setColor(const ccColor3B& color)
+void NodeRGBA::setColor(const Color3B& color)
 {
 	_displayedColor = _realColor = color;
 	
 	if (_cascadeColorEnabled)
     {
-		ccColor3B parentColor = ccWHITE;
+		Color3B parentColor = Color3B::WHITE;
         RGBAProtocol *parent = dynamic_cast<RGBAProtocol*>(_parent);
 		if (parent && parent->isCascadeColorEnabled())
         {
@@ -1450,7 +1450,7 @@ void NodeRGBA::setColor(const ccColor3B& color)
 	}
 }
 
-void NodeRGBA::updateDisplayedColor(const ccColor3B& parentColor)
+void NodeRGBA::updateDisplayedColor(const Color3B& parentColor)
 {
 	_displayedColor.r = _realColor.r * parentColor.r/255.0;
 	_displayedColor.g = _realColor.g * parentColor.g/255.0;

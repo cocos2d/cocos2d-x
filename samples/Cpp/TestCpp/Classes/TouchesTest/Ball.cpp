@@ -42,7 +42,7 @@ void Ball::move(float delta)
 
 void Ball::collideWithPaddle(Paddle* paddle)
 {
-    Rect paddleRect = paddle->rect();
+    Rect paddleRect = paddle->getRect();
     paddleRect.origin.x += paddle->getPosition().x;
     paddleRect.origin.y += paddle->getPosition().y;
     

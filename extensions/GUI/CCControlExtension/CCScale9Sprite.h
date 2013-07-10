@@ -98,7 +98,7 @@ protected:
 
     bool _opacityModifyRGB;
     GLubyte _opacity;
-    ccColor3B _color;
+    Color3B _color;
     
     void updateCapInset();
     void updatePositions();
@@ -308,9 +308,10 @@ public:
      */
     virtual bool isOpacityModifyRGB(void) const;
     virtual void setOpacity(GLubyte opacity);
+
 	virtual GLubyte getOpacity() const;
-    virtual void setColor(const ccColor3B& color);
-	virtual const ccColor3B& getColor() const;
+    virtual void setColor(const Color3B& color);
+	virtual const Color3B& getColor() const;
 
     virtual bool updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bool rotated, Rect capInsets);
 

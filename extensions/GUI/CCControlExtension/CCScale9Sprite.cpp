@@ -62,7 +62,7 @@ Scale9Sprite::Scale9Sprite()
 , _bottomRight(NULL)
 , _opacityModifyRGB(false)
 , _opacity(255)
-, _color(ccWHITE)
+, _color(Color3B::WHITE)
 {
 
 }
@@ -112,7 +112,7 @@ bool Scale9Sprite::initWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bool
 bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bool rotated, Rect capInsets)
 {
     GLubyte opacity = getOpacity();
-    ccColor3B color = getColor();
+    Color3B color = getColor();
 
     // Release old sprites
     this->removeAllChildrenWithCleanup(true);
@@ -790,7 +790,7 @@ void Scale9Sprite::visit()
     Node::visit();
 }
 
-void Scale9Sprite::setColor(const ccColor3B& color)
+void Scale9Sprite::setColor(const Color3B& color)
 {
     _color = color;
 
@@ -806,7 +806,7 @@ void Scale9Sprite::setColor(const ccColor3B& color)
     }
 }
 
-const ccColor3B& Scale9Sprite::getColor() const
+const Color3B& Scale9Sprite::getColor() const
 {
 	return _color;
 }

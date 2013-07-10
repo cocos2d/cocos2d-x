@@ -68,6 +68,8 @@ static struct {
 
 static const int g_maxTests = sizeof(g_extensionsTests) / sizeof(g_extensionsTests[0]);
 
+static Point s_tCurPos = PointZero;
+
 ////////////////////////////////////////////////////////
 //
 // ExtensionsMainLayer
@@ -79,18 +81,54 @@ void ExtensionsMainLayer::onEnter()
     
     Size s = Director::sharedDirector()->getWinSize();
     
-    Menu* pMenu = Menu::create();
-    pMenu->setPosition( PointZero );
+    _itemMenu = Menu::create();
+    _itemMenu->setPosition( PointZero );
     MenuItemFont::setFontName("Arial");
     MenuItemFont::setFontSize(24);
     for (int i = 0; i < g_maxTests; ++i)
     {
         MenuItemFont* pItem = MenuItemFont::create(g_extensionsTests[i].name, g_extensionsTests[i].callback);
         pItem->setPosition(ccp(s.width / 2, s.height - (i + 1) * LINE_SPACE));
-        pMenu->addChild(pItem, kItemTagBasic + i);
+        _itemMenu->addChild(pItem, kItemTagBasic + i);
     }
+
+	setTouchEnabled(true);
     
-    addChild(pMenu);
+    addChild(_itemMenu);
+}
+
+void ExtensionsMainLayer::ccTouchesBegan(Set *pTouches, Event *pEvent)
+{
+    Touch* touch = static_cast<Touch*>(pTouches->anyObject());
+
+    _beginPos = touch->getLocation();    
+}
+
+void ExtensionsMainLayer::ccTouchesMoved(Set *pTouches, Event *pEvent)
+{
+    Touch* touch = static_cast<Touch*>(pTouches->anyObject());
+
+    Point touchLocation = touch->getLocation();    
+    float nMoveY = touchLocation.y - _beginPos.y;
+
+    Point curPos  = _itemMenu->getPosition();
+    Point nextPos = ccp(curPos.x, curPos.y + nMoveY);
+
+    if (nextPos.y < 0.0f)
+    {
+        _itemMenu->setPosition(PointZero);
+        return;
+    }
+
+    if (nextPos.y > ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
+    {
+        _itemMenu->setPosition(ccp(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        return;
+    }
+
+    _itemMenu->setPosition(nextPos);
+    _beginPos = touchLocation;
+    s_tCurPos   = nextPos;
 }
 
 ////////////////////////////////////////////////////////
@@ -107,3 +145,5 @@ void ExtensionsTestScene::runThisTest()
     
     Director::sharedDirector()->replaceScene(this);
 }
+
+

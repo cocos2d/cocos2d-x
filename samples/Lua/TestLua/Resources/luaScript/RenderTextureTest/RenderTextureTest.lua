@@ -62,7 +62,7 @@ local function RenderTextureSave()
     -- create a brush image to draw into the texture with
     m_pBrush = CCSprite:create("Images/fire.png")
     m_pBrush:retain()
-    m_pBrush:setColor(ccc3(255, 0, 0))
+    m_pBrush:setColor(Color3B(255, 0, 0))
     m_pBrush:setOpacity(20)
 
 
@@ -98,7 +98,7 @@ local function RenderTextureSave()
                     m_pBrush:setScale(r)
 
                     -- Use CCRANDOM_0_1() will cause error when loading libtests.so on android, I don't know why.
-                    m_pBrush:setColor(ccc3(math.random(0, 126) + 128, 255, 255))
+                    m_pBrush:setColor(Color3B(math.random(0, 126) + 128, 255, 255))
                     -- Call visit to draw the brush, don't call draw..
                     m_pBrush:visit()
                 end
@@ -150,7 +150,7 @@ end
 --         *  B1: non-premulti sprite
 --         *  B2: non-premulti render
 --     */
---     local background = CCLayerColor:create(ccc4(200,200,200,255))
+--     local background = CCLayerColor:create(Color4B(200,200,200,255))
 --     addChild(background)
 
 --     local spr_premulti = CCSprite:create("Images/fire.png")
@@ -171,7 +171,7 @@ end
 -- end
 
 -- -- It's possible to modify the RenderTexture blending function by
--- --        [[rend sprite] setBlendFunc:(ccBlendFunc) GL_ONE, GL_ONE_MINUS_SRC_ALPHAend]
+-- --        [[rend sprite] setBlendFunc:(BlendFunc) GL_ONE, GL_ONE_MINUS_SRC_ALPHAend]
 
 -- rend:begin()
 -- spr_premulti:visit()
@@ -268,7 +268,7 @@ end
 --     sp9:setVertexZ(-400)
 
 --     sp9:setScale(2)
---     sp9:setColor(ccYELLOW)
+--     sp9:setColor(Color3B::YELLOW)
 -- end
 
 -- local function title()
@@ -348,7 +348,7 @@ end
 -- sprite:setOpacity(182)
 -- sprite:setFlipY(1)
 -- this:addChild(sprite, 999999)
--- sprite:setColor(ccGREEN)
+-- sprite:setColor(Color3B::GREEN)
 
 -- sprite:runAction(CCSequence:create(CCFadeTo:create(2, 0),
 --                                    CCHide:create(),
@@ -416,7 +416,7 @@ end
 --         *  B1: non-premulti sprite
 --         *  B2: non-premulti render
 --     */
---     local background = CCLayerColor:create(ccc4(40,40,40,255))
+--     local background = CCLayerColor:create(Color4B(40,40,40,255))
 --     addChild(background)
 
 --     -- sprite 1
@@ -438,7 +438,7 @@ end
 --     /* add the sprites to the render texture */
 --     renderTexture:addChild(sprite1)
 --     renderTexture:addChild(sprite2)
---     renderTexture:setClearColor(ccc4f(0, 0, 0, 0))
+--     renderTexture:setClearColor(Color4F(0, 0, 0, 0))
 --     renderTexture:setClearFlags(GL_COLOR_BUFFER_BIT)
 
 --     /* add the render texture to the scene */
@@ -465,7 +465,7 @@ end
 -- else
 
 --     renderTexture:setClearFlags(0)
---     renderTexture:setClearColor(ccc4f( CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1))
+--     renderTexture:setClearColor(Color4F( CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1))
 --     end
 -- end
 
@@ -521,7 +521,7 @@ end
 
 -- CC_NODE_DRAW_SETUP()
 
--- ccBlendFunc blend = getBlendFunc()
+-- BlendFunc blend = getBlendFunc()
 -- ccGLBlendFunc(blend.src, blend.dst)
 
 -- ccGLBindTexture2D(getTexture():getName())
@@ -536,15 +536,15 @@ end
 -- long offset = (long)&m_sQuad
 
 -- -- vertex
--- int diff = offsetof( ccV3F_C4B_T2F, vertices)
+-- int diff = offsetof( V3F_C4B_T2F, vertices)
 -- glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff))
 
 -- -- texCoods
--- diff = offsetof( ccV3F_C4B_T2F, texCoords)
+-- diff = offsetof( V3F_C4B_T2F, texCoords)
 -- glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff))
 
 -- -- color
--- diff = offsetof( ccV3F_C4B_T2F, colors)
+-- diff = offsetof( V3F_C4B_T2F, colors)
 -- glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff))
 
 -- glDrawArrays(GL_TRIANGLE_STRIP, 0, 4)

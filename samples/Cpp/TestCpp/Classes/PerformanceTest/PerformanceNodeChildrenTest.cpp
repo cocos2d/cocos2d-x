@@ -76,7 +76,7 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
     LabelTTF *label = LabelTTF::create(title().c_str(), "Arial", 40);
     addChild(label, 1);
     label->setPosition(ccp(s.width/2, s.height-32));
-    label->setColor(ccc3(255,255,40));
+    label->setColor(Color3B(255,255,40));
 
     // Subtitle
     std::string strSubTitle = subtitle();
@@ -100,7 +100,7 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
 		updateQuantityLabel();
 		updateQuantityOfNodes();
 	});
-    decrease->setColor(ccc3(0,200,20));
+    decrease->setColor(Color3B(0,200,20));
     MenuItemFont *increase = MenuItemFont::create(" + ", [&](Object *sender) {
 		quantityOfNodes += kNodesIncrease;
 		if( quantityOfNodes > kMaxNodes )
@@ -109,7 +109,7 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
 		updateQuantityLabel();
 		updateQuantityOfNodes();
 	});
-    increase->setColor(ccc3(0,200,20));
+    increase->setColor(Color3B(0,200,20));
 
     Menu *menu = Menu::create(decrease, increase, NULL);
     menu->alignItemsHorizontally();
@@ -117,7 +117,7 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
     addChild(menu, 1);
 
     LabelTTF *infoLabel = LabelTTF::create("0 nodes", "Marker Felt", 30);
-    infoLabel->setColor(ccc3(0,200,20));
+    infoLabel->setColor(Color3B(0,200,20));
     infoLabel->setPosition(ccp(s.width/2, s.height/2-15));
     addChild(infoLabel, 1, kTagInfoLayer);
 
@@ -220,7 +220,7 @@ void IterateSpriteSheetFastEnum::update(float dt)
 
     CCARRAY_FOREACH(pChildren, pObject)
     {
-        Sprite* pSprite = (Sprite*) pObject;
+        Sprite* pSprite = static_cast<Sprite*>(pObject);
         pSprite->setVisible(false);
     }
 
@@ -257,7 +257,7 @@ void IterateSpriteSheetCArray::update(float dt)
 
     CCARRAY_FOREACH(pChildren, pObject)
     {
-        Sprite* pSprite = (Sprite*)pObject;
+        Sprite* pSprite = static_cast<Sprite*>(pObject);
         pSprite->setVisible(false);
     }
 

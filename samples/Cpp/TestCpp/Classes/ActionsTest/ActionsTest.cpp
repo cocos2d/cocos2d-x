@@ -238,10 +238,10 @@ void ActionManual::onEnter()
 
     _grossini->setRotation( 120);
     _grossini->setPosition( ccp(s.width/2, s.height/2));
-    _grossini->setColor( ccc3( 255,0,0));
+    _grossini->setColor( Color3B( 255,0,0));
 
     _kathia->setPosition( ccp(s.width-100, s.height/2));
-    _kathia->setColor( ccBLUE);
+    _kathia->setColor( Color3B::BLUE);
 }
 
 std::string ActionManual::subtitle()
@@ -368,7 +368,7 @@ void ActionRotationalSkewVSStandardSkew::onEnter()
 
     Size boxSize(100.0f, 100.0f);
 
-    auto box = LayerColor::create(ccc4(255,255,0,255));
+    auto box = LayerColor::create(Color4B(255,255,0,255));
     box->setAnchorPoint(ccp(0.5,0.5));
     box->setContentSize( boxSize );
     box->ignoreAnchorPointForPosition(false);
@@ -384,7 +384,7 @@ void ActionRotationalSkewVSStandardSkew::onEnter()
 
     box->runAction(Sequence::create(actionTo, actionToBack, NULL));
 
-    box = LayerColor::create(ccc4(255,255,0,255));
+    box = LayerColor::create(Color4B(255,255,0,255));
     box->setAnchorPoint(ccp(0.5,0.5));
     box->setContentSize(boxSize);
     box->ignoreAnchorPointForPosition(false);
@@ -414,19 +414,19 @@ void ActionSkewRotateScale::onEnter()
 
     Size boxSize(100.0f, 100.0f);
 
-    auto box = LayerColor::create(ccc4(255, 255, 0, 255));
+    auto box = LayerColor::create(Color4B(255, 255, 0, 255));
     box->setAnchorPoint(ccp(0, 0));
     box->setPosition(ccp(190, 110));
     box->setContentSize(boxSize);
 
     static float markrside = 10.0f;
-    auto uL = LayerColor::create(ccc4(255, 0, 0, 255));
+    auto uL = LayerColor::create(Color4B(255, 0, 0, 255));
     box->addChild(uL);
     uL->setContentSize(CCSizeMake(markrside, markrside));
     uL->setPosition(ccp(0.f, boxSize.height - markrside));
     uL->setAnchorPoint(ccp(0, 0));
 
-    auto uR = LayerColor::create(ccc4(0, 0, 255, 255));
+    auto uR = LayerColor::create(Color4B(0, 0, 255, 255));
     box->addChild(uR);
     uR->setContentSize(CCSizeMake(markrside, markrside));
     uR->setPosition(ccp(boxSize.width - markrside, boxSize.height - markrside));
@@ -1887,9 +1887,9 @@ std::string Issue1327::subtitle()
     return "See console: You should see: 0, 45, 90, 135, 180";
 }
 
-void Issue1327::logSprRotation(Node* pSender)
+void Issue1327::logSprRotation(Sprite* pSender)
 {
-    CCLog("%f", ((Sprite*)pSender)->getRotation());
+    CCLog("%f", pSender->getRotation());
 }
 
 //Issue1398

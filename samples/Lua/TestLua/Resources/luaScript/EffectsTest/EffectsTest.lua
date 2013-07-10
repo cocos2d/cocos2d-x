@@ -357,7 +357,7 @@ local function createEffect(idx, t)
 end
 
 function CreateEffectsTestLayer()
-    testLayer = CCLayerColor:create(ccc4(32,128,32,255))
+    testLayer = CCLayerColor:create(Color4B(32,128,32,255))
 
     local x, y = size.width, size.height
 

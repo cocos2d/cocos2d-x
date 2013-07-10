@@ -54,7 +54,7 @@ RenderTexture::RenderTexture()
 , _UITextureImage(NULL)
 , _pixelFormat(kTexture2DPixelFormat_RGBA8888)
 , _clearFlags(0)
-, _clearColor(ccc4f(0,0,0,0))
+, _clearColor(Color4F(0,0,0,0))
 , _clearDepth(0.0f)
 , _clearStencil(0)
 , _autoDraw(false)
@@ -163,12 +163,12 @@ void RenderTexture::setClearFlags(unsigned int uClearFlags)
     _clearFlags = uClearFlags;
 }
 
-const ccColor4F& RenderTexture::getClearColor() const
+const Color4F& RenderTexture::getClearColor() const
 {
     return _clearColor;
 }
 
-void RenderTexture::setClearColor(const ccColor4F &clearColor)
+void RenderTexture::setClearColor(const Color4F &clearColor)
 {
     _clearColor = clearColor;
 }
@@ -339,7 +339,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2DPixelFormat eF
         _texture->release();
         _sprite->setScaleY(-1);
 
-        ccBlendFunc tBlendFunc = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA };
+        BlendFunc tBlendFunc = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA };
         _sprite->setBlendFunc(tBlendFunc);
 
         glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
@@ -594,7 +594,7 @@ void RenderTexture::draw()
 		Object *pElement;
 		CCARRAY_FOREACH(_children, pElement)
         {
-            Node *pChild = (Node*)pElement;
+            Node *pChild = static_cast<Node*>(pElement);
 
             if (pChild != _sprite)
             {
