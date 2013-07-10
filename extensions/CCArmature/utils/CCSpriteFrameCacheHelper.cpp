@@ -87,7 +87,7 @@ void SpriteFrameCacheHelper::addSpriteFrameFromDict(Dictionary *dictionary, Text
     DictElement *pElement = NULL;
     CCDICT_FOREACH(framesDict, pElement)
     {
-        Dictionary *frameDict = (Dictionary *)pElement->getObject();
+        Dictionary *frameDict = static_cast<Dictionary*>(pElement->getObject());
         std::string spriteFrameName = pElement->getStrKey();
 
         _display2ImageMap[spriteFrameName] = imagePath;

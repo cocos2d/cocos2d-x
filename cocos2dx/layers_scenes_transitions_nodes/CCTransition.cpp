@@ -1179,7 +1179,7 @@ TransitionFade::~TransitionFade()
 {
 }
 
-TransitionFade * TransitionFade::create(float duration, Scene *scene, const ccColor3B& color)
+TransitionFade * TransitionFade::create(float duration, Scene *scene, const Color3B& color)
 {
     TransitionFade * pTransition = new TransitionFade();
     pTransition->initWithDuration(duration, scene, color);
@@ -1189,10 +1189,10 @@ TransitionFade * TransitionFade::create(float duration, Scene *scene, const ccCo
 
 TransitionFade* TransitionFade::create(float duration,Scene* scene)
 {
-    return TransitionFade::create(duration, scene, ccBLACK);
+    return TransitionFade::create(duration, scene, Color3B::BLACK);
 }
 
-bool TransitionFade::initWithDuration(float duration, Scene *scene, const ccColor3B& color)
+bool TransitionFade::initWithDuration(float duration, Scene *scene, const Color3B& color)
 {
     if (TransitionScene::initWithDuration(duration, scene))
     {
@@ -1206,7 +1206,7 @@ bool TransitionFade::initWithDuration(float duration, Scene *scene, const ccColo
 
 bool TransitionFade::initWithDuration(float t, Scene *scene)
 {
-    this->initWithDuration(t, scene, ccBLACK);
+    this->initWithDuration(t, scene, Color3B::BLACK);
     return true;
 }
 
@@ -1270,7 +1270,7 @@ void TransitionCrossFade::onEnter()
 
     // create a transparent color layer
     // in which we are going to add our rendertextures
-    ccColor4B  color = {0,0,0,0};
+    Color4B  color(0,0,0,0);
     Size size = Director::sharedDirector()->getWinSize();
     LayerColor* layer = LayerColor::create(color);
 
@@ -1304,8 +1304,8 @@ void TransitionCrossFade::onEnter()
 
     // create blend functions
 
-    ccBlendFunc blend1 = {GL_ONE, GL_ONE}; // inScene will lay on background and will not be used with alpha
-    ccBlendFunc blend2 = {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}; // we are going to blend outScene via alpha 
+    BlendFunc blend1 = {GL_ONE, GL_ONE}; // inScene will lay on background and will not be used with alpha
+    BlendFunc blend2 = {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}; // we are going to blend outScene via alpha 
 
     // set blendfunctions
     inTexture->getSprite()->setBlendFunc(blend1);

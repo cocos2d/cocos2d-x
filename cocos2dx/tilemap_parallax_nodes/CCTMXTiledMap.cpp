@@ -149,7 +149,7 @@ TMXTilesetInfo * TMXTiledMap::tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInf
         Object* pObj = NULL;
         CCARRAY_FOREACH_REVERSE(tilesets, pObj)
         {
-            tileset = (TMXTilesetInfo*)pObj;
+            tileset = static_cast<TMXTilesetInfo*>(pObj);
             if (tileset)
             {
                 for( unsigned int y=0; y < size.height; y++ )
@@ -211,7 +211,7 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
         Object* pObj = NULL;
         CCARRAY_FOREACH(layers, pObj)
         {
-            layerInfo = (TMXLayerInfo*)pObj;
+            layerInfo = static_cast<TMXLayerInfo*>(pObj);
             if (layerInfo && layerInfo->_visible)
             {
                 TMXLayer *child = parseLayer(layerInfo, mapInfo);
@@ -262,7 +262,7 @@ TMXObjectGroup * TMXTiledMap::objectGroupNamed(const char *groupName)
         Object* pObj = NULL;
         CCARRAY_FOREACH(_objectGroups, pObj)
         {
-            objectGroup = (TMXObjectGroup*)(pObj);
+            objectGroup = static_cast<TMXObjectGroup*>(pObj);
             if (objectGroup && objectGroup->getGroupName() == sGroupName)
             {
                 return objectGroup;

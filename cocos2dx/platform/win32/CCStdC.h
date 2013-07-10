@@ -53,14 +53,9 @@ THE SOFTWARE.
 #include <time.h>
 
 // for MIN MAX and sys/time.h on win32 platform
-#ifndef __MINGW32__
-
-#define MIN     min
-#define MAX     max
-
-#else // __MINGW32__
-
+#ifdef __MINGW32__
 #include <sys/time.h>
+#endif // __MINGW32__
 
 #ifndef MIN
 #define MIN(x,y) (((x) > (y)) ? (y) : (x))
@@ -70,8 +65,6 @@ THE SOFTWARE.
 #define MAX(x,y) (((x) < (y)) ? (y) : (x))
 #endif  // MAX
 
-#endif // __MINGW32__
-
 
 #if _MSC_VER >= 1600 || defined(__MINGW32__)
     #include <stdint.h>
@@ -80,6 +73,7 @@ THE SOFTWARE.
 #endif
 
 #define _WINSOCKAPI_
+#define NOMINMAX
 // Structure timeval has define in winsock.h, include windows.h for it.
 #include <Windows.h>
 

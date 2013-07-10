@@ -116,7 +116,7 @@ void TextureDemo::onEnter()
 
     TextureCache::sharedTextureCache()->dumpCachedTextureInfo();
 
-    LayerColor *col = LayerColor::create(ccc4(128,128,128,255));
+    LayerColor *col = LayerColor::create(Color4B(128,128,128,255));
     addChild(col, -10);
     
     TextureCache::sharedTextureCache()->dumpCachedTextureInfo();
@@ -1309,7 +1309,7 @@ void TexturePixelFormat::onEnter()
         
     Size s = Director::sharedDirector()->getWinSize();
 
-    LayerColor *background = LayerColor::create(ccc4(128,128,128,255), s.width, s.height);
+    LayerColor *background = LayerColor::create(Color4B(128,128,128,255), s.width, s.height);
     addChild(background, -1);
     
     // RGBA 8888 image (32-bit)
@@ -1412,7 +1412,7 @@ void TextureBlend::onEnter()
         Sprite *cloud = Sprite::create("Images/test_blend.png");
         addChild(cloud, i+1, 100+i);
         cloud->setPosition(ccp(50+25*i, 80));
-        ccBlendFunc blendFunc1 = { GL_ONE, GL_ONE_MINUS_SRC_ALPHA };
+        BlendFunc blendFunc1 = { GL_ONE, GL_ONE_MINUS_SRC_ALPHA };
         cloud->setBlendFunc(blendFunc1);
 
         // CENTER sprites have also alpha pre-multiplied
@@ -1420,7 +1420,7 @@ void TextureBlend::onEnter()
         cloud = Sprite::create("Images/test_blend.png");
         addChild(cloud, i+1, 200+i);
         cloud->setPosition(ccp(50+25*i, 160));
-        ccBlendFunc blendFunc2 = { GL_ONE_MINUS_DST_COLOR, GL_ZERO };
+        BlendFunc blendFunc2 = { GL_ONE_MINUS_DST_COLOR, GL_ZERO };
         cloud->setBlendFunc(blendFunc2);
 
         // UPPER sprites are using custom blending function
@@ -1428,7 +1428,7 @@ void TextureBlend::onEnter()
         cloud = Sprite::create("Images/test_blend.png");
         addChild(cloud, i+1, 200+i);
         cloud->setPosition(ccp(50+25*i, 320-80));
-        ccBlendFunc blendFunc3 = { GL_SRC_ALPHA, GL_ONE };
+        BlendFunc blendFunc3 = { GL_SRC_ALPHA, GL_ONE };
         cloud->setBlendFunc(blendFunc3);  // additive blending
     }
 }
@@ -1495,7 +1495,7 @@ void TextureAsync::loadImages(float dt)
 
 void TextureAsync::imageLoaded(Object* pObj)
 {
-    Texture2D* tex = (Texture2D*)pObj;
+    Texture2D* tex = static_cast<Texture2D*>(pObj);
     Director *director = Director::sharedDirector();
 
     //CCAssert( [NSThread currentThread] == [director runningThread], @"FAIL. Callback should be on cocos2d thread");
@@ -1711,16 +1711,16 @@ void TextureDrawAtPoint::onEnter()
     TextureDemo::onEnter();
 
     _tex1 = TextureCache::sharedTextureCache()->addImage("Images/grossinis_sister1.png");
-    _tex2 = TextureCache::sharedTextureCache()->addImage("Images/grossinis_sister2.png");
+    _Tex2F = TextureCache::sharedTextureCache()->addImage("Images/grossinis_sister2.png");
 
     _tex1->retain();
-    _tex2->retain();
+    _Tex2F->retain();
 }
 
 TextureDrawAtPoint::~TextureDrawAtPoint()
 {
     _tex1->release();
-    _tex2->release();
+    _Tex2F->release();
 }
 
 std::string TextureDrawAtPoint::title()
@@ -1740,7 +1740,7 @@ void TextureDrawAtPoint::draw()
     Size s = Director::sharedDirector()->getWinSize();
 
     _tex1->drawAtPoint(ccp(s.width/2-50, s.height/2 - 50));
-    _tex2->drawAtPoint(ccp(s.width/2+50, s.height/2 - 50));
+    _Tex2F->drawAtPoint(ccp(s.width/2+50, s.height/2 - 50));
 
 }
 
@@ -1750,16 +1750,16 @@ void TextureDrawInRect::onEnter()
 {
     TextureDemo::onEnter();
     _tex1 = TextureCache::sharedTextureCache()->addImage("Images/grossinis_sister1.png");
-    _tex2 = TextureCache::sharedTextureCache()->addImage("Images/grossinis_sister2.png");
+    _Tex2F = TextureCache::sharedTextureCache()->addImage("Images/grossinis_sister2.png");
 
     _tex1->retain();
-    _tex2->retain();
+    _Tex2F->retain();
 }
 
 TextureDrawInRect::~TextureDrawInRect()
 {
     _tex1->release();
-    _tex2->release();
+    _Tex2F->release();
 }
 
 void TextureDrawInRect::draw()
@@ -1772,7 +1772,7 @@ void TextureDrawInRect::draw()
     Rect rect2 = CCRectMake( s.width/2 + 80, s.height/2, _tex1->getContentSize().width * 2, _tex1->getContentSize().height * 0.5f );
 
     _tex1->drawInRect(rect1);
-    _tex2->drawInRect(rect2);
+    _Tex2F->drawInRect(rect2);
 
 }
 
@@ -1920,7 +1920,7 @@ TexturePVRv3Premult::TexturePVRv3Premult()
 {
     Size size = Director::sharedDirector()->getWinSize();
         
-    LayerColor *background = LayerColor::create(ccc4(128,128,128,255), size.width, size.height);
+    LayerColor *background = LayerColor::create(Color4B(128,128,128,255), size.width, size.height);
     addChild(background, -1);
     
     

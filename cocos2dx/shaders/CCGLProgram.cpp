@@ -128,7 +128,7 @@ bool GLProgram::initWithVertexShaderFilename(const char* vShaderFilename, const 
     return initWithVertexShaderByteArray(vertexSource, fragmentSource);
 }
 
-const char* GLProgram::description()
+const char* GLProgram::description() const
 {
     return String::createWithFormat("<GLProgram = "
                                       CC_FORMAT_PRINTF_SIZE_T
@@ -260,7 +260,7 @@ void GLProgram::use()
     ccGLUseProgram(_program);
 }
 
-const char* GLProgram::logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc)
+const char* GLProgram::logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const
 {
     GLint logLength = 0, charsWritten = 0;
 
@@ -277,17 +277,17 @@ const char* GLProgram::logForOpenGLObject(GLuint object, GLInfoFunction infoFunc
     return log->getCString();
 }
 
-const char* GLProgram::vertexShaderLog()
+const char* GLProgram::vertexShaderLog() const
 {
     return this->logForOpenGLObject(_vertShader, (GLInfoFunction)&glGetShaderiv, (GLLogFunction)&glGetShaderInfoLog);
 }
 
-const char* GLProgram::fragmentShaderLog()
+const char* GLProgram::fragmentShaderLog() const
 {
     return this->logForOpenGLObject(_fragShader, (GLInfoFunction)&glGetShaderiv, (GLLogFunction)&glGetShaderInfoLog);
 }
 
-const char* GLProgram::programLog()
+const char* GLProgram::programLog() const
 {
     return this->logForOpenGLObject(_program, (GLInfoFunction)&glGetProgramiv, (GLLogFunction)&glGetProgramInfoLog);
 }
@@ -333,7 +333,7 @@ bool GLProgram::updateUniformLocation(GLint location, GLvoid* data, unsigned int
     return updated;
 }
 
-GLint GLProgram::getUniformLocationForName(const char* name)
+GLint GLProgram::getUniformLocationForName(const char* name) const
 {
     CCAssert(name != NULL, "Invalid uniform name" );
     CCAssert(_program != 0, "Invalid operation. Cannot get uniform location when program is not initialized");

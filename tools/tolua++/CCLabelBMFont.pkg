@@ -24,8 +24,8 @@ class CCLabelBMFont : public CCSpriteBatchNode
 	void setFntFile(const char* fntFile);
 	const char* getFntFile();
 
-    void setColor(const ccColor3B& color);
-    const ccColor3B& getColor(void) const;
+    void setColor(const Color3B& color);
+    const Color3B& getColor(void) const;
 
     GLubyte getOpacity(void) const;
     void setOpacity(GLubyte opacity);

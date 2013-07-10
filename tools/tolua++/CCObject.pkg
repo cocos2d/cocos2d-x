@@ -6,6 +6,5 @@ class CCObject
     bool isSingleReference(void);
     unsigned int retainCount(void);
     bool isEqual(const CCObject* pObject);
-	CCObject* copy();
 	CCObject* autorelease();
 };

@@ -86,8 +86,8 @@ typedef struct sParticle {
     Point     pos;
     Point     startPos;
 
-    ccColor4F    color;
-    ccColor4F    deltaColor;
+    Color4F    color;
+    Color4F    deltaColor;
 
     float        size;
     float        deltaSize;
@@ -258,32 +258,32 @@ public:
     // mode A
     virtual const Point& getGravity();
     virtual void setGravity(const Point& g);
-    virtual float getSpeed();
+    virtual float getSpeed() const;
     virtual void setSpeed(float speed);
-    virtual float getSpeedVar();
+    virtual float getSpeedVar() const;
     virtual void setSpeedVar(float speed);
-    virtual float getTangentialAccel();
+    virtual float getTangentialAccel() const;
     virtual void setTangentialAccel(float t);
-    virtual float getTangentialAccelVar();
+    virtual float getTangentialAccelVar() const;
     virtual void setTangentialAccelVar(float t);
-    virtual float getRadialAccel();
+    virtual float getRadialAccel() const;
     virtual void setRadialAccel(float t);
-    virtual float getRadialAccelVar();
+    virtual float getRadialAccelVar() const;
     virtual void setRadialAccelVar(float t);
-    virtual bool getRotationIsDir();
+    virtual bool getRotationIsDir() const;
     virtual void setRotationIsDir(bool t);
     // mode B
-    virtual float getStartRadius();
+    virtual float getStartRadius() const;
     virtual void setStartRadius(float startRadius);
-    virtual float getStartRadiusVar();
+    virtual float getStartRadiusVar() const;
     virtual void setStartRadiusVar(float startRadiusVar);
-    virtual float getEndRadius();
+    virtual float getEndRadius() const;
     virtual void setEndRadius(float endRadius);
-    virtual float getEndRadiusVar();
+    virtual float getEndRadiusVar() const;
     virtual void setEndRadiusVar(float endRadiusVar);
-    virtual float getRotatePerSecond();
+    virtual float getRotatePerSecond() const;
     virtual void setRotatePerSecond(float degrees);
-    virtual float getRotatePerSecondVar();
+    virtual float getRotatePerSecondVar() const;
     virtual void setRotatePerSecondVar(float degrees);
 
     virtual void setScale(float s);
@@ -291,8 +291,8 @@ public:
     virtual void setScaleX(float newScaleX);
     virtual void setScaleY(float newScaleY);
     
-    virtual bool isActive();
-    virtual bool isBlendAdditive();
+    virtual bool isActive() const;
+    virtual bool isBlendAdditive() const;
     virtual void setBlendAdditive(bool value);
 //////////////////////////////////////////////////////////////////////////
     
@@ -305,13 +305,13 @@ public:
     /** end size variance in pixels of each particle */
     CC_PROPERTY(float, _endSizeVar, EndSizeVar)
     /** start color of each particle */
-    CC_PROPERTY_PASS_BY_REF(ccColor4F, _startColor, StartColor)
+    CC_PROPERTY_PASS_BY_REF(Color4F, _startColor, StartColor)
     /** start color variance of each particle */
-    CC_PROPERTY_PASS_BY_REF(ccColor4F, _startColorVar, StartColorVar)
+    CC_PROPERTY_PASS_BY_REF(Color4F, _startColorVar, StartColorVar)
     /** end color and end color variation of each particle */
-    CC_PROPERTY_PASS_BY_REF(ccColor4F, _endColor, EndColor)
+    CC_PROPERTY_PASS_BY_REF(Color4F, _endColor, EndColor)
     /** end color variance of each particle */
-    CC_PROPERTY_PASS_BY_REF(ccColor4F, _endColorVar, EndColorVar)
+    CC_PROPERTY_PASS_BY_REF(Color4F, _endColorVar, EndColorVar)
     //* initial angle of each particle
     CC_PROPERTY(float, _startSpin, StartSpin)
     //* initial angle of each particle
@@ -327,7 +327,7 @@ public:
     /** conforms to CocosNodeTexture protocol */
     CC_PROPERTY(Texture2D*, _texture, Texture)
     /** conforms to CocosNodeTexture protocol */
-    CC_PROPERTY_PASS_BY_REF(ccBlendFunc, _blendFunc, BlendFunc)
+    CC_PROPERTY_PASS_BY_REF(BlendFunc, _blendFunc, BlendFunc)
     /** does the alpha value modify color */
     CC_PROPERTY(bool, _opacityModifyRGB, OpacityModifyRGB)
 
@@ -350,7 +350,7 @@ public:
 protected:
     bool _isAutoRemoveOnFinish;
 public:
-    virtual bool isAutoRemoveOnFinish();
+    virtual bool isAutoRemoveOnFinish() const;
     virtual void setAutoRemoveOnFinish(bool var);
 
     /** Switch between different kind of emitter modes:

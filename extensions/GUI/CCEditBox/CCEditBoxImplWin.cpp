@@ -43,8 +43,8 @@ EditBoxImplWin::EditBoxImplWin(EditBox* pEditText)
 , _editBoxInputMode(kEditBoxInputModeSingleLine)
 , _editBoxInputFlag(kEditBoxInputFlagInitialCapsAllCharacters)
 , _keyboardReturnType(kKeyboardReturnTypeDefault)
-, _colText(ccWHITE)
-, _colPlaceHolder(ccGRAY)
+, _colText(Color3B::WHITE)
+, _colPlaceHolder(Color3B::GRAY)
 , _maxLength(-1)
 {
     
@@ -93,7 +93,7 @@ void EditBoxImplWin::setFont(const char* pFontName, int fontSize)
 	}
 }
 
-void EditBoxImplWin::setFontColor(const ccColor3B& color)
+void EditBoxImplWin::setFontColor(const Color3B& color)
 {
     _colText = color;
     _label->setColor(color);
@@ -107,7 +107,7 @@ void EditBoxImplWin::setPlaceholderFont(const char* pFontName, int fontSize)
 	}
 }
 
-void EditBoxImplWin::setPlaceholderFontColor(const ccColor3B& color)
+void EditBoxImplWin::setPlaceholderFontColor(const Color3B& color)
 {
     _colPlaceHolder = color;
     _labelPlaceHolder->setColor(color);

@@ -68,7 +68,7 @@ public:
     bool initWithDuration(float d);
 
     /** returns true if the action has finished */
-    virtual bool isDone(void);
+    virtual bool isDone(void) const;
 
     virtual void step(float dt);
     virtual void startWithTarget(Node *pTarget);
@@ -98,7 +98,6 @@ public:
     /** initializes the action */
     bool initWithTwoActions(FiniteTimeAction *pActionOne, FiniteTimeAction *pActionTwo);
 
-    virtual Object* copyWithZone(Zone* pZone);
 	/** returns a new clone of the action */
     virtual Sequence* clone() const;
 
@@ -137,7 +136,6 @@ public:
     /** initializes a Repeat action. Times is an unsigned integer between 1 and pow(2,30) */
     bool initWithAction(FiniteTimeAction *pAction, unsigned int times);
 
-    virtual Object* copyWithZone(Zone* pZone);
 	/** returns a new clone of the action */
     virtual Repeat* clone() const;
 
@@ -147,7 +145,7 @@ public:
     virtual void startWithTarget(Node *pTarget);
     virtual void stop(void);
     virtual void update(float dt);
-    virtual bool isDone(void);
+    virtual bool isDone(void) const;
 
     inline void setInnerAction(FiniteTimeAction *pAction)
     {
@@ -191,7 +189,7 @@ public:
 
     /** initializes the action */
     bool initWithAction(ActionInterval *pAction);
-    virtual Object* copyWithZone(Zone *pZone);
+
 	/** returns a new clone of the action */
     virtual RepeatForever* clone() const;
 
@@ -200,7 +198,7 @@ public:
 
     virtual void startWithTarget(Node* pTarget);
     virtual void step(float dt);
-    virtual bool isDone(void);
+    virtual bool isDone(void) const;
 
     inline void setInnerAction(ActionInterval *pAction)
     {
@@ -236,7 +234,6 @@ public:
     /** initializes the Spawn action with the 2 actions to spawn */
     bool initWithTwoActions(FiniteTimeAction *pAction1, FiniteTimeAction *pAction2);
 
-    virtual Object* copyWithZone(Zone* pZone);
 	/** returns a new clone of the action */
     virtual Spawn* clone() const;
 
@@ -282,8 +279,6 @@ public:
     static RotateTo* create(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
     virtual bool initWithDuration(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
 
-    virtual Object* copyWithZone(Zone* pZone);
-
 	/** returns a new clone of the action */
     virtual RotateTo* clone() const;
 
@@ -316,7 +311,6 @@ public:
     static RotateBy* create(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
     bool initWithDuration(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
 
-    virtual Object* copyWithZone(Zone* pZone);
 	/** returns a new clone of the action */
     virtual RotateBy* clone() const;
 
@@ -346,7 +340,6 @@ public:
     /** initializes the action */
     bool initWithDuration(float duration, const Point& deltaPosition);
 
-    virtual Object* copyWithZone(Zone* pZone);
 	/** returns a new clone of the action */
     virtual MoveBy* clone() const;
 
@@ -377,7 +370,6 @@ public:
     /** initializes the action */
     bool initWithDuration(float duration, const Point& position);
 
-    virtual Object* copyWithZone(Zone* pZone);
 	/** returns a new clone of the action */
     virtual MoveTo* clone() const;
 
@@ -398,7 +390,7 @@ class CC_DLL SkewTo : public ActionInterval
 public:
     SkewTo();
     virtual bool initWithDuration(float t, float sx, float sy);
-    virtual Object* copyWithZone(Zone* pZone);
+
 	/** returns a new clone of the action */
     virtual SkewTo* clone() const;
 	/** returns a new reversed action */
@@ -451,7 +443,6 @@ public:
     /** initializes the action */
     bool initWithDuration(float duration, const Point& position, float height, unsigned int jumps);
 
-    virtual Object* copyWithZone(Zone* pZone);
 	/** returns a new clone of the action */
     virtual JumpBy* clone() const;
 	/** returns a new reversed action */
@@ -477,7 +468,7 @@ class CC_DLL JumpTo : public JumpBy
 {
 public:
     virtual void startWithTarget(Node *pTarget);
-    virtual Object* copyWithZone(Zone* pZone);
+
 	/** returns a new clone of the action */
     virtual JumpTo* clone() const;
 	/** returns a new reversed action */
@@ -507,7 +498,6 @@ public:
     /** initializes the action with a duration and a bezier configuration */
     bool initWithDuration(float t, const ccBezierConfig& c);
 
-    virtual Object* copyWithZone(Zone* pZone);
 	/** returns a new clone of the action */
     virtual BezierBy* clone() const;
 	/** returns a new reversed action */
@@ -532,7 +522,7 @@ class CC_DLL BezierTo : public BezierBy
 {
 public:
     virtual void startWithTarget(Node *pTarget);
-    virtual Object* copyWithZone(Zone* pZone);
+
 	/** returns a new clone of the action */
     virtual BezierTo* clone() const;
 	/** returns a new reversed action */
@@ -560,7 +550,6 @@ public:
     /** initializes the action with and X factor and a Y factor */
     bool initWithDuration(float duration, float sx, float sy);
 
-    virtual Object* copyWithZone(Zone* pZone);
 	/** returns a new clone of the action */
     virtual ScaleTo* clone() const;
 	/** returns a new reversed action */
@@ -598,8 +587,6 @@ public:
 	/** returns a new reversed action */
 	virtual ScaleBy* reverse(void) const;
 
-    virtual Object* copyWithZone(Zone* pZone);
-
 public:
 
     /** creates the action with the same scale factor for X and Y */
@@ -622,7 +609,6 @@ public:
 	/** returns a new reversed action */
 	virtual Blink* reverse(void) const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void update(float time);
 
 public:
@@ -651,8 +637,6 @@ public:
 	/** returns a new reversed action */
 	virtual ActionInterval* reverse(void) const;
 
-    virtual Object* copyWithZone(Zone* pZone);
-
 public:
     /** creates the action */
     static FadeIn* create(float d);
@@ -665,7 +649,7 @@ class CC_DLL FadeOut : public ActionInterval
 {
 public:
     virtual void update(float time);
-    virtual Object* copyWithZone(Zone* pZone);
+
 	/** returns a new clone of the action */
     virtual FadeOut* clone() const;
 	/** returns a new reversed action */
@@ -692,7 +676,6 @@ public:
 	/** returns a new reversed action */
 	virtual FadeTo* reverse(void) const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void startWithTarget(Node *pTarget);
     virtual void update(float time);
 
@@ -719,7 +702,6 @@ public:
 	/** returns a new reversed action */
 	virtual TintTo* reverse(void) const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void startWithTarget(Node *pTarget);
     virtual void update(float time);
 
@@ -727,8 +709,8 @@ public:
     /** creates an action with duration and color */
     static TintTo* create(float duration, GLubyte red, GLubyte green, GLubyte blue);
 protected:
-    ccColor3B _to;
-    ccColor3B _from;
+    Color3B _to;
+    Color3B _from;
 };
 
 /** @brief Tints a Node that implements the NodeRGB protocol from current tint to a custom one.
@@ -745,7 +727,6 @@ public:
 	/** returns a new reversed action */
 	virtual TintBy* reverse() const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void startWithTarget(Node *pTarget);
     virtual void update(float time);
 
@@ -772,7 +753,6 @@ public:
     virtual DelayTime* reverse() const;
 	/** returns a new clone of the action */
     virtual DelayTime* clone() const;
-    virtual Object* copyWithZone(Zone* pZone);
 
 public:
 
@@ -800,7 +780,6 @@ public:
 	virtual ReverseTime* reverse() const;
 	/** returns a new clone of the action */
     virtual ReverseTime* clone() const;
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void startWithTarget(Node *pTarget);
     virtual void stop(void);
     virtual void update(float time);
@@ -828,13 +807,9 @@ public:
 	/** returns a new reversed action */
     virtual Animate* reverse() const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void startWithTarget(Node *pTarget);
     virtual void stop(void);
     virtual void update(float t);
-
-
-
 public:
     /** creates the action with an Animation and will restore the original frame when the animation is over */
     static Animate* create(Animation *pAnimation);
@@ -843,7 +818,7 @@ protected:
     std::vector<float>* _splitTimes;
     int                _nextFrame;
     SpriteFrame*  _origFrame;
-       unsigned int    _executedLoops;
+    unsigned int    _executedLoops;
 };
 
 /** Overrides the target of an action so that it always runs on the target
@@ -866,7 +841,6 @@ public:
 	/** returns a new reversed action */
     virtual TargetedAction* reverse() const;
 
-    virtual Object* copyWithZone(Zone* pZone);
     virtual void startWithTarget(Node *pTarget);
     virtual void stop(void);
     virtual void update(float time);

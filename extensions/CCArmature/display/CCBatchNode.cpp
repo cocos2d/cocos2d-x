@@ -105,7 +105,7 @@ void BatchNode::draw()
         }
         else
         {
-            ((Node *)object)->visit();
+            static_cast<Node*>(object)->visit();
         }
     }
 

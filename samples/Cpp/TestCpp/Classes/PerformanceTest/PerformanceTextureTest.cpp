@@ -51,7 +51,7 @@ void TextureMenuLayer::onEnter()
     LabelTTF *label = LabelTTF::create(title().c_str(), "Arial", 40);
     addChild(label, 1);
     label->setPosition(ccp(s.width/2, s.height-32));
-    label->setColor(ccc3(255,255,40));
+    label->setColor(Color3B(255,255,40));
 
     // Subtitle
     std::string strSubTitle = subtitle();

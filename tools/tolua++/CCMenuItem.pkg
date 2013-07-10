@@ -19,10 +19,10 @@ class CCMenuItemLabel : public CCMenuItem
 
     void setOpacity(GLubyte opacity);
     GLubyte getOpacity();
-    void setColor(ccColor3B color);
-    ccColor3B getColor();
-	void setDisabledColor(const ccColor3B & color);
-	const ccColor3B & getDisabledColor();
+    void setColor(Color3B color);
+    Color3B getColor();
+	void setDisabledColor(const Color3B & color);
+	const Color3B & getDisabledColor();
 	void setLabel(CCNode* pLabel);
 	CCNode* getLabel();
 
@@ -62,8 +62,8 @@ class CCMenuItemFont : public CCMenuItemLabel
 
 class CCMenuItemSprite : public CCMenuItem
 {
-    void setColor(ccColor3B color);
-    ccColor3B getColor();
+    void setColor(Color3B color);
+    Color3B getColor();
     void setOpacity(GLubyte opacity);
     GLubyte getOpacity();
 
@@ -90,8 +90,8 @@ class CCMenuItemSprite : public CCMenuItem
 
 class CCMenuItemImage : public CCMenuItemSprite
 {
-    void setColor(ccColor3B color);
-    ccColor3B getColor();
+    void setColor(Color3B color);
+    Color3B getColor();
     void setOpacity(GLubyte opacity);
     GLubyte getOpacity();
 
@@ -109,8 +109,8 @@ class CCMenuItemImage : public CCMenuItemSprite
 
 class CCMenuItemToggle : public CCMenuItem
 {
-    void setColor(ccColor3B color);
-    ccColor3B getColor();
+    void setColor(Color3B color);
+    Color3B getColor();
     void setOpacity(GLubyte opacity);
     GLubyte getOpacity();
     void setSelectedIndex(unsigned int index);

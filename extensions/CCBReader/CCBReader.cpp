@@ -294,7 +294,7 @@ Node* CCBReader::readNodeGraphFromData(Data *pData, Object *pOwner, const Size &
     CCDICT_FOREACH(animationManagers, pElement)
     {
         Node* pNode = (Node*)pElement->getIntKey();
-        CCBAnimationManager* manager = (CCBAnimationManager*)animationManagers->objectForKey((intptr_t)pNode);
+        CCBAnimationManager* manager = static_cast<CCBAnimationManager*>(animationManagers->objectForKey((intptr_t)pNode));
         pNode->setUserObject(manager);
 
         if (jsControlled)
@@ -333,7 +333,7 @@ void CCBReader::cleanUpNodeGraph(Node *pNode)
     Object *pChild = NULL;
     CCARRAY_FOREACH(pNode->getChildren(), pChild)
     {
-        cleanUpNodeGraph((Node*)pChild);
+        cleanUpNodeGraph(static_cast<Node*>(pChild));
     }
 }
 
@@ -714,11 +714,11 @@ Node * CCBReader::readNodeGraph(Node * pParent) {
                     DictElement* pElement;
                     CCDICT_FOREACH(pCustomPropeties, pElement)
                     {
-                        customAssigned = targetAsCCBMemberVariableAssigner->onAssignCCBCustomProperty(target, pElement->getStrKey(), (CCBValue*)pElement->getObject());
+                        customAssigned = targetAsCCBMemberVariableAssigner->onAssignCCBCustomProperty(target, pElement->getStrKey(), static_cast<CCBValue*>(pElement->getObject()));
 
                         if(!customAssigned && this->mCCBMemberVariableAssigner != NULL)
                         {
-                            customAssigned = this->mCCBMemberVariableAssigner->onAssignCCBCustomProperty(target, pElement->getStrKey(), (CCBValue*)pElement->getObject());
+                            customAssigned = this->mCCBMemberVariableAssigner->onAssignCCBCustomProperty(target, pElement->getStrKey(), static_cast<CCBValue*>(pElement->getObject()));
                         }
                     }
                 }
@@ -790,8 +790,8 @@ CCBKeyframe* CCBReader::readKeyframe(int type)
         int g = readByte();
         int b = readByte();
         
-        ccColor3B c = ccc3(r,g,b);
-        value = ccColor3BWapper::create(c);
+        Color3B c = Color3B(r,g,b);
+        value = Color3BWapper::create(c);
     }
     else if (type == kCCBPropTypeDegrees)
     {

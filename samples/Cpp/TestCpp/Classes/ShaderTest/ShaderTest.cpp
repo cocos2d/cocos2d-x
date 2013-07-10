@@ -109,8 +109,8 @@ enum
 };
 
 ShaderNode::ShaderNode()
-:_center(vertex2(0.0f, 0.0f))
-,_resolution(vertex2(0.0f, 0.0f))
+:_center(Vertex2F(0.0f, 0.0f))
+,_resolution(Vertex2F(0.0f, 0.0f))
 ,_time(0.0f)
 ,_uniformCenter(0)
 ,_uniformResolution(0)
@@ -142,7 +142,7 @@ bool ShaderNode::initWithVertex(const char *vert, const char *frag)
     loadShaderVertex(vert, frag);
 
     _time = 0;
-    _resolution = vertex2(SIZE_X, SIZE_Y);
+    _resolution = Vertex2F(SIZE_X, SIZE_Y);
 
     scheduleUpdate();
 
@@ -189,7 +189,7 @@ void ShaderNode::setPosition(const Point &newPosition)
 {
     Node::setPosition(newPosition);
     Point position = getPosition();
-    _center = vertex2(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
+    _center = Vertex2F(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
 }
 
 void ShaderNode::draw()
@@ -522,7 +522,7 @@ void SpriteBlur::initProgram()
 void SpriteBlur::draw()
 {
     ccGLEnableVertexAttribs(kVertexAttribFlag_PosColorTex );
-    ccBlendFunc blend = getBlendFunc();
+    BlendFunc blend = getBlendFunc();
     ccGLBlendFunc(blend.src, blend.dst);
 
     getShaderProgram()->use();
@@ -539,15 +539,15 @@ void SpriteBlur::draw()
     long offset = (long)&_quad;
 
     // vertex
-    int diff = offsetof( ccV3F_C4B_T2F, vertices);
+    int diff = offsetof( V3F_C4B_T2F, vertices);
     glVertexAttribPointer(kVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
 
     // texCoods
-    diff = offsetof( ccV3F_C4B_T2F, texCoords);
+    diff = offsetof( V3F_C4B_T2F, texCoords);
     glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
 
     // color
-    diff = offsetof( ccV3F_C4B_T2F, colors);
+    diff = offsetof( V3F_C4B_T2F, colors);
     glVertexAttribPointer(kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
 
 
@@ -684,7 +684,7 @@ void ShaderRetroEffect::update(float dt)
     Object* pObj = NULL;
     CCARRAY_FOREACH(pArray, pObj)
     {
-        Sprite *sprite = (Sprite*)pObj;
+        Sprite *sprite = static_cast<Sprite*>(pObj);
         i++;
         Point oldPosition = sprite->getPosition();
         sprite->setPosition(ccp( oldPosition.x, sinf( _accum * 2 + i/2.0) * 20  ));

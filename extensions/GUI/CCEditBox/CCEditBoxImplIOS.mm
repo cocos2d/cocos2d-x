@@ -309,14 +309,14 @@ void EditBoxImplIOS::initInactiveLabels(const Size& size)
 
 	_label = LabelTTF::create("", "", 0.0f);
     _label->setAnchorPoint(ccp(0, 0.5f));
-    _label->setColor(ccWHITE);
+    _label->setColor(Color3B::WHITE);
     _label->setVisible(false);
     _editBox->addChild(_label, kLabelZOrder);
 	
     _labelPlaceHolder = LabelTTF::create("", "", 0.0f);
 	// align the text vertically center
     _labelPlaceHolder->setAnchorPoint(ccp(0, 0.5f));
-    _labelPlaceHolder->setColor(ccGRAY);
+    _labelPlaceHolder->setColor(Color3B::GRAY);
     _editBox->addChild(_labelPlaceHolder, kLabelZOrder);
     
     setFont(pDefaultFontName, size.height*2/3);
@@ -378,7 +378,7 @@ void EditBoxImplIOS::setFont(const char* pFontName, int fontSize)
 	_labelPlaceHolder->setFontSize(fontSize);
 }
 
-void EditBoxImplIOS::setFontColor(const ccColor3B& color)
+void EditBoxImplIOS::setFontColor(const Color3B& color)
 {
     _systemControl.textField.textColor = [UIColor colorWithRed:color.r / 255.0f green:color.g / 255.0f blue:color.b / 255.0f alpha:1.0f];
 	_label->setColor(color);
@@ -389,7 +389,7 @@ void EditBoxImplIOS::setPlaceholderFont(const char* pFontName, int fontSize)
 	// TODO need to be implemented.
 }
 
-void EditBoxImplIOS::setPlaceholderFontColor(const ccColor3B& color)
+void EditBoxImplIOS::setPlaceholderFontColor(const Color3B& color)
 {
 	_labelPlaceHolder->setColor(color);
 }

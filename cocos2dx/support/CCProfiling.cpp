@@ -84,7 +84,7 @@ void Profiler::displayTimers()
     DictElement* pElement = NULL;
     CCDICT_FOREACH(_activeTimers, pElement)
     {
-        ProfilingTimer* timer = (ProfilingTimer*)pElement->getObject();
+        ProfilingTimer* timer = static_cast<ProfilingTimer*>(pElement->getObject());
         CCLog("%s", timer->description());
     }
 }
@@ -109,7 +109,7 @@ ProfilingTimer::~ProfilingTimer(void)
     
 }
 
-const char* ProfilingTimer::description()
+const char* ProfilingTimer::description() const
 {
     static char s_szDesciption[256] = {0};
     sprintf(s_szDesciption, "%s: avg time, %fms", _nameStr.c_str(), _averageTime);

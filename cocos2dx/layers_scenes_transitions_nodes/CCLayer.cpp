@@ -557,8 +557,8 @@ void Layer::ccTouchesCancelled(Set *pTouches, Event *pEvent)
 LayerRGBA::LayerRGBA()
 : _displayedOpacity(255)
 , _realOpacity (255)
-, _displayedColor(ccWHITE)
-, _realColor(ccWHITE)
+, _displayedColor(Color3B::WHITE)
+, _realColor(Color3B::WHITE)
 , _cascadeOpacityEnabled(false)
 , _cascadeColorEnabled(false)
 {}
@@ -570,7 +570,7 @@ bool LayerRGBA::init()
 	if (Layer::init())
     {
         _displayedOpacity = _realOpacity = 255;
-        _displayedColor = _realColor = ccWHITE;
+        _displayedColor = _realColor = Color3B::WHITE;
         setCascadeOpacityEnabled(false);
         setCascadeColorEnabled(false);
         
@@ -609,23 +609,23 @@ void LayerRGBA::setOpacity(GLubyte opacity)
 	}
 }
 
-const ccColor3B& LayerRGBA::getColor() const
+const Color3B& LayerRGBA::getColor() const
 {
 	return _realColor;
 }
 
-const ccColor3B& LayerRGBA::getDisplayedColor() const
+const Color3B& LayerRGBA::getDisplayedColor() const
 {
 	return _displayedColor;
 }
 
-void LayerRGBA::setColor(const ccColor3B& color)
+void LayerRGBA::setColor(const Color3B& color)
 {
 	_displayedColor = _realColor = color;
 	
 	if (_cascadeColorEnabled)
     {
-		ccColor3B parentColor = ccWHITE;
+		Color3B parentColor = Color3B::WHITE;
         RGBAProtocol* parent = dynamic_cast<RGBAProtocol*>(_parent);
 		if (parent && parent->isCascadeColorEnabled())
         {
@@ -654,7 +654,7 @@ void LayerRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
     }
 }
 
-void LayerRGBA::updateDisplayedColor(const ccColor3B& parentColor)
+void LayerRGBA::updateDisplayedColor(const Color3B& parentColor)
 {
 	_displayedColor.r = _realColor.r * parentColor.r/255.0;
 	_displayedColor.g = _realColor.g * parentColor.g/255.0;
@@ -708,12 +708,12 @@ LayerColor::~LayerColor()
 }
 
 /// blendFunc getter
-const ccBlendFunc &LayerColor::getBlendFunc() const
+const BlendFunc &LayerColor::getBlendFunc() const
 {
     return _blendFunc;
 }
 /// blendFunc setter
-void LayerColor::setBlendFunc(const ccBlendFunc &var)
+void LayerColor::setBlendFunc(const BlendFunc &var)
 {
     _blendFunc = var;
 }
@@ -732,7 +732,7 @@ LayerColor* LayerColor::create()
     return pRet;
 }
 
-LayerColor * LayerColor::create(const ccColor4B& color, GLfloat width, GLfloat height)
+LayerColor * LayerColor::create(const Color4B& color, GLfloat width, GLfloat height)
 {
     LayerColor * pLayer = new LayerColor();
     if( pLayer && pLayer->initWithColor(color,width,height))
@@ -744,7 +744,7 @@ LayerColor * LayerColor::create(const ccColor4B& color, GLfloat width, GLfloat h
     return NULL;
 }
 
-LayerColor * LayerColor::create(const ccColor4B& color)
+LayerColor * LayerColor::create(const Color4B& color)
 {
     LayerColor * pLayer = new LayerColor();
     if(pLayer && pLayer->initWithColor(color))
@@ -759,10 +759,10 @@ LayerColor * LayerColor::create(const ccColor4B& color)
 bool LayerColor::init()
 {
     Size s = Director::sharedDirector()->getWinSize();
-    return initWithColor(ccc4(0,0,0,0), s.width, s.height);
+    return initWithColor(Color4B(0,0,0,0), s.width, s.height);
 }
 
-bool LayerColor::initWithColor(const ccColor4B& color, GLfloat w, GLfloat h)
+bool LayerColor::initWithColor(const Color4B& color, GLfloat w, GLfloat h)
 {
     if (Layer::init())
     {
@@ -791,7 +791,7 @@ bool LayerColor::initWithColor(const ccColor4B& color, GLfloat w, GLfloat h)
     return false;
 }
 
-bool LayerColor::initWithColor(const ccColor4B& color)
+bool LayerColor::initWithColor(const Color4B& color)
 {
     Size s = Director::sharedDirector()->getWinSize();
     this->initWithColor(color, s.width, s.height);
@@ -845,10 +845,10 @@ void LayerColor::draw()
     // Attributes
     //
 #ifdef EMSCRIPTEN
-    setGLBufferData(_squareVertices, 4 * sizeof(ccVertex2F), 0);
+    setGLBufferData(_squareVertices, 4 * sizeof(Vertex2F), 0);
     glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
-    setGLBufferData(_squareColors, 4 * sizeof(ccColor4F), 1);
+    setGLBufferData(_squareColors, 4 * sizeof(Color4F), 1);
     glVertexAttribPointer(kVertexAttrib_Color, 4, GL_FLOAT, GL_FALSE, 0, 0);
 #else
     glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, _squareVertices);
@@ -862,7 +862,7 @@ void LayerColor::draw()
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void LayerColor::setColor(const ccColor3B &color)
+void LayerColor::setColor(const Color3B &color)
 {
     LayerRGBA::setColor(color);
     updateColor();
@@ -877,7 +877,7 @@ void LayerColor::setOpacity(GLubyte opacity)
 //
 // LayerGradient
 // 
-LayerGradient* LayerGradient::create(const ccColor4B& start, const ccColor4B& end)
+LayerGradient* LayerGradient::create(const Color4B& start, const Color4B& end)
 {
     LayerGradient * pLayer = new LayerGradient();
     if( pLayer && pLayer->initWithColor(start, end))
@@ -889,7 +889,7 @@ LayerGradient* LayerGradient::create(const ccColor4B& start, const ccColor4B& en
     return NULL;
 }
 
-LayerGradient* LayerGradient::create(const ccColor4B& start, const ccColor4B& end, const Point& v)
+LayerGradient* LayerGradient::create(const Color4B& start, const Color4B& end, const Point& v)
 {
     LayerGradient * pLayer = new LayerGradient();
     if( pLayer && pLayer->initWithColor(start, end, v))
@@ -917,15 +917,15 @@ LayerGradient* LayerGradient::create()
 
 bool LayerGradient::init()
 {
-	return initWithColor(ccc4(0, 0, 0, 255), ccc4(0, 0, 0, 255));
+	return initWithColor(Color4B(0, 0, 0, 255), Color4B(0, 0, 0, 255));
 }
 
-bool LayerGradient::initWithColor(const ccColor4B& start, const ccColor4B& end)
+bool LayerGradient::initWithColor(const Color4B& start, const Color4B& end)
 {
     return initWithColor(start, end, ccp(0, -1));
 }
 
-bool LayerGradient::initWithColor(const ccColor4B& start, const ccColor4B& end, const Point& v)
+bool LayerGradient::initWithColor(const Color4B& start, const Color4B& end, const Point& v)
 {
     _endColor.r  = end.r;
     _endColor.g  = end.g;
@@ -937,7 +937,7 @@ bool LayerGradient::initWithColor(const ccColor4B& start, const ccColor4B& end, 
 
     _compressedInterpolation = true;
 
-    return LayerColor::initWithColor(ccc4(start.r, start.g, start.b, 255));
+    return LayerColor::initWithColor(Color4B(start.r, start.g, start.b, 255));
 }
 
 void LayerGradient::updateColor()
@@ -960,19 +960,19 @@ void LayerGradient::updateColor()
 
     float opacityf = (float)_displayedOpacity / 255.0f;
 
-    ccColor4F S = {
+    Color4F S(
         _displayedColor.r / 255.0f,
         _displayedColor.g / 255.0f,
         _displayedColor.b / 255.0f,
         _startOpacity * opacityf / 255.0f
-    };
+    );
 
-    ccColor4F E = {
+    Color4F E(
         _endColor.r / 255.0f,
         _endColor.g / 255.0f,
         _endColor.b / 255.0f,
         _endOpacity * opacityf / 255.0f
-    };
+    );
 
     // (-1, -1)
     _squareColors[0].r = E.r + (S.r - E.r) * ((c + u.x + u.y) / (2.0f * c));
@@ -996,23 +996,23 @@ void LayerGradient::updateColor()
     _squareColors[3].a = E.a + (S.a - E.a) * ((c - u.x - u.y) / (2.0f * c));
 }
 
-const ccColor3B& LayerGradient::getStartColor() const
+const Color3B& LayerGradient::getStartColor() const
 {
     return _realColor;
 }
 
-void LayerGradient::setStartColor(const ccColor3B& color)
+void LayerGradient::setStartColor(const Color3B& color)
 {
     setColor(color);
 }
 
-void LayerGradient::setEndColor(const ccColor3B& color)
+void LayerGradient::setEndColor(const Color3B& color)
 {
     _endColor = color;
     updateColor();
 }
 
-const ccColor3B& LayerGradient::getEndColor() const
+const Color3B& LayerGradient::getEndColor() const
 {
     return _endColor;
 }

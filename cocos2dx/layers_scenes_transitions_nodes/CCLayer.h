@@ -202,10 +202,10 @@ public:
     virtual bool isCascadeOpacityEnabled() const;
     virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
     
-    virtual const ccColor3B& getColor() const;
-    virtual const ccColor3B& getDisplayedColor() const;
-    virtual void setColor(const ccColor3B& color);
-    virtual void updateDisplayedColor(const ccColor3B& parentColor);
+    virtual const Color3B& getColor() const;
+    virtual const Color3B& getDisplayedColor() const;
+    virtual void setColor(const Color3B& color);
+    virtual void updateDisplayedColor(const Color3B& parentColor);
     virtual bool isCascadeColorEnabled() const;
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
     
@@ -213,7 +213,7 @@ public:
     virtual bool isOpacityModifyRGB() const { return false; }
 protected:
 	GLubyte		_displayedOpacity, _realOpacity;
-	ccColor3B	_displayedColor, _realColor;
+	Color3B	    _displayedColor, _realColor;
 	bool		_cascadeOpacityEnabled, _cascadeColorEnabled;
 };
 
@@ -232,8 +232,8 @@ class CC_DLL LayerColor : public LayerRGBA, public BlendProtocol
 #endif // EMSCRIPTEN
 {
 protected:
-    ccVertex2F _squareVertices[4];
-    ccColor4F  _squareColors[4];
+    Vertex2F _squareVertices[4];
+    Color4F  _squareColors[4];
 
 public:
     LayerColor();
@@ -246,15 +246,15 @@ public:
     static LayerColor* create();
     
     /** creates a Layer with color, width and height in Points */
-    static LayerColor * create(const ccColor4B& color, GLfloat width, GLfloat height);
+    static LayerColor * create(const Color4B& color, GLfloat width, GLfloat height);
     /** creates a Layer with color. Width and height are the window size. */
-    static LayerColor * create(const ccColor4B& color);
+    static LayerColor * create(const Color4B& color);
 
     virtual bool init();
     /** initializes a Layer with color, width and height in Points */
-    virtual bool initWithColor(const ccColor4B& color, GLfloat width, GLfloat height);
+    virtual bool initWithColor(const Color4B& color, GLfloat width, GLfloat height);
     /** initializes a Layer with color. Width and height are the window size. */
-    virtual bool initWithColor(const ccColor4B& color);
+    virtual bool initWithColor(const Color4B& color);
 
     /** change width in Points*/
     void changeWidth(GLfloat w);
@@ -266,11 +266,11 @@ public:
     void changeWidthAndHeight(GLfloat w ,GLfloat h);
 
     /** BlendFunction. Conforms to BlendProtocol protocol */
-    CC_PROPERTY_PASS_BY_REF(ccBlendFunc, _blendFunc, BlendFunc)
+    CC_PROPERTY_PASS_BY_REF(BlendFunc, _blendFunc, BlendFunc)
 
     virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
     virtual bool isOpacityModifyRGB(void) const { return false;}
-    virtual void setColor(const ccColor3B &color);
+    virtual void setColor(const Color3B &color);
     virtual void setOpacity(GLubyte opacity);
 
 protected:
@@ -307,17 +307,17 @@ public:
     static LayerGradient* create();
 
     /** Creates a full-screen Layer with a gradient between start and end. */
-    static LayerGradient* create(const ccColor4B& start, const ccColor4B& end);
+    static LayerGradient* create(const Color4B& start, const Color4B& end);
 
     /** Creates a full-screen Layer with a gradient between start and end in the direction of v. */
-    static LayerGradient* create(const ccColor4B& start, const ccColor4B& end, const Point& v);
+    static LayerGradient* create(const Color4B& start, const Color4B& end, const Point& v);
 
     virtual bool init();
     /** Initializes the Layer with a gradient between start and end. */
-    virtual bool initWithColor(const ccColor4B& start, const ccColor4B& end);
+    virtual bool initWithColor(const Color4B& start, const Color4B& end);
 
     /** Initializes the Layer with a gradient between start and end in the direction of v. */
-    virtual bool initWithColor(const ccColor4B& start, const ccColor4B& end, const Point& v);
+    virtual bool initWithColor(const Color4B& start, const Color4B& end, const Point& v);
     
     /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
      Default: YES
@@ -325,8 +325,8 @@ public:
     virtual void setCompressedInterpolation(bool bCompressedInterpolation);
     virtual bool isCompressedInterpolation() const;
 
-    CC_PROPERTY_PASS_BY_REF(ccColor3B, _startColor, StartColor)
-    CC_PROPERTY_PASS_BY_REF(ccColor3B, _endColor, EndColor)
+    CC_PROPERTY_PASS_BY_REF(Color3B, _startColor, StartColor)
+    CC_PROPERTY_PASS_BY_REF(Color3B, _endColor, EndColor)
     CC_PROPERTY(GLubyte, _startOpacity, StartOpacity)
     CC_PROPERTY(GLubyte, _endOpacity, EndOpacity)
     CC_PROPERTY_PASS_BY_REF(Point, _alongVector, Vector)

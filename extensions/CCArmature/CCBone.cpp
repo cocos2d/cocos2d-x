@@ -188,7 +188,7 @@ void Bone::update(float delta)
     Object *object = NULL;
     CCARRAY_FOREACH(_children, object)
     {
-        Bone *childBone = (Bone *)object;
+        Bone *childBone = static_cast<Bone *>(object);
         childBone->update(delta);
     }
 
@@ -196,7 +196,7 @@ void Bone::update(float delta)
 }
 
 
-void Bone::updateDisplayedColor(const ccColor3B &parentColor)
+void Bone::updateDisplayedColor(const Color3B &parentColor)
 {
     NodeRGBA::updateDisplayedColor(parentColor);
     updateColor();
@@ -214,7 +214,7 @@ void Bone::updateColor()
     RGBAProtocol *protocol = dynamic_cast<RGBAProtocol *>(display);
     if(protocol != NULL)
     {
-        protocol->setColor(ccc3(_displayedColor.r * _tweenData->r / 255, _displayedColor.g * _tweenData->g / 255, _displayedColor.b * _tweenData->b / 255));
+        protocol->setColor(Color3B(_displayedColor.r * _tweenData->r / 255, _displayedColor.g * _tweenData->g / 255, _displayedColor.b * _tweenData->b / 255));
         protocol->setOpacity(_displayedOpacity * _tweenData->a / 255);
     }
 }
@@ -247,7 +247,7 @@ void Bone::removeChildBone(Bone *bone, bool recursion)
             Object *_object = NULL;
             CCARRAY_FOREACH(_ccbones, _object)
             {
-                Bone *_ccBone = (Bone *)_object;
+                Bone *_ccBone = static_cast<Bone *>(_object);
                 bone->removeChildBone(_ccBone, recursion);
             }
         }

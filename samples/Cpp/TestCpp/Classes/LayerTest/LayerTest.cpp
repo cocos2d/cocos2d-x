@@ -129,7 +129,7 @@ static void setEnableRecursiveCascading(Node* node, bool enable)
     Array* children = node->getChildren();
     CCARRAY_FOREACH(children, obj)
     {
-        Node* child = (Node*)obj;
+        Node* child = static_cast<Node*>(obj);
         setEnableRecursiveCascading(child, enable);
     }
 }
@@ -190,7 +190,7 @@ void LayerTestCascadingOpacityB::onEnter()
     LayerTest::onEnter();
         
     Size s = Director::sharedDirector()->getWinSize();
-    LayerColor* layer1 = LayerColor::create(ccc4(192, 0, 0, 255), s.width, s.height/2);
+    LayerColor* layer1 = LayerColor::create(Color4B(192, 0, 0, 255), s.width, s.height/2);
     layer1->setCascadeColorEnabled(false);
     
     layer1->setPosition( ccp(0, s.height/2));
@@ -242,7 +242,7 @@ void LayerTestCascadingOpacityC::onEnter()
     LayerTest::onEnter();
     
     Size s = Director::sharedDirector()->getWinSize();
-    LayerColor* layer1 = LayerColor::create(ccc4(192, 0, 0, 255), s.width, s.height/2);
+    LayerColor* layer1 = LayerColor::create(Color4B(192, 0, 0, 255), s.width, s.height/2);
     layer1->setCascadeColorEnabled(false);
     layer1->setCascadeOpacityEnabled(false);
     
@@ -345,7 +345,7 @@ void LayerTestCascadingColorB::onEnter()
 {
     LayerTest::onEnter();
     Size s = Director::sharedDirector()->getWinSize();
-    LayerColor* layer1 = LayerColor::create(ccc4(255, 255, 255, 255), s.width, s.height/2);
+    LayerColor* layer1 = LayerColor::create(Color4B(255, 255, 255, 255), s.width, s.height/2);
     
     layer1->setPosition( ccp(0, s.height/2));
     
@@ -397,7 +397,7 @@ void LayerTestCascadingColorC::onEnter()
 {
     LayerTest::onEnter();
     Size s = Director::sharedDirector()->getWinSize();
-    LayerColor* layer1 = LayerColor::create(ccc4(255, 255, 255, 255), s.width, s.height/2);
+    LayerColor* layer1 = LayerColor::create(Color4B(255, 255, 255, 255), s.width, s.height/2);
     layer1->setCascadeColorEnabled(false);
     layer1->setPosition( ccp(0, s.height/2));
     
@@ -452,7 +452,7 @@ void LayerTest1::onEnter()
     setTouchEnabled(true);
     
     Size s = Director::sharedDirector()->getWinSize();
-    LayerColor* layer = LayerColor::create( ccc4(0xFF, 0x00, 0x00, 0x80), 200, 200); 
+    LayerColor* layer = LayerColor::create( Color4B(0xFF, 0x00, 0x00, 0x80), 200, 200); 
     
     layer->ignoreAnchorPointForPosition(false);
     layer->setPosition( ccp(s.width/2, s.height/2) );
@@ -503,12 +503,12 @@ void LayerTest2::onEnter()
     LayerTest::onEnter();
 
     Size s = Director::sharedDirector()->getWinSize();
-    LayerColor* layer1 = LayerColor::create( ccc4(255, 255, 0, 80), 100, 300);
+    LayerColor* layer1 = LayerColor::create( Color4B(255, 255, 0, 80), 100, 300);
     layer1->setPosition(ccp(s.width/3, s.height/2));
     layer1->ignoreAnchorPointForPosition(false);
     addChild(layer1, 1);
     
-    LayerColor* layer2 = LayerColor::create( ccc4(0, 0, 255, 255), 100, 300);
+    LayerColor* layer2 = LayerColor::create( Color4B(0, 0, 255, 255), 100, 300);
     layer2->setPosition(ccp((s.width/3)*2, s.height/2));
     layer2->ignoreAnchorPointForPosition(false);
     addChild(layer2, 1);
@@ -538,7 +538,7 @@ std::string LayerTest2::title()
 LayerTestBlend::LayerTestBlend()
 {
     Size s = Director::sharedDirector()->getWinSize();
-    LayerColor* layer1 = LayerColor::create( ccc4(255, 255, 255, 80) );
+    LayerColor* layer1 = LayerColor::create( Color4B(255, 255, 255, 80) );
     
     Sprite* sister1 = Sprite::create(s_pPathSister1);
     Sprite* sister2 = Sprite::create(s_pPathSister2);
@@ -571,7 +571,7 @@ void LayerTestBlend::newBlend(float dt)
         dst = GL_ZERO;
     }
 
-    ccBlendFunc bf = {src, dst};
+    BlendFunc bf = {src, dst};
     layer->setBlendFunc( bf );
 }
 
@@ -588,7 +588,7 @@ std::string LayerTestBlend::title()
 //------------------------------------------------------------------
 LayerGradientTest::LayerGradientTest()
 {
-    LayerGradient* layer1 = LayerGradient::create(ccc4(255,0,0,255), ccc4(0,255,0,255), ccp(0.9f, 0.9f));
+    LayerGradient* layer1 = LayerGradient::create(Color4B(255,0,0,255), Color4B(0,255,0,255), ccp(0.9f, 0.9f));
     addChild(layer1, 0, kTagLayer);
 
     setTouchEnabled(true);
@@ -643,7 +643,7 @@ string LayerGradientTest::subtitle()
 LayerGradientTest2::LayerGradientTest2()
 {
     LayerGradient* layer = new LayerGradient;
-    layer->initWithColor(ccc4(255,0,0,255), ccc4(255,255,0,255));
+    layer->initWithColor(Color4B(255,0,0,255), Color4B(255,255,0,255));
     layer->autorelease();
     addChild(layer);
 }
@@ -666,7 +666,7 @@ string LayerGradientTest2::subtitle()
 //------------------------------------------------------------------
 LayerGradientTest3::LayerGradientTest3()
 {
-    LayerGradient* layer1 = LayerGradient::create(ccc4(255,0,0,255), ccc4(255,255,0,255));
+    LayerGradient* layer1 = LayerGradient::create(Color4B(255,0,0,255), Color4B(255,255,0,255));
     addChild(layer1);
 }
 
@@ -690,7 +690,7 @@ void LayerIgnoreAnchorPointPos::onEnter()
 
     Size s = Director::sharedDirector()->getWinSize();
 
-    LayerColor *l = LayerColor::create(ccc4(255, 0, 0, 255), 150, 150);
+    LayerColor *l = LayerColor::create(Color4B(255, 0, 0, 255), 150, 150);
 
     l->setAnchorPoint(ccp(0.5f, 0.5f));
     l->setPosition(ccp( s.width/2, s.height/2));
@@ -738,7 +738,7 @@ void LayerIgnoreAnchorPointRot::onEnter()
     LayerTest::onEnter();
     Size s = Director::sharedDirector()->getWinSize();
 
-    LayerColor *l = LayerColor::create(ccc4(255, 0, 0, 255), 200, 200);
+    LayerColor *l = LayerColor::create(Color4B(255, 0, 0, 255), 200, 200);
 
     l->setAnchorPoint(ccp(0.5f, 0.5f));
     l->setPosition(ccp( s.width/2, s.height/2));
@@ -786,7 +786,7 @@ void LayerIgnoreAnchorPointScale::onEnter()
     
     Size s = Director::sharedDirector()->getWinSize();
 
-    LayerColor *l = LayerColor::create(ccc4(255, 0, 0, 255), 200, 200);
+    LayerColor *l = LayerColor::create(Color4B(255, 0, 0, 255), 200, 200);
 
     l->setAnchorPoint(ccp(0.5f, 1.0f));
     l->setPosition(ccp( s.width/2, s.height/2));
@@ -841,12 +841,12 @@ void LayerTestScene::runThisTest()
 
 LayerExtendedBlendOpacityTest::LayerExtendedBlendOpacityTest()
 {
-    LayerGradient* layer1 = LayerGradient::create(ccc4(255, 0, 0, 255), ccc4(255, 0, 255, 255));
+    LayerGradient* layer1 = LayerGradient::create(Color4B(255, 0, 0, 255), Color4B(255, 0, 255, 255));
     layer1->setContentSize(CCSizeMake(80, 80));
     layer1->setPosition(ccp(50,50));
     addChild(layer1);
     
-    LayerGradient* layer2 = LayerGradient::create(ccc4(0, 0, 0, 127), ccc4(255, 255, 255, 127));
+    LayerGradient* layer2 = LayerGradient::create(Color4B(0, 0, 0, 127), Color4B(255, 255, 255, 127));
     layer2->setContentSize(CCSizeMake(80, 80));
     layer2->setPosition(ccp(100,90));
     addChild(layer2);
@@ -854,11 +854,11 @@ LayerExtendedBlendOpacityTest::LayerExtendedBlendOpacityTest()
     LayerGradient* layer3 = LayerGradient::create();
     layer3->setContentSize(CCSizeMake(80, 80));
     layer3->setPosition(ccp(150,140));
-    layer3->setStartColor(ccc3(255, 0, 0));
-    layer3->setEndColor(ccc3(255, 0, 255));
+    layer3->setStartColor(Color3B(255, 0, 0));
+    layer3->setEndColor(Color3B(255, 0, 255));
     layer3->setStartOpacity(255);
     layer3->setEndOpacity(255);
-    ccBlendFunc blend;
+    BlendFunc blend;
     blend.src = GL_SRC_ALPHA;
     blend.dst = GL_ONE_MINUS_SRC_ALPHA;
     layer3->setBlendFunc(blend);

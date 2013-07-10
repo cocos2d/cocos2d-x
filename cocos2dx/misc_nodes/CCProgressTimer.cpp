@@ -164,29 +164,29 @@ bool ProgressTimer::isOpacityModifyRGB(void) const
 ///
 //    @returns the vertex position from the texture coordinate
 ///
-ccTex2F ProgressTimer::textureCoordFromAlphaPoint(Point alpha)
+Tex2F ProgressTimer::textureCoordFromAlphaPoint(Point alpha)
 {
-    ccTex2F ret = {0.0f, 0.0f};
+    Tex2F ret(0.0f, 0.0f);
     if (!_sprite) {
         return ret;
     }
-    ccV3F_C4B_T2F_Quad quad = _sprite->getQuad();
+    V3F_C4B_T2F_Quad quad = _sprite->getQuad();
     Point min = ccp(quad.bl.texCoords.u,quad.bl.texCoords.v);
     Point max = ccp(quad.tr.texCoords.u,quad.tr.texCoords.v);
     //  Fix bug #1303 so that progress timer handles sprite frame texture rotation
     if (_sprite->isTextureRectRotated()) {
         CC_SWAP(alpha.x, alpha.y, float);
     }
-    return tex2(min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y);
+    return Tex2F(min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y);
 }
 
-ccVertex2F ProgressTimer::vertexFromAlphaPoint(Point alpha)
+Vertex2F ProgressTimer::vertexFromAlphaPoint(Point alpha)
 {
-    ccVertex2F ret = {0.0f, 0.0f};
+    Vertex2F ret(0.0f, 0.0f);
     if (!_sprite) {
         return ret;
     }
-    ccV3F_C4B_T2F_Quad quad = _sprite->getQuad();
+    V3F_C4B_T2F_Quad quad = _sprite->getQuad();
     Point min = ccp(quad.bl.vertices.x,quad.bl.vertices.y);
     Point max = ccp(quad.tr.vertices.x,quad.tr.vertices.y);
     ret.x = min.x * (1.f - alpha.x) + max.x * alpha.x;
@@ -202,7 +202,7 @@ void ProgressTimer::updateColor(void)
 
     if (_vertexData)
     {
-        ccColor4B sc = _sprite->getQuad().tl.colors;
+        Color4B sc = _sprite->getQuad().tl.colors;
         for (int i = 0; i < _vertexDataCount; ++i)
         {
             _vertexData[i].colors = sc;
@@ -344,7 +344,7 @@ void ProgressTimer::updateRadial(void)
 
     if(!_vertexData) {
         _vertexDataCount = index + 3;
-        _vertexData = (ccV2F_C4B_T2F*)malloc(_vertexDataCount * sizeof(ccV2F_C4B_T2F));
+        _vertexData = (V2F_C4B_T2F*)malloc(_vertexDataCount * sizeof(V2F_C4B_T2F));
         CCAssert( _vertexData, "CCProgressTimer. Not enough memory");
     }
     updateColor();
@@ -415,7 +415,7 @@ void ProgressTimer::updateBar(void)
     if (!_reverseDirection) {
         if(!_vertexData) {
             _vertexDataCount = 4;
-            _vertexData = (ccV2F_C4B_T2F*)malloc(_vertexDataCount * sizeof(ccV2F_C4B_T2F));
+            _vertexData = (V2F_C4B_T2F*)malloc(_vertexDataCount * sizeof(V2F_C4B_T2F));
             CCAssert( _vertexData, "CCProgressTimer. Not enough memory");
         }
         //    TOPLEFT
@@ -436,7 +436,7 @@ void ProgressTimer::updateBar(void)
     } else {
         if(!_vertexData) {
             _vertexDataCount = 8;
-            _vertexData = (ccV2F_C4B_T2F*)malloc(_vertexDataCount * sizeof(ccV2F_C4B_T2F));
+            _vertexData = (V2F_C4B_T2F*)malloc(_vertexDataCount * sizeof(V2F_C4B_T2F));
             CCAssert( _vertexData, "CCProgressTimer. Not enough memory");
             //    TOPLEFT 1
             _vertexData[0].texCoords = textureCoordFromAlphaPoint(ccp(0,1));
@@ -500,16 +500,16 @@ void ProgressTimer::draw(void)
     ccGLBindTexture2D( _sprite->getTexture()->getName() );
 
 #ifdef EMSCRIPTEN
-    setGLBufferData((void*) _vertexData, (_vertexDataCount * sizeof(ccV2F_C4B_T2F)), 0);
+    setGLBufferData((void*) _vertexData, (_vertexDataCount * sizeof(V2F_C4B_T2F)), 0);
 
     int offset = 0;
-    glVertexAttribPointer( kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid*)offset);
+    glVertexAttribPointer( kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid*)offset);
 
-    offset += sizeof(ccVertex2F);
-    glVertexAttribPointer( kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(ccV2F_C4B_T2F), (GLvoid*)offset);
+    offset += sizeof(Vertex2F);
+    glVertexAttribPointer( kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid*)offset);
 
-    offset += sizeof(ccColor4B);
-    glVertexAttribPointer( kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid*)offset);
+    offset += sizeof(Color4B);
+    glVertexAttribPointer( kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid*)offset);
 #else
     glVertexAttribPointer( kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]) , &_vertexData[0].vertices);
     glVertexAttribPointer( kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]), &_vertexData[0].texCoords);
