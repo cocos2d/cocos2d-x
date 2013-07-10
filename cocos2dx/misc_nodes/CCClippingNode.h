@@ -95,6 +95,11 @@ public:
     void setInverted(bool bInverted);
     
 private:
+    /**draw fullscreen quad to clear stencil bits
+    */
+    void drawFullScreenQuadClearStencil();
+    
+private:
     ClippingNode();
 };
 
