@@ -42,4 +42,6 @@ files
     "LuaOpengl.h"
     "LuaScrollView.cpp"
     "LuaScrollView.h"
+    "LuaScriptHandlerMgr.cpp"
+    "LuaScriptHandlerMgr.h"
 }
