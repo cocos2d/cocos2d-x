@@ -688,20 +688,10 @@ void Scale9Sprite::updateCapInset()
     }
     else
     {
-        if (_spriteFrameRotated)
-        {
-            insets = CCRectMake(_insetBottom,
-                _insetLeft,
-                _spriteRect.size.width-_insetRight-_insetLeft,
-                _spriteRect.size.height-_insetTop-_insetBottom);
-        }
-        else
-        {
-            insets = CCRectMake(_insetLeft,
-                _insetTop,
-                _spriteRect.size.width-_insetLeft-_insetRight,
-                _spriteRect.size.height-_insetTop-_insetBottom);
-        }
+        insets = CCRectMake(_insetLeft,
+            _insetTop,
+            _spriteRect.size.width-_insetLeft-_insetRight,
+            _spriteRect.size.height-_insetTop-_insetBottom);
     }
     this->setCapInsets(insets);
 }
