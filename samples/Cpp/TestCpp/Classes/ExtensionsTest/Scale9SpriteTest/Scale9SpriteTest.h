@@ -178,3 +178,13 @@ public:
     virtual std::string subtitle();
 };
 
+// S9FrameNameSpriteSheetRotatedInsetsScaled
+
+class S9FrameNameSpriteSheetRotatedSetCapInsetLater : public S9SpriteTestDemo
+{
+public:
+    virtual void onEnter();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+};
