@@ -532,7 +532,7 @@ void S9_TexturePacker::onEnter()
     s->setPosition(Point(x, y));
     CCLog("... setPosition");
 
-    s->setContentSize(Size(21 * 16, 13 * 16));
+    s->setContentSize(Size(14 * 16, 10 * 16));
     CCLog("... setContentSize");
 
     this->addChild(s);
@@ -546,7 +546,7 @@ void S9_TexturePacker::onEnter()
     s2->setPosition(Point(x, y));
     CCLog("... setPosition");
 
-    s2->setContentSize(Size(21 * 16, 13 * 16));
+    s2->setContentSize(Size(14 * 16, 10 * 16));
     CCLog("... setContentSize");
 
     this->addChild(s2);
@@ -621,7 +621,8 @@ void S9FrameNameSpriteSheetRotatedSetCapInsetLater::onEnter()
     
     blocks_scaled_with_insets->setInsetLeft(32);
     blocks_scaled_with_insets->setInsetRight(32);
-    
+
+    blocks_scaled_with_insets->setPreferredSize(Size(32*5.5f, 32*4));
     blocks_scaled_with_insets->setPosition(Point(x, y));
     CCLog("... setPosition");
     
