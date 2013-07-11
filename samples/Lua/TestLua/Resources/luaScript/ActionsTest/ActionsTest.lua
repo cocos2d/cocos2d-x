@@ -583,26 +583,26 @@ local function ActionSequenceCallback3(sender)
 end
 
 local function ActionSequence2()
-	actionSequenceLayer = CCLayer:create()
-	initWithLayer(actionSequenceLayer)
+    actionSequenceLayer = CCLayer:create()
+    initWithLayer(actionSequenceLayer)
 
-	alignSpritesLeft(1)
+    alignSpritesLeft(1)
 
-	grossini:setVisible(false)
-	local array = CCArray:create()
-	array:addObject(CCPlace:create(ccp(200,200)))
-	array:addObject(CCShow:create())
-	array:addObject(CCMoveBy:create(1, ccp(100,0)))
+    grossini:setVisible(false)
+    local array = CCArray:create()
+    array:addObject(CCPlace:create(ccp(200,200)))
+    array:addObject(CCShow:create())
+    array:addObject(CCMoveBy:create(1, ccp(100,0)))
     array:addObject(scriptHandlerMgr:registerCallFuncHandler(ActionSequenceCallback1))
     array:addObject(scriptHandlerMgr:registerCallFuncHandler(ActionSequenceCallback2))
     array:addObject(scriptHandlerMgr:registerCallFuncHandler(ActionSequenceCallback3))
 
-	local action = CCSequence:create(array)
+    local action = CCSequence:create(array)
 
     grossini:runAction(action)
 
-	Helper.subtitleLabel:setString("Sequence of InstantActions")
-	return actionSequenceLayer
+    Helper.subtitleLabel:setString("Sequence of InstantActions")
+    return actionSequenceLayer
 end
 
 --------------------------------------
