@@ -44,7 +44,8 @@ static std::function<Layer*()> createFunctions[] = {
     CL(S9FrameNameSpriteSheetInsetsScaled),
     CL(S9FrameNameSpriteSheetRotatedInsets),
     CL(S9_TexturePacker),
-    CL(S9FrameNameSpriteSheetRotatedInsetsScaled)
+    CL(S9FrameNameSpriteSheetRotatedInsetsScaled),
+    CL(S9FrameNameSpriteSheetRotatedSetCapInsetLater)
 };
 
 static int sceneIdx=-1;
@@ -531,7 +532,7 @@ void S9_TexturePacker::onEnter()
     s->setPosition(Point(x, y));
     CCLog("... setPosition");
 
-    s->setContentSize(Size(21 * 16, 13 * 16));
+    s->setContentSize(Size(14 * 16, 10 * 16));
     CCLog("... setContentSize");
 
     this->addChild(s);
@@ -545,7 +546,7 @@ void S9_TexturePacker::onEnter()
     s2->setPosition(Point(x, y));
     CCLog("... setPosition");
 
-    s2->setContentSize(Size(21 * 16, 13 * 16));
+    s2->setContentSize(Size(14 * 16, 10 * 16));
     CCLog("... setContentSize");
 
     this->addChild(s2);
@@ -600,4 +601,43 @@ std::string S9FrameNameSpriteSheetRotatedInsetsScaled::title()
 std::string S9FrameNameSpriteSheetRotatedInsetsScaled::subtitle()
 {
     return "createWithSpriteFrameName(); default cap insets; rendered scaled 4.5 X width, 2.5 X height";
+}
+
+//
+//// Scale9FrameNameSpriteSheetRotatedSetCapInsetLater
+//
+
+void S9FrameNameSpriteSheetRotatedSetCapInsetLater::onEnter()
+{
+    S9SpriteTestDemo::onEnter();
+    Size winSize = Director::sharedDirector()->getWinSize();
+    float x = winSize.width / 2;
+    float y = 0 + (winSize.height / 2);
+    
+    CCLog("Scale9FrameNameSpriteSheetRotatedSetCapInsetLater ...");
+    
+    auto blocks_scaled_with_insets = Scale9Sprite::createWithSpriteFrameName("blocks9r.png");
+    CCLog("... created");
+    
+    blocks_scaled_with_insets->setInsetLeft(32);
+    blocks_scaled_with_insets->setInsetRight(32);
+
+    blocks_scaled_with_insets->setPreferredSize(Size(32*5.5f, 32*4));
+    blocks_scaled_with_insets->setPosition(Point(x, y));
+    CCLog("... setPosition");
+    
+    this->addChild(blocks_scaled_with_insets);
+    CCLog("this->addChild");
+    
+    CCLog("... Scale9FrameNameSpriteSheetRotatedSetCapInsetLater done.");
+}
+
+std::string S9FrameNameSpriteSheetRotatedSetCapInsetLater::title()
+{
+    return "Scale9Sprite from sprite sheet (stored rotated), with setting CapInset later";
+}
+
+std::string S9FrameNameSpriteSheetRotatedSetCapInsetLater::subtitle()
+{
+    return "createWithSpriteFrameName(); setInsetLeft(32); setInsetRight(32);";
 }
