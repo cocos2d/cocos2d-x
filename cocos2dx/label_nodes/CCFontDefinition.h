@@ -26,7 +26,6 @@
 #ifndef _FontDefinition_h
 #define _FontDefinition_h
 
-#include "cocos2d.h"
 #include "CCTextImage.h"
 #include "CCFont.h"
 

@@ -6,6 +6,7 @@
 //
 //
 
+#include "cocos2d.h"
 #include "CCFontDefinition.h"
 
 NS_CC_BEGIN
@@ -86,6 +87,13 @@ bool LabelFontDefinition::createFontDefinition(char *fontName, int fontSize, cha
                 tempDef.offset           =    currentGlyph.getRect().origin.x;
                 tempDef.textureID        =    cPages;
                 tempDef.commonLineHeight =    currentGlyph.getCommonHeight();
+                
+                
+                // take from pixels to points
+                tempDef.width  =    tempDef.width  / CC_CONTENT_SCALE_FACTOR();
+                tempDef.height =    tempDef.height / CC_CONTENT_SCALE_FACTOR();
+                tempDef.U      =    tempDef.U      / CC_CONTENT_SCALE_FACTOR();
+                tempDef.V      =    tempDef.V      / CC_CONTENT_SCALE_FACTOR();
                 
                 if (tempDef.commonLineHeight>maxLineHeight)
                     maxLineHeight = tempDef.commonLineHeight;

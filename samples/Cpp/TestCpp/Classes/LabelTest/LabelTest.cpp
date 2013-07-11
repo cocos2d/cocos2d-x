@@ -40,7 +40,7 @@ Layer* restartAtlasAction();
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    28
+#define MAX_LAYER    30
 
 Layer* createAtlasLayer(int nIndex)
 {
@@ -76,6 +76,8 @@ Layer* createAtlasLayer(int nIndex)
         case 25: return new LabelTTFAlignment();
         case 26: return new LabelBMFontBounds();
         case 27: return new TTFFontShadowAndStroke();
+        case 28: return new LabelBMFontNewTest();
+        case 29: return new LabelDyamicTest();
     }
 
     return NULL;
@@ -1594,7 +1596,6 @@ LabelBMFontBounds::LabelBMFontBounds()
     // LabelBMFont
     label1 = LabelBMFont::create("Testing Glyph Designer", "fonts/boundsTestFont.fnt");
     
-    
     addChild(label1);
     label1->setPosition(ccp(s.width/2, s.height/2));
 }
@@ -1626,4 +1627,63 @@ void LabelBMFontBounds::draw()
     };
     ccDrawPoly(vertices, 4, true);
 }
+
+LabelBMFontNewTest::LabelBMFontNewTest()
+{
+    Size s = Director::sharedDirector()->getWinSize();
+    
+    LayerColor *layer = LayerColor::create(Color4B(128,128,128,255));
+    addChild(layer, -10);
+    
+    // LabelBMFont
+    label1 = LabelBMFontNew::create("Testing Glyph Designer", "fonts/boundsTestFont.fnt");
+    
+    addChild(label1);
+    label1->setPosition(ccp(s.width/2, s.height/2));
+}
+
+void LabelBMFontNewTest::draw()
+{
+}
+std::string LabelBMFontNewTest::title()
+{
+    return "New LabelBMFont";
+}
+
+std::string LabelBMFontNewTest::subtitle()
+{
+    return "Testing the new LabelBMFont";
+}
+
+LabelDyamicTest::LabelDyamicTest()
+{
+    Size size = Director::sharedDirector()->getWinSize();
+    
+    const char *pFontName           = "MarkerFelt-Thin";
+    const char *pFontGlyphs         = "abcdefghilmnopqrstuvzxywABCDEFGHILMNOPQRSTUVZXYW0123456789,. ";
+    LabelFontDefinition *pDef       =  new LabelFontDefinition;
+    
+    pDef->createFontDefinition((char *)pFontName, 30, (char *) pFontGlyphs);
+    StringTTF *pTestString = new StringTTF(pDef);
+    pTestString->setText( (char *)LongSentencesExample, size.width, kTextAlignmentCenter, false);
+    addChild(pTestString);
+    
+    pTestString->setPosition(Point(0, size.height/2));
+}
+
+void LabelDyamicTest::draw()
+{
+}
+
+std::string LabelDyamicTest::title()
+{
+    return "Dynamic TTF label";
+}
+
+std::string LabelDyamicTest::subtitle()
+{
+    return "Testing the new dynamic TTF label";
+}
+
+
 

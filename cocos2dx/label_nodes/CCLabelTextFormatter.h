@@ -9,7 +9,6 @@
 #ifndef __CCLabelTextFormatter__
 #define __CCLabelTextFormatter__
 
-#include "cocos2d.h"
 #include "CClabelTextFormatProtocol.h"
 
 NS_CC_BEGIN

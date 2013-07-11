@@ -7,6 +7,8 @@
 //
 
 #include <vector>
+
+#include "cocos2d.h"
 #include "CCLabelTextFormatter.h"
 #include "ccUTF8.h"
 
@@ -286,7 +288,7 @@ bool LabelTextFormatter::createStringSprites(LabelTextFormatProtocol *theLabel)
     int commonLineHeight        = theLabel->getCommonLineHeight();
     
     totalHeight                 =     commonLineHeight * quantityOfLines;
-    nextFontPositionY           = - ( commonLineHeight - totalHeight );
+    nextFontPositionY           = 0 - ( commonLineHeight - totalHeight );
     
     Rect      rect;
 
@@ -324,8 +326,8 @@ bool LabelTextFormatter::createStringSprites(LabelTextFormatProtocol *theLabel)
         int yOffset = commonLineHeight - charYOffset;
         
         
-        Point fontPos = ccp( (float)nextFontPositionX + charXOffset + charRect.size.width *  0.5f + kerningAmount,
-                               (float)nextFontPositionY + yOffset     - charRect.size.height * 0.5f * CC_CONTENT_SCALE_FACTOR() );
+        Point fontPos = ccp( (float)nextFontPositionX + charXOffset +   charRect.size.width  *  0.5f + kerningAmount,
+                             (float)nextFontPositionY + yOffset     -   charRect.size.height *  0.5f );
         
         // set the sprite position
         pLetterSprite->setPosition(CC_POINT_PIXELS_TO_POINTS(fontPos));

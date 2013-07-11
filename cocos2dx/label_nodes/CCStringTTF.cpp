@@ -5,7 +5,7 @@
 //  Created by Carlo Morgantini on 4/11/13.
 //
 //
-
+#include "cocos2d.h"
 #include "CCStringTTF.h"
 #include "CCFont.h"
 #include "CCLabelTextFormatter.h"
@@ -69,17 +69,14 @@ bool StringTTF::setText(char *pStringToRender, float lineWidth, TextAlignment al
     return true;
 }
 
-
 void StringTTF::alignText()
 {
     hideAllLetters();
     LabelTextFormatter::createStringSprites(this);
     LabelTextFormatter::multilineText(this);
-    
     hideAllLetters();
     LabelTextFormatter::createStringSprites(this);
     LabelTextFormatter::alignText(this);
-    
 }
 
 void StringTTF::hideAllLetters()
@@ -347,8 +344,6 @@ int StringTTF::getAdvanceForChar(unsigned short c, int hintPositionInString)
 
 Rect StringTTF::getRectForChar(unsigned short c)
 {
-    // carloX LetterDefinition tempDefinition   = _fontDef->getLetterDefinition(c);
-    
     Rect uvRect;
     
     uvRect.origin.x     = 0.0;
