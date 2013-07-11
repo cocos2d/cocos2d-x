@@ -1380,21 +1380,20 @@ BezierTo* BezierTo::create(float t, const ccBezierConfig& c)
 
 bool BezierTo::initWithDuration(float t, const ccBezierConfig &c)
 {
-    bool bRet = false;
-    
     if (ActionInterval::initWithDuration(t))
     {
         _toConfig = c;
+        return true;
     }
     
-    return bRet;
+    return false;
 }
 
 BezierTo* BezierTo::clone(void) const
 {
 	// no copy constructor
 	auto a = new BezierTo();
-	a->initWithDuration(_duration, _config);
+	a->initWithDuration(_duration, _toConfig);
 	a->autorelease();
 	return a;
 }

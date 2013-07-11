@@ -53,7 +53,7 @@ public:
     /** returns a copy of the object.
      @deprecated Use clone() instead
      */
-    CC_DEPRECATED_ATTRIBUTE void copy() const
+    CC_DEPRECATED_ATTRIBUTE Object* copy() const
     {
         // use "clone" instead
         CC_ASSERT(false);
