@@ -87,7 +87,7 @@ and when to execute the Scenes.
   - setting the orientation (default one is Portrait)
  
  Since the Director is a singleton, the standard way to use it is by calling:
-  _ Director::sharedDirector()->methodName();
+  _ Director::getInstance()->methodName();
  
  The Director also sets the default OpenGL context:
   - GL_TEXTURE_2D is enabled
@@ -347,7 +347,10 @@ public:
 	
 public:
     /** returns a shared instance of the director */
-    static Director* sharedDirector(void);
+    static Director* getInstance();
+
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static Director* sharedDirector(void);
 
 protected:
 

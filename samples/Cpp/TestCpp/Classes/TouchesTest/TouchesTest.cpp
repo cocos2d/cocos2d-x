@@ -39,13 +39,13 @@ PongLayer::PongLayer()
 {
     _ballStartingVelocity = ccp(20.0f, -100.0f);
     
-    _ball = Ball::ballWithTexture( TextureCache::sharedTextureCache()->addImage(s_Ball) );
+    _ball = Ball::ballWithTexture( TextureCache::getInstance()->addImage(s_Ball) );
     _ball->setPosition( VisibleRect::center() );
     _ball->setVelocity( _ballStartingVelocity );
     addChild( _ball );
     _ball->retain();
     
-    Texture2D* paddleTexture = TextureCache::sharedTextureCache()->addImage(s_Paddle);
+    Texture2D* paddleTexture = TextureCache::getInstance()->addImage(s_Paddle);
     
     Array *paddlesM = Array::createWithCapacity(4);
     
@@ -122,5 +122,5 @@ void PongLayer::doStep(float delta)
 
 void PongScene::runThisTest()
 {
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

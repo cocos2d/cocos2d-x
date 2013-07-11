@@ -15,7 +15,7 @@
 	Bug##__bug__##Layer* pLayer = new Bug##__bug__##Layer();	\
 	pLayer->init();                                         \
 	pScene->addChild(pLayer);                               \
-	Director::sharedDirector()->replaceScene(pScene);     \
+	Director::getInstance()->replaceScene(pScene);     \
 	pLayer->autorelease();                                  \
 }
 
@@ -54,7 +54,7 @@ void BugsTestMainLayer::onEnter()
 {
     Layer::onEnter();
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     _itmeMenu = Menu::create();
     MenuItemFont::setFontName("Arial");
     MenuItemFont::setFontSize(24);
@@ -86,7 +86,7 @@ void BugsTestMainLayer::ccTouchesMoved(Set *pTouches, Event *pEvent)
 
     Point curPos  = _itmeMenu->getPosition();
     Point nextPos = ccp(curPos.x, curPos.y + nMoveY);
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
     if (nextPos.y < 0.0f)
     {
         _itmeMenu->setPosition(PointZero);
@@ -124,7 +124,7 @@ void BugsTestBaseLayer::onEnter()
 
 void BugsTestBaseLayer::backCallback(Object* pSender)
 {
-//    Director::sharedDirector()->enableRetinaDisplay(false);
+//    Director::getInstance()->enableRetinaDisplay(false);
     BugsTestScene* pScene = new BugsTestScene();
     pScene->runThisTest();
     pScene->autorelease();
@@ -141,5 +141,5 @@ void BugsTestScene::runThisTest()
     addChild(pLayer);
     pLayer->release();
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

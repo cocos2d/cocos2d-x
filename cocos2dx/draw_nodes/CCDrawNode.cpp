@@ -149,7 +149,7 @@ bool DrawNode::init()
     _blendFunc.src = CC_BLEND_SRC;
     _blendFunc.dst = CC_BLEND_DST;
 
-    setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionLengthTexureColor));
+    setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionLengthTexureColor));
     
     ensureCapacity(512);
     

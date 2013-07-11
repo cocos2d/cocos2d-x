@@ -83,7 +83,7 @@ void TextInputTest::restartCallback(Object* pSender)
     Scene* s = new TextInputTestScene();
     s->addChild(restartTextInputTest()); 
 
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -91,7 +91,7 @@ void TextInputTest::nextCallback(Object* pSender)
 {
     Scene* s = new TextInputTestScene();
     s->addChild( nextTextInputTest() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -99,7 +99,7 @@ void TextInputTest::backCallback(Object* pSender)
 {
     Scene* s = new TextInputTestScene();
     s->addChild( backTextInputTest() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -131,7 +131,7 @@ KeyboardNotificationLayer::KeyboardNotificationLayer()
 
 void KeyboardNotificationLayer::registerWithTouchDispatcher()
 {
-    Director* pDirector = Director::sharedDirector();
+    Director* pDirector = Director::getInstance();
     pDirector->getTouchDispatcher()->addTargetedDelegate(this, 0, false);
 }
 
@@ -244,7 +244,7 @@ void TextFieldTTFDefaultTest::onEnter()
     KeyboardNotificationLayer::onEnter();
 
     // add TextFieldTTF
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     TextFieldTTF * pTextField = TextFieldTTF::textFieldWithPlaceHolder("<click here for input>",
         FONT_NAME,
@@ -304,7 +304,7 @@ void TextFieldTTFActionTest::onEnter()
     _action = false;
 
     // add TextFieldTTF
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     _textField = TextFieldTTF::textFieldWithPlaceHolder("<click here for input>",
         FONT_NAME,
@@ -379,7 +379,7 @@ bool TextFieldTTFActionTest::onTextFieldInsertText(TextFieldTTF * pSender, const
         endPos.x += pSender->getContentSize().width / 2;
     }
     Size  inputTextSize = label->getContentSize();
-    Point beginPos(endPos.x, Director::sharedDirector()->getWinSize().height - inputTextSize.height * 2); 
+    Point beginPos(endPos.x, Director::getInstance()->getWinSize().height - inputTextSize.height * 2); 
 
     float duration = 0.5;
     label->setPosition(beginPos);
@@ -409,7 +409,7 @@ bool TextFieldTTFActionTest::onTextFieldDeleteBackward(TextFieldTTF * pSender, c
     Size labelSize = label->getContentSize();
     beginPos.x += (textfieldSize.width - labelSize.width) / 2.0f;
     
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
     Point endPos(- winSize.width / 4.0f, winSize.height * (0.5 + (float)rand() / (2.0f * RAND_MAX)));
 
     float duration = 1;
@@ -450,5 +450,5 @@ void TextInputTestScene::runThisTest()
     Layer* pLayer = nextTextInputTest();
     addChild(pLayer);
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

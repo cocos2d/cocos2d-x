@@ -41,7 +41,7 @@ ChipmunkTestLayer::ChipmunkTestLayer()
     _spriteTexture = parent->getTexture();
 #else
     // doesn't use batch node. Slower
-    _spriteTexture = TextureCache::sharedTextureCache()->addImage("Images/grossini_dance_atlas.png");
+    _spriteTexture = TextureCache::getInstance()->addImage("Images/grossini_dance_atlas.png");
     Node *parent = Node::create();
 #endif
     addChild(parent, 0, kTagParentNode);
@@ -61,7 +61,7 @@ ChipmunkTestLayer::ChipmunkTestLayer()
     LabelTTF *pLabel = LabelTTF::create("Should define CC_ENABLE_CHIPMUNK_INTEGRATION=1\n to run this test case",
                                             "Arial",
                                             18);
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
     pLabel->setPosition(ccp(size.width/2, size.height/2));
     
     addChild(pLabel);
@@ -138,7 +138,7 @@ void ChipmunkTestLayer::update(float delta)
 {
     // Should use a fixed size step based on the animation interval.
     int steps = 2;
-    float dt = Director::sharedDirector()->getAnimationInterval()/(float)steps;
+    float dt = Director::getInstance()->getAnimationInterval()/(float)steps;
 
     for(int i=0; i<steps; i++){
         cpSpaceStep(_space, dt);
@@ -161,7 +161,7 @@ void ChipmunkTestLayer::reset(Object* sender)
     ChipmunkTestLayer* child = new ChipmunkTestLayer();
     s->addChild(child);
     child->release();
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -246,6 +246,6 @@ void ChipmunkAccelTouchTestScene::runThisTest()
     addChild(pLayer);
     pLayer->release();
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }
 

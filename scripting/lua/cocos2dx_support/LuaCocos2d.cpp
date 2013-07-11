@@ -9524,7 +9524,7 @@ static int tolua_Cocos2d_CCFileUtils_sharedFileUtils00(lua_State* tolua_S)
 #endif
  {
   {
-   FileUtils* tolua_ret = (FileUtils*)  FileUtils::sharedFileUtils();
+   FileUtils* tolua_ret = (FileUtils*)  FileUtils::getInstance();
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCFileUtils");
   }
  }
@@ -12434,7 +12434,7 @@ static int tolua_Cocos2d_CCDirector_sharedDirector00(lua_State* tolua_S)
 #endif
  {
   {
-   Director* tolua_ret = (Director*)  Director::sharedDirector();
+   Director* tolua_ret = (Director*)  Director::getInstance();
     int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
     toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCDirector");
@@ -13009,7 +13009,7 @@ static int tolua_Cocos2d_CCNotificationCenter_sharedNotificationCenter00(lua_Sta
 #endif
  {
   {
-   NotificationCenter* tolua_ret = (NotificationCenter*)  NotificationCenter::sharedNotificationCenter();
+   NotificationCenter* tolua_ret = (NotificationCenter*)  NotificationCenter::getInstance();
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCNotificationCenter");
   }
  }
@@ -19630,7 +19630,7 @@ static int tolua_Cocos2d_CCTextureCache_sharedTextureCache00(lua_State* tolua_S)
 #endif
  {
   {
-   TextureCache* tolua_ret = (TextureCache*)  TextureCache::sharedTextureCache();
+   TextureCache* tolua_ret = (TextureCache*)  TextureCache::getInstance();
     int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
     toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTextureCache");
@@ -24089,7 +24089,7 @@ static int tolua_Cocos2d_CCSpriteFrameCache_sharedSpriteFrameCache00(lua_State* 
 #endif
  {
   {
-   SpriteFrameCache* tolua_ret = (SpriteFrameCache*)  SpriteFrameCache::sharedSpriteFrameCache();
+   SpriteFrameCache* tolua_ret = (SpriteFrameCache*)  SpriteFrameCache::getInstance();
     int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
     toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteFrameCache");
@@ -38737,7 +38737,7 @@ static int tolua_Cocos2d_CCAnimationCache_sharedAnimationCache00(lua_State* tolu
 #endif
  {
   {
-   AnimationCache* tolua_ret = (AnimationCache*)  AnimationCache::sharedAnimationCache();
+   AnimationCache* tolua_ret = (AnimationCache*)  AnimationCache::getInstance();
     int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
     toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimationCache");

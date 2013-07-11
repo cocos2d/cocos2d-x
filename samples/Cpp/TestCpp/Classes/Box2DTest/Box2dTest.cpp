@@ -29,7 +29,7 @@ Box2DTestLayer::Box2DTestLayer()
     _spriteTexture = parent->getTexture();
 #else
     // doesn't use batch node. Slower
-    _spriteTexture = TextureCache::sharedTextureCache()->addImage("Images/blocks.png");
+    _spriteTexture = TextureCache::getInstance()->addImage("Images/blocks.png");
     Node *parent = Node::create();
 #endif
     addChild(parent, 0, kTagParentNode);
@@ -47,7 +47,7 @@ Box2DTestLayer::Box2DTestLayer()
     LabelTTF *pLabel = LabelTTF::create("Should define CC_ENABLE_BOX2D_INTEGRATION=1\n to run this test case",
                                             "Arial",
                                             18);
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
     pLabel->setPosition(ccp(size.width/2, size.height/2));
     
     addChild(pLabel);
@@ -120,7 +120,7 @@ void Box2DTestLayer::createResetButton()
 		Box2DTestLayer* child = new Box2DTestLayer();
 		s->addChild(child);
 		child->release();
-		Director::sharedDirector()->replaceScene(s);
+		Director::getInstance()->replaceScene(s);
 		s->release();
 	});
 
@@ -252,6 +252,6 @@ void Box2DTestScene::runThisTest()
     addChild(pLayer);
     pLayer->release();
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }
  

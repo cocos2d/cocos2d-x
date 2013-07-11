@@ -131,6 +131,6 @@ void runEditBoxTest()
     EditBoxTest *pLayer = new EditBoxTest();
     pScene->addChild(pLayer);
     
-    Director::sharedDirector()->replaceScene(pScene);
+    Director::getInstance()->replaceScene(pScene);
     pLayer->release();
 }

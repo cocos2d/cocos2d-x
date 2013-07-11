@@ -22,8 +22,8 @@ bool Bug1159Layer::init()
 {
     if (BugsTestBaseLayer::init())
     {
-        Director::sharedDirector()->setDepthTest(true);
-        Size s = Director::sharedDirector()->getWinSize();
+        Director::getInstance()->setDepthTest(true);
+        Size s = Director::getInstance()->getWinSize();
 
         LayerColor *background = LayerColor::create(Color4B(255, 0, 255, 255));
         addChild(background);
@@ -58,11 +58,11 @@ bool Bug1159Layer::init()
 
 void Bug1159Layer::callBack(Object* pSender)
 {
-    Director::sharedDirector()->replaceScene(TransitionPageTurn::create(1.0f, Bug1159Layer::scene(), false));
+    Director::getInstance()->replaceScene(TransitionPageTurn::create(1.0f, Bug1159Layer::scene(), false));
 }
 
 void Bug1159Layer::onExit()
 {
-    Director::sharedDirector()->setDepthTest(false);
+    Director::getInstance()->setDepthTest(false);
     BugsTestBaseLayer::onExit();
 }

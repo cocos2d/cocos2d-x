@@ -263,11 +263,11 @@ static CCEAGLView *view = 0;
     cocos2d::Size size;
     size.width = size_.width;
     size.height = size_.height;
-    //cocos2d::Director::sharedDirector()->reshapeProjection(size);
+    //cocos2d::Director::getInstance()->reshapeProjection(size);
 
     // Avoid flicker. Issue #350
     //[director performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
-    cocos2d::Director::sharedDirector()->drawScene();
+    cocos2d::Director::getInstance()->drawScene();
 }
 
 - (void) swapBuffers

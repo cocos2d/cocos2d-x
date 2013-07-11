@@ -46,7 +46,7 @@ bool Scene::init()
      do 
      {
          Director * pDirector;
-         CC_BREAK_IF( ! (pDirector = Director::sharedDirector()) );
+         CC_BREAK_IF( ! (pDirector = Director::getInstance()) );
          this->setContentSize(pDirector->getWinSize());
          // success
          bRet = true;

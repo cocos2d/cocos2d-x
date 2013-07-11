@@ -60,7 +60,7 @@ void RenderTextureTest::restartCallback(Object* pSender)
     Scene* s = new RenderTextureScene();
     s->addChild(restartTestCase()); 
 
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -68,7 +68,7 @@ void RenderTextureTest::nextCallback(Object* pSender)
 {
     Scene* s = new RenderTextureScene();
     s->addChild( nextTestCase() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -76,7 +76,7 @@ void RenderTextureTest::backCallback(Object* pSender)
 {
     Scene* s = new RenderTextureScene();
     s->addChild( backTestCase() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 } 
 
@@ -95,7 +95,7 @@ std::string RenderTextureTest::subtitle()
 */
 RenderTextureSave::RenderTextureSave()
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     // create a render texture, this is what we are going to draw into
     _target = RenderTexture::create(s.width, s.height, kTexture2DPixelFormat_RGBA8888);
@@ -153,7 +153,7 @@ void RenderTextureSave::saveImage(cocos2d::Object *pSender)
 
     Image *pImage = _target->newImage();
 
-    Texture2D *tex = TextureCache::sharedTextureCache()->addUIImage(pImage, png);
+    Texture2D *tex = TextureCache::getInstance()->addUIImage(pImage, png);
 
     CC_SAFE_DELETE(pImage);
 
@@ -173,7 +173,7 @@ RenderTextureSave::~RenderTextureSave()
 {
     _brush->release();
     _target->release();
-    TextureCache::sharedTextureCache()->removeUnusedTextures();
+    TextureCache::getInstance()->removeUnusedTextures();
 }
 
 void RenderTextureSave::ccTouchesMoved(Set* touches, Event* event)
@@ -258,7 +258,7 @@ RenderTextureIssue937::RenderTextureIssue937()
     spr_nonpremulti->visit();
     rend->end(); 
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     /* A1: setup */
     spr_premulti->setPosition(ccp(s.width/2-16, s.height/2+16));
@@ -287,7 +287,7 @@ void RenderTextureScene::runThisTest()
     Layer* pLayer = nextTestCase();
     addChild(pLayer);
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }
 
 /**
@@ -297,7 +297,7 @@ void RenderTextureScene::runThisTest()
 RenderTextureZbuffer::RenderTextureZbuffer()
 {
     this->setTouchEnabled(true);
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
     LabelTTF *label = LabelTTF::create("vertexZ = 50", "Marker Felt", 64);
     label->setPosition(ccp(size.width / 2, size.height * 0.25f));
     this->addChild(label);
@@ -314,7 +314,7 @@ RenderTextureZbuffer::RenderTextureZbuffer()
     label2->setVertexZ(0);
     label3->setVertexZ(-50);
 
-    SpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Images/bugs/circle.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Images/bugs/circle.plist");
     mgr = SpriteBatchNode::create("Images/bugs/circle.png", 9);
     this->addChild(mgr);
     sp1 = Sprite::createWithSpriteFrameName("circle.png");
@@ -436,7 +436,7 @@ void RenderTextureZbuffer::renderScreenShot()
 
 RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     Sprite *sprite = Sprite::create("Images/fire.png");
     sprite->setPosition(ccp(s.width * 0.25f, 0));
@@ -502,7 +502,7 @@ RenderTextureTargetNode::RenderTextureTargetNode()
     // sprite 2
     sprite2 = Sprite::create("Images/fire_rgba8888.pvr");
     
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     
     /* Create the render texture */
     RenderTexture *renderTexture = RenderTexture::create(s.width, s.height, kTexture2DPixelFormat_RGBA4444);
@@ -589,7 +589,7 @@ void SpriteRenderTextureBug::SimpleSprite::draw()
 {
     if (rt == NULL)
     {
-		Size s = Director::sharedDirector()->getWinSize();
+		Size s = Director::getInstance()->getWinSize();
         rt = new RenderTexture();
         rt->initWithWidthAndHeight(s.width, s.height, kTexture2DPixelFormat_RGBA8888);
 	}
@@ -631,7 +631,7 @@ SpriteRenderTextureBug::SpriteRenderTextureBug()
 {
     setTouchEnabled(true);
     
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     addNewSpriteWithCoords(ccp(s.width/2, s.height/2));
 }
 
