@@ -25,7 +25,6 @@ SOURCES = ../actions/CCAction.cpp \
 ../cocoa/CCNS.cpp \
 ../cocoa/CCObject.cpp \
 ../cocoa/CCSet.cpp \
-../cocoa/CCZone.cpp \
 ../cocoa/CCArray.cpp \
 ../cocoa/CCDictionary.cpp \
 ../cocoa/CCString.cpp \

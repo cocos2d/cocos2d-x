@@ -594,7 +594,7 @@ void RenderTexture::draw()
 		Object *pElement;
 		CCARRAY_FOREACH(_children, pElement)
         {
-            Node *pChild = (Node*)pElement;
+            Node *pChild = static_cast<Node*>(pElement);
 
             if (pChild != _sprite)
             {

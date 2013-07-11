@@ -279,7 +279,7 @@ static int tolua_Cocos2d_WebSocket_createByProtocolArray00(lua_State* tolua_S)
             Object* pObj = NULL;
             CCARRAY_FOREACH(protocolArray, pObj)
             {
-                String* pStr = (String*)pObj;
+                String* pStr = static_cast<String*>(pObj);
                 if (NULL != pStr) {
                     protocols.push_back(pStr->getCString());
                 }

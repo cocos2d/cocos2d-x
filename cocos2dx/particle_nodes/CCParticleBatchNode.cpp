@@ -476,7 +476,7 @@ void ParticleBatchNode::updateAllAtlasIndexes()
 
     CCARRAY_FOREACH(_children,pObj)
     {
-        ParticleSystem* child = (ParticleSystem*)pObj;
+        ParticleSystem* child = static_cast<ParticleSystem*>(pObj);
         child->setAtlasIndex(index);
         index += child->getTotalParticles();
     }

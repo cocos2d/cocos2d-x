@@ -35,21 +35,20 @@
 								<option id="sbi.gnu.cpp.compiler.option.debugging.level.1554282679" name="Debug level" superClass="sbi.gnu.cpp.compiler.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="sbi.gnu.cpp.compiler.option.debug.applog.1800109419" name="Enable application logging (-D_APP_LOG)" superClass="sbi.gnu.cpp.compiler.option.debug.applog" value="true" valueType="boolean"/>
 								<option id="sbi.gnu.cpp.compiler.option.796499718" name="Tizen-Target" superClass="sbi.gnu.cpp.compiler.option" valueType="userObjs">
-									<listOptionValue builtIn="false" value="tizen-emulator-2.1.native_gcc45.i386.cpp.staticLib"/>
+									<listOptionValue builtIn="false" value="tizen-emulator-2.2.native_gcc45.i386.cpp.staticLib"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.include.paths.1887202981" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/extensions&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/CocosDenshion/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/external/chipmunk/include/chipmunk&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/external/libwebsockets/tizen/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/external/libwebsockets/tizen/include/&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/external&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/external/libwebsockets/tizen/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/kazmath/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/tizen&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/rootstraps/tizen-emulator-2.1.native/usr/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/rootstraps/tizen-emulator-2.2.native/usr/include&quot;"/>
 								</option>
 								<option id="sbi.gnu.cpp.compiler.option.frameworks.cpp.140749819" name="Tizen-Frameworks" superClass="sbi.gnu.cpp.compiler.option.frameworks.cpp" valueType="userObjs">
 									<listOptionValue builtIn="false" value="osp-static"/>
@@ -70,7 +69,7 @@
 									<listOptionValue builtIn="false" value="CC_ENABLE_CHIPMUNK_INTEGRATION=1"/>
 									<listOptionValue builtIn="false" value="CC_ENABLE_BOX2D_INTEGRATION=0"/>
 								</option>
-								<option id="gnu.cpp.compiler.option.other.other.1649119739" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
+								<option id="gnu.cpp.compiler.option.other.other.1562216418" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
 								<inputType id="sbi.gnu.cpp.compiler.tizen.inputType.2085750802" superClass="sbi.gnu.cpp.compiler.tizen.inputType"/>
 							</tool>
 							<tool command="i386-linux-gnueabi-gcc.exe" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="org.tizen.nativecpp.tool.sbi.gnu.c.compiler.263460224" name="C Compiler" superClass="org.tizen.nativecpp.tool.sbi.gnu.c.compiler">
@@ -78,7 +77,7 @@
 								<option id="sbi.gnu.c.compiler.option.debugging.level.709891206" name="Debug level" superClass="sbi.gnu.c.compiler.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="sbi.gnu.c.compiler.option.debug.applog.1166511754" name="Enable application logging (-D_APP_LOG)" superClass="sbi.gnu.c.compiler.option.debug.applog" value="true" valueType="boolean"/>
 								<option id="sbi.gnu.c.compiler.option.1738169580" name="Tizen-Target" superClass="sbi.gnu.c.compiler.option" valueType="userObjs">
-									<listOptionValue builtIn="false" value="tizen-emulator-2.1.native_gcc45.i386.cpp.staticLib"/>
+									<listOptionValue builtIn="false" value="tizen-emulator-2.2.native_gcc45.i386.cpp.staticLib"/>
 								</option>
 								<option id="gnu.c.compiler.option.include.paths.821405214" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
@@ -164,7 +163,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="a" artifactName="extensions" buildArtefactType="org.tizen.nativecpp.buildArtefactType.staticLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.tizen.nativecpp.buildArtefactType.staticLib" cleanCommand="rm -f" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;" id="org.tizen.nativecpp.config.sbi.gcc45.lib.debug.device.1240851129" name="Debug-Tizen-Device" parent="org.tizen.nativecpp.config.sbi.gcc45.lib.debug.device">
+				<configuration artifactExtension="a" artifactName="${ProjName}" buildArtefactType="org.tizen.nativecpp.buildArtefactType.staticLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.tizen.nativecpp.buildArtefactType.staticLib" cleanCommand="rm -f" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;" id="org.tizen.nativecpp.config.sbi.gcc45.lib.debug.device.1240851129" name="Debug-Tizen-Device" parent="org.tizen.nativecpp.config.sbi.gcc45.lib.debug.device">
 					<folderInfo id="org.tizen.nativecpp.config.sbi.gcc45.lib.debug.device.1240851129." name="/" resourcePath="">
 						<toolChain id="org.tizen.nativecpp.toolchain.sbi.gcc45.lib.debug.device.1011815399" name="Tizen Native Toolchain" superClass="org.tizen.nativecpp.toolchain.sbi.gcc45.lib.debug.device">
 							<targetPlatform binaryParser="org.eclipse.cdt.core.ELF" id="org.tizen.nativeide.target.sbi.gnu.platform.base.205106495" osList="linux,win32" superClass="org.tizen.nativeide.target.sbi.gnu.platform.base"/>
@@ -175,20 +174,20 @@
 								<option id="sbi.gnu.cpp.compiler.option.debugging.level.412266760" name="Debug level" superClass="sbi.gnu.cpp.compiler.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="sbi.gnu.cpp.compiler.option.debug.applog.48357772" name="Enable application logging (-D_APP_LOG)" superClass="sbi.gnu.cpp.compiler.option.debug.applog" value="true" valueType="boolean"/>
 								<option id="sbi.gnu.cpp.compiler.option.738324429" name="Tizen-Target" superClass="sbi.gnu.cpp.compiler.option" valueType="userObjs">
-									<listOptionValue builtIn="false" value="tizen-device-2.1.native_gcc45.armel.cpp.staticLib"/>
+									<listOptionValue builtIn="false" value="tizen-device-2.2.native_gcc45.armel.cpp.staticLib"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.include.paths.1372067183" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/extensions&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/CocosDenshion/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/external/chipmunk/include/chipmunk&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/external/libwebsockets/tizen/include/&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/external&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/external/libwebsockets/tizen/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/kazmath/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/tizen&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/rootstraps/tizen-device-2.1.native/usr/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/rootstraps/tizen-device-2.2.native/usr/include&quot;"/>
 								</option>
 								<option id="sbi.gnu.cpp.compiler.option.frameworks.cpp.1270990666" name="Tizen-Frameworks" superClass="sbi.gnu.cpp.compiler.option.frameworks.cpp" valueType="userObjs">
 									<listOptionValue builtIn="false" value="osp-static"/>
@@ -209,7 +208,7 @@
 									<listOptionValue builtIn="false" value="CC_ENABLE_CHIPMUNK_INTEGRATION=1"/>
 									<listOptionValue builtIn="false" value="CC_ENABLE_BOX2D_INTEGRATION=0"/>
 								</option>
-								<option id="gnu.cpp.compiler.option.other.other.643677748" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
+								<option id="gnu.cpp.compiler.option.other.other.2066748684" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
 								<inputType id="sbi.gnu.cpp.compiler.tizen.inputType.1890676098" superClass="sbi.gnu.cpp.compiler.tizen.inputType"/>
 							</tool>
 							<tool command="arm-linux-gnueabi-gcc.exe" id="org.tizen.nativecpp.tool.sbi.gnu.c.compiler.800077346" name="C Compiler" superClass="org.tizen.nativecpp.tool.sbi.gnu.c.compiler">
@@ -217,14 +216,10 @@
 								<option id="sbi.gnu.c.compiler.option.debugging.level.641100997" name="Debug level" superClass="sbi.gnu.c.compiler.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="sbi.gnu.c.compiler.option.debug.applog.2000116514" name="Enable application logging (-D_APP_LOG)" superClass="sbi.gnu.c.compiler.option.debug.applog" value="true" valueType="boolean"/>
 								<option id="sbi.gnu.c.compiler.option.1751855743" name="Tizen-Target" superClass="sbi.gnu.c.compiler.option" valueType="userObjs">
-									<listOptionValue builtIn="false" value="tizen-device-2.1.native_gcc45.armel.cpp.staticLib"/>
+									<listOptionValue builtIn="false" value="tizen-device-2.2.native_gcc45.armel.cpp.staticLib"/>
 								</option>
 								<option id="gnu.c.compiler.option.include.paths.1641648644" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/kazmath/include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/tizen&quot;"/>
 								</option>
 								<option id="sbi.gnu.c.compiler.option.frameworks.cpp.356824867" name="Tizen-Frameworks" superClass="sbi.gnu.c.compiler.option.frameworks.cpp" valueType="userObjs">
 									<listOptionValue builtIn="false" value="osp-static"/>
@@ -298,7 +293,7 @@
 								<option id="sbi.gnu.cpp.compiler.option.debugging.level.459894355" name="Debug level" superClass="sbi.gnu.cpp.compiler.option.debugging.level"/>
 								<option id="sbi.gnu.cpp.compiler.option.debug.applog.849008186" name="Enable application logging (-D_APP_LOG)" superClass="sbi.gnu.cpp.compiler.option.debug.applog"/>
 								<option id="sbi.gnu.cpp.compiler.option.74299026" name="Tizen-Target" superClass="sbi.gnu.cpp.compiler.option" valueType="userObjs">
-									<listOptionValue builtIn="false" value="tizen-emulator-2.1.native_llvm31.i386.cpp.staticLib"/>
+									<listOptionValue builtIn="false" value="tizen-emulator-2.2.native_llvm31.i386.cpp.staticLib"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.include.paths.1217915212" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
@@ -324,7 +319,7 @@
 								<option id="sbi.gnu.c.compiler.option.debugging.level.220381318" name="Debug level" superClass="sbi.gnu.c.compiler.option.debugging.level"/>
 								<option id="sbi.gnu.c.compiler.option.debug.applog.753089515" name="Enable application logging (-D_APP_LOG)" superClass="sbi.gnu.c.compiler.option.debug.applog"/>
 								<option id="sbi.gnu.c.compiler.option.215142124" name="Tizen-Target" superClass="sbi.gnu.c.compiler.option" valueType="userObjs">
-									<listOptionValue builtIn="false" value="tizen-emulator-2.1.native_llvm31.i386.cpp.staticLib"/>
+									<listOptionValue builtIn="false" value="tizen-emulator-2.2.native_llvm31.i386.cpp.staticLib"/>
 								</option>
 								<option id="gnu.c.compiler.option.include.paths.632347119" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
@@ -380,13 +375,13 @@
 	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="org.tizen.nativecpp.config.sbi.gcc45.lib.debug.emulator.1855378280">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.tizen.nativecommon.TizenGCCManagedMakePerProjectProfileCPP"/>
+		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="org.tizen.nativecpp.config.sbi.gcc45.lib.release.2023052084">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.tizen.nativecommon.TizenGCCManagedMakePerProjectProfileCPP"/>
 		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="org.tizen.nativecpp.config.sbi.gcc45.lib.debug.device.1240851129">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.tizen.nativecommon.TizenGCCManagedMakePerProjectProfileCPP"/>
-		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="org.tizen.nativecpp.config.sbi.gcc45.lib.debug.emulator.1855378280">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.tizen.nativecommon.TizenGCCManagedMakePerProjectProfileCPP"/>
 		</scannerConfigBuildInfo>
 	</storageModule>

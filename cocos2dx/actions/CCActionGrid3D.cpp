@@ -25,7 +25,6 @@ THE SOFTWARE.
 #include "CCActionGrid3D.h"
 #include "support/CCPointExtension.h"
 #include "CCDirector.h"
-#include "cocoa/CCZone.h"
 #include <stdlib.h>
 
 NS_CC_BEGIN
@@ -73,30 +72,6 @@ Waves3D* Waves3D::clone() const
 	return a;
 }
 
-Object* Waves3D::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    Waves3D* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (Waves3D*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new Waves3D();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    Grid3DAction::copyWithZone(pZone);
-
-
-    pCopy->initWithDuration(_duration, _gridSize, _waves, _amplitude);
-
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 void Waves3D::update(float time)
 {
     int i, j;
@@ -104,7 +79,7 @@ void Waves3D::update(float time)
     {
         for (j = 0; j < _gridSize.height + 1; ++j)
         {
-            Vertex3F v = originalVertex(ccp(i ,j));
+            Vertex3F v = getOriginalVertex(ccp(i ,j));
             v.z += (sinf((float)M_PI * time * _waves * 2 + (v.y+v.x) * 0.01f) * _amplitude * _amplitudeRate);
             //CCLOG("v.z offset is %f\n", (sinf((float)M_PI * time * _waves * 2 + (v.y+v.x) * .01f) * _amplitude * _amplitudeRate));
             setVertex(ccp(i, j), v);
@@ -160,29 +135,6 @@ FlipX3D* FlipX3D::clone() const
 	return a;
 }
 
-Object* FlipX3D::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    FlipX3D* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (FlipX3D*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new FlipX3D();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    Grid3DAction::copyWithZone(pZone);
-
-    pCopy->initWithSize(_gridSize, _duration);
-
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 void FlipX3D::update(float time)
 {
     float angle = (float)M_PI * time; // 180 degrees
@@ -192,8 +144,8 @@ void FlipX3D::update(float time)
 
     Vertex3F v0, v1, v, diff;
 
-    v0 = originalVertex(ccp(1, 1));
-    v1 = originalVertex(ccp(0, 0));
+    v0 = getOriginalVertex(ccp(1, 1));
+    v1 = getOriginalVertex(ccp(0, 0));
 
     float    x0 = v0.x;
     float    x1 = v1.x;
@@ -223,31 +175,40 @@ void FlipX3D::update(float time)
     diff.z = fabsf( floorf( (x * mz) / 4.0f ) );
 
     // bottom-left
-    v = originalVertex(a);
+    v = getOriginalVertex(a);
     v.x = diff.x;
     v.z += diff.z;
     setVertex(a, v);
     
     // upper-left
-    v = originalVertex(b);
+    v = getOriginalVertex(b);
     v.x = diff.x;
     v.z += diff.z;
     setVertex(b, v);
     
     // bottom-right
-    v = originalVertex(c);
+    v = getOriginalVertex(c);
     v.x -= diff.x;
     v.z -= diff.z;
     setVertex(c, v);
     
     // upper-right
-    v = originalVertex(d);
+    v = getOriginalVertex(d);
     v.x -= diff.x;
     v.z -= diff.z;
     setVertex(d, v);
 }
 
 // implementation of FlipY3D
+
+FlipY3D* FlipY3D::clone() const
+{
+    // no copy constructor
+	auto a = new FlipY3D();
+    a->initWithSize(_gridSize, _duration);
+	a->autorelease();
+	return a;
+}
 
 FlipY3D* FlipY3D::create(float duration)
 {
@@ -268,29 +229,6 @@ FlipY3D* FlipY3D::create(float duration)
     return pAction;
 }
 
-Object* FlipY3D::copyWithZone(Zone* pZone)
-{
-    Zone* pNewZone = NULL;
-    FlipY3D* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (FlipY3D*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new FlipY3D();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    FlipX3D::copyWithZone(pZone);
-
-    pCopy->initWithSize(_gridSize, _duration);
-
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 void FlipY3D::update(float time)
 {
     float angle = (float)M_PI * time; // 180 degrees
@@ -300,8 +238,8 @@ void FlipY3D::update(float time)
     
     Vertex3F    v0, v1, v, diff;
     
-    v0 = originalVertex(ccp(1, 1));
-    v1 = originalVertex(ccp(0, 0));
+    v0 = getOriginalVertex(ccp(1, 1));
+    v1 = getOriginalVertex(ccp(0, 0));
     
     float    y0 = v0.y;
     float    y1 = v1.y;
@@ -331,25 +269,25 @@ void FlipY3D::update(float time)
     diff.z = fabsf(floorf((y * mz) / 4.0f));
     
     // bottom-left
-    v = originalVertex(a);
+    v = getOriginalVertex(a);
     v.y = diff.y;
     v.z += diff.z;
     setVertex(a, v);
     
     // upper-left
-    v = originalVertex(b);
+    v = getOriginalVertex(b);
     v.y -= diff.y;
     v.z -= diff.z;
     setVertex(b, v);
     
     // bottom-right
-    v = originalVertex(c);
+    v = getOriginalVertex(c);
     v.y = diff.y;
     v.z += diff.z;
     setVertex(c, v);
     
     // upper-right
-    v = originalVertex(d);
+    v = getOriginalVertex(d);
     v.y -= diff.y;
     v.z -= diff.z;
     setVertex(d, v);
@@ -403,29 +341,6 @@ Lens3D* Lens3D::clone() const
 	return a;
 }
 
-Object* Lens3D::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    Lens3D* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (Lens3D*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new Lens3D();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    Grid3DAction::copyWithZone(pZone);
-
-    pCopy->initWithDuration(_duration, _gridSize, _position, _radius);
-    
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 void Lens3D::setPosition(const Point& pos)
 {
     if( !pos.equals(_position))
@@ -446,7 +361,7 @@ void Lens3D::update(float time)
         {
             for (j = 0; j < _gridSize.height + 1; ++j)
             {
-                Vertex3F v = originalVertex(ccp(i, j));
+                Vertex3F v = getOriginalVertex(ccp(i, j));
                 Point vect = ccpSub(_position, ccp(v.x, v.y));
                 float r = ccpLength(vect);
                 
@@ -530,29 +445,6 @@ Ripple3D* Ripple3D::clone() const
 	return a;
 }
 
-Object* Ripple3D::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    Ripple3D* pCopy = NULL;
-    if(pZone && pZone->_copyObject)
-    {
-        //in case of being called at sub class
-        pCopy = (Ripple3D*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new Ripple3D();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    Grid3DAction::copyWithZone(pZone);
-
-    pCopy->initWithDuration(_duration, _gridSize, _position, _radius, _waves, _amplitude);
-    
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 void Ripple3D::update(float time)
 {
     int i, j;
@@ -561,7 +453,7 @@ void Ripple3D::update(float time)
     {
         for (j = 0; j < (_gridSize.height+1); ++j)
         {
-            Vertex3F v = originalVertex(ccp(i, j));
+            Vertex3F v = getOriginalVertex(ccp(i, j));
             Point vect = ccpSub(_position, ccp(v.x,v.y));
             float r = ccpLength(vect);
             
@@ -620,29 +512,6 @@ Shaky3D* Shaky3D::clone() const
 	return a;
 }
 
-Object* Shaky3D::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    Shaky3D* pCopy = NULL;
-    if(pZone && pZone->_copyObject)
-    {
-        //in case of being called at sub class
-        pCopy = (Shaky3D*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new Shaky3D();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    Grid3DAction::copyWithZone(pZone);
-
-    pCopy->initWithDuration(_duration, _gridSize, _randrange, _shakeZ);
-    
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 void Shaky3D::update(float time)
 {
     CC_UNUSED_PARAM(time);
@@ -652,7 +521,7 @@ void Shaky3D::update(float time)
     {
         for (j = 0; j < (_gridSize.height+1); ++j)
         {
-            Vertex3F v = originalVertex(ccp(i ,j));
+            Vertex3F v = getOriginalVertex(ccp(i ,j));
             v.x += (rand() % (_randrange*2)) - _randrange;
             v.y += (rand() % (_randrange*2)) - _randrange;
             if (_shakeZ)
@@ -709,29 +578,6 @@ Liquid* Liquid::clone() const
 	return a;
 }
 
-Object* Liquid::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    Liquid* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (Liquid*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new Liquid();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    Grid3DAction::copyWithZone(pZone);
-
-    pCopy->initWithDuration(_duration, _gridSize, _waves, _amplitude);
-
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 void Liquid::update(float time)
 {
     int i, j;
@@ -740,7 +586,7 @@ void Liquid::update(float time)
     {
         for (j = 1; j < _gridSize.height; ++j)
         {
-            Vertex3F v = originalVertex(ccp(i, j));
+            Vertex3F v = getOriginalVertex(ccp(i, j));
             v.x = (v.x + (sinf(time * (float)M_PI * _waves * 2 + v.x * .01f) * _amplitude * _amplitudeRate));
             v.y = (v.y + (sinf(time * (float)M_PI * _waves * 2 + v.y * .01f) * _amplitude * _amplitudeRate));
             setVertex(ccp(i, j), v);
@@ -794,29 +640,6 @@ Waves* Waves::clone() const
 	return a;
 }
 
-Object* Waves::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    Waves* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (Waves*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new Waves();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    Grid3DAction::copyWithZone(pZone);
-
-    pCopy->initWithDuration(_duration, _gridSize, _waves, _amplitude, _horizontal, _vertical);
-    
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 void Waves::update(float time)
 {
     int i, j;
@@ -825,7 +648,7 @@ void Waves::update(float time)
     {
         for (j = 0; j < _gridSize.height + 1; ++j)
         {
-            Vertex3F v = originalVertex(ccp(i, j));
+            Vertex3F v = getOriginalVertex(ccp(i, j));
 
             if (_vertical)
             {
@@ -892,30 +715,6 @@ Twirl *Twirl::clone() const
 	return a;
 }
 
-Object* Twirl::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    Twirl* pCopy = NULL;
-    if(pZone && pZone->_copyObject)
-    {
-        //in case of being called at sub class
-        pCopy = (Twirl*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new Twirl();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    Grid3DAction::copyWithZone(pZone);
-
-
-    pCopy->initWithDuration(_duration, _gridSize, _position, _twirls, _amplitude);
-
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 void Twirl::update(float time)
 {
     int i, j;
@@ -925,7 +724,7 @@ void Twirl::update(float time)
     {
         for (j = 0; j < (_gridSize.height+1); ++j)
         {
-            Vertex3F v = originalVertex(ccp(i ,j));
+            Vertex3F v = getOriginalVertex(ccp(i ,j));
             
             Point    avg = ccp(i-(_gridSize.width/2.0f), j-(_gridSize.height/2.0f));
             float r = ccpLength(avg);

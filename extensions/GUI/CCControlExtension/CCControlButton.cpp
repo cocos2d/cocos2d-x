@@ -44,7 +44,7 @@ enum
 
 ControlButton::ControlButton()
 : _currentTitle(NULL)
-, _currentTitleColor(Color3B::white)
+, _currentTitleColor(Color3B::WHITE)
 , _doesAdjustBackgroundImage(false)
 , _titleLabel(NULL)
 , _backgroundSprite(NULL)
@@ -251,7 +251,7 @@ void ControlButton::setPreferredSize(Size size)
         DictElement * item = NULL;
         CCDICT_FOREACH(_backgroundSpriteDispatchTable, item)
         {
-            Scale9Sprite* sprite = (Scale9Sprite*)item->getObject();
+            Scale9Sprite* sprite = static_cast<Scale9Sprite*>(item->getObject());
             sprite->setPreferredSize(size);
         }
     }
@@ -323,7 +323,7 @@ void ControlButton::setTitleForState(String* title, ControlState state)
 
 const Color3B ControlButton::getTitleColorForState(ControlState state)
 {
-    Color3B returnColor = Color3B::white;
+    Color3B returnColor = Color3B::WHITE;
     do 
     {
         CC_BREAK_IF(NULL == _titleColorDispatchTable);
@@ -719,7 +719,7 @@ void ControlButton::setOpacity(GLubyte opacity)
     DictElement * item = NULL;
     CCDICT_FOREACH(_backgroundSpriteDispatchTable, item)
     {
-        Scale9Sprite* sprite = (Scale9Sprite*)item->getObject();
+        Scale9Sprite* sprite = static_cast<Scale9Sprite*>(item->getObject());
         sprite->setOpacity(opacity);
     }
 }
@@ -736,7 +736,7 @@ void ControlButton::setColor(const Color3B & color)
 	DictElement * item = NULL;
     CCDICT_FOREACH(_backgroundSpriteDispatchTable, item)
     {
-        Scale9Sprite* sprite = (Scale9Sprite*)item->getObject();
+        Scale9Sprite* sprite = static_cast<Scale9Sprite*>(item->getObject());
         sprite->setColor(color);
     }
 }

@@ -169,6 +169,7 @@ bool TextureETC::loadTexture(const char* file)
         etcFileData = NULL;
         return true;
     }
+    return false;
 }
 
 NS_CC_END

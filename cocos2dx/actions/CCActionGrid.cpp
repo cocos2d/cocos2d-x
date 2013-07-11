@@ -25,7 +25,6 @@ THE SOFTWARE.
 #include "CCActionGrid.h"
 #include "CCDirector.h"
 #include "effects/CCGrid.h"
-#include "cocoa/CCZone.h"
 
 NS_CC_BEGIN
 // implementation of GridAction
@@ -77,6 +76,7 @@ void GridAction::startWithTarget(Node *pTarget)
 
 GridAction* GridAction::reverse() const
 {
+    // FIXME: This conversion isn't safe.
 	return (GridAction*)ReverseTime::create( this->clone() );
 }
 
@@ -130,16 +130,26 @@ GridBase* TiledGrid3DAction::getGrid(void)
     return TiledGrid3D::create(_gridSize);
 }
 
-Quad3 TiledGrid3DAction::tile(const Point& pos)
+Quad3 TiledGrid3DAction::getTile(const Point& pos)
 {
     TiledGrid3D *g = (TiledGrid3D*)_target->getGrid();
-    return g->tile(pos);
+    return g->getTile(pos);
+}
+
+Quad3 TiledGrid3DAction::getOriginalTile(const Point& pos)
+{
+    TiledGrid3D *g = (TiledGrid3D*)_target->getGrid();
+    return g->getOriginalTile(pos);
+}
+
+Quad3 TiledGrid3DAction::tile(const Point& pos)
+{
+    return getTile(pos);
 }
 
 Quad3 TiledGrid3DAction::originalTile(const Point& pos)
 {
-    TiledGrid3D *g = (TiledGrid3D*)_target->getGrid();
-    return g->originalTile(pos);
+    return getOriginalTile(pos);
 }
 
 void TiledGrid3DAction::setTile(const Point& pos, const Quad3& coords)

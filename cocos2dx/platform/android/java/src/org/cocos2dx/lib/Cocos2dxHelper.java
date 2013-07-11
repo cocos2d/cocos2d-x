@@ -77,7 +77,7 @@ public class Cocos2dxHelper {
 
 		Cocos2dxHelper.nativeSetAssetManager(sAssetManager);
 		Cocos2dxBitmap.setContext(pContext);
-		Cocos2dxETCLoader.setContext(pContext);
+        Cocos2dxETCLoader.setContext(pContext);
 	}
 
 	// ===========================================================
@@ -173,8 +173,8 @@ public class Cocos2dxHelper {
 		Cocos2dxHelper.sCocos2dSound.preloadEffect(path);
 	}
 
-	public static int playEffect(final String path, final boolean isLoop) {
-		return Cocos2dxHelper.sCocos2dSound.playEffect(path, isLoop);
+	public static int playEffect(final String path, final boolean isLoop, final float pitch, final float pan, final float gain) {
+		return Cocos2dxHelper.sCocos2dSound.playEffect(path, isLoop, pitch, pan, gain);
 	}
 
 	public static void resumeEffect(final int soundId) {

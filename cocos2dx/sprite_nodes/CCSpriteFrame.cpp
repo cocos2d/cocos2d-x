@@ -129,16 +129,6 @@ SpriteFrame* SpriteFrame::clone() const
     return copy;
 }
 
-Object* SpriteFrame::copyWithZone(Zone *pZone)
-{
-    CC_UNUSED_PARAM(pZone);
-    SpriteFrame *pCopy = new SpriteFrame();
-    
-    pCopy->initWithTextureFilename(_textureFilename.c_str(), _rectInPixels, _rotated, _offsetInPixels, _originalSizeInPixels);
-    pCopy->setTexture(_texture);
-    return pCopy;
-}
-
 void SpriteFrame::setRect(const Rect& rect)
 {
     _rect = rect;

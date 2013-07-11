@@ -63,7 +63,7 @@ ColliderDetector::~ColliderDetector()
     Object *object = NULL;
     CCARRAY_FOREACH(_colliderBodyList, object)
     {
-        ColliderBody *colliderBody = (ColliderBody *)object;
+        ColliderBody *colliderBody = static_cast<ColliderBody *>(object);
 
         b2Body *body = colliderBody->getB2Body();
         PhysicsWorld::sharedPhysicsWorld()->getNoGravityWorld()->DestroyBody(body);
@@ -101,7 +101,7 @@ void ColliderDetector::addContourData(ContourData *contourData)
     int i = 0;
     CCARRAY_FOREACH(array, object)
     {
-        ContourVertex2F *v = (ContourVertex2F *)object;
+        ContourVertex2F *v = static_cast<ContourVertex2F *>(object);
         b2bv[i].Set(v->x / PT_RATIO, v->y / PT_RATIO);
         i++;
     }
@@ -134,7 +134,7 @@ void ColliderDetector::addContourDataList(Array *contourDataList)
     Object *object = NULL;
     CCARRAY_FOREACH(contourDataList, object)
     {
-        addContourData((ContourData *)object);
+        addContourData(static_cast<ContourData *>(object));
     }
 }
 
@@ -153,7 +153,7 @@ void ColliderDetector::setColliderFilter(b2Filter &filter)
     Object *object = NULL;
     CCARRAY_FOREACH(_colliderBodyList, object)
     {
-        ColliderBody *colliderBody = (ColliderBody *)object;
+        ColliderBody *colliderBody = static_cast<ColliderBody *>(object);
         colliderBody->getB2Body()->GetFixtureList()->SetFilterData(filter);
     }
 }
@@ -163,7 +163,7 @@ void ColliderDetector::setActive(bool active)
     Object *object = NULL;
     CCARRAY_FOREACH(_colliderBodyList, object)
     {
-        ColliderBody *colliderBody = (ColliderBody *)object;
+        ColliderBody *colliderBody = static_cast<ColliderBody *>(object);
         colliderBody->getB2Body()->SetActive(active);
     }
 }
@@ -175,7 +175,7 @@ void ColliderDetector::updateTransform(AffineTransform &t)
     Object *object = NULL;
     CCARRAY_FOREACH(_colliderBodyList, object)
     {
-        ColliderBody *colliderBody = (ColliderBody *)object;
+        ColliderBody *colliderBody = static_cast<ColliderBody *>(object);
 
         ContourData *contourData = colliderBody->getContourData();
         b2Body *body = colliderBody->getB2Body();
@@ -188,7 +188,7 @@ void ColliderDetector::updateTransform(AffineTransform &t)
         int i = 0;
         CCARRAY_FOREACH(array, object)
         {
-            ContourVertex2F *cv = (ContourVertex2F *)object;
+            ContourVertex2F *cv = static_cast<ContourVertex2F *>(object);
             b2Vec2 &bv = shape->m_vertices[i];
 
             helpPoint.setPoint(cv->x, cv->y);

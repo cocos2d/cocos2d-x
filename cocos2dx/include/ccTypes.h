@@ -58,15 +58,15 @@ struct Color3B
     GLubyte g;
     GLubyte b;
     
-    const static Color3B white;
-    const static Color3B yellow;
-    const static Color3B blue;
-    const static Color3B green;
-    const static Color3B red;
-    const static Color3B magenta;
-    const static Color3B black;
-    const static Color3B orange;
-    const static Color3B gray;
+    const static Color3B WHITE;
+    const static Color3B YELLOW;
+    const static Color3B BLUE;
+    const static Color3B GREEN;
+    const static Color3B RED;
+    const static Color3B MAGENTA;
+    const static Color3B BLACK;
+    const static Color3B ORANGE;
+    const static Color3B GRAY;
 };
 
 struct Color4F;
@@ -301,7 +301,7 @@ struct BlendFunc
     //! destination blend function
     GLenum dst;
     
-    const static BlendFunc blendFuncDisable;
+    const static BlendFunc BLEND_FUNC_DISABLE;
 };
 
 // XXX: If any of these enums are edited and/or reordered, update Texture2D.m
@@ -357,7 +357,9 @@ struct FontShadow
 public:
     
     // shadow is not enabled by default
-    FontShadow(): _shadowEnabled(false) {}
+    FontShadow(): _shadowEnabled(false),
+    _shadowBlur(0),
+    _shadowOpacity(0){}
     
     // true if shadow enabled
     bool   _shadowEnabled;
@@ -375,7 +377,11 @@ struct FontStroke
 public:
     
     // stroke is disabled by default
-    FontStroke(): _strokeEnabled(false) {}
+    FontStroke()
+	    : _strokeEnabled(false)
+        , _strokeColor(Color3B::BLACK)
+        , _strokeSize(0)
+	    {}
     
     // true if stroke enabled
     bool      _strokeEnabled;
@@ -391,9 +397,10 @@ struct FontDefinition
 {
 public:
     
-    FontDefinition():  _alignment(kTextAlignmentCenter),
+    FontDefinition():_fontSize(0),
+    _alignment(kTextAlignmentCenter),
     _vertAlignment(kVerticalTextAlignmentTop),
-    _fontFillColor(Color3B::white)
+    _fontFillColor(Color3B::WHITE)
     { _dimensions = CCSizeMake(0,0); }
     
     // font name

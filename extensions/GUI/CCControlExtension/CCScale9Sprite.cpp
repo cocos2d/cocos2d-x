@@ -62,7 +62,7 @@ Scale9Sprite::Scale9Sprite()
 , _bottomRight(NULL)
 , _opacityModifyRGB(false)
 , _opacity(255)
-, _color(Color3B::white)
+, _color(Color3B::WHITE)
 {
 
 }
@@ -96,8 +96,9 @@ bool Scale9Sprite::initWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bool
     if(batchnode)
     {
         this->updateWithBatchNode(batchnode, rect, rotated, capInsets);
-        this->setAnchorPoint(ccp(0.5f, 0.5f));
     }
+    
+    this->setAnchorPoint(ccp(0.5f, 0.5f));
     this->_positionsAreDirty = true;
     
     return true;

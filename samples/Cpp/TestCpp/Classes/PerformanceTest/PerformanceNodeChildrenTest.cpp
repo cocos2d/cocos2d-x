@@ -220,7 +220,7 @@ void IterateSpriteSheetFastEnum::update(float dt)
 
     CCARRAY_FOREACH(pChildren, pObject)
     {
-        Sprite* pSprite = (Sprite*) pObject;
+        Sprite* pSprite = static_cast<Sprite*>(pObject);
         pSprite->setVisible(false);
     }
 
@@ -257,7 +257,7 @@ void IterateSpriteSheetCArray::update(float dt)
 
     CCARRAY_FOREACH(pChildren, pObject)
     {
-        Sprite* pSprite = (Sprite*)pObject;
+        Sprite* pSprite = static_cast<Sprite*>(pObject);
         pSprite->setVisible(false);
     }
 

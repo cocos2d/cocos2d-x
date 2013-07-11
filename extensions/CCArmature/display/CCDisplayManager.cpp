@@ -225,7 +225,7 @@ void DisplayManager::initDisplayList(BoneData *boneData)
     Array *displayDataList = &boneData->displayDataList;
     CCARRAY_FOREACH(displayDataList, object)
     {
-        DisplayData *displayData = (DisplayData *)object;
+        DisplayData *displayData = static_cast<DisplayData *>(object);
 
         DecorativeDisplay *decoDisplay = DecorativeDisplay::create();
         decoDisplay->setDisplayData(displayData);

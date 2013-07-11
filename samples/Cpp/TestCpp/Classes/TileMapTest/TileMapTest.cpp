@@ -133,7 +133,7 @@ TMXOrthoTest::TMXOrthoTest()
     Object* pObject = NULL;
     CCARRAY_FOREACH(pChildrenArray, pObject)
     {
-        child = (SpriteBatchNode*)pObject;
+        child = static_cast<SpriteBatchNode*>(pObject);
 
         if(!child)
             break;
@@ -182,7 +182,7 @@ TMXOrthoTest2::TMXOrthoTest2()
     Object* pObject = NULL;
     CCARRAY_FOREACH(pChildrenArray, pObject)
     {
-        child = (SpriteBatchNode*)pObject;
+        child = static_cast<SpriteBatchNode*>(pObject);
 
         if(!child)
             break;
@@ -216,7 +216,7 @@ TMXOrthoTest3::TMXOrthoTest3()
     Object* pObject = NULL;
     CCARRAY_FOREACH(pChildrenArray, pObject)
     {
-        child = (SpriteBatchNode*)pObject;
+        child = static_cast<SpriteBatchNode*>(pObject);
 
         if(!child)
             break;
@@ -251,7 +251,7 @@ TMXOrthoTest4::TMXOrthoTest4()
     Object* pObject = NULL;
     CCARRAY_FOREACH(pChildrenArray, pObject)
     {
-        child = (SpriteBatchNode*)pObject;
+        child = static_cast<SpriteBatchNode*>(pObject);
 
         if(!child)
             break;
@@ -556,7 +556,7 @@ TMXUncompressedTest::TMXUncompressedTest()
     Object* pObject = NULL;
     CCARRAY_FOREACH(pChildrenArray, pObject)
     {
-        layer= (TMXLayer*)pObject;
+        layer= static_cast<TMXLayer*>(pObject);
 
         if(!layer)
             break;
@@ -621,7 +621,7 @@ TMXOrthoObjectsTest::TMXOrthoObjectsTest()
     Object* pObj = NULL;
     CCARRAY_FOREACH(objects, pObj)
     {
-        dict = (Dictionary*)pObj;//dynamic_cast<StringToStringDictionary*>(*it);
+        dict = static_cast<Dictionary*>(pObj);
 
         if(!dict)
             break;
@@ -644,7 +644,7 @@ void TMXOrthoObjectsTest::draw()
     Object* pObj = NULL;
     CCARRAY_FOREACH(objects, pObj)
     {
-        dict = (Dictionary*)pObj;//dynamic_cast<StringToStringDictionary*>(*it);
+        dict = static_cast<Dictionary*>(pObj);
         
         if(!dict)
             break;
@@ -702,7 +702,7 @@ TMXIsoObjectsTest::TMXIsoObjectsTest()
     Object* pObj = NULL;
     CCARRAY_FOREACH(objects, pObj)
     {
-        dict = (Dictionary*)pObj;
+        dict = static_cast<Dictionary*>(pObj);
 
         if(!dict)
             break;
@@ -721,18 +721,18 @@ void TMXIsoObjectsTest::draw()
     Object* pObj = NULL;
     CCARRAY_FOREACH(objects, pObj)
     {
-        dict = (Dictionary*)pObj;//dynamic_cast<StringToStringDictionary*>(*it);
+        dict = static_cast<Dictionary*>(pObj);
 
         if(!dict)
             break;
         const char* key = "x";
-        int x = ((String*)dict->objectForKey(key))->intValue();//dynamic_cast<NSNumber*>(dict->objectForKey("x"))->getNumber();
+        int x = static_cast<String*>(dict->objectForKey(key))->intValue();
         key = "y";
-        int y = ((String*)dict->objectForKey(key))->intValue();//dynamic_cast<NSNumber*>(dict->objectForKey("y"))->getNumber();
+        int y = static_cast<String*>(dict->objectForKey(key))->intValue();
         key = "width";
-        int width = ((String*)dict->objectForKey(key))->intValue();//dynamic_cast<NSNumber*>(dict->objectForKey("width"))->getNumber();
+        int width = static_cast<String*>(dict->objectForKey(key))->intValue();
         key = "height";
-        int height = ((String*)dict->objectForKey(key))->intValue();//dynamic_cast<NSNumber*>(dict->objectForKey("height"))->getNumber();
+        int height = static_cast<String*>(dict->objectForKey(key))->intValue();
         
         glLineWidth(3);
         
@@ -1157,7 +1157,7 @@ TMXOrthoFlipTest::TMXOrthoFlipTest()
     Object* pObj = NULL;
     CCARRAY_FOREACH(map->getChildren(), pObj)
     {
-        SpriteBatchNode* child = (SpriteBatchNode*)pObj;
+        SpriteBatchNode* child = static_cast<SpriteBatchNode*>(pObj);
         child->getTexture()->setAntiAliasTexParameters();
     }
 
@@ -1187,7 +1187,7 @@ TMXOrthoFlipRunTimeTest::TMXOrthoFlipRunTimeTest()
     Object* pObj = NULL;
     CCARRAY_FOREACH(map->getChildren(), pObj)
     {
-        SpriteBatchNode* child = (SpriteBatchNode*)pObj;
+        SpriteBatchNode* child = static_cast<SpriteBatchNode*>(pObj);
         child->getTexture()->setAntiAliasTexParameters();
     }
 
@@ -1266,7 +1266,7 @@ TMXOrthoFromXMLTest::TMXOrthoFromXMLTest()
     Object* pObj = NULL;
     CCARRAY_FOREACH(map->getChildren(), pObj)
     {
-        SpriteBatchNode* child = (SpriteBatchNode*)pObj;
+        SpriteBatchNode* child = static_cast<SpriteBatchNode*>(pObj);
         child->getTexture()->setAntiAliasTexParameters();
     }
 
@@ -1297,7 +1297,7 @@ TMXBug987::TMXBug987()
     Object* pObject = NULL;
     CCARRAY_FOREACH(childs, pObject)
     {
-        pNode = (TMXLayer*) pObject;
+        pNode = static_cast<TMXLayer*>(pObject);
         CC_BREAK_IF(!pNode);
         pNode->getTexture()->setAntiAliasTexParameters();
     }
@@ -1523,7 +1523,7 @@ void TMXGIDObjectsTest::draw()
     Object* pObj = NULL;
     CCARRAY_FOREACH(array, pObj)
     {
-        dict = (Dictionary*)pObj;
+        dict = static_cast<Dictionary*>(pObj);
         if(!dict)
         {
             break;

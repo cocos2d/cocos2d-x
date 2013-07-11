@@ -109,7 +109,7 @@ void KeypadDispatcher::forceRemoveDelegate(KeypadDelegate* pDelegate)
     Object* pObj = NULL;
     CCARRAY_FOREACH(_delegates, pObj)
     {
-        pHandler = (KeypadHandler*)pObj;
+        pHandler = static_cast<KeypadHandler*>(pObj);
         if (pHandler && pHandler->getDelegate() == pDelegate)
         {
             _delegates->removeObject(pHandler);
@@ -132,7 +132,7 @@ bool KeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
         {
             CC_BREAK_IF(!pObj);
 
-            pHandler = (KeypadHandler*)pObj;
+            pHandler = static_cast<KeypadHandler*>(pObj);
             pDelegate = pHandler->getDelegate();
 
             switch (nMsgType)
