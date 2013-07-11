@@ -6,18 +6,18 @@
 //
 //
 
-#ifndef _FontRenderIOS_h
-#define _FontRenderIOS_h
+#ifndef _FontRenderFreeType_h
+#define _FontRenderFreeType_h
 
 #include "CCFontRender.h"
 
 NS_CC_BEGIN
 
-class FontRenderIOS : public FontRender
+class FontRenderFreeType : public FontRender
 {
 public:
     
-    virtual ~FontRenderIOS() {}
+    virtual ~FontRenderFreeType() {}
     virtual unsigned char * preparePageGlyphData(TextPageDef *thePage, char *fontName, int fontSize);
     
 };
