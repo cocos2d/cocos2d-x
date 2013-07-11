@@ -129,6 +129,28 @@ int String::compare(const char * pStr) const
     return strcmp(getCString(), pStr);
 }
 
+void String::append(const std::string& str)
+{
+    _string.append(str);
+}
+
+void String::appendWithFormat(const char* format, ...)
+{
+    va_list ap;
+    va_start(ap, format);
+    
+    char* pBuf = (char*)malloc(kMaxStringLen);
+    if (pBuf != NULL)
+    {
+        vsnprintf(pBuf, kMaxStringLen, format, ap);
+        _string.append(pBuf);
+        free(pBuf);
+    }
+    
+    va_end(ap);
+    
+}
+
 bool String::isEqual(const Object* pObject)
 {
     bool bRet = false;
