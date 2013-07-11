@@ -561,7 +561,7 @@ void SpriteBlur::setBlurSize(float f)
     Size s = getTexture()->getContentSizeInPixels();
 
     blur_ = ccp(1/s.width, 1/s.height);
-    blur_ = ccpMult(blur_,f);
+    blur_ = blur_ * f;
 }
 
 // ShaderBlur

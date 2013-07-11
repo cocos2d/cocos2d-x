@@ -116,6 +116,78 @@ Point Point::rotateByAngle(const Point& pivot, float angle) const
     return pivot + (*this - pivot).rotate(Point::forAngle(angle));
 }
 
+bool Point::isLineIntersect(const Point& A, const Point& B,
+                            const Point& C, const Point& D,
+                            float *S, float *T)
+{
+    // FAIL: Line undefined
+    if ( (A.x==B.x && A.y==B.y) || (C.x==D.x && C.y==D.y) )
+    {
+        return false;
+    }
+    const float BAx = B.x - A.x;
+    const float BAy = B.y - A.y;
+    const float DCx = D.x - C.x;
+    const float DCy = D.y - C.y;
+    const float ACx = A.x - C.x;
+    const float ACy = A.y - C.y;
+    
+    const float denom = DCy*BAx - DCx*BAy;
+    
+    *S = DCx*ACy - DCy*ACx;
+    *T = BAx*ACy - BAy*ACx;
+    
+    if (denom == 0)
+    {
+        if (*S == 0 || *T == 0)
+        {
+            // Lines incident
+            return true;
+        }
+        // Lines parallel and not incident
+        return false;
+    }
+    
+    *S = *S / denom;
+    *T = *T / denom;
+    
+    // Point of intersection
+    // CGPoint P;
+    // P.x = A.x + *S * (B.x - A.x);
+    // P.y = A.y + *S * (B.y - A.y);
+    
+    return true;
+}
+
+bool Point::isSegmentIntersect(const Point& A, const Point& B, const Point& C, const Point& D)
+{
+    float S, T;
+    
+    if (isLineIntersect(A, B, C, D, &S, &T )&&
+       (S >= 0.0f && S <= 1.0f && T >= 0.0f && T <= 1.0f))
+    {
+        return true;
+    }  
+    
+    return false;
+}
+
+Point Point::getIntersectPoint(const Point& A, const Point& B, const Point& C, const Point& D)
+{
+    float S, T;
+    
+    if (isLineIntersect(A, B, C, D, &S, &T))
+    {
+        // Point of intersection
+        Point P;
+        P.x = A.x + S * (B.x - A.x);
+        P.y = A.y + S * (B.y - A.y);
+        return P;
+    }
+    
+    return PointZero;
+}
+
 // implementation of Size
 
 Size::Size(void) : width(0), height(0)

@@ -26,7 +26,7 @@ Ball* Ball::ballWithTexture(Texture2D* aTexture)
 
 void Ball::move(float delta)
 {
-    this->setPosition( ccpAdd(getPosition(), ccpMult(_velocity, delta)) );
+    this->setPosition(getPosition() + _velocity * delta);
     
     if (getPosition().x > VisibleRect::right().x - radius()) 
     {
@@ -73,12 +73,12 @@ void Ball::collideWithPaddle(Paddle* paddle)
         
         if (hit) 
         {
-            float hitAngle = ccpToAngle(ccpSub(paddle->getPosition(), getPosition())) + angleOffset;
+            float hitAngle = (paddle->getPosition() - getPosition()).getAngle() + angleOffset;
             
-            float scalarVelocity = ccpLength(_velocity) * 1.05f;
-            float velocityAngle = -ccpToAngle(_velocity) + 0.5f * hitAngle;
+            float scalarVelocity = _velocity.getLength() * 1.05f;
+            float velocityAngle = -_velocity.getAngle() + 0.5f * hitAngle;
             
-            _velocity = ccpMult(ccpForAngle(velocityAngle), scalarVelocity);
+            _velocity = Point::forAngle(velocityAngle) * scalarVelocity;
         }
     }    
 } 

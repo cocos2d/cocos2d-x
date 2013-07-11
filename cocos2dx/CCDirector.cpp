@@ -912,8 +912,8 @@ void Director::createStatsLabel()
 
     Texture2D::setDefaultAlphaPixelFormat(currentFormat);
 
-    _drawsLabel->setPosition(ccpAdd(ccp(0, 34*factor), CC_DIRECTOR_STATS_POSITION));
-    _SPFLabel->setPosition(ccpAdd(ccp(0, 17*factor), CC_DIRECTOR_STATS_POSITION));
+    _drawsLabel->setPosition(ccp(0, 34*factor) + CC_DIRECTOR_STATS_POSITION);
+    _SPFLabel->setPosition(ccp(0, 17*factor) + CC_DIRECTOR_STATS_POSITION);
     _FPSLabel->setPosition(CC_DIRECTOR_STATS_POSITION);
 }
 

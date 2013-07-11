@@ -237,7 +237,7 @@ void MenuLayer2::alignMenusH()
             // TIP: if no padding, padding = 5
             menu->alignItemsHorizontally();            
             Point p = menu->getPosition();
-            menu->setPosition( ccpAdd(p, ccp(0,30)) );
+            menu->setPosition(p + ccp(0,30));
             
         } 
         else 
@@ -245,7 +245,7 @@ void MenuLayer2::alignMenusH()
             // TIP: but padding is configurable
             menu->alignItemsHorizontallyWithPadding(40);
             Point p = menu->getPosition();
-            menu->setPosition( ccpSub(p, ccp(0,30)) );
+            menu->setPosition(p - ccp(0,30));
         }        
     }
 }
@@ -261,14 +261,14 @@ void MenuLayer2::alignMenusV()
             // TIP: if no padding, padding = 5
             menu->alignItemsVertically();            
             Point p = menu->getPosition();
-            menu->setPosition( ccpAdd(p, ccp(100,0)) );            
+            menu->setPosition(p + ccp(100,0));
         } 
         else 
         {
             // TIP: but padding is configurable
             menu->alignItemsVerticallyWithPadding(40);    
             Point p = menu->getPosition();
-            menu->setPosition( ccpSub(p, ccp(100,0)) );
+            menu->setPosition(p - ccp(100,0));
         }        
     }
 }

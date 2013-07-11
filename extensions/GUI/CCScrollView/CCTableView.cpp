@@ -460,7 +460,7 @@ void TableView::scrollViewDidScroll(ScrollView* view)
     }
 
     unsigned int startIdx = 0, endIdx = 0, idx = 0, maxIdx = 0;
-    Point offset = ccpMult(this->getContentOffset(), -1);
+    Point offset = this->getContentOffset() * -1;
     maxIdx = MAX(uCountOfItems-1, 0);
 
     if (_vordering == kTableViewFillTopDown)

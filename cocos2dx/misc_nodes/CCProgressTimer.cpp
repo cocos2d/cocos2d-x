@@ -237,7 +237,7 @@ Point ProgressTimer::getMidpoint(void)
 
 void ProgressTimer::setMidpoint(Point midPoint)
 {
-    _midpoint = ccpClamp(midPoint, PointZero, ccp(1,1));
+    _midpoint = midPoint.getClampPoint(PointZero, Point(1, 1));
 }
 
 ///
@@ -262,7 +262,7 @@ void ProgressTimer::updateRadial(void)
     //    We know the first vector is the one @ 12 o'clock (top,mid) so we rotate
     //    from that by the progress angle around the _midpoint pivot
     Point topMid = ccp(_midpoint.x, 1.f);
-    Point percentagePt = ccpRotateByAngle(topMid, _midpoint, angle);
+    Point percentagePt = topMid.rotateByAngle(_midpoint, angle);
 
 
     int index = 0;
@@ -294,14 +294,14 @@ void ProgressTimer::updateRadial(void)
             //    Remember that the top edge is split in half for the 12 o'clock position
             //    Let's deal with that here by finding the correct endpoints
             if(i == 0){
-                edgePtB = ccpLerp(edgePtA, edgePtB, 1-_midpoint.x);
+                edgePtB = edgePtA.lerp(edgePtB, 1-_midpoint.x);
             } else if(i == 4){
-                edgePtA = ccpLerp(edgePtA, edgePtB, 1-_midpoint.x);
+                edgePtA = edgePtA.lerp(edgePtB, 1-_midpoint.x);
             }
 
             //    s and t are returned by ccpLineIntersect
             float s = 0, t = 0;
-            if(ccpLineIntersect(edgePtA, edgePtB, _midpoint, percentagePt, &s, &t))
+            if(Point::isLineIntersect(edgePtA, edgePtB, _midpoint, percentagePt, &s, &t))
             {
 
                 //    Since our hit test is on rays we have to deal with the top edge
@@ -326,7 +326,7 @@ void ProgressTimer::updateRadial(void)
         }
 
         //    Now that we have the minimum magnitude we can use that to find our intersection
-        hit = ccpAdd(_midpoint, ccpMult(ccpSub(percentagePt, _midpoint),min_t));
+        hit = _midpoint+ ((percentagePt - _midpoint) * min_t);
 
     }
 
@@ -387,9 +387,9 @@ void ProgressTimer::updateBar(void)
         return;
     }
     float alpha = _percentage / 100.0f;
-    Point alphaOffset = ccpMult(ccp(1.0f * (1.0f - _barChangeRate.x) + alpha * _barChangeRate.x, 1.0f * (1.0f - _barChangeRate.y) + alpha * _barChangeRate.y), 0.5f);
-    Point min = ccpSub(_midpoint, alphaOffset);
-    Point max = ccpAdd(_midpoint, alphaOffset);
+    Point alphaOffset = ccp(1.0f * (1.0f - _barChangeRate.x) + alpha * _barChangeRate.x, 1.0f * (1.0f - _barChangeRate.y) + alpha * _barChangeRate.y) * 0.5f;
+    Point min = _midpoint - alphaOffset;
+    Point max = _midpoint + alphaOffset;
 
     if (min.x < 0.f) {
         max.x += -min.x;

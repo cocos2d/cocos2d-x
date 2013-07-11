@@ -934,9 +934,9 @@ void MoveBy::update(float t)
     {
 #if CC_ENABLE_STACKABLE_ACTIONS
         Point currentPos = _target->getPosition();
-        Point diff = ccpSub(currentPos, _previousPosition);
-        _startPosition = ccpAdd( _startPosition, diff);
-        Point newPos =  ccpAdd( _startPosition, ccpMult(_positionDelta, t) );
+        Point diff = currentPos - _previousPosition;
+        _startPosition = _startPosition + diff;
+        Point newPos =  _startPosition + (_positionDelta * t);
         _target->setPosition(newPos);
         _previousPosition = newPos;
 #else
@@ -981,7 +981,7 @@ MoveTo* MoveTo::clone(void) const
 void MoveTo::startWithTarget(Node *pTarget)
 {
     MoveBy::startWithTarget(pTarget);
-    _positionDelta = ccpSub( _endPosition, pTarget->getPosition() );
+    _positionDelta = _endPosition - pTarget->getPosition();
 }
 
 
@@ -1217,10 +1217,10 @@ void JumpBy::update(float t)
 #if CC_ENABLE_STACKABLE_ACTIONS
         Point currentPos = _target->getPosition();
 
-        Point diff = ccpSub( currentPos, _previousPos );
-        _startPosition = ccpAdd( diff, _startPosition);
+        Point diff = currentPos - _previousPos;
+        _startPosition = diff + _startPosition;
 
-        Point newPos = ccpAdd( _startPosition, ccp(x,y));
+        Point newPos = _startPosition + ccp(x,y);
         _target->setPosition(newPos);
 
         _previousPos = newPos;
@@ -1340,10 +1340,10 @@ void BezierBy::update(float time)
 
 #if CC_ENABLE_STACKABLE_ACTIONS
         Point currentPos = _target->getPosition();
-        Point diff = ccpSub(currentPos, _previousPosition);
-        _startPosition = ccpAdd( _startPosition, diff);
+        Point diff = currentPos - _previousPosition;
+        _startPosition = _startPosition + diff;
 
-        Point newPos = ccpAdd( _startPosition, ccp(x,y));
+        Point newPos = _startPosition + ccp(x,y);
         _target->setPosition(newPos);
 
         _previousPosition = newPos;
@@ -1357,9 +1357,9 @@ BezierBy* BezierBy::reverse(void) const
 {
     ccBezierConfig r;
 
-    r.endPosition = ccpNeg(_config.endPosition);
-    r.controlPoint_1 = ccpAdd(_config.controlPoint_2, ccpNeg(_config.endPosition));
-    r.controlPoint_2 = ccpAdd(_config.controlPoint_1, ccpNeg(_config.endPosition));
+    r.endPosition = -_config.endPosition;
+    r.controlPoint_1 = _config.controlPoint_2 + (-_config.endPosition);
+    r.controlPoint_2 = _config.controlPoint_1 + (-_config.endPosition);
 
     BezierBy *pAction = BezierBy::create(_duration, r);
     return pAction;
@@ -1402,9 +1402,9 @@ BezierTo* BezierTo::clone(void) const
 void BezierTo::startWithTarget(Node *pTarget)
 {
     BezierBy::startWithTarget(pTarget);
-    _config.controlPoint_1 = ccpSub(_toConfig.controlPoint_1, _startPosition);
-    _config.controlPoint_2 = ccpSub(_toConfig.controlPoint_2, _startPosition);
-    _config.endPosition = ccpSub(_toConfig.endPosition, _startPosition);
+    _config.controlPoint_1 = _toConfig.controlPoint_1 - _startPosition;
+    _config.controlPoint_2 = _toConfig.controlPoint_2 - _startPosition;
+    _config.endPosition = _toConfig.endPosition - _startPosition;
 }
 
 BezierTo* BezierTo::reverse() const

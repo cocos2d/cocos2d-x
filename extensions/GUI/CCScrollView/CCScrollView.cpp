@@ -249,12 +249,12 @@ void ScrollView::setZoomScale(float s)
         _container->setScale(MAX(_minScale, MIN(_maxScale, s)));
         newCenter = _container->convertToWorldSpace(oldCenter);
         
-        const Point offset = ccpSub(center, newCenter);
+        const Point offset = center - newCenter;
         if (_delegate != NULL)
         {
             _delegate->scrollViewDidZoom(this);
         }
-        this->setContentOffset(ccpAdd(_container->getPosition(),offset));
+        this->setContentOffset(_container->getPosition() + offset);
     }
 }
 
@@ -373,7 +373,7 @@ void ScrollView::deaccelerateScrolling(float dt)
     float newX, newY;
     Point maxInset, minInset;
     
-    _container->setPosition(ccpAdd(_container->getPosition(), _scrollDistance));
+    _container->setPosition(_container->getPosition() + _scrollDistance);
     
     if (_bounceable)
     {
@@ -395,8 +395,8 @@ void ScrollView::deaccelerateScrolling(float dt)
     newX = _container->getPosition().x;
     newY = _container->getPosition().y;
     
-    _scrollDistance     = ccpSub(_scrollDistance, ccp(newX - _container->getPosition().x, newY - _container->getPosition().y));
-    _scrollDistance     = ccpMult(_scrollDistance, SCROLL_DEACCEL_RATE);
+    _scrollDistance     = _scrollDistance - ccp(newX - _container->getPosition().x, newY - _container->getPosition().y);
+    _scrollDistance     = _scrollDistance * SCROLL_DEACCEL_RATE;
     this->setContentOffset(ccp(newX,newY));
     
     if ((fabsf(_scrollDistance.x) <= SCROLL_DEACCEL_DIST &&
@@ -627,10 +627,12 @@ bool ScrollView::ccTouchBegan(Touch* touch, Event* event)
     }
     else if (_touches->count() == 2)
     {
-        _touchPoint  = ccpMidpoint(this->convertTouchToNodeSpace((Touch*)_touches->objectAtIndex(0)),
-                                   this->convertTouchToNodeSpace((Touch*)_touches->objectAtIndex(1)));
-        _touchLength = ccpDistance(_container->convertTouchToNodeSpace((Touch*)_touches->objectAtIndex(0)),
-                                   _container->convertTouchToNodeSpace((Touch*)_touches->objectAtIndex(1)));
+        _touchPoint = (this->convertTouchToNodeSpace((Touch*)_touches->objectAtIndex(0)).getMidpoint(
+                        this->convertTouchToNodeSpace((Touch*)_touches->objectAtIndex(1))));
+        
+        _touchLength = _container->convertTouchToNodeSpace((Touch*)_touches->objectAtIndex(0)).getDistance(
+                       _container->convertTouchToNodeSpace((Touch*)_touches->objectAtIndex(1)));
+        
         _dragging  = false;
     } 
     return true;
@@ -654,7 +656,7 @@ void ScrollView::ccTouchMoved(Touch* touch, Event* event)
             frame = getViewRect();
 
             newPoint     = this->convertTouchToNodeSpace((Touch*)_touches->objectAtIndex(0));
-            moveDistance = ccpSub(newPoint, _touchPoint);
+            moveDistance = newPoint - _touchPoint;
             
             float dis = 0.0f;
             if (_direction == kScrollViewDirectionVertical)
@@ -710,7 +712,7 @@ void ScrollView::ccTouchMoved(Touch* touch, Event* event)
         }
         else if (_touches->count() == 2 && !_dragging)
         {
-            const float len = ccpDistance(_container->convertTouchToNodeSpace((Touch*)_touches->objectAtIndex(0)),
+            const float len = _container->convertTouchToNodeSpace((Touch*)_touches->objectAtIndex(0)).getDistance(
                                             _container->convertTouchToNodeSpace((Touch*)_touches->objectAtIndex(1)));
             this->setZoomScale(this->getZoomScale()*len/_touchLength);
         }

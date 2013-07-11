@@ -346,7 +346,7 @@ void ShuffleTiles::update(float time)
     {
         for (j = 0; j < _gridSize.height; ++j)
         {
-            tileArray->position = ccpMult(ccp((float)tileArray->delta.width, (float)tileArray->delta.height), time);
+            tileArray->position = ccp((float)tileArray->delta.width, (float)tileArray->delta.height) * time;
             placeTile(ccp(i, j), tileArray);
             ++tileArray;
         }
@@ -385,7 +385,7 @@ FadeOutTRTiles* FadeOutTRTiles::clone() const
 
 float FadeOutTRTiles::testFunc(const Size& pos, float time)
 {
-    Point n = ccpMult(ccp((float)_gridSize.width, (float)_gridSize.height), time);
+    Point n = ccp((float)_gridSize.width, (float)_gridSize.height) * time;
     if ((n.x + n.y) == 0.0f)
     {
         return 1.0f;
@@ -483,7 +483,7 @@ FadeOutBLTiles* FadeOutBLTiles::clone() const
 
 float FadeOutBLTiles::testFunc(const Size& pos, float time)
 {
-    Point n = ccpMult(ccp((float)_gridSize.width, (float)_gridSize.height), (1.0f - time));
+    Point n = ccp((float)_gridSize.width, (float)_gridSize.height) * (1.0f - time);
     if ((pos.width + pos.height) == 0)
     {
         return 1.0f;
@@ -524,7 +524,7 @@ FadeOutUpTiles* FadeOutUpTiles::clone() const
 
 float FadeOutUpTiles::testFunc(const Size& pos, float time)
 {
-    Point n = ccpMult(ccp((float)_gridSize.width, (float)_gridSize.height), time);
+    Point n = ccp((float)_gridSize.width, (float)_gridSize.height) * time;
     if (n.y == 0.0f)
     {
         return 1.0f;
@@ -578,7 +578,7 @@ FadeOutDownTiles* FadeOutDownTiles::clone() const
 
 float FadeOutDownTiles::testFunc(const Size& pos, float time)
 {
-    Point n = ccpMult(ccp((float)_gridSize.width, (float)_gridSize.height), (1.0f - time));
+    Point n = ccp((float)_gridSize.width, (float)_gridSize.height) * (1.0f - time);
     if (pos.height == 0)
     {
         return 1.0f;

@@ -520,7 +520,7 @@ static CGPoint convertDesignCoordToScreenCoord(const Point& designCoord, bool bI
     float viewH = (float)[[CCEAGLView sharedEGLView] getHeight];
     
     Point visiblePos = ccp(designCoord.x * eglView->getScaleX(), designCoord.y * eglView->getScaleY());
-    Point screenGLPos = ccpAdd(visiblePos, eglView->getViewPortRect().origin);
+    Point screenGLPos = visiblePos + eglView->getViewPortRect().origin;
     
     CGPoint screenPos = CGPointMake(screenGLPos.x, viewH - screenGLPos.y);
     

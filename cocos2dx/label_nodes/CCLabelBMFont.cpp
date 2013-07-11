@@ -1145,7 +1145,7 @@ void LabelBMFont::updateLabel()
                         if (index < 0) continue;
 
                         Sprite* characterSprite = static_cast<Sprite*>( getChildByTag(index) );
-                        characterSprite->setPosition(ccpAdd(characterSprite->getPosition(), ccp(shift, 0.0f)));
+                        characterSprite->setPosition(characterSprite->getPosition() + ccp(shift, 0.0f));
                     }
                 }
 
