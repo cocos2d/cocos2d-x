@@ -112,7 +112,7 @@ public class UCWrapper {
         if (orientation != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE ||
             orientation != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
         {
-            orientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+            orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
         }
 
         return (orientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
