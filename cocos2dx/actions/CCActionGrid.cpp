@@ -76,6 +76,7 @@ void GridAction::startWithTarget(Node *pTarget)
 
 GridAction* GridAction::reverse() const
 {
+    // FIXME: This conversion isn't safe.
 	return (GridAction*)ReverseTime::create( this->clone() );
 }
 
@@ -132,13 +133,13 @@ GridBase* TiledGrid3DAction::getGrid(void)
 Quad3 TiledGrid3DAction::getTile(const Point& pos)
 {
     TiledGrid3D *g = (TiledGrid3D*)_target->getGrid();
-    return g->tile(pos);
+    return g->getTile(pos);
 }
 
 Quad3 TiledGrid3DAction::getOriginalTile(const Point& pos)
 {
     TiledGrid3D *g = (TiledGrid3D*)_target->getGrid();
-    return g->originalTile(pos);
+    return g->getOriginalTile(pos);
 }
 
 Quad3 TiledGrid3DAction::tile(const Point& pos)
