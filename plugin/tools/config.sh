@@ -10,11 +10,11 @@ export TARGET_DIR_NAME="publish"
 if [ ! ${PLUGIN_ROOT} ]; then
     pushd ../
     export PLUGIN_ROOT=`pwd`
-    export TARGET_ROOT=${PLUGIN_ROOT}/${TARGET_DIR_NAME}
-    echo PLUGIN_ROOT = ${PLUGIN_ROOT}
-    echo TARGET_ROOT = ${TARGET_ROOT}
     popd
 fi
+export TARGET_ROOT=${PLUGIN_ROOT}/${TARGET_DIR_NAME}
+echo PLUGIN_ROOT = ${PLUGIN_ROOT}
+echo TARGET_ROOT = ${TARGET_ROOT}
 
 # get a string include all plugins name(separate with ':')
 export PLUGINS_CAN_SELECT=""
