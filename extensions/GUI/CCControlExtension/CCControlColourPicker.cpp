@@ -57,7 +57,7 @@ bool ControlColourPicker::init()
     {
         setTouchEnabled(true);
         // Cache the sprites
-        SpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("extensions/CCControlColourPickerSpriteSheet.plist");
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile("extensions/CCControlColourPickerSpriteSheet.plist");
         
         // Create the sprite batch node
         SpriteBatchNode *spriteSheet  = SpriteBatchNode::create("extensions/CCControlColourPickerSpriteSheet.png");

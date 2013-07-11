@@ -27,7 +27,7 @@ void Effect1::onEnter()
     //     Lens3D is Grid3D and it's size is (15,10)
     //     Waves3D is Grid3D and it's size is (15,10)
     
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
     ActionInterval* lens = Lens3D::create(0.0f, CCSizeMake(15,10), ccp(size.width/2,size.height/2), 240);
     ActionInterval* waves = Waves3D::create(10, CCSizeMake(15,10), 18, 15);
 
@@ -167,7 +167,7 @@ void Effect4::onEnter()
         so we make an encapsulation for Lens3D to achieve that.
     */
 
-    Director* director = Director::sharedDirector();
+    Director* director = Director::getInstance();
     Node* pTarget = Lens3DTarget::create(lens);
     // Please make sure the target been added to its parent.
     this->addChild(pTarget);
@@ -190,7 +190,7 @@ void Effect5::onEnter()
 {
     EffectAdvanceTextLayer::onEnter();
 
-    //CCDirector::sharedDirector()->setProjection(DirectorProjection2D);
+    //CCDirector::getInstance()->setProjection(DirectorProjection2D);
     
     ActionInterval* effect = Liquid::create(2, CCSizeMake(32,24), 1, 20);    
 
@@ -215,7 +215,7 @@ void Effect5::onExit()
 {
     EffectAdvanceTextLayer::onExit();
 
-    Director::sharedDirector()->setProjection(kDirectorProjection3D);
+    Director::getInstance()->setProjection(kDirectorProjection3D);
 }
 
 //------------------------------------------------------------------
@@ -373,7 +373,7 @@ void EffectAdvanceTextLayer::restartCallback(Object* pSender)
     Scene* s = new EffectAdvanceScene();
     s->addChild(restartEffectAdvanceAction()); 
 
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -381,7 +381,7 @@ void EffectAdvanceTextLayer::nextCallback(Object* pSender)
 {
     Scene* s = new EffectAdvanceScene();
     s->addChild( nextEffectAdvanceAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
 
     s->release();
 }
@@ -390,7 +390,7 @@ void EffectAdvanceTextLayer::backCallback(Object* pSender)
 {
     Scene* s = new EffectAdvanceScene();
     s->addChild( backEffectAdvanceAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 } 
 
@@ -399,5 +399,5 @@ void EffectAdvanceScene::runThisTest()
     Layer* pLayer = nextEffectAdvanceAction();
 
     addChild(pLayer);
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

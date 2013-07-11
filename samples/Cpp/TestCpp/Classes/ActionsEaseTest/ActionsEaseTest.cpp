@@ -464,7 +464,7 @@ void SpeedTest::onEnter()
 {
     EaseSpriteDemo::onEnter();
     
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     // rotate and jump
     ActionInterval *jump1 = JumpBy::create(4, ccp(-s.width+80, 0), 100, 4);
@@ -627,7 +627,7 @@ void EaseSpriteDemo::restartCallback(Object* pSender)
     Scene* s = new ActionsEaseTestScene();//CCScene::create();
     s->addChild(restartEaseAction()); 
 
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -635,7 +635,7 @@ void EaseSpriteDemo::nextCallback(Object* pSender)
 {
     Scene* s = new ActionsEaseTestScene();//CCScene::create();
     s->addChild( nextEaseAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -643,7 +643,7 @@ void EaseSpriteDemo::backCallback(Object* pSender)
 {
     Scene* s = new ActionsEaseTestScene();//CCScene::create();
     s->addChild( backEaseAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -652,5 +652,5 @@ void ActionsEaseTestScene::runThisTest()
     Layer* pLayer = nextEaseAction();
     addChild(pLayer);
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

@@ -27,7 +27,7 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    Director *pDirector = Director::sharedDirector();
+    Director *pDirector = Director::getInstance();
     pDirector->setOpenGLView(EGLView::sharedOpenGLView());
     pDirector->setProjection(kDirectorProjection2D);
 
@@ -44,7 +44,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     if (platform == kTargetIphone || platform == kTargetIpad || platform == kTargetMacOS)
     {
         searchPaths.push_back("Published-iOS"); // Resources/Published-iOS
-        FileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
+        FileUtils::getInstance()->setSearchPaths(searchPaths);
 
         if (screenSize.height > 480)
         {
@@ -56,7 +56,7 @@ bool AppDelegate::applicationDidFinishLaunching()
             resDirOrders.push_back("resources-iphone");
         }
         
-        FileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
+        FileUtils::getInstance()->setSearchResolutionsOrder(resDirOrders);
     }
     else if (platform == kTargetAndroid || platform == kTargetWindows)
     {
@@ -87,7 +87,7 @@ bool AppDelegate::applicationDidFinishLaunching()
             resDirOrders.push_back("resources-small");
         }
         
-        FileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
+        FileUtils::getInstance()->setSearchResolutionsOrder(resDirOrders);
     }
     pDirector->setContentScaleFactor(resourceSize.width/designSize.width);
 
@@ -123,7 +123,7 @@ void handle_signal(int signal) {
     static int internal_state = 0;
     ScriptingCore* sc = ScriptingCore::getInstance();
     // should start everything back
-    Director* director = Director::sharedDirector();
+    Director* director = Director::getInstance();
     if (director->getRunningScene()) {
         director->popToRootScene();
     } else {
@@ -142,7 +142,7 @@ void handle_signal(int signal) {
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    Director::sharedDirector()->stopAnimation();
+    Director::getInstance()->stopAnimation();
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
     SimpleAudioEngine::sharedEngine()->pauseAllEffects();
 }
@@ -150,7 +150,7 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    Director::sharedDirector()->startAnimation();
+    Director::getInstance()->startAnimation();
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
     SimpleAudioEngine::sharedEngine()->resumeAllEffects();
 }

@@ -67,8 +67,8 @@ cocos2d::Node* ComponentsTestLayer::createGameScene()
     Node *root = NULL;
     do 
 	{
-        Size visibleSize = Director::sharedDirector()->getVisibleSize();
-        Point origin = Director::sharedDirector()->getVisibleOrigin();
+        Size visibleSize = Director::getInstance()->getVisibleSize();
+        Point origin = Director::getInstance()->getVisibleOrigin();
 
        
         Sprite *player = Sprite::create("components/Player.png", CCRectMake(0, 0, 27, 40) );
@@ -100,5 +100,5 @@ cocos2d::Node* ComponentsTestLayer::createGameScene()
 void runComponentsTestLayerTest()
 {
     Scene *pScene = ComponentsTestLayer::scene();
-    Director::sharedDirector()->replaceScene(pScene);
+    Director::getInstance()->replaceScene(pScene);
 }

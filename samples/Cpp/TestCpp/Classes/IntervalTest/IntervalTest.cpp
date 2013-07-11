@@ -13,10 +13,10 @@ IntervalLayer::IntervalLayer()
 {
     _time0 = _time1 = _time2 = _time3 = _time4 = 0.0f;
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     // sun
     ParticleSystem* sun = ParticleSun::create();
-    sun->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+    sun->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
     sun->setPosition( ccp(VisibleRect::rightTop().x-32,VisibleRect::rightTop().y-32) );
 
     sun->setTotalParticles(130);
@@ -58,10 +58,10 @@ IntervalLayer::IntervalLayer()
     sprite->runAction( RepeatForever::create(Sequence::create(jump, jump->reverse(), NULL) ));
     // pause button
     MenuItem* item1 = MenuItemFont::create("Pause", [&](Object* sender) {
-		if(Director::sharedDirector()->isPaused())
-			Director::sharedDirector()->resume();
+		if(Director::getInstance()->isPaused())
+			Director::getInstance()->resume();
 		else
-			Director::sharedDirector()->pause();
+			Director::getInstance()->pause();
 	});
     Menu* menu = Menu::create(item1, NULL);
     menu->setPosition( ccp(s.width/2, s.height-50) );
@@ -71,9 +71,9 @@ IntervalLayer::IntervalLayer()
 
 IntervalLayer::~IntervalLayer()
 {
-    if(Director::sharedDirector()->isPaused())
+    if(Director::getInstance()->isPaused())
     {
-        Director::sharedDirector()->resume();
+        Director::getInstance()->resume();
     }
 }
 
@@ -127,5 +127,5 @@ void IntervalTestScene::runThisTest()
     addChild(pLayer);
     pLayer->release();
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

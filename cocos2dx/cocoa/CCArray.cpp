@@ -133,7 +133,7 @@ Array* Array::createWithContentsOfFile(const char* pFileName)
 
 Array* Array::createWithContentsOfFileThreadSafe(const char* pFileName)
 {
-    return FileUtils::sharedFileUtils()->createArrayWithContentsOfFile(pFileName);
+    return FileUtils::getInstance()->createArrayWithContentsOfFile(pFileName);
 }
 
 bool Array::init()

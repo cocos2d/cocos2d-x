@@ -176,7 +176,7 @@ void Animation::addSpriteFrame(SpriteFrame *pFrame)
 
 void Animation::addSpriteFrameWithFileName(const char *pszFileName)
 {
-    Texture2D *pTexture = TextureCache::sharedTextureCache()->addImage(pszFileName);
+    Texture2D *pTexture = TextureCache::getInstance()->addImage(pszFileName);
     Rect rect = RectZero;
     rect.size = pTexture->getContentSize();
     SpriteFrame *pFrame = SpriteFrame::createWithTexture(pTexture, rect);

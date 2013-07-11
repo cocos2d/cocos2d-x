@@ -179,7 +179,7 @@ Texture2D* SpriteFrame::getTexture(void)
     }
 
     if( _textureFilename.length() > 0 ) {
-        return TextureCache::sharedTextureCache()->addImage(_textureFilename.c_str());
+        return TextureCache::getInstance()->addImage(_textureFilename.c_str());
     }
     // no texture or texture filename
     return NULL;

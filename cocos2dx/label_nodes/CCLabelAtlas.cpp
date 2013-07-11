@@ -57,7 +57,7 @@ LabelAtlas* LabelAtlas::create(const char *string, const char *charMapFile, unsi
 
 bool LabelAtlas::initWithString(const char *string, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
 {
-    Texture2D *texture = TextureCache::sharedTextureCache()->addImage(charMapFile);
+    Texture2D *texture = TextureCache::getInstance()->addImage(charMapFile);
 	return initWithString(string, texture, itemWidth, itemHeight, startCharMap);
 }
 
@@ -93,7 +93,7 @@ LabelAtlas* LabelAtlas::create(const char *string, const char *fntFile)
 
 bool LabelAtlas::initWithString(const char *theString, const char *fntFile)
 {
-  std::string pathStr = FileUtils::sharedFileUtils()->fullPathForFilename(fntFile);
+  std::string pathStr = FileUtils::getInstance()->fullPathForFilename(fntFile);
   std::string relPathStr = pathStr.substr(0, pathStr.find_last_of("/"))+"/";
   Dictionary *dict = Dictionary::createWithContentsOfFile(pathStr.c_str());
   

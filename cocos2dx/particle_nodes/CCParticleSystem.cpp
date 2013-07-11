@@ -168,7 +168,7 @@ bool ParticleSystem::init()
 bool ParticleSystem::initWithFile(const char *plistFile)
 {
     bool bRet = false;
-    _plistFile = FileUtils::sharedFileUtils()->fullPathForFilename(plistFile);
+    _plistFile = FileUtils::getInstance()->fullPathForFilename(plistFile);
     Dictionary *dict = Dictionary::createWithContentsOfFileThreadSafe(_plistFile.c_str());
 
     CCAssert( dict != NULL, "Particles: file not found");
@@ -340,11 +340,11 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
                 if (textureName.length() > 0)
                 {
                     // set not pop-up message box when load image failed
-                    bool bNotify = FileUtils::sharedFileUtils()->isPopupNotify();
-                    FileUtils::sharedFileUtils()->setPopupNotify(false);
-                    tex = TextureCache::sharedTextureCache()->addImage(textureName.c_str());
+                    bool bNotify = FileUtils::getInstance()->isPopupNotify();
+                    FileUtils::getInstance()->setPopupNotify(false);
+                    tex = TextureCache::getInstance()->addImage(textureName.c_str());
                     // reset the value of UIImage notify
-                    FileUtils::sharedFileUtils()->setPopupNotify(bNotify);
+                    FileUtils::getInstance()->setPopupNotify(bNotify);
                 }
                 
                 if (tex)
@@ -368,13 +368,13 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
                         CCAssert( deflated != NULL, "CCParticleSystem: error ungzipping textureImageData");
                         CC_BREAK_IF(!deflated);
                         
-                        // For android, we should retain it in VolatileTexture::addImage which invoked in TextureCache::sharedTextureCache()->addUIImage()
+                        // For android, we should retain it in VolatileTexture::addImage which invoked in TextureCache::getInstance()->addUIImage()
                         image = new Image();
                         bool isOK = image->initWithImageData(deflated, deflatedLen);
                         CCAssert(isOK, "CCParticleSystem: error init image with Data");
                         CC_BREAK_IF(!isOK);
                         
-                        setTexture(TextureCache::sharedTextureCache()->addUIImage(image, textureName.c_str()));
+                        setTexture(TextureCache::getInstance()->addUIImage(image, textureName.c_str()));
 
                         image->release();
                     }

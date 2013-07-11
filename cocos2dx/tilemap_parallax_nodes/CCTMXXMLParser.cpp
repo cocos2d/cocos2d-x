@@ -159,7 +159,7 @@ void TMXMapInfo::internalInit(const char* tmxFileName, const char* resourcePath)
 
     if (tmxFileName != NULL)
     {
-        _TMXFileName = FileUtils::sharedFileUtils()->fullPathForFilename(tmxFileName);
+        _TMXFileName = FileUtils::getInstance()->fullPathForFilename(tmxFileName);
     }
     
     if (resourcePath != NULL)
@@ -307,7 +307,7 @@ bool TMXMapInfo::parseXMLFile(const char *xmlFilename)
     
     parser.setDelegator(this);
 
-    return parser.parse(FileUtils::sharedFileUtils()->fullPathForFilename(xmlFilename).c_str());
+    return parser.parse(FileUtils::getInstance()->fullPathForFilename(xmlFilename).c_str());
 }
 
 
@@ -372,7 +372,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             {
                 externalTilesetFilename = _resources + "/" + externalTilesetFilename;
             }
-            externalTilesetFilename = FileUtils::sharedFileUtils()->fullPathForFilename(externalTilesetFilename.c_str());
+            externalTilesetFilename = FileUtils::getInstance()->fullPathForFilename(externalTilesetFilename.c_str());
             
             _currentFirstGID = (unsigned int)atoi(valueForKey("firstgid", attributeDict));
             

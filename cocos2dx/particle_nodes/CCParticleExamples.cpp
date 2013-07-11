@@ -43,7 +43,7 @@ static Texture2D* getDefaultTexture()
     {
         bool bRet = false;
         const char* key = "__firePngData";
-        pTexture = TextureCache::sharedTextureCache()->textureForKey(key);
+        pTexture = TextureCache::getInstance()->textureForKey(key);
         CC_BREAK_IF(pTexture != NULL);
 
         pImage = new Image();
@@ -51,7 +51,7 @@ static Texture2D* getDefaultTexture()
         bRet = pImage->initWithImageData((void*)__firePngData, sizeof(__firePngData), Image::kFmtPng);
         CC_BREAK_IF(!bRet);
 
-        pTexture = TextureCache::sharedTextureCache()->addUIImage(pImage, key);
+        pTexture = TextureCache::getInstance()->addUIImage(pImage, key);
     } while (0);
 
     CC_SAFE_RELEASE(pImage);
@@ -113,7 +113,7 @@ bool ParticleFire::initWithTotalParticles(unsigned int numberOfParticles)
         _angleVar = 10;
 
         // emitter position
-        Size winSize = Director::sharedDirector()->getWinSize();
+        Size winSize = Director::getInstance()->getWinSize();
         this->setPosition(ccp(winSize.width/2, 60));
         this->_posVar = ccp(40, 20);
 
@@ -214,7 +214,7 @@ bool ParticleFireworks::initWithTotalParticles(unsigned int numberOfParticles)
         this->modeA.speedVar = 50;
 
         // emitter position
-        Size winSize = Director::sharedDirector()->getWinSize();
+        Size winSize = Director::getInstance()->getWinSize();
         this->setPosition(ccp(winSize.width/2, winSize.height/2));
 
         // angle
@@ -323,7 +323,7 @@ bool ParticleSun::initWithTotalParticles(unsigned int numberOfParticles)
         _angleVar = 360;
 
         // emitter position
-        Size winSize = Director::sharedDirector()->getWinSize();
+        Size winSize = Director::getInstance()->getWinSize();
         this->setPosition(ccp(winSize.width/2, winSize.height/2));
         setPosVar(PointZero);
 
@@ -430,7 +430,7 @@ bool ParticleGalaxy::initWithTotalParticles(unsigned int numberOfParticles)
         _angleVar = 360;
 
         // emitter position
-        Size winSize = Director::sharedDirector()->getWinSize();
+        Size winSize = Director::getInstance()->getWinSize();
         this->setPosition(ccp(winSize.width/2, winSize.height/2));
         setPosVar(PointZero);
 
@@ -539,7 +539,7 @@ bool ParticleFlower::initWithTotalParticles(unsigned int numberOfParticles)
         _angleVar = 360;
 
         // emitter position
-        Size winSize = Director::sharedDirector()->getWinSize();
+        Size winSize = Director::getInstance()->getWinSize();
         this->setPosition(ccp(winSize.width/2, winSize.height/2));
         setPosVar(PointZero);
 
@@ -647,7 +647,7 @@ bool ParticleMeteor::initWithTotalParticles(unsigned int numberOfParticles)
         _angleVar = 360;
 
         // emitter position
-        Size winSize = Director::sharedDirector()->getWinSize();
+        Size winSize = Director::getInstance()->getWinSize();
         this->setPosition(ccp(winSize.width/2, winSize.height/2));
         setPosVar(PointZero);
 
@@ -756,7 +756,7 @@ bool ParticleSpiral::initWithTotalParticles(unsigned int numberOfParticles)
         _angleVar = 0;
 
         // emitter position
-        Size winSize = Director::sharedDirector()->getWinSize();
+        Size winSize = Director::getInstance()->getWinSize();
         this->setPosition(ccp(winSize.width/2, winSize.height/2));
         setPosVar(PointZero);
 
@@ -864,7 +864,7 @@ bool ParticleExplosion::initWithTotalParticles(unsigned int numberOfParticles)
         _angleVar = 360;
 
         // emitter position
-        Size winSize = Director::sharedDirector()->getWinSize();
+        Size winSize = Director::getInstance()->getWinSize();
         this->setPosition(ccp(winSize.width/2, winSize.height/2));
         setPosVar(PointZero);
 
@@ -969,7 +969,7 @@ bool ParticleSmoke::initWithTotalParticles(unsigned int numberOfParticles)
         _angleVar = 5;
 
         // emitter position
-        Size winSize = Director::sharedDirector()->getWinSize();
+        Size winSize = Director::getInstance()->getWinSize();
         this->setPosition(ccp(winSize.width/2, 0));
         setPosVar(ccp(20, 0));
 
@@ -1074,7 +1074,7 @@ bool ParticleSnow::initWithTotalParticles(unsigned int numberOfParticles)
         setTangentialAccelVar(1);
 
         // emitter position
-        Size winSize = Director::sharedDirector()->getWinSize();
+        Size winSize = Director::getInstance()->getWinSize();
         this->setPosition(ccp(winSize.width/2, winSize.height + 10));
         setPosVar(ccp(winSize.width/2, 0));
 
@@ -1186,7 +1186,7 @@ bool ParticleRain::initWithTotalParticles(unsigned int numberOfParticles)
 
 
         // emitter position
-        Size winSize = Director::sharedDirector()->getWinSize();
+        Size winSize = Director::getInstance()->getWinSize();
         this->setPosition(ccp(winSize.width/2, winSize.height));
         setPosVar(ccp(winSize.width/2, 0));
 

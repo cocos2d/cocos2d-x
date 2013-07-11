@@ -204,7 +204,7 @@ static void networkThread(void)
         s_responseQueueMutex.unlock();
         
         // resume dispatcher selector
-        Director::sharedDirector()->getScheduler()->resumeTarget(HttpClient::getInstance());
+        Director::getInstance()->getScheduler()->resumeTarget(HttpClient::getInstance());
     }
     
     // cleanup: if worker thread received quit signal, clean up un-completed request queue
@@ -393,7 +393,7 @@ HttpClient* HttpClient::getInstance()
 void HttpClient::destroyInstance()
 {
     CCAssert(s_pHttpClient, "");
-    Director::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(HttpClient::dispatchResponseCallbacks), s_pHttpClient);
+    Director::getInstance()->getScheduler()->unscheduleSelector(schedule_selector(HttpClient::dispatchResponseCallbacks), s_pHttpClient);
     s_pHttpClient->release();
 }
 
@@ -402,7 +402,7 @@ void HttpClient::enableCookies(const char* cookieFile) {
         s_cookieFilename = std::string(cookieFile);
     }
     else {
-        s_cookieFilename = (FileUtils::sharedFileUtils()->getWritablePath() + "cookieFile.txt");
+        s_cookieFilename = (FileUtils::getInstance()->getWritablePath() + "cookieFile.txt");
     }
 }
 
@@ -410,9 +410,9 @@ HttpClient::HttpClient()
 : _timeoutForConnect(30)
 , _timeoutForRead(60)
 {
-    Director::sharedDirector()->getScheduler()->scheduleSelector(
+    Director::getInstance()->getScheduler()->scheduleSelector(
                     schedule_selector(HttpClient::dispatchResponseCallbacks), this, 0, false);
-    Director::sharedDirector()->getScheduler()->pauseTarget(this);
+    Director::getInstance()->getScheduler()->pauseTarget(this);
 }
 
 HttpClient::~HttpClient()
@@ -509,7 +509,7 @@ void HttpClient::dispatchResponseCallbacks(float delta)
     
     if (0 == s_asyncRequestCount) 
     {
-        Director::sharedDirector()->getScheduler()->pauseTarget(this);
+        Director::getInstance()->getScheduler()->pauseTarget(this);
     }
     
 }

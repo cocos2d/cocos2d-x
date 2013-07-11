@@ -95,7 +95,7 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
 {
     CCAssert(path != NULL, "Invalid filename");
 
-    Texture2D *texture = TextureCache::sharedTextureCache()->addImage(path);
+    Texture2D *texture = TextureCache::getInstance()->addImage(path);
     return initWithFade(fade, minSeg, stroke, color, texture);
 }
 
@@ -128,7 +128,7 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
     _blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
 
     // shader program
-    setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColor));
+    setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColor));
 
     setTexture(texture);
     setColor(color);

@@ -107,7 +107,7 @@ bool BaseClippingNodeTest::init()
 
 BaseClippingNodeTest::~BaseClippingNodeTest()
 {
-	TextureCache::sharedTextureCache()->removeUnusedTextures();
+	TextureCache::getInstance()->removeUnusedTextures();
 }
 
 std::string BaseClippingNodeTest::title()
@@ -124,7 +124,7 @@ void BaseClippingNodeTest::restartCallback(Object* sender)
 {
 	Scene *s = new ClippingNodeTestScene();
 	s->addChild(restartAction());
-	Director::sharedDirector()->replaceScene(s);
+	Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -132,7 +132,7 @@ void BaseClippingNodeTest::nextCallback(Object* sender)
 {
 	Scene *s = new ClippingNodeTestScene();
 	s->addChild(nextAction());
-	Director::sharedDirector()->replaceScene(s);
+	Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -140,7 +140,7 @@ void BaseClippingNodeTest::backCallback(Object* sender)
 {
 	Scene *s = new ClippingNodeTestScene();
 	s->addChild(backAction());
-	Director::sharedDirector()->replaceScene(s);
+	Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -164,7 +164,7 @@ std::string BasicTest::subtitle()
 
 void BasicTest::setup()
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     
     Node *stencil = this->stencil();
     stencil->setTag( kTagStencilNode );
@@ -479,7 +479,7 @@ void HoleDemo::pokeHoleAtPoint(Point point)
 void HoleDemo::ccTouchesBegan(Set* touches, Event* event)
 {
 	Touch *touch = (Touch *)touches->anyObject();
-	Point point = _outerClipper->convertToNodeSpace(Director::sharedDirector()->convertToGL(touch->getLocationInView()));
+	Point point = _outerClipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
     Rect rect = CCRectMake(0, 0, _outerClipper->getContentSize().width, _outerClipper->getContentSize().height);
     if (!rect.containsPoint(point)) return;
     this->pokeHoleAtPoint(point);
@@ -533,7 +533,7 @@ void ScrollViewDemo::ccTouchesBegan(Set *pTouches, Event *pEvent)
 {
 	Touch *touch = (Touch*)pTouches->anyObject();
     Node *clipper = this->getChildByTag(kTagClipperNode);
-	Point point = clipper->convertToNodeSpace(Director::sharedDirector()->convertToGL(touch->getLocationInView()));
+	Point point = clipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
     Rect rect = CCRectMake(0, 0, clipper->getContentSize().width, clipper->getContentSize().height);
     _scrolling = rect.containsPoint(point);
     _lastPoint = point;
@@ -544,7 +544,7 @@ void ScrollViewDemo::ccTouchesMoved(Set *pTouches, Event *pEvent)
     if (!_scrolling) return;
 	Touch *touch = (Touch*)pTouches->anyObject();
     Node *clipper = this->getChildByTag(kTagClipperNode);
-    Point point = clipper->convertToNodeSpace(Director::sharedDirector()->convertToGL(touch->getLocationInView()));
+    Point point = clipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
 	Point diff = ccpSub(point, _lastPoint);
     Node *content = clipper->getChildByTag(kTagContentNode);
     content->setPosition( ccpAdd(content->getPosition(), diff) );
@@ -602,12 +602,12 @@ void RawStencilBufferTest::setup()
     _sprite->retain();
     _sprite->setAnchorPoint(  ccp(0.5, 0) );
     _sprite->setScale( 2.5f );
-    Director::sharedDirector()->setAlphaBlending(true);
+    Director::getInstance()->setAlphaBlending(true);
 }
 
 void RawStencilBufferTest::draw()
 {    
-    Point winPoint = ccpFromSize(Director::sharedDirector()->getWinSize());
+    Point winPoint = ccpFromSize(Director::getInstance()->getWinSize());
     
     Point planeSize = ccpMult(winPoint, 1.0 / _planeCount);
     
@@ -723,7 +723,7 @@ void RawStencilBufferTest4::setupStencilForClippingOnPlane(GLint plane)
     glEnable(GL_ALPHA_TEST);
     glAlphaFunc(GL_GREATER, _alphaThreshold);
 #else
-    GLProgram *program = ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColorAlphaTest);
+    GLProgram *program = ShaderCache::getInstance()->programForKey(kShader_PositionTextureColorAlphaTest);
     GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), kUniformAlphaTestValue);
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
     _sprite->setShaderProgram(program );
@@ -756,7 +756,7 @@ void RawStencilBufferTest5::setupStencilForClippingOnPlane(GLint plane)
     glEnable(GL_ALPHA_TEST);
     glAlphaFunc(GL_GREATER, _alphaThreshold);
 #else
-    GLProgram *program = ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColorAlphaTest);
+    GLProgram *program = ShaderCache::getInstance()->programForKey(kShader_PositionTextureColorAlphaTest);
     GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), kUniformAlphaTestValue);
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
     _sprite->setShaderProgram( program );
@@ -783,7 +783,7 @@ std::string RawStencilBufferTest6::subtitle()
 void RawStencilBufferTest6::setup()
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    Point winPoint = ccpFromSize(Director::sharedDirector()->getWinSize());
+    Point winPoint = ccpFromSize(Director::getInstance()->getWinSize());
     unsigned char bits = 0;
     glStencilMask(~0);
     glClearStencil(0);
@@ -812,7 +812,7 @@ void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
     glStencilMask(planeMask);
     glStencilFunc(GL_NEVER, 0, planeMask);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
-    ccDrawSolidRect(PointZero, ccpFromSize(Director::sharedDirector()->getWinSize()), Color4F(1, 1, 1, 1));
+    ccDrawSolidRect(PointZero, ccpFromSize(Director::getInstance()->getWinSize()), Color4F(1, 1, 1, 1));
     glStencilFunc(GL_NEVER, planeMask, planeMask);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
     glDisable(GL_DEPTH_TEST);
@@ -821,7 +821,7 @@ void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
     glEnable(GL_ALPHA_TEST);
     glAlphaFunc(GL_GREATER, _alphaThreshold);
 #else
-    GLProgram *program = ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColorAlphaTest);
+    GLProgram *program = ShaderCache::getInstance()->programForKey(kShader_PositionTextureColorAlphaTest);
     GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), kUniformAlphaTestValue);
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
     _sprite->setShaderProgram(program);
@@ -846,5 +846,5 @@ void ClippingNodeTestScene::runThisTest()
 {
     Layer* pLayer = nextAction();
     addChild(pLayer);
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

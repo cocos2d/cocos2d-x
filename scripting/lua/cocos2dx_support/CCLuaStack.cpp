@@ -191,7 +191,7 @@ int LuaStack::executeScriptFile(const char* filename)
     code.append("\"");
     return executeString(code.c_str());
 #else
-    std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(filename);
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
     ++_callFromLua;
     int nRet = luaL_dofile(_state, fullPath.c_str());
     --_callFromLua;
