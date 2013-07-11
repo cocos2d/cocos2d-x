@@ -384,11 +384,11 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bo
     this->addChild(_scale9Image);
     
     if (_spritesGenerated)
-        {
-            // Restore color and opacity
-            this->setOpacity(opacity);
-            this->setColor(color);
-        }
+    {
+        // Restore color and opacity
+        this->setOpacity(opacity);
+        this->setColor(color);
+    }
     _spritesGenerated = true;
 
     return true;
