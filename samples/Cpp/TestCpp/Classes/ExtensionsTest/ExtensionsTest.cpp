@@ -18,6 +18,8 @@
 #include "EditBoxTest/EditBoxTest.h"
 #endif
 
+#include "Scale9SpriteTest/Scale9SpriteTest.h"
+
 enum
 {
     LINE_SPACE = 40,
@@ -29,6 +31,15 @@ static struct {
 	std::function<void(Object* sender)> callback;
 } g_extensionsTests[] = {
 	{ "NotificationCenterTest", [](Object* sender) { runNotificationCenterTest(); }
+	},
+    { "Scale9SpriteTest", [](Object* sender) {
+            S9SpriteTestScene* pScene = new S9SpriteTestScene();
+            if (pScene)
+            {
+                pScene->runThisTest();
+                pScene->release();
+            }
+        }
 	},
 	{ "CCControlButtonTest", [](Object *sender){
 		ControlSceneManager* pManager = ControlSceneManager::sharedControlSceneManager();
