@@ -100,6 +100,8 @@ private:
     
 };
 
+NS_CC_END
+
 #endif
 
-NS_CC_END
+

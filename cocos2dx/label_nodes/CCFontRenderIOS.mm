@@ -7,6 +7,7 @@
 //
 #include <CoreGraphics/CoreGraphics.h>
 #include <UIKit/UIKit.h>
+#include "cocos2d.h"
 #include "CCTextImage.h"
 #include "CCFontRenderIOS.h"
 

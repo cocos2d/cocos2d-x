@@ -15,6 +15,7 @@
 
 #include "support/ccUTF8.h"
 
+#include "cocos2d.h"
 #include "CCFontIOS.h"
 #include "CCTextImage.h"
 
@@ -209,14 +210,17 @@ unsigned short int * FontIOS::getUTF8Text(const char *pText, int &outNumLetters)
     int count = CFStringGetLength(lettersString);
     
     // Allocate our buffers for characters and glyphs.
-    UniChar *characters = new UniChar[count];
+    UniChar *characters = new UniChar[count + 1];
     if (!characters)
         return 0;
     
     // Get the characters from the string.
     CFStringGetCharacters(lettersString, CFRangeMake(0, count), characters);
     
+    // terminate the string
     outNumLetters = count;
+    characters[count] = 0;
+    
     return (unsigned short int *) characters;
 }
 

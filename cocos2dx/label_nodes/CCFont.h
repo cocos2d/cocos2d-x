@@ -11,8 +11,6 @@
 
 #include <string>
 
-#include "cocos2d.h"
-
 NS_CC_BEGIN
 
 class GlyphDef;

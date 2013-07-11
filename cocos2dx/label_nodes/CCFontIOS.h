@@ -11,9 +11,7 @@
 
 #include <CoreText/CTFont.h>
 
-#include "cocos2d.h"
 #include "CCFont.h"
-
 
 NS_CC_BEGIN
 

@@ -74,6 +74,11 @@
 		0131BA87178DCE6F00811BB1 /* CCLabelTextFormatProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 0131BA81178DCE6100811BB1 /* CCLabelTextFormatProtocol.h */; };
 		0131BA88178DCE6F00811BB1 /* CCLabelTextFormatter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0131BA82178DCE6100811BB1 /* CCLabelTextFormatter.cpp */; };
 		0131BA89178DCE6F00811BB1 /* CCLabelTextFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0131BA83178DCE6100811BB1 /* CCLabelTextFormatter.h */; };
+		0131BA8F178E015200811BB1 /* CCLabelBMFontNew.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0131BA8D178E014900811BB1 /* CCLabelBMFontNew.cpp */; };
+		0131BA90178E015200811BB1 /* CCLabelBMFontNew.h in Headers */ = {isa = PBXBuildFile; fileRef = 0131BA8E178E014900811BB1 /* CCLabelBMFontNew.h */; };
+		0131BA91178E015500811BB1 /* CCLabelBMFontNew.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0131BA8D178E014900811BB1 /* CCLabelBMFontNew.cpp */; };
+		0131BA92178E015500811BB1 /* CCLabelBMFontNew.h in Headers */ = {isa = PBXBuildFile; fileRef = 0131BA8E178E014900811BB1 /* CCLabelBMFontNew.h */; };
+		01A130DA178F20DB00FF1249 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A130D9178F20DA00FF1249 /* CoreText.framework */; };
 		1A11979217852B3B00D62A44 /* CCBProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A1195931785201F00D62A44 /* CCBProxy.cpp */; };
 		1A11979317852B3B00D62A44 /* CCLuaBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A1195951785201F00D62A44 /* CCLuaBridge.cpp */; };
 		1A11979417852B3B00D62A44 /* CCLuaEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A1195971785201F00D62A44 /* CCLuaEngine.cpp */; };
@@ -1915,6 +1920,9 @@
 		0131BA81178DCE6100811BB1 /* CCLabelTextFormatProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelTextFormatProtocol.h; sourceTree = "<group>"; };
 		0131BA82178DCE6100811BB1 /* CCLabelTextFormatter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelTextFormatter.cpp; sourceTree = "<group>"; };
 		0131BA83178DCE6100811BB1 /* CCLabelTextFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelTextFormatter.h; sourceTree = "<group>"; };
+		0131BA8D178E014900811BB1 /* CCLabelBMFontNew.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelBMFontNew.cpp; sourceTree = "<group>"; };
+		0131BA8E178E014900811BB1 /* CCLabelBMFontNew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelBMFontNew.h; sourceTree = "<group>"; };
+		01A130D9178F20DA00FF1249 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/CoreText.framework; sourceTree = DEVELOPER_DIR; };
 		1551A33F158F2AB200E66CFE /* libcocos2dx Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1A1195931785201F00D62A44 /* CCBProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBProxy.cpp; sourceTree = "<group>"; };
@@ -3011,6 +3019,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01A130DA178F20DB00FF1249 /* CoreText.framework in Frameworks */,
 				A07A4CAE1783777C0073F6A7 /* libwebp.a in Frameworks */,
 				A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */,
 				A07A4DB817837B910073F6A7 /* libcurl.a in Frameworks */,
@@ -3061,6 +3070,7 @@
 		1551A334158F2AB200E66CFE = {
 			isa = PBXGroup;
 			children = (
+				01A130D9178F20DA00FF1249 /* CoreText.framework */,
 				1A11958117851F4200D62A44 /* lua */,
 				A03F320217814803006731B9 /* javascript */,
 				A03F2FD7178145F2006731B9 /* extensions */,
@@ -3487,6 +3497,8 @@
 		A03F1E631780BAE4006731B9 /* label_nodes */ = {
 			isa = PBXGroup;
 			children = (
+				0131BA8D178E014900811BB1 /* CCLabelBMFontNew.cpp */,
+				0131BA8E178E014900811BB1 /* CCLabelBMFontNew.h */,
 				0131BA81178DCE6100811BB1 /* CCLabelTextFormatProtocol.h */,
 				0131BA82178DCE6100811BB1 /* CCLabelTextFormatter.cpp */,
 				0131BA83178DCE6100811BB1 /* CCLabelTextFormatter.h */,
@@ -5207,6 +5219,7 @@
 				0131BA74178DCD2D00811BB1 /* CCTextImage.h in Headers */,
 				0131BA84178DCE6700811BB1 /* CCLabelTextFormatProtocol.h in Headers */,
 				0131BA86178DCE6700811BB1 /* CCLabelTextFormatter.h in Headers */,
+				0131BA90178E015200811BB1 /* CCLabelBMFontNew.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5790,6 +5803,7 @@
 				0131BA80178DCD2F00811BB1 /* CCTextImage.h in Headers */,
 				0131BA87178DCE6F00811BB1 /* CCLabelTextFormatProtocol.h in Headers */,
 				0131BA89178DCE6F00811BB1 /* CCLabelTextFormatter.h in Headers */,
+				0131BA92178E015500811BB1 /* CCLabelBMFontNew.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6553,6 +6567,7 @@
 				0131BA71178DCD2D00811BB1 /* CCStringTTF.cpp in Sources */,
 				0131BA73178DCD2D00811BB1 /* CCTextImage.cpp in Sources */,
 				0131BA85178DCE6700811BB1 /* CCLabelTextFormatter.cpp in Sources */,
+				0131BA8F178E015200811BB1 /* CCLabelBMFontNew.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6995,6 +7010,7 @@
 				0131BA7D178DCD2F00811BB1 /* CCStringTTF.cpp in Sources */,
 				0131BA7F178DCD2F00811BB1 /* CCTextImage.cpp in Sources */,
 				0131BA88178DCE6F00811BB1 /* CCLabelTextFormatter.cpp in Sources */,
+				0131BA91178E015500811BB1 /* CCLabelBMFontNew.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -234,6 +234,10 @@ public:
 
     bool hasPremultipliedAlpha() const;
     bool hasMipmaps() const;
+    
+    /** set premultiplied alpha in the texture manually */
+    void setPremultipliedAlpha(bool preMultAlpha) { _hasPremultipliedAlpha = preMultAlpha; }
+    
 private:
     bool initPremultipliedATextureWithImage(Image * image, unsigned int pixelsWide, unsigned int pixelsHigh);
     
