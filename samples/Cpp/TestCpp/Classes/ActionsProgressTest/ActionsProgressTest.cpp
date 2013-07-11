@@ -61,7 +61,7 @@ Layer* restartAction()
 void ProgressActionsTestScene::runThisTest()
 {
     addChild(nextAction());
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }
 
 
@@ -101,7 +101,7 @@ void SpriteDemo::restartCallback(Object* pSender)
     Scene* s = new ProgressActionsTestScene();
     s->addChild(restartAction()); 
 
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -109,7 +109,7 @@ void SpriteDemo::nextCallback(Object* pSender)
 {
     Scene* s = new ProgressActionsTestScene();
     s->addChild( nextAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -117,7 +117,7 @@ void SpriteDemo::backCallback(Object* pSender)
 {
     Scene* s = new ProgressActionsTestScene();
     s->addChild( backAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 } 
 
@@ -130,7 +130,7 @@ void SpriteProgressToRadial::onEnter()
 {
     SpriteDemo::onEnter();
     
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     ProgressTo *to1 = ProgressTo::create(2, 100);
     ProgressTo *to2 = ProgressTo::create(2, 100);
@@ -165,7 +165,7 @@ void SpriteProgressToHorizontal::onEnter()
 {
     SpriteDemo::onEnter();
     
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     
     ProgressTo *to1 = ProgressTo::create(2, 100);
     ProgressTo *to2 = ProgressTo::create(2, 100);
@@ -205,7 +205,7 @@ void SpriteProgressToVertical::onEnter()
 {
     SpriteDemo::onEnter();
     
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     
     ProgressTo *to1 = ProgressTo::create(2, 100);
     ProgressTo *to2 = ProgressTo::create(2, 100);
@@ -246,7 +246,7 @@ void SpriteProgressToRadialMidpointChanged::onEnter()
 {
     SpriteDemo::onEnter();
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     ProgressTo *action = ProgressTo::create(2, 100);
 
@@ -290,7 +290,7 @@ void SpriteProgressBarVarious::onEnter()
 {
     SpriteDemo::onEnter();
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     ProgressTo *to = ProgressTo::create(2, 100);
 
@@ -340,7 +340,7 @@ void SpriteProgressBarTintAndFade::onEnter()
 {
     SpriteDemo::onEnter();
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     ProgressTo *to = ProgressTo::create(6, 100);
 	auto tint = Sequence::create(TintTo::create(1, 255, 0, 0),
@@ -407,11 +407,11 @@ void SpriteProgressWithSpriteFrame::onEnter()
 {
     SpriteDemo::onEnter();
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     ProgressTo *to = ProgressTo::create(6, 100);
 
-    SpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("zwoptex/grossini.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("zwoptex/grossini.plist");
 
     ProgressTimer *left = ProgressTimer::create(Sprite::createWithSpriteFrameName("grossini_dance_01.png"));
     left->setType(kProgressTimerTypeBar);

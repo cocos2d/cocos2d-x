@@ -45,7 +45,7 @@ NotificationCenter::~NotificationCenter()
     _observers->release();
 }
 
-NotificationCenter *NotificationCenter::sharedNotificationCenter(void)
+NotificationCenter *NotificationCenter::getInstance()
 {
     if (!s_sharedNotifCenter)
     {
@@ -54,9 +54,21 @@ NotificationCenter *NotificationCenter::sharedNotificationCenter(void)
     return s_sharedNotifCenter;
 }
 
-void NotificationCenter::purgeNotificationCenter(void)
+void NotificationCenter::destroyInstance()
 {
     CC_SAFE_RELEASE_NULL(s_sharedNotifCenter);
+}
+
+// XXX: deprecated
+NotificationCenter *NotificationCenter::sharedNotificationCenter(void)
+{
+    return NotificationCenter::getInstance();
+}
+
+// XXX: deprecated
+void NotificationCenter::purgeNotificationCenter(void)
+{
+    NotificationCenter::destroyInstance();
 }
 
 //

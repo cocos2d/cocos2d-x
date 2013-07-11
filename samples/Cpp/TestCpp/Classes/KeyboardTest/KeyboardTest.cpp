@@ -4,7 +4,7 @@
 
 KeyboardTest::KeyboardTest()
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     LabelTTF* label = LabelTTF::create("Keyboard Test", "Arial", 28);
     addChild(label, 0);
     label->setPosition( ccp(s.width/2, s.height-50) );
@@ -39,7 +39,7 @@ void KeyboardTestScene::runThisTest()
     Layer* pLayer = new KeyboardTest();
     addChild(pLayer);
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
     pLayer->release();
 }
 

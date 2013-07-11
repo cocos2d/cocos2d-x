@@ -35,7 +35,7 @@ void PerformanceMainLayer::onEnter()
 {
     Layer::onEnter();
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     Menu* pMenu = Menu::create();
     pMenu->setPosition( PointZero );
@@ -133,5 +133,5 @@ void PerformanceTestScene::runThisTest()
     addChild(pLayer);
     pLayer->release();
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

@@ -208,7 +208,7 @@ static void addObjectToNSDict(const char * key, Object* object, NSMutableDiction
     }
 }
 
-FileUtils* FileUtils::sharedFileUtils()
+FileUtils* FileUtils::getInstance()
 {
     if (s_sharedFileUtils == NULL)
     {
@@ -303,7 +303,7 @@ bool FileUtilsIOS::isAbsolutePath(const std::string& strPath)
 
 Dictionary* FileUtilsIOS::createDictionaryWithContentsOfFile(const std::string& filename)
 {
-    std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(filename.c_str());
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename.c_str());
     NSString* pPath = [NSString stringWithUTF8String:fullPath.c_str()];
     NSDictionary* pDict = [NSDictionary dictionaryWithContentsOfFile:pPath];
     
@@ -348,7 +348,7 @@ Array* FileUtilsIOS::createArrayWithContentsOfFile(const std::string& filename)
     //    pPath = [pPath stringByDeletingPathExtension];
     //    pPath = [[NSBundle mainBundle] pathForResource:pPath ofType:pathExtension];
     //    fixing cannot read data using Array::createWithContentsOfFile
-    std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(filename.c_str());
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename.c_str());
     NSString* pPath = [NSString stringWithUTF8String:fullPath.c_str()];
     NSArray* pArray = [NSArray arrayWithContentsOfFile:pPath];
     

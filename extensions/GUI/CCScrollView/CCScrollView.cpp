@@ -132,7 +132,7 @@ bool ScrollView::init()
 
 void ScrollView::registerWithTouchDispatcher()
 {
-    Director::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, Layer::getTouchPriority(), false);
+    Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, Layer::getTouchPriority(), false);
 }
 
 bool ScrollView::isNodeVisible(Node* node)

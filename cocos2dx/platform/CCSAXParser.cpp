@@ -116,7 +116,7 @@ bool SAXParser::parse(const char *pszFile)
 {
     bool bRet = false;
     unsigned long size = 0;
-    char* pBuffer = (char*)FileUtils::sharedFileUtils()->getFileData(pszFile, "rt", &size);
+    char* pBuffer = (char*)FileUtils::getInstance()->getFileData(pszFile, "rt", &size);
     if (pBuffer != NULL && size > 0)
     {
         bRet = parse(pBuffer, size);

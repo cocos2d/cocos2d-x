@@ -35,14 +35,14 @@ bool Paddle::initWithTexture(Texture2D* aTexture)
 
 void Paddle::onEnter()
 {
-    Director* pDirector = Director::sharedDirector();
+    Director* pDirector = Director::getInstance();
     pDirector->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
     Sprite::onEnter();
 }
 
 void Paddle::onExit()
 {
-    Director* pDirector = Director::sharedDirector();
+    Director* pDirector = Director::getInstance();
     pDirector->getTouchDispatcher()->removeDelegate(this);
     Sprite::onExit();
 }    

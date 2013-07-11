@@ -44,7 +44,7 @@ static struct {
 	{ "CCControlButtonTest", [](Object *sender){
 		ControlSceneManager* pManager = ControlSceneManager::sharedControlSceneManager();
 		Scene* pScene = pManager->currentControlScene();
-		Director::sharedDirector()->replaceScene(pScene);
+		Director::getInstance()->replaceScene(pScene);
 	}},
 	{ "CocosBuilderTest", [](Object *sender) {
 		TestScene* pScene = new CocosBuilderTestScene();
@@ -90,7 +90,7 @@ void ExtensionsMainLayer::onEnter()
 {
     Layer::onEnter();
     
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     
     _itemMenu = Menu::create();
     _itemMenu->setPosition( PointZero );
@@ -154,7 +154,7 @@ void ExtensionsTestScene::runThisTest()
     addChild(pLayer);
     pLayer->release();
     
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }
 
 

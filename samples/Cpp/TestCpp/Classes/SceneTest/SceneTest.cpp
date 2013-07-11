@@ -27,7 +27,7 @@ SceneTestLayer1::SceneTestLayer1()
     
     addChild( menu );
     
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     Sprite* sprite = Sprite::create(s_pPathGrossini);
     addChild(sprite);
     sprite->setPosition( ccp(s.width-40, s.height/2) );
@@ -65,7 +65,7 @@ void SceneTestLayer1::onPushScene(Object* pSender)
     Scene* scene = new SceneTestScene();
     Layer* pLayer = new SceneTestLayer2();
     scene->addChild( pLayer, 0 );
-    Director::sharedDirector()->pushScene( scene );
+    Director::getInstance()->pushScene( scene );
     scene->release();
     pLayer->release();
 }
@@ -76,7 +76,7 @@ void SceneTestLayer1::onPushSceneTran(Object* pSender)
     Layer* pLayer = new SceneTestLayer2();
     scene->addChild( pLayer, 0 );
 
-    Director::sharedDirector()->pushScene( TransitionSlideInT::create(1, scene) );
+    Director::getInstance()->pushScene( TransitionSlideInT::create(1, scene) );
     scene->release();
     pLayer->release();
 }
@@ -85,7 +85,7 @@ void SceneTestLayer1::onPushSceneTran(Object* pSender)
 void SceneTestLayer1::onQuit(Object* pSender)
 {
     //getCocosApp()->exit();
-    //CCDirector::sharedDirector()->popScene();
+    //CCDirector::getInstance()->popScene();
 
     //// HA HA... no more terminate on sdk v3.0
     //// http://developer.apple.com/iphone/library/qa/qa2008/qa1561.html
@@ -112,7 +112,7 @@ SceneTestLayer2::SceneTestLayer2()
     
     addChild( menu );
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     Sprite* sprite = Sprite::create(s_pPathGrossini);
     addChild(sprite);
     sprite->setPosition( ccp(s.width-40, s.height/2) );
@@ -132,7 +132,7 @@ void SceneTestLayer2::testDealloc(float dt)
 
 void SceneTestLayer2::onGoBack(Object* pSender)
 {
-    Director::sharedDirector()->popScene();
+    Director::getInstance()->popScene();
 }
 
 void SceneTestLayer2::onReplaceScene(Object* pSender)
@@ -140,7 +140,7 @@ void SceneTestLayer2::onReplaceScene(Object* pSender)
     Scene* pScene = new SceneTestScene();
     Layer* pLayer = SceneTestLayer3::create();
     pScene->addChild( pLayer, 0 );
-    Director::sharedDirector()->replaceScene( pScene );
+    Director::getInstance()->replaceScene( pScene );
     pScene->release();
 }
 
@@ -150,7 +150,7 @@ void SceneTestLayer2::onReplaceSceneTran(Object* pSender)
     Scene* pScene = new SceneTestScene();
     Layer* pLayer = SceneTestLayer3::create();
     pScene->addChild( pLayer, 0 );
-    Director::sharedDirector()->replaceScene( TransitionFlipX::create(2, pScene) );
+    Director::getInstance()->replaceScene( TransitionFlipX::create(2, pScene) );
     pScene->release();
 }
 
@@ -169,7 +169,7 @@ bool SceneTestLayer3::init()
 {
     if (LayerColor::initWithColor(Color4B(0,0,255,255)))
     {
-        Size s = Director::sharedDirector()->getWinSize();
+        Size s = Director::getInstance()->getWinSize();
 
         MenuItemFont *item0 = MenuItemFont::create("Touch to pushScene (self)", CC_CALLBACK_1(SceneTestLayer3::item0Clicked, this));
         MenuItemFont *item1 = MenuItemFont::create("Touch to popScene", CC_CALLBACK_1(SceneTestLayer3::item1Clicked, this));
@@ -202,22 +202,22 @@ void SceneTestLayer3::item0Clicked(Object* pSender)
 {
     Scene *newScene = Scene::create();
     newScene->addChild(SceneTestLayer3::create());
-    Director::sharedDirector()->pushScene(TransitionFade::create(0.5, newScene, Color3B(0,255,255)));
+    Director::getInstance()->pushScene(TransitionFade::create(0.5, newScene, Color3B(0,255,255)));
 }
 
 void SceneTestLayer3::item1Clicked(Object* pSender)
 {
-    Director::sharedDirector()->popScene();
+    Director::getInstance()->popScene();
 }
 
 void SceneTestLayer3::item2Clicked(Object* pSender)
 {
-    Director::sharedDirector()->popToRootScene();
+    Director::getInstance()->popToRootScene();
 }
 
 void SceneTestLayer3::item3Clicked(Object* pSender)
 {
-    Director::sharedDirector()->popToSceneStackLevel(2);
+    Director::getInstance()->popToSceneStackLevel(2);
 }
 
 void SceneTestScene::runThisTest()
@@ -226,5 +226,5 @@ void SceneTestScene::runThisTest()
     addChild(pLayer);
     pLayer->release();
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

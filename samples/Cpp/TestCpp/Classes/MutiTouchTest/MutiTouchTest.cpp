@@ -14,7 +14,7 @@ class TouchPoint : public Node
 public:
     TouchPoint()
     {
-        setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColor));
+        setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColor));
     }
 
     virtual void draw()
@@ -66,7 +66,7 @@ static Dictionary s_dic;
 
 void MutiTouchTestLayer::registerWithTouchDispatcher(void)
 {
-    Director::sharedDirector()->getTouchDispatcher()->addStandardDelegate(this, 0);
+    Director::getInstance()->getTouchDispatcher()->addStandardDelegate(this, 0);
 }
 
 void MutiTouchTestLayer::ccTouchesBegan(Set *touches, Event *pEvent)
@@ -121,5 +121,5 @@ void MutiTouchTestScene::runThisTest()
 
     addChild(pLayer, 0);
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

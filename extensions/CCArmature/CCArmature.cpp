@@ -191,7 +191,7 @@ bool Armature::init(const char *name)
 
         }
 
-        setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColor));
+        setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColor));
 
         unscheduleUpdate();
         scheduleUpdate();

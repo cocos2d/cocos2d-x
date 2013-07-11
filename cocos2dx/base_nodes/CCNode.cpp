@@ -93,7 +93,7 @@ Node::Node(void)
 , _componentContainer(NULL)
 {
     // set default scheduler and actionManager
-    Director *director = Director::sharedDirector();
+    Director *director = Director::getInstance();
     _actionManager = director->getActionManager();
     _actionManager->retain();
     _scheduler = director->getScheduler();
@@ -1304,7 +1304,7 @@ Point Node::convertToWorldSpaceAR(const Point& nodePoint)
 Point Node::convertToWindowSpace(const Point& nodePoint)
 {
     Point worldPoint = this->convertToWorldSpace(nodePoint);
-    return Director::sharedDirector()->convertToUI(worldPoint);
+    return Director::getInstance()->convertToUI(worldPoint);
 }
 
 // convenience methods which take a Touch instead of Point

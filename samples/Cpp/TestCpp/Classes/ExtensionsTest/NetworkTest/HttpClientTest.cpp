@@ -8,7 +8,7 @@ USING_NS_CC_EXT;
 HttpClientTest::HttpClientTest() 
 : _labelStatusCode(NULL)
 {
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
 
     const int MARGIN = 40;
     const int SPACE = 35;
@@ -294,6 +294,6 @@ void runHttpClientTest()
     HttpClientTest *pLayer = new HttpClientTest();
     pScene->addChild(pLayer);
     
-    Director::sharedDirector()->replaceScene(pScene);
+    Director::getInstance()->replaceScene(pScene);
     pLayer->release();
 }

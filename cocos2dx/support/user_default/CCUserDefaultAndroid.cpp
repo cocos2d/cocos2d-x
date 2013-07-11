@@ -75,7 +75,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
         tinyxml2::XMLDocument* xmlDoc = new tinyxml2::XMLDocument();
         *doc = xmlDoc;
         unsigned long nSize;
-        const char* pXmlBuffer = (const char*)FileUtils::sharedFileUtils()->getFileData(UserDefault::sharedUserDefault()->getXMLFilePath().c_str(), "rb", &nSize);
+        const char* pXmlBuffer = (const char*)FileUtils::getInstance()->getFileData(UserDefault::getInstance()->getXMLFilePath().c_str(), "rb", &nSize);
         //const char* pXmlBuffer = (const char*)data.getBuffer();
         if(NULL == pXmlBuffer)
         {
@@ -96,7 +96,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
         if (!curNode)
         {
             // There is not xml node, delete xml file.
-            remove(UserDefault::sharedUserDefault()->getXMLFilePath().c_str());
+            remove(UserDefault::getInstance()->getXMLFilePath().c_str());
             
             return NULL;
         }
@@ -122,7 +122,7 @@ static void deleteNode(tinyxml2::XMLDocument* doc, tinyxml2::XMLElement* node)
     if (node)
     {
         doc->DeleteNode(node);
-        doc->SaveFile(UserDefault::sharedUserDefault()->getXMLFilePath().c_str());
+        doc->SaveFile(UserDefault::getInstance()->getXMLFilePath().c_str());
         delete doc;
     }
 }
@@ -136,8 +136,8 @@ static void deleteNodeByKey(const char *pKey)
 #endif
 
 /**
- * If the user invoke delete UserDefault::sharedUserDefault(), should set _spUserDefault
- * to null to avoid error when he invoke UserDefault::sharedUserDefault() later.
+ * If the user invoke delete UserDefault::getInstance(), should set _spUserDefault
+ * to null to avoid error when he invoke UserDefault::getInstance() later.
  */
 UserDefault::~UserDefault()
 {

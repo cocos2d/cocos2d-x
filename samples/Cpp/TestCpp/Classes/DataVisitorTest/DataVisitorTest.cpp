@@ -37,7 +37,7 @@ void PrettyPrinterDemo::addSprite()
 void PrettyPrinterDemo::onEnter()
 {
     Layer::onEnter();
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     
     LabelTTF* label = LabelTTF::create(title().c_str(), "Arial", 28);
     label->setPosition( ccp(s.width/2, s.height * 4/5) );
@@ -71,7 +71,7 @@ void PrettyPrinterDemo::onEnter()
     
     vistor.clear();
     addSprite();
-    pDict = TextureCache::sharedTextureCache()->snapshotTextures();
+    pDict = TextureCache::getInstance()->snapshotTextures();
     pDict->acceptVisitor(vistor);
     CCLog("%s", vistor.getResult().c_str());
 }
@@ -82,5 +82,5 @@ void DataVisitorTestScene::runThisTest()
     layer->autorelease();
     addChild(layer);
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

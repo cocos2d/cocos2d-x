@@ -900,7 +900,7 @@ SplitRows* SplitRows::clone() const
 void SplitRows::startWithTarget(Node *pTarget)
 {
     TiledGrid3DAction::startWithTarget(pTarget);
-    _winSize = Director::sharedDirector()->getWinSizeInPixels();
+    _winSize = Director::getInstance()->getWinSizeInPixels();
 }
 
 void SplitRows::update(float time)
@@ -965,7 +965,7 @@ SplitCols* SplitCols::clone() const
 void SplitCols::startWithTarget(Node *pTarget)
 {
     TiledGrid3DAction::startWithTarget(pTarget);
-    _winSize = Director::sharedDirector()->getWinSizeInPixels();
+    _winSize = Director::getInstance()->getWinSizeInPixels();
 }
 
 void SplitCols::update(float time)

@@ -5682,7 +5682,7 @@ static int tolua_Cocos2d_CCShaderCache_sharedShaderCache00(lua_State* tolua_S)
 #endif
  {
   {
-   ShaderCache* tolua_ret = (ShaderCache*)  ShaderCache::sharedShaderCache();
+   ShaderCache* tolua_ret = (ShaderCache*)  ShaderCache::getInstance();
     int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
     toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCShaderCache");

@@ -20,7 +20,7 @@ bool EnemyController::init()
 void EnemyController::onEnter()
 {
    // Determine where to spawn the target along the Y axis
-	Size winSize = Director::sharedDirector()->getVisibleSize();
+	Size winSize = Director::getInstance()->getVisibleSize();
 	float minY = getOwner()->getContentSize().height/2;
 	float maxY = winSize.height -  getOwner()->getContentSize().height/2;
 	int rangeY = (int)(maxY - minY);
@@ -31,7 +31,7 @@ void EnemyController::onEnter()
 	// and along a random position along the Y axis as calculated
 	_owner->setPosition(
 		ccp(winSize.width + (getOwner()->getContentSize().width/2), 
-            Director::sharedDirector()->getVisibleOrigin().y + actualY) );
+            Director::getInstance()->getVisibleOrigin().y + actualY) );
 	
 
 	// Determine speed of the target

@@ -84,7 +84,7 @@ FontTest::FontTest()
 
 void FontTest::showFont(const char *pFont)
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     Size blockSize = CCSizeMake(s.width/3, 200);
     float fontSize = 26;
@@ -169,5 +169,5 @@ void FontTestScene::runThisTest()
     Layer* pLayer = FontTest::create();
     addChild(pLayer);
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

@@ -59,7 +59,7 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
     Texture2D *texture = NULL;
     if( tilesetInfo )
     {
-        texture = TextureCache::sharedTextureCache()->addImage(tilesetInfo->_sourceImage.c_str());
+        texture = TextureCache::getInstance()->addImage(tilesetInfo->_sourceImage.c_str());
     }
 
     if (SpriteBatchNode::initWithTexture(texture, (unsigned int)capacity))
@@ -72,7 +72,7 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
         _maxGID = layerInfo->_maxGID;
         _opacity = layerInfo->_opacity;
         setProperties(Dictionary::createWithDictionary(layerInfo->getProperties()));
-        _contentScaleFactor = Director::sharedDirector()->getContentScaleFactor(); 
+        _contentScaleFactor = Director::getInstance()->getContentScaleFactor(); 
 
         // tilesetInfo
         _tileSet = tilesetInfo;
@@ -221,7 +221,7 @@ void TMXLayer::parseInternalProperties()
             {
                 alphaFuncValue = alphaFuncVal->floatValue();
             }
-            setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColorAlphaTest));
+            setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColorAlphaTest));
 
             GLint alphaValueLocation = glGetUniformLocation(getShaderProgram()->getProgram(), kUniformAlphaTestValue);
 
