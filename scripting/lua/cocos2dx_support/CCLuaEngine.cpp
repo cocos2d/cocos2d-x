@@ -68,6 +68,7 @@ void LuaEngine::addLuaLoader(lua_CFunction func)
 void LuaEngine::removeScriptObjectByObject(Object* pObj)
 {
     _stack->removeScriptObjectByObject(pObj);
+    ScriptHandlerMgr::getInstance()->unregisterObjectAllHandlers(pObj);
 }
 
 void LuaEngine::removeScriptHandler(int nHandler)

@@ -18,6 +18,7 @@ extern "C" {
 using namespace cocos2d;
 using namespace cocos2d::extension;
 
+NS_CC_BEGIN
 
 ScheduleHandlerDelegate* ScheduleHandlerDelegate::create()
 {
@@ -81,7 +82,7 @@ void CallFuncHandlerDelegate::callFunc(Node* node)
     
     if (0 != handler)
     {
-        BasicScriptData data((void*)this,(void*)_callFunc->getTarget());
+        BasicScriptData data((void*)this,(void*)node);
         ScriptEvent event(kCallFuncEvent,(void*)&data);
 		ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
@@ -183,6 +184,20 @@ int  ScriptHandlerMgr::getObjecHandlerByEvent(void* object,int eventType)
     }
     
     return 0;
+}
+
+void ScriptHandlerMgr::unregisterObjectAllHandlers(void* object)
+{
+    if (NULL == object || _mapObjectHandlers.empty())
+        return;
+    
+    auto iter = _mapObjectHandlers.find(object);
+    
+    if (_mapObjectHandlers.end() != iter)
+    {
+        (iter->second).clear();
+        _mapObjectHandlers.erase(iter);
+    }
 }
 
 ScheduleHandlerDelegate* ScriptHandlerMgr::registerScheduleHandler(int handler,float interval, unsigned int repeat, float delay, bool paused)
@@ -535,6 +550,7 @@ void ScriptHandlerMgr::removeNodeSchedule(cocos2d::Node* node,ScheduleHandlerDel
     }
 }
 
+NS_CC_END
 
 static void tolua_reg_script_handler_mgr_type(lua_State* tolua_S)
 {

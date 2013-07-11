@@ -61,7 +61,8 @@ end
 
 function schedule(node, callback, delay)
     local delay = CCDelayTime:create(delay)
-    local callfunc = CCCallFunc:create(callback)
+    local scriptHandlerMgr = ScriptHandlerMgr:getInstance()
+    local callfunc = scriptHandlerMgr:registerCallFuncHandler(callback)
     local sequence = CCSequence:createWithTwoActions(delay, callfunc)
     local action = CCRepeatForever:create(sequence)
     node:runAction(action)
@@ -70,7 +71,8 @@ end
 
 function performWithDelay(node, callback, delay)
     local delay = CCDelayTime:create(delay)
-    local callfunc = CCCallFunc:create(callback)
+    local scriptHandlerMgr = ScriptHandlerMgr:getInstance()
+    local callfunc = scriptHandlerMgr:registerCallFuncHandler(callback)
     local sequence = CCSequence:createWithTwoActions(delay, callfunc)
     node:runAction(sequence)
     return sequence

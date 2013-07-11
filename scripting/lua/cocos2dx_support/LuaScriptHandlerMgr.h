@@ -13,6 +13,8 @@ extern "C" {
 #include <vector>
 #include <map>
 
+NS_CC_BEGIN
+
 class ScheduleHandlerDelegate;
 
 typedef int EventType;
@@ -71,6 +73,7 @@ public:
     void registerObjectHandler(void* object,int handler,int eventType);
     void unregisterObjectHandler(void* object,int eventType);
     int  getObjecHandlerByEvent(void* object,int eventType);
+    void unregisterObjectAllHandlers(void* object);
         
     void registerNotificationHandler(cocos2d::Object* target,int handler,const char* name);
     void unregisterNotificationHandler(cocos2d::Object* target,const char* name);
@@ -113,6 +116,8 @@ private:
     MapObjectHandlers _mapObjectHandlers;
     MapNodeSchedules   _mapNodeScehdules;
 };
+
+NS_CC_END
 
 TOLUA_API int tolua_script_handler_mgr_open(lua_State* tolua_S);
 

@@ -30,6 +30,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+class ScriptHandlerMgr;
 class CC_DLL NotificationCenter : public Object
 {
     friend class ScriptHandlerMgr;
