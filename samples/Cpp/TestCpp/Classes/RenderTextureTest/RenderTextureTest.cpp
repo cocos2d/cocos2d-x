@@ -187,7 +187,7 @@ void RenderTextureSave::ccTouchesMoved(Set* touches, Event* event)
 
     // for extra points, we'll draw this smoothly from the last position and vary the sprite's
     // scale/rotation/offset
-    float distance = ccpDistance(start, end);
+    float distance = start.getDistance(end);
     if (distance > 1)
     {
         int d = (int)distance;
@@ -454,7 +454,8 @@ RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
     sprite->visit();
 
     //! move sprite half width and height, and draw only where not marked
-    sprite->setPosition(ccpAdd(sprite->getPosition(), ccpMult(ccp(sprite->getContentSize().width * sprite->getScale(), sprite->getContentSize().height * sprite->getScale()), 0.5)));
+    sprite->setPosition(sprite->getPosition() + ccp(sprite->getContentSize().width * sprite->getScale(),
+                                                    sprite->getContentSize().height * sprite->getScale()) * 0.5);
     glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
     glColorMask(1, 1, 1, 1);
     sprite->visit();

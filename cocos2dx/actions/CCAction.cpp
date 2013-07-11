@@ -210,7 +210,7 @@ bool Follow::initWithTarget(Node *pFollowedNode, const Rect& rect/* = RectZero*/
 
     Size winSize = Director::sharedDirector()->getWinSize();
     _fullScreenSize = CCPointMake(winSize.width, winSize.height);
-    _halfScreenSize = ccpMult(_fullScreenSize, 0.5f);
+    _halfScreenSize = _fullScreenSize * 0.5f;
 
     if (_boundarySet)
     {
@@ -251,14 +251,14 @@ void Follow::step(float dt)
         if(_boundaryFullyCovered)
             return;
 
-        Point tempPos = ccpSub( _halfScreenSize, _followedNode->getPosition());
+        Point tempPos = _halfScreenSize - _followedNode->getPosition();
 
         _target->setPosition(ccp(clampf(tempPos.x, _leftBoundary, _rightBoundary), 
                                    clampf(tempPos.y, _bottomBoundary, _topBoundary)));
     }
     else
     {
-        _target->setPosition(ccpSub(_halfScreenSize, _followedNode->getPosition()));
+        _target->setPosition(_halfScreenSize - _followedNode->getPosition());
     }
 }
 

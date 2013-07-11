@@ -618,8 +618,8 @@ void LayerGradientTest::ccTouchesMoved(Set * touches, Event *event)
     Touch* touch = (Touch*) touches->anyObject();
     Point start = touch->getLocation();    
 
-    Point diff = ccpSub( ccp(s.width/2,s.height/2), start);    
-    diff = ccpNormalize(diff);
+    Point diff = ccp(s.width/2,s.height/2) - start;
+    diff = diff.normalize();
 
     LayerGradient *gradient = (LayerGradient*) getChildByTag(1);
     gradient->setVector(diff);

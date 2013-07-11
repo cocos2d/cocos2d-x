@@ -540,7 +540,7 @@ void ParticleSystem::initParticle(tParticle* particle)
         float s = modeA.speed + modeA.speedVar * CCRANDOM_MINUS1_1();
 
         // direction
-        particle->modeA.dir = ccpMult( v, s );
+        particle->modeA.dir = v * s ;
 
         // radial accel
         particle->modeA.radialAccel = modeA.radialAccel + modeA.radialAccelVar * CCRANDOM_MINUS1_1();
@@ -551,7 +551,7 @@ void ParticleSystem::initParticle(tParticle* particle)
 
         // rotation is dir
         if(modeA.rotationIsDir)
-            particle->rotation = -CC_RADIANS_TO_DEGREES(ccpToAngle(particle->modeA.dir));
+            particle->rotation = -CC_RADIANS_TO_DEGREES(particle->modeA.dir.getAngle());
     }
 
     // Mode Radius: B
@@ -658,23 +658,23 @@ void ParticleSystem::update(float dt)
                     // radial acceleration
                     if (p->pos.x || p->pos.y)
                     {
-                        radial = ccpNormalize(p->pos);
+                        radial = p->pos.normalize();
                     }
                     tangential = radial;
-                    radial = ccpMult(radial, p->modeA.radialAccel);
+                    radial = radial * p->modeA.radialAccel;
 
                     // tangential acceleration
                     float newy = tangential.x;
                     tangential.x = -tangential.y;
                     tangential.y = newy;
-                    tangential = ccpMult(tangential, p->modeA.tangentialAccel);
+                    tangential = tangential * p->modeA.tangentialAccel;
 
                     // (gravity + radial + tangential) * dt
-                    tmp = ccpAdd( ccpAdd( radial, tangential), modeA.gravity);
-                    tmp = ccpMult( tmp, dt);
-                    p->modeA.dir = ccpAdd( p->modeA.dir, tmp);
-                    tmp = ccpMult(p->modeA.dir, dt);
-                    p->pos = ccpAdd( p->pos, tmp );
+                    tmp = radial + tangential + modeA.gravity;
+                    tmp = tmp * dt;
+                    p->modeA.dir = p->modeA.dir + tmp;
+                    tmp = p->modeA.dir * dt;
+                    p->pos = p->pos + tmp;
                 }
 
                 // Mode B: radius movement
@@ -709,8 +709,8 @@ void ParticleSystem::update(float dt)
 
                 if (_positionType == kPositionTypeFree || _positionType == kPositionTypeRelative) 
                 {
-                    Point diff = ccpSub( currentPosition, p->startPos );
-                    newPos = ccpSub(p->pos, diff);
+                    Point diff = currentPosition - p->startPos;
+                    newPos = p->pos - diff;
                 } 
                 else
                 {

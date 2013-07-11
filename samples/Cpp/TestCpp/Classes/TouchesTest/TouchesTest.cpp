@@ -90,7 +90,7 @@ PongLayer::~PongLayer()
 
 void PongLayer::resetAndScoreBallForPlayer(int player)
 {
-    _ballStartingVelocity = ccpMult(_ballStartingVelocity, -1.1f);
+    _ballStartingVelocity = _ballStartingVelocity * -1.1f;
     _ball->setVelocity( _ballStartingVelocity );
     _ball->setPosition( VisibleRect::center() );
     

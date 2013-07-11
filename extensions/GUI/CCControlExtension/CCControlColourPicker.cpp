@@ -81,7 +81,7 @@ bool ControlColourPicker::init()
         _background=ControlUtils::addSpriteToTargetWithPosAndAnchor("menuColourPanelBackground.png", spriteSheet, PointZero, ccp(0.5f, 0.5f));
         CC_SAFE_RETAIN(_background);
         
-        Point backgroundPointZero = ccpSub(_background->getPosition(), ccp (_background->getContentSize().width / 2, _background->getContentSize().height / 2));
+        Point backgroundPointZero = _background->getPosition() - ccp(_background->getContentSize().width / 2, _background->getContentSize().height / 2);
         
         // Setup panels
         float hueShift                = 8;

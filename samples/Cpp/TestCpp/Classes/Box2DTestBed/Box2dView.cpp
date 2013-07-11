@@ -143,7 +143,7 @@ void MenuLayer::ccTouchMoved(Touch* touch, Event* event)
     Point diff = touch->getDelta();    
     Node *node = getChildByTag( kTagBox2DNode );
     Point currentPos = node->getPosition();
-    node->setPosition( ccpAdd(currentPos, diff) );
+    node->setPosition(currentPos + diff);
 }
 
 //------------------------------------------------------------------

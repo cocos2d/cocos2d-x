@@ -236,7 +236,7 @@ void ChipmunkTestLayer::didAccelerate(Acceleration* pAccelerationValue)
     prevY = accelY;
 
     Point v = ccp( accelX, accelY);
-    v = ccpMult(v, 200);
+    v = v * 200;
     _space->gravity = cpv(v.x, v.y);
 }
 

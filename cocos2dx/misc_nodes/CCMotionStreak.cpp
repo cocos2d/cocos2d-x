@@ -265,8 +265,8 @@ void MotionStreak::update(float delta)
 
     else if(_nuPoints>0)
     {
-        bool a1 = ccpDistanceSQ(_pointVertexes[_nuPoints-1], _positionR) < _minSeg;
-        bool a2 = (_nuPoints == 1) ? false : (ccpDistanceSQ(_pointVertexes[_nuPoints-2], _positionR) < (_minSeg * 2.0f));
+        bool a1 = _pointVertexes[_nuPoints-1].getDistanceSq(_positionR) < _minSeg;
+        bool a2 = (_nuPoints == 1) ? false : (_pointVertexes[_nuPoints-2].getDistanceSq(_positionR)< (_minSeg * 2.0f));
         if(a1 || a2)
         {
             appendNewPoint = false;

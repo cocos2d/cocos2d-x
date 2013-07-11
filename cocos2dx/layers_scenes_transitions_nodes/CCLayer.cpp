@@ -944,7 +944,7 @@ void LayerGradient::updateColor()
 {
     LayerColor::updateColor();
 
-    float h = ccpLength(_alongVector);
+    float h = _alongVector.getLength();
     if (h == 0)
         return;
 
@@ -955,7 +955,7 @@ void LayerGradient::updateColor()
     if (_compressedInterpolation)
     {
         float h2 = 1 / ( fabsf(u.x) + fabsf(u.y) );
-        u = ccpMult(u, h2 * (float)c);
+        u = u * (h2 * (float)c);
     }
 
     float opacityf = (float)_displayedOpacity / 255.0f;

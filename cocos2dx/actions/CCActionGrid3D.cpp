@@ -362,8 +362,8 @@ void Lens3D::update(float time)
             for (j = 0; j < _gridSize.height + 1; ++j)
             {
                 Vertex3F v = getOriginalVertex(ccp(i, j));
-                Point vect = ccpSub(_position, ccp(v.x, v.y));
-                float r = ccpLength(vect);
+                Point vect = _position - ccp(v.x, v.y);
+                float r = vect.getLength();
                 
                 if (r < _radius)
                 {
@@ -377,11 +377,11 @@ void Lens3D::update(float time)
                     float l = logf(pre_log) * _lensEffect;
                     float new_r = expf( l ) * _radius;
                     
-                    if (ccpLength(vect) > 0)
+                    if (vect.getLength() > 0)
                     {
-                        vect = ccpNormalize(vect);
-                        Point new_vect = ccpMult(vect, new_r);
-                        v.z += (_concave ? -1.0f : 1.0f) * ccpLength(new_vect) * _lensEffect;
+                        vect = vect.normalize();
+                        Point new_vect = vect * new_r;
+                        v.z += (_concave ? -1.0f : 1.0f) * new_vect.getLength() * _lensEffect;
                     }
                 }
                 
@@ -454,8 +454,8 @@ void Ripple3D::update(float time)
         for (j = 0; j < (_gridSize.height+1); ++j)
         {
             Vertex3F v = getOriginalVertex(ccp(i, j));
-            Point vect = ccpSub(_position, ccp(v.x,v.y));
-            float r = ccpLength(vect);
+            Point vect = _position - ccp(v.x,v.y);
+            float r = vect.getLength();
             
             if (r < _radius)
             {
@@ -727,7 +727,7 @@ void Twirl::update(float time)
             Vertex3F v = getOriginalVertex(ccp(i ,j));
             
             Point    avg = ccp(i-(_gridSize.width/2.0f), j-(_gridSize.height/2.0f));
-            float r = ccpLength(avg);
+            float r = avg.getLength();
             
             float amp = 0.1f * _amplitude * _amplitudeRate;
             float a = r * cosf( (float)M_PI/2.0f + time * (float)M_PI * _twirls * 2 ) * amp;

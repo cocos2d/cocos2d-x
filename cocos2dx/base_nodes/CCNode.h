@@ -1448,8 +1448,8 @@ public:
 protected:
 	GLubyte		_displayedOpacity;
     GLubyte     _realOpacity;
-	Color3B	_displayedColor;
-    Color3B   _realColor;
+	Color3B	    _displayedColor;
+    Color3B     _realColor;
 	bool		_cascadeColorEnabled;
     bool        _cascadeOpacityEnabled;
 };

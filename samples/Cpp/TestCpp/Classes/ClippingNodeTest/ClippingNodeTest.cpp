@@ -424,7 +424,7 @@ void HoleDemo::setup()
 
     _outerClipper->setContentSize( SizeApplyAffineTransform(target->getContentSize(), tranform));
     _outerClipper->setAnchorPoint( ccp(0.5, 0.5) );
-    _outerClipper->setPosition( ccpMult(ccpFromSize(this->getContentSize()), 0.5f) );
+    _outerClipper->setPosition(Point(this->getContentSize()) * 0.5f);
     _outerClipper->runAction(RepeatForever::create(RotateBy::create(1, 45)));
     
     _outerClipper->setStencil( target );
@@ -545,9 +545,9 @@ void ScrollViewDemo::ccTouchesMoved(Set *pTouches, Event *pEvent)
 	Touch *touch = (Touch*)pTouches->anyObject();
     Node *clipper = this->getChildByTag(kTagClipperNode);
     Point point = clipper->convertToNodeSpace(Director::sharedDirector()->convertToGL(touch->getLocationInView()));
-	Point diff = ccpSub(point, _lastPoint);
+	Point diff = point - _lastPoint;
     Node *content = clipper->getChildByTag(kTagContentNode);
-    content->setPosition( ccpAdd(content->getPosition(), diff) );
+    content->setPosition(content->getPosition() + diff);
     _lastPoint = point;
 }
 
@@ -607,19 +607,19 @@ void RawStencilBufferTest::setup()
 
 void RawStencilBufferTest::draw()
 {    
-    Point winPoint = ccpFromSize(Director::sharedDirector()->getWinSize());
+    Point winPoint = Point(Director::sharedDirector()->getWinSize());
     
-    Point planeSize = ccpMult(winPoint, 1.0 / _planeCount);
+    Point planeSize = winPoint * (1.0 / _planeCount);
     
     glEnable(GL_STENCIL_TEST);
     CHECK_GL_ERROR_DEBUG();
         
     for (int i = 0; i < _planeCount; i++) {
         
-        Point stencilPoint = ccpMult(planeSize, _planeCount - i);
+        Point stencilPoint = planeSize * (_planeCount - i);
         stencilPoint.x = winPoint.x;
         
-        Point spritePoint = ccpMult(planeSize, i);
+        Point spritePoint = planeSize * i;
         spritePoint.x += planeSize.x / 2;
         spritePoint.y = 0;
         _sprite->setPosition( spritePoint );
@@ -812,7 +812,7 @@ void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
     glStencilMask(planeMask);
     glStencilFunc(GL_NEVER, 0, planeMask);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
-    ccDrawSolidRect(PointZero, ccpFromSize(Director::sharedDirector()->getWinSize()), Color4F(1, 1, 1, 1));
+    ccDrawSolidRect(PointZero, Point(Director::sharedDirector()->getWinSize()), Color4F(1, 1, 1, 1));
     glStencilFunc(GL_NEVER, planeMask, planeMask);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
     glDisable(GL_DEPTH_TEST);

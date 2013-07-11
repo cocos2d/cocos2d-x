@@ -2477,7 +2477,7 @@ JSBool js_cocos2dx_ccpClamp(JSContext *cx, uint32_t argc, jsval *vp)
 		ok &= jsval_to_ccpoint(cx, argv[2], &arg2);
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         
-		Point ret = ccpClamp(arg0, arg1, arg2);
+		Point ret = arg0.getClampPoint(arg1, arg2);
 		
 		jsval jsret = ccpoint_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);

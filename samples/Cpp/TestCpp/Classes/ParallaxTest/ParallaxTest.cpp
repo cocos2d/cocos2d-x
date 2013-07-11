@@ -139,7 +139,7 @@ void Parallax2::ccTouchesMoved(Set *pTouches, Event *pEvent)
     
     Node* node = getChildByTag(kTagNode);
     Point currentPos = node->getPosition();
-    node->setPosition( ccpAdd(currentPos, diff) );
+    node->setPosition(currentPos + diff);
 }
 
 std::string Parallax2::title()

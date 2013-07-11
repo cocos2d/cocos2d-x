@@ -944,7 +944,7 @@ TMXIsoVertexZ::TMXIsoVertexZ()
     _tamara = layer->tileAt( ccp(29,29) );
     _tamara->retain();
     
-    ActionInterval* move = MoveBy::create(10, ccpMult( ccp(300,250), 1/CC_CONTENT_SCALE_FACTOR() ) );
+    ActionInterval* move = MoveBy::create(10, ccp(300,250) * (1/CC_CONTENT_SCALE_FACTOR()));
     ActionInterval* back = move->reverse();
     Sequence* seq = Sequence::create(move, back,NULL);
     _tamara->runAction( RepeatForever::create(seq) );
@@ -1014,7 +1014,7 @@ TMXOrthoVertexZ::TMXOrthoVertexZ()
     CCLOG("%p vertexZ: %f", _tamara, _tamara->getVertexZ());
     _tamara->retain();
 
-    ActionInterval* move = MoveBy::create(10, ccpMult( ccp(400,450), 1/CC_CONTENT_SCALE_FACTOR()));
+    ActionInterval* move = MoveBy::create(10, ccp(400,450) * (1/CC_CONTENT_SCALE_FACTOR()));
     ActionInterval* back = move->reverse();
     Sequence* seq = Sequence::create(move, back,NULL);
     _tamara->runAction( RepeatForever::create(seq));
@@ -1484,7 +1484,7 @@ void TileDemo::ccTouchesMoved(Set *pTouches, Event *pEvent)
     Point diff = touch->getDelta();
     Node *node = getChildByTag(kTagTileMap);
     Point currentPos = node->getPosition();
-    node->setPosition( ccpAdd(currentPos, diff) );
+    node->setPosition(currentPos + diff);
 }
 
 void TileMapTestScene::runThisTest()

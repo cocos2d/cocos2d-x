@@ -1292,12 +1292,12 @@ Point Node::convertToWorldSpace(const Point& nodePoint)
 Point Node::convertToNodeSpaceAR(const Point& worldPoint)
 {
     Point nodePoint = convertToNodeSpace(worldPoint);
-    return ccpSub(nodePoint, _anchorPointInPoints);
+    return nodePoint - _anchorPointInPoints;
 }
 
 Point Node::convertToWorldSpaceAR(const Point& nodePoint)
 {
-    Point pt = ccpAdd(nodePoint, _anchorPointInPoints);
+    Point pt = nodePoint + _anchorPointInPoints;
     return convertToWorldSpace(pt);
 }
 

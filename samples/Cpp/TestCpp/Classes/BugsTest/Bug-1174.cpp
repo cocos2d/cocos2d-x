@@ -12,13 +12,13 @@ int check_for_error( Point p1, Point p2, Point p3, Point p4, float s, float t )
     //    the hit point is        p3 + t * (p4 - p3);
     //    the hit point also is    p1 + s * (p2 - p1);
     
-    Point p4_p3 = ccpSub( p4, p3);
-    Point p4_p3_t = ccpMult(p4_p3, t);
-    Point hitPoint1 = ccpAdd( p3, p4_p3_t);
+    Point p4_p3 = p4 - p3;
+    Point p4_p3_t = p4_p3 * t;
+    Point hitPoint1 = p3 + p4_p3_t;
     
-    Point p2_p1 = ccpSub( p2, p1);
-    Point p2_p1_s = ccpMult(p2_p1, s);
-    Point hitPoint2 = ccpAdd( p1, p2_p1_s);
+    Point p2_p1 = p2 - p1;
+    Point p2_p1_s = p2_p1 * s;
+    Point hitPoint2 = p1 + p2_p1_s;
     
     // Since float has rounding errors, only check if diff is < 0.05
     if( (fabs( hitPoint1.x - hitPoint2.x) > 0.1f) || ( fabs(hitPoint1.y - hitPoint2.y) > 0.1f) )
@@ -77,7 +77,7 @@ bool Bug1174Layer::init()
             B = ccp(bx,by);
             C = ccp(cx,cy);
             D = ccp(dx,dy);
-            if( ccpLineIntersect( A, D, B, C, &s, &t) ) {
+            if( Point::isLineIntersect( A, D, B, C, &s, &t) ) {
                 if( check_for_error(A, D, B, C, s, t) )
                     err++;
                 else
@@ -97,7 +97,7 @@ bool Bug1174Layer::init()
         p4 = ccp(186,416);
         s = 0.0f;
         t = 0.0f;
-        if( ccpLineIntersect(p1, p2, p3, p4, &s, &t) )
+        if( Point::isLineIntersect(p1, p2, p3, p4, &s, &t) )
             check_for_error(p1, p2, p3, p4, s,t );
 
         CCLog("Test2 - End");
@@ -145,7 +145,7 @@ bool Bug1174Layer::init()
 
             s = 0.0f;
             t = 0.0f;
-            if( ccpLineIntersect(p1, p2, p3, p4, &s, &t) ) {
+            if( Point::isLineIntersect(p1, p2, p3, p4, &s, &t) ) {
                 if( check_for_error(p1, p2, p3, p4, s,t ) )
                     err++;
                 else

@@ -74,7 +74,7 @@ static inline Vertex2F v2fforangle(float _a_)
 
 static inline Vertex2F v2fnormalize(const Vertex2F &p)
 {
-	Point r = ccpNormalize(ccp(p.x, p.y));
+	Point r = ccp(p.x, p.y).normalize();
 	return v2f(r.x, r.y);
 }
 

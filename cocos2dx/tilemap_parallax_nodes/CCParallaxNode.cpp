@@ -119,7 +119,7 @@ Point ParallaxNode::absolutePosition()
     while (cn->getParent() != NULL)
     {
         cn = cn->getParent();
-        ret = ccpAdd( ret,  cn->getPosition());
+        ret = ret + cn->getPosition();
     }
     return ret;
 }

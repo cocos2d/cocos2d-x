@@ -1144,7 +1144,7 @@ void ParticleDemo::ccTouchesEnded(Set *pTouches, Event *pEvent)
 
     if (_emitter != NULL)
     {
-        _emitter->setPosition( ccpSub(location, pos) );    
+        _emitter->setPosition(location - pos);
     }
 }
 
