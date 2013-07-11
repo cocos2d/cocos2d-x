@@ -128,7 +128,6 @@ local function runNotificationCenterTest()
     		
     	local function setIsConnectToSwitch(pLight,bConnect,nIdx)
     		bConnectArray[nIdx]  = bConnect
-    		print("come in")
     		if bConnect then
     			CCNotificationCenter:sharedNotificationCenter():registerScriptObserver(pLight, switchStateChanged,NotificationCenterParam.MSG_SWITCH_STATE)
     		else

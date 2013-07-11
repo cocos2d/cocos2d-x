@@ -88,7 +88,6 @@ void CallFuncHandlerDelegate::callFunc(Node* node)
     }
 }
 
-
 ScriptHandlerMgr* ScriptHandlerMgr::_scriptHandlerMgr = NULL;
 
 ScriptHandlerMgr::ScriptHandlerMgr()
@@ -223,38 +222,6 @@ void ScriptHandlerMgr::unregisterScheduleHandler(ScheduleHandlerDelegate* schedu
     unregisterObjectHandler((void*)scheduleDelegate,kScheduleHandler);
     Director::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(ScheduleHandlerDelegate::scheduleFunc), (Object*)scheduleDelegate);
 }
-
-void ScriptHandlerMgr::registerNotificationHandler(Object* target,int handler,const char* name)
-{
-    if (NotificationCenter::sharedNotificationCenter()->observerExisted(target, name))
-        return;
-    
-    NotificationObserver* observer = new NotificationObserver(target, NULL, name, NULL);
-    if (NULL  == observer)
-        return;
-    observer->autorelease();
-    NotificationCenter::sharedNotificationCenter()->_observers->addObject(observer);
-    
-    registerObjectHandler(observer, handler, kNotificationHandler);
-}
-
-void ScriptHandlerMgr::unregisterNotificationHandler(Object* target,const char* name)
-{
-    Object* obj = NULL;
-    CCARRAY_FOREACH(NotificationCenter::sharedNotificationCenter()->_observers, obj)
-    {
-        NotificationObserver* observer = (NotificationObserver*) obj;
-        if (!observer)
-            continue;
-        
-        if ( !strcmp(observer->getName(),name) && observer->getTarget() == target)
-        {
-            unregisterObjectHandler(observer, kNotificationHandler);
-            NotificationCenter::sharedNotificationCenter()->_observers->removeObject(observer);
-        }
-    }
-}
-
 
 cocos2d::CallFuncN* ScriptHandlerMgr::registerCallFuncHandler(int handler)
 {
@@ -689,78 +656,6 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: registerNotificationHandler of class  ScriptHandlerMgr */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_ScriptHandlerMgr_registerNotificationHandler00
-static int tolua_Cocos2d_ScriptHandlerMgr_registerNotificationHandler00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"ScriptHandlerMgr",0,&tolua_err) ||
-        !tolua_isusertype(tolua_S,2,"CCObject",0,&tolua_err)         ||
-        !toluafix_isfunction(tolua_S, 3, "LUA_FUNCTION", 0, &tolua_err) ||
-        !tolua_isstring(tolua_S,4,0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,5,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-        ScriptHandlerMgr* self = (ScriptHandlerMgr*)  tolua_tousertype(tolua_S,1,0);
-        Object* target = (Object*)  tolua_tousertype(tolua_S,2,0);
-        LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,3,0));
-        const char* name = ((const char*)  tolua_tostring(tolua_S,4,0));
-#ifndef TOLUA_RELEASE
-        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'registerNotificationHandler'", NULL);
-#endif
-        {
-            self->registerNotificationHandler(target,handler,name);
-        }
-    }
-    return 0;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'registerNotificationHandler'.",&tolua_err);
-    return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: unregisterNotificationHandler of class  ScriptHandlerMgr */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_ScriptHandlerMgr_unregisterNotificationHandler00
-static int tolua_Cocos2d_ScriptHandlerMgr_unregisterNotificationHandler00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"ScriptHandlerMgr",0,&tolua_err) ||
-        !tolua_isusertype(tolua_S,2,"CCObject",0,&tolua_err) ||
-        !tolua_isstring(tolua_S,3,0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,4,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-        ScriptHandlerMgr* self = (ScriptHandlerMgr*)  tolua_tousertype(tolua_S,1,0);
-        Object* target = (Object*)  tolua_tousertype(tolua_S,2,0);
-        const char* name = ((const char*)  tolua_tostring(tolua_S,3,0));
-#ifndef TOLUA_RELEASE
-        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'unregisterNotificationHandler'", NULL);
-#endif
-        {
-            self->unregisterNotificationHandler(target,name);
-        }
-    }
-    return 0;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'unregisterNotificationHandler'.",&tolua_err);
-    return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* method: registerCallFuncHandler of class  ScriptHandlerMgr */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_ScriptHandlerMgr_registerCallFuncHandler00
 static int tolua_Cocos2d_ScriptHandlerMgr_registerCallFuncHandler00(lua_State* tolua_S)
@@ -823,7 +718,7 @@ static int tolua_Cocos2d_ScriptHandlerMgr_registerTouchesHandler00(lua_State* to
         int objectType = ((int)  tolua_tonumber(tolua_S,3,0));
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,4,0));
         bool isMultiTouches = ((bool)  tolua_toboolean(tolua_S,5,false));
-        int priority = ((int)  tolua_tonumber(tolua_S,6,INT_MIN));
+        int priority = ((int)  tolua_tonumber(tolua_S,6,0));
         bool swallowsTouches = ((bool)  tolua_toboolean(tolua_S,7,false));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'registerTouchesHandler'", NULL);
@@ -1284,6 +1179,8 @@ TOLUA_API int tolua_script_handler_mgr_open(lua_State* tolua_S)
     tolua_reg_script_handler_mgr_type(tolua_S);
     tolua_module(tolua_S, NULL,0);
     tolua_beginmodule(tolua_S, NULL);
+      tolua_constant(tolua_S, "kLayerTouches", kLayerTouches);
+      tolua_constant(tolua_S, "kLayerKeypad", kLayerKeypad);
       tolua_cclass(tolua_S, "ScheduleHandlerDelegate", "ScheduleHandlerDelegate", "CCObject", tolua_collect_ScheduleHandlerDelegate);
       tolua_beginmodule(tolua_S, "ScheduleHandlerDelegate");
         tolua_function(tolua_S, "create", tolua_Cocos2d_ScheduleHandlerDelegate_create00);
@@ -1299,8 +1196,6 @@ TOLUA_API int tolua_script_handler_mgr_open(lua_State* tolua_S)
         tolua_function(tolua_S,"getInstance",tolua_Cocos2d_ScriptHandlerMgr_getInstance00);
         tolua_function(tolua_S,"registerObjectHandler",tolua_Cocos2d_ScriptHandlerMgr_registerObjectHandler00);
         tolua_function(tolua_S,"unregisterObjectHandler",tolua_Cocos2d_ScriptHandlerMgr_unregisterObjectHandler00);
-        tolua_function(tolua_S,"registerNotificationHandler",tolua_Cocos2d_ScriptHandlerMgr_registerNotificationHandler00);
-        tolua_function(tolua_S,"unregisterNotificationHandler",tolua_Cocos2d_ScriptHandlerMgr_unregisterNotificationHandler00);
         tolua_function(tolua_S,"registerCallFuncHandler",tolua_Cocos2d_ScriptHandlerMgr_registerCallFuncHandler00);
         tolua_function(tolua_S,"registerTouchesHandler",tolua_Cocos2d_ScriptHandlerMgr_registerTouchesHandler00);
         tolua_function(tolua_S,"registerKeypadHandler",tolua_Cocos2d_ScriptHandlerMgr_registerKeypadHandler00);

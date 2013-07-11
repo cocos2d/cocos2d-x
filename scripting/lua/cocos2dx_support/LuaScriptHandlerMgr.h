@@ -75,10 +75,8 @@ public:
     int  getObjecHandlerByEvent(void* object,int eventType);
     void unregisterObjectAllHandlers(void* object);
         
-    void registerNotificationHandler(cocos2d::Object* target,int handler,const char* name);
-    void unregisterNotificationHandler(cocos2d::Object* target,const char* name);
     cocos2d::CallFuncN* registerCallFuncHandler(int handler);
-    void registerTouchesHandler(void* object,int objectType,int handler,bool isMultiTouches = false,int priority = INT_MIN,bool swallowsTouches = false);
+    void registerTouchesHandler(void* object,int objectType,int handler,bool isMultiTouches = false,int priority = 0,bool swallowsTouches = false);
     void registerKeypadHandler(void* object,int objectType,int handler);
     
     ScheduleHandlerDelegate* registerScheduleHandler(int handler,float interval = 0.0f, unsigned int repeat = kRepeatForever, float delay = 0.0f, bool paused = false);
