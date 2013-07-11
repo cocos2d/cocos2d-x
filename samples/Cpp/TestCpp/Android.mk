@@ -66,6 +66,7 @@ Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp \
 Classes/ExtensionsTest/EditBoxTest/EditBoxTest.cpp \
 Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp \
 Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp \
+Classes/ExtensionsTest/Scale9SpriteTest/Scale9SpriteTest.cpp \
 Classes/FontTest/FontTest.cpp \
 Classes/IntervalTest/IntervalTest.cpp \
 Classes/KeypadTest/KeypadTest.cpp \
