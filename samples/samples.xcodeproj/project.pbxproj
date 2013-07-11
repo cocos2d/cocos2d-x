@@ -244,6 +244,8 @@
 		1A9F808D177E98A600D9A1CB /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F808C177E98A600D9A1CB /* libcurl.dylib */; };
 		1AC070BE1782721D00FE5C7A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A035AEDB1782564100987F6C /* MainMenu.xib */; };
 		1AC070BF1782721D00FE5C7A /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A035AEE21782564100987F6C /* Icon.icns */; };
+		1ACD13F3178E487D00682DBD /* Scale9SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD13F1178E487D00682DBD /* Scale9SpriteTest.cpp */; };
+		1ACD13F4178E487D00682DBD /* Scale9SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD13F1178E487D00682DBD /* Scale9SpriteTest.cpp */; };
 		A01E166C1784BDA100B0CA4A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = A035ADEA178254FF00987F6C /* .gitignore */; };
 		A01E166D1784BDA100B0CA4A /* app.config.txt in Resources */ = {isa = PBXBuildFile; fileRef = A035ADEB178254FF00987F6C /* app.config.txt */; };
 		A01E166E1784BDA100B0CA4A /* app.icf in Resources */ = {isa = PBXBuildFile; fileRef = A035ADEC178254FF00987F6C /* app.icf */; };
@@ -2364,6 +2366,8 @@
 		1A6FB7DE1785628900CDF010 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Lua/TestLua/proj.mac/main.m; sourceTree = "<group>"; };
 		1A6FB7E11785629800CDF010 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = Lua/TestLua/proj.mac/AppController.h; sourceTree = "<group>"; };
 		1A9F808C177E98A600D9A1CB /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
+		1ACD13F1178E487D00682DBD /* Scale9SpriteTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scale9SpriteTest.cpp; sourceTree = "<group>"; };
+		1ACD13F2178E487D00682DBD /* Scale9SpriteTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scale9SpriteTest.h; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* Test cpp Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test cpp Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A01E16931784BDA100B0CA4A /* Simple Game iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simple Game iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A01E16A11784BF3000B0CA4A /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
@@ -3688,6 +3692,15 @@
 			path = Lua/TestLua/proj.mac/en.lproj;
 			sourceTree = "<group>";
 		};
+		1ACD13F0178E487D00682DBD /* Scale9SpriteTest */ = {
+			isa = PBXGroup;
+			children = (
+				1ACD13F1178E487D00682DBD /* Scale9SpriteTest.cpp */,
+				1ACD13F2178E487D00682DBD /* Scale9SpriteTest.h */,
+			);
+			path = Scale9SpriteTest;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
@@ -4199,6 +4212,7 @@
 				A0359A2817821D9B00987F6C /* ExtensionsTest.h */,
 				A0359A2917821D9B00987F6C /* NetworkTest */,
 				A0359A2E17821D9B00987F6C /* NotificationCenterTest */,
+				1ACD13F0178E487D00682DBD /* Scale9SpriteTest */,
 				A0359A3117821D9B00987F6C /* TableViewTest */,
 			);
 			path = ExtensionsTest;
@@ -6908,6 +6922,7 @@
 				A0359B0A17821D9C00987F6C /* ZwoptexTest.cpp in Sources */,
 				A07A525C1783A3D90073F6A7 /* AppController.mm in Sources */,
 				A07A52601783A3D90073F6A7 /* main.m in Sources */,
+				1ACD13F3178E487D00682DBD /* Scale9SpriteTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7183,6 +7198,7 @@
 				A07A52431783A3A90073F6A7 /* RootViewController.mm in Sources */,
 				A07A52441783A3A90073F6A7 /* testsAppDelegate.mm in Sources */,
 				A07A524C1783A3A90073F6A7 /* main.m in Sources */,
+				1ACD13F4178E487D00682DBD /* Scale9SpriteTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
