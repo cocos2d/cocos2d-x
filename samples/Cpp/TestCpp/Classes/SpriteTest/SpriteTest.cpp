@@ -276,7 +276,7 @@ SpriteBatchNode1::SpriteBatchNode1()
 
 void SpriteBatchNode1::addNewSpriteWithCoords(Point p)
 {
-    SpriteBatchNode* BatchNode = (SpriteBatchNode*) getChildByTag( kTagSpriteBatchNode );
+    SpriteBatchNode* BatchNode = static_cast<SpriteBatchNode*>( getChildByTag(kTagSpriteBatchNode) );
     
     int idx = CCRANDOM_0_1() * 1400 / 100;
     int x = (idx%5) * 85;
@@ -392,7 +392,7 @@ SpriteColorOpacity::SpriteColorOpacity()
 //   color array and vertex array should be reindexed
 void SpriteColorOpacity::removeAndAddSprite(float dt)
 {
-    Sprite* sprite = (Sprite*)(getChildByTag(kTagSprite5));    
+    Sprite* sprite = static_cast<Sprite*>( getChildByTag(kTagSprite5) );
     sprite->retain();
     
     removeChild(sprite, false);
@@ -480,8 +480,8 @@ SpriteBatchNodeColorOpacity::SpriteBatchNodeColorOpacity()
 //   color array and vertex array should be reindexed
 void SpriteBatchNodeColorOpacity::removeAndAddSprite(float dt)
 {
-    SpriteBatchNode* batch= (SpriteBatchNode*)(getChildByTag( kTagSpriteBatchNode ));
-    Sprite* sprite = (Sprite*)(batch->getChildByTag(kTagSprite5));
+    SpriteBatchNode* batch= static_cast<SpriteBatchNode*>( getChildByTag(kTagSpriteBatchNode) );
+    Sprite* sprite = static_cast<Sprite*>( batch->getChildByTag(kTagSprite5) );
     
     sprite->retain();
 
@@ -527,14 +527,14 @@ SpriteZOrder::SpriteZOrder()
     addChild(sprite, -1, kTagSprite1);
     sprite->setPosition( ccp(s.width/2, s.height/2 - 20) );
     sprite->setScaleX( 6 );
-    sprite->setColor(Color3B::red);
+    sprite->setColor(Color3B::RED);
     
     schedule( schedule_selector(SpriteZOrder::reorderSprite), 1);        
 }
 
 void SpriteZOrder::reorderSprite(float dt)
 {
-    Sprite* sprite = (Sprite*)(getChildByTag(kTagSprite1));
+    Sprite* sprite = static_cast<Sprite*>( getChildByTag(kTagSprite1) );
     
     int z = sprite->getZOrder();
     
@@ -590,15 +590,15 @@ SpriteBatchNodeZOrder::SpriteBatchNodeZOrder()
     batch->addChild(sprite, -1, kTagSprite1);
     sprite->setPosition( ccp(s.width/2, s.height/2 - 20) );
     sprite->setScaleX( 6 );
-    sprite->setColor(Color3B::red);
+    sprite->setColor(Color3B::RED);
     
     schedule( schedule_selector(SpriteBatchNodeZOrder::reorderSprite), 1);        
 }
 
 void SpriteBatchNodeZOrder::reorderSprite(float dt)
 {
-    SpriteBatchNode* batch= (SpriteBatchNode*)(getChildByTag( kTagSpriteBatchNode ));
-    Sprite* sprite = (Sprite*)(batch->getChildByTag(kTagSprite1));
+    SpriteBatchNode* batch= static_cast<SpriteBatchNode*>( getChildByTag( kTagSpriteBatchNode ));
+    Sprite* sprite = static_cast<Sprite*>(batch->getChildByTag(kTagSprite1));
     
     int z = sprite->getZOrder();
     
@@ -639,7 +639,7 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
     {
         if(i!=5)
         {
-            asmtest->reorderChild( (Node*)(a->objectAtIndex(i)), 9 );
+            asmtest->reorderChild( static_cast<Node*>(a->objectAtIndex(i)), 9 );
         }
     }
     
@@ -649,7 +649,7 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
     Object* pObject = NULL;
     CCARRAY_FOREACH(children, pObject)
     {
-        child = (Sprite*)pObject;
+        child = static_cast<Sprite*>(pObject);
         if(! child )
             break;
 
@@ -663,7 +663,7 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
     Array* sChildren = asmtest->getDescendants();
     CCARRAY_FOREACH(sChildren, pObject)
     {
-        child = (Sprite*)pObject;
+        child = static_cast<Sprite*>(pObject);
         if(! child )
             break;
 
@@ -851,10 +851,10 @@ std::string SpriteBatchNodeReorderIssue767::subtitle()
 
 void SpriteBatchNodeReorderIssue767::reorderSprites(float dt)
 {
-    SpriteBatchNode* spritebatch = (SpriteBatchNode*)getChildByTag(kTagSprite1);
-    Sprite *father = (Sprite*)spritebatch->getChildByTag(kTagSprite2);
-    Sprite *left = (Sprite*)father->getChildByTag(kTagSpriteLeft);
-    Sprite *right = (Sprite*)father->getChildByTag(kTagSpriteRight);
+    SpriteBatchNode* spritebatch = static_cast<SpriteBatchNode*>( getChildByTag(kTagSprite1) );
+    Sprite *father = static_cast<Sprite*>( spritebatch->getChildByTag(kTagSprite2) );
+    Sprite *left = static_cast<Sprite*>( father->getChildByTag(kTagSpriteLeft) );
+    Sprite *right = static_cast<Sprite*>( father->getChildByTag(kTagSpriteRight) );
 
     int newZLeft = 1;
 
@@ -1209,8 +1209,8 @@ SpriteFlip::SpriteFlip()
 
 void SpriteFlip::flipSprites(float dt)
 {
-    Sprite* sprite1 = (Sprite*)(getChildByTag(kTagSprite1));
-    Sprite* sprite2 = (Sprite*)(getChildByTag(kTagSprite2));
+    Sprite* sprite1 = static_cast<Sprite*>(getChildByTag(kTagSprite1));
+    Sprite* sprite2 = static_cast<Sprite*>(getChildByTag(kTagSprite2));
     
     bool x = sprite1->isFlipX();
     bool y = sprite2->isFlipY();
@@ -1251,9 +1251,9 @@ SpriteBatchNodeFlip::SpriteBatchNodeFlip()
 
 void SpriteBatchNodeFlip::flipSprites(float dt)
 {
-    SpriteBatchNode* batch= (SpriteBatchNode*)(getChildByTag( kTagSpriteBatchNode ));
-    Sprite* sprite1 = (Sprite*)(batch->getChildByTag(kTagSprite1));
-    Sprite* sprite2 = (Sprite*)(batch->getChildByTag(kTagSprite2));
+    SpriteBatchNode* batch= static_cast<SpriteBatchNode*>(getChildByTag( kTagSpriteBatchNode ));
+    Sprite* sprite1 = static_cast<Sprite*>(batch->getChildByTag(kTagSprite1));
+    Sprite* sprite2 = static_cast<Sprite*>(batch->getChildByTag(kTagSprite2));
     
     bool x = sprite1->isFlipX();
     bool y = sprite2->isFlipY();
@@ -1308,14 +1308,14 @@ void SpriteAliased::onEnter()
     // This change will affect every sprite that uses the same texture
     // So sprite1 and sprite2 will be affected by this change
     //
-    Sprite* sprite = (Sprite*)getChildByTag(kTagSprite1);
+    Sprite* sprite = static_cast<Sprite*>( getChildByTag(kTagSprite1) );
     sprite->getTexture()->setAliasTexParameters();
 }
 
 void SpriteAliased::onExit()
 {
     // restore the tex parameter to AntiAliased.
-    Sprite* sprite = (Sprite*)getChildByTag(kTagSprite1);
+    Sprite* sprite = static_cast<Sprite*>( getChildByTag(kTagSprite1) );
     sprite->getTexture()->setAntiAliasTexParameters();
     SpriteTestDemo::onExit();
 }
@@ -1360,14 +1360,14 @@ SpriteBatchNodeAliased::SpriteBatchNodeAliased()
 void SpriteBatchNodeAliased::onEnter()
 {
     SpriteTestDemo::onEnter();
-    SpriteBatchNode* batch = (SpriteBatchNode*) getChildByTag( kTagSpriteBatchNode );
+    SpriteBatchNode* batch = static_cast<SpriteBatchNode*>( getChildByTag(kTagSpriteBatchNode) );
     batch->getTexture()->setAliasTexParameters();
 }
 
 void SpriteBatchNodeAliased::onExit()
 {
     // restore the tex parameter to AntiAliased.
-    SpriteBatchNode* batch = (SpriteBatchNode*) getChildByTag( kTagSpriteBatchNode );
+    SpriteBatchNode* batch = static_cast<SpriteBatchNode*>( getChildByTag(kTagSpriteBatchNode) );
     batch->getTexture()->setAntiAliasTexParameters();
     SpriteTestDemo::onExit();
 }
@@ -1457,7 +1457,7 @@ void SpriteNewTexture::ccTouchesEnded(Set* touches, Event* event)
     {
         CCARRAY_FOREACH(children, pObject)
         {
-            sprite = (Sprite*)pObject;
+            sprite = static_cast<Sprite*>( pObject );
             if(! sprite)
                 break;
 
@@ -1470,7 +1470,7 @@ void SpriteNewTexture::ccTouchesEnded(Set* touches, Event* event)
     {
         CCARRAY_FOREACH(children, pObject)
         {
-            sprite = (Sprite*)pObject;
+            sprite = static_cast<Sprite*>( pObject );
             if(! sprite)
                 break;
 
@@ -1519,7 +1519,7 @@ void SpriteBatchNodeNewTexture::addNewSprite()
     
     Point p = ccp( CCRANDOM_0_1() * s.width, CCRANDOM_0_1() * s.height);
     
-    SpriteBatchNode* batch = (SpriteBatchNode*) getChildByTag( kTagSpriteBatchNode );
+    SpriteBatchNode* batch = static_cast<SpriteBatchNode*>( getChildByTag( kTagSpriteBatchNode ) );
     
     int idx = CCRANDOM_0_1() * 1400 / 100;
     int x = (idx%5) * 85;
@@ -1552,7 +1552,7 @@ void SpriteBatchNodeNewTexture::addNewSprite()
 
 void SpriteBatchNodeNewTexture::ccTouchesEnded(Set* touches, Event* event)
 {
-    SpriteBatchNode* batch = (SpriteBatchNode*) getChildByTag( kTagSpriteBatchNode );
+    SpriteBatchNode* batch = static_cast<SpriteBatchNode*>( getChildByTag( kTagSpriteBatchNode) );
     
     if( batch->getTexture() == _texture1 )
         batch->setTexture(_texture2);
@@ -2212,7 +2212,7 @@ void SpriteHybrid::reparentSprite(float dt)
     Array* children = p1->getChildren();
     CCARRAY_FOREACH(children, pObject)
     {
-        node = (Node*)pObject;
+        node = static_cast<Node*>( pObject );
         if(! node )
             break;
 
@@ -2224,7 +2224,7 @@ void SpriteHybrid::reparentSprite(float dt)
 
     CCARRAY_FOREACH(retArray, pObject)
     {
-        node = (Node*)pObject;
+        node = static_cast<Node*>( pObject );
         if(! node)
             break;
 
@@ -3133,9 +3133,9 @@ SpriteSkewNegativeScaleChildren::SpriteSkewNegativeScaleChildren()
 
         // Skew
         SkewBy* skewX = SkewBy::create(2, 45, 0);
-        SkewBy* skewX_back = (SkewBy*)skewX->reverse();
+        SkewBy* skewX_back = skewX->reverse();
         SkewBy* skewY = SkewBy::create(2, 0, 45);
-        SkewBy* skewY_back = (SkewBy*)skewY->reverse();
+        SkewBy* skewY_back = skewY->reverse();
 
         if(i == 1)
         {
@@ -3190,7 +3190,7 @@ SpriteNilTexture::SpriteNilTexture()
     sprite = new Sprite();
     sprite->init();
     sprite->setTextureRect( CCRectMake(0, 0, 300,300) );
-    sprite->setColor(Color3B::red);
+    sprite->setColor(Color3B::RED);
     sprite->setOpacity(128);
     sprite->setPosition(ccp(3*s.width/4, s.height/2));
     addChild(sprite, 100);
@@ -3199,7 +3199,7 @@ SpriteNilTexture::SpriteNilTexture()
     sprite = new Sprite();
     sprite->init();
     sprite->setTextureRect(CCRectMake(0, 0, 300,300));
-    sprite->setColor(Color3B::blue);
+    sprite->setColor(Color3B::BLUE);
     sprite->setOpacity(128);
     sprite->setPosition(ccp(1*s.width/4, s.height/2));
     addChild(sprite, 100);
@@ -3388,7 +3388,7 @@ SpriteDoubleResolution::SpriteDoubleResolution()
 
     // Actions
     ScaleBy* scale = ScaleBy::create(2, 0.5);
-    ScaleBy* scale_back = (ScaleBy*)scale->reverse();
+    ScaleBy* scale_back = scale->reverse();
     Sequence* seq = Sequence::create(scale, scale_back, NULL);
 
     Sequence* seq_copy = seq->clone();
@@ -4144,17 +4144,17 @@ void NodeSort::reorderSprite(float dt)
     Object* pObj = NULL;
     CCARRAY_FOREACH(_node->getChildren(), pObj)
     {
-        Sprite *child = (Sprite*)pObj;
+        Sprite *child = static_cast<Sprite*>( pObj );
         CCLog("tag %i z %i",(int)child->getTag(),(int)child->getZOrder());
     }
     //z-4
-    _node->reorderChild((Node *)_node->getChildren()->objectAtIndex(0), -6);
+    _node->reorderChild( static_cast<Node*>( _node->getChildren()->objectAtIndex(0) ), -6);
 
     _node->sortAllChildren();
     CCLog("After reorder--");
     CCARRAY_FOREACH(_node->getChildren(), pObj)
     {
-        Sprite *child = (Sprite*)pObj;
+        Sprite *child = static_cast<Sprite*>( pObj );
         CCLog("tag %i z %i",(int)child->getTag(),(int)child->getZOrder());
     }
 }
@@ -4209,7 +4209,7 @@ void SpriteBatchNodeReorderSameIndex::reorderSprite(float dt)
     Object *child;
     CCARRAY_FOREACH(_batchNode->getDescendants(), child)
     {
-        CCLog("tag %i", (int)((Sprite *)child)->getTag());
+        CCLog("tag %i", (int)( static_cast<Node*>(child)->getTag()) );
     }    
 }
 
@@ -4351,9 +4351,9 @@ SpriteOffsetAnchorRotationalSkew::SpriteOffsetAnchorRotationalSkew()
         sprite->runAction(RepeatForever::create(Animate::create(animation)));
         
         RotateBy *skewX = RotateBy::create(2, 45, 0);
-        RotateBy *skewX_back = (RotateBy*)skewX->reverse();
+        RotateBy *skewX_back = skewX->reverse();
         RotateBy *skewY = RotateBy::create(2, 0, 45);
-        RotateBy *skewY_back = (RotateBy*)skewY->reverse();
+        RotateBy *skewY_back = skewY->reverse();
         
         Sequence *seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
         sprite->runAction(RepeatForever::create(seq_skew));
@@ -4427,9 +4427,9 @@ SpriteBatchNodeOffsetAnchorRotationalSkew::SpriteBatchNodeOffsetAnchorRotational
         sprite->runAction(RepeatForever::create(Animate::create(animation)));
         
         RotateBy *skewX = RotateBy::create(2, 45, 0);
-        RotateBy *skewX_back = (RotateBy*)skewX->reverse();
+        RotateBy *skewX_back = skewX->reverse();
         RotateBy *skewY = RotateBy::create(2, 0, 45);
-        RotateBy *skewY_back = (RotateBy*)skewY->reverse();
+        RotateBy *skewY_back = skewY->reverse();
         
         Sequence *seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
         sprite->runAction(RepeatForever::create(seq_skew));
@@ -4501,16 +4501,16 @@ SpriteOffsetAnchorRotationalSkewScale::SpriteOffsetAnchorRotationalSkewScale()
         
         // Skew
         RotateBy *skewX = RotateBy::create(2, 45, 0);
-        RotateBy *skewX_back = (RotateBy*)skewX->reverse();
+        RotateBy *skewX_back = skewX->reverse();
         RotateBy *skewY = RotateBy::create(2, 0, 45);
-        RotateBy *skewY_back = (RotateBy*)skewY->reverse();
+        RotateBy *skewY_back = skewY->reverse();
         
         Sequence *seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
         sprite->runAction(RepeatForever::create(seq_skew));
         
         // Scale
         ScaleBy *scale = ScaleBy::create(2, 2);
-        ScaleBy *scale_back = (ScaleBy *)scale->reverse();
+        ScaleBy *scale_back = scale->reverse();
         Sequence *seq_scale = Sequence::create(scale, scale_back, NULL);
         sprite->runAction(RepeatForever::create(seq_scale));
         
@@ -4584,16 +4584,16 @@ SpriteBatchNodeOffsetAnchorRotationalSkewScale::SpriteBatchNodeOffsetAnchorRotat
         
         // Skew
         RotateBy *skewX = RotateBy::create(2, 45, 0);
-        RotateBy *skewX_back = (RotateBy*)skewX->reverse();
+        RotateBy *skewX_back = skewX->reverse();
         RotateBy *skewY = RotateBy::create(2, 0, 45);
-        RotateBy *skewY_back = (RotateBy*)skewY->reverse();
+        RotateBy *skewY_back = skewY->reverse();
         
         Sequence *seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
         sprite->runAction(RepeatForever::create(seq_skew));
         
         // Scale
         ScaleBy *scale = ScaleBy::create(2, 2);
-        ScaleBy *scale_back = (ScaleBy *)scale->reverse();
+        ScaleBy *scale_back = scale->reverse();
         Sequence *seq_scale = Sequence::create(scale, scale_back, NULL);
         sprite->runAction(RepeatForever::create(seq_scale));
         
@@ -4641,9 +4641,9 @@ SpriteRotationalSkewNegativeScaleChildren::SpriteRotationalSkewNegativeScaleChil
         
         // Skew
         RotateBy *skewX = RotateBy::create(2, 45, 0);
-        RotateBy *skewX_back = (RotateBy*)skewX->reverse();
+        RotateBy *skewX_back = skewX->reverse();
         RotateBy *skewY = RotateBy::create(2, 0, 45);
-        RotateBy *skewY_back = (RotateBy*)skewY->reverse();
+        RotateBy *skewY_back = skewY->reverse();
         
         if (1 == 1)
         {
@@ -4704,9 +4704,9 @@ SpriteBatchNodeRotationalSkewNegativeScaleChildren::SpriteBatchNodeRotationalSke
         
         // Skew
         RotateBy *skewX = RotateBy::create(2, 45, 0);
-        RotateBy *skewX_back = (RotateBy*)skewX->reverse();
+        RotateBy *skewX_back = skewX->reverse();
         RotateBy *skewY = RotateBy::create(2, 0, 45);
-        RotateBy *skewY_back = (RotateBy*)skewY->reverse();
+        RotateBy *skewY_back = skewY->reverse();
         
         if (1 == 1)
         {

@@ -69,7 +69,6 @@ THE SOFTWARE.
 #include "cocoa/CCBool.h"
 #include "cocoa/CCString.h"
 #include "cocoa/CCNS.h"
-#include "cocoa/CCZone.h"
 #include "cocoa/CCData.h"
 
 // draw nodes

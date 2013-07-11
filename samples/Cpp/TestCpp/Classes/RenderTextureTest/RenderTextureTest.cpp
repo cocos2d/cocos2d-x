@@ -109,7 +109,7 @@ RenderTextureSave::RenderTextureSave()
     // create a brush image to draw into the texture with
     _brush = Sprite::create("Images/fire.png");
     _brush->retain();
-    _brush->setColor(Color3B::red);
+    _brush->setColor(Color3B::RED);
     _brush->setOpacity(20);
     this->setTouchEnabled(true);
 
@@ -178,7 +178,7 @@ RenderTextureSave::~RenderTextureSave()
 
 void RenderTextureSave::ccTouchesMoved(Set* touches, Event* event)
 {
-    Touch *touch = (Touch *)touches->anyObject();
+    Touch *touch = static_cast<Touch*>( touches->anyObject() );
     Point start = touch->getLocation();
     Point end = touch->getPreviousLocation();
 
@@ -348,7 +348,7 @@ RenderTextureZbuffer::RenderTextureZbuffer()
     sp9->setVertexZ(-400);
 
     sp9->setScale(2);
-    sp9->setColor(Color3B::yellow);
+    sp9->setColor(Color3B::YELLOW);
 }
 
 string RenderTextureZbuffer::title()
@@ -425,7 +425,7 @@ void RenderTextureZbuffer::renderScreenShot()
     sprite->setOpacity(182);
     sprite->setFlipY(1);
     this->addChild(sprite, 999999);
-    sprite->setColor(Color3B::green);
+    sprite->setColor(Color3B::GREEN);
 
     sprite->runAction(Sequence::create(FadeTo::create(2, 0),
                                           Hide::create(),

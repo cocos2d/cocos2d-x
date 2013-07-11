@@ -103,9 +103,9 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(Dictionary* dictionary, Tex
     DictElement* pElement = NULL;
     CCDICT_FOREACH(framesDict, pElement)
     {
-        Dictionary* frameDict = (Dictionary*)pElement->getObject();
+        Dictionary* frameDict = static_cast<Dictionary*>(pElement->getObject());
         std::string spriteFrameName = pElement->getStrKey();
-        SpriteFrame* spriteFrame = (SpriteFrame*)_spriteFrames->objectForKey(spriteFrameName);
+        SpriteFrame* spriteFrame = static_cast<SpriteFrame*>(_spriteFrames->objectForKey(spriteFrameName));
         if (spriteFrame)
         {
             continue;
@@ -177,7 +177,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(Dictionary* dictionary, Tex
             Object* pObj = NULL;
             CCARRAY_FOREACH(aliases, pObj)
             {
-                std::string oneAlias = ((String*)pObj)->getCString();
+                std::string oneAlias = static_cast<String*>(pObj)->getCString();
                 if (_spriteFramesAliases->objectForKey(oneAlias.c_str()))
                 {
                     CCLOGWARN("cocos2d: WARNING: an alias with name %s already exists", oneAlias.c_str());
@@ -299,7 +299,7 @@ void SpriteFrameCache::removeUnusedSpriteFrames(void)
     DictElement* pElement = NULL;
     CCDICT_FOREACH(_spriteFrames, pElement)
     {
-        SpriteFrame* spriteFrame = (SpriteFrame*)pElement->getObject();
+        SpriteFrame* spriteFrame = static_cast<SpriteFrame*>(pElement->getObject());
         if( spriteFrame->retainCount() == 1 ) 
         {
             CCLOG("cocos2d: SpriteFrameCache: removing unused frame: %s", pElement->getStrKey());
@@ -360,7 +360,7 @@ void SpriteFrameCache::removeSpriteFramesFromFile(const char* plist)
 
 void SpriteFrameCache::removeSpriteFramesFromDictionary(Dictionary* dictionary)
 {
-    Dictionary* framesDict = (Dictionary*)dictionary->objectForKey("frames");
+    Dictionary* framesDict = static_cast<Dictionary*>(dictionary->objectForKey("frames"));
     Array* keysToRemove = Array::create();
 
     DictElement* pElement = NULL;
@@ -383,7 +383,7 @@ void SpriteFrameCache::removeSpriteFramesFromTexture(Texture2D* texture)
     CCDICT_FOREACH(_spriteFrames, pElement)
     {
         string key = pElement->getStrKey();
-        SpriteFrame* frame = (SpriteFrame*)_spriteFrames->objectForKey(key.c_str());
+        SpriteFrame* frame = static_cast<SpriteFrame*>(_spriteFrames->objectForKey(key.c_str()));
         if (frame && (frame->getTexture() == texture))
         {
             keysToRemove->addObject(String::create(pElement->getStrKey()));

@@ -57,7 +57,7 @@ class CC_DLL AnimationFrame : public Object, public Clonable
 public:
     AnimationFrame();
     virtual ~AnimationFrame();
-    virtual Object* copyWithZone(Zone* pZone);
+
     /** initializes the animation frame with a spriteframe, number of delay units and a notification user info */
     bool initWithSpriteFrame(SpriteFrame* spriteFrame, float delayUnits, Dictionary* userInfo);
 
@@ -141,8 +141,6 @@ public:
 
 	/** returns a clone fo the animation */
 	virtual Animation *clone() const;
-
-    virtual Object* copyWithZone(Zone* pZone);
 
     /** total Delay units of the Animation. */
     CC_SYNTHESIZE_READONLY(float, _totalDelayUnits, TotalDelayUnits)

@@ -49,10 +49,10 @@ Dictionary* TMXObjectGroup::objectNamed(const char *objectName)
 {
     if (_objects && _objects->count() > 0)
     {
-        Object* pObj = NULL;
+        Object* pObj = nullptr;
         CCARRAY_FOREACH(_objects, pObj)
         {
-            Dictionary* pDict = (Dictionary*)pObj;
+            Dictionary* pDict = static_cast<Dictionary*>(pObj);
             String *name = (String*)pDict->objectForKey("name");
             if (name && name->_string == objectName)
             {

@@ -70,6 +70,7 @@ Developers:
         Refactoring network extension and fixing unlikely memory leaks.
         Adding PUT/DELETE methods for CCHttpRequest.
         Adding project part for QtCreator.
+        Implemented pitch, pan and gain
 
     savdalion 
         Added example for russian language in TestCpp
@@ -127,6 +128,7 @@ Developers:
 
     tks2shimizu
         add CCFloat, CCDouble and CCBool
+        Add append function for String class
 
     chenium
         fix a bug that CCRenderTexture can not work when coming to foreground on Android
@@ -408,6 +410,7 @@ Developers:
     Éloi Rivard (azmeuk)
         Linux OpenAL support.
         Added some guards to prevent Eclipse to compile twice the same class.
+        Linux Eclipse projects updates
 
     elmiro
         Correction of passed buffer size to readlink and verification of result return by readlink.
@@ -508,6 +511,9 @@ Developers:
         
     xxuejie
         Add namespace prefix to selector macros
+        
+    hannon235 (Chris)
+        Fixing a bug that the submenu of ExtensionTest in TestCpp can't scroll.
 
 Retired Core Developers:
     WenSheng Yang

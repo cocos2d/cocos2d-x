@@ -84,7 +84,7 @@ void ArmatureAnimation:: pause()
     Object *object = NULL;
     CCARRAY_FOREACH(_tweenList, object)
     {
-        ((Tween *)object)->pause();
+        static_cast<Tween *>(object)->pause();
     }
     ProcessBase::pause();
 }
@@ -94,7 +94,7 @@ void ArmatureAnimation::resume()
     Object *object = NULL;
     CCARRAY_FOREACH(_tweenList, object)
     {
-        ((Tween *)object)->resume();
+        static_cast<Tween *>(object)->resume();
     }
     ProcessBase::resume();
 }
@@ -104,7 +104,7 @@ void ArmatureAnimation::stop()
     Object *object = NULL;
     CCARRAY_FOREACH(_tweenList, object)
     {
-        ((Tween *)object)->stop();
+        static_cast<Tween *>(object)->stop();
     }
     _tweenList->removeAllObjects();
     ProcessBase::stop();
@@ -237,7 +237,7 @@ void ArmatureAnimation::update(float dt)
     Object *object = NULL;
     CCARRAY_FOREACH(_tweenList, object)
     {
-        ((Tween *)object)->update(dt);
+        static_cast<Tween *>(object)->update(dt);
     }
 }
 

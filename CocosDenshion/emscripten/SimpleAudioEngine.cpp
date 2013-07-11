@@ -215,7 +215,8 @@ namespace CocosDenshion
         s_effectsVolume = volume;
 	}
 
-	unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
+	unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop,
+                                               float pitch, float pan, float gain)
 	{
         std::string key = std::string(pszFilePath);
         struct soundData *sound;

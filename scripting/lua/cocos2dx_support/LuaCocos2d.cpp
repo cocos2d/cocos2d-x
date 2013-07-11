@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Mon Jul  8 11:21:00 2013.
+** Generated automatically by tolua++-1.0.92 on Mon Jul  8 23:09:26 2013.
 */
 
 /****************************************************************************
@@ -4456,40 +4456,6 @@ static int tolua_Cocos2d_CCObject_isEqual00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'isEqual'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: copy of class  Object */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCObject_copy00
-static int tolua_Cocos2d_CCObject_copy00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"CCObject",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Object* self = (Object*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copy'", NULL);
-#endif
-  {
-   Object* tolua_ret = (Object*)  self->copy();
-    int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
-    int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'copy'.",&tolua_err);
  return 0;
 #endif
 }
@@ -27151,7 +27117,7 @@ static int tolua_Cocos2d_CCTransitionFade_create00(lua_State* tolua_S)
  {
   float duration = ((float)  tolua_tonumber(tolua_S,2,0));
   Scene* scene = ((Scene*)  tolua_tousertype(tolua_S,3,0));
-  const Color3B clr = Color3B::black;
+  const Color3B clr = Color3B::BLACK;
     Color3B color = *((Color3B*)  tolua_tousertype(tolua_S,4,(void*)&clr));
   {
    TransitionFade* tolua_ret = (TransitionFade*)  TransitionFade::create(duration,scene,color);
@@ -64678,7 +64644,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"isSingleReference",tolua_Cocos2d_CCObject_isSingleReference00);
    tolua_function(tolua_S,"retainCount",tolua_Cocos2d_CCObject_retainCount00);
    tolua_function(tolua_S,"isEqual",tolua_Cocos2d_CCObject_isEqual00);
-   tolua_function(tolua_S,"copy",tolua_Cocos2d_CCObject_copy00);
    tolua_function(tolua_S,"autorelease",tolua_Cocos2d_CCObject_autorelease00);
   tolua_endmodule(tolua_S);
   tolua_function(tolua_S,"CCLuaLog",tolua_Cocos2d_CCLuaLog00);

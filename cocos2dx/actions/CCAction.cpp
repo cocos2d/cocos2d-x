@@ -29,7 +29,6 @@ THE SOFTWARE.
 #include "base_nodes/CCNode.h"
 #include "support/CCPointExtension.h"
 #include "CCDirector.h"
-#include "cocoa/CCZone.h"
 
 NS_CC_BEGIN
 //
@@ -122,27 +121,6 @@ Speed *Speed::clone() const
 	a->initWithAction(_innerAction->clone(), _speed);
 	a->autorelease();
 	return  a;
-}
-
-Object *Speed::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    Speed* pRet = NULL;
-    if(pZone && pZone->_copyObject) //in case of being called at sub class
-    {
-        pRet = (Speed*)(pZone->_copyObject);
-    }
-    else
-    {
-        pRet = new Speed();
-        pZone = pNewZone = new Zone(pRet);
-    }
-    Action::copyWithZone(pZone);
-
-    pRet->initWithAction( (ActionInterval*)(_innerAction->copy()->autorelease()) , _speed );
-    
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
 }
 
 void Speed::startWithTarget(Node* pTarget)
@@ -261,26 +239,6 @@ bool Follow::initWithTarget(Node *pFollowedNode, const Rect& rect/* = RectZero*/
     }
     
     return true;
-}
-
-Object *Follow::copyWithZone(Zone *pZone)
-{
-    Zone *pNewZone = NULL;
-    Follow *pRet = NULL;
-    if(pZone && pZone->_copyObject) //in case of being called at sub class
-    {
-        pRet = (Follow*)(pZone->_copyObject);
-    }
-    else
-    {
-        pRet = new Follow();
-        pZone = pNewZone = new Zone(pRet);
-    }
-    Action::copyWithZone(pZone);
-    // copy member data
-    pRet->_tag = _tag;
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
 }
 
 void Follow::step(float dt)

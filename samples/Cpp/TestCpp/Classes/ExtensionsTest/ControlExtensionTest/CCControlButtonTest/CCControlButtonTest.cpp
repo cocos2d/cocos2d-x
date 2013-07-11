@@ -49,7 +49,7 @@ bool ControlButtonTest_HelloVariableSize::init()
         int i = 0;
         CCARRAY_FOREACH(stringArray, pObj)
         {
-            String* title = (String*)pObj;
+            String* title = static_cast<String*>(pObj);
             // Creates a button with this string as title
             ControlButton *button = standardButtonWithTitle(title->getCString());
             if (i == 0)
@@ -103,7 +103,7 @@ ControlButton *ControlButtonTest_HelloVariableSize::standardButtonWithTitle(cons
     
     ControlButton *button = ControlButton::create(titleButton, backgroundButton);
     button->setBackgroundSpriteForState(backgroundHighlightedButton, ControlStateHighlighted);
-    button->setTitleColorForState(Color3B::white, ControlStateHighlighted);
+    button->setTitleColorForState(Color3B::WHITE, ControlStateHighlighted);
 
     return button;
 }
@@ -141,7 +141,7 @@ bool ControlButtonTest_Event::init()
         
         ControlButton *controlButton = ControlButton::create(titleButton, backgroundButton);
         controlButton->setBackgroundSpriteForState(backgroundHighlightedButton, ControlStateHighlighted);
-        controlButton->setTitleColorForState(Color3B::white, ControlStateHighlighted);
+        controlButton->setTitleColorForState(Color3B::WHITE, ControlStateHighlighted);
         
         controlButton->setAnchorPoint(ccp(0.5f, 1));
         controlButton->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
@@ -270,7 +270,7 @@ ControlButton *ControlButtonTest_Styling::standardButtonWithTitle(const char *ti
     
     ControlButton *button = ControlButton::create(titleButton, backgroundButton);
     button->setBackgroundSpriteForState(backgroundHighlightedButton, ControlStateHighlighted);
-    button->setTitleColorForState(Color3B::white, ControlStateHighlighted);
+    button->setTitleColorForState(Color3B::WHITE, ControlStateHighlighted);
     
     return button;
 }

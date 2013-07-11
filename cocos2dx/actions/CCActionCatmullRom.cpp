@@ -35,7 +35,6 @@
 #include "ccMacros.h"
 #include "support/CCPointExtension.h"
 #include "CCActionCatmullRom.h"
-#include "cocoa/CCZone.h"
 
 using namespace std;
 
@@ -287,28 +286,6 @@ CardinalSplineTo* CardinalSplineTo::clone() const
 	a->initWithDuration(this->_duration, this->_points->clone(), this->_tension);
 	a->autorelease();
 	return a;
-}
-
-CardinalSplineTo* CardinalSplineTo::copyWithZone(cocos2d::Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    CardinalSplineTo* pRet = NULL;
-    if(pZone && pZone->_copyObject) //in case of being called at sub class
-    {
-        pRet = (CardinalSplineTo*)(pZone->_copyObject);
-    }
-    else
-    {
-        pRet = new CardinalSplineTo();
-        pZone = pNewZone = new Zone(pRet);
-    }
-
-    ActionInterval::copyWithZone(pZone);
-
-    pRet->initWithDuration(this->getDuration(), this->_points, this->_tension);
-
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
 }
 
 void CardinalSplineTo::update(float time)

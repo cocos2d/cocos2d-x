@@ -188,7 +188,7 @@ void Bone::update(float delta)
     Object *object = NULL;
     CCARRAY_FOREACH(_children, object)
     {
-        Bone *childBone = (Bone *)object;
+        Bone *childBone = static_cast<Bone *>(object);
         childBone->update(delta);
     }
 
@@ -247,7 +247,7 @@ void Bone::removeChildBone(Bone *bone, bool recursion)
             Object *_object = NULL;
             CCARRAY_FOREACH(_ccbones, _object)
             {
-                Bone *_ccBone = (Bone *)_object;
+                Bone *_ccBone = static_cast<Bone *>(_object);
                 bone->removeChildBone(_ccBone, recursion);
             }
         }

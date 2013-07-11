@@ -44,7 +44,7 @@ static std::vector<unsigned int> ccarray_to_std_vector(Array* pArray)
     Object* pObj;
     CCARRAY_FOREACH(pArray, pObj)
     {
-        Integer* pInteger = (Integer*)pObj;
+        Integer* pInteger = static_cast<Integer*>(pObj);
         ret.push_back((unsigned int)pInteger->getValue());
     }
     return ret;
@@ -142,7 +142,7 @@ bool Menu::initWithArray(Array* pArrayOfItems)
             Object* pObj = NULL;
             CCARRAY_FOREACH(pArrayOfItems, pObj)
             {
-                MenuItem* item = (MenuItem*)pObj;
+                MenuItem* item = static_cast<MenuItem*>(pObj);
                 this->addChild(item, z);
                 z++;
             }

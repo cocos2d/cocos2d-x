@@ -45,7 +45,7 @@ static void setProgram(Node *n, GLProgram *p)
     Object* pObj = NULL;
     CCARRAY_FOREACH(n->getChildren(), pObj)
     {
-        setProgram((Node*)pObj, p);
+        setProgram(static_cast<Node*>(pObj), p);
     }
 }
 
@@ -140,6 +140,24 @@ void ClippingNode::onExit()
 {
     _stencil->onExit();
     Node::onExit();
+}
+
+void ClippingNode::drawFullScreenQuadClearStencil()
+{
+    kmGLMatrixMode(KM_GL_MODELVIEW);
+    kmGLPushMatrix();
+    kmGLLoadIdentity();
+    
+    kmGLMatrixMode(KM_GL_PROJECTION);
+    kmGLPushMatrix();
+    kmGLLoadIdentity();
+    
+    ccDrawSolidRect(ccp(-1,-1), ccp(1,1), Color4F(1, 1, 1, 1));
+    
+    kmGLMatrixMode(KM_GL_PROJECTION);
+    kmGLPopMatrix();
+    kmGLMatrixMode(KM_GL_MODELVIEW);
+    kmGLPopMatrix();
 }
 
 void ClippingNode::visit()
@@ -256,7 +274,7 @@ void ClippingNode::visit()
     
     // draw a fullscreen solid rectangle to clear the stencil buffer
     //ccDrawSolidRect(PointZero, ccpFromSize([[Director sharedDirector] winSize]), Color4F(1, 1, 1, 1));
-    ccDrawSolidRect(PointZero, ccpFromSize(Director::sharedDirector()->getWinSize()), Color4F(1, 1, 1, 1));
+    drawFullScreenQuadClearStencil();
     
     ///////////////////////////////////
     // DRAW CLIPPING STENCIL

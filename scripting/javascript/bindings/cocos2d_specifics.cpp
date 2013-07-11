@@ -695,25 +695,6 @@ JSBool js_cocos2dx_swap_native_object(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_TRUE;
 }
 
-JSBool js_cocos2dx_CCNode_copy(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	if (argc == 0) {
-		JSObject *obj = JS_THIS_OBJECT(cx, vp);
-		js_proxy_t *proxy = jsb_get_js_proxy(obj);
-		cocos2d::Object *node = (cocos2d::Object *)(proxy ? proxy->ptr : NULL);
-		TEST_NATIVE_OBJECT(cx, node)
-		cocos2d::Object *ret = node->copy();
-        proxy = js_get_or_create_proxy<cocos2d::Object>(cx, ret);
-		if (ret && proxy) {
-			ret->autorelease();
-			JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(proxy->obj));
-			return JS_TRUE;
-		}
-	}
-    JS_ReportError(cx, "wrong number of arguments");
-	return JS_FALSE;
-}
-
 template <class T>
 JSBool js_cocos2dx_clone(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -1005,7 +986,7 @@ void JSScheduleWrapper::removeAllTargetsForMinPriority(int minPriority)
             Object* pObj = NULL;
             CCARRAY_FOREACH(targets, pObj)
             {
-                JSScheduleWrapper* wrapper = (JSScheduleWrapper*)pObj;
+                JSScheduleWrapper* wrapper = static_cast<JSScheduleWrapper*>(pObj);
                 bool isUpdateSchedule = wrapper->isUpdateSchedule();
                 if (!isUpdateSchedule || (isUpdateSchedule && wrapper->getPriority() >= minPriority))
                 {
@@ -1036,7 +1017,7 @@ void JSScheduleWrapper::removeAllTargetsForMinPriority(int minPriority)
             Object* pObj = NULL;
             CCARRAY_FOREACH(targets, pObj)
             {
-                JSScheduleWrapper* wrapper = (JSScheduleWrapper*)pObj;
+                JSScheduleWrapper* wrapper = static_cast<JSScheduleWrapper*>(pObj);
                 bool isUpdateSchedule = wrapper->isUpdateSchedule();
                 if (!isUpdateSchedule || (isUpdateSchedule && wrapper->getPriority() >= minPriority))
                 {
@@ -1045,7 +1026,7 @@ void JSScheduleWrapper::removeAllTargetsForMinPriority(int minPriority)
                 }
             }
             
-            std::vector<Object*>::iterator iter = objectsNeedToBeReleased.begin();
+            auto iter = objectsNeedToBeReleased.begin();
             for (; iter != objectsNeedToBeReleased.end(); ++iter)
             {
                 targets->removeObject(*iter, true);
@@ -1091,7 +1072,7 @@ void JSScheduleWrapper::removeAllTargetsForJSObject(JSObject* jsTargetObj)
             }
         }
         
-        std::vector<Object*>::iterator iter = objectsNeedToBeReleased.begin();
+        auto iter = objectsNeedToBeReleased.begin();
         for (; iter != objectsNeedToBeReleased.end(); ++iter)
         {
             targets->removeObject(*iter, true);
@@ -1136,7 +1117,7 @@ void JSScheduleWrapper::removeTargetForJSObject(JSObject* jsTargetObj, JSSchedul
         
         CCARRAY_FOREACH(targets, pObj)
         {
-            JSScheduleWrapper* pOneTarget = (JSScheduleWrapper*)pObj;
+            JSScheduleWrapper* pOneTarget = static_cast<JSScheduleWrapper*>(pObj);
             if (pOneTarget == target)
             {
                 removed = current;
@@ -1296,7 +1277,7 @@ JSBool js_CCNode_unschedule(JSContext *cx, uint32_t argc, jsval *vp)
         Object* tmp = NULL;
         CCARRAY_FOREACH(targetArray, tmp)
         {
-            JSScheduleWrapper* target = (JSScheduleWrapper*)tmp;
+            JSScheduleWrapper* target = static_cast<JSScheduleWrapper*>(tmp);
             if (node == target->getTarget())
             {
                 sched->unscheduleSelector(schedule_selector(JSScheduleWrapper::scheduleFunc), target);
@@ -1372,7 +1353,7 @@ JSBool js_CCNode_scheduleOnce(JSContext *cx, uint32_t argc, jsval *vp)
         Object* pObj = NULL;
         CCARRAY_FOREACH(pTargetArr, pObj)
         {
-            JSScheduleWrapper* pTarget = (JSScheduleWrapper*)pObj;
+            JSScheduleWrapper* pTarget = static_cast<JSScheduleWrapper*>(pObj);
             if (argv[0] == pTarget->getJSCallbackFunc())
             {
                 tmpCobj = pTarget;
@@ -1464,7 +1445,7 @@ JSBool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         Object* pObj = NULL;
         CCARRAY_FOREACH(pTargetArr, pObj)
         {
-            JSScheduleWrapper* pTarget = (JSScheduleWrapper*)pObj;
+            JSScheduleWrapper* pTarget = static_cast<JSScheduleWrapper*>(pObj);
             if (argv[0] == pTarget->getJSCallbackFunc())
             {
                 tmpCobj = pTarget;
@@ -1537,7 +1518,7 @@ JSBool js_cocos2dx_CCNode_scheduleUpdateWithPriority(JSContext *cx, uint32_t arg
         Object* pObj = NULL;
         CCARRAY_FOREACH(pTargetArr, pObj)
         {
-            JSScheduleWrapper* pTarget = (JSScheduleWrapper*)pObj;
+            JSScheduleWrapper* pTarget = static_cast<JSScheduleWrapper*>(pObj);
             if (jsUpdateFunc == pTarget->getJSCallbackFunc())
             {
                 tmpCobj = pTarget;
@@ -1637,7 +1618,7 @@ JSBool js_cocos2dx_CCNode_scheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp
         Object* pObj = NULL;
         CCARRAY_FOREACH(pTargetArr, pObj)
         {
-            JSScheduleWrapper* pTarget = (JSScheduleWrapper*)pObj;
+            JSScheduleWrapper* pTarget = static_cast<JSScheduleWrapper*>(pObj);
             if (jsUpdateFunc == pTarget->getJSCallbackFunc())
             {
                 tmpCobj = pTarget;
@@ -1752,7 +1733,7 @@ JSBool js_CCScheduler_scheduleUpdateForTarget(JSContext *cx, uint32_t argc, jsva
         Object* pObj = NULL;
         CCARRAY_FOREACH(pTargetArr, pObj)
         {
-            JSScheduleWrapper* pTarget = (JSScheduleWrapper*)pObj;
+            JSScheduleWrapper* pTarget = static_cast<JSScheduleWrapper*>(pObj);
             if (jsUpdateFunc == pTarget->getJSCallbackFunc())
             {
                 tmpCObj = pTarget;
@@ -1873,7 +1854,7 @@ JSBool js_CCScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         Object* pObj = NULL;
         CCARRAY_FOREACH(pTargetArr, pObj)
         {
-            JSScheduleWrapper* pTarget = (JSScheduleWrapper*)pObj;
+            JSScheduleWrapper* pTarget = static_cast<JSScheduleWrapper*>(pObj);
             if (argv[1] == pTarget->getJSCallbackFunc())
             {
                 tmpCObj = pTarget;
@@ -3414,7 +3395,6 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     
     JS_DefineFunction(cx, jsb_GLProgram_prototype, "retain", js_cocos2dx_retain, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, jsb_GLProgram_prototype, "release", js_cocos2dx_release, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-	JS_DefineFunction(cx, jsb_Node_prototype, "copy", js_cocos2dx_CCNode_copy, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_Node_prototype, "onExit", js_doNothing, 1, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_Node_prototype, "onEnter", js_doNothing, 1, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_Node_prototype, "onEnterTransitionDidFinish", js_doNothing, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
