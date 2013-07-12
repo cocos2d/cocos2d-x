@@ -40,12 +40,6 @@ FileUtils* FileUtils::getInstance()
     return s_sharedFileUtils;
 }
 
-// XXX: deprecated
-FileUtils* FileUtils::sharedFileUtils()
-{
-    return FileUtils::getInstance();
-}
-
 std::string FileUtilsNaCl::getWritablePath()
 {
     //return current resource path

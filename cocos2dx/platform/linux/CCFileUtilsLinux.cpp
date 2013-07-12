@@ -28,12 +28,6 @@ FileUtils* FileUtils::getInstance()
     return s_sharedFileUtils;
 }
 
-// XXX: deprecated
-FileUtils* FileUtils::sharedFileUtils()
-{
-    return FileUtils::getInstance();
-}
-
 FileUtilsLinux::FileUtilsLinux()
 {}
 
