@@ -63,11 +63,11 @@ bool ParticleSystemQuad::initWithTotalParticles(unsigned int numberOfParticles)
         setupVBO();
 #endif
 
-        setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColor));
+        setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColor));
         
         
         // Need to listen the event only when not use batchnode, because it will use VBO
-        NotificationCenter::sharedNotificationCenter()->addObserver(this,
+        NotificationCenter::getInstance()->addObserver(this,
                                                                       callfuncO_selector(ParticleSystemQuad::listenBackToForeground),
                                                                       EVNET_COME_TO_FOREGROUND,
                                                                       NULL);
@@ -99,7 +99,7 @@ ParticleSystemQuad::~ParticleSystemQuad()
 #endif
     }
     
-    NotificationCenter::sharedNotificationCenter()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
+    NotificationCenter::getInstance()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
 }
 
 // implementation ParticleSystemQuad

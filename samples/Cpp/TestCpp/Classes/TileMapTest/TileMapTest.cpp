@@ -150,12 +150,12 @@ void TMXOrthoTest::onEnter()
 {
     TileDemo::onEnter();
 
-    Director::sharedDirector()->setProjection(kDirectorProjection3D);
+    Director::getInstance()->setProjection(kDirectorProjection3D);
 }
 
 void TMXOrthoTest::onExit()
 {
-    Director::sharedDirector()->setProjection(kDirectorProjection2D);
+    Director::getInstance()->setProjection(kDirectorProjection2D);
     TileDemo::onExit();
 }
 
@@ -973,13 +973,13 @@ void TMXIsoVertexZ::onEnter()
     TileDemo::onEnter();
     
     // TIP: 2d projection should be used
-    Director::sharedDirector()->setProjection(kDirectorProjection2D);
+    Director::getInstance()->setProjection(kDirectorProjection2D);
 }
 
 void TMXIsoVertexZ::onExit()
 {
     // At exit use any other projection. 
-    //    Director::sharedDirector()->setProjection:kDirectorProjection3D);
+    //    Director::getInstance()->setProjection:kDirectorProjection3D);
     TileDemo::onExit();
 }
 
@@ -1042,13 +1042,13 @@ void TMXOrthoVertexZ::onEnter()
     TileDemo::onEnter();
     
     // TIP: 2d projection should be used
-    Director::sharedDirector()->setProjection(kDirectorProjection2D);
+    Director::getInstance()->setProjection(kDirectorProjection2D);
 }
 
 void TMXOrthoVertexZ::onExit()
 {
     // At exit use any other projection. 
-    //    Director::sharedDirector()->setProjection:kDirectorProjection3D);
+    //    Director::getInstance()->setProjection:kDirectorProjection3D);
     TileDemo::onExit();
 }
 
@@ -1254,7 +1254,7 @@ TMXOrthoFromXMLTest::TMXOrthoFromXMLTest()
     string resources = "TileMaps";        // partial paths are OK as resource paths.
     string file = resources + "/orthogonal-test1.tmx";
 
-    String* str = String::createWithContentsOfFile(FileUtils::sharedFileUtils()->fullPathForFilename(file.c_str()).c_str());
+    String* str = String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename(file.c_str()).c_str());
     CCAssert(str != NULL, "Unable to open file");
 
     TMXTiledMap *map = TMXTiledMap::createWithXML(str->getCString() ,resources.c_str());
@@ -1457,7 +1457,7 @@ void TileDemo::restartCallback(Object* pSender)
     Scene* s = new TileMapTestScene();
     s->addChild(restartTileMapAction()); 
 
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -1465,7 +1465,7 @@ void TileDemo::nextCallback(Object* pSender)
 {
     Scene* s = new TileMapTestScene();
     s->addChild( nextTileMapAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -1473,7 +1473,7 @@ void TileDemo::backCallback(Object* pSender)
 {
     Scene* s = new TileMapTestScene();
     s->addChild( backTileMapAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 } 
 
@@ -1495,9 +1495,9 @@ void TileMapTestScene::runThisTest()
     // fix bug #486, #419. 
     // "test" is the default value in Director::setGLDefaultValues()
     // but TransitionTest may setDepthTest(false), we should revert it here
-    Director::sharedDirector()->setDepthTest(true);
+    Director::getInstance()->setDepthTest(true);
     
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }
 
 TMXGIDObjectsTest::TMXGIDObjectsTest()

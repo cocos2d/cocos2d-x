@@ -255,7 +255,7 @@ void EditBoxImplMac::doAnimationWhenKeyboardMove(float duration, float distance)
 
 bool EditBoxImplMac::initWithSize(const Size& size)
 {
-    EGLViewProtocol* eglView = EGLView::sharedOpenGLView();
+    EGLViewProtocol* eglView = EGLView::getInstance();
 
     NSRect rect = NSMakeRect(0, 0, size.width * eglView->getScaleX(),size.height * eglView->getScaleY());
 
@@ -346,7 +346,7 @@ NSPoint EditBoxImplMac::convertDesignCoordToScreenCoord(const Point& designCoord
     NSRect frame = [_sysEdit.textField frame];
     CGFloat height = frame.size.height;
     
-    EGLViewProtocol* eglView = EGLView::sharedOpenGLView();
+    EGLViewProtocol* eglView = EGLView::getInstance();
 
     Point visiblePos = ccp(designCoord.x * eglView->getScaleX(), designCoord.y * eglView->getScaleY());
     Point screenGLPos = ccpAdd(visiblePos, eglView->getViewPortRect().origin);

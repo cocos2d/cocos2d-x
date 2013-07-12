@@ -93,7 +93,7 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, unsigned int capacity)
     _descendants = new Array();
     _descendants->initWithCapacity(capacity);
 
-    setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColor));
+    setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColor));
     return true;
 }
 
@@ -109,7 +109,7 @@ bool SpriteBatchNode::init()
 */
 bool SpriteBatchNode::initWithFile(const char* fileImage, unsigned int capacity)
 {
-    Texture2D *pTexture2D = TextureCache::sharedTextureCache()->addImage(fileImage);
+    Texture2D *pTexture2D = TextureCache::getInstance()->addImage(fileImage);
     return initWithTexture(pTexture2D, capacity);
 }
 

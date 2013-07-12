@@ -67,12 +67,18 @@ public:
     Dictionary* snapshotTextures();
 
     /** Returns the shared instance of the cache */
-    static TextureCache * sharedTextureCache();
+    static TextureCache * getInstance();
 
     /** purges the cache. It releases the retained instance.
-    @since v0.99.0
-    */
-    static void purgeSharedTextureCache();
+     @since v0.99.0
+     */
+    static void destroyInstance();
+
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static TextureCache * sharedTextureCache();
+
+    /** @deprecated Use destroyInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static void purgeSharedTextureCache();
 
     /** Returns a Texture2D object given an file image
     * If the file image was not previously loaded, it will create a new Texture2D

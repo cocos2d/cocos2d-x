@@ -1,5 +1,5 @@
 CC_CONTENT_SCALE_FACTOR = function()
-    return CCDirector:sharedDirector():getContentScaleFactor()
+    return CCDirector:getInstance():getContentScaleFactor()
 end
 
 
@@ -32,7 +32,7 @@ local function MainMenuCallback()
     local scene = CCScene:create()
     scene:addChild(CreateTestMenu())
 
-    CCDirector:sharedDirector():replaceScene(scene)
+    CCDirector:getInstance():replaceScene(scene)
 end
 
 -- add the menu item for back to main menu
@@ -41,7 +41,7 @@ function CreateBackMenuItem()
     local MenuItem = CCMenuItemLabel:create(label)
     MenuItem:registerScriptTapHandler(MainMenuCallback)
 
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
     local Menu = CCMenu:create()
     Menu:addChild(MenuItem)
     Menu:setPosition(0, 0)
@@ -85,13 +85,13 @@ function Helper.newScene()
     scene:addChild(Helper.currentLayer)
     scene:addChild(CreateBackMenuItem())
 
-    CCDirector:sharedDirector():replaceScene(scene)
+    CCDirector:getInstance():replaceScene(scene)
 end
 
 function Helper.initWithLayer(layer)
     Helper.currentLayer = layer
 
-    local size = CCDirector:sharedDirector():getWinSize()
+    local size = CCDirector:getInstance():getWinSize()
     Helper.titleLabel = CCLabelTTF:create("", "Arial", 28)
     layer:addChild(Helper.titleLabel, 1)
     Helper.titleLabel:setPosition(size.width / 2, size.height - 50)

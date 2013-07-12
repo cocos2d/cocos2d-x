@@ -50,7 +50,7 @@ local function Effect1()
     --     Lens3D is Grid3D and it's size is (15,10)
     --     Waves3D is Grid3D and it's size is (15,10)
 
-    local size = CCDirector:sharedDirector():getWinSize()
+    local size = CCDirector:getInstance():getWinSize()
     local  lens = CCLens3D:create(0.0, CCSizeMake(15,10), ccp(size.width/2,size.height/2), 240)
     local  waves = CCWaves3D:create(10, CCSizeMake(15,10), 18, 15)
 
@@ -187,7 +187,7 @@ local function Effect4()
     --        so we make an encapsulation for CCLens3D to achieve that.
     --    */
 
-    local  director = CCDirector:sharedDirector()
+    local  director = CCDirector:getInstance()
     -- local  pTarget = Lens3DTarget:create(lens)
     -- -- Please make sure the target been added to its parent.
     -- ret:addChild(pTarget)
@@ -216,7 +216,7 @@ local function Effect5()
     bg:runAction(stopEffect)
     local function onNodeEvent(event)
         if event == "exit" then
-            CCDirector:sharedDirector():setProjection(kCCDirectorProjection3D)
+            CCDirector:getInstance():setProjection(kCCDirectorProjection3D)
         end
     end
 

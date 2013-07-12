@@ -3,8 +3,8 @@ local kTagSprite2 = 2
 local kTagSprite3 = 3
 local kTagSlider  = 4
 
-local s = CCDirector:sharedDirector():getWinSize()
-local scheduler = CCDirector:sharedDirector():getScheduler()
+local s = CCDirector:getInstance():getWinSize()
+local scheduler = CCDirector:getInstance():getScheduler()
 
 local function getBaseLayer()
 	local layer = CCLayer:create()
@@ -308,7 +308,7 @@ local function shouldNotCrash(dt)
 
     -- if the node has timers, it crashes
     local explosion = CCParticleSun:create()
-    explosion:setTexture(CCTextureCache:sharedTextureCache():addImage("Images/fire.png"))
+    explosion:setTexture(CCTextureCache:getInstance():addImage("Images/fire.png"))
 
     explosion:setPosition(s.width / 2, s.height / 2)
 
@@ -377,7 +377,7 @@ local function StressTest2()
     sublayer:addChild(sp1, 1)
 
     local fire = CCParticleFire:create()
-    fire:setTexture(CCTextureCache:sharedTextureCache():addImage("Images/fire.png"))
+    fire:setTexture(CCTextureCache:getInstance():addImage("Images/fire.png"))
 	fire = tolua.cast(fire, "CCNode")
     fire:setPosition(80, s.height / 2 - 50)
 
@@ -434,9 +434,9 @@ end
 -----------------------------------
 local function CameraOrbitTest_onEnterOrExit(tag)
 	if tag == "enter" then
-		CCDirector:sharedDirector():setProjection(kCCDirectorProjection3D)
+		CCDirector:getInstance():setProjection(kCCDirectorProjection3D)
 	elseif tag == "exit" then
-		CCDirector:sharedDirector():setProjection(kCCDirectorProjection2D)
+		CCDirector:getInstance():setProjection(kCCDirectorProjection2D)
 	end
 end
 
@@ -506,10 +506,10 @@ end
 
 local function CameraZoomTest_onEnterOrExit(tag)
 	if tag == "enter" then
-		CCDirector:sharedDirector():setProjection(kCCDirectorProjection3D)
+		CCDirector:getInstance():setProjection(kCCDirectorProjection3D)
 		CameraZoomTest_entry = scheduler:scheduleScriptFunc(CameraZoomTest_update, 0.0, false)
 	elseif tag == "exit" then
-		CCDirector:sharedDirector():setProjection(kCCDirectorProjection2D)
+		CCDirector:getInstance():setProjection(kCCDirectorProjection2D)
 		scheduler:unscheduleScriptEntry(CameraZoomTest_entry)
 	end
 end

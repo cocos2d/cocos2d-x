@@ -61,6 +61,6 @@ void CurlTestScene::runThisTest()
     Layer* pLayer = new CurlTest();
     addChild(pLayer);
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
     pLayer->release();
 }

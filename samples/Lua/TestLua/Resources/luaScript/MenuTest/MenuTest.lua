@@ -49,9 +49,9 @@ local function MenuLayerMainMenu()
 
 
     local schedulerEntry = nil
-	local scheduler = CCDirector:sharedDirector():getScheduler()
+	local scheduler = CCDirector:getInstance():getScheduler()
     local function allowTouches(dt)
-        local  pDirector = CCDirector:sharedDirector()
+        local  pDirector = CCDirector:getInstance()
         --pDirector:getTouchDispatcher():setPriority(kCCMenuHandlerPriority+1, ret)
         if nil ~=  schedulerEntry then 
             scheduler:unscheduleScriptEntry(schedulerEntry)
@@ -63,7 +63,7 @@ local function MenuLayerMainMenu()
 
     local function menuCallbackDisabled(sender)
         -- hijack all touch events for 5 seconds
-        local  pDirector = CCDirector:sharedDirector()
+        local  pDirector = CCDirector:getInstance()
         --pDirector:getTouchDispatcher():setPriority(kCCMenuHandlerPriority-1, ret)
         schedulerEntry = scheduler:scheduleScriptFunc(allowTouches, 5, false)
         cclog("TOUCHES DISABLED FOR 5 SECONDS")
@@ -154,7 +154,7 @@ local function MenuLayerMainMenu()
     menu:alignItemsVertically()
 
     -- elastic effect
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
 
     local i        = 0
     local child    = nil
@@ -295,7 +295,7 @@ local function MenuLayer2()
         menu:addChild(item2)
         menu:addChild(item3)
 
-        local s = CCDirector:sharedDirector():getWinSize()
+        local s = CCDirector:getInstance():getWinSize()
         menu:setPosition(ccp(s.width/2, s.height/2))
 
         menu:setTag( kTagMenu )
@@ -363,7 +363,7 @@ local function MenuLayer3()
 
     menu:setPosition( ccp(0,0) )
 
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
 
     item1:setPosition( ccp(s.width/2 - 150, s.height/2) )
     item2:setPosition( ccp(s.width/2 - 200, s.height/2) )
@@ -492,7 +492,7 @@ local function MenuLayer4()
 
     ret:addChild(menu)
 
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
     menu:setPosition(ccp(s.width/2, s.height/2))
     return ret
 end
@@ -596,7 +596,7 @@ local function BugsTest()
     ret:addChild(menu)
     menu:alignItemsVertically()
 
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
     menu:setPosition(ccp(s.width/2, s.height/2))
     return ret
 end
@@ -604,7 +604,7 @@ end
 
 local function RemoveMenuItemWhenMove()
     local ret = CCLayer:create()
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
 
     local  label = CCLabelTTF:create("click item and move, should not crash", "Arial", 20)
     label:setPosition(ccp(s.width/2, s.height - 30))
@@ -633,7 +633,7 @@ local function RemoveMenuItemWhenMove()
 --[[
     local function onNodeEvent(event)
         if event == "enter" then
-            CCDirector:sharedDirector():getTouchDispatcher():addTargetedDelegate(ret, -129, false)
+            CCDirector:getInstance():getTouchDispatcher():addTargetedDelegate(ret, -129, false)
         elseif event == "exit" then
            -- item:release()
         end

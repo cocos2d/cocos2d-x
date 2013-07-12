@@ -20,9 +20,9 @@ jint JNI_OnLoad(JavaVM *vm, void *reserved)
 
 void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thiz, jint w, jint h)
 {
-    if (!Director::sharedDirector()->getOpenGLView())
+    if (!Director::getInstance()->getOpenGLView())
     {
-        EGLView *view = EGLView::sharedOpenGLView();
+        EGLView *view = EGLView::getInstance();
         view->setFrameSize(w, h);
 
         AppDelegate *pAppDelegate = new AppDelegate();
@@ -34,10 +34,10 @@ void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thi
         ccDrawInit();
         ccGLInvalidateStateCache();
         
-        ShaderCache::sharedShaderCache()->reloadDefaultShaders();
+        ShaderCache::getInstance()->reloadDefaultShaders();
         TextureCache::reloadAllTextures();
-        NotificationCenter::sharedNotificationCenter()->postNotification(EVNET_COME_TO_FOREGROUND, NULL);
-        Director::sharedDirector()->setGLDefaultValues(); 
+        NotificationCenter::getInstance()->postNotification(EVNET_COME_TO_FOREGROUND, NULL);
+        Director::getInstance()->setGLDefaultValues(); 
     }
     */
 }

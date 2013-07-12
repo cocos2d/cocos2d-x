@@ -72,7 +72,7 @@ HelloWorld::HelloWorld()
     setTouchEnabled( true );
     setAccelerometerEnabled( true );
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     // init physics
     this->initPhysics();
 
@@ -103,7 +103,7 @@ HelloWorld::~HelloWorld()
 void HelloWorld::initPhysics()
 {
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     b2Vec2 gravity;
     gravity.Set(0.0f, -10.0f);
@@ -255,7 +255,7 @@ void HelloWorld::ccTouchesEnded(Set* touches, Event* event)
         
         Point location = touch->getLocationInView();
         
-        location = Director::sharedDirector()->convertToGL(location);
+        location = Director::getInstance()->convertToGL(location);
         
         addNewSpriteAtPosition( location );
     }
