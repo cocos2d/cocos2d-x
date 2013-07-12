@@ -614,7 +614,7 @@ MenuItem* Menu::itemForTouch(Touch *touch)
             {
                 Point local = pChild->convertToNodeSpace(touchLocation);
                 Rect r = pChild->rect();
-                r.origin = PointZero;
+                r.origin = Point::ZERO;
 
                 if (r.containsPoint(local))
                 {

@@ -88,16 +88,16 @@ static int g_testCount = sizeof(g_aTestNames) / sizeof(g_aTestNames[0]);
 
 #define LINE_SPACE          40
 
-static Point s_tCurPos = PointZero;
+static Point s_tCurPos = Point::ZERO;
 
 TestController::TestController()
-: _beginPos(PointZero)
+: _beginPos(Point::ZERO)
 {
     // add close menu
     MenuItemImage *pCloseItem = MenuItemImage::create(s_pPathClose, s_pPathClose, CC_CALLBACK_1(TestController::closeCallback, this) );
     Menu* pMenu =Menu::create(pCloseItem, NULL);
 
-    pMenu->setPosition( PointZero );
+    pMenu->setPosition( Point::ZERO );
     pCloseItem->setPosition(Point( VisibleRect::right().x - 30, VisibleRect::top().y - 30));
 
     // add menu items for tests
@@ -175,7 +175,7 @@ void TestController::ccTouchesMoved(Set *pTouches, Event *pEvent)
 
     if (nextPos.y < 0.0f)
     {
-        _itemMenu->setPosition(PointZero);
+        _itemMenu->setPosition(Point::ZERO);
         return;
     }
 

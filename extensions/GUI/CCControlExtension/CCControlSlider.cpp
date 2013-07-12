@@ -224,7 +224,7 @@ void ControlSlider::ccTouchMoved(Touch *pTouch, Event *pEvent)
 
 void ControlSlider::ccTouchEnded(Touch *pTouch, Event *pEvent)
 {
-    sliderEnded(PointZero);
+    sliderEnded(Point::ZERO);
 }
 
 void ControlSlider::needsLayout()

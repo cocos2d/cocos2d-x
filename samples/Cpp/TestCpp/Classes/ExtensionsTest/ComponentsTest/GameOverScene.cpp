@@ -82,7 +82,7 @@ bool GameOverLayer::init()
         itemBack->setColor(Color3B(0, 0, 0));
         itemBack->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
         Menu *menuBack = Menu::create(itemBack, NULL);
-        menuBack->setPosition(PointZero);
+        menuBack->setPosition(Point::ZERO);
         addChild(menuBack);
         
 		return true;

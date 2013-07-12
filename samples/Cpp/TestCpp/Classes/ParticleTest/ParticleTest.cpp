@@ -152,7 +152,7 @@ void DemoBigFlower::onEnter()
     _emitter->setDuration(-1);
     
     // gravity
-    _emitter->setGravity(PointZero);
+    _emitter->setGravity(Point::ZERO);
     
     // angle
     _emitter->setAngle(90);
@@ -172,7 +172,7 @@ void DemoBigFlower::onEnter()
     
     // emitter position
     _emitter->setPosition( Point(160,240) );
-    _emitter->setPosVar(PointZero);
+    _emitter->setPosVar(Point::ZERO);
     
     // life of particles
     _emitter->setLife(4);
@@ -237,7 +237,7 @@ void DemoRotFlower::onEnter()
     _emitter->setDuration(-1);
     
     // gravity
-    _emitter->setGravity(PointZero);
+    _emitter->setGravity(Point::ZERO);
     
     // angle
     _emitter->setAngle(90);
@@ -257,7 +257,7 @@ void DemoRotFlower::onEnter()
     
     // emitter position
     _emitter->setPosition( Point(160,240) );
-    _emitter->setPosVar(PointZero);
+    _emitter->setPosVar(Point::ZERO);
     
     // life of particles
     _emitter->setLife(3);
@@ -517,7 +517,7 @@ void DemoModernArt::onEnter()
     
     // emitter position
     _emitter->setPosition( Point( s.width/2, s.height/2) );
-    _emitter->setPosVar(PointZero);
+    _emitter->setPosVar(Point::ZERO);
     
     // life of particles
     _emitter->setLife(2.0f);
@@ -673,7 +673,7 @@ void RadiusMode1::onEnter()
     // emitter position
     Size size = Director::sharedDirector()->getWinSize();
     _emitter->setPosition(Point(size.width/2, size.height/2));
-    _emitter->setPosVar(PointZero);
+    _emitter->setPosVar(Point::ZERO);
 
     // life of particles
     _emitter->setLife(5);
@@ -757,7 +757,7 @@ void RadiusMode2::onEnter()
     // emitter position
     Size size = Director::sharedDirector()->getWinSize();
     _emitter->setPosition(Point(size.width/2, size.height/2));
-    _emitter->setPosVar(PointZero);
+    _emitter->setPosVar(Point::ZERO);
 
     // life of particles
     _emitter->setLife(4);
@@ -841,7 +841,7 @@ void Issue704::onEnter()
     // emitter position
     Size size = Director::sharedDirector()->getWinSize();
     _emitter->setPosition(Point(size.width/2, size.height/2));
-    _emitter->setPosVar(PointZero);
+    _emitter->setPosVar(Point::ZERO);
 
     // life of particles
     _emitter->setLife(5);
@@ -1086,7 +1086,7 @@ void ParticleDemo::onEnter(void)
     
     Menu *menu = Menu::create(item4, NULL);
     
-    menu->setPosition( PointZero );
+    menu->setPosition( Point::ZERO );
     item4->setPosition( Point( VisibleRect::left().x, VisibleRect::bottom().y+ 100) );
     item4->setAnchorPoint( Point(0,0) );
     
@@ -1136,10 +1136,10 @@ void ParticleDemo::ccTouchesEnded(Set *pTouches, Event *pEvent)
     
     Point location = touch->getLocation();
 
-    Point pos = PointZero;
+    Point pos = Point::ZERO;
     if (_background)
     {
-        pos = _background->convertToWorldSpace(PointZero);
+        pos = _background->convertToWorldSpace(Point::ZERO);
     }
 
     if (_emitter != NULL)
@@ -1427,7 +1427,7 @@ bool RainbowEffect::initWithTotalParticles(unsigned int numberOfParticles)
         // emitter position
         Size winSize = Director::sharedDirector()->getWinSize();
         setPosition(Point(winSize.width/2, winSize.height/2));
-        setPosVar(PointZero);
+        setPosVar(Point::ZERO);
 
         // life of particles
         setLife(0.5f);
@@ -1746,7 +1746,7 @@ void ReorderParticleSystems::onEnter()
         particleSystem->setAngleVar(0);
 
         // emitter position
-        particleSystem->setPosVar(PointZero);
+        particleSystem->setPosVar(Point::ZERO);
 
         // life of particles
         particleSystem->setLife(4);

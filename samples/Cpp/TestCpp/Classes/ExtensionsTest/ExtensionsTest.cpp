@@ -68,7 +68,7 @@ static struct {
 
 static const int g_maxTests = sizeof(g_extensionsTests) / sizeof(g_extensionsTests[0]);
 
-static Point s_tCurPos = PointZero;
+static Point s_tCurPos = Point::ZERO;
 
 ////////////////////////////////////////////////////////
 //
@@ -82,7 +82,7 @@ void ExtensionsMainLayer::onEnter()
     Size s = Director::sharedDirector()->getWinSize();
     
     _itemMenu = Menu::create();
-    _itemMenu->setPosition( PointZero );
+    _itemMenu->setPosition( Point::ZERO );
     MenuItemFont::setFontName("Arial");
     MenuItemFont::setFontSize(24);
     for (int i = 0; i < g_maxTests; ++i)
@@ -116,7 +116,7 @@ void ExtensionsMainLayer::ccTouchesMoved(Set *pTouches, Event *pEvent)
 
     if (nextPos.y < 0.0f)
     {
-        _itemMenu->setPosition(PointZero);
+        _itemMenu->setPosition(Point::ZERO);
         return;
     }
 

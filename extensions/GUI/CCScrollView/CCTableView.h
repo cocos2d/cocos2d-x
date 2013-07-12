@@ -109,7 +109,7 @@ public:
      * @return cell size
      */
     virtual Size cellSizeForTable(TableView *table) {
-        return SizeZero;
+        return Size::ZERO;
     };
     /**
      * a cell instance at a given index

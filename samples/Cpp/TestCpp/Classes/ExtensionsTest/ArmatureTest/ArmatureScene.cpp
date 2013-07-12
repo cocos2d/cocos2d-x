@@ -147,7 +147,7 @@ void ArmatureTestLayer::onEnter()
 
 	Menu *menu = Menu::create(item1, item2, item3, NULL);
 
-	menu->setPosition(PointZero);
+	menu->setPosition(Point::ZERO);
 	item1->setPosition(Point(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
 	item2->setPosition(Point(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
 	item3->setPosition(Point(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));

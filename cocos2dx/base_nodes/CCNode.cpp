@@ -58,12 +58,12 @@ Node::Node(void)
 , _scaleX(1.0f)
 , _scaleY(1.0f)
 , _vertexZ(0.0f)
-, _position(PointZero)
+, _position(Point::ZERO)
 , _skewX(0.0f)
 , _skewY(0.0f)
-, _anchorPointInPoints(PointZero)
-, _anchorPoint(PointZero)
-, _contentSize(SizeZero)
+, _anchorPointInPoints(Point::ZERO)
+, _anchorPoint(Point::ZERO)
+, _contentSize(Size::ZERO)
 , _additionalTransform(AffineTransformMakeIdentity())
 , _camera(NULL)
 // children (lazy allocs)
@@ -1204,7 +1204,7 @@ AffineTransform Node::nodeToParentTransform(void)
         // optimization:
         // inline anchor point calculation if skew is not needed
         // Adjusted transform calculation for rotational skew
-        if (! needsSkewMatrix && !_anchorPointInPoints.equals(PointZero))
+        if (! needsSkewMatrix && !_anchorPointInPoints.equals(Point::ZERO))
         {
             x += cy * -_anchorPointInPoints.x * _scaleX + -sx * -_anchorPointInPoints.y * _scaleY;
             y += sy * -_anchorPointInPoints.x * _scaleX +  cx * -_anchorPointInPoints.y * _scaleY;
@@ -1227,7 +1227,7 @@ AffineTransform Node::nodeToParentTransform(void)
             _transform = AffineTransformConcat(skewMatrix, _transform);
 
             // adjust anchor point
-            if (!_anchorPointInPoints.equals(PointZero))
+            if (!_anchorPointInPoints.equals(Point::ZERO))
             {
                 _transform = AffineTransformTranslate(_transform, -_anchorPointInPoints.x, -_anchorPointInPoints.y);
             }

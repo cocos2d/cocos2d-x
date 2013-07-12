@@ -83,7 +83,7 @@ Scale9Sprite::~Scale9Sprite()
 
 bool Scale9Sprite::init()
 {
-    return this->initWithBatchNode(NULL, RectZero, RectZero);
+    return this->initWithBatchNode(NULL, Rect::ZERO, Rect::ZERO);
 }
 
 bool Scale9Sprite::initWithBatchNode(SpriteBatchNode* batchnode, Rect rect, Rect capInsets)
@@ -141,7 +141,7 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bo
     _spriteFrameRotated = rotated;
     
     // If there is no given rect
-    if ( rect.equals(RectZero) )
+    if ( rect.equals(Rect::ZERO) )
     {
         // Get the texture size as original
         Size textureSize = _scale9Image->getTextureAtlas()->getTexture()->getContentSize();
@@ -159,7 +159,7 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bo
     float h = rect.size.height;
 
     // If there is no specified center region
-    if ( _capInsetsInternal.equals(RectZero) )
+    if ( _capInsetsInternal.equals(Rect::ZERO) )
     {
         // CCLog("... cap insets not specified : using default cap insets ...");
         _capInsetsInternal = Rect(w/3, h/3, w/3, h/3);
@@ -482,7 +482,7 @@ Scale9Sprite* Scale9Sprite::create(const char* file, Rect rect,  Rect capInsets)
 bool Scale9Sprite::initWithFile(const char* file, Rect rect)
 {
     CCAssert(file != NULL, "Invalid file for sprite");
-    bool pReturn = this->initWithFile(file, rect, RectZero);
+    bool pReturn = this->initWithFile(file, rect, Rect::ZERO);
     return pReturn;
 }
 
@@ -501,7 +501,7 @@ Scale9Sprite* Scale9Sprite::create(const char* file, Rect rect)
 
 bool Scale9Sprite::initWithFile(Rect capInsets, const char* file)
 {
-    bool pReturn = this->initWithFile(file, RectZero, capInsets);
+    bool pReturn = this->initWithFile(file, Rect::ZERO, capInsets);
     return pReturn;
 }
 
@@ -519,7 +519,7 @@ Scale9Sprite* Scale9Sprite::create(Rect capInsets, const char* file)
 
 bool Scale9Sprite::initWithFile(const char* file)
 {
-    bool pReturn = this->initWithFile(file, RectZero);
+    bool pReturn = this->initWithFile(file, Rect::ZERO);
     return pReturn;
     
 }
@@ -562,7 +562,7 @@ Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame, Rect
 bool Scale9Sprite::initWithSpriteFrame(SpriteFrame* spriteFrame)
 {
     CCAssert(spriteFrame != NULL, "Invalid spriteFrame for sprite");
-    bool pReturn = this->initWithSpriteFrame(spriteFrame, RectZero);
+    bool pReturn = this->initWithSpriteFrame(spriteFrame, Rect::ZERO);
     return pReturn;
 }
 
@@ -605,7 +605,7 @@ Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const char* spriteFrameNam
 
 bool Scale9Sprite::initWithSpriteFrameName(const char* spriteFrameName)
 {
-    bool pReturn = this->initWithSpriteFrameName(spriteFrameName, RectZero);
+    bool pReturn = this->initWithSpriteFrameName(spriteFrameName, Rect::ZERO);
     return pReturn;
 }
 
@@ -683,7 +683,7 @@ void Scale9Sprite::updateCapInset()
     Rect insets;
     if (this->_insetLeft == 0 && this->_insetTop == 0 && this->_insetRight == 0 && this->_insetBottom == 0)
     {
-        insets = RectZero;
+        insets = Rect::ZERO;
     }
     else
     {
@@ -727,7 +727,7 @@ bool Scale9Sprite::isOpacityModifyRGB() const
 void Scale9Sprite::setSpriteFrame(SpriteFrame * spriteFrame)
 {
     SpriteBatchNode * batchnode = SpriteBatchNode::createWithTexture(spriteFrame->getTexture(), 9);
-    this->updateWithBatchNode(batchnode, spriteFrame->getRect(), spriteFrame->isRotated(), RectZero);
+    this->updateWithBatchNode(batchnode, spriteFrame->getRect(), spriteFrame->isRotated(), Rect::ZERO);
 
     // Reset insets
     this->_insetLeft = 0;

@@ -32,7 +32,7 @@ WebSocketTestLayer::WebSocketTestLayer()
     addChild(label, 0);
     
     Menu *menuRequest = Menu::create();
-    menuRequest->setPosition(PointZero);
+    menuRequest->setPosition(Point::ZERO);
     addChild(menuRequest);
     
     // Send Text
@@ -70,7 +70,7 @@ WebSocketTestLayer::WebSocketTestLayer()
     MenuItemFont *itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(WebSocketTestLayer::toExtensionsMainLayer, this));
     itemBack->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
     Menu *menuBack = Menu::create(itemBack, NULL);
-    menuBack->setPosition(PointZero);
+    menuBack->setPosition(Point::ZERO);
     addChild(menuBack);
     
     _wsiSendText = new WebSocket();

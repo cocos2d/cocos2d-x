@@ -741,7 +741,7 @@ ConvertToNode::ConvertToNode()
         switch(i)
         {
         case 0:
-            sprite->setAnchorPoint(PointZero);
+            sprite->setAnchorPoint(Point::ZERO);
             break;
         case 1:
             sprite->setAnchorPoint(Point(0.5f, 0.5f));
@@ -799,7 +799,7 @@ NodeOpaqueTest::NodeOpaqueTest()
         background = Sprite::create("Images/background1.png");
         BlendFunc blendFunc = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
         background->setBlendFunc(blendFunc);
-        background->setAnchorPoint(PointZero);
+        background->setAnchorPoint(Point::ZERO);
         addChild(background);
     }
 }
@@ -824,7 +824,7 @@ NodeNonOpaqueTest::NodeNonOpaqueTest()
     {
         background = Sprite::create("Images/background1.jpg");
         background->setBlendFunc(BlendFunc::BLEND_FUNC_DISABLE);
-        background->setAnchorPoint(PointZero);
+        background->setAnchorPoint(Point::ZERO);
         addChild(background);
     }
 }

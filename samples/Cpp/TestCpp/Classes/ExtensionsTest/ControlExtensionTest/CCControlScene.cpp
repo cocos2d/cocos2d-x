@@ -45,7 +45,7 @@ bool ControlScene::init()
         MenuItemFont* pBackItem = MenuItemFont::create("Back", CC_CALLBACK_1(ControlScene::toExtensionsMainLayer, this));
         pBackItem->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
         Menu* pBackMenu = Menu::create(pBackItem, NULL);
-        pBackMenu->setPosition( PointZero );
+        pBackMenu->setPosition( Point::ZERO );
         addChild(pBackMenu, 10);
 
         // Add the generated background
@@ -70,7 +70,7 @@ bool ControlScene::init()
         MenuItemImage *item3 = MenuItemImage::create("Images/f1.png", "Images/f2.png", CC_CALLBACK_1(ControlScene::nextCallback, this));
         
         Menu *menu = Menu::create(item1, item3, item2, NULL);
-        menu->setPosition(PointZero);
+        menu->setPosition(Point::ZERO);
         item1->setPosition(Point(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
         item2->setPosition(Point(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
         item3->setPosition(Point(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));

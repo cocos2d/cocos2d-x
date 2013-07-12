@@ -434,21 +434,21 @@ LabelBMFont * LabelBMFont::create()
 
 LabelBMFont * LabelBMFont::create(const char *str, const char *fntFile, float width, TextAlignment alignment)
 {
-    return LabelBMFont::create(str, fntFile, width, alignment, PointZero);
+    return LabelBMFont::create(str, fntFile, width, alignment, Point::ZERO);
 }
 
 LabelBMFont * LabelBMFont::create(const char *str, const char *fntFile, float width)
 {
-    return LabelBMFont::create(str, fntFile, width, kTextAlignmentLeft, PointZero);
+    return LabelBMFont::create(str, fntFile, width, kTextAlignmentLeft, Point::ZERO);
 }
 
 LabelBMFont * LabelBMFont::create(const char *str, const char *fntFile)
 {
-    return LabelBMFont::create(str, fntFile, kLabelAutomaticWidth, kTextAlignmentLeft, PointZero);
+    return LabelBMFont::create(str, fntFile, kLabelAutomaticWidth, kTextAlignmentLeft, Point::ZERO);
 }
 
 //LabelBMFont - Creation & Init
-LabelBMFont *LabelBMFont::create(const char *str, const char *fntFile, float width/* = kLabelAutomaticWidth*/, TextAlignment alignment/* = kTextAlignmentLeft*/, Point imageOffset/* = PointZero*/)
+LabelBMFont *LabelBMFont::create(const char *str, const char *fntFile, float width/* = kLabelAutomaticWidth*/, TextAlignment alignment/* = kTextAlignmentLeft*/, Point imageOffset/* = Point::ZERO*/)
 {
     LabelBMFont *pRet = new LabelBMFont();
     if(pRet && pRet->initWithString(str, fntFile, width, alignment, imageOffset))
@@ -462,10 +462,10 @@ LabelBMFont *LabelBMFont::create(const char *str, const char *fntFile, float wid
 
 bool LabelBMFont::init()
 {
-    return initWithString(NULL, NULL, kLabelAutomaticWidth, kTextAlignmentLeft, PointZero);
+    return initWithString(NULL, NULL, kLabelAutomaticWidth, kTextAlignmentLeft, Point::ZERO);
 }
 
-bool LabelBMFont::initWithString(const char *theString, const char *fntFile, float width/* = kLabelAutomaticWidth*/, TextAlignment alignment/* = kTextAlignmentLeft*/, Point imageOffset/* = PointZero*/)
+bool LabelBMFont::initWithString(const char *theString, const char *fntFile, float width/* = kLabelAutomaticWidth*/, TextAlignment alignment/* = kTextAlignmentLeft*/, Point imageOffset/* = Point::ZERO*/)
 {
     CCAssert(!_configuration, "re-init is no longer supported");
     CCAssert( (theString && fntFile) || (theString==NULL && fntFile==NULL), "Invalid params for LabelBMFont");
@@ -511,7 +511,7 @@ bool LabelBMFont::initWithString(const char *theString, const char *fntFile, flo
         _cascadeOpacityEnabled = true;
         _cascadeColorEnabled = true;
         
-        _contentSize = SizeZero;
+        _contentSize = Size::ZERO;
         
         _isOpacityModifyRGB = _textureAtlas->getTexture()->hasPremultipliedAlpha();
         _anchorPoint = Point(0.5f, 0.5f);
@@ -536,7 +536,7 @@ LabelBMFont::LabelBMFont()
 , _width(-1.0f)
 , _configuration(NULL)
 , _lineBreakWithoutSpaces(false)
-, _imageOffset(PointZero)
+, _imageOffset(Point::ZERO)
 , _reusedChar(NULL)
 , _displayedOpacity(255)
 , _realOpacity(255)
@@ -579,7 +579,7 @@ void LabelBMFont::createFontChars()
     unsigned short prev = -1;
     int kerningAmount = 0;
 
-    Size tmpSize = SizeZero;
+    Size tmpSize = Size::ZERO;
 
     int longestLine = 0;
     unsigned int totalHeight = 0;

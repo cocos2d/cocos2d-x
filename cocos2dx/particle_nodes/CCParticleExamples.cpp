@@ -325,7 +325,7 @@ bool ParticleSun::initWithTotalParticles(unsigned int numberOfParticles)
         // emitter position
         Size winSize = Director::sharedDirector()->getWinSize();
         this->setPosition(Point(winSize.width/2, winSize.height/2));
-        setPosVar(PointZero);
+        setPosVar(Point::ZERO);
 
         // life of particles
         _life = 1;
@@ -432,7 +432,7 @@ bool ParticleGalaxy::initWithTotalParticles(unsigned int numberOfParticles)
         // emitter position
         Size winSize = Director::sharedDirector()->getWinSize();
         this->setPosition(Point(winSize.width/2, winSize.height/2));
-        setPosVar(PointZero);
+        setPosVar(Point::ZERO);
 
         // life of particles
         _life = 4;
@@ -541,7 +541,7 @@ bool ParticleFlower::initWithTotalParticles(unsigned int numberOfParticles)
         // emitter position
         Size winSize = Director::sharedDirector()->getWinSize();
         this->setPosition(Point(winSize.width/2, winSize.height/2));
-        setPosVar(PointZero);
+        setPosVar(Point::ZERO);
 
         // life of particles
         _life = 4;
@@ -649,7 +649,7 @@ bool ParticleMeteor::initWithTotalParticles(unsigned int numberOfParticles)
         // emitter position
         Size winSize = Director::sharedDirector()->getWinSize();
         this->setPosition(Point(winSize.width/2, winSize.height/2));
-        setPosVar(PointZero);
+        setPosVar(Point::ZERO);
 
         // life of particles
         _life = 2;
@@ -758,7 +758,7 @@ bool ParticleSpiral::initWithTotalParticles(unsigned int numberOfParticles)
         // emitter position
         Size winSize = Director::sharedDirector()->getWinSize();
         this->setPosition(Point(winSize.width/2, winSize.height/2));
-        setPosVar(PointZero);
+        setPosVar(Point::ZERO);
 
         // life of particles
         _life = 12;
@@ -866,7 +866,7 @@ bool ParticleExplosion::initWithTotalParticles(unsigned int numberOfParticles)
         // emitter position
         Size winSize = Director::sharedDirector()->getWinSize();
         this->setPosition(Point(winSize.width/2, winSize.height/2));
-        setPosVar(PointZero);
+        setPosVar(Point::ZERO);
 
         // life of particles
         _life = 5.0f;

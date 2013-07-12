@@ -500,7 +500,7 @@ Atlas4::Atlas4()
     Sequence* scale_seq = Sequence::create(scale, scale_back,NULL);
     Action* scale_4ever = RepeatForever::create(scale_seq);
     
-    ActionInterval* jump = JumpBy::create(0.5f, PointZero, 60, 1);
+    ActionInterval* jump = JumpBy::create(0.5f, Point::ZERO, 60, 1);
     Action* jump_4ever = RepeatForever::create(jump);
     
     ActionInterval* fade_out = FadeOut::create(1);
@@ -1353,7 +1353,7 @@ BMFontOneAtlas::BMFontOneAtlas()
 {
     Size s = Director::sharedDirector()->getWinSize();
 
-    LabelBMFont *label1 = LabelBMFont::create("This is Helvetica", "fonts/helvetica-32.fnt", kLabelAutomaticWidth, kTextAlignmentLeft, PointZero);
+    LabelBMFont *label1 = LabelBMFont::create("This is Helvetica", "fonts/helvetica-32.fnt", kLabelAutomaticWidth, kTextAlignmentLeft, Point::ZERO);
     addChild(label1);
     label1->setPosition(Point(s.width/2, s.height/3*2));
 

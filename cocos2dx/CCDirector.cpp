@@ -137,7 +137,7 @@ bool Director::init(void)
     // purge ?
     _purgeDirecotorInNextLoop = false;
 
-    _winSizeInPoints = SizeZero;    
+    _winSizeInPoints = Size::ZERO;    
 
     _openGLView = NULL;
 
@@ -557,7 +557,7 @@ Size Director::getVisibleSize() const
     }
     else 
     {
-        return SizeZero;
+        return Size::ZERO;
     }
 }
 
@@ -569,7 +569,7 @@ Point Director::getVisibleOrigin() const
     }
     else 
     {
-        return PointZero;
+        return Point::ZERO;
     }
 }
 

@@ -95,8 +95,8 @@ bool BaseClippingNodeTest::init()
 	if (BaseTest::init()) {
         
         Sprite *background = Sprite::create(s_back3);
-        background->setAnchorPoint( PointZero );
-        background->setPosition( PointZero );
+        background->setAnchorPoint( Point::ZERO );
+        background->setPosition( Point::ZERO );
         this->addChild(background, -1);
 
         this->setup();
@@ -414,7 +414,7 @@ std::string HoleDemo::subtitle()
 void HoleDemo::setup()
 {
     Sprite *target = Sprite::create(s_pPathBlock);
-    target->setAnchorPoint(PointZero);
+    target->setAnchorPoint(Point::ZERO);
     target->setScale(3);
     
     _outerClipper = ClippingNode::create();
@@ -627,7 +627,7 @@ void RawStencilBufferTest::draw()
         this->setupStencilForClippingOnPlane(i);
         CHECK_GL_ERROR_DEBUG();
 
-        ccDrawSolidRect(PointZero, stencilPoint, Color4F(1, 1, 1, 1));
+        ccDrawSolidRect(Point::ZERO, stencilPoint, Color4F(1, 1, 1, 1));
         
         kmGLPushMatrix();
         this->transform();
@@ -637,7 +637,7 @@ void RawStencilBufferTest::draw()
         this->setupStencilForDrawingOnPlane(i);
         CHECK_GL_ERROR_DEBUG();
         
-        ccDrawSolidRect(PointZero, winPoint, _planeColor[i]);
+        ccDrawSolidRect(Point::ZERO, winPoint, _planeColor[i]);
         
         kmGLPushMatrix();
         this->transform();
@@ -812,7 +812,7 @@ void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
     glStencilMask(planeMask);
     glStencilFunc(GL_NEVER, 0, planeMask);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
-    ccDrawSolidRect(PointZero, Point(Director::sharedDirector()->getWinSize()), Color4F(1, 1, 1, 1));
+    ccDrawSolidRect(Point::ZERO, Point(Director::sharedDirector()->getWinSize()), Color4F(1, 1, 1, 1));
     glStencilFunc(GL_NEVER, planeMask, planeMask);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
     glDisable(GL_DEPTH_TEST);

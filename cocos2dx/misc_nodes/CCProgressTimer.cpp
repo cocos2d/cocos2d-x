@@ -237,7 +237,7 @@ Point ProgressTimer::getMidpoint(void)
 
 void ProgressTimer::setMidpoint(Point midPoint)
 {
-    _midpoint = midPoint.getClampPoint(PointZero, Point(1, 1));
+    _midpoint = midPoint.getClampPoint(Point::ZERO, Point(1, 1));
 }
 
 ///
@@ -266,7 +266,7 @@ void ProgressTimer::updateRadial(void)
 
 
     int index = 0;
-    Point hit = PointZero;
+    Point hit = Point::ZERO;
 
     if (alpha == 0.f) {
         //    More efficient since we don't always need to check intersection
@@ -483,7 +483,7 @@ Point ProgressTimer::boundaryTexCoord(char index)
             return Point((kProgressTextureCoords>>((index<<1)+1))&1,(kProgressTextureCoords>>(index<<1))&1);
         }
     }
-    return PointZero;
+    return Point::ZERO;
 }
 
 void ProgressTimer::draw(void)

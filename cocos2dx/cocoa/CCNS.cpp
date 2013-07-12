@@ -99,7 +99,7 @@ static bool splitWithForm(const char* pStr, strArray& strs)
 
 Rect RectFromString(const char* pszContent)
 {
-    Rect result = RectZero;
+    Rect result = Rect::ZERO;
 
     do 
     {
@@ -148,7 +148,7 @@ Rect RectFromString(const char* pszContent)
 
 Point PointFromString(const char* pszContent)
 {
-    Point ret = PointZero;
+    Point ret = Point::ZERO;
 
     do 
     {
@@ -166,7 +166,7 @@ Point PointFromString(const char* pszContent)
 
 Size SizeFromString(const char* pszContent)
 {
-    Size ret = SizeZero;
+    Size ret = Size::ZERO;
 
     do 
     {

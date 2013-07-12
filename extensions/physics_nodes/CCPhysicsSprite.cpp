@@ -384,7 +384,7 @@ AffineTransform PhysicsSprite::nodeToParentTransform()
 	float c = cosf(radians);
 	float s = sinf(radians);
 
-	if (!_anchorPointInPoints.equals(PointZero))
+	if (!_anchorPointInPoints.equals(Point::ZERO))
     {
 		x += ((c * -_anchorPointInPoints.x * _scaleX) + (-s * -_anchorPointInPoints.y * _scaleY));
 		y += ((s * -_anchorPointInPoints.x * _scaleX) + (c * -_anchorPointInPoints.y * _scaleY));

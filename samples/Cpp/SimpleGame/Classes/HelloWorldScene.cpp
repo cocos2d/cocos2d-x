@@ -84,7 +84,7 @@ bool HelloWorld::init()
 
 		// Create a menu with the "close" menu item, it's an auto release object.
 		Menu* pMenu = Menu::create(pCloseItem, NULL);
-		pMenu->setPosition(PointZero);
+		pMenu->setPosition(Point::ZERO);
 		CC_BREAK_IF(! pMenu);
 
 		// Add the menu to HelloWorld layer as a child layer.

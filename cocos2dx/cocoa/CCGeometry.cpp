@@ -185,7 +185,7 @@ Point Point::getIntersectPoint(const Point& A, const Point& B, const Point& C, c
         return P;
     }
     
-    return PointZero;
+    return Point::ZERO;
 }
 
 const Point Point::ZERO = Point(0, 0);
