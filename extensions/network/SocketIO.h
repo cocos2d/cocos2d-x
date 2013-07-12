@@ -100,15 +100,17 @@ public:
      */
 	static SIOClient* connect(SocketIO::SIODelegate& delegate, const std::string& uri);
 	
-	SIOClientImpl* getSocket(const std::string& uri);
-	void addSocket(const std::string& uri, SIOClientImpl* socket);
-	void removeSocket(const std::string& uri);
-
 private:
 
 	static SocketIO *_inst;
 
 	Dictionary* _sockets;
+
+	SIOClientImpl* getSocket(const std::string& uri);
+	void addSocket(const std::string& uri, SIOClientImpl* socket);
+	void removeSocket(const std::string& uri);
+
+	friend SIOClientImpl;
 	
 };
 
@@ -133,15 +135,22 @@ private:
 
 	EventRegistry _eventRegistry;
 
-public:
-	SIOClient(const std::string& host, int port, const std::string& path, SIOClientImpl* impl, SocketIO::SIODelegate& delegate);
-	virtual ~SIOClient(void);
-
-	SocketIO::SIODelegate* getDelegate() { return _delegate; };
+	void fireEvent(const std::string& eventName, const std::string& data);
 
 	void onOpen();
 	void onConnect();
 	void receivedDisconnect();
+
+	friend SIOClientImpl;
+
+public:
+	SIOClient(const std::string& host, int port, const std::string& path, SIOClientImpl* impl, SocketIO::SIODelegate& delegate);
+	virtual ~SIOClient(void);
+
+	/**
+     *  @brief Returns the delegate for the client
+     */
+	SocketIO::SIODelegate* getDelegate() { return _delegate; };
 
 	/**
      *  @brief Disconnect from the endpoint, onClose will be called on the delegate when comlpete
@@ -160,8 +169,7 @@ public:
 	 *		   Event argument should be passed using CC_CALLBACK2(&Base::function, this)
      */
 	void on(const std::string& eventName, SIOEvent e);
-	void fireEvent(const std::string& eventName, const std::string& data);
-
+	
 	inline void setTag(const char* tag)
     {
         _tag = tag;
