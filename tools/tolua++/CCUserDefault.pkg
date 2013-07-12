@@ -17,7 +17,12 @@ class CCUserDefault
 
 	void flush();
 
+    // XXX: deprecated
     static CCUserDefault* sharedUserDefault();
     static void purgeSharedUserDefault();
+
+    static CCUserDefault* getInstance();
+    static void destroyInstance();
+    
     const static std::string& getXMLFilePath();
 };

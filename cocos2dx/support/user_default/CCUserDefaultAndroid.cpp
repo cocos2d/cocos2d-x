@@ -150,15 +150,21 @@ UserDefault::UserDefault()
 	_spUserDefault = NULL;
 }
 
+// XXX: deprecated
 void UserDefault::purgeSharedUserDefault()
+{
+    UserDefault::destroyInstance();
+}
+
+void UserDefault::destroyInstance()
 {
     _spUserDefault = NULL;
 }
 
- bool UserDefault::getBoolForKey(const char* pKey)
- {
-     return getBoolForKey(pKey, false);
- }
+bool UserDefault::getBoolForKey(const char* pKey)
+{
+    return getBoolForKey(pKey, false);
+}
 
 bool UserDefault::getBoolForKey(const char* pKey, bool defaultValue)
 {
@@ -474,8 +480,13 @@ void UserDefault::setDataForKey(const char* pKey, const Data& value)
     }
 }
 
-
+// XXX: deprecated
 UserDefault* UserDefault::sharedUserDefault()
+{
+    return UserDefault::getInstance();
+}
+
+UserDefault* UserDefault::getInstance()
 {
 #ifdef KEEP_COMPATABILITY
     initXMLFilePath();
