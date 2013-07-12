@@ -7,7 +7,7 @@ CurlTest::CurlTest()
 {
     LabelTTF* label = LabelTTF::create("Curl Test", "Arial", 28);
     addChild(label, 0);
-    label->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y-50) );
+    label->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y-50) );
 
     setTouchEnabled(true);
 

@@ -23,6 +23,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     EGLView* pEGLView = EGLView::getInstance();
 
     pDirector->setOpenGLView(pEGLView);
+    
+    Size size = pDirector->getWinSize();
 
     // Set the design resolution
     pEGLView->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, kResolutionNoBorder);

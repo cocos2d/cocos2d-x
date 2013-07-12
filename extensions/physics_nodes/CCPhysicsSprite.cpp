@@ -277,14 +277,14 @@ const Point& PhysicsSprite::getPosFromPhysics() const
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 
     cpVect cpPos = cpBodyGetPos(_CPBody);
-    s_physicPosion = ccp(cpPos.x, cpPos.y);
+    s_physicPosion = Point(cpPos.x, cpPos.y);
 
 #elif CC_ENABLE_BOX2D_INTEGRATION
 
     b2Vec2 pos = _pB2Body->GetPosition();
     float x = pos.x * _PTMRatio;
     float y = pos.y * _PTMRatio;
-    s_physicPosion = ccp(x,y);
+    s_physicPosion = Point(x,y);
 #endif
     return s_physicPosion;
 }
@@ -384,7 +384,7 @@ AffineTransform PhysicsSprite::nodeToParentTransform()
 	float c = cosf(radians);
 	float s = sinf(radians);
 
-	if (!_anchorPointInPoints.equals(PointZero))
+	if (!_anchorPointInPoints.equals(Point::ZERO))
     {
 		x += ((c * -_anchorPointInPoints.x * _scaleX) + (-s * -_anchorPointInPoints.y * _scaleY));
 		y += ((s * -_anchorPointInPoints.x * _scaleX) + (c * -_anchorPointInPoints.y * _scaleY));

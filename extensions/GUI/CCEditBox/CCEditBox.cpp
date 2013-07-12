@@ -90,7 +90,7 @@ bool EditBox::initWithSizeAndBackgroundSprite(const Size& size, Scale9Sprite* pP
         
         this->setZoomOnTouchDown(false);
         this->setPreferredSize(size);
-        this->setPosition(ccp(0, 0));
+        this->setPosition(Point(0, 0));
         this->addTargetWithActionForControlEvent(this, cccontrol_selector(EditBox::touchDownAction), ControlEventTouchUpInside);
         
         return true;
@@ -342,7 +342,7 @@ void EditBox::onExit(void)
 static Rect getRect(Node * pNode)
 {
 	Size contentSize = pNode->getContentSize();
-	Rect rect = CCRectMake(0, 0, contentSize.width, contentSize.height);
+	Rect rect = Rect(0, 0, contentSize.width, contentSize.height);
 	return RectApplyAffineTransform(rect, pNode->nodeToWorldTransform());
 }
 

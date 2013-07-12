@@ -97,7 +97,7 @@ local TESTS_COUNT = table.getn(_allTests)
 -- create scene
 local function CreateTestScene(nIdx)
     local scene = _allTests[nIdx].create_func()
-    CCDirector:getInstance():purgeCachedData()
+    CCDirector:sharedDirector():purgeCachedData()
     return scene
 end
 -- create menu
@@ -105,7 +105,7 @@ function CreateTestMenu()
     local menuLayer = CCLayer:create()
 
     local function closeCallback()
-        CCDirector:getInstance():endToLua()
+        CCDirector:sharedDirector():endToLua()
     end
 
     local function menuCallback(tag)
@@ -113,12 +113,12 @@ function CreateTestMenu()
         local Idx = tag - 10000
         local testScene = CreateTestScene(Idx)
         if testScene then
-            CCDirector:getInstance():replaceScene(testScene)
+            CCDirector:sharedDirector():replaceScene(testScene)
         end
     end
 
     -- add close menu
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
     local CloseItem = CCMenuItemImage:create(s_pPathClose, s_pPathClose)
     CloseItem:registerScriptTapHandler(closeCallback)
     CloseItem:setPosition(ccp(s.width - 30, s.height - 30))
@@ -158,7 +158,7 @@ function CreateTestMenu()
         local nMoveY = y - BeginPos.y
         local curPosx, curPosy = MainMenu:getPosition()
         local nextPosy = curPosy + nMoveY
-        local winSize = CCDirector:getInstance():getWinSize()
+        local winSize = CCDirector:sharedDirector():getWinSize()
         if nextPosy < 0 then
             MainMenu:setPosition(0, 0)
             return

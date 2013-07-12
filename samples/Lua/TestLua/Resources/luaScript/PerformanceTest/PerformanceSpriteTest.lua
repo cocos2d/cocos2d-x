@@ -3,7 +3,7 @@ local kBasicZOrder = 10
 local kNodesIncrease = 250
 local TEST_COUNT = 7
 
-local s = CCDirector:getInstance():getWinSize()
+local s = CCDirector:sharedDirector():getWinSize()
 
 -----------------------------------
 --  For test functions
@@ -80,7 +80,7 @@ local function initWithSubTest(nSubTest, p)
 	parent = p
 	batchNode = nil
 
-	local mgr = CCTextureCache:getInstance()
+	local mgr = CCTextureCache:sharedTextureCache()
 	-- remove all texture
 	mgr:removeTexture(mgr:addImage("Images/grossinis_sister1.png"))
     mgr:removeTexture(mgr:addImage("Images/grossini_dance_atlas.png"))
@@ -215,7 +215,7 @@ local maxCases = 7
 
 local function showThisTest()
 	local scene = CreateSpriteTestScene()
-	CCDirector:getInstance():replaceScene(scene)
+	CCDirector:sharedDirector():replaceScene(scene)
 end
 
 local function backCallback(sender)
@@ -240,7 +240,7 @@ local function nextCallback(sender)
 end
 
 local function toPerformanceMainLayer(sender)
-	CCDirector:getInstance():replaceScene(PerformanceTest())
+	CCDirector:sharedDirector():replaceScene(PerformanceTest())
 end
 
 local function initWithLayer(layer, controlMenuVisible)

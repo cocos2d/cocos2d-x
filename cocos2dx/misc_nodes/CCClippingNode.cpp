@@ -152,7 +152,7 @@ void ClippingNode::drawFullScreenQuadClearStencil()
     kmGLPushMatrix();
     kmGLLoadIdentity();
     
-    ccDrawSolidRect(ccp(-1,-1), ccp(1,1), Color4F(1, 1, 1, 1));
+    ccDrawSolidRect(Point(-1,-1), Point(1,1), Color4F(1, 1, 1, 1));
     
     kmGLMatrixMode(KM_GL_PROJECTION);
     kmGLPopMatrix();
@@ -273,7 +273,7 @@ void ClippingNode::visit()
     glStencilOp(!_inverted ? GL_ZERO : GL_REPLACE, GL_KEEP, GL_KEEP);
     
     // draw a fullscreen solid rectangle to clear the stencil buffer
-    //ccDrawSolidRect(PointZero, ccpFromSize([[Director sharedDirector] winSize]), Color4F(1, 1, 1, 1));
+    //ccDrawSolidRect(Point::ZERO, ccpFromSize([[Director sharedDirector] winSize]), Color4F(1, 1, 1, 1));
     drawFullScreenQuadClearStencil();
     
     ///////////////////////////////////

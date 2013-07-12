@@ -58,6 +58,6 @@ class CCDirector : public CCObject
     CCPoint getVisibleOrigin();
 
     /** @deprecated Use getInstance() instead */
-    static CCDirector* sharedDirector();
+    static CCDirector* sharedDirector(void);
     static CCDirector* getInstance();
 };

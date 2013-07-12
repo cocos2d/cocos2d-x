@@ -276,12 +276,12 @@ public:
     /**
      * Changes the position (x,y) of the node in OpenGL coordinates
      *
-     * Usually we use ccp(x,y) to compose Point object.
+     * Usually we use Point(x,y) to compose Point object.
      * The original point (0,0) is at the left-bottom corner of screen.
      * For example, this codesnip sets the node in the center of screen.
      * @code
      * Size size = Director::getInstance()->getWinSize();
-     * node->setPosition( ccp(size.width/2, size.height/2) )
+     * node->setPosition( Point(size.width/2, size.height/2) )
      * @endcode
      *
      * @param position  The position (x,y) of the node in OpenGL coordinates
@@ -1273,7 +1273,7 @@ public:
         this->addChild(spriteB); 
 
         //position
-        spriteA->setPosition(ccp(200, 200));
+        spriteA->setPosition(Point(200, 200));
      
         // Gets the spriteA's transform.
         AffineTransform t = spriteA->nodeToParentTransform();
@@ -1448,8 +1448,8 @@ public:
 protected:
 	GLubyte		_displayedOpacity;
     GLubyte     _realOpacity;
-	Color3B	_displayedColor;
-    Color3B   _realColor;
+	Color3B	    _displayedColor;
+    Color3B     _realColor;
 	bool		_cascadeColorEnabled;
     bool        _cascadeOpacityEnabled;
 };

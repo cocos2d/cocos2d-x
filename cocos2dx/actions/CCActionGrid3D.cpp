@@ -79,10 +79,10 @@ void Waves3D::update(float time)
     {
         for (j = 0; j < _gridSize.height + 1; ++j)
         {
-            Vertex3F v = getOriginalVertex(ccp(i ,j));
+            Vertex3F v = getOriginalVertex(Point(i ,j));
             v.z += (sinf((float)M_PI * time * _waves * 2 + (v.y+v.x) * 0.01f) * _amplitude * _amplitudeRate);
             //CCLOG("v.z offset is %f\n", (sinf((float)M_PI * time * _waves * 2 + (v.y+v.x) * .01f) * _amplitude * _amplitudeRate));
-            setVertex(ccp(i, j), v);
+            setVertex(Point(i, j), v);
         }
     }
 }
@@ -110,7 +110,7 @@ FlipX3D* FlipX3D::create(float duration)
 
 bool FlipX3D::initWithDuration(float duration)
 {
-    return Grid3DAction::initWithDuration(duration, CCSizeMake(1, 1));
+    return Grid3DAction::initWithDuration(duration, Size(1, 1));
 }
 
 bool FlipX3D::initWithSize(const Size& gridSize, float duration)
@@ -144,8 +144,8 @@ void FlipX3D::update(float time)
 
     Vertex3F v0, v1, v, diff;
 
-    v0 = getOriginalVertex(ccp(1, 1));
-    v1 = getOriginalVertex(ccp(0, 0));
+    v0 = getOriginalVertex(Point(1, 1));
+    v1 = getOriginalVertex(Point(0, 0));
 
     float    x0 = v0.x;
     float    x1 = v1.x;
@@ -155,19 +155,19 @@ void FlipX3D::update(float time)
     if ( x0 > x1 )
     {
         // Normal Grid
-        a = ccp(0,0);
-        b = ccp(0,1);
-        c = ccp(1,0);
-        d = ccp(1,1);
+        a = Point(0,0);
+        b = Point(0,1);
+        c = Point(1,0);
+        d = Point(1,1);
         x = x0;
     }
     else
     {
         // Reversed Grid
-        c = ccp(0,0);
-        d = ccp(0,1);
-        a = ccp(1,0);
-        b = ccp(1,1);
+        c = Point(0,0);
+        d = Point(0,1);
+        a = Point(1,0);
+        b = Point(1,1);
         x = x1;
     }
     
@@ -238,8 +238,8 @@ void FlipY3D::update(float time)
     
     Vertex3F    v0, v1, v, diff;
     
-    v0 = getOriginalVertex(ccp(1, 1));
-    v1 = getOriginalVertex(ccp(0, 0));
+    v0 = getOriginalVertex(Point(1, 1));
+    v1 = getOriginalVertex(Point(0, 0));
     
     float    y0 = v0.y;
     float    y1 = v1.y;
@@ -249,19 +249,19 @@ void FlipY3D::update(float time)
     if (y0 > y1)
     {
         // Normal Grid
-        a = ccp(0,0);
-        b = ccp(0,1);
-        c = ccp(1,0);
-        d = ccp(1,1);
+        a = Point(0,0);
+        b = Point(0,1);
+        c = Point(1,0);
+        d = Point(1,1);
         y = y0;
     }
     else
     {
         // Reversed Grid
-        b = ccp(0,0);
-        a = ccp(0,1);
-        d = ccp(1,0);
-        c = ccp(1,1);
+        b = Point(0,0);
+        a = Point(0,1);
+        d = Point(1,0);
+        c = Point(1,1);
         y = y1;
     }
     
@@ -319,7 +319,7 @@ bool Lens3D::initWithDuration(float duration, const Size& gridSize, const Point&
 {
     if (Grid3DAction::initWithDuration(duration, gridSize))
     {
-        _position = ccp(-1, -1);
+        _position = Point(-1, -1);
         setPosition(position);
         _radius = radius;
         _lensEffect = 0.7f;
@@ -361,9 +361,9 @@ void Lens3D::update(float time)
         {
             for (j = 0; j < _gridSize.height + 1; ++j)
             {
-                Vertex3F v = getOriginalVertex(ccp(i, j));
-                Point vect = ccpSub(_position, ccp(v.x, v.y));
-                float r = ccpLength(vect);
+                Vertex3F v = getOriginalVertex(Point(i, j));
+                Point vect = _position - Point(v.x, v.y);
+                float r = vect.getLength();
                 
                 if (r < _radius)
                 {
@@ -377,15 +377,15 @@ void Lens3D::update(float time)
                     float l = logf(pre_log) * _lensEffect;
                     float new_r = expf( l ) * _radius;
                     
-                    if (ccpLength(vect) > 0)
+                    if (vect.getLength() > 0)
                     {
-                        vect = ccpNormalize(vect);
-                        Point new_vect = ccpMult(vect, new_r);
-                        v.z += (_concave ? -1.0f : 1.0f) * ccpLength(new_vect) * _lensEffect;
+                        vect = vect.normalize();
+                        Point new_vect = vect * new_r;
+                        v.z += (_concave ? -1.0f : 1.0f) * new_vect.getLength() * _lensEffect;
                     }
                 }
                 
-                setVertex(ccp(i, j), v);
+                setVertex(Point(i, j), v);
             }
         }
         
@@ -453,9 +453,9 @@ void Ripple3D::update(float time)
     {
         for (j = 0; j < (_gridSize.height+1); ++j)
         {
-            Vertex3F v = getOriginalVertex(ccp(i, j));
-            Point vect = ccpSub(_position, ccp(v.x,v.y));
-            float r = ccpLength(vect);
+            Vertex3F v = getOriginalVertex(Point(i, j));
+            Point vect = _position - Point(v.x,v.y);
+            float r = vect.getLength();
             
             if (r < _radius)
             {
@@ -464,7 +464,7 @@ void Ripple3D::update(float time)
                 v.z += (sinf( time*(float)M_PI * _waves * 2 + r * 0.1f) * _amplitude * _amplitudeRate * rate);
             }
             
-            setVertex(ccp(i, j), v);
+            setVertex(Point(i, j), v);
         }
     }
 }
@@ -521,7 +521,7 @@ void Shaky3D::update(float time)
     {
         for (j = 0; j < (_gridSize.height+1); ++j)
         {
-            Vertex3F v = getOriginalVertex(ccp(i ,j));
+            Vertex3F v = getOriginalVertex(Point(i ,j));
             v.x += (rand() % (_randrange*2)) - _randrange;
             v.y += (rand() % (_randrange*2)) - _randrange;
             if (_shakeZ)
@@ -529,7 +529,7 @@ void Shaky3D::update(float time)
                 v.z += (rand() % (_randrange*2)) - _randrange;
             }
             
-            setVertex(ccp(i, j), v);
+            setVertex(Point(i, j), v);
         }
     }
 }
@@ -586,10 +586,10 @@ void Liquid::update(float time)
     {
         for (j = 1; j < _gridSize.height; ++j)
         {
-            Vertex3F v = getOriginalVertex(ccp(i, j));
+            Vertex3F v = getOriginalVertex(Point(i, j));
             v.x = (v.x + (sinf(time * (float)M_PI * _waves * 2 + v.x * .01f) * _amplitude * _amplitudeRate));
             v.y = (v.y + (sinf(time * (float)M_PI * _waves * 2 + v.y * .01f) * _amplitude * _amplitudeRate));
-            setVertex(ccp(i, j), v);
+            setVertex(Point(i, j), v);
         }
     }
 }
@@ -648,7 +648,7 @@ void Waves::update(float time)
     {
         for (j = 0; j < _gridSize.height + 1; ++j)
         {
-            Vertex3F v = getOriginalVertex(ccp(i, j));
+            Vertex3F v = getOriginalVertex(Point(i, j));
 
             if (_vertical)
             {
@@ -660,7 +660,7 @@ void Waves::update(float time)
                 v.y = (v.y + (sinf(time * (float)M_PI * _waves * 2 + v.x * .01f) * _amplitude * _amplitudeRate));
             }
 
-            setVertex(ccp(i, j), v);
+            setVertex(Point(i, j), v);
         }
     }
 }
@@ -724,22 +724,22 @@ void Twirl::update(float time)
     {
         for (j = 0; j < (_gridSize.height+1); ++j)
         {
-            Vertex3F v = getOriginalVertex(ccp(i ,j));
+            Vertex3F v = getOriginalVertex(Point(i ,j));
             
-            Point    avg = ccp(i-(_gridSize.width/2.0f), j-(_gridSize.height/2.0f));
-            float r = ccpLength(avg);
+            Point    avg = Point(i-(_gridSize.width/2.0f), j-(_gridSize.height/2.0f));
+            float r = avg.getLength();
             
             float amp = 0.1f * _amplitude * _amplitudeRate;
             float a = r * cosf( (float)M_PI/2.0f + time * (float)M_PI * _twirls * 2 ) * amp;
             
-            Point d = ccp(
+            Point d = Point(
                 sinf(a) * (v.y-c.y) + cosf(a) * (v.x-c.x),
                 cosf(a) * (v.y-c.y) - sinf(a) * (v.x-c.x));
             
             v.x = c.x + d.x;
             v.y = c.y + d.y;
 
-            setVertex(ccp(i ,j), v);
+            setVertex(Point(i ,j), v);
         }
     }
 }

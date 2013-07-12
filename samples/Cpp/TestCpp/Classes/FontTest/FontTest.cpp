@@ -86,7 +86,7 @@ void FontTest::showFont(const char *pFont)
 {
     Size s = Director::getInstance()->getWinSize();
 
-    Size blockSize = CCSizeMake(s.width/3, 200);
+    Size blockSize = Size(s.width/3, 200);
     float fontSize = 26;
 
     removeChildByTag(kTagLabel1, true);
@@ -114,20 +114,20 @@ void FontTest::showFont(const char *pFont)
     rightColor->ignoreAnchorPointForPosition(false);
 
 
-    top->setAnchorPoint(ccp(0.5, 1));
-    left->setAnchorPoint(ccp(0,0.5));
-    leftColor->setAnchorPoint(ccp(0,0.5));
-    center->setAnchorPoint(ccp(0,0.5));
-    centerColor->setAnchorPoint(ccp(0,0.5));
-    right->setAnchorPoint(ccp(0,0.5));
-    rightColor->setAnchorPoint(ccp(0,0.5));
+    top->setAnchorPoint(Point(0.5, 1));
+    left->setAnchorPoint(Point(0,0.5));
+    leftColor->setAnchorPoint(Point(0,0.5));
+    center->setAnchorPoint(Point(0,0.5));
+    centerColor->setAnchorPoint(Point(0,0.5));
+    right->setAnchorPoint(Point(0,0.5));
+    rightColor->setAnchorPoint(Point(0,0.5));
 
-    top->setPosition(ccp(s.width/2,s.height-20));
-    left->setPosition(ccp(0,s.height/2));
+    top->setPosition(Point(s.width/2,s.height-20));
+    left->setPosition(Point(0,s.height/2));
     leftColor->setPosition(left->getPosition());
-    center->setPosition(ccp(blockSize.width, s.height/2));
+    center->setPosition(Point(blockSize.width, s.height/2));
     centerColor->setPosition(center->getPosition());
-    right->setPosition(ccp(blockSize.width*2, s.height/2));
+    right->setPosition(Point(blockSize.width*2, s.height/2));
     rightColor->setPosition(right->getPosition());
 
     this->addChild(leftColor, -1, kTagColor1);

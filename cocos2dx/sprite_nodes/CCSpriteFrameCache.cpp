@@ -144,10 +144,10 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(Dictionary* dictionary, Tex
             // create frame
             spriteFrame = new SpriteFrame();
             spriteFrame->initWithTexture(pobTexture, 
-                                        CCRectMake(x, y, w, h), 
+                                        Rect(x, y, w, h), 
                                         false,
-                                        CCPointMake(ox, oy),
-                                        CCSizeMake((float)ow, (float)oh)
+                                        Point(ox, oy),
+                                        Size((float)ow, (float)oh)
                                         );
         } 
         else if(format == 1 || format == 2) 
@@ -201,7 +201,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(Dictionary* dictionary, Tex
             // create frame
             spriteFrame = new SpriteFrame();
             spriteFrame->initWithTexture(pobTexture,
-                            CCRectMake(textureRect.origin.x, textureRect.origin.y, spriteSize.width, spriteSize.height),
+                            Rect(textureRect.origin.x, textureRect.origin.y, spriteSize.width, spriteSize.height),
                             textureRotated,
                             spriteOffset,
                             spriteSourceSize);

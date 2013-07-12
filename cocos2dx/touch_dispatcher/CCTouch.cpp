@@ -67,7 +67,7 @@ Point Touch::getStartLocation() const
 // returns the delta position between the current location and the previous location in OpenGL coordinates
 Point Touch::getDelta() const
 {     
-    return ccpSub(getLocation(), getPreviousLocation()); 
+    return getLocation() - getPreviousLocation();
 }
 
 NS_CC_END

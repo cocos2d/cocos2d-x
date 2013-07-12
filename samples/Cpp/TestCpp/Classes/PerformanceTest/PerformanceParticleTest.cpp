@@ -100,18 +100,18 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
 
     Menu *menu = Menu::create(decrease, increase, NULL);
     menu->alignItemsHorizontally();
-    menu->setPosition(ccp(s.width/2, s.height/2+15));
+    menu->setPosition(Point(s.width/2, s.height/2+15));
     addChild(menu, 1);
 
     LabelTTF *infoLabel = LabelTTF::create("0 nodes", "Marker Felt", 30);
     infoLabel->setColor(Color3B(0,200,20));
-    infoLabel->setPosition(ccp(s.width/2, s.height - 90));
+    infoLabel->setPosition(Point(s.width/2, s.height - 90));
     addChild(infoLabel, 1, kTagInfoLayer);
 
     // particles on stage
     LabelAtlas *labelAtlas = LabelAtlas::create("0000", "fps_images.png", 12, 32, '.');
     addChild(labelAtlas, 0, kTagLabelAtlas);
-    labelAtlas->setPosition(ccp(s.width-66,50));
+    labelAtlas->setPosition(Point(s.width-66,50));
 
     // Next Prev Test
     ParticleMenuLayer* pMenu = new ParticleMenuLayer(true, TEST_COUNT, s_nParCurIdx);
@@ -139,12 +139,12 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
         }
     }
     pSubMenu->alignItemsHorizontally();
-    pSubMenu->setPosition(ccp(s.width/2, 80));
+    pSubMenu->setPosition(Point(s.width/2, 80));
     addChild(pSubMenu, 2);
 
     LabelTTF *label = LabelTTF::create(title().c_str(), "Arial", 40);
     addChild(label, 1);
-    label->setPosition(ccp(s.width/2, s.height-32));
+    label->setPosition(Point(s.width/2, s.height-32));
     label->setColor(Color3B(255,255,40));
 
     updateQuantityLabel();
@@ -298,7 +298,7 @@ void ParticlePerformTest1::doTest()
     particleSystem->setDuration(-1);
 
     // gravity
-    particleSystem->setGravity(ccp(0,-90));
+    particleSystem->setGravity(Point(0,-90));
 
     // angle
     particleSystem->setAngle(90);
@@ -313,8 +313,8 @@ void ParticlePerformTest1::doTest()
     particleSystem->setSpeedVar(50);
 
     // emitter position
-    particleSystem->setPosition(ccp(s.width/2, 100));
-    particleSystem->setPosVar(ccp(s.width/2,0));
+    particleSystem->setPosition(Point(s.width/2, 100));
+    particleSystem->setPosVar(Point(s.width/2,0));
 
     // life of particles
     particleSystem->setLife(2.0f);
@@ -368,7 +368,7 @@ void ParticlePerformTest2::doTest()
     particleSystem->setDuration(-1);
 
     // gravity
-    particleSystem->setGravity(ccp(0,-90));
+    particleSystem->setGravity(Point(0,-90));
 
     // angle
     particleSystem->setAngle(90);
@@ -383,8 +383,8 @@ void ParticlePerformTest2::doTest()
     particleSystem->setSpeedVar(50);
 
     // emitter position
-    particleSystem->setPosition(ccp(s.width/2, 100));
-    particleSystem->setPosVar(ccp(s.width/2,0));
+    particleSystem->setPosition(Point(s.width/2, 100));
+    particleSystem->setPosVar(Point(s.width/2,0));
 
     // life of particles
     particleSystem->setLife(2.0f);
@@ -438,7 +438,7 @@ void ParticlePerformTest3::doTest()
     particleSystem->setDuration(-1);
 
     // gravity
-    particleSystem->setGravity(ccp(0,-90));
+    particleSystem->setGravity(Point(0,-90));
 
     // angle
     particleSystem->setAngle(90);
@@ -453,8 +453,8 @@ void ParticlePerformTest3::doTest()
     particleSystem->setSpeedVar(50);
 
     // emitter position
-    particleSystem->setPosition(ccp(s.width/2, 100));
-    particleSystem->setPosVar(ccp(s.width/2,0));
+    particleSystem->setPosition(Point(s.width/2, 100));
+    particleSystem->setPosVar(Point(s.width/2,0));
 
     // life of particles
     particleSystem->setLife(2.0f);
@@ -508,7 +508,7 @@ void ParticlePerformTest4::doTest()
     particleSystem->setDuration(-1);
 
     // gravity
-    particleSystem->setGravity(ccp(0,-90));
+    particleSystem->setGravity(Point(0,-90));
 
     // angle
     particleSystem->setAngle(90);
@@ -523,8 +523,8 @@ void ParticlePerformTest4::doTest()
     particleSystem->setSpeedVar(50);
 
     // emitter position
-    particleSystem->setPosition(ccp(s.width/2, 100));
-    particleSystem->setPosVar(ccp(s.width/2,0));
+    particleSystem->setPosition(Point(s.width/2, 100));
+    particleSystem->setPosVar(Point(s.width/2,0));
 
     // life of particles
     particleSystem->setLife(2.0f);

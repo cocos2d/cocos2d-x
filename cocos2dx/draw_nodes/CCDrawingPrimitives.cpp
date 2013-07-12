@@ -220,19 +220,19 @@ void ccDrawLine( const Point& origin, const Point& destination )
 
 void ccDrawRect( Point origin, Point destination )
 {
-    ccDrawLine(CCPointMake(origin.x, origin.y), CCPointMake(destination.x, origin.y));
-    ccDrawLine(CCPointMake(destination.x, origin.y), CCPointMake(destination.x, destination.y));
-    ccDrawLine(CCPointMake(destination.x, destination.y), CCPointMake(origin.x, destination.y));
-    ccDrawLine(CCPointMake(origin.x, destination.y), CCPointMake(origin.x, origin.y));
+    ccDrawLine(Point(origin.x, origin.y), Point(destination.x, origin.y));
+    ccDrawLine(Point(destination.x, origin.y), Point(destination.x, destination.y));
+    ccDrawLine(Point(destination.x, destination.y), Point(origin.x, destination.y));
+    ccDrawLine(Point(origin.x, destination.y), Point(origin.x, origin.y));
 }
 
 void ccDrawSolidRect( Point origin, Point destination, Color4F color )
 {
     Point vertices[] = {
         origin,
-        ccp(destination.x, origin.y),
+        Point(destination.x, origin.y),
         destination,
-        ccp(origin.x, destination.y)
+        Point(origin.x, destination.y)
     };
 
     ccDrawSolidPoly(vertices, 4, color );

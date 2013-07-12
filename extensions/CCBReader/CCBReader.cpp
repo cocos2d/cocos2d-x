@@ -817,8 +817,10 @@ CCBKeyframe* CCBReader::readKeyframe(int type)
         if (spriteSheet.length() == 0)
         {
             spriteFile = mCCBRootPath + spriteFile;
+
             Texture2D *texture = TextureCache::getInstance()->addImage(spriteFile.c_str());
-            Rect bounds = CCRectMake(0, 0, texture->getContentSize().width, texture->getContentSize().height);
+            Rect bounds = Rect(0, 0, texture->getContentSize().width, texture->getContentSize().height);
+            
             spriteFrame = SpriteFrame::createWithTexture(texture, bounds);
         }
         else

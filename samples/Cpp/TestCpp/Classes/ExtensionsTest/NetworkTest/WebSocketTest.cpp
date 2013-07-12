@@ -28,49 +28,49 @@ WebSocketTestLayer::WebSocketTestLayer()
     const int SPACE = 35;
     
     LabelTTF *label = LabelTTF::create("WebSocket Test", "Arial", 28);
-    label->setPosition(ccp(winSize.width / 2, winSize.height - MARGIN));
+    label->setPosition(Point(winSize.width / 2, winSize.height - MARGIN));
     addChild(label, 0);
     
     Menu *menuRequest = Menu::create();
-    menuRequest->setPosition(PointZero);
+    menuRequest->setPosition(Point::ZERO);
     addChild(menuRequest);
     
     // Send Text
     LabelTTF *labelSendText = LabelTTF::create("Send Text", "Arial", 22);
     MenuItemLabel *itemSendText = MenuItemLabel::create(labelSendText, CC_CALLBACK_1(WebSocketTestLayer::onMenuSendTextClicked, this));
-    itemSendText->setPosition(ccp(winSize.width / 2, winSize.height - MARGIN - SPACE));
+    itemSendText->setPosition(Point(winSize.width / 2, winSize.height - MARGIN - SPACE));
     menuRequest->addChild(itemSendText);
     
     // Send Binary
     LabelTTF *labelSendBinary = LabelTTF::create("Send Binary", "Arial", 22);
     MenuItemLabel *itemSendBinary = MenuItemLabel::create(labelSendBinary, CC_CALLBACK_1(WebSocketTestLayer::onMenuSendBinaryClicked, this));
-    itemSendBinary->setPosition(ccp(winSize.width / 2, winSize.height - MARGIN - 2 * SPACE));
+    itemSendBinary->setPosition(Point(winSize.width / 2, winSize.height - MARGIN - 2 * SPACE));
     menuRequest->addChild(itemSendBinary);
     
 
     // Send Text Status Label
-    _sendTextStatus = LabelTTF::create("Send Text WS is waiting...", "Arial", 14, CCSizeMake(160, 100), kTextAlignmentCenter, kVerticalTextAlignmentTop);
-    _sendTextStatus->setAnchorPoint(ccp(0, 0));
-    _sendTextStatus->setPosition(ccp(VisibleRect::left().x, VisibleRect::rightBottom().y + 25));
+    _sendTextStatus = LabelTTF::create("Send Text WS is waiting...", "Arial", 14, Size(160, 100), kTextAlignmentCenter, kVerticalTextAlignmentTop);
+    _sendTextStatus->setAnchorPoint(Point(0, 0));
+    _sendTextStatus->setPosition(Point(VisibleRect::left().x, VisibleRect::rightBottom().y + 25));
     this->addChild(_sendTextStatus);
     
     // Send Binary Status Label
-    _sendBinaryStatus = LabelTTF::create("Send Binary WS is waiting...", "Arial", 14, CCSizeMake(160, 100), kTextAlignmentCenter, kVerticalTextAlignmentTop);
-    _sendBinaryStatus->setAnchorPoint(ccp(0, 0));
-    _sendBinaryStatus->setPosition(ccp(VisibleRect::left().x + 160, VisibleRect::rightBottom().y + 25));
+    _sendBinaryStatus = LabelTTF::create("Send Binary WS is waiting...", "Arial", 14, Size(160, 100), kTextAlignmentCenter, kVerticalTextAlignmentTop);
+    _sendBinaryStatus->setAnchorPoint(Point(0, 0));
+    _sendBinaryStatus->setPosition(Point(VisibleRect::left().x + 160, VisibleRect::rightBottom().y + 25));
     this->addChild(_sendBinaryStatus);
     
     // Error Label
-    _errorStatus = LabelTTF::create("Error WS is waiting...", "Arial", 14, CCSizeMake(160, 100), kTextAlignmentCenter, kVerticalTextAlignmentTop);
-    _errorStatus->setAnchorPoint(ccp(0, 0));
-    _errorStatus->setPosition(ccp(VisibleRect::left().x + 320, VisibleRect::rightBottom().y + 25));
+    _errorStatus = LabelTTF::create("Error WS is waiting...", "Arial", 14, Size(160, 100), kTextAlignmentCenter, kVerticalTextAlignmentTop);
+    _errorStatus->setAnchorPoint(Point(0, 0));
+    _errorStatus->setPosition(Point(VisibleRect::left().x + 320, VisibleRect::rightBottom().y + 25));
     this->addChild(_errorStatus);
     
     // Back Menu
     MenuItemFont *itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(WebSocketTestLayer::toExtensionsMainLayer, this));
-    itemBack->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
+    itemBack->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
     Menu *menuBack = Menu::create(itemBack, NULL);
-    menuBack->setPosition(PointZero);
+    menuBack->setPosition(Point::ZERO);
     addChild(menuBack);
     
     _wsiSendText = new WebSocket();

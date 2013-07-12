@@ -258,7 +258,7 @@ EditBoxImplIOS::EditBoxImplIOS(EditBox* pEditText)
 , _label(NULL)
 , _labelPlaceHolder(NULL)
 , _systemControl(NULL)
-, _anchorPoint(ccp(0.5f, 0.5f))
+, _anchorPoint(Point(0.5f, 0.5f))
 , _maxTextLength(-1)
 {
     _inRetinaMode = [[CCEAGLView sharedEGLView] contentScaleFactor] == 2.0f ? true : false;
@@ -308,14 +308,14 @@ void EditBoxImplIOS::initInactiveLabels(const Size& size)
 	const char* pDefaultFontName = [[_systemControl.textField.font fontName] UTF8String];
 
 	_label = LabelTTF::create("", "", 0.0f);
-    _label->setAnchorPoint(ccp(0, 0.5f));
+    _label->setAnchorPoint(Point(0, 0.5f));
     _label->setColor(Color3B::WHITE);
     _label->setVisible(false);
     _editBox->addChild(_label, kLabelZOrder);
 	
     _labelPlaceHolder = LabelTTF::create("", "", 0.0f);
 	// align the text vertically center
-    _labelPlaceHolder->setAnchorPoint(ccp(0, 0.5f));
+    _labelPlaceHolder->setAnchorPoint(Point(0, 0.5f));
     _labelPlaceHolder->setColor(Color3B::GRAY);
     _editBox->addChild(_labelPlaceHolder, kLabelZOrder);
     
@@ -324,8 +324,8 @@ void EditBoxImplIOS::initInactiveLabels(const Size& size)
 }
 
 void EditBoxImplIOS::placeInactiveLabels() {
-    _label->setPosition(ccp(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f));
-    _labelPlaceHolder->setPosition(ccp(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f));
+    _label->setPosition(Point(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f));
+    _labelPlaceHolder->setPosition(Point(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f));
 }
 
 void EditBoxImplIOS::setInactiveText(const char* pText)
@@ -519,8 +519,8 @@ static CGPoint convertDesignCoordToScreenCoord(const Point& designCoord, bool bI
     EGLViewProtocol* eglView = EGLView::getInstance();
     float viewH = (float)[[CCEAGLView sharedEGLView] getHeight];
     
-    Point visiblePos = ccp(designCoord.x * eglView->getScaleX(), designCoord.y * eglView->getScaleY());
-    Point screenGLPos = ccpAdd(visiblePos, eglView->getViewPortRect().origin);
+    Point visiblePos = Point(designCoord.x * eglView->getScaleX(), designCoord.y * eglView->getScaleY());
+    Point screenGLPos = visiblePos + eglView->getViewPortRect().origin;
     
     CGPoint screenPos = CGPointMake(screenGLPos.x, viewH - screenGLPos.y);
     
@@ -584,10 +584,10 @@ void EditBoxImplIOS::onEnter(void)
 void EditBoxImplIOS::adjustTextFieldPosition()
 {
 	Size contentSize = _editBox->getContentSize();
-	Rect rect = CCRectMake(0, 0, contentSize.width, contentSize.height);
+	Rect rect = Rect(0, 0, contentSize.width, contentSize.height);
     rect = RectApplyAffineTransform(rect, _editBox->nodeToWorldTransform());
 	
-	Point designCoord = ccp(rect.origin.x, rect.origin.y + rect.size.height);
+	Point designCoord = Point(rect.origin.x, rect.origin.y + rect.size.height);
     [_systemControl setPosition:convertDesignCoordToScreenCoord(designCoord, _inRetinaMode)];
 }
 

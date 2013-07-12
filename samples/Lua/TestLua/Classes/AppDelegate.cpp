@@ -37,13 +37,13 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     Size screenSize = EGLView::getInstance()->getFrameSize();
     
-    Size designSize = CCSizeMake(480, 320);
+    Size designSize = Size(480, 320);
     
     FileUtils* pFileUtils = FileUtils::getInstance();
     
     if (screenSize.height > 320)
     {
-        Size resourceSize = CCSizeMake(960, 640);
+        Size resourceSize = Size(960, 640);
         std::vector<std::string> searchPaths;
         searchPaths.push_back("hd");
         pFileUtils->setSearchPaths(searchPaths);

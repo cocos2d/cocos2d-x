@@ -143,7 +143,7 @@ bool Director::init(void)
     // purge ?
     _purgeDirecotorInNextLoop = false;
 
-    _winSizeInPoints = SizeZero;    
+    _winSizeInPoints = Size::ZERO;    
 
     _openGLView = NULL;
 
@@ -528,7 +528,7 @@ Point Director::convertToGL(const Point& uiPoint)
 	kmVec3 glCoord;
 	kmVec3TransformCoord(&glCoord, &clipCoord, &transformInv);
 	
-	return ccp(glCoord.x, glCoord.y);
+	return Point(glCoord.x, glCoord.y);
 }
 
 Point Director::convertToUI(const Point& glPoint)
@@ -542,7 +542,7 @@ Point Director::convertToUI(const Point& glPoint)
 	kmVec3TransformCoord(&clipCoord, &glCoord, &transform);
 	
 	Size glSize = _openGLView->getDesignResolutionSize();
-	return ccp(glSize.width*(clipCoord.x*0.5 + 0.5), glSize.height*(-clipCoord.y*0.5 + 0.5));
+	return Point(glSize.width*(clipCoord.x*0.5 + 0.5), glSize.height*(-clipCoord.y*0.5 + 0.5));
 }
 
 const Size& Director::getWinSize(void) const
@@ -552,7 +552,7 @@ const Size& Director::getWinSize(void) const
 
 Size Director::getWinSizeInPixels() const
 {
-    return CCSizeMake(_winSizeInPoints.width * _contentScaleFactor, _winSizeInPoints.height * _contentScaleFactor);
+    return Size(_winSizeInPoints.width * _contentScaleFactor, _winSizeInPoints.height * _contentScaleFactor);
 }
 
 Size Director::getVisibleSize() const
@@ -563,7 +563,7 @@ Size Director::getVisibleSize() const
     }
     else 
     {
-        return SizeZero;
+        return Size::ZERO;
     }
 }
 
@@ -575,7 +575,7 @@ Point Director::getVisibleOrigin() const
     }
     else 
     {
-        return PointZero;
+        return Point::ZERO;
     }
 }
 
@@ -918,8 +918,8 @@ void Director::createStatsLabel()
 
     Texture2D::setDefaultAlphaPixelFormat(currentFormat);
 
-    _drawsLabel->setPosition(ccpAdd(ccp(0, 34*factor), CC_DIRECTOR_STATS_POSITION));
-    _SPFLabel->setPosition(ccpAdd(ccp(0, 17*factor), CC_DIRECTOR_STATS_POSITION));
+    _drawsLabel->setPosition(Point(0, 34*factor) + CC_DIRECTOR_STATS_POSITION);
+    _SPFLabel->setPosition(Point(0, 17*factor) + CC_DIRECTOR_STATS_POSITION);
     _FPSLabel->setPosition(CC_DIRECTOR_STATS_POSITION);
 }
 

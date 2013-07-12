@@ -29,25 +29,25 @@ bool Bug1159Layer::init()
         addChild(background);
 
         LayerColor *sprite_a = LayerColor::create(Color4B(255, 0, 0, 255), 700, 700);
-        sprite_a->setAnchorPoint(ccp(0.5f, 0.5f));
+        sprite_a->setAnchorPoint(Point(0.5f, 0.5f));
         sprite_a->ignoreAnchorPointForPosition(false);
-        sprite_a->setPosition(ccp(0.0f, s.height/2));
+        sprite_a->setPosition(Point(0.0f, s.height/2));
         addChild(sprite_a);
 
         sprite_a->runAction(RepeatForever::create(Sequence::create(
-                                                        MoveTo::create(1.0f, ccp(1024.0f, 384.0f)),
-                                                        MoveTo::create(1.0f, ccp(0.0f, 384.0f)),
+                                                        MoveTo::create(1.0f, Point(1024.0f, 384.0f)),
+                                                        MoveTo::create(1.0f, Point(0.0f, 384.0f)),
                                                         NULL)));
 
         LayerColor *sprite_b = LayerColor::create(Color4B(0, 0, 255, 255), 400, 400);
-        sprite_b->setAnchorPoint(ccp(0.5f, 0.5f));
+        sprite_b->setAnchorPoint(Point(0.5f, 0.5f));
         sprite_b->ignoreAnchorPointForPosition(false);
-        sprite_b->setPosition(ccp(s.width/2, s.height/2));
+        sprite_b->setPosition(Point(s.width/2, s.height/2));
         addChild(sprite_b);
 
         MenuItemLabel *label = MenuItemLabel::create(LabelTTF::create("Flip Me", "Helvetica", 24), CC_CALLBACK_1(Bug1159Layer::callBack, this) );
         Menu *menu = Menu::create(label, NULL);
-        menu->setPosition(ccp(s.width - 200.0f, 50.0f));
+        menu->setPosition(Point(s.width - 200.0f, 50.0f));
         addChild(menu);
 
         return true;

@@ -1,4 +1,4 @@
-local scheduler = CCDirector:getInstance():getScheduler()
+local scheduler = CCDirector:sharedDirector():getScheduler()
 local    kTagLabel = 1
 local    kTagSprite1 = 2
 local    kTagSprite2 = 3
@@ -7,10 +7,10 @@ local originCreateLayer = createTestLayer
 local function createTestLayer(title, subtitle)
     local ret = originCreateLayer(title, subtitle)
     Helper.titleLabel:setTag(kTagLabel)
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     local col = CCLayerColor:create(Color4B(128,128,128,255))
     ret:addChild(col, -10)
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 --------------------------------------------------------------------
@@ -21,12 +21,12 @@ end
 
 local function TextureTIFF()
     local ret = createTestLayer("TIFF Test")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image.tiff")
     img:setPosition(ccp( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -38,12 +38,12 @@ end
 local function TexturePNG()
     local ret = createTestLayer("PNG Test")
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image.png")
     img:setPosition(ccp( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -54,12 +54,12 @@ end
 --------------------------------------------------------------------
 local function TextureJPEG()
     local ret = createTestLayer("JPEG Test")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image.jpeg")
     img:setPosition(ccp( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -70,12 +70,12 @@ end
 --------------------------------------------------------------------
 local function TextureWEBP()
     local ret = createTestLayer("WEBP Test")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image.webp")
     img:setPosition(ccp( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -87,9 +87,9 @@ end
 local function TextureMipMap()
     local ret = createTestLayer("Texture Mipmap",
                                 "Left image uses mipmap. Right image doesn't")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
-    local texture0 = CCTextureCache:getInstance():addImage(
+    local texture0 = CCTextureCache:sharedTextureCache():addImage(
         "Images/grossini_dance_atlas.png")
     texture0:generateMipmap()
     local texParams     = ccTexParams()
@@ -99,7 +99,7 @@ local function TextureMipMap()
     texParams.wrapT     = GL_CLAMP_TO_EDGE
     texture0:setTexParameters(texParams)
 
-    local texture1 = CCTextureCache:getInstance():addImage(
+    local texture1 = CCTextureCache:sharedTextureCache():addImage(
         "Images/grossini_dance_atlas_nomipmap.png")
 
     local img0 = CCSprite:createWithTexture(texture0)
@@ -127,7 +127,7 @@ local function TextureMipMap()
     arr:addObject(scale2)
     arr:addObject(sc_back2)
     img1:runAction(CCRepeatForever:create(CCSequence:create(arr)))
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -140,7 +140,7 @@ end
 --------------------------------------------------------------------
 local function TexturePVRMipMap()
     local ret = createTestLayer("PVRTC MipMap Test", "Left image uses mipmap. Right image doesn't")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local imgMipMap = CCSprite:create("Images/logo-mipmap.pvr")
     if imgMipMap ~= nil then
@@ -180,7 +180,7 @@ local function TexturePVRMipMap()
 
         img:runAction(CCRepeatForever:create(CCSequence:create(arr)))
     end
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -192,7 +192,7 @@ end
 --------------------------------------------------------------------
 local function TexturePVRMipMap2()
     local ret = createTestLayer("PVR MipMap Test #2", "Left image uses mipmap. Right image doesn't")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local imgMipMap = CCSprite:create("Images/test_image_rgba4444_mipmap.pvr")
     imgMipMap:setPosition(ccp( s.width/2.0-100, s.height/2.0))
@@ -227,7 +227,7 @@ local function TexturePVRMipMap2()
     arr:addObject(sc_back2)
 
     img:runAction(CCRepeatForever:create(CCSequence:create(arr)))
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -241,7 +241,7 @@ end
 local function TexturePVR2BPP()
     local ret = createTestLayer("PVR TC 2bpp Test")
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image_pvrtc2bpp.pvr")
 
@@ -250,7 +250,7 @@ local function TexturePVR2BPP()
         ret:addChild(img)
     end
 
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -263,7 +263,7 @@ end
 --------------------------------------------------------------------
 local function TexturePVR()
     local ret = createTestLayer("PVR TC 4bpp Test #2")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image.pvr")
 
@@ -273,7 +273,7 @@ local function TexturePVR()
     else
         cclog("This test is not supported.")
     end
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -287,7 +287,7 @@ end
 local function TexturePVR4BPP()
     local ret = createTestLayer("PVR TC 4bpp Test #3")
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image_pvrtc4bpp.pvr")
 
@@ -297,7 +297,7 @@ local function TexturePVR4BPP()
     else
         cclog("This test is not supported in cocos2d-mac")
     end
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -311,12 +311,12 @@ end
 local function TexturePVRRGBA8888()
     local ret = createTestLayer("PVR + RGBA  8888 Test")
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image_rgba8888.pvr")
     img:setPosition(ccp( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -330,7 +330,7 @@ end
 local function TexturePVRBGRA8888()
     local ret = createTestLayer("PVR + BGRA 8888 Test")
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image_bgra8888.pvr")
     if img ~= nil then
@@ -339,7 +339,7 @@ local function TexturePVRBGRA8888()
     else
         cclog("BGRA8888 images are not supported")
     end
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -352,12 +352,12 @@ end
 --------------------------------------------------------------------
 local function TexturePVRRGBA5551()
     local ret = createTestLayer("PVR + RGBA 5551 Test")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image_rgba5551.pvr")
     img:setPosition(ccp( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -370,12 +370,12 @@ end
 --------------------------------------------------------------------
 local function TexturePVRRGBA4444()
     local ret = createTestLayer("PVR + RGBA 4444 Test")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image_rgba4444.pvr")
     img:setPosition(ccp( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -389,12 +389,12 @@ end
 local function TexturePVRRGBA4444GZ()
     local ret = createTestLayer("PVR + RGBA 4444 + GZ Test",
                                 "This is a gzip PVR image")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image_rgba4444.pvr")
     img:setPosition(ccp( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -408,12 +408,12 @@ end
 local function TexturePVRRGBA4444CCZ()
     local ret = createTestLayer("PVR + RGBA 4444 + CCZ Test",
                                 "This is a ccz PVR image")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image_rgba4444.pvr.ccz")
     img:setPosition(ccp( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -426,12 +426,12 @@ end
 --------------------------------------------------------------------
 local function TexturePVRRGB565()
     local ret = createTestLayer("PVR + RGB 565 Test")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image_rgb565.pvr")
     img:setPosition(ccp( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -440,14 +440,14 @@ end
 -- http:--www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
 local function TexturePVRRGB888()
     local ret = createTestLayer("PVR + RGB 888 Test")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image_rgb888.pvr")
     if img ~= nil then
         img:setPosition(ccp( s.width/2.0, s.height/2.0))
         ret:addChild(img)
     end
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -460,12 +460,12 @@ end
 --------------------------------------------------------------------
 local function TexturePVRA8()
     local ret = createTestLayer("PVR + A8 Test")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image_a8.pvr")
     img:setPosition(ccp( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -478,12 +478,12 @@ end
 --------------------------------------------------------------------
 local function TexturePVRI8()
     local ret = createTestLayer("PVR + I8 Test")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image_i8.pvr")
     img:setPosition(ccp( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -497,19 +497,19 @@ end
 --------------------------------------------------------------------
 local function TexturePVRAI88()
     local ret = createTestLayer("PVR + AI88 Test")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image_ai88.pvr")
     img:setPosition(ccp( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
 -- TexturePVR2BPPv3
 local function TexturePVR2BPPv3()
     local ret = createTestLayer("PVR TC 2bpp Test", "Testing PVR File Format v3")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image_pvrtc2bpp_v3.pvr")
 
@@ -517,14 +517,14 @@ local function TexturePVR2BPPv3()
         img:setPosition(ccp(s.width/2.0, s.height/2.0))
         ret:addChild(img)
     end
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
 -- TexturePVRII2BPPv3
 local function TexturePVRII2BPPv3()
     local ret = createTestLayer("PVR TC II 2bpp Test", "Testing PVR File Format v3")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image_pvrtcii2bpp_v3.pvr")
 
@@ -533,14 +533,14 @@ local function TexturePVRII2BPPv3()
         ret:addChild(img)
     end
 
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
 -- TexturePVR4BPPv3
 local function TexturePVR4BPPv3()
     local ret = createTestLayer("PVR TC 4bpp Test", "Testing PVR File Format v3")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image_pvrtc4bpp_v3.pvr")
 
@@ -551,7 +551,7 @@ local function TexturePVR4BPPv3()
         cclog("This test is not supported")
     end
 
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -563,7 +563,7 @@ end
 local function TexturePVRII4BPPv3()
     local ret = createTestLayer("PVR TC II 4bpp Test",
                                 "Testing PVR File Format v3")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image_pvrtcii4bpp_v3.pvr")
 
@@ -573,7 +573,7 @@ local function TexturePVRII4BPPv3()
     else
         cclog("This test is not supported")
     end
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -581,7 +581,7 @@ end
 local function TexturePVRRGBA8888v3()
     local ret = createTestLayer("PVR + RGBA  8888 Test",
                                 "Testing PVR File Format v3")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image_rgba8888_v3.pvr")
 
@@ -590,7 +590,7 @@ local function TexturePVRRGBA8888v3()
         ret:addChild(img)
     end
 
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -599,7 +599,7 @@ local function TexturePVRBGRA8888v3()
     local ret = createTestLayer("PVR + BGRA 8888 Test",
                                 "Testing PVR File Format v3")
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image_bgra8888_v3.pvr")
 
@@ -610,7 +610,7 @@ local function TexturePVRBGRA8888v3()
         cclog("BGRA images are not supported")
     end
 
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -618,7 +618,7 @@ end
 local function TexturePVRRGBA5551v3()
     local ret = createTestLayer("PVR + RGBA 5551 Test",
                                 "Testing PVR File Format v3")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
     local img = CCSprite:create("Images/test_image_rgba5551_v3.pvr")
 
     if img ~= nil then
@@ -626,7 +626,7 @@ local function TexturePVRRGBA5551v3()
         ret:addChild(img)
     end
 
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -634,7 +634,7 @@ end
 local function TexturePVRRGBA4444v3()
     local ret = createTestLayer("PVR + RGBA 4444 Test",
                                 "Testing PVR File Format v3")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image_rgba4444_v3.pvr")
 
@@ -643,7 +643,7 @@ local function TexturePVRRGBA4444v3()
         ret:addChild(img)
     end
 
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -651,7 +651,7 @@ end
 local function TexturePVRRGB565v3()
     local ret = createTestLayer("PVR + RGB 565 Test",
                                 "Testing PVR File Format v3")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image_rgb565_v3.pvr")
 
@@ -660,7 +660,7 @@ local function TexturePVRRGB565v3()
         ret:addChild(img)
     end
 
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -668,7 +668,7 @@ end
 local function TexturePVRRGB888v3()
     local ret = createTestLayer("PVR + RGB 888 Test",
                                 "Testing PVR File Format v3")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image_rgb888_v3.pvr")
 
@@ -677,7 +677,7 @@ local function TexturePVRRGB888v3()
         ret:addChild(img)
     end
 
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -685,7 +685,7 @@ end
 local function TexturePVRA8v3()
     local ret = createTestLayer("PVR + A8 Test",
                                 "Testing PVR File Format v3")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image_a8_v3.pvr")
 
@@ -694,7 +694,7 @@ local function TexturePVRA8v3()
         ret:addChild(img)
     end
 
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -702,7 +702,7 @@ end
 local function TexturePVRI8v3()
     local ret = createTestLayer("PVR + I8 Test",
                                 "Testing PVR File Format v3")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image_i8_v3.pvr")
 
@@ -711,7 +711,7 @@ local function TexturePVRI8v3()
         ret:addChild(img)
     end
 
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -719,7 +719,7 @@ end
 local function TexturePVRAI88v3()
     local ret = createTestLayer("PVR + AI88 Test",
                                 "Testing PVR File Format v3")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image_ai88_v3.pvr")
 
@@ -728,7 +728,7 @@ local function TexturePVRAI88v3()
         ret:addChild(img)
     end
 
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -742,7 +742,7 @@ end
 local function TexturePVRBadEncoding()
     local ret = createTestLayer("PVR Unsupported encoding",
                                 "You should not see any image")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/test_image-bad_encoding.pvr")
     if img  ~= nil then
@@ -760,12 +760,12 @@ end
 local function TexturePVRNonSquare()
     local ret = createTestLayer("PVR + Non square texture",
                                 "Loading a 128x256 texture")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/grossini_128x256_mipmap.pvr")
     img:setPosition(ccp( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -777,14 +777,14 @@ end
 local function TexturePVRNPOT4444()
     local ret = createTestLayer("PVR RGBA4 + NPOT texture",
                                 "Loading a 81x121 RGBA4444 texture.")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/grossini_pvr_rgba4444.pvr")
     if img ~= nil then
         img:setPosition(ccp( s.width/2.0, s.height/2.0))
         ret:addChild(img)
     end
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -796,14 +796,14 @@ end
 local function TexturePVRNPOT8888()
     local ret = createTestLayer("PVR RGBA8 + NPOT texture",
                                 "Loading a 81x121 RGBA8888 texture.")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local img = CCSprite:create("Images/grossini_pvr_rgba8888.pvr")
     if img ~= nil then
         img:setPosition(ccp( s.width/2.0, s.height/2.0))
         ret:addChild(img)
     end
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -815,7 +815,7 @@ end
 local function TextureAlias()
     local ret = createTestLayer("AntiAlias / Alias textures",
                                 "Left image is antialiased. Right image is aliases")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     --
     -- Sprite 1: GL_LINEAR
@@ -851,7 +851,7 @@ local function TextureAlias()
 
     sprite2:runAction(scaleforever)
     sprite:runAction(scaleToo)
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -874,7 +874,7 @@ local function TexturePixelFormat()
     local label = tolua.cast(ret:getChildByTag(kTagLabel), "CCLabelTTF")
     label:setColor(Color3B(16,16,255))
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local background = CCLayerColor:create(Color4B(128,128,128,255), s.width, s.height)
     ret:addChild(background, -1)
@@ -886,7 +886,7 @@ local function TexturePixelFormat()
     ret:addChild(sprite1, 0)
 
     -- remove texture from texture manager
-    CCTextureCache:getInstance():removeTexture(sprite1:getTexture())
+    CCTextureCache:sharedTextureCache():removeTexture(sprite1:getTexture())
 
     -- RGBA 4444 image (16-bit)
     CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444)
@@ -895,7 +895,7 @@ local function TexturePixelFormat()
     ret:addChild(sprite2, 0)
 
     -- remove texture from texture manager
-    CCTextureCache:getInstance():removeTexture(sprite2:getTexture())
+    CCTextureCache:sharedTextureCache():removeTexture(sprite2:getTexture())
 
     -- RGB5A1 image (16-bit)
     CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB5A1)
@@ -904,7 +904,7 @@ local function TexturePixelFormat()
     ret:addChild(sprite3, 0)
 
     -- remove texture from texture manager
-    CCTextureCache:getInstance():removeTexture(sprite3:getTexture())
+    CCTextureCache:sharedTextureCache():removeTexture(sprite3:getTexture())
 
     -- RGB888 image
     CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB888)
@@ -913,7 +913,7 @@ local function TexturePixelFormat()
     ret:addChild(sprite4, 0)
 
     -- remove texture from texture manager
-    CCTextureCache:getInstance():removeTexture(sprite4:getTexture())
+    CCTextureCache:sharedTextureCache():removeTexture(sprite4:getTexture())
 
     -- RGB565 image (16-bit)
     CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB565)
@@ -922,7 +922,7 @@ local function TexturePixelFormat()
     ret:addChild(sprite5, 0)
 
     -- remove texture from texture manager
-    CCTextureCache:getInstance():removeTexture(sprite5:getTexture())
+    CCTextureCache:sharedTextureCache():removeTexture(sprite5:getTexture())
 
     -- A8 image (8-bit)
     CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_A8)
@@ -931,7 +931,7 @@ local function TexturePixelFormat()
     ret:addChild(sprite6, 0)
 
     -- remove texture from texture manager
-    CCTextureCache:getInstance():removeTexture(sprite6:getTexture())
+    CCTextureCache:sharedTextureCache():removeTexture(sprite6:getTexture())
 
     local  fadeout = CCFadeOut:create(2)
     local   fadein  = CCFadeIn:create(2)
@@ -954,7 +954,7 @@ local function TexturePixelFormat()
 
     -- restore default
     CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_Default)
-    CCTextureCache:getInstance():dumpCachedTextureInfo()
+    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
 end
 
@@ -1012,7 +1012,7 @@ local function TextureAsync()
                                 "Textures should load while an animation is being run")
     local m_nImageOffset = 0
 
-    local size =CCDirector:getInstance():getWinSize()
+    local size =CCDirector:sharedDirector():getWinSize()
 
     local label = CCLabelTTF:create("Loading...", "Marker Felt", 32)
     label:setPosition(ccp( size.width/2, size.height/2))
@@ -1028,7 +1028,7 @@ local function TextureAsync()
 
     local function imageLoaded(pObj)
         local  tex = tolua.cast(pObj, "CCTexture2D")
-        local director = CCDirector:getInstance()
+        local director = CCDirector:sharedDirector()
 
         --CCAssert( [NSThread currentThread] == [director runningThread], @"FAIL. Callback should be on cocos2d thread")
 
@@ -1055,16 +1055,16 @@ local function TextureAsync()
             for j=0, 7 do
                 local szSpriteName = string.format(
                     "Images/sprites_test/sprite-%d-%d.png", i, j)
-                CCTextureCache:getInstance():addImageAsync(
+                CCTextureCache:sharedTextureCache():addImageAsync(
                     szSpriteName, imageLoaded)
             end
         end
 
-        CCTextureCache:getInstance():addImageAsync("Images/background1.jpg", imageLoaded)
-        CCTextureCache:getInstance():addImageAsync("Images/background2.jpg", imageLoaded)
-        CCTextureCache:getInstance():addImageAsync("Images/background.png", imageLoaded)
-        CCTextureCache:getInstance():addImageAsync("Images/atlastest.png", imageLoaded)
-        CCTextureCache:getInstance():addImageAsync("Images/grossini_dance_atlas.png",imageLoaded)
+        CCTextureCache:sharedTextureCache():addImageAsync("Images/background1.jpg", imageLoaded)
+        CCTextureCache:sharedTextureCache():addImageAsync("Images/background2.jpg", imageLoaded)
+        CCTextureCache:sharedTextureCache():addImageAsync("Images/background.png", imageLoaded)
+        CCTextureCache:sharedTextureCache():addImageAsync("Images/atlastest.png", imageLoaded)
+        CCTextureCache:sharedTextureCache():addImageAsync("Images/grossini_dance_atlas.png",imageLoaded)
     end
 
     local schedulerEntry = nil
@@ -1073,7 +1073,7 @@ local function TextureAsync()
             schedulerEntry = scheduler:scheduleScriptFunc(loadImages, 1.0, false)
         elseif event == "exit" then
             scheduler:unscheduleScriptEntry(schedulerEntry)
-            CCTextureCache:getInstance():removeAllTextures()
+            CCTextureCache:sharedTextureCache():removeAllTextures()
         end
     end
 
@@ -1089,7 +1089,7 @@ end
 local function TextureGlClamp()
     local ret = createTestLayer("Texture GL_CLAMP")
 
-    local size = CCDirector:getInstance():getWinSize()
+    local size = CCDirector:sharedDirector():getWinSize()
 
     -- The .png image MUST be power of 2 in order to create a continue effect.
     -- eg: 32x64, 512x128, 256x1024, 64x64, etc..
@@ -1115,7 +1115,7 @@ local function TextureGlClamp()
     sprite:runAction(seq)
     local function onNodeEvent(event)
         if event == "exit" then
-            CCTextureCache:getInstance():removeUnusedTextures()
+            CCTextureCache:sharedTextureCache():removeUnusedTextures()
         end
     end
 
@@ -1132,7 +1132,7 @@ end
 local function TextureGlRepeat()
     local ret = createTestLayer("Texture GL_REPEAT")
 
-    local size = CCDirector:getInstance():getWinSize()
+    local size = CCDirector:sharedDirector():getWinSize()
 
     -- The .png image MUST be power of 2 in order to create a continue effect.
     -- eg: 32x64, 512x128, 256x1024, 64x64, etc..
@@ -1159,7 +1159,7 @@ local function TextureGlRepeat()
     sprite:runAction(seq)
     local function onNodeEvent(event)
         if event == "exit" then
-            CCTextureCache:getInstance():removeUnusedTextures()
+            CCTextureCache:sharedTextureCache():removeUnusedTextures()
         end
     end
 
@@ -1217,7 +1217,7 @@ end
 local function TextureCache1()
     local ret = createTestLayer("CCTextureCache: remove",
                     "4 images should appear: alias, antialias, alias, antilias")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local sprite = nil
 
@@ -1227,7 +1227,7 @@ local function TextureCache1()
     sprite:setScale(2)
     ret:addChild(sprite)
 
-    CCTextureCache:getInstance():removeTexture(sprite:getTexture())
+    CCTextureCache:sharedTextureCache():removeTexture(sprite:getTexture())
 
     sprite = CCSprite:create("Images/grossinis_sister1.png")
     sprite:setPosition(ccp(s.width/5*2, s.height/2))
@@ -1243,7 +1243,7 @@ local function TextureCache1()
     sprite:setScale(2)
     ret:addChild(sprite)
 
-    CCTextureCache:getInstance():removeTextureForKey("Images/grossinis_sister2.png")
+    CCTextureCache:sharedTextureCache():removeTextureForKey("Images/grossinis_sister2.png")
 
     sprite = CCSprite:create("Images/grossinis_sister2.png")
     sprite:setPosition(ccp(s.width/5*4, s.height/2))
@@ -1263,14 +1263,14 @@ local function TextureDrawAtPoint()
     local function draw()
         -- TextureDemo:draw()
 
-        local s = CCDirector:getInstance():getWinSize()
+        local s = CCDirector:sharedDirector():getWinSize()
 
         m_pTex1:drawAtPoint(ccp(s.width/2-50, s.height/2 - 50))
         m_pTex2F:drawAtPoint(ccp(s.width/2+50, s.height/2 - 50))
     end
 
-    m_pTex1 = CCTextureCache:getInstance():addImage("Images/grossinis_sister1.png")
-    m_pTex2F = CCTextureCache:getInstance():addImage("Images/grossinis_sister2.png")
+    m_pTex1 = CCTextureCache:sharedTextureCache():addImage("Images/grossinis_sister1.png")
+    m_pTex2F = CCTextureCache:sharedTextureCache():addImage("Images/grossinis_sister2.png")
 
     m_pTex1:retain()
     m_pTex2F:retain()
@@ -1294,7 +1294,7 @@ local function TextureDrawInRect()
     local function draw()
         -- TextureDemo:draw()
 
-        local s = CCDirector:getInstance():getWinSize()
+        local s = CCDirector:sharedDirector():getWinSize()
 
         local rect1 = CCRectMake( s.width/2 - 80, 20, m_pTex1:getContentSize().width * 0.5, m_pTex1:getContentSize().height *2 )
         local rect2 = CCRectMake( s.width/2 + 80, s.height/2, m_pTex1:getContentSize().width * 2, m_pTex1:getContentSize().height * 0.5 )
@@ -1303,8 +1303,8 @@ local function TextureDrawInRect()
         m_pTex2F:drawInRect(rect2)
     end
 
-    local m_pTex1 = CCTextureCache:getInstance():addImage("Images/grossinis_sister1.png")
-    local m_pTex2F = CCTextureCache:getInstance():addImage("Images/grossinis_sister2.png")
+    local m_pTex1 = CCTextureCache:sharedTextureCache():addImage("Images/grossinis_sister1.png")
+    local m_pTex2F = CCTextureCache:sharedTextureCache():addImage("Images/grossinis_sister2.png")
 
     m_pTex1:retain()
     m_pTex2F:retain()
@@ -1337,7 +1337,7 @@ local function TextureMemoryAlloc()
             cclog("updateImage"..tag)
             m_pBackground:removeFromParentAndCleanup(true)
         end
-        CCTextureCache:getInstance():removeUnusedTextures()
+        CCTextureCache:sharedTextureCache():removeUnusedTextures()
 
         local file = ""
         if tag == 0 then
@@ -1357,7 +1357,7 @@ local function TextureMemoryAlloc()
 
         m_pBackground:setVisible(false)
 
-        local s = CCDirector:getInstance():getWinSize()
+        local s = CCDirector:sharedDirector():getWinSize()
         m_pBackground:setPosition(ccp(s.width/2, s.height/2))
     end
 
@@ -1407,7 +1407,7 @@ local function TextureMemoryAlloc()
     menu2:alignItemsHorizontally()
 
     ret:addChild(menu2)
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     menu2:setPosition(ccp(s.width/2, s.height/4))
     return ret
@@ -1431,7 +1431,7 @@ local function TexturePVRv3Premult()
         sprite:runAction(repeatAction)
     end
 
-    local size = CCDirector:getInstance():getWinSize()
+    local size = CCDirector:sharedDirector():getWinSize()
 
     local background = CCLayerColor:create(Color4B(128,128,128,255), size.width, size.height)
     ret:addChild(background, -1)
@@ -1451,7 +1451,7 @@ local function TexturePVRv3Premult()
 
     -- PNG
     CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
-    CCTextureCache:getInstance():removeTextureForKey("Images/grossinis_sister1-testalpha.png")
+    CCTextureCache:sharedTextureCache():removeTextureForKey("Images/grossinis_sister1-testalpha.png")
     local png = CCSprite:create("Images/grossinis_sister1-testalpha.png")
     ret:addChild(png, 0)
     png:setPosition(ccp(size.width/4*3, size.height/2))
