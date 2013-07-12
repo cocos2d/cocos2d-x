@@ -46,7 +46,7 @@ MenuLayer* MenuLayer::menuWithEntryID(int entryId)
 
 bool MenuLayer::initWithEntryID(int entryId)
 {
-    Director* pDirector = Director::sharedDirector();
+    Director* pDirector = Director::getInstance();
 	Point visibleOrigin = pDirector->getVisibleOrigin();
 	Size visibleSize = pDirector->getVisibleSize();
 
@@ -88,7 +88,7 @@ void MenuLayer::restartCallback(Object* sender)
     Scene* s = new Box2dTestBedScene();
     MenuLayer* box = MenuLayer::menuWithEntryID(m_entryID);
     s->addChild( box );
-    Director::sharedDirector()->replaceScene( s );
+    Director::getInstance()->replaceScene( s );
     s->release();
 }
 
@@ -100,7 +100,7 @@ void MenuLayer::nextCallback(Object* sender)
         next = 0;
     MenuLayer* box = MenuLayer::menuWithEntryID(next);
     s->addChild( box );
-    Director::sharedDirector()->replaceScene( s );
+    Director::getInstance()->replaceScene( s );
     s->release();
 }
 
@@ -115,13 +115,13 @@ void MenuLayer::backCallback(Object* sender)
     MenuLayer* box = MenuLayer::menuWithEntryID(next);
 
     s->addChild( box );
-    Director::sharedDirector()->replaceScene( s );
+    Director::getInstance()->replaceScene( s );
     s->release();
 }
 
 void MenuLayer::registerWithTouchDispatcher()
 {
-    Director* pDirector = Director::sharedDirector();
+    Director* pDirector = Director::getInstance();
     pDirector->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
 }
 
@@ -210,7 +210,7 @@ Box2DView::~Box2DView()
 void Box2DView::registerWithTouchDispatcher()
 {
     // higher priority than dragging
-    Director* pDirector = Director::sharedDirector();
+    Director* pDirector = Director::getInstance();
     pDirector->getTouchDispatcher()->addTargetedDelegate(this, -10, true);
 }
 
@@ -254,5 +254,5 @@ void Box2dTestBedScene::runThisTest()
 {
     addChild(MenuLayer::menuWithEntryID(0));
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

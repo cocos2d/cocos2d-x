@@ -110,17 +110,17 @@ do { \
 
   @since v0.99.4
   */
-#define CC_DIRECTOR_END()                                        \
+#define CC_DIRECTOR_END()                                       \
 do {                                                            \
-    Director *__director = Director::sharedDirector();        \
-    __director->end();                                            \
+    Director *__director = Director::getInstance();             \
+    __director->end();                                          \
 } while(0)
 
 /** @def CC_CONTENT_SCALE_FACTOR
 On Mac it returns 1;
 On iPhone it returns 2 if RetinaDisplay is On. Otherwise it returns 1
 */
-#define CC_CONTENT_SCALE_FACTOR() Director::sharedDirector()->getContentScaleFactor()
+#define CC_CONTENT_SCALE_FACTOR() Director::getInstance()->getContentScaleFactor()
 
 /****************************/
 /** RETINA DISPLAY ENABLED **/
@@ -194,8 +194,8 @@ It should work same as apples CFSwapInt32LittleToHost(..)
 /**********************/
 #if CC_ENABLE_PROFILERS
 
-#define CC_PROFILER_DISPLAY_TIMERS() Profiler::sharedProfiler()->displayTimers()
-#define CC_PROFILER_PURGE_ALL() Profiler::sharedProfiler()->releaseAllTimers()
+#define CC_PROFILER_DISPLAY_TIMERS() Profiler::getInstance()->displayTimers()
+#define CC_PROFILER_PURGE_ALL() Profiler::getInstance()->releaseAllTimers()
 
 #define CC_PROFILER_START(__name__) ProfilingBeginTimingBlock(__name__)
 #define CC_PROFILER_STOP(__name__) ProfilingEndTimingBlock(__name__)

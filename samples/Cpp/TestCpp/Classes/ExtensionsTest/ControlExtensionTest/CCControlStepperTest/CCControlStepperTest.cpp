@@ -40,7 +40,7 @@ bool ControlStepperTest::init()
 {
     if (ControlScene::init())
     {
-        Size screenSize = Director::sharedDirector()->getWinSize();
+        Size screenSize = Director::getInstance()->getWinSize();
         
         Node *layer = Node::create();
         layer->setPosition(ccp (screenSize.width / 2, screenSize.height / 2));

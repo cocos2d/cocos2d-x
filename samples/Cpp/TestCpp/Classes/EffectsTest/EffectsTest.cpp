@@ -85,7 +85,7 @@ class Lens3DDemo : public Lens3D
 public:
     static ActionInterval* create(float t)
     {
-        Size size = Director::sharedDirector()->getWinSize();
+        Size size = Director::getInstance()->getWinSize();
         return Lens3D::create(t, CCSizeMake(15,10), ccp(size.width/2,size.height/2), 240); 
     }
 };
@@ -96,7 +96,7 @@ class Ripple3DDemo : public Ripple3D
 public:
     static ActionInterval* create(float t)
     {
-        Size size = Director::sharedDirector()->getWinSize();
+        Size size = Director::getInstance()->getWinSize();
         return Ripple3D::create(t, CCSizeMake(32,24), ccp(size.width/2,size.height/2), 240, 4, 160);
     }
 };
@@ -127,7 +127,7 @@ class TwirlDemo : public Twirl
 public:
     static ActionInterval* create(float t)
     {
-        Size size = Director::sharedDirector()->getWinSize();
+        Size size = Director::getInstance()->getWinSize();
         return Twirl::create(t, CCSizeMake(12,8), ccp(size.width/2, size.height/2), 1, 2.5f); 
     }
 };
@@ -275,7 +275,7 @@ class PageTurn3DDemo : public PageTurn3D
 public:
     static ActionInterval* create(float t)
     {
-        Director::sharedDirector()->setDepthTest(true);
+        Director::getInstance()->setDepthTest(true);
         return PageTurn3D::create(t, CCSizeMake(15,10)); 
     }
 };
@@ -290,7 +290,7 @@ public:
 ActionInterval* createEffect(int nIndex, float t)
 {
 
-    Director::sharedDirector()->setDepthTest(false);
+    Director::getInstance()->setDepthTest(false);
 
     switch(nIndex)
     {
@@ -331,7 +331,7 @@ ActionInterval* getAction()
 void EffectTestScene::runThisTest()
 {
     addChild(TextLayer::create());
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }
 
 #define SID_RESTART        1
@@ -404,7 +404,7 @@ void TextLayer::newScene()
     Scene* s = new EffectTestScene();
     Node* child = TextLayer::create();
     s->addChild(child);
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 

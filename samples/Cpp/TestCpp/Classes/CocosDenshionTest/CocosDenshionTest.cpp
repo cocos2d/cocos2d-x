@@ -50,7 +50,7 @@ public:
 
     ~Button()
     {
-        Director::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
+        Director::getInstance()->getTouchDispatcher()->removeDelegate(this);
     }
 
     void onTriggered(const std::function<void(void)> &onTriggered)
@@ -62,7 +62,7 @@ private:
     Button()
         : _child(NULL)
     {
-        Director::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, 100, true);
+        Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, 100, true);
     }
 
     bool initSpriteButton(const char *filePath)
@@ -418,5 +418,5 @@ void CocosDenshionTestScene::runThisTest()
     addChild(pLayer);
     pLayer->autorelease();
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

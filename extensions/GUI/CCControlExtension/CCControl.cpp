@@ -97,7 +97,7 @@ Control::~Control()
     //Menu - Events
 void Control::registerWithTouchDispatcher()
 {
-    Director::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, getTouchPriority(), true);
+    Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, getTouchPriority(), true);
 }
 
 void Control::onEnter()

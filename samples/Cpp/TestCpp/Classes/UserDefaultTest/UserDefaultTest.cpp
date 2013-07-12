@@ -7,7 +7,7 @@
 
 UserDefaultTest::UserDefaultTest()
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     LabelTTF* label = LabelTTF::create("CCUserDefault test see log", "Arial", 28);
     addChild(label, 0);
     label->setPosition( ccp(s.width/2, s.height-50) );
@@ -21,27 +21,27 @@ void UserDefaultTest::doTest()
 
     // set default value
 
-    UserDefault::sharedUserDefault()->setStringForKey("string", "value1");
-    UserDefault::sharedUserDefault()->setIntegerForKey("integer", 10);
-    UserDefault::sharedUserDefault()->setFloatForKey("float", 2.3f);
-    UserDefault::sharedUserDefault()->setDoubleForKey("double", 2.4);
-    UserDefault::sharedUserDefault()->setBoolForKey("bool", true);
+    UserDefault::getInstance()->setStringForKey("string", "value1");
+    UserDefault::getInstance()->setIntegerForKey("integer", 10);
+    UserDefault::getInstance()->setFloatForKey("float", 2.3f);
+    UserDefault::getInstance()->setDoubleForKey("double", 2.4);
+    UserDefault::getInstance()->setBoolForKey("bool", true);
 
     // print value
 
-    string ret = UserDefault::sharedUserDefault()->getStringForKey("string");
+    string ret = UserDefault::getInstance()->getStringForKey("string");
     CCLOG("string is %s", ret.c_str());
 
-    double d = UserDefault::sharedUserDefault()->getDoubleForKey("double");
+    double d = UserDefault::getInstance()->getDoubleForKey("double");
     CCLOG("double is %f", d);
 
-    int i = UserDefault::sharedUserDefault()->getIntegerForKey("integer");
+    int i = UserDefault::getInstance()->getIntegerForKey("integer");
     CCLOG("integer is %d", i);
 
-    float f = UserDefault::sharedUserDefault()->getFloatForKey("float");
+    float f = UserDefault::getInstance()->getFloatForKey("float");
     CCLOG("float is %f", f);
 
-    bool b = UserDefault::sharedUserDefault()->getBoolForKey("bool");
+    bool b = UserDefault::getInstance()->getBoolForKey("bool");
     if (b)
     {
         CCLOG("bool is true");
@@ -51,35 +51,35 @@ void UserDefaultTest::doTest()
         CCLOG("bool is false");
     }
     
-    //CCUserDefault::sharedUserDefault()->flush();
+    //CCUserDefault::getInstance()->flush();
 
     CCLOG("********************** after change value ***********************");
 
     // change the value
 
-    UserDefault::sharedUserDefault()->setStringForKey("string", "value2");
-    UserDefault::sharedUserDefault()->setIntegerForKey("integer", 11);
-    UserDefault::sharedUserDefault()->setFloatForKey("float", 2.5f);
-    UserDefault::sharedUserDefault()->setDoubleForKey("double", 2.6);
-    UserDefault::sharedUserDefault()->setBoolForKey("bool", false);
+    UserDefault::getInstance()->setStringForKey("string", "value2");
+    UserDefault::getInstance()->setIntegerForKey("integer", 11);
+    UserDefault::getInstance()->setFloatForKey("float", 2.5f);
+    UserDefault::getInstance()->setDoubleForKey("double", 2.6);
+    UserDefault::getInstance()->setBoolForKey("bool", false);
 
-    UserDefault::sharedUserDefault()->flush();
+    UserDefault::getInstance()->flush();
 
     // print value
 
-    ret = UserDefault::sharedUserDefault()->getStringForKey("string");
+    ret = UserDefault::getInstance()->getStringForKey("string");
     CCLOG("string is %s", ret.c_str());
 
-    d = UserDefault::sharedUserDefault()->getDoubleForKey("double");
+    d = UserDefault::getInstance()->getDoubleForKey("double");
     CCLOG("double is %f", d);
 
-    i = UserDefault::sharedUserDefault()->getIntegerForKey("integer");
+    i = UserDefault::getInstance()->getIntegerForKey("integer");
     CCLOG("integer is %d", i);
 
-    f = UserDefault::sharedUserDefault()->getFloatForKey("float");
+    f = UserDefault::getInstance()->getFloatForKey("float");
     CCLOG("float is %f", f);
 
-    b = UserDefault::sharedUserDefault()->getBoolForKey("bool");
+    b = UserDefault::getInstance()->getBoolForKey("bool");
     if (b)
     {
         CCLOG("bool is true");
@@ -100,6 +100,6 @@ void UserDefaultTestScene::runThisTest()
     Layer* pLayer = new UserDefaultTest();
     addChild(pLayer);
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
     pLayer->release();
 }

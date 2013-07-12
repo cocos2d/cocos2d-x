@@ -94,7 +94,7 @@ void LayerTest::restartCallback(Object* pSender)
     Scene* s = new LayerTestScene();
     s->addChild(restartAction());
 
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -102,7 +102,7 @@ void LayerTest::nextCallback(Object* pSender)
 {
     Scene* s = new LayerTestScene();
     s->addChild( nextAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -110,7 +110,7 @@ void LayerTest::backCallback(Object* pSender)
 {
     Scene* s = new LayerTestScene();
     s->addChild( backAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 } 
 
@@ -139,7 +139,7 @@ void LayerTestCascadingOpacityA::onEnter()
 {
     LayerTest::onEnter();
     
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     LayerRGBA* layer1 = LayerRGBA::create();
     
     Sprite *sister1 = Sprite::create("Images/grossinis_sister1.png");
@@ -189,7 +189,7 @@ void LayerTestCascadingOpacityB::onEnter()
 {
     LayerTest::onEnter();
         
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     LayerColor* layer1 = LayerColor::create(Color4B(192, 0, 0, 255), s.width, s.height/2);
     layer1->setCascadeColorEnabled(false);
     
@@ -241,7 +241,7 @@ void LayerTestCascadingOpacityC::onEnter()
 {
     LayerTest::onEnter();
     
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     LayerColor* layer1 = LayerColor::create(Color4B(192, 0, 0, 255), s.width, s.height/2);
     layer1->setCascadeColorEnabled(false);
     layer1->setCascadeOpacityEnabled(false);
@@ -293,7 +293,7 @@ void LayerTestCascadingColorA::onEnter()
 {
     LayerTest::onEnter();
     
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     LayerRGBA* layer1 = LayerRGBA::create();
     
     Sprite *sister1 = Sprite::create("Images/grossinis_sister1.png");
@@ -344,7 +344,7 @@ std::string LayerTestCascadingColorA::title()
 void LayerTestCascadingColorB::onEnter()
 {
     LayerTest::onEnter();
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     LayerColor* layer1 = LayerColor::create(Color4B(255, 255, 255, 255), s.width, s.height/2);
     
     layer1->setPosition( ccp(0, s.height/2));
@@ -396,7 +396,7 @@ std::string LayerTestCascadingColorB::title()
 void LayerTestCascadingColorC::onEnter()
 {
     LayerTest::onEnter();
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     LayerColor* layer1 = LayerColor::create(Color4B(255, 255, 255, 255), s.width, s.height/2);
     layer1->setCascadeColorEnabled(false);
     layer1->setPosition( ccp(0, s.height/2));
@@ -451,7 +451,7 @@ void LayerTest1::onEnter()
 
     setTouchEnabled(true);
     
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     LayerColor* layer = LayerColor::create( Color4B(0xFF, 0x00, 0x00, 0x80), 200, 200); 
     
     layer->ignoreAnchorPointForPosition(false);
@@ -461,7 +461,7 @@ void LayerTest1::onEnter()
 
 void LayerTest1::updateSize(Point &touchLocation)
 {    
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     
     Size newSize = CCSizeMake( fabs(touchLocation.x - s.width/2)*2, fabs(touchLocation.y - s.height/2)*2);
     
@@ -502,7 +502,7 @@ void LayerTest2::onEnter()
 {
     LayerTest::onEnter();
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     LayerColor* layer1 = LayerColor::create( Color4B(255, 255, 0, 80), 100, 300);
     layer1->setPosition(ccp(s.width/3, s.height/2));
     layer1->ignoreAnchorPointForPosition(false);
@@ -537,7 +537,7 @@ std::string LayerTest2::title()
 
 LayerTestBlend::LayerTestBlend()
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     LayerColor* layer1 = LayerColor::create( Color4B(255, 255, 255, 80) );
     
     Sprite* sister1 = Sprite::create(s_pPathSister1);
@@ -601,7 +601,7 @@ LayerGradientTest::LayerGradientTest()
 
     Menu *menu = Menu::create(item, NULL);
     addChild(menu);
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     menu->setPosition(ccp(s.width / 2, 100));
 }
 
@@ -613,7 +613,7 @@ void LayerGradientTest::toggleItem(Object *sender)
 
 void LayerGradientTest::ccTouchesMoved(Set * touches, Event *event)
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     Touch* touch = (Touch*) touches->anyObject();
     Point start = touch->getLocation();    
@@ -688,7 +688,7 @@ void LayerIgnoreAnchorPointPos::onEnter()
 {
     LayerTest::onEnter();
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     LayerColor *l = LayerColor::create(Color4B(255, 0, 0, 255), 150, 150);
 
@@ -736,7 +736,7 @@ std::string LayerIgnoreAnchorPointPos::subtitle()
 void LayerIgnoreAnchorPointRot::onEnter()
 {
     LayerTest::onEnter();
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     LayerColor *l = LayerColor::create(Color4B(255, 0, 0, 255), 200, 200);
 
@@ -784,7 +784,7 @@ void LayerIgnoreAnchorPointScale::onEnter()
 {
     LayerTest::onEnter();
     
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     LayerColor *l = LayerColor::create(Color4B(255, 0, 0, 255), 200, 200);
 
@@ -836,7 +836,7 @@ void LayerTestScene::runThisTest()
     Layer* pLayer = nextAction();
     addChild(pLayer);
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }
 
 LayerExtendedBlendOpacityTest::LayerExtendedBlendOpacityTest()

@@ -29,7 +29,7 @@ bool ControlButtonTest_HelloVariableSize::init()
 {
     if (ControlScene::init())
     {
-        Size screenSize = Director::sharedDirector()->getWinSize();
+        Size screenSize = Director::getInstance()->getWinSize();
         
         // Defines an array of title to create buttons dynamically
         Array *stringArray = Array::create(
@@ -123,7 +123,7 @@ bool ControlButtonTest_Event::init()
 {
     if (ControlScene::init())
     {
-        Size screenSize = Director::sharedDirector()->getWinSize();
+        Size screenSize = Director::getInstance()->getWinSize();
 
         // Add a label in which the button events will be displayed
         setDisplayValueLabel(LabelTTF::create("No Event", "Marker Felt", 32));
@@ -214,7 +214,7 @@ bool ControlButtonTest_Styling::init()
 {
     if (ControlScene::init())
     {
-        Size screenSize = Director::sharedDirector()->getWinSize();
+        Size screenSize = Director::getInstance()->getWinSize();
 
         Node *layer = Node::create();
         addChild(layer, 1);

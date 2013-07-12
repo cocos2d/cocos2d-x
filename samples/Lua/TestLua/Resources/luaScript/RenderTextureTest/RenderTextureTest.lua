@@ -7,7 +7,7 @@
 local function RenderTextureSave()
     local ret = createTestLayer("Touch the screen",
                                 "Press 'Save Image' to create an snapshot of the render texture")
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
     local m_pTarget = nil
     local m_pBrush = nil
     local m_pTarget = nil
@@ -25,7 +25,7 @@ local function RenderTextureSave()
 
         local pImage = m_pTarget:newCCImage()
 
-        local tex = CCTextureCache:sharedTextureCache():addUIImage(pImage, png)
+        local tex = CCTextureCache:getInstance():addUIImage(pImage, png)
 
         pImage:release()
 
@@ -44,7 +44,7 @@ local function RenderTextureSave()
         if event == "exit" then
             m_pBrush:release()
             m_pTarget:release()
-            CCTextureCache:sharedTextureCache():removeUnusedTextures()
+            CCTextureCache:getInstance():removeUnusedTextures()
         end
     end
 
@@ -178,7 +178,7 @@ end
 -- spr_nonpremulti:visit()
 -- rend:end()
 
--- local s = CCDirector:sharedDirector():getWinSize()
+-- local s = CCDirector:getInstance():getWinSize()
 
 -- --/* A1: setup */
 -- spr_premulti:setPosition(ccp(s.width/2-16, s.height/2+16))
@@ -207,7 +207,7 @@ end
 --     local  pLayer = nextTestCase()
 --     addChild(pLayer)
 
---     CCDirector:sharedDirector():replaceScene(this)
+--     CCDirector:getInstance():replaceScene(this)
 -- end
 
 -- --/**
@@ -217,7 +217,7 @@ end
 -- local function RenderTextureZbuffer()
 
 --     this:setTouchEnabled(true)
---     local size = CCDirector:sharedDirector():getWinSize()
+--     local size = CCDirector:getInstance():getWinSize()
 --     local label = CCLabelTTF:create("vertexZ = 50", "Marker Felt", 64)
 --     label:setPosition(ccp(size.width / 2, size.height * 0.25))
 --     this:addChild(label)
@@ -234,7 +234,7 @@ end
 --     label2:setVertexZ(0)
 --     label3:setVertexZ(-50)
 
---     CCSpriteFrameCache:sharedSpriteFrameCache():addSpriteFramesWithFile("Images/bugs/circle.plist")
+--     CCSpriteFrameCache:getInstance():addSpriteFramesWithFile("Images/bugs/circle.plist")
 --     mgr = CCSpriteBatchNode:create("Images/bugs/circle.png", 9)
 --     this:addChild(mgr)
 --     sp1 = CCSprite:createWithSpriteFrameName("circle.png")
@@ -359,7 +359,7 @@ end
 
 -- local function RenderTextureTestDepthStencil()
 
---     local s = CCDirector:sharedDirector():getWinSize()
+--     local s = CCDirector:getInstance():getWinSize()
 
 --     local sprite = CCSprite:create("Images/fire.png")
 --     sprite:setPosition(ccp(s.width * 0.25, 0))
@@ -425,7 +425,7 @@ end
 --     -- sprite 2
 --     sprite2 = CCSprite:create("Images/fire_rgba8888.pvr")
 
---     local s = CCDirector:sharedDirector():getWinSize()
+--     local s = CCDirector:getInstance():getWinSize()
 
 --     /* Create the render texture */
 --     local renderTexture = CCRenderTexture:create(s.width, s.height, kCCTexture2DPixelFormat_RGBA4444)
@@ -512,7 +512,7 @@ end
 
 --     if (rt == NULL)
 
---     local s = CCDirector:sharedDirector():getWinSize()
+--     local s = CCDirector:getInstance():getWinSize()
 --     rt = new CCRenderTexture()
 --     rt:initWithWidthAndHeight(s.width, s.height, kCCTexture2DPixelFormat_RGBA8888)
 -- end
@@ -554,7 +554,7 @@ end
 
 --     setTouchEnabled(true)
 
---     local s = CCDirector:sharedDirector():getWinSize()
+--     local s = CCDirector:getInstance():getWinSize()
 --     addNewSpriteWithCoords(ccp(s.width/2, s.height/2))
 -- end
 

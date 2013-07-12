@@ -91,7 +91,7 @@ void S9SpriteTestScene::runThisTest()
     sceneIdx = -1;
     addChild(nextAction());
     
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }
 
 //------------------------------------------------------------------
@@ -103,7 +103,7 @@ void S9SpriteTestScene::runThisTest()
 void S9SpriteTestDemo::onEnter()
 {
     BaseTest::onEnter();
-    SpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(s_s9s_blocks9_plist);
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile(s_s9s_blocks9_plist);
     CCLOG("sprite frames added to sprite frame cache...");
 }
 
@@ -111,7 +111,7 @@ void S9SpriteTestDemo::restartCallback(Object* sender)
 {
     Scene* s = new S9SpriteTestScene();
     s->addChild( restartAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -119,7 +119,7 @@ void S9SpriteTestDemo::nextCallback(Object* sender)
 {
     Scene* s = new S9SpriteTestScene();
     s->addChild( nextAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -127,7 +127,7 @@ void S9SpriteTestDemo::backCallback(Object* sender)
 {
     Scene* s = new S9SpriteTestScene();
     s->addChild( backAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -137,7 +137,7 @@ void S9SpriteTestDemo::backCallback(Object* sender)
 void S9BatchNodeBasic::onEnter()
 {
     S9SpriteTestDemo::onEnter();
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
     
@@ -177,7 +177,7 @@ std::string S9BatchNodeBasic::subtitle()
 void S9FrameNameSpriteSheet::onEnter()
 {
     S9SpriteTestDemo::onEnter();
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
@@ -211,7 +211,7 @@ std::string S9FrameNameSpriteSheet::subtitle()
 void S9FrameNameSpriteSheetRotated::onEnter()
 {
     S9SpriteTestDemo::onEnter();
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
@@ -246,7 +246,7 @@ std::string S9FrameNameSpriteSheetRotated::subtitle()
 void S9BatchNodeScaledNoInsets::onEnter()
 {
     S9SpriteTestDemo::onEnter();
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
@@ -290,7 +290,7 @@ std::string S9BatchNodeScaledNoInsets::subtitle()
 void S9FrameNameSpriteSheetScaledNoInsets::onEnter()
 {
     S9SpriteTestDemo::onEnter();
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
@@ -329,7 +329,7 @@ std::string S9FrameNameSpriteSheetScaledNoInsets::subtitle()
 void S9FrameNameSpriteSheetRotatedScaledNoInsets::onEnter()
 {
     S9SpriteTestDemo::onEnter();
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
@@ -368,7 +368,7 @@ std::string S9FrameNameSpriteSheetRotatedScaledNoInsets::subtitle()
 void S9BatchNodeScaleWithCapInsets::onEnter()
 {
     S9SpriteTestDemo::onEnter();
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
@@ -412,7 +412,7 @@ std::string S9BatchNodeScaleWithCapInsets::subtitle()
 void S9FrameNameSpriteSheetInsets::onEnter()
 {
     S9SpriteTestDemo::onEnter();
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
@@ -446,7 +446,7 @@ std::string S9FrameNameSpriteSheetInsets::subtitle()
 void S9FrameNameSpriteSheetInsetsScaled::onEnter()
 {
     S9SpriteTestDemo::onEnter();
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
@@ -483,7 +483,7 @@ std::string S9FrameNameSpriteSheetInsetsScaled::subtitle()
 void S9FrameNameSpriteSheetRotatedInsets::onEnter()
 {
     S9SpriteTestDemo::onEnter();
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
@@ -518,8 +518,8 @@ std::string S9FrameNameSpriteSheetRotatedInsets::subtitle()
 void S9_TexturePacker::onEnter()
 {
     S9SpriteTestDemo::onEnter();
-    Size winSize = Director::sharedDirector()->getWinSize();
-    SpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(s_s9s_ui_plist);
+    Size winSize = Director::getInstance()->getWinSize();
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile(s_s9s_ui_plist);
 
     float x = winSize.width / 4;
     float y = 0 + (winSize.height / 2);
@@ -572,7 +572,7 @@ std::string S9_TexturePacker::subtitle()
 void S9FrameNameSpriteSheetRotatedInsetsScaled::onEnter()
 {
     S9SpriteTestDemo::onEnter();
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
@@ -610,7 +610,7 @@ std::string S9FrameNameSpriteSheetRotatedInsetsScaled::subtitle()
 void S9FrameNameSpriteSheetRotatedSetCapInsetLater::onEnter()
 {
     S9SpriteTestDemo::onEnter();
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
     

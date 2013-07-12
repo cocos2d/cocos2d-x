@@ -1,7 +1,7 @@
  
  local function WebSocketTestLayer()
     local layer   = CCLayer:create()
-    local winSize = CCDirector:sharedDirector():getWinSize()
+    local winSize = CCDirector:getInstance():getWinSize()
         
     local MARGIN = 40
     local SPACE  = 35

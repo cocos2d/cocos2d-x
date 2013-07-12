@@ -15,8 +15,8 @@ USING_NS_CC_EXT;
 
 EditBoxTest::EditBoxTest()
 {
-    Point visibleOrigin = EGLView::sharedOpenGLView()->getVisibleOrigin();
-    Size visibleSize = EGLView::sharedOpenGLView()->getVisibleSize();
+    Point visibleOrigin = EGLView::getInstance()->getVisibleOrigin();
+    Size visibleSize = EGLView::getInstance()->getVisibleSize();
     
     Sprite* pBg = Sprite::create("Images/HelloWorld.png");
     pBg->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
@@ -131,6 +131,6 @@ void runEditBoxTest()
     EditBoxTest *pLayer = new EditBoxTest();
     pScene->addChild(pLayer);
     
-    Director::sharedDirector()->replaceScene(pScene);
+    Director::getInstance()->replaceScene(pScene);
     pLayer->release();
 }
