@@ -472,7 +472,7 @@ void FileUtils::destroyInstance()
 // XXX: deprecated
 void FileUtils::purgeFileUtils()
 {
-    FileUtils::destroyInstance()；
+    FileUtils::destroyInstance();
 }
 
 FileUtils::FileUtils()
