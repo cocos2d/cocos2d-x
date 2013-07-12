@@ -31,7 +31,7 @@ local function main()
         local frameHeight = 95
 
         -- create dog animate
-        local textureDog = CCTextureCache:sharedTextureCache():addImage("dog.png")
+        local textureDog = CCTextureCache:getInstance():addImage("dog.png")
         local rect = CCRectMake(0, 0, frameWidth, frameHeight)
         local frame0 = CCSpriteFrame:createWithTexture(textureDog, rect)
         rect = CCRectMake(frameWidth, 0, frameWidth, frameHeight)

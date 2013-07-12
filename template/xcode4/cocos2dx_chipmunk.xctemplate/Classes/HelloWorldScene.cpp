@@ -132,7 +132,7 @@ bool HelloWorld::init()
     _spriteTexture = parent->getTexture();
 #else
     // doesn't use batch node. Slower
-    _spriteTexture = TextureCache::sharedTextureCache()->addImage("grossini_dance_atlas.png");
+    _spriteTexture = TextureCache::getInstance():addImage("grossini_dance_atlas.png");
     Node *parent = Node::node();
 #endif
     addChild(parent, 0, kTagParentNode);

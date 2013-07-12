@@ -733,8 +733,8 @@ local function runParticleTest()
     		pNewScene:removeChildByTag(ParticleTestParam.kTagParticleSystem, true)
     		
     		--remove the "fire.png" from the TextureCache cache. 
-    		local pTexture = CCTextureCache:sharedTextureCache():addImage("Images/fire.png")
-    		CCTextureCache:sharedTextureCache():removeTexture(pTexture)
+    		local pTexture = CCTextureCache:getInstance():addImage("Images/fire.png")
+    		CCTextureCache:getInstance():removeTexture(pTexture)
     		local pParticleSystem = CCParticleSystemQuad:new()
     		if 1 == nSubtestNumber then
     		    CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
@@ -755,7 +755,7 @@ local function runParticleTest()
     		
     		if nil ~= pParticleSystem then
     			pParticleSystem:initWithTotalParticles(nQuantityParticles)
-        		pParticleSystem:setTexture(CCTextureCache:sharedTextureCache():addImage("Images/fire.png"))
+        		pParticleSystem:setTexture(CCTextureCache:getInstance():addImage("Images/fire.png"))
     		end
     		
     		pNewScene:addChild(pParticleSystem, 0, ParticleTestParam.kTagParticleSystem)
@@ -1215,7 +1215,7 @@ local function runSpriteTest()
     	*12: 64 (4-bit) PVRTC Batch Node of 32 x 32 each
     	]]--
     	--purge textures
-    	local pMgr = CCTextureCache:sharedTextureCache()
+    	local pMgr = CCTextureCache:getInstance()
     	--[mgr removeAllTextures]
     	pMgr:removeTexture(pMgr:addImage("Images/grossinis_sister1.png"))
     	pMgr:removeTexture(pMgr:addImage("Images/grossini_dance_atlas.png"))
@@ -1364,7 +1364,7 @@ local function runTextureTest()
 	local function PerformTestsPNG(strFileName)
 		  local time
 		  local pTexture = nil
-    	  local pCache = CCTextureCache:sharedTextureCache()
+    	  local pCache = CCTextureCache:getInstance()
     	  print("RGBA 8888")
     	  CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
     	  pTexture = pCache:addImage(strFileName) 		  
