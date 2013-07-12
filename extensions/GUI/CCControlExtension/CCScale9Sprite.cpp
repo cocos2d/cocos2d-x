@@ -96,8 +96,9 @@ bool Scale9Sprite::initWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bool
     if(batchnode)
     {
         this->updateWithBatchNode(batchnode, rect, rotated, capInsets);
-        this->setAnchorPoint(Point(0.5f, 0.5f));
     }
+    
+    this->setAnchorPoint(Point(0.5f, 0.5f));
     this->_positionsAreDirty = true;
     
     return true;
@@ -180,18 +181,15 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bo
     float y = 0.0;
 
     // top left
-    Rect lefttopbounds = Rect(x, y,
-                                      left_w, top_h);
+    Rect lefttopbounds = Rect(x, y, left_w, top_h);
 
     // top center
     TRANSLATE_X(x, y, left_w);
-    Rect centertopbounds = Rect(x, y,
-                                        center_w, top_h);
+    Rect centertopbounds = Rect(x, y, center_w, top_h);
         
     // top right
     TRANSLATE_X(x, y, center_w);
-    Rect righttopbounds = Rect(x, y,
-                                       right_w, top_h);
+    Rect righttopbounds = Rect(x, y, right_w, top_h);
 
     // ... center row
     x = 0.0;
@@ -199,18 +197,15 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bo
     TRANSLATE_Y(x, y, top_h);
 
     // center left
-    Rect leftcenterbounds = Rect(x, y,
-                                         left_w, center_h);
+    Rect leftcenterbounds = Rect(x, y, left_w, center_h);
 
     // center center
     TRANSLATE_X(x, y, left_w);
-    Rect centerbounds = Rect(x, y,
-                                     center_w, center_h);
+    Rect centerbounds = Rect(x, y, center_w, center_h);
 
     // center right
     TRANSLATE_X(x, y, center_w);
-    Rect rightcenterbounds = Rect(x, y,
-                                          right_w, center_h);
+    Rect rightcenterbounds = Rect(x, y, right_w, center_h);
 
     // ... bottom row
     x = 0.0;
@@ -219,18 +214,15 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bo
     TRANSLATE_Y(x, y, center_h);
 
     // bottom left
-    Rect leftbottombounds = Rect(x, y,
-                                         left_w, bottom_h);
+    Rect leftbottombounds = Rect(x, y, left_w, bottom_h);
 
     // bottom center
     TRANSLATE_X(x, y, left_w);
-    Rect centerbottombounds = Rect(x, y,
-                                           center_w, bottom_h);
+    Rect centerbottombounds = Rect(x, y, center_w, bottom_h);
 
     // bottom right
     TRANSLATE_X(x, y, center_w);
-    Rect rightbottombounds = Rect(x, y,
-                                          right_w, bottom_h);
+    Rect rightbottombounds = Rect(x, y, right_w, bottom_h);
 
     if (!rotated) {
         // CCLog("!rotated");
@@ -383,11 +375,11 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bo
     this->addChild(_scale9Image);
     
     if (_spritesGenerated)
-        {
-            // Restore color and opacity
-            this->setOpacity(opacity);
-            this->setColor(color);
-        }
+    {
+        // Restore color and opacity
+        this->setOpacity(opacity);
+        this->setColor(color);
+    }
     _spritesGenerated = true;
 
     return true;
@@ -687,20 +679,10 @@ void Scale9Sprite::updateCapInset()
     }
     else
     {
-        if (_spriteFrameRotated)
-        {
-            insets = Rect(_insetBottom,
-                _insetLeft,
-                _spriteRect.size.width-_insetRight-_insetLeft,
-                _spriteRect.size.height-_insetTop-_insetBottom);
-        }
-        else
-        {
-            insets = Rect(_insetLeft,
-                _insetTop,
-                _spriteRect.size.width-_insetLeft-_insetRight,
-                _spriteRect.size.height-_insetTop-_insetBottom);
-        }
+        insets = Rect(_insetLeft,
+            _insetTop,
+            _spriteRect.size.width-_insetLeft-_insetRight,
+            _spriteRect.size.height-_insetTop-_insetBottom);
     }
     this->setCapInsets(insets);
 }
