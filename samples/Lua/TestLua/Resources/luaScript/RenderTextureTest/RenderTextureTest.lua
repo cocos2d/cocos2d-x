@@ -234,7 +234,7 @@ end
 --     label2:setVertexZ(0)
 --     label3:setVertexZ(-50)
 
---     CCSpriteFrameCache:sharedSpriteFrameCache():addSpriteFramesWithFile("Images/bugs/circle.plist")
+--     CCSpriteFrameCache:getInstance():addSpriteFramesWithFile("Images/bugs/circle.plist")
 --     mgr = CCSpriteBatchNode:create("Images/bugs/circle.png", 9)
 --     this:addChild(mgr)
 --     sp1 = CCSprite:createWithSpriteFrameName("circle.png")

@@ -241,7 +241,7 @@ SpriteFrameTest.m_nCounter = 0
 
 function SpriteFrameTest.onEnter()
     local s = CCDirector:getInstance():getWinSize()
-    local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+    local cache = CCSpriteFrameCache:getInstance()
 
     cache:addSpriteFramesWithFile("animations/grossini.plist")
     cache:addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png")
@@ -295,7 +295,7 @@ function SpriteFrameTest.onEnter()
 end
 
 function SpriteFrameTest.onExit()
-    local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+    local cache = CCSpriteFrameCache:getInstance()
     cache:removeSpriteFramesFromFile("animations/grossini.plist")
     cache:removeSpriteFramesFromFile("animations/grossini_gray.plist")
     cache:removeSpriteFramesFromFile("animations/grossini_blue.plist")
@@ -362,7 +362,7 @@ SpriteFrameAliasNameTest.__index = SpriteFrameAliasNameTest
 function SpriteFrameAliasNameTest.onEnter()
     local s = CCDirector:getInstance():getWinSize()
 
-    local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+    local cache = CCSpriteFrameCache:getInstance()
     cache:addSpriteFramesWithFile("animations/grossini-aliases.plist", "animations/grossini-aliases.png")
 
     local sprite = CCSprite:createWithSpriteFrameName("grossini_dance_01.png")
@@ -386,7 +386,7 @@ function SpriteFrameAliasNameTest.onEnter()
 end
 
 function SpriteFrameAliasNameTest.onExit()
-    CCSpriteFrameCache:sharedSpriteFrameCache():removeSpriteFramesFromFile("animations/grossini-aliases.plist")
+    CCSpriteFrameCache:getInstance():removeSpriteFramesFromFile("animations/grossini-aliases.plist")
 end
 
 function SpriteFrameAliasNameTest.onEnterOrExit(tag)
@@ -522,7 +522,7 @@ SpriteOffsetAnchorRotation.__index = SpriteOffsetAnchorRotation
 
 function SpriteOffsetAnchorRotation.initLayer(layer)
     local s = CCDirector:getInstance():getWinSize()        
-    local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+    local cache = CCSpriteFrameCache:getInstance()
     cache:addSpriteFramesWithFile("animations/grossini.plist")
     cache:addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png")
 
@@ -567,7 +567,7 @@ end
 
 function SpriteOffsetAnchorRotation.eventHandler(tag)
     if tag == "exit" then
-        local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+        local cache = CCSpriteFrameCache:getInstance()
         cache:removeSpriteFramesFromFile("animations/grossini.plist")
         cache:removeSpriteFramesFromFile("animations/grossini_gray.plist")
     end
@@ -597,7 +597,7 @@ function SpriteBatchNodeOffsetAnchorRotation.initLayer(layer)
 
     local s = CCDirector:getInstance():getWinSize() 
 
-    local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+    local cache = CCSpriteFrameCache:getInstance()
     cache:addSpriteFramesWithFile("animations/grossini.plist")
     cache:addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png")
 
@@ -645,7 +645,7 @@ end
 
 function SpriteBatchNodeOffsetAnchorRotation.eventHandler(tag)
     if tag == "exit" then
-        local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+        local cache = CCSpriteFrameCache:getInstance()
         cache:removeSpriteFramesFromFile("animations/grossini.plist")
         cache:removeSpriteFramesFromFile("animations/grossini_gray.plist")
     end
@@ -674,7 +674,7 @@ SpriteOffsetAnchorScale.__index = SpriteOffsetAnchorScale
 function SpriteOffsetAnchorScale.initLayer(layer)
     local s = CCDirector:getInstance():getWinSize()   
     
-    local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+    local cache = CCSpriteFrameCache:getInstance()
     cache:addSpriteFramesWithFile("animations/grossini.plist")
     cache:addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png")
     
@@ -723,7 +723,7 @@ end
 
 function SpriteOffsetAnchorScale.eventHandler(tag)
     if tag == "exit" then
-        local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+        local cache = CCSpriteFrameCache:getInstance()
         cache:removeSpriteFramesFromFile("animations/grossini.plist")
         cache:removeSpriteFramesFromFile("animations/grossini_gray.plist")
     end
@@ -751,7 +751,7 @@ local SpriteBatchNodeOffsetAnchorScale = {}
 function SpriteBatchNodeOffsetAnchorScale.initLayer(layer)
     local s = CCDirector:getInstance():getWinSize()
 
-    local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+    local cache = CCSpriteFrameCache:getInstance()
     cache:addSpriteFramesWithFile("animations/grossini.plist")
     cache:addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png")
 
@@ -801,7 +801,7 @@ function SpriteBatchNodeOffsetAnchorScale.initLayer(layer)
 end
 
 function SpriteBatchNodeOffsetAnchorScale.onExit()
-    local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+    local cache = CCSpriteFrameCache:getInstance()
     cache:removeSpriteFramesFromFile("animations/grossini.plist")
     cache:removeSpriteFramesFromFile("animations/grossini_gray.plist")
 end
@@ -836,7 +836,7 @@ function SpriteOffsetAnchorSkew.initLayer(layer)
 
     local s = CCDirector:getInstance():getWinSize()
     
-    local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+    local cache = CCSpriteFrameCache:getInstance()
     cache:addSpriteFramesWithFile("animations/grossini.plist")
     cache:addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png")
 
@@ -892,7 +892,7 @@ end
 
 function SpriteOffsetAnchorSkew.eventHandler(tag)
      if tag == "exit" then
-        local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+        local cache = CCSpriteFrameCache:getInstance()
         cache:removeSpriteFramesFromFile("animations/grossini.plist")
         cache:removeSpriteFramesFromFile("animations/grossini_gray.plist")
      end
@@ -919,7 +919,7 @@ function SpriteOffsetAnchorRotationalSkew.initLayer(layer)
 
     local s = CCDirector:getInstance():getWinSize()
     
-    local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+    local cache = CCSpriteFrameCache:getInstance()
     cache:addSpriteFramesWithFile("animations/grossini.plist")
     cache:addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png")
     
@@ -974,7 +974,7 @@ end
 
 function SpriteOffsetAnchorRotationalSkew.eventHandler(tag)
     if tag == "exit" then
-        local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+        local cache = CCSpriteFrameCache:getInstance()
         cache:removeSpriteFramesFromFile("animations/grossini.plist")
         cache:removeSpriteFramesFromFile("animations/grossini_gray.plist")
     end
@@ -1003,7 +1003,7 @@ function SpriteBatchNodeOffsetAnchorSkew.initLayer(layer)
 
     local s = CCDirector:getInstance():getWinSize()
     
-    local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+    local cache = CCSpriteFrameCache:getInstance()
     cache:addSpriteFramesWithFile("animations/grossini.plist")
     cache:addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png")
     
@@ -1062,7 +1062,7 @@ end
 
 function SpriteBatchNodeOffsetAnchorSkew.eventHandler(tag)
     if tag == "exit" then
-        local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+        local cache = CCSpriteFrameCache:getInstance()
         cache:removeSpriteFramesFromFile("animations/grossini.plist")
         cache:removeSpriteFramesFromFile("animations/grossini_gray.plist")
     end
@@ -1090,7 +1090,7 @@ function SpriteBatchNodeOffsetAnchorRotationalSkew.initLayer(layer)
 
     local s = CCDirector:getInstance():getWinSize()
     
-    local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+    local cache = CCSpriteFrameCache:getInstance()
     cache:addSpriteFramesWithFile("animations/grossini.plist")
     cache:addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png")
     
@@ -1151,7 +1151,7 @@ end
 -- remove resources
 function SpriteBatchNodeOffsetAnchorRotationalSkew.eventHandler(tag)
     if tag == "exit" then
-        local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+        local cache = CCSpriteFrameCache:getInstance()
         cache:removeSpriteFramesFromFile("animations/grossini.plist")
         cache:removeSpriteFramesFromFile("animations/grossini_gray.plist")
     end
@@ -1177,7 +1177,7 @@ local SpriteOffsetAnchorSkewScale = {}
 function SpriteOffsetAnchorSkewScale.initLayer(layer)
     local s = CCDirector:getInstance():getWinSize()
 
-    local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+    local cache = CCSpriteFrameCache:getInstance()
     cache:addSpriteFramesWithFile("animations/grossini.plist")
     cache:addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png")
 
@@ -1238,7 +1238,7 @@ end
 
 function SpriteOffsetAnchorSkewScale.eventHandler(tag)
     if tag == "exit" then
-        local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+        local cache = CCSpriteFrameCache:getInstance()
         cache:removeSpriteFramesFromFile("animations/grossini.plist")
         cache:removeSpriteFramesFromFile("animations/grossini_gray.plist")
     end
@@ -1263,7 +1263,7 @@ local SpriteOffsetAnchorRotationalSkewScale = {}
 function SpriteOffsetAnchorRotationalSkewScale.initLayer(layer)
     local s = CCDirector:getInstance():getWinSize()
 
-    local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+    local cache = CCSpriteFrameCache:getInstance()
     cache:addSpriteFramesWithFile("animations/grossini.plist")
     cache:addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png")
     
@@ -1324,7 +1324,7 @@ end
 
 function SpriteOffsetAnchorRotationalSkewScale.eventHandler(tag)
     if tag == "exit" then
-        local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+        local cache = CCSpriteFrameCache:getInstance()
         cache:removeSpriteFramesFromFile("animations/grossini.plist")
         cache:removeSpriteFramesFromFile("animations/grossini_gray.plist")
     end
@@ -1349,7 +1349,7 @@ local SpriteBatchNodeOffsetAnchorSkewScale = {}
 function SpriteBatchNodeOffsetAnchorSkewScale.initLayer(layer)
     local s = CCDirector:getInstance():getWinSize()
 
-    local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+    local cache = CCSpriteFrameCache:getInstance()
     cache:addSpriteFramesWithFile("animations/grossini.plist")
     cache:addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png")
 
@@ -1413,7 +1413,7 @@ end
 
 function SpriteBatchNodeOffsetAnchorSkewScale.eventHandler(tag)
     if tag == "exit" then
-        local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+        local cache = CCSpriteFrameCache:getInstance()
         cache:removeSpriteFramesFromFile("animations/grossini.plist")
         cache:removeSpriteFramesFromFile("animations/grossini_gray.plist")
     end
@@ -1437,7 +1437,7 @@ local SpriteBatchNodeOffsetAnchorRotationalSkewScale = {}
 function SpriteBatchNodeOffsetAnchorRotationalSkewScale.initLayer(layer)
     local s = CCDirector:getInstance():getWinSize()
     
-    local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+    local cache = CCSpriteFrameCache:getInstance()
     cache:addSpriteFramesWithFile("animations/grossini.plist")
     cache:addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png")
 
@@ -1500,7 +1500,7 @@ end
 
 function SpriteBatchNodeOffsetAnchorRotationalSkewScale.eventHandler(tag)
     if tag == "exit" then
-        local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+        local cache = CCSpriteFrameCache:getInstance()
         cache:removeSpriteFramesFromFile("animations/grossini.plist")
         cache:removeSpriteFramesFromFile("animations/grossini_gray.plist")
     end
@@ -1524,7 +1524,7 @@ local SpriteOffsetAnchorFlip = {}
 function SpriteOffsetAnchorFlip.initLayer(layer)
     local s = CCDirector:getInstance():getWinSize()
 
-    local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+    local cache = CCSpriteFrameCache:getInstance()
     cache:addSpriteFramesWithFile("animations/grossini.plist")
     cache:addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png")
 
@@ -1576,7 +1576,7 @@ end
 
 function SpriteOffsetAnchorFlip.eventHandler(tag)
     if tag == "exit" then
-        local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+        local cache = CCSpriteFrameCache:getInstance()
         cache:removeSpriteFramesFromFile("animations/grossini.plist")
         cache:removeSpriteFramesFromFile("animations/grossini_gray.plist")
     end
