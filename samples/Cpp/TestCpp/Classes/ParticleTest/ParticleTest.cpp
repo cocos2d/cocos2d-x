@@ -28,7 +28,7 @@ void DemoFirework::onEnter()
     _emitter->retain();
     _background->addChild(_emitter, 10);
     
-    _emitter->setTexture( TextureCache::sharedTextureCache()->addImage(s_stars1) );
+    _emitter->setTexture( TextureCache::getInstance()->addImage(s_stars1) );
     
     setEmitterPosition();
 }
@@ -52,7 +52,7 @@ void DemoFire::onEnter()
     _emitter->retain();
     _background->addChild(_emitter, 10);
     
-    _emitter->setTexture( TextureCache::sharedTextureCache()->addImage(s_fire) );//.pvr");
+    _emitter->setTexture( TextureCache::getInstance()->addImage(s_fire) );//.pvr");
     Point p = _emitter->getPosition();
     _emitter->setPosition( Point(p.x, 100) );
     
@@ -77,7 +77,7 @@ void DemoSun::onEnter()
     _emitter->retain();
     _background->addChild(_emitter, 10);
 
-    _emitter->setTexture( TextureCache::sharedTextureCache()->addImage(s_fire) );
+    _emitter->setTexture( TextureCache::getInstance()->addImage(s_fire) );
     
     setEmitterPosition();
 }
@@ -100,7 +100,7 @@ void DemoGalaxy::onEnter()
     _emitter->retain();
     _background->addChild(_emitter, 10);
     
-    _emitter->setTexture( TextureCache::sharedTextureCache()->addImage(s_fire) );
+    _emitter->setTexture( TextureCache::getInstance()->addImage(s_fire) );
     
     setEmitterPosition(); 
 }
@@ -122,7 +122,7 @@ void DemoFlower::onEnter()
     _emitter = ParticleFlower::create();
     _emitter->retain();
     _background->addChild(_emitter, 10);
-    _emitter->setTexture( TextureCache::sharedTextureCache()->addImage(s_stars1) );
+    _emitter->setTexture( TextureCache::getInstance()->addImage(s_stars1) );
     
     setEmitterPosition();
 }
@@ -147,7 +147,7 @@ void DemoBigFlower::onEnter()
 
     _background->addChild(_emitter, 10);
     ////_emitter->release();    // win32 :  use this line or remove this line and use autorelease()
-    _emitter->setTexture( TextureCache::sharedTextureCache()->addImage(s_stars1) );
+    _emitter->setTexture( TextureCache::getInstance()->addImage(s_stars1) );
 
     _emitter->setDuration(-1);
     
@@ -231,7 +231,7 @@ void DemoRotFlower::onEnter()
 
     _background->addChild(_emitter, 10);
     ////_emitter->release();    // win32 : Remove this line
-    _emitter->setTexture( TextureCache::sharedTextureCache()->addImage(s_stars2) );
+    _emitter->setTexture( TextureCache::getInstance()->addImage(s_stars2) );
     
     // duration
     _emitter->setDuration(-1);
@@ -314,7 +314,7 @@ void DemoMeteor::onEnter()
     _emitter->retain();
     _background->addChild(_emitter, 10);
     
-    _emitter->setTexture( TextureCache::sharedTextureCache()->addImage(s_fire) );
+    _emitter->setTexture( TextureCache::getInstance()->addImage(s_fire) );
     
     setEmitterPosition();
 }
@@ -337,7 +337,7 @@ void DemoSpiral::onEnter()
     _emitter->retain();
     _background->addChild(_emitter, 10);
     
-    _emitter->setTexture( TextureCache::sharedTextureCache()->addImage(s_fire) );
+    _emitter->setTexture( TextureCache::getInstance()->addImage(s_fire) );
     
     setEmitterPosition();
 }
@@ -360,7 +360,7 @@ void DemoExplosion::onEnter()
     _emitter->retain();
     _background->addChild(_emitter, 10);
     
-    _emitter->setTexture( TextureCache::sharedTextureCache()->addImage(s_stars1) );
+    _emitter->setTexture( TextureCache::getInstance()->addImage(s_stars1) );
     
     _emitter->setAutoRemoveOnFinish(true);
     
@@ -384,7 +384,7 @@ void DemoSmoke::onEnter()
     _emitter = ParticleSmoke::create();
     _emitter->retain();
     _background->addChild(_emitter, 10);
-    _emitter->setTexture( TextureCache::sharedTextureCache()->addImage(s_fire) );
+    _emitter->setTexture( TextureCache::getInstance()->addImage(s_fire) );
     
     Point p = _emitter->getPosition();
     _emitter->setPosition( Point( p.x, 100) );
@@ -435,7 +435,7 @@ void DemoSnow::onEnter()
     
     _emitter->setEmissionRate(_emitter->getTotalParticles()/_emitter->getLife());
     
-    _emitter->setTexture( TextureCache::sharedTextureCache()->addImage(s_snow) );
+    _emitter->setTexture( TextureCache::getInstance()->addImage(s_snow) );
     
     setEmitterPosition();
 }
@@ -462,7 +462,7 @@ void DemoRain::onEnter()
     _emitter->setPosition( Point( p.x, p.y-100) );
     _emitter->setLife(4);
     
-    _emitter->setTexture( TextureCache::sharedTextureCache()->addImage(s_fire) );
+    _emitter->setTexture( TextureCache::getInstance()->addImage(s_fire) );
     
     setEmitterPosition();
 }
@@ -491,7 +491,7 @@ void DemoModernArt::onEnter()
     _background->addChild(_emitter, 10);
     ////_emitter->release();
     
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     
     // duration
     _emitter->setDuration(-1);
@@ -546,7 +546,7 @@ void DemoModernArt::onEnter()
     _emitter->setEndSizeVar(8.0f);
     
     // texture
-    _emitter->setTexture( TextureCache::sharedTextureCache()->addImage(s_fire) );
+    _emitter->setTexture( TextureCache::getInstance()->addImage(s_fire) );
     
     // additive
     _emitter->setBlendAdditive(false);
@@ -573,7 +573,7 @@ void DemoRing::onEnter()
 
     _background->addChild(_emitter, 10);
 
-    _emitter->setTexture( TextureCache::sharedTextureCache()->addImage(s_stars1) );
+    _emitter->setTexture( TextureCache::getInstance()->addImage(s_stars1) );
     _emitter->setLifeVar(0);
     _emitter->setLife(10);
     _emitter->setSpeed(100);
@@ -611,14 +611,14 @@ void ParallaxParticle::onEnter()
 
     _emitter = ParticleFlower::create();
     _emitter->retain();
-    _emitter->setTexture( TextureCache::sharedTextureCache()->addImage(s_fire) );
+    _emitter->setTexture( TextureCache::getInstance()->addImage(s_fire) );
 
     p1->addChild(_emitter, 10);
     _emitter->setPosition( Point(250,200) );
     
     ParticleSun* par = ParticleSun::create();
     p2->addChild(par, 10);
-    par->setTexture( TextureCache::sharedTextureCache()->addImage(s_fire) );
+    par->setTexture( TextureCache::getInstance()->addImage(s_fire) );
     
     ActionInterval* move = MoveBy::create(4, Point(300,0));
     ActionInterval* move_back = move->reverse();
@@ -647,7 +647,7 @@ void RadiusMode1::onEnter()
     _emitter = new ParticleSystemQuad();
     _emitter->initWithTotalParticles(200);
     addChild(_emitter, 10);
-    _emitter->setTexture(TextureCache::sharedTextureCache()->addImage("Images/stars-grayscale.png"));
+    _emitter->setTexture(TextureCache::getInstance()->addImage("Images/stars-grayscale.png"));
 
     // duration
     _emitter->setDuration(kParticleDurationInfinity);
@@ -671,7 +671,7 @@ void RadiusMode1::onEnter()
     _emitter->setAngleVar(0);
 
     // emitter position
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
     _emitter->setPosition(Point(size.width/2, size.height/2));
     _emitter->setPosVar(Point::ZERO);
 
@@ -731,7 +731,7 @@ void RadiusMode2::onEnter()
     _emitter = new ParticleSystemQuad();
     _emitter->initWithTotalParticles(200);
     addChild(_emitter, 10);
-    _emitter->setTexture(TextureCache::sharedTextureCache()->addImage("Images/stars-grayscale.png"));
+    _emitter->setTexture(TextureCache::getInstance()->addImage("Images/stars-grayscale.png"));
 
     // duration
     _emitter->setDuration(kParticleDurationInfinity);
@@ -755,7 +755,7 @@ void RadiusMode2::onEnter()
     _emitter->setAngleVar(0);
 
     // emitter position
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
     _emitter->setPosition(Point(size.width/2, size.height/2));
     _emitter->setPosVar(Point::ZERO);
 
@@ -815,7 +815,7 @@ void Issue704::onEnter()
     _emitter = new ParticleSystemQuad();
     _emitter->initWithTotalParticles(100);
     addChild(_emitter, 10);
-    _emitter->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+    _emitter->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
 
     // duration
     _emitter->setDuration(kParticleDurationInfinity);
@@ -839,7 +839,7 @@ void Issue704::onEnter()
     _emitter->setAngleVar(0);
 
     // emitter position
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
     _emitter->setPosition(Point(size.width/2, size.height/2));
     _emitter->setPosVar(Point::ZERO);
 
@@ -906,7 +906,7 @@ void Issue870::onEnter()
 
     ParticleSystemQuad *system = new ParticleSystemQuad();
     system->initWithFile("Particles/SpinningPeas.plist");
-    system->setTextureWithRect(TextureCache::sharedTextureCache()->addImage("Images/particles.png"), Rect(0,0,32,32));
+    system->setTextureWithRect(TextureCache::getInstance()->addImage("Images/particles.png"), Rect(0,0,32,32));
     addChild(system, 10);
     _emitter = system;
 
@@ -1076,7 +1076,7 @@ void ParticleDemo::onEnter(void)
     
     setTouchEnabled( true );
     
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     
     MenuItemToggle* item4 = MenuItemToggle::createWithCallback( CC_CALLBACK_1(ParticleDemo::toggleCallback, this),
                                                                MenuItemFont::create( "Free Movement" ),
@@ -1144,7 +1144,7 @@ void ParticleDemo::ccTouchesEnded(Set *pTouches, Event *pEvent)
 
     if (_emitter != NULL)
     {
-        _emitter->setPosition(location - pos);
+        _emitter->setPosition(location -pos);
     }
 }
 
@@ -1184,7 +1184,7 @@ void ParticleDemo::nextCallback(Object* pSender)
 {
     Scene* s = new ParticleTestScene();
     s->addChild( nextParticleAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -1192,13 +1192,13 @@ void ParticleDemo::backCallback(Object* pSender)
 {
     Scene* s = new ParticleTestScene();
     s->addChild( backParticleAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 } 
 
 void ParticleDemo::setEmitterPosition()
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     if (_emitter != NULL)
     {
         _emitter->setPosition( Point(s.width / 2, s.height / 2) );
@@ -1270,7 +1270,7 @@ void ParticleBatchMultipleEmitters::onEnter()
     ParticleSystemQuad *emitter3 = ParticleSystemQuad::create("Particles/LavaFlow.plist");
     emitter3->setStartColor(Color4F(0,0,1,1));
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     emitter1->setPosition(Point( s.width/1.25f, s.height/1.25f));
     emitter2->setPosition(Point( s.width/2, s.height/2));
@@ -1325,7 +1325,7 @@ void ParticleReorder::onEnter()
         emitter3->setStartColor(Color4F(0,0,1,1));
         emitter3->setBlendAdditive(false);
 
-        Size s = Director::sharedDirector()->getWinSize();
+        Size s = Director::getInstance()->getWinSize();
 
         int neg = (i==0 ? 1 : -1 );
 
@@ -1425,7 +1425,7 @@ bool RainbowEffect::initWithTotalParticles(unsigned int numberOfParticles)
         setAngleVar(0);
 
         // emitter position
-        Size winSize = Director::sharedDirector()->getWinSize();
+        Size winSize = Director::getInstance()->getWinSize();
         setPosition(Point(winSize.width/2, winSize.height/2));
         setPosVar(Point::ZERO);
 
@@ -1454,7 +1454,7 @@ bool RainbowEffect::initWithTotalParticles(unsigned int numberOfParticles)
         _endColorVar.b = 0.0f;
         _endColorVar.a = 0.0f;
 
-        setTexture(TextureCache::sharedTextureCache()->addImage("Images/particles.png"));
+        setTexture(TextureCache::getInstance()->addImage("Images/particles.png"));
         return true;
     }
 
@@ -1481,7 +1481,7 @@ void Issue1201::onEnter()
 
     addChild(particle);
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     particle->setPosition(Point(s.width/2, s.height/2));
 
@@ -1506,7 +1506,7 @@ void MultipleParticleSystems::onEnter()
     removeChild(_background, true);
     _background = NULL;
 
-    TextureCache::sharedTextureCache()->addImage("Images/particles.png"); 
+    TextureCache::getInstance()->addImage("Images/particles.png"); 
 
     for (int i = 0; i<5; i++) {
         ParticleSystemQuad *particleSystem = ParticleSystemQuad::create("Particles/SpinningPeas.plist");
@@ -1909,5 +1909,5 @@ void ParticleTestScene::runThisTest()
 {
     addChild(nextParticleAction());
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

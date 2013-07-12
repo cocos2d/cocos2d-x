@@ -284,7 +284,7 @@ const Point& PhysicsSprite::getPosFromPhysics() const
     b2Vec2 pos = _pB2Body->GetPosition();
     float x = pos.x * _PTMRatio;
     float y = pos.y * _PTMRatio;
-    s_physicPosion = ccp(x,y);
+    s_physicPosion = Point(x,y);
 #endif
     return s_physicPosion;
 }

@@ -58,7 +58,7 @@ void ParticleMenuLayer::showCurrentTest()
     {
         pNewScene->initWithSubTest(subTest, parNum);
 
-        Director::sharedDirector()->replaceScene(pNewScene);
+        Director::getInstance()->replaceScene(pNewScene);
         pNewScene->release();
     }
 }
@@ -73,7 +73,7 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     //srandom(0);
 
     subtestNumber = asubtest;
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     lastRenderedCount = 0;
     quantityParticles = particles;
@@ -187,8 +187,8 @@ void ParticleMainScene::createParticleSystem()
     removeChildByTag(kTagParticleSystem, true);
 
     // remove the "fire.png" from the TextureCache cache. 
-    Texture2D *texture = TextureCache::sharedTextureCache()->addImage("Images/fire.png");
-    TextureCache::sharedTextureCache()->removeTexture(texture);
+    Texture2D *texture = TextureCache::getInstance()->addImage("Images/fire.png");
+    TextureCache::getInstance()->removeTexture(texture);
 
 //TODO:     if (subtestNumber <= 3)
 //     {
@@ -204,42 +204,42 @@ void ParticleMainScene::createParticleSystem()
     case 1:
         Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA8888);
         particleSystem->initWithTotalParticles(quantityParticles);
-        particleSystem->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+        particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
         break;
     case 2:
         Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA4444);
         particleSystem->initWithTotalParticles(quantityParticles);
-        particleSystem->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+        particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
         break;            
     case 3:
         Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_A8);
         particleSystem->initWithTotalParticles(quantityParticles);
-        particleSystem->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+        particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
         break;                        
 //     case 4:
 //         particleSystem->initWithTotalParticles(quantityParticles);
 //         ////---- particleSystem.texture = [[TextureCache sharedTextureCache] addImage:@"fire.pvr"];
-//         particleSystem->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+//         particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
 //         break;
     case 4:
         Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA8888);
         particleSystem->initWithTotalParticles(quantityParticles);
-        particleSystem->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+        particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
         break;
     case 5:
         Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA4444);
         particleSystem->initWithTotalParticles(quantityParticles);
-        particleSystem->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+        particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
         break;            
     case 6:
         Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_A8);
         particleSystem->initWithTotalParticles(quantityParticles);
-        particleSystem->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+        particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
         break;                        
 //     case 8:
 //         particleSystem->initWithTotalParticles(quantityParticles);
 //         ////---- particleSystem.texture = [[TextureCache sharedTextureCache] addImage:@"fire.pvr"];
-//         particleSystem->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+//         particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
 //         break;
     default:
         particleSystem = NULL;
@@ -291,7 +291,7 @@ std::string ParticlePerformTest1::title()
 
 void ParticlePerformTest1::doTest()
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     ParticleSystem *particleSystem = (ParticleSystem*)getChildByTag(kTagParticleSystem);
 
     // duration
@@ -361,7 +361,7 @@ std::string ParticlePerformTest2::title()
 
 void ParticlePerformTest2::doTest()
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     ParticleSystem *particleSystem = (ParticleSystem*) getChildByTag(kTagParticleSystem);
 
     // duration
@@ -431,7 +431,7 @@ std::string ParticlePerformTest3::title()
 
 void ParticlePerformTest3::doTest()
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     ParticleSystem *particleSystem = (ParticleSystem*)getChildByTag(kTagParticleSystem);
 
     // duration
@@ -501,7 +501,7 @@ std::string ParticlePerformTest4::title()
 
 void ParticlePerformTest4::doTest()
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     ParticleSystem *particleSystem = (ParticleSystem*) getChildByTag(kTagParticleSystem);
 
     // duration
@@ -562,6 +562,6 @@ void runParticleTest()
     ParticleMainScene* pScene = new ParticlePerformTest1;
     pScene->initWithSubTest(1, kNodesIncrease);
 
-    Director::sharedDirector()->replaceScene(pScene);
+    Director::getInstance()->replaceScene(pScene);
     pScene->release();
 }

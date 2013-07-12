@@ -221,7 +221,7 @@ void EGLView::destroyGL()
     CCLOG("destroyGL");
 }
 
-EGLView* EGLView::sharedOpenGLView()
+EGLView* EGLView::getInstance()
 {
     static EGLView* s_pEglView = NULL;
     if (s_pEglView == NULL)
@@ -230,6 +230,12 @@ EGLView* EGLView::sharedOpenGLView()
         s_pEglView = new EGLView();
     }
     return s_pEglView;
+}
+
+// XXX: deprecated
+EGLView* EGLView::sharedOpenGLView()
+{
+    return EGLView::getInstance();
 }
 
 void EGLView::HandleMouseEvent(const pp::MouseInputEvent* event)

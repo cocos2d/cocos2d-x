@@ -74,7 +74,7 @@ void BaseLayer::restartCallback(cocos2d::Object *pSender)
     Scene *s = new DrawPrimitivesTestScene();
     s->addChild(restartAction());
     
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -83,7 +83,7 @@ void BaseLayer::nextCallback(cocos2d::Object *pSender)
     Scene *s = new DrawPrimitivesTestScene();;
     s->addChild(nextAction());
     
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -92,7 +92,7 @@ void BaseLayer::backCallback(cocos2d::Object *pSender)
     Scene *s = new DrawPrimitivesTestScene();
     s->addChild(backAction());
     
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -236,7 +236,7 @@ string DrawPrimitivesTest::subtitle()
 // DrawNodeTest
 DrawNodeTest::DrawNodeTest()
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     
     DrawNode *draw = DrawNode::create();
     addChild(draw, 10);
@@ -303,5 +303,5 @@ void DrawPrimitivesTestScene::runThisTest()
     Layer* pLayer = nextAction();
     addChild(pLayer);
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

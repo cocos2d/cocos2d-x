@@ -100,7 +100,7 @@ void SchedulerTestLayer::backCallback(Object* pSender)
     Layer* pLayer = backSchedulerTest();
 
     pScene->addChild(pLayer);
-    Director::sharedDirector()->replaceScene(pScene);
+    Director::getInstance()->replaceScene(pScene);
     pScene->release();
 }
 
@@ -110,7 +110,7 @@ void SchedulerTestLayer::nextCallback(Object* pSender)
     Layer* pLayer = nextSchedulerTest();
 
     pScene->addChild(pLayer);
-    Director::sharedDirector()->replaceScene(pScene);
+    Director::getInstance()->replaceScene(pScene);
     pScene->release();
 }
 
@@ -120,7 +120,7 @@ void SchedulerTestLayer::restartCallback(Object* pSender)
     Layer* pLayer = restartSchedulerTest();
 
     pScene->addChild(pLayer);
-    Director::sharedDirector()->replaceScene(pScene);
+    Director::getInstance()->replaceScene(pScene);
     pScene->release();
 }
 
@@ -201,7 +201,7 @@ void SchedulerPauseResume::tick2(float dt)
 
 void SchedulerPauseResume::pause(float dt)
 {
-    Director::sharedDirector()->getScheduler()->pauseTarget(this);
+    Director::getInstance()->getScheduler()->pauseTarget(this);
 }
 
 std::string SchedulerPauseResume::title()
@@ -255,7 +255,7 @@ void SchedulerPauseResumeAll::onExit()
 {
     if(_pausedTargets != NULL)
     {
-        Director::sharedDirector()->getScheduler()->resumeTargets(_pausedTargets);
+        Director::getInstance()->getScheduler()->resumeTargets(_pausedTargets);
     }
 }
 
@@ -272,7 +272,7 @@ void SchedulerPauseResumeAll::tick2(float dt)
 void SchedulerPauseResumeAll::pause(float dt)
 {
     CCLog("Pausing");
-    Director* pDirector = Director::sharedDirector();
+    Director* pDirector = Director::getInstance();
     _pausedTargets = pDirector->getScheduler()->pauseAllTargets();
     CC_SAFE_RETAIN(_pausedTargets);
     
@@ -288,7 +288,7 @@ void SchedulerPauseResumeAll::pause(float dt)
 void SchedulerPauseResumeAll::resume(float dt)
 {
     CCLog("Resuming");
-    Director* pDirector = Director::sharedDirector();
+    Director* pDirector = Director::getInstance();
     pDirector->getScheduler()->resumeTargets(_pausedTargets);
     CC_SAFE_RELEASE_NULL(_pausedTargets);
 }
@@ -324,7 +324,7 @@ void SchedulerPauseResumeAllUser::onEnter()
 {
     SchedulerTestLayer::onEnter();
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     Sprite *sprite = Sprite::create("Images/grossinis_sister1.png");
     sprite->setPosition(Point(s.width/2, s.height/2));
@@ -341,7 +341,7 @@ void SchedulerPauseResumeAllUser::onExit()
 {
     if(_pausedTargets != NULL)
     {
-        Director::sharedDirector()->getScheduler()->resumeTargets(_pausedTargets);
+        Director::getInstance()->getScheduler()->resumeTargets(_pausedTargets);
     }
 }
 
@@ -358,7 +358,7 @@ void SchedulerPauseResumeAllUser::tick2(float dt)
 void SchedulerPauseResumeAllUser::pause(float dt)
 {
     CCLog("Pausing");
-    Director* pDirector = Director::sharedDirector();
+    Director* pDirector = Director::getInstance();
     _pausedTargets = pDirector->getScheduler()->pauseAllTargetsWithMinPriority(kPriorityNonSystemMin);
     CC_SAFE_RETAIN(_pausedTargets);
 }
@@ -366,7 +366,7 @@ void SchedulerPauseResumeAllUser::pause(float dt)
 void SchedulerPauseResumeAllUser::resume(float dt)
 {
     CCLog("Resuming");
-    Director* pDirector = Director::sharedDirector();
+    Director* pDirector = Director::getInstance();
     pDirector->getScheduler()->resumeTargets(_pausedTargets);
     CC_SAFE_RELEASE_NULL(_pausedTargets);
 }
@@ -442,7 +442,7 @@ void SchedulerUnscheduleAllHard::onEnter()
 {
     SchedulerTestLayer::onEnter();
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     Sprite *sprite = Sprite::create("Images/grossinis_sister1.png");
     sprite->setPosition(Point(s.width/2, s.height/2));
@@ -462,7 +462,7 @@ void SchedulerUnscheduleAllHard::onExit()
 {
     if(!_actionManagerActive) {
         // Restore the director's action manager.
-        Director* director = Director::sharedDirector();
+        Director* director = Director::getInstance();
         director->getScheduler()->scheduleUpdateForTarget(director->getActionManager(), kPrioritySystem, false);
     }
 }
@@ -489,7 +489,7 @@ void SchedulerUnscheduleAllHard::tick4(float dt)
 
 void SchedulerUnscheduleAllHard::unscheduleAll(float dt)
 {
-    Director::sharedDirector()->getScheduler()->unscheduleAll();
+    Director::getInstance()->getScheduler()->unscheduleAll();
     _actionManagerActive = false;
 }
 
@@ -512,7 +512,7 @@ void SchedulerUnscheduleAllUserLevel::onEnter()
 {
     SchedulerTestLayer::onEnter();
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     Sprite *sprite = Sprite::create("Images/grossinis_sister1.png");
     sprite->setPosition(Point(s.width/2, s.height/2));
@@ -548,7 +548,7 @@ void SchedulerUnscheduleAllUserLevel::tick4(float dt)
 
 void SchedulerUnscheduleAllUserLevel::unscheduleAll(float dt)
 {
-    Director::sharedDirector()->getScheduler()->unscheduleAllWithMinPriority(kPriorityNonSystemMin);
+    Director::getInstance()->getScheduler()->unscheduleAllWithMinPriority(kPriorityNonSystemMin);
 }
 
 std::string SchedulerUnscheduleAllUserLevel::title()
@@ -880,14 +880,14 @@ void SchedulerTimeScale::sliderAction(Object* pSender, ControlEvent controlEvent
     float scale;
     scale = pSliderCtl->getValue();
 
-    Director::sharedDirector()->getScheduler()->setTimeScale(scale);
+    Director::getInstance()->getScheduler()->setTimeScale(scale);
 }
 
 void SchedulerTimeScale::onEnter()
 {
     SchedulerTestLayer::onEnter();
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     // rotate and jump
     ActionInterval *jump1 = JumpBy::create(4, Point(-s.width+80,0), 100, 4);
@@ -920,7 +920,7 @@ void SchedulerTimeScale::onEnter()
     kathia->runAction(Speed::create(action3, 1.0f));
 
     ParticleSystem *emitter = ParticleFireworks::create();
-    emitter->setTexture( TextureCache::sharedTextureCache()->addImage(s_stars1) );
+    emitter->setTexture( TextureCache::getInstance()->addImage(s_stars1) );
     addChild(emitter);
 
     _sliderCtl = sliderCtl();
@@ -932,7 +932,7 @@ void SchedulerTimeScale::onEnter()
 void SchedulerTimeScale::onExit()
 {
     // restore scale
-    Director::sharedDirector()->getScheduler()->setTimeScale(1);
+    Director::getInstance()->getScheduler()->setTimeScale(1);
     SchedulerTestLayer::onExit();
 }
 
@@ -983,7 +983,7 @@ void TwoSchedulers::onEnter()
 {
     SchedulerTestLayer::onEnter();
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
         // rotate and jump
     ActionInterval *jump1 = JumpBy::create(4, Point(0,0), 100, 4);
@@ -1000,7 +1000,7 @@ void TwoSchedulers::onEnter()
     grossini->setPosition(Point(s.width/2,100));
     grossini->runAction(action->clone());
 
-    Scheduler *defaultScheduler = Director::sharedDirector()->getScheduler();
+    Scheduler *defaultScheduler = Director::getInstance()->getScheduler();
 
     //
     // Left:
@@ -1067,7 +1067,7 @@ void TwoSchedulers::onEnter()
 
 TwoSchedulers::~TwoSchedulers()
 {
-    Scheduler *defaultScheduler = Director::sharedDirector()->getScheduler();
+    Scheduler *defaultScheduler = Director::getInstance()->getScheduler();
     defaultScheduler->unscheduleAllForTarget(sched1);
     defaultScheduler->unscheduleAllForTarget(sched2);
 
@@ -1157,5 +1157,5 @@ void SchedulerTestScene::runThisTest()
     Layer* pLayer = nextSchedulerTest();
     addChild(pLayer);
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

@@ -128,7 +128,7 @@ bool Menu::initWithArray(Array* pArrayOfItems)
 
         _enabled = true;
         // menu in the center of the screen
-        Size s = Director::sharedDirector()->getWinSize();
+        Size s = Director::getInstance()->getWinSize();
 
         this->ignoreAnchorPointForPosition(true);
         setAnchorPoint(Point(0.5f, 0.5f));
@@ -213,13 +213,13 @@ void Menu::removeChild(Node* child, bool cleanup)
 
 void Menu::setHandlerPriority(int newPriority)
 {
-    TouchDispatcher* pDispatcher = Director::sharedDirector()->getTouchDispatcher();
+    TouchDispatcher* pDispatcher = Director::getInstance()->getTouchDispatcher();
     pDispatcher->setPriority(newPriority, this);
 }
 
 void Menu::registerWithTouchDispatcher()
 {
-    Director* pDirector = Director::sharedDirector();
+    Director* pDirector = Director::getInstance();
     pDirector->getTouchDispatcher()->addTargetedDelegate(this, this->getTouchPriority(), true);
 }
 
@@ -433,7 +433,7 @@ void Menu::alignItemsInColumnsWithArray(Array* rowsArray)
     // check if too many rows/columns for available menu items
     CCAssert(! columnsOccupied, "");
 
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
 
     row = 0;
     rowHeight = 0;
@@ -555,7 +555,7 @@ void Menu::alignItemsInRowsWithArray(Array* columnArray)
     // check if too many rows/columns for available menu items.
     CCAssert(! rowsOccupied, "");
 
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
 
     column = 0;
     columnWidth = 0;

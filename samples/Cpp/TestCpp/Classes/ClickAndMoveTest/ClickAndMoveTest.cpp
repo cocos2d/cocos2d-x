@@ -12,7 +12,7 @@ void ClickAndMoveTestScene::runThisTest()
     pLayer->autorelease();
 
     addChild(pLayer);
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }
 
 MainLayer::MainLayer()

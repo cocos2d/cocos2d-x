@@ -258,7 +258,7 @@ bool Texture2D::initWithData(const void *data, Texture2DPixelFormat pixelFormat,
     _hasPremultipliedAlpha = false;
     _hasMipmaps = false;
 
-    setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTexture));
+    setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTexture));
 
     return true;
 }
@@ -282,7 +282,7 @@ bool Texture2D::initWithImage(Image *uiImage)
     unsigned int imageWidth = uiImage->getWidth();
     unsigned int imageHeight = uiImage->getHeight();
     
-    Configuration *conf = Configuration::sharedConfiguration();
+    Configuration *conf = Configuration::getInstance();
     
     unsigned maxTextureSize = conf->getMaxTextureSize();
     if (imageWidth > maxTextureSize || imageHeight > maxTextureSize) 

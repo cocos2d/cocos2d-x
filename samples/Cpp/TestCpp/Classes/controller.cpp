@@ -132,7 +132,7 @@ TestController::~TestController()
 void TestController::menuCallback(Object * pSender)
 {
 
-	Director::sharedDirector()->purgeCachedData();
+	Director::getInstance()->purgeCachedData();
 
     // get the userdata, it's the index of the menu item clicked
     MenuItem* pMenuItem = (MenuItem *)(pSender);
@@ -150,7 +150,7 @@ void TestController::menuCallback(Object * pSender)
 
 void TestController::closeCallback(Object * pSender)
 {
-    Director::sharedDirector()->end();
+    Director::getInstance()->end();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
 #endif

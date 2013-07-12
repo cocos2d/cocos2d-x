@@ -127,7 +127,7 @@ class PageTransitionForward : public TransitionPageTurn
 public:
     static TransitionScene* create(float t, Scene* s)
     {
-        Director::sharedDirector()->setDepthTest(true);
+        Director::getInstance()->setDepthTest(true);
         return TransitionPageTurn::create(t, s, false);
     }
 };
@@ -137,7 +137,7 @@ class PageTransitionBackward : public TransitionPageTurn
 public:
     static TransitionScene* create(float t, Scene* s)
     {
-        Director::sharedDirector()->setDepthTest(true);
+        Director::getInstance()->setDepthTest(true);
         return TransitionPageTurn::create(t, s, true);
     }
 };
@@ -201,7 +201,7 @@ static int s_nSceneIdx = 0;
 TransitionScene* createTransition(int nIndex, float t, Scene* s)
 {
     // fix bug #486, without setDepthTest(false), FlipX,Y will flickers
-    Director::sharedDirector()->setDepthTest(false);
+    Director::getInstance()->setDepthTest(false);
 
     switch(nIndex)
     {
@@ -271,14 +271,14 @@ void TransitionsTestScene::runThisTest()
     addChild(pLayer);
     pLayer->release();
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }
 
 TestLayer1::TestLayer1(void)
 {
     float x,y;
 
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
     x = size.width;
     y = size.height;
 
@@ -330,7 +330,7 @@ void TestLayer1::restartCallback(Object* pSender)
     pLayer->release();
     if (pScene)
     {
-        Director::sharedDirector()->replaceScene(pScene);
+        Director::getInstance()->replaceScene(pScene);
     }    
 }
 
@@ -349,7 +349,7 @@ void TestLayer1::nextCallback(Object* pSender)
     pLayer->release();
     if (pScene)
     {
-        Director::sharedDirector()->replaceScene(pScene);
+        Director::getInstance()->replaceScene(pScene);
     }
 }
 
@@ -370,7 +370,7 @@ void TestLayer1::backCallback(Object* pSender)
     pLayer->release();
     if (pScene)
     {
-        Director::sharedDirector()->replaceScene(pScene);
+        Director::getInstance()->replaceScene(pScene);
     }
 }
 
@@ -407,7 +407,7 @@ TestLayer2::TestLayer2()
 {
     float x,y;
 
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
     x = size.width;
     y = size.height;
 
@@ -459,7 +459,7 @@ void TestLayer2::restartCallback(Object* pSender)
     pLayer->release();
     if (pScene)
     {
-        Director::sharedDirector()->replaceScene(pScene);
+        Director::getInstance()->replaceScene(pScene);
     }
 }
 
@@ -478,7 +478,7 @@ void TestLayer2::nextCallback(Object* pSender)
     pLayer->release();
     if (pScene)
     {
-        Director::sharedDirector()->replaceScene(pScene);
+        Director::getInstance()->replaceScene(pScene);
     }
 }
 
@@ -499,7 +499,7 @@ void TestLayer2::backCallback(Object* pSender)
     pLayer->release();
     if (pScene)
     {
-        Director::sharedDirector()->replaceScene(pScene);
+        Director::getInstance()->replaceScene(pScene);
     }
 }
 

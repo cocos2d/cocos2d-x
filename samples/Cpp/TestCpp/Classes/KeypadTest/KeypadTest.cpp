@@ -2,7 +2,7 @@
 
 KeypadTest::KeypadTest()
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     LabelTTF* label = LabelTTF::create("Keypad Test", "Arial", 28);
     addChild(label, 0);
     label->setPosition( Point(s.width/2, s.height-50) );
@@ -37,6 +37,6 @@ void KeypadTestScene::runThisTest()
     Layer* pLayer = new KeypadTest();
     addChild(pLayer);
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
     pLayer->release();
 }

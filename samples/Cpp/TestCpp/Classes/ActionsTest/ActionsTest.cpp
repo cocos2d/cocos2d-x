@@ -96,7 +96,7 @@ void ActionsTestScene::runThisTest()
     sceneIdx = -1;
     addChild(nextAction());
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }
 
 
@@ -146,7 +146,7 @@ void ActionsDemo::restartCallback(Object* pSender)
 {
     Scene* s = new ActionsTestScene();
     s->addChild( restartAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -154,7 +154,7 @@ void ActionsDemo::nextCallback(Object* pSender)
 {
     Scene* s = new ActionsTestScene();
     s->addChild( nextAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -162,13 +162,13 @@ void ActionsDemo::backCallback(Object* pSender)
 {
     Scene* s = new ActionsTestScene();
     s->addChild( backAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
 void ActionsDemo::centerSprites(unsigned int numberOfSprites)
 {
-    auto s = Director::sharedDirector()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
     if( numberOfSprites == 0 )
     {
@@ -198,7 +198,7 @@ void ActionsDemo::centerSprites(unsigned int numberOfSprites)
 
 void ActionsDemo::alignSpritesLeft(unsigned int numberOfSprites)
 {
-    auto s = Director::sharedDirector()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
     if( numberOfSprites == 1 ) 
     {
@@ -229,7 +229,7 @@ void ActionManual::onEnter()
 {
     ActionsDemo::onEnter();
 
-    auto s = Director::sharedDirector()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
     _tamara->setScaleX( 2.5f);
     _tamara->setScaleY( -1.0f);
@@ -260,7 +260,7 @@ void ActionMove::onEnter()
 
     centerSprites(3);
 
-    auto s = Director::sharedDirector()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
     auto actionTo = MoveTo::create(2, Point(s.width-40, s.height-40));
     auto actionBy = MoveBy::create(2, Point(80,80));
@@ -364,7 +364,7 @@ void ActionRotationalSkewVSStandardSkew::onEnter()
     _grossini->removeFromParentAndCleanup(true);
     _kathia->removeFromParentAndCleanup(true);
 
-    auto s = Director::sharedDirector()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
     Size boxSize(100.0f, 100.0f);
 
@@ -513,7 +513,7 @@ void ActionBezier::onEnter()
 {
     ActionsDemo::onEnter();
 
-    auto s = Director::sharedDirector()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
     //
     // startPosition can be any coordinate, but since the movement
@@ -664,7 +664,7 @@ void ActionAnimate::onEnter()
     // File animation
     //
     // With 2 loops and reverse
-    AnimationCache *cache = AnimationCache::sharedAnimationCache();
+    AnimationCache *cache = AnimationCache::getInstance();
     cache->addAnimationsWithFile("animations/animations-2.plist");
     Animation *animation2 = cache->animationByName("dance_1");
 
@@ -758,7 +758,7 @@ void ActionSequence2::onEnter()
 
 void ActionSequence2::callback1()
 {
-    auto s = Director::sharedDirector()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     auto label = LabelTTF::create("callback 1 called", "Marker Felt", 16);
     label->setPosition(Point( s.width/4*1,s.height/2));
 
@@ -767,7 +767,7 @@ void ActionSequence2::callback1()
 
 void ActionSequence2::callback2(Node* sender)
 {
-    auto s = Director::sharedDirector()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     auto label = LabelTTF::create("callback 2 called", "Marker Felt", 16);
     label->setPosition(Point( s.width/4*2,s.height/2));
 
@@ -776,7 +776,7 @@ void ActionSequence2::callback2(Node* sender)
 
 void ActionSequence2::callback3(Node* sender, long data)
 {
-    auto s = Director::sharedDirector()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     auto label = LabelTTF::create("callback 3 called", "Marker Felt", 16);
     label->setPosition(Point( s.width/4*3,s.height/2));
 
@@ -909,7 +909,7 @@ void ActionCallFunction::onEnter()
                         CallFunc::create(
                              // lambda
                              [&](){
-                                 auto s = Director::sharedDirector()->getWinSize();
+                                 auto s = Director::getInstance()->getWinSize();
                                  auto label = LabelTTF::create("called:lambda callback", "Marker Felt", 16);
                                  label->setPosition(Point( s.width/4*1,s.height/2-40));
                                  this->addChild(label);
@@ -936,7 +936,7 @@ void ActionCallFunction::onEnter()
 
 void ActionCallFunction::callback1()
 {
-    auto s = Director::sharedDirector()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     auto label = LabelTTF::create("callback 1 called", "Marker Felt", 16);
     label->setPosition(Point( s.width/4*1,s.height/2));
 
@@ -945,7 +945,7 @@ void ActionCallFunction::callback1()
 
 void ActionCallFunction::callback2(Node* sender)
 {
-    auto s = Director::sharedDirector()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     auto label = LabelTTF::create("callback 2 called", "Marker Felt", 16);
     label->setPosition(Point( s.width/4*2,s.height/2));
 
@@ -956,7 +956,7 @@ void ActionCallFunction::callback2(Node* sender)
 
 void ActionCallFunction::callback3(Node* sender, long data)
 {
-    auto s = Director::sharedDirector()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     auto label = LabelTTF::create("callback 3 called", "Marker Felt", 16);
     label->setPosition(Point( s.width/4*3,s.height/2));
     addChild(label);
@@ -1276,7 +1276,7 @@ void ActionFollow::onEnter()
     ActionsDemo::onEnter();
 
     centerSprites(1);
-    auto s = Director::sharedDirector()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
     _grossini->setPosition(Point(-200, s.height / 2));
     auto move      = MoveBy::create(2, Point(s.width * 3, 0));
@@ -1291,7 +1291,7 @@ void ActionFollow::onEnter()
 
 void ActionFollow::draw()
 {
-    auto winSize = Director::sharedDirector()->getWinSize();
+    auto winSize = Director::getInstance()->getWinSize();
     
 	float x = winSize.width*2 - 100;
 	float y = winSize.height;
@@ -1345,7 +1345,7 @@ void ActionStacked::onEnter()
     
     this->setTouchEnabled(true);
     
-    auto s = Director::sharedDirector()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     this->addNewSpriteWithCoords(Point(s.width/2, s.height/2));
 }
 
@@ -1446,7 +1446,7 @@ std::string ActionMoveJumpStacked::title()
 
 void ActionMoveBezierStacked::runActionsInSprite(Sprite *sprite)
 {
-    auto s = Director::sharedDirector()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     
     // sprite 1
     ccBezierConfig bezier;
@@ -1482,7 +1482,7 @@ void ActionCatmullRomStacked::onEnter()
     
     this->centerSprites(2);
     
-    auto s = Director::sharedDirector()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     
     //
     // sprite 1 (By)
@@ -1592,7 +1592,7 @@ void ActionCardinalSplineStacked::onEnter()
     
     this->centerSprites(2);
     
-    auto s = Director::sharedDirector()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     
     auto array = PointArray::create(20);
     
@@ -1665,7 +1665,7 @@ void ActionCardinalSplineStacked::draw()
     ccDrawCardinalSpline(_array, 0, 100);
     kmGLPopMatrix();
     
-    auto s = Director::sharedDirector()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     
     kmGLPushMatrix();
     kmGLTranslatef(s.width/2, 50, 0);
@@ -1744,15 +1744,15 @@ void Issue1305_2::onEnter()
     id act2 = [CallBlock actionWithBlock:^{
         NSLog(@"1st block");
     });
-    id act3 = [MoveBy create:2, ccp(0, -100));
+    id act3 = [MoveBy create:2, Point(0, -100));
     id act4 = [CallBlock actionWithBlock:^{
         NSLog(@"2nd block");
     });
-    id act5 = [MoveBy create:2, ccp(100, -100));
+    id act5 = [MoveBy create:2, Point(100, -100));
     id act6 = [CallBlock actionWithBlock:^{
         NSLog(@"3rd block");
     });
-    id act7 = [MoveBy create:2, ccp(-100, 0));
+    id act7 = [MoveBy create:2, Point(-100, 0));
     id act8 = [CallBlock actionWithBlock:^{
         NSLog(@"4th block");
     });
@@ -1769,7 +1769,7 @@ void Issue1305_2::onEnter()
     auto actF = Sequence::create(act1, act2, act3, act4, act5, act6, act7, act8, NULL);
 
     //    [spr runAction:actF);
-    Director::sharedDirector()->getActionManager()->addAction(actF ,spr, false);
+    Director::getInstance()->getActionManager()->addAction(actF ,spr, false);
 
 }
 
@@ -1944,7 +1944,7 @@ void ActionCatmullRom::onEnter()
     
     this->centerSprites(2);
     
-    auto s = Director::sharedDirector()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     
     //
     // sprite 1 (By)
@@ -2038,7 +2038,7 @@ void ActionCardinalSpline::onEnter()
     
     this->centerSprites(2);
     
-    auto s = Director::sharedDirector()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     
     auto array = PointArray::create(20);
     
@@ -2095,7 +2095,7 @@ void ActionCardinalSpline::draw()
     ccDrawCardinalSpline(_array, 0, 100);
     kmGLPopMatrix();
     
-    auto s = Director::sharedDirector()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     
     kmGLPushMatrix();
     kmGLTranslatef(s.width/2, 50, 0);
@@ -2154,7 +2154,7 @@ string PauseResumeActions::subtitle()
 void PauseResumeActions::pause(float dt)
 {
     CCLog("Pausing");
-    Director *director = Director::sharedDirector();
+    Director *director = Director::getInstance();
 
     CC_SAFE_RELEASE(_pausedTargets);
     _pausedTargets = director->getActionManager()->pauseAllRunningActions();
@@ -2164,7 +2164,7 @@ void PauseResumeActions::pause(float dt)
 void PauseResumeActions::resume(float dt)
 {
     CCLog("Resuming");
-    Director *director = Director::sharedDirector();
+    Director *director = Director::getInstance();
     director->getActionManager()->resumeTargets(_pausedTargets);
 }
 

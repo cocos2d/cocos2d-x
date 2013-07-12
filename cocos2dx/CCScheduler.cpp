@@ -217,7 +217,7 @@ void Timer::update(float dt)
 
             if (!_runForever && _timesExecuted > _repeat)
             {    //unschedule timer
-                Director::sharedDirector()->getScheduler()->unscheduleSelector(_selector, _target);
+                Director::getInstance()->getScheduler()->unscheduleSelector(_selector, _target);
             }
         }
     }

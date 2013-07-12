@@ -13,7 +13,7 @@ bool QuestionContainerSprite::init()
         label->setTag(100);
 
         //Add the background
-        Size size = Director::sharedDirector()->getWinSize();
+        Size size = Director::getInstance()->getWinSize();
         Sprite* corner = Sprite::create("Images/bugs/corner.png");
 
         int width = size.width * 0.9f - (corner->getContentSize().width * 2);

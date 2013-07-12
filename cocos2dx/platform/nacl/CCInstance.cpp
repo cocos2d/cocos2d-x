@@ -99,6 +99,6 @@ bool CocosPepperInstance::HandleInputEvent(const pp::InputEvent& event)
 {
     if (!Application::isRunning())
       return false;
-    EGLView::sharedOpenGLView()->AddEvent(event);
+    EGLView::getInstance()->AddEvent(event);
     return true;
 }

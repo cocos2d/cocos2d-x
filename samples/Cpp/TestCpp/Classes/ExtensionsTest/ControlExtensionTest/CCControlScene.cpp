@@ -91,16 +91,16 @@ void ControlScene::toExtensionsMainLayer(Object* sender)
 
 void ControlScene::previousCallback(Object* sender)
 {
-    Director::sharedDirector()->replaceScene(ControlSceneManager::sharedControlSceneManager()->previousControlScene());
+    Director::getInstance()->replaceScene(ControlSceneManager::sharedControlSceneManager()->previousControlScene());
 }
 
 void ControlScene::restartCallback(Object* sender)
 {
-    Director::sharedDirector()->replaceScene(ControlSceneManager::sharedControlSceneManager()->currentControlScene());
+    Director::getInstance()->replaceScene(ControlSceneManager::sharedControlSceneManager()->currentControlScene());
 }
 
 void ControlScene::nextCallback(Object* sender)
 {
-    Director::sharedDirector()->replaceScene(ControlSceneManager::sharedControlSceneManager()->nextControlScene());
+    Director::getInstance()->replaceScene(ControlSceneManager::sharedControlSceneManager()->nextControlScene());
 }
 

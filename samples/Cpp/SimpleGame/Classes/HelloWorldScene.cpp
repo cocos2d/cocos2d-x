@@ -76,10 +76,10 @@ bool HelloWorld::init()
 		CC_BREAK_IF(! pCloseItem);
         
 		// Place the menu item bottom-right conner.
-        Size visibleSize = Director::sharedDirector()->getVisibleSize();
-        Point origin = Director::sharedDirector()->getVisibleOrigin();
+        Size visibleSize = Director::getInstance()->getVisibleSize();
+        Point origin = Director::getInstance()->getVisibleOrigin();
         
-		pCloseItem->setPosition(ccp(origin.x + visibleSize.width - pCloseItem->getContentSize().width/2,
+		pCloseItem->setPosition(Point(origin.x + visibleSize.width - pCloseItem->getContentSize().width/2,
                                     origin.y + pCloseItem->getContentSize().height/2));
 
 		// Create a menu with the "close" menu item, it's an auto release object.
@@ -94,7 +94,7 @@ bool HelloWorld::init()
 		// 2. add your codes below...
 		Sprite *player = Sprite::create("Player.png", Rect(0, 0, 27, 40) );
         
-		player->setPosition( ccp(origin.x + player->getContentSize().width/2,
+		player->setPosition( Point(origin.x + player->getContentSize().width/2,
                                  origin.y + visibleSize.height/2) );
 		this->addChild(player);
 
@@ -120,7 +120,7 @@ bool HelloWorld::init()
 void HelloWorld::menuCloseCallback(Object* pSender)
 {
 	// "close" menu item clicked
-	Director::sharedDirector()->end();
+	Director::getInstance()->end();
 }
 
 // cpp with cocos2d-x
@@ -129,7 +129,7 @@ void HelloWorld::addTarget()
 	Sprite *target = Sprite::create("Target.png", Rect(0,0,27,40) );
     
 	// Determine where to spawn the target along the Y axis
-	Size winSize = Director::sharedDirector()->getVisibleSize();
+	Size winSize = Director::getInstance()->getVisibleSize();
 	float minY = target->getContentSize().height/2;
 	float maxY = winSize.height -  target->getContentSize().height/2;
 	int rangeY = (int)(maxY - minY);
@@ -139,8 +139,8 @@ void HelloWorld::addTarget()
 	// Create the target slightly off-screen along the right edge,
 	// and along a random position along the Y axis as calculated
 	target->setPosition( 
-		ccp(winSize.width + (target->getContentSize().width/2), 
-            Director::sharedDirector()->getVisibleOrigin().y + actualY) );
+		Point(winSize.width + (target->getContentSize().width/2), 
+            Director::getInstance()->getVisibleOrigin().y + actualY) );
 	this->addChild(target);
 
 	// Determine speed of the target
@@ -152,7 +152,7 @@ void HelloWorld::addTarget()
 
 	// Create the actions
 	FiniteTimeAction* actionMove = MoveTo::create( (float)actualDuration,
-                                            ccp(0 - target->getContentSize().width/2, actualY) );
+                                            Point(0 - target->getContentSize().width/2, actualY) );
 	FiniteTimeAction* actionMoveDone = CallFuncN::create( this, 
                                             callfuncN_selector(HelloWorld::spriteMoveFinished));
 	target->runAction( Sequence::create(actionMove, actionMoveDone, NULL) );
@@ -173,7 +173,7 @@ void HelloWorld::spriteMoveFinished(Node* sender)
         
 		GameOverScene *gameOverScene = GameOverScene::create();
 		gameOverScene->getLayer()->getLabel()->setString("You Lose :[");
-		Director::sharedDirector()->replaceScene(gameOverScene);
+		Director::getInstance()->replaceScene(gameOverScene);
 
 	}
 	else if (sprite->getTag() == 2) // projectile
@@ -197,10 +197,10 @@ void HelloWorld::ccTouchesEnded(Set* touches, Event* event)
 	CCLog("++++++++after  x:%f, y:%f", location.x, location.y);
 
 	// Set up initial location of projectile
-	Size winSize = Director::sharedDirector()->getVisibleSize();
-    Point origin = Director::sharedDirector()->getVisibleOrigin();
+	Size winSize = Director::getInstance()->getVisibleSize();
+    Point origin = Director::getInstance()->getVisibleOrigin();
 	Sprite *projectile = Sprite::create("Projectile.png", Rect(0, 0, 20, 20));
-	projectile->setPosition( ccp(origin.x+20, origin.y+winSize.height/2) );
+	projectile->setPosition( Point(origin.x+20, origin.y+winSize.height/2) );
 
 	// Determinie offset of location to projectile
 	float offX = location.x - projectile->getPosition().x;
@@ -216,7 +216,7 @@ void HelloWorld::ccTouchesEnded(Set* touches, Event* event)
 	float realX = origin.x+winSize.width + (projectile->getContentSize().width/2);
 	float ratio = offY / offX;
 	float realY = (realX * ratio) + projectile->getPosition().y;
-	Point realDest = ccp(realX, realY);
+	Point realDest = Point(realX, realY);
 
 	// Determine the length of how far we're shooting
 	float offRealX = realX - projectile->getPosition().x;
@@ -286,7 +286,7 @@ void HelloWorld::updateGame(float dt)
 			{
 				GameOverScene *gameOverScene = GameOverScene::create();
 				gameOverScene->getLayer()->getLabel()->setString("You Win!");
-				Director::sharedDirector()->replaceScene(gameOverScene);
+				Director::getInstance()->replaceScene(gameOverScene);
 			}
 		}
 
@@ -310,5 +310,5 @@ void HelloWorld::updateGame(float dt)
 void HelloWorld::registerWithTouchDispatcher()
 {
 	// TouchDispatcher::sharedDispatcher()->addTargetedDelegate(this,0,true);
-    Director::sharedDirector()->getTouchDispatcher()->addStandardDelegate(this,0);
+    Director::getInstance()->getTouchDispatcher()->addStandardDelegate(this,0);
 }

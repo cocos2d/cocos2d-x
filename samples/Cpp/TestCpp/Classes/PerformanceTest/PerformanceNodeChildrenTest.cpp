@@ -57,7 +57,7 @@ void NodeChildrenMenuLayer::showCurrentTest()
     {
         pScene->initWithQuantityOfNodes(nNodes);
 
-        Director::sharedDirector()->replaceScene(pScene);
+        Director::getInstance()->replaceScene(pScene);
         pScene->release();
     }
 }
@@ -70,7 +70,7 @@ void NodeChildrenMenuLayer::showCurrentTest()
 void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
 {
     //srand(time());
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     // Title
     LabelTTF *label = LabelTTF::create(title().c_str(), "Arial", 40);
@@ -164,7 +164,7 @@ IterateSpriteSheet::~IterateSpriteSheet()
 
 void IterateSpriteSheet::updateQuantityOfNodes()
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     // increase nodes
     if( currentQuantityOfNodes < quantityOfNodes )
@@ -302,7 +302,7 @@ void AddRemoveSpriteSheet::initWithQuantityOfNodes(unsigned int nNodes)
 
 void AddRemoveSpriteSheet::updateQuantityOfNodes()
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     // increase nodes
     if( currentQuantityOfNodes < quantityOfNodes )
@@ -523,6 +523,6 @@ void runNodeChildrenTest()
     IterateSpriteSheet* pScene = new IterateSpriteSheetCArray();
     pScene->initWithQuantityOfNodes(kNodesIncrease);
 
-    Director::sharedDirector()->replaceScene(pScene);
+    Director::getInstance()->replaceScene(pScene);
     pScene->release();
 }

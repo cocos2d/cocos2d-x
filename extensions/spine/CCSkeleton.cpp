@@ -60,7 +60,7 @@ void CCSkeleton::initialize () {
 	blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
 	setOpacityModifyRGB(true);
 
-	setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColor));
+	setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColor));
 	scheduleUpdate();
 }
 

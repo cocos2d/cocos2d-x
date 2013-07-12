@@ -108,7 +108,7 @@ void ArmatureTestScene::runThisTest()
 	s_nActionIdx = -1;
 	addChild(NextTest());
 
-	Director::sharedDirector()->replaceScene(this);
+	Director::getInstance()->replaceScene(this);
 }
 void ArmatureTestScene::MainMenuCallback(Object* pSender)
 {
@@ -154,7 +154,7 @@ void ArmatureTestLayer::onEnter()
 
 	addChild(menu, 100);
 
-	setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColor));
+	setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColor));
 
 }
 void ArmatureTestLayer::onExit()
@@ -174,21 +174,21 @@ void ArmatureTestLayer::restartCallback(Object* pSender)
 {
 	Scene* s = new ArmatureTestScene();
 	s->addChild( RestartTest() );
-	Director::sharedDirector()->replaceScene(s);
+	Director::getInstance()->replaceScene(s);
 	s->release();
 }
 void ArmatureTestLayer::nextCallback(Object* pSender)
 {
 	Scene* s = new ArmatureTestScene();
 	s->addChild( NextTest() );
-	Director::sharedDirector()->replaceScene(s);
+	Director::getInstance()->replaceScene(s);
 	s->release();
 }
 void ArmatureTestLayer::backCallback(Object* pSender)
 {
 	Scene* s = new ArmatureTestScene();
 	s->addChild( BackTest() );
-	Director::sharedDirector()->replaceScene(s);
+	Director::getInstance()->replaceScene(s);
 	s->release();
 }
 void ArmatureTestLayer::draw()
@@ -460,7 +460,7 @@ bool TestParticleDisplay::ccTouchBegan(Touch *pTouch, Event *pEvent)
 
 void TestParticleDisplay::registerWithTouchDispatcher()
 {
-	Director::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, INT_MIN+1, true);
+	Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, INT_MIN+1, true);
 }
 
 
@@ -505,7 +505,7 @@ bool TestUseMutiplePicture::ccTouchBegan(Touch *pTouch, Event *pEvent)
 }
 void TestUseMutiplePicture::registerWithTouchDispatcher()
 {
-	Director::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, INT_MIN+1, true);
+	Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, INT_MIN+1, true);
 }
 
 
@@ -642,5 +642,5 @@ bool TestArmatureNesting::ccTouchBegan(Touch *pTouch, Event *pEvent)
 }
 void TestArmatureNesting::registerWithTouchDispatcher()
 {
-	Director::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, INT_MIN+1, true);
+	Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, INT_MIN+1, true);
 }

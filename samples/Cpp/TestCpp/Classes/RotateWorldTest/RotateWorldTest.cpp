@@ -12,7 +12,7 @@ void TestLayer::onEnter()
 
     float x,y;
     
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
     x = size.width;
     y = size.height;
 
@@ -37,7 +37,7 @@ void SpriteLayer::onEnter()
 
     float x,y;
     
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
     x = size.width;
     y = size.height;
     
@@ -86,7 +86,7 @@ void RotateWorldMainLayer::onEnter()
 
     float x,y;
     
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
     x = size.width;
     y = size.height;
     
@@ -131,6 +131,6 @@ void RotateWorldTestScene::runThisTest()
     addChild(pLayer);
     runAction( RotateBy::create(4, -360) );
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 
 }
