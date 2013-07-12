@@ -16,14 +16,14 @@ local function ZwoptexGenericTest()
     local sprite2 = nil
 
     local function onEnter()
-        CCSpriteFrameCache:sharedSpriteFrameCache():addSpriteFramesWithFile("zwoptex/grossini.plist")
-        CCSpriteFrameCache:sharedSpriteFrameCache():addSpriteFramesWithFile("zwoptex/grossini-generic.plist")
+        CCSpriteFrameCache:getInstance():addSpriteFramesWithFile("zwoptex/grossini.plist")
+        CCSpriteFrameCache:getInstance():addSpriteFramesWithFile("zwoptex/grossini-generic.plist")
 
         local layer1 = CCLayerColor:create(Color4B(255, 0, 0, 255), 85, 121)
         layer1:setPosition(ccp(s.width/2-80 - (85.0 * 0.5), s.height/2 - (121.0 * 0.5)))
         ret:addChild(layer1)
 
-        sprite1 = CCSprite:createWithSpriteFrame(CCSpriteFrameCache:sharedSpriteFrameCache():spriteFrameByName("grossini_dance_01.png"))
+        sprite1 = CCSprite:createWithSpriteFrame(CCSpriteFrameCache:getInstance():spriteFrameByName("grossini_dance_01.png"))
         sprite1:setPosition(ccp( s.width/2-80, s.height/2))
         ret:addChild(sprite1)
 
@@ -34,7 +34,7 @@ local function ZwoptexGenericTest()
         layer2:setPosition(ccp(s.width/2+80 - (85.0 * 0.5), s.height/2 - (121.0 * 0.5)))
         ret:addChild(layer2)
 
-        sprite2 = CCSprite:createWithSpriteFrame(CCSpriteFrameCache:sharedSpriteFrameCache():spriteFrameByName("grossini_dance_generic_01.png"))
+        sprite2 = CCSprite:createWithSpriteFrame(CCSpriteFrameCache:getInstance():spriteFrameByName("grossini_dance_generic_01.png"))
         sprite2:setPosition(ccp( s.width/2 + 80, s.height/2))
         ret:addChild(sprite2)
 
@@ -74,8 +74,8 @@ local function ZwoptexGenericTest()
 
             local str1 = string.format("grossini_dance_%02d.png", spriteFrameIndex)
             local str2 = string.format("grossini_dance_generic_%02d.png", spriteFrameIndex)
-            sprite1:setDisplayFrame(CCSpriteFrameCache:sharedSpriteFrameCache():spriteFrameByName(str1))
-            sprite2:setDisplayFrame(CCSpriteFrameCache:sharedSpriteFrameCache():spriteFrameByName(str2))
+            sprite1:setDisplayFrame(CCSpriteFrameCache:getInstance():spriteFrameByName(str1))
+            sprite2:setDisplayFrame(CCSpriteFrameCache:getInstance():spriteFrameByName(str2))
         end
 
         sprite1:retain()
@@ -97,7 +97,7 @@ local function ZwoptexGenericTest()
         end
         sprite1:release()
         sprite2:release()
-        local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+        local cache = CCSpriteFrameCache:getInstance()
         cache:removeSpriteFramesFromFile("zwoptex/grossini.plist")
         cache:removeSpriteFramesFromFile("zwoptex/grossini-generic.plist")
     end

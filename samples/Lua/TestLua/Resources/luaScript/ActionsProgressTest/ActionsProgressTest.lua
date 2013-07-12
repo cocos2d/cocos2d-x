@@ -253,7 +253,7 @@ local function SpriteProgressWithSpriteFrame()
 
 	local to = CCProgressTo:create(6, 100)
 
-    CCSpriteFrameCache:sharedSpriteFrameCache():addSpriteFramesWithFile("zwoptex/grossini.plist")
+    CCSpriteFrameCache:getInstance():addSpriteFramesWithFile("zwoptex/grossini.plist")
 
     local left = CCProgressTimer:create(CCSprite:createWithSpriteFrameName("grossini_dance_01.png"))
     left:setType(kCCProgressTimerTypeBar)

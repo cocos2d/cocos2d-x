@@ -1722,7 +1722,7 @@ void SpriteFrameAliasNameTest::onEnter()
 
     // IMPORTANT:
     // The sprite frames will be cached AND RETAINED, and they won't be released unless you call
-    //     [[SpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
+    //     SpriteFrameCache::getInstance()->removeUnusedSpriteFrames();
     //
     // SpriteFrameCache is a cache of SpriteFrames
     // SpriteFrames each contain a texture id and a rect (frame).

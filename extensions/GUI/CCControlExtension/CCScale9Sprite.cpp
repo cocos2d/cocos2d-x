@@ -581,7 +581,7 @@ Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame)
 
 bool Scale9Sprite::initWithSpriteFrameName(const char* spriteFrameName, Rect capInsets)
 {
-    CCAssert((SpriteFrameCache::getInstance()) != NULL, "sharedSpriteFrameCache must be non-NULL");
+    CCAssert((SpriteFrameCache::getInstance()) != NULL, "SpriteFrameCache::getInstance() must be non-NULL");
 
     SpriteFrame *frame = SpriteFrameCache::getInstance()->spriteFrameByName(spriteFrameName);
     CCAssert(frame != NULL, "CCSpriteFrame must be non-NULL");
