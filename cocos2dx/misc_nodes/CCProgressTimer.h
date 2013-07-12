@@ -84,20 +84,20 @@ public:
 
     virtual void setOpacityModifyRGB(bool bValue);
     virtual bool isOpacityModifyRGB(void);
-    
+
     inline bool isReverseDirection() { return m_bReverseDirection; };
     inline void setReverseDirection(bool value) { m_bReverseDirection = value; };
 
 public:
     /** Creates a progress timer with the sprite as the shape the timer goes through */
     static CCProgressTimer* create(CCSprite* sp);
+    void updateColor(void);
 protected:
     ccTex2F textureCoordFromAlphaPoint(CCPoint alpha);
     ccVertex2F vertexFromAlphaPoint(CCPoint alpha);
     void updateProgress(void);
     void updateBar(void);
     void updateRadial(void);
-    void updateColor(void);
     CCPoint boundaryTexCoord(char index);
 
 protected:
