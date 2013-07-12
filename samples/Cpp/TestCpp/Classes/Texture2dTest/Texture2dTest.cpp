@@ -266,12 +266,12 @@ void TextureMipMap::onEnter()
     Texture2D *texture1 = TextureCache::sharedTextureCache()->addImage("Images/grossini_dance_atlas_nomipmap.png");
 
     Sprite *img0 = Sprite::createWithTexture(texture0);
-    img0->setTextureRect(CCRectMake(85, 121, 85, 121));
+    img0->setTextureRect(Rect(85, 121, 85, 121));
     img0->setPosition(Point( s.width/3.0f, s.height/2.0f));
     addChild(img0);
 
     Sprite *img1 = Sprite::createWithTexture(texture1);
-    img1->setTextureRect(CCRectMake(85, 121, 85, 121));
+    img1->setTextureRect(Rect(85, 121, 85, 121));
     img1->setPosition(Point( 2*s.width/3.0f, s.height/2.0f));
     addChild(img1);
     
@@ -1541,7 +1541,7 @@ void TextureGlClamp::onEnter()
 
     // The .png image MUST be power of 2 in order to create a continue effect.
     // eg: 32x64, 512x128, 256x1024, 64x64, etc..
-    Sprite *sprite = Sprite::create("Images/pattern1.png", CCRectMake(0,0,512,256));
+    Sprite *sprite = Sprite::create("Images/pattern1.png", Rect(0,0,512,256));
     addChild(sprite, -1, kTagSprite1);
     sprite->setPosition(Point(size.width/2,size.height/2));
     ccTexParams params = {GL_LINEAR,GL_LINEAR,GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE};
@@ -1578,7 +1578,7 @@ void TextureGlRepeat::onEnter()
     
     // The .png image MUST be power of 2 in order to create a continue effect.
     // eg: 32x64, 512x128, 256x1024, 64x64, etc..
-    Sprite *sprite = Sprite::create("Images/pattern1.png", CCRectMake(0, 0, 4096, 4096));
+    Sprite *sprite = Sprite::create("Images/pattern1.png", Rect(0, 0, 4096, 4096));
     addChild(sprite, -1, kTagSprite1);
     sprite->setPosition(Point(size.width/2,size.height/2));
     ccTexParams params = {GL_LINEAR,GL_LINEAR,GL_REPEAT,GL_REPEAT};
@@ -1768,8 +1768,8 @@ void TextureDrawInRect::draw()
 
     Size s = Director::sharedDirector()->getWinSize();
 
-    Rect rect1 = CCRectMake( s.width/2 - 80, 20, _tex1->getContentSize().width * 0.5f, _tex1->getContentSize().height *2 );
-    Rect rect2 = CCRectMake( s.width/2 + 80, s.height/2, _tex1->getContentSize().width * 2, _tex1->getContentSize().height * 0.5f );
+    Rect rect1 = Rect( s.width/2 - 80, 20, _tex1->getContentSize().width * 0.5f, _tex1->getContentSize().height *2 );
+    Rect rect2 = Rect( s.width/2 + 80, s.height/2, _tex1->getContentSize().width * 2, _tex1->getContentSize().height * 0.5f );
 
     _tex1->drawInRect(rect1);
     _Tex2F->drawInRect(rect2);

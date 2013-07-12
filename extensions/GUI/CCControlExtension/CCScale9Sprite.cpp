@@ -146,7 +146,7 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bo
         // Get the texture size as original
         Size textureSize = _scale9Image->getTextureAtlas()->getTexture()->getContentSize();
     
-        rect = CCRectMake(0, 0, textureSize.width, textureSize.height);
+        rect = Rect(0, 0, textureSize.width, textureSize.height);
     }
     
     // Set the given rect's size as original size
@@ -162,7 +162,7 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bo
     if ( _capInsetsInternal.equals(RectZero) )
     {
         // CCLog("... cap insets not specified : using default cap insets ...");
-        _capInsetsInternal = CCRectMake(w/3, h/3, w/3, h/3);
+        _capInsetsInternal = Rect(w/3, h/3, w/3, h/3);
     }
 
     float left_w = _capInsetsInternal.origin.x;
@@ -180,17 +180,17 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bo
     float y = 0.0;
 
     // top left
-    Rect lefttopbounds = CCRectMake(x, y,
+    Rect lefttopbounds = Rect(x, y,
                                       left_w, top_h);
 
     // top center
     TRANSLATE_X(x, y, left_w);
-    Rect centertopbounds = CCRectMake(x, y,
+    Rect centertopbounds = Rect(x, y,
                                         center_w, top_h);
         
     // top right
     TRANSLATE_X(x, y, center_w);
-    Rect righttopbounds = CCRectMake(x, y,
+    Rect righttopbounds = Rect(x, y,
                                        right_w, top_h);
 
     // ... center row
@@ -199,17 +199,17 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bo
     TRANSLATE_Y(x, y, top_h);
 
     // center left
-    Rect leftcenterbounds = CCRectMake(x, y,
+    Rect leftcenterbounds = Rect(x, y,
                                          left_w, center_h);
 
     // center center
     TRANSLATE_X(x, y, left_w);
-    Rect centerbounds = CCRectMake(x, y,
+    Rect centerbounds = Rect(x, y,
                                      center_w, center_h);
 
     // center right
     TRANSLATE_X(x, y, center_w);
-    Rect rightcenterbounds = CCRectMake(x, y,
+    Rect rightcenterbounds = Rect(x, y,
                                           right_w, center_h);
 
     // ... bottom row
@@ -219,17 +219,17 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bo
     TRANSLATE_Y(x, y, center_h);
 
     // bottom left
-    Rect leftbottombounds = CCRectMake(x, y,
+    Rect leftbottombounds = Rect(x, y,
                                          left_w, bottom_h);
 
     // bottom center
     TRANSLATE_X(x, y, left_w);
-    Rect centerbottombounds = CCRectMake(x, y,
+    Rect centerbottombounds = Rect(x, y,
                                            center_w, bottom_h);
 
     // bottom right
     TRANSLATE_X(x, y, center_w);
-    Rect rightbottombounds = CCRectMake(x, y,
+    Rect rightbottombounds = Rect(x, y,
                                           right_w, bottom_h);
 
     if (!rotated) {
@@ -689,14 +689,14 @@ void Scale9Sprite::updateCapInset()
     {
         if (_spriteFrameRotated)
         {
-            insets = CCRectMake(_insetBottom,
+            insets = Rect(_insetBottom,
                 _insetLeft,
                 _spriteRect.size.width-_insetRight-_insetLeft,
                 _spriteRect.size.height-_insetTop-_insetBottom);
         }
         else
         {
-            insets = CCRectMake(_insetLeft,
+            insets = Rect(_insetLeft,
                 _insetTop,
                 _spriteRect.size.width-_insetLeft-_insetRight,
                 _spriteRect.size.height-_insetTop-_insetBottom);

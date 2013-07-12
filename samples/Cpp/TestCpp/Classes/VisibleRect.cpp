@@ -15,7 +15,7 @@ void VisibleRect::lazyInit()
 Rect VisibleRect::getVisibleRect()
 {
     lazyInit();
-    return CCRectMake(s_visibleRect.origin.x, s_visibleRect.origin.y, s_visibleRect.size.width, s_visibleRect.size.height);
+    return Rect(s_visibleRect.origin.x, s_visibleRect.origin.y, s_visibleRect.size.width, s_visibleRect.size.height);
 }
 
 Point VisibleRect::left()

@@ -30,9 +30,9 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     setTouchMode(kTouchesOneByOne);
 
     // Font Item    
-    Sprite* spriteNormal = Sprite::create(s_MenuItem, CCRectMake(0,23*2,115,23));
-    Sprite* spriteSelected = Sprite::create(s_MenuItem, CCRectMake(0,23*1,115,23));
-    Sprite* spriteDisabled = Sprite::create(s_MenuItem, CCRectMake(0,23*0,115,23));
+    Sprite* spriteNormal = Sprite::create(s_MenuItem, Rect(0,23*2,115,23));
+    Sprite* spriteSelected = Sprite::create(s_MenuItem, Rect(0,23*1,115,23));
+    Sprite* spriteDisabled = Sprite::create(s_MenuItem, Rect(0,23*0,115,23));
 
     MenuItemSprite* item1 = MenuItemSprite::create(spriteNormal, spriteSelected, spriteDisabled, CC_CALLBACK_1(MenuLayerMainMenu::menuCallback, this) );
     
@@ -318,9 +318,9 @@ MenuLayer3::MenuLayer3()
 		    static_cast<LayerMultiplex*>(_parent)->switchTo(0);
 	});
 
-    Sprite *spriteNormal   = Sprite::create(s_MenuItem,  CCRectMake(0,23*2,115,23));
-    Sprite *spriteSelected = Sprite::create(s_MenuItem,  CCRectMake(0,23*1,115,23));
-    Sprite *spriteDisabled = Sprite::create(s_MenuItem,  CCRectMake(0,23*0,115,23));
+    Sprite *spriteNormal   = Sprite::create(s_MenuItem,  Rect(0,23*2,115,23));
+    Sprite *spriteSelected = Sprite::create(s_MenuItem,  Rect(0,23*1,115,23));
+    Sprite *spriteDisabled = Sprite::create(s_MenuItem,  Rect(0,23*0,115,23));
     
     
     MenuItemSprite* item3 = MenuItemSprite::create(spriteNormal, spriteSelected, spriteDisabled, [](Object *sender) {

@@ -54,8 +54,8 @@ bool ControlScene::init()
         addChild(background);
         
         // Add the ribbon
-        Scale9Sprite *ribbon = Scale9Sprite::create("extensions/ribbon.png", CCRectMake(1, 1, 48, 55));
-        ribbon->setContentSize(CCSizeMake(VisibleRect::getVisibleRect().size.width, 57));
+        Scale9Sprite *ribbon = Scale9Sprite::create("extensions/ribbon.png", Rect(1, 1, 48, 55));
+        ribbon->setContentSize(Size(VisibleRect::getVisibleRect().size.width, 57));
         ribbon->setPosition(Point(VisibleRect::center().x, VisibleRect::top().y - ribbon->getContentSize().height / 2.0f));
         addChild(ribbon);
         

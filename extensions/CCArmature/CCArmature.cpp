@@ -529,7 +529,7 @@ Rect Armature::boundingBox()
 
     bool first = true;
 
-    Rect boundingBox = CCRectMake(0, 0, 0, 0);
+    Rect boundingBox = Rect(0, 0, 0, 0);
 
     Object *object = NULL;
     CCARRAY_FOREACH(_children, object)

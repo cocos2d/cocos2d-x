@@ -55,7 +55,7 @@ public:
 ParallaxNode::ParallaxNode()
 {
     _parallaxArray = ccArrayNew(5);        
-    _lastPosition = CCPointMake(-100,-100);
+    _lastPosition = Point(-100,-100);
 }
 ParallaxNode::~ParallaxNode()
 {

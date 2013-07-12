@@ -38,8 +38,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     Size screenSize = EGLView::sharedOpenGLView()->getFrameSize();
 
-    Size designSize = CCSizeMake(320, 480);
-    Size resourceSize = CCSizeMake(320, 480);
+    Size designSize = Size(320, 480);
+    Size resourceSize = Size(320, 480);
     
     std::vector<std::string> resDirOrders;
     
@@ -51,26 +51,26 @@ bool AppDelegate::applicationDidFinishLaunching()
         FileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
         if (screenSize.height > 1024)
         {
-            resourceSize = CCSizeMake(1536, 2048);
+            resourceSize = Size(1536, 2048);
             resDirOrders.push_back("resources-ipadhd");
             resDirOrders.push_back("resources-ipad");
             resDirOrders.push_back("resources-iphonehd");
         }
         else if (screenSize.height > 960)
         {
-            resourceSize = CCSizeMake(768, 1024);
+            resourceSize = Size(768, 1024);
             resDirOrders.push_back("resources-ipad");
             resDirOrders.push_back("resources-iphonehd");
         }
         else if (screenSize.height > 480)
         {
-            resourceSize = CCSizeMake(640, 960);
+            resourceSize = Size(640, 960);
             resDirOrders.push_back("resources-iphonehd");
             resDirOrders.push_back("resources-iphone");
         }
         else
         {
-            resourceSize = CCSizeMake(320, 480);
+            resourceSize = Size(320, 480);
             resDirOrders.push_back("resources-iphone");
         }
         
@@ -79,7 +79,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     {
         if (screenSize.height > 960)
         {
-            resourceSize = CCSizeMake(1280, 1920);
+            resourceSize = Size(1280, 1920);
             resDirOrders.push_back("resources-xlarge");
             resDirOrders.push_back("resources-large");
             resDirOrders.push_back("resources-medium");
@@ -87,20 +87,20 @@ bool AppDelegate::applicationDidFinishLaunching()
         }
         else if (screenSize.height > 720)
         {
-            resourceSize = CCSizeMake(640, 960);
+            resourceSize = Size(640, 960);
             resDirOrders.push_back("resources-large");
             resDirOrders.push_back("resources-medium");
             resDirOrders.push_back("resources-small");
         }
         else if (screenSize.height > 480)
         {
-            resourceSize = CCSizeMake(480, 720);
+            resourceSize = Size(480, 720);
             resDirOrders.push_back("resources-medium");
             resDirOrders.push_back("resources-small");
         }
         else
         {
-            resourceSize = CCSizeMake(320, 480);
+            resourceSize = Size(320, 480);
             resDirOrders.push_back("resources-small");
         }
     }

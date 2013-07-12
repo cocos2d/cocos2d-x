@@ -115,14 +115,14 @@ const Size& EGLViewProtocol::getFrameSize() const
 
 void EGLViewProtocol::setFrameSize(float width, float height)
 {
-    _designResolutionSize = _screenSize = CCSizeMake(width, height);
+    _designResolutionSize = _screenSize = Size(width, height);
 }
 
 Size  EGLViewProtocol::getVisibleSize() const
 {
     if (_resolutionPolicy == kResolutionNoBorder)
     {
-        return CCSizeMake(_screenSize.width/_scaleX, _screenSize.height/_scaleY);
+        return Size(_screenSize.width/_scaleX, _screenSize.height/_scaleY);
     }
     else 
     {
@@ -134,7 +134,7 @@ Point EGLViewProtocol::getVisibleOrigin() const
 {
     if (_resolutionPolicy == kResolutionNoBorder)
     {
-        return CCPointMake((_designResolutionSize.width - _screenSize.width/_scaleX)/2, 
+        return Point((_designResolutionSize.width - _screenSize.width/_scaleX)/2, 
                            (_designResolutionSize.height - _screenSize.height/_scaleY)/2);
     }
     else 
@@ -177,7 +177,7 @@ Rect EGLViewProtocol::getScissorRect()
 	float y = (params[1] - _viewPortRect.origin.y) / _scaleY;
 	float w = params[2] / _scaleX;
 	float h = params[3] / _scaleY;
-	return CCRectMake(x, y, w, h);
+	return Rect(x, y, w, h);
 }
 
 void EGLViewProtocol::setViewName(const char* pszViewName)

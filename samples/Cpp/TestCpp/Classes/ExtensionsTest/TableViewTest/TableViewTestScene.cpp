@@ -23,14 +23,14 @@ bool TableViewTestLayer::init()
 
 	Size winSize = Director::sharedDirector()->getWinSize();
 
-    TableView* tableView = TableView::create(this, CCSizeMake(250, 60));
+    TableView* tableView = TableView::create(this, Size(250, 60));
     tableView->setDirection(kScrollViewDirectionHorizontal);
     tableView->setPosition(Point(20,winSize.height/2-30));
     tableView->setDelegate(this);
     this->addChild(tableView);
     tableView->reloadData();
 
-	tableView = TableView::create(this, CCSizeMake(60, 250));
+	tableView = TableView::create(this, Size(60, 250));
 	tableView->setDirection(kScrollViewDirectionVertical);
 	tableView->setPosition(Point(winSize.width-150,winSize.height/2-120));
 	tableView->setDelegate(this);
@@ -63,9 +63,9 @@ void TableViewTestLayer::tableCellTouched(TableView* table, TableViewCell* cell)
 Size TableViewTestLayer::tableCellSizeForIndex(TableView *table, unsigned int idx)
 {
     if (idx == 2) {
-        return CCSizeMake(100, 100);
+        return Size(100, 100);
     }
-    return CCSizeMake(60, 60);
+    return Size(60, 60);
 }
 
 TableViewCell* TableViewTestLayer::tableCellAtIndex(TableView *table, unsigned int idx)

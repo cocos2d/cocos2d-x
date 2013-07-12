@@ -546,7 +546,7 @@ const Size& Director::getWinSize(void) const
 
 Size Director::getWinSizeInPixels() const
 {
-    return CCSizeMake(_winSizeInPoints.width * _contentScaleFactor, _winSizeInPoints.height * _contentScaleFactor);
+    return Size(_winSizeInPoints.width * _contentScaleFactor, _winSizeInPoints.height * _contentScaleFactor);
 }
 
 Size Director::getVisibleSize() const

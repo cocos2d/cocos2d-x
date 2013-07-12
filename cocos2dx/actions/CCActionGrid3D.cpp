@@ -110,7 +110,7 @@ FlipX3D* FlipX3D::create(float duration)
 
 bool FlipX3D::initWithDuration(float duration)
 {
-    return Grid3DAction::initWithDuration(duration, CCSizeMake(1, 1));
+    return Grid3DAction::initWithDuration(duration, Size(1, 1));
 }
 
 bool FlipX3D::initWithSize(const Size& gridSize, float duration)

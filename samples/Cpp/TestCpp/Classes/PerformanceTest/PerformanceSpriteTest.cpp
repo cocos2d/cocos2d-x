@@ -130,7 +130,7 @@ Sprite* SubTest::createSpriteWithTag(int tag)
         case 2:
         case 3: 
             {
-                sprite = Sprite::createWithTexture(batchNode->getTexture(), CCRectMake(0, 0, 52, 139));
+                sprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(0, 0, 52, 139));
                 batchNode->addChild(sprite, 0, tag+100);
                 break;
             }
@@ -154,7 +154,7 @@ Sprite* SubTest::createSpriteWithTag(int tag)
 
                 x *= 85;
                 y *= 121;
-                sprite = Sprite::createWithTexture(batchNode->getTexture(), CCRectMake(x,y,85,121));
+                sprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(x,y,85,121));
                 batchNode->addChild(sprite, 0, tag+100);
                 break;
             }
@@ -185,7 +185,7 @@ Sprite* SubTest::createSpriteWithTag(int tag)
 
                 x *= 32;
                 y *= 32;
-                sprite = Sprite::createWithTexture(batchNode->getTexture(), CCRectMake(x,y,32,32));
+                sprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(x,y,32,32));
                 batchNode->addChild(sprite, 0, tag+100);
                 break;
             }

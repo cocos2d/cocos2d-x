@@ -134,7 +134,7 @@ bool LabelTTF::initWithString(const char *string, const char *fontName, float fo
         // shader program
         this->setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(SHADER_PROGRAM));
         
-        _dimensions = CCSizeMake(dimensions.width, dimensions.height);
+        _dimensions = Size(dimensions.width, dimensions.height);
         _alignment  = hAlignment;
         _vAlignment  = vAlignment;
         _fontName   = new std::string(fontName);
@@ -470,7 +470,7 @@ FontDefinition LabelTTF::getTextDefinition()
 
 void LabelTTF::_updateWithTextDefinition(const FontDefinition& textDefinition, bool mustUpdateTexture)
 {
-    _dimensions = CCSizeMake(textDefinition._dimensions.width, textDefinition._dimensions.height);
+    _dimensions = Size(textDefinition._dimensions.width, textDefinition._dimensions.height);
     _alignment  = textDefinition._alignment;
     _vAlignment  = textDefinition._vertAlignment;
     

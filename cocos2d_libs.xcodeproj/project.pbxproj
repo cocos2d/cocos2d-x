@@ -1888,7 +1888,7 @@
 		1A1195A01785201F00D62A44 /* Lua_extensions_CCB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lua_extensions_CCB.h; sourceTree = "<group>"; };
 		1A1195A11785201F00D62A44 /* Lua_web_socket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Lua_web_socket.cpp; sourceTree = "<group>"; };
 		1A1195A21785201F00D62A44 /* Lua_web_socket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lua_web_socket.h; sourceTree = "<group>"; };
-		1A1195A31785201F00D62A44 /* LuaCocos2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaCocos2d.cpp; sourceTree = "<group>"; };
+		1A1195A31785201F00D62A44 /* LuaCocos2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = LuaCocos2d.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		1A1195A41785201F00D62A44 /* LuaCocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaCocos2d.h; sourceTree = "<group>"; };
 		1A1195A51785201F00D62A44 /* LuaOpengl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaOpengl.cpp; sourceTree = "<group>"; };
 		1A1195A61785201F00D62A44 /* LuaOpengl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaOpengl.h; sourceTree = "<group>"; };
@@ -2196,7 +2196,7 @@
 		A03F25531780BAE8006731B9 /* CCParallaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParallaxNode.h; sourceTree = "<group>"; };
 		A03F25541780BAE8006731B9 /* CCTileMapAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTileMapAtlas.cpp; sourceTree = "<group>"; };
 		A03F25551780BAE8006731B9 /* CCTileMapAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTileMapAtlas.h; sourceTree = "<group>"; };
-		A03F25561780BAE8006731B9 /* CCTMXLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTMXLayer.cpp; sourceTree = "<group>"; };
+		A03F25561780BAE8006731B9 /* CCTMXLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCTMXLayer.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		A03F25571780BAE8006731B9 /* CCTMXLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXLayer.h; sourceTree = "<group>"; };
 		A03F25581780BAE8006731B9 /* CCTMXObjectGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTMXObjectGroup.cpp; sourceTree = "<group>"; };
 		A03F25591780BAE8006731B9 /* CCTMXObjectGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXObjectGroup.h; sourceTree = "<group>"; };
@@ -2405,7 +2405,7 @@
 		A03F2FF5178145F2006731B9 /* CCShaderNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCShaderNode.h; sourceTree = "<group>"; };
 		A03F2FF6178145F2006731B9 /* CCSkin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSkin.cpp; sourceTree = "<group>"; };
 		A03F2FF7178145F2006731B9 /* CCSkin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSkin.h; sourceTree = "<group>"; };
-		A03F2FF9178145F2006731B9 /* CCTexture2DMutable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTexture2DMutable.cpp; sourceTree = "<group>"; };
+		A03F2FF9178145F2006731B9 /* CCTexture2DMutable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCTexture2DMutable.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		A03F2FFA178145F2006731B9 /* CCTexture2DMutable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexture2DMutable.h; sourceTree = "<group>"; };
 		A03F2FFB178145F2006731B9 /* GLES-Render.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "GLES-Render.cpp"; sourceTree = "<group>"; };
 		A03F2FFC178145F2006731B9 /* GLES-Render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GLES-Render.h"; sourceTree = "<group>"; };

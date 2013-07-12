@@ -643,7 +643,7 @@ SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::addNewSpriteWithCo
 	int y = (idx/5) * 121;
     
     SpriteRenderTextureBug::SimpleSprite *sprite = SpriteRenderTextureBug::SimpleSprite::create("Images/grossini_dance_atlas.png",
-                                                                                                CCRectMake(x,y,85,121));
+                                                                                                Rect(x,y,85,121));
     addChild(sprite);
     
     sprite->setPosition(p);

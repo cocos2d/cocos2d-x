@@ -653,7 +653,7 @@ VolatileTexture::VolatileTexture(Texture2D *t)
 , uiImage(NULL)
 , _fontSize(0.0f)
 {
-    _size = CCSizeMake(0, 0);
+    _size = Size(0, 0);
     _texParams.minFilter = GL_LINEAR;
     _texParams.magFilter = GL_LINEAR;
     _texParams.wrapS = GL_CLAMP_TO_EDGE;

@@ -94,7 +94,7 @@ ControlSlider* ControlSlider::create(Sprite * backgroundSprite, Sprite* pogressS
         // Defines the content size
         Rect maxRect   = ControlUtils::RectUnion(backgroundSprite->boundingBox(), thumbSprite->boundingBox());
 
-        setContentSize(CCSizeMake(maxRect.size.width, maxRect.size.height));
+        setContentSize(Size(maxRect.size.width, maxRect.size.height));
         
         // Add the slider background
         _backgroundSprite->setAnchorPoint(Point(0.5f, 0.5f));
@@ -242,7 +242,7 @@ void ControlSlider::needsLayout()
 
     // Stretches content proportional to newLevel
     Rect textureRect          = _progressSprite->getTextureRect();
-    textureRect                 = CCRectMake(textureRect.origin.x, textureRect.origin.y, pos.x, textureRect.size.height);
+    textureRect                 = Rect(textureRect.origin.x, textureRect.origin.y, pos.x, textureRect.size.height);
     _progressSprite->setTextureRect(textureRect, _progressSprite->isTextureRectRotated(), textureRect.size);
 }
 

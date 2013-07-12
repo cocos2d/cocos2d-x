@@ -366,7 +366,7 @@ NSPoint EditBoxImplMac::convertDesignCoordToScreenCoord(const Point& designCoord
 void EditBoxImplMac::adjustTextFieldPosition()
 {
 	Size contentSize = _editBox->getContentSize();
-	Rect rect = CCRectMake(0, 0, contentSize.width, contentSize.height);
+	Rect rect = Rect(0, 0, contentSize.width, contentSize.height);
 
     rect = RectApplyAffineTransform(rect, _editBox->nodeToWorldTransform());
 	

@@ -188,6 +188,8 @@ Point Point::getIntersectPoint(const Point& A, const Point& B, const Point& C, c
     return PointZero;
 }
 
+const Point Point::ZERO = Point(0, 0);
+
 // implementation of Size
 
 Size::Size(void) : width(0), height(0)
@@ -250,6 +252,8 @@ bool Size::equals(const Size& target) const
     return (fabs(this->width  - target.width)  < FLT_EPSILON)
         && (fabs(this->height - target.height) < FLT_EPSILON);
 }
+
+const Size Size::ZERO = Size(0, 0);
 
 // implementation of Rect
 
@@ -382,5 +386,7 @@ Rect Rect::unionWithRect(const Rect & rect) const
     
     return Rect(combinedLeftX, combinedBottomY, combinedRightX - combinedLeftX, combinedTopY - combinedBottomY);
 }
+
+const Rect Rect::ZERO = Rect(0, 0, 0, 0);
 
 NS_CC_END

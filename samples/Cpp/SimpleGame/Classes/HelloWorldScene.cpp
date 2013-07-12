@@ -92,7 +92,7 @@ bool HelloWorld::init()
 
 		/////////////////////////////
 		// 2. add your codes below...
-		Sprite *player = Sprite::create("Player.png", CCRectMake(0, 0, 27, 40) );
+		Sprite *player = Sprite::create("Player.png", Rect(0, 0, 27, 40) );
         
 		player->setPosition( ccp(origin.x + player->getContentSize().width/2,
                                  origin.y + visibleSize.height/2) );
@@ -126,7 +126,7 @@ void HelloWorld::menuCloseCallback(Object* pSender)
 // cpp with cocos2d-x
 void HelloWorld::addTarget()
 {
-	Sprite *target = Sprite::create("Target.png", CCRectMake(0,0,27,40) );
+	Sprite *target = Sprite::create("Target.png", Rect(0,0,27,40) );
     
 	// Determine where to spawn the target along the Y axis
 	Size winSize = Director::sharedDirector()->getVisibleSize();
@@ -199,7 +199,7 @@ void HelloWorld::ccTouchesEnded(Set* touches, Event* event)
 	// Set up initial location of projectile
 	Size winSize = Director::sharedDirector()->getVisibleSize();
     Point origin = Director::sharedDirector()->getVisibleOrigin();
-	Sprite *projectile = Sprite::create("Projectile.png", CCRectMake(0, 0, 20, 20));
+	Sprite *projectile = Sprite::create("Projectile.png", Rect(0, 0, 20, 20));
 	projectile->setPosition( ccp(origin.x+20, origin.y+winSize.height/2) );
 
 	// Determinie offset of location to projectile
@@ -249,7 +249,7 @@ void HelloWorld::updateGame(float dt)
     CCARRAY_FOREACH(_projectiles, it)
 	{
 		Sprite *projectile = dynamic_cast<Sprite*>(it);
-		Rect projectileRect = CCRectMake(
+		Rect projectileRect = Rect(
 			projectile->getPosition().x - (projectile->getContentSize().width/2),
 			projectile->getPosition().y - (projectile->getContentSize().height/2),
 			projectile->getContentSize().width,
@@ -261,7 +261,7 @@ void HelloWorld::updateGame(float dt)
         CCARRAY_FOREACH(_targets, jt)
 		{
 			Sprite *target = dynamic_cast<Sprite*>(jt);
-			Rect targetRect = CCRectMake(
+			Rect targetRect = Rect(
 				target->getPosition().x - (target->getContentSize().width/2),
 				target->getPosition().y - (target->getContentSize().height/2),
 				target->getContentSize().width,

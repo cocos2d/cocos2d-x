@@ -281,6 +281,8 @@ public:
      @since v3.0
      */
     static Point getIntersectPoint(const Point& A, const Point& B, const Point& C, const Point& D);
+    
+    static const Point ZERO;
 };
 
 class CC_DLL Size
@@ -302,6 +304,8 @@ public:
     Size operator/(float a) const;
     void setSize(float width, float height);
     bool equals(const Size& target) const;
+    
+    static const Size ZERO;
 };
 
 class CC_DLL Rect
@@ -326,21 +330,34 @@ public:
     bool containsPoint(const Point& point) const;
     bool intersectsRect(const Rect& rect) const;
     Rect unionWithRect(const Rect & rect) const;
+    
+    static const Rect ZERO;
 };
 
 
-#define CCPointMake(x, y) Point((float)(x), (float)(y))
-#define CCSizeMake(width, height) Size((float)(width), (float)(height))
-#define CCRectMake(x, y, width, height) Rect((float)(x), (float)(y), (float)(width), (float)(height))
+CC_DEPRECATED_ATTRIBUTE Point CCPointMake(float x, float y)
+{
+    return Point(x, y);
+}
+
+CC_DEPRECATED_ATTRIBUTE Size CCSizeMake(float width, float height)
+{
+    return Size(width, height);
+}
+
+CC_DEPRECATED_ATTRIBUTE Rect CCRectMake(float x, float y, float width, float height)
+{
+    return Rect(x, y, width, height);
+}
 
 
-const Point PointZero = CCPointMake(0,0);
+CC_DEPRECATED_ATTRIBUTE const Point PointZero = Point(0,0);
 
-/* The "zero" size -- equivalent to CCSizeMake(0, 0). */ 
-const Size SizeZero = CCSizeMake(0,0);
+/* The "zero" size -- equivalent to Size(0, 0). */ 
+CC_DEPRECATED_ATTRIBUTE const Size SizeZero = Size(0,0);
 
-/* The "zero" rectangle -- equivalent to CCRectMake(0, 0, 0, 0). */ 
-const Rect RectZero = CCRectMake(0,0,0,0);
+/* The "zero" rectangle -- equivalent to Rect(0, 0, 0, 0). */ 
+CC_DEPRECATED_ATTRIBUTE const Rect RectZero = Rect(0,0,0,0);
 
 // end of data_structure group
 /// @}

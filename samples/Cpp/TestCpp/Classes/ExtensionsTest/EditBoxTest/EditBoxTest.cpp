@@ -33,7 +33,7 @@ EditBoxTest::EditBoxTest()
     menuBack->setPosition(PointZero);
     addChild(menuBack);
     
-    Size editBoxSize = CCSizeMake(visibleSize.width - 100, 60);
+    Size editBoxSize = Size(visibleSize.width - 100, 60);
 
     // top
     _editName = EditBox::create(editBoxSize, Scale9Sprite::create("extensions/green_edit.png"));
@@ -69,7 +69,7 @@ EditBoxTest::EditBoxTest()
     addChild(_editPassword);
     
     // bottom
-    _editEmail = EditBox::create(CCSizeMake(editBoxSize.width, editBoxSize.height), Scale9Sprite::create("extensions/yellow_edit.png"));
+    _editEmail = EditBox::create(Size(editBoxSize.width, editBoxSize.height), Scale9Sprite::create("extensions/yellow_edit.png"));
     _editEmail->setPosition(Point(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/4));
     _editEmail->setAnchorPoint(Point(0.5, 1.0f));
     _editEmail->setPlaceHolder("Email:");

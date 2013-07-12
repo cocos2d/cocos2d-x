@@ -198,7 +198,7 @@ void LabelAtlas::setString(const char *label)
     _string = label;
     this->updateAtlasValues();
 
-    Size s = CCSizeMake(len * _itemWidth, _itemHeight);
+    Size s = Size(len * _itemWidth, _itemHeight);
 
     this->setContentSize(s);
 

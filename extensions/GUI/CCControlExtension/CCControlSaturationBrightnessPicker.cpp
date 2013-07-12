@@ -110,7 +110,7 @@ void ControlSaturationBrightnessPicker::updateWithHSV(HSV hsv)
 void ControlSaturationBrightnessPicker::updateDraggerWithHSV(HSV hsv)
 {
     // Set the position of the slider to the correct saturation and brightness
-    Point pos = CCPointMake(_startPos.x + boxPos + (boxSize*(1 - hsv.s)),
+    Point pos = Point(_startPos.x + boxPos + (boxSize*(1 - hsv.s)),
                               _startPos.y + boxPos + (boxSize*hsv.v));
     
     // update

@@ -78,12 +78,12 @@ bool ControlButtonTest_HelloVariableSize::init()
         }
 
         layer->setAnchorPoint(Point (0.5, 0.5));
-        layer->setContentSize(CCSizeMake(total_width, height));
+        layer->setContentSize(Size(total_width, height));
         layer->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f));
         
         // Add the black background
         Scale9Sprite *background = Scale9Sprite::create("extensions/buttonBackground.png");
-        background->setContentSize(CCSizeMake(total_width + 14, height + 14));
+        background->setContentSize(Size(total_width + 14, height + 14));
         background->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f));
         addChild(background);
         return true;
@@ -149,7 +149,7 @@ bool ControlButtonTest_Event::init()
 
         // Add the black background
         Scale9Sprite *background = Scale9Sprite::create("extensions/buttonBackground.png");
-        background->setContentSize(CCSizeMake(300, 170));
+        background->setContentSize(Size(300, 170));
         background->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f));
         addChild(background);
         
@@ -240,12 +240,12 @@ bool ControlButtonTest_Styling::init()
         }
         
         layer->setAnchorPoint(Point(0.5, 0.5));
-        layer->setContentSize(CCSizeMake(max_w, max_h));
+        layer->setContentSize(Size(max_w, max_h));
         layer->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f));
         
         // Add the black background
         Scale9Sprite *backgroundButton = Scale9Sprite::create("extensions/buttonBackground.png");
-        backgroundButton->setContentSize(CCSizeMake(max_w + 14, max_h + 14));
+        backgroundButton->setContentSize(Size(max_w + 14, max_h + 14));
         backgroundButton->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f));
         addChild(backgroundButton);
         return true;
@@ -260,9 +260,9 @@ ControlButton *ControlButtonTest_Styling::standardButtonWithTitle(const char *ti
 {
     /** Creates and return a button with a default background and title color. */
     Scale9Sprite *backgroundButton = Scale9Sprite::create("extensions/button.png");
-    backgroundButton->setPreferredSize(CCSizeMake(45, 45));  // Set the prefered size
+    backgroundButton->setPreferredSize(Size(45, 45));  // Set the prefered size
     Scale9Sprite *backgroundHighlightedButton = Scale9Sprite::create("extensions/buttonHighlighted.png");
-    backgroundHighlightedButton->setPreferredSize(CCSizeMake(45, 45));  // Set the prefered size
+    backgroundHighlightedButton->setPreferredSize(Size(45, 45));  // Set the prefered size
     
     LabelTTF *titleButton = LabelTTF::create(title, "Marker Felt", 30);
 

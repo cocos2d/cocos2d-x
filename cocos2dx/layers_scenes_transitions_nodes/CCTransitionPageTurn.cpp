@@ -83,7 +83,7 @@ void TransitionPageTurn::onEnter()
         y=16;
     }
 
-    ActionInterval *action  = this->actionWithSize(CCSizeMake(x,y));
+    ActionInterval *action  = this->actionWithSize(Size(x,y));
 
     if (! _back )
     {

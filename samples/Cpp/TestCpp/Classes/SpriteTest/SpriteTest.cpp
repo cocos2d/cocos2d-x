@@ -217,7 +217,7 @@ void Sprite1::addNewSpriteWithCoords(Point p)
     int y = (idx/5) * 121;
     
     
-    Sprite* sprite = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(x,y,85,121) );
+    Sprite* sprite = Sprite::create("Images/grossini_dance_atlas.png", Rect(x,y,85,121) );
     addChild( sprite );
     
     sprite->setPosition( Point( p.x, p.y) );
@@ -283,7 +283,7 @@ void SpriteBatchNode1::addNewSpriteWithCoords(Point p)
     int y = (idx/5) * 121;
     
 
-    Sprite* sprite = Sprite::createWithTexture(BatchNode->getTexture(), CCRectMake(x,y,85,121));
+    Sprite* sprite = Sprite::createWithTexture(BatchNode->getTexture(), Rect(x,y,85,121));
     BatchNode->addChild(sprite);
 
     sprite->setPosition( Point( p.x, p.y) );
@@ -334,15 +334,15 @@ std::string SpriteBatchNode1::title()
 
 SpriteColorOpacity::SpriteColorOpacity()
 {
-    Sprite* sprite1 = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*0, 121*1, 85, 121));
-    Sprite* sprite2 = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*1, 121*1, 85, 121));
-    Sprite* sprite3 = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*2, 121*1, 85, 121));
-    Sprite* sprite4 = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*3, 121*1, 85, 121));
+    Sprite* sprite1 = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*0, 121*1, 85, 121));
+    Sprite* sprite2 = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*1, 121*1, 85, 121));
+    Sprite* sprite3 = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*2, 121*1, 85, 121));
+    Sprite* sprite4 = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*3, 121*1, 85, 121));
     
-    Sprite* sprite5 = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*0, 121*1, 85, 121));
-    Sprite* sprite6 = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*1, 121*1, 85, 121));
-    Sprite* sprite7 = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*2, 121*1, 85, 121));
-    Sprite* sprite8 = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*3, 121*1, 85, 121));
+    Sprite* sprite5 = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*0, 121*1, 85, 121));
+    Sprite* sprite6 = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*1, 121*1, 85, 121));
+    Sprite* sprite7 = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*2, 121*1, 85, 121));
+    Sprite* sprite8 = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*3, 121*1, 85, 121));
     
     Size s = Director::sharedDirector()->getWinSize();
     sprite1->setPosition( Point( (s.width/5)*1, (s.height/3)*1) );
@@ -419,15 +419,15 @@ SpriteBatchNodeColorOpacity::SpriteBatchNodeColorOpacity()
     SpriteBatchNode* batch = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 1);
     addChild(batch, 0, kTagSpriteBatchNode);        
     
-    Sprite* sprite1 = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*0, 121*1, 85, 121));
-    Sprite* sprite2 = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*1, 121*1, 85, 121));
-    Sprite* sprite3 = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*2, 121*1, 85, 121));
-    Sprite* sprite4 = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*3, 121*1, 85, 121));
+    Sprite* sprite1 = Sprite::createWithTexture(batch->getTexture(), Rect(85*0, 121*1, 85, 121));
+    Sprite* sprite2 = Sprite::createWithTexture(batch->getTexture(), Rect(85*1, 121*1, 85, 121));
+    Sprite* sprite3 = Sprite::createWithTexture(batch->getTexture(), Rect(85*2, 121*1, 85, 121));
+    Sprite* sprite4 = Sprite::createWithTexture(batch->getTexture(), Rect(85*3, 121*1, 85, 121));
     
-    Sprite* sprite5 = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*0, 121*1, 85, 121));
-    Sprite* sprite6 = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*1, 121*1, 85, 121));
-    Sprite* sprite7 = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*2, 121*1, 85, 121));
-    Sprite* sprite8 = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*3, 121*1, 85, 121));
+    Sprite* sprite5 = Sprite::createWithTexture(batch->getTexture(), Rect(85*0, 121*1, 85, 121));
+    Sprite* sprite6 = Sprite::createWithTexture(batch->getTexture(), Rect(85*1, 121*1, 85, 121));
+    Sprite* sprite7 = Sprite::createWithTexture(batch->getTexture(), Rect(85*2, 121*1, 85, 121));
+    Sprite* sprite8 = Sprite::createWithTexture(batch->getTexture(), Rect(85*3, 121*1, 85, 121));
     
     
     Size s = Director::sharedDirector()->getWinSize();
@@ -511,19 +511,19 @@ SpriteZOrder::SpriteZOrder()
     float step = s.width/11;
     for(int i=0;i<5;i++) 
     {
-        Sprite* sprite = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*0, 121*1, 85, 121));
+        Sprite* sprite = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*0, 121*1, 85, 121));
         sprite->setPosition( Point( (i+1)*step, s.height/2) );
         addChild(sprite, i);
     }
     
     for(int i=5;i<10;i++) 
     {
-        Sprite* sprite = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*1, 121*0, 85, 121));
+        Sprite* sprite = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*1, 121*0, 85, 121));
         sprite->setPosition( Point( (i+1)*step, s.height/2) );
         addChild(sprite, 14-i);
     }
     
-    Sprite* sprite = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*3, 121*0, 85, 121));
+    Sprite* sprite = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*3, 121*0, 85, 121));
     addChild(sprite, -1, kTagSprite1);
     sprite->setPosition( Point(s.width/2, s.height/2 - 20) );
     sprite->setScaleX( 6 );
@@ -574,19 +574,19 @@ SpriteBatchNodeZOrder::SpriteBatchNodeZOrder()
     float step = s.width/11;
     for(int i=0;i<5;i++) 
     {
-        Sprite* sprite = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*0, 121*1, 85, 121));
+        Sprite* sprite = Sprite::createWithTexture(batch->getTexture(), Rect(85*0, 121*1, 85, 121));
         sprite->setPosition( Point( (i+1)*step, s.height/2) );
         batch->addChild(sprite, i);
     }
     
     for(int i=5;i<10;i++) 
     {
-        Sprite* sprite = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*1, 121*0, 85, 121));
+        Sprite* sprite = Sprite::createWithTexture(batch->getTexture(), Rect(85*1, 121*0, 85, 121));
         sprite->setPosition( Point( (i+1)*step, s.height/2) );
         batch->addChild(sprite, 14-i);
     }
     
-    Sprite* sprite = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*3, 121*0, 85, 121));
+    Sprite* sprite = Sprite::createWithTexture(batch->getTexture(), Rect(85*3, 121*0, 85, 121));
     batch->addChild(sprite, -1, kTagSprite1);
     sprite->setPosition( Point(s.width/2, s.height/2 - 20) );
     sprite->setScaleX( 6 );
@@ -630,7 +630,7 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
     
     for(int i=0; i<10; i++)
     {
-        Sprite* s1 = Sprite::createWithTexture(asmtest->getTexture(), CCRectMake(0, 0, 50, 50));
+        Sprite* s1 = Sprite::createWithTexture(asmtest->getTexture(), Rect(0, 0, 50, 50));
         a->addObject(s1);
         asmtest->addChild(s1, 10);
     }
@@ -700,7 +700,7 @@ SpriteBatchNodeReorderIssue744::SpriteBatchNodeReorderIssue744()
     SpriteBatchNode* batch = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 15);
     addChild(batch, 0, kTagSpriteBatchNode);        
 
-    Sprite* sprite = Sprite::createWithTexture(batch->getTexture(),CCRectMake(0, 0, 85, 121));
+    Sprite* sprite = Sprite::createWithTexture(batch->getTexture(),Rect(0, 0, 85, 121));
     sprite->setPosition( Point(s.width/2, s.height/2) );
     batch->addChild(sprite, 3);
     batch->reorderChild(sprite, 1);
@@ -724,15 +724,15 @@ std::string SpriteBatchNodeReorderIssue744::subtitle()
 
 Sprite* SpriteBatchNodeReorderIssue766::makeSpriteZ(int aZ)
 {
-    Sprite *sprite = Sprite::createWithTexture(batchNode->getTexture(), CCRectMake(128,0,64,64));
+    Sprite *sprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(128,0,64,64));
     batchNode->addChild(sprite, aZ+1, 0);
 
     //children
-    Sprite *spriteShadow = Sprite::createWithTexture(batchNode->getTexture(), CCRectMake(0,0,64,64));
+    Sprite *spriteShadow = Sprite::createWithTexture(batchNode->getTexture(), Rect(0,0,64,64));
     spriteShadow->setOpacity(128);
     sprite->addChild(spriteShadow, aZ, 3);
 
-    Sprite *spriteTop = Sprite::createWithTexture(batchNode->getTexture(), CCRectMake(64,0,64,64));
+    Sprite *spriteTop = Sprite::createWithTexture(batchNode->getTexture(), Rect(64,0,64,64));
     sprite->addChild(spriteTop, aZ+2, 3);
 
     return sprite;
@@ -917,7 +917,7 @@ SpriteZVertex::SpriteZVertex()
     
     Node* node = Node::create();
     // camera uses the center of the image as the pivoting point
-    node->setContentSize( CCSizeMake(s.width,s.height) );
+    node->setContentSize( Size(s.width,s.height) );
     node->setAnchorPoint( Point(0.5f, 0.5f));
     node->setPosition( Point(s.width/2, s.height/2));
 
@@ -925,7 +925,7 @@ SpriteZVertex::SpriteZVertex()
 
     for(int i=0;i<5;i++) 
     {
-        Sprite* sprite = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*0, 121*1, 85, 121));
+        Sprite* sprite = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*0, 121*1, 85, 121));
         sprite->setPosition( Point((i+1)*step, s.height/2) );
         sprite->setVertexZ( 10 + i*40 );
         sprite->setShaderProgram(alphaTestShader);
@@ -935,7 +935,7 @@ SpriteZVertex::SpriteZVertex()
     
     for(int i=5;i<11;i++) 
     {
-        Sprite* sprite = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*1, 121*0, 85, 121));
+        Sprite* sprite = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*1, 121*0, 85, 121));
         sprite->setPosition( Point( (i+1)*step, s.height/2) );
         sprite->setVertexZ( 10 + (10-i)*40 );
         sprite->setShaderProgram(alphaTestShader);
@@ -1000,7 +1000,7 @@ SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
     // Don't use capacity=1 in your real game. It is expensive to resize the capacity
     SpriteBatchNode* batch = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 1);
     // camera uses the center of the image as the pivoting point
-    batch->setContentSize( CCSizeMake(s.width,s.height));
+    batch->setContentSize( Size(s.width,s.height));
     batch->setAnchorPoint( Point(0.5f, 0.5f));
     batch->setPosition( Point(s.width/2, s.height/2));
     
@@ -1009,7 +1009,7 @@ SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
     
     for(int i=0;i<5;i++) 
     {
-        Sprite* sprite = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*0, 121*1, 85, 121));
+        Sprite* sprite = Sprite::createWithTexture(batch->getTexture(), Rect(85*0, 121*1, 85, 121));
         sprite->setPosition( Point( (i+1)*step, s.height/2) );
         sprite->setVertexZ(  10 + i*40 );
         batch->addChild(sprite, 0);
@@ -1017,7 +1017,7 @@ SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
     }
     
     for(int i=5;i<11;i++) {
-        Sprite* sprite = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*1, 121*0, 85, 121));
+        Sprite* sprite = Sprite::createWithTexture(batch->getTexture(), Rect(85*1, 121*0, 85, 121));
         sprite->setPosition( Point( (i+1)*step, s.height/2) );
         sprite->setVertexZ(  10 + (10-i)*40 );
         batch->addChild(sprite, 0);
@@ -1048,7 +1048,7 @@ SpriteAnchorPoint::SpriteAnchorPoint()
     
     for(int i=0;i<3;i++) 
     {
-        Sprite* sprite = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*i, 121*1, 85, 121) );
+        Sprite* sprite = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*i, 121*1, 85, 121) );
         sprite->setPosition( Point( s.width/4*(i+1), s.height/2) );
         
         Sprite *point = Sprite::create("Images/r1.png");
@@ -1100,7 +1100,7 @@ SpriteBatchNodeAnchorPoint::SpriteBatchNodeAnchorPoint()
     Action* action = RepeatForever::create(rotate);
     for(int i=0;i<3;i++) 
     {
-        Sprite* sprite = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*i, 121*1, 85, 121));
+        Sprite* sprite = Sprite::createWithTexture(batch->getTexture(), Rect(85*i, 121*1, 85, 121));
         sprite->setPosition( Point( s.width/4*(i+1), s.height/2) );
         
         Sprite *point = Sprite::create("Images/r1.png");
@@ -1150,7 +1150,7 @@ Sprite6::Sprite6()
     Size s = Director::sharedDirector()->getWinSize();
 
     batch->setAnchorPoint( Point(0.5f, 0.5f) );
-    batch->setContentSize( CCSizeMake(s.width, s.height) );
+    batch->setContentSize( Size(s.width, s.height) );
     
     
     // SpriteBatchNode actions
@@ -1171,7 +1171,7 @@ Sprite6::Sprite6()
 
     for(int i=0;i<3;i++) 
     {
-        Sprite* sprite = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*i, 121*1, 85, 121));
+        Sprite* sprite = Sprite::createWithTexture(batch->getTexture(), Rect(85*i, 121*1, 85, 121));
         sprite->setPosition( Point( (i+1)*step, s.height/2) );
 
         sprite->runAction( action->clone());
@@ -1196,11 +1196,11 @@ SpriteFlip::SpriteFlip()
 {
     Size s = Director::sharedDirector()->getWinSize();
     
-    Sprite* sprite1 = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*1, 121*1, 85, 121));
+    Sprite* sprite1 = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*1, 121*1, 85, 121));
     sprite1->setPosition( Point( s.width/2 - 100, s.height/2 ) );
     addChild(sprite1, 0, kTagSprite1);
     
-    Sprite* sprite2 = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*1, 121*1, 85, 121));
+    Sprite* sprite2 = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*1, 121*1, 85, 121));
     sprite2->setPosition( Point( s.width/2 + 100, s.height/2 ) );
     addChild(sprite2, 0, kTagSprite2);
     
@@ -1238,11 +1238,11 @@ SpriteBatchNodeFlip::SpriteBatchNodeFlip()
     
     Size s = Director::sharedDirector()->getWinSize();
     
-    Sprite* sprite1 = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*1, 121*1, 85, 121));
+    Sprite* sprite1 = Sprite::createWithTexture(batch->getTexture(), Rect(85*1, 121*1, 85, 121));
     sprite1->setPosition( Point( s.width/2 - 100, s.height/2 ) );
     batch->addChild(sprite1, 0, kTagSprite1);
     
-    Sprite* sprite2 = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*1, 121*1, 85, 121));
+    Sprite* sprite2 = Sprite::createWithTexture(batch->getTexture(), Rect(85*1, 121*1, 85, 121));
     sprite2->setPosition( Point( s.width/2 + 100, s.height/2 ) );
     batch->addChild(sprite2, 0, kTagSprite2);
     
@@ -1279,11 +1279,11 @@ SpriteAliased::SpriteAliased()
 {
     Size s = Director::sharedDirector()->getWinSize();
     
-    Sprite* sprite1 = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*1, 121*1, 85, 121));
+    Sprite* sprite1 = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*1, 121*1, 85, 121));
     sprite1->setPosition( Point( s.width/2 - 100, s.height/2 ) );
     addChild(sprite1, 0, kTagSprite1);
     
-    Sprite* sprite2 = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*1, 121*1, 85, 121));
+    Sprite* sprite2 = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*1, 121*1, 85, 121));
     sprite2->setPosition( Point( s.width/2 + 100, s.height/2 ) );
     addChild(sprite2, 0, kTagSprite2);
     
@@ -1338,11 +1338,11 @@ SpriteBatchNodeAliased::SpriteBatchNodeAliased()
     
     Size s = Director::sharedDirector()->getWinSize();
 
-    Sprite* sprite1 = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*1, 121*1, 85, 121));
+    Sprite* sprite1 = Sprite::createWithTexture(batch->getTexture(), Rect(85*1, 121*1, 85, 121));
     sprite1->setPosition( Point( s.width/2 - 100, s.height/2 ) );
     batch->addChild(sprite1, 0, kTagSprite1);
     
-    Sprite* sprite2 = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*1, 121*1, 85, 121));
+    Sprite* sprite2 = Sprite::createWithTexture(batch->getTexture(), Rect(85*1, 121*1, 85, 121));
     sprite2->setPosition( Point( s.width/2 + 100, s.height/2 ) );
     batch->addChild(sprite2, 0, kTagSprite2);
     
@@ -1419,7 +1419,7 @@ void SpriteNewTexture::addNewSprite()
     
     
     Node* node = getChildByTag( kTagSpriteBatchNode );
-    Sprite* sprite = Sprite::createWithTexture(_texture1, CCRectMake(x,y,85,121));
+    Sprite* sprite = Sprite::createWithTexture(_texture1, Rect(x,y,85,121));
     node->addChild(sprite);
     
     sprite->setPosition( Point( p.x, p.y) );
@@ -1526,7 +1526,7 @@ void SpriteBatchNodeNewTexture::addNewSprite()
     int y = (idx/5) * 121;
     
     
-    Sprite* sprite = Sprite::createWithTexture(batch->getTexture(), CCRectMake(x,y,85,121));
+    Sprite* sprite = Sprite::createWithTexture(batch->getTexture(), Rect(x,y,85,121));
     batch->addChild(sprite);
     
     sprite->setPosition( Point( p.x, p.y) );
@@ -2098,12 +2098,12 @@ SpriteAnimationSplit::SpriteAnimationSplit()
     Texture2D *texture = TextureCache::sharedTextureCache()->addImage("animations/dragon_animation.png");
     
     // manually add frames to the frame cache
-    SpriteFrame *frame0 = SpriteFrame::createWithTexture(texture, CCRectMake(132*0, 132*0, 132, 132));
-    SpriteFrame *frame1 = SpriteFrame::createWithTexture(texture, CCRectMake(132*1, 132*0, 132, 132));
-    SpriteFrame *frame2 = SpriteFrame::createWithTexture(texture, CCRectMake(132*2, 132*0, 132, 132));
-    SpriteFrame *frame3 = SpriteFrame::createWithTexture(texture, CCRectMake(132*3, 132*0, 132, 132));
-    SpriteFrame *frame4 = SpriteFrame::createWithTexture(texture, CCRectMake(132*0, 132*1, 132, 132));
-    SpriteFrame *frame5 = SpriteFrame::createWithTexture(texture, CCRectMake(132*1, 132*1, 132, 132));
+    SpriteFrame *frame0 = SpriteFrame::createWithTexture(texture, Rect(132*0, 132*0, 132, 132));
+    SpriteFrame *frame1 = SpriteFrame::createWithTexture(texture, Rect(132*1, 132*0, 132, 132));
+    SpriteFrame *frame2 = SpriteFrame::createWithTexture(texture, Rect(132*2, 132*0, 132, 132));
+    SpriteFrame *frame3 = SpriteFrame::createWithTexture(texture, Rect(132*3, 132*0, 132, 132));
+    SpriteFrame *frame4 = SpriteFrame::createWithTexture(texture, Rect(132*0, 132*1, 132, 132));
+    SpriteFrame *frame5 = SpriteFrame::createWithTexture(texture, Rect(132*1, 132*1, 132, 132));
     
     
     //
@@ -3189,7 +3189,7 @@ SpriteNilTexture::SpriteNilTexture()
 
     sprite = new Sprite();
     sprite->init();
-    sprite->setTextureRect( CCRectMake(0, 0, 300,300) );
+    sprite->setTextureRect( Rect(0, 0, 300,300) );
     sprite->setColor(Color3B::RED);
     sprite->setOpacity(128);
     sprite->setPosition(Point(3*s.width/4, s.height/2));
@@ -3198,7 +3198,7 @@ SpriteNilTexture::SpriteNilTexture()
 
     sprite = new Sprite();
     sprite->init();
-    sprite->setTextureRect(CCRectMake(0, 0, 300,300));
+    sprite->setTextureRect(Rect(0, 0, 300,300));
     sprite->setColor(Color3B::BLUE);
     sprite->setOpacity(128);
     sprite->setPosition(Point(1*s.width/4, s.height/2));
@@ -3576,9 +3576,9 @@ SpriteBatchBug1217::SpriteBatchBug1217()
 {
     SpriteBatchNode *bn = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 15);
 
-    Sprite * s1 = Sprite::createWithTexture(bn->getTexture(), CCRectMake(0, 0, 57, 57));
-    Sprite * s2 = Sprite::createWithTexture(bn->getTexture(), CCRectMake(0, 0, 57, 57));
-    Sprite * s3 = Sprite::createWithTexture(bn->getTexture(), CCRectMake(0, 0, 57, 57));
+    Sprite * s1 = Sprite::createWithTexture(bn->getTexture(), Rect(0, 0, 57, 57));
+    Sprite * s2 = Sprite::createWithTexture(bn->getTexture(), Rect(0, 0, 57, 57));
+    Sprite * s3 = Sprite::createWithTexture(bn->getTexture(), Rect(0, 0, 57, 57));
 
     s1->setColor(Color3B(255, 0, 0));
     s2->setColor(Color3B(0, 255, 0));
@@ -4102,23 +4102,23 @@ NodeSort::NodeSort()
     _node = Node::create();
     addChild(_node, 0, 0);
 
-    _sprite1 = Sprite::create("Images/piece.png", CCRectMake(128, 0, 64, 64));
+    _sprite1 = Sprite::create("Images/piece.png", Rect(128, 0, 64, 64));
     _sprite1->setPosition(Point(100, 160));
     _node->addChild(_sprite1, -6, 1);
 
-    _sprite2 = Sprite::create("Images/piece.png", CCRectMake(128, 0, 64, 64));
+    _sprite2 = Sprite::create("Images/piece.png", Rect(128, 0, 64, 64));
     _sprite2->setPosition(Point(164, 160));
     _node->addChild(_sprite2, -6, 2);
 
-    _sprite4 = Sprite::create("Images/piece.png", CCRectMake(128, 0, 64, 64));
+    _sprite4 = Sprite::create("Images/piece.png", Rect(128, 0, 64, 64));
     _sprite4->setPosition(Point(292, 160));
     _node->addChild(_sprite4, -3, 4);
 
-    _sprite3 = Sprite::create("Images/piece.png", CCRectMake(128, 0, 64, 64));
+    _sprite3 = Sprite::create("Images/piece.png", Rect(128, 0, 64, 64));
     _sprite3->setPosition(Point(228, 160));
     _node->addChild(_sprite3, -4, 3);
 
-    _sprite5 = Sprite::create("Images/piece.png", CCRectMake(128, 0, 64, 64));
+    _sprite5 = Sprite::create("Images/piece.png", Rect(128, 0, 64, 64));
     _sprite5->setPosition(Point(356, 160));
     _node->addChild(_sprite5, -3, 5);
 
@@ -4165,23 +4165,23 @@ SpriteBatchNodeReorderSameIndex::SpriteBatchNodeReorderSameIndex()
     _batchNode = SpriteBatchNode::create("Images/piece.png", 15);
     addChild(_batchNode, 1, 0);
 
-    _sprite1 = Sprite::createWithTexture(_batchNode->getTexture(), CCRectMake(128,0,64,64));
+    _sprite1 = Sprite::createWithTexture(_batchNode->getTexture(), Rect(128,0,64,64));
     _sprite1->setPosition(Point(100,160));
     _batchNode->addChild(_sprite1, 3, 1);
 
-    _sprite2= Sprite::createWithTexture(_batchNode->getTexture(), CCRectMake(128,0,64,64));
+    _sprite2= Sprite::createWithTexture(_batchNode->getTexture(), Rect(128,0,64,64));
     _sprite2->setPosition(Point(164,160));
     _batchNode->addChild(_sprite2, 4, 2);
 
-    _sprite3 = Sprite::createWithTexture(_batchNode->getTexture(), CCRectMake(128,0,64,64));
+    _sprite3 = Sprite::createWithTexture(_batchNode->getTexture(), Rect(128,0,64,64));
     _sprite3->setPosition(Point(228,160));
     _batchNode->addChild(_sprite3, 4, 3);
 
-    _sprite4 = Sprite::createWithTexture(_batchNode->getTexture(), CCRectMake(128,0,64,64));
+    _sprite4 = Sprite::createWithTexture(_batchNode->getTexture(), Rect(128,0,64,64));
     _sprite4->setPosition(Point(292,160));
     _batchNode->addChild(_sprite4, 5, 4);
 
-    _sprite5 = Sprite::createWithTexture(_batchNode->getTexture(), CCRectMake(128,0,64,64));
+    _sprite5 = Sprite::createWithTexture(_batchNode->getTexture(), Rect(128,0,64,64));
     _sprite5->setPosition(Point(356,160));
     _batchNode->addChild(_sprite5, 6, 5);
 

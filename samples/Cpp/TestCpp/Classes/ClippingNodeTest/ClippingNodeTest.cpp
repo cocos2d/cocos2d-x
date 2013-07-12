@@ -370,7 +370,7 @@ void NestedTest::setup()
         int size = 225 - i * (225 / (depth * 2));
 
         ClippingNode *clipper = ClippingNode::create();
-        clipper->setContentSize(CCSizeMake(size, size));
+        clipper->setContentSize(Size(size, size));
         clipper->setAnchorPoint(Point(0.5, 0.5));
         clipper->setPosition( Point(parent->getContentSize().width / 2, parent->getContentSize().height / 2) );
         clipper->setAlphaThreshold(0.05f);
@@ -480,7 +480,7 @@ void HoleDemo::ccTouchesBegan(Set* touches, Event* event)
 {
 	Touch *touch = (Touch *)touches->anyObject();
 	Point point = _outerClipper->convertToNodeSpace(Director::sharedDirector()->convertToGL(touch->getLocationInView()));
-    Rect rect = CCRectMake(0, 0, _outerClipper->getContentSize().width, _outerClipper->getContentSize().height);
+    Rect rect = Rect(0, 0, _outerClipper->getContentSize().width, _outerClipper->getContentSize().height);
     if (!rect.containsPoint(point)) return;
     this->pokeHoleAtPoint(point);
 }
@@ -501,7 +501,7 @@ void ScrollViewDemo::setup()
 {
     ClippingNode *clipper = ClippingNode::create();
     clipper->setTag( kTagClipperNode );
-    clipper->setContentSize(  CCSizeMake(200, 200) );
+    clipper->setContentSize(  Size(200, 200) );
     clipper->setAnchorPoint(  Point(0.5, 0.5) );
     clipper->setPosition( Point(this->getContentSize().width / 2, this->getContentSize().height / 2) );
     clipper->runAction(RepeatForever::create(RotateBy::create(1, 45)));
@@ -534,7 +534,7 @@ void ScrollViewDemo::ccTouchesBegan(Set *pTouches, Event *pEvent)
 	Touch *touch = (Touch*)pTouches->anyObject();
     Node *clipper = this->getChildByTag(kTagClipperNode);
 	Point point = clipper->convertToNodeSpace(Director::sharedDirector()->convertToGL(touch->getLocationInView()));
-    Rect rect = CCRectMake(0, 0, clipper->getContentSize().width, clipper->getContentSize().height);
+    Rect rect = Rect(0, 0, clipper->getContentSize().width, clipper->getContentSize().height);
     _scrolling = rect.containsPoint(point);
     _lastPoint = point;
 }

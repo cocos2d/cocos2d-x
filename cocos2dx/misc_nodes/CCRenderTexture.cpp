@@ -284,7 +284,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2DPixelFormat eF
         _texture = new Texture2D();
         if (_texture)
         {
-            _texture->initWithData(data, (Texture2DPixelFormat)_pixelFormat, powW, powH, CCSizeMake((float)w, (float)h));
+            _texture->initWithData(data, (Texture2DPixelFormat)_pixelFormat, powW, powH, Size((float)w, (float)h));
         }
         else
         {
@@ -298,7 +298,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2DPixelFormat eF
             _textureCopy = new Texture2D();
             if (_textureCopy)
             {
-                _textureCopy->initWithData(data, (Texture2DPixelFormat)_pixelFormat, powW, powH, CCSizeMake((float)w, (float)h));
+                _textureCopy->initWithData(data, (Texture2DPixelFormat)_pixelFormat, powW, powH, Size((float)w, (float)h));
             }
             else
             {

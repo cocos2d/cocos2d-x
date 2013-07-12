@@ -36,11 +36,11 @@ THE SOFTWARE.
  
  Examples:
   - ccpAdd( ccp(1,1), ccp(2,2) ); // preferred cocos2d way
-  - ccpAdd( CCPointMake(1,1), CCPointMake(2,2) ); // also ok but more verbose
+  - ccpAdd( Point(1,1), Point(2,2) ); // also ok but more verbose
   
   - cpvadd( cpv(1,1), cpv(2,2) ); // way of the chipmunk
   - ccpAdd( cpv(1,1), cpv(2,2) ); // mixing chipmunk and cocos2d (avoid)
-  - cpvadd( CCPointMake(1,1), CCPointMake(2,2) ); // mixing chipmunk and CG (avoid)
+  - cpvadd( Point(1,1), Point(2,2) ); // mixing chipmunk and CG (avoid)
  */
 
 #include "cocoa/CCGeometry.h"
@@ -57,7 +57,7 @@ NS_CC_BEGIN
  @return Point
  @since v0.7.2
  */
-//#define ccp(__X__,__Y__) cocos2d::CCPointMake((float)(__X__), (float)(__Y__))
+//#define ccp(__X__,__Y__) cocos2d::Point((float)(__X__), (float)(__Y__))
 
 CC_DEPRECATED_ATTRIBUTE inline Point ccp(float x, float y)
 {

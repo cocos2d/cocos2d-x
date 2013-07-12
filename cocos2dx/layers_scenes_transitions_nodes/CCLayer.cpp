@@ -783,7 +783,7 @@ bool LayerColor::initWithColor(const Color4B& color, GLfloat w, GLfloat h)
         }
 
         updateColor();
-        setContentSize(CCSizeMake(w, h));
+        setContentSize(Size(w, h));
 
         setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionColor));
         return true;
@@ -811,17 +811,17 @@ void LayerColor::setContentSize(const Size & size)
 
 void LayerColor::changeWidthAndHeight(GLfloat w ,GLfloat h)
 {
-    this->setContentSize(CCSizeMake(w, h));
+    this->setContentSize(Size(w, h));
 }
 
 void LayerColor::changeWidth(GLfloat w)
 {
-    this->setContentSize(CCSizeMake(w, _contentSize.height));
+    this->setContentSize(Size(w, _contentSize.height));
 }
 
 void LayerColor::changeHeight(GLfloat h)
 {
-    this->setContentSize(CCSizeMake(_contentSize.width, h));
+    this->setContentSize(Size(_contentSize.width, h));
 }
 
 void LayerColor::updateColor()
