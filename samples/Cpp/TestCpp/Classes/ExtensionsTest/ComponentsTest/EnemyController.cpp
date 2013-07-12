@@ -30,7 +30,7 @@ void EnemyController::onEnter()
 	// Create the target slightly off-screen along the right edge,
 	// and along a random position along the Y axis as calculated
 	_owner->setPosition(
-		ccp(winSize.width + (getOwner()->getContentSize().width/2), 
+		Point(winSize.width + (getOwner()->getContentSize().width/2), 
             Director::getInstance()->getVisibleOrigin().y + actualY) );
 	
 
@@ -43,7 +43,7 @@ void EnemyController::onEnter()
 
 	// Create the actions
 	FiniteTimeAction* actionMove = MoveTo::create( (float)actualDuration,
-                                            ccp(0 - getOwner()->getContentSize().width/2, actualY) );
+                                            Point(0 - getOwner()->getContentSize().width/2, actualY) );
 	FiniteTimeAction* actionMoveDone = CallFuncN::create(getOwner()->getParent()->getComponent("SceneController"),
                                             callfuncN_selector(SceneController::spriteMoveFinished));
 	_owner->runAction( Sequence::create(actionMove, actionMoveDone, NULL) );

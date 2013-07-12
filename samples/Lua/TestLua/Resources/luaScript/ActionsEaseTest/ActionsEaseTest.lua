@@ -2,8 +2,8 @@ local kTagAction1 = 1
 local kTagAction2 = 2
 local kTagSlider = 1
 
-local s = CCDirector:getInstance():getWinSize()
-local scheduler = CCDirector:getInstance():getScheduler()
+local s = CCDirector:sharedDirector():getWinSize()
+local scheduler = CCDirector:sharedDirector():getScheduler()
 
 local function createSimpleMoveBy()
     return CCMoveBy:create(3, CCPointMake(s.width - 130, 0))

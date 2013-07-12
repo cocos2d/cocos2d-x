@@ -401,7 +401,7 @@ void Grid3D::calculateVertexPoints(void)
             Vertex3F l2[4] = {e, f, g, h};
 
             int tex1[4] = {a*2, b*2, c*2, d*2};
-            Point Tex2F[4] = {ccp(x1, y1), ccp(x2, y1), ccp(x2, y2), ccp(x1, y2)};
+            Point Tex2F[4] = {Point(x1, y1), Point(x2, y1), Point(x2, y2), Point(x1, y2)};
 
             for (i = 0; i < 4; ++i)
             {

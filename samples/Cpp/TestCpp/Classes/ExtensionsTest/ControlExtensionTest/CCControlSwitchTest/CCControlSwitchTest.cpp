@@ -38,15 +38,15 @@ bool ControlSwitchTest::init()
         Size screenSize = Director::getInstance()->getWinSize();
         
         Node *layer = Node::create();
-        layer->setPosition(ccp (screenSize.width / 2, screenSize.height / 2));
+        layer->setPosition(Point(screenSize.width / 2, screenSize.height / 2));
         addChild(layer, 1);
         
         double layer_width = 0;
         
         // Add the black background for the text
         Scale9Sprite *background = Scale9Sprite::create("extensions/buttonBackground.png");
-        background->setContentSize(CCSizeMake(80, 50));
-        background->setPosition(ccp(layer_width + background->getContentSize().width / 2.0f, 0));
+        background->setContentSize(Size(80, 50));
+        background->setPosition(Point(layer_width + background->getContentSize().width / 2.0f, 0));
         layer->addChild(background);
         
         layer_width += background->getContentSize().width;
@@ -67,14 +67,14 @@ bool ControlSwitchTest::init()
                 LabelTTF::create("On", "Arial-BoldMT", 16),
                 LabelTTF::create("Off", "Arial-BoldMT", 16)
             );
-        switchControl->setPosition(ccp (layer_width + 10 + switchControl->getContentSize().width / 2, 0));
+        switchControl->setPosition(Point(layer_width + 10 + switchControl->getContentSize().width / 2, 0));
         layer->addChild(switchControl);
 
         switchControl->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlSwitchTest::valueChanged), ControlEventValueChanged);
         
         // Set the layer size
-        layer->setContentSize(CCSizeMake(layer_width, 0));
-        layer->setAnchorPoint(ccp (0.5f, 0.5f));
+        layer->setContentSize(Size(layer_width, 0));
+        layer->setAnchorPoint(Point(0.5f, 0.5f));
         
         // Update the value label
         valueChanged(switchControl, ControlEventValueChanged);

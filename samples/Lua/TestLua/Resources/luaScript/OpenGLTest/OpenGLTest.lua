@@ -8,7 +8,7 @@ local function OpenGLTestMainLayer()
     local curCase  = 0
     local accum    = 0
     local labelBMFont = nil
-    local size = CCDirector:getInstance():getWinSize()
+    local size = CCDirector:sharedDirector():getWinSize()
     local curLayer = nil
     local schedulEntry = nil
     local  function OrderCallbackMenu()
@@ -31,7 +31,7 @@ local function OpenGLTestMainLayer()
         end
 
         local ordercallbackmenu = CCMenu:create()
-        local size = CCDirector:getInstance():getWinSize()
+        local size = CCDirector:sharedDirector():getWinSize()
         local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
         item1:registerScriptTapHandler(backCallback)
         ordercallbackmenu:addChild(item1,kItemTagBasic)
@@ -554,7 +554,7 @@ local function OpenGLTestMainLayer()
         glGetActiveLayer:addChild(sprite)
         local glNode = gl.glNodeCreate()
         glGetActiveLayer:addChild(glNode,-10)
-        local scheduler = CCDirector:getInstance():getScheduler()
+        local scheduler = CCDirector:sharedDirector():getScheduler()
 
         local function getCurrentResult()
             local var = {}
@@ -717,7 +717,7 @@ local function OpenGLTestMainLayer()
         readPixelsLayer:addChild(green,12)
         readPixelsLayer:addChild(red,13)
 
-        local scheduler = CCDirector:getInstance():getScheduler()
+        local scheduler = CCDirector:sharedDirector():getScheduler()
 
         local function getCurrentResult()
             local x = size.width
@@ -782,7 +782,7 @@ local function OpenGLTestMainLayer()
         local glNode = gl.glNodeCreate()
         clearLayer:addChild(glNode,10)
         --gl.init()
-        local scheduler = CCDirector:getInstance():getScheduler()
+        local scheduler = CCDirector:sharedDirector():getScheduler()
 
         local function clearDraw()
             gl.clear(gl.COLOR_BUFFER_BIT)
@@ -1150,7 +1150,7 @@ local function OpenGLTestMainLayer()
         local curScene = CCScene:create()
         if nil ~= curScene then
             if nil ~= curLayer then
-                local scheduler = CCDirector:getInstance():getScheduler()
+                local scheduler = CCDirector:sharedDirector():getScheduler()
                 if nil ~= schedulEntry then
                     scheduler:unscheduleScriptEntry(schedulEntry)
                 end
@@ -1160,7 +1160,7 @@ local function OpenGLTestMainLayer()
                 curScene:addChild(curLayer)
                 curLayer:addChild(OrderCallbackMenu(),15)
                 curScene:addChild(CreateBackMenuItem())
-                CCDirector:getInstance():replaceScene(curScene)
+                CCDirector:sharedDirector():replaceScene(curScene)
             end            
         end 
     end

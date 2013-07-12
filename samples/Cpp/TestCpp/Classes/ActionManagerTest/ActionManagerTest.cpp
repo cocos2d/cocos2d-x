@@ -163,7 +163,7 @@ void LogicTest::onEnter()
     grossini->setPosition(VisibleRect::center());
 
     grossini->runAction( Sequence::create( 
-                                                MoveBy::create(1, ccp(150,0)),
+                                                MoveBy::create(1, Point(150,0)),
                                                 CallFuncN::create(this, callfuncN_selector(LogicTest::bugMe)),
                                                 NULL) 
                         );
@@ -197,7 +197,7 @@ void PauseTest::onEnter()
 
     LabelTTF* l = LabelTTF::create("After 5 seconds grossini should move", "Thonburi", 16);
     addChild(l);
-    l->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y-75) );
+    l->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y-75) );
     
     
     //
@@ -207,7 +207,7 @@ void PauseTest::onEnter()
     addChild(grossini, 0, kTagGrossini);
     grossini->setPosition(VisibleRect::center() );
     
-    Action* action = MoveBy::create(1, ccp(150,0));
+    Action* action = MoveBy::create(1, Point(150,0));
 
     Director* pDirector = Director::getInstance();
     pDirector->getActionManager()->addAction(action, grossini, true);
@@ -239,9 +239,9 @@ void RemoveTest::onEnter()
 
     LabelTTF* l = LabelTTF::create("Should not crash", "Thonburi", 16);
     addChild(l);
-    l->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - 75) );
+    l->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 75) );
 
-    MoveBy* pMove = MoveBy::create(2, ccp(200, 0));
+    MoveBy* pMove = MoveBy::create(2, Point(200, 0));
     CallFunc* pCallback = CallFunc::create(this, callfunc_selector(RemoveTest::stopAction));
     ActionInterval* pSequence = Sequence::create(pMove, pCallback, NULL);
     pSequence->setTag(kTagSequence);
@@ -280,7 +280,7 @@ void ResumeTest::onEnter()
 
     LabelTTF* l = LabelTTF::create("Grossini only rotate/scale in 3 seconds", "Thonburi", 16);
     addChild(l);
-    l->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - 75));
+    l->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 75));
 
     Sprite* pGrossini = Sprite::create(s_pPathGrossini);
     addChild(pGrossini, 0, kTagGrossini);

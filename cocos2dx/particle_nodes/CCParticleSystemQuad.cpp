@@ -133,7 +133,7 @@ void ParticleSystemQuad::initTexCoordsWithRect(const Rect& pointRect)
 {
     // convert to Tex coords
 
-    Rect rect = CCRectMake(
+    Rect rect = Rect(
         pointRect.origin.x * CC_CONTENT_SCALE_FACTOR(),
         pointRect.origin.y * CC_CONTENT_SCALE_FACTOR(),
         pointRect.size.width * CC_CONTENT_SCALE_FACTOR(),
@@ -207,11 +207,11 @@ void ParticleSystemQuad::setTextureWithRect(Texture2D *texture, const Rect& rect
 void ParticleSystemQuad::setTexture(Texture2D* texture)
 {
     const Size& s = texture->getContentSize();
-    this->setTextureWithRect(texture, CCRectMake(0, 0, s.width, s.height));
+    this->setTextureWithRect(texture, Rect(0, 0, s.width, s.height));
 }
 void ParticleSystemQuad::setDisplayFrame(SpriteFrame *spriteFrame)
 {
-    CCAssert(spriteFrame->getOffsetInPixels().equals(PointZero), 
+    CCAssert(spriteFrame->getOffsetInPixels().equals(Point::ZERO), 
              "QuadParticle only supports SpriteFrames with no offsets");
 
     // update texture before updating texture rect

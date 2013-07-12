@@ -360,7 +360,7 @@ Point NodeLoader::parsePropTypePosition(Node * pNode, Node * pParent, CCBReader 
     
     Size containerSize = pCCBReader->getAnimationManager()->getContainerSize(pParent);
     
-    Point pt = getAbsolutePosition(ccp(x,y), type, containerSize, pPropertyName);
+    Point pt = getAbsolutePosition(Point(x,y), type, containerSize, pPropertyName);
     pNode->setPosition(pt);
     
     if (pCCBReader->getAnimatedProperties()->find(pPropertyName) != pCCBReader->getAnimatedProperties()->end())
@@ -566,7 +566,7 @@ SpriteFrame * NodeLoader::parsePropTypeSpriteFrame(Node * pNode, Node * pParent,
             spriteFile = pCCBReader->getCCBRootPath() + spriteFile;
             Texture2D * texture = TextureCache::getInstance()->addImage(spriteFile.c_str());
             if(texture != NULL) {
-                Rect bounds = CCRectMake(0, 0, texture->getContentSize().width, texture->getContentSize().height);
+                Rect bounds = Rect(0, 0, texture->getContentSize().width, texture->getContentSize().height);
                 spriteFrame = SpriteFrame::createWithTexture(texture, bounds);
             }
         }

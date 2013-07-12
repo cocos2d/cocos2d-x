@@ -13,7 +13,7 @@ local testsName =
     "PerformanceTouchesTest"
 }
 
-local s = CCDirector:getInstance():getWinSize()
+local s = CCDirector:sharedDirector():getWinSize()
 
 --Create toMainLayr MenuItem
 function CreatePerfomBasicLayerMenu(pMenu)
@@ -23,7 +23,7 @@ function CreatePerfomBasicLayerMenu(pMenu)
 	local function toMainLayer()
        local pScene = PerformanceTestMain()
        if pScene ~= nil then
-           CCDirector:getInstance():replaceScene(pScene)
+           CCDirector:sharedDirector():replaceScene(pScene)
        end
     end	
     --Create BackMneu
@@ -125,7 +125,7 @@ local function runNodeChildrenTest()
     				ShowCurrentTest()
    				end
    				
-    			local size = CCDirector:getInstance():getWinSize()
+    			local size = CCDirector:sharedDirector():getWinSize()
     			local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
     			item1:registerScriptTapHandler(backCallback)
     			pMenu:addChild(item1,kItemTagBasic)
@@ -136,7 +136,7 @@ local function runNodeChildrenTest()
     			pMenu:addChild(item3,kItemTagBasic) 
     			item3:registerScriptTapHandler(nextCallback)
     			
-    			local size = CCDirector:getInstance():getWinSize()
+    			local size = CCDirector:sharedDirector():getWinSize()
     			item1:setPosition(CCPointMake(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
     			item2:setPosition(CCPointMake(size.width / 2, item2:getContentSize().height / 2))
     			item3:setPosition(CCPointMake(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
@@ -278,7 +278,7 @@ local function runNodeChildrenTest()
     end
     
     local function updateQuantityOfNodes()
-    	local s = CCDirector:getInstance():getWinSize()  	
+    	local s = CCDirector:sharedDirector():getWinSize()  	
    		--increase nodes
     	if( nCurrentQuantityOfNodes < nQuantityOfNodes ) then
     		local i = 0
@@ -336,7 +336,7 @@ local function runNodeChildrenTest()
     end
     
     local function MainSceneInitWithQuantityOfNodes(nNodes)
-    	local s = CCDirector:getInstance():getWinSize()
+    	local s = CCDirector:sharedDirector():getWinSize()
     		
         --Title
    		local pLabel = CCLabelTTF:create(GetTitle(), "Arial", 40)
@@ -401,7 +401,7 @@ local function runNodeChildrenTest()
 			MainSceneInitWithQuantityOfNodes(nQuantityOfNodes)
 --			pNewscene:registerScriptHandler(onNodeEvent)
 			NodeChildrenScheduleUpdate()
-			CCDirector:getInstance():replaceScene(pNewscene)
+			CCDirector:sharedDirector():replaceScene(pNewscene)
     	end	
     end
     
@@ -483,7 +483,7 @@ local function runParticleTest()
     				ShowCurrentTest()
    				end
    				
-    			local size = CCDirector:getInstance():getWinSize()
+    			local size = CCDirector:sharedDirector():getWinSize()
     			local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
     			item1:registerScriptTapHandler(backCallback)
     			pMenu:addChild(item1,kItemTagBasic)
@@ -494,7 +494,7 @@ local function runParticleTest()
     			pMenu:addChild(item3,kItemTagBasic) 
     			item3:registerScriptTapHandler(nextCallback)
     			
-    			local size = CCDirector:getInstance():getWinSize()
+    			local size = CCDirector:sharedDirector():getWinSize()
     			item1:setPosition(CCPointMake(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
     			item2:setPosition(CCPointMake(size.width / 2, item2:getContentSize().height / 2))
     			item3:setPosition(CCPointMake(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
@@ -519,7 +519,7 @@ local function runParticleTest()
     end
     
     local function doTest()
-   		local s = CCDirector:getInstance():getWinSize()
+   		local s = CCDirector:sharedDirector():getWinSize()
    		local pParticleSystem = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagParticleSystem),"CCParticleSystem")
    		if nil == pParticleSystem then
    			return
@@ -733,8 +733,8 @@ local function runParticleTest()
     		pNewScene:removeChildByTag(ParticleTestParam.kTagParticleSystem, true)
     		
     		--remove the "fire.png" from the TextureCache cache. 
-    		local pTexture = CCTextureCache:getInstance():addImage("Images/fire.png")
-    		CCTextureCache:getInstance():removeTexture(pTexture)
+    		local pTexture = CCTextureCache:sharedTextureCache():addImage("Images/fire.png")
+    		CCTextureCache:sharedTextureCache():removeTexture(pTexture)
     		local pParticleSystem = CCParticleSystemQuad:new()
     		if 1 == nSubtestNumber then
     		    CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
@@ -755,7 +755,7 @@ local function runParticleTest()
     		
     		if nil ~= pParticleSystem then
     			pParticleSystem:initWithTotalParticles(nQuantityParticles)
-        		pParticleSystem:setTexture(CCTextureCache:getInstance():addImage("Images/fire.png"))
+        		pParticleSystem:setTexture(CCTextureCache:sharedTextureCache():addImage("Images/fire.png"))
     		end
     		
     		pNewScene:addChild(pParticleSystem, 0, ParticleTestParam.kTagParticleSystem)
@@ -774,7 +774,7 @@ local function runParticleTest()
 	
 	local function ScheduleFuncion()
 		 local function OnEnterOrExit(tag)
-    		  local scheduler = CCDirector:getInstance():getScheduler()
+    		  local scheduler = CCDirector:sharedDirector():getScheduler()
 			    if tag == "enter" then
 					ScheduleSelector = scheduler:scheduleScriptFunc(step,0,false)
 				elseif tag == "exit" then
@@ -806,7 +806,7 @@ local function runParticleTest()
     
     local function InitWithSubTest(nSubtest,nParticles)
     	nSubtestNumber = nSubtest
-    	local s = CCDirector:getInstance():getWinSize()
+    	local s = CCDirector:sharedDirector():getWinSize()
     	
     	nLastRenderedCount = 0
     	nQuantityParticles = nParticles
@@ -877,11 +877,11 @@ local function runParticleTest()
     
     function ShowCurrentTest()
     	if nil ~= pNewScene then
-    		CCDirector:getInstance():getScheduler():unscheduleScriptEntry(ScheduleSelector)
+    		CCDirector:sharedDirector():getScheduler():unscheduleScriptEntry(ScheduleSelector)
     	end  	
 		pNewScene = CCScene:create()
 		InitWithSubTest(nSubtestNumber,nQuantityParticles)
-		CCDirector:getInstance():replaceScene(pNewScene)	   	
+		CCDirector:sharedDirector():replaceScene(pNewScene)	   	
     end
     
 	
@@ -971,7 +971,7 @@ local function runSpriteTest()
     				ShowCurrentTest()
    				end
    				
-    			local size = CCDirector:getInstance():getWinSize()
+    			local size = CCDirector:sharedDirector():getWinSize()
     			local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
     			item1:registerScriptTapHandler(backCallback)
     			pMenu:addChild(item1,kItemTagBasic)
@@ -982,7 +982,7 @@ local function runSpriteTest()
     			pMenu:addChild(item3,kItemTagBasic) 
     			item3:registerScriptTapHandler(nextCallback)
     			
-    			local size = CCDirector:getInstance():getWinSize()
+    			local size = CCDirector:sharedDirector():getWinSize()
     			item1:setPosition(CCPointMake(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
     			item2:setPosition(CCPointMake(size.width / 2, item2:getContentSize().height / 2))
     			item3:setPosition(CCPointMake(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
@@ -1000,18 +1000,18 @@ local function runSpriteTest()
     end
     
     local function PerformancePosition(pSprite)
-    	local size = CCDirector:getInstance():getWinSize()
+    	local size = CCDirector:sharedDirector():getWinSize()
     	pSprite:setPosition(ccp((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
     end
     
     local function PerformanceScale(pSprite)
-    	local size = CCDirector:getInstance():getWinSize()
+    	local size = CCDirector:sharedDirector():getWinSize()
     	pSprite:setPosition(ccp((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
     	pSprite:setScale(math.random() * 100 / 50)
 	end
 	
 	local function PerformanceRotationScale(pSprite)
-	    local size = CCDirector:getInstance():getWinSize()
+	    local size = CCDirector:sharedDirector():getWinSize()
     	pSprite:setPosition(ccp((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
     	pSprite:setRotation(math.random() * 360)
     	pSprite:setScale(math.random() * 2)
@@ -1022,7 +1022,7 @@ local function runSpriteTest()
 	end
 	
 	local function Performanceout20(pSprite)
-		  local size = CCDirector:getInstance():getWinSize()
+		  local size = CCDirector:sharedDirector():getWinSize()
 
     	  if math.random() < 0.2 then
         	pSprite:setPosition(ccp((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
@@ -1032,7 +1032,7 @@ local function runSpriteTest()
 	end
 	
 	local function PerformanceActions(pSprite)
-	    local size = CCDirector:getInstance():getWinSize()
+	    local size = CCDirector:sharedDirector():getWinSize()
     	pSprite:setPosition(ccp((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
 
     	local fPeriod = 0.5 + (math.random(0,SpriteTestParam.kRandMax) % 1000) / 500.0
@@ -1054,7 +1054,7 @@ local function runSpriteTest()
 	end
 	
 	local function PerformanceActions20(pSprite)
-		  local size = CCDirector:getInstance():getWinSize()
+		  local size = CCDirector:sharedDirector():getWinSize()
 		  
     	  if math.random() < 0.2  then
         	pSprite:setPosition(ccp((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
@@ -1215,7 +1215,7 @@ local function runSpriteTest()
     	*12: 64 (4-bit) PVRTC Batch Node of 32 x 32 each
     	]]--
     	--purge textures
-    	local pMgr = CCTextureCache:getInstance()
+    	local pMgr = CCTextureCache:sharedTextureCache()
     	--[mgr removeAllTextures]
     	pMgr:removeTexture(pMgr:addImage("Images/grossinis_sister1.png"))
     	pMgr:removeTexture(pMgr:addImage("Images/grossini_dance_atlas.png"))
@@ -1259,7 +1259,7 @@ local function runSpriteTest()
     	nSubtestNumber = nSubtest
     	--about create subset
     	InitWithSubTest(nSubtest)
-    	local s = CCDirector:getInstance():getWinSize()
+    	local s = CCDirector:sharedDirector():getWinSize()
     	
     	nLastRenderedCount = 0
     	nQuantityNodes    = 0
@@ -1330,7 +1330,7 @@ local function runSpriteTest()
     function ShowCurrentTest() 	
 		pNewScene = CCScene:create()
 		InitWithSpriteTest(nSubtestNumber,nQuantityNodes)
-		CCDirector:getInstance():replaceScene(pNewScene)	 
+		CCDirector:sharedDirector():replaceScene(pNewScene)	 
     end
     
     InitWithSpriteTest(1,SpriteTestParam.kInitNodes)
@@ -1359,12 +1359,12 @@ local function runTextureTest()
 	local nTexCurCase = 0	
 	local pNewscene = CCScene:create()
 	local pLayer    = CCLayer:create()
-	local s 		= CCDirector:getInstance():getWinSize()
+	local s 		= CCDirector:sharedDirector():getWinSize()
 	
 	local function PerformTestsPNG(strFileName)
 		  local time
 		  local pTexture = nil
-    	  local pCache = CCTextureCache:getInstance()
+    	  local pCache = CCTextureCache:sharedTextureCache()
     	  print("RGBA 8888")
     	  CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
     	  pTexture = pCache:addImage(strFileName) 		  
@@ -1481,7 +1481,7 @@ local function runTouchesTest()
     local  nNumberOfTouchesC  = 0
     local  fElapsedTime       = 0.0
     
-    local  s = CCDirector:getInstance():getWinSize()
+    local  s = CCDirector:sharedDirector():getWinSize()
    	local  pNewscene = CCScene:create()
 	local  pLayer    = CCLayer:create()
 	
@@ -1518,7 +1518,7 @@ local function runTouchesTest()
     				ShowCurrentTest()
    				end
    				
-    			local size = CCDirector:getInstance():getWinSize()
+    			local size = CCDirector:sharedDirector():getWinSize()
     			local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
     			item1:registerScriptTapHandler(backCallback)
     			pMenu:addChild(item1,kItemTagBasic)
@@ -1529,7 +1529,7 @@ local function runTouchesTest()
     			pMenu:addChild(item3,kItemTagBasic) 
     			item3:registerScriptTapHandler(nextCallback)
     			
-    			local size = CCDirector:getInstance():getWinSize()
+    			local size = CCDirector:sharedDirector():getWinSize()
     			item1:setPosition(CCPointMake(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
     			item2:setPosition(CCPointMake(size.width / 2, item2:getContentSize().height / 2))
     			item3:setPosition(CCPointMake(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
@@ -1645,7 +1645,7 @@ local function runTouchesTest()
     		pLayer = CCLayer:create()
     		InitLayer()
 			pNewscene:addChild(pLayer)
-			CCDirector:getInstance():replaceScene(pNewscene)
+			CCDirector:sharedDirector():replaceScene(pNewscene)
     	end	
     end
 
@@ -1676,7 +1676,7 @@ local function menuCallback(tag, pMenuItem)
     local nIdx = pMenuItem:getZOrder() - kItemTagBasic
 	local PerformanceTestScene = CreatePerformancesTestScene(nIdx)
     if nil ~= PerformanceTestScene then
-         CCDirector:getInstance():replaceScene(PerformanceTestScene)
+         CCDirector:sharedDirector():replaceScene(PerformanceTestScene)
     end
 end
 

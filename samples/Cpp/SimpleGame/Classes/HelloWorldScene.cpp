@@ -79,12 +79,12 @@ bool HelloWorld::init()
         Size visibleSize = Director::getInstance()->getVisibleSize();
         Point origin = Director::getInstance()->getVisibleOrigin();
         
-		pCloseItem->setPosition(ccp(origin.x + visibleSize.width - pCloseItem->getContentSize().width/2,
+		pCloseItem->setPosition(Point(origin.x + visibleSize.width - pCloseItem->getContentSize().width/2,
                                     origin.y + pCloseItem->getContentSize().height/2));
 
 		// Create a menu with the "close" menu item, it's an auto release object.
 		Menu* pMenu = Menu::create(pCloseItem, NULL);
-		pMenu->setPosition(PointZero);
+		pMenu->setPosition(Point::ZERO);
 		CC_BREAK_IF(! pMenu);
 
 		// Add the menu to HelloWorld layer as a child layer.
@@ -92,9 +92,9 @@ bool HelloWorld::init()
 
 		/////////////////////////////
 		// 2. add your codes below...
-		Sprite *player = Sprite::create("Player.png", CCRectMake(0, 0, 27, 40) );
+		Sprite *player = Sprite::create("Player.png", Rect(0, 0, 27, 40) );
         
-		player->setPosition( ccp(origin.x + player->getContentSize().width/2,
+		player->setPosition( Point(origin.x + player->getContentSize().width/2,
                                  origin.y + visibleSize.height/2) );
 		this->addChild(player);
 
@@ -126,7 +126,7 @@ void HelloWorld::menuCloseCallback(Object* pSender)
 // cpp with cocos2d-x
 void HelloWorld::addTarget()
 {
-	Sprite *target = Sprite::create("Target.png", CCRectMake(0,0,27,40) );
+	Sprite *target = Sprite::create("Target.png", Rect(0,0,27,40) );
     
 	// Determine where to spawn the target along the Y axis
 	Size winSize = Director::getInstance()->getVisibleSize();
@@ -139,7 +139,7 @@ void HelloWorld::addTarget()
 	// Create the target slightly off-screen along the right edge,
 	// and along a random position along the Y axis as calculated
 	target->setPosition( 
-		ccp(winSize.width + (target->getContentSize().width/2), 
+		Point(winSize.width + (target->getContentSize().width/2), 
             Director::getInstance()->getVisibleOrigin().y + actualY) );
 	this->addChild(target);
 
@@ -152,7 +152,7 @@ void HelloWorld::addTarget()
 
 	// Create the actions
 	FiniteTimeAction* actionMove = MoveTo::create( (float)actualDuration,
-                                            ccp(0 - target->getContentSize().width/2, actualY) );
+                                            Point(0 - target->getContentSize().width/2, actualY) );
 	FiniteTimeAction* actionMoveDone = CallFuncN::create( this, 
                                             callfuncN_selector(HelloWorld::spriteMoveFinished));
 	target->runAction( Sequence::create(actionMove, actionMoveDone, NULL) );
@@ -199,8 +199,8 @@ void HelloWorld::ccTouchesEnded(Set* touches, Event* event)
 	// Set up initial location of projectile
 	Size winSize = Director::getInstance()->getVisibleSize();
     Point origin = Director::getInstance()->getVisibleOrigin();
-	Sprite *projectile = Sprite::create("Projectile.png", CCRectMake(0, 0, 20, 20));
-	projectile->setPosition( ccp(origin.x+20, origin.y+winSize.height/2) );
+	Sprite *projectile = Sprite::create("Projectile.png", Rect(0, 0, 20, 20));
+	projectile->setPosition( Point(origin.x+20, origin.y+winSize.height/2) );
 
 	// Determinie offset of location to projectile
 	float offX = location.x - projectile->getPosition().x;
@@ -216,7 +216,7 @@ void HelloWorld::ccTouchesEnded(Set* touches, Event* event)
 	float realX = origin.x+winSize.width + (projectile->getContentSize().width/2);
 	float ratio = offY / offX;
 	float realY = (realX * ratio) + projectile->getPosition().y;
-	Point realDest = ccp(realX, realY);
+	Point realDest = Point(realX, realY);
 
 	// Determine the length of how far we're shooting
 	float offRealX = realX - projectile->getPosition().x;
@@ -249,7 +249,7 @@ void HelloWorld::updateGame(float dt)
     CCARRAY_FOREACH(_projectiles, it)
 	{
 		Sprite *projectile = dynamic_cast<Sprite*>(it);
-		Rect projectileRect = CCRectMake(
+		Rect projectileRect = Rect(
 			projectile->getPosition().x - (projectile->getContentSize().width/2),
 			projectile->getPosition().y - (projectile->getContentSize().height/2),
 			projectile->getContentSize().width,
@@ -261,7 +261,7 @@ void HelloWorld::updateGame(float dt)
         CCARRAY_FOREACH(_targets, jt)
 		{
 			Sprite *target = dynamic_cast<Sprite*>(jt);
-			Rect targetRect = CCRectMake(
+			Rect targetRect = Rect(
 				target->getPosition().x - (target->getContentSize().width/2),
 				target->getPosition().y - (target->getContentSize().height/2),
 				target->getContentSize().width,

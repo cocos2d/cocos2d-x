@@ -71,7 +71,7 @@ TMXLayerInfo::TMXLayerInfo()
 , _ownTiles(true)
 , _minGID(100000)
 , _maxGID(0)        
-, _offset(PointZero)
+, _offset(Point::ZERO)
 {
     _properties= new Dictionary();;
 }
@@ -100,10 +100,10 @@ void TMXLayerInfo::setProperties(Dictionary* var)
 // implementation TMXTilesetInfo
 TMXTilesetInfo::TMXTilesetInfo()
     :_firstGid(0)
-    ,_tileSize(SizeZero)
+    ,_tileSize(Size::ZERO)
     ,_spacing(0)
     ,_margin(0)
-    ,_imageSize(SizeZero)
+    ,_imageSize(Size::ZERO)
 {
 }
 TMXTilesetInfo::~TMXTilesetInfo()
@@ -193,8 +193,8 @@ bool TMXMapInfo::initWithTMXFile(const char *tmxFile)
 }
 
 TMXMapInfo::TMXMapInfo()
-: _mapSize(SizeZero)    
-, _tileSize(SizeZero)
+: _mapSize(Size::ZERO)    
+, _tileSize(Size::ZERO)
 , _layers(NULL)
 , _tilesets(NULL)
 , _objectGroups(NULL)
@@ -438,7 +438,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
 
         float x = (float)atof(valueForKey("x", attributeDict));
         float y = (float)atof(valueForKey("y", attributeDict));
-        layer->_offset = ccp(x,y);
+        layer->_offset = Point(x,y);
 
         pTMXMapInfo->getLayers()->addObject(layer);
         layer->release();

@@ -7,13 +7,13 @@ KeyboardTest::KeyboardTest()
     Size s = Director::getInstance()->getWinSize();
     LabelTTF* label = LabelTTF::create("Keyboard Test", "Arial", 28);
     addChild(label, 0);
-    label->setPosition( ccp(s.width/2, s.height-50) );
+    label->setPosition( Point(s.width/2, s.height-50) );
 
     setKeyboardEnabled(true);
 
     // create a label to display the tip string
     _label = LabelTTF::create("Please press any key and see console log...", "Arial", 22);
-    _label->setPosition(ccp(s.width / 2, s.height / 2));
+    _label->setPosition(Point(s.width / 2, s.height / 2));
     addChild(_label, 0);
     
     _label->retain();

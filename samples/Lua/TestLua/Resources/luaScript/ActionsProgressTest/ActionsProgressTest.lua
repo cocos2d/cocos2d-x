@@ -1,5 +1,5 @@
 
-local s = CCDirector:getInstance():getWinSize()
+local s = CCDirector:sharedDirector():getWinSize()
 
 ------------------------------------
 --  SpriteProgressToRadial
@@ -253,7 +253,7 @@ local function SpriteProgressWithSpriteFrame()
 
 	local to = CCProgressTo:create(6, 100)
 
-    CCSpriteFrameCache:getInstance():addSpriteFramesWithFile("zwoptex/grossini.plist")
+    CCSpriteFrameCache:sharedSpriteFrameCache():addSpriteFramesWithFile("zwoptex/grossini.plist")
 
     local left = CCProgressTimer:create(CCSprite:createWithSpriteFrameName("grossini_dance_01.png"))
     left:setType(kCCProgressTimerTypeBar)
@@ -305,5 +305,5 @@ function ProgressActionsTest()
 	scene:addChild(SpriteProgressToRadial())
 	scene:addChild(CreateBackMenuItem())
 
-	CCDirector:getInstance():replaceScene(scene)
+	CCDirector:sharedDirector():replaceScene(scene)
 end

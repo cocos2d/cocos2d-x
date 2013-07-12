@@ -88,7 +88,7 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
 
         _atlasIndexArray = ccCArrayNew((unsigned int)totalNumberOfTiles);
 
-        this->setContentSize(CC_SIZE_PIXELS_TO_POINTS(CCSizeMake(_layerSize.width * _mapTileSize.width, _layerSize.height * _mapTileSize.height)));
+        this->setContentSize(CC_SIZE_PIXELS_TO_POINTS(Size(_layerSize.width * _mapTileSize.width, _layerSize.height * _mapTileSize.height)));
 
         _useAutomaticVertexZ = false;
         _vertexZvalue = 0;
@@ -99,8 +99,8 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
 }
 
 TMXLayer::TMXLayer()
-:_layerSize(SizeZero)
-,_mapTileSize(SizeZero)
+:_layerSize(Size::ZERO)
+,_mapTileSize(Size::ZERO)
 ,_tiles(NULL)
 ,_tileSet(NULL)
 ,_properties(NULL)
@@ -185,7 +185,7 @@ void TMXLayer::setupTiles()
             // XXX: gid == 0 --> empty tile
             if (gid != 0) 
             {
-                this->appendTileForGID(gid, ccp(x, y));
+                this->appendTileForGID(gid, Point(x, y));
 
                 // Optimization: update min and max GID rendered by the layer
                 _minGID = MIN(gid, _minGID);
@@ -243,21 +243,21 @@ void TMXLayer::setupTileSprite(Sprite* sprite, Point pos, unsigned int gid)
 {
     sprite->setPosition(positionAt(pos));
     sprite->setVertexZ((float)vertexZForPos(pos));
-    sprite->setAnchorPoint(PointZero);
+    sprite->setAnchorPoint(Point::ZERO);
     sprite->setOpacity(_opacity);
 
     //issue 1264, flip can be undone as well
     sprite->setFlipX(false);
     sprite->setFlipY(false);
     sprite->setRotation(0.0f);
-    sprite->setAnchorPoint(ccp(0,0));
+    sprite->setAnchorPoint(Point(0,0));
 
     // Rotation in tiled is achieved using 3 flipped states, flipping across the horizontal, vertical, and diagonal axes of the tiles.
     if (gid & kTMXTileDiagonalFlag)
     {
         // put the anchor in the middle for ease of rotation.
-        sprite->setAnchorPoint(ccp(0.5f,0.5f));
-        sprite->setPosition(ccp(positionAt(pos).x + sprite->getContentSize().height/2,
+        sprite->setAnchorPoint(Point(0.5f,0.5f));
+        sprite->setPosition(Point(positionAt(pos).x + sprite->getContentSize().height/2,
            positionAt(pos).y + sprite->getContentSize().width/2 ) );
 
         unsigned int flag = gid & (kTMXTileHorizontalFlag | kTMXTileVerticalFlag );
@@ -346,7 +346,7 @@ Sprite * TMXLayer::tileAt(const Point& pos)
             tile->setBatchNode(this);
             tile->setPosition(positionAt(pos));
             tile->setVertexZ((float)vertexZForPos(pos));
-            tile->setAnchorPoint(PointZero);
+            tile->setAnchorPoint(Point::ZERO);
             tile->setOpacity(_opacity);
 
             unsigned int indexForZ = atlasIndexForExistantZ(z);
@@ -425,7 +425,7 @@ Sprite * TMXLayer::insertTileForGID(unsigned int gid, const Point& pos)
 Sprite * TMXLayer::updateTileForGID(unsigned int gid, const Point& pos)    
 {
     Rect rect = _tileSet->rectForGID(gid);
-    rect = CCRectMake(rect.origin.x / _contentScaleFactor, rect.origin.y / _contentScaleFactor, rect.size.width/ _contentScaleFactor, rect.size.height/ _contentScaleFactor);
+    rect = Rect(rect.origin.x / _contentScaleFactor, rect.origin.y / _contentScaleFactor, rect.size.width/ _contentScaleFactor, rect.size.height/ _contentScaleFactor);
     int z = (int)(pos.x + pos.y * _layerSize.width);
 
     Sprite *tile = reusedTileWithRect(rect);
@@ -629,25 +629,25 @@ void TMXLayer::removeTileAt(const Point& pos)
 //CCTMXLayer - obtaining positions, offset
 Point TMXLayer::calculateLayerOffset(const Point& pos)
 {
-    Point ret = PointZero;
+    Point ret = Point::ZERO;
     switch (_layerOrientation) 
     {
     case TMXOrientationOrtho:
-        ret = ccp( pos.x * _mapTileSize.width, -pos.y *_mapTileSize.height);
+        ret = Point( pos.x * _mapTileSize.width, -pos.y *_mapTileSize.height);
         break;
     case TMXOrientationIso:
-        ret = ccp((_mapTileSize.width /2) * (pos.x - pos.y),
+        ret = Point((_mapTileSize.width /2) * (pos.x - pos.y),
                   (_mapTileSize.height /2 ) * (-pos.x - pos.y));
         break;
     case TMXOrientationHex:
-        CCAssert(pos.equals(PointZero), "offset for hexagonal map not implemented yet");
+        CCAssert(pos.equals(Point::ZERO), "offset for hexagonal map not implemented yet");
         break;
     }
     return ret;    
 }
 Point TMXLayer::positionAt(const Point& pos)
 {
-    Point ret = PointZero;
+    Point ret = Point::ZERO;
     switch (_layerOrientation)
     {
     case TMXOrientationOrtho:
@@ -665,13 +665,13 @@ Point TMXLayer::positionAt(const Point& pos)
 }
 Point TMXLayer::positionForOrthoAt(const Point& pos)
 {
-    Point xy = CCPointMake(pos.x * _mapTileSize.width,
+    Point xy = Point(pos.x * _mapTileSize.width,
                             (_layerSize.height - pos.y - 1) * _mapTileSize.height);
     return xy;
 }
 Point TMXLayer::positionForIsoAt(const Point& pos)
 {
-    Point xy = CCPointMake(_mapTileSize.width /2 * (_layerSize.width + pos.x - pos.y - 1),
+    Point xy = Point(_mapTileSize.width /2 * (_layerSize.width + pos.x - pos.y - 1),
                              _mapTileSize.height /2 * ((_layerSize.height * 2 - pos.x - pos.y) - 2));
     return xy;
 }
@@ -683,7 +683,7 @@ Point TMXLayer::positionForHexAt(const Point& pos)
         diffY = -_mapTileSize.height/2 ;
     }
 
-    Point xy = CCPointMake(pos.x * _mapTileSize.width*3/4,
+    Point xy = Point(pos.x * _mapTileSize.width*3/4,
                             (_layerSize.height - pos.y - 1) * _mapTileSize.height + diffY);
     return xy;
 }

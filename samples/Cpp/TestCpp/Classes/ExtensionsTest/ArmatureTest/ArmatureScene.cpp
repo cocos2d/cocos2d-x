@@ -129,7 +129,7 @@ void ArmatureTestLayer::onEnter()
 	LabelTTF* label = LabelTTF::create(pTitle, "Arial", 18);
 	label->setColor(Color3B(0, 0, 0));
 	addChild(label, 1, 10000);
-	label->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - 30) );
+	label->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 30) );
 
 	std::string strSubtitle = subtitle();
 	if( ! strSubtitle.empty() ) 
@@ -137,7 +137,7 @@ void ArmatureTestLayer::onEnter()
 		LabelTTF* l = LabelTTF::create(strSubtitle.c_str(), "Arial", 18);
 		l->setColor(Color3B(0, 0, 0));
 		addChild(l, 1, 10001);
-		l->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - 60) );
+		l->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 60) );
 	}    
 
 	// add menu
@@ -147,10 +147,10 @@ void ArmatureTestLayer::onEnter()
 
 	Menu *menu = Menu::create(item1, item2, item3, NULL);
 
-	menu->setPosition(PointZero);
-	item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-	item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-	item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+	menu->setPosition(Point::ZERO);
+	item1->setPosition(Point(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+	item2->setPosition(Point(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
+	item3->setPosition(Point(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
 
 	addChild(menu, 100);
 
@@ -224,7 +224,7 @@ void TestCSWithSkeleton::onEnter()
 	armature = Armature::create("Cowboy");
 	armature->getAnimation()->playByIndex(0);
 	armature->setScale(0.2f);
-	armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y/*-100*/));
+	armature->setPosition(Point(VisibleRect::center().x, VisibleRect::center().y/*-100*/));
 	addChild(armature);
 }
 
@@ -241,9 +241,9 @@ void TestCSWithoutSkeleton::onEnter()
 	Armature *armature = NULL;
 	armature = Armature::create("TestBone");
 	armature->getAnimation()->playByIndex(0);
-    armature->setAnchorPoint(ccp(0.5, -0.1));
+    armature->setAnchorPoint(Point(0.5, -0.1));
 	armature->setScale(0.2f);
-	armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y-100));
+	armature->setPosition(Point(VisibleRect::center().x, VisibleRect::center().y-100));
 	addChild(armature);
 }
 
@@ -318,7 +318,7 @@ void TestChangeZorder::onEnter()
 
 	armature = Armature::create("Knight_f/Knight");
 	armature->getAnimation()->playByIndex(0);
-	armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y-100));
+	armature->setPosition(Point(VisibleRect::center().x, VisibleRect::center().y-100));
 	++currentTag;
 	armature->setScale(0.6f);
 	addChild(armature, currentTag, currentTag);
@@ -326,13 +326,13 @@ void TestChangeZorder::onEnter()
 	armature = Armature::create("TestBone");
 	armature->getAnimation()->playByIndex(0);
 	armature->setScale(0.24f);
-	armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y-100));
+	armature->setPosition(Point(VisibleRect::center().x, VisibleRect::center().y-100));
 	++currentTag;
 	addChild(armature, currentTag, currentTag);
 
 	armature = Armature::create("Dragon");
 	armature->getAnimation()->playByIndex(0);
-	armature->setPosition(ccp(VisibleRect::center().x , VisibleRect::center().y-100));
+	armature->setPosition(Point(VisibleRect::center().x , VisibleRect::center().y-100));
 	++currentTag;
 	armature->setScale(0.6f);
 	addChild(armature, currentTag, currentTag);
@@ -366,7 +366,7 @@ void TestAnimationEvent::onEnter()
 	armature->getAnimation()->play("Fire");
 	armature->setScaleX(-0.24f);
 	armature->setScaleY(0.24f);
-	armature->setPosition(ccp(VisibleRect::left().x + 50, VisibleRect::left().y));
+	armature->setPosition(Point(VisibleRect::left().x + 50, VisibleRect::left().y));
 	armature->getAnimation()->MovementEventSignal.connect(this, &TestAnimationEvent::animationEvent);
 	addChild(armature);
 }
@@ -382,14 +382,14 @@ void TestAnimationEvent::animationEvent(Armature *armature, MovementEventType mo
 	{
 		if (id.compare("Fire") == 0)
 		{
-			ActionInterval *actionToRight = MoveTo::create(2, ccp(VisibleRect::right().x - 50, VisibleRect::right().y));
+			ActionInterval *actionToRight = MoveTo::create(2, Point(VisibleRect::right().x - 50, VisibleRect::right().y));
 			armature->stopAllActions();
 			armature->runAction(Sequence::create(actionToRight,  CallFunc::create(this, callfunc_selector(TestAnimationEvent::callback1)), NULL));
 			armature->getAnimation()->play("Walk");
 		}
 		else if (id.compare("FireMax") == 0)
 		{
-			ActionInterval *actionToLeft = MoveTo::create(2, ccp(VisibleRect::left().x + 50, VisibleRect::left().y));
+			ActionInterval *actionToLeft = MoveTo::create(2, Point(VisibleRect::left().x + 50, VisibleRect::left().y));
 			armature->stopAllActions();
 			armature->runAction(Sequence::create(actionToLeft,  CallFunc::create(this, callfunc_selector(TestAnimationEvent::callback2)), NULL));
 			armature->getAnimation()->play("Walk");
@@ -475,7 +475,7 @@ void TestUseMutiplePicture::onEnter()
 
 	armature = Armature::create("Knight_f/Knight");
 	armature->getAnimation()->playByIndex(0);
-	armature->setPosition(ccp(VisibleRect::left().x+70, VisibleRect::left().y));
+	armature->setPosition(Point(VisibleRect::left().x+70, VisibleRect::left().y));
 	armature->setScale(1.2f);
 	addChild(armature);
 
@@ -521,14 +521,14 @@ void TestBox2DDetector::onEnter()
 	armature->getAnimation()->setAnimationScale(0.1f);
 	armature->setScaleX(-0.2f);
 	armature->setScaleY(0.2f);
-	armature->setPosition(ccp(VisibleRect::left().x + 70, VisibleRect::left().y));
+	armature->setPosition(Point(VisibleRect::left().x + 70, VisibleRect::left().y));
 	addChild(armature);
 
 	armature2 = Armature::create("Cowboy");
 	armature2->getAnimation()->play("Walk");
 	armature2->setScaleX(-0.2f);
 	armature2->setScaleY(0.2f);
-	armature2->setPosition(ccp(VisibleRect::right().x - 30, VisibleRect::left().y));
+	armature2->setPosition(Point(VisibleRect::right().x - 30, VisibleRect::left().y));
 	addChild(armature2);
 
 	PhysicsWorld::sharedPhysicsWorld()->BoneColliderSignal.connect(this, &TestBox2DDetector::onHit);
@@ -582,7 +582,7 @@ void TestBoundingBox::draw()
 	rect = RectApplyAffineTransform(armature->boundingBox(), armature->nodeToParentTransform());
 	
 	ccDrawColor4B(100, 100, 100, 255);
-	ccDrawRect(rect.origin, ccp(rect.getMaxX(), rect.getMaxY()));
+	ccDrawRect(rect.origin, Point(rect.getMaxX(), rect.getMaxY()));
 }
 
 
@@ -600,11 +600,11 @@ void TestAnchorPoint::onEnter()
 		addChild(armature, 0, i);
 	}
 
-	getChildByTag(0)->setAnchorPoint(ccp(0,0));
-	getChildByTag(1)->setAnchorPoint(ccp(0,1));
-	getChildByTag(2)->setAnchorPoint(ccp(1,0));
-	getChildByTag(3)->setAnchorPoint(ccp(1,1));
-	getChildByTag(4)->setAnchorPoint(ccp(0.5,0.5));
+	getChildByTag(0)->setAnchorPoint(Point(0,0));
+	getChildByTag(1)->setAnchorPoint(Point(0,1));
+	getChildByTag(2)->setAnchorPoint(Point(1,0));
+	getChildByTag(3)->setAnchorPoint(Point(1,1));
+	getChildByTag(4)->setAnchorPoint(Point(0.5,0.5));
 
 }
 std::string TestAnchorPoint::title()

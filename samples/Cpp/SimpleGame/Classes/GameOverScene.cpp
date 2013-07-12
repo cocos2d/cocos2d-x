@@ -62,7 +62,7 @@ bool GameOverLayer::init()
 		this->_label = LabelTTF::create("","Artial", 32);
 		_label->retain();
 		_label->setColor( Color3B(0, 0, 0) );
-		_label->setPosition( ccp(winSize.width/2, winSize.height/2) );
+		_label->setPosition( Point(winSize.width/2, winSize.height/2) );
 		this->addChild(_label);
 		
 		this->runAction( Sequence::create(

@@ -96,7 +96,7 @@ local function onMenuTestClicked()
     if nil ~= scene then
         scene:addChild(layer)
         scene:addChild(CreateBackMenuItem())
-        CCDirector:getInstance():pushScene(CCTransitionFade:create(0.5, scene, Color3B(0,0,0))); 
+        CCDirector:sharedDirector():pushScene(CCTransitionFade:create(0.5, scene, Color3B(0,0,0))); 
     end
 end
 
@@ -105,7 +105,7 @@ TestMenusLayer["onMenuItemBClicked"] = onMenuItemBClicked
 TestMenusLayer["pressedC:"] = pressedC
 
 local function onBackClicked()
-    CCDirector:getInstance():popScene();
+    CCDirector:sharedDirector():popScene();
 end
 
 TestHeaderLayer["onBackClicked"] = onBackClicked
@@ -125,7 +125,7 @@ local function onSpriteTestClicked()
     if nil ~= scene then
         scene:addChild(layer)
         scene:addChild(CreateBackMenuItem())
-        CCDirector:getInstance():pushScene(CCTransitionFade:create(0.5, scene, Color3B(0,0,0))); 
+        CCDirector:sharedDirector():pushScene(CCTransitionFade:create(0.5, scene, Color3B(0,0,0))); 
     end 
 end
 
@@ -144,7 +144,7 @@ local function onButtonTestClicked()
     if nil ~= scene then
         scene:addChild(layer)
         scene:addChild(CreateBackMenuItem())
-        CCDirector:getInstance():pushScene(CCTransitionFade:create(0.5, scene, Color3B(0,0,0))); 
+        CCDirector:sharedDirector():pushScene(CCTransitionFade:create(0.5, scene, Color3B(0,0,0))); 
     end 
 end
 
@@ -171,7 +171,7 @@ local function onAnimationsTestClicked()
     if nil ~= scene then
         scene:addChild(layer)
         scene:addChild(CreateBackMenuItem())
-        CCDirector:getInstance():pushScene(CCTransitionFade:create(0.5, scene, Color3B(0,0,0))); 
+        CCDirector:sharedDirector():pushScene(CCTransitionFade:create(0.5, scene, Color3B(0,0,0))); 
     end 
 end
 
@@ -190,7 +190,7 @@ local function onParticleSystemTestClicked()
     if nil ~= scene then
         scene:addChild(layer)
         scene:addChild(CreateBackMenuItem())
-        CCDirector:getInstance():pushScene(CCTransitionFade:create(0.5, scene, Color3B(0,0,0))); 
+        CCDirector:sharedDirector():pushScene(CCTransitionFade:create(0.5, scene, Color3B(0,0,0))); 
     end 
 end
 
@@ -250,7 +250,7 @@ local function onScrollViewTestClicked()
     if nil ~= scene then
         scene:addChild(layer)
         scene:addChild(CreateBackMenuItem())
-        CCDirector:getInstance():pushScene(CCTransitionFade:create(0.5, scene, Color3B(0,0,0))); 
+        CCDirector:sharedDirector():pushScene(CCTransitionFade:create(0.5, scene, Color3B(0,0,0))); 
     end
 end
 
@@ -269,7 +269,7 @@ local function onTimelineCallbackSoundClicked()
     if nil ~= scene then
         scene:addChild(layer)
         scene:addChild(CreateBackMenuItem())
-        CCDirector:getInstance():pushScene(CCTransitionFade:create(0.5, scene, Color3B(0,0,0))); 
+        CCDirector:sharedDirector():pushScene(CCTransitionFade:create(0.5, scene, Color3B(0,0,0))); 
     end 
 end
 

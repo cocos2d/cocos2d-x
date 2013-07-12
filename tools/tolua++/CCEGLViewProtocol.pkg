@@ -87,7 +87,7 @@ class CCEGLViewProtocol
 class CCEGLView : public CCEGLViewProtocol
 {
     /** @deprecated Use getInstance() instead */
-    static CCEGLView* sharedOpenGLView();
+    static CCEGLView* sharedOpenGLView(void);
     static CCEGLView* getInstance();
 };
 

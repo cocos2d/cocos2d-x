@@ -22,7 +22,7 @@ void ProjectileController::onEnter()
 {
     Size winSize = Director::getInstance()->getVisibleSize();
     Point origin = Director::getInstance()->getVisibleOrigin();
-    _owner->setPosition( ccp(origin.x+20, origin.y+winSize.height/2) );
+    _owner->setPosition( Point(origin.x+20, origin.y+winSize.height/2) );
 	_owner->setTag(3);
     Component *com = _owner->getParent()->getComponent("SceneController");
     ((SceneController*)com)->getProjectiles()->addObject(_owner);
@@ -39,7 +39,7 @@ void ProjectileController::update(float delta)
     cocos2d::Array *_targets = ((SceneController*)com)->getTargets();
     
     Sprite *projectile = dynamic_cast<Sprite*>(_owner);
-    Rect projectileRect = CCRectMake(
+    Rect projectileRect = Rect(
 			projectile->getPosition().x - (projectile->getContentSize().width/2),
 			projectile->getPosition().y - (projectile->getContentSize().height/2),
 			projectile->getContentSize().width,
@@ -50,7 +50,7 @@ void ProjectileController::update(float delta)
     CCARRAY_FOREACH(_targets, jt)
     {
         Sprite *target = dynamic_cast<Sprite*>(jt);
-        Rect targetRect = CCRectMake(
+        Rect targetRect = Rect(
             target->getPosition().x - (target->getContentSize().width/2),
             target->getPosition().y - (target->getContentSize().height/2),
             target->getContentSize().width,
@@ -112,7 +112,7 @@ void ProjectileController::move(float flocationX, float flocationY)
 	float realX = origin.x + winSize.width + (_owner->getContentSize().width/2);
 	float ratio = offY / offX;
 	float realY = (realX * ratio) + _owner->getPosition().y;
-	Point realDest = ccp(realX, realY);
+	Point realDest = Point(realX, realY);
 
 	// Determine the length of how far we're shooting
 	float offRealX = realX - _owner->getPosition().x;

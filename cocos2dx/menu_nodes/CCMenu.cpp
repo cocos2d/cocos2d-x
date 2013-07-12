@@ -131,10 +131,10 @@ bool Menu::initWithArray(Array* pArrayOfItems)
         Size s = Director::getInstance()->getWinSize();
 
         this->ignoreAnchorPointForPosition(true);
-        setAnchorPoint(ccp(0.5f, 0.5f));
+        setAnchorPoint(Point(0.5f, 0.5f));
         this->setContentSize(s);
 
-        setPosition(ccp(s.width/2, s.height/2));
+        setPosition(Point(s.width/2, s.height/2));
         
         if (pArrayOfItems != NULL)
         {
@@ -324,7 +324,7 @@ void Menu::alignItemsVerticallyWithPadding(float padding)
             Node* pChild = dynamic_cast<Node*>(pObject);
             if (pChild)
             {
-                pChild->setPosition(ccp(0, y - pChild->getContentSize().height * pChild->getScaleY() / 2.0f));
+                pChild->setPosition(Point(0, y - pChild->getContentSize().height * pChild->getScaleY() / 2.0f));
                 y -= pChild->getContentSize().height * pChild->getScaleY() + padding;
             }
         }
@@ -362,7 +362,7 @@ void Menu::alignItemsHorizontallyWithPadding(float padding)
             Node* pChild = dynamic_cast<Node*>(pObject);
             if (pChild)
             {
-                pChild->setPosition(ccp(x + pChild->getContentSize().width * pChild->getScaleX() / 2.0f, 0));
+                pChild->setPosition(Point(x + pChild->getContentSize().width * pChild->getScaleX() / 2.0f, 0));
                  x += pChild->getContentSize().width * pChild->getScaleX() + padding;
             }
         }
@@ -460,7 +460,7 @@ void Menu::alignItemsInColumnsWithArray(Array* rowsArray)
                 float tmp = pChild->getContentSize().height;
                 rowHeight = (unsigned int)((rowHeight >= tmp || isnan(tmp)) ? rowHeight : tmp);
 
-                pChild->setPosition(ccp(x - winSize.width / 2,
+                pChild->setPosition(Point(x - winSize.width / 2,
                                        y - pChild->getContentSize().height / 2));
 
                 x += w;
@@ -581,7 +581,7 @@ void Menu::alignItemsInRowsWithArray(Array* columnArray)
                 float tmp = pChild->getContentSize().width;
                 columnWidth = (unsigned int)((columnWidth >= tmp || isnan(tmp)) ? columnWidth : tmp);
 
-                pChild->setPosition(ccp(x + columnWidths[column] / 2,
+                pChild->setPosition(Point(x + columnWidths[column] / 2,
                                        y - winSize.height / 2));
 
                 y -= pChild->getContentSize().height + 10;
@@ -614,7 +614,7 @@ MenuItem* Menu::itemForTouch(Touch *touch)
             {
                 Point local = pChild->convertToNodeSpace(touchLocation);
                 Rect r = pChild->rect();
-                r.origin = PointZero;
+                r.origin = Point::ZERO;
 
                 if (r.containsPoint(local))
                 {
