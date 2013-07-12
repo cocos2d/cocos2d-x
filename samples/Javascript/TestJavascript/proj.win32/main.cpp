@@ -24,7 +24,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
     // create the application instance
     AppDelegate app;
-    EGLView* eglView = EGLView::sharedOpenGLView();
+    EGLView* eglView = EGLView::getInstance();
     eglView->setViewName("TestJavascript");
     eglView->setFrameSize(800, 450);
 

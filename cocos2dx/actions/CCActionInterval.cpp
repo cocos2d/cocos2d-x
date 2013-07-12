@@ -1225,7 +1225,7 @@ void JumpBy::update(float t)
 
         _previousPos = newPos;
 #else
-        _target->setPosition(ccpAdd( _startPosition, ccp(x,y)));
+        _target->setPosition(ccpAdd( _startPosition, Point(x,y)));
 #endif // !CC_ENABLE_STACKABLE_ACTIONS
     }
 }
@@ -1348,7 +1348,7 @@ void BezierBy::update(float time)
 
         _previousPosition = newPos;
 #else
-        _target->setPosition(ccpAdd( _startPosition, ccp(x,y)));
+        _target->setPosition(ccpAdd( _startPosition, Point(x,y)));
 #endif // !CC_ENABLE_STACKABLE_ACTIONS
     }
 }

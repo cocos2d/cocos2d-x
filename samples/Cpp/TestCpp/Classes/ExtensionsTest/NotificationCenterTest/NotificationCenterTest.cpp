@@ -34,7 +34,7 @@ Light::Light()
 
 Light::~Light()
 {
-    NotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_SWITCH_STATE);
+    NotificationCenter::getInstance()->removeObserver(this, MSG_SWITCH_STATE);
 }
 
 Light* Light::lightWithFile(const char* name)
@@ -50,11 +50,11 @@ void Light::setIsConnectToSwitch(bool bConnectToSwitch)
     _connected = bConnectToSwitch;
     if (_connected)
     {
-        NotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(Light::switchStateChanged), MSG_SWITCH_STATE, NULL);
+        NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Light::switchStateChanged), MSG_SWITCH_STATE, NULL);
     }
     else
     {
-        NotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_SWITCH_STATE);
+        NotificationCenter::getInstance()->removeObserver(this, MSG_SWITCH_STATE);
     }
     updateLightState();
 }
@@ -80,7 +80,7 @@ void Light::updateLightState()
 NotificationCenterTest::NotificationCenterTest()
 : _showImage(false)
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     MenuItemFont* pBackItem = MenuItemFont::create("Back", CC_CALLBACK_1(NotificationCenterTest::toExtensionsMainLayer, this));
     pBackItem->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
@@ -126,18 +126,18 @@ NotificationCenterTest::NotificationCenterTest()
         light->setIsConnectToSwitch(bConnected);
     }
 
-    NotificationCenter::sharedNotificationCenter()->postNotification(MSG_SWITCH_STATE, (Object*)(intptr_t)item->getSelectedIndex());
+    NotificationCenter::getInstance()->postNotification(MSG_SWITCH_STATE, (Object*)(intptr_t)item->getSelectedIndex());
 
     /* for testing removeAllObservers */
-    NotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(NotificationCenterTest::doNothing), "random-observer1", NULL);
-    NotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(NotificationCenterTest::doNothing), "random-observer2", NULL);
-    NotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(NotificationCenterTest::doNothing), "random-observer3", NULL);
+    NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(NotificationCenterTest::doNothing), "random-observer1", NULL);
+    NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(NotificationCenterTest::doNothing), "random-observer2", NULL);
+    NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(NotificationCenterTest::doNothing), "random-observer3", NULL);
 }
 
 void NotificationCenterTest::toExtensionsMainLayer(cocos2d::Object* sender)
 {
     /* for testing removeAllObservers */
-    int CC_UNUSED numObserversRemoved = NotificationCenter::sharedNotificationCenter()->removeAllObservers(this);
+    int CC_UNUSED numObserversRemoved = NotificationCenter::getInstance()->removeAllObservers(this);
     CCAssert(numObserversRemoved >= 3, "All observers were not removed!");
 
     ExtensionsTestScene* pScene = new ExtensionsTestScene();
@@ -149,7 +149,7 @@ void NotificationCenterTest::toggleSwitch(Object *sender)
 {
     MenuItemToggle* item = (MenuItemToggle*)sender;
     int index = item->getSelectedIndex();
-    NotificationCenter::sharedNotificationCenter()->postNotification(MSG_SWITCH_STATE, (Object*)(intptr_t)index);
+    NotificationCenter::getInstance()->postNotification(MSG_SWITCH_STATE, (Object*)(intptr_t)index);
 }
 
 void NotificationCenterTest::connectToSwitch(Object *sender)
@@ -170,6 +170,6 @@ void runNotificationCenterTest()
     Scene* pScene = Scene::create();
     NotificationCenterTest* pLayer = new NotificationCenterTest();
     pScene->addChild(pLayer);
-    Director::sharedDirector()->replaceScene(pScene);
+    Director::getInstance()->replaceScene(pScene);
     pLayer->release();
 }

@@ -50,7 +50,7 @@ int Application::run()
 
 	for (;;) {
 		long iLastTime = getCurrentMillSecond();
-		Director::sharedDirector()->mainLoop();
+		Director::getInstance()->mainLoop();
 		long iCurTime = getCurrentMillSecond();
 		if (iCurTime-iLastTime<_animationInterval){
 			usleep((_animationInterval - iCurTime+iLastTime)*1000);
@@ -73,7 +73,7 @@ void Application::setResourceRootPath(const std::string& rootResDir)
     {
         _resourceRootPath += '/';
     }
-    FileUtils* pFileUtils = FileUtils::sharedFileUtils();
+    FileUtils* pFileUtils = FileUtils::getInstance();
     std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
     searchPaths.insert(searchPaths.begin(), _resourceRootPath);
     pFileUtils->setSearchPaths(searchPaths);

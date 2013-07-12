@@ -20,8 +20,8 @@ bool ProjectileController::init()
 
 void ProjectileController::onEnter()
 {
-    Size winSize = Director::sharedDirector()->getVisibleSize();
-    Point origin = Director::sharedDirector()->getVisibleOrigin();
+    Size winSize = Director::getInstance()->getVisibleSize();
+    Point origin = Director::getInstance()->getVisibleOrigin();
     _owner->setPosition( Point(origin.x+20, origin.y+winSize.height/2) );
 	_owner->setTag(3);
     Component *com = _owner->getParent()->getComponent("SceneController");
@@ -96,8 +96,8 @@ ProjectileController* ProjectileController::create(void)
 
 void ProjectileController::move(float flocationX, float flocationY)
 {
-    Size winSize = Director::sharedDirector()->getVisibleSize();
-    Point origin = Director::sharedDirector()->getVisibleOrigin();
+    Size winSize = Director::getInstance()->getVisibleSize();
+    Point origin = Director::getInstance()->getVisibleOrigin();
     // Determinie offset of location to projectile
 	float offX = flocationX - _owner->getPosition().x;
 	float offY = flocationY - _owner->getPosition().y;

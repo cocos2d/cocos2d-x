@@ -309,7 +309,7 @@ void ClippingNode::visit()
 #else
         // since glAlphaTest do not exists in OES, use a shader that writes
         // pixel only if greater than an alpha threshold
-        GLProgram *program = ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColorAlphaTest);
+        GLProgram *program = ShaderCache::getInstance()->programForKey(kShader_PositionTextureColorAlphaTest);
         GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), kUniformAlphaTestValue);
         // set our alphaThreshold
         program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);

@@ -82,7 +82,7 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     
     
     // elastic effect
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     
     int i=0;
     Node* child;
@@ -148,7 +148,7 @@ void MenuLayerMainMenu::menuCallbackConfig(Object* sender)
 
 void MenuLayerMainMenu::allowTouches(float dt)
 {
-    Director* pDirector = Director::sharedDirector();
+    Director* pDirector = Director::getInstance();
     pDirector->getTouchDispatcher()->setPriority(kMenuHandlerPriority+1, this);
     unscheduleAllSelectors();
     CCLog("TOUCHES ALLOWED AGAIN");
@@ -157,7 +157,7 @@ void MenuLayerMainMenu::allowTouches(float dt)
 void MenuLayerMainMenu::menuCallbackDisabled(Object* sender) 
 {
     // hijack all touch events for 5 seconds
-    Director* pDirector = Director::sharedDirector();
+    Director* pDirector = Director::getInstance();
     pDirector->getTouchDispatcher()->setPriority(kMenuHandlerPriority-1, this);
     schedule(schedule_selector(MenuLayerMainMenu::allowTouches), 5.0f);
     CCLog("TOUCHES DISABLED FOR 5 SECONDS");
@@ -208,7 +208,7 @@ MenuLayer2::MenuLayer2()
         
         Menu* menu = Menu::create(item1, item2, item3, NULL);
         
-        Size s = Director::sharedDirector()->getWinSize();
+        Size s = Director::getInstance()->getWinSize();
         menu->setPosition(Point(s.width/2, s.height/2));
 
         menu->setTag( kTagMenu );
@@ -332,7 +332,7 @@ MenuLayer3::MenuLayer3()
     Menu *menu = Menu::create( item1, item2, item3, NULL);    
     menu->setPosition( Point(0,0) );
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     
     item1->setPosition( Point(s.width/2 - 150, s.height/2) );
     item2->setPosition( Point(s.width/2 - 200, s.height/2) );
@@ -439,7 +439,7 @@ MenuLayer4::MenuLayer4()
     
     addChild( menu );
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     menu->setPosition(Point(s.width/2, s.height/2));
 }
 
@@ -526,7 +526,7 @@ BugsTest::BugsTest()
     addChild(menu);
     menu->alignItemsVertically();
     
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     menu->setPosition(Point(s.width/2, s.height/2));
 }
 
@@ -555,7 +555,7 @@ void BugsTest::backMenuCallback(cocos2d::Object *pSender)
 
 RemoveMenuItemWhenMove::RemoveMenuItemWhenMove()
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     
     LabelTTF* label = LabelTTF::create("click item and move, should not crash", "Arial", 20);
     label->setPosition(Point(s.width/2, s.height - 30));
@@ -587,7 +587,7 @@ RemoveMenuItemWhenMove::~RemoveMenuItemWhenMove()
 
 void RemoveMenuItemWhenMove::registerWithTouchDispatcher(void)
 {
-    Director::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, -129, false);
+    Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, -129, false);
 }
 
 bool RemoveMenuItemWhenMove::ccTouchBegan(Touch *pTouch, Event *pEvent)
@@ -626,5 +626,5 @@ void MenuTestScene::runThisTest()
     pLayer6->release();
     pLayer7->release();
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

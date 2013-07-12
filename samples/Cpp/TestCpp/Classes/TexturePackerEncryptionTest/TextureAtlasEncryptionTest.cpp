@@ -16,7 +16,7 @@ void TextureAtlasEncryptionDemo::onEnter()
 {
     Layer::onEnter();
     
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     
     LabelTTF* label = LabelTTF::create(title().c_str(), "Arial", 28);
     label->setPosition( Point(s.width/2, s.height * 0.75f) );
@@ -31,7 +31,7 @@ void TextureAtlasEncryptionDemo::onEnter()
     }
     
     // Load the non-encrypted atlas
-    SpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Images/nonencryptedAtlas.plist", "Images/nonencryptedAtlas.pvr.ccz");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Images/nonencryptedAtlas.plist", "Images/nonencryptedAtlas.pvr.ccz");
     
     // Create a sprite from the non-encrypted atlas
     Sprite *nonencryptedSprite = Sprite::createWithSpriteFrameName("Icon.png");
@@ -58,7 +58,7 @@ void TextureAtlasEncryptionDemo::onEnter()
     // ZipUtils::ccSetPvrEncryptionKey(0xaaaaaaaa, 0xbbbbbbbb, 0xcccccccc, 0xdddddddd);
 
     // 2) Load the encrypted atlas
-    SpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Images/encryptedAtlas.plist", "Images/encryptedAtlas.pvr.ccz");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Images/encryptedAtlas.plist", "Images/encryptedAtlas.pvr.ccz");
     
     // 3) Create a sprite from the encrypted atlas
     Sprite *encryptedSprite = Sprite::createWithSpriteFrameName("powered.png");
@@ -77,6 +77,6 @@ void TextureAtlasEncryptionTestScene::runThisTest()
     
     addChild(layer);
     
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }
 

@@ -49,19 +49,19 @@ Point Touch::getStartLocationInView() const
 // returns the current touch location in OpenGL coordinates
 Point Touch::getLocation() const
 { 
-    return Director::sharedDirector()->convertToGL(_point); 
+    return Director::getInstance()->convertToGL(_point); 
 }
 
 // returns the previous touch location in OpenGL coordinates
 Point Touch::getPreviousLocation() const
 { 
-    return Director::sharedDirector()->convertToGL(_prevPoint);  
+    return Director::getInstance()->convertToGL(_prevPoint);  
 }
 
 // returns the start touch location in OpenGL coordinates
 Point Touch::getStartLocation() const
 { 
-    return Director::sharedDirector()->convertToGL(_startPoint);  
+    return Director::getInstance()->convertToGL(_startPoint);  
 }
 
 // returns the delta position between the current location and the previous location in OpenGL coordinates

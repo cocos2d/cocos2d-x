@@ -115,7 +115,7 @@ void TileMapAtlas::loadTGAfile(const char *file)
 {
     CCAssert( file != NULL, "file must be non-nil");
 
-    std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(file);
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(file);
 
     //    //Find the path of the file
     //    NSBundle *mainBndl = [Director sharedDirector].loadingBundle;

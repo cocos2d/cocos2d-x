@@ -108,7 +108,7 @@ void TestCocosNodeDemo::restartCallback(Object* pSender)
     Scene* s = new CocosNodeTestScene();//CCScene::create();
     s->addChild(restartCocosNodeAction()); 
 
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -116,7 +116,7 @@ void TestCocosNodeDemo::nextCallback(Object* pSender)
 {
     Scene* s = new CocosNodeTestScene();//CCScene::create();
     s->addChild( nextCocosNodeAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -124,7 +124,7 @@ void TestCocosNodeDemo::backCallback(Object* pSender)
 {
     Scene* s = new CocosNodeTestScene();//CCScene::create();
     s->addChild( backCocosNodeAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 } 
 
@@ -138,7 +138,7 @@ void Test2::onEnter()
 {
     TestCocosNodeDemo::onEnter();
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     
     Sprite *sp1 = Sprite::create(s_pPathSister1);
     Sprite *sp2 = Sprite::create(s_pPathSister2);
@@ -341,7 +341,7 @@ std::string Test6::title()
 //------------------------------------------------------------------
 StressTest1::StressTest1()
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     Sprite *sp1 = Sprite::create(s_pPathSister1);
     addChild(sp1, 0, kTagSprite1);
@@ -355,11 +355,11 @@ void StressTest1::shouldNotCrash(float dt)
 {
     unschedule(schedule_selector(StressTest1::shouldNotCrash));
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     // if the node has timers, it crashes
     ParticleSun* explosion = ParticleSun::create();
-    explosion->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+    explosion->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
     
     // if it doesn't, it works Ok.
 //    CocosNode *explosion = [Sprite create:@"grossinis_sister2.png");
@@ -394,7 +394,7 @@ std::string StressTest1::title()
 //------------------------------------------------------------------
 StressTest2::StressTest2()
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     
     Layer* sublayer = Layer::create();
     
@@ -409,7 +409,7 @@ StressTest2::StressTest2()
     sublayer->addChild(sp1, 1);
 
     ParticleFire* fire = ParticleFire::create();
-    fire->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+    fire->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
     fire->setPosition( Point(80, s.height/2-50) );
     
     ActionInterval* copy_seq3 = seq3->clone();
@@ -512,18 +512,18 @@ std::string NodeToWorld::title()
 void CameraOrbitTest::onEnter()
 {
     TestCocosNodeDemo::onEnter();
-    Director::sharedDirector()->setProjection(kDirectorProjection3D);
+    Director::getInstance()->setProjection(kDirectorProjection3D);
 }
 
 void CameraOrbitTest::onExit()
 {
-    Director::sharedDirector()->setProjection(kDirectorProjection2D);
+    Director::getInstance()->setProjection(kDirectorProjection2D);
     TestCocosNodeDemo::onExit();
 }
 
 CameraOrbitTest::CameraOrbitTest()
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     Sprite *p = Sprite::create(s_back3);
     addChild( p, 0);
@@ -584,18 +584,18 @@ void CameraZoomTest::onEnter()
 {
     TestCocosNodeDemo::onEnter();
     
-    Director::sharedDirector()->setProjection(kDirectorProjection3D);
+    Director::getInstance()->setProjection(kDirectorProjection3D);
 }
 
 void CameraZoomTest::onExit()
 {
-    Director::sharedDirector()->setProjection(kDirectorProjection2D);
+    Director::getInstance()->setProjection(kDirectorProjection2D);
     TestCocosNodeDemo::onExit();
 }
 
 CameraZoomTest::CameraZoomTest()
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     
     Sprite *sprite;
     Camera *cam;
@@ -650,7 +650,7 @@ std::string CameraZoomTest::title()
 //------------------------------------------------------------------
 CameraCenterTest::CameraCenterTest()
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
             
     Sprite *sprite;
     OrbitCamera *orbit;
@@ -663,7 +663,7 @@ CameraCenterTest::CameraCenterTest()
     sprite->setTextureRect(Rect(0, 0, 120, 50));
     orbit = OrbitCamera::create(10, 1, 0, 0, 360, 0, 0);
     sprite->runAction(RepeatForever::create( orbit ));
-//        [sprite setAnchorPoint: ccp(0,1));
+//        [sprite setAnchorPoint: Point(0,1));
 
     
     
@@ -724,7 +724,7 @@ std::string CameraCenterTest::subtitle()
 ConvertToNode::ConvertToNode()
 {
     setTouchEnabled(true);
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     RotateBy* rotate = RotateBy::create(10, 360);
     RepeatForever* action = RepeatForever::create(rotate);
@@ -844,5 +844,5 @@ void CocosNodeTestScene::runThisTest()
     Layer* pLayer = nextCocosNodeAction();
     addChild(pLayer);
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

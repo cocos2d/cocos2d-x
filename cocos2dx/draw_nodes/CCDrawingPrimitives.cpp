@@ -94,7 +94,7 @@ static void lazy_init( void )
         //
         // Position and 1 color passed as a uniform (to simulate glColor4ub )
         //
-        s_pShader = ShaderCache::sharedShaderCache()->programForKey(kShader_Position_uColor);
+        s_pShader = ShaderCache::getInstance()->programForKey(kShader_Position_uColor);
         s_pShader->retain();
         
         s_nColorLocation = glGetUniformLocation( s_pShader->getProgram(), "u_color");

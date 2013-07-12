@@ -183,7 +183,7 @@ void CCBMFontConfiguration::purgeFontDefDictionary()
 
 std::set<unsigned int>* CCBMFontConfiguration::parseConfigFile(const char *controlFile)
 {    
-    std::string fullpath = FileUtils::sharedFileUtils()->fullPathForFilename(controlFile);
+    std::string fullpath = FileUtils::getInstance()->fullPathForFilename(controlFile);
     String *contents = String::createWithContentsOfFile(fullpath.c_str());
 
     CCAssert(contents, "CCBMFontConfiguration::parseConfigFile | Open file error.");
@@ -277,7 +277,7 @@ void CCBMFontConfiguration::parseImageFileName(std::string line, const char *fnt
     index2 = line.find('"', index);
     value = line.substr(index, index2-index);
 
-    _atlasName = FileUtils::sharedFileUtils()->fullPathFromRelativeFile(value.c_str(), fntFile);
+    _atlasName = FileUtils::getInstance()->fullPathFromRelativeFile(value.c_str(), fntFile);
 }
 
 void CCBMFontConfiguration::parseInfoArguments(std::string line)
@@ -312,12 +312,12 @@ void CCBMFontConfiguration::parseCommonArguments(std::string line)
     index = line.find("scaleW=") + strlen("scaleW=");
     index2 = line.find(' ', index);
     value = line.substr(index, index2-index);
-    CCAssert(atoi(value.c_str()) <= Configuration::sharedConfiguration()->getMaxTextureSize(), "CCLabelBMFont: page can't be larger than supported");
+    CCAssert(atoi(value.c_str()) <= Configuration::getInstance()->getMaxTextureSize(), "CCLabelBMFont: page can't be larger than supported");
     // scaleH. sanity check
     index = line.find("scaleH=") + strlen("scaleH=");
     index2 = line.find(' ', index);
     value = line.substr(index, index2-index);
-    CCAssert(atoi(value.c_str()) <= Configuration::sharedConfiguration()->getMaxTextureSize(), "CCLabelBMFont: page can't be larger than supported");
+    CCAssert(atoi(value.c_str()) <= Configuration::getInstance()->getMaxTextureSize(), "CCLabelBMFont: page can't be larger than supported");
     // pages. sanity check
     index = line.find("pages=") + strlen("pages=");
     index2 = line.find(' ', index);
@@ -488,7 +488,7 @@ bool LabelBMFont::initWithString(const char *theString, const char *fntFile, flo
         
         _fntFile = fntFile;
         
-        texture = TextureCache::sharedTextureCache()->addImage(_configuration->getAtlasName());
+        texture = TextureCache::getInstance()->addImage(_configuration->getAtlasName());
     }
     else 
     {
@@ -1223,7 +1223,7 @@ void LabelBMFont::setFntFile(const char* fntFile)
         CC_SAFE_RELEASE(_configuration);
         _configuration = newConf;
 
-        this->setTexture(TextureCache::sharedTextureCache()->addImage(_configuration->getAtlasName()));
+        this->setTexture(TextureCache::getInstance()->addImage(_configuration->getAtlasName()));
         this->createFontChars();
     }
 }
@@ -1241,8 +1241,8 @@ void LabelBMFont::draw()
     SpriteBatchNode::draw();
     const Size& s = this->getContentSize();
     Point vertices[4]={
-        ccp(0,0),ccp(s.width,0),
-        ccp(s.width,s.height),ccp(0,s.height),
+        Point(0,0),Point(s.width,0),
+        Point(s.width,s.height),Point(0,s.height),
     };
     ccDrawPoly(vertices, 4, true);
 }

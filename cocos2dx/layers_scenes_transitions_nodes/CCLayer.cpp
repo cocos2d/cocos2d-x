@@ -71,7 +71,7 @@ bool Layer::init()
     do 
     {        
         Director * pDirector;
-        CC_BREAK_IF(!(pDirector = Director::sharedDirector()));
+        CC_BREAK_IF(!(pDirector = Director::getInstance()));
         this->setContentSize(pDirector->getWinSize());
         _touchEnabled = false;
         _accelerometerEnabled = false;
@@ -100,7 +100,7 @@ Layer *Layer::create()
 
 void Layer::registerWithTouchDispatcher()
 {
-    TouchDispatcher* pDispatcher = Director::sharedDirector()->getTouchDispatcher();
+    TouchDispatcher* pDispatcher = Director::getInstance()->getTouchDispatcher();
 
     // Using LuaBindings
     if (_scriptTouchHandlerEntry)
@@ -193,7 +193,7 @@ void Layer::setTouchEnabled(bool enabled)
             else
             {
                 // have problems?
-                Director::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
+                Director::getInstance()->getTouchDispatcher()->removeDelegate(this);
             }
         }
     }
@@ -251,7 +251,7 @@ void Layer::setAccelerometerEnabled(bool enabled)
 
         if (_running)
         {
-            Director* pDirector = Director::sharedDirector();
+            Director* pDirector = Director::getInstance();
             if (enabled)
             {
                 pDirector->getAccelerometer()->setDelegate(CC_CALLBACK_1(Layer::didAccelerate, this));
@@ -270,7 +270,7 @@ void Layer::setAccelerometerInterval(double interval) {
     {
         if (_running)
         {
-            Director* pDirector = Director::sharedDirector();
+            Director* pDirector = Director::getInstance();
             pDirector->getAccelerometer()->setAccelerometerInterval(interval);
         }
     }
@@ -316,7 +316,7 @@ void Layer::setKeyboardEnabled(bool enabled)
     {
         _keyboardEnabled = enabled;
 
-        Director* pDirector = Director::sharedDirector();
+        Director* pDirector = Director::getInstance();
         if (enabled)
         {
             pDirector->getKeyboardDispatcher()->setKeyPressDelegate( CC_CALLBACK_1(Layer::keyPressed, this) );
@@ -344,7 +344,7 @@ void Layer::setKeypadEnabled(bool enabled)
 
         if (_running)
         {
-            Director* pDirector = Director::sharedDirector();
+            Director* pDirector = Director::getInstance();
             if (enabled)
             {
                 pDirector->getKeypadDispatcher()->addDelegate(this);
@@ -396,7 +396,7 @@ void Layer::keyMenuClicked(void)
 /// Callbacks
 void Layer::onEnter()
 {
-    Director* pDirector = Director::sharedDirector();
+    Director* pDirector = Director::getInstance();
     // register 'parent' nodes first
     // since events are propagated in reverse order
     if (_touchEnabled)
@@ -422,7 +422,7 @@ void Layer::onEnter()
 
 void Layer::onExit()
 {
-    Director* pDirector = Director::sharedDirector();
+    Director* pDirector = Director::getInstance();
     if( _touchEnabled )
     {
         pDirector->getTouchDispatcher()->removeDelegate(this);
@@ -449,7 +449,7 @@ void Layer::onEnterTransitionDidFinish()
 {
     if (_accelerometerEnabled)
     {
-        Director* pDirector = Director::sharedDirector();
+        Director* pDirector = Director::getInstance();
         pDirector->getAccelerometer()->setDelegate(CC_CALLBACK_1(Layer::didAccelerate, this));
     }
     
@@ -758,7 +758,7 @@ LayerColor * LayerColor::create(const Color4B& color)
 
 bool LayerColor::init()
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     return initWithColor(Color4B(0,0,0,0), s.width, s.height);
 }
 
@@ -785,7 +785,7 @@ bool LayerColor::initWithColor(const Color4B& color, GLfloat w, GLfloat h)
         updateColor();
         setContentSize(Size(w, h));
 
-        setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionColor));
+        setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionColor));
         return true;
     }
     return false;
@@ -793,7 +793,7 @@ bool LayerColor::initWithColor(const Color4B& color, GLfloat w, GLfloat h)
 
 bool LayerColor::initWithColor(const Color4B& color)
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     this->initWithColor(color, s.width, s.height);
     return true;
 }

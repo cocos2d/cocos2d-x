@@ -32,8 +32,8 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    Director *pDirector = Director::sharedDirector();
-    pDirector->setOpenGLView(EGLView::sharedOpenGLView());
+    Director *pDirector = Director::getInstance();
+    pDirector->setOpenGLView(EGLView::getInstance());
 
     // turn on display FPS
     //pDirector->setDisplayStats(true);
@@ -60,7 +60,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    Director::sharedDirector()->stopAnimation();
+    Director::getInstance()->stopAnimation();
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
     SimpleAudioEngine::sharedEngine()->pauseAllEffects();
 }
@@ -68,7 +68,7 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    Director::sharedDirector()->startAnimation();
+    Director::getInstance()->startAnimation();
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
     SimpleAudioEngine::sharedEngine()->resumeAllEffects();
 }
@@ -127,9 +127,9 @@ void UpdateLayer::enter(cocos2d::Object *pSender)
     // Because AssetsManager will set 
     if (! isUpdateItemClicked)
     {
-        vector<string> searchPaths = FileUtils::sharedFileUtils()->getSearchPaths();
+        vector<string> searchPaths = FileUtils::getInstance()->getSearchPaths();
         searchPaths.insert(searchPaths.begin(), pathToSave);
-        FileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
+        FileUtils::getInstance()->setSearchPaths(searchPaths);
     }
     
     ScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
@@ -143,7 +143,7 @@ bool UpdateLayer::init()
     
     createDownloadedDir();
     
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
 
     pItemReset = MenuItemFont::create("reset", CC_CALLBACK_1(UpdateLayer::reset,this));
     pItemEnter = MenuItemFont::create("enter", CC_CALLBACK_1(UpdateLayer::enter, this));
@@ -182,7 +182,7 @@ AssetsManager* UpdateLayer::getAssetsManager()
 
 void UpdateLayer::createDownloadedDir()
 {
-    pathToSave = FileUtils::sharedFileUtils()->getWritablePath();
+    pathToSave = FileUtils::getInstance()->getWritablePath();
     pathToSave += "tmpdir";
     
     // Create the folder if it doesn't exist

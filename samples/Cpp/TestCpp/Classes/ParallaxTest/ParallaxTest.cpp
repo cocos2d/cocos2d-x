@@ -224,7 +224,7 @@ void ParallaxDemo::restartCallback(Object* pSender)
     Scene* s = new ParallaxTestScene();
     s->addChild(restartParallaxAction()); 
 
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -232,7 +232,7 @@ void ParallaxDemo::nextCallback(Object* pSender)
 {
     Scene* s = new ParallaxTestScene();
     s->addChild( nextParallaxAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -240,7 +240,7 @@ void ParallaxDemo::backCallback(Object* pSender)
 {
     Scene* s = new ParallaxTestScene();
     s->addChild( backParallaxAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 } 
 
@@ -249,5 +249,5 @@ void ParallaxTestScene::runThisTest()
     Layer* pLayer = nextParallaxAction();
 
     addChild(pLayer);
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

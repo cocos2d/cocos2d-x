@@ -345,19 +345,19 @@ CC_DEPRECATED_ATTRIBUTE inline Size CCSizeMake(float width, float height)
     return Size(width, height);
 }
 
-CC_DEPRECATED_ATTRIBUTE inline Rect CCRectMake(float x, float y, float width, float height)
+CC_DEPRECATED_ATTRIBUTE inline Rect RectMake(float x, float y, float width, float height)
 {
     return Rect(x, y, width, height);
 }
 
 
-CC_DEPRECATED_ATTRIBUTE const Point PointZero = Point(0,0);
+CC_DEPRECATED_ATTRIBUTE const Point PointZero = Point::ZERO;
 
 /* The "zero" size -- equivalent to Size(0, 0). */ 
-CC_DEPRECATED_ATTRIBUTE const Size SizeZero = Size(0,0);
+CC_DEPRECATED_ATTRIBUTE const Size SizeZero = Size::ZERO;
 
 /* The "zero" rectangle -- equivalent to Rect(0, 0, 0, 0). */ 
-CC_DEPRECATED_ATTRIBUTE const Rect RectZero = Rect(0,0,0,0);
+CC_DEPRECATED_ATTRIBUTE const Rect RectZero = Rect::ZERO;
 
 // end of data_structure group
 /// @}

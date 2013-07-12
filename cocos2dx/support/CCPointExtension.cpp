@@ -89,7 +89,7 @@ bool ccpFuzzyEqual(const Point& a, const Point& b, float var)
 
 Point ccpCompMult(const Point& a, const Point& b)
 {
-    return ccp(a.x * b.x, a.y * b.y);
+    return Point(a.x * b.x, a.y * b.y);
 }
 
 float ccpAngleSigned(const Point& a, const Point& b)

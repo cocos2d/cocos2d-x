@@ -42,7 +42,7 @@ void TestScene::onEnter()
             Layer* pLayer = new TestController();
             pScene->addChild(pLayer);
             pLayer->release();
-            Director::sharedDirector()->replaceScene(pScene);
+            Director::getInstance()->replaceScene(pScene);
             pScene->release();
         }
 	});

@@ -10,7 +10,7 @@ void runTableViewTest()
 	Scene *pScene = Scene::create();
 	TableViewTestLayer *pLayer = TableViewTestLayer::create();
 	pScene->addChild(pLayer);
-	Director::sharedDirector()->replaceScene(pScene);
+	Director::getInstance()->replaceScene(pScene);
 }
 
 // on "init" you need to initialize your instance
@@ -21,7 +21,7 @@ bool TableViewTestLayer::init()
         return false;
     }
 
-	Size winSize = Director::sharedDirector()->getWinSize();
+	Size winSize = Director::getInstance()->getWinSize();
 
     TableView* tableView = TableView::create(this, Size(250, 60));
     tableView->setDirection(kScrollViewDirectionHorizontal);

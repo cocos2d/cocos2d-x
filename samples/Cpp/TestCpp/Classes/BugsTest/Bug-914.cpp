@@ -32,7 +32,7 @@ bool Bug914Layer::init()
     {
         setTouchEnabled(true);
         // ask director the the window size
-        Size size = Director::sharedDirector()->getWinSize();
+        Size size = Director::getInstance()->getWinSize();
         LayerColor *layer;
         for( int i=0;i < 5;i++)
         {
@@ -75,5 +75,5 @@ void Bug914Layer::ccTouchesBegan(Set *touches, Event * event)
 
 void Bug914Layer::restart(Object* sender)
 {
-    Director::sharedDirector()->replaceScene(Bug914Layer::scene());
+    Director::getInstance()->replaceScene(Bug914Layer::scene());
 }
