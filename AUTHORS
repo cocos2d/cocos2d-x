@@ -514,6 +514,9 @@ Developers:
         
     hannon235 (Chris)
         Fixing a bug that the submenu of ExtensionTest in TestCpp can't scroll.
+        
+    pktangyue
+        Fixing a bug that CCScale9Sprite::setInsetLeft/XXX can't work for rotated sprite frame.
 
 Retired Core Developers:
     WenSheng Yang
