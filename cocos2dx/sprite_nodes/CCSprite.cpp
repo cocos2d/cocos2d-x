@@ -1104,10 +1104,9 @@ void Sprite::setTexture(Texture2D *texture)
         {
             Image* image = new Image();
             bool isOK = image->initWithImageData(cc_2x2_white_image, sizeof(cc_2x2_white_image), Image::kFmtRawData, 2, 2, 8);
-            if (isOK) {
-                texture = TextureCache::getInstance()->addUIImage(image, CC_2x2_WHITE_IMAGE_KEY);
-            }
-            
+            CCAssert(isOK, "The 2x2 empty texture was created unsuccessfully.");
+
+            texture = TextureCache::getInstance()->addUIImage(image, CC_2x2_WHITE_IMAGE_KEY);
             CC_SAFE_RELEASE(image);
         }
     }
