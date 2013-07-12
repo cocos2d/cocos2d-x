@@ -472,7 +472,7 @@ void FileUtils::destroyInstance()
 // XXX: deprecated
 void FileUtils::purgeFileUtils()
 {
-    CC_SAFE_DELETE(s_sharedFileUtils);
+    FileUtils::destroyInstance()；
 }
 
 FileUtils::FileUtils()
