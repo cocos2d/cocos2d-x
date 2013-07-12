@@ -61,7 +61,7 @@ static Color4F ColorForBody(cpBody *body)
 
 static Point cpVert2ccp(const cpVect &vert)
 {
-    return CCPointMake(vert.x, vert.y);
+    return Point(vert.x, vert.y);
 }
 
 static Point* cpVertArray2ccpArrayN(const cpVect* cpVertArray, unsigned int count)

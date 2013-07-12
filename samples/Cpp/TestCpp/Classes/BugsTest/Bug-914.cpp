@@ -37,7 +37,7 @@ bool Bug914Layer::init()
         for( int i=0;i < 5;i++)
         {
             layer = LayerColor::create(Color4B(i*20, i*20, i*20,255));
-            layer->setContentSize(CCSizeMake(i*100, i*100));
+            layer->setContentSize(Size(i*100, i*100));
             layer->setPosition(Point(size.width/2, size.height/2));
             layer->setAnchorPoint(Point(0.5f, 0.5f));
             layer->ignoreAnchorPointForPosition(false);

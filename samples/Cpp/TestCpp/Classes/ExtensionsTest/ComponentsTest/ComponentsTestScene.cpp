@@ -71,7 +71,7 @@ cocos2d::Node* ComponentsTestLayer::createGameScene()
         Point origin = Director::sharedDirector()->getVisibleOrigin();
 
        
-        Sprite *player = Sprite::create("components/Player.png", CCRectMake(0, 0, 27, 40) );
+        Sprite *player = Sprite::create("components/Player.png", Rect(0, 0, 27, 40) );
         
         player->setPosition( Point(origin.x + player->getContentSize().width/2,
                                  origin.y + visibleSize.height/2) );

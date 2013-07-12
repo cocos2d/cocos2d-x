@@ -422,13 +422,13 @@ void ActionSkewRotateScale::onEnter()
     static float markrside = 10.0f;
     auto uL = LayerColor::create(Color4B(255, 0, 0, 255));
     box->addChild(uL);
-    uL->setContentSize(CCSizeMake(markrside, markrside));
+    uL->setContentSize(Size(markrside, markrside));
     uL->setPosition(Point(0.f, boxSize.height - markrside));
     uL->setAnchorPoint(Point(0, 0));
 
     auto uR = LayerColor::create(Color4B(0, 0, 255, 255));
     box->addChild(uR);
-    uR->setContentSize(CCSizeMake(markrside, markrside));
+    uR->setContentSize(Size(markrside, markrside));
     uR->setPosition(Point(boxSize.width - markrside, boxSize.height - markrside));
     uR->setAnchorPoint(Point(0, 0));
     addChild(box);
@@ -1286,7 +1286,7 @@ void ActionFollow::onEnter()
 
     _grossini->runAction(rep);
 
-    this->runAction(Follow::create(_grossini, CCRectMake(0, 0, s.width * 2 - 100, s.height)));
+    this->runAction(Follow::create(_grossini, Rect(0, 0, s.width * 2 - 100, s.height)));
 }
 
 void ActionFollow::draw()
@@ -1356,7 +1356,7 @@ void ActionStacked::addNewSpriteWithCoords(Point p)
     int y = (idx/5) * 121;
     
     
-    Sprite *sprite = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(x,y,85,121));
+    Sprite *sprite = Sprite::create("Images/grossini_dance_atlas.png", Rect(x,y,85,121));
     
     sprite->setPosition(p);
     this->addChild(sprite);

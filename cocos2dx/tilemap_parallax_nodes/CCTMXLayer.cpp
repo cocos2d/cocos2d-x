@@ -88,7 +88,7 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
 
         _atlasIndexArray = ccCArrayNew((unsigned int)totalNumberOfTiles);
 
-        this->setContentSize(CC_SIZE_PIXELS_TO_POINTS(CCSizeMake(_layerSize.width * _mapTileSize.width, _layerSize.height * _mapTileSize.height)));
+        this->setContentSize(CC_SIZE_PIXELS_TO_POINTS(Size(_layerSize.width * _mapTileSize.width, _layerSize.height * _mapTileSize.height)));
 
         _useAutomaticVertexZ = false;
         _vertexZvalue = 0;
@@ -425,7 +425,7 @@ Sprite * TMXLayer::insertTileForGID(unsigned int gid, const Point& pos)
 Sprite * TMXLayer::updateTileForGID(unsigned int gid, const Point& pos)    
 {
     Rect rect = _tileSet->rectForGID(gid);
-    rect = CCRectMake(rect.origin.x / _contentScaleFactor, rect.origin.y / _contentScaleFactor, rect.size.width/ _contentScaleFactor, rect.size.height/ _contentScaleFactor);
+    rect = Rect(rect.origin.x / _contentScaleFactor, rect.origin.y / _contentScaleFactor, rect.size.width/ _contentScaleFactor, rect.size.height/ _contentScaleFactor);
     int z = (int)(pos.x + pos.y * _layerSize.width);
 
     Sprite *tile = reusedTileWithRect(rect);
@@ -665,13 +665,13 @@ Point TMXLayer::positionAt(const Point& pos)
 }
 Point TMXLayer::positionForOrthoAt(const Point& pos)
 {
-    Point xy = CCPointMake(pos.x * _mapTileSize.width,
+    Point xy = Point(pos.x * _mapTileSize.width,
                             (_layerSize.height - pos.y - 1) * _mapTileSize.height);
     return xy;
 }
 Point TMXLayer::positionForIsoAt(const Point& pos)
 {
-    Point xy = CCPointMake(_mapTileSize.width /2 * (_layerSize.width + pos.x - pos.y - 1),
+    Point xy = Point(_mapTileSize.width /2 * (_layerSize.width + pos.x - pos.y - 1),
                              _mapTileSize.height /2 * ((_layerSize.height * 2 - pos.x - pos.y) - 2));
     return xy;
 }
@@ -683,7 +683,7 @@ Point TMXLayer::positionForHexAt(const Point& pos)
         diffY = -_mapTileSize.height/2 ;
     }
 
-    Point xy = CCPointMake(pos.x * _mapTileSize.width*3/4,
+    Point xy = Point(pos.x * _mapTileSize.width*3/4,
                             (_layerSize.height - pos.y - 1) * _mapTileSize.height + diffY);
     return xy;
 }

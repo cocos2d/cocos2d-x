@@ -906,7 +906,7 @@ void Issue870::onEnter()
 
     ParticleSystemQuad *system = new ParticleSystemQuad();
     system->initWithFile("Particles/SpinningPeas.plist");
-    system->setTextureWithRect(TextureCache::sharedTextureCache()->addImage("Images/particles.png"), CCRectMake(0,0,32,32));
+    system->setTextureWithRect(TextureCache::sharedTextureCache()->addImage("Images/particles.png"), Rect(0,0,32,32));
     addChild(system, 10);
     _emitter = system;
 
@@ -917,7 +917,7 @@ void Issue870::onEnter()
 void Issue870::updateQuads(float dt)
 {
     _index = (_index + 1) % 4;
-    Rect rect = CCRectMake(_index * 32, 0, 32, 32);
+    Rect rect = Rect(_index * 32, 0, 32, 32);
     ParticleSystemQuad* system = (ParticleSystemQuad*)_emitter;
     system->setTextureWithRect(_emitter->getTexture(), rect);
 }

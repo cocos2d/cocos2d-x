@@ -172,7 +172,7 @@ static CCEAGLView *view;
 	
 	cocos2d::Director *director = cocos2d::Director::sharedDirector();
 //	CGSize size = NSSizeToCGSize(rect.size);
-//	cocos2d::Size ccsize = cocos2d::CCSizeMake(size.width, size.height);
+//	cocos2d::Size ccsize = cocos2d::Size(size.width, size.height);
 	//director->reshapeProjection(ccsize);
 	
 	// avoid flicker

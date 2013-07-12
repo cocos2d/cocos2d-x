@@ -58,7 +58,7 @@ bool TileMapAtlas::initWithTileFile(const char *tile, const char *mapFile, int t
     {
         _posToAtlasIndex = new Dictionary();
         this->updateAtlasValues();
-        this->setContentSize(CCSizeMake((float)(_TGAInfo->width*_itemWidth),
+        this->setContentSize(Size((float)(_TGAInfo->width*_itemWidth),
                                         (float)(_TGAInfo->height*_itemHeight)));
         return true;
     }

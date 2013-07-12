@@ -49,19 +49,19 @@ WebSocketTestLayer::WebSocketTestLayer()
     
 
     // Send Text Status Label
-    _sendTextStatus = LabelTTF::create("Send Text WS is waiting...", "Arial", 14, CCSizeMake(160, 100), kTextAlignmentCenter, kVerticalTextAlignmentTop);
+    _sendTextStatus = LabelTTF::create("Send Text WS is waiting...", "Arial", 14, Size(160, 100), kTextAlignmentCenter, kVerticalTextAlignmentTop);
     _sendTextStatus->setAnchorPoint(Point(0, 0));
     _sendTextStatus->setPosition(Point(VisibleRect::left().x, VisibleRect::rightBottom().y + 25));
     this->addChild(_sendTextStatus);
     
     // Send Binary Status Label
-    _sendBinaryStatus = LabelTTF::create("Send Binary WS is waiting...", "Arial", 14, CCSizeMake(160, 100), kTextAlignmentCenter, kVerticalTextAlignmentTop);
+    _sendBinaryStatus = LabelTTF::create("Send Binary WS is waiting...", "Arial", 14, Size(160, 100), kTextAlignmentCenter, kVerticalTextAlignmentTop);
     _sendBinaryStatus->setAnchorPoint(Point(0, 0));
     _sendBinaryStatus->setPosition(Point(VisibleRect::left().x + 160, VisibleRect::rightBottom().y + 25));
     this->addChild(_sendBinaryStatus);
     
     // Error Label
-    _errorStatus = LabelTTF::create("Error WS is waiting...", "Arial", 14, CCSizeMake(160, 100), kTextAlignmentCenter, kVerticalTextAlignmentTop);
+    _errorStatus = LabelTTF::create("Error WS is waiting...", "Arial", 14, Size(160, 100), kTextAlignmentCenter, kVerticalTextAlignmentTop);
     _errorStatus->setAnchorPoint(Point(0, 0));
     _errorStatus->setPosition(Point(VisibleRect::left().x + 320, VisibleRect::rightBottom().y + 25));
     this->addChild(_errorStatus);

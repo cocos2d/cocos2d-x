@@ -231,7 +231,7 @@ Rect CCSkeleton::boundingBox () {
 		maxY = max(maxY, vertices[VERTEX_Y3] * scaleY);
 	}
 	Point position = getPosition();
-	return CCRectMake(position.x + minX, position.y + minY, maxX - minX, maxY - minY);
+	return Rect(position.x + minX, position.y + minY, maxX - minX, maxY - minY);
 }
 
 // --- Convenience methods for Skeleton_* functions.

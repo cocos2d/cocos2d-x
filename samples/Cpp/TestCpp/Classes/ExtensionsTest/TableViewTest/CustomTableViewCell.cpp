@@ -7,7 +7,7 @@ void CustomTableViewCell::draw()
 	TableViewCell::draw();
 	// draw bounding box
 // 	Point pos = getPosition();
-// 	Size size = CCSizeMake(178, 200);
+// 	Size size = Size(178, 200);
 // 	Point vertices[4]={
 // 		ccp(pos.x+1, pos.y+1),
 // 		ccp(pos.x+size.width-1, pos.y+1),

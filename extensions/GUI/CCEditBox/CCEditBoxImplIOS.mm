@@ -584,7 +584,7 @@ void EditBoxImplIOS::onEnter(void)
 void EditBoxImplIOS::adjustTextFieldPosition()
 {
 	Size contentSize = _editBox->getContentSize();
-	Rect rect = CCRectMake(0, 0, contentSize.width, contentSize.height);
+	Rect rect = Rect(0, 0, contentSize.width, contentSize.height);
     rect = RectApplyAffineTransform(rect, _editBox->nodeToWorldTransform());
 	
 	Point designCoord = Point(rect.origin.x, rect.origin.y + rect.size.height);

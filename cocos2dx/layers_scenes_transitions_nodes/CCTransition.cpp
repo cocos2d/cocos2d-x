@@ -1381,7 +1381,7 @@ void TransitionTurnOffTiles::onEnter()
     int x = (int)(12 * aspect);
     int y = 12;
 
-    TurnOffTiles* toff = TurnOffTiles::create(_duration, CCSizeMake(x,y));
+    TurnOffTiles* toff = TurnOffTiles::create(_duration, Size(x,y));
     ActionInterval* action = easeActionWithAction(toff);
     _outScene->runAction
     (
@@ -1525,7 +1525,7 @@ void TransitionFadeTR::onEnter()
     int x = (int)(12 * aspect);
     int y = 12;
 
-    ActionInterval* action  = actionWithSize(CCSizeMake(x,y));
+    ActionInterval* action  = actionWithSize(Size(x,y));
 
     _outScene->runAction
     (

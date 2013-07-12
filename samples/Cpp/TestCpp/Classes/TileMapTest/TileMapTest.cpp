@@ -84,7 +84,7 @@ void TileMapEditTest::updateMap(float dt)
     // over all your tiles in every frame. It's very expensive
     //    for(int x=0; x < tilemap.tgaInfo->width; x++) {
     //        for(int y=0; y < tilemap.tgaInfo->height; y++) {
-    //            Color3B c =[tilemap tileAt:CCSizeMake(x,y));
+    //            Color3B c =[tilemap tileAt:Size(x,y));
     //            if( c.r != 0 ) {
     //                ////----CCLOG("%d,%d = %d", x,y,c.r);
     //            }

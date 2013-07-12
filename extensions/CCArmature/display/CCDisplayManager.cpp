@@ -296,13 +296,13 @@ bool DisplayManager::isVisible()
 
 Size DisplayManager::getContentSize()
 {
-    CS_RETURN_IF(!_displayRenderNode) CCSizeMake(0, 0);
+    CS_RETURN_IF(!_displayRenderNode) Size(0, 0);
     return _displayRenderNode->getContentSize();
 }
 
 Rect DisplayManager::getBoundingBox()
 {
-    CS_RETURN_IF(!_displayRenderNode) CCRectMake(0, 0, 0, 0);
+    CS_RETURN_IF(!_displayRenderNode) Rect(0, 0, 0, 0);
     return _displayRenderNode->boundingBox();
 }
 

@@ -518,7 +518,7 @@ void Node::setShaderProgram(GLProgram *pShaderProgram)
 
 Rect Node::boundingBox()
 {
-    Rect rect = CCRectMake(0, 0, _contentSize.width, _contentSize.height);
+    Rect rect = Rect(0, 0, _contentSize.width, _contentSize.height);
     return RectApplyAffineTransform(rect, nodeToParentTransform());
 }
 

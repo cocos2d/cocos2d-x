@@ -93,7 +93,7 @@ bool ControlStepper::initWithMinusSpriteAndPlusSprite(Sprite *minusSprite, Sprit
         
         this->setMinusLabel( LabelTTF::create("-", ControlStepperLabelFont, 40));
         _minusLabel->setColor(ControlStepperLabelColorDisabled);
-        _minusLabel->setPosition(CCPointMake(_minusSprite->getContentSize().width / 2, _minusSprite->getContentSize().height / 2) );
+        _minusLabel->setPosition(Point(_minusSprite->getContentSize().width / 2, _minusSprite->getContentSize().height / 2) );
         _minusSprite->addChild(_minusLabel);
         
         // Add the plus components 
@@ -104,12 +104,12 @@ bool ControlStepper::initWithMinusSpriteAndPlusSprite(Sprite *minusSprite, Sprit
         
         this->setPlusLabel( LabelTTF::create("+", ControlStepperLabelFont, 40 ));
         _plusLabel->setColor( ControlStepperLabelColorEnabled );
-        _plusLabel->setPosition( CCPointMake(_plusSprite->getContentSize().width / 2, _plusSprite->getContentSize().height / 2) );
+        _plusLabel->setPosition( Point(_plusSprite->getContentSize().width / 2, _plusSprite->getContentSize().height / 2) );
         _plusSprite->addChild(_plusLabel);
         
         // Defines the content size
         Rect maxRect = ControlUtils::RectUnion(_minusSprite->boundingBox(), _plusSprite->boundingBox());
-        this->setContentSize( CCSizeMake(_minusSprite->getContentSize().width + _plusSprite->getContentSize().height, maxRect.size.height) );
+        this->setContentSize( Size(_minusSprite->getContentSize().width + _plusSprite->getContentSize().height, maxRect.size.height) );
         return true;
     }
     return false;

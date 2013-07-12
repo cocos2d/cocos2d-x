@@ -353,19 +353,19 @@ LabelTTFAlignment::LabelTTFAlignment()
     Size s = Director::sharedDirector()->getWinSize();
 
     LabelTTF* ttf0 = LabelTTF::create("Alignment 0\nnew line", "Helvetica", 12,
-                                          CCSizeMake(256, 32), kTextAlignmentLeft);
+                                          Size(256, 32), kTextAlignmentLeft);
     ttf0->setPosition(Point(s.width/2,(s.height/6)*2));
     ttf0->setAnchorPoint(Point(0.5f,0.5f));
     this->addChild(ttf0);
 
     LabelTTF* ttf1 = LabelTTF::create("Alignment 1\nnew line", "Helvetica", 12,
-                                          CCSizeMake(245, 32), kTextAlignmentCenter);
+                                          Size(245, 32), kTextAlignmentCenter);
     ttf1->setPosition(Point(s.width/2,(s.height/6)*3));
     ttf1->setAnchorPoint(Point(0.5f,0.5f));
     this->addChild(ttf1);
 
     LabelTTF* ttf2 = LabelTTF::create("Alignment 2\nnew line", "Helvetica", 12,
-                                          CCSizeMake(245, 32), kTextAlignmentRight);
+                                          Size(245, 32), kTextAlignmentRight);
     ttf2->setPosition(Point(s.width/2,(s.height/6)*4));
     ttf2->setAnchorPoint(Point(0.5f,0.5f));
     this->addChild(ttf2);
@@ -929,7 +929,7 @@ void AtlasTestScene::runThisTest()
 //------------------------------------------------------------------
 LabelTTFTest::LabelTTFTest()
 {
-    Size blockSize = CCSizeMake(200, 160);
+    Size blockSize = Size(200, 160);
     Size s = Director::sharedDirector()->getWinSize();
 
     LayerColor *colorLayer = LayerColor::create(Color4B(100, 100, 100, 255), blockSize.width, blockSize.height);
@@ -971,7 +971,7 @@ LabelTTFTest::~LabelTTFTest()
 
 void  LabelTTFTest::updateAlignment()
 {
-    Size blockSize = CCSizeMake(200, 160);
+    Size blockSize = Size(200, 160);
     Size s = Director::sharedDirector()->getWinSize();
 
     if (_plabel)
@@ -1074,7 +1074,7 @@ LabelTTFMultiline::LabelTTFMultiline()
     LabelTTF *center = LabelTTF::create("word wrap \"testing\" (bla0) bla1 'bla2' [bla3] (bla4) {bla5} {bla6} [bla7] (bla8) [bla9] 'bla0' \"bla1\"",
                                             "Paint Boy",
                                             32,
-                                            CCSizeMake(s.width/2,200),
+                                            Size(s.width/2,200),
                                             kTextAlignmentCenter,
                                             kVerticalTextAlignmentTop);
 

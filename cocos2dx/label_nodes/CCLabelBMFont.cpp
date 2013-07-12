@@ -519,7 +519,7 @@ bool LabelBMFont::initWithString(const char *theString, const char *fntFile, flo
         _imageOffset = imageOffset;
         
         _reusedChar = new Sprite();
-        _reusedChar->initWithTexture(_textureAtlas->getTexture(), CCRectMake(0, 0, 0, 0), false);
+        _reusedChar->initWithTexture(_textureAtlas->getTexture(), Rect(0, 0, 0, 0), false);
         _reusedChar->setBatchNode(this);
         
         this->setString(theString, true);

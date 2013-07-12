@@ -39,7 +39,7 @@ void ProjectileController::update(float delta)
     cocos2d::Array *_targets = ((SceneController*)com)->getTargets();
     
     Sprite *projectile = dynamic_cast<Sprite*>(_owner);
-    Rect projectileRect = CCRectMake(
+    Rect projectileRect = Rect(
 			projectile->getPosition().x - (projectile->getContentSize().width/2),
 			projectile->getPosition().y - (projectile->getContentSize().height/2),
 			projectile->getContentSize().width,
@@ -50,7 +50,7 @@ void ProjectileController::update(float delta)
     CCARRAY_FOREACH(_targets, jt)
     {
         Sprite *target = dynamic_cast<Sprite*>(jt);
-        Rect targetRect = CCRectMake(
+        Rect targetRect = Rect(
             target->getPosition().x - (target->getContentSize().width/2),
             target->getPosition().y - (target->getContentSize().height/2),
             target->getContentSize().width,

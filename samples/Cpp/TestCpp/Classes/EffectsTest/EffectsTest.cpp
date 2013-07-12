@@ -41,7 +41,7 @@ class Shaky3DDemo : public Shaky3D
 public:
     static ActionInterval* create(float t)
     {
-        return Shaky3D::create(t, CCSizeMake(15,10), 5, false);
+        return Shaky3D::create(t, Size(15,10), 5, false);
     }
 };
 
@@ -50,7 +50,7 @@ class Waves3DDemo : public Waves3D
 public:
     static ActionInterval* create(float t)
     {
-        return Waves3D::create(t, CCSizeMake(15,10), 5, 40);
+        return Waves3D::create(t, Size(15,10), 5, 40);
     }
 };
 
@@ -86,7 +86,7 @@ public:
     static ActionInterval* create(float t)
     {
         Size size = Director::sharedDirector()->getWinSize();
-        return Lens3D::create(t, CCSizeMake(15,10), Point(size.width/2,size.height/2), 240); 
+        return Lens3D::create(t, Size(15,10), Point(size.width/2,size.height/2), 240); 
     }
 };
 
@@ -97,7 +97,7 @@ public:
     static ActionInterval* create(float t)
     {
         Size size = Director::sharedDirector()->getWinSize();
-        return Ripple3D::create(t, CCSizeMake(32,24), Point(size.width/2,size.height/2), 240, 4, 160);
+        return Ripple3D::create(t, Size(32,24), Point(size.width/2,size.height/2), 240, 4, 160);
     }
 };
 
@@ -107,7 +107,7 @@ class LiquidDemo : public Liquid
 public:
     static ActionInterval* create(float t)
     {
-        return Liquid::create(t, CCSizeMake(16,12), 4, 20); 
+        return Liquid::create(t, Size(16,12), 4, 20); 
     }
 };
 
@@ -117,7 +117,7 @@ class WavesDemo : public Waves
 public:
     static ActionInterval* create(float t)
     {
-        return Waves::create(t, CCSizeMake(16,12), 4, 20, true, true);  
+        return Waves::create(t, Size(16,12), 4, 20, true, true);  
     }
 };
 
@@ -128,7 +128,7 @@ public:
     static ActionInterval* create(float t)
     {
         Size size = Director::sharedDirector()->getWinSize();
-        return Twirl::create(t, CCSizeMake(12,8), Point(size.width/2, size.height/2), 1, 2.5f); 
+        return Twirl::create(t, Size(12,8), Point(size.width/2, size.height/2), 1, 2.5f); 
     }
 };
 
@@ -138,7 +138,7 @@ class ShakyTiles3DDemo : public ShakyTiles3D
 public:
     static ActionInterval* create(float t)
     {
-        return ShakyTiles3D::create(t, CCSizeMake(16,12), 5, false) ;
+        return ShakyTiles3D::create(t, Size(16,12), 5, false) ;
     }
 };
 
@@ -148,7 +148,7 @@ class ShatteredTiles3DDemo : public ShatteredTiles3D
 public:
     static ActionInterval* create(float t)
     {
-        return ShatteredTiles3D::create(t, CCSizeMake(16,12), 5, false); 
+        return ShatteredTiles3D::create(t, Size(16,12), 5, false); 
     }
 };
 
@@ -158,7 +158,7 @@ class ShuffleTilesDemo : public ShuffleTiles
 public:
     static ActionInterval* create(float t)
     {
-        ShuffleTiles* shuffle = ShuffleTiles::create(t, CCSizeMake(16,12), 25);
+        ShuffleTiles* shuffle = ShuffleTiles::create(t, Size(16,12), 25);
         ActionInterval* shuffle_back = shuffle->reverse();
         DelayTime* delay = DelayTime::create(2);
 
@@ -172,7 +172,7 @@ class FadeOutTRTilesDemo : public FadeOutTRTiles
 public:
     static ActionInterval* create(float t)
     {
-        FadeOutTRTiles* fadeout = FadeOutTRTiles::create(t, CCSizeMake(16,12));
+        FadeOutTRTiles* fadeout = FadeOutTRTiles::create(t, Size(16,12));
         ActionInterval* back = fadeout->reverse();
         DelayTime* delay = DelayTime::create(0.5f);
 
@@ -186,7 +186,7 @@ class FadeOutBLTilesDemo : public FadeOutBLTiles
 public:
     static ActionInterval* create(float t)
     {
-        FadeOutBLTiles* fadeout = FadeOutBLTiles::create(t, CCSizeMake(16,12));
+        FadeOutBLTiles* fadeout = FadeOutBLTiles::create(t, Size(16,12));
         ActionInterval* back = fadeout->reverse();
         DelayTime* delay = DelayTime::create(0.5f);
 
@@ -200,7 +200,7 @@ class FadeOutUpTilesDemo : public FadeOutUpTiles
 public:
     static ActionInterval* create(float t)
     {
-        FadeOutUpTiles* fadeout = FadeOutUpTiles::create(t, CCSizeMake(16,12));
+        FadeOutUpTiles* fadeout = FadeOutUpTiles::create(t, Size(16,12));
         ActionInterval* back = fadeout->reverse();
         DelayTime* delay = DelayTime::create(0.5f);
 
@@ -213,7 +213,7 @@ class FadeOutDownTilesDemo : public FadeOutDownTiles
 public:
     static ActionInterval* create(float t)
     {
-        FadeOutDownTiles* fadeout = FadeOutDownTiles::create(t, CCSizeMake(16,12));
+        FadeOutDownTiles* fadeout = FadeOutDownTiles::create(t, Size(16,12));
         ActionInterval* back = fadeout->reverse();
         DelayTime* delay = DelayTime::create(0.5f);
 
@@ -226,7 +226,7 @@ class TurnOffTilesDemo : public TurnOffTiles
 public:
     static ActionInterval* create(float t)
     {
-        TurnOffTiles* fadeout = TurnOffTiles::create(t, CCSizeMake(48,32), 25);
+        TurnOffTiles* fadeout = TurnOffTiles::create(t, Size(48,32), 25);
         ActionInterval* back = fadeout->reverse();
         DelayTime* delay = DelayTime::create(0.5f);
 
@@ -239,7 +239,7 @@ class WavesTiles3DDemo : public WavesTiles3D
 public:
     static ActionInterval* create(float t)
     {
-        return WavesTiles3D::create(t, CCSizeMake(15,10), 4, 120); 
+        return WavesTiles3D::create(t, Size(15,10), 4, 120); 
     }
 };
 
@@ -248,7 +248,7 @@ class JumpTiles3DDemo : public JumpTiles3D
 public:
     static ActionInterval* create(float t)
     {
-        return JumpTiles3D::create(t, CCSizeMake(15,10), 2, 30); 
+        return JumpTiles3D::create(t, Size(15,10), 2, 30); 
     }
 };
 
@@ -276,7 +276,7 @@ public:
     static ActionInterval* create(float t)
     {
         Director::sharedDirector()->setDepthTest(true);
-        return PageTurn3D::create(t, CCSizeMake(15,10)); 
+        return PageTurn3D::create(t, Size(15,10)); 
     }
 };
 

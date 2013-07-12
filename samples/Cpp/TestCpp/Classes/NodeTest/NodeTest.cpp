@@ -660,7 +660,7 @@ CameraCenterTest::CameraCenterTest()
     addChild( sprite, 0);
     sprite->setPosition(Point(s.width/5*1, s.height/5*1));
     sprite->setColor(Color3B::RED);
-    sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
+    sprite->setTextureRect(Rect(0, 0, 120, 50));
     orbit = OrbitCamera::create(10, 1, 0, 0, 360, 0, 0);
     sprite->runAction(RepeatForever::create( orbit ));
 //        [sprite setAnchorPoint: ccp(0,1));
@@ -672,7 +672,7 @@ CameraCenterTest::CameraCenterTest()
     addChild( sprite, 0, 40);
     sprite->setPosition(Point(s.width/5*1, s.height/5*4));
     sprite->setColor(Color3B::BLUE);
-    sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
+    sprite->setTextureRect(Rect(0, 0, 120, 50));
     orbit = OrbitCamera::create(10, 1, 0, 0, 360, 0, 0);
     sprite->runAction(RepeatForever::create( orbit ));
 
@@ -682,7 +682,7 @@ CameraCenterTest::CameraCenterTest()
     addChild( sprite, 0);    
     sprite->setPosition(Point(s.width/5*4, s.height/5*1));
     sprite->setColor(Color3B::YELLOW);
-    sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
+    sprite->setTextureRect(Rect(0, 0, 120, 50));
     orbit = OrbitCamera::create(10, 1, 0, 0, 360, 0, 0);
     sprite->runAction(RepeatForever::create( orbit) );
 
@@ -692,7 +692,7 @@ CameraCenterTest::CameraCenterTest()
     addChild( sprite, 0, 40);
     sprite->setPosition(Point(s.width/5*4, s.height/5*4));
     sprite->setColor(Color3B::GREEN);
-    sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
+    sprite->setTextureRect(Rect(0, 0, 120, 50));
     orbit = OrbitCamera::create(10, 1, 0, 0, 360, 0, 0);
     sprite->runAction( RepeatForever::create( orbit ) );
 
@@ -701,7 +701,7 @@ CameraCenterTest::CameraCenterTest()
     addChild( sprite, 0, 40);
     sprite->setPosition(Point(s.width/2, s.height/2));
     sprite->setColor(Color3B::WHITE);
-    sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
+    sprite->setTextureRect(Rect(0, 0, 120, 50));
     orbit = OrbitCamera::create(10, 1, 0, 0, 360, 0, 0);
     sprite->runAction(RepeatForever::create( orbit ) );
 }

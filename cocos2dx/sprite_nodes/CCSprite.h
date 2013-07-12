@@ -323,7 +323,7 @@ public:
      * @warning This method is not recommended for game developers. Sample code for using batch node
      * @code
      * SpriteBatchNode *batch = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 15);
-     * Sprite *sprite = Sprite::createWithTexture(batch->getTexture(), CCRectMake(0, 0, 57, 57));
+     * Sprite *sprite = Sprite::createWithTexture(batch->getTexture(), Rect(0, 0, 57, 57));
      * batch->addChild(sprite);
      * layer->addChild(batch);
      * @endcode

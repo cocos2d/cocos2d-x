@@ -273,7 +273,7 @@ Size ShuffleTiles::getDelta(const Size& pos) const
     pos2.x = (float)(_tilesOrder[idx] / (int)_gridSize.height);
     pos2.y = (float)(_tilesOrder[idx] % (int)_gridSize.height);
 
-    return CCSizeMake((int)(pos2.x - pos.width), (int)(pos2.y - pos.height));
+    return Size((int)(pos2.x - pos.width), (int)(pos2.y - pos.height));
 }
 
 void ShuffleTiles::placeTile(const Point& pos, Tile *t)
@@ -330,7 +330,7 @@ void ShuffleTiles::startWithTarget(Node *pTarget)
         {
             tileArray->position = Point((float)i, (float)j);
             tileArray->startPosition = Point((float)i, (float)j);
-            tileArray->delta = getDelta(CCSizeMake(i, j));
+            tileArray->delta = getDelta(Size(i, j));
             ++tileArray;
         }
     }
@@ -434,7 +434,7 @@ void FadeOutTRTiles::update(float time)
     {
         for (j = 0; j < _gridSize.height; ++j)
         {
-            float distance = testFunc(CCSizeMake(i, j), time);
+            float distance = testFunc(Size(i, j), time);
             if ( distance == 0 )
             {
                 turnOffTile(Point(i, j));
@@ -885,7 +885,7 @@ bool SplitRows::initWithDuration(float duration, unsigned int nRows)
 {
     _rows = nRows;
 
-    return TiledGrid3DAction::initWithDuration(duration, CCSizeMake(1, nRows));
+    return TiledGrid3DAction::initWithDuration(duration, Size(1, nRows));
 }
 
 SplitRows* SplitRows::clone() const
@@ -950,7 +950,7 @@ SplitCols* SplitCols::create(float duration, unsigned int nCols)
 bool SplitCols::initWithDuration(float duration, unsigned int nCols)
 {
     _cols = nCols;
-    return TiledGrid3DAction::initWithDuration(duration, CCSizeMake(nCols, 1));
+    return TiledGrid3DAction::initWithDuration(duration, Size(nCols, 1));
 }
 
 SplitCols* SplitCols::clone() const

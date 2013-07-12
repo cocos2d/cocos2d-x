@@ -120,7 +120,7 @@ void SpriteFrameCacheHelper::addSpriteFrameFromDict(Dictionary *dictionary, Text
             oh = abs(oh);
             // create frame
             spriteFrame = new SpriteFrame();
-            spriteFrame->initWithTexture(pobTexture, CCRectMake(x, y, w, h), false, CCPointMake(ox, oy), CCSizeMake((float)ow, (float)oh));
+            spriteFrame->initWithTexture(pobTexture, Rect(x, y, w, h), false, Point(ox, oy), Size((float)ow, (float)oh));
 		}
         else if(format == 1 || format == 2)
         {

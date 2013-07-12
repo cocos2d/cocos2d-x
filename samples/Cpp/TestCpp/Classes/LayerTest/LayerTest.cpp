@@ -463,7 +463,7 @@ void LayerTest1::updateSize(Point &touchLocation)
 {    
     Size s = Director::sharedDirector()->getWinSize();
     
-    Size newSize = CCSizeMake( fabs(touchLocation.x - s.width/2)*2, fabs(touchLocation.y - s.height/2)*2);
+    Size newSize = Size( fabs(touchLocation.x - s.width/2)*2, fabs(touchLocation.y - s.height/2)*2);
     
     LayerColor* l = (LayerColor*) getChildByTag(kTagLayer);
 
@@ -842,17 +842,17 @@ void LayerTestScene::runThisTest()
 LayerExtendedBlendOpacityTest::LayerExtendedBlendOpacityTest()
 {
     LayerGradient* layer1 = LayerGradient::create(Color4B(255, 0, 0, 255), Color4B(255, 0, 255, 255));
-    layer1->setContentSize(CCSizeMake(80, 80));
+    layer1->setContentSize(Size(80, 80));
     layer1->setPosition(Point(50,50));
     addChild(layer1);
     
     LayerGradient* layer2 = LayerGradient::create(Color4B(0, 0, 0, 127), Color4B(255, 255, 255, 127));
-    layer2->setContentSize(CCSizeMake(80, 80));
+    layer2->setContentSize(Size(80, 80));
     layer2->setPosition(Point(100,90));
     addChild(layer2);
     
     LayerGradient* layer3 = LayerGradient::create();
-    layer3->setContentSize(CCSizeMake(80, 80));
+    layer3->setContentSize(Size(80, 80));
     layer3->setPosition(Point(150,140));
     layer3->setStartColor(Color3B(255, 0, 0));
     layer3->setEndColor(Color3B(255, 0, 255));

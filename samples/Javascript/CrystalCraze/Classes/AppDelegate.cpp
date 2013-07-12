@@ -34,8 +34,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     Size screenSize = EGLView::sharedOpenGLView()->getFrameSize();
 
-    Size designSize = CCSizeMake(320, 480);
-    Size resourceSize = CCSizeMake(320, 480);
+    Size designSize = Size(320, 480);
+    Size resourceSize = Size(320, 480);
     
     std::vector<std::string> searchPaths;
     std::vector<std::string> resDirOrders;
@@ -48,7 +48,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
         if (screenSize.height > 480)
         {
-            resourceSize = CCSizeMake(640, 960);
+            resourceSize = Size(640, 960);
             resDirOrders.push_back("resources-iphonehd");
         }
         else
@@ -63,27 +63,27 @@ bool AppDelegate::applicationDidFinishLaunching()
         // Comments it since opengles2.0 only supports texture size within 2048x2048.
 //        if (screenSize.height > 1024)
 //        {
-//            resourceSize = CCSizeMake(1280, 1920);
+//            resourceSize = Size(1280, 1920);
 //            resDirOrders.push_back("resources-xlarge");
 //            resDirOrders.push_back("");
 //        }
 //        else 
         if (screenSize.height > 960)
         {
-            resourceSize = CCSizeMake(640, 960);
+            resourceSize = Size(640, 960);
             resDirOrders.push_back("resources-large");
             resDirOrders.push_back("resources-medium");
             resDirOrders.push_back("resources-small");
         }
         else if (screenSize.height > 480)
         {
-            resourceSize = CCSizeMake(480, 720);
+            resourceSize = Size(480, 720);
             resDirOrders.push_back("resources-medium");
             resDirOrders.push_back("resources-small");
         }
         else
         {
-            resourceSize = CCSizeMake(320, 568);
+            resourceSize = Size(320, 568);
             resDirOrders.push_back("resources-small");
         }
         

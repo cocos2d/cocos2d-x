@@ -157,7 +157,7 @@ bool MenuItem::isEnabled() const
 
 Rect MenuItem::rect()
 {
-    return CCRectMake( _position.x - _contentSize.width * _anchorPoint.x,
+    return Rect( _position.x - _contentSize.width * _anchorPoint.x,
                       _position.y - _contentSize.height * _anchorPoint.y,
                       _contentSize.width, _contentSize.height);
 }

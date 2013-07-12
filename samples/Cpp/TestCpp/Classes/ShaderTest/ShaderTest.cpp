@@ -146,7 +146,7 @@ bool ShaderNode::initWithVertex(const char *vert, const char *frag)
 
     scheduleUpdate();
 
-    setContentSize(CCSizeMake(SIZE_X, SIZE_Y));
+    setContentSize(Size(SIZE_X, SIZE_Y));
     setAnchorPoint(Point(0.5f, 0.5f));
     
     _vertFileName = vert;

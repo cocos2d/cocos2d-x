@@ -19,7 +19,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     pDirector->setOpenGLView(EGLView::sharedOpenGLView());
     
     Size screenSize = EGLView::sharedOpenGLView()->getFrameSize();
-    Size designSize = CCSizeMake(480, 320);
+    Size designSize = Size(480, 320);
     std::vector<std::string> searchPaths;
     
     if (screenSize.height > 320)

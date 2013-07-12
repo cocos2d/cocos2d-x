@@ -498,7 +498,7 @@ void ControlButton::setBackgroundSpriteForState(Scale9Sprite* sprite, ControlSta
         if (oldPreferredSize.equals(_preferredSize))
         {
             // Force update of preferred size
-            sprite->setPreferredSize(CCSizeMake(oldPreferredSize.width+1, oldPreferredSize.height+1));
+            sprite->setPreferredSize(Size(oldPreferredSize.width+1, oldPreferredSize.height+1));
         }
         
         sprite->setPreferredSize(this->_preferredSize);
@@ -578,7 +578,7 @@ void ControlButton::needsLayout()
         // Add the margins
         if (_backgroundSprite != NULL)
         {
-            _backgroundSprite->setContentSize(CCSizeMake(titleLabelSize.width + _marginH * 2, titleLabelSize.height + _marginV * 2));
+            _backgroundSprite->setContentSize(Size(titleLabelSize.width + _marginH * 2, titleLabelSize.height + _marginV * 2));
         }
     } 
     else
@@ -613,7 +613,7 @@ void ControlButton::needsLayout()
     }
 
     Rect maxRect = ControlUtils::RectUnion(rectTitle, rectBackground);
-    setContentSize(CCSizeMake(maxRect.size.width, maxRect.size.height));        
+    setContentSize(Size(maxRect.size.width, maxRect.size.height));        
     
     if (_titleLabel != NULL)
     {

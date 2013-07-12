@@ -165,7 +165,7 @@ Rect ControlUtils::RectUnion(const Rect& src1, const Rect& src2)
     float y2 = MAX(src1.getMaxY(), src2.getMaxY());
     
     result.origin=Point(x1,x2);
-    result.size=CCSizeMake(x2-x1, y2-y1);
+    result.size=Size(x2-x1, y2-y1);
     return result;
 }
 

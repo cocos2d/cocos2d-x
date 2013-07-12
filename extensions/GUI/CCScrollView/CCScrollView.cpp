@@ -127,7 +127,7 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
 
 bool ScrollView::init()
 {
-    return this->initWithViewSize(CCSizeMake(200, 200), NULL);
+    return this->initWithViewSize(Size(200, 200), NULL);
 }
 
 void ScrollView::registerWithTouchDispatcher()
@@ -143,7 +143,7 @@ bool ScrollView::isNodeVisible(Node* node)
     
     Rect viewRect;
     
-    viewRect = CCRectMake(-offset.x/scale, -offset.y/scale, size.width/scale, size.height/scale); 
+    viewRect = Rect(-offset.x/scale, -offset.y/scale, size.width/scale, size.height/scale); 
     
     return viewRect.intersectsRect(node->boundingBox());
 }
@@ -779,6 +779,6 @@ Rect ScrollView::getViewRect()
         scaleY = -scaleY;
     }
 
-    return CCRectMake(screenPos.x, screenPos.y, _viewSize.width*scaleX, _viewSize.height*scaleY);
+    return Rect(screenPos.x, screenPos.y, _viewSize.width*scaleX, _viewSize.height*scaleY);
 }
 NS_CC_EXT_END

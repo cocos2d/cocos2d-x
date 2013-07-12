@@ -288,7 +288,7 @@ Sprite* Sprite::initWithCGImage(CGImageRef pImage, const char *pszKey)
     Texture2D *pTexture = TextureCache::sharedTextureCache()->addCGImage(pImage, pszKey);
 
     const Size& size = pTexture->getContentSize();
-    Rect rect = CCRectMake(0 ,0, size.width, size.height);
+    Rect rect = Rect(0 ,0, size.width, size.height);
 
     return initWithTexture(texture, rect);
 }

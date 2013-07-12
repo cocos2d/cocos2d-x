@@ -278,10 +278,10 @@ void TableView::_updateContentSize()
         switch (this->getDirection())
         {
             case kScrollViewDirectionHorizontal:
-                size = CCSizeMake(maxPosition, _viewSize.height);
+                size = Size(maxPosition, _viewSize.height);
                 break;
             default:
-                size = CCSizeMake(_viewSize.width, maxPosition);
+                size = Size(_viewSize.width, maxPosition);
                 break;
         }
     }

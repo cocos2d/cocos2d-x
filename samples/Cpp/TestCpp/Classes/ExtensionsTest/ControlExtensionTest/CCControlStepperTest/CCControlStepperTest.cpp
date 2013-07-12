@@ -50,7 +50,7 @@ bool ControlStepperTest::init()
         
         // Add the black background for the text
         Scale9Sprite *background  = Scale9Sprite::create("extensions/buttonBackground.png");
-        background->setContentSize(CCSizeMake(100, 50));
+        background->setContentSize(Size(100, 50));
         background->setPosition(Point(layer_width + background->getContentSize().width / 2.0f, 0));
         layer->addChild(background);
         
@@ -69,7 +69,7 @@ bool ControlStepperTest::init()
         layer_width                 += stepper->getContentSize().width;
         
         // Set the layer size
-        layer->setContentSize(CCSizeMake(layer_width, 0));
+        layer->setContentSize(Size(layer_width, 0));
         layer->setAnchorPoint(Point(0.5f, 0.5f));
         
         // Update the value label
