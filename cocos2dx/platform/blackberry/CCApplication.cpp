@@ -82,7 +82,7 @@ void Application::setResourceRootPath(const std::string& rootResDir)
     {
         _resourceRootPath += '/';
     }
-    FileUtils* pFileUtils = FileUtils::sharedFileUtils();
+    FileUtils* pFileUtils = FileUtils::getInstance();
     std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
     searchPaths.insert(searchPaths.begin(), _resourceRootPath);
     pFileUtils->setSearchPaths(searchPaths);

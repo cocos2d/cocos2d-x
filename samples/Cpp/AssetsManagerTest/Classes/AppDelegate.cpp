@@ -127,9 +127,9 @@ void UpdateLayer::enter(cocos2d::Object *pSender)
     // Because AssetsManager will set 
     if (! isUpdateItemClicked)
     {
-        vector<string> searchPaths = FileUtils::sharedFileUtils()->getSearchPaths();
+        vector<string> searchPaths = FileUtils::getInstance()->getSearchPaths();
         searchPaths.insert(searchPaths.begin(), pathToSave);
-        FileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
+        FileUtils::getInstance()->setSearchPaths(searchPaths);
     }
     
     ScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
@@ -182,7 +182,7 @@ AssetsManager* UpdateLayer::getAssetsManager()
 
 void UpdateLayer::createDownloadedDir()
 {
-    pathToSave = FileUtils::sharedFileUtils()->getWritablePath();
+    pathToSave = FileUtils::getInstance()->getWritablePath();
     pathToSave += "tmpdir";
     
     // Create the folder if it doesn't exist

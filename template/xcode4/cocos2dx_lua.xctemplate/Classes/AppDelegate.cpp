@@ -36,7 +36,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     LuaEngine* pEngine = LuaEngine::defaultEngine();
     ScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
 
-    std::string path = FileUtils::sharedFileUtils()->fullPathForFilename("hello.lua");
+    std::string path = FileUtils::getInstance()->fullPathForFilename("hello.lua");
     pEngine->executeScriptFile(path.c_str());
 
     return true;

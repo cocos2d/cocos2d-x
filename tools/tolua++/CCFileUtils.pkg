@@ -2,6 +2,7 @@
 class CCFileUtils
 {
     static CCFileUtils* sharedFileUtils();
+    static CCFileUtils* getInstance();
     static void purgeFileUtils();
     
     void purgeCachedEntries();
