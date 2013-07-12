@@ -211,7 +211,7 @@ public:
         , _rightBoundary(0.0)
         , _topBoundary(0.0)
         , _bottomBoundary(0.0)
-		, _worldRect(RectZero)
+		, _worldRect(Rect::ZERO)
     {}
     virtual ~Follow(void);
     
@@ -220,7 +220,7 @@ public:
     inline void setBoudarySet(bool bValue) { _boundarySet = bValue; }
 
     /** initializes the action with a set boundary */
-    bool initWithTarget(Node *pFollowedNode, const Rect& rect = RectZero);
+    bool initWithTarget(Node *pFollowedNode, const Rect& rect = Rect::ZERO);
 
 	/** returns a clone of action */
 	virtual Follow* clone() const;
@@ -230,9 +230,9 @@ public:
 
 public:
     /** creates the action with a set boundary,
-    It will work with no boundary if @param rect is equal to RectZero.
+    It will work with no boundary if @param rect is equal to Rect::ZERO.
     */
-    static Follow* create(Node *pFollowedNode, const Rect& rect = RectZero);
+    static Follow* create(Node *pFollowedNode, const Rect& rect = Rect::ZERO);
 protected:
     // node to follow
     Node *_followedNode;

@@ -83,9 +83,9 @@ NotificationCenterTest::NotificationCenterTest()
     Size s = Director::getInstance()->getWinSize();
 
     MenuItemFont* pBackItem = MenuItemFont::create("Back", CC_CALLBACK_1(NotificationCenterTest::toExtensionsMainLayer, this));
-    pBackItem->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
+    pBackItem->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
     Menu* pBackMenu = Menu::create(pBackItem, NULL);
-    pBackMenu->setPosition( PointZero );
+    pBackMenu->setPosition( Point::ZERO );
     addChild(pBackMenu);
 
     LabelTTF *label1 = LabelTTF::create("switch off", "Marker Felt", 26);
@@ -96,18 +96,18 @@ NotificationCenterTest::NotificationCenterTest()
     // turn on
     item->setSelectedIndex(1);
     Menu *menu = Menu::create(item, NULL);
-    menu->setPosition(ccp(s.width/2+100, s.height/2));
+    menu->setPosition(Point(s.width/2+100, s.height/2));
     addChild(menu);
 
     Menu *menuConnect = Menu::create();
-    menuConnect->setPosition(PointZero);
+    menuConnect->setPosition(Point::ZERO);
     addChild(menuConnect);
 
     for (int i = 1; i <= 3; i++)
     {
         Light* light = Light::lightWithFile("Images/Pea.png");
         light->setTag(kTagLight+i);
-        light->setPosition(ccp(100, s.height/4*i));
+        light->setPosition(Point(100, s.height/4*i));
         addChild(light);
 
         LabelTTF *label1 = LabelTTF::create("not connected", "Marker Felt", 26);
@@ -116,7 +116,7 @@ NotificationCenterTest::NotificationCenterTest()
         MenuItemLabel *item2 = MenuItemLabel::create(label2);
         MenuItemToggle *item = MenuItemToggle::createWithCallback( CC_CALLBACK_1(NotificationCenterTest::connectToSwitch, this), item1, item2, NULL);
         item->setTag(kTagConnect+i);
-        item->setPosition(ccp(light->getPosition().x, light->getPosition().y+50));
+        item->setPosition(Point(light->getPosition().x, light->getPosition().y+50));
         menuConnect->addChild(item, 0);
         if (i == 2)
         {

@@ -49,8 +49,8 @@ void TestScene::onEnter()
 
     Menu* pMenu =Menu::create(pMenuItem, NULL);
 
-    pMenu->setPosition( PointZero );
-    pMenuItem->setPosition( ccp( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
+    pMenu->setPosition( Point::ZERO );
+    pMenuItem->setPosition( Point( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
 
     addChild(pMenu, 1);
 }

@@ -6,9 +6,9 @@ class CCAnimationCache : public CCObject
     CCAnimation* animationByName(const char* name);
 
     // XXX deprecated, use getInstance instead
-    static CCAnimationCache* sharedAnimationCache();
+    static CCAnimationCache* sharedAnimationCache(void);
     // XXX deprecated, use destroyInstance instead
-    static void purgeSharedAnimationCache();
+    static void purgeSharedAnimationCache(void);
 
     static CCAnimationCache* getInstance();
     static void destroyInstance();

@@ -54,7 +54,7 @@ void DemoFire::onEnter()
     
     _emitter->setTexture( TextureCache::getInstance()->addImage(s_fire) );//.pvr");
     Point p = _emitter->getPosition();
-    _emitter->setPosition( ccp(p.x, 100) );
+    _emitter->setPosition( Point(p.x, 100) );
     
     setEmitterPosition();
 }
@@ -152,7 +152,7 @@ void DemoBigFlower::onEnter()
     _emitter->setDuration(-1);
     
     // gravity
-    _emitter->setGravity(PointZero);
+    _emitter->setGravity(Point::ZERO);
     
     // angle
     _emitter->setAngle(90);
@@ -171,8 +171,8 @@ void DemoBigFlower::onEnter()
     _emitter->setTangentialAccelVar(0);
     
     // emitter position
-    _emitter->setPosition( ccp(160,240) );
-    _emitter->setPosVar(PointZero);
+    _emitter->setPosition( Point(160,240) );
+    _emitter->setPosVar(Point::ZERO);
     
     // life of particles
     _emitter->setLife(4);
@@ -237,7 +237,7 @@ void DemoRotFlower::onEnter()
     _emitter->setDuration(-1);
     
     // gravity
-    _emitter->setGravity(PointZero);
+    _emitter->setGravity(Point::ZERO);
     
     // angle
     _emitter->setAngle(90);
@@ -256,8 +256,8 @@ void DemoRotFlower::onEnter()
     _emitter->setTangentialAccelVar(0);
     
     // emitter position
-    _emitter->setPosition( ccp(160,240) );
-    _emitter->setPosVar(PointZero);
+    _emitter->setPosition( Point(160,240) );
+    _emitter->setPosVar(Point::ZERO);
     
     // life of particles
     _emitter->setLife(3);
@@ -387,7 +387,7 @@ void DemoSmoke::onEnter()
     _emitter->setTexture( TextureCache::getInstance()->addImage(s_fire) );
     
     Point p = _emitter->getPosition();
-    _emitter->setPosition( ccp( p.x, 100) );
+    _emitter->setPosition( Point( p.x, 100) );
     
     setEmitterPosition();
 }
@@ -411,12 +411,12 @@ void DemoSnow::onEnter()
     _background->addChild(_emitter, 10);
     
     Point p = _emitter->getPosition();
-    _emitter->setPosition( ccp( p.x, p.y-110) );
+    _emitter->setPosition( Point( p.x, p.y-110) );
     _emitter->setLife(3);
     _emitter->setLifeVar(1);
     
     // gravity
-    _emitter->setGravity(ccp(0,-10));
+    _emitter->setGravity(Point(0,-10));
         
     // speed of particles
     _emitter->setSpeed(130);
@@ -459,7 +459,7 @@ void DemoRain::onEnter()
     _background->addChild(_emitter, 10);
     
     Point p = _emitter->getPosition();
-    _emitter->setPosition( ccp( p.x, p.y-100) );
+    _emitter->setPosition( Point( p.x, p.y-100) );
     _emitter->setLife(4);
     
     _emitter->setTexture( TextureCache::getInstance()->addImage(s_fire) );
@@ -497,7 +497,7 @@ void DemoModernArt::onEnter()
     _emitter->setDuration(-1);
     
     // gravity
-    _emitter->setGravity(ccp(0,0));
+    _emitter->setGravity(Point(0,0));
     
     // angle
     _emitter->setAngle(0);
@@ -516,8 +516,8 @@ void DemoModernArt::onEnter()
     _emitter->setSpeedVar(10);
     
     // emitter position
-    _emitter->setPosition( ccp( s.width/2, s.height/2) );
-    _emitter->setPosVar(PointZero);
+    _emitter->setPosition( Point( s.width/2, s.height/2) );
+    _emitter->setPosVar(Point::ZERO);
     
     // life of particles
     _emitter->setLife(2.0f);
@@ -606,21 +606,21 @@ void ParallaxParticle::onEnter()
     Sprite *p1 = Sprite::create(s_back3);
     Sprite *p2 = Sprite::create(s_back3);
     
-    p->addChild( p1, 1, ccp(0.5f,1), ccp(0,250) );
-    p->addChild(p2, 2, ccp(1.5f,1), ccp(0,50) );
+    p->addChild( p1, 1, Point(0.5f,1), Point(0,250) );
+    p->addChild(p2, 2, Point(1.5f,1), Point(0,50) );
 
     _emitter = ParticleFlower::create();
     _emitter->retain();
     _emitter->setTexture( TextureCache::getInstance()->addImage(s_fire) );
 
     p1->addChild(_emitter, 10);
-    _emitter->setPosition( ccp(250,200) );
+    _emitter->setPosition( Point(250,200) );
     
     ParticleSun* par = ParticleSun::create();
     p2->addChild(par, 10);
     par->setTexture( TextureCache::getInstance()->addImage(s_fire) );
     
-    ActionInterval* move = MoveBy::create(4, ccp(300,0));
+    ActionInterval* move = MoveBy::create(4, Point(300,0));
     ActionInterval* move_back = move->reverse();
     Sequence* seq = Sequence::create( move, move_back, NULL);
     p->runAction(RepeatForever::create(seq));    
@@ -672,8 +672,8 @@ void RadiusMode1::onEnter()
 
     // emitter position
     Size size = Director::getInstance()->getWinSize();
-    _emitter->setPosition(ccp(size.width/2, size.height/2));
-    _emitter->setPosVar(PointZero);
+    _emitter->setPosition(Point(size.width/2, size.height/2));
+    _emitter->setPosVar(Point::ZERO);
 
     // life of particles
     _emitter->setLife(5);
@@ -756,8 +756,8 @@ void RadiusMode2::onEnter()
 
     // emitter position
     Size size = Director::getInstance()->getWinSize();
-    _emitter->setPosition(ccp(size.width/2, size.height/2));
-    _emitter->setPosVar(PointZero);
+    _emitter->setPosition(Point(size.width/2, size.height/2));
+    _emitter->setPosVar(Point::ZERO);
 
     // life of particles
     _emitter->setLife(4);
@@ -840,8 +840,8 @@ void Issue704::onEnter()
 
     // emitter position
     Size size = Director::getInstance()->getWinSize();
-    _emitter->setPosition(ccp(size.width/2, size.height/2));
-    _emitter->setPosVar(PointZero);
+    _emitter->setPosition(Point(size.width/2, size.height/2));
+    _emitter->setPosVar(Point::ZERO);
 
     // life of particles
     _emitter->setLife(5);
@@ -906,7 +906,7 @@ void Issue870::onEnter()
 
     ParticleSystemQuad *system = new ParticleSystemQuad();
     system->initWithFile("Particles/SpinningPeas.plist");
-    system->setTextureWithRect(TextureCache::getInstance()->addImage("Images/particles.png"), CCRectMake(0,0,32,32));
+    system->setTextureWithRect(TextureCache::getInstance()->addImage("Images/particles.png"), Rect(0,0,32,32));
     addChild(system, 10);
     _emitter = system;
 
@@ -917,7 +917,7 @@ void Issue870::onEnter()
 void Issue870::updateQuads(float dt)
 {
     _index = (_index + 1) % 4;
-    Rect rect = CCRectMake(_index * 32, 0, 32, 32);
+    Rect rect = Rect(_index * 32, 0, 32, 32);
     ParticleSystemQuad* system = (ParticleSystemQuad*)_emitter;
     system->setTextureWithRect(_emitter->getTexture(), rect);
 }
@@ -1086,22 +1086,22 @@ void ParticleDemo::onEnter(void)
     
     Menu *menu = Menu::create(item4, NULL);
     
-    menu->setPosition( PointZero );
-    item4->setPosition( ccp( VisibleRect::left().x, VisibleRect::bottom().y+ 100) );
-    item4->setAnchorPoint( ccp(0,0) );
+    menu->setPosition( Point::ZERO );
+    item4->setPosition( Point( VisibleRect::left().x, VisibleRect::bottom().y+ 100) );
+    item4->setAnchorPoint( Point(0,0) );
     
     addChild( menu, 100 );
     
     LabelAtlas* labelAtlas = LabelAtlas::create("0000", "fps_images.png", 12, 32, '.');
     addChild(labelAtlas, 100, kTagParticleCount);
-    labelAtlas->setPosition(ccp(s.width-66,50));
+    labelAtlas->setPosition(Point(s.width-66,50));
     
     // moving background
     _background = Sprite::create(s_back3);
     addChild(_background, 5);
-    _background->setPosition( ccp(s.width/2, s.height-180) );
+    _background->setPosition( Point(s.width/2, s.height-180) );
     
-    ActionInterval* move = MoveBy::create(4, ccp(300,0) );
+    ActionInterval* move = MoveBy::create(4, Point(300,0) );
     ActionInterval* move_back = move->reverse();
     Sequence* seq = Sequence::create( move, move_back, NULL);
     _background->runAction( RepeatForever::create(seq) );
@@ -1136,15 +1136,15 @@ void ParticleDemo::ccTouchesEnded(Set *pTouches, Event *pEvent)
     
     Point location = touch->getLocation();
 
-    Point pos = PointZero;
+    Point pos = Point::ZERO;
     if (_background)
     {
-        pos = _background->convertToWorldSpace(PointZero);
+        pos = _background->convertToWorldSpace(Point::ZERO);
     }
 
     if (_emitter != NULL)
     {
-        _emitter->setPosition( ccpSub(location, pos) );    
+        _emitter->setPosition(location -pos);
     }
 }
 
@@ -1201,7 +1201,7 @@ void ParticleDemo::setEmitterPosition()
     Size s = Director::getInstance()->getWinSize();
     if (_emitter != NULL)
     {
-        _emitter->setPosition( ccp(s.width / 2, s.height / 2) );
+        _emitter->setPosition( Point(s.width / 2, s.height / 2) );
     }
 }
 
@@ -1272,9 +1272,9 @@ void ParticleBatchMultipleEmitters::onEnter()
 
     Size s = Director::getInstance()->getWinSize();
 
-    emitter1->setPosition(ccp( s.width/1.25f, s.height/1.25f));
-    emitter2->setPosition(ccp( s.width/2, s.height/2));
-    emitter3->setPosition(ccp( s.width/4, s.height/4));
+    emitter1->setPosition(Point( s.width/1.25f, s.height/1.25f));
+    emitter2->setPosition(Point( s.width/2, s.height/2));
+    emitter3->setPosition(Point( s.width/4, s.height/4));
 
     ParticleBatchNode *batch = ParticleBatchNode::createWithTexture(emitter1->getTexture());
 
@@ -1329,9 +1329,9 @@ void ParticleReorder::onEnter()
 
         int neg = (i==0 ? 1 : -1 );
 
-        emitter1->setPosition(ccp( s.width/2-30,    s.height/2+60*neg));
-        emitter2->setPosition(ccp( s.width/2,        s.height/2+60*neg));
-        emitter3->setPosition(ccp( s.width/2+30,    s.height/2+60*neg));
+        emitter1->setPosition(Point( s.width/2-30,    s.height/2+60*neg));
+        emitter2->setPosition(Point( s.width/2,        s.height/2+60*neg));
+        emitter3->setPosition(Point( s.width/2+30,    s.height/2+60*neg));
 
         parent->addChild(emitter1, 0, 1);
         parent->addChild(emitter2, 0, 2);
@@ -1409,7 +1409,7 @@ bool RainbowEffect::initWithTotalParticles(unsigned int numberOfParticles)
         setEmitterMode(kParticleModeGravity);
 
         // Gravity Mode: gravity
-        setGravity(ccp(0,0));
+        setGravity(Point(0,0));
 
         // Gravity mode: radial acceleration
         setRadialAccel(0);
@@ -1426,8 +1426,8 @@ bool RainbowEffect::initWithTotalParticles(unsigned int numberOfParticles)
 
         // emitter position
         Size winSize = Director::getInstance()->getWinSize();
-        setPosition(ccp(winSize.width/2, winSize.height/2));
-        setPosVar(PointZero);
+        setPosition(Point(winSize.width/2, winSize.height/2));
+        setPosVar(Point::ZERO);
 
         // life of particles
         setLife(0.5f);
@@ -1483,7 +1483,7 @@ void Issue1201::onEnter()
 
     Size s = Director::getInstance()->getWinSize();
 
-    particle->setPosition(ccp(s.width/2, s.height/2));
+    particle->setPosition(Point(s.width/2, s.height/2));
 
     _emitter = particle;
 }
@@ -1511,7 +1511,7 @@ void MultipleParticleSystems::onEnter()
     for (int i = 0; i<5; i++) {
         ParticleSystemQuad *particleSystem = ParticleSystemQuad::create("Particles/SpinningPeas.plist");
 
-        particleSystem->setPosition(ccp(i*50 ,i*50));
+        particleSystem->setPosition(Point(i*50 ,i*50));
 
         particleSystem->setPositionType(kPositionTypeGrouped);
         addChild(particleSystem);
@@ -1571,7 +1571,7 @@ void MultipleParticleSystemsBatched::onEnter()
         ParticleSystemQuad *particleSystem = ParticleSystemQuad::create("Particles/SpinningPeas.plist");
 
         particleSystem->setPositionType(kPositionTypeGrouped);         
-        particleSystem->setPosition(ccp(i*50 ,i*50));
+        particleSystem->setPosition(Point(i*50 ,i*50));
 
         batchNode->setTexture(particleSystem->getTexture());
         batchNode->addChild(particleSystem);
@@ -1636,7 +1636,7 @@ void AddAndDeleteParticleSystems::onEnter()
         particleSystem->setPositionType(kPositionTypeGrouped);         
         particleSystem->setTotalParticles(200);
 
-        particleSystem->setPosition(ccp(i*15 +100,i*15+100));
+        particleSystem->setPosition(Point(i*15 +100,i*15+100));
 
         unsigned int randZ = rand() % 100; 
         _batchNode->addChild(particleSystem, randZ, -1);
@@ -1663,7 +1663,7 @@ void AddAndDeleteParticleSystems::removeSystem(float dt)
         particleSystem->setPositionType(kPositionTypeGrouped);         
         particleSystem->setTotalParticles(200);
 
-        particleSystem->setPosition(ccp(rand() % 300 ,rand() % 400));
+        particleSystem->setPosition(Point(rand() % 300 ,rand() % 400));
 
         CCLOG("add a new system");
         unsigned int randZ = rand() % 100; 
@@ -1746,7 +1746,7 @@ void ReorderParticleSystems::onEnter()
         particleSystem->setAngleVar(0);
 
         // emitter position
-        particleSystem->setPosVar(PointZero);
+        particleSystem->setPosVar(Point::ZERO);
 
         // life of particles
         particleSystem->setLife(4);
@@ -1783,7 +1783,7 @@ void ReorderParticleSystems::onEnter()
 
         // additive
 
-        particleSystem->setPosition(ccp(i*10+120 ,200));
+        particleSystem->setPosition(Point(i*10+120 ,200));
 
 
         _batchNode->addChild(particleSystem);

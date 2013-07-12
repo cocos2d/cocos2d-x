@@ -31,9 +31,9 @@ local function main()
 
         -- create dog animate
         local textureDog = CCTextureCache:getInstance():addImage("dog.png")
-        local rect = CCRectMake(0, 0, frameWidth, frameHeight)
+        local rect = Rect(0, 0, frameWidth, frameHeight)
         local frame0 = CCSpriteFrame:createWithTexture(textureDog, rect)
-        rect = CCRectMake(frameWidth, 0, frameWidth, frameHeight)
+        rect = Rect(frameWidth, 0, frameWidth, frameHeight)
         local frame1 = CCSpriteFrame:createWithTexture(textureDog, rect)
 
         local spriteDog = CCSprite:createWithSpriteFrame(frame0)
@@ -86,7 +86,7 @@ local function main()
         end
 
         -- add crop
-        local frameCrop = CCSpriteFrame:create("crop.png", CCRectMake(0, 0, 105, 95))
+        local frameCrop = CCSpriteFrame:create("crop.png", Rect(0, 0, 105, 95))
         for i = 0, 3 do
             for j = 0, 1 do
                 local spriteCrop = CCSprite:createWithSpriteFrame(frameCrop);

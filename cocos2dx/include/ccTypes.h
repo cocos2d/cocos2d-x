@@ -401,7 +401,7 @@ public:
     _alignment(kTextAlignmentCenter),
     _vertAlignment(kVerticalTextAlignmentTop),
     _fontFillColor(Color3B::WHITE)
-    { _dimensions = CCSizeMake(0,0); }
+    { _dimensions = Size(0,0); }
     
     // font name
     std::string           _fontName;

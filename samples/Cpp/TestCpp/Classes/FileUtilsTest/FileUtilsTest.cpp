@@ -261,7 +261,7 @@ void TestFilenameLookup::onEnter()
     this->addChild(sprite);
     
     Size s = Director::getInstance()->getWinSize();
-    sprite->setPosition(ccp(s.width/2, s.height/2));
+    sprite->setPosition(Point(s.width/2, s.height/2));
 }
 
 void TestFilenameLookup::onExit()
@@ -299,12 +299,12 @@ void TestIsFileExist::onEnter()
     isExist = sharedFileUtils->isFileExist("Images/grossini.png");
     
     pTTF = LabelTTF::create(isExist ? "Images/grossini.png exists" : "Images/grossini.png doesn't exist", "", 20);
-    pTTF->setPosition(ccp(s.width/2, s.height/3));
+    pTTF->setPosition(Point(s.width/2, s.height/3));
     this->addChild(pTTF);
     
     isExist = sharedFileUtils->isFileExist("Images/grossini.xcf");
     pTTF = LabelTTF::create(isExist ? "Images/grossini.xcf exists" : "Images/grossini.xcf doesn't exist", "", 20);
-    pTTF->setPosition(ccp(s.width/2, s.height/3*2));
+    pTTF->setPosition(Point(s.width/2, s.height/3*2));
     this->addChild(pTTF);
 }
 
@@ -370,7 +370,7 @@ void TextWritePlist::onEnter()
     LabelTTF *label = LabelTTF::create(fullPath.c_str(), "Thonburi", 6);
     this->addChild(label);
     Size winSize = Director::getInstance()->getWinSize();
-    label->setPosition(ccp(winSize.width/2, winSize.height/3));
+    label->setPosition(Point(winSize.width/2, winSize.height/3));
 }
 
 void TextWritePlist::onExit()

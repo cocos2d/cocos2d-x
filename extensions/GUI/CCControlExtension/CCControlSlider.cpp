@@ -94,20 +94,20 @@ ControlSlider* ControlSlider::create(Sprite * backgroundSprite, Sprite* pogressS
         // Defines the content size
         Rect maxRect   = ControlUtils::RectUnion(backgroundSprite->boundingBox(), thumbSprite->boundingBox());
 
-        setContentSize(CCSizeMake(maxRect.size.width, maxRect.size.height));
+        setContentSize(Size(maxRect.size.width, maxRect.size.height));
         
         // Add the slider background
-        _backgroundSprite->setAnchorPoint(ccp(0.5f, 0.5f));
-        _backgroundSprite->setPosition(ccp(this->getContentSize().width / 2, this->getContentSize().height / 2));
+        _backgroundSprite->setAnchorPoint(Point(0.5f, 0.5f));
+        _backgroundSprite->setPosition(Point(this->getContentSize().width / 2, this->getContentSize().height / 2));
         addChild(_backgroundSprite);
 
         // Add the progress bar
-        _progressSprite->setAnchorPoint(ccp(0.0f, 0.5f));
-        _progressSprite->setPosition(ccp(0.0f, this->getContentSize().height / 2));
+        _progressSprite->setAnchorPoint(Point(0.0f, 0.5f));
+        _progressSprite->setPosition(Point(0.0f, this->getContentSize().height / 2));
         addChild(_progressSprite);
 
         // Add the slider thumb  
-        _thumbSprite->setPosition(ccp(0.0f, this->getContentSize().height / 2));
+        _thumbSprite->setPosition(Point(0.0f, this->getContentSize().height / 2));
         addChild(_thumbSprite);
         
         // Init default values
@@ -224,7 +224,7 @@ void ControlSlider::ccTouchMoved(Touch *pTouch, Event *pEvent)
 
 void ControlSlider::ccTouchEnded(Touch *pTouch, Event *pEvent)
 {
-    sliderEnded(PointZero);
+    sliderEnded(Point::ZERO);
 }
 
 void ControlSlider::needsLayout()
@@ -242,7 +242,7 @@ void ControlSlider::needsLayout()
 
     // Stretches content proportional to newLevel
     Rect textureRect          = _progressSprite->getTextureRect();
-    textureRect                 = CCRectMake(textureRect.origin.x, textureRect.origin.y, pos.x, textureRect.size.height);
+    textureRect                 = Rect(textureRect.origin.x, textureRect.origin.y, pos.x, textureRect.size.height);
     _progressSprite->setTextureRect(textureRect, _progressSprite->isTextureRectRotated(), textureRect.size);
 }
 

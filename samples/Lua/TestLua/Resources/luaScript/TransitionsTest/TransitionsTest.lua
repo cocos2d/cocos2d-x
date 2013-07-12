@@ -4,7 +4,7 @@ require "luaScript/TransitionsTest/TransitionsName"
 local SceneIdx = -1
 local CurSceneNo = 2
 local TRANSITION_DURATION = 1.2
-local s = CCDirector:getInstance():getWinSize()
+local s = CCDirector:sharedDirector():getWinSize()
 
 local function switchSceneTypeNo()
     if CurSceneNo == 1 then
@@ -38,17 +38,17 @@ end
 
 local function backCallback(sender)
     local scene = backAction()
-    CCDirector:getInstance():replaceScene(scene)
+    CCDirector:sharedDirector():replaceScene(scene)
 end
 
 local function restartCallback(sender)
     local scene = restartAction()
-    CCDirector:getInstance():replaceScene(scene)
+    CCDirector:sharedDirector():replaceScene(scene)
 end
 
 local function nextCallback(sender)
     local scene = nextAction()
-    CCDirector:getInstance():replaceScene(scene)
+    CCDirector:sharedDirector():replaceScene(scene)
 end
 
 -----------------------------
@@ -141,7 +141,7 @@ end
 -- Create Transition Test
 -----------------------------
 local function createTransition(index, t, scene)
-    CCDirector:getInstance():setDepthTest(false)
+    CCDirector:sharedDirector():setDepthTest(false)
 
     if firstEnter == true then
         firstEnter = false
@@ -165,10 +165,10 @@ local function createTransition(index, t, scene)
     elseif index == Transition_Table.CCTransitionCrossFade then
         scene = CCTransitionCrossFade:create(t, scene)
     elseif index == Transition_Table.TransitionPageForward then
-        CCDirector:getInstance():setDepthTest(true)
+        CCDirector:sharedDirector():setDepthTest(true)
         scene = CCTransitionPageTurn:create(t, scene, false)
     elseif index == Transition_Table.TransitionPageBackward then
-        CCDirector:getInstance():setDepthTest(true)
+        CCDirector:sharedDirector():setDepthTest(true)
         scene = CCTransitionPageTurn:create(t, scene, true)
     elseif index == Transition_Table.CCTransitionFadeTR then
         scene = CCTransitionFadeTR:create(t, scene)

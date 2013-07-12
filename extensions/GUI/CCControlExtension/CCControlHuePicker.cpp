@@ -65,10 +65,10 @@ bool ControlHuePicker::initWithTargetAndPos(Node* target, Point pos)
     {
         setTouchEnabled(true);
         // Add background and slider sprites
-        this->setBackground(ControlUtils::addSpriteToTargetWithPosAndAnchor("huePickerBackground.png", target, pos, ccp(0.0f, 0.0f)));
-        this->setSlider(ControlUtils::addSpriteToTargetWithPosAndAnchor("colourPicker.png", target, pos, ccp(0.5f, 0.5f)));
+        this->setBackground(ControlUtils::addSpriteToTargetWithPosAndAnchor("huePickerBackground.png", target, pos, Point(0.0f, 0.0f)));
+        this->setSlider(ControlUtils::addSpriteToTargetWithPosAndAnchor("colourPicker.png", target, pos, Point(0.5f, 0.5f)));
         
-        _slider->setPosition(ccp(pos.x, pos.y + _background->boundingBox().size.height * 0.5f));
+        _slider->setPosition(Point(pos.x, pos.y + _background->boundingBox().size.height * 0.5f));
         _startPos=pos;
 
         // Sets the default value
@@ -113,7 +113,7 @@ void ControlHuePicker::setHuePercentage(float hueValueInPercent)
     // Set new position of the slider
     float x                 = centerX + limit * cosf(angle);
     float y                 = centerY + limit * sinf(angle);
-    _slider->setPosition(ccp(x, y));
+    _slider->setPosition(Point(x, y));
 
 }
 

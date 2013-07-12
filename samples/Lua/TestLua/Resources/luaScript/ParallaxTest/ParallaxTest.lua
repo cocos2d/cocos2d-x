@@ -157,7 +157,7 @@ end
 function ParallaxTestMain()
     cclog("ParallaxMain")
     Helper.index = 1
-    CCDirector:getInstance():setDepthTest(true)
+    CCDirector:sharedDirector():setDepthTest(true)
     local scene = CCScene:create()
 
     Helper.createFunctionTable = {

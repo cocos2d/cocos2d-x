@@ -23,16 +23,16 @@ bool TableViewTestLayer::init()
 
 	Size winSize = Director::getInstance()->getWinSize();
 
-    TableView* tableView = TableView::create(this, CCSizeMake(250, 60));
+    TableView* tableView = TableView::create(this, Size(250, 60));
     tableView->setDirection(kScrollViewDirectionHorizontal);
-    tableView->setPosition(ccp(20,winSize.height/2-30));
+    tableView->setPosition(Point(20,winSize.height/2-30));
     tableView->setDelegate(this);
     this->addChild(tableView);
     tableView->reloadData();
 
-	tableView = TableView::create(this, CCSizeMake(60, 250));
+	tableView = TableView::create(this, Size(60, 250));
 	tableView->setDirection(kScrollViewDirectionVertical);
-	tableView->setPosition(ccp(winSize.width-150,winSize.height/2-120));
+	tableView->setPosition(Point(winSize.width-150,winSize.height/2-120));
 	tableView->setDelegate(this);
 	tableView->setVerticalFillOrder(kTableViewFillTopDown);
 	this->addChild(tableView);
@@ -40,9 +40,9 @@ bool TableViewTestLayer::init()
 
 	// Back Menu
 	MenuItemFont *itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(TableViewTestLayer::toExtensionsMainLayer, this));
-	itemBack->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
+	itemBack->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
 	Menu *menuBack = Menu::create(itemBack, NULL);
-	menuBack->setPosition(PointZero);
+	menuBack->setPosition(Point::ZERO);
 	addChild(menuBack);
 
     return true;
@@ -63,9 +63,9 @@ void TableViewTestLayer::tableCellTouched(TableView* table, TableViewCell* cell)
 Size TableViewTestLayer::tableCellSizeForIndex(TableView *table, unsigned int idx)
 {
     if (idx == 2) {
-        return CCSizeMake(100, 100);
+        return Size(100, 100);
     }
-    return CCSizeMake(60, 60);
+    return Size(60, 60);
 }
 
 TableViewCell* TableViewTestLayer::tableCellAtIndex(TableView *table, unsigned int idx)
@@ -76,13 +76,13 @@ TableViewCell* TableViewTestLayer::tableCellAtIndex(TableView *table, unsigned i
         cell = new CustomTableViewCell();
         cell->autorelease();
         Sprite *sprite = Sprite::create("Images/Icon.png");
-        sprite->setAnchorPoint(PointZero);
-        sprite->setPosition(ccp(0, 0));
+        sprite->setAnchorPoint(Point::ZERO);
+        sprite->setPosition(Point(0, 0));
         cell->addChild(sprite);
 
         LabelTTF *label = LabelTTF::create(string->getCString(), "Helvetica", 20.0);
-        label->setPosition(PointZero);
-		label->setAnchorPoint(PointZero);
+        label->setPosition(Point::ZERO);
+		label->setAnchorPoint(Point::ZERO);
         label->setTag(123);
         cell->addChild(label);
     }

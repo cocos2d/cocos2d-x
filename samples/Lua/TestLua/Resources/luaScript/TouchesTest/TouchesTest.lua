@@ -18,7 +18,7 @@ local layer = nil
 local function backCallback(sender)
 	local scene = CCScene:create()
 	scene:addChild(CreateBackMenuItem())
-	CCDirector:getInstance():replaceScene(scene)
+	CCDirector:sharedDirector():replaceScene(scene)
 end
 
 
@@ -63,7 +63,7 @@ local function CreateTouchesLayer()
     layer = CCLayer:create()
 
     m_ballStartingVelocity = ccp(20.0, -100.0);
-    local mgr = CCTextureCache:getInstance()
+    local mgr = CCTextureCache:sharedTextureCache()
     local texture = mgr:addImage(s_Ball)
     m_ball = Ball.ballWithTexture(texture);
 
@@ -72,7 +72,7 @@ local function CreateTouchesLayer()
     layer:addChild( m_ball );
     m_ball:retain();
     
-    local paddleTexture = CCTextureCache:getInstance():addImage(s_Paddle);
+    local paddleTexture = CCTextureCache:sharedTextureCache():addImage(s_Paddle);
     
     local paddlesM = {}
     

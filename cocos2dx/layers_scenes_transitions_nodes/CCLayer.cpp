@@ -55,7 +55,7 @@ Layer::Layer()
 , _touchMode(kTouchesAllAtOnce)
 {
     _ignoreAnchorPointForPosition = true;
-    setAnchorPoint(ccp(0.5f, 0.5f));
+    setAnchorPoint(Point(0.5f, 0.5f));
 }
 
 Layer::~Layer()
@@ -783,7 +783,7 @@ bool LayerColor::initWithColor(const Color4B& color, GLfloat w, GLfloat h)
         }
 
         updateColor();
-        setContentSize(CCSizeMake(w, h));
+        setContentSize(Size(w, h));
 
         setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionColor));
         return true;
@@ -811,17 +811,17 @@ void LayerColor::setContentSize(const Size & size)
 
 void LayerColor::changeWidthAndHeight(GLfloat w ,GLfloat h)
 {
-    this->setContentSize(CCSizeMake(w, h));
+    this->setContentSize(Size(w, h));
 }
 
 void LayerColor::changeWidth(GLfloat w)
 {
-    this->setContentSize(CCSizeMake(w, _contentSize.height));
+    this->setContentSize(Size(w, _contentSize.height));
 }
 
 void LayerColor::changeHeight(GLfloat h)
 {
-    this->setContentSize(CCSizeMake(_contentSize.width, h));
+    this->setContentSize(Size(_contentSize.width, h));
 }
 
 void LayerColor::updateColor()
@@ -922,7 +922,7 @@ bool LayerGradient::init()
 
 bool LayerGradient::initWithColor(const Color4B& start, const Color4B& end)
 {
-    return initWithColor(start, end, ccp(0, -1));
+    return initWithColor(start, end, Point(0, -1));
 }
 
 bool LayerGradient::initWithColor(const Color4B& start, const Color4B& end, const Point& v)
@@ -944,18 +944,18 @@ void LayerGradient::updateColor()
 {
     LayerColor::updateColor();
 
-    float h = ccpLength(_alongVector);
+    float h = _alongVector.getLength();
     if (h == 0)
         return;
 
     float c = sqrtf(2.0f);
-    Point u = ccp(_alongVector.x / h, _alongVector.y / h);
+    Point u = Point(_alongVector.x / h, _alongVector.y / h);
 
     // Compressed Interpolation mode
     if (_compressedInterpolation)
     {
         float h2 = 1 / ( fabsf(u.x) + fabsf(u.y) );
-        u = ccpMult(u, h2 * (float)c);
+        u = u * (h2 * (float)c);
     }
 
     float opacityf = (float)_displayedOpacity / 255.0f;

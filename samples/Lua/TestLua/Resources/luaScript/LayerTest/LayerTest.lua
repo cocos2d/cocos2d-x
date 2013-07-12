@@ -1,4 +1,4 @@
-local scheduler = CCDirector:getInstance():getScheduler()
+local scheduler = CCDirector:sharedDirector():getScheduler()
 local kTagLayer = 1
 
 local function createLayerDemoLayer(title, subtitle)
@@ -63,7 +63,7 @@ end
 -- LayerTestCascadingOpacityA
 local function LayerTestCascadingOpacityA()
     local ret = createLayerDemoLayer("LayerRGBA: cascading opacity")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
     local  layer1 = CCLayerRGBA:create()
 
     local sister1 = CCSprite:create("Images/grossinis_sister1.png")
@@ -102,7 +102,7 @@ end
 local function LayerTestCascadingOpacityB()
     local ret = createLayerDemoLayer("CCLayerColor: cascading opacity")
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
     local layer1 = CCLayerColor:create(Color4B(192, 0, 0, 255), s.width, s.height/2)
     layer1:setCascadeColorEnabled(false)
 
@@ -146,7 +146,7 @@ end
 local function LayerTestCascadingOpacityC()
     local ret = createLayerDemoLayer("CCLayerColor: non-cascading opacity")
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
     local  layer1 = CCLayerColor:create(Color4B(192, 0, 0, 255), s.width, s.height/2)
     layer1:setCascadeColorEnabled(false)
     layer1:setCascadeOpacityEnabled(false)
@@ -195,7 +195,7 @@ end
 local function LayerTestCascadingColorA()
     local ret = createLayerDemoLayer("LayerRGBA: cascading color")
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
     local  layer1 = CCLayerRGBA:create()
 
     local sister1 = CCSprite:create("Images/grossinis_sister1.png")
@@ -244,7 +244,7 @@ end
 local function LayerTestCascadingColorB()
     local ret = createLayerDemoLayer("CCLayerColor: cascading color")
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
     local  layer1 = CCLayerColor:create(Color4B(255, 255, 255, 255), s.width, s.height/2)
 
     layer1:setPosition( ccp(0, s.height/2))
@@ -295,7 +295,7 @@ end
 local function LayerTestCascadingColorC()
     local ret = createLayerDemoLayer("CCLayerColor: non-cascading color")
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
     local  layer1 = CCLayerColor:create(Color4B(255, 255, 255, 255), s.width, s.height/2)
     layer1:setCascadeColorEnabled(false)
     layer1:setPosition( ccp(0, s.height/2))
@@ -349,7 +349,7 @@ local function LayerTest1()
 
     ret:setTouchEnabled(true)
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
     local  layer = CCLayerColor:create( Color4B(0xFF, 0x00, 0x00, 0x80), 200, 200)
 
     layer:ignoreAnchorPointForPosition(false)
@@ -357,7 +357,7 @@ local function LayerTest1()
     ret:addChild(layer, 1, kTagLayer)
 
     local function updateSize(x, y)
-        local s = CCDirector:getInstance():getWinSize()
+        local s = CCDirector:sharedDirector():getWinSize()
 
         local newSize = CCSizeMake( math.abs(x - s.width/2)*2, math.abs(y - s.height/2)*2)
 
@@ -386,7 +386,7 @@ end
 local function LayerTest2()
     local ret = createLayerDemoLayer("ColorLayer: fade and tint")
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
     local  layer1 = CCLayerColor:create( Color4B(255, 255, 0, 80), 100, 300)
     layer1:setPosition(ccp(s.width/3, s.height/2))
     layer1:ignoreAnchorPointForPosition(false)
@@ -424,7 +424,7 @@ end
 
 local function LayerTestBlend()
     local ret = createLayerDemoLayer("ColorLayer: blend")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
     local  layer1 = CCLayerColor:create( Color4B(255, 255, 255, 80) )
 
     local  sister1 = CCSprite:create(s_pPathSister1)
@@ -500,14 +500,14 @@ local function LayerGradient()
 
     local menu = CCMenu:createWithItem(item)
     ret:addChild(menu)
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
     menu:setPosition(ccp(s.width / 2, 100))
 
     local function onTouchEvent(eventType, x, y)
         if eventType == "began" then
             return true
         elseif eventType == "moved" then
-            local s = CCDirector:getInstance():getWinSize()
+            local s = CCDirector:sharedDirector():getWinSize()
             local start = ccp(x, y)
 
             local diff = ccpSub( ccp(s.width/2,s.height/2), start)
@@ -530,7 +530,7 @@ local kLayerIgnoreAnchorPoint = 1000
 local function LayerIgnoreAnchorPointPos()
     local ret = createLayerDemoLayer("IgnoreAnchorPoint - Position", "Ignoring Anchor Point for position")
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local l = CCLayerColor:create(Color4B(255, 0, 0, 255), 150, 150)
 
@@ -572,7 +572,7 @@ end
 local function LayerIgnoreAnchorPointRot()
     local ret = createLayerDemoLayer("IgnoreAnchorPoint - Rotation", "Ignoring Anchor Point for rotations")
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local l = CCLayerColor:create(Color4B(255, 0, 0, 255), 200, 200)
 
@@ -609,7 +609,7 @@ end
 -- LayerIgnoreAnchorPointScale
 local function LayerIgnoreAnchorPointScale()
     local ret = createLayerDemoLayer("IgnoreAnchorPoint - Scale", "Ignoring Anchor Point for scale")
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local l = CCLayerColor:create(Color4B(255, 0, 0, 255), 200, 200)
 
@@ -681,7 +681,7 @@ end
 function LayerTestMain()
     cclog("LayerTestMain")
     Helper.index = 1
-    CCDirector:getInstance():setDepthTest(true)
+    CCDirector:sharedDirector():setDepthTest(true)
     local scene = CCScene:create()
 
     Helper.createFunctionTable = {

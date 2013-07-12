@@ -3,8 +3,8 @@ local streak = nil
 local titleLabel = nil
 local subtitleLabel = nil
 
-local s = CCDirector:getInstance():getWinSize()
-local scheduler = CCDirector:getInstance():getScheduler()
+local s = CCDirector:sharedDirector():getWinSize()
+local scheduler = CCDirector:sharedDirector():getScheduler()
 
 local firstTick = nil
 

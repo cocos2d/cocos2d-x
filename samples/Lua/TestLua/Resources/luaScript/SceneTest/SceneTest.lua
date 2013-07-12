@@ -23,7 +23,7 @@ SceneTestLayer1 = function()
         local  layer = SceneTestLayer2()
         scene:addChild(layer, 0)
         scene:addChild(CreateBackMenuItem())
-        CCDirector:getInstance():pushScene( scene )
+        CCDirector:sharedDirector():pushScene( scene )
     end
 
     local function onPushSceneTran(tag, pSender)
@@ -31,7 +31,7 @@ SceneTestLayer1 = function()
         local  layer = SceneTestLayer2()
         scene:addChild(layer, 0)
         scene:addChild(CreateBackMenuItem())
-        CCDirector:getInstance():pushScene( CCTransitionSlideInT:create(1, scene) )
+        CCDirector:sharedDirector():pushScene( CCTransitionSlideInT:create(1, scene) )
     end
 
 
@@ -55,7 +55,7 @@ SceneTestLayer1 = function()
 
     ret:addChild( menu )
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
     local  sprite = CCSprite:create(s_pPathGrossini)
     ret:addChild(sprite)
     sprite:setPosition( ccp(s.width-40, s.height/2) )
@@ -86,7 +86,7 @@ SceneTestLayer2 = function()
     local m_timeCounter = 0
 
     local function onGoBack(tag, pSender)
-        CCDirector:getInstance():popScene()
+        CCDirector:sharedDirector():popScene()
     end
 
     local function onReplaceScene(tag, pSender)
@@ -94,7 +94,7 @@ SceneTestLayer2 = function()
         local  layer = SceneTestLayer3()
         scene:addChild(layer, 0)
         scene:addChild(CreateBackMenuItem())
-        CCDirector:getInstance():replaceScene( scene )
+        CCDirector:sharedDirector():replaceScene( scene )
     end
 
 
@@ -103,7 +103,7 @@ SceneTestLayer2 = function()
         local  layer = SceneTestLayer3()
         scene:addChild(layer, 0)
         scene:addChild(CreateBackMenuItem())
-        CCDirector:getInstance():replaceScene( CCTransitionFlipX:create(2, scene) )
+        CCDirector:sharedDirector():replaceScene( CCTransitionFlipX:create(2, scene) )
     end
 
     local  item1 = CCMenuItemFont:create( "replaceScene")
@@ -121,7 +121,7 @@ SceneTestLayer2 = function()
 
     ret:addChild( menu )
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
     local  sprite = CCSprite:create(s_pPathGrossini)
     ret:addChild(sprite)
     sprite:setPosition( ccp(s.width-40, s.height/2) )
@@ -140,20 +140,20 @@ end
 
 SceneTestLayer3 = function()
     local ret = CCLayerColor:create(Color4B(0,0,255,255))
-    local s = CCDirector:getInstance():getWinSize()
+    local s = CCDirector:sharedDirector():getWinSize()
 
     local function item0Clicked(tag, pSender)
         local newScene = CCScene:create()
         newScene:addChild(SceneTestLayer3())
-        CCDirector:getInstance():pushScene(CCTransitionFade:create(0.5, newScene, Color3B(0,255,255)))
+        CCDirector:sharedDirector():pushScene(CCTransitionFade:create(0.5, newScene, Color3B(0,255,255)))
     end
 
     local function item1Clicked(tag, pSender)
-        CCDirector:getInstance():popScene()
+        CCDirector:sharedDirector():popScene()
     end
 
     local function item2Clicked(tag, pSender)
-        CCDirector:getInstance():popToRootScene()
+        CCDirector:sharedDirector():popToRootScene()
     end
 
     local item0 = CCMenuItemFont:create("Touch to pushScene (self)")

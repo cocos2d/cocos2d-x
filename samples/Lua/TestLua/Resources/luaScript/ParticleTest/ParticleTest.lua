@@ -10,7 +10,7 @@ local titleLabel = nil
 local subtitleLabel = nil
 local baseLayer_entry = nil
 
-local s = CCDirector:getInstance():getWinSize()
+local s = CCDirector:sharedDirector():getWinSize()
 
 local function backAction()
 	SceneIdx = SceneIdx - 1
@@ -38,7 +38,7 @@ local function backCallback(sender)
 	scene:addChild(backAction())
 	scene:addChild(CreateBackMenuItem())
 
-	CCDirector:getInstance():replaceScene(scene)
+	CCDirector:sharedDirector():replaceScene(scene)
 end
 
 local function restartCallback(sender)
@@ -47,7 +47,7 @@ local function restartCallback(sender)
 	scene:addChild(restartAction())
 	scene:addChild(CreateBackMenuItem())
 
-	CCDirector:getInstance():replaceScene(scene)
+	CCDirector:sharedDirector():replaceScene(scene)
 end
 
 local function nextCallback(sender)
@@ -56,7 +56,7 @@ local function nextCallback(sender)
 	scene:addChild(nextAction())
 	scene:addChild(CreateBackMenuItem())
 
-	CCDirector:getInstance():replaceScene(scene)
+	CCDirector:sharedDirector():replaceScene(scene)
 end
 
 local function toggleCallback(sender)
@@ -85,7 +85,7 @@ local function update(dt)
 end
 
 local function baseLayer_onEnterOrExit(tag)
-	local scheduler = CCDirector:getInstance():getScheduler()
+	local scheduler = CCDirector:sharedDirector():getScheduler()
 	if tag == "enter" then
 		baseLayer_entry = scheduler:scheduleScriptFunc(update, 0, false)
 	elseif tag == "exit" then
@@ -211,7 +211,7 @@ local function reorderParticles(dt)
 end
 
 local function ParticleReorder_onEnterOrExit(tag)
-	local scheduler = CCDirector:getInstance():getScheduler()
+	local scheduler = CCDirector:sharedDirector():getScheduler()
 	if tag == "enter" then
 		ParticleReorder_entry = scheduler:scheduleScriptFunc(reorderParticles, 1.0, false)
 	elseif tag == "exit" then
@@ -301,7 +301,7 @@ local function switchRender(dt)
 end
 
 local function ParticleBatchHybrid_onEnterOrExit(tag)
-	local scheduler = CCDirector:getInstance():getScheduler()
+	local scheduler = CCDirector:sharedDirector():getScheduler()
 	if tag == "enter" then
 		ParticleBatchHybrid_entry = scheduler:scheduleScriptFunc(switchRender, 2.0, false)
 	elseif tag == "exit" then
@@ -378,7 +378,7 @@ local function DemoFlower()
 	emitter = CCParticleFlower:create()
 	-- emitter:retain()
     background:addChild(emitter, 10)
-    emitter:setTexture(CCTextureCache:getInstance():addImage(s_stars1))
+    emitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_stars1))
 
     setEmitterPosition()
 
@@ -396,7 +396,7 @@ local function DemoGalaxy()
     -- emitter:retain()
     background:addChild(emitter, 10)
 
-    emitter:setTexture(CCTextureCache:getInstance():addImage(s_fire))
+    emitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_fire))
 
     setEmitterPosition()
 
@@ -414,7 +414,7 @@ local function DemoFirework()
     -- emitter:retain()
     background:addChild(emitter, 10)
 
-    emitter:setTexture(CCTextureCache:getInstance():addImage(s_stars1))
+    emitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_stars1))
 
     setEmitterPosition()
 
@@ -432,7 +432,7 @@ local function DemoSpiral()
     -- emitter:retain()
     background:addChild(emitter, 10)
 
-    emitter:setTexture(CCTextureCache:getInstance():addImage(s_fire))
+    emitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_fire))
 
     setEmitterPosition()
 
@@ -450,7 +450,7 @@ local function DemoSun()
     -- emitter:retain()
     background:addChild(emitter, 10)
 
-    emitter:setTexture(CCTextureCache:getInstance():addImage(s_fire))
+    emitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_fire))
 
     setEmitterPosition()
 
@@ -468,7 +468,7 @@ local function DemoMeteor()
     -- emitter:retain()
     background:addChild(emitter, 10)
 
-    emitter:setTexture(CCTextureCache:getInstance():addImage(s_fire))
+    emitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_fire))
 
     setEmitterPosition()
 
@@ -486,7 +486,7 @@ local function DemoFire()
     -- emitter:retain()
     background:addChild(emitter, 10)
 
-    emitter:setTexture(CCTextureCache:getInstance():addImage(s_fire))
+    emitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_fire))
     local pos_x, pos_y = emitter:getPosition()
     emitter:setPosition(pos_x, 100)
 
@@ -503,7 +503,7 @@ local function DemoSmoke()
 	emitter = CCParticleSmoke:create()
     -- emitter:retain()
     background:addChild(emitter, 10)
-    emitter:setTexture(CCTextureCache:getInstance():addImage(s_fire))
+    emitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_fire))
 
     local pos_x, pos_y = emitter:getPosition()
     emitter:setPosition(pos_x, 100)
@@ -524,7 +524,7 @@ local function DemoExplosion()
     -- emitter:retain()
     background:addChild(emitter, 10)
 
-    emitter:setTexture(CCTextureCache:getInstance():addImage(s_stars1))
+    emitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_stars1))
 
     emitter:setAutoRemoveOnFinish(true)
 
@@ -568,7 +568,7 @@ local function DemoSnow()
 
     emitter:setEmissionRate(emitter:getTotalParticles() / emitter:getLife())
 
-    emitter:setTexture(CCTextureCache:getInstance():addImage(s_snow))
+    emitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_snow))
 
     setEmitterPosition()
 
@@ -590,7 +590,7 @@ local function DemoRain()
     emitter:setPosition(pos_x, pos_y - 100)
     emitter:setLife(4)
 
-    emitter:setTexture(CCTextureCache:getInstance():addImage(s_fire))
+    emitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_fire))
 
     setEmitterPosition()
 
@@ -610,7 +610,7 @@ local function DemoBigFlower()
 
     background:addChild(emitter, 10)
     ----emitter:release()    -- win32 :  use this line or remove this line and use autorelease()
-    emitter:setTexture( CCTextureCache:getInstance():addImage(s_stars1) )
+    emitter:setTexture( CCTextureCache:sharedTextureCache():addImage(s_stars1) )
     emitter:setDuration(-1)
 
     -- gravity
@@ -681,7 +681,7 @@ local function DemoRotFlower()
 
     background:addChild(emitter, 10)
     ----emitter:release()    -- win32 : Remove this line
-    emitter:setTexture(CCTextureCache:getInstance():addImage(s_stars2))
+    emitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_stars2))
 
     -- duration
     emitter:setDuration(-1)
@@ -801,7 +801,7 @@ local function DemoModernArt()
     emitter:setEndSizeVar(8.0)
 
     -- texture
-    emitter:setTexture(CCTextureCache:getInstance():addImage(s_fire))
+    emitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_fire))
 
     -- additive
     emitter:setBlendAdditive(false)
@@ -823,7 +823,7 @@ local function DemoRing()
 
     background:addChild(emitter, 10)
 
-    emitter:setTexture(CCTextureCache:getInstance():addImage(s_stars1))
+    emitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_stars1))
     emitter:setLifeVar(0)
     emitter:setLife(10)
     emitter:setSpeed(100)
@@ -856,14 +856,14 @@ local function ParallaxParticle()
 
     emitter = CCParticleFlower:create()
     -- emitter:retain()
-    emitter:setTexture(CCTextureCache:getInstance():addImage(s_fire))
+    emitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_fire))
 
     p1:addChild(emitter, 10)
     emitter:setPosition(250, 200)
 
     local par = CCParticleSun:create()
     p2:addChild(par, 10)
-    par:setTexture(CCTextureCache:getInstance():addImage(s_fire))
+    par:setTexture(CCTextureCache:sharedTextureCache():addImage(s_fire))
 
     local move = CCMoveBy:create(4, CCPointMake(300,0))
     local move_back = move:reverse()
@@ -909,7 +909,7 @@ local function RadiusMode1()
     emitter = CCParticleSystemQuad:new()
     emitter:initWithTotalParticles(200)
     layer:addChild(emitter, 10)
-    emitter:setTexture(CCTextureCache:getInstance():addImage("Images/stars-grayscale.png"))
+    emitter:setTexture(CCTextureCache:sharedTextureCache():addImage("Images/stars-grayscale.png"))
 
     -- duration
     emitter:setDuration(kCCParticleDurationInfinity)
@@ -980,7 +980,7 @@ local function RadiusMode2()
     emitter = CCParticleSystemQuad:new()
     emitter:initWithTotalParticles(200)
     layer:addChild(emitter, 10)
-    emitter:setTexture(CCTextureCache:getInstance():addImage("Images/stars-grayscale.png"))
+    emitter:setTexture(CCTextureCache:sharedTextureCache():addImage("Images/stars-grayscale.png"))
 
     -- duration
     emitter:setDuration(kCCParticleDurationInfinity)
@@ -1050,7 +1050,7 @@ local function Issue704()
     emitter = CCParticleSystemQuad:new()
     emitter:initWithTotalParticles(100)
     layer:addChild(emitter, 10)
-    emitter:setTexture(CCTextureCache:getInstance():addImage("Images/fire.png"))
+    emitter:setTexture(CCTextureCache:sharedTextureCache():addImage("Images/fire.png"))
 
     -- duration
     emitter:setDuration(kCCParticleDurationInfinity)
@@ -1127,7 +1127,7 @@ local function updateQuads(dt)
 end
 
 local function Issue870_onEnterOrExit(tag)
-	local scheduler = CCDirector:getInstance():getScheduler()
+	local scheduler = CCDirector:sharedDirector():getScheduler()
 	if tag == "enter" then
 		Issue870_entry = scheduler:scheduleScriptFunc(updateQuads, 2.0, false)
 	elseif tag == "exit" then
@@ -1144,7 +1144,7 @@ local function Issue870()
 
     local system = CCParticleSystemQuad:new()
     system:initWithFile("Particles/SpinningPeas.plist")
-    system:setTextureWithRect(CCTextureCache:getInstance():addImage("Images/particles.png"), CCRectMake(0,0,32,32))
+    system:setTextureWithRect(CCTextureCache:sharedTextureCache():addImage("Images/particles.png"), CCRectMake(0,0,32,32))
     layer:addChild(system, 10)
     emitter = system
 
@@ -1166,7 +1166,7 @@ local function MultipleParticleSystems()
     layer:removeChild(background, true)
     background = nil
 
-    CCTextureCache:getInstance():addImage("Images/particles.png")
+    CCTextureCache:sharedTextureCache():addImage("Images/particles.png")
 
     for i = 0, 4 do
         local particleSystem = CCParticleSystemQuad:create("Particles/SpinningPeas.plist")
@@ -1239,7 +1239,7 @@ local function removeSystem(dt)
 end
 
 local function AddAndDeleteParticleSystems_onEnterOrExit(tag)
-	local scheduler = CCDirector:getInstance():getScheduler()
+	local scheduler = CCDirector:sharedDirector():getScheduler()
 	if tag == "enter" then
 		AddAndDeleteParticleSystems_entry = scheduler:scheduleScriptFunc(removeSystem, 2.0, false)
 	elseif tag == "exit" then
@@ -1297,7 +1297,7 @@ local function reorderSystem(dt)
 end
 
 local function ReorderParticleSystems_onEnterOrExit(tag)
-	local scheduler = CCDirector:getInstance():getScheduler()
+	local scheduler = CCDirector:sharedDirector():getScheduler()
 	if tag == "enter" then
 		ReorderParticleSystems_entry = scheduler:scheduleScriptFunc(reorderSystem, 2.0, false)
 	elseif tag == "exit" then

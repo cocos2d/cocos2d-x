@@ -2,7 +2,7 @@ local    MAX_COUNT = 9;
 local    LINE_SPACE = 40;
 local    kItemTagBasic = 5432;
 
-local Winsize = CCDirector:getInstance():getWinSize();
+local Winsize = CCDirector:sharedDirector():getWinSize();
 
 local testNames = {
     "Bug-350",
@@ -24,7 +24,7 @@ local function CreateBugsTestBackMenuItem(pLayer)
     local function menuCallback()
         local pScene = BugsTestMain()
         if pScene ~= nil then
-            CCDirector:getInstance():replaceScene(pScene)
+            CCDirector:sharedDirector():replaceScene(pScene)
         end
     end
     pMenuItemFont:registerScriptTapHandler(menuCallback)
@@ -202,19 +202,19 @@ local function BugTest624()
 --  schedule(schedule_selector(Bug624Layer::switchLayer), 5.0f);
 	
 	local function BugTest624_SwitchLayer()
-		local scheduler = CCDirector:getInstance():getScheduler()
+		local scheduler = CCDirector:sharedDirector():getScheduler()
 		scheduler:unscheduleScriptEntry(BugTest624_entry)
 			
 		local pScene = CCScene:create(); 
 		local pNewPlayer = BugTest624_2()
 		CreateBugsTestBackMenuItem(pNewPlayer)   
         pScene:addChild(pNewPlayer);   
-        CCDirector:getInstance():replaceScene(CCTransitionFade:create(2.0, pScene, Color3B(255,255,255))); 
+        CCDirector:sharedDirector():replaceScene(CCTransitionFade:create(2.0, pScene, Color3B(255,255,255))); 
 	end
 	
 	
     local function BugTest624_OnEnterOrExit(tag)
-    	local scheduler = CCDirector:getInstance():getScheduler()
+    	local scheduler = CCDirector:sharedDirector():getScheduler()
 		if tag == "enter" then
 			BugTest624_entry = scheduler:scheduleScriptFunc(BugTest624_SwitchLayer, 5.0, false)
 		elseif tag == "exit" then
@@ -240,18 +240,18 @@ function BugTest624_2()
     pLayer:setAccelerometerEnabled(true);
     
     local function BugTest624_2_SwitchLayer()
-		local scheduler = CCDirector:getInstance():getScheduler()
+		local scheduler = CCDirector:sharedDirector():getScheduler()
 		scheduler:unscheduleScriptEntry(BugTest624_2_entry)
 			
 		local pScene = CCScene:create(); 
 		local pNewPlayer = BugTest624()
 		CreateBugsTestBackMenuItem(pNewPlayer)   
         pScene:addChild(pNewPlayer);
-        CCDirector:getInstance():replaceScene(CCTransitionFade:create(2.0, pScene, Color3B(255,0,0))); 
+        CCDirector:sharedDirector():replaceScene(CCTransitionFade:create(2.0, pScene, Color3B(255,0,0))); 
 	end
 	
 	local function BugTest624_2_OnEnterOrExit(tag)
-    	local scheduler = CCDirector:getInstance():getScheduler()
+    	local scheduler = CCDirector:sharedDirector():getScheduler()
 		if tag == "enter" then
 			BugTest624_2_entry = scheduler:scheduleScriptFunc(BugTest624_2_SwitchLayer, 5.0, false)
 		elseif tag == "exit" then
@@ -321,7 +321,7 @@ local function BugTest914()
        local pLayer = BugTest914()
        CreateBugsTestBackMenuItem(pLayer)
        pScene:addChild(pLayer);
-       CCDirector:getInstance():replaceScene(pScene)
+       CCDirector:sharedDirector():replaceScene(pScene)
 	end
 
     local label = CCLabelTTF:create("Hello World", "Marker Felt", 64)
@@ -365,7 +365,7 @@ end
 local function BugTest1159()
     local pLayer = CCLayer:create()
     
-    CCDirector:getInstance():setDepthTest(true)
+    CCDirector:sharedDirector():setDepthTest(true)
 
     local background = CCLayerColor:create(Color4B(255, 0, 255, 255))
     pLayer:addChild(background)
@@ -394,7 +394,7 @@ local function BugTest1159()
        local pLayer = BugTest1159()
        CreateBugsTestBackMenuItem(pLayer)
        pScene:addChild(pLayer);
-       CCDirector:getInstance():replaceScene(CCTransitionPageTurn:create(1.0, pScene, false))
+       CCDirector:sharedDirector():replaceScene(CCTransitionPageTurn:create(1.0, pScene, false))
 	end
     local label = CCMenuItemLabel:create(CCLabelTTF:create("Flip Me", "Helvetica", 24));
     label:registerScriptTapHandler(menuCallback)
@@ -410,7 +410,7 @@ local function BugTest1159()
                 scheduler:unscheduleScriptEntry(schedulerEntry)
             end
             ]]--
-            CCDirector:getInstance():setDepthTest(false)
+            CCDirector:sharedDirector():setDepthTest(false)
         end
     end
 
@@ -584,7 +584,7 @@ local function CreateBugsTestScene(nBugNo)
   local pLayer = CreateBugsTestTable[nBugNo]()
   CreateBugsTestBackMenuItem(pLayer)
   pNewscene:addChild(pLayer)
-  CCDirector:getInstance():replaceScene(pNewscene)
+  CCDirector:sharedDirector():replaceScene(pNewscene)
 --pLayer:autorelease()
 end
 
@@ -597,7 +597,7 @@ local function BugsTestMainLayer()
         local nIdx = pMenuItem:getZOrder() - kItemTagBasic
         local BugTestScene = CreateBugsTestScene(nIdx)
         if nil ~= testScene then
-            CCDirector:getInstance():replaceScene(testScene)
+            CCDirector:sharedDirector():replaceScene(testScene)
         end
     end
 	

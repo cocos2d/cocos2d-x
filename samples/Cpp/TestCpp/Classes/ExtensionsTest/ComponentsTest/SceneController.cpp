@@ -80,7 +80,7 @@ SceneController* SceneController::create(void)
 
 void SceneController::addTarget()
 {
-	Sprite *target = Sprite::create("components/Target.png", CCRectMake(0,0,27,40));
+	Sprite *target = Sprite::create("components/Target.png", Rect(0,0,27,40));
     _owner->addChild(target, 1, 2);
     
     target->addComponent(EnemyController::create());

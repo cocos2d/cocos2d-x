@@ -145,8 +145,8 @@ void Test2::onEnter()
     Sprite *sp3 = Sprite::create(s_pPathSister1);
     Sprite *sp4 = Sprite::create(s_pPathSister2);
     
-    sp1->setPosition(ccp(100, s.height /2 ));
-    sp2->setPosition(ccp(380, s.height /2 ));
+    sp1->setPosition(Point(100, s.height /2 ));
+    sp2->setPosition(Point(380, s.height /2 ));
     addChild(sp1);
     addChild(sp2);
     
@@ -167,7 +167,7 @@ void Test2::onEnter()
 																	NULL)
 												);
     
-    sp2->setAnchorPoint(ccp(0,0));
+    sp2->setAnchorPoint(Point(0,0));
     
     sp1->runAction(action1);
     sp2->runAction(action2);
@@ -192,8 +192,8 @@ Test4::Test4()
     Sprite *sp1 = Sprite::create(s_pPathSister1);
     Sprite *sp2 = Sprite::create(s_pPathSister2);
     
-    sp1->setPosition( ccp(100,160) );
-    sp2->setPosition( ccp(380,160) );
+    sp1->setPosition( Point(100,160) );
+    sp2->setPosition( Point(380,160) );
     
     addChild(sp1, 0, 2);
     addChild(sp2, 0, 3);
@@ -231,8 +231,8 @@ Test5::Test5()
     Sprite* sp1 = Sprite::create(s_pPathSister1);
     Sprite* sp2 = Sprite::create(s_pPathSister2);
     
-    sp1->setPosition(ccp(100,160));
-    sp2->setPosition(ccp(380,160));
+    sp1->setPosition(Point(100,160));
+    sp2->setPosition(Point(380,160));
 
     RotateBy* rot = RotateBy::create(2, 360);
     ActionInterval* rot_back = rot->reverse();
@@ -286,8 +286,8 @@ Test6::Test6()
     Sprite* sp2 = Sprite::create(s_pPathSister2);
     Sprite* sp21 = Sprite::create(s_pPathSister2);
         
-    sp1->setPosition(ccp(100,160));
-    sp2->setPosition(ccp(380,160));
+    sp1->setPosition(Point(100,160));
+    sp2->setPosition(Point(380,160));
         
     ActionInterval* rot = RotateBy::create(2, 360);
     ActionInterval* rot_back = rot->reverse();
@@ -346,7 +346,7 @@ StressTest1::StressTest1()
     Sprite *sp1 = Sprite::create(s_pPathSister1);
     addChild(sp1, 0, kTagSprite1);
     
-    sp1->setPosition( ccp(s.width/2, s.height/2) );        
+    sp1->setPosition( Point(s.width/2, s.height/2) );        
 
     schedule( schedule_selector(StressTest1::shouldNotCrash), 1.0f);
 }
@@ -364,7 +364,7 @@ void StressTest1::shouldNotCrash(float dt)
     // if it doesn't, it works Ok.
 //    CocosNode *explosion = [Sprite create:@"grossinis_sister2.png");
 
-    explosion->setPosition( ccp(s.width/2, s.height/2) );
+    explosion->setPosition( Point(s.width/2, s.height/2) );
     
     runAction( Sequence::create(
                             RotateBy::create(2, 360),
@@ -399,9 +399,9 @@ StressTest2::StressTest2()
     Layer* sublayer = Layer::create();
     
     Sprite *sp1 = Sprite::create(s_pPathSister1);
-    sp1->setPosition( ccp(80, s.height/2) );
+    sp1->setPosition( Point(80, s.height/2) );
     
-    ActionInterval* move = MoveBy::create(3, ccp(350,0));
+    ActionInterval* move = MoveBy::create(3, Point(350,0));
     ActionInterval* move_ease_inout3 = EaseInOut::create(move->clone(), 2.0f);
     ActionInterval* move_ease_inout_back3 = move_ease_inout3->reverse();
     Sequence* seq3 = Sequence::create( move_ease_inout3, move_ease_inout_back3, NULL);
@@ -410,7 +410,7 @@ StressTest2::StressTest2()
 
     ParticleFire* fire = ParticleFire::create();
     fire->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
-    fire->setPosition( ccp(80, s.height/2-50) );
+    fire->setPosition( Point(80, s.height/2-50) );
     
     ActionInterval* copy_seq3 = seq3->clone();
     
@@ -479,20 +479,20 @@ NodeToWorld::NodeToWorld()
 
     Sprite *back = Sprite::create(s_back3);
     addChild( back, -10);
-    back->setAnchorPoint( ccp(0,0) );
+    back->setAnchorPoint( Point(0,0) );
     Size backSize = back->getContentSize();
     
     MenuItem *item = MenuItemImage::create(s_PlayNormal, s_PlaySelect);
     Menu *menu = Menu::create(item, NULL);
     menu->alignItemsVertically();
-    menu->setPosition( ccp(backSize.width/2, backSize.height/2));
+    menu->setPosition( Point(backSize.width/2, backSize.height/2));
     back->addChild(menu);
     
     ActionInterval* rot = RotateBy::create(5, 360);
     Action* fe = RepeatForever::create( rot);
     item->runAction( fe );
     
-    ActionInterval* move = MoveBy::create(3, ccp(200,0));
+    ActionInterval* move = MoveBy::create(3, Point(200,0));
     ActionInterval* move_back = move->reverse();
     Sequence* seq = Sequence::create( move, move_back, NULL);
     Action* fe2 = RepeatForever::create(seq);
@@ -527,7 +527,7 @@ CameraOrbitTest::CameraOrbitTest()
 
     Sprite *p = Sprite::create(s_back3);
     addChild( p, 0);
-    p->setPosition( ccp(s.width/2, s.height/2) );
+    p->setPosition( Point(s.width/2, s.height/2) );
     p->setOpacity( 128 );
     
     Sprite* sprite;
@@ -539,7 +539,7 @@ CameraOrbitTest::CameraOrbitTest()
     sprite = Sprite::create(s_pPathGrossini);
     sprite->setScale(0.5f);
     p->addChild(sprite, 0);        
-    sprite->setPosition( ccp(s.width/4*1, s.height/2) );
+    sprite->setPosition( Point(s.width/4*1, s.height/2) );
     orbit = OrbitCamera::create(2, 1, 0, 0, 360, 0, 0);
     sprite->runAction( RepeatForever::create( orbit ) );
     
@@ -547,7 +547,7 @@ CameraOrbitTest::CameraOrbitTest()
     sprite = Sprite::create(s_pPathGrossini);
     sprite->setScale( 1.0f );
     p->addChild(sprite, 0);        
-    sprite->setPosition( ccp(s.width/4*2, s.height/2) );
+    sprite->setPosition( Point(s.width/4*2, s.height/2) );
     orbit = OrbitCamera::create(2, 1, 0, 0, 360, 45, 0);
     sprite->runAction( RepeatForever::create( orbit ) );
     
@@ -556,7 +556,7 @@ CameraOrbitTest::CameraOrbitTest()
     sprite = Sprite::create(s_pPathGrossini);
     sprite->setScale( 2.0f );
     p->addChild(sprite, 0);        
-    sprite->setPosition( ccp(s.width/4*3, s.height/2) );
+    sprite->setPosition( Point(s.width/4*3, s.height/2) );
     ss = sprite->getContentSize();        
     orbit = OrbitCamera::create(2, 1, 0, 0, 360, 90, -45),
     sprite->runAction( RepeatForever::create(orbit) );
@@ -603,7 +603,7 @@ CameraZoomTest::CameraZoomTest()
     // LEFT
     sprite = Sprite::create(s_pPathGrossini);
     addChild( sprite, 0);        
-    sprite->setPosition( ccp(s.width/4*1, s.height/2) );
+    sprite->setPosition( Point(s.width/4*1, s.height/2) );
     cam = sprite->getCamera();
     cam->setEyeXYZ(0, 0, 415/2);
     cam->setCenterXYZ(0, 0, 0);
@@ -611,12 +611,12 @@ CameraZoomTest::CameraZoomTest()
     // CENTER
     sprite = Sprite::create(s_pPathGrossini);
     addChild( sprite, 0, 40);
-    sprite->setPosition(ccp(s.width/4*2, s.height/2));
+    sprite->setPosition(Point(s.width/4*2, s.height/2));
     
     // RIGHT
     sprite = Sprite::create(s_pPathGrossini);
     addChild( sprite, 0, 20);
-    sprite->setPosition(ccp(s.width/4*3, s.height/2));
+    sprite->setPosition(Point(s.width/4*3, s.height/2));
 
     _z = 0;
     scheduleUpdate();
@@ -658,21 +658,21 @@ CameraCenterTest::CameraCenterTest()
     // LEFT-TOP
     sprite = Sprite::create("Images/white-512x512.png");
     addChild( sprite, 0);
-    sprite->setPosition(ccp(s.width/5*1, s.height/5*1));
+    sprite->setPosition(Point(s.width/5*1, s.height/5*1));
     sprite->setColor(Color3B::RED);
-    sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
+    sprite->setTextureRect(Rect(0, 0, 120, 50));
     orbit = OrbitCamera::create(10, 1, 0, 0, 360, 0, 0);
     sprite->runAction(RepeatForever::create( orbit ));
-//        [sprite setAnchorPoint: ccp(0,1));
+//        [sprite setAnchorPoint: Point(0,1));
 
     
     
     // LEFT-BOTTOM
     sprite = Sprite::create("Images/white-512x512.png");
     addChild( sprite, 0, 40);
-    sprite->setPosition(ccp(s.width/5*1, s.height/5*4));
+    sprite->setPosition(Point(s.width/5*1, s.height/5*4));
     sprite->setColor(Color3B::BLUE);
-    sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
+    sprite->setTextureRect(Rect(0, 0, 120, 50));
     orbit = OrbitCamera::create(10, 1, 0, 0, 360, 0, 0);
     sprite->runAction(RepeatForever::create( orbit ));
 
@@ -680,9 +680,9 @@ CameraCenterTest::CameraCenterTest()
     // RIGHT-TOP
     sprite = Sprite::create("Images/white-512x512.png");
     addChild( sprite, 0);    
-    sprite->setPosition(ccp(s.width/5*4, s.height/5*1));
+    sprite->setPosition(Point(s.width/5*4, s.height/5*1));
     sprite->setColor(Color3B::YELLOW);
-    sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
+    sprite->setTextureRect(Rect(0, 0, 120, 50));
     orbit = OrbitCamera::create(10, 1, 0, 0, 360, 0, 0);
     sprite->runAction(RepeatForever::create( orbit) );
 
@@ -690,18 +690,18 @@ CameraCenterTest::CameraCenterTest()
     // RIGHT-BOTTOM
     sprite = Sprite::create("Images/white-512x512.png");
     addChild( sprite, 0, 40);
-    sprite->setPosition(ccp(s.width/5*4, s.height/5*4));
+    sprite->setPosition(Point(s.width/5*4, s.height/5*4));
     sprite->setColor(Color3B::GREEN);
-    sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
+    sprite->setTextureRect(Rect(0, 0, 120, 50));
     orbit = OrbitCamera::create(10, 1, 0, 0, 360, 0, 0);
     sprite->runAction( RepeatForever::create( orbit ) );
 
     // CENTER
     sprite = Sprite::create("Images/white-512x512.png");
     addChild( sprite, 0, 40);
-    sprite->setPosition(ccp(s.width/2, s.height/2));
+    sprite->setPosition(Point(s.width/2, s.height/2));
     sprite->setColor(Color3B::WHITE);
-    sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
+    sprite->setTextureRect(Rect(0, 0, 120, 50));
     orbit = OrbitCamera::create(10, 1, 0, 0, 360, 0, 0);
     sprite->runAction(RepeatForever::create( orbit ) );
 }
@@ -731,7 +731,7 @@ ConvertToNode::ConvertToNode()
     for(int i = 0; i < 3; i++)
     {
         Sprite *sprite = Sprite::create("Images/grossini.png");
-        sprite->setPosition(ccp( s.width/4*(i+1), s.height/2));
+        sprite->setPosition(Point( s.width/4*(i+1), s.height/2));
 
         Sprite *point = Sprite::create("Images/r1.png");
         point->setScale(0.25f);
@@ -741,13 +741,13 @@ ConvertToNode::ConvertToNode()
         switch(i)
         {
         case 0:
-            sprite->setAnchorPoint(PointZero);
+            sprite->setAnchorPoint(Point::ZERO);
             break;
         case 1:
-            sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+            sprite->setAnchorPoint(Point(0.5f, 0.5f));
             break;
         case 2:
-            sprite->setAnchorPoint(ccp(1,1));
+            sprite->setAnchorPoint(Point(1,1));
             break;
         }
 
@@ -799,7 +799,7 @@ NodeOpaqueTest::NodeOpaqueTest()
         background = Sprite::create("Images/background1.png");
         BlendFunc blendFunc = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
         background->setBlendFunc(blendFunc);
-        background->setAnchorPoint(PointZero);
+        background->setAnchorPoint(Point::ZERO);
         addChild(background);
     }
 }
@@ -824,7 +824,7 @@ NodeNonOpaqueTest::NodeNonOpaqueTest()
     {
         background = Sprite::create("Images/background1.jpg");
         background->setBlendFunc(BlendFunc::BLEND_FUNC_DISABLE);
-        background->setAnchorPoint(PointZero);
+        background->setAnchorPoint(Point::ZERO);
         addChild(background);
     }
 }

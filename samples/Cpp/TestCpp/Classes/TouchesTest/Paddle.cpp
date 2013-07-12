@@ -11,7 +11,7 @@ Paddle::~Paddle(void)
 Rect Paddle::getRect()
 {
     Size s = getTexture()->getContentSize();
-    return CCRectMake(-s.width / 2, -s.height / 2, s.width, s.height);
+    return Rect(-s.width / 2, -s.height / 2, s.width, s.height);
 }
 
 Paddle* Paddle::createWithTexture(Texture2D* aTexture)
@@ -74,7 +74,7 @@ void Paddle::ccTouchMoved(Touch* touch, Event* event)
     
     Point touchPoint = touch->getLocation();
     
-    setPosition( ccp(touchPoint.x, getPosition().y) );
+    setPosition( Point(touchPoint.x, getPosition().y) );
 }
 
 Paddle* Paddle::clone() const

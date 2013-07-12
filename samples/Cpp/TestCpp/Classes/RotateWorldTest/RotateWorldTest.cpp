@@ -21,7 +21,7 @@ void TestLayer::onEnter()
     //    NSLog( s );
     LabelTTF* label = LabelTTF::create("cocos2d", "Tahoma", 64);
 
-    label->setPosition( ccp(x/2,y/2) );
+    label->setPosition( Point(x/2,y/2) );
     
     addChild(label);
 }
@@ -49,9 +49,9 @@ void SpriteLayer::onEnter()
     spriteSister1->setScale(1.5f);
     spriteSister2->setScale(1.5f);
     
-    sprite->setPosition(ccp(x/2,y/2));
-    spriteSister1->setPosition(ccp(40,y/2));
-    spriteSister2->setPosition(ccp(x-40,y/2));
+    sprite->setPosition(Point(x/2,y/2));
+    spriteSister1->setPosition(Point(40,y/2));
+    spriteSister2->setPosition(Point(x-40,y/2));
 
     Action *rot = RotateBy::create(16, -3600);
     
@@ -61,7 +61,7 @@ void SpriteLayer::onEnter()
     
     sprite->runAction(rot);
 
-    ActionInterval *jump1 = JumpBy::create(4, ccp(-400,0), 100, 4);
+    ActionInterval *jump1 = JumpBy::create(4, Point(-400,0), 100, 4);
     ActionInterval *jump2 = jump1->reverse();
     
     ActionInterval *rot1 = RotateBy::create(4, 360*2);
@@ -96,20 +96,20 @@ void RotateWorldMainLayer::onEnter()
     Node* white = LayerColor::create(Color4B(255,255,255,255));
 
     blue->setScale(0.5f);
-    blue->setPosition(ccp(-x/4,-y/4));
+    blue->setPosition(Point(-x/4,-y/4));
     blue->addChild( SpriteLayer::create() );
     
     red->setScale(0.5f);
-    red->setPosition(ccp(x/4,-y/4));
+    red->setPosition(Point(x/4,-y/4));
 
     green->setScale(0.5f);
-    green->setPosition(ccp(-x/4,y/4));
+    green->setPosition(Point(-x/4,y/4));
     green->addChild(TestLayer::create());
 
     white->setScale(0.5f);
-    white->setPosition(ccp(x/4,y/4));
+    white->setPosition(Point(x/4,y/4));
     white->ignoreAnchorPointForPosition(false);
-    white->setPosition(ccp(x/4*3,y/4*3));
+    white->setPosition(Point(x/4*3,y/4*3));
 
     addChild(blue, -1);
     addChild(white);
