@@ -345,7 +345,7 @@ CC_DEPRECATED_ATTRIBUTE inline Size CCSizeMake(float width, float height)
     return Size(width, height);
 }
 
-CC_DEPRECATED_ATTRIBUTE inline Rect RectMake(float x, float y, float width, float height)
+CC_DEPRECATED_ATTRIBUTE inline Rect CCRectMake(float x, float y, float width, float height)
 {
     return Rect(x, y, width, height);
 }
