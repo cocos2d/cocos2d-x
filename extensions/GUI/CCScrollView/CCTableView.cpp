@@ -268,7 +268,7 @@ void TableView::_addCellIfNecessary(TableViewCell * cell)
 
 void TableView::_updateContentSize()
 {
-    Size size = SizeZero;
+    Size size = Size::ZERO;
     unsigned int cellsCount = _dataSource->numberOfCellsInTableView(this);
 
     if (cellsCount > 0)

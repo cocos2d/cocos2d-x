@@ -349,7 +349,7 @@ TextLayer::TextLayer(void)
     
     Sprite *bg = Sprite::create(s_back3);
     node->addChild(bg, 0);
-//  bg->setAnchorPoint( PointZero );
+//  bg->setAnchorPoint( Point::ZERO );
     bg->setPosition(VisibleRect::center());
 
     Sprite* grossini = Sprite::create(s_pPathSister2);

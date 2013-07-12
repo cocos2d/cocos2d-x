@@ -139,7 +139,7 @@ Point EGLViewProtocol::getVisibleOrigin() const
     }
     else 
     {
-        return PointZero;
+        return Point::ZERO;
     }
 }
 

@@ -144,7 +144,7 @@ Sprite* Sprite::create()
 
 bool Sprite::init(void)
 {
-    return initWithTexture(NULL, RectZero);
+    return initWithTexture(NULL, Rect::ZERO);
 }
 
 // designated initializer
@@ -168,7 +168,7 @@ bool Sprite::initWithTexture(Texture2D *pTexture, const Rect& rect, bool rotated
         setAnchorPoint(Point(0.5f, 0.5f));
         
         // zwoptex default values
-        _offsetPosition = PointZero;
+        _offsetPosition = Point::ZERO;
         
         _hasChildren = false;
         
@@ -210,7 +210,7 @@ bool Sprite::initWithTexture(Texture2D *pTexture)
 {
     CCAssert(pTexture != NULL, "Invalid texture for sprite");
 
-    Rect rect = RectZero;
+    Rect rect = Rect::ZERO;
     rect.size = pTexture->getContentSize();
     
     return initWithTexture(pTexture, rect);
@@ -223,7 +223,7 @@ bool Sprite::initWithFile(const char *pszFilename)
     Texture2D *pTexture = TextureCache::sharedTextureCache()->addImage(pszFilename);
     if (pTexture)
     {
-        Rect rect = RectZero;
+        Rect rect = Rect::ZERO;
         rect.size = pTexture->getContentSize();
         return initWithTexture(pTexture, rect);
     }

@@ -61,7 +61,7 @@ void MotionStreakTest1::onEnter()
 
 void MotionStreakTest1::onUpdate(float delta)
 {
-    streak->setPosition( _target->convertToWorldSpace(PointZero) );
+    streak->setPosition( _target->convertToWorldSpace(Point::ZERO) );
 }
 
 std::string MotionStreakTest1::title()

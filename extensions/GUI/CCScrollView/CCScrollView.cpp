@@ -113,7 +113,7 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
         _delegate = NULL;
         _bounceable = true;
         _clippingToBounds = true;
-        //_container->setContentSize(SizeZero);
+        //_container->setContentSize(Size::ZERO);
         _direction  = kScrollViewDirectionBoth;
         _container->setPosition(Point(0.0f, 0.0f));
         _touchLength = 0.0f;
@@ -680,7 +680,7 @@ void ScrollView::ccTouchMoved(Touch* touch, Event* event)
             
             if (!_touchMoved)
             {
-                moveDistance = PointZero;
+                moveDistance = Point::ZERO;
             }
             
             _touchPoint = newPoint;
@@ -757,7 +757,7 @@ void ScrollView::ccTouchCancelled(Touch* touch, Event* event)
 
 Rect ScrollView::getViewRect()
 {
-    Point screenPos = this->convertToWorldSpace(PointZero);
+    Point screenPos = this->convertToWorldSpace(Point::ZERO);
     
     float scaleX = this->getScaleX();
     float scaleY = this->getScaleY();

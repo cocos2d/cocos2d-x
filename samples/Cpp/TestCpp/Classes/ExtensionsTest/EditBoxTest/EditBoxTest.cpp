@@ -30,7 +30,7 @@ EditBoxTest::EditBoxTest()
     MenuItemFont *itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(EditBoxTest::toExtensionsMainLayer, this));
     itemBack->setPosition(Point(visibleOrigin.x+visibleSize.width - 50, visibleOrigin.y+25));
     Menu *menuBack = Menu::create(itemBack, NULL);
-    menuBack->setPosition(PointZero);
+    menuBack->setPosition(Point::ZERO);
     addChild(menuBack);
     
     Size editBoxSize = Size(visibleSize.width - 100, 60);

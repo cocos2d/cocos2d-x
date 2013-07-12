@@ -25,7 +25,7 @@ enum
     kItemTagBasic = 5432,
 };
 
-static Point s_tCurPos = PointZero;
+static Point s_tCurPos = Point::ZERO;
 
 struct {
 	const char *test_name;
@@ -89,7 +89,7 @@ void BugsTestMainLayer::ccTouchesMoved(Set *pTouches, Event *pEvent)
     Size winSize = Director::sharedDirector()->getWinSize();
     if (nextPos.y < 0.0f)
     {
-        _itmeMenu->setPosition(PointZero);
+        _itmeMenu->setPosition(Point::ZERO);
         return;
     }
 
@@ -118,7 +118,7 @@ void BugsTestBaseLayer::onEnter()
     MenuItemFont* pMainItem = MenuItemFont::create("Back", CC_CALLBACK_1(BugsTestBaseLayer::backCallback, this));
     pMainItem->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
     Menu* pMenu = Menu::create(pMainItem, NULL);
-    pMenu->setPosition( PointZero );
+    pMenu->setPosition( Point::ZERO );
     addChild(pMenu);
 }
 

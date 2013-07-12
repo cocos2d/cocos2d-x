@@ -73,7 +73,7 @@ LabelTTF * LabelTTF::create()
 LabelTTF * LabelTTF::create(const char *string, const char *fontName, float fontSize)
 {
     return LabelTTF::create(string, fontName, fontSize,
-                              SizeZero, kTextAlignmentCenter, kVerticalTextAlignmentTop);
+                              Size::ZERO, kTextAlignmentCenter, kVerticalTextAlignmentTop);
 }
 
 LabelTTF * LabelTTF::create(const char *string, const char *fontName, float fontSize,
@@ -122,7 +122,7 @@ bool LabelTTF::initWithString(const char *label, const char *fontName, float fon
 bool LabelTTF::initWithString(const char *label, const char *fontName, float fontSize)
 {
     return this->initWithString(label, fontName, fontSize, 
-                                SizeZero, kTextAlignmentLeft, kVerticalTextAlignmentTop);
+                                Size::ZERO, kTextAlignmentLeft, kVerticalTextAlignmentTop);
 }
 
 bool LabelTTF::initWithString(const char *string, const char *fontName, float fontSize,
@@ -320,7 +320,7 @@ bool LabelTTF::updateTexture()
     tex->release();
     
     // set the size in the sprite
-    Rect rect =RectZero;
+    Rect rect =Rect::ZERO;
     rect.size   = _texture->getContentSize();
     this->setTextureRect(rect);
     

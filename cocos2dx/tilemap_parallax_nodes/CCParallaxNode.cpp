@@ -132,7 +132,7 @@ The positions are updated at visit because:
 void ParallaxNode::visit()
 {
     //    Point pos = position_;
-    //    Point    pos = [self convertToWorldSpace:PointZero];
+    //    Point    pos = [self convertToWorldSpace:Point::ZERO];
     Point pos = this->absolutePosition();
     if( ! pos.equals(_lastPosition) )
     {

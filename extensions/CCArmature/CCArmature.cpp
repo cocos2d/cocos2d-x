@@ -360,7 +360,7 @@ AffineTransform Armature::nodeToParentTransform()
         // optimization:
         // inline anchor point calculation if skew is not needed
         // Adjusted transform calculation for rotational skew
-        if (! needsSkewMatrix && !_anchorPointInPoints.equals(PointZero))
+        if (! needsSkewMatrix && !_anchorPointInPoints.equals(Point::ZERO))
         {
             x += cy * -_anchorPointInPoints.x * _scaleX + -sx * -_anchorPointInPoints.y * _scaleY;
             y += sy * -_anchorPointInPoints.x * _scaleX +  cx * -_anchorPointInPoints.y * _scaleY;
@@ -383,7 +383,7 @@ AffineTransform Armature::nodeToParentTransform()
             _transform = AffineTransformConcat(skewMatrix, _transform);
 
             // adjust anchor point
-            if (!_anchorPointInPoints.equals(PointZero))
+            if (!_anchorPointInPoints.equals(Point::ZERO))
             {
                 _transform = AffineTransformTranslate(_transform, -_anchorPointInPoints.x, -_anchorPointInPoints.y);
             }

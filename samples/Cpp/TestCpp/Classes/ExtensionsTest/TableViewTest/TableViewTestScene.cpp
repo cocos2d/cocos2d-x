@@ -42,7 +42,7 @@ bool TableViewTestLayer::init()
 	MenuItemFont *itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(TableViewTestLayer::toExtensionsMainLayer, this));
 	itemBack->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
 	Menu *menuBack = Menu::create(itemBack, NULL);
-	menuBack->setPosition(PointZero);
+	menuBack->setPosition(Point::ZERO);
 	addChild(menuBack);
 
     return true;
@@ -76,13 +76,13 @@ TableViewCell* TableViewTestLayer::tableCellAtIndex(TableView *table, unsigned i
         cell = new CustomTableViewCell();
         cell->autorelease();
         Sprite *sprite = Sprite::create("Images/Icon.png");
-        sprite->setAnchorPoint(PointZero);
+        sprite->setAnchorPoint(Point::ZERO);
         sprite->setPosition(Point(0, 0));
         cell->addChild(sprite);
 
         LabelTTF *label = LabelTTF::create(string->getCString(), "Helvetica", 20.0);
-        label->setPosition(PointZero);
-		label->setAnchorPoint(PointZero);
+        label->setPosition(Point::ZERO);
+		label->setAnchorPoint(Point::ZERO);
         label->setTag(123);
         cell->addChild(label);
     }

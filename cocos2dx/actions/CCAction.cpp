@@ -169,7 +169,7 @@ Follow::~Follow()
     CC_SAFE_RELEASE(_followedNode);
 }
 
-Follow* Follow::create(Node *pFollowedNode, const Rect& rect/* = RectZero*/)
+Follow* Follow::create(Node *pFollowedNode, const Rect& rect/* = Rect::ZERO*/)
 {
     Follow *pRet = new Follow();
     if (pRet && pRet->initWithTarget(pFollowedNode, rect))
@@ -190,14 +190,14 @@ Follow* Follow::clone() const
 	return a;
 }
 
-bool Follow::initWithTarget(Node *pFollowedNode, const Rect& rect/* = RectZero*/)
+bool Follow::initWithTarget(Node *pFollowedNode, const Rect& rect/* = Rect::ZERO*/)
 {
     CCAssert(pFollowedNode != NULL, "");
  
     pFollowedNode->retain();
     _followedNode = pFollowedNode;
 	_worldRect = rect;
-    if (rect.equals(RectZero))
+    if (rect.equals(Rect::ZERO))
     {
         _boundarySet = false;
     }

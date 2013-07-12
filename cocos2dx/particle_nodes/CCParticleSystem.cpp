@@ -94,8 +94,8 @@ ParticleSystem::ParticleSystem()
 , _isActive(true)
 , _particleCount(0)
 , _duration(0)
-, _sourcePosition(PointZero)
-, _posVar(PointZero)
+, _sourcePosition(Point::ZERO)
+, _posVar(Point::ZERO)
 , _life(0)
 , _lifeVar(0)
 , _angle(0)
@@ -117,7 +117,7 @@ ParticleSystem::ParticleSystem()
 , _isAutoRemoveOnFinish(false)
 , _emitterMode(kParticleModeGravity)
 {
-    modeA.gravity = PointZero;
+    modeA.gravity = Point::ZERO;
     modeA.speed = 0;
     modeA.speedVar = 0;
     modeA.tangentialAccel = 0;
@@ -523,7 +523,7 @@ void ParticleSystem::initParticle(tParticle* particle)
     // position
     if( _positionType == kPositionTypeFree )
     {
-        particle->startPos = this->convertToWorldSpace(PointZero);
+        particle->startPos = this->convertToWorldSpace(Point::ZERO);
     }
     else if ( _positionType == kPositionTypeRelative )
     {
@@ -628,10 +628,10 @@ void ParticleSystem::update(float dt)
 
     _particleIdx = 0;
 
-    Point currentPosition = PointZero;
+    Point currentPosition = Point::ZERO;
     if (_positionType == kPositionTypeFree)
     {
-        currentPosition = this->convertToWorldSpace(PointZero);
+        currentPosition = this->convertToWorldSpace(Point::ZERO);
     }
     else if (_positionType == kPositionTypeRelative)
     {
@@ -654,7 +654,7 @@ void ParticleSystem::update(float dt)
                 {
                     Point tmp, radial, tangential;
 
-                    radial = PointZero;
+                    radial = Point::ZERO;
                     // radial acceleration
                     if (p->pos.x || p->pos.y)
                     {

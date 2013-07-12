@@ -1059,7 +1059,7 @@ SpriteAnchorPoint::SpriteAnchorPoint()
         switch(i) 
         {
             case 0:
-                sprite->setAnchorPoint( PointZero );
+                sprite->setAnchorPoint( Point::ZERO );
                 break;
             case 1:
                 sprite->setAnchorPoint( Point(0.5f, 0.5f) );
@@ -1111,7 +1111,7 @@ SpriteBatchNodeAnchorPoint::SpriteBatchNodeAnchorPoint()
         switch(i) 
         {
             case 0:
-                sprite->setAnchorPoint( PointZero );
+                sprite->setAnchorPoint( Point::ZERO );
                 break;
             case 1:
                 sprite->setAnchorPoint( Point(0.5f, 0.5f) );
@@ -1810,7 +1810,7 @@ SpriteOffsetAnchorRotation::SpriteOffsetAnchorRotation()
         switch(i) 
         {
             case 0:
-                sprite->setAnchorPoint( PointZero );
+                sprite->setAnchorPoint( Point::ZERO );
                 break;
             case 1:
                 sprite->setAnchorPoint( Point(0.5f, 0.5f) );
@@ -1887,7 +1887,7 @@ SpriteBatchNodeOffsetAnchorRotation::SpriteBatchNodeOffsetAnchorRotation()
         switch(i) 
         {
             case 0:
-                sprite->setAnchorPoint( PointZero );
+                sprite->setAnchorPoint( Point::ZERO );
                 break;
             case 1:
                 sprite->setAnchorPoint( Point(0.5f, 0.5f) );
@@ -1962,7 +1962,7 @@ SpriteOffsetAnchorScale::SpriteOffsetAnchorScale()
         switch(i) 
         {
             case 0:
-                sprite->setAnchorPoint( PointZero );
+                sprite->setAnchorPoint( Point::ZERO );
                 break;
             case 1:
                 sprite->setAnchorPoint( Point(0.5f, 0.5f) );
@@ -2039,7 +2039,7 @@ SpriteBatchNodeOffsetAnchorScale::SpriteBatchNodeOffsetAnchorScale()
         
         switch(i) {
             case 0:
-                sprite->setAnchorPoint( PointZero );
+                sprite->setAnchorPoint( Point::ZERO );
                 break;
             case 1:
                 sprite->setAnchorPoint( Point(0.5f, 0.5f) );
@@ -3644,7 +3644,7 @@ SpriteOffsetAnchorSkew::SpriteOffsetAnchorSkew()
         switch (i)
         {
         case 0:
-            sprite->setAnchorPoint(PointZero);
+            sprite->setAnchorPoint(Point::ZERO);
             break;
         case 1:
             sprite->setAnchorPoint(Point(0.5f, 0.5f));
@@ -3722,7 +3722,7 @@ SpriteBatchNodeOffsetAnchorSkew::SpriteBatchNodeOffsetAnchorSkew()
         switch (i)
         {
         case 0:
-            sprite->setAnchorPoint(PointZero);
+            sprite->setAnchorPoint(Point::ZERO);
             break;
         case 1:
             sprite->setAnchorPoint(Point(0.5f, 0.5f));
@@ -3797,7 +3797,7 @@ SpriteOffsetAnchorSkewScale::SpriteOffsetAnchorSkewScale()
         switch (i)
         {
         case 0:
-            sprite->setAnchorPoint(PointZero);
+            sprite->setAnchorPoint(Point::ZERO);
             break;
         case 1:
             sprite->setAnchorPoint(Point(0.5f, 0.5f));
@@ -3879,7 +3879,7 @@ SpriteBatchNodeOffsetAnchorSkewScale::SpriteBatchNodeOffsetAnchorSkewScale()
         switch (i)
         {
         case 0:
-            sprite->setAnchorPoint(PointZero);
+            sprite->setAnchorPoint(Point::ZERO);
             break;
         case 1:
             sprite->setAnchorPoint(Point(0.5f, 0.5f));
@@ -3961,7 +3961,7 @@ SpriteOffsetAnchorFlip::SpriteOffsetAnchorFlip()
         switch (i)
         {
         case 0:
-            sprite->setAnchorPoint(PointZero);
+            sprite->setAnchorPoint(Point::ZERO);
             break;
         case 1:
             sprite->setAnchorPoint(Point(0.5f, 0.5f));
@@ -4043,7 +4043,7 @@ SpriteBatchNodeOffsetAnchorFlip::SpriteBatchNodeOffsetAnchorFlip()
         switch (i)
         {
         case 0:
-            sprite->setAnchorPoint(PointZero);
+            sprite->setAnchorPoint(Point::ZERO);
             break;
         case 1:
             sprite->setAnchorPoint(Point(0.5f, 0.5f));
@@ -4327,7 +4327,7 @@ SpriteOffsetAnchorRotationalSkew::SpriteOffsetAnchorRotationalSkew()
         switch(i)
         {
             case 0:
-                sprite->setAnchorPoint(PointZero);
+                sprite->setAnchorPoint(Point::ZERO);
                 break;
             case 1:
                 sprite->setAnchorPoint(Point(0.5f, 0.5f));
@@ -4403,7 +4403,7 @@ SpriteBatchNodeOffsetAnchorRotationalSkew::SpriteBatchNodeOffsetAnchorRotational
         switch(i)
         {
             case 0:
-                sprite->setAnchorPoint(PointZero);
+                sprite->setAnchorPoint(Point::ZERO);
                 break;
             case 1:
                 sprite->setAnchorPoint(Point(0.5f, 0.5f));
@@ -4476,7 +4476,7 @@ SpriteOffsetAnchorRotationalSkewScale::SpriteOffsetAnchorRotationalSkewScale()
         switch(i)
         {
             case 0:
-                sprite->setAnchorPoint(PointZero);
+                sprite->setAnchorPoint(Point::ZERO);
                 break;
             case 1:
                 sprite->setAnchorPoint(Point(0.5f, 0.5f));
@@ -4559,7 +4559,7 @@ SpriteBatchNodeOffsetAnchorRotationalSkewScale::SpriteBatchNodeOffsetAnchorRotat
         switch(i)
         {
             case 0:
-                sprite->setAnchorPoint(PointZero);
+                sprite->setAnchorPoint(Point::ZERO);
                 break;
             case 1:
                 sprite->setAnchorPoint(Point(0.5f, 0.5f));

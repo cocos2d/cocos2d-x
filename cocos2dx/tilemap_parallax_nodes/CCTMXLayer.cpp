@@ -99,8 +99,8 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
 }
 
 TMXLayer::TMXLayer()
-:_layerSize(SizeZero)
-,_mapTileSize(SizeZero)
+:_layerSize(Size::ZERO)
+,_mapTileSize(Size::ZERO)
 ,_tiles(NULL)
 ,_tileSet(NULL)
 ,_properties(NULL)
@@ -243,7 +243,7 @@ void TMXLayer::setupTileSprite(Sprite* sprite, Point pos, unsigned int gid)
 {
     sprite->setPosition(positionAt(pos));
     sprite->setVertexZ((float)vertexZForPos(pos));
-    sprite->setAnchorPoint(PointZero);
+    sprite->setAnchorPoint(Point::ZERO);
     sprite->setOpacity(_opacity);
 
     //issue 1264, flip can be undone as well
@@ -346,7 +346,7 @@ Sprite * TMXLayer::tileAt(const Point& pos)
             tile->setBatchNode(this);
             tile->setPosition(positionAt(pos));
             tile->setVertexZ((float)vertexZForPos(pos));
-            tile->setAnchorPoint(PointZero);
+            tile->setAnchorPoint(Point::ZERO);
             tile->setOpacity(_opacity);
 
             unsigned int indexForZ = atlasIndexForExistantZ(z);
@@ -629,7 +629,7 @@ void TMXLayer::removeTileAt(const Point& pos)
 //CCTMXLayer - obtaining positions, offset
 Point TMXLayer::calculateLayerOffset(const Point& pos)
 {
-    Point ret = PointZero;
+    Point ret = Point::ZERO;
     switch (_layerOrientation) 
     {
     case TMXOrientationOrtho:
@@ -640,14 +640,14 @@ Point TMXLayer::calculateLayerOffset(const Point& pos)
                   (_mapTileSize.height /2 ) * (-pos.x - pos.y));
         break;
     case TMXOrientationHex:
-        CCAssert(pos.equals(PointZero), "offset for hexagonal map not implemented yet");
+        CCAssert(pos.equals(Point::ZERO), "offset for hexagonal map not implemented yet");
         break;
     }
     return ret;    
 }
 Point TMXLayer::positionAt(const Point& pos)
 {
-    Point ret = PointZero;
+    Point ret = Point::ZERO;
     switch (_layerOrientation)
     {
     case TMXOrientationOrtho:

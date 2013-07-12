@@ -38,7 +38,7 @@ void PerformanceMainLayer::onEnter()
     Size s = Director::sharedDirector()->getWinSize();
 
     Menu* pMenu = Menu::create();
-    pMenu->setPosition( PointZero );
+    pMenu->setPosition( Point::ZERO );
     MenuItemFont::setFontName("Arial");
     MenuItemFont::setFontSize(24);
     for (int i = 0; i < g_testMax; ++i)
@@ -73,7 +73,7 @@ void PerformBasicLayer::onEnter()
     MenuItemFont* pMainItem = MenuItemFont::create("Back", CC_CALLBACK_1(PerformBasicLayer::toMainLayer, this));
     pMainItem->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
     Menu* pMenu = Menu::create(pMainItem, NULL);
-    pMenu->setPosition( PointZero );
+    pMenu->setPosition( Point::ZERO );
 
     if (_controlMenuVisible)
     {

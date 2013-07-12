@@ -335,17 +335,17 @@ public:
 };
 
 
-CC_DEPRECATED_ATTRIBUTE Point CCPointMake(float x, float y)
+CC_DEPRECATED_ATTRIBUTE inline Point CCPointMake(float x, float y)
 {
     return Point(x, y);
 }
 
-CC_DEPRECATED_ATTRIBUTE Size CCSizeMake(float width, float height)
+CC_DEPRECATED_ATTRIBUTE inline Size CCSizeMake(float width, float height)
 {
     return Size(width, height);
 }
 
-CC_DEPRECATED_ATTRIBUTE Rect CCRectMake(float x, float y, float width, float height)
+CC_DEPRECATED_ATTRIBUTE inline Rect CCRectMake(float x, float y, float width, float height)
 {
     return Rect(x, y, width, height);
 }

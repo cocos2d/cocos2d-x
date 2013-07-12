@@ -85,7 +85,7 @@ NotificationCenterTest::NotificationCenterTest()
     MenuItemFont* pBackItem = MenuItemFont::create("Back", CC_CALLBACK_1(NotificationCenterTest::toExtensionsMainLayer, this));
     pBackItem->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
     Menu* pBackMenu = Menu::create(pBackItem, NULL);
-    pBackMenu->setPosition( PointZero );
+    pBackMenu->setPosition( Point::ZERO );
     addChild(pBackMenu);
 
     LabelTTF *label1 = LabelTTF::create("switch off", "Marker Felt", 26);
@@ -100,7 +100,7 @@ NotificationCenterTest::NotificationCenterTest()
     addChild(menu);
 
     Menu *menuConnect = Menu::create();
-    menuConnect->setPosition(PointZero);
+    menuConnect->setPosition(Point::ZERO);
     addChild(menuConnect);
 
     for (int i = 1; i <= 3; i++)
