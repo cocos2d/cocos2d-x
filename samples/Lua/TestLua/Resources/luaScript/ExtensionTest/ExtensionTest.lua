@@ -74,7 +74,7 @@ local function runNotificationCenterTest()
     		if 0 == nIndex  then
     			selectedItem = nil
     		end
-    		CCNotificationCenter:sharedNotificationCenter():postNotification(NotificationCenterParam.MSG_SWITCH_STATE,selectedItem)
+    		CCNotificationCenter:getInstance():postNotification(NotificationCenterParam.MSG_SWITCH_STATE,selectedItem)
     	end
     	
     	local switchlabel1 = CCLabelTTF:create("switch off", "Marker Felt", 26)
@@ -130,9 +130,9 @@ local function runNotificationCenterTest()
     		bConnectArray[nIdx]  = bConnect
     		print("come in")
     		if bConnect then
-    			CCNotificationCenter:sharedNotificationCenter():registerScriptObserver(pLight, switchStateChanged,NotificationCenterParam.MSG_SWITCH_STATE)
+    			CCNotificationCenter:getInstance():registerScriptObserver(pLight, switchStateChanged,NotificationCenterParam.MSG_SWITCH_STATE)
     		else
-    			CCNotificationCenter:sharedNotificationCenter():unregisterScriptObserver(pLight,NotificationCenterParam.MSG_SWITCH_STATE)
+    			CCNotificationCenter:getInstance():unregisterScriptObserver(pLight,NotificationCenterParam.MSG_SWITCH_STATE)
     		end
     		updateLightState()
     	end
@@ -187,28 +187,28 @@ local function runNotificationCenterTest()
     	if 0 == toggleSelectIndex  then
     		toggleSelectedItem = nil
     	end
-    	CCNotificationCenter:sharedNotificationCenter():postNotification(NotificationCenterParam.MSG_SWITCH_STATE, toggleSelectedItem)
+    	CCNotificationCenter:getInstance():postNotification(NotificationCenterParam.MSG_SWITCH_STATE, toggleSelectedItem)
     	
     	--for testing removeAllObservers */
     	local function doNothing()
     	end
-    	CCNotificationCenter:sharedNotificationCenter():registerScriptObserver(pNewLayer,doNothing, "random-observer1")
-    	CCNotificationCenter:sharedNotificationCenter():registerScriptObserver(pNewLayer,doNothing, "random-observer2")
-    	CCNotificationCenter:sharedNotificationCenter():registerScriptObserver(pNewLayer,doNothing, "random-observer3")
+    	CCNotificationCenter:getInstance():registerScriptObserver(pNewLayer,doNothing, "random-observer1")
+    	CCNotificationCenter:getInstance():registerScriptObserver(pNewLayer,doNothing, "random-observer2")
+    	CCNotificationCenter:getInstance():registerScriptObserver(pNewLayer,doNothing, "random-observer3")
     	
     	local function CreateToMainMenu(pMenu)
 		     if nil == pMenu then
 				return
 			 end
 			 local function toMainLayer()
-				local numObserversRemoved = CCNotificationCenter:sharedNotificationCenter():removeAllObservers(pNewLayer)
+				local numObserversRemoved = CCNotificationCenter:getInstance():removeAllObservers(pNewLayer)
 				if 3 ~= numObserversRemoved then
 					print("All observers were not removed!")
 				end
 				
 				for i = 1 , 3 do					 
 					 if bConnectArray[i] then
-					 	CCNotificationCenter:sharedNotificationCenter():unregisterScriptObserver(lightArray[i],NotificationCenterParam.MSG_SWITCH_STATE)
+					 	CCNotificationCenter:getInstance():unregisterScriptObserver(lightArray[i],NotificationCenterParam.MSG_SWITCH_STATE)
 					 end   		    			
 				end
 				
