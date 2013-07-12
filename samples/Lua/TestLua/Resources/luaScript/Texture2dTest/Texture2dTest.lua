@@ -7,10 +7,10 @@ local originCreateLayer = createTestLayer
 local function createTestLayer(title, subtitle)
     local ret = originCreateLayer(title, subtitle)
     Helper.titleLabel:setTag(kTagLabel)
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     local col = CCLayerColor:create(Color4B(128,128,128,255))
     ret:addChild(col, -10)
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 --------------------------------------------------------------------
@@ -26,7 +26,7 @@ local function TextureTIFF()
     local img = CCSprite:create("Images/test_image.tiff")
     img:setPosition(ccp( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -43,7 +43,7 @@ local function TexturePNG()
     local img = CCSprite:create("Images/test_image.png")
     img:setPosition(ccp( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -59,7 +59,7 @@ local function TextureJPEG()
     local img = CCSprite:create("Images/test_image.jpeg")
     img:setPosition(ccp( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -75,7 +75,7 @@ local function TextureWEBP()
     local img = CCSprite:create("Images/test_image.webp")
     img:setPosition(ccp( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -89,7 +89,7 @@ local function TextureMipMap()
                                 "Left image uses mipmap. Right image doesn't")
     local s = CCDirector:getInstance():getWinSize()
 
-    local texture0 = CCTextureCache:sharedTextureCache():addImage(
+    local texture0 = CCTextureCache:getInstance():addImage(
         "Images/grossini_dance_atlas.png")
     texture0:generateMipmap()
     local texParams     = ccTexParams()
@@ -99,7 +99,7 @@ local function TextureMipMap()
     texParams.wrapT     = GL_CLAMP_TO_EDGE
     texture0:setTexParameters(texParams)
 
-    local texture1 = CCTextureCache:sharedTextureCache():addImage(
+    local texture1 = CCTextureCache:getInstance():addImage(
         "Images/grossini_dance_atlas_nomipmap.png")
 
     local img0 = CCSprite:createWithTexture(texture0)
@@ -127,7 +127,7 @@ local function TextureMipMap()
     arr:addObject(scale2)
     arr:addObject(sc_back2)
     img1:runAction(CCRepeatForever:create(CCSequence:create(arr)))
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -180,7 +180,7 @@ local function TexturePVRMipMap()
 
         img:runAction(CCRepeatForever:create(CCSequence:create(arr)))
     end
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -227,7 +227,7 @@ local function TexturePVRMipMap2()
     arr:addObject(sc_back2)
 
     img:runAction(CCRepeatForever:create(CCSequence:create(arr)))
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -250,7 +250,7 @@ local function TexturePVR2BPP()
         ret:addChild(img)
     end
 
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -273,7 +273,7 @@ local function TexturePVR()
     else
         cclog("This test is not supported.")
     end
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -297,7 +297,7 @@ local function TexturePVR4BPP()
     else
         cclog("This test is not supported in cocos2d-mac")
     end
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -316,7 +316,7 @@ local function TexturePVRRGBA8888()
     local img = CCSprite:create("Images/test_image_rgba8888.pvr")
     img:setPosition(ccp( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -339,7 +339,7 @@ local function TexturePVRBGRA8888()
     else
         cclog("BGRA8888 images are not supported")
     end
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -357,7 +357,7 @@ local function TexturePVRRGBA5551()
     local img = CCSprite:create("Images/test_image_rgba5551.pvr")
     img:setPosition(ccp( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -375,7 +375,7 @@ local function TexturePVRRGBA4444()
     local img = CCSprite:create("Images/test_image_rgba4444.pvr")
     img:setPosition(ccp( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -394,7 +394,7 @@ local function TexturePVRRGBA4444GZ()
     local img = CCSprite:create("Images/test_image_rgba4444.pvr")
     img:setPosition(ccp( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -413,7 +413,7 @@ local function TexturePVRRGBA4444CCZ()
     local img = CCSprite:create("Images/test_image_rgba4444.pvr.ccz")
     img:setPosition(ccp( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -431,7 +431,7 @@ local function TexturePVRRGB565()
     local img = CCSprite:create("Images/test_image_rgb565.pvr")
     img:setPosition(ccp( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -447,7 +447,7 @@ local function TexturePVRRGB888()
         img:setPosition(ccp( s.width/2.0, s.height/2.0))
         ret:addChild(img)
     end
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -465,7 +465,7 @@ local function TexturePVRA8()
     local img = CCSprite:create("Images/test_image_a8.pvr")
     img:setPosition(ccp( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -483,7 +483,7 @@ local function TexturePVRI8()
     local img = CCSprite:create("Images/test_image_i8.pvr")
     img:setPosition(ccp( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -502,7 +502,7 @@ local function TexturePVRAI88()
     local img = CCSprite:create("Images/test_image_ai88.pvr")
     img:setPosition(ccp( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -517,7 +517,7 @@ local function TexturePVR2BPPv3()
         img:setPosition(ccp(s.width/2.0, s.height/2.0))
         ret:addChild(img)
     end
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -533,7 +533,7 @@ local function TexturePVRII2BPPv3()
         ret:addChild(img)
     end
 
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -551,7 +551,7 @@ local function TexturePVR4BPPv3()
         cclog("This test is not supported")
     end
 
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -573,7 +573,7 @@ local function TexturePVRII4BPPv3()
     else
         cclog("This test is not supported")
     end
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -590,7 +590,7 @@ local function TexturePVRRGBA8888v3()
         ret:addChild(img)
     end
 
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -610,7 +610,7 @@ local function TexturePVRBGRA8888v3()
         cclog("BGRA images are not supported")
     end
 
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -626,7 +626,7 @@ local function TexturePVRRGBA5551v3()
         ret:addChild(img)
     end
 
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -643,7 +643,7 @@ local function TexturePVRRGBA4444v3()
         ret:addChild(img)
     end
 
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -660,7 +660,7 @@ local function TexturePVRRGB565v3()
         ret:addChild(img)
     end
 
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -677,7 +677,7 @@ local function TexturePVRRGB888v3()
         ret:addChild(img)
     end
 
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -694,7 +694,7 @@ local function TexturePVRA8v3()
         ret:addChild(img)
     end
 
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -711,7 +711,7 @@ local function TexturePVRI8v3()
         ret:addChild(img)
     end
 
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -728,7 +728,7 @@ local function TexturePVRAI88v3()
         ret:addChild(img)
     end
 
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -765,7 +765,7 @@ local function TexturePVRNonSquare()
     local img = CCSprite:create("Images/grossini_128x256_mipmap.pvr")
     img:setPosition(ccp( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -784,7 +784,7 @@ local function TexturePVRNPOT4444()
         img:setPosition(ccp( s.width/2.0, s.height/2.0))
         ret:addChild(img)
     end
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -803,7 +803,7 @@ local function TexturePVRNPOT8888()
         img:setPosition(ccp( s.width/2.0, s.height/2.0))
         ret:addChild(img)
     end
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -851,7 +851,7 @@ local function TextureAlias()
 
     sprite2:runAction(scaleforever)
     sprite:runAction(scaleToo)
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -886,7 +886,7 @@ local function TexturePixelFormat()
     ret:addChild(sprite1, 0)
 
     -- remove texture from texture manager
-    CCTextureCache:sharedTextureCache():removeTexture(sprite1:getTexture())
+    CCTextureCache:getInstance():removeTexture(sprite1:getTexture())
 
     -- RGBA 4444 image (16-bit)
     CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444)
@@ -895,7 +895,7 @@ local function TexturePixelFormat()
     ret:addChild(sprite2, 0)
 
     -- remove texture from texture manager
-    CCTextureCache:sharedTextureCache():removeTexture(sprite2:getTexture())
+    CCTextureCache:getInstance():removeTexture(sprite2:getTexture())
 
     -- RGB5A1 image (16-bit)
     CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB5A1)
@@ -904,7 +904,7 @@ local function TexturePixelFormat()
     ret:addChild(sprite3, 0)
 
     -- remove texture from texture manager
-    CCTextureCache:sharedTextureCache():removeTexture(sprite3:getTexture())
+    CCTextureCache:getInstance():removeTexture(sprite3:getTexture())
 
     -- RGB888 image
     CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB888)
@@ -913,7 +913,7 @@ local function TexturePixelFormat()
     ret:addChild(sprite4, 0)
 
     -- remove texture from texture manager
-    CCTextureCache:sharedTextureCache():removeTexture(sprite4:getTexture())
+    CCTextureCache:getInstance():removeTexture(sprite4:getTexture())
 
     -- RGB565 image (16-bit)
     CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB565)
@@ -922,7 +922,7 @@ local function TexturePixelFormat()
     ret:addChild(sprite5, 0)
 
     -- remove texture from texture manager
-    CCTextureCache:sharedTextureCache():removeTexture(sprite5:getTexture())
+    CCTextureCache:getInstance():removeTexture(sprite5:getTexture())
 
     -- A8 image (8-bit)
     CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_A8)
@@ -931,7 +931,7 @@ local function TexturePixelFormat()
     ret:addChild(sprite6, 0)
 
     -- remove texture from texture manager
-    CCTextureCache:sharedTextureCache():removeTexture(sprite6:getTexture())
+    CCTextureCache:getInstance():removeTexture(sprite6:getTexture())
 
     local  fadeout = CCFadeOut:create(2)
     local   fadein  = CCFadeIn:create(2)
@@ -954,7 +954,7 @@ local function TexturePixelFormat()
 
     -- restore default
     CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_Default)
-    CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
+    CCTextureCache:getInstance():dumpCachedTextureInfo()
     return ret
 end
 
@@ -1055,16 +1055,16 @@ local function TextureAsync()
             for j=0, 7 do
                 local szSpriteName = string.format(
                     "Images/sprites_test/sprite-%d-%d.png", i, j)
-                CCTextureCache:sharedTextureCache():addImageAsync(
+                CCTextureCache:getInstance():addImageAsync(
                     szSpriteName, imageLoaded)
             end
         end
 
-        CCTextureCache:sharedTextureCache():addImageAsync("Images/background1.jpg", imageLoaded)
-        CCTextureCache:sharedTextureCache():addImageAsync("Images/background2.jpg", imageLoaded)
-        CCTextureCache:sharedTextureCache():addImageAsync("Images/background.png", imageLoaded)
-        CCTextureCache:sharedTextureCache():addImageAsync("Images/atlastest.png", imageLoaded)
-        CCTextureCache:sharedTextureCache():addImageAsync("Images/grossini_dance_atlas.png",imageLoaded)
+        CCTextureCache:getInstance():addImageAsync("Images/background1.jpg", imageLoaded)
+        CCTextureCache:getInstance():addImageAsync("Images/background2.jpg", imageLoaded)
+        CCTextureCache:getInstance():addImageAsync("Images/background.png", imageLoaded)
+        CCTextureCache:getInstance():addImageAsync("Images/atlastest.png", imageLoaded)
+        CCTextureCache:getInstance():addImageAsync("Images/grossini_dance_atlas.png",imageLoaded)
     end
 
     local schedulerEntry = nil
@@ -1073,7 +1073,7 @@ local function TextureAsync()
             schedulerEntry = scheduler:scheduleScriptFunc(loadImages, 1.0, false)
         elseif event == "exit" then
             scheduler:unscheduleScriptEntry(schedulerEntry)
-            CCTextureCache:sharedTextureCache():removeAllTextures()
+            CCTextureCache:getInstance():removeAllTextures()
         end
     end
 
@@ -1115,7 +1115,7 @@ local function TextureGlClamp()
     sprite:runAction(seq)
     local function onNodeEvent(event)
         if event == "exit" then
-            CCTextureCache:sharedTextureCache():removeUnusedTextures()
+            CCTextureCache:getInstance():removeUnusedTextures()
         end
     end
 
@@ -1159,7 +1159,7 @@ local function TextureGlRepeat()
     sprite:runAction(seq)
     local function onNodeEvent(event)
         if event == "exit" then
-            CCTextureCache:sharedTextureCache():removeUnusedTextures()
+            CCTextureCache:getInstance():removeUnusedTextures()
         end
     end
 
@@ -1227,7 +1227,7 @@ local function TextureCache1()
     sprite:setScale(2)
     ret:addChild(sprite)
 
-    CCTextureCache:sharedTextureCache():removeTexture(sprite:getTexture())
+    CCTextureCache:getInstance():removeTexture(sprite:getTexture())
 
     sprite = CCSprite:create("Images/grossinis_sister1.png")
     sprite:setPosition(ccp(s.width/5*2, s.height/2))
@@ -1243,7 +1243,7 @@ local function TextureCache1()
     sprite:setScale(2)
     ret:addChild(sprite)
 
-    CCTextureCache:sharedTextureCache():removeTextureForKey("Images/grossinis_sister2.png")
+    CCTextureCache:getInstance():removeTextureForKey("Images/grossinis_sister2.png")
 
     sprite = CCSprite:create("Images/grossinis_sister2.png")
     sprite:setPosition(ccp(s.width/5*4, s.height/2))
@@ -1269,8 +1269,8 @@ local function TextureDrawAtPoint()
         m_pTex2F:drawAtPoint(ccp(s.width/2+50, s.height/2 - 50))
     end
 
-    m_pTex1 = CCTextureCache:sharedTextureCache():addImage("Images/grossinis_sister1.png")
-    m_pTex2F = CCTextureCache:sharedTextureCache():addImage("Images/grossinis_sister2.png")
+    m_pTex1 = CCTextureCache:getInstance():addImage("Images/grossinis_sister1.png")
+    m_pTex2F = CCTextureCache:getInstance():addImage("Images/grossinis_sister2.png")
 
     m_pTex1:retain()
     m_pTex2F:retain()
@@ -1303,8 +1303,8 @@ local function TextureDrawInRect()
         m_pTex2F:drawInRect(rect2)
     end
 
-    local m_pTex1 = CCTextureCache:sharedTextureCache():addImage("Images/grossinis_sister1.png")
-    local m_pTex2F = CCTextureCache:sharedTextureCache():addImage("Images/grossinis_sister2.png")
+    local m_pTex1 = CCTextureCache:getInstance():addImage("Images/grossinis_sister1.png")
+    local m_pTex2F = CCTextureCache:getInstance():addImage("Images/grossinis_sister2.png")
 
     m_pTex1:retain()
     m_pTex2F:retain()
@@ -1337,7 +1337,7 @@ local function TextureMemoryAlloc()
             cclog("updateImage"..tag)
             m_pBackground:removeFromParentAndCleanup(true)
         end
-        CCTextureCache:sharedTextureCache():removeUnusedTextures()
+        CCTextureCache:getInstance():removeUnusedTextures()
 
         local file = ""
         if tag == 0 then
@@ -1451,7 +1451,7 @@ local function TexturePVRv3Premult()
 
     -- PNG
     CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
-    CCTextureCache:sharedTextureCache():removeTextureForKey("Images/grossinis_sister1-testalpha.png")
+    CCTextureCache:getInstance():removeTextureForKey("Images/grossinis_sister1-testalpha.png")
     local png = CCSprite:create("Images/grossinis_sister1-testalpha.png")
     ret:addChild(png, 0)
     png:setPosition(ccp(size.width/4*3, size.height/2))

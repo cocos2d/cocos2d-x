@@ -15,7 +15,7 @@ local function IntervalLayer()
     local s = CCDirector:getInstance():getWinSize()
     -- sun
     local  sun = CCParticleSun:create()
-    sun:setTexture(CCTextureCache:sharedTextureCache():addImage("Images/fire.png"))
+    sun:setTexture(CCTextureCache:getInstance():addImage("Images/fire.png"))
     sun:setPosition( ccp(VisibleRect:rightTop().x-32,VisibleRect:rightTop().y-32) )
 
     sun:setTotalParticles(130)

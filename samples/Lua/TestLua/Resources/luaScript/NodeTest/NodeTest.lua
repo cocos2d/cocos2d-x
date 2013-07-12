@@ -308,7 +308,7 @@ local function shouldNotCrash(dt)
 
     -- if the node has timers, it crashes
     local explosion = CCParticleSun:create()
-    explosion:setTexture(CCTextureCache:sharedTextureCache():addImage("Images/fire.png"))
+    explosion:setTexture(CCTextureCache:getInstance():addImage("Images/fire.png"))
 
     explosion:setPosition(s.width / 2, s.height / 2)
 
@@ -377,7 +377,7 @@ local function StressTest2()
     sublayer:addChild(sp1, 1)
 
     local fire = CCParticleFire:create()
-    fire:setTexture(CCTextureCache:sharedTextureCache():addImage("Images/fire.png"))
+    fire:setTexture(CCTextureCache:getInstance():addImage("Images/fire.png"))
 	fire = tolua.cast(fire, "CCNode")
     fire:setPosition(80, s.height / 2 - 50)
 
