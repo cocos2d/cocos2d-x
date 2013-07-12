@@ -1,7 +1,7 @@
 local    kTagNode = 0
 local    kTagGrossini = 1
 local    kTagSequence = 2
-local scheduler = CCDirector:sharedDirector():getScheduler()
+local scheduler = CCDirector:getInstance():getScheduler()
 --------------------------------------------------------------------
 --
 -- Test1
@@ -75,7 +75,7 @@ local function PauseTest()
         scheduler:unscheduleScriptEntry(schedulerEntry)
         schedulerEntry = nil
         local  node = ret:getChildByTag( kTagGrossini )
-        local  pDirector = CCDirector:sharedDirector()
+        local  pDirector = CCDirector:getInstance()
         pDirector:getActionManager():resumeTarget(node)
     end
 
@@ -91,7 +91,7 @@ local function PauseTest()
             
             local  action = CCMoveBy:create(1, ccp(150,0))
 
-            local  pDirector = CCDirector:sharedDirector()
+            local  pDirector = CCDirector:getInstance()
             pDirector:getActionManager():addAction(action, grossini, true)
 
             schedulerEntry = scheduler:scheduleScriptFunc(unpause, 3.0, false)
@@ -152,7 +152,7 @@ local function ResumeTest()
         scheduler:unscheduleScriptEntry(schedulerEntry)
         schedulerEntry = nil
         local  pGrossini = ret:getChildByTag(kTagGrossini)
-        local  pDirector = CCDirector:sharedDirector()
+        local  pDirector = CCDirector:getInstance()
         pDirector:getActionManager():resumeTarget(pGrossini)
     end
 
@@ -169,7 +169,7 @@ local function ResumeTest()
 
             pGrossini:runAction(CCScaleBy:create(2, 2))
 
-            local  pDirector = CCDirector:sharedDirector()
+            local  pDirector = CCDirector:getInstance()
             pDirector:getActionManager():pauseTarget(pGrossini)
             pGrossini:runAction(CCRotateBy:create(2, 360))
 
@@ -190,7 +190,7 @@ end
 function ActionManagerTestMain()
     cclog("ActionManagerTestMain")
     Helper.index = 1
-    CCDirector:sharedDirector():setDepthTest(true)
+    CCDirector:getInstance():setDepthTest(true)
     local scene = CCScene:create()
 
     Helper.createFunctionTable = {

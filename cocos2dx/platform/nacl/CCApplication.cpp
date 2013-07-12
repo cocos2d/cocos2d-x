@@ -69,7 +69,7 @@ int Application::run()
     for (;;)
     {
         //long iLastTime = getCurrentMillSecond();
-        Director::sharedDirector()->mainLoop();
+        Director::getInstance()->mainLoop();
         EGLView::sharedOpenGLView()->ProcessEventQueue();
 
         //long iCurTime = getCurrentMillSecond();

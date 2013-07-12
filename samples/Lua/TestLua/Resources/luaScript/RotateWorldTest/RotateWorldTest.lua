@@ -1,5 +1,5 @@
 
-local size = CCDirector:sharedDirector():getWinSize()
+local size = CCDirector:getInstance():getWinSize()
 
 local function CreateSpriteLayer()
 	local layer = CCLayer:create()

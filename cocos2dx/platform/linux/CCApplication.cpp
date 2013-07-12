@@ -50,7 +50,7 @@ int Application::run()
 
 	for (;;) {
 		long iLastTime = getCurrentMillSecond();
-		Director::sharedDirector()->mainLoop();
+		Director::getInstance()->mainLoop();
 		long iCurTime = getCurrentMillSecond();
 		if (iCurTime-iLastTime<_animationInterval){
 			usleep((_animationInterval - iCurTime+iLastTime)*1000);

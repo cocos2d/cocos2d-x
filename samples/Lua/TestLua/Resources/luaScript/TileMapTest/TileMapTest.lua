@@ -1,5 +1,5 @@
-local size = CCDirector:sharedDirector():getWinSize()
-local scheduler = CCDirector:sharedDirector():getScheduler()
+local size = CCDirector:getInstance():getWinSize()
+local scheduler = CCDirector:getInstance():getScheduler()
 
 local kTagTileMap = 1
 
@@ -189,9 +189,9 @@ local function TMXOrthoTest()
 
     local function onNodeEvent(event)
         if event == "enter" then
-            CCDirector:sharedDirector():setProjection(kCCDirectorProjection3D)
+            CCDirector:getInstance():setProjection(kCCDirectorProjection3D)
         elseif event == "exit" then
-            CCDirector:sharedDirector():setProjection(kCCDirectorProjection2D)
+            CCDirector:getInstance():setProjection(kCCDirectorProjection2D)
         end
     end
 
@@ -966,11 +966,11 @@ local function TMXIsoVertexZ()
     local function onNodeEvent(event)
         if event == "enter" then
             -- TIP: 2d projection should be used
-            CCDirector:sharedDirector():setProjection(kCCDirectorProjection2D)
+            CCDirector:getInstance():setProjection(kCCDirectorProjection2D)
             schedulerEntry = scheduler:scheduleScriptFunc(repositionSprite, 0, false)
         elseif event == "exit" then
             -- At exit use any other projection.
-            --    CCDirector:sharedDirector():setProjection:kCCDirectorProjection3D)
+            --    CCDirector:getInstance():setProjection:kCCDirectorProjection3D)
 
             if m_tamara ~= nil then
                 m_tamara:release()
@@ -1025,11 +1025,11 @@ local function TMXOrthoVertexZ()
     local function onNodeEvent(event)
         if event == "enter" then
             -- TIP: 2d projection should be used
-            CCDirector:sharedDirector():setProjection(kCCDirectorProjection2D)
+            CCDirector:getInstance():setProjection(kCCDirectorProjection2D)
             schedulerEntry = scheduler:scheduleScriptFunc(repositionSprite, 0, false)
         elseif event == "exit" then
             -- At exit use any other projection.
-            --    CCDirector:sharedDirector():setProjection:kCCDirectorProjection3D)
+            --    CCDirector:getInstance():setProjection:kCCDirectorProjection3D)
             if m_tamara ~= nil then
                 m_tamara:release()
             end
@@ -1268,7 +1268,7 @@ end
 function TileMapTestMain()
     cclog("TileMapTestMain")
     Helper.index = 1
-    CCDirector:sharedDirector():setDepthTest(true)
+    CCDirector:getInstance():setDepthTest(true)
     local scene = CCScene:create()
 
     Helper.createFunctionTable = {

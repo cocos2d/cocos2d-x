@@ -64,7 +64,7 @@ int Application::run()
             if (nNow.QuadPart - nLast.QuadPart > _animationInterval.QuadPart)
             {
                 nLast.QuadPart = nNow.QuadPart;
-                Director::sharedDirector()->mainLoop();
+                Director::getInstance()->mainLoop();
             }
             else
             {

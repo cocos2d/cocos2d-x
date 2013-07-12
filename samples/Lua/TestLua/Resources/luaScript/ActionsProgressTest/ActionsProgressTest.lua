@@ -1,5 +1,5 @@
 
-local s = CCDirector:sharedDirector():getWinSize()
+local s = CCDirector:getInstance():getWinSize()
 
 ------------------------------------
 --  SpriteProgressToRadial
@@ -305,5 +305,5 @@ function ProgressActionsTest()
 	scene:addChild(SpriteProgressToRadial())
 	scene:addChild(CreateBackMenuItem())
 
-	CCDirector:sharedDirector():replaceScene(scene)
+	CCDirector:getInstance():replaceScene(scene)
 end

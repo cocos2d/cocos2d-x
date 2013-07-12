@@ -131,5 +131,5 @@ void TestIAP::menuBackCallback(Object* pSender)
 	MyPurchase::purgePurchase();
 
 	Scene* newScene = HelloWorld::scene();
-    Director::sharedDirector()->replaceScene(newScene);
+    Director::getInstance()->replaceScene(newScene);
 }

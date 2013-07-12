@@ -161,5 +161,5 @@ void TestIAPOnline::menuBackCallback(Object* pSender)
 	MyIAPOLManager::purge();
 
 	Scene* newScene = HelloWorld::scene();
-    Director::sharedDirector()->replaceScene(newScene);
+    Director::getInstance()->replaceScene(newScene);
 }

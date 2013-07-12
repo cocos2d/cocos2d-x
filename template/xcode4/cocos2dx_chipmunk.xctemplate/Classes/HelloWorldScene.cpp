@@ -116,7 +116,7 @@ bool HelloWorld::init()
     setTouchEnabled(true);
     setAccelerometerEnabled(true);
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     // title
     LabelTTF *label = LabelTTF::create("Multi touch the screen", "Marker Felt", 36);
@@ -147,7 +147,7 @@ bool HelloWorld::init()
 
 void HelloWorld::initPhysics()
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     // init chipmunk
     cpInitChipmunk();
@@ -183,7 +183,7 @@ void HelloWorld::update(float delta)
 {
     // Should use a fixed size step based on the animation interval.
     int steps = 2;
-    float dt = Director::sharedDirector()->getAnimationInterval()/(float)steps;
+    float dt = Director::getInstance()->getAnimationInterval()/(float)steps;
 
     for(int i=0; i<steps; i++){
         cpSpaceStep(_space, dt);
@@ -245,7 +245,7 @@ void HelloWorld::ccTouchesEnded(Set* touches, Event* event)
 
         Point location = touch->getLocationInView();
 
-        location = Director::sharedDirector()->convertToGL(location);
+        location = Director::getInstance()->convertToGL(location);
 
         addNewSpriteAtPosition( location );
     }

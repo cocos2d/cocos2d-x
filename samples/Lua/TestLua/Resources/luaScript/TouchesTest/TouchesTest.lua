@@ -18,7 +18,7 @@ local layer = nil
 local function backCallback(sender)
 	local scene = CCScene:create()
 	scene:addChild(CreateBackMenuItem())
-	CCDirector:sharedDirector():replaceScene(scene)
+	CCDirector:getInstance():replaceScene(scene)
 end
 
 

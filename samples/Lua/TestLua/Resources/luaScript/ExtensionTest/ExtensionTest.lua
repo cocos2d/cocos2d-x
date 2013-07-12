@@ -35,7 +35,7 @@ function CreateExtensionsBasicLayerMenu(pMenu)
 	local function toMainLayer()
        local pScene = ExtensionsTestMain()
        if pScene ~= nil then
-           CCDirector:sharedDirector():replaceScene(pScene)
+           CCDirector:getInstance():replaceScene(pScene)
        end
     end	
     --Create BackMneu
@@ -65,7 +65,7 @@ local function runNotificationCenterTest()
 		if nil == pLayer then
 			return
 		end
-		local s = CCDirector:sharedDirector():getWinSize()
+		local s = CCDirector:getInstance():getWinSize()
     	
     	local function toggleSwitch(tag,menuItem)
     		local toggleItem = tolua.cast(menuItem,"CCMenuItemToggle")
@@ -214,7 +214,7 @@ local function runNotificationCenterTest()
 				
        			local pScene = ExtensionsTestMain()
        			if pScene ~= nil then
-           			CCDirector:sharedDirector():replaceScene(pScene)
+           			CCDirector:getInstance():replaceScene(pScene)
        			end
     		 end	
     		 --Create BackMneu
@@ -308,7 +308,7 @@ local function runCCControlTest()
 			  CurrentControlScene()
    		end
    				
-    	local size = CCDirector:sharedDirector():getWinSize()
+    	local size = CCDirector:getInstance():getWinSize()
     	local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
     	item1:registerScriptTapHandler(backCallback)
     	pMenu:addChild(item1,kItemTagBasic)
@@ -319,7 +319,7 @@ local function runCCControlTest()
     	pMenu:addChild(item3,kItemTagBasic) 
     	item3:registerScriptTapHandler(nextCallback)
     			
-    	local size = CCDirector:sharedDirector():getWinSize()
+    	local size = CCDirector:getInstance():getWinSize()
     	item1:setPosition(CCPointMake(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
     	item2:setPosition(CCPointMake(size.width / 2, item2:getContentSize().height / 2))
     	item3:setPosition(CCPointMake(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
@@ -364,7 +364,7 @@ local function runCCControlTest()
 			return
 		end
 		
-		local screenSize = CCDirector:sharedDirector():getWinSize()
+		local screenSize = CCDirector:getInstance():getWinSize()
 		--Add a label in which the slider value will be displayed
 		local pDisplayValueLabel = CCLabelTTF:create("Move the slider thumb!\nThe lower slider is restricted." ,"Marker Felt", 32)
         pDisplayValueLabel:retain()
@@ -419,7 +419,7 @@ local function runCCControlTest()
 		if nil == pLayer then
 			return
 		end
-		local screenSize = CCDirector:sharedDirector():getWinSize()
+		local screenSize = CCDirector:getInstance():getWinSize()
 		local pColorLabel = nil
 
         local pNode  = CCNode:create()
@@ -472,7 +472,7 @@ local function runCCControlTest()
 			return
 		end
 		
-		local screenSize = CCDirector:sharedDirector():getWinSize()
+		local screenSize = CCDirector:getInstance():getWinSize()
         
         local pNode = CCNode:create()
         pNode:setPosition(ccp (screenSize.width / 2, screenSize.height / 2))
@@ -548,7 +548,7 @@ local function runCCControlTest()
 			return
 		end
 		
-		local screenSize = CCDirector:sharedDirector():getWinSize()
+		local screenSize = CCDirector:getInstance():getWinSize()
 		local strArray   = CCArray:create()
 		strArray:addObject(CCString:create("Hello"))
 		strArray:addObject(CCString:create("Variable"))
@@ -608,7 +608,7 @@ local function runCCControlTest()
 			return
 		end
 		
-		local screenSize = CCDirector:sharedDirector():getWinSize()
+		local screenSize = CCDirector:getInstance():getWinSize()
 
         local pNode = CCNode:create()
         pLayer:addChild(pNode, 1)
@@ -652,7 +652,7 @@ local function runCCControlTest()
 			return
 		end
 		
-		local screenSize = CCDirector:sharedDirector():getWinSize()
+		local screenSize = CCDirector:getInstance():getWinSize()
 
         --Add a label in which the button events will be displayed
         local pDisplayValueLabel = nil
@@ -753,7 +753,7 @@ local function runCCControlTest()
 			return
 		end
 		
-		local screenSize = CCDirector:sharedDirector():getWinSize()
+		local screenSize = CCDirector:getInstance():getWinSize()
         
         local pNode = CCNode:create()
         pNode:setPosition(ccp (screenSize.width / 2, screenSize.height / 2))
@@ -807,7 +807,7 @@ local function runCCControlTest()
 			return
 		end
 		
-		local screenSize = CCDirector:sharedDirector():getWinSize()
+		local screenSize = CCDirector:getInstance():getWinSize()
         
         local pNode = CCNode:create()
         pNode:setPosition(ccp (screenSize.width / 2, screenSize.height / 2))
@@ -883,7 +883,7 @@ local function runCCControlTest()
     	InitSpecialSceneLayer(pNewLayer)
 		pNewScene:addChild(pNewLayer)
 		if nil ~= pNewScene then
-		    CCDirector:sharedDirector():replaceScene(pNewScene)
+		    CCDirector:getInstance():replaceScene(pNewScene)
 		end
 		
     end
@@ -1011,7 +1011,7 @@ local function runScrollViewTest()
     newLayer:addChild(layerColor)
 
     local scrollView1 = CCScrollView:create()
-    local screenSize = CCDirector:sharedDirector():getWinSize()
+    local screenSize = CCDirector:getInstance():getWinSize()
     local function scrollView1DidScroll()
         print("scrollView1DidScroll")
     end
@@ -1083,7 +1083,7 @@ local CreateExtensionsTestTable =
 
 local function ExtensionsMainLayer()
 
-	local s = CCDirector:sharedDirector():getWinSize()
+	local s = CCDirector:getInstance():getWinSize()
 
 	local function CreateExtensionsTestScene(nPerformanceNo)
 	  	local pNewscene = CreateExtensionsTestTable[nPerformanceNo]()
@@ -1095,7 +1095,7 @@ local function ExtensionsMainLayer()
     	local nIdx = pMenuItem:getZOrder() - kItemTagBasic
 		local ExtensionsTestScene = CreateExtensionsTestScene(nIdx)
     	if nil ~= ExtensionsTestScene then
-         	CCDirector:sharedDirector():replaceScene(ExtensionsTestScene)
+         	CCDirector:getInstance():replaceScene(ExtensionsTestScene)
     	end
 	end
 	

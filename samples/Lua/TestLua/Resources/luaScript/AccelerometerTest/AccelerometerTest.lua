@@ -18,7 +18,7 @@ local function AccelerometerMainLayer()
     pBall:retain()
     
     local function didAccelerate(x,y,z,timestamp)
-    	local pDir = CCDirector:sharedDirector()
+    	local pDir = CCDirector:getInstance()
 
     	if nil == pBall then
     		return
