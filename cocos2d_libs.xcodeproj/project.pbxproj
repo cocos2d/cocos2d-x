@@ -160,7 +160,6 @@
 		1A6FB5A2178556E900CDF010 /* CCLuaObjcBridge.h in Sources */ = {isa = PBXBuildFile; fileRef = 1A1195AB1785201F00D62A44 /* CCLuaObjcBridge.h */; };
 		1A6FB5A3178556E900CDF010 /* CCLuaObjcBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A1195AC1785201F00D62A44 /* CCLuaObjcBridge.mm */; };
 		1A6FB66817855AF300CDF010 /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A6FB53317854DD600CDF010 /* libluajit.a */; };
-		1A94D35016C2072800D79D09 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A94D34C16C2014900D79D09 /* libwebp.a */; };
 		1A94D35116C2072800D79D09 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
 		46B9C9631786763E00F808DD /* ccTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B9C9611786763E00F808DD /* ccTypes.cpp */; };
 		46B9C9641786763E00F808DD /* ccTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B9C9611786763E00F808DD /* ccTypes.cpp */; };
@@ -1078,7 +1077,6 @@
 		A07A4CAA1783777C0073F6A7 /* CCTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F255F1780BAE8006731B9 /* CCTouch.cpp */; };
 		A07A4CAB1783777C0073F6A7 /* CCTouchDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F25621780BAE8006731B9 /* CCTouchDispatcher.cpp */; };
 		A07A4CAC1783777C0073F6A7 /* CCTouchHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F25641780BAE8006731B9 /* CCTouchHandler.cpp */; };
-		A07A4CAE1783777C0073F6A7 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A94D34C16C2014900D79D09 /* libwebp.a */; };
 		A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
 		A07A4CB21783777C0073F6A7 /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1DDD1780BAE4006731B9 /* CCAction.h */; };
 		A07A4CB31783777C0073F6A7 /* CCActionCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1DDF1780BAE4006731B9 /* CCActionCamera.h */; };
@@ -1809,6 +1807,184 @@
 		A07A52CC1784AC360073F6A7 /* etc1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A07A52C91784AC360073F6A7 /* etc1.cpp */; };
 		A07A52CD1784AC360073F6A7 /* etc1.h in Headers */ = {isa = PBXBuildFile; fileRef = A07A52CA1784AC360073F6A7 /* etc1.h */; };
 		A07A52CE1784AC360073F6A7 /* etc1.h in Headers */ = {isa = PBXBuildFile; fileRef = A07A52CA1784AC360073F6A7 /* etc1.h */; };
+		A0BD5A23178F80BF008915C5 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0BD5A22178F80BF008915C5 /* libfreetype.a */; };
+		A0BD5A25178F80CB008915C5 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0BD5A24178F80CB008915C5 /* libfreetype.a */; };
+		A0BD5A84178F80E4008915C5 /* ftconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A2A178F80E4008915C5 /* ftconfig.h */; };
+		A0BD5A85178F80E4008915C5 /* ftheader.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A2B178F80E4008915C5 /* ftheader.h */; };
+		A0BD5A86178F80E4008915C5 /* ftmodule.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A2C178F80E4008915C5 /* ftmodule.h */; };
+		A0BD5A87178F80E4008915C5 /* ftoption.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A2D178F80E4008915C5 /* ftoption.h */; };
+		A0BD5A88178F80E4008915C5 /* ftstdlib.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A2E178F80E4008915C5 /* ftstdlib.h */; };
+		A0BD5A89178F80E4008915C5 /* freetype.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A2F178F80E4008915C5 /* freetype.h */; };
+		A0BD5A8A178F80E4008915C5 /* ftadvanc.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A30178F80E4008915C5 /* ftadvanc.h */; };
+		A0BD5A8B178F80E4008915C5 /* ftautoh.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A31178F80E4008915C5 /* ftautoh.h */; };
+		A0BD5A8C178F80E4008915C5 /* ftbbox.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A32178F80E4008915C5 /* ftbbox.h */; };
+		A0BD5A8D178F80E4008915C5 /* ftbdf.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A33178F80E4008915C5 /* ftbdf.h */; };
+		A0BD5A8E178F80E4008915C5 /* ftbitmap.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A34178F80E4008915C5 /* ftbitmap.h */; };
+		A0BD5A8F178F80E4008915C5 /* ftbzip2.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A35178F80E4008915C5 /* ftbzip2.h */; };
+		A0BD5A90178F80E4008915C5 /* ftcache.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A36178F80E4008915C5 /* ftcache.h */; };
+		A0BD5A91178F80E4008915C5 /* ftcffdrv.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A37178F80E4008915C5 /* ftcffdrv.h */; };
+		A0BD5A92178F80E4008915C5 /* ftchapters.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A38178F80E4008915C5 /* ftchapters.h */; };
+		A0BD5A93178F80E4008915C5 /* ftcid.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A39178F80E4008915C5 /* ftcid.h */; };
+		A0BD5A94178F80E4008915C5 /* fterrdef.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A3A178F80E4008915C5 /* fterrdef.h */; };
+		A0BD5A95178F80E4008915C5 /* fterrors.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A3B178F80E4008915C5 /* fterrors.h */; };
+		A0BD5A96178F80E4008915C5 /* ftgasp.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A3C178F80E4008915C5 /* ftgasp.h */; };
+		A0BD5A97178F80E4008915C5 /* ftglyph.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A3D178F80E4008915C5 /* ftglyph.h */; };
+		A0BD5A98178F80E4008915C5 /* ftgxval.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A3E178F80E4008915C5 /* ftgxval.h */; };
+		A0BD5A99178F80E4008915C5 /* ftgzip.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A3F178F80E4008915C5 /* ftgzip.h */; };
+		A0BD5A9A178F80E4008915C5 /* ftimage.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A40178F80E4008915C5 /* ftimage.h */; };
+		A0BD5A9B178F80E4008915C5 /* ftincrem.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A41178F80E4008915C5 /* ftincrem.h */; };
+		A0BD5A9C178F80E4008915C5 /* ftlcdfil.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A42178F80E4008915C5 /* ftlcdfil.h */; };
+		A0BD5A9D178F80E4008915C5 /* ftlist.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A43178F80E4008915C5 /* ftlist.h */; };
+		A0BD5A9E178F80E4008915C5 /* ftlzw.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A44178F80E4008915C5 /* ftlzw.h */; };
+		A0BD5A9F178F80E4008915C5 /* ftmac.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A45178F80E4008915C5 /* ftmac.h */; };
+		A0BD5AA0178F80E4008915C5 /* ftmm.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A46178F80E4008915C5 /* ftmm.h */; };
+		A0BD5AA1178F80E4008915C5 /* ftmodapi.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A47178F80E4008915C5 /* ftmodapi.h */; };
+		A0BD5AA2178F80E4008915C5 /* ftmoderr.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A48178F80E4008915C5 /* ftmoderr.h */; };
+		A0BD5AA3178F80E4008915C5 /* ftotval.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A49178F80E4008915C5 /* ftotval.h */; };
+		A0BD5AA4178F80E4008915C5 /* ftoutln.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A4A178F80E4008915C5 /* ftoutln.h */; };
+		A0BD5AA5178F80E4008915C5 /* ftpfr.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A4B178F80E4008915C5 /* ftpfr.h */; };
+		A0BD5AA6178F80E4008915C5 /* ftrender.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A4C178F80E4008915C5 /* ftrender.h */; };
+		A0BD5AA7178F80E4008915C5 /* ftsizes.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A4D178F80E4008915C5 /* ftsizes.h */; };
+		A0BD5AA8178F80E4008915C5 /* ftsnames.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A4E178F80E4008915C5 /* ftsnames.h */; };
+		A0BD5AA9178F80E4008915C5 /* ftstroke.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A4F178F80E4008915C5 /* ftstroke.h */; };
+		A0BD5AAA178F80E4008915C5 /* ftsynth.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A50178F80E4008915C5 /* ftsynth.h */; };
+		A0BD5AAB178F80E4008915C5 /* ftsystem.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A51178F80E4008915C5 /* ftsystem.h */; };
+		A0BD5AAC178F80E4008915C5 /* fttrigon.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A52178F80E4008915C5 /* fttrigon.h */; };
+		A0BD5AAD178F80E4008915C5 /* ftttdrv.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A53178F80E4008915C5 /* ftttdrv.h */; };
+		A0BD5AAE178F80E4008915C5 /* fttypes.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A54178F80E4008915C5 /* fttypes.h */; };
+		A0BD5AAF178F80E4008915C5 /* ftwinfnt.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A55178F80E4008915C5 /* ftwinfnt.h */; };
+		A0BD5AB0178F80E4008915C5 /* ftxf86.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A56178F80E4008915C5 /* ftxf86.h */; };
+		A0BD5AB1178F80E4008915C5 /* autohint.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A58178F80E4008915C5 /* autohint.h */; };
+		A0BD5AB2178F80E4008915C5 /* ftcalc.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A59178F80E4008915C5 /* ftcalc.h */; };
+		A0BD5AB3178F80E4008915C5 /* ftdebug.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A5A178F80E4008915C5 /* ftdebug.h */; };
+		A0BD5AB4178F80E4008915C5 /* ftdriver.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A5B178F80E4008915C5 /* ftdriver.h */; };
+		A0BD5AB5178F80E4008915C5 /* ftgloadr.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A5C178F80E4008915C5 /* ftgloadr.h */; };
+		A0BD5AB6178F80E4008915C5 /* ftmemory.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A5D178F80E4008915C5 /* ftmemory.h */; };
+		A0BD5AB7178F80E4008915C5 /* ftobjs.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A5E178F80E4008915C5 /* ftobjs.h */; };
+		A0BD5AB8178F80E4008915C5 /* ftpic.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A5F178F80E4008915C5 /* ftpic.h */; };
+		A0BD5AB9178F80E4008915C5 /* ftrfork.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A60178F80E4008915C5 /* ftrfork.h */; };
+		A0BD5ABA178F80E4008915C5 /* ftserv.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A61178F80E4008915C5 /* ftserv.h */; };
+		A0BD5ABB178F80E4008915C5 /* ftstream.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A62178F80E4008915C5 /* ftstream.h */; };
+		A0BD5ABC178F80E4008915C5 /* fttrace.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A63178F80E4008915C5 /* fttrace.h */; };
+		A0BD5ABD178F80E4008915C5 /* ftvalid.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A64178F80E4008915C5 /* ftvalid.h */; };
+		A0BD5ABE178F80E4008915C5 /* internal.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A65178F80E4008915C5 /* internal.h */; };
+		A0BD5ABF178F80E4008915C5 /* psaux.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A66178F80E4008915C5 /* psaux.h */; };
+		A0BD5AC0178F80E4008915C5 /* pshints.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A67178F80E4008915C5 /* pshints.h */; };
+		A0BD5AC1178F80E4008915C5 /* svbdf.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A69178F80E4008915C5 /* svbdf.h */; };
+		A0BD5AC2178F80E4008915C5 /* svcid.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A6A178F80E4008915C5 /* svcid.h */; };
+		A0BD5AC3178F80E4008915C5 /* svgldict.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A6B178F80E4008915C5 /* svgldict.h */; };
+		A0BD5AC4178F80E4008915C5 /* svgxval.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A6C178F80E4008915C5 /* svgxval.h */; };
+		A0BD5AC5178F80E4008915C5 /* svkern.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A6D178F80E4008915C5 /* svkern.h */; };
+		A0BD5AC6178F80E4008915C5 /* svmm.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A6E178F80E4008915C5 /* svmm.h */; };
+		A0BD5AC7178F80E4008915C5 /* svotval.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A6F178F80E4008915C5 /* svotval.h */; };
+		A0BD5AC8178F80E4008915C5 /* svpfr.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A70178F80E4008915C5 /* svpfr.h */; };
+		A0BD5AC9178F80E4008915C5 /* svpostnm.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A71178F80E4008915C5 /* svpostnm.h */; };
+		A0BD5ACA178F80E4008915C5 /* svprop.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A72178F80E4008915C5 /* svprop.h */; };
+		A0BD5ACB178F80E4008915C5 /* svpscmap.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A73178F80E4008915C5 /* svpscmap.h */; };
+		A0BD5ACC178F80E4008915C5 /* svpsinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A74178F80E4008915C5 /* svpsinfo.h */; };
+		A0BD5ACD178F80E4008915C5 /* svsfnt.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A75178F80E4008915C5 /* svsfnt.h */; };
+		A0BD5ACE178F80E4008915C5 /* svttcmap.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A76178F80E4008915C5 /* svttcmap.h */; };
+		A0BD5ACF178F80E4008915C5 /* svtteng.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A77178F80E4008915C5 /* svtteng.h */; };
+		A0BD5AD0178F80E4008915C5 /* svttglyf.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A78178F80E4008915C5 /* svttglyf.h */; };
+		A0BD5AD1178F80E4008915C5 /* svwinfnt.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A79178F80E4008915C5 /* svwinfnt.h */; };
+		A0BD5AD2178F80E4008915C5 /* svxf86nm.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A7A178F80E4008915C5 /* svxf86nm.h */; };
+		A0BD5AD3178F80E4008915C5 /* sfnt.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A7B178F80E4008915C5 /* sfnt.h */; };
+		A0BD5AD4178F80E4008915C5 /* t1types.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A7C178F80E4008915C5 /* t1types.h */; };
+		A0BD5AD5178F80E4008915C5 /* tttypes.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A7D178F80E4008915C5 /* tttypes.h */; };
+		A0BD5AD6178F80E4008915C5 /* t1tables.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A7E178F80E4008915C5 /* t1tables.h */; };
+		A0BD5AD7178F80E4008915C5 /* ttnameid.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A7F178F80E4008915C5 /* ttnameid.h */; };
+		A0BD5AD8178F80E4008915C5 /* tttables.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A80178F80E4008915C5 /* tttables.h */; };
+		A0BD5AD9178F80E4008915C5 /* tttags.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A81178F80E4008915C5 /* tttags.h */; };
+		A0BD5ADA178F80E4008915C5 /* ttunpat.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A82178F80E4008915C5 /* ttunpat.h */; };
+		A0BD5ADB178F80E4008915C5 /* ft2build.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5A83178F80E4008915C5 /* ft2build.h */; };
+		A0BD5B39178F80EF008915C5 /* ftconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5ADF178F80EF008915C5 /* ftconfig.h */; };
+		A0BD5B3A178F80EF008915C5 /* ftheader.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AE0178F80EF008915C5 /* ftheader.h */; };
+		A0BD5B3B178F80EF008915C5 /* ftmodule.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AE1178F80EF008915C5 /* ftmodule.h */; };
+		A0BD5B3C178F80EF008915C5 /* ftoption.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AE2178F80EF008915C5 /* ftoption.h */; };
+		A0BD5B3D178F80EF008915C5 /* ftstdlib.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AE3178F80EF008915C5 /* ftstdlib.h */; };
+		A0BD5B3E178F80EF008915C5 /* freetype.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AE4178F80EF008915C5 /* freetype.h */; };
+		A0BD5B3F178F80EF008915C5 /* ftadvanc.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AE5178F80EF008915C5 /* ftadvanc.h */; };
+		A0BD5B40178F80EF008915C5 /* ftautoh.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AE6178F80EF008915C5 /* ftautoh.h */; };
+		A0BD5B41178F80EF008915C5 /* ftbbox.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AE7178F80EF008915C5 /* ftbbox.h */; };
+		A0BD5B42178F80EF008915C5 /* ftbdf.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AE8178F80EF008915C5 /* ftbdf.h */; };
+		A0BD5B43178F80EF008915C5 /* ftbitmap.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AE9178F80EF008915C5 /* ftbitmap.h */; };
+		A0BD5B44178F80EF008915C5 /* ftbzip2.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AEA178F80EF008915C5 /* ftbzip2.h */; };
+		A0BD5B45178F80EF008915C5 /* ftcache.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AEB178F80EF008915C5 /* ftcache.h */; };
+		A0BD5B46178F80EF008915C5 /* ftcffdrv.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AEC178F80EF008915C5 /* ftcffdrv.h */; };
+		A0BD5B47178F80EF008915C5 /* ftchapters.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AED178F80EF008915C5 /* ftchapters.h */; };
+		A0BD5B48178F80EF008915C5 /* ftcid.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AEE178F80EF008915C5 /* ftcid.h */; };
+		A0BD5B49178F80EF008915C5 /* fterrdef.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AEF178F80EF008915C5 /* fterrdef.h */; };
+		A0BD5B4A178F80EF008915C5 /* fterrors.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AF0178F80EF008915C5 /* fterrors.h */; };
+		A0BD5B4B178F80EF008915C5 /* ftgasp.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AF1178F80EF008915C5 /* ftgasp.h */; };
+		A0BD5B4C178F80EF008915C5 /* ftglyph.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AF2178F80EF008915C5 /* ftglyph.h */; };
+		A0BD5B4D178F80EF008915C5 /* ftgxval.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AF3178F80EF008915C5 /* ftgxval.h */; };
+		A0BD5B4E178F80EF008915C5 /* ftgzip.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AF4178F80EF008915C5 /* ftgzip.h */; };
+		A0BD5B4F178F80EF008915C5 /* ftimage.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AF5178F80EF008915C5 /* ftimage.h */; };
+		A0BD5B50178F80EF008915C5 /* ftincrem.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AF6178F80EF008915C5 /* ftincrem.h */; };
+		A0BD5B51178F80EF008915C5 /* ftlcdfil.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AF7178F80EF008915C5 /* ftlcdfil.h */; };
+		A0BD5B52178F80EF008915C5 /* ftlist.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AF8178F80EF008915C5 /* ftlist.h */; };
+		A0BD5B53178F80EF008915C5 /* ftlzw.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AF9178F80EF008915C5 /* ftlzw.h */; };
+		A0BD5B54178F80EF008915C5 /* ftmac.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AFA178F80EF008915C5 /* ftmac.h */; };
+		A0BD5B55178F80EF008915C5 /* ftmm.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AFB178F80EF008915C5 /* ftmm.h */; };
+		A0BD5B56178F80EF008915C5 /* ftmodapi.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AFC178F80EF008915C5 /* ftmodapi.h */; };
+		A0BD5B57178F80EF008915C5 /* ftmoderr.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AFD178F80EF008915C5 /* ftmoderr.h */; };
+		A0BD5B58178F80EF008915C5 /* ftotval.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AFE178F80EF008915C5 /* ftotval.h */; };
+		A0BD5B59178F80EF008915C5 /* ftoutln.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5AFF178F80EF008915C5 /* ftoutln.h */; };
+		A0BD5B5A178F80EF008915C5 /* ftpfr.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B00178F80EF008915C5 /* ftpfr.h */; };
+		A0BD5B5B178F80EF008915C5 /* ftrender.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B01178F80EF008915C5 /* ftrender.h */; };
+		A0BD5B5C178F80EF008915C5 /* ftsizes.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B02178F80EF008915C5 /* ftsizes.h */; };
+		A0BD5B5D178F80EF008915C5 /* ftsnames.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B03178F80EF008915C5 /* ftsnames.h */; };
+		A0BD5B5E178F80EF008915C5 /* ftstroke.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B04178F80EF008915C5 /* ftstroke.h */; };
+		A0BD5B5F178F80EF008915C5 /* ftsynth.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B05178F80EF008915C5 /* ftsynth.h */; };
+		A0BD5B60178F80EF008915C5 /* ftsystem.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B06178F80EF008915C5 /* ftsystem.h */; };
+		A0BD5B61178F80EF008915C5 /* fttrigon.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B07178F80EF008915C5 /* fttrigon.h */; };
+		A0BD5B62178F80EF008915C5 /* ftttdrv.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B08178F80EF008915C5 /* ftttdrv.h */; };
+		A0BD5B63178F80EF008915C5 /* fttypes.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B09178F80EF008915C5 /* fttypes.h */; };
+		A0BD5B64178F80EF008915C5 /* ftwinfnt.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B0A178F80EF008915C5 /* ftwinfnt.h */; };
+		A0BD5B65178F80EF008915C5 /* ftxf86.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B0B178F80EF008915C5 /* ftxf86.h */; };
+		A0BD5B66178F80EF008915C5 /* autohint.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B0D178F80EF008915C5 /* autohint.h */; };
+		A0BD5B67178F80EF008915C5 /* ftcalc.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B0E178F80EF008915C5 /* ftcalc.h */; };
+		A0BD5B68178F80EF008915C5 /* ftdebug.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B0F178F80EF008915C5 /* ftdebug.h */; };
+		A0BD5B69178F80EF008915C5 /* ftdriver.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B10178F80EF008915C5 /* ftdriver.h */; };
+		A0BD5B6A178F80EF008915C5 /* ftgloadr.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B11178F80EF008915C5 /* ftgloadr.h */; };
+		A0BD5B6B178F80EF008915C5 /* ftmemory.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B12178F80EF008915C5 /* ftmemory.h */; };
+		A0BD5B6C178F80EF008915C5 /* ftobjs.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B13178F80EF008915C5 /* ftobjs.h */; };
+		A0BD5B6D178F80EF008915C5 /* ftpic.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B14178F80EF008915C5 /* ftpic.h */; };
+		A0BD5B6E178F80EF008915C5 /* ftrfork.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B15178F80EF008915C5 /* ftrfork.h */; };
+		A0BD5B6F178F80EF008915C5 /* ftserv.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B16178F80EF008915C5 /* ftserv.h */; };
+		A0BD5B70178F80EF008915C5 /* ftstream.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B17178F80EF008915C5 /* ftstream.h */; };
+		A0BD5B71178F80EF008915C5 /* fttrace.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B18178F80EF008915C5 /* fttrace.h */; };
+		A0BD5B72178F80EF008915C5 /* ftvalid.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B19178F80EF008915C5 /* ftvalid.h */; };
+		A0BD5B73178F80EF008915C5 /* internal.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B1A178F80EF008915C5 /* internal.h */; };
+		A0BD5B74178F80EF008915C5 /* psaux.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B1B178F80EF008915C5 /* psaux.h */; };
+		A0BD5B75178F80EF008915C5 /* pshints.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B1C178F80EF008915C5 /* pshints.h */; };
+		A0BD5B76178F80EF008915C5 /* svbdf.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B1E178F80EF008915C5 /* svbdf.h */; };
+		A0BD5B77178F80EF008915C5 /* svcid.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B1F178F80EF008915C5 /* svcid.h */; };
+		A0BD5B78178F80EF008915C5 /* svgldict.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B20178F80EF008915C5 /* svgldict.h */; };
+		A0BD5B79178F80EF008915C5 /* svgxval.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B21178F80EF008915C5 /* svgxval.h */; };
+		A0BD5B7A178F80EF008915C5 /* svkern.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B22178F80EF008915C5 /* svkern.h */; };
+		A0BD5B7B178F80EF008915C5 /* svmm.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B23178F80EF008915C5 /* svmm.h */; };
+		A0BD5B7C178F80EF008915C5 /* svotval.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B24178F80EF008915C5 /* svotval.h */; };
+		A0BD5B7D178F80EF008915C5 /* svpfr.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B25178F80EF008915C5 /* svpfr.h */; };
+		A0BD5B7E178F80EF008915C5 /* svpostnm.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B26178F80EF008915C5 /* svpostnm.h */; };
+		A0BD5B7F178F80EF008915C5 /* svprop.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B27178F80EF008915C5 /* svprop.h */; };
+		A0BD5B80178F80EF008915C5 /* svpscmap.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B28178F80EF008915C5 /* svpscmap.h */; };
+		A0BD5B81178F80EF008915C5 /* svpsinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B29178F80EF008915C5 /* svpsinfo.h */; };
+		A0BD5B82178F80EF008915C5 /* svsfnt.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B2A178F80EF008915C5 /* svsfnt.h */; };
+		A0BD5B83178F80EF008915C5 /* svttcmap.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B2B178F80EF008915C5 /* svttcmap.h */; };
+		A0BD5B84178F80EF008915C5 /* svtteng.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B2C178F80EF008915C5 /* svtteng.h */; };
+		A0BD5B85178F80EF008915C5 /* svttglyf.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B2D178F80EF008915C5 /* svttglyf.h */; };
+		A0BD5B86178F80EF008915C5 /* svwinfnt.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B2E178F80EF008915C5 /* svwinfnt.h */; };
+		A0BD5B87178F80EF008915C5 /* svxf86nm.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B2F178F80EF008915C5 /* svxf86nm.h */; };
+		A0BD5B88178F80EF008915C5 /* sfnt.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B30178F80EF008915C5 /* sfnt.h */; };
+		A0BD5B89178F80EF008915C5 /* t1types.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B31178F80EF008915C5 /* t1types.h */; };
+		A0BD5B8A178F80EF008915C5 /* tttypes.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B32178F80EF008915C5 /* tttypes.h */; };
+		A0BD5B8B178F80EF008915C5 /* t1tables.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B33178F80EF008915C5 /* t1tables.h */; };
+		A0BD5B8C178F80EF008915C5 /* ttnameid.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B34178F80EF008915C5 /* ttnameid.h */; };
+		A0BD5B8D178F80EF008915C5 /* tttables.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B35178F80EF008915C5 /* tttables.h */; };
+		A0BD5B8E178F80EF008915C5 /* tttags.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B36178F80EF008915C5 /* tttags.h */; };
+		A0BD5B8F178F80EF008915C5 /* ttunpat.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B37178F80EF008915C5 /* ttunpat.h */; };
+		A0BD5B90178F80EF008915C5 /* ft2build.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD5B38178F80EF008915C5 /* ft2build.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2961,6 +3137,184 @@
 		A07A509917838A0C0073F6A7 /* libjs_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjs_static.a; sourceTree = "<group>"; };
 		A07A52C91784AC360073F6A7 /* etc1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = etc1.cpp; sourceTree = "<group>"; };
 		A07A52CA1784AC360073F6A7 /* etc1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = etc1.h; sourceTree = "<group>"; };
+		A0BD5A22178F80BF008915C5 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libfreetype.a; sourceTree = "<group>"; };
+		A0BD5A24178F80CB008915C5 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libfreetype.a; sourceTree = "<group>"; };
+		A0BD5A2A178F80E4008915C5 /* ftconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftconfig.h; sourceTree = "<group>"; };
+		A0BD5A2B178F80E4008915C5 /* ftheader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftheader.h; sourceTree = "<group>"; };
+		A0BD5A2C178F80E4008915C5 /* ftmodule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftmodule.h; sourceTree = "<group>"; };
+		A0BD5A2D178F80E4008915C5 /* ftoption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftoption.h; sourceTree = "<group>"; };
+		A0BD5A2E178F80E4008915C5 /* ftstdlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftstdlib.h; sourceTree = "<group>"; };
+		A0BD5A2F178F80E4008915C5 /* freetype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = freetype.h; sourceTree = "<group>"; };
+		A0BD5A30178F80E4008915C5 /* ftadvanc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftadvanc.h; sourceTree = "<group>"; };
+		A0BD5A31178F80E4008915C5 /* ftautoh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftautoh.h; sourceTree = "<group>"; };
+		A0BD5A32178F80E4008915C5 /* ftbbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftbbox.h; sourceTree = "<group>"; };
+		A0BD5A33178F80E4008915C5 /* ftbdf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftbdf.h; sourceTree = "<group>"; };
+		A0BD5A34178F80E4008915C5 /* ftbitmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftbitmap.h; sourceTree = "<group>"; };
+		A0BD5A35178F80E4008915C5 /* ftbzip2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftbzip2.h; sourceTree = "<group>"; };
+		A0BD5A36178F80E4008915C5 /* ftcache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftcache.h; sourceTree = "<group>"; };
+		A0BD5A37178F80E4008915C5 /* ftcffdrv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftcffdrv.h; sourceTree = "<group>"; };
+		A0BD5A38178F80E4008915C5 /* ftchapters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftchapters.h; sourceTree = "<group>"; };
+		A0BD5A39178F80E4008915C5 /* ftcid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftcid.h; sourceTree = "<group>"; };
+		A0BD5A3A178F80E4008915C5 /* fterrdef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fterrdef.h; sourceTree = "<group>"; };
+		A0BD5A3B178F80E4008915C5 /* fterrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fterrors.h; sourceTree = "<group>"; };
+		A0BD5A3C178F80E4008915C5 /* ftgasp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftgasp.h; sourceTree = "<group>"; };
+		A0BD5A3D178F80E4008915C5 /* ftglyph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftglyph.h; sourceTree = "<group>"; };
+		A0BD5A3E178F80E4008915C5 /* ftgxval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftgxval.h; sourceTree = "<group>"; };
+		A0BD5A3F178F80E4008915C5 /* ftgzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftgzip.h; sourceTree = "<group>"; };
+		A0BD5A40178F80E4008915C5 /* ftimage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftimage.h; sourceTree = "<group>"; };
+		A0BD5A41178F80E4008915C5 /* ftincrem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftincrem.h; sourceTree = "<group>"; };
+		A0BD5A42178F80E4008915C5 /* ftlcdfil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftlcdfil.h; sourceTree = "<group>"; };
+		A0BD5A43178F80E4008915C5 /* ftlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftlist.h; sourceTree = "<group>"; };
+		A0BD5A44178F80E4008915C5 /* ftlzw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftlzw.h; sourceTree = "<group>"; };
+		A0BD5A45178F80E4008915C5 /* ftmac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftmac.h; sourceTree = "<group>"; };
+		A0BD5A46178F80E4008915C5 /* ftmm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftmm.h; sourceTree = "<group>"; };
+		A0BD5A47178F80E4008915C5 /* ftmodapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftmodapi.h; sourceTree = "<group>"; };
+		A0BD5A48178F80E4008915C5 /* ftmoderr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftmoderr.h; sourceTree = "<group>"; };
+		A0BD5A49178F80E4008915C5 /* ftotval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftotval.h; sourceTree = "<group>"; };
+		A0BD5A4A178F80E4008915C5 /* ftoutln.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftoutln.h; sourceTree = "<group>"; };
+		A0BD5A4B178F80E4008915C5 /* ftpfr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftpfr.h; sourceTree = "<group>"; };
+		A0BD5A4C178F80E4008915C5 /* ftrender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftrender.h; sourceTree = "<group>"; };
+		A0BD5A4D178F80E4008915C5 /* ftsizes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftsizes.h; sourceTree = "<group>"; };
+		A0BD5A4E178F80E4008915C5 /* ftsnames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftsnames.h; sourceTree = "<group>"; };
+		A0BD5A4F178F80E4008915C5 /* ftstroke.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftstroke.h; sourceTree = "<group>"; };
+		A0BD5A50178F80E4008915C5 /* ftsynth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftsynth.h; sourceTree = "<group>"; };
+		A0BD5A51178F80E4008915C5 /* ftsystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftsystem.h; sourceTree = "<group>"; };
+		A0BD5A52178F80E4008915C5 /* fttrigon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fttrigon.h; sourceTree = "<group>"; };
+		A0BD5A53178F80E4008915C5 /* ftttdrv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftttdrv.h; sourceTree = "<group>"; };
+		A0BD5A54178F80E4008915C5 /* fttypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fttypes.h; sourceTree = "<group>"; };
+		A0BD5A55178F80E4008915C5 /* ftwinfnt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftwinfnt.h; sourceTree = "<group>"; };
+		A0BD5A56178F80E4008915C5 /* ftxf86.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftxf86.h; sourceTree = "<group>"; };
+		A0BD5A58178F80E4008915C5 /* autohint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = autohint.h; sourceTree = "<group>"; };
+		A0BD5A59178F80E4008915C5 /* ftcalc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftcalc.h; sourceTree = "<group>"; };
+		A0BD5A5A178F80E4008915C5 /* ftdebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftdebug.h; sourceTree = "<group>"; };
+		A0BD5A5B178F80E4008915C5 /* ftdriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftdriver.h; sourceTree = "<group>"; };
+		A0BD5A5C178F80E4008915C5 /* ftgloadr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftgloadr.h; sourceTree = "<group>"; };
+		A0BD5A5D178F80E4008915C5 /* ftmemory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftmemory.h; sourceTree = "<group>"; };
+		A0BD5A5E178F80E4008915C5 /* ftobjs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftobjs.h; sourceTree = "<group>"; };
+		A0BD5A5F178F80E4008915C5 /* ftpic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftpic.h; sourceTree = "<group>"; };
+		A0BD5A60178F80E4008915C5 /* ftrfork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftrfork.h; sourceTree = "<group>"; };
+		A0BD5A61178F80E4008915C5 /* ftserv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftserv.h; sourceTree = "<group>"; };
+		A0BD5A62178F80E4008915C5 /* ftstream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftstream.h; sourceTree = "<group>"; };
+		A0BD5A63178F80E4008915C5 /* fttrace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fttrace.h; sourceTree = "<group>"; };
+		A0BD5A64178F80E4008915C5 /* ftvalid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftvalid.h; sourceTree = "<group>"; };
+		A0BD5A65178F80E4008915C5 /* internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = internal.h; sourceTree = "<group>"; };
+		A0BD5A66178F80E4008915C5 /* psaux.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = psaux.h; sourceTree = "<group>"; };
+		A0BD5A67178F80E4008915C5 /* pshints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pshints.h; sourceTree = "<group>"; };
+		A0BD5A69178F80E4008915C5 /* svbdf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svbdf.h; sourceTree = "<group>"; };
+		A0BD5A6A178F80E4008915C5 /* svcid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svcid.h; sourceTree = "<group>"; };
+		A0BD5A6B178F80E4008915C5 /* svgldict.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svgldict.h; sourceTree = "<group>"; };
+		A0BD5A6C178F80E4008915C5 /* svgxval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svgxval.h; sourceTree = "<group>"; };
+		A0BD5A6D178F80E4008915C5 /* svkern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svkern.h; sourceTree = "<group>"; };
+		A0BD5A6E178F80E4008915C5 /* svmm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svmm.h; sourceTree = "<group>"; };
+		A0BD5A6F178F80E4008915C5 /* svotval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svotval.h; sourceTree = "<group>"; };
+		A0BD5A70178F80E4008915C5 /* svpfr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svpfr.h; sourceTree = "<group>"; };
+		A0BD5A71178F80E4008915C5 /* svpostnm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svpostnm.h; sourceTree = "<group>"; };
+		A0BD5A72178F80E4008915C5 /* svprop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svprop.h; sourceTree = "<group>"; };
+		A0BD5A73178F80E4008915C5 /* svpscmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svpscmap.h; sourceTree = "<group>"; };
+		A0BD5A74178F80E4008915C5 /* svpsinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svpsinfo.h; sourceTree = "<group>"; };
+		A0BD5A75178F80E4008915C5 /* svsfnt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svsfnt.h; sourceTree = "<group>"; };
+		A0BD5A76178F80E4008915C5 /* svttcmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svttcmap.h; sourceTree = "<group>"; };
+		A0BD5A77178F80E4008915C5 /* svtteng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svtteng.h; sourceTree = "<group>"; };
+		A0BD5A78178F80E4008915C5 /* svttglyf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svttglyf.h; sourceTree = "<group>"; };
+		A0BD5A79178F80E4008915C5 /* svwinfnt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svwinfnt.h; sourceTree = "<group>"; };
+		A0BD5A7A178F80E4008915C5 /* svxf86nm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svxf86nm.h; sourceTree = "<group>"; };
+		A0BD5A7B178F80E4008915C5 /* sfnt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sfnt.h; sourceTree = "<group>"; };
+		A0BD5A7C178F80E4008915C5 /* t1types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = t1types.h; sourceTree = "<group>"; };
+		A0BD5A7D178F80E4008915C5 /* tttypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tttypes.h; sourceTree = "<group>"; };
+		A0BD5A7E178F80E4008915C5 /* t1tables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = t1tables.h; sourceTree = "<group>"; };
+		A0BD5A7F178F80E4008915C5 /* ttnameid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttnameid.h; sourceTree = "<group>"; };
+		A0BD5A80178F80E4008915C5 /* tttables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tttables.h; sourceTree = "<group>"; };
+		A0BD5A81178F80E4008915C5 /* tttags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tttags.h; sourceTree = "<group>"; };
+		A0BD5A82178F80E4008915C5 /* ttunpat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttunpat.h; sourceTree = "<group>"; };
+		A0BD5A83178F80E4008915C5 /* ft2build.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ft2build.h; sourceTree = "<group>"; };
+		A0BD5ADF178F80EF008915C5 /* ftconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftconfig.h; sourceTree = "<group>"; };
+		A0BD5AE0178F80EF008915C5 /* ftheader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftheader.h; sourceTree = "<group>"; };
+		A0BD5AE1178F80EF008915C5 /* ftmodule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftmodule.h; sourceTree = "<group>"; };
+		A0BD5AE2178F80EF008915C5 /* ftoption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftoption.h; sourceTree = "<group>"; };
+		A0BD5AE3178F80EF008915C5 /* ftstdlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftstdlib.h; sourceTree = "<group>"; };
+		A0BD5AE4178F80EF008915C5 /* freetype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = freetype.h; sourceTree = "<group>"; };
+		A0BD5AE5178F80EF008915C5 /* ftadvanc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftadvanc.h; sourceTree = "<group>"; };
+		A0BD5AE6178F80EF008915C5 /* ftautoh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftautoh.h; sourceTree = "<group>"; };
+		A0BD5AE7178F80EF008915C5 /* ftbbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftbbox.h; sourceTree = "<group>"; };
+		A0BD5AE8178F80EF008915C5 /* ftbdf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftbdf.h; sourceTree = "<group>"; };
+		A0BD5AE9178F80EF008915C5 /* ftbitmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftbitmap.h; sourceTree = "<group>"; };
+		A0BD5AEA178F80EF008915C5 /* ftbzip2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftbzip2.h; sourceTree = "<group>"; };
+		A0BD5AEB178F80EF008915C5 /* ftcache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftcache.h; sourceTree = "<group>"; };
+		A0BD5AEC178F80EF008915C5 /* ftcffdrv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftcffdrv.h; sourceTree = "<group>"; };
+		A0BD5AED178F80EF008915C5 /* ftchapters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftchapters.h; sourceTree = "<group>"; };
+		A0BD5AEE178F80EF008915C5 /* ftcid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftcid.h; sourceTree = "<group>"; };
+		A0BD5AEF178F80EF008915C5 /* fterrdef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fterrdef.h; sourceTree = "<group>"; };
+		A0BD5AF0178F80EF008915C5 /* fterrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fterrors.h; sourceTree = "<group>"; };
+		A0BD5AF1178F80EF008915C5 /* ftgasp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftgasp.h; sourceTree = "<group>"; };
+		A0BD5AF2178F80EF008915C5 /* ftglyph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftglyph.h; sourceTree = "<group>"; };
+		A0BD5AF3178F80EF008915C5 /* ftgxval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftgxval.h; sourceTree = "<group>"; };
+		A0BD5AF4178F80EF008915C5 /* ftgzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftgzip.h; sourceTree = "<group>"; };
+		A0BD5AF5178F80EF008915C5 /* ftimage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftimage.h; sourceTree = "<group>"; };
+		A0BD5AF6178F80EF008915C5 /* ftincrem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftincrem.h; sourceTree = "<group>"; };
+		A0BD5AF7178F80EF008915C5 /* ftlcdfil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftlcdfil.h; sourceTree = "<group>"; };
+		A0BD5AF8178F80EF008915C5 /* ftlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftlist.h; sourceTree = "<group>"; };
+		A0BD5AF9178F80EF008915C5 /* ftlzw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftlzw.h; sourceTree = "<group>"; };
+		A0BD5AFA178F80EF008915C5 /* ftmac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftmac.h; sourceTree = "<group>"; };
+		A0BD5AFB178F80EF008915C5 /* ftmm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftmm.h; sourceTree = "<group>"; };
+		A0BD5AFC178F80EF008915C5 /* ftmodapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftmodapi.h; sourceTree = "<group>"; };
+		A0BD5AFD178F80EF008915C5 /* ftmoderr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftmoderr.h; sourceTree = "<group>"; };
+		A0BD5AFE178F80EF008915C5 /* ftotval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftotval.h; sourceTree = "<group>"; };
+		A0BD5AFF178F80EF008915C5 /* ftoutln.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftoutln.h; sourceTree = "<group>"; };
+		A0BD5B00178F80EF008915C5 /* ftpfr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftpfr.h; sourceTree = "<group>"; };
+		A0BD5B01178F80EF008915C5 /* ftrender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftrender.h; sourceTree = "<group>"; };
+		A0BD5B02178F80EF008915C5 /* ftsizes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftsizes.h; sourceTree = "<group>"; };
+		A0BD5B03178F80EF008915C5 /* ftsnames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftsnames.h; sourceTree = "<group>"; };
+		A0BD5B04178F80EF008915C5 /* ftstroke.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftstroke.h; sourceTree = "<group>"; };
+		A0BD5B05178F80EF008915C5 /* ftsynth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftsynth.h; sourceTree = "<group>"; };
+		A0BD5B06178F80EF008915C5 /* ftsystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftsystem.h; sourceTree = "<group>"; };
+		A0BD5B07178F80EF008915C5 /* fttrigon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fttrigon.h; sourceTree = "<group>"; };
+		A0BD5B08178F80EF008915C5 /* ftttdrv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftttdrv.h; sourceTree = "<group>"; };
+		A0BD5B09178F80EF008915C5 /* fttypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fttypes.h; sourceTree = "<group>"; };
+		A0BD5B0A178F80EF008915C5 /* ftwinfnt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftwinfnt.h; sourceTree = "<group>"; };
+		A0BD5B0B178F80EF008915C5 /* ftxf86.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftxf86.h; sourceTree = "<group>"; };
+		A0BD5B0D178F80EF008915C5 /* autohint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = autohint.h; sourceTree = "<group>"; };
+		A0BD5B0E178F80EF008915C5 /* ftcalc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftcalc.h; sourceTree = "<group>"; };
+		A0BD5B0F178F80EF008915C5 /* ftdebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftdebug.h; sourceTree = "<group>"; };
+		A0BD5B10178F80EF008915C5 /* ftdriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftdriver.h; sourceTree = "<group>"; };
+		A0BD5B11178F80EF008915C5 /* ftgloadr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftgloadr.h; sourceTree = "<group>"; };
+		A0BD5B12178F80EF008915C5 /* ftmemory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftmemory.h; sourceTree = "<group>"; };
+		A0BD5B13178F80EF008915C5 /* ftobjs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftobjs.h; sourceTree = "<group>"; };
+		A0BD5B14178F80EF008915C5 /* ftpic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftpic.h; sourceTree = "<group>"; };
+		A0BD5B15178F80EF008915C5 /* ftrfork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftrfork.h; sourceTree = "<group>"; };
+		A0BD5B16178F80EF008915C5 /* ftserv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftserv.h; sourceTree = "<group>"; };
+		A0BD5B17178F80EF008915C5 /* ftstream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftstream.h; sourceTree = "<group>"; };
+		A0BD5B18178F80EF008915C5 /* fttrace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fttrace.h; sourceTree = "<group>"; };
+		A0BD5B19178F80EF008915C5 /* ftvalid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftvalid.h; sourceTree = "<group>"; };
+		A0BD5B1A178F80EF008915C5 /* internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = internal.h; sourceTree = "<group>"; };
+		A0BD5B1B178F80EF008915C5 /* psaux.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = psaux.h; sourceTree = "<group>"; };
+		A0BD5B1C178F80EF008915C5 /* pshints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pshints.h; sourceTree = "<group>"; };
+		A0BD5B1E178F80EF008915C5 /* svbdf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svbdf.h; sourceTree = "<group>"; };
+		A0BD5B1F178F80EF008915C5 /* svcid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svcid.h; sourceTree = "<group>"; };
+		A0BD5B20178F80EF008915C5 /* svgldict.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svgldict.h; sourceTree = "<group>"; };
+		A0BD5B21178F80EF008915C5 /* svgxval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svgxval.h; sourceTree = "<group>"; };
+		A0BD5B22178F80EF008915C5 /* svkern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svkern.h; sourceTree = "<group>"; };
+		A0BD5B23178F80EF008915C5 /* svmm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svmm.h; sourceTree = "<group>"; };
+		A0BD5B24178F80EF008915C5 /* svotval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svotval.h; sourceTree = "<group>"; };
+		A0BD5B25178F80EF008915C5 /* svpfr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svpfr.h; sourceTree = "<group>"; };
+		A0BD5B26178F80EF008915C5 /* svpostnm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svpostnm.h; sourceTree = "<group>"; };
+		A0BD5B27178F80EF008915C5 /* svprop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svprop.h; sourceTree = "<group>"; };
+		A0BD5B28178F80EF008915C5 /* svpscmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svpscmap.h; sourceTree = "<group>"; };
+		A0BD5B29178F80EF008915C5 /* svpsinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svpsinfo.h; sourceTree = "<group>"; };
+		A0BD5B2A178F80EF008915C5 /* svsfnt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svsfnt.h; sourceTree = "<group>"; };
+		A0BD5B2B178F80EF008915C5 /* svttcmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svttcmap.h; sourceTree = "<group>"; };
+		A0BD5B2C178F80EF008915C5 /* svtteng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svtteng.h; sourceTree = "<group>"; };
+		A0BD5B2D178F80EF008915C5 /* svttglyf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svttglyf.h; sourceTree = "<group>"; };
+		A0BD5B2E178F80EF008915C5 /* svwinfnt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svwinfnt.h; sourceTree = "<group>"; };
+		A0BD5B2F178F80EF008915C5 /* svxf86nm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svxf86nm.h; sourceTree = "<group>"; };
+		A0BD5B30178F80EF008915C5 /* sfnt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sfnt.h; sourceTree = "<group>"; };
+		A0BD5B31178F80EF008915C5 /* t1types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = t1types.h; sourceTree = "<group>"; };
+		A0BD5B32178F80EF008915C5 /* tttypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tttypes.h; sourceTree = "<group>"; };
+		A0BD5B33178F80EF008915C5 /* t1tables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = t1tables.h; sourceTree = "<group>"; };
+		A0BD5B34178F80EF008915C5 /* ttnameid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttnameid.h; sourceTree = "<group>"; };
+		A0BD5B35178F80EF008915C5 /* tttables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tttables.h; sourceTree = "<group>"; };
+		A0BD5B36178F80EF008915C5 /* tttags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tttags.h; sourceTree = "<group>"; };
+		A0BD5B37178F80EF008915C5 /* ttunpat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttunpat.h; sourceTree = "<group>"; };
+		A0BD5B38178F80EF008915C5 /* ft2build.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ft2build.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2968,9 +3322,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A94D35016C2072800D79D09 /* libwebp.a in Frameworks */,
 				1A94D35116C2072800D79D09 /* Foundation.framework in Frameworks */,
 				A03F27DD1780BAE8006731B9 /* libwebp.a in Frameworks */,
+				A0BD5A23178F80BF008915C5 /* libfreetype.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3032,10 +3386,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				01A130DA178F20DB00FF1249 /* CoreText.framework in Frameworks */,
-				A07A4CAE1783777C0073F6A7 /* libwebp.a in Frameworks */,
 				A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */,
 				A07A4DB817837B910073F6A7 /* libcurl.a in Frameworks */,
 				A07A4DB917837B910073F6A7 /* libwebp.a in Frameworks */,
+				A0BD5A25178F80CB008915C5 /* libfreetype.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3641,6 +3995,7 @@
 			isa = PBXGroup;
 			children = (
 				A03F20D31780BAE5006731B9 /* libraries */,
+				A0BD5ADC178F80EF008915C5 /* libfreetype2 */,
 				A03F20D51780BAE5006731B9 /* webp */,
 			);
 			path = mac;
@@ -3649,6 +4004,7 @@
 		A03F20D31780BAE5006731B9 /* libraries */ = {
 			isa = PBXGroup;
 			children = (
+				A0BD5A22178F80BF008915C5 /* libfreetype.a */,
 				A03F20D41780BAE5006731B9 /* libwebp.a */,
 			);
 			path = libraries;
@@ -4839,8 +5195,9 @@
 		A07A4D9D17837B910073F6A7 /* ios */ = {
 			isa = PBXGroup;
 			children = (
-				A07A4D9E17837B910073F6A7 /* curl */,
 				A07A4DA817837B910073F6A7 /* libraries */,
+				A0BD5A27178F80E4008915C5 /* libfreetype2 */,
+				A07A4D9E17837B910073F6A7 /* curl */,
 				A07A4DAB17837B910073F6A7 /* webp */,
 			);
 			path = ios;
@@ -4865,6 +5222,7 @@
 		A07A4DA817837B910073F6A7 /* libraries */ = {
 			isa = PBXGroup;
 			children = (
+				A0BD5A24178F80CB008915C5 /* libfreetype.a */,
 				A07A4DA917837B910073F6A7 /* libcurl.a */,
 				A07A4DAA17837B910073F6A7 /* libwebp.a */,
 			);
@@ -5042,6 +5400,260 @@
 				A07A52CA1784AC360073F6A7 /* etc1.h */,
 			);
 			path = etc;
+			sourceTree = "<group>";
+		};
+		A0BD5A27178F80E4008915C5 /* libfreetype2 */ = {
+			isa = PBXGroup;
+			children = (
+				A0BD5A28178F80E4008915C5 /* freetype */,
+				A0BD5A83178F80E4008915C5 /* ft2build.h */,
+			);
+			path = libfreetype2;
+			sourceTree = "<group>";
+		};
+		A0BD5A28178F80E4008915C5 /* freetype */ = {
+			isa = PBXGroup;
+			children = (
+				A0BD5A29178F80E4008915C5 /* config */,
+				A0BD5A2F178F80E4008915C5 /* freetype.h */,
+				A0BD5A30178F80E4008915C5 /* ftadvanc.h */,
+				A0BD5A31178F80E4008915C5 /* ftautoh.h */,
+				A0BD5A32178F80E4008915C5 /* ftbbox.h */,
+				A0BD5A33178F80E4008915C5 /* ftbdf.h */,
+				A0BD5A34178F80E4008915C5 /* ftbitmap.h */,
+				A0BD5A35178F80E4008915C5 /* ftbzip2.h */,
+				A0BD5A36178F80E4008915C5 /* ftcache.h */,
+				A0BD5A37178F80E4008915C5 /* ftcffdrv.h */,
+				A0BD5A38178F80E4008915C5 /* ftchapters.h */,
+				A0BD5A39178F80E4008915C5 /* ftcid.h */,
+				A0BD5A3A178F80E4008915C5 /* fterrdef.h */,
+				A0BD5A3B178F80E4008915C5 /* fterrors.h */,
+				A0BD5A3C178F80E4008915C5 /* ftgasp.h */,
+				A0BD5A3D178F80E4008915C5 /* ftglyph.h */,
+				A0BD5A3E178F80E4008915C5 /* ftgxval.h */,
+				A0BD5A3F178F80E4008915C5 /* ftgzip.h */,
+				A0BD5A40178F80E4008915C5 /* ftimage.h */,
+				A0BD5A41178F80E4008915C5 /* ftincrem.h */,
+				A0BD5A42178F80E4008915C5 /* ftlcdfil.h */,
+				A0BD5A43178F80E4008915C5 /* ftlist.h */,
+				A0BD5A44178F80E4008915C5 /* ftlzw.h */,
+				A0BD5A45178F80E4008915C5 /* ftmac.h */,
+				A0BD5A46178F80E4008915C5 /* ftmm.h */,
+				A0BD5A47178F80E4008915C5 /* ftmodapi.h */,
+				A0BD5A48178F80E4008915C5 /* ftmoderr.h */,
+				A0BD5A49178F80E4008915C5 /* ftotval.h */,
+				A0BD5A4A178F80E4008915C5 /* ftoutln.h */,
+				A0BD5A4B178F80E4008915C5 /* ftpfr.h */,
+				A0BD5A4C178F80E4008915C5 /* ftrender.h */,
+				A0BD5A4D178F80E4008915C5 /* ftsizes.h */,
+				A0BD5A4E178F80E4008915C5 /* ftsnames.h */,
+				A0BD5A4F178F80E4008915C5 /* ftstroke.h */,
+				A0BD5A50178F80E4008915C5 /* ftsynth.h */,
+				A0BD5A51178F80E4008915C5 /* ftsystem.h */,
+				A0BD5A52178F80E4008915C5 /* fttrigon.h */,
+				A0BD5A53178F80E4008915C5 /* ftttdrv.h */,
+				A0BD5A54178F80E4008915C5 /* fttypes.h */,
+				A0BD5A55178F80E4008915C5 /* ftwinfnt.h */,
+				A0BD5A56178F80E4008915C5 /* ftxf86.h */,
+				A0BD5A57178F80E4008915C5 /* internal */,
+				A0BD5A7E178F80E4008915C5 /* t1tables.h */,
+				A0BD5A7F178F80E4008915C5 /* ttnameid.h */,
+				A0BD5A80178F80E4008915C5 /* tttables.h */,
+				A0BD5A81178F80E4008915C5 /* tttags.h */,
+				A0BD5A82178F80E4008915C5 /* ttunpat.h */,
+			);
+			path = freetype;
+			sourceTree = "<group>";
+		};
+		A0BD5A29178F80E4008915C5 /* config */ = {
+			isa = PBXGroup;
+			children = (
+				A0BD5A2A178F80E4008915C5 /* ftconfig.h */,
+				A0BD5A2B178F80E4008915C5 /* ftheader.h */,
+				A0BD5A2C178F80E4008915C5 /* ftmodule.h */,
+				A0BD5A2D178F80E4008915C5 /* ftoption.h */,
+				A0BD5A2E178F80E4008915C5 /* ftstdlib.h */,
+			);
+			path = config;
+			sourceTree = "<group>";
+		};
+		A0BD5A57178F80E4008915C5 /* internal */ = {
+			isa = PBXGroup;
+			children = (
+				A0BD5A58178F80E4008915C5 /* autohint.h */,
+				A0BD5A59178F80E4008915C5 /* ftcalc.h */,
+				A0BD5A5A178F80E4008915C5 /* ftdebug.h */,
+				A0BD5A5B178F80E4008915C5 /* ftdriver.h */,
+				A0BD5A5C178F80E4008915C5 /* ftgloadr.h */,
+				A0BD5A5D178F80E4008915C5 /* ftmemory.h */,
+				A0BD5A5E178F80E4008915C5 /* ftobjs.h */,
+				A0BD5A5F178F80E4008915C5 /* ftpic.h */,
+				A0BD5A60178F80E4008915C5 /* ftrfork.h */,
+				A0BD5A61178F80E4008915C5 /* ftserv.h */,
+				A0BD5A62178F80E4008915C5 /* ftstream.h */,
+				A0BD5A63178F80E4008915C5 /* fttrace.h */,
+				A0BD5A64178F80E4008915C5 /* ftvalid.h */,
+				A0BD5A65178F80E4008915C5 /* internal.h */,
+				A0BD5A66178F80E4008915C5 /* psaux.h */,
+				A0BD5A67178F80E4008915C5 /* pshints.h */,
+				A0BD5A68178F80E4008915C5 /* services */,
+				A0BD5A7B178F80E4008915C5 /* sfnt.h */,
+				A0BD5A7C178F80E4008915C5 /* t1types.h */,
+				A0BD5A7D178F80E4008915C5 /* tttypes.h */,
+			);
+			path = internal;
+			sourceTree = "<group>";
+		};
+		A0BD5A68178F80E4008915C5 /* services */ = {
+			isa = PBXGroup;
+			children = (
+				A0BD5A69178F80E4008915C5 /* svbdf.h */,
+				A0BD5A6A178F80E4008915C5 /* svcid.h */,
+				A0BD5A6B178F80E4008915C5 /* svgldict.h */,
+				A0BD5A6C178F80E4008915C5 /* svgxval.h */,
+				A0BD5A6D178F80E4008915C5 /* svkern.h */,
+				A0BD5A6E178F80E4008915C5 /* svmm.h */,
+				A0BD5A6F178F80E4008915C5 /* svotval.h */,
+				A0BD5A70178F80E4008915C5 /* svpfr.h */,
+				A0BD5A71178F80E4008915C5 /* svpostnm.h */,
+				A0BD5A72178F80E4008915C5 /* svprop.h */,
+				A0BD5A73178F80E4008915C5 /* svpscmap.h */,
+				A0BD5A74178F80E4008915C5 /* svpsinfo.h */,
+				A0BD5A75178F80E4008915C5 /* svsfnt.h */,
+				A0BD5A76178F80E4008915C5 /* svttcmap.h */,
+				A0BD5A77178F80E4008915C5 /* svtteng.h */,
+				A0BD5A78178F80E4008915C5 /* svttglyf.h */,
+				A0BD5A79178F80E4008915C5 /* svwinfnt.h */,
+				A0BD5A7A178F80E4008915C5 /* svxf86nm.h */,
+			);
+			path = services;
+			sourceTree = "<group>";
+		};
+		A0BD5ADC178F80EF008915C5 /* libfreetype2 */ = {
+			isa = PBXGroup;
+			children = (
+				A0BD5ADD178F80EF008915C5 /* freetype */,
+				A0BD5B38178F80EF008915C5 /* ft2build.h */,
+			);
+			path = libfreetype2;
+			sourceTree = "<group>";
+		};
+		A0BD5ADD178F80EF008915C5 /* freetype */ = {
+			isa = PBXGroup;
+			children = (
+				A0BD5ADE178F80EF008915C5 /* config */,
+				A0BD5AE4178F80EF008915C5 /* freetype.h */,
+				A0BD5AE5178F80EF008915C5 /* ftadvanc.h */,
+				A0BD5AE6178F80EF008915C5 /* ftautoh.h */,
+				A0BD5AE7178F80EF008915C5 /* ftbbox.h */,
+				A0BD5AE8178F80EF008915C5 /* ftbdf.h */,
+				A0BD5AE9178F80EF008915C5 /* ftbitmap.h */,
+				A0BD5AEA178F80EF008915C5 /* ftbzip2.h */,
+				A0BD5AEB178F80EF008915C5 /* ftcache.h */,
+				A0BD5AEC178F80EF008915C5 /* ftcffdrv.h */,
+				A0BD5AED178F80EF008915C5 /* ftchapters.h */,
+				A0BD5AEE178F80EF008915C5 /* ftcid.h */,
+				A0BD5AEF178F80EF008915C5 /* fterrdef.h */,
+				A0BD5AF0178F80EF008915C5 /* fterrors.h */,
+				A0BD5AF1178F80EF008915C5 /* ftgasp.h */,
+				A0BD5AF2178F80EF008915C5 /* ftglyph.h */,
+				A0BD5AF3178F80EF008915C5 /* ftgxval.h */,
+				A0BD5AF4178F80EF008915C5 /* ftgzip.h */,
+				A0BD5AF5178F80EF008915C5 /* ftimage.h */,
+				A0BD5AF6178F80EF008915C5 /* ftincrem.h */,
+				A0BD5AF7178F80EF008915C5 /* ftlcdfil.h */,
+				A0BD5AF8178F80EF008915C5 /* ftlist.h */,
+				A0BD5AF9178F80EF008915C5 /* ftlzw.h */,
+				A0BD5AFA178F80EF008915C5 /* ftmac.h */,
+				A0BD5AFB178F80EF008915C5 /* ftmm.h */,
+				A0BD5AFC178F80EF008915C5 /* ftmodapi.h */,
+				A0BD5AFD178F80EF008915C5 /* ftmoderr.h */,
+				A0BD5AFE178F80EF008915C5 /* ftotval.h */,
+				A0BD5AFF178F80EF008915C5 /* ftoutln.h */,
+				A0BD5B00178F80EF008915C5 /* ftpfr.h */,
+				A0BD5B01178F80EF008915C5 /* ftrender.h */,
+				A0BD5B02178F80EF008915C5 /* ftsizes.h */,
+				A0BD5B03178F80EF008915C5 /* ftsnames.h */,
+				A0BD5B04178F80EF008915C5 /* ftstroke.h */,
+				A0BD5B05178F80EF008915C5 /* ftsynth.h */,
+				A0BD5B06178F80EF008915C5 /* ftsystem.h */,
+				A0BD5B07178F80EF008915C5 /* fttrigon.h */,
+				A0BD5B08178F80EF008915C5 /* ftttdrv.h */,
+				A0BD5B09178F80EF008915C5 /* fttypes.h */,
+				A0BD5B0A178F80EF008915C5 /* ftwinfnt.h */,
+				A0BD5B0B178F80EF008915C5 /* ftxf86.h */,
+				A0BD5B0C178F80EF008915C5 /* internal */,
+				A0BD5B33178F80EF008915C5 /* t1tables.h */,
+				A0BD5B34178F80EF008915C5 /* ttnameid.h */,
+				A0BD5B35178F80EF008915C5 /* tttables.h */,
+				A0BD5B36178F80EF008915C5 /* tttags.h */,
+				A0BD5B37178F80EF008915C5 /* ttunpat.h */,
+			);
+			path = freetype;
+			sourceTree = "<group>";
+		};
+		A0BD5ADE178F80EF008915C5 /* config */ = {
+			isa = PBXGroup;
+			children = (
+				A0BD5ADF178F80EF008915C5 /* ftconfig.h */,
+				A0BD5AE0178F80EF008915C5 /* ftheader.h */,
+				A0BD5AE1178F80EF008915C5 /* ftmodule.h */,
+				A0BD5AE2178F80EF008915C5 /* ftoption.h */,
+				A0BD5AE3178F80EF008915C5 /* ftstdlib.h */,
+			);
+			path = config;
+			sourceTree = "<group>";
+		};
+		A0BD5B0C178F80EF008915C5 /* internal */ = {
+			isa = PBXGroup;
+			children = (
+				A0BD5B0D178F80EF008915C5 /* autohint.h */,
+				A0BD5B0E178F80EF008915C5 /* ftcalc.h */,
+				A0BD5B0F178F80EF008915C5 /* ftdebug.h */,
+				A0BD5B10178F80EF008915C5 /* ftdriver.h */,
+				A0BD5B11178F80EF008915C5 /* ftgloadr.h */,
+				A0BD5B12178F80EF008915C5 /* ftmemory.h */,
+				A0BD5B13178F80EF008915C5 /* ftobjs.h */,
+				A0BD5B14178F80EF008915C5 /* ftpic.h */,
+				A0BD5B15178F80EF008915C5 /* ftrfork.h */,
+				A0BD5B16178F80EF008915C5 /* ftserv.h */,
+				A0BD5B17178F80EF008915C5 /* ftstream.h */,
+				A0BD5B18178F80EF008915C5 /* fttrace.h */,
+				A0BD5B19178F80EF008915C5 /* ftvalid.h */,
+				A0BD5B1A178F80EF008915C5 /* internal.h */,
+				A0BD5B1B178F80EF008915C5 /* psaux.h */,
+				A0BD5B1C178F80EF008915C5 /* pshints.h */,
+				A0BD5B1D178F80EF008915C5 /* services */,
+				A0BD5B30178F80EF008915C5 /* sfnt.h */,
+				A0BD5B31178F80EF008915C5 /* t1types.h */,
+				A0BD5B32178F80EF008915C5 /* tttypes.h */,
+			);
+			path = internal;
+			sourceTree = "<group>";
+		};
+		A0BD5B1D178F80EF008915C5 /* services */ = {
+			isa = PBXGroup;
+			children = (
+				A0BD5B1E178F80EF008915C5 /* svbdf.h */,
+				A0BD5B1F178F80EF008915C5 /* svcid.h */,
+				A0BD5B20178F80EF008915C5 /* svgldict.h */,
+				A0BD5B21178F80EF008915C5 /* svgxval.h */,
+				A0BD5B22178F80EF008915C5 /* svkern.h */,
+				A0BD5B23178F80EF008915C5 /* svmm.h */,
+				A0BD5B24178F80EF008915C5 /* svotval.h */,
+				A0BD5B25178F80EF008915C5 /* svpfr.h */,
+				A0BD5B26178F80EF008915C5 /* svpostnm.h */,
+				A0BD5B27178F80EF008915C5 /* svprop.h */,
+				A0BD5B28178F80EF008915C5 /* svpscmap.h */,
+				A0BD5B29178F80EF008915C5 /* svpsinfo.h */,
+				A0BD5B2A178F80EF008915C5 /* svsfnt.h */,
+				A0BD5B2B178F80EF008915C5 /* svttcmap.h */,
+				A0BD5B2C178F80EF008915C5 /* svtteng.h */,
+				A0BD5B2D178F80EF008915C5 /* svttglyf.h */,
+				A0BD5B2E178F80EF008915C5 /* svwinfnt.h */,
+				A0BD5B2F178F80EF008915C5 /* svxf86nm.h */,
+			);
+			path = services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -5238,6 +5850,94 @@
 				0131BA90178E015200811BB1 /* CCLabelBMFontNew.h in Headers */,
 				01A130E3178F6AC000FF1249 /* CCFontFreeType.h in Headers */,
 				01A130E9178F6BFB00FF1249 /* CCFontRenderFreeType.h in Headers */,
+				A0BD5B39178F80EF008915C5 /* ftconfig.h in Headers */,
+				A0BD5B3A178F80EF008915C5 /* ftheader.h in Headers */,
+				A0BD5B3B178F80EF008915C5 /* ftmodule.h in Headers */,
+				A0BD5B3C178F80EF008915C5 /* ftoption.h in Headers */,
+				A0BD5B3D178F80EF008915C5 /* ftstdlib.h in Headers */,
+				A0BD5B3E178F80EF008915C5 /* freetype.h in Headers */,
+				A0BD5B3F178F80EF008915C5 /* ftadvanc.h in Headers */,
+				A0BD5B40178F80EF008915C5 /* ftautoh.h in Headers */,
+				A0BD5B41178F80EF008915C5 /* ftbbox.h in Headers */,
+				A0BD5B42178F80EF008915C5 /* ftbdf.h in Headers */,
+				A0BD5B43178F80EF008915C5 /* ftbitmap.h in Headers */,
+				A0BD5B44178F80EF008915C5 /* ftbzip2.h in Headers */,
+				A0BD5B45178F80EF008915C5 /* ftcache.h in Headers */,
+				A0BD5B46178F80EF008915C5 /* ftcffdrv.h in Headers */,
+				A0BD5B47178F80EF008915C5 /* ftchapters.h in Headers */,
+				A0BD5B48178F80EF008915C5 /* ftcid.h in Headers */,
+				A0BD5B49178F80EF008915C5 /* fterrdef.h in Headers */,
+				A0BD5B4A178F80EF008915C5 /* fterrors.h in Headers */,
+				A0BD5B4B178F80EF008915C5 /* ftgasp.h in Headers */,
+				A0BD5B4C178F80EF008915C5 /* ftglyph.h in Headers */,
+				A0BD5B4D178F80EF008915C5 /* ftgxval.h in Headers */,
+				A0BD5B4E178F80EF008915C5 /* ftgzip.h in Headers */,
+				A0BD5B4F178F80EF008915C5 /* ftimage.h in Headers */,
+				A0BD5B50178F80EF008915C5 /* ftincrem.h in Headers */,
+				A0BD5B51178F80EF008915C5 /* ftlcdfil.h in Headers */,
+				A0BD5B52178F80EF008915C5 /* ftlist.h in Headers */,
+				A0BD5B53178F80EF008915C5 /* ftlzw.h in Headers */,
+				A0BD5B54178F80EF008915C5 /* ftmac.h in Headers */,
+				A0BD5B55178F80EF008915C5 /* ftmm.h in Headers */,
+				A0BD5B56178F80EF008915C5 /* ftmodapi.h in Headers */,
+				A0BD5B57178F80EF008915C5 /* ftmoderr.h in Headers */,
+				A0BD5B58178F80EF008915C5 /* ftotval.h in Headers */,
+				A0BD5B59178F80EF008915C5 /* ftoutln.h in Headers */,
+				A0BD5B5A178F80EF008915C5 /* ftpfr.h in Headers */,
+				A0BD5B5B178F80EF008915C5 /* ftrender.h in Headers */,
+				A0BD5B5C178F80EF008915C5 /* ftsizes.h in Headers */,
+				A0BD5B5D178F80EF008915C5 /* ftsnames.h in Headers */,
+				A0BD5B5E178F80EF008915C5 /* ftstroke.h in Headers */,
+				A0BD5B5F178F80EF008915C5 /* ftsynth.h in Headers */,
+				A0BD5B60178F80EF008915C5 /* ftsystem.h in Headers */,
+				A0BD5B61178F80EF008915C5 /* fttrigon.h in Headers */,
+				A0BD5B62178F80EF008915C5 /* ftttdrv.h in Headers */,
+				A0BD5B63178F80EF008915C5 /* fttypes.h in Headers */,
+				A0BD5B64178F80EF008915C5 /* ftwinfnt.h in Headers */,
+				A0BD5B65178F80EF008915C5 /* ftxf86.h in Headers */,
+				A0BD5B66178F80EF008915C5 /* autohint.h in Headers */,
+				A0BD5B67178F80EF008915C5 /* ftcalc.h in Headers */,
+				A0BD5B68178F80EF008915C5 /* ftdebug.h in Headers */,
+				A0BD5B69178F80EF008915C5 /* ftdriver.h in Headers */,
+				A0BD5B6A178F80EF008915C5 /* ftgloadr.h in Headers */,
+				A0BD5B6B178F80EF008915C5 /* ftmemory.h in Headers */,
+				A0BD5B6C178F80EF008915C5 /* ftobjs.h in Headers */,
+				A0BD5B6D178F80EF008915C5 /* ftpic.h in Headers */,
+				A0BD5B6E178F80EF008915C5 /* ftrfork.h in Headers */,
+				A0BD5B6F178F80EF008915C5 /* ftserv.h in Headers */,
+				A0BD5B70178F80EF008915C5 /* ftstream.h in Headers */,
+				A0BD5B71178F80EF008915C5 /* fttrace.h in Headers */,
+				A0BD5B72178F80EF008915C5 /* ftvalid.h in Headers */,
+				A0BD5B73178F80EF008915C5 /* internal.h in Headers */,
+				A0BD5B74178F80EF008915C5 /* psaux.h in Headers */,
+				A0BD5B75178F80EF008915C5 /* pshints.h in Headers */,
+				A0BD5B76178F80EF008915C5 /* svbdf.h in Headers */,
+				A0BD5B77178F80EF008915C5 /* svcid.h in Headers */,
+				A0BD5B78178F80EF008915C5 /* svgldict.h in Headers */,
+				A0BD5B79178F80EF008915C5 /* svgxval.h in Headers */,
+				A0BD5B7A178F80EF008915C5 /* svkern.h in Headers */,
+				A0BD5B7B178F80EF008915C5 /* svmm.h in Headers */,
+				A0BD5B7C178F80EF008915C5 /* svotval.h in Headers */,
+				A0BD5B7D178F80EF008915C5 /* svpfr.h in Headers */,
+				A0BD5B7E178F80EF008915C5 /* svpostnm.h in Headers */,
+				A0BD5B7F178F80EF008915C5 /* svprop.h in Headers */,
+				A0BD5B80178F80EF008915C5 /* svpscmap.h in Headers */,
+				A0BD5B81178F80EF008915C5 /* svpsinfo.h in Headers */,
+				A0BD5B82178F80EF008915C5 /* svsfnt.h in Headers */,
+				A0BD5B83178F80EF008915C5 /* svttcmap.h in Headers */,
+				A0BD5B84178F80EF008915C5 /* svtteng.h in Headers */,
+				A0BD5B85178F80EF008915C5 /* svttglyf.h in Headers */,
+				A0BD5B86178F80EF008915C5 /* svwinfnt.h in Headers */,
+				A0BD5B87178F80EF008915C5 /* svxf86nm.h in Headers */,
+				A0BD5B88178F80EF008915C5 /* sfnt.h in Headers */,
+				A0BD5B89178F80EF008915C5 /* t1types.h in Headers */,
+				A0BD5B8A178F80EF008915C5 /* tttypes.h in Headers */,
+				A0BD5B8B178F80EF008915C5 /* t1tables.h in Headers */,
+				A0BD5B8C178F80EF008915C5 /* ttnameid.h in Headers */,
+				A0BD5B8D178F80EF008915C5 /* tttables.h in Headers */,
+				A0BD5B8E178F80EF008915C5 /* tttags.h in Headers */,
+				A0BD5B8F178F80EF008915C5 /* ttunpat.h in Headers */,
+				A0BD5B90178F80EF008915C5 /* ft2build.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5824,6 +6524,94 @@
 				0131BA92178E015500811BB1 /* CCLabelBMFontNew.h in Headers */,
 				01A130E5178F6AC200FF1249 /* CCFontFreeType.h in Headers */,
 				01A130EB178F6BFC00FF1249 /* CCFontRenderFreeType.h in Headers */,
+				A0BD5A84178F80E4008915C5 /* ftconfig.h in Headers */,
+				A0BD5A85178F80E4008915C5 /* ftheader.h in Headers */,
+				A0BD5A86178F80E4008915C5 /* ftmodule.h in Headers */,
+				A0BD5A87178F80E4008915C5 /* ftoption.h in Headers */,
+				A0BD5A88178F80E4008915C5 /* ftstdlib.h in Headers */,
+				A0BD5A89178F80E4008915C5 /* freetype.h in Headers */,
+				A0BD5A8A178F80E4008915C5 /* ftadvanc.h in Headers */,
+				A0BD5A8B178F80E4008915C5 /* ftautoh.h in Headers */,
+				A0BD5A8C178F80E4008915C5 /* ftbbox.h in Headers */,
+				A0BD5A8D178F80E4008915C5 /* ftbdf.h in Headers */,
+				A0BD5A8E178F80E4008915C5 /* ftbitmap.h in Headers */,
+				A0BD5A8F178F80E4008915C5 /* ftbzip2.h in Headers */,
+				A0BD5A90178F80E4008915C5 /* ftcache.h in Headers */,
+				A0BD5A91178F80E4008915C5 /* ftcffdrv.h in Headers */,
+				A0BD5A92178F80E4008915C5 /* ftchapters.h in Headers */,
+				A0BD5A93178F80E4008915C5 /* ftcid.h in Headers */,
+				A0BD5A94178F80E4008915C5 /* fterrdef.h in Headers */,
+				A0BD5A95178F80E4008915C5 /* fterrors.h in Headers */,
+				A0BD5A96178F80E4008915C5 /* ftgasp.h in Headers */,
+				A0BD5A97178F80E4008915C5 /* ftglyph.h in Headers */,
+				A0BD5A98178F80E4008915C5 /* ftgxval.h in Headers */,
+				A0BD5A99178F80E4008915C5 /* ftgzip.h in Headers */,
+				A0BD5A9A178F80E4008915C5 /* ftimage.h in Headers */,
+				A0BD5A9B178F80E4008915C5 /* ftincrem.h in Headers */,
+				A0BD5A9C178F80E4008915C5 /* ftlcdfil.h in Headers */,
+				A0BD5A9D178F80E4008915C5 /* ftlist.h in Headers */,
+				A0BD5A9E178F80E4008915C5 /* ftlzw.h in Headers */,
+				A0BD5A9F178F80E4008915C5 /* ftmac.h in Headers */,
+				A0BD5AA0178F80E4008915C5 /* ftmm.h in Headers */,
+				A0BD5AA1178F80E4008915C5 /* ftmodapi.h in Headers */,
+				A0BD5AA2178F80E4008915C5 /* ftmoderr.h in Headers */,
+				A0BD5AA3178F80E4008915C5 /* ftotval.h in Headers */,
+				A0BD5AA4178F80E4008915C5 /* ftoutln.h in Headers */,
+				A0BD5AA5178F80E4008915C5 /* ftpfr.h in Headers */,
+				A0BD5AA6178F80E4008915C5 /* ftrender.h in Headers */,
+				A0BD5AA7178F80E4008915C5 /* ftsizes.h in Headers */,
+				A0BD5AA8178F80E4008915C5 /* ftsnames.h in Headers */,
+				A0BD5AA9178F80E4008915C5 /* ftstroke.h in Headers */,
+				A0BD5AAA178F80E4008915C5 /* ftsynth.h in Headers */,
+				A0BD5AAB178F80E4008915C5 /* ftsystem.h in Headers */,
+				A0BD5AAC178F80E4008915C5 /* fttrigon.h in Headers */,
+				A0BD5AAD178F80E4008915C5 /* ftttdrv.h in Headers */,
+				A0BD5AAE178F80E4008915C5 /* fttypes.h in Headers */,
+				A0BD5AAF178F80E4008915C5 /* ftwinfnt.h in Headers */,
+				A0BD5AB0178F80E4008915C5 /* ftxf86.h in Headers */,
+				A0BD5AB1178F80E4008915C5 /* autohint.h in Headers */,
+				A0BD5AB2178F80E4008915C5 /* ftcalc.h in Headers */,
+				A0BD5AB3178F80E4008915C5 /* ftdebug.h in Headers */,
+				A0BD5AB4178F80E4008915C5 /* ftdriver.h in Headers */,
+				A0BD5AB5178F80E4008915C5 /* ftgloadr.h in Headers */,
+				A0BD5AB6178F80E4008915C5 /* ftmemory.h in Headers */,
+				A0BD5AB7178F80E4008915C5 /* ftobjs.h in Headers */,
+				A0BD5AB8178F80E4008915C5 /* ftpic.h in Headers */,
+				A0BD5AB9178F80E4008915C5 /* ftrfork.h in Headers */,
+				A0BD5ABA178F80E4008915C5 /* ftserv.h in Headers */,
+				A0BD5ABB178F80E4008915C5 /* ftstream.h in Headers */,
+				A0BD5ABC178F80E4008915C5 /* fttrace.h in Headers */,
+				A0BD5ABD178F80E4008915C5 /* ftvalid.h in Headers */,
+				A0BD5ABE178F80E4008915C5 /* internal.h in Headers */,
+				A0BD5ABF178F80E4008915C5 /* psaux.h in Headers */,
+				A0BD5AC0178F80E4008915C5 /* pshints.h in Headers */,
+				A0BD5AC1178F80E4008915C5 /* svbdf.h in Headers */,
+				A0BD5AC2178F80E4008915C5 /* svcid.h in Headers */,
+				A0BD5AC3178F80E4008915C5 /* svgldict.h in Headers */,
+				A0BD5AC4178F80E4008915C5 /* svgxval.h in Headers */,
+				A0BD5AC5178F80E4008915C5 /* svkern.h in Headers */,
+				A0BD5AC6178F80E4008915C5 /* svmm.h in Headers */,
+				A0BD5AC7178F80E4008915C5 /* svotval.h in Headers */,
+				A0BD5AC8178F80E4008915C5 /* svpfr.h in Headers */,
+				A0BD5AC9178F80E4008915C5 /* svpostnm.h in Headers */,
+				A0BD5ACA178F80E4008915C5 /* svprop.h in Headers */,
+				A0BD5ACB178F80E4008915C5 /* svpscmap.h in Headers */,
+				A0BD5ACC178F80E4008915C5 /* svpsinfo.h in Headers */,
+				A0BD5ACD178F80E4008915C5 /* svsfnt.h in Headers */,
+				A0BD5ACE178F80E4008915C5 /* svttcmap.h in Headers */,
+				A0BD5ACF178F80E4008915C5 /* svtteng.h in Headers */,
+				A0BD5AD0178F80E4008915C5 /* svttglyf.h in Headers */,
+				A0BD5AD1178F80E4008915C5 /* svwinfnt.h in Headers */,
+				A0BD5AD2178F80E4008915C5 /* svxf86nm.h in Headers */,
+				A0BD5AD3178F80E4008915C5 /* sfnt.h in Headers */,
+				A0BD5AD4178F80E4008915C5 /* t1types.h in Headers */,
+				A0BD5AD5178F80E4008915C5 /* tttypes.h in Headers */,
+				A0BD5AD6178F80E4008915C5 /* t1tables.h in Headers */,
+				A0BD5AD7178F80E4008915C5 /* ttnameid.h in Headers */,
+				A0BD5AD8178F80E4008915C5 /* tttables.h in Headers */,
+				A0BD5AD9178F80E4008915C5 /* tttags.h in Headers */,
+				A0BD5ADA178F80E4008915C5 /* ttunpat.h in Headers */,
+				A0BD5ADB178F80E4008915C5 /* ft2build.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
