@@ -39,14 +39,23 @@ public:
     ~StringTTF();
     
     bool setText(char *pStringToRender, float lineWidth, TextAlignment alignment = kTextAlignmentLeft, bool lineBreakWithoutSpaces = false);
+    
+    
+    virtual void setAlignment(TextAlignment alignment);
+    virtual void setWidth(float width);
+    virtual void setLineBreakWithoutSpace(bool breakWithoutSpace);
+    virtual void setScale(float scale);
+    virtual void setScaleX(float scaleX);
+    virtual void setScaleY(float scaleY);
+    
 
     
     // CCLabelTextFormat protocol implementation
     
     // sprite related stuff
-    virtual Sprite *                  getSpriteChild(int ID);
-    virtual Array  *                  getChildrenLetters();
-    virtual Sprite *                  getSpriteForChar(unsigned short int theChar, int spriteIndexHint);
+    virtual Sprite *                    getSpriteChild(int ID);
+    virtual Array  *                    getChildrenLetters();
+    virtual Sprite *                    getSpriteForChar(unsigned short int theChar, int spriteIndexHint);
     virtual float                       getLetterPosXLeft( Sprite* sp );
     virtual float                       getLetterPosXRight( Sprite* sp );
     
@@ -56,7 +65,7 @@ public:
     virtual int                         getXOffsetForChar(unsigned short c);
     virtual int                         getYOffsetForChar(unsigned short c);
     virtual int                         getAdvanceForChar(unsigned short c, int hintPositionInString);
-    virtual Rect                      getRectForChar(unsigned short c) ;
+    virtual Rect                        getRectForChar(unsigned short c) ;
     
     // string related stuff
     virtual int                         getStringNumLines();
@@ -64,12 +73,12 @@ public:
     virtual unsigned short              getCharAtStringPosition(int position);
     virtual unsigned short *            getUTF8String();
     virtual void                        assignNewUTF8String(unsigned short *newString);
-    virtual TextAlignment             getTextAlignment();
+    virtual TextAlignment               getTextAlignment();
     
     // label related stuff
     virtual float                       getMaxLineWidth() ;
     virtual bool                        breakLineWithoutSpace();
-    virtual Size                      getLabelContentSize();
+    virtual Size                        getLabelContentSize();
     virtual void                        setLabelContentSize(const Size &newSize);
     
     
