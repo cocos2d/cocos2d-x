@@ -899,8 +899,8 @@ end
 local function runEditBoxTest()
 	local newScene = CCScene:create()
 	local newLayer = CCLayer:create()
-	local visibleOrigin = CCEGLView:sharedOpenGLView():getVisibleOrigin()
-    local visibleSize = CCEGLView:sharedOpenGLView():getVisibleSize()
+	local visibleOrigin = CCEGLView:getInstance():getVisibleOrigin()
+    local visibleSize = CCEGLView:getInstance():getVisibleSize()
     
     local pBg = CCSprite:create("Images/HelloWorld.png")
     pBg:setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2))

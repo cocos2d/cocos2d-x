@@ -48,7 +48,10 @@ public:
 	/**
 	 @brief	get the shared main open gl window
 	 */
-	static EGLView* sharedOpenGLView();			// MH: Cocos2D now uses pointer instead of ref
+	static EGLView* getInstance();			// MH: Cocos2D now uses pointer instead of ref
+	
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static EGLView* sharedOpenGLView();
 
 private:
 	bool				_accelState;

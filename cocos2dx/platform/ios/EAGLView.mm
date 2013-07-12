@@ -410,7 +410,7 @@ static CCEAGLView *view = 0;
         ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
         ++i;
     }
-    cocos2d::EGLView::sharedOpenGLView()->handleTouchesBegin(i, ids, xs, ys);
+    cocos2d::EGLView::getInstance()->handleTouchesBegin(i, ids, xs, ys);
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -430,7 +430,7 @@ static CCEAGLView *view = 0;
         ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
         ++i;
     }
-    cocos2d::EGLView::sharedOpenGLView()->handleTouchesMove(i, ids, xs, ys);
+    cocos2d::EGLView::getInstance()->handleTouchesMove(i, ids, xs, ys);
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -451,7 +451,7 @@ static CCEAGLView *view = 0;
         ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
         ++i;
     }
-    cocos2d::EGLView::sharedOpenGLView()->handleTouchesEnd(i, ids, xs, ys);
+    cocos2d::EGLView::getInstance()->handleTouchesEnd(i, ids, xs, ys);
 }
     
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
@@ -472,7 +472,7 @@ static CCEAGLView *view = 0;
         ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
         ++i;
     }
-    cocos2d::EGLView::sharedOpenGLView()->handleTouchesCancel(i, ids, xs, ys);
+    cocos2d::EGLView::getInstance()->handleTouchesCancel(i, ids, xs, ys);
 }
 
 #pragma mark -
@@ -797,8 +797,8 @@ static CCEAGLView *view = 0;
             break;
     }
     
-    float scaleX = cocos2d::EGLView::sharedOpenGLView()->getScaleX();
-	float scaleY = cocos2d::EGLView::sharedOpenGLView()->getScaleY();
+    float scaleX = cocos2d::EGLView::getInstance()->getScaleX();
+	float scaleY = cocos2d::EGLView::getInstance()->getScaleY();
     
     
     if (self.contentScaleFactor == 2.0f)
@@ -809,7 +809,7 @@ static CCEAGLView *view = 0;
         end = CGRectApplyAffineTransform(end, CGAffineTransformScale(CGAffineTransformIdentity, 2.0f, 2.0f));
     }
     
-    float offestY = cocos2d::EGLView::sharedOpenGLView()->getViewPortRect().origin.y;
+    float offestY = cocos2d::EGLView::getInstance()->getViewPortRect().origin.y;
     CCLOG("offestY = %f", offestY);
     if (offestY < 0.0f)
     {
@@ -868,11 +868,11 @@ static CCEAGLView *view = 0;
 	[UIView setAnimationDuration:duration];
 	[UIView setAnimationBeginsFromCurrentState:YES];
     
-    //NSLog(@"[animation] dis = %f, scale = %f \n", dis, cocos2d::EGLView::sharedOpenGLView()->getScaleY());
+    //NSLog(@"[animation] dis = %f, scale = %f \n", dis, cocos2d::EGLView::getInstance()->getScaleY());
     
     if (dis < 0.0f) dis = 0.0f;
 
-	dis *= cocos2d::EGLView::sharedOpenGLView()->getScaleY();
+	dis *= cocos2d::EGLView::getInstance()->getScaleY();
     
     if (self.contentScaleFactor == 2.0f)
     {

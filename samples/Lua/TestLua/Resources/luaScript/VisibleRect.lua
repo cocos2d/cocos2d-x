@@ -8,7 +8,7 @@ VisibleRect.s_visibleRect = CCRect:new()
 
 function VisibleRect:lazyInit()
     if (self.s_visibleRect.size.width == 0.0 and self.s_visibleRect.size.height == 0.0) then
-        local pEGLView = CCEGLView:sharedOpenGLView();
+        local pEGLView = CCEGLView:getInstance();
         self.s_visibleRect.origin = pEGLView:getVisibleOrigin();
         self.s_visibleRect.size = pEGLView:getVisibleSize();
     end

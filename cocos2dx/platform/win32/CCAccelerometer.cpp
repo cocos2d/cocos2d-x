@@ -168,12 +168,12 @@ void Accelerometer::setDelegate(std::function<void(Acceleration*)> function)
     if (_function)
     {
         // Register our handler
-        EGLView::sharedOpenGLView()->setAccelerometerKeyHook( &myAccelerometerKeyHook );
+        EGLView::getInstance()->setAccelerometerKeyHook( &myAccelerometerKeyHook );
     }
     else
     {
         // De-register our handler
-        EGLView::sharedOpenGLView()->setAccelerometerKeyHook( NULL );
+        EGLView::getInstance()->setAccelerometerKeyHook( NULL );
         resetAccelerometer();
     }
 }

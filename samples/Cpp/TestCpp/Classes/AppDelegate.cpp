@@ -28,9 +28,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     // initialize director
     Director *pDirector = Director::getInstance();
-    pDirector->setOpenGLView(EGLView::sharedOpenGLView());
+    pDirector->setOpenGLView(EGLView::getInstance());
 
-    Size screenSize = EGLView::sharedOpenGLView()->getFrameSize();
+    Size screenSize = EGLView::getInstance()->getFrameSize();
 
     Size designSize = CCSizeMake(480, 320);
 
@@ -45,7 +45,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         pDirector->setContentScaleFactor(resourceSize.height/designSize.height);
     }
 
-    EGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
+    EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
 
     Scene * pScene = Scene::create();
     Layer * pLayer = new TestController();

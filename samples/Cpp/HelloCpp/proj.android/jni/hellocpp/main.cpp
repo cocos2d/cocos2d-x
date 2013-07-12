@@ -24,7 +24,7 @@ void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thi
 {
     if (!Director::getInstance()->getOpenGLView())
     {
-        EGLView *view = EGLView::sharedOpenGLView();
+        EGLView *view = EGLView::getInstance();
         view->setFrameSize(w, h);
 
         AppDelegate *pAppDelegate = new AppDelegate();

@@ -899,7 +899,7 @@ void Director::createStatsLabel()
      Secondly, the size of this image is 480*320, to display the FPS label with correct size, 
      a factor of design resolution ratio of 480x320 is also needed.
      */
-    float factor = EGLView::sharedOpenGLView()->getDesignResolutionSize().height / 320.0f;
+    float factor = EGLView::getInstance()->getDesignResolutionSize().height / 320.0f;
 
     _FPSLabel = new LabelAtlas();
     _FPSLabel->setIgnoreContentScaleFactor(true);

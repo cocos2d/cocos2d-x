@@ -218,12 +218,18 @@ void EGLView::setIMEKeyboardState(bool bOpen)
 	}
 }
 
-EGLView* EGLView::sharedOpenGLView()		// MH: Cocos2D now uses pointer instead of ref
+EGLView* EGLView::getInstance()		// MH: Cocos2D now uses pointer instead of ref
 {
 	if( !_instance ) {
 		_instance = new EGLView() ;
 	}
 	return _instance;							// MH: Cocos2D now uses pointer instead of ref
+}
+
+// XXX: deprecated
+EGLView* EGLView::sharedOpenGLView()
+{
+    return EGLView::getInstance();
 }
 
 NS_CC_END

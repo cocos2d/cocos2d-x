@@ -99,7 +99,7 @@ void EGLView::setIMEKeyboardState(bool bOpen)
     }
 }
 
-EGLView* EGLView::sharedOpenGLView()
+EGLView* EGLView::getInstance()
 {
     static EGLView* s_pEglView = NULL;
     if (s_pEglView == NULL)
@@ -113,6 +113,12 @@ EGLView* EGLView::sharedOpenGLView()
     }
 
     return s_pEglView;
+}
+
+// XXX: deprecated
+EGLView* EGLView::sharedOpenGLView()
+{
+    return EGLView::getInstance();
 }
 
 void

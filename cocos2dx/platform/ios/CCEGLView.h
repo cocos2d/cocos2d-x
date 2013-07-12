@@ -51,7 +51,7 @@ public:
     static EGLView* getInstance();
 
     /** @deprecated Use getInstance() instead */
-    static EGLView* sharedOpenGLView();
+    CC_DEPRECATED_ATTRIBUTE static EGLView* sharedOpenGLView();
 
 };
 

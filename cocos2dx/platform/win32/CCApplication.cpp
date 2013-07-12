@@ -49,7 +49,7 @@ int Application::run()
         return 0;
     }
 
-    EGLView* pMainWnd = EGLView::sharedOpenGLView();
+    EGLView* pMainWnd = EGLView::getInstance();
     pMainWnd->centerWindow();
     ShowWindow(pMainWnd->getHWnd(), SW_SHOW);
 
