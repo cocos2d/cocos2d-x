@@ -9,7 +9,7 @@ using namespace std;
 
 NS_CC_BEGIN
 
-FileUtils* FileUtils::sharedFileUtils()
+FileUtils* FileUtils::getInstance()
 {
     if (s_sharedFileUtils == NULL)
     {
@@ -17,6 +17,12 @@ FileUtils* FileUtils::sharedFileUtils()
         s_sharedFileUtils->init();
     }
     return s_sharedFileUtils;
+}
+
+// XXX: deprecated
+FileUtils* FileUtils::sharedFileUtils()
+{
+    return FileUtils::getInstance();
 }
 
 FileUtilsEmscripten::FileUtilsEmscripten()

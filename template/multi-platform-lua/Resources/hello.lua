@@ -158,7 +158,7 @@ local function main()
 
         local function menuCallbackOpenPopup()
             -- loop test sound effect
-            local effectPath = CCFileUtils:sharedFileUtils():fullPathForFilename("effect1.wav")
+            local effectPath = CCFileUtils:getInstance():fullPathForFilename("effect1.wav")
             effectID = AudioEngine.playEffect(effectPath)
             menuPopup:setVisible(true)
         end
@@ -188,10 +188,10 @@ local function main()
     -- play background music, preload effect
 
     -- uncomment below for the BlackBerry version
-    -- local bgMusicPath = CCFileUtils:sharedFileUtils():fullPathForFilename("background.ogg")
-    local bgMusicPath = CCFileUtils:sharedFileUtils():fullPathForFilename("background.mp3")
+    -- local bgMusicPath = CCFileUtils:getInstance():fullPathForFilename("background.ogg")
+    local bgMusicPath = CCFileUtils:getInstance():fullPathForFilename("background.mp3")
     AudioEngine.playMusic(bgMusicPath, true)
-    local effectPath = CCFileUtils:sharedFileUtils():fullPathForFilename("effect1.wav")
+    local effectPath = CCFileUtils:getInstance():fullPathForFilename("effect1.wav")
     AudioEngine.preloadEffect(effectPath)
 
     -- run

@@ -46,7 +46,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     tolua_web_socket_open(tolua_s);
 #endif
     
-    std::string path = FileUtils::sharedFileUtils()->fullPathForFilename("hello.lua");
+    std::string path = FileUtils::getInstance()->fullPathForFilename("hello.lua");
     pEngine->executeScriptFile(path.c_str());
 
     return true;

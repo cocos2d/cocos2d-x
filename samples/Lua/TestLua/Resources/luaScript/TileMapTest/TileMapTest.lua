@@ -1196,7 +1196,7 @@ local function TMXOrthoFromXMLTest()
     local resources = "TileMaps"        -- partial paths are OK as resource paths.
     local file = resources.."/orthogonal-test1.tmx"
 
-    local  str = CCString:createWithContentsOfFile(CCFileUtils:sharedFileUtils():fullPathForFilename(file)):getCString()
+    local  str = CCString:createWithContentsOfFile(CCFileUtils:getInstance():fullPathForFilename(file)):getCString()
     --    CCAssert(str != NULL, "Unable to open file")
     if (str == nil) then
         cclog("Unable to open file")
