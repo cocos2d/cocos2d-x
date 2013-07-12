@@ -141,7 +141,7 @@ void ParallaxNode::visit()
             PointObject *point = (PointObject*)_parallaxArray->arr[i];
             float x = -pos.x + pos.x * point->getRatio().x + point->getOffset().x;
             float y = -pos.y + pos.y * point->getRatio().y + point->getOffset().y;            
-            point->getChild()->setPosition(ccp(x,y));
+            point->getChild()->setPosition(Point(x,y));
         }
         _lastPosition = pos;
     }

@@ -406,8 +406,8 @@ void Armature::updateOffsetPoint()
     // Set contentsize and Calculate anchor point.
     Rect rect = boundingBox();
     setContentSize(rect.size);
-    _offsetPoint = ccp(-rect.origin.x,  -rect.origin.y);
-    setAnchorPoint(ccp(_offsetPoint.x / rect.size.width, _offsetPoint.y / rect.size.height));
+    _offsetPoint = Point(-rect.origin.x,  -rect.origin.y);
+    setAnchorPoint(Point(_offsetPoint.x / rect.size.width, _offsetPoint.y / rect.size.height));
 }
 
 

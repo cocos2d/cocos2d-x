@@ -147,7 +147,7 @@ bool ShaderNode::initWithVertex(const char *vert, const char *frag)
     scheduleUpdate();
 
     setContentSize(CCSizeMake(SIZE_X, SIZE_Y));
-    setAnchorPoint(ccp(0.5f, 0.5f));
+    setAnchorPoint(Point(0.5f, 0.5f));
     
     _vertFileName = vert;
     _fragFileName = frag;
@@ -232,7 +232,7 @@ bool ShaderMonjori::init()
         ShaderNode *sn = ShaderNode::shaderNodeWithVertex("Shaders/example_Monjori.vsh", "Shaders/example_Monjori.fsh");
 
         Size s = Director::sharedDirector()->getWinSize();
-        sn->setPosition(ccp(s.width/2, s.height/2));
+        sn->setPosition(Point(s.width/2, s.height/2));
 
         addChild(sn);
 
@@ -266,7 +266,7 @@ bool ShaderMandelbrot::init()
         ShaderNode *sn = ShaderNode::shaderNodeWithVertex("Shaders/example_Mandelbrot.vsh", "Shaders/example_Mandelbrot.fsh");
 
         Size s = Director::sharedDirector()->getWinSize();
-        sn->setPosition(ccp(s.width/2, s.height/2));
+        sn->setPosition(Point(s.width/2, s.height/2));
 
         addChild(sn);
 
@@ -299,7 +299,7 @@ bool ShaderJulia::init()
         ShaderNode *sn = ShaderNode::shaderNodeWithVertex("Shaders/example_Julia.vsh", "Shaders/example_Julia.fsh");
 
         Size s = Director::sharedDirector()->getWinSize();
-        sn->setPosition(ccp(s.width/2, s.height/2));
+        sn->setPosition(Point(s.width/2, s.height/2));
 
         addChild(sn);
 
@@ -333,7 +333,7 @@ bool ShaderHeart::init()
         ShaderNode *sn = ShaderNode::shaderNodeWithVertex("Shaders/example_Heart.vsh", "Shaders/example_Heart.fsh");
 
         Size s = Director::sharedDirector()->getWinSize();
-        sn->setPosition(ccp(s.width/2, s.height/2));
+        sn->setPosition(Point(s.width/2, s.height/2));
 
         addChild(sn);
 
@@ -366,7 +366,7 @@ bool ShaderFlower::init()
         ShaderNode *sn = ShaderNode::shaderNodeWithVertex("Shaders/example_Flower.vsh", "Shaders/example_Flower.fsh");
 
         Size s = Director::sharedDirector()->getWinSize();
-        sn->setPosition(ccp(s.width/2, s.height/2));
+        sn->setPosition(Point(s.width/2, s.height/2));
 
         addChild(sn);
 
@@ -399,7 +399,7 @@ bool ShaderPlasma::init()
         ShaderNode *sn = ShaderNode::shaderNodeWithVertex("Shaders/example_Plasma.vsh", "Shaders/example_Plasma.fsh");
 
         Size s = Director::sharedDirector()->getWinSize();
-        sn->setPosition(ccp(s.width/2, s.height/2));
+        sn->setPosition(Point(s.width/2, s.height/2));
 
         addChild(sn);
 
@@ -477,7 +477,7 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
         
         Size s = getTexture()->getContentSizeInPixels();
 
-        blur_ = ccp(1/s.width, 1/s.height);
+        blur_ = Point(1/s.width, 1/s.height);
         sub_[0] = sub_[1] = sub_[2] = sub_[3] = 0;
 
         this->initProgram();
@@ -560,7 +560,7 @@ void SpriteBlur::setBlurSize(float f)
 {
     Size s = getTexture()->getContentSizeInPixels();
 
-    blur_ = ccp(1/s.width, 1/s.height);
+    blur_ = Point(1/s.width, 1/s.height);
     blur_ = blur_ * f;
 }
 
@@ -586,11 +586,11 @@ ControlSlider* ShaderBlur::createSliderCtl()
     Size screenSize = Director::sharedDirector()->getWinSize();
 
     ControlSlider *slider = ControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
-    slider->setAnchorPoint(ccp(0.5f, 1.0f));
+    slider->setAnchorPoint(Point(0.5f, 1.0f));
     slider->setMinimumValue(0.0f); // Sets the min value of range
     slider->setMaximumValue(3.0f); // Sets the max value of range
     slider->setValue(1.0f);
-    slider->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 3.0f));
+    slider->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 3.0f));
 
     // When the value of the slider will change, the given selector will be call
     slider->addTargetWithActionForControlEvents(this, cccontrol_selector(ShaderBlur::sliderAction), ControlEventValueChanged);
@@ -608,8 +608,8 @@ bool ShaderBlur::init()
         Sprite *sprite = Sprite::create("Images/grossini.png");
 
         Size s = Director::sharedDirector()->getWinSize();
-        _blurSprite->setPosition(ccp(s.width/3, s.height/2));
-        sprite->setPosition(ccp(2*s.width/3, s.height/2));
+        _blurSprite->setPosition(Point(s.width/3, s.height/2));
+        sprite->setPosition(Point(2*s.width/3, s.height/2));
 
         addChild(_blurSprite);
         addChild(sprite);
@@ -663,7 +663,7 @@ bool ShaderRetroEffect::init()
         p->release();
 
 
-        _label->setPosition(ccp(s.width/2,s.height/2));
+        _label->setPosition(Point(s.width/2,s.height/2));
 
         addChild(_label);
 
@@ -687,7 +687,7 @@ void ShaderRetroEffect::update(float dt)
         Sprite *sprite = static_cast<Sprite*>(pObj);
         i++;
         Point oldPosition = sprite->getPosition();
-        sprite->setPosition(ccp( oldPosition.x, sinf( _accum * 2 + i/2.0) * 20  ));
+        sprite->setPosition(Point( oldPosition.x, sinf( _accum * 2 + i/2.0) * 20  ));
 
         // add fabs() to prevent negative scaling
         float scaleY = ( sinf( _accum * 2 + i/2.0 + 0.707) );

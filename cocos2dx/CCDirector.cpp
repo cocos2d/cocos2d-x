@@ -522,7 +522,7 @@ Point Director::convertToGL(const Point& uiPoint)
 	kmVec3 glCoord;
 	kmVec3TransformCoord(&glCoord, &clipCoord, &transformInv);
 	
-	return ccp(glCoord.x, glCoord.y);
+	return Point(glCoord.x, glCoord.y);
 }
 
 Point Director::convertToUI(const Point& glPoint)
@@ -536,7 +536,7 @@ Point Director::convertToUI(const Point& glPoint)
 	kmVec3TransformCoord(&clipCoord, &glCoord, &transform);
 	
 	Size glSize = _openGLView->getDesignResolutionSize();
-	return ccp(glSize.width*(clipCoord.x*0.5 + 0.5), glSize.height*(-clipCoord.y*0.5 + 0.5));
+	return Point(glSize.width*(clipCoord.x*0.5 + 0.5), glSize.height*(-clipCoord.y*0.5 + 0.5));
 }
 
 const Size& Director::getWinSize(void) const
@@ -912,8 +912,8 @@ void Director::createStatsLabel()
 
     Texture2D::setDefaultAlphaPixelFormat(currentFormat);
 
-    _drawsLabel->setPosition(ccp(0, 34*factor) + CC_DIRECTOR_STATS_POSITION);
-    _SPFLabel->setPosition(ccp(0, 17*factor) + CC_DIRECTOR_STATS_POSITION);
+    _drawsLabel->setPosition(Point(0, 34*factor) + CC_DIRECTOR_STATS_POSITION);
+    _SPFLabel->setPosition(Point(0, 17*factor) + CC_DIRECTOR_STATS_POSITION);
     _FPSLabel->setPosition(CC_DIRECTOR_STATS_POSITION);
 }
 

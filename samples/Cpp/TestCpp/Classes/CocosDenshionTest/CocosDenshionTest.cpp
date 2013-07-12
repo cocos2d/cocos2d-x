@@ -157,9 +157,9 @@ public:
             _lblMinValue = LabelTTF::create(buffer, "Arial", 8);
             addChild(_lblMinValue);
             if (_direction == Vertical)
-                _lblMinValue->setPosition(ccp(12.0, -50.0));
+                _lblMinValue->setPosition(Point(12.0, -50.0));
             else
-                _lblMinValue->setPosition(ccp(-50, 12.0));
+                _lblMinValue->setPosition(Point(-50, 12.0));
         } else {
             _lblMinValue->setString(buffer);
         }
@@ -169,9 +169,9 @@ public:
             _lblMaxValue = LabelTTF::create(buffer, "Arial", 8);
             addChild(_lblMaxValue);
             if (_direction == Vertical)
-                _lblMaxValue->setPosition(ccp(12.0, 50.0));
+                _lblMaxValue->setPosition(Point(12.0, 50.0));
             else
-                _lblMaxValue->setPosition(ccp(50, 12.0));
+                _lblMaxValue->setPosition(Point(50, 12.0));
         } else {
             _lblMaxValue->setString(buffer);
         }

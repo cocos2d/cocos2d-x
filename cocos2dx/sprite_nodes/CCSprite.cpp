@@ -165,7 +165,7 @@ bool Sprite::initWithTexture(Texture2D *pTexture, const Rect& rect, bool rotated
         _flipX = _flipY = false;
         
         // default transform anchor: center
-        setAnchorPoint(ccp(0.5f, 0.5f));
+        setAnchorPoint(Point(0.5f, 0.5f));
         
         // zwoptex default values
         _offsetPosition = PointZero;

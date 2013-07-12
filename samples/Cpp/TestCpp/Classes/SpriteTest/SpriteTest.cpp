@@ -206,7 +206,7 @@ Sprite1::Sprite1()
     
     
     Size s = Director::sharedDirector()->getWinSize();
-    addNewSpriteWithCoords( ccp(s.width/2, s.height/2) );
+    addNewSpriteWithCoords( Point(s.width/2, s.height/2) );
     
 }
 
@@ -220,7 +220,7 @@ void Sprite1::addNewSpriteWithCoords(Point p)
     Sprite* sprite = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(x,y,85,121) );
     addChild( sprite );
     
-    sprite->setPosition( ccp( p.x, p.y) );
+    sprite->setPosition( Point( p.x, p.y) );
     
     ActionInterval* action;
     float random = CCRANDOM_0_1();
@@ -271,7 +271,7 @@ SpriteBatchNode1::SpriteBatchNode1()
     addChild(BatchNode, 0, kTagSpriteBatchNode);
     
     Size s = Director::sharedDirector()->getWinSize();
-    addNewSpriteWithCoords( ccp(s.width/2, s.height/2) );
+    addNewSpriteWithCoords( Point(s.width/2, s.height/2) );
 }
 
 void SpriteBatchNode1::addNewSpriteWithCoords(Point p)
@@ -286,7 +286,7 @@ void SpriteBatchNode1::addNewSpriteWithCoords(Point p)
     Sprite* sprite = Sprite::createWithTexture(BatchNode->getTexture(), CCRectMake(x,y,85,121));
     BatchNode->addChild(sprite);
 
-    sprite->setPosition( ccp( p.x, p.y) );
+    sprite->setPosition( Point( p.x, p.y) );
 
     ActionInterval* action;
     float random = CCRANDOM_0_1();
@@ -345,14 +345,14 @@ SpriteColorOpacity::SpriteColorOpacity()
     Sprite* sprite8 = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*3, 121*1, 85, 121));
     
     Size s = Director::sharedDirector()->getWinSize();
-    sprite1->setPosition( ccp( (s.width/5)*1, (s.height/3)*1) );
-    sprite2->setPosition( ccp( (s.width/5)*2, (s.height/3)*1) );
-    sprite3->setPosition( ccp( (s.width/5)*3, (s.height/3)*1) );
-    sprite4->setPosition( ccp( (s.width/5)*4, (s.height/3)*1) );
-    sprite5->setPosition( ccp( (s.width/5)*1, (s.height/3)*2) );
-    sprite6->setPosition( ccp( (s.width/5)*2, (s.height/3)*2) );
-    sprite7->setPosition( ccp( (s.width/5)*3, (s.height/3)*2) );
-    sprite8->setPosition( ccp( (s.width/5)*4, (s.height/3)*2) );
+    sprite1->setPosition( Point( (s.width/5)*1, (s.height/3)*1) );
+    sprite2->setPosition( Point( (s.width/5)*2, (s.height/3)*1) );
+    sprite3->setPosition( Point( (s.width/5)*3, (s.height/3)*1) );
+    sprite4->setPosition( Point( (s.width/5)*4, (s.height/3)*1) );
+    sprite5->setPosition( Point( (s.width/5)*1, (s.height/3)*2) );
+    sprite6->setPosition( Point( (s.width/5)*2, (s.height/3)*2) );
+    sprite7->setPosition( Point( (s.width/5)*3, (s.height/3)*2) );
+    sprite8->setPosition( Point( (s.width/5)*4, (s.height/3)*2) );
     
     auto action = FadeIn::create(2);
     auto action_back = action->reverse();
@@ -431,14 +431,14 @@ SpriteBatchNodeColorOpacity::SpriteBatchNodeColorOpacity()
     
     
     Size s = Director::sharedDirector()->getWinSize();
-    sprite1->setPosition( ccp( (s.width/5)*1, (s.height/3)*1) );
-    sprite2->setPosition( ccp( (s.width/5)*2, (s.height/3)*1) );
-    sprite3->setPosition( ccp( (s.width/5)*3, (s.height/3)*1) );
-    sprite4->setPosition( ccp( (s.width/5)*4, (s.height/3)*1) );
-    sprite5->setPosition( ccp( (s.width/5)*1, (s.height/3)*2) );
-    sprite6->setPosition( ccp( (s.width/5)*2, (s.height/3)*2) );
-    sprite7->setPosition( ccp( (s.width/5)*3, (s.height/3)*2) );
-    sprite8->setPosition( ccp( (s.width/5)*4, (s.height/3)*2) );
+    sprite1->setPosition( Point( (s.width/5)*1, (s.height/3)*1) );
+    sprite2->setPosition( Point( (s.width/5)*2, (s.height/3)*1) );
+    sprite3->setPosition( Point( (s.width/5)*3, (s.height/3)*1) );
+    sprite4->setPosition( Point( (s.width/5)*4, (s.height/3)*1) );
+    sprite5->setPosition( Point( (s.width/5)*1, (s.height/3)*2) );
+    sprite6->setPosition( Point( (s.width/5)*2, (s.height/3)*2) );
+    sprite7->setPosition( Point( (s.width/5)*3, (s.height/3)*2) );
+    sprite8->setPosition( Point( (s.width/5)*4, (s.height/3)*2) );
 
     auto action = FadeIn::create(2);
     auto action_back = action->reverse();
@@ -512,20 +512,20 @@ SpriteZOrder::SpriteZOrder()
     for(int i=0;i<5;i++) 
     {
         Sprite* sprite = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*0, 121*1, 85, 121));
-        sprite->setPosition( ccp( (i+1)*step, s.height/2) );
+        sprite->setPosition( Point( (i+1)*step, s.height/2) );
         addChild(sprite, i);
     }
     
     for(int i=5;i<10;i++) 
     {
         Sprite* sprite = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*1, 121*0, 85, 121));
-        sprite->setPosition( ccp( (i+1)*step, s.height/2) );
+        sprite->setPosition( Point( (i+1)*step, s.height/2) );
         addChild(sprite, 14-i);
     }
     
     Sprite* sprite = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*3, 121*0, 85, 121));
     addChild(sprite, -1, kTagSprite1);
-    sprite->setPosition( ccp(s.width/2, s.height/2 - 20) );
+    sprite->setPosition( Point(s.width/2, s.height/2 - 20) );
     sprite->setScaleX( 6 );
     sprite->setColor(Color3B::RED);
     
@@ -575,20 +575,20 @@ SpriteBatchNodeZOrder::SpriteBatchNodeZOrder()
     for(int i=0;i<5;i++) 
     {
         Sprite* sprite = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*0, 121*1, 85, 121));
-        sprite->setPosition( ccp( (i+1)*step, s.height/2) );
+        sprite->setPosition( Point( (i+1)*step, s.height/2) );
         batch->addChild(sprite, i);
     }
     
     for(int i=5;i<10;i++) 
     {
         Sprite* sprite = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*1, 121*0, 85, 121));
-        sprite->setPosition( ccp( (i+1)*step, s.height/2) );
+        sprite->setPosition( Point( (i+1)*step, s.height/2) );
         batch->addChild(sprite, 14-i);
     }
     
     Sprite* sprite = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*3, 121*0, 85, 121));
     batch->addChild(sprite, -1, kTagSprite1);
-    sprite->setPosition( ccp(s.width/2, s.height/2 - 20) );
+    sprite->setPosition( Point(s.width/2, s.height/2 - 20) );
     sprite->setScaleX( 6 );
     sprite->setColor(Color3B::RED);
     
@@ -701,7 +701,7 @@ SpriteBatchNodeReorderIssue744::SpriteBatchNodeReorderIssue744()
     addChild(batch, 0, kTagSpriteBatchNode);        
 
     Sprite* sprite = Sprite::createWithTexture(batch->getTexture(),CCRectMake(0, 0, 85, 121));
-    sprite->setPosition( ccp(s.width/2, s.height/2) );
+    sprite->setPosition( Point(s.width/2, s.height/2) );
     batch->addChild(sprite, 3);
     batch->reorderChild(sprite, 1);
 }
@@ -752,13 +752,13 @@ SpriteBatchNodeReorderIssue766::SpriteBatchNodeReorderIssue766()
     addChild(batchNode, 1, 0);
 
     sprite1 = makeSpriteZ(2);
-    sprite1->setPosition(ccp(200,160));
+    sprite1->setPosition(Point(200,160));
 
     sprite2 = makeSpriteZ(3);
-    sprite2->setPosition(ccp(264,160));
+    sprite2->setPosition(Point(264,160));
 
     sprite3 = makeSpriteZ(4);
-    sprite3->setPosition(ccp(328,160));
+    sprite3->setPosition(Point(328,160));
 
     schedule(schedule_selector(SpriteBatchNodeReorderIssue766::reorderSprite), 2);
 }
@@ -794,20 +794,20 @@ SpriteBatchNodeReorderIssue767::SpriteBatchNodeReorderIssue767()
 
     // parent
     l1 = Sprite::createWithSpriteFrameName("father.gif");
-    l1->setPosition(ccp( s.width/2, s.height/2));
+    l1->setPosition(Point( s.width/2, s.height/2));
     aParent->addChild(l1, 0, kTagSprite2);
     Size l1Size = l1->getContentSize();
 
     // child left
     l2a = Sprite::createWithSpriteFrameName("sister1.gif");
-    l2a->setPosition(ccp( -25 + l1Size.width/2, 0 + l1Size.height/2));
+    l2a->setPosition(Point( -25 + l1Size.width/2, 0 + l1Size.height/2));
     l1->addChild(l2a, -1, kTagSpriteLeft);
     Size l2aSize = l2a->getContentSize();        
 
 
     // child right
     l2b = Sprite::createWithSpriteFrameName("sister2.gif");
-    l2b->setPosition(ccp( +25 + l1Size.width/2, 0 + l1Size.height/2));
+    l2b->setPosition(Point( +25 + l1Size.width/2, 0 + l1Size.height/2));
     l1->addChild(l2b, 1, kTagSpriteRight);
     Size l2bSize = l2a->getContentSize();
 
@@ -815,25 +815,25 @@ SpriteBatchNodeReorderIssue767::SpriteBatchNodeReorderIssue767()
     // child left bottom
     l3a1 = Sprite::createWithSpriteFrameName("child1.gif");
     l3a1->setScale(0.65f);
-    l3a1->setPosition(ccp(0+l2aSize.width/2,-50+l2aSize.height/2));
+    l3a1->setPosition(Point(0+l2aSize.width/2,-50+l2aSize.height/2));
     l2a->addChild(l3a1, -1);
 
     // child left top
     l3a2 = Sprite::createWithSpriteFrameName("child1.gif");
     l3a2->setScale(0.65f);
-    l3a2->setPosition(ccp(0+l2aSize.width/2,+50+l2aSize.height/2));
+    l3a2->setPosition(Point(0+l2aSize.width/2,+50+l2aSize.height/2));
     l2a->addChild(l3a2, 1);
 
     // child right bottom
     l3b1 = Sprite::createWithSpriteFrameName("child1.gif");
     l3b1->setScale(0.65f);
-    l3b1->setPosition(ccp(0+l2bSize.width/2,-50+l2bSize.height/2));
+    l3b1->setPosition(Point(0+l2bSize.width/2,-50+l2bSize.height/2));
     l2b->addChild(l3b1, -1);
 
     // child right top
     l3b2 = Sprite::createWithSpriteFrameName("child1.gif");
     l3b2->setScale(0.65f);
-    l3b2->setPosition(ccp(0+l2bSize.width/2,+50+l2bSize.height/2));
+    l3b2->setPosition(Point(0+l2bSize.width/2,+50+l2bSize.height/2));
     l2b->addChild(l3b2, 1);
 
     schedule(schedule_selector(SpriteBatchNodeReorderIssue767::reorderSprites), 1);
@@ -918,15 +918,15 @@ SpriteZVertex::SpriteZVertex()
     Node* node = Node::create();
     // camera uses the center of the image as the pivoting point
     node->setContentSize( CCSizeMake(s.width,s.height) );
-    node->setAnchorPoint( ccp(0.5f, 0.5f));
-    node->setPosition( ccp(s.width/2, s.height/2));
+    node->setAnchorPoint( Point(0.5f, 0.5f));
+    node->setPosition( Point(s.width/2, s.height/2));
 
     addChild(node, 0);
 
     for(int i=0;i<5;i++) 
     {
         Sprite* sprite = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*0, 121*1, 85, 121));
-        sprite->setPosition( ccp((i+1)*step, s.height/2) );
+        sprite->setPosition( Point((i+1)*step, s.height/2) );
         sprite->setVertexZ( 10 + i*40 );
         sprite->setShaderProgram(alphaTestShader);
         node->addChild(sprite, 0);
@@ -936,7 +936,7 @@ SpriteZVertex::SpriteZVertex()
     for(int i=5;i<11;i++) 
     {
         Sprite* sprite = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*1, 121*0, 85, 121));
-        sprite->setPosition( ccp( (i+1)*step, s.height/2) );
+        sprite->setPosition( Point( (i+1)*step, s.height/2) );
         sprite->setVertexZ( 10 + (10-i)*40 );
         sprite->setShaderProgram(alphaTestShader);
         node->addChild(sprite, 0);
@@ -1001,8 +1001,8 @@ SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
     SpriteBatchNode* batch = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 1);
     // camera uses the center of the image as the pivoting point
     batch->setContentSize( CCSizeMake(s.width,s.height));
-    batch->setAnchorPoint( ccp(0.5f, 0.5f));
-    batch->setPosition( ccp(s.width/2, s.height/2));
+    batch->setAnchorPoint( Point(0.5f, 0.5f));
+    batch->setPosition( Point(s.width/2, s.height/2));
     
     batch->setShaderProgram(alphaTestShader);
     addChild(batch, 0, kTagSpriteBatchNode);        
@@ -1010,7 +1010,7 @@ SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
     for(int i=0;i<5;i++) 
     {
         Sprite* sprite = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*0, 121*1, 85, 121));
-        sprite->setPosition( ccp( (i+1)*step, s.height/2) );
+        sprite->setPosition( Point( (i+1)*step, s.height/2) );
         sprite->setVertexZ(  10 + i*40 );
         batch->addChild(sprite, 0);
         
@@ -1018,7 +1018,7 @@ SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
     
     for(int i=5;i<11;i++) {
         Sprite* sprite = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*1, 121*0, 85, 121));
-        sprite->setPosition( ccp( (i+1)*step, s.height/2) );
+        sprite->setPosition( Point( (i+1)*step, s.height/2) );
         sprite->setVertexZ(  10 + (10-i)*40 );
         batch->addChild(sprite, 0);
     }
@@ -1049,7 +1049,7 @@ SpriteAnchorPoint::SpriteAnchorPoint()
     for(int i=0;i<3;i++) 
     {
         Sprite* sprite = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*i, 121*1, 85, 121) );
-        sprite->setPosition( ccp( s.width/4*(i+1), s.height/2) );
+        sprite->setPosition( Point( s.width/4*(i+1), s.height/2) );
         
         Sprite *point = Sprite::create("Images/r1.png");
         point->setScale( 0.25f );
@@ -1062,10 +1062,10 @@ SpriteAnchorPoint::SpriteAnchorPoint()
                 sprite->setAnchorPoint( PointZero );
                 break;
             case 1:
-                sprite->setAnchorPoint( ccp(0.5f, 0.5f) );
+                sprite->setAnchorPoint( Point(0.5f, 0.5f) );
                 break;
             case 2:
-                sprite->setAnchorPoint( ccp(1,1) );
+                sprite->setAnchorPoint( Point(1,1) );
                 break;
         }
         
@@ -1101,7 +1101,7 @@ SpriteBatchNodeAnchorPoint::SpriteBatchNodeAnchorPoint()
     for(int i=0;i<3;i++) 
     {
         Sprite* sprite = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*i, 121*1, 85, 121));
-        sprite->setPosition( ccp( s.width/4*(i+1), s.height/2) );
+        sprite->setPosition( Point( s.width/4*(i+1), s.height/2) );
         
         Sprite *point = Sprite::create("Images/r1.png");
         point->setScale( 0.25f );
@@ -1114,10 +1114,10 @@ SpriteBatchNodeAnchorPoint::SpriteBatchNodeAnchorPoint()
                 sprite->setAnchorPoint( PointZero );
                 break;
             case 1:
-                sprite->setAnchorPoint( ccp(0.5f, 0.5f) );
+                sprite->setAnchorPoint( Point(0.5f, 0.5f) );
                 break;
             case 2:
-                sprite->setAnchorPoint( ccp(1,1) );
+                sprite->setAnchorPoint( Point(1,1) );
                 break;
         }
 
@@ -1149,7 +1149,7 @@ Sprite6::Sprite6()
 
     Size s = Director::sharedDirector()->getWinSize();
 
-    batch->setAnchorPoint( ccp(0.5f, 0.5f) );
+    batch->setAnchorPoint( Point(0.5f, 0.5f) );
     batch->setContentSize( CCSizeMake(s.width, s.height) );
     
     
@@ -1172,7 +1172,7 @@ Sprite6::Sprite6()
     for(int i=0;i<3;i++) 
     {
         Sprite* sprite = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*i, 121*1, 85, 121));
-        sprite->setPosition( ccp( (i+1)*step, s.height/2) );
+        sprite->setPosition( Point( (i+1)*step, s.height/2) );
 
         sprite->runAction( action->clone());
         batch->addChild(sprite, i);
@@ -1197,11 +1197,11 @@ SpriteFlip::SpriteFlip()
     Size s = Director::sharedDirector()->getWinSize();
     
     Sprite* sprite1 = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*1, 121*1, 85, 121));
-    sprite1->setPosition( ccp( s.width/2 - 100, s.height/2 ) );
+    sprite1->setPosition( Point( s.width/2 - 100, s.height/2 ) );
     addChild(sprite1, 0, kTagSprite1);
     
     Sprite* sprite2 = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*1, 121*1, 85, 121));
-    sprite2->setPosition( ccp( s.width/2 + 100, s.height/2 ) );
+    sprite2->setPosition( Point( s.width/2 + 100, s.height/2 ) );
     addChild(sprite2, 0, kTagSprite2);
     
     schedule( schedule_selector(SpriteFlip::flipSprites), 1);
@@ -1239,11 +1239,11 @@ SpriteBatchNodeFlip::SpriteBatchNodeFlip()
     Size s = Director::sharedDirector()->getWinSize();
     
     Sprite* sprite1 = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*1, 121*1, 85, 121));
-    sprite1->setPosition( ccp( s.width/2 - 100, s.height/2 ) );
+    sprite1->setPosition( Point( s.width/2 - 100, s.height/2 ) );
     batch->addChild(sprite1, 0, kTagSprite1);
     
     Sprite* sprite2 = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*1, 121*1, 85, 121));
-    sprite2->setPosition( ccp( s.width/2 + 100, s.height/2 ) );
+    sprite2->setPosition( Point( s.width/2 + 100, s.height/2 ) );
     batch->addChild(sprite2, 0, kTagSprite2);
     
     schedule( schedule_selector(SpriteBatchNodeFlip::flipSprites), 1);
@@ -1280,11 +1280,11 @@ SpriteAliased::SpriteAliased()
     Size s = Director::sharedDirector()->getWinSize();
     
     Sprite* sprite1 = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*1, 121*1, 85, 121));
-    sprite1->setPosition( ccp( s.width/2 - 100, s.height/2 ) );
+    sprite1->setPosition( Point( s.width/2 - 100, s.height/2 ) );
     addChild(sprite1, 0, kTagSprite1);
     
     Sprite* sprite2 = Sprite::create("Images/grossini_dance_atlas.png", CCRectMake(85*1, 121*1, 85, 121));
-    sprite2->setPosition( ccp( s.width/2 + 100, s.height/2 ) );
+    sprite2->setPosition( Point( s.width/2 + 100, s.height/2 ) );
     addChild(sprite2, 0, kTagSprite2);
     
     auto scale = ScaleBy::create(2, 5);
@@ -1339,11 +1339,11 @@ SpriteBatchNodeAliased::SpriteBatchNodeAliased()
     Size s = Director::sharedDirector()->getWinSize();
 
     Sprite* sprite1 = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*1, 121*1, 85, 121));
-    sprite1->setPosition( ccp( s.width/2 - 100, s.height/2 ) );
+    sprite1->setPosition( Point( s.width/2 - 100, s.height/2 ) );
     batch->addChild(sprite1, 0, kTagSprite1);
     
     Sprite* sprite2 = Sprite::createWithTexture(batch->getTexture(), CCRectMake(85*1, 121*1, 85, 121));
-    sprite2->setPosition( ccp( s.width/2 + 100, s.height/2 ) );
+    sprite2->setPosition( Point( s.width/2 + 100, s.height/2 ) );
     batch->addChild(sprite2, 0, kTagSprite2);
     
     auto scale = ScaleBy::create(2, 5);
@@ -1411,7 +1411,7 @@ void SpriteNewTexture::addNewSprite()
 {
     Size s = Director::sharedDirector()->getWinSize();
 
-    Point p = ccp( CCRANDOM_0_1() * s.width, CCRANDOM_0_1() * s.height);
+    Point p = Point( CCRANDOM_0_1() * s.width, CCRANDOM_0_1() * s.height);
 
     int idx = CCRANDOM_0_1() * 1400 / 100;
     int x = (idx%5) * 85;
@@ -1422,7 +1422,7 @@ void SpriteNewTexture::addNewSprite()
     Sprite* sprite = Sprite::createWithTexture(_texture1, CCRectMake(x,y,85,121));
     node->addChild(sprite);
     
-    sprite->setPosition( ccp( p.x, p.y) );
+    sprite->setPosition( Point( p.x, p.y) );
     
     ActionInterval* action;
     float random = CCRANDOM_0_1();
@@ -1517,7 +1517,7 @@ void SpriteBatchNodeNewTexture::addNewSprite()
 {
     Size s = Director::sharedDirector()->getWinSize();
     
-    Point p = ccp( CCRANDOM_0_1() * s.width, CCRANDOM_0_1() * s.height);
+    Point p = Point( CCRANDOM_0_1() * s.width, CCRANDOM_0_1() * s.height);
     
     SpriteBatchNode* batch = static_cast<SpriteBatchNode*>( getChildByTag( kTagSpriteBatchNode ) );
     
@@ -1529,7 +1529,7 @@ void SpriteBatchNodeNewTexture::addNewSprite()
     Sprite* sprite = Sprite::createWithTexture(batch->getTexture(), CCRectMake(x,y,85,121));
     batch->addChild(sprite);
     
-    sprite->setPosition( ccp( p.x, p.y) );
+    sprite->setPosition( Point( p.x, p.y) );
     
     ActionInterval* action;
     float random = CCRANDOM_0_1();
@@ -1589,7 +1589,7 @@ void SpriteFrameTest::onEnter()
     // Animation using Sprite BatchNode
     //
     _sprite1 = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-    _sprite1->setPosition( ccp( s.width/2-80, s.height/2) );
+    _sprite1->setPosition( Point( s.width/2-80, s.height/2) );
 
     SpriteBatchNode* spritebatch = SpriteBatchNode::create("animations/grossini.png");
     spritebatch->addChild(_sprite1);
@@ -1616,7 +1616,7 @@ void SpriteFrameTest::onEnter()
     // Animation using standard Sprite
     //
     _sprite2 = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-    _sprite2->setPosition( ccp( s.width/2 + 80, s.height/2) );
+    _sprite2->setPosition( Point( s.width/2 + 80, s.height/2) );
     addChild(_sprite2);
 
 
@@ -1745,7 +1745,7 @@ void SpriteFrameAliasNameTest::onEnter()
     //
 
     Sprite *sprite = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-    sprite->setPosition(ccp(s.width * 0.5f, s.height * 0.5f));
+    sprite->setPosition(Point(s.width * 0.5f, s.height * 0.5f));
 
     SpriteBatchNode *spriteBatch = SpriteBatchNode::create("animations/grossini-aliases.png");
     spriteBatch->addChild(sprite);
@@ -1800,7 +1800,7 @@ SpriteOffsetAnchorRotation::SpriteOffsetAnchorRotation()
         // Animation using Sprite batch
         //
         Sprite* sprite = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-        sprite->setPosition(ccp( s.width/4*(i+1), s.height/2));
+        sprite->setPosition(Point( s.width/4*(i+1), s.height/2));
 
         Sprite *point = Sprite::create("Images/r1.png");
         point->setScale( 0.25f );
@@ -1813,10 +1813,10 @@ SpriteOffsetAnchorRotation::SpriteOffsetAnchorRotation()
                 sprite->setAnchorPoint( PointZero );
                 break;
             case 1:
-                sprite->setAnchorPoint( ccp(0.5f, 0.5f) );
+                sprite->setAnchorPoint( Point(0.5f, 0.5f) );
                 break;
             case 2:
-                sprite->setAnchorPoint( ccp(1,1) );
+                sprite->setAnchorPoint( Point(1,1) );
                 break;
         }
         
@@ -1877,7 +1877,7 @@ SpriteBatchNodeOffsetAnchorRotation::SpriteBatchNodeOffsetAnchorRotation()
         // Animation using Sprite BatchNode
         //
         Sprite* sprite = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-        sprite->setPosition( ccp( s.width/4*(i+1), s.height/2));
+        sprite->setPosition( Point( s.width/4*(i+1), s.height/2));
         
         Sprite* point = Sprite::create("Images/r1.png");
         point->setScale( 0.25f );
@@ -1890,10 +1890,10 @@ SpriteBatchNodeOffsetAnchorRotation::SpriteBatchNodeOffsetAnchorRotation()
                 sprite->setAnchorPoint( PointZero );
                 break;
             case 1:
-                sprite->setAnchorPoint( ccp(0.5f, 0.5f) );
+                sprite->setAnchorPoint( Point(0.5f, 0.5f) );
                 break;
             case 2:
-                sprite->setAnchorPoint( ccp(1,1) );
+                sprite->setAnchorPoint( Point(1,1) );
                 break;
         }
         
@@ -1952,7 +1952,7 @@ SpriteOffsetAnchorScale::SpriteOffsetAnchorScale()
         // Animation using Sprite BatchNode
         //
         Sprite* sprite = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-        sprite->setPosition( ccp( s.width/4*(i+1), s.height/2) );
+        sprite->setPosition( Point( s.width/4*(i+1), s.height/2) );
         
         Sprite *point = Sprite::create("Images/r1.png");
         point->setScale( 0.25f );
@@ -1965,10 +1965,10 @@ SpriteOffsetAnchorScale::SpriteOffsetAnchorScale()
                 sprite->setAnchorPoint( PointZero );
                 break;
             case 1:
-                sprite->setAnchorPoint( ccp(0.5f, 0.5f) );
+                sprite->setAnchorPoint( Point(0.5f, 0.5f) );
                 break;
             case 2:
-                sprite->setAnchorPoint( ccp(1,1) );
+                sprite->setAnchorPoint( Point(1,1) );
                 break;
         }
         
@@ -2030,7 +2030,7 @@ SpriteBatchNodeOffsetAnchorScale::SpriteBatchNodeOffsetAnchorScale()
         // Animation using Sprite BatchNode
         //
         Sprite* sprite = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-        sprite->setPosition( ccp( s.width/4*(i+1), s.height/2) );
+        sprite->setPosition( Point( s.width/4*(i+1), s.height/2) );
         
         Sprite *point = Sprite::create("Images/r1.png");
         point->setScale( 0.25f );
@@ -2042,10 +2042,10 @@ SpriteBatchNodeOffsetAnchorScale::SpriteBatchNodeOffsetAnchorScale()
                 sprite->setAnchorPoint( PointZero );
                 break;
             case 1:
-                sprite->setAnchorPoint( ccp(0.5f, 0.5f) );
+                sprite->setAnchorPoint( Point(0.5f, 0.5f) );
                 break;
             case 2:
-                sprite->setAnchorPoint( ccp(1,1) );
+                sprite->setAnchorPoint( Point(1,1) );
                 break;
         }
         
@@ -2110,7 +2110,7 @@ SpriteAnimationSplit::SpriteAnimationSplit()
     // Animation using Sprite BatchNode
     //
     Sprite* sprite = Sprite::createWithSpriteFrame(frame0);
-    sprite->setPosition( ccp( s.width/2-80, s.height/2) );
+    sprite->setPosition( Point( s.width/2-80, s.height/2) );
     addChild(sprite);
             
     Array* animFrames = Array::createWithCapacity(6);
@@ -2184,7 +2184,7 @@ SpriteHybrid::SpriteHybrid()
             x = CCRANDOM_0_1() * s.width;
             y = CCRANDOM_0_1() * s.height;
         }
-        sprite->setPosition( ccp(x,y) );
+        sprite->setPosition( Point(x,y) );
             
         ActionInterval* action = RotateBy::create(4, 360);
         sprite->runAction( RepeatForever::create(action) );
@@ -2264,13 +2264,13 @@ SpriteBatchNodeChildren::SpriteBatchNodeChildren()
     SpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/grossini.plist");
     
     Sprite* sprite1 = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-    sprite1->setPosition(ccp( s.width/3, s.height/2));
+    sprite1->setPosition(Point( s.width/3, s.height/2));
     
     Sprite* sprite2 = Sprite::createWithSpriteFrameName("grossini_dance_02.png");
-    sprite2->setPosition(ccp(50,50));
+    sprite2->setPosition(Point(50,50));
     
     Sprite* sprite3 = Sprite::createWithSpriteFrameName("grossini_dance_03.png");
-    sprite3->setPosition(ccp(-50,-50));
+    sprite3->setPosition(Point(-50,-50));
     
     batch->addChild(sprite1);
     sprite1->addChild(sprite2);
@@ -2290,7 +2290,7 @@ SpriteBatchNodeChildren::SpriteBatchNodeChildren()
     sprite1->runAction(RepeatForever::create( Animate::create(animation) ) );
     // END NEW CODE
     
-    auto action = MoveBy::create(2, ccp(200,0));
+    auto action = MoveBy::create(2, Point(200,0));
     auto action_back = action->reverse();
     auto action_rot = RotateBy::create(2, 360);
     auto action_s = ScaleBy::create(2, 2);
@@ -2337,13 +2337,13 @@ SpriteBatchNodeChildrenZ::SpriteBatchNodeChildrenZ()
     addChild(batch, 0, kTagSpriteBatchNode);
     
     sprite1 = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-    sprite1->setPosition(ccp( s.width/3, s.height/2));
+    sprite1->setPosition(Point( s.width/3, s.height/2));
     
     sprite2 = Sprite::createWithSpriteFrameName("grossini_dance_02.png");
-    sprite2->setPosition(ccp(20,30));
+    sprite2->setPosition(Point(20,30));
     
     sprite3 = Sprite::createWithSpriteFrameName("grossini_dance_03.png");
-    sprite3->setPosition(ccp(-20,30));
+    sprite3->setPosition(Point(-20,30));
     
     batch->addChild(sprite1);
     sprite1->addChild(sprite2, 2);
@@ -2354,13 +2354,13 @@ SpriteBatchNodeChildrenZ::SpriteBatchNodeChildrenZ()
     addChild(batch, 0, kTagSpriteBatchNode);
     
     sprite1 = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-    sprite1->setPosition(ccp( 2*s.width/3, s.height/2));
+    sprite1->setPosition(Point( 2*s.width/3, s.height/2));
     
     sprite2 = Sprite::createWithSpriteFrameName("grossini_dance_02.png");
-    sprite2->setPosition(ccp(20,30));
+    sprite2->setPosition(Point(20,30));
     
     sprite3 = Sprite::createWithSpriteFrameName("grossini_dance_03.png");
-    sprite3->setPosition(ccp(-20,30));
+    sprite3->setPosition(Point(-20,30));
     
     batch->addChild(sprite1);
     sprite1->addChild(sprite2, -2);
@@ -2371,13 +2371,13 @@ SpriteBatchNodeChildrenZ::SpriteBatchNodeChildrenZ()
     addChild(batch, 0, kTagSpriteBatchNode);
     
     sprite1 = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-    sprite1->setPosition(ccp( s.width/2 - 90, s.height/4));
+    sprite1->setPosition(Point( s.width/2 - 90, s.height/4));
     
     sprite2 = Sprite::createWithSpriteFrameName("grossini_dance_02.png");
-    sprite2->setPosition(ccp( s.width/2 - 60,s.height/4));
+    sprite2->setPosition(Point( s.width/2 - 60,s.height/4));
     
     sprite3 = Sprite::createWithSpriteFrameName("grossini_dance_03.png");
-    sprite3->setPosition(ccp( s.width/2 - 30, s.height/4));
+    sprite3->setPosition(Point( s.width/2 - 30, s.height/4));
     
     batch->addChild(sprite1, 10);
     batch->addChild(sprite2, -10);
@@ -2388,13 +2388,13 @@ SpriteBatchNodeChildrenZ::SpriteBatchNodeChildrenZ()
     addChild(batch, 0, kTagSpriteBatchNode);
     
     sprite1 = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-    sprite1->setPosition(ccp( s.width/2 +30, s.height/4));
+    sprite1->setPosition(Point( s.width/2 +30, s.height/4));
     
     sprite2 = Sprite::createWithSpriteFrameName("grossini_dance_02.png");
-    sprite2->setPosition(ccp( s.width/2 +60,s.height/4));
+    sprite2->setPosition(Point( s.width/2 +60,s.height/4));
     
     sprite3 = Sprite::createWithSpriteFrameName("grossini_dance_03.png");
-    sprite3->setPosition(ccp( s.width/2 +90, s.height/4));
+    sprite3->setPosition(Point( s.width/2 +90, s.height/4));
     
     batch->addChild(sprite1, -10);
     batch->addChild(sprite2, -5);
@@ -2431,19 +2431,19 @@ SpriteChildrenVisibility::SpriteChildrenVisibility()
     //
     // parents
     aParent = SpriteBatchNode::create("animations/grossini.png", 50);
-    aParent->setPosition( ccp(s.width/3, s.height/2) );
+    aParent->setPosition( Point(s.width/3, s.height/2) );
     addChild(aParent, 0);
     
     
     
     sprite1 = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-    sprite1->setPosition(ccp(0,0));
+    sprite1->setPosition(Point(0,0));
     
     sprite2 = Sprite::createWithSpriteFrameName("grossini_dance_02.png");
-    sprite2->setPosition(ccp(20,30));
+    sprite2->setPosition(Point(20,30));
     
     sprite3 = Sprite::createWithSpriteFrameName("grossini_dance_03.png");
-    sprite3->setPosition(ccp(-20,30));
+    sprite3->setPosition(Point(-20,30));
     
     aParent->addChild(sprite1);
     sprite1->addChild(sprite2, -2);
@@ -2455,17 +2455,17 @@ SpriteChildrenVisibility::SpriteChildrenVisibility()
     // Sprite
     //
     aParent = Node::create();
-    aParent->setPosition( ccp(2*s.width/3, s.height/2) );
+    aParent->setPosition( Point(2*s.width/3, s.height/2) );
     addChild(aParent, 0);
 
     sprite1 = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-    sprite1->setPosition(ccp(0,0));
+    sprite1->setPosition(Point(0,0));
             
     sprite2 = Sprite::createWithSpriteFrameName("grossini_dance_02.png");
-    sprite2->setPosition(ccp(20,30));
+    sprite2->setPosition(Point(20,30));
     
     sprite3 = Sprite::createWithSpriteFrameName("grossini_dance_03.png");
-    sprite3->setPosition(ccp(-20,30));
+    sprite3->setPosition(Point(-20,30));
     
     aParent->addChild(sprite1);
     sprite1->addChild(sprite2, -2);
@@ -2503,17 +2503,17 @@ SpriteChildrenVisibilityIssue665::SpriteChildrenVisibilityIssue665()
     //
     // parents
     aParent = SpriteBatchNode::create("animations/grossini.png", 50);
-    aParent->setPosition(ccp(s.width/3, s.height/2));
+    aParent->setPosition(Point(s.width/3, s.height/2));
     addChild(aParent, 0);
 
     sprite1 = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-    sprite1->setPosition(ccp(0,0));
+    sprite1->setPosition(Point(0,0));
 
     sprite2 = Sprite::createWithSpriteFrameName("grossini_dance_02.png");
-    sprite2->setPosition(ccp(20,30));
+    sprite2->setPosition(Point(20,30));
 
     sprite3 = Sprite::createWithSpriteFrameName("grossini_dance_03.png");
-    sprite3->setPosition(ccp(-20,30));
+    sprite3->setPosition(Point(-20,30));
 
     // test issue #665
     sprite1->setVisible(false);
@@ -2526,17 +2526,17 @@ SpriteChildrenVisibilityIssue665::SpriteChildrenVisibilityIssue665()
     // Sprite
     //
     aParent = Node::create();
-    aParent->setPosition(ccp(2*s.width/3, s.height/2));
+    aParent->setPosition(Point(2*s.width/3, s.height/2));
     addChild(aParent, 0);
 
     sprite1 = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-    sprite1->setPosition(ccp(0,0));
+    sprite1->setPosition(Point(0,0));
 
     sprite2 = Sprite::createWithSpriteFrameName("grossini_dance_02.png");
-    sprite2->setPosition(ccp(20,30));
+    sprite2->setPosition(Point(20,30));
 
     sprite3 = Sprite::createWithSpriteFrameName("grossini_dance_03.png");
-    sprite3->setPosition(ccp(-20,30));
+    sprite3->setPosition(Point(-20,30));
 
     // test issue #665
     sprite1->setVisible(false);
@@ -2584,18 +2584,18 @@ SpriteChildrenAnchorPoint::SpriteChildrenAnchorPoint()
     
     // anchor (0,0)
     sprite1 = Sprite::createWithSpriteFrameName("grossini_dance_08.png");
-    sprite1->setPosition(ccp(s.width/4,s.height/2));
-    sprite1->setAnchorPoint( ccp(0,0) );
+    sprite1->setPosition(Point(s.width/4,s.height/2));
+    sprite1->setAnchorPoint( Point(0,0) );
 
     
     sprite2 = Sprite::createWithSpriteFrameName("grossini_dance_02.png");
-    sprite2->setPosition(ccp(20,30));
+    sprite2->setPosition(Point(20,30));
     
     sprite3 = Sprite::createWithSpriteFrameName("grossini_dance_03.png");
-    sprite3->setPosition(ccp(-20,30));
+    sprite3->setPosition(Point(-20,30));
     
     sprite4 = Sprite::createWithSpriteFrameName("grossini_dance_04.png");
-    sprite4->setPosition(ccp(0,0));
+    sprite4->setPosition(Point(0,0));
     sprite4->setScale( 0.5f );
 
     
@@ -2612,17 +2612,17 @@ SpriteChildrenAnchorPoint::SpriteChildrenAnchorPoint()
     
     // anchor (0.5, 0.5)
     sprite1 = Sprite::createWithSpriteFrameName("grossini_dance_08.png");
-    sprite1->setPosition(ccp(s.width/2,s.height/2));
-    sprite1->setAnchorPoint( ccp(0.5f, 0.5f) );
+    sprite1->setPosition(Point(s.width/2,s.height/2));
+    sprite1->setAnchorPoint( Point(0.5f, 0.5f) );
     
     sprite2 = Sprite::createWithSpriteFrameName("grossini_dance_02.png");
-    sprite2->setPosition(ccp(20,30));
+    sprite2->setPosition(Point(20,30));
 
     sprite3 = Sprite::createWithSpriteFrameName("grossini_dance_03.png");
-    sprite3->setPosition(ccp(-20,30));
+    sprite3->setPosition(Point(-20,30));
 
     sprite4 = Sprite::createWithSpriteFrameName("grossini_dance_04.png");
-    sprite4->setPosition(ccp(0,0));
+    sprite4->setPosition(Point(0,0));
     sprite4->setScale( 0.5f );        
 
     aParent->addChild(sprite1);
@@ -2638,18 +2638,18 @@ SpriteChildrenAnchorPoint::SpriteChildrenAnchorPoint()
     
     // anchor (1,1)
     sprite1 = Sprite::createWithSpriteFrameName("grossini_dance_08.png");
-    sprite1->setPosition(ccp(s.width/2+s.width/4,s.height/2));
-    sprite1->setAnchorPoint( ccp(1,1) );
+    sprite1->setPosition(Point(s.width/2+s.width/4,s.height/2));
+    sprite1->setAnchorPoint( Point(1,1) );
 
     
     sprite2 = Sprite::createWithSpriteFrameName("grossini_dance_02.png");
-    sprite2->setPosition(ccp(20,30));
+    sprite2->setPosition(Point(20,30));
     
     sprite3 = Sprite::createWithSpriteFrameName("grossini_dance_03.png");
-    sprite3->setPosition(ccp(-20,30));
+    sprite3->setPosition(Point(-20,30));
     
     sprite4 = Sprite::createWithSpriteFrameName("grossini_dance_04.png");
-    sprite4->setPosition(ccp(0,0));
+    sprite4->setPosition(Point(0,0));
     sprite4->setScale( 0.5f );        
     
     aParent->addChild(sprite1);
@@ -2697,17 +2697,17 @@ SpriteBatchNodeChildrenAnchorPoint::SpriteBatchNodeChildrenAnchorPoint()
     
     // anchor (0,0)
     sprite1 = Sprite::createWithSpriteFrameName("grossini_dance_08.png");
-    sprite1->setPosition(ccp(s.width/4,s.height/2));
-    sprite1->setAnchorPoint( ccp(0,0) );
+    sprite1->setPosition(Point(s.width/4,s.height/2));
+    sprite1->setAnchorPoint( Point(0,0) );
     
     sprite2 = Sprite::createWithSpriteFrameName("grossini_dance_02.png");
-    sprite2->setPosition(ccp(20,30));
+    sprite2->setPosition(Point(20,30));
     
     sprite3 = Sprite::createWithSpriteFrameName("grossini_dance_03.png");
-    sprite3->setPosition(ccp(-20,30));
+    sprite3->setPosition(Point(-20,30));
     
     sprite4 = Sprite::createWithSpriteFrameName("grossini_dance_04.png");
-    sprite4->setPosition(ccp(0,0));
+    sprite4->setPosition(Point(0,0));
     sprite4->setScale( 0.5f );
     
     aParent->addChild(sprite1);
@@ -2723,17 +2723,17 @@ SpriteBatchNodeChildrenAnchorPoint::SpriteBatchNodeChildrenAnchorPoint()
     
     // anchor (0.5, 0.5)
     sprite1 = Sprite::createWithSpriteFrameName("grossini_dance_08.png");
-    sprite1->setPosition(ccp(s.width/2,s.height/2));
-    sprite1->setAnchorPoint( ccp(0.5f, 0.5f) );
+    sprite1->setPosition(Point(s.width/2,s.height/2));
+    sprite1->setAnchorPoint( Point(0.5f, 0.5f) );
     
     sprite2 = Sprite::createWithSpriteFrameName("grossini_dance_02.png");
-    sprite2->setPosition(ccp(20,30));
+    sprite2->setPosition(Point(20,30));
     
     sprite3 = Sprite::createWithSpriteFrameName("grossini_dance_03.png");
-    sprite3->setPosition(ccp(-20,30));
+    sprite3->setPosition(Point(-20,30));
     
     sprite4 = Sprite::createWithSpriteFrameName("grossini_dance_04.png");
-    sprite4->setPosition(ccp(0,0));
+    sprite4->setPosition(Point(0,0));
     sprite4->setScale( 0.5f );        
     
     aParent->addChild(sprite1);
@@ -2749,17 +2749,17 @@ SpriteBatchNodeChildrenAnchorPoint::SpriteBatchNodeChildrenAnchorPoint()
     
     // anchor (1,1)
     sprite1 = Sprite::createWithSpriteFrameName("grossini_dance_08.png");
-    sprite1->setPosition(ccp(s.width/2+s.width/4,s.height/2));
-    sprite1->setAnchorPoint( ccp(1,1) );
+    sprite1->setPosition(Point(s.width/2+s.width/4,s.height/2));
+    sprite1->setAnchorPoint( Point(1,1) );
     
     sprite2 = Sprite::createWithSpriteFrameName("grossini_dance_02.png");
-    sprite2->setPosition(ccp(20,30));
+    sprite2->setPosition(Point(20,30));
     
     sprite3 = Sprite::createWithSpriteFrameName("grossini_dance_03.png");
-    sprite3->setPosition(ccp(-20,30));
+    sprite3->setPosition(Point(-20,30));
     
     sprite4 = Sprite::createWithSpriteFrameName("grossini_dance_04.png");
-    sprite4->setPosition(ccp(0,0));
+    sprite4->setPosition(Point(0,0));
     sprite4->setScale( 0.5f );        
     
     aParent->addChild(sprite1);
@@ -2806,14 +2806,14 @@ SpriteBatchNodeChildrenScale::SpriteBatchNodeChildrenScale()
     //
     aParent = Node::create();
     sprite1 = Sprite::createWithSpriteFrameName("grossinis_sister1.png");
-    sprite1->setPosition( ccp( s.width/4, s.height/4) );
+    sprite1->setPosition( Point( s.width/4, s.height/4) );
     sprite1->setScaleX( -0.5f );
     sprite1->setScaleY( 2.0f );
     sprite1->runAction(seq);
     
     
     sprite2 = Sprite::createWithSpriteFrameName("grossinis_sister2.png");
-    sprite2->setPosition( ccp( 50,0) );
+    sprite2->setPosition( Point( 50,0) );
     
     addChild(aParent);
     aParent->addChild(sprite1);
@@ -2827,13 +2827,13 @@ SpriteBatchNodeChildrenScale::SpriteBatchNodeChildrenScale()
     
     aParent = SpriteBatchNode::create("animations/grossini_family.png");
     sprite1 = Sprite::createWithSpriteFrameName("grossinis_sister1.png");
-    sprite1->setPosition( ccp( 3*s.width/4, s.height/4) );
+    sprite1->setPosition( Point( 3*s.width/4, s.height/4) );
     sprite1->setScaleX( -0.5f );
     sprite1->setScaleY( 2.0f );
     sprite1->runAction( seq->clone() );
     
     sprite2 = Sprite::createWithSpriteFrameName("grossinis_sister2.png");
-    sprite2->setPosition( ccp( 50,0) );
+    sprite2->setPosition( Point( 50,0) );
     
     addChild(aParent);
     aParent->addChild(sprite1);
@@ -2847,13 +2847,13 @@ SpriteBatchNodeChildrenScale::SpriteBatchNodeChildrenScale()
     
     aParent = Node::create();
     sprite1 = Sprite::createWithSpriteFrameName("grossinis_sister1.png");
-    sprite1->setPosition( ccp( s.width/4, 2*s.height/3) );
+    sprite1->setPosition( Point( s.width/4, 2*s.height/3) );
     sprite1->setScaleX( 1.5f );
     sprite1->setScaleY( -0.5f );
     sprite1->runAction( seq->clone() );
     
     sprite2 = Sprite::createWithSpriteFrameName("grossinis_sister2.png");
-    sprite2->setPosition( ccp( 50,0) );
+    sprite2->setPosition( Point( 50,0) );
     
     addChild(aParent);
     aParent->addChild(sprite1);
@@ -2866,13 +2866,13 @@ SpriteBatchNodeChildrenScale::SpriteBatchNodeChildrenScale()
     
     aParent = SpriteBatchNode::create("animations/grossini_family.png");
     sprite1 = Sprite::createWithSpriteFrameName("grossinis_sister1.png");
-    sprite1->setPosition( ccp( 3*s.width/4, 2*s.height/3) );
+    sprite1->setPosition( Point( 3*s.width/4, 2*s.height/3) );
     sprite1->setScaleX( 1.5f );
     sprite1->setScaleY( -0.5f);
     sprite1->runAction( seq->clone() );
     
     sprite2 = Sprite::createWithSpriteFrameName("grossinis_sister2.png");
-    sprite2->setPosition( ccp( 50,0) );
+    sprite2->setPosition( Point( 50,0) );
     
     addChild(aParent);
     aParent->addChild(sprite1);
@@ -2913,14 +2913,14 @@ SpriteChildrenChildren::SpriteChildrenChildren()
     
     // parent
     l1 = Sprite::createWithSpriteFrameName("father.gif");
-    l1->setPosition( ccp( s.width/2, s.height/2) );
+    l1->setPosition( Point( s.width/2, s.height/2) );
     l1->runAction( seq->clone() );
     aParent->addChild(l1);
     Size l1Size = l1->getContentSize();
     
     // child left
     l2a = Sprite::createWithSpriteFrameName("sister1.gif");
-    l2a->setPosition( ccp( -50 + l1Size.width/2, 0 + l1Size.height/2) );
+    l2a->setPosition( Point( -50 + l1Size.width/2, 0 + l1Size.height/2) );
     l2a->runAction( rot_back_fe->clone() );
     l1->addChild(l2a);
     Size l2aSize = l2a->getContentSize();        
@@ -2928,7 +2928,7 @@ SpriteChildrenChildren::SpriteChildrenChildren()
     
     // child right
     l2b = Sprite::createWithSpriteFrameName("sister2.gif");
-    l2b->setPosition( ccp( +50 + l1Size.width/2, 0 + l1Size.height/2) );
+    l2b->setPosition( Point( +50 + l1Size.width/2, 0 + l1Size.height/2) );
     l2b->runAction( rot_back_fe->clone() );
     l1->addChild(l2b);
     Size l2bSize = l2a->getContentSize();        
@@ -2937,27 +2937,27 @@ SpriteChildrenChildren::SpriteChildrenChildren()
     // child left bottom
     l3a1 = Sprite::createWithSpriteFrameName("child1.gif");
     l3a1->setScale( 0.45f );
-    l3a1->setPosition( ccp(0+l2aSize.width/2,-100+l2aSize.height/2) );
+    l3a1->setPosition( Point(0+l2aSize.width/2,-100+l2aSize.height/2) );
     l2a->addChild(l3a1);
     
     // child left top
     l3a2 = Sprite::createWithSpriteFrameName("child1.gif");
     l3a2->setScale( 0.45f );
-    l3a1->setPosition( ccp(0+l2aSize.width/2,+100+l2aSize.height/2) );
+    l3a1->setPosition( Point(0+l2aSize.width/2,+100+l2aSize.height/2) );
     l2a->addChild(l3a2);
     
     // child right bottom
     l3b1 = Sprite::createWithSpriteFrameName("child1.gif");
     l3b1->setScale( 0.45f);
     l3b1->setFlipY( true );
-    l3b1->setPosition( ccp(0+l2bSize.width/2,-100+l2bSize.height/2) );
+    l3b1->setPosition( Point(0+l2bSize.width/2,-100+l2bSize.height/2) );
     l2b->addChild(l3b1);
     
     // child right top
     l3b2 = Sprite::createWithSpriteFrameName("child1.gif");
     l3b2->setScale( 0.45f );
     l3b2->setFlipY( true );
-    l3b1->setPosition( ccp(0+l2bSize.width/2,+100+l2bSize.height/2) );
+    l3b1->setPosition( Point(0+l2bSize.width/2,+100+l2bSize.height/2) );
     l2b->addChild(l3b2);
 }
 
@@ -2997,14 +2997,14 @@ SpriteBatchNodeChildrenChildren::SpriteBatchNodeChildrenChildren()
     
     // parent
     l1 = Sprite::createWithSpriteFrameName("father.gif");
-    l1->setPosition( ccp( s.width/2, s.height/2) );
+    l1->setPosition( Point( s.width/2, s.height/2) );
     l1->runAction( seq->clone() );
     aParent->addChild(l1);
     Size l1Size = l1->getContentSize();
 
     // child left
     l2a = Sprite::createWithSpriteFrameName("sister1.gif");
-    l2a->setPosition( ccp( -50 + l1Size.width/2, 0 + l1Size.height/2) );
+    l2a->setPosition( Point( -50 + l1Size.width/2, 0 + l1Size.height/2) );
     l2a->runAction( rot_back_fe->clone() );
     l1->addChild(l2a);
     Size l2aSize = l2a->getContentSize();        
@@ -3012,7 +3012,7 @@ SpriteBatchNodeChildrenChildren::SpriteBatchNodeChildrenChildren()
 
     // child right
     l2b = Sprite::createWithSpriteFrameName("sister2.gif");
-    l2b->setPosition( ccp( +50 + l1Size.width/2, 0 + l1Size.height/2) );
+    l2b->setPosition( Point( +50 + l1Size.width/2, 0 + l1Size.height/2) );
     l2b->runAction( rot_back_fe->clone() );
     l1->addChild(l2b);
     Size l2bSize = l2a->getContentSize();        
@@ -3021,27 +3021,27 @@ SpriteBatchNodeChildrenChildren::SpriteBatchNodeChildrenChildren()
     // child left bottom
     l3a1 = Sprite::createWithSpriteFrameName("child1.gif");
     l3a1->setScale( 0.45f );
-    l3a1->setPosition( ccp(0+l2aSize.width/2,-100+l2aSize.height/2) );
+    l3a1->setPosition( Point(0+l2aSize.width/2,-100+l2aSize.height/2) );
     l2a->addChild(l3a1);
     
     // child left top
     l3a2 = Sprite::createWithSpriteFrameName("child1.gif");
     l3a2->setScale( 0.45f );
-    l3a1->setPosition( ccp(0+l2aSize.width/2,+100+l2aSize.height/2) );
+    l3a1->setPosition( Point(0+l2aSize.width/2,+100+l2aSize.height/2) );
     l2a->addChild(l3a2);
     
     // child right bottom
     l3b1 = Sprite::createWithSpriteFrameName("child1.gif");
     l3b1->setScale( 0.45f );
     l3b1->setFlipY( true );
-    l3b1->setPosition( ccp(0+l2bSize.width/2,-100+l2bSize.height/2) );
+    l3b1->setPosition( Point(0+l2bSize.width/2,-100+l2bSize.height/2) );
     l2b->addChild(l3b1);
 
     // child right top
     l3b2 = Sprite::createWithSpriteFrameName("child1.gif");
     l3b2->setScale( 0.45f );
     l3b2->setFlipY( true );
-    l3b1->setPosition( ccp(0+l2bSize.width/2,+100+l2bSize.height/2) );
+    l3b1->setPosition( Point(0+l2bSize.width/2,+100+l2bSize.height/2) );
     l2b->addChild(l3b2);
     
 }
@@ -3070,7 +3070,7 @@ SpriteBatchNodeSkewNegativeScaleChildren::SpriteBatchNodeSkewNegativeScaleChildr
 
     for(int i=0;i<2;i++) {
         Sprite *sprite = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-        sprite->setPosition(ccp( s.width/4*(i+1), s.height/2));
+        sprite->setPosition(Point( s.width/4*(i+1), s.height/2));
 
         // Skew
         SkewBy* skewX = SkewBy::create(2, 45, 0);
@@ -3087,7 +3087,7 @@ SpriteBatchNodeSkewNegativeScaleChildren::SpriteBatchNodeSkewNegativeScaleChildr
         sprite->runAction(RepeatForever::create(seq_skew));
 
         Sprite *child1 = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-        child1->setPosition(ccp(sprite->getContentSize().width / 2.0f, sprite->getContentSize().height / 2.0f));
+        child1->setPosition(Point(sprite->getContentSize().width / 2.0f, sprite->getContentSize().height / 2.0f));
 
         child1->setScale(0.8f);
 
@@ -3129,7 +3129,7 @@ SpriteSkewNegativeScaleChildren::SpriteSkewNegativeScaleChildren()
 
     for(int i=0;i<2;i++) {
         Sprite *sprite = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-        sprite->setPosition(ccp( s.width/4*(i+1), s.height/2));
+        sprite->setPosition(Point( s.width/4*(i+1), s.height/2));
 
         // Skew
         SkewBy* skewX = SkewBy::create(2, 45, 0);
@@ -3146,7 +3146,7 @@ SpriteSkewNegativeScaleChildren::SpriteSkewNegativeScaleChildren()
         sprite->runAction(RepeatForever::create(seq_skew));
 
         Sprite *child1 = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-        child1->setPosition(ccp(sprite->getContentSize().width / 2.0f, sprite->getContentSize().height / 2.0f));
+        child1->setPosition(Point(sprite->getContentSize().width / 2.0f, sprite->getContentSize().height / 2.0f));
 
         sprite->addChild(child1);
 
@@ -3192,7 +3192,7 @@ SpriteNilTexture::SpriteNilTexture()
     sprite->setTextureRect( CCRectMake(0, 0, 300,300) );
     sprite->setColor(Color3B::RED);
     sprite->setOpacity(128);
-    sprite->setPosition(ccp(3*s.width/4, s.height/2));
+    sprite->setPosition(Point(3*s.width/4, s.height/2));
     addChild(sprite, 100);
     sprite->release();
 
@@ -3201,7 +3201,7 @@ SpriteNilTexture::SpriteNilTexture()
     sprite->setTextureRect(CCRectMake(0, 0, 300,300));
     sprite->setColor(Color3B::BLUE);
     sprite->setOpacity(128);
-    sprite->setPosition(ccp(1*s.width/4, s.height/2));
+    sprite->setPosition(Point(1*s.width/4, s.height/2));
     addChild(sprite, 100);
     sprite->release();
 }
@@ -3265,14 +3265,14 @@ SpriteSubclass::SpriteSubclass()
 
     // MySprite1
     MySprite1 *sprite = MySprite1::createWithSpriteFrameName("father.gif");
-    sprite->setPosition(ccp( s.width/4*1, s.height/2));
+    sprite->setPosition(Point( s.width/4*1, s.height/2));
     aParent->addChild(sprite);
     addChild(aParent);
 
     // MySprite2
     MySprite2 *sprite2 = MySprite2::create("Images/grossini.png");
     addChild(sprite2);
-    sprite2->setPosition(ccp(s.width/4*3, s.height/2));
+    sprite2->setPosition(Point(s.width/4*3, s.height/2));
 }
 
 std::string SpriteSubclass::title()
@@ -3356,15 +3356,15 @@ SpriteDoubleResolution::SpriteDoubleResolution()
     // there is no HD resolution file of grossini_dance_08.
     DoubleSprite *spriteSD = DoubleSprite::create("Images/grossini_dance_08.png");
     addChild(spriteSD);
-    spriteSD->setPosition(ccp(s.width/4*1,s.height/2));
+    spriteSD->setPosition(Point(s.width/4*1,s.height/2));
 
     Sprite *child1_left = DoubleSprite::create("Images/grossini_dance_08.png");
     spriteSD->addChild(child1_left);
-    child1_left->setPosition(ccp(-30,0));
+    child1_left->setPosition(Point(-30,0));
 
     Sprite *child1_right = Sprite::create("Images/grossini.png");
     spriteSD->addChild(child1_right);
-    child1_left->setPosition(ccp( spriteSD->getContentSize().height, 0));
+    child1_left->setPosition(Point( spriteSD->getContentSize().height, 0));
 
 
 
@@ -3374,15 +3374,15 @@ SpriteDoubleResolution::SpriteDoubleResolution()
     // there is an HD version of grossini.png
     Sprite *spriteHD = Sprite::create("Images/grossini.png");
     addChild(spriteHD);
-    spriteHD->setPosition(ccp(s.width/4*3,s.height/2));
+    spriteHD->setPosition(Point(s.width/4*3,s.height/2));
 
     Sprite *child2_left = DoubleSprite::create("Images/grossini_dance_08.png");
     spriteHD->addChild(child2_left);
-    child2_left->setPosition(ccp(-30,0));
+    child2_left->setPosition(Point(-30,0));
 
     Sprite *child2_right = Sprite::create("Images/grossini.png");
     spriteHD->addChild(child2_right);
-    child2_left->setPosition(ccp( spriteHD->getContentSize().height, 0));
+    child2_left->setPosition(Point( spriteHD->getContentSize().height, 0));
 
 
 
@@ -3493,7 +3493,7 @@ AnimationCacheTest::AnimationCacheTest()
     grossini->setDisplayFrame(frame);
 
     Size winSize = Director::sharedDirector()->getWinSize();
-    grossini->setPosition(ccp(winSize.width/2, winSize.height/2));
+    grossini->setPosition(Point(winSize.width/2, winSize.height/2));
     addChild(grossini);
 
     // run the animation
@@ -3551,7 +3551,7 @@ AnimationCacheFile::AnimationCacheFile()
 
     Size winSize = Director::sharedDirector()->getWinSize();
 
-    grossini->setPosition(ccp(winSize.width/2, winSize.height/2));
+    grossini->setPosition(Point(winSize.width/2, winSize.height/2));
 
     addChild(grossini);
 
@@ -3584,11 +3584,11 @@ SpriteBatchBug1217::SpriteBatchBug1217()
     s2->setColor(Color3B(0, 255, 0));
     s3->setColor(Color3B(0, 0, 255));
 
-    s1->setPosition(ccp(20,200));
-    s2->setPosition(ccp(100,0));
-    s3->setPosition(ccp(100,0));
+    s1->setPosition(Point(20,200));
+    s2->setPosition(Point(100,0));
+    s3->setPosition(Point(100,0));
 
-    bn->setPosition(ccp(0,0));
+    bn->setPosition(Point(0,0));
 
     //!!!!!
     s1->addChild(s2);
@@ -3634,7 +3634,7 @@ SpriteOffsetAnchorSkew::SpriteOffsetAnchorSkew()
         // Animation using Sprite batch
         //
         Sprite *sprite = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-        sprite->setPosition(ccp(s.width / 4 * (i + 1), s.height / 2));
+        sprite->setPosition(Point(s.width / 4 * (i + 1), s.height / 2));
 
         Sprite *point = Sprite::create("Images/r1.png");
         point->setScale(0.25f);
@@ -3647,10 +3647,10 @@ SpriteOffsetAnchorSkew::SpriteOffsetAnchorSkew()
             sprite->setAnchorPoint(PointZero);
             break;
         case 1:
-            sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+            sprite->setAnchorPoint(Point(0.5f, 0.5f));
             break;
         case 2:
-            sprite->setAnchorPoint(ccp(1, 1));
+            sprite->setAnchorPoint(Point(1, 1));
             break;
         }
 
@@ -3712,7 +3712,7 @@ SpriteBatchNodeOffsetAnchorSkew::SpriteBatchNodeOffsetAnchorSkew()
         // Animation using Sprite batch
         //
         Sprite *sprite = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-        sprite->setPosition(ccp(s.width / 4 * (i + 1), s.height / 2));
+        sprite->setPosition(Point(s.width / 4 * (i + 1), s.height / 2));
 
         Sprite *point = Sprite::create("Images/r1.png");
         point->setScale(0.25f);
@@ -3725,10 +3725,10 @@ SpriteBatchNodeOffsetAnchorSkew::SpriteBatchNodeOffsetAnchorSkew()
             sprite->setAnchorPoint(PointZero);
             break;
         case 1:
-            sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+            sprite->setAnchorPoint(Point(0.5f, 0.5f));
             break;
         case 2:
-            sprite->setAnchorPoint(ccp(1, 1));
+            sprite->setAnchorPoint(Point(1, 1));
             break;
         }
 
@@ -3787,7 +3787,7 @@ SpriteOffsetAnchorSkewScale::SpriteOffsetAnchorSkewScale()
         // Animation using Sprite batch
         //
         Sprite *sprite = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-        sprite->setPosition(ccp(s.width / 4 * (i + 1), s.height / 2));
+        sprite->setPosition(Point(s.width / 4 * (i + 1), s.height / 2));
 
         Sprite *point = Sprite::create("Images/r1.png");
         point->setScale(0.25f);
@@ -3800,10 +3800,10 @@ SpriteOffsetAnchorSkewScale::SpriteOffsetAnchorSkewScale()
             sprite->setAnchorPoint(PointZero);
             break;
         case 1:
-            sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+            sprite->setAnchorPoint(Point(0.5f, 0.5f));
             break;
         case 2:
-            sprite->setAnchorPoint(ccp(1, 1));
+            sprite->setAnchorPoint(Point(1, 1));
             break;
         }
 
@@ -3869,7 +3869,7 @@ SpriteBatchNodeOffsetAnchorSkewScale::SpriteBatchNodeOffsetAnchorSkewScale()
         // Animation using Sprite batch
         //
         Sprite *sprite = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-        sprite->setPosition(ccp(s.width / 4 * (i + 1), s.height / 2));
+        sprite->setPosition(Point(s.width / 4 * (i + 1), s.height / 2));
 
         Sprite *point = Sprite::create("Images/r1.png");
         point->setScale(0.25f);
@@ -3882,10 +3882,10 @@ SpriteBatchNodeOffsetAnchorSkewScale::SpriteBatchNodeOffsetAnchorSkewScale()
             sprite->setAnchorPoint(PointZero);
             break;
         case 1:
-            sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+            sprite->setAnchorPoint(Point(0.5f, 0.5f));
             break;
         case 2:
-            sprite->setAnchorPoint(ccp(1, 1));
+            sprite->setAnchorPoint(Point(1, 1));
             break;
         }
 
@@ -3951,7 +3951,7 @@ SpriteOffsetAnchorFlip::SpriteOffsetAnchorFlip()
         // Animation using Sprite batch
         //
         Sprite *sprite = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-        sprite->setPosition(ccp(s.width / 4 * (i + 1), s.height / 2));
+        sprite->setPosition(Point(s.width / 4 * (i + 1), s.height / 2));
 
         Sprite *point = Sprite::create("Images/r1.png");
         point->setScale(0.25f);
@@ -3964,10 +3964,10 @@ SpriteOffsetAnchorFlip::SpriteOffsetAnchorFlip()
             sprite->setAnchorPoint(PointZero);
             break;
         case 1:
-            sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+            sprite->setAnchorPoint(Point(0.5f, 0.5f));
             break;
         case 2:
-            sprite->setAnchorPoint(ccp(1, 1));
+            sprite->setAnchorPoint(Point(1, 1));
             break;
         }
 
@@ -4033,7 +4033,7 @@ SpriteBatchNodeOffsetAnchorFlip::SpriteBatchNodeOffsetAnchorFlip()
         // Animation using Sprite batch
         //
         Sprite *sprite = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-        sprite->setPosition(ccp(s.width / 4 * (i + 1), s.height / 2));
+        sprite->setPosition(Point(s.width / 4 * (i + 1), s.height / 2));
 
         Sprite *point = Sprite::create("Images/r1.png");
         point->setScale(0.25f);
@@ -4046,10 +4046,10 @@ SpriteBatchNodeOffsetAnchorFlip::SpriteBatchNodeOffsetAnchorFlip()
             sprite->setAnchorPoint(PointZero);
             break;
         case 1:
-            sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+            sprite->setAnchorPoint(Point(0.5f, 0.5f));
             break;
         case 2:
-            sprite->setAnchorPoint(ccp(1, 1));
+            sprite->setAnchorPoint(Point(1, 1));
             break;
         }
 
@@ -4103,23 +4103,23 @@ NodeSort::NodeSort()
     addChild(_node, 0, 0);
 
     _sprite1 = Sprite::create("Images/piece.png", CCRectMake(128, 0, 64, 64));
-    _sprite1->setPosition(ccp(100, 160));
+    _sprite1->setPosition(Point(100, 160));
     _node->addChild(_sprite1, -6, 1);
 
     _sprite2 = Sprite::create("Images/piece.png", CCRectMake(128, 0, 64, 64));
-    _sprite2->setPosition(ccp(164, 160));
+    _sprite2->setPosition(Point(164, 160));
     _node->addChild(_sprite2, -6, 2);
 
     _sprite4 = Sprite::create("Images/piece.png", CCRectMake(128, 0, 64, 64));
-    _sprite4->setPosition(ccp(292, 160));
+    _sprite4->setPosition(Point(292, 160));
     _node->addChild(_sprite4, -3, 4);
 
     _sprite3 = Sprite::create("Images/piece.png", CCRectMake(128, 0, 64, 64));
-    _sprite3->setPosition(ccp(228, 160));
+    _sprite3->setPosition(Point(228, 160));
     _node->addChild(_sprite3, -4, 3);
 
     _sprite5 = Sprite::create("Images/piece.png", CCRectMake(128, 0, 64, 64));
-    _sprite5->setPosition(ccp(356, 160));
+    _sprite5->setPosition(Point(356, 160));
     _node->addChild(_sprite5, -3, 5);
 
     schedule(schedule_selector(NodeSort::reorderSprite));
@@ -4166,23 +4166,23 @@ SpriteBatchNodeReorderSameIndex::SpriteBatchNodeReorderSameIndex()
     addChild(_batchNode, 1, 0);
 
     _sprite1 = Sprite::createWithTexture(_batchNode->getTexture(), CCRectMake(128,0,64,64));
-    _sprite1->setPosition(ccp(100,160));
+    _sprite1->setPosition(Point(100,160));
     _batchNode->addChild(_sprite1, 3, 1);
 
     _sprite2= Sprite::createWithTexture(_batchNode->getTexture(), CCRectMake(128,0,64,64));
-    _sprite2->setPosition(ccp(164,160));
+    _sprite2->setPosition(Point(164,160));
     _batchNode->addChild(_sprite2, 4, 2);
 
     _sprite3 = Sprite::createWithTexture(_batchNode->getTexture(), CCRectMake(128,0,64,64));
-    _sprite3->setPosition(ccp(228,160));
+    _sprite3->setPosition(Point(228,160));
     _batchNode->addChild(_sprite3, 4, 3);
 
     _sprite4 = Sprite::createWithTexture(_batchNode->getTexture(), CCRectMake(128,0,64,64));
-    _sprite4->setPosition(ccp(292,160));
+    _sprite4->setPosition(Point(292,160));
     _batchNode->addChild(_sprite4, 5, 4);
 
     _sprite5 = Sprite::createWithTexture(_batchNode->getTexture(), CCRectMake(128,0,64,64));
-    _sprite5->setPosition(ccp(356,160));
+    _sprite5->setPosition(Point(356,160));
     _batchNode->addChild(_sprite5, 6, 5);
 
 
@@ -4235,14 +4235,14 @@ SpriteBatchNodeReorderOneChild::SpriteBatchNodeReorderOneChild()
 
     // parent
     l1 = Sprite::createWithSpriteFrameName("father.gif");
-    l1->setPosition(ccp( s.width/2, s.height/2));
+    l1->setPosition(Point( s.width/2, s.height/2));
 
     aParent->addChild(l1);
     Size l1Size = l1->getContentSize();
 
     // child left
     l2a = Sprite::createWithSpriteFrameName("sister1.gif");
-    l2a->setPosition(ccp( -10 + l1Size.width/2, 0 + l1Size.height/2));
+    l2a->setPosition(Point( -10 + l1Size.width/2, 0 + l1Size.height/2));
 
     l1->addChild(l2a, 1);
     Size l2aSize = l2a->getContentSize();
@@ -4250,7 +4250,7 @@ SpriteBatchNodeReorderOneChild::SpriteBatchNodeReorderOneChild()
 
     // child right
     l2b = Sprite::createWithSpriteFrameName("sister2.gif");
-    l2b->setPosition(ccp( +50 + l1Size.width/2, 0 + l1Size.height/2));
+    l2b->setPosition(Point( +50 + l1Size.width/2, 0 + l1Size.height/2));
 
     l1->addChild(l2b, 2);
     Size l2bSize = l2a->getContentSize();
@@ -4259,13 +4259,13 @@ SpriteBatchNodeReorderOneChild::SpriteBatchNodeReorderOneChild()
     // child left bottom
     l3a1 = Sprite::createWithSpriteFrameName("child1.gif");
     l3a1->setScale(0.45f);
-    l3a1->setPosition(ccp(0+l2aSize.width/2,-50+l2aSize.height/2));
+    l3a1->setPosition(Point(0+l2aSize.width/2,-50+l2aSize.height/2));
     l2a->addChild(l3a1, 1);
 
     // child left top
     l3a2 = Sprite::createWithSpriteFrameName("child1.gif");
     l3a2->setScale(0.45f);
-    l3a2->setPosition(ccp(0+l2aSize.width/2,+50+l2aSize.height/2));
+    l3a2->setPosition(Point(0+l2aSize.width/2,+50+l2aSize.height/2));
     l2a->addChild(l3a2, 2);
 
     _reorderSprite = l2a;
@@ -4274,14 +4274,14 @@ SpriteBatchNodeReorderOneChild::SpriteBatchNodeReorderOneChild()
     l3b1 = Sprite::createWithSpriteFrameName("child1.gif");
     l3b1->setScale(0.45f);
     l3b1->setFlipY(true);
-    l3b1->setPosition(ccp(0+l2bSize.width/2,-50+l2bSize.height/2));
+    l3b1->setPosition(Point(0+l2bSize.width/2,-50+l2bSize.height/2));
     l2b->addChild(l3b1);
 
     // child right top
     l3b2 = Sprite::createWithSpriteFrameName("child1.gif");
     l3b2->setScale(0.45f);
     l3b2->setFlipY(true);
-    l3b2->setPosition(ccp(0+l2bSize.width/2,+50+l2bSize.height/2));
+    l3b2->setPosition(Point(0+l2bSize.width/2,+50+l2bSize.height/2));
     l2b->addChild(l3b2);
 
     scheduleOnce(schedule_selector(SpriteBatchNodeReorderOneChild::reorderSprite), 2.0f);
@@ -4316,7 +4316,7 @@ SpriteOffsetAnchorRotationalSkew::SpriteOffsetAnchorRotationalSkew()
         // Animation using Sprite batch
         //
         Sprite *sprite = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-        sprite->setPosition(ccp(s.width/4*(i+1), s.height/2));
+        sprite->setPosition(Point(s.width/4*(i+1), s.height/2));
         
         Sprite *point = Sprite::create("Images/r1.png");
                             
@@ -4330,10 +4330,10 @@ SpriteOffsetAnchorRotationalSkew::SpriteOffsetAnchorRotationalSkew()
                 sprite->setAnchorPoint(PointZero);
                 break;
             case 1:
-                sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+                sprite->setAnchorPoint(Point(0.5f, 0.5f));
                 break;
             case 2:
-                sprite->setAnchorPoint(ccp(1,1));
+                sprite->setAnchorPoint(Point(1,1));
                 break;
         }
         
@@ -4392,7 +4392,7 @@ SpriteBatchNodeOffsetAnchorRotationalSkew::SpriteBatchNodeOffsetAnchorRotational
         // Animation using Sprite batch
         //
         Sprite *sprite = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-        sprite->setPosition(ccp(s.width/4*(i+1), s.height/2));
+        sprite->setPosition(Point(s.width/4*(i+1), s.height/2));
         
         Sprite *point = Sprite::create("Images/r1.png");
         
@@ -4406,10 +4406,10 @@ SpriteBatchNodeOffsetAnchorRotationalSkew::SpriteBatchNodeOffsetAnchorRotational
                 sprite->setAnchorPoint(PointZero);
                 break;
             case 1:
-                sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+                sprite->setAnchorPoint(Point(0.5f, 0.5f));
                 break;
             case 2:
-                sprite->setAnchorPoint(ccp(1,1));
+                sprite->setAnchorPoint(Point(1,1));
                 break;
         }
         
@@ -4465,7 +4465,7 @@ SpriteOffsetAnchorRotationalSkewScale::SpriteOffsetAnchorRotationalSkewScale()
         // Animation using Sprite batch
         //
         Sprite *sprite = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-        sprite->setPosition(ccp(s.width/4*(i+1), s.height/2));
+        sprite->setPosition(Point(s.width/4*(i+1), s.height/2));
         
         Sprite *point = Sprite::create("Images/r1.png");
         
@@ -4479,10 +4479,10 @@ SpriteOffsetAnchorRotationalSkewScale::SpriteOffsetAnchorRotationalSkewScale()
                 sprite->setAnchorPoint(PointZero);
                 break;
             case 1:
-                sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+                sprite->setAnchorPoint(Point(0.5f, 0.5f));
                 break;
             case 2:
-                sprite->setAnchorPoint(ccp(1,1));
+                sprite->setAnchorPoint(Point(1,1));
                 break;
         }
         
@@ -4548,7 +4548,7 @@ SpriteBatchNodeOffsetAnchorRotationalSkewScale::SpriteBatchNodeOffsetAnchorRotat
         // Animation using Sprite batch
         //
         Sprite *sprite = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-        sprite->setPosition(ccp(s.width/4*(i+1), s.height/2));
+        sprite->setPosition(Point(s.width/4*(i+1), s.height/2));
         
         Sprite *point = Sprite::create("Images/r1.png");
         
@@ -4562,10 +4562,10 @@ SpriteBatchNodeOffsetAnchorRotationalSkewScale::SpriteBatchNodeOffsetAnchorRotat
                 sprite->setAnchorPoint(PointZero);
                 break;
             case 1:
-                sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+                sprite->setAnchorPoint(Point(0.5f, 0.5f));
                 break;
             case 2:
-                sprite->setAnchorPoint(ccp(1,1));
+                sprite->setAnchorPoint(Point(1,1));
                 break;
         }
         
@@ -4631,7 +4631,7 @@ SpriteRotationalSkewNegativeScaleChildren::SpriteRotationalSkewNegativeScaleChil
         // Animation using Sprite batch
         //
         Sprite *sprite = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-        sprite->setPosition(ccp(s.width/4*(i+1), s.height/2));
+        sprite->setPosition(Point(s.width/4*(i+1), s.height/2));
         
         Sprite *point = Sprite::create("Images/r1.png");
         
@@ -4654,7 +4654,7 @@ SpriteRotationalSkewNegativeScaleChildren::SpriteRotationalSkewNegativeScaleChil
         sprite->runAction(RepeatForever::create(seq_skew));
         
         Sprite *child1 = Sprite::create("Images/grossini_dance_01.png");
-        child1->setPosition(ccp(sprite->getContentSize().width/2.0f, sprite->getContentSize().height/2.0f));
+        child1->setPosition(Point(sprite->getContentSize().width/2.0f, sprite->getContentSize().height/2.0f));
         
         sprite->addChild(child1);
         
@@ -4694,7 +4694,7 @@ SpriteBatchNodeRotationalSkewNegativeScaleChildren::SpriteBatchNodeRotationalSke
         // Animation using Sprite batch
         //
         Sprite *sprite = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-        sprite->setPosition(ccp(s.width/4*(i+1), s.height/2));
+        sprite->setPosition(Point(s.width/4*(i+1), s.height/2));
         
         Sprite *point = Sprite::create("Images/r1.png");
         
@@ -4717,7 +4717,7 @@ SpriteBatchNodeRotationalSkewNegativeScaleChildren::SpriteBatchNodeRotationalSke
         sprite->runAction(RepeatForever::create(seq_skew));
         
         Sprite *child1 = Sprite::create("Images/grossini_dance_01.png");
-        child1->setPosition(ccp(sprite->getContentSize().width/2.0f, sprite->getContentSize().height/2.0f));
+        child1->setPosition(Point(sprite->getContentSize().width/2.0f, sprite->getContentSize().height/2.0f));
         
         sprite->addChild(child1);
         

@@ -86,7 +86,7 @@ public:
     static ActionInterval* create(float t)
     {
         Size size = Director::sharedDirector()->getWinSize();
-        return Lens3D::create(t, CCSizeMake(15,10), ccp(size.width/2,size.height/2), 240); 
+        return Lens3D::create(t, CCSizeMake(15,10), Point(size.width/2,size.height/2), 240); 
     }
 };
 
@@ -97,7 +97,7 @@ public:
     static ActionInterval* create(float t)
     {
         Size size = Director::sharedDirector()->getWinSize();
-        return Ripple3D::create(t, CCSizeMake(32,24), ccp(size.width/2,size.height/2), 240, 4, 160);
+        return Ripple3D::create(t, CCSizeMake(32,24), Point(size.width/2,size.height/2), 240, 4, 160);
     }
 };
 
@@ -128,7 +128,7 @@ public:
     static ActionInterval* create(float t)
     {
         Size size = Director::sharedDirector()->getWinSize();
-        return Twirl::create(t, CCSizeMake(12,8), ccp(size.width/2, size.height/2), 1, 2.5f); 
+        return Twirl::create(t, CCSizeMake(12,8), Point(size.width/2, size.height/2), 1, 2.5f); 
     }
 };
 
@@ -354,14 +354,14 @@ TextLayer::TextLayer(void)
 
     Sprite* grossini = Sprite::create(s_pPathSister2);
     node->addChild(grossini, 1);
-    grossini->setPosition( ccp(VisibleRect::left().x+VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y) );
+    grossini->setPosition( Point(VisibleRect::left().x+VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y) );
     ActionInterval* sc = ScaleBy::create(2, 5);
     ActionInterval* sc_back = sc->reverse();
     grossini->runAction( RepeatForever::create(Sequence::create(sc, sc_back, NULL) ) );
 
     Sprite* tamara = Sprite::create(s_pPathSister1);
     node->addChild(tamara, 1);
-    tamara->setPosition( ccp(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y) );
+    tamara->setPosition( Point(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y) );
     ActionInterval* sc2 = ScaleBy::create(2, 5);
     ActionInterval* sc2_back = sc2->reverse();
     tamara->runAction( RepeatForever::create(Sequence::create(sc2, sc2_back, NULL)) );

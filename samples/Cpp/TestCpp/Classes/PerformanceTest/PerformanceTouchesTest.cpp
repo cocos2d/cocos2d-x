@@ -45,12 +45,12 @@ void TouchesMainScene::onEnter()
     // add title
     LabelTTF *label = LabelTTF::create(title().c_str(), "Arial", 32);
     addChild(label, 1);
-    label->setPosition(ccp(s.width/2, s.height-50));
+    label->setPosition(Point(s.width/2, s.height-50));
 
     scheduleUpdate();
 
     _plabel = LabelBMFont::create("00.0", "fonts/arial16.fnt");
-    _plabel->setPosition(ccp(s.width/2, s.height/2));
+    _plabel->setPosition(Point(s.width/2, s.height/2));
     addChild(_plabel);
 
     elapsedTime = 0;

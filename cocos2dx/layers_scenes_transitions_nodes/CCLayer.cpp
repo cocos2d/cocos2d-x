@@ -55,7 +55,7 @@ Layer::Layer()
 , _touchMode(kTouchesAllAtOnce)
 {
     _ignoreAnchorPointForPosition = true;
-    setAnchorPoint(ccp(0.5f, 0.5f));
+    setAnchorPoint(Point(0.5f, 0.5f));
 }
 
 Layer::~Layer()
@@ -922,7 +922,7 @@ bool LayerGradient::init()
 
 bool LayerGradient::initWithColor(const Color4B& start, const Color4B& end)
 {
-    return initWithColor(start, end, ccp(0, -1));
+    return initWithColor(start, end, Point(0, -1));
 }
 
 bool LayerGradient::initWithColor(const Color4B& start, const Color4B& end, const Point& v)
@@ -949,7 +949,7 @@ void LayerGradient::updateColor()
         return;
 
     float c = sqrtf(2.0f);
-    Point u = ccp(_alongVector.x / h, _alongVector.y / h);
+    Point u = Point(_alongVector.x / h, _alongVector.y / h);
 
     // Compressed Interpolation mode
     if (_compressedInterpolation)

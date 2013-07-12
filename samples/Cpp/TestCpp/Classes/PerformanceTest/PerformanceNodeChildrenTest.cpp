@@ -75,7 +75,7 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
     // Title
     LabelTTF *label = LabelTTF::create(title().c_str(), "Arial", 40);
     addChild(label, 1);
-    label->setPosition(ccp(s.width/2, s.height-32));
+    label->setPosition(Point(s.width/2, s.height-32));
     label->setColor(Color3B(255,255,40));
 
     // Subtitle
@@ -84,7 +84,7 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
     {
         LabelTTF *l = LabelTTF::create(strSubTitle.c_str(), "Thonburi", 16);
         addChild(l, 1);
-        l->setPosition(ccp(s.width/2, s.height-80));
+        l->setPosition(Point(s.width/2, s.height-80));
     }
 
     lastRenderedCount = 0;
@@ -113,12 +113,12 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
 
     Menu *menu = Menu::create(decrease, increase, NULL);
     menu->alignItemsHorizontally();
-    menu->setPosition(ccp(s.width/2, s.height/2+15));
+    menu->setPosition(Point(s.width/2, s.height/2+15));
     addChild(menu, 1);
 
     LabelTTF *infoLabel = LabelTTF::create("0 nodes", "Marker Felt", 30);
     infoLabel->setColor(Color3B(0,200,20));
-    infoLabel->setPosition(ccp(s.width/2, s.height/2-15));
+    infoLabel->setPosition(Point(s.width/2, s.height/2-15));
     addChild(infoLabel, 1, kTagInfoLayer);
 
     NodeChildrenMenuLayer* pMenu = new NodeChildrenMenuLayer(true, TEST_COUNT, s_nCurCase);
@@ -173,7 +173,7 @@ void IterateSpriteSheet::updateQuantityOfNodes()
         {
             Sprite *sprite = Sprite::createWithTexture(batchNode->getTexture(), CCRectMake(0, 0, 32, 32));
             batchNode->addChild(sprite);
-            sprite->setPosition(ccp( CCRANDOM_0_1()*s.width, CCRANDOM_0_1()*s.height));
+            sprite->setPosition(Point( CCRANDOM_0_1()*s.width, CCRANDOM_0_1()*s.height));
         }
     }
 
@@ -311,7 +311,7 @@ void AddRemoveSpriteSheet::updateQuantityOfNodes()
         {
             Sprite *sprite = Sprite::createWithTexture(batchNode->getTexture(), CCRectMake(0, 0, 32, 32));
             batchNode->addChild(sprite);
-            sprite->setPosition(ccp( CCRANDOM_0_1()*s.width, CCRANDOM_0_1()*s.height));
+            sprite->setPosition(Point( CCRANDOM_0_1()*s.width, CCRANDOM_0_1()*s.height));
             sprite->setVisible(false);
         }
     }

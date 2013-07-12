@@ -21,7 +21,7 @@ bool Bug886Layer::init()
         Sprite* sprite2 = Sprite::create("Images/bugs/bug886.png");
         sprite2->setAnchorPoint(PointZero);
         sprite2->setScaleX(0.6f);
-        sprite2->setPosition(ccp(sprite->getContentSize().width * 0.6f + 10, 0));
+        sprite2->setPosition(Point(sprite->getContentSize().width * 0.6f + 10, 0));
         addChild(sprite2);
 
         return true;

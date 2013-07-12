@@ -50,7 +50,7 @@ void TextureMenuLayer::onEnter()
     // Title
     LabelTTF *label = LabelTTF::create(title().c_str(), "Arial", 40);
     addChild(label, 1);
-    label->setPosition(ccp(s.width/2, s.height-32));
+    label->setPosition(Point(s.width/2, s.height-32));
     label->setColor(Color3B(255,255,40));
 
     // Subtitle
@@ -59,7 +59,7 @@ void TextureMenuLayer::onEnter()
     {
         LabelTTF *l = LabelTTF::create(strSubTitle.c_str(), "Thonburi", 16);
         addChild(l, 1);
-        l->setPosition(ccp(s.width/2, s.height-80));
+        l->setPosition(Point(s.width/2, s.height-80));
     }
 
     performTests();

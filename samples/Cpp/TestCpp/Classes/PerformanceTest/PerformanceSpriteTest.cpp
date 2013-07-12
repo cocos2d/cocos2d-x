@@ -294,12 +294,12 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
 
     Menu *menu = Menu::create(decrease, increase, NULL);
     menu->alignItemsHorizontally();
-    menu->setPosition(ccp(s.width/2, s.height-65));
+    menu->setPosition(Point(s.width/2, s.height-65));
     addChild(menu, 1);
 
     LabelTTF *infoLabel = LabelTTF::create("0 nodes", "Marker Felt", 30);
     infoLabel->setColor(Color3B(0,200,20));
-    infoLabel->setPosition(ccp(s.width/2, s.height-90));
+    infoLabel->setPosition(Point(s.width/2, s.height-90));
     addChild(infoLabel, 1, kTagInfoLayer);
 
     // add menu
@@ -327,13 +327,13 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     }
 
     pSubMenu->alignItemsHorizontally();
-    pSubMenu->setPosition(ccp(s.width/2, 80));
+    pSubMenu->setPosition(Point(s.width/2, 80));
     addChild(pSubMenu, 2);
 
     // add title label
     LabelTTF *label = LabelTTF::create(title().c_str(), "Arial", 40);
     addChild(label, 1);
-    label->setPosition(ccp(s.width/2, s.height-32));
+    label->setPosition(Point(s.width/2, s.height-32));
     label->setColor(Color3B(255,255,40));
 
     while(quantityNodes < nNodes)
@@ -411,7 +411,7 @@ void SpriteMainScene::onDecrease(Object* pSender)
 void performanceActions(Sprite* pSprite)
 {
     Size size = Director::sharedDirector()->getWinSize();
-    pSprite->setPosition(ccp((rand() % (int)size.width), (rand() % (int)size.height)));
+    pSprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
 
     float period = 0.5f + (rand() % 1000) / 500.0f;
     RotateBy* rot = RotateBy::create(period, 360.0f * CCRANDOM_0_1());
@@ -429,9 +429,9 @@ void performanceActions20(Sprite* pSprite)
 {
     Size size = Director::sharedDirector()->getWinSize();
     if( CCRANDOM_0_1() < 0.2f )
-        pSprite->setPosition(ccp((rand() % (int)size.width), (rand() % (int)size.height)));
+        pSprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
     else
-        pSprite->setPosition(ccp( -1000, -1000));
+        pSprite->setPosition(Point( -1000, -1000));
 
     float period = 0.5f + (rand() % 1000) / 500.0f;
     RotateBy* rot = RotateBy::create(period, 360.0f * CCRANDOM_0_1());
@@ -448,7 +448,7 @@ void performanceActions20(Sprite* pSprite)
 void performanceRotationScale(Sprite* pSprite)
 {
     Size size = Director::sharedDirector()->getWinSize();
-    pSprite->setPosition(ccp((rand() % (int)size.width), (rand() % (int)size.height)));
+    pSprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
     pSprite->setRotation(CCRANDOM_0_1() * 360);
     pSprite->setScale(CCRANDOM_0_1() * 2);
 }
@@ -456,7 +456,7 @@ void performanceRotationScale(Sprite* pSprite)
 void performancePosition(Sprite* pSprite)
 {
     Size size = Director::sharedDirector()->getWinSize();
-    pSprite->setPosition(ccp((rand() % (int)size.width), (rand() % (int)size.height)));
+    pSprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
 }
 
 void performanceout20(Sprite* pSprite)
@@ -464,20 +464,20 @@ void performanceout20(Sprite* pSprite)
     Size size = Director::sharedDirector()->getWinSize();
 
     if( CCRANDOM_0_1() < 0.2f )
-        pSprite->setPosition(ccp((rand() % (int)size.width), (rand() % (int)size.height)));
+        pSprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
     else
-        pSprite->setPosition(ccp( -1000, -1000));
+        pSprite->setPosition(Point( -1000, -1000));
 }
 
 void performanceOut100(Sprite* pSprite)
 {
-    pSprite->setPosition(ccp( -1000, -1000));
+    pSprite->setPosition(Point( -1000, -1000));
 }
 
 void performanceScale(Sprite* pSprite)
 {
     Size size = Director::sharedDirector()->getWinSize();
-    pSprite->setPosition(ccp((rand() % (int)size.width), (rand() % (int)size.height)));
+    pSprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
     pSprite->setScale(CCRANDOM_0_1() * 100 / 50);
 }
 

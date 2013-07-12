@@ -327,7 +327,7 @@ void SchedulerPauseResumeAllUser::onEnter()
     Size s = Director::sharedDirector()->getWinSize();
 
     Sprite *sprite = Sprite::create("Images/grossinis_sister1.png");
-    sprite->setPosition(ccp(s.width/2, s.height/2));
+    sprite->setPosition(Point(s.width/2, s.height/2));
     this->addChild(sprite);
     sprite->runAction(RepeatForever::create(RotateBy::create(3.0, 360)));
 
@@ -445,7 +445,7 @@ void SchedulerUnscheduleAllHard::onEnter()
     Size s = Director::sharedDirector()->getWinSize();
 
     Sprite *sprite = Sprite::create("Images/grossinis_sister1.png");
-    sprite->setPosition(ccp(s.width/2, s.height/2));
+    sprite->setPosition(Point(s.width/2, s.height/2));
     this->addChild(sprite);
     sprite->runAction(RepeatForever::create(RotateBy::create(3.0, 360)));
 
@@ -515,7 +515,7 @@ void SchedulerUnscheduleAllUserLevel::onEnter()
     Size s = Director::sharedDirector()->getWinSize();
 
     Sprite *sprite = Sprite::create("Images/grossinis_sister1.png");
-    sprite->setPosition(ccp(s.width/2, s.height/2));
+    sprite->setPosition(Point(s.width/2, s.height/2));
     this->addChild(sprite);
     sprite->runAction(RepeatForever::create(RotateBy::create(3.0, 360)));
 
@@ -890,7 +890,7 @@ void SchedulerTimeScale::onEnter()
     Size s = Director::sharedDirector()->getWinSize();
 
     // rotate and jump
-    ActionInterval *jump1 = JumpBy::create(4, ccp(-s.width+80,0), 100, 4);
+    ActionInterval *jump1 = JumpBy::create(4, Point(-s.width+80,0), 100, 4);
     ActionInterval *jump2 = jump1->reverse();
     ActionInterval *rot1 = RotateBy::create(4, 360*2);
     ActionInterval *rot2 = rot1->reverse();
@@ -907,9 +907,9 @@ void SchedulerTimeScale::onEnter()
     Sprite *tamara = Sprite::create("Images/grossinis_sister1.png");
     Sprite *kathia = Sprite::create("Images/grossinis_sister2.png");
 
-    grossini->setPosition(ccp(40,80));
-    tamara->setPosition(ccp(40,80));
-    kathia->setPosition(ccp(40,80));
+    grossini->setPosition(Point(40,80));
+    tamara->setPosition(Point(40,80));
+    kathia->setPosition(Point(40,80));
 
     addChild(grossini);
     addChild(tamara);
@@ -924,7 +924,7 @@ void SchedulerTimeScale::onEnter()
     addChild(emitter);
 
     _sliderCtl = sliderCtl();
-    _sliderCtl->setPosition(ccp(s.width / 2.0f, s.height / 3.0f));
+    _sliderCtl->setPosition(Point(s.width / 2.0f, s.height / 3.0f));
 
     addChild(_sliderCtl);
 }
@@ -986,7 +986,7 @@ void TwoSchedulers::onEnter()
     Size s = Director::sharedDirector()->getWinSize();
 
         // rotate and jump
-    ActionInterval *jump1 = JumpBy::create(4, ccp(0,0), 100, 4);
+    ActionInterval *jump1 = JumpBy::create(4, Point(0,0), 100, 4);
     ActionInterval *jump2 = jump1->reverse();
 
     Sequence* seq = Sequence::create(jump2, jump1, NULL);
@@ -997,7 +997,7 @@ void TwoSchedulers::onEnter()
         //
     Sprite *grossini = Sprite::create("Images/grossini.png");
     addChild(grossini);
-    grossini->setPosition(ccp(s.width/2,100));
+    grossini->setPosition(Point(s.width/2,100));
     grossini->runAction(action->clone());
 
     Scheduler *defaultScheduler = Director::sharedDirector()->getScheduler();
@@ -1023,7 +1023,7 @@ void TwoSchedulers::onEnter()
         sprite->setActionManager(actionManager1);
 
         addChild(sprite);
-        sprite->setPosition(ccp(30+15*i,100));
+        sprite->setPosition(Point(30+15*i,100));
 
         sprite->runAction(action->clone());
     }
@@ -1048,7 +1048,7 @@ void TwoSchedulers::onEnter()
         sprite->setActionManager(actionManager2);
 
         addChild(sprite);
-        sprite->setPosition(ccp(s.width-30-15*i,100));
+        sprite->setPosition(Point(s.width-30-15*i,100));
 
         sprite->runAction(action->clone());
     }
@@ -1056,12 +1056,12 @@ void TwoSchedulers::onEnter()
     sliderCtl1 = sliderCtl();
     addChild(sliderCtl1);
     sliderCtl1->retain();
-    sliderCtl1->setPosition(ccp(s.width / 4.0f, VisibleRect::top().y - 20));
+    sliderCtl1->setPosition(Point(s.width / 4.0f, VisibleRect::top().y - 20));
 
     sliderCtl2 = sliderCtl();
     addChild(sliderCtl2);
     sliderCtl2->retain();
-    sliderCtl2->setPosition(ccp(s.width / 4.0f*3.0f, VisibleRect::top().y-20));
+    sliderCtl2->setPosition(Point(s.width / 4.0f*3.0f, VisibleRect::top().y-20));
 }
 
 

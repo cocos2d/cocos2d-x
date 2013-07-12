@@ -90,7 +90,7 @@ bool EditBox::initWithSizeAndBackgroundSprite(const Size& size, Scale9Sprite* pP
         
         this->setZoomOnTouchDown(false);
         this->setPreferredSize(size);
-        this->setPosition(ccp(0, 0));
+        this->setPosition(Point(0, 0));
         this->addTargetWithActionForControlEvent(this, cccontrol_selector(EditBox::touchDownAction), ControlEventTouchUpInside);
         
         return true;

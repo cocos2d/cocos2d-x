@@ -62,7 +62,7 @@ bool SpineTestLayer::init () {
 		NULL)));
 
 	Size windowSize = Director::sharedDirector()->getWinSize();
-	skeletonNode->setPosition(ccp(windowSize.width / 2, 20));
+	skeletonNode->setPosition(Point(windowSize.width / 2, 20));
 	addChild(skeletonNode);
 
 	scheduleUpdate();

@@ -103,7 +103,7 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
         {
             _container = Layer::create();
             this->_container->ignoreAnchorPointForPosition(false);
-            this->_container->setAnchorPoint(ccp(0.0f, 0.0f));
+            this->_container->setAnchorPoint(Point(0.0f, 0.0f));
         }
 
         this->setViewSize(size);
@@ -115,7 +115,7 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
         _clippingToBounds = true;
         //_container->setContentSize(SizeZero);
         _direction  = kScrollViewDirectionBoth;
-        _container->setPosition(ccp(0.0f, 0.0f));
+        _container->setPosition(Point(0.0f, 0.0f));
         _touchLength = 0.0f;
         
         this->addChild(_container);
@@ -237,7 +237,7 @@ void ScrollView::setZoomScale(float s)
         
         if (_touchLength == 0.0f) 
         {
-            center = ccp(_viewSize.width*0.5f, _viewSize.height*0.5f);
+            center = Point(_viewSize.width*0.5f, _viewSize.height*0.5f);
             center = this->convertToWorldSpace(center);
         }
         else
@@ -314,7 +314,7 @@ void ScrollView::setContainer(Node * pContainer)
     this->_container = pContainer;
 
     this->_container->ignoreAnchorPointForPosition(false);
-    this->_container->setAnchorPoint(ccp(0.0f, 0.0f));
+    this->_container->setAnchorPoint(Point(0.0f, 0.0f));
 
     this->addChild(this->_container);
 
@@ -347,18 +347,18 @@ void ScrollView::relocateContainer(bool animated)
 
     if (newY != oldPoint.y || newX != oldPoint.x)
     {
-        this->setContentOffset(ccp(newX, newY), animated);
+        this->setContentOffset(Point(newX, newY), animated);
     }
 }
 
 Point ScrollView::maxContainerOffset()
 {
-    return ccp(0.0f, 0.0f);
+    return Point(0.0f, 0.0f);
 }
 
 Point ScrollView::minContainerOffset()
 {
-    return ccp(_viewSize.width - _container->getContentSize().width*_container->getScaleX(), 
+    return Point(_viewSize.width - _container->getContentSize().width*_container->getScaleX(), 
                _viewSize.height - _container->getContentSize().height*_container->getScaleY());
 }
 
@@ -395,9 +395,9 @@ void ScrollView::deaccelerateScrolling(float dt)
     newX = _container->getPosition().x;
     newY = _container->getPosition().y;
     
-    _scrollDistance     = _scrollDistance - ccp(newX - _container->getPosition().x, newY - _container->getPosition().y);
+    _scrollDistance     = _scrollDistance - Point(newX - _container->getPosition().x, newY - _container->getPosition().y);
     _scrollDistance     = _scrollDistance * SCROLL_DEACCEL_RATE;
-    this->setContentOffset(ccp(newX,newY));
+    this->setContentOffset(Point(newX,newY));
     
     if ((fabsf(_scrollDistance.x) <= SCROLL_DEACCEL_DIST &&
          fabsf(_scrollDistance.y) <= SCROLL_DEACCEL_DIST) ||
@@ -455,10 +455,10 @@ void ScrollView::updateInset()
 	if (this->getContainer() != NULL)
 	{
 		_maxInset = this->maxContainerOffset();
-		_maxInset = ccp(_maxInset.x + _viewSize.width * INSET_RATIO,
+		_maxInset = Point(_maxInset.x + _viewSize.width * INSET_RATIO,
 			_maxInset.y + _viewSize.height * INSET_RATIO);
 		_minInset = this->minContainerOffset();
-		_minInset = ccp(_minInset.x - _viewSize.width * INSET_RATIO,
+		_minInset = Point(_minInset.x - _viewSize.width * INSET_RATIO,
 			_minInset.y - _viewSize.height * INSET_RATIO);
 	}
 }
@@ -469,7 +469,7 @@ void ScrollView::updateInset()
 void ScrollView::addChild(Node * child, int zOrder, int tag)
 {
     child->ignoreAnchorPointForPosition(false);
-    child->setAnchorPoint(ccp(0.0f, 0.0f));
+    child->setAnchorPoint(Point(0.0f, 0.0f));
     if (_container != child) {
         _container->addChild(child, zOrder, tag);
     } else {
@@ -622,7 +622,7 @@ bool ScrollView::ccTouchBegan(Touch* touch, Event* event)
         _touchPoint     = this->convertTouchToNodeSpace(touch);
         _touchMoved     = false;
         _dragging     = true; //dragging started
-        _scrollDistance = ccp(0.0f, 0.0f);
+        _scrollDistance = Point(0.0f, 0.0f);
         _touchLength    = 0.0f;
     }
     else if (_touches->count() == 2)
@@ -691,10 +691,10 @@ void ScrollView::ccTouchMoved(Touch* touch, Event* event)
                 switch (_direction)
                 {
                     case kScrollViewDirectionVertical:
-                        moveDistance = ccp(0.0f, moveDistance.y);
+                        moveDistance = Point(0.0f, moveDistance.y);
                         break;
                     case kScrollViewDirectionHorizontal:
-                        moveDistance = ccp(moveDistance.x, 0.0f);
+                        moveDistance = Point(moveDistance.x, 0.0f);
                         break;
                     default:
                         break;
@@ -707,7 +707,7 @@ void ScrollView::ccTouchMoved(Touch* touch, Event* event)
                 newY     = _container->getPosition().y + moveDistance.y;
 
                 _scrollDistance = moveDistance;
-                this->setContentOffset(ccp(newX, newY));
+                this->setContentOffset(Point(newX, newY));
             }
         }
         else if (_touches->count() == 2 && !_dragging)

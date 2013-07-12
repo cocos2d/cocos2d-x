@@ -248,7 +248,7 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
             // position
             float x = dictionary->valueForKey("sourcePositionx")->floatValue();
             float y = dictionary->valueForKey("sourcePositiony")->floatValue();
-            this->setPosition( ccp(x,y) );            
+            this->setPosition( Point(x,y) );            
             _posVar.x = dictionary->valueForKey("sourcePositionVariancex")->floatValue();
             _posVar.y = dictionary->valueForKey("sourcePositionVariancey")->floatValue();
 

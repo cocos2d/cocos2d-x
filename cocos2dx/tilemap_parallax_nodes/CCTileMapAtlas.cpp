@@ -252,7 +252,7 @@ void TileMapAtlas::updateAtlasValues()
 
                 if( value.r != 0 )
                 {
-                    this->updateAtlasValueAt(ccp(x,y), value, total);
+                    this->updateAtlasValueAt(Point(x,y), value, total);
 
                     String *key = String::createWithFormat("%d,%d", x,y);
                     Integer *num = Integer::create(total);

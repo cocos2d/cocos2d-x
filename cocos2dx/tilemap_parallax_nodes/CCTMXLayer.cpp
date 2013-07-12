@@ -185,7 +185,7 @@ void TMXLayer::setupTiles()
             // XXX: gid == 0 --> empty tile
             if (gid != 0) 
             {
-                this->appendTileForGID(gid, ccp(x, y));
+                this->appendTileForGID(gid, Point(x, y));
 
                 // Optimization: update min and max GID rendered by the layer
                 _minGID = MIN(gid, _minGID);
@@ -250,14 +250,14 @@ void TMXLayer::setupTileSprite(Sprite* sprite, Point pos, unsigned int gid)
     sprite->setFlipX(false);
     sprite->setFlipY(false);
     sprite->setRotation(0.0f);
-    sprite->setAnchorPoint(ccp(0,0));
+    sprite->setAnchorPoint(Point(0,0));
 
     // Rotation in tiled is achieved using 3 flipped states, flipping across the horizontal, vertical, and diagonal axes of the tiles.
     if (gid & kTMXTileDiagonalFlag)
     {
         // put the anchor in the middle for ease of rotation.
-        sprite->setAnchorPoint(ccp(0.5f,0.5f));
-        sprite->setPosition(ccp(positionAt(pos).x + sprite->getContentSize().height/2,
+        sprite->setAnchorPoint(Point(0.5f,0.5f));
+        sprite->setPosition(Point(positionAt(pos).x + sprite->getContentSize().height/2,
            positionAt(pos).y + sprite->getContentSize().width/2 ) );
 
         unsigned int flag = gid & (kTMXTileHorizontalFlag | kTMXTileVerticalFlag );
@@ -633,10 +633,10 @@ Point TMXLayer::calculateLayerOffset(const Point& pos)
     switch (_layerOrientation) 
     {
     case TMXOrientationOrtho:
-        ret = ccp( pos.x * _mapTileSize.width, -pos.y *_mapTileSize.height);
+        ret = Point( pos.x * _mapTileSize.width, -pos.y *_mapTileSize.height);
         break;
     case TMXOrientationIso:
-        ret = ccp((_mapTileSize.width /2) * (pos.x - pos.y),
+        ret = Point((_mapTileSize.width /2) * (pos.x - pos.y),
                   (_mapTileSize.height /2 ) * (-pos.x - pos.y));
         break;
     case TMXOrientationHex:

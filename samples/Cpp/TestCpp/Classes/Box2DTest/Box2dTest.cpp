@@ -48,7 +48,7 @@ Box2DTestLayer::Box2DTestLayer()
                                             "Arial",
                                             18);
     Size size = Director::sharedDirector()->getWinSize();
-    pLabel->setPosition(ccp(size.width/2, size.height/2));
+    pLabel->setPosition(Point(size.width/2, size.height/2));
     
     addChild(pLabel);
 #endif
@@ -126,7 +126,7 @@ void Box2DTestLayer::createResetButton()
 
     Menu *menu = Menu::create(reset, NULL);
 
-    menu->setPosition(ccp(VisibleRect::bottom().x, VisibleRect::bottom().y + 30));
+    menu->setPosition(Point(VisibleRect::bottom().x, VisibleRect::bottom().y + 30));
     this->addChild(menu, -1);
 
 }

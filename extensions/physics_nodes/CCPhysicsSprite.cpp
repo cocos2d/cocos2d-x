@@ -277,7 +277,7 @@ const Point& PhysicsSprite::getPosFromPhysics() const
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 
     cpVect cpPos = cpBodyGetPos(_CPBody);
-    s_physicPosion = ccp(cpPos.x, cpPos.y);
+    s_physicPosion = Point(cpPos.x, cpPos.y);
 
 #elif CC_ENABLE_BOX2D_INTEGRATION
 

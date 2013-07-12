@@ -73,10 +73,10 @@ bool Bug1174Layer::init()
             float cx = CCRANDOM_0_1() * -5000;
             float cy = CCRANDOM_0_1() * -5000;
             
-            A = ccp(ax,ay);
-            B = ccp(bx,by);
-            C = ccp(cx,cy);
-            D = ccp(dx,dy);
+            A = Point(ax,ay);
+            B = Point(bx,by);
+            C = Point(cx,cy);
+            D = Point(dx,dy);
             if( Point::isLineIntersect( A, D, B, C, &s, &t) ) {
                 if( check_for_error(A, D, B, C, s, t) )
                     err++;
@@ -91,10 +91,10 @@ bool Bug1174Layer::init()
         //
         CCLog("Test2 - Start");
         
-        p1 = ccp(220,480);
-        p2 = ccp(304,325);
-        p3 = ccp(264,416);
-        p4 = ccp(186,416);
+        p1 = Point(220,480);
+        p2 = Point(304,325);
+        p3 = Point(264,416);
+        p4 = Point(186,416);
         s = 0.0f;
         t = 0.0f;
         if( Point::isLineIntersect(p1, p2, p3, p4, &s, &t) )
@@ -117,14 +117,14 @@ bool Bug1174Layer::init()
             // c | d
             float ax = CCRANDOM_0_1() * -500;
             float ay = CCRANDOM_0_1() * 500;
-            p1 = ccp(ax,ay);
+            p1 = Point(ax,ay);
             
             // a | b
             // -----
             // c | D
             float dx = CCRANDOM_0_1() * 500;
             float dy = CCRANDOM_0_1() * -500;
-            p2 = ccp(dx,dy);
+            p2 = Point(dx,dy);
             
             
             //////
@@ -135,13 +135,13 @@ bool Bug1174Layer::init()
             // -----
             // C | d
             float cx = CCRANDOM_0_1() * -500;
-            p3 = ccp(cx,y);
+            p3 = Point(cx,y);
             
             // a | B
             // -----
             // c | d
             float bx = CCRANDOM_0_1() * 500;
-            p4 = ccp(bx,y);
+            p4 = Point(bx,y);
 
             s = 0.0f;
             t = 0.0f;

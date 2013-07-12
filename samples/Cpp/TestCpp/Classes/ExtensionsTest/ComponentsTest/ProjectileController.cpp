@@ -22,7 +22,7 @@ void ProjectileController::onEnter()
 {
     Size winSize = Director::sharedDirector()->getVisibleSize();
     Point origin = Director::sharedDirector()->getVisibleOrigin();
-    _owner->setPosition( ccp(origin.x+20, origin.y+winSize.height/2) );
+    _owner->setPosition( Point(origin.x+20, origin.y+winSize.height/2) );
 	_owner->setTag(3);
     Component *com = _owner->getParent()->getComponent("SceneController");
     ((SceneController*)com)->getProjectiles()->addObject(_owner);
@@ -112,7 +112,7 @@ void ProjectileController::move(float flocationX, float flocationY)
 	float realX = origin.x + winSize.width + (_owner->getContentSize().width/2);
 	float ratio = offY / offX;
 	float realY = (realX * ratio) + _owner->getPosition().y;
-	Point realDest = ccp(realX, realY);
+	Point realDest = Point(realX, realY);
 
 	// Determine the length of how far we're shooting
 	float offRealX = realX - _owner->getPosition().x;

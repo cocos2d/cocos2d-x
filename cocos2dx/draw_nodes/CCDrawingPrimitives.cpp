@@ -230,9 +230,9 @@ void ccDrawSolidRect( Point origin, Point destination, Color4F color )
 {
     Point vertices[] = {
         origin,
-        ccp(destination.x, origin.y),
+        Point(destination.x, origin.y),
         destination,
-        ccp(origin.x, destination.y)
+        Point(origin.x, destination.y)
     };
 
     ccDrawSolidPoly(vertices, 4, color );

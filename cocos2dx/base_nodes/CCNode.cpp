@@ -305,7 +305,7 @@ void Node::getPosition(float* x, float* y) const
 
 void Node::setPosition(float x, float y)
 {
-    setPosition(ccp(x, y));
+    setPosition(Point(x, y));
 }
 
 float Node::getPositionX(void) const
@@ -320,12 +320,12 @@ float Node::getPositionY(void) const
 
 void Node::setPositionX(float x)
 {
-    setPosition(ccp(x, _position.y));
+    setPosition(Point(x, _position.y));
 }
 
 void Node::setPositionY(float y)
 {
-    setPosition(ccp(_position.x, y));
+    setPosition(Point(_position.x, y));
 }
 
 /// children getter
@@ -394,7 +394,7 @@ void Node::setAnchorPoint(const Point& point)
     if( ! point.equals(_anchorPoint))
     {
         _anchorPoint = point;
-        _anchorPointInPoints = ccp(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y );
+        _anchorPointInPoints = Point(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y );
         _transformDirty = _inverseDirty = true;
     }
 }
@@ -411,7 +411,7 @@ void Node::setContentSize(const Size & size)
     {
         _contentSize = size;
 
-        _anchorPointInPoints = ccp(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y );
+        _anchorPointInPoints = Point(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y );
         _transformDirty = _inverseDirty = true;
     }
 }

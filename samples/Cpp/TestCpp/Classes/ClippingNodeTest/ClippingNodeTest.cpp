@@ -168,17 +168,17 @@ void BasicTest::setup()
     
     Node *stencil = this->stencil();
     stencil->setTag( kTagStencilNode );
-    stencil->setPosition( ccp(50, 50) );
+    stencil->setPosition( Point(50, 50) );
     
     ClippingNode *clipper = this->clipper();
     clipper->setTag( kTagClipperNode );
-    clipper->setAnchorPoint(ccp(0.5, 0.5));
-    clipper->setPosition( ccp(s.width / 2 - 50, s.height / 2 - 50) );
+    clipper->setAnchorPoint(Point(0.5, 0.5));
+    clipper->setPosition( Point(s.width / 2 - 50, s.height / 2 - 50) );
     clipper->setStencil(stencil);
     this->addChild(clipper);
     
     Node *content = this->content();
-    content->setPosition( ccp(50, 50) );
+    content->setPosition( Point(50, 50) );
     clipper->addChild(content);
 }
 
@@ -197,9 +197,9 @@ DrawNode* BasicTest::shape()
 {
     DrawNode *shape = DrawNode::create();
     static Point triangle[3];
-    triangle[0] = ccp(-100, -100);
-    triangle[1] = ccp(100, -100);
-    triangle[2] = ccp(0, 100);
+    triangle[0] = Point(-100, -100);
+    triangle[1] = Point(100, -100);
+    triangle[2] = Point(0, 100);
 
     static Color4F green(0, 1, 0, 1);
     shape->drawPolygon(triangle, 3, green, 0, green);
@@ -371,16 +371,16 @@ void NestedTest::setup()
 
         ClippingNode *clipper = ClippingNode::create();
         clipper->setContentSize(CCSizeMake(size, size));
-        clipper->setAnchorPoint(ccp(0.5, 0.5));
-        clipper->setPosition( ccp(parent->getContentSize().width / 2, parent->getContentSize().height / 2) );
+        clipper->setAnchorPoint(Point(0.5, 0.5));
+        clipper->setPosition( Point(parent->getContentSize().width / 2, parent->getContentSize().height / 2) );
         clipper->setAlphaThreshold(0.05f);
         clipper->runAction(RepeatForever::create(RotateBy::create(i % 3 ? 1.33 : 1.66, i % 2 ? 90 : -90)));
         parent->addChild(clipper);
         
         Node *stencil = Sprite::create(s_pPathGrossini);
         stencil->setScale( 2.5 - (i * (2.5 / depth)) );
-        stencil->setAnchorPoint( ccp(0.5, 0.5) );
-        stencil->setPosition( ccp(clipper->getContentSize().width / 2, clipper->getContentSize().height / 2) );
+        stencil->setAnchorPoint( Point(0.5, 0.5) );
+        stencil->setPosition( Point(clipper->getContentSize().width / 2, clipper->getContentSize().height / 2) );
         stencil->setVisible(false);
         stencil->runAction(Sequence::createWithTwoActions(DelayTime::create(i), Show::create()));
         clipper->setStencil(stencil);
@@ -423,7 +423,7 @@ void HoleDemo::setup()
     tranform = AffineTransformScale(tranform, target->getScale(), target->getScale());
 
     _outerClipper->setContentSize( SizeApplyAffineTransform(target->getContentSize(), tranform));
-    _outerClipper->setAnchorPoint( ccp(0.5, 0.5) );
+    _outerClipper->setAnchorPoint( Point(0.5, 0.5) );
     _outerClipper->setPosition(Point(this->getContentSize()) * 0.5f);
     _outerClipper->runAction(RepeatForever::create(RotateBy::create(1, 45)));
     
@@ -502,17 +502,17 @@ void ScrollViewDemo::setup()
     ClippingNode *clipper = ClippingNode::create();
     clipper->setTag( kTagClipperNode );
     clipper->setContentSize(  CCSizeMake(200, 200) );
-    clipper->setAnchorPoint(  ccp(0.5, 0.5) );
-    clipper->setPosition( ccp(this->getContentSize().width / 2, this->getContentSize().height / 2) );
+    clipper->setAnchorPoint(  Point(0.5, 0.5) );
+    clipper->setPosition( Point(this->getContentSize().width / 2, this->getContentSize().height / 2) );
     clipper->runAction(RepeatForever::create(RotateBy::create(1, 45)));
     this->addChild(clipper);
 
     DrawNode *stencil = DrawNode::create();
     Point rectangle[4];
-    rectangle[0] = ccp(0, 0);
-    rectangle[1] = ccp(clipper->getContentSize().width, 0);
-    rectangle[2] = ccp(clipper->getContentSize().width, clipper->getContentSize().height);
-    rectangle[3] = ccp(0, clipper->getContentSize().height);
+    rectangle[0] = Point(0, 0);
+    rectangle[1] = Point(clipper->getContentSize().width, 0);
+    rectangle[2] = Point(clipper->getContentSize().width, clipper->getContentSize().height);
+    rectangle[3] = Point(0, clipper->getContentSize().height);
     
     Color4F white(1, 1, 1, 1);
     stencil->drawPolygon(rectangle, 4, white, 1, white);
@@ -520,8 +520,8 @@ void ScrollViewDemo::setup()
 
     Sprite *content = Sprite::create(s_back2);
     content->setTag( kTagContentNode );
-    content->setAnchorPoint(  ccp(0.5, 0.5) );
-    content->setPosition( ccp(clipper->getContentSize().width / 2, clipper->getContentSize().height / 2) );
+    content->setAnchorPoint(  Point(0.5, 0.5) );
+    content->setPosition( Point(clipper->getContentSize().width / 2, clipper->getContentSize().height / 2) );
     clipper->addChild(content);
     
     _scrolling = false;
@@ -600,7 +600,7 @@ void RawStencilBufferTest::setup()
     }
     _sprite = Sprite::create(s_pPathGrossini);
     _sprite->retain();
-    _sprite->setAnchorPoint(  ccp(0.5, 0) );
+    _sprite->setAnchorPoint(  Point(0.5, 0) );
     _sprite->setScale( 2.5f );
     Director::sharedDirector()->setAlphaBlending(true);
 }

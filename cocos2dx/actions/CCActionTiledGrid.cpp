@@ -90,7 +90,7 @@ void ShakyTiles3D::update(float time)
     {
         for (j = 0; j < _gridSize.height; ++j)
         {
-            Quad3 coords = getOriginalTile(ccp(i, j));
+            Quad3 coords = getOriginalTile(Point(i, j));
 
             // X
             coords.bl.x += ( rand() % (_randrange*2) ) - _randrange;
@@ -112,7 +112,7 @@ void ShakyTiles3D::update(float time)
                 coords.tr.z += ( rand() % (_randrange*2) ) - _randrange;
             }
                         
-            setTile(ccp(i, j), coords);
+            setTile(Point(i, j), coords);
         }
     }
 }
@@ -172,7 +172,7 @@ void ShatteredTiles3D::update(float time)
         {
             for (j = 0; j < _gridSize.height; ++j)
             {
-                Quad3 coords = getOriginalTile(ccp(i ,j));
+                Quad3 coords = getOriginalTile(Point(i ,j));
                 
                 // X
                 coords.bl.x += ( rand() % (_randrange*2) ) - _randrange;
@@ -194,7 +194,7 @@ void ShatteredTiles3D::update(float time)
                     coords.tr.z += ( rand() % (_randrange*2) ) - _randrange;
                 }
                 
-                setTile(ccp(i, j), coords);
+                setTile(Point(i, j), coords);
             }
         }
         
@@ -328,8 +328,8 @@ void ShuffleTiles::startWithTarget(Node *pTarget)
     {
         for (j = 0; j < _gridSize.height; ++j)
         {
-            tileArray->position = ccp((float)i, (float)j);
-            tileArray->startPosition = ccp((float)i, (float)j);
+            tileArray->position = Point((float)i, (float)j);
+            tileArray->startPosition = Point((float)i, (float)j);
             tileArray->delta = getDelta(CCSizeMake(i, j));
             ++tileArray;
         }
@@ -346,8 +346,8 @@ void ShuffleTiles::update(float time)
     {
         for (j = 0; j < _gridSize.height; ++j)
         {
-            tileArray->position = ccp((float)tileArray->delta.width, (float)tileArray->delta.height) * time;
-            placeTile(ccp(i, j), tileArray);
+            tileArray->position = Point((float)tileArray->delta.width, (float)tileArray->delta.height) * time;
+            placeTile(Point(i, j), tileArray);
             ++tileArray;
         }
     }
@@ -385,7 +385,7 @@ FadeOutTRTiles* FadeOutTRTiles::clone() const
 
 float FadeOutTRTiles::testFunc(const Size& pos, float time)
 {
-    Point n = ccp((float)_gridSize.width, (float)_gridSize.height) * time;
+    Point n = Point((float)_gridSize.width, (float)_gridSize.height) * time;
     if ((n.x + n.y) == 0.0f)
     {
         return 1.0f;
@@ -437,15 +437,15 @@ void FadeOutTRTiles::update(float time)
             float distance = testFunc(CCSizeMake(i, j), time);
             if ( distance == 0 )
             {
-                turnOffTile(ccp(i, j));
+                turnOffTile(Point(i, j));
             } else 
             if (distance < 1)
             {
-                transformTile(ccp(i, j), distance);
+                transformTile(Point(i, j), distance);
             }
             else
             {
-                turnOnTile(ccp(i, j));
+                turnOnTile(Point(i, j));
             }
         }
     }
@@ -483,7 +483,7 @@ FadeOutBLTiles* FadeOutBLTiles::clone() const
 
 float FadeOutBLTiles::testFunc(const Size& pos, float time)
 {
-    Point n = ccp((float)_gridSize.width, (float)_gridSize.height) * (1.0f - time);
+    Point n = Point((float)_gridSize.width, (float)_gridSize.height) * (1.0f - time);
     if ((pos.width + pos.height) == 0)
     {
         return 1.0f;
@@ -524,7 +524,7 @@ FadeOutUpTiles* FadeOutUpTiles::clone() const
 
 float FadeOutUpTiles::testFunc(const Size& pos, float time)
 {
-    Point n = ccp((float)_gridSize.width, (float)_gridSize.height) * time;
+    Point n = Point((float)_gridSize.width, (float)_gridSize.height) * time;
     if (n.y == 0.0f)
     {
         return 1.0f;
@@ -578,7 +578,7 @@ FadeOutDownTiles* FadeOutDownTiles::clone() const
 
 float FadeOutDownTiles::testFunc(const Size& pos, float time)
 {
-    Point n = ccp((float)_gridSize.width, (float)_gridSize.height) * (1.0f - time);
+    Point n = Point((float)_gridSize.width, (float)_gridSize.height) * (1.0f - time);
     if (pos.height == 0)
     {
         return 1.0f;
@@ -705,7 +705,7 @@ void TurnOffTiles::update(float time)
     for( i = 0; i < _tilesCount; i++ )
     {
         t = _tilesOrder[i];
-        Point tilePos = ccp( (unsigned int)(t / _gridSize.height), t % (unsigned int)_gridSize.height );
+        Point tilePos = Point( (unsigned int)(t / _gridSize.height), t % (unsigned int)_gridSize.height );
 
         if ( i < l )
         {
@@ -770,7 +770,7 @@ void WavesTiles3D::update(float time)
     {
         for( j = 0; j < _gridSize.height; j++ )
         {
-            Quad3 coords = getOriginalTile(ccp(i, j));
+            Quad3 coords = getOriginalTile(Point(i, j));
 
             coords.bl.z = (sinf(time * (float)M_PI  *_waves * 2 + 
                 (coords.bl.y+coords.bl.x) * .01f) * _amplitude * _amplitudeRate );
@@ -778,7 +778,7 @@ void WavesTiles3D::update(float time)
             coords.tl.z = coords.bl.z;
             coords.tr.z = coords.bl.z;
 
-            setTile(ccp(i, j), coords);
+            setTile(Point(i, j), coords);
         }
     }
 }
@@ -838,7 +838,7 @@ void JumpTiles3D::update(float time)
     {
         for( j = 0; j < _gridSize.height; j++ )
         {
-            Quad3 coords = getOriginalTile(ccp(i, j));
+            Quad3 coords = getOriginalTile(Point(i, j));
 
             if ( ((i+j) % 2) == 0 )
             {
@@ -855,7 +855,7 @@ void JumpTiles3D::update(float time)
                 coords.tr.z += sinz2;
             }
 
-            setTile(ccp(i, j), coords);
+            setTile(Point(i, j), coords);
         }
     }
 }
@@ -909,7 +909,7 @@ void SplitRows::update(float time)
 
     for (j = 0; j < _gridSize.height; ++j)
     {
-        Quad3 coords = getOriginalTile(ccp(0, j));
+        Quad3 coords = getOriginalTile(Point(0, j));
         float    direction = 1;
 
         if ( (j % 2 ) == 0 )
@@ -922,7 +922,7 @@ void SplitRows::update(float time)
         coords.tl.x += direction * _winSize.width * time;
         coords.tr.x += direction * _winSize.width * time;
 
-        setTile(ccp(0, j), coords);
+        setTile(Point(0, j), coords);
     }
 }
 
@@ -974,7 +974,7 @@ void SplitCols::update(float time)
 
     for (i = 0; i < _gridSize.width; ++i)
     {
-        Quad3 coords = getOriginalTile(ccp(i, 0));
+        Quad3 coords = getOriginalTile(Point(i, 0));
         float    direction = 1;
 
         if ( (i % 2 ) == 0 )
@@ -987,7 +987,7 @@ void SplitCols::update(float time)
         coords.tl.y += direction * _winSize.height * time;
         coords.tr.y += direction * _winSize.height * time;
 
-        setTile(ccp(i, 0), coords);
+        setTile(Point(i, 0), coords);
     }
 }
 

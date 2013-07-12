@@ -215,7 +215,7 @@ Point ccCardinalSplineAt(Point &p0, Point &p1, Point &p2, Point &p3, float tensi
     float x = (p0.x*b1 + p1.x*b2 + p2.x*b3 + p3.x*b4);
     float y = (p0.y*b1 + p1.y*b2 + p2.y*b3 + p3.y*b4);
 	
-	return ccp(x,y);
+	return Point(x,y);
 }
 
 /* Implementation of CardinalSplineTo

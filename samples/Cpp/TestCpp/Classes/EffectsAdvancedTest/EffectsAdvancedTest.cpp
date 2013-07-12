@@ -28,7 +28,7 @@ void Effect1::onEnter()
     //     Waves3D is Grid3D and it's size is (15,10)
     
     Size size = Director::sharedDirector()->getWinSize();
-    ActionInterval* lens = Lens3D::create(0.0f, CCSizeMake(15,10), ccp(size.width/2,size.height/2), 240);
+    ActionInterval* lens = Lens3D::create(0.0f, CCSizeMake(15,10), Point(size.width/2,size.height/2), 240);
     ActionInterval* waves = Waves3D::create(10, CCSizeMake(15,10), 18, 15);
 
     FiniteTimeAction* reuse = ReuseGrid::create(1);
@@ -108,7 +108,7 @@ void Effect3::onEnter()
     target2->runAction( RepeatForever::create( shaky ) );
     
     // moving background. Testing issue #244
-    ActionInterval* move = MoveBy::create(3, ccp(200,0) );
+    ActionInterval* move = MoveBy::create(3, Point(200,0) );
     bg->runAction(RepeatForever::create( Sequence::create(move, move->reverse(), NULL) ));    
 }
 
@@ -157,8 +157,8 @@ void Effect4::onEnter()
 {
     EffectAdvanceTextLayer::onEnter();
 
-    Lens3D* lens = Lens3D::create(10, CCSizeMake(32,24), ccp(100,180), 150);
-    ActionInterval* move = JumpBy::create(5, ccp(380,0), 100, 4);
+    Lens3D* lens = Lens3D::create(10, CCSizeMake(32,24), Point(100,180), 150);
+    ActionInterval* move = JumpBy::create(5, Point(380,0), 100, 4);
     ActionInterval* move_back = move->reverse();
     ActionInterval* seq = Sequence::create( move, move_back, NULL);
 
@@ -237,7 +237,7 @@ void Issue631::onEnter()
     LayerColor* layer = LayerColor::create( Color4B(255,0,0,255) );
     addChild(layer, -10);
     Sprite* sprite = Sprite::create("Images/grossini.png");
-    sprite->setPosition( ccp(50,80) );
+    sprite->setPosition( Point(50,80) );
     layer->addChild(sprite, 10);
     
     // foreground
@@ -341,14 +341,14 @@ void EffectAdvanceTextLayer::onEnter(void)
     
     Sprite* grossini = Sprite::create("Images/grossinis_sister2.png");
     bg->addChild(grossini, 1, kTagSprite1);
-    grossini->setPosition( ccp(VisibleRect::left().x+VisibleRect::getVisibleRect().size.width/3.0f, VisibleRect::bottom().y+ 200) );
+    grossini->setPosition( Point(VisibleRect::left().x+VisibleRect::getVisibleRect().size.width/3.0f, VisibleRect::bottom().y+ 200) );
     ActionInterval* sc = ScaleBy::create(2, 5);
     ActionInterval* sc_back = sc->reverse();
     grossini->runAction( RepeatForever::create(Sequence::create(sc, sc_back, NULL) ) );
 
     Sprite* tamara = Sprite::create("Images/grossinis_sister1.png");
     bg->addChild(tamara, 1, kTagSprite2);
-    tamara->setPosition( ccp(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3.0f,VisibleRect::bottom().y+200) );
+    tamara->setPosition( Point(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3.0f,VisibleRect::bottom().y+200) );
     ActionInterval* sc2 = ScaleBy::create(2, 5);
     ActionInterval* sc2_back = sc2->reverse();
     tamara->runAction( RepeatForever::create(Sequence::create(sc2, sc2_back, NULL) ) );    

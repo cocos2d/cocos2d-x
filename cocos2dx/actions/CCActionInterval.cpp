@@ -924,7 +924,7 @@ void MoveBy::startWithTarget(Node *pTarget)
 
 MoveBy* MoveBy::reverse() const
 {
-    return MoveBy::create(_duration, ccp( -_positionDelta.x, -_positionDelta.y));
+    return MoveBy::create(_duration, Point( -_positionDelta.x, -_positionDelta.y));
 }
 
 
@@ -1220,7 +1220,7 @@ void JumpBy::update(float t)
         Point diff = currentPos - _previousPos;
         _startPosition = diff + _startPosition;
 
-        Point newPos = _startPosition + ccp(x,y);
+        Point newPos = _startPosition + Point(x,y);
         _target->setPosition(newPos);
 
         _previousPos = newPos;
@@ -1232,7 +1232,7 @@ void JumpBy::update(float t)
 
 JumpBy* JumpBy::reverse() const
 {
-    return JumpBy::create(_duration, ccp(-_delta.x, -_delta.y),
+    return JumpBy::create(_duration, Point(-_delta.x, -_delta.y),
         _height, _jumps);
 }
 
@@ -1267,7 +1267,7 @@ JumpTo* JumpTo::reverse() const
 void JumpTo::startWithTarget(Node *pTarget)
 {
     JumpBy::startWithTarget(pTarget);
-    _delta = ccp(_delta.x - _startPosition.x, _delta.y - _startPosition.y);
+    _delta = Point(_delta.x - _startPosition.x, _delta.y - _startPosition.y);
 }
 
 // Bezier cubic formula:
@@ -1343,7 +1343,7 @@ void BezierBy::update(float time)
         Point diff = currentPos - _previousPosition;
         _startPosition = _startPosition + diff;
 
-        Point newPos = _startPosition + ccp(x,y);
+        Point newPos = _startPosition + Point(x,y);
         _target->setPosition(newPos);
 
         _previousPosition = newPos;

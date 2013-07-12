@@ -438,7 +438,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
 
         float x = (float)atof(valueForKey("x", attributeDict));
         float y = (float)atof(valueForKey("y", attributeDict));
-        layer->_offset = ccp(x,y);
+        layer->_offset = Point(x,y);
 
         pTMXMapInfo->getLayers()->addObject(layer);
         layer->release();
