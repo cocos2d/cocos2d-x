@@ -109,17 +109,19 @@ void StringTTF::setLineBreakWithoutSpace(bool breakWithoutSpace)
 void StringTTF::setScale(float scale)
 {
     Node::setScale(scale);
-    
+    alignText();
 }
 
 void StringTTF::setScaleX(float scaleX)
 {
     Node::setScaleX(scaleX);
+    alignText();
 }
 
 void StringTTF::setScaleY(float scaleY)
 {
     Node::setScaleY(scaleY);
+    alignText();
 }
 
 void StringTTF::alignText()
@@ -349,16 +351,14 @@ Sprite * StringTTF::getSpriteForChar(unsigned short int theChar, int spriteIndex
 
 float StringTTF::getLetterPosXLeft( Sprite* sp )
 {
-    float scaleX = 1.0f;
+    float scaleX = _scaleX;
     return sp->getPosition().x * scaleX - (sp->getContentSize().width * scaleX * sp->getAnchorPoint().x);
 }
 
 float StringTTF::getLetterPosXRight( Sprite* sp )
 {
-    float scaleX = 1.0f;
-    float retVal = 0;
-    retVal = sp->getPosition().x * scaleX + (sp->getContentSize().width * scaleX * sp->getAnchorPoint().x);
-    return retVal;
+    float scaleX = _scaleX;
+    return sp->getPosition().x * scaleX + (sp->getContentSize().width * scaleX * sp->getAnchorPoint().x);
 }
 
 int StringTTF::getCommonLineHeight()
@@ -482,6 +482,74 @@ Size StringTTF::getLabelContentSize()
 void StringTTF::setLabelContentSize(const Size &newSize)
 {
     setContentSize(newSize);
+}
+
+
+// RGBA protocol
+
+
+bool StringTTF::isOpacityModifyRGB() const
+{
+    return false;
+}
+
+void StringTTF::setOpacityModifyRGB(bool isOpacityModifyRGB)
+{
+}
+
+unsigned char StringTTF::getOpacity() const
+{
+    return 0;
+}
+
+unsigned char StringTTF::getDisplayedOpacity() const
+{
+    return 0;
+}
+
+void StringTTF::setOpacity(GLubyte opacity)
+{
+}
+void StringTTF::updateDisplayedOpacity(GLubyte parentOpacity)
+{
+}
+
+bool StringTTF::isCascadeOpacityEnabled() const
+{
+    return false;
+}
+
+void StringTTF::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
+{
+}
+
+const Color3B& StringTTF::getColor(void) const
+{
+    Color3B temp;
+    return temp;
+}
+
+const Color3B& StringTTF::getDisplayedColor() const
+{
+    Color3B temp;
+    return temp;
+}
+
+void StringTTF::setColor(const Color3B& color)
+{
+}
+
+void StringTTF::updateDisplayedColor(const Color3B& parentColor)
+{
+}
+
+bool StringTTF::isCascadeColorEnabled() const
+{
+    return false;
+}
+
+void StringTTF::setCascadeColorEnabled(bool cascadeColorEnabled)
+{
 }
 
 NS_CC_END

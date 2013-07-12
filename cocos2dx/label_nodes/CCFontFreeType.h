@@ -6,12 +6,15 @@
 //
 //
 
-#ifndef _FontIOS_h
-#define _FontIOS_h
-
-#include <CoreText/CTFont.h>
+#ifndef _FontFreetype_h
+#define _FontFreetype_h
 
 #include "CCFont.h"
+
+
+#include "ft2build.h"
+#include "CCStdC.h"
+#include FT_FREETYPE_H
 
 NS_CC_BEGIN
 

@@ -31,7 +31,7 @@
 
 NS_CC_BEGIN
 
-class StringTTF : public Node , public LabelTextFormatProtocol
+class StringTTF : public Node , public LabelTextFormatProtocol, public RGBAProtocol
 {
 public:
     
@@ -40,7 +40,7 @@ public:
     
     bool setText(char *pStringToRender, float lineWidth, TextAlignment alignment = kTextAlignmentLeft, bool lineBreakWithoutSpaces = false);
     
-    
+    // main interface
     virtual void setAlignment(TextAlignment alignment);
     virtual void setWidth(float width);
     virtual void setLineBreakWithoutSpace(bool breakWithoutSpace);
@@ -48,7 +48,22 @@ public:
     virtual void setScaleX(float scaleX);
     virtual void setScaleY(float scaleY);
     
-
+    // RGBAProtocol
+    
+    virtual bool isOpacityModifyRGB() const;
+    virtual void setOpacityModifyRGB(bool isOpacityModifyRGB);
+    virtual unsigned char getOpacity() const;
+    virtual unsigned char getDisplayedOpacity() const;
+    virtual void setOpacity(GLubyte opacity);
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
+    virtual bool isCascadeOpacityEnabled() const;
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
+    virtual const Color3B& getColor(void) const;
+    virtual const Color3B& getDisplayedColor() const;
+    virtual void setColor(const Color3B& color);
+    virtual void updateDisplayedColor(const Color3B& parentColor);
+    virtual bool isCascadeColorEnabled() const;
+    virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
     
     // CCLabelTextFormat protocol implementation
     
