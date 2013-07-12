@@ -256,7 +256,7 @@ bool DisplayManager::containPoint(Point &point)
          *
          */
 
-        Point outPoint = ccp(0, 0);
+        Point outPoint = Point(0, 0);
 
         Sprite *sprite = (Sprite *)_currentDecoDisplay->getDisplay();
         sprite = (Sprite *)sprite->getChildByTag(0);
@@ -274,7 +274,7 @@ bool DisplayManager::containPoint(Point &point)
 
 bool DisplayManager::containPoint(float x, float y)
 {
-    Point p = ccp(x, y);
+    Point p = Point(x, y);
     return containPoint(p);
 }
 
@@ -309,13 +309,13 @@ Rect DisplayManager::getBoundingBox()
 
 Point DisplayManager::getAnchorPoint()
 {
-    CS_RETURN_IF(!_displayRenderNode) ccp(0, 0);
+    CS_RETURN_IF(!_displayRenderNode) Point(0, 0);
     return _displayRenderNode->getAnchorPoint();
 }
 
 Point DisplayManager::getAnchorPointInPoints()
 {
-    CS_RETURN_IF(!_displayRenderNode) ccp(0, 0);
+    CS_RETURN_IF(!_displayRenderNode) Point(0, 0);
     return _displayRenderNode->getAnchorPointInPoints();
 }
 

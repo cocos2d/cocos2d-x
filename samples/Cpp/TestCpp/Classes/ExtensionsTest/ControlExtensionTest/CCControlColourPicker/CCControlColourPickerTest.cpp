@@ -39,7 +39,7 @@ bool ControlColourPickerTest::init()
         Size screenSize = Director::sharedDirector()->getWinSize();
 
         Node *layer  = Node::create();
-        layer->setPosition(ccp (screenSize.width / 2, screenSize.height / 2));
+        layer->setPosition(Point (screenSize.width / 2, screenSize.height / 2));
         addChild(layer, 1);
 
         double layer_width = 0;
@@ -47,7 +47,7 @@ bool ControlColourPickerTest::init()
         // Create the colour picker
         ControlColourPicker *colourPicker = ControlColourPicker::create();
         colourPicker->setColor(Color3B(37, 46, 252));
-        colourPicker->setPosition(ccp (colourPicker->getContentSize().width / 2, 0));
+        colourPicker->setPosition(Point (colourPicker->getContentSize().width / 2, 0));
 
         // Add it to the layer
         layer->addChild(colourPicker);
@@ -61,7 +61,7 @@ bool ControlColourPickerTest::init()
         // Add the black background for the text
         Scale9Sprite *background = Scale9Sprite::create("extensions/buttonBackground.png");
         background->setContentSize(CCSizeMake(150, 50));
-        background->setPosition(ccp(layer_width + background->getContentSize().width / 2.0f, 0));
+        background->setPosition(Point(layer_width + background->getContentSize().width / 2.0f, 0));
         layer->addChild(background);
 
         layer_width += background->getContentSize().width;
@@ -74,7 +74,7 @@ bool ControlColourPickerTest::init()
 
         // Set the layer size
         layer->setContentSize(CCSizeMake(layer_width, 0));
-        layer->setAnchorPoint(ccp (0.5f, 0.5f));
+        layer->setAnchorPoint(Point (0.5f, 0.5f));
 
         // Update the color text
         colourValueChanged(colourPicker, ControlEventValueChanged);

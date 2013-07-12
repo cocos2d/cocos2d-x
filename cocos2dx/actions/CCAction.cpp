@@ -253,7 +253,7 @@ void Follow::step(float dt)
 
         Point tempPos = _halfScreenSize - _followedNode->getPosition();
 
-        _target->setPosition(ccp(clampf(tempPos.x, _leftBoundary, _rightBoundary), 
+        _target->setPosition(Point(clampf(tempPos.x, _leftBoundary, _rightBoundary),
                                    clampf(tempPos.y, _bottomBoundary, _topBoundary)));
     }
     else

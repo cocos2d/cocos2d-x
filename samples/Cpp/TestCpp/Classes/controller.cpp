@@ -98,7 +98,7 @@ TestController::TestController()
     Menu* pMenu =Menu::create(pCloseItem, NULL);
 
     pMenu->setPosition( PointZero );
-    pCloseItem->setPosition(ccp( VisibleRect::right().x - 30, VisibleRect::top().y - 30));
+    pCloseItem->setPosition(Point( VisibleRect::right().x - 30, VisibleRect::top().y - 30));
 
     // add menu items for tests
     _itemMenu = Menu::create();
@@ -112,7 +112,7 @@ TestController::TestController()
         MenuItemLabel* pMenuItem = MenuItemLabel::create(label, CC_CALLBACK_1(TestController::menuCallback, this));
 
         _itemMenu->addChild(pMenuItem, i + 10000);
-        pMenuItem->setPosition( ccp( VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE) ));
+        pMenuItem->setPosition( Point( VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE) ));
     }
 
     _itemMenu->setContentSize(CCSizeMake(VisibleRect::getVisibleRect().size.width, (g_testCount + 1) * (LINE_SPACE)));
@@ -171,7 +171,7 @@ void TestController::ccTouchesMoved(Set *pTouches, Event *pEvent)
     float nMoveY = touchLocation.y - _beginPos.y;
 
     Point curPos  = _itemMenu->getPosition();
-    Point nextPos = ccp(curPos.x, curPos.y + nMoveY);
+    Point nextPos = Point(curPos.x, curPos.y + nMoveY);
 
     if (nextPos.y < 0.0f)
     {
@@ -181,7 +181,7 @@ void TestController::ccTouchesMoved(Set *pTouches, Event *pEvent)
 
     if (nextPos.y > ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        _itemMenu->setPosition(ccp(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(Point(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
         return;
     }
 

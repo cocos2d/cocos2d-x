@@ -151,7 +151,7 @@ void DrawPrimitivesTest::draw()
 	CHECK_GL_ERROR_DEBUG();
     
 	// draw 4 small points
-	Point points[] = { ccp(60,60), ccp(70,70), ccp(60,70), ccp(70,60) };
+	Point points[] = { Point(60,60), Point(70,70), Point(60,70), Point(70,60) };
 	ccPointSize(4);
 	ccDrawColor4B(0,255,255,255);
 	ccDrawPoints( points, 4);
@@ -175,28 +175,28 @@ void DrawPrimitivesTest::draw()
 	// draw a pink solid circle with 50 segments
 	glLineWidth(2);
 	ccDrawColor4B(255, 0, 255, 255);
-    ccDrawSolidCircle( VisibleRect::center() + ccp(140,0), 40, CC_DEGREES_TO_RADIANS(90), 50, 1.0f, 1.0f);
+    ccDrawSolidCircle( VisibleRect::center() + Point(140,0), 40, CC_DEGREES_TO_RADIANS(90), 50, 1.0f, 1.0f);
     
 	CHECK_GL_ERROR_DEBUG();
     
 	// open yellow poly
 	ccDrawColor4B(255, 255, 0, 255);
 	glLineWidth(10);
-	Point vertices[] = { ccp(0,0), ccp(50,50), ccp(100,50), ccp(100,100), ccp(50,100) };
+	Point vertices[] = { Point(0,0), Point(50,50), Point(100,50), Point(100,100), Point(50,100) };
 	ccDrawPoly( vertices, 5, false);
     
 	CHECK_GL_ERROR_DEBUG();
 	
 	// filled poly
 	glLineWidth(1);
-	Point filledVertices[] = { ccp(0,120), ccp(50,120), ccp(50,170), ccp(25,200), ccp(0,170) };
+	Point filledVertices[] = { Point(0,120), Point(50,120), Point(50,170), Point(25,200), Point(0,170) };
 	ccDrawSolidPoly(filledVertices, 5, Color4F(0.5f, 0.5f, 1, 1 ) );
     
     
 	// closed purble poly
 	ccDrawColor4B(255, 0, 255, 255);
 	glLineWidth(2);
-	Point vertices2[] = { ccp(30,130), ccp(30,230), ccp(50,200) };
+	Point vertices2[] = { Point(30,130), Point(30,230), Point(50,200) };
 	ccDrawPoly( vertices2, 3, true);
     
 	CHECK_GL_ERROR_DEBUG();
@@ -207,12 +207,12 @@ void DrawPrimitivesTest::draw()
 	CHECK_GL_ERROR_DEBUG();
     
 	// draw cubic bezier path
-    ccDrawCubicBezier(VisibleRect::center(), ccp(VisibleRect::center().x+30,VisibleRect::center().y+50), ccp(VisibleRect::center().x+60,VisibleRect::center().y-50),VisibleRect::right(),100);
+    ccDrawCubicBezier(VisibleRect::center(), Point(VisibleRect::center().x+30,VisibleRect::center().y+50), Point(VisibleRect::center().x+60,VisibleRect::center().y-50),VisibleRect::right(),100);
     
 	CHECK_GL_ERROR_DEBUG();
     
     //draw a solid polygon
-	Point vertices3[] = {ccp(60,160), ccp(70,190), ccp(100,190), ccp(90,160)};
+	Point vertices3[] = {Point(60,160), Point(70,190), Point(100,190), Point(90,160)};
     ccDrawSolidPoly( vertices3, 4, Color4F(1,1,0,1) );
     
 	// restore original values
@@ -244,7 +244,7 @@ DrawNodeTest::DrawNodeTest()
     // Draw 10 circles
     for( int i=0; i < 10; i++)
     {
-        draw->drawDot(ccp(s.width/2, s.height/2), 10*(10-i), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
+        draw->drawDot(Point(s.width/2, s.height/2), 10*(10-i), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
     }
     
     // Draw polygons
@@ -283,9 +283,9 @@ DrawNodeTest::DrawNodeTest()
     
     
     // Draw segment
-    draw->drawSegment(ccp(20,s.height), ccp(20,s.height/2), 10, Color4F(0, 1, 0, 1));
+    draw->drawSegment(Point(20,s.height), Point(20,s.height/2), 10, Color4F(0, 1, 0, 1));
 
-    draw->drawSegment(ccp(10,s.height/2), ccp(s.width/2, s.height/2), 40, Color4F(1, 0, 1, 0.5));
+    draw->drawSegment(Point(10,s.height/2), Point(s.width/2, s.height/2), 40, Color4F(1, 0, 1, 0.5));
 }
 
 string DrawNodeTest::title()

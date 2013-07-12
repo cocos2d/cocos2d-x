@@ -21,8 +21,8 @@ public:
     {
         ccDrawColor4B(_touchColor.r, _touchColor.g, _touchColor.b, 255);
         glLineWidth(10);
-        ccDrawLine( ccp(0, _touchPoint.y), ccp(getContentSize().width, _touchPoint.y) );
-        ccDrawLine( ccp(_touchPoint.x, 0), ccp(_touchPoint.x, getContentSize().height) );
+        ccDrawLine( Point(0, _touchPoint.y), Point(getContentSize().width, _touchPoint.y) );
+        ccDrawLine( Point(_touchPoint.x, 0), Point(_touchPoint.x, getContentSize().height) );
         glLineWidth(1);
         ccPointSize(30);
         ccDrawPoint(_touchPoint);
@@ -42,7 +42,7 @@ public:
     {
         TouchPoint* pRet = new TouchPoint();
         pRet->setContentSize(pParent->getContentSize());
-        pRet->setAnchorPoint(ccp(0.0f, 0.0f));
+        pRet->setAnchorPoint(Point(0.0f, 0.0f));
         pRet->autorelease();
         return pRet;
     }

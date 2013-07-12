@@ -74,7 +74,7 @@ void Paddle::ccTouchMoved(Touch* touch, Event* event)
     
     Point touchPoint = touch->getLocation();
     
-    setPosition( ccp(touchPoint.x, getPosition().y) );
+    setPosition( Point(touchPoint.x, getPosition().y) );
 }
 
 Paddle* Paddle::clone() const

@@ -26,7 +26,7 @@ ChipmunkTestLayer::ChipmunkTestLayer()
 
     // title
     LabelTTF *label = LabelTTF::create("Multi touch the screen", "Marker Felt", 36);
-    label->setPosition(ccp( VisibleRect::center().x, VisibleRect::top().y - 30));
+    label->setPosition(Point( VisibleRect::center().x, VisibleRect::top().y - 30));
     this->addChild(label, -1);
 
     // reset button
@@ -46,7 +46,7 @@ ChipmunkTestLayer::ChipmunkTestLayer()
 #endif
     addChild(parent, 0, kTagParentNode);
 
-    addNewSpriteAtPosition(ccp(200,200));
+    addNewSpriteAtPosition(Point(200,200));
 
     // menu for debug layer
     MenuItemFont::setFontSize(18);
@@ -54,7 +54,7 @@ ChipmunkTestLayer::ChipmunkTestLayer()
 
     Menu *menu = Menu::create(item, NULL);
     this->addChild(menu);
-    menu->setPosition(ccp(VisibleRect::right().x-100, VisibleRect::top().y-60));
+    menu->setPosition(Point(VisibleRect::right().x-100, VisibleRect::top().y-60));
 
     scheduleUpdate();
 #else
@@ -151,7 +151,7 @@ void ChipmunkTestLayer::createResetButton()
 
     Menu *menu = Menu::create(reset, NULL);
 
-    menu->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y + 30));
+    menu->setPosition(Point(VisibleRect::center().x, VisibleRect::bottom().y + 30));
     this->addChild(menu, -1);
 }
 
@@ -235,7 +235,7 @@ void ChipmunkTestLayer::didAccelerate(Acceleration* pAccelerationValue)
     prevX = accelX;
     prevY = accelY;
 
-    Point v = ccp( accelX, accelY);
+    Point v = Point( accelX, accelY);
     v = v * 200;
     _space->gravity = cpv(v.x, v.y);
 }

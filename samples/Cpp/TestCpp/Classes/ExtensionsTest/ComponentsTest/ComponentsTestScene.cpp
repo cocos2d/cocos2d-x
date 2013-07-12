@@ -73,7 +73,7 @@ cocos2d::Node* ComponentsTestLayer::createGameScene()
        
         Sprite *player = Sprite::create("components/Player.png", CCRectMake(0, 0, 27, 40) );
         
-        player->setPosition( ccp(origin.x + player->getContentSize().width/2,
+        player->setPosition( Point(origin.x + player->getContentSize().width/2,
                                  origin.y + visibleSize.height/2) );
         
         root = cocos2d::Node::create();
@@ -87,7 +87,7 @@ cocos2d::Node* ComponentsTestLayer::createGameScene()
         });
         
         itemBack->setColor(Color3B(0, 0, 0));
-        itemBack->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
+        itemBack->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
         Menu *menuBack = Menu::create(itemBack, NULL);
         menuBack->setPosition(PointZero);
         addChild(menuBack);

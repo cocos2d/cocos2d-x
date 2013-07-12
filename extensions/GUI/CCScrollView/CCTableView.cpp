@@ -292,11 +292,11 @@ void TableView::_updateContentSize()
 	{
 		if (_direction == kScrollViewDirectionHorizontal)
 		{
-			this->setContentOffset(ccp(0,0));
+			this->setContentOffset(Point(0,0));
 		}
 		else
 		{
-			this->setContentOffset(ccp(0,this->minContainerOffset().y));
+			this->setContentOffset(Point(0,this->minContainerOffset().y));
 		}
 		_oldDirection = _direction;
 	}
@@ -323,10 +323,10 @@ Point TableView::__offsetFromIndex(unsigned int index)
     switch (this->getDirection())
     {
         case kScrollViewDirectionHorizontal:
-            offset = ccp(_vCellsPositions[index], 0.0f);
+            offset = Point(_vCellsPositions[index], 0.0f);
             break;
         default:
-            offset = ccp(0.0f, _vCellsPositions[index]);
+            offset = Point(0.0f, _vCellsPositions[index]);
             break;
     }
 
@@ -415,7 +415,7 @@ void TableView::_moveCellOutOfSight(TableViewCell *cell)
 
 void TableView::_setIndexForCell(unsigned int index, TableViewCell *cell)
 {
-    cell->setAnchorPoint(ccp(0.0f, 0.0f));
+    cell->setAnchorPoint(Point(0.0f, 0.0f));
     cell->setPosition(this->_offsetFromIndex(index));
     cell->setIdx(index);
 }

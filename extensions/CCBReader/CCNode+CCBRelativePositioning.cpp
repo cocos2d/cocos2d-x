@@ -7,7 +7,7 @@ NS_CC_EXT_BEGIN
 
 Point getAbsolutePosition(const Point &pt, int nType, const Size &containerSize, const char *pPropName)
 {
-    Point absPt = ccp(0,0);
+    Point absPt = Point(0,0);
     if (nType == kCCBPositionTypeRelativeBottomLeft)
     {
         absPt = pt;

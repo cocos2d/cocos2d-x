@@ -61,7 +61,7 @@ void BugsTestMainLayer::onEnter()
     for (int i = 0; i < g_maxitems; ++i)
     {
         MenuItemFont* pItem = MenuItemFont::create(g_bugs[i].test_name, g_bugs[i].callback);
-        pItem->setPosition(ccp(s.width / 2, s.height - (i + 1) * LINE_SPACE));
+        pItem->setPosition(Point(s.width / 2, s.height - (i + 1) * LINE_SPACE));
         _itmeMenu->addChild(pItem, kItemTagBasic + i);
     }
 
@@ -85,7 +85,7 @@ void BugsTestMainLayer::ccTouchesMoved(Set *pTouches, Event *pEvent)
     float nMoveY = touchLocation.y - _beginPos.y;
 
     Point curPos  = _itmeMenu->getPosition();
-    Point nextPos = ccp(curPos.x, curPos.y + nMoveY);
+    Point nextPos = Point(curPos.x, curPos.y + nMoveY);
     Size winSize = Director::sharedDirector()->getWinSize();
     if (nextPos.y < 0.0f)
     {
@@ -95,7 +95,7 @@ void BugsTestMainLayer::ccTouchesMoved(Set *pTouches, Event *pEvent)
 
     if (nextPos.y > ((g_maxitems + 1)* LINE_SPACE - winSize.height))
     {
-        _itmeMenu->setPosition(ccp(0, ((g_maxitems + 1)* LINE_SPACE - winSize.height)));
+        _itmeMenu->setPosition(Point(0, ((g_maxitems + 1)* LINE_SPACE - winSize.height)));
         return;
     }
 
@@ -116,7 +116,7 @@ void BugsTestBaseLayer::onEnter()
     MenuItemFont::setFontName("Arial");
     MenuItemFont::setFontSize(24);
     MenuItemFont* pMainItem = MenuItemFont::create("Back", CC_CALLBACK_1(BugsTestBaseLayer::backCallback, this));
-    pMainItem->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
+    pMainItem->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
     Menu* pMenu = Menu::create(pMainItem, NULL);
     pMenu->setPosition( PointZero );
     addChild(pMenu);

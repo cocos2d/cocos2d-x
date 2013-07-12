@@ -514,7 +514,7 @@ bool LabelBMFont::initWithString(const char *theString, const char *fntFile, flo
         _contentSize = SizeZero;
         
         _isOpacityModifyRGB = _textureAtlas->getTexture()->hasPremultipliedAlpha();
-        _anchorPoint = ccp(0.5f, 0.5f);
+        _anchorPoint = Point(0.5f, 0.5f);
         
         _imageOffset = imageOffset;
         
@@ -689,7 +689,7 @@ void LabelBMFont::createFontChars()
 
         // See issue 1343. cast( signed short + unsigned integer ) == unsigned integer (sign is lost!)
         int yOffset = _configuration->_commonHeight - fontDef.yOffset;
-        Point fontPos = ccp( (float)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount,
+        Point fontPos = Point( (float)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount,
             (float)nextFontPositionY + yOffset - rect.size.height*0.5f * CC_CONTENT_SCALE_FACTOR() );
         fontChar->setPosition(CC_POINT_PIXELS_TO_POINTS(fontPos));
 
@@ -1145,7 +1145,7 @@ void LabelBMFont::updateLabel()
                         if (index < 0) continue;
 
                         Sprite* characterSprite = static_cast<Sprite*>( getChildByTag(index) );
-                        characterSprite->setPosition(characterSprite->getPosition() + ccp(shift, 0.0f));
+                        characterSprite->setPosition(characterSprite->getPosition() + Point(shift, 0.0f));
                     }
                 }
 

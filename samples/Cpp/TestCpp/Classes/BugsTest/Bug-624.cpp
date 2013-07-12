@@ -17,7 +17,7 @@ bool Bug624Layer::init()
         Size size = Director::sharedDirector()->getWinSize();
         LabelTTF *label = LabelTTF::create("Layer1", "Marker Felt", 36);
 
-        label->setPosition(ccp(size.width/2, size.height/2));
+        label->setPosition(Point(size.width/2, size.height/2));
         addChild(label);
         setAccelerometerEnabled(true);
         schedule(schedule_selector(Bug624Layer::switchLayer), 5.0f);
@@ -54,7 +54,7 @@ bool Bug624Layer2::init()
         Size size = Director::sharedDirector()->getWinSize();
         LabelTTF *label = LabelTTF::create("Layer2", "Marker Felt", 36);
 
-        label->setPosition(ccp(size.width/2, size.height/2));
+        label->setPosition(Point(size.width/2, size.height/2));
         addChild(label);
         setAccelerometerEnabled(true);
         schedule(schedule_selector(Bug624Layer2::switchLayer), 5.0f);

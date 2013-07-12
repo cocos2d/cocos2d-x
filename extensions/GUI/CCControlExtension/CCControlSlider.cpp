@@ -97,17 +97,17 @@ ControlSlider* ControlSlider::create(Sprite * backgroundSprite, Sprite* pogressS
         setContentSize(CCSizeMake(maxRect.size.width, maxRect.size.height));
         
         // Add the slider background
-        _backgroundSprite->setAnchorPoint(ccp(0.5f, 0.5f));
-        _backgroundSprite->setPosition(ccp(this->getContentSize().width / 2, this->getContentSize().height / 2));
+        _backgroundSprite->setAnchorPoint(Point(0.5f, 0.5f));
+        _backgroundSprite->setPosition(Point(this->getContentSize().width / 2, this->getContentSize().height / 2));
         addChild(_backgroundSprite);
 
         // Add the progress bar
-        _progressSprite->setAnchorPoint(ccp(0.0f, 0.5f));
-        _progressSprite->setPosition(ccp(0.0f, this->getContentSize().height / 2));
+        _progressSprite->setAnchorPoint(Point(0.0f, 0.5f));
+        _progressSprite->setPosition(Point(0.0f, this->getContentSize().height / 2));
         addChild(_progressSprite);
 
         // Add the slider thumb  
-        _thumbSprite->setPosition(ccp(0.0f, this->getContentSize().height / 2));
+        _thumbSprite->setPosition(Point(0.0f, this->getContentSize().height / 2));
         addChild(_thumbSprite);
         
         // Init default values

@@ -96,7 +96,7 @@ bool Scale9Sprite::initWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bool
     if(batchnode)
     {
         this->updateWithBatchNode(batchnode, rect, rotated, capInsets);
-        this->setAnchorPoint(ccp(0.5f, 0.5f));
+        this->setAnchorPoint(Point(0.5f, 0.5f));
     }
     this->_positionsAreDirty = true;
     
@@ -428,34 +428,34 @@ void Scale9Sprite::updatePositions()
     float leftWidth = _bottomLeft->getContentSize().width;
     float bottomHeight = _bottomLeft->getContentSize().height;
 
-    _bottomLeft->setAnchorPoint(ccp(0,0));
-    _bottomRight->setAnchorPoint(ccp(0,0));
-    _topLeft->setAnchorPoint(ccp(0,0));
-    _topRight->setAnchorPoint(ccp(0,0));
-    _left->setAnchorPoint(ccp(0,0));
-    _right->setAnchorPoint(ccp(0,0));
-    _top->setAnchorPoint(ccp(0,0));
-    _bottom->setAnchorPoint(ccp(0,0));
-    _centre->setAnchorPoint(ccp(0,0));
+    _bottomLeft->setAnchorPoint(Point(0,0));
+    _bottomRight->setAnchorPoint(Point(0,0));
+    _topLeft->setAnchorPoint(Point(0,0));
+    _topRight->setAnchorPoint(Point(0,0));
+    _left->setAnchorPoint(Point(0,0));
+    _right->setAnchorPoint(Point(0,0));
+    _top->setAnchorPoint(Point(0,0));
+    _bottom->setAnchorPoint(Point(0,0));
+    _centre->setAnchorPoint(Point(0,0));
 
     // Position corners
-    _bottomLeft->setPosition(ccp(0,0));
-    _bottomRight->setPosition(ccp(leftWidth+rescaledWidth,0));
-    _topLeft->setPosition(ccp(0, bottomHeight+rescaledHeight));
-    _topRight->setPosition(ccp(leftWidth+rescaledWidth, bottomHeight+rescaledHeight));
+    _bottomLeft->setPosition(Point(0,0));
+    _bottomRight->setPosition(Point(leftWidth+rescaledWidth,0));
+    _topLeft->setPosition(Point(0, bottomHeight+rescaledHeight));
+    _topRight->setPosition(Point(leftWidth+rescaledWidth, bottomHeight+rescaledHeight));
 
     // Scale and position borders
-    _left->setPosition(ccp(0, bottomHeight));
+    _left->setPosition(Point(0, bottomHeight));
     _left->setScaleY(verticalScale);
-    _right->setPosition(ccp(leftWidth+rescaledWidth,bottomHeight));
+    _right->setPosition(Point(leftWidth+rescaledWidth,bottomHeight));
     _right->setScaleY(verticalScale);
-    _bottom->setPosition(ccp(leftWidth,0));
+    _bottom->setPosition(Point(leftWidth,0));
     _bottom->setScaleX(horizontalScale);
-    _top->setPosition(ccp(leftWidth,bottomHeight+rescaledHeight));
+    _top->setPosition(Point(leftWidth,bottomHeight+rescaledHeight));
     _top->setScaleX(horizontalScale);
 
     // Position centre
-    _centre->setPosition(ccp(leftWidth, bottomHeight));
+    _centre->setPosition(Point(leftWidth, bottomHeight));
 }
 
 bool Scale9Sprite::initWithFile(const char* file, Rect rect,  Rect capInsets)

@@ -30,12 +30,12 @@ void Ball::move(float delta)
     
     if (getPosition().x > VisibleRect::right().x - radius()) 
     {
-        setPosition( ccp( VisibleRect::right().x - radius(), getPosition().y) );
+        setPosition( Point( VisibleRect::right().x - radius(), getPosition().y) );
         _velocity.x *= -1;
     } 
     else if (getPosition().x < VisibleRect::left().x + radius()) 
     {
-        setPosition( ccp(VisibleRect::left().x + radius(), getPosition().y) );
+        setPosition( Point(VisibleRect::left().x + radius(), getPosition().y) );
         _velocity.x *= -1;
     }
 }
@@ -60,13 +60,13 @@ void Ball::collideWithPaddle(Paddle* paddle)
         
         if (getPosition().y > midY && getPosition().y <= highY + radius()) 
         {
-            setPosition( ccp(getPosition().x, highY + radius()) );
+            setPosition( Point(getPosition().x, highY + radius()) );
             hit = true;
             angleOffset = (float)M_PI / 2;
         }
         else if (getPosition().y < midY && getPosition().y >= lowY - radius()) 
         {
-            setPosition( ccp(getPosition().x, lowY - radius()) );
+            setPosition( Point(getPosition().x, lowY - radius()) );
             hit = true;
             angleOffset = -(float)M_PI / 2;
         }

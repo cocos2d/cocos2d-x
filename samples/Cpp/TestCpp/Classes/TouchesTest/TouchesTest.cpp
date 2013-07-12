@@ -37,7 +37,7 @@ PongScene::PongScene()
 //------------------------------------------------------------------
 PongLayer::PongLayer()
 {
-    _ballStartingVelocity = ccp(20.0f, -100.0f);
+    _ballStartingVelocity = Point(20.0f, -100.0f);
     
     _ball = Ball::ballWithTexture( TextureCache::sharedTextureCache()->addImage(s_Ball) );
     _ball->setPosition( VisibleRect::center() );
@@ -50,19 +50,19 @@ PongLayer::PongLayer()
     Array *paddlesM = Array::createWithCapacity(4);
     
     Paddle* paddle = Paddle::createWithTexture(paddleTexture);
-    paddle->setPosition( ccp(VisibleRect::center().x, VisibleRect::bottom().y + 15) );
+    paddle->setPosition( Point(VisibleRect::center().x, VisibleRect::bottom().y + 15) );
     paddlesM->addObject( paddle );
     
     paddle = Paddle::createWithTexture( paddleTexture );
-    paddle->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - kStatusBarHeight - 15) );
+    paddle->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - kStatusBarHeight - 15) );
     paddlesM->addObject( paddle );
     
     paddle = Paddle::createWithTexture( paddleTexture );
-    paddle->setPosition( ccp(VisibleRect::center().x, VisibleRect::bottom().y + 100) );
+    paddle->setPosition( Point(VisibleRect::center().x, VisibleRect::bottom().y + 100) );
     paddlesM->addObject( paddle );
     
     paddle = Paddle::createWithTexture( paddleTexture );
-    paddle->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - kStatusBarHeight - 100) );
+    paddle->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - kStatusBarHeight - 100) );
     paddlesM->addObject( paddle );
     
     _paddles = paddlesM->clone();
