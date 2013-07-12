@@ -444,7 +444,7 @@ UserDefault* UserDefault::sharedUserDefault()
 // XXX: deprecated
 void UserDefault::purgeSharedUserDefault()
 {
-    return destroyInstance();
+    return UserDefault::destroyInstance();
 }
 
 bool UserDefault::isXMLFileExist()
