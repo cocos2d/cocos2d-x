@@ -20,7 +20,7 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
     Director* pDirector = Director::getInstance();
-    EGLView* pEGLView = EGLView::sharedOpenGLView();
+    EGLView* pEGLView = EGLView::getInstance();
 
     pDirector->setOpenGLView(pEGLView);
 

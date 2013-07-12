@@ -28,11 +28,11 @@ bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
     Director *pDirector = Director::getInstance();
-    pDirector->setOpenGLView(EGLView::sharedOpenGLView());
+    pDirector->setOpenGLView(EGLView::getInstance());
     pDirector->setProjection(kDirectorProjection2D);
 
     // Set the design resolution
-    EGLView::sharedOpenGLView()->setDesignResolutionSize(320, 480, kResolutionShowAll);
+    EGLView::getInstance()->setDesignResolutionSize(320, 480, kResolutionShowAll);
 
     // turn on display FPS
     pDirector->setDisplayStats(true);

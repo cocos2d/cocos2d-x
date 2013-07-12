@@ -16,9 +16,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
     Director *pDirector = Director::getInstance();
     
-    pDirector->setOpenGLView(EGLView::sharedOpenGLView());
+    pDirector->setOpenGLView(EGLView::getInstance());
     
-    Size screenSize = EGLView::sharedOpenGLView()->getFrameSize();
+    Size screenSize = EGLView::getInstance()->getFrameSize();
     Size designSize = CCSizeMake(480, 320);
     std::vector<std::string> searchPaths;
     
@@ -36,7 +36,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     FileUtils::getInstance()->setSearchPaths(searchPaths);
     
-    EGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
+    EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
 
     // turn on display FPS
     pDirector->setDisplayStats(true);

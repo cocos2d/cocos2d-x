@@ -23,7 +23,7 @@ int main(int argc, char **argv)
 		height = 600;
 	}
 
-    CCEGLView& eglView = CCEGLView::sharedOpenGLView();
+    CCEGLView& eglView = CCEGLView::getInstance();
     eglView.setSize(width, height);
 
     return CCApplication::sharedApplication().run();

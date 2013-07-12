@@ -37,7 +37,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
 
 @implementation CCCustomUITextField
 - (CGRect)textRectForBounds:(CGRect)bounds {
-    float padding = CC_EDIT_BOX_PADDING * cocos2d::EGLView::sharedOpenGLView()->getScaleX() / [[CCEAGLView sharedEGLView] contentScaleFactor ];
+    float padding = CC_EDIT_BOX_PADDING * cocos2d::EGLView::getInstance()->getScaleX() / [[CCEAGLView sharedEGLView] contentScaleFactor ];
     return CGRectMake(bounds.origin.x + padding, bounds.origin.y + padding,
                       bounds.size.width - padding*2, bounds.size.height - padding*2);
 }
@@ -281,7 +281,7 @@ bool EditBoxImplIOS::initWithSize(const Size& size)
 {
     do 
     {
-        EGLViewProtocol* eglView = EGLView::sharedOpenGLView();
+        EGLViewProtocol* eglView = EGLView::getInstance();
 
         CGRect rect = CGRectMake(0, 0, size.width * eglView->getScaleX(),size.height * eglView->getScaleY());
 
@@ -358,7 +358,7 @@ void EditBoxImplIOS::setFont(const char* pFontName, int fontSize)
 
     float retinaFactor = _inRetinaMode ? 2.0f : 1.0f;
 	NSString * fntName = [NSString stringWithUTF8String:pFontName];
-    float scaleFactor = EGLView::sharedOpenGLView()->getScaleX();
+    float scaleFactor = EGLView::getInstance()->getScaleX();
     UIFont *textFont = nil;
     if (isValidFontName) {
         textFont = [UIFont fontWithName:fntName size:fontSize * scaleFactor / retinaFactor];
@@ -516,7 +516,7 @@ void EditBoxImplIOS::setPlaceHolder(const char* pText)
 
 static CGPoint convertDesignCoordToScreenCoord(const Point& designCoord, bool bInRetinaMode)
 {
-    EGLViewProtocol* eglView = EGLView::sharedOpenGLView();
+    EGLViewProtocol* eglView = EGLView::getInstance();
     float viewH = (float)[[CCEAGLView sharedEGLView] getHeight];
     
     Point visiblePos = ccp(designCoord.x * eglView->getScaleX(), designCoord.y * eglView->getScaleY());
@@ -549,7 +549,7 @@ void EditBoxImplIOS::setContentSize(const Size& size)
     _contentSize = size;
     CCLOG("[Edit text] content size = (%f, %f)", size.width, size.height);
     placeInactiveLabels();
-    EGLViewProtocol* eglView = EGLView::sharedOpenGLView();
+    EGLViewProtocol* eglView = EGLView::getInstance();
     CGSize controlSize = CGSizeMake(size.width * eglView->getScaleX(),size.height * eglView->getScaleY());
     
     if (_inRetinaMode)

@@ -207,7 +207,7 @@ void EGLView::swapBuffers()
 	eglSwapBuffers(_eglDisplay, _eglSurface);
 }
 
-EGLView* EGLView::sharedOpenGLView()
+EGLView* EGLView::getInstance()
 {
 	if (!s_pInstance)
 	{
@@ -216,6 +216,12 @@ EGLView* EGLView::sharedOpenGLView()
 
 	CCAssert(s_pInstance != NULL, "CCEGLView wasn't constructed yet");
 	return s_pInstance;
+}
+
+// XXX: deprecated
+EGLView* EGLView::sharedOpenGLView()
+{
+    return EGLView::getInstance();
 }
 
 void EGLView::showKeyboard()

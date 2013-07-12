@@ -50,7 +50,7 @@ int Application::run()
 
 	while (1) // or device wants to quit
 	{
-		EGLView::sharedOpenGLView()->handleEvents();
+		EGLView::getInstance()->handleEvents();
 
 		clock_gettime(CLOCK_REALTIME, &time_struct);
 		current_time = time2millis(&time_struct);

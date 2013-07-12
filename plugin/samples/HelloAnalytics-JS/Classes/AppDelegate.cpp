@@ -30,7 +30,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
     Director *pDirector = Director::getInstance();
-    pDirector->setOpenGLView(EGLView::sharedOpenGLView());
+    pDirector->setOpenGLView(EGLView::getInstance());
     
     // turn on display FPS
     pDirector->setDisplayStats(true);

@@ -28,11 +28,11 @@ bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
     Director *pDirector = Director::getInstance();
-    pDirector->setOpenGLView(EGLView::sharedOpenGLView());
+    pDirector->setOpenGLView(EGLView::getInstance());
     pDirector->setProjection(kDirectorProjection2D);
 
 
-    Size screenSize = EGLView::sharedOpenGLView()->getFrameSize();
+    Size screenSize = EGLView::getInstance()->getFrameSize();
 
     Size designSize = CCSizeMake(320, 480);
     Size resourceSize = CCSizeMake(320, 480);
@@ -91,7 +91,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     }
     pDirector->setContentScaleFactor(resourceSize.width/designSize.width);
 
-    EGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionShowAll);
+    EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionShowAll);
     
     // turn on display FPS
     pDirector->setDisplayStats(true);

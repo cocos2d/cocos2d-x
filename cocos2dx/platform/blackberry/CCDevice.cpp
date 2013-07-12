@@ -11,7 +11,7 @@ int Device::getDPI()
     static int dpi = -1;
     if (dpi == -1)
     {
-        screen_display_t screen_disp = EGLView::sharedOpenGLView()->getScreenDisplay();
+        screen_display_t screen_disp = EGLView::getInstance()->getScreenDisplay();
 #ifdef BLACKBERRY10
         // Dev Alpha: 1280x768, 4.2", 356DPI, 0.6f scale
         

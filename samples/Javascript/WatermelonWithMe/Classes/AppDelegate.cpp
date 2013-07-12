@@ -28,7 +28,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
     Director *pDirector = Director::getInstance();
-    pDirector->setOpenGLView(EGLView::sharedOpenGLView());
+    pDirector->setOpenGLView(EGLView::getInstance());
     
     // turn on display FPS
     pDirector->setDisplayStats(true);
@@ -36,7 +36,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
     
-    EGLView::sharedOpenGLView()->setDesignResolutionSize(480, 320, kResolutionFixedHeight);
+    EGLView::getInstance()->setDesignResolutionSize(480, 320, kResolutionFixedHeight);
     
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
