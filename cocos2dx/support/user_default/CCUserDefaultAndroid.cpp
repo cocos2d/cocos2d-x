@@ -49,7 +49,7 @@ NS_CC_BEGIN
  * implements of UserDefault
  */
 
-UserDefault* UserDefault::_spUserDefault = 0;
+UserDefault* UserDefault::_userDefault = 0;
 string UserDefault::_filePath = string("");
 bool UserDefault::_sbIsFilePathInitialized = false;
 
@@ -136,18 +136,18 @@ static void deleteNodeByKey(const char *pKey)
 #endif
 
 /**
- * If the user invoke delete UserDefault::getInstance(), should set _spUserDefault
+ * If the user invoke delete UserDefault::getInstance(), should set _userDefault
  * to null to avoid error when he invoke UserDefault::getInstance() later.
  */
 UserDefault::~UserDefault()
 {
-	CC_SAFE_DELETE(_spUserDefault);
-    _spUserDefault = NULL;
+	CC_SAFE_DELETE(_userDefault);
+    _userDefault = NULL;
 }
 
 UserDefault::UserDefault()
 {
-	_spUserDefault = NULL;
+	_userDefault = NULL;
 }
 
 // XXX: deprecated
@@ -158,7 +158,7 @@ void UserDefault::purgeSharedUserDefault()
 
 void UserDefault::destroyInstance()
 {
-    _spUserDefault = NULL;
+    _userDefault = NULL;
 }
 
 bool UserDefault::getBoolForKey(const char* pKey)
@@ -492,12 +492,12 @@ UserDefault* UserDefault::getInstance()
     initXMLFilePath();
 #endif
     
-    if (! _spUserDefault)
+    if (! _userDefault)
     {
-        _spUserDefault = new UserDefault();
+        _userDefault = new UserDefault();
     }
 
-    return _spUserDefault;
+    return _userDefault;
 }
 
 bool UserDefault::isXMLFileExist()
