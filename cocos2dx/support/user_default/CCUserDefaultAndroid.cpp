@@ -51,7 +51,7 @@ NS_CC_BEGIN
 
 UserDefault* UserDefault::_userDefault = 0;
 string UserDefault::_filePath = string("");
-bool UserDefault::_sbIsFilePathInitialized = false;
+bool UserDefault::_isFilePathInitialized = false;
 
 #ifdef KEEP_COMPATABILITY
 static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDocument **doc)
@@ -517,11 +517,11 @@ bool UserDefault::isXMLFileExist()
 void UserDefault::initXMLFilePath()
 {
 #ifdef KEEP_COMPATABILITY
-    if (! _sbIsFilePathInitialized)
+    if (! _isFilePathInitialized)
     {
         // UserDefault.xml is stored in /data/data/<package-path>/ before v2.1.2
         _filePath += "/data/data/" + getPackageNameJNI() + "/" + XML_FILE_NAME;
-        _sbIsFilePathInitialized = true;
+        _isFilePathInitialized = true;
     }
 #endif
 }
