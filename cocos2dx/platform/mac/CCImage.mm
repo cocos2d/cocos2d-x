@@ -818,7 +818,11 @@ bool Image::initWithImageData(void * pData,
     {
         CC_BREAK_IF(! pData || nDataLen <= 0);
         
-        if (eFmt == Image::kFmtWebp)
+        if (eFmt == kFmtRawData)
+        {
+            bRet = initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false);
+        }
+        else if (eFmt == Image::kFmtWebp)
         {
             bRet = _initWithWebpData(pData, nDataLen);
         }
@@ -845,6 +849,30 @@ bool Image::initWithImageData(void * pData,
         }
     } while (0);
 	
+    return bRet;
+}
+
+bool Image::initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti)
+{
+    bool bRet = false;
+    do
+    {
+        CC_BREAK_IF(0 == nWidth || 0 == nHeight);
+        
+        _bitsPerComponent = nBitsPerComponent;
+        _height   = (short)nHeight;
+        _width    = (short)nWidth;
+        _hasAlpha = true;
+        
+        // only RGBA8888 supported
+        int nBytesPerComponent = 4;
+        int nSize = nHeight * nWidth * nBytesPerComponent;
+        _data = new unsigned char[nSize];
+        CC_BREAK_IF(! _data);
+        memcpy(_data, pData, nSize);
+        
+        bRet = true;
+    } while (0);
     return bRet;
 }
 
