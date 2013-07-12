@@ -1,4 +1,4 @@
-local size = CCDirector:sharedDirector():getWinSize()
+local size = CCDirector:getInstance():getWinSize()
 local layer = nil
 local kTagSprite = 1
 

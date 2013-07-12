@@ -1,5 +1,5 @@
-local size = CCDirector:sharedDirector():getWinSize()
-local scheduler = CCDirector:sharedDirector():getScheduler()
+local size = CCDirector:getInstance():getWinSize()
+local scheduler = CCDirector:getInstance():getScheduler()
 
 local kTagTileMap = 1
 local kTagSpriteManager = 1
@@ -275,7 +275,7 @@ function Atlas4.create()
     local label = CCLabelBMFont:create("Bitmap Font Atlas", "fonts/bitmapFontTest.fnt")
     layer:addChild(label)
 
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
 
     label:setPosition( ccp(s.width/2, s.height/2) )
     label:setAnchorPoint( ccp(0.5, 0.5) )
@@ -332,7 +332,7 @@ function Atlas4.create()
 end
 
 function Atlas4.draw()
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
     ccDrawLine( ccp(0, s.height/2), ccp(s.width, s.height/2) )
     ccDrawLine( ccp(s.width/2, 0), ccp(s.width/2, s.height) )
 end
@@ -369,7 +369,7 @@ function Atlas5:create()
     local label = CCLabelBMFont:create("abcdefg", "fonts/bitmapFontTest4.fnt")
     layer:addChild(label)
 
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
 
     label:setPosition( ccp(s.width/2, s.height/2) )
     label:setAnchorPoint( ccp(0.5, 0.5) )
@@ -399,7 +399,7 @@ function Atlas6:create()
     Helper.initWithLayer(layer)
     Atlas6.layer = layer
 
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
     local label = CCLabelBMFont:create("FaFeFiFoFu", "fonts/bitmapFontTest5.fnt")
     layer:addChild(label)
     label:setPosition( ccp(s.width/2, s.height/2+50) )
@@ -437,7 +437,7 @@ function AtlasBitmapColor:create()
     AtlasBitmapColor.layer = layer
     Helper.initWithLayer(layer)
 
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
 
     local label = CCLabelBMFont:create("Blue", "fonts/bitmapFontTest5.fnt")
     label:setColor( Color3B(0, 0, 255 ))
@@ -489,7 +489,7 @@ function AtlasFastBitmap:create()
         local label = CCLabelBMFont:create(str, "fonts/bitmapFontTest.fnt")
         layer:addChild(label)
 
-        local s = CCDirector:sharedDirector():getWinSize()
+        local s = CCDirector:getInstance():getWinSize()
 
         local p = ccp( math.random() * s.width, math.random() * s.height)
         label:setPosition( p )
@@ -579,7 +579,7 @@ function LabelsEmpty.create()
     LabelsEmpty.layer = layer
     Helper.initWithLayer(layer)
 
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
 
     -- CCLabelBMFont
     local label1 = CCLabelBMFont:create("", "fonts/bitmapFontTest3.fnt")
@@ -635,7 +635,7 @@ function LabelBMFontHD.create()
     local layer = CCLayer:create()
     Helper.initWithLayer(layer)
 
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
 
     -- CCLabelBMFont
     local label1 = CCLabelBMFont:create("TESTING RETINA DISPLAY", "fonts/konqa32.fnt")
@@ -657,7 +657,7 @@ function LabelAtlasHD.create()
     local layer = CCLayer:create()
     Helper.initWithLayer(layer)
 
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
 
     -- CCLabelBMFont
     local label1 = CCLabelAtlas:create("TESTING RETINA DISPLAY", "fonts/larabie-16.plist")
@@ -682,7 +682,7 @@ function LabelGlyphDesigner.create()
     local layer = CCLayer:create()
     Helper.initWithLayer(layer)
 
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
 
     local colorlayer = CCLayerColor:create(Color4B(128,128,128,255))
     layer:addChild(colorlayer, -10)
@@ -719,7 +719,7 @@ function LabelTTFTest.create()
     LabelTTFTest._eVertAlign  = kCCVerticalTextAlignmentTop
 
     local blockSize = CCSizeMake(200, 160)
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
 
     local colorLayer = CCLayerColor:create(Color4B(100, 100, 100, 255), blockSize.width, blockSize.height)
     colorLayer:setAnchorPoint(ccp(0,0))
@@ -780,7 +780,7 @@ end
 
 function LabelTTFTest.updateAlignment()
     local blockSize = CCSizeMake(200, 160)
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
 
     if LabelTTFTest._plabel ~= nil then
         LabelTTFTest._plabel:removeFromParentAndCleanup(true)
@@ -858,7 +858,7 @@ end
 --{ 
 --    m_textureAtlas = CCTextureAtlas:create(s_AtlasTest, 3); m_textureAtlas:retain();
 --    
---    CCSize s = CCDirector:sharedDirector():getWinSize();
+--    CCSize s = CCDirector:getInstance():getWinSize();
 --  
 --    --
 --    -- Notice: u,v tex coordinates are inverted
@@ -928,7 +928,7 @@ function LabelTTFMultiline.create()
     local layer = CCLayer:create()
     Helper.initWithLayer(layer)
     
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
 
     local center = CCLabelTTF:create("word wrap \"testing\" (bla0) bla1 'bla2' [bla3] (bla4) {bla5} {bla6} [bla7] (bla8) [bla9] 'bla0' \"bla1\"",
                                      "Paint Boy",
@@ -951,7 +951,7 @@ local LabelTTFChinese = {}
 function LabelTTFChinese.create()
     local layer = CCLayer:create()
     Helper.initWithLayer(layer)
-    local size = CCDirector:sharedDirector():getWinSize()
+    local size = CCDirector:getInstance():getWinSize()
     local pLable = CCLabelTTF:create("中国", "Marker Felt", 30)
     pLable:setPosition(ccp(size.width / 2, size.height /2))
     layer:addChild(pLable)
@@ -964,7 +964,7 @@ function LabelBMFontChinese.create()
     local layer = CCLayer:create()
     Helper.initWithLayer(layer)
 
-    local size = CCDirector:sharedDirector():getWinSize()
+    local size = CCDirector:getInstance():getWinSize()
     local pLable = CCLabelBMFont:create("中国", "fonts/bitmapFontChinese.fnt")
     pLable:setPosition(ccp(size.width / 2, size.height /2))
     layer:addChild(pLable)
@@ -1008,7 +1008,7 @@ function BitmapFontMultiLineAlignment.create()
     layer:setTouchEnabled(true)
 
     -- ask director the the window size
-    local size = CCDirector:sharedDirector():getWinSize()
+    local size = CCDirector:getInstance():getWinSize()
 
     -- create and initialize a Label
     BitmapFontMultiLineAlignment._pLabelShouldRetain = CCLabelBMFont:create(LongSentencesExample, "fonts/markerFelt.fnt", size.width/1.5, kCCTextAlignmentCenter)
@@ -1148,7 +1148,7 @@ function BitmapFontMultiLineAlignment.onTouchEvent(eventType, x, y)
             return
         end
 
-        local winSize = CCDirector:sharedDirector():getWinSize()
+        local winSize = CCDirector:getInstance():getWinSize()
         BitmapFontMultiLineAlignment._pArrowsShouldRetain:setPosition(
             math.max(math.min(x, ArrowsMax*winSize.width), ArrowsMin*winSize.width), 
             BitmapFontMultiLineAlignment._pArrowsShouldRetain:getPositionY())
@@ -1174,7 +1174,7 @@ function LabelTTFA8Test.create()
     local layer = CCLayer:create()
     Helper.initWithLayer(layer)
 
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
 
     local colorlayer = CCLayerColor:create(Color4B(128, 128, 128, 255))
     layer:addChild(colorlayer, -10)
@@ -1206,7 +1206,7 @@ function BMFontOneAtlas.create()
     local layer = CCLayer:create()
     Helper.initWithLayer(layer)
 
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
     
     local label1 = CCLabelBMFont:create("This is Helvetica", "fonts/helvetica-32.fnt", kCCLabelAutomaticWidth, kCCTextAlignmentLeft, ccp(0, 0))
     layer:addChild(label1)
@@ -1228,7 +1228,7 @@ function BMFontUnicode.create()
     Helper.titleLabel:setString("CCLabelBMFont with Unicode support")
     Helper.subtitleLabel:setString("You should see 3 differnt labels: In Spanish, Chinese and Korean")
 
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
     
     local label1 = CCLabelBMFont:create("Buen día", "fonts/arial-unicode-26.fnt", 200, kCCTextAlignmentLeft)
     layer:addChild(label1)
@@ -1254,7 +1254,7 @@ function BMFontInit.create()
     Helper.titleLabel:setString("CCLabelBMFont init")
     Helper.subtitleLabel:setString("Test for support of init method without parameters.")
     
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
     
     local bmFont = CCLabelBMFont:new()
     bmFont:init()
@@ -1277,7 +1277,7 @@ function TTFFontInit.create()
     Helper.titleLabel:setString("CCLabelTTF init")
     Helper.subtitleLabel:setString("Test for support of init method without parameters.")
     
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
     
     local font = CCLabelTTF:new()
     font:init()
@@ -1299,7 +1299,7 @@ function Issue1343.create()
     Helper.titleLabel:setString("Issue 1343")
     Helper.subtitleLabel:setString("You should see: ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz.,'")
     
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
     
     local bmFont = CCLabelBMFont:new()
     bmFont:init()
@@ -1320,7 +1320,7 @@ function LabelBMFontBounds.create()
     Helper.titleLabel:setString("Testing LabelBMFont Bounds")
     Helper.subtitleLabel:setString("You should see string enclosed by a box")
     
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
     
     local colorlayer = CCLayerColor:create(Color4B(128,128,128,255))
     layer:addChild(colorlayer, -10)
@@ -1337,7 +1337,7 @@ end
 
 function LabelBMFontBounds.draw()
     -- CCSize labelSize = label1:getContentSize()
-    -- CCSize origin = CCDirector:sharedDirector():getWinSize()
+    -- CCSize origin = CCDirector:getInstance():getWinSize()
     
     -- origin.width = origin.width / 2 - (labelSize.width / 2)
     -- origin.height = origin.height / 2 - (labelSize.height / 2)
@@ -1364,7 +1364,7 @@ function LabelTTFAlignment.create()
     Helper.titleLabel:setString("CCLabelTTF alignment")
     Helper.subtitleLabel:setString("Tests alignment values")
     
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
 
     local ttf0 = CCLabelTTF:create("Alignment 0\nnew line", "Helvetica", 12,
                                    CCSizeMake(256, 32), kCCTextAlignmentLeft)

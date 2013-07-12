@@ -453,17 +453,17 @@ LRESULT EGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         break;
     case WM_KEYDOWN:
 #ifdef CC_KEYBOARD_SUPPORT
-        Director::sharedDirector()->getKeyboardDispatcher()->dispatchKeyboardEvent(wParam, true);
+        Director::getInstance()->getKeyboardDispatcher()->dispatchKeyboardEvent(wParam, true);
 #endif
         if (wParam == VK_F1 || wParam == VK_F2)
         {
-            Director* pDirector = Director::sharedDirector();
+            Director* pDirector = Director::getInstance();
             if (GetKeyState(VK_LSHIFT) < 0 ||  GetKeyState(VK_RSHIFT) < 0 || GetKeyState(VK_SHIFT) < 0)
                 pDirector->getKeypadDispatcher()->dispatchKeypadMSG(wParam == VK_F1 ? kTypeBackClicked : kTypeMenuClicked);
         }
         else if (wParam == VK_ESCAPE)
         {
-            Director::sharedDirector()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
+            Director::getInstance()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
         }
 
         if ( _lpfnAccelerometerKeyHook!=NULL )
@@ -473,7 +473,7 @@ LRESULT EGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         break;
     case WM_KEYUP:
 #ifdef CC_KEYBOARD_SUPPORT
-        Director::sharedDirector()->getKeyboardDispatcher()->dispatchKeyboardEvent(wParam, false);
+        Director::getInstance()->getKeyboardDispatcher()->dispatchKeyboardEvent(wParam, false);
 #endif
         if ( _lpfnAccelerometerKeyHook!=NULL )
         {
@@ -499,7 +499,7 @@ LRESULT EGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
                 else if (VK_ESCAPE == wParam)
                 {
                     // ESC input
-                    //CCDirector::sharedDirector()->end();
+                    //CCDirector::getInstance()->end();
                 }
             }
             else if (wParam < 128)
@@ -526,7 +526,7 @@ LRESULT EGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         break;
 
     case WM_CLOSE:
-        Director::sharedDirector()->end();
+        Director::getInstance()->end();
         break;
 
     case WM_DESTROY:
@@ -662,7 +662,7 @@ void EGLView::setFrameZoomFactor(float fZoomFactor)
     _frameZoomFactor = fZoomFactor;
     resize(_screenSize.width * fZoomFactor, _screenSize.height * fZoomFactor);
     centerWindow();
-    Director::sharedDirector()->setProjection(Director::sharedDirector()->getProjection());
+    Director::getInstance()->setProjection(Director::getInstance()->getProjection());
 }
 
 float EGLView::getFrameZoomFactor()

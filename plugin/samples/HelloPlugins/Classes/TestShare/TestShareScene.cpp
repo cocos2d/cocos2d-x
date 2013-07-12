@@ -127,5 +127,5 @@ void TestShare::menuBackCallback(Object* pSender)
 {
     MyShareManager::purgeManager();
     Scene* newScene = HelloWorld::scene();
-    Director::sharedDirector()->replaceScene(newScene);
+    Director::getInstance()->replaceScene(newScene);
 }

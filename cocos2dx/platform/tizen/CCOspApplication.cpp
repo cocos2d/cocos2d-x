@@ -142,7 +142,7 @@ OspApplication::OnForeground(void)
         timer->Start(cocos2d::Application::sharedApplication()->getAnimationInterval());
     }
 
-    if (Director::sharedDirector()->getOpenGLView())
+    if (Director::getInstance()->getOpenGLView())
     {
         cocos2d::Application::sharedApplication()->applicationWillEnterForeground();
     }

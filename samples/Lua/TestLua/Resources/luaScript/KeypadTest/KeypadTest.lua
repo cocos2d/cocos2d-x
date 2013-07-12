@@ -1,7 +1,7 @@
 local function KeypadMainLayer()	
 	local pLayer = CCLayer:create()   
 	
-	local  s = CCDirector:sharedDirector():getWinSize()
+	local  s = CCDirector:getInstance():getWinSize()
     local  label = CCLabelTTF:create("Keypad Test", "Arial", 28)
     pLayer:addChild(label, 0)
     label:setPosition( ccp(s.width/2, s.height-50) )

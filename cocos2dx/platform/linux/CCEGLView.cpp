@@ -151,13 +151,13 @@ void mousePosEventHandle(int iPosX,int iPosY) {
 }
 
 int closeEventHandle() {
-	Director::sharedDirector()->end();
+	Director::getInstance()->end();
 	return GL_TRUE;
 }
 
 void GLFWCALL keyboardEventHandle(int keyCode, int action)
 {
-    KeyboardDispatcher *kbDisp = Director::sharedDirector()->getKeyboardDispatcher();
+    KeyboardDispatcher *kbDisp = Director::getInstance()->getKeyboardDispatcher();
 
     switch (action)
     {   
@@ -265,7 +265,7 @@ void EGLView::setFrameZoomFactor(float fZoomFactor)
 {
     _frameZoomFactor = fZoomFactor;
     glfwSetWindowSize(_screenSize.width * fZoomFactor, _screenSize.height * fZoomFactor);
-    Director::sharedDirector()->setProjection(Director::sharedDirector()->getProjection());
+    Director::getInstance()->setProjection(Director::getInstance()->getProjection());
 }
 
 float EGLView::getFrameZoomFactor()

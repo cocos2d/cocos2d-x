@@ -1,4 +1,4 @@
-local size = CCDirector:sharedDirector():getWinSize()
+local size = CCDirector:getInstance():getWinSize()
 
 local function initWithLayer(layer)
 	grossini = CCSprite:create(s_pPathGrossini)
@@ -176,7 +176,7 @@ local function ActionRotationalSkewVSStandardSkew()
     grossini:removeFromParentAndCleanup(true);
     kathia:removeFromParentAndCleanup(true);
 
-    local s = CCDirector:sharedDirector():getWinSize();
+    local s = CCDirector:getInstance():getWinSize();
     local boxSize = CCSizeMake(100.0, 100.0);
     local box = CCLayerColor:create(Color4B(255,255,0,255));
     box:setAnchorPoint(ccp(0.5,0.5));
@@ -1003,10 +1003,10 @@ local PauseResumeActions_resumeEntry = nil
 local function ActionPause(dt)
 	cclog("Pausing")
 
-	local scheduler = CCDirector:sharedDirector():getScheduler()
+	local scheduler = CCDirector:getInstance():getScheduler()
 	scheduler:unscheduleScriptEntry(PauseResumeActions_pauseEntry)
 
-	local director = CCDirector:sharedDirector()
+	local director = CCDirector:getInstance()
     pausedTargets = director:getActionManager():pauseAllRunningActions()
     pausedTargets:retain()
 end
@@ -1014,10 +1014,10 @@ end
 local function ActionResume(dt)
 	cclog("Resuming")
 
-	local scheduler = CCDirector:sharedDirector():getScheduler()
+	local scheduler = CCDirector:getInstance():getScheduler()
 	scheduler:unscheduleScriptEntry(PauseResumeActions_resumeEntry)
 
-	local director = CCDirector:sharedDirector()
+	local director = CCDirector:getInstance()
 	if pausedTargets ~= nil then
 		-- problem: will crash here. Try fixing me!
 		director:getActionManager():resumeTargets(pausedTargets)
@@ -1026,7 +1026,7 @@ local function ActionResume(dt)
 end
 
 local function PauseResumeActions_onEnterOrExit(tag)
-	local scheduler = CCDirector:sharedDirector():getScheduler()
+	local scheduler = CCDirector:getInstance():getScheduler()
 	if tag == "enter" then
 		PauseResumeActions_pauseEntry = scheduler:scheduleScriptFunc(ActionPause, 3, false)
 		PauseResumeActions_resumeEntry = scheduler:scheduleScriptFunc(ActionResume, 5, false)
@@ -1064,7 +1064,7 @@ local function Issue1305_log(sender)
 end
 
 local function addSprite(dt)
-	local scheduler = CCDirector:sharedDirector():getScheduler()
+	local scheduler = CCDirector:getInstance():getScheduler()
 	scheduler:unscheduleScriptEntry(Issue1305_entry)
 
 	spriteTmp:setPosition(ccp(250, 250))
@@ -1072,7 +1072,7 @@ local function addSprite(dt)
 end
 
 local function Issue1305_onEnterOrExit(tag)
-	local scheduler = CCDirector:sharedDirector():getScheduler()
+	local scheduler = CCDirector:getInstance():getScheduler()
 	if tag == "enter" then
 		Issue1305_entry = scheduler:scheduleScriptFunc(addSprite, 2, false)
 	elseif tag == "exit" then
@@ -1145,7 +1145,7 @@ local function ActionIssue1305_2()
 	array:addObject(act8)
     local actF = CCSequence:create(array)
 
-    CCDirector:sharedDirector():getActionManager():addAction(actF ,spr, false)
+    CCDirector:getInstance():getActionManager():addAction(actF ,spr, false)
 
 	Helper.titleLabel:setString("Issue 1305 #2")
 	Helper.subtitleLabel:setString("See console. You should only see one message for each block")

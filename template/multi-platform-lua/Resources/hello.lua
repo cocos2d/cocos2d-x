@@ -22,8 +22,8 @@ local function main()
 
     ---------------
 
-    local visibleSize = CCDirector:sharedDirector():getVisibleSize()
-    local origin = CCDirector:sharedDirector():getVisibleOrigin()
+    local visibleSize = CCDirector:getInstance():getVisibleSize()
+    local origin = CCDirector:getInstance():getVisibleOrigin()
 
     -- add the moving dog
     local function creatDog()
@@ -63,7 +63,7 @@ local function main()
             spriteDog:setPositionX(x)
         end
 
-        CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(tick, 0, false)
+        CCDirector:getInstance():getScheduler():scheduleScriptFunc(tick, 0, false)
 
         return spriteDog
     end
@@ -198,7 +198,7 @@ local function main()
     local sceneGame = CCScene:create()
     sceneGame:addChild(createLayerFarm())
     sceneGame:addChild(createLayerMenu())
-    CCDirector:sharedDirector():runWithScene(sceneGame)
+    CCDirector:getInstance():runWithScene(sceneGame)
 end
 
 xpcall(main, __G__TRACKBACK__)

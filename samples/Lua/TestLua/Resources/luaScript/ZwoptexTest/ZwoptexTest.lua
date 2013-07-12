@@ -1,4 +1,4 @@
-local scheduler = CCDirector:sharedDirector():getScheduler()
+local scheduler = CCDirector:getInstance():getScheduler()
 --------------------------------------------------------------------
 --
 -- ZwoptexGenericTest
@@ -9,7 +9,7 @@ local function ZwoptexGenericTest()
                                 "Coordinate Formats, Rotation, Trimming, flipX/Y")
     local spriteFrameIndex = 0
     local counter = 0
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
     local schedulerEntry = nil
     local schedulerFlipSpriteEntry = nil
     local sprite1 = nil

@@ -27,7 +27,7 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    Director *pDirector = Director::sharedDirector();
+    Director *pDirector = Director::getInstance();
     pDirector->setOpenGLView(EGLView::sharedOpenGLView());
 
     // turn on display FPS
@@ -48,7 +48,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    Director::sharedDirector()->stopAnimation();
+    Director::getInstance()->stopAnimation();
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
     SimpleAudioEngine::sharedEngine()->pauseAllEffects();
 }
@@ -56,7 +56,7 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    Director::sharedDirector()->startAnimation();
+    Director::getInstance()->startAnimation();
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
     SimpleAudioEngine::sharedEngine()->resumeAllEffects();
 }

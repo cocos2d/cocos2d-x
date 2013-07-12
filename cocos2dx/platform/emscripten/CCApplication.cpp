@@ -38,7 +38,7 @@ Application::~Application()
 extern "C" void mainLoopIter(void)
 {
     EGLView::sharedOpenGLView()->handleEvents();
-    Director::sharedDirector()->mainLoop();
+    Director::getInstance()->mainLoop();
 }
 
 int Application::run()

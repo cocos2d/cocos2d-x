@@ -10,7 +10,7 @@ local titleLabel = nil
 local subtitleLabel = nil
 local baseLayer_entry = nil
 
-local s = CCDirector:sharedDirector():getWinSize()
+local s = CCDirector:getInstance():getWinSize()
 
 local function backAction()
 	SceneIdx = SceneIdx - 1
@@ -38,7 +38,7 @@ local function backCallback(sender)
 	scene:addChild(backAction())
 	scene:addChild(CreateBackMenuItem())
 
-	CCDirector:sharedDirector():replaceScene(scene)
+	CCDirector:getInstance():replaceScene(scene)
 end
 
 local function restartCallback(sender)
@@ -47,7 +47,7 @@ local function restartCallback(sender)
 	scene:addChild(restartAction())
 	scene:addChild(CreateBackMenuItem())
 
-	CCDirector:sharedDirector():replaceScene(scene)
+	CCDirector:getInstance():replaceScene(scene)
 end
 
 local function nextCallback(sender)
@@ -56,7 +56,7 @@ local function nextCallback(sender)
 	scene:addChild(nextAction())
 	scene:addChild(CreateBackMenuItem())
 
-	CCDirector:sharedDirector():replaceScene(scene)
+	CCDirector:getInstance():replaceScene(scene)
 end
 
 local function toggleCallback(sender)
@@ -85,7 +85,7 @@ local function update(dt)
 end
 
 local function baseLayer_onEnterOrExit(tag)
-	local scheduler = CCDirector:sharedDirector():getScheduler()
+	local scheduler = CCDirector:getInstance():getScheduler()
 	if tag == "enter" then
 		baseLayer_entry = scheduler:scheduleScriptFunc(update, 0, false)
 	elseif tag == "exit" then
@@ -211,7 +211,7 @@ local function reorderParticles(dt)
 end
 
 local function ParticleReorder_onEnterOrExit(tag)
-	local scheduler = CCDirector:sharedDirector():getScheduler()
+	local scheduler = CCDirector:getInstance():getScheduler()
 	if tag == "enter" then
 		ParticleReorder_entry = scheduler:scheduleScriptFunc(reorderParticles, 1.0, false)
 	elseif tag == "exit" then
@@ -301,7 +301,7 @@ local function switchRender(dt)
 end
 
 local function ParticleBatchHybrid_onEnterOrExit(tag)
-	local scheduler = CCDirector:sharedDirector():getScheduler()
+	local scheduler = CCDirector:getInstance():getScheduler()
 	if tag == "enter" then
 		ParticleBatchHybrid_entry = scheduler:scheduleScriptFunc(switchRender, 2.0, false)
 	elseif tag == "exit" then
@@ -1127,7 +1127,7 @@ local function updateQuads(dt)
 end
 
 local function Issue870_onEnterOrExit(tag)
-	local scheduler = CCDirector:sharedDirector():getScheduler()
+	local scheduler = CCDirector:getInstance():getScheduler()
 	if tag == "enter" then
 		Issue870_entry = scheduler:scheduleScriptFunc(updateQuads, 2.0, false)
 	elseif tag == "exit" then
@@ -1239,7 +1239,7 @@ local function removeSystem(dt)
 end
 
 local function AddAndDeleteParticleSystems_onEnterOrExit(tag)
-	local scheduler = CCDirector:sharedDirector():getScheduler()
+	local scheduler = CCDirector:getInstance():getScheduler()
 	if tag == "enter" then
 		AddAndDeleteParticleSystems_entry = scheduler:scheduleScriptFunc(removeSystem, 2.0, false)
 	elseif tag == "exit" then
@@ -1297,7 +1297,7 @@ local function reorderSystem(dt)
 end
 
 local function ReorderParticleSystems_onEnterOrExit(tag)
-	local scheduler = CCDirector:sharedDirector():getScheduler()
+	local scheduler = CCDirector:getInstance():getScheduler()
 	if tag == "enter" then
 		ReorderParticleSystems_entry = scheduler:scheduleScriptFunc(reorderSystem, 2.0, false)
 	elseif tag == "exit" then

@@ -58,7 +58,7 @@ int Application::run()
 		if ((current_time - update_time) > _animationInterval)
 		{
 			update_time = current_time;
-			Director::sharedDirector()->mainLoop();
+			Director::getInstance()->mainLoop();
 		}
 		else
 		{
