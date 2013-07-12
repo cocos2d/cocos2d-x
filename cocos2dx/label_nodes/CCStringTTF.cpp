@@ -69,6 +69,59 @@ bool StringTTF::setText(char *pStringToRender, float lineWidth, TextAlignment al
     return true;
 }
 
+void StringTTF::setAlignment(TextAlignment alignment)
+{
+    // store the new alignment
+    if (alignment != _alignment)
+    {
+        // store
+        _alignment = alignment;
+    
+        // need to align text again
+        alignText();
+    }
+}
+
+void StringTTF::setWidth(float width)
+{
+    if (width != _width)
+    {
+        // store
+        _width = width;
+        
+        // need to align text again
+        alignText();
+    }
+}
+
+void StringTTF::setLineBreakWithoutSpace(bool breakWithoutSpace)
+{
+    if (breakWithoutSpace != _lineBreakWithoutSpaces)
+    {
+        // store
+        _lineBreakWithoutSpaces = breakWithoutSpace;
+        
+        // need to align text again
+        alignText();
+    }
+}
+
+void StringTTF::setScale(float scale)
+{
+    Node::setScale(scale);
+    
+}
+
+void StringTTF::setScaleX(float scaleX)
+{
+    Node::setScaleX(scaleX);
+}
+
+void StringTTF::setScaleY(float scaleY)
+{
+    Node::setScaleY(scaleY);
+}
+
 void StringTTF::alignText()
 {
     hideAllLetters();

@@ -14,8 +14,7 @@ NS_CC_BEGIN
 
 unsigned char * FontRenderFreeType::preparePageGlyphData(TextPageDef *thePage, char *fontName, int fontSize)
 {
-    return 0;
-    /*
+
     // constants
     float   LINE_PADDING    = 1.9;
     
@@ -28,11 +27,48 @@ unsigned char * FontRenderFreeType::preparePageGlyphData(TextPageDef *thePage, c
     int pageWidth  = thePage->getWidth();
     int pageHeight = thePage->getHeight();
     
-    // prepare memory ans set to 0
+    // prepare memory and clean to 0
     int sizeInBytes = (pageWidth * pageHeight * 4);
     unsigned char* data = new unsigned char[sizeInBytes];
     memset(data, 0, sizeInBytes);
     
+    
+    int numLines = thePage->getNumLines();
+    for (int c = 0; c<numLines; ++c)
+    {
+        TextLineDef *pCurrentLine = thePage->getLineAt(c);
+        float lineHeight            = pCurrentLine->getHeight();
+        
+        float origX         = LINE_PADDING;
+        float origY         = pCurrentLine->getY();
+        
+        int numGlyphToRender = pCurrentLine->getNumGlyph();
+        
+        for (int cglyph = 0; cglyph < numGlyphToRender; ++cglyph)
+        {
+            GlyphDef currGlyph      = pCurrentLine->getGlyphAt(cglyph);
+            
+            //NSString *lineString = [NSString stringWithFormat: @"%C", currGlyph.getUTF8Letter()];
+            //CGRect tempRect;
+            Rect tempRect;
+            
+            tempRect.origin.x       = (origX - currGlyph.getRect().origin.x);
+            tempRect.origin.y       = origY;
+            tempRect.size.width     = currGlyph.getRect().size.width;
+            tempRect.size.height    = lineHeight;
+            
+            // actually draw one character
+            //[lineString drawInRect: tempRect withFont:font lineBreakMode:NSLineBreakByWordWrapping alignment:align];
+            
+            // move to next character
+            origX += (tempRect.size.width + currGlyph.getPadding());
+        }
+    }
+    
+    // we are done here
+    return data;
+    
+    /*
     // prepare the context
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGContextRef context = CGBitmapContextCreate(data, pageWidth, pageHeight, 8, pageWidth * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
