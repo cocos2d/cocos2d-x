@@ -515,7 +515,7 @@ local function ActionAnimate()
     local action = CCAnimate:create(animation)
     grossini:runAction(CCSequence:createWithTwoActions(action, action:reverse()))
 
-    local cache = CCAnimationCache:sharedAnimationCache()
+    local cache = CCAnimationCache:getInstance()
     cache:addAnimationsWithFile("animations/animations-2.plist")
     local animation2 = cache:animationByName("dance_1")
 
