@@ -17,7 +17,7 @@ class CCTextureCache : public CCObject
     static CCTextureCache * sharedTextureCache();
     static void purgeSharedTextureCache();
 
-    static TextureCache * getInstance();
+    static CCTextureCache * getInstance();
     static void destroyInstance();
 
     static void reloadAllTextures();
