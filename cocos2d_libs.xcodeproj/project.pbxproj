@@ -8495,7 +8495,7 @@
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/cocos2dx/platform/ios\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/cocos2dx/platform/third_party/ios/libfreetype2\" \"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/cocos2dx/platform/ios\"";
 			};
 			name = Debug;
 		};
@@ -8518,7 +8518,7 @@
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/cocos2dx/platform/ios\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/cocos2dx/platform/third_party/ios/libfreetype2\" \"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/cocos2dx/platform/ios\"";
 			};
 			name = Release;
 		};

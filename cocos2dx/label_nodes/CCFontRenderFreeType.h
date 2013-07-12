@@ -19,6 +19,8 @@ public:
     
     virtual ~FontRenderFreeType() {}
     virtual unsigned char * preparePageGlyphData(TextPageDef *thePage, char *fontName, int fontSize);
+    static void testRendering();
+    
     
 };
 

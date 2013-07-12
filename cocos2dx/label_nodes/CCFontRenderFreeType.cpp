@@ -10,7 +10,26 @@
 #include "CCTextImage.h"
 #include "CCFontRenderFreeType.h"
 
+#include "ft2build.h"
+#include "CCStdC.h"
+#include FT_FREETYPE_H
+
 NS_CC_BEGIN
+
+FT_Library library;
+
+void FontRenderFreeType::testRendering()
+{
+    // begin freetype
+    //FT_Init_FreeType( &library );
+    
+    
+    
+    // end freetype
+    //FT_Done_FreeType(library);
+    
+}
+
 
 unsigned char * FontRenderFreeType::preparePageGlyphData(TextPageDef *thePage, char *fontName, int fontSize)
 {

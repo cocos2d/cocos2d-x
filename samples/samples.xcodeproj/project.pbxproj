@@ -52,6 +52,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		014616EE1790827000380716 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 014616ED1790827000380716 /* libfreetype.a */; };
 		01A130DD178F218400FF1249 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A130DC178F218400FF1249 /* CoreText.framework */; };
 		15C64825165F3934007D4F18 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64824165F3934007D4F18 /* OpenGL.framework */; };
 		15C64827165F394E007D4F18 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64826165F394E007D4F18 /* QuartzCore.framework */; };
@@ -2265,6 +2266,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		014616ED1790827000380716 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../cocos2dx/platform/third_party/ios/libraries/libfreetype.a; sourceTree = "<group>"; };
 		01A130DC178F218400FF1249 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/CoreText.framework; sourceTree = DEVELOPER_DIR; };
 		15C64822165F391E007D4F18 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		15C64824165F3934007D4F18 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
@@ -3430,6 +3432,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				014616EE1790827000380716 /* libfreetype.a in Frameworks */,
 				01A130DD178F218400FF1249 /* CoreText.framework in Frameworks */,
 				A07A522B1783A1EC0073F6A7 /* libbox2d iOS.a in Frameworks */,
 				A07A522C1783A1EC0073F6A7 /* libchipmunk iOS.a in Frameworks */,
@@ -3694,6 +3697,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				014616ED1790827000380716 /* libfreetype.a */,
 				01A130DC178F218400FF1249 /* CoreText.framework */,
 				A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */,
 				A035AC3B178245AA00987F6C /* CocosDragonJS */,
@@ -8889,11 +8893,20 @@
 					CC_TARGET_OS_IPHONE,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/ios/libfreetype2\"",
+					"\"$(SRCROOT)/../extensions\"",
+					"\"$(SRCROOT)/../external\"",
+				);
 				INFOPLIST_FILE = "Cpp/TestCpp/proj.ios/Test-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../cocos2dx/platform/third_party/ios/libraries\"",
+				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../cocos2dx/platform/third_party/ios/libfreetype2\" $(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\"";
 			};
 			name = Debug;
 		};
@@ -8908,11 +8921,20 @@
 					CC_TARGET_OS_IPHONE,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/ios/libfreetype2\"",
+					"\"$(SRCROOT)/../extensions\"",
+					"\"$(SRCROOT)/../external\"",
+				);
 				INFOPLIST_FILE = "Cpp/TestCpp/proj.ios/Test-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../cocos2dx/platform/third_party/ios/libraries\"",
+				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" $(SRCROOT)/../cocos2dx/platform/third_party/ios/libfreetype2\"";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

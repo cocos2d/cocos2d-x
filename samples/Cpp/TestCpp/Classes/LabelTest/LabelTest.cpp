@@ -1669,6 +1669,12 @@ LabelDyamicTest::LabelDyamicTest()
     addChild(pTestString);
     
     pTestString->setPosition(Point(0, size.height/2));
+    
+    
+    // test freetype
+    FontRenderFreeType::testRendering();
+    
+    
 }
 
 void LabelDyamicTest::draw()
