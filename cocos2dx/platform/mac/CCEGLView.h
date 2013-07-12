@@ -37,8 +37,11 @@ class Size;
 class CC_DLL EGLView : public EGLViewProtocol
 {
 public:
-    static EGLView* sharedOpenGLView(void);
-    
+    static EGLView* getInstance();
+
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static EGLView* sharedOpenGLView();
+
     virtual ~EGLView(void);
     
     virtual bool isOpenGLReady(void);

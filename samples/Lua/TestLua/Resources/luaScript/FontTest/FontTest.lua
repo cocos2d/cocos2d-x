@@ -27,7 +27,7 @@ local vAlignCount = table.getn(verticalAlignment)
 local function showFont(ret, pFont)
 
     cclog("vAlignIdx="..vAlignIdx)
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
 
     local blockSize = CCSizeMake(s.width/3, 200)
     local fontSize = 26

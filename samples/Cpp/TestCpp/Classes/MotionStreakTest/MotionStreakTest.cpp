@@ -21,7 +21,7 @@ void MotionStreakTest1::onEnter()
 {
     MotionStreakTest::onEnter();
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
   
     // the root object just rotates around
     _root = Sprite::create(s_pPathR1);
@@ -81,7 +81,7 @@ void MotionStreakTest2::onEnter()
 
     setTouchEnabled(true);
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
         
     // create the streak object and add it to the scene
     streak = MotionStreak::create(3, 3, 64, Color3B::WHITE, s_streak );
@@ -115,7 +115,7 @@ void Issue1358::onEnter()
     MotionStreakTest::onEnter();
     
     // ask director the the window size
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
     
     streak = MotionStreak::create(2.0f, 1.0f, 50.0f, Color3B(255, 255, 0), "Images/Icon.png");
     addChild(streak);
@@ -229,7 +229,7 @@ void MotionStreakTest::onEnter()
 {
     BaseTest::onEnter();
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     MenuItemToggle *itemMode = MenuItemToggle::createWithCallback( CC_CALLBACK_1(MotionStreakTest::modeCallback, this),
         MenuItemFont::create("Use High Quality Mode"),
@@ -253,7 +253,7 @@ void MotionStreakTest::restartCallback(Object* pSender)
     Scene* s = new MotionStreakTestScene();//CCScene::create();
     s->addChild(restartMotionAction()); 
 
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -261,7 +261,7 @@ void MotionStreakTest::nextCallback(Object* pSender)
 {
     Scene* s = new MotionStreakTestScene();//CCScene::create();
     s->addChild( nextMotionAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -269,7 +269,7 @@ void MotionStreakTest::backCallback(Object* pSender)
 {
     Scene* s = new MotionStreakTestScene;//CCScene::create();
     s->addChild( backMotionAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 } 
 
@@ -278,5 +278,5 @@ void MotionStreakTestScene::runThisTest()
     Layer* pLayer = nextMotionAction();
     addChild(pLayer);
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

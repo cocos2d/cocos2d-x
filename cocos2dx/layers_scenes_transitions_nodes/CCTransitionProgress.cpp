@@ -69,7 +69,7 @@ void TransitionProgress::onEnter()
     
     // create a transparent color layer
     // in which we are going to add our rendertextures
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
 
     // create the second render texture for outScene
     RenderTexture *texture = RenderTexture::create((int)size.width, (int)size.height);
@@ -135,7 +135,7 @@ ProgressTimer* TransitionProgress::progressTimerNodeWithRenderTexture(RenderText
 
 ProgressTimer* TransitionProgressRadialCCW::progressTimerNodeWithRenderTexture(RenderTexture* texture)
 {
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
 
     ProgressTimer* pNode = ProgressTimer::create(texture->getSprite());
 
@@ -179,7 +179,7 @@ TransitionProgressRadialCW* TransitionProgressRadialCW::create(float t, Scene* s
 
 ProgressTimer* TransitionProgressRadialCW::progressTimerNodeWithRenderTexture(RenderTexture* texture)
 {
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
     
     ProgressTimer* pNode = ProgressTimer::create(texture->getSprite());
     
@@ -211,7 +211,7 @@ TransitionProgressHorizontal* TransitionProgressHorizontal::create(float t, Scen
 
 ProgressTimer* TransitionProgressHorizontal::progressTimerNodeWithRenderTexture(RenderTexture* texture)
 {    
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
 
     ProgressTimer* pNode = ProgressTimer::create(texture->getSprite());
     
@@ -244,7 +244,7 @@ TransitionProgressVertical* TransitionProgressVertical::create(float t, Scene* s
 
 ProgressTimer* TransitionProgressVertical::progressTimerNodeWithRenderTexture(RenderTexture* texture)
 {    
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
     
     ProgressTimer* pNode = ProgressTimer::create(texture->getSprite());
     
@@ -290,7 +290,7 @@ void TransitionProgressInOut::setupTransition()
 
 ProgressTimer* TransitionProgressInOut::progressTimerNodeWithRenderTexture(RenderTexture* texture)
 {    
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
     
     ProgressTimer* pNode = ProgressTimer::create(texture->getSprite());
     
@@ -324,7 +324,7 @@ TransitionProgressOutIn* TransitionProgressOutIn::create(float t, Scene* scene)
 
 ProgressTimer* TransitionProgressOutIn::progressTimerNodeWithRenderTexture(RenderTexture* texture)
 {    
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
     
     ProgressTimer* pNode = ProgressTimer::create(texture->getSprite());
     

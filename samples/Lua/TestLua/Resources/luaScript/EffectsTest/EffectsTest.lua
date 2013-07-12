@@ -2,7 +2,7 @@ require "luaScript/EffectsTest/EffectsName"
 
 
 local ActionIdx = -1
-local size = CCDirector:sharedDirector():getWinSize()
+local size = CCDirector:getInstance():getWinSize()
 local kTagTextLayer  = 1
 local kTagBackground = 1
 local kTagLabel      = 2
@@ -26,7 +26,7 @@ local function checkAnim(dt)
 end
 
 local function onEnterOrExit(tag)
-    local scheduler = CCDirector:sharedDirector():getScheduler()
+    local scheduler = CCDirector:getInstance():getScheduler()
     if tag == "enter" then
         entry = scheduler:scheduleScriptFunc(checkAnim, 0, false)
     elseif tag == "exit" then
@@ -60,7 +60,7 @@ local function backCallback(sender)
     scene:addChild(backAction())
     scene:addChild(CreateBackMenuItem())
 
-    CCDirector:sharedDirector():replaceScene(scene)
+    CCDirector:getInstance():replaceScene(scene)
 end
 
 local function restartCallback(sender)
@@ -69,7 +69,7 @@ local function restartCallback(sender)
     scene:addChild(restartAction())
     scene:addChild(CreateBackMenuItem())
 
-    CCDirector:sharedDirector():replaceScene(scene)
+    CCDirector:getInstance():replaceScene(scene)
 end
 
 local function nextCallback(sender)
@@ -78,7 +78,7 @@ local function nextCallback(sender)
     scene:addChild(nextAction())
     scene:addChild(CreateBackMenuItem())
 
-    CCDirector:sharedDirector():replaceScene(scene)
+    CCDirector:getInstance():replaceScene(scene)
 end
 
 --------------------------------------
@@ -296,7 +296,7 @@ end
 --  PageTurn3DDemo
 --------------------------------------
 local function PageTurn3DDemo(t)
-    CCDirector:sharedDirector():setDepthTest(true)
+    CCDirector:getInstance():setDepthTest(true)
     return CCPageTurn3D:create(t, CCSizeMake(15,10));
 end
 
@@ -304,7 +304,7 @@ end
 --  Effects Test
 --------------------------------------
 local function createEffect(idx, t)
-    CCDirector:sharedDirector():setDepthTest(false)
+    CCDirector:getInstance():setDepthTest(false)
     local action = nil
 
     if idx == 0 then

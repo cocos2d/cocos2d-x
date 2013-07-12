@@ -204,7 +204,7 @@ namespace CocosDenshion
     void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 	{
 		// Changing file path to full path
-    	std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    	std::string fullPath = FileUtils::getInstance()->fullPathForFilename(pszFilePath);
 
     	BackgroundMusicsMap::const_iterator it = s_backgroundMusics.find(fullPath);
 		if (it == s_backgroundMusics.end())
@@ -244,7 +244,7 @@ namespace CocosDenshion
 			stopBackgroundMusic(false);
 
 		// Changing file path to full path
-    	std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    	std::string fullPath = FileUtils::getInstance()->fullPathForFilename(pszFilePath);
 
     	BackgroundMusicsMap::const_iterator it = s_backgroundMusics.find(fullPath);
 		if (it == s_backgroundMusics.end())
@@ -358,7 +358,7 @@ namespace CocosDenshion
 	unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop,
                                                float pitch, float pan, float gain)
     {
-        std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(pszFilePath);
 
 		EffectsMap::iterator iter = s_effects.find(fullPath);
 
@@ -402,7 +402,7 @@ namespace CocosDenshion
 	void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 	{
 		// Changing file path to full path
-    	std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    	std::string fullPath = FileUtils::getInstance()->fullPathForFilename(pszFilePath);
 
 		EffectsMap::iterator iter = s_effects.find(fullPath);
 
@@ -453,7 +453,7 @@ namespace CocosDenshion
 	void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 	{
 		// Changing file path to full path
-    	std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    	std::string fullPath = FileUtils::getInstance()->fullPathForFilename(pszFilePath);
     	
 		EffectsMap::iterator iter = s_effects.find(fullPath);
 

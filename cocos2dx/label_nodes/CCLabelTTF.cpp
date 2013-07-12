@@ -132,7 +132,7 @@ bool LabelTTF::initWithString(const char *string, const char *fontName, float fo
     if (Sprite::init())
     {
         // shader program
-        this->setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(SHADER_PROGRAM));
+        this->setShaderProgram(ShaderCache::getInstance()->programForKey(SHADER_PROGRAM));
         
         _dimensions = CCSizeMake(dimensions.width, dimensions.height);
         _alignment  = hAlignment;
@@ -153,7 +153,7 @@ bool LabelTTF::initWithStringAndTextDefinition(const char *string, FontDefinitio
     if (Sprite::init())
     {
         // shader program
-        this->setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(SHADER_PROGRAM));
+        this->setShaderProgram(ShaderCache::getInstance()->programForKey(SHADER_PROGRAM));
         
         // prepare everythin needed to render the label
         _updateWithTextDefinition(textDefinition, false);

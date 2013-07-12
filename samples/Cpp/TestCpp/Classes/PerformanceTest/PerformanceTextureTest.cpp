@@ -37,7 +37,7 @@ void TextureMenuLayer::showCurrentTest()
 
     if (pScene)
     {
-        Director::sharedDirector()->replaceScene(pScene);
+        Director::getInstance()->replaceScene(pScene);
     }
 }
 
@@ -45,7 +45,7 @@ void TextureMenuLayer::onEnter()
 {
     PerformBasicLayer::onEnter();
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     // Title
     LabelTTF *label = LabelTTF::create(title().c_str(), "Arial", 40);
@@ -84,7 +84,7 @@ void TextureTest::performTestsPNG(const char* filename)
 {
     struct timeval now;
     Texture2D *texture;
-    TextureCache *cache = TextureCache::sharedTextureCache();
+    TextureCache *cache = TextureCache::getInstance();
 
     CCLog("RGBA 8888");
     Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA8888);
@@ -131,7 +131,7 @@ void TextureTest::performTests()
 {
 //     Texture2D *texture;
 //     struct timeval now;
-//     TextureCache *cache = TextureCache::sharedTextureCache();
+//     TextureCache *cache = TextureCache::getInstance();
 
     CCLog("--------");
 
@@ -356,5 +356,5 @@ void runTextureTest()
 {
     s_nTexCurCase = 0;
     Scene* pScene = TextureTest::scene();
-    Director::sharedDirector()->replaceScene(pScene);
+    Director::getInstance()->replaceScene(pScene);
 }

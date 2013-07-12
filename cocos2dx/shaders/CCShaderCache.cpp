@@ -46,7 +46,7 @@ enum {
 
 static ShaderCache *_sharedShaderCache = 0;
 
-ShaderCache* ShaderCache::sharedShaderCache()
+ShaderCache* ShaderCache::getInstance()
 {
     if (!_sharedShaderCache) {
         _sharedShaderCache = new ShaderCache();
@@ -58,9 +58,21 @@ ShaderCache* ShaderCache::sharedShaderCache()
     return _sharedShaderCache;
 }
 
-void ShaderCache::purgeSharedShaderCache()
+void ShaderCache::destroyInstance()
 {
     CC_SAFE_RELEASE_NULL(_sharedShaderCache);
+}
+
+// XXX: deprecated
+ShaderCache* ShaderCache::sharedShaderCache()
+{
+    return ShaderCache::getInstance();
+}
+
+// XXX: deprecated
+void ShaderCache::purgeSharedShaderCache()
+{
+    ShaderCache::destroyInstance();
 }
 
 ShaderCache::ShaderCache()

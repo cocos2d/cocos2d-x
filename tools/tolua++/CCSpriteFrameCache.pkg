@@ -16,6 +16,10 @@ class CCSpriteFrameCache : public CCObject
 
     CCSpriteFrame* spriteFrameByName(const char *pszName);
 
-    static CCSpriteFrameCache* sharedSpriteFrameCache(void);
-    static void purgeSharedSpriteFrameCache(void);
+    // XXX deprecated
+    static CCSpriteFrameCache* sharedSpriteFrameCache();
+    static void purgeSharedSpriteFrameCache();
+
+    static CCSpriteFrameCache* getInstance();
+    static void destroyInstance();
 };

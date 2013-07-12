@@ -238,7 +238,7 @@ static bool _initWithImage(CGImageRef CGImage, tImageInfo *pImageinfo, double sc
     }
     
 	//if (cocos2d::Image::getIsScaleEnabled())
-	if( cocos2d::Director::sharedDirector()->getContentScaleFactor() > 1.0f )
+	if( cocos2d::Director::getInstance()->getContentScaleFactor() > 1.0f )
 	{
 		POTWide = CGImageGetWidth(CGImage) * scaleX;
 		POTHigh = CGImageGetHeight(CGImage) * scaleY;
@@ -565,7 +565,7 @@ Image::~Image()
 
 bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
 {
-    std::string strTemp = FileUtils::sharedFileUtils()->fullPathForFilename(strPath);
+    std::string strTemp = FileUtils::getInstance()->fullPathForFilename(strPath);
 	if (_enabledScale)
 	{
 		if (!isFileExists(strTemp.c_str()))
@@ -577,7 +577,7 @@ bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFm
 				{
 					strTemp.insert(t, "@2x");
 				}
-/*				Size size = Director::sharedDirector()->getWinSize();		
+/*				Size size = Director::getInstance()->getWinSize();		
 	#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 				_scaleX = size.width/800.0f;
 				_scaleY = size.height/480.0f;
@@ -600,7 +600,7 @@ bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFm
 //	return initWithImageData(tempData.getBuffer(), tempData.getSize(), eImgFmt);
 
 	unsigned long fileSize = 0;
-	unsigned char* pFileData = FileUtils::sharedFileUtils()->getFileData(strTemp.c_str(), "rb", &fileSize);
+	unsigned char* pFileData = FileUtils::getInstance()->getFileData(strTemp.c_str(), "rb", &fileSize);
 	bool ret = initWithImageData(pFileData, fileSize, eImgFmt);
 	delete []pFileData;
 	return ret;
@@ -613,7 +613,7 @@ bool Image::initWithImageFileThreadSafe(const char *fullpath, EImageFormat image
      */
     bool bRet = false;
     unsigned long nSize = 0;
-    unsigned char* pBuffer = FileUtils::sharedFileUtils()->getFileData(fullpath, "rb", &nSize);
+    unsigned char* pBuffer = FileUtils::getInstance()->getFileData(fullpath, "rb", &nSize);
     if (pBuffer != NULL && nSize > 0)
     {
         bRet = initWithImageData(pBuffer, nSize, imageType);

@@ -5,8 +5,13 @@ class CCAnimationCache : public CCObject
     void removeAnimationByName(const char* name);
     CCAnimation* animationByName(const char* name);
 
-    static CCAnimationCache* sharedAnimationCache(void);
-    static void purgeSharedAnimationCache(void);
+    // XXX deprecated, use getInstance instead
+    static CCAnimationCache* sharedAnimationCache();
+    // XXX deprecated, use destroyInstance instead
+    static void purgeSharedAnimationCache();
+
+    static CCAnimationCache* getInstance();
+    static void destroyInstance();
 
 	void addAnimationsWithDictionary(CCDictionary* dictionary);
 	void addAnimationsWithFile(const char* plist);

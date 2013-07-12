@@ -57,7 +57,7 @@ void AccelerometerTest::didAccelerate(Acceleration* pAccelerationValue)
 // 
 //     _lastTime = fNow;
 
-    Director* pDir = Director::sharedDirector();
+    Director* pDir = Director::getInstance();
 
     /*FIXME: Testing on the Nexus S sometimes _ball is NULL */
     if ( _ball == NULL ) {
@@ -89,5 +89,5 @@ void AccelerometerTestScene::runThisTest()
     addChild(pLayer);
     pLayer->release();
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

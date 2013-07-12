@@ -280,7 +280,7 @@ public:
      * The original point (0,0) is at the left-bottom corner of screen.
      * For example, this codesnip sets the node in the center of screen.
      * @code
-     * Size size = Director::sharedDirector()->getWinSize();
+     * Size size = Director::getInstance()->getWinSize();
      * node->setPosition( ccp(size.width/2, size.height/2) )
      * @endcode
      *
@@ -826,7 +826,7 @@ public:
      * Since v2.0, each rendering node must set its shader program.
      * It should be set in initialize phase.
      * @code
-     * node->setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColor));
+     * node->setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColor));
      * @endcode
      * 
      * @param The shader program which fetchs from ShaderCache.

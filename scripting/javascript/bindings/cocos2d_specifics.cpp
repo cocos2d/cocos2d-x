@@ -42,12 +42,12 @@ void JSTouchDelegate::setJSObject(JSObject *obj) {
 }
 
 void JSTouchDelegate::registerStandardDelegate() {
-    Director* pDirector = Director::sharedDirector();
+    Director* pDirector = Director::getInstance();
     pDirector->getTouchDispatcher()->addStandardDelegate(this,0);
 }
 
 void JSTouchDelegate::registerTargettedDelegate(int priority, bool swallowsTouches) {
-    Director* pDirector = Director::sharedDirector();
+    Director* pDirector = Director::getInstance();
     pDirector->getTouchDispatcher()->addTargetedDelegate(this,
                                                          priority,
                                                          swallowsTouches);
@@ -56,7 +56,7 @@ void JSTouchDelegate::registerTargettedDelegate(int priority, bool swallowsTouch
 
 void JSTouchDelegate::unregisterTouchDelegate()
 {
-    Director* pDirector = Director::sharedDirector();
+    Director* pDirector = Director::getInstance();
     pDirector->getTouchDispatcher()->removeDelegate(this);
 }
 

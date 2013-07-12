@@ -70,7 +70,7 @@ void TransitionPageTurn::sceneOrder()
 void TransitionPageTurn::onEnter()
 {
     TransitionScene::onEnter();
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     int x,y;
     if (s.width > s.height)
     {

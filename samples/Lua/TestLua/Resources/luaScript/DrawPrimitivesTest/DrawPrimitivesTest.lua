@@ -7,7 +7,7 @@ local background = nil
 local labelAtlas = nil
 local baseLayer_entry = nil
 
-local s = CCDirector:sharedDirector():getWinSize()
+local s = CCDirector:getInstance():getWinSize()
 
 local function getBaseLayer()
 	local layer = CCLayer:create()

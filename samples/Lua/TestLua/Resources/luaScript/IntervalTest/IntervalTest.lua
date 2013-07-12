@@ -1,4 +1,4 @@
-local scheduler = CCDirector:sharedDirector():getScheduler()
+local scheduler = CCDirector:getInstance():getScheduler()
 local SID_STEP1    = 100
 local SID_STEP2    = 101
 local SID_STEP3    = 102
@@ -12,10 +12,10 @@ local function IntervalLayer()
     local m_time3 = 0
     local m_time4 = 0
 
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
     -- sun
     local  sun = CCParticleSun:create()
-    sun:setTexture(CCTextureCache:sharedTextureCache():addImage("Images/fire.png"))
+    sun:setTexture(CCTextureCache:getInstance():addImage("Images/fire.png"))
     sun:setPosition( ccp(VisibleRect:rightTop().x-32,VisibleRect:rightTop().y-32) )
 
     sun:setTotalParticles(130)
@@ -77,8 +77,8 @@ local function IntervalLayer()
             scheduler:unscheduleScriptEntry(schedulerEntry2)
             scheduler:unscheduleScriptEntry(schedulerEntry3)
             scheduler:unscheduleScriptEntry(schedulerEntry4)
-            if CCDirector:sharedDirector():isPaused() then
-                CCDirector:sharedDirector():resume()
+            if CCDirector:getInstance():isPaused() then
+                CCDirector:getInstance():resume()
             end
         end
     end
@@ -112,10 +112,10 @@ local function IntervalLayer()
     -- pause button
     local  item1 = CCMenuItemFont:create("Pause")
     local function onPause(tag, pSender)
-        if CCDirector:sharedDirector():isPaused() then
-            CCDirector:sharedDirector():resume()
+        if CCDirector:getInstance():isPaused() then
+            CCDirector:getInstance():resume()
         else
-            CCDirector:sharedDirector():pause()
+            CCDirector:getInstance():pause()
         end
     end
 

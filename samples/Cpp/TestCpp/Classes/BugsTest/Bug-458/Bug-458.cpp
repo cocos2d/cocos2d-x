@@ -11,7 +11,7 @@ bool Bug458Layer::init()
     if(BugsTestBaseLayer::init())
     {
         // ask director the the window size
-        Size size = Director::sharedDirector()->getWinSize();
+        Size size = Director::getInstance()->getWinSize();
 
         QuestionContainerSprite* question = new QuestionContainerSprite();
         QuestionContainerSprite* question2 = new QuestionContainerSprite();

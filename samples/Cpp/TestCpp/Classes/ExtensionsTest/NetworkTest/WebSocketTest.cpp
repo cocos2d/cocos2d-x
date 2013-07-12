@@ -22,7 +22,7 @@ WebSocketTestLayer::WebSocketTestLayer()
 , _sendTextTimes(0)
 , _sendBinaryTimes(0)
 {
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
     
     const int MARGIN = 40;
     const int SPACE = 35;
@@ -236,6 +236,6 @@ void runWebSocketTest()
     WebSocketTestLayer *pLayer = new WebSocketTestLayer();
     pScene->addChild(pLayer);
     
-    Director::sharedDirector()->replaceScene(pScene);
+    Director::getInstance()->replaceScene(pScene);
     pLayer->release();
 }

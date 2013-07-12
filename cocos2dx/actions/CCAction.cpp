@@ -208,7 +208,7 @@ bool Follow::initWithTarget(Node *pFollowedNode, const Rect& rect/* = RectZero*/
     
     _boundaryFullyCovered = false;
 
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
     _fullScreenSize = CCPointMake(winSize.width, winSize.height);
     _halfScreenSize = ccpMult(_fullScreenSize, 0.5f);
 

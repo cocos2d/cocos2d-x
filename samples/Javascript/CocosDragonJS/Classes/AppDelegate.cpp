@@ -31,12 +31,12 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    Director *pDirector = Director::sharedDirector();
-    pDirector->setOpenGLView(EGLView::sharedOpenGLView());
+    Director *pDirector = Director::getInstance();
+    pDirector->setOpenGLView(EGLView::getInstance());
     pDirector->setProjection(kDirectorProjection2D);
 
 
-    Size screenSize = EGLView::sharedOpenGLView()->getFrameSize();
+    Size screenSize = EGLView::getInstance()->getFrameSize();
 
     Size designSize = CCSizeMake(320, 480);
     Size resourceSize = CCSizeMake(320, 480);
@@ -46,9 +46,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     TargetPlatform platform = Application::sharedApplication()->getTargetPlatform();
     if (platform == kTargetIphone || platform == kTargetIpad || platform == kTargetMacOS)
     {
-        std::vector<std::string> searchPaths = FileUtils::sharedFileUtils()->getSearchPaths();
+        std::vector<std::string> searchPaths = FileUtils::getInstance()->getSearchPaths();
         searchPaths.insert(searchPaths.begin(), "Published files iOS");
-        FileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
+        FileUtils::getInstance()->setSearchPaths(searchPaths);
         if (screenSize.height > 1024)
         {
             resourceSize = CCSizeMake(1536, 2048);
@@ -105,11 +105,11 @@ bool AppDelegate::applicationDidFinishLaunching()
         }
     }
     
-    FileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
+    FileUtils::getInstance()->setSearchResolutionsOrder(resDirOrders);
     
     pDirector->setContentScaleFactor(resourceSize.width/designSize.width);
 
-    EGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
+    EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
     
     // turn on display FPS
     pDirector->setDisplayStats(true);
@@ -141,7 +141,7 @@ void handle_signal(int signal) {
     static int internal_state = 0;
     ScriptingCore* sc = ScriptingCore::getInstance();
     // should start everything back
-    Director* director = Director::sharedDirector();
+    Director* director = Director::getInstance();
     if (director->getRunningScene()) {
         director->popToRootScene();
     } else {
@@ -160,7 +160,7 @@ void handle_signal(int signal) {
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    Director::sharedDirector()->stopAnimation();
+    Director::getInstance()->stopAnimation();
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
     SimpleAudioEngine::sharedEngine()->pauseAllEffects();
 }
@@ -168,7 +168,7 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    Director::sharedDirector()->startAnimation();
+    Director::getInstance()->startAnimation();
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
     SimpleAudioEngine::sharedEngine()->resumeAllEffects();
 }

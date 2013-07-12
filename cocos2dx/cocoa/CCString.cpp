@@ -209,7 +209,7 @@ String* String::createWithContentsOfFile(const char* pszFileName)
     unsigned long size = 0;
     unsigned char* pData = 0;
     String* pRet = NULL;
-    pData = FileUtils::sharedFileUtils()->getFileData(pszFileName, "rb", &size);
+    pData = FileUtils::getInstance()->getFileData(pszFileName, "rb", &size);
     pRet = String::createWithData(pData, size);
     CC_SAFE_DELETE_ARRAY(pData);
     return pRet;
