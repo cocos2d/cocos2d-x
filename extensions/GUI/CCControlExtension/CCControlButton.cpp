@@ -105,13 +105,13 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* b
 
         // Adjust the background image by default
         setAdjustBackgroundImage(true);
-        setPreferredSize(SizeZero);
+        setPreferredSize(Size::ZERO);
         // Zooming button by default
         _zoomOnTouchDown = true;
         
         // Set the default anchor point
         ignoreAnchorPointForPosition(false);
-        setAnchorPoint(ccp(0.5f, 0.5f));
+        setAnchorPoint(Point(0.5f, 0.5f));
         
         // Set the nodes
         setTitleLabel(node);
@@ -131,7 +131,7 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* b
         setTitleLabelForState(node, ControlStateNormal);
         setBackgroundSpriteForState(backgroundSprite, ControlStateNormal);
         
-        setLabelAnchorPoint(ccp(0.5f, 0.5f));
+        setLabelAnchorPoint(Point(0.5f, 0.5f));
 
         // Layout update
         needsLayout();
@@ -380,7 +380,7 @@ void ControlButton::setTitleLabelForState(Node* titleLabel, ControlState state)
 
     _titleLabelDispatchTable->setObject(titleLabel, state);
     titleLabel->setVisible(false);
-    titleLabel->setAnchorPoint(ccp(0.5f, 0.5f));
+    titleLabel->setAnchorPoint(Point(0.5f, 0.5f));
     addChild(titleLabel, 1);
 
     // If the current state if equal to the given state we update the layout
@@ -490,7 +490,7 @@ void ControlButton::setBackgroundSpriteForState(Scale9Sprite* sprite, ControlSta
 
     _backgroundSpriteDispatchTable->setObject(sprite, state);
     sprite->setVisible(false);
-    sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+    sprite->setAnchorPoint(Point(0.5f, 0.5f));
     addChild(sprite);
 
     if (this->_preferredSize.width != 0 || this->_preferredSize.height != 0)
@@ -498,7 +498,7 @@ void ControlButton::setBackgroundSpriteForState(Scale9Sprite* sprite, ControlSta
         if (oldPreferredSize.equals(_preferredSize))
         {
             // Force update of preferred size
-            sprite->setPreferredSize(CCSizeMake(oldPreferredSize.width+1, oldPreferredSize.height+1));
+            sprite->setPreferredSize(Size(oldPreferredSize.width+1, oldPreferredSize.height+1));
         }
         
         sprite->setPreferredSize(this->_preferredSize);
@@ -555,14 +555,14 @@ void ControlButton::needsLayout()
     }
     if (_titleLabel != NULL)
     {
-        _titleLabel->setPosition(ccp (getContentSize().width / 2, getContentSize().height / 2));
+        _titleLabel->setPosition(Point (getContentSize().width / 2, getContentSize().height / 2));
     }
     
     // Update the background sprite
     this->setBackgroundSprite(this->getBackgroundSpriteForState(_state));
     if (_backgroundSprite != NULL)
     {
-        _backgroundSprite->setPosition(ccp (getContentSize().width / 2, getContentSize().height / 2));
+        _backgroundSprite->setPosition(Point (getContentSize().width / 2, getContentSize().height / 2));
     }
    
     // Get the title label size
@@ -578,7 +578,7 @@ void ControlButton::needsLayout()
         // Add the margins
         if (_backgroundSprite != NULL)
         {
-            _backgroundSprite->setContentSize(CCSizeMake(titleLabelSize.width + _marginH * 2, titleLabelSize.height + _marginV * 2));
+            _backgroundSprite->setContentSize(Size(titleLabelSize.width + _marginH * 2, titleLabelSize.height + _marginV * 2));
         }
     } 
     else
@@ -613,18 +613,18 @@ void ControlButton::needsLayout()
     }
 
     Rect maxRect = ControlUtils::RectUnion(rectTitle, rectBackground);
-    setContentSize(CCSizeMake(maxRect.size.width, maxRect.size.height));        
+    setContentSize(Size(maxRect.size.width, maxRect.size.height));        
     
     if (_titleLabel != NULL)
     {
-        _titleLabel->setPosition(ccp(getContentSize().width/2, getContentSize().height/2));
+        _titleLabel->setPosition(Point(getContentSize().width/2, getContentSize().height/2));
         // Make visible the background and the label
         _titleLabel->setVisible(true);
     }
   
     if (_backgroundSprite != NULL)
     {
-        _backgroundSprite->setPosition(ccp(getContentSize().width/2, getContentSize().height/2));
+        _backgroundSprite->setPosition(Point(getContentSize().width/2, getContentSize().height/2));
         _backgroundSprite->setVisible(true);   
     }   
 }

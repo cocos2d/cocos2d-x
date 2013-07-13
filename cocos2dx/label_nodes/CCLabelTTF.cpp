@@ -73,7 +73,7 @@ LabelTTF * LabelTTF::create()
 LabelTTF * LabelTTF::create(const char *string, const char *fontName, float fontSize)
 {
     return LabelTTF::create(string, fontName, fontSize,
-                              SizeZero, kTextAlignmentCenter, kVerticalTextAlignmentTop);
+                              Size::ZERO, kTextAlignmentCenter, kVerticalTextAlignmentTop);
 }
 
 LabelTTF * LabelTTF::create(const char *string, const char *fontName, float fontSize,
@@ -122,7 +122,7 @@ bool LabelTTF::initWithString(const char *label, const char *fontName, float fon
 bool LabelTTF::initWithString(const char *label, const char *fontName, float fontSize)
 {
     return this->initWithString(label, fontName, fontSize, 
-                                SizeZero, kTextAlignmentLeft, kVerticalTextAlignmentTop);
+                                Size::ZERO, kTextAlignmentLeft, kVerticalTextAlignmentTop);
 }
 
 bool LabelTTF::initWithString(const char *string, const char *fontName, float fontSize,
@@ -132,9 +132,9 @@ bool LabelTTF::initWithString(const char *string, const char *fontName, float fo
     if (Sprite::init())
     {
         // shader program
-        this->setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(SHADER_PROGRAM));
+        this->setShaderProgram(ShaderCache::getInstance()->programForKey(SHADER_PROGRAM));
         
-        _dimensions = CCSizeMake(dimensions.width, dimensions.height);
+        _dimensions = Size(dimensions.width, dimensions.height);
         _alignment  = hAlignment;
         _vAlignment  = vAlignment;
         _fontName   = new std::string(fontName);
@@ -153,7 +153,7 @@ bool LabelTTF::initWithStringAndTextDefinition(const char *string, FontDefinitio
     if (Sprite::init())
     {
         // shader program
-        this->setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(SHADER_PROGRAM));
+        this->setShaderProgram(ShaderCache::getInstance()->programForKey(SHADER_PROGRAM));
         
         // prepare everythin needed to render the label
         _updateWithTextDefinition(textDefinition, false);
@@ -320,7 +320,7 @@ bool LabelTTF::updateTexture()
     tex->release();
     
     // set the size in the sprite
-    Rect rect =RectZero;
+    Rect rect =Rect::ZERO;
     rect.size   = _texture->getContentSize();
     this->setTextureRect(rect);
     
@@ -470,7 +470,7 @@ FontDefinition LabelTTF::getTextDefinition()
 
 void LabelTTF::_updateWithTextDefinition(const FontDefinition& textDefinition, bool mustUpdateTexture)
 {
-    _dimensions = CCSizeMake(textDefinition._dimensions.width, textDefinition._dimensions.height);
+    _dimensions = Size(textDefinition._dimensions.width, textDefinition._dimensions.height);
     _alignment  = textDefinition._alignment;
     _vAlignment  = textDefinition._vertAlignment;
     

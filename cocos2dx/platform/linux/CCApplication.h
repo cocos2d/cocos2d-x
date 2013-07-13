@@ -43,13 +43,13 @@ public:
 
 	/**
      *  Sets the Resource root path.
-     *  @deprecated Please use FileUtils::sharedFileUtils()->setSearchPaths() instead.
+     *  @deprecated Please use FileUtils::getInstance()->setSearchPaths() instead.
      */
     CC_DEPRECATED_ATTRIBUTE void setResourceRootPath(const std::string& rootResDir);
     
 	/** 
      *  Gets the Resource root path.
-     *  @deprecated Please use FileUtils::sharedFileUtils()->getSearchPaths() instead. 
+     *  @deprecated Please use FileUtils::getInstance()->getSearchPaths() instead. 
      */
     CC_DEPRECATED_ATTRIBUTE const std::string& getResourceRootPath(void);
     

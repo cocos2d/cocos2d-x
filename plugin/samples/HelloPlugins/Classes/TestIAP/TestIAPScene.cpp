@@ -76,7 +76,7 @@ bool TestIAP::init()
     // 2. add a menu item with "X" image, which is clicked to quit the program
     //    you may modify it.
 
-    EGLView* pEGLView = EGLView::sharedOpenGLView();
+    EGLView* pEGLView = EGLView::getInstance();
     Point posBR = ccp(pEGLView->getVisibleOrigin().x + pEGLView->getVisibleSize().width, pEGLView->getVisibleOrigin().y);
     Point posTL = ccp(pEGLView->getVisibleOrigin().x, pEGLView->getVisibleOrigin().y + pEGLView->getVisibleSize().height);
 
@@ -131,5 +131,5 @@ void TestIAP::menuBackCallback(Object* pSender)
 	MyPurchase::purgePurchase();
 
 	Scene* newScene = HelloWorld::scene();
-    Director::sharedDirector()->replaceScene(newScene);
+    Director::getInstance()->replaceScene(newScene);
 }

@@ -119,7 +119,7 @@ Sprite* Sprite::createWithSpriteFrame(SpriteFrame *pSpriteFrame)
 
 Sprite* Sprite::createWithSpriteFrameName(const char *pszSpriteFrameName)
 {
-    SpriteFrame *pFrame = SpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pszSpriteFrameName);
+    SpriteFrame *pFrame = SpriteFrameCache::getInstance()->spriteFrameByName(pszSpriteFrameName);
     
 #if COCOS2D_DEBUG > 0
     char msg[256] = {0};
@@ -144,7 +144,7 @@ Sprite* Sprite::create()
 
 bool Sprite::init(void)
 {
-    return initWithTexture(NULL, RectZero);
+    return initWithTexture(NULL, Rect::ZERO);
 }
 
 // designated initializer
@@ -165,10 +165,10 @@ bool Sprite::initWithTexture(Texture2D *pTexture, const Rect& rect, bool rotated
         _flipX = _flipY = false;
         
         // default transform anchor: center
-        setAnchorPoint(ccp(0.5f, 0.5f));
+        setAnchorPoint(Point(0.5f, 0.5f));
         
         // zwoptex default values
-        _offsetPosition = PointZero;
+        _offsetPosition = Point::ZERO;
         
         _hasChildren = false;
         
@@ -183,7 +183,7 @@ bool Sprite::initWithTexture(Texture2D *pTexture, const Rect& rect, bool rotated
         _quad.tr.colors = tmpColor;
         
         // shader program
-        setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColor));
+        setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColor));
         
         // update texture (calls updateBlendFunc)
         setTexture(pTexture);
@@ -210,7 +210,7 @@ bool Sprite::initWithTexture(Texture2D *pTexture)
 {
     CCAssert(pTexture != NULL, "Invalid texture for sprite");
 
-    Rect rect = RectZero;
+    Rect rect = Rect::ZERO;
     rect.size = pTexture->getContentSize();
     
     return initWithTexture(pTexture, rect);
@@ -220,10 +220,10 @@ bool Sprite::initWithFile(const char *pszFilename)
 {
     CCAssert(pszFilename != NULL, "Invalid filename for sprite");
 
-    Texture2D *pTexture = TextureCache::sharedTextureCache()->addImage(pszFilename);
+    Texture2D *pTexture = TextureCache::getInstance()->addImage(pszFilename);
     if (pTexture)
     {
-        Rect rect = RectZero;
+        Rect rect = Rect::ZERO;
         rect.size = pTexture->getContentSize();
         return initWithTexture(pTexture, rect);
     }
@@ -238,7 +238,7 @@ bool Sprite::initWithFile(const char *pszFilename, const Rect& rect)
 {
     CCAssert(pszFilename != NULL, "");
 
-    Texture2D *pTexture = TextureCache::sharedTextureCache()->addImage(pszFilename);
+    Texture2D *pTexture = TextureCache::getInstance()->addImage(pszFilename);
     if (pTexture)
     {
         return initWithTexture(pTexture, rect);
@@ -264,7 +264,7 @@ bool Sprite::initWithSpriteFrameName(const char *pszSpriteFrameName)
 {
     CCAssert(pszSpriteFrameName != NULL, "");
 
-    SpriteFrame *pFrame = SpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pszSpriteFrameName);
+    SpriteFrame *pFrame = SpriteFrameCache::getInstance()->spriteFrameByName(pszSpriteFrameName);
     return initWithSpriteFrame(pFrame);
 }
 
@@ -285,10 +285,10 @@ Sprite* Sprite::initWithCGImage(CGImageRef pImage, const char *pszKey)
     CCAssert(pImage != NULL);
 
     // XXX: possible bug. See issue #349. New API should be added
-    Texture2D *pTexture = TextureCache::sharedTextureCache()->addCGImage(pImage, pszKey);
+    Texture2D *pTexture = TextureCache::getInstance()->addCGImage(pImage, pszKey);
 
     const Size& size = pTexture->getContentSize();
-    Rect rect = CCRectMake(0 ,0, size.width, size.height);
+    Rect rect = Rect(0 ,0, size.width, size.height);
 
     return initWithTexture(texture, rect);
 }
@@ -533,10 +533,10 @@ void Sprite::updateTransform(void)
 #if CC_SPRITE_DEBUG_DRAW
     // draw bounding box
     Point vertices[4] = {
-        ccp( _quad.bl.vertices.x, _quad.bl.vertices.y ),
-        ccp( _quad.br.vertices.x, _quad.br.vertices.y ),
-        ccp( _quad.tr.vertices.x, _quad.tr.vertices.y ),
-        ccp( _quad.tl.vertices.x, _quad.tl.vertices.y ),
+        Point( _quad.bl.vertices.x, _quad.bl.vertices.y ),
+        Point( _quad.br.vertices.x, _quad.br.vertices.y ),
+        Point( _quad.tr.vertices.x, _quad.tr.vertices.y ),
+        Point( _quad.tl.vertices.x, _quad.tl.vertices.y ),
     };
     ccDrawPoly(vertices, 4, true);
 #endif // CC_SPRITE_DEBUG_DRAW
@@ -586,10 +586,10 @@ void Sprite::draw(void)
 #if CC_SPRITE_DEBUG_DRAW == 1
     // draw bounding box
     Point vertices[4]={
-        ccp(_quad.tl.vertices.x,_quad.tl.vertices.y),
-        ccp(_quad.bl.vertices.x,_quad.bl.vertices.y),
-        ccp(_quad.br.vertices.x,_quad.br.vertices.y),
-        ccp(_quad.tr.vertices.x,_quad.tr.vertices.y),
+        Point(_quad.tl.vertices.x,_quad.tl.vertices.y),
+        Point(_quad.bl.vertices.x,_quad.bl.vertices.y),
+        Point(_quad.br.vertices.x,_quad.br.vertices.y),
+        Point(_quad.tr.vertices.x,_quad.tr.vertices.y),
     };
     ccDrawPoly(vertices, 4, true);
 #elif CC_SPRITE_DEBUG_DRAW == 2
@@ -597,8 +597,8 @@ void Sprite::draw(void)
     Size s = this->getTextureRect().size;
     Point offsetPix = this->getOffsetPosition();
     Point vertices[4] = {
-        ccp(offsetPix.x,offsetPix.y), ccp(offsetPix.x+s.width,offsetPix.y),
-        ccp(offsetPix.x+s.width,offsetPix.y+s.height), ccp(offsetPix.x,offsetPix.y+s.height)
+        Point(offsetPix.x,offsetPix.y), Point(offsetPix.x+s.width,offsetPix.y),
+        Point(offsetPix.x+s.width,offsetPix.y+s.height), Point(offsetPix.x,offsetPix.y+s.height)
     };
     ccDrawPoly(vertices, 4, true);
 #endif // CC_SPRITE_DEBUG_DRAW
@@ -984,7 +984,7 @@ void Sprite::setDisplayFrameWithAnimationName(const char *animationName, int fra
 {
     CCAssert(animationName, "CCSprite#setDisplayFrameWithAnimationName. animationName must not be NULL");
 
-    Animation *a = AnimationCache::sharedAnimationCache()->animationByName(animationName);
+    Animation *a = AnimationCache::getInstance()->animationByName(animationName);
 
     CCAssert(a, "CCSprite#setDisplayFrameWithAnimationName: Frame not found");
 
@@ -1097,17 +1097,16 @@ void Sprite::setTexture(Texture2D *texture)
     if (NULL == texture)
     {
         // Gets the texture by key firstly.
-        texture = TextureCache::sharedTextureCache()->textureForKey(CC_2x2_WHITE_IMAGE_KEY);
+        texture = TextureCache::getInstance()->textureForKey(CC_2x2_WHITE_IMAGE_KEY);
         
         // If texture wasn't in cache, create it from RAW data.
         if (NULL == texture)
         {
             Image* image = new Image();
             bool isOK = image->initWithImageData(cc_2x2_white_image, sizeof(cc_2x2_white_image), Image::kFmtRawData, 2, 2, 8);
-            if (isOK) {
-                texture = TextureCache::sharedTextureCache()->addUIImage(image, CC_2x2_WHITE_IMAGE_KEY);
-            }
-            
+            CCAssert(isOK, "The 2x2 empty texture was created unsuccessfully.");
+
+            texture = TextureCache::getInstance()->addUIImage(image, CC_2x2_WHITE_IMAGE_KEY);
             CC_SAFE_RELEASE(image);
         }
     }

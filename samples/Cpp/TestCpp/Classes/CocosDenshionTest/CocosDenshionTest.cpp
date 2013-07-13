@@ -50,7 +50,7 @@ public:
 
     ~Button()
     {
-        Director::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
+        Director::getInstance()->getTouchDispatcher()->removeDelegate(this);
     }
 
     void onTriggered(const std::function<void(void)> &onTriggered)
@@ -62,7 +62,7 @@ private:
     Button()
         : _child(NULL)
     {
-        Director::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, 100, true);
+        Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, 100, true);
     }
 
     bool initSpriteButton(const char *filePath)
@@ -157,9 +157,9 @@ public:
             _lblMinValue = LabelTTF::create(buffer, "Arial", 8);
             addChild(_lblMinValue);
             if (_direction == Vertical)
-                _lblMinValue->setPosition(ccp(12.0, -50.0));
+                _lblMinValue->setPosition(Point(12.0, -50.0));
             else
-                _lblMinValue->setPosition(ccp(-50, 12.0));
+                _lblMinValue->setPosition(Point(-50, 12.0));
         } else {
             _lblMinValue->setString(buffer);
         }
@@ -169,9 +169,9 @@ public:
             _lblMaxValue = LabelTTF::create(buffer, "Arial", 8);
             addChild(_lblMaxValue);
             if (_direction == Vertical)
-                _lblMaxValue->setPosition(ccp(12.0, 50.0));
+                _lblMaxValue->setPosition(Point(12.0, 50.0));
             else
-                _lblMaxValue->setPosition(ccp(50, 12.0));
+                _lblMaxValue->setPosition(Point(50, 12.0));
         } else {
             _lblMaxValue->setString(buffer);
         }
@@ -418,5 +418,5 @@ void CocosDenshionTestScene::runThisTest()
     addChild(pLayer);
     pLayer->autorelease();
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

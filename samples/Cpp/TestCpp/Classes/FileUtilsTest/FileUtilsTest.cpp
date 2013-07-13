@@ -58,7 +58,7 @@ void FileUtilsTestScene::runThisTest()
     Layer* pLayer = nextAction();
     addChild(pLayer);
     
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }
 
 // #pragma mark - FileUtilsDemo
@@ -74,7 +74,7 @@ void FileUtilsDemo::backCallback(Object* pSender)
     Layer* pLayer = backAction();
     
     pScene->addChild(pLayer);
-    Director::sharedDirector()->replaceScene(pScene);
+    Director::getInstance()->replaceScene(pScene);
     pScene->release();
 }
 
@@ -84,7 +84,7 @@ void FileUtilsDemo::nextCallback(Object* pSender)
     Layer* pLayer = nextAction();
     
     pScene->addChild(pLayer);
-    Director::sharedDirector()->replaceScene(pScene);
+    Director::getInstance()->replaceScene(pScene);
     pScene->release();
 }
 
@@ -94,7 +94,7 @@ void FileUtilsDemo::restartCallback(Object* pSender)
     Layer* pLayer = restartAction();
     
     pScene->addChild(pLayer);
-    Director::sharedDirector()->replaceScene(pScene);
+    Director::getInstance()->replaceScene(pScene);
     pScene->release();
 }
 
@@ -113,7 +113,7 @@ string FileUtilsDemo::subtitle()
 void TestResolutionDirectories::onEnter()
 {
     FileUtilsDemo::onEnter();
-    FileUtils *sharedFileUtils = FileUtils::sharedFileUtils();
+    FileUtils *sharedFileUtils = FileUtils::getInstance();
 
     string ret;
     
@@ -144,7 +144,7 @@ void TestResolutionDirectories::onEnter()
 
 void TestResolutionDirectories::onExit()
 {
-    FileUtils *sharedFileUtils = FileUtils::sharedFileUtils();
+    FileUtils *sharedFileUtils = FileUtils::getInstance();
     
 	// reset search path
 	sharedFileUtils->setSearchPaths(_defaultSearchPathArray);
@@ -167,7 +167,7 @@ string TestResolutionDirectories::subtitle()
 void TestSearchPath::onEnter()
 {
     FileUtilsDemo::onEnter();
-    FileUtils *sharedFileUtils = FileUtils::sharedFileUtils();
+    FileUtils *sharedFileUtils = FileUtils::getInstance();
     
     string ret;
     
@@ -223,7 +223,7 @@ void TestSearchPath::onEnter()
 
 void TestSearchPath::onExit()
 {
-	FileUtils *sharedFileUtils = FileUtils::sharedFileUtils();
+	FileUtils *sharedFileUtils = FileUtils::getInstance();
 
 	// reset search path
 	sharedFileUtils->setSearchPaths(_defaultSearchPathArray);
@@ -247,7 +247,7 @@ void TestFilenameLookup::onEnter()
 {
     FileUtilsDemo::onEnter();
 		
-    FileUtils *sharedFileUtils = FileUtils::sharedFileUtils();
+    FileUtils *sharedFileUtils = FileUtils::getInstance();
 
     Dictionary *dict = Dictionary::create();
     dict->setObject(String::create("Images/grossini.png"), "grossini.bmp");
@@ -260,14 +260,14 @@ void TestFilenameLookup::onEnter()
     Sprite *sprite = Sprite::create("grossini.xcf");
     this->addChild(sprite);
     
-    Size s = Director::sharedDirector()->getWinSize();
-    sprite->setPosition(ccp(s.width/2, s.height/2));
+    Size s = Director::getInstance()->getWinSize();
+    sprite->setPosition(Point(s.width/2, s.height/2));
 }
 
 void TestFilenameLookup::onExit()
 {
 	
-	FileUtils *sharedFileUtils = FileUtils::sharedFileUtils();
+	FileUtils *sharedFileUtils = FileUtils::getInstance();
 	
 	// reset filename lookup
     sharedFileUtils->setFilenameLookupDictionary(Dictionary::create());
@@ -290,8 +290,8 @@ string TestFilenameLookup::subtitle()
 void TestIsFileExist::onEnter()
 {
     FileUtilsDemo::onEnter();
-    Size s = Director::sharedDirector()->getWinSize();
-    FileUtils *sharedFileUtils = FileUtils::sharedFileUtils();
+    Size s = Director::getInstance()->getWinSize();
+    FileUtils *sharedFileUtils = FileUtils::getInstance();
     
     LabelTTF* pTTF = NULL;
     bool isExist = false;
@@ -299,19 +299,19 @@ void TestIsFileExist::onEnter()
     isExist = sharedFileUtils->isFileExist("Images/grossini.png");
     
     pTTF = LabelTTF::create(isExist ? "Images/grossini.png exists" : "Images/grossini.png doesn't exist", "", 20);
-    pTTF->setPosition(ccp(s.width/2, s.height/3));
+    pTTF->setPosition(Point(s.width/2, s.height/3));
     this->addChild(pTTF);
     
     isExist = sharedFileUtils->isFileExist("Images/grossini.xcf");
     pTTF = LabelTTF::create(isExist ? "Images/grossini.xcf exists" : "Images/grossini.xcf doesn't exist", "", 20);
-    pTTF->setPosition(ccp(s.width/2, s.height/3*2));
+    pTTF->setPosition(Point(s.width/2, s.height/3*2));
     this->addChild(pTTF);
 }
 
 void TestIsFileExist::onExit()
 {
 	
-	FileUtils *sharedFileUtils = FileUtils::sharedFileUtils();
+	FileUtils *sharedFileUtils = FileUtils::getInstance();
 	
 	// reset filename lookup
     sharedFileUtils->setFilenameLookupDictionary(Dictionary::create());
@@ -360,7 +360,7 @@ void TextWritePlist::onEnter()
     root->setObject(dictInDict, "dictInDict");
     
     // end with /
-    std::string writablePath = FileUtils::sharedFileUtils()->getWritablePath();
+    std::string writablePath = FileUtils::getInstance()->getWritablePath();
     std::string fullPath = writablePath + "text.plist";
     if(root->writeToFile(fullPath.c_str()))
         CCLog("see the plist file at %s", fullPath.c_str());
@@ -369,8 +369,8 @@ void TextWritePlist::onEnter()
     
     LabelTTF *label = LabelTTF::create(fullPath.c_str(), "Thonburi", 6);
     this->addChild(label);
-    Size winSize = Director::sharedDirector()->getWinSize();
-    label->setPosition(ccp(winSize.width/2, winSize.height/3));
+    Size winSize = Director::getInstance()->getWinSize();
+    label->setPosition(Point(winSize.width/2, winSize.height/3));
 }
 
 void TextWritePlist::onExit()
@@ -385,6 +385,6 @@ string TextWritePlist::title()
 
 string TextWritePlist::subtitle()
 {
-    std::string writablePath = FileUtils::sharedFileUtils()->getWritablePath().c_str();
+    std::string writablePath = FileUtils::getInstance()->getWritablePath().c_str();
     return ("See plist file at your writablePath");
 }
