@@ -104,7 +104,7 @@ ControlButton *ControlButtonTest_HelloVariableSize::standardButtonWithTitle(cons
     ControlButton *button = ControlButton::create(titleButton, backgroundButton);
     button->setBackgroundSpriteForState(backgroundHighlightedButton, ControlStateHighlighted);
     button->setTitleColorForState(Color3B::WHITE, ControlStateHighlighted);
-
+    
     return button;
 }
 
@@ -275,3 +275,30 @@ ControlButton *ControlButtonTest_Styling::standardButtonWithTitle(const char *ti
     return button;
 }
 
+//ControlButtonTest_SpriteBackground
+
+bool ControlButtonTest_SpriteBackground::init()
+{
+    if (ControlScene::init())
+    {
+        Size screenSize = Director::getInstance()->getWinSize();
+
+		/** Creates button with non scalable background **/
+		Sprite* sprite = Sprite::create("extensions/orange_edit.png");
+		ControlButton* buttonSprite = ControlButton::create(sprite);
+		buttonSprite->setPosition(screenSize.width/2,screenSize.height/2);
+		addChild(buttonSprite);
+		
+		
+		/** Creates button with non scalable background **/
+		buttonSprite = ControlButton::create("Very long title.Very long title.Very long title.", "Marker Felt", 14, false);
+		buttonSprite->setPosition(screenSize.width/2,screenSize.height/3);
+		addChild(buttonSprite);
+		
+        return true;
+    }
+    return false;
+}
+
+   
+    
