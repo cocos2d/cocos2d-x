@@ -104,13 +104,11 @@
     <ClCompile Include="..\CCArmature\display\CCDisplayManager.cpp" />
     <ClCompile Include="..\CCArmature\display\CCSkin.cpp" />
     <ClCompile Include="..\CCArmature\external_tool\CCTexture2DMutable.cpp" />
-    <ClCompile Include="..\CCArmature\external_tool\GLES-Render.cpp" />
     <ClCompile Include="..\CCArmature\external_tool\Json\CSContentJsonDictionary.cpp" />
     <ClCompile Include="..\CCArmature\external_tool\Json\lib_json\json_reader.cpp" />
     <ClCompile Include="..\CCArmature\external_tool\Json\lib_json\json_value.cpp" />
     <ClCompile Include="..\CCArmature\external_tool\Json\lib_json\json_writer.cpp" />
     <ClCompile Include="..\CCArmature\physics\CCColliderDetector.cpp" />
-    <ClCompile Include="..\CCArmature\physics\CCPhysicsWorld.cpp" />
     <ClCompile Include="..\CCArmature\utils\CCArmatureDataManager.cpp" />
     <ClCompile Include="..\CCArmature\utils\CCDataReaderHelper.cpp" />
     <ClCompile Include="..\CCArmature\utils\CCSpriteFrameCacheHelper.cpp" />
@@ -205,7 +203,6 @@
     <ClInclude Include="..\CCArmature\display\CCDisplayManager.h" />
     <ClInclude Include="..\CCArmature\display\CCSkin.h" />
     <ClInclude Include="..\CCArmature\external_tool\CCTexture2DMutable.h" />
-    <ClInclude Include="..\CCArmature\external_tool\GLES-Render.h" />
     <ClInclude Include="..\CCArmature\external_tool\Json\CSContentJsonDictionary.h" />
     <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\autolink.h" />
     <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\config.h" />
@@ -219,7 +216,6 @@
     <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\writer.h" />
     <ClInclude Include="..\CCArmature\external_tool\sigslot.h" />
     <ClInclude Include="..\CCArmature\physics\CCColliderDetector.h" />
-    <ClInclude Include="..\CCArmature\physics\CCPhysicsWorld.h" />
     <ClInclude Include="..\CCArmature\utils\CCArmatureDataManager.h" />
     <ClInclude Include="..\CCArmature\utils\CCArmatureDefine.h" />
     <ClInclude Include="..\CCArmature\utils\CCConstValue.h" />

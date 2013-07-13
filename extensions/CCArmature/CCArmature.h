@@ -30,6 +30,9 @@ THE SOFTWARE.
 #include "display/CCBatchNode.h"
 #include "animation/CCArmatureAnimation.h"
 
+class b2Body;
+struct cpBody;
+
 NS_CC_EXT_BEGIN
     
 class  CCArmature : public CCNodeRGBA, public CCBlendProtocol 
@@ -154,6 +157,12 @@ protected:
 	CCPoint m_pOffsetPoint;
 
 	CCArmatureAnimation *m_pAnimation;
+
+#if ENABLE_PHYSICS_BOX2D_DETECT
+	CC_PROPERTY(b2Body*, m_pB2Body, B2Body);
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+	CC_PROPERTY(cpBody*, m_pCPBody, CPBody);
+#endif
 };
 
 NS_CC_EXT_END

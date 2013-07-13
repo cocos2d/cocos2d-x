@@ -1,5 +1,7 @@
 #include "ArmatureScene.h"
 #include "../../testResource.h"
+#include "D:/Program Files/Visual Leak Detector\include/vld.h"
+
 
 using namespace cocos2d;
 using namespace cocos2d::extension;
@@ -32,8 +34,8 @@ CCLayer *CreateLayer(int index)
 		pLayer = new TestParticleDisplay(); break;
 	case TEST_USE_DIFFERENT_PICTURE:
 		pLayer = new TestUseMutiplePicture(); break;
-	case TEST_BOX2D_DETECTOR:
-		pLayer = new TestBox2DDetector(); break;
+	case TEST_BCOLLIDER_DETECTOR:
+		pLayer = new TestColliderDetector(); break;
 	case TEST_BOUDINGBOX:
 		pLayer = new TestBoundingBox(); break;
 	case TEST_ANCHORPOINT:
@@ -98,13 +100,13 @@ ArmatureTestScene::ArmatureTestScene(bool bPortrait)
 void ArmatureTestScene::runThisTest()
 {
 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/TestBone0.png", "armature/TestBone0.plist", "armature/TestBone.json");
- 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/Cowboy0.png", "armature/Cowboy0.plist", "armature/Cowboy.json");
+ 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/Cowboy0.png", "armature/Cowboy0.plist", "armature/Cowboy.ExportJson");
 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/knight.png", "armature/knight.plist", "armature/knight.xml");
 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/weapon.png", "armature/weapon.plist", "armature/weapon.xml");
 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/robot.png", "armature/robot.plist", "armature/robot.xml");
 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/cyborg.png", "armature/cyborg.plist", "armature/cyborg.xml");
 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/Dragon.png", "armature/Dragon.plist", "armature/Dragon.xml");
-
+	
 	s_nActionIdx = -1;
 	addChild(NextTest());
 
@@ -513,15 +515,121 @@ void TestUseMutiplePicture::registerWithTouchDispatcher()
 
 
 
-void TestBox2DDetector::onEnter()
+
+
+
+#if ENABLE_PHYSICS_BOX2D_DETECT
+
+class Contact
+{
+public:
+	b2Fixture *fixtureA;
+	b2Fixture *fixtureB;
+};
+
+class ContactListener : public b2ContactListener
+{
+	//! Callbacks for derived classes.
+	virtual void BeginContact(b2Contact *contact)
+	{
+		if (contact)
+		{
+			Contact c;
+			c.fixtureA = contact->GetFixtureA();
+			c.fixtureB = contact->GetFixtureB();
+
+			contact_list.push_back(c);
+		}
+		B2_NOT_USED(contact);
+	}
+	virtual void EndContact(b2Contact *contact)
+	{
+		contact_list.clear();
+		B2_NOT_USED(contact);
+	}
+	virtual void PreSolve(b2Contact *contact, const b2Manifold *oldManifold)
+	{
+		B2_NOT_USED(contact);
+		B2_NOT_USED(oldManifold);
+	}
+	virtual void PostSolve(const b2Contact *contact, const b2ContactImpulse *impulse)
+	{
+		B2_NOT_USED(contact);
+		B2_NOT_USED(impulse);
+	}
+
+public:
+	std::list<Contact> contact_list;
+};
+
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+
+enum ColliderType
+{
+	eBulletTag,
+	eEnemyTag
+};
+
+
+int TestColliderDetector::beginHit(cpArbiter *arb, cpSpace *space, void *unused)
+{
+	CP_ARBITER_GET_SHAPES(arb, a, b);
+
+	CCBone *bone = (CCBone*)a->data;
+	bone->getArmature()->setVisible(false);
+
+	return 0;
+}
+
+void TestColliderDetector::endHit(cpArbiter *arb, cpSpace *space, void *unused)
+{
+	CP_ARBITER_GET_SHAPES(arb, a, b);
+
+	CCBone *bone = (CCBone*)a->data;
+	bone->getArmature()->setVisible(true);
+}
+
+void TestColliderDetector::destroyCPBody(cpBody *body)
+{
+	cpShape *shape = body->shapeList_private;
+	while(shape)
+	{
+		cpShape *temp = shape->next_private;
+
+		cpSpaceRemoveShape(space, shape);
+		cpShapeFree(shape);
+
+		shape = temp;
+	}
+	
+	cpSpaceRemoveBody(space, body);
+	cpBodyFree(body);
+}
+#endif
+
+TestColliderDetector::~TestColliderDetector()
+{
+#if ENABLE_PHYSICS_BOX2D_DETECT
+	CC_SAFE_DELETE(world);
+	CC_SAFE_DELETE(listener);
+	CC_SAFE_DELETE(debugDraw);
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+	destroyCPBody(armature2->getCPBody());
+	destroyCPBody(bullet->getCPBody());
+
+	cpSpaceFree(space);
+#endif
+}
+
+void TestColliderDetector::onEnter()
 {
 	ArmatureTestLayer::onEnter();
 
 	scheduleUpdate();
 
 	armature = cocos2d::extension::CCArmature::create("Cowboy");
-	armature->getAnimation()->play("Fire");
-	armature->getAnimation()->setAnimationScale(0.1f);
+	armature->getAnimation()->play("FireWithoutBullet");
+	armature->getAnimation()->setAnimationScale(0.2f);
 	armature->setScaleX(-0.2f);
 	armature->setScaleY(0.2f);
 	armature->setPosition(ccp(VisibleRect::left().x + 70, VisibleRect::left().y));
@@ -534,32 +642,148 @@ void TestBox2DDetector::onEnter()
 	armature2->setPosition(ccp(VisibleRect::right().x - 30, VisibleRect::left().y));
 	addChild(armature2);
 
-	CCPhysicsWorld::sharedPhysicsWorld()->BoneColliderSignal.connect(this, &TestBox2DDetector::onHit);
+	bullet = CCPhysicsSprite::createWithSpriteFrameName("25.png");
+	addChild(bullet);
+
+	initWorld();
 }
-std::string TestBox2DDetector::title()
+std::string TestColliderDetector::title()
 {
 	return "Test Box2D Detector";
 }
-void TestBox2DDetector::draw()
+void TestColliderDetector::draw()
 {
+#if ENABLE_PHYSICS_BOX2D_DETECT
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
-
 	kmGLPushMatrix();
-
-	CCPhysicsWorld::sharedPhysicsWorld()->drawDebug();
-
+	world->DrawDebugData();
 	kmGLPopMatrix();
-	
+#endif
 }
-void TestBox2DDetector::update(float delta)
+void TestColliderDetector::update(float delta)
 {
+#if ENABLE_PHYSICS_BOX2D_DETECT
 	armature2->setVisible(true);
-	CCPhysicsWorld::sharedPhysicsWorld()->update(delta);
+#endif
+
+	if (armature->getAnimation()->getCurrentFrameIndex() == 9)
+	{
+		CCPoint p = armature->getBone("Layer126")->getDisplayRenderNode()->convertToWorldSpaceAR(ccp(0, 0));
+		bullet->setPosition(ccp(p.x + 60, p.y));
+
+		bullet->stopAllActions();
+		bullet->runAction(CCMoveBy::create(1.5f, ccp(350, 0)));
+	}
+
+#if ENABLE_PHYSICS_BOX2D_DETECT
+	world->Step(delta, 0, 0);
+
+	for (std::list<Contact>::iterator it = listener->contact_list.begin(); it != listener->contact_list.end(); ++it)
+	{
+		Contact &contact = *it;
+
+		b2Body *b2a = contact.fixtureA->GetBody();
+		b2Body *b2b = contact.fixtureB->GetBody();
+
+		CCBone *ba = (CCBone *)b2a->GetUserData();
+		CCBone *bb = (CCBone *)b2b->GetUserData();
+
+		bb->getArmature()->setVisible(false);
+	}
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+	cpSpaceStep(space, delta);
+#endif
 }
-void TestBox2DDetector::onHit(cocos2d::extension::CCBone *bone, cocos2d::extension::CCBone *bone2)
+void TestColliderDetector::initWorld()
 {
-	armature2->setVisible(false);
+#if ENABLE_PHYSICS_BOX2D_DETECT
+	b2Vec2 noGravity(0, 0);
+
+	world = new b2World(noGravity);
+	world->SetAllowSleeping(true);
+
+	listener = new ContactListener();
+	world->SetContactListener(listener);
+
+	debugDraw = new GLESDebugDraw( PT_RATIO );
+	world->SetDebugDraw(debugDraw);
+
+	uint32 flags = 0;
+	flags += b2Draw::e_shapeBit;
+	//        flags += b2Draw::e_jointBit;
+	//        flags += b2Draw::e_aabbBit;
+	//        flags += b2Draw::e_pairBit;
+	//        flags += b2Draw::e_centerOfMassBit;
+	debugDraw->SetFlags(flags);
+
+
+	// Define the dynamic body.
+	//Set up a 1m squared box in the physics world
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_dynamicBody;
+
+	b2Body *body = world->CreateBody(&bodyDef);
+
+	// Define another box shape for our dynamic body.
+	b2PolygonShape dynamicBox;
+	dynamicBox.SetAsBox(.5f, .5f);//These are mid points for our 1m box
+
+	// Define the dynamic body fixture.
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &dynamicBox;   
+	fixtureDef.isSensor = true;
+	body->CreateFixture(&fixtureDef);    
+
+
+	bullet->setB2Body(body);
+	bullet->setPTMRatio(PT_RATIO);
+	bullet->setPosition( ccp( -100, -100) );
+
+	body = world->CreateBody(&bodyDef);
+	armature2->setB2Body(body);
+
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+	space = cpSpaceNew();
+	space->gravity = cpv(0, 0);
+
+	// Physics debug layer
+	CCPhysicsDebugNode *debugLayer = CCPhysicsDebugNode::create(space);
+	this->addChild(debugLayer, INT_MAX);
+
+	CCSize size = bullet->getContentSize();
+
+	int num = 4;
+	cpVect verts[] = {
+		cpv(-size.width/2,-size.height/2),
+		cpv(-size.width/2,size.height/2),
+		cpv(size.width/2,size.height/2),
+		cpv(size.width/2,-size.height/2),
+	};
+
+	cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, cpvzero));
+	cpSpaceAddBody(space, body);
+
+	cpShape* shape = cpPolyShapeNew(body, num, verts, cpvzero);
+	shape->collision_type = eBulletTag;
+	cpSpaceAddShape(space, shape);
+
+	bullet->setCPBody(body);
+
+	body = cpBodyNew(INFINITY, INFINITY);
+	cpSpaceAddBody(space, body);
+	armature2->setCPBody(body);
+
+	shape = body->shapeList_private;
+	while(shape){
+		cpShape *next = shape->next_private;
+		shape->collision_type = eEnemyTag;
+		shape = next;
+	}
+
+	cpSpaceAddCollisionHandler(space, eEnemyTag, eBulletTag, beginHit, NULL, NULL, endHit, NULL);
+#endif
 }
+
 
 
 

@@ -217,8 +217,6 @@ void CCTween::updateHandler()
                 //
                 m_fCurrentFrame = (1 - m_pMovementBoneData->delay) * (float)m_iNextFrameIndex;
                 m_fCurrentPercent = m_fCurrentFrame / m_iNextFrameIndex;
-
-
             }
             else
             {
@@ -322,10 +320,7 @@ void CCTween::arriveKeyFrame(CCFrameData *keyFrameData)
             }
         }
 
-        if(keyFrameData->m_strEvent.length() != 0)
-        {
-            m_pAnimation->FrameEventSignal.emit(m_pBone, keyFrameData->m_strEvent.c_str());
-        }
+        
         // 		if(keyFrameData->m_strSound.length() != 0)
         // 		{
         // 			//soundManager.dispatchEventWith(Event.SOUND_FRAME, m_pCurrentKeyFrame->sound);
