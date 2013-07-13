@@ -587,4 +587,65 @@ CCBone *CCArmature::getBoneAtPoint(float x, float y)
     return NULL;
 }
 
+#if ENABLE_PHYSICS_BOX2D_DETECT
+b2Body *CCArmature::getB2Body()
+{
+	return m_pB2Body;
+}
+
+void CCArmature::setB2Body(b2Body *body)
+{
+	m_pB2Body = body;
+	
+	CCObject *object = NULL;
+	CCARRAY_FOREACH(m_pChildren, object)
+	{
+		if (CCBone *bone = dynamic_cast<CCBone*>(object))
+		{
+			CCArray *displayList = bone->getDisplayManager()->getDecorativeDisplayList();
+
+			CCObject *displayObject = NULL;
+			CCARRAY_FOREACH(displayList, displayObject)
+			{
+				CCColliderDetector *detector = ((CCDecorativeDisplay*)displayObject)->getColliderDetector();
+				if (detector != NULL)
+				{
+					detector->setB2Body(m_pB2Body);
+				}
+			}
+		}
+	}
+}
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+cpBody *CCArmature::getCPBody()
+{
+	return m_pCPBody;
+}
+
+void CCArmature::setCPBody(cpBody *body)
+{
+	m_pCPBody = body;
+
+	CCObject *object = NULL;
+	CCARRAY_FOREACH(m_pChildren, object)
+	{
+		if (CCBone *bone = dynamic_cast<CCBone*>(object))
+		{
+			CCArray *displayList = bone->getDisplayManager()->getDecorativeDisplayList();
+
+			CCObject *displayObject = NULL;
+			CCARRAY_FOREACH(displayList, displayObject)
+			{
+				CCColliderDetector *detector = ((CCDecorativeDisplay*)displayObject)->getColliderDetector();
+				if (detector != NULL)
+				{
+					detector->setCPBody(m_pCPBody);
+				}
+			}
+		}
+	}
+}
+#endif
+
+
 NS_CC_EXT_END

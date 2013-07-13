@@ -44,7 +44,7 @@ CCDecorativeDisplay::CCDecorativeDisplay()
     , m_pDisplayData(NULL)
 
 {
-#if ENABLE_PHYSICS_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     m_pColliderDetector = NULL;
 #endif
 }
@@ -55,7 +55,7 @@ CCDecorativeDisplay::~CCDecorativeDisplay(void)
     CC_SAFE_RELEASE_NULL(m_pDisplayData);
     CC_SAFE_RELEASE_NULL(m_pDisplay);
 
-#if ENABLE_PHYSICS_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     CC_SAFE_RELEASE_NULL(m_pColliderDetector);
 #endif
 }

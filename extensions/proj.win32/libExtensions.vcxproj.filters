@@ -255,17 +255,11 @@
     <ClCompile Include="..\CCArmature\physics\CCColliderDetector.cpp">
       <Filter>CCArmature\physics</Filter>
     </ClCompile>
-    <ClCompile Include="..\CCArmature\physics\CCPhysicsWorld.cpp">
-      <Filter>CCArmature\physics</Filter>
-    </ClCompile>
     <ClCompile Include="..\CCArmature\CCArmature.cpp">
       <Filter>CCArmature</Filter>
     </ClCompile>
     <ClCompile Include="..\CCArmature\CCBone.cpp">
       <Filter>CCArmature</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCArmature\external_tool\GLES-Render.cpp">
-      <Filter>CCArmature\external_tool</Filter>
     </ClCompile>
     <ClCompile Include="..\CCArmature\external_tool\Json\CSContentJsonDictionary.cpp">
       <Filter>CCArmature\external_tool\Json</Filter>
@@ -589,17 +583,11 @@
     <ClInclude Include="..\CCArmature\physics\CCColliderDetector.h">
       <Filter>CCArmature\physics</Filter>
     </ClInclude>
-    <ClInclude Include="..\CCArmature\physics\CCPhysicsWorld.h">
-      <Filter>CCArmature\physics</Filter>
-    </ClInclude>
     <ClInclude Include="..\CCArmature\CCArmature.h">
       <Filter>CCArmature</Filter>
     </ClInclude>
     <ClInclude Include="..\CCArmature\CCBone.h">
       <Filter>CCArmature</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCArmature\external_tool\GLES-Render.h">
-      <Filter>CCArmature\external_tool</Filter>
     </ClInclude>
     <ClInclude Include="..\CCArmature\external_tool\Json\CSContentJsonDictionary.h">
       <Filter>CCArmature\external_tool\Json</Filter>
