@@ -37,8 +37,8 @@ Application::~Application()
 
 extern "C" void mainLoopIter(void)
 {
-    EGLView::sharedOpenGLView()->handleEvents();
-    Director::sharedDirector()->mainLoop();
+    EGLView::getInstance()->handleEvents();
+    Director::getInstance()->mainLoop();
 }
 
 int Application::run()
@@ -74,7 +74,7 @@ void Application::setResourceRootPath(const std::string& rootResDir)
     {
         _resourceRootPath += '/';
     }
-    FileUtils* pFileUtils = FileUtils::sharedFileUtils();
+    FileUtils* pFileUtils = FileUtils::getInstance();
     std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
     searchPaths.insert(searchPaths.begin(), _resourceRootPath);
     pFileUtils->setSearchPaths(searchPaths);

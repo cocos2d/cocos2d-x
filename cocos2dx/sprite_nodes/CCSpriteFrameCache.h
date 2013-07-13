@@ -132,10 +132,16 @@ public:
 
 public:
     /** Returns the shared instance of the Sprite Frame cache */
-    static SpriteFrameCache* sharedSpriteFrameCache(void);
+    static SpriteFrameCache* getInstance(void);
 
-    /** Purges the cache. It releases all the Sprite Frames and the retained instance. */
-    static void purgeSharedSpriteFrameCache(void);
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static SpriteFrameCache* sharedSpriteFrameCache(void);
+
+    /** Destroys the cache. It releases all the Sprite Frames and the retained instance. */
+    static void destroyInstance();
+
+    /** @deprecated Use destroyInstance() instead  */
+    CC_DEPRECATED_ATTRIBUTE static void purgeSharedSpriteFrameCache(void);
 
 private:
     // MARMALADE: Made this protected not private, as deriving from this class is pretty useful

@@ -5,10 +5,10 @@ class CCTextFieldTTF : public CCLabelTTF
     bool detachWithIME();
 
     int getCharCount();
-    void setColorSpaceHolder(ccColor3B val);
-    ccColor3B getColorSpaceHolder();
+    void setColorSpaceHolder(Color3B val);
+    Color3B getColorSpaceHolder();
     void setString(const char *text);
-    const char* getString(void);
+    const char* getString(void) const;
 
     void setPlaceHolder(const char * text);
     const char * getPlaceHolder(void);

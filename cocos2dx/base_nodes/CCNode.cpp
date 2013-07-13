@@ -58,12 +58,12 @@ Node::Node(void)
 , _scaleX(1.0f)
 , _scaleY(1.0f)
 , _vertexZ(0.0f)
-, _position(PointZero)
+, _position(Point::ZERO)
 , _skewX(0.0f)
 , _skewY(0.0f)
-, _anchorPointInPoints(PointZero)
-, _anchorPoint(PointZero)
-, _contentSize(SizeZero)
+, _anchorPointInPoints(Point::ZERO)
+, _anchorPoint(Point::ZERO)
+, _contentSize(Size::ZERO)
 , _additionalTransform(AffineTransformMakeIdentity())
 , _camera(NULL)
 // children (lazy allocs)
@@ -93,7 +93,7 @@ Node::Node(void)
 , _componentContainer(NULL)
 {
     // set default scheduler and actionManager
-    Director *director = Director::sharedDirector();
+    Director *director = Director::getInstance();
     _actionManager = director->getActionManager();
     _actionManager->retain();
     _scheduler = director->getScheduler();
@@ -128,7 +128,7 @@ Node::~Node(void)
         Object* child;
         CCARRAY_FOREACH(_children, child)
         {
-            Node* pChild = (Node*) child;
+            Node* pChild = static_cast<Node*>(child);
             if (pChild)
             {
                 pChild->_parent = NULL;
@@ -149,7 +149,7 @@ bool Node::init()
     return true;
 }
 
-float Node::getSkewX()
+float Node::getSkewX() const
 {
     return _skewX;
 }
@@ -160,7 +160,7 @@ void Node::setSkewX(float newSkewX)
     _transformDirty = _inverseDirty = true;
 }
 
-float Node::getSkewY()
+float Node::getSkewY() const
 {
     return _skewY;
 }
@@ -173,7 +173,7 @@ void Node::setSkewY(float newSkewY)
 }
 
 /// zOrder getter
-int Node::getZOrder()
+int Node::getZOrder() const
 {
     return _ZOrder;
 }
@@ -195,7 +195,7 @@ void Node::setZOrder(int z)
 }
 
 /// vertexZ getter
-float Node::getVertexZ()
+float Node::getVertexZ() const
 {
     return _vertexZ;
 }
@@ -209,7 +209,7 @@ void Node::setVertexZ(float var)
 
 
 /// rotation getter
-float Node::getRotation()
+float Node::getRotation() const
 {
     CCAssert(_rotationX == _rotationY, "CCNode#rotation. RotationX != RotationY. Don't know which one to return");
     return _rotationX;
@@ -222,7 +222,7 @@ void Node::setRotation(float newRotation)
     _transformDirty = _inverseDirty = true;
 }
 
-float Node::getRotationX()
+float Node::getRotationX() const
 {
     return _rotationX;
 }
@@ -233,7 +233,7 @@ void Node::setRotationX(float fRotationX)
     _transformDirty = _inverseDirty = true;
 }
 
-float Node::getRotationY()
+float Node::getRotationY() const
 {
     return _rotationY;
 }
@@ -245,7 +245,7 @@ void Node::setRotationY(float fRotationY)
 }
 
 /// scale getter
-float Node::getScale(void)
+float Node::getScale(void) const
 {
     CCAssert( _scaleX == _scaleY, "CCNode#scale. ScaleX != ScaleY. Don't know which one to return");
     return _scaleX;
@@ -259,7 +259,7 @@ void Node::setScale(float scale)
 }
 
 /// scaleX getter
-float Node::getScaleX()
+float Node::getScaleX() const
 {
     return _scaleX;
 }
@@ -272,7 +272,7 @@ void Node::setScaleX(float newScaleX)
 }
 
 /// scaleY getter
-float Node::getScaleY()
+float Node::getScaleY() const
 {
     return _scaleY;
 }
@@ -285,7 +285,7 @@ void Node::setScaleY(float newScaleY)
 }
 
 /// position getter
-const Point& Node::getPosition()
+const Point& Node::getPosition() const
 {
     return _position;
 }
@@ -297,7 +297,7 @@ void Node::setPosition(const Point& newPosition)
     _transformDirty = _inverseDirty = true;
 }
 
-void Node::getPosition(float* x, float* y)
+void Node::getPosition(float* x, float* y) const
 {
     *x = _position.x;
     *y = _position.y;
@@ -305,27 +305,27 @@ void Node::getPosition(float* x, float* y)
 
 void Node::setPosition(float x, float y)
 {
-    setPosition(ccp(x, y));
+    setPosition(Point(x, y));
 }
 
-float Node::getPositionX(void)
+float Node::getPositionX(void) const
 {
     return _position.x;
 }
 
-float Node::getPositionY(void)
+float Node::getPositionY(void) const
 {
     return  _position.y;
 }
 
 void Node::setPositionX(float x)
 {
-    setPosition(ccp(x, _position.y));
+    setPosition(Point(x, _position.y));
 }
 
 void Node::setPositionY(float y)
 {
-    setPosition(ccp(_position.x, y));
+    setPosition(Point(_position.x, y));
 }
 
 /// children getter
@@ -367,7 +367,7 @@ void Node::setGrid(GridBase* pGrid)
 
 
 /// isVisible getter
-bool Node::isVisible()
+bool Node::isVisible() const
 {
     return _visible;
 }
@@ -378,13 +378,13 @@ void Node::setVisible(bool var)
     _visible = var;
 }
 
-const Point& Node::getAnchorPointInPoints()
+const Point& Node::getAnchorPointInPoints() const
 {
     return _anchorPointInPoints;
 }
 
 /// anchorPoint getter
-const Point& Node::getAnchorPoint()
+const Point& Node::getAnchorPoint() const
 {
     return _anchorPoint;
 }
@@ -394,7 +394,7 @@ void Node::setAnchorPoint(const Point& point)
     if( ! point.equals(_anchorPoint))
     {
         _anchorPoint = point;
-        _anchorPointInPoints = ccp(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y );
+        _anchorPointInPoints = Point(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y );
         _transformDirty = _inverseDirty = true;
     }
 }
@@ -411,13 +411,13 @@ void Node::setContentSize(const Size & size)
     {
         _contentSize = size;
 
-        _anchorPointInPoints = ccp(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y );
+        _anchorPointInPoints = Point(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y );
         _transformDirty = _inverseDirty = true;
     }
 }
 
 // isRunning getter
-bool Node::isRunning()
+bool Node::isRunning() const
 {
     return _running;
 }
@@ -434,7 +434,7 @@ void Node::setParent(Node * var)
 }
 
 /// isRelativeAnchorPoint getter
-bool Node::isIgnoreAnchorPointForPosition()
+bool Node::isIgnoreAnchorPointForPosition() const
 {
     return _ignoreAnchorPointForPosition;
 }
@@ -472,7 +472,7 @@ void Node::setUserData(void *var)
     _userData = var;
 }
 
-unsigned int Node::getOrderOfArrival()
+unsigned int Node::getOrderOfArrival() const
 {
     return _orderOfArrival;
 }
@@ -492,7 +492,7 @@ Object* Node::getUserObject()
     return _userObject;
 }
 
-ccGLServerState Node::getGLServerState()
+ccGLServerState Node::getGLServerState() const
 {
     return _GLServerState;
 }
@@ -518,7 +518,7 @@ void Node::setShaderProgram(GLProgram *pShaderProgram)
 
 Rect Node::boundingBox()
 {
-    Rect rect = CCRectMake(0, 0, _contentSize.width, _contentSize.height);
+    Rect rect = Rect(0, 0, _contentSize.width, _contentSize.height);
     return RectApplyAffineTransform(rect, nodeToParentTransform());
 }
 
@@ -542,7 +542,14 @@ void Node::cleanup()
     this->stopAllActions();
     this->unscheduleAllSelectors();
     
-    if ( _scriptType != kScriptTypeNone)
+    if ( _scriptType == kScriptTypeLua)
+    {
+        int action = kNodeOnCleanup;
+        BasicScriptData data((void*)this,(void*)&action);
+        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);
+    }
+    else if(_scriptType == kScriptTypeJavascript)
     {
         ScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kNodeOnCleanup);
     }
@@ -552,7 +559,7 @@ void Node::cleanup()
 }
 
 
-const char* Node::description()
+const char* Node::description() const
 {
     return String::createWithFormat("<Node | Tag = %d>", _tag)->getCString();
 }
@@ -573,7 +580,7 @@ Node* Node::getChildByTag(int aTag)
         Object* child;
         CCARRAY_FOREACH(_children, child)
         {
-            Node* pNode = (Node*) child;
+            Node* pNode = static_cast<Node*>(child);
             if(pNode && pNode->_tag == aTag)
                 return pNode;
         }
@@ -694,7 +701,7 @@ void Node::removeAllChildrenWithCleanup(bool cleanup)
         Object* child;
         CCARRAY_FOREACH(_children, child)
         {
-            Node* pNode = (Node*) child;
+            Node* pNode = static_cast<Node*>(child);
             if (pNode)
             {
                 // IMPORTANT:
@@ -914,7 +921,14 @@ void Node::onEnter()
 
     _running = true;
 
-    if (_scriptType != kScriptTypeNone)
+    if (_scriptType == kScriptTypeLua)
+    {
+        int action = kNodeOnEnter;
+        BasicScriptData data((void*)this,(void*)&action);
+        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);
+    }
+    else if(_scriptType == kScriptTypeJavascript)
     {
         ScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kNodeOnEnter);
     }
@@ -926,7 +940,14 @@ void Node::onEnterTransitionDidFinish()
 
     arrayMakeObjectsPerformSelector(_children, onEnterTransitionDidFinish, Node*);
 
-    if (_scriptType == kScriptTypeJavascript)
+    if (_scriptType == kScriptTypeLua)
+    {
+        int action = kNodeOnEnterTransitionDidFinish;
+        BasicScriptData data((void*)this,(void*)&action);
+        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);
+    }
+    else if (_scriptType == kScriptTypeJavascript)
     {
         ScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kNodeOnEnterTransitionDidFinish);
     }
@@ -935,8 +956,13 @@ void Node::onEnterTransitionDidFinish()
 void Node::onExitTransitionDidStart()
 {
     arrayMakeObjectsPerformSelector(_children, onExitTransitionDidStart, Node*);
-
-    if (_scriptType == kScriptTypeJavascript)
+    if (_scriptType == kScriptTypeLua)
+    {
+        int action = kNodeOnExitTransitionDidStart;
+        BasicScriptData data((void*)this,(void*)&action);
+        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);    }
+    else if (_scriptType == kScriptTypeJavascript)
     {
         ScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kNodeOnExitTransitionDidStart);
     }
@@ -947,8 +973,14 @@ void Node::onExit()
     this->pauseSchedulerAndActions();
 
     _running = false;
-
-    if ( _scriptType != kScriptTypeNone)
+    if (_scriptType == kScriptTypeLua)
+    {
+        int action = kNodeOnExit;
+        BasicScriptData data((void*)this,(void*)&action);
+        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);
+    }
+    else if ( _scriptType == kScriptTypeJavascript)
     {
         ScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kNodeOnExit);
     }
@@ -1123,9 +1155,12 @@ void Node::pauseSchedulerAndActions()
 // override me
 void Node::update(float fDelta)
 {
-    if (_updateScriptHandler)
+    if (0 != _updateScriptHandler)
     {
-        ScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(_updateScriptHandler, fDelta, this);
+        //only lua use
+        SchedulerScriptData data(_updateScriptHandler,fDelta);
+        ScriptEvent event(kScheduleEvent,&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
     
     if (_componentContainer && !_componentContainer->isEmpty())
@@ -1169,7 +1204,7 @@ AffineTransform Node::nodeToParentTransform(void)
         // optimization:
         // inline anchor point calculation if skew is not needed
         // Adjusted transform calculation for rotational skew
-        if (! needsSkewMatrix && !_anchorPointInPoints.equals(PointZero))
+        if (! needsSkewMatrix && !_anchorPointInPoints.equals(Point::ZERO))
         {
             x += cy * -_anchorPointInPoints.x * _scaleX + -sx * -_anchorPointInPoints.y * _scaleY;
             y += sy * -_anchorPointInPoints.x * _scaleX +  cx * -_anchorPointInPoints.y * _scaleY;
@@ -1192,7 +1227,7 @@ AffineTransform Node::nodeToParentTransform(void)
             _transform = AffineTransformConcat(skewMatrix, _transform);
 
             // adjust anchor point
-            if (!_anchorPointInPoints.equals(PointZero))
+            if (!_anchorPointInPoints.equals(Point::ZERO))
             {
                 _transform = AffineTransformTranslate(_transform, -_anchorPointInPoints.x, -_anchorPointInPoints.y);
             }
@@ -1257,19 +1292,19 @@ Point Node::convertToWorldSpace(const Point& nodePoint)
 Point Node::convertToNodeSpaceAR(const Point& worldPoint)
 {
     Point nodePoint = convertToNodeSpace(worldPoint);
-    return ccpSub(nodePoint, _anchorPointInPoints);
+    return nodePoint - _anchorPointInPoints;
 }
 
 Point Node::convertToWorldSpaceAR(const Point& nodePoint)
 {
-    Point pt = ccpAdd(nodePoint, _anchorPointInPoints);
+    Point pt = nodePoint + _anchorPointInPoints;
     return convertToWorldSpace(pt);
 }
 
 Point Node::convertToWindowSpace(const Point& nodePoint)
 {
     Point worldPoint = this->convertToWorldSpace(nodePoint);
-    return Director::sharedDirector()->convertToUI(worldPoint);
+    return Director::getInstance()->convertToUI(worldPoint);
 }
 
 // convenience methods which take a Touch instead of Point
@@ -1314,8 +1349,8 @@ void Node::removeAllComponents()
 NodeRGBA::NodeRGBA()
 : _displayedOpacity(255)
 , _realOpacity(255)
-, _displayedColor(ccWHITE)
-, _realColor(ccWHITE)
+, _displayedColor(Color3B::WHITE)
+, _realColor(Color3B::WHITE)
 , _cascadeColorEnabled(false)
 , _cascadeOpacityEnabled(false)
 {}
@@ -1327,19 +1362,19 @@ bool NodeRGBA::init()
     if (Node::init())
     {
         _displayedOpacity = _realOpacity = 255;
-        _displayedColor = _realColor = ccWHITE;
+        _displayedColor = _realColor = Color3B::WHITE;
         _cascadeOpacityEnabled = _cascadeColorEnabled = false;
         return true;
     }
     return false;
 }
 
-GLubyte NodeRGBA::getOpacity(void)
+GLubyte NodeRGBA::getOpacity(void) const
 {
 	return _realOpacity;
 }
 
-GLubyte NodeRGBA::getDisplayedOpacity(void)
+GLubyte NodeRGBA::getDisplayedOpacity(void) const
 {
 	return _displayedOpacity;
 }
@@ -1378,7 +1413,7 @@ void NodeRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
     }
 }
 
-bool NodeRGBA::isCascadeOpacityEnabled(void)
+bool NodeRGBA::isCascadeOpacityEnabled(void) const
 {
     return _cascadeOpacityEnabled;
 }
@@ -1388,23 +1423,23 @@ void NodeRGBA::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
     _cascadeOpacityEnabled = cascadeOpacityEnabled;
 }
 
-const ccColor3B& NodeRGBA::getColor(void)
+const Color3B& NodeRGBA::getColor(void) const
 {
 	return _realColor;
 }
 
-const ccColor3B& NodeRGBA::getDisplayedColor()
+const Color3B& NodeRGBA::getDisplayedColor() const
 {
 	return _displayedColor;
 }
 
-void NodeRGBA::setColor(const ccColor3B& color)
+void NodeRGBA::setColor(const Color3B& color)
 {
 	_displayedColor = _realColor = color;
 	
 	if (_cascadeColorEnabled)
     {
-		ccColor3B parentColor = ccWHITE;
+		Color3B parentColor = Color3B::WHITE;
         RGBAProtocol *parent = dynamic_cast<RGBAProtocol*>(_parent);
 		if (parent && parent->isCascadeColorEnabled())
         {
@@ -1415,7 +1450,7 @@ void NodeRGBA::setColor(const ccColor3B& color)
 	}
 }
 
-void NodeRGBA::updateDisplayedColor(const ccColor3B& parentColor)
+void NodeRGBA::updateDisplayedColor(const Color3B& parentColor)
 {
 	_displayedColor.r = _realColor.r * parentColor.r/255.0;
 	_displayedColor.g = _realColor.g * parentColor.g/255.0;
@@ -1435,7 +1470,7 @@ void NodeRGBA::updateDisplayedColor(const ccColor3B& parentColor)
     }
 }
 
-bool NodeRGBA::isCascadeColorEnabled(void)
+bool NodeRGBA::isCascadeColorEnabled(void) const
 {
     return _cascadeColorEnabled;
 }

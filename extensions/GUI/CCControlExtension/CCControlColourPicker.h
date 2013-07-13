@@ -52,7 +52,7 @@ class ControlColourPicker: public Control
 public:
     ControlColourPicker();
     virtual ~ControlColourPicker();
-    virtual void setColor(const ccColor3B& colorValue);
+    virtual void setColor(const Color3B& colorValue);
     virtual void setEnabled(bool bEnabled);
 protected:
     HSV _hsv;

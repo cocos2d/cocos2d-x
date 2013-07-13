@@ -61,7 +61,7 @@ bool TMXTiledMap::initWithTMXFile(const char *tmxFile)
 {
     CCAssert(tmxFile != NULL && strlen(tmxFile)>0, "TMXTiledMap: tmx file should not bi NULL");
     
-    setContentSize(SizeZero);
+    setContentSize(Size::ZERO);
 
     TMXMapInfo *mapInfo = TMXMapInfo::formatWithTMXFile(tmxFile);
 
@@ -77,7 +77,7 @@ bool TMXTiledMap::initWithTMXFile(const char *tmxFile)
 
 bool TMXTiledMap::initWithXML(const char* tmxString, const char* resourcePath)
 {
-    setContentSize(SizeZero);
+    setContentSize(Size::ZERO);
 
     TMXMapInfo *mapInfo = TMXMapInfo::formatWithXML(tmxString, resourcePath);
 
@@ -88,8 +88,8 @@ bool TMXTiledMap::initWithXML(const char* tmxString, const char* resourcePath)
 }
 
 TMXTiledMap::TMXTiledMap()
-    :_mapSize(SizeZero)
-    ,_tileSize(SizeZero)        
+    :_mapSize(Size::ZERO)
+    ,_tileSize(Size::ZERO)        
     ,_objectGroups(NULL)
     ,_properties(NULL)
     ,_tileProperties(NULL)
@@ -149,7 +149,7 @@ TMXTilesetInfo * TMXTiledMap::tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInf
         Object* pObj = NULL;
         CCARRAY_FOREACH_REVERSE(tilesets, pObj)
         {
-            tileset = (TMXTilesetInfo*)pObj;
+            tileset = static_cast<TMXTilesetInfo*>(pObj);
             if (tileset)
             {
                 for( unsigned int y=0; y < size.height; y++ )
@@ -211,7 +211,7 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
         Object* pObj = NULL;
         CCARRAY_FOREACH(layers, pObj)
         {
-            layerInfo = (TMXLayerInfo*)pObj;
+            layerInfo = static_cast<TMXLayerInfo*>(pObj);
             if (layerInfo && layerInfo->_visible)
             {
                 TMXLayer *child = parseLayer(layerInfo, mapInfo);
@@ -262,7 +262,7 @@ TMXObjectGroup * TMXTiledMap::objectGroupNamed(const char *groupName)
         Object* pObj = NULL;
         CCARRAY_FOREACH(_objectGroups, pObj)
         {
-            objectGroup = (TMXObjectGroup*)(pObj);
+            objectGroup = static_cast<TMXObjectGroup*>(pObj);
             if (objectGroup && objectGroup->getGroupName() == sGroupName)
             {
                 return objectGroup;

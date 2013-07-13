@@ -65,7 +65,7 @@ public:
     CC_PROPERTY(Size, _preferredSize, PreferredSize); 
     /** 
      * The end-cap insets. 
-     * On a non-resizeable sprite, this property is set to CGRectZero; the sprite 
+     * On a non-resizeable sprite, this property is set to CGRect::ZERO; the sprite 
      * does not use end caps and the entire sprite is subject to stretching. 
      */
     CC_PROPERTY(Rect, _capInsets, CapInsets);
@@ -98,7 +98,7 @@ protected:
 
     bool _opacityModifyRGB;
     GLubyte _opacity;
-    ccColor3B _color;
+    Color3B _color;
     
     void updateCapInset();
     void updatePositions();
@@ -306,11 +306,12 @@ public:
     /** returns whether or not the opacity will be applied using glColor(R,G,B,opacity) or glColor(opacity, opacity, opacity, opacity);
      @since v0.8
      */
-    virtual bool isOpacityModifyRGB(void);
+    virtual bool isOpacityModifyRGB(void) const;
     virtual void setOpacity(GLubyte opacity);
-	virtual GLubyte getOpacity();
-    virtual void setColor(const ccColor3B& color);
-	virtual const ccColor3B& getColor();
+
+	virtual GLubyte getOpacity() const;
+    virtual void setColor(const Color3B& color);
+	virtual const Color3B& getColor() const;
 
     virtual bool updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bool rotated, Rect capInsets);
 

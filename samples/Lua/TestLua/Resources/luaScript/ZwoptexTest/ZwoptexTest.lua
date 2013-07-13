@@ -19,7 +19,7 @@ local function ZwoptexGenericTest()
         CCSpriteFrameCache:sharedSpriteFrameCache():addSpriteFramesWithFile("zwoptex/grossini.plist")
         CCSpriteFrameCache:sharedSpriteFrameCache():addSpriteFramesWithFile("zwoptex/grossini-generic.plist")
 
-        local layer1 = CCLayerColor:create(ccc4(255, 0, 0, 255), 85, 121)
+        local layer1 = CCLayerColor:create(Color4B(255, 0, 0, 255), 85, 121)
         layer1:setPosition(ccp(s.width/2-80 - (85.0 * 0.5), s.height/2 - (121.0 * 0.5)))
         ret:addChild(layer1)
 
@@ -30,7 +30,7 @@ local function ZwoptexGenericTest()
         sprite1:setFlipX(false)
         sprite1:setFlipY(false)
 
-        local layer2 = CCLayerColor:create(ccc4(255, 0, 0, 255), 85, 121)
+        local layer2 = CCLayerColor:create(Color4B(255, 0, 0, 255), 85, 121)
         layer2:setPosition(ccp(s.width/2+80 - (85.0 * 0.5), s.height/2 - (121.0 * 0.5)))
         ret:addChild(layer2)
 

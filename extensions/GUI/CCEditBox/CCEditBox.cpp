@@ -36,8 +36,8 @@ EditBox::EditBox(void)
 , _keyboardReturnType(kKeyboardReturnTypeDefault)
 , _fontSize(-1)
 , _placeholderFontSize(-1)
-, _colText(ccWHITE)
-, _colPlaceHolder(ccGRAY)
+, _colText(Color3B::WHITE)
+, _colPlaceHolder(Color3B::GRAY)
 , _maxLength(0)
 , _adjustHeight(0.0f)
 , _scriptEditBoxHandler(0)
@@ -90,7 +90,7 @@ bool EditBox::initWithSizeAndBackgroundSprite(const Size& size, Scale9Sprite* pP
         
         this->setZoomOnTouchDown(false);
         this->setPreferredSize(size);
-        this->setPosition(ccp(0, 0));
+        this->setPosition(Point(0, 0));
         this->addTargetWithActionForControlEvent(this, cccontrol_selector(EditBox::touchDownAction), ControlEventTouchUpInside);
         
         return true;
@@ -167,7 +167,7 @@ void EditBox::setFontSize(int fontSize)
     }
 }
 
-void EditBox::setFontColor(const ccColor3B& color)
+void EditBox::setFontColor(const Color3B& color)
 {
     _colText = color;
     if (_editBoxImpl != NULL)
@@ -207,7 +207,7 @@ void EditBox::setPlaceholderFontSize(int fontSize)
     }
 }
 
-void EditBox::setPlaceholderFontColor(const ccColor3B& color)
+void EditBox::setPlaceholderFontColor(const Color3B& color)
 {
     _colText = color;
     if (_editBoxImpl != NULL)
@@ -342,7 +342,7 @@ void EditBox::onExit(void)
 static Rect getRect(Node * pNode)
 {
 	Size contentSize = pNode->getContentSize();
-	Rect rect = CCRectMake(0, 0, contentSize.width, contentSize.height);
+	Rect rect = Rect(0, 0, contentSize.width, contentSize.height);
 	return RectApplyAffineTransform(rect, pNode->nodeToWorldTransform());
 }
 

@@ -44,6 +44,7 @@
 									<listOptionValue builtIn="false" value="LINUX"/>
 									<listOptionValue builtIn="false" value="CC_ENABLE_CHIPMUNK_INTEGRATION=1"/>
 								</option>
+								<option id="gnu.cpp.compiler.option.other.other.632416339" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.2029444877" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool command="gcc" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.2041247495" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.debug">
@@ -56,9 +57,10 @@
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1712401455" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,../../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,../../../CocosDenshion/proj.linux/${ConfigName} -Wl,-rpath,../../../CocosDenshion/third_party/fmod/api/lib" id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.1840922427" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug"/>
-							<tool command="g++" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} bin/${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,../../../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,../../../../CocosDenshion/proj.linux/${ConfigName}  -Wl,-rpath,../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -Wl,-rpath,../../../../CocosDenshion/third_party/fmod/api/lib" errorParsers="org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.163089056" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug">
+							<tool command="g++" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} bin/${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,../../../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,../../../../CocosDenshion/proj.linux/${ConfigName} -Wl,-rpath,../../../../CocosDenshion/third_party/fmod/api/lib" errorParsers="org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.163089056" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug">
 								<option id="gnu.cpp.link.option.libs.1882458104" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="cocos2d"/>
+									<listOptionValue builtIn="false" value="GL"/>
 									<listOptionValue builtIn="false" value="GLEW"/>
 									<listOptionValue builtIn="false" value="fmodex"/>
 									<listOptionValue builtIn="false" value="rt"/>
@@ -72,7 +74,7 @@
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/third_party/fmod/api/lib"/>
 								</option>
 								<option id="gnu.cpp.link.option.userobjs.1021852674" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
-									<listOptionValue builtIn="false" value="&quot;../../../../../extensions/proj.linux/${ConfigName}/libextension.a&quot;"/>
+									<listOptionValue builtIn="false" value="../../../../../extensions/proj.linux/${ConfigName}/libextension.a"/>
 									<listOptionValue builtIn="false" value="../../../../../external/chipmunk/proj.linux/${ConfigName}/libchipmunk.a"/>
 									<listOptionValue builtIn="false" value="../../../../../external/Box2D/proj.linux/${ConfigName}/libBox2D.a"/>
 								</option>
@@ -129,12 +131,12 @@
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="../../../../../external/chipmunk/include/chipmunk"/>
-									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.2022262883" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
 									<listOptionValue builtIn="false" value="CC_ENABLE_CHIPMUNK_INTEGRATION=1"/>
 								</option>
+								<option id="gnu.cpp.compiler.option.other.other.1913232962" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1960450905" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="cdt.managedbuild.tool.gnu.c.compiler.exe.release.1494845250" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.release">
@@ -147,9 +149,10 @@
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.558791653" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,../../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,../../../CocosDenshion/proj.linux/${ConfigName} -Wl,-rpath,../../../CocosDenshion/third_party/fmod/api/lib" id="cdt.managedbuild.tool.gnu.c.linker.exe.release.1799998206" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.release"/>
-							<tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} bin/${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,../../../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,../../../../CocosDenshion/proj.linux/${ConfigName}  -Wl,-rpath,../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -Wl,-rpath,../../../../CocosDenshion/third_party/fmod/api/lib" errorParsers="org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.tool.gnu.cpp.linker.exe.release.1783987767" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.release">
+							<tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} bin/${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,../../../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,../../../../CocosDenshion/proj.linux/${ConfigName} -Wl,-rpath,../../../../CocosDenshion/third_party/fmod/api/lib" errorParsers="org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.tool.gnu.cpp.linker.exe.release.1783987767" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.release">
 								<option id="gnu.cpp.link.option.libs.1581059715" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="cocos2d"/>
+									<listOptionValue builtIn="false" value="GL"/>
 									<listOptionValue builtIn="false" value="GLEW"/>
 									<listOptionValue builtIn="false" value="fmodex"/>
 									<listOptionValue builtIn="false" value="rt"/>
@@ -163,7 +166,7 @@
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/third_party/fmod/api/lib"/>
 								</option>
 								<option id="gnu.cpp.link.option.userobjs.1558283777" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
-									<listOptionValue builtIn="false" value="&quot;../../../../../extensions/proj.linux/${ConfigName}/libextension.a&quot;"/>
+									<listOptionValue builtIn="false" value="../../../../../extensions/proj.linux/${ConfigName}/libextension.a"/>
 									<listOptionValue builtIn="false" value="../../../../../external/chipmunk/proj.linux/${ConfigName}/libchipmunk.a"/>
 									<listOptionValue builtIn="false" value="../../../../../external/Box2D/proj.linux/${ConfigName}/libBox2D.a"/>
 								</option>
@@ -228,8 +231,10 @@
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1397402419" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
+									<listOptionValue builtIn="false" value="CC_KEYBOARD_SUPPORT"/>
 									<listOptionValue builtIn="false" value="CC_ENABLE_CHIPMUNK_INTEGRATION=1"/>
 								</option>
+								<option id="gnu.cpp.compiler.option.other.other.1818312012" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1880061794" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool command="gcc" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.219380601" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.debug">
@@ -238,13 +243,15 @@
 								<option id="gnu.c.compiler.option.include.paths.389614171" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths"/>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.985816570" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
+									<listOptionValue builtIn="false" value="CC_KEYBOARD_SUPPORT"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.806213730" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,../../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,../../../CocosDenshion/proj.linux/${ConfigName} -Wl,-rpath,../../../CocosDenshion/third_party/fmod/api/lib" id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.1349694383" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug"/>
-							<tool command="g++" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} bin/${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,../../../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,../../../../CocosDenshion/proj.linux/${ConfigName}  -Wl,-rpath,../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -Wl,-rpath,../../../../CocosDenshion/third_party/fmod/lib64/api/lib" errorParsers="org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.940220230" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug">
+							<tool command="g++" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} bin/${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,../../../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,../../../../CocosDenshion/proj.linux/${ConfigName} -Wl,-rpath,../../../../CocosDenshion/third_party/fmod/lib64/api/lib" errorParsers="org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.940220230" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug">
 								<option id="gnu.cpp.link.option.libs.1907501762" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="cocos2d"/>
+									<listOptionValue builtIn="false" value="GL"/>
 									<listOptionValue builtIn="false" value="GLEW"/>
 									<listOptionValue builtIn="false" value="fmodex64"/>
 									<listOptionValue builtIn="false" value="rt"/>
@@ -258,7 +265,7 @@
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/third_party/fmod/lib64/api/lib"/>
 								</option>
 								<option id="gnu.cpp.link.option.userobjs.300798233" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
-									<listOptionValue builtIn="false" value="&quot;../../../../../extensions/proj.linux/${ConfigName}/libextension.a&quot;"/>
+									<listOptionValue builtIn="false" value="../../../../../extensions/proj.linux/${ConfigName}/libextension.a"/>
 									<listOptionValue builtIn="false" value="../../../../../external/chipmunk/proj.linux/${ConfigName}/libchipmunk.a"/>
 									<listOptionValue builtIn="false" value="../../../../../external/Box2D/proj.linux/${ConfigName}/libBox2D.a"/>
 								</option>
@@ -320,6 +327,7 @@
 									<listOptionValue builtIn="false" value="LINUX"/>
 									<listOptionValue builtIn="false" value="CC_ENABLE_CHIPMUNK_INTEGRATION=1"/>
 								</option>
+								<option id="gnu.cpp.compiler.option.other.other.1403724285" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.716751530" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="cdt.managedbuild.tool.gnu.c.compiler.exe.release.1869052171" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.release">
@@ -332,9 +340,10 @@
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1196514567" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,../../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,../../../CocosDenshion/proj.linux/${ConfigName} -Wl,-rpath,../../../CocosDenshion/third_party/fmod/api/lib" id="cdt.managedbuild.tool.gnu.c.linker.exe.release.1613941884" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.release"/>
-							<tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} bin/${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,../../../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,../../../../CocosDenshion/proj.linux/${ConfigName}  -Wl,-rpath,../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -Wl,-rpath,../../../../CocosDenshion/third_party/fmod/lib64/api/lib" errorParsers="org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.tool.gnu.cpp.linker.exe.release.174804381" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.release">
+							<tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} bin/${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,../../../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,../../../../CocosDenshion/proj.linux/${ConfigName} -Wl,-rpath,../../../../CocosDenshion/third_party/fmod/lib64/api/lib" errorParsers="org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.tool.gnu.cpp.linker.exe.release.174804381" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.release">
 								<option id="gnu.cpp.link.option.libs.1843271674" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="cocos2d"/>
+									<listOptionValue builtIn="false" value="GL"/>
 									<listOptionValue builtIn="false" value="GLEW"/>
 									<listOptionValue builtIn="false" value="fmodex64"/>
 									<listOptionValue builtIn="false" value="rt"/>
@@ -348,7 +357,7 @@
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/third_party/fmod/lib64/api/lib"/>
 								</option>
 								<option id="gnu.cpp.link.option.userobjs.521099390" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
-									<listOptionValue builtIn="false" value="&quot;../../../../../extensions/proj.linux/${ConfigName}/libextension.a&quot;"/>
+									<listOptionValue builtIn="false" value="../../../../../extensions/proj.linux/${ConfigName}/libextension.a"/>
 									<listOptionValue builtIn="false" value="../../../../../external/chipmunk/proj.linux/${ConfigName}/libchipmunk.a"/>
 									<listOptionValue builtIn="false" value="../../../../../external/Box2D/proj.linux/${ConfigName}/libBox2D.a"/>
 								</option>

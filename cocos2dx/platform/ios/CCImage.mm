@@ -365,10 +365,14 @@ static bool _initWithString(const char * pText, cocos2d::Image::ETextAlign eAlig
             textOrigingY = startH - shadowStrokePaddingY;
         }
         
+        CGRect rect = CGRectMake(textOriginX, textOrigingY, textWidth, textHeight);
         
+        CGContextBeginTransparencyLayerWithRect(context, rect, NULL);
         // actually draw the text in the context
 		// XXX: ios7 casting
-        [str drawInRect:CGRectMake(textOriginX, textOrigingY, textWidth, textHeight) withFont:font lineBreakMode:NSLineBreakByWordWrapping alignment:(NSTextAlignment)align];
+        [str drawInRect: rect withFont:font lineBreakMode:NSLineBreakByWordWrapping alignment:(NSTextAlignment)align];
+
+        CGContextEndTransparencyLayer(context);
         
         // pop the context
         UIGraphicsPopContext();
@@ -412,8 +416,8 @@ bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFm
 {
 	bool bRet = false;
     unsigned long nSize = 0;
-    unsigned char* pBuffer = FileUtils::sharedFileUtils()->getFileData(
-				FileUtils::sharedFileUtils()->fullPathForFilename(strPath).c_str(),
+    unsigned char* pBuffer = FileUtils::getInstance()->getFileData(
+				FileUtils::getInstance()->fullPathForFilename(strPath).c_str(),
 				"rb",
 				&nSize);
 				
@@ -432,7 +436,7 @@ bool Image::initWithImageFileThreadSafe(const char *fullpath, EImageFormat image
      */
     bool bRet = false;
     unsigned long nSize = 0;
-    unsigned char* pBuffer = FileUtils::sharedFileUtils()->getFileData(fullpath, "rb", &nSize);
+    unsigned char* pBuffer = FileUtils::getInstance()->getFileData(fullpath, "rb", &nSize);
     if (pBuffer != NULL && nSize > 0)
     {
         bRet = initWithImageData(pBuffer, nSize, imageType);

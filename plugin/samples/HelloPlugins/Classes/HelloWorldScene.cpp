@@ -3,6 +3,7 @@
 #include "TestAnalyticsScene.h"
 #include "TestShareScene.h"
 #include "TestIAPScene.h"
+#include "TestIAPOnlineScene.h"
 #include "TestUserScene.h"
 
 USING_NS_CC;
@@ -13,6 +14,7 @@ std::string g_testCases[] = {
     "Test Share",
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     "Test IAP",
+    "Test IAP Online",
     "Test User",
 #endif
 };
@@ -42,8 +44,8 @@ bool HelloWorld::init()
         return false;
     }
     
-    Size visibleSize = Director::sharedDirector()->getVisibleSize();
-    Point origin = Director::sharedDirector()->getVisibleOrigin();
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    Point origin = Director::getInstance()->getVisibleOrigin();
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
@@ -94,6 +96,9 @@ void HelloWorld::menuCallback(Object* pSender)
         newScene = TestIAP::scene();
         break;
     case 4:
+        newScene = TestIAPOnline::scene();
+        break;
+    case 5:
         newScene = TestUser::scene();
         break;
     default:
@@ -101,13 +106,13 @@ void HelloWorld::menuCallback(Object* pSender)
     }
 
     if (newScene) {
-        Director::sharedDirector()->replaceScene(newScene);
+        Director::getInstance()->replaceScene(newScene);
     }
 }
 
 void HelloWorld::menuCloseCallback(Object* pSender)
 {
-    Director::sharedDirector()->end();
+    Director::getInstance()->end();
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);

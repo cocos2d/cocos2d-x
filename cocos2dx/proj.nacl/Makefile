@@ -25,7 +25,6 @@ SOURCES = ../actions/CCAction.cpp \
 ../cocoa/CCNS.cpp \
 ../cocoa/CCObject.cpp \
 ../cocoa/CCSet.cpp \
-../cocoa/CCZone.cpp \
 ../cocoa/CCArray.cpp \
 ../cocoa/CCDictionary.cpp \
 ../cocoa/CCString.cpp \
@@ -37,6 +36,7 @@ SOURCES = ../actions/CCAction.cpp \
 ../effects/CCGrid.cpp \
 ../keypad_dispatcher/CCKeypadDelegate.cpp \
 ../keypad_dispatcher/CCKeypadDispatcher.cpp \
+../keyboard_dispatcher/CCKeyboardDispatcher.cpp \
 ../label_nodes/CCLabelAtlas.cpp \
 ../label_nodes/CCLabelBMFont.cpp \
 ../label_nodes/CCLabelTTF.cpp \
@@ -99,6 +99,7 @@ SOURCES = ../actions/CCAction.cpp \
 ../textures/CCTextureCache.cpp \
 ../textures/CCTextureETC.cpp \
 ../textures/CCTexturePVR.cpp \
+../textures/etc/etc1.cpp\
 ../tilemap_parallax_nodes/CCParallaxNode.cpp \
 ../tilemap_parallax_nodes/CCTMXLayer.cpp \
 ../tilemap_parallax_nodes/CCTMXObjectGroup.cpp \
@@ -130,6 +131,7 @@ SOURCES = ../actions/CCAction.cpp \
 ../CCDirector.cpp \
 ../CCScheduler.cpp \
 ../ccFPSImages.c \
+../ccTypes.cpp \
 ../cocos2d.cpp
 
 include cocos2dx.mk

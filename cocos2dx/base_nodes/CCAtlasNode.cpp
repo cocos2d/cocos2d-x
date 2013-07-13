@@ -77,7 +77,7 @@ AtlasNode * AtlasNode::create(const char *tile, unsigned int tileWidth, unsigned
 bool AtlasNode::initWithTileFile(const char *tile, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender)
 {
     CCAssert(tile != NULL, "title should not be null");
-    Texture2D *texture = TextureCache::sharedTextureCache()->addImage(tile);
+    Texture2D *texture = TextureCache::getInstance()->addImage(tile);
 	return initWithTexture(texture, tileWidth, tileHeight, itemsToRender);
 }
 
@@ -87,7 +87,7 @@ bool AtlasNode::initWithTexture(Texture2D* texture, unsigned int tileWidth, unsi
     _itemWidth  = tileWidth;
     _itemHeight = tileHeight;
 
-    _colorUnmodified = ccWHITE;
+    _colorUnmodified = Color3B::WHITE;
     _isOpacityModifyRGB = true;
 
     _blendFunc.src = CC_BLEND_SRC;
@@ -110,7 +110,7 @@ bool AtlasNode::initWithTexture(Texture2D* texture, unsigned int tileWidth, unsi
     _quadsToDraw = itemsToRender;
 
     // shader stuff
-    setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTexture_uColor));
+    setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTexture_uColor));
     _uniformColor = glGetUniformLocation( getShaderProgram()->getProgram(), "u_color");
 
     return true;
@@ -152,7 +152,7 @@ void AtlasNode::draw(void)
 
 // AtlasNode - RGBA protocol
 
-const ccColor3B& AtlasNode::getColor()
+const Color3B& AtlasNode::getColor() const
 {
     if(_isOpacityModifyRGB)
     {
@@ -161,9 +161,9 @@ const ccColor3B& AtlasNode::getColor()
     return NodeRGBA::getColor();
 }
 
-void AtlasNode::setColor(const ccColor3B& color3)
+void AtlasNode::setColor(const Color3B& color3)
 {
-    ccColor3B tmp = color3;
+    Color3B tmp = color3;
     _colorUnmodified = color3;
 
     if( _isOpacityModifyRGB )
@@ -186,12 +186,12 @@ void AtlasNode::setOpacity(GLubyte opacity)
 
 void AtlasNode::setOpacityModifyRGB(bool bValue)
 {
-    ccColor3B oldColor = this->getColor();
+    Color3B oldColor = this->getColor();
     _isOpacityModifyRGB = bValue;
     this->setColor(oldColor);
 }
 
-bool AtlasNode::isOpacityModifyRGB()
+bool AtlasNode::isOpacityModifyRGB() const
 {
     return _isOpacityModifyRGB;
 }
@@ -208,12 +208,12 @@ void AtlasNode::setIgnoreContentScaleFactor(bool bIgnoreContentScaleFactor)
 
 // AtlasNode - CocosNodeTexture protocol
 
-ccBlendFunc AtlasNode::getBlendFunc()
+const BlendFunc& AtlasNode::getBlendFunc() const
 {
     return _blendFunc;
 }
 
-void AtlasNode::setBlendFunc(ccBlendFunc blendFunc)
+void AtlasNode::setBlendFunc(const BlendFunc &blendFunc)
 {
     _blendFunc = blendFunc;
 }

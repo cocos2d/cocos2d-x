@@ -505,9 +505,8 @@ static int		eventQueueCount;
 {
 	if( dispatchEvents_ ) {
 		tListEntry *entry, *tmp;
+		cocos2d::Director::getInstance()->getKeyboardDispatcher()->dispatchKeyboardEvent(event.keyCode, true);
 
-      cocos2d::KeyboardDispatcher *kbDisp = cocos2d::Director::sharedDirector()->getKeyboardDispatcher();
-      kbDisp->dispatchKeyboardEvent(event.keyCode, true);		
 		DL_FOREACH_SAFE( keyboardDelegates_, entry, tmp ) {
 			if ( entry->flags & kImplementsKeyDown ) {
 				void *swallows = [entry->delegate performSelector:@selector(ccKeyDown:) withObject:event];
@@ -522,9 +521,8 @@ static int		eventQueueCount;
 {
 	if( dispatchEvents_ ) {
 		tListEntry *entry, *tmp;
-		
-      cocos2d::KeyboardDispatcher *kbDisp = cocos2d::Director::sharedDirector()->getKeyboardDispatcher();
-      kbDisp->dispatchKeyboardEvent(event.keyCode, true);
+		cocos2d::Director::getInstance()->getKeyboardDispatcher()->dispatchKeyboardEvent(event.keyCode, false);
+
 		DL_FOREACH_SAFE( keyboardDelegates_, entry, tmp ) {
 			if ( entry->flags & kImplementsKeyUp ) {
 				void *swallows = [entry->delegate performSelector:@selector(ccKeyUp:) withObject:event];

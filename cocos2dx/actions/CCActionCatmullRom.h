@@ -93,7 +93,7 @@ public:
 
     virtual PointArray* clone() const;
 
-    const std::vector<Point*>* getControlPoints();
+    const std::vector<Point*>* getControlPoints() const;
 
     void setControlPoints(std::vector<Point*> *controlPoints);
 private:
@@ -125,7 +125,6 @@ public:
 	/** returns a new reversed action */
     virtual CardinalSplineTo* reverse() const;
 
-    virtual CardinalSplineTo* copyWithZone(Zone* pZone);
     virtual void startWithTarget(Node *pTarget);
     virtual void update(float time);
 

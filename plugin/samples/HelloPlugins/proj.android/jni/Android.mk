@@ -12,14 +12,21 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/TestAds/TestAdsScene.cpp \
                    ../../Classes/TestAnalytics/TestAnalyticsScene.cpp \
                    ../../Classes/TestIAP/TestIAPScene.cpp \
-				   ../../Classes/TestIAP/MyPurchase.cpp \
+                   ../../Classes/TestIAP/MyPurchase.cpp \
                    ../../Classes/TestShare/TestShareScene.cpp \
-				   ../../Classes/TestShare/MyShareManager.cpp \
+                   ../../Classes/TestShare/MyShareManager.cpp \
                    ../../Classes/TestUser/TestUserScene.cpp \
-				   ../../Classes/TestUser/MyUserManager.cpp
+                   ../../Classes/TestUser/MyUserManager.cpp \
+                   ../../Classes/TestIAPOnline/TestIAPOnlineScene.cpp \
+                   ../../Classes/TestIAPOnline/MyIAPOLManager.cpp
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes $(LOCAL_PATH)/../../Classes/TestAds $(LOCAL_PATH)/../../Classes/TestAnalytics \
-	$(LOCAL_PATH)/../../Classes/TestIAP $(LOCAL_PATH)/../../Classes/TestShare $(LOCAL_PATH)/../../Classes/TestUser
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
+    $(LOCAL_PATH)/../../Classes/TestAds \
+    $(LOCAL_PATH)/../../Classes/TestAnalytics \
+    $(LOCAL_PATH)/../../Classes/TestIAP \
+    $(LOCAL_PATH)/../../Classes/TestShare \
+    $(LOCAL_PATH)/../../Classes/TestUser \
+    $(LOCAL_PATH)/../../Classes/TestIAPOnline
 
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dx_static \
 PluginProtocolStatic

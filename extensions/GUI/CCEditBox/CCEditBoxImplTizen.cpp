@@ -47,8 +47,8 @@ EditBoxImplTizen::EditBoxImplTizen(EditBox* pEditText)
 , _editBoxInputMode(kEditBoxInputModeSingleLine)
 , _editBoxInputFlag(kEditBoxInputFlagInitialCapsAllCharacters)
 , _keyboardReturnType(kKeyboardReturnTypeDefault)
-, _colText(ccWHITE)
-, _colPlaceHolder(ccGRAY)
+, _colText(Color3B::WHITE)
+, _colPlaceHolder(Color3B::GRAY)
 , _maxLength(-1)
 {
 }
@@ -68,15 +68,15 @@ bool EditBoxImplTizen::initWithSize(const Size& size)
     int fontSize = (int)size.height-12;
     _label = LabelTTF::create("", "", size.height-12);
     // align the text vertically center
-    _label->setAnchorPoint(ccp(0, 0.5f));
-    _label->setPosition(ccp(CC_EDIT_BOX_PADDING, size.height / 2.0f));
+    _label->setAnchorPoint(Point(0, 0.5f));
+    _label->setPosition(Point(CC_EDIT_BOX_PADDING, size.height / 2.0f));
     _label->setColor(_colText);
     _editBox->addChild(_label);
 
     _labelPlaceHolder = LabelTTF::create("", "", size.height-12);
     // align the text vertically center
-    _labelPlaceHolder->setAnchorPoint(ccp(0, 0.5f));
-    _labelPlaceHolder->setPosition(ccp(CC_EDIT_BOX_PADDING, size.height / 2.0f));
+    _labelPlaceHolder->setAnchorPoint(Point(0, 0.5f));
+    _labelPlaceHolder->setPosition(Point(CC_EDIT_BOX_PADDING, size.height / 2.0f));
     _labelPlaceHolder->setVisible(false);
     _labelPlaceHolder->setColor(_colPlaceHolder);
     _editBox->addChild(_labelPlaceHolder);
@@ -98,7 +98,7 @@ void EditBoxImplTizen::setFont(const char* pFontName, int fontSize)
     }
 }
 
-void EditBoxImplTizen::setFontColor(const ccColor3B& color)
+void EditBoxImplTizen::setFontColor(const Color3B& color)
 {
     _colText = color;
     _label->setColor(color);
@@ -112,7 +112,7 @@ void EditBoxImplTizen::setPlaceholderFont(const char* pFontName, int fontSize)
     }
 }
 
-void EditBoxImplTizen::setPlaceholderFontColor(const ccColor3B& color)
+void EditBoxImplTizen::setPlaceholderFontColor(const Color3B& color)
 {
     _colPlaceHolder = color;
     _labelPlaceHolder->setColor(color);
@@ -250,11 +250,18 @@ static void editBoxCallbackFunc(const char* pText, void* ctx)
     
     EditBox* pEditBox = thiz->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
-    {
-        cocos2d::ScriptEngineProtocol* pEngine = cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine();
-        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
-        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "ended",pEditBox);
-        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "return",pEditBox);
+    {       
+        CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
+        ScriptEvent event(kCommonEvent,(void*)&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+        memset(data.eventName,0,64*sizeof(char));
+        strncpy(data.eventName,"ended",64);
+        event.data = (void*)&data;
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+        memset(data.eventName,0,64*sizeof(char));
+        strncpy(data.eventName,"return",64);
+        event.data = (void*)&data;
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
 }
 
@@ -267,8 +274,9 @@ void EditBoxImplTizen::openKeyboard()
     EditBox* pEditBox = this->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
-        cocos2d::ScriptEngineProtocol* pEngine = cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine();
-        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
+        CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
+        ScriptEvent event(kCommonEvent,(void*)&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
 
     KeypadStyle keypadStyle = KEYPAD_STYLE_NORMAL;

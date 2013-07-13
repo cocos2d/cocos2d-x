@@ -43,25 +43,25 @@ NS_CC_EXT_BEGIN
  as the private API may change with little or no warning.
  */
 
-static ccColor4F ColorForBody(cpBody *body)
+static Color4F ColorForBody(cpBody *body)
 {
 	if (cpBodyIsRogue(body) || cpBodyIsSleeping(body))
     {
-		return ccc4f(0.5f, 0.5f, 0.5f ,0.5f);
+		return Color4F(0.5f, 0.5f, 0.5f ,0.5f);
 	}
     else if (body->CP_PRIVATE(node).idleTime > body->CP_PRIVATE(space)->sleepTimeThreshold)
     {
-		return ccc4f(0.33f, 0.33f, 0.33f, 0.5f);
+		return Color4F(0.33f, 0.33f, 0.33f, 0.5f);
 	}
     else
     {
-		return ccc4f(1.0f, 0.0f, 0.0f, 0.5f);
+		return Color4F(1.0f, 0.0f, 0.0f, 0.5f);
 	}
 }
 
-static Point cpVert2ccp(const cpVect &vert)
+static Point cpVert2Point(const cpVect &vert)
 {
-    return CCPointMake(vert.x, vert.y);
+    return Point(vert.x, vert.y);
 }
 
 static Point* cpVertArray2ccpArrayN(const cpVect* cpVertArray, unsigned int count)
@@ -80,7 +80,7 @@ static Point* cpVertArray2ccpArrayN(const cpVect* cpVertArray, unsigned int coun
 static void DrawShape(cpShape *shape, DrawNode *renderer)
 {
 	cpBody *body = shape->body;
-	ccColor4F color = ColorForBody(body);
+	Color4F color = ColorForBody(body);
     
 	switch (shape->CP_PRIVATE(klass)->type)
     {
@@ -89,20 +89,20 @@ static void DrawShape(cpShape *shape, DrawNode *renderer)
             cpCircleShape *circle = (cpCircleShape *)shape;
             cpVect center = circle->tc;
             cpFloat radius = circle->r;
-            renderer->drawDot(cpVert2ccp(center), cpfmax(radius, 1.0), color);
-            renderer->drawSegment(cpVert2ccp(center), cpVert2ccp(cpvadd(center, cpvmult(body->rot, radius))), 1.0, color);
+            renderer->drawDot(cpVert2Point(center), cpfmax(radius, 1.0), color);
+            renderer->drawSegment(cpVert2Point(center), cpVert2Point(cpvadd(center, cpvmult(body->rot, radius))), 1.0, color);
         }
              break;
 		case CP_SEGMENT_SHAPE:
         {
             cpSegmentShape *seg = (cpSegmentShape *)shape;
-            renderer->drawSegment(cpVert2ccp(seg->ta), cpVert2ccp(seg->tb), cpfmax(seg->r, 2.0), color);
+            renderer->drawSegment(cpVert2Point(seg->ta), cpVert2Point(seg->tb), cpfmax(seg->r, 2.0), color);
         }
             break;
 		case CP_POLY_SHAPE:
         {
             cpPolyShape *poly = (cpPolyShape *)shape;
-            ccColor4F line = color;
+            Color4F line = color;
             line.a = cpflerp(color.a, 1.0, 0.5);
             Point* pPoints = cpVertArray2ccpArrayN(poly->tVerts, poly->numVerts);
             renderer->drawPolygon(pPoints, poly->numVerts, color, 1.0, line);
@@ -114,7 +114,7 @@ static void DrawShape(cpShape *shape, DrawNode *renderer)
 	}
 }
 
-static ccColor4F CONSTRAINT_COLOR = {0, 1, 0, 0.5};
+static Color4F CONSTRAINT_COLOR(0, 1, 0, 0.5);
 
 static void DrawConstraint(cpConstraint *constraint, DrawNode *renderer)
 {
@@ -129,9 +129,9 @@ static void DrawConstraint(cpConstraint *constraint, DrawNode *renderer)
 		cpVect a = cpBodyLocal2World(body_a, joint->anchr1);
 		cpVect b = cpBodyLocal2World(body_b, joint->anchr2);
 		
-        renderer->drawDot(cpVert2ccp(a), 3.0, CONSTRAINT_COLOR);
-        renderer->drawDot(cpVert2ccp(b), 3.0, CONSTRAINT_COLOR);
-        renderer->drawSegment(cpVert2ccp(a), cpVert2ccp(b), 1.0, CONSTRAINT_COLOR);
+        renderer->drawDot(cpVert2Point(a), 3.0, CONSTRAINT_COLOR);
+        renderer->drawDot(cpVert2Point(b), 3.0, CONSTRAINT_COLOR);
+        renderer->drawSegment(cpVert2Point(a), cpVert2Point(b), 1.0, CONSTRAINT_COLOR);
 	}
     else if (klass == cpSlideJointGetClass())
     {
@@ -140,9 +140,9 @@ static void DrawConstraint(cpConstraint *constraint, DrawNode *renderer)
 		cpVect a = cpBodyLocal2World(body_a, joint->anchr1);
 		cpVect b = cpBodyLocal2World(body_b, joint->anchr2);
         
-        renderer->drawDot(cpVert2ccp(a), 3.0, CONSTRAINT_COLOR);
-        renderer->drawDot(cpVert2ccp(b), 3.0, CONSTRAINT_COLOR);
-        renderer->drawSegment(cpVert2ccp(a), cpVert2ccp(b), 1.0, CONSTRAINT_COLOR);
+        renderer->drawDot(cpVert2Point(a), 3.0, CONSTRAINT_COLOR);
+        renderer->drawDot(cpVert2Point(b), 3.0, CONSTRAINT_COLOR);
+        renderer->drawSegment(cpVert2Point(a), cpVert2Point(b), 1.0, CONSTRAINT_COLOR);
 	}
     else if (klass == cpPivotJointGetClass())
     {
@@ -151,8 +151,8 @@ static void DrawConstraint(cpConstraint *constraint, DrawNode *renderer)
 		cpVect a = cpBodyLocal2World(body_a, joint->anchr1);
 		cpVect b = cpBodyLocal2World(body_b, joint->anchr2);
         
-        renderer->drawDot(cpVert2ccp(a), 3.0, CONSTRAINT_COLOR);
-        renderer->drawDot(cpVert2ccp(b), 3.0, CONSTRAINT_COLOR);
+        renderer->drawDot(cpVert2Point(a), 3.0, CONSTRAINT_COLOR);
+        renderer->drawDot(cpVert2Point(b), 3.0, CONSTRAINT_COLOR);
 	}
     else if (klass == cpGrooveJointGetClass())
     {
@@ -162,8 +162,8 @@ static void DrawConstraint(cpConstraint *constraint, DrawNode *renderer)
 		cpVect b = cpBodyLocal2World(body_a, joint->grv_b);
 		cpVect c = cpBodyLocal2World(body_b, joint->anchr2);
         
-        renderer->drawDot(cpVert2ccp(c), 3.0, CONSTRAINT_COLOR);
-        renderer->drawSegment(cpVert2ccp(a), cpVert2ccp(b), 1.0, CONSTRAINT_COLOR);
+        renderer->drawDot(cpVert2Point(c), 3.0, CONSTRAINT_COLOR);
+        renderer->drawSegment(cpVert2Point(a), cpVert2Point(b), 1.0, CONSTRAINT_COLOR);
 	}
     else if (klass == cpDampedSpringGetClass())
     {

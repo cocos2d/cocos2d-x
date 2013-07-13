@@ -133,7 +133,7 @@ void PoolManager::finalize()
         {
             if(!pObj)
                 break;
-            AutoreleasePool* pPool = (AutoreleasePool*)pObj;
+            AutoreleasePool* pPool = static_cast<AutoreleasePool*>(pObj);
             pPool->clear();
         }
     }

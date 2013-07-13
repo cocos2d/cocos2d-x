@@ -32,10 +32,20 @@
         <activity android:configChanges="orientation|keyboardHidden|navigation|screenSize" android:name="com.qihoopay.insdk.activity.RemoteContainerActivity" android:process=":remote" android:theme="@android:style/Theme.Translucent.NoTitleBar">
         </activity>
 
-        <meta-data android:name="QHOPENSDK_APPID" android:value="Your app_id" />
-        <meta-data android:name="QHOPENSDK_APPKEY" android:value="Your app_key" />
-        <meta-data android:name="QHOPENSDK_PRIVATEKEY" android:value="Your app_private_key" />
-        <meta-data android:name="QHOPENSDK_CHANNEL" android:value="Your channel or delete this line" />
+        <meta-data android:name="QHOPENSDK_APPID" android:value="102094835" />
+        <meta-data android:name="QHOPENSDK_APPKEY" android:value="8689e00460eabb1e66277eb4232fde6f" />
+        <meta-data android:name="QHOPENSDK_PRIVATEKEY" android:value="4e04fe9ac8e2a73cbb27ba52ac076eb9" />
+        <meta-data android:name="QHOPENSDK_CHANNEL" android:value="360PayDebug" />
+        <activity
+            android:name="cn.uc.gamesdk.view.SdkWebActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Translucent"
+            android:windowSoftInputMode="adjustResize" >
+            <intent-filter>
+                <action android:name="cn.uc.gamesdk.sdkweb" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
     <supports-screens android:anyDensity="true" android:largeScreens="true" android:normalScreens="true" android:smallScreens="true" />
                          

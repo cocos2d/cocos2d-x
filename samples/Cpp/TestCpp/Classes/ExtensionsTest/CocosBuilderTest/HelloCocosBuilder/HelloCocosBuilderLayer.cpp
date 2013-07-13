@@ -52,12 +52,12 @@ void HelloCocosBuilderLayer::openTest(const char * pCCBFileName, const char * pN
     }
 
     /* Push the new scene with a fancy transition. */
-    ccColor3B transitionColor;
+    Color3B transitionColor;
     transitionColor.r = 0;
     transitionColor.g = 0;
     transitionColor.b = 0;
     
-    Director::sharedDirector()->pushScene(TransitionFade::create(0.5f, scene, transitionColor));
+    Director::getInstance()->pushScene(TransitionFade::create(0.5f, scene, transitionColor));
 }
 
 
@@ -168,12 +168,12 @@ void HelloCocosBuilderLayer::onAnimationsTestClicked(Object * pSender, cocos2d::
     }
     
     /* Push the new scene with a fancy transition. */
-    ccColor3B transitionColor;
+    Color3B transitionColor;
     transitionColor.r = 0;
     transitionColor.g = 0;
     transitionColor.b = 0;
     
-    Director::sharedDirector()->pushScene(TransitionFade::create(0.5f, scene, transitionColor));
+    Director::getInstance()->pushScene(TransitionFade::create(0.5f, scene, transitionColor));
     
     
     //this->openTest("TestAnimations.ccbi", "TestAnimationsLayer", AnimationsTestLayerLoader::loader());

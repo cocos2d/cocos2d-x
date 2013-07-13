@@ -25,6 +25,7 @@ THE SOFTWARE.
 #define __MY_USER_MANAGER_H__
 
 #include "ProtocolUser.h"
+#include "Configs.h"
 
 class MyUserActionResult : public cocos2d::plugin::UserActionListener
 {
@@ -42,6 +43,9 @@ public:
     	kNoneMode = 0,
     	kQH360,
     	kND91,
+#if TEST_UC
+    	kUC,
+#endif
     } MyUserMode;
 
 	void unloadPlugin();
@@ -57,6 +61,7 @@ private:
 
     cocos2d::plugin::ProtocolUser* _qh360;
     cocos2d::plugin::ProtocolUser* _nd91;
+    cocos2d::plugin::ProtocolUser* _uc;
     MyUserActionResult* _retListener;
 };
 

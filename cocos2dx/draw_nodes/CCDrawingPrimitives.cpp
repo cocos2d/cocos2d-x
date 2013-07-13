@@ -56,7 +56,7 @@ NS_CC_BEGIN
 static bool s_bInitialized = false;
 static GLProgram* s_pShader = NULL;
 static int s_nColorLocation = -1;
-static ccColor4F s_tColor = {1.0f,1.0f,1.0f,1.0f};
+static Color4F s_tColor(1.0f,1.0f,1.0f,1.0f);
 static int s_nPointSizeLocation = -1;
 static GLfloat s_fPointSize = 1.0f;
 
@@ -94,7 +94,7 @@ static void lazy_init( void )
         //
         // Position and 1 color passed as a uniform (to simulate glColor4ub )
         //
-        s_pShader = ShaderCache::sharedShaderCache()->programForKey(kShader_Position_uColor);
+        s_pShader = ShaderCache::getInstance()->programForKey(kShader_Position_uColor);
         s_pShader->retain();
         
         s_nColorLocation = glGetUniformLocation( s_pShader->getProgram(), "u_color");
@@ -122,7 +122,7 @@ void ccDrawPoint( const Point& point )
 {
     lazy_init();
 
-    ccVertex2F p;
+    Vertex2F p;
     p.x = point.x;
     p.y = point.y;
 
@@ -156,10 +156,10 @@ void ccDrawPoints( const Point *points, unsigned int numberOfPoints )
     s_pShader->setUniformLocationWith1f(s_nPointSizeLocation, s_fPointSize);
 
     // XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
-    ccVertex2F* newPoints = new ccVertex2F[numberOfPoints];
+    Vertex2F* newPoints = new Vertex2F[numberOfPoints];
 
     // iPhone and 32-bit machines optimization
-    if( sizeof(Point) == sizeof(ccVertex2F) )
+    if( sizeof(Point) == sizeof(Vertex2F) )
     {
 #ifdef EMSCRIPTEN
         setGLBufferData((void*) points, numberOfPoints * sizeof(Point));
@@ -178,7 +178,7 @@ void ccDrawPoints( const Point *points, unsigned int numberOfPoints )
 #ifdef EMSCRIPTEN
         // Suspect Emscripten won't be emitting 64-bit code for a while yet,
         // but want to make sure this continues to work even if they do.
-        setGLBufferData(newPoints, numberOfPoints * sizeof(ccVertex2F));
+        setGLBufferData(newPoints, numberOfPoints * sizeof(Vertex2F));
         glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
         glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, newPoints);
@@ -197,9 +197,9 @@ void ccDrawLine( const Point& origin, const Point& destination )
 {
     lazy_init();
 
-    ccVertex2F vertices[2] = {
-        {origin.x, origin.y},
-        {destination.x, destination.y}
+    Vertex2F vertices[2] = {
+        Vertex2F(origin.x, origin.y),
+        Vertex2F(destination.x, destination.y)
     };
 
     s_pShader->use();
@@ -220,19 +220,19 @@ void ccDrawLine( const Point& origin, const Point& destination )
 
 void ccDrawRect( Point origin, Point destination )
 {
-    ccDrawLine(CCPointMake(origin.x, origin.y), CCPointMake(destination.x, origin.y));
-    ccDrawLine(CCPointMake(destination.x, origin.y), CCPointMake(destination.x, destination.y));
-    ccDrawLine(CCPointMake(destination.x, destination.y), CCPointMake(origin.x, destination.y));
-    ccDrawLine(CCPointMake(origin.x, destination.y), CCPointMake(origin.x, origin.y));
+    ccDrawLine(Point(origin.x, origin.y), Point(destination.x, origin.y));
+    ccDrawLine(Point(destination.x, origin.y), Point(destination.x, destination.y));
+    ccDrawLine(Point(destination.x, destination.y), Point(origin.x, destination.y));
+    ccDrawLine(Point(origin.x, destination.y), Point(origin.x, origin.y));
 }
 
-void ccDrawSolidRect( Point origin, Point destination, ccColor4F color )
+void ccDrawSolidRect( Point origin, Point destination, Color4F color )
 {
     Point vertices[] = {
         origin,
-        ccp(destination.x, origin.y),
+        Point(destination.x, origin.y),
         destination,
-        ccp(origin.x, destination.y)
+        Point(origin.x, destination.y)
     };
 
     ccDrawSolidPoly(vertices, 4, color );
@@ -249,7 +249,7 @@ void ccDrawPoly( const Point *poli, unsigned int numberOfPoints, bool closePolyg
     ccGLEnableVertexAttribs( kVertexAttribFlag_Position );
 
     // iPhone and 32-bit machines optimization
-    if( sizeof(Point) == sizeof(ccVertex2F) )
+    if( sizeof(Point) == sizeof(Vertex2F) )
     {
 #ifdef EMSCRIPTEN
         setGLBufferData((void*) poli, numberOfPoints * sizeof(Point));
@@ -267,13 +267,13 @@ void ccDrawPoly( const Point *poli, unsigned int numberOfPoints, bool closePolyg
     {
         // Mac on 64-bit
         // XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
-        ccVertex2F* newPoli = new ccVertex2F[numberOfPoints];
+        Vertex2F* newPoli = new Vertex2F[numberOfPoints];
         for( unsigned int i=0; i<numberOfPoints;i++) {
             newPoli[i].x = poli[i].x;
             newPoli[i].y = poli[i].y;
         }
 #ifdef EMSCRIPTEN
-        setGLBufferData(newPoli, numberOfPoints * sizeof(ccVertex2F));
+        setGLBufferData(newPoli, numberOfPoints * sizeof(Vertex2F));
         glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
         glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, newPoli);
@@ -290,7 +290,7 @@ void ccDrawPoly( const Point *poli, unsigned int numberOfPoints, bool closePolyg
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void ccDrawSolidPoly( const Point *poli, unsigned int numberOfPoints, ccColor4F color )
+void ccDrawSolidPoly( const Point *poli, unsigned int numberOfPoints, Color4F color )
 {
     lazy_init();
 
@@ -301,10 +301,10 @@ void ccDrawSolidPoly( const Point *poli, unsigned int numberOfPoints, ccColor4F 
     ccGLEnableVertexAttribs( kVertexAttribFlag_Position );
 
     // XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
-    ccVertex2F* newPoli = new ccVertex2F[numberOfPoints];
+    Vertex2F* newPoli = new Vertex2F[numberOfPoints];
 
     // iPhone and 32-bit machines optimization
-    if( sizeof(Point) == sizeof(ccVertex2F) )
+    if( sizeof(Point) == sizeof(Vertex2F) )
     {
 #ifdef EMSCRIPTEN
         setGLBufferData((void*) poli, numberOfPoints * sizeof(Point));
@@ -318,10 +318,10 @@ void ccDrawSolidPoly( const Point *poli, unsigned int numberOfPoints, ccColor4F 
         // Mac on 64-bit
         for( unsigned int i=0; i<numberOfPoints;i++)
         {
-            newPoli[i] = vertex2( poli[i].x, poli[i].y );
+            newPoli[i] = Vertex2F( poli[i].x, poli[i].y );
         }
 #ifdef EMSCRIPTEN
-        setGLBufferData(newPoli, numberOfPoints * sizeof(ccVertex2F));
+        setGLBufferData(newPoli, numberOfPoints * sizeof(Vertex2F));
         glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
         glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, newPoli);
@@ -383,11 +383,57 @@ void CC_DLL ccDrawCircle( const Point& center, float radius, float angle, unsign
     ccDrawCircle(center, radius, angle, segments, drawLineToCenter, 1.0f, 1.0f);
 }
 
+void ccDrawSolidCircle( const Point& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY)
+{
+    lazy_init();
+    
+    const float coef = 2.0f * (float)M_PI/segments;
+    
+    GLfloat *vertices = (GLfloat*)calloc( sizeof(GLfloat)*2*(segments+2), 1);
+    if( ! vertices )
+        return;
+    
+    for(unsigned int i = 0;i <= segments; i++) {
+        float rads = i*coef;
+        GLfloat j = radius * cosf(rads + angle) * scaleX + center.x;
+        GLfloat k = radius * sinf(rads + angle) * scaleY + center.y;
+        
+        vertices[i*2] = j;
+        vertices[i*2+1] = k;
+    }
+    vertices[(segments+1)*2] = center.x;
+    vertices[(segments+1)*2+1] = center.y;
+    
+    s_pShader->use();
+    s_pShader->setUniformsForBuiltins();
+    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
+    
+    ccGLEnableVertexAttribs( kVertexAttribFlag_Position );
+    
+#ifdef EMSCRIPTEN
+    setGLBufferData(vertices, sizeof(GLfloat)*2*(segments+2));
+    glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
+#else
+    glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+#endif // EMSCRIPTEN
+    
+    glDrawArrays(GL_TRIANGLE_FAN, 0, (GLsizei) segments+1);
+    
+    free( vertices );
+    
+    CC_INCREMENT_GL_DRAWS(1);
+}
+
+void CC_DLL ccDrawSolidCircle( const Point& center, float radius, float angle, unsigned int segments)
+{
+    ccDrawSolidCircle(center, radius, angle, segments, 1.0f, 1.0f);
+}
+
 void ccDrawQuadBezier(const Point& origin, const Point& control, const Point& destination, unsigned int segments)
 {
     lazy_init();
 
-    ccVertex2F* vertices = new ccVertex2F[segments + 1];
+    Vertex2F* vertices = new Vertex2F[segments + 1];
 
     float t = 0.0f;
     for(unsigned int i = 0; i < segments; i++)
@@ -406,7 +452,7 @@ void ccDrawQuadBezier(const Point& origin, const Point& control, const Point& de
     ccGLEnableVertexAttribs( kVertexAttribFlag_Position );
 
 #ifdef EMSCRIPTEN
-    setGLBufferData(vertices, (segments + 1) * sizeof(ccVertex2F));
+    setGLBufferData(vertices, (segments + 1) * sizeof(Vertex2F));
     glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
     glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
@@ -426,7 +472,7 @@ void ccDrawCardinalSpline( PointArray *config, float tension,  unsigned int segm
 {
     lazy_init();
 
-    ccVertex2F* vertices = new ccVertex2F[segments + 1];
+    Vertex2F* vertices = new Vertex2F[segments + 1];
 
     unsigned int p;
     float lt;
@@ -463,7 +509,7 @@ void ccDrawCardinalSpline( PointArray *config, float tension,  unsigned int segm
     ccGLEnableVertexAttribs( kVertexAttribFlag_Position );
 
 #ifdef EMSCRIPTEN
-    setGLBufferData(vertices, (segments + 1) * sizeof(ccVertex2F));
+    setGLBufferData(vertices, (segments + 1) * sizeof(Vertex2F));
     glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
     glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
@@ -478,7 +524,7 @@ void ccDrawCubicBezier(const Point& origin, const Point& control1, const Point& 
 {
     lazy_init();
 
-    ccVertex2F* vertices = new ccVertex2F[segments + 1];
+    Vertex2F* vertices = new Vertex2F[segments + 1];
 
     float t = 0;
     for(unsigned int i = 0; i < segments; i++)
@@ -497,7 +543,7 @@ void ccDrawCubicBezier(const Point& origin, const Point& control1, const Point& 
     ccGLEnableVertexAttribs( kVertexAttribFlag_Position );
 
 #ifdef EMSCRIPTEN
-    setGLBufferData(vertices, (segments + 1) * sizeof(ccVertex2F));
+    setGLBufferData(vertices, (segments + 1) * sizeof(Vertex2F));
     glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
     glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);

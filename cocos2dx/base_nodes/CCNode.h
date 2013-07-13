@@ -156,7 +156,7 @@ public:
      * Gets the description string. It makes debugging easier.
      * @return A string terminated with '\0'
      */
-    const char* description(void);
+    const char* description(void) const;
     
     /// @} end of initializers
     
@@ -192,7 +192,7 @@ public:
      *
      * @return The Z order.
      */
-    virtual int getZOrder();
+    virtual int getZOrder() const;
 
 
     /**
@@ -215,7 +215,7 @@ public:
      *
      * @return OpenGL Z vertex of this node
      */
-    virtual float getVertexZ();
+    virtual float getVertexZ() const;
 
 
     /**
@@ -233,7 +233,7 @@ public:
      *
      * @return The scale factor on X axis.
      */
-    virtual float getScaleX();
+    virtual float getScaleX() const;
 
     
     /**
@@ -251,7 +251,7 @@ public:
      *
      * @return The scale factor on Y axis. 
      */
-    virtual float getScaleY();
+    virtual float getScaleY() const;
 
     
     /**
@@ -270,18 +270,18 @@ public:
      *
      * @return The scale factor of the node.
      */
-    virtual float getScale();
+    virtual float getScale() const;
     
     
     /**
      * Changes the position (x,y) of the node in OpenGL coordinates
      *
-     * Usually we use ccp(x,y) to compose Point object.
+     * Usually we use Point(x,y) to compose Point object.
      * The original point (0,0) is at the left-bottom corner of screen.
      * For example, this codesnip sets the node in the center of screen.
      * @code
-     * Size size = Director::sharedDirector()->getWinSize();
-     * node->setPosition( ccp(size.width/2, size.height/2) )
+     * Size size = Director::getInstance()->getWinSize();
+     * node->setPosition( Point(size.width/2, size.height/2) )
      * @endcode
      *
      * @param position  The position (x,y) of the node in OpenGL coordinates
@@ -294,7 +294,7 @@ public:
      *
      * @return The position (x,y) of the node in OpenGL coordinates
      */
-    virtual const Point& getPosition();
+    virtual const Point& getPosition() const;
     /**
      * Sets position in a more efficient way.
      *
@@ -317,15 +317,15 @@ public:
      *
      * @see setPosition(float, float)
      */
-    virtual void getPosition(float* x, float* y);
+    virtual void getPosition(float* x, float* y) const;
     /**
      * Gets/Sets x or y coordinate individually for position.
      * These methods are used in Lua and Javascript Bindings
      */
     virtual void  setPositionX(float x);
-    virtual float getPositionX(void);
+    virtual float getPositionX(void) const;
     virtual void  setPositionY(float y);
-    virtual float getPositionY(void);
+    virtual float getPositionY(void) const;
     
     
     /**
@@ -345,7 +345,7 @@ public:
      *
      * @return The X skew angle of the node in degrees.
      */
-    virtual float getSkewX();
+    virtual float getSkewX() const;
 
     
     /**
@@ -365,7 +365,7 @@ public:
      *
      * @return The Y skew angle of the node in degrees.
      */
-    virtual float getSkewY();
+    virtual float getSkewY() const;
 
     
     /**
@@ -387,7 +387,7 @@ public:
      *
      * @return The anchor point of node.
      */
-    virtual const Point& getAnchorPoint();
+    virtual const Point& getAnchorPoint() const;
     /**
      * Returns the anchorPoint in absolute pixels.
      * 
@@ -396,7 +396,7 @@ public:
      *
      * @return The anchor point in absolute pixels.
      */
-    virtual const Point& getAnchorPointInPoints();
+    virtual const Point& getAnchorPointInPoints() const;
     
     
     /**
@@ -433,7 +433,7 @@ public:
      *
      * @return true if the node is visible, false if the node is hidden.
      */
-    virtual bool isVisible();
+    virtual bool isVisible() const;
 
     
     /** 
@@ -452,7 +452,7 @@ public:
      *
      * @return The rotation of the node in degrees.
      */
-    virtual float getRotation();
+    virtual float getRotation() const;
 
     
     /** 
@@ -471,7 +471,7 @@ public:
      *
      * @return The X rotation in degrees.
      */
-    virtual float getRotationX();
+    virtual float getRotationX() const;
 
     
     /** 
@@ -490,7 +490,7 @@ public:
      *
      * @return The Y rotation in degrees.
      */
-    virtual float getRotationY();
+    virtual float getRotationY() const;
 
     
     /**
@@ -511,7 +511,7 @@ public:
      *
      * @return The arrival order.
      */
-    virtual unsigned int getOrderOfArrival();
+    virtual unsigned int getOrderOfArrival() const;
     
     
     /**
@@ -525,7 +525,7 @@ public:
      *
      * @return The state of OpenGL server side.
      */
-    virtual ccGLServerState getGLServerState();
+    virtual ccGLServerState getGLServerState() const;
     
     
     /**
@@ -545,7 +545,7 @@ public:
      *
      * @return true if the anchor point will be (0,0) when you position this node.
      */
-    virtual bool isIgnoreAnchorPointForPosition();
+    virtual bool isIgnoreAnchorPointForPosition() const;
     
     /// @}  end of Setters & Getters for Graphic Peroperties
     
@@ -826,7 +826,7 @@ public:
      * Since v2.0, each rendering node must set its shader program.
      * It should be set in initialize phase.
      * @code
-     * node->setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColor));
+     * node->setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColor));
      * @endcode
      * 
      * @param The shader program which fetchs from ShaderCache.
@@ -855,7 +855,7 @@ public:
      *
      * @return Whether or not the node is running.
      */
-    virtual bool isRunning();
+    virtual bool isRunning() const;
 
     
     /// @{
@@ -896,7 +896,7 @@ public:
      *
      * @return A number that indicates a lua function.
      */
-    inline int getScriptHandler() { return _scriptHandler; };
+    inline int getScriptHandler() const { return _scriptHandler; };
     
     /** 
      * Schedules for lua script. 
@@ -1273,7 +1273,7 @@ public:
         this->addChild(spriteB); 
 
         //position
-        spriteA->setPosition(ccp(200, 200));
+        spriteA->setPosition(Point(200, 200));
      
         // Gets the spriteA's transform.
         AffineTransform t = spriteA->nodeToParentTransform();
@@ -1428,28 +1428,28 @@ public:
     
     virtual bool init();
     
-    virtual GLubyte getOpacity();
-    virtual GLubyte getDisplayedOpacity();
+    virtual GLubyte getOpacity() const;
+    virtual GLubyte getDisplayedOpacity() const;
     virtual void setOpacity(GLubyte opacity);
     virtual void updateDisplayedOpacity(GLubyte parentOpacity);
-    virtual bool isCascadeOpacityEnabled();
+    virtual bool isCascadeOpacityEnabled() const;
     virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
     
-    virtual const ccColor3B& getColor(void);
-    virtual const ccColor3B& getDisplayedColor();
-    virtual void setColor(const ccColor3B& color);
-    virtual void updateDisplayedColor(const ccColor3B& parentColor);
-    virtual bool isCascadeColorEnabled();
+    virtual const Color3B& getColor(void) const;
+    virtual const Color3B& getDisplayedColor() const;
+    virtual void setColor(const Color3B& color);
+    virtual void updateDisplayedColor(const Color3B& parentColor);
+    virtual bool isCascadeColorEnabled() const;
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
     
     virtual void setOpacityModifyRGB(bool bValue) {};
-    virtual bool isOpacityModifyRGB() { return false; };
+    virtual bool isOpacityModifyRGB() const { return false; };
 
 protected:
 	GLubyte		_displayedOpacity;
     GLubyte     _realOpacity;
-	ccColor3B	_displayedColor;
-    ccColor3B   _realColor;
+	Color3B	    _displayedColor;
+    Color3B     _realColor;
 	bool		_cascadeColorEnabled;
     bool        _cascadeOpacityEnabled;
 };

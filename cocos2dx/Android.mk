@@ -11,6 +11,7 @@ CCConfiguration.cpp \
 CCScheduler.cpp \
 CCCamera.cpp \
 ccFPSImages.c \
+ccTypes.cpp \
 actions/CCAction.cpp \
 actions/CCActionCamera.cpp \
 actions/CCActionCatmullRom.cpp \
@@ -34,7 +35,6 @@ cocoa/CCNS.cpp \
 cocoa/CCObject.cpp \
 cocoa/CCSet.cpp \
 cocoa/CCString.cpp \
-cocoa/CCZone.cpp \
 cocoa/CCArray.cpp \
 cocoa/CCDataVisitor.cpp \
 cocoa/CCData.cpp \
@@ -59,6 +59,7 @@ kazmath/src/GL/mat4stack.c \
 kazmath/src/GL/matrix.c \
 keypad_dispatcher/CCKeypadDelegate.cpp \
 keypad_dispatcher/CCKeypadDispatcher.cpp \
+keyboard_dispatcher/CCKeyboardDispatcher.cpp \
 label_nodes/CCLabelAtlas.cpp \
 label_nodes/CCLabelBMFont.cpp \
 label_nodes/CCLabelTTF.cpp \
@@ -133,6 +134,7 @@ textures/CCTextureAtlas.cpp \
 textures/CCTextureCache.cpp \
 textures/CCTextureETC.cpp \
 textures/CCTexturePVR.cpp \
+textures/etc/etc1.cpp\
 tilemap_parallax_nodes/CCParallaxNode.cpp \
 tilemap_parallax_nodes/CCTMXLayer.cpp \
 tilemap_parallax_nodes/CCTMXObjectGroup.cpp \

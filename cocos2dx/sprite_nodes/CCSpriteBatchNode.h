@@ -131,8 +131,8 @@ public:
     // TextureProtocol
     virtual Texture2D* getTexture(void);
     virtual void setTexture(Texture2D *texture);
-    virtual void setBlendFunc(ccBlendFunc blendFunc);
-    virtual ccBlendFunc getBlendFunc(void);
+    virtual void setBlendFunc(const BlendFunc &blendFunc);
+    virtual const BlendFunc& getBlendFunc(void) const;
 
     virtual void visit(void);
     virtual void addChild(Node * child);
@@ -168,7 +168,7 @@ private:
 
 protected:
     TextureAtlas *_textureAtlas;
-    ccBlendFunc _blendFunc;
+    BlendFunc _blendFunc;
 
     // all descendants: children, gran children, etc...
     Array* _descendants;

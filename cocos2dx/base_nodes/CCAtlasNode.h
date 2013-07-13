@@ -62,14 +62,14 @@ protected:
     //! height of each char
     unsigned int    _itemHeight;
 
-    ccColor3B    _colorUnmodified;
+    Color3B    _colorUnmodified;
 
     CC_PROPERTY(TextureAtlas*, _textureAtlas, TextureAtlas);
 
     // protocol variables
     bool _isOpacityModifyRGB;
     
-    CC_PROPERTY(ccBlendFunc, _blendFunc, BlendFunc);
+    CC_PROPERTY_PASS_BY_REF(BlendFunc, _blendFunc, BlendFunc);
 
     // quads to draw
     CC_PROPERTY(unsigned int, _quadsToDraw, QuadsToDraw);
@@ -107,10 +107,10 @@ public:
     /** sets a new texture. it will be retained*/
     virtual void setTexture(Texture2D *texture);
     
-    virtual bool isOpacityModifyRGB();
+    virtual bool isOpacityModifyRGB() const;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB);
-    virtual const ccColor3B& getColor(void);
-    virtual void setColor(const ccColor3B& color);
+    virtual const Color3B& getColor(void) const;
+    virtual void setColor(const Color3B& color);
     virtual void setOpacity(GLubyte opacity);
 
 private :

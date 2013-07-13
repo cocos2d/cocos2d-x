@@ -38,9 +38,7 @@ THE SOFTWARE.
 #include "support/TransformUtils.h"
 // extern
 #include "kazmath/GL/matrix.h"
-#ifdef CC_KEYBOARD_SUPPORT
 #include "keyboard_dispatcher/CCKeyboardDispatcher.h"
-#endif
 
 NS_CC_BEGIN
 
@@ -48,9 +46,7 @@ NS_CC_BEGIN
 Layer::Layer()
 : _touchEnabled(false)
 , _accelerometerEnabled(false)
-#ifdef CC_KEYBOARD_SUPPORT
 , _keyboardEnabled(false)
-#endif
 , _keypadEnabled(false)
 , _scriptTouchHandlerEntry(NULL)
 , _scriptKeypadHandlerEntry(NULL)
@@ -59,7 +55,7 @@ Layer::Layer()
 , _touchMode(kTouchesAllAtOnce)
 {
     _ignoreAnchorPointForPosition = true;
-    setAnchorPoint(ccp(0.5f, 0.5f));
+    setAnchorPoint(Point(0.5f, 0.5f));
 }
 
 Layer::~Layer()
@@ -75,7 +71,7 @@ bool Layer::init()
     do 
     {        
         Director * pDirector;
-        CC_BREAK_IF(!(pDirector = Director::sharedDirector()));
+        CC_BREAK_IF(!(pDirector = Director::getInstance()));
         this->setContentSize(pDirector->getWinSize());
         _touchEnabled = false;
         _accelerometerEnabled = false;
@@ -104,7 +100,7 @@ Layer *Layer::create()
 
 void Layer::registerWithTouchDispatcher()
 {
-    TouchDispatcher* pDispatcher = Director::sharedDirector()->getTouchDispatcher();
+    TouchDispatcher* pDispatcher = Director::getInstance()->getTouchDispatcher();
 
     // Using LuaBindings
     if (_scriptTouchHandlerEntry)
@@ -146,16 +142,39 @@ void Layer::unregisterScriptTouchHandler(void)
 
 int Layer::excuteScriptTouchHandler(int nEventType, Touch *pTouch)
 {
-    return ScriptEngineManager::sharedManager()->getScriptEngine()->executeLayerTouchEvent(this, nEventType, pTouch);
+    if (kScriptTypeLua == _scriptType)
+    {
+        Set touches;
+        touches.addObject((Object*)pTouch);
+        TouchesScriptData data(nEventType,kLayerTouches,(void*)this,&touches);
+        ScriptEvent event(kTouchesEvent,&data);
+        return ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);        
+    }
+    else if(kScriptTypeJavascript == _scriptType)
+    {
+        return ScriptEngineManager::sharedManager()->getScriptEngine()->executeLayerTouchEvent(this, nEventType, pTouch);
+    }
+    //can not reach it
+    return 0;
 }
 
 int Layer::excuteScriptTouchHandler(int nEventType, Set *pTouches)
 {
-    return ScriptEngineManager::sharedManager()->getScriptEngine()->executeLayerTouchesEvent(this, nEventType, pTouches);
+    if (kScriptTypeLua == _scriptType)
+    {
+        TouchesScriptData data(nEventType,kLayerTouches,(void*)this,pTouches);
+        ScriptEvent event(kTouchesEvent,&data);
+        return ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+    }
+    else if(kScriptTypeJavascript == _scriptType)
+    {
+        return ScriptEngineManager::sharedManager()->getScriptEngine()->executeLayerTouchesEvent(this, nEventType, pTouches);
+    }
+    return 0;
 }
 
 /// isTouchEnabled getter
-bool Layer::isTouchEnabled()
+bool Layer::isTouchEnabled() const
 {
     return _touchEnabled;
 }
@@ -174,7 +193,7 @@ void Layer::setTouchEnabled(bool enabled)
             else
             {
                 // have problems?
-                Director::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
+                Director::getInstance()->getTouchDispatcher()->removeDelegate(this);
             }
         }
     }
@@ -208,18 +227,18 @@ void Layer::setTouchPriority(int priority)
     }
 }
 
-int Layer::getTouchPriority()
+int Layer::getTouchPriority() const
 {
     return _touchPriority;
 }
 
-int Layer::getTouchMode()
+int Layer::getTouchMode() const
 {
     return _touchMode;
 }
 
 /// isAccelerometerEnabled getter
-bool Layer::isAccelerometerEnabled()
+bool Layer::isAccelerometerEnabled() const
 {
     return _accelerometerEnabled;
 }
@@ -232,7 +251,7 @@ void Layer::setAccelerometerEnabled(bool enabled)
 
         if (_running)
         {
-            Director* pDirector = Director::sharedDirector();
+            Director* pDirector = Director::getInstance();
             if (enabled)
             {
                 pDirector->getAccelerometer()->setDelegate(CC_CALLBACK_1(Layer::didAccelerate, this));
@@ -251,7 +270,7 @@ void Layer::setAccelerometerInterval(double interval) {
     {
         if (_running)
         {
-            Director* pDirector = Director::sharedDirector();
+            Director* pDirector = Director::getInstance();
             pDirector->getAccelerometer()->setAccelerometerInterval(interval);
         }
     }
@@ -261,10 +280,16 @@ void Layer::setAccelerometerInterval(double interval) {
 void Layer::didAccelerate(Acceleration* pAccelerationValue)
 {
    CC_UNUSED_PARAM(pAccelerationValue);
-   if ( _scriptType != kScriptTypeNone)
-   {
-       ScriptEngineManager::sharedManager()->getScriptEngine()->executeAccelerometerEvent(this, pAccelerationValue);
-   }
+    if (kScriptTypeJavascript == _scriptType)
+    {
+        ScriptEngineManager::sharedManager()->getScriptEngine()->executeAccelerometerEvent(this, pAccelerationValue);
+    }
+    else if(kScriptTypeLua == _scriptType)
+    {
+        BasicScriptData data((void*)this,(void*)pAccelerationValue);
+        ScriptEvent event(kAccelerometerEvent,&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+    }
 }
 
 void Layer::registerScriptAccelerateHandler(int nHandler)
@@ -279,9 +304,8 @@ void Layer::unregisterScriptAccelerateHandler(void)
     CC_SAFE_RELEASE_NULL(_scriptAccelerateHandlerEntry);
 }
 
-#ifdef CC_KEYBOARD_SUPPORT
 /// isKeyboardEnabled getter
-bool Layer::isKeyboardEnabled()
+bool Layer::isKeyboardEnabled() const
 {
     return _keyboardEnabled;
 }
@@ -292,7 +316,7 @@ void Layer::setKeyboardEnabled(bool enabled)
     {
         _keyboardEnabled = enabled;
 
-        Director* pDirector = Director::sharedDirector();
+        Director* pDirector = Director::getInstance();
         if (enabled)
         {
             pDirector->getKeyboardDispatcher()->setKeyPressDelegate( CC_CALLBACK_1(Layer::keyPressed, this) );
@@ -300,15 +324,14 @@ void Layer::setKeyboardEnabled(bool enabled)
         }
         else
         {
-            pDirector->getKeyboardDispatcher()->setKeyPressDelegate(NULL);
-            pDirector->getKeyboardDispatcher()->setKeyReleaseDelegate(NULL);
+            pDirector->getKeyboardDispatcher()->setKeyPressDelegate(nullptr);
+            pDirector->getKeyboardDispatcher()->setKeyReleaseDelegate(nullptr);
         }
     }
 }
-#endif
 
 /// isKeypadEnabled getter
-bool Layer::isKeypadEnabled()
+bool Layer::isKeypadEnabled() const
 {
     return _keypadEnabled;
 }
@@ -321,7 +344,7 @@ void Layer::setKeypadEnabled(bool enabled)
 
         if (_running)
         {
-            Director* pDirector = Director::sharedDirector();
+            Director* pDirector = Director::getInstance();
             if (enabled)
             {
                 pDirector->getKeypadDispatcher()->addDelegate(this);
@@ -348,7 +371,13 @@ void Layer::unregisterScriptKeypadHandler(void)
 
 void Layer::keyBackClicked(void)
 {
-    if (_scriptKeypadHandlerEntry || _scriptType == kScriptTypeJavascript)
+    if (NULL != _scriptKeypadHandlerEntry && 0 != _scriptKeypadHandlerEntry->getHandler())
+    {
+        KeypadScriptData data(kTypeBackClicked,kLayerKeypad,(void*)this);
+        ScriptEvent event(kKeypadEvent,(void*)&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+    }
+    else if(kScriptTypeJavascript == _scriptType)
     {
         ScriptEngineManager::sharedManager()->getScriptEngine()->executeLayerKeypadEvent(this, kTypeBackClicked);
     }
@@ -356,16 +385,18 @@ void Layer::keyBackClicked(void)
 
 void Layer::keyMenuClicked(void)
 {
-    if (_scriptKeypadHandlerEntry)
+    if (NULL != _scriptKeypadHandlerEntry && 0 != _scriptKeypadHandlerEntry->getHandler())
     {
-        ScriptEngineManager::sharedManager()->getScriptEngine()->executeLayerKeypadEvent(this, kTypeMenuClicked);
+        KeypadScriptData data(kTypeMenuClicked,kLayerKeypad,(void*)this);
+        ScriptEvent event(kKeypadEvent,(void*)&data);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
 }
 
 /// Callbacks
 void Layer::onEnter()
 {
-    Director* pDirector = Director::sharedDirector();
+    Director* pDirector = Director::getInstance();
     // register 'parent' nodes first
     // since events are propagated in reverse order
     if (_touchEnabled)
@@ -391,7 +422,7 @@ void Layer::onEnter()
 
 void Layer::onExit()
 {
-    Director* pDirector = Director::sharedDirector();
+    Director* pDirector = Director::getInstance();
     if( _touchEnabled )
     {
         pDirector->getTouchDispatcher()->removeDelegate(this);
@@ -418,7 +449,7 @@ void Layer::onEnterTransitionDidFinish()
 {
     if (_accelerometerEnabled)
     {
-        Director* pDirector = Director::sharedDirector();
+        Director* pDirector = Director::getInstance();
         pDirector->getAccelerometer()->setDelegate(CC_CALLBACK_1(Layer::didAccelerate, this));
     }
     
@@ -526,8 +557,8 @@ void Layer::ccTouchesCancelled(Set *pTouches, Event *pEvent)
 LayerRGBA::LayerRGBA()
 : _displayedOpacity(255)
 , _realOpacity (255)
-, _displayedColor(ccWHITE)
-, _realColor(ccWHITE)
+, _displayedColor(Color3B::WHITE)
+, _realColor(Color3B::WHITE)
 , _cascadeOpacityEnabled(false)
 , _cascadeColorEnabled(false)
 {}
@@ -539,7 +570,7 @@ bool LayerRGBA::init()
 	if (Layer::init())
     {
         _displayedOpacity = _realOpacity = 255;
-        _displayedColor = _realColor = ccWHITE;
+        _displayedColor = _realColor = Color3B::WHITE;
         setCascadeOpacityEnabled(false);
         setCascadeColorEnabled(false);
         
@@ -551,12 +582,12 @@ bool LayerRGBA::init()
     }
 }
 
-GLubyte LayerRGBA::getOpacity()
+GLubyte LayerRGBA::getOpacity() const
 {
 	return _realOpacity;
 }
 
-GLubyte LayerRGBA::getDisplayedOpacity()
+GLubyte LayerRGBA::getDisplayedOpacity() const
 {
 	return _displayedOpacity;
 }
@@ -578,23 +609,23 @@ void LayerRGBA::setOpacity(GLubyte opacity)
 	}
 }
 
-const ccColor3B& LayerRGBA::getColor()
+const Color3B& LayerRGBA::getColor() const
 {
 	return _realColor;
 }
 
-const ccColor3B& LayerRGBA::getDisplayedColor()
+const Color3B& LayerRGBA::getDisplayedColor() const
 {
 	return _displayedColor;
 }
 
-void LayerRGBA::setColor(const ccColor3B& color)
+void LayerRGBA::setColor(const Color3B& color)
 {
 	_displayedColor = _realColor = color;
 	
 	if (_cascadeColorEnabled)
     {
-		ccColor3B parentColor = ccWHITE;
+		Color3B parentColor = Color3B::WHITE;
         RGBAProtocol* parent = dynamic_cast<RGBAProtocol*>(_parent);
 		if (parent && parent->isCascadeColorEnabled())
         {
@@ -623,7 +654,7 @@ void LayerRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
     }
 }
 
-void LayerRGBA::updateDisplayedColor(const ccColor3B& parentColor)
+void LayerRGBA::updateDisplayedColor(const Color3B& parentColor)
 {
 	_displayedColor.r = _realColor.r * parentColor.r/255.0;
 	_displayedColor.g = _realColor.g * parentColor.g/255.0;
@@ -643,7 +674,7 @@ void LayerRGBA::updateDisplayedColor(const ccColor3B& parentColor)
     }
 }
 
-bool LayerRGBA::isCascadeOpacityEnabled()
+bool LayerRGBA::isCascadeOpacityEnabled() const
 {
     return _cascadeOpacityEnabled;
 }
@@ -653,7 +684,7 @@ void LayerRGBA::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
     _cascadeOpacityEnabled = cascadeOpacityEnabled;
 }
 
-bool LayerRGBA::isCascadeColorEnabled()
+bool LayerRGBA::isCascadeColorEnabled() const
 {
     return _cascadeColorEnabled;
 }
@@ -677,12 +708,12 @@ LayerColor::~LayerColor()
 }
 
 /// blendFunc getter
-ccBlendFunc LayerColor::getBlendFunc()
+const BlendFunc &LayerColor::getBlendFunc() const
 {
     return _blendFunc;
 }
 /// blendFunc setter
-void LayerColor::setBlendFunc(ccBlendFunc var)
+void LayerColor::setBlendFunc(const BlendFunc &var)
 {
     _blendFunc = var;
 }
@@ -701,7 +732,7 @@ LayerColor* LayerColor::create()
     return pRet;
 }
 
-LayerColor * LayerColor::create(const ccColor4B& color, GLfloat width, GLfloat height)
+LayerColor * LayerColor::create(const Color4B& color, GLfloat width, GLfloat height)
 {
     LayerColor * pLayer = new LayerColor();
     if( pLayer && pLayer->initWithColor(color,width,height))
@@ -713,7 +744,7 @@ LayerColor * LayerColor::create(const ccColor4B& color, GLfloat width, GLfloat h
     return NULL;
 }
 
-LayerColor * LayerColor::create(const ccColor4B& color)
+LayerColor * LayerColor::create(const Color4B& color)
 {
     LayerColor * pLayer = new LayerColor();
     if(pLayer && pLayer->initWithColor(color))
@@ -727,11 +758,11 @@ LayerColor * LayerColor::create(const ccColor4B& color)
 
 bool LayerColor::init()
 {
-    Size s = Director::sharedDirector()->getWinSize();
-    return initWithColor(ccc4(0,0,0,0), s.width, s.height);
+    Size s = Director::getInstance()->getWinSize();
+    return initWithColor(Color4B(0,0,0,0), s.width, s.height);
 }
 
-bool LayerColor::initWithColor(const ccColor4B& color, GLfloat w, GLfloat h)
+bool LayerColor::initWithColor(const Color4B& color, GLfloat w, GLfloat h)
 {
     if (Layer::init())
     {
@@ -752,16 +783,17 @@ bool LayerColor::initWithColor(const ccColor4B& color, GLfloat w, GLfloat h)
         }
 
         updateColor();
-        setContentSize(CCSizeMake(w, h));
+        setContentSize(Size(w, h));
 
-        setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionColor));
+        setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionColor));
+        return true;
     }
-    return true;
+    return false;
 }
 
-bool LayerColor::initWithColor(const ccColor4B& color)
+bool LayerColor::initWithColor(const Color4B& color)
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     this->initWithColor(color, s.width, s.height);
     return true;
 }
@@ -779,17 +811,17 @@ void LayerColor::setContentSize(const Size & size)
 
 void LayerColor::changeWidthAndHeight(GLfloat w ,GLfloat h)
 {
-    this->setContentSize(CCSizeMake(w, h));
+    this->setContentSize(Size(w, h));
 }
 
 void LayerColor::changeWidth(GLfloat w)
 {
-    this->setContentSize(CCSizeMake(w, _contentSize.height));
+    this->setContentSize(Size(w, _contentSize.height));
 }
 
 void LayerColor::changeHeight(GLfloat h)
 {
-    this->setContentSize(CCSizeMake(_contentSize.width, h));
+    this->setContentSize(Size(_contentSize.width, h));
 }
 
 void LayerColor::updateColor()
@@ -813,10 +845,10 @@ void LayerColor::draw()
     // Attributes
     //
 #ifdef EMSCRIPTEN
-    setGLBufferData(_squareVertices, 4 * sizeof(ccVertex2F), 0);
+    setGLBufferData(_squareVertices, 4 * sizeof(Vertex2F), 0);
     glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
-    setGLBufferData(_squareColors, 4 * sizeof(ccColor4F), 1);
+    setGLBufferData(_squareColors, 4 * sizeof(Color4F), 1);
     glVertexAttribPointer(kVertexAttrib_Color, 4, GL_FLOAT, GL_FALSE, 0, 0);
 #else
     glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, _squareVertices);
@@ -830,7 +862,7 @@ void LayerColor::draw()
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void LayerColor::setColor(const ccColor3B &color)
+void LayerColor::setColor(const Color3B &color)
 {
     LayerRGBA::setColor(color);
     updateColor();
@@ -845,7 +877,7 @@ void LayerColor::setOpacity(GLubyte opacity)
 //
 // LayerGradient
 // 
-LayerGradient* LayerGradient::create(const ccColor4B& start, const ccColor4B& end)
+LayerGradient* LayerGradient::create(const Color4B& start, const Color4B& end)
 {
     LayerGradient * pLayer = new LayerGradient();
     if( pLayer && pLayer->initWithColor(start, end))
@@ -857,7 +889,7 @@ LayerGradient* LayerGradient::create(const ccColor4B& start, const ccColor4B& en
     return NULL;
 }
 
-LayerGradient* LayerGradient::create(const ccColor4B& start, const ccColor4B& end, const Point& v)
+LayerGradient* LayerGradient::create(const Color4B& start, const Color4B& end, const Point& v)
 {
     LayerGradient * pLayer = new LayerGradient();
     if( pLayer && pLayer->initWithColor(start, end, v))
@@ -885,15 +917,15 @@ LayerGradient* LayerGradient::create()
 
 bool LayerGradient::init()
 {
-	return initWithColor(ccc4(0, 0, 0, 255), ccc4(0, 0, 0, 255));
+	return initWithColor(Color4B(0, 0, 0, 255), Color4B(0, 0, 0, 255));
 }
 
-bool LayerGradient::initWithColor(const ccColor4B& start, const ccColor4B& end)
+bool LayerGradient::initWithColor(const Color4B& start, const Color4B& end)
 {
-    return initWithColor(start, end, ccp(0, -1));
+    return initWithColor(start, end, Point(0, -1));
 }
 
-bool LayerGradient::initWithColor(const ccColor4B& start, const ccColor4B& end, const Point& v)
+bool LayerGradient::initWithColor(const Color4B& start, const Color4B& end, const Point& v)
 {
     _endColor.r  = end.r;
     _endColor.g  = end.g;
@@ -905,42 +937,42 @@ bool LayerGradient::initWithColor(const ccColor4B& start, const ccColor4B& end, 
 
     _compressedInterpolation = true;
 
-    return LayerColor::initWithColor(ccc4(start.r, start.g, start.b, 255));
+    return LayerColor::initWithColor(Color4B(start.r, start.g, start.b, 255));
 }
 
 void LayerGradient::updateColor()
 {
     LayerColor::updateColor();
 
-    float h = ccpLength(_alongVector);
+    float h = _alongVector.getLength();
     if (h == 0)
         return;
 
     float c = sqrtf(2.0f);
-    Point u = ccp(_alongVector.x / h, _alongVector.y / h);
+    Point u = Point(_alongVector.x / h, _alongVector.y / h);
 
     // Compressed Interpolation mode
     if (_compressedInterpolation)
     {
         float h2 = 1 / ( fabsf(u.x) + fabsf(u.y) );
-        u = ccpMult(u, h2 * (float)c);
+        u = u * (h2 * (float)c);
     }
 
     float opacityf = (float)_displayedOpacity / 255.0f;
 
-    ccColor4F S = {
+    Color4F S(
         _displayedColor.r / 255.0f,
         _displayedColor.g / 255.0f,
         _displayedColor.b / 255.0f,
         _startOpacity * opacityf / 255.0f
-    };
+    );
 
-    ccColor4F E = {
+    Color4F E(
         _endColor.r / 255.0f,
         _endColor.g / 255.0f,
         _endColor.b / 255.0f,
         _endOpacity * opacityf / 255.0f
-    };
+    );
 
     // (-1, -1)
     _squareColors[0].r = E.r + (S.r - E.r) * ((c + u.x + u.y) / (2.0f * c));
@@ -964,23 +996,23 @@ void LayerGradient::updateColor()
     _squareColors[3].a = E.a + (S.a - E.a) * ((c - u.x - u.y) / (2.0f * c));
 }
 
-const ccColor3B& LayerGradient::getStartColor()
+const Color3B& LayerGradient::getStartColor() const
 {
     return _realColor;
 }
 
-void LayerGradient::setStartColor(const ccColor3B& color)
+void LayerGradient::setStartColor(const Color3B& color)
 {
     setColor(color);
 }
 
-void LayerGradient::setEndColor(const ccColor3B& color)
+void LayerGradient::setEndColor(const Color3B& color)
 {
     _endColor = color;
     updateColor();
 }
 
-const ccColor3B& LayerGradient::getEndColor()
+const Color3B& LayerGradient::getEndColor() const
 {
     return _endColor;
 }
@@ -1013,12 +1045,12 @@ void LayerGradient::setVector(const Point& var)
     updateColor();
 }
 
-const Point& LayerGradient::getVector()
+const Point& LayerGradient::getVector() const
 {
     return _alongVector;
 }
 
-bool LayerGradient::isCompressedInterpolation()
+bool LayerGradient::isCompressedInterpolation() const
 {
     return _compressedInterpolation;
 }

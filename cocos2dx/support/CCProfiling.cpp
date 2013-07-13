@@ -37,7 +37,7 @@ bool kProfilerCategoryParticles = false;
 
 static Profiler* g_sSharedProfiler = NULL;
 
-Profiler* Profiler::sharedProfiler(void)
+Profiler* Profiler::getInstance()
 {
     if (! g_sSharedProfiler)
     {
@@ -46,6 +46,12 @@ Profiler* Profiler::sharedProfiler(void)
     }
 
     return g_sSharedProfiler;
+}
+
+// XXX: deprecated
+Profiler* Profiler::sharedProfiler(void)
+{
+    return Profiler::getInstance();
 }
 
 ProfilingTimer* Profiler::createAndAddTimerWithName(const char* timerName)
@@ -84,7 +90,7 @@ void Profiler::displayTimers()
     DictElement* pElement = NULL;
     CCDICT_FOREACH(_activeTimers, pElement)
     {
-        ProfilingTimer* timer = (ProfilingTimer*)pElement->getObject();
+        ProfilingTimer* timer = static_cast<ProfilingTimer*>(pElement->getObject());
         CCLog("%s", timer->description());
     }
 }
@@ -109,7 +115,7 @@ ProfilingTimer::~ProfilingTimer(void)
     
 }
 
-const char* ProfilingTimer::description()
+const char* ProfilingTimer::description() const
 {
     static char s_szDesciption[256] = {0};
     sprintf(s_szDesciption, "%s: avg time, %fms", _nameStr.c_str(), _averageTime);
@@ -128,7 +134,7 @@ void ProfilingTimer::reset()
 
 void ProfilingBeginTimingBlock(const char *timerName)
 {
-    Profiler* p = Profiler::sharedProfiler();
+    Profiler* p = Profiler::getInstance();
     ProfilingTimer* timer = (ProfilingTimer*)p->_activeTimers->objectForKey(timerName);
     if( ! timer )
     {
@@ -142,7 +148,7 @@ void ProfilingBeginTimingBlock(const char *timerName)
 
 void ProfilingEndTimingBlock(const char *timerName)
 {
-    Profiler* p = Profiler::sharedProfiler();
+    Profiler* p = Profiler::getInstance();
     ProfilingTimer* timer = (ProfilingTimer*)p->_activeTimers->objectForKey(timerName);
 
     CCAssert(timer, "CCProfilingTimer  not found");
@@ -162,7 +168,7 @@ void ProfilingEndTimingBlock(const char *timerName)
 
 void ProfilingResetTimingBlock(const char *timerName)
 {
-    Profiler* p = Profiler::sharedProfiler();
+    Profiler* p = Profiler::getInstance();
     ProfilingTimer *timer = (ProfilingTimer*)p->_activeTimers->objectForKey(timerName);
 
     CCAssert(timer, "CCProfilingTimer not found");

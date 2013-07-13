@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCGL_H__
-#define __CCGL_H__
+#ifndef __PLATFORM_IOS_CCGL_H__
+#define __PLATFORM_IOS_CCGL_H__
 
 #define	glClearDepth				glClearDepthf
 #define glDeleteVertexArrays		glDeleteVertexArraysOES
@@ -39,4 +39,4 @@ THE SOFTWARE.
 #include <OpenGLES/ES2/glext.h>
 
 
-#endif // __CCGL_H__
+#endif // __PLATFORM_IOS_CCGL_H__

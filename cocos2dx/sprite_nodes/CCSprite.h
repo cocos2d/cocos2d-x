@@ -263,8 +263,8 @@ public:
     /// @name Functions inherited from TextureProtocol
     virtual void setTexture(Texture2D *texture);
     virtual Texture2D* getTexture(void);
-    inline void setBlendFunc(ccBlendFunc blendFunc) { _blendFunc = blendFunc; }
-    inline ccBlendFunc getBlendFunc(void) { return _blendFunc; }
+    inline void setBlendFunc(const BlendFunc &blendFunc) { _blendFunc = blendFunc; }
+    inline const BlendFunc& getBlendFunc(void) const { return _blendFunc; }
     /// @}
 
     /// @{
@@ -294,11 +294,11 @@ public:
     
     /// @{
     /// @name Functions inherited from NodeRGBA
-    virtual void setColor(const ccColor3B& color3);
-    virtual void updateDisplayedColor(const ccColor3B& parentColor);
+    virtual void setColor(const Color3B& color3);
+    virtual void updateDisplayedColor(const Color3B& parentColor);
     virtual void setOpacity(GLubyte opacity);
     virtual void setOpacityModifyRGB(bool modify);
-    virtual bool isOpacityModifyRGB(void);
+    virtual bool isOpacityModifyRGB(void) const;
     virtual void updateDisplayedOpacity(GLubyte parentOpacity);
     /// @}
 
@@ -323,7 +323,7 @@ public:
      * @warning This method is not recommended for game developers. Sample code for using batch node
      * @code
      * SpriteBatchNode *batch = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 15);
-     * Sprite *sprite = Sprite::createWithTexture(batch->getTexture(), CCRectMake(0, 0, 57, 57));
+     * Sprite *sprite = Sprite::createWithTexture(batch->getTexture(), Rect(0, 0, 57, 57));
      * batch->addChild(sprite);
      * layer->addChild(batch);
      * @endcode
@@ -372,7 +372,7 @@ public:
     /**
      * Returns whether or not a SpriteFrame is being displayed
      */
-    virtual bool isFrameDisplayed(SpriteFrame *pFrame);
+    virtual bool isFrameDisplayed(SpriteFrame *pFrame) const;
     
     /**
      * Returns the current displayed frame.
@@ -400,27 +400,27 @@ public:
      *
      * @return true if the sprite needs to be updated in the Atlas, false otherwise.
      */
-    inline virtual bool isDirty(void) { return _dirty; }
+    virtual bool isDirty(void) const { return _dirty; }
     
     /** 
      * Makes the Sprite to be updated in the Atlas.
      */
-    inline virtual void setDirty(bool bDirty) { _dirty = bDirty; }
+    virtual void setDirty(bool bDirty) { _dirty = bDirty; }
     
     /**
      * Returns the quad (tex coords, vertex coords and color) information. 
      */
-    inline ccV3F_C4B_T2F_Quad getQuad(void) { return _quad; }
+    inline V3F_C4B_T2F_Quad getQuad(void) const { return _quad; }
 
     /** 
      * Returns whether or not the texture rectangle is rotated.
      */
-    inline bool isTextureRectRotated(void) { return _rectRotated; }
+    inline bool isTextureRectRotated(void) const { return _rectRotated; }
     
     /** 
      * Returns the index used on the TextureAtlas. 
      */
-    inline unsigned int getAtlasIndex(void) { return _atlasIndex; }
+    inline unsigned int getAtlasIndex(void) const { return _atlasIndex; }
     
     /** 
      * Sets the index used on the TextureAtlas.
@@ -446,7 +446,7 @@ public:
     /** 
      * Gets the offset position of the sprite. Calculated automatically by editors like Zwoptex.
      */
-    inline const Point& getOffsetPosition(void) { return _offsetPosition; }
+    inline const Point& getOffsetPosition(void) const { return _offsetPosition; }
 
 
     /** 
@@ -459,7 +459,7 @@ public:
      *
      * @return true if the sprite is flipped horizaontally, false otherwise.
      */
-    bool isFlipX(void);
+    bool isFlipX(void) const;
     /**
      * Sets whether the sprite should be flipped horizontally or not.
      *
@@ -477,7 +477,7 @@ public:
      * 
      * @return true if the sprite is flipped vertically, flase otherwise.
      */
-    bool isFlipY(void);
+    bool isFlipY(void) const;
     /**
      * Sets whether the sprite should be flipped vertically or not.
      *
@@ -510,7 +510,7 @@ protected:
     //
     // Data used when the sprite is self-rendered
     //
-    ccBlendFunc        _blendFunc;            /// It's required for TextureProtocol inheritance
+    BlendFunc        _blendFunc;            /// It's required for TextureProtocol inheritance
     Texture2D*       _texture;            /// Texture2D object that is used to render the sprite
 
     //
@@ -526,7 +526,7 @@ protected:
     Point _unflippedOffsetPositionFromCenter;
 
     // vertex coords, texture coords and color info
-    ccV3F_C4B_T2F_Quad _quad;
+    V3F_C4B_T2F_Quad _quad;
 
     // opacity and RGB protocol
     bool _opacityModifyRGB;

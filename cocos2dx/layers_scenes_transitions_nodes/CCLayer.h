@@ -112,21 +112,21 @@ public:
     Only the touches of this node will be affected. This "method" is not propagated to it's children.
     @since v0.8.1
     */
-    virtual bool isTouchEnabled();
+    virtual bool isTouchEnabled() const;
     virtual void setTouchEnabled(bool value);
     
     virtual void setTouchMode(ccTouchesMode mode);
-    virtual int getTouchMode();
+    virtual int getTouchMode() const;
     
     /** priority of the touch events. Default is 0 */
     virtual void setTouchPriority(int priority);
-    virtual int getTouchPriority();
+    virtual int getTouchPriority() const;
 
     /** whether or not it will receive Accelerometer events
     You can enable / disable accelerometer events with this property.
     @since v0.8.1
     */
-    virtual bool isAccelerometerEnabled();
+    virtual bool isAccelerometerEnabled() const;
     virtual void setAccelerometerEnabled(bool value);
     virtual void setAccelerometerInterval(double interval);
 
@@ -134,13 +134,13 @@ public:
     You can enable / disable accelerometer events with this property.
     it's new in cocos2d-x
     */
-#ifdef CC_KEYBOARD_SUPPORT
-    virtual bool isKeyboardEnabled();
+
+    virtual bool isKeyboardEnabled() const;
     virtual void setKeyboardEnabled(bool value);
     virtual void keyPressed(int keyCode) {};
     virtual void keyReleased(int keyCode) {};
-#endif
-    virtual bool isKeypadEnabled();
+
+    virtual bool isKeypadEnabled() const;
     virtual void setKeypadEnabled(bool value);
 
     /** Register keypad events handler */
@@ -151,15 +151,13 @@ public:
     virtual void keyBackClicked(void);
     virtual void keyMenuClicked(void);
     
-    inline TouchScriptHandlerEntry* getScriptTouchHandlerEntry() { return _scriptTouchHandlerEntry; };
-    inline ScriptHandlerEntry* getScriptKeypadHandlerEntry() { return _scriptKeypadHandlerEntry; };
-    inline ScriptHandlerEntry* getScriptAccelerateHandlerEntry() { return _scriptAccelerateHandlerEntry; };
+    inline TouchScriptHandlerEntry* getScriptTouchHandlerEntry() const { return _scriptTouchHandlerEntry; };
+    inline ScriptHandlerEntry* getScriptKeypadHandlerEntry() const { return _scriptKeypadHandlerEntry; };
+    inline ScriptHandlerEntry* getScriptAccelerateHandlerEntry() const { return _scriptAccelerateHandlerEntry; };
 protected:   
     bool _touchEnabled;
     bool _accelerometerEnabled;
-#ifdef CC_KEYBOARD_SUPPORT
     bool _keyboardEnabled;
-#endif
     bool _keypadEnabled;
     
 private:
@@ -197,25 +195,25 @@ public:
     
     virtual bool init();
     
-    virtual GLubyte getOpacity();
-    virtual GLubyte getDisplayedOpacity();
+    virtual GLubyte getOpacity() const;
+    virtual GLubyte getDisplayedOpacity() const;
     virtual void setOpacity(GLubyte opacity);
     virtual void updateDisplayedOpacity(GLubyte parentOpacity);
-    virtual bool isCascadeOpacityEnabled();
+    virtual bool isCascadeOpacityEnabled() const;
     virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
     
-    virtual const ccColor3B& getColor();
-    virtual const ccColor3B& getDisplayedColor();
-    virtual void setColor(const ccColor3B& color);
-    virtual void updateDisplayedColor(const ccColor3B& parentColor);
-    virtual bool isCascadeColorEnabled();
+    virtual const Color3B& getColor() const;
+    virtual const Color3B& getDisplayedColor() const;
+    virtual void setColor(const Color3B& color);
+    virtual void updateDisplayedColor(const Color3B& parentColor);
+    virtual bool isCascadeColorEnabled() const;
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
     
     virtual void setOpacityModifyRGB(bool bValue) {}
-    virtual bool isOpacityModifyRGB() { return false; }
+    virtual bool isOpacityModifyRGB() const { return false; }
 protected:
 	GLubyte		_displayedOpacity, _realOpacity;
-	ccColor3B	_displayedColor, _realColor;
+	Color3B	    _displayedColor, _realColor;
 	bool		_cascadeOpacityEnabled, _cascadeColorEnabled;
 };
 
@@ -234,8 +232,8 @@ class CC_DLL LayerColor : public LayerRGBA, public BlendProtocol
 #endif // EMSCRIPTEN
 {
 protected:
-    ccVertex2F _squareVertices[4];
-    ccColor4F  _squareColors[4];
+    Vertex2F _squareVertices[4];
+    Color4F  _squareColors[4];
 
 public:
     LayerColor();
@@ -248,15 +246,15 @@ public:
     static LayerColor* create();
     
     /** creates a Layer with color, width and height in Points */
-    static LayerColor * create(const ccColor4B& color, GLfloat width, GLfloat height);
+    static LayerColor * create(const Color4B& color, GLfloat width, GLfloat height);
     /** creates a Layer with color. Width and height are the window size. */
-    static LayerColor * create(const ccColor4B& color);
+    static LayerColor * create(const Color4B& color);
 
     virtual bool init();
     /** initializes a Layer with color, width and height in Points */
-    virtual bool initWithColor(const ccColor4B& color, GLfloat width, GLfloat height);
+    virtual bool initWithColor(const Color4B& color, GLfloat width, GLfloat height);
     /** initializes a Layer with color. Width and height are the window size. */
-    virtual bool initWithColor(const ccColor4B& color);
+    virtual bool initWithColor(const Color4B& color);
 
     /** change width in Points*/
     void changeWidth(GLfloat w);
@@ -268,11 +266,11 @@ public:
     void changeWidthAndHeight(GLfloat w ,GLfloat h);
 
     /** BlendFunction. Conforms to BlendProtocol protocol */
-    CC_PROPERTY(ccBlendFunc, _blendFunc, BlendFunc)
+    CC_PROPERTY_PASS_BY_REF(BlendFunc, _blendFunc, BlendFunc)
 
     virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool isOpacityModifyRGB(void) { return false;}
-    virtual void setColor(const ccColor3B &color);
+    virtual bool isOpacityModifyRGB(void) const { return false;}
+    virtual void setColor(const Color3B &color);
     virtual void setOpacity(GLubyte opacity);
 
 protected:
@@ -309,35 +307,35 @@ public:
     static LayerGradient* create();
 
     /** Creates a full-screen Layer with a gradient between start and end. */
-    static LayerGradient* create(const ccColor4B& start, const ccColor4B& end);
+    static LayerGradient* create(const Color4B& start, const Color4B& end);
 
     /** Creates a full-screen Layer with a gradient between start and end in the direction of v. */
-    static LayerGradient* create(const ccColor4B& start, const ccColor4B& end, const Point& v);
+    static LayerGradient* create(const Color4B& start, const Color4B& end, const Point& v);
 
     virtual bool init();
     /** Initializes the Layer with a gradient between start and end. */
-    virtual bool initWithColor(const ccColor4B& start, const ccColor4B& end);
+    virtual bool initWithColor(const Color4B& start, const Color4B& end);
 
     /** Initializes the Layer with a gradient between start and end in the direction of v. */
-    virtual bool initWithColor(const ccColor4B& start, const ccColor4B& end, const Point& v);
+    virtual bool initWithColor(const Color4B& start, const Color4B& end, const Point& v);
+    
+    /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
+     Default: YES
+     */
+    virtual void setCompressedInterpolation(bool bCompressedInterpolation);
+    virtual bool isCompressedInterpolation() const;
 
-    CC_PROPERTY_PASS_BY_REF(ccColor3B, _startColor, StartColor)
-    CC_PROPERTY_PASS_BY_REF(ccColor3B, _endColor, EndColor)
+    CC_PROPERTY_PASS_BY_REF(Color3B, _startColor, StartColor)
+    CC_PROPERTY_PASS_BY_REF(Color3B, _endColor, EndColor)
     CC_PROPERTY(GLubyte, _startOpacity, StartOpacity)
     CC_PROPERTY(GLubyte, _endOpacity, EndOpacity)
     CC_PROPERTY_PASS_BY_REF(Point, _alongVector, Vector)
 
-    /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
-    Default: YES
-    */
-protected:
-    bool _compressedInterpolation;
-public:
-    virtual void setCompressedInterpolation(bool bCompressedInterpolation);
-    virtual bool isCompressedInterpolation();
-    
 protected:
     virtual void updateColor();
+    
+protected:
+    bool _compressedInterpolation;
 };
 
 

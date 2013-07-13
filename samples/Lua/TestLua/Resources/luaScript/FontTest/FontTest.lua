@@ -45,9 +45,9 @@ local function showFont(ret, pFont)
     local right = CCLabelTTF:create("alignment right", pFont, fontSize,
                                     blockSize, kCCTextAlignmentRight, verticalAlignment[vAlignIdx])
 
-    local leftColor = CCLayerColor:create(ccc4(100, 100, 100, 255), blockSize.width, blockSize.height)
-    local centerColor = CCLayerColor:create(ccc4(200, 100, 100, 255), blockSize.width, blockSize.height)
-    local rightColor = CCLayerColor:create(ccc4(100, 100, 200, 255), blockSize.width, blockSize.height)
+    local leftColor = CCLayerColor:create(Color4B(100, 100, 100, 255), blockSize.width, blockSize.height)
+    local centerColor = CCLayerColor:create(Color4B(200, 100, 100, 255), blockSize.width, blockSize.height)
+    local rightColor = CCLayerColor:create(Color4B(100, 100, 200, 255), blockSize.width, blockSize.height)
 
     leftColor:ignoreAnchorPointForPosition(false)
     centerColor:ignoreAnchorPointForPosition(false)

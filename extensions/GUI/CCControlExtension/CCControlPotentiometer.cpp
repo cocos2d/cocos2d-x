@@ -200,7 +200,7 @@ void ControlPotentiometer::ccTouchMoved(Touch *pTouch, Event *pEvent)
 
 void ControlPotentiometer::ccTouchEnded(Touch *pTouch, Event *pEvent)
 {
-    this->potentiometerEnded(PointZero);
+    this->potentiometerEnded(Point::ZERO);
 }
 
 float ControlPotentiometer::distanceBetweenPointAndPoint(Point point1, Point point2)
@@ -231,7 +231,7 @@ float ControlPotentiometer::angleInDegreesBetweenLineFromPoint_toPoint_toLineFro
 void ControlPotentiometer::potentiometerBegan(Point location)
 {
     setSelected(true);
-    getThumbSprite()->setColor(ccGRAY);
+    getThumbSprite()->setColor(Color3B::GRAY);
 }
 
 void ControlPotentiometer::potentiometerMoved(Point location)
@@ -259,7 +259,7 @@ void ControlPotentiometer::potentiometerMoved(Point location)
 
 void ControlPotentiometer::potentiometerEnded(Point location)
 {
-    getThumbSprite()->setColor(ccWHITE);
+    getThumbSprite()->setColor(Color3B::WHITE);
     setSelected(false);
 }
 

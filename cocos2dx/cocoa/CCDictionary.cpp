@@ -306,7 +306,7 @@ void Dictionary::removeObjectsForKeys(Array* pKeyArray)
     Object* pObj = NULL;
     CCARRAY_FOREACH(pKeyArray, pObj)
     {
-        String* pStr = (String*)pObj;
+        String* pStr = static_cast<String*>(pObj);
         removeObjectForKey(pStr->getCString());
     }
 }
@@ -333,36 +333,6 @@ void Dictionary::removeAllObjects()
     }
 }
 
-Object* Dictionary::copyWithZone(Zone* pZone)
-{
-    CCAssert(pZone == NULL, "CCDictionary should not be inherited.");
-    Dictionary* pNewDict = new Dictionary();
-
-    DictElement* pElement = NULL;
-    Object* pTmpObj = NULL;
-
-    if (_dictType == kDictInt)
-    {
-        CCDICT_FOREACH(this, pElement)
-        {
-            pTmpObj = pElement->getObject()->copy();
-            pNewDict->setObject(pTmpObj, pElement->getIntKey());
-            pTmpObj->release();
-        }
-    }
-    else if (_dictType == kDictStr)
-    {
-        CCDICT_FOREACH(this, pElement)
-        {
-            pTmpObj = pElement->getObject()->copy();
-            pNewDict->setObject(pTmpObj, pElement->getStrKey());
-            pTmpObj->release();
-        }
-    }
-
-    return pNewDict;
-}
-
 Object* Dictionary::randomObject()
 {
     if (_dictType == kDictUnknown)
@@ -374,11 +344,11 @@ Object* Dictionary::randomObject()
     
     if (_dictType == kDictInt)
     {
-        return objectForKey(((Integer*)key)->getValue());
+        return objectForKey( static_cast<Integer*>(key)->getValue());
     }
     else if (_dictType == kDictStr)
     {
-        return objectForKey(((String*)key)->getCString());
+        return objectForKey( static_cast<String*>(key)->getCString());
     }
     else
     {
@@ -398,14 +368,12 @@ Dictionary* Dictionary::create()
 
 Dictionary* Dictionary::createWithDictionary(Dictionary* srcDict)
 {
-    Dictionary* pNewDict = (Dictionary*)srcDict->copy();
-    pNewDict->autorelease();
-    return pNewDict;
+    return srcDict->clone();
 }
 
 Dictionary* Dictionary::createWithContentsOfFileThreadSafe(const char *pFileName)
 {
-    return FileUtils::sharedFileUtils()->createDictionaryWithContentsOfFile(pFileName);
+    return FileUtils::getInstance()->createDictionaryWithContentsOfFile(pFileName);
 }
 
 void Dictionary::acceptVisitor(DataVisitor &visitor)
@@ -422,8 +390,57 @@ Dictionary* Dictionary::createWithContentsOfFile(const char *pFileName)
 
 bool Dictionary::writeToFile(const char *fullPath)
 {
-    return FileUtils::sharedFileUtils()->writeToFile(this, fullPath);
+    return FileUtils::getInstance()->writeToFile(this, fullPath);
 }
 
+Dictionary* Dictionary::clone() const
+{
+    Dictionary* newDict = new Dictionary();
+    newDict->autorelease();
+    
+    DictElement* element = NULL;
+    Object* tmpObj = NULL;
+    Clonable* obj = NULL;
+    if (_dictType == kDictInt)
+    {
+        CCDICT_FOREACH(this, element)
+        {
+            obj = dynamic_cast<Clonable*>(element->getObject());
+            if (obj)
+            {
+                tmpObj = dynamic_cast<Object*>(obj->clone());
+                if (tmpObj)
+                {
+                    newDict->setObject(tmpObj, element->getIntKey());
+                }
+            }
+            else
+            {
+                CCLOGWARN("%s isn't clonable.", typeid(*element->getObject()).name());
+            }
+        }
+    }
+    else if (_dictType == kDictStr)
+    {
+        CCDICT_FOREACH(this, element)
+        {
+            obj = dynamic_cast<Clonable*>(element->getObject());
+            if (obj)
+            {
+                tmpObj = dynamic_cast<Object*>(obj->clone());
+                if (tmpObj)
+                {
+                    newDict->setObject(tmpObj, element->getStrKey());
+                }
+            }
+            else
+            {
+                CCLOGWARN("%s isn't clonable.", typeid(*element->getObject()).name());
+            }
+        }
+    }
+    
+    return newDict;
+}
 
 NS_CC_END

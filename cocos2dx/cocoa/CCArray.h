@@ -76,10 +76,10 @@ I found that it's not work in C++. So it keep what it's look like in version 1.0
 do {                                                                  \
     if(pArray && pArray->count() > 0)                                 \
     {                                                                 \
-        Object* child;                                              \
+        Object* child;                                                \
         CCARRAY_FOREACH(pArray, child)                                \
         {                                                             \
-            elementType pNode = (elementType) child;                  \
+            elementType pNode = static_cast<elementType>(child);      \
             if(pNode)                                                 \
             {                                                         \
                 pNode->func();                                        \
@@ -93,10 +93,10 @@ while(false)
 do {                                                                  \
     if(pArray && pArray->count() > 0)                                 \
     {                                                                 \
-        Object* child = NULL;                                       \
+        Object* child;                                                \
         CCARRAY_FOREACH(pArray, child)                                \
         {                                                             \
-            elementType pNode = (elementType) child;                  \
+            elementType pNode = static_cast<elementType>(child);      \
             if(pNode)                                                 \
             {                                                         \
                 pNode->func(pObject);                                 \
@@ -109,7 +109,7 @@ while(false)
 
 NS_CC_BEGIN
 
-class CC_DLL Array : public Object
+class CC_DLL Array : public Object, public Clonable
 {
 public:
     ~Array();
@@ -208,11 +208,9 @@ public:
     void reduceMemoryFootprint();
   
     /* override functions */
-    virtual Object* copyWithZone(Zone* pZone);
-
-    /* override functions */
     virtual void acceptVisitor(DataVisitor &visitor);
-
+    virtual Array* clone() const;
+    
 public:
     ccArray* data;
     Array();

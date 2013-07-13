@@ -7,6 +7,9 @@ USING_NS_CC;
 const std::string s_aTestCases[] = {
     "QH360",
     "ND91",
+#if TEST_UC
+    "UC",
+#endif
 };
 
 Scene* TestUser::scene()
@@ -35,8 +38,8 @@ bool TestUser::init()
     }
 
     MyUserManager::sharedManager()->loadPlugin();
-    Size visibleSize = Director::sharedDirector()->getVisibleSize();
-    Point origin = Director::sharedDirector()->getVisibleOrigin();
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    Point origin = Director::getInstance()->getVisibleOrigin();
     Point posMid = ccp(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
     Point posBR = ccp(origin.x + visibleSize.width, origin.y);
 
@@ -104,5 +107,5 @@ void TestUser::menuBackCallback(Object* pSender)
     MyUserManager::purgeManager();
 
     Scene* newScene = HelloWorld::scene();
-    Director::sharedDirector()->replaceScene(newScene);
+    Director::getInstance()->replaceScene(newScene);
 }

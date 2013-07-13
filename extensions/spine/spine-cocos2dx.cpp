@@ -31,7 +31,7 @@ USING_NS_CC;
 namespace cocos2d { namespace extension {
 
 void _AtlasPage_createTexture (AtlasPage* self, const char* path) {
-	Texture2D* texture = TextureCache::sharedTextureCache()->addImage(path);
+	Texture2D* texture = TextureCache::getInstance()->addImage(path);
 	TextureAtlas* textureAtlas = TextureAtlas::createWithTexture(texture, 4);
 	textureAtlas->retain();
 	self->rendererObject = textureAtlas;
@@ -48,15 +48,15 @@ void _AtlasPage_disposeTexture (AtlasPage* self) {
 
 char* _Util_readFile (const char* path, int* length) {
 	unsigned long size;
-    char* data = reinterpret_cast<char*>(FileUtils::sharedFileUtils()->getFileData(
-		FileUtils::sharedFileUtils()->fullPathForFilename(path).c_str(), "r", &size));
+    char* data = reinterpret_cast<char*>(FileUtils::getInstance()->getFileData(
+		FileUtils::getInstance()->fullPathForFilename(path).c_str(), "r", &size));
 	*length = size;
 	return data;
 }
 
 /**/
 
-void RegionAttachment_updateQuad (RegionAttachment* self, Slot* slot, ccV3F_C4B_T2F_Quad* quad, bool premultipliedAlpha) {
+void RegionAttachment_updateQuad (RegionAttachment* self, Slot* slot, V3F_C4B_T2F_Quad* quad, bool premultipliedAlpha) {
 	float vertices[8];
 	RegionAttachment_computeVertices(self, slot->skeleton->x, slot->skeleton->y, slot->bone, vertices);
 

@@ -29,7 +29,6 @@ THE SOFTWARE.
 #include "base_nodes/CCNode.h"
 #include "support/CCPointExtension.h"
 #include "CCDirector.h"
-#include "cocoa/CCZone.h"
 
 NS_CC_BEGIN
 //
@@ -48,7 +47,7 @@ Action::~Action()
     CCLOGINFO("cocos2d: deallocing");
 }
 
-const char* Action::description()
+const char* Action::description() const
 {
     return String::createWithFormat("<Action | Tag = %d>", _tag)->getCString();
 }
@@ -63,7 +62,7 @@ void Action::stop()
     _target = NULL;
 }
 
-bool Action::isDone()
+bool Action::isDone() const
 {
     return true;
 }
@@ -124,27 +123,6 @@ Speed *Speed::clone() const
 	return  a;
 }
 
-Object *Speed::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    Speed* pRet = NULL;
-    if(pZone && pZone->_copyObject) //in case of being called at sub class
-    {
-        pRet = (Speed*)(pZone->_copyObject);
-    }
-    else
-    {
-        pRet = new Speed();
-        pZone = pNewZone = new Zone(pRet);
-    }
-    Action::copyWithZone(pZone);
-
-    pRet->initWithAction( (ActionInterval*)(_innerAction->copy()->autorelease()) , _speed );
-    
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
-}
-
 void Speed::startWithTarget(Node* pTarget)
 {
     Action::startWithTarget(pTarget);
@@ -162,7 +140,7 @@ void Speed::step(float dt)
     _innerAction->step(dt * _speed);
 }
 
-bool Speed::isDone()
+bool Speed::isDone() const
 {
     return _innerAction->isDone();
 }
@@ -191,7 +169,7 @@ Follow::~Follow()
     CC_SAFE_RELEASE(_followedNode);
 }
 
-Follow* Follow::create(Node *pFollowedNode, const Rect& rect/* = RectZero*/)
+Follow* Follow::create(Node *pFollowedNode, const Rect& rect/* = Rect::ZERO*/)
 {
     Follow *pRet = new Follow();
     if (pRet && pRet->initWithTarget(pFollowedNode, rect))
@@ -212,14 +190,14 @@ Follow* Follow::clone() const
 	return a;
 }
 
-bool Follow::initWithTarget(Node *pFollowedNode, const Rect& rect/* = RectZero*/)
+bool Follow::initWithTarget(Node *pFollowedNode, const Rect& rect/* = Rect::ZERO*/)
 {
     CCAssert(pFollowedNode != NULL, "");
  
     pFollowedNode->retain();
     _followedNode = pFollowedNode;
 	_worldRect = rect;
-    if (rect.equals(RectZero))
+    if (rect.equals(Rect::ZERO))
     {
         _boundarySet = false;
     }
@@ -230,9 +208,9 @@ bool Follow::initWithTarget(Node *pFollowedNode, const Rect& rect/* = RectZero*/
     
     _boundaryFullyCovered = false;
 
-    Size winSize = Director::sharedDirector()->getWinSize();
-    _fullScreenSize = CCPointMake(winSize.width, winSize.height);
-    _halfScreenSize = ccpMult(_fullScreenSize, 0.5f);
+    Size winSize = Director::getInstance()->getWinSize();
+    _fullScreenSize = Point(winSize.width, winSize.height);
+    _halfScreenSize = _fullScreenSize * 0.5f;
 
     if (_boundarySet)
     {
@@ -263,26 +241,6 @@ bool Follow::initWithTarget(Node *pFollowedNode, const Rect& rect/* = RectZero*/
     return true;
 }
 
-Object *Follow::copyWithZone(Zone *pZone)
-{
-    Zone *pNewZone = NULL;
-    Follow *pRet = NULL;
-    if(pZone && pZone->_copyObject) //in case of being called at sub class
-    {
-        pRet = (Follow*)(pZone->_copyObject);
-    }
-    else
-    {
-        pRet = new Follow();
-        pZone = pNewZone = new Zone(pRet);
-    }
-    Action::copyWithZone(pZone);
-    // copy member data
-    pRet->_tag = _tag;
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
-}
-
 void Follow::step(float dt)
 {
     CC_UNUSED_PARAM(dt);
@@ -293,18 +251,18 @@ void Follow::step(float dt)
         if(_boundaryFullyCovered)
             return;
 
-        Point tempPos = ccpSub( _halfScreenSize, _followedNode->getPosition());
+        Point tempPos = _halfScreenSize - _followedNode->getPosition();
 
-        _target->setPosition(ccp(clampf(tempPos.x, _leftBoundary, _rightBoundary), 
+        _target->setPosition(Point(clampf(tempPos.x, _leftBoundary, _rightBoundary),
                                    clampf(tempPos.y, _bottomBoundary, _topBoundary)));
     }
     else
     {
-        _target->setPosition(ccpSub(_halfScreenSize, _followedNode->getPosition()));
+        _target->setPosition(_halfScreenSize - _followedNode->getPosition());
     }
 }
 
-bool Follow::isDone()
+bool Follow::isDone() const
 {
     return ( !_followedNode->isRunning() );
 }

@@ -75,9 +75,9 @@ public:
     
     virtual bool initWithSize(const Size& size);
     virtual void setFont(const char* pFontName, int fontSize);
-    virtual void setFontColor(const ccColor3B& color);
+    virtual void setFontColor(const Color3B& color);
     virtual void setPlaceholderFont(const char* pFontName, int fontSize);
-    virtual void setPlaceholderFontColor(const ccColor3B& color);
+    virtual void setPlaceholderFontColor(const Color3B& color);
     virtual void setInputMode(EditBoxInputMode inputMode);
     virtual void setInputFlag(EditBoxInputFlag inputFlag);
     virtual void setMaxLength(int maxLength);

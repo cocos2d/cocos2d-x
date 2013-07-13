@@ -14,7 +14,7 @@ class CCControlButton : public CCControl
     virtual void setHighlighted(bool enabled);
 
     virtual CCString* getCurrentTitle();
-    virtual const ccColor3B& getCurrentTitleColor() const;
+    virtual const Color3B& getCurrentTitleColor() const;
 
     bool doesAdjustBackgroundImage();
     void setAdjustBackgroundImage(bool adjustBackgroundImage);
@@ -79,10 +79,10 @@ class CCControlButton : public CCControl
     virtual void setTitleForState(CCString* title, CCControlState state);
 
 
-    virtual const ccColor3B getTitleColorForState(CCControlState state);
+    virtual const Color3B getTitleColorForState(CCControlState state);
 
 
-    virtual void setTitleColorForState(ccColor3B color, CCControlState state);
+    virtual void setTitleColorForState(Color3B color, CCControlState state);
 
 
     virtual CCNode* getTitleLabelForState(CCControlState state);

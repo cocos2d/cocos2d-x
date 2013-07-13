@@ -97,7 +97,7 @@ Control::~Control()
     //Menu - Events
 void Control::registerWithTouchDispatcher()
 {
-    Director::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, getTouchPriority(), true);
+    Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, getTouchPriority(), true);
 }
 
 void Control::onEnter()
@@ -124,15 +124,18 @@ void Control::sendActionsForControlEvents(ControlEvent controlEvents)
             Object* pObj = NULL;
             CCARRAY_FOREACH(invocationList, pObj)
             {
-                Invocation* invocation = (Invocation*)pObj;
+                Invocation* invocation = static_cast<Invocation*>(pObj);
                 invocation->invoke(this);
             }
             //Call ScriptFunc
             if (kScriptTypeNone != _scriptType)
             {
                 int nHandler = this->getHandleOfControlEvent(controlEvents);
-                if (-1 != nHandler) {
-                    ScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(nHandler,"",this);
+                if (0 != nHandler)
+                {
+                    cocos2d::CommonScriptData data(nHandler, "",(Object*)this);
+                    cocos2d::ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
+                    cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
                 }
             }
         }
@@ -209,7 +212,7 @@ void Control::removeTargetWithActionForControlEvent(Object* target, SEL_CCContro
             Object* pObj = NULL;
             CCARRAY_FOREACH(eventInvocationList, pObj)
             {
-                Invocation *invocation = (Invocation*)pObj;
+                Invocation *invocation = static_cast<Invocation*>(pObj);
                 bool shouldBeRemoved=true;
                 if (target)
                 {
@@ -245,7 +248,7 @@ void Control::setOpacityModifyRGB(bool bOpacityModifyRGB)
     }
 }
 
-bool Control::isOpacityModifyRGB()
+bool Control::isOpacityModifyRGB() const
 {
     return _isOpacityModifyRGB;
 }
@@ -359,6 +362,6 @@ int  Control::getHandleOfControlEvent(ControlEvent controlEvent)
     if (_mapHandleOfControlEvent.end() != Iter)
         return Iter->second;
     
-    return -1;
+    return 0;
 }
 NS_CC_EXT_END

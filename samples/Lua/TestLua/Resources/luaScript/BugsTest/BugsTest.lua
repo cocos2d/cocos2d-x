@@ -99,14 +99,14 @@ local function BugTest458()
         local pCorner = CCSprite:create("Images/bugs/corner.png");
         local nWidth = Winsize.width * 0.9 - (pCorner:getContentSize().width * 2);
         local nHeight = Winsize.height * 0.15  - (pCorner:getContentSize().height * 2);
-        local pColorLayer = CCLayerColor:create(ccc4(255, 255, 255, 255 * .75), nWidth, nHeight);
+        local pColorLayer = CCLayerColor:create(Color4B(255, 255, 255, 255 * .75), nWidth, nHeight);
         pColorLayer:setPosition(ccp(-nWidth / 2, -nHeight / 2));
         --First button is blue,Second is red,Used for testing - change later
         if (0 == nColorFlag) then
-            pLabel:setColor(ccc3(0,0,255))
+            pLabel:setColor(Color3B(0,0,255))
         else
             print("Color changed")
-            pLabel:setColor(ccc3(255,0,0))
+            pLabel:setColor(Color3B(255,0,0))
         end
         nColorFlag = nColorFlag + 1;
         pSprite:addChild(pColorLayer);
@@ -167,11 +167,11 @@ local function BugTest458()
     end
     local pMenuItemSprite = CCMenuItemSprite:create(pQuestion1,pQuestion2)
     pMenuItemSprite:registerScriptTapHandler(menuCallback)
-    local pLayerColor1 = CCLayerColor:create(ccc4(0,0,255,255), 100, 100);
+    local pLayerColor1 = CCLayerColor:create(Color4B(0,0,255,255), 100, 100);
 --  question->release();
 --  question2->release();
 
-    local pLayerColor2 = CCLayerColor:create(ccc4(255,0,0,255), 100, 100);
+    local pLayerColor2 = CCLayerColor:create(Color4B(255,0,0,255), 100, 100);
     local pMenuItemSprite2 = CCMenuItemSprite:create(pLayerColor1, pLayerColor2);   
     pMenuItemSprite2:registerScriptTapHandler(menuCallback) 
 
@@ -209,7 +209,7 @@ local function BugTest624()
 		local pNewPlayer = BugTest624_2()
 		CreateBugsTestBackMenuItem(pNewPlayer)   
         pScene:addChild(pNewPlayer);   
-        CCDirector:sharedDirector():replaceScene(CCTransitionFade:create(2.0, pScene, ccc3(255,255,255))); 
+        CCDirector:sharedDirector():replaceScene(CCTransitionFade:create(2.0, pScene, Color3B(255,255,255))); 
 	end
 	
 	
@@ -247,7 +247,7 @@ function BugTest624_2()
 		local pNewPlayer = BugTest624()
 		CreateBugsTestBackMenuItem(pNewPlayer)   
         pScene:addChild(pNewPlayer);
-        CCDirector:sharedDirector():replaceScene(CCTransitionFade:create(2.0, pScene, ccc3(255,0,0))); 
+        CCDirector:sharedDirector():replaceScene(CCTransitionFade:create(2.0, pScene, Color3B(255,0,0))); 
 	end
 	
 	local function BugTest624_2_OnEnterOrExit(tag)
@@ -307,7 +307,7 @@ local function BugTest914()
     local pLayerColor = nil
     
     for i = 0, 4 do
-       pLayerColor = CCLayerColor:create(ccc4(i*20, i*20, i*20,255))
+       pLayerColor = CCLayerColor:create(Color4B(i*20, i*20, i*20,255))
        pLayerColor:setContentSize(CCSizeMake(i*100, i*100));
        pLayerColor:setPosition(ccp(Winsize.width/2, Winsize.height/2))
        pLayerColor:setAnchorPoint(ccp(0.5, 0.5));
@@ -367,10 +367,10 @@ local function BugTest1159()
     
     CCDirector:sharedDirector():setDepthTest(true)
 
-    local background = CCLayerColor:create(ccc4(255, 0, 255, 255))
+    local background = CCLayerColor:create(Color4B(255, 0, 255, 255))
     pLayer:addChild(background)
 
-    local sprite_a   = CCLayerColor:create(ccc4(255, 0, 0, 255), 700, 700)
+    local sprite_a   = CCLayerColor:create(Color4B(255, 0, 0, 255), 700, 700)
     sprite_a:setAnchorPoint(ccp(0.5, 0.5))
     sprite_a:ignoreAnchorPointForPosition(false)
     sprite_a:setPosition(ccp(0.0, Winsize.height/2))
@@ -383,7 +383,7 @@ local function BugTest1159()
     local seq = CCSequence:create(arr)     
     sprite_a:runAction(CCRepeatForever:create(seq))
 
-    local sprite_b = CCLayerColor:create(ccc4(0, 0, 255, 255), 400, 400);
+    local sprite_b = CCLayerColor:create(Color4B(0, 0, 255, 255), 400, 400);
     sprite_b:setAnchorPoint(ccp(0.5, 0.5))
     sprite_b:ignoreAnchorPointForPosition(false);
     sprite_b:setPosition(ccp(Winsize.width/2, Winsize.height/2));

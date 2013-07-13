@@ -118,6 +118,19 @@ public:
 
     virtual bool handleAssert(const char *msg);
     
+    virtual int sendEvent(ScriptEvent* message);
+private:
+    int handleNodeEvent(void* data);
+    int handleMenuClickedEvent(void* data);
+    int handleNotificationEvent(void* data);
+    int handleCallFuncActionEvent(void* data);
+    int handleScheduler(void* data);
+    int handleKeypadEvent(void* data);
+    int handleAccelerometerEvent(void* data);
+    int handleCommonEvent(void* data);
+    int handleTouchesEvent(void* data);
+    int handleLayerTouchesEvent(Layer* layer,int actionType,Set* touches);
+    int handleLayerKeypadEvent(Layer* layer,int actionType);
 private:
     LuaEngine(void)
     : _stack(NULL)

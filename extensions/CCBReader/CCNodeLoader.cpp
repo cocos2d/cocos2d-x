@@ -78,7 +78,7 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * pCCBR
                 bool bFound = false;
                 CCARRAY_FOREACH(extraPropsNames, pObj)
                 {
-                    String* pStr = (String*)pObj;
+                    String* pStr = static_cast<String*>(pObj);
                     if (0 == pStr->compare(propertyName.c_str()))
                     {
                         bFound = true;
@@ -90,7 +90,7 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * pCCBR
         }
         else if (isExtraProp && pNode == pCCBReader->getAnimationManager()->getRootNode())
         {
-            Array *extraPropsNames = (Array*)pNode->getUserObject();
+            Array *extraPropsNames = static_cast<Array*>(pNode->getUserObject());
             if (! extraPropsNames)
             {
                 extraPropsNames = Array::create();
@@ -258,7 +258,7 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * pCCBR
             }
             case kCCBPropTypeColor3: 
             {
-                ccColor3B color3B = this->parsePropTypeColor3(pNode, pParent, pCCBReader, propertyName.c_str());
+                Color3B color3B = this->parsePropTypeColor3(pNode, pParent, pCCBReader, propertyName.c_str());
                 if(setProp) 
                 {
                     this->onHandlePropTypeColor3(pNode, pParent, propertyName.c_str(), color3B, pCCBReader);
@@ -267,7 +267,7 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * pCCBR
             }
             case kCCBPropTypeColor4FVar: 
             {
-                ccColor4F * color4FVar = this->parsePropTypeColor4FVar(pNode, pParent, pCCBReader);
+                Color4F * color4FVar = this->parsePropTypeColor4FVar(pNode, pParent, pCCBReader);
                 if(setProp) 
                 {
                     this->onHandlePropTypeColor4FVar(pNode, pParent, propertyName.c_str(), color4FVar, pCCBReader);
@@ -285,7 +285,7 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * pCCBR
             }
             case kCCBPropTypeBlendmode: 
             {
-                ccBlendFunc blendFunc = this->parsePropTypeBlendFunc(pNode, pParent, pCCBReader);
+                BlendFunc blendFunc = this->parsePropTypeBlendFunc(pNode, pParent, pCCBReader);
                 if(setProp) 
                 {
                     this->onHandlePropTypeBlendFunc(pNode, pParent, propertyName.c_str(), blendFunc, pCCBReader);
@@ -360,7 +360,7 @@ Point NodeLoader::parsePropTypePosition(Node * pNode, Node * pParent, CCBReader 
     
     Size containerSize = pCCBReader->getAnimationManager()->getContainerSize(pParent);
     
-    Point pt = getAbsolutePosition(ccp(x,y), type, containerSize, pPropertyName);
+    Point pt = getAbsolutePosition(Point(x,y), type, containerSize, pPropertyName);
     pNode->setPosition(pt);
     
     if (pCCBReader->getAnimatedProperties()->find(pPropertyName) != pCCBReader->getAnimatedProperties()->end())
@@ -564,15 +564,15 @@ SpriteFrame * NodeLoader::parsePropTypeSpriteFrame(Node * pNode, Node * pParent,
         if (spriteSheet.length() == 0)
         {
             spriteFile = pCCBReader->getCCBRootPath() + spriteFile;
-            Texture2D * texture = TextureCache::sharedTextureCache()->addImage(spriteFile.c_str());
+            Texture2D * texture = TextureCache::getInstance()->addImage(spriteFile.c_str());
             if(texture != NULL) {
-                Rect bounds = CCRectMake(0, 0, texture->getContentSize().width, texture->getContentSize().height);
+                Rect bounds = Rect(0, 0, texture->getContentSize().width, texture->getContentSize().height);
                 spriteFrame = SpriteFrame::createWithTexture(texture, bounds);
             }
         }
         else 
         {
-            SpriteFrameCache * frameCache = SpriteFrameCache::sharedSpriteFrameCache();
+            SpriteFrameCache * frameCache = SpriteFrameCache::getInstance();
             spriteSheet = pCCBReader->getCCBRootPath() + spriteSheet;   
             // Load the sprite sheet only if it is not loaded
             if (pCCBReader->getLoadedSpriteSheet().find(spriteSheet) == pCCBReader->getLoadedSpriteSheet().end())
@@ -609,7 +609,7 @@ Animation * NodeLoader::parsePropTypeAnimation(Node * pNode, Node * pParent, CCB
     
     if (animation.length() > 0) 
     {
-        AnimationCache * animationCache = AnimationCache::sharedAnimationCache();
+        AnimationCache * animationCache = AnimationCache::getInstance();
         animationCache->addAnimationsWithFile(animationFile.c_str());
         
         ccAnimation = animationCache->animationByName(animation.c_str());
@@ -622,7 +622,7 @@ Texture2D * NodeLoader::parsePropTypeTexture(Node * pNode, Node * pParent, CCBRe
     
     if (spriteFile.length() > 0)
     {
-        return TextureCache::sharedTextureCache()->addImage(spriteFile.c_str());
+        return TextureCache::getInstance()->addImage(spriteFile.c_str());
     }
     else 
     {
@@ -642,21 +642,21 @@ unsigned char NodeLoader::parsePropTypeByte(Node * pNode, Node * pParent, CCBRea
     return ret;
 }
 
-ccColor3B NodeLoader::parsePropTypeColor3(Node * pNode, Node * pParent, CCBReader * pCCBReader, const char *pPropertyName) {
+Color3B NodeLoader::parsePropTypeColor3(Node * pNode, Node * pParent, CCBReader * pCCBReader, const char *pPropertyName) {
     unsigned char red = pCCBReader->readByte();
     unsigned char green = pCCBReader->readByte();
     unsigned char blue = pCCBReader->readByte();
     
-    ccColor3B color = { red, green, blue };
+    Color3B color(red, green, blue);
     if (pCCBReader->getAnimatedProperties()->find(pPropertyName) != pCCBReader->getAnimatedProperties()->end())
     {
-        ccColor3BWapper *value = ccColor3BWapper::create(color);
+        Color3BWapper *value = Color3BWapper::create(color);
         pCCBReader->getAnimationManager()->setBaseValue(value, pNode, pPropertyName);
     }
     return color;
 }
 
-ccColor4F * NodeLoader::parsePropTypeColor4FVar(Node * pNode, Node * pParent, CCBReader * pCCBReader) {
+Color4F * NodeLoader::parsePropTypeColor4FVar(Node * pNode, Node * pParent, CCBReader * pCCBReader) {
     float red = pCCBReader->readFloat();
     float green = pCCBReader->readFloat();
     float blue = pCCBReader->readFloat();
@@ -666,7 +666,7 @@ ccColor4F * NodeLoader::parsePropTypeColor4FVar(Node * pNode, Node * pParent, CC
     float blueVar = pCCBReader->readFloat();
     float alphaVar = pCCBReader->readFloat();
     
-    ccColor4F * colors = new ccColor4F[2];
+    Color4F * colors = new Color4F[2];
     colors[0].r = red;
     colors[0].g = green;
     colors[0].b = blue;
@@ -691,12 +691,12 @@ bool * NodeLoader::parsePropTypeFlip(Node * pNode, Node * pParent, CCBReader * p
     return arr;
 }
 
-ccBlendFunc NodeLoader::parsePropTypeBlendFunc(Node * pNode, Node * pParent, CCBReader * pCCBReader) 
+BlendFunc NodeLoader::parsePropTypeBlendFunc(Node * pNode, Node * pParent, CCBReader * pCCBReader) 
 {
     int source = pCCBReader->readInt(false);
     int destination = pCCBReader->readInt(false);
     
-    ccBlendFunc blendFunc;
+    BlendFunc blendFunc;
     blendFunc.src = source;
     blendFunc.dst = destination;
     
@@ -865,9 +865,9 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
     ccbFileName = ccbFileWithoutPathExtension + ".ccbi";
     
     // Load sub file
-    std::string path = FileUtils::sharedFileUtils()->fullPathForFilename(ccbFileName.c_str());
+    std::string path = FileUtils::getInstance()->fullPathForFilename(ccbFileName.c_str());
     unsigned long size = 0;
-    unsigned char * pBytes = FileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", &size);
+    unsigned char * pBytes = FileUtils::getInstance()->getFileData(path.c_str(), "rb", &size);
 
     CCBReader * ccbReader = new CCBReader(pCCBReader);
     ccbReader->autorelease();
@@ -1056,11 +1056,11 @@ void NodeLoader::onHandlePropTypeByte(Node * pNode, Node * pParent, const char* 
     ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
-void NodeLoader::onHandlePropTypeColor3(Node * pNode, Node * pParent, const char* pPropertyName, ccColor3B pColor3B, CCBReader * pCCBReader) {
+void NodeLoader::onHandlePropTypeColor3(Node * pNode, Node * pParent, const char* pPropertyName, Color3B pColor3B, CCBReader * pCCBReader) {
     ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
-void NodeLoader::onHandlePropTypeColor4FVar(Node * pNode, Node * pParent, const char* pPropertyName, ccColor4F * pColor4FVar, CCBReader * pCCBReader) {
+void NodeLoader::onHandlePropTypeColor4FVar(Node * pNode, Node * pParent, const char* pPropertyName, Color4F * pColor4FVar, CCBReader * pCCBReader) {
     ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
@@ -1068,7 +1068,7 @@ void NodeLoader::onHandlePropTypeFlip(Node * pNode, Node * pParent, const char* 
     ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
-void NodeLoader::onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const char* pPropertyName, ccBlendFunc pBlendFunc, CCBReader * pCCBReader) {
+void NodeLoader::onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const char* pPropertyName, BlendFunc pBlendFunc, CCBReader * pCCBReader) {
     ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 

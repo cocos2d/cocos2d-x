@@ -4,7 +4,13 @@
 #include "SimpleAudioEngine.h"
 #include "ScriptingCore.h"
 #include "generated/jsb_cocos2dx_auto.hpp"
+#include "generated/jsb_cocos2dx_extension_auto.hpp"
+#include "jsb_cocos2dx_extension_manual.h"
 #include "cocos2d_specifics.hpp"
+#include "js_bindings_ccbreader.h"
+#include "js_bindings_system_registration.h"
+#include "js_bindings_chipmunk_registration.h"
+#include "jsb_opengl_registration.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -21,12 +27,12 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    Director *pDirector = Director::sharedDirector();
-    pDirector->setOpenGLView(EGLView::sharedOpenGLView());
+    Director *pDirector = Director::getInstance();
+    pDirector->setOpenGLView(EGLView::getInstance());
     pDirector->setProjection(kDirectorProjection2D);
 
     // Set the design resolution
-    EGLView::sharedOpenGLView()->setDesignResolutionSize(320, 480, kResolutionShowAll);
+    EGLView::getInstance()->setDesignResolutionSize(320, 480, kResolutionShowAll);
 
     // turn on display FPS
     pDirector->setDisplayStats(true);
@@ -36,7 +42,14 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
+    sc->addRegisterCallback(register_all_cocos2dx_extension);
     sc->addRegisterCallback(register_cocos2dx_js_extensions);
+    sc->addRegisterCallback(jsb_register_chipmunk);
+    sc->addRegisterCallback(register_all_cocos2dx_extension_manual);
+    sc->addRegisterCallback(register_CCBuilderReader);
+    sc->addRegisterCallback(jsb_register_system);
+    sc->addRegisterCallback(JSB_register_opengl);
+    
     sc->start();
     
     ScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
@@ -54,7 +67,7 @@ void handle_signal(int signal) {
     static int internal_state = 0;
     ScriptingCore* sc = ScriptingCore::getInstance();
     // should start everything back
-    Director* director = Director::sharedDirector();
+    Director* director = Director::getInstance();
     if (director->getRunningScene()) {
         director->popToRootScene();
     } else {
@@ -73,7 +86,7 @@ void handle_signal(int signal) {
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    Director::sharedDirector()->stopAnimation();
+    Director::getInstance()->stopAnimation();
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
     SimpleAudioEngine::sharedEngine()->pauseAllEffects();
 }
@@ -81,7 +94,7 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    Director::sharedDirector()->startAnimation();
+    Director::getInstance()->startAnimation();
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
     SimpleAudioEngine::sharedEngine()->resumeAllEffects();
 }

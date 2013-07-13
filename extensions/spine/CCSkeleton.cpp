@@ -60,7 +60,7 @@ void CCSkeleton::initialize () {
 	blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
 	setOpacityModifyRGB(true);
 
-	setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColor));
+	setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColor));
 	scheduleUpdate();
 }
 
@@ -121,7 +121,7 @@ void CCSkeleton::draw () {
 	CC_NODE_DRAW_SETUP();
 
 	ccGLBlendFunc(blendFunc.src, blendFunc.dst);
-	ccColor3B color = getColor();
+	Color3B color = getColor();
 	skeleton->r = color.r / (float)255;
 	skeleton->g = color.g / (float)255;
 	skeleton->b = color.b / (float)255;
@@ -133,7 +133,7 @@ void CCSkeleton::draw () {
 	}
 
 	TextureAtlas* textureAtlas = 0;
-	ccV3F_C4B_T2F_Quad quad;
+	V3F_C4B_T2F_Quad quad;
 	quad.tl.vertices.z = 0;
 	quad.tr.vertices.z = 0;
 	quad.bl.vertices.z = 0;
@@ -165,16 +165,16 @@ void CCSkeleton::draw () {
 		ccDrawColor4B(0, 0, 255, 255);
 		glLineWidth(1);
 		Point points[4];
-		ccV3F_C4B_T2F_Quad quad;
+		V3F_C4B_T2F_Quad quad;
 		for (int i = 0, n = skeleton->slotCount; i < n; i++) {
 			Slot* slot = skeleton->slots[i];
 			if (!slot->attachment || slot->attachment->type != ATTACHMENT_REGION) continue;
 			RegionAttachment* attachment = (RegionAttachment*)slot->attachment;
 			RegionAttachment_updateQuad(attachment, slot, &quad);
-			points[0] = ccp(quad.bl.vertices.x, quad.bl.vertices.y);
-			points[1] = ccp(quad.br.vertices.x, quad.br.vertices.y);
-			points[2] = ccp(quad.tr.vertices.x, quad.tr.vertices.y);
-			points[3] = ccp(quad.tl.vertices.x, quad.tl.vertices.y);
+			points[0] = Point(quad.bl.vertices.x, quad.bl.vertices.y);
+			points[1] = Point(quad.br.vertices.x, quad.br.vertices.y);
+			points[2] = Point(quad.tr.vertices.x, quad.tr.vertices.y);
+			points[3] = Point(quad.tl.vertices.x, quad.tl.vertices.y);
 			ccDrawPoly(points, 4, true);
 		}
 	}
@@ -186,14 +186,14 @@ void CCSkeleton::draw () {
 			Bone *bone = skeleton->bones[i];
 			float x = bone->data->length * bone->m00 + bone->worldX;
 			float y = bone->data->length * bone->m10 + bone->worldY;
-			ccDrawLine(ccp(bone->worldX, bone->worldY), ccp(x, y));
+			ccDrawLine(Point(bone->worldX, bone->worldY), Point(x, y));
 		}
 		// Bone origins.
 		ccPointSize(4);
 		ccDrawColor4B(0, 0, 255, 255); // Root bone is blue.
 		for (int i = 0, n = skeleton->boneCount; i < n; i++) {
 			Bone *bone = skeleton->bones[i];
-			ccDrawPoint(ccp(bone->worldX, bone->worldY));
+			ccDrawPoint(Point(bone->worldX, bone->worldY));
 			if (i == 0) ccDrawColor4B(0, 255, 0, 255);
 		}
 	}
@@ -231,7 +231,7 @@ Rect CCSkeleton::boundingBox () {
 		maxY = max(maxY, vertices[VERTEX_Y3] * scaleY);
 	}
 	Point position = getPosition();
-	return CCRectMake(position.x + minX, position.y + minY, maxX - minX, maxY - minY);
+	return Rect(position.x + minX, position.y + minY, maxX - minX, maxY - minY);
 }
 
 // --- Convenience methods for Skeleton_* functions.
@@ -271,11 +271,12 @@ bool CCSkeleton::setAttachment (const char* slotName, const char* attachmentName
 
 // --- BlendProtocol
 
-ccBlendFunc CCSkeleton::getBlendFunc () {
+const BlendFunc& CCSkeleton::getBlendFunc() const
+{
     return blendFunc;
 }
 
-void CCSkeleton::setBlendFunc (ccBlendFunc blendFunc) {
+void CCSkeleton::setBlendFunc( const BlendFunc &blendFunc) {
     this->blendFunc = blendFunc;
 }
 
@@ -283,7 +284,7 @@ void CCSkeleton::setOpacityModifyRGB (bool value) {
 	premultipliedAlpha = value;
 }
 
-bool CCSkeleton::isOpacityModifyRGB () {
+bool CCSkeleton::isOpacityModifyRGB () const {
 	return premultipliedAlpha;
 }
 

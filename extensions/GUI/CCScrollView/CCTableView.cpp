@@ -106,7 +106,7 @@ void TableView::reloadData()
     Object* pObj = NULL;
     CCARRAY_FOREACH(_cellsUsed, pObj)
     {
-        TableViewCell* cell = (TableViewCell*)pObj;
+        TableViewCell* cell = static_cast<TableViewCell*>(pObj);
 
         if(_tableViewDelegate != NULL) {
             _tableViewDelegate->tableCellWillRecycle(this, cell);
@@ -268,7 +268,7 @@ void TableView::_addCellIfNecessary(TableViewCell * cell)
 
 void TableView::_updateContentSize()
 {
-    Size size = SizeZero;
+    Size size = Size::ZERO;
     unsigned int cellsCount = _dataSource->numberOfCellsInTableView(this);
 
     if (cellsCount > 0)
@@ -278,10 +278,10 @@ void TableView::_updateContentSize()
         switch (this->getDirection())
         {
             case kScrollViewDirectionHorizontal:
-                size = CCSizeMake(maxPosition, _viewSize.height);
+                size = Size(maxPosition, _viewSize.height);
                 break;
             default:
-                size = CCSizeMake(_viewSize.width, maxPosition);
+                size = Size(_viewSize.width, maxPosition);
                 break;
         }
     }
@@ -292,11 +292,11 @@ void TableView::_updateContentSize()
 	{
 		if (_direction == kScrollViewDirectionHorizontal)
 		{
-			this->setContentOffset(ccp(0,0));
+			this->setContentOffset(Point(0,0));
 		}
 		else
 		{
-			this->setContentOffset(ccp(0,this->minContainerOffset().y));
+			this->setContentOffset(Point(0,this->minContainerOffset().y));
 		}
 		_oldDirection = _direction;
 	}
@@ -323,10 +323,10 @@ Point TableView::__offsetFromIndex(unsigned int index)
     switch (this->getDirection())
     {
         case kScrollViewDirectionHorizontal:
-            offset = ccp(_vCellsPositions[index], 0.0f);
+            offset = Point(_vCellsPositions[index], 0.0f);
             break;
         default:
-            offset = ccp(0.0f, _vCellsPositions[index]);
+            offset = Point(0.0f, _vCellsPositions[index]);
             break;
     }
 
@@ -415,7 +415,7 @@ void TableView::_moveCellOutOfSight(TableViewCell *cell)
 
 void TableView::_setIndexForCell(unsigned int index, TableViewCell *cell)
 {
-    cell->setAnchorPoint(ccp(0.0f, 0.0f));
+    cell->setAnchorPoint(Point(0.0f, 0.0f));
     cell->setPosition(this->_offsetFromIndex(index));
     cell->setIdx(index);
 }
@@ -460,7 +460,7 @@ void TableView::scrollViewDidScroll(ScrollView* view)
     }
 
     unsigned int startIdx = 0, endIdx = 0, idx = 0, maxIdx = 0;
-    Point offset = ccpMult(this->getContentOffset(), -1);
+    Point offset = this->getContentOffset() * -1;
     maxIdx = MAX(uCountOfItems-1, 0);
 
     if (_vordering == kTableViewFillTopDown)
@@ -494,7 +494,7 @@ void TableView::scrollViewDidScroll(ScrollView* view)
     int i = 0;
     CCARRAY_FOREACH(_cellsUsed, pObj)
     {
-        TableViewCell* pCell = (TableViewCell*)pObj;
+        TableViewCell* pCell = static_cast<TableViewCell*>(pObj);
         CCLog("cells Used index %d, value = %d", i, pCell->getIdx());
         i++;
     }
@@ -502,7 +502,7 @@ void TableView::scrollViewDidScroll(ScrollView* view)
     i = 0;
     CCARRAY_FOREACH(_cellsFreed, pObj)
     {
-        TableViewCell* pCell = (TableViewCell*)pObj;
+        TableViewCell* pCell = static_cast<TableViewCell*>(pObj);
         CCLog("cells freed index %d, value = %d", i, pCell->getIdx());
         i++;
     }

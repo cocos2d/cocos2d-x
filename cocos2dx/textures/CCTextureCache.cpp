@@ -54,8 +54,13 @@ NS_CC_BEGIN
 
 TextureCache* TextureCache::_sharedTextureCache = nullptr;
 
-
+// XXX: deprecated
 TextureCache * TextureCache::sharedTextureCache()
+{
+    return TextureCache::getInstance();
+}
+
+TextureCache * TextureCache::getInstance()
 {
     if (!_sharedTextureCache)
     {
@@ -89,7 +94,7 @@ TextureCache::~TextureCache()
     _sharedTextureCache = nullptr;
 }
 
-void TextureCache::purgeSharedTextureCache()
+void TextureCache::destroyInstance()
 {
     // notify sub thread to quick
     _sharedTextureCache->_needQuit = true;
@@ -99,7 +104,13 @@ void TextureCache::purgeSharedTextureCache()
     CC_SAFE_RELEASE_NULL(_sharedTextureCache);
 }
 
-const char* TextureCache::description()
+// XXX deprecated
+void TextureCache::purgeSharedTextureCache()
+{
+    TextureCache::destroyInstance();
+}
+
+const char* TextureCache::description() const
 {
     return String::createWithFormat("<TextureCache | Number of textures = %u>", _textures->count())->getCString();
 }
@@ -126,7 +137,7 @@ void TextureCache::addImageAsync(const char *path, Object *target, SEL_CallFuncO
 
     std::string pathKey = path;
 
-    pathKey = FileUtils::sharedFileUtils()->fullPathForFilename(pathKey.c_str());
+    pathKey = FileUtils::getInstance()->fullPathForFilename(pathKey.c_str());
     texture = (Texture2D*)_textures->objectForKey(pathKey.c_str());
 
     std::string fullpath = pathKey;
@@ -154,7 +165,7 @@ void TextureCache::addImageAsync(const char *path, Object *target, SEL_CallFuncO
 
     if (0 == _asyncRefCount)
     {
-        Director::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(TextureCache::addImageAsyncCallBack), this, 0, false);
+        Director::getInstance()->getScheduler()->scheduleSelector(schedule_selector(TextureCache::addImageAsyncCallBack), this, 0, false);
     }
 
     ++_asyncRefCount;
@@ -321,7 +332,7 @@ void TextureCache::addImageAsyncCallBack(float dt)
         --_asyncRefCount;
         if (0 == _asyncRefCount)
         {
-            Director::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(TextureCache::addImageAsyncCallBack), this);
+            Director::getInstance()->getScheduler()->unscheduleSelector(schedule_selector(TextureCache::addImageAsyncCallBack), this);
         }
     }
 }
@@ -338,7 +349,7 @@ Texture2D * TextureCache::addImage(const char * path)
 
     std::string pathKey = path;
 
-    pathKey = FileUtils::sharedFileUtils()->fullPathForFilename(pathKey.c_str());
+    pathKey = FileUtils::getInstance()->fullPathForFilename(pathKey.c_str());
     if (pathKey.size() == 0)
     {
         return NULL;
@@ -429,7 +440,7 @@ Texture2D * TextureCache::addPVRImage(const char* path)
     }
 
     // Split up directory and filename
-    std::string fullpath = FileUtils::sharedFileUtils()->fullPathForFilename(key.c_str());
+    std::string fullpath = FileUtils::getInstance()->fullPathForFilename(key.c_str());
     texture = new Texture2D();
     if(texture != NULL && texture->initWithPVRFile(fullpath.c_str()) )
     {
@@ -462,7 +473,7 @@ Texture2D* TextureCache::addETCImage(const char* path)
     }
     
     // Split up directory and filename
-    std::string fullpath = FileUtils::sharedFileUtils()->fullPathForFilename(key.c_str());
+    std::string fullpath = FileUtils::getInstance()->fullPathForFilename(key.c_str());
     texture = new Texture2D();
     if(texture != NULL && texture->initWithETCFile(fullpath.c_str()))
     {
@@ -487,7 +498,7 @@ Texture2D* TextureCache::addUIImage(Image *image, const char *key)
     std::string forKey;
     if (key)
     {
-        forKey = FileUtils::sharedFileUtils()->fullPathForFilename(key);
+        forKey = FileUtils::getInstance()->fullPathForFilename(key);
     }
 
     // Don't have to lock here, because addImageAsync() will not 
@@ -538,7 +549,7 @@ void TextureCache::removeUnusedTextures()
     CCDICT_FOREACH(_textures, pElement)
     {
         CCLOG("cocos2d: TextureCache: texture: %s", pElement->getStrKey());
-        Texture2D *value = (Texture2D*)pElement->getObject();
+        Texture2D *value = static_cast<Texture2D*>(pElement->getObject());
         if (value->retainCount() == 1)
         {
             CCLOG("cocos2d: TextureCache: removing unused texture: %s", pElement->getStrKey());
@@ -557,7 +568,7 @@ void TextureCache::removeUnusedTextures()
         CCDICT_FOREACH(_textures, pElement)
         {
             CCLOG("cocos2d: TextureCache: texture: %s", pElement->getStrKey());
-            Texture2D *value = (Texture2D*)pElement->getObject();
+            Texture2D *value = static_cast<Texture2D*>(pElement->getObject());
             if (value->retainCount() == 1)
             {
                 elementToRemove.push_back(pElement);
@@ -591,13 +602,13 @@ void TextureCache::removeTextureForKey(const char *textureKeyName)
         return;
     }
 
-    string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(textureKeyName);
+    string fullPath = FileUtils::getInstance()->fullPathForFilename(textureKeyName);
     _textures->removeObjectForKey(fullPath);
 }
 
 Texture2D* TextureCache::textureForKey(const char* key)
 {
-    return (Texture2D*)_textures->objectForKey(FileUtils::sharedFileUtils()->fullPathForFilename(key));
+    return static_cast<Texture2D*>(_textures->objectForKey(FileUtils::getInstance()->fullPathForFilename(key)));
 }
 
 void TextureCache::reloadAllTextures()
@@ -615,7 +626,7 @@ void TextureCache::dumpCachedTextureInfo()
     DictElement* pElement = NULL;
     CCDICT_FOREACH(_textures, pElement)
     {
-        Texture2D* tex = (Texture2D*)pElement->getObject();
+        Texture2D* tex = static_cast<Texture2D*>(pElement->getObject());
         unsigned int bpp = tex->bitsPerPixelForFormat();
         // Each texture takes up width * height * bytesPerPixel bytes.
         unsigned int bytes = tex->getPixelsWide() * tex->getPixelsHigh() * bpp / 8;
@@ -653,7 +664,7 @@ VolatileTexture::VolatileTexture(Texture2D *t)
 , uiImage(NULL)
 , _fontSize(0.0f)
 {
-    _size = CCSizeMake(0, 0);
+    _size = Size(0, 0);
     _texParams.minFilter = GL_LINEAR;
     _texParams.magFilter = GL_LINEAR;
     _texParams.wrapS = GL_CLAMP_TO_EDGE;
@@ -746,18 +757,18 @@ void VolatileTexture::addStringTexture(Texture2D *tt, const char* text, const Si
     vt->_text     = text;
 }
 
-void VolatileTexture::setTexParameters(Texture2D *t, ccTexParams *texParams) 
+void VolatileTexture::setTexParameters(Texture2D *t, const ccTexParams &texParams)
 {
     VolatileTexture *vt = findVolotileTexture(t);
 
-    if (texParams->minFilter != GL_NONE)
-        vt->_texParams.minFilter = texParams->minFilter;
-    if (texParams->magFilter != GL_NONE)
-        vt->_texParams.magFilter = texParams->magFilter;
-    if (texParams->wrapS != GL_NONE)
-        vt->_texParams.wrapS = texParams->wrapS;
-    if (texParams->wrapT != GL_NONE)
-        vt->_texParams.wrapT = texParams->wrapT;
+    if (texParams.minFilter != GL_NONE)
+        vt->_texParams.minFilter = texParams.minFilter;
+    if (texParams.magFilter != GL_NONE)
+        vt->_texParams.magFilter = texParams.magFilter;
+    if (texParams.wrapS != GL_NONE)
+        vt->_texParams.wrapS = texParams.wrapS;
+    if (texParams.wrapT != GL_NONE)
+        vt->_texParams.wrapT = texParams.wrapT;
 }
 
 void VolatileTexture::removeTexture(Texture2D *t) 
@@ -808,7 +819,7 @@ void VolatileTexture::reloadAllTextures()
                 {
                     Image* pImage = new Image();
                     unsigned long nSize = 0;
-                    unsigned char* pBuffer = FileUtils::sharedFileUtils()->getFileData(vt->_fileName.c_str(), "rb", &nSize);
+                    unsigned char* pBuffer = FileUtils::getInstance()->getFileData(vt->_fileName.c_str(), "rb", &nSize);
 
                     if (pImage && pImage->initWithImageData((void*)pBuffer, nSize, vt->_fmtImage))
                     {
@@ -851,7 +862,7 @@ void VolatileTexture::reloadAllTextures()
         default:
             break;
         }
-        vt->texture->setTexParameters(&vt->_texParams);
+        vt->texture->setTexParameters(vt->_texParams);
     }
 
     isReloading = false;

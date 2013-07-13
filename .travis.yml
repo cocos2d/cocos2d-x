@@ -8,7 +8,7 @@ env:
   # Disabled travis-ci build for native client port since it doesn't support std::thread, std::mutex.
   # - PLATFORM=nacl DEBUG=1 NACL_ARCH=arm
   - PLATFORM=android
-  - PLATFORM=emscripten DEBUG=1
+  # - PLATFORM=emscripten DEBUG=1
   global:
   - secure: |-
       cHXOjAda+t2tmBVuVAiQfvhDN+unToO6hX1rc3dJeGDOk4rlQnylJacjA7o/

@@ -19,8 +19,8 @@ class CCSpriteBatchNode : public CCNode
 	void reorderBatch(bool reorder);
     void setTexture(CCTexture2D *texture);
     CCTexture2D* getTexture(void);
-    void setBlendFunc(ccBlendFunc blendFunc);
-    ccBlendFunc getBlendFunc(void);
+    void setBlendFunc(const BlendFunc &blendFunc);
+    const BlendFunc& getBlendFunc(void);
 
 	void addChild(CCNode * child);
     void addChild(CCNode * child, int zOrder);

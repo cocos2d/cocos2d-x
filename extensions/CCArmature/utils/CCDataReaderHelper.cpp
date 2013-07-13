@@ -183,13 +183,13 @@ void DataReaderHelper::addDataFromXML(const char *xmlPath)
     /*
     *  Need to get the full path of the xml file, or the Tiny XML can't find the xml at IOS
     */
-    std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(xmlPath);
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(xmlPath);
 
     /*
     *  Need to read the tiny xml into memory first, or the Tiny XML can't find the xml at IOS
     */
     unsigned long size;
-    const char *pFileContent = (char *)FileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , "r", &size);
+    const char *pFileContent = (char *)FileUtils::getInstance()->getFileData(fullPath.c_str() , "r", &size);
 
     if (pFileContent)
     {
@@ -778,7 +778,7 @@ ContourData *DataReaderHelper::decodeContour(tinyxml2::XMLElement *contourXML)
 
     while (vertexDataXML)
     {
-        ContourVertex2 *vertex = new ContourVertex2(0, 0);
+        ContourVertex2F *vertex = new ContourVertex2F(0, 0);
         vertex->autorelease();
 
         vertexDataXML->QueryFloatAttribute(A_X, &vertex->x);
@@ -799,8 +799,8 @@ ContourData *DataReaderHelper::decodeContour(tinyxml2::XMLElement *contourXML)
 void DataReaderHelper::addDataFromJson(const char *filePath)
 {
     unsigned long size;
-    std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(filePath);
-    const char *pFileContent = (char *)FileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , "r", &size);
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
+    const char *pFileContent = (char *)FileUtils::getInstance()->getFileData(fullPath.c_str() , "r", &size);
 
     addDataFromJsonCache(pFileContent);
 }
@@ -1096,7 +1096,7 @@ ContourData *DataReaderHelper::decodeContour(cs::CSJsonDictionary &json)
     {
         cs::CSJsonDictionary *dic = json.getSubItemFromArray(VERTEX_POINT, i);
 
-        ContourVertex2 *vertex = new ContourVertex2(0, 0);
+        ContourVertex2F *vertex = new ContourVertex2F(0, 0);
 
         vertex->x = dic->getItemFloatValue(A_X, 0);
         vertex->y = dic->getItemFloatValue(A_Y, 0);

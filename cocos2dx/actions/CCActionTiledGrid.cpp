@@ -27,7 +27,6 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "support/CCPointExtension.h"
 #include "effects/CCGrid.h"
-#include "cocoa/CCZone.h"
 #include <stdlib.h>
 
 NS_CC_BEGIN
@@ -82,29 +81,6 @@ ShakyTiles3D* ShakyTiles3D::clone() const
 	return a;
 }
 
-Object* ShakyTiles3D::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    ShakyTiles3D* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (ShakyTiles3D*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new ShakyTiles3D();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-    
-    TiledGrid3DAction::copyWithZone(pZone);
-
-    pCopy->initWithDuration(_duration, _gridSize, _randrange, _shakeZ);
-    
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 void ShakyTiles3D::update(float time)
 {
     CC_UNUSED_PARAM(time);
@@ -114,7 +90,7 @@ void ShakyTiles3D::update(float time)
     {
         for (j = 0; j < _gridSize.height; ++j)
         {
-            ccQuad3 coords = originalTile(ccp(i, j));
+            Quad3 coords = getOriginalTile(Point(i, j));
 
             // X
             coords.bl.x += ( rand() % (_randrange*2) ) - _randrange;
@@ -136,7 +112,7 @@ void ShakyTiles3D::update(float time)
                 coords.tr.z += ( rand() % (_randrange*2) ) - _randrange;
             }
                         
-            setTile(ccp(i, j), coords);
+            setTile(Point(i, j), coords);
         }
     }
 }
@@ -185,29 +161,6 @@ ShatteredTiles3D* ShatteredTiles3D::clone() const
 	return a;
 }
 
-Object* ShatteredTiles3D::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    ShatteredTiles3D* pCopy = NULL;
-    if(pZone && pZone->_copyObject)
-    {
-        pCopy = (ShatteredTiles3D*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new ShatteredTiles3D();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    //copy super class's member
-    TiledGrid3DAction::copyWithZone(pZone);
-
-    pCopy->initWithDuration(_duration, _gridSize, _randrange, _shatterZ);
-
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 void ShatteredTiles3D::update(float time)
 {
     CC_UNUSED_PARAM(time);
@@ -219,7 +172,7 @@ void ShatteredTiles3D::update(float time)
         {
             for (j = 0; j < _gridSize.height; ++j)
             {
-                ccQuad3 coords = originalTile(ccp(i ,j));
+                Quad3 coords = getOriginalTile(Point(i ,j));
                 
                 // X
                 coords.bl.x += ( rand() % (_randrange*2) ) - _randrange;
@@ -241,7 +194,7 @@ void ShatteredTiles3D::update(float time)
                     coords.tr.z += ( rand() % (_randrange*2) ) - _randrange;
                 }
                 
-                setTile(ccp(i, j), coords);
+                setTile(Point(i, j), coords);
             }
         }
         
@@ -293,28 +246,6 @@ ShuffleTiles* ShuffleTiles::clone() const
 	return a;
 }
 
-Object* ShuffleTiles::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    ShuffleTiles* pCopy = NULL;
-    if(pZone && pZone->_copyObject)
-    {
-        pCopy = (ShuffleTiles*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new ShuffleTiles();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    TiledGrid3DAction::copyWithZone(pZone);
-
-    pCopy->initWithDuration(_duration, _gridSize, _seed);
-
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 ShuffleTiles::~ShuffleTiles(void)
 {
     CC_SAFE_DELETE_ARRAY(_tilesOrder);
@@ -333,7 +264,7 @@ void ShuffleTiles::shuffle(unsigned int *pArray, unsigned int nLen)
     }
 }
 
-Size ShuffleTiles::getDelta(const Size& pos)
+Size ShuffleTiles::getDelta(const Size& pos) const
 {
     Point    pos2;
 
@@ -342,12 +273,12 @@ Size ShuffleTiles::getDelta(const Size& pos)
     pos2.x = (float)(_tilesOrder[idx] / (int)_gridSize.height);
     pos2.y = (float)(_tilesOrder[idx] % (int)_gridSize.height);
 
-    return CCSizeMake((int)(pos2.x - pos.width), (int)(pos2.y - pos.height));
+    return Size((int)(pos2.x - pos.width), (int)(pos2.y - pos.height));
 }
 
 void ShuffleTiles::placeTile(const Point& pos, Tile *t)
 {
-    ccQuad3 coords = originalTile(pos);
+    Quad3 coords = getOriginalTile(pos);
 
     Point step = _target->getGrid()->getStep();
     coords.bl.x += (int)(t->position.x * step.x);
@@ -397,9 +328,9 @@ void ShuffleTiles::startWithTarget(Node *pTarget)
     {
         for (j = 0; j < _gridSize.height; ++j)
         {
-            tileArray->position = ccp((float)i, (float)j);
-            tileArray->startPosition = ccp((float)i, (float)j);
-            tileArray->delta = getDelta(CCSizeMake(i, j));
+            tileArray->position = Point((float)i, (float)j);
+            tileArray->startPosition = Point((float)i, (float)j);
+            tileArray->delta = getDelta(Size(i, j));
             ++tileArray;
         }
     }
@@ -415,8 +346,8 @@ void ShuffleTiles::update(float time)
     {
         for (j = 0; j < _gridSize.height; ++j)
         {
-            tileArray->position = ccpMult(ccp((float)tileArray->delta.width, (float)tileArray->delta.height), time);
-            placeTile(ccp(i, j), tileArray);
+            tileArray->position = Point((float)tileArray->delta.width, (float)tileArray->delta.height) * time;
+            placeTile(Point(i, j), tileArray);
             ++tileArray;
         }
     }
@@ -454,7 +385,7 @@ FadeOutTRTiles* FadeOutTRTiles::clone() const
 
 float FadeOutTRTiles::testFunc(const Size& pos, float time)
 {
-    Point n = ccpMult(ccp((float)_gridSize.width, (float)_gridSize.height), time);
+    Point n = Point((float)_gridSize.width, (float)_gridSize.height) * time;
     if ((n.x + n.y) == 0.0f)
     {
         return 1.0f;
@@ -465,19 +396,19 @@ float FadeOutTRTiles::testFunc(const Size& pos, float time)
 
 void FadeOutTRTiles::turnOnTile(const Point& pos)
 {
-    setTile(pos, originalTile(pos));
+    setTile(pos, getOriginalTile(pos));
 }
 
 void FadeOutTRTiles::turnOffTile(const Point& pos)
 {
-    ccQuad3 coords;
-    memset(&coords, 0, sizeof(ccQuad3));
+    Quad3 coords;
+    memset(&coords, 0, sizeof(Quad3));
     setTile(pos, coords);
 }
 
 void FadeOutTRTiles::transformTile(const Point& pos, float distance)
 {
-    ccQuad3 coords = originalTile(pos);
+    Quad3 coords = getOriginalTile(pos);
     Point step = _target->getGrid()->getStep();
 
     coords.bl.x += (step.x / 2) * (1.0f - distance);
@@ -503,18 +434,18 @@ void FadeOutTRTiles::update(float time)
     {
         for (j = 0; j < _gridSize.height; ++j)
         {
-            float distance = testFunc(CCSizeMake(i, j), time);
+            float distance = testFunc(Size(i, j), time);
             if ( distance == 0 )
             {
-                turnOffTile(ccp(i, j));
+                turnOffTile(Point(i, j));
             } else 
             if (distance < 1)
             {
-                transformTile(ccp(i, j), distance);
+                transformTile(Point(i, j), distance);
             }
             else
             {
-                turnOnTile(ccp(i, j));
+                turnOnTile(Point(i, j));
             }
         }
     }
@@ -552,7 +483,7 @@ FadeOutBLTiles* FadeOutBLTiles::clone() const
 
 float FadeOutBLTiles::testFunc(const Size& pos, float time)
 {
-    Point n = ccpMult(ccp((float)_gridSize.width, (float)_gridSize.height), (1.0f - time));
+    Point n = Point((float)_gridSize.width, (float)_gridSize.height) * (1.0f - time);
     if ((pos.width + pos.height) == 0)
     {
         return 1.0f;
@@ -593,7 +524,7 @@ FadeOutUpTiles* FadeOutUpTiles::clone() const
 
 float FadeOutUpTiles::testFunc(const Size& pos, float time)
 {
-    Point n = ccpMult(ccp((float)_gridSize.width, (float)_gridSize.height), time);
+    Point n = Point((float)_gridSize.width, (float)_gridSize.height) * time;
     if (n.y == 0.0f)
     {
         return 1.0f;
@@ -604,7 +535,7 @@ float FadeOutUpTiles::testFunc(const Size& pos, float time)
 
 void FadeOutUpTiles::transformTile(const Point& pos, float distance)
 {
-    ccQuad3 coords = originalTile(pos);
+    Quad3 coords = getOriginalTile(pos);
     Point step = _target->getGrid()->getStep();
 
     coords.bl.y += (step.y / 2) * (1.0f - distance);
@@ -647,7 +578,7 @@ FadeOutDownTiles* FadeOutDownTiles::clone() const
 
 float FadeOutDownTiles::testFunc(const Size& pos, float time)
 {
-    Point n = ccpMult(ccp((float)_gridSize.width, (float)_gridSize.height), (1.0f - time));
+    Point n = Point((float)_gridSize.width, (float)_gridSize.height) * (1.0f - time);
     if (pos.height == 0)
     {
         return 1.0f;
@@ -713,28 +644,6 @@ TurnOffTiles* TurnOffTiles::clone() const
 	return a;
 }
 
-Object* TurnOffTiles::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    TurnOffTiles* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        pCopy = (TurnOffTiles*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new TurnOffTiles();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    TiledGrid3DAction::copyWithZone(pZone);
-
-    pCopy->initWithDuration(_duration, _gridSize, _seed );
-
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 TurnOffTiles::~TurnOffTiles(void)
 {
     CC_SAFE_DELETE_ARRAY(_tilesOrder);
@@ -754,14 +663,14 @@ void TurnOffTiles::shuffle(unsigned int *pArray, unsigned int nLen)
 
 void TurnOffTiles::turnOnTile(const Point& pos)
 {
-    setTile(pos, originalTile(pos));
+    setTile(pos, getOriginalTile(pos));
 }
 
 void TurnOffTiles::turnOffTile(const Point& pos)
 {
-    ccQuad3 coords;
+    Quad3 coords;
 
-    memset(&coords, 0, sizeof(ccQuad3));
+    memset(&coords, 0, sizeof(Quad3));
     setTile(pos, coords);
 }
 
@@ -796,7 +705,7 @@ void TurnOffTiles::update(float time)
     for( i = 0; i < _tilesCount; i++ )
     {
         t = _tilesOrder[i];
-        Point tilePos = ccp( (unsigned int)(t / _gridSize.height), t % (unsigned int)_gridSize.height );
+        Point tilePos = Point( (unsigned int)(t / _gridSize.height), t % (unsigned int)_gridSize.height );
 
         if ( i < l )
         {
@@ -853,28 +762,6 @@ WavesTiles3D* WavesTiles3D::clone() const
 	return a;
 }
 
-Object* WavesTiles3D::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    WavesTiles3D* pCopy = NULL;
-    if(pZone && pZone->_copyObject)
-    {
-        pCopy = (WavesTiles3D*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new WavesTiles3D();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    TiledGrid3DAction::copyWithZone(pZone);
-
-    pCopy->initWithDuration(_duration, _gridSize, _waves, _amplitude);
-
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 void WavesTiles3D::update(float time)
 {
     int i, j;
@@ -883,7 +770,7 @@ void WavesTiles3D::update(float time)
     {
         for( j = 0; j < _gridSize.height; j++ )
         {
-            ccQuad3 coords = originalTile(ccp(i, j));
+            Quad3 coords = getOriginalTile(Point(i, j));
 
             coords.bl.z = (sinf(time * (float)M_PI  *_waves * 2 + 
                 (coords.bl.y+coords.bl.x) * .01f) * _amplitude * _amplitudeRate );
@@ -891,7 +778,7 @@ void WavesTiles3D::update(float time)
             coords.tl.z = coords.bl.z;
             coords.tr.z = coords.bl.z;
 
-            setTile(ccp(i, j), coords);
+            setTile(Point(i, j), coords);
         }
     }
 }
@@ -940,27 +827,6 @@ JumpTiles3D* JumpTiles3D::clone() const
 	return a;
 }
 
-Object* JumpTiles3D::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    JumpTiles3D* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        pCopy = (JumpTiles3D*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new JumpTiles3D();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    TiledGrid3DAction::copyWithZone(pZone);
-    pCopy->initWithDuration(_duration, _gridSize, _jumps, _amplitude);
-
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 void JumpTiles3D::update(float time)
 {
     int i, j;
@@ -972,7 +838,7 @@ void JumpTiles3D::update(float time)
     {
         for( j = 0; j < _gridSize.height; j++ )
         {
-            ccQuad3 coords = originalTile(ccp(i, j));
+            Quad3 coords = getOriginalTile(Point(i, j));
 
             if ( ((i+j) % 2) == 0 )
             {
@@ -989,7 +855,7 @@ void JumpTiles3D::update(float time)
                 coords.tr.z += sinz2;
             }
 
-            setTile(ccp(i, j), coords);
+            setTile(Point(i, j), coords);
         }
     }
 }
@@ -1019,7 +885,7 @@ bool SplitRows::initWithDuration(float duration, unsigned int nRows)
 {
     _rows = nRows;
 
-    return TiledGrid3DAction::initWithDuration(duration, CCSizeMake(1, nRows));
+    return TiledGrid3DAction::initWithDuration(duration, Size(1, nRows));
 }
 
 SplitRows* SplitRows::clone() const
@@ -1031,32 +897,10 @@ SplitRows* SplitRows::clone() const
 	return a;
 }
 
-Object* SplitRows::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    SplitRows* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        pCopy = (SplitRows*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new SplitRows();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    TiledGrid3DAction::copyWithZone(pZone);
-
-    pCopy->initWithDuration(_duration, _rows);
-
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 void SplitRows::startWithTarget(Node *pTarget)
 {
     TiledGrid3DAction::startWithTarget(pTarget);
-    _winSize = Director::sharedDirector()->getWinSizeInPixels();
+    _winSize = Director::getInstance()->getWinSizeInPixels();
 }
 
 void SplitRows::update(float time)
@@ -1065,7 +909,7 @@ void SplitRows::update(float time)
 
     for (j = 0; j < _gridSize.height; ++j)
     {
-        ccQuad3 coords = originalTile(ccp(0, j));
+        Quad3 coords = getOriginalTile(Point(0, j));
         float    direction = 1;
 
         if ( (j % 2 ) == 0 )
@@ -1078,7 +922,7 @@ void SplitRows::update(float time)
         coords.tl.x += direction * _winSize.width * time;
         coords.tr.x += direction * _winSize.width * time;
 
-        setTile(ccp(0, j), coords);
+        setTile(Point(0, j), coords);
     }
 }
 
@@ -1106,7 +950,7 @@ SplitCols* SplitCols::create(float duration, unsigned int nCols)
 bool SplitCols::initWithDuration(float duration, unsigned int nCols)
 {
     _cols = nCols;
-    return TiledGrid3DAction::initWithDuration(duration, CCSizeMake(nCols, 1));
+    return TiledGrid3DAction::initWithDuration(duration, Size(nCols, 1));
 }
 
 SplitCols* SplitCols::clone() const
@@ -1118,31 +962,10 @@ SplitCols* SplitCols::clone() const
 	return a;
 }
 
-Object* SplitCols::copyWithZone(Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    SplitCols* pCopy = NULL;
-    if(pZone && pZone->_copyObject) 
-    {
-        pCopy = (SplitCols*)(pZone->_copyObject);
-    }
-    else
-    {
-        pCopy = new SplitCols();
-        pZone = pNewZone = new Zone(pCopy);
-    }
-
-    TiledGrid3DAction::copyWithZone(pZone);
-    pCopy->initWithDuration(_duration, _cols);
-
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
 void SplitCols::startWithTarget(Node *pTarget)
 {
     TiledGrid3DAction::startWithTarget(pTarget);
-    _winSize = Director::sharedDirector()->getWinSizeInPixels();
+    _winSize = Director::getInstance()->getWinSizeInPixels();
 }
 
 void SplitCols::update(float time)
@@ -1151,7 +974,7 @@ void SplitCols::update(float time)
 
     for (i = 0; i < _gridSize.width; ++i)
     {
-        ccQuad3 coords = originalTile(ccp(i, 0));
+        Quad3 coords = getOriginalTile(Point(i, 0));
         float    direction = 1;
 
         if ( (i % 2 ) == 0 )
@@ -1164,7 +987,7 @@ void SplitCols::update(float time)
         coords.tl.y += direction * _winSize.height * time;
         coords.tr.y += direction * _winSize.height * time;
 
-        setTile(ccp(i, 0), coords);
+        setTile(Point(i, 0), coords);
     }
 }
 

@@ -55,7 +55,11 @@ public:
     bool init(void);
 
 public:
-    static Profiler* sharedProfiler(void);
+    /** returns the singleton */
+    static Profiler* getInstance(void);
+
+    CC_DEPRECATED_ATTRIBUTE static Profiler* sharedProfiler(void);
+
     /** Creates and adds a new timer */
     ProfilingTimer* createAndAddTimerWithName(const char* timerName);
     /** releases a timer */
@@ -71,7 +75,7 @@ class ProfilingTimer : public Object
 public:
     bool initWithName(const char* timerName);
     ~ProfilingTimer(void);
-    const char* description(void);
+    const char* description(void) const;
     inline struct cc_timeval * getStartTime(void) { return &_startTime; };
     inline void setAverageTime(double value) { _averageTime = value; }
     inline double getAverageTime(void) { return _averageTime; }

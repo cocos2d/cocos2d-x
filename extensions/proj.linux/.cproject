@@ -40,6 +40,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
+									<listOptionValue builtIn="false" value="../../../CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="../../../external"/>
 									<listOptionValue builtIn="false" value="../../../external/chipmunk/include/chipmunk"/>
 									<listOptionValue builtIn="false" value="../.."/>
@@ -51,6 +52,7 @@
 									<listOptionValue builtIn="false" value="LINUX"/>
 									<listOptionValue builtIn="false" value="CC_ENABLE_CHIPMUNK_INTEGRATION=1"/>
 								</option>
+								<option id="gnu.cpp.compiler.option.other.other.583875716" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -Wno-multichar -std=c++0x" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1844974810" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.compiler.lib.debug.923891685" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.lib.debug">
@@ -66,6 +68,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
+									<listOptionValue builtIn="false" value="../../../CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="../../../external"/>
 									<listOptionValue builtIn="false" value="../../../external/chipmunk/include/chipmunk"/>
 									<listOptionValue builtIn="false" value="../.."/>
@@ -133,6 +136,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
+									<listOptionValue builtIn="false" value="../../../CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="../../../external"/>
 									<listOptionValue builtIn="false" value="../../../external/chipmunk/include/chipmunk"/>
 									<listOptionValue builtIn="false" value="../.."/>
@@ -144,6 +148,7 @@
 									<listOptionValue builtIn="false" value="LINUX"/>
 									<listOptionValue builtIn="false" value="CC_ENABLE_CHIPMUNK_INTEGRATION=1"/>
 								</option>
+								<option id="gnu.cpp.compiler.option.other.other.2145306208" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -Wno-multichar -std=c++0x" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1223687608" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.compiler.lib.release.225988932" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.lib.release">
@@ -159,6 +164,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
+									<listOptionValue builtIn="false" value="../../../CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="../../../external"/>
 									<listOptionValue builtIn="false" value="../../../external/chipmunk/include/chipmunk"/>
 									<listOptionValue builtIn="false" value="../.."/>
@@ -218,6 +224,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
+									<listOptionValue builtIn="false" value="../../../CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="../../../external"/>
 									<listOptionValue builtIn="false" value="../../../external/chipmunk/include/chipmunk"/>
 									<listOptionValue builtIn="false" value="../.."/>
@@ -227,8 +234,10 @@
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.304106741" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
+									<listOptionValue builtIn="false" value="CC_KEYBOARD_SUPPORT"/>
 									<listOptionValue builtIn="false" value="CC_ENABLE_CHIPMUNK_INTEGRATION=1"/>
 								</option>
+								<option id="gnu.cpp.compiler.option.other.other.554430191" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -Wno-multichar -std=c++0x" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1787525763" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.compiler.lib.debug.315678675" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.lib.debug">
@@ -244,6 +253,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
+									<listOptionValue builtIn="false" value="../../../CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="../../../external"/>
 									<listOptionValue builtIn="false" value="../../../external/chipmunk/include/chipmunk"/>
 									<listOptionValue builtIn="false" value="../.."/>
@@ -251,13 +261,16 @@
 									<listOptionValue builtIn="false" value="../../GUI/CCControlExtension"/>
 									<listOptionValue builtIn="false" value="../../network"/>
 								</option>
+								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1854594658" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="CC_KEYBOARD_SUPPORT"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.401196029" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.linker.base.124577990" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.base">
-								<option defaultValue="true" id="gnu.c.link.option.shared.31345903" superClass="gnu.c.link.option.shared" valueType="boolean"/>
+								<option defaultValue="true" id="gnu.c.link.option.shared.31345903" name="Shared (-shared)" superClass="gnu.c.link.option.shared" valueType="boolean"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.base.46603271" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.base">
-								<option defaultValue="true" id="gnu.cpp.link.option.shared.1668882269" superClass="gnu.cpp.link.option.shared" valueType="boolean"/>
+								<option defaultValue="true" id="gnu.cpp.link.option.shared.1668882269" name="Shared (-shared)" superClass="gnu.cpp.link.option.shared" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1712946881" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -312,6 +325,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
+									<listOptionValue builtIn="false" value="../../../CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="../../../external"/>
 									<listOptionValue builtIn="false" value="../../../external/chipmunk/include/chipmunk"/>
 									<listOptionValue builtIn="false" value="../.."/>
@@ -323,6 +337,7 @@
 									<listOptionValue builtIn="false" value="LINUX"/>
 									<listOptionValue builtIn="false" value="CC_ENABLE_CHIPMUNK_INTEGRATION=1"/>
 								</option>
+								<option id="gnu.cpp.compiler.option.other.other.852144129" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -Wno-multichar -std=c++0x" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.2037211185" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.compiler.lib.release.1172909638" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.lib.release">
@@ -338,6 +353,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
+									<listOptionValue builtIn="false" value="../../../CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="../../../external"/>
 									<listOptionValue builtIn="false" value="../../../external/chipmunk/include/chipmunk"/>
 									<listOptionValue builtIn="false" value="../.."/>

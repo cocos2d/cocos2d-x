@@ -129,11 +129,26 @@ int String::compare(const char * pStr) const
     return strcmp(getCString(), pStr);
 }
 
-Object* String::copyWithZone(Zone* pZone)
+void String::append(const std::string& str)
 {
-    CCAssert(pZone == NULL, "CCString should not be inherited.");
-    String* pStr = new String(_string.c_str());
-    return pStr;
+    _string.append(str);
+}
+
+void String::appendWithFormat(const char* format, ...)
+{
+    va_list ap;
+    va_start(ap, format);
+    
+    char* pBuf = (char*)malloc(kMaxStringLen);
+    if (pBuf != NULL)
+    {
+        vsnprintf(pBuf, kMaxStringLen, format, ap);
+        _string.append(pBuf);
+        free(pBuf);
+    }
+    
+    va_end(ap);
+    
 }
 
 bool String::isEqual(const Object* pObject)
@@ -194,7 +209,7 @@ String* String::createWithContentsOfFile(const char* pszFileName)
     unsigned long size = 0;
     unsigned char* pData = 0;
     String* pRet = NULL;
-    pData = FileUtils::sharedFileUtils()->getFileData(pszFileName, "rb", &size);
+    pData = FileUtils::getInstance()->getFileData(pszFileName, "rb", &size);
     pRet = String::createWithData(pData, size);
     CC_SAFE_DELETE_ARRAY(pData);
     return pRet;
@@ -203,6 +218,11 @@ String* String::createWithContentsOfFile(const char* pszFileName)
 void String::acceptVisitor(DataVisitor &visitor)
 {
     visitor.visit(this);
+}
+
+String* String::clone() const
+{
+    return String::create(_string);
 }
 
 NS_CC_END

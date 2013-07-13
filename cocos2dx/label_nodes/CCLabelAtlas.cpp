@@ -57,7 +57,7 @@ LabelAtlas* LabelAtlas::create(const char *string, const char *charMapFile, unsi
 
 bool LabelAtlas::initWithString(const char *string, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
 {
-    Texture2D *texture = TextureCache::sharedTextureCache()->addImage(charMapFile);
+    Texture2D *texture = TextureCache::getInstance()->addImage(charMapFile);
 	return initWithString(string, texture, itemWidth, itemHeight, startCharMap);
 }
 
@@ -93,7 +93,7 @@ LabelAtlas* LabelAtlas::create(const char *string, const char *fntFile)
 
 bool LabelAtlas::initWithString(const char *theString, const char *fntFile)
 {
-  std::string pathStr = FileUtils::sharedFileUtils()->fullPathForFilename(fntFile);
+  std::string pathStr = FileUtils::getInstance()->fullPathForFilename(fntFile);
   std::string relPathStr = pathStr.substr(0, pathStr.find_last_of("/"))+"/";
   Dictionary *dict = Dictionary::createWithContentsOfFile(pathStr.c_str());
   
@@ -130,7 +130,7 @@ void LabelAtlas::updateAtlasValues()
     }
 
     CCAssert( n <= _textureAtlas->getCapacity(), "updateAtlasValues: Invalid String length");
-    ccV3F_C4B_T2F_Quad* quads = _textureAtlas->getQuads();
+    V3F_C4B_T2F_Quad* quads = _textureAtlas->getQuads();
     for(unsigned int i = 0; i < n; i++) {
 
         unsigned char a = s[i] - _mapStartChar;
@@ -171,7 +171,7 @@ void LabelAtlas::updateAtlasValues()
         quads[i].tr.vertices.x = (float)(i * _itemWidth + _itemWidth);
         quads[i].tr.vertices.y = (float)(_itemHeight);
         quads[i].tr.vertices.z = 0.0f;
-        ccColor4B c = { _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity };
+        Color4B c(_displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity);
         quads[i].tl.colors = c;
         quads[i].tr.colors = c;
         quads[i].bl.colors = c;
@@ -198,14 +198,14 @@ void LabelAtlas::setString(const char *label)
     _string = label;
     this->updateAtlasValues();
 
-    Size s = CCSizeMake(len * _itemWidth, _itemHeight);
+    Size s = Size(len * _itemWidth, _itemHeight);
 
     this->setContentSize(s);
 
     _quadsToDraw = len;
 }
 
-const char* LabelAtlas::getString(void)
+const char* LabelAtlas::getString(void) const
 {
     return _string.c_str();
 }
@@ -219,8 +219,8 @@ void LabelAtlas::draw()
 
     const Size& s = this->getContentSize();
     Point vertices[4]={
-        ccp(0,0),ccp(s.width,0),
-        ccp(s.width,s.height),ccp(0,s.height),
+        Point(0,0),Point(s.width,0),
+        Point(s.width,s.height),Point(0,s.height),
     };
     ccDrawPoly(vertices, 4, true);
 }

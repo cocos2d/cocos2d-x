@@ -62,17 +62,23 @@ public:
     TextureCache();
     virtual ~TextureCache();
 
-    const char* description(void);
+    const char* description(void) const;
 
     Dictionary* snapshotTextures();
 
     /** Returns the shared instance of the cache */
-    static TextureCache * sharedTextureCache();
+    static TextureCache * getInstance();
 
     /** purges the cache. It releases the retained instance.
-    @since v0.99.0
-    */
-    static void purgeSharedTextureCache();
+     @since v0.99.0
+     */
+    static void destroyInstance();
+
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static TextureCache * sharedTextureCache();
+
+    /** @deprecated Use destroyInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static void purgeSharedTextureCache();
 
     /** Returns a Texture2D object given an file image
     * If the file image was not previously loaded, it will create a new Texture2D
@@ -218,7 +224,7 @@ public:
     static void addDataTexture(Texture2D *tt, void* data, Texture2DPixelFormat pixelFormat, const Size& contentSize);
     static void addImage(Texture2D *tt, Image *image);
 
-    static void setTexParameters(Texture2D *t, ccTexParams *texParams);
+    static void setTexParameters(Texture2D *t, const ccTexParams &texParams);
     static void removeTexture(Texture2D *t);
     static void reloadAllTextures();
 

@@ -45,7 +45,7 @@ NotificationCenter::~NotificationCenter()
     _observers->release();
 }
 
-NotificationCenter *NotificationCenter::sharedNotificationCenter(void)
+NotificationCenter *NotificationCenter::getInstance()
 {
     if (!s_sharedNotifCenter)
     {
@@ -54,9 +54,21 @@ NotificationCenter *NotificationCenter::sharedNotificationCenter(void)
     return s_sharedNotifCenter;
 }
 
-void NotificationCenter::purgeNotificationCenter(void)
+void NotificationCenter::destroyInstance()
 {
     CC_SAFE_RELEASE_NULL(s_sharedNotifCenter);
+}
+
+// XXX: deprecated
+NotificationCenter *NotificationCenter::sharedNotificationCenter(void)
+{
+    return NotificationCenter::getInstance();
+}
+
+// XXX: deprecated
+void NotificationCenter::purgeNotificationCenter(void)
+{
+    NotificationCenter::destroyInstance();
 }
 
 //
@@ -101,7 +113,7 @@ void NotificationCenter::removeObserver(Object *target,const char *name)
     Object* obj = NULL;
     CCARRAY_FOREACH(_observers, obj)
     {
-        NotificationObserver* observer = (NotificationObserver*) obj;
+        NotificationObserver* observer = static_cast<NotificationObserver*>(obj);
         if (!observer)
             continue;
         
@@ -120,7 +132,7 @@ int NotificationCenter::removeAllObservers(Object *target)
 
     CCARRAY_FOREACH(_observers, obj)
     {
-        NotificationObserver *observer = (NotificationObserver *)obj;
+        NotificationObserver *observer = static_cast<NotificationObserver *>(obj);
         if (!observer)
             continue;
 
@@ -154,7 +166,7 @@ void NotificationCenter::unregisterScriptObserver(Object *target,const char* nam
     Object* obj = NULL;
     CCARRAY_FOREACH(_observers, obj)
     {
-        NotificationObserver* observer = (NotificationObserver*) obj;
+        NotificationObserver* observer = static_cast<NotificationObserver*>(obj);
         if (!observer)
             continue;
             
@@ -172,7 +184,7 @@ void NotificationCenter::postNotification(const char *name, Object *object)
     Object* obj = NULL;
     CCARRAY_FOREACH(ObserversCopy, obj)
     {
-        NotificationObserver* observer = (NotificationObserver*) obj;
+        NotificationObserver* observer = static_cast<NotificationObserver*>(obj);
         if (!observer)
             continue;
         
@@ -180,8 +192,9 @@ void NotificationCenter::postNotification(const char *name, Object *object)
         {
             if (0 != observer->getHandler())
             {
-                ScriptEngineProtocol* engine = ScriptEngineManager::sharedManager()->getScriptEngine();
-                engine->executeNotificationEvent(this, name);
+                BasicScriptData data((void*)this,(void*)name);
+                ScriptEvent scriptEvent(kNotificationEvent,(void*)&data);
+                ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);
             }
             else
             {
@@ -200,13 +213,13 @@ int NotificationCenter::getObserverHandlerByName(const char* name)
 {
     if (NULL == name || strlen(name) == 0)
     {
-        return -1;
+        return 0;
     }
     
     Object* obj = NULL;
     CCARRAY_FOREACH(_observers, obj)
     {
-        NotificationObserver* observer = (NotificationObserver*) obj;
+        NotificationObserver* observer = static_cast<NotificationObserver*>(obj);
         if (NULL == observer)
             continue;
         
@@ -217,7 +230,7 @@ int NotificationCenter::getObserverHandlerByName(const char* name)
         }
     }
     
-    return -1;
+    return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

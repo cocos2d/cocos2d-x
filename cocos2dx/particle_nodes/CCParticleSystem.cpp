@@ -94,8 +94,8 @@ ParticleSystem::ParticleSystem()
 , _isActive(true)
 , _particleCount(0)
 , _duration(0)
-, _sourcePosition(PointZero)
-, _posVar(PointZero)
+, _sourcePosition(Point::ZERO)
+, _posVar(Point::ZERO)
 , _life(0)
 , _lifeVar(0)
 , _angle(0)
@@ -117,7 +117,7 @@ ParticleSystem::ParticleSystem()
 , _isAutoRemoveOnFinish(false)
 , _emitterMode(kParticleModeGravity)
 {
-    modeA.gravity = PointZero;
+    modeA.gravity = Point::ZERO;
     modeA.speed = 0;
     modeA.speedVar = 0;
     modeA.tangentialAccel = 0;
@@ -168,7 +168,7 @@ bool ParticleSystem::init()
 bool ParticleSystem::initWithFile(const char *plistFile)
 {
     bool bRet = false;
-    _plistFile = FileUtils::sharedFileUtils()->fullPathForFilename(plistFile);
+    _plistFile = FileUtils::getInstance()->fullPathForFilename(plistFile);
     Dictionary *dict = Dictionary::createWithContentsOfFileThreadSafe(_plistFile.c_str());
 
     CCAssert( dict != NULL, "Particles: file not found");
@@ -248,7 +248,7 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
             // position
             float x = dictionary->valueForKey("sourcePositionx")->floatValue();
             float y = dictionary->valueForKey("sourcePositiony")->floatValue();
-            this->setPosition( ccp(x,y) );            
+            this->setPosition( Point(x,y) );            
             _posVar.x = dictionary->valueForKey("sourcePositionVariancex")->floatValue();
             _posVar.y = dictionary->valueForKey("sourcePositionVariancey")->floatValue();
 
@@ -340,11 +340,11 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
                 if (textureName.length() > 0)
                 {
                     // set not pop-up message box when load image failed
-                    bool bNotify = FileUtils::sharedFileUtils()->isPopupNotify();
-                    FileUtils::sharedFileUtils()->setPopupNotify(false);
-                    tex = TextureCache::sharedTextureCache()->addImage(textureName.c_str());
+                    bool bNotify = FileUtils::getInstance()->isPopupNotify();
+                    FileUtils::getInstance()->setPopupNotify(false);
+                    tex = TextureCache::getInstance()->addImage(textureName.c_str());
                     // reset the value of UIImage notify
-                    FileUtils::sharedFileUtils()->setPopupNotify(bNotify);
+                    FileUtils::getInstance()->setPopupNotify(bNotify);
                 }
                 
                 if (tex)
@@ -368,13 +368,13 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
                         CCAssert( deflated != NULL, "CCParticleSystem: error ungzipping textureImageData");
                         CC_BREAK_IF(!deflated);
                         
-                        // For android, we should retain it in VolatileTexture::addImage which invoked in TextureCache::sharedTextureCache()->addUIImage()
+                        // For android, we should retain it in VolatileTexture::addImage which invoked in TextureCache::getInstance()->addUIImage()
                         image = new Image();
                         bool isOK = image->initWithImageData(deflated, deflatedLen);
                         CCAssert(isOK, "CCParticleSystem: error init image with Data");
                         CC_BREAK_IF(!isOK);
                         
-                        setTexture(TextureCache::sharedTextureCache()->addUIImage(image, textureName.c_str()));
+                        setTexture(TextureCache::getInstance()->addUIImage(image, textureName.c_str()));
 
                         image->release();
                     }
@@ -479,13 +479,13 @@ void ParticleSystem::initParticle(tParticle* particle)
 
 
     // Color
-    ccColor4F start;
+    Color4F start;
     start.r = clampf(_startColor.r + _startColorVar.r * CCRANDOM_MINUS1_1(), 0, 1);
     start.g = clampf(_startColor.g + _startColorVar.g * CCRANDOM_MINUS1_1(), 0, 1);
     start.b = clampf(_startColor.b + _startColorVar.b * CCRANDOM_MINUS1_1(), 0, 1);
     start.a = clampf(_startColor.a + _startColorVar.a * CCRANDOM_MINUS1_1(), 0, 1);
 
-    ccColor4F end;
+    Color4F end;
     end.r = clampf(_endColor.r + _endColorVar.r * CCRANDOM_MINUS1_1(), 0, 1);
     end.g = clampf(_endColor.g + _endColorVar.g * CCRANDOM_MINUS1_1(), 0, 1);
     end.b = clampf(_endColor.b + _endColorVar.b * CCRANDOM_MINUS1_1(), 0, 1);
@@ -523,7 +523,7 @@ void ParticleSystem::initParticle(tParticle* particle)
     // position
     if( _positionType == kPositionTypeFree )
     {
-        particle->startPos = this->convertToWorldSpace(PointZero);
+        particle->startPos = this->convertToWorldSpace(Point::ZERO);
     }
     else if ( _positionType == kPositionTypeRelative )
     {
@@ -540,7 +540,7 @@ void ParticleSystem::initParticle(tParticle* particle)
         float s = modeA.speed + modeA.speedVar * CCRANDOM_MINUS1_1();
 
         // direction
-        particle->modeA.dir = ccpMult( v, s );
+        particle->modeA.dir = v * s ;
 
         // radial accel
         particle->modeA.radialAccel = modeA.radialAccel + modeA.radialAccelVar * CCRANDOM_MINUS1_1();
@@ -551,7 +551,7 @@ void ParticleSystem::initParticle(tParticle* particle)
 
         // rotation is dir
         if(modeA.rotationIsDir)
-            particle->rotation = -CC_RADIANS_TO_DEGREES(ccpToAngle(particle->modeA.dir));
+            particle->rotation = -CC_RADIANS_TO_DEGREES(particle->modeA.dir.getAngle());
     }
 
     // Mode Radius: B
@@ -628,10 +628,10 @@ void ParticleSystem::update(float dt)
 
     _particleIdx = 0;
 
-    Point currentPosition = PointZero;
+    Point currentPosition = Point::ZERO;
     if (_positionType == kPositionTypeFree)
     {
-        currentPosition = this->convertToWorldSpace(PointZero);
+        currentPosition = this->convertToWorldSpace(Point::ZERO);
     }
     else if (_positionType == kPositionTypeRelative)
     {
@@ -654,27 +654,27 @@ void ParticleSystem::update(float dt)
                 {
                     Point tmp, radial, tangential;
 
-                    radial = PointZero;
+                    radial = Point::ZERO;
                     // radial acceleration
                     if (p->pos.x || p->pos.y)
                     {
-                        radial = ccpNormalize(p->pos);
+                        radial = p->pos.normalize();
                     }
                     tangential = radial;
-                    radial = ccpMult(radial, p->modeA.radialAccel);
+                    radial = radial * p->modeA.radialAccel;
 
                     // tangential acceleration
                     float newy = tangential.x;
                     tangential.x = -tangential.y;
                     tangential.y = newy;
-                    tangential = ccpMult(tangential, p->modeA.tangentialAccel);
+                    tangential = tangential * p->modeA.tangentialAccel;
 
                     // (gravity + radial + tangential) * dt
-                    tmp = ccpAdd( ccpAdd( radial, tangential), modeA.gravity);
-                    tmp = ccpMult( tmp, dt);
-                    p->modeA.dir = ccpAdd( p->modeA.dir, tmp);
-                    tmp = ccpMult(p->modeA.dir, dt);
-                    p->pos = ccpAdd( p->pos, tmp );
+                    tmp = radial + tangential + modeA.gravity;
+                    tmp = tmp * dt;
+                    p->modeA.dir = p->modeA.dir + tmp;
+                    tmp = p->modeA.dir * dt;
+                    p->pos = p->pos + tmp;
                 }
 
                 // Mode B: radius movement
@@ -709,8 +709,8 @@ void ParticleSystem::update(float dt)
 
                 if (_positionType == kPositionTypeFree || _positionType == kPositionTypeRelative) 
                 {
-                    Point diff = ccpSub( currentPosition, p->startPos );
-                    newPos = ccpSub(p->pos, diff);
+                    Point diff = currentPosition - p->startPos;
+                    newPos = p->pos - diff;
                 } 
                 else
                 {
@@ -851,7 +851,7 @@ void ParticleSystem::setBlendAdditive(bool additive)
     }
 }
 
-bool ParticleSystem::isBlendAdditive()
+bool ParticleSystem::isBlendAdditive() const
 {
     return( _blendFunc.src == GL_SRC_ALPHA && _blendFunc.dst == GL_ONE);
 }
@@ -863,7 +863,7 @@ void ParticleSystem::setTangentialAccel(float t)
     modeA.tangentialAccel = t;
 }
 
-float ParticleSystem::getTangentialAccel()
+float ParticleSystem::getTangentialAccel() const
 {
     CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     return modeA.tangentialAccel;
@@ -875,7 +875,7 @@ void ParticleSystem::setTangentialAccelVar(float t)
     modeA.tangentialAccelVar = t;
 }
 
-float ParticleSystem::getTangentialAccelVar()
+float ParticleSystem::getTangentialAccelVar() const
 {
     CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     return modeA.tangentialAccelVar;
@@ -887,7 +887,7 @@ void ParticleSystem::setRadialAccel(float t)
     modeA.radialAccel = t;
 }
 
-float ParticleSystem::getRadialAccel()
+float ParticleSystem::getRadialAccel() const
 {
     CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     return modeA.radialAccel;
@@ -899,7 +899,7 @@ void ParticleSystem::setRadialAccelVar(float t)
     modeA.radialAccelVar = t;
 }
 
-float ParticleSystem::getRadialAccelVar()
+float ParticleSystem::getRadialAccelVar() const
 {
     CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     return modeA.radialAccelVar;
@@ -911,7 +911,7 @@ void ParticleSystem::setRotationIsDir(bool t)
     modeA.rotationIsDir = t;
 }
 
-bool ParticleSystem::getRotationIsDir()
+bool ParticleSystem::getRotationIsDir() const
 {
     CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     return modeA.rotationIsDir;
@@ -935,7 +935,7 @@ void ParticleSystem::setSpeed(float speed)
     modeA.speed = speed;
 }
 
-float ParticleSystem::getSpeed()
+float ParticleSystem::getSpeed() const
 {
     CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     return modeA.speed;
@@ -947,7 +947,7 @@ void ParticleSystem::setSpeedVar(float speedVar)
     modeA.speedVar = speedVar;
 }
 
-float ParticleSystem::getSpeedVar()
+float ParticleSystem::getSpeedVar() const
 {
     CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     return modeA.speedVar;
@@ -960,7 +960,7 @@ void ParticleSystem::setStartRadius(float startRadius)
     modeB.startRadius = startRadius;
 }
 
-float ParticleSystem::getStartRadius()
+float ParticleSystem::getStartRadius() const
 {
     CCAssert( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
     return modeB.startRadius;
@@ -972,7 +972,7 @@ void ParticleSystem::setStartRadiusVar(float startRadiusVar)
     modeB.startRadiusVar = startRadiusVar;
 }
 
-float ParticleSystem::getStartRadiusVar()
+float ParticleSystem::getStartRadiusVar() const
 {
     CCAssert( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
     return modeB.startRadiusVar;
@@ -984,7 +984,7 @@ void ParticleSystem::setEndRadius(float endRadius)
     modeB.endRadius = endRadius;
 }
 
-float ParticleSystem::getEndRadius()
+float ParticleSystem::getEndRadius() const
 {
     CCAssert( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
     return modeB.endRadius;
@@ -996,7 +996,7 @@ void ParticleSystem::setEndRadiusVar(float endRadiusVar)
     modeB.endRadiusVar = endRadiusVar;
 }
 
-float ParticleSystem::getEndRadiusVar()
+float ParticleSystem::getEndRadiusVar() const
 {
     CCAssert( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
     return modeB.endRadiusVar;
@@ -1008,7 +1008,7 @@ void ParticleSystem::setRotatePerSecond(float degrees)
     modeB.rotatePerSecond = degrees;
 }
 
-float ParticleSystem::getRotatePerSecond()
+float ParticleSystem::getRotatePerSecond() const
 {
     CCAssert( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
     return modeB.rotatePerSecond;
@@ -1020,13 +1020,13 @@ void ParticleSystem::setRotatePerSecondVar(float degrees)
     modeB.rotatePerSecondVar = degrees;
 }
 
-float ParticleSystem::getRotatePerSecondVar()
+float ParticleSystem::getRotatePerSecondVar() const
 {
     CCAssert( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
     return modeB.rotatePerSecondVar;
 }
 
-bool ParticleSystem::isActive()
+bool ParticleSystem::isActive() const
 {
     return _isActive;
 }
@@ -1046,7 +1046,7 @@ void ParticleSystem::setDuration(float var)
     _duration = var;
 }
 
-const Point& ParticleSystem::getSourcePosition()
+const Point& ParticleSystem::getSourcePosition() const
 {
     return _sourcePosition;
 }
@@ -1056,7 +1056,7 @@ void ParticleSystem::setSourcePosition(const Point& var)
     _sourcePosition = var;
 }
 
-const Point& ParticleSystem::getPosVar()
+const Point& ParticleSystem::getPosVar() const
 {
     return _posVar;
 }
@@ -1146,42 +1146,42 @@ void ParticleSystem::setEndSizeVar(float var)
     _endSizeVar = var;
 }
 
-const ccColor4F& ParticleSystem::getStartColor()
+const Color4F& ParticleSystem::getStartColor() const
 {
     return _startColor;
 }
 
-void ParticleSystem::setStartColor(const ccColor4F& var)
+void ParticleSystem::setStartColor(const Color4F& var)
 {
     _startColor = var;
 }
 
-const ccColor4F& ParticleSystem::getStartColorVar()
+const Color4F& ParticleSystem::getStartColorVar() const
 {
     return _startColorVar;
 }
 
-void ParticleSystem::setStartColorVar(const ccColor4F& var)
+void ParticleSystem::setStartColorVar(const Color4F& var)
 {
     _startColorVar = var;
 }
 
-const ccColor4F& ParticleSystem::getEndColor()
+const Color4F& ParticleSystem::getEndColor() const
 {
     return _endColor;
 }
 
-void ParticleSystem::setEndColor(const ccColor4F& var)
+void ParticleSystem::setEndColor(const Color4F& var)
 {
     _endColor = var;
 }
 
-const ccColor4F& ParticleSystem::getEndColorVar()
+const Color4F& ParticleSystem::getEndColorVar() const
 {
     return _endColorVar;
 }
 
-void ParticleSystem::setEndColorVar(const ccColor4F& var)
+void ParticleSystem::setEndColorVar(const Color4F& var)
 {
     _endColorVar = var;
 }
@@ -1246,12 +1246,12 @@ void ParticleSystem::setTotalParticles(unsigned int var)
     _totalParticles = var;
 }
 
-ccBlendFunc ParticleSystem::getBlendFunc()
+const BlendFunc& ParticleSystem::getBlendFunc() const
 {
     return _blendFunc;
 }
 
-void ParticleSystem::setBlendFunc(ccBlendFunc blendFunc)
+void ParticleSystem::setBlendFunc(const BlendFunc &blendFunc)
 {
     if( _blendFunc.src != blendFunc.src || _blendFunc.dst != blendFunc.dst ) {
         _blendFunc = blendFunc;
@@ -1279,7 +1279,7 @@ void ParticleSystem::setPositionType(tPositionType var)
     _positionType = var;
 }
 
-bool ParticleSystem::isAutoRemoveOnFinish()
+bool ParticleSystem::isAutoRemoveOnFinish() const
 {
     return _isAutoRemoveOnFinish;
 }

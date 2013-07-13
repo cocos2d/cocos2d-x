@@ -71,14 +71,14 @@ protected:
     /** Texture of the texture atlas */
     CC_PROPERTY(Texture2D *, _texture, Texture)
     /** Quads that are going to be rendered */
-    CC_PROPERTY(ccV3F_C4B_T2F_Quad *, _quads, Quads)
+    CC_PROPERTY(V3F_C4B_T2F_Quad *, _quads, Quads)
 
 public:
 
     TextureAtlas();
     virtual ~TextureAtlas();
 
-    const char* description();
+    const char* description() const;
 
     /** creates a TextureAtlas with an filename and with an initial capacity for Quads.
     * The TextureAtlas capacity can be increased in runtime.
@@ -111,20 +111,20 @@ public:
     * index must be between 0 and the atlas capacity - 1
     @since v0.8
     */
-    void updateQuad(ccV3F_C4B_T2F_Quad* quad, unsigned int index);
+    void updateQuad(V3F_C4B_T2F_Quad* quad, unsigned int index);
 
     /** Inserts a Quad (texture, vertex and color) at a certain index
     index must be between 0 and the atlas capacity - 1
     @since v0.8
     */
-    void insertQuad(ccV3F_C4B_T2F_Quad* quad, unsigned int index);
+    void insertQuad(V3F_C4B_T2F_Quad* quad, unsigned int index);
 
     /** Inserts a c array of quads at a given index
      index must be between 0 and the atlas capacity - 1
      this method doesn't enlarge the array when amount + index > totalQuads
      @since v1.1
     */
-    void insertQuads(ccV3F_C4B_T2F_Quad* quads, unsigned int index, unsigned int amount);
+    void insertQuads(V3F_C4B_T2F_Quad* quads, unsigned int index, unsigned int amount);
 
     /** Removes the quad that is located at a certain index and inserts it at a new index
     This operation is faster than removing and inserting in a quad in 2 different steps

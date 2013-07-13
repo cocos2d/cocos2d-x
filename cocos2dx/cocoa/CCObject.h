@@ -38,17 +38,9 @@ NS_CC_BEGIN
  * @{
  */
 
-class Zone;
 class Object;
 class Node;
 class Event;
-
-class CC_DLL Copying
-{
-public:
-    virtual Object* copyWithZone(Zone* pZone);
-	
-};
 
 /** Interface that defines how to clone an object */
 class CC_DLL Clonable
@@ -57,9 +49,18 @@ public:
 	/** returns a copy of the object */
     virtual Clonable* clone() const = 0;
 	virtual ~Clonable() {};
+
+    /** returns a copy of the object.
+     @deprecated Use clone() instead
+     */
+    CC_DEPRECATED_ATTRIBUTE Object* copy() const
+    {
+        // use "clone" instead
+        CC_ASSERT(false);
+    }
 };
 
-class CC_DLL Object : public Copying
+class CC_DLL Object
 {
 public:
     // object id, ScriptSupport need public _ID
@@ -78,7 +79,6 @@ public:
     void release(void);
     void retain(void);
     Object* autorelease(void);
-    Object* copy(void);
     bool isSingleReference(void) const;
     unsigned int retainCount(void) const;
     virtual bool isEqual(const Object* pObject);
@@ -100,14 +100,14 @@ typedef void (Object::*SEL_MenuHandler)(Object*);
 typedef void (Object::*SEL_EventHandler)(Event*);
 typedef int (Object::*SEL_Compare)(Object*);
 
-#define schedule_selector(_SELECTOR) (SEL_SCHEDULE)(&_SELECTOR)
-#define callfunc_selector(_SELECTOR) (SEL_CallFunc)(&_SELECTOR)
-#define callfuncN_selector(_SELECTOR) (SEL_CallFuncN)(&_SELECTOR)
-#define callfuncND_selector(_SELECTOR) (SEL_CallFuncND)(&_SELECTOR)
-#define callfuncO_selector(_SELECTOR) (SEL_CallFuncO)(&_SELECTOR)
-#define menu_selector(_SELECTOR) (SEL_MenuHandler)(&_SELECTOR)
-#define event_selector(_SELECTOR) (SEL_EventHandler)(&_SELECTOR)
-#define compare_selector(_SELECTOR) (SEL_Compare)(&_SELECTOR)
+#define schedule_selector(_SELECTOR) static_cast<cocos2d::SEL_SCHEDULE>(&_SELECTOR)
+#define callfunc_selector(_SELECTOR) static_cast<cocos2d::SEL_CallFunc>(&_SELECTOR)
+#define callfuncN_selector(_SELECTOR) static_cast<cocos2d::SEL_CallFuncN>(&_SELECTOR)
+#define callfuncND_selector(_SELECTOR) static_cast<cocos2d::SEL_CallFuncND>(&_SELECTOR)
+#define callfuncO_selector(_SELECTOR) static_cast<cocos2d::SEL_CallFuncO>(&_SELECTOR)
+#define menu_selector(_SELECTOR) static_cast<cocos2d::SEL_MenuHandler>(&_SELECTOR)
+#define event_selector(_SELECTOR) static_cast<cocos2d::SEL_EventHandler>(&_SELECTOR)
+#define compare_selector(_SELECTOR) static_cast<cocos2d::SEL_Compare>(&_SELECTOR)
 
 // new callbacks based on C++11
 #define CC_CALLBACK_0(__selector__,__target__, ...) std::bind(&__selector__,__target__, ##__VA_ARGS__)

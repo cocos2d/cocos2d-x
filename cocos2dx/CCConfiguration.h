@@ -56,10 +56,16 @@ class CC_DLL Configuration : public Object
 {
 public:
     /** returns a shared instance of Configuration */
-    static Configuration *sharedConfiguration(void);
+    static Configuration *getInstance();
 
     /** purge the shared instance of Configuration */
-    static void purgeConfiguration(void);
+    static void destroyInstance();
+
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static Configuration *sharedConfiguration(void);
+
+    /** @deprecated Use destroyInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static void purgeConfiguration(void);
 
 public:
 
@@ -85,7 +91,10 @@ public:
 
     /** Whether or not PVR Texture Compressed is supported */
 	bool supportsPVRTC(void) const;
-
+    
+     /** Whether or not ETC Texture Compressed is supported */
+    bool supportsETC(void) const;
+    
     /** Whether or not BGRA8888 textures are supported.
      @since v0.99.2
      */
@@ -142,6 +151,7 @@ protected:
     GLint           _maxTextureSize;
     GLint           _maxModelviewStackDepth;
     bool            _supportsPVRTC;
+    bool            _supportsETC;
     bool            _supportsNPOT;
     bool            _supportsBGRA8888;
     bool            _supportsDiscardFramebuffer;

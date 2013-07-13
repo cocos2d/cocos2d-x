@@ -126,7 +126,7 @@ public://@public
 public:
     CCBMFontConfiguration();
     virtual ~CCBMFontConfiguration();
-    const char * description();
+    const char * description() const;
 
     /** allocates a CCBMFontConfiguration with a FNT file */
     static CCBMFontConfiguration * create(const char *FNTfile);
@@ -206,7 +206,7 @@ public:
 
     bool init();
     /** init a bitmap font atlas with an initial string and the FNT file */
-    bool initWithString(const char *str, const char *fntFile, float width = kLabelAutomaticWidth, TextAlignment alignment = kTextAlignmentLeft, Point imageOffset = PointZero);
+    bool initWithString(const char *str, const char *fntFile, float width = kLabelAutomaticWidth, TextAlignment alignment = kTextAlignmentLeft, Point imageOffset = Point::ZERO);
 
     /** updates the font chars based on the string to render */
     void createFontChars();
@@ -214,7 +214,7 @@ public:
     virtual void setString(const char *newString);
     virtual void setString(const char *newString, bool needUpdateLabel);
 
-    virtual const char* getString(void);
+    virtual const char* getString(void) const;
     virtual void setCString(const char *label);
     virtual void setAnchorPoint(const Point& var);
     virtual void updateLabel();
@@ -226,18 +226,19 @@ public:
     virtual void setScaleY(float scaleY);
     
     // RGBAProtocol 
-    virtual bool isOpacityModifyRGB();
-    virtual void setOpacityModifyRGB(bool isOpacityModifyRGB); virtual GLubyte getOpacity();
-    virtual GLubyte getDisplayedOpacity();
+    virtual bool isOpacityModifyRGB() const;
+    virtual void setOpacityModifyRGB(bool isOpacityModifyRGB);
+    virtual GLubyte getOpacity() const;
+    virtual GLubyte getDisplayedOpacity() const;
     virtual void setOpacity(GLubyte opacity);
     virtual void updateDisplayedOpacity(GLubyte parentOpacity);
-    virtual bool isCascadeOpacityEnabled();
+    virtual bool isCascadeOpacityEnabled() const;
     virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
-    virtual const ccColor3B& getColor(void);
-    virtual const ccColor3B& getDisplayedColor();
-    virtual void setColor(const ccColor3B& color);
-    virtual void updateDisplayedColor(const ccColor3B& parentColor);
-    virtual bool isCascadeColorEnabled();
+    virtual const Color3B& getColor(void) const;
+    virtual const Color3B& getDisplayedColor() const;
+    virtual void setColor(const Color3B& color);
+    virtual void updateDisplayedColor(const Color3B& parentColor);
+    virtual bool isCascadeColorEnabled() const;
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
 
     void setFntFile(const char* fntFile);
@@ -280,8 +281,8 @@ protected:
     // texture RGBA
     GLubyte _displayedOpacity;
     GLubyte _realOpacity;
-    ccColor3B _displayedColor;
-    ccColor3B _realColor;
+    Color3B _displayedColor;
+    Color3B _realColor;
     bool _cascadeColorEnabled;
     bool _cascadeOpacityEnabled;
     /** conforms to RGBAProtocol protocol */

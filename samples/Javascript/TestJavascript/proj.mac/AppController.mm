@@ -58,7 +58,7 @@
 		// set window parameters
 		[window becomeFirstResponder];
 		[window setContentView:glView];
-		[window setTitle:@"TestCpp"];
+		[window setTitle:@"JS Test"];
 		[window makeKeyAndOrderFront:self];
 		[window setAcceptsMouseMovedEvents:NO];
 
@@ -72,7 +72,7 @@
 
 	-(void) dealloc
 	{
-		cocos2d::Director::sharedDirector()->end();
+		cocos2d::Director::getInstance()->end();
 		[super dealloc];
 	}
 

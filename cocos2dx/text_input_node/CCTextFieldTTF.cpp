@@ -135,7 +135,7 @@ bool TextFieldTTF::attachWithIME()
     if (bRet)
     {
         // open keyboard
-        EGLView * pGlView = Director::sharedDirector()->getOpenGLView();
+        EGLView * pGlView = Director::getInstance()->getOpenGLView();
         if (pGlView)
         {
             pGlView->setIMEKeyboardState(true);
@@ -150,7 +150,7 @@ bool TextFieldTTF::detachWithIME()
     if (bRet)
     {
         // close keyboard
-        EGLView * pGlView = Director::sharedDirector()->getOpenGLView();
+        EGLView * pGlView = Director::getInstance()->getOpenGLView();
         if (pGlView)
         {
             pGlView->setIMEKeyboardState(false);
@@ -265,18 +265,18 @@ void TextFieldTTF::draw()
     }
 
     // draw placeholder
-    ccColor3B color = getColor();
+    Color3B color = getColor();
     setColor(_colorSpaceHolder);
     LabelTTF::draw();
     setColor(color);
 }
 
-const ccColor3B& TextFieldTTF::getColorSpaceHolder()
+const Color3B& TextFieldTTF::getColorSpaceHolder()
 {
     return _colorSpaceHolder;
 }
 
-void TextFieldTTF::setColorSpaceHolder(const ccColor3B& color)
+void TextFieldTTF::setColorSpaceHolder(const Color3B& color)
 {
     _colorSpaceHolder = color;
 }
@@ -326,7 +326,7 @@ void TextFieldTTF::setString(const char *text)
     _charCount = _calcCharCount(_inputText->c_str());
 }
 
-const char* TextFieldTTF::getString(void)
+const char* TextFieldTTF::getString(void) const
 {
     return _inputText->c_str();
 }

@@ -35,7 +35,6 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class Texture2D;
-class Zone;
 
 /**
  * @addtogroup sprite_nodes
@@ -64,7 +63,7 @@ public:
     inline void setRotated(bool bRotated) { _rotated = bRotated; }
 
     /** get rect of the frame */
-    inline const Rect& getRect(void) { return _rect; }
+    inline const Rect& getRect(void) const { return _rect; }
     /** set rect of the frame */
     void setRect(const Rect& rect);
 
@@ -96,8 +95,6 @@ public:
 
 	/** returns a clone of the SpriteFrame */
 	virtual SpriteFrame *clone() const;
-
-    virtual Object* copyWithZone(Zone *pZone);
 
     /** Create a SpriteFrame with a texture filename, rect in points.
      It is assumed that the frame was not trimmed.

@@ -103,6 +103,12 @@
     <Filter Include="support\component">
       <UniqueIdentifier>{caa78ce0-9b58-4314-b117-1acae278691e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="textures\etc">
+      <UniqueIdentifier>{5e6e45aa-50ef-451b-9bb1-f98b9b78259b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="keyboard_dispatcher">
+      <UniqueIdentifier>{e7134ba0-4220-4dd1-b120-3533883394ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\base_nodes\CCAtlasNode.cpp">
@@ -136,9 +142,6 @@
       <Filter>cocoa</Filter>
     </ClCompile>
     <ClCompile Include="..\cocoa\CCString.cpp">
-      <Filter>cocoa</Filter>
-    </ClCompile>
-    <ClCompile Include="..\cocoa\CCZone.cpp">
       <Filter>cocoa</Filter>
     </ClCompile>
     <ClCompile Include="..\cocoa\CCData.cpp">
@@ -477,6 +480,13 @@
     <ClCompile Include="..\support\component\CCComponentContainer.cpp">
       <Filter>support\component</Filter>
     </ClCompile>
+    <ClCompile Include="..\textures\etc\etc1.cpp">
+      <Filter>textures\etc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\keyboard_dispatcher\CCKeyboardDispatcher.cpp">
+      <Filter>keyboard_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ccTypes.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\base_nodes\CCAtlasNode.h">
@@ -513,9 +523,6 @@
       <Filter>cocoa</Filter>
     </ClInclude>
     <ClInclude Include="..\cocoa\CCString.h">
-      <Filter>cocoa</Filter>
-    </ClInclude>
-    <ClInclude Include="..\cocoa\CCZone.h">
       <Filter>cocoa</Filter>
     </ClInclude>
     <ClInclude Include="..\cocoa\CCData.h">
@@ -957,6 +964,12 @@
     </ClInclude>
     <ClInclude Include="..\support\component\CCComponent.h">
       <Filter>support\component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\textures\etc\etc1.h">
+      <Filter>textures\etc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\keyboard_dispatcher\CCKeyboardDispatcher.h">
+      <Filter>keyboard_dispatcher</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -13,9 +13,7 @@
 #include "touch_dispatcher/CCTouch.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
 #include "text_input_node/CCIMEDispatcher.h"
-#ifdef CC_KEYBOARD_SUPPORT
 #include "keyboard_dispatcher/CCKeyboardDispatcher.h"
-#endif
 
 PFNGLGENFRAMEBUFFERSEXTPROC glGenFramebuffersEXT = NULL;
 PFNGLDELETEFRAMEBUFFERSEXTPROC glDeleteFramebuffersEXT = NULL;
@@ -113,7 +111,7 @@ void charEventHandle(int iCharID,int iCharState) {
 
 void mouseButtonEventHandle(int iMouseID,int iMouseState) {
 	if (iMouseID == GLFW_MOUSE_BUTTON_LEFT) {
-        EGLView* pEGLView = EGLView::sharedOpenGLView();
+        EGLView* pEGLView = EGLView::getInstance();
 		//get current mouse pos
 		int x,y;
 		glfwGetMousePos(&x, &y);
@@ -142,7 +140,7 @@ void mousePosEventHandle(int iPosX,int iPosY) {
 
 	//to test move
 	if (iButtonState == GLFW_PRESS) {
-            EGLView* pEGLView = EGLView::sharedOpenGLView();
+            EGLView* pEGLView = EGLView::getInstance();
             int id = 0;
             float x = (float)iPosX;
             float y = (float)iPosY;
@@ -153,14 +151,13 @@ void mousePosEventHandle(int iPosX,int iPosY) {
 }
 
 int closeEventHandle() {
-	Director::sharedDirector()->end();
+	Director::getInstance()->end();
 	return GL_TRUE;
 }
 
-#ifdef CC_KEYBOARD_SUPPORT
 void GLFWCALL keyboardEventHandle(int keyCode, int action)
 {
-    KeyboardDispatcher *kbDisp = Director::sharedDirector()->getKeyboardDispatcher();
+    KeyboardDispatcher *kbDisp = Director::getInstance()->getKeyboardDispatcher();
 
     switch (action)
     {   
@@ -172,7 +169,6 @@ void GLFWCALL keyboardEventHandle(int keyCode, int action)
             break;
     }   
 }
-#endif
 
 void EGLView::setFrameSize(float width, float height)
 {
@@ -269,7 +265,7 @@ void EGLView::setFrameZoomFactor(float fZoomFactor)
 {
     _frameZoomFactor = fZoomFactor;
     glfwSetWindowSize(_screenSize.width * fZoomFactor, _screenSize.height * fZoomFactor);
-    Director::sharedDirector()->setProjection(Director::sharedDirector()->getProjection());
+    Director::getInstance()->setProjection(Director::getInstance()->getProjection());
 }
 
 float EGLView::getFrameZoomFactor()
@@ -363,7 +359,7 @@ void EGLView::destroyGL()
 	*/
 }
 
-EGLView* EGLView::sharedOpenGLView()
+EGLView* EGLView::getInstance()
 {
     static EGLView* s_pEglView = NULL;
     if (s_pEglView == NULL)
@@ -371,6 +367,12 @@ EGLView* EGLView::sharedOpenGLView()
         s_pEglView = new EGLView();
     }
     return s_pEglView;
+}
+
+// XXX: deprecated
+EGLView* EGLView::sharedOpenGLView()
+{
+    return EGLView::getInstance();
 }
 
 NS_CC_END

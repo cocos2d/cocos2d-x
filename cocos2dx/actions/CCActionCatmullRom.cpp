@@ -35,7 +35,6 @@
 #include "ccMacros.h"
 #include "support/CCPointExtension.h"
 #include "CCActionCatmullRom.h"
-#include "cocoa/CCZone.h"
 
 using namespace std;
 
@@ -101,7 +100,7 @@ PointArray::~PointArray()
 
 PointArray::PointArray() :_controlPoints(NULL){}
 
-const std::vector<Point*>* PointArray::getControlPoints()
+const std::vector<Point*>* PointArray::getControlPoints() const
 {
     return _controlPoints;
 }
@@ -216,7 +215,7 @@ Point ccCardinalSplineAt(Point &p0, Point &p1, Point &p2, Point &p3, float tensi
     float x = (p0.x*b1 + p1.x*b2 + p2.x*b3 + p3.x*b4);
     float y = (p0.y*b1 + p1.y*b2 + p2.y*b3 + p3.y*b4);
 	
-	return ccp(x,y);
+	return Point(x,y);
 }
 
 /* Implementation of CardinalSplineTo
@@ -277,38 +276,16 @@ void CardinalSplineTo::startWithTarget(cocos2d::Node *pTarget)
     _deltaT = (float) 1 / (_points->count() - 1);
 
     _previousPosition = pTarget->getPosition();
-    _accumulatedDiff = PointZero;
+    _accumulatedDiff = Point::ZERO;
 }
 
 CardinalSplineTo* CardinalSplineTo::clone() const
 {
 	// no copy constructor
 	auto a = new CardinalSplineTo();
-	a->initWithDuration(this->_duration, this->_points, this->_tension);
+	a->initWithDuration(this->_duration, this->_points->clone(), this->_tension);
 	a->autorelease();
 	return a;
-}
-
-CardinalSplineTo* CardinalSplineTo::copyWithZone(cocos2d::Zone *pZone)
-{
-    Zone* pNewZone = NULL;
-    CardinalSplineTo* pRet = NULL;
-    if(pZone && pZone->_copyObject) //in case of being called at sub class
-    {
-        pRet = (CardinalSplineTo*)(pZone->_copyObject);
-    }
-    else
-    {
-        pRet = new CardinalSplineTo();
-        pZone = pNewZone = new Zone(pRet);
-    }
-
-    ActionInterval::copyWithZone(pZone);
-
-    pRet->initWithDuration(this->getDuration(), this->_points, this->_tension);
-
-    CC_SAFE_DELETE(pNewZone);
-    return pRet;
 }
 
 void CardinalSplineTo::update(float time)
@@ -342,10 +319,10 @@ void CardinalSplineTo::update(float time)
 #if CC_ENABLE_STACKABLE_ACTIONS
     // Support for stacked actions
     Node *node = _target;
-    Point diff = ccpSub( node->getPosition(), _previousPosition);
+    Point diff = node->getPosition() - _previousPosition;
     if( diff.x !=0 || diff.y != 0 ) {
-        _accumulatedDiff = ccpAdd( _accumulatedDiff, diff);
-        newPos = ccpAdd( newPos, _accumulatedDiff);
+        _accumulatedDiff = _accumulatedDiff + diff;
+        newPos = newPos + _accumulatedDiff;
     }
 #endif
     
@@ -392,7 +369,7 @@ CardinalSplineBy::CardinalSplineBy() : _startPosition(0,0)
 
 void CardinalSplineBy::updatePosition(cocos2d::Point &newPos)
 {
-    Point p = ccpAdd(newPos, _startPosition);
+    Point p = newPos + _startPosition;
     _target->setPosition(p);
     _previousPosition = p;
 }
@@ -408,7 +385,7 @@ CardinalSplineBy* CardinalSplineBy::reverse() const
     for (unsigned int i = 1; i < copyConfig->count(); ++i)
     {
         Point current = copyConfig->getControlPointAtIndex(i);
-        Point diff = ccpSub(current, p);
+        Point diff = current - p;
         copyConfig->replaceControlPoint(diff, i);
         
         p = current;
@@ -424,14 +401,14 @@ CardinalSplineBy* CardinalSplineBy::reverse() const
     p = pReverse->getControlPointAtIndex(pReverse->count()-1);
     pReverse->removeControlPointAtIndex(pReverse->count()-1);
     
-    p = ccpNeg(p);
+    p = -p;
     pReverse->insertControlPoint(p, 0);
     
     for (unsigned int i = 1; i < pReverse->count(); ++i)
     {
         Point current = pReverse->getControlPointAtIndex(i);
-        current = ccpNeg(current);
-        Point abs = ccpAdd(current, p);
+        current = -current;
+        Point abs = current + p;
         pReverse->replaceControlPoint(abs, i);
         
         p = abs;
@@ -553,7 +530,7 @@ CatmullRomBy* CatmullRomBy::reverse() const
     for (unsigned int i = 1; i < copyConfig->count(); ++i)
     {
         Point current = copyConfig->getControlPointAtIndex(i);
-        Point diff = ccpSub(current, p);
+        Point diff = current - p;
         copyConfig->replaceControlPoint(diff, i);
 
         p = current;
@@ -569,14 +546,14 @@ CatmullRomBy* CatmullRomBy::reverse() const
     p = pReverse->getControlPointAtIndex(pReverse->count()-1);
     pReverse->removeControlPointAtIndex(pReverse->count()-1);
 
-    p = ccpNeg(p);
+    p = -p;
     pReverse->insertControlPoint(p, 0);
 
     for (unsigned int i = 1; i < pReverse->count(); ++i)
     {
         Point current = pReverse->getControlPointAtIndex(i);
-        current = ccpNeg(current);
-        Point abs = ccpAdd(current, p);
+        current = -current;
+        Point abs = current + p;
         pReverse->replaceControlPoint(abs, i);
 
         p = abs;

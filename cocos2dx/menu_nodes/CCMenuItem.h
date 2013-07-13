@@ -90,15 +90,15 @@ public:
     /** Register menu handler script function */
     virtual void registerScriptTapHandler(int nHandler);
     virtual void unregisterScriptTapHandler(void);
-    int getScriptTapHandler() { return _scriptTapHandler; };
+    int getScriptTapHandler() const { return _scriptTapHandler; };
 
-    virtual bool isEnabled();
+    virtual bool isEnabled() const;
     //@note: It's 'setIsEnable' in cocos2d-iphone. 
     virtual void setEnabled(bool value);
-    virtual bool isSelected();
+    virtual bool isSelected() const;
     
     virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool isOpacityModifyRGB(void) { return false;}
+    virtual bool isOpacityModifyRGB(void) const { return false;}
     
     /** set the target/selector of the menu item*/
     CC_DEPRECATED_ATTRIBUTE void setTarget(Object *rec, SEL_MenuHandler selector);
@@ -125,7 +125,7 @@ protected:
 class CC_DLL MenuItemLabel : public MenuItem
 {
     /** the color that will be used to disable the item */
-    CC_PROPERTY_PASS_BY_REF(ccColor3B, _disabledColor, DisabledColor);
+    CC_PROPERTY_PASS_BY_REF(Color3B, _disabledColor, DisabledColor);
     /** Label that is rendered. It can be any Node that implements the LabelProtocol */
     CC_PROPERTY(Node*, _label, Label);
 public:
@@ -162,8 +162,8 @@ public:
     virtual void setEnabled(bool enabled);
     
 protected:
-    ccColor3B    _colorBackup;
-    float        _originalScale;
+    Color3B    _colorBackup;
+    float      _originalScale;
 };
 
 
@@ -292,7 +292,7 @@ public:
     virtual void setEnabled(bool bEnabled);
     
     virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool isOpacityModifyRGB(void) { return false;}
+    virtual bool isOpacityModifyRGB(void) const { return false;}
 protected:
     virtual void updateImagesVisibility();
 };
@@ -399,7 +399,7 @@ public:
     virtual void setEnabled(bool var);
     
     virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool isOpacityModifyRGB(void) { return false;}
+    virtual bool isOpacityModifyRGB(void) const { return false;}
 };
 
 

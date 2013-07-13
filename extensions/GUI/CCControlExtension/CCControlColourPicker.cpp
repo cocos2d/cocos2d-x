@@ -57,7 +57,7 @@ bool ControlColourPicker::init()
     {
         setTouchEnabled(true);
         // Cache the sprites
-        SpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("extensions/CCControlColourPickerSpriteSheet.plist");
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile("extensions/CCControlColourPickerSpriteSheet.plist");
         
         // Create the sprite batch node
         SpriteBatchNode *spriteSheet  = SpriteBatchNode::create("extensions/CCControlColourPickerSpriteSheet.png");
@@ -78,19 +78,19 @@ bool ControlColourPicker::init()
         _hsv.v = 0;
         
         // Add image
-        _background=ControlUtils::addSpriteToTargetWithPosAndAnchor("menuColourPanelBackground.png", spriteSheet, PointZero, ccp(0.5f, 0.5f));
+        _background=ControlUtils::addSpriteToTargetWithPosAndAnchor("menuColourPanelBackground.png", spriteSheet, Point::ZERO, Point(0.5f, 0.5f));
         CC_SAFE_RETAIN(_background);
         
-        Point backgroundPointZero = ccpSub(_background->getPosition(), ccp (_background->getContentSize().width / 2, _background->getContentSize().height / 2));
+        Point backgroundPointZero = _background->getPosition() - Point(_background->getContentSize().width / 2, _background->getContentSize().height / 2);
         
         // Setup panels
         float hueShift                = 8;
         float colourShift             = 28;
         
         _huePicker = new ControlHuePicker();
-        _huePicker->initWithTargetAndPos(spriteSheet, ccp(backgroundPointZero.x + hueShift, backgroundPointZero.y + hueShift));
+        _huePicker->initWithTargetAndPos(spriteSheet, Point(backgroundPointZero.x + hueShift, backgroundPointZero.y + hueShift));
         _colourPicker = new ControlSaturationBrightnessPicker();
-        _colourPicker->initWithTargetAndPos(spriteSheet, ccp(backgroundPointZero.x + colourShift, backgroundPointZero.y + colourShift));
+        _colourPicker->initWithTargetAndPos(spriteSheet, Point(backgroundPointZero.x + colourShift, backgroundPointZero.y + colourShift));
         
         // Setup events
         _huePicker->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlColourPicker::hueSliderValueChanged), ControlEventValueChanged);
@@ -118,7 +118,7 @@ ControlColourPicker* ControlColourPicker::create()
 }
 
 
-void ControlColourPicker::setColor(const ccColor3B& color)
+void ControlColourPicker::setColor(const Color3B& color)
 {
     // XXX fixed me if not correct
     Control::setColor(color);
@@ -169,7 +169,7 @@ void ControlColourPicker::hueSliderValueChanged(Object * sender, ControlEvent co
     // Update the value
     RGBA rgb    = ControlUtils::RGBfromHSV(_hsv);
     // XXX fixed me if not correct
-    Control::setColor(ccc3((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
+    Control::setColor(Color3B((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
     
     // Send Control callback
     sendActionsForControlEvents(ControlEventValueChanged);
@@ -185,7 +185,7 @@ void ControlColourPicker::colourSliderValueChanged(Object * sender, ControlEvent
      // Update the value
     RGBA rgb    = ControlUtils::RGBfromHSV(_hsv);
     // XXX fixed me if not correct
-    Control::setColor(ccc3((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
+    Control::setColor(Color3B((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
     
     // Send Control callback
     sendActionsForControlEvents(ControlEventValueChanged);

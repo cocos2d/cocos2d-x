@@ -116,6 +116,80 @@ Point Point::rotateByAngle(const Point& pivot, float angle) const
     return pivot + (*this - pivot).rotate(Point::forAngle(angle));
 }
 
+bool Point::isLineIntersect(const Point& A, const Point& B,
+                            const Point& C, const Point& D,
+                            float *S, float *T)
+{
+    // FAIL: Line undefined
+    if ( (A.x==B.x && A.y==B.y) || (C.x==D.x && C.y==D.y) )
+    {
+        return false;
+    }
+    const float BAx = B.x - A.x;
+    const float BAy = B.y - A.y;
+    const float DCx = D.x - C.x;
+    const float DCy = D.y - C.y;
+    const float ACx = A.x - C.x;
+    const float ACy = A.y - C.y;
+    
+    const float denom = DCy*BAx - DCx*BAy;
+    
+    *S = DCx*ACy - DCy*ACx;
+    *T = BAx*ACy - BAy*ACx;
+    
+    if (denom == 0)
+    {
+        if (*S == 0 || *T == 0)
+        {
+            // Lines incident
+            return true;
+        }
+        // Lines parallel and not incident
+        return false;
+    }
+    
+    *S = *S / denom;
+    *T = *T / denom;
+    
+    // Point of intersection
+    // CGPoint P;
+    // P.x = A.x + *S * (B.x - A.x);
+    // P.y = A.y + *S * (B.y - A.y);
+    
+    return true;
+}
+
+bool Point::isSegmentIntersect(const Point& A, const Point& B, const Point& C, const Point& D)
+{
+    float S, T;
+    
+    if (isLineIntersect(A, B, C, D, &S, &T )&&
+       (S >= 0.0f && S <= 1.0f && T >= 0.0f && T <= 1.0f))
+    {
+        return true;
+    }  
+    
+    return false;
+}
+
+Point Point::getIntersectPoint(const Point& A, const Point& B, const Point& C, const Point& D)
+{
+    float S, T;
+    
+    if (isLineIntersect(A, B, C, D, &S, &T))
+    {
+        // Point of intersection
+        Point P;
+        P.x = A.x + S * (B.x - A.x);
+        P.y = A.y + S * (B.y - A.y);
+        return P;
+    }
+    
+    return Point::ZERO;
+}
+
+const Point Point::ZERO = Point(0, 0);
+
 // implementation of Size
 
 Size::Size(void) : width(0), height(0)
@@ -178,6 +252,8 @@ bool Size::equals(const Size& target) const
     return (fabs(this->width  - target.width)  < FLT_EPSILON)
         && (fabs(this->height - target.height) < FLT_EPSILON);
 }
+
+const Size Size::ZERO = Size(0, 0);
 
 // implementation of Rect
 
@@ -270,5 +346,47 @@ bool Rect::intersectsRect(const Rect& rect) const
                   getMaxY() < rect.getMinY() ||
              rect.getMaxY() <      getMinY());
 }
+
+Rect Rect::unionWithRect(const Rect & rect) const
+{
+    float thisLeftX = origin.x;
+    float thisRightX = origin.x + size.width;
+    float thisTopY = origin.y + size.height;
+    float thisBottomY = origin.y;
+    
+    if (thisRightX < thisLeftX)
+    {
+        std::swap(thisRightX, thisLeftX);   // This rect has negative width
+    }
+    
+    if (thisTopY < thisBottomY)
+    {
+        std::swap(thisTopY, thisBottomY);   // This rect has negative height
+    }
+    
+    float otherLeftX = rect.origin.x;
+    float otherRightX = rect.origin.x + rect.size.width;
+    float otherTopY = rect.origin.y + rect.size.height;
+    float otherBottomY = rect.origin.y;
+    
+    if (otherRightX < otherLeftX)
+    {
+        std::swap(otherRightX, otherLeftX);   // Other rect has negative width
+    }
+    
+    if (otherTopY < otherBottomY)
+    {
+        std::swap(otherTopY, otherBottomY);   // Other rect has negative height
+    }
+    
+    float combinedLeftX = std::min(thisLeftX, otherLeftX);
+    float combinedRightX = std::max(thisRightX, otherRightX);
+    float combinedTopY = std::max(thisTopY, otherTopY);
+    float combinedBottomY = std::min(thisBottomY, otherBottomY);
+    
+    return Rect(combinedLeftX, combinedBottomY, combinedRightX - combinedLeftX, combinedTopY - combinedBottomY);
+}
+
+const Rect Rect::ZERO = Rect(0, 0, 0, 0);
 
 NS_CC_END

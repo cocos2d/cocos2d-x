@@ -37,7 +37,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
 
 @implementation CCCustomUITextField
 - (CGRect)textRectForBounds:(CGRect)bounds {
-    float padding = CC_EDIT_BOX_PADDING * cocos2d::EGLView::sharedOpenGLView()->getScaleX() / [[CCEAGLView sharedEGLView] contentScaleFactor ];
+    float padding = CC_EDIT_BOX_PADDING * cocos2d::EGLView::getInstance()->getScaleX() / [[CCEAGLView sharedEGLView] contentScaleFactor ];
     return CGRectMake(bounds.origin.x + padding, bounds.origin.y + padding,
                       bounds.size.width - padding*2, bounds.size.height - padding*2);
 }
@@ -158,9 +158,10 @@ static const int CC_EDIT_BOX_PADDING = 5;
     
     cocos2d::extension::EditBox*  pEditBox= getEditBoxImplIOS()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
-    {
-        cocos2d::ScriptEngineProtocol* pEngine = cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine();
-        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
+    {        
+        cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
+        cocos2d::ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
+        cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
     return YES;
 }
@@ -181,9 +182,13 @@ static const int CC_EDIT_BOX_PADDING = 5;
     cocos2d::extension::EditBox*  pEditBox= getEditBoxImplIOS()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
-        cocos2d::ScriptEngineProtocol* pEngine = cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine();
-        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "ended",pEditBox);
-        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "return",pEditBox);
+        cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "ended",pEditBox);
+        cocos2d::ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
+        cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+        memset(data.eventName,0,64*sizeof(char));
+        strncpy(data.eventName,"return",64);
+        event.data = (void*)&data;
+        cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
 	
 	if(editBox_ != nil)
@@ -231,8 +236,9 @@ static const int CC_EDIT_BOX_PADDING = 5;
     cocos2d::extension::EditBox*  pEditBox= getEditBoxImplIOS()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
-        cocos2d::ScriptEngineProtocol* pEngine = cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine();
-        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
+        cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
+        cocos2d::ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
+        cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
 
 }
@@ -252,7 +258,7 @@ EditBoxImplIOS::EditBoxImplIOS(EditBox* pEditText)
 , _label(NULL)
 , _labelPlaceHolder(NULL)
 , _systemControl(NULL)
-, _anchorPoint(ccp(0.5f, 0.5f))
+, _anchorPoint(Point(0.5f, 0.5f))
 , _maxTextLength(-1)
 {
     _inRetinaMode = [[CCEAGLView sharedEGLView] contentScaleFactor] == 2.0f ? true : false;
@@ -275,7 +281,7 @@ bool EditBoxImplIOS::initWithSize(const Size& size)
 {
     do 
     {
-        EGLViewProtocol* eglView = EGLView::sharedOpenGLView();
+        EGLViewProtocol* eglView = EGLView::getInstance();
 
         CGRect rect = CGRectMake(0, 0, size.width * eglView->getScaleX(),size.height * eglView->getScaleY());
 
@@ -302,15 +308,15 @@ void EditBoxImplIOS::initInactiveLabels(const Size& size)
 	const char* pDefaultFontName = [[_systemControl.textField.font fontName] UTF8String];
 
 	_label = LabelTTF::create("", "", 0.0f);
-    _label->setAnchorPoint(ccp(0, 0.5f));
-    _label->setColor(ccWHITE);
+    _label->setAnchorPoint(Point(0, 0.5f));
+    _label->setColor(Color3B::WHITE);
     _label->setVisible(false);
     _editBox->addChild(_label, kLabelZOrder);
 	
     _labelPlaceHolder = LabelTTF::create("", "", 0.0f);
 	// align the text vertically center
-    _labelPlaceHolder->setAnchorPoint(ccp(0, 0.5f));
-    _labelPlaceHolder->setColor(ccGRAY);
+    _labelPlaceHolder->setAnchorPoint(Point(0, 0.5f));
+    _labelPlaceHolder->setColor(Color3B::GRAY);
     _editBox->addChild(_labelPlaceHolder, kLabelZOrder);
     
     setFont(pDefaultFontName, size.height*2/3);
@@ -318,8 +324,8 @@ void EditBoxImplIOS::initInactiveLabels(const Size& size)
 }
 
 void EditBoxImplIOS::placeInactiveLabels() {
-    _label->setPosition(ccp(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f));
-    _labelPlaceHolder->setPosition(ccp(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f));
+    _label->setPosition(Point(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f));
+    _labelPlaceHolder->setPosition(Point(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f));
 }
 
 void EditBoxImplIOS::setInactiveText(const char* pText)
@@ -352,7 +358,7 @@ void EditBoxImplIOS::setFont(const char* pFontName, int fontSize)
 
     float retinaFactor = _inRetinaMode ? 2.0f : 1.0f;
 	NSString * fntName = [NSString stringWithUTF8String:pFontName];
-    float scaleFactor = EGLView::sharedOpenGLView()->getScaleX();
+    float scaleFactor = EGLView::getInstance()->getScaleX();
     UIFont *textFont = nil;
     if (isValidFontName) {
         textFont = [UIFont fontWithName:fntName size:fontSize * scaleFactor / retinaFactor];
@@ -372,7 +378,7 @@ void EditBoxImplIOS::setFont(const char* pFontName, int fontSize)
 	_labelPlaceHolder->setFontSize(fontSize);
 }
 
-void EditBoxImplIOS::setFontColor(const ccColor3B& color)
+void EditBoxImplIOS::setFontColor(const Color3B& color)
 {
     _systemControl.textField.textColor = [UIColor colorWithRed:color.r / 255.0f green:color.g / 255.0f blue:color.b / 255.0f alpha:1.0f];
 	_label->setColor(color);
@@ -383,7 +389,7 @@ void EditBoxImplIOS::setPlaceholderFont(const char* pFontName, int fontSize)
 	// TODO need to be implemented.
 }
 
-void EditBoxImplIOS::setPlaceholderFontColor(const ccColor3B& color)
+void EditBoxImplIOS::setPlaceholderFontColor(const Color3B& color)
 {
 	_labelPlaceHolder->setColor(color);
 }
@@ -510,11 +516,11 @@ void EditBoxImplIOS::setPlaceHolder(const char* pText)
 
 static CGPoint convertDesignCoordToScreenCoord(const Point& designCoord, bool bInRetinaMode)
 {
-    EGLViewProtocol* eglView = EGLView::sharedOpenGLView();
+    EGLViewProtocol* eglView = EGLView::getInstance();
     float viewH = (float)[[CCEAGLView sharedEGLView] getHeight];
     
-    Point visiblePos = ccp(designCoord.x * eglView->getScaleX(), designCoord.y * eglView->getScaleY());
-    Point screenGLPos = ccpAdd(visiblePos, eglView->getViewPortRect().origin);
+    Point visiblePos = Point(designCoord.x * eglView->getScaleX(), designCoord.y * eglView->getScaleY());
+    Point screenGLPos = visiblePos + eglView->getViewPortRect().origin;
     
     CGPoint screenPos = CGPointMake(screenGLPos.x, viewH - screenGLPos.y);
     
@@ -543,7 +549,7 @@ void EditBoxImplIOS::setContentSize(const Size& size)
     _contentSize = size;
     CCLOG("[Edit text] content size = (%f, %f)", size.width, size.height);
     placeInactiveLabels();
-    EGLViewProtocol* eglView = EGLView::sharedOpenGLView();
+    EGLViewProtocol* eglView = EGLView::getInstance();
     CGSize controlSize = CGSizeMake(size.width * eglView->getScaleX(),size.height * eglView->getScaleY());
     
     if (_inRetinaMode)
@@ -578,10 +584,10 @@ void EditBoxImplIOS::onEnter(void)
 void EditBoxImplIOS::adjustTextFieldPosition()
 {
 	Size contentSize = _editBox->getContentSize();
-	Rect rect = CCRectMake(0, 0, contentSize.width, contentSize.height);
+	Rect rect = Rect(0, 0, contentSize.width, contentSize.height);
     rect = RectApplyAffineTransform(rect, _editBox->nodeToWorldTransform());
 	
-	Point designCoord = ccp(rect.origin.x, rect.origin.y + rect.size.height);
+	Point designCoord = Point(rect.origin.x, rect.origin.y + rect.size.height);
     [_systemControl setPosition:convertDesignCoordToScreenCoord(designCoord, _inRetinaMode)];
 }
 

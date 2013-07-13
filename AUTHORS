@@ -13,6 +13,10 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
         
+    Squallium
+        Added ccFPSImages entity as linked resource on linux eclipse project setting.
+        Added CocosDenshion dependency to libextension project for eclipse project of linux.
+        
     longlene
         Improve android project creation script
         
@@ -41,6 +45,9 @@ Developers:
         
     DarraghCoy
         Fix a potential crash SimpleAudioEngineOpenSL::playEffect
+        Fix some bugs with Set class
+        Add ccDrawSolidCircle
+        Add Rect::unionWithRect
 
     silverscania
         Pass correct parameter to glPixelStorei when creating a texture
@@ -63,6 +70,7 @@ Developers:
         Refactoring network extension and fixing unlikely memory leaks.
         Adding PUT/DELETE methods for CCHttpRequest.
         Adding project part for QtCreator.
+        Implemented pitch, pan and gain
 
     savdalion 
         Added example for russian language in TestCpp
@@ -120,6 +128,7 @@ Developers:
 
     tks2shimizu
         add CCFloat, CCDouble and CCBool
+        Add append function for String class
 
     chenium
         fix a bug that CCRenderTexture can not work when coming to foreground on Android
@@ -362,7 +371,8 @@ Developers:
         Refactoring emscripten building script.
 
     Peter Young (young40)
-        Implements setVisible() for CCEditBox
+        Implements setVisible() for CCEditBox.
+        Fixing a bug that event will not be sent to server when paramMap parameter of logEvent function is nil in plugin-x.
 
     csy1988525
         Fixing a bug about display result is wrong when invoking CCControlButton:: setHighlighted.
@@ -399,6 +409,8 @@ Developers:
 
     Éloi Rivard (azmeuk)
         Linux OpenAL support.
+        Added some guards to prevent Eclipse to compile twice the same class.
+        Linux Eclipse projects updates
 
     elmiro
         Correction of passed buffer size to readlink and verification of result return by readlink.
@@ -429,6 +441,7 @@ Developers:
         Fix for broken of ccArrayGetIndexOfObject after merging this commit(076f38c).
         Explicitly initialising CCAcceleration structure.
         Add support to save/retrieve CCData into/from CCUserDefault.
+        Text Shadows fix
 
     MarcelBloemendaal
         Adding secureTextEntry property to CCTextFieldTTF.
@@ -465,6 +478,7 @@ Developers:
     smshuja
         Fixing a bug that pointQueryFirst returns invalid Shape when a shape is not found in JSB.
         Fixing a bug that New PivotJoint can't access 4 parameters like in html5 version.
+        Fixing a bug that Pivotjoint constructor and pointQueryFirst in Space class will return false instead of invalid shape object.
         
     Carsten Sandtner (casarock)
         Adding XMLHttpRequest support for JSB.
@@ -491,6 +505,18 @@ Developers:
         
     wtyqm (zhang peng)
         Fixing a bug that ccbRootPath wasn't passed to sub ccb nodes.
+        
+    smilingpoplar (YangLe)
+        Fixing a bug that CCScale9Sprite doesn't support rotated spriteframe in atlas.
+        
+    xxuejie
+        Add namespace prefix to selector macros
+        
+    hannon235 (Chris)
+        Fixing a bug that the submenu of ExtensionTest in TestCpp can't scroll.
+        
+    pktangyue
+        Fixing a bug that CCScale9Sprite::setInsetLeft/XXX can't work for rotated sprite frame.
 
 Retired Core Developers:
     WenSheng Yang
