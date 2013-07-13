@@ -5668,8 +5668,8 @@ static int tolua_Cocos2d_CCShaderCache_delete00(lua_State* tolua_S)
 #endif //#ifndef TOLUA_DISABLE
 
 /* method: sharedShaderCache of class  ShaderCache */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCShaderCache_sharedShaderCache00
-static int tolua_Cocos2d_CCShaderCache_sharedShaderCache00(lua_State* tolua_S)
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCShaderCache_getInstance00
+static int tolua_Cocos2d_CCShaderCache_getInstance00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -5682,7 +5682,7 @@ static int tolua_Cocos2d_CCShaderCache_sharedShaderCache00(lua_State* tolua_S)
 #endif
  {
   {
-   ShaderCache* tolua_ret = (ShaderCache*)  ShaderCache::sharedShaderCache();
+   ShaderCache* tolua_ret = (ShaderCache*)  ShaderCache::getInstance();
     int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
     toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCShaderCache");
@@ -5691,15 +5691,15 @@ static int tolua_Cocos2d_CCShaderCache_sharedShaderCache00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'sharedShaderCache'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'getInstance'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
 /* method: purgeSharedShaderCache of class  ShaderCache */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCShaderCache_purgeSharedShaderCache00
-static int tolua_Cocos2d_CCShaderCache_purgeSharedShaderCache00(lua_State* tolua_S)
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCShaderCache_destroyInstance00
+static int tolua_Cocos2d_CCShaderCache_destroyInstance00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -5712,13 +5712,13 @@ static int tolua_Cocos2d_CCShaderCache_purgeSharedShaderCache00(lua_State* tolua
 #endif
  {
   {
-   ShaderCache::purgeSharedShaderCache();
+   ShaderCache::destroyInstance();
   }
  }
  return 0;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'purgeSharedShaderCache'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'destroyInstance'.",&tolua_err);
  return 0;
 #endif
 }
@@ -6043,8 +6043,10 @@ TOLUA_API int tolua_opengl_open(lua_State* tolua_S)
         tolua_function(tolua_S,"new_local",tolua_Cocos2d_CCShaderCache_new00_local);
         tolua_function(tolua_S,".call",tolua_Cocos2d_CCShaderCache_new00_local);
         tolua_function(tolua_S,"delete",tolua_Cocos2d_CCShaderCache_delete00);
-        tolua_function(tolua_S,"getInstance",tolua_Cocos2d_CCShaderCache_sharedShaderCache00);
-        tolua_function(tolua_S,"purgeSharedShaderCache",tolua_Cocos2d_CCShaderCache_purgeSharedShaderCache00);
+        tolua_function(tolua_S,"getInstance",tolua_Cocos2d_CCShaderCache_getInstance00);
+        tolua_function(tolua_S,"destroyInstance",tolua_Cocos2d_CCShaderCache_destroyInstance00);
+        tolua_function(tolua_S,"sharedSharedShaderCache",tolua_Cocos2d_CCShaderCache_getInstance00);
+        tolua_function(tolua_S,"purgeSharedShaderCache",tolua_Cocos2d_CCShaderCache_destroyInstance00);
         tolua_function(tolua_S,"loadDefaultShaders",tolua_Cocos2d_CCShaderCache_loadDefaultShaders00);
         tolua_function(tolua_S,"reloadDefaultShaders",tolua_Cocos2d_CCShaderCache_reloadDefaultShaders00);
         tolua_function(tolua_S,"getProgram",tolua_Cocos2d_CCShaderCache_programForKey00);

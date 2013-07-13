@@ -103,7 +103,7 @@ bool GridBase::initWithSize(const Size& gridSize, Texture2D *pTexture, bool bFli
         bRet = false;
     }
     
-    _shaderProgram = ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTexture);
+    _shaderProgram = ShaderCache::getInstance()->programForKey(kShader_PositionTexture);
     calculateVertexPoints();
 
     return bRet;
@@ -111,7 +111,7 @@ bool GridBase::initWithSize(const Size& gridSize, Texture2D *pTexture, bool bFli
 
 bool GridBase::initWithSize(const Size& gridSize)
 {
-    Director *pDirector = Director::sharedDirector();
+    Director *pDirector = Director::getInstance();
     Size s = pDirector->getWinSizeInPixels();
     
     unsigned long POTWide = ccNextPOT((unsigned int)s.width);
@@ -161,7 +161,7 @@ void GridBase::setActive(bool bActive)
     _active = bActive;
     if (! bActive)
     {
-        Director *pDirector = Director::sharedDirector();
+        Director *pDirector = Director::getInstance();
         ccDirectorProjection proj = pDirector->getProjection();
         pDirector->setProjection(proj);
     }
@@ -178,7 +178,7 @@ void GridBase::setTextureFlipped(bool bFlipped)
 
 void GridBase::set2DProjection()
 {
-    Director *director = Director::sharedDirector();
+    Director *director = Director::getInstance();
 
     Size    size = director->getWinSizeInPixels();
 
@@ -200,7 +200,7 @@ void GridBase::set2DProjection()
 void GridBase::beforeDraw(void)
 {
     // save projection
-    Director *director = Director::sharedDirector();
+    Director *director = Director::getInstance();
     _directorProjection = director->getProjection();
 
     // 2d projection
@@ -214,7 +214,7 @@ void GridBase::afterDraw(cocos2d::Node *pTarget)
     _grabber->afterRender(_texture);
 
     // restore projection
-    Director *director = Director::sharedDirector();
+    Director *director = Director::getInstance();
     director->setProjection(_directorProjection);
 
     if (pTarget->getCamera()->isDirty())
@@ -232,8 +232,8 @@ void GridBase::afterDraw(cocos2d::Node *pTarget)
     ccGLBindTexture2D(_texture->getName());
 
     // restore projection for default FBO .fixed bug #543 #544
-//TODO:         Director::sharedDirector()->setProjection(Director::sharedDirector()->getProjection());
-//TODO:         Director::sharedDirector()->applyOrientation();
+//TODO:         Director::getInstance()->setProjection(Director::getInstance()->getProjection());
+//TODO:         Director::getInstance()->applyOrientation();
     blit();
 }
 
@@ -401,7 +401,7 @@ void Grid3D::calculateVertexPoints(void)
             Vertex3F l2[4] = {e, f, g, h};
 
             int tex1[4] = {a*2, b*2, c*2, d*2};
-            Point Tex2F[4] = {ccp(x1, y1), ccp(x2, y1), ccp(x2, y2), ccp(x1, y2)};
+            Point Tex2F[4] = {Point(x1, y1), Point(x2, y1), Point(x2, y2), Point(x1, y2)};
 
             for (i = 0; i < 4; ++i)
             {

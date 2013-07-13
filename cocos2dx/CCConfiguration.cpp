@@ -147,7 +147,7 @@ void Configuration::gatherGPUInfo()
     CHECK_GL_ERROR_DEBUG();
 }
 
-Configuration* Configuration::sharedConfiguration(void)
+Configuration* Configuration::getInstance()
 {
     if (! s_gSharedConfiguration)
     {
@@ -158,10 +158,23 @@ Configuration* Configuration::sharedConfiguration(void)
     return s_gSharedConfiguration;
 }
 
-void Configuration::purgeConfiguration(void)
+void Configuration::destroyInstance()
 {
     CC_SAFE_RELEASE_NULL(s_gSharedConfiguration);
 }
+
+// XXX: deprecated
+Configuration* Configuration::sharedConfiguration(void)
+{
+    return Configuration::getInstance();
+}
+
+// XXX: deprecated
+void Configuration::purgeConfiguration(void)
+{
+    Configuration::destroyInstance();
+}
+
 
 bool Configuration::checkForGLExtension(const string &searchName) const
 {

@@ -33,7 +33,7 @@ NS_CC_BEGIN
 Scene::Scene()
 {
     _ignoreAnchorPointForPosition = true;
-    setAnchorPoint(ccp(0.5f, 0.5f));
+    setAnchorPoint(Point(0.5f, 0.5f));
 }
 
 Scene::~Scene()
@@ -46,7 +46,7 @@ bool Scene::init()
      do 
      {
          Director * pDirector;
-         CC_BREAK_IF( ! (pDirector = Director::sharedDirector()) );
+         CC_BREAK_IF( ! (pDirector = Director::getInstance()) );
          this->setContentSize(pDirector->getWinSize());
          // success
          bRet = true;

@@ -413,7 +413,7 @@ bool Image::initWithString(
     	std::transform(lowerCasePath.begin(), lowerCasePath.end(), lowerCasePath.begin(), ::tolower);
 
     	if ( lowerCasePath.find(".ttf") != std::string::npos ) {
-    		fullFontName = FileUtils::sharedFileUtils()->fullPathForFilename(pFontName);
+    		fullFontName = FileUtils::getInstance()->fullPathForFilename(pFontName);
     	}
         //CCLog("-----pText=%s and Font File is %s nWidth= %d,nHeight=%d",pText,fullFontName.c_str(),nWidth,nHeight);
         

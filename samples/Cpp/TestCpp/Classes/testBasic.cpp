@@ -42,15 +42,15 @@ void TestScene::onEnter()
             Layer* pLayer = new TestController();
             pScene->addChild(pLayer);
             pLayer->release();
-            Director::sharedDirector()->replaceScene(pScene);
+            Director::getInstance()->replaceScene(pScene);
             pScene->release();
         }
 	});
 
     Menu* pMenu =Menu::create(pMenuItem, NULL);
 
-    pMenu->setPosition( PointZero );
-    pMenuItem->setPosition( ccp( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
+    pMenu->setPosition( Point::ZERO );
+    pMenuItem->setPosition( Point( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
 
     addChild(pMenu, 1);
 }

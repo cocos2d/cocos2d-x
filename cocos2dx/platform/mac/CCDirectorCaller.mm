@@ -79,7 +79,7 @@ static id s_sharedDirectorCaller;
     
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
-	cocos2d::Director::sharedDirector()->drawScene();
+	cocos2d::Director::getInstance()->drawScene();
 	cocos2d::PoolManager::sharedPoolManager()->pop();
 	[[CCEventDispatcher sharedDispatcher] dispatchQueuedEvents];
 	
@@ -101,7 +101,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
     //    CVReturn result = [(DirectorCaller*)displayLinkContext getFrameForTime:outputTime];
     //    return result;
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	cocos2d::Director::sharedDirector()->mainLoop();
+	cocos2d::Director::getInstance()->mainLoop();
 	[pool release];
     
 	return kCVReturnSuccess;
@@ -119,7 +119,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	[openGLView lockOpenGLContext];
     
 	// run the main cocos2d loop
-	cocos2d::Director::sharedDirector()->mainLoop();
+	cocos2d::Director::getInstance()->mainLoop();
     
 	// flush buffer (this line is very important!)
 	[[openGLView openGLContext] flushBuffer];
@@ -162,7 +162,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
     
     /*
      // CVDisplayLink
-     //cocos2d::Director::sharedDirector()->gettimeofday();
+     //cocos2d::Director::getInstance()->gettimeofday();
      
      // Create a display link capable of being used with all active displays
      CVDisplayLinkCreateWithActiveCGDisplays(&displayLink);
@@ -207,7 +207,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 
 -(void) doCaller: (id) sender
 {
-	cocos2d::Director::sharedDirector()->mainLoop();
+	cocos2d::Director::getInstance()->mainLoop();
 }
 
 @end

@@ -278,7 +278,7 @@ public:
     	std::string lowerCasePath = fontPath;
     	std::transform(lowerCasePath.begin(), lowerCasePath.end(), lowerCasePath.begin(), ::tolower);
     	if ( lowerCasePath.find(".ttf") != std::string::npos ) {
-    		fontPath = cocos2d::FileUtils::sharedFileUtils()->fullPathForFilename(fontPath.c_str());
+    		fontPath = cocos2d::FileUtils::getInstance()->fullPathForFilename(fontPath.c_str());
 
     		FILE *f = fopen(fontPath.c_str(), "r");
     		if ( f ) {
@@ -439,7 +439,7 @@ bool Image::initWithString(
 
 		BitmapDC &dc = sharedBitmapDC();
 
-		//const char* pFullFontName = FileUtils::sharedFileUtils()->fullPathFromRelativePath(pFontName);
+		//const char* pFullFontName = FileUtils::getInstance()->fullPathFromRelativePath(pFontName);
 
 		CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, pFontName, nSize));
 

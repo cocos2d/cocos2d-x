@@ -127,7 +127,7 @@ OspApplication::OnAppInitialized(void)
 bool
 OspApplication::OnAppTerminating(AppRegistry& appRegistry, bool forcedTermination)
 {
-    EGLView::sharedOpenGLView()->cleanup();
+    EGLView::getInstance()->cleanup();
 
     return true;
 }
@@ -135,14 +135,14 @@ OspApplication::OnAppTerminating(AppRegistry& appRegistry, bool forcedTerminatio
 void
 OspApplication::OnForeground(void)
 {
-    Tizen::Base::Runtime::Timer* timer = EGLView::sharedOpenGLView()->getTimer();
+    Tizen::Base::Runtime::Timer* timer = EGLView::getInstance()->getTimer();
 
     if (timer != null)
     {
         timer->Start(cocos2d::Application::sharedApplication()->getAnimationInterval());
     }
 
-    if (Director::sharedDirector()->getOpenGLView())
+    if (Director::getInstance()->getOpenGLView())
     {
         cocos2d::Application::sharedApplication()->applicationWillEnterForeground();
     }
@@ -151,7 +151,7 @@ OspApplication::OnForeground(void)
 void
 OspApplication::OnBackground(void)
 {
-    Tizen::Base::Runtime::Timer* timer = EGLView::sharedOpenGLView()->getTimer();
+    Tizen::Base::Runtime::Timer* timer = EGLView::getInstance()->getTimer();
 
     if (timer != null)
     {

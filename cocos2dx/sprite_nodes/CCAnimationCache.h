@@ -53,11 +53,17 @@ public:
     AnimationCache();
     ~AnimationCache();
     /** Returns the shared instance of the Animation cache */
-    static AnimationCache* sharedAnimationCache(void);
+    static AnimationCache* getInstance();
 
     /** Purges the cache. It releases all the Animation objects and the shared instance.
-    */
-    static void purgeSharedAnimationCache(void);
+     */
+    static void destroyInstance();
+
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static AnimationCache* sharedAnimationCache(void);
+
+    /** @deprecatd Use destroyInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static void purgeSharedAnimationCache(void);
 
     /** Adds a Animation with a name.
     */

@@ -19,7 +19,7 @@ SocketIOTestLayer::SocketIOTestLayer(void)
 {
 	//set the clients to NULL until we are ready to connect
 
-	Size winSize = Director::sharedDirector()->getWinSize();
+	Size winSize = Director::getInstance()->getWinSize();
     
     const int MARGIN = 40;
     const int SPACE = 35;
@@ -263,6 +263,6 @@ void runSocketIOTest()
     SocketIOTestLayer *pLayer = new SocketIOTestLayer();
     pScene->addChild(pLayer);
     
-    Director::sharedDirector()->replaceScene(pScene);
+    Director::getInstance()->replaceScene(pScene);
     pLayer->release();
 }

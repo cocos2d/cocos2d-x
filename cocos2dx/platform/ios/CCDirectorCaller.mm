@@ -91,7 +91,7 @@ static id s_sharedDirectorCaller;
                       
 -(void) doCaller: (id) sender
 {
-    cocos2d::Director::sharedDirector()->mainLoop();
+    cocos2d::Director::getInstance()->mainLoop();
 }
 
 @end
