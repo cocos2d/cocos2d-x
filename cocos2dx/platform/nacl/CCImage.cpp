@@ -452,7 +452,7 @@ bool Image::initWithString(
 
         BitmapDC &dc = sharedBitmapDC();
 
-        //const char* pFullFontName = FileUtils::sharedFileUtils()->fullPathFromRelativePath(pFontName);
+        //const char* pFullFontName = FileUtils::getInstance()->fullPathFromRelativePath(pFontName);
 
         CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, pFontName, nSize));
 

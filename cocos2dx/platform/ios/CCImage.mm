@@ -416,8 +416,8 @@ bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFm
 {
 	bool bRet = false;
     unsigned long nSize = 0;
-    unsigned char* pBuffer = FileUtils::sharedFileUtils()->getFileData(
-				FileUtils::sharedFileUtils()->fullPathForFilename(strPath).c_str(),
+    unsigned char* pBuffer = FileUtils::getInstance()->getFileData(
+				FileUtils::getInstance()->fullPathForFilename(strPath).c_str(),
 				"rb",
 				&nSize);
 				
@@ -436,7 +436,7 @@ bool Image::initWithImageFileThreadSafe(const char *fullpath, EImageFormat image
      */
     bool bRet = false;
     unsigned long nSize = 0;
-    unsigned char* pBuffer = FileUtils::sharedFileUtils()->getFileData(fullpath, "rb", &nSize);
+    unsigned char* pBuffer = FileUtils::getInstance()->getFileData(fullpath, "rb", &nSize);
     if (pBuffer != NULL && nSize > 0)
     {
         bRet = initWithImageData(pBuffer, nSize, imageType);

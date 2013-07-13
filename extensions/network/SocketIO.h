@@ -141,7 +141,7 @@ private:
 	void onConnect();
 	void receivedDisconnect();
 
-	friend SIOClientImpl;
+	friend class SIOClientImpl;
 
 public:
 	SIOClient(const std::string& host, int port, const std::string& path, SIOClientImpl* impl, SocketIO::SIODelegate& delegate);

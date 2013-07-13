@@ -181,8 +181,8 @@ void SIOClientImpl::handshakeResponse(HttpClient *sender, HttpResponse *response
 
 	std::string res = s.str();
 	std::string sid;
-	int pos;
-	int heartbeat, timeout;
+	int pos = 0;
+	int heartbeat = 0, timeout = 0;
 
 	pos = res.find(":");
 	if(pos >= 0) {
@@ -253,7 +253,7 @@ void SIOClientImpl::disconnect() {
 
 	}
 
-	Director::sharedDirector()->getScheduler()->unscheduleAllForTarget(this);
+	Director::getInstance()->getScheduler()->unscheduleAllForTarget(this);
 
 	_connected = false;
 

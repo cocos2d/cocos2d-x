@@ -4,7 +4,7 @@ CurrentLanguageTest::CurrentLanguageTest()
 {
     LabelTTF* label = LabelTTF::create("Current language Test", "Arial", 28);
     addChild(label, 0);
-    label->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y-50) );
+    label->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y-50) );
 
     LabelTTF *labelLanguage = LabelTTF::create("", "Arial", 20);
     labelLanguage->setPosition(VisibleRect::center());
@@ -64,6 +64,6 @@ void CurrentLanguageTestScene::runThisTest()
     Layer* pLayer = new CurrentLanguageTest();
     addChild(pLayer);
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
     pLayer->release();
 }

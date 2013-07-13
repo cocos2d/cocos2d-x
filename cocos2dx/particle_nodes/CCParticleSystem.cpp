@@ -94,8 +94,8 @@ ParticleSystem::ParticleSystem()
 , _isActive(true)
 , _particleCount(0)
 , _duration(0)
-, _sourcePosition(PointZero)
-, _posVar(PointZero)
+, _sourcePosition(Point::ZERO)
+, _posVar(Point::ZERO)
 , _life(0)
 , _lifeVar(0)
 , _angle(0)
@@ -117,7 +117,7 @@ ParticleSystem::ParticleSystem()
 , _isAutoRemoveOnFinish(false)
 , _emitterMode(kParticleModeGravity)
 {
-    modeA.gravity = PointZero;
+    modeA.gravity = Point::ZERO;
     modeA.speed = 0;
     modeA.speedVar = 0;
     modeA.tangentialAccel = 0;
@@ -168,7 +168,7 @@ bool ParticleSystem::init()
 bool ParticleSystem::initWithFile(const char *plistFile)
 {
     bool bRet = false;
-    _plistFile = FileUtils::sharedFileUtils()->fullPathForFilename(plistFile);
+    _plistFile = FileUtils::getInstance()->fullPathForFilename(plistFile);
     Dictionary *dict = Dictionary::createWithContentsOfFileThreadSafe(_plistFile.c_str());
 
     CCAssert( dict != NULL, "Particles: file not found");
@@ -248,7 +248,7 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
             // position
             float x = dictionary->valueForKey("sourcePositionx")->floatValue();
             float y = dictionary->valueForKey("sourcePositiony")->floatValue();
-            this->setPosition( ccp(x,y) );            
+            this->setPosition( Point(x,y) );            
             _posVar.x = dictionary->valueForKey("sourcePositionVariancex")->floatValue();
             _posVar.y = dictionary->valueForKey("sourcePositionVariancey")->floatValue();
 
@@ -340,11 +340,11 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
                 if (textureName.length() > 0)
                 {
                     // set not pop-up message box when load image failed
-                    bool bNotify = FileUtils::sharedFileUtils()->isPopupNotify();
-                    FileUtils::sharedFileUtils()->setPopupNotify(false);
-                    tex = TextureCache::sharedTextureCache()->addImage(textureName.c_str());
+                    bool bNotify = FileUtils::getInstance()->isPopupNotify();
+                    FileUtils::getInstance()->setPopupNotify(false);
+                    tex = TextureCache::getInstance()->addImage(textureName.c_str());
                     // reset the value of UIImage notify
-                    FileUtils::sharedFileUtils()->setPopupNotify(bNotify);
+                    FileUtils::getInstance()->setPopupNotify(bNotify);
                 }
                 
                 if (tex)
@@ -368,13 +368,13 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
                         CCAssert( deflated != NULL, "CCParticleSystem: error ungzipping textureImageData");
                         CC_BREAK_IF(!deflated);
                         
-                        // For android, we should retain it in VolatileTexture::addImage which invoked in TextureCache::sharedTextureCache()->addUIImage()
+                        // For android, we should retain it in VolatileTexture::addImage which invoked in TextureCache::getInstance()->addUIImage()
                         image = new Image();
                         bool isOK = image->initWithImageData(deflated, deflatedLen);
                         CCAssert(isOK, "CCParticleSystem: error init image with Data");
                         CC_BREAK_IF(!isOK);
                         
-                        setTexture(TextureCache::sharedTextureCache()->addUIImage(image, textureName.c_str()));
+                        setTexture(TextureCache::getInstance()->addUIImage(image, textureName.c_str()));
 
                         image->release();
                     }
@@ -523,7 +523,7 @@ void ParticleSystem::initParticle(tParticle* particle)
     // position
     if( _positionType == kPositionTypeFree )
     {
-        particle->startPos = this->convertToWorldSpace(PointZero);
+        particle->startPos = this->convertToWorldSpace(Point::ZERO);
     }
     else if ( _positionType == kPositionTypeRelative )
     {
@@ -540,7 +540,7 @@ void ParticleSystem::initParticle(tParticle* particle)
         float s = modeA.speed + modeA.speedVar * CCRANDOM_MINUS1_1();
 
         // direction
-        particle->modeA.dir = ccpMult( v, s );
+        particle->modeA.dir = v * s ;
 
         // radial accel
         particle->modeA.radialAccel = modeA.radialAccel + modeA.radialAccelVar * CCRANDOM_MINUS1_1();
@@ -551,7 +551,7 @@ void ParticleSystem::initParticle(tParticle* particle)
 
         // rotation is dir
         if(modeA.rotationIsDir)
-            particle->rotation = -CC_RADIANS_TO_DEGREES(ccpToAngle(particle->modeA.dir));
+            particle->rotation = -CC_RADIANS_TO_DEGREES(particle->modeA.dir.getAngle());
     }
 
     // Mode Radius: B
@@ -628,10 +628,10 @@ void ParticleSystem::update(float dt)
 
     _particleIdx = 0;
 
-    Point currentPosition = PointZero;
+    Point currentPosition = Point::ZERO;
     if (_positionType == kPositionTypeFree)
     {
-        currentPosition = this->convertToWorldSpace(PointZero);
+        currentPosition = this->convertToWorldSpace(Point::ZERO);
     }
     else if (_positionType == kPositionTypeRelative)
     {
@@ -654,27 +654,27 @@ void ParticleSystem::update(float dt)
                 {
                     Point tmp, radial, tangential;
 
-                    radial = PointZero;
+                    radial = Point::ZERO;
                     // radial acceleration
                     if (p->pos.x || p->pos.y)
                     {
-                        radial = ccpNormalize(p->pos);
+                        radial = p->pos.normalize();
                     }
                     tangential = radial;
-                    radial = ccpMult(radial, p->modeA.radialAccel);
+                    radial = radial * p->modeA.radialAccel;
 
                     // tangential acceleration
                     float newy = tangential.x;
                     tangential.x = -tangential.y;
                     tangential.y = newy;
-                    tangential = ccpMult(tangential, p->modeA.tangentialAccel);
+                    tangential = tangential * p->modeA.tangentialAccel;
 
                     // (gravity + radial + tangential) * dt
-                    tmp = ccpAdd( ccpAdd( radial, tangential), modeA.gravity);
-                    tmp = ccpMult( tmp, dt);
-                    p->modeA.dir = ccpAdd( p->modeA.dir, tmp);
-                    tmp = ccpMult(p->modeA.dir, dt);
-                    p->pos = ccpAdd( p->pos, tmp );
+                    tmp = radial + tangential + modeA.gravity;
+                    tmp = tmp * dt;
+                    p->modeA.dir = p->modeA.dir + tmp;
+                    tmp = p->modeA.dir * dt;
+                    p->pos = p->pos + tmp;
                 }
 
                 // Mode B: radius movement
@@ -709,8 +709,8 @@ void ParticleSystem::update(float dt)
 
                 if (_positionType == kPositionTypeFree || _positionType == kPositionTypeRelative) 
                 {
-                    Point diff = ccpSub( currentPosition, p->startPos );
-                    newPos = ccpSub(p->pos, diff);
+                    Point diff = currentPosition - p->startPos;
+                    newPos = p->pos - diff;
                 } 
                 else
                 {

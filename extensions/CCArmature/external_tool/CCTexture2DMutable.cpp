@@ -55,7 +55,7 @@ bool Texture2DMutable::initWithImageFile(const char *imageFile)
     image_->initWithImageFile(imageFile);
     
     bool                      hasAlpha = image_->hasAlpha();
-    Size                    imageSize = CCSizeMake((float)(image_->getWidth()), (float)(image_->getHeight()));
+    Size                    imageSize = Size((float)(image_->getWidth()), (float)(image_->getHeight()));
     size_t                    bpp = image_->getBitsPerComponent();
     cocos2d::Texture2DPixelFormat pixelFormat;
     
@@ -203,7 +203,7 @@ void Texture2DMutable::fill(Color4B p)
 {
 	for(int r = 0; r < _contentSize.height; ++r)
 		for(int c = 0; c < _contentSize.width; ++c)
-            this->setPixelAt(CCPointMake(c, r), p);
+            this->setPixelAt(Point(c, r), p);
 }
 
 Texture2D* Texture2DMutable::copyMutable(bool isMutable )
@@ -240,7 +240,7 @@ void Texture2DMutable::copy(Texture2DMutable* textureToCopy, const Point& offset
 {
 	for(int r = 0; r < _contentSize.height;++r){
 		for(int c = 0; c < _contentSize.width; ++c){
-            setPixelAt(CCPointMake(c + offset.x, r + offset.y), textureToCopy->pixelAt(CCPointMake(c, r)));
+            setPixelAt(Point(c + offset.x, r + offset.y), textureToCopy->pixelAt(Point(c, r)));
 		}
 	}
 }

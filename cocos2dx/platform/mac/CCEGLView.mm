@@ -32,13 +32,19 @@ NS_CC_BEGIN
 
 EGLView* EGLView::s_sharedView = NULL;
 
-EGLView* EGLView::sharedOpenGLView(void)
+EGLView* EGLView::getInstance(void)
 {
     if (!s_sharedView)
     {
         s_sharedView = new EGLView();
     }
     return s_sharedView;
+}
+
+// XXX: deprecated
+EGLView* EGLView::sharedOpenGLView()
+{
+    return EGLView::getInstance();
 }
 
 EGLView::EGLView(void)

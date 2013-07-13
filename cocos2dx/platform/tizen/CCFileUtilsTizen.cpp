@@ -40,7 +40,7 @@ using namespace Tizen::Base;
 using namespace Tizen::Io;
 using namespace Tizen::Text;
 
-FileUtils* FileUtils::sharedFileUtils()
+FileUtils* FileUtils::getInstance()
 {
     if (s_sharedFileUtils == NULL)
     {

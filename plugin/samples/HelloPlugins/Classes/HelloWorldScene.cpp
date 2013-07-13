@@ -44,8 +44,8 @@ bool HelloWorld::init()
         return false;
     }
     
-    Size visibleSize = Director::sharedDirector()->getVisibleSize();
-    Point origin = Director::sharedDirector()->getVisibleOrigin();
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    Point origin = Director::getInstance()->getVisibleOrigin();
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
@@ -106,13 +106,13 @@ void HelloWorld::menuCallback(Object* pSender)
     }
 
     if (newScene) {
-        Director::sharedDirector()->replaceScene(newScene);
+        Director::getInstance()->replaceScene(newScene);
     }
 }
 
 void HelloWorld::menuCloseCallback(Object* pSender)
 {
-    Director::sharedDirector()->end();
+    Director::getInstance()->end();
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);

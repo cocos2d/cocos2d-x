@@ -39,7 +39,7 @@ bool HelloWorld::init()
                                         "CloseSelected.png",
                                         this,
                                         menu_selector(HelloWorld::menuCloseCallback) );
-    pCloseItem->setPosition( ccp(Director::sharedDirector()->getWinSize().width - 20, 20) );
+    pCloseItem->setPosition( ccp(Director::getInstance()->getWinSize().width - 20, 20) );
 
     // create menu, it's an autorelease object
     Menu* pMenu = Menu::create(pCloseItem, NULL);
@@ -54,7 +54,7 @@ bool HelloWorld::init()
     LabelTTF* pLabel = LabelTTF::create("Hello World", "Thonburi", 34);
 
     // ask director the window size
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
 
     // position the label on the center of the screen
     pLabel->setPosition( ccp(size.width / 2, size.height - 20) );
@@ -76,7 +76,7 @@ bool HelloWorld::init()
 
 void HelloWorld::menuCloseCallback(Object* pSender)
 {
-    Director::sharedDirector()->end();
+    Director::getInstance()->end();
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);

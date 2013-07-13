@@ -13,11 +13,11 @@ IntervalLayer::IntervalLayer()
 {
     _time0 = _time1 = _time2 = _time3 = _time4 = 0.0f;
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     // sun
     ParticleSystem* sun = ParticleSun::create();
-    sun->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
-    sun->setPosition( ccp(VisibleRect::rightTop().x-32,VisibleRect::rightTop().y-32) );
+    sun->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
+    sun->setPosition( Point(VisibleRect::rightTop().x-32,VisibleRect::rightTop().y-32) );
 
     sun->setTotalParticles(130);
     sun->setLife(0.6f);
@@ -36,11 +36,11 @@ IntervalLayer::IntervalLayer()
     schedule(schedule_selector(IntervalLayer::step3), 1.0f);
     schedule(schedule_selector(IntervalLayer::step4), 2.0f);
 
-    _label0->setPosition(ccp(s.width*1/6, s.height/2));
-    _label1->setPosition(ccp(s.width*2/6, s.height/2));
-    _label2->setPosition(ccp(s.width*3/6, s.height/2));
-    _label3->setPosition(ccp(s.width*4/6, s.height/2));
-    _label4->setPosition(ccp(s.width*5/6, s.height/2));
+    _label0->setPosition(Point(s.width*1/6, s.height/2));
+    _label1->setPosition(Point(s.width*2/6, s.height/2));
+    _label2->setPosition(Point(s.width*3/6, s.height/2));
+    _label3->setPosition(Point(s.width*4/6, s.height/2));
+    _label4->setPosition(Point(s.width*5/6, s.height/2));
 
     addChild(_label0);
     addChild(_label1);
@@ -50,30 +50,30 @@ IntervalLayer::IntervalLayer()
 
     // Sprite
     Sprite* sprite = Sprite::create(s_pPathGrossini);
-    sprite->setPosition( ccp(VisibleRect::left().x + 40, VisibleRect::bottom().y + 50) );
+    sprite->setPosition( Point(VisibleRect::left().x + 40, VisibleRect::bottom().y + 50) );
     
-    JumpBy* jump = JumpBy::create(3, ccp(s.width-80,0), 50, 4);
+    JumpBy* jump = JumpBy::create(3, Point(s.width-80,0), 50, 4);
     
     addChild(sprite);
     sprite->runAction( RepeatForever::create(Sequence::create(jump, jump->reverse(), NULL) ));
     // pause button
     MenuItem* item1 = MenuItemFont::create("Pause", [&](Object* sender) {
-		if(Director::sharedDirector()->isPaused())
-			Director::sharedDirector()->resume();
+		if(Director::getInstance()->isPaused())
+			Director::getInstance()->resume();
 		else
-			Director::sharedDirector()->pause();
+			Director::getInstance()->pause();
 	});
     Menu* menu = Menu::create(item1, NULL);
-    menu->setPosition( ccp(s.width/2, s.height-50) );
+    menu->setPosition( Point(s.width/2, s.height-50) );
 
     addChild( menu );
 }
 
 IntervalLayer::~IntervalLayer()
 {
-    if(Director::sharedDirector()->isPaused())
+    if(Director::getInstance()->isPaused())
     {
-        Director::sharedDirector()->resume();
+        Director::getInstance()->resume();
     }
 }
 
@@ -127,5 +127,5 @@ void IntervalTestScene::runThisTest()
     addChild(pLayer);
     pLayer->release();
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

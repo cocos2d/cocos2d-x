@@ -106,7 +106,7 @@ public:
     The Sprite can be treated like any other Sprite: rotated, scaled, translated, opacity, color, etc.
     You can remove either by calling:
     - layer->removeChild(sprite, cleanup);
-    - or layer->removeTileAt(ccp(x,y));
+    - or layer->removeTileAt(Point(x,y));
     */
     Sprite* tileAt(const Point& tileCoordinate);
 
