@@ -258,7 +258,7 @@ bool Texture2D::initWithData(const void *data, Texture2DPixelFormat pixelFormat,
     _hasPremultipliedAlpha = false;
     _hasMipmaps = false;
 
-    setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTexture));
+    setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTexture));
 
     return true;
 }
@@ -282,7 +282,7 @@ bool Texture2D::initWithImage(Image *uiImage)
     unsigned int imageWidth = uiImage->getWidth();
     unsigned int imageHeight = uiImage->getHeight();
     
-    Configuration *conf = Configuration::sharedConfiguration();
+    Configuration *conf = Configuration::getInstance();
     
     unsigned maxTextureSize = conf->getMaxTextureSize();
     if (imageWidth > maxTextureSize || imageHeight > maxTextureSize) 
@@ -302,7 +302,7 @@ bool Texture2D::initPremultipliedATextureWithImage(Image *image, unsigned int wi
     unsigned char*            inPixel8 = NULL;
     unsigned short*           outPixel16 = NULL;
     bool                      hasAlpha = image->hasAlpha();
-    Size                    imageSize = CCSizeMake((float)(image->getWidth()), (float)(image->getHeight()));
+    Size                    imageSize = Size((float)(image->getWidth()), (float)(image->getHeight()));
     Texture2DPixelFormat    pixelFormat;
     size_t                    bpp = image->getBitsPerComponent();
 
@@ -437,7 +437,7 @@ bool Texture2D::initPremultipliedATextureWithImage(Image *image, unsigned int wi
 // implementation Texture2D (Text)
 bool Texture2D::initWithString(const char *text, const char *fontName, float fontSize)
 {
-    return initWithString(text,  fontName, fontSize, CCSizeMake(0,0), kTextAlignmentCenter, kVerticalTextAlignmentTop);
+    return initWithString(text,  fontName, fontSize, Size(0,0), kTextAlignmentCenter, kVerticalTextAlignmentTop);
 }
 
 bool Texture2D::initWithString(const char *text, const char *fontName, float fontSize, const Size& dimensions, TextAlignment hAlignment, VerticalTextAlignment vAlignment)
@@ -709,7 +709,7 @@ bool Texture2D::initWithPVRFile(const char* file)
         _maxT = 1.0f;
         _pixelsWide = pvr->getWidth();
         _pixelsHigh = pvr->getHeight();
-        _contentSize = CCSizeMake((float)_pixelsWide, (float)_pixelsHigh);
+        _contentSize = Size((float)_pixelsWide, (float)_pixelsHigh);
         _hasPremultipliedAlpha = PVRHaveAlphaPremultiplied_;
         _pixelFormat = pvr->getFormat();
         _hasMipmaps = pvr->getNumberOfMipmaps() > 1;       
@@ -739,7 +739,7 @@ bool Texture2D::initWithETCFile(const char* file)
         _maxT = 1.0f;
         _pixelsWide = etc->getWidth();
         _pixelsHigh = etc->getHeight();
-        _contentSize = CCSizeMake((float)_pixelsWide, (float)_pixelsHigh);
+        _contentSize = Size((float)_pixelsWide, (float)_pixelsHigh);
         _hasPremultipliedAlpha = true;
         
         etc->release();

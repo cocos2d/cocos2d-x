@@ -37,7 +37,7 @@ NS_CC_BEGIN
 
 AnimationCache* AnimationCache::s_pSharedAnimationCache = NULL;
 
-AnimationCache* AnimationCache::sharedAnimationCache(void)
+AnimationCache* AnimationCache::getInstance()
 {
     if (! s_pSharedAnimationCache)
     {
@@ -48,9 +48,21 @@ AnimationCache* AnimationCache::sharedAnimationCache(void)
     return s_pSharedAnimationCache;
 }
 
-void AnimationCache::purgeSharedAnimationCache(void)
+void AnimationCache::destroyInstance()
 {
     CC_SAFE_RELEASE_NULL(s_pSharedAnimationCache);
+}
+
+// XXX: deprecated
+AnimationCache* AnimationCache::sharedAnimationCache(void)
+{
+    return AnimationCache::getInstance();
+}
+
+// XXX: deprecated
+void AnimationCache::purgeSharedAnimationCache(void)
+{
+    return AnimationCache::destroyInstance();
 }
 
 bool AnimationCache::init()
@@ -92,7 +104,7 @@ Animation* AnimationCache::animationByName(const char* name)
 
 void AnimationCache::parseVersion1(Dictionary* animations)
 {
-    SpriteFrameCache *frameCache = SpriteFrameCache::sharedSpriteFrameCache();
+    SpriteFrameCache *frameCache = SpriteFrameCache::getInstance();
 
     DictElement* pElement = NULL;
     CCDICT_FOREACH(animations, pElement)
@@ -138,14 +150,14 @@ void AnimationCache::parseVersion1(Dictionary* animations)
 
         animation = Animation::create(frames, delay, 1);
 
-        AnimationCache::sharedAnimationCache()->addAnimation(animation, pElement->getStrKey());
+        AnimationCache::getInstance()->addAnimation(animation, pElement->getStrKey());
         frames->release();
     }    
 }
 
 void AnimationCache::parseVersion2(Dictionary* animations)
 {
-    SpriteFrameCache *frameCache = SpriteFrameCache::sharedSpriteFrameCache();
+    SpriteFrameCache *frameCache = SpriteFrameCache::getInstance();
 
     DictElement* pElement = NULL;
     CCDICT_FOREACH(animations, pElement)
@@ -198,7 +210,7 @@ void AnimationCache::parseVersion2(Dictionary* animations)
 
         animation->setRestoreOriginalFrame(restoreOriginalFrame);
 
-        AnimationCache::sharedAnimationCache()->addAnimation(animation, name);
+        AnimationCache::getInstance()->addAnimation(animation, name);
         animation->release();
     }
 }
@@ -223,7 +235,7 @@ void AnimationCache::addAnimationsWithDictionary(Dictionary* dictionary)
         CCARRAY_FOREACH(spritesheets, pObj)
         {
             String* name = static_cast<String*>(pObj);
-            SpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(name->getCString());
+            SpriteFrameCache::getInstance()->addSpriteFramesWithFile(name->getCString());
         }
     }
 
@@ -244,7 +256,7 @@ void AnimationCache::addAnimationsWithFile(const char* plist)
 {
     CCAssert( plist, "Invalid texture file name");
 
-    std::string path = FileUtils::sharedFileUtils()->fullPathForFilename(plist);
+    std::string path = FileUtils::getInstance()->fullPathForFilename(plist);
     Dictionary* dict = Dictionary::createWithContentsOfFile(path.c_str());
 
     CCAssert( dict, "CCAnimationCache: File could not be found");

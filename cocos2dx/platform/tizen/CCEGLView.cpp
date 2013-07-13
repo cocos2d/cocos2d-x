@@ -99,7 +99,7 @@ void EGLView::setIMEKeyboardState(bool bOpen)
     }
 }
 
-EGLView* EGLView::sharedOpenGLView()
+EGLView* EGLView::getInstance()
 {
     static EGLView* s_pEglView = NULL;
     if (s_pEglView == NULL)
@@ -115,6 +115,12 @@ EGLView* EGLView::sharedOpenGLView()
     return s_pEglView;
 }
 
+// XXX: deprecated
+EGLView* EGLView::sharedOpenGLView()
+{
+    return EGLView::getInstance();
+}
+
 void
 EGLView::OnTimerExpired(Tizen::Base::Runtime::Timer& timer)
 {
@@ -124,7 +130,7 @@ EGLView::OnTimerExpired(Tizen::Base::Runtime::Timer& timer)
     }
     __pTimer->Start(Application::sharedApplication()->getAnimationInterval());
 
-    Director::sharedDirector()->mainLoop();
+    Director::getInstance()->mainLoop();
 }
 
 bool

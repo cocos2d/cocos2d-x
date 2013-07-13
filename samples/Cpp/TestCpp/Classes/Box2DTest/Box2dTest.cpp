@@ -29,7 +29,7 @@ Box2DTestLayer::Box2DTestLayer()
     _spriteTexture = parent->getTexture();
 #else
     // doesn't use batch node. Slower
-    _spriteTexture = TextureCache::sharedTextureCache()->addImage("Images/blocks.png");
+    _spriteTexture = TextureCache::getInstance()->addImage("Images/blocks.png");
     Node *parent = Node::create();
 #endif
     addChild(parent, 0, kTagParentNode);
@@ -40,15 +40,15 @@ Box2DTestLayer::Box2DTestLayer()
     LabelTTF *label = LabelTTF::create("Tap screen", "Marker Felt", 32);
     addChild(label, 0);
     label->setColor(Color3B(0,0,255));
-    label->setPosition(ccp( VisibleRect::center().x, VisibleRect::top().y-50));
+    label->setPosition(Point( VisibleRect::center().x, VisibleRect::top().y-50));
     
     scheduleUpdate();
 #else
     LabelTTF *pLabel = LabelTTF::create("Should define CC_ENABLE_BOX2D_INTEGRATION=1\n to run this test case",
                                             "Arial",
                                             18);
-    Size size = Director::sharedDirector()->getWinSize();
-    pLabel->setPosition(ccp(size.width/2, size.height/2));
+    Size size = Director::getInstance()->getWinSize();
+    pLabel->setPosition(Point(size.width/2, size.height/2));
     
     addChild(pLabel);
 #endif
@@ -120,13 +120,13 @@ void Box2DTestLayer::createResetButton()
 		Box2DTestLayer* child = new Box2DTestLayer();
 		s->addChild(child);
 		child->release();
-		Director::sharedDirector()->replaceScene(s);
+		Director::getInstance()->replaceScene(s);
 		s->release();
 	});
 
     Menu *menu = Menu::create(reset, NULL);
 
-    menu->setPosition(ccp(VisibleRect::bottom().x, VisibleRect::bottom().y + 30));
+    menu->setPosition(Point(VisibleRect::bottom().x, VisibleRect::bottom().y + 30));
     this->addChild(menu, -1);
 
 }
@@ -181,11 +181,11 @@ void Box2DTestLayer::addNewSpriteAtPosition(Point p)
     //just randomly picking one of the images
     int idx = (CCRANDOM_0_1() > .5 ? 0:1);
     int idy = (CCRANDOM_0_1() > .5 ? 0:1);
-    PhysicsSprite *sprite = PhysicsSprite::createWithTexture(_spriteTexture,CCRectMake(32 * idx,32 * idy,32,32));
+    PhysicsSprite *sprite = PhysicsSprite::createWithTexture(_spriteTexture,Rect(32 * idx,32 * idy,32,32));
     parent->addChild(sprite);
     sprite->setB2Body(body);
     sprite->setPTMRatio(PTM_RATIO);
-    sprite->setPosition( ccp( p.x, p.y) );
+    sprite->setPosition( Point( p.x, p.y) );
 #endif
 }
 
@@ -252,6 +252,6 @@ void Box2DTestScene::runThisTest()
     addChild(pLayer);
     pLayer->release();
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }
  

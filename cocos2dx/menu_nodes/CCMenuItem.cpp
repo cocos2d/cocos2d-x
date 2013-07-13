@@ -82,7 +82,7 @@ bool MenuItem::initWithTarget(cocos2d::Object *target, SEL_MenuHandler selector 
 
 bool MenuItem::initWithCallback(const ccMenuCallback& callback)
 {
-    setAnchorPoint(ccp(0.5f, 0.5f));
+    setAnchorPoint(Point(0.5f, 0.5f));
 	_callback = callback;
     _enabled = true;
     _selected = false;
@@ -157,7 +157,7 @@ bool MenuItem::isEnabled() const
 
 Rect MenuItem::rect()
 {
-    return CCRectMake( _position.x - _contentSize.width * _anchorPoint.x,
+    return Rect( _position.x - _contentSize.width * _anchorPoint.x,
                       _position.y - _contentSize.height * _anchorPoint.y,
                       _contentSize.width, _contentSize.height);
 }
@@ -202,7 +202,7 @@ void MenuItemLabel::setLabel(Node* var)
     if (var)
     {
         addChild(var);
-        var->setAnchorPoint(ccp(0, 0));
+        var->setAnchorPoint(Point(0, 0));
         setContentSize(var->getContentSize());
     }
     
@@ -509,7 +509,7 @@ void MenuItemSprite::setNormalImage(Node* pImage)
         if (pImage)
         {
             addChild(pImage, 0, kNormalTag);
-            pImage->setAnchorPoint(ccp(0, 0));
+            pImage->setAnchorPoint(Point(0, 0));
         }
 
         if (_normalImage)
@@ -535,7 +535,7 @@ void MenuItemSprite::setSelectedImage(Node* pImage)
         if (pImage)
         {
             addChild(pImage, 0, kSelectedTag);
-            pImage->setAnchorPoint(ccp(0, 0));
+            pImage->setAnchorPoint(Point(0, 0));
         }
 
         if (_selectedImage)
@@ -560,7 +560,7 @@ void MenuItemSprite::setDisabledImage(Node* pImage)
         if (pImage)
         {
             addChild(pImage, 0, kDisableTag);
-            pImage->setAnchorPoint(ccp(0, 0));
+            pImage->setAnchorPoint(Point(0, 0));
         }
 
         if (_disabledImage)
@@ -998,7 +998,7 @@ void MenuItemToggle::setSelectedIndex(unsigned int index)
         this->addChild(item, 0, kCurrentItem);
         Size s = item->getContentSize();
         this->setContentSize(s);
-        item->setPosition( ccp( s.width/2, s.height/2 ) );
+        item->setPosition( Point( s.width/2, s.height/2 ) );
     }
 }
 unsigned int MenuItemToggle::getSelectedIndex()

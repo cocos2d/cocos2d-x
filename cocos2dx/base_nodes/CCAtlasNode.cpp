@@ -77,7 +77,7 @@ AtlasNode * AtlasNode::create(const char *tile, unsigned int tileWidth, unsigned
 bool AtlasNode::initWithTileFile(const char *tile, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender)
 {
     CCAssert(tile != NULL, "title should not be null");
-    Texture2D *texture = TextureCache::sharedTextureCache()->addImage(tile);
+    Texture2D *texture = TextureCache::getInstance()->addImage(tile);
 	return initWithTexture(texture, tileWidth, tileHeight, itemsToRender);
 }
 
@@ -110,7 +110,7 @@ bool AtlasNode::initWithTexture(Texture2D* texture, unsigned int tileWidth, unsi
     _quadsToDraw = itemsToRender;
 
     // shader stuff
-    setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTexture_uColor));
+    setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTexture_uColor));
     _uniformColor = glGetUniformLocation( getShaderProgram()->getProgram(), "u_color");
 
     return true;

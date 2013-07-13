@@ -360,7 +360,7 @@ Point NodeLoader::parsePropTypePosition(Node * pNode, Node * pParent, CCBReader 
     
     Size containerSize = pCCBReader->getAnimationManager()->getContainerSize(pParent);
     
-    Point pt = getAbsolutePosition(ccp(x,y), type, containerSize, pPropertyName);
+    Point pt = getAbsolutePosition(Point(x,y), type, containerSize, pPropertyName);
     pNode->setPosition(pt);
     
     if (pCCBReader->getAnimatedProperties()->find(pPropertyName) != pCCBReader->getAnimatedProperties()->end())
@@ -564,15 +564,15 @@ SpriteFrame * NodeLoader::parsePropTypeSpriteFrame(Node * pNode, Node * pParent,
         if (spriteSheet.length() == 0)
         {
             spriteFile = pCCBReader->getCCBRootPath() + spriteFile;
-            Texture2D * texture = TextureCache::sharedTextureCache()->addImage(spriteFile.c_str());
+            Texture2D * texture = TextureCache::getInstance()->addImage(spriteFile.c_str());
             if(texture != NULL) {
-                Rect bounds = CCRectMake(0, 0, texture->getContentSize().width, texture->getContentSize().height);
+                Rect bounds = Rect(0, 0, texture->getContentSize().width, texture->getContentSize().height);
                 spriteFrame = SpriteFrame::createWithTexture(texture, bounds);
             }
         }
         else 
         {
-            SpriteFrameCache * frameCache = SpriteFrameCache::sharedSpriteFrameCache();
+            SpriteFrameCache * frameCache = SpriteFrameCache::getInstance();
             spriteSheet = pCCBReader->getCCBRootPath() + spriteSheet;   
             // Load the sprite sheet only if it is not loaded
             if (pCCBReader->getLoadedSpriteSheet().find(spriteSheet) == pCCBReader->getLoadedSpriteSheet().end())
@@ -609,7 +609,7 @@ Animation * NodeLoader::parsePropTypeAnimation(Node * pNode, Node * pParent, CCB
     
     if (animation.length() > 0) 
     {
-        AnimationCache * animationCache = AnimationCache::sharedAnimationCache();
+        AnimationCache * animationCache = AnimationCache::getInstance();
         animationCache->addAnimationsWithFile(animationFile.c_str());
         
         ccAnimation = animationCache->animationByName(animation.c_str());
@@ -622,7 +622,7 @@ Texture2D * NodeLoader::parsePropTypeTexture(Node * pNode, Node * pParent, CCBRe
     
     if (spriteFile.length() > 0)
     {
-        return TextureCache::sharedTextureCache()->addImage(spriteFile.c_str());
+        return TextureCache::getInstance()->addImage(spriteFile.c_str());
     }
     else 
     {
@@ -865,9 +865,9 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
     ccbFileName = ccbFileWithoutPathExtension + ".ccbi";
     
     // Load sub file
-    std::string path = FileUtils::sharedFileUtils()->fullPathForFilename(ccbFileName.c_str());
+    std::string path = FileUtils::getInstance()->fullPathForFilename(ccbFileName.c_str());
     unsigned long size = 0;
-    unsigned char * pBytes = FileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", &size);
+    unsigned char * pBytes = FileUtils::getInstance()->getFileData(path.c_str(), "rb", &size);
 
     CCBReader * ccbReader = new CCBReader(pCCBReader);
     ccbReader->autorelease();

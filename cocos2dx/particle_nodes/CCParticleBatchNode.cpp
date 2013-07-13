@@ -103,7 +103,7 @@ bool ParticleBatchNode::initWithTexture(Texture2D *tex, unsigned int capacity)
     _blendFunc.src = CC_BLEND_SRC;
     _blendFunc.dst = CC_BLEND_DST;
 
-    setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColor));
+    setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColor));
     
     return true;
 }
@@ -113,7 +113,7 @@ bool ParticleBatchNode::initWithTexture(Texture2D *tex, unsigned int capacity)
  */
 bool ParticleBatchNode::initWithFile(const char* fileImage, unsigned int capacity)
 {
-    Texture2D *tex = TextureCache::sharedTextureCache()->addImage(fileImage);
+    Texture2D *tex = TextureCache::getInstance()->addImage(fileImage);
     return initWithTexture(tex, capacity);
 }
 
