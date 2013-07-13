@@ -1,6 +1,5 @@
 #include "ArmatureScene.h"
 #include "../../testResource.h"
-#include "D:/Program Files/Visual Leak Detector\include/vld.h"
 
 
 using namespace cocos2d;
