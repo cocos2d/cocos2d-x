@@ -11,6 +11,8 @@
 
 #include "CCFontRender.h"
 
+
+
 NS_CC_BEGIN
 
 class FontRenderFreeType : public FontRender
@@ -20,6 +22,7 @@ public:
     virtual ~FontRenderFreeType() {}
     virtual unsigned char * preparePageGlyphData(TextPageDef *thePage, char *fontName, int fontSize);
     static void testRendering();
+    static void renderCharToBitmap(char *pDestBitmap, char charToRender, int posX, int posY);
     
     
 };
