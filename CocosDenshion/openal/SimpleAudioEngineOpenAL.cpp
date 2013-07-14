@@ -119,10 +119,10 @@ namespace CocosDenshion
 			{
 				if (it->second->source == s_backgroundSource)
 				{
-					alDeleteBuffers(1, &it->second->buffer);
-					checkALError("stopBackground:alDeleteBuffers");
 					alDeleteSources(1, &it->second->source);
 					checkALError("stopBackground:alDeleteSources");
+					alDeleteBuffers(1, &it->second->buffer);
+					checkALError("stopBackground:alDeleteBuffers");
 					delete it->second;
 					s_backgroundMusics.erase(it);
 					break;
@@ -168,31 +168,37 @@ namespace CocosDenshion
 	{
 		checkALError("end:init");
 
-		// clear all the sounds
+		// clear all the sound effects
 	    EffectsMap::const_iterator end = s_effects.end();
-	    for (EffectsMap::iterator it = s_effects.begin(); it != end; it++)
+	    for (auto it = s_effects.begin(); it != end; ++it)
 	    {
 	        alSourceStop(it->second->source);
 	        checkALError("end:alSourceStop");
-			alDeleteBuffers(1, &it->second->buffer);
-			checkALError("end:alDeleteBuffers");
+
 			alDeleteSources(1, &it->second->source);
 			checkALError("end:alDeleteSources");
+
+			alDeleteBuffers(1, &it->second->buffer);
+			checkALError("end:alDeleteBuffers");
+
 			delete it->second;
 	    }
 	    s_effects.clear();
 
-		// and the background too
+		// and the background music too
 		stopBackground(true);
 
-		for (BackgroundMusicsMap::iterator it = s_backgroundMusics.begin(); it != s_backgroundMusics.end(); ++it)
+		for (auto it = s_backgroundMusics.begin(); it != s_backgroundMusics.end(); ++it)
 		{
 			alSourceStop(it->second->source);
 			checkALError("end:alSourceStop");
-			alDeleteBuffers(1, &it->second->buffer);
-			checkALError("end:alDeleteBuffers");
+
 			alDeleteSources(1, &it->second->source);
 			checkALError("end:alDeleteSources");
+
+			alDeleteBuffers(1, &it->second->buffer);
+			checkALError("end:alDeleteBuffers");
+
 			delete it->second;
 		}
 		s_backgroundMusics.clear();
