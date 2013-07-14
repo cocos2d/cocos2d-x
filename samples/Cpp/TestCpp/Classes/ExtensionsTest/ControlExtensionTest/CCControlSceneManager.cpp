@@ -42,6 +42,7 @@ enum
     kControlButtonTest_HelloVariableSize,
     kControlButtonTest_Event,
     kControlButtonTest_Styling,
+    kControlButtonTest_SpriteBackground,
     kControlPotentiometerTest,
     kControlStepperTest,
     kControlTestMax
@@ -54,6 +55,7 @@ static const char* s_testArray[] = {
     "ControlButtonTest_HelloVariableSize",
     "ControlButtonTest_Event",
     "ControlButtonTest_Styling",
+    "ControlButtonTest_SpriteBackground",
     "ControlPotentiometerTest",
     "CCControlStepperTest"
 };
@@ -108,6 +110,7 @@ Scene *ControlSceneManager::currentControlScene()
     case kControlButtonTest_HelloVariableSize:return ControlButtonTest_HelloVariableSize::sceneWithTitle(s_testArray[_currentControlSceneId]);
     case kControlButtonTest_Event:return ControlButtonTest_Event::sceneWithTitle(s_testArray[_currentControlSceneId]);
     case kControlButtonTest_Styling:return ControlButtonTest_Styling::sceneWithTitle(s_testArray[_currentControlSceneId]);
+    case kControlButtonTest_SpriteBackground:return ControlButtonTest_SpriteBackground::sceneWithTitle(s_testArray[_currentControlSceneId]);
     case kControlPotentiometerTest:return ControlPotentiometerTest::sceneWithTitle(s_testArray[_currentControlSceneId]);
     case kControlStepperTest:return ControlStepperTest::sceneWithTitle(s_testArray[_currentControlSceneId]);
     }

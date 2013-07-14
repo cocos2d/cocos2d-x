@@ -74,12 +74,21 @@ ControlButton::~ControlButton()
 
 //initialisers
 
-bool ControlButton::init()
+bool ControlButton::init(bool is9Patch /*= true*/)
 {
-    return this->initWithLabelAndBackgroundSprite(LabelTTF::create("", "Helvetica", 12), Scale9Sprite::create());
+    Node* backgroundSprite;
+    if(is9Patch)
+    {
+    	backgroundSprite = Scale9Sprite::create();
+    }
+    else
+    {
+    	backgroundSprite = Sprite::create();
+    }
+    return this->initWithLabelAndBackgroundSprite(LabelTTF::create("", "Helvetica", 12), backgroundSprite);
 }
 
-bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* backgroundSprite)
+bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Node* backgroundSprite)
 {
     if (Control::init())
     {
@@ -103,9 +112,13 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* b
 
         _currentTitle=NULL;
 
-        // Adjust the background image by default
-        setAdjustBackgroundImage(true);
+        // Adjust the background image by default if we have Scale9Sprite
+        setAdjustBackgroundImage(dynamic_cast<Scale9Sprite*>(backgroundSprite) != NULL);
         setPreferredSize(Size::ZERO);
+        setPreferredSize(_doesAdjustBackgroundImage ?
+        	Size::ZERO
+        	:backgroundSprite->boundingBox().size);
+
         // Zooming button by default
         _zoomOnTouchDown = true;
         
@@ -145,40 +158,49 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* b
     }
 }
 
-ControlButton* ControlButton::create(Node* label, Scale9Sprite* backgroundSprite)
+ControlButton* ControlButton::create(Node* label, Node* backgroundSprite)
 {
-    ControlButton *pRet = new ControlButton();
-    pRet->initWithLabelAndBackgroundSprite(label, backgroundSprite);
-    pRet->autorelease();
-    return pRet;
+    ControlButton* ret = new ControlButton();
+    ret->initWithLabelAndBackgroundSprite(label, backgroundSprite);
+    ret->autorelease();
+    return ret;
 }
 
-bool ControlButton::initWithTitleAndFontNameAndFontSize(string title, const char * fontName, float fontSize)
+bool ControlButton::initWithTitleAndFontNameAndFontSize(string title, const char * fontName, float fontSize, bool is9Patch /*= true*/)
 {
     LabelTTF *label = LabelTTF::create(title.c_str(), fontName, fontSize);
-    return initWithLabelAndBackgroundSprite(label, Scale9Sprite::create());
+    Node* backgroundSprite;
+    if(is9Patch)
+    {
+    	backgroundSprite = Scale9Sprite::create();
+    }
+    else
+    {
+    	backgroundSprite = Sprite::create();
+    }
+    return initWithLabelAndBackgroundSprite(label, backgroundSprite);
 }
 
-ControlButton* ControlButton::create(string title, const char * fontName, float fontSize)
+ControlButton* ControlButton::create(string title, const char * fontName, float fontSize, bool is9Patch /*= true*/)
 {
-    ControlButton *pRet = new ControlButton();
-    pRet->initWithTitleAndFontNameAndFontSize(title, fontName, fontSize);
-    pRet->autorelease();
-    return pRet;
+    ControlButton* ret = new ControlButton();
+    ret->initWithTitleAndFontNameAndFontSize(title, fontName, fontSize,is9Patch);
+    ret->autorelease();
+    return ret;
 }
 
-bool ControlButton::initWithBackgroundSprite(Scale9Sprite* sprite)
+bool ControlButton::initWithBackgroundSprite(Node* sprite)
 {
     LabelTTF *label = LabelTTF::create("", "Arial", 30);//
     return initWithLabelAndBackgroundSprite(label, sprite);
 }
 
-ControlButton* ControlButton::create(Scale9Sprite* sprite)
+ControlButton* ControlButton::create(Node* sprite)
 {
-    ControlButton *pRet = new ControlButton();
-    pRet->initWithBackgroundSprite(sprite);
-    pRet->autorelease();
-    return pRet;
+    ControlButton *ret = new ControlButton();
+    ret->initWithBackgroundSprite(sprite);
+    ret->autorelease();
+    return ret;
 }
 
 
@@ -251,8 +273,12 @@ void ControlButton::setPreferredSize(Size size)
         DictElement * item = NULL;
         CCDICT_FOREACH(_backgroundSpriteDispatchTable, item)
         {
-            Scale9Sprite* sprite = static_cast<Scale9Sprite*>(item->getObject());
-            sprite->setPreferredSize(size);
+            Object* object = item->getObject();
+            Scale9Sprite* sprite = dynamic_cast<Scale9Sprite*>(item->getObject());
+            if(sprite != NULL)
+            {
+            	sprite->setPreferredSize(size);
+            }
         }
     }
 
@@ -404,7 +430,7 @@ const char * ControlButton::getTitleTTFForState(ControlState state)
 {
     LabelProtocol* label = dynamic_cast<LabelProtocol*>(this->getTitleLabelForState(state));
     LabelTTF* labelTTF = dynamic_cast<LabelTTF*>(label);
-    if(labelTTF != 0)
+    if(labelTTF != NULL)
     {
         return labelTTF->getFontName();
     }
@@ -420,7 +446,7 @@ void ControlButton::setTitleTTFSizeForState(float size, ControlState state)
     if(label)
     {
         LabelTTF* labelTTF = dynamic_cast<LabelTTF*>(label);
-        if(labelTTF != 0)
+        if(labelTTF != NULL)
         {
             return labelTTF->setFontSize(size);
         }
@@ -431,7 +457,7 @@ float ControlButton::getTitleTTFSizeForState(ControlState state)
 {
     LabelProtocol* label = dynamic_cast<LabelProtocol*>(this->getTitleLabelForState(state));
     LabelTTF* labelTTF = dynamic_cast<LabelTTF*>(label);
-    if(labelTTF != 0)
+    if(labelTTF != NULL)
     {
         return labelTTF->getFontSize();
     }
@@ -455,7 +481,7 @@ const char * ControlButton::getTitleBMFontForState(ControlState state)
 {
     LabelProtocol* label = dynamic_cast<LabelProtocol*>(this->getTitleLabelForState(state));
     LabelBMFont* labelBMFont = dynamic_cast<LabelBMFont*>(label);
-    if(labelBMFont != 0)
+    if(labelBMFont != NULL)
     {
         return labelBMFont->getFntFile();
     }
@@ -466,22 +492,22 @@ const char * ControlButton::getTitleBMFontForState(ControlState state)
 }
 
 
-Scale9Sprite* ControlButton::getBackgroundSpriteForState(ControlState state)
+Node* ControlButton::getBackgroundSpriteForState(ControlState state)
 {
-    Scale9Sprite* backgroundSprite = (Scale9Sprite*)_backgroundSpriteDispatchTable->objectForKey(state);    
+    Node* backgroundSprite = (Node*)_backgroundSpriteDispatchTable->objectForKey(state);
     if (backgroundSprite)
     {
         return backgroundSprite;
     }
-    return (Scale9Sprite*)_backgroundSpriteDispatchTable->objectForKey(ControlStateNormal);
+    return (Node*)_backgroundSpriteDispatchTable->objectForKey(ControlStateNormal);
 }
 
 
-void ControlButton::setBackgroundSpriteForState(Scale9Sprite* sprite, ControlState state)
+void ControlButton::setBackgroundSpriteForState(Node* sprite, ControlState state)
 {
     Size oldPreferredSize = _preferredSize;
 
-    Scale9Sprite* previousBackgroundSprite = (Scale9Sprite*)_backgroundSpriteDispatchTable->objectForKey(state);
+    Node* previousBackgroundSprite = (Node*)_backgroundSpriteDispatchTable->objectForKey(state);
     if (previousBackgroundSprite)
     {
         removeChild(previousBackgroundSprite, true);
@@ -493,15 +519,18 @@ void ControlButton::setBackgroundSpriteForState(Scale9Sprite* sprite, ControlSta
     sprite->setAnchorPoint(Point(0.5f, 0.5f));
     addChild(sprite);
 
-    if (this->_preferredSize.width != 0 || this->_preferredSize.height != 0)
+    Scale9Sprite* scaleSprite = dynamic_cast<Scale9Sprite*>(sprite);
+
+    if (scaleSprite != NULL && (this->_preferredSize.width != 0 || this->_preferredSize.height != 0))
     {
+
         if (oldPreferredSize.equals(_preferredSize))
         {
             // Force update of preferred size
-            sprite->setPreferredSize(Size(oldPreferredSize.width+1, oldPreferredSize.height+1));
+        	scaleSprite->setPreferredSize(Size(oldPreferredSize.width+1, oldPreferredSize.height+1));
         }
         
-        sprite->setPreferredSize(this->_preferredSize);
+        scaleSprite->setPreferredSize(this->_preferredSize);
     }
 
     // If the current state if equal to the given state we update the layout
@@ -511,9 +540,17 @@ void ControlButton::setBackgroundSpriteForState(Scale9Sprite* sprite, ControlSta
     }
 }
 
-void ControlButton::setBackgroundSpriteFrameForState(SpriteFrame * spriteFrame, ControlState state)
+void ControlButton::setBackgroundSpriteFrameForState(SpriteFrame * spriteFrame, ControlState state,bool is9Patch/* = true*/)
 {
-    Scale9Sprite * sprite = Scale9Sprite::createWithSpriteFrame(spriteFrame);
+	Node* sprite;
+	if(is9Patch)
+	{
+		sprite = Scale9Sprite::createWithSpriteFrame(spriteFrame);
+	}
+	else
+	{
+		sprite= Sprite::createWithSpriteFrame(spriteFrame);
+	}
     this->setBackgroundSpriteForState(sprite, state);
 }
 
@@ -581,12 +618,12 @@ void ControlButton::needsLayout()
             _backgroundSprite->setContentSize(Size(titleLabelSize.width + _marginH * 2, titleLabelSize.height + _marginV * 2));
         }
     } 
-    else
+    else if(_backgroundSprite != NULL)
     {        
         //TODO: should this also have margins if one of the preferred sizes is relaxed?
-        if (_backgroundSprite != NULL)
+        if (dynamic_cast<Scale9Sprite*>(_backgroundSprite))
         {
-            Size preferredSize = _backgroundSprite->getPreferredSize();
+            Size preferredSize = ((Scale9Sprite*)_backgroundSprite)->getPreferredSize();
             if (preferredSize.width <= 0)
             {
                 preferredSize.width = titleLabelSize.width;
@@ -597,6 +634,11 @@ void ControlButton::needsLayout()
             }
 
             _backgroundSprite->setContentSize(preferredSize);
+        }
+        else
+        {
+        	Size size = _backgroundSprite->boundingBox().size;
+        	_backgroundSprite->setContentSize(size);
         }
     }
     
@@ -613,7 +655,7 @@ void ControlButton::needsLayout()
     }
 
     Rect maxRect = ControlUtils::RectUnion(rectTitle, rectBackground);
-    setContentSize(Size(maxRect.size.width, maxRect.size.height));        
+    Control::setContentSize(maxRect.size);
     
     if (_titleLabel != NULL)
     {
@@ -633,7 +675,7 @@ void ControlButton::needsLayout()
 
 bool ControlButton::ccTouchBegan(Touch *pTouch, Event *pEvent)
 {
-    if (!isTouchInside(pTouch) || !isEnabled() || !isVisible() || !hasVisibleParents() )
+	if (!isTouchInside(pTouch) || !isEnabled() || !isVisible() || !hasVisibleParents() )
     {
         return false;
     }
@@ -710,17 +752,20 @@ void ControlButton::setOpacity(GLubyte opacity)
 //    Array* children=getChildren();
 //    CCARRAY_FOREACH(children, child)
 //    {
-//        RGBAProtocol* pNode = dynamic_cast<RGBAProtocol*>(child);        
-//        if (pNode)
+//        RGBAProtocol* node = dynamic_cast<RGBAProtocol*>(child);        
+//        if (node)
 //        {
-//            pNode->setOpacity(opacity);
+//            node->setOpacity(opacity);
 //        }
 //    }
     DictElement * item = NULL;
     CCDICT_FOREACH(_backgroundSpriteDispatchTable, item)
     {
-        Scale9Sprite* sprite = static_cast<Scale9Sprite*>(item->getObject());
-        sprite->setOpacity(opacity);
+    	RGBAProtocol* sprite = dynamic_cast<RGBAProtocol*>(item->getObject());
+    	if(sprite != NULL)
+    	{
+    		sprite->setOpacity(opacity);
+    	}
     }
 }
 
@@ -736,8 +781,11 @@ void ControlButton::setColor(const Color3B & color)
 	DictElement * item = NULL;
     CCDICT_FOREACH(_backgroundSpriteDispatchTable, item)
     {
-        Scale9Sprite* sprite = static_cast<Scale9Sprite*>(item->getObject());
-        sprite->setColor(color);
+    	RGBAProtocol* sprite = dynamic_cast<RGBAProtocol*>(item->getObject());
+    	if(sprite != NULL)
+    	{
+    		sprite->setColor(color);
+    	}
     }
 }
 
@@ -753,10 +801,10 @@ void ControlButton::ccTouchCancelled(Touch *pTouch, Event *pEvent)
     sendActionsForControlEvents(ControlEventTouchCancel);
 }
 
-ControlButton* ControlButton::create()
+ControlButton* ControlButton::create( bool is9Patch /*= true*/)
 {
     ControlButton *pControlButton = new ControlButton();
-    if (pControlButton && pControlButton->init())
+    if (pControlButton && pControlButton->init(is9Patch))
     {
         pControlButton->autorelease();
         return pControlButton;

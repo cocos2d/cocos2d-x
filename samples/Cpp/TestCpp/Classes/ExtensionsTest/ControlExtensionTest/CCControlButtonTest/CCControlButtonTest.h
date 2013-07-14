@@ -68,5 +68,12 @@ public:
     CONTROL_SCENE_CREATE_FUNC(ControlButtonTest_Styling)
 };
 
+class ControlButtonTest_SpriteBackground : public ControlScene
+{
+public:
+    bool init();
+    CONTROL_SCENE_CREATE_FUNC(ControlButtonTest_SpriteBackground)
+};
+
 
 #endif /* __CCCONTROLBUTTONTEST_H__ */

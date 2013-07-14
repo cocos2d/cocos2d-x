@@ -80,7 +80,7 @@ protected:
     CC_SYNTHESIZE_RETAIN(Node*, _titleLabel, TitleLabel);
 
     /** The current background sprite. */
-    CC_SYNTHESIZE_RETAIN(Scale9Sprite*, _backgroundSprite, BackgroundSprite);
+    CC_SYNTHESIZE_RETAIN(Node*, _backgroundSprite, BackgroundSprite);
 
     /** The prefered size of the button, if label is larger it will be expanded. */
     CC_PROPERTY(Size, _preferredSize, PreferredSize);
@@ -121,18 +121,18 @@ public:
 
 
 public:
-    virtual bool init();
-    virtual bool initWithLabelAndBackgroundSprite(Node* label, Scale9Sprite* backgroundSprite);
+    virtual bool init(bool is9Patch = true);
+    virtual bool initWithLabelAndBackgroundSprite(Node* label, Node* backgroundSprite);
     
-    static ControlButton* create(Node* label, Scale9Sprite* backgroundSprite);
+    static ControlButton* create(Node* label, Node* backgroundSprite);
     
-    virtual bool initWithTitleAndFontNameAndFontSize(std::string title, const char * fontName, float fontSize);
+    virtual bool initWithTitleAndFontNameAndFontSize(std::string title, const char * fontName, float fontSize, bool is9Patch = true);
 
-    static ControlButton* create(std::string title, const char * fontName, float fontSize);
+    static ControlButton* create(std::string title, const char * fontName, float fontSize, bool is9Patch = true);
     
-    virtual bool initWithBackgroundSprite(Scale9Sprite* sprite);
+    virtual bool initWithBackgroundSprite(Node* sprite);
 
-    static ControlButton* create(Scale9Sprite* sprite);
+    static ControlButton* create(Node* sprite);
     
     //events
     virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent);
@@ -221,7 +221,7 @@ public:
     * @param state The state that uses the background sprite. Possible values are
     * described in "CCControlState".
     */
-    virtual Scale9Sprite* getBackgroundSpriteForState(ControlState state);
+    virtual Node* getBackgroundSpriteForState(ControlState state);
 
     /**
     * Sets the background sprite to use for the specified button state.
@@ -230,7 +230,7 @@ public:
     * @param state The state that uses the specified image. The values are described
     * in "CCControlState".
     */
-    virtual void setBackgroundSpriteForState(Scale9Sprite* sprite, ControlState state);
+    virtual void setBackgroundSpriteForState(Node* sprite, ControlState state);
 
     /**
      * Sets the background spriteFrame to use for the specified button state.
@@ -239,9 +239,9 @@ public:
      * @param state The state that uses the specified image. The values are described
      * in "CCControlState".
      */
-    virtual void setBackgroundSpriteFrameForState(SpriteFrame * spriteFrame, ControlState state);
+    virtual void setBackgroundSpriteFrameForState(SpriteFrame * spriteFrame, ControlState state,bool is9Patch = true);
 
-    static ControlButton* create();
+    static ControlButton* create( bool is9Patch = true);
 };
 
 // end of GUI group
