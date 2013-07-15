@@ -70,10 +70,6 @@ public:
     /** creates a fullscreen black layer */
     static Layer *create(void);
 
-    virtual void onEnter();
-    virtual void onExit();
-    virtual void onEnterTransitionDidFinish();
-    
     // default implements are used to call script callback if exist
     virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent);
     virtual void ccTouchMoved(Touch *pTouch, Event *pEvent);
@@ -154,7 +150,15 @@ public:
     inline TouchScriptHandlerEntry* getScriptTouchHandlerEntry() const { return _scriptTouchHandlerEntry; };
     inline ScriptHandlerEntry* getScriptKeypadHandlerEntry() const { return _scriptKeypadHandlerEntry; };
     inline ScriptHandlerEntry* getScriptAccelerateHandlerEntry() const { return _scriptAccelerateHandlerEntry; };
-protected:   
+
+    //
+    // Overrides
+    //
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual void onEnterTransitionDidFinish() override;
+
+protected:
     bool _touchEnabled;
     bool _accelerometerEnabled;
     bool _keyboardEnabled;
@@ -194,23 +198,26 @@ public:
     virtual ~LayerRGBA();
     
     virtual bool init();
+
+    //
+    // Overrides
+    //
+    virtual GLubyte getOpacity() const override;
+    virtual GLubyte getDisplayedOpacity() const override;
+    virtual void setOpacity(GLubyte opacity) override;
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
+    virtual bool isCascadeOpacityEnabled() const override;
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override;
     
-    virtual GLubyte getOpacity() const;
-    virtual GLubyte getDisplayedOpacity() const;
-    virtual void setOpacity(GLubyte opacity);
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
-    virtual bool isCascadeOpacityEnabled() const;
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
+    virtual const Color3B& getColor() const override;
+    virtual const Color3B& getDisplayedColor() const override;
+    virtual void setColor(const Color3B& color) override;
+    virtual void updateDisplayedColor(const Color3B& parentColor) override;
+    virtual bool isCascadeColorEnabled() const override;
+    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) override;
     
-    virtual const Color3B& getColor() const;
-    virtual const Color3B& getDisplayedColor() const;
-    virtual void setColor(const Color3B& color);
-    virtual void updateDisplayedColor(const Color3B& parentColor);
-    virtual bool isCascadeColorEnabled() const;
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
-    
-    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool isOpacityModifyRGB() const { return false; }
+    virtual void setOpacityModifyRGB(bool bValue) override {CC_UNUSED_PARAM(bValue);}
+    virtual bool isOpacityModifyRGB() const override { return false; }
 protected:
 	GLubyte		_displayedOpacity, _realOpacity;
 	Color3B	    _displayedColor, _realColor;
@@ -268,8 +275,11 @@ public:
     /** BlendFunction. Conforms to BlendProtocol protocol */
     CC_PROPERTY_PASS_BY_REF(BlendFunc, _blendFunc, BlendFunc)
 
-    virtual void setColor(const Color3B &color);
-    virtual void setOpacity(GLubyte opacity);
+    //
+    // Overrides
+    //
+    virtual void setColor(const Color3B &color) override;
+    virtual void setOpacity(GLubyte opacity) override;
 
 protected:
     virtual void updateColor();
@@ -330,7 +340,7 @@ public:
     CC_PROPERTY_PASS_BY_REF(Point, _alongVector, Vector)
 
 protected:
-    virtual void updateColor();
+    virtual void updateColor() override;
     
 protected:
     bool _compressedInterpolation;

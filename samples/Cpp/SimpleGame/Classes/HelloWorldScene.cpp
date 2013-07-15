@@ -153,8 +153,7 @@ void HelloWorld::addTarget()
 	// Create the actions
 	FiniteTimeAction* actionMove = MoveTo::create( (float)actualDuration,
                                             Point(0 - target->getContentSize().width/2, actualY) );
-	FiniteTimeAction* actionMoveDone = CallFuncN::create( this, 
-                                            callfuncN_selector(HelloWorld::spriteMoveFinished));
+	FiniteTimeAction* actionMoveDone = CallFuncN::create( CC_CALLBACK_1(HelloWorld::spriteMoveFinished, this));
 	target->runAction( Sequence::create(actionMove, actionMoveDone, NULL) );
 
 	// Add to targets array
@@ -228,9 +227,8 @@ void HelloWorld::ccTouchesEnded(Set* touches, Event* event)
 	// Move projectile to actual endpoint
 	projectile->runAction( Sequence::create(
 		MoveTo::create(realMoveDuration, realDest),
-		CallFuncN::create(this, 
-                            callfuncN_selector(HelloWorld::spriteMoveFinished)), 
-        NULL) );
+		CallFuncN::create(CC_CALLBACK_1(HelloWorld::spriteMoveFinished, this)),
+                                            NULL) );
 
 	// Add to projectiles array
 	projectile->setTag(2);
