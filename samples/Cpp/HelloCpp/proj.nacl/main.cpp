@@ -16,7 +16,7 @@ AppDelegate g_app;
 void* cocos_main(void* arg)
 {
     fprintf(stderr, "in cocos_main\n");
-    int rtn = Application::sharedApplication()->run();
+    int rtn = Application::getInstance()->run();
     fprintf(stderr, "app run returned: %d\n", rtn);
     return NULL;
 }

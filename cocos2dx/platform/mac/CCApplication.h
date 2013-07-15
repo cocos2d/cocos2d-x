@@ -56,7 +56,7 @@ public:
     @brief	Get current applicaiton instance.
     @return Current application instance pointer.
     */
-    static Application* sharedApplication();
+    static Application* getInstance();
 
     /**
     @brief Get current language config

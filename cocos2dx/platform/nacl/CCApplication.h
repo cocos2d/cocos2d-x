@@ -52,7 +52,7 @@ public:
      @brief Get current applicaiton instance.
      @return Current application instance pointer.
      */
-    static Application* sharedApplication();
+    static Application* getInstance();
 
     /* override functions */
     virtual ccLanguageType getCurrentLanguage();

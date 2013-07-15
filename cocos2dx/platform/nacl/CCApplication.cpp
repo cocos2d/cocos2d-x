@@ -95,7 +95,7 @@ TargetPlatform Application::getTargetPlatform()
     return kTargetNaCl;
 }
 
-Application* Application::sharedApplication()
+Application* Application::getInstance()
 {
     CC_ASSERT(sm_pSharedApplication);
     return sm_pSharedApplication;

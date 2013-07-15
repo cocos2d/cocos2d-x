@@ -15,14 +15,14 @@ extern "C" {
     }
 
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnPause() {
-        Application::sharedApplication()->applicationDidEnterBackground();
+        Application::getInstance()->applicationDidEnterBackground();
 
         NotificationCenter::getInstance()->postNotification(EVENT_COME_TO_BACKGROUND, NULL);
     }
 
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnResume() {
         if (Director::getInstance()->getOpenGLView()) {
-            Application::sharedApplication()->applicationWillEnterForeground();
+            Application::getInstance()->applicationWillEnterForeground();
         }
     }
 

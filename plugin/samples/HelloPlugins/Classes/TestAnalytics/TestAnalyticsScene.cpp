@@ -225,7 +225,7 @@ void TestAnalytics::eventMenuCallback(Object* pSender)
 
 void TestAnalytics::loadPlugins()
 {
-    ccLanguageType langType = Application::sharedApplication()->getCurrentLanguage();
+    ccLanguageType langType = Application::getInstance()->getCurrentLanguage();
     
     std::string umengKey  = "";
     std::string flurryKey = "";

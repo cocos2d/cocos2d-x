@@ -92,7 +92,7 @@ TargetPlatform Application::getTargetPlatform()
 //////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////
-Application* Application::sharedApplication()
+Application* Application::getInstance()
 {
 	CC_ASSERT(sm_pSharedApplication);
 	return sm_pSharedApplication;

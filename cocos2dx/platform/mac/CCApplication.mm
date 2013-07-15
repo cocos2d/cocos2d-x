@@ -69,7 +69,7 @@ TargetPlatform Application::getTargetPlatform()
 // static member function
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-Application* Application::sharedApplication()
+Application* Application::getInstance()
 {
     CCAssert(sm_pSharedApplication, "sm_pSharedApplication not set");
     return sm_pSharedApplication;

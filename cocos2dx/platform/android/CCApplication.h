@@ -29,7 +29,7 @@ public:
     @brief    Get current application instance.
     @return Current application instance pointer.
     */
-    static Application* sharedApplication();
+    static Application* getInstance();
 
     /**
     @brief Get current language config

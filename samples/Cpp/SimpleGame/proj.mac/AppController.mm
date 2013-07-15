@@ -55,7 +55,7 @@ static AppDelegate s_sharedApplication;
         
         [glView setFrameZoomFactor:0.4];
 
-		cocos2d::Application::sharedApplication()->run();
+		cocos2d::Application::getInstance()->run();
 	}
 
 	-(BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication*)theApplication

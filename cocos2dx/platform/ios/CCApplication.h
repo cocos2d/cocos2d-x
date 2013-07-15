@@ -47,7 +47,7 @@ public:
     @brief    Get the current application instance.
     @return Current application instance pointer.
     */
-    static Application* sharedApplication();
+    static Application* getInstance();
     
     /**
      @brief    Callback by Director for limit FPS.

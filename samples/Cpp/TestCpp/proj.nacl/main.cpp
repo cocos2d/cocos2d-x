@@ -20,7 +20,7 @@ void* cocos_main(void* arg)
     fprintf(stderr, "in cocos_main: %p\n", instance);
     alSetPpapiInfo(instance->pp_instance(), pp::Module::Get()->get_browser_interface());
     fprintf(stderr, "calling application->run\n");
-    int rtn = Application::sharedApplication()->run();
+    int rtn = Application::getInstance()->run();
     fprintf(stderr, "app run returned: %d\n", rtn);
     return NULL;
 }

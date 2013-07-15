@@ -55,7 +55,7 @@ void Application::setAnimationInterval(double interval)
 //////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////
-Application* Application::sharedApplication()
+Application* Application::getInstance()
 {
     CCAssert(sm_pSharedApplication, "");
     return sm_pSharedApplication;
