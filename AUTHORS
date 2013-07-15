@@ -518,6 +518,9 @@ Developers:
         
     pktangyue
         Fixing a bug that CCScale9Sprite::setInsetLeft/XXX can't work for rotated sprite frame.
+        
+    jllust
+        Fixing a bug that CCLabelBMFont crashes in glDrawElements of CCTextureAtlas::drawNumberOfQuads sometimes.
 
 Retired Core Developers:
     WenSheng Yang
