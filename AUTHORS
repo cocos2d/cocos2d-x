@@ -514,6 +514,7 @@ Developers:
         
     hannon235 (Chris)
         Fixing a bug that the submenu of ExtensionTest in TestCpp can't scroll.
+        Implements a socket.io client extension and adds a test case.
         
     pktangyue
         Fixing a bug that CCScale9Sprite::setInsetLeft/XXX can't work for rotated sprite frame.
