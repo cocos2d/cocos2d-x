@@ -529,6 +529,9 @@ Retired Core Developers:
 
     RongHong Huang (flyingpaper)
         Author of cocos2d-xna and spent all his time on wp7.
+        
+    michaelcontento
+        [Android] use onWindowFocusChanged(bool) instead of onResume()/onPause()
 
 
 Cocos2d-x can not grow so fast without the active community.
