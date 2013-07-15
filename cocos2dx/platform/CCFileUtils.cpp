@@ -327,6 +327,7 @@ Array* FileUtils::createArrayWithContentsOfFile(const std::string& filename)
     return tMaker.arrayWithContentsOfFile(fullPath.c_str());
 }
 
+
 /*
  * forward statement
  */
@@ -457,9 +458,21 @@ Array* FileUtils::createArrayWithContentsOfFile(const std::string& filename) {re
 
 FileUtils* FileUtils::s_sharedFileUtils = NULL;
 
-void FileUtils::purgeFileUtils()
+// XXX: deprecated
+FileUtils* FileUtils::sharedFileUtils()
+{
+    return FileUtils::getInstance();
+}
+
+void FileUtils::destroyInstance()
 {
     CC_SAFE_DELETE(s_sharedFileUtils);
+}
+
+// XXX: deprecated
+void FileUtils::purgeFileUtils()
+{
+    FileUtils::destroyInstance();
 }
 
 FileUtils::FileUtils()
@@ -471,6 +484,7 @@ FileUtils::~FileUtils()
 {
     CC_SAFE_RELEASE(_filenameLookupDict);
 }
+
 
 bool FileUtils::init()
 {

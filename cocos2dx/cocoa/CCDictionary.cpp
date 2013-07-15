@@ -373,7 +373,7 @@ Dictionary* Dictionary::createWithDictionary(Dictionary* srcDict)
 
 Dictionary* Dictionary::createWithContentsOfFileThreadSafe(const char *pFileName)
 {
-    return FileUtils::sharedFileUtils()->createDictionaryWithContentsOfFile(pFileName);
+    return FileUtils::getInstance()->createDictionaryWithContentsOfFile(pFileName);
 }
 
 void Dictionary::acceptVisitor(DataVisitor &visitor)
@@ -390,7 +390,7 @@ Dictionary* Dictionary::createWithContentsOfFile(const char *pFileName)
 
 bool Dictionary::writeToFile(const char *fullPath)
 {
-    return FileUtils::sharedFileUtils()->writeToFile(this, fullPath);
+    return FileUtils::getInstance()->writeToFile(this, fullPath);
 }
 
 Dictionary* Dictionary::clone() const

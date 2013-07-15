@@ -108,16 +108,16 @@ void InputDelegate::setTouchEnabled(bool enabled)
         {
             if( _touchMode == kTouchesAllAtOnce )
             {
-                Director::sharedDirector()->getTouchDispatcher()->addStandardDelegate(this, 0);
+                Director::getInstance()->getTouchDispatcher()->addStandardDelegate(this, 0);
             }
             else
             {
-                Director::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, _touchPriority, true);
+                Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, _touchPriority, true);
             }
         }
         else
         {
-            Director::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
+            Director::getInstance()->getTouchDispatcher()->removeDelegate(this);
         }
     }
 }
@@ -171,7 +171,7 @@ void InputDelegate::setAccelerometerEnabled(bool enabled)
     {
         _accelerometerEnabled = enabled;
 
-        Director* pDirector = Director::sharedDirector();
+        Director* pDirector = Director::getInstance();
         if (enabled)
         {
             pDirector->getAccelerometer()->setDelegate(CC_CALLBACK_1(InputDelegate::didAccelerate, this));
@@ -194,7 +194,7 @@ void InputDelegate::setKeypadEnabled(bool enabled)
     {
         _keypadEnabled = enabled;
 
-        Director* pDirector = Director::sharedDirector();
+        Director* pDirector = Director::getInstance();
         if (enabled)
         {
             pDirector->getKeypadDispatcher()->addDelegate(this);

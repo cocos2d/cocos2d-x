@@ -55,7 +55,7 @@ public:
 ParallaxNode::ParallaxNode()
 {
     _parallaxArray = ccArrayNew(5);        
-    _lastPosition = CCPointMake(-100,-100);
+    _lastPosition = Point(-100,-100);
 }
 ParallaxNode::~ParallaxNode()
 {
@@ -119,7 +119,7 @@ Point ParallaxNode::absolutePosition()
     while (cn->getParent() != NULL)
     {
         cn = cn->getParent();
-        ret = ccpAdd( ret,  cn->getPosition());
+        ret = ret + cn->getPosition();
     }
     return ret;
 }
@@ -132,7 +132,7 @@ The positions are updated at visit because:
 void ParallaxNode::visit()
 {
     //    Point pos = position_;
-    //    Point    pos = [self convertToWorldSpace:PointZero];
+    //    Point    pos = [self convertToWorldSpace:Point::ZERO];
     Point pos = this->absolutePosition();
     if( ! pos.equals(_lastPosition) )
     {
@@ -141,7 +141,7 @@ void ParallaxNode::visit()
             PointObject *point = (PointObject*)_parallaxArray->arr[i];
             float x = -pos.x + pos.x * point->getRatio().x + point->getOffset().x;
             float y = -pos.y + pos.y * point->getRatio().y + point->getOffset().y;            
-            point->getChild()->setPosition(ccp(x,y));
+            point->getChild()->setPosition(Point(x,y));
         }
         _lastPosition = pos;
     }

@@ -48,9 +48,9 @@ NS_CC_BEGIN
  * implements of UserDefault
  */
 
-UserDefault* UserDefault::_spUserDefault = 0;
+UserDefault* UserDefault::_userDefault = 0;
 string UserDefault::_filePath = string("");
-bool UserDefault::_sbIsFilePathInitialized = false;
+bool UserDefault::_isFilePathInitialized = false;
 
 #ifdef KEEP_COMPATABILITY
 static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDocument **doc)
@@ -74,7 +74,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
  		tinyxml2::XMLDocument* xmlDoc = new tinyxml2::XMLDocument();
 		*doc = xmlDoc;
 		unsigned long nSize;
-		const char* pXmlBuffer = (const char*)FileUtils::sharedFileUtils()->getFileData(UserDefault::sharedUserDefault()->getXMLFilePath().c_str(), "rb", &nSize);
+		const char* pXmlBuffer = (const char*)FileUtils::getInstance()->getFileData(UserDefault::getInstance()->getXMLFilePath().c_str(), "rb", &nSize);
 		//const char* pXmlBuffer = (const char*)data.getBuffer();
 		if(NULL == pXmlBuffer)
 		{
@@ -95,7 +95,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
         if (!curNode)
         {
             // There is not xml node, delete xml file.
-            remove(UserDefault::sharedUserDefault()->getXMLFilePath().c_str());
+            remove(UserDefault::getInstance()->getXMLFilePath().c_str());
             
             return NULL;
         }
@@ -121,7 +121,7 @@ static void deleteNode(tinyxml2::XMLDocument* doc, tinyxml2::XMLElement* node)
     if (node)
     {
         doc->DeleteNode(node);
-        doc->SaveFile(UserDefault::sharedUserDefault()->getXMLFilePath().c_str());
+        doc->SaveFile(UserDefault::getInstance()->getXMLFilePath().c_str());
         delete doc;
     }
 }
@@ -135,23 +135,18 @@ static void deleteNodeByKey(const char *pKey)
 #endif
 
 /**
- * If the user invoke delete UserDefault::sharedUserDefault(), should set _spUserDefault
- * to null to avoid error when he invoke UserDefault::sharedUserDefault() later.
+ * If the user invoke delete UserDefault::getInstance(), should set _userDefault
+ * to null to avoid error when he invoke UserDefault::getInstance() later.
  */
 UserDefault::~UserDefault()
 {
-	CC_SAFE_DELETE(_spUserDefault);
-    _spUserDefault = NULL;
+	CC_SAFE_DELETE(_userDefault);
+    _userDefault = NULL;
 }
 
 UserDefault::UserDefault()
 {
-	_spUserDefault = NULL;
-}
-
-void UserDefault::purgeSharedUserDefault()
-{
-    _spUserDefault = NULL;
+	_userDefault = NULL;
 }
 
 bool UserDefault::getBoolForKey(const char* pKey)
@@ -492,18 +487,35 @@ void UserDefault::setDataForKey(const char* pKey, const Data& value) {
     [[NSUserDefaults standardUserDefaults] setObject:[NSData dataWithBytes: value.getBytes() length: value.getSize()] forKey:[NSString stringWithUTF8String:pKey]];
 }
 
-UserDefault* UserDefault::sharedUserDefault()
+UserDefault* UserDefault::getInstance()
 {
 #ifdef KEEP_COMPATABILITY
     initXMLFilePath();
 #endif
     
-    if (! _spUserDefault)
+    if (! _userDefault)
     {
-        _spUserDefault = new UserDefault();
+        _userDefault = new UserDefault();
     }
     
-    return _spUserDefault;
+    return _userDefault;
+}
+
+void UserDefault::destroyInstance()
+{
+    _userDefault = NULL;
+}
+
+// XXX: deprecated
+UserDefault* UserDefault::sharedUserDefault()
+{
+    return UserDefault::getInstance();
+}
+
+// XXX: deprecated
+void UserDefault::purgeSharedUserDefault()
+{
+    UserDefault::destroyInstance();
 }
 
 bool UserDefault::isXMLFileExist()
@@ -523,7 +535,7 @@ bool UserDefault::isXMLFileExist()
 void UserDefault::initXMLFilePath()
 {
 #ifdef KEEP_COMPATABILITY
-    if (! _sbIsFilePathInitialized)
+    if (! _isFilePathInitialized)
     {
         // xml file is stored in cache directory before 2.1.2
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
@@ -532,7 +544,7 @@ void UserDefault::initXMLFilePath()
         _filePath.append("/");
         
         _filePath +=  XML_FILE_NAME;
-        _sbIsFilePathInitialized = true;
+        _isFilePathInitialized = true;
     }
 #endif
 }

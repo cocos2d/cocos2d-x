@@ -65,21 +65,21 @@ void ZwoptexTest::restartCallback(Object* pSender)
 {
     Scene *s = ZwoptexTestScene::create();
     s->addChild(restartZwoptexTest());
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
 }
 
 void ZwoptexTest::nextCallback(Object* pSender)
 {
     Scene *s = ZwoptexTestScene::create();
     s->addChild(nextZwoptexTest());
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
 }
 
 void ZwoptexTest::backCallback(Object* pSender)
 {
     Scene *s = ZwoptexTestScene::create();
     s->addChild(backZwoptexTest());
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
 }
 
 std::string ZwoptexTest::title()
@@ -101,28 +101,28 @@ void ZwoptexGenericTest::onEnter()
 {
     ZwoptexTest::onEnter();
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
-    SpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("zwoptex/grossini.plist");
-    SpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("zwoptex/grossini-generic.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("zwoptex/grossini.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("zwoptex/grossini-generic.plist");
     
     LayerColor *layer1 = LayerColor::create(Color4B(255, 0, 0, 255), 85, 121);
-    layer1->setPosition(ccp(s.width/2-80 - (85.0f * 0.5f), s.height/2 - (121.0f * 0.5f)));
+    layer1->setPosition(Point(s.width/2-80 - (85.0f * 0.5f), s.height/2 - (121.0f * 0.5f)));
     addChild(layer1);
 
-    sprite1 = Sprite::createWithSpriteFrame(SpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("grossini_dance_01.png"));
-    sprite1->setPosition(ccp( s.width/2-80, s.height/2));
+    sprite1 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->spriteFrameByName("grossini_dance_01.png"));
+    sprite1->setPosition(Point( s.width/2-80, s.height/2));
     addChild(sprite1);
 
     sprite1->setFlipX(false);
     sprite1->setFlipY(false);
 
     LayerColor *layer2 = LayerColor::create(Color4B(255, 0, 0, 255), 85, 121);
-    layer2->setPosition(ccp(s.width/2+80 - (85.0f * 0.5f), s.height/2 - (121.0f * 0.5f)));
+    layer2->setPosition(Point(s.width/2+80 - (85.0f * 0.5f), s.height/2 - (121.0f * 0.5f)));
     addChild(layer2);
     
-    sprite2 = Sprite::createWithSpriteFrame(SpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("grossini_dance_generic_01.png"));
-    sprite2->setPosition(ccp( s.width/2 + 80, s.height/2));
+    sprite2 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->spriteFrameByName("grossini_dance_generic_01.png"));
+    sprite2->setPosition(Point( s.width/2 + 80, s.height/2));
     addChild(sprite2);
 
     sprite2->setFlipX(false);
@@ -185,15 +185,15 @@ void ZwoptexGenericTest::flipSprites(float dt)
     char str2[32] = {0};
     sprintf(str1, "grossini_dance_%02d.png", spriteFrameIndex);
     sprintf(str2, "grossini_dance_generic_%02d.png", spriteFrameIndex);
-    sprite1->setDisplayFrame(SpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(str1));
-    sprite2->setDisplayFrame(SpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(str2));
+    sprite1->setDisplayFrame(SpriteFrameCache::getInstance()->spriteFrameByName(str1));
+    sprite2->setDisplayFrame(SpriteFrameCache::getInstance()->spriteFrameByName(str2));
 }
 
 ZwoptexGenericTest::~ZwoptexGenericTest()
 {
     sprite1->release();
     sprite2->release();
-    SpriteFrameCache *cache = SpriteFrameCache::sharedSpriteFrameCache();
+    SpriteFrameCache *cache = SpriteFrameCache::getInstance();
     cache->removeSpriteFramesFromFile("zwoptex/grossini.plist");
     cache->removeSpriteFramesFromFile("zwoptex/grossini-generic.plist");
 }
@@ -213,5 +213,5 @@ void ZwoptexTestScene::runThisTest()
     Layer* pLayer = nextZwoptexTest();
     addChild(pLayer);
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

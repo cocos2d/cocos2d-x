@@ -14,7 +14,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
     // create the application instance
     AppDelegate app;
-    EGLView* eglView = EGLView::sharedOpenGLView();
+    EGLView* eglView = EGLView::getInstance();
     eglView->setViewName("HelloCpp");
     eglView->setFrameSize(2048, 1536);
     // The resolution of ipad3 is very large. In general, PC's resolution is smaller than it.

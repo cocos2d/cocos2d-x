@@ -56,10 +56,16 @@ class CC_DLL Configuration : public Object
 {
 public:
     /** returns a shared instance of Configuration */
-    static Configuration *sharedConfiguration(void);
+    static Configuration *getInstance();
 
     /** purge the shared instance of Configuration */
-    static void purgeConfiguration(void);
+    static void destroyInstance();
+
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static Configuration *sharedConfiguration(void);
+
+    /** @deprecated Use destroyInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static void purgeConfiguration(void);
 
 public:
 
