@@ -28,8 +28,10 @@
 #ifndef __COCOS2D_CCDEPRECATED_H__
 #define __COCOS2D_CCDEPRECATED_H__
 
-#include "cocoa/CCGeometry.h"
 #include <math.h>
+#include "cocoa/CCGeometry.h"
+#include "ccTypes.h"
+
 
 NS_CC_BEGIN
 
@@ -397,6 +399,60 @@ CC_DEPRECATED_ATTRIBUTE const Size SizeZero = Size::ZERO;
 /* The "zero" rectangle -- equivalent to Rect(0, 0, 0, 0). */
 CC_DEPRECATED_ATTRIBUTE const Rect RectZero = Rect::ZERO;
 
+
+CC_DEPRECATED_ATTRIBUTE const Color3B ccWHITE = Color3B::WHITE;
+CC_DEPRECATED_ATTRIBUTE const Color3B ccYELLOW = Color3B::YELLOW;
+CC_DEPRECATED_ATTRIBUTE const Color3B ccGREEN = Color3B::GREEN;
+CC_DEPRECATED_ATTRIBUTE const Color3B ccBLUE = Color3B::BLUE;
+CC_DEPRECATED_ATTRIBUTE const Color3B ccRED = Color3B::RED;
+CC_DEPRECATED_ATTRIBUTE const Color3B ccMAGENTA = Color3B::MAGENTA;
+CC_DEPRECATED_ATTRIBUTE const Color3B ccBLACK = Color3B::BLACK;
+CC_DEPRECATED_ATTRIBUTE const Color3B ccORANGE = Color3B::ORANGE;
+CC_DEPRECATED_ATTRIBUTE const Color3B ccGRAY = Color3B::GRAY;
+
+CC_DEPRECATED_ATTRIBUTE const BlendFunc kBlendFuncDisable = BlendFunc::BLEND_FUNC_DISABLE;
+
+CC_DEPRECATED_ATTRIBUTE static inline Color3B ccc3(GLubyte r, GLubyte g, GLubyte b)
+{
+    return Color3B(r, g, b);
+}
+
+CC_DEPRECATED_ATTRIBUTE static inline bool ccc3BEqual(const Color3B &col1, const Color3B &col2)
+{
+    return col1.r == col2.r && col1.g == col2.g && col1.b == col2.b;
+}
+
+CC_DEPRECATED_ATTRIBUTE static inline Color4B
+ccc4(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o)
+{
+    return Color4B(r, g, b, o);
+}
+
+CC_DEPRECATED_ATTRIBUTE static inline Color4F ccc4FFromccc3B(Color3B c)
+{
+    return Color4F(c.r/255.f, c.g/255.f, c.b/255.f, 1.f);
+}
+
+CC_DEPRECATED_ATTRIBUTE static inline Color4F
+ccc4f(const GLfloat r, const GLfloat g, const GLfloat b, const GLfloat a)
+{
+    return Color4F(r, g, b, a);
+}
+
+CC_DEPRECATED_ATTRIBUTE static inline Color4F ccc4FFromccc4B(Color4B c)
+{
+    return Color4F(c.r/255.f, c.g/255.f, c.b/255.f, c.a/255.f);
+}
+
+CC_DEPRECATED_ATTRIBUTE static inline Color4B ccc4BFromccc4F(Color4F c)
+{
+	return Color4B((GLubyte)(c.r*255), (GLubyte)(c.g*255), (GLubyte)(c.b*255), (GLubyte)(c.a*255));
+}
+
+CC_DEPRECATED_ATTRIBUTE static inline bool ccc4FEqual(Color4F a, Color4F b)
+{
+    return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
+}
 
 // end of data_structures group
 /// @}
