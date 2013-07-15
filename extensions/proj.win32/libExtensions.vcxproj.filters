@@ -354,6 +354,9 @@
     <ClCompile Include="..\CCArmature\external_tool\Json\lib_json\json_writer.cpp">
       <Filter>CCArmature\external_tool</Filter>
     </ClCompile>
+    <ClCompile Include="..\network\SocketIO.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\GUI\CCScrollView\CCScrollView.h">
@@ -711,6 +714,9 @@
     </ClInclude>
     <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\writer.h">
       <Filter>CCArmature\external_tool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\network\SocketIO.h">
+      <Filter>network</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
