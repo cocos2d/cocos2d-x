@@ -444,10 +444,10 @@ LRESULT EGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         switch (wParam)
         {
         case SIZE_RESTORED:
-            Application::sharedApplication()->applicationWillEnterForeground();
+            Application::getInstance()->applicationWillEnterForeground();
             break;
         case SIZE_MINIMIZED:
-            Application::sharedApplication()->applicationDidEnterBackground();
+            Application::getInstance()->applicationDidEnterBackground();
             break;
         }
         break;

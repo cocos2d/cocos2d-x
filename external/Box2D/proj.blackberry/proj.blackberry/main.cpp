@@ -26,5 +26,5 @@ int main(int argc, char **argv)
     CCEGLView& eglView = CCEGLView::getInstance();
     eglView.setSize(width, height);
 
-    return CCApplication::sharedApplication().run();
+    return CCApplication::getInstance().run();
 }
