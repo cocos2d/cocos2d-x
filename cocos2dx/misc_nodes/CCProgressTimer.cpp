@@ -149,14 +149,26 @@ void ProgressTimer::setReverseProgress(bool reverse)
     }
 }
 
-void ProgressTimer::setOpacityModifyRGB(bool bValue)
+void ProgressTimer::setColor(const Color3B& color)
 {
-    CC_UNUSED_PARAM(bValue);
+    _sprite->setColor(color);
+    updateColor();
 }
 
-bool ProgressTimer::isOpacityModifyRGB(void) const
+const Color3B& ProgressTimer::getColor() const
 {
-    return false;
+    return _sprite->getColor();
+}
+
+void ProgressTimer::setOpacity(GLubyte opacity)
+{
+    _sprite->setOpacity(opacity);
+    updateColor();
+}
+
+GLubyte ProgressTimer::getOpacity() const
+{
+    return _sprite->getOpacity();
 }
 
 // Interval
