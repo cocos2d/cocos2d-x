@@ -313,8 +313,7 @@ local function shouldNotCrash(dt)
     explosion:setPosition(s.width / 2, s.height / 2)
 
 	StressTest1_layer:setAnchorPoint(ccp(0, 0))
-    local scriptHandlerMgr = ScriptHandlerMgr:getInstance()
-    local callFunc = scriptHandlerMgr:registerCallFuncHandler(removeMe)
+    local callFunc = CCCallFunc:create(removeMe)
     StressTest1_layer:runAction(CCSequence:createWithTwoActions(CCRotateBy:create(2, 360), callFunc))
 
     StressTest1_layer:addChild(explosion)

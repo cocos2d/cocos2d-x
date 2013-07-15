@@ -76,8 +76,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif
     FileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
 
+    pEngine->expandLuaObjecFunc();
     pEngine->executeScriptFile("luaScript/controller.lua");
-
+    
     return true;
 }
 

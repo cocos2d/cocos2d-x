@@ -45,22 +45,17 @@ private:
     bool _isUpdateSchedule;
 };
 
-class CallFuncHandlerDelegate:public cocos2d::Object
+class LuaCallFunc:public cocos2d::CallFuncN
 {
 public:
-    CallFuncHandlerDelegate():_callFunc(NULL)
+    LuaCallFunc()
     {}
-    virtual ~CallFuncHandlerDelegate()
+    virtual ~LuaCallFunc()
     {}
     
-    static CallFuncHandlerDelegate* create();
-    
-    void callFunc(cocos2d::Node* node);
-    
-    void setCallFunc(cocos2d::CallFuncN* callFunc){ _callFunc = callFunc ;}
-    cocos2d::CallFuncN* getCallFunc(){ return _callFunc ;}
-private:
-    cocos2d::CallFuncN* _callFunc;
+    static LuaCallFunc * create(int nHandler);
+    virtual void execute();
+    virtual LuaCallFunc* clone() const;
 };
 
 class ScriptHandlerMgr
@@ -69,53 +64,42 @@ public:
     ScriptHandlerMgr(void);
     virtual ~ScriptHandlerMgr(void);
     static ScriptHandlerMgr* getInstance(void);
-    
-    void registerObjectHandler(void* object,int handler,int eventType);
-    void unregisterObjectHandler(void* object,int eventType);
-    int  getObjecHandlerByEvent(void* object,int eventType);
-    void unregisterObjectAllHandlers(void* object);
         
-    cocos2d::CallFuncN* registerCallFuncHandler(int handler);
-    void registerTouchesHandler(void* object,int objectType,int handler,bool isMultiTouches = false,int priority = 0,bool swallowsTouches = false);
-    void registerKeypadHandler(void* object,int objectType,int handler);
-    
-    ScheduleHandlerDelegate* registerScheduleHandler(int handler,float interval = 0.0f, unsigned int repeat = kRepeatForever, float delay = 0.0f, bool paused = false);
-    void unregisterScheduleHandler(ScheduleHandlerDelegate* scheduleDelegate);
-    
-    ScheduleHandlerDelegate* registerNodeSchedule(cocos2d::Node* node,int handler,float interval = 0.0f,unsigned int repeat = kRepeatForever,float delay = 0.0f);
-    
-    void unregisterNodeSchedule(cocos2d::Node* node,ScheduleHandlerDelegate* scheduleDelegate);
-    
-    ScheduleHandlerDelegate* registerNodeScheduleOnce(cocos2d::Node* node,int handler,float delay = 0.0f);
-    
-    ScheduleHandlerDelegate* registerNodeScheduleUpdateWithPriority(cocos2d::Node* node,int handler,int priority);
-    void unregisterNodeScheduleUpdateWithPriority(cocos2d::Node* node,ScheduleHandlerDelegate* scheduleDelegate = NULL);
-    //one node only have one scheduleUpdate func
-    ScheduleHandlerDelegate* getNodeScheduleUpdateWithPriority(cocos2d::Node* node);
-    
-    void unregisterNodeAllSchedule(cocos2d::Node* node);
-    
+    void addObjectHandler(void* object,int handler,int eventType);
+    void removeObjectHandler(void* object,int eventType);
+    int  getObjectHandler(void* object,int eventType);
+    void removeObjectAllHandlers(void* object);
+            
     enum HandlerEventType
     {
-       kNormalHandler = 0,
-       kScheduleHandler,
+       kNodeHandler = 0,
+       kMenuClickHandler,
        kNotificationHandler,
        kCallFuncHandler,
+       kScheduleHandler,
        kTouchesHandler,
        kKeypadHandler,
+       kAccelerometerHandler,
     };
     
     
 private:
     void init(void);
-    void addNodeSchedule(cocos2d::Node* node,ScheduleHandlerDelegate* schedule);
-    void removeNodeSchedule(cocos2d::Node* node,ScheduleHandlerDelegate* schedule);
     static ScriptHandlerMgr* _scriptHandlerMgr;
     MapObjectHandlers _mapObjectHandlers;
-    MapNodeSchedules   _mapNodeScehdules;
 };
 
 NS_CC_END
+
+TOLUA_API int tolua_Cocos2d_registerScriptHandler00(lua_State* tolua_S);
+
+TOLUA_API int tolua_Cocos2d_registerScriptTapHandler00(lua_State* tolua_S);
+
+TOLUA_API int tolua_Cocos2d_registerScriptTouchHandler00(lua_State* tolua_S);
+
+TOLUA_API int tolua_Cocos2d_registerScriptKeypadHandler00(lua_State* tolua_S);
+
+TOLUA_API int tolua_Cocos2d_registerScriptAccelerateHandler00(lua_State* tolua_S);
 
 TOLUA_API int tolua_script_handler_mgr_open(lua_State* tolua_S);
 

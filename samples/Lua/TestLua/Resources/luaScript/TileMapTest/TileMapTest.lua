@@ -391,8 +391,7 @@ local function TMXReadWriteTest()
         ----------cclog("atlas quantity: %d", p:textureAtlas():totalQuads())
     end
 
-    local scriptHandlerMgr = ScriptHandlerMgr:getInstance()
-    local finish = scriptHandlerMgr:registerCallFuncHandler(removeSprite)
+    local finish = CCCallFunc:create(removeSprite)
     local arr = CCArray:create()
     arr:addObject(move)
     arr:addObject(rotate)

@@ -371,7 +371,7 @@ void Layer::unregisterScriptKeypadHandler(void)
 
 void Layer::keyBackClicked(void)
 {
-    if (NULL != _scriptKeypadHandlerEntry && 0 != _scriptKeypadHandlerEntry->getHandler())
+    if (kScriptTypeLua == _scriptType)
     {
         KeypadScriptData data(kTypeBackClicked,kLayerKeypad,(void*)this);
         ScriptEvent event(kKeypadEvent,(void*)&data);
@@ -385,7 +385,7 @@ void Layer::keyBackClicked(void)
 
 void Layer::keyMenuClicked(void)
 {
-    if (NULL != _scriptKeypadHandlerEntry && 0 != _scriptKeypadHandlerEntry->getHandler())
+    if (kScriptTypeLua == _scriptType)
     {
         KeypadScriptData data(kTypeMenuClicked,kLayerKeypad,(void*)this);
         ScriptEvent event(kKeypadEvent,(void*)&data);
