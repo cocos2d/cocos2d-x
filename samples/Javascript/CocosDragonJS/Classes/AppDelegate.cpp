@@ -43,7 +43,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     std::vector<std::string> resDirOrders;
     
-    TargetPlatform platform = Application::sharedApplication()->getTargetPlatform();
+    TargetPlatform platform = Application::getInstance()->getTargetPlatform();
     if (platform == kTargetIphone || platform == kTargetIpad || platform == kTargetMacOS)
     {
         std::vector<std::string> searchPaths = FileUtils::getInstance()->getSearchPaths();

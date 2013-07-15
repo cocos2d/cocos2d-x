@@ -625,7 +625,7 @@ bool EGLView::handleEvents()
 				case NAVIGATOR_WINDOW_INACTIVE:
 					if (_isWindowActive)
 					{
-						Application::sharedApplication()->applicationDidEnterBackground();
+						Application::getInstance()->applicationDidEnterBackground();
 						_isWindowActive = false;
 					}
 					break;
@@ -633,7 +633,7 @@ bool EGLView::handleEvents()
 				case NAVIGATOR_WINDOW_ACTIVE:
 					if (!_isWindowActive)
 					{
-						Application::sharedApplication()->applicationWillEnterForeground();
+						Application::getInstance()->applicationWillEnterForeground();
 						_isWindowActive = true;
 					}
 					break;
@@ -645,14 +645,14 @@ bool EGLView::handleEvents()
 						case NAVIGATOR_WINDOW_FULLSCREEN:
 							if (!_isWindowActive)
 							{
-								Application::sharedApplication()->applicationWillEnterForeground();
+								Application::getInstance()->applicationWillEnterForeground();
 								_isWindowActive = true;
 							}
 							break;
 						case NAVIGATOR_WINDOW_THUMBNAIL:
 							if (_isWindowActive)
 							{
-								Application::sharedApplication()->applicationDidEnterBackground();
+								Application::getInstance()->applicationDidEnterBackground();
 								_isWindowActive = false;
 							}
 							break;

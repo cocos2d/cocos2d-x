@@ -1058,7 +1058,7 @@ void DisplayLinkDirector::startAnimation(void)
 
     _invalid = false;
 #ifndef EMSCRIPTEN
-    Application::sharedApplication()->setAnimationInterval(_animationInterval);
+    Application::getInstance()->setAnimationInterval(_animationInterval);
 #endif // EMSCRIPTEN
 }
 
