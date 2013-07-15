@@ -31,7 +31,6 @@ THE SOFTWARE.
 #include "cocoa/CCDictionary.h"
 #include "cocoa/CCInteger.h"
 #include "CCDirector.h"
-#include "support/CCPointExtension.h"
 
 NS_CC_BEGIN
 

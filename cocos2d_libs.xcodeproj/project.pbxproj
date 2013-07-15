@@ -123,6 +123,8 @@
 		1AE019851790023400D574A8 /* SocketIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AE019821790023400D574A8 /* SocketIO.cpp */; };
 		1AE019861790023400D574A8 /* SocketIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AE019831790023400D574A8 /* SocketIO.h */; };
 		1AE019871790023400D574A8 /* SocketIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AE019831790023400D574A8 /* SocketIO.h */; };
+		466BE8ED1793DBE400424245 /* CCDeprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = 466BE8EC1793DBE400424245 /* CCDeprecated.h */; };
+		466BE8EE1793DBE400424245 /* CCDeprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = 466BE8EC1793DBE400424245 /* CCDeprecated.h */; };
 		46B9C9631786763E00F808DD /* ccTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B9C9611786763E00F808DD /* ccTypes.cpp */; };
 		46B9C9641786763E00F808DD /* ccTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B9C9611786763E00F808DD /* ccTypes.cpp */; };
 		A035A5431782286100987F6C /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A035A5421782286100987F6C /* libwebsockets.a */; };
@@ -345,8 +347,6 @@
 		A03F2B2B1780BAE9006731B9 /* base64.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F25141780BAE8006731B9 /* base64.h */; };
 		A03F2B2C1780BAE9006731B9 /* CCNotificationCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F25151780BAE8006731B9 /* CCNotificationCenter.cpp */; };
 		A03F2B2D1780BAE9006731B9 /* CCNotificationCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F25161780BAE8006731B9 /* CCNotificationCenter.h */; };
-		A03F2B2E1780BAE9006731B9 /* CCPointExtension.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F25171780BAE8006731B9 /* CCPointExtension.cpp */; };
-		A03F2B2F1780BAE9006731B9 /* CCPointExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F25181780BAE8006731B9 /* CCPointExtension.h */; };
 		A03F2B301780BAE9006731B9 /* CCProfiling.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F25191780BAE8006731B9 /* CCProfiling.cpp */; };
 		A03F2B311780BAE9006731B9 /* CCProfiling.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F251A1780BAE8006731B9 /* CCProfiling.h */; };
 		A03F2B321780BAE9006731B9 /* ccUTF8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F251B1780BAE8006731B9 /* ccUTF8.cpp */; };
@@ -1006,7 +1006,6 @@
 		A07A4C891783777C0073F6A7 /* CCSpriteFrameCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F25101780BAE8006731B9 /* CCSpriteFrameCache.cpp */; };
 		A07A4C8A1783777C0073F6A7 /* base64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F25131780BAE8006731B9 /* base64.cpp */; };
 		A07A4C8B1783777C0073F6A7 /* CCNotificationCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F25151780BAE8006731B9 /* CCNotificationCenter.cpp */; };
-		A07A4C8C1783777C0073F6A7 /* CCPointExtension.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F25171780BAE8006731B9 /* CCPointExtension.cpp */; };
 		A07A4C8D1783777C0073F6A7 /* CCProfiling.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F25191780BAE8006731B9 /* CCProfiling.cpp */; };
 		A07A4C8E1783777C0073F6A7 /* ccUTF8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F251B1780BAE8006731B9 /* ccUTF8.cpp */; };
 		A07A4C8F1783777C0073F6A7 /* ccUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F251D1780BAE8006731B9 /* ccUtils.cpp */; };
@@ -1166,7 +1165,6 @@
 		A07A4D3B1783777C0073F6A7 /* CCSpriteFrameCache.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F25111780BAE8006731B9 /* CCSpriteFrameCache.h */; };
 		A07A4D3C1783777C0073F6A7 /* base64.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F25141780BAE8006731B9 /* base64.h */; };
 		A07A4D3D1783777C0073F6A7 /* CCNotificationCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F25161780BAE8006731B9 /* CCNotificationCenter.h */; };
-		A07A4D3E1783777C0073F6A7 /* CCPointExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F25181780BAE8006731B9 /* CCPointExtension.h */; };
 		A07A4D3F1783777C0073F6A7 /* CCProfiling.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F251A1780BAE8006731B9 /* CCProfiling.h */; };
 		A07A4D401783777C0073F6A7 /* ccUTF8.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F251C1780BAE8006731B9 /* ccUTF8.h */; };
 		A07A4D411783777C0073F6A7 /* ccUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F251E1780BAE8006731B9 /* ccUtils.h */; };
@@ -1925,6 +1923,7 @@
 		1A94D34C16C2014900D79D09 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../platform/third_party/mac/libraries/libwebp.a; sourceTree = "<group>"; };
 		1AE019821790023400D574A8 /* SocketIO.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SocketIO.cpp; sourceTree = "<group>"; };
 		1AE019831790023400D574A8 /* SocketIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketIO.h; sourceTree = "<group>"; };
+		466BE8EC1793DBE400424245 /* CCDeprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDeprecated.h; sourceTree = "<group>"; };
 		46B9C9611786763E00F808DD /* ccTypes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccTypes.cpp; sourceTree = "<group>"; };
 		A035A5421782286100987F6C /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = external/libwebsockets/mac/lib/libwebsockets.a; sourceTree = "<group>"; };
 		A03F1DDC1780BAE4006731B9 /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCAction.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -2148,8 +2147,6 @@
 		A03F25141780BAE8006731B9 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
 		A03F25151780BAE8006731B9 /* CCNotificationCenter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNotificationCenter.cpp; sourceTree = "<group>"; };
 		A03F25161780BAE8006731B9 /* CCNotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNotificationCenter.h; sourceTree = "<group>"; };
-		A03F25171780BAE8006731B9 /* CCPointExtension.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPointExtension.cpp; sourceTree = "<group>"; };
-		A03F25181780BAE8006731B9 /* CCPointExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPointExtension.h; sourceTree = "<group>"; };
 		A03F25191780BAE8006731B9 /* CCProfiling.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCProfiling.cpp; sourceTree = "<group>"; };
 		A03F251A1780BAE8006731B9 /* CCProfiling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProfiling.h; sourceTree = "<group>"; };
 		A03F251B1780BAE8006731B9 /* ccUTF8.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccUTF8.cpp; sourceTree = "<group>"; };
@@ -3345,6 +3342,7 @@
 				A03F1E351780BAE4006731B9 /* ccTypeInfo.h */,
 				A03F1E361780BAE4006731B9 /* ccTypes.h */,
 				A03F1E371780BAE4006731B9 /* cocos2d.h */,
+				466BE8EC1793DBE400424245 /* CCDeprecated.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -3648,8 +3646,6 @@
 				A03F25141780BAE8006731B9 /* base64.h */,
 				A03F25151780BAE8006731B9 /* CCNotificationCenter.cpp */,
 				A03F25161780BAE8006731B9 /* CCNotificationCenter.h */,
-				A03F25171780BAE8006731B9 /* CCPointExtension.cpp */,
-				A03F25181780BAE8006731B9 /* CCPointExtension.h */,
 				A03F25191780BAE8006731B9 /* CCProfiling.cpp */,
 				A03F251A1780BAE8006731B9 /* CCProfiling.h */,
 				A03F251B1780BAE8006731B9 /* ccUTF8.cpp */,
@@ -5099,7 +5095,6 @@
 				A03F2B291780BAE9006731B9 /* CCSpriteFrameCache.h in Headers */,
 				A03F2B2B1780BAE9006731B9 /* base64.h in Headers */,
 				A03F2B2D1780BAE9006731B9 /* CCNotificationCenter.h in Headers */,
-				A03F2B2F1780BAE9006731B9 /* CCPointExtension.h in Headers */,
 				A03F2B311780BAE9006731B9 /* CCProfiling.h in Headers */,
 				A03F2B331780BAE9006731B9 /* ccUTF8.h in Headers */,
 				A03F2B351780BAE9006731B9 /* ccUtils.h in Headers */,
@@ -5146,6 +5141,7 @@
 				A07A4E071783815B0073F6A7 /* CCWindow.h in Headers */,
 				A07A4E091783815B0073F6A7 /* EAGLView.h in Headers */,
 				A07A52CD1784AC360073F6A7 /* etc1.h in Headers */,
+				466BE8ED1793DBE400424245 /* CCDeprecated.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5659,7 +5655,6 @@
 				A07A4D3B1783777C0073F6A7 /* CCSpriteFrameCache.h in Headers */,
 				A07A4D3C1783777C0073F6A7 /* base64.h in Headers */,
 				A07A4D3D1783777C0073F6A7 /* CCNotificationCenter.h in Headers */,
-				A07A4D3E1783777C0073F6A7 /* CCPointExtension.h in Headers */,
 				A07A4D3F1783777C0073F6A7 /* CCProfiling.h in Headers */,
 				A07A4D401783777C0073F6A7 /* ccUTF8.h in Headers */,
 				A07A4D411783777C0073F6A7 /* ccUtils.h in Headers */,
@@ -5721,6 +5716,7 @@
 				A07A4DBB17837B910073F6A7 /* encode.h in Headers */,
 				A07A4DBC17837B910073F6A7 /* types.h in Headers */,
 				A07A52CE1784AC360073F6A7 /* etc1.h in Headers */,
+				466BE8EE1793DBE400424245 /* CCDeprecated.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6433,7 +6429,6 @@
 				A03F2B281780BAE9006731B9 /* CCSpriteFrameCache.cpp in Sources */,
 				A03F2B2A1780BAE9006731B9 /* base64.cpp in Sources */,
 				A03F2B2C1780BAE9006731B9 /* CCNotificationCenter.cpp in Sources */,
-				A03F2B2E1780BAE9006731B9 /* CCPointExtension.cpp in Sources */,
 				A03F2B301780BAE9006731B9 /* CCProfiling.cpp in Sources */,
 				A03F2B321780BAE9006731B9 /* ccUTF8.cpp in Sources */,
 				A03F2B341780BAE9006731B9 /* ccUtils.cpp in Sources */,
@@ -6868,7 +6863,6 @@
 				A07A4C891783777C0073F6A7 /* CCSpriteFrameCache.cpp in Sources */,
 				A07A4C8A1783777C0073F6A7 /* base64.cpp in Sources */,
 				A07A4C8B1783777C0073F6A7 /* CCNotificationCenter.cpp in Sources */,
-				A07A4C8C1783777C0073F6A7 /* CCPointExtension.cpp in Sources */,
 				A07A4C8D1783777C0073F6A7 /* CCProfiling.cpp in Sources */,
 				A07A4C8E1783777C0073F6A7 /* ccUTF8.cpp in Sources */,
 				A07A4C8F1783777C0073F6A7 /* ccUtils.cpp in Sources */,

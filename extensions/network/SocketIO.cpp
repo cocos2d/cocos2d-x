@@ -377,7 +377,7 @@ void SIOClientImpl::onOpen(cocos2d::extension::WebSocket* ws) {
 		
 	}
 
-	Director::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(SIOClientImpl::heartbeat), this, (_heartbeat * .9), false);
+	Director::getInstance()->getScheduler()->scheduleSelector(schedule_selector(SIOClientImpl::heartbeat), this, (_heartbeat * .9), false);
 	
 	CCLog("SIOClientImpl::onOpen socket connected!");
 
@@ -632,7 +632,8 @@ SocketIO* SocketIO::instance() {
 SIOClient* SocketIO::connect(SocketIO::SIODelegate& delegate, const std::string& uri) {
 
 	std::string host = uri;
-	int port, pos;
+	int port = 0;
+    int pos = 0;
 
 	pos = host.find("//");
 	if(pos >= 0) {

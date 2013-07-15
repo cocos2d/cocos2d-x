@@ -32,7 +32,6 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "platform/CCFileUtils.h"
 #include "support/zip_support/ZipUtils.h"
-#include "support/CCPointExtension.h"
 #include "support/base64.h"
 #include "platform/platform.h"
 
