@@ -23,7 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCControlUtils.h"
-#include "support/CCPointExtension.h"
 
 NS_CC_EXT_BEGIN
 

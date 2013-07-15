@@ -47,7 +47,6 @@ THE SOFTWARE.
 #include "textures/CCTextureCache.h"
 #include "textures/CCTextureAtlas.h"
 #include "support/base64.h"
-#include "support/CCPointExtension.h"
 #include "platform/CCFileUtils.h"
 #include "platform/CCImage.h"
 #include "platform/platform.h"

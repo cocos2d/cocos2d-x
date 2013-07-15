@@ -217,7 +217,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\sprite_nodes\CCSpriteFrameCache.cpp" />
     <ClCompile Include="..\support\base64.cpp" />
     <ClCompile Include="..\support\CCNotificationCenter.cpp" />
-    <ClCompile Include="..\support\CCPointExtension.cpp" />
     <ClCompile Include="..\support\CCProfiling.cpp" />
     <ClCompile Include="..\support\ccUTF8.cpp" />
     <ClCompile Include="..\support\ccUtils.cpp" />
@@ -308,6 +307,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\actions\CCActionTiledGrid.h" />
     <ClInclude Include="..\actions\CCActionTween.h" />
     <ClInclude Include="..\include\ccConfig.h" />
+    <ClInclude Include="..\include\CCDeprecated.h" />
     <ClInclude Include="..\include\CCEventType.h" />
     <ClInclude Include="..\include\ccMacros.h" />
     <ClInclude Include="..\include\CCProtocols.h" />
@@ -379,7 +379,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\sprite_nodes\CCSpriteFrameCache.h" />
     <ClInclude Include="..\support\base64.h" />
     <ClInclude Include="..\support\CCNotificationCenter.h" />
-    <ClInclude Include="..\support\CCPointExtension.h" />
     <ClInclude Include="..\support\CCProfiling.h" />
     <ClInclude Include="..\support\ccUTF8.h" />
     <ClInclude Include="..\support\ccUtils.h" />
