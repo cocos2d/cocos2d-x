@@ -12,25 +12,19 @@
 NS_CC_BEGIN
 
 
-LabelFontDefinition::LabelFontDefinition():_textImages(0), _commonLineHeight(0)
+LabelFontDefinition* LabelFontDefinition::create(const char *fontName, int fontSize, const char *letters, int textureSize, bool debugOutput)
 {
+    LabelFontDefinition *ret = new LabelFontDefinition;
+    ret->init( fontName, fontSize, letters, textureSize, debugOutput);
+    return ret;
 }
 
-LabelFontDefinition::~LabelFontDefinition()
-{
-    if (_textImages)
-    {
-        delete _textImages;
-    }
-}
-
-bool LabelFontDefinition::createFontDefinition(char *fontName, int fontSize, char *letters, int textureSize, bool debugOutput)
-{
+bool LabelFontDefinition::init(const char *fontName, int fontSize, const char *letters, int textureSize, bool debugOutput)
+{    
     // constants
     float LINE_PADDING  = 1.9;
     float PIXEL_PADDING = 1.0;
-    
-    
+
     // preare texture/image stuff
     _textImages = new TextImage();
     if (!_textImages)
@@ -114,6 +108,18 @@ bool LabelFontDefinition::createFontDefinition(char *fontName, int fontSize, cha
     _commonLineHeight = maxLineHeight;
     
     return true;
+}
+
+LabelFontDefinition::LabelFontDefinition():_textImages(0), _commonLineHeight(0)
+{
+}
+
+LabelFontDefinition::~LabelFontDefinition()
+{
+    if (_textImages)
+    {
+        delete _textImages;
+    }
 }
 
 void LabelFontDefinition::addLetterDef(LetterDefinition &defToAdd)

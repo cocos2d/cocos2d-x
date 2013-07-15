@@ -1659,13 +1659,13 @@ LabelDyamicTest::LabelDyamicTest()
 {
     Size size = Director::sharedDirector()->getWinSize();
     
-    const char *pFontName           = "MarkerFelt-Thin";
-    const char *pFontGlyphs         = "abcdefghilmnopqrstuvzxywABCDEFGHILMNOPQRSTUVZXYW0123456789,. ";
-    LabelFontDefinition *pDef       =  new LabelFontDefinition;
+    const char *fontName           = "MarkerFelt-Thin";
+    const char *fontGlyphs         = "abcdefghilmnopqrstuvzxywABCDEFGHILMNOPQRSTUVZXYW0123456789,. ";
+
+    LabelFontDefinition *def=  LabelFontDefinition::create(fontName, 30, fontGlyphs);
     
-    pDef->createFontDefinition((char *)pFontName, 30, (char *) pFontGlyphs);
-    StringTTF *pTestString = new StringTTF(pDef);
-    pTestString->setText( (char *)LongSentencesExample, size.width, kTextAlignmentCenter, false);
+    StringTTF *pTestString = StringTTF::create(def);
+    pTestString->setText( LongSentencesExample, size.width, kTextAlignmentCenter, false);
     addChild(pTestString);
     
     pTestString->setPosition(Point(0, size.height/2));

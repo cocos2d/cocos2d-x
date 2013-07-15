@@ -43,18 +43,25 @@ struct LetterDefinition
     float           commonLineHeight;
 };
 
+/**
+ */
 class LabelFontDefinition
 {
 public:
-    
+
+    static LabelFontDefinition* create(const char *fontName, int fontSize, const char *letters, int textureSize = 512, bool debugOutput = false);
+
     LabelFontDefinition();
    ~LabelFontDefinition();
+
+    bool init(const char *fontName, int fontSize, const char *letters, int textureSize, bool debugOutput);
+
     
-    bool createFontDefinition(char *fontName, int fontSize, char *letters, int textureSize = 512, bool debugOutput = false);
     LetterDefinition & getLetterDefinition(unsigned short int theLetter);
     Texture2D * getTexture(int index);
-    Font * getFont()                        { return _textImages->getFont(); }
-    float  getCommonLineHeight()            { return _commonLineHeight;      }
+
+    Font * getFont() { return _textImages->getFont(); }
+    float  getCommonLineHeight() const { return _commonLineHeight; }
     
 private:
     
