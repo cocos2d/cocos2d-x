@@ -61,8 +61,6 @@ Scale9Sprite::Scale9Sprite()
 , _bottom(NULL)
 , _bottomRight(NULL)
 , _opacityModifyRGB(false)
-, _opacity(255)
-, _color(Color3B::WHITE)
 {
 
 }
@@ -774,8 +772,7 @@ void Scale9Sprite::visit()
 
 void Scale9Sprite::setColor(const Color3B& color)
 {
-    _color = color;
-
+    NodeRGBA::setColor(color);
     Object* child;
     Array* children = _scale9Image->getChildren();
     CCARRAY_FOREACH(children, child)
@@ -790,13 +787,12 @@ void Scale9Sprite::setColor(const Color3B& color)
 
 const Color3B& Scale9Sprite::getColor() const
 {
-	return _color;
+	return _realColor;
 }
 
 void Scale9Sprite::setOpacity(GLubyte opacity)
 {
-    _opacity = opacity;
-
+    NodeRGBA::setOpacity(opacity);
     Object* child;
     Array* children = _scale9Image->getChildren();
     CCARRAY_FOREACH(children, child)
@@ -811,7 +807,37 @@ void Scale9Sprite::setOpacity(GLubyte opacity)
 
 GLubyte Scale9Sprite::getOpacity() const
 {
-	return _opacity;
+	return _realOpacity;
+}
+
+void Scale9Sprite::updateDisplayedColor(const cocos2d::Color3B &parentColor)
+{
+    NodeRGBA::updateDisplayedColor(parentColor);
+    Object* child;
+    Array* children = _scale9Image->getChildren();
+    CCARRAY_FOREACH(children, child)
+    {
+        RGBAProtocol* pNode = dynamic_cast<RGBAProtocol*>(child);
+        if (pNode)
+        {
+            pNode->updateDisplayedColor(parentColor);
+        }
+    }
+}
+
+void Scale9Sprite::updateDisplayedOpacity(GLubyte parentOpacity)
+{
+    NodeRGBA::updateDisplayedOpacity(parentOpacity);
+    Object* child;
+    Array* children = _scale9Image->getChildren();
+    CCARRAY_FOREACH(children, child)
+    {
+        RGBAProtocol* pNode = dynamic_cast<RGBAProtocol*>(child);
+        if (pNode)
+        {
+            pNode->updateDisplayedOpacity(parentOpacity);
+        }
+    }
 }
 
 NS_CC_EXT_END
