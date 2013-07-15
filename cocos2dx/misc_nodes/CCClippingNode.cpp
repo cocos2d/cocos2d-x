@@ -30,7 +30,6 @@
 #include "shaders/CCGLProgram.h"
 #include "shaders/CCShaderCache.h"
 #include "CCDirector.h"
-#include "support/CCPointExtension.h"
 #include "draw_nodes/CCDrawingPrimitives.h"
 
 NS_CC_BEGIN

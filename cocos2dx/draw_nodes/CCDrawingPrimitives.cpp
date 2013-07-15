@@ -44,7 +44,6 @@ THE SOFTWARE.
 #include "shaders/CCShaderCache.h"
 #include "shaders/CCGLProgram.h"
 #include "actions/CCActionCatmullRom.h"
-#include "support/CCPointExtension.h"
 #include <string.h>
 #include <cmath>
 

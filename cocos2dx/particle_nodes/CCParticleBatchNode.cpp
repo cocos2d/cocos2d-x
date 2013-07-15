@@ -33,7 +33,6 @@
 #include "ccConfig.h"
 #include "ccMacros.h"
 #include "effects/CCGrid.h"
-#include "support/CCPointExtension.h"
 #include "CCParticleSystem.h"
 #include "shaders/CCShaderCache.h"
 #include "shaders/CCGLProgram.h"

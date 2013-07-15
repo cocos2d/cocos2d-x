@@ -32,7 +32,6 @@ THE SOFTWARE.
 #include "CCLayer.h"
 #include "actions/CCActionInstant.h"
 #include "actions/CCActionProgressTimer.h"
-#include "support/CCPointExtension.h"
 
 NS_CC_BEGIN
 

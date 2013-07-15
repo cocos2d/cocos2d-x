@@ -33,7 +33,6 @@
  * Adapted from cocos2d-x to cocos2d-iphone by Ricardo Quesada
  */
 #include "ccMacros.h"
-#include "support/CCPointExtension.h"
 #include "CCActionCatmullRom.h"
 
 using namespace std;

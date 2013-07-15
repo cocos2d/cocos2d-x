@@ -30,7 +30,6 @@ THE SOFTWARE.
 #include "effects/CCGrid.h"
 #include "draw_nodes/CCDrawingPrimitives.h"
 #include "textures/CCTextureCache.h"
-#include "support/CCPointExtension.h"
 #include "shaders/CCShaderCache.h"
 #include "shaders/CCGLProgram.h"
 #include "shaders/ccGLStateCache.h"
