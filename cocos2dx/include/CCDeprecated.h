@@ -200,7 +200,7 @@ ccpDistanceSQ(const Point p1, const Point p2)
  @return float
  @since v0.7.2
  */
-CC_DEPRECATED_ATTRIBUTE static inline float CC_DLL ccpLength(const Point& v)
+CC_DEPRECATED_ATTRIBUTE static inline float ccpLength(const Point& v)
 {
     return v.getLength();
 }
@@ -209,7 +209,7 @@ CC_DEPRECATED_ATTRIBUTE static inline float CC_DLL ccpLength(const Point& v)
  @return float
  @since v0.7.2
  */
-CC_DEPRECATED_ATTRIBUTE static inline float CC_DLL ccpDistance(const Point& v1, const Point& v2)
+CC_DEPRECATED_ATTRIBUTE static inline float ccpDistance(const Point& v1, const Point& v2)
 {
     return v1.getDistance(v2);
 }
@@ -218,7 +218,7 @@ CC_DEPRECATED_ATTRIBUTE static inline float CC_DLL ccpDistance(const Point& v1, 
  @return Point
  @since v0.7.2
  */
-CC_DEPRECATED_ATTRIBUTE static inline Point CC_DLL ccpNormalize(const Point& v)
+CC_DEPRECATED_ATTRIBUTE static inline Point ccpNormalize(const Point& v)
 {
     return v.normalize();
 }
@@ -227,7 +227,7 @@ CC_DEPRECATED_ATTRIBUTE static inline Point CC_DLL ccpNormalize(const Point& v)
  @return Point
  @since v0.7.2
  */
-CC_DEPRECATED_ATTRIBUTE static inline Point CC_DLL ccpForAngle(const float a)
+CC_DEPRECATED_ATTRIBUTE static inline Point ccpForAngle(const float a)
 {
     return Point::forAngle(a);
 }
@@ -236,7 +236,7 @@ CC_DEPRECATED_ATTRIBUTE static inline Point CC_DLL ccpForAngle(const float a)
  @return float
  @since v0.7.2
  */
-CC_DEPRECATED_ATTRIBUTE static inline float CC_DLL ccpToAngle(const Point& v)
+CC_DEPRECATED_ATTRIBUTE static inline float ccpToAngle(const Point& v)
 {
     return v.getAngle();
 }
@@ -245,7 +245,7 @@ CC_DEPRECATED_ATTRIBUTE static inline float CC_DLL ccpToAngle(const Point& v)
 /** Clamp a point between from and to.
  @since v0.99.1
  */
-CC_DEPRECATED_ATTRIBUTE static inline Point CC_DLL ccpClamp(const Point& p, const Point& from, const Point& to)
+CC_DEPRECATED_ATTRIBUTE static inline Point ccpClamp(const Point& p, const Point& from, const Point& to)
 {
     return p.getClampPoint(from, to);
 }
@@ -253,7 +253,7 @@ CC_DEPRECATED_ATTRIBUTE static inline Point CC_DLL ccpClamp(const Point& p, cons
 /** Quickly convert Size to a Point
  @since v0.99.1
  */
-CC_DEPRECATED_ATTRIBUTE static inline Point CC_DLL ccpFromSize(const Size& s)
+CC_DEPRECATED_ATTRIBUTE static inline Point ccpFromSize(const Size& s)
 {
     return Point(s);
 }
@@ -265,7 +265,7 @@ CC_DEPRECATED_ATTRIBUTE static inline Point CC_DLL ccpFromSize(const Size& s)
  * ccpCompOp(p,floorf);
  @since v0.99.1
  */
-CC_DEPRECATED_ATTRIBUTE static inline Point CC_DLL ccpCompOp(const Point& p, float (*opFunc)(float))
+CC_DEPRECATED_ATTRIBUTE static inline Point ccpCompOp(const Point& p, float (*opFunc)(float))
 {
     return p.compOp(opFunc);
 }
@@ -277,7 +277,7 @@ CC_DEPRECATED_ATTRIBUTE static inline Point CC_DLL ccpCompOp(const Point& p, flo
  otherwise a value between a..b
  @since v0.99.1
  */
-CC_DEPRECATED_ATTRIBUTE static inline Point CC_DLL ccpLerp(const Point& a, const Point& b, float alpha)
+CC_DEPRECATED_ATTRIBUTE static inline Point ccpLerp(const Point& a, const Point& b, float alpha)
 {
     return a.lerp(b, alpha);
 }
@@ -286,7 +286,7 @@ CC_DEPRECATED_ATTRIBUTE static inline Point CC_DLL ccpLerp(const Point& a, const
 /** @returns if points have fuzzy equality which means equal with some degree of variance.
  @since v0.99.1
  */
-CC_DEPRECATED_ATTRIBUTE static inline bool CC_DLL ccpFuzzyEqual(const Point& a, const Point& b, float variance)
+CC_DEPRECATED_ATTRIBUTE static inline bool ccpFuzzyEqual(const Point& a, const Point& b, float variance)
 {
     return a.fuzzyEquals(b, variance);
 }
@@ -296,7 +296,7 @@ CC_DEPRECATED_ATTRIBUTE static inline bool CC_DLL ccpFuzzyEqual(const Point& a, 
  @returns a component-wise multiplication
  @since v0.99.1
  */
-CC_DEPRECATED_ATTRIBUTE static inline Point CC_DLL ccpCompMult(const Point& a, const Point& b)
+CC_DEPRECATED_ATTRIBUTE static inline Point ccpCompMult(const Point& a, const Point& b)
 {
     return Point(a.x * b.x, a.y * b.y);
 }
@@ -304,7 +304,7 @@ CC_DEPRECATED_ATTRIBUTE static inline Point CC_DLL ccpCompMult(const Point& a, c
 /** @returns the signed angle in radians between two vector directions
  @since v0.99.1
  */
-CC_DEPRECATED_ATTRIBUTE static inline float CC_DLL ccpAngleSigned(const Point& a, const Point& b)
+CC_DEPRECATED_ATTRIBUTE static inline float ccpAngleSigned(const Point& a, const Point& b)
 {
     return a.getAngle(b);
 }
@@ -312,7 +312,7 @@ CC_DEPRECATED_ATTRIBUTE static inline float CC_DLL ccpAngleSigned(const Point& a
 /** @returns the angle in radians between two vector directions
  @since v0.99.1
  */
-CC_DEPRECATED_ATTRIBUTE static inline float CC_DLL ccpAngle(const Point& a, const Point& b)
+CC_DEPRECATED_ATTRIBUTE static inline float ccpAngle(const Point& a, const Point& b)
 {
     return a.getAngle(b);
 }
@@ -324,7 +324,7 @@ CC_DEPRECATED_ATTRIBUTE static inline float CC_DLL ccpAngle(const Point& a, cons
  @returns the rotated point
  @since v0.99.1
  */
-CC_DEPRECATED_ATTRIBUTE static inline Point CC_DLL ccpRotateByAngle(const Point& v, const Point& pivot, float angle)
+CC_DEPRECATED_ATTRIBUTE static inline Point ccpRotateByAngle(const Point& v, const Point& pivot, float angle)
 {
     return v.rotateByAngle(pivot, angle);
 }
@@ -350,7 +350,7 @@ CC_DEPRECATED_ATTRIBUTE static inline Point CC_DLL ccpRotateByAngle(const Point&
  the hit point also is    p1 + s * (p2 - p1);
  @since v0.99.1
  */
-CC_DEPRECATED_ATTRIBUTE static inline bool CC_DLL ccpLineIntersect(const Point& p1, const Point& p2,
+CC_DEPRECATED_ATTRIBUTE static inline bool ccpLineIntersect(const Point& p1, const Point& p2,
                                                      const Point& p3, const Point& p4,
                                                      float *s, float *t)
 {
@@ -361,7 +361,7 @@ CC_DEPRECATED_ATTRIBUTE static inline bool CC_DLL ccpLineIntersect(const Point& 
  ccpSegmentIntersect returns YES if Segment A-B intersects with segment C-D
  @since v1.0.0
  */
-CC_DEPRECATED_ATTRIBUTE static inline bool CC_DLL ccpSegmentIntersect(const Point& A, const Point& B, const Point& C, const Point& D)
+CC_DEPRECATED_ATTRIBUTE static inline bool ccpSegmentIntersect(const Point& A, const Point& B, const Point& C, const Point& D)
 {
     return Point::isSegmentIntersect(A, B, C, D);
 }
@@ -370,7 +370,7 @@ CC_DEPRECATED_ATTRIBUTE static inline bool CC_DLL ccpSegmentIntersect(const Poin
  ccpIntersectPoint returns the intersection point of line A-B, C-D
  @since v1.0.0
  */
-CC_DEPRECATED_ATTRIBUTE static inline Point CC_DLL ccpIntersectPoint(const Point& A, const Point& B, const Point& C, const Point& D)
+CC_DEPRECATED_ATTRIBUTE static inline Point ccpIntersectPoint(const Point& A, const Point& B, const Point& C, const Point& D)
 {
     return Point::getIntersectPoint(A, B, C, D);
 }
