@@ -27,7 +27,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     EGLView* eglView = EGLView::getInstance();
     eglView->setViewName("HelloLua");
     eglView->setFrameSize(480, 320);
-    int ret = Application::sharedApplication()->run();
+    int ret = Application::getInstance()->run();
 
 #ifdef USE_WIN32_CONSOLE
     FreeConsole();

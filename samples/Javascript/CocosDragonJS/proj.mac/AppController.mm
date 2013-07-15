@@ -62,7 +62,7 @@
 		[window makeKeyAndOrderFront:self];
 		[window setAcceptsMouseMovedEvents:NO];
 
-		cocos2d::Application::sharedApplication()->run();
+		cocos2d::Application::getInstance()->run();
 	}
 
 	-(BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication*)theApplication

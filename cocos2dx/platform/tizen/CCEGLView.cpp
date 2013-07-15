@@ -128,7 +128,7 @@ EGLView::OnTimerExpired(Tizen::Base::Runtime::Timer& timer)
     {
         return;
     }
-    __pTimer->Start(Application::sharedApplication()->getAnimationInterval());
+    __pTimer->Start(Application::getInstance()->getAnimationInterval());
 
     Director::getInstance()->mainLoop();
 }

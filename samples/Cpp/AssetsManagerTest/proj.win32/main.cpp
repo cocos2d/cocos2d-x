@@ -28,7 +28,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     eglView->setViewName("AssetsManagerTest");
     eglView->setFrameSize(800, 450);
 
-    int ret = Application::sharedApplication()->run();
+    int ret = Application::getInstance()->run();
 
 #ifdef USE_WIN32_CONSOLE
     FreeConsole();
