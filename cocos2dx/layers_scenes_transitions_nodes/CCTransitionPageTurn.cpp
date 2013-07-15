@@ -92,7 +92,7 @@ void TransitionPageTurn::onEnter()
             Sequence::create
             (
                 action,
-                CallFunc::create(this, callfunc_selector(TransitionScene::finish)),
+                CallFunc::create(CC_CALLBACK_0(TransitionScene::finish,this)),
                 StopGrid::create(),
                 NULL
             )
@@ -108,7 +108,7 @@ void TransitionPageTurn::onEnter()
             (
                 Show::create(),
                 action,
-                CallFunc::create(this, callfunc_selector(TransitionScene::finish)),
+                CallFunc::create(CC_CALLBACK_0(TransitionScene::finish,this)),
                 StopGrid::create(),
                 NULL
             )
