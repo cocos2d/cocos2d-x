@@ -48,11 +48,18 @@ public:
     ShaderCache();
 
     virtual ~ShaderCache();
+
     /** returns the shared instance */
-    static ShaderCache* sharedShaderCache();
+    static ShaderCache* getInstance();
 
     /** purges the cache. It releases the retained instance. */
-    static void purgeSharedShaderCache();
+    static void destroyInstance();
+
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static ShaderCache* sharedShaderCache();
+
+    /** @deprecated Use destroyInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static void purgeSharedShaderCache();
 
     /** loads the default shaders */
     void loadDefaultShaders();

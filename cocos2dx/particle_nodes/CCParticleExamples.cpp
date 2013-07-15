@@ -43,7 +43,7 @@ static Texture2D* getDefaultTexture()
     {
         bool bRet = false;
         const char* key = "__firePngData";
-        pTexture = TextureCache::sharedTextureCache()->textureForKey(key);
+        pTexture = TextureCache::getInstance()->textureForKey(key);
         CC_BREAK_IF(pTexture != NULL);
 
         pImage = new Image();
@@ -51,7 +51,7 @@ static Texture2D* getDefaultTexture()
         bRet = pImage->initWithImageData((void*)__firePngData, sizeof(__firePngData), Image::kFmtPng);
         CC_BREAK_IF(!bRet);
 
-        pTexture = TextureCache::sharedTextureCache()->addUIImage(pImage, key);
+        pTexture = TextureCache::getInstance()->addUIImage(pImage, key);
     } while (0);
 
     CC_SAFE_RELEASE(pImage);
@@ -98,7 +98,7 @@ bool ParticleFire::initWithTotalParticles(unsigned int numberOfParticles)
         this->_emitterMode = kParticleModeGravity;
 
         // Gravity Mode: gravity
-        this->modeA.gravity = ccp(0,0);
+        this->modeA.gravity = Point(0,0);
 
         // Gravity Mode: radial acceleration
         this->modeA.radialAccel = 0;
@@ -113,9 +113,9 @@ bool ParticleFire::initWithTotalParticles(unsigned int numberOfParticles)
         _angleVar = 10;
 
         // emitter position
-        Size winSize = Director::sharedDirector()->getWinSize();
-        this->setPosition(ccp(winSize.width/2, 60));
-        this->_posVar = ccp(40, 20);
+        Size winSize = Director::getInstance()->getWinSize();
+        this->setPosition(Point(winSize.width/2, 60));
+        this->_posVar = Point(40, 20);
 
         // life of particles
         _life = 3;
@@ -203,7 +203,7 @@ bool ParticleFireworks::initWithTotalParticles(unsigned int numberOfParticles)
         this->_emitterMode = kParticleModeGravity;
 
         // Gravity Mode: gravity
-        this->modeA.gravity = ccp(0,-90);
+        this->modeA.gravity = Point(0,-90);
 
         // Gravity Mode:  radial
         this->modeA.radialAccel = 0;
@@ -214,8 +214,8 @@ bool ParticleFireworks::initWithTotalParticles(unsigned int numberOfParticles)
         this->modeA.speedVar = 50;
 
         // emitter position
-        Size winSize = Director::sharedDirector()->getWinSize();
-        this->setPosition(ccp(winSize.width/2, winSize.height/2));
+        Size winSize = Director::getInstance()->getWinSize();
+        this->setPosition(Point(winSize.width/2, winSize.height/2));
 
         // angle
         this->_angle= 90;
@@ -307,7 +307,7 @@ bool ParticleSun::initWithTotalParticles(unsigned int numberOfParticles)
         setEmitterMode(kParticleModeGravity);
 
         // Gravity Mode: gravity
-        setGravity(ccp(0,0));
+        setGravity(Point(0,0));
 
         // Gravity mode: radial acceleration
         setRadialAccel(0);
@@ -323,9 +323,9 @@ bool ParticleSun::initWithTotalParticles(unsigned int numberOfParticles)
         _angleVar = 360;
 
         // emitter position
-        Size winSize = Director::sharedDirector()->getWinSize();
-        this->setPosition(ccp(winSize.width/2, winSize.height/2));
-        setPosVar(PointZero);
+        Size winSize = Director::getInstance()->getWinSize();
+        this->setPosition(Point(winSize.width/2, winSize.height/2));
+        setPosVar(Point::ZERO);
 
         // life of particles
         _life = 1;
@@ -411,7 +411,7 @@ bool ParticleGalaxy::initWithTotalParticles(unsigned int numberOfParticles)
         setEmitterMode(kParticleModeGravity);
 
         // Gravity Mode: gravity
-        setGravity(ccp(0,0));
+        setGravity(Point(0,0));
 
         // Gravity Mode: speed of particles
         setSpeed(60);
@@ -430,9 +430,9 @@ bool ParticleGalaxy::initWithTotalParticles(unsigned int numberOfParticles)
         _angleVar = 360;
 
         // emitter position
-        Size winSize = Director::sharedDirector()->getWinSize();
-        this->setPosition(ccp(winSize.width/2, winSize.height/2));
-        setPosVar(PointZero);
+        Size winSize = Director::getInstance()->getWinSize();
+        this->setPosition(Point(winSize.width/2, winSize.height/2));
+        setPosVar(Point::ZERO);
 
         // life of particles
         _life = 4;
@@ -520,7 +520,7 @@ bool ParticleFlower::initWithTotalParticles(unsigned int numberOfParticles)
         setEmitterMode(kParticleModeGravity);
 
         // Gravity Mode: gravity
-        setGravity(ccp(0,0));
+        setGravity(Point(0,0));
 
         // Gravity Mode: speed of particles
         setSpeed(80);
@@ -539,9 +539,9 @@ bool ParticleFlower::initWithTotalParticles(unsigned int numberOfParticles)
         _angleVar = 360;
 
         // emitter position
-        Size winSize = Director::sharedDirector()->getWinSize();
-        this->setPosition(ccp(winSize.width/2, winSize.height/2));
-        setPosVar(PointZero);
+        Size winSize = Director::getInstance()->getWinSize();
+        this->setPosition(Point(winSize.width/2, winSize.height/2));
+        setPosVar(Point::ZERO);
 
         // life of particles
         _life = 4;
@@ -628,7 +628,7 @@ bool ParticleMeteor::initWithTotalParticles(unsigned int numberOfParticles)
         setEmitterMode(kParticleModeGravity);
 
         // Gravity Mode: gravity
-        setGravity(ccp(-200,200));
+        setGravity(Point(-200,200));
 
         // Gravity Mode: speed of particles
         setSpeed(15);
@@ -647,9 +647,9 @@ bool ParticleMeteor::initWithTotalParticles(unsigned int numberOfParticles)
         _angleVar = 360;
 
         // emitter position
-        Size winSize = Director::sharedDirector()->getWinSize();
-        this->setPosition(ccp(winSize.width/2, winSize.height/2));
-        setPosVar(PointZero);
+        Size winSize = Director::getInstance()->getWinSize();
+        this->setPosition(Point(winSize.width/2, winSize.height/2));
+        setPosVar(Point::ZERO);
 
         // life of particles
         _life = 2;
@@ -737,7 +737,7 @@ bool ParticleSpiral::initWithTotalParticles(unsigned int numberOfParticles)
         setEmitterMode(kParticleModeGravity);
 
         // Gravity Mode: gravity
-        setGravity(ccp(0,0));
+        setGravity(Point(0,0));
 
         // Gravity Mode: speed of particles
         setSpeed(150);
@@ -756,9 +756,9 @@ bool ParticleSpiral::initWithTotalParticles(unsigned int numberOfParticles)
         _angleVar = 0;
 
         // emitter position
-        Size winSize = Director::sharedDirector()->getWinSize();
-        this->setPosition(ccp(winSize.width/2, winSize.height/2));
-        setPosVar(PointZero);
+        Size winSize = Director::getInstance()->getWinSize();
+        this->setPosition(Point(winSize.width/2, winSize.height/2));
+        setPosVar(Point::ZERO);
 
         // life of particles
         _life = 12;
@@ -845,7 +845,7 @@ bool ParticleExplosion::initWithTotalParticles(unsigned int numberOfParticles)
         setEmitterMode(kParticleModeGravity);
 
         // Gravity Mode: gravity
-        setGravity(ccp(0,0));
+        setGravity(Point(0,0));
 
         // Gravity Mode: speed of particles
         setSpeed(70);
@@ -864,9 +864,9 @@ bool ParticleExplosion::initWithTotalParticles(unsigned int numberOfParticles)
         _angleVar = 360;
 
         // emitter position
-        Size winSize = Director::sharedDirector()->getWinSize();
-        this->setPosition(ccp(winSize.width/2, winSize.height/2));
-        setPosVar(PointZero);
+        Size winSize = Director::getInstance()->getWinSize();
+        this->setPosition(Point(winSize.width/2, winSize.height/2));
+        setPosVar(Point::ZERO);
 
         // life of particles
         _life = 5.0f;
@@ -954,7 +954,7 @@ bool ParticleSmoke::initWithTotalParticles(unsigned int numberOfParticles)
         setEmitterMode(kParticleModeGravity);
 
         // Gravity Mode: gravity
-        setGravity(ccp(0,0));
+        setGravity(Point(0,0));
 
         // Gravity Mode: radial acceleration
         setRadialAccel(0);
@@ -969,9 +969,9 @@ bool ParticleSmoke::initWithTotalParticles(unsigned int numberOfParticles)
         _angleVar = 5;
 
         // emitter position
-        Size winSize = Director::sharedDirector()->getWinSize();
-        this->setPosition(ccp(winSize.width/2, 0));
-        setPosVar(ccp(20, 0));
+        Size winSize = Director::getInstance()->getWinSize();
+        this->setPosition(Point(winSize.width/2, 0));
+        setPosVar(Point(20, 0));
 
         // life of particles
         _life = 4;
@@ -1059,7 +1059,7 @@ bool ParticleSnow::initWithTotalParticles(unsigned int numberOfParticles)
         setEmitterMode(kParticleModeGravity);
 
         // Gravity Mode: gravity
-        setGravity(ccp(0,-1));
+        setGravity(Point(0,-1));
 
         // Gravity Mode: speed of particles
         setSpeed(5);
@@ -1074,9 +1074,9 @@ bool ParticleSnow::initWithTotalParticles(unsigned int numberOfParticles)
         setTangentialAccelVar(1);
 
         // emitter position
-        Size winSize = Director::sharedDirector()->getWinSize();
-        this->setPosition(ccp(winSize.width/2, winSize.height + 10));
-        setPosVar(ccp(winSize.width/2, 0));
+        Size winSize = Director::getInstance()->getWinSize();
+        this->setPosition(Point(winSize.width/2, winSize.height + 10));
+        setPosVar(Point(winSize.width/2, 0));
 
         // angle
         _angle = -90;
@@ -1166,7 +1166,7 @@ bool ParticleRain::initWithTotalParticles(unsigned int numberOfParticles)
         setEmitterMode(kParticleModeGravity);
 
         // Gravity Mode: gravity
-        setGravity(ccp(10,-10));
+        setGravity(Point(10,-10));
 
         // Gravity Mode: radial
         setRadialAccel(0);
@@ -1186,9 +1186,9 @@ bool ParticleRain::initWithTotalParticles(unsigned int numberOfParticles)
 
 
         // emitter position
-        Size winSize = Director::sharedDirector()->getWinSize();
-        this->setPosition(ccp(winSize.width/2, winSize.height));
-        setPosVar(ccp(winSize.width/2, 0));
+        Size winSize = Director::getInstance()->getWinSize();
+        this->setPosition(Point(winSize.width/2, winSize.height));
+        setPosVar(Point(winSize.width/2, 0));
 
         // life of particles
         _life = 4.5f;

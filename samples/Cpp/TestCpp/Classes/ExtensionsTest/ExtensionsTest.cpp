@@ -44,7 +44,7 @@ static struct {
 	{ "CCControlButtonTest", [](Object *sender){
 		ControlSceneManager* pManager = ControlSceneManager::sharedControlSceneManager();
 		Scene* pScene = pManager->currentControlScene();
-		Director::sharedDirector()->replaceScene(pScene);
+		Director::getInstance()->replaceScene(pScene);
 	}},
 	{ "CocosBuilderTest", [](Object *sender) {
 		TestScene* pScene = new CocosBuilderTestScene();
@@ -79,7 +79,7 @@ static struct {
 
 static const int g_maxTests = sizeof(g_extensionsTests) / sizeof(g_extensionsTests[0]);
 
-static Point s_tCurPos = PointZero;
+static Point s_tCurPos = Point::ZERO;
 
 ////////////////////////////////////////////////////////
 //
@@ -90,16 +90,16 @@ void ExtensionsMainLayer::onEnter()
 {
     Layer::onEnter();
     
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     
     _itemMenu = Menu::create();
-    _itemMenu->setPosition( PointZero );
+    _itemMenu->setPosition( Point::ZERO );
     MenuItemFont::setFontName("Arial");
     MenuItemFont::setFontSize(24);
     for (int i = 0; i < g_maxTests; ++i)
     {
         MenuItemFont* pItem = MenuItemFont::create(g_extensionsTests[i].name, g_extensionsTests[i].callback);
-        pItem->setPosition(ccp(s.width / 2, s.height - (i + 1) * LINE_SPACE));
+        pItem->setPosition(Point(s.width / 2, s.height - (i + 1) * LINE_SPACE));
         _itemMenu->addChild(pItem, kItemTagBasic + i);
     }
 
@@ -123,17 +123,17 @@ void ExtensionsMainLayer::ccTouchesMoved(Set *pTouches, Event *pEvent)
     float nMoveY = touchLocation.y - _beginPos.y;
 
     Point curPos  = _itemMenu->getPosition();
-    Point nextPos = ccp(curPos.x, curPos.y + nMoveY);
+    Point nextPos = Point(curPos.x, curPos.y + nMoveY);
 
     if (nextPos.y < 0.0f)
     {
-        _itemMenu->setPosition(PointZero);
+        _itemMenu->setPosition(Point::ZERO);
         return;
     }
 
     if (nextPos.y > ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        _itemMenu->setPosition(ccp(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(Point(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
         return;
     }
 
@@ -154,7 +154,7 @@ void ExtensionsTestScene::runThisTest()
     addChild(pLayer);
     pLayer->release();
     
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }
 
 

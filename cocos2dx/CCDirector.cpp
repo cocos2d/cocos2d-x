@@ -73,7 +73,7 @@ THE SOFTWARE.
  Default: 0,0 (bottom-left corner)
  */
 #ifndef CC_DIRECTOR_STATS_POSITION
-#define CC_DIRECTOR_STATS_POSITION Director::sharedDirector()->getVisibleOrigin()
+#define CC_DIRECTOR_STATS_POSITION Director::getInstance()->getVisibleOrigin()
 #endif
 
 using namespace std;
@@ -89,7 +89,7 @@ static DisplayLinkDirector *s_SharedDirector = NULL;
 #define kDefaultFPS        60  // 60 frames per second
 extern const char* cocos2dVersion(void);
 
-Director* Director::sharedDirector(void)
+Director* Director::getInstance()
 {
     if (!s_SharedDirector)
     {
@@ -98,6 +98,12 @@ Director* Director::sharedDirector(void)
     }
 
     return s_SharedDirector;
+}
+
+// XXX: deprecated
+Director* Director::sharedDirector()
+{
+    return Director::getInstance();
 }
 
 Director::Director(void)
@@ -137,7 +143,7 @@ bool Director::init(void)
     // purge ?
     _purgeDirecotorInNextLoop = false;
 
-    _winSizeInPoints = SizeZero;    
+    _winSizeInPoints = Size::ZERO;    
 
     _openGLView = NULL;
 
@@ -199,7 +205,7 @@ Director::~Director(void)
 
 void Director::setDefaultValues(void)
 {
-	Configuration *conf = Configuration::sharedConfiguration();
+	Configuration *conf = Configuration::getInstance();
 
 	// default FPS
 	double fps = conf->getNumber("cocos2d.x.fps", kDefaultFPS);
@@ -348,7 +354,7 @@ void Director::setOpenGLView(EGLView *pobOpenGLView)
     if (_openGLView != pobOpenGLView)
     {
 		// Configuration. Gather GPU info
-		Configuration *conf = Configuration::sharedConfiguration();
+		Configuration *conf = Configuration::getInstance();
 		conf->gatherGPUInfo();
 		conf->dumpInfo();
 
@@ -453,9 +459,9 @@ void Director::purgeCachedData(void)
     LabelBMFont::purgeCachedData();
     if (s_SharedDirector->getOpenGLView())
     {
-        TextureCache::sharedTextureCache()->removeUnusedTextures();
+        TextureCache::getInstance()->removeUnusedTextures();
     }
-    FileUtils::sharedFileUtils()->purgeCachedEntries();
+    FileUtils::getInstance()->purgeCachedEntries();
 }
 
 float Director::getZEye(void) const
@@ -522,7 +528,7 @@ Point Director::convertToGL(const Point& uiPoint)
 	kmVec3 glCoord;
 	kmVec3TransformCoord(&glCoord, &clipCoord, &transformInv);
 	
-	return ccp(glCoord.x, glCoord.y);
+	return Point(glCoord.x, glCoord.y);
 }
 
 Point Director::convertToUI(const Point& glPoint)
@@ -536,7 +542,7 @@ Point Director::convertToUI(const Point& glPoint)
 	kmVec3TransformCoord(&clipCoord, &glCoord, &transform);
 	
 	Size glSize = _openGLView->getDesignResolutionSize();
-	return ccp(glSize.width*(clipCoord.x*0.5 + 0.5), glSize.height*(-clipCoord.y*0.5 + 0.5));
+	return Point(glSize.width*(clipCoord.x*0.5 + 0.5), glSize.height*(-clipCoord.y*0.5 + 0.5));
 }
 
 const Size& Director::getWinSize(void) const
@@ -546,7 +552,7 @@ const Size& Director::getWinSize(void) const
 
 Size Director::getWinSizeInPixels() const
 {
-    return CCSizeMake(_winSizeInPoints.width * _contentScaleFactor, _winSizeInPoints.height * _contentScaleFactor);
+    return Size(_winSizeInPoints.width * _contentScaleFactor, _winSizeInPoints.height * _contentScaleFactor);
 }
 
 Size Director::getVisibleSize() const
@@ -557,7 +563,7 @@ Size Director::getVisibleSize() const
     }
     else 
     {
-        return SizeZero;
+        return Size::ZERO;
     }
 }
 
@@ -569,7 +575,7 @@ Point Director::getVisibleOrigin() const
     }
     else 
     {
-        return PointZero;
+        return Point::ZERO;
     }
 }
 
@@ -706,16 +712,16 @@ void Director::purgeDirector()
 
     // purge all managed caches
     ccDrawFree();
-    AnimationCache::purgeSharedAnimationCache();
-    SpriteFrameCache::purgeSharedSpriteFrameCache();
-    TextureCache::purgeSharedTextureCache();
-    ShaderCache::purgeSharedShaderCache();
-    FileUtils::purgeFileUtils();
-    Configuration::purgeConfiguration();
+    AnimationCache::destroyInstance();
+    SpriteFrameCache::destroyInstance();
+    TextureCache::destroyInstance();
+    ShaderCache::destroyInstance();
+    FileUtils::destroyInstance();
+    Configuration::destroyInstance();
 
     // cocos2d-x specific data structures
-    UserDefault::purgeSharedUserDefault();
-    NotificationCenter::purgeNotificationCenter();
+    UserDefault::destroyInstance();
+    NotificationCenter::destroyInstance();
 
     ccGLInvalidateStateCache();
     
@@ -853,7 +859,7 @@ void Director::getFPSImageData(unsigned char** datapointer, unsigned int* length
 void Director::createStatsLabel()
 {
     Texture2D *texture = NULL;
-    TextureCache *textureCache = TextureCache::sharedTextureCache();
+    TextureCache *textureCache = TextureCache::getInstance();
 
     if( _FPSLabel && _SPFLabel )
     {
@@ -861,7 +867,7 @@ void Director::createStatsLabel()
         CC_SAFE_RELEASE_NULL(_SPFLabel);
         CC_SAFE_RELEASE_NULL(_drawsLabel);
         textureCache->removeTextureForKey("cc_fps_images");
-        FileUtils::sharedFileUtils()->purgeCachedEntries();
+        FileUtils::getInstance()->purgeCachedEntries();
     }
 
     Texture2DPixelFormat currentFormat = Texture2D::defaultAlphaPixelFormat();
@@ -893,7 +899,7 @@ void Director::createStatsLabel()
      Secondly, the size of this image is 480*320, to display the FPS label with correct size, 
      a factor of design resolution ratio of 480x320 is also needed.
      */
-    float factor = EGLView::sharedOpenGLView()->getDesignResolutionSize().height / 320.0f;
+    float factor = EGLView::getInstance()->getDesignResolutionSize().height / 320.0f;
 
     _FPSLabel = new LabelAtlas();
     _FPSLabel->setIgnoreContentScaleFactor(true);
@@ -912,8 +918,8 @@ void Director::createStatsLabel()
 
     Texture2D::setDefaultAlphaPixelFormat(currentFormat);
 
-    _drawsLabel->setPosition(ccpAdd(ccp(0, 34*factor), CC_DIRECTOR_STATS_POSITION));
-    _SPFLabel->setPosition(ccpAdd(ccp(0, 17*factor), CC_DIRECTOR_STATS_POSITION));
+    _drawsLabel->setPosition(Point(0, 34*factor) + CC_DIRECTOR_STATS_POSITION);
+    _SPFLabel->setPosition(Point(0, 17*factor) + CC_DIRECTOR_STATS_POSITION);
     _FPSLabel->setPosition(CC_DIRECTOR_STATS_POSITION);
 }
 

@@ -235,7 +235,7 @@ EditBoxImpl* __createSystemEditBox(EditBox* pEditBox)
 
 EditBoxImplMac::EditBoxImplMac(EditBox* pEditText)
 : EditBoxImpl(pEditText), _sysEdit(NULL), _maxTextLength(-1)
-, _anchorPoint(ccp(0.5f, 0.5f))
+, _anchorPoint(Point(0.5f, 0.5f))
 {
     //! TODO: Retina on Mac
     //! _inRetinaMode = [[CCEAGLView sharedEGLView] contentScaleFactor] == 2.0f ? true : false;
@@ -255,7 +255,7 @@ void EditBoxImplMac::doAnimationWhenKeyboardMove(float duration, float distance)
 
 bool EditBoxImplMac::initWithSize(const Size& size)
 {
-    EGLViewProtocol* eglView = EGLView::sharedOpenGLView();
+    EGLViewProtocol* eglView = EGLView::getInstance();
 
     NSRect rect = NSMakeRect(0, 0, size.width * eglView->getScaleX(),size.height * eglView->getScaleY());
 
@@ -346,9 +346,9 @@ NSPoint EditBoxImplMac::convertDesignCoordToScreenCoord(const Point& designCoord
     NSRect frame = [_sysEdit.textField frame];
     CGFloat height = frame.size.height;
     
-    EGLViewProtocol* eglView = EGLView::sharedOpenGLView();
+    EGLViewProtocol* eglView = EGLView::getInstance();
 
-    Point visiblePos = ccp(designCoord.x * eglView->getScaleX(), designCoord.y * eglView->getScaleY());
+    Point visiblePos = Point(designCoord.x * eglView->getScaleX(), designCoord.y * eglView->getScaleY());
     Point screenGLPos = ccpAdd(visiblePos, eglView->getViewPortRect().origin);
     
     //TODO: I don't know why here needs to substract `height`.
@@ -366,11 +366,11 @@ NSPoint EditBoxImplMac::convertDesignCoordToScreenCoord(const Point& designCoord
 void EditBoxImplMac::adjustTextFieldPosition()
 {
 	Size contentSize = _editBox->getContentSize();
-	Rect rect = CCRectMake(0, 0, contentSize.width, contentSize.height);
+	Rect rect = Rect(0, 0, contentSize.width, contentSize.height);
 
     rect = RectApplyAffineTransform(rect, _editBox->nodeToWorldTransform());
 	
-	Point designCoord = ccp(rect.origin.x, rect.origin.y + rect.size.height);
+	Point designCoord = Point(rect.origin.x, rect.origin.y + rect.size.height);
     [_sysEdit setPosition:convertDesignCoordToScreenCoord(designCoord, _inRetinaMode)];
 }
 

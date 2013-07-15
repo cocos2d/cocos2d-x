@@ -81,7 +81,7 @@ int Application::Run()
 
 		quitRequested = s3eDeviceCheckQuitRequest();
 		if( quitRequested) {
-            Director* pDirector = Director::sharedDirector();
+            Director* pDirector = Director::getInstance();
             // if opengl view has been released, delete the director.
             if (pDirector->getOpenGLView() == NULL)
             {
@@ -98,7 +98,7 @@ int Application::Run()
 			break;
 		}
 
-        Director::sharedDirector()->mainLoop();
+        Director::getInstance()->mainLoop();
 
 		while ((s3eTimerGetMs() - updateTime) < _animationInterval) {
 			int32 yield = (int32) (_animationInterval - (s3eTimerGetMs() - updateTime));
@@ -122,7 +122,7 @@ void Application::ccAccelerationUpdate()
 {
 // Accelerometer doesn't work on Marmalade X86 MacOS-X simulator
 #if !(defined(__APPLE__) && defined(I3D_ARCH_X86))
-	Director* pDirector = Director::sharedDirector();
+	Director* pDirector = Director::getInstance();
 	pDirector->getAccelerometer()->update((float)s3eAccelerometerGetX(), (float)s3eAccelerometerGetY(), (float)s3eAccelerometerGetZ(), s3eTimerGetMs());	// MH: Added casting to float
 #endif
 }

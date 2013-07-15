@@ -207,7 +207,7 @@ int LuaEngine::executeLayerTouchEvent(Layer* pLayer, int eventType, Touch *pTouc
             return 0;
     }
     
-    const Point pt = Director::sharedDirector()->convertToGL(pTouch->getLocationInView());
+    const Point pt = Director::getInstance()->convertToGL(pTouch->getLocationInView());
     _stack->pushFloat(pt.x);
     _stack->pushFloat(pt.y);
     int ret = _stack->executeFunctionByHandler(nHandler, 3);
@@ -244,7 +244,7 @@ int LuaEngine::executeLayerTouchesEvent(Layer* pLayer, int eventType, Set *pTouc
             return 0;
     }
 
-    Director* pDirector = Director::sharedDirector();
+    Director* pDirector = Director::getInstance();
     lua_State *L = _stack->getLuaState();
     lua_newtable(L);
     int i = 1;
@@ -648,7 +648,7 @@ int LuaEngine::handleLayerTouchesEvent(Layer* layer,int actionType,Set* touches)
             return 0;
     }
     
-    Director* pDirector = Director::sharedDirector();
+    Director* pDirector = Director::getInstance();
     lua_State *L = _stack->getLuaState();
     int count = touches->count();
     int ret = 0;
@@ -656,7 +656,7 @@ int LuaEngine::handleLayerTouchesEvent(Layer* layer,int actionType,Set* touches)
     {
         Touch* touch = (Touch*)*(touches->begin());
         if (NULL != touch) {
-            const Point pt = Director::sharedDirector()->convertToGL(touch->getLocationInView());
+            const Point pt = Director::getInstance()->convertToGL(touch->getLocationInView());
             _stack->pushFloat(pt.x);
             _stack->pushFloat(pt.y);
             ret = _stack->executeFunctionByHandler(handler, 3);

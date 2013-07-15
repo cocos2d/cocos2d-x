@@ -69,13 +69,13 @@ void TransitionProgress::onEnter()
     
     // create a transparent color layer
     // in which we are going to add our rendertextures
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
 
     // create the second render texture for outScene
     RenderTexture *texture = RenderTexture::create((int)size.width, (int)size.height);
-    texture->getSprite()->setAnchorPoint(ccp(0.5f,0.5f));
-    texture->setPosition(ccp(size.width/2, size.height/2));
-    texture->setAnchorPoint(ccp(0.5f,0.5f));
+    texture->getSprite()->setAnchorPoint(Point(0.5f,0.5f));
+    texture->setPosition(Point(size.width/2, size.height/2));
+    texture->setAnchorPoint(Point(0.5f,0.5f));
 
     // render outScene to its texturebuffer
     texture->clear(0, 0, 0, 1);
@@ -135,7 +135,7 @@ ProgressTimer* TransitionProgress::progressTimerNodeWithRenderTexture(RenderText
 
 ProgressTimer* TransitionProgressRadialCCW::progressTimerNodeWithRenderTexture(RenderTexture* texture)
 {
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
 
     ProgressTimer* pNode = ProgressTimer::create(texture->getSprite());
 
@@ -146,8 +146,8 @@ ProgressTimer* TransitionProgressRadialCCW::progressTimerNodeWithRenderTexture(R
     //    Return the radial type that we want to use
     pNode->setReverseDirection(false);
     pNode->setPercentage(100);
-    pNode->setPosition(ccp(size.width/2, size.height/2));
-    pNode->setAnchorPoint(ccp(0.5f,0.5f));
+    pNode->setPosition(Point(size.width/2, size.height/2));
+    pNode->setAnchorPoint(Point(0.5f,0.5f));
     
     return pNode;
 }
@@ -179,7 +179,7 @@ TransitionProgressRadialCW* TransitionProgressRadialCW::create(float t, Scene* s
 
 ProgressTimer* TransitionProgressRadialCW::progressTimerNodeWithRenderTexture(RenderTexture* texture)
 {
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
     
     ProgressTimer* pNode = ProgressTimer::create(texture->getSprite());
     
@@ -190,8 +190,8 @@ ProgressTimer* TransitionProgressRadialCW::progressTimerNodeWithRenderTexture(Re
     //    Return the radial type that we want to use
     pNode->setReverseDirection(true);
     pNode->setPercentage(100);
-    pNode->setPosition(ccp(size.width/2, size.height/2));
-    pNode->setAnchorPoint(ccp(0.5f,0.5f));
+    pNode->setPosition(Point(size.width/2, size.height/2));
+    pNode->setAnchorPoint(Point(0.5f,0.5f));
     
     return pNode;
 }
@@ -211,7 +211,7 @@ TransitionProgressHorizontal* TransitionProgressHorizontal::create(float t, Scen
 
 ProgressTimer* TransitionProgressHorizontal::progressTimerNodeWithRenderTexture(RenderTexture* texture)
 {    
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
 
     ProgressTimer* pNode = ProgressTimer::create(texture->getSprite());
     
@@ -219,12 +219,12 @@ ProgressTimer* TransitionProgressHorizontal::progressTimerNodeWithRenderTexture(
     pNode->getSprite()->setFlipY(true);
     pNode->setType( kProgressTimerTypeBar);
     
-    pNode->setMidpoint(ccp(1, 0));
-    pNode->setBarChangeRate(ccp(1,0));
+    pNode->setMidpoint(Point(1, 0));
+    pNode->setBarChangeRate(Point(1,0));
     
     pNode->setPercentage(100);
-    pNode->setPosition(ccp(size.width/2, size.height/2));
-    pNode->setAnchorPoint(ccp(0.5f,0.5f));
+    pNode->setPosition(Point(size.width/2, size.height/2));
+    pNode->setAnchorPoint(Point(0.5f,0.5f));
 
     return pNode;
 }
@@ -244,7 +244,7 @@ TransitionProgressVertical* TransitionProgressVertical::create(float t, Scene* s
 
 ProgressTimer* TransitionProgressVertical::progressTimerNodeWithRenderTexture(RenderTexture* texture)
 {    
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
     
     ProgressTimer* pNode = ProgressTimer::create(texture->getSprite());
     
@@ -252,12 +252,12 @@ ProgressTimer* TransitionProgressVertical::progressTimerNodeWithRenderTexture(Re
     pNode->getSprite()->setFlipY(true);
     pNode->setType(kProgressTimerTypeBar);
     
-    pNode->setMidpoint(ccp(0, 0));
-    pNode->setBarChangeRate(ccp(0,1));
+    pNode->setMidpoint(Point(0, 0));
+    pNode->setBarChangeRate(Point(0,1));
     
     pNode->setPercentage(100);
-    pNode->setPosition(ccp(size.width/2, size.height/2));
-    pNode->setAnchorPoint(ccp(0.5f,0.5f));
+    pNode->setPosition(Point(size.width/2, size.height/2));
+    pNode->setAnchorPoint(Point(0.5f,0.5f));
     
     return pNode;
 }
@@ -290,7 +290,7 @@ void TransitionProgressInOut::setupTransition()
 
 ProgressTimer* TransitionProgressInOut::progressTimerNodeWithRenderTexture(RenderTexture* texture)
 {    
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
     
     ProgressTimer* pNode = ProgressTimer::create(texture->getSprite());
     
@@ -298,12 +298,12 @@ ProgressTimer* TransitionProgressInOut::progressTimerNodeWithRenderTexture(Rende
     pNode->getSprite()->setFlipY(true);
     pNode->setType( kProgressTimerTypeBar);
     
-    pNode->setMidpoint(ccp(0.5f, 0.5f));
-    pNode->setBarChangeRate(ccp(1, 1));
+    pNode->setMidpoint(Point(0.5f, 0.5f));
+    pNode->setBarChangeRate(Point(1, 1));
     
     pNode->setPercentage(0);
-    pNode->setPosition(ccp(size.width/2, size.height/2));
-    pNode->setAnchorPoint(ccp(0.5f,0.5f));
+    pNode->setPosition(Point(size.width/2, size.height/2));
+    pNode->setAnchorPoint(Point(0.5f,0.5f));
     
     return pNode;
 }
@@ -324,7 +324,7 @@ TransitionProgressOutIn* TransitionProgressOutIn::create(float t, Scene* scene)
 
 ProgressTimer* TransitionProgressOutIn::progressTimerNodeWithRenderTexture(RenderTexture* texture)
 {    
-    Size size = Director::sharedDirector()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
     
     ProgressTimer* pNode = ProgressTimer::create(texture->getSprite());
     
@@ -332,12 +332,12 @@ ProgressTimer* TransitionProgressOutIn::progressTimerNodeWithRenderTexture(Rende
     pNode->getSprite()->setFlipY(true);
     pNode->setType( kProgressTimerTypeBar );
     
-    pNode->setMidpoint(ccp(0.5f, 0.5f));
-    pNode->setBarChangeRate(ccp(1, 1));
+    pNode->setMidpoint(Point(0.5f, 0.5f));
+    pNode->setBarChangeRate(Point(1, 1));
     
     pNode->setPercentage(100);
-    pNode->setPosition(ccp(size.width/2, size.height/2));
-    pNode->setAnchorPoint(ccp(0.5f,0.5f));
+    pNode->setPosition(Point(size.width/2, size.height/2));
+    pNode->setAnchorPoint(Point(0.5f,0.5f));
     
     return pNode;
 }

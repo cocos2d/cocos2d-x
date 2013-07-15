@@ -44,7 +44,8 @@ static std::function<Layer*()> createFunctions[] = {
     CL(S9FrameNameSpriteSheetInsetsScaled),
     CL(S9FrameNameSpriteSheetRotatedInsets),
     CL(S9_TexturePacker),
-    CL(S9FrameNameSpriteSheetRotatedInsetsScaled)
+    CL(S9FrameNameSpriteSheetRotatedInsetsScaled),
+    CL(S9FrameNameSpriteSheetRotatedSetCapInsetLater)
 };
 
 static int sceneIdx=-1;
@@ -90,7 +91,7 @@ void S9SpriteTestScene::runThisTest()
     sceneIdx = -1;
     addChild(nextAction());
     
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }
 
 //------------------------------------------------------------------
@@ -102,7 +103,7 @@ void S9SpriteTestScene::runThisTest()
 void S9SpriteTestDemo::onEnter()
 {
     BaseTest::onEnter();
-    SpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(s_s9s_blocks9_plist);
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile(s_s9s_blocks9_plist);
     CCLOG("sprite frames added to sprite frame cache...");
 }
 
@@ -110,7 +111,7 @@ void S9SpriteTestDemo::restartCallback(Object* sender)
 {
     Scene* s = new S9SpriteTestScene();
     s->addChild( restartAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -118,7 +119,7 @@ void S9SpriteTestDemo::nextCallback(Object* sender)
 {
     Scene* s = new S9SpriteTestScene();
     s->addChild( nextAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -126,7 +127,7 @@ void S9SpriteTestDemo::backCallback(Object* sender)
 {
     Scene* s = new S9SpriteTestScene();
     s->addChild( backAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -136,7 +137,7 @@ void S9SpriteTestDemo::backCallback(Object* sender)
 void S9BatchNodeBasic::onEnter()
 {
     S9SpriteTestDemo::onEnter();
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
     
@@ -176,7 +177,7 @@ std::string S9BatchNodeBasic::subtitle()
 void S9FrameNameSpriteSheet::onEnter()
 {
     S9SpriteTestDemo::onEnter();
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
@@ -210,7 +211,7 @@ std::string S9FrameNameSpriteSheet::subtitle()
 void S9FrameNameSpriteSheetRotated::onEnter()
 {
     S9SpriteTestDemo::onEnter();
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
@@ -245,7 +246,7 @@ std::string S9FrameNameSpriteSheetRotated::subtitle()
 void S9BatchNodeScaledNoInsets::onEnter()
 {
     S9SpriteTestDemo::onEnter();
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
@@ -289,7 +290,7 @@ std::string S9BatchNodeScaledNoInsets::subtitle()
 void S9FrameNameSpriteSheetScaledNoInsets::onEnter()
 {
     S9SpriteTestDemo::onEnter();
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
@@ -328,7 +329,7 @@ std::string S9FrameNameSpriteSheetScaledNoInsets::subtitle()
 void S9FrameNameSpriteSheetRotatedScaledNoInsets::onEnter()
 {
     S9SpriteTestDemo::onEnter();
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
@@ -367,7 +368,7 @@ std::string S9FrameNameSpriteSheetRotatedScaledNoInsets::subtitle()
 void S9BatchNodeScaleWithCapInsets::onEnter()
 {
     S9SpriteTestDemo::onEnter();
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
@@ -411,7 +412,7 @@ std::string S9BatchNodeScaleWithCapInsets::subtitle()
 void S9FrameNameSpriteSheetInsets::onEnter()
 {
     S9SpriteTestDemo::onEnter();
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
@@ -445,7 +446,7 @@ std::string S9FrameNameSpriteSheetInsets::subtitle()
 void S9FrameNameSpriteSheetInsetsScaled::onEnter()
 {
     S9SpriteTestDemo::onEnter();
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
@@ -482,7 +483,7 @@ std::string S9FrameNameSpriteSheetInsetsScaled::subtitle()
 void S9FrameNameSpriteSheetRotatedInsets::onEnter()
 {
     S9SpriteTestDemo::onEnter();
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
@@ -517,8 +518,8 @@ std::string S9FrameNameSpriteSheetRotatedInsets::subtitle()
 void S9_TexturePacker::onEnter()
 {
     S9SpriteTestDemo::onEnter();
-    Size winSize = Director::sharedDirector()->getWinSize();
-    SpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(s_s9s_ui_plist);
+    Size winSize = Director::getInstance()->getWinSize();
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile(s_s9s_ui_plist);
 
     float x = winSize.width / 4;
     float y = 0 + (winSize.height / 2);
@@ -531,7 +532,7 @@ void S9_TexturePacker::onEnter()
     s->setPosition(Point(x, y));
     CCLog("... setPosition");
 
-    s->setContentSize(Size(21 * 16, 13 * 16));
+    s->setContentSize(Size(14 * 16, 10 * 16));
     CCLog("... setContentSize");
 
     this->addChild(s);
@@ -545,7 +546,7 @@ void S9_TexturePacker::onEnter()
     s2->setPosition(Point(x, y));
     CCLog("... setPosition");
 
-    s2->setContentSize(Size(21 * 16, 13 * 16));
+    s2->setContentSize(Size(14 * 16, 10 * 16));
     CCLog("... setContentSize");
 
     this->addChild(s2);
@@ -571,7 +572,7 @@ std::string S9_TexturePacker::subtitle()
 void S9FrameNameSpriteSheetRotatedInsetsScaled::onEnter()
 {
     S9SpriteTestDemo::onEnter();
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
@@ -600,4 +601,43 @@ std::string S9FrameNameSpriteSheetRotatedInsetsScaled::title()
 std::string S9FrameNameSpriteSheetRotatedInsetsScaled::subtitle()
 {
     return "createWithSpriteFrameName(); default cap insets; rendered scaled 4.5 X width, 2.5 X height";
+}
+
+//
+//// Scale9FrameNameSpriteSheetRotatedSetCapInsetLater
+//
+
+void S9FrameNameSpriteSheetRotatedSetCapInsetLater::onEnter()
+{
+    S9SpriteTestDemo::onEnter();
+    Size winSize = Director::getInstance()->getWinSize();
+    float x = winSize.width / 2;
+    float y = 0 + (winSize.height / 2);
+    
+    CCLog("Scale9FrameNameSpriteSheetRotatedSetCapInsetLater ...");
+    
+    auto blocks_scaled_with_insets = Scale9Sprite::createWithSpriteFrameName("blocks9r.png");
+    CCLog("... created");
+    
+    blocks_scaled_with_insets->setInsetLeft(32);
+    blocks_scaled_with_insets->setInsetRight(32);
+
+    blocks_scaled_with_insets->setPreferredSize(Size(32*5.5f, 32*4));
+    blocks_scaled_with_insets->setPosition(Point(x, y));
+    CCLog("... setPosition");
+    
+    this->addChild(blocks_scaled_with_insets);
+    CCLog("this->addChild");
+    
+    CCLog("... Scale9FrameNameSpriteSheetRotatedSetCapInsetLater done.");
+}
+
+std::string S9FrameNameSpriteSheetRotatedSetCapInsetLater::title()
+{
+    return "Scale9Sprite from sprite sheet (stored rotated), with setting CapInset later";
+}
+
+std::string S9FrameNameSpriteSheetRotatedSetCapInsetLater::subtitle()
+{
+    return "createWithSpriteFrameName(); setInsetLeft(32); setInsetRight(32);";
 }

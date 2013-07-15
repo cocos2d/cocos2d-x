@@ -43,22 +43,34 @@ using namespace std;
 
 NS_CC_BEGIN
 
-static SpriteFrameCache *pSharedSpriteFrameCache = NULL;
+static SpriteFrameCache *_sharedSpriteFrameCache = NULL;
 
-SpriteFrameCache* SpriteFrameCache::sharedSpriteFrameCache(void)
+SpriteFrameCache* SpriteFrameCache::getInstance()
 {
-    if (! pSharedSpriteFrameCache)
+    if (! _sharedSpriteFrameCache)
     {
-        pSharedSpriteFrameCache = new SpriteFrameCache();
-        pSharedSpriteFrameCache->init();
+        _sharedSpriteFrameCache = new SpriteFrameCache();
+        _sharedSpriteFrameCache->init();
     }
 
-    return pSharedSpriteFrameCache;
+    return _sharedSpriteFrameCache;
 }
 
+void SpriteFrameCache::destroyInstance()
+{
+    CC_SAFE_RELEASE_NULL(_sharedSpriteFrameCache);
+}
+
+// XXX: deprecated
+SpriteFrameCache* SpriteFrameCache::sharedSpriteFrameCache(void)
+{
+    return SpriteFrameCache::getInstance();
+}
+
+// XXX: deprecated
 void SpriteFrameCache::purgeSharedSpriteFrameCache(void)
 {
-    CC_SAFE_RELEASE_NULL(pSharedSpriteFrameCache);
+    return SpriteFrameCache::destroyInstance();
 }
 
 bool SpriteFrameCache::init(void)
@@ -132,10 +144,10 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(Dictionary* dictionary, Tex
             // create frame
             spriteFrame = new SpriteFrame();
             spriteFrame->initWithTexture(pobTexture, 
-                                        CCRectMake(x, y, w, h), 
+                                        Rect(x, y, w, h), 
                                         false,
-                                        CCPointMake(ox, oy),
-                                        CCSizeMake((float)ow, (float)oh)
+                                        Point(ox, oy),
+                                        Size((float)ow, (float)oh)
                                         );
         } 
         else if(format == 1 || format == 2) 
@@ -189,7 +201,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(Dictionary* dictionary, Tex
             // create frame
             spriteFrame = new SpriteFrame();
             spriteFrame->initWithTexture(pobTexture,
-                            CCRectMake(textureRect.origin.x, textureRect.origin.y, spriteSize.width, spriteSize.height),
+                            Rect(textureRect.origin.x, textureRect.origin.y, spriteSize.width, spriteSize.height),
                             textureRotated,
                             spriteOffset,
                             spriteSourceSize);
@@ -203,7 +215,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(Dictionary* dictionary, Tex
 
 void SpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist, Texture2D *pobTexture)
 {
-    std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszPlist);
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(pszPlist);
     Dictionary *dict = Dictionary::createWithContentsOfFileThreadSafe(fullPath.c_str());
 
     addSpriteFramesWithDictionary(dict, pobTexture);
@@ -214,7 +226,7 @@ void SpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist, Texture2D *
 void SpriteFrameCache::addSpriteFramesWithFile(const char* plist, const char* textureFileName)
 {
     CCAssert(textureFileName, "texture name should not be null");
-    Texture2D *texture = TextureCache::sharedTextureCache()->addImage(textureFileName);
+    Texture2D *texture = TextureCache::getInstance()->addImage(textureFileName);
 
     if (texture)
     {
@@ -232,7 +244,7 @@ void SpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
 
     if (_loadedFileNames->find(pszPlist) == _loadedFileNames->end())
     {
-        std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszPlist);
+        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(pszPlist);
         Dictionary *dict = Dictionary::createWithContentsOfFileThreadSafe(fullPath.c_str());
 
         string texturePath("");
@@ -247,7 +259,7 @@ void SpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
         if (! texturePath.empty())
         {
             // build texture path relative to plist file
-            texturePath = FileUtils::sharedFileUtils()->fullPathFromRelativeFile(texturePath.c_str(), pszPlist);
+            texturePath = FileUtils::getInstance()->fullPathFromRelativeFile(texturePath.c_str(), pszPlist);
         }
         else
         {
@@ -264,7 +276,7 @@ void SpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
             CCLOG("cocos2d: SpriteFrameCache: Trying to use file %s as texture", texturePath.c_str());
         }
 
-        Texture2D *pTexture = TextureCache::sharedTextureCache()->addImage(texturePath.c_str());
+        Texture2D *pTexture = TextureCache::getInstance()->addImage(texturePath.c_str());
 
         if (pTexture)
         {
@@ -343,7 +355,7 @@ void SpriteFrameCache::removeSpriteFrameByName(const char *pszName)
 
 void SpriteFrameCache::removeSpriteFramesFromFile(const char* plist)
 {
-    std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(plist);
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(plist);
     Dictionary* dict = Dictionary::createWithContentsOfFileThreadSafe(fullPath.c_str());
 
     removeSpriteFramesFromDictionary((Dictionary*)dict);

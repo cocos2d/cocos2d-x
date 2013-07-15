@@ -32,7 +32,7 @@ void TouchesMainScene::showCurrentTest()
         pScene->addChild(pLayer);
         pLayer->release();
 
-        Director::sharedDirector()->replaceScene(pScene);
+        Director::getInstance()->replaceScene(pScene);
     }
 }
 
@@ -40,17 +40,17 @@ void TouchesMainScene::onEnter()
 {
     PerformBasicLayer::onEnter();
 
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     // add title
     LabelTTF *label = LabelTTF::create(title().c_str(), "Arial", 32);
     addChild(label, 1);
-    label->setPosition(ccp(s.width/2, s.height-50));
+    label->setPosition(Point(s.width/2, s.height-50));
 
     scheduleUpdate();
 
     _plabel = LabelBMFont::create("00.0", "fonts/arial16.fnt");
-    _plabel->setPosition(ccp(s.width/2, s.height/2));
+    _plabel->setPosition(Point(s.width/2, s.height/2));
     addChild(_plabel);
 
     elapsedTime = 0;
@@ -99,7 +99,7 @@ std::string TouchesPerformTest1::title()
 
 void TouchesPerformTest1::registerWithTouchDispatcher()
 {
-    Director* pDirector = Director::sharedDirector();
+    Director* pDirector = Director::getInstance();
     pDirector->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
 }
 
@@ -142,7 +142,7 @@ std::string TouchesPerformTest2::title()
 
 void TouchesPerformTest2::registerWithTouchDispatcher()
 {
-    Director* pDirector = Director::sharedDirector();
+    Director* pDirector = Director::getInstance();
     pDirector->getTouchDispatcher()->addStandardDelegate(this, 0);
 }
 
@@ -174,5 +174,5 @@ void runTouchesTest()
     pScene->addChild(pLayer);
     pLayer->release();
 
-    Director::sharedDirector()->replaceScene(pScene);
+    Director::getInstance()->replaceScene(pScene);
 }
