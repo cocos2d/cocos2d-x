@@ -15,5 +15,5 @@ int main(int argc, char **argv)
 
     EGLView* eglView = EGLView::getInstance();
 
-    return Application::sharedApplication()->run();
+    return Application::getInstance()->run();
 }

@@ -17,5 +17,5 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     EGLView* eglView = EGLView::getInstance();
     eglView->setViewName("TestCpp");
     eglView->setFrameSize(480, 320);
-    return Application::sharedApplication()->run();
+    return Application::getInstance()->run();
 }

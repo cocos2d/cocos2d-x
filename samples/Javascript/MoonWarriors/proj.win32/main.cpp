@@ -28,7 +28,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     eglView->setViewName("MoonWarriors");
     eglView->setFrameSize(320, 480);
 
-    int ret = Application::sharedApplication()->run();
+    int ret = Application::getInstance()->run();
 
 #ifdef USE_WIN32_CONSOLE
     FreeConsole();
