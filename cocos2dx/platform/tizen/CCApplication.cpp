@@ -78,6 +78,12 @@ Application* Application::getInstance()
     return sm_pSharedApplication;
 }
 
+// @deprecated Use getInstance() instead
+Application* Application::sharedApplication()
+{
+    return Application::getInstance();
+}
+
 ccLanguageType Application::getCurrentLanguage()
 {
     result r = E_SUCCESS;

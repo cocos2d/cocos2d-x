@@ -54,6 +54,9 @@ public:
      */
     static Application* getInstance();
 
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static Application* sharedApplication();
+    
     /* override functions */
     virtual ccLanguageType getCurrentLanguage();
 

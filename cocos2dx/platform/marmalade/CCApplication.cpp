@@ -136,6 +136,12 @@ Application* Application::getInstance()	// MH Cocos2dx Director class expects th
 	return sm_pSharedApplication;					// MH Cocos2dx Director class expects this to return a pointer and not a reference
 }
 
+// @deprecated Use getInstance() instead
+Application* Application::sharedApplication()
+{
+    return Application::getInstance();
+}
+
 ccLanguageType Application::getCurrentLanguage()
 {
 	int nLanguageIdx;
