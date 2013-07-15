@@ -268,7 +268,7 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
 
                     cocos_init(d, app->activity->assetManager);
                 }
-
+		engine->animating = 1;
                 engine_draw_frame(engine);
             }
             break;
