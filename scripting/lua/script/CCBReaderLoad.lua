@@ -9,7 +9,6 @@ function CCBReaderLoad(strFilePath,proxy,bSetOwner,strOwnerName)
     local node      = proxy:readCCBFromFile(strFilePath,ccbReader,bSetOwner)
     local owner     = ccbReader:getOwner()
     local rootName  = "" 
-    local scriptHandlerMgr = ScriptHandlerMgr:getInstance()
     --owner set in readCCBFromFile is proxy
     if nil ~= owner then
 
@@ -103,10 +102,10 @@ function CCBReaderLoad(strFilePath,proxy,bSetOwner,strOwnerName)
             --Document callback
 
             if 1 == callbackType and nil ~= ccb[documentControllerName] then
-                local callfunc = scriptHandlerMgr:registerCallFuncHandler(ccb[documentControllerName][callbackName])
+                local callfunc = CCCallFunc:create(ccb[documentControllerName][callbackName])
                 animationManager:setCallFuncForLuaCallbackNamed(callfunc, callbackCombine);
             elseif 2 == callbackType and nil ~= owner then --Owner callback
-                local callfunc = scriptHandlerMgr:registerCallFuncHandler(ccb[strOwnerName][callbackName])
+                local callfunc = CCCallFunc:create(ccb[strOwnerName][callbackName])
                 animationManager:setCallFuncForLuaCallbackNamed(callfunc, callbackCombine)
             end
         end

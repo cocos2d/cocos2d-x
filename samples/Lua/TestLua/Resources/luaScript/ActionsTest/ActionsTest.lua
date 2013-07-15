@@ -1,5 +1,4 @@
 local size = CCDirector:sharedDirector():getWinSize()
-local scriptHandlerMgr = ScriptHandlerMgr:getInstance()
 
 local function initWithLayer(layer)
 	grossini = CCSprite:create(s_pPathGrossini)
@@ -593,9 +592,9 @@ local function ActionSequence2()
     array:addObject(CCPlace:create(ccp(200,200)))
     array:addObject(CCShow:create())
     array:addObject(CCMoveBy:create(1, ccp(100,0)))
-    array:addObject(scriptHandlerMgr:registerCallFuncHandler(ActionSequenceCallback1))
-    array:addObject(scriptHandlerMgr:registerCallFuncHandler(ActionSequenceCallback2))
-    array:addObject(scriptHandlerMgr:registerCallFuncHandler(ActionSequenceCallback3))
+    array:addObject(CCCallFunc:create(ActionSequenceCallback1))
+    array:addObject(CCCallFunc:create(ActionSequenceCallback2))
+    array:addObject(CCCallFunc:create(ActionSequenceCallback3))
 
     local action = CCSequence:create(array)
 
@@ -705,7 +704,7 @@ local function ActionRepeatForever()
 
     local action = CCSequence:createWithTwoActions(
         CCDelayTime:create(1),
-        scriptHandlerMgr:registerCallFuncHandler(repeatForever) )
+        CCCallFunc:create(repeatForever) )
 
     grossini:runAction(action)
 
@@ -798,18 +797,18 @@ local function ActionCallFunc()
 
 	local action = CCSequence:createWithTwoActions(
         CCMoveBy:create(2, ccp(200,0)),
-        scriptHandlerMgr:registerCallFuncHandler(CallFucnCallback1) )
+        CCCallFunc:create(CallFucnCallback1) )
 
 	local array = CCArray:create()
 	array:addObject(CCScaleBy:create(2, 2))
 	array:addObject(CCFadeOut:create(2))
-	array:addObject(scriptHandlerMgr:registerCallFuncHandler(CallFucnCallback2))
+	array:addObject(CCCallFunc:create(CallFucnCallback2))
     local action2 = CCSequence:create(array)
 
     local array2 = CCArray:create()
     array2:addObject(CCRotateBy:create(3 , 360))
     array2:addObject(CCFadeOut:create(2))
-    array2:addObject(scriptHandlerMgr:registerCallFuncHandler(CallFucnCallback3))
+    array2:addObject(CCCallFunc:create(CallFucnCallback3))
     local action3 = CCSequence:create(array2)
 
     grossini:runAction(action)
@@ -1089,7 +1088,7 @@ local function ActionIssue1305()
 	centerSprites(0)
 
     spriteTmp = CCSprite:create("Images/grossini.png")
-    spriteTmp:runAction(scriptHandlerMgr:registerCallFuncHandler(Issue1305_log))
+    spriteTmp:runAction(CCCallFunc:create(Issue1305_log))
 
     Issue1305_layer:registerScriptHandler(Issue1305_onEnterOrExit)
 
@@ -1128,13 +1127,13 @@ local function ActionIssue1305_2()
     layer:addChild(spr)
 
     local act1 = CCMoveBy:create(2 ,ccp(0, 100))
-    local act2 = scriptHandlerMgr:registerCallFuncHandler(Issue1305_2_log1)
+    local act2 = CCCallFunc:create(Issue1305_2_log1)
     local act3 = CCMoveBy:create(2, ccp(0, -100))
-    local act4 = scriptHandlerMgr:registerCallFuncHandler(Issue1305_2_log2)
+    local act4 = CCCallFunc:create(Issue1305_2_log2)
     local act5 = CCMoveBy:create(2, ccp(100, -100))
-    local act6 = scriptHandlerMgr:registerCallFuncHandler(Issue1305_2_log3)
+    local act6 = CCCallFunc:create(Issue1305_2_log3)
     local act7 = CCMoveBy:create(2, ccp(-100, 0))
-    local act8 = scriptHandlerMgr:registerCallFuncHandler(Issue1305_2_log4)
+    local act8 = CCCallFunc:create(Issue1305_2_log4)
 
 	local array = CCArray:create()
 	array:addObject(act1)
@@ -1217,15 +1216,15 @@ local function ActionIssue1327()
     spr:setPosition(ccp(100, 100))
     layer:addChild(spr)
 
-    local act1 = scriptHandlerMgr:registerCallFuncHandler(logSprRotation)
+    local act1 = CCCallFunc:create(logSprRotation)
     local act2 = CCRotateBy:create(0.25, 45)
-    local act3 = scriptHandlerMgr:registerCallFuncHandler(logSprRotation)
+    local act3 = CCCallFunc:create(logSprRotation)
     local act4 = CCRotateBy:create(0.25, 45)
-    local act5 = scriptHandlerMgr:registerCallFuncHandler(logSprRotation)
+    local act5 = CCCallFunc:create(logSprRotation)
     local act6 = CCRotateBy:create(0.25, 45)
-    local act7 = scriptHandlerMgr:registerCallFuncHandler(logSprRotation)
+    local act7 = CCCallFunc:create(logSprRotation)
     local act8 = CCRotateBy:create(0.25, 45)
-    local act9 = scriptHandlerMgr:registerCallFuncHandler(logSprRotation)
+    local act9 = CCCallFunc:create(logSprRotation)
 
 	local array = CCArray:create()
 	array:addObject(act1)

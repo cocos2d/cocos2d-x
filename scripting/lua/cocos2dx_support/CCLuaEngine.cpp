@@ -68,7 +68,7 @@ void LuaEngine::addLuaLoader(lua_CFunction func)
 void LuaEngine::removeScriptObjectByObject(Object* pObj)
 {
     _stack->removeScriptObjectByObject(pObj);
-    ScriptHandlerMgr::getInstance()->unregisterObjectAllHandlers(pObj);
+    ScriptHandlerMgr::getInstance()->removeObjectAllHandlers(pObj);
 }
 
 void LuaEngine::removeScriptHandler(int nHandler)
@@ -400,9 +400,8 @@ int LuaEngine::handleNodeEvent(void* data)
     if (NULL == basicScriptData->nativeObject || NULL == basicScriptData->value)
         return 0;
     
-    Node* node = (Node*)(basicScriptData->nativeObject);
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler(basicScriptData->nativeObject, ScriptHandlerMgr::kNodeHandler);
     
-    int handler = node->getScriptHandler();
     if (0 == handler)
         return 0;
     
@@ -427,7 +426,6 @@ int LuaEngine::handleNodeEvent(void* data)
             
         case kNodeOnCleanup:
             _stack->pushString("cleanup");
-            ScriptHandlerMgr::getInstance()->unregisterNodeAllSchedule(node);
             break;
             
         default:
@@ -449,7 +447,7 @@ int LuaEngine::handleMenuClickedEvent(void* data)
         
     MenuItem* menuItem = (MenuItem*)(basicScriptData->nativeObject);
     
-    int handler = menuItem->getScriptTapHandler();
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)menuItem, ScriptHandlerMgr::kMenuClickHandler);
     if (0 == handler)
         return 0;
     
@@ -490,12 +488,12 @@ int LuaEngine::handleCallFuncActionEvent(void* data)
     BasicScriptData* basicScriptData = (BasicScriptData*)(data);
     if (NULL == basicScriptData->nativeObject)
         return 0;
+        
+    int handler =ScriptHandlerMgr::getInstance()->getObjectHandler(basicScriptData->nativeObject, ScriptHandlerMgr::kCallFuncHandler);
     
-    CallFuncHandlerDelegate* callDelegate = (CallFuncHandlerDelegate*)(basicScriptData->nativeObject);
-    
-    int handler = ScriptHandlerMgr::getInstance()->getObjecHandlerByEvent((void*)callDelegate->getCallFunc(),ScriptHandlerMgr::kCallFuncHandler);
     if (0 == handler)
         return 0;
+    
     Object* target     =  (Object*)(basicScriptData->value);
     if (NULL != target)
     {
@@ -554,10 +552,8 @@ int LuaEngine::handleAccelerometerEvent(void* data)
     if (NULL == basicScriptData->nativeObject || NULL == basicScriptData->value)
         return 0;
     
-    Layer* layer = (Layer*)(basicScriptData->nativeObject);
-    
-    ScriptHandlerEntry* scriptHandlerEntry = layer->getScriptAccelerateHandlerEntry();
-    if (NULL == scriptHandlerEntry || 0 == scriptHandlerEntry->getHandler())
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler(basicScriptData->nativeObject, ScriptHandlerMgr::kAccelerometerHandler);
+    if (0 == handler)
         return 0;
     
     Acceleration* accelerationValue = (Acceleration*)(basicScriptData->value);
@@ -565,7 +561,7 @@ int LuaEngine::handleAccelerometerEvent(void* data)
     _stack->pushFloat(accelerationValue->y);
     _stack->pushFloat(accelerationValue->z);
     _stack->pushFloat(accelerationValue->timestamp);
-    int ret = _stack->executeFunctionByHandler(scriptHandlerEntry->getHandler(), 4);
+    int ret = _stack->executeFunctionByHandler(handler, 4);
     _stack->clean();
     return ret;
 }
@@ -626,8 +622,8 @@ int LuaEngine::handleLayerTouchesEvent(Layer* layer,int actionType,Set* touches)
     if (NULL == layer || NULL == touches)
         return 0;
     
-    TouchScriptHandlerEntry* scriptHandlerEntry = layer->getScriptTouchHandlerEntry();
-    if (NULL == scriptHandlerEntry || 0 == scriptHandlerEntry->getHandler())
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)layer, ScriptHandlerMgr::kTouchesHandler);
+    if (0 == handler)
         return 0;
     
     switch (actionType)
@@ -663,7 +659,7 @@ int LuaEngine::handleLayerTouchesEvent(Layer* layer,int actionType,Set* touches)
             const Point pt = Director::sharedDirector()->convertToGL(touch->getLocationInView());
             _stack->pushFloat(pt.x);
             _stack->pushFloat(pt.y);
-            ret = _stack->executeFunctionByHandler(scriptHandlerEntry->getHandler(), 3);
+            ret = _stack->executeFunctionByHandler(handler, 3);
         }
     }
     else if(count > 1)
@@ -681,7 +677,7 @@ int LuaEngine::handleLayerTouchesEvent(Layer* layer,int actionType,Set* touches)
             lua_pushinteger(L, pTouch->getID());
             lua_rawseti(L, -2, i++);
         }
-        ret = _stack->executeFunctionByHandler(scriptHandlerEntry->getHandler(), 2);
+        ret = _stack->executeFunctionByHandler(handler, 2);
     }
     _stack->clean();
     return ret;
@@ -691,8 +687,11 @@ int LuaEngine::handleLayerKeypadEvent(Layer* layer,int actionType)
 {
     if (NULL == layer)
         return 0;
+
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)layer, ScriptHandlerMgr::kKeypadHandler);
     
-    ScriptHandlerEntry* pScriptHandlerEntry = layer->getScriptKeypadHandlerEntry();
+    if (0 == handler)
+        return 0;
     
     int action = actionType;
     
@@ -709,8 +708,72 @@ int LuaEngine::handleLayerKeypadEvent(Layer* layer,int actionType)
         default:
             return 0;
     }
-    int ret = _stack->executeFunctionByHandler(pScriptHandlerEntry->getHandler(), 1);
+    int ret = _stack->executeFunctionByHandler(handler, 1);
     _stack->clean();
     return ret;
+}
+
+void LuaEngine::expandLuaObjecFunc()
+{    
+    if ( NULL == _stack || NULL == _stack->getLuaState())
+        return;
+    
+    lua_State* lua_S = _stack->getLuaState();
+    expandNodeFunc(lua_S);
+    expandMenuItemFunc(lua_S);
+    expandLayerFunc(lua_S);
+    
+    _stack->clean();
+}
+
+void LuaEngine::expandNodeFunc(lua_State* lua_S)
+{
+   if(NULL == lua_S)
+       return;
+    
+    lua_pushstring(lua_S,"CCNode");
+    lua_gettable(lua_S,LUA_REGISTRYINDEX); /* get super */
+    if (lua_istable(lua_S,-1))
+    {
+        lua_pushstring(lua_S,"registerScriptHandler");
+        lua_pushcfunction(lua_S,tolua_Cocos2d_registerScriptHandler00);
+        lua_rawset(lua_S,-3);
+    }
+}
+
+void LuaEngine::expandMenuItemFunc(lua_State* lua_S)
+{
+    if (NULL == lua_S)
+        return;
+    
+    lua_pushstring(lua_S,"CCMenuItem");
+    lua_gettable(lua_S,LUA_REGISTRYINDEX); /* get super */
+    if (lua_istable(lua_S,-1))
+    {
+        lua_pushstring(lua_S,"registerScriptTapHandler");
+        lua_pushcfunction(lua_S,tolua_Cocos2d_registerScriptTapHandler00);
+        lua_rawset(lua_S,-3);
+    }
+}
+
+void LuaEngine::expandLayerFunc(lua_State* lua_S)
+{
+    if (NULL == lua_S)
+        return;
+    
+    lua_pushstring(lua_S,"CCLayer");
+    lua_gettable(lua_S,LUA_REGISTRYINDEX); /* get super */
+    if (lua_istable(lua_S,-1))
+    {
+        lua_pushstring(lua_S,"registerScriptTouchHandler");
+        lua_pushcfunction(lua_S,tolua_Cocos2d_registerScriptTouchHandler00);
+        lua_rawset(lua_S,-3);
+        lua_pushstring(lua_S, "registerScriptKeypadHandler");
+        lua_pushcfunction(lua_S, tolua_Cocos2d_registerScriptKeypadHandler00);
+        lua_rawset(lua_S, -3);
+        lua_pushstring(lua_S, "registerScriptAccelerateHandler");
+        lua_pushcfunction(lua_S, tolua_Cocos2d_registerScriptAccelerateHandler00);
+        lua_rawset(lua_S, -3);
+    }
 }
 NS_CC_END

@@ -29,8 +29,7 @@ local function CrashTest()
         ret:getParent():removeChild(ret, true)
         Helper.nextAction()
     end
-    local scriptHandlerMgr = ScriptHandlerMgr:getInstance()
-    local callfunc = scriptHandlerMgr:registerCallFuncHandler(removeThis)
+    local callfunc = CCCallFunc:create(removeThis)
     arr:addObject(callfunc)
     --After 1.5 second, self will be removed.
     ret:runAction( CCSequence:create(arr))
@@ -57,8 +56,7 @@ local function LogicTest()
         node:runAction(CCScaleTo:create(2, 2))
     end
 
-    local scriptHandlerMgr = ScriptHandlerMgr:getInstance()
-    local callfunc = scriptHandlerMgr:registerCallFuncHandler(bugMe)
+    local callfunc = CCCallFunc:create(bugMe)
     arr:addObject(callfunc)
     grossini:runAction( CCSequence:create(arr));
     return ret
@@ -72,12 +70,9 @@ end
 
 local function PauseTest()
     local ret = createTestLayer("Pause Test")
-    local scheduleEventHandler = nil
-    local scriptHandlerMgr = ScriptHandlerMgr:getInstance()
     local function unpause(dt)
-        --scheduler:unscheduleScriptEntry(scheduleEventHandler)
-        scriptHandlerMgr:unregisterScheduleHandler(scheduleEventHandler)
-        scheduleEventHandler = nil
+        scheduler:unscheduleScriptEntry(schedulerEntry)
+        schedulerEntry = nil
         local  node = ret:getChildByTag( kTagGrossini )
         local  pDirector = CCDirector:sharedDirector()
         pDirector:getActionManager():resumeTarget(node)
@@ -98,14 +93,11 @@ local function PauseTest()
             local  pDirector = CCDirector:sharedDirector()
             pDirector:getActionManager():addAction(action, grossini, true)
 
-            if nil ~= scriptHandlerMgr then
-                scheduleEventHandler = scriptHandlerMgr:registerScheduleHandler(unpause,3.0,0,0.0,false)
-            end
+            schedulerEntry = scheduler:scheduleScriptFunc(unpause, 3.0, false)
 
         elseif event == "exit" then
             if scheduleEventHandler ~= nil then
-                --scheduler:unscheduleScriptEntry(scheduleEventHandler)
-                scriptHandlerMgr:unregisterScheduleHandler(scheduleEventHandler)
+                scheduler:unscheduleScriptEntry(schedulerEntry)
             end
         end
     end
@@ -131,8 +123,7 @@ local function RemoveTest()
         pSprite:stopActionByTag(kTagSequence)
     end
 
-    local scriptHandlerMgr = ScriptHandlerMgr:getInstance()
-    local callfunc = scriptHandlerMgr:registerCallFuncHandler(stopAction)
+    local callfunc = CCCallFunc:create(stopAction)
     local arr = CCArray:create()
     arr:addObject(pMove)
     arr:addObject(callfunc)
