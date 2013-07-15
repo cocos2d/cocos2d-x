@@ -45,7 +45,8 @@ static std::function<Layer*()> createFunctions[] = {
     CL(S9FrameNameSpriteSheetRotatedInsets),
     CL(S9_TexturePacker),
     CL(S9FrameNameSpriteSheetRotatedInsetsScaled),
-    CL(S9FrameNameSpriteSheetRotatedSetCapInsetLater)
+    CL(S9FrameNameSpriteSheetRotatedSetCapInsetLater),
+    CL(S9CascadeOpacityAndColor)
 };
 
 static int sceneIdx=-1;
@@ -640,4 +641,50 @@ std::string S9FrameNameSpriteSheetRotatedSetCapInsetLater::title()
 std::string S9FrameNameSpriteSheetRotatedSetCapInsetLater::subtitle()
 {
     return "createWithSpriteFrameName(); setInsetLeft(32); setInsetRight(32);";
+}
+
+//
+//// S9CascadeOpacityAndColor
+//
+
+void S9CascadeOpacityAndColor::onEnter()
+{
+    S9SpriteTestDemo::onEnter();
+    Size winSize = Director::getInstance()->getWinSize();
+    float x = winSize.width / 2;
+    float y = 0 + (winSize.height / 2);
+    LayerRGBA* rgba = LayerRGBA::create();
+    rgba->setCascadeColorEnabled(true);
+    rgba->setCascadeOpacityEnabled(true);
+    this->addChild(rgba);
+    
+    CCLog("S9CascadeOpacityAndColor ...");
+    
+    auto blocks_scaled_with_insets = Scale9Sprite::createWithSpriteFrameName("blocks9r.png");
+    CCLog("... created");
+    
+    blocks_scaled_with_insets->setPosition(Point(x, y));
+    CCLog("... setPosition");
+    
+    rgba->addChild(blocks_scaled_with_insets);
+    Sequence* actions = Sequence::create(FadeIn::create(1),
+                                         TintTo::create(1, 0, 255, 0),
+                                         TintTo::create(1, 255, 255, 255),
+                                         FadeOut::create(1),
+                                         NULL);
+    RepeatForever* repeat = RepeatForever::create(actions);
+    rgba->runAction(repeat);
+    CCLog("this->addChild");
+    
+    CCLog("... S9CascadeOpacityAndColor done.");
+}
+
+std::string S9CascadeOpacityAndColor::title()
+{
+    return "Scale9Sprite and a LayerRGBA parent with setCascadeOpacityEnable(true) and setCascadeColorEnable(true)";
+}
+
+std::string S9CascadeOpacityAndColor::subtitle()
+{
+    return "when parent change color/opacity, Scale9Sprite should also change";
 }
