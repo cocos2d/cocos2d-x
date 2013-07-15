@@ -25,72 +25,72 @@ SocketIOTestLayer::SocketIOTestLayer(void)
     const int SPACE = 35;
     
     LabelTTF *label = LabelTTF::create("SocketIO Extension Test", "Arial", 28);
-    label->setPosition(ccp(winSize.width / 2, winSize.height - MARGIN));
+    label->setPosition(Point(winSize.width / 2, winSize.height - MARGIN));
     addChild(label, 0);
     	
     Menu *menuRequest = Menu::create();
-    menuRequest->setPosition(PointZero);
+    menuRequest->setPosition(Point::ZERO);
     addChild(menuRequest);
     
     // Test to create basic client in the default namespace
     LabelTTF *labelSIOClient = LabelTTF::create("Open SocketIO Client", "Arial", 22);
     MenuItemLabel *itemSIOClient = MenuItemLabel::create(labelSIOClient, CC_CALLBACK_1(SocketIOTestLayer::onMenuSIOClientClicked, this));
-	itemSIOClient->setPosition(ccp(VisibleRect::left().x + labelSIOClient->getContentSize().width / 2 + 5, winSize.height - MARGIN - SPACE));
+	itemSIOClient->setPosition(Point(VisibleRect::left().x + labelSIOClient->getContentSize().width / 2 + 5, winSize.height - MARGIN - SPACE));
     menuRequest->addChild(itemSIOClient);
 
 	// Test to create a client at the endpoint '/testpoint'
     LabelTTF *labelSIOEndpoint = LabelTTF::create("Open SocketIO Endpoint", "Arial", 22);
     MenuItemLabel *itemSIOEndpoint = MenuItemLabel::create(labelSIOEndpoint, CC_CALLBACK_1(SocketIOTestLayer::onMenuSIOEndpointClicked, this));
-	itemSIOEndpoint->setPosition(ccp(VisibleRect::right().x - labelSIOEndpoint->getContentSize().width / 2 - 5, winSize.height - MARGIN - SPACE));
+	itemSIOEndpoint->setPosition(Point(VisibleRect::right().x - labelSIOEndpoint->getContentSize().width / 2 - 5, winSize.height - MARGIN - SPACE));
     menuRequest->addChild(itemSIOEndpoint);
 
 	// Test sending message to default namespace
     LabelTTF *labelTestMessage = LabelTTF::create("Send Test Message", "Arial", 22);
     MenuItemLabel *itemTestMessage = MenuItemLabel::create(labelTestMessage, CC_CALLBACK_1(SocketIOTestLayer::onMenuTestMessageClicked, this));
-    itemTestMessage->setPosition(ccp(VisibleRect::left().x + labelTestMessage->getContentSize().width / 2 + 5, winSize.height - MARGIN - 2 * SPACE));
+    itemTestMessage->setPosition(Point(VisibleRect::left().x + labelTestMessage->getContentSize().width / 2 + 5, winSize.height - MARGIN - 2 * SPACE));
     menuRequest->addChild(itemTestMessage);
 
 	// Test sending message to the endpoint '/testpoint'
     LabelTTF *labelTestMessageEndpoint = LabelTTF::create("Test Endpoint Message", "Arial", 22);
     MenuItemLabel *itemTestMessageEndpoint = MenuItemLabel::create(labelTestMessageEndpoint, CC_CALLBACK_1(SocketIOTestLayer::onMenuTestMessageEndpointClicked, this));
-    itemTestMessageEndpoint->setPosition(ccp(VisibleRect::right().x - labelTestMessageEndpoint->getContentSize().width / 2 - 5, winSize.height - MARGIN - 2 * SPACE));
+    itemTestMessageEndpoint->setPosition(Point(VisibleRect::right().x - labelTestMessageEndpoint->getContentSize().width / 2 - 5, winSize.height - MARGIN - 2 * SPACE));
     menuRequest->addChild(itemTestMessageEndpoint);
 
 	// Test sending event 'echotest' to default namespace
     LabelTTF *labelTestEvent = LabelTTF::create("Send Test Event", "Arial", 22);
     MenuItemLabel *itemTestEvent = MenuItemLabel::create(labelTestEvent, CC_CALLBACK_1(SocketIOTestLayer::onMenuTestEventClicked, this));
-    itemTestEvent->setPosition(ccp(VisibleRect::left().x + labelTestEvent->getContentSize().width / 2 + 5, winSize.height - MARGIN - 3 * SPACE));
+    itemTestEvent->setPosition(Point(VisibleRect::left().x + labelTestEvent->getContentSize().width / 2 + 5, winSize.height - MARGIN - 3 * SPACE));
     menuRequest->addChild(itemTestEvent);
 
 	// Test sending event 'echotest' to the endpoint '/testpoint'
     LabelTTF *labelTestEventEndpoint = LabelTTF::create("Test Endpoint Event", "Arial", 22);
     MenuItemLabel *itemTestEventEndpoint = MenuItemLabel::create(labelTestEventEndpoint, CC_CALLBACK_1(SocketIOTestLayer::onMenuTestEventEndpointClicked, this));
-    itemTestEventEndpoint->setPosition(ccp(VisibleRect::right().x - labelTestEventEndpoint->getContentSize().width / 2 - 5, winSize.height - MARGIN - 3 * SPACE));
+    itemTestEventEndpoint->setPosition(Point(VisibleRect::right().x - labelTestEventEndpoint->getContentSize().width / 2 - 5, winSize.height - MARGIN - 3 * SPACE));
     menuRequest->addChild(itemTestEventEndpoint);
 
 	// Test disconnecting basic client
     LabelTTF *labelTestClientDisconnect = LabelTTF::create("Disconnect Socket", "Arial", 22);
     MenuItemLabel *itemClientDisconnect = MenuItemLabel::create(labelTestClientDisconnect, CC_CALLBACK_1(SocketIOTestLayer::onMenuTestClientDisconnectClicked, this));
-    itemClientDisconnect->setPosition(ccp(VisibleRect::left().x + labelTestClientDisconnect->getContentSize().width / 2 + 5, winSize.height - MARGIN - 4 * SPACE));
+    itemClientDisconnect->setPosition(Point(VisibleRect::left().x + labelTestClientDisconnect->getContentSize().width / 2 + 5, winSize.height - MARGIN - 4 * SPACE));
     menuRequest->addChild(itemClientDisconnect);
 
 	// Test disconnecting the endpoint '/testpoint'
     LabelTTF *labelTestEndpointDisconnect = LabelTTF::create("Disconnect Endpoint", "Arial", 22);
     MenuItemLabel *itemTestEndpointDisconnect = MenuItemLabel::create(labelTestEndpointDisconnect, CC_CALLBACK_1(SocketIOTestLayer::onMenuTestEndpointDisconnectClicked, this));
-    itemTestEndpointDisconnect->setPosition(ccp(VisibleRect::right().x - labelTestEndpointDisconnect->getContentSize().width / 2 - 5, winSize.height - MARGIN - 4 * SPACE));
+    itemTestEndpointDisconnect->setPosition(Point(VisibleRect::right().x - labelTestEndpointDisconnect->getContentSize().width / 2 - 5, winSize.height - MARGIN - 4 * SPACE));
     menuRequest->addChild(itemTestEndpointDisconnect);
     
 	// Sahred Status Label
-    _sioClientStatus = LabelTTF::create("Not connected...", "Arial", 14, CCSizeMake(320, 100), kTextAlignmentLeft);
-    _sioClientStatus->setAnchorPoint(ccp(0, 0));
-    _sioClientStatus->setPosition(ccp(VisibleRect::left().x, VisibleRect::rightBottom().y));
+    _sioClientStatus = LabelTTF::create("Not connected...", "Arial", 14, Size(320, 100), kTextAlignmentLeft);
+    _sioClientStatus->setAnchorPoint(Point(0, 0));
+    _sioClientStatus->setPosition(Point(VisibleRect::left().x, VisibleRect::rightBottom().y));
     this->addChild(_sioClientStatus);
 
 	// Back Menu
     MenuItemFont *itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(SocketIOTestLayer::toExtensionsMainLayer, this));
-    itemBack->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
+    itemBack->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
     Menu *menuBack = Menu::create(itemBack, NULL);
-    menuBack->setPosition(PointZero);
+    menuBack->setPosition(Point::ZERO);
     addChild(menuBack);
 
 }

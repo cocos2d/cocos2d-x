@@ -38,7 +38,6 @@ THE SOFTWARE.
 #include "CCScheduler.h"
 #include "ccMacros.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
-#include "support/CCPointExtension.h"
 #include "support/CCNotificationCenter.h"
 #include "layers_scenes_transitions_nodes/CCTransition.h"
 #include "textures/CCTextureCache.h"

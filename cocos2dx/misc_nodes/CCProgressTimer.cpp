@@ -26,7 +26,6 @@ THE SOFTWARE.
 
 #include "ccMacros.h"
 #include "textures/CCTextureCache.h"
-#include "support/CCPointExtension.h"
 #include "shaders/CCGLProgram.h"
 #include "shaders/CCShaderCache.h"
 #include "shaders/ccGLStateCache.h"

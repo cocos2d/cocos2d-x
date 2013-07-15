@@ -21,7 +21,6 @@
  */
 
 #include "CCDrawNode.h"
-#include "support/CCPointExtension.h"
 #include "shaders/CCShaderCache.h"
 #include "CCGL.h"
 

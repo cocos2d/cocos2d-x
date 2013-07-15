@@ -37,7 +37,6 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 #include "CCConfiguration.h"
 #include "draw_nodes/CCDrawingPrimitives.h"
 #include "sprite_nodes/CCSprite.h"
-#include "support/CCPointExtension.h"
 #include "platform/CCFileUtils.h"
 #include "CCDirector.h"
 #include "textures/CCTextureCache.h"

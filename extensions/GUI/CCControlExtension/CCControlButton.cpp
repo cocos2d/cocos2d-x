@@ -27,7 +27,6 @@
 
 #include "CCControlButton.h"
 #include "CCScale9Sprite.h"
-#include "support/CCPointExtension.h"
 #include "label_nodes/CCLabelTTF.h"
 #include "label_nodes/CCLabelBMFont.h"
 #include "actions/CCAction.h"

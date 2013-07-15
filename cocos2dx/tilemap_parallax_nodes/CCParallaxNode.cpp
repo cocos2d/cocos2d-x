@@ -24,7 +24,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCParallaxNode.h"
-#include "support/CCPointExtension.h"
 #include "support/data_support/ccCArray.h"
 
 NS_CC_BEGIN
