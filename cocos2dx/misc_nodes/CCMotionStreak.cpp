@@ -30,7 +30,6 @@ THE SOFTWARE.
 #include "ccMacros.h"
 
 #include "support/CCVertex.h"
-#include "support/CCPointExtension.h"
 
 NS_CC_BEGIN
 

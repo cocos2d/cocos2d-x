@@ -30,7 +30,6 @@ THE SOFTWARE.
 #include "touch_dispatcher/CCTouchDispatcher.h"
 #include "text_input_node/CCIMEDispatcher.h"
 #include "keypad_dispatcher/CCKeypadDispatcher.h"
-#include "support/CCPointExtension.h"
 #include "CCApplication.h"
 #ifdef CC_KEYBOARD_SUPPORT
 #include "keyboard_dispatcher/CCKeyboardDispatcher.h"
@@ -352,8 +351,8 @@ LRESULT EGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
             Point pt(point.x, point.y);
             pt.x /= _frameZoomFactor;
             pt.y /= _frameZoomFactor;
-            Point tmp = ccp(pt.x, _screenSize.height - pt.y);
-            if (_viewPortRect.equals(RectZero) || _viewPortRect.containsPoint(tmp))
+            Point tmp = Point(pt.x, _screenSize.height - pt.y);
+            if (_viewPortRect.equals(Rect::ZERO) || _viewPortRect.containsPoint(tmp))
             {
                 _captured = true;
                 SetCapture(_wnd);
@@ -415,8 +414,8 @@ LRESULT EGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
                         input.y = TOUCH_COORD_TO_PIXEL(ti.y);
                         ScreenToClient(_wnd, &input);
                         Point pt(input.x, input.y);
-                        Point tmp = ccp(pt.x, _screenSize.height - pt.y);
-                        if (_viewPortRect.equals(RectZero) || _viewPortRect.containsPoint(tmp))
+                        Point tmp = Point(pt.x, _screenSize.height - pt.y);
+                        if (_viewPortRect.equals(Rect::ZERO) || _viewPortRect.containsPoint(tmp))
                         {
                             pt.x /= _frameZoomFactor;
                             pt.y /= _frameZoomFactor;

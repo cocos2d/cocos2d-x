@@ -349,7 +349,7 @@ NSPoint EditBoxImplMac::convertDesignCoordToScreenCoord(const Point& designCoord
     EGLViewProtocol* eglView = EGLView::getInstance();
 
     Point visiblePos = Point(designCoord.x * eglView->getScaleX(), designCoord.y * eglView->getScaleY());
-    Point screenGLPos = ccpAdd(visiblePos, eglView->getViewPortRect().origin);
+    Point screenGLPos = visiblePos + eglView->getViewPortRect().origin;
     
     //TODO: I don't know why here needs to substract `height`.
     NSPoint screenPos = NSMakePoint(screenGLPos.x, screenGLPos.y-height);

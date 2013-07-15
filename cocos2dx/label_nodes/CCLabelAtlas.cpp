@@ -26,7 +26,6 @@ THE SOFTWARE.
 #include "CCLabelAtlas.h"
 #include "textures/CCTextureAtlas.h"
 #include "textures/CCTextureCache.h"
-#include "support/CCPointExtension.h"
 #include "draw_nodes/CCDrawingPrimitives.h"
 #include "ccConfig.h"
 #include "shaders/CCShaderCache.h"
