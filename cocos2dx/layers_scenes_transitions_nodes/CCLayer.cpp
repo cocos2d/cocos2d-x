@@ -517,6 +517,14 @@ bool CCLayerRGBA::init()
     }
 }
 
+void CCLayerRGBA::visit()
+{
+    if (getOpacity() > 0)
+    {
+        CCLayer::visit();
+    }
+}
+
 GLubyte CCLayerRGBA::getOpacity()
 {
 	return _realOpacity;

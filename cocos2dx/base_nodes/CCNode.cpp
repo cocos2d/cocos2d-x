@@ -1289,6 +1289,14 @@ bool CCNodeRGBA::init()
     return false;
 }
 
+void CCNodeRGBA::visit()
+{
+    if (getOpacity() > 0)
+    {
+        CCNode::visit();
+    }
+}
+
 GLubyte CCNodeRGBA::getOpacity(void)
 {
 	return _realOpacity;

@@ -187,6 +187,8 @@ public:
     virtual ~CCLayerRGBA();
     
     virtual bool init();
+
+    virtual void visit() override;
     
     virtual GLubyte getOpacity();
     virtual GLubyte getDisplayedOpacity();

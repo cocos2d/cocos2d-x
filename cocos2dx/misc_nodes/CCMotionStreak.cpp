@@ -181,13 +181,13 @@ ccBlendFunc CCMotionStreak::getBlendFunc(void)
 
 void CCMotionStreak::setOpacity(GLubyte opacity)
 {
-    CCAssert(false, "Set opacity no supported");
+    //CCAssert(false, "Set opacity no supported");
 }
 
 GLubyte CCMotionStreak::getOpacity(void)
 {
-    CCAssert(false, "Opacity no supported");
-    return 0;
+    //CCAssert(false, "Opacity no supported");
+    return 255;
 }
 
 void CCMotionStreak::setOpacityModifyRGB(bool bValue)
