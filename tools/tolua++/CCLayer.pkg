@@ -19,18 +19,6 @@ class CCLayer : public CCNode
     virtual void setTouchPriority(int priority);
     virtual int getTouchPriority() const;
 
-    void registerScriptTouchHandler(LUA_FUNCTION nHandler,
-                                    bool bIsMultiTouches = false,
-                                    int nPriority = 0,
-                                    bool bSwallowsTouches = false);
-    void unregisterScriptTouchHandler();
-
-    void registerScriptKeypadHandler(LUA_FUNCTION nHandler);
-    void unregisterScriptKeypadHandler(void);
-
-    void registerScriptAccelerateHandler(LUA_FUNCTION nHandler);
-    void unregisterScriptAccelerateHandler(void);
-
     static CCLayer *create(void);
 };
 
