@@ -128,22 +128,26 @@ public:
     unsigned int atlasIndexForChild(Sprite *sprite, int z);
     /* Sprites use this to start sortChildren, don't call this manually */
     void reorderBatch(bool reorder);
-    // TextureProtocol
-    virtual Texture2D* getTexture(void);
-    virtual void setTexture(Texture2D *texture);
-    virtual void setBlendFunc(const BlendFunc &blendFunc);
-    virtual const BlendFunc& getBlendFunc(void) const;
 
-    virtual void visit(void);
-    virtual void addChild(Node * child);
-    virtual void addChild(Node * child, int zOrder);
-    virtual void addChild(Node * child, int zOrder, int tag);
-    virtual void reorderChild(Node * child, int zOrder);
+    //
+    // Overrides
+    //
+    // TextureProtocol
+    virtual Texture2D* getTexture(void) override;
+    virtual void setTexture(Texture2D *texture) override;
+    virtual void setBlendFunc(const BlendFunc &blendFunc) override;
+    virtual const BlendFunc& getBlendFunc(void) const override;
+
+    virtual void visit(void) override;
+    virtual void addChild(Node * child) override;
+    virtual void addChild(Node * child, int zOrder) override;
+    virtual void addChild(Node * child, int zOrder, int tag) override;
+    virtual void reorderChild(Node * child, int zOrder) override;
         
-    virtual void removeChild(Node* child, bool cleanup);
-    virtual void removeAllChildrenWithCleanup(bool cleanup);
-    virtual void sortAllChildren();
-    virtual void draw(void);
+    virtual void removeChild(Node* child, bool cleanup) override;
+    virtual void removeAllChildrenWithCleanup(bool cleanup) override;
+    virtual void sortAllChildren() override;
+    virtual void draw(void) override;
 
 protected:
     /** Inserts a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.

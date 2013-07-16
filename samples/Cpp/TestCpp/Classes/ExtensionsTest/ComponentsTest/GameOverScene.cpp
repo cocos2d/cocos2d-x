@@ -68,8 +68,7 @@ bool GameOverLayer::init()
 		
 		this->runAction( Sequence::create(
                                 DelayTime::create(3),
-                                CallFunc::create(this, 
-                                callfunc_selector(GameOverLayer::gameOverDone)),
+                                CallFunc::create(CC_CALLBACK_0(GameOverLayer::gameOverDone, this)),
                                 NULL));
 		
         

@@ -49,11 +49,13 @@ It is a good practice to use and Scene as the parent of all your nodes.
 class CC_DLL Scene : public Node
 {
 public:
+    /** creates a new Scene object */
+    static Scene *create(void);
+
     Scene();
     virtual ~Scene();
     bool init();
 
-    static Scene *create(void);
 };
 
 // end of scene group

@@ -384,14 +384,14 @@ void TestAnimationEvent::animationEvent(Armature *armature, MovementEventType mo
 		{
 			ActionInterval *actionToRight = MoveTo::create(2, Point(VisibleRect::right().x - 50, VisibleRect::right().y));
 			armature->stopAllActions();
-			armature->runAction(Sequence::create(actionToRight,  CallFunc::create(this, callfunc_selector(TestAnimationEvent::callback1)), NULL));
+			armature->runAction(Sequence::create(actionToRight,  CallFunc::create(CC_CALLBACK_0(TestAnimationEvent::callback1,this)), NULL));
 			armature->getAnimation()->play("Walk");
 		}
 		else if (id.compare("FireMax") == 0)
 		{
 			ActionInterval *actionToLeft = MoveTo::create(2, Point(VisibleRect::left().x + 50, VisibleRect::left().y));
 			armature->stopAllActions();
-			armature->runAction(Sequence::create(actionToLeft,  CallFunc::create(this, callfunc_selector(TestAnimationEvent::callback2)), NULL));
+			armature->runAction(Sequence::create(actionToLeft,  CallFunc::create(CC_CALLBACK_0(TestAnimationEvent::callback2,this)), NULL));
 			armature->getAnimation()->play("Walk");
 		}
 	}
