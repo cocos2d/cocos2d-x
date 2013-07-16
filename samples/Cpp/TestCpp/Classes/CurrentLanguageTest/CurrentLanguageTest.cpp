@@ -9,7 +9,7 @@ CurrentLanguageTest::CurrentLanguageTest()
     LabelTTF *labelLanguage = LabelTTF::create("", "Arial", 20);
     labelLanguage->setPosition(VisibleRect::center());
 
-    ccLanguageType currentLanguageType = Application::sharedApplication()->getCurrentLanguage();
+    ccLanguageType currentLanguageType = Application::getInstance()->getCurrentLanguage();
     switch (currentLanguageType)
     {
     case kLanguageEnglish:

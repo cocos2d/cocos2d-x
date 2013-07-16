@@ -514,9 +514,14 @@ Developers:
         
     hannon235 (Chris)
         Fixing a bug that the submenu of ExtensionTest in TestCpp can't scroll.
+        Implements a socket.io client extension and adds a test case.
         
     pktangyue
         Fixing a bug that CCScale9Sprite::setInsetLeft/XXX can't work for rotated sprite frame.
+        Fixing a bug that Color and Opacity of Scale9Sprite will not be changed when it's added to NodeRGBA and run with FadeIn/Out actions.
+        
+    jllust
+        Fixing a bug that CCLabelBMFont crashes in glDrawElements of CCTextureAtlas::drawNumberOfQuads sometimes.
 
 Retired Core Developers:
     WenSheng Yang
@@ -529,6 +534,9 @@ Retired Core Developers:
 
     RongHong Huang (flyingpaper)
         Author of cocos2d-xna and spent all his time on wp7.
+        
+    michaelcontento
+        [Android] use onWindowFocusChanged(bool) instead of onResume()/onPause()
 
 
 Cocos2d-x can not grow so fast without the active community.

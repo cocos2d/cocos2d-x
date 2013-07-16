@@ -130,10 +130,16 @@ void Application::ccAccelerationUpdate()
 //////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////
-Application* Application::sharedApplication()	// MH Cocos2dx Director class expects this to return a pointer and not a reference
+Application* Application::getInstance()	// MH Cocos2dx Director class expects this to return a pointer and not a reference
 {
 	CC_ASSERT(sm_pSharedApplication);
 	return sm_pSharedApplication;					// MH Cocos2dx Director class expects this to return a pointer and not a reference
+}
+
+// @deprecated Use getInstance() instead
+Application* Application::sharedApplication()
+{
+    return Application::getInstance();
 }
 
 ccLanguageType Application::getCurrentLanguage()

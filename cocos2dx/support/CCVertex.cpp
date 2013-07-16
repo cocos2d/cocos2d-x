@@ -24,7 +24,6 @@
  ****************************************************************************/
 
 #include "CCVertex.h"
-#include "CCPointExtension.h"
 #include "ccMacros.h"
 
 NS_CC_BEGIN

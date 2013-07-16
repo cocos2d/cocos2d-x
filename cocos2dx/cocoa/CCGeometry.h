@@ -334,31 +334,6 @@ public:
     static const Rect ZERO;
 };
 
-
-CC_DEPRECATED_ATTRIBUTE inline Point CCPointMake(float x, float y)
-{
-    return Point(x, y);
-}
-
-CC_DEPRECATED_ATTRIBUTE inline Size CCSizeMake(float width, float height)
-{
-    return Size(width, height);
-}
-
-CC_DEPRECATED_ATTRIBUTE inline Rect CCRectMake(float x, float y, float width, float height)
-{
-    return Rect(x, y, width, height);
-}
-
-
-CC_DEPRECATED_ATTRIBUTE const Point PointZero = Point::ZERO;
-
-/* The "zero" size -- equivalent to Size(0, 0). */ 
-CC_DEPRECATED_ATTRIBUTE const Size SizeZero = Size::ZERO;
-
-/* The "zero" rectangle -- equivalent to Rect(0, 0, 0, 0). */ 
-CC_DEPRECATED_ATTRIBUTE const Rect RectZero = Rect::ZERO;
-
 // end of data_structure group
 /// @}
 

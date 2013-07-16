@@ -188,3 +188,14 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 };
+
+// S9CascadeOpacityAndColor
+
+class S9CascadeOpacityAndColor : public S9SpriteTestDemo
+{
+public:
+    virtual void onEnter();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+};

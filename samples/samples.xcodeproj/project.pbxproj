@@ -120,6 +120,10 @@
 		1A119CB31785480400D62A44 /* Cocos2dConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A119C9017853D8D00D62A44 /* Cocos2dConstants.lua */; };
 		1A119CB41785480400D62A44 /* Opengl.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A119C9117853D8D00D62A44 /* Opengl.lua */; };
 		1A119CB51785480400D62A44 /* OpenglConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A119C9217853D8D00D62A44 /* OpenglConstants.lua */; };
+		1A2E823B1793EED50058E421 /* jsb_deprecated.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E823A1793EED50058E421 /* jsb_deprecated.js */; };
+		1A2E823C1793EED50058E421 /* jsb_deprecated.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E823A1793EED50058E421 /* jsb_deprecated.js */; };
+		1A2E823F1793EEF50058E421 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E823A1793EED50058E421 /* jsb_deprecated.js */; };
+		1A2E82401793EF260058E421 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E823A1793EED50058E421 /* jsb_deprecated.js */; };
 		1A6FB4DE17854A6A00CDF010 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB4C417854A6A00CDF010 /* animations */; };
 		1A6FB4DF17854A6A00CDF010 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB4C517854A6A00CDF010 /* armature */; };
 		1A6FB4E017854A6A00CDF010 /* background-music-aac.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB4C617854A6A00CDF010 /* background-music-aac.wav */; };
@@ -241,6 +245,8 @@
 		1A6FB7DC1785624000CDF010 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A119874178539DF00D62A44 /* AppDelegate.cpp */; };
 		1A6FB7DF1785628900CDF010 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A6FB7DD1785628900CDF010 /* AppController.mm */; };
 		1A6FB7E01785628900CDF010 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A6FB7DE1785628900CDF010 /* main.m */; };
+		1A96FFCD1791701800E3AF98 /* SocketIOTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A96FFCB1791701800E3AF98 /* SocketIOTest.cpp */; };
+		1A96FFCE1791701800E3AF98 /* SocketIOTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A96FFCB1791701800E3AF98 /* SocketIOTest.cpp */; };
 		1A9F808D177E98A600D9A1CB /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F808C177E98A600D9A1CB /* libcurl.dylib */; };
 		1ACD13F3178E487D00682DBD /* Scale9SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD13F1178E487D00682DBD /* Scale9SpriteTest.cpp */; };
 		1ACD13F4178E487D00682DBD /* Scale9SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD13F1178E487D00682DBD /* Scale9SpriteTest.cpp */; };
@@ -2301,6 +2307,7 @@
 		1A119C9017853D8D00D62A44 /* Cocos2dConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Cocos2dConstants.lua; path = ../scripting/lua/script/Cocos2dConstants.lua; sourceTree = "<group>"; };
 		1A119C9117853D8D00D62A44 /* Opengl.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Opengl.lua; path = ../scripting/lua/script/Opengl.lua; sourceTree = "<group>"; };
 		1A119C9217853D8D00D62A44 /* OpenglConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = OpenglConstants.lua; path = ../scripting/lua/script/OpenglConstants.lua; sourceTree = "<group>"; };
+		1A2E823A1793EED50058E421 /* jsb_deprecated.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_deprecated.js; sourceTree = "<group>"; };
 		1A6FB4C417854A6A00CDF010 /* animations */ = {isa = PBXFileReference; lastKnownFileType = folder; name = animations; path = Cpp/TestCpp/Resources/animations; sourceTree = SOURCE_ROOT; };
 		1A6FB4C517854A6A00CDF010 /* armature */ = {isa = PBXFileReference; lastKnownFileType = folder; name = armature; path = Cpp/TestCpp/Resources/armature; sourceTree = SOURCE_ROOT; };
 		1A6FB4C617854A6A00CDF010 /* background-music-aac.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "background-music-aac.wav"; path = "Cpp/TestCpp/Resources/background-music-aac.wav"; sourceTree = SOURCE_ROOT; };
@@ -2343,6 +2350,8 @@
 		1A6FB7DD1785628900CDF010 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppController.mm; path = Lua/TestLua/proj.mac/AppController.mm; sourceTree = "<group>"; };
 		1A6FB7DE1785628900CDF010 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Lua/TestLua/proj.mac/main.m; sourceTree = "<group>"; };
 		1A6FB7E11785629800CDF010 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = Lua/TestLua/proj.mac/AppController.h; sourceTree = "<group>"; };
+		1A96FFCB1791701800E3AF98 /* SocketIOTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SocketIOTest.cpp; sourceTree = "<group>"; };
+		1A96FFCC1791701800E3AF98 /* SocketIOTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketIOTest.h; sourceTree = "<group>"; };
 		1A9F808C177E98A600D9A1CB /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		1ACD13F1178E487D00682DBD /* Scale9SpriteTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scale9SpriteTest.cpp; sourceTree = "<group>"; };
 		1ACD13F2178E487D00682DBD /* Scale9SpriteTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scale9SpriteTest.h; sourceTree = "<group>"; };
@@ -4415,6 +4424,8 @@
 			children = (
 				A0359A2A17821D9B00987F6C /* HttpClientTest.cpp */,
 				A0359A2B17821D9B00987F6C /* HttpClientTest.h */,
+				1A96FFCB1791701800E3AF98 /* SocketIOTest.cpp */,
+				1A96FFCC1791701800E3AF98 /* SocketIOTest.h */,
 				A0359A2C17821D9B00987F6C /* WebSocketTest.cpp */,
 				A0359A2D17821D9B00987F6C /* WebSocketTest.h */,
 			);
@@ -4886,6 +4897,7 @@
 				A035A6FB17822A8E00987F6C /* jsb_cocos2d_extension.js */,
 				A035A6FC17822A8E00987F6C /* jsb_cocosbuilder.js */,
 				A035A6FD17822A8E00987F6C /* jsb_debugger.js */,
+				1A2E823A1793EED50058E421 /* jsb_deprecated.js */,
 				A035A6FE17822A8E00987F6C /* jsb_opengl.js */,
 				A035A6FF17822A8E00987F6C /* jsb_opengl_constants.js */,
 				A035A70017822A8E00987F6C /* jsb_sys.js */,
@@ -6146,6 +6158,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A2E82401793EF260058E421 /* jsb_deprecated.js in Resources */,
 				A01E17D51784C28700B0CA4A /* jsb.js in Resources */,
 				A01E17D61784C28700B0CA4A /* jsb_chipmunk.js in Resources */,
 				A01E17D71784C28700B0CA4A /* jsb_chipmunk_constants.js in Resources */,
@@ -6413,6 +6426,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A2E823F1793EEF50058E421 /* jsb_deprecated.js in Resources */,
 				A035A64C1782296200987F6C /* game.js in Resources */,
 				A035A6D7178229E400987F6C /* main.js in Resources */,
 				A035A6E7178229E400987F6C /* tests_resources-html5.js in Resources */,
@@ -6845,6 +6859,7 @@
 				A07A525C1783A3D90073F6A7 /* AppController.mm in Sources */,
 				A07A52601783A3D90073F6A7 /* main.m in Sources */,
 				1ACD13F3178E487D00682DBD /* Scale9SpriteTest.cpp in Sources */,
+				1A96FFCD1791701800E3AF98 /* SocketIOTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6869,6 +6884,7 @@
 				A01E17911784C0E000B0CA4A /* main.m in Sources */,
 				A01E17921784C0E000B0CA4A /* RootViewController.mm in Sources */,
 				A01E17991784C16100B0CA4A /* AppDelegate.cpp in Sources */,
+				1A2E823C1793EED50058E421 /* jsb_deprecated.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6944,6 +6960,7 @@
 				A035A64B1782296200987F6C /* AppDelegate.cpp in Sources */,
 				A035A6731782296200987F6C /* AppController.mm in Sources */,
 				A035A6781782296200987F6C /* main.m in Sources */,
+				1A2E823B1793EED50058E421 /* jsb_deprecated.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7121,6 +7138,7 @@
 				A07A52441783A3A90073F6A7 /* testsAppDelegate.mm in Sources */,
 				A07A524C1783A3A90073F6A7 /* main.m in Sources */,
 				1ACD13F4178E487D00682DBD /* Scale9SpriteTest.cpp in Sources */,
+				1A96FFCE1791701800E3AF98 /* SocketIOTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

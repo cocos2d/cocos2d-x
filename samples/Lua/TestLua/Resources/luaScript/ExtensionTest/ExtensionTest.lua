@@ -947,7 +947,7 @@ local function runEditBoxTest()
     -- top
     EditName = CCEditBox:create(editBoxSize, CCScale9Sprite:create("extensions/green_edit.png"))
     EditName:setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height*3/4))
-    local targetPlatform = CCApplication:sharedApplication():getTargetPlatform()
+    local targetPlatform = CCApplication:getInstance():getTargetPlatform()
     if kTargetIphone == targetPlatform or kTargetIpad == targetPlatform then
 	   EditName:setFontName("Paint Boy")
 	else
@@ -1103,7 +1103,7 @@ local function ExtensionsMainLayer()
     menu:setPosition(CCPointMake(0, 0))
     CCMenuItemFont:setFontName("Arial")
     CCMenuItemFont:setFontSize(24)
-    local targetPlatform = CCApplication:sharedApplication():getTargetPlatform()
+    local targetPlatform = CCApplication:getInstance():getTargetPlatform()
     local bSupportWebSocket = false
     if (kTargetIphone == targetPlatform) or (kTargetIpad == targetPlatform) or (kTargetAndroid == targetPlatform) or (kTargetWindows == targetPlatform) then
         bSupportWebSocket = true

@@ -69,10 +69,16 @@ TargetPlatform Application::getTargetPlatform()
 // static member function
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-Application* Application::sharedApplication()
+Application* Application::getInstance()
 {
     CCAssert(sm_pSharedApplication, "sm_pSharedApplication not set");
     return sm_pSharedApplication;
+}
+
+// @deprecated Use getInstance() instead
+Application* Application::sharedApplication()
+{
+    return Application::getInstance();
 }
 
 ccLanguageType Application::getCurrentLanguage()

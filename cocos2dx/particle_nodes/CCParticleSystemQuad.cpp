@@ -96,6 +96,7 @@ ParticleSystemQuad::~ParticleSystemQuad()
         glDeleteBuffers(2, &_buffersVBO[0]);
 #if CC_TEXTURE_ATLAS_USE_VAO
         glDeleteVertexArrays(1, &_VAOname);
+        ccGLBindVAO(0);
 #endif
     }
     
@@ -470,6 +471,7 @@ void ParticleSystemQuad::setupVBOandVAO()
     // clean VAO
     glDeleteBuffers(2, &_buffersVBO[0]);
     glDeleteVertexArrays(1, &_VAOname);
+    ccGLBindVAO(0);
     
     glGenVertexArrays(1, &_VAOname);
     ccGLBindVAO(_VAOname);
@@ -593,6 +595,7 @@ void ParticleSystemQuad::setBatchNode(ParticleBatchNode * batchNode)
             glDeleteBuffers(2, &_buffersVBO[0]);
 #if CC_TEXTURE_ATLAS_USE_VAO
             glDeleteVertexArrays(1, &_VAOname);
+            ccGLBindVAO(0);
 #endif
         }
     }

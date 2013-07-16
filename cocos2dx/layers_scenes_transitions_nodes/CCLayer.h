@@ -188,7 +188,7 @@ public:
     virtual bool isCascadeColorEnabled() const;
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
     
-    virtual void setOpacityModifyRGB(bool bValue) {}
+    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
     virtual bool isOpacityModifyRGB() const { return false; }
 protected:
 	GLubyte		_displayedOpacity, _realOpacity;
@@ -247,8 +247,6 @@ public:
     /** BlendFunction. Conforms to BlendProtocol protocol */
     CC_PROPERTY_PASS_BY_REF(BlendFunc, _blendFunc, BlendFunc)
 
-    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool isOpacityModifyRGB(void) const { return false;}
     virtual void setColor(const Color3B &color);
     virtual void setOpacity(GLubyte opacity);
 
