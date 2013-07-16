@@ -11,6 +11,8 @@
 
 #include "CCFontRender.h"
 
+// this should be here #include "ft2build.h"
+// this should bg here #include FT_FREETYPE_H
 
 
 NS_CC_BEGIN
@@ -19,11 +21,22 @@ class FontRenderFreeType : public FontRender
 {
 public:
     
+    FontRenderFreeType(Font *pFont): FontRender(pFont) {}
     virtual ~FontRenderFreeType() {}
     virtual unsigned char * preparePageGlyphData(TextPageDef *thePage, char *fontName, int fontSize);
-    static void testRendering();
-    static void renderCharToBitmap(char *pDestBitmap, char charToRender, int posX, int posY);
     
+    
+    // only a test, needs to go
+    static void testRendering();
+    
+    
+private:
+    
+    bool renderCharAt(unsigned short int charToRender, int posX, int posY, unsigned char *destMemory, int destSize);
+    
+    static bool InitFreeType();
+    static bool CreateFreeTypeFont(const char *fontName, int fontSize, int dpi);
+    static void ReleaseFreeType();
     
 };
 

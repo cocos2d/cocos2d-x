@@ -4,24 +4,81 @@
 #include "cocos2d.h"
 #include "CCFontFreeType.h"
 #include "CCTextImage.h"
+#include "ccUTF8.h"
+
 
 NS_CC_BEGIN
 
+
+FT_Library FontFreeType::_FTlibrary;
+bool       FontFreeType::_FTInitialized = false;
+
+
+
+bool FontFreeType::initFreeType()
+{
+    if (_FTInitialized == false)
+    {
+        // begin freetype
+        if (FT_Init_FreeType( &_FTlibrary ))
+            return false;
+        
+        _FTInitialized = true;
+    }
+    
+    return  _FTInitialized;
+}
+
+void FontFreeType::shutdownFreeType()
+{
+    if (_FTInitialized == true)
+    {
+        FT_Done_FreeType(_FTlibrary);
+    }
+}
+
+FT_Library FontFreeType::getFTLibrary()
+{
+    initFreeType();
+    return _FTlibrary;
+}
+
+FontFreeType::FontFreeType() : _letterPadding(5)
+{
+}
+
 bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
 {
-    /*
-    CFStringRef theRefString    = NULL;
-    theRefString                = CFStringCreateWithCString(kCFAllocatorDefault, fontName.c_str(), CFStringGetSystemEncoding());
-    NSString * fntName          = [NSString stringWithUTF8String:fontName.c_str()];
+    unsigned char* data = NULL;
+    int dpi             = 72;
     
-    // actually create iOS font (s)
-    _fontRef = CTFontCreateWithName(theRefString, fontSize, NULL);
-    _fontUI  = [UIFont fontWithName:fntName size:fontSize];
+    int len = 0;
+    data    = FileUtils::sharedFileUtils()->getFileData(fontName.c_str(), "rb", (unsigned long *)(&len) );
     
-    return ( (_fontRef != NULL) && (_fontUI != NULL) );
-    */
+    if (!data)
+        return false;
     
-    return false;
+    // create the new face
+    FT_Face face;
+    
+    // create the face from the data
+    if ( FT_New_Memory_Face(getFTLibrary(), data, len, 0, &face ) )
+        return false;
+    
+    //we want to use unicode
+    if( FT_Select_Charmap(face, FT_ENCODING_UNICODE) )
+        return false;
+    
+    // set the requested font size
+	int fontSizePoints = (int)(64.f * fontSize);
+	if( FT_Set_Char_Size(face, fontSizePoints, fontSizePoints, dpi, dpi) )
+        return false;
+    
+    // store the face globally
+    _fontRef = face;
+    
+    // done and good
+    return true;
 }
 
 FontFreeType::~FontFreeType()
@@ -30,77 +87,73 @@ FontFreeType::~FontFreeType()
     // TO DO 
 }
 
-GlyphDef * FontFreeType::getGlyphsForText(const char *pText, int &outNumGlyphs)
+bool FontFreeType::getBBOXFotChar(unsigned short theChar, Rect &outRect)
 {
-    /*
-    float CHAR_PADDING = 10.0f;
-    
-    UniChar * characters;
-    CGGlyph * glyphs;
-    CFIndex   count;
-    
-    CFStringRef lettersString;
-    lettersString   = CFStringCreateWithCString(kCFAllocatorDefault, pText, kCFStringEncodingUTF8);
-    
-    if (NULL == lettersString)
+    if (!_fontRef)
         return false;
     
-    count = CFStringGetLength(lettersString);
+    // get the ID to the char we need
+    int glyph_index = FT_Get_Char_Index(_fontRef, theChar);
     
-    // Allocate our buffers for characters and glyphs.
-    characters = new UniChar[count];
-    assert(characters != NULL);
+    if (!glyph_index)
+        return false;
     
-    glyphs = new CGGlyph[count];
-    assert(glyphs != NULL);
+    // load glyph infos
+    if (FT_Load_Glyph(_fontRef, glyph_index, FT_LOAD_DEFAULT))
+        return false;
     
-    // Get the characters from the string.
-    CFStringGetCharacters(lettersString, CFRangeMake(0, count), characters);
+    // store result in the passed rectangle
+    outRect.origin.x    = 0;
+    outRect.origin.y    = - (_fontRef->glyph->metrics.horiBearingY >> 6);
+    outRect.size.width  =   (_fontRef->glyph->metrics.width  >> 6);
+    outRect.size.height =   (_fontRef->glyph->metrics.height >> 6);
     
-    // Get the glyphs for the characters.
-    CTFontGetGlyphsForCharacters(_fontRef, characters, glyphs, count);
-    CGGlyph *theFirstGlyph = &glyphs[0];
+    return true;
+}
+
+GlyphDef * FontFreeType::getGlyphsForText(const char *pText, int &outNumGlyphs)
+{
+    unsigned short* utf16String = cc_utf8_to_utf16(pText);
     
-    // get letters bounding boxes
-    CGRect *BBOx  = new CGRect[count];
-    assert(BBOx != NULL);
+    //
+    if  (!utf16String)
+        return 0;
     
-    
-    CTFontGetBoundingRectsForGlyphs(_fontRef, kCTFontHorizontalOrientation, theFirstGlyph, BBOx, count);
-    
-    GlyphDef *pGlyphs = new GlyphDef[count];
-    assert(pGlyphs != NULL);
-    
+    int numChar = cc_wcslen(utf16String);
+    if (!numChar)
+        return 0;
+
+    // allocate the needed Glyphs
+    GlyphDef *pGlyphs = new GlyphDef[numChar];
+    assert( pGlyphs != NULL );
+    return 0;
     
     // sore result as CCRect
-    for (int c=0; c<count; ++c)
+    for (int c=0; c<numChar; ++c)
     {
         Rect tempRect;
-        tempRect.origin.x       = BBOx[c].origin.x;
-        tempRect.origin.y       = BBOx[c].origin.y;
-        tempRect.size.width     = BBOx[c].size.width;
-        tempRect.size.height    = BBOx[c].size.height;
+        if( !getBBOXFotChar(utf16String[c], tempRect) )
+        {
+            delete [] pGlyphs;
+            return 0;
+        }
         
         pGlyphs[c].setRect(tempRect);
-        pGlyphs[c].setUTF8Letter(characters[c]);
-        pGlyphs[c].setPadding(CHAR_PADDING);
+        pGlyphs[c].setUTF8Letter(utf16String[c]);
+        pGlyphs[c].setPadding(_letterPadding);
     }
     
-    // release memory
-    delete [] characters;
-    delete [] glyphs;
-    delete [] BBOx;
+    outNumGlyphs = numChar;
     
-    outNumGlyphs = count;
+    // free memory
+    delete [] utf16String;
+    
+    // done
     return pGlyphs;
-    */
-    
-    return 0;
 }
 
 Size * FontFreeType::getAdvancesForTextUTF8(unsigned short *pText, int &outNumLetters)
 {
-    /*
     if (!pText)
         return 0;
     
@@ -109,171 +162,174 @@ Size * FontFreeType::getAdvancesForTextUTF8(unsigned short *pText, int &outNumLe
     if (!outNumLetters)
         return 0;
     
-    // create the reference to the string
-    CFStringRef lettersString = CFStringCreateWithCharacters(kCFAllocatorDefault, pText, outNumLetters);
-    
-    if (NULL == lettersString)
-    {
+    Size *pSizes = new Size[outNumLetters];
+    if (!pSizes)
         return 0;
+    
+    for (int c = 0; c<outNumLetters; ++c)
+    {
+        int advance = 0;
+        int kerning = 0;
+        
+        advance = getAdvanceFotChar(pText[c]);
+        
+        if ( c < (outNumLetters-1) )
+            kerning = getHorizontalKerningForChars(pText[c], pText[c+1]);
+        
+        pSizes[c].width = (advance + kerning);
     }
     
-    UniChar *characters;
-    CGGlyph *glyphs;
-    CFIndex  count;
+    return pSizes;
+}
+
+int FontFreeType::getAdvanceFotChar(unsigned short theChar)
+{
+    if (!_fontRef)
+        return false;
     
-    // num char
-    count = CFStringGetLength(lettersString);
+    // get the ID to the char we need
+    int glyph_index = FT_Get_Char_Index(_fontRef, theChar);
     
-    // Allocate our buffers for characters and glyphs.
-    characters = new UniChar[count];
-    assert(characters != NULL);
+    if (!glyph_index)
+        return false;
     
-    glyphs = new CGGlyph[count];
-    assert(glyphs != NULL);
+    // load glyph infos
+    if (FT_Load_Glyph(_fontRef, glyph_index, FT_LOAD_DEFAULT))
+        return false;
     
-    // Get the characters from the string.
-    CFStringGetCharacters(lettersString, CFRangeMake(0, count), characters);
+    // get to the advance for this glyph
+    return (_fontRef->glyph->advance.x >> 6);
+}
+
+int  FontFreeType::getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar)
+{
+    if (!_fontRef)
+        return -1;
     
-    // Get the glyphs for the characters.
-    CTFontGetGlyphsForCharacters(_fontRef, characters, glyphs, count);
+    // get the ID to the char we need
+    int glyph_index1 = FT_Get_Char_Index(_fontRef, firstChar);
     
-    CGGlyph *theFirstGlyph = &glyphs[0];
+    if (!glyph_index1)
+        return -1;
     
+    // get the ID to the char we need
+    int glyph_index2 = FT_Get_Char_Index(_fontRef, secondChar);
     
-    CGSize *pSize = new CGSize[count];
-    if(!pSize)
-        return 0;
+    if (!glyph_index2)
+        return -1;
     
-    Size *pCCSizes = new Size[count];
-    if (!pCCSizes)
-        return 0;
+    FT_Vector kerning;
     
-    // actually get the advances
-    CTFontGetAdvancesForGlyphs(_fontRef, kCTFontHorizontalOrientation, theFirstGlyph, pSize, count);
+    if (FT_Get_Kerning( _fontRef, glyph_index1, glyph_index2,  FT_KERNING_DEFAULT,  &kerning ))
+        return -1;
     
-    for (int c = 0; c<count; ++c)
-    {
-        pCCSizes[c].width  = pSize[c].width;
-        pCCSizes[c].height = pSize[c].height;
-    }
-    
-    delete [] characters;
-    delete [] glyphs;
-    delete [] pSize;
-    
-    outNumLetters = count;
-    return pCCSizes;
-    */
-    
-    return 0;
+    return ( kerning.x >> 6 );
 }
 
 Size * FontFreeType::getAdvancesForText(const char *pText, int &outNumLetters)
 {
-    /*
-    unsigned short int *utf8Text = FontIOS::getUTF8Text(pText, outNumLetters);
-    if (utf8Text)
-    {
-        Size *ret = getAdvancesForTextUTF8(utf8Text, outNumLetters);
-        delete [] utf8Text;
-        return ret;
-    }
-    else
-    {
-        return 0;
-    }
-    */
-    
-    return 0;
+    unsigned short* utf16String = cc_utf8_to_utf16(pText);
+    Size *ret = getAdvancesForTextUTF8(utf16String, outNumLetters);
+    delete [] utf16String;
+    return ret;
 }
 
 Size FontFreeType::getTextWidthAndHeight(const char *pText)
 {
-    /*
     Size retSize;
-    NSString * str      = [NSString stringWithUTF8String:pText];
-    CGSize tmp          = [str sizeWithFont:(UIFont *)_fontUI];
+    retSize.width  = 0;
+    retSize.height = 0;
     
-    retSize.width       = tmp.width;
-    retSize.height      = tmp.height;
+    int numLetters;
+    Size *tempSizes = getAdvancesForText(pText, numLetters);
+    
+    for (int c = 0; c<numLetters; ++c)
+    {
+        retSize.width += tempSizes[c].width;
+    }
+    
+    retSize.height = (_fontRef->size->metrics.height >> 6);
+    
+    delete [] tempSizes;
     
     return retSize;
-    */
+}
+
+unsigned char *   FontFreeType::getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight)
+{
+    if (!_fontRef)
+        return 0;
     
-    Size retSize;
-    return retSize;
+    // get the ID to the char we need
+    int glyph_index = FT_Get_Char_Index(_fontRef, theChar);
+    
+    if (!glyph_index)
+        return 0;
+    
+    // load glyph infos
+    if (FT_Load_Glyph(_fontRef, glyph_index, FT_LOAD_DEFAULT))
+        return 0;
+    
+    if (FT_Render_Glyph( _fontRef->glyph, FT_RENDER_MODE_NORMAL ))
+        return 0;
+    
+    outWidth  = _fontRef->glyph->bitmap.width;
+    outHeight = _fontRef->glyph->bitmap.rows;
+    
+    // return the pointer to the bitmap
+    return _fontRef->glyph->bitmap.buffer;
 }
 
 unsigned short int * FontFreeType::getUTF8Text(const char *pText, int &outNumLetters)
 {
-    /*
-    CFStringRef lettersString = CFStringCreateWithCString(kCFAllocatorDefault, pText, kCFStringEncodingUTF8);
-    if (NULL == lettersString)
-    {
+    unsigned short* utf16String = cc_utf8_to_utf16(pText);
+    if(!utf16String)
         return 0;
-    }
-    
-    // num char
-    int count = CFStringGetLength(lettersString);
-    
-    // Allocate our buffers for characters and glyphs.
-    UniChar *characters = new UniChar[count + 1];
-    if (!characters)
-        return 0;
-    
-    // Get the characters from the string.
-    CFStringGetCharacters(lettersString, CFRangeMake(0, count), characters);
-    
-    // terminate the string
-    outNumLetters = count;
-    characters[count] = 0;
-    
-    return (unsigned short int *) characters;
-    */
-    
-    return 0;
+    outNumLetters = cc_wcslen(utf16String);
+    return utf16String;
 }
 
+// carloX this could be broken
 const char * FontFreeType::trimUTF8Text(const char *pText, int newBegin, int newEnd)
 {
-    /*
     if ( newBegin<0 || newEnd<=0 )
         return 0;
     
     if ( newBegin>=newEnd )
         return 0;
     
-    NSString * str      = [NSString stringWithUTF8String:pText];
-    if ( newEnd >= [str length])
+    unsigned short* utf16String = cc_utf8_to_utf16(pText);
+    if (!utf16String)
         return 0;
     
-    NSRange theRange;
+    if (newEnd >= cc_wcslen(utf16String))
+        return 0;
     
-    theRange.location = newBegin;
-    theRange.length   = (newEnd - newBegin) +1;
+    int newLenght = newEnd - newBegin + 2;
+    unsigned short* trimmedString = new unsigned short[newLenght];
     
-    // trim the string
-    NSString *trimmedString = [str substringWithRange:theRange];
+    for(int c = 0; c < (newLenght-1); ++c)
+    {
+        trimmedString[c] = utf16String[newBegin + c];
+    }
     
-    // ret the string
-    return [trimmedString UTF8String];
-    */
+    // last char
+    trimmedString[newLenght-1] = 0x0000;
     
-    return 0;
+    // release temp
+    delete [] utf16String;
+    
+    return (const char *)trimmedString;
 }
 
 int FontFreeType::getUTF8TextLenght(const char *pText)
 {
-    /*
-    CFStringRef lettersString = CFStringCreateWithCString(kCFAllocatorDefault, pText, kCFStringEncodingUTF8);
-    if (NULL == lettersString)
-    {
-        return 0;
-    }
-    
-    return  CFStringGetLength(lettersString);
-    */
-    return 0;
+    unsigned short* utf16String = cc_utf8_to_utf16(pText);
+    if (!utf16String)
+        return -1;
+    int outNumLetters = cc_wcslen(utf16String);
+    delete [] utf16String;
+    return outNumLetters;
 }
 
 NS_CC_END

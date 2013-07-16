@@ -59,7 +59,7 @@ unsigned char * FontRenderIOS::preparePageGlyphData(TextPageDef *thePage, char *
     int numLines = thePage->getNumLines();
     for (int c = 0; c<numLines; ++c)
     {
-        TextLineDef *pCurrentLine = thePage->getLineAt(c);
+        TextLineDef *pCurrentLine   = thePage->getLineAt(c);
         float lineHeight            = pCurrentLine->getHeight();
         
         float origX         = LINE_PADDING;

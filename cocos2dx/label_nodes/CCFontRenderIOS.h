@@ -13,10 +13,14 @@
 
 NS_CC_BEGIN
 
+class Font;
+
 class FontRenderIOS : public FontRender
 {
+    
 public:
     
+    FontRenderIOS(Font *pFont): FontRender(pFont) {}
     virtual ~FontRenderIOS() {}
     virtual unsigned char * preparePageGlyphData(TextPageDef *thePage, char *fontName, int fontSize);
     
