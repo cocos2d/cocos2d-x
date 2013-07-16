@@ -129,6 +129,7 @@ Developers:
     tks2shimizu
         add CCFloat, CCDouble and CCBool
         Add append function for String class
+        Adding String::componentsSeparatedByString function for splitting string.
 
     chenium
         fix a bug that CCRenderTexture can not work when coming to foreground on Android
