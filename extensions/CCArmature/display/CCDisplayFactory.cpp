@@ -72,7 +72,7 @@ void CCDisplayFactory::updateDisplay(CCBone *bone, CCDecorativeDisplay *decoDisp
 {
     CS_RETURN_IF(!decoDisplay);
 
-#if ENABLE_PHYSICS_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     if (dirty)
     {
         CCColliderDetector *detector = decoDisplay->getColliderDetector();
@@ -167,7 +167,7 @@ void CCDisplayFactory::createSpriteDisplay(CCBone *bone, CCDecorativeDisplay *de
 
     decoDisplay->setDisplay(skin);
 
-#if ENABLE_PHYSICS_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     if (textureData && textureData->contourDataList.count() > 0)
     {
 
