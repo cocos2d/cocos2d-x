@@ -2,7 +2,7 @@
 
 var cc = cc || {};
 
-function() {
+(function() {
 
     var logW = function(old_name, new_name) {
         cc.log("\n********** \n"+old_name +" was deprecated, please use "+ new_name +" instead.\n**********");
@@ -20,4 +20,4 @@ function() {
     // };
 
 
-}();
+})();
