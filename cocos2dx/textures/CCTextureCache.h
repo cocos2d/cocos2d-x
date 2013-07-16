@@ -58,14 +58,6 @@ NS_CC_BEGIN
 class CC_DLL TextureCache : public Object
 {
 public:
-
-    TextureCache();
-    virtual ~TextureCache();
-
-    const char* description(void) const;
-
-    Dictionary* snapshotTextures();
-
     /** Returns the shared instance of the cache */
     static TextureCache * getInstance();
 
@@ -79,6 +71,19 @@ public:
 
     /** @deprecated Use destroyInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedTextureCache();
+
+    /** Reload all textures
+     It's only useful when the value of CC_ENABLE_CACHE_TEXTURE_DATA is 1
+     */
+    static void reloadAllTextures();
+
+public:
+    TextureCache();
+    virtual ~TextureCache();
+
+    const char* description(void) const;
+
+    Dictionary* snapshotTextures();
 
     /** Returns a Texture2D object given an file image
     * If the file image was not previously loaded, it will create a new Texture2D
@@ -153,11 +158,6 @@ public:
      */
     Texture2D* addETCImage(const char* filename);
 
-    /** Reload all textures
-    It's only useful when the value of CC_ENABLE_CACHE_TEXTURE_DATA is 1
-    */
-    static void reloadAllTextures();
-
 private:
     void addImageAsyncCallBack(float dt);
     void loadImage();
@@ -206,13 +206,13 @@ protected:
 
 class VolatileTexture
 {
-typedef enum {
-    kInvalid = 0,
-    kImageFile,
-    kImageData,
-    kString,
-    kImage,
-}ccCachedImageType;
+    typedef enum {
+        kInvalid = 0,
+        kImageFile,
+        kImageData,
+        kString,
+        kImage,
+    }ccCachedImageType;
 
 public:
     VolatileTexture(Texture2D *t);

@@ -368,7 +368,7 @@ void StressTest1::shouldNotCrash(float dt)
     
     runAction( Sequence::create(
                             RotateBy::create(2, 360),
-                            CallFuncN::create(this, callfuncN_selector(StressTest1::removeMe)), 
+                            CallFuncN::create(CC_CALLBACK_1(StressTest1::removeMe, this)),
                             NULL) );
     
     addChild(explosion);

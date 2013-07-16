@@ -132,7 +132,7 @@ void CrashTest::onEnter()
     //After 1.5 second, self will be removed.
     runAction( Sequence::create(
                                     DelayTime::create(1.4f),
-                                    CallFunc::create(this, callfunc_selector(CrashTest::removeThis)),
+                                    CallFunc::create( CC_CALLBACK_0(CrashTest::removeThis,this)),
                                     NULL)
              );
 }
@@ -164,7 +164,7 @@ void LogicTest::onEnter()
 
     grossini->runAction( Sequence::create( 
                                                 MoveBy::create(1, Point(150,0)),
-                                                CallFuncN::create(this, callfuncN_selector(LogicTest::bugMe)),
+                                                CallFuncN::create(CC_CALLBACK_1(LogicTest::bugMe,this)),
                                                 NULL) 
                         );
 }
@@ -242,7 +242,7 @@ void RemoveTest::onEnter()
     l->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 75) );
 
     MoveBy* pMove = MoveBy::create(2, Point(200, 0));
-    CallFunc* pCallback = CallFunc::create(this, callfunc_selector(RemoveTest::stopAction));
+    CallFunc* pCallback = CallFunc::create(CC_CALLBACK_0(RemoveTest::stopAction,this));
     ActionInterval* pSequence = Sequence::create(pMove, pCallback, NULL);
     pSequence->setTag(kTagSequence);
 

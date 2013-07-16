@@ -3,6 +3,7 @@
 #include "ccMacros.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "CCArray.h"
 
 NS_CC_BEGIN
 
@@ -149,6 +150,28 @@ void String::appendWithFormat(const char* format, ...)
     
     va_end(ap);
     
+}
+
+Array* String::componentsSeparatedByString(const char *delimiter)
+{
+    Array* result = Array::create();
+    
+    int cutAt;
+    while( (cutAt = _string.find_first_of(delimiter)) != _string.npos )
+    {
+        if(cutAt > 0)
+        {
+            result->addObject(String::create(_string.substr(0, cutAt)));
+        }
+        _string = _string.substr(cutAt + 1);
+    }
+    
+    if(_string.length() > 0)
+    {
+        result->addObject(String::create(_string));
+    }
+    
+    return result;
 }
 
 bool String::isEqual(const Object* pObject)

@@ -258,51 +258,7 @@ public:
     virtual bool initWithFile(const char *pszFilename, const Rect& rect);
     
     /// @} end of initializers
-    
-    /// @{
-    /// @name Functions inherited from TextureProtocol
-    virtual void setTexture(Texture2D *texture);
-    virtual Texture2D* getTexture(void);
-    inline void setBlendFunc(const BlendFunc &blendFunc) { _blendFunc = blendFunc; }
-    inline const BlendFunc& getBlendFunc(void) const { return _blendFunc; }
-    /// @}
 
-    /// @{
-    /// @name Functions inherited from Node
-    virtual void setScaleX(float fScaleX);
-    virtual void setScaleY(float fScaleY);
-    virtual void setPosition(const Point& pos);
-    virtual void setRotation(float fRotation);
-    virtual void setRotationX(float fRotationX);
-    virtual void setRotationY(float fRotationY);
-    virtual void setSkewX(float sx);
-    virtual void setSkewY(float sy);
-    virtual void removeChild(Node* pChild, bool bCleanup);
-    virtual void removeAllChildrenWithCleanup(bool bCleanup);
-    virtual void reorderChild(Node *pChild, int zOrder);
-    virtual void addChild(Node *pChild);
-    virtual void addChild(Node *pChild, int zOrder);
-    virtual void addChild(Node *pChild, int zOrder, int tag);
-    virtual void sortAllChildren();
-    virtual void setScale(float fScale);
-    virtual void setVertexZ(float fVertexZ);
-    virtual void setAnchorPoint(const Point& anchor);
-    virtual void ignoreAnchorPointForPosition(bool value);
-    virtual void setVisible(bool bVisible);
-    virtual void draw(void);
-    /// @}
-    
-    /// @{
-    /// @name Functions inherited from NodeRGBA
-    virtual void setColor(const Color3B& color3);
-    virtual void updateDisplayedColor(const Color3B& parentColor);
-    virtual void setOpacity(GLubyte opacity);
-    virtual void setOpacityModifyRGB(bool modify);
-    virtual bool isOpacityModifyRGB(void) const;
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
-    /// @}
-
-    
     /// @{
     /// @name BatchNode methods
     
@@ -486,7 +442,54 @@ public:
     void setFlipY(bool bFlipY);
     
     /// @} End of Sprite properties getter/setters
-    
+
+
+    //
+    // Overrides
+    //
+    /// @{
+    /// @name Functions inherited from TextureProtocol
+    virtual void setTexture(Texture2D *texture) override;
+    virtual Texture2D* getTexture(void) override;
+    inline void setBlendFunc(const BlendFunc &blendFunc) override { _blendFunc = blendFunc; }
+    inline const BlendFunc& getBlendFunc(void) const override { return _blendFunc; }
+    /// @}
+
+    /// @{
+    /// @name Functions inherited from Node
+    virtual void setScaleX(float fScaleX) override;
+    virtual void setScaleY(float fScaleY) override;
+    virtual void setPosition(const Point& pos) override;
+    virtual void setRotation(float fRotation) override;
+    virtual void setRotationX(float fRotationX) override;
+    virtual void setRotationY(float fRotationY) override;
+    virtual void setSkewX(float sx) override;
+    virtual void setSkewY(float sy) override;
+    virtual void removeChild(Node* pChild, bool bCleanup) override;
+    virtual void removeAllChildrenWithCleanup(bool bCleanup) override;
+    virtual void reorderChild(Node *pChild, int zOrder) override;
+    virtual void addChild(Node *pChild) override;
+    virtual void addChild(Node *pChild, int zOrder) override;
+    virtual void addChild(Node *pChild, int zOrder, int tag) override;
+    virtual void sortAllChildren() override;
+    virtual void setScale(float fScale) override;
+    virtual void setVertexZ(float fVertexZ) override;
+    virtual void setAnchorPoint(const Point& anchor) override;
+    virtual void ignoreAnchorPointForPosition(bool value) override;
+    virtual void setVisible(bool bVisible) override;
+    virtual void draw(void) override;
+    /// @}
+
+    /// @{
+    /// @name Functions inherited from NodeRGBA
+    virtual void setColor(const Color3B& color3) override;
+    virtual void updateDisplayedColor(const Color3B& parentColor) override;
+    virtual void setOpacity(GLubyte opacity) override;
+    virtual void setOpacityModifyRGB(bool modify) override;
+    virtual bool isOpacityModifyRGB(void) const override;
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
+    /// @}
+
 protected:
     void updateColor(void);
     virtual void setTextureCoords(Rect rect);
