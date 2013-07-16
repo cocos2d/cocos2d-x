@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Mon Jul 15 22:51:28 2013.
+** Generated automatically by tolua++-1.0.92 on Tue Jul 16 13:16:08 2013.
 */
 
 /****************************************************************************
@@ -11234,6 +11234,34 @@ static int tolua_Cocos2d_CCApplication_sharedApplication00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'sharedApplication'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getInstance of class  Application */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCApplication_getInstance00
+static int tolua_Cocos2d_CCApplication_getInstance00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCApplication",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   Application* tolua_ret = (Application*)  Application::getInstance();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCApplication");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getInstance'.",&tolua_err);
  return 0;
 #endif
 }
@@ -64864,6 +64892,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_beginmodule(tolua_S,"CCApplication");
    tolua_function(tolua_S,"delete",tolua_Cocos2d_CCApplication_delete00);
    tolua_function(tolua_S,"sharedApplication",tolua_Cocos2d_CCApplication_sharedApplication00);
+   tolua_function(tolua_S,"getInstance",tolua_Cocos2d_CCApplication_getInstance00);
    tolua_function(tolua_S,"getCurrentLanguage",tolua_Cocos2d_CCApplication_getCurrentLanguage00);
    tolua_function(tolua_S,"getTargetPlatform",tolua_Cocos2d_CCApplication_getTargetPlatform00);
   tolua_endmodule(tolua_S);

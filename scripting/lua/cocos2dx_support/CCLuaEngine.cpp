@@ -27,7 +27,7 @@
 #include "cocoa/CCArray.h"
 #include "CCScheduler.h"
 #include "LuaScriptHandlerMgr.h"
-#include "CCControl.h"
+#include "GUI/CCControlExtension/CCControl.h"
 
 NS_CC_BEGIN
 
