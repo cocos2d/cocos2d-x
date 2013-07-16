@@ -94,7 +94,12 @@ if [ "$GEN_JSB"x = "YES"x ]; then
     install_android_ndk
     install_llvm
 elif [ "$PLATFORM"x = "linux"x ]; then
+    sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
     sudo apt-get update
+    sudo apt-get install gcc-4.7 g++-4.7
+    sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.6 60 --slave /usr/bin/g++ g++ /usr/bin/g++-4.6
+    sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.7 90 --slave /usr/bin/g++ g++ /usr/bin/g++-4.7
+    g++ --version
     bash $COCOS2DX_ROOT/install-deps-linux.sh
 elif [ "$PLATFORM"x = "nacl"x ]; then
     install_nacl_sdk

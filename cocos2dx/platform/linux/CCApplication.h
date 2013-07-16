@@ -36,8 +36,11 @@ public:
 	 @brief	Get current applicaiton instance.
 	 @return Current application instance pointer.
 	 */
-	static Application* sharedApplication();
+	static Application* getInstance();
 
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static Application* sharedApplication();
+    
 	/* override functions */
 	virtual ccLanguageType getCurrentLanguage();
 

@@ -26,5 +26,5 @@ int main(int argc, char **argv)
     EGLView* eglView = EGLView::getInstance();
     eglView->setFrameSize(width, height);
 
-    return Application::sharedApplication()->run();
+    return Application::getInstance()->run();
 }

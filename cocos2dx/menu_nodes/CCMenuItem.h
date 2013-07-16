@@ -91,9 +91,6 @@ public:
     virtual void setEnabled(bool value);
     virtual bool isSelected() const;
     
-    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool isOpacityModifyRGB(void) const { return false;}
-    
     /** set the target/selector of the menu item*/
     CC_DEPRECATED_ATTRIBUTE void setTarget(Object *rec, SEL_MenuHandler selector);
     /** set the callback to the menu item */
@@ -284,8 +281,6 @@ public:
     virtual void unselected();
     virtual void setEnabled(bool bEnabled);
     
-    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool isOpacityModifyRGB(void) const { return false;}
 protected:
     virtual void updateImagesVisibility();
 };
@@ -390,9 +385,6 @@ public:
     virtual void selected();
     virtual void unselected();
     virtual void setEnabled(bool var);
-    
-    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool isOpacityModifyRGB(void) const { return false;}
 };
 
 

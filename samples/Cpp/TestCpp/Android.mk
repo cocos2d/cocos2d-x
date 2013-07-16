@@ -63,6 +63,7 @@ Classes/ExtensionsTest/ComponentsTest/ProjectileController.cpp \
 Classes/ExtensionsTest/ComponentsTest/SceneController.cpp \
 Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp \
 Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp \
+Classes/ExtensionsTest/NetworkTest/SocketIOTest.cpp \
 Classes/ExtensionsTest/EditBoxTest/EditBoxTest.cpp \
 Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp \
 Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp \
