@@ -166,17 +166,8 @@ enum ScriptEventType
     kTouchesEvent,
     kKeypadEvent,
     kAccelerometerEvent,
+    kControlEvent,
     kCommonEvent,
-};
-
-enum TouchesObjectType
-{
-    kLayerTouches = 0,
-};
-
-enum KeypadObjectType
-{
-    kLayerKeypad = 0,
 };
 
 struct BasicScriptData
@@ -209,12 +200,10 @@ struct SchedulerScriptData
 struct TouchesScriptData
 {
     int actionType;
-    int objectType;
     void* nativeObject;
     Set* touches;
-    TouchesScriptData(int inActionType,int inObjectType,void* inNativeObject,Set* inTouches)
+    TouchesScriptData(int inActionType,void* inNativeObject,Set* inTouches)
     :actionType(inActionType),
-    objectType(inObjectType),
     nativeObject(inNativeObject),
     touches(inTouches)
     {
@@ -224,10 +213,9 @@ struct TouchesScriptData
 struct KeypadScriptData
 {
     int actionType;
-    int objectType;
     void* nativeObject;
-    KeypadScriptData(int inActionType,int inObjectType,void* inNativeObject)
-    :actionType(inActionType),objectType(inObjectType),nativeObject(inNativeObject)
+    KeypadScriptData(int inActionType,void* inNativeObject)
+    :actionType(inActionType),nativeObject(inNativeObject)
     {
     }
 };

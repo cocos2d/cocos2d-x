@@ -371,7 +371,7 @@ local function runCCControlTest()
         pDisplayValueLabel:setPosition(ccp(screenSize.width / 1.7, screenSize.height / 2.0))
         pLayer:addChild(pDisplayValueLabel)
         
-        local function valueChanged(strEventName,pSender)
+        local function valueChanged(pSender)
         	if nil == pSender or nil == pDisplayValueLabel then
         		return
         	end       	
@@ -396,7 +396,7 @@ local function runCCControlTest()
 		pSlider:setTag(1)
         
         --When the value of the slider will change, the given selector will be call
-        pSlider:addHandleOfControlEvent(valueChanged, CCControlEventValueChanged)
+        pSlider:registerControlEventHandler(valueChanged, CCControlEventValueChanged)
 		
 		local pRestrictSlider = CCControlSlider:create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png")
         pRestrictSlider:setAnchorPoint(ccp(0.5, 1.0))
@@ -408,7 +408,7 @@ local function runCCControlTest()
         pRestrictSlider:setPosition(ccp(screenSize.width / 2.0, screenSize.height / 2.0 - 24))
 		pRestrictSlider:setTag(2)		
 		--same with restricted
-		pRestrictSlider:addHandleOfControlEvent(valueChanged, CCControlEventValueChanged)
+		pRestrictSlider:registerControlEventHandler(valueChanged, CCControlEventValueChanged)
 	    pLayer:addChild(pSlider)    
 		pLayer:addChild(pRestrictSlider)
 	end
@@ -428,7 +428,7 @@ local function runCCControlTest()
         local dLayer_width = 0
 
         --Create the colour picker,pStrEventName not use
-        local function colourValueChanged(pStrEventName,pSender)
+        local function colourValueChanged(pSender)
         	if nil == pSender or nil == pColorLabel then
         		return
         	end
@@ -440,7 +440,7 @@ local function runCCControlTest()
         local pColourPicker = CCControlColourPicker:create()
         pColourPicker:setColor(Color3B(37, 46, 252))
         pColourPicker:setPosition(ccp (pColourPicker:getContentSize().width / 2, 0))
-        pColourPicker:addHandleOfControlEvent(colourValueChanged, CCControlEventValueChanged)
+        pColourPicker:registerControlEventHandler(colourValueChanged, CCControlEventValueChanged)
         pNode:addChild(pColourPicker)     
 	
 	    dLayer_width = dLayer_width + pColourPicker:getContentSize().width
@@ -462,7 +462,7 @@ local function runCCControlTest()
         pNode:setAnchorPoint(ccp (0.5, 0.5))
 
         --Update the color text
-	    colourValueChanged("", pColourPicker)
+	    colourValueChanged(pColourPicker)
 	end
 	
 	--SwitchTest
@@ -493,7 +493,7 @@ local function runCCControlTest()
         pNode:addChild(pDisplayValueLabel)
         
         --Create the switch
-        local function valueChanged(strEventName,pSender)
+        local function valueChanged(pSender)
         	if nil == pDisplayValueLabel or nil == pSender then
         		return
         	end
@@ -515,14 +515,14 @@ local function runCCControlTest()
             )
         pSwitchControl:setPosition(ccp (dLayer_width + 10 + pSwitchControl:getContentSize().width / 2, 0))
         pNode:addChild(pSwitchControl)
-        pSwitchControl:addHandleOfControlEvent(valueChanged, CCControlEventValueChanged)
+        pSwitchControl:registerControlEventHandler(valueChanged, CCControlEventValueChanged)
         
         --Set the layer size
         pNode:setContentSize(CCSizeMake(dLayer_width, 0))
         pNode:setAnchorPoint(ccp (0.5, 0.5))
         
         --Update the value label
-        valueChanged("", pSwitchControl)
+        valueChanged(pSwitchControl)
 	end
 	
 	--Hvs:HelloVariableSize
@@ -730,14 +730,14 @@ local function runCCControlTest()
         pControlButton:setTitleColorForState(Color3B(255, 255, 255), CCControlStateHighlighted)
         pControlButton:setAnchorPoint(ccp(0.5, 1))
         pControlButton:setPosition(ccp(screenSize.width / 2.0, screenSize.height / 2.0))
-        pControlButton:addHandleOfControlEvent(touchDownAction,CCControlEventTouchDown)
-        pControlButton:addHandleOfControlEvent(touchDragInsideAction,CCControlEventTouchDragInside)
-        pControlButton:addHandleOfControlEvent(touchDragOutsideAction,CCControlEventTouchDragOutside)
-        pControlButton:addHandleOfControlEvent(touchDragEnterAction,CCControlEventTouchDragEnter)
-        pControlButton:addHandleOfControlEvent(touchDragExitAction,CCControlEventTouchDragExit)
-        pControlButton:addHandleOfControlEvent(touchUpInsideAction,CCControlEventTouchUpInside)
-        pControlButton:addHandleOfControlEvent(touchUpOutsideAction,CCControlEventTouchUpOutside)
-        pControlButton:addHandleOfControlEvent(touchCancelAction,CCControlEventTouchCancel)
+        pControlButton:registerControlEventHandler(touchDownAction,CCControlEventTouchDown)
+        pControlButton:registerControlEventHandler(touchDragInsideAction,CCControlEventTouchDragInside)
+        pControlButton:registerControlEventHandler(touchDragOutsideAction,CCControlEventTouchDragOutside)
+        pControlButton:registerControlEventHandler(touchDragEnterAction,CCControlEventTouchDragEnter)
+        pControlButton:registerControlEventHandler(touchDragExitAction,CCControlEventTouchDragExit)
+        pControlButton:registerControlEventHandler(touchUpInsideAction,CCControlEventTouchUpInside)
+        pControlButton:registerControlEventHandler(touchUpOutsideAction,CCControlEventTouchUpOutside)
+        pControlButton:registerControlEventHandler(touchCancelAction,CCControlEventTouchCancel)
         pLayer:addChild(pControlButton, 1)
 		
 		--Add the black background
@@ -773,7 +773,7 @@ local function runCCControlTest()
         pNode:addChild(pDisplayValueLabel)
 		
         -- Add the slider
-        local function valueChanged(strEventName,pSender)
+        local function valueChanged(pSender)
         	if nil == pSender then
         		return
         	end
@@ -787,7 +787,7 @@ local function runCCControlTest()
         pPotentiometer:setPosition(ccp (dLayer_width + 10 + pPotentiometer:getContentSize().width / 2, 0))
 
         -- When the value of the slider will change, the given selector will be call
-        pPotentiometer:addHandleOfControlEvent(valueChanged, CCControlEventValueChanged)
+        pPotentiometer:registerControlEventHandler(valueChanged, CCControlEventValueChanged)
         
 		pNode:addChild(pPotentiometer)
         
@@ -798,7 +798,7 @@ local function runCCControlTest()
         pNode:setAnchorPoint(ccp (0.5, 0.5))
         
         -- Update the value label
-        valueChanged("", pPotentiometer)
+        valueChanged(pPotentiometer)
 	end
 	
 	local function InitStepperTest(pLayer)
@@ -830,7 +830,7 @@ local function runCCControlTest()
         local minusSprite       = CCSprite:create("extensions/stepper-minus.png")
     	local plusSprite        = CCSprite:create("extensions/stepper-plus.png")
     
-    	local function valueChanged(strEventName,pSender)
+    	local function valueChanged(pSender)
     		if nil == pDisplayValueLabel or nil == pSender then
     			return
     		end
@@ -841,7 +841,7 @@ local function runCCControlTest()
     	end
         local stepper   = CCControlStepper:create(minusSprite, plusSprite)
         stepper:setPosition(ccp (layer_width + 10 + stepper:getContentSize().width / 2, 0))
-        stepper:addHandleOfControlEvent(valueChanged, CCControlEventValueChanged)
+        stepper:registerControlEventHandler(valueChanged, CCControlEventValueChanged)
         pNode:addChild(stepper)
         
         layer_width  = layer_width + stepper:getContentSize().width
@@ -851,7 +851,7 @@ local function runCCControlTest()
         pNode:setAnchorPoint(ccp (0.5, 0.5))
         
         -- Update the value label
-        valueChanged("", stepper)
+        valueChanged(stepper)
 	end
 	
 	local function InitSpecialSceneLayer(pLayer)

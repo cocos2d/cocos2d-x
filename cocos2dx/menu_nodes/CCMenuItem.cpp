@@ -92,8 +92,6 @@ bool MenuItem::initWithCallback(const ccMenuCallback& callback)
 MenuItem::~MenuItem()
 {
 	CC_SAFE_RELEASE(_target);
-
-    unregisterScriptTapHandler();
 }
 
 void MenuItem::selected()
@@ -104,23 +102,6 @@ void MenuItem::selected()
 void MenuItem::unselected()
 {
     _selected = false;
-}
-
-void MenuItem::registerScriptTapHandler(int nHandler)
-{
-    unregisterScriptTapHandler();
-    _scriptTapHandler = nHandler;
-    LUALOG("[LUA] Add MenuItem script handler: %d", _scriptTapHandler);
-}
-
-void MenuItem::unregisterScriptTapHandler(void)
-{
-    if (_scriptTapHandler)
-    {
-        ScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(_scriptTapHandler);
-        LUALOG("[LUA] Remove MenuItem script handler: %d", _scriptTapHandler);
-        _scriptTapHandler = 0;
-    }
 }
 
 void MenuItem::activate()

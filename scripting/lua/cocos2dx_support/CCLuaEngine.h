@@ -119,7 +119,7 @@ public:
     virtual bool handleAssert(const char *msg);
     
     virtual int sendEvent(ScriptEvent* message);
-    void expandLuaObjecFunc();
+    void extendLuaObjec();
 private:
     int handleNodeEvent(void* data);
     int handleMenuClickedEvent(void* data);
@@ -130,11 +130,11 @@ private:
     int handleAccelerometerEvent(void* data);
     int handleCommonEvent(void* data);
     int handleTouchesEvent(void* data);
-    int handleLayerTouchesEvent(Layer* layer,int actionType,Set* touches);
-    int handleLayerKeypadEvent(Layer* layer,int actionType);
-    void expandNodeFunc(lua_State* lua_S);
-    void expandMenuItemFunc(lua_State* lua_S);
-    void expandLayerFunc(lua_State* lua_S);
+    int handlerControlEvent(void* data);
+    void extendNode(lua_State* lua_S);
+    void extendMenuItem(lua_State* lua_S);
+    void extendLayer(lua_State* lua_S);
+    void extendControl(lua_State* lua_S);
 private:
     LuaEngine(void)
     : _stack(NULL)

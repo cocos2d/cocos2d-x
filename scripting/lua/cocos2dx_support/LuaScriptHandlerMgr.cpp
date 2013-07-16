@@ -227,6 +227,29 @@ tolua_lerror:
 #endif
 }
 
+int tolua_Cocos2d_unregisterScriptHandler00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCNode",0,&tolua_err)    ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        Node* node = (Node*)tolua_tousertype(tolua_S,1,0);
+        ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)node, ScriptHandlerMgr::kNodeHandler);
+        return 0;
+    }
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'registerScriptHandler'.",&tolua_err);
+    return 0;
+#endif
+}
+
 int tolua_Cocos2d_registerScriptTapHandler00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
@@ -243,6 +266,29 @@ int tolua_Cocos2d_registerScriptTapHandler00(lua_State* tolua_S)
         MenuItem* menuItem = (MenuItem*)tolua_tousertype(tolua_S,1,0);
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)menuItem, handler, ScriptHandlerMgr::kMenuClickHandler);
+        return 0;
+    }
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'registerScriptHandler'.",&tolua_err);
+    return 0;
+#endif
+}
+
+int tolua_Cocos2d_unregisterScriptTapHandler00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCMenuItem",0,&tolua_err)    ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        MenuItem* menuItem = (MenuItem*)tolua_tousertype(tolua_S,1,0);
+        ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)menuItem, ScriptHandlerMgr::kMenuClickHandler);
         return 0;
     }
 #ifndef TOLUA_RELEASE
@@ -287,6 +333,28 @@ tolua_lerror:
 #endif
 }
 
+int tolua_Cocos2d_unregisterScriptTouchHandler00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S,1,"CCLayer",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        Layer* layer = (Layer*)  tolua_tousertype(tolua_S,1,0);
+        ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)layer, ScriptHandlerMgr::kTouchesHandler);
+        return 0;
+    }
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'registerScriptTouchHandler'.",&tolua_err);
+    return 0;
+#endif
+}
+
 int tolua_Cocos2d_registerScriptKeypadHandler00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
@@ -312,6 +380,29 @@ tolua_lerror:
 #endif
 }
 
+int tolua_Cocos2d_unregisterScriptKeypadHandler00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S,1,"CCLayer",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        Layer* layer = (Layer*)  tolua_tousertype(tolua_S,1,0);
+        
+        ScriptHandlerMgr::getInstance()->removeObjectHandler(layer, ScriptHandlerMgr::kKeypadHandler);
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'unregisterScriptKeypadHandler'.",&tolua_err);
+    return 0;
+#endif
+}
+
 int tolua_Cocos2d_registerScriptAccelerateHandler00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
@@ -333,6 +424,88 @@ int tolua_Cocos2d_registerScriptAccelerateHandler00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
 tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'registerScriptAccelerateHandler'.",&tolua_err);
+    return 0;
+#endif
+}
+
+int tolua_Cocos2d_unregisterScriptAccelerateHandler00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCLayer",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        Layer* layer = (Layer*)  tolua_tousertype(tolua_S,1,0);
+        ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)layer, ScriptHandlerMgr::kAccelerometerHandler);
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'unregisterScriptAccelerateHandler'.",&tolua_err);
+    return 0;
+#endif
+}
+
+int tolua_Cocos2d_registerControlEventHandler00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCControl",0,&tolua_err) ||
+        (tolua_isvaluenil(tolua_S,2,&tolua_err) || !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err)) ||
+        !tolua_isnumber(tolua_S, 3, 0, &tolua_err)||
+        !tolua_isnoobj(tolua_S,4,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        Control* control = (Control*)  tolua_tousertype(tolua_S,1,0);
+        LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
+        int controlevent = ((ControlEvent) (int)  tolua_tonumber(tolua_S,3,0));
+        for (int i = 0; i < kControlEventTotalNumber; i++)
+        {
+            if ((controlevent & (1 << i)))
+            {
+                int handlerevent  = ScriptHandlerMgr::kControlTouchDownHandler + i;
+                ScriptHandlerMgr::getInstance()->addObjectHandler((void*)control, handler, handlerevent);
+                break;
+            }
+        }        
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'registerControlEventHandler'.",&tolua_err);
+    return 0;
+#endif
+}
+int tolua_Cocos2d_unregisterControlEventHandler00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCControl",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S, 2, 0, &tolua_err)||
+        !tolua_isnoobj(tolua_S,3,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        Control* control = (Control*)  tolua_tousertype(tolua_S,1,0);
+        int handlerEvent = (int)tolua_tonumber(tolua_S,2,0);
+        ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)control,handlerEvent);
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'registerControlEventHandler'.",&tolua_err);
     return 0;
 #endif
 }
@@ -407,8 +580,6 @@ TOLUA_API int tolua_script_handler_mgr_open(lua_State* tolua_S)
     tolua_reg_script_handler_mgr_type(tolua_S);
     tolua_module(tolua_S, NULL,0);
     tolua_beginmodule(tolua_S, NULL);
-      tolua_constant(tolua_S, "kLayerTouches", kLayerTouches);
-      tolua_constant(tolua_S, "kLayerKeypad", kLayerKeypad);
       tolua_cclass(tolua_S, "CCCallFunc", "CCCallFunc","CCActionInstant",NULL);
       tolua_beginmodule(tolua_S, "CCCallFunc");
          tolua_function(tolua_S, "create", tolua_Cocos2d_LuaCallFunc_create00);
@@ -417,11 +588,21 @@ TOLUA_API int tolua_script_handler_mgr_open(lua_State* tolua_S)
       tolua_beginmodule(tolua_S, "ScriptHandlerMgr");
         tolua_constant(tolua_S,"kNormalHandler",ScriptHandlerMgr::kNodeHandler);
         tolua_constant(tolua_S,"kMenuClickHandler",ScriptHandlerMgr::kMenuClickHandler);
-        tolua_constant(tolua_S,"kScheduleHandler",ScriptHandlerMgr::kScheduleHandler);
         tolua_constant(tolua_S,"kNotificationHandler",ScriptHandlerMgr::kNotificationHandler);
         tolua_constant(tolua_S,"kCallFuncHandler",ScriptHandlerMgr::kCallFuncHandler);
+        tolua_constant(tolua_S,"kScheduleHandler",ScriptHandlerMgr::kScheduleHandler);
         tolua_constant(tolua_S,"kTouchesHandler",ScriptHandlerMgr::kTouchesHandler);
         tolua_constant(tolua_S,"kKeypadHandler",ScriptHandlerMgr::kKeypadHandler);
+        tolua_constant(tolua_S,"kAccelerometerHandler",ScriptHandlerMgr::kAccelerometerHandler);
+        tolua_constant(tolua_S,"kControlTouchDownHandler",ScriptHandlerMgr::kControlTouchDownHandler);
+        tolua_constant(tolua_S,"kControlTouchDragInsideHandler",ScriptHandlerMgr::kControlTouchDragInsideHandler);
+        tolua_constant(tolua_S,"kControlTouchDragOutsideHandler",ScriptHandlerMgr::kControlTouchDragOutsideHandler);
+        tolua_constant(tolua_S,"kControlTouchDragEnterHandler",ScriptHandlerMgr::kControlTouchDragEnterHandler);
+        tolua_constant(tolua_S,"kControlTouchDragExitHandler",ScriptHandlerMgr::kControlTouchDragExitHandler);
+        tolua_constant(tolua_S,"kControlTouchUpInsideHandler",ScriptHandlerMgr::kControlTouchUpInsideHandler);
+        tolua_constant(tolua_S,"kControlTouchUpOutsideHandler",ScriptHandlerMgr::kControlTouchUpOutsideHandler);
+        tolua_constant(tolua_S,"kControlTouchCancelHandler",ScriptHandlerMgr::kControlTouchCancelHandler);
+        tolua_constant(tolua_S,"kControlValueChangedHandler",ScriptHandlerMgr::kControlValueChangedHandler);
         tolua_function(tolua_S, "getInstance", tolua_Cocos2d_ScriptHandlerMgr_getInstance00);
       tolua_endmodule(tolua_S);
     tolua_endmodule(tolua_S);

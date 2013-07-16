@@ -70,6 +70,7 @@ end
 
 local function PauseTest()
     local ret = createTestLayer("Pause Test")
+    local schedulerEntry = nil
     local function unpause(dt)
         scheduler:unscheduleScriptEntry(schedulerEntry)
         schedulerEntry = nil
@@ -96,7 +97,7 @@ local function PauseTest()
             schedulerEntry = scheduler:scheduleScriptFunc(unpause, 3.0, false)
 
         elseif event == "exit" then
-            if scheduleEventHandler ~= nil then
+            if schedulerEntry ~= nil then
                 scheduler:unscheduleScriptEntry(schedulerEntry)
             end
         end
