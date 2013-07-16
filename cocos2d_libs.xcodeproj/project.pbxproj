@@ -80,6 +80,8 @@
 		1A11982A1785388100D62A44 /* tolua_map.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A1196981785201F00D62A44 /* tolua_map.c */; };
 		1A11982B1785388100D62A44 /* tolua_push.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A1196991785201F00D62A44 /* tolua_push.c */; };
 		1A11982C1785388100D62A44 /* tolua_to.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A11969A1785201F00D62A44 /* tolua_to.c */; };
+		1A2E82381793EDB70058E421 /* jsb_deprecated.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E82371793EDB70058E421 /* jsb_deprecated.js */; };
+		1A2E82391793EDB70058E421 /* jsb_deprecated.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E82371793EDB70058E421 /* jsb_deprecated.js */; };
 		1A6FB50617854BC200CDF010 /* tolua_event.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A1196951785201F00D62A44 /* tolua_event.c */; };
 		1A6FB50717854BC200CDF010 /* tolua_is.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A1196971785201F00D62A44 /* tolua_is.c */; };
 		1A6FB50817854BC200CDF010 /* tolua_map.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A1196981785201F00D62A44 /* tolua_map.c */; };
@@ -1918,6 +1920,7 @@
 		1A1196991785201F00D62A44 /* tolua_push.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_push.c; sourceTree = "<group>"; };
 		1A11969A1785201F00D62A44 /* tolua_to.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_to.c; sourceTree = "<group>"; };
 		1A119791178526AA00D62A44 /* libluabindings iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluabindings iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A2E82371793EDB70058E421 /* jsb_deprecated.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_deprecated.js; sourceTree = "<group>"; };
 		1A6FB53017854BC300CDF010 /* libluabindings Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluabindings Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A6FB53317854DD600CDF010 /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libluajit.a; sourceTree = "<group>"; };
 		1A94D34C16C2014900D79D09 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../platform/third_party/mac/libraries/libwebp.a; sourceTree = "<group>"; };
@@ -4589,6 +4592,7 @@
 				A03F321B17814803006731B9 /* jsb_opengl_constants.js */,
 				A03F321C17814803006731B9 /* jsb_sys.js */,
 				A03F321D17814803006731B9 /* main.debug.js */,
+				1A2E82371793EDB70058E421 /* jsb_deprecated.js */,
 			);
 			path = js;
 			sourceTree = "<group>";
@@ -6766,6 +6770,7 @@
 				A03F33BD17814804006731B9 /* jsb_websocket.cpp in Sources */,
 				A03F33C317814804006731B9 /* ScriptingCore.cpp in Sources */,
 				A03F33C617814804006731B9 /* XMLHTTPRequest.cpp in Sources */,
+				1A2E82381793EDB70058E421 /* jsb_deprecated.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7150,6 +7155,7 @@
 				A07A4FC9178387750073F6A7 /* jsb_websocket.cpp in Sources */,
 				A07A4FCA178387750073F6A7 /* ScriptingCore.cpp in Sources */,
 				A07A4FCB178387750073F6A7 /* XMLHTTPRequest.cpp in Sources */,
+				1A2E82391793EDB70058E421 /* jsb_deprecated.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
