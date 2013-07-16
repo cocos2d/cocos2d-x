@@ -522,6 +522,9 @@ Developers:
         
     jllust
         Fixing a bug that CCLabelBMFont crashes in glDrawElements of CCTextureAtlas::drawNumberOfQuads sometimes.
+        
+    Sam Gross (colesbury)
+        Ignoring formatting specifiers in JavaScript log messages.
 
 Retired Core Developers:
     WenSheng Yang
