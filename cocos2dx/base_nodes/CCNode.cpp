@@ -87,7 +87,6 @@ Node::Node(void)
 , _ignoreAnchorPointForPosition(false)
 , _reorderChildDirty(false)
 , _isTransitionFinished(false)
-, _scriptHandler(0)
 , _updateScriptHandler(0)
 , _componentContainer(NULL)
 {
@@ -107,7 +106,6 @@ Node::~Node(void)
 {
     CCLOGINFO( "cocos2d: deallocing: %p", this );
     
-    unregisterScriptHandler();
     if (_updateScriptHandler)
     {
         ScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(_updateScriptHandler);
@@ -985,23 +983,6 @@ void Node::onExit()
     }
 
     arrayMakeObjectsPerformSelector(_children, onExit, Node*);    
-}
-
-void Node::registerScriptHandler(int nHandler)
-{
-    unregisterScriptHandler();
-    _scriptHandler = nHandler;
-    LUALOG("[LUA] Add Node event handler: %d", _scriptHandler);
-}
-
-void Node::unregisterScriptHandler(void)
-{
-    if (_scriptHandler)
-    {
-        ScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(_scriptHandler);
-        LUALOG("[LUA] Remove Node event handler: %d", _scriptHandler);
-        _scriptHandler = 0;
-    }
 }
 
 void Node::setActionManager(ActionManager* actionManager)

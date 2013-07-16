@@ -62,7 +62,6 @@ public:
     MenuItem()
     : _selected(false)
     , _enabled(false)            
-    , _scriptTapHandler(0)
 	, _callback(nullptr)
     , _target(NULL)
     {}
@@ -86,11 +85,6 @@ public:
     virtual void selected();
     /** The item was unselected */
     virtual void unselected();
-    
-    /** Register menu handler script function */
-    virtual void registerScriptTapHandler(int nHandler);
-    virtual void unregisterScriptTapHandler(void);
-    int getScriptTapHandler() const { return _scriptTapHandler; };
 
     virtual bool isEnabled() const;
     //@note: It's 'setIsEnable' in cocos2d-iphone. 
@@ -105,7 +99,6 @@ public:
 protected:
     bool            _selected;
     bool            _enabled;
-    int             _scriptTapHandler;
 	// callback
 	ccMenuCallback _callback;
 	// If using the old API, the _target needs to be retained / released
