@@ -76,7 +76,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif
     FileUtils::getInstance()->setSearchPaths(searchPaths);
 
-    pEngine->extendLuaObjec();
+    pEngine->extendLuaObject();
     pEngine->executeScriptFile("luaScript/controller.lua");
     
     return true;
