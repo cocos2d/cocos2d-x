@@ -8,9 +8,6 @@ class CCMenuItem : public CCNodeRGBA
     void setEnabled(bool enabled);
     bool isEnabled() const;
     bool isSelected() const;
-
-    void registerScriptTapHandler(LUA_FUNCTION funcID);
-    void unregisterScriptTapHandler(void);
 };
 
 class CCMenuItemLabel : public CCMenuItem

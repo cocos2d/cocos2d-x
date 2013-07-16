@@ -857,47 +857,6 @@ public:
      * @return Whether or not the node is running.
      */
     virtual bool isRunning() const;
-
-    
-    /// @{
-    /// @name Script Bindings for lua
-
-    /**
-     * Registers a script function that will be called in onEnter() & onExit() seires functions.
-     * 
-     * This handler will be removed automatically after onExit() called.
-     * @code
-     * -- lua sample
-     * local function sceneEventHandler(eventType)
-     *     if eventType == kNodeOnEnter then
-     *         -- do something
-     *     elseif evetType == kNodeOnExit then
-     *         -- do something
-     *     end
-     * end
-     * scene::registerScriptHandler(sceneEventHandler)
-     * @endcode
-     *
-     * @warning This method is for internal usage, don't call it manually.
-     * @todo Perhaps we should rename it to get/set/removeScriptHandler acoording to the function name style.
-     *
-     * @param handler   A number that indicates a lua function. 
-     */
-    virtual void registerScriptHandler(int handler);
-    /**
-     * Unregisters a script function that will be called in onEnter() & onExit() series functions.
-     *
-     * @see registerScriptHandler(int)
-     */
-    virtual void unregisterScriptHandler(void);
-    /**
-     * Gets script handler for onEnter/onExit event.
-     * This is an internal method. g
-     * @see registerScriptHandler(int)
-     *
-     * @return A number that indicates a lua function.
-     */
-    inline int getScriptHandler() const { return _scriptHandler; };
     
     /** 
      * Schedules for lua script. 

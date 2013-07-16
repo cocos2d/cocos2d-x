@@ -44,6 +44,10 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		15CBC6F3178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CBC6F1178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp */; };
+		15CBC6F4178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CBC6F1178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp */; };
+		15CBC6F5178A57DC00D8BBA7 /* LuaScriptHandlerMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 15CBC6F2178A57DC00D8BBA7 /* LuaScriptHandlerMgr.h */; };
+		15CBC6F6178A57DC00D8BBA7 /* LuaScriptHandlerMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 15CBC6F2178A57DC00D8BBA7 /* LuaScriptHandlerMgr.h */; };
 		1A11979217852B3B00D62A44 /* CCBProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A1195931785201F00D62A44 /* CCBProxy.cpp */; };
 		1A11979317852B3B00D62A44 /* CCLuaBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A1195951785201F00D62A44 /* CCLuaBridge.cpp */; };
 		1A11979417852B3B00D62A44 /* CCLuaEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A1195971785201F00D62A44 /* CCLuaEngine.cpp */; };
@@ -1876,6 +1880,8 @@
 /* Begin PBXFileReference section */
 		1551A33F158F2AB200E66CFE /* libcocos2dx Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		15CBC6F1178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaScriptHandlerMgr.cpp; sourceTree = "<group>"; };
+		15CBC6F2178A57DC00D8BBA7 /* LuaScriptHandlerMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaScriptHandlerMgr.h; sourceTree = "<group>"; };
 		1A1195931785201F00D62A44 /* CCBProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBProxy.cpp; sourceTree = "<group>"; };
 		1A1195941785201F00D62A44 /* CCBProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBProxy.h; sourceTree = "<group>"; };
 		1A1195951785201F00D62A44 /* CCLuaBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLuaBridge.cpp; sourceTree = "<group>"; };
@@ -3079,6 +3085,8 @@
 		1A1195921785201F00D62A44 /* cocos2dx_support */ = {
 			isa = PBXGroup;
 			children = (
+				15CBC6F1178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp */,
+				15CBC6F2178A57DC00D8BBA7 /* LuaScriptHandlerMgr.h */,
 				1A1195931785201F00D62A44 /* CCBProxy.cpp */,
 				1A1195941785201F00D62A44 /* CCBProxy.h */,
 				1A1195951785201F00D62A44 /* CCLuaBridge.cpp */,
@@ -5170,6 +5178,7 @@
 				1A1197AD17852B5200D62A44 /* lua.h in Headers */,
 				1A1197AE17852B5200D62A44 /* luaconf.h in Headers */,
 				1A1197AF17852B5200D62A44 /* lualib.h in Headers */,
+				15CBC6F6178A57DC00D8BBA7 /* LuaScriptHandlerMgr.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5194,6 +5203,7 @@
 				1A6FB52A17854BC200CDF010 /* lua.h in Headers */,
 				1A6FB52B17854BC200CDF010 /* luaconf.h in Headers */,
 				1A6FB52C17854BC200CDF010 /* lualib.h in Headers */,
+				15CBC6F5178A57DC00D8BBA7 /* LuaScriptHandlerMgr.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6503,6 +6513,7 @@
 				1A11979C17852B3B00D62A44 /* LuaScrollView.cpp in Sources */,
 				1A11979D17852B3B00D62A44 /* CCLuaObjcBridge.mm in Sources */,
 				1A11979E17852B3B00D62A44 /* tolua_fix.c in Sources */,
+				15CBC6F4178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6529,6 +6540,7 @@
 				1A6FB51417854BC200CDF010 /* LuaOpengl.cpp in Sources */,
 				1A6FB51517854BC200CDF010 /* LuaScrollView.cpp in Sources */,
 				1A6FB51717854BC200CDF010 /* tolua_fix.c in Sources */,
+				15CBC6F3178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

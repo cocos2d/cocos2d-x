@@ -29,7 +29,7 @@ public:
     virtual ~GLNode()
     {
         if (0 != _scriptDrawHandler) {
-            this->unregisterScriptHandler();
+                this->unregisterScriptDrawHandler();
         }
     }
     
@@ -176,7 +176,7 @@ static int tolua_Cocos2d_GLNode_unregisterScriptDrawHandler00(lua_State* tolua_S
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'unregisterScriptDrawHandler'", NULL);
 #endif
         if(NULL != self)
-            self->unregisterScriptHandler();
+            self->unregisterScriptDrawHandler();
     }
     return 0;
 #ifndef TOLUA_RELEASE
