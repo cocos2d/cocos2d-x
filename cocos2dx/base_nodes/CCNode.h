@@ -130,7 +130,13 @@ class CC_DLL Node : public Object
 public:
     /// @{
     /// @name Constructor, Distructor and Initializers
-    
+
+    /**
+     * Allocates and initializes a node.
+     * @return A initialized node which is marked as "autorelease".
+     */
+    static Node * create(void);
+
     /**
      * Default constructor
      */
@@ -146,12 +152,7 @@ public:
      *  @return Whether the initialization was successful.
      */
     virtual bool init();
-	/**
-     * Allocates and initializes a node.
-     * @return A initialized node which is marked as "autorelease".
-     */
-    static Node * create(void);
-    
+
     /**
      * Gets the description string. It makes debugging easier.
      * @return A string terminated with '\0'

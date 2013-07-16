@@ -189,6 +189,11 @@ Follow* Follow::clone() const
 	return a;
 }
 
+Follow* Follow::reverse() const
+{
+    return clone();
+}
+
 bool Follow::initWithTarget(Node *pFollowedNode, const Rect& rect/* = Rect::ZERO*/)
 {
     CCAssert(pFollowedNode != NULL, "");
