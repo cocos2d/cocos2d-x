@@ -59,7 +59,4 @@ class CCControl:public CCLayerRGBA
 
     virtual CCPoint getTouchLocation(CCTouch* touch);
     virtual bool isTouchInside(CCTouch * touch);
-
-    void addHandleOfControlEvent(LUA_FUNCTION nFunID,CCControlEvent controlEvents);
-    void removeHandleOfControlEvent(CCControlEvent controlEvents);
 };

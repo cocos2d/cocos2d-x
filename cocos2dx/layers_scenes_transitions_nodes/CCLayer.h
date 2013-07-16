@@ -87,8 +87,6 @@ public:
     virtual void ccTouchesCancelled(Set *pTouches, Event *pEvent);
     
     virtual void didAccelerate(Acceleration* pAccelerationValue);
-    void registerScriptAccelerateHandler(int nHandler);
-    void unregisterScriptAccelerateHandler(void);
 
     /** If isTouchEnabled, this method is called onEnter. Override it to change the
     way Layer receives touch events.
@@ -101,11 +99,6 @@ public:
     @since v0.8.0
     */
     virtual void registerWithTouchDispatcher(void);
-    
-    /** Register script touch events handler */
-    virtual void registerScriptTouchHandler(int nHandler, bool bIsMultiTouches = false, int nPriority = INT_MIN, bool bSwallowsTouches = false);
-    /** Unregister script touch events handler */
-    virtual void unregisterScriptTouchHandler(void);
 
     /** whether or not it will receive Touch events.
     You can enable / disable touch events with this property.
@@ -143,29 +136,15 @@ public:
     virtual bool isKeypadEnabled() const;
     virtual void setKeypadEnabled(bool value);
 
-    /** Register keypad events handler */
-    void registerScriptKeypadHandler(int nHandler);
-    /** Unregister keypad events handler */
-    void unregisterScriptKeypadHandler(void);
-
     virtual void keyBackClicked(void);
     virtual void keyMenuClicked(void);
-    
-    inline TouchScriptHandlerEntry* getScriptTouchHandlerEntry() const { return _scriptTouchHandlerEntry; };
-    inline ScriptHandlerEntry* getScriptKeypadHandlerEntry() const { return _scriptKeypadHandlerEntry; };
-    inline ScriptHandlerEntry* getScriptAccelerateHandlerEntry() const { return _scriptAccelerateHandlerEntry; };
 protected:   
     bool _touchEnabled;
     bool _accelerometerEnabled;
     bool _keyboardEnabled;
     bool _keypadEnabled;
     
-private:
-    // Script touch events handler
-    TouchScriptHandlerEntry* _scriptTouchHandlerEntry;
-    ScriptHandlerEntry* _scriptKeypadHandlerEntry;
-    ScriptHandlerEntry* _scriptAccelerateHandlerEntry;
-    
+private:    
     int _touchPriority;
     ccTouchesMode _touchMode;
     

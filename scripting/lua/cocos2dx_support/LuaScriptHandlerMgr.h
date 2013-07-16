@@ -80,6 +80,16 @@ public:
        kTouchesHandler,
        kKeypadHandler,
        kAccelerometerHandler,
+       
+       kControlTouchDownHandler,
+       kControlTouchDragInsideHandler,
+       kControlTouchDragOutsideHandler,
+       kControlTouchDragEnterHandler,
+       kControlTouchDragExitHandler,
+       kControlTouchUpInsideHandler,
+       kControlTouchUpOutsideHandler,
+       kControlTouchCancelHandler,
+       kControlValueChangedHandler,
     };
     
     
@@ -92,14 +102,22 @@ private:
 NS_CC_END
 
 TOLUA_API int tolua_Cocos2d_registerScriptHandler00(lua_State* tolua_S);
+TOLUA_API int tolua_Cocos2d_unregisterScriptHandler00(lua_State* tolua_S);
 
 TOLUA_API int tolua_Cocos2d_registerScriptTapHandler00(lua_State* tolua_S);
+TOLUA_API int tolua_Cocos2d_unregisterScriptTapHandler00(lua_State* tolua_S);
 
 TOLUA_API int tolua_Cocos2d_registerScriptTouchHandler00(lua_State* tolua_S);
+TOLUA_API int tolua_Cocos2d_unregisterScriptTouchHandler00(lua_State* tolua_S);
 
 TOLUA_API int tolua_Cocos2d_registerScriptKeypadHandler00(lua_State* tolua_S);
+TOLUA_API int tolua_Cocos2d_unregisterScriptKeypadHandler00(lua_State* tolua_S);
 
 TOLUA_API int tolua_Cocos2d_registerScriptAccelerateHandler00(lua_State* tolua_S);
+TOLUA_API int tolua_Cocos2d_unregisterScriptAccelerateHandler00(lua_State* tolua_S);
+
+TOLUA_API int tolua_Cocos2d_registerControlEventHandler00(lua_State* tolua_S);
+TOLUA_API int tolua_Cocos2d_unregisterControlEventHandler00(lua_State* tolua_S);
 
 TOLUA_API int tolua_script_handler_mgr_open(lua_State* tolua_S);
 
