@@ -525,6 +525,9 @@ Developers:
         
     Sam Gross (colesbury)
         Ignoring formatting specifiers in JavaScript log messages.
+        
+    James Munro (jdmunro)
+        Added JSB support for ccpDistanceSQ.
 
 Retired Core Developers:
     WenSheng Yang
