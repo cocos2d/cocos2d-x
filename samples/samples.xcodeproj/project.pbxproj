@@ -124,6 +124,14 @@
 		1A2E823C1793EED50058E421 /* jsb_deprecated.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E823A1793EED50058E421 /* jsb_deprecated.js */; };
 		1A2E823F1793EEF50058E421 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E823A1793EED50058E421 /* jsb_deprecated.js */; };
 		1A2E82401793EF260058E421 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E823A1793EED50058E421 /* jsb_deprecated.js */; };
+		1A2E824517952E8D0058E421 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E823A1793EED50058E421 /* jsb_deprecated.js */; };
+		1A2E824817952E9A0058E421 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E823A1793EED50058E421 /* jsb_deprecated.js */; };
+		1A2E824917952EAC0058E421 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E823A1793EED50058E421 /* jsb_deprecated.js */; };
+		1A2E824A17952EB70058E421 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E823A1793EED50058E421 /* jsb_deprecated.js */; };
+		1A2E824B17952EC50058E421 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E823A1793EED50058E421 /* jsb_deprecated.js */; };
+		1A2E824C17952ECE0058E421 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E823A1793EED50058E421 /* jsb_deprecated.js */; };
+		1A2E824D17952ED70058E421 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E823A1793EED50058E421 /* jsb_deprecated.js */; };
+		1A2E824E17952EDF0058E421 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E823A1793EED50058E421 /* jsb_deprecated.js */; };
 		1A6FB4DE17854A6A00CDF010 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB4C417854A6A00CDF010 /* animations */; };
 		1A6FB4DF17854A6A00CDF010 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB4C517854A6A00CDF010 /* armature */; };
 		1A6FB4E017854A6A00CDF010 /* background-music-aac.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB4C617854A6A00CDF010 /* background-music-aac.wav */; };
@@ -6239,6 +6247,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A2E824B17952EC50058E421 /* jsb_deprecated.js in Resources */,
 				A01E18FD1784C5B300B0CA4A /* boot-html5.js in Resources */,
 				A01E18FE1784C5B300B0CA4A /* boot-jsb.js in Resources */,
 				A01E19001784C5B300B0CA4A /* levels.js in Resources */,
@@ -6274,6 +6283,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A2E824C17952ECE0058E421 /* jsb_deprecated.js in Resources */,
 				A01E18671784C4D600B0CA4A /* jsb.js in Resources */,
 				A01E18681784C4D600B0CA4A /* jsb_chipmunk.js in Resources */,
 				A01E18691784C4D600B0CA4A /* jsb_chipmunk_constants.js in Resources */,
@@ -6307,6 +6317,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A2E824D17952ED70058E421 /* jsb_deprecated.js in Resources */,
 				A01E189C1784C4DC00B0CA4A /* jsb.js in Resources */,
 				A01E189D1784C4DC00B0CA4A /* jsb_chipmunk.js in Resources */,
 				A01E189E1784C4DC00B0CA4A /* jsb_chipmunk_constants.js in Resources */,
@@ -6334,6 +6345,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A2E824E17952EDF0058E421 /* jsb_deprecated.js in Resources */,
 				A01E18D11784C4E000B0CA4A /* jsb.js in Resources */,
 				A01E18D21784C4E000B0CA4A /* jsb_chipmunk.js in Resources */,
 				A01E18D31784C4E000B0CA4A /* jsb_chipmunk_constants.js in Resources */,
@@ -6503,6 +6515,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A2E824517952E8D0058E421 /* jsb_deprecated.js in Resources */,
 				A035A8661782343C00987F6C /* boot-html5.js in Resources */,
 				A035A8671782343C00987F6C /* boot-jsb.js in Resources */,
 				A035A8691782343C00987F6C /* levels.js in Resources */,
@@ -6534,6 +6547,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A2E824817952E9A0058E421 /* jsb_deprecated.js in Resources */,
 				A035AA841782413200987F6C /* main.js in Resources */,
 				A035AA861782413200987F6C /* MoonWarriors-jsb.js in Resources */,
 				A035A9CF17823FE100987F6C /* jsb.js in Resources */,
@@ -6560,6 +6574,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A2E824917952EAC0058E421 /* jsb_deprecated.js in Resources */,
 				A035AA9D1782422400987F6C /* jsb.js in Resources */,
 				A035AA9E1782422400987F6C /* jsb_chipmunk.js in Resources */,
 				A035AA9F1782422400987F6C /* jsb_chipmunk_constants.js in Resources */,
@@ -6583,6 +6598,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A2E824A17952EB70058E421 /* jsb_deprecated.js in Resources */,
 				A035AC101782453000987F6C /* jsb.js in Resources */,
 				A035AC111782453000987F6C /* jsb_chipmunk.js in Resources */,
 				A035AC121782453000987F6C /* jsb_chipmunk_constants.js in Resources */,
