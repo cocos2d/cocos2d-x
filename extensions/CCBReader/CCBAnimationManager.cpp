@@ -789,7 +789,7 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
     // Make callback at end of sequence
     CCBSequence *seq = getSequence(nSeqId);
     Action *completeAction = Sequence::createWithTwoActions(DelayTime::create(seq->getDuration() + fTweenDuration),
-                                                                CallFunc::create(this, callfunc_selector(CCBAnimationManager::sequenceCompleted)));
+                                                                CallFunc::create( CC_CALLBACK_0(CCBAnimationManager::sequenceCompleted,this)));
     mRootNode->runAction(completeAction);
     
     // Set the running scene

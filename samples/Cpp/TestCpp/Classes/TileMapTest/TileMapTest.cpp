@@ -338,7 +338,7 @@ TMXReadWriteTest::TMXReadWriteTest()
     ActionInterval* opacity = FadeOut::create(2);
     ActionInterval* fadein = FadeIn::create(2);
     ActionInterval* scaleback = ScaleTo::create(1, 1);
-    ActionInstant* finish = CallFuncN::create(this, callfuncN_selector(TMXReadWriteTest::removeSprite));
+    ActionInstant* finish = CallFuncN::create(CC_CALLBACK_1(TMXReadWriteTest::removeSprite, this));
     Sequence* seq0 = Sequence::create(move, rotate, scale, opacity, fadein, scaleback, finish, NULL);
     ActionInterval* seq1 = seq0->clone();
     ActionInterval* seq2 = seq0->clone();

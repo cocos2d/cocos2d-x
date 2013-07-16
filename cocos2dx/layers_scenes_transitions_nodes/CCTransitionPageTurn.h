@@ -48,19 +48,16 @@ is turned on in Director using:
 */
 class CC_DLL TransitionPageTurn : public TransitionScene
 {
-protected:
-    bool    _back;
-    
 public:
+    /**
+     * Creates a base transition with duration and incoming scene.
+     * If back is true then the effect is reversed to appear as if the incoming
+     * scene is being turned from left over the outgoing scene.
+     */
+    static TransitionPageTurn* create(float t,Scene* scene,bool backwards);
+
     TransitionPageTurn();
     virtual ~TransitionPageTurn();
-
-    /**
-    * Creates a base transition with duration and incoming scene.
-    * If back is true then the effect is reversed to appear as if the incoming 
-    * scene is being turned from left over the outgoing scene.
-    */
-    static TransitionPageTurn* create(float t,Scene* scene,bool backwards);
 
     /**
     * Creates a base transition with duration and incoming scene.
@@ -71,10 +68,17 @@ public:
 
     ActionInterval* actionWithSize(const Size& vector);
 
-    virtual void onEnter();
+    //
+    // Overrides
+    //
+    virtual void onEnter() override;
 
 protected:
-    virtual void sceneOrder();
+    virtual void sceneOrder() override;
+
+protected:
+    bool    _back;
+
 };
 
 // end of transition group
