@@ -129,6 +129,7 @@ Developers:
     tks2shimizu
         add CCFloat, CCDouble and CCBool
         Add append function for String class
+        Adding String::componentsSeparatedByString function for splitting string.
 
     chenium
         fix a bug that CCRenderTexture can not work when coming to foreground on Android
@@ -522,6 +523,12 @@ Developers:
         
     jllust
         Fixing a bug that CCLabelBMFont crashes in glDrawElements of CCTextureAtlas::drawNumberOfQuads sometimes.
+        
+    Sam Gross (colesbury)
+        Ignoring formatting specifiers in JavaScript log messages.
+        
+    James Munro (jdmunro)
+        Added JSB support for ccpDistanceSQ.
 
 Retired Core Developers:
     WenSheng Yang

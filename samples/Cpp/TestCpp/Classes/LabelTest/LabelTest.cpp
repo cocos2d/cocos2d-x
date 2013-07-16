@@ -303,7 +303,7 @@ LabelAtlasColorTest::LabelAtlasColorTest()
 
     ActionInterval* fade = FadeOut::create(1.0f);
     ActionInterval* fade_in = fade->reverse();
-    CallFunc* cb = CallFunc::create(this, callfunc_selector(LabelAtlasColorTest::actionFinishCallback));
+    CallFunc* cb = CallFunc::create(CC_CALLBACK_0(LabelAtlasColorTest::actionFinishCallback, this));
     Sequence* seq = Sequence::create(fade, fade_in, cb, NULL);
     Action* repeat = RepeatForever::create( seq );
     label2->runAction( repeat );    

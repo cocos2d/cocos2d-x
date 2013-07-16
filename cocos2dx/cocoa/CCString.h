@@ -86,6 +86,9 @@ public:
     /** append(w/ format) additional characters at the end of its current value */
     void appendWithFormat(const char* format, ...);
 
+    /** split a string */
+    Array* componentsSeparatedByString(const char *delimiter);
+    
     /* override functions */
     virtual bool isEqual(const Object* pObject);
 

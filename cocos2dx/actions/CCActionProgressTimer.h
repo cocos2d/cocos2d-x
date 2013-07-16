@@ -41,21 +41,20 @@ NS_CC_BEGIN
 class CC_DLL ProgressTo : public ActionInterval
 {
 public:
+    /** Creates and initializes with a duration and a percent */
+    static ProgressTo* create(float duration, float fPercent);
+
     /** Initializes with a duration and a percent */
     bool initWithDuration(float duration, float fPercent);
 
-	/** returns a new clone of the action */
-	virtual ProgressTo* clone() const;
+    //
+    // Overrides
+    //
+	virtual ProgressTo* clone() const override;
+	virtual ProgressTo* reverse(void) const override;
+    virtual void startWithTarget(Node *pTarget) override;
+    virtual void update(float time) override;
 
-	/** returns a new reversed action */
-	virtual ProgressTo* reverse(void) const;
-
-    virtual void startWithTarget(Node *pTarget);
-    virtual void update(float time);
-
-public:
-    /** Creates and initializes with a duration and a percent */
-    static ProgressTo* create(float duration, float fPercent);
 protected:
     float _to;
     float _from;
@@ -68,22 +67,20 @@ protected:
 class CC_DLL ProgressFromTo : public ActionInterval
 {
 public:
+    /** Creates and initializes the action with a duration, a "from" percentage and a "to" percentage */
+    static ProgressFromTo* create(float duration, float fFromPercentage, float fToPercentage);
+
     /** Initializes the action with a duration, a "from" percentage and a "to" percentage */
     bool initWithDuration(float duration, float fFromPercentage, float fToPercentage);
 
-	/** returns a new clone of the action */
-	virtual ProgressFromTo* clone() const;
+    //
+    // Overrides
+    //
+	virtual ProgressFromTo* clone() const override;
+	virtual ProgressFromTo* reverse(void) const override;
+    virtual void startWithTarget(Node *pTarget) override;
+    virtual void update(float time) override;
 
-	/** returns a new reversed action */
-	virtual ProgressFromTo* reverse(void) const;
-
-    virtual void startWithTarget(Node *pTarget);
-    virtual void update(float time);
-
-public:
-
-    /** Creates and initializes the action with a duration, a "from" percentage and a "to" percentage */
-    static ProgressFromTo* create(float duration, float fFromPercentage, float fToPercentage);
 protected:
     float _to;
     float _from;

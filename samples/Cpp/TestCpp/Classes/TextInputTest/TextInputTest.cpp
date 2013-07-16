@@ -391,7 +391,7 @@ bool TextFieldTTFActionTest::onTextFieldInsertText(TextFieldTTF * pSender, const
             ScaleTo::create(duration, 1),
             FadeOut::create(duration),
         0),
-        CallFuncN::create(this, callfuncN_selector(TextFieldTTFActionTest::callbackRemoveNodeWhenDidAction)),
+        CallFuncN::create(CC_CALLBACK_1(TextFieldTTFActionTest::callbackRemoveNodeWhenDidAction, this)),
         0);
     label->runAction(seq);
     return false;
@@ -425,7 +425,7 @@ bool TextFieldTTFActionTest::onTextFieldDeleteBackward(TextFieldTTF * pSender, c
                 repeatTime),
             FadeOut::create(duration),
         0),
-        CallFuncN::create(this, callfuncN_selector(TextFieldTTFActionTest::callbackRemoveNodeWhenDidAction)),
+        CallFuncN::create(CC_CALLBACK_1(TextFieldTTFActionTest::callbackRemoveNodeWhenDidAction, this)),
         0);
     label->runAction(seq);
     return false;

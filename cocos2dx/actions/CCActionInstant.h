@@ -48,17 +48,14 @@ the IntervalAction actions.
 class CC_DLL ActionInstant : public FiniteTimeAction //<NSCopying>
 {
 public:
-    virtual ~ActionInstant(){}
-    // Action methods
-
-	/** returns a new clone of the action */
-	virtual ActionInstant* clone() const = 0;
-    /** returns a new reversed action */
-    virtual ActionInstant * reverse(void) const = 0;
-
-    virtual bool isDone(void) const;
-    virtual void step(float dt);
-    virtual void update(float time);
+    //
+    // Overrides
+    //
+	virtual ActionInstant* clone() const override = 0;
+    virtual ActionInstant * reverse(void) const override = 0;
+    virtual bool isDone(void) const override;
+    virtual void step(float dt) override;
+    virtual void update(float time) override;
 };
 
 /** @brief Show the node
@@ -66,23 +63,18 @@ public:
 class CC_DLL Show : public ActionInstant
 {
 public:
-    Show(){}
-    virtual ~Show(){}
-    //super methods
-    virtual void update(float time);
-
-	/** returns a new reversed action */
-    virtual ActionInstant * reverse(void) const;
-	/** returns a new clone of the action */
-	virtual Show* clone() const;
-
-public:
-
     /** Allocates and initializes the action */
     static Show * create();
+
+    Show(){}
+
+    //
+    // Overrides
+    //
+    virtual void update(float time) override;
+    virtual ActionInstant* reverse(void) const override;
+	virtual Show* clone() const override;
 };
-
-
 
 /** 
 @brief Hide the node
@@ -90,18 +82,17 @@ public:
 class CC_DLL Hide : public ActionInstant
 {
 public:
-    Hide(){}
-    virtual ~Hide(){}
-    //super methods
-    virtual void update(float time);
-	/** returns a new reversed action */
-	virtual ActionInstant* reverse() const;
-	/** returns a new clone of the action */
-	virtual Hide* clone() const;
-public:
-
     /** Allocates and initializes the action */
     static Hide * create();
+
+    Hide(){}
+
+    //
+    // Overrides
+    //
+    virtual void update(float time) override;
+	virtual ActionInstant* reverse() const override;
+	virtual Hide* clone() const override;
 };
 
 /** @brief Toggles the visibility of a node
@@ -109,18 +100,17 @@ public:
 class CC_DLL ToggleVisibility : public ActionInstant
 {
 public:
-    ToggleVisibility(){}
-    virtual ~ToggleVisibility(){}
-    //super method
-    virtual void update(float time);
-	/** returns a new reversed action */
-	virtual ToggleVisibility* reverse() const;
-	/** returns a new clone of the action */
-	virtual ToggleVisibility* clone() const;
-public:
-
     /** Allocates and initializes the action */
     static ToggleVisibility * create();
+
+    ToggleVisibility(){}
+
+    //
+    // Overrides
+    //
+    virtual void update(float time) override;
+	virtual ToggleVisibility* reverse() const override;
+	virtual ToggleVisibility* clone() const override;
 };
 
 /** 
@@ -129,20 +119,22 @@ public:
 class CC_DLL RemoveSelf : public ActionInstant
 {
 public:
-	RemoveSelf():_isNeedCleanUp(true)
-	{}
-	virtual ~RemoveSelf(){}
-	//super methods
-	virtual void update(float time);
-	/** returns a new clone of the instance */
-	virtual RemoveSelf* clone() const;
-	/** returns a new reversed action */
-	virtual RemoveSelf* reverse() const;
-public:
 	/** create the action */
 	static RemoveSelf * create(bool isNeedCleanUp = true);
+
+    RemoveSelf():_isNeedCleanUp(true)
+	{}
+
 	/** init the action */
 	bool init(bool isNeedCleanUp);
+
+	//
+    // Override
+    //
+	virtual void update(float time) override;
+	virtual RemoveSelf* clone() const override;
+	virtual RemoveSelf* reverse() const override;
+
 protected:
 	bool _isNeedCleanUp;
 };
@@ -154,22 +146,22 @@ protected:
 class CC_DLL FlipX : public ActionInstant
 {
 public:
-    FlipX()
-        :_flipX(false)
-    {}
-    virtual ~FlipX(){}
-
     /** create the action */
     static FlipX * create(bool x);
 
+    FlipX()
+        :_flipX(false)
+    {}
+
     /** init the action */
     bool initWithFlipX(bool x);
-    //super methods
-    virtual void update(float time);
-	/** returns a new reversed action */
-	virtual FlipX* reverse() const;
-	/** returns a new clone of the action */
-	virtual FlipX* clone() const;
+
+    //
+    // Overrides
+    //
+    virtual void update(float time) override;
+	virtual FlipX* reverse() const override;
+	virtual FlipX* clone() const override;
 
 protected:
     bool    _flipX;
@@ -182,22 +174,22 @@ protected:
 class CC_DLL FlipY : public ActionInstant
 {
 public:
-    FlipY()
-        :_flipY(false)
-    {}
-    virtual ~FlipY(){}
-
     /** create the action */
     static FlipY * create(bool y);
 
+    FlipY()
+        :_flipY(false)
+    {}
+
     /** init the action */
     bool initWithFlipY(bool y);
-    //super methods
-    virtual void update(float time);
-	/** returns a new reversed action */
-	virtual FlipY* reverse() const;
-	/** returns a new clone of the action */
-	virtual FlipY* clone() const;
+
+    //
+    // Overrides
+    //
+    virtual void update(float time) override;
+	virtual FlipY* reverse() const override;
+	virtual FlipY* clone() const override;
 
 protected:
     bool    _flipY;
@@ -209,18 +201,18 @@ class CC_DLL Place : public ActionInstant //<NSCopying>
 {
 public:
     Place(){}
-    virtual ~Place(){}
 
     /** creates a Place action with a position */
     static Place * create(const Point& pos);
     /** Initializes a Place action with a position */
     bool initWithPosition(const Point& pos);
-    //super methods
-    virtual void update(float time);
-	/** returns a new reversed action */
-	virtual Place* reverse() const;
-	/** returns a new clone of the action */
-	virtual Place* clone() const;
+
+    //
+    // Overrides
+    //
+    virtual void update(float time) override;
+	virtual Place* reverse() const override;
+	virtual Place* clone() const override;
 
 protected:
     Point _position;
@@ -232,6 +224,22 @@ protected:
 class CC_DLL CallFunc : public ActionInstant //<NSCopying>
 {
 public:
+	/** creates the action with the callback of type std::function<void()>.
+	 This is the preferred way to create the callback.
+	 */
+    static CallFunc * create(const std::function<void()>& func);
+
+    /** creates the action with the callback
+
+     typedef void (Object::*SEL_CallFunc)();
+	 @deprecated Use the std::function API instead.
+     */
+    CC_DEPRECATED_ATTRIBUTE static CallFunc * create(Object* pSelectorTarget, SEL_CallFunc selector);
+
+	/** creates the action with the handler script function */
+	static CallFunc * create(int nHandler);
+
+public:
     CallFunc()
         : _selectorTarget(NULL)
 		, _scriptHandler(0)
@@ -240,21 +248,6 @@ public:
     {
     }
     virtual ~CallFunc();
-
-	/** creates the action with the callback of type std::function<void()>.
-	 This is the preferred way to create the callback.
-	 */
-    static CallFunc * create(const std::function<void()>& func);
-
-    /** creates the action with the callback 
-
-    typedef void (Object::*SEL_CallFunc)();
-	 @deprecated Use the std::function API instead.
-    */
-    static CallFunc * create(Object* pSelectorTarget, SEL_CallFunc selector);
-
-	/** creates the action with the handler script function */
-	static CallFunc * create(int nHandler);
 
 	/** initializes the action with the callback 
     
@@ -268,12 +261,6 @@ public:
 
     /** executes the callback */
     virtual void execute();
-    //super methods
-    virtual void update(float time);
-	/** returns a new reversed action */
-	virtual CallFunc* reverse() const;
-	/** returns a new clone of the action */
-	virtual CallFunc* clone() const;
 
     inline Object* getTargetCallback()
     {
@@ -291,6 +278,14 @@ public:
     }
     
     inline int getScriptHandler() const { return _scriptHandler; };
+
+    //
+    // Overrides
+    //
+    virtual void update(float time) override;
+	virtual CallFunc* reverse() const override;
+	virtual CallFunc* clone() const override;
+
 protected:
     /** Target that will be called */
     Object*   _selectorTarget;
@@ -314,13 +309,6 @@ N means Node
 class CC_DLL CallFuncN : public CallFunc, public TypeInfo
 {
 public:
-    CallFuncN():_functionN(nullptr){}
-    virtual ~CallFuncN(){}
-    virtual long getClassTypeInfo() {
-		static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CallFunc).name());
-		return id;
-    }
-
     /** creates the action with the callback of type std::function<void()>.
 	 This is the preferred way to create the callback.
 	 */
@@ -331,11 +319,13 @@ public:
     typedef void (Object::*SEL_CallFuncN)(Node*);
      @deprecated Use the std::function API instead.
     */
-    static CallFuncN * create(Object* pSelectorTarget, SEL_CallFuncN selector);
+    CC_DEPRECATED_ATTRIBUTE static CallFuncN * create(Object* pSelectorTarget, SEL_CallFuncN selector);
 
 	/** creates the action with the handler script function */
 	static CallFuncN * create(int nHandler);
 
+public:
+    CallFuncN():_functionN(nullptr){}
 
     /** initializes the action with the std::function<void(Node*)>
 	 */
@@ -346,10 +336,18 @@ public:
     typedef void (Object::*SEL_CallFuncN)(Node*);
     @deprecated Use the std::function API instead.
     */
-    virtual bool initWithTarget(Object* pSelectorTarget, SEL_CallFuncN selector);
-    // super methods
-	virtual CallFuncN* clone() const;
-    virtual void execute();
+    CC_DEPRECATED_ATTRIBUTE virtual bool initWithTarget(Object* pSelectorTarget, SEL_CallFuncN selector);
+
+    virtual long getClassTypeInfo() {
+		static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CallFunc).name());
+		return id;
+    }
+
+    //
+    // Overrides
+    //
+	virtual CallFuncN* clone() const override;
+    virtual void execute() override;
 
 protected:
     /** function that will be called with the "sender" as the 1st argument */

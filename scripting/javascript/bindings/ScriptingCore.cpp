@@ -583,7 +583,7 @@ JSBool ScriptingCore::log(JSContext* cx, uint32_t argc, jsval *vp)
         JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &string);
         if (string) {
             JSStringWrapper wrapper(string);
-            js_log((char *)wrapper);
+            js_log("%s", (char *)wrapper);
         }
     }
     return JS_TRUE;
