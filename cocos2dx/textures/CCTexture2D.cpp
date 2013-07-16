@@ -460,10 +460,10 @@ bool Texture2D::initWithString(const char *text, const char *fontName, float fon
 
 bool Texture2D::initWithString(const char *text, const FontDefinition& textDefinition)
 {
-    #if CC_ENABLE_CACHE_TEXTURE_DATA
-        // cache the texture data
-        VolatileTexture::addStringTexture(this, text, textDefinition);
-    #endif
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    // cache the texture data
+    VolatileTexture::addStringTexture(this, text, textDefinition);
+#endif
 
     bool bRet = false;
     Image::ETextAlign eAlign;
@@ -489,94 +489,93 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
         return false;
     }
     
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+
+    // handle shadow parameters
+    bool  shadowEnabled = false;
+    float shadowDX      = 0.0f;
+    float shadowDY      = 0.0f;
+    float shadowBlur    = 0.0f;
+    float shadowOpacity = 0.0f;
     
-        // handle shadow parameters
-        bool  shadowEnabled = false;
-        float shadowDX      = 0.0f;
-        float shadowDY      = 0.0f;
-        float shadowBlur    = 0.0f;
-        float shadowOpacity = 0.0f;
-        
-        if ( textDefinition._shadow._shadowEnabled )
-        {
-            shadowEnabled =  true;
-            shadowDX      = textDefinition._shadow._shadowOffset.width;
-            shadowDY      = textDefinition._shadow._shadowOffset.height;
-            shadowBlur    = textDefinition._shadow._shadowBlur;
-            shadowOpacity = textDefinition._shadow._shadowOpacity;
-        }
-        
-        // handle stroke parameters
-        bool strokeEnabled = false;
-        float strokeColorR = 0.0f;
-        float strokeColorG = 0.0f;
-        float strokeColorB = 0.0f;
-        float strokeSize   = 0.0f;
-        
-        if ( textDefinition._stroke._strokeEnabled )
-        {
-            strokeEnabled = true;
-            strokeColorR = textDefinition._stroke._strokeColor.r / 255.0f;
-            strokeColorG = textDefinition._stroke._strokeColor.g / 255.0f;
-            strokeColorB = textDefinition._stroke._strokeColor.b / 255.0f;
-            strokeSize   = textDefinition._stroke._strokeSize;
-        }
-        
-        Image* pImage = new Image();
-        do
-        {
-            CC_BREAK_IF(NULL == pImage);
-            
-            bRet = pImage->initWithStringShadowStroke(text,
-                                                      (int)textDefinition._dimensions.width,
-                                                      (int)textDefinition._dimensions.height,
-                                                      eAlign,
-                                                      textDefinition._fontName.c_str(),
-                                                      textDefinition._fontSize,
-                                                      textDefinition._fontFillColor.r / 255.0f,
-                                                      textDefinition._fontFillColor.g / 255.0f,
-                                                      textDefinition._fontFillColor.b / 255.0f,
-                                                      shadowEnabled,
-                                                      shadowDX,
-                                                      shadowDY,
-                                                      shadowOpacity,
-                                                      shadowBlur,
-                                                      strokeEnabled,
-                                                      strokeColorR,
-                                                      strokeColorG,
-                                                      strokeColorB,
-                                                      strokeSize);
-            
-            
-            CC_BREAK_IF(!bRet);
-            bRet = initWithImage(pImage);
-            
-        } while (0);
-        
-        CC_SAFE_RELEASE(pImage);
-        
-        return bRet;
+    if ( textDefinition._shadow._shadowEnabled )
+    {
+        shadowEnabled =  true;
+        shadowDX      = textDefinition._shadow._shadowOffset.width;
+        shadowDY      = textDefinition._shadow._shadowOffset.height;
+        shadowBlur    = textDefinition._shadow._shadowBlur;
+        shadowOpacity = textDefinition._shadow._shadowOpacity;
+    }
     
+    // handle stroke parameters
+    bool strokeEnabled = false;
+    float strokeColorR = 0.0f;
+    float strokeColorG = 0.0f;
+    float strokeColorB = 0.0f;
+    float strokeSize   = 0.0f;
     
-    #else
-        bool requestUnsupported = textDefinition._shadow._shadowEnabled || textDefinition._stroke._strokeEnabled;
+    if ( textDefinition._stroke._strokeEnabled )
+    {
+        strokeEnabled = true;
+        strokeColorR = textDefinition._stroke._strokeColor.r / 255.0f;
+        strokeColorG = textDefinition._stroke._strokeColor.g / 255.0f;
+        strokeColorB = textDefinition._stroke._strokeColor.b / 255.0f;
+        strokeSize   = textDefinition._stroke._strokeSize;
+    }
     
-        CCAssert(requestUnsupported == false, "Currently shadow and stroke only supported on iOS and Android!");
-    
-        do
-        {
-            Image* pImage = new Image();
-            CC_BREAK_IF(NULL == pImage);
-            bRet = pImage->initWithString(text, (int)textDefinition._dimensions.width, (int)textDefinition._dimensions.height, eAlign, textDefinition._fontName.c_str(), (int)textDefinition._fontSize);
-            CC_BREAK_IF(!bRet);
-            bRet = initWithImage(pImage);
-            CC_SAFE_RELEASE(pImage);
-        } while (0);
+    Image* pImage = new Image();
+    do
+    {
+        CC_BREAK_IF(NULL == pImage);
         
+        bRet = pImage->initWithStringShadowStroke(text,
+                                                  (int)textDefinition._dimensions.width,
+                                                  (int)textDefinition._dimensions.height,
+                                                  eAlign,
+                                                  textDefinition._fontName.c_str(),
+                                                  textDefinition._fontSize,
+                                                  textDefinition._fontFillColor.r / 255.0f,
+                                                  textDefinition._fontFillColor.g / 255.0f,
+                                                  textDefinition._fontFillColor.b / 255.0f,
+                                                  shadowEnabled,
+                                                  shadowDX,
+                                                  shadowDY,
+                                                  shadowOpacity,
+                                                  shadowBlur,
+                                                  strokeEnabled,
+                                                  strokeColorR,
+                                                  strokeColorG,
+                                                  strokeColorB,
+                                                  strokeSize);
+        
+        
+        CC_BREAK_IF(!bRet);
+        bRet = initWithImage(pImage);
+        
+    } while (0);
     
-        return bRet;    
-    #endif
+    CC_SAFE_RELEASE(pImage);
+    
+    return bRet;
+
+#else
+    bool requestUnsupported = textDefinition._shadow._shadowEnabled || textDefinition._stroke._strokeEnabled;
+
+    CCAssert(requestUnsupported == false, "Currently shadow and stroke only supported on iOS and Android!");
+
+    Image* pImage = new Image();
+    do
+    {
+        CC_BREAK_IF(NULL == pImage);
+        bRet = pImage->initWithString(text, (int)textDefinition._dimensions.width, (int)textDefinition._dimensions.height, eAlign, textDefinition._fontName.c_str(), (int)textDefinition._fontSize);
+        CC_BREAK_IF(!bRet);
+        bRet = initWithImage(pImage);
+    } while (0);
+    
+    CC_SAFE_RELEASE(pImage);
+
+    return bRet;    
+#endif
 }
 
 
