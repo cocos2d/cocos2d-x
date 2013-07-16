@@ -555,7 +555,7 @@ int LuaEngine::handlerControlEvent(void* data)
     return ret;    
 }
 
-void LuaEngine::extendLuaObjec()
+void LuaEngine::extendLuaObject()
 {    
     if ( NULL == _stack || NULL == _stack->getLuaState())
         return;

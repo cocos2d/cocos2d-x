@@ -119,7 +119,7 @@ public:
     virtual bool handleAssert(const char *msg);
     
     virtual int sendEvent(ScriptEvent* message);
-    void extendLuaObjec();
+    void extendLuaObject();
 private:
     int handleNodeEvent(void* data);
     int handleMenuClickedEvent(void* data);
