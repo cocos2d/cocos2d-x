@@ -454,6 +454,7 @@ Developers:
 
     sunzhuoshi
         Adding support for javascript bytecode.
+        Fixing bad js constant names.
 
     ptekchand (Pranav Tekchand)
         Supporting negative node scales for CCScrollView.
