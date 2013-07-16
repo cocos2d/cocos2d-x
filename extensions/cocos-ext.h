@@ -50,7 +50,6 @@
 #include "CCArmature/display/CCDisplayManager.h"
 #include "CCArmature/display/CCSkin.h"
 #include "CCArmature/physics/CCColliderDetector.h"
-#include "CCArmature/physics/CCPhysicsWorld.h"
 #include "CCArmature/utils/CCArmatureDataManager.h"
 #include "CCArmature/utils/CCConstValue.h"
 #include "CCArmature/utils/CCDataReaderHelper.h"

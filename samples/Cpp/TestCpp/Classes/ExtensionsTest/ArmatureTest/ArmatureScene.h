@@ -6,6 +6,13 @@
 #include "../../VisibleRect.h"
 #include "../../testBasic.h"
 
+#if ENABLE_PHYSICS_BOX2D_DETECT
+#include "../../Box2DTestBed/GLES-Render.h"
+#include "Box2D/Box2D.h"
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+#include "chipmunk.h"
+#endif
+
 class ArmatureTestScene : public TestScene
 {
 public: 
@@ -26,7 +33,7 @@ enum {
 	TEST_ANIMATION_EVENT,
 	TEST_PARTICLE_DISPLAY,
 	TEST_USE_DIFFERENT_PICTURE,
-	TEST_BOX2D_DETECTOR,
+	TEST_BCOLLIDER_DETECTOR,
 	TEST_BOUDINGBOX,
 	TEST_ANCHORPOINT,
 	TEST_ARMATURE_NESTING,
@@ -141,19 +148,42 @@ class TestParticleDisplay : public ArmatureTestLayer
 	cocos2d::extension::CCArmature *armature;
 };
 
-class TestBox2DDetector : public ArmatureTestLayer, public sigslot::has_slots<>
+#if ENABLE_PHYSICS_BOX2D_DETECT
+class ContactListener;
+#endif
+
+class TestColliderDetector : public ArmatureTestLayer, public sigslot::has_slots<>
 {
 public:
+	~TestColliderDetector();
+
 	virtual void onEnter();
 	virtual std::string title();
 	virtual void draw();
 	virtual void update(float delta);
 
-	void onHit(cocos2d::extension::CCBone *bone, cocos2d::extension::CCBone *bone2);
+	void initWorld();
 
 	cocos2d::extension::CCArmature *armature;
 	cocos2d::extension::CCArmature *armature2;
+
+	cocos2d::extension::CCPhysicsSprite *bullet;
+
+#if ENABLE_PHYSICS_BOX2D_DETECT
+	b2World *world;
+	ContactListener *listener;
+	GLESDebugDraw *debugDraw;
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+	cpSpace *space;
+
+	static int beginHit(cpArbiter *arb, cpSpace *space, void *unused);
+	static void endHit(cpArbiter *arb, cpSpace *space, void *unused);
+
+	void destroyCPBody(cpBody *body);
+#endif
 };
+
+
 
 class TestBoundingBox : public ArmatureTestLayer
 {

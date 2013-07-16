@@ -137,7 +137,9 @@ public:
     virtual bool isTransformDirty();
 
     virtual CCAffineTransform nodeToArmatureTransform();
+	virtual CCAffineTransform nodeToWorldTransform();
 
+	CCNode *getDisplayRenderNode();
 public:
     /*
      *  The origin state of the CCBone. Display's state is effected by m_pBoneData, m_pNode, m_pTweenData

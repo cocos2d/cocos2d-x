@@ -313,10 +313,7 @@ void CCTween::arriveKeyFrame(CCFrameData *keyFrameData)
             }
         }
 
-        if(keyFrameData->m_strEvent.length() != 0)
-        {
-            m_pAnimation->FrameEventSignal.emit(m_pBone, keyFrameData->m_strEvent.c_str());
-        }
+        
         // 		if(keyFrameData->m_strSound.length() != 0)
         // 		{
         // 			//soundManager.dispatchEventWith(Event.SOUND_FRAME, keyFrameData->sound);

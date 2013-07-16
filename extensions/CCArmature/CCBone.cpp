@@ -320,6 +320,16 @@ CCAffineTransform CCBone::nodeToArmatureTransform()
 	return m_tWorldTransform;
 }
 
+CCAffineTransform CCBone::nodeToWorldTransform()
+{
+	return CCAffineTransformConcat(m_tWorldTransform, m_pArmature->nodeToWorldTransform());
+}
+
+CCNode *CCBone::getDisplayRenderNode()
+{
+	return m_pDisplayManager->getDisplayRenderNode();
+}
+
 void CCBone::addDisplay(CCDisplayData *displayData, int index)
 {
     m_pDisplayManager->addDisplay(displayData, index);
