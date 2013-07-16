@@ -668,6 +668,7 @@ const char* FileUtils::fullPathFromRelativeFile(const char *pszFilename, const c
 void FileUtils::setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder)
 {
     bool bExistDefault = false;
+    _fullPathCache.clear();
     _searchResolutionsOrderArray.clear();
     for (std::vector<std::string>::const_iterator iter = searchResolutionsOrder.begin(); iter != searchResolutionsOrder.end(); ++iter)
     {
@@ -709,6 +710,7 @@ void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
 {
     bool bExistDefaultRootPath = false;
     
+    _fullPathCache.clear();
     _searchPathArray.clear();
     for (std::vector<std::string>::const_iterator iter = searchPaths.begin(); iter != searchPaths.end(); ++iter)
     {
@@ -755,6 +757,7 @@ void FileUtils::addSearchPath(const char* path_)
 
 void FileUtils::setFilenameLookupDictionary(Dictionary* pFilenameLookupDict)
 {
+    _fullPathCache.clear();    
     CC_SAFE_RELEASE(_filenameLookupDict);
     _filenameLookupDict = pFilenameLookupDict;
     CC_SAFE_RETAIN(_filenameLookupDict);
