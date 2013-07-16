@@ -184,6 +184,12 @@ private:
     Font *                                      _font;
     FontRender *                                _fontRender;
     
+    
+    // carloX new stuff
+    Font *                                      _fontNew;
+    FontRender *                                _fontRenderNew;
+    
+    
 };
 
 

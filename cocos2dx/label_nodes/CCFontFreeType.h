@@ -22,8 +22,10 @@ class FontFreeType : public Font
 {
 public:
     
+    FontFreeType();
     virtual ~FontFreeType();
     virtual bool                    createFontObject(const std::string &fontName, int fontSize);
+    
     virtual int                     getUTF8TextLenght(const char *pText);
     virtual Size                    getTextWidthAndHeight(const char *pText);
     virtual GlyphDef            *   getGlyphsForText(const char *pText, int &outNumGlyphs);
@@ -31,11 +33,24 @@ public:
     virtual Size                *   getAdvancesForTextUTF8(unsigned short *pText, int &outNumLetters);
     virtual unsigned short int  *   getUTF8Text(const char *pText, int &outNumLetters);
     virtual const char          *   trimUTF8Text(const char *pText, int newBegin, int newEnd);
+    virtual int                     getLetterPadding() { return _letterPadding;}
+    unsigned char               *   getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight);
     
 private:
     
-    //CTFontRef   _fontRef;
-    //void *      _fontUI;
+    bool initFreeType();
+    void shutdownFreeType();
+    FT_Library getFTLibrary();
+    bool getBBOXFotChar(unsigned short theChar, Rect &outRect);
+    int  getAdvanceFotChar(unsigned short theChar);
+    int  getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar);
+    
+    static FT_Library _FTlibrary;
+    static bool       _FTInitialized;
+    FT_Face           _fontRef;
+    const int         _letterPadding;
+    
+    
     
 };
 

@@ -8890,7 +8890,7 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/ios/libfreetype2\"",
+					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/ios/libfreetype2/freetype\"",
 					"\"$(SRCROOT)/../extensions\"",
 					"\"$(SRCROOT)/../external\"",
 				);
@@ -8902,7 +8902,7 @@
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../cocos2dx/platform/third_party/ios/libfreetype2\" $(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../cocos2dx/platform/third_party/ios/libfreetype2/freetype\" $(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\"";
 			};
 			name = Debug;
 		};
@@ -8918,7 +8918,7 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/ios/libfreetype2\"",
+					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/ios/libfreetype2/freetype\"",
 					"\"$(SRCROOT)/../extensions\"",
 					"\"$(SRCROOT)/../external\"",
 				);

@@ -284,6 +284,14 @@ bool TextImage::initWithString(const char * pText, int nWidth, int nHeight, cons
 
 bool TextImage::createFontRef(const char *fontName, int fontSize)
 {
+    //carloX new stuff
+    //_font
+    
+    
+    // end carloX new stuff
+    
+    
+    
     if (_font)
     {
         delete _font;
@@ -308,7 +316,7 @@ bool TextImage::createFontRender()
     }
     
     // carloX
-    _fontRender = new FontRenderIOS();
+    _fontRender = new FontRenderIOS(_font);
     
     return true;
 }

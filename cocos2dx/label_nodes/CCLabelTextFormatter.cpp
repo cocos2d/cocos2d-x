@@ -302,10 +302,10 @@ bool LabelTextFormatter::createStringSprites(LabelTextFormatProtocol *theLabel)
         // get the current character
         unsigned short c    = theLabel->getCharAtStringPosition(i);
         
-        charXOffset     = theLabel->getXOffsetForChar(c);
-        charYOffset     = theLabel->getYOffsetForChar(c);
-        charAdvance     = theLabel->getAdvanceForChar(c, i);
-        charRect        = theLabel->getRectForChar(c);
+        charXOffset         = theLabel->getXOffsetForChar(c);
+        charYOffset         = theLabel->getYOffsetForChar(c);
+        charAdvance         = theLabel->getAdvanceForChar(c, i);
+        charRect            = theLabel->getRectForChar(c);
         
         int kerningAmount   = theLabel->getKerningForCharsPair(prev, c);
         

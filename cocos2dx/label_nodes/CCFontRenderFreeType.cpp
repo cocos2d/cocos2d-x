@@ -10,27 +10,28 @@
 #include "CCTextImage.h"
 #include "CCFontRenderFreeType.h"
 
-
 #include "CCImage.h"
 
-
-
 #include "ft2build.h"
-#include "CCStdC.h"
 #include FT_FREETYPE_H
+
 
 NS_CC_BEGIN
 
 FT_Library library;
+FT_Face    currentFace;
 
 
 // globals
 
-bool renderCharAt(FT_GlyphSlot theGlyph, unsigned char *destMemory, int posX, int posY, int destSize)
+bool renderCharAtStatic(FT_GlyphSlot theGlyph, unsigned char *destMemory, int posX, int posY, int destSize)
 {
     // render the glyph
     if (FT_Render_Glyph( theGlyph, FT_RENDER_MODE_NORMAL ))
         return false;
+    
+    // carloX posY -= theGlyph->bitmap_top;
+    // carloX int testbearing = theGlyph->bitmap_top;
     
     // copy the gliph into the bitmap
     FT_Bitmap& bitmap = theGlyph->bitmap;
@@ -61,62 +62,126 @@ bool renderCharAt(FT_GlyphSlot theGlyph, unsigned char *destMemory, int posX, in
     return true;
 }
 
-
-void FontRenderFreeType::testRendering()
+bool FontRenderFreeType::renderCharAt(unsigned short int charToRender, int posX, int posY, unsigned char *destMemory, int destSize)
 {
+    if (!_font)
+        return false;
     
-    const char *stringToRender = "abcdefghilmnopqrstuvz";
+    unsigned char *sourceBitmap = 0;
+    int sourceWidth  = 0;
+    int sourceHeight = 0;
     
-    // font info
-    int dpi         = 72;
-	int fontSize    = 30;
+    // get the glyph's bitmap
+    sourceBitmap = _font->getGlyphBitmap(charToRender, sourceWidth, sourceHeight);
     
-    // error 
-    int libError;
+    if(!sourceBitmap)
+        return false;
     
+    int iX = posX;
+    int iY = posY;
+    
+    for (int y = 0; y < sourceHeight; ++y)
+    {
+        int bitmap_y = y * sourceWidth;
+        
+        for (int x = 0; x < sourceWidth; ++x)
+        {
+            unsigned char cTemp = sourceBitmap[bitmap_y + x];
+            
+            // the final pixel
+            int iTemp = cTemp << 24 | cTemp << 16 | cTemp << 8 | cTemp;
+            *(int*) &destMemory[(iX + ( iY * destSize ) ) * 4] = iTemp;
+            
+            iX += 1;
+        }
+        
+        iX  = posX;
+        iY += 1;
+    }
+    
+    //everything good
+    return true;
+}
+
+bool FontRenderFreeType::InitFreeType()
+{
     // begin freetype
-    libError = FT_Init_FreeType( &library );
-    
+    if (FT_Init_FreeType( &library ))
+        return false;
+    else
+        return true;
+}
+
+bool FontRenderFreeType::CreateFreeTypeFont(const char *fontName, int fontSize, int dpi)
+{
     unsigned char* data = NULL;
+    
     int len = 0;
-    data    = FileUtils::sharedFileUtils()->getFileData("fonts/Thonburi.ttf", "rb", (unsigned long *)(&len) );
+    data    = FileUtils::sharedFileUtils()->getFileData(fontName, "rb", (unsigned long *)(&len) );
     
     if (!data)
-        return;
-
+        return false;
+    
     // create the new face
     FT_Face face;
     
     // create the face from the data
     if (FT_New_Memory_Face(library, data, len, 0, &face) )
-        return;
+        return false;
     
     // set the requested font size
 	int fontSizePoints = (int)(64.f * fontSize);
 	if( FT_Set_Char_Size(face, fontSizePoints, fontSizePoints, dpi, dpi) )
-        return;
+        return false;
+    
+    // store the face globally
+    currentFace = face;
+    
+    // done and good
+    return true;
+}
+
+void FontRenderFreeType::ReleaseFreeType()
+{
+    // end freetype
+    FT_Done_FreeType(library);
+}
+
+
+void FontRenderFreeType::testRendering()
+{
+    //
+    const char *stringToRender = "abcdefghilmnopqrstuvz";
+    
+    // init freetype
+    InitFreeType();
+    
+    
+    // init and create a font
+    CreateFreeTypeFont("fonts/Thonburi.ttf", 100, 72);
+    
+    
     
     // allocate memory for the bitmap
     int bitmapSize = 512;
     unsigned char *pBitmap = new unsigned char[bitmapSize * bitmapSize * 4];
     if(!pBitmap) return;
     memset(pBitmap, 0, bitmapSize * bitmapSize * 4);
-
     
+    // carloX: has to be changed
+    FT_Face face = currentFace;
     
-    
-    
+    // line height
+    int lineHeight = face->size->metrics.height>>6;
     
     // padding between letters
-    int paddingX = 5;
-    int paddingY = 10;
+    int paddingX =  5;
+    int paddingY =  0;
     
-    int renderPosX = paddingX;
-    int renderPosY = paddingY;
-    
-    // this must be dynamic
-    int letterWidth  = 30;
-    int letterHeight = 30;
+    // where we need to render first
+    int renderPosX =  paddingX;
+    // carloX int renderPosY =  lineHeight + paddingY;
+    int renderPosY =  0;
     
     int stringLength = strlen(stringToRender);
     
@@ -129,113 +194,51 @@ void FontRenderFreeType::testRendering()
         if (FT_Load_Glyph(face, glyph_index, FT_LOAD_DEFAULT))
             return;
         
-        // get witdh and height for the next character
-        
         // check for bounds
-        if ( (renderPosX +letterWidth + paddingX) >= bitmapSize )
+        
+        // test carloX
+        int advancePixel    = face->glyph->advance.x >> 6;
+        int widthInPixel    = face->glyph->metrics.width >> 6;
+        int heightInPixel   = face->glyph->metrics.height >> 6;
+        int ascent          = face->glyph->metrics.horiBearingY>>6;
+        // end test carloX
+        
+        if ( (renderPosX + (face->glyph->advance.x >> 6) + paddingX) >= bitmapSize )
         {
-            renderPosX = paddingX;
-            renderPosY += (letterHeight + paddingY);
+            renderPosX  = paddingX;
+            renderPosY += (lineHeight + paddingY);
         }
         
-        renderCharAt(face->glyph, pBitmap, renderPosX, renderPosY, bitmapSize);
+        // render in bitmap
+        renderCharAtStatic(face->glyph, pBitmap, renderPosX, renderPosY, bitmapSize);
         
-        // move
-        renderPosX += letterWidth + paddingX;
+        // move pen
+        // carloX renderPosX += ((face->glyph->advance.x >> 6) + paddingX);
+        renderPosX += (widthInPixel + paddingX);
     }
     
     
-    
-    /*
-        
-    
-    // allocate the bitmap
-    int bitmapSize = 512;
-    unsigned char *pBitmap = new unsigned char[bitmapSize * bitmapSize * 4];
-    memset(pBitmap, 0, bitmapSize * bitmapSize * 4);
-    
-    renderCharAt(face->glyph, pBitmap, 10, 10, 512);
-    renderCharAt(face->glyph, pBitmap, 200, 200, 512);
-    renderCharAt(face->glyph, pBitmap, 300, 300, 512);
-    */
-    /*
-
-    // render the glyph
-    if (FT_Render_Glyph( face->glyph, FT_RENDER_MODE_NORMAL ))
-    {
-        return;
-    }
-    
-    // copy the gliph into the bitmap
-    FT_Bitmap& bitmap = face->glyph->bitmap;
-    
-    // allocate the bitmap
-    int bitmapSize = 512;
-    unsigned char *pBitmap = new unsigned char[bitmapSize * bitmapSize * 4];
-    memset(pBitmap, 0, bitmapSize * bitmapSize * 4);
-    
-    
-    if (!pBitmap)
-        return;
-    
-    int destX = 10;
-    int destY = 10;
-    
-    int iX = destX;
-    int iY = destY;
-    
-    
-    for (int y = 0; y < bitmap.rows; ++y)
-    {
-        int bitmap_y = y * bitmap.width;
-        
-        for (int x = 0; x < bitmap.width; ++x)
-        {
-            unsigned char cTemp = bitmap.buffer[bitmap_y + x];
-            
-            //if (cTemp == 0)
-            //{
-            //    continue;
-            //}
-            
-            // the final pixel
-            int iTemp = cTemp << 24 | cTemp << 16 | cTemp << 8 | cTemp;
-            *(int*) &pBitmap[(iX + ( iY * bitmapSize ) ) * 4] = iTemp;
-            
-            iX += 1;
-        }
-        
-        iX  = destX;
-        iY += 1;
-    }
-    */
     
     // save the bitmap into a file
     Image *pImage = new Image;
     pImage->initWithRawData(pBitmap, (bitmapSize * bitmapSize * 4), 512, 512, 8, false);
     pImage->saveToFile("carlottone");
     
+    
     // release the bitmap
     delete [] pBitmap;
     
     // end freetype
-    FT_Done_FreeType(library);
+    ReleaseFreeType();
 }
-
-
-void FontRenderFreeType::renderCharToBitmap(char *pDestBitmap, char charToRender, int posX, int posY)
-{
-}
-
 
 unsigned char * FontRenderFreeType::preparePageGlyphData(TextPageDef *thePage, char *fontName, int fontSize)
 {
-
-    // constants
-    float   LINE_PADDING    = 1.9;
-    
     if (!thePage)
-        return NULL;
+        return 0;
+    
+    if (_font)
+        return 0;
     
     if (thePage->getNumLines() == 0)
         return NULL;
@@ -246,16 +249,19 @@ unsigned char * FontRenderFreeType::preparePageGlyphData(TextPageDef *thePage, c
     // prepare memory and clean to 0
     int sizeInBytes = (pageWidth * pageHeight * 4);
     unsigned char* data = new unsigned char[sizeInBytes];
+    
+    if (!data)
+        return 0;
+    
     memset(data, 0, sizeInBytes);
     
-    
     int numLines = thePage->getNumLines();
+    
     for (int c = 0; c<numLines; ++c)
     {
-        TextLineDef *pCurrentLine = thePage->getLineAt(c);
-        float lineHeight            = pCurrentLine->getHeight();
+        TextLineDef *pCurrentLine   = thePage->getLineAt(c);
         
-        float origX         = LINE_PADDING;
+        float origX         = _font->getLetterPadding();
         float origY         = pCurrentLine->getY();
         
         int numGlyphToRender = pCurrentLine->getNumGlyph();
@@ -263,91 +269,31 @@ unsigned char * FontRenderFreeType::preparePageGlyphData(TextPageDef *thePage, c
         for (int cglyph = 0; cglyph < numGlyphToRender; ++cglyph)
         {
             GlyphDef currGlyph      = pCurrentLine->getGlyphAt(cglyph);
-            
-            //NSString *lineString = [NSString stringWithFormat: @"%C", currGlyph.getUTF8Letter()];
-            //CGRect tempRect;
-            Rect tempRect;
-            
-            tempRect.origin.x       = (origX - currGlyph.getRect().origin.x);
-            tempRect.origin.y       = origY;
-            tempRect.size.width     = currGlyph.getRect().size.width;
-            tempRect.size.height    = lineHeight;
-            
-            // actually draw one character
-            //[lineString drawInRect: tempRect withFont:font lineBreakMode:NSLineBreakByWordWrapping alignment:align];
-            
-            // move to next character
-            origX += (tempRect.size.width + currGlyph.getPadding());
+            renderCharAt(currGlyph.getUTF8Letter(), origX, origY, data, pageWidth);
+            origX += (currGlyph.getRect().size.width + _font->getLetterPadding());
         }
     }
+    
+    
+    bool debug = true;
+    if (debug)
+    {
+        static int counter = 0;
+        
+        char outFilename[512];
+        sprintf(outFilename,"carlottone%d", counter);
+        ++counter;
+        
+        // save the bitmap into a file
+        Image *pImage = new Image;
+        pImage->initWithRawData(data, (pageWidth * pageWidth * 4), 512, 512, 8, false);
+        pImage->saveToFile(outFilename);
+    }
+        
+        
     
     // we are done here
     return data;
-    
-    /*
-    // prepare the context
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef context = CGBitmapContextCreate(data, pageWidth, pageHeight, 8, pageWidth * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
-    CGColorSpaceRelease(colorSpace);
-    
-    if (!context)
-    {
-        delete[] data;
-        return 0;
-    }
-    
-    // prepare the context
-    CGContextSetRGBFillColor(context, 1, 1, 1, 1);
-    CGContextTranslateCTM(context, 0.0f, pageHeight);
-    CGContextScaleCTM(context, 1.0f, -1.0f); //NOTE: NSString draws in UIKit referential i.e. renders upside-down compared to CGBitmapContext referential
-    
-    
-    UIGraphicsPushContext(context);
-    UITextAlignment align = NSTextAlignmentLeft;
-    
-    // create the font
-    NSString *nsFontName = [NSString stringWithUTF8String:fontName];
-    id font = [UIFont fontWithName:nsFontName size:fontSize];
-    
-    int numLines = thePage->getNumLines();
-    for (int c = 0; c<numLines; ++c)
-    {
-        TextLineDef *pCurrentLine = thePage->getLineAt(c);
-        float lineHeight            = pCurrentLine->getHeight();
-        
-        float origX         = LINE_PADDING;
-        float origY         = pCurrentLine->getY();
-        
-        int numGlyphToRender = pCurrentLine->getNumGlyph();
-        
-        for (int cglyph = 0; cglyph < numGlyphToRender; ++cglyph)
-        {
-            GlyphDef currGlyph      = pCurrentLine->getGlyphAt(cglyph);
-            
-            NSString *lineString = [NSString stringWithFormat: @"%C", currGlyph.getUTF8Letter()];
-            CGRect tempRect;
-            
-            tempRect.origin.x       = (origX - currGlyph.getRect().origin.x);
-            tempRect.origin.y       = origY;
-            tempRect.size.width     = currGlyph.getRect().size.width;
-            tempRect.size.height    = lineHeight;
-            
-            // actually draw one character
-            [lineString drawInRect: tempRect withFont:font lineBreakMode:NSLineBreakByWordWrapping alignment:align];
-            
-            // move to next character
-            origX += (tempRect.size.width + currGlyph.getPadding());
-        }
-    }
-    
-    // clean everything
-    UIGraphicsPopContext();
-    CGContextRelease(context);
-    
-    // everything looks good
-    return data;
-     
-    */
 }
 
 

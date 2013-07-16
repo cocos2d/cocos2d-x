@@ -8487,11 +8487,15 @@
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
-				HEADER_SEARCH_PATHS = "\"$(SDKROOT)/usr/include/libxml2\"";
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/cocos2dx/platform/third_party/ios/libfreetype2/freetype\"",
+					"\"$(SDKROOT)/usr/include/libxml2\"",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/cocos2dx/platform/third_party/ios/libraries\"",
+					"\"$(SRCROOT)/cocos2dx/platform/third_party/ios/libfreetype2/freetype\"",
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8510,11 +8514,15 @@
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
-				HEADER_SEARCH_PATHS = "\"$(SDKROOT)/usr/include/libxml2\"";
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/cocos2dx/platform/third_party/ios/libfreetype2/freetype\"",
+					"\"$(SDKROOT)/usr/include/libxml2\"",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/cocos2dx/platform/third_party/ios/libraries\"",
+					"\"$(SRCROOT)/cocos2dx/platform/third_party/ios/libfreetype2/freetype\"",
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
