@@ -49,6 +49,8 @@ class Image;
 Possible texture pixel formats
 */
 typedef enum {
+	//! auto detect the type
+	kTexture2DPixelFormat_Automatic,
 
     //! 32-bit texture: RGBA8888
     kTexture2DPixelFormat_RGBA8888,
@@ -72,8 +74,8 @@ typedef enum {
     kTexture2DPixelFormat_PVRTC2,
 
 
-    //! Default texture format: RGBA8888
-    kTexture2DPixelFormat_Default = kTexture2DPixelFormat_RGBA8888
+    //! Default texture format: Automatic
+    kTexture2DPixelFormat_Default = kTexture2DPixelFormat_Automatic
 } Texture2DPixelFormat;
 
 class GLProgram;
@@ -237,6 +239,8 @@ public:
     bool hasMipmaps() const;
 
 private:
+
+	Texture2DPixelFormat convertDataToFormat(unsigned char* data, int dataLen, unsigned short chanel, unsigned short bitDepth, Texture2DPixelFormat format, unsigned char** outData, int* outDataLen);
     bool initPremultipliedATextureWithImage(Image * image, unsigned int pixelsWide, unsigned int pixelsHigh);
     
     // By default PVR images are treated as if they don't have the alpha channel premultiplied

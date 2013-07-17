@@ -687,11 +687,11 @@ Image* RenderTexture::newImage(bool flipImage)
                        nSavedBufferWidth * 4);
             }
 
-            pImage->initWithImageData(pBuffer, nSavedBufferWidth * nSavedBufferHeight * 4, Image::kFmtRawData, nSavedBufferWidth, nSavedBufferHeight, 8);
+            pImage->initWithImageData(pBuffer, nSavedBufferWidth * nSavedBufferHeight * 4, nSavedBufferWidth, nSavedBufferHeight, 8);
         }
         else
         {
-            pImage->initWithImageData(pTempData, nSavedBufferWidth * nSavedBufferHeight * 4, Image::kFmtRawData, nSavedBufferWidth, nSavedBufferHeight, 8);
+            pImage->initWithImageData(pTempData, nSavedBufferWidth * nSavedBufferHeight * 4, nSavedBufferWidth, nSavedBufferHeight, 8);
         }
         
     } while (0);

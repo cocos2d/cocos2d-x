@@ -406,7 +406,7 @@ bool Image::initWithString(
         _height   = (short)size.cy;
         _hasAlpha = true;
         _preMulti = false;
-        _bitsPerComponent = 8;
+        _bitDepth = 8;
         // copy pixed data
         bi.bmiHeader.biHeight = (bi.bmiHeader.biHeight > 0)
            ? - bi.bmiHeader.biHeight : bi.bmiHeader.biHeight;

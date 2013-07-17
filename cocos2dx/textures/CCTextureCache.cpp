@@ -231,7 +231,7 @@ void TextureCache::loadImage()
         
         // generate image            
         Image *pImage = new Image();
-        if (pImage && !pImage->initWithImageFileThreadSafe(filename, imageType))
+        if (pImage && !pImage->initWithImageFileThreadSafe(filename))
         {
             CC_SAFE_RELEASE(pImage);
             CCLOG("can not load %s", filename);
@@ -399,7 +399,7 @@ Texture2D * TextureCache::addImage(const char * path)
                 pImage = new Image();
                 CC_BREAK_IF(NULL == pImage);
 
-                bool bRet = pImage->initWithImageFile(fullpath.c_str(), eImageFormat);
+                bool bRet = pImage->initWithImageFile(fullpath.c_str());
                 CC_BREAK_IF(!bRet);
 
                 texture = new Texture2D();

@@ -73,13 +73,20 @@ public:
         kAlignTopLeft       = 0x11, ///< Horizontal left and vertical top.
     }ETextAlign;
     
+
+	typedef enum
+	{
+		kColorGray = 0,
+		kColorRGB,
+	}EColorType;
+
     /**
     @brief  Load the image from the specified path. 
     @param strPath   the absolute file path.
     @param imageType the type of image, currently only supporting two types.
     @return  true if loaded correctly.
     */
-    bool initWithImageFile(const char * strPath, EImageFormat imageType = kFmtPng);
+    bool initWithImageFile(const char * strPath);
 
     /**
     @brief  Load image from stream buffer.
@@ -92,7 +99,6 @@ public:
     */
     bool initWithImageData(void * pData, 
                            int nDataLen, 
-                           EImageFormat eFmt = kFmtUnKnown,
                            int nWidth = 0,
                            int nHeight = 0,
                            int nBitsPerComponent = 8);
@@ -146,7 +152,11 @@ public:
     
 
     unsigned char *   getData()               { return _data; }
-    int               getDataLen()            { return _width * _height; }
+    int               getDataLen()            { return _width * _height * (_colorType == kColorGray ? 1 : 3 + _hasAlpha ? 1 : 0); }
+	EColorType        getColorType()          { return _colorType; }
+	unsigned short    getBitDepth()              { return _bitDepth; }
+	unsigned short    getWidth()              { return _width; }
+	unsigned short    getHeight()             { return _height; }
 
 
     bool hasAlpha()                     { return _hasAlpha;   }
@@ -160,10 +170,6 @@ public:
     */
     bool saveToFile(const char *pszFilePath, bool bIsToRGB = true);
 
-    CC_SYNTHESIZE_READONLY(unsigned short,   _width,       Width);
-    CC_SYNTHESIZE_READONLY(unsigned short,   _height,      Height);
-    CC_SYNTHESIZE_READONLY(int,     _bitsPerComponent,   BitsPerComponent);
-
 protected:
     bool _initWithJpgData(void *pData, int nDatalen);
     bool _initWithPngData(void *pData, int nDatalen);
@@ -174,6 +180,10 @@ protected:
     bool _saveImageToJPG(const char *pszFilePath);
 
     unsigned char *_data;
+	unsigned short _bitDepth;
+	unsigned short _width;
+	unsigned short _height;
+	EColorType _colorType;
     bool _hasAlpha;
     bool _preMulti;
 
@@ -190,7 +200,13 @@ private:
      @param imageType the type of image, currently only supporting two types.
      @return  true if loaded correctly.
      */
-    bool initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType = kFmtPng);
+    bool initWithImageFileThreadSafe(const char *fullpath);
+
+	EImageFormat detectFormat(void* pData, int nDatalen);
+	bool isPng(void *pData, int nDatalen);
+	bool isJpg(void *pData, int nDatalen);
+	bool isTiff(void *pData, int nDatalen);
+	bool isWebp(void *pData, int nDatalen);
 };
 
 // end of platform group

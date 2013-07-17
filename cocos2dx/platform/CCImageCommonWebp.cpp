@@ -49,7 +49,7 @@ bool Image::_initWithWebpData(void *pData, int nDataLen)
         if (config.input.width == 0 || config.input.height == 0) break;
         
         config.output.colorspace = MODE_RGBA;
-        _bitsPerComponent = 8;
+        _bitDepth = 8;
         _width    = config.input.width;
         _height   = config.input.height;
         _hasAlpha = true;

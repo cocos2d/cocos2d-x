@@ -123,7 +123,6 @@
 		1A6FB5A2178556E900CDF010 /* CCLuaObjcBridge.h in Sources */ = {isa = PBXBuildFile; fileRef = 1A1195AB1785201F00D62A44 /* CCLuaObjcBridge.h */; };
 		1A6FB5A3178556E900CDF010 /* CCLuaObjcBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A1195AC1785201F00D62A44 /* CCLuaObjcBridge.mm */; };
 		1A6FB66817855AF300CDF010 /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A6FB53317854DD600CDF010 /* libluajit.a */; };
-		1A94D35016C2072800D79D09 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A94D34C16C2014900D79D09 /* libwebp.a */; };
 		1A94D35116C2072800D79D09 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
 		1AE019841790023400D574A8 /* SocketIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AE019821790023400D574A8 /* SocketIO.cpp */; };
 		1AE019851790023400D574A8 /* SocketIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AE019821790023400D574A8 /* SocketIO.cpp */; };
@@ -1044,7 +1043,6 @@
 		A07A4CAA1783777C0073F6A7 /* CCTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F255F1780BAE8006731B9 /* CCTouch.cpp */; };
 		A07A4CAB1783777C0073F6A7 /* CCTouchDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F25621780BAE8006731B9 /* CCTouchDispatcher.cpp */; };
 		A07A4CAC1783777C0073F6A7 /* CCTouchHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F25641780BAE8006731B9 /* CCTouchHandler.cpp */; };
-		A07A4CAE1783777C0073F6A7 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A94D34C16C2014900D79D09 /* libwebp.a */; };
 		A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
 		A07A4CB21783777C0073F6A7 /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1DDD1780BAE4006731B9 /* CCAction.h */; };
 		A07A4CB31783777C0073F6A7 /* CCActionCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1DDF1780BAE4006731B9 /* CCActionCamera.h */; };
@@ -1241,7 +1239,6 @@
 		A07A4DB517837B910073F6A7 /* multi.h in Headers */ = {isa = PBXBuildFile; fileRef = A07A4DA517837B910073F6A7 /* multi.h */; };
 		A07A4DB617837B910073F6A7 /* stdcheaders.h in Headers */ = {isa = PBXBuildFile; fileRef = A07A4DA617837B910073F6A7 /* stdcheaders.h */; };
 		A07A4DB717837B910073F6A7 /* typecheck-gcc.h in Headers */ = {isa = PBXBuildFile; fileRef = A07A4DA717837B910073F6A7 /* typecheck-gcc.h */; };
-		A07A4DB817837B910073F6A7 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A4DA917837B910073F6A7 /* libcurl.a */; };
 		A07A4DB917837B910073F6A7 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A4DAA17837B910073F6A7 /* libwebp.a */; };
 		A07A4DBA17837B910073F6A7 /* decode.h in Headers */ = {isa = PBXBuildFile; fileRef = A07A4DAC17837B910073F6A7 /* decode.h */; };
 		A07A4DBB17837B910073F6A7 /* encode.h in Headers */ = {isa = PBXBuildFile; fileRef = A07A4DAD17837B910073F6A7 /* encode.h */; };
@@ -1774,6 +1771,12 @@
 		A07A52CC1784AC360073F6A7 /* etc1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A07A52C91784AC360073F6A7 /* etc1.cpp */; };
 		A07A52CD1784AC360073F6A7 /* etc1.h in Headers */ = {isa = PBXBuildFile; fileRef = A07A52CA1784AC360073F6A7 /* etc1.h */; };
 		A07A52CE1784AC360073F6A7 /* etc1.h in Headers */ = {isa = PBXBuildFile; fileRef = A07A52CA1784AC360073F6A7 /* etc1.h */; };
+		B348AF76179690E0000D2245 /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B348AF70179690B3000D2245 /* libjpeg.a */; };
+		B348AF77179690E0000D2245 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B348AF71179690B3000D2245 /* libpng.a */; };
+		B348AF78179690E0000D2245 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B348AF72179690B3000D2245 /* libtiff.a */; };
+		B348AF7B17969102000D2245 /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B348AF7917969102000D2245 /* libjpeg.a */; };
+		B348AF7C17969102000D2245 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B348AF7A17969102000D2245 /* libpng.a */; };
+		B348AF7E17969124000D2245 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B348AF7D17969124000D2245 /* libtiff.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2908,6 +2911,12 @@
 		A07A509917838A0C0073F6A7 /* libjs_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjs_static.a; sourceTree = "<group>"; };
 		A07A52C91784AC360073F6A7 /* etc1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = etc1.cpp; sourceTree = "<group>"; };
 		A07A52CA1784AC360073F6A7 /* etc1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = etc1.h; sourceTree = "<group>"; };
+		B348AF70179690B3000D2245 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = cocos2dx/platform/third_party/mac/libraries/libjpeg.a; sourceTree = "<group>"; };
+		B348AF71179690B3000D2245 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = cocos2dx/platform/third_party/mac/libraries/libpng.a; sourceTree = "<group>"; };
+		B348AF72179690B3000D2245 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = cocos2dx/platform/third_party/mac/libraries/libtiff.a; sourceTree = "<group>"; };
+		B348AF7917969102000D2245 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = cocos2dx/platform/third_party/ios/libraries/libjpeg.a; sourceTree = "<group>"; };
+		B348AF7A17969102000D2245 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = cocos2dx/platform/third_party/ios/libraries/libpng.a; sourceTree = "<group>"; };
+		B348AF7D17969124000D2245 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = cocos2dx/platform/third_party/ios/libraries/libtiff.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2915,7 +2924,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A94D35016C2072800D79D09 /* libwebp.a in Frameworks */,
+				B348AF76179690E0000D2245 /* libjpeg.a in Frameworks */,
+				B348AF77179690E0000D2245 /* libpng.a in Frameworks */,
+				B348AF78179690E0000D2245 /* libtiff.a in Frameworks */,
 				1A94D35116C2072800D79D09 /* Foundation.framework in Frameworks */,
 				A03F27DD1780BAE8006731B9 /* libwebp.a in Frameworks */,
 			);
@@ -2978,9 +2989,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A07A4CAE1783777C0073F6A7 /* libwebp.a in Frameworks */,
+				B348AF7E17969124000D2245 /* libtiff.a in Frameworks */,
+				B348AF7B17969102000D2245 /* libjpeg.a in Frameworks */,
+				B348AF7C17969102000D2245 /* libpng.a in Frameworks */,
 				A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */,
-				A07A4DB817837B910073F6A7 /* libcurl.a in Frameworks */,
 				A07A4DB917837B910073F6A7 /* libwebp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3064,6 +3076,12 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B348AF7D17969124000D2245 /* libtiff.a */,
+				B348AF7917969102000D2245 /* libjpeg.a */,
+				B348AF7A17969102000D2245 /* libpng.a */,
+				B348AF70179690B3000D2245 /* libjpeg.a */,
+				B348AF71179690B3000D2245 /* libpng.a */,
+				B348AF72179690B3000D2245 /* libtiff.a */,
 				A035A5421782286100987F6C /* libwebsockets.a */,
 				1A94D34C16C2014900D79D09 /* libwebp.a */,
 				1551A342158F2AB200E66CFE /* Foundation.framework */,
@@ -7316,7 +7334,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/cocos2dx/platform/third_party/mac/libraries\"",
 				);
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/cocos2dx/platform/mac\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/cocos2dx/platform/mac\" \"$(SRCROOT)/cocos2dx/platform/third_party/common\"/**";
 			};
 			name = Debug;
 		};
@@ -7336,7 +7354,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/cocos2dx/platform/third_party/mac/libraries\"",
 				);
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/cocos2dx/platform/mac\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/cocos2dx/platform/mac\" \"$(SRCROOT)/cocos2dx/platform/third_party/common\"/**";
 			};
 			name = Release;
 		};
@@ -7597,11 +7615,13 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/cocos2dx/platform/third_party/ios/libraries\"",
+					"\\\"$(SRCROOT)/cocos2dx/platform/third_party/ios/libraries\\\"",
+					"$(SRCROOT)/cocos2dx/platform/third_party/mac/libraries",
+					"$(SRCROOT)/cocos2dx/platform/third_party/ios/libraries",
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/cocos2dx/platform/ios\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/cocos2dx/platform/ios\" \"$(SRCROOT)/cocos2dx/platform/third_party/common\"/**";
 			};
 			name = Debug;
 		};
@@ -7620,11 +7640,13 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/cocos2dx/platform/third_party/ios/libraries\"",
+					"\\\"$(SRCROOT)/cocos2dx/platform/third_party/ios/libraries\\\"",
+					"$(SRCROOT)/cocos2dx/platform/third_party/mac/libraries",
+					"$(SRCROOT)/cocos2dx/platform/third_party/ios/libraries",
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/cocos2dx/platform/ios\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/cocos2dx/platform/ios\" \"$(SRCROOT)/cocos2dx/platform/third_party/common\"/**";
 			};
 			name = Release;
 		};
