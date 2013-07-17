@@ -2,6 +2,7 @@
 #define __CDDANDRIODANDROIDJAVAENGINE_H__
 
 #include "SimpleAudioEngine.h"
+#include "platform/android/jni/JniHelper.h"
 
 namespace CocosDenshion {
     namespace android {
@@ -29,6 +30,11 @@ namespace CocosDenshion {
             void stopAllEffects();
             void preloadEffect(const char* pszFilePath);
             void unloadEffect(const char* pszFilePath);
+
+        private :
+            static bool getJNIStaticMethodInfo(cocos2d::JniMethodInfo &methodinfo,
+                                               const char *methodName,
+                                               const char *paramCode);
         };
     }
 }
