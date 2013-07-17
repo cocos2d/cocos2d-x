@@ -1,3 +1,6 @@
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -405,3 +408,5 @@ TOLUA_API int tolua_web_socket_open(lua_State* tolua_S){
     tolua_endmodule(tolua_S);
 	return 1;
 }
+
+#endif//(CC_TARGET_PLATFORM == CC_PLATFORM_IOS ...
