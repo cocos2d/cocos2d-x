@@ -170,7 +170,7 @@ bool Image::initWithString(
         _height   = (short)dc._height;
         _hasAlpha = true;
         _preMulti = true;
-        _bitsPerComponent = 8;
+        _bitDepth = 8;
 
         bRet = true;
     } while (0);
@@ -222,7 +222,7 @@ bool Image::initWithStringShadowStroke(
 	        _height   = (short)dc._height;
 	        _hasAlpha = true;
 	        _preMulti = true;
-	        _bitsPerComponent = 8;
+	        _bitDepth = 8;
 
 	        // swap the alpha channel (ARGB to RGBA)
 	        swapAlphaChannel((unsigned int *)_data, (_width * _height) );

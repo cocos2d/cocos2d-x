@@ -56,7 +56,7 @@ bool Texture2DMutable::initWithImageFile(const char *imageFile)
     
     bool                      hasAlpha = image_->hasAlpha();
     Size                    imageSize = Size((float)(image_->getWidth()), (float)(image_->getHeight()));
-    size_t                    bpp = image_->getBitsPerComponent();
+    size_t                    bpp = image_->getBitDepth();
     cocos2d::Texture2DPixelFormat pixelFormat;
     
     // compute pixel format

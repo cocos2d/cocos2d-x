@@ -26,11 +26,15 @@ class CCImage : public CCObject
         kAlignTopLeft       = 0x11, ///< Horizontal left and vertical top.
     }ETextAlign;
 
+	typedef enum
+	{
+		kColorGray = 0,
+		kColorRGB,
+	}EColorType;
 
-    bool initWithImageFile(const char * strPath, EImageFormat imageType = kFmtPng);
+    bool initWithImageFile(const char * strPath);
     bool initWithImageData(void * pData,
                            int nDataLen,
-                           EImageFormat eFmt = kFmtUnKnown,
                            int nWidth = 0,
                            int nHeight = 0,
                            int nBitsPerComponent = 8);
@@ -50,5 +54,5 @@ class CCImage : public CCObject
     bool saveToFile(const char *pszFilePath, bool bIsToRGB = true);
     unsigned short getWidth();
     unsigned short getHeight();
-    int getBitsPerComponent();
+    int getBitDepth();
 };

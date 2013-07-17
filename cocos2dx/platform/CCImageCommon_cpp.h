@@ -22,10 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_PLATFORM_IMAGE_CPP__
-#error "CCFileUtilsCommon_cpp.h can only be included for FileUtils.cpp in platform/win32(android,...)"
-#endif /* __CC_PLATFORM_IMAGE_CPP__ */
-
 #include "CCImage.h"
 #include "CCCommon.h"
 #include "CCStdC.h"
@@ -78,8 +74,9 @@ static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t leng
 Image::Image()
 : _width(0)
 , _height(0)
-, _bitsPerComponent(0)
+, _bitDepth(0)
 , _data(0)
+, _colorType(kColorRGB)
 , _hasAlpha(false)
 , _preMulti(false)
 {
@@ -91,7 +88,7 @@ Image::~Image()
     CC_SAFE_DELETE_ARRAY(_data);
 }
 
-bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
+bool Image::initWithImageFile(const char * strPath)
 {
     bool bRet = false;
 
@@ -120,7 +117,7 @@ bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFm
     unsigned char* pBuffer = FileUtils::getInstance()->getFileData(fullPath.c_str(), "rb", &nSize);
     if (pBuffer != NULL && nSize > 0)
     {
-        bRet = initWithImageData(pBuffer, nSize, eImgFmt);
+        bRet = initWithImageData(pBuffer, nSize);
     }
     CC_SAFE_DELETE_ARRAY(pBuffer);
 #endif // EMSCRIPTEN
@@ -128,7 +125,7 @@ bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFm
     return bRet;
 }
 
-bool Image::initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType)
+bool Image::initWithImageFileThreadSafe(const char *fullpath)
 {
     bool bRet = false;
     unsigned long nSize = 0;
@@ -140,7 +137,7 @@ bool Image::initWithImageFileThreadSafe(const char *fullpath, EImageFormat image
 #endif
     if (pBuffer != NULL && nSize > 0)
     {
-        bRet = initWithImageData(pBuffer, nSize, imageType);
+        bRet = initWithImageData(pBuffer, nSize);
     }
     CC_SAFE_DELETE_ARRAY(pBuffer);
     return bRet;
@@ -148,7 +145,6 @@ bool Image::initWithImageFileThreadSafe(const char *fullpath, EImageFormat image
 
 bool Image::initWithImageData(void * pData, 
                                 int nDataLen, 
-                                EImageFormat eFmt/* = eSrcFmtPng*/, 
                                 int nWidth/* = 0*/,
                                 int nHeight/* = 0*/,
                                 int nBitsPerComponent/* = 8*/)
@@ -158,6 +154,8 @@ bool Image::initWithImageData(void * pData,
     {
         CC_BREAK_IF(! pData || nDataLen <= 0);
 
+
+		int eFmt = detectFormat(pData, nDataLen);
         if (kFmtPng == eFmt)
         {
             bRet = _initWithPngData(pData, nDataLen);
@@ -232,6 +230,82 @@ bool Image::initWithImageData(void * pData,
     return bRet;
 }
 
+bool Image::isPng(void *pData, int nDatalen)
+{
+	if (nDatalen <= 8)
+	{
+		return false;
+	}
+
+	static const unsigned char PNG_SIGNATURE[] = {0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a};
+
+	return memcmp(PNG_SIGNATURE, pData, sizeof(PNG_SIGNATURE)) == 0;
+}
+
+bool Image::isJpg(void *pData, int nDatalen)
+{
+	if (nDatalen <= 4)
+	{
+		return false;
+	}
+
+	static const unsigned char JPG_SOI[] = {0xFF, 0xD8};
+
+	return memcmp(pData, JPG_SOI, 2) == 0;
+}
+
+bool Image::isTiff(void *pData, int nDatalen)
+{
+	if (nDatalen <= 4)
+	{
+		return false;
+	}
+
+	static const char* TIFF_II = "II";
+	static const char* TIFF_MM = "MM";
+
+	return (memcmp(pData, TIFF_II, 2) == 0 && *((const char*)pData + 2) == 42 && *((const char*)pData + 2) == 0)
+		|| (memcmp(pData, TIFF_MM, 2) == 0 && *((const char*)pData + 2) == 0 && *((const char*)pData + 2) == 42);
+}
+
+bool Image::isWebp(void *pData, int nDatalen)
+{
+	if (nDatalen <= 12)
+	{
+		return false;
+	}
+
+	static const char* WEBP_RIFF = "RIFF";
+	static const char* WEBP_WEBP = "WEBP";
+
+	return memcmp(pData, WEBP_RIFF, 4) == 0 
+		&& (int)(*((int*)(pData) + 1)) == nDatalen 
+		&& memcmp((unsigned char*)pData + 8, WEBP_WEBP, 4) == 0;
+}
+
+
+Image::EImageFormat Image::detectFormat(void* pData, int nDatalen)
+{
+	if (isPng(pData, nDatalen))
+	{
+		return kFmtPng;
+	}else if (isJpg(pData, nDatalen))
+	{
+		return kFmtJpg;
+	}else if (isTiff(pData, nDatalen))
+	{
+		return kFmtTiff;
+	}else if (isWebp(pData, nDatalen))
+	{
+		return kFmtWebp;
+	}else
+	{
+		return kFmtRawData;
+	}
+
+
+
+}
 /*
  * ERROR HANDLING:
  *
@@ -345,7 +419,7 @@ bool Image::_initWithJpgData(void * data, int nSize)
         _height = (short)(cinfo.output_height);
         _hasAlpha = false;
         _preMulti = false;
-        _bitsPerComponent = 8;
+        _bitDepth = 8;
         row_pointer[0] = new unsigned char[cinfo.output_width*cinfo.output_components];
         CC_BREAK_IF(! row_pointer[0]);
 
@@ -422,7 +496,7 @@ bool Image::_initWithPngData(void * pData, int nDatalen)
         
         _width = png_get_image_width(png_ptr, info_ptr);
         _height = png_get_image_height(png_ptr, info_ptr);
-        _bitsPerComponent = png_get_bit_depth(png_ptr, info_ptr);
+        _bitDepth = png_get_bit_depth(png_ptr, info_ptr);
         png_uint_32 color_type = png_get_color_type(png_ptr, info_ptr);
 
         //CCLOG("color type %u", color_type);
@@ -434,8 +508,9 @@ bool Image::_initWithPngData(void * pData, int nDatalen)
             png_set_palette_to_rgb(png_ptr);
         }
         // low-bit-depth grayscale images are to be expanded to 8 bits
-        if (color_type == PNG_COLOR_TYPE_GRAY && _bitsPerComponent < 8)
+        if (color_type == PNG_COLOR_TYPE_GRAY && _bitDepth < 8)
         {
+			_bitDepth = 8;
             png_set_expand_gray_1_2_4_to_8(png_ptr);
         }
         // expand any tRNS chunk data into a full alpha channel
@@ -444,23 +519,41 @@ bool Image::_initWithPngData(void * pData, int nDatalen)
             png_set_tRNS_to_alpha(png_ptr);
         }  
         // reduce images with 16-bit samples to 8 bits
-        if (_bitsPerComponent == 16)
+        if (_bitDepth == 16)
         {
             png_set_strip_16(png_ptr);            
         } 
-        // expand grayscale images to RGB
-        if (color_type == PNG_COLOR_TYPE_GRAY || color_type == PNG_COLOR_TYPE_GRAY_ALPHA)
-        {
-            png_set_gray_to_rgb(png_ptr);
-        }
+
+        // Expanded earlier for grayscale, now take care of palette and rgb
+		if (_bitDepth < 8) {
+			png_set_packing(png_ptr);
+		}
+		// update info
+		png_read_update_info(png_ptr, info_ptr);
+		_width = png_get_image_width(png_ptr, info_ptr);
+		_height = png_get_image_height(png_ptr, info_ptr);
+		_bitDepth = png_get_bit_depth(png_ptr, info_ptr);
+		color_type = png_get_color_type(png_ptr, info_ptr);
+        
+		_hasAlpha = color_type & PNG_COLOR_MASK_ALPHA;
+        
+		switch (color_type)
+		{
+		case PNG_COLOR_TYPE_GRAY:
+		case PNG_COLOR_TYPE_GRAY_ALPHA:
+			_colorType = kColorGray;
+			break;
+		case PNG_COLOR_TYPE_RGB:
+		case PNG_COLOR_TYPE_RGB_ALPHA:
+			_colorType = kColorRGB;
+			break;
+		default:
+			break;
+		}
 
         // read png data
-        // _bitsPerComponent will always be 8
-        _bitsPerComponent = 8;
         png_uint_32 rowbytes;
         png_bytep* row_pointers = (png_bytep*)malloc( sizeof(png_bytep) * _height );
-        
-        png_read_update_info(png_ptr, info_ptr);
         
         rowbytes = png_get_rowbytes(png_ptr, info_ptr);
         
@@ -474,23 +567,8 @@ bool Image::_initWithPngData(void * pData, int nDatalen)
         png_read_image(png_ptr, row_pointers);
         
         png_read_end(png_ptr, NULL);
-        
-        png_uint_32 channel = rowbytes/_width;
-        if (channel == 4)
-        {
-            _hasAlpha = true;
-            unsigned int *tmp = (unsigned int *)_data;
-            for(unsigned short i = 0; i < _height; i++)
-            {
-                for(unsigned int j = 0; j < rowbytes; j += 4)
-                {
-                    *tmp++ = CC_RGB_PREMULTIPLY_ALPHA( row_pointers[i][j], row_pointers[i][j + 1], 
-                                                      row_pointers[i][j + 2], row_pointers[i][j + 3] );
-                }
-            }
-            
-            _preMulti = true;
-        }
+		
+		_preMulti = false;
 
         CC_SAFE_FREE(row_pointers);
 
@@ -645,7 +723,7 @@ bool Image::_initWithTiffData(void* pData, int nDataLen)
         _hasAlpha = true;
         _width = w;
         _height = h;
-        _bitsPerComponent = 8;
+        _bitDepth = 8;
 
         _data = new unsigned char[npixels * sizeof (uint32)];
 
@@ -688,7 +766,7 @@ bool Image::initWithRawData(void * pData, int nDatalen, int nWidth, int nHeight,
     {
         CC_BREAK_IF(0 == nWidth || 0 == nHeight);
 
-        _bitsPerComponent = nBitsPerComponent;
+        _bitDepth = nBitsPerComponent;
         _height   = (short)nHeight;
         _width    = (short)nWidth;
         _hasAlpha = true;

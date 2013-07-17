@@ -61,6 +61,297 @@ static Texture2DPixelFormat g_defaultAlphaPixelFormat = kTexture2DPixelFormat_De
 // By default PVR images are treated as if they don't have the alpha channel premultiplied
 static bool PVRHaveAlphaPremultiplied_ = false;
 
+//////////////////////////////////////////////////////////////////////////
+//conventer function
+
+// IIIIIIII -> RRRRRRRRGGGGGGGGGBBBBBBBB
+void Gray8ToRGB888(unsigned char* in, int len, unsigned char* out)
+{
+	for (int i=0; i < len; ++i)
+	{
+		*out++ = in[i];//R
+		*out++ = in[i];//G
+		*out++ = in[i];//B
+	}
+}
+
+// IIIIIIIIAAAAAAAA -> RRRRRRRRGGGGGGGGBBBBBBBB
+void GrayA8ToRGB888(unsigned char* in, int len, unsigned char* out)
+{
+	for (int i = 0, l = len - 1; i < l; i += 2)
+	{
+		*out++ = in[i];//R
+		*out++ = in[i];//G
+		*out++ = in[i];//B
+	}
+}
+
+// IIIIIIII -> RRRRRRRRGGGGGGGGGBBBBBBBBAAAAAAAA
+void Gray8ToRGBA8888(unsigned char* in, int len, unsigned char* out)
+{
+	for (int i = 0; i < len; ++i)
+	{
+		*out++ = in[i];//R
+		*out++ = in[i];//G
+		*out++ = in[i];//B
+		*out++ = 0xFF;//A
+	}
+}
+
+// IIIIIIIIAAAAAAAA -> RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA
+void GrayA8ToRGBA8888(unsigned char* in, int len, unsigned char* out)
+{
+	for (int i = 0, l = len - 1; i < l; i += 2)
+	{
+		*out++ = in[i];//R
+		*out++ = in[i];//G
+		*out++ = in[i];//B
+		*out++ = in[i + 1];//A
+	}
+}
+
+// IIIIIIII -> RRRRRGGGGGGBBBBB
+void Gray8ToRGB565(unsigned char* in, int len, unsigned char* out)
+{
+	unsigned short* out16 = (unsigned short*)out;
+	for (int i = 0; i < len; ++i)
+	{
+		*out16++ = (unsigned short)(in[i] & 0XF8) << 8  //R
+			| (unsigned short)(in[i] & 0XFC) << 3        //G
+			| (unsigned short)(in[i] & 0XF8) >> 3;            //B
+	}
+}
+
+// IIIIIIIIAAAAAAAA -> RRRRRGGGGGGBBBBB
+void GrayA8ToRGB565(unsigned char* in, int len, unsigned char* out)
+{
+	unsigned short* out16 = (unsigned short*)out;
+	for (int i = 0, l = len - 1; i < l; i += 2)
+	{
+		*out16++ = (unsigned short)(in[i] & 0XF8) << 8  //R
+			| (unsigned short)(in[i] & 0XFC) << 3        //G
+			| (unsigned short)(in[i] & 0XF8) >> 3;            //B
+	}
+}
+
+// IIIIIIII -> RRRRGGGGBBBBAAAA
+void Gray8ToRGBA4444(unsigned char* in, int len, unsigned char* out)
+{
+	for (int i = 0; i < len; ++i)
+	{
+		*out++ = (in[i] & 0xF0) | 0x0F;                //BA
+		*out++ = (in[i] & 0xF0) | (in[i] & 0xF0) >> 4; //RG
+	}
+}
+
+// IIIIIIIIAAAAAAAA -> RRRRGGGGBBBBAAAA
+void GrayA8ToRGBA4444(unsigned char* in, int len, unsigned char* out)
+{
+	for (int i = 0, l = len - 1; i < l; i += 2)
+	{
+		*out++ = (in[i] & 0xF0) | (in[i+1] & 0xF0) >> 4;  //BA
+		*out++ = (in[i] & 0xF0) | (in[i] & 0xF0) >> 4;    //RG
+	}
+}
+
+// IIIIIIII -> RRRRRGGGGGBBBBBA
+void Gray8ToRGB5A1(unsigned char* in, int len, unsigned char* out)
+{
+	unsigned short* out16 = (unsigned short*)out;
+	for (int i = 0; i < len; ++i)
+	{
+		*out16++ = (unsigned short)(in[i] & 0xF8) << 8  //R
+			| (unsigned short)(in[i] & 0xF8) << 3        //G
+			| (unsigned short)(in[i] & 0xF8) >> 2        //B
+			| 0x01;                                      //A
+	}
+}
+
+// IIIIIIIIAAAAAAAA -> RRRRRGGGGGBBBBBA
+void GrayA8ToRGB5A1(unsigned char* in, int len, unsigned char* out)
+{
+	unsigned short* out16 = (unsigned short*)out;
+	for (int i = 0, l = len - 1; i < l; i += 2)
+	{
+		*out16++ = (unsigned short)(in[i] & 0xF8) << 8  //R
+			| (unsigned short)(in[i] & 0xF8) << 3        //G
+			| (unsigned short)(in[i] & 0xF8) >> 2        //B
+			| (unsigned short)in[i + 1] & 0x80 >> 7;         //A
+	}
+}
+
+// IIIIIIII -> IIIIIIIIAAAAAAAA
+void Gray8ToAI88(unsigned char* in, int len, unsigned char* out)
+{
+	unsigned short* out16 = (unsigned short*)out;
+	for (int i = 0; i < len; ++i)
+	{
+		*out16++ = (unsigned short)in[i] << 8  //R
+			| 0xFF;                            //A
+	}
+}
+
+// IIIIIIIIAAAAAAAA -> AAAAAAAA
+void GrayA8ToA8(unsigned char* in, int len, unsigned char* out)
+{
+	for (int i = 1; i < len; i += 2)
+	{
+		*out++ = in[i]; //A
+	}
+}
+
+// IIIIIIIIAAAAAAAA -> IIIIIIII
+void GrayA8ToI8(unsigned char* in, int len, unsigned char* out)
+{
+	for (int i = 0, l = len - 1; i < l; i += 2)
+	{
+		*out++ = in[i]; //R
+	}
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBB -> RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA
+void RGB8ToRGBA8888(unsigned char* in, int len, unsigned char* out)
+{
+	for (int i = 0, l = len - 2; i < l; i += 3)
+	{
+		*out++ = in[i];
+		*out++ = in[i + 1];
+		*out++ = in[i + 2];
+		*out++ = 0xFF;
+	}
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> RRRRRRRRGGGGGGGGBBBBBBBB
+void RGBA8ToRGB888(unsigned char* in, int len, unsigned char* out)
+{
+	for (int i = 0, l = len - 3; i < l; i += 4)
+	{
+		*out++ = in[i];
+		*out++ = in[i + 1];
+		*out++ = in[i + 2];
+	}
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBB -> RRRRRGGGGGGBBBBB
+void RGB8ToRGB565(unsigned char* in, int len, unsigned char* out)
+{
+	unsigned short* out16 = (unsigned short*)out;
+	for (int i = 0, l = len - 2; i < l; i += 3)
+	{
+		*out16++ = (unsigned short)(in[i] & 0XF8) << 8  //R
+			| (unsigned short)(in[i + 1] & 0XFC) << 3        //G
+			| (unsigned short)(in[i + 2] & 0XF8) >> 3;            //B
+	}
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> RRRRRGGGGGGBBBBB
+void RGBA8ToRGB565(unsigned char* in, int len, unsigned char* out)
+{
+	unsigned short* out16 = (unsigned short*)out;
+	for (int i = 0, l = len - 3; i < l; i += 4)
+	{
+		*out16++ = (unsigned short)(in[i] & 0XF8) << 8  //R
+			| (unsigned short)(in[i + 1] & 0XFC) << 3        //G
+			| (unsigned short)(in[i + 2] & 0XF8) >> 3;            //B
+	}
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBB -> IIIIIIII
+void RGB8ToI8(unsigned char* in, int len, unsigned char* out)
+{
+	for (int i = 0, l = len - 2; i < l; i += 3)
+	{
+		*out++ = (in[i] * 299 + in[i + 1] * 587 + in[i + 2] * 114 + 500) / 1000;  //I =  (R*299 + G*587 + B*114 + 500) / 1000
+	}
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> IIIIIIII
+void RGBA8ToI8(unsigned char* in, int len, unsigned char* out)
+{
+	for (int i = 0, l = len - 3; i < l; i += 4)
+	{
+		*out++ = (in[i] * 299 + in[i + 1] * 587 + in[i + 2] * 114 + 500) / 1000;  //I =  (R*299 + G*587 + B*114 + 500) / 1000
+	}
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> AAAAAAAA
+void RGBA8ToA8(unsigned char* in, int len, unsigned char* out)
+{
+	for (int i = 0, l = len -3; i < l; i += 4)
+	{
+		*out++ = in[i + 3];
+	}
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBB -> IIIIIIIIAAAAAAAA
+void RGB8ToAI88(unsigned char* in, int len, unsigned char* out)
+{
+	for (int i = 0, l = len - 2; i < l; i += 3)
+	{
+		*out++ = (in[i] * 299 + in[i + 1] * 587 + in[i + 2] * 114 + 500) / 1000;  //I =  (R*299 + G*587 + B*114 + 500) / 1000
+		*out++ = 0xFF;
+	}
+}
+
+
+// RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> IIIIIIIIAAAAAAAA
+void RGBA8ToAI88(unsigned char* in, int len, unsigned char* out)
+{
+	for (int i = 0, l = len - 3; i < l; i += 4)
+	{
+		*out++ = (in[i] * 299 + in[i + 1] * 587 + in[i + 2] * 114 + 500) / 1000;  //I =  (R*299 + G*587 + B*114 + 500) / 1000
+		*out++ = in[i + 3];
+	}
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBB -> RRRRGGGGBBBBAAAA
+void RGB8ToRGBA4444(unsigned char* in, int len, unsigned char* out)
+{
+	for (int i = 0, l = len - 2; i < l; i += 3)
+	{
+		*out++ = (in[i + 2] & 0xF0) |  0x0F;  //BA
+		*out++ = (in[i] & 0xF0) | (in[i + 1] & 0xF0) >> 4;    //RG
+	}
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> RRRRGGGGBBBBAAAA
+void RGBA8ToRGBA4444(unsigned char* in, int len, unsigned char* out)
+{
+	for (int i = 0, l = len - 3; i < l; i += 4)
+	{
+		*out++ = (in[i + 2] & 0xF0) |  (in[i + 3] & 0xF0) >> 4;  //BA
+		*out++ = (in[i] & 0xF0) | (in[i + 1] & 0xF0) >> 4;    //RG
+	}
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBB -> RRRRRGGGGGBBBBBA
+void RGB8ToRGB5A1(unsigned char* in, int len, unsigned char* out)
+{
+	unsigned short* out16 = (unsigned short*)out;
+	for (int i = 0, l = len - 2; i < l; i += 3)
+	{
+		*out16++ = (unsigned short)(in[i] & 0xF8) << 8  //R
+			| (unsigned short)(in[i + 1] & 0xF8) << 3        //G
+			| (unsigned short)(in[i + 2] & 0xF8) >> 2        //B
+			|  0x01;         //A
+	}
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBB -> RRRRRGGGGGBBBBBA
+void RGBA8ToRGB5A1(unsigned char* in, int len, unsigned char* out)
+{
+	unsigned short* out16 = (unsigned short*)out;
+	for (int i = 0, l = len - 2; i < l; i += 4)
+	{
+		*out16++ = (unsigned short)(in[i] & 0xF8) << 8  //R
+			| (unsigned short)(in[i + 1] & 0xF8) << 3        //G
+			| (unsigned short)(in[i + 2] & 0xF8) >> 2        //B
+			|  (in[i + 3] & 0x80) >> 7;         //A
+	}
+}
+// conventer function end
+//////////////////////////////////////////////////////////////////////////
+
 Texture2D::Texture2D()
 : _PVRHaveAlphaPremultiplied(true)
 , _pixelsWide(0)
@@ -295,6 +586,212 @@ bool Texture2D::initWithImage(Image *uiImage)
     return initPremultipliedATextureWithImage(uiImage, imageWidth, imageHeight);
 }
 
+
+/*
+convert map:
+1.kTexture2DPixelFormat_RGBA8888
+2.kTexture2DPixelFormat_RGB888
+3.kTexture2DPixelFormat_RGB565
+4.kTexture2DPixelFormat_A8
+5.kTexture2DPixelFormat_I8
+6.kTexture2DPixelFormat_AI88
+7.kTexture2DPixelFormat_RGBA4444
+8.kTexture2DPixelFormat_RGB5A1
+
+gray(5) -> 1235678
+gray alpha(6) -> 12345678
+rgb(2) -> 1235678
+rgba(1) -> 12345678
+
+*/
+Texture2DPixelFormat Texture2D::convertDataToFormat(unsigned char* data, int dataLen, unsigned short chanel, unsigned short bitDepth, Texture2DPixelFormat format, unsigned char** outData, int* outDataLen)
+{
+	if (chanel == 1)     // Gray image
+	{
+		switch (format)
+		{
+		case kTexture2DPixelFormat_RGBA8888:
+			*outDataLen = dataLen*4;
+			*outData = new unsigned char[*outDataLen];
+			Gray8ToRGBA8888(data, dataLen, *outData);
+			break;
+		case kTexture2DPixelFormat_RGB888:
+			*outDataLen = dataLen*3;
+			*outData = new unsigned char[*outDataLen];
+			Gray8ToRGB888(data, dataLen, *outData);
+			break;
+		case kTexture2DPixelFormat_RGB565:
+			*outDataLen = dataLen*2;
+			*outData = new unsigned char[*outDataLen];
+			Gray8ToRGB565(data, dataLen, *outData);
+			break;
+		case kTexture2DPixelFormat_AI88:
+			*outDataLen = dataLen*2;
+			*outData = new unsigned char[*outDataLen];
+			Gray8ToAI88(data, dataLen, *outData);
+			break;
+		case kTexture2DPixelFormat_RGBA4444:
+			*outDataLen = dataLen*2;
+			*outData = new unsigned char[*outDataLen];
+			Gray8ToRGBA4444(data, dataLen, *outData);
+			break;
+		case kTexture2DPixelFormat_RGB5A1:
+			*outDataLen = dataLen*2;
+			*outData = new unsigned char[*outDataLen];
+			GrayA8ToRGB5A1(data, dataLen, *outData);
+			break;
+		default:
+			// unsupport convertion or don't need to convert
+			*outData = data;
+			*outDataLen = dataLen;
+			return kTexture2DPixelFormat_I8;
+		}
+
+		return format;
+	}else if (chanel == 2)   //Gray alpha image
+	{
+		switch (format)
+		{
+		case kTexture2DPixelFormat_RGBA8888:
+			*outDataLen = dataLen*2;
+			*outData = new unsigned char[*outDataLen];
+			GrayA8ToRGBA8888(data, dataLen, *outData);
+			break;
+		case kTexture2DPixelFormat_RGB888:
+			*outDataLen = dataLen/2*3;
+			*outData = new unsigned char[*outDataLen];
+			GrayA8ToRGB888(data, dataLen, *outData);
+			break;
+		case kTexture2DPixelFormat_RGB565:
+			*outDataLen = dataLen;
+			*outData = new unsigned char[*outDataLen];
+			GrayA8ToRGB565(data, dataLen, *outData);
+			break;
+		case kTexture2DPixelFormat_A8:
+			*outDataLen = dataLen/2;
+			*outData = new unsigned char[*outDataLen];
+			GrayA8ToA8(data, dataLen, *outData);
+			break;
+		case kTexture2DPixelFormat_I8:
+			*outDataLen = dataLen/2;
+			*outData = new unsigned char[*outDataLen];
+			GrayA8ToI8(data, dataLen, *outData);
+			break;
+		case kTexture2DPixelFormat_RGBA4444:
+			*outDataLen = dataLen;
+			*outData = new unsigned char[*outDataLen];
+			GrayA8ToRGBA4444(data, dataLen, *outData);
+			break;
+		case kTexture2DPixelFormat_RGB5A1:
+			*outDataLen = dataLen;
+			*outData = new unsigned char[*outDataLen];
+			GrayA8ToRGB5A1(data, dataLen, *outData);
+			break;
+		default:
+			// unsupport convertion or don't need to convert
+			*outData = data;
+			*outDataLen = dataLen;
+			return kTexture2DPixelFormat_AI88;
+			break;
+		}
+
+		return format;
+	}else if (chanel == 3)   //RGB image
+	{
+		switch (format)
+		{
+		case kTexture2DPixelFormat_RGBA8888:
+			*outDataLen = dataLen/3*4;
+			*outData = new unsigned char[*outDataLen];
+			RGB8ToRGBA8888(data, dataLen, *outData);
+			break;
+		case kTexture2DPixelFormat_RGB565:
+			*outDataLen = dataLen/3*2;
+			*outData = new unsigned char[*outDataLen];
+			RGB8ToRGB565(data, dataLen, *outData);
+			break;
+		case kTexture2DPixelFormat_I8:
+			*outDataLen = dataLen/3;
+			*outData = new unsigned char[*outDataLen];
+			RGB8ToI8(data, dataLen, *outData);
+			break;
+		case kTexture2DPixelFormat_AI88:
+			*outDataLen = dataLen/3*2;
+			*outData = new unsigned char[*outDataLen];
+			RGB8ToAI88(data, dataLen, *outData);
+			break;
+		case kTexture2DPixelFormat_RGBA4444:
+			*outDataLen = dataLen/3*2;
+			*outData = new unsigned char[*outDataLen];
+			RGB8ToRGBA4444(data, dataLen, *outData);
+			break;
+		case kTexture2DPixelFormat_RGB5A1:
+			*outDataLen = dataLen;
+			*outData = new unsigned char[*outDataLen];
+			RGB8ToRGB5A1(data, dataLen, *outData);
+			break;
+		default:
+			// unsupport convertion or don't need to convert
+			*outData = data;
+			*outDataLen = dataLen;
+			return kTexture2DPixelFormat_RGB888;
+			break;
+		}
+
+		return format;
+	}else if (chanel == 4)   //RGBA image
+	{
+		switch (format)
+		{
+		case kTexture2DPixelFormat_RGB888:
+			*outDataLen = dataLen/4*3;
+			*outData = new unsigned char[*outDataLen];
+			RGBA8ToRGB888(data, dataLen, *outData);
+			break;
+		case kTexture2DPixelFormat_RGB565:
+			*outDataLen = dataLen/2;
+			*outData = new unsigned char[*outDataLen];
+			RGBA8ToRGB565(data, dataLen, *outData);
+			break;
+		case kTexture2DPixelFormat_A8:
+			*outDataLen = dataLen/4;
+			*outData = new unsigned char[*outDataLen];
+			RGBA8ToA8(data, dataLen, *outData);
+			break;
+		case kTexture2DPixelFormat_I8:
+			*outDataLen = dataLen/4;
+			*outData = new unsigned char[*outDataLen];
+			RGBA8ToI8(data, dataLen, *outData);
+			break;
+		case kTexture2DPixelFormat_AI88:
+			*outDataLen = dataLen/2;
+			*outData = new unsigned char[*outDataLen];
+			RGBA8ToAI88(data, dataLen, *outData);
+			break;
+		case kTexture2DPixelFormat_RGBA4444:
+			*outDataLen = dataLen/2;
+			*outData = new unsigned char[*outDataLen];
+			RGBA8ToRGBA4444(data, dataLen, *outData);
+			break;
+		case kTexture2DPixelFormat_RGB5A1:
+			*outDataLen = dataLen/2;
+			*outData = new unsigned char[*outDataLen];
+			RGBA8ToRGB5A1(data, dataLen, *outData);
+			break;
+		default:
+			// unsupport convertion or don't need to convert
+			*outData = data;
+			*outDataLen = dataLen;
+			return kTexture2DPixelFormat_RGBA8888;
+			break;
+		}
+
+		return format;
+	}
+
+
+	CCAssert(false, "It shouldn't be here!");
+}
 bool Texture2D::initPremultipliedATextureWithImage(Image *image, unsigned int width, unsigned int height)
 {
     unsigned char*            tempData = image->getData();
@@ -302,132 +799,42 @@ bool Texture2D::initPremultipliedATextureWithImage(Image *image, unsigned int wi
     unsigned char*            inPixel8 = NULL;
     unsigned short*           outPixel16 = NULL;
     bool                      hasAlpha = image->hasAlpha();
-    Size                    imageSize = Size((float)(image->getWidth()), (float)(image->getHeight()));
-    Texture2DPixelFormat    pixelFormat;
-    size_t                    bpp = image->getBitsPerComponent();
+    Size                      imageSize = Size((float)(image->getWidth()), (float)(image->getHeight()));
+    Texture2DPixelFormat      pixelFormat;
+    size_t                    bpp = image->getBitDepth();
+	Image::EColorType         colorType = image->getColorType();
+	size_t	                  tempDataLen = image->getDataLen();
 
     // compute pixel format
-    if (hasAlpha)
-    {
     	pixelFormat = g_defaultAlphaPixelFormat;
-    }
-    else
-    {
-        if (bpp >= 8)
-        {
-            pixelFormat = kTexture2DPixelFormat_RGB888;
-        }
-        else 
-        {
-            pixelFormat = kTexture2DPixelFormat_RGB565;
-        }
-        
-    }
     
     // Repack the pixel data into the right format
     unsigned int length = width * height;
 
-    if (pixelFormat == kTexture2DPixelFormat_RGB565)
-    {
-        if (hasAlpha)
-        {
-            // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
-            
-            tempData = new unsigned char[width * height * 2];
-            outPixel16 = (unsigned short*)tempData;
-            inPixel32 = (unsigned int*)image->getData();
-            
-            for(unsigned int i = 0; i < length; ++i, ++inPixel32)
-            {
-                *outPixel16++ = 
-                ((((*inPixel32 >>  0) & 0xFF) >> 3) << 11) |  // R
-                ((((*inPixel32 >>  8) & 0xFF) >> 2) << 5)  |  // G
-                ((((*inPixel32 >> 16) & 0xFF) >> 3) << 0);    // B
-            }
-        }
-        else 
-        {
-            // Convert "RRRRRRRRRGGGGGGGGBBBBBBBB" to "RRRRRGGGGGGBBBBB"
-            
-            tempData = new unsigned char[width * height * 2];
-            outPixel16 = (unsigned short*)tempData;
-            inPixel8 = (unsigned char*)image->getData();
-            
-            for(unsigned int i = 0; i < length; ++i)
-            {
-                *outPixel16++ = 
-                (((*inPixel8++ & 0xFF) >> 3) << 11) |  // R
-                (((*inPixel8++ & 0xFF) >> 2) << 5)  |  // G
-                (((*inPixel8++ & 0xFF) >> 3) << 0);    // B
-            }
-        }    
-    }
-    else if (pixelFormat == kTexture2DPixelFormat_RGBA4444)
-    {
-        // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRGGGGBBBBAAAA"
-        
-        inPixel32 = (unsigned int*)image->getData();  
-        tempData = new unsigned char[width * height * 2];
-        outPixel16 = (unsigned short*)tempData;
-        
-        for(unsigned int i = 0; i < length; ++i, ++inPixel32)
-        {
-            *outPixel16++ = 
-            ((((*inPixel32 >> 0) & 0xFF) >> 4) << 12) | // R
-            ((((*inPixel32 >> 8) & 0xFF) >> 4) <<  8) | // G
-            ((((*inPixel32 >> 16) & 0xFF) >> 4) << 4) | // B
-            ((((*inPixel32 >> 24) & 0xFF) >> 4) << 0);  // A
-        }
-    }
-    else if (pixelFormat == kTexture2DPixelFormat_RGB5A1)
-    {
-        // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGBBBBBA"
-        inPixel32 = (unsigned int*)image->getData();   
-        tempData = new unsigned char[width * height * 2];
-        outPixel16 = (unsigned short*)tempData;
-        
-        for(unsigned int i = 0; i < length; ++i, ++inPixel32)
-        {
-            *outPixel16++ = 
-            ((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | // R
-            ((((*inPixel32 >> 8) & 0xFF) >> 3) <<  6) | // G
-            ((((*inPixel32 >> 16) & 0xFF) >> 3) << 1) | // B
-            ((((*inPixel32 >> 24) & 0xFF) >> 7) << 0);  // A
-        }
-    }
-    else if (pixelFormat == kTexture2DPixelFormat_A8)
-    {
-        // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "AAAAAAAA"
-        inPixel32 = (unsigned int*)image->getData();
-        tempData = new unsigned char[width * height];
-        unsigned char *outPixel8 = tempData;
-        
-        for(unsigned int i = 0; i < length; ++i, ++inPixel32)
-        {
-            *outPixel8++ = (*inPixel32 >> 24) & 0xFF;  // A
-        }
-    }
+	unsigned char* outTempData = NULL;
+	int outTempDataLen = 0;
+	unsigned char* outTempPalette = NULL;
+	int outTempPaletteLen = 0;
+		
+	switch (colorType)
+	{
+	case Image::kColorRGB:
+		pixelFormat = convertDataToFormat(tempData, tempDataLen, hasAlpha ? 4 : 3, bpp, pixelFormat, &outTempData, &outTempDataLen);
+		break;
+	case  Image::kColorGray:
+		pixelFormat = convertDataToFormat(tempData, tempDataLen, hasAlpha ? 2 : 1, bpp, pixelFormat, &outTempData, &outTempDataLen);
+		break;
+	default:
+		break;
+	}
     
-    if (hasAlpha && pixelFormat == kTexture2DPixelFormat_RGB888)
-    {
-        // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRRRRGGGGGGGGBBBBBBBB"
-        inPixel32 = (unsigned int*)image->getData();
-        tempData = new unsigned char[width * height * 3];
-        unsigned char *outPixel8 = tempData;
-        
-        for(unsigned int i = 0; i < length; ++i, ++inPixel32)
-        {
-            *outPixel8++ = (*inPixel32 >> 0) & 0xFF; // R
-            *outPixel8++ = (*inPixel32 >> 8) & 0xFF; // G
-            *outPixel8++ = (*inPixel32 >> 16) & 0xFF; // B
-        }
-    }
+    initWithData(outTempData, pixelFormat, width, height, imageSize);
     
-    initWithData(tempData, pixelFormat, width, height, imageSize);
-    
-    if (tempData != image->getData())
+
+    if (outTempData != NULL && outTempData != tempData)
     {
-        delete [] tempData;
+
+        delete [] outTempData;
     }
 
     _hasPremultipliedAlpha = image->isPremultipliedAlpha();

@@ -21,6 +21,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
+#include "CCImageCommon_cpp.h"
 #include <Foundation/Foundation.h>
 #include <Cocoa/Cocoa.h>
 #include "CCDirector.h"
@@ -547,6 +549,7 @@ bool isFileExists(const char* szFilePath)
 	return true;
 }
 
+#if 0
 Image::Image()
 : _width(0)
 , _height(0)
@@ -875,7 +878,7 @@ bool Image::initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, 
     } while (0);
     return bRet;
 }
-
+#endif
 bool Image::initWithString(
 	const char *    pText, 
 	int             nWidth, 
@@ -894,7 +897,7 @@ bool Image::initWithString(
     }
     _height = (short)info.height;
     _width = (short)info.width;
-    _bitsPerComponent = info.bitsPerComponent;
+    _bitDepth = info.bitsPerComponent;
     _hasAlpha = info.hasAlpha;
     _preMulti = info.isPremultipliedAlpha;
 	if (_data) {
@@ -904,13 +907,13 @@ bool Image::initWithString(
 
     return true;
 }
-
+#if 0
 bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
 {
 	assert(false);
 	return false;
 }
-
+#endif
 
 
 NS_CC_END
