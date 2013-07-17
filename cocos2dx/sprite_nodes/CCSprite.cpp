@@ -465,12 +465,12 @@ void Sprite::updateTransform(void)
 
             if( ! _parent || _parent == _batchNode )
             {
-                _transformToBatch = nodeToParentTransform();
+                _transformToBatch = getNodeToParentTransform();
             }
             else 
             {
                 CCAssert( dynamic_cast<Sprite*>(_parent), "Logic error in Sprite. Parent must be a Sprite");
-                _transformToBatch = AffineTransformConcat( nodeToParentTransform() , ((Sprite*)_parent)->_transformToBatch );
+                _transformToBatch = AffineTransformConcat( getNodeToParentTransform() , ((Sprite*)_parent)->_transformToBatch );
             }
 
             //
