@@ -56,7 +56,7 @@ public:
     ParallaxNode();
     virtual ~ParallaxNode();
 
-    virtual void addChild(Node * child, int z, const Point& parallaxRatio, const Point& positionOffset);
+    void addChild(Node * child, int z, const Point& parallaxRatio, const Point& positionOffset);
     
     //
     // Overrides
