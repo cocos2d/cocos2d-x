@@ -568,7 +568,7 @@ void ControlButton::needsLayout()
     Size titleLabelSize;
     if (_titleLabel != NULL)
     {
-        titleLabelSize = _titleLabel->boundingBox().size;
+        titleLabelSize = _titleLabel->getBoundingBox().size;
     }
     
     // Adjust the background image if necessary
@@ -603,12 +603,12 @@ void ControlButton::needsLayout()
     Rect rectTitle;
     if (_titleLabel != NULL)
     {
-        rectTitle = _titleLabel->boundingBox();
+        rectTitle = _titleLabel->getBoundingBox();
     }
     Rect rectBackground;
     if (_backgroundSprite != NULL)
     {
-        rectBackground = _backgroundSprite->boundingBox();
+        rectBackground = _backgroundSprite->getBoundingBox();
     }
 
     Rect maxRect = ControlUtils::RectUnion(rectTitle, rectBackground);

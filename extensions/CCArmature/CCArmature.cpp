@@ -323,7 +323,7 @@ Dictionary *Armature::getBoneDic()
     return _boneDic;
 }
 
-AffineTransform Armature::nodeToParentTransform()
+AffineTransform Armature::getNodeToParentTransform() const
 {
     if (_transformDirty)
     {
@@ -404,7 +404,7 @@ AffineTransform Armature::nodeToParentTransform()
 void Armature::updateOffsetPoint()
 {
     // Set contentsize and Calculate anchor point.
-    Rect rect = boundingBox();
+    Rect rect = getBoundingBox();
     setContentSize(rect.size);
     _offsetPoint = Point(-rect.origin.x,  -rect.origin.y);
     setAnchorPoint(Point(_offsetPoint.x / rect.size.width, _offsetPoint.y / rect.size.height));
@@ -523,7 +523,7 @@ void Armature::visit()
     kmGLPopMatrix();
 }
 
-Rect Armature::boundingBox()
+Rect Armature::getBoundingBox() const
 {
     float minx, miny, maxx, maxy = 0;
 
