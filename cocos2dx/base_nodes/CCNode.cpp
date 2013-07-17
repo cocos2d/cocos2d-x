@@ -102,7 +102,7 @@ Node::Node(void)
     _componentContainer = new ComponentContainer(this);
 }
 
-Node::~Node(void)
+Node::~Node()
 {
     CCLOGINFO( "cocos2d: deallocing: %p", this );
     
@@ -305,12 +305,12 @@ void Node::setPosition(float x, float y)
     setPosition(Point(x, y));
 }
 
-float Node::getPositionX(void) const
+float Node::getPositionX() const
 {
     return _position.x;
 }
 
-float Node::getPositionY(void) const
+float Node::getPositionY() const
 {
     return  _position.y;
 }
@@ -331,7 +331,7 @@ Array* Node::getChildren()
     return _children;
 }
 
-unsigned int Node::getChildrenCount(void) const
+unsigned int Node::getChildrenCount() const
 {
     return _children ? _children->count() : 0;
 }
@@ -513,11 +513,17 @@ void Node::setShaderProgram(GLProgram *pShaderProgram)
     _shaderProgram = pShaderProgram;
 }
 
-Rect Node::boundingBox()
+Rect Node::getBoundingBox() const
 {
     Rect rect = Rect(0, 0, _contentSize.width, _contentSize.height);
-    return RectApplyAffineTransform(rect, nodeToParentTransform());
+    return RectApplyAffineTransform(rect, getNodeToParentTransform());
 }
+
+Rect Node::boundingBox() const
+{
+    return getBoundingBox();
+}
+
 
 Node * Node::create(void)
 {
@@ -882,7 +888,7 @@ void Node::transform()
     kmMat4 transfrom4x4;
 
     // Convert 3x3 into 4x4 matrix
-    AffineTransform tmpAffine = this->nodeToParentTransform();
+    AffineTransform tmpAffine = this->getNodeToParentTransform();
     CGAffineToGL(&tmpAffine, transfrom4x4.mat);
 
     // Update Z vertex manually
@@ -1149,7 +1155,7 @@ void Node::update(float fDelta)
     }
 }
 
-AffineTransform Node::nodeToParentTransform(void)
+AffineTransform Node::getNodeToParentTransform() const
 {
     if (_transformDirty) 
     {
@@ -1225,6 +1231,12 @@ AffineTransform Node::nodeToParentTransform(void)
     return _transform;
 }
 
+// XXX deprecated
+AffineTransform Node::nodeToParentTransform() const
+{
+    return getNodeToParentTransform();
+}
+
 void Node::setAdditionalTransform(const AffineTransform& additionalTransform)
 {
     _additionalTransform = additionalTransform;
@@ -1232,68 +1244,86 @@ void Node::setAdditionalTransform(const AffineTransform& additionalTransform)
     _additionalTransformDirty = true;
 }
 
-AffineTransform Node::parentToNodeTransform(void)
+AffineTransform Node::getParentToNodeTransform() const
 {
     if ( _inverseDirty ) {
-        _inverse = AffineTransformInvert(this->nodeToParentTransform());
+        _inverse = AffineTransformInvert(this->getNodeToParentTransform());
         _inverseDirty = false;
     }
 
     return _inverse;
 }
 
-AffineTransform Node::nodeToWorldTransform()
+// XXX deprecated
+AffineTransform Node::parentToNodeTransform() const
 {
-    AffineTransform t = this->nodeToParentTransform();
+    return getParentToNodeTransform();
+}
+
+AffineTransform Node::getNodeToWorldTransform() const
+{
+    AffineTransform t = this->getNodeToParentTransform();
 
     for (Node *p = _parent; p != NULL; p = p->getParent())
-        t = AffineTransformConcat(t, p->nodeToParentTransform());
+        t = AffineTransformConcat(t, p->getNodeToParentTransform());
 
     return t;
 }
 
-AffineTransform Node::worldToNodeTransform(void)
+// XXX deprecated
+AffineTransform Node::nodeToWorldTransform() const
 {
-    return AffineTransformInvert(this->nodeToWorldTransform());
+    return getNodeToWorldTransform();
 }
 
-Point Node::convertToNodeSpace(const Point& worldPoint)
+AffineTransform Node::getWorldToNodeTransform() const
 {
-    Point ret = PointApplyAffineTransform(worldPoint, worldToNodeTransform());
+    return AffineTransformInvert(this->getNodeToWorldTransform());
+}
+
+// XXX deprecated
+AffineTransform Node::worldToNodeTransform() const
+{
+    return getWorldToNodeTransform();
+}
+
+Point Node::convertToNodeSpace(const Point& worldPoint) const
+{
+    Point ret = PointApplyAffineTransform(worldPoint, getWorldToNodeTransform());
     return ret;
 }
 
-Point Node::convertToWorldSpace(const Point& nodePoint)
+Point Node::convertToWorldSpace(const Point& nodePoint) const
 {
-    Point ret = PointApplyAffineTransform(nodePoint, nodeToWorldTransform());
+    Point ret = PointApplyAffineTransform(nodePoint, getNodeToWorldTransform());
     return ret;
 }
 
-Point Node::convertToNodeSpaceAR(const Point& worldPoint)
+Point Node::convertToNodeSpaceAR(const Point& worldPoint) const
 {
     Point nodePoint = convertToNodeSpace(worldPoint);
     return nodePoint - _anchorPointInPoints;
 }
 
-Point Node::convertToWorldSpaceAR(const Point& nodePoint)
+Point Node::convertToWorldSpaceAR(const Point& nodePoint) const
 {
     Point pt = nodePoint + _anchorPointInPoints;
     return convertToWorldSpace(pt);
 }
 
-Point Node::convertToWindowSpace(const Point& nodePoint)
+Point Node::convertToWindowSpace(const Point& nodePoint) const
 {
     Point worldPoint = this->convertToWorldSpace(nodePoint);
     return Director::getInstance()->convertToUI(worldPoint);
 }
 
 // convenience methods which take a Touch instead of Point
-Point Node::convertTouchToNodeSpace(Touch *touch)
+Point Node::convertTouchToNodeSpace(Touch *touch) const
 {
     Point point = touch->getLocation();
     return this->convertToNodeSpace(point);
 }
-Point Node::convertTouchToNodeSpaceAR(Touch *touch)
+Point Node::convertTouchToNodeSpaceAR(Touch *touch) const
 {
     Point point = touch->getLocation();
     return this->convertToNodeSpaceAR(point);
