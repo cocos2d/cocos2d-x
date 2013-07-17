@@ -55,4 +55,26 @@ namespace CocosDenshion {
     SimpleAudioEngine::~SimpleAudioEngine() {
     }
 
+    // Empty implementations. On Android, only subclasses are meant to be used
+    void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath) { }
+    void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop) { }
+    void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData) { }
+    void SimpleAudioEngine::pauseBackgroundMusic() { }
+    void SimpleAudioEngine::resumeBackgroundMusic() { }
+    void SimpleAudioEngine::rewindBackgroundMusic() { }
+    bool SimpleAudioEngine::willPlayBackgroundMusic() { }
+    bool SimpleAudioEngine::isBackgroundMusicPlaying() { }
+    float SimpleAudioEngine::getBackgroundMusicVolume() { }
+    void SimpleAudioEngine::setBackgroundMusicVolume(float volume) { }
+    float SimpleAudioEngine::getEffectsVolume() { }
+    void SimpleAudioEngine::setEffectsVolume(float volume) { }
+    unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop) { }
+    void SimpleAudioEngine::pauseEffect(unsigned int nSoundId) { }
+    void SimpleAudioEngine::pauseAllEffects() { }
+    void SimpleAudioEngine::resumeEffect(unsigned int nSoundId) { }
+    void SimpleAudioEngine::resumeAllEffects() { }
+    void SimpleAudioEngine::stopEffect(unsigned int nSoundId) { }
+    void SimpleAudioEngine::stopAllEffects() { }
+    void SimpleAudioEngine::preloadEffect(const char* pszFilePath) { }
+    void SimpleAudioEngine::unloadEffect(const char* pszFilePath) { }
 }
