@@ -303,7 +303,7 @@ Size DisplayManager::getContentSize()
 Rect DisplayManager::getBoundingBox()
 {
     CS_RETURN_IF(!_displayRenderNode) Rect(0, 0, 0, 0);
-    return _displayRenderNode->boundingBox();
+    return _displayRenderNode->getBoundingBox();
 }
 
 
