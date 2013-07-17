@@ -3290,11 +3290,11 @@ class DoubleSprite : public Sprite
 {
 public:
     DoubleSprite() {_HD = false;}
-    virtual bool initWithTexture(Texture2D* texture, Rect rect);
+    virtual bool initWithTexture(Texture2D* texture, const Rect& rect);
     // Called everytime the vertex needs to be updated.
     virtual void setContentSize(const Size& size);
     // rect used only for the vertex. Called everytime the vertex needs to be updated.
-    virtual void setVertexRect(Rect rect);
+    virtual void setVertexRect(const Rect& rect);
 
     static DoubleSprite* create(const char* pszFileName);
     bool _HD;
@@ -3308,7 +3308,7 @@ DoubleSprite* DoubleSprite::create(const char* pszFileName)
     return pSp;
 }
 
-bool DoubleSprite::initWithTexture(Texture2D* texture, Rect rect)
+bool DoubleSprite::initWithTexture(Texture2D* texture, const Rect& rect)
 {
     if( Sprite::initWithTexture(texture, rect)) 
     {
@@ -3332,15 +3332,16 @@ void DoubleSprite::setContentSize(const Size& size)
 }
 
 // rect used only for the vertex. Called everytime the vertex needs to be updated.
-void DoubleSprite::setVertexRect(Rect rect)
+void DoubleSprite::setVertexRect(const Rect& rect)
 {
+    Rect tmpRect = rect;
     // If Retina Display and Texture is in HD then scale the vertex rect
     if( CC_CONTENT_SCALE_FACTOR() == 2 && ! _HD ) {
-        rect.size.width *= 2;
-        rect.size.height *= 2;
+        tmpRect.size.width *= 2;
+        tmpRect.size.height *= 2;
     }
 
-    Sprite::setVertexRect(rect);
+    Sprite::setVertexRect(tmpRect);
 }
 
 
