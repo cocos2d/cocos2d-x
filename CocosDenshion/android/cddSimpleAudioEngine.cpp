@@ -43,6 +43,12 @@ namespace CocosDenshion {
         return s_pEngine;
     }
 
+    void SimpleAudioEngine::end() {
+        if (s_pEngine) {
+            delete s_pEngine;
+        }
+    }
+
     SimpleAudioEngine::SimpleAudioEngine() {
     }
 
