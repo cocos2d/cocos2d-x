@@ -521,6 +521,7 @@ tolua_lerror:
 #endif
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 int tolua_Cocos2d_WebSocket_registerScriptHandler00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
@@ -577,6 +578,7 @@ tolua_lerror:
     return 0;
 #endif
 }
+#endif
 
 int tolua_Cocos2d_GLNode_registerScriptDrawHandler00(lua_State* tolua_S)
 {
