@@ -9,6 +9,7 @@
 #endif
 #include "LuaOpengl.h"
 #include "LuaScrollView.h"
+#include "LuaScriptHandlerMgr.h"
 
 using namespace CocosDenshion;
 
@@ -64,6 +65,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif
     tolua_opengl_open(tolua_s);
     tolua_scroll_view_open(tolua_s);
+    tolua_script_handler_mgr_open(tolua_s);
     
     std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
     searchPaths.push_back("cocosbuilderRes");
@@ -74,8 +76,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif
     FileUtils::getInstance()->setSearchPaths(searchPaths);
 
+    pEngine->extendLuaObject();
     pEngine->executeScriptFile("luaScript/controller.lua");
-
+    
     return true;
 }
 

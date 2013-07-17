@@ -443,6 +443,7 @@ Developers:
         Explicitly initialising CCAcceleration structure.
         Add support to save/retrieve CCData into/from CCUserDefault.
         Text Shadows fix
+        Solving 'black screen' on android.
 
     MarcelBloemendaal
         Adding secureTextEntry property to CCTextFieldTTF.
@@ -454,6 +455,7 @@ Developers:
 
     sunzhuoshi
         Adding support for javascript bytecode.
+        Fixing bad js constant names.
 
     ptekchand (Pranav Tekchand)
         Supporting negative node scales for CCScrollView.

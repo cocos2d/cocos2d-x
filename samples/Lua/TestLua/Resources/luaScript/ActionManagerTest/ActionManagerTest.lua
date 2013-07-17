@@ -29,8 +29,8 @@ local function CrashTest()
         ret:getParent():removeChild(ret, true)
         Helper.nextAction()
     end
-
-    arr:addObject(CCCallFunc:create(removeThis))
+    local callfunc = CCCallFunc:create(removeThis)
+    arr:addObject(callfunc)
     --After 1.5 second, self will be removed.
     ret:runAction( CCSequence:create(arr))
     return ret
@@ -56,7 +56,8 @@ local function LogicTest()
         node:runAction(CCScaleTo:create(2, 2))
     end
 
-    arr:addObject(CCCallFuncN:create(bugMe))
+    local callfunc = CCCallFunc:create(bugMe)
+    arr:addObject(callfunc)
     grossini:runAction( CCSequence:create(arr));
     return ret
 end
@@ -69,7 +70,6 @@ end
 
 local function PauseTest()
     local ret = createTestLayer("Pause Test")
-
     local schedulerEntry = nil
     local function unpause(dt)
         scheduler:unscheduleScriptEntry(schedulerEntry)
@@ -95,6 +95,7 @@ local function PauseTest()
             pDirector:getActionManager():addAction(action, grossini, true)
 
             schedulerEntry = scheduler:scheduleScriptFunc(unpause, 3.0, false)
+
         elseif event == "exit" then
             if schedulerEntry ~= nil then
                 scheduler:unscheduleScriptEntry(schedulerEntry)
@@ -123,10 +124,10 @@ local function RemoveTest()
         pSprite:stopActionByTag(kTagSequence)
     end
 
-    local  pCallback = CCCallFunc:create(stopAction)
+    local callfunc = CCCallFunc:create(stopAction)
     local arr = CCArray:create()
     arr:addObject(pMove)
-    arr:addObject(pCallback)
+    arr:addObject(callfunc)
     local  pSequence = CCSequence:create(arr)
     pSequence:setTag(kTagSequence)
 
