@@ -145,7 +145,7 @@ bool ScrollView::isNodeVisible(Node* node)
     
     viewRect = Rect(-offset.x/scale, -offset.y/scale, size.width/scale, size.height/scale); 
     
-    return viewRect.intersectsRect(node->boundingBox());
+    return viewRect.intersectsRect(node->getBoundingBox());
 }
 
 void ScrollView::pause(Object* sender)
