@@ -443,6 +443,7 @@ Developers:
         Explicitly initialising CCAcceleration structure.
         Add support to save/retrieve CCData into/from CCUserDefault.
         Text Shadows fix
+        Solving 'black screen' on android.
 
     MarcelBloemendaal
         Adding secureTextEntry property to CCTextFieldTTF.
