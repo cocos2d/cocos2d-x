@@ -241,7 +241,7 @@ bool GLProgram::link()
     
     _vertShader = _fragShader = 0;
 	
-#if DEBUG
+#if COCOS2D_DEBUG
     glGetProgramiv(_program, GL_LINK_STATUS, &status);
 	
     if (status == GL_FALSE)
