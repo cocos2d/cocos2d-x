@@ -8,7 +8,7 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
-#include "WebSocket.h"
+#include "network/WebSocket.h"
 
 class LuaWebSocket: public cocos2d::extension::WebSocket,public cocos2d::extension::WebSocket::Delegate
 {
