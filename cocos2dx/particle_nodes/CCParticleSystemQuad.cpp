@@ -65,13 +65,14 @@ bool ParticleSystemQuad::initWithTotalParticles(unsigned int numberOfParticles)
 
         setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColor));
         
-        
+#if CC_ENABLE_CACHE_TEXTURE_DATA
         // Need to listen the event only when not use batchnode, because it will use VBO
         NotificationCenter::getInstance()->addObserver(this,
                                                                       callfuncO_selector(ParticleSystemQuad::listenBackToForeground),
                                                                       EVNET_COME_TO_FOREGROUND,
                                                                       NULL);
-        
+#endif
+
         return true;
     }
     return false;
@@ -100,7 +101,9 @@ ParticleSystemQuad::~ParticleSystemQuad()
 #endif
     }
     
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     NotificationCenter::getInstance()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
+#endif
 }
 
 // implementation ParticleSystemQuad
@@ -483,14 +486,16 @@ void ParticleSystemQuad::setupVBOandVAO()
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _totalParticles, _quads, GL_DYNAMIC_DRAW);
 
-    ccGLEnableVertexAttribs(kVertexAttribFlag_PosColorTex);
     // vertices
+    glEnableVertexAttribArray(kVertexAttrib_Position);
     glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, vertices));
 
     // colors
+    glEnableVertexAttribArray(kVertexAttrib_Color);
     glVertexAttribPointer(kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, colors));
 
     // tex coords
+    glEnableVertexAttribArray(kVertexAttrib_TexCoords);
     glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, texCoords));
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);

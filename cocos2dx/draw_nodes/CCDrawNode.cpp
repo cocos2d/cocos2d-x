@@ -121,7 +121,9 @@ DrawNode::~DrawNode()
     _vao = 0;
 #endif
     
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     NotificationCenter::getInstance()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
+#endif
 }
 
 DrawNode* DrawNode::create()
@@ -184,11 +186,13 @@ bool DrawNode::init()
     
     _dirty = true;
     
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     // Need to listen the event only when not use batchnode, because it will use VBO
     NotificationCenter::getInstance()->addObserver(this,
                                                    callfuncO_selector(DrawNode::listenBackToForeground),
                                                    EVNET_COME_TO_FOREGROUND,
                                                    NULL);
+#endif
     
     return true;
 }

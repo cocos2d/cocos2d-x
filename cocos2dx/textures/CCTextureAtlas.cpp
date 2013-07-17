@@ -66,7 +66,9 @@ TextureAtlas::~TextureAtlas()
 #endif
     CC_SAFE_RELEASE(_texture);
     
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     NotificationCenter::getInstance()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
+#endif
 }
 
 unsigned int TextureAtlas::getTotalQuads() const
@@ -176,12 +178,14 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, unsigned int capacity)
     memset( _quads, 0, _capacity * sizeof(V3F_C4B_T2F_Quad) );
     memset( _indices, 0, _capacity * 6 * sizeof(GLushort) );
     
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     // listen the event when app go to background
     NotificationCenter::getInstance()->addObserver(this,
                                                            callfuncO_selector(TextureAtlas::listenBackToForeground),
                                                            EVNET_COME_TO_FOREGROUND,
                                                            NULL);
-
+#endif
+    
     this->setupIndices();
 
 #if CC_TEXTURE_ATLAS_USE_VAO
@@ -255,14 +259,16 @@ void TextureAtlas::setupVBOandVAO()
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _capacity, _quads, GL_DYNAMIC_DRAW);
 
-    ccGLEnableVertexAttribs(kVertexAttribFlag_PosColorTex);
     // vertices
+    glEnableVertexAttribArray(kVertexAttrib_Position);
     glVertexAttribPointer(kVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, vertices));
 
     // colors
+    glEnableVertexAttribArray(kVertexAttrib_Color);
     glVertexAttribPointer(kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, colors));
 
     // tex coords
+    glEnableVertexAttribArray(kVertexAttrib_TexCoords);
     glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, texCoords));
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
