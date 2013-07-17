@@ -8,6 +8,25 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
+#include "WebSocket.h"
+
+class LuaWebSocket: public cocos2d::extension::WebSocket,public cocos2d::extension::WebSocket::Delegate
+{
+public:
+    virtual ~LuaWebSocket();
+    virtual void onOpen(WebSocket* ws);
+    virtual void onMessage(WebSocket* ws, const WebSocket::Data& data);
+    virtual void onClose(WebSocket* ws);
+    virtual void onError(WebSocket* ws, const WebSocket::ErrorCode& error);
+    
+    enum WebSocketScriptHandlerType
+    {
+        kWebSocketScriptHandlerOpen,
+        kWebSocketScriptHandlerMessage,
+        kWebSocketScriptHandlerClose,
+        kWebSocketScriptHandlerError,
+    };
+};
 
 TOLUA_API int tolua_web_socket_open(lua_State* tolua_S);
 

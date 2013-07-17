@@ -135,6 +135,9 @@ private:
     void extendMenuItem(lua_State* lua_S);
     void extendLayer(lua_State* lua_S);
     void extendControl(lua_State* lua_S);
+    void extendWebsocket(lua_State* lua_S);
+    void extendGLNode(lua_State* lua_S);
+    void extendScrollView(lua_State* lua_S);
 private:
     LuaEngine(void)
     : _stack(NULL)
