@@ -659,6 +659,7 @@ void LuaEngine::extendControl(lua_State* lua_S)
 
 void LuaEngine::extendWebsocket(lua_State* lua_S)
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     if (NULL == lua_S)
         return;
     
@@ -673,6 +674,7 @@ void LuaEngine::extendWebsocket(lua_State* lua_S)
         lua_pushcfunction(lua_S,tolua_Cocos2d_WebSocket_unregisterScriptHandler00);
         lua_rawset(lua_S,-3);
     }
+#endif
 }
 
 void LuaEngine::extendGLNode(lua_State* lua_S)

@@ -129,8 +129,10 @@ TOLUA_API int tolua_Cocos2d_unregisterScriptAccelerateHandler00(lua_State* tolua
 TOLUA_API int tolua_Cocos2d_registerControlEventHandler00(lua_State* tolua_S);
 TOLUA_API int tolua_Cocos2d_unregisterControlEventHandler00(lua_State* tolua_S);
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 TOLUA_API int tolua_Cocos2d_WebSocket_registerScriptHandler00(lua_State* tolua_S);
 TOLUA_API int tolua_Cocos2d_WebSocket_unregisterScriptHandler00(lua_State* tolua_S);
+#endif
 
 TOLUA_API int tolua_Cocos2d_GLNode_registerScriptDrawHandler00(lua_State* tolua_S);
 TOLUA_API int tolua_Cocos2d_GLNode_unregisterScriptDrawHandler00(lua_State* tolua_S);
