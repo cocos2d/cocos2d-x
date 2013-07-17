@@ -148,7 +148,7 @@ PhysicsSprite* PhysicsSprite::create(const char *pszFileName, const Rect& rect)
 
 // this method will only get called if the sprite is batched.
 // return YES if the physic's values (angles, position ) changed.
-// If you return NO, then nodeToParentTransform won't be called.
+// If you return NO, then getNodeToParentTransform won't be called.
 bool PhysicsSprite::isDirty() const
 {
     return true;
@@ -342,7 +342,7 @@ void PhysicsSprite::setRotation(float fRotation)
 }
 
 // returns the transform matrix according the Chipmunk Body values
-AffineTransform PhysicsSprite::nodeToParentTransform()
+AffineTransform PhysicsSprite::getNodeToParentTransform() const
 {
     // Although scale is not used by physics engines, it is calculated just in case
 	// the sprite is animated (scaled up/down) using actions.
