@@ -835,7 +835,7 @@ CCBKeyframe* CCBReader::readKeyframe(int type)
                 mLoadedSpriteSheets.insert(spriteSheet);
             }
             
-            spriteFrame = frameCache->spriteFrameByName(spriteFile.c_str());
+            spriteFrame = frameCache->getSpriteFrameByName(spriteFile.c_str());
         }
         value = spriteFrame;
     }

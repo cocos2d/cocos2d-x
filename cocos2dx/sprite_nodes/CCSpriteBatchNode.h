@@ -63,9 +63,36 @@ class Sprite;
 class CC_DLL SpriteBatchNode : public Node, public TextureProtocol
 {
 public:
+    /** creates a SpriteBatchNode with a texture2d and capacity of children.
+     The capacity will be increased in 33% in runtime if it run out of space.
+     */
+    static SpriteBatchNode* createWithTexture(Texture2D* tex, unsigned int capacity);
+    static SpriteBatchNode* createWithTexture(Texture2D* tex) {
+        return SpriteBatchNode::createWithTexture(tex, kDefaultSpriteBatchCapacity);
+    }
+
+    /** creates a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and capacity of children.
+     The capacity will be increased in 33% in runtime if it run out of space.
+     The file will be loaded using the TextureMgr.
+     */
+    static SpriteBatchNode* create(const char* fileImage, unsigned int capacity);
+    static SpriteBatchNode* create(const char* fileImage) {
+        return SpriteBatchNode::create(fileImage, kDefaultSpriteBatchCapacity);
+    }
 
     SpriteBatchNode();
-    ~SpriteBatchNode();
+    virtual ~SpriteBatchNode();
+
+    /** initializes a SpriteBatchNode with a texture2d and capacity of children.
+     The capacity will be increased in 33% in runtime if it run out of space.
+     */
+    bool initWithTexture(Texture2D *tex, unsigned int capacity);
+    /** initializes a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.
+     The capacity will be increased in 33% in runtime if it run out of space.
+     The file will be loaded using the TextureMgr.
+     */
+    bool initWithFile(const char* fileImage, unsigned int capacity);
+    bool init();
 
     // property
     
@@ -82,34 +109,6 @@ public:
     }
 
     inline Array* getDescendants(void) { return _descendants; }
-
-    /** creates a SpriteBatchNode with a texture2d and capacity of children.
-    The capacity will be increased in 33% in runtime if it run out of space.
-    */
-    static SpriteBatchNode* createWithTexture(Texture2D* tex, unsigned int capacity);
-    static SpriteBatchNode* createWithTexture(Texture2D* tex) {
-        return SpriteBatchNode::createWithTexture(tex, kDefaultSpriteBatchCapacity);
-    }
-
-    /** creates a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and capacity of children.
-    The capacity will be increased in 33% in runtime if it run out of space.
-    The file will be loaded using the TextureMgr.
-    */
-    static SpriteBatchNode* create(const char* fileImage, unsigned int capacity);
-    static SpriteBatchNode* create(const char* fileImage) {
-        return SpriteBatchNode::create(fileImage, kDefaultSpriteBatchCapacity);
-    }
-
-    /** initializes a SpriteBatchNode with a texture2d and capacity of children.
-    The capacity will be increased in 33% in runtime if it run out of space.
-    */
-    bool initWithTexture(Texture2D *tex, unsigned int capacity);
-    /** initializes a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.
-    The capacity will be increased in 33% in runtime if it run out of space.
-    The file will be loaded using the TextureMgr.
-    */
-    bool initWithFile(const char* fileImage, unsigned int capacity);
-    bool init();
 
     void increaseAtlasCapacity();
 

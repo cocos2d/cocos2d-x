@@ -59,6 +59,13 @@ class SpriteFrame;
 class CC_DLL MenuItem : public NodeRGBA
 {
 public:
+    /** Creates a MenuItem with no target/selector */
+    static MenuItem* create();
+    /** Creates a MenuItem with a target/selector */
+    CC_DEPRECATED_ATTRIBUTE static MenuItem* create(Object *rec, SEL_MenuHandler selector);
+    /** Creates a MenuItem with a target/selector */
+    static MenuItem* create(const ccMenuCallback& callback);
+
     MenuItem()
     : _selected(false)
     , _enabled(false)            
@@ -67,34 +74,30 @@ public:
     {}
     virtual ~MenuItem();
 
-    /** Creates a MenuItem with no target/selector */
-    static MenuItem* create();
-    /** Creates a MenuItem with a target/selector */
-    CC_DEPRECATED_ATTRIBUTE static MenuItem* create(Object *rec, SEL_MenuHandler selector);
-    /** Creates a MenuItem with a target/selector */
-    static MenuItem* create(const ccMenuCallback& callback);
     /** Initializes a MenuItem with a target/selector */
     bool initWithCallback(const ccMenuCallback& callback);
     /** Initializes a MenuItem with a target/selector */
     CC_DEPRECATED_ATTRIBUTE bool initWithTarget( Object *rec, SEL_MenuHandler selector);
+
     /** Returns the outside box */
-    Rect rect();
+    Rect rect() const;
     /** Activate the item */
     virtual void activate();
     /** The item was selected (not activated), similar to "mouse-over" */
     virtual void selected();
     /** The item was unselected */
     virtual void unselected();
-
+    /** returns whether or not the item is enabled */
     virtual bool isEnabled() const;
-    //@note: It's 'setIsEnable' in cocos2d-iphone. 
+    /** enables or disables the item */
     virtual void setEnabled(bool value);
+    /** returns whether or not the item is selected */
     virtual bool isSelected() const;
-    
-    /** set the target/selector of the menu item*/
-    CC_DEPRECATED_ATTRIBUTE void setTarget(Object *rec, SEL_MenuHandler selector);
+
     /** set the callback to the menu item */
     void setCallback(const ccMenuCallback& callback);
+    /** set the target/selector of the menu item*/
+    CC_DEPRECATED_ATTRIBUTE void setTarget(Object *rec, SEL_MenuHandler selector);
 
 protected:
     bool            _selected;
@@ -114,17 +117,7 @@ protected:
  */
 class CC_DLL MenuItemLabel : public MenuItem
 {
-    /** the color that will be used to disable the item */
-    CC_PROPERTY_PASS_BY_REF(Color3B, _disabledColor, DisabledColor);
-    /** Label that is rendered. It can be any Node that implements the LabelProtocol */
-    CC_PROPERTY(Node*, _label, Label);
 public:
-    MenuItemLabel()
-    : _label(NULL)
-    , _originalScale(0.0)
-    {}
-    virtual ~MenuItemLabel();
-
     /** creates a MenuItemLabel with a Label, target and selector */
     CC_DEPRECATED_ATTRIBUTE static MenuItemLabel * create(Node*label, Object* target, SEL_MenuHandler selector);
 
@@ -134,26 +127,35 @@ public:
     /** creates a MenuItemLabel with a Label. Target and selector will be nil */
     static MenuItemLabel* create(Node *label);
 
-    /** initializes a MenuItemLabel with a Label, target and selector */
-    CC_DEPRECATED_ATTRIBUTE bool initWithLabel(Node* label, Object* target, SEL_MenuHandler selector);
+    MenuItemLabel()
+    : _label(NULL)
+    , _originalScale(0.0)
+    {}
+    virtual ~MenuItemLabel();
 
 	/** initializes a MenuItemLabel with a Label, target and selector */
     bool initWithLabel(Node* label, const ccMenuCallback& callback);
 
+    /** initializes a MenuItemLabel with a Label, target and selector */
+    CC_DEPRECATED_ATTRIBUTE bool initWithLabel(Node* label, Object* target, SEL_MenuHandler selector);
+
     /** sets a new string to the inner label */
     void setString(const char * label);
-    // super methods
-    virtual void activate();
-    virtual void selected();
-    virtual void unselected();
-    /** Enable or disabled the MenuItemFont
-     @warning setEnabled changes the RGB color of the font
-     */
-    virtual void setEnabled(bool enabled);
+
+    // Overrides
+    virtual void activate() override;
+    virtual void selected() override;
+    virtual void unselected() override;
+    virtual void setEnabled(bool enabled) override;
     
 protected:
     Color3B    _colorBackup;
     float      _originalScale;
+
+    /** the color that will be used to disable the item */
+    CC_PROPERTY_PASS_BY_REF(Color3B, _disabledColor, DisabledColor);
+    /** Label that is rendered. It can be any Node that implements the LabelProtocol */
+    CC_PROPERTY(Node*, _label, Label);
 };
 
 
@@ -163,9 +165,6 @@ protected:
 class CC_DLL MenuItemAtlasFont : public MenuItemLabel
 {
 public:
-    MenuItemAtlasFont(){}
-    virtual ~MenuItemAtlasFont(){}
-    
     /** creates a menu item from a string and atlas with a target/selector */
     static MenuItemAtlasFont* create(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap);
     /** creates a menu item from a string and atlas. Use it with MenuItemToggle */
@@ -173,11 +172,13 @@ public:
     /** creates a menu item from a string and atlas. Use it with MenuItemToggle */
     static MenuItemAtlasFont* create(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback);
 
+    MenuItemAtlasFont(){}
+    virtual ~MenuItemAtlasFont(){}
+
     /** initializes a menu item from a string and atlas with a target/selector */
     CC_DEPRECATED_ATTRIBUTE bool initWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, Object* target, SEL_MenuHandler selector);
     /** initializes a menu item from a string and atlas with a target/selector */
     bool initWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback);
-
 };
 
 
@@ -187,8 +188,21 @@ public:
 class CC_DLL MenuItemFont : public MenuItemLabel
 {
 public:
+    /** creates a menu item from a string without target/selector. To be used with MenuItemToggle */
+    static MenuItemFont * create(const char *value);
+    /** creates a menu item from a string with a target/selector */
+    CC_DEPRECATED_ATTRIBUTE static MenuItemFont * create(const char *value, Object* target, SEL_MenuHandler selector);
+    /** creates a menu item from a string with a target/selector */
+    static MenuItemFont * create(const char *value, const ccMenuCallback& callback);
+
     MenuItemFont() : _fontSize(0), _fontName(""){}
     virtual ~MenuItemFont(){}
+
+    /** initializes a menu item from a string with a target/selector */
+    CC_DEPRECATED_ATTRIBUTE bool initWithString(const char *value, Object* target, SEL_MenuHandler selector);
+    /** initializes a menu item from a string with a target/selector */
+    bool initWithString(const char *value, const ccMenuCallback& callback);
+
     /** set default font size */
     static void setFontSize(unsigned int s);
     /** get default font size */
@@ -197,18 +211,6 @@ public:
     static void setFontName(const char *name);
     /** get the default font name */
     static const char *fontName();
-
-    /** creates a menu item from a string without target/selector. To be used with MenuItemToggle */
-    static MenuItemFont * create(const char *value);
-    /** creates a menu item from a string with a target/selector */
-    CC_DEPRECATED_ATTRIBUTE static MenuItemFont * create(const char *value, Object* target, SEL_MenuHandler selector);
-    /** creates a menu item from a string with a target/selector */
-    static MenuItemFont * create(const char *value, const ccMenuCallback& callback);
-
-    /** initializes a menu item from a string with a target/selector */
-    CC_DEPRECATED_ATTRIBUTE bool initWithString(const char *value, Object* target, SEL_MenuHandler selector);
-    /** initializes a menu item from a string with a target/selector */
-    bool initWithString(const char *value, const ccMenuCallback& callback);
 
     /** set font size
      * c++ can not overload static and non-static member functions with the same parameter types
@@ -224,8 +226,12 @@ public:
      * so change the name to setFontNameObj
      */
     void setFontNameObj(const char* name);
-    
-    const char* fontNameObj();
+
+    /** returns the name of the Font */
+    const char* getFontNameObj() const;
+
+    /** deprecated Use getFontNameObj() instead */
+    CC_DEPRECATED_ATTRIBUTE const char* fontNameObj() const { return getFontNameObj(); }
     
 protected:
     void recreateLabel();
@@ -245,19 +251,7 @@ protected:
  */
 class CC_DLL MenuItemSprite : public MenuItem
 {
-    /** the image used when the item is not selected */
-    CC_PROPERTY(Node*, _normalImage, NormalImage);
-    /** the image used when the item is selected */
-    CC_PROPERTY(Node*, _selectedImage, SelectedImage);
-    /** the image used when the item is disabled */
-    CC_PROPERTY(Node*, _disabledImage, DisabledImage);
 public:
-    MenuItemSprite()
-    :_normalImage(NULL)
-    ,_selectedImage(NULL)
-    ,_disabledImage(NULL)
-    {}
-
     /** creates a menu item with a normal, selected and disabled image*/
     static MenuItemSprite * create(Node* normalSprite, Node* selectedSprite, Node* disabledSprite = NULL);
     /** creates a menu item with a normal and selected image with target/selector */
@@ -268,6 +262,12 @@ public:
     static MenuItemSprite * create(Node* normalSprite, Node* selectedSprite, const ccMenuCallback& callback);
     /** creates a menu item with a normal,selected  and disabled image with target/selector */
     static MenuItemSprite * create(Node* normalSprite, Node* selectedSprite, Node* disabledSprite, const ccMenuCallback& callback);
+
+    MenuItemSprite()
+    :_normalImage(NULL)
+    ,_selectedImage(NULL)
+    ,_disabledImage(NULL)
+    {}
 
     /** initializes a menu item with a normal, selected  and disabled image with target/selector */
     CC_DEPRECATED_ATTRIBUTE bool initWithNormalSprite(Node* normalSprite, Node* selectedSprite, Node* disabledSprite, Object* target, SEL_MenuHandler selector);
@@ -283,6 +283,13 @@ public:
     
 protected:
     virtual void updateImagesVisibility();
+
+    /** the image used when the item is not selected */
+    CC_PROPERTY(Node*, _normalImage, NormalImage);
+    /** the image used when the item is selected */
+    CC_PROPERTY(Node*, _selectedImage, SelectedImage);
+    /** the image used when the item is disabled */
+    CC_PROPERTY(Node*, _disabledImage, DisabledImage);
 };
 
 
@@ -297,9 +304,8 @@ protected:
 class CC_DLL MenuItemImage : public MenuItemSprite
 {
 public:
-    MenuItemImage(){}
-    virtual ~MenuItemImage(){}
-    
+    /** Creates an MenuItemImage. */
+    static MenuItemImage* create();
     /** creates a menu item with a normal and selected image*/
     static MenuItemImage* create(const char *normalImage, const char *selectedImage);
     /** creates a menu item with a normal,selected  and disabled image*/
@@ -314,6 +320,9 @@ public:
     /** creates a menu item with a normal,selected  and disabled image with a callable object */
     static MenuItemImage* create(const char *normalImage, const char *selectedImage, const char *disabledImage, const ccMenuCallback& callback);
 
+    MenuItemImage(){}
+    virtual ~MenuItemImage(){}
+
     bool init();
     /** initializes a menu item with a normal, selected  and disabled image with target/selector */
     CC_DEPRECATED_ATTRIBUTE bool initWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, Object* target, SEL_MenuHandler selector);
@@ -326,10 +335,6 @@ public:
     void setSelectedSpriteFrame(SpriteFrame* frame);
     /** sets the sprite frame for the disabled image */
     void setDisabledSpriteFrame(SpriteFrame* frame);
-
-    /** Creates an MenuItemImage.
-     */
-    static MenuItemImage* create();
 };
 
 
@@ -339,39 +344,30 @@ public:
  */
 class CC_DLL MenuItemToggle : public MenuItem
 {
-    /** returns the selected item */
-    CC_PROPERTY(unsigned int, _selectedIndex, SelectedIndex);
-    /** MutableArray that contains the subitems. You can add/remove items in runtime, and you can replace the array with a new one.
-     @since v0.7.2
-     */
-    CC_PROPERTY(Array*, _subItems, SubItems);
 public:
+    /** creates a menu item from a Array with a callable object */
+    static MenuItemToggle * createWithCallback(const ccMenuCallback& callback, Array* menuItems);
+    /** creates a menu item from a list of items with a callable object */
+    static MenuItemToggle* createWithCallback(const ccMenuCallback& callback, MenuItem* item, ...);
+    /** creates a menu item with no target/selector and no items */
+    static MenuItemToggle* create();
+    /** creates a menu item with a item */
+    static MenuItemToggle* create(MenuItem *item);
+    /** creates a menu item from a Array with a target selector */
+    CC_DEPRECATED_ATTRIBUTE static MenuItemToggle * createWithTarget(Object* target, SEL_MenuHandler selector, Array* menuItems);
+    /** creates a menu item from a list of items with a target/selector */
+    CC_DEPRECATED_ATTRIBUTE static MenuItemToggle* createWithTarget(Object* target, SEL_MenuHandler selector, MenuItem* item, ...);
+
     MenuItemToggle()
     : _selectedIndex(0)
     , _subItems(NULL)            
     {}
     virtual ~MenuItemToggle();
-    
-    /** creates a menu item from a Array with a target selector */
-    CC_DEPRECATED_ATTRIBUTE static MenuItemToggle * createWithTarget(Object* target, SEL_MenuHandler selector, Array* menuItems);
-    /** creates a menu item from a Array with a callable object */
-    static MenuItemToggle * createWithCallback(const ccMenuCallback& callback, Array* menuItems);
-
-    /** creates a menu item from a list of items with a target/selector */
-    CC_DEPRECATED_ATTRIBUTE static MenuItemToggle* createWithTarget(Object* target, SEL_MenuHandler selector, MenuItem* item, ...);
-    /** creates a menu item from a list of items with a callable object */
-    static MenuItemToggle* createWithCallback(const ccMenuCallback& callback, MenuItem* item, ...);
-
-    /** creates a menu item with no target/selector and no items */
-    static MenuItemToggle* create();
 
     /** initializes a menu item from a list of items with a target selector */
     CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Object* target, SEL_MenuHandler selector, MenuItem* item, va_list args);
     /** initializes a menu item from a list of items with a callable object */
     bool initWithCallback(const ccMenuCallback& callback, MenuItem* item, va_list args);
-
-    /** creates a menu item with a item */
-    static MenuItemToggle* create(MenuItem *item);
 
     /** initializes a menu item with a item */
     bool initWithItem(MenuItem *item);
@@ -379,12 +375,24 @@ public:
     void addSubItem(MenuItem *item);
     
     /** return the selected item */
-    MenuItem* selectedItem();
-    // super methods
-    virtual void activate();
-    virtual void selected();
-    virtual void unselected();
-    virtual void setEnabled(bool var);
+    MenuItem* getSelectedItem();
+    /** @deprecated Use getSelectedItem() instead */
+    CC_DEPRECATED_ATTRIBUTE MenuItem* selectedItem() { return getSelectedItem(); }
+
+    // Overrides
+    virtual void activate() override;
+    virtual void selected() override;
+    virtual void unselected() override;
+    virtual void setEnabled(bool var) override;
+
+protected:
+    /** returns the selected item */
+    CC_PROPERTY(unsigned int, _selectedIndex, SelectedIndex);
+    /** MutableArray that contains the subitems. You can add/remove items in runtime, and you can replace the array with a new one.
+     @since v0.7.2
+     */
+    CC_PROPERTY(Array*, _subItems, SubItems);
+
 };
 
 

@@ -295,9 +295,9 @@ void ShuffleTiles::placeTile(const Point& pos, Tile *t)
     setTile(pos, coords);
 }
 
-void ShuffleTiles::startWithTarget(Node *pTarget)
+void ShuffleTiles::startWithTarget(Node *target)
 {
-    TiledGrid3DAction::startWithTarget(pTarget);
+    TiledGrid3DAction::startWithTarget(target);
 
     if (_seed != (unsigned int)-1)
     {
@@ -673,11 +673,11 @@ void TurnOffTiles::turnOffTile(const Point& pos)
     setTile(pos, coords);
 }
 
-void TurnOffTiles::startWithTarget(Node *pTarget)
+void TurnOffTiles::startWithTarget(Node *target)
 {
     unsigned int i;
 
-    TiledGrid3DAction::startWithTarget(pTarget);
+    TiledGrid3DAction::startWithTarget(target);
 
     if (_seed != (unsigned int)-1)
     {
@@ -896,9 +896,9 @@ SplitRows* SplitRows::clone() const
 	return a;
 }
 
-void SplitRows::startWithTarget(Node *pTarget)
+void SplitRows::startWithTarget(Node *target)
 {
-    TiledGrid3DAction::startWithTarget(pTarget);
+    TiledGrid3DAction::startWithTarget(target);
     _winSize = Director::getInstance()->getWinSizeInPixels();
 }
 
@@ -961,9 +961,9 @@ SplitCols* SplitCols::clone() const
 	return a;
 }
 
-void SplitCols::startWithTarget(Node *pTarget)
+void SplitCols::startWithTarget(Node *target)
 {
-    TiledGrid3DAction::startWithTarget(pTarget);
+    TiledGrid3DAction::startWithTarget(target);
     _winSize = Director::getInstance()->getWinSizeInPixels();
 }
 
