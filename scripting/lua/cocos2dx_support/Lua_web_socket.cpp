@@ -10,10 +10,10 @@ extern "C" {
 #include <string>
 #include "Lua_web_socket.h"
 #include "cocos2d.h"
-#include "WebSocket.h"
 #include "CCLuaStack.h"
 #include "CCLuaValue.h"
 #include "CCLuaEngine.h"
+#include "LuaScriptHandlerMgr.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;
@@ -52,131 +52,77 @@ static int SendBinaryMessageToLua(int nHandler,const unsigned char* pTable,int n
     return nRet;
 }
 
-class LuaWebSocket: public WebSocket,public WebSocket::Delegate
+
+
+LuaWebSocket::~LuaWebSocket()
 {
-public:
-    virtual ~LuaWebSocket()
-    {
-        this->unregisterScriptHandler(kWebSocketScriptHandlerOpen);
-        this->unregisterScriptHandler(kWebSocketScriptHandlerMessage);
-        this->unregisterScriptHandler(kWebSocketScriptHandlerClose);
-        this->unregisterScriptHandler(kWebSocketScriptHandlerError);
-    }
-    /*
-     * @brief  delegate event enum,for lua register handler
-     */
-    enum WebSocketScriptHandlerType
-    {
-        kWebSocketScriptHandlerOpen    = 0,
-        kWebSocketScriptHandlerMessage,
-        kWebSocketScriptHandlerClose,
-        kWebSocketScriptHandlerError,
-    };
-    /**
-     *  @brief Add Handler of DelegateEvent
-     */
-    void registerScriptHandler(int nFunID,WebSocketScriptHandlerType scriptHandlerType)
-    {
-        this->unregisterScriptHandler(scriptHandlerType);
-        _mapScriptHandler[scriptHandlerType] = nFunID;
-    }
-    /**
-     *  @brief Remove Handler of DelegateEvent
-     */
-    void unregisterScriptHandler(WebSocketScriptHandlerType scriptHandlerType)
-    {
-        std::map<int,int>::iterator Iter = _mapScriptHandler.find(scriptHandlerType);
-        
-        if (_mapScriptHandler.end() != Iter)
-        {
-            _mapScriptHandler.erase(Iter);
+    ScriptHandlerMgr::getInstance()->removeObjectAllHandlers((void*)this);
+}
+
+void LuaWebSocket::onOpen(WebSocket* ws)
+{
+    LuaWebSocket* luaWs = dynamic_cast<LuaWebSocket*>(ws);
+    if (NULL != luaWs) {
+        int nHandler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::kWebSocketScriptHandlerOpen);
+        if (0 != nHandler) {
+            CommonScriptData data(nHandler,"");
+            ScriptEvent event(kCommonEvent,(void*)&data);
+            ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
         }
     }
-    /**
-     *  @brief Get Handler By DelegateEvent Type
-     */
-    int  getScriptHandler(WebSocketScriptHandlerType scriptHandlerType)
-    {
-        std::map<int,int>::iterator Iter = _mapScriptHandler.find(scriptHandlerType);
-        
-        if (_mapScriptHandler.end() != Iter)
-            return Iter->second;
-        
-        return 0;
-    }
+}
     
-    void InitScriptHandleMap()
-    {
-        _mapScriptHandler.clear();
-    }
-    
-    virtual void onOpen(WebSocket* ws)
-    {
-        LuaWebSocket* luaWs = dynamic_cast<LuaWebSocket*>(ws);
-        if (NULL != luaWs) {
-            int nHandler = luaWs->getScriptHandler(LuaWebSocket::kWebSocketScriptHandlerOpen);
+void LuaWebSocket::onMessage(WebSocket* ws, const WebSocket::Data& data)
+{
+    LuaWebSocket* luaWs = dynamic_cast<LuaWebSocket*>(ws);
+    if (NULL != luaWs) {
+        if (data.isBinary) {
+            int nHandler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::kWebSocketScriptHandlerMessage);
             if (0 != nHandler) {
-                CommonScriptData data(nHandler,"");
-                ScriptEvent event(kCommonEvent,(void*)&data);
-                ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+                SendBinaryMessageToLua(nHandler, (const unsigned char*)data.bytes, data.len);
             }
         }
-    }
-    
-    virtual void onMessage(WebSocket* ws, const WebSocket::Data& data)
-    {
-        LuaWebSocket* luaWs = dynamic_cast<LuaWebSocket*>(ws);
-        if (NULL != luaWs) {
-            if (data.isBinary) {
-                int nHandler = luaWs->getScriptHandler(LuaWebSocket::kWebSocketScriptHandlerMessage);
-                if (0 != nHandler) {
-                    SendBinaryMessageToLua(nHandler, (const unsigned char*)data.bytes, data.len);
-                }
-            }
-            else{
+        else{
                 
-                int nHandler = luaWs->getScriptHandler(LuaWebSocket::kWebSocketScriptHandlerMessage);
-                if (0 != nHandler) {
+            int nHandler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::kWebSocketScriptHandlerMessage);
+            if (0 != nHandler) {
                     CommonScriptData commonData(nHandler,data.bytes);
                     ScriptEvent event(kCommonEvent,(void*)&commonData);
                     ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
-                }
             }
         }
     }
+}
     
-    virtual void onClose(WebSocket* ws)
-    {
-        LuaWebSocket* luaWs = dynamic_cast<LuaWebSocket*>(ws);
-        if (NULL != luaWs) {
-            int nHandler = luaWs->getScriptHandler(LuaWebSocket::kWebSocketScriptHandlerClose);
-            if (0 != nHandler)
-            {
-                CommonScriptData data(nHandler,"");
-                ScriptEvent event(kCommonEvent,(void*)&data);
-                ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
-            }
+void LuaWebSocket::onClose(WebSocket* ws)
+{
+    LuaWebSocket* luaWs = dynamic_cast<LuaWebSocket*>(ws);
+    if (NULL != luaWs) {
+        int nHandler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::kWebSocketScriptHandlerClose);
+        if (0 != nHandler)
+        {
+            CommonScriptData data(nHandler,"");
+            ScriptEvent event(kCommonEvent,(void*)&data);
+            ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
         }
     }
+}
     
-    virtual void onError(WebSocket* ws, const WebSocket::ErrorCode& error)
-    {
-        LuaWebSocket* luaWs = dynamic_cast<LuaWebSocket*>(ws);
-        if (NULL != luaWs) {
-            int nHandler = luaWs->getScriptHandler(LuaWebSocket::kWebSocketScriptHandlerError);
-            if (0 != nHandler)
-            {
-                CommonScriptData data(nHandler,"");
-                ScriptEvent event(kCommonEvent,(void*)&data);
-                ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
-            }
+void LuaWebSocket::onError(WebSocket* ws, const WebSocket::ErrorCode& error)
+{
+    LuaWebSocket* luaWs = dynamic_cast<LuaWebSocket*>(ws);
+    if (NULL != luaWs) {
+        int nHandler = 0;//luaWs->getScriptHandler(LuaWebSocket::kWebSocketScriptHandlerError);
+        if (0 != nHandler)
+        {
+            CommonScriptData data(nHandler,"");
+            ScriptEvent event(kCommonEvent,(void*)&data);
+            ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
         }
     }
+}
 
-    
-private:
-    std::map<int,int> _mapScriptHandler;
-};
+
 
 #ifdef __cplusplus
 static int tolua_collect_WebSocket (lua_State* tolua_S)
@@ -388,68 +334,6 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: addHandlerOfDelegateEvent of class WebSocket */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_WebSocket_registerScriptHandler00
-static int tolua_Cocos2d_WebSocket_registerScriptHandler00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"WebSocket",0,&tolua_err) ||
-        !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err) ||
-        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,4,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-        LuaWebSocket* self    = (LuaWebSocket*)  tolua_tousertype(tolua_S,1,0);
-        if (NULL != self ) {
-            int nFunID = (  toluafix_ref_function(tolua_S,2,0));
-            LuaWebSocket::WebSocketScriptHandlerType handlerType = ((LuaWebSocket::WebSocketScriptHandlerType) (int)  tolua_tonumber(tolua_S,3,0));
-            self->registerScriptHandler(nFunID, handlerType);
-        }
-    }
-    return 0;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'registerScriptHandler'.",&tolua_err);
-    return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: removeHandlerOfDelegateEvent of class WebSocket */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_WebSocket_unregisterScriptHandler00
-static int tolua_Cocos2d_WebSocket_unregisterScriptHandler00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"WebSocket",0,&tolua_err) ||
-        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,3,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-        LuaWebSocket* self    = (LuaWebSocket*)  tolua_tousertype(tolua_S,1,0);
-        if (NULL != self ) {
-            LuaWebSocket::WebSocketScriptHandlerType handlerType = ((LuaWebSocket::WebSocketScriptHandlerType) (int)  tolua_tonumber(tolua_S,2,0));
-            self->unregisterScriptHandler(handlerType);
-        }
-    }
-    return 0;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'unregisterScriptHandler'.",&tolua_err);
-    return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* method: sendBinaryMsg of class WebSocket */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_WebSocket_sendBinaryMsg00
 static int tolua_Cocos2d_WebSocket_sendBinaryMsg00(lua_State* tolua_S)
@@ -503,6 +387,7 @@ TOLUA_API int tolua_web_socket_open(lua_State* tolua_S){
       tolua_constant(tolua_S,"kWebSocketScriptHandlerMessage",LuaWebSocket::kWebSocketScriptHandlerMessage);
       tolua_constant(tolua_S,"kWebSocketScriptHandlerClose",LuaWebSocket::kWebSocketScriptHandlerClose);
       tolua_constant(tolua_S,"kWebSocketScriptHandlerError",LuaWebSocket::kWebSocketScriptHandlerError);
+
       #ifdef __cplusplus
       tolua_cclass(tolua_S,"WebSocket","WebSocket","",tolua_collect_WebSocket);
       #else
@@ -515,8 +400,6 @@ TOLUA_API int tolua_web_socket_open(lua_State* tolua_S){
         tolua_function(tolua_S, "getReadyState", tolua_Cocos2d_WebSocket_getReadyState00);
         tolua_function(tolua_S, "sendTextMsg", tolua_Cocos2d_WebSocket_sendTextMsg00);
         tolua_function(tolua_S, "close", tolua_Cocos2d_WebSocket_close00);
-        tolua_function(tolua_S, "registerScriptHandler", tolua_Cocos2d_WebSocket_registerScriptHandler00);
-        tolua_function(tolua_S, "unregisterScriptHandler", tolua_Cocos2d_WebSocket_unregisterScriptHandler00);
         tolua_function(tolua_S, "sendBinaryMsg", tolua_Cocos2d_WebSocket_sendBinaryMsg00);
       tolua_endmodule(tolua_S);
     tolua_endmodule(tolua_S);
