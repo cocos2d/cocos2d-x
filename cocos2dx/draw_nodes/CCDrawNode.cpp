@@ -23,6 +23,8 @@
 #include "CCDrawNode.h"
 #include "shaders/CCShaderCache.h"
 #include "CCGL.h"
+#include "support/CCNotificationCenter.h"
+#include "CCEventType.h"
 
 NS_CC_BEGIN
 
@@ -118,6 +120,8 @@ DrawNode::~DrawNode()
     ccGLBindVAO(0);
     _vao = 0;
 #endif
+    
+    NotificationCenter::getInstance()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
 }
 
 DrawNode* DrawNode::create()
@@ -157,18 +161,17 @@ bool DrawNode::init()
     glGenVertexArrays(1, &_vao);
     ccGLBindVAO(_vao);
 #endif
-    
+        
     glGenBuffers(1, &_vbo);
     glBindBuffer(GL_ARRAY_BUFFER, _vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)* _bufferCapacity, _buffer, GL_STREAM_DRAW);
     
-    glEnableVertexAttribArray(kVertexAttrib_Position);
+    ccGLEnableVertexAttribs( kVertexAttribFlag_PosColorTex );
+    
     glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, vertices));
     
-    glEnableVertexAttribArray(kVertexAttrib_Color);
     glVertexAttribPointer(kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, colors));
     
-    glEnableVertexAttribArray(kVertexAttrib_TexCoords);
     glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
     
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -180,6 +183,12 @@ bool DrawNode::init()
     CHECK_GL_ERROR_DEBUG();
     
     _dirty = true;
+    
+    // Need to listen the event only when not use batchnode, because it will use VBO
+    NotificationCenter::getInstance()->addObserver(this,
+                                                   callfuncO_selector(DrawNode::listenBackToForeground),
+                                                   EVNET_COME_TO_FOREGROUND,
+                                                   NULL);
     
     return true;
 }
@@ -196,6 +205,7 @@ void DrawNode::render()
     ccGLBindVAO(_vao);
 #else
     ccGLEnableVertexAttribs(kVertexAttribFlag_PosColorTex);
+    
     glBindBuffer(GL_ARRAY_BUFFER, _vbo);
     // vertex
     glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, vertices));
@@ -216,11 +226,9 @@ void DrawNode::render()
 
 void DrawNode::draw()
 {
+    CC_NODE_DRAW_SETUP();
     ccGLBlendFunc(_blendFunc.src, _blendFunc.dst);
-    
-    getShaderProgram()->use();
-    getShaderProgram()->setUniformsForBuiltins();
-    
+
     render();
 }
 
@@ -438,6 +446,13 @@ const BlendFunc& DrawNode::getBlendFunc() const
 void DrawNode::setBlendFunc(const BlendFunc &blendFunc)
 {
     _blendFunc = blendFunc;
+}
+
+/** listen the event that coming to foreground on Android
+ */
+void DrawNode::listenBackToForeground(Object *obj)
+{
+    init();
 }
 
 NS_CC_END
