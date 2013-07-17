@@ -158,7 +158,6 @@ public:
     /// @}  end of creators group
     
     
-    
     /// @{
     /// @name Initializers
     

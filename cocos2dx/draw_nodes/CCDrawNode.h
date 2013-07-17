@@ -43,25 +43,14 @@ NS_CC_BEGIN
  */
 class CC_DLL DrawNode : public Node
 {
-protected:
-    GLuint      _vao;
-    GLuint      _vbo;
-    
-    unsigned int    _bufferCapacity;
-    GLsizei         _bufferCount;
-    V2F_C4B_T2F   *_buffer;
-    
-    BlendFunc     _blendFunc;
-    
-    bool            _dirty;
-    
 public:
+    /** creates and initialize a DrawNode node */
     static DrawNode* create();
+    DrawNode();
     virtual ~DrawNode();
     
     virtual bool init();
-    virtual void draw();
-    
+
     /** draw a dot at a position, with a given radius and color */
     void drawDot(const Point &pos, float radius, const Color4F &color);
     
@@ -77,15 +66,29 @@ public:
     const BlendFunc& getBlendFunc() const;
     void setBlendFunc(const BlendFunc &blendFunc);
     
-    DrawNode();
-    
     /** listen the event that coming to foreground on Android
      */
     void listenBackToForeground(Object *obj);
-    
+
+    // Overrides
+    virtual void draw() override;
+
 private:
     void ensureCapacity(unsigned int count);
     void render();
+
+protected:
+    GLuint      _vao;
+    GLuint      _vbo;
+
+    unsigned int    _bufferCapacity;
+    GLsizei         _bufferCount;
+    V2F_C4B_T2F   *_buffer;
+
+    BlendFunc     _blendFunc;
+
+    bool            _dirty;
+
 };
 
 NS_CC_END

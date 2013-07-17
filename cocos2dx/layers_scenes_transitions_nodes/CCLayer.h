@@ -63,13 +63,12 @@ All features from Node are valid, plus the following new features:
 class CC_DLL Layer : public Node, public TouchDelegate, public KeypadDelegate
 {
 public:
+    /** creates a fullscreen black layer */
+    static Layer *create(void);
     Layer();
     virtual ~Layer();
     virtual bool init();
     
-    /** creates a fullscreen black layer */
-    static Layer *create(void);
-
     // default implements are used to call script callback if exist
     virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent);
     virtual void ccTouchMoved(Touch *pTouch, Event *pEvent);
@@ -216,24 +215,16 @@ class CC_DLL LayerColor : public LayerRGBA, public BlendProtocol
 , public GLBufferedNode
 #endif // EMSCRIPTEN
 {
-protected:
-    Vertex2F _squareVertices[4];
-    Color4F  _squareColors[4];
-
 public:
-    LayerColor();
-    virtual ~LayerColor();
-
-    virtual void draw();
-    virtual void setContentSize(const Size & var);
-
     /** creates a fullscreen black layer */
     static LayerColor* create();
-    
     /** creates a Layer with color, width and height in Points */
     static LayerColor * create(const Color4B& color, GLfloat width, GLfloat height);
     /** creates a Layer with color. Width and height are the window size. */
     static LayerColor * create(const Color4B& color);
+
+    LayerColor();
+    virtual ~LayerColor();
 
     virtual bool init();
     /** initializes a Layer with color, width and height in Points */
@@ -256,11 +247,16 @@ public:
     //
     // Overrides
     //
+    virtual void draw() override;
     virtual void setColor(const Color3B &color) override;
     virtual void setOpacity(GLubyte opacity) override;
+    virtual void setContentSize(const Size & var) override;
 
 protected:
     virtual void updateColor();
+
+    Vertex2F _squareVertices[4];
+    Color4F  _squareColors[4];
 };
 
 //
@@ -288,7 +284,6 @@ If ' compressedInterpolation' is enabled (default mode) you will see both the st
 class CC_DLL LayerGradient : public LayerColor
 {
 public:
-
     /** Creates a fullscreen black layer */
     static LayerGradient* create();
 
@@ -311,15 +306,15 @@ public:
     virtual void setCompressedInterpolation(bool bCompressedInterpolation);
     virtual bool isCompressedInterpolation() const;
 
+protected:
+    virtual void updateColor() override;
+
     CC_PROPERTY_PASS_BY_REF(Color3B, _startColor, StartColor)
     CC_PROPERTY_PASS_BY_REF(Color3B, _endColor, EndColor)
     CC_PROPERTY(GLubyte, _startOpacity, StartOpacity)
     CC_PROPERTY(GLubyte, _endOpacity, EndOpacity)
     CC_PROPERTY_PASS_BY_REF(Point, _alongVector, Vector)
 
-protected:
-    virtual void updateColor() override;
-    
 protected:
     bool _compressedInterpolation;
 };
@@ -332,16 +327,11 @@ Features:
 */
 class CC_DLL LayerMultiplex : public Layer
 {
-protected:
-    unsigned int _enabledLayer;
-    Array*     _layers;
 public:
-    LayerMultiplex();
-    virtual ~LayerMultiplex();
-    
+    /** creates and initializes a LayerMultiplex object */
     static LayerMultiplex* create();
-    
-    /** creates a MultiplexLayer with an array of layers.
+
+    /** creates a LayerMultiplex with an array of layers.
      @since v2.1
      */
     static LayerMultiplex* createWithArray(Array* arrayOfLayers);
@@ -355,24 +345,31 @@ public:
      */
     static LayerMultiplex * createWithLayer(Layer* layer);
 
-    void addLayer(Layer* layer);
+    LayerMultiplex();
+    virtual ~LayerMultiplex();
 
     /** initializes a MultiplexLayer with one or more layers using a variable argument list. */
     bool initWithLayers(Layer* layer, va_list params);
-    /** switches to a certain layer indexed by n. 
-    The current (old) layer will be removed from it's parent with 'cleanup:YES'.
-    */
 
     /** initializes a MultiplexLayer with an array of layers
-    @since v2.1
-    */
+     @since v2.1
+     */
     bool initWithArray(Array* arrayOfLayers);
 
+    void addLayer(Layer* layer);
+
+    /** switches to a certain layer indexed by n.
+     The current (old) layer will be removed from it's parent with 'cleanup:YES'.
+     */
     void switchTo(unsigned int n);
     /** release the current layer and switches to another layer indexed by n.
     The current (old) layer will be removed from it's parent with 'cleanup:YES'.
     */
     void switchToAndReleaseMe(unsigned int n);
+
+protected:
+    unsigned int _enabledLayer;
+    Array*     _layers;
 };
 
 
