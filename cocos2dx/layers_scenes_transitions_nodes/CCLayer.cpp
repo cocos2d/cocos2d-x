@@ -47,9 +47,6 @@ Layer::Layer()
 , _accelerometerEnabled(false)
 , _keyboardEnabled(false)
 , _keypadEnabled(false)
-, _scriptTouchHandlerEntry(NULL)
-, _scriptKeypadHandlerEntry(NULL)
-, _scriptAccelerateHandlerEntry(NULL)
 , _touchPriority(0)
 , _touchMode(kTouchesAllAtOnce)
 {
@@ -59,9 +56,7 @@ Layer::Layer()
 
 Layer::~Layer()
 {
-    unregisterScriptTouchHandler();
-    unregisterScriptKeypadHandler();
-    unregisterScriptAccelerateHandler();
+
 }
 
 bool Layer::init()
@@ -101,43 +96,12 @@ void Layer::registerWithTouchDispatcher()
 {
     TouchDispatcher* pDispatcher = Director::getInstance()->getTouchDispatcher();
 
-    // Using LuaBindings
-    if (_scriptTouchHandlerEntry)
-    {
-	    if (_scriptTouchHandlerEntry->isMultiTouches())
-	    {
-	       pDispatcher->addStandardDelegate(this, 0);
-	       LUALOG("[LUA] Add multi-touches event handler: %d", _scriptTouchHandlerEntry->getHandler());
-	    }
-	    else
-	    {
-	       pDispatcher->addTargetedDelegate(this,
-						_scriptTouchHandlerEntry->getPriority(),
-						_scriptTouchHandlerEntry->getSwallowsTouches());
-	       LUALOG("[LUA] Add touch event handler: %d", _scriptTouchHandlerEntry->getHandler());
-	    }
-    }
-    else
-    {
-        if( _touchMode == kTouchesAllAtOnce ) {
-            pDispatcher->addStandardDelegate(this, 0);
-        } else {
-            pDispatcher->addTargetedDelegate(this, _touchPriority, true);
-        }
+    if( _touchMode == kTouchesAllAtOnce ) {
+        pDispatcher->addStandardDelegate(this, 0);
+    } else {
+        pDispatcher->addTargetedDelegate(this, _touchPriority, true);
     }
 }
-
-void Layer::registerScriptTouchHandler(int nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches)
-{
-    unregisterScriptTouchHandler();
-    _scriptTouchHandlerEntry = TouchScriptHandlerEntry::create(nHandler, bIsMultiTouches, nPriority, bSwallowsTouches);
-    _scriptTouchHandlerEntry->retain();
-}
-
-void Layer::unregisterScriptTouchHandler(void)
-{
-    CC_SAFE_RELEASE_NULL(_scriptTouchHandlerEntry);
-    }
 
 int Layer::excuteScriptTouchHandler(int nEventType, Touch *pTouch)
 {
@@ -145,7 +109,7 @@ int Layer::excuteScriptTouchHandler(int nEventType, Touch *pTouch)
     {
         Set touches;
         touches.addObject((Object*)pTouch);
-        TouchesScriptData data(nEventType,kLayerTouches,(void*)this,&touches);
+        TouchesScriptData data(nEventType,(void*)this,&touches);
         ScriptEvent event(kTouchesEvent,&data);
         return ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);        
     }
@@ -161,7 +125,7 @@ int Layer::excuteScriptTouchHandler(int nEventType, Set *pTouches)
 {
     if (kScriptTypeLua == _scriptType)
     {
-        TouchesScriptData data(nEventType,kLayerTouches,(void*)this,pTouches);
+        TouchesScriptData data(nEventType,(void*)this,pTouches);
         ScriptEvent event(kTouchesEvent,&data);
         return ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
@@ -291,18 +255,6 @@ void Layer::didAccelerate(Acceleration* pAccelerationValue)
     }
 }
 
-void Layer::registerScriptAccelerateHandler(int nHandler)
-{
-    unregisterScriptAccelerateHandler();
-    _scriptAccelerateHandlerEntry = ScriptHandlerEntry::create(nHandler);
-    _scriptAccelerateHandlerEntry->retain();
-}
-
-void Layer::unregisterScriptAccelerateHandler(void)
-{
-    CC_SAFE_RELEASE_NULL(_scriptAccelerateHandlerEntry);
-}
-
 /// isKeyboardEnabled getter
 bool Layer::isKeyboardEnabled() const
 {
@@ -356,23 +308,11 @@ void Layer::setKeypadEnabled(bool enabled)
     }
 }
 
-void Layer::registerScriptKeypadHandler(int nHandler)
-{
-    unregisterScriptKeypadHandler();
-    _scriptKeypadHandlerEntry = ScriptHandlerEntry::create(nHandler);
-    _scriptKeypadHandlerEntry->retain();
-}
-
-void Layer::unregisterScriptKeypadHandler(void)
-{
-    CC_SAFE_RELEASE_NULL(_scriptKeypadHandlerEntry);
-}
-
 void Layer::keyBackClicked(void)
 {
-    if (NULL != _scriptKeypadHandlerEntry && 0 != _scriptKeypadHandlerEntry->getHandler())
+    if (kScriptTypeLua == _scriptType)
     {
-        KeypadScriptData data(kTypeBackClicked,kLayerKeypad,(void*)this);
+        KeypadScriptData data(kTypeBackClicked,(void*)this);
         ScriptEvent event(kKeypadEvent,(void*)&data);
         ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
@@ -384,9 +324,9 @@ void Layer::keyBackClicked(void)
 
 void Layer::keyMenuClicked(void)
 {
-    if (NULL != _scriptKeypadHandlerEntry && 0 != _scriptKeypadHandlerEntry->getHandler())
+    if (kScriptTypeLua == _scriptType)
     {
-        KeypadScriptData data(kTypeMenuClicked,kLayerKeypad,(void*)this);
+        KeypadScriptData data(kTypeMenuClicked,(void*)this);
         ScriptEvent event(kKeypadEvent,(void*)&data);
         ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
@@ -425,8 +365,6 @@ void Layer::onExit()
     if( _touchEnabled )
     {
         pDirector->getTouchDispatcher()->removeDelegate(this);
-        // [lua]:don't unregister script touch handler, or the handler will be destroyed
-        // unregisterScriptTouchHandler();
     }
 
     // remove this layer from the delegates who concern Accelerometer Sensor
