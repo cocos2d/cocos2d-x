@@ -397,9 +397,6 @@ int StringTTF::getYOffsetForChar(unsigned short c)
     
     LetterDefinition tempDefinition   = _fontDef->getLetterDefinition(c);
     return (tempDefinition.offsetY);
-            
-            
-    // carloX return 0;
 }
 
 int StringTTF::getAdvanceForChar(unsigned short c, int hintPositionInString)

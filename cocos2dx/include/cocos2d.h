@@ -101,11 +101,6 @@ THE SOFTWARE.
 #include "label_nodes/CCLabelBMFontNew.h"
 #include "label_nodes/CCStringTTF.h"
 
-// carloX
-#include "label_nodes/CCFontRenderFreeType.h"
-
-
-
 // layers_scenes_transitions_nodes
 #include "layers_scenes_transitions_nodes/CCLayer.h"
 #include "layers_scenes_transitions_nodes/CCScene.h"

@@ -77,7 +77,7 @@ bool FontRenderFreeType::renderCharAt(unsigned short int charToRender, int posX,
     return true;
 }
 
-unsigned char * FontRenderFreeType::preparePageGlyphData(TextPageDef *thePage, char *fontName, int fontSize)
+unsigned char * FontRenderFreeType::preparePageGlyphData(TextPageDef *thePage)
 {
     if (!thePage)
         return 0;
@@ -92,7 +92,7 @@ unsigned char * FontRenderFreeType::preparePageGlyphData(TextPageDef *thePage, c
     int pageHeight = thePage->getHeight();
     
     // prepare memory and clean to 0
-    int sizeInBytes = (pageWidth * pageHeight * 4);
+    int sizeInBytes     = (pageWidth * pageHeight * 4);
     unsigned char* data = new unsigned char[sizeInBytes];
     
     if (!data)
