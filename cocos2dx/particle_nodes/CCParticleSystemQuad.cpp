@@ -65,13 +65,14 @@ bool ParticleSystemQuad::initWithTotalParticles(unsigned int numberOfParticles)
 
         setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColor));
         
-        
+#if CC_ENABLE_CACHE_TEXTURE_DATA
         // Need to listen the event only when not use batchnode, because it will use VBO
         NotificationCenter::getInstance()->addObserver(this,
                                                                       callfuncO_selector(ParticleSystemQuad::listenBackToForeground),
                                                                       EVNET_COME_TO_FOREGROUND,
                                                                       NULL);
-        
+#endif
+
         return true;
     }
     return false;
@@ -100,7 +101,9 @@ ParticleSystemQuad::~ParticleSystemQuad()
 #endif
     }
     
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     NotificationCenter::getInstance()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
+#endif
 }
 
 // implementation ParticleSystemQuad

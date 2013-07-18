@@ -219,7 +219,7 @@ void ShaderCache::reloadDefaultShaders()
 	//
     p = programForKey(kShader_PositionLengthTexureColor);
     p->reset();
-    loadDefaultShader(p, kShaderType_Position_uColor);
+    loadDefaultShader(p, kShaderType_PositionLengthTexureColor);
 }
 
 void ShaderCache::loadDefaultShader(GLProgram *p, int type)
@@ -297,7 +297,7 @@ void ShaderCache::loadDefaultShader(GLProgram *p, int type)
 
 GLProgram* ShaderCache::programForKey(const char* key)
 {
-    return (GLProgram*)_programs->objectForKey(key);
+    return static_cast<GLProgram*>(_programs->objectForKey(key));
 }
 
 void ShaderCache::addProgram(GLProgram* program, const char* key)

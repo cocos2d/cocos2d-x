@@ -237,9 +237,9 @@ public:
 
     virtual bool init();
     /** initializes a Layer with color, width and height in Points */
-    virtual bool initWithColor(const Color4B& color, GLfloat width, GLfloat height);
+    bool initWithColor(const Color4B& color, GLfloat width, GLfloat height);
     /** initializes a Layer with color. Width and height are the window size. */
-    virtual bool initWithColor(const Color4B& color);
+    bool initWithColor(const Color4B& color);
 
     /** change width in Points*/
     void changeWidth(GLfloat w);
@@ -300,10 +300,10 @@ public:
 
     virtual bool init();
     /** Initializes the Layer with a gradient between start and end. */
-    virtual bool initWithColor(const Color4B& start, const Color4B& end);
+    bool initWithColor(const Color4B& start, const Color4B& end);
 
     /** Initializes the Layer with a gradient between start and end in the direction of v. */
-    virtual bool initWithColor(const Color4B& start, const Color4B& end, const Point& v);
+    bool initWithColor(const Color4B& start, const Color4B& end, const Point& v);
     
     /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
      Default: YES
