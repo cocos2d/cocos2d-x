@@ -52,7 +52,7 @@ public:
     virtual void startWithTarget(Node *pTarget);
 
     /** initializes the action with size and duration */
-    virtual bool initWithDuration(float duration, const Size& gridSize);
+    bool initWithDuration(float duration, const Size& gridSize);
 
     /** returns the grid */
     virtual GridBase* getGrid(void);

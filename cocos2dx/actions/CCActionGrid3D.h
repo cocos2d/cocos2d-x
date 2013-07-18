@@ -68,7 +68,7 @@ class CC_DLL FlipX3D : public Grid3DAction
 {
 public:
     /** initializes the action with duration */
-    virtual bool initWithDuration(float duration);
+    bool initWithDuration(float duration);
     virtual bool initWithSize(const Size& gridSize, float duration);
 
 	/** returns a new clone of the action */
