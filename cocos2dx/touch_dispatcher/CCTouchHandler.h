@@ -60,7 +60,7 @@ public:
     void setEnalbedSelectors(int nValue);
 
     /** initializes a TouchHandler with a delegate and a priority */
-    virtual bool initWithDelegate(TouchDelegate *pDelegate, int nPriority);
+    bool initWithDelegate(TouchDelegate *pDelegate, int nPriority);
 
 public:
     /** allocates a TouchHandler with a delegate and a priority */
@@ -79,7 +79,7 @@ class CC_DLL  StandardTouchHandler : public TouchHandler
 {
 public:
     /** initializes a TouchHandler with a delegate and a priority */
-    virtual bool initWithDelegate(TouchDelegate *pDelegate, int nPriority);
+    bool initWithDelegate(TouchDelegate *pDelegate, int nPriority);
 
 public:
     /** allocates a TouchHandler with a delegate and a priority */

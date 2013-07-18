@@ -121,6 +121,11 @@ public:
     virtual int sendEvent(ScriptEvent* message);
     void extendLuaObject();
 private:
+    LuaEngine(void)
+    : _stack(NULL)
+    {
+    }
+    bool init(void);
     int handleNodeEvent(void* data);
     int handleMenuClickedEvent(void* data);
     int handleNotificationEvent(void* data);
@@ -135,14 +140,10 @@ private:
     void extendMenuItem(lua_State* lua_S);
     void extendLayer(lua_State* lua_S);
     void extendControl(lua_State* lua_S);
+    void extendWebsocket(lua_State* lua_S);
+    void extendGLNode(lua_State* lua_S);
+    void extendScrollView(lua_State* lua_S);
 private:
-    LuaEngine(void)
-    : _stack(NULL)
-    {
-    }
-    
-    bool init(void);
-    
     static LuaEngine* _defaultEngine;
     LuaStack *_stack;
 };

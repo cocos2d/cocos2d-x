@@ -39,7 +39,7 @@ class CC_DLL ShakyTiles3D : public TiledGrid3DAction
 {
 public:
     /** initializes the action with a range, whether or not to shake Z vertices, a grid size, and duration */
-    virtual bool initWithDuration(float duration, const Size& gridSize, int nRange, bool bShakeZ);
+    bool initWithDuration(float duration, const Size& gridSize, int nRange, bool bShakeZ);
 
 	/** returns a new clone of the action */
 	virtual ShakyTiles3D* clone() const;
@@ -61,7 +61,7 @@ class CC_DLL ShatteredTiles3D : public TiledGrid3DAction
 {
 public:
     /** initializes the action with a range, whether or not to shatter Z vertices, a grid size and duration */
-    virtual bool initWithDuration(float duration, const Size& gridSize, int nRange, bool bShatterZ);
+    bool initWithDuration(float duration, const Size& gridSize, int nRange, bool bShatterZ);
 
 	/** returns a new clone of the action */
 	virtual ShatteredTiles3D* clone() const;
@@ -87,7 +87,7 @@ class CC_DLL ShuffleTiles : public TiledGrid3DAction
 public:
     ~ShuffleTiles(void);
     /** initializes the action with a random seed, the grid size and the duration */
-    virtual bool initWithDuration(float duration, const Size& gridSize, unsigned int seed);
+    bool initWithDuration(float duration, const Size& gridSize, unsigned int seed);
     void shuffle(unsigned int *pArray, unsigned int nLen);
     Size getDelta(const Size& pos) const;
     void placeTile(const Point& pos, Tile *t);
@@ -189,7 +189,7 @@ class CC_DLL TurnOffTiles : public TiledGrid3DAction
 public:
     ~TurnOffTiles(void);
     /** initializes the action with a random seed, the grid size and the duration */
-    virtual bool initWithDuration(float duration, const Size& gridSize, unsigned int seed);
+    bool initWithDuration(float duration, const Size& gridSize, unsigned int seed);
     void shuffle(unsigned int *pArray, unsigned int nLen);
     void turnOnTile(const Point& pos);
     void turnOffTile(const Point& pos);
@@ -226,7 +226,7 @@ public:
     inline void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
 
     /** initializes the action with a number of waves, the waves amplitude, the grid size and the duration */
-    virtual bool initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude);
+    bool initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude);
 
 	/** returns a new clone of the action */
 	virtual WavesTiles3D* clone() const;
@@ -279,7 +279,7 @@ class CC_DLL SplitRows : public TiledGrid3DAction
 {
 public :
     /** initializes the action with the number of rows to split and the duration */
-    virtual bool initWithDuration(float duration, unsigned int nRows);
+    bool initWithDuration(float duration, unsigned int nRows);
 
 	/** returns a new clone of the action */
 	virtual SplitRows* clone() const;
@@ -301,7 +301,7 @@ class CC_DLL SplitCols : public TiledGrid3DAction
 {
 public:
     /** initializes the action with the number of columns to split and the duration */
-    virtual bool initWithDuration(float duration, unsigned int nCols);
+    bool initWithDuration(float duration, unsigned int nCols);
 
 	/** returns a new clone of the action */
 	virtual SplitCols* clone() const;

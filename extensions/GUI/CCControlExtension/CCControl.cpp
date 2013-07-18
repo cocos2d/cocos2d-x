@@ -260,7 +260,7 @@ bool Control::isTouchInside(Touch* touch)
 {
     Point touchLocation = touch->getLocation(); // Get the touch position
     touchLocation = this->getParent()->convertToNodeSpace(touchLocation);
-    Rect bBox=boundingBox();
+    Rect bBox = getBoundingBox();
     return bBox.containsPoint(touchLocation);
 }
 
