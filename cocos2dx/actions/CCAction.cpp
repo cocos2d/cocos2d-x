@@ -122,10 +122,10 @@ Speed *Speed::clone() const
 	return  a;
 }
 
-void Speed::startWithTarget(Node* pTarget)
+void Speed::startWithTarget(Node* target)
 {
-    Action::startWithTarget(pTarget);
-    _innerAction->startWithTarget(pTarget);
+    Action::startWithTarget(target);
+    _innerAction->startWithTarget(target);
 }
 
 void Speed::stop()

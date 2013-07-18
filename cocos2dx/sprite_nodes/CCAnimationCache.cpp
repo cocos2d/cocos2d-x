@@ -53,18 +53,6 @@ void AnimationCache::destroyInstance()
     CC_SAFE_RELEASE_NULL(s_pSharedAnimationCache);
 }
 
-// XXX: deprecated
-AnimationCache* AnimationCache::sharedAnimationCache(void)
-{
-    return AnimationCache::getInstance();
-}
-
-// XXX: deprecated
-void AnimationCache::purgeSharedAnimationCache(void)
-{
-    return AnimationCache::destroyInstance();
-}
-
 bool AnimationCache::init()
 {
     _animations = new Dictionary();
@@ -127,7 +115,7 @@ void AnimationCache::parseVersion1(Dictionary* animations)
         CCARRAY_FOREACH(frameNames, pObj)
         {
             const char* frameName = static_cast<String*>(pObj)->getCString();
-            SpriteFrame* spriteFrame = frameCache->spriteFrameByName(frameName);
+            SpriteFrame* spriteFrame = frameCache->getSpriteFrameByName(frameName);
 
             if ( ! spriteFrame ) {
                 CCLOG("cocos2d: AnimationCache: Animation '%s' refers to frame '%s' which is not currently in the SpriteFrameCache. This frame will not be added to the animation.", pElement->getStrKey(), frameName);
@@ -185,7 +173,7 @@ void AnimationCache::parseVersion2(Dictionary* animations)
             Dictionary* entry = static_cast<Dictionary*>(pObj);
 
             const char* spriteFrameName = entry->valueForKey("spriteframe")->getCString();
-            SpriteFrame *spriteFrame = frameCache->spriteFrameByName(spriteFrameName);
+            SpriteFrame *spriteFrame = frameCache->getSpriteFrameByName(spriteFrameName);
 
             if( ! spriteFrame ) {
                 CCLOG("cocos2d: AnimationCache: Animation '%s' refers to frame '%s' which is not currently in the SpriteFrameCache. This frame will not be added to the animation.", name, spriteFrameName);

@@ -61,18 +61,6 @@ void SpriteFrameCache::destroyInstance()
     CC_SAFE_RELEASE_NULL(_sharedSpriteFrameCache);
 }
 
-// XXX: deprecated
-SpriteFrameCache* SpriteFrameCache::sharedSpriteFrameCache(void)
-{
-    return SpriteFrameCache::getInstance();
-}
-
-// XXX: deprecated
-void SpriteFrameCache::purgeSharedSpriteFrameCache(void)
-{
-    return SpriteFrameCache::destroyInstance();
-}
-
 bool SpriteFrameCache::init(void)
 {
     _spriteFrames= new Dictionary();
@@ -405,7 +393,7 @@ void SpriteFrameCache::removeSpriteFramesFromTexture(Texture2D* texture)
     _spriteFrames->removeObjectsForKeys(keysToRemove);
 }
 
-SpriteFrame* SpriteFrameCache::spriteFrameByName(const char *pszName)
+SpriteFrame* SpriteFrameCache::getSpriteFrameByName(const char *pszName)
 {
     SpriteFrame* frame = (SpriteFrame*)_spriteFrames->objectForKey(pszName);
     if (!frame)
