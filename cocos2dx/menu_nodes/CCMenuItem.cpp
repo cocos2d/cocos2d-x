@@ -135,7 +135,7 @@ bool MenuItem::isEnabled() const
     return _enabled;
 }
 
-Rect MenuItem::rect()
+Rect MenuItem::rect() const
 {
     return Rect( _position.x - _contentSize.width * _anchorPoint.x,
                       _position.y - _contentSize.height * _anchorPoint.y,
@@ -468,7 +468,7 @@ void MenuItemFont::setFontNameObj(const char* name)
     recreateLabel();
 }
 
-const char* MenuItemFont::fontNameObj()
+const char* MenuItemFont::getFontNameObj() const
 {
     return _fontName.c_str();
 }
@@ -1023,7 +1023,7 @@ void MenuItemToggle::setEnabled(bool enabled)
     }
 }
 
-MenuItem* MenuItemToggle::selectedItem()
+MenuItem* MenuItemToggle::getSelectedItem()
 {
     return (MenuItem*)_subItems->objectAtIndex(_selectedIndex);
 }

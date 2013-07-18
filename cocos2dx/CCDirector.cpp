@@ -99,12 +99,6 @@ Director* Director::getInstance()
     return s_SharedDirector;
 }
 
-// XXX: deprecated
-Director* Director::sharedDirector()
-{
-    return Director::getInstance();
-}
-
 Director::Director(void)
 {
 

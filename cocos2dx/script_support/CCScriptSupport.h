@@ -310,7 +310,7 @@ public:
     virtual int executeNotificationEvent(NotificationCenter* pNotificationCenter, const char* pszName) = 0;
     
     /** execute a callfun event */
-    virtual int executeCallFuncActionEvent(CallFunc* pAction, Object* pTarget = NULL) = 0;
+    virtual int executeCallFuncActionEvent(CallFunc* pAction, Object* target = NULL) = 0;
     /** execute a schedule function */
     virtual int executeSchedule(int nHandler, float dt, Node* pNode = NULL) = 0;
     
