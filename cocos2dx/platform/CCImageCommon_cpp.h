@@ -479,17 +479,7 @@ bool Image::_initWithPngData(void * pData, int nDatalen)
         if (channel == 4)
         {
             _hasAlpha = true;
-            unsigned int *tmp = (unsigned int *)_data;
-            for(unsigned short i = 0; i < _height; i++)
-            {
-                for(unsigned int j = 0; j < rowbytes; j += 4)
-                {
-                    *tmp++ = CC_RGB_PREMULTIPLY_ALPHA( row_pointers[i][j], row_pointers[i][j + 1], 
-                                                      row_pointers[i][j + 2], row_pointers[i][j + 3] );
-                }
-            }
-            
-            _preMulti = true;
+            _preMulti = false;
         }
 
         CC_SAFE_FREE(row_pointers);
