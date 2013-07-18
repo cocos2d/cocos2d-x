@@ -28,8 +28,6 @@ enum TargetPlatform
 class CCApplication
 {
     ~CCApplication();
-    // XXX: deprecated
-    static CCApplication* sharedApplication();
     
     static CCApplication* getInstance();
     ccLanguageType getCurrentLanguage();
