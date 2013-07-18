@@ -247,6 +247,7 @@ void CocosDenshionTest::onExit()
     Layer::onExit();
 
     SimpleAudioEngine::sharedEngine()->end();
+    delete SimpleAudioEngine::sharedEngine();
 }
 
 void CocosDenshionTest::addButtons()

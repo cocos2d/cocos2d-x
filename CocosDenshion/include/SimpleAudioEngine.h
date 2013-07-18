@@ -57,6 +57,8 @@ static inline unsigned int getHashCodeByString(const char *key)
 /**
   @class          SimpleAudioEngine
   @brief          Offers a VERY simple interface to play background music & sound effects.
+  @note           Make sure to call SimpleAudioEngine::end() when the sound engine is not needed anymore
+                  to release allocated resources.
  */
 
 class EXPORT_DLL SimpleAudioEngine : public TypeInfo
@@ -76,26 +78,26 @@ public:
 
     /**
     @brief Release the shared Engine object
-    @warning It must be called before the application exit, or a memroy leak will be caused.
+    @warning It must be called before the application exit, or a memory leak will be caused.
      */
     static void end();
 
     /**
      @brief Preload background music
-     @param pszFilePath The path of the background music file, or the FileName of T_SoundResInfo
+     @param pszFilePath The path of the background music file.
      */
     void preloadBackgroundMusic(const char* pszFilePath);
     
     /**
     @brief Play background music
-    @param pszFilePath The path of the background music file, or the FileName of T_SoundResInfo
-    @param bLoop Determines whether the background music should loop or not
+    @param pszFilePath The path of the background music file.
+    @param bLoop Determines whether the background music should loop or not.
      */
     void playBackgroundMusic(const char* pszFilePath, bool bLoop);
 
     /**
     @brief Play background music once
-    @param pszFilePath The path of the background music file, or the FileName of T_SoundResInfo
+    @param pszFilePath The path of the background music file.
     @see CocosDenshion::playBackgroundMusic(const char* pszFilePath, bool bLoop)
      */
     void playBackgroundMusic(const char* pszFilePath) {
@@ -134,7 +136,6 @@ public:
     /**
      @brief Indicates whether any background music can be played or not.
      @return <i>true</i> if background music can be played, otherwise <i>false</i>.
-     @remark Returns currently always true.
      */
     bool willPlayBackgroundMusic();
 
@@ -155,7 +156,7 @@ public:
 
     /**
     @brief Set the volume of background music
-    @param volume must be within the range of 0.0 as the minimum and 1.0 as the maximum
+    @param volume must be within the range of 0.0 as the minimum and 1.0 as the maximum.
     */
     void setBackgroundMusicVolume(float volume);
 
@@ -166,7 +167,7 @@ public:
 
     /**
     @brief Set the volume of sound effects
-    @param volume must be within the range of 0.0 as the minimum and 1.0 as the maximum
+    @param volume must be within the range of 0.0 as the minimum and 1.0 as the maximum.
     */
     void setEffectsVolume(float volume);
 
@@ -176,7 +177,7 @@ public:
 
     /**
     @brief Play sound effect
-    @param pszFilePath The path of the effect file, or the FileName of T_SoundResInfo
+    @param pszFilePath The path of the effect file.
     @param bLoop Determines whether to loop the effect playing or not. The default value is false.
     */
     unsigned int playEffect(const char* pszFilePath, bool bLoop) {
@@ -185,7 +186,7 @@ public:
 
     /**
     @brief Play sound effect once
-    @param pszFilePath The path of the effect file, or the FileName of T_SoundResInfo
+    @param pszFilePath The path of the effect file.
     @see CocosDenshion::playEffect(const char* pszFilePath, bool bLoop)
     */
     unsigned int playEffect(const char* pszFilePath) {
@@ -194,7 +195,7 @@ public:
 
     /**
     @brief Play sound effect with a file path, pitch, pan and gain
-    @param pszFilePath The path of the effect file, or the FileName of T_SoundResInfo
+    @param pszFilePath The path of the effect file.
     @param bLoop Determines whether to loop the effect playing or not. The default value is false.
     @param pitch Frequency, normal value is 1.0. Will also change effect play time.
     @param pan   Stereo effect, in the range of [-1..1] where -1 enables only left channel.
@@ -246,13 +247,13 @@ public:
     /**
     @brief          preload a compressed audio file
     @details        the compressed audio will be decoded to wave, then written into an internal buffer in SimpleAudioEngine
-    @param pszFilePath The path of the effect file, or the FileName of T_SoundResInfo
+    @param pszFilePath The path of the effect file
     */
     void preloadEffect(const char* pszFilePath);
 
     /**
     @brief          unload the preloaded effect from internal buffer
-    @param pszFilePath        The path of the effect file, or the FileName of T_SoundResInfo
+    @param pszFilePath        The path of the effect file
     */
     void unloadEffect(const char* pszFilePath);
 };
