@@ -41,7 +41,7 @@ FontIOS::~FontIOS()
     // TO DO 
 }
 
-GlyphDef * FontIOS::getGlyphsForText(const char *pText, int &outNumGlyphs)
+GlyphDef * FontIOS::getGlyphsForText(const char *pText, int &outNumGlyphs, bool UTF16text)
 {
     float CHAR_PADDING = 10.0f;
     
@@ -171,7 +171,7 @@ Size * FontIOS::getAdvancesForTextUTF8(unsigned short *pText, int &outNumLetters
     return pCCSizes;
 }
 
-Size * FontIOS::getAdvancesForText(const char *pText, int &outNumLetters)
+Size * FontIOS::getAdvancesForText(const char *pText, int &outNumLetters, bool UTF16text)
 {
     unsigned short int *utf8Text = FontIOS::getUTF8Text(pText, outNumLetters);
     if (utf8Text)
@@ -186,7 +186,7 @@ Size * FontIOS::getAdvancesForText(const char *pText, int &outNumLetters)
     }
 }
 
-Size FontIOS::getTextWidthAndHeight(const char *pText)
+Size FontIOS::getTextWidthAndHeight(const char *pText, bool UTF16text)
 {
     Size retSize;
     NSString * str      = [NSString stringWithUTF8String:pText];

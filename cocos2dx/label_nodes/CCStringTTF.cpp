@@ -378,7 +378,12 @@ int StringTTF::getXOffsetForChar(unsigned short c)
 
 int StringTTF::getYOffsetForChar(unsigned short c)
 {
-    return 0;
+    
+    LetterDefinition tempDefinition   = _fontDef->getLetterDefinition(c);
+    return (tempDefinition.offsetY);
+            
+            
+    // carloX return 0;
 }
 
 int StringTTF::getAdvanceForChar(unsigned short c, int hintPositionInString)
@@ -387,7 +392,7 @@ int StringTTF::getAdvanceForChar(unsigned short c, int hintPositionInString)
     {
         // not that advance contains the X offset already
         LetterDefinition tempDefinition   = _fontDef->getLetterDefinition(c);
-        return (_advances[hintPositionInString].width - tempDefinition.offset);
+        return (_advances[hintPositionInString].width - tempDefinition.offsetX);
     }
     else
     {
