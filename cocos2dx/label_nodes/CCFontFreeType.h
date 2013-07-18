@@ -45,11 +45,11 @@ public:
     virtual Size                    getTextWidthAndHeight(const char *pText, bool UTF16text = false);
     
     virtual Size                *   getAdvancesForTextUTF16(unsigned short *pText, int &outNumLetters);
-    virtual unsigned short int  *   getUTF16Text(const char *pText, int &outNumLetters);
     unsigned char               *   getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight);
     virtual int                     getLetterPadding() { return _letterPadding;}
     
-    
+    // utf16 text utilities
+    virtual unsigned short int  *   getUTF16Text(const char *pText, int &outNumLetters);
     virtual unsigned short int  *   trimUTF16Text(unsigned short int *pText, int newBegin, int newEnd);
     virtual int                     getUTF16TextLenght(unsigned short int *pText);
     

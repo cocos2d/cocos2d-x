@@ -149,6 +149,7 @@ private:
     std::vector<TextPageDef *>    _pages;
     int                           _fontSize;
     char *                        _fontName;
+    
 };
 
 /** @brief TextImage 
@@ -167,7 +168,7 @@ public:
     
 private:
     
-    unsigned char * preparePageGlyphData(TextPageDef *thePage, char *fontName, int fontSize);
+    unsigned char * preparePageGlyphData(TextPageDef *thePage);
     bool createImageDataFromPages(TextFontPagesDef *thePages, bool releaseRAWData = true);
     bool createFontRender();
     bool addGlyphsToLine(TextLineDef *line, const char *lineText, bool textIsUTF16 = false);

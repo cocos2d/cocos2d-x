@@ -38,7 +38,7 @@ public:
     
              FontRender(Font *pFont) { _font = pFont; }
     virtual ~FontRender() {}
-    virtual unsigned char * preparePageGlyphData(TextPageDef *thePage, char *fontName, int fontSize) = 0;
+    virtual  unsigned char * preparePageGlyphData(TextPageDef *thePage) = 0;
     
 protected:
     

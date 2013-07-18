@@ -35,11 +35,12 @@ public:
     
     FontRenderFreeType(Font *pFont): FontRender(pFont) {}
     virtual ~FontRenderFreeType()                      {}
-    virtual unsigned char * preparePageGlyphData(TextPageDef *thePage, char *fontName, int fontSize);
+    virtual unsigned char * preparePageGlyphData(TextPageDef *thePage);
 
 private:
     
     bool renderCharAt(unsigned short int charToRender, int posX, int posY, unsigned char *destMemory, int destSize);
+    
 };
 
 NS_CC_END

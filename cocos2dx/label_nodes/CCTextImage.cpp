@@ -28,12 +28,9 @@
 #include <string>
 
 #include "cocos2d.h"
-#include "CCFontIOS.h"
 #include "CCTextImage.h"
-#include "CCFontRenderIOS.h"
-
-// new stuff CarloX
 #include "CCFontFreeType.h"
+#include "CCFontRenderFreeType.h"
 
 NS_CC_BEGIN
 
@@ -169,21 +166,20 @@ TextFontPagesDef::~TextFontPagesDef()
     }
 }
 
-TextImage::TextImage(): _font(0), _fontRender(0)
+TextImage::TextImage(): _font(0), _fontRender(0), _fontPages(0)
 {
 }
 
 TextImage::~TextImage()
 {
     if (_fontPages)
-    {
         delete _fontPages;
-    }
     
     if (_font)
-    {
         delete _font;
-    }
+    
+    if (_fontRender)
+        delete _fontRender;
 }
 
 bool TextImage::initWithString(const char * pText, int nWidth, int nHeight, const char * pFontName, int nSize, bool releaseRAWData)
@@ -200,7 +196,7 @@ bool TextImage::initWithString(const char * pText, int nWidth, int nHeight, cons
         return false;
 
     
-    CGSize constrainSize;
+    Size constrainSize;
     unsigned short int *strUTF16 = 0;
     int stringNumChars;
     
@@ -225,7 +221,7 @@ bool TextImage::initWithString(const char * pText, int nWidth, int nHeight, cons
     int   currentPage     = 0;
     float currentY        = 0.0;
     
-    //carloX
+    // carloX this is heavy and should be replaced
     float lineHeight = _font->getTextWidthAndHeight(pText).height;
     
     // check if at least one line will fit in the texture
@@ -263,7 +259,6 @@ bool TextImage::initWithString(const char * pText, int nWidth, int nHeight, cons
             
             _fontPages->addPage(currentPageDef);
         }
-        
         
         // get the new fitting string
         Size tempSize;
@@ -333,12 +328,13 @@ bool TextImage::createFontRef(const char *fontName, int fontSize)
         _font = 0;
     }
     
+    // carloX 
     _font = new FontFreeType();
+    
     if (!_font)
         return false;
     
-    // carloX hack fixed font name for now, to be changed
-    if( !_font->createFontObject("fonts/arial.ttf", 26))
+    if( !_font->createFontObject(fontName, fontSize))
         return false;
     
     return true;
@@ -355,6 +351,7 @@ bool TextImage::createFontRender()
         _fontRender = 0;
     }
     
+    // carloX 
     _fontRender = new FontRenderFreeType(_font);
     
     if (!_fontRender)
@@ -420,7 +417,7 @@ bool TextImage::createImageDataFromPages(TextFontPagesDef *thePages, bool releas
     for (int c = 0; c < numPages; ++c)
     {
         unsigned char *pPageData = 0;
-        pPageData = preparePageGlyphData(thePages->getPageAt(c), thePages->getFontName(), thePages->getFontSize());
+        pPageData = preparePageGlyphData(thePages->getPageAt(c));
         
         if (pPageData)
         {
@@ -440,7 +437,7 @@ bool TextImage::createImageDataFromPages(TextFontPagesDef *thePages, bool releas
     return true;
 }
 
-unsigned char * TextImage::preparePageGlyphData(TextPageDef *thePage, char *fontName, int fontSize)
+unsigned char * TextImage::preparePageGlyphData(TextPageDef *thePage)
 {
     if ( !_fontRender )
     {
@@ -449,7 +446,7 @@ unsigned char * TextImage::preparePageGlyphData(TextPageDef *thePage, char *font
     
     if (_fontRender)
     {
-        return _fontRender->preparePageGlyphData(thePage, fontName, fontSize);
+        return _fontRender->preparePageGlyphData(thePage);
     }
     else
     {
