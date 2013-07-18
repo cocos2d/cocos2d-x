@@ -449,6 +449,7 @@ void CCDirector::purgeCachedData(void)
     CCLabelBMFont::purgeCachedData();
     if (s_SharedDirector->getOpenGLView())
     {
+		CCSpriteFrameCache::sharedSpriteFrameCache()->removeUnusedSpriteFrames();
         CCTextureCache::sharedTextureCache()->removeUnusedTextures();
     }
     CCFileUtils::sharedFileUtils()->purgeCachedEntries();
