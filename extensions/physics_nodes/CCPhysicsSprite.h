@@ -43,19 +43,7 @@ NS_CC_EXT_BEGIN
  */
 class PhysicsSprite : public Sprite
 {
-protected:
-    bool    _ignoreBodyRotation;
-
-
-    // chipmunk specific
-    cpBody  *_CPBody;
-
-    // box2d specific
-    b2Body  *_pB2Body;
-    float   _PTMRatio;
-
 public:
-    PhysicsSprite();
 
     static PhysicsSprite* create();
     /** Creates an sprite with a texture.
@@ -89,6 +77,8 @@ public:
      The offset will be (0,0).
      */
     static PhysicsSprite* create(const char *pszFileName, const Rect& rect);
+
+    PhysicsSprite();
 
     virtual bool isDirty() const;
 
@@ -125,6 +115,18 @@ public:
 
 protected:
     const Point& getPosFromPhysics() const;
+
+protected:
+    bool    _ignoreBodyRotation;
+
+    // chipmunk specific
+    cpBody  *_CPBody;
+
+    // box2d specific
+    b2Body  *_pB2Body;
+    float   _PTMRatio;
+    
+
 };
 
 NS_CC_EXT_END

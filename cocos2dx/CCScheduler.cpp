@@ -84,7 +84,7 @@ Timer::Timer()
 {
 }
 
-Timer* Timer::createWithTarget(Object *target, SEL_SCHEDULE selector)
+Timer* Timer::create(Object *target, SEL_SCHEDULE selector)
 {
     Timer *pTimer = new Timer();
 
@@ -94,7 +94,7 @@ Timer* Timer::createWithTarget(Object *target, SEL_SCHEDULE selector)
     return pTimer;
 }
 
-Timer* Timer::createWithTarget(Object *target, SEL_SCHEDULE selector, float seconds)
+Timer* Timer::create(Object *target, SEL_SCHEDULE selector, float seconds)
 {
     Timer *pTimer = new Timer();
 
