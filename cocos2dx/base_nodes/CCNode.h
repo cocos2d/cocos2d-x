@@ -935,7 +935,7 @@ public:
     virtual Rect getBoundingBox() const;
 
     /** @deprecated Use getBoundingBox instead */
-    CC_DEPRECATED_ATTRIBUTE Rect boundingBox() const;
+    CC_DEPRECATED_ATTRIBUTE inline virtual Rect boundingBox() const { return getBoundingBox(); }
 
     /// @{
     /// @name Actions
@@ -991,7 +991,7 @@ public:
      *
      * @return The action object with the given tag.
      */
-    Action* getActionByTag(int tag);
+    Action* getActionByTag(int tag) const;
 
     /** 
      * Returns the numbers of actions that are running plus the ones that are schedule to run (actions in actionsToAdd and actions arrays).
@@ -1003,7 +1003,10 @@ public:
      *
      * @return The number of actions that are running plus the ones that are schedule to run
      */
-    unsigned int numberOfRunningActions();
+    unsigned int getNumberOfRunningActions() const;
+
+    /** @deprecated Use getNumberOfRunningActions() instead */
+    CC_DEPRECATED_ATTRIBUTE unsigned int numberOfRunningActions() const { return getNumberOfRunningActions(); };
 
     /// @} end of Actions
     
@@ -1162,7 +1165,7 @@ public:
     virtual AffineTransform getNodeToParentTransform() const;
 
     /** @deprecated use getNodeToParentTransform() instead */
-    CC_DEPRECATED_ATTRIBUTE virtual AffineTransform nodeToParentTransform() const;
+    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToParentTransform() const { return getNodeToParentTransform(); }
 
     /** 
      * Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
@@ -1171,7 +1174,7 @@ public:
     virtual AffineTransform getParentToNodeTransform() const;
 
     /** @deprecated Use getParentToNodeTransform() instead */
-    CC_DEPRECATED_ATTRIBUTE virtual AffineTransform parentToNodeTransform() const;
+    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform parentToNodeTransform() const { return getParentToNodeTransform(); }
 
     /** 
      * Returns the world affine transform matrix. The matrix is in Pixels.
@@ -1179,7 +1182,7 @@ public:
     virtual AffineTransform getNodeToWorldTransform() const;
 
     /** @deprecated Use getNodeToWorldTransform() instead */
-    CC_DEPRECATED_ATTRIBUTE virtual AffineTransform nodeToWorldTransform() const;
+    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToWorldTransform() const { return getNodeToWorldTransform(); }
 
     /** 
      * Returns the inverse world affine transform matrix. The matrix is in Pixels.
@@ -1187,7 +1190,7 @@ public:
     virtual AffineTransform getWorldToNodeTransform() const;
 
     /** @deprecated Use worldToNodeTransform() instead */
-    CC_DEPRECATED_ATTRIBUTE virtual AffineTransform worldToNodeTransform() const;
+    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform worldToNodeTransform() const { return getWorldToNodeTransform(); }
 
     /// @} end of Transformations
     
@@ -1409,7 +1412,7 @@ public:
     virtual void setOpacity(GLubyte opacity) override;
     virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
     virtual bool isCascadeOpacityEnabled() const  override;
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled)  override;
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override;
     
     virtual const Color3B& getColor(void) const override;
     virtual const Color3B& getDisplayedColor() const override;

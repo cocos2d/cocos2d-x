@@ -129,102 +129,96 @@ private:
 
 class CCBSetSpriteFrame : public ActionInstant
 {
-private:
-    SpriteFrame *mSpriteFrame;
-    
 public:
-    ~CCBSetSpriteFrame();
-    
     /** creates a Place action with a position */
     static CCBSetSpriteFrame* create(SpriteFrame *pSpriteFrame);
+
+    ~CCBSetSpriteFrame();
+    
     bool initWithSpriteFrame(SpriteFrame *pSpriteFrame);
-    virtual void update(float time);
-	/** returns a new clone of the action */
-	virtual CCBSetSpriteFrame* clone() const;
 
-	/** returns a new reversed action */
-	virtual CCBSetSpriteFrame* reverse() const;
+    // Overrides
+    virtual void update(float time) override;
+	virtual CCBSetSpriteFrame* clone() const override;
+	virtual CCBSetSpriteFrame* reverse() const override;
+
+private:
+    SpriteFrame *mSpriteFrame;
 };
-
 
 
 class CCBSoundEffect : public ActionInstant
 {
-private:
-  std::string mSoundFile;
-  float mPitch, mPan, mGain;
-    
 public:
-    ~CCBSoundEffect();
-    
     static CCBSoundEffect* actionWithSoundFile(const std::string &file, float pitch, float pan, float gain);
+    ~CCBSoundEffect();
     bool initWithSoundFile(const std::string &file, float pitch, float pan, float gain);
-    virtual void update(float time);
-	/** returns a new clone of the action */
-	virtual CCBSoundEffect* clone() const;
 
-	/** returns a new reversed action */
-	virtual CCBSoundEffect* reverse() const;
+    // Overrides
+    virtual void update(float time) override;
+	virtual CCBSoundEffect* clone() const override;
+	virtual CCBSoundEffect* reverse() const override;
+
+private:
+    std::string mSoundFile;
+    float mPitch, mPan, mGain;
 };
 
 
 class CCBRotateTo : public ActionInterval
 {
-private:
-    float mStartAngle;
-    float mDstAngle;
-    float mDiffAngle;
-    
 public:
     static CCBRotateTo* create(float fDuration, float fAngle);
     bool initWithDuration(float fDuration, float fAngle);
-    virtual void update(float time);
-	/** returns a new clone of the action */
-	virtual CCBRotateTo* clone() const;
 
-	/** returns a new reversed action */
-	virtual CCBRotateTo* reverse() const;
+    // Override
+    virtual void update(float time) override;
+	virtual CCBRotateTo* clone() const override;
+	virtual CCBRotateTo* reverse() const override;
+    virtual void startWithTarget(Node *pNode) override;
 
-    virtual void startWithTarget(Node *pNode);
-};
-
-
-class CCBRotateXTo: public ActionInterval {
 private:
     float mStartAngle;
     float mDstAngle;
     float mDiffAngle;
+};
+
+
+class CCBRotateXTo: public ActionInterval
+{
 public:
     static CCBRotateXTo* create(float fDuration, float fAngle);
     bool initWithDuration(float fDuration, float fAngle);
-    virtual void startWithTarget(Node *pNode);
-	/** returns a new clone of the action */
-	virtual CCBRotateXTo* clone() const;
 
-	/** returns a new reversed action */
-	virtual CCBRotateXTo* reverse() const;
+    // Overrides
+    virtual void startWithTarget(Node *pNode) override;
+	virtual CCBRotateXTo* clone() const override;
+	virtual CCBRotateXTo* reverse() const override;
+    virtual void update(float time) override;
 
-    virtual void update(float time);
-};
-
-
-class CCBRotateYTo: public ActionInterval {
 private:
     float mStartAngle;
     float mDstAngle;
     float mDiffAngle;
+};
 
+
+class CCBRotateYTo: public ActionInterval
+{
 public:
     static CCBRotateYTo* create(float fDuration, float fAngle);
     bool initWithDuration(float fDuration, float fAngle);
-    virtual void startWithTarget(Node *pNode);
-	/** returns a new clone of the action */
-	virtual CCBRotateYTo* clone() const;
 
-	/** returns a new reversed action */
-	virtual CCBRotateYTo* reverse() const;
+    // Override
+    virtual void startWithTarget(Node *pNode) override;
+	virtual CCBRotateYTo* clone() const override;
+	virtual CCBRotateYTo* reverse() const override;
+    virtual void update(float time) override;
 
-    virtual void update(float time);
+private:
+    float mStartAngle;
+    float mDstAngle;
+    float mDiffAngle;
 };
 
 
@@ -233,13 +227,9 @@ class CCBEaseInstant : public ActionEase
 public:
     static CCBEaseInstant* create(ActionInterval *pAction);
 
-	/** returns a new clone of the action */
-	virtual CCBEaseInstant* clone() const;
-
-	/** returns a new reversed action */
-	virtual CCBEaseInstant* reverse() const;
-	
-    virtual void update(float dt);
+	virtual CCBEaseInstant* clone() const override;
+	virtual CCBEaseInstant* reverse() const override;
+    virtual void update(float dt) override;
 };
 
 
