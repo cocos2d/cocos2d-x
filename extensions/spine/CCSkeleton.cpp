@@ -203,7 +203,7 @@ TextureAtlas* CCSkeleton::getTextureAtlas (RegionAttachment* regionAttachment) c
 	return (TextureAtlas*)((AtlasRegion*)regionAttachment->rendererObject)->page->rendererObject;
 }
 
-Rect CCSkeleton::boundingBox () {
+Rect CCSkeleton::getBoundingBox() const {
 	float minX = FLT_MAX, minY = FLT_MAX, maxX = FLT_MIN, maxY = FLT_MIN;
 	float scaleX = getScaleX();
 	float scaleY = getScaleY();

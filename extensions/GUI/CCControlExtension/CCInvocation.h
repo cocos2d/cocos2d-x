@@ -50,15 +50,16 @@ typedef void (Object::*SEL_CCControlHandler)(Object*, ControlEvent);
 
 class Invocation : public Object
 {
-    CC_SYNTHESIZE_READONLY(SEL_CCControlHandler, _action, Action);
-    CC_SYNTHESIZE_READONLY(Object*, _target, Target);
-    CC_SYNTHESIZE_READONLY(ControlEvent, _controlEvent, ControlEvent);
-    
 public:
     static Invocation* create(Object* target, SEL_CCControlHandler action, ControlEvent controlEvent);
     Invocation(Object* target, SEL_CCControlHandler action, ControlEvent controlEvent);
 
     void invoke(Object* sender);
+
+protected:
+    CC_SYNTHESIZE_READONLY(SEL_CCControlHandler, _action, Action);
+    CC_SYNTHESIZE_READONLY(Object*, _target, Target);
+    CC_SYNTHESIZE_READONLY(ControlEvent, _controlEvent, ControlEvent);
 };
 
 // end of GUI group

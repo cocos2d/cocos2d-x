@@ -605,7 +605,8 @@ public:
      *
      * @return An array of children
      */
-    virtual Array* getChildren();
+    virtual Array* getChildren() { return _children; }
+    virtual const Array *getChildren() const { return _children; }
     
     /** 
      * Get the amount of children.
@@ -627,8 +628,9 @@ public:
      *
      * @returns A pointer to the parnet node
      */
-    virtual Node* getParent();
-    
+    virtual Node* getParent() { return _parent; }
+    virtual const Node* getParent() const { return _parent; }
+
     
     ////// REMOVES //////
     
@@ -714,7 +716,9 @@ public:
      * 
      * @return A Grid object that is used when applying effects
      */
-    virtual GridBase* getGrid();
+    virtual GridBase* getGrid() { return _grid; }
+    virtual const GridBase* getGrid() const { return _grid; }
+
     /**
      * Changes a grid object that is used when applying effects
      *
@@ -778,7 +782,9 @@ public:
      * 
      * @return A custom user data pointer
      */
-    virtual void* getUserData();
+    virtual void* getUserData() { return _userData; }
+    virtual const void* getUserData() const { return _userData; }
+
     /**
      * Sets a custom user data pointer
      *
@@ -797,7 +803,9 @@ public:
      *
      * @return A user assigned Object
      */
-    virtual Object* getUserObject();
+    virtual Object* getUserObject() { return _userObject; }
+    virtual const Object* getUserObject() const { return _userObject; }
+
     /**
      * Returns a user assigned Object
      *
@@ -820,7 +828,9 @@ public:
      * 
      * @return The shader program currelty used for this node
      */
-    virtual GLProgram* getShaderProgram();
+    virtual GLProgram* getShaderProgram() { return _shaderProgram; }
+    virtual const GLProgram* getShaderProgram() const { return _shaderProgram; }
+
     /**
      * Sets the shader program for this node
      *
@@ -953,8 +963,9 @@ public:
      * @see setActionManager(ActionManager*)
      * @return A ActionManager object.
      */
-    virtual ActionManager* getActionManager();
-    
+    virtual ActionManager* getActionManager() { return _actionManager; }
+    virtual const ActionManager* getActionManager() const { return _actionManager; }
+
     /** 
      * Executes an action, and returns the action that is executed.
      *
@@ -991,7 +1002,7 @@ public:
      *
      * @return The action object with the given tag.
      */
-    Action* getActionByTag(int tag) const;
+    Action* getActionByTag(int tag);
 
     /** 
      * Returns the numbers of actions that are running plus the ones that are schedule to run (actions in actionsToAdd and actions arrays).
@@ -1027,7 +1038,9 @@ public:
      * @see setScheduler(Scheduler*)
      * @return A Scheduler object.
      */
-    virtual Scheduler* getScheduler();
+    virtual Scheduler* getScheduler() { return _scheduler; }
+    virtual const Scheduler* getScheduler() const { return _scheduler; }
+
     
     /** 
      * Checks whether a selector is scheduled.
@@ -1287,7 +1300,7 @@ public:
     /** 
      *   gets a component by its name
      */
-    Component* getComponent(const char *pName) const;
+    Component* getComponent(const char *pName);
     
     /** 
      *   adds a component

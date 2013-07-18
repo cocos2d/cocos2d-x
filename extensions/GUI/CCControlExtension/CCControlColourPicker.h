@@ -50,30 +50,29 @@ NS_CC_EXT_BEGIN
 class ControlColourPicker: public Control
 {
 public:
-    ControlColourPicker();
-    virtual ~ControlColourPicker();
-    virtual void setColor(const Color3B& colorValue);
-    virtual void setEnabled(bool bEnabled);
-protected:
-    HSV _hsv;
-    CC_SYNTHESIZE_RETAIN(ControlSaturationBrightnessPicker*, _colourPicker, colourPicker)
-    CC_SYNTHESIZE_RETAIN(ControlHuePicker*, _huePicker, HuePicker)
-    CC_SYNTHESIZE_RETAIN(Sprite*, _background, Background)
-    
-public:
-
     static ControlColourPicker* create();
 
+    ControlColourPicker();
+    virtual ~ControlColourPicker();
+
     virtual bool init();
+
+    virtual void setColor(const Color3B& colorValue);
+    virtual void setEnabled(bool bEnabled);
+
     //virtual ~ControlColourPicker();
     void hueSliderValueChanged(Object * sender, ControlEvent controlEvent);
     void colourSliderValueChanged(Object * sender, ControlEvent controlEvent);
 
-protected:    
+protected:
     void updateControlPicker();
     void updateHueAndControlPicker();
     virtual bool ccTouchBegan(Touch* touch, Event* pEvent);
-    
+
+    HSV _hsv;
+    CC_SYNTHESIZE_RETAIN(ControlSaturationBrightnessPicker*, _colourPicker, colourPicker)
+    CC_SYNTHESIZE_RETAIN(ControlHuePicker*, _huePicker, HuePicker)
+    CC_SYNTHESIZE_RETAIN(Sprite*, _background, Background)
 };
 
 // end of GUI group
