@@ -52,7 +52,7 @@ public:
     //
 	virtual ProgressTo* clone() const override;
 	virtual ProgressTo* reverse(void) const override;
-    virtual void startWithTarget(Node *pTarget) override;
+    virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
 
 protected:
@@ -78,7 +78,7 @@ public:
     //
 	virtual ProgressFromTo* clone() const override;
 	virtual ProgressFromTo* reverse(void) const override;
-    virtual void startWithTarget(Node *pTarget) override;
+    virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
 
 protected:

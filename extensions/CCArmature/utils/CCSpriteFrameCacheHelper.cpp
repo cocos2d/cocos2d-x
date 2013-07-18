@@ -94,7 +94,7 @@ void SpriteFrameCacheHelper::addSpriteFrameFromDict(Dictionary *dictionary, Text
 
         //CCLog("spriteFrameName : %s,    imagePath : %s", spriteFrameName.c_str(), _imagePath);
 
-        SpriteFrame *spriteFrame = (SpriteFrame *)SpriteFrameCache::getInstance()->spriteFrameByName(spriteFrameName.c_str());
+        SpriteFrame *spriteFrame = (SpriteFrame *)SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName.c_str());
         if (spriteFrame)
         {
             continue;

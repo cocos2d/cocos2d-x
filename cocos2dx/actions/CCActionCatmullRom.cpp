@@ -265,16 +265,16 @@ CardinalSplineTo::CardinalSplineTo()
 {
 }
 
-void CardinalSplineTo::startWithTarget(cocos2d::Node *pTarget)
+void CardinalSplineTo::startWithTarget(cocos2d::Node *target)
 {
-    ActionInterval::startWithTarget(pTarget);
+    ActionInterval::startWithTarget(target);
 	
 //    _deltaT = (float) 1 / _points->count();
     
     // Issue #1441
     _deltaT = (float) 1 / (_points->count() - 1);
 
-    _previousPosition = pTarget->getPosition();
+    _previousPosition = target->getPosition();
     _accumulatedDiff = Point::ZERO;
 }
 
@@ -416,10 +416,10 @@ CardinalSplineBy* CardinalSplineBy::reverse() const
     return CardinalSplineBy::create(_duration, pReverse, _tension);
 }
 
-void CardinalSplineBy::startWithTarget(cocos2d::Node *pTarget)
+void CardinalSplineBy::startWithTarget(cocos2d::Node *target)
 {    
-    CardinalSplineTo::startWithTarget(pTarget);
-    _startPosition = pTarget->getPosition();
+    CardinalSplineTo::startWithTarget(target);
+    _startPosition = target->getPosition();
 }
 
 CardinalSplineBy* CardinalSplineBy::clone() const
