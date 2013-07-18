@@ -52,11 +52,11 @@ public:
     void ComputeMass(b2MassData* massData, float32 density) const;
     
     /// These are the edge vertices
-    b2Vec2 m_vertex1, m_Vertex2F;
+    b2Vec2 m_vertex1, m_vertex2;
 
     /// Optional adjacent vertices. These are used for smooth collision.
-    b2Vec2 m_vertex0, m_Vertex3F;
-    bool m_hasVertex0, m_hasVertex3F;
+    b2Vec2 m_vertex0, m_vertex3;
+    bool m_hasVertex0, m_hasVertex3;
 };
 
 inline b2EdgeShape::b2EdgeShape()
@@ -65,10 +65,10 @@ inline b2EdgeShape::b2EdgeShape()
     m_radius = b2_polygonRadius;
     m_vertex0.x = 0.0f;
     m_vertex0.y = 0.0f;
-    m_Vertex3F.x = 0.0f;
-    m_Vertex3F.y = 0.0f;
+    m_vertex3.x = 0.0f;
+    m_vertex3.y = 0.0f;
     m_hasVertex0 = false;
-    m_hasVertex3F = false;
+    m_hasVertex3 = false;
 }
 
 #endif
