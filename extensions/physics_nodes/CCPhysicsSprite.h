@@ -96,15 +96,6 @@ public:
     bool isIgnoreBodyRotation() const;
     void setIgnoreBodyRotation(bool bIgnoreBodyRotation);
 
-    virtual const Point& getPosition() const;
-    virtual void getPosition(float* x, float* y) const;
-    virtual float getPositionX() const;
-    virtual float getPositionY() const;
-    virtual void setPosition(const Point &position);
-    virtual float getRotation() const;
-    virtual void setRotation(float fRotation);
-    virtual AffineTransform nodeToParentTransform();
-
     //
     // Chipmunk specific
     //
@@ -121,6 +112,16 @@ public:
 
     float getPTMRatio() const;
     void setPTMRatio(float fPTMRatio);
+
+    // overrides
+    virtual const Point& getPosition() const override;
+    virtual void getPosition(float* x, float* y) const override;
+    virtual float getPositionX() const override;
+    virtual float getPositionY() const override;
+    virtual void setPosition(const Point &position) override;
+    virtual float getRotation() const override;
+    virtual void setRotation(float fRotation) override;
+    virtual AffineTransform getNodeToParentTransform() const override;
 
 protected:
     const Point& getPosFromPhysics() const;

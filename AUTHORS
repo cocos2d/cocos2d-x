@@ -443,6 +443,7 @@ Developers:
         Explicitly initialising CCAcceleration structure.
         Add support to save/retrieve CCData into/from CCUserDefault.
         Text Shadows fix
+        Solving 'black screen' on android.
 
     MarcelBloemendaal
         Adding secureTextEntry property to CCTextFieldTTF.
@@ -527,6 +528,7 @@ Developers:
         
     Sam Gross (colesbury)
         Ignoring formatting specifiers in JavaScript log messages.
+        Make bindings-generator supports to bind std::function argument.
         
     James Munro (jdmunro)
         Added JSB support for ccpDistanceSQ.

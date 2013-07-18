@@ -67,7 +67,7 @@ bool ControlHuePicker::initWithTargetAndPos(Node* target, Point pos)
         this->setBackground(ControlUtils::addSpriteToTargetWithPosAndAnchor("huePickerBackground.png", target, pos, Point(0.0f, 0.0f)));
         this->setSlider(ControlUtils::addSpriteToTargetWithPosAndAnchor("colourPicker.png", target, pos, Point(0.5f, 0.5f)));
         
-        _slider->setPosition(Point(pos.x, pos.y + _background->boundingBox().size.height * 0.5f));
+        _slider->setPosition(Point(pos.x, pos.y + _background->getBoundingBox().size.height * 0.5f));
         _startPos=pos;
 
         // Sets the default value
@@ -96,7 +96,7 @@ void ControlHuePicker::setHuePercentage(float hueValueInPercent)
     _hue=_huePercentage*360.0f;
 
     // Clamp the position of the icon within the circle
-    Rect backgroundBox=_background->boundingBox();
+    Rect backgroundBox=_background->getBoundingBox();
 
     // Get the center point of the background image
     float centerX           = _startPos.x + backgroundBox.size.width * 0.5f;
@@ -129,7 +129,7 @@ void ControlHuePicker::updateSliderPosition(Point location)
 {
 
     // Clamp the position of the icon within the circle
-    Rect backgroundBox=_background->boundingBox();
+    Rect backgroundBox=_background->getBoundingBox();
     
     // Get the center point of the background image
     float centerX           = _startPos.x + backgroundBox.size.width * 0.5f;

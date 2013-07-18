@@ -566,7 +566,7 @@ void TableView::ccTouchEnded(Touch *pTouch, Event *pEvent)
     }
 
     if (_touchedCell){
-		Rect bb = this->boundingBox();
+		Rect bb = this->getBoundingBox();
 		bb.origin = _parent->convertToWorldSpace(bb.origin);
 
 		if (bb.containsPoint(pTouch->getLocation()) && _tableViewDelegate != NULL)
