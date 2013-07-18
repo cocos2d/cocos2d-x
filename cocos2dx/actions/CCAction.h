@@ -65,7 +65,7 @@ public:
     virtual bool isDone(void) const;
 
     //! called before the action start. It will also set the target.
-    virtual void startWithTarget(Node *pTarget);
+    virtual void startWithTarget(Node *target);
 
     /** 
     called after the action has finished. It will set the 'target' to nil.
@@ -88,7 +88,7 @@ public:
     
     inline Node* getTarget(void) const { return _target; }
     /** The action will modify the target properties. */
-    inline void setTarget(Node *pTarget) { _target = pTarget; }
+    inline void setTarget(Node *target) { _target = target; }
     
     inline Node* getOriginalTarget(void) const { return _originalTarget; }
     /** Set the original target, since target can be nil.
@@ -157,7 +157,6 @@ class RepeatForever;
 class CC_DLL Speed : public Action
 {
 public:
-
     /** create the action */
     static Speed* create(ActionInterval* pAction, float fSpeed);
 
@@ -173,7 +172,7 @@ public:
 
     void setInnerAction(ActionInterval *pAction);
 
-    inline ActionInterval* getInnerAction()
+    inline ActionInterval* getInnerAction() const
     {
         return _innerAction;
     }
@@ -183,7 +182,7 @@ public:
     //
 	virtual Speed* clone() const override;
     virtual Speed* reverse() const override;
-    virtual void startWithTarget(Node* pTarget) override;
+    virtual void startWithTarget(Node* target) override;
     virtual void stop() override;
     virtual void step(float dt) override;
     virtual bool isDone(void) const  override;

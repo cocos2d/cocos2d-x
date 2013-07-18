@@ -208,7 +208,7 @@ void GridBase::beforeDraw(void)
     _grabber->beforeRender(_texture);
 }
 
-void GridBase::afterDraw(cocos2d::Node *pTarget)
+void GridBase::afterDraw(cocos2d::Node *target)
 {
     _grabber->afterRender(_texture);
 
@@ -216,15 +216,15 @@ void GridBase::afterDraw(cocos2d::Node *pTarget)
     Director *director = Director::getInstance();
     director->setProjection(_directorProjection);
 
-    if (pTarget->getCamera()->isDirty())
+    if (target->getCamera()->isDirty())
     {
-        Point offset = pTarget->getAnchorPointInPoints();
+        Point offset = target->getAnchorPointInPoints();
 
         //
         // XXX: Camera should be applied in the AnchorPoint
         //
         kmGLTranslatef(offset.x, offset.y, 0);
-        pTarget->getCamera()->locate();
+        target->getCamera()->locate();
         kmGLTranslatef(-offset.x, -offset.y, 0);
     }
 
@@ -424,12 +424,7 @@ void Grid3D::calculateVertexPoints(void)
     memcpy(_originalVertices, _vertices, (_gridSize.width+1) * (_gridSize.height+1) * sizeof(Vertex3F));
 }
 
-Vertex3F Grid3D::vertex(const Point& pos)
-{
-    return getVertex(pos);
-}
-
-Vertex3F Grid3D::getVertex(const Point& pos)
+Vertex3F Grid3D::getVertex(const Point& pos) const
 {
     CCAssert( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     
@@ -441,12 +436,7 @@ Vertex3F Grid3D::getVertex(const Point& pos)
     return vert;
 }
 
-Vertex3F Grid3D::originalVertex(const Point& pos)
-{
-    return getOriginalVertex(pos);
-}
-
-Vertex3F Grid3D::getOriginalVertex(const Point& pos)
+Vertex3F Grid3D::getOriginalVertex(const Point& pos) const
 {
     CCAssert( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     
@@ -662,7 +652,7 @@ void TiledGrid3D::setTile(const Point& pos, const Quad3& coords)
     memcpy(&vertArray[idx], &coords, sizeof(Quad3));
 }
 
-Quad3 TiledGrid3D::getOriginalTile(const Point& pos)
+Quad3 TiledGrid3D::getOriginalTile(const Point& pos) const
 {
     CCAssert( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     int idx = (_gridSize.height * pos.x + pos.y) * 4 * 3;
@@ -674,7 +664,7 @@ Quad3 TiledGrid3D::getOriginalTile(const Point& pos)
     return ret;
 }
 
-Quad3 TiledGrid3D::getTile(const Point& pos)
+Quad3 TiledGrid3D::getTile(const Point& pos) const
 {
     CCAssert( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     int idx = (_gridSize.height * pos.x + pos.y) * 4 * 3;
@@ -684,16 +674,6 @@ Quad3 TiledGrid3D::getTile(const Point& pos)
     memcpy(&ret, &vertArray[idx], sizeof(Quad3));
 
     return ret;
-}
-
-Quad3 TiledGrid3D::originalTile(const Point& pos)
-{
-    return getOriginalTile(pos);
-}
-
-Quad3 TiledGrid3D::tile(const Point& pos)
-{
-    return getTile(pos);
 }
 
 void TiledGrid3D::reuse(void)
