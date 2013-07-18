@@ -118,7 +118,7 @@ Sprite* Sprite::createWithSpriteFrame(SpriteFrame *pSpriteFrame)
 
 Sprite* Sprite::createWithSpriteFrameName(const char *pszSpriteFrameName)
 {
-    SpriteFrame *pFrame = SpriteFrameCache::getInstance()->spriteFrameByName(pszSpriteFrameName);
+    SpriteFrame *pFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(pszSpriteFrameName);
     
 #if COCOS2D_DEBUG > 0
     char msg[256] = {0};
@@ -263,7 +263,7 @@ bool Sprite::initWithSpriteFrameName(const char *pszSpriteFrameName)
 {
     CCAssert(pszSpriteFrameName != NULL, "");
 
-    SpriteFrame *pFrame = SpriteFrameCache::getInstance()->spriteFrameByName(pszSpriteFrameName);
+    SpriteFrame *pFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(pszSpriteFrameName);
     return initWithSpriteFrame(pFrame);
 }
 
