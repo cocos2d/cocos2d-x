@@ -250,14 +250,14 @@ public:
     virtual ~CallFunc();
 
 	/** initializes the action with the callback 
-    
     typedef void (Object::*SEL_CallFunc)();
+    @deprecated Use the std::function API instead.
     */
-    virtual bool initWithTarget(Object* pSelectorTarget);
+    CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Object* pSelectorTarget);
 
 	/** initializes the action with the std::function<void()>
 	 */
-    virtual bool initWithFunction(const std::function<void()>& func);
+    bool initWithFunction(const std::function<void()>& func);
 
     /** executes the callback */
     virtual void execute();
@@ -329,14 +329,14 @@ public:
 
     /** initializes the action with the std::function<void(Node*)>
 	 */
-    virtual bool initWithFunction(const std::function<void(Node*)>& func);
+    bool initWithFunction(const std::function<void(Node*)>& func);
 
     /** initializes the action with the callback 
 
     typedef void (Object::*SEL_CallFuncN)(Node*);
     @deprecated Use the std::function API instead.
     */
-    CC_DEPRECATED_ATTRIBUTE virtual bool initWithTarget(Object* pSelectorTarget, SEL_CallFuncN selector);
+    CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Object* pSelectorTarget, SEL_CallFuncN selector);
 
     virtual long getClassTypeInfo() {
 		static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CallFunc).name());

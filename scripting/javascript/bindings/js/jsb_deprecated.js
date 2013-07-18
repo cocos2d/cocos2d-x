@@ -25,4 +25,24 @@ var cc = cc || {};
         return cc.Animation.prototype.clone.apply(this, arguments);
     };
 
+    cc.Node.prototype.nodeToWorldTransform = function() {
+        logW("cc.Node.nodeToWorldTransform", "cc.Node.getNodeToWorldTransform");
+        return cc.Node.prototype.getNodeToWorldTransform.apply(this, arguments);
+    };
+
+    cc.Node.prototype.nodeToParentTransform = function() {
+        logW("cc.Node.nodeToParentTransform", "cc.Node.getNodeToParentTransform");
+        return cc.Node.prototype.getNodeToParentTransform.apply(this, arguments);
+    };
+
+    cc.Node.prototype.worldToNodeTransform = function() {
+        logW("cc.Node.worldToNodeTransform", "cc.Node.getWorldToNodeTransform");
+        return cc.Node.prototype.getWorldToNodeTransform.apply(this, arguments);
+    };
+
+    cc.Node.prototype.parentToNodeTransform = function() {
+        logW("cc.Node.parentToNodeTransform", "cc.Node.getParentToNodeTransform");
+        return cc.Node.prototype.getParentToNodeTransform.apply(this, arguments);
+    };
+    
 })();

@@ -35,6 +35,8 @@ THE SOFTWARE.
 #include <stdio.h>
 #include <unistd.h>
 
+NS_CC_BEGIN
+
 typedef struct
 {
     unsigned int height;
@@ -55,28 +57,6 @@ static unsigned int nextPOT(unsigned int x)
     x = x | (x >> 16);
     return x + 1;
 }
-
-typedef enum {
-    kTexture2DPixelFormat_Automatic = 0,
-        //! 32-bit texture: RGBA8888
-    kTexture2DPixelFormat_RGBA8888,
-        //! 24-bit texture: RGBA888
-    kTexture2DPixelFormat_RGB888,
-        //! 16-bit texture without Alpha channel
-    kTexture2DPixelFormat_RGB565,
-        //! 8-bit textures used as masks
-    kTexture2DPixelFormat_A8,
-        //! 16-bit textures: RGBA4444
-    kTexture2DPixelFormat_RGBA4444,
-        //! 16-bit textures: RGB5A1
-    kTexture2DPixelFormat_RGB5A1,    
-    
-        //! Default texture format: RGBA8888
-    kTexture2DPixelFormat_Default = kTexture2DPixelFormat_RGBA8888,
-    
-        // backward compatibility stuff
-    
-} Texture2DPixelFormat;
 
 static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POTWide, NSUInteger POTHigh, tImageInfo *pImageInfo)
 {
@@ -483,7 +463,6 @@ static bool _initWithString(const char * pText, cocos2d::Image::ETextAlign eAlig
     return bRet;
 }
 
-NS_CC_BEGIN
 
 static bool _enabledScale = true;
 

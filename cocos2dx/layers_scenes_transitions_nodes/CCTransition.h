@@ -88,7 +88,7 @@ public:
     virtual ~TransitionScene();
 
     /** initializes a transition with duration and incoming scene */
-    virtual bool initWithDuration(float t,Scene* scene);
+    bool initWithDuration(float t,Scene* scene);
 
     /** called after the transition finishes */
     void finish(void);
@@ -131,7 +131,7 @@ public:
     virtual ~TransitionSceneOriented();
 
     /** initializes a transition with duration and incoming scene */
-    virtual bool initWithDuration(float t,Scene* scene,tOrientation orientation);
+    bool initWithDuration(float t,Scene* scene,tOrientation orientation);
 
 protected:
     tOrientation _orientation;
@@ -468,12 +468,12 @@ public:
     virtual ~TransitionFade();
 
     /** initializes the transition with a duration and with an RGB color */
-    virtual bool initWithDuration(float t, Scene*scene ,const Color3B& color);
+    bool initWithDuration(float t, Scene*scene ,const Color3B& color);
 
     //
     // Overrides
     //
-    virtual bool initWithDuration(float t,Scene* scene);
+    bool initWithDuration(float t,Scene* scene);
     virtual void onEnter();
     virtual void onExit();
 
