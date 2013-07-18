@@ -1,11 +1,32 @@
-
+/****************************************************************************
+ Copyright (c) 2013      Zynga Inc.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 #include <stdio.h>
 #include "cocos2d.h"
+#include "ccUTF8.h"
 #include "CCFontFreeType.h"
 #include "CCTextImage.h"
-#include "ccUTF8.h"
-
 
 NS_CC_BEGIN
 
@@ -102,19 +123,8 @@ bool FontFreeType::getBBOXFotChar(unsigned short theChar, Rect &outRect)
     if (FT_Load_Glyph(_fontRef, glyph_index, FT_LOAD_DEFAULT))
         return false;
     
-    
-    
     // store result in the passed rectangle
     outRect.origin.x    = 0;
-    
-    // hack carloX //////////////////////////////////////////
-    FT_Render_Glyph(  _fontRef->glyph, FT_RENDER_MODE_NORMAL );
-    int testCarloX =  _fontRef->glyph->bitmap.width;
-    int testCarloX2 = (_fontRef->glyph->metrics.horiBearingX >>6);
-    /////////////////////////////////////////////////////////
-                      
-                      
-                      
     outRect.origin.y    = - (_fontRef->glyph->metrics.horiBearingY >> 6);
     outRect.size.width  =   (_fontRef->glyph->metrics.width  >> 6);
     outRect.size.height =   (_fontRef->glyph->metrics.height >> 6);
@@ -179,7 +189,7 @@ GlyphDef * FontFreeType::getGlyphsForText(const char *pText, int &outNumGlyphs, 
     return pGlyphs;
 }
 
-Size * FontFreeType::getAdvancesForTextUTF8(unsigned short *pText, int &outNumLetters)
+Size * FontFreeType::getAdvancesForTextUTF16(unsigned short *pText, int &outNumLetters)
 {
     if (!pText)
         return 0;
@@ -224,22 +234,9 @@ int FontFreeType::getAdvanceForChar(unsigned short theChar)
     if (FT_Load_Glyph(_fontRef, glyph_index, FT_LOAD_DEFAULT))
         return 0;
     
-    
-    
-    // carloX //// hack to be moved somewhere eles ///////////////
-    
-    FT_Render_Glyph( _fontRef->glyph, FT_RENDER_MODE_NORMAL );
-    int testBMP = _fontRef->glyph->bitmap_left;
-    
-    // end hack/////////////////////////////////////////////////////
-    
-    
     // get to the advance for this glyph
     return (_fontRef->glyph->advance.x >> 6);
-    
-    //return (_fontRef->glyph->advance.x >> 6) + testBMP;
 }
-
 
 int FontFreeType::getBearingXForChar(unsigned short theChar)
 {
@@ -303,7 +300,7 @@ Size * FontFreeType::getAdvancesForText(const char *pText, int &outNumLetters, b
         utf16String = cc_utf8_to_utf16(pText);
     }
     
-    Size *ret = getAdvancesForTextUTF8(utf16String, outNumLetters);
+    Size *ret = getAdvancesForTextUTF16(utf16String, outNumLetters);
     
     if (!UTF16text)
         delete [] utf16String;
@@ -357,46 +354,15 @@ unsigned char *   FontFreeType::getGlyphBitmap(unsigned short theChar, int &outW
     return _fontRef->glyph->bitmap.buffer;
 }
 
-unsigned short int * FontFreeType::getUTF8Text(const char *pText, int &outNumLetters)
+unsigned short int * FontFreeType::getUTF16Text(const char *pText, int &outNumLetters)
 {
     unsigned short* utf16String = cc_utf8_to_utf16(pText);
+    
     if(!utf16String)
         return 0;
+    
     outNumLetters = cc_wcslen(utf16String);
     return utf16String;
-}
-
-// carloX this could be broken
-const char * FontFreeType::trimUTF8Text(const char *pText, int newBegin, int newEnd)
-{
-    if ( newBegin<0 || newEnd<=0 )
-        return 0;
-    
-    if ( newBegin>=newEnd )
-        return 0;
-    
-    unsigned short* utf16String = cc_utf8_to_utf16(pText);
-    if (!utf16String)
-        return 0;
-    
-    if (newEnd >= cc_wcslen(utf16String))
-        return 0;
-    
-    int newLenght = newEnd - newBegin + 2;
-    unsigned short* trimmedString = new unsigned short[newLenght];
-    
-    for(int c = 0; c < (newLenght-1); ++c)
-    {
-        trimmedString[c] = utf16String[newBegin + c];
-    }
-    
-    // last char
-    trimmedString[newLenght-1] = 0x0000;
-    
-    // release temp
-    delete [] utf16String;
-    
-    return (const char *)trimmedString;
 }
 
 unsigned short int  * FontFreeType::trimUTF16Text(unsigned short int *pText, int newBegin, int newEnd)
@@ -423,18 +389,6 @@ unsigned short int  * FontFreeType::trimUTF16Text(unsigned short int *pText, int
 
     // done 
     return trimmedString;
-}
-
-
-int FontFreeType::getUTF8TextLenght(const char *pText)
-{
-    unsigned short* utf16String = cc_utf8_to_utf16(pText);
-    if (!utf16String)
-        return -1;
-    int outNumLetters = cc_wcslen(utf16String);
-    delete [] utf16String;
-    
-    return outNumLetters;
 }
 
 NS_CC_END

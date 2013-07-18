@@ -105,7 +105,7 @@ GlyphDef * FontIOS::getGlyphsForText(const char *pText, int &outNumGlyphs, bool 
     return pGlyphs;
 }
 
-Size * FontIOS::getAdvancesForTextUTF8(unsigned short *pText, int &outNumLetters)
+Size * FontIOS::getAdvancesForTextUTF16(unsigned short *pText, int &outNumLetters)
 {
     if (!pText)
         return 0;
@@ -173,10 +173,10 @@ Size * FontIOS::getAdvancesForTextUTF8(unsigned short *pText, int &outNumLetters
 
 Size * FontIOS::getAdvancesForText(const char *pText, int &outNumLetters, bool UTF16text)
 {
-    unsigned short int *utf8Text = FontIOS::getUTF8Text(pText, outNumLetters);
+    unsigned short int *utf8Text = FontIOS::getUTF16Text(pText, outNumLetters);
     if (utf8Text)
     {
-        Size *ret = getAdvancesForTextUTF8(utf8Text, outNumLetters);
+        Size *ret = getAdvancesForTextUTF16(utf8Text, outNumLetters);
         delete [] utf8Text;
         return ret;
     }
@@ -198,7 +198,7 @@ Size FontIOS::getTextWidthAndHeight(const char *pText, bool UTF16text)
     return retSize;
 }
 
-unsigned short int * FontIOS::getUTF8Text(const char *pText, int &outNumLetters)
+unsigned short int * FontIOS::getUTF16Text(const char *pText, int &outNumLetters)
 {
     CFStringRef lettersString = CFStringCreateWithCString(kCFAllocatorDefault, pText, kCFStringEncodingUTF8);
     if (NULL == lettersString)
@@ -222,41 +222,6 @@ unsigned short int * FontIOS::getUTF8Text(const char *pText, int &outNumLetters)
     characters[count] = 0;
     
     return (unsigned short int *) characters;
-}
-
-const char * FontIOS::trimUTF8Text(const char *pText, int newBegin, int newEnd)
-{
-    if ( newBegin<0 || newEnd<=0 )
-        return 0;
-    
-    if ( newBegin>=newEnd )
-        return 0;
-    
-    NSString * str      = [NSString stringWithUTF8String:pText];
-    if ( newEnd >= [str length])
-        return 0;
-    
-    NSRange theRange;
-    
-    theRange.location = newBegin;
-    theRange.length   = (newEnd - newBegin) +1;
-    
-    // trim the string
-    NSString *trimmedString = [str substringWithRange:theRange];
-    
-    // ret the string
-    return [trimmedString UTF8String];
-}
-
-int FontIOS::getUTF8TextLenght(const char *pText)
-{
-    CFStringRef lettersString = CFStringCreateWithCString(kCFAllocatorDefault, pText, kCFStringEncodingUTF8);
-    if (NULL == lettersString)
-    {
-        return 0;
-    }
-    
-    return  CFStringGetLength(lettersString);
 }
 
 NS_CC_END
