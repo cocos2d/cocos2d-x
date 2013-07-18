@@ -3,13 +3,6 @@
 #include "AppDelegate.h"
 #include "CCLuaEngine.h"
 #include "SimpleAudioEngine.h"
-#include "Lua_extensions_CCB.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-#include "Lua_web_socket.h"
-#endif
-#include "LuaOpengl.h"
-#include "LuaScrollView.h"
-#include "LuaScriptHandlerMgr.h"
 
 using namespace CocosDenshion;
 
@@ -57,16 +50,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     LuaEngine* pEngine = LuaEngine::defaultEngine();
     ScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
     
-    LuaStack *pStack = pEngine->getLuaStack();
-    lua_State *tolua_s = pStack->getLuaState();
-    tolua_extensions_ccb_open(tolua_s);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    tolua_web_socket_open(tolua_s);
-#endif
-    tolua_opengl_open(tolua_s);
-    tolua_scroll_view_open(tolua_s);
-    tolua_script_handler_mgr_open(tolua_s);
-    
     std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
     searchPaths.push_back("cocosbuilderRes");
 
@@ -76,7 +59,6 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif
     FileUtils::getInstance()->setSearchPaths(searchPaths);
 
-    pEngine->extendLuaObject();
     pEngine->executeScriptFile("luaScript/controller.lua");
     
     return true;

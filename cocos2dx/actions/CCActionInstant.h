@@ -236,13 +236,9 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE static CallFunc * create(Object* pSelectorTarget, SEL_CallFunc selector);
 
-	/** creates the action with the handler script function */
-	static CallFunc * create(int nHandler);
-
 public:
     CallFunc()
         : _selectorTarget(NULL)
-		, _scriptHandler(0)
         , _callFunc(NULL)
 		, _function(nullptr)
     {
@@ -276,9 +272,6 @@ public:
             _selectorTarget = pSel; 
         }
     }
-    
-    inline int getScriptHandler() const { return _scriptHandler; };
-
     //
     // Overrides
     //
@@ -289,8 +282,6 @@ public:
 protected:
     /** Target that will be called */
     Object*   _selectorTarget;
-
-	int _scriptHandler;
 
     union
     {
@@ -320,10 +311,6 @@ public:
      @deprecated Use the std::function API instead.
     */
     CC_DEPRECATED_ATTRIBUTE static CallFuncN * create(Object* pSelectorTarget, SEL_CallFuncN selector);
-
-	/** creates the action with the handler script function */
-	static CallFuncN * create(int nHandler);
-
 public:
     CallFuncN():_functionN(nullptr){}
 
