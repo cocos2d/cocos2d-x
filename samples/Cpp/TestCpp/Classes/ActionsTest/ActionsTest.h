@@ -249,7 +249,7 @@ public:
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
-    void removeFromParentAndCleanup(Node* pSender, bool cleanup);
+    void doRemoveFromParentAndCleanup(Node* pSender, bool cleanup);
 };
 
 class ActionCallFuncO : public ActionsDemo

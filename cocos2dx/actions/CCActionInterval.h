@@ -266,7 +266,7 @@ public:
     /** initializes the action */
     bool initWithDuration(float fDuration, float fDeltaAngle);
     
-    virtual bool initWithDuration(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
+    bool initWithDuration(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
 
     //
     // Overrides
@@ -378,7 +378,7 @@ public:
     static SkewTo* create(float t, float sx, float sy);
 
     SkewTo();
-    virtual bool initWithDuration(float t, float sx, float sy);
+    bool initWithDuration(float t, float sx, float sy);
 
     //
     // Overrides
@@ -408,7 +408,7 @@ public:
     /** creates the action */
     static SkewBy* create(float t, float deltaSkewX, float deltaSkewY);
 
-    virtual bool initWithDuration(float t, float sx, float sy);
+    bool initWithDuration(float t, float sx, float sy);
 
     //
     // Overrides
