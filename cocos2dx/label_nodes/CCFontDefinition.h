@@ -1,5 +1,4 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2013      Zynga Inc.
  
  http://www.cocos2d-x.org
@@ -23,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef _FontDefinition_h
-#define _FontDefinition_h
+#ifndef _FontDefinition_h_
+#define _FontDefinition_h_
 
 #include "CCTextImage.h"
 #include "CCFont.h"
@@ -33,14 +32,13 @@ NS_CC_BEGIN
 
 struct LetterDefinition
 {
-    unsigned short  letteCharUTF8;
+    unsigned short  letteCharUTF16;
     float           U;
     float           V;
     float           width;
     float           height;
     float           offsetX;
     float           offsetY;
-    
     int             textureID;
     float           commonLineHeight;
 };
@@ -53,33 +51,20 @@ public:
    ~LabelFontDefinition();
     
     bool createFontDefinition(char *fontName, int fontSize, char *letters, int textureSize = 512, bool debugOutput = false);
-    
     LetterDefinition & getLetterDefinition(unsigned short int theLetter);
     Texture2D * getTexture(int index);
-    Font * getFont()                        { if (debugUseFreetype) return _textImages->getFontNew(); else return _textImages->getFont(); }
-    float  getCommonLineHeight()            { if (debugUseFreetype) return _commonLineHeightNew; else return _commonLineHeight;           }
+    
+    Font * getFont()                        { return _textImages->getFont(); }
+    float  getCommonLineHeight()            { return _commonLineHeight;      }
     
 private:
     
-    
     bool prepareLetterDefinitions(TextFontPagesDef *pageDefs);
+    void addLetterDefinition(LetterDefinition &defToAdd);
     
-    
-    // carloX
-    bool prepareLetterDefinitionsNew(TextFontPagesDef *pageDefs);
-    void addLetterDefNew(LetterDefinition &defToAdd);
-    std::map<unsigned short, LetterDefinition>  _fontLettersDefinitionUTF16;
-    float                                       _commonLineHeightNew;
-    
-    
-    void   addLetterDef(LetterDefinition &defToAdd);
     TextImage *                                 _textImages;
+    std::map<unsigned short, LetterDefinition>  _fontLettersDefinitionUTF16;
     float                                       _commonLineHeight;
-    std::map<unsigned short, LetterDefinition>  _fontLettersDefinitionUTF8;
-    
-    
-    bool debugUseFreetype;
-        
     
 };
 

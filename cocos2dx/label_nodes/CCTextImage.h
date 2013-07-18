@@ -1,5 +1,4 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2013      Zynga Inc.
  
  http://www.cocos2d-x.org
@@ -23,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef _TextImage_h
-#define _TextImage_h
+#ifndef _TextImage_h_
+#define _TextImage_h_
 
 #include "CCFontRender.h"
 #include "CCFont.h"
@@ -84,11 +83,11 @@ public:
     
 private:
     
-    float _x;
-    float _y;
-    float _width;
-    float _height;
-    std::vector<GlyphDef> _glyphs;
+    float                   _x;
+    float                   _y;
+    float                   _width;
+    float                   _height;
+    std::vector<GlyphDef>   _glyphs;
     
 };
 
@@ -119,12 +118,12 @@ private:
     
     bool generatePageTexture(bool releasePageData = false);
     
-    int             _pageNum;
-    int             _width;
-    int             _height;
-    unsigned char * _pageData;
-    Texture2D   *   _pageTexture;
-    std::vector<TextLineDef *> _lines;
+    int                         _pageNum;
+    int                         _width;
+    int                         _height;
+    unsigned char *             _pageData;
+    Texture2D   *               _pageTexture;
+    std::vector<TextLineDef *>  _lines;
     
 };
 
@@ -148,8 +147,8 @@ public:
 private:
     
     std::vector<TextPageDef *>    _pages;
-    int                             _fontSize;
-    char *                          _fontName;
+    int                           _fontSize;
+    char *                        _fontName;
 };
 
 /** @brief TextImage 
@@ -158,58 +157,27 @@ private:
 class TextImage
 {
 public:
+    
     TextImage();
    ~TextImage();
     
     bool initWithString(const char *pText, int nWidth, int nHeight, const char * pFontName, int nSize, bool releaseRAWData = true);
-    
-    
-    // carloX  
-    bool initWithStringNew(const char *pText, int nWidth, int nHeight, const char * pFontName, int nSize, bool textIsUTF16 = false, bool releaseRAWData = true);
-    TextFontPagesDef  * getPagesNew()    { return _fontPagesNew; }
-    Font              * getFontNew()     { return _fontNew;      }
-    
-    
-    
     TextFontPagesDef  * getPages()    { return _fontPages; }
     Font              * getFont()     { return _font;      }
     
-    // debug only (this will go)
-    bool debugSaveToFile(const char *pszFilePath, bool bIsToRGB);
-    
-    
-    
 private:
     
-    bool createImageDataFromPages(TextFontPagesDef *thePages, bool releaseRAWData = true);
-    bool createFontRef(const char *fontName, int size);
-    bool createFontRender();
-    bool generateTextGlyphs(const char * pText);
     unsigned char * preparePageGlyphData(TextPageDef *thePage, char *fontName, int fontSize);
+    bool createImageDataFromPages(TextFontPagesDef *thePages, bool releaseRAWData = true);
+    bool createFontRender();
     bool addGlyphsToLine(TextLineDef *line, const char *lineText, bool textIsUTF16 = false);
-    
-    
-    // carloX
-    unsigned char * preparePageGlyphDataNew(TextPageDef *thePage, char *fontName, int fontSize);
-    bool createImageDataFromPagesNew(TextFontPagesDef *thePages, bool releaseRAWData = true);
-    bool createFontRenderNew();
-    bool addGlyphsToLineNew(TextLineDef *line, const char *lineText, bool textIsUTF16 = false);
-    
-    
-    
-    
+    bool createFontRef(const char *fontName, int size);
+    bool generateTextGlyphs(const char * pText);
     
     std::map<unsigned short int, GlyphDef>      _textGlyphs;
     TextFontPagesDef *                          _fontPages;
     Font *                                      _font;
     FontRender *                                _fontRender;
-    
-    
-    // carloX new stuff
-    std::map<unsigned short int, GlyphDef>      _textGlyphsNew;
-    TextFontPagesDef *                          _fontPagesNew;
-    Font *                                      _fontNew;
-    FontRender *                                _fontRenderNew;
     
     
 };

@@ -1,10 +1,27 @@
-//
-//  CCStringTTF.cpp
-//  TestNewStringStuff
-//
-//  Created by Carlo Morgantini on 4/11/13.
-//
-//
+/****************************************************************************
+ Copyright (c) 2013      Zynga Inc.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "cocos2d.h"
 #include "CCStringTTF.h"
 #include "CCFont.h"
@@ -40,8 +57,7 @@ bool StringTTF::setText(char *pStringToRender, float lineWidth, TextAlignment al
     if (!_fontDef)
         return false;
     
-    _width = lineWidth;
-    
+    _width                  = lineWidth;
     _alignment              = alignment;
     _lineBreakWithoutSpaces = lineBreakWithoutSpaces;
      
@@ -59,7 +75,7 @@ bool StringTTF::setText(char *pStringToRender, float lineWidth, TextAlignment al
         return false;
     
     int numLetter = 0;
-    unsigned short int *pUTF8Text = pFont->getUTF8Text(pStringToRender, numLetter);
+    unsigned short int *pUTF8Text = pFont->getUTF16Text(pStringToRender, numLetter);
     setCurrentString(pUTF8Text);
     
     // align text
@@ -184,7 +200,7 @@ bool StringTTF::computeAdvancesForString(unsigned short int *stringToRender)
         return false;
     
     int letterCount = 0;
-    _advances = pFont->getAdvancesForTextUTF8(stringToRender, letterCount);
+    _advances = pFont->getAdvancesForTextUTF16(stringToRender, letterCount);
     
     if(!_advances)
         return false;

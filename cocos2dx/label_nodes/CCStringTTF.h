@@ -1,5 +1,4 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2013      Zynga Inc.
  
  http://www.cocos2d-x.org
@@ -35,7 +34,7 @@ class StringTTF : public Node , public LabelTextFormatProtocol, public RGBAProto
 {
 public:
     
-    StringTTF(LabelFontDefinition *pDefinition, TextAlignment alignment = kTextAlignmentLeft);
+     StringTTF(LabelFontDefinition *pDefinition, TextAlignment alignment = kTextAlignmentLeft);
     ~StringTTF();
     
     bool setText(char *pStringToRender, float lineWidth, TextAlignment alignment = kTextAlignmentLeft, bool lineBreakWithoutSpaces = false);
@@ -47,6 +46,7 @@ public:
     virtual void setScale(float scale);
     virtual void setScaleX(float scaleX);
     virtual void setScaleY(float scaleY);
+    
     
     // RGBAProtocol
     
@@ -106,6 +106,7 @@ private:
     bool computeAdvancesForString(const char *stringToRender);
     bool computeAdvancesForString(unsigned short int *stringToRender);
     bool setCurrentString(unsigned short *stringToSet);
+    
     Sprite * getSprite();
     Sprite * createNewSpriteFromLetterDefinition(LetterDefinition &theDefinition, Texture2D *theTexture);
     Sprite * updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, LetterDefinition &theDefinition, Texture2D *theTexture);
