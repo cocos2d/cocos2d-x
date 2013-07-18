@@ -21,10 +21,13 @@ public:
     
     virtual ~FontIOS();
     virtual bool                    createFontObject(const std::string &fontName, int fontSize);
+    
+    virtual GlyphDef            *   getGlyphsForText(const char *pText, int &outNumGlyphs,    bool UTF16text = false);
+    virtual Size                *   getAdvancesForText(const char *pText, int &outNumLetters, bool UTF16text = false);
+    virtual Size                    getTextWidthAndHeight(const char *pText, bool UTF16text = false);
+    
+    
     virtual int                     getUTF8TextLenght(const char *pText);
-    virtual Size                    getTextWidthAndHeight(const char *pText);
-    virtual GlyphDef            *   getGlyphsForText(const char *pText, int &outNumGlyphs);
-    virtual Size                *   getAdvancesForText(const char *pText, int &outNumLetters);
     virtual Size                *   getAdvancesForTextUTF8(unsigned short *pText, int &outNumLetters);
     virtual unsigned short int  *   getUTF8Text(const char *pText, int &outNumLetters);
     virtual const char          *   trimUTF8Text(const char *pText, int newBegin, int newEnd);

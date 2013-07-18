@@ -1124,6 +1124,7 @@ string LabelBMFontChinese::title()
 /// BitmapFontMultiLineAlignment
 
 #define LongSentencesExample "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+//#define LongSentencesExample "psps"
 #define LineBreaksExample "Lorem ipsum dolor\nsit amet\nconsectetur adipisicing elit\nblah\nblah"
 #define MixedExample "ABC\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt\nDEF"
 
@@ -1661,6 +1662,7 @@ LabelDyamicTest::LabelDyamicTest()
     
     const char *pFontName           = "MarkerFelt-Thin";
     const char *pFontGlyphs         = "abcdefghilmnopqrstuvzxywABCDEFGHILMNOPQRSTUVZXYW0123456789,. ";
+    //const char *pFontGlyphs         = "ps";
     LabelFontDefinition *pDef       =  new LabelFontDefinition;
     
     pDef->createFontDefinition((char *)pFontName, 30, (char *) pFontGlyphs);

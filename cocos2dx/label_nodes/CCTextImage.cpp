@@ -16,6 +16,9 @@
 #include "CCTextImage.h"
 #include "CCFontRenderIOS.h"
 
+// new stuff CarloX
+#include "CCFontFreeType.h"
+
 NS_CC_BEGIN
 
 
@@ -123,10 +126,38 @@ TextFontPagesDef::~TextFontPagesDef()
     }
 }
 
+int _getNumGlyphsFittingInSize(std::map<unsigned short int, GlyphDef> &glyphDefs, unsigned short int *strUTF8, Font *pFont, Size *constrainSize, int &outNewSize)
+{
+    if (!strUTF8)
+        return NULL;
+    
+    float widthWithBBX  =  0.0f;
+    float lastWidth     = 0.0f;
+    
+    // get the string to UTF8
+    int numChar = cc_wcslen(strUTF8);
+    
+    for (int c = 0; c<numChar; ++c)
+    {
+        widthWithBBX+= (glyphDefs[strUTF8[c]].getRect().size.width + glyphDefs[strUTF8[c]].getPadding());
+        
+        if (widthWithBBX >= constrainSize->width)
+        {
+            outNewSize = lastWidth;
+            return c;
+        }
+        
+        lastWidth = widthWithBBX;
+    }
+    
+    outNewSize = constrainSize->width;
+    return numChar;
+}
+
 const char * _getStringInBoundsUsingGlyphSize(std::map<unsigned short int, GlyphDef> &glyphDefs, const char *str, Font *pFont, Size *constrainSize)
 {
     
-    Size tmp          = pFont->getTextWidthAndHeight(str);
+    Size tmp            = pFont->getTextWidthAndHeight(str);
     float widthWithBBX  =  0.0f;
     
     // get the string to UTF8
@@ -162,7 +193,7 @@ const char * _getStringInBoundsUsingGlyphSize(std::map<unsigned short int, Glyph
     }
 }
 
-TextImage::TextImage(): _font(0), _fontRender(0)
+TextImage::TextImage(): _font(0), _fontRender(0), _fontNew(0), _fontRenderNew(0)
 {
 }
 
@@ -179,6 +210,146 @@ TextImage::~TextImage()
     }
 }
 
+
+bool TextImage::initWithStringNew(const char * pText, int nWidth, int nHeight, const char * pFontName, int nSize, bool textIsUTF16, bool releaseRAWData)
+{
+    CGSize constrainSize;
+    
+    unsigned short int *strUTF16 = 0;
+    int stringNumChars;
+    
+    if ( textIsUTF16 )
+    {
+        strUTF16 = (unsigned short int *)pText;
+        stringNumChars = cc_wcslen(strUTF16);
+    }
+    else
+    {
+        // string needs to go to unicode
+        strUTF16 = _fontNew->getUTF8Text(pText, stringNumChars);
+    }
+    
+    // tell if the string has been trimmed at least one
+    bool stringTrimmedOnce = false;
+    
+    constrainSize.width  = nWidth;
+    constrainSize.height = nHeight;
+    
+    // pointer to the original input stream
+    //const char *inputString = pText;
+    
+    int   delta           = 0;
+    int   currentPage     = 0;
+    float currentY        = 0.0;
+    
+    //carloX
+    float lineHeight = _fontNew->getTextWidthAndHeight(pText).height;
+    
+    
+    // check if at least one line will fit in the texture
+    if ( lineHeight > constrainSize.height )
+    {
+        // we can't even fit one line in this texture
+        return false;
+    }
+    
+    // create pages for the font
+    _fontPagesNew = new TextFontPagesDef((char *)pFontName, nSize);
+    if (!_fontPagesNew)
+        return false;
+    
+    // create the first page (ther is going to be at least one page)
+    TextPageDef *currentPageDef = new TextPageDef(currentPage, nWidth, nHeight);
+    if ( !currentPageDef )
+        return false;
+    
+    // add the current page
+    _fontPagesNew->addPage(currentPageDef);
+    
+    
+    do {
+        
+        // choose texture page
+        if ( ( currentY + lineHeight ) > constrainSize.height )
+        {
+            currentY     = 0;
+            currentPage += 1;
+            
+            // create a new page and add
+            currentPageDef = new TextPageDef(currentPage, nWidth, nHeight);
+            if ( !currentPageDef )
+                return false;
+            
+            _fontPagesNew->addPage(currentPageDef);
+        }
+        
+        
+        // get the new fitting string
+        Size tempSize;
+        tempSize.width  = constrainSize.width;
+        tempSize.height = constrainSize.height;
+        
+        //const char *pNewString = _getStringInBoundsUsingGlyphSizeNew(_textGlyphsNew, inputString, _fontNew, &tempSize);
+        
+        // figure out how many glyphs fit in this line
+        int newLineSize    = 0;
+        int numFittingChar = _getNumGlyphsFittingInSize(_textGlyphsNew, strUTF16, _fontNew, &tempSize, newLineSize);
+        
+        // crete the temporary new string
+        unsigned short int *pTempString = 0;
+        pTempString = _fontNew->trimUTF16Text(strUTF16, 0, (numFittingChar - 1));
+        
+        // create the new line and add to the current page
+        TextLineDef *newLine  = new TextLineDef(0.0, currentY, newLineSize, lineHeight);
+        if ( !newLine )
+            return false;
+        
+        // add all the glyphs to this line
+        addGlyphsToLineNew(newLine, (const char *)pTempString, true);
+        
+        // add the line the to current page
+        currentPageDef->addLine(newLine);
+        
+        // can now release the string
+        delete [] pTempString;
+        
+        // create the new string
+        int stringLenght = _fontNew->getUTF16TextLenght(strUTF16);
+        delta = (stringLenght - numFittingChar);
+        
+        // there is still some leftover, need to work on it
+        if ( delta )
+        {
+            // create the new string
+            unsigned short int *tempS = _fontNew->trimUTF16Text(strUTF16, numFittingChar, (stringLenght - 1));
+            
+            // a copy of the string has been created
+            stringTrimmedOnce = true;
+            
+            // release the old one
+            delete [] strUTF16;
+            
+            // assign pointer
+            strUTF16 = tempS;
+        }
+        
+        // go to next line
+        currentY += lineHeight;
+        
+    } while( delta );
+    
+    
+    if (!textIsUTF16 || stringTrimmedOnce)
+        delete [] strUTF16;
+    
+    // actually create the needed images
+    return createImageDataFromPagesNew(_fontPagesNew, releaseRAWData);
+    
+    
+    return true;
+    
+}
+
 bool TextImage::initWithString(const char * pText, int nWidth, int nHeight, const char * pFontName, int nSize, bool releaseRAWData)
 {
     // create the reference to the system font
@@ -188,6 +359,14 @@ bool TextImage::initWithString(const char * pText, int nWidth, int nHeight, cons
     // generate the glyphs
     if ( !generateTextGlyphs(pText) )
         return false;
+    
+    
+    // carloX new stuff
+    
+    initWithStringNew(pText, nWidth, nHeight, pFontName, nSize, false, releaseRAWData);
+    
+    // end new stuff
+    
     
     CGSize constrainSize;
     constrainSize.width  = nWidth;
@@ -285,7 +464,23 @@ bool TextImage::initWithString(const char * pText, int nWidth, int nHeight, cons
 bool TextImage::createFontRef(const char *fontName, int fontSize)
 {
     //carloX new stuff
-    //_font
+    
+    if (_fontNew)
+    {
+        delete _fontNew;
+        _fontNew = 0;
+    }
+    
+    _fontNew = new FontFreeType();
+    if (!_fontNew)
+        return false;
+    
+    
+    // fixed font name for now, to be changed
+    //if( !_fontNew->createFontObject("fonts/Marker Felt.ttf", 20))
+    
+    if( !_fontNew->createFontObject("fonts/arial.ttf", 26))
+        return false;
     
     
     // end carloX new stuff
@@ -307,6 +502,25 @@ bool TextImage::createFontRef(const char *fontName, int fontSize)
         return false;
 }
 
+bool TextImage::createFontRenderNew()
+{
+    if (!_fontNew)
+        return false;
+    
+    if (_fontRenderNew)
+    {
+        delete _fontRenderNew;
+        _fontRenderNew = 0;
+    }
+    
+    _fontRenderNew = new FontRenderFreeType(_fontNew);
+    
+    if (!_fontRenderNew)
+        return false;
+    
+    return true;
+}
+
 bool TextImage::createFontRender()
 {
     if (_fontRender)
@@ -321,29 +535,97 @@ bool TextImage::createFontRender()
     return true;
 }
 
-bool TextImage::addGlyphsToLine(TextLineDef *line, const char *lineText)
+bool TextImage::addGlyphsToLineNew(TextLineDef *line, const char *lineText, bool textIsUTF16)
 {
     if (!_font)
         return false;
     
-    int numLetters = 0;
-    unsigned short int *UTF8string  = _font->getUTF8Text(lineText, numLetters);
+    int numLetters                   = 0;
+    unsigned short int *UTF16string  = 0;
+    
+    if (textIsUTF16)
+    {
+        UTF16string = (unsigned short int *) lineText;
+        numLetters = cc_wcslen(UTF16string);
+    }
+    else
+    {
+        UTF16string  = _fontNew->getUTF8Text(lineText, numLetters);
+    }
     
     for (int c=0; c<numLetters; ++c)
     {
-        _textGlyphs[UTF8string[c]].setCommonHeight(line->getHeight());
-        line->addGlyph(_textGlyphs[UTF8string[c]] );
+        _textGlyphsNew[UTF16string[c]].setCommonHeight(line->getHeight());
+        line->addGlyph(_textGlyphsNew[UTF16string[c]] );
     }
+    
+    if(!textIsUTF16)
+        delete [] UTF16string;
+    
+    return true;
+}
+
+bool TextImage::addGlyphsToLine(TextLineDef *line, const char *lineText, bool textIsUTF16)
+{
+    if (!_font)
+        return false;
+    
+    int numLetters                  = 0;
+    unsigned short int *UTF16string  = 0;
+    
+    if (textIsUTF16)
+    {
+        UTF16string = (unsigned short int *) lineText;
+        numLetters = cc_wcslen(UTF16string);
+    }
+    else
+    {
+        UTF16string  = _font->getUTF8Text(lineText, numLetters);
+    }
+    
+    for (int c=0; c<numLetters; ++c)
+    {
+        _textGlyphs[UTF16string[c]].setCommonHeight(line->getHeight());
+        line->addGlyph(_textGlyphs[UTF16string[c]] );
+    }
+    
+    if(!textIsUTF16)
+        delete [] UTF16string;
     
     return true;
 }
 
 bool TextImage::generateTextGlyphs(const char * pText)
 {
+    
+    int numGlyphs = 0;
+    
+    // carloX new stuff
+    
+    if(!_fontNew)
+        return false;
+    
+    
+    GlyphDef *pNewGlyphs  = _fontNew->getGlyphsForText(pText, numGlyphs);
+    
+    if (!pNewGlyphs)
+        return false;
+    
+    for (int c=0; c < numGlyphs; ++c)
+    {
+        _textGlyphsNew[pNewGlyphs[c].getUTF8Letter()] = pNewGlyphs[c];
+    }
+    
+    
+    delete [] pNewGlyphs;
+    
+    // end new stuff
+    
+    
     if (!_font)
         return false;
     
-    int numGlyphs = 0;
+    
     GlyphDef *pGlyphs = _font->getGlyphsForText(pText, numGlyphs);
     
     if (!pGlyphs || !numGlyphs)
@@ -355,6 +637,36 @@ bool TextImage::generateTextGlyphs(const char * pText)
     }
     
     delete [] pGlyphs;
+    return true;
+}
+
+
+bool TextImage::createImageDataFromPagesNew(TextFontPagesDef *thePages, bool releaseRAWData)
+{
+    int numPages = thePages->getNumPages();
+    if (!numPages)
+        return false;
+    
+    for (int c = 0; c < numPages; ++c)
+    {
+        unsigned char *pPageData = 0;
+        pPageData = preparePageGlyphDataNew(thePages->getPageAt(c), thePages->getFontName(), thePages->getFontSize());
+        
+        if (pPageData)
+        {
+            // set the page data
+            thePages->getPageAt(c)->setPageData(pPageData);
+            
+            // crete page texture and relase RAW data
+            thePages->getPageAt(c)->preparePageTexture(releaseRAWData);
+        }
+        else
+        {
+            return false;
+        }
+        
+    }
+    
     return true;
 }
 
@@ -384,6 +696,23 @@ bool TextImage::createImageDataFromPages(TextFontPagesDef *thePages, bool releas
     }
     
     return true;
+}
+
+unsigned char * TextImage::preparePageGlyphDataNew(TextPageDef *thePage, char *fontName, int fontSize)
+{
+    if ( !_fontRenderNew )
+    {
+        createFontRenderNew();
+    }
+    
+    if (_fontRenderNew)
+    {
+        return _fontRenderNew->preparePageGlyphData(thePage, fontName, fontSize);
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 unsigned char * TextImage::preparePageGlyphData(TextPageDef *thePage, char *fontName, int fontSize)

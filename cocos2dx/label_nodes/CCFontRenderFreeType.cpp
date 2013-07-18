@@ -237,7 +237,7 @@ unsigned char * FontRenderFreeType::preparePageGlyphData(TextPageDef *thePage, c
     if (!thePage)
         return 0;
     
-    if (_font)
+    if (!_font)
         return 0;
     
     if (thePage->getNumLines() == 0)

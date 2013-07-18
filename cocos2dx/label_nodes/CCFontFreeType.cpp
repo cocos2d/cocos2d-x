@@ -102,8 +102,19 @@ bool FontFreeType::getBBOXFotChar(unsigned short theChar, Rect &outRect)
     if (FT_Load_Glyph(_fontRef, glyph_index, FT_LOAD_DEFAULT))
         return false;
     
+    
+    
     // store result in the passed rectangle
     outRect.origin.x    = 0;
+    
+    // hack carloX //////////////////////////////////////////
+    FT_Render_Glyph(  _fontRef->glyph, FT_RENDER_MODE_NORMAL );
+    int testCarloX =  _fontRef->glyph->bitmap.width;
+    int testCarloX2 = (_fontRef->glyph->metrics.horiBearingX >>6);
+    /////////////////////////////////////////////////////////
+                      
+                      
+                      
     outRect.origin.y    = - (_fontRef->glyph->metrics.horiBearingY >> 6);
     outRect.size.width  =   (_fontRef->glyph->metrics.width  >> 6);
     outRect.size.height =   (_fontRef->glyph->metrics.height >> 6);
@@ -111,9 +122,23 @@ bool FontFreeType::getBBOXFotChar(unsigned short theChar, Rect &outRect)
     return true;
 }
 
-GlyphDef * FontFreeType::getGlyphsForText(const char *pText, int &outNumGlyphs)
+int FontFreeType::getUTF16TextLenght(unsigned short int *pText)
 {
-    unsigned short* utf16String = cc_utf8_to_utf16(pText);
+    return cc_wcslen(pText);
+}
+
+GlyphDef * FontFreeType::getGlyphsForText(const char *pText, int &outNumGlyphs, bool UTF16text)
+{
+    unsigned short* utf16String = 0;
+    
+    if (UTF16text)
+    {
+        utf16String = (unsigned short*) pText;
+    }
+    else
+    {
+        utf16String = cc_utf8_to_utf16(pText);
+    }
     
     //
     if  (!utf16String)
@@ -126,7 +151,8 @@ GlyphDef * FontFreeType::getGlyphsForText(const char *pText, int &outNumGlyphs)
     // allocate the needed Glyphs
     GlyphDef *pGlyphs = new GlyphDef[numChar];
     assert( pGlyphs != NULL );
-    return 0;
+    if (!pGlyphs)
+        return 0;
     
     // sore result as CCRect
     for (int c=0; c<numChar; ++c)
@@ -146,7 +172,8 @@ GlyphDef * FontFreeType::getGlyphsForText(const char *pText, int &outNumGlyphs)
     outNumGlyphs = numChar;
     
     // free memory
-    delete [] utf16String;
+    if (!UTF16text)
+        delete [] utf16String;
     
     // done
     return pGlyphs;
@@ -171,7 +198,7 @@ Size * FontFreeType::getAdvancesForTextUTF8(unsigned short *pText, int &outNumLe
         int advance = 0;
         int kerning = 0;
         
-        advance = getAdvanceFotChar(pText[c]);
+        advance = getAdvanceForChar(pText[c]) - getBearingXForChar(pText[c]);
         
         if ( c < (outNumLetters-1) )
             kerning = getHorizontalKerningForChars(pText[c], pText[c+1]);
@@ -182,66 +209,116 @@ Size * FontFreeType::getAdvancesForTextUTF8(unsigned short *pText, int &outNumLe
     return pSizes;
 }
 
-int FontFreeType::getAdvanceFotChar(unsigned short theChar)
+int FontFreeType::getAdvanceForChar(unsigned short theChar)
 {
     if (!_fontRef)
-        return false;
+        return 0;
     
     // get the ID to the char we need
     int glyph_index = FT_Get_Char_Index(_fontRef, theChar);
     
     if (!glyph_index)
-        return false;
+        return 0;
     
     // load glyph infos
     if (FT_Load_Glyph(_fontRef, glyph_index, FT_LOAD_DEFAULT))
-        return false;
+        return 0;
+    
+    
+    
+    // carloX //// hack to be moved somewhere eles ///////////////
+    
+    FT_Render_Glyph( _fontRef->glyph, FT_RENDER_MODE_NORMAL );
+    int testBMP = _fontRef->glyph->bitmap_left;
+    
+    // end hack/////////////////////////////////////////////////////
+    
     
     // get to the advance for this glyph
     return (_fontRef->glyph->advance.x >> 6);
+    
+    //return (_fontRef->glyph->advance.x >> 6) + testBMP;
+}
+
+
+int FontFreeType::getBearingXForChar(unsigned short theChar)
+{
+    
+    if (!_fontRef)
+        return 0;
+    
+    // get the ID to the char we need
+    int glyph_index = FT_Get_Char_Index(_fontRef, theChar);
+    
+    if (!glyph_index)
+        return 0;
+    
+    // load glyph infos
+    if (FT_Load_Glyph(_fontRef, glyph_index, FT_LOAD_DEFAULT))
+        return 0;
+    
+    return (_fontRef->glyph->metrics.horiBearingX >>6);
 }
 
 int  FontFreeType::getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar)
 {
     if (!_fontRef)
-        return -1;
+        return 0;
+
+    bool hasKerning = FT_HAS_KERNING( _fontRef );
+    
+    if (!hasKerning)
+        return 0;
     
     // get the ID to the char we need
     int glyph_index1 = FT_Get_Char_Index(_fontRef, firstChar);
     
     if (!glyph_index1)
-        return -1;
+        return 0;
     
     // get the ID to the char we need
     int glyph_index2 = FT_Get_Char_Index(_fontRef, secondChar);
     
     if (!glyph_index2)
-        return -1;
+        return 0;
     
     FT_Vector kerning;
     
     if (FT_Get_Kerning( _fontRef, glyph_index1, glyph_index2,  FT_KERNING_DEFAULT,  &kerning ))
-        return -1;
+        return 0;
     
     return ( kerning.x >> 6 );
 }
 
-Size * FontFreeType::getAdvancesForText(const char *pText, int &outNumLetters)
+Size * FontFreeType::getAdvancesForText(const char *pText, int &outNumLetters, bool UTF16text)
 {
-    unsigned short* utf16String = cc_utf8_to_utf16(pText);
+    unsigned short* utf16String = 0;
+    
+    if (UTF16text)
+    {
+        utf16String = (unsigned short* )pText;
+    }
+    else
+    {
+        utf16String = cc_utf8_to_utf16(pText);
+    }
+    
     Size *ret = getAdvancesForTextUTF8(utf16String, outNumLetters);
-    delete [] utf16String;
+    
+    if (!UTF16text)
+        delete [] utf16String;
+    
     return ret;
 }
 
-Size FontFreeType::getTextWidthAndHeight(const char *pText)
+Size FontFreeType::getTextWidthAndHeight(const char *pText, bool UTF16text)
 {
     Size retSize;
     retSize.width  = 0;
     retSize.height = 0;
     
     int numLetters;
-    Size *tempSizes = getAdvancesForText(pText, numLetters);
+    Size *tempSizes = getAdvancesForText(pText, numLetters, UTF16text);
     
     for (int c = 0; c<numLetters; ++c)
     {
@@ -322,6 +399,33 @@ const char * FontFreeType::trimUTF8Text(const char *pText, int newBegin, int new
     return (const char *)trimmedString;
 }
 
+unsigned short int  * FontFreeType::trimUTF16Text(unsigned short int *pText, int newBegin, int newEnd)
+{
+    if ( newBegin<0 || newEnd<=0 )
+        return 0;
+    
+    if ( newBegin>=newEnd )
+        return 0;
+    
+    if (newEnd >= cc_wcslen(pText))
+        return 0;
+    
+    int newLenght = newEnd - newBegin + 2;
+    unsigned short* trimmedString = new unsigned short[newLenght];
+    
+    for(int c = 0; c < (newLenght-1); ++c)
+    {
+        trimmedString[c] = pText[newBegin + c];
+    }
+    
+    // last char
+    trimmedString[newLenght-1] = 0x0000;
+
+    // done 
+    return trimmedString;
+}
+
+
 int FontFreeType::getUTF8TextLenght(const char *pText)
 {
     unsigned short* utf16String = cc_utf8_to_utf16(pText);
@@ -329,6 +433,7 @@ int FontFreeType::getUTF8TextLenght(const char *pText)
         return -1;
     int outNumLetters = cc_wcslen(utf16String);
     delete [] utf16String;
+    
     return outNumLetters;
 }
 

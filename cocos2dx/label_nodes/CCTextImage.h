@@ -163,11 +163,21 @@ public:
     
     bool initWithString(const char *pText, int nWidth, int nHeight, const char * pFontName, int nSize, bool releaseRAWData = true);
     
+    
+    // carloX  
+    bool initWithStringNew(const char *pText, int nWidth, int nHeight, const char * pFontName, int nSize, bool textIsUTF16 = false, bool releaseRAWData = true);
+    TextFontPagesDef  * getPagesNew()    { return _fontPagesNew; }
+    Font              * getFontNew()     { return _fontNew;      }
+    
+    
+    
     TextFontPagesDef  * getPages()    { return _fontPages; }
     Font              * getFont()     { return _font;      }
     
     // debug only (this will go)
     bool debugSaveToFile(const char *pszFilePath, bool bIsToRGB);
+    
+    
     
 private:
     
@@ -176,7 +186,17 @@ private:
     bool createFontRender();
     bool generateTextGlyphs(const char * pText);
     unsigned char * preparePageGlyphData(TextPageDef *thePage, char *fontName, int fontSize);
-    bool addGlyphsToLine(TextLineDef *line, const char *lineText);
+    bool addGlyphsToLine(TextLineDef *line, const char *lineText, bool textIsUTF16 = false);
+    
+    
+    // carloX
+    unsigned char * preparePageGlyphDataNew(TextPageDef *thePage, char *fontName, int fontSize);
+    bool createImageDataFromPagesNew(TextFontPagesDef *thePages, bool releaseRAWData = true);
+    bool createFontRenderNew();
+    bool addGlyphsToLineNew(TextLineDef *line, const char *lineText, bool textIsUTF16 = false);
+    
+    
+    
     
     
     std::map<unsigned short int, GlyphDef>      _textGlyphs;
@@ -186,6 +206,8 @@ private:
     
     
     // carloX new stuff
+    std::map<unsigned short int, GlyphDef>      _textGlyphsNew;
+    TextFontPagesDef *                          _fontPagesNew;
     Font *                                      _fontNew;
     FontRender *                                _fontRenderNew;
     
