@@ -35,10 +35,10 @@ import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.FontMetricsInt;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.text.TextPaint;
 import android.text.TextUtils;
-import android.util.FloatMath;
 import android.util.Log;
 
 public class Cocos2dxBitmap {
@@ -118,35 +118,31 @@ public class Cocos2dxBitmap {
 		paint.setARGB(255, (int)(255.0 * fontTintR), (int)(255.0 * fontTintG), (int)(255.0 * fontTintB));
 
 		final TextProperty textProperty = Cocos2dxBitmap.computeTextProperty(pString, pWidth, pHeight, paint);
-		final int bitmapTotalHeight = (pHeight == 0 ? textProperty.mTotalHeight: pHeight);
-		
-		// padding needed when using shadows (not used otherwise)
-		float bitmapPaddingX   = 0.0f;
-		float bitmapPaddingY   = 0.0f;
-		float renderTextDeltaX = 0.0f;
-		float renderTextDeltaY = 0.0f;
-		
+				
+        RectF textRect = new RectF(0, 0, textProperty.mMaxWidth, (pHeight == 0 ? textProperty.mTotalHeight: pHeight));
+          
+        RectF shadowAndStrokeRect = new RectF(textRect);
+
+        if (stroke) {
+            shadowAndStrokeRect.inset(-strokeSize/2.0f, -strokeSize/2.0f);
+        }
+        
+        if (shadow ) {
+            RectF shadowRect = new RectF(textRect);
+            shadowRect.inset(-shadowBlur, -shadowBlur);
+            shadowRect.offset(shadowDX, shadowDY);
+            shadowAndStrokeRect.union(shadowRect);
+        }
+
+        textRect.offset(-shadowAndStrokeRect.left, -shadowAndStrokeRect.top);
+        		
 		if ( shadow ) {
 
 			int shadowColor = ((int)(255 * shadowOpacity) & 0xff) << 24;
-			paint.setShadowLayer(shadowBlur, shadowDX, shadowDY, shadowColor);
-	
-			bitmapPaddingX = Math.abs(shadowDX);
-			bitmapPaddingY = Math.abs(shadowDY);
-					
-			if ( shadowDX < 0.0 )
-			{
-				renderTextDeltaX = bitmapPaddingX;
-			}
-			
-			if ( shadowDY < 0.0 )
-			{
-				renderTextDeltaY = 	bitmapPaddingY;
-			}
+			paint.setShadowLayer(shadowBlur, shadowDX, shadowDY, shadowColor);	
 		}
 		
-		final Bitmap bitmap = Bitmap.createBitmap(textProperty.mMaxWidth + (int)bitmapPaddingX,
-				bitmapTotalHeight + (int)bitmapPaddingY, Bitmap.Config.ARGB_8888);
+		final Bitmap bitmap = Bitmap.createBitmap((int)Math.ceil(shadowAndStrokeRect.width()), (int)Math.ceil(shadowAndStrokeRect.height()), Bitmap.Config.ARGB_8888);
 		
 		final Canvas canvas = new Canvas(bitmap);
 
@@ -158,13 +154,11 @@ public class Cocos2dxBitmap {
 		
 		final String[] lines = textProperty.mLines;
 		
-		for (final String line : lines) {
-			
+		for (final String line : lines) {			
 			x = Cocos2dxBitmap.computeX(line, textProperty.mMaxWidth, horizontalAlignment);
-			canvas.drawText(line, x + renderTextDeltaX, y + renderTextDeltaY, paint);
-			y += textProperty.mHeightPerLine;
-			
-		}
+			canvas.drawText(line, textRect.left + x, textRect.top + y, paint);
+			y += textProperty.mHeightPerLine;			
+		}		
 		 
 		// draw again with stroke on if needed 
 		if ( stroke ) {
@@ -178,16 +172,13 @@ public class Cocos2dxBitmap {
 			y = Cocos2dxBitmap.computeY(fontMetricsInt, pHeight, textProperty.mTotalHeight, verticalAlignment);
 			final String[] lines2 = textProperty.mLines;
 			
-			for (final String line : lines2) {
-				
+			for (final String line : lines2) {				
 				x = Cocos2dxBitmap.computeX(line, textProperty.mMaxWidth, horizontalAlignment);
-				canvas.drawText(line, x + renderTextDeltaX, y + renderTextDeltaY, paintStroke);
-				y += textProperty.mHeightPerLine;
-				
-			}
-			
+				canvas.drawText(line, textRect.left + x, textRect.top + y, paintStroke);
+				y += textProperty.mHeightPerLine;				
+			}			
 		}
-		
+				
 		Cocos2dxBitmap.initNativeObject(bitmap);
 	}
 
@@ -234,7 +225,7 @@ public class Cocos2dxBitmap {
 	private static TextProperty computeTextProperty(final String pString,
 			final int pWidth, final int pHeight, final Paint pPaint) {
 		final FontMetricsInt fm = pPaint.getFontMetricsInt();
-		final int h = (int) Math.ceil(fm.bottom - fm.top);
+		final int h = fm.bottom - fm.top;
 		int maxContentWidth = 0;
 
 		final String[] lines = Cocos2dxBitmap.splitString(pString, pWidth,
@@ -246,7 +237,7 @@ public class Cocos2dxBitmap {
 			/* Compute the max width. */
 			int temp = 0;
 			for (final String line : lines) {
-				temp = (int) FloatMath.ceil(pPaint.measureText(line, 0,
+				temp = (int) Math.ceil(pPaint.measureText(line, 0,
 						line.length()));
 				if (temp > maxContentWidth) {
 					maxContentWidth = temp;
@@ -308,9 +299,9 @@ public class Cocos2dxBitmap {
 	private static String[] splitString(final String pString,
 			final int pMaxWidth, final int pMaxHeight, final Paint pPaint) {
 		final String[] lines = pString.split("\\n");
-		String[] ret = null;
+		final String[] ret;
 		final FontMetricsInt fm = pPaint.getFontMetricsInt();
-		final int heightPerLine = (int) Math.ceil(fm.bottom - fm.top);
+		final int heightPerLine = fm.bottom - fm.top;
 		final int maxLines = pMaxHeight / heightPerLine;
 
 		if (pMaxWidth != 0) {
@@ -320,8 +311,7 @@ public class Cocos2dxBitmap {
 				 * The width of line is exceed maxWidth, should divide it into
 				 * two or more lines.
 				 */
-				final int lineWidth = (int) FloatMath.ceil(pPaint
-						.measureText(line));
+				final int lineWidth = (int) Math.ceil(pPaint.measureText(line));
 				if (lineWidth > pMaxWidth) {
 					strList.addAll(Cocos2dxBitmap.divideStringWithMaxWidth(
 							line, pMaxWidth, pPaint));
@@ -341,17 +331,11 @@ public class Cocos2dxBitmap {
 					strList.removeLast();
 				}
 			}
-
-			ret = new String[strList.size()];
-			strList.toArray(ret);
-		} else if (pMaxHeight != 0 && lines.length > maxLines) {
-			/* Remove exceeding lines. */
-			final LinkedList<String> strList = new LinkedList<String>();
-			for (int i = 0; i < maxLines; i++) {
-				strList.add(lines[i]);
-			}
-			ret = new String[strList.size()];
-			strList.toArray(ret);
+			
+			ret = strList.toArray(new String[strList.size()]);
+		} else if (maxLines > 0 && lines.length > maxLines) {
+		    ret = new String[maxLines];
+		    System.arraycopy(lines, 0, ret, 0, maxLines);
 		} else {
 			ret = lines;
 		}
@@ -368,7 +352,7 @@ public class Cocos2dxBitmap {
 
 		/* Break a String into String[] by the width & should wrap the word. */
 		for (int i = 1; i <= charLength; ++i) {
-			tempWidth = (int) FloatMath.ceil(pPaint.measureText(pString, start,
+			tempWidth = (int) Math.ceil(pPaint.measureText(pString, start,
 					i));
 			if (tempWidth >= pMaxWidth) {
 				final int lastIndexOfSpace = pString.substring(0, i)
@@ -408,7 +392,7 @@ public class Cocos2dxBitmap {
 
 	private static String refactorString(final String pString) {
 		/* Avoid error when content is "". */
-		if (pString.compareTo("") == 0) {
+		if (pString.length() == 0) {
 			return " ";
 		}
 
@@ -416,22 +400,14 @@ public class Cocos2dxBitmap {
 		 * If the font of "\n" is "" or "\n", insert " " in front of it. For
 		 * example: "\nabc" -> " \nabc" "\nabc\n\n" -> " \nabc\n \n".
 		 */
-		final StringBuilder strBuilder = new StringBuilder(pString);
-		int start = 0;
-		int index = strBuilder.indexOf("\n");
-		while (index != -1) {
-			if (index == 0 || strBuilder.charAt(index - 1) == '\n') {
-				strBuilder.insert(start, " ");
-				start = index + 2;
-			} else {
-				start = index + 1;
-			}
-
-			if (start > strBuilder.length() || index == strBuilder.length()) {
-				break;
-			}
-
-			index = strBuilder.indexOf("\n", start);
+		final StringBuilder strBuilder = new StringBuilder(pString.length());	
+		for (int index = 0; index < pString.length(); index++) {
+		    char c = pString.charAt(index);
+		    
+		    if (c == '\n' && (index == 0 || pString.charAt(index-1) == '\n')) {
+		        strBuilder.append(" ");
+		    }
+		    strBuilder.append(c);
 		}
 
 		return strBuilder.toString();

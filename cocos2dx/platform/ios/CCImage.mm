@@ -141,16 +141,13 @@ static bool _initWithData(void * pBuffer, int length, tImageInfo *pImageinfo)
     return ret;
 }
 
-static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize)
+static CGSize _calculateStringSize(NSString *str, id font, const CGSize &constrainSize)
 {
     NSArray *listItems = [str componentsSeparatedByString: @"\n"];
     CGSize dim = CGSizeZero;
     CGSize textRect = CGSizeZero;
-    textRect.width = constrainSize->width > 0 ? constrainSize->width
-                                              : 0x7fffffff;
-    textRect.height = constrainSize->height > 0 ? constrainSize->height
-                                              : 0x7fffffff;
-    
+    textRect.width = constrainSize.width > 0 ? constrainSize.width : 0x7fffffff;
+    textRect.height = constrainSize.height > 0 ? constrainSize.height : 0x7fffffff;
     
     for (NSString *s in listItems)
     {
@@ -182,11 +179,6 @@ static bool _initWithString(const char * pText, cocos2d::Image::ETextAlign eAlig
         NSString * str          = [NSString stringWithUTF8String:pText];
         NSString * fntName      = [NSString stringWithUTF8String:pFontName];
         
-        CGSize dim, constrainSize;
-        
-        constrainSize.width     = pInfo->width;
-        constrainSize.height    = pInfo->height;
-        
         // On iOS custom fonts must be listed beforehand in the App info.plist (in order to be usable) and referenced only the by the font family name itself when
         // calling [UIFont fontWithName]. Therefore even if the developer adds 'SomeFont.ttf' or 'fonts/SomeFont.ttf' to the App .plist, the font must
         // be referenced as 'SomeFont' when calling [UIFont fontWithName]. Hence we strip out the folder path components and the extension here in order to get just
@@ -197,75 +189,57 @@ static bool _initWithString(const char * pText, cocos2d::Image::ETextAlign eAlig
         // create the font   
         id font = [UIFont fontWithName:fntName size:nSize];
         
-        if (font)
-        {
-            dim = _calculateStringSize(str, font, &constrainSize);
-        }
-        else
-        {
-            if (!font)
-            {
-                font = [UIFont systemFontOfSize:nSize];
-            }
-                
-            if (font)
-            {
-                dim = _calculateStringSize(str, font, &constrainSize);
-            }
+        if (!font) {
+            font = [UIFont systemFontOfSize:nSize];
         }
 
         CC_BREAK_IF(! font);
         
-        // compute start point
-        int startH = 0;
-        if (constrainSize.height > dim.height)
-        {
-            // vertical alignment
-            unsigned int vAlignment = (eAlign >> 4) & 0x0F;
-            if (vAlignment == ALIGN_TOP)
-            {
-                startH = 0;
-            }
-            else if (vAlignment == ALIGN_CENTER)
-            {
-                startH = (constrainSize.height - dim.height) / 2;
-            }
-            else 
-            {
-                startH = constrainSize.height - dim.height;
-            }
-        }
+        CGSize constrainSize    = CGSizeMake(pInfo->width, pInfo->height);
+        CGSize dim = _calculateStringSize(str, font, constrainSize);
+        CGRect textRect = CGRectMake(0, 0, dim.width, dim.height);
         
         // adjust text rect
         if (constrainSize.width > 0 && constrainSize.width > dim.width)
         {
-            dim.width = constrainSize.width;
+            textRect.size.width = dim.width = constrainSize.width;
         }
-        if (constrainSize.height > 0 && constrainSize.height > dim.height)
+        
+        if (constrainSize.height > 0)
         {
-            dim.height = constrainSize.height;
+            if (constrainSize.height > dim.height) {
+                // vertical alignment
+                unsigned int vAlignment = (eAlign >> 4) & 0x0F;
+                if (vAlignment == ALIGN_BOTTOM)
+                {
+                    textRect.origin.y += constrainSize.height-dim.height;
+                }
+                else if (vAlignment == ALIGN_CENTER)
+                {
+                    textRect.origin.y += (constrainSize.height-dim.height) / 2.0f;
+                } else {
+                    textRect.size.height = constrainSize.height;
+                }
+                dim.height = constrainSize.height;
+            } else {
+                textRect.size.height = dim.height = constrainSize.height;
+            }
         }
         
+        CGRect shadowAndStrokeRect = CGRectMake(0, 0, dim.width, dim.height);
         
-        // compute the padding needed by shadow and stroke
-        float shadowStrokePaddingX = 0.0f;
-        float shadowStrokePaddingY = 0.0f;
-        
-        if ( pInfo->hasStroke )
-        {
-            shadowStrokePaddingX = ceilf(pInfo->strokeSize);
-            shadowStrokePaddingY = ceilf(pInfo->strokeSize);
+        if ( pInfo->hasStroke ) {
+            shadowAndStrokeRect = CGRectInset(textRect, -pInfo->strokeSize/2.0f, -pInfo->strokeSize/2.0f);
         }
         
-        if ( pInfo->hasShadow )
-        {
-            shadowStrokePaddingX = std::max(shadowStrokePaddingX, (float)fabs(pInfo->shadowOffset.width));
-            shadowStrokePaddingY = std::max(shadowStrokePaddingY, (float)fabs(pInfo->shadowOffset.height));
+        if ( pInfo->hasShadow ) {
+            shadowAndStrokeRect = CGRectUnion(shadowAndStrokeRect,
+                                              CGRectOffset(CGRectInset(CGRectMake(0, 0, dim.width, dim.height), -pInfo->shadowBlur, -pInfo->shadowBlur),
+                                                           pInfo->shadowOffset.width, -pInfo->shadowOffset.height));
         }
         
-        // add the padding (this could be 0 if no shadow and no stroke)
-        dim.width  += shadowStrokePaddingX;
-        dim.height += shadowStrokePaddingY;
+        textRect = CGRectOffset(textRect, -shadowAndStrokeRect.origin.x, -shadowAndStrokeRect.origin.y);
+        dim = shadowAndStrokeRect.size;
         
         
         unsigned char* data = new unsigned char[(int)(dim.width * dim.height * 4)];
@@ -286,11 +260,11 @@ static bool _initWithString(const char * pText, cocos2d::Image::ETextAlign eAlig
             delete[] data;
             break;
         }
-
+        
         // text color
         CGContextSetRGBFillColor(context, pInfo->tintColorR, pInfo->tintColorG, pInfo->tintColorB, 1);
         // move Y rendering to the top of the image
-        CGContextTranslateCTM(context, 0.0f, (dim.height - shadowStrokePaddingY) );
+        CGContextTranslateCTM(context, 0.0f, dim.height);
         CGContextScaleCTM(context, 1.0f, -1.0f); //NOTE: NSString draws in UIKit referential i.e. renders upside-down compared to CGBitmapContext referential
         
         // store the current context
@@ -314,67 +288,21 @@ static bool _initWithString(const char * pText, cocos2d::Image::ETextAlign eAlig
         // take care of shadow if needed
         if ( pInfo->hasShadow )
         {
-            CGSize offset;
-            offset.height = pInfo->shadowOffset.height;
-            offset.width  = pInfo->shadowOffset.width;
             CGFloat shadowColorValues[] = {0, 0, 0, pInfo->shadowOpacity};
             CGColorRef shadowColor = CGColorCreate (colorSpace, shadowColorValues);
             
-            CGContextSetShadowWithColor(context, offset, pInfo->shadowBlur, shadowColor);
+            CGContextSetShadowWithColor(context, pInfo->shadowOffset, pInfo->shadowBlur, shadowColor);
             
             CGColorRelease (shadowColor);
         }
         
         CGColorSpaceRelease(colorSpace);        
         
-        
-        // normal fonts
-        //if( [font isKindOfClass:[UIFont class] ] )
-        //{
-        //    [str drawInRect:CGRectMake(0, startH, dim.width, dim.height) withFont:font lineBreakMode:(UILineBreakMode)UILineBreakModeWordWrap alignment:align];
-        //}
-        //else // ZFont class
-        //{
-        //    [FontLabelStringDrawingHelper drawInRect:str rect:CGRectMake(0, startH, dim.width, dim.height) withZFont:font lineBreakMode:(UILineBreakMode)UILineBreakModeWordWrap 
-        ////alignment:align];
-        //}
-    
-        
-        
-        // compute the rect used for rendering the text
-        // based on wether shadows or stroke are enabled
-        
-        float textOriginX  = 0.0;
-        float textOrigingY = 0.0;
-        
-        float textWidth    = dim.width  - shadowStrokePaddingX;
-        float textHeight   = dim.height - shadowStrokePaddingY;
-        
-        
-        if ( pInfo->shadowOffset.width < 0 )
-        {
-            textOriginX = shadowStrokePaddingX;
-        }
-        else
-        {
-            textOriginX = 0.0;
-        }
-        
-        if (pInfo->shadowOffset.height > 0)
-        {
-            textOrigingY = startH;
-        }
-        else
-        {
-            textOrigingY = startH - shadowStrokePaddingY;
-        }
-        
-        CGRect rect = CGRectMake(textOriginX, textOrigingY, textWidth, textHeight);
-        
-        CGContextBeginTransparencyLayerWithRect(context, rect, NULL);
+        CGContextBeginTransparencyLayer(context, NULL);
         // actually draw the text in the context
 		// XXX: ios7 casting
-        [str drawInRect: rect withFont:font lineBreakMode:NSLineBreakByWordWrapping alignment:(NSTextAlignment)align];
+        
+        [str drawInRect: textRect withFont:font lineBreakMode:NSLineBreakByWordWrapping alignment:(NSTextAlignment)align];
 
         CGContextEndTransparencyLayer(context);
         
