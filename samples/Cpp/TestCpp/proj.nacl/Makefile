@@ -113,7 +113,7 @@ include $(COCOS_ROOT)/cocos2dx/proj.nacl/cocos2dx.mk
 
 CXXFLAGS += -Wno-multichar
 
-SHAREDLIBS += -lchipmunk -lbox2d
+SHAREDLIBS += -lchipmunk -lBox2D
 
 APP_NAME = TestCpp
 TARGET = $(BIN_DIR)/$(APP_NAME)_$(NACL_ARCH).nexe

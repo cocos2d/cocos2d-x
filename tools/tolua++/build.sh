@@ -1,6 +1,5 @@
 #!/bin/bash
-#
-# Invoked build.xml, overriding the lolua++ property
+# Runs tolua++ to build the cococs2dx lua bindings.
 
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 TOLUA=`which tolua++`

@@ -12,7 +12,7 @@ SOURCES = main.cpp \
 
 include $(COCOS_ROOT)/cocos2dx/proj.nacl/cocos2dx.mk
 
-SHAREDLIBS += -lbox2d
+SHAREDLIBS += -lBox2D
 
 APP_NAME = SimpleGame
 TARGET = $(BIN_DIR)/$(APP_NAME)_$(NACL_ARCH).nexe
