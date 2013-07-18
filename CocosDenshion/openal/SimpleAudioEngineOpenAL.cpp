@@ -111,7 +111,12 @@ namespace CocosDenshion
 
     static void stopBackground(bool bReleaseData)
     {
-		alSourceStop(s_backgroundSource);
+        // The background music might have been already stopped
+        // Stop request can come from 
+        //   - stopBackgroundMusic(..)
+        //   - end(..)
+        if (s_backgroundSource != AL_NONE)
+            alSourceStop(s_backgroundSource);
 
 		if (bReleaseData)
 		{
@@ -119,10 +124,10 @@ namespace CocosDenshion
 			{
 				if (it->second->source == s_backgroundSource)
 				{
-					alDeleteBuffers(1, &it->second->buffer);
-					checkALError("stopBackground:alDeleteBuffers");
 					alDeleteSources(1, &it->second->source);
 					checkALError("stopBackground:alDeleteSources");
+					alDeleteBuffers(1, &it->second->buffer);
+					checkALError("stopBackground:alDeleteBuffers");
 					delete it->second;
 					s_backgroundMusics.erase(it);
 					break;
@@ -130,7 +135,7 @@ namespace CocosDenshion
 			}
 		}
 
-		s_backgroundSource = AL_NONE;
+        s_backgroundSource = AL_NONE;
     }
 
     static void setBackgroundVolume(float volume)
@@ -168,31 +173,37 @@ namespace CocosDenshion
 	{
 		checkALError("end:init");
 
-		// clear all the sounds
+		// clear all the sound effects
 	    EffectsMap::const_iterator end = s_effects.end();
-	    for (EffectsMap::iterator it = s_effects.begin(); it != end; it++)
+	    for (auto it = s_effects.begin(); it != end; ++it)
 	    {
 	        alSourceStop(it->second->source);
 	        checkALError("end:alSourceStop");
-			alDeleteBuffers(1, &it->second->buffer);
-			checkALError("end:alDeleteBuffers");
+
 			alDeleteSources(1, &it->second->source);
 			checkALError("end:alDeleteSources");
+
+			alDeleteBuffers(1, &it->second->buffer);
+			checkALError("end:alDeleteBuffers");
+
 			delete it->second;
 	    }
 	    s_effects.clear();
 
-		// and the background too
+		// and the background music too
 		stopBackground(true);
 
-		for (BackgroundMusicsMap::iterator it = s_backgroundMusics.begin(); it != s_backgroundMusics.end(); ++it)
+		for (auto it = s_backgroundMusics.begin(); it != s_backgroundMusics.end(); ++it)
 		{
 			alSourceStop(it->second->source);
 			checkALError("end:alSourceStop");
-			alDeleteBuffers(1, &it->second->buffer);
-			checkALError("end:alDeleteBuffers");
+
 			alDeleteSources(1, &it->second->source);
 			checkALError("end:alDeleteSources");
+
+			alDeleteBuffers(1, &it->second->buffer);
+			checkALError("end:alDeleteBuffers");
+
 			delete it->second;
 		}
 		s_backgroundMusics.clear();
@@ -240,6 +251,7 @@ namespace CocosDenshion
 
 	void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 	{
+        // If there is already a background music source we stop it first
 		if (s_backgroundSource != AL_NONE)
 			stopBackgroundMusic(false);
 
@@ -257,6 +269,7 @@ namespace CocosDenshion
 		{
 			s_backgroundSource = it->second->source;
 			alSourcei(s_backgroundSource, AL_LOOPING, bLoop ? AL_TRUE : AL_FALSE);
+            setBackgroundVolume(s_volume);
 			alSourcePlay(s_backgroundSource);
 			checkALError("playBackgroundMusic:alSourcePlay");
 		}
@@ -264,6 +277,10 @@ namespace CocosDenshion
 
 	void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
 	{
+        // If there is no source, then there is nothing that can be stopped
+        if (s_backgroundSource == AL_NONE)
+            return;
+
         ALint state;
         alGetSourcei(s_backgroundSource, AL_SOURCE_STATE, &state);
         if (state == AL_PLAYING)
@@ -272,27 +289,43 @@ namespace CocosDenshion
 
 	void SimpleAudioEngine::pauseBackgroundMusic()
 	{
+        // If there is no source, then there is nothing that can be paused
+        if (s_backgroundSource == AL_NONE)
+            return;
+
 		ALint state;
 		alGetSourcei(s_backgroundSource, AL_SOURCE_STATE, &state);
 		if (state == AL_PLAYING)
 			alSourcePause(s_backgroundSource);
+
 		checkALError("pauseBackgroundMusic:alSourcePause");
 	}
 
 	void SimpleAudioEngine::resumeBackgroundMusic()
 	{
+        // If there is no source, then there is nothing that can be resumed
+        if (s_backgroundSource == AL_NONE)
+            return;
+
 		ALint state;
 		alGetSourcei(s_backgroundSource, AL_SOURCE_STATE, &state);
 		if (state == AL_PAUSED)
 			alSourcePlay(s_backgroundSource);
-		checkALError("resumeBackgroundMusic:alSourcePlay");
+		
+        checkALError("resumeBackgroundMusic:alSourcePlay");
     }
 
     void SimpleAudioEngine::rewindBackgroundMusic()
     {
+        // If there is no source, then there is nothing that can be rewinded
+        if (s_backgroundSource == AL_NONE)
+            return;
+
+        // Rewind and prevent the last state the source had
         ALint state;
         alGetSourcei(s_backgroundSource, AL_SOURCE_STATE, &state);
         alSourceRewind(s_backgroundSource);
+
         if (state == AL_PLAYING)
         {
             alSourcePlay(s_backgroundSource);
@@ -307,13 +340,23 @@ namespace CocosDenshion
 
 	bool SimpleAudioEngine::willPlayBackgroundMusic()
 	{
-		return true;
+        // We are able to play background music 
+        // if we have a valid background source
+        if (s_backgroundSource == AL_NONE)
+            return false;
+
+		return (alIsSource(s_backgroundSource) == AL_TRUE ? true : false);
 	}
 
 	bool SimpleAudioEngine::isBackgroundMusicPlaying()
 	{
+        // If there is no source, then there is nothing that is playing
+        if (s_backgroundSource == AL_NONE)
+            return false;
+
 	    ALint play_status;
 	    alGetSourcei(s_backgroundSource, AL_SOURCE_STATE, &play_status);
+        checkALError("isBackgroundMusicPlaying:alGetSourcei");
 
 		return (play_status == AL_PLAYING);
 	}
@@ -325,11 +368,17 @@ namespace CocosDenshion
 
 	void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
 	{
+        
+
 		if (s_volume != volume && volume >= -0.0001 && volume <= 1.0001)
 		{
-    		s_volume = volume;
+            s_volume = volume;
 
-			setBackgroundVolume(volume);
+            // No source, no background music, no volume adjustment
+            if (s_backgroundSource != AL_NONE)
+            {
+                setBackgroundVolume(volume);
+            }
 		}
 	}
 
