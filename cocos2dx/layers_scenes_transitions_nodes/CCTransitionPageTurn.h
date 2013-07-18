@@ -64,7 +64,7 @@ public:
     * If back is true then the effect is reversed to appear as if the incoming 
     * scene is being turned from left over the outgoing scene.
     */
-    virtual bool initWithDuration(float t,Scene* scene,bool backwards);
+    bool initWithDuration(float t,Scene* scene,bool backwards);
 
     ActionInterval* actionWithSize(const Size& vector);
 
