@@ -31,9 +31,9 @@ local function main()
 
         -- create dog animate
         local textureDog = CCTextureCache:getInstance():addImage("dog.png")
-        local rect = Rect(0, 0, frameWidth, frameHeight)
+        local rect = CCRectMake(0, 0, frameWidth, frameHeight)
         local frame0 = CCSpriteFrame:createWithTexture(textureDog, rect)
-        rect = Rect(frameWidth, 0, frameWidth, frameHeight)
+        rect = CCRectMake(frameWidth, 0, frameWidth, frameHeight)
         local frame1 = CCSpriteFrame:createWithTexture(textureDog, rect)
 
         local spriteDog = CCSprite:createWithSpriteFrame(frame0)
@@ -86,7 +86,7 @@ local function main()
         end
 
         -- add crop
-        local frameCrop = CCSpriteFrame:create("crop.png", Rect(0, 0, 105, 95))
+        local frameCrop = CCSpriteFrame:create("crop.png", CCRectMake(0, 0, 105, 95))
         for i = 0, 3 do
             for j = 0, 1 do
                 local spriteCrop = CCSprite:createWithSpriteFrame(frameCrop);
@@ -136,7 +136,7 @@ local function main()
             end
         end
 
-        layerFarm:registerScriptTouchHandler(onTouch)
+        --layerFarm:registerScriptTouchHandler(onTouch)
         layerFarm:setTouchEnabled(true)
 
         return layerFarm
@@ -165,7 +165,7 @@ local function main()
         -- add a popup menu
         local menuPopupItem = CCMenuItemImage:create("menu2.png", "menu2.png")
         menuPopupItem:setPosition(0, 0)
-        menuPopupItem:registerScriptTapHandler(menuCallbackClosePopup)
+--        menuPopupItem:registerScriptTapHandler(menuCallbackClosePopup)
         menuPopup = CCMenu:createWithItem(menuPopupItem)
         menuPopup:setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2)
         menuPopup:setVisible(false)
@@ -174,7 +174,7 @@ local function main()
         -- add the left-bottom "tools" menu to invoke menuPopup
         local menuToolsItem = CCMenuItemImage:create("menu1.png", "menu1.png")
         menuToolsItem:setPosition(0, 0)
-        menuToolsItem:registerScriptTapHandler(menuCallbackOpenPopup)
+--        menuToolsItem:registerScriptTapHandler(menuCallbackOpenPopup)
         menuTools = CCMenu:createWithItem(menuToolsItem)
         local itemWidth = menuToolsItem:getContentSize().width
         local itemHeight = menuToolsItem:getContentSize().height

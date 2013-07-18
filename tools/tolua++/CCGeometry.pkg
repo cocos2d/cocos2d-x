@@ -5,8 +5,33 @@ class CCPoint
     float y;
     CCPoint();
     CCPoint(float x, float y);
+    CCPoint(const CCSize& size);
+    CCPoint operator-(const CCPoint& right) const;
+    CCPoint operator+(const CCPoint& right) const;
+    CCPoint operator*(float a) const;
+    CCPoint getMidpoint(const CCPoint& other) const;
+    float dot(const CCPoint& other) const;
+    float cross(const CCPoint& other) const;
+    CCPoint getPerp() const;
+    CCPoint getRPerp() const;
+    CCPoint project(const CCPoint& other) const;
+    CCPoint rotate(const CCPoint& other) const;
+    CCPoint unrotate(const CCPoint& other) const;
+    float getLengthSq() const;
+    float getLength() const;
+    float getDistance(const CCPoint& other) const;
+    CCPoint normalize() const;
+    float getAngle() const;
+    CCPoint getClampPoint(const CCPoint& min_inclusive, const CCPoint& max_inclusive) const;
+    CCPoint lerp(const CCPoint& other, float alpha) const;
+    bool fuzzyEquals(const CCPoint& target, float variance) const;
+    CCPoint rotateByAngle(const CCPoint& pivot, float angle) const;
 
     bool equals(const CCPoint & target) const ;
+    static bool isLineIntersect(const CCPoint& A, const CCPoint& B,const CCPoint& C, const CCPoint& D,float* S, float* T);
+    static bool isSegmentIntersect(const CCPoint& A, const CCPoint& B, const CCPoint& C, const CCPoint& D);
+    static CCPoint getIntersectPoint(const CCPoint& A, const CCPoint& B, const CCPoint& C, const CCPoint& D);
+    static CCPoint forAngle(const float a);
 };
 
 class CCSize
@@ -36,8 +61,3 @@ class CCRect
 	bool containsPoint(const CCPoint & point) const;
 	bool intersectsRect(const CCRect & rect) const;
 };
-
-CCPoint CCPointMake(float x, float y);
-CCPoint CCPointMake @ ccp (float x, float y);
-CCSize  CCSizeMake(float width, float height);
-CCRect  CCRectMake(float x, float y, float width,float height);
