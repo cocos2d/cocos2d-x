@@ -33,7 +33,7 @@ void b2CollideEdgeAndCircle(b2Manifold* manifold,
     // Compute circle in frame of edge
     b2Vec2 Q = b2MulT(xfA, b2Mul(xfB, circleB->m_p));
     
-    b2Vec2 A = edgeA->m_vertex1, B = edgeA->m_Vertex2F;
+    b2Vec2 A = edgeA->m_vertex1, B = edgeA->m_vertex2;
     b2Vec2 e = B - A;
     
     // Barycentric coordinates
@@ -96,9 +96,9 @@ void b2CollideEdgeAndCircle(b2Manifold* manifold,
         }
         
         // Is there an edge connected to B?
-        if (edgeA->m_hasVertex3F)
+        if (edgeA->m_hasVertex3)
         {
-            b2Vec2 B2 = edgeA->m_Vertex3F;
+            b2Vec2 B2 = edgeA->m_vertex3;
             b2Vec2 A2 = B;
             b2Vec2 e2 = B2 - A2;
             float32 v2 = b2Dot(e2, Q - A2);
@@ -236,11 +236,11 @@ void b2EPCollider::Collide(b2Manifold* manifold, const b2EdgeShape* edgeA, const
     
     m_v0 = edgeA->m_vertex0;
     m_v1 = edgeA->m_vertex1;
-    m_v2 = edgeA->m_Vertex2F;
-    m_v3 = edgeA->m_Vertex3F;
+    m_v2 = edgeA->m_vertex2;
+    m_v3 = edgeA->m_vertex3;
     
     bool hasVertex0 = edgeA->m_hasVertex0;
-    bool hasVertex3F = edgeA->m_hasVertex3F;
+    bool hasVertex3F = edgeA->m_hasVertex3;
     
     b2Vec2 edge1 = m_v2 - m_v1;
     edge1.Normalize();

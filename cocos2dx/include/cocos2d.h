@@ -85,7 +85,7 @@ THE SOFTWARE.
 #include "ccConfig.h"
 #include "ccMacros.h"
 #include "ccTypes.h"
-#include "CCDeprecated.h"
+
 
 // kazmath
 #include "kazmath/include/kazmath/kazmath.h"
@@ -275,6 +275,9 @@ THE SOFTWARE.
 // component
 #include "support/component/CCComponent.h"
 #include "support/component/CCComponentContainer.h"
+
+// Deprecated include
+#include "CCDeprecated.h"
 
 NS_CC_BEGIN
 
