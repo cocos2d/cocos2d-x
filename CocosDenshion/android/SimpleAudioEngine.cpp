@@ -94,7 +94,7 @@ SimpleAudioEngine::~SimpleAudioEngine()
 	}
 }
 
-SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
+SimpleAudioEngine* SimpleAudioEngine::getInstance()
 {
     if (! s_pEngine)
     {

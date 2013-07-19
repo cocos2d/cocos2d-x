@@ -156,7 +156,7 @@ namespace CocosDenshion
 		alutExit();
 	}
 
-	SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
+	SimpleAudioEngine* SimpleAudioEngine::getInstance()
 	{
 		if (!s_engine)
 			s_engine = new SimpleAudioEngine();
