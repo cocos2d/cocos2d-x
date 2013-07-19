@@ -16,7 +16,7 @@ SimpleAudioEngine::SimpleAudioEngine() {
 SimpleAudioEngine::~SimpleAudioEngine() {
 }
 
-SimpleAudioEngine* SimpleAudioEngine::sharedEngine() {
+SimpleAudioEngine* SimpleAudioEngine::getInstance() {
 	static SimpleAudioEngine s_SharedEngine;
 	return &s_SharedEngine;
 }
