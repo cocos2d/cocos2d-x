@@ -32,6 +32,27 @@ FontDefinitionTTF::FontDefinitionTTF():_textImages(0), _commonLineHeight(0)
 {
 }
 
+
+
+FontDefinitionTTF* FontDefinitionTTF::create(const char *fontName, int fontSize, const char *letters, int textureSize )
+{
+    FontDefinitionTTF *ret = new FontDefinitionTTF;
+    
+    if(!ret)
+        return 0;
+    
+    if ( ret->initDefinition( fontName, fontSize, letters, textureSize ) )
+    {
+        ret->autorelease();
+        return ret;
+    }
+    else
+    {
+        delete ret;
+        return 0;
+    }
+}
+
 FontDefinitionTTF::~FontDefinitionTTF()
 {
     if (_textImages)
@@ -117,17 +138,18 @@ bool FontDefinitionTTF::prepareLetterDefinitions(TextFontPagesDef *pageDefs)
     // store the common line height
     _commonLineHeight = maxLineHeight;
     
+    //
     return true;
 }
 
-bool FontDefinitionTTF::createFontDefinition(char *fontName, int fontSize, char *letters, int textureSize, bool debugOutput)
+bool FontDefinitionTTF::initDefinition(const char *fontName, int fontSize, const char *letters, int textureSize)
 {
     // preare texture/image stuff
     _textImages = new TextImage();
     if (!_textImages)
         return false;
     
-    if (!_textImages->initWithString(letters, textureSize, textureSize, fontName, fontSize, !debugOutput))
+    if (!_textImages->initWithString(letters, textureSize, textureSize, fontName, fontSize, true))
     {
         delete _textImages;
         _textImages = 0;

@@ -331,13 +331,18 @@ private:
 class LabelDyamicTest : public AtlasDemo
 {
 public:
-    LabelDyamicTest();
+    
+     LabelDyamicTest();
+    ~LabelDyamicTest();
     
     virtual void draw();
     virtual std::string title();
     virtual std::string subtitle();
+    
 private:
+    
     StringTTF *label1;
+
 };
 
 

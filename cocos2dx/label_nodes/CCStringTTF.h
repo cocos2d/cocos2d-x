@@ -34,12 +34,10 @@ class StringTTF : public Node , public LabelTextFormatProtocol, public RGBAProto
 {
 public:
     
-     StringTTF(FontDefinitionTTF *pDefinition, TextAlignment alignment = kTextAlignmentLeft);
-    ~StringTTF();
-    
-    bool setText(char *pStringToRender, float lineWidth, TextAlignment alignment = kTextAlignmentLeft, bool lineBreakWithoutSpaces = false);
+    static StringTTF* create(FontDefinitionTTF *pDefinition, TextAlignment alignment = kTextAlignmentLeft);
     
     // main interface
+    bool setText(const char *pStringToRender, float lineWidth, TextAlignment alignment = kTextAlignmentLeft, bool lineBreakWithoutSpaces = false);
     virtual void setAlignment(TextAlignment alignment);
     virtual void setWidth(float width);
     virtual void setLineBreakWithoutSpace(bool breakWithoutSpace);
@@ -99,6 +97,10 @@ public:
     
 private:
     
+     StringTTF(FontDefinitionTTF *pDefinition, TextAlignment alignment = kTextAlignmentLeft);
+    ~StringTTF();
+    
+    bool init();
     
     void alignText();
     void hideAllLetters();
