@@ -42,10 +42,10 @@ ProcessBase::ProcessBase(void)
     , _isLoopBack(false)
 {
     /*
-     *  set _animationInternal defualt value to Director::sharedDirector()
+     *  set _animationInternal defualt value to Director::getInstance()
      *  ->getAnimationInterval(), in line with game update speed
      */
-    _animationInternal = Director::sharedDirector()->getAnimationInterval();
+    _animationInternal = Director::getInstance()->getAnimationInterval();
 }
 
 

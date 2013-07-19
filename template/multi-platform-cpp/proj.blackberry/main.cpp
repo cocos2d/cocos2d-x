@@ -23,8 +23,8 @@ int main(int argc, char **argv)
 		height = 600;
 	}
 
-    EGLView* eglView = EGLView::sharedOpenGLView();
+    EGLView* eglView = EGLView::getInstance();
     eglView->setFrameSize(width, height);
 
-    return Application::sharedApplication()->run();
+    return Application::getInstance()->run();
 }

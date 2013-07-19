@@ -49,7 +49,7 @@ int Application::run()
         return 0;
     }
 
-    EGLView* pMainWnd = EGLView::sharedOpenGLView();
+    EGLView* pMainWnd = EGLView::getInstance();
     pMainWnd->centerWindow();
     ShowWindow(pMainWnd->getHWnd(), SW_SHOW);
 
@@ -64,7 +64,7 @@ int Application::run()
             if (nNow.QuadPart - nLast.QuadPart > _animationInterval.QuadPart)
             {
                 nLast.QuadPart = nNow.QuadPart;
-                Director::sharedDirector()->mainLoop();
+                Director::getInstance()->mainLoop();
             }
             else
             {
@@ -100,10 +100,16 @@ void Application::setAnimationInterval(double interval)
 //////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////
-Application* Application::sharedApplication()
+Application* Application::getInstance()
 {
     CC_ASSERT(sm_pSharedApplication);
     return sm_pSharedApplication;
+}
+
+// @deprecated Use getInstance() instead
+Application* Application::sharedApplication()
+{
+    return Application::getInstance();
 }
 
 ccLanguageType Application::getCurrentLanguage()
@@ -175,7 +181,7 @@ void Application::setResourceRootPath(const std::string& rootResDir)
     {
         _resourceRootPath += '/';
     }
-    FileUtils* pFileUtils = FileUtils::sharedFileUtils();
+    FileUtils* pFileUtils = FileUtils::getInstance();
     std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
     searchPaths.insert(searchPaths.begin(), _resourceRootPath);
     pFileUtils->setSearchPaths(searchPaths);

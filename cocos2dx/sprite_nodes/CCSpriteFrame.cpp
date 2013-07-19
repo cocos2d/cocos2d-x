@@ -70,13 +70,13 @@ SpriteFrame* SpriteFrame::create(const char* filename, const Rect& rect, bool ro
 bool SpriteFrame::initWithTexture(Texture2D* pobTexture, const Rect& rect)
 {
     Rect rectInPixels = CC_RECT_POINTS_TO_PIXELS(rect);
-    return initWithTexture(pobTexture, rectInPixels, false, PointZero, rectInPixels.size);
+    return initWithTexture(pobTexture, rectInPixels, false, Point::ZERO, rectInPixels.size);
 }
 
 bool SpriteFrame::initWithTextureFilename(const char* filename, const Rect& rect)
 {
     Rect rectInPixels = CC_RECT_POINTS_TO_PIXELS( rect );
-    return initWithTextureFilename(filename, rectInPixels, false, PointZero, rectInPixels.size);
+    return initWithTextureFilename(filename, rectInPixels, false, Point::ZERO, rectInPixels.size);
 }
 
 bool SpriteFrame::initWithTexture(Texture2D* pobTexture, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize)
@@ -141,7 +141,7 @@ void SpriteFrame::setRectInPixels(const Rect& rectInPixels)
     _rect = CC_RECT_PIXELS_TO_POINTS(rectInPixels);
 }
 
-const Point& SpriteFrame::getOffset(void)
+const Point& SpriteFrame::getOffset() const
 {
     return _offset;
 }
@@ -152,7 +152,7 @@ void SpriteFrame::setOffset(const Point& offsets)
     _offsetInPixels = CC_POINT_POINTS_TO_PIXELS( _offset );
 }
 
-const Point& SpriteFrame::getOffsetInPixels(void)
+const Point& SpriteFrame::getOffsetInPixels() const
 {
     return _offsetInPixels;
 }
@@ -179,7 +179,7 @@ Texture2D* SpriteFrame::getTexture(void)
     }
 
     if( _textureFilename.length() > 0 ) {
-        return TextureCache::sharedTextureCache()->addImage(_textureFilename.c_str());
+        return TextureCache::getInstance()->addImage(_textureFilename.c_str());
     }
     // no texture or texture filename
     return NULL;

@@ -63,15 +63,16 @@ bool ParticleSystemQuad::initWithTotalParticles(unsigned int numberOfParticles)
         setupVBO();
 #endif
 
-        setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColor));
+        setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColor));
         
-        
+#if CC_ENABLE_CACHE_TEXTURE_DATA
         // Need to listen the event only when not use batchnode, because it will use VBO
-        NotificationCenter::sharedNotificationCenter()->addObserver(this,
+        NotificationCenter::getInstance()->addObserver(this,
                                                                       callfuncO_selector(ParticleSystemQuad::listenBackToForeground),
                                                                       EVNET_COME_TO_FOREGROUND,
                                                                       NULL);
-        
+#endif
+
         return true;
     }
     return false;
@@ -96,10 +97,13 @@ ParticleSystemQuad::~ParticleSystemQuad()
         glDeleteBuffers(2, &_buffersVBO[0]);
 #if CC_TEXTURE_ATLAS_USE_VAO
         glDeleteVertexArrays(1, &_VAOname);
+        ccGLBindVAO(0);
 #endif
     }
     
-    NotificationCenter::sharedNotificationCenter()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    NotificationCenter::getInstance()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
+#endif
 }
 
 // implementation ParticleSystemQuad
@@ -133,7 +137,7 @@ void ParticleSystemQuad::initTexCoordsWithRect(const Rect& pointRect)
 {
     // convert to Tex coords
 
-    Rect rect = CCRectMake(
+    Rect rect = Rect(
         pointRect.origin.x * CC_CONTENT_SCALE_FACTOR(),
         pointRect.origin.y * CC_CONTENT_SCALE_FACTOR(),
         pointRect.size.width * CC_CONTENT_SCALE_FACTOR(),
@@ -207,11 +211,11 @@ void ParticleSystemQuad::setTextureWithRect(Texture2D *texture, const Rect& rect
 void ParticleSystemQuad::setTexture(Texture2D* texture)
 {
     const Size& s = texture->getContentSize();
-    this->setTextureWithRect(texture, CCRectMake(0, 0, s.width, s.height));
+    this->setTextureWithRect(texture, Rect(0, 0, s.width, s.height));
 }
 void ParticleSystemQuad::setDisplayFrame(SpriteFrame *spriteFrame)
 {
-    CCAssert(spriteFrame->getOffsetInPixels().equals(PointZero), 
+    CCAssert(spriteFrame->getOffsetInPixels().equals(Point::ZERO), 
              "QuadParticle only supports SpriteFrames with no offsets");
 
     // update texture before updating texture rect
@@ -470,6 +474,7 @@ void ParticleSystemQuad::setupVBOandVAO()
     // clean VAO
     glDeleteBuffers(2, &_buffersVBO[0]);
     glDeleteVertexArrays(1, &_VAOname);
+    ccGLBindVAO(0);
     
     glGenVertexArrays(1, &_VAOname);
     ccGLBindVAO(_VAOname);
@@ -593,6 +598,7 @@ void ParticleSystemQuad::setBatchNode(ParticleBatchNode * batchNode)
             glDeleteBuffers(2, &_buffersVBO[0]);
 #if CC_TEXTURE_ATLAS_USE_VAO
             glDeleteVertexArrays(1, &_VAOname);
+            ccGLBindVAO(0);
 #endif
         }
     }

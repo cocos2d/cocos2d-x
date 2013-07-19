@@ -83,7 +83,7 @@ void TextInputTest::restartCallback(Object* pSender)
     Scene* s = new TextInputTestScene();
     s->addChild(restartTextInputTest()); 
 
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -91,7 +91,7 @@ void TextInputTest::nextCallback(Object* pSender)
 {
     Scene* s = new TextInputTestScene();
     s->addChild( nextTextInputTest() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -99,7 +99,7 @@ void TextInputTest::backCallback(Object* pSender)
 {
     Scene* s = new TextInputTestScene();
     s->addChild( backTextInputTest() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -131,7 +131,7 @@ KeyboardNotificationLayer::KeyboardNotificationLayer()
 
 void KeyboardNotificationLayer::registerWithTouchDispatcher()
 {
-    Director* pDirector = Director::sharedDirector();
+    Director* pDirector = Director::getInstance();
     pDirector->getTouchDispatcher()->addTargetedDelegate(this, 0, false);
 }
 
@@ -244,7 +244,7 @@ void TextFieldTTFDefaultTest::onEnter()
     KeyboardNotificationLayer::onEnter();
 
     // add TextFieldTTF
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     TextFieldTTF * pTextField = TextFieldTTF::textFieldWithPlaceHolder("<click here for input>",
         FONT_NAME,
@@ -254,9 +254,9 @@ void TextFieldTTFDefaultTest::onEnter()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)    
     // on android, TextFieldTTF cannot auto adjust its position when soft-keyboard pop up
     // so we had to set a higher position to make it visable
-    pTextField->setPosition(ccp(s.width / 2, s.height/2 + 50));
+    pTextField->setPosition(Point(s.width / 2, s.height/2 + 50));
 #else
-    pTextField->setPosition(ccp(s.width / 2, s.height / 2));
+    pTextField->setPosition(Point(s.width / 2, s.height / 2));
 #endif
 
     _trackNode = pTextField;
@@ -304,7 +304,7 @@ void TextFieldTTFActionTest::onEnter()
     _action = false;
 
     // add TextFieldTTF
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     _textField = TextFieldTTF::textFieldWithPlaceHolder("<click here for input>",
         FONT_NAME,
@@ -316,9 +316,9 @@ void TextFieldTTFActionTest::onEnter()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)    
     // on android, TextFieldTTF cannot auto adjust its position when soft-keyboard pop up
     // so we had to set a higher position
-    _textField->setPosition(ccp(s.width / 2, s.height/2 + 50));
+    _textField->setPosition(Point(s.width / 2, s.height/2 + 50));
 #else
-    _textField->setPosition(ccp(s.width / 2, s.height / 2));
+    _textField->setPosition(Point(s.width / 2, s.height / 2));
 #endif
 
     _trackNode = _textField;
@@ -379,7 +379,7 @@ bool TextFieldTTFActionTest::onTextFieldInsertText(TextFieldTTF * pSender, const
         endPos.x += pSender->getContentSize().width / 2;
     }
     Size  inputTextSize = label->getContentSize();
-    Point beginPos(endPos.x, Director::sharedDirector()->getWinSize().height - inputTextSize.height * 2); 
+    Point beginPos(endPos.x, Director::getInstance()->getWinSize().height - inputTextSize.height * 2); 
 
     float duration = 0.5;
     label->setPosition(beginPos);
@@ -391,7 +391,7 @@ bool TextFieldTTFActionTest::onTextFieldInsertText(TextFieldTTF * pSender, const
             ScaleTo::create(duration, 1),
             FadeOut::create(duration),
         0),
-        CallFuncN::create(this, callfuncN_selector(TextFieldTTFActionTest::callbackRemoveNodeWhenDidAction)),
+        CallFuncN::create(CC_CALLBACK_1(TextFieldTTFActionTest::callbackRemoveNodeWhenDidAction, this)),
         0);
     label->runAction(seq);
     return false;
@@ -409,7 +409,7 @@ bool TextFieldTTFActionTest::onTextFieldDeleteBackward(TextFieldTTF * pSender, c
     Size labelSize = label->getContentSize();
     beginPos.x += (textfieldSize.width - labelSize.width) / 2.0f;
     
-    Size winSize = Director::sharedDirector()->getWinSize();
+    Size winSize = Director::getInstance()->getWinSize();
     Point endPos(- winSize.width / 4.0f, winSize.height * (0.5 + (float)rand() / (2.0f * RAND_MAX)));
 
     float duration = 1;
@@ -425,7 +425,7 @@ bool TextFieldTTFActionTest::onTextFieldDeleteBackward(TextFieldTTF * pSender, c
                 repeatTime),
             FadeOut::create(duration),
         0),
-        CallFuncN::create(this, callfuncN_selector(TextFieldTTFActionTest::callbackRemoveNodeWhenDidAction)),
+        CallFuncN::create(CC_CALLBACK_1(TextFieldTTFActionTest::callbackRemoveNodeWhenDidAction, this)),
         0);
     label->runAction(seq);
     return false;
@@ -450,5 +450,5 @@ void TextInputTestScene::runThisTest()
     Layer* pLayer = nextTextInputTest();
     addChild(pLayer);
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

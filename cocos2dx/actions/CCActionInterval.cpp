@@ -27,7 +27,6 @@ THE SOFTWARE.
 #include "CCActionInterval.h"
 #include "sprite_nodes/CCSprite.h"
 #include "base_nodes/CCNode.h"
-#include "support/CCPointExtension.h"
 #include "CCStdC.h"
 #include "CCActionInstant.h"
 #include <stdarg.h>
@@ -139,9 +138,9 @@ float ActionInterval::getAmplitudeRate(void)
     return 0;
 }
 
-void ActionInterval::startWithTarget(Node *pTarget)
+void ActionInterval::startWithTarget(Node *target)
 {
-    FiniteTimeAction::startWithTarget(pTarget);
+    FiniteTimeAction::startWithTarget(target);
     _elapsed = 0.0f;
     _firstTick = true;
 }
@@ -258,9 +257,9 @@ Sequence::~Sequence(void)
     CC_SAFE_RELEASE(_actions[1]);
 }
 
-void Sequence::startWithTarget(Node *pTarget)
+void Sequence::startWithTarget(Node *target)
 {
-    ActionInterval::startWithTarget(pTarget);
+    ActionInterval::startWithTarget(target);
     _split = _actions[0]->getDuration() / _duration;
     _last = -1;
 }
@@ -394,12 +393,12 @@ Repeat::~Repeat(void)
     CC_SAFE_RELEASE(_innerAction);
 }
 
-void Repeat::startWithTarget(Node *pTarget)
+void Repeat::startWithTarget(Node *target)
 {
     _total = 0;
     _nextDt = _innerAction->getDuration()/_duration;
-    ActionInterval::startWithTarget(pTarget);
-    _innerAction->startWithTarget(pTarget);
+    ActionInterval::startWithTarget(target);
+    _innerAction->startWithTarget(target);
 }
 
 void Repeat::stop(void)
@@ -499,10 +498,10 @@ RepeatForever *RepeatForever::clone(void) const
 	return a;
 }
 
-void RepeatForever::startWithTarget(Node* pTarget)
+void RepeatForever::startWithTarget(Node* target)
 {
-    ActionInterval::startWithTarget(pTarget);
-    _innerAction->startWithTarget(pTarget);
+    ActionInterval::startWithTarget(target);
+    _innerAction->startWithTarget(target);
 }
 
 void RepeatForever::step(float dt)
@@ -657,11 +656,11 @@ Spawn::~Spawn(void)
     CC_SAFE_RELEASE(_two);
 }
 
-void Spawn::startWithTarget(Node *pTarget)
+void Spawn::startWithTarget(Node *target)
 {
-    ActionInterval::startWithTarget(pTarget);
-    _one->startWithTarget(pTarget);
-    _two->startWithTarget(pTarget);
+    ActionInterval::startWithTarget(target);
+    _one->startWithTarget(target);
+    _two->startWithTarget(target);
 }
 
 void Spawn::stop(void)
@@ -743,12 +742,12 @@ RotateTo* RotateTo::clone(void) const
 	return a;
 }
 
-void RotateTo::startWithTarget(Node *pTarget)
+void RotateTo::startWithTarget(Node *target)
 {
-    ActionInterval::startWithTarget(pTarget);
+    ActionInterval::startWithTarget(target);
     
     // Calculate X
-    _startAngleX = pTarget->getRotationX();
+    _startAngleX = target->getRotationX();
     if (_startAngleX > 0)
     {
         _startAngleX = fmodf(_startAngleX, 360.0f);
@@ -861,11 +860,11 @@ RotateBy* RotateBy::clone(void) const
 	return a;
 }
 
-void RotateBy::startWithTarget(Node *pTarget)
+void RotateBy::startWithTarget(Node *target)
 {
-    ActionInterval::startWithTarget(pTarget);
-    _startAngleX = pTarget->getRotationX();
-    _startAngleY = pTarget->getRotationY();
+    ActionInterval::startWithTarget(target);
+    _startAngleX = target->getRotationX();
+    _startAngleY = target->getRotationY();
 }
 
 void RotateBy::update(float time)
@@ -916,15 +915,15 @@ MoveBy* MoveBy::clone(void) const
 	return a;
 }
 
-void MoveBy::startWithTarget(Node *pTarget)
+void MoveBy::startWithTarget(Node *target)
 {
-    ActionInterval::startWithTarget(pTarget);
-    _previousPosition = _startPosition = pTarget->getPosition();
+    ActionInterval::startWithTarget(target);
+    _previousPosition = _startPosition = target->getPosition();
 }
 
 MoveBy* MoveBy::reverse() const
 {
-    return MoveBy::create(_duration, ccp( -_positionDelta.x, -_positionDelta.y));
+    return MoveBy::create(_duration, Point( -_positionDelta.x, -_positionDelta.y));
 }
 
 
@@ -934,9 +933,9 @@ void MoveBy::update(float t)
     {
 #if CC_ENABLE_STACKABLE_ACTIONS
         Point currentPos = _target->getPosition();
-        Point diff = ccpSub(currentPos, _previousPosition);
-        _startPosition = ccpAdd( _startPosition, diff);
-        Point newPos =  ccpAdd( _startPosition, ccpMult(_positionDelta, t) );
+        Point diff = currentPos - _previousPosition;
+        _startPosition = _startPosition + diff;
+        Point newPos =  _startPosition + (_positionDelta * t);
         _target->setPosition(newPos);
         _previousPosition = newPos;
 #else
@@ -978,10 +977,10 @@ MoveTo* MoveTo::clone(void) const
 	return a;
 }
 
-void MoveTo::startWithTarget(Node *pTarget)
+void MoveTo::startWithTarget(Node *target)
 {
-    MoveBy::startWithTarget(pTarget);
-    _positionDelta = ccpSub( _endPosition, pTarget->getPosition() );
+    MoveBy::startWithTarget(target);
+    _positionDelta = _endPosition - target->getPosition();
 }
 
 
@@ -1036,11 +1035,11 @@ SkewTo* SkewTo::reverse() const
 	return nullptr;
 }
 
-void SkewTo::startWithTarget(Node *pTarget)
+void SkewTo::startWithTarget(Node *target)
 {
-    ActionInterval::startWithTarget(pTarget);
+    ActionInterval::startWithTarget(target);
 
-    _startSkewX = pTarget->getSkewX();
+    _startSkewX = target->getSkewX();
 
     if (_startSkewX > 0)
     {
@@ -1062,7 +1061,7 @@ void SkewTo::startWithTarget(Node *pTarget)
         _deltaX += 360;
     }
 
-    _startSkewY = pTarget->getSkewY();
+    _startSkewY = target->getSkewY();
 
     if (_startSkewY > 0)
     {
@@ -1148,9 +1147,9 @@ bool SkewBy::initWithDuration(float t, float deltaSkewX, float deltaSkewY)
     return bRet;
 }
 
-void SkewBy::startWithTarget(Node *pTarget)
+void SkewBy::startWithTarget(Node *target)
 {
-    SkewTo::startWithTarget(pTarget);
+    SkewTo::startWithTarget(target);
     _deltaX = _skewX;
     _deltaY = _skewY;
     _endSkewX = _startSkewX + _deltaX;
@@ -1198,10 +1197,10 @@ JumpBy* JumpBy::clone(void) const
 	return a;
 }
 
-void JumpBy::startWithTarget(Node *pTarget)
+void JumpBy::startWithTarget(Node *target)
 {
-    ActionInterval::startWithTarget(pTarget);
-    _previousPos = _startPosition = pTarget->getPosition();
+    ActionInterval::startWithTarget(target);
+    _previousPos = _startPosition = target->getPosition();
 }
 
 void JumpBy::update(float t)
@@ -1217,22 +1216,22 @@ void JumpBy::update(float t)
 #if CC_ENABLE_STACKABLE_ACTIONS
         Point currentPos = _target->getPosition();
 
-        Point diff = ccpSub( currentPos, _previousPos );
-        _startPosition = ccpAdd( diff, _startPosition);
+        Point diff = currentPos - _previousPos;
+        _startPosition = diff + _startPosition;
 
-        Point newPos = ccpAdd( _startPosition, ccp(x,y));
+        Point newPos = _startPosition + Point(x,y);
         _target->setPosition(newPos);
 
         _previousPos = newPos;
 #else
-        _target->setPosition(ccpAdd( _startPosition, ccp(x,y)));
+        _target->setPosition(ccpAdd( _startPosition, Point(x,y)));
 #endif // !CC_ENABLE_STACKABLE_ACTIONS
     }
 }
 
 JumpBy* JumpBy::reverse() const
 {
-    return JumpBy::create(_duration, ccp(-_delta.x, -_delta.y),
+    return JumpBy::create(_duration, Point(-_delta.x, -_delta.y),
         _height, _jumps);
 }
 
@@ -1264,10 +1263,10 @@ JumpTo* JumpTo::reverse() const
 	return nullptr;
 }
 
-void JumpTo::startWithTarget(Node *pTarget)
+void JumpTo::startWithTarget(Node *target)
 {
-    JumpBy::startWithTarget(pTarget);
-    _delta = ccp(_delta.x - _startPosition.x, _delta.y - _startPosition.y);
+    JumpBy::startWithTarget(target);
+    _delta = Point(_delta.x - _startPosition.x, _delta.y - _startPosition.y);
 }
 
 // Bezier cubic formula:
@@ -1306,10 +1305,10 @@ bool BezierBy::initWithDuration(float t, const ccBezierConfig& c)
     return false;
 }
 
-void BezierBy::startWithTarget(Node *pTarget)
+void BezierBy::startWithTarget(Node *target)
 {
-    ActionInterval::startWithTarget(pTarget);
-    _previousPosition = _startPosition = pTarget->getPosition();
+    ActionInterval::startWithTarget(target);
+    _previousPosition = _startPosition = target->getPosition();
 }
 
 BezierBy* BezierBy::clone(void) const
@@ -1340,15 +1339,15 @@ void BezierBy::update(float time)
 
 #if CC_ENABLE_STACKABLE_ACTIONS
         Point currentPos = _target->getPosition();
-        Point diff = ccpSub(currentPos, _previousPosition);
-        _startPosition = ccpAdd( _startPosition, diff);
+        Point diff = currentPos - _previousPosition;
+        _startPosition = _startPosition + diff;
 
-        Point newPos = ccpAdd( _startPosition, ccp(x,y));
+        Point newPos = _startPosition + Point(x,y);
         _target->setPosition(newPos);
 
         _previousPosition = newPos;
 #else
-        _target->setPosition(ccpAdd( _startPosition, ccp(x,y)));
+        _target->setPosition(ccpAdd( _startPosition, Point(x,y)));
 #endif // !CC_ENABLE_STACKABLE_ACTIONS
     }
 }
@@ -1357,9 +1356,9 @@ BezierBy* BezierBy::reverse(void) const
 {
     ccBezierConfig r;
 
-    r.endPosition = ccpNeg(_config.endPosition);
-    r.controlPoint_1 = ccpAdd(_config.controlPoint_2, ccpNeg(_config.endPosition));
-    r.controlPoint_2 = ccpAdd(_config.controlPoint_1, ccpNeg(_config.endPosition));
+    r.endPosition = -_config.endPosition;
+    r.controlPoint_1 = _config.controlPoint_2 + (-_config.endPosition);
+    r.controlPoint_2 = _config.controlPoint_1 + (-_config.endPosition);
 
     BezierBy *pAction = BezierBy::create(_duration, r);
     return pAction;
@@ -1380,31 +1379,30 @@ BezierTo* BezierTo::create(float t, const ccBezierConfig& c)
 
 bool BezierTo::initWithDuration(float t, const ccBezierConfig &c)
 {
-    bool bRet = false;
-    
     if (ActionInterval::initWithDuration(t))
     {
         _toConfig = c;
+        return true;
     }
     
-    return bRet;
+    return false;
 }
 
 BezierTo* BezierTo::clone(void) const
 {
 	// no copy constructor
 	auto a = new BezierTo();
-	a->initWithDuration(_duration, _config);
+	a->initWithDuration(_duration, _toConfig);
 	a->autorelease();
 	return a;
 }
 
-void BezierTo::startWithTarget(Node *pTarget)
+void BezierTo::startWithTarget(Node *target)
 {
-    BezierBy::startWithTarget(pTarget);
-    _config.controlPoint_1 = ccpSub(_toConfig.controlPoint_1, _startPosition);
-    _config.controlPoint_2 = ccpSub(_toConfig.controlPoint_2, _startPosition);
-    _config.endPosition = ccpSub(_toConfig.endPosition, _startPosition);
+    BezierBy::startWithTarget(target);
+    _config.controlPoint_1 = _toConfig.controlPoint_1 - _startPosition;
+    _config.controlPoint_2 = _toConfig.controlPoint_2 - _startPosition;
+    _config.endPosition = _toConfig.endPosition - _startPosition;
 }
 
 BezierTo* BezierTo::reverse() const
@@ -1477,11 +1475,11 @@ ScaleTo* ScaleTo::reverse() const
 }
 
 
-void ScaleTo::startWithTarget(Node *pTarget)
+void ScaleTo::startWithTarget(Node *target)
 {
-    ActionInterval::startWithTarget(pTarget);
-    _startScaleX = pTarget->getScaleX();
-    _startScaleY = pTarget->getScaleY();
+    ActionInterval::startWithTarget(target);
+    _startScaleX = target->getScaleX();
+    _startScaleY = target->getScaleY();
     _deltaX = _endScaleX - _startScaleX;
     _deltaY = _endScaleY - _startScaleY;
 }
@@ -1526,9 +1524,9 @@ ScaleBy* ScaleBy::clone(void) const
 	return a;
 }
 
-void ScaleBy::startWithTarget(Node *pTarget)
+void ScaleBy::startWithTarget(Node *target)
 {
-    ScaleTo::startWithTarget(pTarget);
+    ScaleTo::startWithTarget(target);
     _deltaX = _startScaleX * _endScaleX - _startScaleX;
     _deltaY = _startScaleY * _endScaleY - _startScaleY;
 }
@@ -1568,10 +1566,10 @@ void Blink::stop()
     ActionInterval::stop();
 }
 
-void Blink::startWithTarget(Node *pTarget)
+void Blink::startWithTarget(Node *target)
 {
-    ActionInterval::startWithTarget(pTarget);
-    _originalState = pTarget->isVisible();
+    ActionInterval::startWithTarget(target);
+    _originalState = target->isVisible();
 }
 
 Blink* Blink::clone(void) const
@@ -1654,6 +1652,7 @@ FadeOut* FadeOut::clone() const
 {
 	// no copy constructor
 	auto a = new FadeOut();
+    a->initWithDuration(_duration);
 	a->autorelease();
 	return a;
 }
@@ -1712,16 +1711,16 @@ FadeTo* FadeTo::reverse() const
 	return nullptr;
 }
 
-void FadeTo::startWithTarget(Node *pTarget)
+void FadeTo::startWithTarget(Node *target)
 {
-    ActionInterval::startWithTarget(pTarget);
+    ActionInterval::startWithTarget(target);
 
-    RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(pTarget);
+    RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(target);
     if (pRGBAProtocol)
     {
         _fromOpacity = pRGBAProtocol->getOpacity();
     }
-    /*_fromOpacity = pTarget->getOpacity();*/
+    /*_fromOpacity = target->getOpacity();*/
 }
 
 void FadeTo::update(float time)
@@ -1772,15 +1771,15 @@ TintTo* TintTo::reverse() const
 	return nullptr;
 }
 
-void TintTo::startWithTarget(Node *pTarget)
+void TintTo::startWithTarget(Node *target)
 {
-    ActionInterval::startWithTarget(pTarget);
+    ActionInterval::startWithTarget(target);
     RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(_target);
     if (pRGBAProtocol)
     {
         _from = pRGBAProtocol->getColor();
     }
-    /*_from = pTarget->getColor();*/
+    /*_from = target->getColor();*/
 }
 
 void TintTo::update(float time)
@@ -1830,11 +1829,11 @@ TintBy* TintBy::clone() const
 	return a;
 }
 
-void TintBy::startWithTarget(Node *pTarget)
+void TintBy::startWithTarget(Node *target)
 {
-    ActionInterval::startWithTarget(pTarget);
+    ActionInterval::startWithTarget(target);
 
-    RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(pTarget);
+    RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(target);
     if (pRGBAProtocol)
     {
         Color3B color = pRGBAProtocol->getColor();
@@ -1877,6 +1876,7 @@ DelayTime* DelayTime::clone() const
 {
 	// no copy constructor
 	auto a = new DelayTime();
+    a->initWithDuration(_duration);
 	a->autorelease();
 	return a;
 }
@@ -1944,10 +1944,10 @@ ReverseTime::~ReverseTime(void)
     CC_SAFE_RELEASE(_other);
 }
 
-void ReverseTime::startWithTarget(Node *pTarget)
+void ReverseTime::startWithTarget(Node *target)
 {
-    ActionInterval::startWithTarget(pTarget);
-    _other->startWithTarget(pTarget);
+    ActionInterval::startWithTarget(target);
+    _other->startWithTarget(target);
 }
 
 void ReverseTime::stop(void)
@@ -2042,10 +2042,10 @@ Animate::~Animate()
     CC_SAFE_DELETE(_splitTimes);
 }
 
-void Animate::startWithTarget(Node *pTarget)
+void Animate::startWithTarget(Node *target)
 {
-    ActionInterval::startWithTarget(pTarget);
-    Sprite *pSprite = (Sprite*)(pTarget);
+    ActionInterval::startWithTarget(target);
+    Sprite *pSprite = static_cast<Sprite*>(target);
 
     CC_SAFE_RELEASE(_origFrame);
 
@@ -2153,21 +2153,21 @@ TargetedAction::~TargetedAction()
     CC_SAFE_RELEASE(_action);
 }
 
-TargetedAction* TargetedAction::create(Node* pTarget, FiniteTimeAction* pAction)
+TargetedAction* TargetedAction::create(Node* target, FiniteTimeAction* pAction)
 {
     TargetedAction* p = new TargetedAction();
-    p->initWithTarget(pTarget, pAction);
+    p->initWithTarget(target, pAction);
     p->autorelease();
     return p;
 }
 
 
-bool TargetedAction::initWithTarget(Node* pTarget, FiniteTimeAction* pAction)
+bool TargetedAction::initWithTarget(Node* target, FiniteTimeAction* pAction)
 {
     if(ActionInterval::initWithDuration(pAction->getDuration()))
     {
-        CC_SAFE_RETAIN(pTarget);
-        _forcedTarget = pTarget;
+        CC_SAFE_RETAIN(target);
+        _forcedTarget = target;
         CC_SAFE_RETAIN(pAction);
         _action = pAction;
         return true;
@@ -2191,9 +2191,9 @@ TargetedAction* TargetedAction::reverse(void) const
 	return this->clone();
 }
 
-void TargetedAction::startWithTarget(Node *pTarget)
+void TargetedAction::startWithTarget(Node *target)
 {
-    ActionInterval::startWithTarget(pTarget);
+    ActionInterval::startWithTarget(target);
     _action->startWithTarget(_forcedTarget);
 }
 

@@ -12,7 +12,7 @@ int main(int argc, char **argv)
 {
     // create the application instance
     AppDelegate app;
-    EGLView* eglView = EGLView::sharedOpenGLView();
+    EGLView* eglView = EGLView::getInstance();
     eglView->setFrameSize(960, 640);
-    return Application::sharedApplication()->run();
+    return Application::getInstance()->run();
 }

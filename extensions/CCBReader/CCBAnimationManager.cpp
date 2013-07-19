@@ -22,7 +22,7 @@ CCBAnimationManager::CCBAnimationManager()
 , mBaseValues(NULL)
 , mAutoPlaySequenceId(0)
 , mRootNode(NULL)
-, mRootContainerSize(SizeZero)
+, mRootContainerSize(Size::ZERO)
 , mDelegate(NULL)
 , mRunningSequence(NULL)
 , jsControlled(false)
@@ -347,7 +347,7 @@ ActionInterval* CCBAnimationManager::getAction(CCBKeyframe *pKeyframe0, CCBKeyfr
         
         Size containerSize = getContainerSize(pNode->getParent());
         
-        Point absPos = getAbsolutePosition(ccp(x,y), type, containerSize, pPropName);
+        Point absPos = getAbsolutePosition(Point(x,y), type, containerSize, pPropName);
         
         return MoveTo::create(duration, absPos);
     }
@@ -418,7 +418,7 @@ void CCBAnimationManager::setAnimatedProperty(const char *pPropName, Node *pNode
             float x = ((CCBValue*)value->objectAtIndex(0))->getFloatValue();
             float y = ((CCBValue*)value->objectAtIndex(1))->getFloatValue();
             
-            pNode->setPosition(getAbsolutePosition(ccp(x,y), type, getContainerSize(pNode->getParent()), pPropName));
+            pNode->setPosition(getAbsolutePosition(Point(x,y), type, getContainerSize(pNode->getParent()), pPropName));
         }
         else if (strcmp(pPropName, "scale") == 0)
         {
@@ -789,7 +789,7 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
     // Make callback at end of sequence
     CCBSequence *seq = getSequence(nSeqId);
     Action *completeAction = Sequence::createWithTwoActions(DelayTime::create(seq->getDuration() + fTweenDuration),
-                                                                CallFunc::create(this, callfunc_selector(CCBAnimationManager::sequenceCompleted)));
+                                                                CallFunc::create( CC_CALLBACK_0(CCBAnimationManager::sequenceCompleted,this)));
     mRootNode->runAction(completeAction);
     
     // Set the running scene

@@ -62,9 +62,9 @@ ActionEase::~ActionEase(void)
     CC_SAFE_RELEASE(_inner);
 }
 
-void ActionEase::startWithTarget(Node *pTarget)
+void ActionEase::startWithTarget(Node *target)
 {
-    ActionInterval::startWithTarget(pTarget);
+    ActionInterval::startWithTarget(target);
     _inner->startWithTarget(_target);
 }
 

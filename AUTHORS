@@ -128,6 +128,8 @@ Developers:
 
     tks2shimizu
         add CCFloat, CCDouble and CCBool
+        Add append function for String class
+        Adding String::componentsSeparatedByString function for splitting string.
 
     chenium
         fix a bug that CCRenderTexture can not work when coming to foreground on Android
@@ -441,6 +443,7 @@ Developers:
         Explicitly initialising CCAcceleration structure.
         Add support to save/retrieve CCData into/from CCUserDefault.
         Text Shadows fix
+        Solving 'black screen' on android.
 
     MarcelBloemendaal
         Adding secureTextEntry property to CCTextFieldTTF.
@@ -452,6 +455,7 @@ Developers:
 
     sunzhuoshi
         Adding support for javascript bytecode.
+        Fixing bad js constant names.
 
     ptekchand (Pranav Tekchand)
         Supporting negative node scales for CCScrollView.
@@ -513,6 +517,21 @@ Developers:
         
     hannon235 (Chris)
         Fixing a bug that the submenu of ExtensionTest in TestCpp can't scroll.
+        Implements a socket.io client extension and adds a test case.
+        
+    pktangyue
+        Fixing a bug that CCScale9Sprite::setInsetLeft/XXX can't work for rotated sprite frame.
+        Fixing a bug that Color and Opacity of Scale9Sprite will not be changed when it's added to NodeRGBA and run with FadeIn/Out actions.
+        
+    jllust
+        Fixing a bug that CCLabelBMFont crashes in glDrawElements of CCTextureAtlas::drawNumberOfQuads sometimes.
+        
+    Sam Gross (colesbury)
+        Ignoring formatting specifiers in JavaScript log messages.
+        Make bindings-generator supports to bind std::function argument.
+        
+    James Munro (jdmunro)
+        Added JSB support for ccpDistanceSQ.
 
 Retired Core Developers:
     WenSheng Yang
@@ -525,6 +544,9 @@ Retired Core Developers:
 
     RongHong Huang (flyingpaper)
         Author of cocos2d-xna and spent all his time on wp7.
+        
+    michaelcontento
+        [Android] use onWindowFocusChanged(bool) instead of onResume()/onPause()
 
 
 Cocos2d-x can not grow so fast without the active community.

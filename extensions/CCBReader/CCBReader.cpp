@@ -172,7 +172,7 @@ bool CCBReader::init()
     pActionManager->release();
     
     // Setup resolution scale and container size
-    mActionManager->setRootContainerSize(Director::sharedDirector()->getWinSize());
+    mActionManager->setRootContainerSize(Director::getInstance()->getWinSize());
     
     return true;
 }
@@ -229,7 +229,7 @@ Node* CCBReader::readNodeGraphFromFile(const char *pCCBFileName)
 
 Node* CCBReader::readNodeGraphFromFile(const char* pCCBFileName, Object* pOwner) 
 {
-    return this->readNodeGraphFromFile(pCCBFileName, pOwner, Director::sharedDirector()->getWinSize());
+    return this->readNodeGraphFromFile(pCCBFileName, pOwner, Director::getInstance()->getWinSize());
 }
 
 Node* CCBReader::readNodeGraphFromFile(const char *pCCBFileName, Object *pOwner, const Size &parentSize)
@@ -247,10 +247,10 @@ Node* CCBReader::readNodeGraphFromFile(const char *pCCBFileName, Object *pOwner,
         strCCBFileName += strSuffix;
     }
 
-    std::string strPath = FileUtils::sharedFileUtils()->fullPathForFilename(strCCBFileName.c_str());
+    std::string strPath = FileUtils::getInstance()->fullPathForFilename(strCCBFileName.c_str());
     unsigned long size = 0;
 
-    unsigned char * pBytes = FileUtils::sharedFileUtils()->getFileData(strPath.c_str(), "rb", &size);
+    unsigned char * pBytes = FileUtils::getInstance()->getFileData(strPath.c_str(), "rb", &size);
     Data *data = new Data(pBytes, size);
     CC_SAFE_DELETE_ARRAY(pBytes);
 
@@ -314,7 +314,7 @@ Scene* CCBReader::createSceneWithNodeGraphFromFile(const char *pCCBFileName)
 
 Scene* CCBReader::createSceneWithNodeGraphFromFile(const char *pCCBFileName, Object *pOwner)
 {
-    return createSceneWithNodeGraphFromFile(pCCBFileName, pOwner, Director::sharedDirector()->getWinSize());
+    return createSceneWithNodeGraphFromFile(pCCBFileName, pOwner, Director::getInstance()->getWinSize());
 }
 
 Scene* CCBReader::createSceneWithNodeGraphFromFile(const char *pCCBFileName, Object *pOwner, const Size &parentSize)
@@ -817,14 +817,16 @@ CCBKeyframe* CCBReader::readKeyframe(int type)
         if (spriteSheet.length() == 0)
         {
             spriteFile = mCCBRootPath + spriteFile;
-            Texture2D *texture = TextureCache::sharedTextureCache()->addImage(spriteFile.c_str());
-            Rect bounds = CCRectMake(0, 0, texture->getContentSize().width, texture->getContentSize().height);
+
+            Texture2D *texture = TextureCache::getInstance()->addImage(spriteFile.c_str());
+            Rect bounds = Rect(0, 0, texture->getContentSize().width, texture->getContentSize().height);
+            
             spriteFrame = SpriteFrame::createWithTexture(texture, bounds);
         }
         else
         {
             spriteSheet = mCCBRootPath + spriteSheet;
-            SpriteFrameCache* frameCache = SpriteFrameCache::sharedSpriteFrameCache();
+            SpriteFrameCache* frameCache = SpriteFrameCache::getInstance();
             
             // Load the sprite sheet only if it is not loaded            
             if (mLoadedSpriteSheets.find(spriteSheet) == mLoadedSpriteSheets.end())
@@ -833,7 +835,7 @@ CCBKeyframe* CCBReader::readKeyframe(int type)
                 mLoadedSpriteSheets.insert(spriteSheet);
             }
             
-            spriteFrame = frameCache->spriteFrameByName(spriteFile.c_str());
+            spriteFrame = frameCache->getSpriteFrameByName(spriteFile.c_str());
         }
         value = spriteFrame;
     }

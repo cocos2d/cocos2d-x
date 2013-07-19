@@ -377,9 +377,12 @@ local function TMXReadWriteTest()
     local  fadein = CCFadeIn:create(2)
     local  scaleback = CCScaleTo:create(1, 1)
 
-    local function removeSprite(tag, sender)
+    local function removeSprite(sender)
         --------cclog("removing tile: %x", sender)
-        local node = tolua.cast(sender, "CCNode");
+        local node = tolua.cast(sender, "CCNode")
+        if nil == node then
+            print("Errro node is nil")
+        end
         local p = node:getParent()
 
         if p ~= nil then
@@ -388,8 +391,7 @@ local function TMXReadWriteTest()
         ----------cclog("atlas quantity: %d", p:textureAtlas():totalQuads())
     end
 
-
-    local  finish = CCCallFuncN:create(removeSprite)
+    local finish = CCCallFunc:create(removeSprite)
     local arr = CCArray:create()
     arr:addObject(move)
     arr:addObject(rotate)

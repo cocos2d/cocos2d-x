@@ -53,11 +53,19 @@ public:
     AnimationCache();
     ~AnimationCache();
     /** Returns the shared instance of the Animation cache */
-    static AnimationCache* sharedAnimationCache(void);
+    static AnimationCache* getInstance();
 
     /** Purges the cache. It releases all the Animation objects and the shared instance.
-    */
-    static void purgeSharedAnimationCache(void);
+     */
+    static void destroyInstance();
+
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static AnimationCache* sharedAnimationCache() { return AnimationCache::getInstance(); }
+
+    /** @deprecatd Use destroyInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static void purgeSharedAnimationCache() { return AnimationCache::destroyInstance(); }
+
+    bool init(void);
 
     /** Adds a Animation with a name.
     */
@@ -85,11 +93,10 @@ public:
      */
     void addAnimationsWithFile(const char* plist);
 
-    bool init(void);
-
 private:
     void parseVersion1(Dictionary* animations);
     void parseVersion2(Dictionary* animations);
+
 private:
     Dictionary* _animations;
     static AnimationCache* s_pSharedAnimationCache;

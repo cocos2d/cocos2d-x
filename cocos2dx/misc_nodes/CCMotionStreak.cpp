@@ -30,7 +30,6 @@ THE SOFTWARE.
 #include "ccMacros.h"
 
 #include "support/CCVertex.h"
-#include "support/CCPointExtension.h"
 
 NS_CC_BEGIN
 
@@ -38,7 +37,7 @@ MotionStreak::MotionStreak()
 : _fastMode(false)
 , _startingPositionInitialized(false)
 , _texture(NULL)
-, _positionR(PointZero)
+, _positionR(Point::ZERO)
 , _stroke(0.0f)
 , _fadeDelta(0.0f)
 , _minSeg(0.0f)
@@ -95,18 +94,18 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
 {
     CCAssert(path != NULL, "Invalid filename");
 
-    Texture2D *texture = TextureCache::sharedTextureCache()->addImage(path);
+    Texture2D *texture = TextureCache::getInstance()->addImage(path);
     return initWithFade(fade, minSeg, stroke, color, texture);
 }
 
 bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture)
 {
-    Node::setPosition(PointZero);
-    setAnchorPoint(PointZero);
+    Node::setPosition(Point::ZERO);
+    setAnchorPoint(Point::ZERO);
     ignoreAnchorPointForPosition(true);
     _startingPositionInitialized = false;
 
-    _positionR = PointZero;
+    _positionR = Point::ZERO;
     _fastMode = true;
     _minSeg = (minSeg == -1.0f) ? stroke/5.0f : minSeg;
     _minSeg *= _minSeg;
@@ -128,7 +127,7 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
     _blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
 
     // shader program
-    setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColor));
+    setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColor));
 
     setTexture(texture);
     setColor(color);
@@ -265,8 +264,8 @@ void MotionStreak::update(float delta)
 
     else if(_nuPoints>0)
     {
-        bool a1 = ccpDistanceSQ(_pointVertexes[_nuPoints-1], _positionR) < _minSeg;
-        bool a2 = (_nuPoints == 1) ? false : (ccpDistanceSQ(_pointVertexes[_nuPoints-2], _positionR) < (_minSeg * 2.0f));
+        bool a1 = _pointVertexes[_nuPoints-1].getDistanceSq(_positionR) < _minSeg;
+        bool a2 = (_nuPoints == 1) ? false : (_pointVertexes[_nuPoints-2].getDistanceSq(_positionR)< (_minSeg * 2.0f));
         if(a1 || a2)
         {
             appendNewPoint = false;

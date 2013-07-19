@@ -3,6 +3,7 @@
 #include "ccMacros.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "CCArray.h"
 
 NS_CC_BEGIN
 
@@ -129,6 +130,50 @@ int String::compare(const char * pStr) const
     return strcmp(getCString(), pStr);
 }
 
+void String::append(const std::string& str)
+{
+    _string.append(str);
+}
+
+void String::appendWithFormat(const char* format, ...)
+{
+    va_list ap;
+    va_start(ap, format);
+    
+    char* pBuf = (char*)malloc(kMaxStringLen);
+    if (pBuf != NULL)
+    {
+        vsnprintf(pBuf, kMaxStringLen, format, ap);
+        _string.append(pBuf);
+        free(pBuf);
+    }
+    
+    va_end(ap);
+    
+}
+
+Array* String::componentsSeparatedByString(const char *delimiter)
+{
+    Array* result = Array::create();
+    
+    int cutAt;
+    while( (cutAt = _string.find_first_of(delimiter)) != _string.npos )
+    {
+        if(cutAt > 0)
+        {
+            result->addObject(String::create(_string.substr(0, cutAt)));
+        }
+        _string = _string.substr(cutAt + 1);
+    }
+    
+    if(_string.length() > 0)
+    {
+        result->addObject(String::create(_string));
+    }
+    
+    return result;
+}
+
 bool String::isEqual(const Object* pObject)
 {
     bool bRet = false;
@@ -187,7 +232,7 @@ String* String::createWithContentsOfFile(const char* pszFileName)
     unsigned long size = 0;
     unsigned char* pData = 0;
     String* pRet = NULL;
-    pData = FileUtils::sharedFileUtils()->getFileData(pszFileName, "rb", &size);
+    pData = FileUtils::getInstance()->getFileData(pszFileName, "rb", &size);
     pRet = String::createWithData(pData, size);
     CC_SAFE_DELETE_ARRAY(pData);
     return pRet;

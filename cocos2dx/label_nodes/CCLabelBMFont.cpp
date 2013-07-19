@@ -37,7 +37,6 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 #include "CCConfiguration.h"
 #include "draw_nodes/CCDrawingPrimitives.h"
 #include "sprite_nodes/CCSprite.h"
-#include "support/CCPointExtension.h"
 #include "platform/CCFileUtils.h"
 #include "CCDirector.h"
 #include "textures/CCTextureCache.h"
@@ -183,7 +182,7 @@ void CCBMFontConfiguration::purgeFontDefDictionary()
 
 std::set<unsigned int>* CCBMFontConfiguration::parseConfigFile(const char *controlFile)
 {    
-    std::string fullpath = FileUtils::sharedFileUtils()->fullPathForFilename(controlFile);
+    std::string fullpath = FileUtils::getInstance()->fullPathForFilename(controlFile);
     String *contents = String::createWithContentsOfFile(fullpath.c_str());
 
     CCAssert(contents, "CCBMFontConfiguration::parseConfigFile | Open file error.");
@@ -277,7 +276,7 @@ void CCBMFontConfiguration::parseImageFileName(std::string line, const char *fnt
     index2 = line.find('"', index);
     value = line.substr(index, index2-index);
 
-    _atlasName = FileUtils::sharedFileUtils()->fullPathFromRelativeFile(value.c_str(), fntFile);
+    _atlasName = FileUtils::getInstance()->fullPathFromRelativeFile(value.c_str(), fntFile);
 }
 
 void CCBMFontConfiguration::parseInfoArguments(std::string line)
@@ -312,12 +311,12 @@ void CCBMFontConfiguration::parseCommonArguments(std::string line)
     index = line.find("scaleW=") + strlen("scaleW=");
     index2 = line.find(' ', index);
     value = line.substr(index, index2-index);
-    CCAssert(atoi(value.c_str()) <= Configuration::sharedConfiguration()->getMaxTextureSize(), "CCLabelBMFont: page can't be larger than supported");
+    CCAssert(atoi(value.c_str()) <= Configuration::getInstance()->getMaxTextureSize(), "CCLabelBMFont: page can't be larger than supported");
     // scaleH. sanity check
     index = line.find("scaleH=") + strlen("scaleH=");
     index2 = line.find(' ', index);
     value = line.substr(index, index2-index);
-    CCAssert(atoi(value.c_str()) <= Configuration::sharedConfiguration()->getMaxTextureSize(), "CCLabelBMFont: page can't be larger than supported");
+    CCAssert(atoi(value.c_str()) <= Configuration::getInstance()->getMaxTextureSize(), "CCLabelBMFont: page can't be larger than supported");
     // pages. sanity check
     index = line.find("pages=") + strlen("pages=");
     index2 = line.find(' ', index);
@@ -434,21 +433,21 @@ LabelBMFont * LabelBMFont::create()
 
 LabelBMFont * LabelBMFont::create(const char *str, const char *fntFile, float width, TextAlignment alignment)
 {
-    return LabelBMFont::create(str, fntFile, width, alignment, PointZero);
+    return LabelBMFont::create(str, fntFile, width, alignment, Point::ZERO);
 }
 
 LabelBMFont * LabelBMFont::create(const char *str, const char *fntFile, float width)
 {
-    return LabelBMFont::create(str, fntFile, width, kTextAlignmentLeft, PointZero);
+    return LabelBMFont::create(str, fntFile, width, kTextAlignmentLeft, Point::ZERO);
 }
 
 LabelBMFont * LabelBMFont::create(const char *str, const char *fntFile)
 {
-    return LabelBMFont::create(str, fntFile, kLabelAutomaticWidth, kTextAlignmentLeft, PointZero);
+    return LabelBMFont::create(str, fntFile, kLabelAutomaticWidth, kTextAlignmentLeft, Point::ZERO);
 }
 
 //LabelBMFont - Creation & Init
-LabelBMFont *LabelBMFont::create(const char *str, const char *fntFile, float width/* = kLabelAutomaticWidth*/, TextAlignment alignment/* = kTextAlignmentLeft*/, Point imageOffset/* = PointZero*/)
+LabelBMFont *LabelBMFont::create(const char *str, const char *fntFile, float width/* = kLabelAutomaticWidth*/, TextAlignment alignment/* = kTextAlignmentLeft*/, Point imageOffset/* = Point::ZERO*/)
 {
     LabelBMFont *pRet = new LabelBMFont();
     if(pRet && pRet->initWithString(str, fntFile, width, alignment, imageOffset))
@@ -462,10 +461,10 @@ LabelBMFont *LabelBMFont::create(const char *str, const char *fntFile, float wid
 
 bool LabelBMFont::init()
 {
-    return initWithString(NULL, NULL, kLabelAutomaticWidth, kTextAlignmentLeft, PointZero);
+    return initWithString(NULL, NULL, kLabelAutomaticWidth, kTextAlignmentLeft, Point::ZERO);
 }
 
-bool LabelBMFont::initWithString(const char *theString, const char *fntFile, float width/* = kLabelAutomaticWidth*/, TextAlignment alignment/* = kTextAlignmentLeft*/, Point imageOffset/* = PointZero*/)
+bool LabelBMFont::initWithString(const char *theString, const char *fntFile, float width/* = kLabelAutomaticWidth*/, TextAlignment alignment/* = kTextAlignmentLeft*/, Point imageOffset/* = Point::ZERO*/)
 {
     CCAssert(!_configuration, "re-init is no longer supported");
     CCAssert( (theString && fntFile) || (theString==NULL && fntFile==NULL), "Invalid params for LabelBMFont");
@@ -488,7 +487,7 @@ bool LabelBMFont::initWithString(const char *theString, const char *fntFile, flo
         
         _fntFile = fntFile;
         
-        texture = TextureCache::sharedTextureCache()->addImage(_configuration->getAtlasName());
+        texture = TextureCache::getInstance()->addImage(_configuration->getAtlasName());
     }
     else 
     {
@@ -511,15 +510,15 @@ bool LabelBMFont::initWithString(const char *theString, const char *fntFile, flo
         _cascadeOpacityEnabled = true;
         _cascadeColorEnabled = true;
         
-        _contentSize = SizeZero;
+        _contentSize = Size::ZERO;
         
         _isOpacityModifyRGB = _textureAtlas->getTexture()->hasPremultipliedAlpha();
-        _anchorPoint = ccp(0.5f, 0.5f);
+        _anchorPoint = Point(0.5f, 0.5f);
         
         _imageOffset = imageOffset;
         
         _reusedChar = new Sprite();
-        _reusedChar->initWithTexture(_textureAtlas->getTexture(), CCRectMake(0, 0, 0, 0), false);
+        _reusedChar->initWithTexture(_textureAtlas->getTexture(), Rect(0, 0, 0, 0), false);
         _reusedChar->setBatchNode(this);
         
         this->setString(theString, true);
@@ -536,7 +535,7 @@ LabelBMFont::LabelBMFont()
 , _width(-1.0f)
 , _configuration(NULL)
 , _lineBreakWithoutSpaces(false)
-, _imageOffset(PointZero)
+, _imageOffset(Point::ZERO)
 , _reusedChar(NULL)
 , _displayedOpacity(255)
 , _realOpacity(255)
@@ -579,7 +578,7 @@ void LabelBMFont::createFontChars()
     unsigned short prev = -1;
     int kerningAmount = 0;
 
-    Size tmpSize = SizeZero;
+    Size tmpSize = Size::ZERO;
 
     int longestLine = 0;
     unsigned int totalHeight = 0;
@@ -689,7 +688,7 @@ void LabelBMFont::createFontChars()
 
         // See issue 1343. cast( signed short + unsigned integer ) == unsigned integer (sign is lost!)
         int yOffset = _configuration->_commonHeight - fontDef.yOffset;
-        Point fontPos = ccp( (float)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount,
+        Point fontPos = Point( (float)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount,
             (float)nextFontPositionY + yOffset - rect.size.height*0.5f * CC_CONTENT_SCALE_FACTOR() );
         fontChar->setPosition(CC_POINT_PIXELS_TO_POINTS(fontPos));
 
@@ -1145,7 +1144,7 @@ void LabelBMFont::updateLabel()
                         if (index < 0) continue;
 
                         Sprite* characterSprite = static_cast<Sprite*>( getChildByTag(index) );
-                        characterSprite->setPosition(ccpAdd(characterSprite->getPosition(), ccp(shift, 0.0f)));
+                        characterSprite->setPosition(characterSprite->getPosition() + Point(shift, 0.0f));
                     }
                 }
 
@@ -1223,7 +1222,7 @@ void LabelBMFont::setFntFile(const char* fntFile)
         CC_SAFE_RELEASE(_configuration);
         _configuration = newConf;
 
-        this->setTexture(TextureCache::sharedTextureCache()->addImage(_configuration->getAtlasName()));
+        this->setTexture(TextureCache::getInstance()->addImage(_configuration->getAtlasName()));
         this->createFontChars();
     }
 }
@@ -1241,8 +1240,8 @@ void LabelBMFont::draw()
     SpriteBatchNode::draw();
     const Size& s = this->getContentSize();
     Point vertices[4]={
-        ccp(0,0),ccp(s.width,0),
-        ccp(s.width,s.height),ccp(0,s.height),
+        Point(0,0),Point(s.width,0),
+        Point(s.width,s.height),Point(0,s.height),
     };
     ccDrawPoly(vertices, 4, true);
 }

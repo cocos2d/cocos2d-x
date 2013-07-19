@@ -78,8 +78,6 @@ bool Control::init()
         this->setTouchPriority(1);
         // Initialise the tables
         _dispatchTable = new Dictionary(); 
-        // Initialise the mapHandleOfControlEvents
-        _mapHandleOfControlEvent.clear();
         
         return true;
     }
@@ -97,7 +95,7 @@ Control::~Control()
     //Menu - Events
 void Control::registerWithTouchDispatcher()
 {
-    Director::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, getTouchPriority(), true);
+    Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, getTouchPriority(), true);
 }
 
 void Control::onEnter()
@@ -128,15 +126,11 @@ void Control::sendActionsForControlEvents(ControlEvent controlEvents)
                 invocation->invoke(this);
             }
             //Call ScriptFunc
-            if (kScriptTypeNone != _scriptType)
+            if (kScriptTypeLua == _scriptType)
             {
-                int nHandler = this->getHandleOfControlEvent(controlEvents);
-                if (0 != nHandler)
-                {
-                    cocos2d::CommonScriptData data(nHandler, "",(Object*)this);
-                    cocos2d::ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
-                    cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
-                }
+                cocos2d::BasicScriptData data((void*)this,(void*)&controlEvents);
+                cocos2d::ScriptEvent event(cocos2d::kControlEvent,(void*)&data);
+                cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
             }
         }
     }
@@ -266,7 +260,7 @@ bool Control::isTouchInside(Touch* touch)
 {
     Point touchLocation = touch->getLocation(); // Get the touch position
     touchLocation = this->getParent()->convertToNodeSpace(touchLocation);
-    Rect bBox=boundingBox();
+    Rect bBox = getBoundingBox();
     return bBox.containsPoint(touchLocation);
 }
 
@@ -337,31 +331,5 @@ bool Control::hasVisibleParents()
         }
     }
     return true;
-}
-
-void Control::addHandleOfControlEvent(int nFunID,ControlEvent controlEvent)
-{
-    _mapHandleOfControlEvent[controlEvent] = nFunID;
-}
-
-void Control::removeHandleOfControlEvent(ControlEvent controlEvent)
-{
-    std::map<int,int>::iterator Iter = _mapHandleOfControlEvent.find(controlEvent);
-    
-    if (_mapHandleOfControlEvent.end() != Iter)
-    {
-        _mapHandleOfControlEvent.erase(Iter);
-    }
-    
-}
-
-int  Control::getHandleOfControlEvent(ControlEvent controlEvent)
-{
-    std::map<int,int>::iterator Iter = _mapHandleOfControlEvent.find(controlEvent);
-    
-    if (_mapHandleOfControlEvent.end() != Iter)
-        return Iter->second;
-    
-    return 0;
 }
 NS_CC_EXT_END

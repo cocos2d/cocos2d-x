@@ -57,17 +57,27 @@ class Sprite;
  */
 class CC_DLL SpriteFrameCache : public Object
 {
+public:
+    /** Returns the shared instance of the Sprite Frame cache */
+    static SpriteFrameCache* getInstance(void);
+
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static SpriteFrameCache* sharedSpriteFrameCache() { return SpriteFrameCache::getInstance(); }
+
+    /** Destroys the cache. It releases all the Sprite Frames and the retained instance. */
+    static void destroyInstance();
+
+    /** @deprecated Use destroyInstance() instead  */
+    CC_DEPRECATED_ATTRIBUTE static void purgeSharedSpriteFrameCache() { return SpriteFrameCache::destroyInstance(); }
+
 protected:
     // MARMALADE: Made this protected not private, as deriving from this class is pretty useful
-    SpriteFrameCache(void) : _spriteFrames(NULL), _spriteFramesAliases(NULL){}
-public:
-    bool init(void);
-    ~SpriteFrameCache(void);
+    SpriteFrameCache() : _spriteFrames(NULL), _spriteFramesAliases(NULL){}
 
-private:
-    /*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
-     */
-    void addSpriteFramesWithDictionary(Dictionary* pobDictionary, Texture2D *pobTexture);
+public:
+    virtual ~SpriteFrameCache();
+    bool init(void);
+
 public:
     /** Adds multiple Sprite Frames from a plist file.
      * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png
@@ -112,34 +122,31 @@ public:
     */
     void removeSpriteFramesFromFile(const char* plist);
 
-private:
-    /** Removes multiple Sprite Frames from Dictionary.
-    * @since v0.99.5
-    */
-    void removeSpriteFramesFromDictionary(Dictionary* dictionary);
-public:
     /** Removes all Sprite Frames associated with the specified textures.
-    * It is convenient to call this method when a specific texture needs to be removed.
-    * @since v0.995.
-    */
+     * It is convenient to call this method when a specific texture needs to be removed.
+     * @since v0.995.
+     */
     void removeSpriteFramesFromTexture(Texture2D* texture);
 
     /** Returns an Sprite Frame that was previously added.
      If the name is not found it will return nil.
      You should retain the returned copy if you are going to use it.
      */
-    SpriteFrame* spriteFrameByName(const char *pszName);
+    SpriteFrame* getSpriteFrameByName(const char *name);
 
-public:
-    /** Returns the shared instance of the Sprite Frame cache */
-    static SpriteFrameCache* sharedSpriteFrameCache(void);
-
-    /** Purges the cache. It releases all the Sprite Frames and the retained instance. */
-    static void purgeSharedSpriteFrameCache(void);
+    /** @deprecated use getSpriteFrameByName() instead */
+    CC_DEPRECATED_ATTRIBUTE SpriteFrame* spriteFrameByName(const char *name) { return getSpriteFrameByName(name); }
 
 private:
-    // MARMALADE: Made this protected not private, as deriving from this class is pretty useful
-//    SpriteFrameCache(void) : _spriteFrames(NULL), _spriteFramesAliases(NULL){}
+    /*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
+     */
+    void addSpriteFramesWithDictionary(Dictionary* pobDictionary, Texture2D *pobTexture);
+
+    /** Removes multiple Sprite Frames from Dictionary.
+    * @since v0.99.5
+    */
+    void removeSpriteFramesFromDictionary(Dictionary* dictionary);
+
 protected:
     Dictionary* _spriteFrames;
     Dictionary* _spriteFramesAliases;

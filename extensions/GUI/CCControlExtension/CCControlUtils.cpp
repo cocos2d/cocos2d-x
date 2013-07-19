@@ -23,7 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCControlUtils.h"
-#include "support/CCPointExtension.h"
 
 NS_CC_EXT_BEGIN
 
@@ -164,8 +163,8 @@ Rect ControlUtils::RectUnion(const Rect& src1, const Rect& src2)
     float x2 = MAX(src1.getMaxX(), src2.getMaxX());
     float y2 = MAX(src1.getMaxY(), src2.getMaxY());
     
-    result.origin=ccp(x1,x2);
-    result.size=CCSizeMake(x2-x1, y2-y1);
+    result.origin=Point(x1,x2);
+    result.size=Size(x2-x1, y2-y1);
     return result;
 }
 

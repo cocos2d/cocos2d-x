@@ -55,35 +55,20 @@ To render the quads using an interleaved vertex array list, you should modify th
 */
 class CC_DLL TextureAtlas : public Object 
 {
-protected:
-    GLushort*           _indices;
-#if CC_TEXTURE_ATLAS_USE_VAO
-    GLuint              _VAOname;
-#endif
-    GLuint              _buffersVBO[2]; //0: vertex  1: indices
-    bool                _dirty; //indicates whether or not the array buffer of the VBO needs to be updated
-
-
-    /** quantity of quads that are going to be drawn */
-    CC_PROPERTY_READONLY(unsigned int, _totalQuads, TotalQuads)
-    /** quantity of quads that can be stored with the current texture atlas size */
-    CC_PROPERTY_READONLY(unsigned int, _capacity, Capacity)
-    /** Texture of the texture atlas */
-    CC_PROPERTY(Texture2D *, _texture, Texture)
-    /** Quads that are going to be rendered */
-    CC_PROPERTY(V3F_C4B_T2F_Quad *, _quads, Quads)
-
 public:
+    /** creates a TextureAtlas with an filename and with an initial capacity for Quads.
+     * The TextureAtlas capacity can be increased in runtime.
+     */
+    static TextureAtlas* create(const char* file , unsigned int capacity);
+
+    /** creates a TextureAtlas with a previously initialized Texture2D object, and
+     * with an initial capacity for n Quads.
+     * The TextureAtlas capacity can be increased in runtime.
+     */
+    static TextureAtlas* createWithTexture(Texture2D *texture, unsigned int capacity);
 
     TextureAtlas();
     virtual ~TextureAtlas();
-
-    const char* description() const;
-
-    /** creates a TextureAtlas with an filename and with an initial capacity for Quads.
-    * The TextureAtlas capacity can be increased in runtime.
-    */
-    static TextureAtlas* create(const char* file , unsigned int capacity);
 
     /** initializes a TextureAtlas with a filename and with a certain capacity for Quads.
     * The TextureAtlas capacity can be increased in runtime.
@@ -91,13 +76,6 @@ public:
     * WARNING: Do not reinitialize the TextureAtlas because it will leak memory (issue #706)
     */
     bool initWithFile(const char* file, unsigned int capacity);
-
-   /** creates a TextureAtlas with a previously initialized Texture2D object, and
-    * with an initial capacity for n Quads. 
-    * The TextureAtlas capacity can be increased in runtime.
-    */
-    static TextureAtlas* createWithTexture(Texture2D *texture, unsigned int capacity);
-
 
     /** initializes a TextureAtlas with a previously initialized Texture2D object, and
     * with an initial capacity for Quads. 
@@ -148,7 +126,6 @@ public:
     @since v0.7.2
     */
     void removeAllQuads();
-
 
     /** resize the capacity of the TextureAtlas.
     * The new capacity can be lower or higher than the current one
@@ -208,6 +185,8 @@ public:
     /** specify if the array buffer of the VBO needs to be updated */
     inline void setDirty(bool bDirty) { _dirty = bDirty; }
 
+    const char* description() const;
+
 private:
     void setupIndices();
     void mapBuffers();
@@ -216,6 +195,24 @@ private:
 #else
     void setupVBO();
 #endif
+
+protected:
+    GLushort*           _indices;
+#if CC_TEXTURE_ATLAS_USE_VAO
+    GLuint              _VAOname;
+#endif
+    GLuint              _buffersVBO[2]; //0: vertex  1: indices
+    bool                _dirty; //indicates whether or not the array buffer of the VBO needs to be updated
+
+
+    /** quantity of quads that are going to be drawn */
+    CC_PROPERTY_READONLY(unsigned int, _totalQuads, TotalQuads)
+    /** quantity of quads that can be stored with the current texture atlas size */
+    CC_PROPERTY_READONLY(unsigned int, _capacity, Capacity)
+    /** Texture of the texture atlas */
+    CC_PROPERTY(Texture2D *, _texture, Texture)
+    /** Quads that are going to be rendered */
+    CC_PROPERTY(V3F_C4B_T2F_Quad *, _quads, Quads)
 };
 
 // end of textures group

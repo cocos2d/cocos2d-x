@@ -82,7 +82,6 @@ SOURCES = ../actions/CCAction.cpp \
 ../sprite_nodes/CCSpriteFrame.cpp \
 ../sprite_nodes/CCSpriteFrameCache.cpp \
 ../support/ccUTF8.cpp \
-../support/CCPointExtension.cpp \
 ../support/CCProfiling.cpp \
 ../support/user_default/CCUserDefault.cpp \
 ../support/TransformUtils.cpp \

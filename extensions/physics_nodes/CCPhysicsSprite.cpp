@@ -21,7 +21,6 @@
  */
 
 #include "CCPhysicsSprite.h"
-#include "support/CCPointExtension.h"
 
 #if defined(CC_ENABLE_CHIPMUNK_INTEGRATION) && defined(CC_ENABLE_BOX2D_INTEGRATION)
 #error "Either Chipmunk or Box2d should be enabled, but not both at the same time"
@@ -149,7 +148,7 @@ PhysicsSprite* PhysicsSprite::create(const char *pszFileName, const Rect& rect)
 
 // this method will only get called if the sprite is batched.
 // return YES if the physic's values (angles, position ) changed.
-// If you return NO, then nodeToParentTransform won't be called.
+// If you return NO, then getNodeToParentTransform won't be called.
 bool PhysicsSprite::isDirty() const
 {
     return true;
@@ -277,14 +276,14 @@ const Point& PhysicsSprite::getPosFromPhysics() const
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 
     cpVect cpPos = cpBodyGetPos(_CPBody);
-    s_physicPosion = ccp(cpPos.x, cpPos.y);
+    s_physicPosion = Point(cpPos.x, cpPos.y);
 
 #elif CC_ENABLE_BOX2D_INTEGRATION
 
     b2Vec2 pos = _pB2Body->GetPosition();
     float x = pos.x * _PTMRatio;
     float y = pos.y * _PTMRatio;
-    s_physicPosion = ccp(x,y);
+    s_physicPosion = Point(x,y);
 #endif
     return s_physicPosion;
 }
@@ -343,7 +342,7 @@ void PhysicsSprite::setRotation(float fRotation)
 }
 
 // returns the transform matrix according the Chipmunk Body values
-AffineTransform PhysicsSprite::nodeToParentTransform()
+AffineTransform PhysicsSprite::getNodeToParentTransform() const
 {
     // Although scale is not used by physics engines, it is calculated just in case
 	// the sprite is animated (scaled up/down) using actions.
@@ -384,7 +383,7 @@ AffineTransform PhysicsSprite::nodeToParentTransform()
 	float c = cosf(radians);
 	float s = sinf(radians);
 
-	if (!_anchorPointInPoints.equals(PointZero))
+	if (!_anchorPointInPoints.equals(Point::ZERO))
     {
 		x += ((c * -_anchorPointInPoints.x * _scaleX) + (-s * -_anchorPointInPoints.y * _scaleY));
 		y += ((s * -_anchorPointInPoints.x * _scaleX) + (c * -_anchorPointInPoints.y * _scaleY));

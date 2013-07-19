@@ -69,9 +69,9 @@ void Skin::setSkinData(const BaseData &var)
     setScaleX(_skinData.scaleX);
     setScaleY(_skinData.scaleY);
     setRotation(CC_RADIANS_TO_DEGREES(_skinData.skewX));
-    setPosition(ccp(_skinData.x, _skinData.y));
+    setPosition(Point(_skinData.x, _skinData.y));
 
-    _skinTransform = nodeToParentTransform();
+    _skinTransform = getNodeToParentTransform();
 }
 
 const BaseData &Skin::getSkinData() const

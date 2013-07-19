@@ -70,7 +70,7 @@ void TransitionPageTurn::sceneOrder()
 void TransitionPageTurn::onEnter()
 {
     TransitionScene::onEnter();
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     int x,y;
     if (s.width > s.height)
     {
@@ -83,7 +83,7 @@ void TransitionPageTurn::onEnter()
         y=16;
     }
 
-    ActionInterval *action  = this->actionWithSize(CCSizeMake(x,y));
+    ActionInterval *action  = this->actionWithSize(Size(x,y));
 
     if (! _back )
     {
@@ -92,7 +92,7 @@ void TransitionPageTurn::onEnter()
             Sequence::create
             (
                 action,
-                CallFunc::create(this, callfunc_selector(TransitionScene::finish)),
+                CallFunc::create(CC_CALLBACK_0(TransitionScene::finish,this)),
                 StopGrid::create(),
                 NULL
             )
@@ -108,7 +108,7 @@ void TransitionPageTurn::onEnter()
             (
                 Show::create(),
                 action,
-                CallFunc::create(this, callfunc_selector(TransitionScene::finish)),
+                CallFunc::create(CC_CALLBACK_0(TransitionScene::finish,this)),
                 StopGrid::create(),
                 NULL
             )

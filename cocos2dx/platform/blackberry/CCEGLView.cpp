@@ -207,7 +207,7 @@ void EGLView::swapBuffers()
 	eglSwapBuffers(_eglDisplay, _eglSurface);
 }
 
-EGLView* EGLView::sharedOpenGLView()
+EGLView* EGLView::getInstance()
 {
 	if (!s_pInstance)
 	{
@@ -216,6 +216,12 @@ EGLView* EGLView::sharedOpenGLView()
 
 	CCAssert(s_pInstance != NULL, "CCEGLView wasn't constructed yet");
 	return s_pInstance;
+}
+
+// XXX: deprecated
+EGLView* EGLView::sharedOpenGLView()
+{
+    return EGLView::getInstance();
 }
 
 void EGLView::showKeyboard()
@@ -607,7 +613,7 @@ bool EGLView::handleEvents()
 			switch (bps_event_get_code(event))
 			{
 				case NAVIGATOR_SWIPE_DOWN:
-					Director::sharedDirector()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeMenuClicked);
+					Director::getInstance()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeMenuClicked);
 					break;
 
 				case NAVIGATOR_EXIT:
@@ -619,7 +625,7 @@ bool EGLView::handleEvents()
 				case NAVIGATOR_WINDOW_INACTIVE:
 					if (_isWindowActive)
 					{
-						Application::sharedApplication()->applicationDidEnterBackground();
+						Application::getInstance()->applicationDidEnterBackground();
 						_isWindowActive = false;
 					}
 					break;
@@ -627,7 +633,7 @@ bool EGLView::handleEvents()
 				case NAVIGATOR_WINDOW_ACTIVE:
 					if (!_isWindowActive)
 					{
-						Application::sharedApplication()->applicationWillEnterForeground();
+						Application::getInstance()->applicationWillEnterForeground();
 						_isWindowActive = true;
 					}
 					break;
@@ -639,14 +645,14 @@ bool EGLView::handleEvents()
 						case NAVIGATOR_WINDOW_FULLSCREEN:
 							if (!_isWindowActive)
 							{
-								Application::sharedApplication()->applicationWillEnterForeground();
+								Application::getInstance()->applicationWillEnterForeground();
 								_isWindowActive = true;
 							}
 							break;
 						case NAVIGATOR_WINDOW_THUMBNAIL:
 							if (_isWindowActive)
 							{
-								Application::sharedApplication()->applicationDidEnterBackground();
+								Application::getInstance()->applicationDidEnterBackground();
 								_isWindowActive = false;
 							}
 							break;
@@ -790,7 +796,7 @@ bool EGLView::handleEvents()
                 current_time = time2millis(&time_struct);
 
                 sensor_event_get_xyz(event, &x, &y, &z);
-                Director::sharedDirector()->getAccelerometer()->update(current_time, -x, -y, z);
+                Director::getInstance()->getAccelerometer()->update(current_time, -x, -y, z);
             }
         }
 	}

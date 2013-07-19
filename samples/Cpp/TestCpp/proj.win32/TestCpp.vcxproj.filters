@@ -232,6 +232,9 @@
     <Filter Include="Classes\ExtensionsTest\ComponentsTest">
       <UniqueIdentifier>{285cdfb8-5749-4969-ae31-99ec25f15e6e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ExtensionsTest\Scale9SpriteTest">
+      <UniqueIdentifier>{3d73aa04-d66e-43d3-921f-b867a753c113}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -542,6 +545,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\ComponentsTest\SceneController.cpp">
       <Filter>Classes\ExtensionsTest\ComponentsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\Scale9SpriteTest\Scale9SpriteTest.cpp">
+      <Filter>Classes\ExtensionsTest\Scale9SpriteTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\SocketIOTest.cpp">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1033,6 +1042,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\ComponentsTest\SceneController.h">
       <Filter>Classes\ExtensionsTest\ComponentsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\Scale9SpriteTest\Scale9SpriteTest.h">
+      <Filter>Classes\ExtensionsTest\Scale9SpriteTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\SocketIOTest.h">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -49,6 +49,15 @@ public:
 	/** returns a copy of the object */
     virtual Clonable* clone() const = 0;
 	virtual ~Clonable() {};
+
+    /** returns a copy of the object.
+     @deprecated Use clone() instead
+     */
+    CC_DEPRECATED_ATTRIBUTE Object* copy() const
+    {
+        // use "clone" instead
+        CC_ASSERT(false);
+    }
 };
 
 class CC_DLL Object

@@ -52,8 +52,11 @@ public:
     /**
     @brief    get the shared main open gl window
     */
-    static EGLView* sharedOpenGLView();
+    static EGLView* getInstance();
 
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static EGLView* sharedOpenGLView();
+    
     bool    handleEvents();
 
 private:

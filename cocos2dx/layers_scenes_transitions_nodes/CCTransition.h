@@ -80,27 +80,15 @@ typedef enum {
 class CC_DLL TransitionScene : public Scene
 {
 
-protected:
-    Scene    * _inScene;
-    Scene    * _outScene;
-    float    _duration;
-    bool    _isInSceneOnTop;
-    bool    _isSendCleanupToScene;
-
 public:
-
-    TransitionScene();
-    virtual ~TransitionScene();
-    virtual void draw();
-    virtual void onEnter();
-    virtual void onExit();
-    virtual void cleanup();
-
     /** creates a base transition with duration and incoming scene */
     static TransitionScene * create(float t, Scene *scene);
 
+    TransitionScene();
+    virtual ~TransitionScene();
+
     /** initializes a transition with duration and incoming scene */
-    virtual bool initWithDuration(float t,Scene* scene);
+    bool initWithDuration(float t,Scene* scene);
 
     /** called after the transition finishes */
     void finish(void);
@@ -108,11 +96,26 @@ public:
     /** used by some transitions to hide the outer scene */
     void hideOutShowIn(void);
 
+    //
+    // Overrides
+    //
+    virtual void draw() override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual void cleanup() override;
+
 protected:
     virtual void sceneOrder();
+
 private:
     void setNewScene(float dt);
 
+protected:
+    Scene    * _inScene;
+    Scene    * _outScene;
+    float    _duration;
+    bool    _isInSceneOnTop;
+    bool    _isSendCleanupToScene;
 };
 
 /** @brief A Transition that supports orientation like.
@@ -120,18 +123,18 @@ private:
 */
 class CC_DLL TransitionSceneOriented : public TransitionScene
 {
-protected:
-    tOrientation _orientation;
-
 public:
-    TransitionSceneOriented();
-    virtual ~TransitionSceneOriented();
-
     /** creates a base transition with duration and incoming scene */
     static TransitionSceneOriented * create(float t,Scene* scene, tOrientation orientation);
 
+    TransitionSceneOriented();
+    virtual ~TransitionSceneOriented();
+
     /** initializes a transition with duration and incoming scene */
-    virtual bool initWithDuration(float t,Scene* scene,tOrientation orientation);
+    bool initWithDuration(float t,Scene* scene,tOrientation orientation);
+
+protected:
+    tOrientation _orientation;
 };
 
 /** @brief TransitionRotoZoom:
@@ -140,11 +143,15 @@ Rotate and zoom out the outgoing scene, and then rotate and zoom in the incoming
 class CC_DLL TransitionRotoZoom : public TransitionScene
 {
 public:
+    static TransitionRotoZoom* create(float t, Scene* scene);
+
     TransitionRotoZoom();
     virtual ~TransitionRotoZoom();
-    virtual void onEnter();
 
-    static TransitionRotoZoom* create(float t, Scene* scene);
+    //
+    // Overrides
+    //
+    virtual void onEnter() override;
 };
 
 /** @brief TransitionJumpZoom:
@@ -153,11 +160,15 @@ Zoom out and jump the outgoing scene, and then jump and zoom in the incoming
 class CC_DLL TransitionJumpZoom : public TransitionScene
 {
 public:
+    static TransitionJumpZoom* create(float t, Scene* scene);
+
     TransitionJumpZoom();
     virtual ~TransitionJumpZoom();
-    virtual void onEnter();
 
-    static TransitionJumpZoom* create(float t, Scene* scene);
+    //
+    // Overrides
+    //
+    virtual void onEnter() override;
 };
 
 /** @brief TransitionMoveInL:
@@ -166,6 +177,8 @@ Move in from to the left the incoming scene.
 class CC_DLL TransitionMoveInL : public TransitionScene, public TransitionEaseScene
 {
 public:
+    static TransitionMoveInL* create(float t, Scene* scene);
+
     TransitionMoveInL();
     virtual ~TransitionMoveInL();
     /** initializes the scenes */
@@ -175,9 +188,10 @@ public:
 
     virtual ActionInterval* easeActionWithAction(ActionInterval * action);
 
-    virtual void onEnter();
-
-    static TransitionMoveInL* create(float t, Scene* scene);
+    //
+    // Overrides
+    //
+    virtual void onEnter() override;
 };
 
 /** @brief TransitionMoveInR:
@@ -186,11 +200,11 @@ Move in from to the right the incoming scene.
 class CC_DLL TransitionMoveInR : public TransitionMoveInL
 {
 public:
+    static TransitionMoveInR* create(float t, Scene* scene);
+
     TransitionMoveInR();
     virtual ~TransitionMoveInR();
     virtual void initScenes();
-
-    static TransitionMoveInR* create(float t, Scene* scene);
 };
 
 /** @brief TransitionMoveInT:
@@ -199,11 +213,11 @@ Move in from to the top the incoming scene.
 class CC_DLL TransitionMoveInT : public TransitionMoveInL 
 {
 public:
+    static TransitionMoveInT* create(float t, Scene* scene);
+
     TransitionMoveInT();
     virtual ~TransitionMoveInT();
     virtual void initScenes();
-
-    static TransitionMoveInT* create(float t, Scene* scene);
 };
 
 /** @brief TransitionMoveInB:
@@ -212,11 +226,11 @@ Move in from to the bottom the incoming scene.
 class CC_DLL TransitionMoveInB : public TransitionMoveInL
 {
 public:
+    static TransitionMoveInB* create(float t, Scene* scene);
+
     TransitionMoveInB();
     virtual ~TransitionMoveInB();
     virtual void initScenes();
-
-    static TransitionMoveInB* create(float t, Scene* scene);
 };
 
 /** @brief TransitionSlideInL:
@@ -225,21 +239,25 @@ Slide in the incoming scene from the left border.
 class CC_DLL TransitionSlideInL : public TransitionScene, public TransitionEaseScene
 {
 public:
+    static TransitionSlideInL* create(float t, Scene* scene);
+
     TransitionSlideInL();
     virtual ~TransitionSlideInL();
+
+    virtual ActionInterval* easeActionWithAction(ActionInterval * action);
 
     /** initializes the scenes */
     virtual void initScenes(void);
     /** returns the action that will be performed by the incoming and outgoing scene */
     virtual ActionInterval* action(void);
 
-    virtual void onEnter();
+    //
+    // Overrides
+    //
+    virtual void onEnter() override;
     
-    virtual ActionInterval* easeActionWithAction(ActionInterval * action);
-
-    static TransitionSlideInL* create(float t, Scene* scene);
 protected:
-    virtual void sceneOrder();
+    virtual void sceneOrder() override;
 };
 
 /** @brief TransitionSlideInR:
@@ -248,6 +266,8 @@ Slide in the incoming scene from the right border.
 class CC_DLL TransitionSlideInR : public TransitionSlideInL 
 {
 public:
+    static TransitionSlideInR* create(float t, Scene* scene);
+
     TransitionSlideInR();
     virtual ~TransitionSlideInR();
 
@@ -256,9 +276,8 @@ public:
     /** returns the action that will be performed by the incoming and outgoing scene */
     virtual ActionInterval* action(void);
 
-    static TransitionSlideInR* create(float t, Scene* scene);
 protected:
-    virtual void sceneOrder();
+    virtual void sceneOrder() override;
 };
 
 /** @brief TransitionSlideInB:
@@ -267,6 +286,8 @@ Slide in the incoming scene from the bottom border.
 class CC_DLL TransitionSlideInB : public TransitionSlideInL
 {
 public:
+    static TransitionSlideInB* create(float t, Scene* scene);
+
     TransitionSlideInB();
     virtual ~TransitionSlideInB();
 
@@ -275,9 +296,8 @@ public:
     /** returns the action that will be performed by the incoming and outgoing scene */
     virtual ActionInterval* action(void);
 
-    static TransitionSlideInB* create(float t, Scene* scene);
-protected: 
-    virtual void sceneOrder();
+protected:
+    virtual void sceneOrder() override;
 };
 
 /** @brief TransitionSlideInT:
@@ -286,6 +306,8 @@ Slide in the incoming scene from the top border.
 class CC_DLL TransitionSlideInT : public TransitionSlideInL
 {
 public:
+    static TransitionSlideInT* create(float t, Scene* scene);
+
     TransitionSlideInT();
     virtual ~TransitionSlideInT();
 
@@ -294,9 +316,8 @@ public:
     /** returns the action that will be performed by the incoming and outgoing scene */
     virtual ActionInterval* action(void);
 
-    static TransitionSlideInT* create(float t, Scene* scene);
 protected:
-    virtual void sceneOrder();
+    virtual void sceneOrder() override;
 };
 
 /**
@@ -305,13 +326,16 @@ protected:
 class CC_DLL TransitionShrinkGrow : public TransitionScene , public TransitionEaseScene
 {
 public:
+    static TransitionShrinkGrow* create(float t, Scene* scene);
+
     TransitionShrinkGrow();
     virtual ~TransitionShrinkGrow();
 
-    virtual void onEnter();
-    virtual ActionInterval* easeActionWithAction(ActionInterval * action);
-
-    static TransitionShrinkGrow* create(float t, Scene* scene);
+    //
+    // Overrides
+    //
+    virtual void onEnter() override;
+    virtual ActionInterval* easeActionWithAction(ActionInterval * action) override;
 };
 
 /** @brief TransitionFlipX:
@@ -321,13 +345,16 @@ The front face is the outgoing scene and the back face is the incoming scene.
 class CC_DLL TransitionFlipX : public TransitionSceneOriented
 {
 public:
+    static TransitionFlipX* create(float t, Scene* s, tOrientation o);
+    static TransitionFlipX* create(float t, Scene* s);
+
     TransitionFlipX();
     virtual ~TransitionFlipX();
 
-    virtual void onEnter();
-
-    static TransitionFlipX* create(float t, Scene* s, tOrientation o);
-    static TransitionFlipX* create(float t, Scene* s);
+    //
+    // Overrides
+    //
+    virtual void onEnter() override;
 };
 
 /** @brief TransitionFlipY:
@@ -337,13 +364,16 @@ The front face is the outgoing scene and the back face is the incoming scene.
 class CC_DLL TransitionFlipY : public TransitionSceneOriented
 {
 public:
+    static TransitionFlipY* create(float t, Scene* s, tOrientation o);
+    static TransitionFlipY* create(float t, Scene* s);
+
     TransitionFlipY();
     virtual ~TransitionFlipY();
 
-    virtual void onEnter();
-
-    static TransitionFlipY* create(float t, Scene* s, tOrientation o);
-    static TransitionFlipY* create(float t, Scene* s);
+    //
+    // Overrides
+    //
+    virtual void onEnter() override;
 };
 
 /** @brief TransitionFlipAngular:
@@ -353,13 +383,16 @@ The front face is the outgoing scene and the back face is the incoming scene.
 class CC_DLL TransitionFlipAngular : public TransitionSceneOriented
 {
 public:
+    static TransitionFlipAngular* create(float t, Scene* s, tOrientation o);
+    static TransitionFlipAngular* create(float t, Scene* s);
+
     TransitionFlipAngular();
     virtual ~TransitionFlipAngular();
 
-    virtual void onEnter();
-    
-    static TransitionFlipAngular* create(float t, Scene* s, tOrientation o);
-    static TransitionFlipAngular* create(float t, Scene* s);
+    //
+    // Overrides
+    //
+    virtual void onEnter() override;
 };
 
 /** @brief TransitionZoomFlipX:
@@ -369,13 +402,16 @@ The front face is the outgoing scene and the back face is the incoming scene.
 class CC_DLL TransitionZoomFlipX : public TransitionSceneOriented
 {
 public:
+    static TransitionZoomFlipX* create(float t, Scene* s, tOrientation o);
+    static TransitionZoomFlipX* create(float t, Scene* s);
+
     TransitionZoomFlipX();
     virtual ~TransitionZoomFlipX();
 
-    virtual void onEnter();
-
-    static TransitionZoomFlipX* create(float t, Scene* s, tOrientation o);
-    static TransitionZoomFlipX* create(float t, Scene* s);
+    //
+    // Overrides
+    //
+    virtual void onEnter() override;
 };
 
 /** @brief TransitionZoomFlipY:
@@ -385,13 +421,16 @@ The front face is the outgoing scene and the back face is the incoming scene.
 class CC_DLL TransitionZoomFlipY : public TransitionSceneOriented
 {
 public:
+    static TransitionZoomFlipY* create(float t, Scene* s, tOrientation o);
+    static TransitionZoomFlipY* create(float t, Scene* s);
+
     TransitionZoomFlipY();
     virtual ~TransitionZoomFlipY();
 
-    virtual void onEnter();
-
-    static TransitionZoomFlipY* create(float t, Scene* s, tOrientation o);
-    static TransitionZoomFlipY* create(float t, Scene* s);
+    //
+    // Overrides
+    //
+    virtual void onEnter() override;
 };
 
 /** @brief TransitionZoomFlipAngular:
@@ -401,13 +440,16 @@ The front face is the outgoing scene and the back face is the incoming scene.
 class CC_DLL TransitionZoomFlipAngular : public TransitionSceneOriented
 {
 public:
+    static TransitionZoomFlipAngular* create(float t, Scene* s, tOrientation o);
+    static TransitionZoomFlipAngular* create(float t, Scene* s);
+
     TransitionZoomFlipAngular();
     virtual ~TransitionZoomFlipAngular();
 
-    virtual void onEnter();
-
-    static TransitionZoomFlipAngular* create(float t, Scene* s, tOrientation o);
-    static TransitionZoomFlipAngular* create(float t, Scene* s);
+    //
+    // Overrides
+    //
+    virtual void onEnter() override;
 };
 
 /** @brief TransitionFade:
@@ -415,26 +457,28 @@ Fade out the outgoing scene and then fade in the incoming scene.'''
 */
 class CC_DLL TransitionFade : public TransitionScene
 {
-protected:
-    Color4B    _color;
-
 public:
-
-    TransitionFade();
-    virtual ~TransitionFade();
-    
     /** creates the transition with a duration and with an RGB color
     * Example: FadeTransition::create(2, scene, Color3B(255,0,0); // red color
     */
     static TransitionFade* create(float duration,Scene* scene, const Color3B& color);
     static TransitionFade* create(float duration,Scene* scene);
 
-    /** initializes the transition with a duration and with an RGB color */
-    virtual bool initWithDuration(float t, Scene*scene ,const Color3B& color);
+    TransitionFade();
+    virtual ~TransitionFade();
 
-    virtual bool initWithDuration(float t,Scene* scene); 
+    /** initializes the transition with a duration and with an RGB color */
+    bool initWithDuration(float t, Scene*scene ,const Color3B& color);
+
+    //
+    // Overrides
+    //
+    bool initWithDuration(float t,Scene* scene);
     virtual void onEnter();
     virtual void onExit();
+
+protected:
+    Color4B    _color;
 };
 
 class RenderTexture;
@@ -445,15 +489,18 @@ Cross fades two scenes using the RenderTexture object.
 class CC_DLL TransitionCrossFade : public TransitionScene
 {
 public :
+    static TransitionCrossFade* create(float t, Scene* scene);
+
     TransitionCrossFade();
     virtual ~TransitionCrossFade();
 
-    virtual void draw();
-    virtual void onEnter();
-    virtual void onExit();
+    //
+    // Overrides
+    //
+    virtual void draw() override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
 
-public:
-    static TransitionCrossFade* create(float t, Scene* scene);
 };
 
 /** @brief TransitionTurnOffTiles:
@@ -462,16 +509,19 @@ Turn off the tiles of the outgoing scene in random order
 class CC_DLL TransitionTurnOffTiles : public TransitionScene ,public TransitionEaseScene
 {
 public :
+    static TransitionTurnOffTiles* create(float t, Scene* scene);
+
     TransitionTurnOffTiles();
     virtual ~TransitionTurnOffTiles();
 
-    virtual void onEnter();
-    virtual ActionInterval * easeActionWithAction(ActionInterval * action);
+    //
+    // Overrides
+    //
+    virtual void onEnter() override;
+    virtual ActionInterval * easeActionWithAction(ActionInterval * action) override;
 
-public:
-    static TransitionTurnOffTiles* create(float t, Scene* scene);
 protected:
-    virtual void sceneOrder();
+    virtual void sceneOrder() override;
 };
 
 /** @brief TransitionSplitCols:
@@ -480,16 +530,18 @@ The odd columns goes upwards while the even columns goes downwards.
 class CC_DLL TransitionSplitCols : public TransitionScene , public TransitionEaseScene
 {
 public:
+    static TransitionSplitCols* create(float t, Scene* scene);
+
     TransitionSplitCols();
     virtual ~TransitionSplitCols();
 
     virtual ActionInterval* action(void);
-    virtual void onEnter();
-    virtual ActionInterval * easeActionWithAction(ActionInterval * action);
 
-public:
-
-    static TransitionSplitCols* create(float t, Scene* scene);
+    //
+    // Overrides
+    //
+    virtual void onEnter() override;
+    virtual ActionInterval * easeActionWithAction(ActionInterval * action) override;
 };
 
 /** @brief TransitionSplitRows:
@@ -498,14 +550,15 @@ The odd rows goes to the left while the even rows goes to the right.
 class CC_DLL TransitionSplitRows : public TransitionSplitCols
 {
 public:
+    static TransitionSplitRows* create(float t, Scene* scene);
+
     TransitionSplitRows();
     virtual ~TransitionSplitRows();
 
-    virtual ActionInterval* action(void);
-
-public:
-
-    static TransitionSplitRows* create(float t, Scene* scene);
+    //
+    // Overrides
+    //
+    virtual ActionInterval* action(void) override;
 };
 
 /** @brief TransitionFadeTR:
@@ -514,15 +567,18 @@ Fade the tiles of the outgoing scene from the left-bottom corner the to top-righ
 class CC_DLL TransitionFadeTR : public TransitionScene , public TransitionEaseScene
 {
 public:
+    static TransitionFadeTR* create(float t, Scene* scene);
+
     TransitionFadeTR();
     virtual ~TransitionFadeTR();
     virtual ActionInterval* actionWithSize(const Size& size);
-    virtual void onEnter();
-    virtual ActionInterval* easeActionWithAction(ActionInterval * action);
 
-public:
+    //
+    // Overrides
+    //
+    virtual void onEnter() override;
+    virtual ActionInterval* easeActionWithAction(ActionInterval * action) override;
 
-    static TransitionFadeTR* create(float t, Scene* scene);
 protected:
     virtual void sceneOrder();
 };
@@ -533,13 +589,16 @@ Fade the tiles of the outgoing scene from the top-right corner to the bottom-lef
 class CC_DLL TransitionFadeBL : public TransitionFadeTR
 {
 public:
+    static TransitionFadeBL* create(float t, Scene* scene);
+
     TransitionFadeBL();
     virtual ~TransitionFadeBL();
-    virtual ActionInterval* actionWithSize(const Size& size);
 
-public:
+    //
+    // Overrides
+    //
+    virtual ActionInterval* actionWithSize(const Size& size) override;
 
-    static TransitionFadeBL* create(float t, Scene* scene);
 };
 
 /** @brief TransitionFadeUp:
@@ -548,13 +607,15 @@ public:
 class CC_DLL TransitionFadeUp : public TransitionFadeTR
 {
 public:
+    static TransitionFadeUp* create(float t, Scene* scene);
+
     TransitionFadeUp();
     virtual ~TransitionFadeUp();
-    virtual ActionInterval* actionWithSize(const Size& size);
 
-public:
-
-    static TransitionFadeUp* create(float t, Scene* scene);
+    //
+    // Overrides
+    //
+    virtual ActionInterval* actionWithSize(const Size& size) override;
 };
 
 /** @brief TransitionFadeDown:
@@ -563,13 +624,15 @@ public:
 class CC_DLL TransitionFadeDown : public TransitionFadeTR
 {
 public:
+    static TransitionFadeDown* create(float t, Scene* scene);
+
     TransitionFadeDown();
     virtual ~TransitionFadeDown();
-    virtual ActionInterval* actionWithSize(const Size& size);
 
-public:
-
-    static TransitionFadeDown* create(float t, Scene* scene);
+    //
+    // Overrides
+    //
+    virtual ActionInterval* actionWithSize(const Size& size) override;
 };
 
 // end of transition group

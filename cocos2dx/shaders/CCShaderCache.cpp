@@ -46,7 +46,7 @@ enum {
 
 static ShaderCache *_sharedShaderCache = 0;
 
-ShaderCache* ShaderCache::sharedShaderCache()
+ShaderCache* ShaderCache::getInstance()
 {
     if (!_sharedShaderCache) {
         _sharedShaderCache = new ShaderCache();
@@ -58,9 +58,21 @@ ShaderCache* ShaderCache::sharedShaderCache()
     return _sharedShaderCache;
 }
 
-void ShaderCache::purgeSharedShaderCache()
+void ShaderCache::destroyInstance()
 {
     CC_SAFE_RELEASE_NULL(_sharedShaderCache);
+}
+
+// XXX: deprecated
+ShaderCache* ShaderCache::sharedShaderCache()
+{
+    return ShaderCache::getInstance();
+}
+
+// XXX: deprecated
+void ShaderCache::purgeSharedShaderCache()
+{
+    ShaderCache::destroyInstance();
 }
 
 ShaderCache::ShaderCache()
@@ -207,7 +219,7 @@ void ShaderCache::reloadDefaultShaders()
 	//
     p = programForKey(kShader_PositionLengthTexureColor);
     p->reset();
-    loadDefaultShader(p, kShaderType_Position_uColor);
+    loadDefaultShader(p, kShaderType_PositionLengthTexureColor);
 }
 
 void ShaderCache::loadDefaultShader(GLProgram *p, int type)
@@ -285,7 +297,7 @@ void ShaderCache::loadDefaultShader(GLProgram *p, int type)
 
 GLProgram* ShaderCache::programForKey(const char* key)
 {
-    return (GLProgram*)_programs->objectForKey(key);
+    return static_cast<GLProgram*>(_programs->objectForKey(key));
 }
 
 void ShaderCache::addProgram(GLProgram* program, const char* key)
