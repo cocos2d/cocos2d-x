@@ -119,7 +119,7 @@ private:
     bool                        _lineBreakWithoutSpaces;
     float                       _width;
     TextAlignment               _alignment;
-    FontDefinitionTTF*          _fontDef;
+    FontDefinitionTTF  *        _fontDef;
     unsigned short int *        _currentUTF8String;
     Size               *        _advances;
     
