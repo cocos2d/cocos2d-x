@@ -29,68 +29,27 @@ THE SOFTWARE.
 #define  LOG_TAG    "JniHelper"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
-static JNIEnv* _getJNIEnv(void) {
-        
-    JavaVM* jvm = cocos2d::JniHelper::getJavaVM();
-    if (NULL == jvm) {
-        LOGD("Failed to get JNIEnv. JniHelper::getJavaVM() is NULL");
-        return NULL;
-    }
-        
-    JNIEnv *env = NULL;
-    // get jni environment
-    jint ret = jvm->GetEnv((void**)&env, JNI_VERSION_1_4);
-        
-    switch (ret) {
-    case JNI_OK :
-        // Success!
-        return env;
-                
-    case JNI_EDETACHED :
-        // Thread not attached
-                
-        // TODO : If calling AttachCurrentThread() on a native thread
-        // must call DetachCurrentThread() in future.
-        // see: http://developer.android.com/guide/practices/design/jni.html
-                
-        if (jvm->AttachCurrentThread(&env, NULL) < 0)
-            {
-                LOGD("Failed to get the environment using AttachCurrentThread()");
-                return NULL;
-            } else {
-            // Success : Attached and obtained JNIEnv!
-            return env;
-        }
-                
-    case JNI_EVERSION :
-        // Cannot recover from this error
-        LOGD("JNI interface version 1.4 not supported");
-    default :
-        LOGD("Failed to get the environment using GetEnv()");
-        return NULL;
-    }
-}
-
 jclass _getClassID(const char *className) {
     if (NULL == className) {
         return NULL;
     }
 
+    JNIEnv* env = cocos2d::JniHelper::getEnv();
 
-    jstring _jstrClassName = cocos2d::JniHelper::loadclassMethod.env->NewStringUTF(className);
+    jstring _jstrClassName = env->NewStringUTF(className);
 
     // explicit cast to jclass, since the returned object
-    jobject _clazzObject = cocos2d::JniHelper::loadclassMethod.env->CallObjectMethod(cocos2d::JniHelper::classloader,
-                                                                             cocos2d::JniHelper::loadclassMethod.methodID,
-                                                                             _jstrClassName);
+    jobject _clazzObject = env->CallObjectMethod(cocos2d::JniHelper::classloader,
+                                                 cocos2d::JniHelper::loadclassMethod_methodID,
+                                                 _jstrClassName);
 
-    jclass _clazz = cocos2d::JniHelper::loadclassMethod.env->GetObjectClass(_clazzObject);
+    jclass _clazz = env->GetObjectClass(_clazzObject);
 
     if (NULL == _clazz) {
         LOGD("Classloader failed to find class of %s", className);
     }
 
-    cocos2d::JniHelper::loadclassMethod.env->DeleteLocalRef(_jstrClassName);
+    env->DeleteLocalRef(_jstrClassName);
         
     return _clazz;
 }
@@ -98,8 +57,9 @@ jclass _getClassID(const char *className) {
 namespace cocos2d {
 
     JavaVM* JniHelper::_psJavaVM = NULL;
-    JniMethodInfo JniHelper::loadclassMethod = {NULL, NULL, NULL};
+    jmethodID JniHelper::loadclassMethod_methodID = NULL;
     jobject JniHelper::classloader = NULL;
+    JNIEnv* JniHelper::env = NULL;
 
     JavaVM* JniHelper::getJavaVM() {
         pthread_t thisthread = pthread_self();
@@ -111,6 +71,52 @@ namespace cocos2d {
         pthread_t thisthread = pthread_self();
         LOGD("JniHelper::setJavaVM(%p), pthread_self() = %X", javaVM, thisthread);
         _psJavaVM = javaVM;
+
+        JniHelper::cacheEnv(javaVM);
+    }
+
+    bool JniHelper::cacheEnv(JavaVM* jvm) {
+        JNIEnv* _env = NULL;
+        // get jni environment
+        jint ret = jvm->GetEnv((void**)&_env, JNI_VERSION_1_4);
+        
+        switch (ret) {
+        case JNI_OK :
+            // Success!
+            JniHelper::env = _env;
+            return true;
+                
+        case JNI_EDETACHED :
+            // Thread not attached
+                
+            // TODO : If calling AttachCurrentThread() on a native thread
+            // must call DetachCurrentThread() in future.
+            // see: http://developer.android.com/guide/practices/design/jni.html
+                
+            if (jvm->AttachCurrentThread(&_env, NULL) < 0)
+                {
+                    LOGD("Failed to get the environment using AttachCurrentThread()");
+
+                    JniHelper::env = NULL;
+                    return false;
+                } else {
+                // Success : Attached and obtained JNIEnv!
+                JniHelper::env = _env;
+                return true;
+            }
+                
+        case JNI_EVERSION :
+            // Cannot recover from this error
+            LOGD("JNI interface version 1.4 not supported");
+        default :
+            LOGD("Failed to get the environment using GetEnv()");
+            JniHelper::env = NULL;
+            return false;
+        }
+    }
+
+    JNIEnv* JniHelper::getEnv() {
+        return JniHelper::env;
     }
 
     bool JniHelper::setClassLoaderFrom(jobject nativeactivityinstance) {
@@ -122,8 +128,8 @@ namespace cocos2d {
             return false;
         }
 
-        jobject _c = _getclassloaderMethod.env->CallObjectMethod(nativeactivityinstance,
-                                                                 _getclassloaderMethod.methodID);
+        jobject _c = cocos2d::JniHelper::getEnv()->CallObjectMethod(nativeactivityinstance,
+                                                                    _getclassloaderMethod.methodID);
 
         if (NULL == _c) {
             return false;
@@ -138,7 +144,7 @@ namespace cocos2d {
         }
 
         JniHelper::classloader = _c;
-        JniHelper::loadclassMethod = _m;
+        JniHelper::loadclassMethod_methodID = _m.methodID;
 
         return true;
     }
@@ -153,7 +159,7 @@ namespace cocos2d {
             return false;
         }
 
-        JNIEnv *pEnv = _getJNIEnv();
+        JNIEnv *pEnv = JniHelper::getEnv();
         if (!pEnv) {
             LOGD("Failed to get JNIEnv");
             return false;
@@ -187,7 +193,7 @@ namespace cocos2d {
             return false;
         }
 
-        JNIEnv *pEnv = _getJNIEnv();
+        JNIEnv *pEnv = JniHelper::getEnv();
         if (!pEnv) {
             return false;
         }
@@ -216,7 +222,7 @@ namespace cocos2d {
             return "";
         }
         
-        JNIEnv *env = _getJNIEnv();
+        JNIEnv *pEnv = JniHelper::getEnv();
         if (!env) {
             return NULL;
         }
