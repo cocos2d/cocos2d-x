@@ -519,12 +519,6 @@ Rect Node::getBoundingBox() const
     return RectApplyAffineTransform(rect, getNodeToParentTransform());
 }
 
-Rect Node::boundingBox() const
-{
-    return getBoundingBox();
-}
-
-
 Node * Node::create(void)
 {
 	Node * pRet = new Node();
@@ -1029,15 +1023,15 @@ void Node::stopActionByTag(int tag)
     _actionManager->removeActionByTag(tag, this);
 }
 
-Action * Node::getActionByTag(int tag)
+Action * Node::getActionByTag(int tag) const
 {
     CCAssert( tag != kActionTagInvalid, "Invalid tag");
     return _actionManager->getActionByTag(tag, this);
 }
 
-unsigned int Node::numberOfRunningActions()
+unsigned int Node::getNumberOfRunningActions() const
 {
-    return _actionManager->numberOfRunningActionsInTarget(this);
+    return _actionManager->getNumberOfRunningActionsInTarget(this);
 }
 
 // Node - Callbacks
@@ -1231,12 +1225,6 @@ AffineTransform Node::getNodeToParentTransform() const
     return _transform;
 }
 
-// XXX deprecated
-AffineTransform Node::nodeToParentTransform() const
-{
-    return getNodeToParentTransform();
-}
-
 void Node::setAdditionalTransform(const AffineTransform& additionalTransform)
 {
     _additionalTransform = additionalTransform;
@@ -1254,12 +1242,6 @@ AffineTransform Node::getParentToNodeTransform() const
     return _inverse;
 }
 
-// XXX deprecated
-AffineTransform Node::parentToNodeTransform() const
-{
-    return getParentToNodeTransform();
-}
-
 AffineTransform Node::getNodeToWorldTransform() const
 {
     AffineTransform t = this->getNodeToParentTransform();
@@ -1270,21 +1252,9 @@ AffineTransform Node::getNodeToWorldTransform() const
     return t;
 }
 
-// XXX deprecated
-AffineTransform Node::nodeToWorldTransform() const
-{
-    return getNodeToWorldTransform();
-}
-
 AffineTransform Node::getWorldToNodeTransform() const
 {
     return AffineTransformInvert(this->getNodeToWorldTransform());
-}
-
-// XXX deprecated
-AffineTransform Node::worldToNodeTransform() const
-{
-    return getWorldToNodeTransform();
 }
 
 Point Node::convertToNodeSpace(const Point& worldPoint) const
