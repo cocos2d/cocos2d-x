@@ -56,20 +56,12 @@ struct engine {
 #include "shaders/CCShaderCache.h"
 #include "textures/CCTextureCache.h"
 
-extern "C" void cocos_android_app_init(void);
+void cocos_android_app_init(void);
 
 typedef struct cocos_dimensions {
     int w;
     int h;
 } cocos_dimensions;
-
-static void jnihelper_init(JavaVM* vm) {
-    LOGI("jnihelper_init(...)");
-    pthread_t thisthread = pthread_self();
-    LOGI("pthread_self() = %X", thisthread);
-
-    cocos2d::JniHelper::setJavaVM(vm);
-}
 
 static void cocos_init(cocos_dimensions d, AAssetManager* assetmanager) {
     LOGI("cocos_init(...)");
@@ -259,7 +251,7 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
                 cocos_dimensions d = engine_init_display(engine);
                 if ((d.w > 0) &&
                     (d.h > 0)) {
-                    jnihelper_init(app->activity->vm);
+                    cocos2d::JniHelper::setJavaVM(app->activity->vm, app->activity->clazz);
                     cocos_init(d, app->activity->assetManager);
                 }
 

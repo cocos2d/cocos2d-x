@@ -29,70 +29,77 @@ THE SOFTWARE.
 #define  LOG_TAG    "JniHelper"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
-extern "C"
-{
-
-    static JNIEnv* _getJNIEnv(void) {
+static JNIEnv* _getJNIEnv(void) {
         
-        JavaVM* jvm = cocos2d::JniHelper::getJavaVM();
-        if (NULL == jvm) {
-            LOGD("Failed to get JNIEnv. JniHelper::getJavaVM() is NULL");
-            return NULL;
-        }
+    JavaVM* jvm = cocos2d::JniHelper::getJavaVM();
+    if (NULL == jvm) {
+        LOGD("Failed to get JNIEnv. JniHelper::getJavaVM() is NULL");
+        return NULL;
+    }
         
-        JNIEnv *env = NULL;
-        // get jni environment
-        jint ret = jvm->GetEnv((void**)&env, JNI_VERSION_1_4);
+    JNIEnv *env = NULL;
+    // get jni environment
+    jint ret = jvm->GetEnv((void**)&env, JNI_VERSION_1_4);
         
-        switch (ret) {
-        case JNI_OK :
-            // Success!
+    switch (ret) {
+    case JNI_OK :
+        // Success!
+        return env;
+                
+    case JNI_EDETACHED :
+        // Thread not attached
+                
+        // TODO : If calling AttachCurrentThread() on a native thread
+        // must call DetachCurrentThread() in future.
+        // see: http://developer.android.com/guide/practices/design/jni.html
+                
+        if (jvm->AttachCurrentThread(&env, NULL) < 0)
+            {
+                LOGD("Failed to get the environment using AttachCurrentThread()");
+                return NULL;
+            } else {
+            // Success : Attached and obtained JNIEnv!
             return env;
-                
-        case JNI_EDETACHED :
-            // Thread not attached
-                
-            // TODO : If calling AttachCurrentThread() on a native thread
-            // must call DetachCurrentThread() in future.
-            // see: http://developer.android.com/guide/practices/design/jni.html
-                
-            if (jvm->AttachCurrentThread(&env, NULL) < 0)
-                {
-                    LOGD("Failed to get the environment using AttachCurrentThread()");
-                    return NULL;
-                } else {
-                // Success : Attached and obtained JNIEnv!
-                return env;
-            }
-                
-        case JNI_EVERSION :
-            // Cannot recover from this error
-            LOGD("JNI interface version 1.4 not supported");
-        default :
-            LOGD("Failed to get the environment using GetEnv()");
-            return NULL;
         }
+                
+    case JNI_EVERSION :
+        // Cannot recover from this error
+        LOGD("JNI interface version 1.4 not supported");
+    default :
+        LOGD("Failed to get the environment using GetEnv()");
+        return NULL;
+    }
+}
+
+jclass _getClassID(const char *className) {
+    if (NULL == className) {
+        return NULL;
     }
 
-    jclass _getClassID(const char *className, JNIEnv *env) {
-        if (NULL == className) {
-            return NULL;
-        }
 
-        jclass ret = env->FindClass(className);
-        if (!ret) {
-            LOGD("Failed to find class of %s", className);
-        }
+    jstring _jstrClassName = cocos2d::JniHelper::loadclassMethod.env->NewStringUTF(className);
+
+    // explicit cast to jclass, since the returned object
+    jobject _clazzObject = cocos2d::JniHelper::loadclassMethod.env->CallObjectMethod(cocos2d::JniHelper::classloader,
+                                                                             cocos2d::JniHelper::loadclassMethod.methodID,
+                                                                             _jstrClassName);
+
+    jclass _clazz = cocos2d::JniHelper::loadclassMethod.env->GetObjectClass(_clazzObject);
+
+    if (NULL == _clazz) {
+        LOGD("Classloader failed to find class of %s", className);
+    }
+
+    cocos2d::JniHelper::loadclassMethod.env->DeleteLocalRef(_jstrClassName);
         
-        return ret;
-    }
-
-
+    return _clazz;
 }
 
 namespace cocos2d {
 
     JavaVM* JniHelper::_psJavaVM = NULL;
+    JniMethodInfo JniHelper::loadclassMethod = {NULL, NULL, NULL};
+    jobject JniHelper::classloader = NULL;
 
     JavaVM* JniHelper::getJavaVM() {
         pthread_t thisthread = pthread_self();
@@ -100,10 +107,37 @@ namespace cocos2d {
         return _psJavaVM;
     }
 
-    void JniHelper::setJavaVM(JavaVM *javaVM) {
+    void JniHelper::setJavaVM(JavaVM *javaVM, jobject nativeActivityInstance) {
         pthread_t thisthread = pthread_self();
         LOGD("JniHelper::setJavaVM(%p), pthread_self() = %X", javaVM, thisthread);
         _psJavaVM = javaVM;
+
+        if (!setClassLoader(nativeActivityInstance)) {
+            LOGD("FAIL FAIL FAIL! Could not obtain Java class loader for application code");
+        }
+    }
+
+    bool JniHelper::setClassLoader(jobject nativeactivityinstance) {
+        JniMethodInfo _getclassloaderMethod;
+        if (!JniHelper::getMethodInfo(_getclassloaderMethod,
+                                      "android/app/NativeActivity",
+                                      "getClassLoader",
+                                      "()Ljava/lang/ClassLoader;")) {
+            return false;
+        }
+
+        jobject _c = _getclassloaderMethod.env->CallObjectMethod(nativeactivityinstance,
+                                                                 _getclassloaderMethod.methodID);
+        JniMethodInfo _m;
+        if (!JniHelper::getMethodInfo(_m,
+                                      "java/lang/ClassLoader",
+                                      "loadClass",
+                                      "(Ljava/lang/String;)Ljava/lang/Class;")) {
+            return false;
+        }
+
+        JniHelper::classloader = _c;
+        JniHelper::loadclassMethod = _m;
     }
 
     bool JniHelper::getStaticMethodInfo(JniMethodInfo &methodinfo,
@@ -122,7 +156,7 @@ namespace cocos2d {
             return false;
         }
             
-        jclass classID = _getClassID(className, pEnv);
+        jclass classID = _getClassID(className);
         if (! classID) {
             LOGD("Failed to find class %s", className);
             return false;
@@ -155,7 +189,7 @@ namespace cocos2d {
             return false;
         }
 
-        jclass classID = _getClassID(className, pEnv);
+        jclass classID = _getClassID(className);
         if (! classID) {
             LOGD("Failed to find class %s", className);
             return false;
