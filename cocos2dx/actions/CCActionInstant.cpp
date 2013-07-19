@@ -461,7 +461,14 @@ CallFuncN * CallFuncN::clone() const
 {
 	// no copy constructor
 	auto a = new CallFuncN();
-	a->initWithTarget(_selectorTarget, _callFuncN);
+
+    if( _selectorTarget) {
+        a->initWithTarget(_selectorTarget, _callFuncN);
+    }
+    else if( _function ){
+        a->initWithFunction(_functionN);
+    }
+
 	a->autorelease();
 	return a;
 }

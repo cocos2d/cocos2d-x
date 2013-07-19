@@ -44,21 +44,24 @@ NS_CC_EXT_BEGIN
 
 class PhysicsDebugNode : public DrawNode
 {
-protected:
-    cpSpace *_spacePtr;
-    
+
 public:
     /** Create a debug node for a regular Chipmunk space. */
     static PhysicsDebugNode* create(cpSpace *space);
-    
+
+    PhysicsDebugNode();
     virtual ~PhysicsDebugNode();
     
-    virtual void draw();
-    
+
     cpSpace* getSpace() const;
     void setSpace(cpSpace *space);
     
-    PhysicsDebugNode();
+    // Overrides
+    virtual void draw() override;
+
+protected:
+    cpSpace *_spacePtr;
+
 };
 
 NS_CC_EXT_END
