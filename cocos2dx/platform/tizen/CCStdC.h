@@ -43,4 +43,6 @@ THE SOFTWARE.
 
 #define nullptr __null
 
+#define override
+
 #endif  // __CC_STD_C_H__
