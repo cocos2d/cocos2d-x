@@ -158,7 +158,7 @@ void TileMapAtlas::setTile(const Color3B& tile, const Point& position)
     }    
 }
 
-Color3B TileMapAtlas::tileAt(const Point& position)
+Color3B TileMapAtlas::getTileAt(const Point& position) const
 {
     CCAssert( _TGAInfo != NULL, "tgaInfo must not be nil");
     CCAssert( position.x < _TGAInfo->width, "Invalid position.x");

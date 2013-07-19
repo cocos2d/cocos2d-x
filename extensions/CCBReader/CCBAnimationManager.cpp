@@ -978,7 +978,7 @@ CCBSoundEffect* CCBSoundEffect::reverse() const
 
 void CCBSoundEffect::update(float time)
 {
-    CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(mSoundFile.c_str());
+    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(mSoundFile.c_str());
 }
 
 
