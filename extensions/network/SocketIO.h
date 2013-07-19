@@ -110,7 +110,7 @@ private:
 	void addSocket(const std::string& uri, SIOClientImpl* socket);
 	void removeSocket(const std::string& uri);
 
-	friend SIOClientImpl;
+	friend class SIOClientImpl;
 	
 };
 
