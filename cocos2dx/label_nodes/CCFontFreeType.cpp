@@ -137,7 +137,7 @@ int FontFreeType::getUTF16TextLenght(unsigned short int *pText)
     return cc_wcslen(pText);
 }
 
-GlyphDef * FontFreeType::getGlyphsForText(const char *pText, int &outNumGlyphs, bool UTF16text)
+GlyphDef * FontFreeType::getGlyphDefintionsForText(const char *pText, int &outNumGlyphs, bool UTF16text)
 {
     unsigned short* utf16String = 0;
     
@@ -175,7 +175,7 @@ GlyphDef * FontFreeType::getGlyphsForText(const char *pText, int &outNumGlyphs, 
         }
         
         pGlyphs[c].setRect(tempRect);
-        pGlyphs[c].setUTF8Letter(utf16String[c]);
+        pGlyphs[c].setUTF16Letter(utf16String[c]);
         pGlyphs[c].setPadding(_letterPadding);
     }
     
@@ -306,6 +306,11 @@ Size * FontFreeType::getAdvancesForText(const char *pText, int &outNumLetters, b
         delete [] utf16String;
     
     return ret;
+}
+
+int FontFreeType::getFontMaxHeight()
+{
+    return (_fontRef->size->metrics.height >> 6);
 }
 
 Size FontFreeType::getTextWidthAndHeight(const char *pText, bool UTF16text)

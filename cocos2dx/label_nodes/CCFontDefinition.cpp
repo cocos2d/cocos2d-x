@@ -28,11 +28,11 @@
 NS_CC_BEGIN
 
 
-LabelFontDefinition::LabelFontDefinition():_textImages(0), _commonLineHeight(0)
+FontDefinitionTTF::FontDefinitionTTF():_textImages(0), _commonLineHeight(0)
 {
 }
 
-LabelFontDefinition::~LabelFontDefinition()
+FontDefinitionTTF::~FontDefinitionTTF()
 {
     if (_textImages)
     {
@@ -40,7 +40,7 @@ LabelFontDefinition::~LabelFontDefinition()
     }
 }
 
-bool LabelFontDefinition::prepareLetterDefinitions(TextFontPagesDef *pageDefs)
+bool FontDefinitionTTF::prepareLetterDefinitions(TextFontPagesDef *pageDefs)
 {
     // get all the pages
     TextFontPagesDef *pPages = pageDefs;
@@ -120,7 +120,7 @@ bool LabelFontDefinition::prepareLetterDefinitions(TextFontPagesDef *pageDefs)
     return true;
 }
 
-bool LabelFontDefinition::createFontDefinition(char *fontName, int fontSize, char *letters, int textureSize, bool debugOutput)
+bool FontDefinitionTTF::createFontDefinition(char *fontName, int fontSize, char *letters, int textureSize, bool debugOutput)
 {
     // preare texture/image stuff
     _textImages = new TextImage();
@@ -138,7 +138,7 @@ bool LabelFontDefinition::createFontDefinition(char *fontName, int fontSize, cha
     return prepareLetterDefinitions(_textImages->getPages());
 }
 
-void LabelFontDefinition::addLetterDefinition(LetterDefinition &defToAdd)
+void FontDefinitionTTF::addLetterDefinition(LetterDefinition &defToAdd)
 {
     if (_fontLettersDefinitionUTF16.find(defToAdd.letteCharUTF16) == _fontLettersDefinitionUTF16.end())
     {
@@ -146,18 +146,68 @@ void LabelFontDefinition::addLetterDefinition(LetterDefinition &defToAdd)
     }
 }
 
-LetterDefinition & LabelFontDefinition::getLetterDefinition(unsigned short int theLetter)
+LetterDefinition & FontDefinitionTTF::getLetterDefinition(unsigned short int theLetter)
 {
     return _fontLettersDefinitionUTF16[theLetter];
 }
 
-Texture2D * LabelFontDefinition::getTexture(int index)
+Texture2D * FontDefinitionTTF::getTexture(int index)
 {
     TextFontPagesDef *pPages = _textImages->getPages();
     
     if (!pPages)
         return (false);
+    
     return pPages->getPageAt(index)->getPageTexture();
+}
+
+int FontDefinitionTTF::getNumTextures()
+{
+    TextFontPagesDef *pPages = _textImages->getPages();
+    if (pPages)
+    {
+        return pPages->getNumPages();
+    }
+    
+    return 0;
+}
+
+FontAtlas * FontDefinitionTTF::createFontAtlas()
+{
+    FontAtlas *retAtlas = new FontAtlas();
+    
+    if (!retAtlas)
+        return 0;
+    
+    // add all the textures
+    int numTextures = getNumTextures();
+    if (!numTextures)
+        return 0;
+    
+    for (int c = 0; c<numTextures; ++c)
+    {
+        retAtlas->addTexture(getTexture(c), c);
+    }
+    
+    // add all the letter definitions
+    std::map<unsigned short, LetterDefinition>::iterator ITER;
+    for(ITER = _fontLettersDefinitionUTF16.begin(); ITER!=_fontLettersDefinitionUTF16.end(); ++ITER)
+    {
+        FontLetterDefinition tempDefinition;
+        tempDefinition.letteCharUTF16   = (*ITER).second.letteCharUTF16;
+        tempDefinition.U                = (*ITER).second.U;
+        tempDefinition.V                = (*ITER).second.V;
+        tempDefinition.width            = (*ITER).second.width;
+        tempDefinition.height           = (*ITER).second.height;
+        tempDefinition.offsetX          = (*ITER).second.offsetX;
+        tempDefinition.offsetY          = (*ITER).second.offsetY;
+        tempDefinition.textureID        = (*ITER).second.textureID;
+        tempDefinition.commonLineHeight = (*ITER).second.commonLineHeight;
+        retAtlas->addLetterDefinition(tempDefinition);
+    }
+    
+    // done here
+    return retAtlas;
 }
 
 NS_CC_END

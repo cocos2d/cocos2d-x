@@ -34,33 +34,6 @@
 
 NS_CC_BEGIN
 
-int _getNumGlyphsFittingInSize(std::map<unsigned short int, GlyphDef> &glyphDefs, unsigned short int *strUTF8, Font *pFont, Size *constrainSize, int &outNewSize)
-{
-    if (!strUTF8)
-        return NULL;
-    
-    float widthWithBBX  =  0.0f;
-    float lastWidth     = 0.0f;
-    
-    // get the string to UTF8
-    int numChar = cc_wcslen(strUTF8);
-    
-    for (int c = 0; c<numChar; ++c)
-    {
-        widthWithBBX+= (glyphDefs[strUTF8[c]].getRect().size.width + glyphDefs[strUTF8[c]].getPadding());
-        
-        if (widthWithBBX >= constrainSize->width)
-        {
-            outNewSize = lastWidth;
-            return c;
-        }
-        
-        lastWidth = widthWithBBX;
-    }
-    
-    outNewSize = constrainSize->width;
-    return numChar;
-}
 
 TextLineDef::TextLineDef(float x, float y, float width, float height) :_x(x), _y(y), _width(width), _height(height)
 {
@@ -144,11 +117,8 @@ Texture2D *TextPageDef::getPageTexture()
     return _pageTexture;
 }
 
-TextFontPagesDef::TextFontPagesDef(char *fontName, int fontSize): _fontSize(fontSize)
+TextFontPagesDef::TextFontPagesDef()
 {
-    _fontName = new char[strlen(fontName)+1];
-    if (_fontName)
-        strcpy(_fontName, fontName);
 }
 
 TextFontPagesDef::~TextFontPagesDef()
@@ -158,11 +128,6 @@ TextFontPagesDef::~TextFontPagesDef()
     {
         if (_pages[c])
             delete _pages[c];
-    }
-    
-    if (_fontName)
-    {
-        delete [] _fontName;
     }
 }
 
@@ -187,22 +152,21 @@ bool TextImage::initWithString(const char * pText, int nWidth, int nHeight, cons
     // carloX
     bool textIsUTF16 = false;
     
-    // create the reference to the system font
+    // create the reference to the font we want to use
     if ( !createFontRef(pFontName, nSize) )
         return false;
     
-    // generate the glyphs
+    // generate the glyphs for the requested text (glyphs are latter's bounding boxes)
     if ( !generateTextGlyphs(pText) )
         return false;
 
-    
     Size constrainSize;
     unsigned short int *strUTF16 = 0;
     int stringNumChars;
     
     if ( textIsUTF16 )
     {
-        strUTF16 = (unsigned short int *)pText;
+        strUTF16       = (unsigned short int *)pText;
         stringNumChars = cc_wcslen(strUTF16);
     }
     else
@@ -211,49 +175,59 @@ bool TextImage::initWithString(const char * pText, int nWidth, int nHeight, cons
         strUTF16 = _font->getUTF16Text(pText, stringNumChars);
     }
     
-    // tell if the string has been trimmed at least one
-    bool stringTrimmedOnce = false;
-    
-    constrainSize.width  = nWidth;
-    constrainSize.height = nHeight;
-    
-    int   delta           = 0;
-    int   currentPage     = 0;
-    float currentY        = 0.0;
-    
-    // carloX this is heavy and should be replaced
-    float lineHeight = _font->getTextWidthAndHeight(pText).height;
-    
-    // check if at least one line will fit in the texture
-    if ( lineHeight > constrainSize.height )
-    {
-        // we can't even fit one line in this texture
+    if (!strUTF16 || !stringNumChars)
         return false;
-    }
+    
+    // create all the needed pages
+    if (!createPageDefinitions(strUTF16, nWidth, nHeight, _font->getFontMaxHeight()))
+        return false;
+    
+    // release the original string if needed
+    if ( !textIsUTF16 )
+        delete [] strUTF16;
+    
+    // actually create the needed images
+    return createImageDataFromPages(_fontPages, releaseRAWData);
+}
+
+bool TextImage::createPageDefinitions(unsigned short int *inText, int imageWidth, int imageHeight, int lineHeight)
+{
+    bool  needToReleaseText = false;
+    int   delta             = 0;
+    int   currentPage       = 0;
+    float currentY          = 0.0;
+    
+    //
+    unsigned short int *strUTF16 = inText;
+    
+    if (_fontPages)
+        delete _fontPages;
     
     // create pages for the font
-    _fontPages = new TextFontPagesDef((char *)pFontName, nSize);
+    _fontPages = new TextFontPagesDef();
     if (!_fontPages)
         return false;
     
     // create the first page (ther is going to be at least one page)
-    TextPageDef *currentPageDef = new TextPageDef(currentPage, nWidth, nHeight);
+    TextPageDef *currentPageDef = new TextPageDef(currentPage, imageWidth, imageHeight);
     if ( !currentPageDef )
         return false;
     
     // add the current page
     _fontPages->addPage(currentPageDef);
     
+    // work out creating pages
+    
     do {
         
         // choose texture page
-        if ( ( currentY + lineHeight ) > constrainSize.height )
+        if ( ( currentY + lineHeight ) > imageHeight )
         {
             currentY     = 0;
             currentPage += 1;
             
             // create a new page and add
-            currentPageDef = new TextPageDef(currentPage, nWidth, nHeight);
+            currentPageDef = new TextPageDef(currentPage, imageWidth, imageHeight);
             if ( !currentPageDef )
                 return false;
             
@@ -262,12 +236,12 @@ bool TextImage::initWithString(const char * pText, int nWidth, int nHeight, cons
         
         // get the new fitting string
         Size tempSize;
-        tempSize.width  = constrainSize.width;
-        tempSize.height = constrainSize.height;
-
+        tempSize.width  = imageWidth;
+        tempSize.height = imageHeight;
+        
         // figure out how many glyphs fit in this line
         int newLineSize    = 0;
-        int numFittingChar = _getNumGlyphsFittingInSize(_textGlyphs, strUTF16, _font, &tempSize, newLineSize);
+        int numFittingChar = getNumGlyphsFittingInSize(_textGlyphs, strUTF16, _font, &tempSize, newLineSize);
         
         // crete the temporary new string
         unsigned short int *pTempString = 0;
@@ -297,11 +271,11 @@ bool TextImage::initWithString(const char * pText, int nWidth, int nHeight, cons
             // create the new string
             unsigned short int *tempS = _font->trimUTF16Text(strUTF16, numFittingChar, (stringLenght - 1));
             
-            // a copy of the string has been created
-            stringTrimmedOnce = true;
+            if (needToReleaseText)
+                delete [] strUTF16;
             
-            // release the old one
-            delete [] strUTF16;
+            // a copy of the string has been created, so next time I'll need to release it
+            needToReleaseText = true;
             
             // assign pointer
             strUTF16 = tempS;
@@ -312,12 +286,38 @@ bool TextImage::initWithString(const char * pText, int nWidth, int nHeight, cons
         
     } while( delta );
     
-    
-    if (!textIsUTF16 || stringTrimmedOnce)
+    if (needToReleaseText)
         delete [] strUTF16;
     
-    // actually create the needed images
-    return createImageDataFromPages(_fontPages, releaseRAWData);
+    return true;
+}
+
+int TextImage::getNumGlyphsFittingInSize(std::map<unsigned short int, GlyphDef> &glyphDefs, unsigned short int *strUTF8, Font *pFont, Size *constrainSize, int &outNewSize)
+{
+    if (!strUTF8)
+        return NULL;
+    
+    float widthWithBBX  =  0.0f;
+    float lastWidth     =  0.0f;
+    
+    // get the string to UTF8
+    int numChar = cc_wcslen(strUTF8);
+    
+    for (int c = 0; c<numChar; ++c)
+    {
+        widthWithBBX += (glyphDefs[strUTF8[c]].getRect().size.width + glyphDefs[strUTF8[c]].getPadding());
+        
+        if (widthWithBBX >= constrainSize->width)
+        {
+            outNewSize = lastWidth;
+            return c;
+        }
+        
+        lastWidth = widthWithBBX;
+    }
+    
+    outNewSize = constrainSize->width;
+    return numChar;
 }
 
 bool TextImage::createFontRef(const char *fontName, int fontSize)
@@ -392,14 +392,17 @@ bool TextImage::addGlyphsToLine(TextLineDef *line, const char *lineText, bool te
 
 bool TextImage::generateTextGlyphs(const char * pText)
 {
-    if(!_font)
+    if (!_font)
         return false;
     
     int numGlyphs = 0;
-    GlyphDef *pNewGlyphs  = _font->getGlyphsForText(pText, numGlyphs);
+    GlyphDef *pNewGlyphs  = _font->getGlyphDefintionsForText(pText, numGlyphs);
     
     if (!pNewGlyphs)
         return false;
+    
+    if (!_textGlyphs.empty())
+        _textGlyphs.clear();
     
     for (int c=0; c < numGlyphs; ++c)
         _textGlyphs[pNewGlyphs[c].getUTF8Letter()] = pNewGlyphs[c];
