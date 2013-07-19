@@ -33,11 +33,11 @@ NS_CC_BEGIN
 //
 // CameraAction
 //
-void ActionCamera::startWithTarget(Node *pTarget)
+void ActionCamera::startWithTarget(Node *target)
 {
-    ActionInterval::startWithTarget(pTarget);
+    ActionInterval::startWithTarget(target);
     
-    Camera *camera = pTarget->getCamera();
+    Camera *camera = target->getCamera();
     camera->getCenterXYZ(&_centerXOrig, &_centerYOrig, &_centerZOrig);
     camera->getEyeXYZ(&_eyeXOrig, &_eyeYOrig, &_eyeZOrig);
     camera->getUpXYZ(&_upXOrig, &_upYOrig, &_upZOrig);
@@ -53,6 +53,7 @@ ActionCamera* ActionCamera::clone() const
 
 ActionCamera * ActionCamera::reverse() const
 {
+    // FIXME: This conversion isn't safe.
     return (ActionCamera*)ReverseTime::create(const_cast<ActionCamera*>(this));
 }
 //
@@ -98,9 +99,9 @@ bool OrbitCamera::initWithDuration(float t, float radius, float deltaRadius, flo
     return false;
 }
 
-void OrbitCamera::startWithTarget(Node *pTarget)
+void OrbitCamera::startWithTarget(Node *target)
 {
-    ActionInterval::startWithTarget(pTarget);
+    ActionInterval::startWithTarget(target);
     float r, zenith, azimuth;
     this->sphericalRadius(&r, &zenith, &azimuth);
     if( isnan(_radius) )

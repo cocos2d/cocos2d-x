@@ -130,7 +130,13 @@ class CC_DLL Node : public Object
 public:
     /// @{
     /// @name Constructor, Distructor and Initializers
-    
+
+    /**
+     * Allocates and initializes a node.
+     * @return A initialized node which is marked as "autorelease".
+     */
+    static Node * create(void);
+
     /**
      * Default constructor
      */
@@ -146,12 +152,7 @@ public:
      *  @return Whether the initialization was successful.
      */
     virtual bool init();
-	/**
-     * Allocates and initializes a node.
-     * @return A initialized node which is marked as "autorelease".
-     */
-    static Node * create(void);
-    
+
     /**
      * Gets the description string. It makes debugging easier.
      * @return A string terminated with '\0'
@@ -276,12 +277,12 @@ public:
     /**
      * Changes the position (x,y) of the node in OpenGL coordinates
      *
-     * Usually we use ccp(x,y) to compose Point object.
+     * Usually we use Point(x,y) to compose Point object.
      * The original point (0,0) is at the left-bottom corner of screen.
      * For example, this codesnip sets the node in the center of screen.
      * @code
-     * Size size = Director::sharedDirector()->getWinSize();
-     * node->setPosition( ccp(size.width/2, size.height/2) )
+     * Size size = Director::getInstance()->getWinSize();
+     * node->setPosition( Point(size.width/2, size.height/2) )
      * @endcode
      *
      * @param position  The position (x,y) of the node in OpenGL coordinates
@@ -463,7 +464,7 @@ public:
      * 
      * @param fRotationX    The X rotation in degrees which performs a horizontal rotational skew.
      */
-    virtual void setRotationX(float fRotaionX);
+    virtual void setRotationX(float rotaionX);
     /**
      * Gets the X rotation (angle) of the node in degrees which performs a horizontal rotation skew.
      *
@@ -482,7 +483,7 @@ public:
      *
      * @param fRotationY    The Y rotation in degrees.
      */
-    virtual void setRotationY(float fRotationY);
+    virtual void setRotationY(float rotationY);
     /**
      * Gets the Y rotation (angle) of the node in degrees which performs a vertical rotational skew.
      *
@@ -503,7 +504,7 @@ public:
      *
      * @param uOrderOfArrival   The arrival order.
      */
-    virtual void setOrderOfArrival(unsigned int uOrderOfArrival);
+    virtual void setOrderOfArrival(unsigned int orderOfArrival);
     /**
      * Returns the arrival order, indecates which children is added previously.
      *
@@ -519,7 +520,7 @@ public:
      *
      * @param glServerState     The state of OpenGL server side.
      */
-    virtual void setGLServerState(ccGLServerState glServerState);
+    virtual void setGLServerState(ccGLServerState serverState);
     /**
      * Returns the state of OpenGL server side.
      *
@@ -611,7 +612,7 @@ public:
      *
      * @return The amount of children.
      */
-    unsigned int getChildrenCount(void) const;
+    unsigned int getChildrenCount() const;
     
     /**
      * Sets the parent node
@@ -719,7 +720,7 @@ public:
      *
      * @param A Grid object that is used when applying effects
      */
-    virtual void setGrid(GridBase *pGrid);
+    virtual void setGrid(GridBase *grid);
     
     /// @} end of Grid
     
@@ -768,7 +769,7 @@ public:
      *
      * @param A interger that indentifies the node.
      */
-    virtual void setTag(int nTag);
+    virtual void setTag(int tag);
     
     /**
      * Returns a custom user data pointer
@@ -787,7 +788,7 @@ public:
      *
      * @param A custom user data pointer
      */
-    virtual void setUserData(void *pUserData);
+    virtual void setUserData(void *userData);
     
     /** 
      * Returns a user assigned Object
@@ -807,7 +808,7 @@ public:
      *
      * @param A user assigned Object
      */
-    virtual void setUserObject(Object *pUserObject);
+    virtual void setUserObject(Object *userObject);
     
     /// @} end of Tag & User Data
     
@@ -826,12 +827,12 @@ public:
      * Since v2.0, each rendering node must set its shader program.
      * It should be set in initialize phase.
      * @code
-     * node->setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColor));
+     * node->setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColor));
      * @endcode
      * 
      * @param The shader program which fetchs from ShaderCache.
      */
-    virtual void setShaderProgram(GLProgram *pShaderProgram);
+    virtual void setShaderProgram(GLProgram *shaderProgram);
     /// @} end of Shader Program
     
     
@@ -856,52 +857,11 @@ public:
      * @return Whether or not the node is running.
      */
     virtual bool isRunning() const;
-
-    
-    /// @{
-    /// @name Script Bindings for lua
-
-    /**
-     * Registers a script function that will be called in onEnter() & onExit() seires functions.
-     * 
-     * This handler will be removed automatically after onExit() called.
-     * @code
-     * -- lua sample
-     * local function sceneEventHandler(eventType)
-     *     if eventType == kNodeOnEnter then
-     *         -- do something
-     *     elseif evetType == kNodeOnExit then
-     *         -- do something
-     *     end
-     * end
-     * scene::registerScriptHandler(sceneEventHandler)
-     * @endcode
-     *
-     * @warning This method is for internal usage, don't call it manually.
-     * @todo Perhaps we should rename it to get/set/removeScriptHandler acoording to the function name style.
-     *
-     * @param handler   A number that indicates a lua function. 
-     */
-    virtual void registerScriptHandler(int handler);
-    /**
-     * Unregisters a script function that will be called in onEnter() & onExit() series functions.
-     *
-     * @see registerScriptHandler(int)
-     */
-    virtual void unregisterScriptHandler(void);
-    /**
-     * Gets script handler for onEnter/onExit event.
-     * This is an internal method. g
-     * @see registerScriptHandler(int)
-     *
-     * @return A number that indicates a lua function.
-     */
-    inline int getScriptHandler() const { return _scriptHandler; };
     
     /** 
      * Schedules for lua script. 
      */
-    void scheduleUpdateWithPriorityLua(int nHandler, int priority);
+    void scheduleUpdateWithPriorityLua(int handler, int priority);
     
     /// @}  end Script Bindings
 
@@ -943,7 +903,7 @@ public:
     /** 
      * Stops all running actions and schedulers
      */
-    virtual void cleanup(void);
+    virtual void cleanup();
 
     /** 
      * Override this method to draw your own node.
@@ -955,12 +915,12 @@ public:
      * AND YOU SHOULD NOT DISABLE THEM AFTER DRAWING YOUR NODE
      * But if you enable any other GL state, you should disable it after drawing your node.
      */
-    virtual void draw(void);
+    virtual void draw();
 
     /** 
      * Visits this node's children and draw them recursively.
      */
-    virtual void visit(void);
+    virtual void visit();
 
     
     /** 
@@ -972,7 +932,10 @@ public:
      * 
      * @return A "local" axis aligned boudning box of the node.
      */
-    Rect boundingBox(void);
+    virtual Rect getBoundingBox() const;
+
+    /** @deprecated Use getBoundingBox instead */
+    CC_DEPRECATED_ATTRIBUTE inline virtual Rect boundingBox() const { return getBoundingBox(); }
 
     /// @{
     /// @name Actions
@@ -1005,7 +968,7 @@ public:
     /** 
      * Stops and removes all actions from the running action list .
      */
-    void stopAllActions(void);
+    void stopAllActions();
 
     /** 
      * Stops and removes an action from the running action list.
@@ -1028,7 +991,7 @@ public:
      *
      * @return The action object with the given tag.
      */
-    Action* getActionByTag(int tag);
+    Action* getActionByTag(int tag) const;
 
     /** 
      * Returns the numbers of actions that are running plus the ones that are schedule to run (actions in actionsToAdd and actions arrays).
@@ -1040,7 +1003,10 @@ public:
      *
      * @return The number of actions that are running plus the ones that are schedule to run
      */
-    unsigned int numberOfRunningActions(void);
+    unsigned int getNumberOfRunningActions() const;
+
+    /** @deprecated Use getNumberOfRunningActions() instead */
+    CC_DEPRECATED_ATTRIBUTE unsigned int numberOfRunningActions() const { return getNumberOfRunningActions(); };
 
     /// @} end of Actions
     
@@ -1176,13 +1142,13 @@ public:
     /**
      * Performs OpenGL view-matrix transformation based on position, scale, rotation and other attributes.
      */
-    void transform(void);
+    void transform();
     /**
      * Performs OpenGL view-matrix transformation of it's ancestors.
      * Generally the ancestors are already transformed, but in certain cases (eg: attaching a FBO)
      * It's necessary to transform the ancestors again.
      */
-    void transformAncestors(void);
+    void transformAncestors();
     /**
      * Calls children's updateTransform() method recursively.
      *
@@ -1190,29 +1156,41 @@ public:
      * As the result, you apply SpriteBatchNode's optimization on your customed Node.
      * e.g., batchNode->addChild(myCustomNode), while you can only addChild(sprite) before.
      */
-    virtual void updateTransform(void);
+    virtual void updateTransform();
     
     /** 
      * Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
      * The matrix is in Pixels.
      */
-    virtual AffineTransform nodeToParentTransform(void);
+    virtual AffineTransform getNodeToParentTransform() const;
+
+    /** @deprecated use getNodeToParentTransform() instead */
+    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToParentTransform() const { return getNodeToParentTransform(); }
 
     /** 
      * Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
      * The matrix is in Pixels.
      */
-    virtual AffineTransform parentToNodeTransform(void);
+    virtual AffineTransform getParentToNodeTransform() const;
+
+    /** @deprecated Use getParentToNodeTransform() instead */
+    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform parentToNodeTransform() const { return getParentToNodeTransform(); }
 
     /** 
      * Returns the world affine transform matrix. The matrix is in Pixels.
      */
-    virtual AffineTransform nodeToWorldTransform(void);
+    virtual AffineTransform getNodeToWorldTransform() const;
+
+    /** @deprecated Use getNodeToWorldTransform() instead */
+    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToWorldTransform() const { return getNodeToWorldTransform(); }
 
     /** 
      * Returns the inverse world affine transform matrix. The matrix is in Pixels.
      */
-    virtual AffineTransform worldToNodeTransform(void);
+    virtual AffineTransform getWorldToNodeTransform() const;
+
+    /** @deprecated Use worldToNodeTransform() instead */
+    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform worldToNodeTransform() const { return getWorldToNodeTransform(); }
 
     /// @} end of Transformations
     
@@ -1223,39 +1201,39 @@ public:
     /** 
      * Converts a Point to node (local) space coordinates. The result is in Points.
      */
-    Point convertToNodeSpace(const Point& worldPoint);
+    Point convertToNodeSpace(const Point& worldPoint) const;
     
     /** 
      * Converts a Point to world space coordinates. The result is in Points.
      */
-    Point convertToWorldSpace(const Point& nodePoint);
+    Point convertToWorldSpace(const Point& nodePoint) const;
     
     /** 
      * Converts a Point to node (local) space coordinates. The result is in Points.
      * treating the returned/received node point as anchor relative.
      */
-    Point convertToNodeSpaceAR(const Point& worldPoint);
+    Point convertToNodeSpaceAR(const Point& worldPoint) const;
     
     /** 
      * Converts a local Point to world space coordinates.The result is in Points.
      * treating the returned/received node point as anchor relative.
      */
-    Point convertToWorldSpaceAR(const Point& nodePoint);
+    Point convertToWorldSpaceAR(const Point& nodePoint) const;
 
     /** 
      * convenience methods which take a Touch instead of Point
      */
-    Point convertTouchToNodeSpace(Touch * touch);
+    Point convertTouchToNodeSpace(Touch * touch) const;
 
     /** 
      * converts a Touch (world coordinates) into a local coordinate. This method is AR (Anchor Relative).
      */
-    Point convertTouchToNodeSpaceAR(Touch * touch);
+    Point convertTouchToNodeSpaceAR(Touch * touch) const;
     
 	/**
      *  Sets the additional transform.
      *
-     *  @note The additional transform will be concatenated at the end of nodeToParentTransform.
+     *  @note The additional transform will be concatenated at the end of getNodeToParentTransform.
      *        It could be used to simulate `parent-child` relationship between two nodes (e.g. one is in BatchNode, another isn't).
      *  @code
         // create a batchNode
@@ -1273,10 +1251,10 @@ public:
         this->addChild(spriteB); 
 
         //position
-        spriteA->setPosition(ccp(200, 200));
+        spriteA->setPosition(Point(200, 200));
      
         // Gets the spriteA's transform.
-        AffineTransform t = spriteA->nodeToParentTransform();
+        AffineTransform t = spriteA->getNodeToParentTransform();
      
         // Sets the additional transform to spriteB, spriteB's postion will based on its pseudo parent i.e. spriteA.
         spriteB->setAdditionalTransform(t);
@@ -1285,7 +1263,7 @@ public:
         spriteA->setScale(2);
      
         // Gets the spriteA's transform.
-        t = spriteA->nodeToParentTransform();
+        t = spriteA->getNodeToParentTransform();
      
         // Sets the additional transform to spriteB, spriteB's scale will based on its pseudo parent i.e. spriteA.
         spriteB->setAdditionalTransform(t);
@@ -1294,7 +1272,7 @@ public:
         spriteA->setRotation(20);
      
         // Gets the spriteA's transform.
-        t = spriteA->nodeToParentTransform();
+        t = spriteA->getNodeToParentTransform();
      
         // Sets the additional transform to spriteB, spriteB's rotation will based on its pseudo parent i.e. spriteA.
         spriteB->setAdditionalTransform(t);
@@ -1338,7 +1316,7 @@ private:
     void detachChild(Node *child, bool doCleanup);
     
     /// Convert cocos2d coordinates to UI windows coordinate.
-    Point convertToWindowSpace(const Point& nodePoint);
+    Point convertToWindowSpace(const Point& nodePoint) const;
 
 protected:
     float _rotationX;                 ///< rotation angle on x-axis
@@ -1359,11 +1337,14 @@ protected:
     
     Size _contentSize;             ///< untransformed size of the node
     
-    
-    AffineTransform _additionalTransform; ///< transform
-    AffineTransform _transform;     ///< transform
-    AffineTransform _inverse;       ///< transform
-    
+    // "cache" variables are allowed to be mutable
+    mutable AffineTransform _additionalTransform; ///< transform
+    mutable AffineTransform _transform;     ///< transform
+    mutable AffineTransform _inverse;       ///< inverse transform
+    mutable bool _additionalTransformDirty;   ///< The flag to check whether the additional transform is dirty
+    mutable bool _transformDirty;             ///< transform dirty flag
+    mutable bool _inverseDirty;               ///< inverse transform dirty flag
+
     Camera *_camera;                ///< a camera
     
     GridBase *_grid;                ///< a grid
@@ -1390,9 +1371,6 @@ protected:
     
     bool _running;                    ///< is running
     
-    bool _transformDirty;             ///< transform dirty flag
-    bool _inverseDirty;               ///< transform dirty flag
-    bool _additionalTransformDirty;   ///< The flag to check whether the additional transform is dirty
     bool _visible;                    ///< is this node visible
     
     bool _ignoreAnchorPointForPosition; ///< true if the Anchor Point will be (0,0) when you position the Node, false otherwise.
@@ -1427,29 +1405,30 @@ public:
     virtual ~NodeRGBA();
     
     virtual bool init();
+
+    // overrides
+    virtual GLubyte getOpacity() const override;
+    virtual GLubyte getDisplayedOpacity() const  override;
+    virtual void setOpacity(GLubyte opacity) override;
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
+    virtual bool isCascadeOpacityEnabled() const  override;
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override;
     
-    virtual GLubyte getOpacity() const;
-    virtual GLubyte getDisplayedOpacity() const;
-    virtual void setOpacity(GLubyte opacity);
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
-    virtual bool isCascadeOpacityEnabled() const;
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
+    virtual const Color3B& getColor(void) const override;
+    virtual const Color3B& getDisplayedColor() const override;
+    virtual void setColor(const Color3B& color) override;
+    virtual void updateDisplayedColor(const Color3B& parentColor) override;
+    virtual bool isCascadeColorEnabled() const override;
+    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) override;
     
-    virtual const Color3B& getColor(void) const;
-    virtual const Color3B& getDisplayedColor() const;
-    virtual void setColor(const Color3B& color);
-    virtual void updateDisplayedColor(const Color3B& parentColor);
-    virtual bool isCascadeColorEnabled() const;
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
-    
-    virtual void setOpacityModifyRGB(bool bValue) {};
-    virtual bool isOpacityModifyRGB() const { return false; };
+    virtual void setOpacityModifyRGB(bool bValue) override {CC_UNUSED_PARAM(bValue);};
+    virtual bool isOpacityModifyRGB() const override { return false; };
 
 protected:
 	GLubyte		_displayedOpacity;
     GLubyte     _realOpacity;
-	Color3B	_displayedColor;
-    Color3B   _realColor;
+	Color3B	    _displayedColor;
+    Color3B     _realColor;
 	bool		_cascadeColorEnabled;
     bool        _cascadeOpacityEnabled;
 };

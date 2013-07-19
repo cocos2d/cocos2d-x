@@ -295,13 +295,3 @@ class CCPlace : public CCActionInstant //<NSCopying>
 {
     static CCPlace* create(CCPoint pos);
 };
-
-class CCCallFunc : public CCActionInstant
-{
-	static CCCallFunc* create(LUA_FUNCTION funcID);
-};
-
-class CCCallFuncN : public CCCallFunc
-{
-	static CCCallFuncN* create(LUA_FUNCTION funcID);
-};

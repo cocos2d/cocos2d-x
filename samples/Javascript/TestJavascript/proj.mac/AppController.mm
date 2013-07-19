@@ -62,7 +62,7 @@
 		[window makeKeyAndOrderFront:self];
 		[window setAcceptsMouseMovedEvents:NO];
 
-		cocos2d::Application::sharedApplication()->run();
+		cocos2d::Application::getInstance()->run();
 	}
 
 	-(BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication*)theApplication
@@ -72,7 +72,7 @@
 
 	-(void) dealloc
 	{
-		cocos2d::Director::sharedDirector()->end();
+		cocos2d::Director::getInstance()->end();
 		[super dealloc];
 	}
 

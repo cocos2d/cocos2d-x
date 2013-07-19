@@ -50,7 +50,7 @@ int Application::run()
 
 	while (1) // or device wants to quit
 	{
-		EGLView::sharedOpenGLView()->handleEvents();
+		EGLView::getInstance()->handleEvents();
 
 		clock_gettime(CLOCK_REALTIME, &time_struct);
 		current_time = time2millis(&time_struct);
@@ -58,7 +58,7 @@ int Application::run()
 		if ((current_time - update_time) > _animationInterval)
 		{
 			update_time = current_time;
-			Director::sharedDirector()->mainLoop();
+			Director::getInstance()->mainLoop();
 		}
 		else
 		{
@@ -82,7 +82,7 @@ void Application::setResourceRootPath(const std::string& rootResDir)
     {
         _resourceRootPath += '/';
     }
-    FileUtils* pFileUtils = FileUtils::sharedFileUtils();
+    FileUtils* pFileUtils = FileUtils::getInstance();
     std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
     searchPaths.insert(searchPaths.begin(), _resourceRootPath);
     pFileUtils->setSearchPaths(searchPaths);
@@ -101,10 +101,16 @@ TargetPlatform Application::getTargetPlatform()
 //////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////
-Application* Application::sharedApplication()
+Application* Application::getInstance()
 {
     CC_ASSERT(sm_pSharedApplication);
     return sm_pSharedApplication;
+}
+
+// @deprecated Use getInstance() instead
+Application* Application::sharedApplication()
+{
+    return Application::getInstance();
 }
 
 ccLanguageType Application::getCurrentLanguage()

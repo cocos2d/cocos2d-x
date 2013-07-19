@@ -22,14 +22,14 @@ void BaseTest::onEnter()
     const char * pTitle = str.c_str();
     LabelTTF* label = LabelTTF::create(pTitle, "Arial", 32);
     addChild(label, 9999);
-    label->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - 30) );
+    label->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 30) );
 
     std::string strSubtitle = subtitle();
     if( ! strSubtitle.empty() )
     {
         LabelTTF* l = LabelTTF::create(strSubtitle.c_str(), "Thonburi", 16);
         addChild(l, 9999);
-        l->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - 60) );
+        l->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 60) );
     }
 
     // add menu
@@ -40,10 +40,10 @@ void BaseTest::onEnter()
 
     Menu *menu = Menu::create(item1, item2, item3, NULL);
 
-    menu->setPosition(PointZero);
-    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    menu->setPosition(Point::ZERO);
+    item1->setPosition(Point(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item2->setPosition(Point(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item3->setPosition(Point(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
 
     addChild(menu, 9999);
 

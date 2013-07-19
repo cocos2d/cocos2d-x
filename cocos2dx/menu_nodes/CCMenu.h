@@ -55,13 +55,7 @@ enum {
 */
 class CC_DLL Menu : public LayerRGBA
 {
-    /** whether or not the menu will receive events */
-    bool _enabled;
-    
 public:
-    Menu() : _selectedItem(NULL) {}
-    virtual ~Menu(){}
-
     /** creates an empty Menu */
     static Menu* create();
 
@@ -79,6 +73,9 @@ public:
     
     /** creates a Menu with MenuItem objects */
     static Menu* createWithItems(MenuItem *firstItem, va_list args);
+
+    Menu() : _selectedItem(NULL) {}
+    virtual ~Menu(){}
 
     /** initializes an empty Menu */
     bool init();
@@ -113,34 +110,28 @@ public:
     /** set event handler priority. By default it is: kMenuTouchPriority */
     void setHandlerPriority(int newPriority);
 
-    //super methods
-    virtual void addChild(Node * child);
-    virtual void addChild(Node * child, int zOrder);
-    virtual void addChild(Node * child, int zOrder, int tag);
     virtual void registerWithTouchDispatcher();
     virtual void removeChild(Node* child, bool cleanup);
 
-    /**
-    @brief For phone event handle functions
-    */
-    virtual bool ccTouchBegan(Touch* touch, Event* event);
-    virtual void ccTouchEnded(Touch* touch, Event* event);
-    virtual void ccTouchCancelled(Touch *touch, Event* event);
-    virtual void ccTouchMoved(Touch* touch, Event* event);
-
-    /**
-    @since v0.99.5
-    override onExit
-    */
-    virtual void onExit();
-
-    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool isOpacityModifyRGB(void) const { return false;}
-    
     virtual bool isEnabled() const { return _enabled; }
     virtual void setEnabled(bool value) { _enabled = value; };
 
+    // overrides
+    virtual void addChild(Node * child) override;
+    virtual void addChild(Node * child, int zOrder) override;
+    virtual void addChild(Node * child, int zOrder, int tag) override;
+    virtual bool ccTouchBegan(Touch* touch, Event* event) override;
+    virtual void ccTouchEnded(Touch* touch, Event* event) override;
+    virtual void ccTouchCancelled(Touch *touch, Event* event) override;
+    virtual void ccTouchMoved(Touch* touch, Event* event) override;
+    virtual void onExit() override;
+    virtual void setOpacityModifyRGB(bool bValue) override {CC_UNUSED_PARAM(bValue);}
+    virtual bool isOpacityModifyRGB(void) const override { return false;}
+
 protected:
+    /** whether or not the menu will receive events */
+    bool _enabled;
+
     MenuItem* itemForTouch(Touch * touch);
     tMenuState _state;
     MenuItem *_selectedItem;

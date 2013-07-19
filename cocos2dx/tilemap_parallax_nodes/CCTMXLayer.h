@@ -106,7 +106,7 @@ public:
     The Sprite can be treated like any other Sprite: rotated, scaled, translated, opacity, color, etc.
     You can remove either by calling:
     - layer->removeChild(sprite, cleanup);
-    - or layer->removeTileAt(ccp(x,y));
+    - or layer->removeTileAt(Point(x,y));
     */
     Sprite* tileAt(const Point& tileCoordinate);
 
@@ -148,15 +148,20 @@ public:
     /** Creates the tiles */
     void setupTiles();
 
-    /** TMXLayer doesn't support adding a Sprite manually.
-    @warning addchild(z, tag); is not supported on TMXLayer. Instead of setTileGID.
-    */
-    virtual void addChild(Node * child, int zOrder, int tag);
-    // super method
-    void removeChild(Node* child, bool cleanup);
-
     inline const char* getLayerName(){ return _layerName.c_str(); }
     inline void setLayerName(const char *layerName){ _layerName = layerName; }
+
+    //
+    // Override
+    //
+    /** TMXLayer doesn't support adding a Sprite manually.
+     @warning addchild(z, tag); is not supported on TMXLayer. Instead of setTileGID.
+     */
+    virtual void addChild(Node * child, int zOrder, int tag) override;
+    // super method
+    void removeChild(Node* child, bool cleanup) override;
+
+
 private:
     Point positionForIsoAt(const Point& pos);
     Point positionForOrthoAt(const Point& pos);

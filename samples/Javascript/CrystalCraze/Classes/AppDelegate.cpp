@@ -27,28 +27,28 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    Director *pDirector = Director::sharedDirector();
-    pDirector->setOpenGLView(EGLView::sharedOpenGLView());
+    Director *pDirector = Director::getInstance();
+    pDirector->setOpenGLView(EGLView::getInstance());
     pDirector->setProjection(kDirectorProjection2D);
 
 
-    Size screenSize = EGLView::sharedOpenGLView()->getFrameSize();
+    Size screenSize = EGLView::getInstance()->getFrameSize();
 
-    Size designSize = CCSizeMake(320, 480);
-    Size resourceSize = CCSizeMake(320, 480);
+    Size designSize = Size(320, 480);
+    Size resourceSize = Size(320, 480);
     
     std::vector<std::string> searchPaths;
     std::vector<std::string> resDirOrders;
     
-    TargetPlatform platform = Application::sharedApplication()->getTargetPlatform();
+    TargetPlatform platform = Application::getInstance()->getTargetPlatform();
     if (platform == kTargetIphone || platform == kTargetIpad || platform == kTargetMacOS)
     {
         searchPaths.push_back("Published-iOS"); // Resources/Published-iOS
-        FileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
+        FileUtils::getInstance()->setSearchPaths(searchPaths);
 
         if (screenSize.height > 480)
         {
-            resourceSize = CCSizeMake(640, 960);
+            resourceSize = Size(640, 960);
             resDirOrders.push_back("resources-iphonehd");
         }
         else
@@ -56,42 +56,42 @@ bool AppDelegate::applicationDidFinishLaunching()
             resDirOrders.push_back("resources-iphone");
         }
         
-        FileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
+        FileUtils::getInstance()->setSearchResolutionsOrder(resDirOrders);
     }
     else if (platform == kTargetAndroid || platform == kTargetWindows)
     {
         // Comments it since opengles2.0 only supports texture size within 2048x2048.
 //        if (screenSize.height > 1024)
 //        {
-//            resourceSize = CCSizeMake(1280, 1920);
+//            resourceSize = Size(1280, 1920);
 //            resDirOrders.push_back("resources-xlarge");
 //            resDirOrders.push_back("");
 //        }
 //        else 
         if (screenSize.height > 960)
         {
-            resourceSize = CCSizeMake(640, 960);
+            resourceSize = Size(640, 960);
             resDirOrders.push_back("resources-large");
             resDirOrders.push_back("resources-medium");
             resDirOrders.push_back("resources-small");
         }
         else if (screenSize.height > 480)
         {
-            resourceSize = CCSizeMake(480, 720);
+            resourceSize = Size(480, 720);
             resDirOrders.push_back("resources-medium");
             resDirOrders.push_back("resources-small");
         }
         else
         {
-            resourceSize = CCSizeMake(320, 568);
+            resourceSize = Size(320, 568);
             resDirOrders.push_back("resources-small");
         }
         
-        FileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
+        FileUtils::getInstance()->setSearchResolutionsOrder(resDirOrders);
     }
     pDirector->setContentScaleFactor(resourceSize.width/designSize.width);
 
-    EGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionShowAll);
+    EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionShowAll);
     
     // turn on display FPS
     pDirector->setDisplayStats(true);
@@ -123,7 +123,7 @@ void handle_signal(int signal) {
     static int internal_state = 0;
     ScriptingCore* sc = ScriptingCore::getInstance();
     // should start everything back
-    Director* director = Director::sharedDirector();
+    Director* director = Director::getInstance();
     if (director->getRunningScene()) {
         director->popToRootScene();
     } else {
@@ -142,7 +142,7 @@ void handle_signal(int signal) {
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    Director::sharedDirector()->stopAnimation();
+    Director::getInstance()->stopAnimation();
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
     SimpleAudioEngine::sharedEngine()->pauseAllEffects();
 }
@@ -150,7 +150,7 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    Director::sharedDirector()->startAnimation();
+    Director::getInstance()->startAnimation();
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
     SimpleAudioEngine::sharedEngine()->resumeAllEffects();
 }

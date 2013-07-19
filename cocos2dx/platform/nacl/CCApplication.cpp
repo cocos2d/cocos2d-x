@@ -69,8 +69,8 @@ int Application::run()
     for (;;)
     {
         //long iLastTime = getCurrentMillSecond();
-        Director::sharedDirector()->mainLoop();
-        EGLView::sharedOpenGLView()->ProcessEventQueue();
+        Director::getInstance()->mainLoop();
+        EGLView::getInstance()->ProcessEventQueue();
 
         //long iCurTime = getCurrentMillSecond();
         /*
@@ -95,10 +95,16 @@ TargetPlatform Application::getTargetPlatform()
     return kTargetNaCl;
 }
 
-Application* Application::sharedApplication()
+Application* Application::getInstance()
 {
     CC_ASSERT(sm_pSharedApplication);
     return sm_pSharedApplication;
+}
+
+// @deprecated Use getInstance() instead
+Application* Application::sharedApplication()
+{
+    return Application::getInstance();
 }
 
 ccLanguageType Application::getCurrentLanguage()

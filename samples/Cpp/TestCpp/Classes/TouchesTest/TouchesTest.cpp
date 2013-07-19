@@ -37,32 +37,32 @@ PongScene::PongScene()
 //------------------------------------------------------------------
 PongLayer::PongLayer()
 {
-    _ballStartingVelocity = ccp(20.0f, -100.0f);
+    _ballStartingVelocity = Point(20.0f, -100.0f);
     
-    _ball = Ball::ballWithTexture( TextureCache::sharedTextureCache()->addImage(s_Ball) );
+    _ball = Ball::ballWithTexture( TextureCache::getInstance()->addImage(s_Ball) );
     _ball->setPosition( VisibleRect::center() );
     _ball->setVelocity( _ballStartingVelocity );
     addChild( _ball );
     _ball->retain();
     
-    Texture2D* paddleTexture = TextureCache::sharedTextureCache()->addImage(s_Paddle);
+    Texture2D* paddleTexture = TextureCache::getInstance()->addImage(s_Paddle);
     
     Array *paddlesM = Array::createWithCapacity(4);
     
     Paddle* paddle = Paddle::createWithTexture(paddleTexture);
-    paddle->setPosition( ccp(VisibleRect::center().x, VisibleRect::bottom().y + 15) );
+    paddle->setPosition( Point(VisibleRect::center().x, VisibleRect::bottom().y + 15) );
     paddlesM->addObject( paddle );
     
     paddle = Paddle::createWithTexture( paddleTexture );
-    paddle->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - kStatusBarHeight - 15) );
+    paddle->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - kStatusBarHeight - 15) );
     paddlesM->addObject( paddle );
     
     paddle = Paddle::createWithTexture( paddleTexture );
-    paddle->setPosition( ccp(VisibleRect::center().x, VisibleRect::bottom().y + 100) );
+    paddle->setPosition( Point(VisibleRect::center().x, VisibleRect::bottom().y + 100) );
     paddlesM->addObject( paddle );
     
     paddle = Paddle::createWithTexture( paddleTexture );
-    paddle->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - kStatusBarHeight - 100) );
+    paddle->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - kStatusBarHeight - 100) );
     paddlesM->addObject( paddle );
     
     _paddles = paddlesM->clone();
@@ -90,7 +90,7 @@ PongLayer::~PongLayer()
 
 void PongLayer::resetAndScoreBallForPlayer(int player)
 {
-    _ballStartingVelocity = ccpMult(_ballStartingVelocity, -1.1f);
+    _ballStartingVelocity = _ballStartingVelocity * -1.1f;
     _ball->setVelocity( _ballStartingVelocity );
     _ball->setPosition( VisibleRect::center() );
     
@@ -122,5 +122,5 @@ void PongLayer::doStep(float delta)
 
 void PongScene::runThisTest()
 {
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

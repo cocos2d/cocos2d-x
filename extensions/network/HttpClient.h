@@ -51,6 +51,9 @@ public:
     
     /** Relase the shared instance **/
     static void destroyInstance();
+
+    /** Enable cookie support. **/
+    void enableCookies(const char* cookieFile);
         
     /**
      * Add a get request to task queue

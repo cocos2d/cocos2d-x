@@ -44,10 +44,10 @@ ApplicationInitialized(void)
 {
     AppDelegate* pAppDelegate = new AppDelegate;
 
-    EGLView* eglView = EGLView::sharedOpenGLView();
+    EGLView* eglView = EGLView::getInstance();
     eglView->setFrameSize(720, 1280);
 
-    Application::sharedApplication()->run();
+    Application::getInstance()->run();
 }
 
 //

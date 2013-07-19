@@ -54,47 +54,6 @@ class Texture2D;
 class CC_DLL SpriteFrame : public Object, public Clonable
 {
 public:
-    // attributes
-
-    inline const Rect& getRectInPixels(void) { return _rectInPixels; }
-    void setRectInPixels(const Rect& rectInPixels);
-
-    inline bool isRotated(void) { return _rotated; }
-    inline void setRotated(bool bRotated) { _rotated = bRotated; }
-
-    /** get rect of the frame */
-    inline const Rect& getRect(void) const { return _rect; }
-    /** set rect of the frame */
-    void setRect(const Rect& rect);
-
-    /** get offset of the frame */
-    const Point& getOffsetInPixels(void);
-    /** set offset of the frame */
-    void setOffsetInPixels(const Point& offsetInPixels);
-
-    /** get original size of the trimmed image */
-    inline const Size& getOriginalSizeInPixels(void) { return _originalSizeInPixels; }
-    /** set original size of the trimmed image */
-    inline void setOriginalSizeInPixels(const Size& sizeInPixels) { _originalSizeInPixels = sizeInPixels; }
-
-    /** get original size of the trimmed image */
-    inline const Size& getOriginalSize(void) { return _originalSize; }
-    /** set original size of the trimmed image */
-    inline void setOriginalSize(const Size& sizeInPixels) { _originalSize = sizeInPixels; }
-
-    /** get texture of the frame */
-    Texture2D* getTexture(void);
-    /** set texture of the frame, the texture is retained */
-    void setTexture(Texture2D* pobTexture);
-
-    const Point& getOffset(void);
-    void setOffset(const Point& offsets);
-
-public:
-    ~SpriteFrame(void);
-
-	/** returns a clone of the SpriteFrame */
-	virtual SpriteFrame *clone() const;
 
     /** Create a SpriteFrame with a texture filename, rect in points.
      It is assumed that the frame was not trimmed.
@@ -116,7 +75,8 @@ public:
      */
     static SpriteFrame* createWithTexture(Texture2D* pobTexture, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize);
 
-public:
+    virtual ~SpriteFrame(void);
+
     /** Initializes a SpriteFrame with a texture, rect in points.
      It is assumed that the frame was not trimmed.
      */
@@ -139,6 +99,44 @@ public:
      */
     bool initWithTextureFilename(const char* filename, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize);
 
+
+    // attributes
+    inline const Rect& getRectInPixels() const { return _rectInPixels; }
+    void setRectInPixels(const Rect& rectInPixels);
+
+    inline bool isRotated(void) const { return _rotated; }
+    inline void setRotated(bool bRotated) { _rotated = bRotated; }
+
+    /** get rect of the frame */
+    inline const Rect& getRect(void) const { return _rect; }
+    /** set rect of the frame */
+    void setRect(const Rect& rect);
+
+    /** get offset of the frame */
+    const Point& getOffsetInPixels(void) const;
+    /** set offset of the frame */
+    void setOffsetInPixels(const Point& offsetInPixels);
+
+    /** get original size of the trimmed image */
+    inline const Size& getOriginalSizeInPixels(void) const { return _originalSizeInPixels; }
+    /** set original size of the trimmed image */
+    inline void setOriginalSizeInPixels(const Size& sizeInPixels) { _originalSizeInPixels = sizeInPixels; }
+
+    /** get original size of the trimmed image */
+    inline const Size& getOriginalSize(void) const { return _originalSize; }
+    /** set original size of the trimmed image */
+    inline void setOriginalSize(const Size& sizeInPixels) { _originalSize = sizeInPixels; }
+
+    /** get texture of the frame */
+    Texture2D* getTexture(void);
+    /** set texture of the frame, the texture is retained */
+    void setTexture(Texture2D* pobTexture);
+
+    const Point& getOffset(void) const;
+    void setOffset(const Point& offsets);
+
+    // Overrides
+	virtual SpriteFrame *clone() const override;
 
 protected:
     Point _offset;

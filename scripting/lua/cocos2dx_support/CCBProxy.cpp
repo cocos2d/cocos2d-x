@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "CCBProxy.h"
+#include "LuaScriptHandlerMgr.h"
 
 CCBReader* CCBProxy::createCCBReader()
 {
@@ -144,7 +145,7 @@ void CCBProxy::setCallback(Node* pNode,int nHandle)
     {
         MenuItem *pMenuItem = dynamic_cast<MenuItem*>(pNode);
         if (NULL != pMenuItem) {
-            pMenuItem->registerScriptTapHandler(nHandle);
+            ScriptHandlerMgr::getInstance()->addObjectHandler((void*)pMenuItem, nHandle, ScriptHandlerMgr::kMenuClickHandler);
         }
     }
     else  if (NULL != dynamic_cast<ControlButton*>(pNode))
@@ -152,10 +153,8 @@ void CCBProxy::setCallback(Node* pNode,int nHandle)
         ControlButton *pBtnItem = dynamic_cast<ControlButton*>(pNode);
         if (NULL != pBtnItem) {
             //UNOD,need Btn Pros to addHanldeOfControlEvent
-            pBtnItem->addHandleOfControlEvent(nHandle,ControlEventTouchUpInside);
+            ScriptHandlerMgr::getInstance()->addObjectHandler((void*)pBtnItem, nHandle, ScriptHandlerMgr::kControlTouchUpInsideHandler);
         }
     }
-    
-    
 }
 

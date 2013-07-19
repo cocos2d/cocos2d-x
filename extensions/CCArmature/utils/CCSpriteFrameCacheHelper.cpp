@@ -48,11 +48,11 @@ void SpriteFrameCacheHelper::purgeSpriteFrameCacheHelper()
 void SpriteFrameCacheHelper::addSpriteFrameFromFile(const char *plistPath, const char *imagePath)
 {
 
-    std::string path = FileUtils::sharedFileUtils()->fullPathForFilename(plistPath);
+    std::string path = FileUtils::getInstance()->fullPathForFilename(plistPath);
     Dictionary *dict = Dictionary::createWithContentsOfFileThreadSafe(path.c_str());
 
 
-    Texture2D *pobTexture = TextureCache::sharedTextureCache()->addImage(imagePath);
+    Texture2D *pobTexture = TextureCache::getInstance()->addImage(imagePath);
 
     addSpriteFrameFromDict(dict, pobTexture, imagePath);
 
@@ -94,7 +94,7 @@ void SpriteFrameCacheHelper::addSpriteFrameFromDict(Dictionary *dictionary, Text
 
         //CCLog("spriteFrameName : %s,    imagePath : %s", spriteFrameName.c_str(), _imagePath);
 
-        SpriteFrame *spriteFrame = (SpriteFrame *)SpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(spriteFrameName.c_str());
+        SpriteFrame *spriteFrame = (SpriteFrame *)SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName.c_str());
         if (spriteFrame)
         {
             continue;
@@ -120,7 +120,7 @@ void SpriteFrameCacheHelper::addSpriteFrameFromDict(Dictionary *dictionary, Text
             oh = abs(oh);
             // create frame
             spriteFrame = new SpriteFrame();
-            spriteFrame->initWithTexture(pobTexture, CCRectMake(x, y, w, h), false, CCPointMake(ox, oy), CCSizeMake((float)ow, (float)oh));
+            spriteFrame->initWithTexture(pobTexture, Rect(x, y, w, h), false, Point(ox, oy), Size((float)ow, (float)oh));
 		}
         else if(format == 1 || format == 2)
         {
@@ -146,7 +146,7 @@ void SpriteFrameCacheHelper::addSpriteFrameFromDict(Dictionary *dictionary, Text
         }
 
         // add sprite frame
-        SpriteFrameCache::sharedSpriteFrameCache()->addSpriteFrame(spriteFrame, spriteFrameName.c_str());
+        SpriteFrameCache::getInstance()->addSpriteFrame(spriteFrame, spriteFrameName.c_str());
         spriteFrame->release();
     }
 }
@@ -163,7 +163,7 @@ TextureAtlas *SpriteFrameCacheHelper::getTextureAtlas(const char *displayName)
     TextureAtlas *atlas = (TextureAtlas *)_display2TextureAtlas->objectForKey(textureName);
     if (atlas == NULL)
     {
-        atlas = TextureAtlas::createWithTexture(TextureCache::sharedTextureCache()->addImage(textureName), 4);
+        atlas = TextureAtlas::createWithTexture(TextureCache::getInstance()->addImage(textureName), 4);
         _display2TextureAtlas->setObject(atlas, textureName);
     }
 

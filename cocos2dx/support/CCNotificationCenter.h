@@ -30,8 +30,10 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+class ScriptHandlerMgr;
 class CC_DLL NotificationCenter : public Object
 {
+    friend class ScriptHandlerMgr;
 public:
     /** NotificationCenter constructor */
     NotificationCenter();
@@ -40,10 +42,17 @@ public:
     ~NotificationCenter();
     
     /** Gets the single instance of NotificationCenter. */
-    static NotificationCenter *sharedNotificationCenter(void);
+    static NotificationCenter *getInstance();
 
     /** Destroys the single instance of NotificationCenter. */
-    static void purgeNotificationCenter(void);
+    static void destroyInstance();
+
+    /** @deprecated use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static NotificationCenter *sharedNotificationCenter(void);
+
+    /** @deprecated use destroyInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static void purgeNotificationCenter(void);
+
 
     /** @brief Adds an observer for the specified target.
      *  @param target The target which wants to observe notification events.

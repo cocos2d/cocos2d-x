@@ -33,6 +33,8 @@ THE SOFTWARE.
 #include <stdio.h>
 #include <unistd.h>
 
+NS_CC_BEGIN
+
 typedef struct
 {
     unsigned int height;
@@ -53,28 +55,6 @@ static unsigned int nextPOT(unsigned int x)
     x = x | (x >> 16);
     return x + 1;
 }
-
-typedef enum {
-    kTexture2DPixelFormat_Automatic = 0,
-        //! 32-bit texture: RGBA8888
-    kTexture2DPixelFormat_RGBA8888,
-        //! 24-bit texture: RGBA888
-    kTexture2DPixelFormat_RGB888,
-        //! 16-bit texture without Alpha channel
-    kTexture2DPixelFormat_RGB565,
-        //! 8-bit textures used as masks
-    kTexture2DPixelFormat_A8,
-        //! 16-bit textures: RGBA4444
-    kTexture2DPixelFormat_RGBA4444,
-        //! 16-bit textures: RGB5A1
-    kTexture2DPixelFormat_RGB5A1,    
-    
-        //! Default texture format: RGBA8888
-    kTexture2DPixelFormat_Default = kTexture2DPixelFormat_RGBA8888,
-    
-        // backward compatibility stuff
-    
-} Texture2DPixelFormat;
 
 static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POTWide, NSUInteger POTHigh, tImageInfo *pImageInfo)
 {
@@ -238,7 +218,7 @@ static bool _initWithImage(CGImageRef CGImage, tImageInfo *pImageinfo, double sc
     }
     
 	//if (cocos2d::Image::getIsScaleEnabled())
-	if( cocos2d::Director::sharedDirector()->getContentScaleFactor() > 1.0f )
+	if( cocos2d::Director::getInstance()->getContentScaleFactor() > 1.0f )
 	{
 		POTWide = CGImageGetWidth(CGImage) * scaleX;
 		POTHigh = CGImageGetHeight(CGImage) * scaleY;
@@ -481,7 +461,6 @@ static bool _initWithString(const char * pText, cocos2d::Image::ETextAlign eAlig
     return bRet;
 }
 
-NS_CC_BEGIN
 
 static bool _enabledScale = true;
 
@@ -565,7 +544,7 @@ Image::~Image()
 
 bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
 {
-    std::string strTemp = FileUtils::sharedFileUtils()->fullPathForFilename(strPath);
+    std::string strTemp = FileUtils::getInstance()->fullPathForFilename(strPath);
 	if (_enabledScale)
 	{
 		if (!isFileExists(strTemp.c_str()))
@@ -577,7 +556,7 @@ bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFm
 				{
 					strTemp.insert(t, "@2x");
 				}
-/*				Size size = Director::sharedDirector()->getWinSize();		
+/*				Size size = Director::getInstance()->getWinSize();		
 	#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 				_scaleX = size.width/800.0f;
 				_scaleY = size.height/480.0f;
@@ -600,7 +579,7 @@ bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFm
 //	return initWithImageData(tempData.getBuffer(), tempData.getSize(), eImgFmt);
 
 	unsigned long fileSize = 0;
-	unsigned char* pFileData = FileUtils::sharedFileUtils()->getFileData(strTemp.c_str(), "rb", &fileSize);
+	unsigned char* pFileData = FileUtils::getInstance()->getFileData(strTemp.c_str(), "rb", &fileSize);
 	bool ret = initWithImageData(pFileData, fileSize, eImgFmt);
 	delete []pFileData;
 	return ret;
@@ -613,7 +592,7 @@ bool Image::initWithImageFileThreadSafe(const char *fullpath, EImageFormat image
      */
     bool bRet = false;
     unsigned long nSize = 0;
-    unsigned char* pBuffer = FileUtils::sharedFileUtils()->getFileData(fullpath, "rb", &nSize);
+    unsigned char* pBuffer = FileUtils::getInstance()->getFileData(fullpath, "rb", &nSize);
     if (pBuffer != NULL && nSize > 0)
     {
         bRet = initWithImageData(pBuffer, nSize, imageType);
@@ -818,7 +797,11 @@ bool Image::initWithImageData(void * pData,
     {
         CC_BREAK_IF(! pData || nDataLen <= 0);
         
-        if (eFmt == Image::kFmtWebp)
+        if (eFmt == kFmtRawData)
+        {
+            bRet = initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false);
+        }
+        else if (eFmt == Image::kFmtWebp)
         {
             bRet = _initWithWebpData(pData, nDataLen);
         }
@@ -845,6 +828,30 @@ bool Image::initWithImageData(void * pData,
         }
     } while (0);
 	
+    return bRet;
+}
+
+bool Image::initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti)
+{
+    bool bRet = false;
+    do
+    {
+        CC_BREAK_IF(0 == nWidth || 0 == nHeight);
+        
+        _bitsPerComponent = nBitsPerComponent;
+        _height   = (short)nHeight;
+        _width    = (short)nWidth;
+        _hasAlpha = true;
+        
+        // only RGBA8888 supported
+        int nBytesPerComponent = 4;
+        int nSize = nHeight * nWidth * nBytesPerComponent;
+        _data = new unsigned char[nSize];
+        CC_BREAK_IF(! _data);
+        memcpy(_data, pData, nSize);
+        
+        bRet = true;
+    } while (0);
     return bRet;
 }
 

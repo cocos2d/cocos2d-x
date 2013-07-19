@@ -59,13 +59,19 @@ public:
     /**
      *  Gets the instance of FileUtils.
      */
-    static FileUtils* sharedFileUtils();
-    
+    static FileUtils* getInstance();
+
     /**
      *  Destroys the instance of FileUtils.
      */
-    static void purgeFileUtils();
-    
+    static void destroyInstance();
+
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static FileUtils* sharedFileUtils();
+
+    /** @deprecated Use destroyInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static void purgeFileUtils();
+
     /**
      *  The destructor of FileUtils.
      */
