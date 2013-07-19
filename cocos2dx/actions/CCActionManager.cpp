@@ -120,20 +120,20 @@ void ActionManager::removeActionAtIndex(unsigned int uIndex, tHashElement *pElem
 
 // pause / resume
 
-void ActionManager::pauseTarget(Object *pTarget)
+void ActionManager::pauseTarget(Object *target)
 {
     tHashElement *pElement = NULL;
-    HASH_FIND_INT(_targets, &pTarget, pElement);
+    HASH_FIND_INT(_targets, &target, pElement);
     if (pElement)
     {
         pElement->paused = true;
     }
 }
 
-void ActionManager::resumeTarget(Object *pTarget)
+void ActionManager::resumeTarget(Object *target)
 {
     tHashElement *pElement = NULL;
-    HASH_FIND_INT(_targets, &pTarget, pElement);
+    HASH_FIND_INT(_targets, &target, pElement);
     if (pElement)
     {
         pElement->paused = false;
@@ -168,21 +168,21 @@ void ActionManager::resumeTargets(cocos2d::Set *targetsToResume)
 
 // run
 
-void ActionManager::addAction(Action *pAction, Node *pTarget, bool paused)
+void ActionManager::addAction(Action *pAction, Node *target, bool paused)
 {
     CCAssert(pAction != NULL, "");
-    CCAssert(pTarget != NULL, "");
+    CCAssert(target != NULL, "");
 
     tHashElement *pElement = NULL;
     // we should convert it to Object*, because we save it as Object*
-    Object *tmp = pTarget;
+    Object *tmp = target;
     HASH_FIND_INT(_targets, &tmp, pElement);
     if (! pElement)
     {
         pElement = (tHashElement*)calloc(sizeof(*pElement), 1);
         pElement->paused = paused;
-        pTarget->retain();
-        pElement->target = pTarget;
+        target->retain();
+        pElement->target = target;
         HASH_ADD_INT(_targets, target, pElement);
     }
 
@@ -191,7 +191,7 @@ void ActionManager::addAction(Action *pAction, Node *pTarget, bool paused)
      CCAssert(! ccArrayContainsObject(pElement->actions, pAction), "");
      ccArrayAppendObject(pElement->actions, pAction);
  
-     pAction->startWithTarget(pTarget);
+     pAction->startWithTarget(target);
 }
 
 // remove
@@ -200,22 +200,22 @@ void ActionManager::removeAllActions(void)
 {
     for (tHashElement *pElement = _targets; pElement != NULL; )
     {
-        Object *pTarget = pElement->target;
+        Object *target = pElement->target;
         pElement = (tHashElement*)pElement->hh.next;
-        removeAllActionsFromTarget(pTarget);
+        removeAllActionsFromTarget(target);
     }
 }
 
-void ActionManager::removeAllActionsFromTarget(Object *pTarget)
+void ActionManager::removeAllActionsFromTarget(Object *target)
 {
     // explicit null handling
-    if (pTarget == NULL)
+    if (target == NULL)
     {
         return;
     }
 
     tHashElement *pElement = NULL;
-    HASH_FIND_INT(_targets, &pTarget, pElement);
+    HASH_FIND_INT(_targets, &target, pElement);
     if (pElement)
     {
         if (ccArrayContainsObject(pElement->actions, pElement->currentAction) && (! pElement->currentActionSalvaged))
@@ -249,8 +249,8 @@ void ActionManager::removeAction(Action *pAction)
     }
 
     tHashElement *pElement = NULL;
-    Object *pTarget = pAction->getOriginalTarget();
-    HASH_FIND_INT(_targets, &pTarget, pElement);
+    Object *target = pAction->getOriginalTarget();
+    HASH_FIND_INT(_targets, &target, pElement);
     if (pElement)
     {
         unsigned int i = ccArrayGetIndexOfObject(pElement->actions, pAction);
@@ -265,13 +265,13 @@ void ActionManager::removeAction(Action *pAction)
     }
 }
 
-void ActionManager::removeActionByTag(unsigned int tag, Object *pTarget)
+void ActionManager::removeActionByTag(unsigned int tag, Object *target)
 {
     CCAssert((int)tag != kActionTagInvalid, "");
-    CCAssert(pTarget != NULL, "");
+    CCAssert(target != NULL, "");
 
     tHashElement *pElement = NULL;
-    HASH_FIND_INT(_targets, &pTarget, pElement);
+    HASH_FIND_INT(_targets, &target, pElement);
 
     if (pElement)
     {
@@ -280,7 +280,7 @@ void ActionManager::removeActionByTag(unsigned int tag, Object *pTarget)
         {
             Action *pAction = (Action*)pElement->actions->arr[i];
 
-            if (pAction->getTag() == (int)tag && pAction->getOriginalTarget() == pTarget)
+            if (pAction->getTag() == (int)tag && pAction->getOriginalTarget() == target)
             {
                 removeActionAtIndex(i, pElement);
                 break;
@@ -291,12 +291,14 @@ void ActionManager::removeActionByTag(unsigned int tag, Object *pTarget)
 
 // get
 
-Action* ActionManager::getActionByTag(unsigned int tag, Object *pTarget)
+// XXX: Passing "const O *" instead of "const O&" because HASH_FIND_IT requries the address of a pointer
+// and, it is not possible to get the address of a reference
+Action* ActionManager::getActionByTag(unsigned int tag, const Object *target) const
 {
     CCAssert((int)tag != kActionTagInvalid, "");
 
     tHashElement *pElement = NULL;
-    HASH_FIND_INT(_targets, &pTarget, pElement);
+    HASH_FIND_INT(_targets, &target, pElement);
 
     if (pElement)
     {
@@ -323,10 +325,12 @@ Action* ActionManager::getActionByTag(unsigned int tag, Object *pTarget)
     return NULL;
 }
 
-unsigned int ActionManager::numberOfRunningActionsInTarget(Object *pTarget)
+// XXX: Passing "const O *" instead of "const O&" because HASH_FIND_IT requries the address of a pointer
+// and, it is not possible to get the address of a reference
+unsigned int ActionManager::getNumberOfRunningActionsInTarget(const Object *target) const
 {
     tHashElement *pElement = NULL;
-    HASH_FIND_INT(_targets, &pTarget, pElement);
+    HASH_FIND_INT(_targets, &target, pElement);
     if (pElement)
     {
         return pElement->actions ? pElement->actions->num : 0;

@@ -581,7 +581,7 @@ SpriteFrame * NodeLoader::parsePropTypeSpriteFrame(Node * pNode, Node * pParent,
                 pCCBReader->getLoadedSpriteSheet().insert(spriteSheet);
             }
             
-            spriteFrame = frameCache->spriteFrameByName(spriteFile.c_str());
+            spriteFrame = frameCache->getSpriteFrameByName(spriteFile.c_str());
         }
         
         if (pCCBReader->getAnimatedProperties()->find(pPropertyName) != pCCBReader->getAnimatedProperties()->end())

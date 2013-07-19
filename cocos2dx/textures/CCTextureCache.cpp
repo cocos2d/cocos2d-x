@@ -54,12 +54,6 @@ NS_CC_BEGIN
 
 TextureCache* TextureCache::_sharedTextureCache = nullptr;
 
-// XXX: deprecated
-TextureCache * TextureCache::sharedTextureCache()
-{
-    return TextureCache::getInstance();
-}
-
 TextureCache * TextureCache::getInstance()
 {
     if (!_sharedTextureCache)
@@ -102,12 +96,6 @@ void TextureCache::destroyInstance()
     if (_sharedTextureCache->_loadingThread) _sharedTextureCache->_loadingThread->join();
 
     CC_SAFE_RELEASE_NULL(_sharedTextureCache);
-}
-
-// XXX deprecated
-void TextureCache::purgeSharedTextureCache()
-{
-    TextureCache::destroyInstance();
 }
 
 const char* TextureCache::description() const

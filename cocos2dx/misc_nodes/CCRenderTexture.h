@@ -53,19 +53,7 @@ There are also functions for saving the render texture to disk in PNG or JPG for
 */
 class CC_DLL RenderTexture : public Node 
 {
-    /** The Sprite being used.
-    The sprite, by default, will use the following blending function: GL_ONE, GL_ONE_MINUS_SRC_ALPHA.
-    The blending function can be changed in runtime by calling:
-    - [[renderTexture sprite] setBlendFunc:(BlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
-    */
-    CC_PROPERTY(Sprite*, _sprite, Sprite)
 public:
-    RenderTexture();
-    virtual ~RenderTexture();
-    
-    virtual void visit();
-    virtual void draw();
-
     /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
     static RenderTexture * create(int w ,int h, Texture2DPixelFormat eFormat, GLuint uDepthStencilFormat);
 
@@ -75,6 +63,9 @@ public:
     /** creates a RenderTexture object with width and height in Points, pixel format is RGBA8888 */
     static RenderTexture * create(int w, int h);
 
+    RenderTexture();
+    virtual ~RenderTexture();
+    
     /** initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
     bool initWithWidthAndHeight(int w, int h, Texture2DPixelFormat eFormat);
 
@@ -157,6 +148,10 @@ public:
     bool isAutoDraw() const;
     void setAutoDraw(bool bAutoDraw);
 
+    // Overrides
+    virtual void visit() override;
+    virtual void draw() override;
+
 private:
     void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags);
 
@@ -175,6 +170,13 @@ protected:
     GLclampf     _clearDepth;
     GLint        _clearStencil;
     bool         _autoDraw;
+
+    /** The Sprite being used.
+     The sprite, by default, will use the following blending function: GL_ONE, GL_ONE_MINUS_SRC_ALPHA.
+     The blending function can be changed in runtime by calling:
+     - [[renderTexture sprite] setBlendFunc:(BlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
+     */
+    CC_PROPERTY(Sprite*, _sprite, Sprite)
 };
 
 // end of textures group

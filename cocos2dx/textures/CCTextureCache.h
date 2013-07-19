@@ -61,16 +61,16 @@ public:
     /** Returns the shared instance of the cache */
     static TextureCache * getInstance();
 
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static TextureCache * sharedTextureCache() { return TextureCache::getInstance(); }
+
     /** purges the cache. It releases the retained instance.
      @since v0.99.0
      */
     static void destroyInstance();
 
-    /** @deprecated Use getInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static TextureCache * sharedTextureCache();
-
     /** @deprecated Use destroyInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static void purgeSharedTextureCache();
+    CC_DEPRECATED_ATTRIBUTE static void purgeSharedTextureCache() { return TextureCache::destroyInstance(); }
 
     /** Reload all textures
      It's only useful when the value of CC_ENABLE_CACHE_TEXTURE_DATA is 1
