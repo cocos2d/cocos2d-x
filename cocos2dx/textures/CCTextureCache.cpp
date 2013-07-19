@@ -33,7 +33,6 @@ THE SOFTWARE.
 #include "CCTexture2D.h"
 #include "ccMacros.h"
 #include "CCDirector.h"
-#include "platform/platform.h"
 #include "platform/CCFileUtils.h"
 #include "platform/CCThread.h"
 #include "support/ccUtils.h"

@@ -130,7 +130,6 @@ THE SOFTWARE.
 #include "platform/CCImage.h"
 #include "platform/CCSAXParser.h"
 #include "platform/CCThread.h"
-#include "platform/platform.h"
 #include "platform/CCPlatformConfig.h"
 #include "platform/CCPlatformMacros.h"
 

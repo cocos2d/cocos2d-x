@@ -57,7 +57,6 @@ SOURCES = ../actions/CCAction.cpp \
 ../particle_nodes/CCParticleBatchNode.cpp \
 ../platform/CCSAXParser.cpp \
 ../platform/CCThread.cpp \
-../platform/platform.cpp \
 ../platform/CCImageCommonWebp.cpp \
 ../platform/CCEGLViewProtocol.cpp \
 ../platform/CCFileUtils.cpp \

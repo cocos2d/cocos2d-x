@@ -82,7 +82,6 @@ platform/CCImageCommonWebp.cpp \
 platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
 platform/CCFileUtils.cpp \
-platform/platform.cpp \
 platform/CCEGLViewProtocol.cpp \
 platform/android/CCDevice.cpp \
 platform/android/CCEGLView.cpp \

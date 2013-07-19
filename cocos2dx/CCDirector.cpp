@@ -24,11 +24,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+// cocos2d includes
+#include "CCDirector.h"
+
 // standard includes
 #include <string>
 
-// cocos2d includes
-#include "CCDirector.h"
 #include "ccFPSImages.h"
 #include "draw_nodes/CCDrawingPrimitives.h"
 #include "CCConfiguration.h"
@@ -43,7 +44,6 @@ THE SOFTWARE.
 #include "textures/CCTextureCache.h"
 #include "sprite_nodes/CCSpriteFrameCache.h"
 #include "cocoa/CCAutoreleasePool.h"
-#include "platform/platform.h"
 #include "platform/CCFileUtils.h"
 #include "CCApplication.h"
 #include "label_nodes/CCLabelBMFont.h"
@@ -134,7 +134,7 @@ bool Director::init(void)
     _drawsLabel = NULL;
     _totalFrames = _frames = 0;
     _FPS = new char[10];
-    _lastUpdate = new struct cc_timeval();
+    _lastUpdate = new struct timeval;
 
     // paused ?
     _paused = false;
@@ -311,9 +311,9 @@ void Director::drawScene(void)
 
 void Director::calculateDeltaTime(void)
 {
-    struct cc_timeval now;
+    struct timeval now;
 
-    if (Time::gettimeofdayCocos2d(&now, NULL) != 0)
+    if (gettimeofday(&now, NULL) != 0)
     {
         CCLOG("error in gettimeofday");
         _deltaTime = 0;
@@ -794,7 +794,7 @@ void Director::resume(void)
 
     setAnimationInterval(_oldAnimationInterval);
 
-    if (Time::gettimeofdayCocos2d(_lastUpdate, NULL) != 0)
+    if (gettimeofday(_lastUpdate, NULL) != 0)
     {
         CCLOG("cocos2d: Director: Error in gettimeofday");
     }
@@ -841,8 +841,8 @@ void Director::showStats(void)
 
 void Director::calculateMPF()
 {
-    struct cc_timeval now;
-    Time::gettimeofdayCocos2d(&now, NULL);
+    struct timeval now;
+    gettimeofday(&now, NULL);
     
     _secondsPerFrame = (now.tv_sec - _lastUpdate->tv_sec) + (now.tv_usec - _lastUpdate->tv_usec) / 1000000.0f;
 }
@@ -1050,7 +1050,7 @@ Accelerometer* Director::getAccelerometer()
 // so we now only support DisplayLinkDirector
 void DisplayLinkDirector::startAnimation(void)
 {
-    if (Time::gettimeofdayCocos2d(_lastUpdate, NULL) != 0)
+    if (gettimeofday(_lastUpdate, NULL) != 0)
     {
         CCLOG("cocos2d: DisplayLinkDirector: Error on gettimeofday");
     }
