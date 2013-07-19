@@ -320,7 +320,7 @@ void ControlButton::setTitleForState(String* title, ControlState state)
 }
 
 
-const Color3B ControlButton::getTitleColorForState(ControlState state)
+Color3B ControlButton::getTitleColorForState(ControlState state) const
 {
     Color3B returnColor = Color3B::WHITE;
     do 

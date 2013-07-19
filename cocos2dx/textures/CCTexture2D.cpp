@@ -184,7 +184,7 @@ bool Texture2D::initWithData(const void *data, Texture2DPixelFormat pixelFormat,
     }
     else
     {
-        bitsPerPixel = bitsPerPixelForFormat(pixelFormat);
+        bitsPerPixel = getBitsPerPixelForFormat(pixelFormat);
     }
 
     unsigned int bytesPerRow = pixelsWide * bitsPerPixel / 8;
@@ -435,12 +435,7 @@ bool Texture2D::initPremultipliedATextureWithImage(Image *image, unsigned int wi
 }
 
 // implementation Texture2D (Text)
-bool Texture2D::initWithString(const char *text, const char *fontName, float fontSize)
-{
-    return initWithString(text,  fontName, fontSize, Size(0,0), kTextAlignmentCenter, kVerticalTextAlignmentTop);
-}
-
-bool Texture2D::initWithString(const char *text, const char *fontName, float fontSize, const Size& dimensions, TextAlignment hAlignment, VerticalTextAlignment vAlignment)
+bool Texture2D::initWithString(const char *text, const char *fontName, float fontSize, const Size& dimensions/* = Size(0, 0)*/, TextAlignment hAlignment/* =  kTextAlignmentCenter */, VerticalTextAlignment vAlignment/* =  kVerticalTextAlignmentTop */)
 {
     FontDefinition tempDef;
     
@@ -792,7 +787,7 @@ void Texture2D::setAntiAliasTexParameters()
 #endif
 }
 
-const char* Texture2D::stringForFormat() const
+const char* Texture2D::getStringForFormat() const
 {
 	switch (_pixelFormat) 
 	{
@@ -845,12 +840,12 @@ void Texture2D::setDefaultAlphaPixelFormat(Texture2DPixelFormat format)
     g_defaultAlphaPixelFormat = format;
 }
 
-Texture2DPixelFormat Texture2D::defaultAlphaPixelFormat()
+Texture2DPixelFormat Texture2D::getDefaultAlphaPixelFormat()
 {
     return g_defaultAlphaPixelFormat;
 }
 
-unsigned int Texture2D::bitsPerPixelForFormat(Texture2DPixelFormat format) const
+unsigned int Texture2D::getBitsPerPixelForFormat(Texture2DPixelFormat format) const
 {
 	unsigned int ret=0;
 
@@ -895,9 +890,9 @@ unsigned int Texture2D::bitsPerPixelForFormat(Texture2DPixelFormat format) const
 	return ret;
 }
 
-unsigned int Texture2D::bitsPerPixelForFormat() const
+unsigned int Texture2D::getBitsPerPixelForFormat() const
 {
-	return this->bitsPerPixelForFormat(_pixelFormat);
+	return this->getBitsPerPixelForFormat(_pixelFormat);
 }
 
 

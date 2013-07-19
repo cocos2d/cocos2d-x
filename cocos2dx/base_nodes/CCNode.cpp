@@ -325,12 +325,6 @@ void Node::setPositionY(float y)
     setPosition(Point(_position.x, y));
 }
 
-/// children getter
-Array* Node::getChildren()
-{
-    return _children;
-}
-
 unsigned int Node::getChildrenCount() const
 {
     return _children ? _children->count() : 0;
@@ -345,13 +339,6 @@ Camera* Node::getCamera()
     }
     
     return _camera;
-}
-
-
-/// grid getter
-GridBase* Node::getGrid()
-{
-    return _grid;
 }
 
 /// grid setter
@@ -419,11 +406,6 @@ bool Node::isRunning() const
     return _running;
 }
 
-/// parent getter
-Node * Node::getParent()
-{
-    return _parent;
-}
 /// parent setter
 void Node::setParent(Node * var)
 {
@@ -457,12 +439,6 @@ void Node::setTag(int var)
     _tag = var;
 }
 
-/// userData getter
-void * Node::getUserData()
-{
-    return _userData;
-}
-
 /// userData setter
 void Node::setUserData(void *var)
 {
@@ -477,16 +453,6 @@ unsigned int Node::getOrderOfArrival() const
 void Node::setOrderOfArrival(unsigned int uOrderOfArrival)
 {
     _orderOfArrival = uOrderOfArrival;
-}
-
-GLProgram* Node::getShaderProgram()
-{
-    return _shaderProgram;
-}
-
-Object* Node::getUserObject()
-{
-    return _userObject;
 }
 
 ccGLServerState Node::getGLServerState() const
@@ -641,16 +607,11 @@ void Node::removeFromParentAndCleanup(bool cleanup)
     } 
 }
 
-void Node::removeChild(Node* child)
-{
-    this->removeChild(child, true);
-}
-
 /* "remove" logic MUST only be on this method
 * If a class want's to extend the 'removeChild' behavior it only needs
 * to override this method
 */
-void Node::removeChild(Node* child, bool cleanup)
+void Node::removeChild(Node* child, bool cleanup /* = true */)
 {
     // explicit nil handling
     if (_children == NULL)
@@ -664,12 +625,7 @@ void Node::removeChild(Node* child, bool cleanup)
     }
 }
 
-void Node::removeChildByTag(int tag)
-{
-    this->removeChildByTag(tag, true);
-}
-
-void Node::removeChildByTag(int tag, bool cleanup)
+void Node::removeChildByTag(int tag, bool cleanup/* = true */)
 {
     CCAssert( tag != kNodeTagInvalid, "Invalid tag");
 
@@ -995,11 +951,6 @@ void Node::setActionManager(ActionManager* actionManager)
     }
 }
 
-ActionManager* Node::getActionManager()
-{
-    return _actionManager;
-}
-
 Action * Node::runAction(Action* action)
 {
     CCAssert( action != NULL, "Argument must be non-nil");
@@ -1023,7 +974,7 @@ void Node::stopActionByTag(int tag)
     _actionManager->removeActionByTag(tag, this);
 }
 
-Action * Node::getActionByTag(int tag) const
+Action * Node::getActionByTag(int tag)
 {
     CCAssert( tag != kActionTagInvalid, "Invalid tag");
     return _actionManager->getActionByTag(tag, this);
@@ -1044,11 +995,6 @@ void Node::setScheduler(Scheduler* scheduler)
         CC_SAFE_RELEASE(_scheduler);
         _scheduler = scheduler;
     }
-}
-
-Scheduler* Node::getScheduler()
-{
-    return _scheduler;
 }
 
 bool Node::isScheduled(SEL_SCHEDULE selector)
@@ -1305,7 +1251,7 @@ void Node::updateTransform()
     arrayMakeObjectsPerformSelector(_children, updateTransform, Node*);
 }
 
-Component* Node::getComponent(const char *pName) const
+Component* Node::getComponent(const char *pName)
 {
     return _componentContainer->get(pName);
 }
