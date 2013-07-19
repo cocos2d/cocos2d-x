@@ -38,7 +38,6 @@ jclass _getClassID(const char *className) {
 
     jstring _jstrClassName = env->NewStringUTF(className);
 
-    // explicit cast to jclass, since the returned object
     jobject _clazzObject = env->CallObjectMethod(cocos2d::JniHelper::classloader,
                                                  cocos2d::JniHelper::loadclassMethod_methodID,
                                                  _jstrClassName);
@@ -121,10 +120,10 @@ namespace cocos2d {
 
     bool JniHelper::setClassLoaderFrom(jobject nativeactivityinstance) {
         JniMethodInfo _getclassloaderMethod;
-        if (!JniHelper::getMethodInfo(_getclassloaderMethod,
-                                      "android/app/NativeActivity",
-                                      "getClassLoader",
-                                      "()Ljava/lang/ClassLoader;")) {
+        if (!JniHelper::getMethodInfo_DefaultClassLoader(_getclassloaderMethod,
+                                                         "android/app/NativeActivity",
+                                                         "getClassLoader",
+                                                         "()Ljava/lang/ClassLoader;")) {
             return false;
         }
 
@@ -136,10 +135,10 @@ namespace cocos2d {
         }
 
         JniMethodInfo _m;
-        if (!JniHelper::getMethodInfo(_m,
-                                      "java/lang/ClassLoader",
-                                      "loadClass",
-                                      "(Ljava/lang/String;)Ljava/lang/Class;")) {
+        if (!JniHelper::getMethodInfo_DefaultClassLoader(_m,
+                                                         "java/lang/ClassLoader",
+                                                         "loadClass",
+                                                         "(Ljava/lang/String;)Ljava/lang/Class;")) {
             return false;
         }
 
@@ -180,6 +179,40 @@ namespace cocos2d {
         methodinfo.classID = classID;
         methodinfo.env = pEnv;
         methodinfo.methodID = methodID;
+        return true;
+    }
+
+    bool JniHelper::getMethodInfo_DefaultClassLoader(JniMethodInfo &methodinfo,
+                                                     const char *className,
+                                                     const char *methodName,
+                                                     const char *paramCode) {
+        if ((NULL == className) ||
+            (NULL == methodName) ||
+            (NULL == paramCode)) {
+            return false;
+        }
+
+        JNIEnv *pEnv = JniHelper::getEnv();
+        if (!pEnv) {
+            return false;
+        }
+
+        jclass classID = pEnv->FindClass(className);
+        if (! classID) {
+            LOGD("Failed to find class %s", className);
+            return false;
+        }
+
+        jmethodID methodID = pEnv->GetMethodID(classID, methodName, paramCode);
+        if (! methodID) {
+            LOGD("Failed to find method id of %s", methodName);
+            return false;
+        }
+
+        methodinfo.classID = classID;
+        methodinfo.env = pEnv;
+        methodinfo.methodID = methodID;
+
         return true;
     }
 
