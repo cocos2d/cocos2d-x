@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Thu Jul 18 17:11:12 2013.
+** Generated automatically by tolua++-1.0.92 on Fri Jul 19 14:53:34 2013.
 */
 
 /****************************************************************************
@@ -15792,26 +15792,26 @@ static int tolua_Cocos2d_CCNode_transformAncestors00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: boundingBox of class  Node */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCNode_boundingBox00
-static int tolua_Cocos2d_CCNode_boundingBox00(lua_State* tolua_S)
+/* method: getBoundingBox of class  Node */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCNode_getBoundingBox00
+static int tolua_Cocos2d_CCNode_getBoundingBox00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"CCNode",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"const CCNode",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  Node* self = (Node*)  tolua_tousertype(tolua_S,1,0);
+  const Node* self = (const Node*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'boundingBox'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBoundingBox'", NULL);
 #endif
   {
-   Rect tolua_ret = (Rect)  self->boundingBox();
+   Rect tolua_ret = (Rect)  self->getBoundingBox();
    {
 #ifdef __cplusplus
     void* tolua_obj = Mtolua_new((Rect)(tolua_ret));
@@ -15828,7 +15828,7 @@ static int tolua_Cocos2d_CCNode_boundingBox00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'boundingBox'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'getBoundingBox'.",&tolua_err);
  return 0;
 #endif
 }
@@ -64396,7 +64396,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"visit",tolua_Cocos2d_CCNode_visit00);
    tolua_function(tolua_S,"transform",tolua_Cocos2d_CCNode_transform00);
    tolua_function(tolua_S,"transformAncestors",tolua_Cocos2d_CCNode_transformAncestors00);
-   tolua_function(tolua_S,"boundingBox",tolua_Cocos2d_CCNode_boundingBox00);
+   tolua_function(tolua_S,"getBoundingBox",tolua_Cocos2d_CCNode_getBoundingBox00);
    tolua_function(tolua_S,"runAction",tolua_Cocos2d_CCNode_runAction00);
    tolua_function(tolua_S,"stopAllActions",tolua_Cocos2d_CCNode_stopAllActions00);
    tolua_function(tolua_S,"stopAction",tolua_Cocos2d_CCNode_stopAction00);
@@ -64706,7 +64706,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"GL_RGBA4",GL_RGBA4);
   tolua_constant(tolua_S,"GL_RGB5_A1",GL_RGB5_A1);
   tolua_constant(tolua_S,"GL_DEPTH_COMPONENT16",GL_DEPTH_COMPONENT16);
-  tolua_constant(tolua_S,"GL_STENCIL_INDEX",GL_STENCIL_INDEX);
   tolua_constant(tolua_S,"GL_STENCIL_INDEX8",GL_STENCIL_INDEX8);
   tolua_constant(tolua_S,"GL_RENDERBUFFER_WIDTH",GL_RENDERBUFFER_WIDTH);
   tolua_constant(tolua_S,"GL_RENDERBUFFER_HEIGHT",GL_RENDERBUFFER_HEIGHT);
