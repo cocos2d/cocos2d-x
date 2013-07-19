@@ -107,17 +107,13 @@ namespace cocos2d {
         return _psJavaVM;
     }
 
-    void JniHelper::setJavaVM(JavaVM *javaVM, jobject nativeActivityInstance) {
+    void JniHelper::setJavaVM(JavaVM *javaVM) {
         pthread_t thisthread = pthread_self();
         LOGD("JniHelper::setJavaVM(%p), pthread_self() = %X", javaVM, thisthread);
         _psJavaVM = javaVM;
-
-        if (!setClassLoader(nativeActivityInstance)) {
-            LOGD("FAIL FAIL FAIL! Could not obtain Java class loader for application code");
-        }
     }
 
-    bool JniHelper::setClassLoader(jobject nativeactivityinstance) {
+    bool JniHelper::setClassLoaderFrom(jobject nativeactivityinstance) {
         JniMethodInfo _getclassloaderMethod;
         if (!JniHelper::getMethodInfo(_getclassloaderMethod,
                                       "android/app/NativeActivity",
@@ -128,6 +124,11 @@ namespace cocos2d {
 
         jobject _c = _getclassloaderMethod.env->CallObjectMethod(nativeactivityinstance,
                                                                  _getclassloaderMethod.methodID);
+
+        if (NULL == _c) {
+            return false;
+        }
+
         JniMethodInfo _m;
         if (!JniHelper::getMethodInfo(_m,
                                       "java/lang/ClassLoader",
@@ -138,6 +139,8 @@ namespace cocos2d {
 
         JniHelper::classloader = _c;
         JniHelper::loadclassMethod = _m;
+
+        return true;
     }
 
     bool JniHelper::getStaticMethodInfo(JniMethodInfo &methodinfo,

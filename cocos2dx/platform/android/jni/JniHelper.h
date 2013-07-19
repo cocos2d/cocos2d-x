@@ -40,8 +40,9 @@ typedef struct JniMethodInfo_
 class CC_DLL JniHelper
 {
 public:
-    static void setJavaVM(JavaVM *javaVM, jobject nativeActivitInstance);
+    static void setJavaVM(JavaVM *javaVM);
     static JavaVM* getJavaVM();
+    static bool setClassLoaderFrom(jobject nativeActivityInstance);
     static bool getStaticMethodInfo(JniMethodInfo &methodinfo,
                                     const char *className,
                                     const char *methodName,
@@ -59,7 +60,6 @@ public:
 private:
     static JavaVM *_psJavaVM;
 
-    static bool setClassLoader(jobject nativeActivityInstance);
 };
 
 NS_CC_END
