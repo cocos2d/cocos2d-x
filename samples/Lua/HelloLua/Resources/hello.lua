@@ -136,7 +136,7 @@ local function main()
             end
         end
 
-        --layerFarm:registerScriptTouchHandler(onTouch)
+        layerFarm:registerScriptTouchHandler(onTouch)
         layerFarm:setTouchEnabled(true)
 
         return layerFarm
@@ -165,7 +165,7 @@ local function main()
         -- add a popup menu
         local menuPopupItem = CCMenuItemImage:create("menu2.png", "menu2.png")
         menuPopupItem:setPosition(0, 0)
---        menuPopupItem:registerScriptTapHandler(menuCallbackClosePopup)
+        menuPopupItem:registerScriptTapHandler(menuCallbackClosePopup)
         menuPopup = CCMenu:createWithItem(menuPopupItem)
         menuPopup:setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2)
         menuPopup:setVisible(false)
@@ -174,7 +174,7 @@ local function main()
         -- add the left-bottom "tools" menu to invoke menuPopup
         local menuToolsItem = CCMenuItemImage:create("menu1.png", "menu1.png")
         menuToolsItem:setPosition(0, 0)
---        menuToolsItem:registerScriptTapHandler(menuCallbackOpenPopup)
+        menuToolsItem:registerScriptTapHandler(menuCallbackOpenPopup)
         menuTools = CCMenu:createWithItem(menuToolsItem)
         local itemWidth = menuToolsItem:getContentSize().width
         local itemHeight = menuToolsItem:getContentSize().height

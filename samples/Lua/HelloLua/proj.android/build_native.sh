@@ -79,6 +79,9 @@ if [ -f "$file" ]; then
 fi
 done
 
+#copy Deprecated.lua
+cp "$APP_ROOT"/../../../scripting/lua/script/Deprecated.lua "$APP_ANDROID_ROOT"/assets
+
 if [[ "$buildexternalsfromsource" ]]; then
     echo "Building external dependencies from source"
     "$NDK_ROOT"/ndk-build -C "$APP_ANDROID_ROOT" $* \

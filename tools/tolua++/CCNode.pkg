@@ -86,7 +86,7 @@ class CCNode : public CCObject
     void    visit(void);
     void    transform(void);
     void    transformAncestors(void);
-    CCRect  boundingBox(void);
+    CCRect  getBoundingBox(void) const;
 
     CCAction* runAction(CCAction* action);
     void    stopAllActions(void);
