@@ -4,6 +4,7 @@
 #include "../testBasic.h"
 #include "../BaseTest.h"
 
+
 class AtlasDemo : public BaseTest
 {
 protected:
@@ -314,6 +315,79 @@ public:
 private:
     LabelBMFont *label1;
 };
+
+class LabelBMFontNewTest : public AtlasDemo
+{
+public:
+    LabelBMFontNewTest();
+    
+    virtual void draw();
+    virtual std::string title();
+    virtual std::string subtitle();
+private:
+    LabelBMFontNew *label1;
+};
+
+class LabelDyamicTest : public AtlasDemo
+{
+public:
+    
+     LabelDyamicTest();
+    ~LabelDyamicTest();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+    
+private:
+    
+    StringTTF *label1;
+
+};
+
+class NewLabelTTFTest : public AtlasDemo
+{
+public:
+
+    NewLabelTTFTest();
+    ~NewLabelTTFTest();
+
+    virtual std::string title();
+    virtual std::string subtitle();
+
+private:
+    Node *label;
+};
+
+class NewLabelBMFontTest : public AtlasDemo
+{
+public:
+
+    NewLabelBMFontTest();
+    ~NewLabelBMFontTest();
+
+    virtual std::string title();
+    virtual std::string subtitle();
+
+private:
+    Node *label;
+};
+
+
+class NewLabelFontDefTest : public AtlasDemo
+{
+public:
+
+    NewLabelFontDefTest();
+    ~NewLabelFontDefTest();
+
+    virtual std::string title();
+    virtual std::string subtitle();
+
+private:
+    Node *label;
+};
+
+
 
 // we don't support linebreak mode
 
