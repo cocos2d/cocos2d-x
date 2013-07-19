@@ -373,7 +373,7 @@ void MenuItemFont::setFontSize(unsigned int s)
     _globalFontSize = s;
 }
 
-unsigned int MenuItemFont::fontSize()
+unsigned int MenuItemFont::getFontSize()
 {
     return _globalFontSize;
 }
@@ -388,7 +388,7 @@ void MenuItemFont::setFontName(const char *name)
     _globalFontNameRelease = true;
 }
 
-const char * MenuItemFont::fontName()
+const char * MenuItemFont::getFontName()
 {
     return _globalFontName.c_str();
 }
@@ -457,7 +457,7 @@ void MenuItemFont::setFontSizeObj(unsigned int s)
     recreateLabel();
 }
 
-unsigned int MenuItemFont::fontSizeObj()
+unsigned int MenuItemFont::getFontSizeObj() const
 {
     return _fontSize;
 }
