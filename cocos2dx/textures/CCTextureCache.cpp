@@ -615,7 +615,7 @@ void TextureCache::dumpCachedTextureInfo()
     CCDICT_FOREACH(_textures, pElement)
     {
         Texture2D* tex = static_cast<Texture2D*>(pElement->getObject());
-        unsigned int bpp = tex->bitsPerPixelForFormat();
+        unsigned int bpp = tex->getBitsPerPixelForFormat();
         // Each texture takes up width * height * bytesPerPixel bytes.
         unsigned int bytes = tex->getPixelsWide() * tex->getPixelsHigh() * bpp / 8;
         totalBytes += bytes;

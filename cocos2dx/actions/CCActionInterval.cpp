@@ -1982,6 +1982,23 @@ Animate* Animate::create(Animation *pAnimation)
     return pAnimate;
 }
 
+Animate::Animate()
+: _animation(NULL)
+, _splitTimes(new std::vector<float>)
+, _nextFrame(0)
+, _origFrame(NULL)
+, _executedLoops(0)
+{
+
+}
+
+Animate::~Animate()
+{
+    CC_SAFE_RELEASE(_animation);
+    CC_SAFE_RELEASE(_origFrame);
+    CC_SAFE_DELETE(_splitTimes);
+}
+
 bool Animate::initWithAnimation(Animation *pAnimation)
 {
     CCAssert( pAnimation!=NULL, "Animate: argument Animation must be non-NULL");
@@ -2016,6 +2033,16 @@ bool Animate::initWithAnimation(Animation *pAnimation)
     return false;
 }
 
+void Animate::setAnimation(cocos2d::Animation *animation)
+{
+    if (_animation != animation)
+    {
+        CC_SAFE_RETAIN(animation);
+        CC_SAFE_RELEASE(_animation);
+        _animation = animation;
+    }
+}
+
 Animate* Animate::clone() const
 {
 	// no copy constructor
@@ -2023,23 +2050,6 @@ Animate* Animate::clone() const
 	a->initWithAnimation(_animation->clone());
 	a->autorelease();
 	return a;
-}
-
-Animate::Animate()
-: _animation(NULL)
-, _splitTimes(new std::vector<float>)
-, _nextFrame(0)
-, _origFrame(NULL)
-, _executedLoops(0)
-{
-
-}
-
-Animate::~Animate()
-{
-    CC_SAFE_RELEASE(_animation);
-    CC_SAFE_RELEASE(_origFrame);
-    CC_SAFE_DELETE(_splitTimes);
 }
 
 void Animate::startWithTarget(Node *target)
@@ -2205,6 +2215,15 @@ void TargetedAction::stop(void)
 void TargetedAction::update(float time)
 {
     _action->update(time);
+}
+
+void TargetedAction::setForcedTarget(Node* forcedTarget)
+{
+    if( _forcedTarget != forcedTarget ) {
+        CC_SAFE_RETAIN(forcedTarget);
+        CC_SAFE_RELEASE(_forcedTarget);
+        _forcedTarget = forcedTarget;
+    }
 }
 
 NS_CC_END

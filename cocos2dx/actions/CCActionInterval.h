@@ -776,6 +776,12 @@ public:
     /** initializes the action with an Animation and will restore the original frame when the animation is over */
     bool initWithAnimation(Animation *pAnimation);
 
+    /** sets the Animation object to be animated */
+    void setAnimation( Animation* animation );
+    /** returns the Animation object that is being animated */
+    Animation* getAnimation() { return _animation; }
+    const Animation* getAnimation() const { return _animation; }
+
     //
     // Overrides
     //
@@ -785,14 +791,12 @@ public:
     virtual void stop(void) override;
     virtual void update(float t) override;
 
-public:
-    CC_SYNTHESIZE_RETAIN(Animation*, _animation, Animation)
-
 protected:
     std::vector<float>* _splitTimes;
-    int                _nextFrame;
-    SpriteFrame*  _origFrame;
+    int             _nextFrame;
+    SpriteFrame*    _origFrame;
     unsigned int    _executedLoops;
+    Animation*      _animation;
 };
 
 /** Overrides the target of an action so that it always runs on the target
@@ -810,6 +814,12 @@ public:
     /** Init an action with the specified action and forced target */
     bool initWithTarget(Node* target, FiniteTimeAction* pAction);
 
+    /** Sets the target that the action will be forced to run with */
+    void setForcedTarget(Node* forcedTarget);
+    /** returns the target that the action is forced to run with */
+    Node* getForcedTarget() { return _forcedTarget; }
+    const Node* getForcedTarget() const { return _forcedTarget; }
+
     //
     // Overrides
     //
@@ -819,11 +829,9 @@ public:
     virtual void stop(void) override;
     virtual void update(float time) override;
 
-public:
-    /** This is the target that the action will be forced to run with */
-    CC_SYNTHESIZE_RETAIN(Node*, _forcedTarget, ForcedTarget);
 private:
     FiniteTimeAction* _action;
+    Node* _forcedTarget;
 };
 
 // end of actions group

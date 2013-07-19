@@ -354,7 +354,6 @@ protected:
 
     /** Is the emitter active */
     bool _isActive;
-
     
     /** Quantity of particles that are being simulated at the moment */
     CC_PROPERTY_READONLY(unsigned int, _particleCount, ParticleCount)
