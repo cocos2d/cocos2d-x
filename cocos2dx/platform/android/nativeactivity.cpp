@@ -251,7 +251,8 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
                 cocos_dimensions d = engine_init_display(engine);
                 if ((d.w > 0) &&
                     (d.h > 0)) {
-                    cocos2d::JniHelper::setJavaVM(app->activity->vm, app->activity->clazz);
+                    cocos2d::JniHelper::setJavaVM(app->activity->vm);
+                    cocos2d::JniHelper::setClassLoaderFrom(app->activity->clazz);
                     cocos_init(d, app->activity->assetManager);
                 }
 
