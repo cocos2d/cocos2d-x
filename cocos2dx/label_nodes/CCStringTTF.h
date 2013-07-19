@@ -27,17 +27,20 @@
 
 #include "CCFontDefinition.h"
 #include "CCLabelTextFormatProtocol.h"
+#include "CCLabel.h"
 
 NS_CC_BEGIN
 
-class StringTTF : public Node , public LabelTextFormatProtocol, public RGBAProtocol
+class StringTTF : public Label, public LabelTextFormatProtocol
 {
 public:
     
     static StringTTF* create(FontDefinitionTTF *pDefinition, TextAlignment alignment = kTextAlignmentLeft);
     
     // main interface
-    bool setText(const char *pStringToRender, float lineWidth, TextAlignment alignment = kTextAlignmentLeft, bool lineBreakWithoutSpaces = false);
+    bool setText(const char *stringToRender, float lineWidth, TextAlignment alignment = kTextAlignmentLeft, bool lineBreakWithoutSpaces = false);
+    void setString(const char *stringToRender);
+    const char* getString() const { return "not implemented"; }
     virtual void setAlignment(TextAlignment alignment);
     virtual void setWidth(float width);
     virtual void setLineBreakWithoutSpace(bool breakWithoutSpace);

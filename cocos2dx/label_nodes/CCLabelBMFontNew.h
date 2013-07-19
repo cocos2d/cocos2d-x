@@ -41,10 +41,11 @@ Use any of these editors to generate BMFonts:
 #include <sstream>
 #include <iostream>
 #include <vector>
+#include "CCLabel.h"
 
 NS_CC_BEGIN
 
-class CC_DLL LabelBMFontNew : public SpriteBatchNode, public LabelProtocol, public RGBAProtocol, public LabelTextFormatProtocol
+class CC_DLL LabelBMFontNew: public Label, public LabelTextFormatProtocol
 {
 public:
     LabelBMFontNew();

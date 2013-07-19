@@ -83,6 +83,11 @@ bool StringTTF::init()
     return true;
 }
 
+void StringTTF::setString(const char *stringToRender)
+{
+    setText(stringToRender, 500, kTextAlignmentCenter, false);
+}
+
 bool StringTTF::setText(const char *stringToRender, float lineWidth, TextAlignment alignment, bool lineBreakWithoutSpaces)
 {
     if (!_fontDef)
