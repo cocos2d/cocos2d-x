@@ -1661,7 +1661,7 @@ LabelDyamicTest::LabelDyamicTest()
     
     const char *pFontFileName       = "fonts/arial.ttf";
     const char *pFontGlyphs         = "abcdefghilmnopqrstuvzxywABCDEFGHILMNOPQRSTUVZXYW0123456789,. ";
-    LabelFontDefinition *pDef       =  new LabelFontDefinition;
+    FontDefinitionTTF *pDef         =  new FontDefinitionTTF;
     
     pDef->createFontDefinition((char *)pFontFileName, 26, (char *) pFontGlyphs);
     StringTTF *pTestString = new StringTTF(pDef);

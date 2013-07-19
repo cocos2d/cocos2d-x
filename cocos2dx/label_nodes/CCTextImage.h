@@ -40,22 +40,22 @@ class GlyphDef
 {
 public:
     
-    GlyphDef()                                                          {   /*do nothing*/                               }
-    GlyphDef(unsigned short int letterUTF8, Rect &rect)                 { _gliphRect = rect; _uTF8Letter = letterUTF8;   }
+    GlyphDef()                                                          {   /*do nothing*/                              }
+    GlyphDef(unsigned short int letterUTF8, Rect &rect)                 { _gliphRect = rect; _uTF16Letter = letterUTF8; }
     
-    void setUTF8Letter(unsigned short int letterUTF8)                   { _uTF8Letter  = letterUTF8;    }
+    void setUTF16Letter(unsigned short int letterUTF8)                  { _uTF16Letter  = letterUTF8;   }
     void setRect(Rect & theRect)                                        { _gliphRect = theRect;         }
-    unsigned short int getUTF8Letter()                                  { return _uTF8Letter;           }
+    unsigned short int getUTF8Letter()                                  { return _uTF16Letter;          }
     Rect &  getRect()                                                   { return _gliphRect;            }
-    void  setPadding(float padding)                                     { _padding = padding;           }
-    float getPadding()                                                  { return _padding;              }
-    void  setCommonHeight(float commonHeight)                           { _commonHeight = commonHeight; }
-    float getCommonHeight()                                             { return _commonHeight;         }
+    void    setPadding(float padding)                                   { _padding = padding;           }
+    float   getPadding()                                                { return _padding;              }
+    void    setCommonHeight(float commonHeight)                         { _commonHeight = commonHeight; }
+    float   getCommonHeight()                                           { return _commonHeight;         }
     
 private:
     
     Rect                _gliphRect;
-    unsigned short int  _uTF8Letter;
+    unsigned short int  _uTF16Letter;
     float               _padding;
     float               _commonHeight;
     
@@ -135,20 +135,16 @@ class TextFontPagesDef
 {
 public:
     
-    TextFontPagesDef(char *fontName, int fontSize);
+    TextFontPagesDef();
    ~TextFontPagesDef();
     
     void addPage(TextPageDef *newPage)      { _pages.push_back(newPage);    }
     int  getNumPages()                      { return _pages.size();         }
-    TextPageDef     *getPageAt(int index)   { return _pages[index];         }
-    char            *getFontName()          { return _fontName;             }
-    int              getFontSize()          { return _fontSize;             }
+    TextPageDef* getPageAt(int index)       { return _pages[index];         }
     
 private:
     
     std::vector<TextPageDef *>    _pages;
-    int                           _fontSize;
-    char *                        _fontName;
     
 };
 
@@ -174,6 +170,8 @@ private:
     bool addGlyphsToLine(TextLineDef *line, const char *lineText, bool textIsUTF16 = false);
     bool createFontRef(const char *fontName, int size);
     bool generateTextGlyphs(const char * pText);
+    int  getNumGlyphsFittingInSize(std::map<unsigned short int, GlyphDef> &glyphDefs, unsigned short int *strUTF8, Font *pFont, Size *constrainSize, int &outNewSize);
+    bool createPageDefinitions(unsigned short int *inText, int imageWidth, int imageHeight, int lineHeight);
     
     std::map<unsigned short int, GlyphDef>      _textGlyphs;
     TextFontPagesDef *                          _fontPages;

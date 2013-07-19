@@ -40,9 +40,10 @@ public:
     virtual ~FontFreeType();
     virtual bool                    createFontObject(const std::string &fontName, int fontSize);
     
-    virtual GlyphDef            *   getGlyphsForText(const char *pText, int &outNumGlyphs,    bool UTF16text = false);
+    virtual GlyphDef            *   getGlyphDefintionsForText(const char *pText, int &outNumGlyphs,    bool UTF16text = false);
     virtual Size                *   getAdvancesForText(const char *pText, int &outNumLetters, bool UTF16text = false);
     virtual Size                    getTextWidthAndHeight(const char *pText, bool UTF16text = false);
+    virtual int                     getFontMaxHeight();
     
     virtual Size                *   getAdvancesForTextUTF16(unsigned short *pText, int &outNumLetters);
     unsigned char               *   getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight);

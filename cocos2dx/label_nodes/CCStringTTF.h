@@ -34,7 +34,7 @@ class StringTTF : public Node , public LabelTextFormatProtocol, public RGBAProto
 {
 public:
     
-     StringTTF(LabelFontDefinition *pDefinition, TextAlignment alignment = kTextAlignmentLeft);
+     StringTTF(FontDefinitionTTF *pDefinition, TextAlignment alignment = kTextAlignmentLeft);
     ~StringTTF();
     
     bool setText(char *pStringToRender, float lineWidth, TextAlignment alignment = kTextAlignmentLeft, bool lineBreakWithoutSpaces = false);
@@ -119,7 +119,7 @@ private:
     bool                        _lineBreakWithoutSpaces;
     float                       _width;
     TextAlignment               _alignment;
-    LabelFontDefinition*        _fontDef;
+    FontDefinitionTTF*          _fontDef;
     unsigned short int *        _currentUTF8String;
     Size               *        _advances;
     

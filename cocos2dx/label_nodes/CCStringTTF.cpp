@@ -29,7 +29,7 @@
 
 NS_CC_BEGIN
 
-StringTTF::StringTTF(LabelFontDefinition *theDef, TextAlignment alignment) : _currentUTF8String(0),
+StringTTF::StringTTF(FontDefinitionTTF *theDef, TextAlignment alignment) : _currentUTF8String(0),
                                                                              _fontDef(theDef),
                                                                              _alignment(alignment),
                                                                              _lineBreakWithoutSpaces(false),
