@@ -38,11 +38,9 @@ jclass _getClassID(const char *className) {
 
     jstring _jstrClassName = env->NewStringUTF(className);
 
-    jobject _clazzObject = env->CallObjectMethod(cocos2d::JniHelper::classloader,
-                                                 cocos2d::JniHelper::loadclassMethod_methodID,
-                                                 _jstrClassName);
-
-    jclass _clazz = env->GetObjectClass(_clazzObject);
+    jclass _clazz = (jclass) env->CallObjectMethod(cocos2d::JniHelper::classloader,
+                                                   cocos2d::JniHelper::loadclassMethod_methodID,
+                                                   _jstrClassName);
 
     if (NULL == _clazz) {
         LOGD("Classloader failed to find class of %s", className);
