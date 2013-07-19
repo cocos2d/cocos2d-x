@@ -646,36 +646,22 @@ public:
      * @param cleanup   true if all actions and callbacks on this node should be removed, false otherwise.
      */
     virtual void removeFromParentAndCleanup(bool cleanup);
-    /** 
-     * Removes a child from the container with a cleanup
-     *
-     * @see removeChild(Node, bool)
-     *
-     * @param child     The child node which will be removed.
-     */
-    virtual void removeChild(Node* child);
+
     /** 
      * Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
      * 
      * @param child     The child node which will be removed.
      * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
      */
-    virtual void removeChild(Node* child, bool cleanup);
-    /** 
-     * Removes a child from the container by tag value with a cleanup.
-     *
-     * @see removeChildByTag(int, bool)
-     *
-     * @param tag       An interger number that identifies a child node
-     */
-    virtual void removeChildByTag(int tag);
+    virtual void removeChild(Node* child, bool cleanup = true);
+
     /** 
      * Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
      * 
      * @param tag       An interger number that identifies a child node
      * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise. 
      */
-    virtual void removeChildByTag(int tag, bool cleanup);
+    virtual void removeChildByTag(int tag, bool cleanup = true);
     /** 
      * Removes all children from the container with a cleanup.
      *

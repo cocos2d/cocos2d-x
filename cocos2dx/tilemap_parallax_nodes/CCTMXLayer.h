@@ -73,24 +73,12 @@ Tiles can have tile flags for additional properties. At the moment only flip hor
 
 class CC_DLL TMXLayer : public SpriteBatchNode
 {
-    /** size of the layer in tiles */
-    CC_SYNTHESIZE_PASS_BY_REF(Size, _layerSize, LayerSize);
-    /** size of the map's tile (could be different from the tile's size) */
-    CC_SYNTHESIZE_PASS_BY_REF(Size, _mapTileSize, MapTileSize);
-    /** pointer to the map of tiles */
-    CC_SYNTHESIZE(unsigned int*, _tiles, Tiles);
-    /** Tileset information for the layer */
-    CC_PROPERTY(TMXTilesetInfo*, _tileSet, TileSet);
-    /** Layer orientation, which is the same as the map orientation */
-    CC_SYNTHESIZE(unsigned int, _layerOrientation, LayerOrientation);
-    /** properties from the layer. They can be added using Tiled */
-    CC_PROPERTY(Dictionary*, _properties, Properties);
 public:
-    TMXLayer();
-    virtual ~TMXLayer();
-  
     /** creates a TMXLayer with an tileset info, a layer info and a map info */
     static TMXLayer * create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
+    
+    TMXLayer();
+    virtual ~TMXLayer();
 
     /** initializes a TMXLayer with a tileset info, a layer info and a map info */
     bool initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
@@ -108,18 +96,16 @@ public:
     - layer->removeChild(sprite, cleanup);
     - or layer->removeTileAt(Point(x,y));
     */
-    Sprite* tileAt(const Point& tileCoordinate);
-
-    /** returns the tile gid at a given tile coordinate.
-    if it returns 0, it means that the tile is empty.
-    This method requires the the tile map has not been previously released (eg. don't call layer->releaseMap())
-    */
-    unsigned int  tileGIDAt(const Point& tileCoordinate);
-
+    Sprite* getTileAt(const Point& tileCoordinate);
+    CC_DEPRECATED_ATTRIBUTE Sprite* tileAt(const Point& tileCoordinate) { return getTileAt(tileCoordinate); };
+    
     /** returns the tile gid at a given tile coordinate. It also returns the tile flags.
      This method requires the the tile map has not been previously released (eg. don't call [layer releaseMap])
      */
-    unsigned int tileGIDAt(const Point& tileCoordinate, ccTMXTileFlags* flags);
+    unsigned int getTileGIDAt(const Point& tileCoordinate, ccTMXTileFlags* flags = nullptr);
+    CC_DEPRECATED_ATTRIBUTE unsigned int tileGIDAt(const Point& tileCoordinate, ccTMXTileFlags* flags = nullptr){
+        return getTileGIDAt(tileCoordinate, flags);
+    };
 
     /** sets the tile gid (gid = tile global id) at a given tile coordinate.
     The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
@@ -140,10 +126,12 @@ public:
     void removeTileAt(const Point& tileCoordinate);
 
     /** returns the position in points of a given tile coordinate */
-    Point positionAt(const Point& tileCoordinate);
+    Point getPositionAt(const Point& tileCoordinate);
+    CC_DEPRECATED_ATTRIBUTE Point positionAt(const Point& tileCoordinate);
 
     /** return the value for the specific property name */
-    String *propertyNamed(const char *propertyName);
+    String* getPropertyNamed(const char *propertyName) const;
+    CC_DEPRECATED_ATTRIBUTE String* propertyNamed(const char *propertyName) const { return getPropertyNamed(propertyName); };
 
     /** Creates the tiles */
     void setupTiles();
@@ -163,9 +151,9 @@ public:
 
 
 private:
-    Point positionForIsoAt(const Point& pos);
-    Point positionForOrthoAt(const Point& pos);
-    Point positionForHexAt(const Point& pos);
+    Point getPositionForIsoAt(const Point& pos);
+    Point getPositionForOrthoAt(const Point& pos);
+    Point getPositionForHexAt(const Point& pos);
 
     Point calculateLayerOffset(const Point& offset);
 
@@ -178,11 +166,12 @@ private:
     void parseInternalProperties();
     void setupTileSprite(Sprite* sprite, Point pos, unsigned int gid);
     Sprite* reusedTileWithRect(Rect rect);
-    int vertexZForPos(const Point& pos);
+    int getVertexZForPos(const Point& pos);
 
     // index
     unsigned int atlasIndexForExistantZ(unsigned int z);
     unsigned int atlasIndexForNewZ(int z);
+    
 protected:
     //! name of the layer
     std::string _layerName;
@@ -201,7 +190,21 @@ protected:
     ccCArray            *_atlasIndexArray;
     
     // used for retina display
-    float               _contentScaleFactor;            
+    float               _contentScaleFactor;
+    
+private:
+    /** size of the layer in tiles */
+    CC_SYNTHESIZE_PASS_BY_REF(Size, _layerSize, LayerSize);
+    /** size of the map's tile (could be different from the tile's size) */
+    CC_SYNTHESIZE_PASS_BY_REF(Size, _mapTileSize, MapTileSize);
+    /** pointer to the map of tiles */
+    CC_SYNTHESIZE(unsigned int*, _tiles, Tiles);
+    /** Tileset information for the layer */
+    CC_PROPERTY(TMXTilesetInfo*, _tileSet, TileSet);
+    /** Layer orientation, which is the same as the map orientation */
+    CC_SYNTHESIZE(unsigned int, _layerOrientation, LayerOrientation);
+    /** properties from the layer. They can be added using Tiled */
+    CC_PROPERTY(Dictionary*, _properties, Properties);
 };
 
 // end of tilemap_parallax_nodes group
