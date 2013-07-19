@@ -206,11 +206,13 @@ public:
     /** set default font size */
     static void setFontSize(unsigned int s);
     /** get default font size */
-    static unsigned int fontSize();
+    static unsigned int getFontSize();
+    CC_DEPRECATED_ATTRIBUTE static unsigned int fontSize() { return MenuItemFont::getFontSize(); };
     /** set the default font name */
     static void setFontName(const char *name);
     /** get the default font name */
-    static const char *fontName();
+    static const char *getFontName();
+    CC_DEPRECATED_ATTRIBUTE static const char *fontName() { return MenuItemFont::getFontName(); };
 
     /** set font size
      * c++ can not overload static and non-static member functions with the same parameter types
@@ -219,7 +221,8 @@ public:
     void setFontSizeObj(unsigned int s);
     
     /** get font size */
-    unsigned int fontSizeObj();
+    unsigned int getFontSizeObj() const;
+    CC_DEPRECATED_ATTRIBUTE unsigned int fontSizeObj() const { return getFontSizeObj(); };
     
     /** set the font name 
      * c++ can not overload static and non-static member functions with the same parameter types
