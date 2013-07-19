@@ -201,7 +201,7 @@ public:
 	 * while -1 means fail
 	 *
 	 */
-	int computeLineStart(FT_Face face, Image::ETextAlign eAlignMask, char cText,
+	int computeLineStart(FT_Face face, Image::TextAlign eAlignMask, char cText,
                          int iLineIndex) {
 		int iRet;
 		int iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, cText),
@@ -224,7 +224,7 @@ public:
 		return iRet;
 	}
 		
-	int computeLineStartY( FT_Face face, Image::ETextAlign eAlignMask, int txtHeight, int borderHeight ){
+	int computeLineStartY( FT_Face face, Image::TextAlign eAlignMask, int txtHeight, int borderHeight ){
 		int iRet;
 		if (eAlignMask == Image::kAlignCenter || eAlignMask == Image::kAlignLeft ||
 			eAlignMask == Image::kAlignRight ) {
@@ -243,7 +243,7 @@ public:
 		return iRet;
 	}
     
-	bool getBitmap(const char *text, int nWidth, int nHeight, Image::ETextAlign eAlignMask, const char * pFontName, float fontSize) {
+	bool getBitmap(const char *text, int nWidth, int nHeight, Image::TextAlign eAlignMask, const char * pFontName, float fontSize) {
 		FT_Face face;
 		FT_Error iError;
         
@@ -398,7 +398,7 @@ bool Image::initWithString(
                              const char *    pText,
                              int             nWidth/* = 0*/,
                              int             nHeight/* = 0*/,
-                             ETextAlign      eAlignMask/* = kAlignCenter*/,
+                             TextAlign      eAlignMask/* = kAlignCenter*/,
                              const char *    pFontName/* = nil*/,
                              int             nSize/* = 0*/)
 {
@@ -428,7 +428,7 @@ bool Image::initWithString(
         _height = (short)dc.iMaxLineHeight;
         _hasAlpha = true;
         _preMulti = true;
-        _bitsPerComponent = 8;
+        _bitDepth = 8;
         
         bRet = true;
         

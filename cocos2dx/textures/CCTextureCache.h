@@ -161,7 +161,6 @@ public:
 private:
     void addImageAsyncCallBack(float dt);
     void loadImage();
-    Image::EImageFormat computeImageFormatType(std::string& filename);
 
 public:
     struct AsyncStruct
@@ -179,7 +178,6 @@ protected:
     {
         AsyncStruct *asyncStruct;
         Image        *image;
-        Image::EImageFormat imageType;
     } ImageInfo;
     
     std::thread* _loadingThread;
@@ -218,7 +216,7 @@ public:
     VolatileTexture(Texture2D *t);
     ~VolatileTexture();
 
-    static void addImageTexture(Texture2D *tt, const char* imageFileName, Image::EImageFormat format);
+    static void addImageTexture(Texture2D *tt, const char* imageFileName);
     static void addStringTexture(Texture2D *tt, const char* text, const FontDefinition& fontDefinition);
     static void addDataTexture(Texture2D *tt, void* data, Texture2DPixelFormat pixelFormat, const Size& contentSize);
     static void addImage(Texture2D *tt, Image *image);
@@ -248,7 +246,6 @@ protected:
     Texture2DPixelFormat _pixelFormat;
 
     std::string _fileName;
-    Image::EImageFormat _fmtImage;
 
     ccTexParams      _texParams;
     std::string      _text;

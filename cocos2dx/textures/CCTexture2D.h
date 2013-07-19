@@ -49,8 +49,8 @@ class Image;
 Possible texture pixel formats
 */
 typedef enum {
-	//! auto detect the type
-	kTexture2DPixelFormat_Automatic,
+    //! auto detect the type
+    kTexture2DPixelFormat_Automatic,
 
     //! 32-bit texture: RGBA8888
     kTexture2DPixelFormat_RGBA8888,
@@ -162,11 +162,15 @@ public:
 
     /**
     Extensions to make it easy to create a Texture2D object from an image file.
-    Note that RGBA type textures will have their alpha premultiplied - use the blending mode (GL_ONE, GL_ONE_MINUS_SRC_ALPHA).
     */
-    /** Initializes a texture from a UIImage object */
-
-    bool initWithImage(Image * uiImage);
+    /** 
+	Initializes a texture from a UIImage object.
+	first, we will use the format you passed to the function to convert the image format to the texture format.
+	If you didn't pass the format param we will use the global default format you specified through setDefaultAlphaPixelFormat() to convert the image.
+	If you didn't specified the global default format either, we will specify kTexture2DPixelFormat_Automatic for you and convert the image to the closest texture format. 
+	format == -1 means you didn't pass the format param.
+	*/
+    bool initWithImage(Image * uiImage, Texture2DPixelFormat format = (Texture2DPixelFormat)(-1));
 
     /** Initializes a texture from a string with dimensions, alignment, font name and font size */
     bool initWithString(const char *text,  const char *fontName, float fontSize, const Size& dimensions, TextAlignment hAlignment, VerticalTextAlignment vAlignment);
@@ -240,9 +244,49 @@ public:
 
 private:
 
-	Texture2DPixelFormat convertDataToFormat(unsigned char* data, int dataLen, unsigned short chanel, unsigned short bitDepth, Texture2DPixelFormat format, unsigned char** outData, int* outDataLen);
-    bool initPremultipliedATextureWithImage(Image * image, unsigned int pixelsWide, unsigned int pixelsHigh);
-    
+    /**convert functions*/
+
+    /**
+    Convert the format to the format param you specified, if the format is kTexture2DPixelFormat_Automatic, it will detect it automatically and convert to the closest format for you.
+    It will return the converted format to you. if the outData != data, you must delete it manually.
+    */
+    static Texture2DPixelFormat convertDataToFormat(const unsigned char* data, int dataLen, unsigned short chanel, unsigned short bitDepth, Texture2DPixelFormat format, unsigned char** outData, int* outDataLen);
+
+    static Texture2DPixelFormat convertGray8ToFormat(const unsigned char* data, int dataLen, unsigned short bitDepth, Texture2DPixelFormat format, unsigned char** outData, int* outDataLen);
+    static Texture2DPixelFormat convertGrayA8ToFormat(const unsigned char* data, int dataLen, unsigned short bitDepth, Texture2DPixelFormat format, unsigned char** outData, int* outDataLen);
+    static Texture2DPixelFormat convertRGB8ToFormat(const unsigned char* data, int dataLen, unsigned short bitDepth, Texture2DPixelFormat format, unsigned char** outData, int* outDataLen);
+    static Texture2DPixelFormat convertRGBA8ToFormat(const unsigned char* data, int dataLen, unsigned short bitDepth, Texture2DPixelFormat format, unsigned char** outData, int* outDataLen);
+
+    static void convertGray8ToRGB888(const unsigned char* in, int len, unsigned char* out);
+    static void convertGray8ToRGBA8888(const unsigned char* in, int len, unsigned char* out);
+    static void convertGray8ToRGB565(const unsigned char* in, int len, unsigned char* out);
+    static void convertGray8ToRGBA4444(const unsigned char* in, int len, unsigned char* out);
+    static void convertGray8ToRGB5A1(const unsigned char* in, int len, unsigned char* out);
+    static void convertGray8ToAI88(const unsigned char* in, int len, unsigned char* out);
+
+    static void convertGrayA8ToRGB888(const unsigned char* in, int len, unsigned char* out);
+    static void convertGrayA8ToRGBA8888(const unsigned char* in, int len, unsigned char* out);
+    static void convertGrayA8ToRGB565(const unsigned char* in, int len, unsigned char* out);
+    static void convertGrayA8ToRGBA4444(const unsigned char* in, int len, unsigned char* out);
+    static void convertGrayA8ToRGB5A1(const unsigned char* in, int len, unsigned char* out);
+    static void convertGrayA8ToA8(const unsigned char* in, int len, unsigned char* out);
+    static void convertGrayA8ToI8(const unsigned char* in, int len, unsigned char* out);
+
+    static void convertRGB8ToRGBA8888(const unsigned char* in, int len, unsigned char* out);
+    static void convertRGB8ToRGB565(const unsigned char* in, int len, unsigned char* out);
+    static void convertRGB8ToI8(const unsigned char* in, int len, unsigned char* out);
+    static void convertRGB8ToAI88(const unsigned char* in, int len, unsigned char* out);
+    static void convertRGB8ToRGBA4444(const unsigned char* in, int len, unsigned char* out);
+    static void convertRGB8ToRGB5A1(const unsigned char* in, int len, unsigned char* out);
+
+    static void convertRGBA8ToRGB888(const unsigned char* in, int len, unsigned char* out);
+    static void convertRGBA8ToRGB565(const unsigned char* in, int len, unsigned char* out);
+    static void convertRGBA8ToI8(const unsigned char* in, int len, unsigned char* out);
+    static void convertRGBA8ToA8(const unsigned char* in, int len, unsigned char* out);
+    static void convertRGBA8ToAI88(const unsigned char* in, int len, unsigned char* out);
+    static void convertRGBA8ToRGBA4444(const unsigned char* in, int len, unsigned char* out);
+    static void convertRGBA8ToRGB5A1(const unsigned char* in, int len, unsigned char* out);
+
     // By default PVR images are treated as if they don't have the alpha channel premultiplied
     bool _PVRHaveAlphaPremultiplied;
 
