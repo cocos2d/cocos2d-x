@@ -40,7 +40,7 @@ Layer* restartAtlasAction();
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    28
+#define MAX_LAYER    30
 
 Layer* createAtlasLayer(int nIndex)
 {
@@ -76,6 +76,8 @@ Layer* createAtlasLayer(int nIndex)
         case 25: return new LabelTTFAlignment();
         case 26: return new LabelBMFontBounds();
         case 27: return new TTFFontShadowAndStroke();
+        case 28: return new LabelBMFontNewTest();
+        case 29: return new LabelDyamicTest();
     }
 
     return NULL;
@@ -1594,7 +1596,6 @@ LabelBMFontBounds::LabelBMFontBounds()
     // LabelBMFont
     label1 = LabelBMFont::create("Testing Glyph Designer", "fonts/boundsTestFont.fnt");
     
-    
     addChild(label1);
     label1->setPosition(Point(s.width/2, s.height/2));
 }
@@ -1627,3 +1628,143 @@ void LabelBMFontBounds::draw()
     ccDrawPoly(vertices, 4, true);
 }
 
+LabelBMFontNewTest::LabelBMFontNewTest()
+{
+    Size s = Director::getInstance()->getWinSize();
+    
+    LayerColor *layer = LayerColor::create(Color4B(128,128,128,255));
+    addChild(layer, -10);
+    
+    // LabelBMFont
+    label1 = LabelBMFontNew::create("Testing Glyph Designer", "fonts/boundsTestFont.fnt");
+    
+    addChild(label1);
+    label1->setPosition(Point(s.width/2, s.height/2));
+}
+
+void LabelBMFontNewTest::draw()
+{
+}
+std::string LabelBMFontNewTest::title()
+{
+    return "New LabelBMFont";
+}
+
+std::string LabelBMFontNewTest::subtitle()
+{
+    return "Testing the new LabelBMFont";
+}
+
+///
+
+LabelDyamicTest::LabelDyamicTest()
+{
+    Size size = Director::getInstance()->getWinSize();
+    const char *pFontFileName       = "fonts/arial.ttf";
+    const char *fontGlyphs          = "abcdefghilmnopqrstuvzxywABCDEFGHILMNOPQRSTUVZXYW0123456789,. ";
+    FontDefinitionTTF *def          =  FontDefinitionTTF::create(pFontFileName, 26, fontGlyphs);
+    
+    if ( def )
+    {
+        label1 =  StringTTF::create(def);
+        
+        if (label1)
+        {
+            label1->setText( LongSentencesExample, size.width, kTextAlignmentCenter, false);
+            addChild(label1);
+            label1->setPosition(Point(0, size.height/2));
+            label1->retain();
+        }
+    }
+}
+
+LabelDyamicTest::~LabelDyamicTest()
+{
+    CC_SAFE_RELEASE(label1);
+}
+
+std::string LabelDyamicTest::title()
+{
+    return "Dynamic TTF label";
+}
+
+std::string LabelDyamicTest::subtitle()
+{
+    return "Testing the new dynamic TTF label";
+}
+
+//
+/// NEW LABEL with TTF
+//
+NewLabelTTFTest::NewLabelTTFTest()
+{
+//    Size size = Director::getInstance()->getWinSize();
+//
+//    label = Label::createWithTTF("Hello World", "fonts/arial.ttf", 28);
+//    label->setPosition( Point(size.width/2, size.height/2) );
+//    addChild(label);
+}
+
+NewLabelTTFTest::~NewLabelTTFTest()
+{
+    CC_SAFE_RELEASE(label);
+}
+
+std::string NewLabelTTFTest::title()
+{
+    return "Label() using TTF";
+}
+
+std::string NewLabelTTFTest::subtitle()
+{
+    return "Uses the new Label() with TTF";
+}
+
+//
+/// NEW LABEL with BMFont
+//
+NewLabelBMFontTest::NewLabelBMFontTest()
+{
+//    Size size = Director::getInstance()->getWinSize();
+//
+//    label = Label::createWithBMFont("Hello World", "fonts/bitmapFontTest2.fnt");
+//    label->setPosition( Point(size.width/2, size.height/2) );
+//    addChild(label);
+}
+
+NewLabelBMFontTest::~NewLabelBMFontTest()
+{
+    CC_SAFE_RELEASE(label);
+}
+
+std::string NewLabelBMFontTest::title()
+{
+    return "Label() using BMFont";
+}
+
+std::string NewLabelBMFontTest::subtitle()
+{
+    return "Uses the new Label() with BMFont";
+}
+
+//
+/// NEW LABEL with FontDefinition
+//
+NewLabelFontDefTest::NewLabelFontDefTest()
+{
+}
+
+NewLabelFontDefTest::~NewLabelFontDefTest()
+{
+    CC_SAFE_RELEASE(label);
+}
+
+std::string NewLabelFontDefTest::title()
+{
+    return "NOT IMPLEMENTED YET";
+}
+
+std::string NewLabelFontDefTest::subtitle()
+{
+    return "NOT IMPLEMENTED YET";
+}
