@@ -40,7 +40,7 @@ Layer* restartAtlasAction();
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    30
+#define MAX_LAYER    32
 
 Layer* createAtlasLayer(int nIndex)
 {
@@ -78,6 +78,8 @@ Layer* createAtlasLayer(int nIndex)
         case 27: return new TTFFontShadowAndStroke();
         case 28: return new LabelBMFontNewTest();
         case 29: return new LabelDyamicTest();
+        case 30: return new NewLabelBMFontTest();
+        case 31: return new NewLabelTTFTest();
     }
 
     return NULL;
@@ -1698,11 +1700,11 @@ std::string LabelDyamicTest::subtitle()
 //
 NewLabelTTFTest::NewLabelTTFTest()
 {
-//    Size size = Director::getInstance()->getWinSize();
-//
-//    label = Label::createWithTTF("Hello World", "fonts/arial.ttf", 28);
-//    label->setPosition( Point(size.width/2, size.height/2) );
-//    addChild(label);
+    Size size = Director::getInstance()->getWinSize();
+
+    label = Label::createWithTTF("Hello World", "fonts/arial.ttf", 28);
+    label->setPosition( Point(size.width/2, size.height/2) );
+    addChild(label);
 }
 
 NewLabelTTFTest::~NewLabelTTFTest()
@@ -1725,11 +1727,11 @@ std::string NewLabelTTFTest::subtitle()
 //
 NewLabelBMFontTest::NewLabelBMFontTest()
 {
-//    Size size = Director::getInstance()->getWinSize();
-//
-//    label = Label::createWithBMFont("Hello World", "fonts/bitmapFontTest2.fnt");
-//    label->setPosition( Point(size.width/2, size.height/2) );
-//    addChild(label);
+    Size size = Director::getInstance()->getWinSize();
+
+    label = Label::createWithBMFont("Hello World", "fonts/bitmapFontTest2.fnt");
+    label->setPosition( Point(size.width/2, size.height/2) );
+    addChild(label);
 }
 
 NewLabelBMFontTest::~NewLabelBMFontTest()

@@ -23,5 +23,33 @@
  ****************************************************************************/
 
 #include "CCLabel.h"
+#include "CCLabelBMFontNew.h"
+#include "CCStringTTF.h"
+#include "CCFontDefinition.h"
 
+NS_CC_BEGIN
 
+Label* Label::createWithTTF( const char* label, const char* tttFilePath, int size, GlyphCollection glyphs )
+{
+    const char *fontGlyphs          = "abcdefghilmnopqrstuvzxywABCDEFGHILMNOPQRSTUVZXYW0123456789,. ";
+    FontDefinitionTTF *def          =  FontDefinitionTTF::create(tttFilePath, size, fontGlyphs);
+
+    StringTTF* l = StringTTF::create(def);
+    l->setString( label );
+    return l;
+}
+
+Label* Label::createWithBMFont( const char* label, const char* bmfontFilePath )
+{
+    return LabelBMFontNew::create(label, bmfontFilePath);
+}
+
+Label::Label()
+{
+}
+
+Label::~Label()
+{
+}
+
+NS_CC_END

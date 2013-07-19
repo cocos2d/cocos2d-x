@@ -355,7 +355,7 @@ public:
     virtual std::string subtitle();
 
 private:
-    Node *label;
+    Label *label;
 };
 
 class NewLabelBMFontTest : public AtlasDemo
@@ -369,7 +369,7 @@ public:
     virtual std::string subtitle();
 
 private:
-    Node *label;
+    Label *label;
 };
 
 
