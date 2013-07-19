@@ -126,9 +126,13 @@ public:
     //! Update color to render display
     void updateColor();
 
-    CCTween *getTween();
+	//! Update zorder
+	void updateZOrder();
 
     virtual void setZOrder(int zOrder);
+
+	CCTween *getTween();
+
     /*
      * Whether or not the bone's transform property changed. if true, the bone will update the transform.
      */

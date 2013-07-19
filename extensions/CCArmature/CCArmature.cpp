@@ -304,8 +304,11 @@ void CCArmature::changeBoneParent(CCBone *bone, const char *parentName)
 {
     CCAssert(bone != NULL, "bone must be added to the bone dictionary!");
 
-    bone->getParentBone()->getChildren()->removeObject(bone);
-    bone->setParentBone(NULL);
+    if(bone->getParentBone())
+	{
+		bone->getParentBone()->getChildren()->removeObject(bone);
+		bone->setParentBone(NULL);
+	}
 
     if (parentName != NULL)
     {

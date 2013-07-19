@@ -155,4 +155,17 @@ CCAffineTransform CCSkin::nodeToWorldTransform()
 	return CCAffineTransformConcat(m_sTransform, m_pBone->getArmature()->nodeToWorldTransform());
 }
 
+CCAffineTransform CCSkin::nodeToWorldTransformAR()
+{
+	CCAffineTransform displayTransform = m_sTransform;
+	CCPoint anchorPoint =  m_obAnchorPointInPoints;
+
+	anchorPoint = CCPointApplyAffineTransform(anchorPoint, displayTransform);
+	
+	displayTransform.tx = anchorPoint.x;
+	displayTransform.ty = anchorPoint.y;
+
+	return CCAffineTransformConcat(displayTransform, m_pBone->getArmature()->nodeToWorldTransform());
+}
+
 NS_CC_EXT_END

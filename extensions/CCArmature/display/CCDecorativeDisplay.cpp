@@ -65,9 +65,4 @@ bool CCDecorativeDisplay::init()
     return true;
 }
 
-
-void CCDecorativeDisplay::anchorPointChanged(float pointX, float pointY)
-{
-}
-
 NS_CC_EXT_END

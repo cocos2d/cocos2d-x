@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
 
+#define VERSION_COMBINED 0.25f
 
 #ifndef ENABLE_PHYSICS_BOX2D_DETECT
 #define ENABLE_PHYSICS_BOX2D_DETECT 0

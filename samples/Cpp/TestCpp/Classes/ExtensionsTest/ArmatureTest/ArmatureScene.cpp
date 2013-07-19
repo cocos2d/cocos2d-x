@@ -424,6 +424,7 @@ void TestParticleDisplay::onEnter()
 	armature->getAnimation()->playByIndex(0);
 	armature->setPosition(VisibleRect::center());
 	armature->setScale(0.48f);
+	armature->getAnimation()->setAnimationScale(0.5f);
 	addChild(armature);
 
 
@@ -648,7 +649,7 @@ void TestColliderDetector::onEnter()
 }
 std::string TestColliderDetector::title()
 {
-	return "Test Box2D Detector";
+	return "Test Collider Detector";
 }
 void TestColliderDetector::draw()
 {
