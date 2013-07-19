@@ -23,12 +23,13 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCDatas.h"
-#include "CCArmature/utils/CCUtilMath.h"
+#include "../utils/CCUtilMath.h"
+#include "../utils/CCTransformHelp.h"
 
 NS_CC_EXT_BEGIN
 
 
-	CCBaseData::CCBaseData()
+CCBaseData::CCBaseData()
 	: x(0.0f)
 	, y(0.0f)
 	, zOrder(0)
@@ -135,7 +136,6 @@ ccColor4B CCBaseData::getColor()
 	return ccc4(r, g, b, a);
 }
 
-
 const char *CCDisplayData::changeDisplayToTexture(const char *displayName)
 {
     // remove .xxx
@@ -173,6 +173,8 @@ void CCSpriteDisplayData::copy(CCSpriteDisplayData *displayData)
 {
     displayName = displayData->displayName;
     displayType = displayData->displayType;
+
+	skinData = displayData->skinData;
 }
 
 CCArmatureDisplayData::CCArmatureDisplayData(void)
@@ -243,6 +245,11 @@ CCDisplayData *CCBoneData::getDisplayData(int index)
 {
     return (CCDisplayData *)displayDataList.objectAtIndex(index);
 }
+void CCBoneData::updateBoneDataTransform()
+{
+	CCTransformHelp::nodeToMatrix(*this, boneDataTransform);
+}
+
 
 CCArmatureData::CCArmatureData()
 	:dataVersion(0.1f)
@@ -274,10 +281,10 @@ CCFrameData::CCFrameData(void)
     , tweenEasing(Linear)
     , displayIndex(0)
 
-    , m_strMovement("")
-    , m_strEvent("")
-    , m_strSound("")
-    , m_strSoundEffect("")
+    , strMovement("")
+    , strEvent("")
+    , strSound("")
+    , strSoundEffect("")
 {
 }
 
@@ -289,7 +296,6 @@ void CCFrameData::copy(CCFrameData *frameData)
 {
     CCBaseData::copy(frameData);
 
-	frameID = frameData->frameID;
     duration = frameData->duration;
     displayIndex = frameData->displayIndex;
     tweenEasing = frameData->tweenEasing;
@@ -398,6 +404,7 @@ bool CCContourData::init()
 {
     return vertexList.init();
 }
+
 void CCContourData::addVertex(CCPoint *vertex)
 {
 	CCContourVertex2 *vertex2 = new CCContourVertex2(vertex->x, vertex->y);
@@ -405,7 +412,6 @@ void CCContourData::addVertex(CCPoint *vertex)
 
 	vertexList.addObject(vertex2);
 }
-
 
 CCTextureData::CCTextureData()
     : height(0.0f)

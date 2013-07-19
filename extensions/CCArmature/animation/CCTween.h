@@ -94,7 +94,7 @@ protected:
     /**
      * Calculate which frame arrived, and if current frame have event, then call the event listener
      */
-    virtual float updateFrameData(float currentPrecent, bool activeFrame = false);
+    virtual float updateFrameData(float currentPrecent);
 
     /**
      * Calculate the between value of _from and _to, and give it to between frame data
@@ -129,7 +129,7 @@ protected:
 
     CCTweenType m_eFrameTweenEasing;	//! Dedermine which tween effect current frame use
 
-    int m_BetweenDuration;			//! Current key frame will last m_BetweenDuration frames
+    int m_iBetweenDuration;			//! Current key frame will last m_iBetweenDuration frames
     int m_iTotalDuration;
 
 
@@ -137,6 +137,8 @@ protected:
     int m_iToIndex;					//! The next frame index in FrameList of CCMovementBoneData, it's different from m_iFrameIndex
 
     CCArmatureAnimation *m_pAnimation;
+
+	bool m_bNeedTweenTo;
 };
 
 NS_CC_EXT_END

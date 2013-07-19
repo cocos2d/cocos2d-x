@@ -158,7 +158,7 @@ void CCArmatureAnimation::play(const char *animationName, int durationTo, int du
     CCProcessBase::play((void *)animationName, durationTo, durationTween, loop, tweenEasing);
 
 
-    if (m_iRawDuration == 1)
+    if (m_iRawDuration == 0)
     {
         m_eLoopType = SINGLE_FRAME;
     }
@@ -191,6 +191,7 @@ void CCArmatureAnimation::play(const char *animationName, int durationTo, int du
         if(movementBoneData && movementBoneData->frameList.count() > 0)
         {
             m_pTweenList->addObject(tween);
+			movementBoneData->duration = m_pMovementData->duration;
             tween->play(movementBoneData, durationTo, durationTween, loop, tweenEasing);
 
             tween->setAnimationScale(m_fAnimationScale);

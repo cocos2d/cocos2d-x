@@ -219,6 +219,18 @@ void CCBone::updateColor()
     }
 }
 
+void CCBone::updateZOrder()
+{
+	if (m_pArmature->getArmatureData()->dataVersion >= VERSION_COMBINED)
+	{
+		int zorder = m_pTweenData->zOrder + m_pBoneData->zOrder;
+		setZOrder(zorder);
+	}
+	else
+	{
+		setZOrder(m_pTweenData->zOrder);
+	}
+}
 
 void CCBone::addChildBone(CCBone *child)
 {

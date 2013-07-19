@@ -313,6 +313,19 @@ namespace cs {
         return fRet;
     }
     
+    bool CSJsonDictionary::getBoolValueFromArray(const char *pszArrayKey, int nIndex, bool bDefaultValue)
+    {
+        bool bRet = bDefaultValue;
+        CSJson::Value * arrayValue = validateArrayItem(pszArrayKey, nIndex);
+        if (arrayValue)
+        {
+            if ((*arrayValue)[nIndex].isNumeric())
+                bRet = (*arrayValue)[nIndex].asBool();
+        }
+        
+        return bRet;
+    }
+    
     
     const char * CSJsonDictionary::getStringValueFromArray(const char *pszArrayKey, int nIndex)
     {

@@ -28,7 +28,6 @@ THE SOFTWARE.
 #include "../utils/CCArmatureDefine.h"
 #include "CCDisplayFactory.h"
 #include "../datas/CCDatas.h"
-#include "../external_tool/sigslot.h"
 
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
@@ -37,7 +36,7 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
-class  CCDecorativeDisplay: public CCObject, public sigslot::has_slots<>
+class  CCDecorativeDisplay: public CCObject
 {
 public:
     static CCDecorativeDisplay *create();
@@ -55,8 +54,6 @@ protected:
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     CC_SYNTHESIZE_RETAIN(CCColliderDetector *, m_pColliderDetector, ColliderDetector);
 #endif
-public:
-    void anchorPointChanged(float pointX, float pointY);
 };
 
 NS_CC_EXT_END

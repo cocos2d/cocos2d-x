@@ -26,9 +26,9 @@ THE SOFTWARE.
 #include "CCDataReaderHelper.h"
 #include "CCArmatureDataManager.h"
 #include "CCTransformHelp.h"
+#include "CCUtilMath.h"
 #include "CCArmatureDefine.h"
 #include "../datas/CCDatas.h"
-
 
 
 static const char *VERSION = "version";
@@ -49,6 +49,7 @@ static const char *SUB_TEXTURE = "SubTexture";
 
 static const char *A_NAME = "name";
 static const char *A_DURATION = "dr";
+static const char *A_FRAME_INDEX = "fi";
 static const char *A_DURATION_TO = "to";
 static const char *A_DURATION_TWEEN = "drTW";
 static const char *A_LOOP = "lp";
@@ -132,6 +133,7 @@ NS_CC_EXT_BEGIN
 std::vector<std::string> s_arrConfigFileList;
 float s_PositionReadScale = 1;
 static float s_FlashToolVersion = VERSION_2_0;
+static float s_CocoStudioVersion = VERSION_COMBINED;
 
 void CCDataReaderHelper::setPositionReadScale(float scale)
 {
@@ -590,19 +592,19 @@ CCFrameData *CCDataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  ti
 
     if(frameXML->Attribute(A_MOVEMENT) != NULL)
     {
-        frameData->m_strMovement = frameXML->Attribute(A_MOVEMENT);
+        frameData->strMovement = frameXML->Attribute(A_MOVEMENT);
     }
     if(frameXML->Attribute(A_EVENT) != NULL)
     {
-        frameData->m_strEvent = frameXML->Attribute(A_EVENT);
+        frameData->strEvent = frameXML->Attribute(A_EVENT);
     }
     if(frameXML->Attribute(A_SOUND) != NULL)
     {
-        frameData->m_strSound = frameXML->Attribute(A_SOUND);
+        frameData->strSound = frameXML->Attribute(A_SOUND);
     }
     if(frameXML->Attribute(A_SOUND_EFFECT) != NULL)
     {
-        frameData->m_strSoundEffect = frameXML->Attribute(A_SOUND_EFFECT);
+        frameData->strSoundEffect = frameXML->Attribute(A_SOUND_EFFECT);
     }
 
 
@@ -864,7 +866,7 @@ CCArmatureData *CCDataReaderHelper::decodeArmature(cs::CSJsonDictionary &json)
         armatureData->name = name;
     }
 
-	armatureData->dataVersion = json.getItemFloatValue("data_version", 0.1f);
+	s_CocoStudioVersion = armatureData->dataVersion = json.getItemFloatValue(VERSION, 0.1f);
 
     int length = json.getArrayItemCount(BONE_DATA);
     for (int i = 0; i < length; i++)
@@ -1061,18 +1063,23 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(cs::CSJsonDictionary 
 
 		movementBoneData->addFrameData(frameData);
 
-		frameData->frameID = movementBoneData->duration;
-		movementBoneData->duration += frameData->duration;
+		if (s_CocoStudioVersion < VERSION_COMBINED)
+		{
+			frameData->frameID = movementBoneData->duration;
+			movementBoneData->duration += frameData->duration;
+		}
 
         delete dic;
     }
 
-	//
-	CCFrameData *frameData = CCFrameData::create();
-	frameData->copy((CCFrameData*)movementBoneData->frameList.lastObject());
-	movementBoneData->addFrameData(frameData);
+	if (s_CocoStudioVersion < VERSION_COMBINED)
+	{
+		CCFrameData *frameData = CCFrameData::create();
+		frameData->copy((CCFrameData*)movementBoneData->frameList.lastObject());
+		movementBoneData->addFrameData(frameData);
 
-	frameData->frameID = movementBoneData->duration;
+		frameData->frameID = movementBoneData->duration;
+	}
 
     return movementBoneData;
 }
@@ -1083,15 +1090,23 @@ CCFrameData *CCDataReaderHelper::decodeFrame(cs::CSJsonDictionary &json)
 
     decodeNode(frameData, json);
 
-    frameData->duration = json.getItemIntValue(A_DURATION, 1);
     frameData->tweenEasing = (CCTweenType)json.getItemIntValue(A_TWEEN_EASING, Linear);
     frameData->displayIndex = json.getItemIntValue(A_DISPLAY_INDEX, 0);
 
     const char *event = json.getItemStringValue(A_EVENT);
     if (event != NULL)
     {
-        frameData->m_strEvent = event;
+        frameData->strEvent = event;
     }
+
+	if (s_CocoStudioVersion < VERSION_COMBINED)
+	{
+		frameData->duration = json.getItemIntValue(A_DURATION, 1);
+	}
+	else
+	{
+		frameData->frameID = json.getItemIntValue(A_FRAME_INDEX, 0);
+	}
 
     return frameData;
 }

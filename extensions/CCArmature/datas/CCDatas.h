@@ -245,10 +245,12 @@ public:
 
     void addDisplayData(CCDisplayData *displayData);
     CCDisplayData *getDisplayData(int index);
+	void updateBoneDataTransform();
 public:
     std::string name;			//! the bone's name
     std::string parentName;		//! the bone parent's name
     CCArray displayDataList;	//! save CCDisplayData informations for the CCBone
+	CCAffineTransform boneDataTransform;
 };
 
 
@@ -298,10 +300,10 @@ public:
     /**
     * m_strMovement, m_strEvent, m_strSound, m_strSoundEffect do not support yet
     */
-    std::string m_strMovement;
-    std::string m_strEvent;
-    std::string m_strSound;
-    std::string m_strSoundEffect;
+    std::string strMovement;
+    std::string strEvent;
+    std::string strSound;
+    std::string strSoundEffect;
 };
 
 
