@@ -27,7 +27,6 @@ THE SOFTWARE.
 
 #include "ccConfig.h"
 #include "cocoa/CCObject.h"
-#include "platform/platform.h"
 #include "cocoa/CCDictionary.h"
 #include <string>
 
@@ -76,14 +75,14 @@ public:
     bool initWithName(const char* timerName);
     ~ProfilingTimer(void);
     const char* description(void) const;
-    inline struct cc_timeval * getStartTime(void) { return &_startTime; };
+    inline struct timeval * getStartTime(void) { return &_startTime; };
     inline void setAverageTime(double value) { _averageTime = value; }
     inline double getAverageTime(void) { return _averageTime; }
     /** resets the timer properties */
     void reset();
 
     std::string _nameStr;
-    struct cc_timeval _startTime;
+    struct timeval _startTime;
     double _averageTime;
     double            minTime;
     double            maxTime;

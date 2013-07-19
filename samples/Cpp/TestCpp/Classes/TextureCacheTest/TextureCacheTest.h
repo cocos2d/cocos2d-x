@@ -4,7 +4,6 @@
 
 #include "cocos2d.h"
 #include "../testBasic.h"
-#include "platform/platform.h"
 
 class TextureCacheTest : public Layer
 {

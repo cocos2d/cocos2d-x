@@ -28,6 +28,7 @@ THE SOFTWARE.
 #define __CCDIRECTOR_H__
 
 #include "platform/CCPlatformMacros.h"
+
 #include "cocoa/CCObject.h"
 #include "ccTypes.h"
 #include "cocoa/CCGeometry.h"
@@ -405,7 +406,7 @@ protected:
     Array* _scenesStack;
     
     /* last time the main loop was updated */
-    struct cc_timeval *_lastUpdate;
+    struct timeval *_lastUpdate;
 
     /* whether or not the next delta time will be zero */
     bool _nextDeltaTimeZero;
