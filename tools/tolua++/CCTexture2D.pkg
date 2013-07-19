@@ -389,7 +389,7 @@
 //comment nextline since it wasn't defined in glew.h of windows
 // #define GL_RGB565                                           0x8D62
 #define GL_DEPTH_COMPONENT16                                0x81A5
-//comment nextline since it wasn't defined in gl.h of Xcode5.0's sdk
+//comment nextline since it wasn't defined in gl.h of IOS7 sdk
 //#define GL_STENCIL_INDEX                                    0x1901
 #define GL_STENCIL_INDEX8                                   0x8D48
 
