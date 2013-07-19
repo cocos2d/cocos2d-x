@@ -124,7 +124,8 @@ public:
     /** returns the alpha pixel format
      @since v0.8
      */
-    static Texture2DPixelFormat defaultAlphaPixelFormat();
+    static Texture2DPixelFormat getDefaultAlphaPixelFormat();
+    CC_DEPRECATED_ATTRIBUTE static Texture2DPixelFormat defaultAlphaPixelFormat() { return Texture2D::getDefaultAlphaPixelFormat(); };
 
     /** treats (or not) PVR files as if they have alpha premultiplied.
      Since it is impossible to know at runtime if the PVR images have the alpha channel premultiplied, it is
@@ -167,9 +168,7 @@ public:
     bool initWithImage(Image * uiImage);
 
     /** Initializes a texture from a string with dimensions, alignment, font name and font size */
-    bool initWithString(const char *text,  const char *fontName, float fontSize, const Size& dimensions, TextAlignment hAlignment, VerticalTextAlignment vAlignment);
-    /** Initializes a texture from a string with font name and font size */
-    bool initWithString(const char *text, const char *fontName, float fontSize);
+    bool initWithString(const char *text,  const char *fontName, float fontSize, const Size& dimensions = Size(0, 0), TextAlignment hAlignment = kTextAlignmentCenter, VerticalTextAlignment vAlignment = kVerticalTextAlignmentTop);
     /** Initializes a texture from a string using a text definition*/
     bool initWithString(const char *text, const FontDefinition& textDefinition);
     
@@ -218,17 +217,20 @@ public:
     /** returns the pixel format.
      @since v2.0
      */
-    const char* stringForFormat() const;
+    const char* getStringForFormat() const;
+    CC_DEPRECATED_ATTRIBUTE const char* stringForFormat() const { return getStringForFormat(); };
 
     /** returns the bits-per-pixel of the in-memory OpenGL texture
     @since v1.0
     */
-    unsigned int bitsPerPixelForFormat() const;
+    unsigned int getBitsPerPixelForFormat() const;
+    CC_DEPRECATED_ATTRIBUTE unsigned int bitsPerPixelForFormat() const { return getBitsPerPixelForFormat(); };
 
     /** Helper functions that returns bits per pixels for a given format.
      @since v2.0
      */
-    unsigned int bitsPerPixelForFormat(Texture2DPixelFormat format) const;
+    unsigned int getBitsPerPixelForFormat(Texture2DPixelFormat format) const;
+    CC_DEPRECATED_ATTRIBUTE unsigned int bitsPerPixelForFormat(Texture2DPixelFormat format) const { return getBitsPerPixelForFormat(format); };
 
     /** content size */
     const Size& getContentSizeInPixels();
