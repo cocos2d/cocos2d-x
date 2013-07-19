@@ -53,14 +53,14 @@ class CC_DLL Timer : public Object
 {
 public:
     /** Allocates a timer with a target and a selector. */
-    static Timer* createWithTarget(Object *target, SEL_SCHEDULE selector);
+    static Timer* create(Object *target, SEL_SCHEDULE selector);
     /** Allocates a timer with a target, a selector and an interval in seconds. */
-    static Timer* createWithTarget(Object *target, SEL_SCHEDULE selector, float seconds);
+    static Timer* create(Object *target, SEL_SCHEDULE selector, float seconds);
     /** Allocates a timer with a script callback function and an interval in seconds. */
     static Timer* createWithScriptHandler(int nHandler, float seconds);
 
-    CC_DEPRECATED_ATTRIBUTE static Timer* timerWithTarget(Object *target, SEL_SCHEDULE selector) { return Timer::createWithTarget(target, selector); }
-    CC_DEPRECATED_ATTRIBUTE static Timer* timerWithTarget(Object *target, SEL_SCHEDULE selector, float seconds) { return Timer::createWithTarget(target, selector, seconds); }
+    CC_DEPRECATED_ATTRIBUTE static Timer* timerWithTarget(Object *target, SEL_SCHEDULE selector) { return Timer::create(target, selector); }
+    CC_DEPRECATED_ATTRIBUTE static Timer* timerWithTarget(Object *target, SEL_SCHEDULE selector, float seconds) { return Timer::create(target, selector, seconds); }
     CC_DEPRECATED_ATTRIBUTE static Timer* timerWithScriptHandler(int nHandler, float seconds) { return Timer::createWithScriptHandler(nHandler, seconds); }
 
     Timer(void);

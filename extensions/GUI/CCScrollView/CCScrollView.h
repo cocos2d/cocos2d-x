@@ -61,12 +61,6 @@ public:
 class ScrollView : public Layer
 {
 public:
-    ScrollView();
-    virtual ~ScrollView();
-
-    bool init();
-    virtual void registerWithTouchDispatcher();
-
     /**
      * Returns an autoreleased scroll view object.
      *
@@ -85,6 +79,10 @@ public:
      */
     static ScrollView* create();
 
+    ScrollView();
+    virtual ~ScrollView();
+
+    bool init();
     /**
      * Returns a scroll view object
      *
@@ -94,6 +92,7 @@ public:
      */
     bool initWithViewSize(Size size, Node* container = NULL);
 
+    virtual void registerWithTouchDispatcher();
 
     /**
      * Sets a new content offset. It ignores max/min offset. It just sets what's given. (just like UIKit's UIScrollView)
@@ -154,9 +153,9 @@ public:
     void resume(Object* sender);
 
 
-    bool isDragging() {return _dragging;}
-    bool isTouchMoved() { return _touchMoved; }
-    bool isBounceable() { return _bounceable; }
+    bool isDragging() const {return _dragging;}
+    bool isTouchMoved() const { return _touchMoved; }
+    bool isBounceable() const { return _bounceable; }
     void setBounceable(bool bBounceable) { _bounceable = bBounceable; }
 
     /**
@@ -164,7 +163,7 @@ public:
      * It's semantically different what it actually means to common scroll views.
      * Hence, this scroll view will use a separate size property.
      */
-    Size getViewSize() { return _viewSize; } 
+    Size getViewSize() const { return _viewSize; }
     void setViewSize(Size size);
 
     Node * getContainer();
@@ -173,35 +172,34 @@ public:
     /**
      * direction allowed to scroll. ScrollViewDirectionBoth by default.
      */
-    ScrollViewDirection getDirection() { return _direction; }
+    ScrollViewDirection getDirection() const { return _direction; }
     virtual void setDirection(ScrollViewDirection eDirection) { _direction = eDirection; }
 
     ScrollViewDelegate* getDelegate() { return _delegate; }
     void setDelegate(ScrollViewDelegate* pDelegate) { _delegate = pDelegate; }
 
-    /** override functions */
-    // optional
-    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent);
-    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent);
-    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent);
-    virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent);
-
-    virtual void setContentSize(const Size & size);
-    virtual const Size& getContentSize() const;
-
 	void updateInset();
+
     /**
      * Determines whether it clips its children or not.
      */
     bool isClippingToBounds() { return _clippingToBounds; }
     void setClippingToBounds(bool bClippingToBounds) { _clippingToBounds = bClippingToBounds; }
 
-    virtual void visit();
-    virtual void addChild(Node * child, int zOrder, int tag);
-    virtual void addChild(Node * child, int zOrder);
-    virtual void addChild(Node * child);
-    void setTouchEnabled(bool e);
-private:
+    // Overrides
+    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) override;
+    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) override;
+    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) override;
+    virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) override;
+    virtual void setContentSize(const Size & size) override;
+    virtual const Size& getContentSize() const override;
+    virtual void visit() override;
+    virtual void addChild(Node * child, int zOrder, int tag) override;
+    virtual void addChild(Node * child, int zOrder) override;
+    virtual void addChild(Node * child) override;
+    void setTouchEnabled(bool e) override;
+
+protected:
     /**
      * Relocates the container at the proper offset, in bounds of max/min offsets.
      *
@@ -237,7 +235,6 @@ private:
      */
     void handleZoom();
 
-protected:
     Rect getViewRect();
     
     /**

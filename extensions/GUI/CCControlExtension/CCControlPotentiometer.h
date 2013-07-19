@@ -42,12 +42,13 @@ NS_CC_EXT_BEGIN
 class ControlPotentiometer : public Control
 {
 public:
-    ControlPotentiometer();
-    virtual ~ControlPotentiometer();
-    /** 
+    /**
      * Creates potentiometer with a track filename and a progress filename.
      */
     static ControlPotentiometer* create(const char* backgroundFile, const char* progressFile, const char* thumbFile);
+
+    ControlPotentiometer();
+    virtual ~ControlPotentiometer();
 
     /** 
      * Initializes a potentiometer with a track sprite and a progress bar.
@@ -56,6 +57,7 @@ public:
      * @param progressSprite ProgressTimer, that is used as a progress bar.
      */
     bool initWithTrackSprite_ProgressTimer_ThumbSprite(Sprite* trackSprite, ProgressTimer* progressTimer, Sprite* thumbSprite);
+
     void setValue(float value);
     float getValue();
      
@@ -65,26 +67,13 @@ public:
     void setMaximumValue(float maximumValue);
     float getMaximumValue();
 
-    void setEnabled(bool enabled);
+    // Overrides
+    virtual bool isTouchInside(Touch * touch) override;
+    void setEnabled(bool enabled) override;
+    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) override;
+    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) override;
+    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) override;
 
-    virtual bool isTouchInside(Touch * touch);
-
-    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent);
-    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent);
-    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent);
-
-protected:
-    CC_SYNTHESIZE_RETAIN(Sprite*, _thumbSprite, ThumbSprite)
-    CC_SYNTHESIZE_RETAIN(ProgressTimer*, _progressTimer, ProgressTimer)
-    CC_SYNTHESIZE(Point, _previousLocation, PreviousLocation)
-    /** Contains the receiver’s current value. */
-    float           _value; 
-    /** Contains the minimum value of the receiver. 
-    * The default value of this property is 0.0. */
-    float           _minimumValue;
-    /** Contains the maximum value of the receiver. 
-    * The default value of this property is 1.0. */
-    float           _maximumValue;
     /** Factorize the event dispath into these methods. */
     void potentiometerBegan(Point location);
     void potentiometerMoved(Point location);
@@ -99,6 +88,19 @@ protected:
         Point beginLineB,
         Point endLineB);
 
+protected:
+    /** Contains the receiver’s current value. */
+    float           _value;
+    /** Contains the minimum value of the receiver.
+     * The default value of this property is 0.0. */
+    float           _minimumValue;
+    /** Contains the maximum value of the receiver.
+     * The default value of this property is 1.0. */
+    float           _maximumValue;
+
+    CC_SYNTHESIZE_RETAIN(Sprite*, _thumbSprite, ThumbSprite)
+    CC_SYNTHESIZE_RETAIN(ProgressTimer*, _progressTimer, ProgressTimer)
+    CC_SYNTHESIZE(Point, _previousLocation, PreviousLocation)
 };
 
 // end of GUI group
