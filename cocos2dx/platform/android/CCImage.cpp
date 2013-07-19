@@ -62,7 +62,7 @@ public:
     bool getBitmapFromJavaShadowStroke(	const char *text,
     									int nWidth,
     									int nHeight,
-    									Image::ETextAlign eAlignMask,
+    									Image::TextAlign eAlignMask,
     									const char * pFontName,
     									float fontSize,
     									float textTintR 		= 1.0,
@@ -120,7 +120,7 @@ public:
     }
 
 
-    bool getBitmapFromJava(const char *text, int nWidth, int nHeight, Image::ETextAlign eAlignMask, const char * pFontName, float fontSize)
+    bool getBitmapFromJava(const char *text, int nWidth, int nHeight, Image::TextAlign eAlignMask, const char * pFontName, float fontSize)
     {
     	return  getBitmapFromJavaShadowStroke(	text, nWidth, nHeight, eAlignMask, pFontName, fontSize );
     }
@@ -148,7 +148,7 @@ bool Image::initWithString(
                                const char *    pText, 
                                int             nWidth/* = 0*/, 
                                int             nHeight/* = 0*/,
-                               ETextAlign      eAlignMask/* = kAlignCenter*/,
+                               TextAlign      eAlignMask/* = kAlignCenter*/,
                                const char *    pFontName/* = nil*/,
                                int             nSize/* = 0*/)
 {
@@ -182,7 +182,7 @@ bool Image::initWithStringShadowStroke(
                                          const char * pText,
                                          int         nWidth ,
                                          int         nHeight ,
-                                         ETextAlign eAlignMask ,
+                                         TextAlign eAlignMask ,
                                          const char * pFontName ,
                                          int          nSize ,
                                          float        textTintR,

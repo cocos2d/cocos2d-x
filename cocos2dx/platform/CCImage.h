@@ -58,7 +58,7 @@ public:
         kFmtWebp,
         kFmtRawData,
         kFmtUnKnown
-    }EImageFormat;
+    }ImageFormat;
 
     typedef enum
     {
@@ -71,14 +71,14 @@ public:
         kAlignBottomLeft    = 0x21, ///< Horizontal left and vertical bottom.
         kAlignLeft          = 0x31, ///< Horizontal left and vertical center.
         kAlignTopLeft       = 0x11, ///< Horizontal left and vertical top.
-    }ETextAlign;
-    
+    }TextAlign;
 
-	typedef enum
-	{
-		kColorGray = 0,
-		kColorRGB,
-	}EColorType;
+
+    typedef enum
+    {
+        kColorGray = 0,
+        kColorRGB,
+    }ColorType;
 
     /**
     @brief  Load the image from the specified path. 
@@ -119,7 +119,7 @@ public:
         const char *    pText, 
         int             nWidth = 0, 
         int             nHeight = 0,
-        ETextAlign      eAlignMask = kAlignCenter,
+        TextAlign      eAlignMask = kAlignCenter,
         const char *    pFontName = 0,
         int             nSize = 0);
     
@@ -129,7 +129,7 @@ public:
                                             const char *    pText,
                                             int             nWidth      = 0,
                                             int             nHeight     = 0,
-                                            ETextAlign      eAlignMask  = kAlignCenter,
+                                            TextAlign      eAlignMask  = kAlignCenter,
                                             const char *    pFontName   = 0,
                                             int             nSize       = 0,
                                             float           textTintR   = 1,
@@ -150,13 +150,13 @@ public:
     
     #endif
     
-
+        
     unsigned char *   getData()               { return _data; }
-    int               getDataLen()            { return _width * _height * (_colorType == kColorGray ? 1 : 3 + _hasAlpha ? 1 : 0); }
-	EColorType        getColorType()          { return _colorType; }
-	unsigned short    getBitDepth()              { return _bitDepth; }
-	unsigned short    getWidth()              { return _width; }
-	unsigned short    getHeight()             { return _height; }
+    int               getDataLen()            { return _width * _height * ((_colorType == kColorGray ? 1 : 3) + (_hasAlpha ? 1 : 0)); }
+    ColorType        getColorType()          { return _colorType; }
+    unsigned short    getBitDepth()              { return _bitDepth; }
+    unsigned short    getWidth()              { return _width; }
+    unsigned short    getHeight()             { return _height; }
 
 
     bool hasAlpha()                     { return _hasAlpha;   }
@@ -179,13 +179,18 @@ protected:
     bool _saveImageToPNG(const char *pszFilePath, bool bIsToRGB = true);
     bool _saveImageToJPG(const char *pszFilePath);
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    bool _iosSaveToFile(const char *pszFilePath, bool bIsToRGB = true);
+#endif
+
     unsigned char *_data;
-	unsigned short _bitDepth;
-	unsigned short _width;
-	unsigned short _height;
-	EColorType _colorType;
+    unsigned short _bitDepth;
+    unsigned short _width;
+    unsigned short _height;
+    ColorType _colorType;
     bool _hasAlpha;
     bool _preMulti;
+    int _dataLen;
 
 
 private:
@@ -202,11 +207,11 @@ private:
      */
     bool initWithImageFileThreadSafe(const char *fullpath);
 
-	EImageFormat detectFormat(void* pData, int nDatalen);
-	bool isPng(void *pData, int nDatalen);
-	bool isJpg(void *pData, int nDatalen);
-	bool isTiff(void *pData, int nDatalen);
-	bool isWebp(void *pData, int nDatalen);
+    ImageFormat detectFormat(void* pData, int nDatalen);
+    bool isPng(void *pData, int nDatalen);
+    bool isJpg(void *pData, int nDatalen);
+    bool isTiff(void *pData, int nDatalen);
+    bool isWebp(void *pData, int nDatalen);
 };
 
 // end of platform group

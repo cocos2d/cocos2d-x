@@ -306,7 +306,6 @@
 		A03F264A1780BAE8006731B9 /* CCThread.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1EE91780BAE5006731B9 /* CCThread.h */; };
 		A03F26B91780BAE8006731B9 /* platform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F1F5F1780BAE5006731B9 /* platform.cpp */; };
 		A03F26BA1780BAE8006731B9 /* platform.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1F601780BAE5006731B9 /* platform.h */; };
-		A03F27DD1780BAE8006731B9 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A03F20D41780BAE5006731B9 /* libwebp.a */; };
 		A03F27DE1780BAE8006731B9 /* decode.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F20D61780BAE5006731B9 /* decode.h */; };
 		A03F27DF1780BAE8006731B9 /* encode.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F20D71780BAE5006731B9 /* encode.h */; };
 		A03F27E01780BAE8006731B9 /* types.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F20D81780BAE5006731B9 /* types.h */; };
@@ -1239,7 +1238,6 @@
 		A07A4DB517837B910073F6A7 /* multi.h in Headers */ = {isa = PBXBuildFile; fileRef = A07A4DA517837B910073F6A7 /* multi.h */; };
 		A07A4DB617837B910073F6A7 /* stdcheaders.h in Headers */ = {isa = PBXBuildFile; fileRef = A07A4DA617837B910073F6A7 /* stdcheaders.h */; };
 		A07A4DB717837B910073F6A7 /* typecheck-gcc.h in Headers */ = {isa = PBXBuildFile; fileRef = A07A4DA717837B910073F6A7 /* typecheck-gcc.h */; };
-		A07A4DB917837B910073F6A7 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A4DAA17837B910073F6A7 /* libwebp.a */; };
 		A07A4DBA17837B910073F6A7 /* decode.h in Headers */ = {isa = PBXBuildFile; fileRef = A07A4DAC17837B910073F6A7 /* decode.h */; };
 		A07A4DBB17837B910073F6A7 /* encode.h in Headers */ = {isa = PBXBuildFile; fileRef = A07A4DAD17837B910073F6A7 /* encode.h */; };
 		A07A4DBC17837B910073F6A7 /* types.h in Headers */ = {isa = PBXBuildFile; fileRef = A07A4DAE17837B910073F6A7 /* types.h */; };
@@ -1771,12 +1769,15 @@
 		A07A52CC1784AC360073F6A7 /* etc1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A07A52C91784AC360073F6A7 /* etc1.cpp */; };
 		A07A52CD1784AC360073F6A7 /* etc1.h in Headers */ = {isa = PBXBuildFile; fileRef = A07A52CA1784AC360073F6A7 /* etc1.h */; };
 		A07A52CE1784AC360073F6A7 /* etc1.h in Headers */ = {isa = PBXBuildFile; fileRef = A07A52CA1784AC360073F6A7 /* etc1.h */; };
-		B348AF76179690E0000D2245 /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B348AF70179690B3000D2245 /* libjpeg.a */; };
-		B348AF77179690E0000D2245 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B348AF71179690B3000D2245 /* libpng.a */; };
-		B348AF78179690E0000D2245 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B348AF72179690B3000D2245 /* libtiff.a */; };
-		B348AF7B17969102000D2245 /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B348AF7917969102000D2245 /* libjpeg.a */; };
-		B348AF7C17969102000D2245 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B348AF7A17969102000D2245 /* libpng.a */; };
-		B348AF7E17969124000D2245 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B348AF7D17969124000D2245 /* libtiff.a */; };
+		B3D8DD58179922A10039C204 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D8DD53179922A10039C204 /* libcurl.a */; };
+		B3D8DD59179922A10039C204 /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D8DD54179922A10039C204 /* libjpeg.a */; };
+		B3D8DD5A179922A10039C204 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D8DD55179922A10039C204 /* libpng.a */; };
+		B3D8DD5B179922A10039C204 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D8DD56179922A10039C204 /* libtiff.a */; };
+		B3D8DD5C179922A10039C204 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D8DD57179922A10039C204 /* libwebp.a */; };
+		B3D8DD61179922F30039C204 /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D8DD5D179922F30039C204 /* libjpeg.a */; };
+		B3D8DD62179922F30039C204 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D8DD5E179922F30039C204 /* libpng.a */; };
+		B3D8DD63179922F30039C204 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D8DD5F179922F30039C204 /* libtiff.a */; };
+		B3D8DD64179922F30039C204 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D8DD60179922F30039C204 /* libwebp.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1932,7 +1933,6 @@
 		1A2E82371793EDB70058E421 /* jsb_deprecated.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_deprecated.js; sourceTree = "<group>"; };
 		1A6FB53017854BC300CDF010 /* libluabindings Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluabindings Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A6FB53317854DD600CDF010 /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libluajit.a; sourceTree = "<group>"; };
-		1A94D34C16C2014900D79D09 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../platform/third_party/mac/libraries/libwebp.a; sourceTree = "<group>"; };
 		1AE019821790023400D574A8 /* SocketIO.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SocketIO.cpp; sourceTree = "<group>"; };
 		1AE019831790023400D574A8 /* SocketIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketIO.h; sourceTree = "<group>"; };
 		466BE8EC1793DBE400424245 /* CCDeprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDeprecated.h; sourceTree = "<group>"; };
@@ -2113,7 +2113,6 @@
 		A03F1EE91780BAE5006731B9 /* CCThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCThread.h; sourceTree = "<group>"; };
 		A03F1F5F1780BAE5006731B9 /* platform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = platform.cpp; sourceTree = "<group>"; };
 		A03F1F601780BAE5006731B9 /* platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = platform.h; sourceTree = "<group>"; };
-		A03F20D41780BAE5006731B9 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwebp.a; sourceTree = "<group>"; };
 		A03F20D61780BAE5006731B9 /* decode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = decode.h; sourceTree = "<group>"; };
 		A03F20D71780BAE5006731B9 /* encode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = encode.h; sourceTree = "<group>"; };
 		A03F20D81780BAE5006731B9 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
@@ -2798,8 +2797,6 @@
 		A07A4DA517837B910073F6A7 /* multi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = multi.h; sourceTree = "<group>"; };
 		A07A4DA617837B910073F6A7 /* stdcheaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdcheaders.h; sourceTree = "<group>"; };
 		A07A4DA717837B910073F6A7 /* typecheck-gcc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "typecheck-gcc.h"; sourceTree = "<group>"; };
-		A07A4DA917837B910073F6A7 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.a; sourceTree = "<group>"; };
-		A07A4DAA17837B910073F6A7 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwebp.a; sourceTree = "<group>"; };
 		A07A4DAC17837B910073F6A7 /* decode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = decode.h; sourceTree = "<group>"; };
 		A07A4DAD17837B910073F6A7 /* encode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = encode.h; sourceTree = "<group>"; };
 		A07A4DAE17837B910073F6A7 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
@@ -2911,12 +2908,15 @@
 		A07A509917838A0C0073F6A7 /* libjs_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjs_static.a; sourceTree = "<group>"; };
 		A07A52C91784AC360073F6A7 /* etc1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = etc1.cpp; sourceTree = "<group>"; };
 		A07A52CA1784AC360073F6A7 /* etc1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = etc1.h; sourceTree = "<group>"; };
-		B348AF70179690B3000D2245 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = cocos2dx/platform/third_party/mac/libraries/libjpeg.a; sourceTree = "<group>"; };
-		B348AF71179690B3000D2245 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = cocos2dx/platform/third_party/mac/libraries/libpng.a; sourceTree = "<group>"; };
-		B348AF72179690B3000D2245 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = cocos2dx/platform/third_party/mac/libraries/libtiff.a; sourceTree = "<group>"; };
-		B348AF7917969102000D2245 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = cocos2dx/platform/third_party/ios/libraries/libjpeg.a; sourceTree = "<group>"; };
-		B348AF7A17969102000D2245 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = cocos2dx/platform/third_party/ios/libraries/libpng.a; sourceTree = "<group>"; };
-		B348AF7D17969124000D2245 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = cocos2dx/platform/third_party/ios/libraries/libtiff.a; sourceTree = "<group>"; };
+		B3D8DD53179922A10039C204 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
+		B3D8DD54179922A10039C204 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = cocos2dx/platform/third_party/ios/libraries/libjpeg.a; sourceTree = "<group>"; };
+		B3D8DD55179922A10039C204 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = cocos2dx/platform/third_party/ios/libraries/libpng.a; sourceTree = "<group>"; };
+		B3D8DD56179922A10039C204 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = cocos2dx/platform/third_party/ios/libraries/libtiff.a; sourceTree = "<group>"; };
+		B3D8DD57179922A10039C204 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = cocos2dx/platform/third_party/ios/libraries/libwebp.a; sourceTree = "<group>"; };
+		B3D8DD5D179922F30039C204 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = cocos2dx/platform/third_party/mac/libraries/libjpeg.a; sourceTree = "<group>"; };
+		B3D8DD5E179922F30039C204 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = cocos2dx/platform/third_party/mac/libraries/libpng.a; sourceTree = "<group>"; };
+		B3D8DD5F179922F30039C204 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = cocos2dx/platform/third_party/mac/libraries/libtiff.a; sourceTree = "<group>"; };
+		B3D8DD60179922F30039C204 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = cocos2dx/platform/third_party/mac/libraries/libwebp.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2924,11 +2924,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B348AF76179690E0000D2245 /* libjpeg.a in Frameworks */,
-				B348AF77179690E0000D2245 /* libpng.a in Frameworks */,
-				B348AF78179690E0000D2245 /* libtiff.a in Frameworks */,
+				B3D8DD63179922F30039C204 /* libtiff.a in Frameworks */,
+				B3D8DD64179922F30039C204 /* libwebp.a in Frameworks */,
 				1A94D35116C2072800D79D09 /* Foundation.framework in Frameworks */,
-				A03F27DD1780BAE8006731B9 /* libwebp.a in Frameworks */,
+				B3D8DD61179922F30039C204 /* libjpeg.a in Frameworks */,
+				B3D8DD62179922F30039C204 /* libpng.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2989,11 +2989,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B348AF7E17969124000D2245 /* libtiff.a in Frameworks */,
-				B348AF7B17969102000D2245 /* libjpeg.a in Frameworks */,
-				B348AF7C17969102000D2245 /* libpng.a in Frameworks */,
 				A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */,
-				A07A4DB917837B910073F6A7 /* libwebp.a in Frameworks */,
+				B3D8DD58179922A10039C204 /* libcurl.a in Frameworks */,
+				B3D8DD59179922A10039C204 /* libjpeg.a in Frameworks */,
+				B3D8DD5A179922A10039C204 /* libpng.a in Frameworks */,
+				B3D8DD5B179922A10039C204 /* libtiff.a in Frameworks */,
+				B3D8DD5C179922A10039C204 /* libwebp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3076,14 +3077,9 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B348AF7D17969124000D2245 /* libtiff.a */,
-				B348AF7917969102000D2245 /* libjpeg.a */,
-				B348AF7A17969102000D2245 /* libpng.a */,
-				B348AF70179690B3000D2245 /* libjpeg.a */,
-				B348AF71179690B3000D2245 /* libpng.a */,
-				B348AF72179690B3000D2245 /* libtiff.a */,
+				B3D8D44B179921D50039C204 /* ios */,
+				B3D8D4471799219B0039C204 /* mac */,
 				A035A5421782286100987F6C /* libwebsockets.a */,
-				1A94D34C16C2014900D79D09 /* libwebp.a */,
 				1551A342158F2AB200E66CFE /* Foundation.framework */,
 			);
 			name = Frameworks;
@@ -3594,7 +3590,6 @@
 		A03F20D31780BAE5006731B9 /* libraries */ = {
 			isa = PBXGroup;
 			children = (
-				A03F20D41780BAE5006731B9 /* libwebp.a */,
 			);
 			path = libraries;
 			sourceTree = "<group>";
@@ -4811,8 +4806,6 @@
 		A07A4DA817837B910073F6A7 /* libraries */ = {
 			isa = PBXGroup;
 			children = (
-				A07A4DA917837B910073F6A7 /* libcurl.a */,
-				A07A4DAA17837B910073F6A7 /* libwebp.a */,
 			);
 			path = libraries;
 			sourceTree = "<group>";
@@ -4988,6 +4981,29 @@
 				A07A52CA1784AC360073F6A7 /* etc1.h */,
 			);
 			path = etc;
+			sourceTree = "<group>";
+		};
+		B3D8D4471799219B0039C204 /* mac */ = {
+			isa = PBXGroup;
+			children = (
+				B3D8DD5D179922F30039C204 /* libjpeg.a */,
+				B3D8DD5E179922F30039C204 /* libpng.a */,
+				B3D8DD5F179922F30039C204 /* libtiff.a */,
+				B3D8DD60179922F30039C204 /* libwebp.a */,
+			);
+			name = mac;
+			sourceTree = "<group>";
+		};
+		B3D8D44B179921D50039C204 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				B3D8DD53179922A10039C204 /* libcurl.a */,
+				B3D8DD54179922A10039C204 /* libjpeg.a */,
+				B3D8DD55179922A10039C204 /* libpng.a */,
+				B3D8DD56179922A10039C204 /* libtiff.a */,
+				B3D8DD57179922A10039C204 /* libwebp.a */,
+			);
+			name = ios;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -7334,7 +7350,9 @@
 				HEADER_SEARCH_PATHS = "\"$(SDKROOT)/usr/include/libxml2\"";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/cocos2dx/platform/third_party/mac/libraries\"",
+					"\\\"$(SRCROOT)/cocos2dx/platform/third_party/mac/libraries\\\"",
+					"$(SRCROOT)/cocos2dx/platform/third_party/ios/libraries",
+					"$(SRCROOT)/cocos2dx/platform/third_party/mac/libraries",
 				);
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/cocos2dx/platform/mac\" \"$(SRCROOT)/cocos2dx/platform/third_party/common\"/**";
 			};
@@ -7354,7 +7372,9 @@
 				HEADER_SEARCH_PATHS = "\"$(SDKROOT)/usr/include/libxml2\"";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/cocos2dx/platform/third_party/mac/libraries\"",
+					"\\\"$(SRCROOT)/cocos2dx/platform/third_party/mac/libraries\\\"",
+					"$(SRCROOT)/cocos2dx/platform/third_party/ios/libraries",
+					"$(SRCROOT)/cocos2dx/platform/third_party/mac/libraries",
 				);
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/cocos2dx/platform/mac\" \"$(SRCROOT)/cocos2dx/platform/third_party/common\"/**";
 			};

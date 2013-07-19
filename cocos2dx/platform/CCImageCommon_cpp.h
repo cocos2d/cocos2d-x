@@ -232,79 +232,75 @@ bool Image::initWithImageData(void * pData,
 
 bool Image::isPng(void *pData, int nDatalen)
 {
-	if (nDatalen <= 8)
-	{
-		return false;
-	}
+    if (nDatalen <= 8)
+    {
+        return false;
+    }
 
-	static const unsigned char PNG_SIGNATURE[] = {0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a};
+    static const unsigned char PNG_SIGNATURE[] = {0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a};
 
-	return memcmp(PNG_SIGNATURE, pData, sizeof(PNG_SIGNATURE)) == 0;
+    return memcmp(PNG_SIGNATURE, pData, sizeof(PNG_SIGNATURE)) == 0;
 }
 
 bool Image::isJpg(void *pData, int nDatalen)
 {
-	if (nDatalen <= 4)
-	{
-		return false;
-	}
+    if (nDatalen <= 4)
+    {
+        return false;
+    }
 
-	static const unsigned char JPG_SOI[] = {0xFF, 0xD8};
+    static const unsigned char JPG_SOI[] = {0xFF, 0xD8};
 
-	return memcmp(pData, JPG_SOI, 2) == 0;
+    return memcmp(pData, JPG_SOI, 2) == 0;
 }
 
 bool Image::isTiff(void *pData, int nDatalen)
 {
-	if (nDatalen <= 4)
-	{
-		return false;
-	}
+    if (nDatalen <= 4)
+    {
+        return false;
+    }
 
-	static const char* TIFF_II = "II";
-	static const char* TIFF_MM = "MM";
+    static const char* TIFF_II = "II";
+    static const char* TIFF_MM = "MM";
 
-	return (memcmp(pData, TIFF_II, 2) == 0 && *((const char*)pData + 2) == 42 && *((const char*)pData + 2) == 0)
-		|| (memcmp(pData, TIFF_MM, 2) == 0 && *((const char*)pData + 2) == 0 && *((const char*)pData + 2) == 42);
+    return (memcmp(pData, TIFF_II, 2) == 0 && *((const char*)pData + 2) == 42 && *((const char*)pData + 3) == 0)
+        || (memcmp(pData, TIFF_MM, 2) == 0 && *((const char*)pData + 2) == 0 && *((const char*)pData + 3) == 42);
 }
 
 bool Image::isWebp(void *pData, int nDatalen)
 {
-	if (nDatalen <= 12)
-	{
-		return false;
-	}
+    if (nDatalen <= 12)
+    {
+        return false;
+    }
 
-	static const char* WEBP_RIFF = "RIFF";
-	static const char* WEBP_WEBP = "WEBP";
+    static const char* WEBP_RIFF = "RIFF";
+    static const char* WEBP_WEBP = "WEBP";
 
-	return memcmp(pData, WEBP_RIFF, 4) == 0 
-		&& (int)(*((int*)(pData) + 1)) == nDatalen 
-		&& memcmp((unsigned char*)pData + 8, WEBP_WEBP, 4) == 0;
+    return memcmp(pData, WEBP_RIFF, 4) == 0 
+        && memcmp((unsigned char*)pData + 8, WEBP_WEBP, 4) == 0;
 }
 
 
-Image::EImageFormat Image::detectFormat(void* pData, int nDatalen)
+Image::ImageFormat Image::detectFormat(void* pData, int nDatalen)
 {
-	if (isPng(pData, nDatalen))
-	{
-		return kFmtPng;
-	}else if (isJpg(pData, nDatalen))
-	{
-		return kFmtJpg;
-	}else if (isTiff(pData, nDatalen))
-	{
-		return kFmtTiff;
-	}else if (isWebp(pData, nDatalen))
-	{
-		return kFmtWebp;
-	}else
-	{
-		return kFmtRawData;
-	}
-
-
-
+    if (isPng(pData, nDatalen))
+    {
+        return kFmtPng;
+    }else if (isJpg(pData, nDatalen))
+    {
+        return kFmtJpg;
+    }else if (isTiff(pData, nDatalen))
+    {
+        return kFmtTiff;
+    }else if (isWebp(pData, nDatalen))
+    {
+        return kFmtWebp;
+    }else
+    {
+        return kFmtRawData;
+    }
 }
 /*
  * ERROR HANDLING:
@@ -399,16 +395,17 @@ bool Image::_initWithJpgData(void * data, int nSize)
 #endif
 
         // we only support RGB or grayscale
-        if (cinfo.jpeg_color_space != JCS_RGB)
+        if (cinfo.jpeg_color_space == JCS_RGB)
         {
-            if (cinfo.jpeg_color_space == JCS_GRAYSCALE || cinfo.jpeg_color_space == JCS_YCbCr)
-            {
-                cinfo.out_color_space = JCS_RGB;
-            }
+            _colorType = kColorRGB;
         }
-        else
+        else if (cinfo.jpeg_color_space == JCS_GRAYSCALE)
         {
-            break;
+            _colorType = kColorGray;
+        }else
+        {
+            cinfo.out_color_space = JCS_RGB;
+            _colorType = kColorRGB;
         }
 
         /* Start decompression jpeg here */
@@ -454,7 +451,7 @@ bool Image::_initWithJpgData(void * data, int nSize)
 
 bool Image::_initWithPngData(void * pData, int nDatalen)
 {
-// length of bytes to check if it is a valid png file
+    // length of bytes to check if it is a valid png file
 #define PNGSIGSIZE  8
     bool bRet = false;
     png_byte        header[PNGSIGSIZE]   = {0}; 
@@ -490,17 +487,17 @@ bool Image::_initWithPngData(void * pData, int nDatalen)
         png_set_read_fn(png_ptr, &imageSource, pngReadCallback);
 
         // read png header info
-        
+
         // read png file info
         png_read_info(png_ptr, info_ptr);
-        
+
         _width = png_get_image_width(png_ptr, info_ptr);
         _height = png_get_image_height(png_ptr, info_ptr);
         _bitDepth = png_get_bit_depth(png_ptr, info_ptr);
         png_uint_32 color_type = png_get_color_type(png_ptr, info_ptr);
 
         //CCLOG("color type %u", color_type);
-        
+
         // force palette images to be expanded to 24-bit RGB
         // it may include alpha channel
         if (color_type == PNG_COLOR_TYPE_PALETTE)
@@ -510,7 +507,7 @@ bool Image::_initWithPngData(void * pData, int nDatalen)
         // low-bit-depth grayscale images are to be expanded to 8 bits
         if (color_type == PNG_COLOR_TYPE_GRAY && _bitDepth < 8)
         {
-			_bitDepth = 8;
+            _bitDepth = 8;
             png_set_expand_gray_1_2_4_to_8(png_ptr);
         }
         // expand any tRNS chunk data into a full alpha channel
@@ -525,50 +522,50 @@ bool Image::_initWithPngData(void * pData, int nDatalen)
         } 
 
         // Expanded earlier for grayscale, now take care of palette and rgb
-		if (_bitDepth < 8) {
-			png_set_packing(png_ptr);
-		}
-		// update info
-		png_read_update_info(png_ptr, info_ptr);
-		_width = png_get_image_width(png_ptr, info_ptr);
-		_height = png_get_image_height(png_ptr, info_ptr);
-		_bitDepth = png_get_bit_depth(png_ptr, info_ptr);
-		color_type = png_get_color_type(png_ptr, info_ptr);
-        
-		_hasAlpha = color_type & PNG_COLOR_MASK_ALPHA;
-        
-		switch (color_type)
-		{
-		case PNG_COLOR_TYPE_GRAY:
-		case PNG_COLOR_TYPE_GRAY_ALPHA:
-			_colorType = kColorGray;
-			break;
-		case PNG_COLOR_TYPE_RGB:
-		case PNG_COLOR_TYPE_RGB_ALPHA:
-			_colorType = kColorRGB;
-			break;
-		default:
-			break;
-		}
+        if (_bitDepth < 8) {
+            png_set_packing(png_ptr);
+        }
+        // update info
+        png_read_update_info(png_ptr, info_ptr);
+        _width = png_get_image_width(png_ptr, info_ptr);
+        _height = png_get_image_height(png_ptr, info_ptr);
+        _bitDepth = png_get_bit_depth(png_ptr, info_ptr);
+        color_type = png_get_color_type(png_ptr, info_ptr);
+
+        _hasAlpha = color_type & PNG_COLOR_MASK_ALPHA;
+
+        switch (color_type)
+        {
+        case PNG_COLOR_TYPE_GRAY:
+        case PNG_COLOR_TYPE_GRAY_ALPHA:
+            _colorType = kColorGray;
+            break;
+        case PNG_COLOR_TYPE_RGB:
+        case PNG_COLOR_TYPE_RGB_ALPHA:
+            _colorType = kColorRGB;
+            break;
+        default:
+            break;
+        }
 
         // read png data
         png_uint_32 rowbytes;
         png_bytep* row_pointers = (png_bytep*)malloc( sizeof(png_bytep) * _height );
-        
+
         rowbytes = png_get_rowbytes(png_ptr, info_ptr);
-        
+
         _data = new unsigned char[rowbytes * _height];
         CC_BREAK_IF(!_data);
-        
+
         for (unsigned short i = 0; i < _height; ++i)
         {
             row_pointers[i] = _data + i*rowbytes;
         }
         png_read_image(png_ptr, row_pointers);
-        
+
         png_read_end(png_ptr, NULL);
-		
-		_preMulti = false;
+
+        _preMulti = false;
 
         CC_SAFE_FREE(row_pointers);
 
@@ -787,6 +784,12 @@ bool Image::initWithRawData(void * pData, int nDatalen, int nWidth, int nHeight,
 
 bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    assert(false);
+    return false;
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    return _iosSaveToFile(pszFilePath, bIsToRGB);
+#else
     bool bRet = false;
 
     do 
@@ -819,6 +822,7 @@ bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
     } while (0);
 
     return bRet;
+#endif
 }
 
 bool Image::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)

@@ -21,6 +21,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#include "CCImageCommon_cpp.h"
+
 #import "CCImage.h"
 #import "CCFileUtils.h"
 #import "CCCommon.h"
@@ -172,7 +174,7 @@ static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize
 #define ALIGN_CENTER 3
 #define ALIGN_BOTTOM 2
 
-static bool _initWithString(const char * pText, cocos2d::Image::ETextAlign eAlign, const char * pFontName, int nSize, tImageInfo* pInfo)
+static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign, const char * pFontName, int nSize, tImageInfo* pInfo)
 {
     bool bRet = false;
     do 
@@ -400,179 +402,40 @@ static bool _initWithString(const char * pText, cocos2d::Image::ETextAlign eAlig
 
 NS_CC_BEGIN
 
-Image::Image()
-: _width(0)
-, _height(0)
-, _bitsPerComponent(0)
-, _data(0)
-, _hasAlpha(false)
-, _preMulti(false)
-{
-    
-}
-
-Image::~Image()
-{
-    CC_SAFE_DELETE_ARRAY(_data);
-}
-
-bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
-{
-	bool bRet = false;
-    unsigned long nSize = 0;
-    unsigned char* pBuffer = FileUtils::getInstance()->getFileData(
-				FileUtils::getInstance()->fullPathForFilename(strPath).c_str(),
-				"rb",
-				&nSize);
-				
-    if (pBuffer != NULL && nSize > 0)
-    {
-        bRet = initWithImageData(pBuffer, nSize, eImgFmt);
-    }
-    CC_SAFE_DELETE_ARRAY(pBuffer);
-    return bRet;
-}
-
-bool Image::initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType)
-{
-    /*
-     * FileUtils::fullPathFromRelativePath() is not thread-safe.
-     */
-    bool bRet = false;
-    unsigned long nSize = 0;
-    unsigned char* pBuffer = FileUtils::getInstance()->getFileData(fullpath, "rb", &nSize);
-    if (pBuffer != NULL && nSize > 0)
-    {
-        bRet = initWithImageData(pBuffer, nSize, imageType);
-    }
-    CC_SAFE_DELETE_ARRAY(pBuffer);
-    return bRet;
-}
-
-bool Image::initWithImageData(void * pData, 
-                                int nDataLen, 
-                                EImageFormat eFmt,
-                                int nWidth,
-                                int nHeight,
-                                int nBitsPerComponent)
-{
-    bool bRet = false;
-    tImageInfo info = {0};
-    
-    info.hasShadow = false;
-    info.hasStroke = false;
-    
-    do 
-    {
-        CC_BREAK_IF(! pData || nDataLen <= 0);
-        if (eFmt == kFmtRawData)
-        {
-            bRet = initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false);
-        }
-        else if (eFmt == kFmtWebp)
-        {
-            bRet = _initWithWebpData(pData, nDataLen);
-        }
-        else // init with png or jpg file data
-        {
-            bRet = _initWithData(pData, nDataLen, &info);
-            if (bRet)
-            {
-                _height = (short)info.height;
-                _width = (short)info.width;
-                _bitsPerComponent = info.bitsPerComponent;
-                _hasAlpha = info.hasAlpha;
-                _preMulti = info.isPremultipliedAlpha;
-                _data = info.data;
-            }
-        }
-    } while (0);
-    
-    return bRet;
-}
-
-bool Image::initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti)
-{
-    bool bRet = false;
-    do 
-    {
-        CC_BREAK_IF(0 == nWidth || 0 == nHeight);
-
-        _bitsPerComponent = nBitsPerComponent;
-        _height   = (short)nHeight;
-        _width    = (short)nWidth;
-        _hasAlpha = true;
-
-        // only RGBA8888 supported
-        int nBytesPerComponent = 4;
-        int nSize = nHeight * nWidth * nBytesPerComponent;
-        _data = new unsigned char[nSize];
-        CC_BREAK_IF(! _data);
-        memcpy(_data, pData, nSize);
-
-        bRet = true;
-    } while (0);
-    return bRet;
-}
-
-bool Image::_initWithJpgData(void *pData, int nDatalen)
-{
-    assert(0);
-	return false;
-}
-
-bool Image::_initWithPngData(void *pData, int nDatalen)
-{
-    assert(0);
-	return false;
-}
-
-bool Image::_saveImageToPNG(const char *pszFilePath, bool bIsToRGB)
-{
-    assert(0);
-	return false;
-}
-
-bool Image::_saveImageToJPG(const char *pszFilePath)
-{
-    assert(0);
-	return false;
-}
-
 bool Image::initWithString(
-                            const char * pText,
-                            int         nWidth /* = 0 */,
-                            int         nHeight /* = 0 */,
-                            ETextAlign eAlignMask /* = kAlignCenter */,
-                            const char * pFontName /* = nil */,
-                            int         nSize /* = 0 */)
+                           const char * pText,
+                           int         nWidth /* = 0 */,
+                           int         nHeight /* = 0 */,
+                           TextAlign eAlignMask /* = kAlignCenter */,
+                           const char * pFontName /* = nil */,
+                           int         nSize /* = 0 */)
 {
     return initWithStringShadowStroke(pText, nWidth, nHeight, eAlignMask , pFontName, nSize);
 }
 
 bool Image::initWithStringShadowStroke(
-                                         const char * pText,
-                                         int         nWidth ,
-                                         int         nHeight ,
-                                         ETextAlign eAlignMask ,
-                                         const char * pFontName ,
-                                         int         nSize ,
-                                         float       textTintR,
-                                         float       textTintG,
-                                         float       textTintB,
-                                         bool shadow,
-                                         float shadowOffsetX,
-                                         float shadowOffsetY,
-                                         float shadowOpacity,
-                                         float shadowBlur,
-                                         bool  stroke,
-                                         float strokeR,
-                                         float strokeG,
-                                         float strokeB,
-                                         float strokeSize)
+                                       const char * pText,
+                                       int         nWidth ,
+                                       int         nHeight ,
+                                       TextAlign eAlignMask ,
+                                       const char * pFontName ,
+                                       int         nSize ,
+                                       float       textTintR,
+                                       float       textTintG,
+                                       float       textTintB,
+                                       bool shadow,
+                                       float shadowOffsetX,
+                                       float shadowOffsetY,
+                                       float shadowOpacity,
+                                       float shadowBlur,
+                                       bool  stroke,
+                                       float strokeR,
+                                       float strokeG,
+                                       float strokeB,
+                                       float strokeSize)
 {
     
-   
+    
     
     tImageInfo info = {0};
     info.width                  = nWidth;
@@ -598,7 +461,7 @@ bool Image::initWithStringShadowStroke(
     }
     _height = (short)info.height;
     _width = (short)info.width;
-    _bitsPerComponent = info.bitsPerComponent;
+    _bitDepth = info.bitsPerComponent;
     _hasAlpha = info.hasAlpha;
     _preMulti = info.isPremultipliedAlpha;
     _data = info.data;
@@ -606,8 +469,7 @@ bool Image::initWithStringShadowStroke(
     return true;
 }
 
-
-bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
+bool Image::_iosSaveToFile(const char *pszFilePath, bool bIsToRGB)
 {
     bool saveToPNG = false;
     bool needToCopyPixels = false;

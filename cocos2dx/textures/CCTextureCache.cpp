@@ -218,16 +218,6 @@ void TextureCache::loadImage()
         }        
 
         const char *filename = pAsyncStruct->filename.c_str();
-
-        // compute image type
-        Image::EImageFormat imageType = computeImageFormatType(pAsyncStruct->filename);
-        if (imageType == Image::kFmtUnKnown)
-        {
-            CCLOG("unsupported format %s",filename);
-            delete pAsyncStruct;
-            
-            continue;
-        }
         
         // generate image            
         Image *pImage = new Image();
@@ -242,7 +232,6 @@ void TextureCache::loadImage()
         ImageInfo *pImageInfo = new ImageInfo();
         pImageInfo->asyncStruct = pAsyncStruct;
         pImageInfo->image = pImage;
-        pImageInfo->imageType = imageType;
 
         // put the image info into the queue
         _imageInfoMutex.lock();
@@ -257,30 +246,6 @@ void TextureCache::loadImage()
         delete _imageInfoQueue;
 	    _imageInfoQueue = nullptr;
     }
-}
-
-Image::EImageFormat TextureCache::computeImageFormatType(string& filename)
-{
-    Image::EImageFormat ret = Image::kFmtUnKnown;
-
-    if ((std::string::npos != filename.find(".jpg")) || (std::string::npos != filename.find(".jpeg")))
-    {
-        ret = Image::kFmtJpg;
-    }
-    else if ((std::string::npos != filename.find(".png")) || (std::string::npos != filename.find(".PNG")))
-    {
-        ret = Image::kFmtPng;
-    }
-    else if ((std::string::npos != filename.find(".tiff")) || (std::string::npos != filename.find(".TIFF")))
-    {
-        ret = Image::kFmtTiff;
-    }
-    else if ((std::string::npos != filename.find(".webp")) || (std::string::npos != filename.find(".WEBP")))
-    {
-        ret = Image::kFmtWebp;
-    }
-   
-    return ret;
 }
 
 void TextureCache::addImageAsyncCallBack(float dt)
@@ -313,7 +278,7 @@ void TextureCache::addImageAsyncCallBack(float dt)
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
        // cache the texture file name
-       VolatileTexture::addImageTexture(texture, filename, pImageInfo->imageType);
+       VolatileTexture::addImageTexture(texture, filename);
 #endif
         // cache the texture
         _textures->setObject(texture, filename);
@@ -378,24 +343,6 @@ Texture2D * TextureCache::addImage(const char * path)
             }
             else
             {
-                Image::EImageFormat eImageFormat = Image::kFmtUnKnown;
-                if (std::string::npos != lowerCase.find(".png"))
-                {
-                    eImageFormat = Image::kFmtPng;
-                }
-                else if (std::string::npos != lowerCase.find(".jpg") || std::string::npos != lowerCase.find(".jpeg"))
-                {
-                    eImageFormat = Image::kFmtJpg;
-                }
-                else if (std::string::npos != lowerCase.find(".tif") || std::string::npos != lowerCase.find(".tiff"))
-                {
-                    eImageFormat = Image::kFmtTiff;
-                }
-                else if (std::string::npos != lowerCase.find(".webp"))
-                {
-                    eImageFormat = Image::kFmtWebp;
-                }
-                
                 pImage = new Image();
                 CC_BREAK_IF(NULL == pImage);
 
@@ -409,7 +356,7 @@ Texture2D * TextureCache::addImage(const char * path)
                 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
                     // cache the texture file name
-                    VolatileTexture::addImageTexture(texture, fullpath.c_str(), eImageFormat);
+                    VolatileTexture::addImageTexture(texture, fullpath.c_str());
 #endif
                     _textures->setObject(texture, pathKey.c_str());
                     texture->release();
@@ -446,7 +393,7 @@ Texture2D * TextureCache::addPVRImage(const char* path)
     {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         // cache the texture file name
-        VolatileTexture::addImageTexture(texture, fullpath.c_str(), Image::kFmtRawData);
+        VolatileTexture::addImageTexture(texture, fullpath.c_str());
 #endif
         _textures->setObject(texture, key.c_str());
         texture->autorelease();
@@ -656,7 +603,6 @@ VolatileTexture::VolatileTexture(Texture2D *t)
 , _textureData(NULL)
 , _pixelFormat(kTexture2DPixelFormat_RGBA8888)
 , _fileName("")
-, _fmtImage(Image::kFmtPng)
 , _text("")
 , _uiImage(NULL)
 {
@@ -673,7 +619,7 @@ VolatileTexture::~VolatileTexture()
     CC_SAFE_RELEASE(_uiImage);
 }
 
-void VolatileTexture::addImageTexture(Texture2D *tt, const char* imageFileName, Image::EImageFormat format)
+void VolatileTexture::addImageTexture(Texture2D *tt, const char* imageFileName)
 {
     if (_isReloading)
     {
@@ -684,7 +630,6 @@ void VolatileTexture::addImageTexture(Texture2D *tt, const char* imageFileName, 
 
     vt->_cashedImageType = kImageFile;
     vt->_fileName = imageFileName;
-    vt->_fmtImage    = format;
     vt->_pixelFormat = tt->getPixelFormat();
 }
 
@@ -810,7 +755,7 @@ void VolatileTexture::reloadAllTextures()
                     unsigned long nSize = 0;
                     unsigned char* pBuffer = FileUtils::getInstance()->getFileData(vt->_fileName.c_str(), "rb", &nSize);
 
-                    if (pImage && pImage->initWithImageData((void*)pBuffer, nSize, vt->_fmtImage))
+                    if (pImage && pImage->initWithImageData((void*)pBuffer, nSize))
                     {
                         Texture2DPixelFormat oldPixelFormat = Texture2D::defaultAlphaPixelFormat();
                         Texture2D::setDefaultAlphaPixelFormat(vt->_pixelFormat);

@@ -240,7 +240,7 @@ public:
         return true;
     }
 
-    int drawText(const char * pszText, SIZE& tSize, Image::ETextAlign eAlign)
+    int drawText(const char * pszText, SIZE& tSize, Image::TextAlign eAlign)
     {
         int nRet = 0;
         wchar_t * pwszBuffer = 0;
@@ -370,7 +370,7 @@ bool Image::initWithString(
                                const char *    pText, 
                                int             nWidth/* = 0*/, 
                                int             nHeight/* = 0*/,
-                               ETextAlign      eAlignMask/* = kAlignCenter*/,
+                               TextAlign      eAlignMask/* = kAlignCenter*/,
                                const char *    pFontName/* = nil*/,
                                int             nSize/* = 0*/)
 {

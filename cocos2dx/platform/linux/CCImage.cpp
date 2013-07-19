@@ -240,7 +240,7 @@ public:
 	/**
 	 * compute the start pos of every line
 	 */
-	int computeLineStart(FT_Face face, Image::ETextAlign eAlignMask, int line) {
+	int computeLineStart(FT_Face face, Image::TextAlign eAlignMask, int line) {
 				int lineWidth = textLines.at(line).lineWidth;
 		if (eAlignMask == Image::kAlignCenter || eAlignMask == Image::kAlignTop || eAlignMask == Image::kAlignBottom) {
 			return (iMaxLineWidth - lineWidth) / 2;
@@ -252,7 +252,7 @@ public:
 		return 0;
 	}
 
-	int computeLineStartY( FT_Face face, Image::ETextAlign eAlignMask, int txtHeight, int borderHeight ){
+	int computeLineStartY( FT_Face face, Image::TextAlign eAlignMask, int txtHeight, int borderHeight ){
 		int baseLinePos = ceilf(FT_MulFix( face->bbox.yMax, face->size->metrics.y_scale )/64.0f);
 		if (eAlignMask == Image::kAlignCenter || eAlignMask == Image::kAlignLeft || eAlignMask == Image::kAlignRight) {
 			//vertical center
@@ -313,7 +313,7 @@ public:
     	return family_name;
     }
 
-	bool getBitmap(const char *text, int nWidth, int nHeight, Image::ETextAlign eAlignMask, const char * pFontName, float fontSize) {
+	bool getBitmap(const char *text, int nWidth, int nHeight, Image::TextAlign eAlignMask, const char * pFontName, float fontSize) {
 		if (libError) {
 			return false;
 		}
@@ -428,7 +428,7 @@ bool Image::initWithString(
 		const char * pText,
 		int nWidth/* = 0*/,
 		int nHeight/* = 0*/,
-		ETextAlign eAlignMask/* = kAlignCenter*/,
+		TextAlign eAlignMask/* = kAlignCenter*/,
 		const char * pFontName/* = nil*/,
 		int nSize/* = 0*/)
 {
@@ -451,7 +451,7 @@ bool Image::initWithString(
 		_height = (short)dc.iMaxLineHeight;
 		_hasAlpha = true;
 		_preMulti = true;
-		_bitsPerComponent = 8;
+		_bitDepth = 8;
 
 		bRet = true;
 
