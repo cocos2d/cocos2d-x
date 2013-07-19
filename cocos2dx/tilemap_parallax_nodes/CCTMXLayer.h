@@ -127,7 +127,7 @@ public:
 
     /** returns the position in points of a given tile coordinate */
     Point getPositionAt(const Point& tileCoordinate);
-    CC_DEPRECATED_ATTRIBUTE Point positionAt(const Point& tileCoordinate);
+    CC_DEPRECATED_ATTRIBUTE Point positionAt(const Point& tileCoordinate) { return getPositionAt(tileCoordinate); };
 
     /** return the value for the specific property name */
     String* getPropertyNamed(const char *propertyName) const;
