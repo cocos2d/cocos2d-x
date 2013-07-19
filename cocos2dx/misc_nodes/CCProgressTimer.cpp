@@ -241,12 +241,12 @@ void ProgressTimer::setAnchorPoint(const Point& anchorPoint)
     Node::setAnchorPoint(anchorPoint);
 }
 
-Point ProgressTimer::getMidpoint(void)
+Point ProgressTimer::getMidpoint() const
 {
     return _midpoint;
 }
 
-void ProgressTimer::setMidpoint(Point midPoint)
+void ProgressTimer::setMidpoint(const Point& midPoint)
 {
     _midpoint = midPoint.getClampPoint(Point::ZERO, Point(1, 1));
 }

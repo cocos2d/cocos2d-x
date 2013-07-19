@@ -960,7 +960,7 @@ void LayerGradient::setStartOpacity(GLubyte o)
     updateColor();
 }
 
-GLubyte LayerGradient::getStartOpacity()
+GLubyte LayerGradient::getStartOpacity() const
 {
     return _startOpacity;
 }
@@ -971,7 +971,7 @@ void LayerGradient::setEndOpacity(GLubyte o)
     updateColor();
 }
 
-GLubyte LayerGradient::getEndOpacity()
+GLubyte LayerGradient::getEndOpacity() const
 {
     return _endOpacity;
 }

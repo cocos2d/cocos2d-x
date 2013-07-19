@@ -85,6 +85,30 @@ public:
     inline bool isReverseDirection() { return _reverseDirection; };
     inline void setReverseDirection(bool value) { _reverseDirection = value; };
 
+    /**
+     *    Midpoint is used to modify the progress start position.
+     *    If you're using radials type then the midpoint changes the center point
+     *    If you're using bar type the the midpoint changes the bar growth
+     *        it expands from the center but clamps to the sprites edge so:
+     *        you want a left to right then set the midpoint all the way to Point(0,y)
+     *        you want a right to left then set the midpoint all the way to Point(1,y)
+     *        you want a bottom to top then set the midpoint all the way to Point(x,0)
+     *        you want a top to bottom then set the midpoint all the way to Point(x,1)
+     */
+    void setMidpoint(const Point& point);
+    /** Returns the Midpoint */
+    Point getMidpoint() const;
+
+    /**
+     *    This allows the bar type to move the component at a specific rate
+     *    Set the component to 0 to make sure it stays at 100%.
+     *    For example you want a left to right bar but not have the height stay 100%
+     *    Set the rate to be Point(0,1); and set the midpoint to = Point(0,.5f);
+     */
+    inline void setBarChangeRate(const Point& barChangeRate ) { _barChangeRate = barChangeRate; }
+    /** Returns the BarChangeRate */
+    inline Point getBarChangeRate() const { return _barChangeRate; }
+
     // Overrides
     virtual void draw(void) override;
     void setAnchorPoint(const Point& anchorPoint) override;
@@ -102,32 +126,13 @@ protected:
     void updateColor(void);
     Point boundaryTexCoord(char index);
 
-protected:
     ProgressTimerType _type;
+    Point _midpoint;
+    Point _barChangeRate;
     float _percentage;
     Sprite *_sprite;
     int _vertexDataCount;
     V2F_C4B_T2F *_vertexData;
-
-    /**
-     *    Midpoint is used to modify the progress start position.
-     *    If you're using radials type then the midpoint changes the center point
-     *    If you're using bar type the the midpoint changes the bar growth
-     *        it expands from the center but clamps to the sprites edge so:
-     *        you want a left to right then set the midpoint all the way to Point(0,y)
-     *        you want a right to left then set the midpoint all the way to Point(1,y)
-     *        you want a bottom to top then set the midpoint all the way to Point(x,0)
-     *        you want a top to bottom then set the midpoint all the way to Point(x,1)
-     */
-    CC_PROPERTY(Point, _midpoint, Midpoint);
-
-    /**
-     *    This allows the bar type to move the component at a specific rate
-     *    Set the component to 0 to make sure it stays at 100%.
-     *    For example you want a left to right bar but not have the height stay 100%
-     *    Set the rate to be Point(0,1); and set the midpoint to = Point(0,.5f);
-     */
-    CC_SYNTHESIZE(Point, _barChangeRate, BarChangeRate);
 
     bool _reverseDirection;
 };
