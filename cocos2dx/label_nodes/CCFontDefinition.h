@@ -44,26 +44,28 @@ struct LetterDefinition
     float           commonLineHeight;
 };
 
-class FontDefinitionTTF
+/**
+ */
+class FontDefinitionTTF : public Object
 {
 public:
-    
-    FontDefinitionTTF();
-   ~FontDefinitionTTF();
-    
-    bool createFontDefinition(char *fontName, int fontSize, char *letters, int textureSize = 512, bool debugOutput = false);
+
+    static FontDefinitionTTF* create(const char *fontName, int fontSize, const char *letters, int textureSize = 512);
     LetterDefinition & getLetterDefinition(unsigned short int theLetter);
     Texture2D * getTexture(int index);
-    int getNumTextures();
+    int         getNumTextures();
+    Font *      getFont()                        { return _textImages->getFont(); }
+    float       getCommonLineHeight()            { return _commonLineHeight;      }
     
-    Font * getFont()                        { return _textImages->getFont(); }
-    float  getCommonLineHeight()            { return _commonLineHeight;      }
-    
-    // carloX
+    // carloX new
     FontAtlas * createFontAtlas();
     
 private:
     
+     FontDefinitionTTF();
+    ~FontDefinitionTTF();
+    
+    bool initDefinition(const char *fontName, int fontSize, const char *letters, int textureSize);
     bool prepareLetterDefinitions(TextFontPagesDef *pageDefs);
     void addLetterDefinition(LetterDefinition &defToAdd);
     

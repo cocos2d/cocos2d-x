@@ -1658,16 +1658,30 @@ std::string LabelBMFontNewTest::subtitle()
 LabelDyamicTest::LabelDyamicTest()
 {
     Size size = Director::sharedDirector()->getWinSize();
-    
     const char *pFontFileName       = "fonts/arial.ttf";
-    const char *pFontGlyphs         = "abcdefghilmnopqrstuvzxywABCDEFGHILMNOPQRSTUVZXYW0123456789,. ";
-    FontDefinitionTTF *pDef         =  new FontDefinitionTTF;
+    const char *fontGlyphs          = "abcdefghilmnopqrstuvzxywABCDEFGHILMNOPQRSTUVZXYW0123456789,. ";
+    FontDefinitionTTF *def          =  FontDefinitionTTF::create(pFontFileName, 26, fontGlyphs);
     
-    pDef->createFontDefinition((char *)pFontFileName, 26, (char *) pFontGlyphs);
-    StringTTF *pTestString = new StringTTF(pDef);
-    pTestString->setText( (char *)LongSentencesExample, size.width, kTextAlignmentCenter, false);
-    addChild(pTestString);
-    pTestString->setPosition(Point(0, size.height/2));
+    if ( def )
+    {
+        label1 =  StringTTF::create(def);
+        
+        if (label1)
+        {
+            label1->setText( LongSentencesExample, size.width, kTextAlignmentCenter, false);
+            addChild(label1);
+            label1->setPosition(Point(0, size.height/2));
+            label1->retain();
+        }
+    }
+}
+
+LabelDyamicTest::~LabelDyamicTest()
+{
+    if (label1)
+    {
+        label1->release();
+    }
 }
 
 void LabelDyamicTest::draw()
