@@ -17,28 +17,31 @@ namespace CocosDenshion {
 #define  METHOD_NAME  "getDeviceModel"
 
         bool is_buggy_device(void) {
-            bool buggydevice = false;
-
             JniMethodInfo methodInfo;
             jstring jstr;
-            if (JniHelper::getStaticMethodInfo(methodInfo, CLASS_NAME, METHOD_NAME, "()Ljava/lang/String;"))
-                {
-                    jstr = (jstring)methodInfo.env->CallStaticObjectMethod(methodInfo.classID, methodInfo.methodID);
-                }
-            methodInfo.env->DeleteLocalRef(methodInfo.classID);
+            if (JniHelper::getStaticMethodInfo(methodInfo,
+                                               CLASS_NAME,
+                                               METHOD_NAME,
+                                               "()Ljava/lang/String;")) {
+                jstr = (jstring)methodInfo.env->CallStaticObjectMethod(methodInfo.classID,
+                                                                       methodInfo.methodID);
+            }
 	
             const char* deviceModel = methodInfo.env->GetStringUTFChars(jstr, NULL);
-            LOGD("%s", deviceModel);
+            if (NULL == deviceModel) {
+                return false;
+            }
+
+            LOGD("deviceModel = %s", deviceModel);
+            methodInfo.env->ReleaseStringUTFChars(jstr, deviceModel);
+            methodInfo.env->DeleteLocalRef(jstr);
     
             if (strcmp(I9100_MODEL, deviceModel) == 0) {
                 LOGD("i9100 model\nSwitch to OpenSLES");
-                buggydevice = true;
+                return true;
             }
-    
-            methodInfo.env->ReleaseStringUTFChars(jstr, deviceModel);
-            methodInfo.env->DeleteLocalRef(jstr);
 
-            return buggydevice;
+            return false;
         }
 
         std::string getFullPathWithoutAssetsPrefix(const char* pszFilename) {
