@@ -43,7 +43,7 @@ ComponentContainer::~ComponentContainer(void)
 Component* ComponentContainer::get(const char *pName) const
 {
     Component* pRet = NULL;
-    CCAssert(pName != NULL, "Argument must be non-nil");
+    CCASSERT(pName != NULL, "Argument must be non-nil");
     do {
         CC_BREAK_IF(NULL == pName);
         CC_BREAK_IF(NULL == _components);
@@ -56,8 +56,8 @@ Component* ComponentContainer::get(const char *pName) const
 bool ComponentContainer::add(Component *pCom)
 {
     bool bRet = false;
-    CCAssert(pCom != NULL, "Argument must be non-nil");
-    CCAssert(pCom->getOwner() == NULL, "Component already added. It can't be added again");
+    CCASSERT(pCom != NULL, "Argument must be non-nil");
+    CCASSERT(pCom->getOwner() == NULL, "Component already added. It can't be added again");
     do
     {
         if (_components == NULL)
@@ -68,7 +68,7 @@ bool ComponentContainer::add(Component *pCom)
         }
         Component *pComponent = dynamic_cast<Component*>(_components->objectForKey(pCom->getName()));
         
-        CCAssert(pComponent == NULL, "Component already added. It can't be added again");
+        CCASSERT(pComponent == NULL, "Component already added. It can't be added again");
         CC_BREAK_IF(pComponent);
         pCom->setOwner(_owner);
         _components->setObject(pCom, pCom->getName());
@@ -81,7 +81,7 @@ bool ComponentContainer::add(Component *pCom)
 bool ComponentContainer::remove(const char *pName)
 {
     bool bRet = false;
-    CCAssert(pName != NULL, "Argument must be non-nil");
+    CCASSERT(pName != NULL, "Argument must be non-nil");
     do 
     {        
         CC_BREAK_IF(!_components);

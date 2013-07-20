@@ -65,7 +65,7 @@ ActionTween *ActionTween::clone() const
 
 void ActionTween::startWithTarget(Node *target)
 {
-    CCAssert(dynamic_cast<ActionTweenDelegate*>(target), "target must implement ActionTweenDelegate");
+    CCASSERT(dynamic_cast<ActionTweenDelegate*>(target), "target must implement ActionTweenDelegate");
     ActionInterval::startWithTarget(target);
     _delta = _to - _from;
 }

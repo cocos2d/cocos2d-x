@@ -356,7 +356,7 @@ void ProgressTimer::updateRadial(void)
     if(!_vertexData) {
         _vertexDataCount = index + 3;
         _vertexData = (V2F_C4B_T2F*)malloc(_vertexDataCount * sizeof(V2F_C4B_T2F));
-        CCAssert( _vertexData, "CCProgressTimer. Not enough memory");
+        CCASSERT( _vertexData, "CCProgressTimer. Not enough memory");
     }
     updateColor();
 
@@ -427,7 +427,7 @@ void ProgressTimer::updateBar(void)
         if(!_vertexData) {
             _vertexDataCount = 4;
             _vertexData = (V2F_C4B_T2F*)malloc(_vertexDataCount * sizeof(V2F_C4B_T2F));
-            CCAssert( _vertexData, "CCProgressTimer. Not enough memory");
+            CCASSERT( _vertexData, "CCProgressTimer. Not enough memory");
         }
         //    TOPLEFT
         _vertexData[0].texCoords = textureCoordFromAlphaPoint(Point(min.x,max.y));
@@ -448,7 +448,7 @@ void ProgressTimer::updateBar(void)
         if(!_vertexData) {
             _vertexDataCount = 8;
             _vertexData = (V2F_C4B_T2F*)malloc(_vertexDataCount * sizeof(V2F_C4B_T2F));
-            CCAssert( _vertexData, "CCProgressTimer. Not enough memory");
+            CCASSERT( _vertexData, "CCProgressTimer. Not enough memory");
             //    TOPLEFT 1
             _vertexData[0].texCoords = textureCoordFromAlphaPoint(Point(0,1));
             _vertexData[0].vertices = vertexFromAlphaPoint(Point(0,1));

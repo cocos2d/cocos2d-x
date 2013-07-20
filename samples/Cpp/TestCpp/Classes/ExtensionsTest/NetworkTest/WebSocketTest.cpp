@@ -120,7 +120,7 @@ void WebSocketTestLayer::onOpen(cocos2d::extension::WebSocket* ws)
     }
     else if (ws == _wsiError)
     {
-        CCAssert(0, "error test will never go here.");
+        CCASSERT(0, "error test will never go here.");
     }
 }
 

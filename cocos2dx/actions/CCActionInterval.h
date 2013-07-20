@@ -424,10 +424,10 @@ class CC_DLL JumpBy : public ActionInterval
 {
 public:
     /** creates the action */
-    static JumpBy* create(float duration, const Point& position, float height, unsigned int jumps);
+    static JumpBy* create(float duration, const Point& position, float height, int jumps);
 
     /** initializes the action */
-    bool initWithDuration(float duration, const Point& position, float height, unsigned int jumps);
+    bool initWithDuration(float duration, const Point& position, float height, int jumps);
 
     //
     // Overrides
@@ -441,7 +441,7 @@ protected:
     Point           _startPosition;
     Point           _delta;
     float           _height;
-    unsigned int    _jumps;
+    int             _jumps;
     Point           _previousPos;
 };
 
@@ -580,10 +580,10 @@ class CC_DLL Blink : public ActionInterval
 {
 public:
     /** creates the action */
-    static Blink* create(float duration, unsigned int uBlinks);
+    static Blink* create(float duration, int blinks);
 
     /** initializes the action */
-    bool initWithDuration(float duration, unsigned int uBlinks);
+    bool initWithDuration(float duration, int blinks);
 
     //
     // Overrides
@@ -595,7 +595,7 @@ public:
     virtual void stop() override;
     
 protected:
-    unsigned int _times;
+    int _times;
     bool _originalState;
 };
 

@@ -215,7 +215,7 @@ void ParticleSystemQuad::setTexture(Texture2D* texture)
 }
 void ParticleSystemQuad::setDisplayFrame(SpriteFrame *spriteFrame)
 {
-    CCAssert(spriteFrame->getOffsetInPixels().equals(Point::ZERO), 
+    CCASSERT(spriteFrame->getOffsetInPixels().equals(Point::ZERO), 
              "QuadParticle only supports SpriteFrames with no offsets");
 
     // update texture before updating texture rect
@@ -346,14 +346,14 @@ void ParticleSystemQuad::postStep()
 // overriding draw method
 void ParticleSystemQuad::draw()
 {    
-    CCAssert(!_batchNode,"draw should not be called when added to a particleBatchNode");
+    CCASSERT(!_batchNode,"draw should not be called when added to a particleBatchNode");
 
     CC_NODE_DRAW_SETUP();
 
     ccGLBindTexture2D( _texture->getName() );
     ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
 
-    CCAssert( _particleIdx == _particleCount, "Abnormal error in particle quad");
+    CCASSERT( _particleIdx == _particleCount, "Abnormal error in particle quad");
 
 #if CC_TEXTURE_ATLAS_USE_VAO
     //
@@ -540,8 +540,8 @@ void ParticleSystemQuad::listenBackToForeground(Object *obj)
 
 bool ParticleSystemQuad::allocMemory()
 {
-    CCAssert( ( !_quads && !_indices), "Memory already alloced");
-    CCAssert( !_batchNode, "Memory should not be alloced when not using batchNode");
+    CCASSERT( ( !_quads && !_indices), "Memory already alloced");
+    CCASSERT( !_batchNode, "Memory should not be alloced when not using batchNode");
 
     CC_SAFE_FREE(_quads);
     CC_SAFE_FREE(_indices);

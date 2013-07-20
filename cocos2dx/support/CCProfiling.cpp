@@ -151,7 +151,7 @@ void ProfilingEndTimingBlock(const char *timerName)
     Profiler* p = Profiler::getInstance();
     ProfilingTimer* timer = (ProfilingTimer*)p->_activeTimers->objectForKey(timerName);
 
-    CCAssert(timer, "CCProfilingTimer  not found");
+    CCASSERT(timer, "CCProfilingTimer  not found");
 
     struct timeval currentTime;
     gettimeofday(&currentTime, NULL);
@@ -171,7 +171,7 @@ void ProfilingResetTimingBlock(const char *timerName)
     Profiler* p = Profiler::getInstance();
     ProfilingTimer *timer = (ProfilingTimer*)p->_activeTimers->objectForKey(timerName);
 
-    CCAssert(timer, "CCProfilingTimer not found");
+    CCASSERT(timer, "CCProfilingTimer not found");
 
     timer->reset();
 }

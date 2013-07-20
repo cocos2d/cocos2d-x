@@ -124,7 +124,7 @@ static void addObjectToNSArray(Object *object, NSMutableArray *array)
 static void addValueToDict(id key, id value, Dictionary* pDict)
 {
     // the key must be a string
-    CCAssert([key isKindOfClass:[NSString class]], "The key should be a string!");
+    CCASSERT([key isKindOfClass:[NSString class]], "The key should be a string!");
     std::string pKey = [key UTF8String];
     
     // the value is a new dictionary

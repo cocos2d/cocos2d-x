@@ -92,7 +92,7 @@ MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, const
 
 bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Color3B& color, const char* path)
 {
-    CCAssert(path != NULL, "Invalid filename");
+    CCASSERT(path != NULL, "Invalid filename");
 
     Texture2D *texture = TextureCache::getInstance()->addImage(path);
     return initWithFade(fade, minSeg, stroke, color, texture);
@@ -180,12 +180,12 @@ const BlendFunc& MotionStreak::getBlendFunc(void) const
 
 void MotionStreak::setOpacity(GLubyte opacity)
 {
-    CCAssert(false, "Set opacity no supported");
+    CCASSERT(false, "Set opacity no supported");
 }
 
 GLubyte MotionStreak::getOpacity(void) const
 {
-    CCAssert(false, "Opacity no supported");
+    CCASSERT(false, "Opacity no supported");
     return 0;
 }
 
