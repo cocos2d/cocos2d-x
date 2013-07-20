@@ -62,7 +62,7 @@ void ArrayForObjectSorting::insertSortedObject(SortableObject* object)
 {
     unsigned int idx;
     Object* pObj = dynamic_cast<Object*>(object);
-    CCAssert(pObj, "Invalid parameter.");
+    CCASSERT(pObj, "Invalid parameter.");
     idx = this->indexOfSortedObject(object);
     
     this->insertObject(pObj, idx);

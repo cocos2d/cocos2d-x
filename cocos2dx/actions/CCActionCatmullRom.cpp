@@ -106,7 +106,7 @@ const std::vector<Point*>* PointArray::getControlPoints() const
 
 void PointArray::setControlPoints(vector<Point*> *controlPoints)
 {
-    CCAssert(controlPoints != NULL, "control points should not be NULL");
+    CCASSERT(controlPoints != NULL, "control points should not be NULL");
     
     // delete old points
     vector<Point*>::iterator iter;
@@ -175,7 +175,7 @@ PointArray* PointArray::reverse() const
 
 void PointArray::reverseInline()
 {
-    unsigned int l = _controlPoints->size();
+    unsigned long l = _controlPoints->size();
     Point *p1 = NULL;
     Point *p2 = NULL;
     int x, y;
@@ -240,7 +240,7 @@ CardinalSplineTo* CardinalSplineTo::create(float duration, cocos2d::PointArray *
 
 bool CardinalSplineTo::initWithDuration(float duration, cocos2d::PointArray *points, float tension)
 {
-    CCAssert(points->count() > 0, "Invalid configuration. It must at least have one control point");
+    CCASSERT(points->count() > 0, "Invalid configuration. It must at least have one control point");
 
     if (ActionInterval::initWithDuration(duration))
     {

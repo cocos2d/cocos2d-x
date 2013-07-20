@@ -167,23 +167,23 @@ void ParticleBatchNode::addChild(Node * child, int zOrder)
 
 void ParticleBatchNode::addChild(Node * child, int zOrder, int tag)
 {
-    CCAssert( child != NULL, "Argument must be non-NULL");
-    CCAssert( dynamic_cast<ParticleSystem*>(child) != NULL, "CCParticleBatchNode only supports QuadParticleSystems as children");
+    CCASSERT( child != NULL, "Argument must be non-NULL");
+    CCASSERT( dynamic_cast<ParticleSystem*>(child) != NULL, "CCParticleBatchNode only supports QuadParticleSystems as children");
     ParticleSystem* pChild = (ParticleSystem*)child;
-    CCAssert( pChild->getTexture()->getName() == _textureAtlas->getTexture()->getName(), "CCParticleSystem is not using the same texture id");
+    CCASSERT( pChild->getTexture()->getName() == _textureAtlas->getTexture()->getName(), "CCParticleSystem is not using the same texture id");
     // If this is the 1st children, then copy blending function
     if( _children->count() == 0 ) 
     {
         setBlendFunc(pChild->getBlendFunc());
     }
 
-    CCAssert( _blendFunc.src  == pChild->getBlendFunc().src && _blendFunc.dst  == pChild->getBlendFunc().dst, "Can't add a PaticleSystem that uses a different blending function");
+    CCASSERT( _blendFunc.src  == pChild->getBlendFunc().src && _blendFunc.dst  == pChild->getBlendFunc().dst, "Can't add a PaticleSystem that uses a different blending function");
 
     //no lazy sorting, so don't call super addChild, call helper instead
     unsigned int pos = addChildHelper(pChild,zOrder,tag);
 
     //get new atlasIndex
-    unsigned int atlasIndex = 0;
+    int atlasIndex = 0;
 
     if (pos != 0) 
     {
@@ -208,8 +208,8 @@ void ParticleBatchNode::addChild(Node * child, int zOrder, int tag)
 // this helper is almost equivalent to Node's addChild, but doesn't make use of the lazy sorting
 unsigned int ParticleBatchNode::addChildHelper(ParticleSystem* child, int z, int aTag)
 {
-    CCAssert( child != NULL, "Argument must be non-nil");
-    CCAssert( child->getParent() == NULL, "child already added. It can't be added again");
+    CCASSERT( child != NULL, "Argument must be non-nil");
+    CCASSERT( child->getParent() == NULL, "child already added. It can't be added again");
 
     if( ! _children ) 
     {
@@ -238,9 +238,9 @@ unsigned int ParticleBatchNode::addChildHelper(ParticleSystem* child, int z, int
 // Reorder will be done in this function, no "lazy" reorder to particles
 void ParticleBatchNode::reorderChild(Node * child, int zOrder)
 {
-    CCAssert( child != NULL, "Child must be non-NULL");
-    CCAssert( dynamic_cast<ParticleSystem*>(child) != NULL, "CCParticleBatchNode only supports QuadParticleSystems as children");
-    CCAssert( _children->containsObject(child), "Child doesn't belong to batch" );
+    CCASSERT( child != NULL, "Child must be non-NULL");
+    CCASSERT( dynamic_cast<ParticleSystem*>(child) != NULL, "CCParticleBatchNode only supports QuadParticleSystems as children");
+    CCASSERT( _children->containsObject(child), "Child doesn't belong to batch" );
 
     ParticleSystem* pChild = (ParticleSystem*)(child);
 
@@ -266,13 +266,13 @@ void ParticleBatchNode::reorderChild(Node * child, int zOrder)
             pChild->release();
 
             // save old altasIndex
-            unsigned int oldAtlasIndex = pChild->getAtlasIndex();
+            int oldAtlasIndex = pChild->getAtlasIndex();
 
             // update atlas index
             updateAllAtlasIndexes();
 
             // Find new AtlasIndex
-            unsigned int newAtlasIndex = 0;
+            int newAtlasIndex = 0;
             for( unsigned int i=0;i < _children->count();i++)
             {
                 ParticleSystem* pNode = (ParticleSystem*)_children->objectAtIndex(i);
@@ -368,8 +368,8 @@ void  ParticleBatchNode::removeChild(Node* child, bool cleanup)
         return;
     }
     
-    CCAssert( dynamic_cast<ParticleSystem*>(child) != NULL, "CCParticleBatchNode only supports QuadParticleSystems as children");
-    CCAssert(_children->containsObject(child), "CCParticleBatchNode doesn't contain the sprite. Can't remove it");
+    CCASSERT( dynamic_cast<ParticleSystem*>(child) != NULL, "CCParticleBatchNode only supports QuadParticleSystems as children");
+    CCASSERT(_children->containsObject(child), "CCParticleBatchNode doesn't contain the sprite. Can't remove it");
 
     ParticleSystem* pChild = (ParticleSystem*)child;
     Node::removeChild(pChild, cleanup);
@@ -429,7 +429,7 @@ void ParticleBatchNode::increaseAtlasCapacityTo(unsigned int quantity)
     if( ! _textureAtlas->resizeCapacity(quantity) ) {
         // serious problems
         CCLOGWARN("cocos2d: WARNING: Not enough memory to resize the atlas");
-        CCAssert(false,"XXX: ParticleBatchNode #increaseAtlasCapacity SHALL handle this assert");
+        CCASSERT(false,"XXX: ParticleBatchNode #increaseAtlasCapacity SHALL handle this assert");
     }
 }
 

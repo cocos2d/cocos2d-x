@@ -402,7 +402,7 @@ bool Layer::ccTouchBegan(Touch *pTouch, Event *pEvent)
 
     CC_UNUSED_PARAM(pTouch);
     CC_UNUSED_PARAM(pEvent);
-    CCAssert(false, "Layer#ccTouchBegan override me");
+    CCASSERT(false, "Layer#ccTouchBegan override me");
     return true;
 }
 
@@ -1062,7 +1062,7 @@ LayerMultiplex* LayerMultiplex::createWithArray(Array* arrayOfLayers)
 
 void LayerMultiplex::addLayer(Layer* layer)
 {
-    CCAssert(_layers, "");
+    CCASSERT(_layers, "");
     _layers->addObject(layer);
 }
 
@@ -1105,7 +1105,7 @@ bool LayerMultiplex::initWithArray(Array* arrayOfLayers)
 
 void LayerMultiplex::switchTo(unsigned int n)
 {
-    CCAssert( n < _layers->count(), "Invalid index in MultiplexLayer switchTo message" );
+    CCASSERT( n < _layers->count(), "Invalid index in MultiplexLayer switchTo message" );
 
     this->removeChild((Node*)_layers->objectAtIndex(_enabledLayer), true);
 
@@ -1116,7 +1116,7 @@ void LayerMultiplex::switchTo(unsigned int n)
 
 void LayerMultiplex::switchToAndReleaseMe(unsigned int n)
 {
-    CCAssert( n < _layers->count(), "Invalid index in MultiplexLayer switchTo message" );
+    CCASSERT( n < _layers->count(), "Invalid index in MultiplexLayer switchTo message" );
 
     this->removeChild((Node*)_layers->objectAtIndex(_enabledLayer), true);
 

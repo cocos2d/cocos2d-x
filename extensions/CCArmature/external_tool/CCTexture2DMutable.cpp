@@ -252,7 +252,7 @@ void Texture2DMutable::restore()
 	this->apply();
 #else
 	//You should set CC_MUTABLE_TEXTURE_SAVE_ORIGINAL_DATA 1 in Texture2DMutable.h
-    CCAssert(false, "Exception:  MutableTexture.restore was disabled by the user.");
+    CCASSERT(false, "Exception:  MutableTexture.restore was disabled by the user.");
 #endif
 }
 
@@ -280,7 +280,7 @@ void Texture2DMutable::apply()
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, _pixelsWide, _pixelsHigh, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data_);
 			break;
 		default:
-            CCAssert(false, "NSInternalInconsistencyException");
+            CCASSERT(false, "NSInternalInconsistencyException");
 
 	}
 	glBindTexture(GL_TEXTURE_2D, 0);

@@ -336,7 +336,7 @@ void WebSocket::send(const std::string& message)
 
 void WebSocket::send(const unsigned char* binaryMsg, unsigned int len)
 {
-    CCAssert(binaryMsg != NULL && len > 0, "parameter invalid.");
+    CCASSERT(binaryMsg != NULL && len > 0, "parameter invalid.");
 
     if (_readyState == kStateOpen)
     {
@@ -448,8 +448,8 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                      void *user, void *in, size_t len)
 {
 	//CCLOG("socket callback for %d reason", reason);
-    CCAssert(_wsContext == NULL || ctx == _wsContext, "Invalid context.");
-    CCAssert(_wsInstance == NULL || wsi == NULL || wsi == _wsInstance, "Invaild websocket instance.");
+    CCASSERT(_wsContext == NULL || ctx == _wsContext, "Invalid context.");
+    CCASSERT(_wsInstance == NULL || wsi == NULL || wsi == _wsInstance, "Invaild websocket instance.");
 
 	switch (reason)
     {

@@ -217,7 +217,7 @@ void DataReaderHelper::addDataFromCache(const char *pFileContent)
     document.Parse(pFileContent);
 
     tinyxml2::XMLElement *root = document.RootElement();
-    CCAssert(root, "XML error  or  XML is empty.");
+    CCASSERT(root, "XML error  or  XML is empty.");
 
     root->QueryFloatAttribute(VERSION, &s_FlashToolVersion);
 
@@ -308,7 +308,7 @@ BoneData *DataReaderHelper::decodeBone(tinyxml2::XMLElement *boneXML, tinyxml2::
 
     std::string name = boneXML->Attribute(A_NAME);
 
-    CCAssert(name.length() != 0, "");
+    CCASSERT(name.length() != 0, "");
 
     BoneData *boneData = BoneData::create();
 

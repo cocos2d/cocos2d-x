@@ -502,9 +502,9 @@ public:
      *
      * @warning This method is used internally for zOrder sorting, don't change this manually
      *
-     * @param uOrderOfArrival   The arrival order.
+     * @param orderOfArrival   The arrival order.
      */
-    virtual void setOrderOfArrival(unsigned int orderOfArrival);
+    virtual void setOrderOfArrival(int orderOfArrival);
     /**
      * Returns the arrival order, indecates which children is added previously.
      *
@@ -512,7 +512,7 @@ public:
      *
      * @return The arrival order.
      */
-    virtual unsigned int getOrderOfArrival() const;
+    virtual int getOrderOfArrival() const;
     
     
     /**
@@ -1362,7 +1362,7 @@ protected:
     
     ccGLServerState _GLServerState;   ///< OpenGL servier side state
     
-    unsigned int _orderOfArrival;     ///< used to preserve sequence while sorting children with the same zOrder
+    int _orderOfArrival;            ///< used to preserve sequence while sorting children with the same zOrder
     
     Scheduler *_scheduler;          ///< scheduler used to schedule timers and updates
     

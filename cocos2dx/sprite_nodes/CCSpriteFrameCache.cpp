@@ -98,7 +98,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(Dictionary* dictionary, Tex
     }
 
     // check the format
-    CCAssert(format >=0 && format <= 3, "format is not supported for SpriteFrameCache addSpriteFramesWithDictionary:textureFilename:");
+    CCASSERT(format >=0 && format <= 3, "format is not supported for SpriteFrameCache addSpriteFramesWithDictionary:textureFilename:");
 
     DictElement* pElement = NULL;
     CCDICT_FOREACH(framesDict, pElement)
@@ -213,7 +213,7 @@ void SpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist, Texture2D *
 
 void SpriteFrameCache::addSpriteFramesWithFile(const char* plist, const char* textureFileName)
 {
-    CCAssert(textureFileName, "texture name should not be null");
+    CCASSERT(textureFileName, "texture name should not be null");
     Texture2D *texture = TextureCache::getInstance()->addImage(textureFileName);
 
     if (texture)
@@ -228,7 +228,7 @@ void SpriteFrameCache::addSpriteFramesWithFile(const char* plist, const char* te
 
 void SpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
 {
-    CCAssert(pszPlist, "plist filename should not be NULL");
+    CCASSERT(pszPlist, "plist filename should not be NULL");
 
     if (_loadedFileNames->find(pszPlist) == _loadedFileNames->end())
     {

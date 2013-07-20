@@ -57,7 +57,7 @@ void TouchDispatcher::setDispatchEvents(bool bDispatchEvents)
 +(id) allocWithZone:(Zone *)zone
 {
     @synchronized(self) {
-        CCAssert(sharedDispatcher == nil, @"Attempted to allocate a second instance of a singleton.");
+        CCASSERT(sharedDispatcher == nil, @"Attempted to allocate a second instance of a singleton.");
         return [super allocWithZone:zone];
     }
     return nil; // on subsequent allocation attempts return nil
@@ -118,7 +118,7 @@ void TouchDispatcher::forceAddHandler(TouchHandler *pHandler, Array *pArray)
  
              if (h->getDelegate() == pHandler->getDelegate())
              {
-                 CCAssert(0, "");
+                 CCASSERT(0, "");
                  return;
              }
          }
@@ -275,7 +275,7 @@ TouchHandler* TouchDispatcher::findHandler(TouchDelegate *pDelegate)
 
 TouchHandler* TouchDispatcher::findHandler(Array* pArray, TouchDelegate *pDelegate)
 {
-    CCAssert(pArray != NULL && pDelegate != NULL, "");
+    CCASSERT(pArray != NULL && pDelegate != NULL, "");
 
     Object* pObj = NULL;
     CCARRAY_FOREACH(pArray, pObj)
@@ -297,13 +297,13 @@ void TouchDispatcher::rearrangeHandlers(Array *pArray)
 
 void TouchDispatcher::setPriority(int nPriority, TouchDelegate *pDelegate)
 {
-    CCAssert(pDelegate != NULL, "");
+    CCASSERT(pDelegate != NULL, "");
 
     TouchHandler *handler = NULL;
 
     handler = this->findHandler(pDelegate);
 
-    CCAssert(handler != NULL, "");
+    CCASSERT(handler != NULL, "");
 	
     if (handler->getPriority() != nPriority)
     {
@@ -318,7 +318,7 @@ void TouchDispatcher::setPriority(int nPriority, TouchDelegate *pDelegate)
 //
 void TouchDispatcher::touches(Set *pTouches, Event *pEvent, unsigned int uIndex)
 {
-    CCAssert(uIndex >= 0 && uIndex < 4, "");
+    CCASSERT(uIndex >= 0 && uIndex < 4, "");
 
     Set *pMutableTouches;
     _locked = true;

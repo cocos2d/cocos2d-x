@@ -92,16 +92,9 @@ public:
     TMXLayerInfo();
     virtual ~TMXLayerInfo();
 
-    inline void setProperties(Dictionary *properties);
-    inline Dictionary* getProperties();
+    void setProperties(Dictionary *properties);
+    Dictionary* getProperties();
 
-    inline void setName(const std::string& name) { _name = name; }
-    inline const std::string& getName() { return _name; }
-
-    inline void setLayerSize(const Size& layersize) { _layerSize = layersize; }
-    inline const Size& getLayerSize() const { return _layerSize; }
-
-//protected:
     Dictionary          *_properties;
     std::string         _name;
     Size                _layerSize;

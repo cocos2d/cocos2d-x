@@ -155,7 +155,7 @@ CCBReader::~CCBReader() {
 
 void CCBReader::setCCBRootPath(const char* pCCBRootPath)
 {
-    CCAssert(pCCBRootPath != NULL, "");
+    CCASSERT(pCCBRootPath != NULL, "");
     mCCBRootPath = pCCBRootPath;
 }
 

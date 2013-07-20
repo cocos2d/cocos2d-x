@@ -60,8 +60,8 @@ GLProgram::~GLProgram()
     CCLOGINFO("cocos2d: %s %d deallocing %p", __FUNCTION__, __LINE__, this);
 
     // there is no need to delete the shaders. They should have been already deleted.
-    CCAssert(_vertShader == 0, "Vertex Shaders should have been already deleted");
-    CCAssert(_fragShader == 0, "Fragment Shaders should have been already deleted");
+    CCASSERT(_vertShader == 0, "Vertex Shaders should have been already deleted");
+    CCASSERT(_fragShader == 0, "Fragment Shaders should have been already deleted");
 
     if (_program) 
     {
@@ -223,7 +223,7 @@ void GLProgram::updateUniforms()
 
 bool GLProgram::link()
 {
-    CCAssert(_program != 0, "Cannot link invalid program");
+    CCASSERT(_program != 0, "Cannot link invalid program");
     
     GLint status = GL_TRUE;
     
@@ -335,8 +335,8 @@ bool GLProgram::updateUniformLocation(GLint location, GLvoid* data, unsigned int
 
 GLint GLProgram::getUniformLocationForName(const char* name) const
 {
-    CCAssert(name != NULL, "Invalid uniform name" );
-    CCAssert(_program != 0, "Invalid operation. Cannot get uniform location when program is not initialized");
+    CCASSERT(name != NULL, "Invalid uniform name" );
+    CCASSERT(_program != 0, "Invalid operation. Cannot get uniform location when program is not initialized");
     
     return glGetUniformLocation(_program, name);
 }
