@@ -660,7 +660,7 @@ void TextureAtlas::drawNumberOfQuads(int numberOfQuads, int start)
     // XXX: update is done in draw... perhaps it should be done in a timer
     if (_dirty) 
     {
-        glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );
+        glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * numberOfQuads , &_quads[start] );
         _dirty = false;
     }
 
@@ -678,9 +678,9 @@ void TextureAtlas::drawNumberOfQuads(int numberOfQuads, int start)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
 
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-    glDrawElements(GL_TRIANGLE_STRIP, (GLsizei)n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])));
+    glDrawElements(GL_TRIANGLE_STRIP, (GLsizei)numberOfQuads*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])));
 #else
-    glDrawElements(GL_TRIANGLES, (GLsizei)n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])));
+    glDrawElements(GL_TRIANGLES, (GLsizei)numberOfQuads*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])));
 #endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
