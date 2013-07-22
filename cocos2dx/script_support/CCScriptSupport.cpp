@@ -136,7 +136,7 @@ void ScriptEngineManager::removeScriptEngine(void)
     }
 }
 
-ScriptEngineManager* ScriptEngineManager::sharedManager(void)
+ScriptEngineManager* ScriptEngineManager::getInstance()
 {
     if (!s_pSharedScriptEngineManager)
     {
@@ -145,7 +145,7 @@ ScriptEngineManager* ScriptEngineManager::sharedManager(void)
     return s_pSharedScriptEngineManager;
 }
 
-void ScriptEngineManager::purgeSharedManager(void)
+void ScriptEngineManager::destroyInstance()
 {
     if (s_pSharedScriptEngineManager)
     {

@@ -350,8 +350,11 @@ public:
     void setScriptEngine(ScriptEngineProtocol *pScriptEngine);
     void removeScriptEngine(void);
     
-    static ScriptEngineManager* sharedManager(void);
-    static void purgeSharedManager(void);
+    static ScriptEngineManager* getInstance();
+    static void destroyInstance();
+    
+    CC_DEPRECATED_ATTRIBUTE static ScriptEngineManager* sharedManager() { return ScriptEngineManager::getInstance(); };
+    CC_DEPRECATED_ATTRIBUTE static void purgeSharedManager() { ScriptEngineManager::destroyInstance(); };
     
 private:
     ScriptEngineManager(void)
