@@ -92,7 +92,7 @@ void TileMapEditTest::updateMap(float dt)
     //    }
     
     // NEW since v0.7
-    Color3B c = tilemap->tileAt(Point(13,21));        
+    Color3B c = tilemap->getTileAt(Point(13,21));        
     c.r++;
     c.r %= 50;
     if( c.r==0)
@@ -265,13 +265,13 @@ TMXOrthoTest4::TMXOrthoTest4()
     Size s = layer->getLayerSize();
     
     Sprite* sprite;
-    sprite = layer->tileAt(Point(0,0));
+    sprite = layer->getTileAt(Point(0,0));
     sprite->setScale(2);
-    sprite = layer->tileAt(Point(s.width-1,0));
+    sprite = layer->getTileAt(Point(s.width-1,0));
     sprite->setScale(2);
-    sprite = layer->tileAt(Point(0,s.height-1));
+    sprite = layer->getTileAt(Point(0,s.height-1));
     sprite->setScale(2);
-    sprite = layer->tileAt(Point(s.width-1,s.height-1));
+    sprite = layer->getTileAt(Point(s.width-1,s.height-1));
     sprite->setScale(2);
 
     schedule( schedule_selector(TMXOrthoTest4::removeSprite), 2 );
@@ -286,7 +286,7 @@ void TMXOrthoTest4::removeSprite(float dt)
     TMXLayer* layer = map->layerNamed("Layer 0");
     Size s = layer->getLayerSize();
 
-    Sprite* sprite = layer->tileAt( Point(s.width-1,0) );
+    Sprite* sprite = layer->getTileAt( Point(s.width-1,0) );
     layer->removeChild(sprite, true);
 }
 
@@ -323,10 +323,10 @@ TMXReadWriteTest::TMXReadWriteTest()
 
     map->setScale( 1 );
 
-    Sprite *tile0 = layer->tileAt(Point(1,63));
-    Sprite *tile1 = layer->tileAt(Point(2,63));
-    Sprite *tile2 = layer->tileAt(Point(3,62));//Point(1,62));
-    Sprite *tile3 = layer->tileAt(Point(2,62));
+    Sprite *tile0 = layer->getTileAt(Point(1,63));
+    Sprite *tile1 = layer->getTileAt(Point(2,63));
+    Sprite *tile2 = layer->getTileAt(Point(3,62));//Point(1,62));
+    Sprite *tile3 = layer->getTileAt(Point(2,62));
     tile0->setAnchorPoint( Point(0.5f, 0.5f) );
     tile1->setAnchorPoint( Point(0.5f, 0.5f) );
     tile2->setAnchorPoint( Point(0.5f, 0.5f) );
@@ -350,7 +350,7 @@ TMXReadWriteTest::TMXReadWriteTest()
     tile3->runAction(seq3);
     
     
-    _gid = layer->tileGIDAt(Point(0,63));
+    _gid = layer->getTileGIDAt(Point(0,63));
     ////----CCLOG("Tile GID at:(0,63) is: %d", _gid);
 
     schedule(schedule_selector(TMXReadWriteTest::updateCol), 2.0f); 
@@ -406,7 +406,7 @@ void TMXReadWriteTest::repaintWithGID(float dt)
     for( int x=0; x<s.width;x++) 
     {
         int y = (int)s.height-1;
-        unsigned int tmpgid = layer->tileGIDAt( Point((float)x, (float)y) );
+        unsigned int tmpgid = layer->getTileGIDAt( Point((float)x, (float)y) );
         layer->setTileGID(tmpgid+1, Point((float)x, (float)y));
     }
 }
@@ -941,7 +941,7 @@ TMXIsoVertexZ::TMXIsoVertexZ()
     // because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
     // can use any Sprite and it will work OK.
     TMXLayer* layer = map->layerNamed("Trees");
-    _tamara = layer->tileAt( Point(29,29) );
+    _tamara = layer->getTileAt( Point(29,29) );
     _tamara->retain();
     
     ActionInterval* move = MoveBy::create(10, Point(300,250) * (1/CC_CONTENT_SCALE_FACTOR()));
@@ -1010,7 +1010,7 @@ TMXOrthoVertexZ::TMXOrthoVertexZ()
     // because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
     // can use any Sprite and it will work OK.
     TMXLayer* layer = map->layerNamed("trees");
-    _tamara = layer->tileAt(Point(0,11));
+    _tamara = layer->getTileAt(Point(0,11));
     CCLOG("%p vertexZ: %f", _tamara, _tamara->getVertexZ());
     _tamara->retain();
 
@@ -1215,7 +1215,7 @@ void TMXOrthoFlipRunTimeTest::flipIt(float dt)
     //blue diamond 
     Point tileCoord = Point(1,10);
     int flags;
-    unsigned int GID = layer->tileGIDAt(tileCoord, (ccTMXTileFlags*)&flags);
+    unsigned int GID = layer->getTileGIDAt(tileCoord, (ccTMXTileFlags*)&flags);
     // Vertical
     if( flags & kTMXTileVerticalFlag )
         flags &= ~kTMXTileVerticalFlag;
@@ -1225,7 +1225,7 @@ void TMXOrthoFlipRunTimeTest::flipIt(float dt)
 
 
     tileCoord = Point(1,8);    
-    GID = layer->tileGIDAt(tileCoord, (ccTMXTileFlags*)&flags);
+    GID = layer->getTileGIDAt(tileCoord, (ccTMXTileFlags*)&flags);
     // Vertical
     if( flags & kTMXTileVerticalFlag )
         flags &= ~kTMXTileVerticalFlag;
@@ -1235,7 +1235,7 @@ void TMXOrthoFlipRunTimeTest::flipIt(float dt)
 
 
     tileCoord = Point(2,8);
-    GID = layer->tileGIDAt(tileCoord, (ccTMXTileFlags*)&flags);
+    GID = layer->getTileGIDAt(tileCoord, (ccTMXTileFlags*)&flags);
     // Horizontal
     if( flags & kTMXTileHorizontalFlag )
         flags &= ~kTMXTileHorizontalFlag;
@@ -1255,7 +1255,7 @@ TMXOrthoFromXMLTest::TMXOrthoFromXMLTest()
     string file = resources + "/orthogonal-test1.tmx";
 
     String* str = String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename(file.c_str()).c_str());
-    CCAssert(str != NULL, "Unable to open file");
+    CCASSERT(str != NULL, "Unable to open file");
 
     TMXTiledMap *map = TMXTiledMap::createWithXML(str->getCString() ,resources.c_str());
     addChild(map, 0, kTagTileMap);

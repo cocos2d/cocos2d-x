@@ -73,22 +73,20 @@ public:
     // Overrides
     virtual void draw() override;
 
-private:
-    void ensureCapacity(unsigned int count);
+protected:
+    void ensureCapacity(int count);
     void render();
 
-protected:
     GLuint      _vao;
     GLuint      _vbo;
 
-    unsigned int    _bufferCapacity;
-    GLsizei         _bufferCount;
-    V2F_C4B_T2F   *_buffer;
+    int         _bufferCapacity;
+    GLsizei     _bufferCount;
+    V2F_C4B_T2F *_buffer;
 
-    BlendFunc     _blendFunc;
+    BlendFunc   _blendFunc;
 
-    bool            _dirty;
-
+    bool        _dirty;
 };
 
 NS_CC_END

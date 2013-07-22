@@ -127,13 +127,13 @@ void ActionInterval::setAmplitudeRate(float amp)
 {
     CC_UNUSED_PARAM(amp);
     // Abstract class needs implementation
-    CCAssert(0, "");
+    CCASSERT(0, "");
 }
 
 float ActionInterval::getAmplitudeRate(void)
 {
     // Abstract class needs implementation
-    CCAssert(0, "");
+    CCASSERT(0, "");
 
     return 0;
 }
@@ -227,8 +227,8 @@ Sequence* Sequence::create(Array* arrayOfActions)
 
 bool Sequence::initWithTwoActions(FiniteTimeAction *pActionOne, FiniteTimeAction *pActionTwo)
 {
-    CCAssert(pActionOne != NULL, "");
-    CCAssert(pActionTwo != NULL, "");
+    CCASSERT(pActionOne != NULL, "");
+    CCASSERT(pActionTwo != NULL, "");
 
     float d = pActionOne->getDuration() + pActionTwo->getDuration();
     ActionInterval::initWithDuration(d);
@@ -483,7 +483,7 @@ RepeatForever *RepeatForever::create(ActionInterval *pAction)
 
 bool RepeatForever::initWithAction(ActionInterval *pAction)
 {
-    CCAssert(pAction != NULL, "");
+    CCASSERT(pAction != NULL, "");
     pAction->retain();
     _innerAction = pAction;
     return true;
@@ -608,8 +608,8 @@ Spawn* Spawn::createWithTwoActions(FiniteTimeAction *pAction1, FiniteTimeAction 
 
 bool Spawn:: initWithTwoActions(FiniteTimeAction *pAction1, FiniteTimeAction *pAction2)
 {
-    CCAssert(pAction1 != NULL, "");
-    CCAssert(pAction2 != NULL, "");
+    CCASSERT(pAction1 != NULL, "");
+    CCASSERT(pAction2 != NULL, "");
 
     bool bRet = false;
 
@@ -802,7 +802,7 @@ void RotateTo::update(float time)
 
 RotateTo *RotateTo::reverse() const
 {
-	CCAssert(false, "RotateTo doesn't support the 'reverse' method");
+	CCASSERT(false, "RotateTo doesn't support the 'reverse' method");
 	return nullptr;
 }
 
@@ -1031,7 +1031,7 @@ SkewTo* SkewTo::clone(void) const
 
 SkewTo* SkewTo::reverse() const
 {
-	CCAssert(false, "reverse() not supported in SkewTo");
+	CCASSERT(false, "reverse() not supported in SkewTo");
 	return nullptr;
 }
 
@@ -1165,7 +1165,7 @@ SkewBy* SkewBy::reverse() const
 // JumpBy
 //
 
-JumpBy* JumpBy::create(float duration, const Point& position, float height, unsigned int jumps)
+JumpBy* JumpBy::create(float duration, const Point& position, float height, int jumps)
 {
     JumpBy *pJumpBy = new JumpBy();
     pJumpBy->initWithDuration(duration, position, height, jumps);
@@ -1174,9 +1174,11 @@ JumpBy* JumpBy::create(float duration, const Point& position, float height, unsi
     return pJumpBy;
 }
 
-bool JumpBy::initWithDuration(float duration, const Point& position, float height, unsigned int jumps)
+bool JumpBy::initWithDuration(float duration, const Point& position, float height, int jumps)
 {
-    if (ActionInterval::initWithDuration(duration))
+    CCASSERT(jumps>=0, "Number of jumps must be >= 0");
+    
+    if (ActionInterval::initWithDuration(duration) && jumps>=0)
     {
         _delta = position;
         _height = height;
@@ -1259,7 +1261,7 @@ JumpTo* JumpTo::clone(void) const
 
 JumpTo* JumpTo::reverse() const
 {
-	CCAssert(false, "reverse() not supported in JumpTo");
+	CCASSERT(false, "reverse() not supported in JumpTo");
 	return nullptr;
 }
 
@@ -1407,7 +1409,7 @@ void BezierTo::startWithTarget(Node *target)
 
 BezierTo* BezierTo::reverse() const
 {
-	CCAssert(false, "CCBezierTo doesn't support the 'reverse' method");
+	CCASSERT(false, "CCBezierTo doesn't support the 'reverse' method");
 	return nullptr;
 }
 
@@ -1470,7 +1472,7 @@ ScaleTo* ScaleTo::clone(void) const
 
 ScaleTo* ScaleTo::reverse() const
 {
-	CCAssert(false, "reverse() not supported in ScaleTo");
+	CCASSERT(false, "reverse() not supported in ScaleTo");
 	return nullptr;
 }
 
@@ -1540,20 +1542,22 @@ ScaleBy* ScaleBy::reverse() const
 // Blink
 //
 
-Blink* Blink::create(float duration, unsigned int uBlinks)
+Blink* Blink::create(float duration, int blinks)
 {
     Blink *pBlink = new Blink();
-    pBlink->initWithDuration(duration, uBlinks);
+    pBlink->initWithDuration(duration, blinks);
     pBlink->autorelease();
 
     return pBlink;
 }
 
-bool Blink::initWithDuration(float duration, unsigned int uBlinks)
+bool Blink::initWithDuration(float duration, int blinks)
 {
-    if (ActionInterval::initWithDuration(duration))
+    CCASSERT(blinks>=0, "blinks should be >= 0");
+    
+    if (ActionInterval::initWithDuration(duration) && blinks>=0)
     {
-        _times = uBlinks;
+        _times = blinks;
         return true;
     }
 
@@ -1576,7 +1580,7 @@ Blink* Blink::clone(void) const
 {
 	// no copy constructor
 	auto a = new Blink();
-	a->initWithDuration(_duration, (unsigned int)_times);
+	a->initWithDuration(_duration, _times);
 	a->autorelease();
 	return a;
 }
@@ -1707,7 +1711,7 @@ FadeTo* FadeTo::clone() const
 
 FadeTo* FadeTo::reverse() const
 {
-	CCAssert(false, "reverse() not supported in FadeTo");
+	CCASSERT(false, "reverse() not supported in FadeTo");
 	return nullptr;
 }
 
@@ -1767,7 +1771,7 @@ TintTo* TintTo::clone() const
 
 TintTo* TintTo::reverse() const
 {
-	CCAssert(false, "reverse() not supported in TintTo");
+	CCASSERT(false, "reverse() not supported in TintTo");
 	return nullptr;
 }
 
@@ -1908,8 +1912,8 @@ ReverseTime* ReverseTime::create(FiniteTimeAction *pAction)
 
 bool ReverseTime::initWithAction(FiniteTimeAction *pAction)
 {
-    CCAssert(pAction != NULL, "");
-    CCAssert(pAction != _other, "");
+    CCASSERT(pAction != NULL, "");
+    CCASSERT(pAction != _other, "");
 
     if (ActionInterval::initWithDuration(pAction->getDuration()))
     {
@@ -1982,9 +1986,26 @@ Animate* Animate::create(Animation *pAnimation)
     return pAnimate;
 }
 
+Animate::Animate()
+: _animation(NULL)
+, _splitTimes(new std::vector<float>)
+, _nextFrame(0)
+, _origFrame(NULL)
+, _executedLoops(0)
+{
+
+}
+
+Animate::~Animate()
+{
+    CC_SAFE_RELEASE(_animation);
+    CC_SAFE_RELEASE(_origFrame);
+    CC_SAFE_DELETE(_splitTimes);
+}
+
 bool Animate::initWithAnimation(Animation *pAnimation)
 {
-    CCAssert( pAnimation!=NULL, "Animate: argument Animation must be non-NULL");
+    CCASSERT( pAnimation!=NULL, "Animate: argument Animation must be non-NULL");
 
     float singleDuration = pAnimation->getDuration();
 
@@ -2016,6 +2037,16 @@ bool Animate::initWithAnimation(Animation *pAnimation)
     return false;
 }
 
+void Animate::setAnimation(cocos2d::Animation *animation)
+{
+    if (_animation != animation)
+    {
+        CC_SAFE_RETAIN(animation);
+        CC_SAFE_RELEASE(_animation);
+        _animation = animation;
+    }
+}
+
 Animate* Animate::clone() const
 {
 	// no copy constructor
@@ -2023,23 +2054,6 @@ Animate* Animate::clone() const
 	a->initWithAnimation(_animation->clone());
 	a->autorelease();
 	return a;
-}
-
-Animate::Animate()
-: _animation(NULL)
-, _splitTimes(new std::vector<float>)
-, _nextFrame(0)
-, _origFrame(NULL)
-, _executedLoops(0)
-{
-
-}
-
-Animate::~Animate()
-{
-    CC_SAFE_RELEASE(_animation);
-    CC_SAFE_RELEASE(_origFrame);
-    CC_SAFE_DELETE(_splitTimes);
 }
 
 void Animate::startWithTarget(Node *target)
@@ -2089,7 +2103,7 @@ void Animate::update(float t)
     unsigned int numberOfFrames = frames->count();
     SpriteFrame *frameToDisplay = NULL;
 
-    for( unsigned int i=_nextFrame; i < numberOfFrames; i++ ) {
+    for( int i=_nextFrame; i < numberOfFrames; i++ ) {
         float splitTime = _splitTimes->at(i);
 
         if( splitTime <= t ) {
@@ -2205,6 +2219,15 @@ void TargetedAction::stop(void)
 void TargetedAction::update(float time)
 {
     _action->update(time);
+}
+
+void TargetedAction::setForcedTarget(Node* forcedTarget)
+{
+    if( _forcedTarget != forcedTarget ) {
+        CC_SAFE_RETAIN(forcedTarget);
+        CC_SAFE_RELEASE(_forcedTarget);
+        _forcedTarget = forcedTarget;
+    }
 }
 
 NS_CC_END

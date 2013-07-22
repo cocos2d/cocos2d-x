@@ -32,7 +32,7 @@ Point::Point(void) : x(0), y(0)
 {
 }
 
-Point::Point(float x, float y) : x(x), y(y)
+Point::Point(float xx, float yy) : x(xx), y(yy)
 {
 }
 
@@ -78,14 +78,14 @@ Point Point::operator*(float a) const
 
 Point Point::operator/(float a) const
 {
-	CCAssert(a, "CCPoint division by 0.");
+	CCASSERT(a!=0, "CCPoint division by 0.");
     return Point(this->x / a, this->y / a);
 }
 
-void Point::setPoint(float x, float y)
+void Point::setPoint(float xx, float yy)
 {
-    this->x = x;
-    this->y = y;
+    this->x = xx;
+    this->y = yy;
 }
 
 bool Point::equals(const Point& target) const
@@ -196,7 +196,7 @@ Size::Size(void) : width(0), height(0)
 {
 }
 
-Size::Size(float width, float height) : width(width), height(height)
+Size::Size(float w, float h) : width(w), height(h)
 {
 }
 
@@ -237,14 +237,14 @@ Size Size::operator*(float a) const
 
 Size Size::operator/(float a) const
 {
-	CCAssert(a, "CCSize division by 0.");
+	CCASSERT(a!=0, "CCSize division by 0.");
     return Size(this->width / a, this->height / a);
 }
 
-void Size::setSize(float width, float height)
+void Size::setSize(float w, float h)
 {
-    this->width = width;
-    this->height = height;
+    this->width = w;
+    this->height = h;
 }
 
 bool Size::equals(const Size& target) const
@@ -281,7 +281,7 @@ Rect& Rect::operator= (const Rect& other)
 void Rect::setRect(float x, float y, float width, float height)
 {
     // CGRect can support width<0 or height<0
-    // CCAssert(width >= 0.0f && height >= 0.0f, "width and height of Rect must not less than 0.");
+    // CCASSERT(width >= 0.0f && height >= 0.0f, "width and height of Rect must not less than 0.");
 
     origin.x = x;
     origin.y = y;

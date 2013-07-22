@@ -82,7 +82,7 @@ void SpriteFrameCacheHelper::addSpriteFrameFromDict(Dictionary *dictionary, Text
     }
 
     // check the format
-    CCAssert(format >= 0 && format <= 3, "format is not supported for SpriteFrameCache addSpriteFramesWithDictionary:textureFilename:");
+    CCASSERT(format >= 0 && format <= 3, "format is not supported for SpriteFrameCache addSpriteFramesWithDictionary:textureFilename:");
 
     DictElement *pElement = NULL;
     CCDICT_FOREACH(framesDict, pElement)

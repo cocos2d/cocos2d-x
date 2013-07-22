@@ -44,7 +44,7 @@ NS_CC_BEGIN
 
 bool ActionEase::initWithAction(ActionInterval *pAction)
 {
-    CCAssert(pAction != NULL, "");
+    CCASSERT(pAction != NULL, "");
 
     if (ActionInterval::initWithDuration(pAction->getDuration()))
     {
@@ -663,7 +663,7 @@ void EaseElasticInOut::update(float time)
     else
     {
         time = time * 2;
-        if (! _period)
+        if ( _period == 0)
         {
             _period = 0.3f * 1.5f;
         }

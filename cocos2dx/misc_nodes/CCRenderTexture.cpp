@@ -249,7 +249,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2DPixelFormat eF
 
 bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2DPixelFormat eFormat, GLuint uDepthStencilFormat)
 {
-    CCAssert(eFormat != kTexture2DPixelFormat_A8, "only RGB and RGBA formats are valid for a render texture");
+    CCASSERT(eFormat != kTexture2DPixelFormat_A8, "only RGB and RGBA formats are valid for a render texture");
 
     bool bRet = false;
     void *data = NULL;
@@ -329,7 +329,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2DPixelFormat eF
         }
 
         // check if it worked (probably worth doing :) )
-        CCAssert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Could not attach texture to framebuffer");
+        CCASSERT(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Could not attach texture to framebuffer");
 
         _texture->setAliasTexParameters();
 
@@ -622,7 +622,7 @@ bool RenderTexture::saveToFile(const char *szFilePath)
 bool RenderTexture::saveToFile(const char *fileName, tImageFormat format)
 {
     bool bRet = false;
-    CCAssert(format == kImageFormatJPEG || format == kImageFormatPNG,
+    CCASSERT(format == kImageFormatJPEG || format == kImageFormatPNG,
              "the image can only be saved as JPG or PNG format");
 
     Image *pImage = newImage(true);
@@ -641,7 +641,7 @@ bool RenderTexture::saveToFile(const char *fileName, tImageFormat format)
 /* get buffer as Image */
 Image* RenderTexture::newImage(bool flipImage)
 {
-    CCAssert(_pixelFormat == kTexture2DPixelFormat_RGBA8888, "only RGBA8888 can be saved as image");
+    CCASSERT(_pixelFormat == kTexture2DPixelFormat_RGBA8888, "only RGBA8888 can be saved as image");
 
     if (NULL == _texture)
     {

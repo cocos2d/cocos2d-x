@@ -45,7 +45,7 @@ Point getAbsolutePosition(const Point &pt, int nType, const Size &containerSize,
 
 void setRelativeScale(Node *pNode, float fScaleX, float fScaleY, int nType, const char* pPropName)
 {
-    CCAssert(pNode, "pNode should not be null");
+    CCASSERT(pNode, "pNode should not be null");
     
     if (nType == kCCBScaleTypeMultiplyResolution)
     {
