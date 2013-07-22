@@ -44,7 +44,8 @@ NS_CC_BEGIN
 class LuaEngine : public ScriptEngineProtocol
 {
 public:
-    static LuaEngine* defaultEngine(void);    
+    static LuaEngine* getInstance(void);
+    CC_DEPRECATED_ATTRIBUTE static LuaEngine* defaultEngine(void) { return LuaEngine::getInstance(); }
     virtual ~LuaEngine(void);
     
     virtual ccScriptType getScriptType() {

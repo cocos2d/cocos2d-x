@@ -32,7 +32,7 @@ static int SendBinaryMessageToLua(int nHandler,const unsigned char* pTable,int n
         return 0;
     }
     
-    LuaStack *pStack = LuaEngine::defaultEngine()->getLuaStack();
+    LuaStack *pStack = LuaEngine::getInstance()->getLuaStack();
     if (NULL == pStack) {
         return 0;
     }

@@ -33,7 +33,7 @@ NS_CC_BEGIN
 
 LuaEngine* LuaEngine::_defaultEngine = NULL;
 
-LuaEngine* LuaEngine::defaultEngine(void)
+LuaEngine* LuaEngine::getInstance(void)
 {
     if (!_defaultEngine)
     {
