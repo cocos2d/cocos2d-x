@@ -246,7 +246,7 @@ void CocosDenshionTest::onExit()
 {
     Layer::onExit();
 
-    SimpleAudioEngine::getInstance()->end();
+    SimpleAudioEngine::end();
 }
 
 void CocosDenshionTest::addButtons()
