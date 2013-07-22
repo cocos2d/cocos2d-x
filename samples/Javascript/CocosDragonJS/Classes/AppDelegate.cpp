@@ -131,7 +131,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     js_log("RUNNING Main");
     ScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
-    ScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
+    ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
     ScriptingCore::getInstance()->runScript("main.js");
        
     return true;

@@ -17,7 +17,7 @@ AppDelegate::~AppDelegate()
 {
     // end simple audio engine here, or it may crashed on win32
     SimpleAudioEngine::sharedEngine()->end();
-    //CCScriptEngineManager::purgeSharedManager();
+    //CCScriptEngineManager::destroyInstance();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
@@ -34,7 +34,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     // register lua engine
     LuaEngine* pEngine = LuaEngine::defaultEngine();
-    ScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
+    ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
 
     std::string path = FileUtils::getInstance()->fullPathForFilename("hello.lua");
     pEngine->executeScriptFile(path.c_str());
