@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 
-#include "SimpleAudioEngine.h"
+//#include "SimpleAudioEngine.h"
 
 class HelloWorld : public cocos2d::LayerColor
 {
