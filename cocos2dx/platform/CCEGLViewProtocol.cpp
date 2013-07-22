@@ -89,6 +89,17 @@ void EGLViewProtocol::setDesignResolutionSize(float width, float height, Resolut
     	_designResolutionSize.height = ceilf(_screenSize.height/_scaleY);
     }
 
+	if ( resolutionPolicy == kResolutionGreatestChange ) {
+		int changeX = abs(_screenSize.width - _designResolutionSize.width);
+		int changeY = abs(_screenSize.height - _designResolutionSize.height);
+		
+		if (changeX > changeY) {
+			_scaleY = _scaleX;
+		} else {
+			_scaleX = _scaleY;
+		}
+	}
+	
     // calculate the rect of viewport    
     float viewPortW = _designResolutionSize.width * _scaleX;
     float viewPortH = _designResolutionSize.height * _scaleY;
