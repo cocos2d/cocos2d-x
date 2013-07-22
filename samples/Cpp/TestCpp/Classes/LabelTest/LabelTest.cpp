@@ -1702,7 +1702,7 @@ NewLabelTTFTest::NewLabelTTFTest()
 {
     Size size = Director::getInstance()->getWinSize();
 
-    label = Label::createWithTTF("Hello World", "fonts/arial.ttf", 28);
+    label = Label::createWithTTF("Hello World", "fonts/arial.ttf", 28, GlyphCollection::NEHE);
     label->setPosition( Point(size.width/2, size.height/2) );
     label->setAnchorPoint(Point(0.5, 1.0));
     label->retain();
