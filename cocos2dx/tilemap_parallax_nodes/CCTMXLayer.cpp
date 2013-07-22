@@ -193,7 +193,7 @@ void TMXLayer::setupTiles()
         }
     }
 
-    CCAssert( _maxGID >= _tileSet->_firstGid &&
+    CCASSERT( _maxGID >= _tileSet->_firstGid &&
         _minGID >= _tileSet->_firstGid, "TMX: Only 1 tileset per layer is supported");    
 }
 
@@ -322,8 +322,8 @@ Sprite* TMXLayer::reusedTileWithRect(Rect rect)
 // TMXLayer - obtaining tiles/gids
 Sprite * TMXLayer::getTileAt(const Point& pos)
 {
-    CCAssert(pos.x < _layerSize.width && pos.y < _layerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
-    CCAssert(_tiles && _atlasIndexArray, "TMXLayer: the tiles map has been released");
+    CCASSERT(pos.x < _layerSize.width && pos.y < _layerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
+    CCASSERT(_tiles && _atlasIndexArray, "TMXLayer: the tiles map has been released");
 
     Sprite *tile = nullptr;
     unsigned int gid = this->getTileGIDAt(pos);
@@ -359,8 +359,8 @@ Sprite * TMXLayer::getTileAt(const Point& pos)
 
 unsigned int TMXLayer::getTileGIDAt(const Point& pos, ccTMXTileFlags* flags/* = nullptr*/)
 {
-    CCAssert(pos.x < _layerSize.width && pos.y < _layerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
-    CCAssert(_tiles && _atlasIndexArray, "TMXLayer: the tiles map has been released");
+    CCASSERT(pos.x < _layerSize.width && pos.y < _layerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
+    CCASSERT(_tiles && _atlasIndexArray, "TMXLayer: the tiles map has been released");
 
     int idx = (int)(pos.x + pos.y * _layerSize.width);
     // Bits on the far end of the 32-bit global tile ID are used for tile flags
@@ -473,7 +473,7 @@ unsigned int TMXLayer::atlasIndexForExistantZ(unsigned int z)
     int key=z;
     int *item = (int*)bsearch((void*)&key, (void*)&_atlasIndexArray->arr[0], _atlasIndexArray->num, sizeof(void*), compareInts);
 
-    CCAssert(item, "TMX atlas index not found. Shall not happen");
+    CCASSERT(item, "TMX atlas index not found. Shall not happen");
 
     int index = ((size_t)item - (size_t)_atlasIndexArray->arr) / sizeof(void*);
     return index;
@@ -502,9 +502,9 @@ void TMXLayer::setTileGID(unsigned int gid, const Point& pos)
 
 void TMXLayer::setTileGID(unsigned int gid, const Point& pos, ccTMXTileFlags flags)
 {
-    CCAssert(pos.x < _layerSize.width && pos.y < _layerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
-    CCAssert(_tiles && _atlasIndexArray, "TMXLayer: the tiles map has been released");
-    CCAssert(gid == 0 || gid >= _tileSet->_firstGid, "TMXLayer: invalid gid" );
+    CCASSERT(pos.x < _layerSize.width && pos.y < _layerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
+    CCASSERT(_tiles && _atlasIndexArray, "TMXLayer: the tiles map has been released");
+    CCASSERT(gid == 0 || gid >= _tileSet->_firstGid, "TMXLayer: invalid gid" );
 
     ccTMXTileFlags currentFlags;
     unsigned int currentGID = getTileGIDAt(pos, &currentFlags);
@@ -553,7 +553,7 @@ void TMXLayer::addChild(Node * child, int zOrder, int tag)
     CC_UNUSED_PARAM(child);
     CC_UNUSED_PARAM(zOrder);
     CC_UNUSED_PARAM(tag);
-    CCAssert(0, "addChild: is not supported on TMXLayer. Instead use setTileGID:at:/tileAt:");
+    CCASSERT(0, "addChild: is not supported on TMXLayer. Instead use setTileGID:at:/tileAt:");
 }
 
 void TMXLayer::removeChild(Node* node, bool cleanup)
@@ -565,7 +565,7 @@ void TMXLayer::removeChild(Node* node, bool cleanup)
         return;
     }
 
-    CCAssert(_children->containsObject(sprite), "Tile does not belong to TMXLayer");
+    CCASSERT(_children->containsObject(sprite), "Tile does not belong to TMXLayer");
 
     unsigned int atlasIndex = sprite->getAtlasIndex();
     unsigned int zz = (size_t)_atlasIndexArray->arr[atlasIndex];
@@ -576,8 +576,8 @@ void TMXLayer::removeChild(Node* node, bool cleanup)
 
 void TMXLayer::removeTileAt(const Point& pos)
 {
-    CCAssert(pos.x < _layerSize.width && pos.y < _layerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
-    CCAssert(_tiles && _atlasIndexArray, "TMXLayer: the tiles map has been released");
+    CCASSERT(pos.x < _layerSize.width && pos.y < _layerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
+    CCASSERT(_tiles && _atlasIndexArray, "TMXLayer: the tiles map has been released");
 
     unsigned int gid = getTileGIDAt(pos);
 
@@ -637,7 +637,7 @@ Point TMXLayer::calculateLayerOffset(const Point& pos)
                   (_mapTileSize.height /2 ) * (-pos.x - pos.y));
         break;
     case TMXOrientationHex:
-        CCAssert(pos.equals(Point::ZERO), "offset for hexagonal map not implemented yet");
+        CCASSERT(pos.equals(Point::ZERO), "offset for hexagonal map not implemented yet");
         break;
     }
     return ret;    
@@ -703,10 +703,10 @@ int TMXLayer::getVertexZForPos(const Point& pos)
             ret = (int)(-(_layerSize.height-pos.y));
             break;
         case TMXOrientationHex:
-            CCAssert(0, "TMX Hexa zOrder not supported");
+            CCASSERT(0, "TMX Hexa zOrder not supported");
             break;
         default:
-            CCAssert(0, "TMX invalid value");
+            CCASSERT(0, "TMX invalid value");
             break;
         }
     } 

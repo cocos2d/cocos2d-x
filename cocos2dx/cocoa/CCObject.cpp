@@ -66,7 +66,7 @@ Object::~Object(void)
 
 void Object::release(void)
 {
-    CCAssert(_reference > 0, "reference count should greater than 0");
+    CCASSERT(_reference > 0, "reference count should greater than 0");
     --_reference;
 
     if (_reference == 0)
@@ -77,7 +77,7 @@ void Object::release(void)
 
 void Object::retain(void)
 {
-    CCAssert(_reference > 0, "reference count should greater than 0");
+    CCASSERT(_reference > 0, "reference count should greater than 0");
 
     ++_reference;
 }

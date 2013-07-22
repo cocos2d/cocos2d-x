@@ -10,6 +10,7 @@
 #define __SCRIPTING_CORE_H__
 
 #include <assert.h>
+#include <memory>
 #include "cocos2d.h"
 #include "js_bindings_config.h"
 #include "js_bindings_core.h"

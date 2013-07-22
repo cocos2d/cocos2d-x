@@ -93,7 +93,7 @@ void TileMapAtlas::releaseMap()
 
 void TileMapAtlas::calculateItemsToRender()
 {
-    CCAssert( _TGAInfo != NULL, "tgaInfo must be non-nil");
+    CCASSERT( _TGAInfo != NULL, "tgaInfo must be non-nil");
 
     _itemsToRender = 0;
     for(int x=0;x < _TGAInfo->width; x++ ) 
@@ -112,7 +112,7 @@ void TileMapAtlas::calculateItemsToRender()
 
 void TileMapAtlas::loadTGAfile(const char *file)
 {
-    CCAssert( file != NULL, "file must be non-nil");
+    CCASSERT( file != NULL, "file must be non-nil");
 
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(file);
 
@@ -125,7 +125,7 @@ void TileMapAtlas::loadTGAfile(const char *file)
 #if 1
     if( _TGAInfo->status != TGA_OK ) 
     {
-        CCAssert(0, "TileMapAtlasLoadTGA : TileMapAtlas cannot load TGA file");
+        CCASSERT(0, "TileMapAtlasLoadTGA : TileMapAtlas cannot load TGA file");
     }
 #endif
 }
@@ -133,11 +133,11 @@ void TileMapAtlas::loadTGAfile(const char *file)
 // TileMapAtlas - Atlas generation / updates
 void TileMapAtlas::setTile(const Color3B& tile, const Point& position)
 {
-    CCAssert(_TGAInfo != NULL, "tgaInfo must not be nil");
-    CCAssert(_posToAtlasIndex != NULL, "posToAtlasIndex must not be nil");
-    CCAssert(position.x < _TGAInfo->width, "Invalid position.x");
-    CCAssert(position.y < _TGAInfo->height, "Invalid position.x");
-    CCAssert(tile.r != 0, "R component must be non 0");
+    CCASSERT(_TGAInfo != NULL, "tgaInfo must not be nil");
+    CCASSERT(_posToAtlasIndex != NULL, "posToAtlasIndex must not be nil");
+    CCASSERT(position.x < _TGAInfo->width, "Invalid position.x");
+    CCASSERT(position.y < _TGAInfo->height, "Invalid position.x");
+    CCASSERT(tile.r != 0, "R component must be non 0");
 
     Color3B *ptr = (Color3B*)_TGAInfo->imageData;
     Color3B value = ptr[(unsigned int)(position.x + position.y * _TGAInfo->width)];
@@ -160,9 +160,9 @@ void TileMapAtlas::setTile(const Color3B& tile, const Point& position)
 
 Color3B TileMapAtlas::getTileAt(const Point& position) const
 {
-    CCAssert( _TGAInfo != NULL, "tgaInfo must not be nil");
-    CCAssert( position.x < _TGAInfo->width, "Invalid position.x");
-    CCAssert( position.y < _TGAInfo->height, "Invalid position.y");
+    CCASSERT( _TGAInfo != NULL, "tgaInfo must not be nil");
+    CCASSERT( position.x < _TGAInfo->width, "Invalid position.x");
+    CCASSERT( position.y < _TGAInfo->height, "Invalid position.y");
 
     Color3B *ptr = (Color3B*)_TGAInfo->imageData;
     Color3B value = ptr[(unsigned int)(position.x + position.y * _TGAInfo->width)];
@@ -170,9 +170,9 @@ Color3B TileMapAtlas::getTileAt(const Point& position) const
     return value;    
 }
 
-void TileMapAtlas::updateAtlasValueAt(const Point& pos, const Color3B& value, unsigned int index)
+void TileMapAtlas::updateAtlasValueAt(const Point& pos, const Color3B& value, int index)
 {
-    CCAssert( index >= 0 && index < _textureAtlas->getCapacity(), "updateAtlasValueAt: Invalid index");
+    CCASSERT( index >= 0 && index < _textureAtlas->getCapacity(), "updateAtlasValueAt: Invalid index");
 
     V3F_C4B_T2F_Quad* quad = &((_textureAtlas->getQuads())[index]);
 
@@ -228,7 +228,7 @@ void TileMapAtlas::updateAtlasValueAt(const Point& pos, const Color3B& value, un
     quad->bl.colors = color;
 
     _textureAtlas->setDirty(true);
-    unsigned int totalQuads = _textureAtlas->getTotalQuads();
+    int totalQuads = _textureAtlas->getTotalQuads();
     if (index + 1 > totalQuads) {
         _textureAtlas->increaseTotalQuadsWith(index + 1 - totalQuads);
     }
@@ -236,7 +236,7 @@ void TileMapAtlas::updateAtlasValueAt(const Point& pos, const Color3B& value, un
 
 void TileMapAtlas::updateAtlasValues()
 {
-    CCAssert( _TGAInfo != NULL, "tgaInfo must be non-nil");
+    CCASSERT( _TGAInfo != NULL, "tgaInfo must be non-nil");
 
     int total = 0;
 

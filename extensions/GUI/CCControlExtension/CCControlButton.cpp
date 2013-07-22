@@ -82,11 +82,11 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* b
 {
     if (Control::init())
     {
-        CCAssert(node != NULL, "Label must not be nil.");
+        CCASSERT(node != NULL, "Label must not be nil.");
         LabelProtocol* label = dynamic_cast<LabelProtocol*>(node);
         RGBAProtocol* rgbaLabel = dynamic_cast<RGBAProtocol*>(node);
-        CCAssert(backgroundSprite != NULL, "Background sprite must not be nil.");
-        CCAssert(label != NULL || rgbaLabel!=NULL || backgroundSprite != NULL, "");
+        CCASSERT(backgroundSprite != NULL, "Background sprite must not be nil.");
+        CCASSERT(label != NULL || rgbaLabel!=NULL || backgroundSprite != NULL, "");
         
         _parentInited = true;
 
