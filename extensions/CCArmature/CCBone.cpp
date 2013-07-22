@@ -175,7 +175,7 @@ void Bone::update(float delta)
         _worldTransform.tx = _tweenData->x;
         _worldTransform.ty = _tweenData->y;
 
-        _worldTransform = AffineTransformConcat(nodeToParentTransform(), _worldTransform);
+        _worldTransform = AffineTransformConcat(getNodeToParentTransform(), _worldTransform);
 
         if(_parent)
         {

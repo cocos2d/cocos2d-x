@@ -443,7 +443,7 @@ void ParticleBatchNode::disableParticle(unsigned int particleIndex)
 // ParticleBatchNode - add / remove / reorder helper methods
 
 // add child helper
-void ParticleBatchNode::insertChild(ParticleSystem* pSystem, unsigned int index)
+void ParticleBatchNode::insertChild(ParticleSystem* pSystem, int index)
 {
     pSystem->setAtlasIndex(index);
 
