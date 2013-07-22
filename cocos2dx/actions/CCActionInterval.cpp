@@ -1792,8 +1792,8 @@ void TintTo::update(float time)
     if (pRGBAProtocol)
     {
         pRGBAProtocol->setColor(Color3B(GLubyte(_from.r + (_to.r - _from.r) * time), 
-            (GLbyte)(_from.g + (_to.g - _from.g) * time),
-            (GLbyte)(_from.b + (_to.b - _from.b) * time)));
+            (GLubyte)(_from.g + (_to.g - _from.g) * time),
+            (GLubyte)(_from.b + (_to.b - _from.b) * time)));
     }    
 }
 
