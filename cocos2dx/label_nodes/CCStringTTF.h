@@ -35,7 +35,7 @@ class StringTTF : public Label, public LabelTextFormatProtocol
 {
 public:
     
-    static StringTTF* create(FontDefinitionTTF *pDefinition, TextAlignment alignment = kTextAlignmentLeft);
+    static StringTTF* create(FontDefinitionTTF *pDefinition, TextAlignment alignment = kTextAlignmentLeft, int lineSize = 0);
     
     // main interface
     bool setText(const char *stringToRender, float lineWidth, TextAlignment alignment = kTextAlignmentLeft, bool lineBreakWithoutSpaces = false);
