@@ -170,7 +170,7 @@ Color3B TileMapAtlas::getTileAt(const Point& position) const
     return value;    
 }
 
-void TileMapAtlas::updateAtlasValueAt(const Point& pos, const Color3B& value, unsigned int index)
+void TileMapAtlas::updateAtlasValueAt(const Point& pos, const Color3B& value, int index)
 {
     CCASSERT( index >= 0 && index < _textureAtlas->getCapacity(), "updateAtlasValueAt: Invalid index");
 
@@ -228,7 +228,7 @@ void TileMapAtlas::updateAtlasValueAt(const Point& pos, const Color3B& value, un
     quad->bl.colors = color;
 
     _textureAtlas->setDirty(true);
-    unsigned int totalQuads = _textureAtlas->getTotalQuads();
+    int totalQuads = _textureAtlas->getTotalQuads();
     if (index + 1 > totalQuads) {
         _textureAtlas->increaseTotalQuadsWith(index + 1 - totalQuads);
     }

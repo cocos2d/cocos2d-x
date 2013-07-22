@@ -699,7 +699,7 @@ void SpriteBatchNode::setTexture(Texture2D *texture)
 // SpriteSheet Extension
 //implementation SpriteSheet (TMXTiledMapExtension)
 
-void SpriteBatchNode::insertQuadFromSprite(Sprite *sprite, unsigned int index)
+void SpriteBatchNode::insertQuadFromSprite(Sprite *sprite, int index)
 {
     CCASSERT( sprite != NULL, "Argument must be non-NULL");
     CCASSERT( dynamic_cast<Sprite*>(sprite), "CCSpriteBatchNode only supports Sprites as children");
@@ -724,7 +724,7 @@ void SpriteBatchNode::insertQuadFromSprite(Sprite *sprite, unsigned int index)
     sprite->updateTransform();
 }
 
-void SpriteBatchNode::updateQuadFromSprite(Sprite *sprite, unsigned int index)
+void SpriteBatchNode::updateQuadFromSprite(Sprite *sprite, int index)
 {
     CCASSERT(sprite != NULL, "Argument must be non-nil");
     CCASSERT(dynamic_cast<Sprite*>(sprite) != NULL, "CCSpriteBatchNode only supports Sprites as children");
@@ -747,7 +747,7 @@ void SpriteBatchNode::updateQuadFromSprite(Sprite *sprite, unsigned int index)
 	sprite->updateTransform();
 }
 
-SpriteBatchNode * SpriteBatchNode::addSpriteWithoutQuad(Sprite*child, unsigned int z, int aTag)
+SpriteBatchNode * SpriteBatchNode::addSpriteWithoutQuad(Sprite*child, int z, int aTag)
 {
     CCASSERT( child != NULL, "Argument must be non-NULL");
     CCASSERT( dynamic_cast<Sprite*>(child), "CCSpriteBatchNode only supports Sprites as children");
