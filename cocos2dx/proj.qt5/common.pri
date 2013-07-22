@@ -29,3 +29,6 @@ COCOS2DX_SYSTEM_LIBS += -lfontconfig -lfreetype
 
 LINK_AGAINST_COCOS2DX = -L$${LIB_OUTPUT_DIR} -lcocos2d $${COCOS2DX_SYSTEM_LIBS}
 
+#INCLUDEPATH += $${PWD}/../../CocosDenshion/include
+#LINK_AGAINST_COCOSDENSHION = -L$${LIB_OUTPUT_DIR} -lcocosdenshion
+
