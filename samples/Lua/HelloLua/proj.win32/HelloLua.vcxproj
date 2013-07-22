@@ -102,7 +102,7 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\..\..\scripting\lua\script\Deprecated.lua" "$(ProjectDir)..\..\HelloLua\Resources" /e /Y</Command>
+      <Command>xcopy "$(ProjectDir)..\..\..\..\scripting\lua\script" "$(ProjectDir)..\..\HelloLua\Resources" /e /Y</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
