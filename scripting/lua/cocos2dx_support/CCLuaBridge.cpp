@@ -31,7 +31,7 @@ int        LuaBridge::s_newFunctionId = 0;
 
 LuaStack *LuaBridge::getStack(void)
 {
-    return LuaEngine::defaultEngine()->getLuaStack();
+    return LuaEngine::getInstance()->getLuaStack();
 }
 
 int LuaBridge::pushLuaFunctionById(int functionId)

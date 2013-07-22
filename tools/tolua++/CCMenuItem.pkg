@@ -46,13 +46,13 @@ class CCMenuItemAtlasFont : public CCMenuItemLabel
 class CCMenuItemFont : public CCMenuItemLabel
 {
     static void setFontSize(int s);
-    static unsigned int fontSize();
+    static unsigned int getFontSize();
     static void setFontName(const char* name);
-    static const char* fontName();
+    static const char* getFontName();
 	void setFontSizeObj(unsigned int s);
-    unsigned int fontSizeObj();
+    unsigned int getFontSizeObj();
     void setFontNameObj(const char* name);
-    const char* fontNameObj();
+    const char* getFontNameObj() const;
 
     static CCMenuItemFont * create(const char* value);
 };
@@ -116,7 +116,7 @@ class CCMenuItemToggle : public CCMenuItem
     CCArray* getSubItems();
 
     void addSubItem(CCMenuItem *item);
-    CCMenuItem* selectedItem();
+    CCMenuItem* getSelectedItem();
 
     void activate();
     void selected();

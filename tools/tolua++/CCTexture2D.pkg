@@ -389,7 +389,8 @@
 //comment nextline since it wasn't defined in glew.h of windows
 // #define GL_RGB565                                           0x8D62
 #define GL_DEPTH_COMPONENT16                                0x81A5
-#define GL_STENCIL_INDEX                                    0x1901
+//comment nextline since it wasn't defined in gl.h of IOS7 sdk
+//#define GL_STENCIL_INDEX                                    0x1901
 #define GL_STENCIL_INDEX8                                   0x8D48
 
 #define GL_RENDERBUFFER_WIDTH                               0x8D42
@@ -504,10 +505,10 @@ class CCTexture2D : public CCObject
     void setAliasTexParameters();
     void generateMipmap();
 
-	const char* stringForFormat() const;
-    unsigned int bitsPerPixelForFormat() const;
-	unsigned int bitsPerPixelForFormat(CCTexture2DPixelFormat format) const;
+	const char* getStringForFormat() const;
+    unsigned int getBitsPerPixelForFormat() const;
+	unsigned int getBitsPerPixelForFormat(CCTexture2DPixelFormat format) const;
 
     static void setDefaultAlphaPixelFormat(CCTexture2DPixelFormat format);
-    static CCTexture2DPixelFormat defaultAlphaPixelFormat();
+    static CCTexture2DPixelFormat getDefaultAlphaPixelFormat();
 };
