@@ -55,4 +55,4 @@ files
 	AppDelegate.cpp
 }
 
-
+postbuild "cccopy.py -s ../../../../scripting/lua/script/ -d ../../../../samples/Lua/HelloLua/Resources/"
