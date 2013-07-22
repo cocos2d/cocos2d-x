@@ -1083,14 +1083,23 @@ void CCSprite::setTexture(CCTexture2D *texture)
     CCAssert( !texture || dynamic_cast<CCTexture2D*>(texture), "setTexture expects a CCTexture2D. Invalid argument");
 
     // shader program
-    if (texture)
-    {
-        setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
-    }
-    else
-    {
-        setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionColor));
-    }
+	if (getShaderProgram() == NULL)
+	{
+		// We don't want change someones shader
+		// for example in CCControlSwitch when we call needsLayout
+		if (texture)
+		{
+			setShaderProgram(
+				CCShaderCache::sharedShaderCache()->programForKey(
+					kCCShader_PositionTextureColor));
+		}
+		else
+		{
+			setShaderProgram(
+				CCShaderCache::sharedShaderCache()->programForKey(
+					kCCShader_PositionColor));
+		}
+	}
     
     if (!m_pobBatchNode && m_pobTexture != texture)
     {
