@@ -500,9 +500,9 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
                 layerAttribs = pTMXMapInfo->getLayerAttribs();
                 pTMXMapInfo->setLayerAttribs(layerAttribs | TMXLayerAttribZlib);
             }
-            CCAssert( compression == "" || compression == "gzip" || compression == "zlib", "TMX: unsupported compression method" );
+            CCASSERT( compression == "" || compression == "gzip" || compression == "zlib", "TMX: unsupported compression method" );
         }
-        CCAssert( pTMXMapInfo->getLayerAttribs() != TMXLayerAttribNone, "TMX tile map: Only base64 and/or gzip/zlib maps are supported" );
+        CCASSERT( pTMXMapInfo->getLayerAttribs() != TMXLayerAttribNone, "TMX tile map: Only base64 and/or gzip/zlib maps are supported" );
 
     } 
     else if (elementName == "object")
@@ -718,7 +718,7 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
             int sizeHint = (int)(s.width * s.height * sizeof(unsigned int));
 
             int inflatedLen = ZipUtils::ccInflateMemoryWithHint(buffer, len, &deflated, sizeHint);
-            CCAssert(inflatedLen == sizeHint, "");
+            CCASSERT(inflatedLen == sizeHint, "");
 
             inflatedLen = (size_t)&inflatedLen; // XXX: to avoid warnings in compiler
             

@@ -1426,7 +1426,7 @@ JSBool JSB_cpCentroidForPoly(JSContext *cx, uint32_t argc, jsval *vp)
 // void cpRecenterPoly(const int numVerts, cpVect *verts);
 JSBool JSB_cpRecenterPoly(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	CCAssert(false, "NOT IMPLEMENTED");
+	CCASSERT(false, "NOT IMPLEMENTED");
 	return JS_FALSE;
 }
 

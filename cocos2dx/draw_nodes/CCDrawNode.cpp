@@ -141,8 +141,10 @@ DrawNode* DrawNode::create()
     return pRet;
 }
 
-void DrawNode::ensureCapacity(unsigned int count)
+void DrawNode::ensureCapacity(int count)
 {
+    CCASSERT(count>=0, "capacity must be >= 0");
+    
     if(_bufferCount + count > _bufferCapacity)
     {
 		_bufferCapacity += MAX(_bufferCapacity, count);

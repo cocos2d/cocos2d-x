@@ -62,7 +62,7 @@ bool LabelAtlas::initWithString(const char *string, const char *charMapFile, uns
 
 bool LabelAtlas::initWithString(const char *string, Texture2D* texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
 {
-    CCAssert(string != NULL, "");
+    CCASSERT(string != NULL, "");
     if (AtlasNode::initWithTexture(texture, itemWidth, itemHeight, strlen(string)))
     {
         _mapStartChar = startCharMap;
@@ -96,7 +96,7 @@ bool LabelAtlas::initWithString(const char *theString, const char *fntFile)
   std::string relPathStr = pathStr.substr(0, pathStr.find_last_of("/"))+"/";
   Dictionary *dict = Dictionary::createWithContentsOfFile(pathStr.c_str());
   
-  CCAssert(((String*)dict->objectForKey("version"))->intValue() == 1, "Unsupported version. Upgrade cocos2d version");
+  CCASSERT(((String*)dict->objectForKey("version"))->intValue() == 1, "Unsupported version. Upgrade cocos2d version");
     
   std::string texturePathStr = relPathStr + ((String*)dict->objectForKey("textureFilename"))->getCString();
   String *textureFilename = String::create(texturePathStr);
@@ -113,7 +113,7 @@ bool LabelAtlas::initWithString(const char *theString, const char *fntFile)
 //CCLabelAtlas - Atlas generation
 void LabelAtlas::updateAtlasValues()
 {
-    unsigned int n = _string.length();
+    int n = _string.length();
 
     const unsigned char *s = (unsigned char*)_string.c_str();
 
@@ -128,9 +128,9 @@ void LabelAtlas::updateAtlasValues()
         itemHeightInPixels = _itemHeight;
     }
 
-    CCAssert( n <= _textureAtlas->getCapacity(), "updateAtlasValues: Invalid String length");
+    CCASSERT( n <= _textureAtlas->getCapacity(), "updateAtlasValues: Invalid String length");
     V3F_C4B_T2F_Quad* quads = _textureAtlas->getQuads();
-    for(unsigned int i = 0; i < n; i++) {
+    for(int i = 0; i < n; i++) {
 
         unsigned char a = s[i] - _mapStartChar;
         float row = (float) (a % _itemsPerRow);
@@ -178,7 +178,7 @@ void LabelAtlas::updateAtlasValues()
     }
     if (n > 0 ){
         _textureAtlas->setDirty(true);
-        unsigned int totalQuads = _textureAtlas->getTotalQuads();
+        int totalQuads = _textureAtlas->getTotalQuads();
         if (n > totalQuads) {
             _textureAtlas->increaseTotalQuadsWith(n - totalQuads);
         }
@@ -188,7 +188,7 @@ void LabelAtlas::updateAtlasValues()
 //CCLabelAtlas - LabelProtocol
 void LabelAtlas::setString(const char *label)
 {
-    unsigned int len = strlen(label);
+    int len = strlen(label);
     if (len > _textureAtlas->getTotalQuads())
     {
         _textureAtlas->resizeCapacity(len);

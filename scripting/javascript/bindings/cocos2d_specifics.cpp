@@ -15,7 +15,7 @@ JSTouchDelegate::TouchDelegateMap JSTouchDelegate::sTouchDelegateMap;
 
 void JSTouchDelegate::setDelegateForJSObject(JSObject* pJSObj, JSTouchDelegate* pDelegate)
 {
-    CCAssert(sTouchDelegateMap.find(pJSObj) == sTouchDelegateMap.end(), "");
+    CCASSERT(sTouchDelegateMap.find(pJSObj) == sTouchDelegateMap.end(), "");
     sTouchDelegateMap.insert(TouchDelegatePair(pJSObj, pDelegate));
 }
 
@@ -33,7 +33,7 @@ JSTouchDelegate* JSTouchDelegate::getDelegateForJSObject(JSObject* pJSObj)
 void JSTouchDelegate::removeDelegateForJSObject(JSObject* pJSObj)
 {
     TouchDelegateMap::iterator iter = sTouchDelegateMap.find(pJSObj);
-    CCAssert(iter != sTouchDelegateMap.end(), "");
+    CCASSERT(iter != sTouchDelegateMap.end(), "");
     sTouchDelegateMap.erase(pJSObj);
 }
 
@@ -66,7 +66,7 @@ bool JSTouchDelegate::ccTouchBegan(Touch *pTouch, Event *pEvent) {
     bool bRet = false;
 
     js_proxy_t* p = jsb_get_js_proxy(_mObj);
-    CCAssert(p, "js object has been unrooted.");
+    CCASSERT(p, "js object has been unrooted.");
 
     ScriptingCore::getInstance()->executeCustomTouchEvent(CCTOUCHBEGAN, 
         pTouch, _mObj, retval);
@@ -83,7 +83,7 @@ void JSTouchDelegate::ccTouchMoved(Touch *pTouch, Event *pEvent) {
 
     //jsval retval;
     js_proxy_t* p = jsb_get_js_proxy(_mObj);
-    CCAssert(p, "js object has been unrooted.");
+    CCASSERT(p, "js object has been unrooted.");
 
     ScriptingCore::getInstance()->executeCustomTouchEvent(CCTOUCHMOVED, 
         pTouch, _mObj);
@@ -93,7 +93,7 @@ void JSTouchDelegate::ccTouchEnded(Touch *pTouch, Event *pEvent) {
     CC_UNUSED_PARAM(pEvent);
 
     js_proxy_t* p = jsb_get_js_proxy(_mObj);
-    CCAssert(p, "js object has been unrooted.");
+    CCASSERT(p, "js object has been unrooted.");
 
     ScriptingCore::getInstance()->executeCustomTouchEvent(CCTOUCHENDED, 
         pTouch, _mObj);
@@ -102,7 +102,7 @@ void JSTouchDelegate::ccTouchEnded(Touch *pTouch, Event *pEvent) {
 void JSTouchDelegate::ccTouchCancelled(Touch *pTouch, Event *pEvent) {
     CC_UNUSED_PARAM(pEvent);
     js_proxy_t* p = jsb_get_js_proxy(_mObj);
-    CCAssert(p, "js object has been unrooted.");
+    CCASSERT(p, "js object has been unrooted.");
 
     ScriptingCore::getInstance()->executeCustomTouchEvent(CCTOUCHCANCELLED, 
         pTouch, _mObj);
@@ -907,7 +907,7 @@ void JSScheduleWrapper::setTargetForSchedule(jsval sched, JSScheduleWrapper *tar
             HASH_ADD_PTR(_schedFunc_target_ht, jsfuncObj, p);
         }
 
-        CCAssert(!targetArray->containsObject(target), "The target was already added.");
+        CCASSERT(!targetArray->containsObject(target), "The target was already added.");
 
         targetArray->addObject(target);
     } while(0);
@@ -933,7 +933,7 @@ void JSScheduleWrapper::setTargetForJSObject(JSObject* jsTargetObj, JSScheduleWr
         HASH_ADD_PTR(_schedObj_target_ht, jsTargetObj, p);
     }
     
-    CCAssert(!targetArray->containsObject(target), "The target was already added.");
+    CCASSERT(!targetArray->containsObject(target), "The target was already added.");
     targetArray->addObject(target);
 }
 
@@ -1169,7 +1169,7 @@ void JSScheduleWrapper::dump()
             jsfuncTargetCount++;
         }
     }
-    CCAssert(nativeTargetsCount == jsfuncTargetCount, "");
+    CCASSERT(nativeTargetsCount == jsfuncTargetCount, "");
     CCLOG("\n---------JSScheduleWrapper dump end--------------\n");
 #endif
 }
@@ -1229,7 +1229,7 @@ void JSScheduleWrapper::setTarget(Object* pTarget)
 
 void JSScheduleWrapper::setPureJSTarget(JSObject* pPureJSTarget)
 {
-    CCAssert(_pPureJSTarget == NULL, "The pure js target has been set");
+    CCASSERT(_pPureJSTarget == NULL, "The pure js target has been set");
     JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
     _pPureJSTarget = pPureJSTarget;
     JS_AddNamedObjectRoot(cx, &_pPureJSTarget, "Pure JS target");
@@ -1575,7 +1575,7 @@ JSBool js_cocos2dx_CCNode_unscheduleUpdate(JSContext *cx, uint32_t argc, jsval *
                 wrapper = (JSScheduleWrapper*)arr->objectAtIndex(i);
                 if(wrapper && wrapper->isUpdateSchedule()) {
                     cobj->getScheduler()->unscheduleUpdateForTarget(wrapper);
-                    CCAssert(OBJECT_TO_JSVAL(tmpObj) == wrapper->getJSCallbackThis(), "Wrong target object.");
+                    CCASSERT(OBJECT_TO_JSVAL(tmpObj) == wrapper->getJSCallbackThis(), "Wrong target object.");
                     JSScheduleWrapper::removeTargetForJSObject(tmpObj, wrapper);
                     break;
                 }
@@ -1790,7 +1790,7 @@ JSBool js_CCScheduler_unscheduleUpdateForTarget(JSContext *cx, uint32_t argc, js
                 wrapper = (JSScheduleWrapper*)arr->objectAtIndex(i);
                 if(wrapper && wrapper->isUpdateSchedule()) {
                     cobj->unscheduleUpdateForTarget(wrapper);
-                    CCAssert(argv[0] == wrapper->getJSCallbackThis(), "Wrong target object.");
+                    CCASSERT(argv[0] == wrapper->getJSCallbackThis(), "Wrong target object.");
                     JSScheduleWrapper::removeTargetForJSObject(tmpObj, wrapper);
                     break;
                 }
@@ -2956,7 +2956,7 @@ JSBool js_cocos2dx_CCTMXLayer_getTileFlagsAt(JSContext *cx, uint32_t argc, jsval
         Point arg0;
         ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-        cobj->tileGIDAt(arg0, &flags);
+        cobj->getTileGIDAt(arg0, &flags);
         
         JS_SET_RVAL(cx, vp, UINT_TO_JSVAL((uint32_t)flags));
         return JS_TRUE;

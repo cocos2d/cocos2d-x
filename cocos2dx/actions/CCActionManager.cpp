@@ -170,8 +170,8 @@ void ActionManager::resumeTargets(cocos2d::Set *targetsToResume)
 
 void ActionManager::addAction(Action *pAction, Node *target, bool paused)
 {
-    CCAssert(pAction != NULL, "");
-    CCAssert(target != NULL, "");
+    CCASSERT(pAction != NULL, "");
+    CCASSERT(target != NULL, "");
 
     tHashElement *pElement = NULL;
     // we should convert it to Object*, because we save it as Object*
@@ -188,7 +188,7 @@ void ActionManager::addAction(Action *pAction, Node *target, bool paused)
 
      actionAllocWithHashElement(pElement);
  
-     CCAssert(! ccArrayContainsObject(pElement->actions, pAction), "");
+     CCASSERT(! ccArrayContainsObject(pElement->actions, pAction), "");
      ccArrayAppendObject(pElement->actions, pAction);
  
      pAction->startWithTarget(target);
@@ -267,8 +267,8 @@ void ActionManager::removeAction(Action *pAction)
 
 void ActionManager::removeActionByTag(unsigned int tag, Object *target)
 {
-    CCAssert((int)tag != kActionTagInvalid, "");
-    CCAssert(target != NULL, "");
+    CCASSERT((int)tag != kActionTagInvalid, "");
+    CCASSERT(target != NULL, "");
 
     tHashElement *pElement = NULL;
     HASH_FIND_INT(_targets, &target, pElement);
@@ -295,7 +295,7 @@ void ActionManager::removeActionByTag(unsigned int tag, Object *target)
 // and, it is not possible to get the address of a reference
 Action* ActionManager::getActionByTag(unsigned int tag, const Object *target) const
 {
-    CCAssert((int)tag != kActionTagInvalid, "");
+    CCASSERT((int)tag != kActionTagInvalid, "");
 
     tHashElement *pElement = NULL;
     HASH_FIND_INT(_targets, &target, pElement);

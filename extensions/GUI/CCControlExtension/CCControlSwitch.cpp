@@ -301,10 +301,10 @@ bool ControlSwitch::initWithMaskSprite(Sprite *maskSprite, Sprite * onSprite, Sp
 {
     if (Control::init())
     {
-        CCAssert(maskSprite,    "Mask must not be nil.");
-        CCAssert(onSprite,      "onSprite must not be nil.");
-        CCAssert(offSprite,     "offSprite must not be nil.");
-        CCAssert(thumbSprite,   "thumbSprite must not be nil.");
+        CCASSERT(maskSprite,    "Mask must not be nil.");
+        CCASSERT(onSprite,      "onSprite must not be nil.");
+        CCASSERT(offSprite,     "offSprite must not be nil.");
+        CCASSERT(thumbSprite,   "thumbSprite must not be nil.");
         
         setTouchEnabled(true);
         _on = true;

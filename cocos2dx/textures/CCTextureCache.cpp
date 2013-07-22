@@ -75,7 +75,7 @@ TextureCache::TextureCache()
 , _asyncRefCount(0)
 , _textures(new Dictionary())
 {
-    CCAssert(_sharedTextureCache == nullptr, "Attempted to allocate a second instance of a singleton.");
+    CCASSERT(_sharedTextureCache == nullptr, "Attempted to allocate a second instance of a singleton.");
 }
 
 TextureCache::~TextureCache()
@@ -117,7 +117,7 @@ Dictionary* TextureCache::snapshotTextures()
 
 void TextureCache::addImageAsync(const char *path, Object *target, SEL_CallFuncO selector)
 {
-    CCAssert(path != NULL, "TextureCache: fileimage MUST not be NULL");    
+    CCASSERT(path != NULL, "TextureCache: fileimage MUST not be NULL");    
 
     Texture2D *texture = NULL;
 
@@ -327,7 +327,7 @@ void TextureCache::addImageAsyncCallBack(float dt)
 
 Texture2D * TextureCache::addImage(const char * path)
 {
-    CCAssert(path != NULL, "TextureCache: fileimage MUST not be NULL");
+    CCASSERT(path != NULL, "TextureCache: fileimage MUST not be NULL");
 
     Texture2D * texture = NULL;
     Image* pImage = NULL;
@@ -417,7 +417,7 @@ Texture2D * TextureCache::addImage(const char * path)
 
 Texture2D * TextureCache::addPVRImage(const char* path)
 {
-    CCAssert(path != NULL, "TextureCache: fileimage MUST not be nil");
+    CCASSERT(path != NULL, "TextureCache: fileimage MUST not be nil");
 
     Texture2D* texture = NULL;
     std::string key(path);
@@ -450,7 +450,7 @@ Texture2D * TextureCache::addPVRImage(const char* path)
 
 Texture2D* TextureCache::addETCImage(const char* path)
 {
-    CCAssert(path != NULL, "TextureCache: fileimage MUST not be nil");
+    CCASSERT(path != NULL, "TextureCache: fileimage MUST not be nil");
     
     Texture2D* texture = NULL;
     std::string key(path);
@@ -479,7 +479,7 @@ Texture2D* TextureCache::addETCImage(const char* path)
 
 Texture2D* TextureCache::addUIImage(Image *image, const char *key)
 {
-    CCAssert(image != NULL, "TextureCache: image MUST not be nil");
+    CCASSERT(image != NULL, "TextureCache: image MUST not be nil");
 
     Texture2D * texture = NULL;
     // textureForKey() use full path,so the key should be full path
@@ -615,7 +615,7 @@ void TextureCache::dumpCachedTextureInfo()
     CCDICT_FOREACH(_textures, pElement)
     {
         Texture2D* tex = static_cast<Texture2D*>(pElement->getObject());
-        unsigned int bpp = tex->bitsPerPixelForFormat();
+        unsigned int bpp = tex->getBitsPerPixelForFormat();
         // Each texture takes up width * height * bytesPerPixel bytes.
         unsigned int bytes = tex->getPixelsWide() * tex->getPixelsHigh() * bpp / 8;
         totalBytes += bytes;

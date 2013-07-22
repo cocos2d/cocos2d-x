@@ -45,7 +45,7 @@ NS_CC_BEGIN
 * creation with Texture2D
 */
 
-SpriteBatchNode* SpriteBatchNode::createWithTexture(Texture2D* tex, unsigned int capacity/* = kDefaultSpriteBatchCapacity*/)
+SpriteBatchNode* SpriteBatchNode::createWithTexture(Texture2D* tex, int capacity/* = kDefaultSpriteBatchCapacity*/)
 {
     SpriteBatchNode *batchNode = new SpriteBatchNode();
     batchNode->initWithTexture(tex, capacity);
@@ -58,7 +58,7 @@ SpriteBatchNode* SpriteBatchNode::createWithTexture(Texture2D* tex, unsigned int
 * creation with File Image
 */
 
-SpriteBatchNode* SpriteBatchNode::create(const char *fileImage, unsigned int capacity/* = kDefaultSpriteBatchCapacity*/)
+SpriteBatchNode* SpriteBatchNode::create(const char *fileImage, int capacity/* = kDefaultSpriteBatchCapacity*/)
 {
     SpriteBatchNode *batchNode = new SpriteBatchNode();
     batchNode->initWithFile(fileImage, capacity);
@@ -70,8 +70,10 @@ SpriteBatchNode* SpriteBatchNode::create(const char *fileImage, unsigned int cap
 /*
 * init with Texture2D
 */
-bool SpriteBatchNode::initWithTexture(Texture2D *tex, unsigned int capacity)
+bool SpriteBatchNode::initWithTexture(Texture2D *tex, int capacity)
 {
+    CCASSERT(capacity>=0, "Capacity must be >= 0");
+    
     _blendFunc.src = CC_BLEND_SRC;
     _blendFunc.dst = CC_BLEND_DST;
     _textureAtlas = new TextureAtlas();
@@ -106,7 +108,7 @@ bool SpriteBatchNode::init()
 /*
 * init with FileImage
 */
-bool SpriteBatchNode::initWithFile(const char* fileImage, unsigned int capacity)
+bool SpriteBatchNode::initWithFile(const char* fileImage, int capacity)
 {
     Texture2D *pTexture2D = TextureCache::getInstance()->addImage(fileImage);
     return initWithTexture(pTexture2D, capacity);
@@ -169,11 +171,11 @@ void SpriteBatchNode::visit(void)
 
 void SpriteBatchNode::addChild(Node *child, int zOrder, int tag)
 {
-    CCAssert(child != NULL, "child should not be null");
-    CCAssert(dynamic_cast<Sprite*>(child) != NULL, "CCSpriteBatchNode only supports Sprites as children");
+    CCASSERT(child != NULL, "child should not be null");
+    CCASSERT(dynamic_cast<Sprite*>(child) != NULL, "CCSpriteBatchNode only supports Sprites as children");
     Sprite *pSprite = (Sprite*)(child);
     // check Sprite is using the same texture id
-    CCAssert(pSprite->getTexture()->getName() == _textureAtlas->getTexture()->getName(), "CCSprite is not using the same texture id");
+    CCASSERT(pSprite->getTexture()->getName() == _textureAtlas->getTexture()->getName(), "CCSprite is not using the same texture id");
 
     Node::addChild(child, zOrder, tag);
 
@@ -193,8 +195,8 @@ void SpriteBatchNode::addChild(Node *child, int zOrder)
 // override reorderChild
 void SpriteBatchNode::reorderChild(Node *child, int zOrder)
 {
-    CCAssert(child != NULL, "the child should not be null");
-    CCAssert(_children->containsObject(child), "Child doesn't belong to Sprite");
+    CCASSERT(child != NULL, "the child should not be null");
+    CCASSERT(_children->containsObject(child), "Child doesn't belong to Sprite");
 
     if (zOrder == child->getZOrder())
     {
@@ -216,7 +218,7 @@ void SpriteBatchNode::removeChild(Node *child, bool cleanup)
         return;
     }
 
-    CCAssert(_children->containsObject(pSprite), "sprite batch node should contain the child");
+    CCASSERT(_children->containsObject(pSprite), "sprite batch node should contain the child");
 
     // cleanup before removing
     removeSpriteFromAtlas(pSprite);
@@ -420,7 +422,7 @@ void SpriteBatchNode::increaseAtlasCapacity(void)
     {
         // serious problems
         CCLOGWARN("cocos2d: WARNING: Not enough memory to resize the atlas");
-        CCAssert(false, "Not enough memory to resize the atlas");
+        CCASSERT(false, "Not enough memory to resize the atlas");
     }
 }
 
@@ -548,7 +550,7 @@ unsigned int SpriteBatchNode::atlasIndexForChild(Sprite *pobSprite, int nZ)
     }
 
     // Should not happen. Error calculating Z on SpriteSheet
-    CCAssert(0, "should not run here");
+    CCASSERT(0, "should not run here");
     return 0;
 }
 
@@ -697,10 +699,10 @@ void SpriteBatchNode::setTexture(Texture2D *texture)
 // SpriteSheet Extension
 //implementation SpriteSheet (TMXTiledMapExtension)
 
-void SpriteBatchNode::insertQuadFromSprite(Sprite *sprite, unsigned int index)
+void SpriteBatchNode::insertQuadFromSprite(Sprite *sprite, int index)
 {
-    CCAssert( sprite != NULL, "Argument must be non-NULL");
-    CCAssert( dynamic_cast<Sprite*>(sprite), "CCSpriteBatchNode only supports Sprites as children");
+    CCASSERT( sprite != NULL, "Argument must be non-NULL");
+    CCASSERT( dynamic_cast<Sprite*>(sprite), "CCSpriteBatchNode only supports Sprites as children");
 
     // make needed room
     while(index >= _textureAtlas->getCapacity() || _textureAtlas->getCapacity() == _textureAtlas->getTotalQuads())
@@ -722,10 +724,10 @@ void SpriteBatchNode::insertQuadFromSprite(Sprite *sprite, unsigned int index)
     sprite->updateTransform();
 }
 
-void SpriteBatchNode::updateQuadFromSprite(Sprite *sprite, unsigned int index)
+void SpriteBatchNode::updateQuadFromSprite(Sprite *sprite, int index)
 {
-    CCAssert(sprite != NULL, "Argument must be non-nil");
-    CCAssert(dynamic_cast<Sprite*>(sprite) != NULL, "CCSpriteBatchNode only supports Sprites as children");
+    CCASSERT(sprite != NULL, "Argument must be non-nil");
+    CCASSERT(dynamic_cast<Sprite*>(sprite) != NULL, "CCSpriteBatchNode only supports Sprites as children");
     
 	// make needed room
 	while (index >= _textureAtlas->getCapacity() || _textureAtlas->getCapacity() == _textureAtlas->getTotalQuads())
@@ -745,10 +747,10 @@ void SpriteBatchNode::updateQuadFromSprite(Sprite *sprite, unsigned int index)
 	sprite->updateTransform();
 }
 
-SpriteBatchNode * SpriteBatchNode::addSpriteWithoutQuad(Sprite*child, unsigned int z, int aTag)
+SpriteBatchNode * SpriteBatchNode::addSpriteWithoutQuad(Sprite*child, int z, int aTag)
 {
-    CCAssert( child != NULL, "Argument must be non-NULL");
-    CCAssert( dynamic_cast<Sprite*>(child), "CCSpriteBatchNode only supports Sprites as children");
+    CCASSERT( child != NULL, "Argument must be non-NULL");
+    CCASSERT( dynamic_cast<Sprite*>(child), "CCSpriteBatchNode only supports Sprites as children");
 
     // quad index is Z
     child->setAtlasIndex(z);
