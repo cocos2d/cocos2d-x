@@ -74,7 +74,7 @@ namespace CocosDenshion
 
 	static ALuint s_backgroundSource = AL_NONE;
 
-	static SimpleAudioEngine  *s_engine = 0;
+	static SimpleAudioEngine  *s_engine = nullptr;
 
 	static int checkALError(const char *funcName)
 	{
@@ -207,6 +207,8 @@ namespace CocosDenshion
 			delete it->second;
 		}
 		s_backgroundMusics.clear();
+
+        CC_SAFE_DELETE(s_engine);
     }
 
 	//
