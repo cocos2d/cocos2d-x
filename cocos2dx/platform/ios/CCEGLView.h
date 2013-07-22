@@ -46,8 +46,12 @@ public:
     virtual void    swapBuffers();
     
     virtual void setIMEKeyboardState(bool bOpen);
-    
-    static EGLView* sharedOpenGLView();
+
+    /** returns the singleton */
+    static EGLView* getInstance();
+
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static EGLView* sharedOpenGLView();
 
 };
 

@@ -200,7 +200,7 @@ void ControlPotentiometer::ccTouchMoved(Touch *pTouch, Event *pEvent)
 
 void ControlPotentiometer::ccTouchEnded(Touch *pTouch, Event *pEvent)
 {
-    this->potentiometerEnded(PointZero);
+    this->potentiometerEnded(Point::ZERO);
 }
 
 float ControlPotentiometer::distanceBetweenPointAndPoint(Point point1, Point point2)

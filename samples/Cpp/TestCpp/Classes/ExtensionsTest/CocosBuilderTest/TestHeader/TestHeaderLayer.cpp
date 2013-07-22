@@ -20,5 +20,5 @@ void TestHeaderLayer::onNodeLoaded(cocos2d::Node * pNode, cocos2d::extension::No
 }
 
 void TestHeaderLayer::onBackClicked(cocos2d::Object *pSender) {
-    Director::sharedDirector()->popScene();
+    Director::getInstance()->popScene();
 }

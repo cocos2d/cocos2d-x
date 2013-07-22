@@ -166,17 +166,8 @@ enum ScriptEventType
     kTouchesEvent,
     kKeypadEvent,
     kAccelerometerEvent,
+    kControlEvent,
     kCommonEvent,
-};
-
-enum TouchesObjectType
-{
-    kLayerTouches = 0,
-};
-
-enum KeypadObjectType
-{
-    kLayerKeypad = 0,
 };
 
 struct BasicScriptData
@@ -209,12 +200,10 @@ struct SchedulerScriptData
 struct TouchesScriptData
 {
     int actionType;
-    int objectType;
     void* nativeObject;
     Set* touches;
-    TouchesScriptData(int inActionType,int inObjectType,void* inNativeObject,Set* inTouches)
+    TouchesScriptData(int inActionType,void* inNativeObject,Set* inTouches)
     :actionType(inActionType),
-    objectType(inObjectType),
     nativeObject(inNativeObject),
     touches(inTouches)
     {
@@ -224,10 +213,9 @@ struct TouchesScriptData
 struct KeypadScriptData
 {
     int actionType;
-    int objectType;
     void* nativeObject;
-    KeypadScriptData(int inActionType,int inObjectType,void* inNativeObject)
-    :actionType(inActionType),objectType(inObjectType),nativeObject(inNativeObject)
+    KeypadScriptData(int inActionType,void* inNativeObject)
+    :actionType(inActionType),nativeObject(inNativeObject)
     {
     }
 };
@@ -285,7 +273,7 @@ public:
     virtual void removeScriptHandler(int nHandler) {};
     
     /** Reallocate script function handler, only LuaEngine class need to implement this function. */
-    virtual int reallocateScriptHandler(int nHandler) { return -1;}
+    virtual int reallocateScriptHandler(int nHandler) { return 0;}
     
     /**
      @brief Execute script code contained in the given string.
@@ -322,7 +310,7 @@ public:
     virtual int executeNotificationEvent(NotificationCenter* pNotificationCenter, const char* pszName) = 0;
     
     /** execute a callfun event */
-    virtual int executeCallFuncActionEvent(CallFunc* pAction, Object* pTarget = NULL) = 0;
+    virtual int executeCallFuncActionEvent(CallFunc* pAction, Object* target = NULL) = 0;
     /** execute a schedule function */
     virtual int executeSchedule(int nHandler, float dt, Node* pNode = NULL) = 0;
     

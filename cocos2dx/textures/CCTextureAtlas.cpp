@@ -62,10 +62,13 @@ TextureAtlas::~TextureAtlas()
 
 #if CC_TEXTURE_ATLAS_USE_VAO
     glDeleteVertexArrays(1, &_VAOname);
+    ccGLBindVAO(0);
 #endif
     CC_SAFE_RELEASE(_texture);
     
-    NotificationCenter::sharedNotificationCenter()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    NotificationCenter::getInstance()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
+#endif
 }
 
 unsigned int TextureAtlas::getTotalQuads() const
@@ -131,7 +134,7 @@ TextureAtlas * TextureAtlas::createWithTexture(Texture2D *texture, unsigned int 
 bool TextureAtlas::initWithFile(const char * file, unsigned int capacity)
 {
     // retained in property
-    Texture2D *texture = TextureCache::sharedTextureCache()->addImage(file);
+    Texture2D *texture = TextureCache::getInstance()->addImage(file);
 
     if (texture)
     {
@@ -175,12 +178,14 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, unsigned int capacity)
     memset( _quads, 0, _capacity * sizeof(V3F_C4B_T2F_Quad) );
     memset( _indices, 0, _capacity * 6 * sizeof(GLushort) );
     
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     // listen the event when app go to background
-    NotificationCenter::sharedNotificationCenter()->addObserver(this,
+    NotificationCenter::getInstance()->addObserver(this,
                                                            callfuncO_selector(TextureAtlas::listenBackToForeground),
                                                            EVNET_COME_TO_FOREGROUND,
                                                            NULL);
-
+#endif
+    
     this->setupIndices();
 
 #if CC_TEXTURE_ATLAS_USE_VAO

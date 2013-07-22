@@ -43,7 +43,7 @@ SimpleAudioEngine::~SimpleAudioEngine()
 {
 }
 
-SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
+SimpleAudioEngine* SimpleAudioEngine::getInstance()
 {
     static SimpleAudioEngine s_SharedEngine;
     return &s_SharedEngine;
@@ -259,7 +259,7 @@ void SimpleAudioEngine::setEffectsVolume(float volume)
 
 static std::string _FullPath(const char * szPath)
 {
-    return FileUtils::sharedFileUtils()->fullPathForFilename(szPath);
+    return FileUtils::getInstance()->fullPathForFilename(szPath);
 }
 
 unsigned int _Hash(const char *key)

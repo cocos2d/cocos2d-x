@@ -140,10 +140,10 @@ b2Joint** joints = (b2Joint**)b2Alloc(2 * sizeof(b2Joint*));
     shape.m_radius = 9.999999776482582e-03f;
     shape.m_vertex0.Set(0.000000000000000e+00f, 0.000000000000000e+00f);
     shape.m_vertex1.Set(4.452173995971680e+01f, 1.669565200805664e+01f);
-    shape.m_Vertex2F.Set(4.452173995971680e+01f, 0.000000000000000e+00f);
-    shape.m_Vertex3F.Set(0.000000000000000e+00f, 0.000000000000000e+00f);
+    shape.m_vertex2.Set(4.452173995971680e+01f, 0.000000000000000e+00f);
+    shape.m_vertex3.Set(0.000000000000000e+00f, 0.000000000000000e+00f);
     shape.m_hasVertex0 = bool(0);
-    shape.m_hasVertex3F = bool(0);
+    shape.m_hasVertex3 = bool(0);
 
     fd.shape = &shape;
 
@@ -162,10 +162,10 @@ b2Joint** joints = (b2Joint**)b2Alloc(2 * sizeof(b2Joint*));
     shape.m_radius = 9.999999776482582e-03f;
     shape.m_vertex0.Set(0.000000000000000e+00f, 0.000000000000000e+00f);
     shape.m_vertex1.Set(0.000000000000000e+00f, 1.669565200805664e+01f);
-    shape.m_Vertex2F.Set(0.000000000000000e+00f, 0.000000000000000e+00f);
-    shape.m_Vertex3F.Set(0.000000000000000e+00f, 0.000000000000000e+00f);
+    shape.m_vertex2.Set(0.000000000000000e+00f, 0.000000000000000e+00f);
+    shape.m_vertex3.Set(0.000000000000000e+00f, 0.000000000000000e+00f);
     shape.m_hasVertex0 = bool(0);
-    shape.m_hasVertex3F = bool(0);
+    shape.m_hasVertex3 = bool(0);
 
     fd.shape = &shape;
 
@@ -184,10 +184,10 @@ b2Joint** joints = (b2Joint**)b2Alloc(2 * sizeof(b2Joint*));
     shape.m_radius = 9.999999776482582e-03f;
     shape.m_vertex0.Set(0.000000000000000e+00f, 0.000000000000000e+00f);
     shape.m_vertex1.Set(0.000000000000000e+00f, 1.669565200805664e+01f);
-    shape.m_Vertex2F.Set(4.452173995971680e+01f, 1.669565200805664e+01f);
-    shape.m_Vertex3F.Set(0.000000000000000e+00f, 0.000000000000000e+00f);
+    shape.m_vertex2.Set(4.452173995971680e+01f, 1.669565200805664e+01f);
+    shape.m_vertex3.Set(0.000000000000000e+00f, 0.000000000000000e+00f);
     shape.m_hasVertex0 = bool(0);
-    shape.m_hasVertex3F = bool(0);
+    shape.m_hasVertex3 = bool(0);
 
     fd.shape = &shape;
 
@@ -206,10 +206,10 @@ b2Joint** joints = (b2Joint**)b2Alloc(2 * sizeof(b2Joint*));
     shape.m_radius = 9.999999776482582e-03f;
     shape.m_vertex0.Set(0.000000000000000e+00f, 0.000000000000000e+00f);
     shape.m_vertex1.Set(0.000000000000000e+00f, 0.000000000000000e+00f);
-    shape.m_Vertex2F.Set(4.452173995971680e+01f, 0.000000000000000e+00f);
-    shape.m_Vertex3F.Set(0.000000000000000e+00f, 0.000000000000000e+00f);
+    shape.m_vertex2.Set(4.452173995971680e+01f, 0.000000000000000e+00f);
+    shape.m_vertex3.Set(0.000000000000000e+00f, 0.000000000000000e+00f);
     shape.m_hasVertex0 = bool(0);
-    shape.m_hasVertex3F = bool(0);
+    shape.m_hasVertex3 = bool(0);
 
     fd.shape = &shape;
 

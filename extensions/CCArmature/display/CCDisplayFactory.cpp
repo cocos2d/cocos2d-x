@@ -144,7 +144,7 @@ void DisplayFactory::createSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisp
     if(textureData)
     {
         //! Init display anchorPoint, every Texture have a anchor point
-        skin->setAnchorPoint(ccp( textureData->pivotX, textureData->pivotY));
+        skin->setAnchorPoint(Point( textureData->pivotX, textureData->pivotY));
     }
 
     skin->setBone(bone);

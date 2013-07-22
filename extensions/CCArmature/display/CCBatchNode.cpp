@@ -48,7 +48,7 @@ BatchNode::BatchNode()
 bool BatchNode::init()
 {
     bool ret = Node::init();
-    setShaderProgram(ShaderCache::sharedShaderCache()->programForKey(kShader_PositionTextureColor));
+    setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColor));
     return ret;
 }
 

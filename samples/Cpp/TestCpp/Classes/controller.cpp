@@ -88,17 +88,17 @@ static int g_testCount = sizeof(g_aTestNames) / sizeof(g_aTestNames[0]);
 
 #define LINE_SPACE          40
 
-static Point s_tCurPos = PointZero;
+static Point s_tCurPos = Point::ZERO;
 
 TestController::TestController()
-: _beginPos(PointZero)
+: _beginPos(Point::ZERO)
 {
     // add close menu
     MenuItemImage *pCloseItem = MenuItemImage::create(s_pPathClose, s_pPathClose, CC_CALLBACK_1(TestController::closeCallback, this) );
     Menu* pMenu =Menu::create(pCloseItem, NULL);
 
-    pMenu->setPosition( PointZero );
-    pCloseItem->setPosition(ccp( VisibleRect::right().x - 30, VisibleRect::top().y - 30));
+    pMenu->setPosition( Point::ZERO );
+    pCloseItem->setPosition(Point( VisibleRect::right().x - 30, VisibleRect::top().y - 30));
 
     // add menu items for tests
     _itemMenu = Menu::create();
@@ -112,10 +112,10 @@ TestController::TestController()
         MenuItemLabel* pMenuItem = MenuItemLabel::create(label, CC_CALLBACK_1(TestController::menuCallback, this));
 
         _itemMenu->addChild(pMenuItem, i + 10000);
-        pMenuItem->setPosition( ccp( VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE) ));
+        pMenuItem->setPosition( Point( VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE) ));
     }
 
-    _itemMenu->setContentSize(CCSizeMake(VisibleRect::getVisibleRect().size.width, (g_testCount + 1) * (LINE_SPACE)));
+    _itemMenu->setContentSize(Size(VisibleRect::getVisibleRect().size.width, (g_testCount + 1) * (LINE_SPACE)));
     _itemMenu->setPosition(s_tCurPos);
     addChild(_itemMenu);
 
@@ -132,7 +132,7 @@ TestController::~TestController()
 void TestController::menuCallback(Object * pSender)
 {
 
-	Director::sharedDirector()->purgeCachedData();
+	Director::getInstance()->purgeCachedData();
 
     // get the userdata, it's the index of the menu item clicked
     MenuItem* pMenuItem = (MenuItem *)(pSender);
@@ -150,7 +150,7 @@ void TestController::menuCallback(Object * pSender)
 
 void TestController::closeCallback(Object * pSender)
 {
-    Director::sharedDirector()->end();
+    Director::getInstance()->end();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
 #endif
@@ -171,17 +171,17 @@ void TestController::ccTouchesMoved(Set *pTouches, Event *pEvent)
     float nMoveY = touchLocation.y - _beginPos.y;
 
     Point curPos  = _itemMenu->getPosition();
-    Point nextPos = ccp(curPos.x, curPos.y + nMoveY);
+    Point nextPos = Point(curPos.x, curPos.y + nMoveY);
 
     if (nextPos.y < 0.0f)
     {
-        _itemMenu->setPosition(PointZero);
+        _itemMenu->setPosition(Point::ZERO);
         return;
     }
 
     if (nextPos.y > ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        _itemMenu->setPosition(ccp(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(Point(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
         return;
     }
 

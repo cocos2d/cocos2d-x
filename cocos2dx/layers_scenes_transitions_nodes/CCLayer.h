@@ -63,16 +63,11 @@ All features from Node are valid, plus the following new features:
 class CC_DLL Layer : public Node, public TouchDelegate, public KeypadDelegate
 {
 public:
+    /** creates a fullscreen black layer */
+    static Layer *create(void);
     Layer();
     virtual ~Layer();
     virtual bool init();
-    
-    /** creates a fullscreen black layer */
-    static Layer *create(void);
-
-    virtual void onEnter();
-    virtual void onExit();
-    virtual void onEnterTransitionDidFinish();
     
     // default implements are used to call script callback if exist
     virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent);
@@ -87,8 +82,6 @@ public:
     virtual void ccTouchesCancelled(Set *pTouches, Event *pEvent);
     
     virtual void didAccelerate(Acceleration* pAccelerationValue);
-    void registerScriptAccelerateHandler(int nHandler);
-    void unregisterScriptAccelerateHandler(void);
 
     /** If isTouchEnabled, this method is called onEnter. Override it to change the
     way Layer receives touch events.
@@ -101,11 +94,6 @@ public:
     @since v0.8.0
     */
     virtual void registerWithTouchDispatcher(void);
-    
-    /** Register script touch events handler */
-    virtual void registerScriptTouchHandler(int nHandler, bool bIsMultiTouches = false, int nPriority = INT_MIN, bool bSwallowsTouches = false);
-    /** Unregister script touch events handler */
-    virtual void unregisterScriptTouchHandler(void);
 
     /** whether or not it will receive Touch events.
     You can enable / disable touch events with this property.
@@ -143,29 +131,22 @@ public:
     virtual bool isKeypadEnabled() const;
     virtual void setKeypadEnabled(bool value);
 
-    /** Register keypad events handler */
-    void registerScriptKeypadHandler(int nHandler);
-    /** Unregister keypad events handler */
-    void unregisterScriptKeypadHandler(void);
-
     virtual void keyBackClicked(void);
     virtual void keyMenuClicked(void);
-    
-    inline TouchScriptHandlerEntry* getScriptTouchHandlerEntry() const { return _scriptTouchHandlerEntry; };
-    inline ScriptHandlerEntry* getScriptKeypadHandlerEntry() const { return _scriptKeypadHandlerEntry; };
-    inline ScriptHandlerEntry* getScriptAccelerateHandlerEntry() const { return _scriptAccelerateHandlerEntry; };
-protected:   
+    //
+    // Overrides
+    //
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual void onEnterTransitionDidFinish() override;
+
+protected:
     bool _touchEnabled;
     bool _accelerometerEnabled;
     bool _keyboardEnabled;
     bool _keypadEnabled;
     
 private:
-    // Script touch events handler
-    TouchScriptHandlerEntry* _scriptTouchHandlerEntry;
-    ScriptHandlerEntry* _scriptKeypadHandlerEntry;
-    ScriptHandlerEntry* _scriptAccelerateHandlerEntry;
-    
     int _touchPriority;
     ccTouchesMode _touchMode;
     
@@ -194,23 +175,26 @@ public:
     virtual ~LayerRGBA();
     
     virtual bool init();
+
+    //
+    // Overrides
+    //
+    virtual GLubyte getOpacity() const override;
+    virtual GLubyte getDisplayedOpacity() const override;
+    virtual void setOpacity(GLubyte opacity) override;
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
+    virtual bool isCascadeOpacityEnabled() const override;
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override;
     
-    virtual GLubyte getOpacity() const;
-    virtual GLubyte getDisplayedOpacity() const;
-    virtual void setOpacity(GLubyte opacity);
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
-    virtual bool isCascadeOpacityEnabled() const;
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
+    virtual const Color3B& getColor() const override;
+    virtual const Color3B& getDisplayedColor() const override;
+    virtual void setColor(const Color3B& color) override;
+    virtual void updateDisplayedColor(const Color3B& parentColor) override;
+    virtual bool isCascadeColorEnabled() const override;
+    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) override;
     
-    virtual const Color3B& getColor() const;
-    virtual const Color3B& getDisplayedColor() const;
-    virtual void setColor(const Color3B& color);
-    virtual void updateDisplayedColor(const Color3B& parentColor);
-    virtual bool isCascadeColorEnabled() const;
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
-    
-    virtual void setOpacityModifyRGB(bool bValue) {}
-    virtual bool isOpacityModifyRGB() const { return false; }
+    virtual void setOpacityModifyRGB(bool bValue) override {CC_UNUSED_PARAM(bValue);}
+    virtual bool isOpacityModifyRGB() const override { return false; }
 protected:
 	GLubyte		_displayedOpacity, _realOpacity;
 	Color3B	    _displayedColor, _realColor;
@@ -231,30 +215,22 @@ class CC_DLL LayerColor : public LayerRGBA, public BlendProtocol
 , public GLBufferedNode
 #endif // EMSCRIPTEN
 {
-protected:
-    Vertex2F _squareVertices[4];
-    Color4F  _squareColors[4];
-
 public:
-    LayerColor();
-    virtual ~LayerColor();
-
-    virtual void draw();
-    virtual void setContentSize(const Size & var);
-
     /** creates a fullscreen black layer */
     static LayerColor* create();
-    
     /** creates a Layer with color, width and height in Points */
     static LayerColor * create(const Color4B& color, GLfloat width, GLfloat height);
     /** creates a Layer with color. Width and height are the window size. */
     static LayerColor * create(const Color4B& color);
 
+    LayerColor();
+    virtual ~LayerColor();
+
     virtual bool init();
     /** initializes a Layer with color, width and height in Points */
-    virtual bool initWithColor(const Color4B& color, GLfloat width, GLfloat height);
+    bool initWithColor(const Color4B& color, GLfloat width, GLfloat height);
     /** initializes a Layer with color. Width and height are the window size. */
-    virtual bool initWithColor(const Color4B& color);
+    bool initWithColor(const Color4B& color);
 
     /** change width in Points*/
     void changeWidth(GLfloat w);
@@ -268,13 +244,19 @@ public:
     /** BlendFunction. Conforms to BlendProtocol protocol */
     CC_PROPERTY_PASS_BY_REF(BlendFunc, _blendFunc, BlendFunc)
 
-    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool isOpacityModifyRGB(void) const { return false;}
-    virtual void setColor(const Color3B &color);
-    virtual void setOpacity(GLubyte opacity);
+    //
+    // Overrides
+    //
+    virtual void draw() override;
+    virtual void setColor(const Color3B &color) override;
+    virtual void setOpacity(GLubyte opacity) override;
+    virtual void setContentSize(const Size & var) override;
 
 protected:
     virtual void updateColor();
+
+    Vertex2F _squareVertices[4];
+    Color4F  _squareColors[4];
 };
 
 //
@@ -302,7 +284,6 @@ If ' compressedInterpolation' is enabled (default mode) you will see both the st
 class CC_DLL LayerGradient : public LayerColor
 {
 public:
-
     /** Creates a fullscreen black layer */
     static LayerGradient* create();
 
@@ -314,10 +295,10 @@ public:
 
     virtual bool init();
     /** Initializes the Layer with a gradient between start and end. */
-    virtual bool initWithColor(const Color4B& start, const Color4B& end);
+    bool initWithColor(const Color4B& start, const Color4B& end);
 
     /** Initializes the Layer with a gradient between start and end in the direction of v. */
-    virtual bool initWithColor(const Color4B& start, const Color4B& end, const Point& v);
+    bool initWithColor(const Color4B& start, const Color4B& end, const Point& v);
     
     /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
      Default: YES
@@ -325,15 +306,15 @@ public:
     virtual void setCompressedInterpolation(bool bCompressedInterpolation);
     virtual bool isCompressedInterpolation() const;
 
+protected:
+    virtual void updateColor() override;
+
     CC_PROPERTY_PASS_BY_REF(Color3B, _startColor, StartColor)
     CC_PROPERTY_PASS_BY_REF(Color3B, _endColor, EndColor)
     CC_PROPERTY(GLubyte, _startOpacity, StartOpacity)
     CC_PROPERTY(GLubyte, _endOpacity, EndOpacity)
     CC_PROPERTY_PASS_BY_REF(Point, _alongVector, Vector)
 
-protected:
-    virtual void updateColor();
-    
 protected:
     bool _compressedInterpolation;
 };
@@ -346,16 +327,11 @@ Features:
 */
 class CC_DLL LayerMultiplex : public Layer
 {
-protected:
-    unsigned int _enabledLayer;
-    Array*     _layers;
 public:
-    LayerMultiplex();
-    virtual ~LayerMultiplex();
-    
+    /** creates and initializes a LayerMultiplex object */
     static LayerMultiplex* create();
-    
-    /** creates a MultiplexLayer with an array of layers.
+
+    /** creates a LayerMultiplex with an array of layers.
      @since v2.1
      */
     static LayerMultiplex* createWithArray(Array* arrayOfLayers);
@@ -369,24 +345,31 @@ public:
      */
     static LayerMultiplex * createWithLayer(Layer* layer);
 
-    void addLayer(Layer* layer);
+    LayerMultiplex();
+    virtual ~LayerMultiplex();
 
     /** initializes a MultiplexLayer with one or more layers using a variable argument list. */
     bool initWithLayers(Layer* layer, va_list params);
-    /** switches to a certain layer indexed by n. 
-    The current (old) layer will be removed from it's parent with 'cleanup:YES'.
-    */
 
     /** initializes a MultiplexLayer with an array of layers
-    @since v2.1
-    */
+     @since v2.1
+     */
     bool initWithArray(Array* arrayOfLayers);
 
+    void addLayer(Layer* layer);
+
+    /** switches to a certain layer indexed by n.
+     The current (old) layer will be removed from it's parent with 'cleanup:YES'.
+     */
     void switchTo(unsigned int n);
     /** release the current layer and switches to another layer indexed by n.
     The current (old) layer will be removed from it's parent with 'cleanup:YES'.
     */
     void switchToAndReleaseMe(unsigned int n);
+
+protected:
+    unsigned int _enabledLayer;
+    Array*     _layers;
 };
 
 

@@ -118,8 +118,16 @@ public:
      */
     void    flush();
 
-    static UserDefault* sharedUserDefault();
-    static void purgeSharedUserDefault();
+    /** returns the singleton */
+    static UserDefault* getInstance();
+
+    static void destroyInstance();
+
+    /** deprecated. Use getInstace() instead */
+    CC_DEPRECATED_ATTRIBUTE static UserDefault* sharedUserDefault();
+
+    CC_DEPRECATED_ATTRIBUTE static void purgeSharedUserDefault();
+
     const static std::string& getXMLFilePath();
     static bool isXMLFileExist();
 
@@ -128,9 +136,9 @@ private:
     static bool createXMLFile();
     static void initXMLFilePath();
     
-    static UserDefault* _spUserDefault;
+    static UserDefault* _userDefault;
     static std::string _filePath;
-    static bool _sbIsFilePathInitialized;
+    static bool _isFilePathInitialized;
 };
 
 // end of data_storage group

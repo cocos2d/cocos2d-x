@@ -24,7 +24,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCParallaxNode.h"
-#include "support/CCPointExtension.h"
 #include "support/data_support/ccCArray.h"
 
 NS_CC_BEGIN
@@ -55,7 +54,7 @@ public:
 ParallaxNode::ParallaxNode()
 {
     _parallaxArray = ccArrayNew(5);        
-    _lastPosition = CCPointMake(-100,-100);
+    _lastPosition = Point(-100,-100);
 }
 ParallaxNode::~ParallaxNode()
 {
@@ -73,14 +72,15 @@ ParallaxNode * ParallaxNode::create()
     return pRet;
 }
 
-void ParallaxNode::addChild(Node * child, unsigned int zOrder, int tag)
+void ParallaxNode::addChild(Node * child, int zOrder, int tag)
 {
     CC_UNUSED_PARAM(zOrder);
     CC_UNUSED_PARAM(child);
     CC_UNUSED_PARAM(tag);
     CCAssert(0,"ParallaxNode: use addChild:z:parallaxRatio:positionOffset instead");
 }
-void ParallaxNode::addChild(Node *child, unsigned int z, const Point& ratio, const Point& offset)
+
+void ParallaxNode::addChild(Node *child, int z, const Point& ratio, const Point& offset)
 {
     CCAssert( child != NULL, "Argument must be non-nil");
     PointObject *obj = PointObject::pointWithPoint(ratio, offset);
@@ -119,7 +119,7 @@ Point ParallaxNode::absolutePosition()
     while (cn->getParent() != NULL)
     {
         cn = cn->getParent();
-        ret = ccpAdd( ret,  cn->getPosition());
+        ret = ret + cn->getPosition();
     }
     return ret;
 }
@@ -132,7 +132,7 @@ The positions are updated at visit because:
 void ParallaxNode::visit()
 {
     //    Point pos = position_;
-    //    Point    pos = [self convertToWorldSpace:PointZero];
+    //    Point    pos = [self convertToWorldSpace:Point::ZERO];
     Point pos = this->absolutePosition();
     if( ! pos.equals(_lastPosition) )
     {
@@ -141,7 +141,7 @@ void ParallaxNode::visit()
             PointObject *point = (PointObject*)_parallaxArray->arr[i];
             float x = -pos.x + pos.x * point->getRatio().x + point->getOffset().x;
             float y = -pos.y + pos.y * point->getRatio().y + point->getOffset().y;            
-            point->getChild()->setPosition(ccp(x,y));
+            point->getChild()->setPosition(Point(x,y));
         }
         _lastPosition = pos;
     }

@@ -11,18 +11,18 @@ using namespace cocos2d;
 
 extern "C" {
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeRender(JNIEnv* env) {
-        cocos2d::Director::sharedDirector()->mainLoop();
+        cocos2d::Director::getInstance()->mainLoop();
     }
 
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnPause() {
-        Application::sharedApplication()->applicationDidEnterBackground();
+        Application::getInstance()->applicationDidEnterBackground();
 
-        NotificationCenter::sharedNotificationCenter()->postNotification(EVENT_COME_TO_BACKGROUND, NULL);
+        NotificationCenter::getInstance()->postNotification(EVENT_COME_TO_BACKGROUND, NULL);
     }
 
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnResume() {
-        if (Director::sharedDirector()->getOpenGLView()) {
-            Application::sharedApplication()->applicationWillEnterForeground();
+        if (Director::getInstance()->getOpenGLView()) {
+            Application::getInstance()->applicationWillEnterForeground();
         }
     }
 

@@ -38,19 +38,27 @@ class RenderTexture;
  * @addtogroup transition
  * @{
  */
-
 class CC_DLL TransitionProgress : public TransitionScene
 {
 public:
     static TransitionProgress* create(float t, Scene* scene);
 
     TransitionProgress();
-    virtual void onEnter();
-    virtual void onExit();
+
+    //
+    // Overrides
+    //
+    virtual void onEnter() override;
+    virtual void onExit() override;
+
+protected:
+    virtual void sceneOrder() override;
+
 protected:
     virtual ProgressTimer* progressTimerNodeWithRenderTexture(RenderTexture* texture);
     virtual void setupTransition();
-    virtual void sceneOrder();
+
+protected:
     float _to;
     float _from;
     Scene* _sceneToBeModified;
@@ -64,8 +72,12 @@ class CC_DLL TransitionProgressRadialCCW : public TransitionProgress
 {
 public:
     static TransitionProgressRadialCCW* create(float t, Scene* scene);
+
 protected:
-    virtual ProgressTimer* progressTimerNodeWithRenderTexture(RenderTexture* texture);
+    //
+    // Overrides
+    //
+    virtual ProgressTimer* progressTimerNodeWithRenderTexture(RenderTexture* texture) override;
   
 };
 
@@ -77,8 +89,12 @@ class CC_DLL TransitionProgressRadialCW : public TransitionProgress
 {
 public:
     static TransitionProgressRadialCW* create(float t, Scene* scene);
+
 protected:
-    virtual ProgressTimer* progressTimerNodeWithRenderTexture(RenderTexture* texture);
+    //
+    // Overrides
+    //
+    virtual ProgressTimer* progressTimerNodeWithRenderTexture(RenderTexture* texture) override;
 
 };
 
@@ -88,41 +104,51 @@ protected:
 class CC_DLL TransitionProgressHorizontal : public TransitionProgress
 {
 public:
-
     static TransitionProgressHorizontal* create(float t, Scene* scene);
-protected:
-    virtual ProgressTimer* progressTimerNodeWithRenderTexture(RenderTexture* texture);
 
+protected:
+    //
+    // Overrides
+    //
+    virtual ProgressTimer* progressTimerNodeWithRenderTexture(RenderTexture* texture) override;
 };
 
 class CC_DLL TransitionProgressVertical : public TransitionProgress
 {
 public:
-
     static TransitionProgressVertical* create(float t, Scene* scene);
-protected:
-    virtual ProgressTimer* progressTimerNodeWithRenderTexture(RenderTexture* texture);
 
+protected:
+    //
+    // Overrides
+    //
+    virtual ProgressTimer* progressTimerNodeWithRenderTexture(RenderTexture* texture) override;
 };
 
 class CC_DLL TransitionProgressInOut : public TransitionProgress
 {
 public:
-
     static TransitionProgressInOut* create(float t, Scene* scene);
+
 protected:
-    virtual ProgressTimer* progressTimerNodeWithRenderTexture(RenderTexture* texture);
-    virtual void sceneOrder();
-    virtual void setupTransition();
+    //
+    // Overrides
+    //
+    virtual ProgressTimer* progressTimerNodeWithRenderTexture(RenderTexture* texture) override;
+    virtual void sceneOrder() override;
+    virtual void setupTransition() override;
 };
 
 class CC_DLL TransitionProgressOutIn : public TransitionProgress
 {
 public:
-
     static TransitionProgressOutIn* create(float t, Scene* scene);
+
 protected:
-    virtual ProgressTimer* progressTimerNodeWithRenderTexture(RenderTexture* texture);
+    //
+    // Overrides
+    //
+    virtual ProgressTimer* progressTimerNodeWithRenderTexture(RenderTexture* texture) override;
 
 };
 

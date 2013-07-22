@@ -117,27 +117,23 @@ public:
     
     /** initializes the action with a duration and an array of points */
     bool initWithDuration(float duration, PointArray* points, float tension);
-    
-    // super virtual functions
-	/** returns a new clone of the action */
-	virtual CardinalSplineTo *clone() const;
-
-	/** returns a new reversed action */
-    virtual CardinalSplineTo* reverse() const;
-
-    virtual void startWithTarget(Node *pTarget);
-    virtual void update(float time);
 
     virtual void updatePosition(Point &newPos);
-    
+
     inline PointArray* getPoints() { return _points; }
-    inline void  setPoints(PointArray* points) 
+    inline void setPoints(PointArray* points)
     {
         CC_SAFE_RETAIN(points);
         CC_SAFE_RELEASE(_points);
         _points = points;
     }
-    
+
+    // Overrides
+	virtual CardinalSplineTo *clone() const override;
+    virtual CardinalSplineTo* reverse() const override;
+    virtual void startWithTarget(Node *target) override;
+    virtual void update(float time) override;
+
 protected:
     /** Array of control points */
     PointArray *_points;
@@ -160,15 +156,11 @@ public:
 
     CardinalSplineBy();
     
-    virtual void startWithTarget(Node *pTarget);
-
-    virtual void updatePosition(Point &newPos);
-
-	/** returns a new clone of the action */
-	virtual CardinalSplineBy *clone() const;
-
-	/** returns a new reversed action */
-    virtual CardinalSplineBy* reverse() const;
+    // Overrides
+    virtual void startWithTarget(Node *target) override;
+    virtual void updatePosition(Point &newPos) override;
+	virtual CardinalSplineBy *clone() const override;
+    virtual CardinalSplineBy* reverse() const override;
 
 protected:
     Point _startPosition;
@@ -189,11 +181,9 @@ public:
     /** initializes the action with a duration and an array of points */
     bool initWithDuration(float dt, PointArray* points);
 
-	/** returns a new clone of the action */
-	virtual CatmullRomTo *clone() const;
-
-	/** returns a reversed copy of the action */
-	virtual CatmullRomTo *reverse() const;
+    // Override
+	virtual CatmullRomTo *clone() const override;
+	virtual CatmullRomTo *reverse() const override;
 };
 
 /** An action that moves the target with a CatmullRom curve by a certain distance.
@@ -204,18 +194,15 @@ public:
 class CC_DLL CatmullRomBy : public CardinalSplineBy
 {
 public:
-    
     /** creates an action with a Cardinal Spline array of points and tension */
     static CatmullRomBy* create(float dt, PointArray* points);
 
     /** initializes the action with a duration and an array of points */
     bool initWithDuration(float dt, PointArray* points);
 
-	/** returns a new clone of the action */
-	virtual CatmullRomBy *clone() const;
-
-	/** returns a reversed copy of the action */
-	virtual CatmullRomBy *reverse() const;
+    // Override
+	virtual CatmullRomBy *clone() const override;
+	virtual CatmullRomBy *reverse() const override;
 
 };
 

@@ -61,8 +61,8 @@ bool ShaderNode::initWithVertex(const char *vert, const char *frag)
 
     scheduleUpdate();
 
-    setContentSize(CCSizeMake(SIZE_X, SIZE_Y));
-    setAnchorPoint(ccp(0.5f, 0.5f));
+    setContentSize(Size(SIZE_X, SIZE_Y));
+    setAnchorPoint(Point(0.5f, 0.5f));
 
     return true;
 }

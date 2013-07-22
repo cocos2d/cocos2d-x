@@ -41,9 +41,9 @@ bool GridAction::initWithDuration(float duration, const Size& gridSize)
     return false;
 }
 
-void GridAction::startWithTarget(Node *pTarget)
+void GridAction::startWithTarget(Node *target)
 {
-    ActionInterval::startWithTarget(pTarget);
+    ActionInterval::startWithTarget(target);
 
     GridBase *newgrid = this->getGrid();
 
@@ -76,6 +76,7 @@ void GridAction::startWithTarget(Node *pTarget)
 
 GridAction* GridAction::reverse() const
 {
+    // FIXME: This conversion isn't safe.
 	return (GridAction*)ReverseTime::create( this->clone() );
 }
 
@@ -94,23 +95,13 @@ GridBase* Grid3DAction::getGrid(void)
     return Grid3D::create(_gridSize);
 }
 
-Vertex3F Grid3DAction::vertex(const Point& position)
-{
-    return getVertex(position);
-}
-
-Vertex3F Grid3DAction::originalVertex(const Point& position)
-{
-    return getOriginalVertex(position);
-}
-
-Vertex3F Grid3DAction::getVertex(const Point& position)
+Vertex3F Grid3DAction::getVertex(const Point& position) const
 {
     Grid3D *g = (Grid3D*)_target->getGrid();
     return g->getVertex(position);
 }
 
-Vertex3F Grid3DAction::getOriginalVertex(const Point& position)
+Vertex3F Grid3DAction::getOriginalVertex(const Point& position) const
 {
     Grid3D *g = (Grid3D*)_target->getGrid();
     return g->getOriginalVertex(position);
@@ -129,26 +120,16 @@ GridBase* TiledGrid3DAction::getGrid(void)
     return TiledGrid3D::create(_gridSize);
 }
 
-Quad3 TiledGrid3DAction::getTile(const Point& pos)
+Quad3 TiledGrid3DAction::getTile(const Point& pos) const
 {
     TiledGrid3D *g = (TiledGrid3D*)_target->getGrid();
-    return g->tile(pos);
+    return g->getTile(pos);
 }
 
-Quad3 TiledGrid3DAction::getOriginalTile(const Point& pos)
+Quad3 TiledGrid3DAction::getOriginalTile(const Point& pos) const
 {
     TiledGrid3D *g = (TiledGrid3D*)_target->getGrid();
-    return g->originalTile(pos);
-}
-
-Quad3 TiledGrid3DAction::tile(const Point& pos)
-{
-    return getTile(pos);
-}
-
-Quad3 TiledGrid3DAction::originalTile(const Point& pos)
-{
-    return getOriginalTile(pos);
+    return g->getOriginalTile(pos);
 }
 
 void TiledGrid3DAction::setTile(const Point& pos, const Quad3& coords)
@@ -205,10 +186,10 @@ AccelDeccelAmplitude::~AccelDeccelAmplitude(void)
     CC_SAFE_RELEASE(_other);
 }
 
-void AccelDeccelAmplitude::startWithTarget(Node *pTarget)
+void AccelDeccelAmplitude::startWithTarget(Node *target)
 {
-    ActionInterval::startWithTarget(pTarget);
-    _other->startWithTarget(pTarget);
+    ActionInterval::startWithTarget(target);
+    _other->startWithTarget(target);
 }
 
 void AccelDeccelAmplitude::update(float time)
@@ -277,10 +258,10 @@ AccelAmplitude::~AccelAmplitude(void)
     CC_SAFE_DELETE(_other);
 }
 
-void AccelAmplitude::startWithTarget(Node *pTarget)
+void AccelAmplitude::startWithTarget(Node *target)
 {
-    ActionInterval::startWithTarget(pTarget);
-    _other->startWithTarget(pTarget);
+    ActionInterval::startWithTarget(target);
+    _other->startWithTarget(target);
 }
 
 void AccelAmplitude::update(float time)
@@ -333,10 +314,10 @@ DeccelAmplitude::~DeccelAmplitude(void)
     CC_SAFE_RELEASE(_other);
 }
 
-void DeccelAmplitude::startWithTarget(Node *pTarget)
+void DeccelAmplitude::startWithTarget(Node *target)
 {
-    ActionInterval::startWithTarget(pTarget);
-    _other->startWithTarget(pTarget);
+    ActionInterval::startWithTarget(target);
+    _other->startWithTarget(target);
 }
 
 void DeccelAmplitude::update(float time)
@@ -361,9 +342,9 @@ DeccelAmplitude* DeccelAmplitude::reverse() const
 
 // implementation of StopGrid
 
-void StopGrid::startWithTarget(Node *pTarget)
+void StopGrid::startWithTarget(Node *target)
 {
-    ActionInstant::startWithTarget(pTarget);
+    ActionInstant::startWithTarget(target);
 
     GridBase *pGrid = _target->getGrid();
     if (pGrid && pGrid->isActive())
@@ -418,9 +399,9 @@ bool ReuseGrid::initWithTimes(int times)
     return true;
 }
 
-void ReuseGrid::startWithTarget(Node *pTarget)
+void ReuseGrid::startWithTarget(Node *target)
 {
-    ActionInstant::startWithTarget(pTarget);
+    ActionInstant::startWithTarget(target);
 
     if (_target->getGrid() && _target->getGrid()->isActive())
     {

@@ -74,7 +74,7 @@ bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
     int dpi             = 72;
     
     int len = 0;
-    data    = FileUtils::sharedFileUtils()->getFileData(fontName.c_str(), "rb", (unsigned long *)(&len) );
+    data    = FileUtils::getInstance()->getFileData(fontName.c_str(), "rb", (unsigned long *)(&len) );
     
     if (!data)
         return false;

@@ -310,6 +310,34 @@ private:
     JSStringWrapper &operator=(const JSStringWrapper &another);
 };
 
+// wraps a function and "this" object
+class JSFunctionWrapper
+{
+    JSContext *_cx;
+    JSObject *_jsthis;
+    jsval _fval;
+public:
+    JSFunctionWrapper(JSContext* cx, JSObject *jsthis, jsval fval)
+    : _cx(cx)
+    , _jsthis(jsthis)
+    , _fval(fval)
+    {
+        JS_AddNamedValueRoot(cx, &this->_fval, "JSFunctionWrapper");
+        JS_AddNamedObjectRoot(cx, &this->_jsthis, "JSFunctionWrapper");
+    }
+    ~JSFunctionWrapper() {
+        JS_RemoveValueRoot(this->_cx, &this->_fval);
+        JS_RemoveObjectRoot(this->_cx, &this->_jsthis);
+    }
+    JSBool invoke(unsigned int argc, jsval *argv, jsval &rval) {
+        return JS_CallFunctionValue(this->_cx, this->_jsthis, this->_fval, argc, argv, &rval);
+    }
+private:
+    /* Copy and assignment are not supported. */
+    JSFunctionWrapper(const JSFunctionWrapper &another);
+    JSFunctionWrapper &operator=(const JSFunctionWrapper &another);
+};
+
 JSBool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value);
 JSBool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret);
 

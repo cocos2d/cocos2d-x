@@ -40,7 +40,7 @@ GLESDebugDraw::GLESDebugDraw( float32 ratio )
 
 void GLESDebugDraw::initShader( void )
 {
-    mShaderProgram = ShaderCache::sharedShaderCache()->programForKey(kShader_Position_uColor);
+    mShaderProgram = ShaderCache::getInstance()->programForKey(kShader_Position_uColor);
 
     mColorLocation = glGetUniformLocation( mShaderProgram->getProgram(), "u_color");
 }

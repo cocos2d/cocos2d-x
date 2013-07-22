@@ -39,7 +39,7 @@ bool isSpriteContainPoint(Sprite *_sprite, Point _point, Point &_outPoint)
 
 bool isSpriteContainPoint(Sprite *_sprite, Point _point)
 {
-    Point _p = ccp(0, 0);
+    Point _p = Point(0, 0);
     return isSpriteContainPoint(_sprite, _point, _p);
 }
 

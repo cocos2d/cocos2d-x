@@ -49,13 +49,16 @@ public:
     /** initializes the action */
     bool initWithAction(ActionInterval *pAction);
 
-	virtual ActionEase* clone() const = 0;
-    virtual ActionEase* reverse() const = 0;
-
-    virtual void startWithTarget(Node *pTarget);
-    virtual void stop(void);
-    virtual void update(float time);
     virtual ActionInterval* getInnerAction();
+
+    //
+    // Overrides
+    //
+	virtual ActionEase* clone() const override = 0;
+    virtual ActionEase* reverse() const override = 0;
+    virtual void startWithTarget(Node *target) override;
+    virtual void stop(void) override;
+    virtual void update(float time) override;
 
 protected:
     /** The inner action */
@@ -71,16 +74,19 @@ class CC_DLL EaseRateAction : public ActionEase
 public:
     virtual ~EaseRateAction(void);
 
+    /** Initializes the action with the inner action and the rate parameter */
+    bool initWithAction(ActionInterval *pAction, float fRate);
+
     /** set rate value for the actions */
     inline void setRate(float rate) { _rate = rate; }
     /** get rate value for the actions */
     inline float getRate(void) const { return _rate; }
 
-    /** Initializes the action with the inner action and the rate parameter */
-    bool initWithAction(ActionInterval *pAction, float fRate);
-
-	virtual EaseRateAction* clone() const = 0;
-    virtual EaseRateAction* reverse() const = 0;
+    //
+    // Overrides
+    //
+	virtual EaseRateAction* clone() const override = 0;
+    virtual EaseRateAction* reverse() const override = 0;
 
 protected:
     float _rate;
@@ -93,17 +99,13 @@ protected:
 class CC_DLL EaseIn : public EaseRateAction
 {
 public:
-    virtual void update(float time);
-
-	/** returns a new clone of the action */
-	virtual EaseIn* clone() const;
-	/** returns a new reversed action */
-	virtual EaseIn* reverse() const;
-
-public:
-
     /** Creates the action with the inner action and the rate parameter */
     static EaseIn* create(ActionInterval* pAction, float fRate);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseIn* clone() const override;
+	virtual EaseIn* reverse() const override;
 };
 
 /** 
@@ -113,16 +115,13 @@ public:
 class CC_DLL EaseOut : public EaseRateAction
 {
 public:
-    virtual void update(float time);
-	/** returns a new clone of the action */
-	virtual EaseOut* clone() const;
-	/** returns a new reversed action */
-	virtual EaseOut* reverse() const;
-
-public:
-
     /** Creates the action with the inner action and the rate parameter */
     static EaseOut* create(ActionInterval* pAction, float fRate);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseOut* clone() const  override;
+	virtual EaseOut* reverse() const  override;
 };
 
 /** 
@@ -132,17 +131,13 @@ public:
 class CC_DLL EaseInOut : public EaseRateAction
 {
 public:
-    virtual void update(float time);
-
-	/** returns a new clone of the action */
-	virtual EaseInOut* clone() const;
-	/** returns a new reversed action */
-	virtual EaseInOut* reverse() const;
-
-public:
-
     /** Creates the action with the inner action and the rate parameter */
     static EaseInOut* create(ActionInterval* pAction, float fRate);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseInOut* clone() const  override;
+	virtual EaseInOut* reverse() const  override;
 };
 
 /** 
@@ -152,15 +147,13 @@ public:
 class CC_DLL EaseExponentialIn : public ActionEase
 {
 public:
-    virtual void update(float time);
-	/** returns a new clone of the action */
-	virtual EaseExponentialIn* clone() const;
-	/** returns a new reversed action */
-	virtual ActionEase* reverse() const;
-
-public:
     /** creates the action */
     static EaseExponentialIn* create(ActionInterval* pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseExponentialIn* clone() const override;
+	virtual ActionEase* reverse() const override;
 };
 
 /** 
@@ -170,15 +163,13 @@ public:
 class CC_DLL EaseExponentialOut : public ActionEase
 {
 public:
-    virtual void update(float time);
-	/** returns a new clone of the action */
-	virtual EaseExponentialOut* clone() const;
-	/** returns a new reversed action */
-	virtual ActionEase* reverse() const;
-
-public:
     /** creates the action */
     static EaseExponentialOut* create(ActionInterval* pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseExponentialOut* clone() const override;
+	virtual ActionEase* reverse() const override;
 };
 
 /** 
@@ -188,15 +179,13 @@ public:
 class CC_DLL EaseExponentialInOut : public ActionEase
 {
 public:
-    virtual void update(float time);
-	/** returns a new clone of the action */
-	virtual EaseExponentialInOut* clone() const;
-	/** returns a new reversed action */
-	virtual EaseExponentialInOut* reverse() const;
-public:
-
     /** creates the action */
     static EaseExponentialInOut* create(ActionInterval* pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseExponentialInOut* clone() const override;
+	virtual EaseExponentialInOut* reverse() const override;
 };
 
 /** 
@@ -206,14 +195,13 @@ public:
 class CC_DLL EaseSineIn : public ActionEase
 {
 public:
-    virtual void update(float time);
-	/** returns a new clone of the action */
-	virtual EaseSineIn* clone() const;
-	/** returns a new reversed action */
-	virtual ActionEase* reverse() const;
-public:
     /** creates the action */
     static EaseSineIn* create(ActionInterval* pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseSineIn* clone() const override;
+	virtual ActionEase* reverse() const override;
 };
 
 /** 
@@ -223,16 +211,13 @@ public:
 class CC_DLL EaseSineOut : public ActionEase
 {
 public:
-    virtual void update(float time);
-	/** returns a new clone of the action */
-	virtual EaseSineOut* clone() const;
-	/** returns a new reversed action */
-	virtual ActionEase* reverse() const;
-
-public:
-
     /** creates the action */
     static EaseSineOut* create(ActionInterval* pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseSineOut* clone() const override;
+	virtual ActionEase* reverse() const override;
 };
 
 /** 
@@ -242,16 +227,13 @@ public:
 class CC_DLL EaseSineInOut : public ActionEase
 {
 public:
-    virtual void update(float time);
-	/** returns a new clone of the action */
-	virtual EaseSineInOut* clone() const;
-	/** returns a new reversed action */
-	virtual EaseSineInOut* reverse() const;
-
-public:
-
     /** creates the action */
     static EaseSineInOut* create(ActionInterval* pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseSineInOut* clone() const override;
+	virtual EaseSineInOut* reverse() const override;
 };
 
 /** 
@@ -262,18 +244,19 @@ public:
 class CC_DLL EaseElastic : public ActionEase
 {
 public:
+    /** Initializes the action with the inner action and the period in radians (default is 0.3) */
+    bool initWithAction(ActionInterval *pAction, float fPeriod = 0.3f);
+
     /** get period of the wave in radians. default is 0.3 */
     inline float getPeriod(void) const { return _period; }
     /** set period of the wave in radians. */
     inline void setPeriod(float fPeriod) { _period = fPeriod; }
 
-    /** Initializes the action with the inner action and the period in radians (default is 0.3) */
-    bool initWithAction(ActionInterval *pAction, float fPeriod = 0.3f);
-
-	/** returns a new clone of the action */
-	virtual EaseElastic* clone() const = 0;
-	/** returns a new reversed action */
-	virtual EaseElastic* reverse() const = 0;
+    //
+    // Overrides
+    //
+	virtual EaseElastic* clone() const override = 0;
+	virtual EaseElastic* reverse() const override = 0;
 
 protected:
     float _period;
@@ -288,17 +271,14 @@ protected:
 class CC_DLL EaseElasticIn : public EaseElastic
 {
 public:
-    virtual void update(float time);
-	/** returns a new clone of the action */
-	virtual EaseElasticIn* clone() const;
-	/** returns a new reversed action */
-	virtual EaseElastic* reverse() const;
-
-public:
-
     /** Creates the action with the inner action and the period in radians (default is 0.3) */
     static EaseElasticIn* create(ActionInterval *pAction, float fPeriod);
     static EaseElasticIn* create(ActionInterval *pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseElasticIn* clone() const override;
+	virtual EaseElastic* reverse() const override;
 };
 
 /** 
@@ -310,17 +290,14 @@ public:
 class CC_DLL EaseElasticOut : public EaseElastic
 {
 public:
-    virtual void update(float time);
-	/** returns a new clone of the action */
-	virtual EaseElasticOut* clone() const;
-	/** returns a new reversed action */
-	virtual EaseElastic* reverse() const;
-
-public:
-
     /** Creates the action with the inner action and the period in radians (default is 0.3) */
     static EaseElasticOut* create(ActionInterval *pAction, float fPeriod);
     static EaseElasticOut* create(ActionInterval *pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseElasticOut* clone() const override;
+	virtual EaseElastic* reverse() const override;
 };
 
 /** 
@@ -332,17 +309,14 @@ public:
 class CC_DLL EaseElasticInOut : public EaseElastic
 {
 public:
-    virtual void update(float time);
-	/** returns a new clone of the action */
-	virtual EaseElasticInOut* clone() const;
-	/** returns a new reversed action */
-	virtual EaseElasticInOut* reverse() const;
-
-public:
-
     /** Creates the action with the inner action and the period in radians (default is 0.3) */
     static EaseElasticInOut* create(ActionInterval *pAction, float fPeriod);
     static EaseElasticInOut* create(ActionInterval *pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseElasticInOut* clone() const override;
+	virtual EaseElasticInOut* reverse() const override;
 };
 
 /** 
@@ -354,11 +328,10 @@ class CC_DLL EaseBounce : public ActionEase
 {
 public:
     float bounceTime(float time);
-	/** returns a new clone of the action */
-	virtual EaseBounce* clone() const = 0;
-	/** returns a new reversed action */
-	virtual EaseBounce* reverse() const = 0;
 
+    // Overrides
+	virtual EaseBounce* clone() const override = 0;
+	virtual EaseBounce* reverse() const override = 0;
 };
 
 /** 
@@ -370,16 +343,13 @@ public:
 class CC_DLL EaseBounceIn : public EaseBounce
 {
 public:
-    virtual void update(float time);
-	/** returns a new clone of the action */
-	virtual EaseBounceIn* clone() const;
-	/** returns a new reversed action */
-	virtual EaseBounce* reverse() const;
-
-public:
-
     /** creates the action */
     static EaseBounceIn* create(ActionInterval* pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseBounceIn* clone() const override;
+	virtual EaseBounce* reverse() const override;
 };
 
 /** 
@@ -391,15 +361,13 @@ public:
 class CC_DLL EaseBounceOut : public EaseBounce
 {
 public:
-    virtual void update(float time);
-	/** returns a new clone of the action */
-	virtual EaseBounceOut* clone() const;
-	/** returns a new reversed action */
-	virtual EaseBounce* reverse() const;
-public:
-
     /** creates the action */
     static EaseBounceOut* create(ActionInterval* pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseBounceOut* clone() const override;
+	virtual EaseBounce* reverse() const override;
 };
 
 /** 
@@ -411,15 +379,13 @@ public:
 class CC_DLL EaseBounceInOut : public EaseBounce
 {
 public:
-    virtual void update(float time);
-	/** returns a new clone of the action */
-	virtual EaseBounceInOut* clone() const;
-	/** returns a new reversed action */
-	virtual EaseBounceInOut* reverse() const;
-public:
-
     /** creates the action */
     static EaseBounceInOut* create(ActionInterval* pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseBounceInOut* clone() const override;
+	virtual EaseBounceInOut* reverse() const override;
 };
 
 /** 
@@ -431,15 +397,13 @@ public:
 class CC_DLL EaseBackIn : public ActionEase
 {
 public:
-    virtual void update(float time);
-	/** returns a new clone of the action */
-	virtual EaseBackIn* clone() const;
-	/** returns a new reversed action */
-	virtual ActionEase* reverse() const;
-public:
-
     /** creates the action */
     static EaseBackIn* create(ActionInterval* pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseBackIn* clone() const override;
+	virtual ActionEase* reverse() const override;
 };
 
 /** 
@@ -451,15 +415,13 @@ public:
 class CC_DLL EaseBackOut : public ActionEase
 {
 public:
-    virtual void update(float time);
-	/** returns a new clone of the action */
-	virtual EaseBackOut* clone() const;
-	/** returns a new reversed action */
-	virtual ActionEase* reverse() const;
-public:
-
     /** creates the action */
     static EaseBackOut* create(ActionInterval* pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseBackOut* clone() const override;
+	virtual ActionEase* reverse() const override;
 };
 
 /** 
@@ -471,15 +433,13 @@ public:
 class CC_DLL EaseBackInOut : public ActionEase
 {
 public:
-    virtual void update(float time);
-	/** returns a new clone of the action */
-	virtual EaseBackInOut* clone() const;
-	/** returns a new reversed action */
-	virtual EaseBackInOut* reverse() const;
-public:
-
     /** creates the action */
     static EaseBackInOut* create(ActionInterval* pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseBackInOut* clone() const override;
+	virtual EaseBackInOut* reverse() const override;
 };
 
 // end of actions group

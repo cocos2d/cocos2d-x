@@ -339,20 +339,6 @@ CallFunc * CallFunc::create(Object* pSelectorTarget, SEL_CallFunc selector)
     return NULL;
 }
 
-CallFunc * CallFunc::create(int nHandler)
-{
-	CallFunc *pRet = new CallFunc();
-
-	if (pRet) {
-		pRet->_scriptHandler = nHandler;
-		pRet->autorelease();
-	}
-	else{
-		CC_SAFE_DELETE(pRet);
-	}
-	return pRet;
-}
-
 bool CallFunc::initWithFunction(const std::function<void()> &func)
 {
 	_function = func;
@@ -376,10 +362,6 @@ bool CallFunc::initWithTarget(Object* pSelectorTarget) {
 
 CallFunc::~CallFunc(void)
 {
-    if (_scriptHandler)
-    {
-        cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(_scriptHandler);
-    }
     CC_SAFE_RELEASE(_selectorTarget);
 }
 
@@ -394,10 +376,6 @@ CallFunc * CallFunc::clone() const
     else if( _function ){
         a->initWithFunction(_function);
     }
-    else if (_scriptHandler > 0 ) {
-        a->_scriptHandler = cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine()->reallocateScriptHandler(_scriptHandler);
-    }
-    
 
     a->autorelease();
     return a;
@@ -417,13 +395,9 @@ void CallFunc::update(float time) {
 void CallFunc::execute() {
     if (_callFunc) {
         (_selectorTarget->*_callFunc)();
-    } else if( _function )
-		_function();
-	if (0 != _scriptHandler) {
-        BasicScriptData data((void*)this);
-        ScriptEvent event(kCallFuncEvent,(void*)&data);
-		ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
-	}
+    } else if( _function ){
+        _function();
+    }
 }
 
 //
@@ -458,33 +432,12 @@ CallFuncN * CallFuncN::create(Object* pSelectorTarget, SEL_CallFuncN selector)
     return NULL;
 }
 
-CallFuncN * CallFuncN::create(int nHandler)
-{
-	CallFuncN *pRet = new CallFuncN();
-
-	if (pRet) {
-		pRet->_scriptHandler = nHandler;
-		pRet->autorelease();
-	}
-	else{
-		CC_SAFE_DELETE(pRet);
-	}
-	return pRet;
-}
-
-
 void CallFuncN::execute() {
     if (_callFuncN) {
         (_selectorTarget->*_callFuncN)(_target);
     }
     else if (_functionN) {
         _functionN(_target);
-    }
-    if (0 != _scriptHandler)
-    {
-        BasicScriptData data((void*)this,(void*)_target);
-        ScriptEvent event(kCallFuncEvent,(void*)&data);
-        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
 }
 
@@ -508,7 +461,14 @@ CallFuncN * CallFuncN::clone() const
 {
 	// no copy constructor
 	auto a = new CallFuncN();
-	a->initWithTarget(_selectorTarget, _callFuncN);
+
+    if( _selectorTarget) {
+        a->initWithTarget(_selectorTarget, _callFuncN);
+    }
+    else if( _function ){
+        a->initWithFunction(_functionN);
+    }
+
 	a->autorelease();
 	return a;
 }

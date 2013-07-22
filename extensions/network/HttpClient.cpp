@@ -30,6 +30,8 @@
 
 #include "curl/curl.h"
 
+#include "platform/CCFileUtils.h"
+
 NS_CC_EXT_BEGIN
 
 static std::mutex       s_requestQueueMutex;
@@ -44,7 +46,7 @@ static unsigned long    s_asyncRequestCount = 0;
 typedef int int32_t;
 #endif
 
-static bool need_quit = false;
+static bool s_need_quit = false;
 
 static Array* s_requestQueue = NULL;
 static Array* s_responseQueue = NULL;
@@ -54,6 +56,8 @@ static HttpClient *s_pHttpClient = NULL; // pointer to singleton
 static char s_errorBuffer[CURL_ERROR_SIZE];
 
 typedef size_t (*write_callback)(void *ptr, size_t size, size_t nmemb, void *stream);
+
+static std::string s_cookieFilename = "";
 
 // Callback function used by libcurl for collect response data
 static size_t writeData(void *ptr, size_t size, size_t nmemb, void *stream)
@@ -96,7 +100,7 @@ static void networkThread(void)
     
     while (true) 
     {
-        if (need_quit)
+        if (s_need_quit)
         {
             break;
         }
@@ -200,7 +204,7 @@ static void networkThread(void)
         s_responseQueueMutex.unlock();
         
         // resume dispatcher selector
-        Director::sharedDirector()->getScheduler()->resumeTarget(HttpClient::getInstance());
+        Director::getInstance()->getScheduler()->resumeTarget(HttpClient::getInstance());
     }
     
     // cleanup: if worker thread received quit signal, clean up un-completed request queue
@@ -298,6 +302,14 @@ public:
             if (!setOption(CURLOPT_HTTPHEADER, _headers))
                 return false;
         }
+        if (!s_cookieFilename.empty()) {
+            if (!setOption(CURLOPT_COOKIEFILE, s_cookieFilename.c_str())) {
+                return false;
+            }
+            if (!setOption(CURLOPT_COOKIEJAR, s_cookieFilename.c_str())) {
+                return false;
+            }
+        }
 
         return setOption(CURLOPT_URL, request->getUrl())
                 && setOption(CURLOPT_WRITEFUNCTION, callback)
@@ -313,9 +325,10 @@ public:
         if (CURLE_OK != curl_easy_perform(_curl))
             return false;
         CURLcode code = curl_easy_getinfo(_curl, CURLINFO_RESPONSE_CODE, responseCode);
-        if (code != CURLE_OK || *responseCode != 200)
+        if (code != CURLE_OK || *responseCode != 200) {
+            CCLOGERROR("Curl curl_easy_getinfo failed: %s", curl_easy_strerror(code));
             return false;
-        
+        }
         // Get some mor data.
         
         return true;
@@ -380,22 +393,31 @@ HttpClient* HttpClient::getInstance()
 void HttpClient::destroyInstance()
 {
     CCAssert(s_pHttpClient, "");
-    Director::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(HttpClient::dispatchResponseCallbacks), s_pHttpClient);
+    Director::getInstance()->getScheduler()->unscheduleSelector(schedule_selector(HttpClient::dispatchResponseCallbacks), s_pHttpClient);
     s_pHttpClient->release();
+}
+
+void HttpClient::enableCookies(const char* cookieFile) {
+    if (cookieFile) {
+        s_cookieFilename = std::string(cookieFile);
+    }
+    else {
+        s_cookieFilename = (FileUtils::getInstance()->getWritablePath() + "cookieFile.txt");
+    }
 }
 
 HttpClient::HttpClient()
 : _timeoutForConnect(30)
 , _timeoutForRead(60)
 {
-    Director::sharedDirector()->getScheduler()->scheduleSelector(
+    Director::getInstance()->getScheduler()->scheduleSelector(
                     schedule_selector(HttpClient::dispatchResponseCallbacks), this, 0, false);
-    Director::sharedDirector()->getScheduler()->pauseTarget(this);
+    Director::getInstance()->getScheduler()->pauseTarget(this);
 }
 
 HttpClient::~HttpClient()
 {
-    need_quit = true;
+    s_need_quit = true;
     
     if (s_requestQueue != NULL) {
     	s_SleepCondition.notify_one();
@@ -421,7 +443,7 @@ bool HttpClient::lazyInitThreadSemphore()
         auto t = std::thread(&networkThread);
         t.detach();
         
-        need_quit = false;
+        s_need_quit = false;
     }
     
     return true;
@@ -487,7 +509,7 @@ void HttpClient::dispatchResponseCallbacks(float delta)
     
     if (0 == s_asyncRequestCount) 
     {
-        Director::sharedDirector()->getScheduler()->pauseTarget(this);
+        Director::getInstance()->getScheduler()->pauseTarget(this);
     }
     
 }

@@ -21,11 +21,11 @@ void PrettyPrinterDemo::addSprite()
     Sprite *s4 = Sprite::create("Images/grossini_dance_03.png");
     Sprite *s5 = Sprite::create("Images/grossini_dance_04.png");
     
-    s1->setPosition(ccp(50, 50));
-    s2->setPosition(ccp(60, 50));
-    s3->setPosition(ccp(70, 50));
-    s4->setPosition(ccp(80, 50));
-    s5->setPosition(ccp(90, 50));
+    s1->setPosition(Point(50, 50));
+    s2->setPosition(Point(60, 50));
+    s3->setPosition(Point(70, 50));
+    s4->setPosition(Point(80, 50));
+    s5->setPosition(Point(90, 50));
     
     this->addChild(s1);
     this->addChild(s2);
@@ -37,17 +37,17 @@ void PrettyPrinterDemo::addSprite()
 void PrettyPrinterDemo::onEnter()
 {
     Layer::onEnter();
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     
     LabelTTF* label = LabelTTF::create(title().c_str(), "Arial", 28);
-    label->setPosition( ccp(s.width/2, s.height * 4/5) );
+    label->setPosition( Point(s.width/2, s.height * 4/5) );
     this->addChild(label, 1);
     
     std::string strSubtitle = subtitle();
     if(strSubtitle.empty() == false)
     {
         LabelTTF* subLabel = LabelTTF::create(strSubtitle.c_str(), "Thonburi", 16);
-        subLabel->setPosition( ccp(s.width/2, s.height * 3/5) );
+        subLabel->setPosition( Point(s.width/2, s.height * 3/5) );
         this->addChild(subLabel, 1);
     }
     
@@ -71,7 +71,7 @@ void PrettyPrinterDemo::onEnter()
     
     vistor.clear();
     addSprite();
-    pDict = TextureCache::sharedTextureCache()->snapshotTextures();
+    pDict = TextureCache::getInstance()->snapshotTextures();
     pDict->acceptVisitor(vistor);
     CCLog("%s", vistor.getResult().c_str());
 }
@@ -82,5 +82,5 @@ void DataVisitorTestScene::runThisTest()
     layer->autorelease();
     addChild(layer);
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

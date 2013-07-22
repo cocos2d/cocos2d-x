@@ -77,7 +77,7 @@ extern "C" void mouseCB(int button, int state, int x, int y)
 {
     float fx = x;
     float fy = y;
-    EGLView* pEGLView = EGLView::sharedOpenGLView();
+    EGLView* pEGLView = EGLView::getInstance();
     int id = 0;
 
     if(button != glutLeftButton) return;
@@ -98,7 +98,7 @@ extern "C" void motionCB(int x, int y)
 {
     float fx = x;
     float fy = y;
-    EGLView* pEGLView = EGLView::sharedOpenGLView();
+    EGLView* pEGLView = EGLView::getInstance();
     int id = 0;
 
     if(buttonDepressed)
@@ -201,7 +201,7 @@ void EGLView::swapBuffers()
 	eglSwapBuffers(_eglDisplay, _eglSurface);
 }
 
-EGLView* EGLView::sharedOpenGLView()
+EGLView* EGLView::getInstance()
 {
 	if (!s_pInstance)
 	{
@@ -210,6 +210,12 @@ EGLView* EGLView::sharedOpenGLView()
 
 	CCAssert(s_pInstance != NULL, "CCEGLView wasn't constructed yet");
 	return s_pInstance;
+}
+
+// XXX: deprecated
+EGLView* EGLView::sharedOpenGLView()
+{
+    return EGLView::getInstance();
 }
 
 void EGLView::showKeyboard()

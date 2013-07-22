@@ -25,7 +25,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCMenuItem.h"
-#include "support/CCPointExtension.h"
 #include "actions/CCActionInterval.h"
 #include "sprite_nodes/CCSprite.h"
 #include "label_nodes/CCLabelAtlas.h"
@@ -82,7 +81,7 @@ bool MenuItem::initWithTarget(cocos2d::Object *target, SEL_MenuHandler selector 
 
 bool MenuItem::initWithCallback(const ccMenuCallback& callback)
 {
-    setAnchorPoint(ccp(0.5f, 0.5f));
+    setAnchorPoint(Point(0.5f, 0.5f));
 	_callback = callback;
     _enabled = true;
     _selected = false;
@@ -92,8 +91,6 @@ bool MenuItem::initWithCallback(const ccMenuCallback& callback)
 MenuItem::~MenuItem()
 {
 	CC_SAFE_RELEASE(_target);
-
-    unregisterScriptTapHandler();
 }
 
 void MenuItem::selected()
@@ -104,23 +101,6 @@ void MenuItem::selected()
 void MenuItem::unselected()
 {
     _selected = false;
-}
-
-void MenuItem::registerScriptTapHandler(int nHandler)
-{
-    unregisterScriptTapHandler();
-    _scriptTapHandler = nHandler;
-    LUALOG("[LUA] Add MenuItem script handler: %d", _scriptTapHandler);
-}
-
-void MenuItem::unregisterScriptTapHandler(void)
-{
-    if (_scriptTapHandler)
-    {
-        ScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(_scriptTapHandler);
-        LUALOG("[LUA] Remove MenuItem script handler: %d", _scriptTapHandler);
-        _scriptTapHandler = 0;
-    }
 }
 
 void MenuItem::activate()
@@ -155,9 +135,9 @@ bool MenuItem::isEnabled() const
     return _enabled;
 }
 
-Rect MenuItem::rect()
+Rect MenuItem::rect() const
 {
-    return CCRectMake( _position.x - _contentSize.width * _anchorPoint.x,
+    return Rect( _position.x - _contentSize.width * _anchorPoint.x,
                       _position.y - _contentSize.height * _anchorPoint.y,
                       _contentSize.width, _contentSize.height);
 }
@@ -202,7 +182,7 @@ void MenuItemLabel::setLabel(Node* var)
     if (var)
     {
         addChild(var);
-        var->setAnchorPoint(ccp(0, 0));
+        var->setAnchorPoint(Point(0, 0));
         setContentSize(var->getContentSize());
     }
     
@@ -393,7 +373,7 @@ void MenuItemFont::setFontSize(unsigned int s)
     _globalFontSize = s;
 }
 
-unsigned int MenuItemFont::fontSize()
+unsigned int MenuItemFont::getFontSize()
 {
     return _globalFontSize;
 }
@@ -408,7 +388,7 @@ void MenuItemFont::setFontName(const char *name)
     _globalFontNameRelease = true;
 }
 
-const char * MenuItemFont::fontName()
+const char * MenuItemFont::getFontName()
 {
     return _globalFontName.c_str();
 }
@@ -477,7 +457,7 @@ void MenuItemFont::setFontSizeObj(unsigned int s)
     recreateLabel();
 }
 
-unsigned int MenuItemFont::fontSizeObj()
+unsigned int MenuItemFont::getFontSizeObj() const
 {
     return _fontSize;
 }
@@ -488,7 +468,7 @@ void MenuItemFont::setFontNameObj(const char* name)
     recreateLabel();
 }
 
-const char* MenuItemFont::fontNameObj()
+const char* MenuItemFont::getFontNameObj() const
 {
     return _fontName.c_str();
 }
@@ -509,7 +489,7 @@ void MenuItemSprite::setNormalImage(Node* pImage)
         if (pImage)
         {
             addChild(pImage, 0, kNormalTag);
-            pImage->setAnchorPoint(ccp(0, 0));
+            pImage->setAnchorPoint(Point(0, 0));
         }
 
         if (_normalImage)
@@ -535,7 +515,7 @@ void MenuItemSprite::setSelectedImage(Node* pImage)
         if (pImage)
         {
             addChild(pImage, 0, kSelectedTag);
-            pImage->setAnchorPoint(ccp(0, 0));
+            pImage->setAnchorPoint(Point(0, 0));
         }
 
         if (_selectedImage)
@@ -560,7 +540,7 @@ void MenuItemSprite::setDisabledImage(Node* pImage)
         if (pImage)
         {
             addChild(pImage, 0, kDisableTag);
-            pImage->setAnchorPoint(ccp(0, 0));
+            pImage->setAnchorPoint(Point(0, 0));
         }
 
         if (_disabledImage)
@@ -998,7 +978,7 @@ void MenuItemToggle::setSelectedIndex(unsigned int index)
         this->addChild(item, 0, kCurrentItem);
         Size s = item->getContentSize();
         this->setContentSize(s);
-        item->setPosition( ccp( s.width/2, s.height/2 ) );
+        item->setPosition( Point( s.width/2, s.height/2 ) );
     }
 }
 unsigned int MenuItemToggle::getSelectedIndex()
@@ -1043,7 +1023,7 @@ void MenuItemToggle::setEnabled(bool enabled)
     }
 }
 
-MenuItem* MenuItemToggle::selectedItem()
+MenuItem* MenuItemToggle::getSelectedItem()
 {
     return (MenuItem*)_subItems->objectAtIndex(_selectedIndex);
 }

@@ -262,7 +262,7 @@ bool LabelTextFormatter::alignText(LabelTextFormatProtocol *theLabel)
                     if (index < 0) continue;
                     
                     Sprite* characterSprite = theLabel->getSpriteChild(index);
-                    characterSprite->setPosition(ccpAdd(characterSprite->getPosition(), ccp(shift, 0.0f)));
+                    characterSprite->setPosition( characterSprite->getPosition() + Point(shift, 0.0f));
                 }
             }
             
@@ -294,7 +294,7 @@ bool LabelTextFormatter::createStringSprites(LabelTextFormatProtocol *theLabel)
     unsigned short prev         = -1;
     
     
-    Size tmpSize              = SizeZero;
+    Size tmpSize              = Size::ZERO;
     
     int longestLine             = 0;
     unsigned int totalHeight    = 0;
@@ -342,7 +342,7 @@ bool LabelTextFormatter::createStringSprites(LabelTextFormatProtocol *theLabel)
         int yOffset = commonLineHeight - charYOffset;
         
         
-        Point fontPos = ccp( (float)nextFontPositionX + charXOffset +   charRect.size.width  *  0.5f + kerningAmount,
+        Point fontPos = Point( (float)nextFontPositionX + charXOffset +   charRect.size.width  *  0.5f + kerningAmount,
                              (float)nextFontPositionY + yOffset     -   charRect.size.height *  0.5f );
         
         // set the sprite position

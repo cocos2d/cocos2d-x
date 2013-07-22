@@ -37,10 +37,10 @@ void AccelerometerTest::onEnter()
 
     LabelTTF* label = LabelTTF::create(title().c_str(), "Arial", 32);
     addChild(label, 1);
-    label->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y-50) );
+    label->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y-50) );
 
     _ball = Sprite::create("Images/ball.png");
-    _ball->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y));
+    _ball->setPosition(Point(VisibleRect::center().x, VisibleRect::center().y));
     addChild(_ball);
 
     _ball->retain();
@@ -57,7 +57,7 @@ void AccelerometerTest::didAccelerate(Acceleration* pAccelerationValue)
 // 
 //     _lastTime = fNow;
 
-    Director* pDir = Director::sharedDirector();
+    Director* pDir = Director::getInstance();
 
     /*FIXME: Testing on the Nexus S sometimes _ball is NULL */
     if ( _ball == NULL ) {
@@ -89,5 +89,5 @@ void AccelerometerTestScene::runThisTest()
     addChild(pLayer);
     pLayer->release();
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }

@@ -109,7 +109,7 @@ public:
      * @return cell size
      */
     virtual Size cellSizeForTable(TableView *table) {
-        return SizeZero;
+        return Size::ZERO;
     };
     /**
      * a cell instance at a given index
@@ -137,9 +137,6 @@ public:
 class TableView : public ScrollView, public ScrollViewDelegate
 {
 public:
-    TableView();
-    virtual ~TableView();
-
     /**
      * An intialized table view object
      *
@@ -158,6 +155,11 @@ public:
      */
     static TableView* create(TableViewDataSource* dataSource, Size size, Node *container);
 
+    TableView();
+    virtual ~TableView();
+
+    bool initWithViewSize(Size size, Node* container = NULL);
+
     /**
      * data source
      */
@@ -175,8 +177,6 @@ public:
     void setVerticalFillOrder(TableViewVerticalFillOrder order);
     TableViewVerticalFillOrder getVerticalFillOrder();
 
-
-    bool initWithViewSize(Size size, Node* container = NULL);
     /**
      * Updates the content of the cell at a given index.
      *
@@ -214,14 +214,13 @@ public:
      */
     TableViewCell *cellAtIndex(unsigned int idx);
 
-
-    virtual void scrollViewDidScroll(ScrollView* view);
-    virtual void scrollViewDidZoom(ScrollView* view) {}
-
-    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent);
-    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent);
-    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent);
-    virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent);
+    // Overrides
+    virtual void scrollViewDidScroll(ScrollView* view) override;
+    virtual void scrollViewDidZoom(ScrollView* view)  override {}
+    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) override;
+    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) override;
+    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) override;
+    virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) override;
 
 protected:
 

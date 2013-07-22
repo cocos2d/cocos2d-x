@@ -80,7 +80,7 @@ SceneController* SceneController::create(void)
 
 void SceneController::addTarget()
 {
-	Sprite *target = Sprite::create("components/Target.png", CCRectMake(0,0,27,40));
+	Sprite *target = Sprite::create("components/Target.png", Rect(0,0,27,40));
     _owner->addChild(target, 1, 2);
     
     target->addComponent(EnemyController::create());
@@ -98,7 +98,7 @@ void SceneController::spriteMoveFinished(Node* sender)
         _targets->removeObject(sprite);
 		GameOverScene *gameOverScene = GameOverScene::create();
 		gameOverScene->getLayer()->getLabel()->setString("You Lose :[");
-		Director::sharedDirector()->replaceScene(gameOverScene);
+		Director::getInstance()->replaceScene(gameOverScene);
 	}
 	else if (sprite->getTag() == 3) 
 	{
@@ -118,6 +118,6 @@ void SceneController::increaseKillCount()
     {
             GameOverScene *gameOverScene = GameOverScene::create();
             gameOverScene->getLayer()->getLabel()->setString("You Win!");
-            Director::sharedDirector()->replaceScene(gameOverScene);
+            Director::getInstance()->replaceScene(gameOverScene);
     }
 }

@@ -38,7 +38,7 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 #include "CCLabelTextFormatter.h"
 #include "draw_nodes/CCDrawingPrimitives.h"
 #include "sprite_nodes/CCSprite.h"
-#include "support/CCPointExtension.h"
+//#include "support/CCPointExtension.h"
 #include "platform/CCFileUtils.h"
 #include "CCDirector.h"
 #include "textures/CCTextureCache.h"
@@ -85,21 +85,21 @@ LabelBMFontNew * LabelBMFontNew::create()
 
 LabelBMFontNew * LabelBMFontNew::create(const char *str, const char *fntFile, float width, TextAlignment alignment)
 {
-    return LabelBMFontNew::create(str, fntFile, width, alignment, PointZero);
+    return LabelBMFontNew::create(str, fntFile, width, alignment, Point::ZERO);
 }
 
 LabelBMFontNew * LabelBMFontNew::create(const char *str, const char *fntFile, float width)
 {
-    return LabelBMFontNew::create(str, fntFile, width, kTextAlignmentLeft, PointZero);
+    return LabelBMFontNew::create(str, fntFile, width, kTextAlignmentLeft, Point::ZERO);
 }
 
 LabelBMFontNew * LabelBMFontNew::create(const char *str, const char *fntFile)
 {
-    return LabelBMFontNew::create(str, fntFile, kLabelAutomaticWidth, kTextAlignmentLeft, PointZero);
+    return LabelBMFontNew::create(str, fntFile, kLabelAutomaticWidth, kTextAlignmentLeft, Point::ZERO);
 }
 
 //LabelBMFont - Creation & Init
-LabelBMFontNew *LabelBMFontNew::create(const char *str, const char *fntFile, float width/* = kLabelAutomaticWidth*/, TextAlignment alignment/* = kTextAlignmentLeft*/, Point imageOffset/* = PointZero*/)
+LabelBMFontNew *LabelBMFontNew::create(const char *str, const char *fntFile, float width/* = kLabelAutomaticWidth*/, TextAlignment alignment/* = kTextAlignmentLeft*/, Point imageOffset/* = Point::ZERO*/)
 {
     LabelBMFontNew *pRet = new LabelBMFontNew();
     if(pRet && pRet->initWithString(str, fntFile, width, alignment, imageOffset))
@@ -113,10 +113,10 @@ LabelBMFontNew *LabelBMFontNew::create(const char *str, const char *fntFile, flo
 
 bool LabelBMFontNew::init()
 {
-    return initWithString(NULL, NULL, kLabelAutomaticWidth, kTextAlignmentLeft, PointZero);
+    return initWithString(NULL, NULL, kLabelAutomaticWidth, kTextAlignmentLeft, Point::ZERO);
 }
 
-bool LabelBMFontNew::initWithString(const char *theString, const char *fntFile, float width/* = kLabelAutomaticWidth*/, TextAlignment alignment/* = kTextAlignmentLeft*/, Point imageOffset/* = PointZero*/)
+bool LabelBMFontNew::initWithString(const char *theString, const char *fntFile, float width/* = kLabelAutomaticWidth*/, TextAlignment alignment/* = kTextAlignmentLeft*/, Point imageOffset/* = Point::ZERO*/)
 {
     CCAssert(!_configuration, "re-init is no longer supported");
     CCAssert( (theString && fntFile) || (theString==NULL && fntFile==NULL), "Invalid params for LabelBMFontNew");
@@ -139,7 +139,7 @@ bool LabelBMFontNew::initWithString(const char *theString, const char *fntFile, 
         
         _fntFile = fntFile;
         
-        texture = TextureCache::sharedTextureCache()->addImage(_configuration->getAtlasName());
+        texture = TextureCache::getInstance()->addImage(_configuration->getAtlasName());
     }
     else 
     {
@@ -162,15 +162,15 @@ bool LabelBMFontNew::initWithString(const char *theString, const char *fntFile, 
         _cascadeOpacityEnabled = true;
         _cascadeColorEnabled = true;
         
-        _contentSize = SizeZero;
+        _contentSize = Size::ZERO;
         
         _isOpacityModifyRGB = _textureAtlas->getTexture()->hasPremultipliedAlpha();
-        _anchorPoint = ccp(0.5f, 0.5f);
+        _anchorPoint = Point(0.5f, 0.5f);
         
         _imageOffset = imageOffset;
         
         _reusedChar = new Sprite();
-        _reusedChar->initWithTexture(_textureAtlas->getTexture(), CCRectMake(0, 0, 0, 0), false);
+        _reusedChar->initWithTexture(_textureAtlas->getTexture(), Rect(0, 0, 0, 0), false);
         _reusedChar->setBatchNode(this);
         
         this->setString(theString);
@@ -187,7 +187,7 @@ LabelBMFontNew::LabelBMFontNew()
 , _width(-1.0f)
 , _configuration(NULL)
 , _lineBreakWithoutSpaces(false)
-, _imageOffset(PointZero)
+, _imageOffset(Point::ZERO)
 , _reusedChar(NULL)
 , _displayedOpacity(255)
 , _realOpacity(255)
@@ -423,7 +423,7 @@ void LabelBMFontNew::setFntFile(const char* fntFile)
         CC_SAFE_RELEASE(_configuration);
         _configuration = newConf;
 
-        this->setTexture(TextureCache::sharedTextureCache()->addImage(_configuration->getAtlasName()));
+        this->setTexture(TextureCache::getInstance()->addImage(_configuration->getAtlasName()));
         LabelTextFormatter::createStringSprites(this);
     }
 }

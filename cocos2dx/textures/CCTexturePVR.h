@@ -90,33 +90,33 @@ enum {
 class TexturePVR : public Object
 {
 public:
+    /** creates and initializes a TexturePVR with a path */
+    static TexturePVR* create(const char* path);
+
     TexturePVR();
     virtual ~TexturePVR();
 
     /** initializes a TexturePVR with a path */
     bool initWithContentsOfFile(const char* path);
 
-    /** creates and initializes a TexturePVR with a path */
-    static TexturePVR* create(const char* path);
-    
-    // properties 
+    // properties
     
     /** texture id name */
-    inline unsigned int getName() { return _name; }
+    inline unsigned int getName() const { return _name; }
     /** texture width */
-    inline unsigned int getWidth() { return _width; }
+    inline unsigned int getWidth() const { return _width; }
     /** texture height */
-    inline unsigned int getHeight() { return _height; }
+    inline unsigned int getHeight() const { return _height; }
     /** whether or not the texture has alpha */
-    inline bool hasAlpha() { return _hasAlpha; }
+    inline bool hasAlpha() const { return _hasAlpha; }
     /** whether or not the texture has premultiplied alpha */
-    inline bool hasPremultipliedAlpha() { return _hasPremultipliedAlpha; }
+    inline bool hasPremultipliedAlpha() const { return _hasPremultipliedAlpha; }
     /** whether or not the texture should use hasPremultipliedAlpha instead of global default */
-    inline bool isForcePremultipliedAlpha() { return _forcePremultipliedAlpha; }
+    inline bool isForcePremultipliedAlpha() const { return _forcePremultipliedAlpha; }
     /** how many mipmaps the texture has. 1 means one level (level 0 */
-    inline unsigned int getNumberOfMipmaps() { return _numberOfMipmaps; }
-    inline Texture2DPixelFormat getFormat() { return _format; }
-    inline bool isRetainName() { return _retainName; }
+    inline unsigned int getNumberOfMipmaps() const { return _numberOfMipmaps; }
+    inline Texture2DPixelFormat getFormat() const { return _format; }
+    inline bool isRetainName() const { return _retainName; }
     inline void setRetainName(bool retainName) { _retainName = retainName; }
 
 private:

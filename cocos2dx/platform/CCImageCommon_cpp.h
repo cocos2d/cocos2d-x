@@ -116,8 +116,8 @@ bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFm
     SDL_FreeSurface(iSurf);
 #else
     unsigned long nSize = 0;
-    std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(strPath);
-    unsigned char* pBuffer = FileUtils::sharedFileUtils()->getFileData(fullPath.c_str(), "rb", &nSize);
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(strPath);
+    unsigned char* pBuffer = FileUtils::getInstance()->getFileData(fullPath.c_str(), "rb", &nSize);
     if (pBuffer != NULL && nSize > 0)
     {
         bRet = initWithImageData(pBuffer, nSize, eImgFmt);
@@ -133,10 +133,10 @@ bool Image::initWithImageFileThreadSafe(const char *fullpath, EImageFormat image
     bool bRet = false;
     unsigned long nSize = 0;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    FileUtilsAndroid *fileUitls = (FileUtilsAndroid*)FileUtils::sharedFileUtils();
+    FileUtilsAndroid *fileUitls = (FileUtilsAndroid*)FileUtils::getInstance();
     unsigned char *pBuffer = fileUitls->getFileDataForAsync(fullpath, "rb", &nSize);
 #else
-    unsigned char *pBuffer = FileUtils::sharedFileUtils()->getFileData(fullpath, "rb", &nSize);
+    unsigned char *pBuffer = FileUtils::getInstance()->getFileData(fullpath, "rb", &nSize);
 #endif
     if (pBuffer != NULL && nSize > 0)
     {

@@ -39,5 +39,10 @@ static const char s_AtlasTest[]           = "Images/atlastest.png";
 static const char s_TilesPng[]            = "TileMaps/tiles.png";
 static const char s_LevelMapTga[]         = "TileMaps/levelmap.tga";
 
+// Scale9Sprite resource
+static const char s_s9s_blocks9[]         = "Images/blocks9ss.png";
+static const char s_s9s_blocks9_plist[]   = "Images/blocks9ss.plist";
+static const char s_s9s_ui[]              = "Images/ui.png";
+static const char s_s9s_ui_plist[]        = "Images/ui.plist";
 
 #endif

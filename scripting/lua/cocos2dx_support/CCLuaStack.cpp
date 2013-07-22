@@ -39,6 +39,14 @@ extern "C" {
 #include "platform/ios/CCLuaObjcBridge.h"
 #endif
 
+#include "Lua_extensions_CCB.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#include "Lua_web_socket.h"
+#endif
+#include "LuaOpengl.h"
+#include "LuaScrollView.h"
+#include "LuaScriptHandlerMgr.h"
+
 namespace {
 int lua_print(lua_State * luastate)
 {
@@ -118,6 +126,13 @@ bool LuaStack::init(void)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     LuaObjcBridge::luaopen_luaoc(_state);
 #endif
+    tolua_extensions_ccb_open(_state);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    tolua_web_socket_open(_state);
+#endif
+    tolua_opengl_open(_state);
+    tolua_scroll_view_open(_state);
+    tolua_script_handler_mgr_open(_state);
     
     // add cocos2dx loader
     addLuaLoader(cocos2dx_lua_loader);
@@ -191,7 +206,7 @@ int LuaStack::executeScriptFile(const char* filename)
     code.append("\"");
     return executeString(code.c_str());
 #else
-    std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(filename);
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
     ++_callFromLua;
     int nRet = luaL_dofile(_state, fullPath.c_str());
     --_callFromLua;

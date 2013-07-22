@@ -80,7 +80,7 @@ bool TextPageDef::generatePageTexture(bool releasePageData)
         _pageTexture = 0;
     }
     
-    Size imageSize = CCSizeMake((float)(_width), (float)(_height));
+    Size imageSize = Size((float)(_width), (float)(_height));
     if( (imageSize.width <=0) || (imageSize.height<=0) )
         return false;
     

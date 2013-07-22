@@ -65,7 +65,7 @@ OspForm::OnTerminating(void)
     if (__pKeypad)
         __pKeypad->Destroy();
 
-    Director::sharedDirector()->getAccelerometer()->stopSensor();
+    Director::getInstance()->getAccelerometer()->stopSensor();
 
     return r;
 }
@@ -96,7 +96,7 @@ OspForm::OnTouchMoved(const Control& source, const  Tizen::Graphics::Point& curr
     int id = touchInfo.GetPointId();
     float x = currentPosition.x;
     float y = currentPosition.y;
-    Director::sharedDirector()->getOpenGLView()->handleTouchesMove(1, &id, &x, &y);
+    Director::getInstance()->getOpenGLView()->handleTouchesMove(1, &id, &x, &y);
 }
 
 void
@@ -105,7 +105,7 @@ OspForm::OnTouchPressed(const Control& source, const  Tizen::Graphics::Point& cu
     int id = touchInfo.GetPointId();
     float x = currentPosition.x;
     float y = currentPosition.y;
-    Director::sharedDirector()->getOpenGLView()->handleTouchesBegin(1, &id, &x, &y);
+    Director::getInstance()->getOpenGLView()->handleTouchesBegin(1, &id, &x, &y);
 }
 
 void
@@ -114,7 +114,7 @@ OspForm::OnTouchReleased(const Control& source, const  Tizen::Graphics::Point& c
     int id = touchInfo.GetPointId();
     float x = currentPosition.x;
     float y = currentPosition.y;
-    Director::sharedDirector()->getOpenGLView()->handleTouchesEnd(1, &id, &x, &y);
+    Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, &id, &x, &y);
 }
 
 void OspForm::OnTextValueChanged(const Tizen::Ui::Control& source)

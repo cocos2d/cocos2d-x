@@ -79,10 +79,16 @@ void EGLView::swapBuffers()
 {
 }
 
-EGLView* EGLView::sharedOpenGLView()
+EGLView* EGLView::getInstance()
 {
     static EGLView instance;
     return &instance;
+}
+
+// XXX: deprecated
+EGLView* EGLView::sharedOpenGLView()
+{
+    return EGLView::getInstance();
 }
 
 void EGLView::setIMEKeyboardState(bool bOpen)

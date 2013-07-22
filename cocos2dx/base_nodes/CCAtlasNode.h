@@ -49,9 +49,44 @@ All features from Node are valid, plus the following features:
 - opacity and RGB colors
 */
 class CC_DLL AtlasNode : public NodeRGBA, public TextureProtocol
-{
-protected:
+{    
+public:
+	/** creates a AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
+	static AtlasNode * create(const char* tile,unsigned int tileWidth, unsigned int tileHeight,
+                              unsigned int itemsToRender);
+    AtlasNode();
+    virtual ~AtlasNode();
 
+    /** initializes an AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
+    bool initWithTileFile(const char* tile, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
+
+    /** initializes an AtlasNode  with a texture the width and height of each item measured in points and the quantity of items to render*/
+    bool initWithTexture(Texture2D* texture, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
+    
+    /** updates the Atlas (indexed vertex array).
+    * Shall be overridden in subclasses
+    */
+    virtual void updateAtlasValues();
+
+    // Overrides
+    virtual void draw() override;
+    virtual Texture2D* getTexture() override;
+    virtual void setTexture(Texture2D *texture) override;
+    virtual bool isOpacityModifyRGB() const override;
+    virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
+    virtual const Color3B& getColor(void) const override;
+    virtual void setColor(const Color3B& color) override;
+    virtual void setOpacity(GLubyte opacity) override;
+
+private :
+    void calculateMaxItems();
+    void updateBlendFunc();
+    void updateOpacityModifyRGB();
+    
+    friend class Director;
+    void setIgnoreContentScaleFactor(bool bIgnoreContentScaleFactor);
+
+protected:
     //! chars per row
     unsigned int _itemsPerRow;
     //! chars per column
@@ -68,7 +103,7 @@ protected:
 
     // protocol variables
     bool _isOpacityModifyRGB;
-    
+
     CC_PROPERTY_PASS_BY_REF(BlendFunc, _blendFunc, BlendFunc);
 
     // quads to draw
@@ -77,49 +112,6 @@ protected:
     GLint    _uniformColor;
     // This varible is only used for LabelAtlas FPS display. So plz don't modify its value.
     bool _ignoreContentScaleFactor;
-    
-public:
-    AtlasNode();
-    virtual ~AtlasNode();
-
-	/** creates a AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
-	static AtlasNode * create(const char* tile,unsigned int tileWidth, unsigned int tileHeight, 
-		unsigned int itemsToRender);
-
-    /** initializes an AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
-    bool initWithTileFile(const char* tile, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
-
-    /** initializes an AtlasNode  with a texture the width and height of each item measured in points and the quantity of items to render*/
-    bool initWithTexture(Texture2D* texture, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
-    
-    /** updates the Atlas (indexed vertex array).
-    * Shall be overridden in subclasses
-    */
-    virtual void updateAtlasValues();
-
-    virtual void draw(void);
-
-    // CC Texture protocol
-
-    /** returns the used texture*/
-    virtual Texture2D* getTexture(void);
-
-    /** sets a new texture. it will be retained*/
-    virtual void setTexture(Texture2D *texture);
-    
-    virtual bool isOpacityModifyRGB() const;
-    virtual void setOpacityModifyRGB(bool isOpacityModifyRGB);
-    virtual const Color3B& getColor(void) const;
-    virtual void setColor(const Color3B& color);
-    virtual void setOpacity(GLubyte opacity);
-
-private :
-    void calculateMaxItems();
-    void updateBlendFunc();
-    void updateOpacityModifyRGB();
-    
-    friend class Director;
-    void setIgnoreContentScaleFactor(bool bIgnoreContentScaleFactor);
 };
 
 // end of base_node group

@@ -40,11 +40,6 @@ NS_CC_BEGIN
  */
 class CC_DLL ClippingNode : public Node
 {
-protected:
-    Node* _stencil;
-    GLfloat _alphaThreshold;
-    bool    _inverted;
-    
 public:
     /** Creates and initializes a clipping node without a stencil.
      */
@@ -65,12 +60,6 @@ public:
      The stencil node will be retained, and its parent will be set to this clipping node.
      */
     virtual bool init(Node *pStencil);
-    
-    virtual void onEnter();
-    virtual void onEnterTransitionDidFinish();
-    virtual void onExitTransitionDidStart();
-    virtual void onExit();
-    virtual void visit();
     
     /** The Node to use as a stencil to do the clipping.
      The stencil node will be retained.
@@ -93,9 +82,26 @@ public:
      */
     bool isInverted() const;
     void setInverted(bool bInverted);
-    
+
+    // Overrides
+    virtual void onEnter() override;
+    virtual void onEnterTransitionDidFinish() override;
+    virtual void onExitTransitionDidStart() override;
+    virtual void onExit() override;
+    virtual void visit() override;
+
+private:
+    /**draw fullscreen quad to clear stencil bits
+    */
+    void drawFullScreenQuadClearStencil();
+
 private:
     ClippingNode();
+
+protected:
+    Node* _stencil;
+    GLfloat _alphaThreshold;
+    bool    _inverted;
 };
 
 NS_CC_END

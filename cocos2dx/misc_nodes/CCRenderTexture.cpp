@@ -62,12 +62,12 @@ RenderTexture::RenderTexture()
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // Listen this event to save render texture before come to background.
     // Then it can be restored after coming to foreground on Android.
-    NotificationCenter::sharedNotificationCenter()->addObserver(this,
+    NotificationCenter::getInstance()->addObserver(this,
                                                                   callfuncO_selector(RenderTexture::listenToBackground),
                                                                   EVENT_COME_TO_BACKGROUND,
                                                                   NULL);
     
-    NotificationCenter::sharedNotificationCenter()->addObserver(this,
+    NotificationCenter::getInstance()->addObserver(this,
                                                                   callfuncO_selector(RenderTexture::listenToForeground),
                                                                   EVNET_COME_TO_FOREGROUND, // this is misspelt
                                                                   NULL);
@@ -87,8 +87,8 @@ RenderTexture::~RenderTexture()
     CC_SAFE_DELETE(_UITextureImage);
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    NotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_COME_TO_BACKGROUND);
-    NotificationCenter::sharedNotificationCenter()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
+    NotificationCenter::getInstance()->removeObserver(this, EVENT_COME_TO_BACKGROUND);
+    NotificationCenter::getInstance()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
 #endif
 }
 
@@ -264,7 +264,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2DPixelFormat eF
         unsigned int powW = 0;
         unsigned int powH = 0;
 
-        if (Configuration::sharedConfiguration()->supportsNPOT())
+        if (Configuration::getInstance()->supportsNPOT())
         {
             powW = w;
             powH = h;
@@ -284,7 +284,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2DPixelFormat eF
         _texture = new Texture2D();
         if (_texture)
         {
-            _texture->initWithData(data, (Texture2DPixelFormat)_pixelFormat, powW, powH, CCSizeMake((float)w, (float)h));
+            _texture->initWithData(data, (Texture2DPixelFormat)_pixelFormat, powW, powH, Size((float)w, (float)h));
         }
         else
         {
@@ -293,12 +293,12 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2DPixelFormat eF
         GLint oldRBO;
         glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRBO);
         
-        if (Configuration::sharedConfiguration()->checkForGLExtension("GL_QCOM"))
+        if (Configuration::getInstance()->checkForGLExtension("GL_QCOM"))
         {
             _textureCopy = new Texture2D();
             if (_textureCopy)
             {
-                _textureCopy->initWithData(data, (Texture2DPixelFormat)_pixelFormat, powW, powH, CCSizeMake((float)w, (float)h));
+                _textureCopy->initWithData(data, (Texture2DPixelFormat)_pixelFormat, powW, powH, Size((float)w, (float)h));
             }
             else
             {
@@ -366,7 +366,7 @@ void RenderTexture::begin()
 	kmGLMatrixMode(KM_GL_MODELVIEW);
     kmGLPushMatrix();
     
-    Director *director = Director::sharedDirector();
+    Director *director = Director::getInstance();
     director->setProjection(director->getProjection());
 
     const Size& texSize = _texture->getContentSizeInPixels();
@@ -390,7 +390,7 @@ void RenderTexture::begin()
     
     /*  Certain Qualcomm Andreno gpu's will retain data in memory after a frame buffer switch which corrupts the render to the texture. The solution is to clear the frame buffer before rendering to the texture. However, calling glClear has the unintended result of clearing the current texture. Create a temporary texture to overcome this. At the end of RenderTexture::begin(), switch the attached texture to the second one, call glClear, and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
      */
-    if (Configuration::sharedConfiguration()->checkForGLExtension("GL_QCOM"))
+    if (Configuration::getInstance()->checkForGLExtension("GL_QCOM"))
     {
         // -- bind a temporary texture so we can clear the render buffer without losing our texture
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _textureCopy->getName(), 0);
@@ -461,7 +461,7 @@ void RenderTexture::beginWithClear(float r, float g, float b, float a, float dep
 
 void RenderTexture::end()
 {
-    Director *director = Director::sharedDirector();
+    Director *director = Director::getInstance();
     
     glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 
@@ -628,7 +628,7 @@ bool RenderTexture::saveToFile(const char *fileName, tImageFormat format)
     Image *pImage = newImage(true);
     if (pImage)
     {
-        std::string fullpath = FileUtils::sharedFileUtils()->getWritablePath() + fileName;
+        std::string fullpath = FileUtils::getInstance()->getWritablePath() + fileName;
         
         bRet = pImage->saveToFile(fullpath.c_str(), true);
     }

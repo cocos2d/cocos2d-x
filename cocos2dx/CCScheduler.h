@@ -52,36 +52,35 @@ class Set;
 class CC_DLL Timer : public Object
 {
 public:
+    /** Allocates a timer with a target and a selector. */
+    static Timer* create(Object *target, SEL_SCHEDULE selector);
+    /** Allocates a timer with a target, a selector and an interval in seconds. */
+    static Timer* create(Object *target, SEL_SCHEDULE selector, float seconds);
+    /** Allocates a timer with a script callback function and an interval in seconds. */
+    static Timer* createWithScriptHandler(int nHandler, float seconds);
+
+    CC_DEPRECATED_ATTRIBUTE static Timer* timerWithTarget(Object *target, SEL_SCHEDULE selector) { return Timer::create(target, selector); }
+    CC_DEPRECATED_ATTRIBUTE static Timer* timerWithTarget(Object *target, SEL_SCHEDULE selector, float seconds) { return Timer::create(target, selector, seconds); }
+    CC_DEPRECATED_ATTRIBUTE static Timer* timerWithScriptHandler(int nHandler, float seconds) { return Timer::createWithScriptHandler(nHandler, seconds); }
+
     Timer(void);
-    
+
+    /** Initializes a timer with a target and a selector. */
+    bool initWithTarget(Object *target, SEL_SCHEDULE selector);
+    /** Initializes a timer with a target, a selector and an interval in seconds, repeat in number of times to repeat, delay in seconds. */
+    bool initWithTarget(Object *target, SEL_SCHEDULE selector, float seconds, unsigned int nRepeat, float fDelay);
+    /** Initializes a timer with a script callback function and an interval in seconds. */
+    bool initWithScriptHandler(int nHandler, float seconds);
+
     /** get interval in seconds */
-    float getInterval(void) const;
+    float getInterval() const;
     /** set interval in seconds */
-    void setInterval(float fInterval);
+    void setInterval(float interval);
     
     SEL_SCHEDULE getSelector() const;
-    
-    /** Initializes a timer with a target and a selector. */
-    bool initWithTarget(Object *pTarget, SEL_SCHEDULE pfnSelector);
-    
-    /** Initializes a timer with a target, a selector and an interval in seconds, repeat in number of times to repeat, delay in seconds. */
-    bool initWithTarget(Object *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds, unsigned int nRepeat, float fDelay);
-    
-    /** Initializes a timer with a script callback function and an interval in seconds. */
-    bool initWithScriptHandler(int nHandler, float fSeconds);
-    
+
     /** triggers the timer */
     void update(float dt);
-    
-public:
-    /** Allocates a timer with a target and a selector. */
-    static Timer* timerWithTarget(Object *pTarget, SEL_SCHEDULE pfnSelector);
-    
-    /** Allocates a timer with a target, a selector and an interval in seconds. */
-    static Timer* timerWithTarget(Object *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds);
-    
-    /** Allocates a timer with a script callback function and an interval in seconds. */
-    static Timer* timerWithScriptHandler(int nHandler, float fSeconds);
     
     inline int getScriptHandler() const { return _scriptHandler; };
 
@@ -149,38 +148,38 @@ public:
 
      @since v0.99.3, repeat and delay added in v1.1
      */
-    void scheduleSelector(SEL_SCHEDULE pfnSelector, Object *pTarget, float fInterval, unsigned int repeat, float delay, bool bPaused);
+    void scheduleSelector(SEL_SCHEDULE selector, Object *target, float fInterval, unsigned int repeat, float delay, bool bPaused);
 
     /** calls scheduleSelector with kRepeatForever and a 0 delay */
-    void scheduleSelector(SEL_SCHEDULE pfnSelector, Object *pTarget, float fInterval, bool bPaused);
+    void scheduleSelector(SEL_SCHEDULE selector, Object *target, float fInterval, bool bPaused);
     /** Schedules the 'update' selector for a given target with a given priority.
      The 'update' selector will be called every frame.
      The lower the priority, the earlier it is called.
      @since v0.99.3
      */
-    void scheduleUpdateForTarget(Object *pTarget, int nPriority, bool bPaused);
+    void scheduleUpdateForTarget(Object *target, int nPriority, bool bPaused);
     
     /** Checks whether a selector for a given taget is scheduled.
      @since v3.0.0
      */
-    bool isScheduledForTarget(SEL_SCHEDULE pfnSelector, Object *pTarget);
+    bool isScheduledForTarget(SEL_SCHEDULE selector, Object *target);
 
     /** Unschedule a selector for a given target.
      If you want to unschedule the "update", use unscheudleUpdateForTarget.
      @since v0.99.3
      */
-    void unscheduleSelector(SEL_SCHEDULE pfnSelector, Object *pTarget);
+    void unscheduleSelector(SEL_SCHEDULE selector, Object *target);
 
     /** Unschedules the update selector for a given target
      @since v0.99.3
      */
-    void unscheduleUpdateForTarget(const Object *pTarget);
+    void unscheduleUpdateForTarget(const Object *target);
 
     /** Unschedules all selectors for a given target.
      This also includes the "update" selector.
      @since v0.99.3
      */
-    void unscheduleAllForTarget(Object *pTarget);
+    void unscheduleAllForTarget(Object *target);
 
     /** Unschedules all selectors from all targets.
      You should NEVER call this method, unless you know what you are doing.
@@ -210,19 +209,19 @@ public:
      If the target is not present, nothing happens.
      @since v0.99.3
      */
-    void pauseTarget(Object *pTarget);
+    void pauseTarget(Object *target);
 
     /** Resumes the target.
      The 'target' will be unpaused, so all schedule selectors/update will be 'ticked' again.
      If the target is not present, nothing happens.
      @since v0.99.3
      */
-    void resumeTarget(Object *pTarget);
+    void resumeTarget(Object *target);
 
     /** Returns whether or not the target is paused
     @since v1.0.0
     */
-    bool isTargetPaused(Object *pTarget);
+    bool isTargetPaused(Object *target);
 
     /** Pause all selectors from all targets.
       You should NEVER call this method, unless you know what you are doing.
@@ -248,8 +247,8 @@ private:
 
     // update specific
 
-    void priorityIn(struct _listEntry **ppList, Object *pTarget, int nPriority, bool bPaused);
-    void appendIn(struct _listEntry **ppList, Object *pTarget, bool bPaused);
+    void priorityIn(struct _listEntry **ppList, Object *target, int nPriority, bool bPaused);
+    void appendIn(struct _listEntry **ppList, Object *target, bool bPaused);
 
 protected:
     float _timeScale;

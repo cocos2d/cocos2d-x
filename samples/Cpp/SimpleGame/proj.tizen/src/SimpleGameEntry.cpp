@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "cocos2d.h"
 
 USING_NS_CC;
+
 using namespace Tizen::Base;
 using namespace Tizen::Base::Collection;
 
@@ -43,10 +44,10 @@ ApplicationInitialized(void)
 {
     AppDelegate* pAppDelegate = new AppDelegate;
 
-    EGLView* eglView = EGLView::sharedOpenGLView();
+    EGLView* eglView = EGLView::getInstance();
     eglView->setFrameSize(720, 1280);
 
-    Application::sharedApplication()->run();
+    Application::getInstance()->run();
 }
 
 //

@@ -67,13 +67,13 @@ cocos2d::Node* ComponentsTestLayer::createGameScene()
     Node *root = NULL;
     do 
 	{
-        Size visibleSize = Director::sharedDirector()->getVisibleSize();
-        Point origin = Director::sharedDirector()->getVisibleOrigin();
+        Size visibleSize = Director::getInstance()->getVisibleSize();
+        Point origin = Director::getInstance()->getVisibleOrigin();
 
        
-        Sprite *player = Sprite::create("components/Player.png", CCRectMake(0, 0, 27, 40) );
+        Sprite *player = Sprite::create("components/Player.png", Rect(0, 0, 27, 40) );
         
-        player->setPosition( ccp(origin.x + player->getContentSize().width/2,
+        player->setPosition( Point(origin.x + player->getContentSize().width/2,
                                  origin.y + visibleSize.height/2) );
         
         root = cocos2d::Node::create();
@@ -87,9 +87,9 @@ cocos2d::Node* ComponentsTestLayer::createGameScene()
         });
         
         itemBack->setColor(Color3B(0, 0, 0));
-        itemBack->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
+        itemBack->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
         Menu *menuBack = Menu::create(itemBack, NULL);
-        menuBack->setPosition(PointZero);
+        menuBack->setPosition(Point::ZERO);
         addChild(menuBack);
         
     }while (0);
@@ -100,5 +100,5 @@ cocos2d::Node* ComponentsTestLayer::createGameScene()
 void runComponentsTestLayerTest()
 {
     Scene *pScene = ComponentsTestLayer::scene();
-    Director::sharedDirector()->replaceScene(pScene);
+    Director::getInstance()->replaceScene(pScene);
 }

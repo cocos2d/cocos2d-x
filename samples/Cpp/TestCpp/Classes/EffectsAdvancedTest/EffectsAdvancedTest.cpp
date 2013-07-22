@@ -27,9 +27,9 @@ void Effect1::onEnter()
     //     Lens3D is Grid3D and it's size is (15,10)
     //     Waves3D is Grid3D and it's size is (15,10)
     
-    Size size = Director::sharedDirector()->getWinSize();
-    ActionInterval* lens = Lens3D::create(0.0f, CCSizeMake(15,10), ccp(size.width/2,size.height/2), 240);
-    ActionInterval* waves = Waves3D::create(10, CCSizeMake(15,10), 18, 15);
+    Size size = Director::getInstance()->getWinSize();
+    ActionInterval* lens = Lens3D::create(0.0f, Size(15,10), Point(size.width/2,size.height/2), 240);
+    ActionInterval* waves = Waves3D::create(10, Size(15,10), 18, 15);
 
     FiniteTimeAction* reuse = ReuseGrid::create(1);
     ActionInterval* delay = DelayTime::create(8);
@@ -62,9 +62,9 @@ void Effect2::onEnter()
     //     ShakyTiles is TiledGrid3D and it's size is (15,10)
     //     Shuffletiles is TiledGrid3D and it's size is (15,10)
     //       TurnOfftiles is TiledGrid3D and it's size is (15,10)
-    ActionInterval* shaky = ShakyTiles3D::create(5, CCSizeMake(15,10), 4, false);
-    ActionInterval* shuffle = ShuffleTiles::create(0, CCSizeMake(15,10), 3);
-    ActionInterval* turnoff = TurnOffTiles::create(0, CCSizeMake(15,10), 3);
+    ActionInterval* shaky = ShakyTiles3D::create(5, Size(15,10), 4, false);
+    ActionInterval* shuffle = ShuffleTiles::create(0, Size(15,10), 3);
+    ActionInterval* turnoff = TurnOffTiles::create(0, Size(15,10), 3);
     ActionInterval* turnon = turnoff->reverse();
     
     // reuse 2 times:
@@ -101,14 +101,14 @@ void Effect3::onEnter()
     Node* target1 = bg->getChildByTag(kTagSprite1);
     Node* target2 = bg->getChildByTag(kTagSprite2);    
     
-    ActionInterval* waves = Waves::create(5, CCSizeMake(15,10), 5, 20, true, false);
-    ActionInterval* shaky = Shaky3D::create(5, CCSizeMake(15,10), 4, false);
+    ActionInterval* waves = Waves::create(5, Size(15,10), 5, 20, true, false);
+    ActionInterval* shaky = Shaky3D::create(5, Size(15,10), 4, false);
     
     target1->runAction( RepeatForever::create( waves ) );
     target2->runAction( RepeatForever::create( shaky ) );
     
     // moving background. Testing issue #244
-    ActionInterval* move = MoveBy::create(3, ccp(200,0) );
+    ActionInterval* move = MoveBy::create(3, Point(200,0) );
     bg->runAction(RepeatForever::create( Sequence::create(move, move->reverse(), NULL) ));    
 }
 
@@ -132,7 +132,7 @@ public:
         _lens3D->setPosition(var);
     }
     
-    virtual const Point& getPosition()
+    virtual const Point& getPosition() const
     {
         return _lens3D->getPosition();
     }
@@ -157,8 +157,8 @@ void Effect4::onEnter()
 {
     EffectAdvanceTextLayer::onEnter();
 
-    Lens3D* lens = Lens3D::create(10, CCSizeMake(32,24), ccp(100,180), 150);
-    ActionInterval* move = JumpBy::create(5, ccp(380,0), 100, 4);
+    Lens3D* lens = Lens3D::create(10, Size(32,24), Point(100,180), 150);
+    ActionInterval* move = JumpBy::create(5, Point(380,0), 100, 4);
     ActionInterval* move_back = move->reverse();
     ActionInterval* seq = Sequence::create( move, move_back, NULL);
 
@@ -167,7 +167,7 @@ void Effect4::onEnter()
         so we make an encapsulation for Lens3D to achieve that.
     */
 
-    Director* director = Director::sharedDirector();
+    Director* director = Director::getInstance();
     Node* pTarget = Lens3DTarget::create(lens);
     // Please make sure the target been added to its parent.
     this->addChild(pTarget);
@@ -190,9 +190,9 @@ void Effect5::onEnter()
 {
     EffectAdvanceTextLayer::onEnter();
 
-    //CCDirector::sharedDirector()->setProjection(DirectorProjection2D);
+    //CCDirector::getInstance()->setProjection(DirectorProjection2D);
     
-    ActionInterval* effect = Liquid::create(2, CCSizeMake(32,24), 1, 20);    
+    ActionInterval* effect = Liquid::create(2, Size(32,24), 1, 20);    
 
     ActionInterval* stopEffect = Sequence::create(
                                          effect,
@@ -215,7 +215,7 @@ void Effect5::onExit()
 {
     EffectAdvanceTextLayer::onExit();
 
-    Director::sharedDirector()->setProjection(kDirectorProjection3D);
+    Director::getInstance()->setProjection(kDirectorProjection3D);
 }
 
 //------------------------------------------------------------------
@@ -227,7 +227,7 @@ void Issue631::onEnter()
 {
     EffectAdvanceTextLayer::onEnter();
         
-    ActionInterval* effect = Sequence::create( DelayTime::create(2.0f), Shaky3D::create(5.0f, CCSizeMake(5, 5), 16, false), NULL);
+    ActionInterval* effect = Sequence::create( DelayTime::create(2.0f), Shaky3D::create(5.0f, Size(5, 5), 16, false), NULL);
 
     // cleanup
     Node* bg = getChildByTag(kTagBackground);
@@ -237,7 +237,7 @@ void Issue631::onEnter()
     LayerColor* layer = LayerColor::create( Color4B(255,0,0,255) );
     addChild(layer, -10);
     Sprite* sprite = Sprite::create("Images/grossini.png");
-    sprite->setPosition( ccp(50,80) );
+    sprite->setPosition( Point(50,80) );
     layer->addChild(sprite, 10);
     
     // foreground
@@ -341,14 +341,14 @@ void EffectAdvanceTextLayer::onEnter(void)
     
     Sprite* grossini = Sprite::create("Images/grossinis_sister2.png");
     bg->addChild(grossini, 1, kTagSprite1);
-    grossini->setPosition( ccp(VisibleRect::left().x+VisibleRect::getVisibleRect().size.width/3.0f, VisibleRect::bottom().y+ 200) );
+    grossini->setPosition( Point(VisibleRect::left().x+VisibleRect::getVisibleRect().size.width/3.0f, VisibleRect::bottom().y+ 200) );
     ActionInterval* sc = ScaleBy::create(2, 5);
     ActionInterval* sc_back = sc->reverse();
     grossini->runAction( RepeatForever::create(Sequence::create(sc, sc_back, NULL) ) );
 
     Sprite* tamara = Sprite::create("Images/grossinis_sister1.png");
     bg->addChild(tamara, 1, kTagSprite2);
-    tamara->setPosition( ccp(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3.0f,VisibleRect::bottom().y+200) );
+    tamara->setPosition( Point(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3.0f,VisibleRect::bottom().y+200) );
     ActionInterval* sc2 = ScaleBy::create(2, 5);
     ActionInterval* sc2_back = sc2->reverse();
     tamara->runAction( RepeatForever::create(Sequence::create(sc2, sc2_back, NULL) ) );    
@@ -373,7 +373,7 @@ void EffectAdvanceTextLayer::restartCallback(Object* pSender)
     Scene* s = new EffectAdvanceScene();
     s->addChild(restartEffectAdvanceAction()); 
 
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 }
 
@@ -381,7 +381,7 @@ void EffectAdvanceTextLayer::nextCallback(Object* pSender)
 {
     Scene* s = new EffectAdvanceScene();
     s->addChild( nextEffectAdvanceAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
 
     s->release();
 }
@@ -390,7 +390,7 @@ void EffectAdvanceTextLayer::backCallback(Object* pSender)
 {
     Scene* s = new EffectAdvanceScene();
     s->addChild( backEffectAdvanceAction() );
-    Director::sharedDirector()->replaceScene(s);
+    Director::getInstance()->replaceScene(s);
     s->release();
 } 
 
@@ -399,5 +399,5 @@ void EffectAdvanceScene::runThisTest()
     Layer* pLayer = nextEffectAdvanceAction();
 
     addChild(pLayer);
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }
