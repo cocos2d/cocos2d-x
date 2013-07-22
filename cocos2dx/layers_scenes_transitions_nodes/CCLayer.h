@@ -150,8 +150,8 @@ private:
     int _touchPriority;
     ccTouchesMode _touchMode;
     
-    int  excuteScriptTouchHandler(int nEventType, Touch *pTouch);
-    int  excuteScriptTouchHandler(int nEventType, Set *pTouches);
+    int executeScriptTouchHandler(int eventType, Touch* touch);
+    int executeScriptTouchesHandler(int eventType, Set* touches);
 };
 
 #ifdef __apple__
