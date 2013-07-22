@@ -293,7 +293,7 @@ void Control::setEnabled(bool bEnabled)
     this->needsLayout();
 }
 
-bool Control::isEnabled()
+bool Control::isEnabled() const
 {
     return _enabled;
 }
@@ -304,7 +304,7 @@ void Control::setSelected(bool bSelected)
     this->needsLayout();
 }
 
-bool Control::isSelected()
+bool Control::isSelected() const
 {
     return _selected;
 }
@@ -315,15 +315,15 @@ void Control::setHighlighted(bool bHighlighted)
     this->needsLayout();
 }
 
-bool Control::isHighlighted()
+bool Control::isHighlighted() const
 {
     return _highlighted;
 }
 
-bool Control::hasVisibleParents()
+bool Control::hasVisibleParents() const
 {
-    Node* pParent = this->getParent();
-    for( Node *c = pParent; c != NULL; c = c->getParent() )
+    auto parent = this->getParent();
+    for( auto c = parent; c != NULL; c = c->getParent() )
     {
         if( !c->isVisible() )
         {

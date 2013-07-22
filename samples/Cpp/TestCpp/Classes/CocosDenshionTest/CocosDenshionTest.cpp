@@ -230,12 +230,12 @@ _sliderMusicVolume(NULL)
     setTouchEnabled(true);
 
     // preload background music and effect
-    SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic( MUSIC_FILE );
-    SimpleAudioEngine::sharedEngine()->preloadEffect( EFFECT_FILE );
+    SimpleAudioEngine::getInstance()->preloadBackgroundMusic( MUSIC_FILE );
+    SimpleAudioEngine::getInstance()->preloadEffect( EFFECT_FILE );
 
     // set default volume
-    SimpleAudioEngine::sharedEngine()->setEffectsVolume(0.5);
-    SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0.5);
+    SimpleAudioEngine::getInstance()->setEffectsVolume(0.5);
+    SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.5);
 }
 
 CocosDenshionTest::~CocosDenshionTest()
@@ -246,7 +246,7 @@ void CocosDenshionTest::onExit()
 {
     Layer::onExit();
 
-    SimpleAudioEngine::sharedEngine()->end();
+    SimpleAudioEngine::getInstance()->end();
 }
 
 void CocosDenshionTest::addButtons()
@@ -256,37 +256,37 @@ void CocosDenshionTest::addButtons()
 
     Button *btnPlay = Button::createWithText("play");
     btnPlay->onTriggered([]() {
-        SimpleAudioEngine::sharedEngine()->playBackgroundMusic(MUSIC_FILE, true);
+        SimpleAudioEngine::getInstance()->playBackgroundMusic(MUSIC_FILE, true);
     });
     addChildAt(btnPlay, 0.1, 0.75);
 
     Button *btnStop = Button::createWithText("stop");
     btnStop->onTriggered([]() {
-        SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+        SimpleAudioEngine::getInstance()->stopBackgroundMusic();
     });
     addChildAt(btnStop, 0.25, 0.75);
 
     Button *btnRewindMusic = Button::createWithText("rewind");
     btnRewindMusic->onTriggered([]() {
-        SimpleAudioEngine::sharedEngine()->rewindBackgroundMusic();
+        SimpleAudioEngine::getInstance()->rewindBackgroundMusic();
     });
     addChildAt(btnRewindMusic, 0.4, 0.75);
 
     Button *btnPause = Button::createWithText("pause");
     btnPause->onTriggered([]() {
-        SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+        SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
     });
     addChildAt(btnPause, 0.1, 0.65);
 
     Button *btnResumeMusic = Button::createWithText("resume");
     btnResumeMusic->onTriggered([]() {
-        SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+        SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
     });
     addChildAt(btnResumeMusic, 0.25, 0.65);
 
     Button *btnIsPlayingMusic = Button::createWithText("is playing");
     btnIsPlayingMusic->onTriggered([]() {
-        if (SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying())
+        if (SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying())
             CCLOG("background music is playing");
         else
             CCLOG("background music is not playing");
@@ -301,7 +301,7 @@ void CocosDenshionTest::addButtons()
         const float pitch = _sliderPitch->getValue();
         const float pan = _sliderPan->getValue();
         const float gain = _sliderGain->getValue();
-        _soundId = SimpleAudioEngine::sharedEngine()->playEffect(EFFECT_FILE, false, pitch, pan, gain);
+        _soundId = SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE, false, pitch, pan, gain);
     });
     addChildAt(btnPlayEffect, 0.6, 0.8);
 
@@ -310,49 +310,49 @@ void CocosDenshionTest::addButtons()
         const float pitch = _sliderPitch->getValue();
         const float pan = _sliderPan->getValue();
         const float gain = _sliderGain->getValue();
-        _soundId = SimpleAudioEngine::sharedEngine()->playEffect(EFFECT_FILE, true, pitch, pan, gain);
+        _soundId = SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE, true, pitch, pan, gain);
     });
     addChildAt(btnPlayEffectInLoop, 0.75, 0.8);
 
     Button *btnStopEffect = Button::createWithText("stop");
     btnStopEffect->onTriggered([this]() {
-        SimpleAudioEngine::sharedEngine()->stopEffect(_soundId);
+        SimpleAudioEngine::getInstance()->stopEffect(_soundId);
     });
     addChildAt(btnStopEffect, 0.9, 0.8);
 
     Button *btnUnloadEffect = Button::createWithText("unload");
     btnUnloadEffect->onTriggered([this]() {
-        SimpleAudioEngine::sharedEngine()->unloadEffect(EFFECT_FILE);
+        SimpleAudioEngine::getInstance()->unloadEffect(EFFECT_FILE);
     });
     addChildAt(btnUnloadEffect, 0.6, 0.7);
 
     Button *btnPauseEffect = Button::createWithText("pause");
     btnPauseEffect->onTriggered([this]() {
-        SimpleAudioEngine::sharedEngine()->pauseEffect(_soundId);
+        SimpleAudioEngine::getInstance()->pauseEffect(_soundId);
     });
     addChildAt(btnPauseEffect, 0.75, 0.7);
 
     Button *btnResumeEffect = Button::createWithText("resume");
     btnResumeEffect->onTriggered([this]() {
-        SimpleAudioEngine::sharedEngine()->resumeEffect(_soundId);
+        SimpleAudioEngine::getInstance()->resumeEffect(_soundId);
     });
     addChildAt(btnResumeEffect, 0.9, 0.7);
 
     Button *btnPauseAll = Button::createWithText("pause all");
     btnPauseAll->onTriggered([this]() {
-        SimpleAudioEngine::sharedEngine()->pauseAllEffects();
+        SimpleAudioEngine::getInstance()->pauseAllEffects();
     });
     addChildAt(btnPauseAll, 0.6, 0.6);
 
     Button *btnResumeAll = Button::createWithText("resume all");
     btnResumeAll->onTriggered([this]() {
-        SimpleAudioEngine::sharedEngine()->resumeAllEffects();
+        SimpleAudioEngine::getInstance()->resumeAllEffects();
     });
     addChildAt(btnResumeAll, 0.75, 0.6);
 
     Button *btnStopAll = Button::createWithText("stop all");
     btnStopAll->onTriggered([this]() {
-        SimpleAudioEngine::sharedEngine()->stopAllEffects();
+        SimpleAudioEngine::getInstance()->stopAllEffects();
     });
     addChildAt(btnStopAll, 0.9, 0.6);
 }
@@ -402,13 +402,13 @@ void CocosDenshionTest::updateVolumes(float)
     const float musicVolume = _sliderMusicVolume->getValue();
     if (fabs(musicVolume - _musicVolume) > 0.001) {
         _musicVolume = musicVolume;
-        SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(_musicVolume);
+        SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(_musicVolume);
     }
 
     const float effectsVolume = _sliderEffectsVolume->getValue();
     if (fabs(effectsVolume - _effectsVolume) > 0.001) {
         _effectsVolume = effectsVolume;
-        SimpleAudioEngine::sharedEngine()->setEffectsVolume(_effectsVolume);
+        SimpleAudioEngine::getInstance()->setEffectsVolume(_effectsVolume);
     }
 }
 

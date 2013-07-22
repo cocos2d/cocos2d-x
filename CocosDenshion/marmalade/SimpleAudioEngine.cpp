@@ -63,7 +63,7 @@ namespace CocosDenshion
 	{
 	}
 
-	SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
+	SimpleAudioEngine* SimpleAudioEngine::getInstance()
 	{
 		if (! s_pEngine) {
 			s_pEngine = new SimpleAudioEngine();
