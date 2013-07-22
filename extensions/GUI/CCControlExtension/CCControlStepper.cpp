@@ -71,8 +71,8 @@ bool ControlStepper::initWithMinusSpriteAndPlusSprite(Sprite *minusSprite, Sprit
 {
     if (Control::init())
     {
-        CCAssert(minusSprite,   "Minus sprite must be not nil");
-        CCAssert(plusSprite,    "Plus sprite must be not nil");
+        CCASSERT(minusSprite,   "Minus sprite must be not nil");
+        CCASSERT(plusSprite,    "Plus sprite must be not nil");
         
         setTouchEnabled(true);
 
@@ -148,7 +148,7 @@ void ControlStepper::setMinimumValue(double minimumValue)
 {
     if (minimumValue >= _maximumValue)
     {
-        CCAssert(0, "Must be numerically less than maximumValue.");
+        CCASSERT(0, "Must be numerically less than maximumValue.");
     }
     
     _minimumValue   = minimumValue;
@@ -159,7 +159,7 @@ void ControlStepper::setMaximumValue(double maximumValue)
 {
     if (maximumValue <= _minimumValue)
     {
-        CCAssert(0, "Must be numerically greater than minimumValue.");
+        CCASSERT(0, "Must be numerically greater than minimumValue.");
     }
     
     _maximumValue   = maximumValue;
@@ -180,7 +180,7 @@ void ControlStepper::setStepValue(double stepValue)
 {
     if (stepValue <= 0)
     {
-        CCAssert(0,"Must be numerically greater than 0.");
+        CCASSERT(0,"Must be numerically greater than 0.");
     }
 
     _stepValue  = stepValue;

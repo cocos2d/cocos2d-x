@@ -34,10 +34,10 @@ THE SOFTWARE.
 #include "platform/CCCommon.h"
 #include "CCStdC.h"
 
-#ifndef CCAssert
+#ifndef CCASSERT
 #if COCOS2D_DEBUG > 0
 extern bool CC_DLL cc_assert_script_compatible(const char *msg);
-#define CCAssert(cond, msg) do {                              \
+#define CCASSERT(cond, msg) do {                              \
       if (!(cond)) {                                          \
         if (!cc_assert_script_compatible(msg) && strlen(msg)) \
           cocos2d::CCLog("Assert failed: %s", msg);           \
@@ -45,9 +45,11 @@ extern bool CC_DLL cc_assert_script_compatible(const char *msg);
       } \
     } while (0)
 #else
-#define CCAssert(cond, msg)
+#define CCASSERT(cond, msg)
 #endif
-#endif  // CCAssert
+// XXX: Backward compatible
+#define CCAssert CCASSERT
+#endif  // CCASSERT
 
 #include "ccConfig.h"
 
@@ -96,7 +98,7 @@ default gl blend src function. Compatible with premultiplied alpha images.
 #define CC_NODE_DRAW_SETUP() \
 do { \
     ccGLEnable(_GLServerState); \
-    CCAssert(getShaderProgram(), "No shader program set for this node"); \
+    CCASSERT(getShaderProgram(), "No shader program set for this node"); \
     { \
         getShaderProgram()->use(); \
         getShaderProgram()->setUniformsForBuiltins(); \

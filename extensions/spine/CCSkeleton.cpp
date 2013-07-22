@@ -86,7 +86,7 @@ CCSkeleton::CCSkeleton (const char* skeletonDataFile, Atlas* atlas, float scale)
 	SkeletonJson* json = SkeletonJson_create(atlas);
 	json->scale = scale;
 	SkeletonData* skeletonData = SkeletonJson_readSkeletonDataFile(json, skeletonDataFile);
-	CCAssert(skeletonData, json->error ? json->error : "Error reading skeleton data.");
+	CCASSERT(skeletonData, json->error ? json->error : "Error reading skeleton data.");
 	SkeletonJson_dispose(json);
 
 	setSkeletonData(skeletonData, true);
@@ -96,12 +96,12 @@ CCSkeleton::CCSkeleton (const char* skeletonDataFile, const char* atlasFile, flo
 	initialize();
 
 	atlas = Atlas_readAtlasFile(atlasFile);
-	CCAssert(atlas, "Error reading atlas file.");
+	CCASSERT(atlas, "Error reading atlas file.");
 
 	SkeletonJson* json = SkeletonJson_create(atlas);
 	json->scale = scale;
 	SkeletonData* skeletonData = SkeletonJson_readSkeletonDataFile(json, skeletonDataFile);
-	CCAssert(skeletonData, json->error ? json->error : "Error reading skeleton data file.");
+	CCASSERT(skeletonData, json->error ? json->error : "Error reading skeleton data file.");
 	SkeletonJson_dispose(json);
 
 	setSkeletonData(skeletonData, true);

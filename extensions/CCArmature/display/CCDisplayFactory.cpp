@@ -79,7 +79,7 @@ void DisplayFactory::updateDisplay(Bone *bone, DecorativeDisplay *decoDisplay, f
         ColliderDetector *detector = decoDisplay->getColliderDetector();
         if (detector)
         {
-            AffineTransform t = AffineTransformConcat(bone->nodeToArmatureTransform(), bone->getArmature()->nodeToWorldTransform());
+            AffineTransform t = AffineTransformConcat(bone->nodeToArmatureTransform(), bone->getArmature()->getNodeToWorldTransform());
             detector->updateTransform(t);
         }
     }

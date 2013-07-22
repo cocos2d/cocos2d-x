@@ -59,7 +59,7 @@ void GridAction::startWithTarget(Node *target)
         }
         else
         {
-            CCAssert(0, "");
+            CCASSERT(0, "");
         }
     }
     else
@@ -83,7 +83,7 @@ GridAction* GridAction::reverse() const
 GridBase* GridAction::getGrid(void)
 {
     // Abstract class needs implementation
-    CCAssert(0, "");
+    CCASSERT(0, "");
 
     return NULL;
 }

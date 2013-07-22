@@ -1337,7 +1337,7 @@ JSBool jsval_to_ccarray(JSContext* cx, jsval v, Array** ret) {
                 }
             }
             else {
-                CCAssert(false, "not supported type");
+                CCASSERT(false, "not supported type");
             }
         }
     }
@@ -1385,7 +1385,7 @@ jsval ccarray_to_jsval(JSContext* cx, Array *arr)
             }  else if ((boolVal = dynamic_cast<Bool*>(obj))) {
                 arrElement = BOOLEAN_TO_JSVAL(boolVal->getValue() ? JS_TRUE : JS_FALSE);
             } else {
-                CCAssert(false, "the type isn't suppored.");
+                CCASSERT(false, "the type isn't suppored.");
             }
         }
         if(!JS_SetElement(cx, jsretArr, i, &arrElement)) {
@@ -1433,7 +1433,7 @@ jsval ccdictionary_to_jsval(JSContext* cx, Dictionary* dict)
             } else if ((boolVal = dynamic_cast<Bool*>(obj))) {
                 dictElement = BOOLEAN_TO_JSVAL(boolVal->getValue() ? JS_TRUE : JS_FALSE);
             } else {
-                CCAssert(false, "the type isn't suppored.");
+                CCASSERT(false, "the type isn't suppored.");
             }
         }
         const char* key = pElement->getStrKey();
@@ -1536,7 +1536,7 @@ JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, Dictionary** ret) {
             }
         }
         else {
-            CCAssert(false, "not supported type");
+            CCASSERT(false, "not supported type");
         }
     }
 
