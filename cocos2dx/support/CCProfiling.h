@@ -55,7 +55,11 @@ public:
     bool init(void);
 
 public:
-    static Profiler* sharedProfiler(void);
+    /** returns the singleton */
+    static Profiler* getInstance(void);
+
+    CC_DEPRECATED_ATTRIBUTE static Profiler* sharedProfiler(void);
+
     /** Creates and adds a new timer */
     ProfilingTimer* createAndAddTimerWithName(const char* timerName);
     /** releases a timer */

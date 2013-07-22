@@ -32,7 +32,7 @@ NS_CC_BEGIN
 //implementation TMXObjectGroup
 
 TMXObjectGroup::TMXObjectGroup()
-    :_positionOffset(PointZero)
+    :_positionOffset(Point::ZERO)
     ,_groupName("")        
 {
     _objects = Array::create();

@@ -5,17 +5,6 @@
 #include "Box2D/Box2D.h"
 #include "../testBasic.h"
 
-class PhysicsSprite : public Sprite
-{
-public:
-    PhysicsSprite();
-    void setPhysicsBody(b2Body * body);
-    virtual bool isDirty(void);
-    virtual AffineTransform nodeToParentTransform(void);
-private:
-    b2Body* _body;    // strong ref
-};
-
 class Box2DTestLayer : public Layer
 {
     Texture2D* _spriteTexture;    // weak ref

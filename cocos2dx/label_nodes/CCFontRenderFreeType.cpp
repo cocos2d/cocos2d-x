@@ -26,7 +26,7 @@
 #include "CCTextImage.h"
 #include "CCFontRenderFreeType.h"
 
-#include "ft2build.h"
+#include <ft2build.h>
 #include FT_FREETYPE_H
 
 #ifdef _DEBUG_FONTS_

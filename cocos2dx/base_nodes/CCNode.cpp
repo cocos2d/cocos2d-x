@@ -26,7 +26,6 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "cocoa/CCString.h"
 #include "CCNode.h"
-#include "support/CCPointExtension.h"
 #include "support/TransformUtils.h"
 #include "CCCamera.h"
 #include "effects/CCGrid.h"
@@ -58,12 +57,12 @@ Node::Node(void)
 , _scaleX(1.0f)
 , _scaleY(1.0f)
 , _vertexZ(0.0f)
-, _position(PointZero)
+, _position(Point::ZERO)
 , _skewX(0.0f)
 , _skewY(0.0f)
-, _anchorPointInPoints(PointZero)
-, _anchorPoint(PointZero)
-, _contentSize(SizeZero)
+, _anchorPointInPoints(Point::ZERO)
+, _anchorPoint(Point::ZERO)
+, _contentSize(Size::ZERO)
 , _additionalTransform(AffineTransformMakeIdentity())
 , _camera(NULL)
 // children (lazy allocs)
@@ -88,12 +87,11 @@ Node::Node(void)
 , _ignoreAnchorPointForPosition(false)
 , _reorderChildDirty(false)
 , _isTransitionFinished(false)
-, _scriptHandler(0)
 , _updateScriptHandler(0)
 , _componentContainer(NULL)
 {
     // set default scheduler and actionManager
-    Director *director = Director::sharedDirector();
+    Director *director = Director::getInstance();
     _actionManager = director->getActionManager();
     _actionManager->retain();
     _scheduler = director->getScheduler();
@@ -104,11 +102,10 @@ Node::Node(void)
     _componentContainer = new ComponentContainer(this);
 }
 
-Node::~Node(void)
+Node::~Node()
 {
     CCLOGINFO( "cocos2d: deallocing: %p", this );
     
-    unregisterScriptHandler();
     if (_updateScriptHandler)
     {
         ScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(_updateScriptHandler);
@@ -305,36 +302,30 @@ void Node::getPosition(float* x, float* y) const
 
 void Node::setPosition(float x, float y)
 {
-    setPosition(ccp(x, y));
+    setPosition(Point(x, y));
 }
 
-float Node::getPositionX(void) const
+float Node::getPositionX() const
 {
     return _position.x;
 }
 
-float Node::getPositionY(void) const
+float Node::getPositionY() const
 {
     return  _position.y;
 }
 
 void Node::setPositionX(float x)
 {
-    setPosition(ccp(x, _position.y));
+    setPosition(Point(x, _position.y));
 }
 
 void Node::setPositionY(float y)
 {
-    setPosition(ccp(_position.x, y));
+    setPosition(Point(_position.x, y));
 }
 
-/// children getter
-Array* Node::getChildren()
-{
-    return _children;
-}
-
-unsigned int Node::getChildrenCount(void) const
+unsigned int Node::getChildrenCount() const
 {
     return _children ? _children->count() : 0;
 }
@@ -348,13 +339,6 @@ Camera* Node::getCamera()
     }
     
     return _camera;
-}
-
-
-/// grid getter
-GridBase* Node::getGrid()
-{
-    return _grid;
 }
 
 /// grid setter
@@ -394,7 +378,7 @@ void Node::setAnchorPoint(const Point& point)
     if( ! point.equals(_anchorPoint))
     {
         _anchorPoint = point;
-        _anchorPointInPoints = ccp(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y );
+        _anchorPointInPoints = Point(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y );
         _transformDirty = _inverseDirty = true;
     }
 }
@@ -411,7 +395,7 @@ void Node::setContentSize(const Size & size)
     {
         _contentSize = size;
 
-        _anchorPointInPoints = ccp(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y );
+        _anchorPointInPoints = Point(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y );
         _transformDirty = _inverseDirty = true;
     }
 }
@@ -422,11 +406,6 @@ bool Node::isRunning() const
     return _running;
 }
 
-/// parent getter
-Node * Node::getParent()
-{
-    return _parent;
-}
 /// parent setter
 void Node::setParent(Node * var)
 {
@@ -460,12 +439,6 @@ void Node::setTag(int var)
     _tag = var;
 }
 
-/// userData getter
-void * Node::getUserData()
-{
-    return _userData;
-}
-
 /// userData setter
 void Node::setUserData(void *var)
 {
@@ -480,16 +453,6 @@ unsigned int Node::getOrderOfArrival() const
 void Node::setOrderOfArrival(unsigned int uOrderOfArrival)
 {
     _orderOfArrival = uOrderOfArrival;
-}
-
-GLProgram* Node::getShaderProgram()
-{
-    return _shaderProgram;
-}
-
-Object* Node::getUserObject()
-{
-    return _userObject;
 }
 
 ccGLServerState Node::getGLServerState() const
@@ -516,10 +479,10 @@ void Node::setShaderProgram(GLProgram *pShaderProgram)
     _shaderProgram = pShaderProgram;
 }
 
-Rect Node::boundingBox()
+Rect Node::getBoundingBox() const
 {
-    Rect rect = CCRectMake(0, 0, _contentSize.width, _contentSize.height);
-    return RectApplyAffineTransform(rect, nodeToParentTransform());
+    Rect rect = Rect(0, 0, _contentSize.width, _contentSize.height);
+    return RectApplyAffineTransform(rect, getNodeToParentTransform());
 }
 
 Node * Node::create(void)
@@ -644,16 +607,11 @@ void Node::removeFromParentAndCleanup(bool cleanup)
     } 
 }
 
-void Node::removeChild(Node* child)
-{
-    this->removeChild(child, true);
-}
-
 /* "remove" logic MUST only be on this method
 * If a class want's to extend the 'removeChild' behavior it only needs
 * to override this method
 */
-void Node::removeChild(Node* child, bool cleanup)
+void Node::removeChild(Node* child, bool cleanup /* = true */)
 {
     // explicit nil handling
     if (_children == NULL)
@@ -667,12 +625,7 @@ void Node::removeChild(Node* child, bool cleanup)
     }
 }
 
-void Node::removeChildByTag(int tag)
-{
-    this->removeChildByTag(tag, true);
-}
-
-void Node::removeChildByTag(int tag, bool cleanup)
+void Node::removeChildByTag(int tag, bool cleanup/* = true */)
 {
     CCAssert( tag != kNodeTagInvalid, "Invalid tag");
 
@@ -885,7 +838,7 @@ void Node::transform()
     kmMat4 transfrom4x4;
 
     // Convert 3x3 into 4x4 matrix
-    AffineTransform tmpAffine = this->nodeToParentTransform();
+    AffineTransform tmpAffine = this->getNodeToParentTransform();
     CGAffineToGL(&tmpAffine, transfrom4x4.mat);
 
     // Update Z vertex manually
@@ -988,23 +941,6 @@ void Node::onExit()
     arrayMakeObjectsPerformSelector(_children, onExit, Node*);    
 }
 
-void Node::registerScriptHandler(int nHandler)
-{
-    unregisterScriptHandler();
-    _scriptHandler = nHandler;
-    LUALOG("[LUA] Add Node event handler: %d", _scriptHandler);
-}
-
-void Node::unregisterScriptHandler(void)
-{
-    if (_scriptHandler)
-    {
-        ScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(_scriptHandler);
-        LUALOG("[LUA] Remove Node event handler: %d", _scriptHandler);
-        _scriptHandler = 0;
-    }
-}
-
 void Node::setActionManager(ActionManager* actionManager)
 {
     if( actionManager != _actionManager ) {
@@ -1013,11 +949,6 @@ void Node::setActionManager(ActionManager* actionManager)
         CC_SAFE_RELEASE(_actionManager);
         _actionManager = actionManager;
     }
-}
-
-ActionManager* Node::getActionManager()
-{
-    return _actionManager;
 }
 
 Action * Node::runAction(Action* action)
@@ -1049,9 +980,9 @@ Action * Node::getActionByTag(int tag)
     return _actionManager->getActionByTag(tag, this);
 }
 
-unsigned int Node::numberOfRunningActions()
+unsigned int Node::getNumberOfRunningActions() const
 {
-    return _actionManager->numberOfRunningActionsInTarget(this);
+    return _actionManager->getNumberOfRunningActionsInTarget(this);
 }
 
 // Node - Callbacks
@@ -1064,11 +995,6 @@ void Node::setScheduler(Scheduler* scheduler)
         CC_SAFE_RELEASE(_scheduler);
         _scheduler = scheduler;
     }
-}
-
-Scheduler* Node::getScheduler()
-{
-    return _scheduler;
 }
 
 bool Node::isScheduled(SEL_SCHEDULE selector)
@@ -1169,7 +1095,7 @@ void Node::update(float fDelta)
     }
 }
 
-AffineTransform Node::nodeToParentTransform(void)
+AffineTransform Node::getNodeToParentTransform() const
 {
     if (_transformDirty) 
     {
@@ -1204,7 +1130,7 @@ AffineTransform Node::nodeToParentTransform(void)
         // optimization:
         // inline anchor point calculation if skew is not needed
         // Adjusted transform calculation for rotational skew
-        if (! needsSkewMatrix && !_anchorPointInPoints.equals(PointZero))
+        if (! needsSkewMatrix && !_anchorPointInPoints.equals(Point::ZERO))
         {
             x += cy * -_anchorPointInPoints.x * _scaleX + -sx * -_anchorPointInPoints.y * _scaleY;
             y += sy * -_anchorPointInPoints.x * _scaleX +  cx * -_anchorPointInPoints.y * _scaleY;
@@ -1227,7 +1153,7 @@ AffineTransform Node::nodeToParentTransform(void)
             _transform = AffineTransformConcat(skewMatrix, _transform);
 
             // adjust anchor point
-            if (!_anchorPointInPoints.equals(PointZero))
+            if (!_anchorPointInPoints.equals(Point::ZERO))
             {
                 _transform = AffineTransformTranslate(_transform, -_anchorPointInPoints.x, -_anchorPointInPoints.y);
             }
@@ -1252,68 +1178,68 @@ void Node::setAdditionalTransform(const AffineTransform& additionalTransform)
     _additionalTransformDirty = true;
 }
 
-AffineTransform Node::parentToNodeTransform(void)
+AffineTransform Node::getParentToNodeTransform() const
 {
     if ( _inverseDirty ) {
-        _inverse = AffineTransformInvert(this->nodeToParentTransform());
+        _inverse = AffineTransformInvert(this->getNodeToParentTransform());
         _inverseDirty = false;
     }
 
     return _inverse;
 }
 
-AffineTransform Node::nodeToWorldTransform()
+AffineTransform Node::getNodeToWorldTransform() const
 {
-    AffineTransform t = this->nodeToParentTransform();
+    AffineTransform t = this->getNodeToParentTransform();
 
     for (Node *p = _parent; p != NULL; p = p->getParent())
-        t = AffineTransformConcat(t, p->nodeToParentTransform());
+        t = AffineTransformConcat(t, p->getNodeToParentTransform());
 
     return t;
 }
 
-AffineTransform Node::worldToNodeTransform(void)
+AffineTransform Node::getWorldToNodeTransform() const
 {
-    return AffineTransformInvert(this->nodeToWorldTransform());
+    return AffineTransformInvert(this->getNodeToWorldTransform());
 }
 
-Point Node::convertToNodeSpace(const Point& worldPoint)
+Point Node::convertToNodeSpace(const Point& worldPoint) const
 {
-    Point ret = PointApplyAffineTransform(worldPoint, worldToNodeTransform());
+    Point ret = PointApplyAffineTransform(worldPoint, getWorldToNodeTransform());
     return ret;
 }
 
-Point Node::convertToWorldSpace(const Point& nodePoint)
+Point Node::convertToWorldSpace(const Point& nodePoint) const
 {
-    Point ret = PointApplyAffineTransform(nodePoint, nodeToWorldTransform());
+    Point ret = PointApplyAffineTransform(nodePoint, getNodeToWorldTransform());
     return ret;
 }
 
-Point Node::convertToNodeSpaceAR(const Point& worldPoint)
+Point Node::convertToNodeSpaceAR(const Point& worldPoint) const
 {
     Point nodePoint = convertToNodeSpace(worldPoint);
-    return ccpSub(nodePoint, _anchorPointInPoints);
+    return nodePoint - _anchorPointInPoints;
 }
 
-Point Node::convertToWorldSpaceAR(const Point& nodePoint)
+Point Node::convertToWorldSpaceAR(const Point& nodePoint) const
 {
-    Point pt = ccpAdd(nodePoint, _anchorPointInPoints);
+    Point pt = nodePoint + _anchorPointInPoints;
     return convertToWorldSpace(pt);
 }
 
-Point Node::convertToWindowSpace(const Point& nodePoint)
+Point Node::convertToWindowSpace(const Point& nodePoint) const
 {
     Point worldPoint = this->convertToWorldSpace(nodePoint);
-    return Director::sharedDirector()->convertToUI(worldPoint);
+    return Director::getInstance()->convertToUI(worldPoint);
 }
 
 // convenience methods which take a Touch instead of Point
-Point Node::convertTouchToNodeSpace(Touch *touch)
+Point Node::convertTouchToNodeSpace(Touch *touch) const
 {
     Point point = touch->getLocation();
     return this->convertToNodeSpace(point);
 }
-Point Node::convertTouchToNodeSpaceAR(Touch *touch)
+Point Node::convertTouchToNodeSpaceAR(Touch *touch) const
 {
     Point point = touch->getLocation();
     return this->convertToNodeSpaceAR(point);
@@ -1325,7 +1251,7 @@ void Node::updateTransform()
     arrayMakeObjectsPerformSelector(_children, updateTransform, Node*);
 }
 
-Component* Node::getComponent(const char *pName) const
+Component* Node::getComponent(const char *pName)
 {
     return _componentContainer->get(pName);
 }

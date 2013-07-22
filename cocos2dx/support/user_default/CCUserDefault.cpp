@@ -57,9 +57,9 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLEle
     {
  		tinyxml2::XMLDocument* xmlDoc = new tinyxml2::XMLDocument();
 		*doc = xmlDoc;
-		//CCFileData data(UserDefault::sharedUserDefault()->getXMLFilePath().c_str(),"rt");
+		//CCFileData data(UserDefault::getInstance()->getXMLFilePath().c_str(),"rt");
 		unsigned long nSize;
-		const char* pXmlBuffer = (const char*)FileUtils::sharedFileUtils()->getFileData(UserDefault::sharedUserDefault()->getXMLFilePath().c_str(), "rb", &nSize);
+		const char* pXmlBuffer = (const char*)FileUtils::getInstance()->getFileData(UserDefault::getInstance()->getXMLFilePath().c_str(), "rb", &nSize);
 		//const char* pXmlBuffer = (const char*)data.getBuffer();
 		if(NULL == pXmlBuffer)
 		{
@@ -131,7 +131,7 @@ static void setValueForKey(const char* pKey, const char* pValue)
     // save file and free doc
 	if (doc)
 	{
-		doc->SaveFile(UserDefault::sharedUserDefault()->getXMLFilePath().c_str());
+		doc->SaveFile(UserDefault::getInstance()->getXMLFilePath().c_str());
 		delete doc;
 	}
 }
@@ -140,34 +140,29 @@ static void setValueForKey(const char* pKey, const char* pValue)
  * implements of UserDefault
  */
 
-UserDefault* UserDefault::_spUserDefault = 0;
+UserDefault* UserDefault::_userDefault = 0;
 string UserDefault::_filePath = string("");
-bool UserDefault::_sbIsFilePathInitialized = false;
+bool UserDefault::_isFilePathInitialized = false;
 
 /**
- * If the user invoke delete UserDefault::sharedUserDefault(), should set _spUserDefault
- * to null to avoid error when he invoke UserDefault::sharedUserDefault() later.
+ * If the user invoke delete UserDefault::getInstance(), should set _userDefault
+ * to null to avoid error when he invoke UserDefault::getInstance() later.
  */
 UserDefault::~UserDefault()
 {
-	CC_SAFE_DELETE(_spUserDefault);
-    _spUserDefault = NULL;
+	CC_SAFE_DELETE(_userDefault);
+    _userDefault = NULL;
 }
 
 UserDefault::UserDefault()
 {
-	_spUserDefault = NULL;
+	_userDefault = NULL;
 }
 
-void UserDefault::purgeSharedUserDefault()
+bool UserDefault::getBoolForKey(const char* pKey)
 {
-    _spUserDefault = NULL;
+ return getBoolForKey(pKey, false);
 }
-
- bool UserDefault::getBoolForKey(const char* pKey)
- {
-     return getBoolForKey(pKey, false);
- }
 
 bool UserDefault::getBoolForKey(const char* pKey, bool defaultValue)
 {
@@ -416,7 +411,7 @@ void UserDefault::setDataForKey(const char* pKey, const Data& value) {
     if (encodedData) delete encodedData;
 }
 
-UserDefault* UserDefault::sharedUserDefault()
+UserDefault* UserDefault::getInstance()
 {
     initXMLFilePath();
 
@@ -427,12 +422,29 @@ UserDefault* UserDefault::sharedUserDefault()
         return NULL;
     }
 
-    if (! _spUserDefault)
+    if (! _userDefault)
     {
-        _spUserDefault = new UserDefault();
+        _userDefault = new UserDefault();
     }
 
-    return _spUserDefault;
+    return _userDefault;
+}
+
+void UserDefault::destroyInstance()
+{
+    _userDefault = NULL;
+}
+
+// XXX: deprecated
+UserDefault* UserDefault::sharedUserDefault()
+{
+    return UserDefault::getInstance();
+}
+
+// XXX: deprecated
+void UserDefault::purgeSharedUserDefault()
+{
+    return UserDefault::destroyInstance();
 }
 
 bool UserDefault::isXMLFileExist()
@@ -451,10 +463,10 @@ bool UserDefault::isXMLFileExist()
 
 void UserDefault::initXMLFilePath()
 {
-    if (! _sbIsFilePathInitialized)
+    if (! _isFilePathInitialized)
     {
-        _filePath += FileUtils::sharedFileUtils()->getWritablePath() + XML_FILE_NAME;
-        _sbIsFilePathInitialized = true;
+        _filePath += FileUtils::getInstance()->getWritablePath() + XML_FILE_NAME;
+        _isFilePathInitialized = true;
     }    
 }
 

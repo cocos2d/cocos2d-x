@@ -353,10 +353,10 @@ FrameData *Tween::tweenNodeTo(float percent, FrameData *node)
         _bone->updateColor();
     }
 
-    //    Point p1 = ccp(_from->x, _from->y);
-    //    Point p2 = ccp(100, 0);
-    //    Point p3 = ccp(200, 400);
-    //    Point p4 = ccp(_from->x + _between->x, _from->y + _between->y);
+    //    Point p1 = Point(_from->x, _from->y);
+    //    Point p2 = Point(100, 0);
+    //    Point p3 = Point(200, 400);
+    //    Point p4 = Point(_from->x + _between->x, _from->y + _between->y);
     //
     //    Point p = bezierTo(percent, p1, p2, p3, p4);
     //    node->x = p.x;

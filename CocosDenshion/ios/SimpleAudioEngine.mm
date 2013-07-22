@@ -153,7 +153,7 @@ SimpleAudioEngine::~SimpleAudioEngine()
 
 }
 
-SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
+SimpleAudioEngine* SimpleAudioEngine::getInstance()
 {
     if (! s_pEngine)
     {
@@ -177,14 +177,14 @@ void SimpleAudioEngine::end()
 void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 {
     // Changing file path to full path
-    std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(pszFilePath);
     static_preloadBackgroundMusic(fullPath.c_str());
 }
 
 void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 {
     // Changing file path to full path
-    std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(pszFilePath);
     static_playBackgroundMusic(fullPath.c_str(), bLoop);
 }
 
@@ -242,7 +242,7 @@ unsigned int SimpleAudioEngine::playEffect(const char *pszFilePath, bool bLoop,
                                            float pitch, float pan, float gain)
 {
     // Changing file path to full path
-    std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(pszFilePath);
     return static_playEffect(fullPath.c_str(), bLoop, pitch, pan, gain);
 }
 
@@ -254,14 +254,14 @@ void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 {
     // Changing file path to full path
-    std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(pszFilePath);
     static_preloadEffect(fullPath.c_str());
 }
 
 void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 {
     // Changing file path to full path
-    std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(pszFilePath);
     static_unloadEffect(fullPath.c_str());
 }
 

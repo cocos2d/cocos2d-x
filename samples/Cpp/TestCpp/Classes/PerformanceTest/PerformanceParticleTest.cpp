@@ -58,7 +58,7 @@ void ParticleMenuLayer::showCurrentTest()
     {
         pNewScene->initWithSubTest(subTest, parNum);
 
-        Director::sharedDirector()->replaceScene(pNewScene);
+        Director::getInstance()->replaceScene(pNewScene);
         pNewScene->release();
     }
 }
@@ -73,7 +73,7 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     //srandom(0);
 
     subtestNumber = asubtest;
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
 
     lastRenderedCount = 0;
     quantityParticles = particles;
@@ -100,18 +100,18 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
 
     Menu *menu = Menu::create(decrease, increase, NULL);
     menu->alignItemsHorizontally();
-    menu->setPosition(ccp(s.width/2, s.height/2+15));
+    menu->setPosition(Point(s.width/2, s.height/2+15));
     addChild(menu, 1);
 
     LabelTTF *infoLabel = LabelTTF::create("0 nodes", "Marker Felt", 30);
     infoLabel->setColor(Color3B(0,200,20));
-    infoLabel->setPosition(ccp(s.width/2, s.height - 90));
+    infoLabel->setPosition(Point(s.width/2, s.height - 90));
     addChild(infoLabel, 1, kTagInfoLayer);
 
     // particles on stage
     LabelAtlas *labelAtlas = LabelAtlas::create("0000", "fps_images.png", 12, 32, '.');
     addChild(labelAtlas, 0, kTagLabelAtlas);
-    labelAtlas->setPosition(ccp(s.width-66,50));
+    labelAtlas->setPosition(Point(s.width-66,50));
 
     // Next Prev Test
     ParticleMenuLayer* pMenu = new ParticleMenuLayer(true, TEST_COUNT, s_nParCurIdx);
@@ -139,12 +139,12 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
         }
     }
     pSubMenu->alignItemsHorizontally();
-    pSubMenu->setPosition(ccp(s.width/2, 80));
+    pSubMenu->setPosition(Point(s.width/2, 80));
     addChild(pSubMenu, 2);
 
     LabelTTF *label = LabelTTF::create(title().c_str(), "Arial", 40);
     addChild(label, 1);
-    label->setPosition(ccp(s.width/2, s.height-32));
+    label->setPosition(Point(s.width/2, s.height-32));
     label->setColor(Color3B(255,255,40));
 
     updateQuantityLabel();
@@ -187,8 +187,8 @@ void ParticleMainScene::createParticleSystem()
     removeChildByTag(kTagParticleSystem, true);
 
     // remove the "fire.png" from the TextureCache cache. 
-    Texture2D *texture = TextureCache::sharedTextureCache()->addImage("Images/fire.png");
-    TextureCache::sharedTextureCache()->removeTexture(texture);
+    Texture2D *texture = TextureCache::getInstance()->addImage("Images/fire.png");
+    TextureCache::getInstance()->removeTexture(texture);
 
 //TODO:     if (subtestNumber <= 3)
 //     {
@@ -204,42 +204,42 @@ void ParticleMainScene::createParticleSystem()
     case 1:
         Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA8888);
         particleSystem->initWithTotalParticles(quantityParticles);
-        particleSystem->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+        particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
         break;
     case 2:
         Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA4444);
         particleSystem->initWithTotalParticles(quantityParticles);
-        particleSystem->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+        particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
         break;            
     case 3:
         Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_A8);
         particleSystem->initWithTotalParticles(quantityParticles);
-        particleSystem->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+        particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
         break;                        
 //     case 4:
 //         particleSystem->initWithTotalParticles(quantityParticles);
 //         ////---- particleSystem.texture = [[TextureCache sharedTextureCache] addImage:@"fire.pvr"];
-//         particleSystem->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+//         particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
 //         break;
     case 4:
         Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA8888);
         particleSystem->initWithTotalParticles(quantityParticles);
-        particleSystem->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+        particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
         break;
     case 5:
         Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA4444);
         particleSystem->initWithTotalParticles(quantityParticles);
-        particleSystem->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+        particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
         break;            
     case 6:
         Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_A8);
         particleSystem->initWithTotalParticles(quantityParticles);
-        particleSystem->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+        particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
         break;                        
 //     case 8:
 //         particleSystem->initWithTotalParticles(quantityParticles);
 //         ////---- particleSystem.texture = [[TextureCache sharedTextureCache] addImage:@"fire.pvr"];
-//         particleSystem->setTexture(TextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+//         particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
 //         break;
     default:
         particleSystem = NULL;
@@ -291,14 +291,14 @@ std::string ParticlePerformTest1::title()
 
 void ParticlePerformTest1::doTest()
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     ParticleSystem *particleSystem = (ParticleSystem*)getChildByTag(kTagParticleSystem);
 
     // duration
     particleSystem->setDuration(-1);
 
     // gravity
-    particleSystem->setGravity(ccp(0,-90));
+    particleSystem->setGravity(Point(0,-90));
 
     // angle
     particleSystem->setAngle(90);
@@ -313,8 +313,8 @@ void ParticlePerformTest1::doTest()
     particleSystem->setSpeedVar(50);
 
     // emitter position
-    particleSystem->setPosition(ccp(s.width/2, 100));
-    particleSystem->setPosVar(ccp(s.width/2,0));
+    particleSystem->setPosition(Point(s.width/2, 100));
+    particleSystem->setPosVar(Point(s.width/2,0));
 
     // life of particles
     particleSystem->setLife(2.0f);
@@ -361,14 +361,14 @@ std::string ParticlePerformTest2::title()
 
 void ParticlePerformTest2::doTest()
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     ParticleSystem *particleSystem = (ParticleSystem*) getChildByTag(kTagParticleSystem);
 
     // duration
     particleSystem->setDuration(-1);
 
     // gravity
-    particleSystem->setGravity(ccp(0,-90));
+    particleSystem->setGravity(Point(0,-90));
 
     // angle
     particleSystem->setAngle(90);
@@ -383,8 +383,8 @@ void ParticlePerformTest2::doTest()
     particleSystem->setSpeedVar(50);
 
     // emitter position
-    particleSystem->setPosition(ccp(s.width/2, 100));
-    particleSystem->setPosVar(ccp(s.width/2,0));
+    particleSystem->setPosition(Point(s.width/2, 100));
+    particleSystem->setPosVar(Point(s.width/2,0));
 
     // life of particles
     particleSystem->setLife(2.0f);
@@ -431,14 +431,14 @@ std::string ParticlePerformTest3::title()
 
 void ParticlePerformTest3::doTest()
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     ParticleSystem *particleSystem = (ParticleSystem*)getChildByTag(kTagParticleSystem);
 
     // duration
     particleSystem->setDuration(-1);
 
     // gravity
-    particleSystem->setGravity(ccp(0,-90));
+    particleSystem->setGravity(Point(0,-90));
 
     // angle
     particleSystem->setAngle(90);
@@ -453,8 +453,8 @@ void ParticlePerformTest3::doTest()
     particleSystem->setSpeedVar(50);
 
     // emitter position
-    particleSystem->setPosition(ccp(s.width/2, 100));
-    particleSystem->setPosVar(ccp(s.width/2,0));
+    particleSystem->setPosition(Point(s.width/2, 100));
+    particleSystem->setPosVar(Point(s.width/2,0));
 
     // life of particles
     particleSystem->setLife(2.0f);
@@ -501,14 +501,14 @@ std::string ParticlePerformTest4::title()
 
 void ParticlePerformTest4::doTest()
 {
-    Size s = Director::sharedDirector()->getWinSize();
+    Size s = Director::getInstance()->getWinSize();
     ParticleSystem *particleSystem = (ParticleSystem*) getChildByTag(kTagParticleSystem);
 
     // duration
     particleSystem->setDuration(-1);
 
     // gravity
-    particleSystem->setGravity(ccp(0,-90));
+    particleSystem->setGravity(Point(0,-90));
 
     // angle
     particleSystem->setAngle(90);
@@ -523,8 +523,8 @@ void ParticlePerformTest4::doTest()
     particleSystem->setSpeedVar(50);
 
     // emitter position
-    particleSystem->setPosition(ccp(s.width/2, 100));
-    particleSystem->setPosVar(ccp(s.width/2,0));
+    particleSystem->setPosition(Point(s.width/2, 100));
+    particleSystem->setPosVar(Point(s.width/2,0));
 
     // life of particles
     particleSystem->setLife(2.0f);
@@ -562,6 +562,6 @@ void runParticleTest()
     ParticleMainScene* pScene = new ParticlePerformTest1;
     pScene->initWithSubTest(1, kNodesIncrease);
 
-    Director::sharedDirector()->replaceScene(pScene);
+    Director::getInstance()->replaceScene(pScene);
     pScene->release();
 }

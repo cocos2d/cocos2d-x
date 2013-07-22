@@ -59,17 +59,16 @@ bool GameOverLayer::init()
 {
 	if ( LayerColor::initWithColor( Color4B(255,255,255,255) ) )
 	{
-		Size winSize = Director::sharedDirector()->getWinSize();
+		Size winSize = Director::getInstance()->getWinSize();
 		this->_label = LabelTTF::create("","Artial", 32);
 		_label->retain();
 		_label->setColor( Color3B(0, 0, 0) );
-		_label->setPosition( ccp(winSize.width/2, winSize.height/2) );
+		_label->setPosition( Point(winSize.width/2, winSize.height/2) );
 		this->addChild(_label);
 		
 		this->runAction( Sequence::create(
                                 DelayTime::create(3),
-                                CallFunc::create(this, 
-                                callfunc_selector(GameOverLayer::gameOverDone)),
+                                CallFunc::create(CC_CALLBACK_0(GameOverLayer::gameOverDone, this)),
                                 NULL));
 		
         
@@ -80,9 +79,9 @@ bool GameOverLayer::init()
         });
         
         itemBack->setColor(Color3B(0, 0, 0));
-        itemBack->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
+        itemBack->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
         Menu *menuBack = Menu::create(itemBack, NULL);
-        menuBack->setPosition(PointZero);
+        menuBack->setPosition(Point::ZERO);
         addChild(menuBack);
         
 		return true;
@@ -95,7 +94,7 @@ bool GameOverLayer::init()
 
 void GameOverLayer::gameOverDone()
 {
-	Director::sharedDirector()->replaceScene( ComponentsTestLayer::scene() );
+	Director::getInstance()->replaceScene( ComponentsTestLayer::scene() );
 }
 
 GameOverLayer::~GameOverLayer()

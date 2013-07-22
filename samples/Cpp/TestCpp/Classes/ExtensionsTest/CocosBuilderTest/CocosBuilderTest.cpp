@@ -47,7 +47,7 @@ void CocosBuilderTestScene::runThisTest() {
         this->addChild(node);
     }
 
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }
 
 
@@ -70,5 +70,5 @@ void CocosBuilderTestScene::runThisTest() {
 //    
 //    this->addChild(ccbiReaderLayer);
 //    
-//    Director::sharedDirector()->replaceScene(this);
+//    Director::getInstance()->replaceScene(this);
 //}

@@ -31,7 +31,6 @@ THE SOFTWARE.
 #include "cocoa/CCDictionary.h"
 #include "cocoa/CCInteger.h"
 #include "CCDirector.h"
-#include "support/CCPointExtension.h"
 
 NS_CC_BEGIN
 
@@ -58,7 +57,7 @@ bool TileMapAtlas::initWithTileFile(const char *tile, const char *mapFile, int t
     {
         _posToAtlasIndex = new Dictionary();
         this->updateAtlasValues();
-        this->setContentSize(CCSizeMake((float)(_TGAInfo->width*_itemWidth),
+        this->setContentSize(Size((float)(_TGAInfo->width*_itemWidth),
                                         (float)(_TGAInfo->height*_itemHeight)));
         return true;
     }
@@ -115,7 +114,7 @@ void TileMapAtlas::loadTGAfile(const char *file)
 {
     CCAssert( file != NULL, "file must be non-nil");
 
-    std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(file);
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(file);
 
     //    //Find the path of the file
     //    NSBundle *mainBndl = [Director sharedDirector].loadingBundle;
@@ -159,7 +158,7 @@ void TileMapAtlas::setTile(const Color3B& tile, const Point& position)
     }    
 }
 
-Color3B TileMapAtlas::tileAt(const Point& position)
+Color3B TileMapAtlas::getTileAt(const Point& position) const
 {
     CCAssert( _TGAInfo != NULL, "tgaInfo must not be nil");
     CCAssert( position.x < _TGAInfo->width, "Invalid position.x");
@@ -252,7 +251,7 @@ void TileMapAtlas::updateAtlasValues()
 
                 if( value.r != 0 )
                 {
-                    this->updateAtlasValueAt(ccp(x,y), value, total);
+                    this->updateAtlasValueAt(Point(x,y), value, total);
 
                     String *key = String::createWithFormat("%d,%d", x,y);
                     Integer *num = Integer::create(total);

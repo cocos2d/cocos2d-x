@@ -42,7 +42,7 @@ void PlayerController::ccTouchesEnded(Set *pTouches, Event *pEvent)
 	Point location = touch->getLocation();
     
 
-	Sprite *projectile = Sprite::create("components/Projectile.png", CCRectMake(0, 0, 20, 20));
+	Sprite *projectile = Sprite::create("components/Projectile.png", Rect(0, 0, 20, 20));
     _owner->getParent()->addChild(projectile, 1, 4);
     
     ProjectileController *com = ProjectileController::create();

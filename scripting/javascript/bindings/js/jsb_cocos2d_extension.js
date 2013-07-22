@@ -157,6 +157,10 @@ cc.PhysicsSprite.prototype.setBody = function( body ) {
     return this._setCPBody( b );
 };
 
+cc.PhysicsSprite.prototype.getBody = function() {
+    return this.getCPBody();
+};
+
 cc.ScrollView.extend = cc.Class.extend;
 cc.TableView.extend = cc.Class.extend;
 cc.TableViewCell.extend = cc.Class.extend;

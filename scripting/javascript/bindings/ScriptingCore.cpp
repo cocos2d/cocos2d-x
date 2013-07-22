@@ -474,7 +474,7 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     if (!path) {
         return false;
     }
-    cocos2d::FileUtils *futil = cocos2d::FileUtils::sharedFileUtils();
+    cocos2d::FileUtils *futil = cocos2d::FileUtils::getInstance();
     std::string fullPath = futil->fullPathForFilename(path);
     if (global == NULL) {
         global = global_;
@@ -583,7 +583,7 @@ JSBool ScriptingCore::log(JSContext* cx, uint32_t argc, jsval *vp)
         JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &string);
         if (string) {
             JSStringWrapper wrapper(string);
-            js_log((char *)wrapper);
+            js_log("%s", (char *)wrapper);
         }
     }
     return JS_TRUE;
@@ -722,7 +722,7 @@ void ScriptingCore::cleanupSchedulesAndActions(js_proxy_t* p)
     
     arr = JSScheduleWrapper::getTargetForJSObject(p->obj);
     if(arr) {
-        Scheduler* pScheduler = Director::sharedDirector()->getScheduler();
+        Scheduler* pScheduler = Director::getInstance()->getScheduler();
         Object* pObj = NULL;
         CCARRAY_FOREACH(arr, pObj)
         {
@@ -1805,7 +1805,7 @@ void ScriptingCore::enableDebugger() {
         auto t = std::thread(&serverEntryPoint);
         t.detach();
 
-        Scheduler* scheduler = Director::sharedDirector()->getScheduler();
+        Scheduler* scheduler = Director::getInstance()->getScheduler();
         scheduler->scheduleUpdateForTarget(this->runLoop, 0, false);
     }
 }

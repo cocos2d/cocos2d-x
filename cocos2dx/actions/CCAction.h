@@ -58,11 +58,14 @@ public:
 	/** returns a clone of action */
 	virtual Action* clone() const = 0;
 
+    /** returns a new action that performs the exactly the reverse action */
+	virtual Action* reverse() const = 0;
+
     //! return true if the action has finished
     virtual bool isDone(void) const;
 
     //! called before the action start. It will also set the target.
-    virtual void startWithTarget(Node *pTarget);
+    virtual void startWithTarget(Node *target);
 
     /** 
     called after the action has finished. It will set the 'target' to nil.
@@ -85,7 +88,7 @@ public:
     
     inline Node* getTarget(void) const { return _target; }
     /** The action will modify the target properties. */
-    inline void setTarget(Node *pTarget) { _target = pTarget; }
+    inline void setTarget(Node *target) { _target = target; }
     
     inline Node* getOriginalTarget(void) const { return _originalTarget; }
     /** Set the original target, since target can be nil.
@@ -97,8 +100,6 @@ public:
 
     inline int getTag(void) const { return _tag; }
     inline void setTag(int nTag) { _tag = nTag; }
-
-public:
 
 protected:
     Node    *_originalTarget;
@@ -133,11 +134,11 @@ public:
     //! set duration in seconds of the action
     inline void setDuration(float duration) { _duration = duration; }
 
-    /** returns a new reversed action */
-    virtual FiniteTimeAction* reverse() const = 0;
-
-	/** returns a clone of action */
-	virtual FiniteTimeAction* clone() const = 0;
+    //
+    // Overrides
+    //
+    virtual FiniteTimeAction* reverse() const override = 0;
+	virtual FiniteTimeAction* clone() const override = 0;
 
 protected:
     //! duration in seconds
@@ -156,6 +157,9 @@ class RepeatForever;
 class CC_DLL Speed : public Action
 {
 public:
+    /** create the action */
+    static Speed* create(ActionInterval* pAction, float fSpeed);
+
     Speed();
     virtual ~Speed(void);
 
@@ -166,26 +170,23 @@ public:
     /** initializes the action */
     bool initWithAction(ActionInterval *pAction, float fSpeed);
 
-	/** returns a new clone of the action */
-	virtual Speed* clone() const;
-    /** returns a new reversed action */
-    virtual Speed* reverse(void) const;
-
-    virtual void startWithTarget(Node* pTarget);
-    virtual void stop();
-    virtual void step(float dt);
-    virtual bool isDone(void) const;
-
     void setInnerAction(ActionInterval *pAction);
 
-    inline ActionInterval* getInnerAction()
+    inline ActionInterval* getInnerAction() const
     {
         return _innerAction;
     }
 
-public:
-    /** create the action */
-    static Speed* create(ActionInterval* pAction, float fSpeed);
+    //
+    // Override
+    //
+	virtual Speed* clone() const override;
+    virtual Speed* reverse() const override;
+    virtual void startWithTarget(Node* target) override;
+    virtual void stop() override;
+    virtual void step(float dt) override;
+    virtual bool isDone(void) const  override;
+
 protected:
     float _speed;
     ActionInterval *_innerAction;
@@ -203,6 +204,11 @@ Instead of using Camera as a "follower", use this action instead.
 class CC_DLL Follow : public Action
 {
 public:
+    /** creates the action with a set boundary,
+     It will work with no boundary if @param rect is equal to Rect::ZERO.
+     */
+    static Follow* create(Node *pFollowedNode, const Rect& rect = Rect::ZERO);
+
     Follow()
 		: _followedNode(NULL)
         , _boundarySet(false)
@@ -211,7 +217,7 @@ public:
         , _rightBoundary(0.0)
         , _topBoundary(0.0)
         , _bottomBoundary(0.0)
-		, _worldRect(RectZero)
+		, _worldRect(Rect::ZERO)
     {}
     virtual ~Follow(void);
     
@@ -220,19 +226,17 @@ public:
     inline void setBoudarySet(bool bValue) { _boundarySet = bValue; }
 
     /** initializes the action with a set boundary */
-    bool initWithTarget(Node *pFollowedNode, const Rect& rect = RectZero);
+    bool initWithTarget(Node *pFollowedNode, const Rect& rect = Rect::ZERO);
 
-	/** returns a clone of action */
-	virtual Follow* clone() const;
-    virtual void step(float dt);
-    virtual bool isDone(void) const;
-    virtual void stop(void);
+    //
+    // Override
+    //
+	virtual Follow* clone() const override;
+	virtual Follow* reverse() const override;
+    virtual void step(float dt) override;
+    virtual bool isDone(void) const override;
+    virtual void stop(void) override;
 
-public:
-    /** creates the action with a set boundary,
-    It will work with no boundary if @param rect is equal to RectZero.
-    */
-    static Follow* create(Node *pFollowedNode, const Rect& rect = RectZero);
 protected:
     // node to follow
     Node *_followedNode;

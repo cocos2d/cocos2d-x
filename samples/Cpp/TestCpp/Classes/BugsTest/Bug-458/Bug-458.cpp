@@ -11,7 +11,7 @@ bool Bug458Layer::init()
     if(BugsTestBaseLayer::init())
     {
         // ask director the the window size
-        Size size = Director::sharedDirector()->getWinSize();
+        Size size = Director::getInstance()->getWinSize();
 
         QuestionContainerSprite* question = new QuestionContainerSprite();
         QuestionContainerSprite* question2 = new QuestionContainerSprite();
@@ -30,7 +30,7 @@ bool Bug458Layer::init()
         MenuItemSprite* sprite2 = MenuItemSprite::create(layer, layer2, CC_CALLBACK_1(Bug458Layer::selectAnswer, this) );
         Menu* menu = Menu::create(sprite, sprite2, NULL);
         menu->alignItemsVerticallyWithPadding(100);
-        menu->setPosition(ccp(size.width / 2, size.height / 2));
+        menu->setPosition(Point(size.width / 2, size.height / 2));
 
         // add the label as a child to this Layer
         addChild(menu);

@@ -122,8 +122,8 @@ bool GLProgram::initWithVertexShaderByteArray(const GLchar* vShaderByteArray, co
 
 bool GLProgram::initWithVertexShaderFilename(const char* vShaderFilename, const char* fShaderFilename)
 {
-    const GLchar * vertexSource = (GLchar*) String::createWithContentsOfFile(FileUtils::sharedFileUtils()->fullPathForFilename(vShaderFilename).c_str())->getCString();
-    const GLchar * fragmentSource = (GLchar*) String::createWithContentsOfFile(FileUtils::sharedFileUtils()->fullPathForFilename(fShaderFilename).c_str())->getCString();
+    const GLchar * vertexSource = (GLchar*) String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename(vShaderFilename).c_str())->getCString();
+    const GLchar * fragmentSource = (GLchar*) String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename(fShaderFilename).c_str())->getCString();
 
     return initWithVertexShaderByteArray(vertexSource, fragmentSource);
 }
@@ -241,7 +241,7 @@ bool GLProgram::link()
     
     _vertShader = _fragShader = 0;
 	
-#if DEBUG
+#if COCOS2D_DEBUG
     glGetProgramiv(_program, GL_LINK_STATUS, &status);
 	
     if (status == GL_FALSE)
@@ -515,7 +515,7 @@ void GLProgram::setUniformsForBuiltins()
 	
 	if(_usesTime)
     {
-		Director *director = Director::sharedDirector();
+		Director *director = Director::getInstance();
 		// This doesn't give the most accurate global time value.
 		// Cocos2D doesn't store a high precision time value, so this will have to do.
 		// Getting Mach time per frame per shader using time could be extremely expensive.

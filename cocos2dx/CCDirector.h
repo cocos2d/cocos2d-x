@@ -87,7 +87,7 @@ and when to execute the Scenes.
   - setting the orientation (default one is Portrait)
  
  Since the Director is a singleton, the standard way to use it is by calling:
-  _ Director::sharedDirector()->methodName();
+  _ Director::getInstance()->methodName();
  
  The Director also sets the default OpenGL context:
   - GL_TEXTURE_2D is enabled
@@ -98,6 +98,12 @@ and when to execute the Scenes.
 class CC_DLL Director : public Object, public TypeInfo
 {
 public:
+    /** returns a shared instance of the director */
+    static Director* getInstance();
+
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static Director* sharedDirector() { return Director::getInstance(); }
+
     Director(void);
     virtual ~Director(void);
     virtual bool init(void);
@@ -344,13 +350,8 @@ public:
 
     /* delta time since last tick to main loop */
 	CC_PROPERTY_READONLY(float, _deltaTime, DeltaTime);
-	
-public:
-    /** returns a shared instance of the director */
-    static Director* sharedDirector(void);
 
 protected:
-
     void purgeDirector();
     bool _purgeDirecotorInNextLoop; // this flag will be set to true in end()
     
@@ -363,6 +364,7 @@ protected:
     
     /** calculates delta time since last time it was called */    
     void calculateDeltaTime();
+
 protected:
     /* The EGLView, where everything is rendered */
     EGLView    *_openGLView;
@@ -446,10 +448,13 @@ public:
         : _invalid(false)
     {}
 
-    virtual void mainLoop(void);
-    virtual void setAnimationInterval(double dValue);
-    virtual void startAnimation(void);
-    virtual void stopAnimation();
+    //
+    // Overrides
+    //
+    virtual void mainLoop(void) override;
+    virtual void setAnimationInterval(double dValue) override;
+    virtual void startAnimation(void) override;
+    virtual void stopAnimation() override;
 
 protected:
     bool _invalid;

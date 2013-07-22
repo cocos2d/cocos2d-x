@@ -28,8 +28,8 @@ bool HelloWorld::init()
         return false;
     }
     
-    Size visibleSize = Director::sharedDirector()->getVisibleSize();
-    Point origin = Director::sharedDirector()->getVisibleOrigin();
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    Point origin = Director::getInstance()->getVisibleOrigin();
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
@@ -41,12 +41,12 @@ bool HelloWorld::init()
                                         "CloseSelected.png",
                                         CC_CALLBACK_1(HelloWorld::menuCloseCallback,this));
     
-	pCloseItem->setPosition(ccp(origin.x + visibleSize.width - pCloseItem->getContentSize().width/2 ,
+	pCloseItem->setPosition(Point(origin.x + visibleSize.width - pCloseItem->getContentSize().width/2 ,
                                 origin.y + pCloseItem->getContentSize().height/2));
 
     // create menu, it's an autorelease object
     Menu* pMenu = Menu::create(pCloseItem, NULL);
-    pMenu->setPosition(PointZero);
+    pMenu->setPosition(Point::ZERO);
     this->addChild(pMenu, 1);
 
     /////////////////////////////
@@ -58,7 +58,7 @@ bool HelloWorld::init()
     LabelTTF* pLabel = LabelTTF::create("Hello World", "Arial", TITLE_FONT_SIZE);
     
     // position the label on the center of the screen
-    pLabel->setPosition(ccp(origin.x + visibleSize.width/2,
+    pLabel->setPosition(Point(origin.x + visibleSize.width/2,
                             origin.y + visibleSize.height - pLabel->getContentSize().height));
 
     // add the label as a child to this layer
@@ -68,7 +68,7 @@ bool HelloWorld::init()
     Sprite* pSprite = Sprite::create("HelloWorld.png");
 
     // position the sprite on the center of the screen
-    pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+    pSprite->setPosition(Point(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
 
     // add the sprite as a child to this layer
     this->addChild(pSprite, 0);
@@ -79,7 +79,7 @@ bool HelloWorld::init()
 
 void HelloWorld::menuCloseCallback(Object* pSender)
 {
-    Director::sharedDirector()->end();
+    Director::getInstance()->end();
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);

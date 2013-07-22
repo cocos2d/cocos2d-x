@@ -59,38 +59,40 @@ class CC_DLL ProgressTimer : public NodeRGBA
 #endif // EMSCRIPTEN
 {
 public:
+    /** Creates a progress timer with the sprite as the shape the timer goes through */
+    static ProgressTimer* create(Sprite* sp);
+
     ProgressTimer();
-    ~ProgressTimer(void);
-
-    /**    Change the percentage to change progress. */
-    inline ProgressTimerType getType(void) { return _type; }
-
-    /** Percentages are from 0 to 100 */
-    inline float getPercentage(void) {return _percentage; }
-
-    /** The image to show the progress percentage, retain */
-    inline Sprite* getSprite(void) { return _sprite; }
+    virtual ~ProgressTimer();
 
     /** Initializes a progress timer with the sprite as the shape the timer goes through */
     bool initWithSprite(Sprite* sp);
+
+    /** Change the percentage to change progress. */
+    inline ProgressTimerType getType() const { return _type; }
+
+    /** Percentages are from 0 to 100 */
+    inline float getPercentage() const {return _percentage; }
+
+    /** The image to show the progress percentage, retain */
+    inline Sprite* getSprite() const { return _sprite; }
 
     void setPercentage(float fPercentage);
     void setSprite(Sprite *pSprite);
     void setType(ProgressTimerType type);
     void setReverseProgress(bool reverse);
 
-    virtual void draw(void);
-    void setAnchorPoint(const Point& anchorPoint);
-
-    virtual void setOpacityModifyRGB(bool bValue);
-    virtual bool isOpacityModifyRGB(void) const;
-    
     inline bool isReverseDirection() { return _reverseDirection; };
     inline void setReverseDirection(bool value) { _reverseDirection = value; };
 
-public:
-    /** Creates a progress timer with the sprite as the shape the timer goes through */
-    static ProgressTimer* create(Sprite* sp);
+    // Overrides
+    virtual void draw(void) override;
+    void setAnchorPoint(const Point& anchorPoint) override;
+    virtual void setColor(const Color3B& color) override;
+    virtual const Color3B& getColor() const override;
+    virtual GLubyte getOpacity() const override;
+    virtual void setOpacity(GLubyte opacity) override;
+    
 protected:
     Tex2F textureCoordFromAlphaPoint(Point alpha);
     Vertex2F vertexFromAlphaPoint(Point alpha);
@@ -112,10 +114,10 @@ protected:
      *    If you're using radials type then the midpoint changes the center point
      *    If you're using bar type the the midpoint changes the bar growth
      *        it expands from the center but clamps to the sprites edge so:
-     *        you want a left to right then set the midpoint all the way to ccp(0,y)
-     *        you want a right to left then set the midpoint all the way to ccp(1,y)
-     *        you want a bottom to top then set the midpoint all the way to ccp(x,0)
-     *        you want a top to bottom then set the midpoint all the way to ccp(x,1)
+     *        you want a left to right then set the midpoint all the way to Point(0,y)
+     *        you want a right to left then set the midpoint all the way to Point(1,y)
+     *        you want a bottom to top then set the midpoint all the way to Point(x,0)
+     *        you want a top to bottom then set the midpoint all the way to Point(x,1)
      */
     CC_PROPERTY(Point, _midpoint, Midpoint);
 
@@ -123,7 +125,7 @@ protected:
      *    This allows the bar type to move the component at a specific rate
      *    Set the component to 0 to make sure it stays at 100%.
      *    For example you want a left to right bar but not have the height stay 100%
-     *    Set the rate to be ccp(0,1); and set the midpoint to = ccp(0,.5f);
+     *    Set the rate to be Point(0,1); and set the midpoint to = Point(0,.5f);
      */
     CC_SYNTHESIZE(Point, _barChangeRate, BarChangeRate);
 

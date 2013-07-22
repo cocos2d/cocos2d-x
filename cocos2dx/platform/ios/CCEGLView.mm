@@ -82,10 +82,16 @@ void EGLView::setIMEKeyboardState(bool bOpen)
     }
 }
 
-EGLView* EGLView::sharedOpenGLView()
+EGLView* EGLView::getInstance()
 {
     static EGLView instance;
     return &instance;
+}
+
+// XXX: deprecated
+EGLView* EGLView::sharedOpenGLView()
+{
+    return EGLView::getInstance();
 }
 
 NS_CC_END

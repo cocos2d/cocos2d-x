@@ -194,21 +194,21 @@ void ControlSwitchSprite::draw()
 
 void ControlSwitchSprite::needsLayout()
 {
-    _onSprite->setPosition(ccp(_onSprite->getContentSize().width / 2 + _sliderXPosition,
+    _onSprite->setPosition(Point(_onSprite->getContentSize().width / 2 + _sliderXPosition,
         _onSprite->getContentSize().height / 2));
-    _offSprite->setPosition(ccp(_onSprite->getContentSize().width + _offSprite->getContentSize().width / 2 + _sliderXPosition, 
+    _offSprite->setPosition(Point(_onSprite->getContentSize().width + _offSprite->getContentSize().width / 2 + _sliderXPosition, 
         _offSprite->getContentSize().height / 2));
-    _thumbSprite->setPosition(ccp(_onSprite->getContentSize().width + _sliderXPosition,
+    _thumbSprite->setPosition(Point(_onSprite->getContentSize().width + _sliderXPosition,
         _maskTexture->getContentSize().height / 2));
 
     if (_onLabel)
     {
-        _onLabel->setPosition(ccp(_onSprite->getPosition().x - _thumbSprite->getContentSize().width / 6,
+        _onLabel->setPosition(Point(_onSprite->getPosition().x - _thumbSprite->getContentSize().width / 6,
             _onSprite->getContentSize().height / 2));
     }
     if (_offLabel)
     {
-        _offLabel->setPosition(ccp(_offSprite->getPosition().x + _thumbSprite->getContentSize().width / 6,
+        _offLabel->setPosition(Point(_offSprite->getPosition().x + _thumbSprite->getContentSize().width / 6,
             _offSprite->getContentSize().height / 2));
     }
 
@@ -316,11 +316,11 @@ bool ControlSwitch::initWithMaskSprite(Sprite *maskSprite, Sprite * onSprite, Sp
                                            thumbSprite,
                                            onLabel,
                                            offLabel);
-        _switchSprite->setPosition(ccp (_switchSprite->getContentSize().width / 2, _switchSprite->getContentSize().height / 2));
+        _switchSprite->setPosition(Point(_switchSprite->getContentSize().width / 2, _switchSprite->getContentSize().height / 2));
         addChild(_switchSprite);
         
         ignoreAnchorPointForPosition(false);
-        setAnchorPoint(ccp (0.5f, 0.5f));
+        setAnchorPoint(Point(0.5f, 0.5f));
         setContentSize(_switchSprite->getContentSize());
         return true;
     }
@@ -408,7 +408,7 @@ bool ControlSwitch::ccTouchBegan(Touch *pTouch, Event *pEvent)
 void ControlSwitch::ccTouchMoved(Touch *pTouch, Event *pEvent)
 {
     Point location    = this->locationFromTouch(pTouch);
-    location            = ccp (location.x - _initialTouchXPosition, 0);
+    location            = Point(location.x - _initialTouchXPosition, 0);
     
     _moved              = true;
     

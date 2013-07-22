@@ -88,28 +88,28 @@ bool ControlStepper::initWithMinusSpriteAndPlusSprite(Sprite *minusSprite, Sprit
     
         // Add the minus components
         this->setMinusSprite(minusSprite);
-		_minusSprite->setPosition( ccp(minusSprite->getContentSize().width / 2, minusSprite->getContentSize().height / 2) );
+		_minusSprite->setPosition( Point(minusSprite->getContentSize().width / 2, minusSprite->getContentSize().height / 2) );
 		this->addChild(_minusSprite);
         
         this->setMinusLabel( LabelTTF::create("-", ControlStepperLabelFont, 40));
         _minusLabel->setColor(ControlStepperLabelColorDisabled);
-        _minusLabel->setPosition(CCPointMake(_minusSprite->getContentSize().width / 2, _minusSprite->getContentSize().height / 2) );
+        _minusLabel->setPosition(Point(_minusSprite->getContentSize().width / 2, _minusSprite->getContentSize().height / 2) );
         _minusSprite->addChild(_minusLabel);
         
         // Add the plus components 
         this->setPlusSprite( plusSprite );
-		_plusSprite->setPosition( ccp(minusSprite->getContentSize().width + plusSprite->getContentSize().width / 2, 
+		_plusSprite->setPosition( Point(minusSprite->getContentSize().width + plusSprite->getContentSize().width / 2, 
                                                   minusSprite->getContentSize().height / 2) );
 		this->addChild(_plusSprite);
         
         this->setPlusLabel( LabelTTF::create("+", ControlStepperLabelFont, 40 ));
         _plusLabel->setColor( ControlStepperLabelColorEnabled );
-        _plusLabel->setPosition( CCPointMake(_plusSprite->getContentSize().width / 2, _plusSprite->getContentSize().height / 2) );
+        _plusLabel->setPosition( Point(_plusSprite->getContentSize().width / 2, _plusSprite->getContentSize().height / 2) );
         _plusSprite->addChild(_plusLabel);
         
         // Defines the content size
-        Rect maxRect = ControlUtils::RectUnion(_minusSprite->boundingBox(), _plusSprite->boundingBox());
-        this->setContentSize( CCSizeMake(_minusSprite->getContentSize().width + _plusSprite->getContentSize().height, maxRect.size.height) );
+        Rect maxRect = ControlUtils::RectUnion(_minusSprite->getBoundingBox(), _plusSprite->getBoundingBox());
+        this->setContentSize( Size(_minusSprite->getContentSize().width + _plusSprite->getContentSize().height, maxRect.size.height) );
         return true;
     }
     return false;
@@ -171,7 +171,7 @@ void ControlStepper::setValue(double value)
     this->setValueWithSendingEvent(value, true);
 }
 
-double ControlStepper::getValue()
+double ControlStepper::getValue() const
 {
     return _value;
 }
@@ -186,7 +186,7 @@ void ControlStepper::setStepValue(double stepValue)
     _stepValue  = stepValue;
 }
 
-bool ControlStepper::isContinuous()
+bool ControlStepper::isContinuous() const
 {
     return _continuous;
 }

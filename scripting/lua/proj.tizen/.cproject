@@ -29,7 +29,7 @@
 								<option id="sbi.gnu.cpp.compiler.option.debugging.level.1202478015" name="Debug level" superClass="sbi.gnu.cpp.compiler.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="sbi.gnu.cpp.compiler.option.debug.applog.864337508" name="Enable application logging (-D_APP_LOG)" superClass="sbi.gnu.cpp.compiler.option.debug.applog" value="true" valueType="boolean"/>
 								<option id="sbi.gnu.cpp.compiler.option.398317020" name="Tizen-Target" superClass="sbi.gnu.cpp.compiler.option" valueType="userObjs">
-									<listOptionValue builtIn="false" value="tizen-emulator-2.1.native_gcc45.i386.cpp.staticLib"/>
+									<listOptionValue builtIn="false" value="tizen-emulator-2.2.native_gcc45.i386.cpp.staticLib"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.include.paths.537359646" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
@@ -60,7 +60,7 @@
 									<listOptionValue builtIn="false" value="_DEBUG"/>
 									<listOptionValue builtIn="false" value="TIZEN"/>
 								</option>
-								<option id="gnu.cpp.compiler.option.other.other.617645545" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
+								<option id="gnu.cpp.compiler.option.other.other.617645545" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
 								<inputType id="sbi.gnu.cpp.compiler.tizen.inputType.741691323" superClass="sbi.gnu.cpp.compiler.tizen.inputType"/>
 							</tool>
 							<tool command="i386-linux-gnueabi-gcc.exe" id="org.tizen.nativecpp.tool.sbi.gnu.c.compiler.1771482599" name="C Compiler" superClass="org.tizen.nativecpp.tool.sbi.gnu.c.compiler">
@@ -68,7 +68,7 @@
 								<option id="sbi.gnu.c.compiler.option.debugging.level.1397575457" name="Debug level" superClass="sbi.gnu.c.compiler.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="sbi.gnu.c.compiler.option.debug.applog.89099155" name="Enable application logging (-D_APP_LOG)" superClass="sbi.gnu.c.compiler.option.debug.applog" value="true" valueType="boolean"/>
 								<option id="sbi.gnu.c.compiler.option.402878923" name="Tizen-Target" superClass="sbi.gnu.c.compiler.option" valueType="userObjs">
-									<listOptionValue builtIn="false" value="tizen-emulator-2.1.native_gcc45.i386.cpp.staticLib"/>
+									<listOptionValue builtIn="false" value="tizen-emulator-2.2.native_gcc45.i386.cpp.staticLib"/>
 								</option>
 								<option id="gnu.c.compiler.option.include.paths.252206828" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
@@ -101,7 +101,6 @@
 								</option>
 								<option id="sbi.gnu.cpp.linker.option.frameworks_lflags.cpp.898624143" name="Tizen-Frameworks-Other-Lflags" superClass="sbi.gnu.cpp.linker.option.frameworks_lflags.cpp" valueType="stringList">
 									<listOptionValue builtIn="false" value="--sysroot=&quot;${SBI_SYSROOT}&quot;"/>
-									<listOptionValue builtIn="false" value="-Xlinker -rpath=&quot;/opt/usr/apps//lib&quot;"/>
 								</option>
 							</tool>
 							<tool command="i386-linux-gnueabi-as.exe" id="org.tizen.nativeapp.tool.sbi.gnu.assembler.base.1364098419" name="Assembler" superClass="org.tizen.nativeapp.tool.sbi.gnu.assembler.base">
@@ -147,7 +146,7 @@
 								<option id="sbi.gnu.cpp.compiler.option.debugging.level.1546049215" name="Debug level" superClass="sbi.gnu.cpp.compiler.option.debugging.level"/>
 								<option id="sbi.gnu.cpp.compiler.option.debug.applog.1632337760" name="Enable application logging (-D_APP_LOG)" superClass="sbi.gnu.cpp.compiler.option.debug.applog"/>
 								<option id="sbi.gnu.cpp.compiler.option.1759530990" name="Tizen-Target" superClass="sbi.gnu.cpp.compiler.option" valueType="userObjs">
-									<listOptionValue builtIn="false" value="tizen-emulator-2.1.native_llvm31.i386.cpp.staticLib"/>
+									<listOptionValue builtIn="false" value="tizen-emulator-2.2.native_llvm31.i386.cpp.staticLib"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.include.paths.1875075226" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
@@ -173,7 +172,7 @@
 								<option id="sbi.gnu.c.compiler.option.debugging.level.137343893" name="Debug level" superClass="sbi.gnu.c.compiler.option.debugging.level"/>
 								<option id="sbi.gnu.c.compiler.option.debug.applog.1299357834" name="Enable application logging (-D_APP_LOG)" superClass="sbi.gnu.c.compiler.option.debug.applog"/>
 								<option id="sbi.gnu.c.compiler.option.287040565" name="Tizen-Target" superClass="sbi.gnu.c.compiler.option" valueType="userObjs">
-									<listOptionValue builtIn="false" value="tizen-emulator-2.1.native_llvm31.i386.cpp.staticLib"/>
+									<listOptionValue builtIn="false" value="tizen-emulator-2.2.native_llvm31.i386.cpp.staticLib"/>
 								</option>
 								<option id="gnu.c.compiler.option.include.paths.195061874" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
@@ -247,7 +246,7 @@
 								<option id="sbi.gnu.cpp.compiler.option.debugging.level.686036537" name="Debug level" superClass="sbi.gnu.cpp.compiler.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="sbi.gnu.cpp.compiler.option.debug.applog.1547274381" name="Enable application logging (-D_APP_LOG)" superClass="sbi.gnu.cpp.compiler.option.debug.applog" value="true" valueType="boolean"/>
 								<option id="sbi.gnu.cpp.compiler.option.308021389" name="Tizen-Target" superClass="sbi.gnu.cpp.compiler.option" valueType="userObjs">
-									<listOptionValue builtIn="false" value="tizen-device-2.1.native_gcc45.armel.cpp.staticLib"/>
+									<listOptionValue builtIn="false" value="tizen-device-2.2.native_gcc45.armel.cpp.staticLib"/>
 								</option>
 								<option id="sbi.gnu.cpp.compiler.option.frameworks_inc.cpp.622036336" name="Tizen-Frameworks-Include-Path" superClass="sbi.gnu.cpp.compiler.option.frameworks_inc.cpp" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/libxml2&quot;"/>
@@ -278,7 +277,7 @@
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/CocosDenshion/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/extensions&quot;"/>
 								</option>
-								<option id="gnu.cpp.compiler.option.other.other.2142605903" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
+								<option id="gnu.cpp.compiler.option.other.other.2142605903" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
 								<inputType id="sbi.gnu.cpp.compiler.tizen.inputType.514092169" superClass="sbi.gnu.cpp.compiler.tizen.inputType"/>
 							</tool>
 							<tool command="arm-linux-gnueabi-gcc.exe" id="org.tizen.nativecpp.tool.sbi.gnu.c.compiler.1879913320" name="C Compiler" superClass="org.tizen.nativecpp.tool.sbi.gnu.c.compiler">
@@ -286,7 +285,7 @@
 								<option id="sbi.gnu.c.compiler.option.debugging.level.564820300" name="Debug level" superClass="sbi.gnu.c.compiler.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="sbi.gnu.c.compiler.option.debug.applog.2015298167" name="Enable application logging (-D_APP_LOG)" superClass="sbi.gnu.c.compiler.option.debug.applog" value="true" valueType="boolean"/>
 								<option id="sbi.gnu.c.compiler.option.1903132321" name="Tizen-Target" superClass="sbi.gnu.c.compiler.option" valueType="userObjs">
-									<listOptionValue builtIn="false" value="tizen-device-2.1.native_gcc45.armel.cpp.staticLib"/>
+									<listOptionValue builtIn="false" value="tizen-device-2.2.native_gcc45.armel.cpp.staticLib"/>
 								</option>
 								<option id="sbi.gnu.c.compiler.option.frameworks_inc.cpp.1474767087" name="Tizen-Frameworks-Include-Path" superClass="sbi.gnu.c.compiler.option.frameworks_inc.cpp" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/libxml2&quot;"/>
@@ -316,7 +315,6 @@
 							<tool command="arm-linux-gnueabi-g++.exe" id="org.tizen.nativecpp.tool.sbi.gnu.cpp.linker.1975693319" name="C++ Linker" superClass="org.tizen.nativecpp.tool.sbi.gnu.cpp.linker">
 								<option id="sbi.gnu.cpp.linker.option.frameworks_lflags.cpp.5402855" name="Tizen-Frameworks-Other-Lflags" superClass="sbi.gnu.cpp.linker.option.frameworks_lflags.cpp" valueType="stringList">
 									<listOptionValue builtIn="false" value="--sysroot=&quot;${SBI_SYSROOT}&quot;"/>
-									<listOptionValue builtIn="false" value="-Xlinker -rpath=&quot;/opt/usr/apps//lib&quot;"/>
 								</option>
 							</tool>
 							<tool command="arm-linux-gnueabi-as.exe" id="org.tizen.nativeapp.tool.sbi.gnu.assembler.base.539635811" name="Assembler" superClass="org.tizen.nativeapp.tool.sbi.gnu.assembler.base">

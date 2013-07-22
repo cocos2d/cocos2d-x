@@ -87,8 +87,8 @@ bool TestAnalytics::init()
     _pluginAnalytics = NULL;
     loadPlugins();
 
-    Size visibleSize = Director::sharedDirector()->getVisibleSize();
-    Point origin = Director::sharedDirector()->getVisibleOrigin();
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    Point origin = Director::getInstance()->getVisibleOrigin();
     Point posBR = ccp(origin.x + visibleSize.width, origin.y);
 
     /////////////////////////////
@@ -225,7 +225,7 @@ void TestAnalytics::eventMenuCallback(Object* pSender)
 
 void TestAnalytics::loadPlugins()
 {
-    ccLanguageType langType = Application::sharedApplication()->getCurrentLanguage();
+    ccLanguageType langType = Application::getInstance()->getCurrentLanguage();
     
     std::string umengKey  = "";
     std::string flurryKey = "";
@@ -299,5 +299,5 @@ void TestAnalytics::unloadPlugins()
 void TestAnalytics::menuBackCallback(Object* pSender)
 {
     Scene* newScene = HelloWorld::scene();
-    Director::sharedDirector()->replaceScene(newScene);
+    Director::getInstance()->replaceScene(newScene);
 }

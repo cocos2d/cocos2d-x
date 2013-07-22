@@ -9,7 +9,7 @@ using namespace std;
 
 NS_CC_BEGIN
 
-FileUtils* FileUtils::sharedFileUtils()
+FileUtils* FileUtils::getInstance()
 {
     if (s_sharedFileUtils == NULL)
     {

@@ -24,8 +24,8 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    Director *pDirector = Director::sharedDirector();
-    pDirector->setOpenGLView(EGLView::sharedOpenGLView());
+    Director *pDirector = Director::getInstance();
+    pDirector->setOpenGLView(EGLView::getInstance());
 
     // turn on display FPS
     pDirector->setDisplayStats(true);
@@ -46,7 +46,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     tolua_web_socket_open(tolua_s);
 #endif
     
-    std::string path = FileUtils::sharedFileUtils()->fullPathForFilename("hello.lua");
+    std::string path = FileUtils::getInstance()->fullPathForFilename("hello.lua");
     pEngine->executeScriptFile(path.c_str());
 
     return true;
@@ -55,7 +55,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    Director::sharedDirector()->stopAnimation();
+    Director::getInstance()->stopAnimation();
 
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
 }
@@ -63,7 +63,7 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    Director::sharedDirector()->startAnimation();
+    Director::getInstance()->startAnimation();
 
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
 }

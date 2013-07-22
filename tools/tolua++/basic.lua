@@ -11,8 +11,6 @@ local CCObjectTypes = {
     "CCImage",
     "CCFiniteTimeAction",
     "CCActionInstant",
-    "CCCallFunc",
-    "CCCallFuncN",
     "CCFlipX",
     "CCFlipY",
     "CCHide",

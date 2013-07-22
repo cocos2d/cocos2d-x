@@ -13,15 +13,15 @@ bool Bug886Layer::init()
         //        CGSize size = [[Director sharedDirector] winSize];
         
         Sprite* sprite = Sprite::create("Images/bugs/bug886.jpg");
-        sprite->setAnchorPoint(PointZero);
-        sprite->setPosition(PointZero);
+        sprite->setAnchorPoint(Point::ZERO);
+        sprite->setPosition(Point::ZERO);
         sprite->setScaleX(0.6f);
         addChild(sprite);
 
         Sprite* sprite2 = Sprite::create("Images/bugs/bug886.png");
-        sprite2->setAnchorPoint(PointZero);
+        sprite2->setAnchorPoint(Point::ZERO);
         sprite2->setScaleX(0.6f);
-        sprite2->setPosition(ccp(sprite->getContentSize().width * 0.6f + 10, 0));
+        sprite2->setPosition(Point(sprite->getContentSize().width * 0.6f + 10, 0));
         addChild(sprite2);
 
         return true;

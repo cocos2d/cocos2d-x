@@ -45,10 +45,10 @@ The children will be moved faster / slower than the parent according the the par
 */
 class CC_DLL ParallaxNode : public Node 
 {
-    /** array that holds the offset / ratio of the children */
-    CC_SYNTHESIZE(struct _ccArray *, _parallaxArray, ParallaxArray)
-
 public:
+    // Create a Parallax node
+    static ParallaxNode * create();
+    
     /** Adds a child to the container with a z-order, a parallax ratio and a position offset
     It returns self, so you can chain several addChilds.
     @since v0.8
@@ -56,17 +56,21 @@ public:
     ParallaxNode();
     virtual ~ParallaxNode();
 
-    static ParallaxNode * create();
-    virtual void addChild(Node * child, unsigned int z, const Point& parallaxRatio, const Point& positionOffset);
-    // super methods
-    virtual void addChild(Node * child, unsigned int zOrder, int tag);
-    virtual void removeChild(Node* child, bool cleanup);
-    virtual void removeAllChildrenWithCleanup(bool cleanup);
-    virtual void visit(void);
+    void addChild(Node * child, int z, const Point& parallaxRatio, const Point& positionOffset);
+    
+    //
+    // Overrides
+    //
+    virtual void addChild(Node * child, int zOrder, int tag) override;
+    virtual void removeChild(Node* child, bool cleanup) override;
+    virtual void removeAllChildrenWithCleanup(bool cleanup) override;
+    virtual void visit(void) override;
 private:
     Point absolutePosition();
 protected:
     Point    _lastPosition;
+    /** array that holds the offset / ratio of the children */
+    CC_SYNTHESIZE(struct _ccArray *, _parallaxArray, ParallaxArray)
 };
 
 // end of tilemap_parallax_nodes group

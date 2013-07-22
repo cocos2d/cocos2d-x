@@ -113,7 +113,6 @@ sprite_nodes/CCSpriteFrameCache.cpp \
 support/ccUTF8.cpp \
 support/CCNotificationCenter.cpp \
 support/CCProfiling.cpp \
-support/CCPointExtension.cpp \
 support/TransformUtils.cpp \
 support/user_default/CCUserDefaultAndroid.cpp \
 support/base64.cpp \

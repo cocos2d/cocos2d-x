@@ -77,8 +77,11 @@ public:
 	@brief	Get current applicaiton instance.
 	@return Current application instance pointer.
 	*/
-    static Application* sharedApplication();			// MH Cocos2dx Director class expects this to return a pointer and not a reference
+    static Application* getInstance();			// MH Cocos2dx Director class expects this to return a pointer and not a reference
 
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static Application* sharedApplication();
+    
     /**
     @brief Get current language config
     @return Current language config

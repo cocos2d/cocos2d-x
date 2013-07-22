@@ -25,11 +25,25 @@ THE SOFTWARE.
 #ifndef __CCGEMETRY_H__
 #define __CCGEMETRY_H__
 
+#include <math.h>
+#include <functional>
+
 #include "platform/CCPlatformMacros.h"
 #include "CCObject.h"
-#include <math.h>
+#include "ccMacros.h"
 
 NS_CC_BEGIN
+
+/** Clamp a value between from and to.
+ @since v0.99.1
+ */
+inline float clampf(float value, float min_inclusive, float max_inclusive)
+{
+    if (min_inclusive > max_inclusive) {
+        CC_SWAP(min_inclusive, max_inclusive, float);
+    }
+    return value < min_inclusive ? min_inclusive : value < max_inclusive? value : max_inclusive;
+}
 
 /**
  * @addtogroup data_structures
@@ -132,6 +146,35 @@ public:
     inline Point getPerp() const {
         return Point(-y, x);
     };
+    
+    /** Calculates midpoint between two points.
+     @return Point
+     @since v3.0
+     */
+    inline Point getMidpoint(const Point& other) const
+    {
+        return Point((x + other.x) / 2.0f, (y + other.y) / 2.0f);
+    }
+    
+    /** Clamp a point between from and to.
+     @since v3.0
+     */
+    inline Point getClampPoint(const Point& min_inclusive, const Point& max_inclusive) const
+    {
+        return Point(clampf(x,min_inclusive.x,max_inclusive.x), clampf(y, min_inclusive.y, max_inclusive.y));
+    }
+    
+    /** Run a math operation function on each point component
+     * absf, fllorf, ceilf, roundf
+     * any function that has the signature: float func(float);
+     * For example: let's try to take the floor of x,y
+     * p.compOp(floorf);
+     @since v3.0
+     */
+    inline Point compOp(std::function<float(float)> function) const
+    {
+        return Point(function(x), function(y));
+    }
 
     /** Calculates perpendicular of v, rotated 90 degrees clockwise -- cross(v, rperp(v)) <= 0
      @return Point
@@ -201,6 +244,45 @@ public:
     {
     	return Point(cosf(a), sinf(a));
     }
+    
+    /** A general line-line intersection test
+     @param p1
+     is the startpoint for the first line P1 = (p1 - p2)
+     @param p2
+     is the endpoint for the first line P1 = (p1 - p2)
+     @param p3
+     is the startpoint for the second line P2 = (p3 - p4)
+     @param p4
+     is the endpoint for the second line P2 = (p3 - p4)
+     @param s
+     is the range for a hitpoint in P1 (pa = p1 + s*(p2 - p1))
+     @param t
+     is the range for a hitpoint in P3 (pa = p2 + t*(p4 - p3))
+     @return bool
+     indicating successful intersection of a line
+     note that to truly test intersection for segments we have to make
+     sure that s & t lie within [0..1] and for rays, make sure s & t > 0
+     the hit point is        p3 + t * (p4 - p3);
+     the hit point also is    p1 + s * (p2 - p1);
+     @since 3.0
+     */
+    static bool isLineIntersect(const Point& A, const Point& B,
+                                 const Point& C, const Point& D,
+                                 float *S, float *T);
+    
+    /*
+     returns YES if Segment A-B intersects with segment C-D
+     @since v3.0
+     */
+    static bool isSegmentIntersect(const Point& A, const Point& B, const Point& C, const Point& D);
+    
+    /*
+     returns the intersection point of line A-B, C-D
+     @since v3.0
+     */
+    static Point getIntersectPoint(const Point& A, const Point& B, const Point& C, const Point& D);
+    
+    static const Point ZERO;
 };
 
 class CC_DLL Size
@@ -222,6 +304,8 @@ public:
     Size operator/(float a) const;
     void setSize(float width, float height);
     bool equals(const Size& target) const;
+    
+    static const Size ZERO;
 };
 
 class CC_DLL Rect
@@ -246,21 +330,9 @@ public:
     bool containsPoint(const Point& point) const;
     bool intersectsRect(const Rect& rect) const;
     Rect unionWithRect(const Rect & rect) const;
+    
+    static const Rect ZERO;
 };
-
-
-#define CCPointMake(x, y) Point((float)(x), (float)(y))
-#define CCSizeMake(width, height) Size((float)(width), (float)(height))
-#define CCRectMake(x, y, width, height) Rect((float)(x), (float)(y), (float)(width), (float)(height))
-
-
-const Point PointZero = CCPointMake(0,0);
-
-/* The "zero" size -- equivalent to CCSizeMake(0, 0). */ 
-const Size SizeZero = CCSizeMake(0,0);
-
-/* The "zero" rectangle -- equivalent to CCRectMake(0, 0, 0, 0). */ 
-const Rect RectZero = CCRectMake(0,0,0,0);
 
 // end of data_structure group
 /// @}

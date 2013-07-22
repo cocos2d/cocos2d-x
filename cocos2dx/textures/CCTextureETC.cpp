@@ -46,7 +46,7 @@ TextureETC::~TextureETC()
 
 bool TextureETC::initWithFile(const char *file)
 {
-    return loadTexture(FileUtils::sharedFileUtils()->fullPathForFilename(file).c_str());
+    return loadTexture(FileUtils::getInstance()->fullPathForFilename(file).c_str());
 }
 
 unsigned int TextureETC::getName() const
@@ -91,7 +91,7 @@ bool TextureETC::loadTexture(const char* file)
 {
     unsigned long etcFileSize = 0;
     etc1_byte* etcFileData = NULL;
-    etcFileData = FileUtils::sharedFileUtils()->getFileData(file, "rb", &etcFileSize);
+    etcFileData = FileUtils::getInstance()->getFileData(file, "rb", &etcFileSize);
     
     if(0 == etcFileSize)
     {
@@ -115,7 +115,7 @@ bool TextureETC::loadTexture(const char* file)
         return false;
     }
     
-    if(Configuration::sharedConfiguration()->supportsETC())
+    if(Configuration::getInstance()->supportsETC())
     {
         //old opengl version has no define for GL_ETC1_RGB8_OES, add macro to make compiler happy. 
 #ifdef GL_ETC1_RGB8_OES

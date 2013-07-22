@@ -37,7 +37,7 @@ bool kProfilerCategoryParticles = false;
 
 static Profiler* g_sSharedProfiler = NULL;
 
-Profiler* Profiler::sharedProfiler(void)
+Profiler* Profiler::getInstance()
 {
     if (! g_sSharedProfiler)
     {
@@ -46,6 +46,12 @@ Profiler* Profiler::sharedProfiler(void)
     }
 
     return g_sSharedProfiler;
+}
+
+// XXX: deprecated
+Profiler* Profiler::sharedProfiler(void)
+{
+    return Profiler::getInstance();
 }
 
 ProfilingTimer* Profiler::createAndAddTimerWithName(const char* timerName)
@@ -128,7 +134,7 @@ void ProfilingTimer::reset()
 
 void ProfilingBeginTimingBlock(const char *timerName)
 {
-    Profiler* p = Profiler::sharedProfiler();
+    Profiler* p = Profiler::getInstance();
     ProfilingTimer* timer = (ProfilingTimer*)p->_activeTimers->objectForKey(timerName);
     if( ! timer )
     {
@@ -142,7 +148,7 @@ void ProfilingBeginTimingBlock(const char *timerName)
 
 void ProfilingEndTimingBlock(const char *timerName)
 {
-    Profiler* p = Profiler::sharedProfiler();
+    Profiler* p = Profiler::getInstance();
     ProfilingTimer* timer = (ProfilingTimer*)p->_activeTimers->objectForKey(timerName);
 
     CCAssert(timer, "CCProfilingTimer  not found");
@@ -162,7 +168,7 @@ void ProfilingEndTimingBlock(const char *timerName)
 
 void ProfilingResetTimingBlock(const char *timerName)
 {
-    Profiler* p = Profiler::sharedProfiler();
+    Profiler* p = Profiler::getInstance();
     ProfilingTimer *timer = (ProfilingTimer*)p->_activeTimers->objectForKey(timerName);
 
     CCAssert(timer, "CCProfilingTimer not found");

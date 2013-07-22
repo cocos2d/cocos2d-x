@@ -117,9 +117,6 @@ class CCNode : public CCObject
 	void scheduleUpdateWithPriorityLua(LUA_FUNCTION nHandler, int priority);
 	void unscheduleUpdate(void);
 
-    void registerScriptHandler(LUA_FUNCTION funcID);
-    void unregisterScriptHandler(void);
-
     static CCNode * create(void);
 };
 

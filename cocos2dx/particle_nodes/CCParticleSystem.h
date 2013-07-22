@@ -164,97 +164,64 @@ emitter.startSpin = 0;
 
 */
 class CC_DLL ParticleSystem : public Node, public TextureProtocol
-{    
-protected:
-    std::string _plistFile;
-    //! time elapsed since the start of the system (in seconds)
-    float _elapsed;
-
-    // Different modes
-    //! Mode A:Gravity + Tangential Accel + Radial Accel
-    struct {
-        /** Gravity value. Only available in 'Gravity' mode. */
-        Point gravity;
-        /** speed of each particle. Only available in 'Gravity' mode.  */
-        float speed;
-        /** speed variance of each particle. Only available in 'Gravity' mode. */
-        float speedVar;
-        /** tangential acceleration of each particle. Only available in 'Gravity' mode. */
-        float tangentialAccel;
-        /** tangential acceleration variance of each particle. Only available in 'Gravity' mode. */
-        float tangentialAccelVar;
-        /** radial acceleration of each particle. Only available in 'Gravity' mode. */
-        float radialAccel;
-        /** radial acceleration variance of each particle. Only available in 'Gravity' mode. */
-        float radialAccelVar;
-        /** set the rotation of each particle to its direction Only available in 'Gravity' mode. */
-        bool rotationIsDir;
-    } modeA;
-
-    //! Mode B: circular movement (gravity, radial accel and tangential accel don't are not used in this mode)
-    struct {
-        /** The starting radius of the particles. Only available in 'Radius' mode. */
-        float startRadius;
-        /** The starting radius variance of the particles. Only available in 'Radius' mode. */
-        float startRadiusVar;
-        /** The ending radius of the particles. Only available in 'Radius' mode. */
-        float endRadius;
-        /** The ending radius variance of the particles. Only available in 'Radius' mode. */
-        float endRadiusVar;            
-        /** Number of degrees to rotate a particle around the source pos per second. Only available in 'Radius' mode. */
-        float rotatePerSecond;
-        /** Variance in degrees for rotatePerSecond. Only available in 'Radius' mode. */
-        float rotatePerSecondVar;
-    } modeB;
-
-    //! Array of particles
-    tParticle *_particles;
-
-    // color modulate
-    //    BOOL colorModulate;
-
-    //! How many particles can be emitted per second
-    float _emitCounter;
-
-    //!  particle idx
-    unsigned int _particleIdx;
-
-    // Optimization
-    //CC_UPDATE_PARTICLE_IMP    updateParticleImp;
-    //SEL                        updateParticleSel;
-
-    /** weak reference to the SpriteBatchNode that renders the Sprite */
-    CC_PROPERTY(ParticleBatchNode*, _batchNode, BatchNode);
-
-    // index of system in batch node array
-    CC_SYNTHESIZE(unsigned int, _atlasIndex, AtlasIndex);
-
-    //true if scaled or rotated
-    bool _transformSystemDirty;
-    // Number of allocated particles
-    unsigned int _allocatedParticles;
-
-    /** Is the emitter active */
-    bool _isActive;
-    /** Quantity of particles that are being simulated at the moment */
-    CC_PROPERTY_READONLY(unsigned int, _particleCount, ParticleCount)
-    /** How many seconds the emitter will run. -1 means 'forever' */
-    CC_PROPERTY(float, _duration, Duration)
-    /** sourcePosition of the emitter */
-    CC_PROPERTY_PASS_BY_REF(Point, _sourcePosition, SourcePosition)
-    /** Position variance of the emitter */
-    CC_PROPERTY_PASS_BY_REF(Point, _posVar, PosVar)
-    /** life, and life variation of each particle */
-    CC_PROPERTY(float, _life, Life)
-    /** life variance of each particle */
-    CC_PROPERTY(float, _lifeVar, LifeVar)
-    /** angle and angle variation of each particle */
-    CC_PROPERTY(float, _angle, Angle)
-    /** angle variance of each particle */
-    CC_PROPERTY(float, _angleVar, AngleVar)
-
-//////////////////////////////////////////////////////////////////////////
+{
 public:
+    /** creates an initializes a ParticleSystem from a plist file.
+    This plist files can be created manually or with Particle Designer:
+    http://particledesigner.71squared.com/
+    @since v2.0
+    */
+    static ParticleSystem * create(const char *plistFile);
+
+    //! create a system with a fixed number of particles
+    static ParticleSystem* createWithTotalParticles(unsigned int numberOfParticles);
+
+    ParticleSystem();
+    virtual ~ParticleSystem();
+
+    /** initializes a ParticleSystem*/
+    bool init();
+    /** initializes a ParticleSystem from a plist file.
+    This plist files can be created manually or with Particle Designer:
+    http://particledesigner.71squared.com/
+    @since v0.99.3
+    */
+    bool initWithFile(const char *plistFile);
+
+    /** initializes a QuadParticleSystem from a Dictionary.
+    @since v0.99.3
+    */
+    bool initWithDictionary(Dictionary *dictionary);
+    
+    /** initializes a particle system from a NSDictionary and the path from where to load the png
+     @since v2.1
+     */
+    bool initWithDictionary(Dictionary *dictionary, const char *dirname);
+
+    //! Initializes a system with a fixed number of particles
+    virtual bool initWithTotalParticles(unsigned int numberOfParticles);
+
+    //! Add a particle to the emitter
+    bool addParticle();
+    //! Initializes a particle
+    void initParticle(tParticle* particle);
+    //! stop emitting particles. Running particles will continue to run until they die
+    void stopSystem();
+    //! Kill all living particles.
+    void resetSystem();
+    //! whether or not the system is full
+    bool isFull();
+
+    //! should be overridden by subclasses
+    virtual void updateQuadWithParticle(tParticle* particle, const Point& newPosition);
+    //! should be overridden by subclasses
+    virtual void postStep();
+
+    virtual void updateWithNoTime(void);
+
+    virtual bool isAutoRemoveOnFinish() const;
+    virtual void setAutoRemoveOnFinish(bool var);
+
     // mode A
     virtual const Point& getGravity();
     virtual void setGravity(const Point& g);
@@ -290,12 +257,128 @@ public:
     virtual void setRotation(float newRotation);
     virtual void setScaleX(float newScaleX);
     virtual void setScaleY(float newScaleY);
-    
+
     virtual bool isActive() const;
     virtual bool isBlendAdditive() const;
     virtual void setBlendAdditive(bool value);
-//////////////////////////////////////////////////////////////////////////
+
+    // Overrides
+    virtual void update(float dt) override;
+
+protected:
+    virtual void updateBlendFunc();
+
+protected:
+    /** whether or not the particles are using blend additive.
+     If enabled, the following blending function will be used.
+     @code
+     source blend function = GL_SRC_ALPHA;
+     dest blend function = GL_ONE;
+     @endcode
+     */
+    bool _isBlendAdditive;
+
+    /** whether or not the node will be auto-removed when it has no particles left.
+     By default it is false.
+     @since v0.8
+     */
+    bool _isAutoRemoveOnFinish;
+
+    std::string _plistFile;
+    //! time elapsed since the start of the system (in seconds)
+    float _elapsed;
+
+    // Different modes
+    //! Mode A:Gravity + Tangential Accel + Radial Accel
+    struct {
+        /** Gravity value. Only available in 'Gravity' mode. */
+        Point gravity;
+        /** speed of each particle. Only available in 'Gravity' mode.  */
+        float speed;
+        /** speed variance of each particle. Only available in 'Gravity' mode. */
+        float speedVar;
+        /** tangential acceleration of each particle. Only available in 'Gravity' mode. */
+        float tangentialAccel;
+        /** tangential acceleration variance of each particle. Only available in 'Gravity' mode. */
+        float tangentialAccelVar;
+        /** radial acceleration of each particle. Only available in 'Gravity' mode. */
+        float radialAccel;
+        /** radial acceleration variance of each particle. Only available in 'Gravity' mode. */
+        float radialAccelVar;
+        /** set the rotation of each particle to its direction Only available in 'Gravity' mode. */
+        bool rotationIsDir;
+    } modeA;
+
+    //! Mode B: circular movement (gravity, radial accel and tangential accel don't are not used in this mode)
+    struct {
+        /** The starting radius of the particles. Only available in 'Radius' mode. */
+        float startRadius;
+        /** The starting radius variance of the particles. Only available in 'Radius' mode. */
+        float startRadiusVar;
+        /** The ending radius of the particles. Only available in 'Radius' mode. */
+        float endRadius;
+        /** The ending radius variance of the particles. Only available in 'Radius' mode. */
+        float endRadiusVar;
+        /** Number of degrees to rotate a particle around the source pos per second. Only available in 'Radius' mode. */
+        float rotatePerSecond;
+        /** Variance in degrees for rotatePerSecond. Only available in 'Radius' mode. */
+        float rotatePerSecondVar;
+    } modeB;
+
+    //! Array of particles
+    tParticle *_particles;
+
+    // color modulate
+    //    BOOL colorModulate;
+
+    //! How many particles can be emitted per second
+    float _emitCounter;
+
+    //!  particle idx
+    unsigned int _particleIdx;
+
+    // Optimization
+    //CC_UPDATE_PARTICLE_IMP    updateParticleImp;
+    //SEL                        updateParticleSel;
+
+    /** weak reference to the SpriteBatchNode that renders the Sprite */
+    CC_PROPERTY(ParticleBatchNode*, _batchNode, BatchNode);
+
+    // index of system in batch node array
+    CC_SYNTHESIZE(unsigned int, _atlasIndex, AtlasIndex);
+
+    //true if scaled or rotated
+    bool _transformSystemDirty;
+    // Number of allocated particles
+    unsigned int _allocatedParticles;
+
+    /** Is the emitter active */
+    bool _isActive;
+
     
+    /** Quantity of particles that are being simulated at the moment */
+    CC_PROPERTY_READONLY(unsigned int, _particleCount, ParticleCount)
+    /** How many seconds the emitter will run. -1 means 'forever' */
+    CC_PROPERTY(float, _duration, Duration)
+    /** sourcePosition of the emitter */
+    CC_PROPERTY_PASS_BY_REF(Point, _sourcePosition, SourcePosition)
+    /** Position variance of the emitter */
+    CC_PROPERTY_PASS_BY_REF(Point, _posVar, PosVar)
+    /** life, and life variation of each particle */
+    CC_PROPERTY(float, _life, Life)
+    /** life variance of each particle */
+    CC_PROPERTY(float, _lifeVar, LifeVar)
+    /** angle and angle variation of each particle */
+    CC_PROPERTY(float, _angle, Angle)
+    /** angle variance of each particle */
+    CC_PROPERTY(float, _angleVar, AngleVar)
+
+    /** Switch between different kind of emitter modes:
+     - kParticleModeGravity: uses gravity, speed, radial and tangential acceleration
+     - kParticleModeRadius: uses radius movement + rotation
+     */
+    CC_PROPERTY(int, _emitterMode, EmitterMode)
+
     /** start size in pixels of each particle */
     CC_PROPERTY(float, _startSize, StartSize)
     /** size variance in pixels of each particle */
@@ -331,90 +414,10 @@ public:
     /** does the alpha value modify color */
     CC_PROPERTY(bool, _opacityModifyRGB, OpacityModifyRGB)
 
-    /** whether or not the particles are using blend additive.
-    If enabled, the following blending function will be used.
-    @code
-    source blend function = GL_SRC_ALPHA;
-    dest blend function = GL_ONE;
-    @endcode
-    */
-    bool _isBlendAdditive;
     /** particles movement type: Free or Grouped
-    @since v0.8
-    */
-    CC_PROPERTY(tPositionType, _positionType, PositionType)
-    /** whether or not the node will be auto-removed when it has no particles left.
-    By default it is false.
-    @since v0.8
-    */
-protected:
-    bool _isAutoRemoveOnFinish;
-public:
-    virtual bool isAutoRemoveOnFinish() const;
-    virtual void setAutoRemoveOnFinish(bool var);
-
-    /** Switch between different kind of emitter modes:
-    - kParticleModeGravity: uses gravity, speed, radial and tangential acceleration
-    - kParticleModeRadius: uses radius movement + rotation
-    */
-    CC_PROPERTY(int, _emitterMode, EmitterMode)
-
-public:
-    ParticleSystem();
-    virtual ~ParticleSystem();
-
-    /** creates an initializes a ParticleSystem from a plist file.
-    This plist files can be created manually or with Particle Designer:
-    http://particledesigner.71squared.com/
-    @since v2.0
-    */
-    static ParticleSystem * create(const char *plistFile);
-
-    //! create a system with a fixed number of particles
-    static ParticleSystem* createWithTotalParticles(unsigned int numberOfParticles);
-
-    /** initializes a ParticleSystem*/
-    bool init();
-    /** initializes a ParticleSystem from a plist file.
-    This plist files can be created manually or with Particle Designer:
-    http://particledesigner.71squared.com/
-    @since v0.99.3
-    */
-    bool initWithFile(const char *plistFile);
-
-    /** initializes a QuadParticleSystem from a Dictionary.
-    @since v0.99.3
-    */
-    bool initWithDictionary(Dictionary *dictionary);
-    
-    /** initializes a particle system from a NSDictionary and the path from where to load the png
-     @since v2.1
+     @since v0.8
      */
-    bool initWithDictionary(Dictionary *dictionary, const char *dirname);
-
-    //! Initializes a system with a fixed number of particles
-    virtual bool initWithTotalParticles(unsigned int numberOfParticles);
-    //! Add a particle to the emitter
-    bool addParticle();
-    //! Initializes a particle
-    void initParticle(tParticle* particle);
-    //! stop emitting particles. Running particles will continue to run until they die
-    void stopSystem();
-    //! Kill all living particles.
-    void resetSystem();
-    //! whether or not the system is full
-    bool isFull();
-
-    //! should be overridden by subclasses
-    virtual void updateQuadWithParticle(tParticle* particle, const Point& newPosition);
-    //! should be overridden by subclasses
-    virtual void postStep();
-
-    virtual void update(float dt);
-    virtual void updateWithNoTime(void);
-
-protected:
-    virtual void updateBlendFunc();
+    CC_PROPERTY(tPositionType, _positionType, PositionType)
 };
 
 // end of particle_nodes group

@@ -15,29 +15,29 @@ USING_NS_CC_EXT;
 
 EditBoxTest::EditBoxTest()
 {
-    Point visibleOrigin = EGLView::sharedOpenGLView()->getVisibleOrigin();
-    Size visibleSize = EGLView::sharedOpenGLView()->getVisibleSize();
+    Point visibleOrigin = EGLView::getInstance()->getVisibleOrigin();
+    Size visibleSize = EGLView::getInstance()->getVisibleSize();
     
     Sprite* pBg = Sprite::create("Images/HelloWorld.png");
-    pBg->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
+    pBg->setPosition(Point(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
     addChild(pBg);
     
     _TTFShowEditReturn = LabelTTF::create("No edit control return!", "", 30);
-    _TTFShowEditReturn->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y + visibleSize.height - 50));
+    _TTFShowEditReturn->setPosition(Point(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y + visibleSize.height - 50));
     addChild(_TTFShowEditReturn);
     
     // Back Menu
     MenuItemFont *itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(EditBoxTest::toExtensionsMainLayer, this));
-    itemBack->setPosition(ccp(visibleOrigin.x+visibleSize.width - 50, visibleOrigin.y+25));
+    itemBack->setPosition(Point(visibleOrigin.x+visibleSize.width - 50, visibleOrigin.y+25));
     Menu *menuBack = Menu::create(itemBack, NULL);
-    menuBack->setPosition(PointZero);
+    menuBack->setPosition(Point::ZERO);
     addChild(menuBack);
     
-    Size editBoxSize = CCSizeMake(visibleSize.width - 100, 60);
+    Size editBoxSize = Size(visibleSize.width - 100, 60);
 
     // top
     _editName = EditBox::create(editBoxSize, Scale9Sprite::create("extensions/green_edit.png"));
-    _editName->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height*3/4));
+    _editName->setPosition(Point(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height*3/4));
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     _editName->setFontName("Paint Boy");
 #else
@@ -54,7 +54,7 @@ EditBoxTest::EditBoxTest()
     
     // middle
     _editPassword = EditBox::create(editBoxSize, Scale9Sprite::create("extensions/orange_edit.png"));
-    _editPassword->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
+    _editPassword->setPosition(Point(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	_editPassword->setFont("American Typewriter", 30);
 #else
@@ -69,15 +69,15 @@ EditBoxTest::EditBoxTest()
     addChild(_editPassword);
     
     // bottom
-    _editEmail = EditBox::create(CCSizeMake(editBoxSize.width, editBoxSize.height), Scale9Sprite::create("extensions/yellow_edit.png"));
-    _editEmail->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/4));
-    _editEmail->setAnchorPoint(ccp(0.5, 1.0f));
+    _editEmail = EditBox::create(Size(editBoxSize.width, editBoxSize.height), Scale9Sprite::create("extensions/yellow_edit.png"));
+    _editEmail->setPosition(Point(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/4));
+    _editEmail->setAnchorPoint(Point(0.5, 1.0f));
     _editEmail->setPlaceHolder("Email:");
     _editEmail->setInputMode(kEditBoxInputModeEmailAddr);
     _editEmail->setDelegate(this);
     addChild(_editEmail);
     
-    this->setPosition(ccp(10, 20));
+    this->setPosition(Point(10, 20));
 }
 
 EditBoxTest::~EditBoxTest()
@@ -131,6 +131,6 @@ void runEditBoxTest()
     EditBoxTest *pLayer = new EditBoxTest();
     pScene->addChild(pLayer);
     
-    Director::sharedDirector()->replaceScene(pScene);
+    Director::getInstance()->replaceScene(pScene);
     pLayer->release();
 }

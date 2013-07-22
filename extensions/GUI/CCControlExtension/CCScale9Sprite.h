@@ -57,61 +57,81 @@ public:
     virtual ~Scale9Sprite();
 
 public:
-    /** Original sprite's size. */
-    CC_SYNTHESIZE_READONLY(Size, _originalSize, OriginalSize);
-    /** Prefered sprite's size. By default the prefered size is the original size. */
+    static Scale9Sprite* create();
 
-    //if the preferredSize component is given as -1, it is ignored
-    CC_PROPERTY(Size, _preferredSize, PreferredSize); 
-    /** 
-     * The end-cap insets. 
-     * On a non-resizeable sprite, this property is set to CGRectZero; the sprite 
-     * does not use end caps and the entire sprite is subject to stretching. 
+    /**
+     * Creates a 9-slice sprite with a texture file, a delimitation zone and
+     * with the specified cap insets.
+     *
+     * @see initWithFile:rect:centerRegion:
      */
-    CC_PROPERTY(Rect, _capInsets, CapInsets);
-    /** Sets the left side inset */
-    CC_PROPERTY(float, _insetLeft, InsetLeft);
-    /** Sets the top side inset */
-    CC_PROPERTY(float, _insetTop, InsetTop);
-    /** Sets the right side inset */
-    CC_PROPERTY(float, _insetRight, InsetRight);
-    /** Sets the bottom side inset */
-    CC_PROPERTY(float, _insetBottom, InsetBottom);
+    static Scale9Sprite* create(const char* file, Rect rect,  Rect capInsets);
 
-protected:
-    bool _spritesGenerated;
-    Rect _spriteRect;
-    bool   _spriteFrameRotated;
-    Rect _capInsetsInternal;
-    bool _positionsAreDirty;
-    
-    SpriteBatchNode* _scale9Image;
-    Sprite* _topLeft;
-    Sprite* _top;
-    Sprite* _topRight;
-    Sprite* _left;
-    Sprite* _centre;
-    Sprite* _right;
-    Sprite* _bottomLeft;
-    Sprite* _bottom;
-    Sprite* _bottomRight;
+    /**
+     * Creates a 9-slice sprite with a texture file. The whole texture will be
+     * broken down into a 3×3 grid of equal blocks.
+     *
+     * @see initWithFile:capInsets:
+     */
+    static Scale9Sprite* create(Rect capInsets, const char* file);
 
-    bool _opacityModifyRGB;
-    GLubyte _opacity;
-    Color3B _color;
-    
-    void updateCapInset();
-    void updatePositions();
+    /**
+     * Creates a 9-slice sprite with a texture file and a delimitation zone. The
+     * texture will be broken down into a 3×3 grid of equal blocks.
+     *
+     * @see initWithFile:rect:
+     */
+    static Scale9Sprite* create(const char* file, Rect rect);
 
-public:
-    
-    virtual void setContentSize(const Size & size);
-    virtual void visit();
-    
-    virtual bool init();
+    /**
+     * Creates a 9-slice sprite with a texture file. The whole texture will be
+     * broken down into a 3×3 grid of equal blocks.
+     *
+     * @see initWithFile:
+     */
+    static Scale9Sprite* create(const char* file);
 
-    virtual bool initWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bool rotated, Rect capInsets);
-    virtual bool initWithBatchNode(SpriteBatchNode* batchnode, Rect rect, Rect capInsets);
+    /**
+     * Creates a 9-slice sprite with an sprite frame.
+     * Once the sprite is created, you can then call its "setContentSize:" method
+     * to resize the sprite will all it's 9-slice goodness intract.
+     * It respects the anchorPoint too.
+     *
+     * @see initWithSpriteFrame:
+     */
+    static Scale9Sprite* createWithSpriteFrame(SpriteFrame* spriteFrame);
+
+    /**
+     * Creates a 9-slice sprite with an sprite frame and the centre of its zone.
+     * Once the sprite is created, you can then call its "setContentSize:" method
+     * to resize the sprite will all it's 9-slice goodness intract.
+     * It respects the anchorPoint too.
+     *
+     * @see initWithSpriteFrame:centerRegion:
+     */
+    static Scale9Sprite* createWithSpriteFrame(SpriteFrame* spriteFrame, Rect capInsets);
+
+    /**
+     * Creates a 9-slice sprite with an sprite frame name.
+     * Once the sprite is created, you can then call its "setContentSize:" method
+     * to resize the sprite will all it's 9-slice goodness intract.
+     * It respects the anchorPoint too.
+     *
+     * @see initWithSpriteFrameName:
+     */
+    static Scale9Sprite* createWithSpriteFrameName(const char*spriteFrameName);
+
+    /**
+     * Creates a 9-slice sprite with an sprite frame name and the centre of its
+     * zone.
+     * Once the sprite is created, you can then call its "setContentSize:" method
+     * to resize the sprite will all it's 9-slice goodness intract.
+     * It respects the anchorPoint too.
+     *
+     * @see initWithSpriteFrameName:centerRegion:
+     */
+    static Scale9Sprite* createWithSpriteFrameName(const char*spriteFrameName, Rect capInsets);
+
     /**
      * Initializes a 9-slice sprite with a texture file, a delimitation zone and
      * with the specified cap insets.
@@ -127,14 +147,6 @@ public:
      */
     virtual bool initWithFile(const char* file, Rect rect,  Rect capInsets);
     
-    /** 
-     * Creates a 9-slice sprite with a texture file, a delimitation zone and
-     * with the specified cap insets.
-     *
-     * @see initWithFile:rect:centerRegion:
-     */
-    static Scale9Sprite* create(const char* file, Rect rect,  Rect capInsets);
-
     /**
      * Initializes a 9-slice sprite with a texture file and a delimitation zone. The
      * texture will be broken down into a 3×3 grid of equal blocks.
@@ -149,14 +161,6 @@ public:
      */
     virtual bool initWithFile(const char* file, Rect rect);
     
-     /** 
-     * Creates a 9-slice sprite with a texture file and a delimitation zone. The
-     * texture will be broken down into a 3×3 grid of equal blocks.
-     *
-     * @see initWithFile:rect:
-     */
-    static Scale9Sprite* create(const char* file, Rect rect);
-
     /**
      * Initializes a 9-slice sprite with a texture file and with the specified cap
      * insets.
@@ -168,15 +172,6 @@ public:
      * @param capInsets The values to use for the cap insets.
      */
     virtual bool initWithFile(Rect capInsets, const char* file);
-
-    /** 
-     * Creates a 9-slice sprite with a texture file. The whole texture will be
-     * broken down into a 3×3 grid of equal blocks.
-     *
-     * @see initWithFile:capInsets:
-     */
-    static Scale9Sprite* create(Rect capInsets, const char* file);
-
     
     /**
      * Initializes a 9-slice sprite with a texture file. The whole texture will be
@@ -188,14 +183,6 @@ public:
      * @param file The name of the texture file.
      */
     virtual bool initWithFile(const char* file);
-
-    /** 
-     * Creates a 9-slice sprite with a texture file. The whole texture will be
-     * broken down into a 3×3 grid of equal blocks.
-     *
-     * @see initWithFile:
-     */
-    static Scale9Sprite* create(const char* file);
     
     /**
      * Initializes a 9-slice sprite with an sprite frame and with the specified 
@@ -210,15 +197,6 @@ public:
     virtual bool initWithSpriteFrame(SpriteFrame* spriteFrame, Rect capInsets);
 
     /**
-     * Creates a 9-slice sprite with an sprite frame and the centre of its zone.
-     * Once the sprite is created, you can then call its "setContentSize:" method
-     * to resize the sprite will all it's 9-slice goodness intract.
-     * It respects the anchorPoint too.
-     *
-     * @see initWithSpriteFrame:centerRegion:
-     */
-    static Scale9Sprite* createWithSpriteFrame(SpriteFrame* spriteFrame, Rect capInsets); 
-    /**
      * Initializes a 9-slice sprite with an sprite frame.
      * Once the sprite is created, you can then call its "setContentSize:" method
      * to resize the sprite will all it's 9-slice goodness intract.
@@ -227,16 +205,6 @@ public:
      * @param spriteFrame The sprite frame object.
      */
     virtual bool initWithSpriteFrame(SpriteFrame* spriteFrame);
-
-    /**
-     * Creates a 9-slice sprite with an sprite frame.
-     * Once the sprite is created, you can then call its "setContentSize:" method
-     * to resize the sprite will all it's 9-slice goodness intract.
-     * It respects the anchorPoint too.
-     *
-     * @see initWithSpriteFrame:
-     */
-    static Scale9Sprite* createWithSpriteFrame(SpriteFrame* spriteFrame);  
 
     /**
      * Initializes a 9-slice sprite with an sprite frame name and with the specified 
@@ -251,17 +219,6 @@ public:
     virtual bool initWithSpriteFrameName(const char*spriteFrameName, Rect capInsets);
 
     /**
-     * Creates a 9-slice sprite with an sprite frame name and the centre of its
-     * zone.
-     * Once the sprite is created, you can then call its "setContentSize:" method
-     * to resize the sprite will all it's 9-slice goodness intract.
-     * It respects the anchorPoint too.
-     *
-     * @see initWithSpriteFrameName:centerRegion:
-     */
-    static Scale9Sprite* createWithSpriteFrameName(const char*spriteFrameName, Rect capInsets); 
-
-    /**
      * Initializes a 9-slice sprite with an sprite frame name.
      * Once the sprite is created, you can then call its "setContentSize:" method
      * to resize the sprite will all it's 9-slice goodness intract.
@@ -271,16 +228,10 @@ public:
      */
     virtual bool initWithSpriteFrameName(const char*spriteFrameName);
 
-    /**
-     * Creates a 9-slice sprite with an sprite frame name.
-     * Once the sprite is created, you can then call its "setContentSize:" method
-     * to resize the sprite will all it's 9-slice goodness intract.
-     * It respects the anchorPoint too.
-     *
-     * @see initWithSpriteFrameName:
-     */
-    static Scale9Sprite* createWithSpriteFrameName(const char*spriteFrameName);
-    
+    virtual bool init();
+    virtual bool initWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bool rotated, Rect capInsets);
+    virtual bool initWithBatchNode(SpriteBatchNode* batchnode, Rect rect, Rect capInsets);
+
     /**
      * Creates and returns a new sprite object with the specified cap insets.
      * You use this method to add cap insets to a sprite or to change the existing
@@ -291,31 +242,64 @@ public:
      */
     Scale9Sprite* resizableSpriteWithCapInsets(Rect capInsets);
     
-    static Scale9Sprite* create();
-
-    // optional
-    
-    /** sets the premultipliedAlphaOpacity property.
-     If set to NO then opacity will be applied as: glColor(R,G,B,opacity);
-     If set to YES then oapcity will be applied as: glColor(opacity, opacity, opacity, opacity );
-     Textures with premultiplied alpha will have this property by default on YES. Otherwise the default value is NO
-     @since v0.8
-     */
-    virtual void setOpacityModifyRGB(bool bValue);
-    
-    /** returns whether or not the opacity will be applied using glColor(R,G,B,opacity) or glColor(opacity, opacity, opacity, opacity);
-     @since v0.8
-     */
-    virtual bool isOpacityModifyRGB(void) const;
-    virtual void setOpacity(GLubyte opacity);
-
-	virtual GLubyte getOpacity() const;
-    virtual void setColor(const Color3B& color);
-	virtual const Color3B& getColor() const;
-
     virtual bool updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bool rotated, Rect capInsets);
-
     virtual void setSpriteFrame(SpriteFrame * spriteFrame);
+
+    // overrides
+    virtual void setContentSize(const Size & size) override;
+    virtual void visit() override;
+    virtual void setOpacityModifyRGB(bool bValue) override;
+    virtual bool isOpacityModifyRGB(void) const override;
+    virtual void setOpacity(GLubyte opacity) override;
+	virtual GLubyte getOpacity() const override;
+    virtual void setColor(const Color3B& color) override;
+	virtual const Color3B& getColor() const override;
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
+    virtual void updateDisplayedColor(const Color3B& parentColor) override;
+
+protected:
+    void updateCapInset();
+    void updatePositions();
+
+    bool _spritesGenerated;
+    Rect _spriteRect;
+    bool   _spriteFrameRotated;
+    Rect _capInsetsInternal;
+    bool _positionsAreDirty;
+
+    SpriteBatchNode* _scale9Image;
+    Sprite* _topLeft;
+    Sprite* _top;
+    Sprite* _topRight;
+    Sprite* _left;
+    Sprite* _centre;
+    Sprite* _right;
+    Sprite* _bottomLeft;
+    Sprite* _bottom;
+    Sprite* _bottomRight;
+
+    bool _opacityModifyRGB;
+
+    /** Original sprite's size. */
+    CC_SYNTHESIZE_READONLY(Size, _originalSize, OriginalSize);
+    /** Prefered sprite's size. By default the prefered size is the original size. */
+
+    //if the preferredSize component is given as -1, it is ignored
+    CC_PROPERTY(Size, _preferredSize, PreferredSize);
+    /**
+     * The end-cap insets.
+     * On a non-resizeable sprite, this property is set to CGRect::ZERO; the sprite
+     * does not use end caps and the entire sprite is subject to stretching.
+     */
+    CC_PROPERTY(Rect, _capInsets, CapInsets);
+    /** Sets the left side inset */
+    CC_PROPERTY(float, _insetLeft, InsetLeft);
+    /** Sets the top side inset */
+    CC_PROPERTY(float, _insetTop, InsetTop);
+    /** Sets the right side inset */
+    CC_PROPERTY(float, _insetRight, InsetRight);
+    /** Sets the bottom side inset */
+    CC_PROPERTY(float, _insetBottom, InsetBottom);
 };
 
 // end of GUI group

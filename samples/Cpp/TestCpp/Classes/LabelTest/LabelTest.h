@@ -335,7 +335,6 @@ public:
      LabelDyamicTest();
     ~LabelDyamicTest();
     
-    virtual void draw();
     virtual std::string title();
     virtual std::string subtitle();
     
@@ -343,6 +342,49 @@ private:
     
     StringTTF *label1;
 
+};
+
+class NewLabelTTFTest : public AtlasDemo
+{
+public:
+
+    NewLabelTTFTest();
+    ~NewLabelTTFTest();
+
+    virtual std::string title();
+    virtual std::string subtitle();
+
+private:
+    Label *label;
+};
+
+class NewLabelBMFontTest : public AtlasDemo
+{
+public:
+
+    NewLabelBMFontTest();
+    ~NewLabelBMFontTest();
+
+    virtual std::string title();
+    virtual std::string subtitle();
+
+private:
+    Label *label;
+};
+
+
+class NewLabelFontDefTest : public AtlasDemo
+{
+public:
+
+    NewLabelFontDefTest();
+    ~NewLabelFontDefTest();
+
+    virtual std::string title();
+    virtual std::string subtitle();
+
+private:
+    Node *label;
 };
 
 

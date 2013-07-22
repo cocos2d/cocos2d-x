@@ -50,7 +50,7 @@ namespace CocosDenshion {
 static std::string getFullPathWithoutAssetsPrefix(const char* pszFilename)
 {
 	// Changing file path to full path
-    std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename(pszFilename);
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(pszFilename);
     // Removing `assets` since it isn't needed for the API of playing sound.
     size_t pos = fullPath.find("assets/");
     if (pos == 0)
@@ -94,7 +94,7 @@ SimpleAudioEngine::~SimpleAudioEngine()
 	}
 }
 
-SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
+SimpleAudioEngine* SimpleAudioEngine::getInstance()
 {
     if (! s_pEngine)
     {

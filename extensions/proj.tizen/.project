@@ -136,11 +136,6 @@
 			<locationURI>PARENT-1-PROJECT_LOC/network</locationURI>
 		</link>
 		<link>
-			<name>src/physics_nodes</name>
-			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/physics_nodes</locationURI>
-		</link>
-		<link>
 			<name>src/spine</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/spine</locationURI>

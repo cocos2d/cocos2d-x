@@ -522,7 +522,7 @@ bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFm
 	IW_CALLSTACK("UIImage::initWithImageFile");
     bool bRet = false;
     unsigned long nSize = 0;
-    unsigned char* pBuffer = FileUtils::sharedFileUtils()->getFileData(strPath, "rb", &nSize);
+    unsigned char* pBuffer = FileUtils::getInstance()->getFileData(strPath, "rb", &nSize);
     if (pBuffer != NULL && nSize > 0)
     {
         bRet = initWithImageData(pBuffer, nSize, eImgFmt);
@@ -536,7 +536,7 @@ bool Image::initWithImageFileThreadSafe( const char *fullpath, EImageFormat imag
 	CC_UNUSED_PARAM(imageType);
     bool bRet = false;
     unsigned long nSize = 0;
-    unsigned char *pBuffer = FileUtils::sharedFileUtils()->getFileData(fullpath, "rb", &nSize);
+    unsigned char *pBuffer = FileUtils::getInstance()->getFileData(fullpath, "rb", &nSize);
     if (pBuffer != NULL && nSize > 0)
     {
         bRet = initWithImageData(pBuffer, nSize, imageType);
@@ -873,7 +873,7 @@ bool Image::initWithString(
     	std::transform(lowerCasePath.begin(), lowerCasePath.end(), lowerCasePath.begin(), ::tolower);
         
     	if ( lowerCasePath.find(".ttf") != std::string::npos ) {
-    		fullFontName = FileUtils::sharedFileUtils()->fullPathForFilename(pFontName);
+    		fullFontName = FileUtils::getInstance()->fullPathForFilename(pFontName);
     	}
 
 		CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, fullFontName.c_str(), nSize));

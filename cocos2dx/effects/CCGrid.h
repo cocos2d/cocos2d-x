@@ -52,7 +52,15 @@ class GLProgram;
 class CC_DLL GridBase : public Object
 {
 public:
+    /** create one Grid */
+    static GridBase* create(const Size& gridSize, Texture2D *texture, bool flipped);
+    /** create one Grid */
+    static GridBase* create(const Size& gridSize);
+
     virtual ~GridBase(void);
+
+    bool initWithSize(const Size& gridSize, Texture2D *pTexture, bool bFlipped);
+    bool initWithSize(const Size& gridSize);
 
     /** whether or not the grid is active */
     inline bool isActive(void) { return _active; }
@@ -74,21 +82,11 @@ public:
     inline bool isTextureFlipped(void) { return _isTextureFlipped; }
     void setTextureFlipped(bool bFlipped);
 
-    bool initWithSize(const Size& gridSize, Texture2D *pTexture, bool bFlipped);
-    bool initWithSize(const Size& gridSize);
-
     void beforeDraw(void);
-    void afterDraw(Node *pTarget);
+    void afterDraw(Node *target);
     virtual void blit(void);
     virtual void reuse(void);
     virtual void calculateVertexPoints(void);
-
-public:
-
-    /** create one Grid */
-    static GridBase* create(const Size& gridSize, Texture2D *texture, bool flipped);
-    /** create one Grid */
-    static GridBase* create(const Size& gridSize);
 
     void set2DProjection(void);
 
@@ -113,32 +111,31 @@ class CC_DLL Grid3D : public GridBase
 #endif // EMSCRIPTEN
 {
 public:
-    Grid3D();
-    ~Grid3D(void);
-
-    /** returns the vertex at a given position */
-    CC_DEPRECATED_ATTRIBUTE Vertex3F vertex(const Point& pos);
-    /** returns the original (non-transformed) vertex at a given position */
-    CC_DEPRECATED_ATTRIBUTE Vertex3F originalVertex(const Point& pos);
-
-    /** returns the vertex at a given position */
-    Vertex3F getVertex(const Point& pos);
-    /** returns the original (non-transformed) vertex at a given position */
-    Vertex3F getOriginalVertex(const Point& pos);
-
-    /** sets a new vertex at a given position */
-    void setVertex(const Point& pos, const Vertex3F& vertex);
-
-    virtual void blit(void);
-    virtual void reuse(void);
-    virtual void calculateVertexPoints(void);
-
-public:
     /** create one Grid */
     static Grid3D* create(const Size& gridSize, Texture2D *pTexture, bool bFlipped);
     /** create one Grid */
     static Grid3D* create(const Size& gridSize);
-    
+
+    Grid3D();
+    ~Grid3D(void);
+
+    /** returns the vertex at a given position */
+    Vertex3F getVertex(const Point& pos) const;
+    /** @deprecated Use getVertex() instead */
+    CC_DEPRECATED_ATTRIBUTE Vertex3F vertex(const Point& pos) const { return getVertex(pos); }
+    /** returns the original (non-transformed) vertex at a given position */
+    Vertex3F getOriginalVertex(const Point& pos) const;
+    /** @deprecated Use getOriginalVertex() instead */
+    CC_DEPRECATED_ATTRIBUTE Vertex3F originalVertex(const Point& pos) const { return getOriginalVertex(pos); }
+
+    /** sets a new vertex at a given position */
+    void setVertex(const Point& pos, const Vertex3F& vertex);
+
+    // Overrides
+    virtual void blit() override;
+    virtual void reuse() override;
+    virtual void calculateVertexPoints() override;
+
 protected:
     GLvoid *_texCoordinates;
     GLvoid *_vertices;
@@ -156,27 +153,31 @@ class CC_DLL TiledGrid3D : public GridBase
 #endif // EMSCRIPTEN
 {
 public:
-    TiledGrid3D();
-    ~TiledGrid3D(void);
-
-    /** returns the tile at the given position */
-    Quad3 tile(const Point& pos);
-    /** returns the original tile (untransformed) at the given position */
-    Quad3 originalTile(const Point& pos);
-    /** sets a new tile */
-    void setTile(const Point& pos, const Quad3& coords);
-
-    virtual void blit(void);
-    virtual void reuse(void);
-    virtual void calculateVertexPoints(void);
-
-public:
-
     /** create one Grid */
     static TiledGrid3D* create(const Size& gridSize, Texture2D *pTexture, bool bFlipped);
     /** create one Grid */
     static TiledGrid3D* create(const Size& gridSize);
-    
+
+    TiledGrid3D();
+    ~TiledGrid3D();
+
+    /** returns the tile at the given position */
+    Quad3 getTile(const Point& pos) const;
+    /** returns the tile at the given position */
+    CC_DEPRECATED_ATTRIBUTE Quad3 tile(const Point& pos) const { return getTile(pos); }
+    /** returns the original tile (untransformed) at the given position */
+    Quad3 getOriginalTile(const Point& pos) const;
+    /** returns the original tile (untransformed) at the given position */
+    CC_DEPRECATED_ATTRIBUTE Quad3 originalTile(const Point& pos) const { return getOriginalTile(pos); }
+
+    /** sets a new tile */
+    void setTile(const Point& pos, const Quad3& coords);
+
+    // Overrides
+    virtual void blit() override;
+    virtual void reuse() override;
+    virtual void calculateVertexPoints() override;
+
 protected:
     GLvoid *_texCoordinates;
     GLvoid *_vertices;

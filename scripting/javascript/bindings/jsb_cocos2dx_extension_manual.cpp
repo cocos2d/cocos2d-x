@@ -258,7 +258,7 @@ public:
             JSBool isSucceed = jsval_to_ccsize(cx, ret, &size);
             if (isSucceed) return size;
         }
-        return SizeZero;
+        return Size::ZERO;
         
     }
     

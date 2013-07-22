@@ -36,13 +36,6 @@ Draws a skeleton.
 */
 class CCSkeleton: public cocos2d::NodeRGBA, public cocos2d::BlendProtocol {
 public:
-	Skeleton* skeleton;
-	Bone* rootBone;
-	float timeScale;
-	bool debugSlots;
-	bool debugBones;
-	bool premultipliedAlpha;
-
 	static CCSkeleton* createWithData (SkeletonData* skeletonData, bool ownsSkeletonData = false);
 	static CCSkeleton* createWithFile (const char* skeletonDataFile, Atlas* atlas, float scale = 1);
 	static CCSkeleton* createWithFile (const char* skeletonDataFile, const char* atlasFile, float scale = 1);
@@ -52,10 +45,6 @@ public:
 	CCSkeleton (const char* skeletonDataFile, const char* atlasFile, float scale = 1);
 
 	virtual ~CCSkeleton ();
-
-	virtual void update (float deltaTime);
-	virtual void draw ();
-	virtual cocos2d::Rect boundingBox ();
 
 	// --- Convenience methods for common Skeleton_* functions.
 	void updateWorldTransform ();
@@ -79,10 +68,22 @@ public:
 	/* Returns false if the slot or attachment was not found. */
 	bool setAttachment (const char* slotName, const char* attachmentName);
 
-	// --- BlendProtocol
-	CC_PROPERTY_PASS_BY_REF(cocos2d::BlendFunc, blendFunc, BlendFunc);
-	virtual void setOpacityModifyRGB (bool value);
-	virtual bool isOpacityModifyRGB() const;
+    // Overrides
+	virtual void update (float deltaTime) override;
+	virtual void draw() override;
+	virtual cocos2d::Rect getBoundingBox() const override;
+	virtual void setOpacityModifyRGB (bool value) override;
+	virtual bool isOpacityModifyRGB() const override;
+    virtual void setBlendFunc( const cocos2d::BlendFunc& func ) override;
+    virtual const cocos2d::BlendFunc& getBlendFunc() const override;
+
+    Skeleton* skeleton;
+	Bone* rootBone;
+	float timeScale;
+	bool debugSlots;
+	bool debugBones;
+	bool premultipliedAlpha;
+    cocos2d::BlendFunc blendFunc;
 
 protected:
 	CCSkeleton ();

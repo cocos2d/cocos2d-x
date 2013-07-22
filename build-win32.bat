@@ -18,7 +18,7 @@ set "VSTOOLS=%VSTOOLS:\=/%"
 set VSVARS="%VSTOOLS%vsvars32.bat"
 
 if not defined VSVARS (
-    echo Can't find VC2010 or VC2012 installed!
+    echo Can't find VC2012 installed!
     goto ERROR
 )
 

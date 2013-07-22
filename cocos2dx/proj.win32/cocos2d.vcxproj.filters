@@ -297,9 +297,6 @@
     <ClCompile Include="..\support\CCNotificationCenter.cpp">
       <Filter>support</Filter>
     </ClCompile>
-    <ClCompile Include="..\support\CCPointExtension.cpp">
-      <Filter>support</Filter>
-    </ClCompile>
     <ClCompile Include="..\support\CCProfiling.cpp">
       <Filter>support</Filter>
     </ClCompile>
@@ -720,9 +717,6 @@
     <ClInclude Include="..\support\CCNotificationCenter.h">
       <Filter>support</Filter>
     </ClInclude>
-    <ClInclude Include="..\support\CCPointExtension.h">
-      <Filter>support</Filter>
-    </ClInclude>
     <ClInclude Include="..\support\CCProfiling.h">
       <Filter>support</Filter>
     </ClInclude>
@@ -970,6 +964,9 @@
     </ClInclude>
     <ClInclude Include="..\keyboard_dispatcher\CCKeyboardDispatcher.h">
       <Filter>keyboard_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\CCDeprecated.h">
+      <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

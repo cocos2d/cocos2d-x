@@ -162,7 +162,7 @@ void TextureCacheEmscripten::addImageAsync(const char *path, Object *target, SEL
     Texture2D *texture = NULL;
 
     // optimization
-    std::string pathKey = FileUtils::sharedFileUtils()->fullPathForFilename(path);
+    std::string pathKey = FileUtils::getInstance()->fullPathForFilename(path);
     texture = (Texture2D*)_textures->objectForKey(pathKey.c_str());
 
     std::string fullpath = pathKey;

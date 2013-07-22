@@ -275,7 +275,7 @@ bool TexturePVR::unpackPVRv2Data(unsigned char* data, unsigned int len)
         return false;
     }
     
-    Configuration *configuration = Configuration::sharedConfiguration();
+    Configuration *configuration = Configuration::getInstance();
 
     flags = CC_SWAP_INT32_LITTLE_TO_HOST(header->flags);
     formatFlags = flags & PVR_TEXTURE_FLAG_TYPE_MASK;
@@ -293,7 +293,7 @@ bool TexturePVR::unpackPVRv2Data(unsigned char* data, unsigned int len)
     }
     
     unsigned int pvr2TableElements = PVR2_MAX_TABLE_ELEMENTS;
-    if (! Configuration::sharedConfiguration()->supportsPVRTC())
+    if (! Configuration::getInstance()->supportsPVRTC())
     {
         pvr2TableElements = 9;
     }
@@ -345,7 +345,7 @@ bool TexturePVR::unpackPVRv2Data(unsigned char* data, unsigned int len)
                         heightBlocks = height / 4;
                         break;
                     case kPVR2TexturePixelFormat_BGRA_8888:
-                        if (Configuration::sharedConfiguration()->supportsBGRA8888() == false) 
+                        if (Configuration::getInstance()->supportsBGRA8888() == false) 
                         {
                             CCLOG("cocos2d: TexturePVR. BGRA8888 not supported on this device");
                             return false;
@@ -424,7 +424,7 @@ bool TexturePVR::unpackPVRv3Data(unsigned char* dataPointer, unsigned int dataLe
 	bool infoValid = false;
     
     unsigned int pvr3TableElements = PVR3_MAX_TABLE_ELEMENTS;
-    if (! Configuration::sharedConfiguration()->supportsPVRTC())
+    if (! Configuration::getInstance()->supportsPVRTC())
     {
         pvr3TableElements = 9;
     }
@@ -490,7 +490,7 @@ bool TexturePVR::unpackPVRv3Data(unsigned char* dataPointer, unsigned int dataLe
 				heightBlocks = height / 4;
 				break;
 			case kPVR3TexturePixelFormat_BGRA_8888:
-				if( ! Configuration::sharedConfiguration()->supportsBGRA8888())
+				if( ! Configuration::getInstance()->supportsBGRA8888())
                 {
 					CCLOG("cocos2d: TexturePVR. BGRA8888 not supported on this device");
 					return false;
@@ -574,7 +574,7 @@ bool TexturePVR::createGLTexture()
     // Generate textures with mipmaps
     for (unsigned int i = 0; i < _numberOfMipmaps; ++i)
     {
-        if (compressed && ! Configuration::sharedConfiguration()->supportsPVRTC()) 
+        if (compressed && ! Configuration::getInstance()->supportsPVRTC()) 
         {
 			CCLOG("cocos2d: WARNING: PVRTC images are not supported");
 			return false;
@@ -633,7 +633,7 @@ bool TexturePVR::initWithContentsOfFile(const char* path)
     }
     else
     {
-        pvrdata = FileUtils::sharedFileUtils()->getFileData(path, "rb", (unsigned long *)(&pvrlen));
+        pvrdata = FileUtils::getInstance()->getFileData(path, "rb", (unsigned long *)(&pvrlen));
     }
     
     if (pvrlen < 0)

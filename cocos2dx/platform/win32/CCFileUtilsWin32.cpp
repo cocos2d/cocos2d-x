@@ -43,7 +43,7 @@ static void _checkPath()
     }
 }
 
-FileUtils* FileUtils::sharedFileUtils()
+FileUtils* FileUtils::getInstance()
 {
     if (s_sharedFileUtils == NULL)
     {

@@ -24,28 +24,28 @@ bool AppDelegate::applicationDidFinishLaunching()
 	// As an example, load config file
 	// XXX: This should be loaded before the Director is initialized,
 	// XXX: but at this point, the director is already initialized
-	Configuration::sharedConfiguration()->loadConfigFile("configs/config-example.plist");
+	Configuration::getInstance()->loadConfigFile("configs/config-example.plist");
 
     // initialize director
-    Director *pDirector = Director::sharedDirector();
-    pDirector->setOpenGLView(EGLView::sharedOpenGLView());
+    Director *pDirector = Director::getInstance();
+    pDirector->setOpenGLView(EGLView::getInstance());
 
-    Size screenSize = EGLView::sharedOpenGLView()->getFrameSize();
+    Size screenSize = EGLView::getInstance()->getFrameSize();
 
-    Size designSize = CCSizeMake(480, 320);
+    Size designSize = Size(480, 320);
 
-    FileUtils* pFileUtils = FileUtils::sharedFileUtils();
+    FileUtils* pFileUtils = FileUtils::getInstance();
     
     if (screenSize.height > 320)
     {
-        Size resourceSize = CCSizeMake(960, 640);
+        Size resourceSize = Size(960, 640);
         std::vector<std::string> searchPaths;
         searchPaths.push_back("hd");
         pFileUtils->setSearchPaths(searchPaths);
         pDirector->setContentScaleFactor(resourceSize.height/designSize.height);
     }
 
-    EGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
+    EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
 
     Scene * pScene = Scene::create();
     Layer * pLayer = new TestController();
@@ -60,15 +60,15 @@ bool AppDelegate::applicationDidFinishLaunching()
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    Director::sharedDirector()->stopAnimation();
-    SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
-    SimpleAudioEngine::sharedEngine()->pauseAllEffects();
+    Director::getInstance()->stopAnimation();
+    SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+    SimpleAudioEngine::getInstance()->pauseAllEffects();
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    Director::sharedDirector()->startAnimation();
-    SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
-    SimpleAudioEngine::sharedEngine()->resumeAllEffects();
+    Director::getInstance()->startAnimation();
+    SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+    SimpleAudioEngine::getInstance()->resumeAllEffects();
 }

@@ -29,11 +29,11 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    Director *pDirector = Director::sharedDirector();
-    pDirector->setOpenGLView(EGLView::sharedOpenGLView());
+    Director *pDirector = Director::getInstance();
+    pDirector->setOpenGLView(EGLView::getInstance());
 
     // JS-Test in Html5 uses 800x450 as design resolution
-    EGLView::sharedOpenGLView()->setDesignResolutionSize(800, 450, kResolutionFixedHeight);
+    EGLView::getInstance()->setDesignResolutionSize(800, 450, kResolutionFixedHeight);
     // turn on display FPS
     pDirector->setDisplayStats(true);
 
@@ -67,7 +67,7 @@ void handle_signal(int signal) {
     static int internal_state = 0;
     ScriptingCore* sc = ScriptingCore::getInstance();
     // should start everything back
-    Director* director = Director::sharedDirector();
+    Director* director = Director::getInstance();
     if (director->getRunningScene()) {
         director->popToRootScene();
     } else {
@@ -86,15 +86,15 @@ void handle_signal(int signal) {
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    Director::sharedDirector()->stopAnimation();
-    SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
-    SimpleAudioEngine::sharedEngine()->pauseAllEffects();
+    Director::getInstance()->stopAnimation();
+    SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+    SimpleAudioEngine::getInstance()->pauseAllEffects();
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    Director::sharedDirector()->startAnimation();
-    SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
-    SimpleAudioEngine::sharedEngine()->resumeAllEffects();
+    Director::getInstance()->startAnimation();
+    SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+    SimpleAudioEngine::getInstance()->resumeAllEffects();
 }

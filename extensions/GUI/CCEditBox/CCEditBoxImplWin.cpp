@@ -63,15 +63,15 @@ bool EditBoxImplWin::initWithSize(const Size& size)
     //! int fontSize = getFontSizeAccordingHeightJni(size.height-12);
     _label = LabelTTF::create("", "", size.height-12);
 	// align the text vertically center
-    _label->setAnchorPoint(ccp(0, 0.5f));
-    _label->setPosition(ccp(5, size.height / 2.0f));
+    _label->setAnchorPoint(Point(0, 0.5f));
+    _label->setPosition(Point(5, size.height / 2.0f));
     _label->setColor(_colText);
     _editBox->addChild(_label);
 
     _labelPlaceHolder = LabelTTF::create("", "", size.height-12);
 	// align the text vertically center
-    _labelPlaceHolder->setAnchorPoint(ccp(0, 0.5f));
-    _labelPlaceHolder->setPosition(ccp(5, size.height / 2.0f));
+    _labelPlaceHolder->setAnchorPoint(Point(0, 0.5f));
+    _labelPlaceHolder->setPosition(Point(5, size.height / 2.0f));
     _labelPlaceHolder->setVisible(false);
     _labelPlaceHolder->setColor(_colPlaceHolder);
     _editBox->addChild(_labelPlaceHolder);

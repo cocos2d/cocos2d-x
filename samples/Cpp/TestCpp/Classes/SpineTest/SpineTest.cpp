@@ -42,7 +42,7 @@ void SpineTestScene::runThisTest()
     Layer* pLayer = SpineTestLayer::create();
     addChild(pLayer);
     
-    Director::sharedDirector()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }
 
 bool SpineTestLayer::init () {
@@ -61,8 +61,8 @@ bool SpineTestLayer::init () {
 		DelayTime::create(5),
 		NULL)));
 
-	Size windowSize = Director::sharedDirector()->getWinSize();
-	skeletonNode->setPosition(ccp(windowSize.width / 2, 20));
+	Size windowSize = Director::getInstance()->getWinSize();
+	skeletonNode->setPosition(Point(windowSize.width / 2, 20));
 	addChild(skeletonNode);
 
 	scheduleUpdate();

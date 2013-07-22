@@ -63,9 +63,11 @@ Classes/ExtensionsTest/ComponentsTest/ProjectileController.cpp \
 Classes/ExtensionsTest/ComponentsTest/SceneController.cpp \
 Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp \
 Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp \
+Classes/ExtensionsTest/NetworkTest/SocketIOTest.cpp \
 Classes/ExtensionsTest/EditBoxTest/EditBoxTest.cpp \
 Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp \
 Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp \
+Classes/ExtensionsTest/Scale9SpriteTest/Scale9SpriteTest.cpp \
 Classes/FontTest/FontTest.cpp \
 Classes/IntervalTest/IntervalTest.cpp \
 Classes/KeypadTest/KeypadTest.cpp \
@@ -109,6 +111,8 @@ Classes/testBasic.cpp \
 Classes/AppDelegate.cpp \
 Classes/BaseTest.cpp \
 Classes/VisibleRect.cpp
+
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/Classes
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static

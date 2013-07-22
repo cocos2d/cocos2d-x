@@ -102,6 +102,42 @@ class CC_DLL Texture2D : public Object
 #endif // EMSCRIPTEN
 {
 public:
+    /** sets the default pixel format for UIImagescontains alpha channel.
+     If the UIImage contains alpha channel, then the options are:
+     - generate 32-bit textures: kTexture2DPixelFormat_RGBA8888 (default one)
+     - generate 24-bit textures: kTexture2DPixelFormat_RGB888
+     - generate 16-bit textures: kTexture2DPixelFormat_RGBA4444
+     - generate 16-bit textures: kTexture2DPixelFormat_RGB5A1
+     - generate 16-bit textures: kTexture2DPixelFormat_RGB565
+     - generate 8-bit textures: kTexture2DPixelFormat_A8 (only use it if you use just 1 color)
+
+     How does it work ?
+     - If the image is an RGBA (with Alpha) then the default pixel format will be used (it can be a 8-bit, 16-bit or 32-bit texture)
+     - If the image is an RGB (without Alpha) then: If the default pixel format is RGBA8888 then a RGBA8888 (32-bit) will be used. Otherwise a RGB565 (16-bit texture) will be used.
+
+     This parameter is not valid for PVR / PVR.CCZ images.
+
+     @since v0.8
+     */
+    static void setDefaultAlphaPixelFormat(Texture2DPixelFormat format);
+
+    /** returns the alpha pixel format
+     @since v0.8
+     */
+    static Texture2DPixelFormat getDefaultAlphaPixelFormat();
+    CC_DEPRECATED_ATTRIBUTE static Texture2DPixelFormat defaultAlphaPixelFormat() { return Texture2D::getDefaultAlphaPixelFormat(); };
+
+    /** treats (or not) PVR files as if they have alpha premultiplied.
+     Since it is impossible to know at runtime if the PVR images have the alpha channel premultiplied, it is
+     possible load them as if they have (or not) the alpha channel premultiplied.
+
+     By default it is disabled.
+
+     @since v0.99.5
+     */
+    static void PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
+    
+public:
     Texture2D();
     virtual ~Texture2D();
 
@@ -132,9 +168,7 @@ public:
     bool initWithImage(Image * uiImage);
 
     /** Initializes a texture from a string with dimensions, alignment, font name and font size */
-    bool initWithString(const char *text,  const char *fontName, float fontSize, const Size& dimensions, TextAlignment hAlignment, VerticalTextAlignment vAlignment);
-    /** Initializes a texture from a string with font name and font size */
-    bool initWithString(const char *text, const char *fontName, float fontSize);
+    bool initWithString(const char *text,  const char *fontName, float fontSize, const Size& dimensions = Size(0, 0), TextAlignment hAlignment = kTextAlignmentCenter, VerticalTextAlignment vAlignment = kVerticalTextAlignmentTop);
     /** Initializes a texture from a string using a text definition*/
     bool initWithString(const char *text, const FontDefinition& textDefinition);
     
@@ -183,51 +217,20 @@ public:
     /** returns the pixel format.
      @since v2.0
      */
-    const char* stringForFormat() const;
+    const char* getStringForFormat() const;
+    CC_DEPRECATED_ATTRIBUTE const char* stringForFormat() const { return getStringForFormat(); };
 
     /** returns the bits-per-pixel of the in-memory OpenGL texture
     @since v1.0
     */
-    unsigned int bitsPerPixelForFormat() const;
+    unsigned int getBitsPerPixelForFormat() const;
+    CC_DEPRECATED_ATTRIBUTE unsigned int bitsPerPixelForFormat() const { return getBitsPerPixelForFormat(); };
 
     /** Helper functions that returns bits per pixels for a given format.
      @since v2.0
      */
-    unsigned int bitsPerPixelForFormat(Texture2DPixelFormat format) const;
-
-    /** sets the default pixel format for UIImagescontains alpha channel.
-    If the UIImage contains alpha channel, then the options are:
-    - generate 32-bit textures: kTexture2DPixelFormat_RGBA8888 (default one)
-    - generate 24-bit textures: kTexture2DPixelFormat_RGB888
-    - generate 16-bit textures: kTexture2DPixelFormat_RGBA4444
-    - generate 16-bit textures: kTexture2DPixelFormat_RGB5A1
-    - generate 16-bit textures: kTexture2DPixelFormat_RGB565
-    - generate 8-bit textures: kTexture2DPixelFormat_A8 (only use it if you use just 1 color)
-
-    How does it work ?
-    - If the image is an RGBA (with Alpha) then the default pixel format will be used (it can be a 8-bit, 16-bit or 32-bit texture)
-    - If the image is an RGB (without Alpha) then: If the default pixel format is RGBA8888 then a RGBA8888 (32-bit) will be used. Otherwise a RGB565 (16-bit texture) will be used.
-
-    This parameter is not valid for PVR / PVR.CCZ images.
-
-    @since v0.8
-    */
-    static void setDefaultAlphaPixelFormat(Texture2DPixelFormat format);
-
-    /** returns the alpha pixel format
-    @since v0.8
-    */
-    static Texture2DPixelFormat defaultAlphaPixelFormat();
-
-    /** treats (or not) PVR files as if they have alpha premultiplied.
-     Since it is impossible to know at runtime if the PVR images have the alpha channel premultiplied, it is
-     possible load them as if they have (or not) the alpha channel premultiplied.
-     
-     By default it is disabled.
-     
-     @since v0.99.5
-     */
-    static void PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
+    unsigned int getBitsPerPixelForFormat(Texture2DPixelFormat format) const;
+    CC_DEPRECATED_ATTRIBUTE unsigned int bitsPerPixelForFormat(Texture2DPixelFormat format) const { return getBitsPerPixelForFormat(format); };
 
     /** content size */
     const Size& getContentSizeInPixels();
