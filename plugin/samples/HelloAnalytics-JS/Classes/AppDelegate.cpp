@@ -51,7 +51,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->start();
     CCLOG("applicationDidFinishLaunching 02");
     ScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
-    ScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
+    ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
     ScriptingCore::getInstance()->runScript("main.js");
        CCLOG("applicationDidFinishLaunching 03");
     return true;

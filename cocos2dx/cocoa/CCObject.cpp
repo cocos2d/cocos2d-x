@@ -52,11 +52,11 @@ Object::~Object(void)
     // if the object is referenced by Lua engine, remove it
     if (_luaID)
     {
-        ScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptObjectByObject(this);
+        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptObjectByObject(this);
     }
     else
     {
-        ScriptEngineProtocol* pEngine = ScriptEngineManager::sharedManager()->getScriptEngine();
+        ScriptEngineProtocol* pEngine = ScriptEngineManager::getInstance()->getScriptEngine();
         if (pEngine != NULL && pEngine->getScriptType() == kScriptTypeJavascript)
         {
             pEngine->removeScriptObjectByObject(this);
