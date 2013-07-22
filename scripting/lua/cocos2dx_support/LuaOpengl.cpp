@@ -28,7 +28,7 @@ void GLNode::draw()
     {
             CommonScriptData data(handler,"");
             ScriptEvent event(kCommonEvent,(void*)&data);
-            ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+            ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 }
 

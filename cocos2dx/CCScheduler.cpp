@@ -164,7 +164,7 @@ void Timer::update(float dt)
                 {
                     SchedulerScriptData data(_scriptHandler,_elapsed);
                     ScriptEvent event(kScheduleEvent,&data);
-                    ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+                    ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
                 }
                 _elapsed = 0;
             }
@@ -185,7 +185,7 @@ void Timer::update(float dt)
                     {
                         SchedulerScriptData data(_scriptHandler,_elapsed);
                         ScriptEvent event(kScheduleEvent,&data);
-                        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+                        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
                     }
 
                     _elapsed = _elapsed - _delay;
@@ -206,7 +206,7 @@ void Timer::update(float dt)
                     {
                         SchedulerScriptData data(_scriptHandler,_elapsed);
                         ScriptEvent event(kScheduleEvent,&data);
-                        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+                        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
                     }
 
                     _elapsed = 0;
