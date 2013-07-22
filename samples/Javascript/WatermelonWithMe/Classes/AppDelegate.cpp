@@ -51,7 +51,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->start();
     
     ScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
-    ScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
+    ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
     ScriptingCore::getInstance()->runScript("boot-jsb.js");
        
     return true;

@@ -399,7 +399,7 @@ void EditBox::unregisterScriptEditBoxHandler(void)
 {
     if (0 != _scriptEditBoxHandler)
     {
-        ScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(_scriptEditBoxHandler);
+        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_scriptEditBoxHandler);
         _scriptEditBoxHandler = 0;
     }
 }
