@@ -119,14 +119,18 @@ CC_DEPRECATED_ATTRIBUTE typedef LayerColorLoader CCLayerColorLoader ;
 CC_DEPRECATED_ATTRIBUTE typedef LabelTTFLoader CCLabelTTFLoader ;
 CC_DEPRECATED_ATTRIBUTE typedef AssetsManager CCAssetsManager ;
 CC_DEPRECATED_ATTRIBUTE typedef AssetsManagerDelegateProtocol CCAssetsManagerDelegateProtocol ;
+
+#if CC_ENABLE_BOX2D_INTEGRATION || CC_ENABLE_CHIPMUNK_INTEGRATION
 CC_DEPRECATED_ATTRIBUTE typedef PhysicsSprite CCPhysicsSprite ;
 CC_DEPRECATED_ATTRIBUTE typedef PhysicsDebugNode CCPhysicsDebugNode ;
+#endif
+
 CC_DEPRECATED_ATTRIBUTE typedef ComController CCComController ;
 CC_DEPRECATED_ATTRIBUTE typedef ComAttribute CCComAttribute ;
 CC_DEPRECATED_ATTRIBUTE typedef InputDelegate CCInputDelegate ;
 CC_DEPRECATED_ATTRIBUTE typedef ComAudio CCComAudio ;
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX) && (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
 CC_DEPRECATED_ATTRIBUTE typedef WsMessage CCWsMessage ;
 CC_DEPRECATED_ATTRIBUTE typedef WsThreadHelper CCWsThreadHelper ;
 CC_DEPRECATED_ATTRIBUTE typedef WebSocketCallbackWrapper CCWebSocketCallbackWrapper ;
