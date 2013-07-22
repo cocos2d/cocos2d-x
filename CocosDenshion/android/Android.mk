@@ -8,8 +8,10 @@ LOCAL_MODULE_FILENAME := libcocosdenshion
 LOCAL_SRC_FILES := SimpleAudioEngine.cpp \
                    ccdandroidUtils.cpp \
                    jni/SimpleAudioEngineJni.cpp \
+                   jni/cddandroidAndroidJavaEngine.cpp \
                    opensl/OpenSLEngine.cpp \
-                   opensl/SimpleAudioEngineOpenSL.cpp
+                   opensl/SimpleAudioEngineOpenSL.cpp \
+                   opensl/cddandroidOpenSLEngine.cpp
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../include
 
