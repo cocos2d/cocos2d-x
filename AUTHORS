@@ -532,6 +532,9 @@ Developers:
         
     James Munro (jdmunro)
         Added JSB support for ccpDistanceSQ.
+        
+    Rafael (rafaelx)
+        A warning fix of AL_INVALID_NAME and AL_INVALID_OPERATION in SimpleAudioEngineOpenAL.cpp.
 
 Retired Core Developers:
     WenSheng Yang
