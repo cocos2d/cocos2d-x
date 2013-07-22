@@ -30,21 +30,30 @@
 
 NS_CC_BEGIN
 
-Label* Label::createWithTTF( const char* label, const char* tttFilePath, int size, GlyphCollection glyphs )
+Label* Label::createWithTTF( const char* label, const char* tttFilePath, int fontSize, GlyphCollection glyphs, int lineSize )
 {
-    FontDefinitionTTF *def = CCFontCache::getFontDefinition(tttFilePath, size, glyphs);
+    FontDefinitionTTF *def = CCFontCache::getFontDefinition(tttFilePath, fontSize, glyphs);
     
     if(!def)
         return 0;
     
-    StringTTF* l = StringTTF::create(def);
-    l->setString( label );
-    return l;
+    StringTTF* templabel = StringTTF::create(def, kTextAlignmentCenter, lineSize);
+    
+    if ( templabel )
+    {
+        templabel->setText(label, lineSize, kTextAlignmentCenter, false);
+        return templabel;
+    }
+    else
+    {
+        CCFontCache::purgeUnusedFonts();
+        return 0;
+    }
 }
 
-Label* Label::createWithBMFont( const char* label, const char* bmfontFilePath )
+Label* Label::createWithBMFont( const char* label, const char* bmfontFilePath, int lineSize )
 {
-    return LabelBMFontNew::create(label, bmfontFilePath);
+    return LabelBMFontNew::create(label, bmfontFilePath, lineSize);
 }
 
 Label::Label()

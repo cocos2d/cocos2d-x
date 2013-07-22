@@ -39,7 +39,7 @@ StringTTF::StringTTF(FontDefinitionTTF *theDef, TextAlignment alignment) :   _cu
         _fontDef->retain();
 }
 
-StringTTF* StringTTF::create(FontDefinitionTTF *def, TextAlignment alignment)
+StringTTF* StringTTF::create(FontDefinitionTTF *def, TextAlignment alignment, int lineSize )
 {
     StringTTF *ret = new StringTTF(def, alignment);
     

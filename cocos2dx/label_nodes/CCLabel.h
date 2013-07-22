@@ -41,43 +41,12 @@ enum class GlyphCollection {
 class CC_DLL Label : public SpriteBatchNode, public LabelProtocol, public RGBAProtocol
 {
 public:
-    static Label* createWithTTF( const char* label, const char* tttFilePath, int size, GlyphCollection glyphs = GlyphCollection::NEHE );
-    static Label* createWithBMFont( const char* label, const char* bmfontFilePath );
-
+    
+    static Label* createWithTTF( const char* label, const char* tttFilePath, int fontSize, GlyphCollection glyphs = GlyphCollection::NEHE, int lineSize = 0 );
+    static Label* createWithBMFont( const char* label, const char* bmfontFilePath, int lineSize = 0 );
+    
     virtual ~Label();
     Label();
-
-//    bool initWithTTF( const char* label, const char* tttFilePath, int size, GlyphCollection glyphs = GlyphCollection::NEHE );
-//    bool initWithBMFont( const char* label, const char* bmfontFilePath );
-
-    // UTF-8 collection
-//    void setGlyphCollection( const char* glyphCollection  );
-//    virtual void setHorizontalAlignment(TextAlignment alignment);
-//    virtual void setVerticalAlignment(VerticalTextAlignment alignment);
-//    virtual void setLineBreakWithoutSpace(bool breakWithoutSpace);
-
-//    // Overrides
-//    virtual void setString(const char *newString) override;
-//    virtual const char* getString(void) const override;
-//    virtual bool isOpacityModifyRGB() const override;
-//    virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
-//    virtual GLubyte getOpacity() const override;
-//    virtual GLubyte getDisplayedOpacity() const override;
-//    virtual void setOpacity(GLubyte opacity) override;
-//    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
-//    virtual bool isCascadeOpacityEnabled() const override;
-//    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override;
-//    virtual const Color3B& getColor(void) const override;
-//    virtual const Color3B& getDisplayedColor() const override;
-//    virtual void setColor(const Color3B& color) override;
-//    virtual void updateDisplayedColor(const Color3B& parentColor) override;
-//    virtual bool isCascadeColorEnabled() const override;
-//    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) override;
-
-protected:
-
-private:
-
 };
 
 NS_CC_END

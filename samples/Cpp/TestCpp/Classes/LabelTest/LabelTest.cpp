@@ -1701,8 +1701,7 @@ std::string LabelDyamicTest::subtitle()
 NewLabelTTFTest::NewLabelTTFTest()
 {
     Size size = Director::getInstance()->getWinSize();
-
-    label = Label::createWithTTF("Hello World", "fonts/arial.ttf", 28, GlyphCollection::NEHE);
+    label = Label::createWithTTF(LongSentencesExample, "fonts/arial.ttf", 28, GlyphCollection::NEHE, size.width);
     label->setPosition( Point(size.width/2, size.height/2) );
     label->setAnchorPoint(Point(0.5, 1.0));
     label->retain();
@@ -1731,7 +1730,7 @@ NewLabelBMFontTest::NewLabelBMFontTest()
 {
     Size size = Director::getInstance()->getWinSize();
 
-    label = Label::createWithBMFont("Hello World", "fonts/bitmapFontTest2.fnt");
+    label = Label::createWithBMFont("Hello World, this is testing the new Label using fnt file", "fonts/bitmapFontTest2.fnt", size.width);
     label->setPosition( Point(size.width/2, size.height/2) );
     label->retain();
     addChild(label);
