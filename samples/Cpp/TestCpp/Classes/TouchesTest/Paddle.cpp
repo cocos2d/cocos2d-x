@@ -70,7 +70,7 @@ void Paddle::ccTouchMoved(Touch* touch, Event* event)
     // you get Sets instead of 1 UITouch, so you'd need to loop through the set
     // in each touchXXX method.
     
-    CCAssert(_state == kPaddleStateGrabbed, "Paddle - Unexpected state!");    
+    CCASSERT(_state == kPaddleStateGrabbed, "Paddle - Unexpected state!");    
     
     Point touchPoint = touch->getLocation();
     
@@ -88,7 +88,7 @@ Paddle* Paddle::clone() const
 
 void Paddle::ccTouchEnded(Touch* touch, Event* event)
 {
-    CCAssert(_state == kPaddleStateGrabbed, "Paddle - Unexpected state!");    
+    CCASSERT(_state == kPaddleStateGrabbed, "Paddle - Unexpected state!");    
     
     _state = kPaddleStateUngrabbed;
 } 

@@ -654,7 +654,7 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
             break;
 
         int currentIndex = child->getAtlasIndex();
-        CCAssert( prev == currentIndex-1, "Child order failed");
+        CCASSERT( prev == currentIndex-1, "Child order failed");
         ////----CCLOG("children %x - atlasIndex:%d", child, currentIndex);
         prev = currentIndex;
     }
@@ -668,7 +668,7 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
             break;
 
         int currentIndex = child->getAtlasIndex();
-        CCAssert( prev == currentIndex-1, "Child order failed");
+        CCASSERT( prev == currentIndex-1, "Child order failed");
         ////----CCLOG("descendant %x - atlasIndex:%d", child, currentIndex);
         prev = currentIndex;
     }

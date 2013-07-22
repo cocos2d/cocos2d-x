@@ -60,37 +60,37 @@ ComAttribute* ComAttribute::create(void)
 
 void ComAttribute::setInt(const char *key, int value)
 {
-    CCAssert(key != NULL, "Argument must be non-nil"); 
+    CCASSERT(key != NULL, "Argument must be non-nil"); 
     _attributes->setObject(Integer::create(value), key);
 }
 
 void ComAttribute::setDouble(const char *key, double value)
 {
-    CCAssert(key != NULL, "Argument must be non-nil"); 
+    CCASSERT(key != NULL, "Argument must be non-nil"); 
     _attributes->setObject(Double::create(value), key);
 }
 
 void ComAttribute::setFloat(const char *key, float value)
 {
-    CCAssert(key != NULL, "Argument must be non-nil"); 
+    CCASSERT(key != NULL, "Argument must be non-nil"); 
     _attributes->setObject(Float::create(value), key);
 }
 
 void ComAttribute::setBool(const char *key, bool value)
 {
-    CCAssert(key != NULL, "Argument must be non-nil"); 
+    CCASSERT(key != NULL, "Argument must be non-nil"); 
     _attributes->setObject(Bool::create(value), key);
 }
 
 void ComAttribute::setCString(const char *key, const char *value)
 {
-    CCAssert(key != NULL, "Argument must be non-nil"); 
+    CCASSERT(key != NULL, "Argument must be non-nil"); 
     _attributes->setObject(String::create(value), key);
 }
 
 void ComAttribute::setObject(const char *key, Object *value)
 {
-    CCAssert(key != NULL, "Argument must be non-nil"); 
+    CCASSERT(key != NULL, "Argument must be non-nil"); 
     _attributes->setObject(value, key);
 }
 
@@ -102,7 +102,7 @@ int ComAttribute::getInt(const char *key) const
 		if( Integer *obj=dynamic_cast<Integer*>(ret) )
 			return obj->getValue();
 
-		CCAssert(false, "Key found, type is not integer");
+		CCASSERT(false, "Key found, type is not integer");
 	}
 
 	// XXX: Should it throw an exception ?
@@ -118,7 +118,7 @@ double ComAttribute::getDouble(const char *key) const
 		if( Double *obj=dynamic_cast<Double*>(ret) )
 			return obj->getValue();
 
-		CCAssert(false, "Key found, type is not double");
+		CCASSERT(false, "Key found, type is not double");
 	}
 
 	// XXX: Should it throw an exception ?
@@ -134,7 +134,7 @@ float ComAttribute::getFloat(const char *key) const
 		if( Float *obj=dynamic_cast<Float*>(ret) )
 			return obj->getValue();
 
-		CCAssert(false, "Key found, type is not float");
+		CCASSERT(false, "Key found, type is not float");
 	}
 
 	// XXX: Should it throw an exception ?
@@ -151,7 +151,7 @@ bool ComAttribute::getBool(const char *key) const
 			return boolobj->getValue();
 		if( String *strobj=dynamic_cast<String*>(ret) )
 			return strobj->boolValue();
-		CCAssert(false, "Key found, type is not Bool");
+		CCASSERT(false, "Key found, type is not Bool");
 	}
 
 	// XXX: Should it throw an exception ?
@@ -167,7 +167,7 @@ const char* ComAttribute::getCString(const char *key) const
 		if( String *str=dynamic_cast<String*>(ret) )
 			return str->getCString();
 
-		CCAssert(false, "Key found, type is not CString");
+		CCASSERT(false, "Key found, type is not CString");
 	}
 
 	// XXX: Should it throw an exception ?

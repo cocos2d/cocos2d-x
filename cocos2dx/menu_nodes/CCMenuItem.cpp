@@ -344,7 +344,7 @@ MenuItemAtlasFont * MenuItemAtlasFont::create(const char *value, const char *cha
 // XXX: deprecated
 bool MenuItemAtlasFont::initWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, Object* target, SEL_MenuHandler selector)
 {
-    CCAssert( value != NULL && strlen(value) != 0, "value length must be greater than 0");
+    CCASSERT( value != NULL && strlen(value) != 0, "value length must be greater than 0");
 
 	_target = target;
 	CC_SAFE_RETAIN(_target);
@@ -353,7 +353,7 @@ bool MenuItemAtlasFont::initWithString(const char *value, const char *charMapFil
 
 bool MenuItemAtlasFont::initWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback)
 {
-    CCAssert( value != NULL && strlen(value) != 0, "value length must be greater than 0");
+    CCASSERT( value != NULL && strlen(value) != 0, "value length must be greater than 0");
     LabelAtlas *label = new LabelAtlas();
     label->initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap);
     label->autorelease();
@@ -422,7 +422,7 @@ MenuItemFont * MenuItemFont::create(const char *value)
 // XXX: deprecated
 bool MenuItemFont::initWithString(const char *value, Object* target, SEL_MenuHandler selector)
 {
-    CCAssert( value != NULL && strlen(value) != 0, "Value length must be greater than 0");
+    CCASSERT( value != NULL && strlen(value) != 0, "Value length must be greater than 0");
 
 	_target = target;
     CC_SAFE_RETAIN(target);
@@ -431,7 +431,7 @@ bool MenuItemFont::initWithString(const char *value, Object* target, SEL_MenuHan
 
 bool MenuItemFont::initWithString(const char *value, const ccMenuCallback& callback)
 {
-    CCAssert( value != NULL && strlen(value) != 0, "Value length must be greater than 0");
+    CCASSERT( value != NULL && strlen(value) != 0, "Value length must be greater than 0");
 
     _fontName = _globalFontName;
     _fontSize = _globalFontSize;

@@ -57,7 +57,13 @@ public:
     virtual ~ParallaxNode();
 
     void addChild(Node * child, int z, const Point& parallaxRatio, const Point& positionOffset);
-    
+
+    /** Sets an array of layers for the Parallax node */
+    void setParallaxArray( struct _ccArray *parallaxArray) { _parallaxArray = parallaxArray; }
+    /** Returns the array of layers of the Parallax node */
+    struct _ccArray* getParallaxArray() { return _parallaxArray; }
+    const struct _ccArray* getParallaxArray() const { return _parallaxArray; }
+
     //
     // Overrides
     //
@@ -65,12 +71,12 @@ public:
     virtual void removeChild(Node* child, bool cleanup) override;
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     virtual void visit(void) override;
-private:
-    Point absolutePosition();
+
 protected:
+    Point absolutePosition();
+
     Point    _lastPosition;
-    /** array that holds the offset / ratio of the children */
-    CC_SYNTHESIZE(struct _ccArray *, _parallaxArray, ParallaxArray)
+    struct _ccArray* _parallaxArray;
 };
 
 // end of tilemap_parallax_nodes group

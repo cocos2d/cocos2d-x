@@ -79,9 +79,9 @@ ControlSlider* ControlSlider::create(Sprite * backgroundSprite, Sprite* pogressS
  {
      if (Control::init())
      {
-        CCAssert(backgroundSprite,  "Background sprite must be not nil");
-        CCAssert(progressSprite,    "Progress sprite must be not nil");
-        CCAssert(thumbSprite,       "Thumb sprite must be not nil");
+        CCASSERT(backgroundSprite,  "Background sprite must be not nil");
+        CCASSERT(progressSprite,    "Progress sprite must be not nil");
+        CCASSERT(thumbSprite,       "Thumb sprite must be not nil");
 
         ignoreAnchorPointForPosition(false);
         setTouchEnabled(true);

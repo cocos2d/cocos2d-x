@@ -41,7 +41,6 @@ NS_CC_BEGIN
  * @{
  */
 
-#define kDefaultSpriteBatchCapacity   29
 
 class Sprite;
 
@@ -62,11 +61,13 @@ class Sprite;
 */
 class CC_DLL SpriteBatchNode : public Node, public TextureProtocol
 {
+    static const int kDefaultSpriteBatchCapacity = 29;
+
 public:
     /** creates a SpriteBatchNode with a texture2d and capacity of children.
      The capacity will be increased in 33% in runtime if it run out of space.
      */
-    static SpriteBatchNode* createWithTexture(Texture2D* tex, unsigned int capacity);
+    static SpriteBatchNode* createWithTexture(Texture2D* tex, int capacity);
     static SpriteBatchNode* createWithTexture(Texture2D* tex) {
         return SpriteBatchNode::createWithTexture(tex, kDefaultSpriteBatchCapacity);
     }
@@ -75,7 +76,7 @@ public:
      The capacity will be increased in 33% in runtime if it run out of space.
      The file will be loaded using the TextureMgr.
      */
-    static SpriteBatchNode* create(const char* fileImage, unsigned int capacity);
+    static SpriteBatchNode* create(const char* fileImage, int capacity);
     static SpriteBatchNode* create(const char* fileImage) {
         return SpriteBatchNode::create(fileImage, kDefaultSpriteBatchCapacity);
     }
@@ -86,12 +87,12 @@ public:
     /** initializes a SpriteBatchNode with a texture2d and capacity of children.
      The capacity will be increased in 33% in runtime if it run out of space.
      */
-    bool initWithTexture(Texture2D *tex, unsigned int capacity);
+    bool initWithTexture(Texture2D *tex, int capacity);
     /** initializes a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.
      The capacity will be increased in 33% in runtime if it run out of space.
      The file will be loaded using the TextureMgr.
      */
-    bool initWithFile(const char* fileImage, unsigned int capacity);
+    bool initWithFile(const char* fileImage, int capacity);
     bool init();
 
     // property

@@ -377,7 +377,7 @@ bool TexturePVR::unpackPVRv2Data(unsigned char* data, unsigned int len)
                 _numberOfMipmaps++;
                 
                 //Check that we didn't overflow
-                CCAssert(_numberOfMipmaps < CC_PVRMIPMAP_MAX, 
+                CCASSERT(_numberOfMipmaps < CC_PVRMIPMAP_MAX, 
                          "TexturePVR: Maximum number of mipmaps reached. Increase the CC_PVRMIPMAP_MAX value");
                 
                 dataOffset += packetLength;
@@ -471,7 +471,7 @@ bool TexturePVR::unpackPVRv3Data(unsigned char* dataPointer, unsigned int dataLe
 	bytes = dataPointer;
 	
 	_numberOfMipmaps = header->numberOfMipmaps;
-	CCAssert(_numberOfMipmaps < CC_PVRMIPMAP_MAX, "TexturePVR: Maximum number of mimpaps reached. Increate the CC_PVRMIPMAP_MAX value");
+	CCASSERT(_numberOfMipmaps < CC_PVRMIPMAP_MAX, "TexturePVR: Maximum number of mimpaps reached. Increate the CC_PVRMIPMAP_MAX value");
     
 	for (unsigned int i = 0; i < _numberOfMipmaps; i++)
     {	
@@ -520,7 +520,7 @@ bool TexturePVR::unpackPVRv3Data(unsigned char* dataPointer, unsigned int dataLe
 		_asMipmaps[i].len = packetLength;
 		
 		dataOffset += packetLength;
-		CCAssert(dataOffset <= dataLength, "CCTexurePVR: Invalid lenght");
+		CCASSERT(dataOffset <= dataLength, "CCTexurePVR: Invalid lenght");
 		
 		
 		width = MAX(width >> 1, 1);

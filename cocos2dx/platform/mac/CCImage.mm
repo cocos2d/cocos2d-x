@@ -312,8 +312,8 @@ static bool _initWithString(const char * pText, cocos2d::Image::ETextAlign eAlig
 {
     bool bRet = false;
 
-	CCAssert(pText, "Invalid pText");
-	CCAssert(pInfo, "Invalid pInfo");
+	CCASSERT(pText, "Invalid pText");
+	CCASSERT(pInfo, "Invalid pInfo");
 	
 	do {
 		NSString * string  = [NSString stringWithUTF8String:pText];
@@ -643,7 +643,7 @@ bool Image::potImageData(unsigned int POTWide, unsigned int POTHigh)
 		case kTexture2DPixelFormat_RGB565:
 		case kTexture2DPixelFormat_A8:
 			tempData = (unsigned char*)(this->getData());
-			CCAssert(tempData != NULL, "NULL image data.");
+			CCASSERT(tempData != NULL, "NULL image data.");
 			
 			if(this->getWidth() == (short)POTWide && this->getHeight() == (short)POTHigh)
 			{
@@ -668,7 +668,7 @@ bool Image::potImageData(unsigned int POTWide, unsigned int POTHigh)
 			break;    
 		case kTexture2DPixelFormat_RGB888:
 			tempData = (unsigned char*)(this->getData());
-			CCAssert(tempData != NULL, "NULL image data.");
+			CCASSERT(tempData != NULL, "NULL image data.");
 			if(this->getWidth() == (short)POTWide && this->getHeight() == (short)POTHigh)
 			{
 				data = new unsigned char[POTHigh * POTWide * 3];
@@ -690,7 +690,7 @@ bool Image::potImageData(unsigned int POTWide, unsigned int POTHigh)
 			}
 			break;   
 		default:
-			CCAssert(0, "Invalid pixel format");
+			CCASSERT(0, "Invalid pixel format");
 	}
 	
 	// Repack the pixel data into the right format
