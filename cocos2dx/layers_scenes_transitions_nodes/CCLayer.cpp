@@ -103,36 +103,28 @@ void Layer::registerWithTouchDispatcher()
     }
 }
 
-int Layer::excuteScriptTouchHandler(int nEventType, Touch *pTouch)
+int Layer::executeScriptTouchHandler(int eventType, Touch* touch)
 {
-    if (kScriptTypeLua == _scriptType)
+    if (kScriptTypeNone != _scriptType)
     {
-        Set touches;
-        touches.addObject((Object*)pTouch);
-        TouchesScriptData data(nEventType,(void*)this,&touches);
-        ScriptEvent event(kTouchesEvent,&data);
+        TouchScriptData data(eventType, this, touch);
+        ScriptEvent event(kTouchEvent, &data);
         return ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);        
     }
-    else if(kScriptTypeJavascript == _scriptType)
-    {
-        return ScriptEngineManager::sharedManager()->getScriptEngine()->executeLayerTouchEvent(this, nEventType, pTouch);
-    }
+
     //can not reach it
     return 0;
 }
 
-int Layer::excuteScriptTouchHandler(int nEventType, Set *pTouches)
+int Layer::executeScriptTouchesHandler(int eventType, Set* touches)
 {
-    if (kScriptTypeLua == _scriptType)
+    if (kScriptTypeNone != _scriptType)
     {
-        TouchesScriptData data(nEventType,(void*)this,pTouches);
-        ScriptEvent event(kTouchesEvent,&data);
+        TouchesScriptData data(eventType, this, touches);
+        ScriptEvent event(kTouchesEvent, &data);
         return ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
-    else if(kScriptTypeJavascript == _scriptType)
-    {
-        return ScriptEngineManager::sharedManager()->getScriptEngine()->executeLayerTouchesEvent(this, nEventType, pTouches);
-    }
+
     return 0;
 }
 
@@ -141,6 +133,7 @@ bool Layer::isTouchEnabled() const
 {
     return _touchEnabled;
 }
+
 /// isTouchEnabled setter
 void Layer::setTouchEnabled(bool enabled)
 {
@@ -242,14 +235,11 @@ void Layer::setAccelerometerInterval(double interval) {
 
 void Layer::didAccelerate(Acceleration* pAccelerationValue)
 {
-   CC_UNUSED_PARAM(pAccelerationValue);
-    if (kScriptTypeJavascript == _scriptType)
+    CC_UNUSED_PARAM(pAccelerationValue);
+    
+    if(kScriptTypeNone == _scriptType)
     {
-        ScriptEngineManager::sharedManager()->getScriptEngine()->executeAccelerometerEvent(this, pAccelerationValue);
-    }
-    else if(kScriptTypeLua == _scriptType)
-    {
-        BasicScriptData data((void*)this,(void*)pAccelerationValue);
+        BasicScriptData data(this,(void*)pAccelerationValue);
         ScriptEvent event(kAccelerometerEvent,&data);
         ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
@@ -310,15 +300,11 @@ void Layer::setKeypadEnabled(bool enabled)
 
 void Layer::keyBackClicked(void)
 {
-    if (kScriptTypeLua == _scriptType)
+    if (kScriptTypeNone != _scriptType)
     {
-        KeypadScriptData data(kTypeBackClicked,(void*)this);
+        KeypadScriptData data(kTypeBackClicked, this);
         ScriptEvent event(kKeypadEvent,(void*)&data);
         ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
-    }
-    else if(kScriptTypeJavascript == _scriptType)
-    {
-        ScriptEngineManager::sharedManager()->getScriptEngine()->executeLayerKeypadEvent(this, kTypeBackClicked);
     }
 }
 
@@ -326,7 +312,7 @@ void Layer::keyMenuClicked(void)
 {
     if (kScriptTypeLua == _scriptType)
     {
-        KeypadScriptData data(kTypeMenuClicked,(void*)this);
+        KeypadScriptData data(kTypeMenuClicked, this);
         ScriptEvent event(kKeypadEvent,(void*)&data);
         ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
     }
@@ -397,7 +383,7 @@ bool Layer::ccTouchBegan(Touch *pTouch, Event *pEvent)
 {
     if (kScriptTypeNone != _scriptType)
     {
-        return excuteScriptTouchHandler(CCTOUCHBEGAN, pTouch) == 0 ? false : true;
+        return executeScriptTouchHandler(CCTOUCHBEGAN, pTouch) == 0 ? false : true;
     }
 
     CC_UNUSED_PARAM(pTouch);
@@ -410,7 +396,7 @@ void Layer::ccTouchMoved(Touch *pTouch, Event *pEvent)
 {
     if (kScriptTypeNone != _scriptType)
     {
-        excuteScriptTouchHandler(CCTOUCHMOVED, pTouch);
+        executeScriptTouchHandler(CCTOUCHMOVED, pTouch);
         return;
     }
 
@@ -422,7 +408,7 @@ void Layer::ccTouchEnded(Touch *pTouch, Event *pEvent)
 {
     if (kScriptTypeNone != _scriptType)
     {
-        excuteScriptTouchHandler(CCTOUCHENDED, pTouch);
+        executeScriptTouchHandler(CCTOUCHENDED, pTouch);
         return;
     }
 
@@ -434,7 +420,7 @@ void Layer::ccTouchCancelled(Touch *pTouch, Event *pEvent)
 {
     if (kScriptTypeNone != _scriptType)
     {
-        excuteScriptTouchHandler(CCTOUCHCANCELLED, pTouch);
+        executeScriptTouchHandler(CCTOUCHCANCELLED, pTouch);
         return;
     }
 
@@ -446,7 +432,7 @@ void Layer::ccTouchesBegan(Set *pTouches, Event *pEvent)
 {
     if (kScriptTypeNone != _scriptType)
     {
-        excuteScriptTouchHandler(CCTOUCHBEGAN, pTouches);
+        executeScriptTouchesHandler(CCTOUCHBEGAN, pTouches);
         return;
     }
 
@@ -458,7 +444,7 @@ void Layer::ccTouchesMoved(Set *pTouches, Event *pEvent)
 {
     if (kScriptTypeNone != _scriptType)
     {
-        excuteScriptTouchHandler(CCTOUCHMOVED, pTouches);
+        executeScriptTouchesHandler(CCTOUCHMOVED, pTouches);
         return;
     }
 
@@ -470,7 +456,7 @@ void Layer::ccTouchesEnded(Set *pTouches, Event *pEvent)
 {
     if (kScriptTypeNone != _scriptType)
     {
-        excuteScriptTouchHandler(CCTOUCHENDED, pTouches);
+        executeScriptTouchesHandler(CCTOUCHENDED, pTouches);
         return;
     }
 
@@ -482,7 +468,7 @@ void Layer::ccTouchesCancelled(Set *pTouches, Event *pEvent)
 {
     if (kScriptTypeNone != _scriptType)
     {
-        excuteScriptTouchHandler(CCTOUCHCANCELLED, pTouches);
+        executeScriptTouchesHandler(CCTOUCHCANCELLED, pTouches);
         return;
     }
 

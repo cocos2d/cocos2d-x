@@ -163,6 +163,7 @@ enum ScriptEventType
     kNotificationEvent,
     kCallFuncEvent,
     kScheduleEvent,
+    kTouchEvent,
     kTouchesEvent,
     kKeypadEvent,
     kAccelerometerEvent,
@@ -172,27 +173,31 @@ enum ScriptEventType
 
 struct BasicScriptData
 {
-    //nativeobject:to get handler for lua or to get jsobject for js
+    // nativeobject:to get handler for lua or to get jsobject for js
     void* nativeObject;
-    //value: a pointer to a object that already defined
+    // value: a pointer to a object that already defined
     void* value;
+    
+    // Constructor
     BasicScriptData(void* inObject,void* inValue = NULL)
-    :nativeObject(inObject),value(inValue)
+    : nativeObject(inObject),value(inValue)
     {
     }
 };
 
 struct SchedulerScriptData
 {
-    //lua use
+    // lua use
     int handler;
     float elapse;
-    //js use
-    Node* node;
-    SchedulerScriptData(int inHandler,float inElapse,Node* inNode = NULL)
-    :handler(inHandler),
-    elapse(inElapse),
-    node(inNode)
+    // js use
+    void* node;
+    
+    // Constructor
+    SchedulerScriptData(int inHandler,float inElapse,void* inNode = NULL)
+    : handler(inHandler),
+      elapse(inElapse),
+      node(inNode)
     {
     }
 };
@@ -202,10 +207,27 @@ struct TouchesScriptData
     int actionType;
     void* nativeObject;
     Set* touches;
-    TouchesScriptData(int inActionType,void* inNativeObject,Set* inTouches)
-    :actionType(inActionType),
-    nativeObject(inNativeObject),
-    touches(inTouches)
+    
+    // Constructor
+    TouchesScriptData(int inActionType, void* inNativeObject, Set* inTouches)
+    : actionType(inActionType),
+      nativeObject(inNativeObject),
+      touches(inTouches)
+    {
+    }
+};
+
+struct TouchScriptData
+{
+    int actionType;
+    void* nativeObject;
+    Touch* touch;
+    
+    // Constructor
+    TouchScriptData(int inActionType, void* inNativeObject, Touch* inTouch)
+    : actionType(inActionType),
+      nativeObject(inNativeObject),
+      touch(inTouch)
     {
     }
 };
@@ -214,22 +236,26 @@ struct KeypadScriptData
 {
     int actionType;
     void* nativeObject;
+    
+    // Constructor
     KeypadScriptData(int inActionType,void* inNativeObject)
-    :actionType(inActionType),nativeObject(inNativeObject)
+    : actionType(inActionType),nativeObject(inNativeObject)
     {
     }
 };
 
 struct CommonScriptData
 {
-    //now,only use lua 
+    // Now this struct is only used in LuaBinding.
     int handler;
     char eventName[64];
     Object* eventSource;
     char eventSourceClassName[64];
+    
+    // Constructor
     CommonScriptData(int inHandler,const char* inName,Object* inSource = NULL,const char* inClassName = NULL)
-    :handler(inHandler),
-    eventSource(inSource)
+    : handler(inHandler),
+      eventSource(inSource)
     {
         strncpy(eventName, inName, 64);
         
@@ -248,9 +274,11 @@ struct ScriptEvent
 {
     ScriptEventType type;
     void* data;
+    
+    // Constructor
     ScriptEvent(ScriptEventType inType,void* inData)
-    :type(inType),
-    data(inData)
+    : type(inType),
+      data(inData)
     {
     }
 };
@@ -297,44 +325,13 @@ public:
      */
     virtual int executeGlobalFunction(const char* functionName) = 0;
     
-    /**
-     @brief Execute a node event function
-     @param pNode which node produce this event
-     @param nAction kNodeOnEnter,kNodeOnExit,kMenuItemActivated,kNodeOnEnterTransitionDidFinish,kNodeOnExitTransitionDidStart
-     @return The integer value returned from the script function.
-     */
-    virtual int executeNodeEvent(Node* pNode, int nAction) = 0;
+    //when trigger a script event ,call this func,add params needed into ScriptEvent object.nativeObject is object triggering the event, can be NULL in lua
+    virtual int sendEvent(ScriptEvent* evt) = 0;
     
-    virtual int executeMenuItemEvent(MenuItem* pMenuItem) = 0;
-    /** Execute a notification event function */
-    virtual int executeNotificationEvent(NotificationCenter* pNotificationCenter, const char* pszName) = 0;
-    
-    /** execute a callfun event */
-    virtual int executeCallFuncActionEvent(CallFunc* pAction, Object* target = NULL) = 0;
-    /** execute a schedule function */
-    virtual int executeSchedule(int nHandler, float dt, Node* pNode = NULL) = 0;
-    
-    /** functions for executing touch event */
-    virtual int executeLayerTouchesEvent(Layer* pLayer, int eventType, Set *pTouches) = 0;
-    virtual int executeLayerTouchEvent(Layer* pLayer, int eventType, Touch *pTouch) = 0;
-
-    /** functions for keypad event */
-    virtual int executeLayerKeypadEvent(Layer* pLayer, int eventType) = 0;
-
-    /** execute a accelerometer event */
-    virtual int executeAccelerometerEvent(Layer* pLayer, Acceleration* pAccelerationValue) = 0;
-
-    /** function for common event */
-    virtual int executeEvent(int nHandler, const char* pEventName, Object* pEventSource = NULL, const char* pEventSourceClassName = NULL) = 0;
-
     /** called by CCAssert to allow scripting engine to handle failed assertions
      * @return true if the assert was handled by the script engine, false otherwise.
      */
     virtual bool handleAssert(const char *msg) = 0;
-    
-    //when trigger a script event ,call this func,add params needed into ScriptEvent object.nativeObject is object triggering the event, can be NULL in lua
-    virtual int sendEvent(ScriptEvent* message){ return 0;}
-    //
 };
 
 /**
