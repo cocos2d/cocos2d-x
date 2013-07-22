@@ -10,4 +10,5 @@ SUBDIRS += cocos2dx/proj.qt5/cocos2dx.pro
 
 # Examples
 SUBDIRS += samples/Cpp/HelloCpp/proj.qt5/HelloCpp.pro
+SUBDIRS += samples/Cpp/SimpleGame/proj.qt5/SimpleGame.pro
 
