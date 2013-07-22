@@ -130,7 +130,7 @@ void Control::sendActionsForControlEvents(ControlEvent controlEvents)
             {
                 cocos2d::BasicScriptData data(this,(void*)&controlEvents);
                 cocos2d::ScriptEvent event(cocos2d::kControlEvent,(void*)&data);
-                cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+                cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
             }
         }
     }

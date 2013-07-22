@@ -116,7 +116,7 @@ void MenuItem::activate()
         {
             BasicScriptData data(this);
             ScriptEvent scriptEvent(kMenuClickedEvent,&data);
-            ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);
+            ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
         }
     }
 }

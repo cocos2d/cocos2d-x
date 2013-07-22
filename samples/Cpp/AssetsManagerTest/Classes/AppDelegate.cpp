@@ -133,7 +133,7 @@ void UpdateLayer::enter(cocos2d::Object *pSender)
     }
     
     ScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
-    ScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
+    ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
     ScriptingCore::getInstance()->runScript("main.js");
 }
 

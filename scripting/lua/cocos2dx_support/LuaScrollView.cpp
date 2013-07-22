@@ -35,7 +35,7 @@ void LuaScrollView::scrollViewDidScroll(ScrollView* view)
         {
             CommonScriptData data(handler,"");
             ScriptEvent event(kCommonEvent,(void*)&data);
-            ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+            ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
         }
     }
 }
@@ -50,7 +50,7 @@ void LuaScrollView::scrollViewDidZoom(ScrollView* view)
         {
             CommonScriptData data(handler,"");
             ScriptEvent event(kCommonEvent,(void*)&data);
-            ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+            ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
         }
     }
 }

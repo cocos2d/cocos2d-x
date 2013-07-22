@@ -109,7 +109,7 @@ int Layer::executeScriptTouchHandler(int eventType, Touch* touch)
     {
         TouchScriptData data(eventType, this, touch);
         ScriptEvent event(kTouchEvent, &data);
-        return ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);        
+        return ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);        
     }
 
     //can not reach it
@@ -122,7 +122,7 @@ int Layer::executeScriptTouchesHandler(int eventType, Set* touches)
     {
         TouchesScriptData data(eventType, this, touches);
         ScriptEvent event(kTouchesEvent, &data);
-        return ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+        return ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 
     return 0;
@@ -241,7 +241,7 @@ void Layer::didAccelerate(Acceleration* pAccelerationValue)
     {
         BasicScriptData data(this,(void*)pAccelerationValue);
         ScriptEvent event(kAccelerometerEvent,&data);
-        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 }
 
@@ -304,7 +304,7 @@ void Layer::keyBackClicked(void)
     {
         KeypadScriptData data(kTypeBackClicked, this);
         ScriptEvent event(kKeypadEvent,(void*)&data);
-        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 }
 
@@ -314,7 +314,7 @@ void Layer::keyMenuClicked(void)
     {
         KeypadScriptData data(kTypeMenuClicked, this);
         ScriptEvent event(kKeypadEvent,(void*)&data);
-        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 }
 
