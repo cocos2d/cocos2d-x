@@ -77,12 +77,12 @@ void ParallaxNode::addChild(Node * child, int zOrder, int tag)
     CC_UNUSED_PARAM(zOrder);
     CC_UNUSED_PARAM(child);
     CC_UNUSED_PARAM(tag);
-    CCAssert(0,"ParallaxNode: use addChild:z:parallaxRatio:positionOffset instead");
+    CCASSERT(0,"ParallaxNode: use addChild:z:parallaxRatio:positionOffset instead");
 }
 
 void ParallaxNode::addChild(Node *child, int z, const Point& ratio, const Point& offset)
 {
-    CCAssert( child != NULL, "Argument must be non-nil");
+    CCASSERT( child != NULL, "Argument must be non-nil");
     PointObject *obj = PointObject::pointWithPoint(ratio, offset);
     obj->setChild(child);
     ccArrayAppendObjectWithResize(_parallaxArray, (Object*)obj);

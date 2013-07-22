@@ -88,20 +88,23 @@ This information is obtained from the TMX file.
 */
 class CC_DLL TMXLayerInfo : public Object
 {
-    CC_PROPERTY(Dictionary*, _properties, Properties);
 public:
+    TMXLayerInfo();
+    virtual ~TMXLayerInfo();
+
+    void setProperties(Dictionary *properties);
+    Dictionary* getProperties();
+
+    Dictionary          *_properties;
     std::string         _name;
-    Size              _layerSize;
+    Size                _layerSize;
     unsigned int        *_tiles;
     bool                _visible;
     unsigned char       _opacity;
     bool                _ownTiles;
     unsigned int        _minGID;
     unsigned int        _maxGID;
-    Point             _offset;
-public:
-    TMXLayerInfo();
-    virtual ~TMXLayerInfo();
+    Point               _offset;
 };
 
 /** @brief TMXTilesetInfo contains the information about the tilesets like:

@@ -62,7 +62,7 @@ void ccArrayDoubleCapacity(ccArray *arr)
 	arr->max *= 2;
 	Object** newArr = (Object**)realloc( arr->arr, arr->max * sizeof(Object*) );
 	// will fail when there's not enough memory
-    CCAssert(newArr != 0, "ccArrayDoubleCapacity failed. Not enough memory");
+    CCASSERT(newArr != 0, "ccArrayDoubleCapacity failed. Not enough memory");
 	arr->arr = newArr;
 }
 
@@ -93,7 +93,7 @@ void ccArrayShrink(ccArray *arr)
 		}
 		
 		arr->arr = (Object**)realloc(arr->arr,newSize * sizeof(Object*) );
-		CCAssert(arr->arr!=NULL,"could not reallocate the memory");
+		CCASSERT(arr->arr!=NULL,"could not reallocate the memory");
 	}
 }
 
@@ -119,7 +119,7 @@ bool ccArrayContainsObject(ccArray *arr, Object* object)
 /** Appends an object. Behavior undefined if array doesn't have enough capacity. */
 void ccArrayAppendObject(ccArray *arr, Object* object)
 {
-    CCAssert(object != NULL, "Invalid parameter!");
+    CCASSERT(object != NULL, "Invalid parameter!");
     object->retain();
 	arr->arr[arr->num] = object;
 	arr->num++;
@@ -152,8 +152,8 @@ void ccArrayAppendArrayWithResize(ccArray *arr, ccArray *plusArr)
 /** Inserts an object at index */
 void ccArrayInsertObjectAtIndex(ccArray *arr, Object* object, unsigned int index)
 {
-	CCAssert(index<=arr->num, "Invalid index. Out of bounds");
-	CCAssert(object != NULL, "Invalid parameter!");
+	CCASSERT(index<=arr->num, "Invalid index. Out of bounds");
+	CCASSERT(object != NULL, "Invalid parameter!");
 
 	ccArrayEnsureExtraCapacity(arr, 1);
 	
@@ -171,8 +171,8 @@ void ccArrayInsertObjectAtIndex(ccArray *arr, Object* object, unsigned int index
 /** Swaps two objects */
 void ccArraySwapObjectsAtIndexes(ccArray *arr, unsigned int index1, unsigned int index2)
 {
-	CCAssert(index1 < arr->num, "(1) Invalid index. Out of bounds");
-	CCAssert(index2 < arr->num, "(2) Invalid index. Out of bounds");
+	CCASSERT(index1 < arr->num, "(1) Invalid index. Out of bounds");
+	CCASSERT(index2 < arr->num, "(2) Invalid index. Out of bounds");
 	
 	Object* object1 = arr->arr[index1];
 	
@@ -193,7 +193,7 @@ void ccArrayRemoveAllObjects(ccArray *arr)
  Behavior undefined if index outside [0, num-1]. */
 void ccArrayRemoveObjectAtIndex(ccArray *arr, unsigned int index, bool bReleaseObj/* = true*/)
 {
-    CCAssert(arr && arr->num > 0 && index < arr->num, "Invalid index. Out of bounds");
+    CCASSERT(arr && arr->num > 0 && index < arr->num, "Invalid index. Out of bounds");
     if (bReleaseObj)
     {
         CC_SAFE_RELEASE(arr->arr[index]);
@@ -336,7 +336,7 @@ bool ccCArrayContainsValue(ccCArray *arr, void* value)
 /** Inserts a value at a certain position. Behavior undefined if array doesn't have enough capacity */
 void ccCArrayInsertValueAtIndex( ccCArray *arr, void* value, unsigned int index)
 {
-	CCAssert( index < arr->max, "ccCArrayInsertValueAtIndex: invalid index");
+	CCASSERT( index < arr->max, "ccCArrayInsertValueAtIndex: invalid index");
 	
 	unsigned int remaining = arr->num - index;
     // make sure it has enough capacity

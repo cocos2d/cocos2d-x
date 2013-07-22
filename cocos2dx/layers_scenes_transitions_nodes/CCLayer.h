@@ -303,20 +303,45 @@ public:
     /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
      Default: YES
      */
-    virtual void setCompressedInterpolation(bool bCompressedInterpolation);
-    virtual bool isCompressedInterpolation() const;
+    void setCompressedInterpolation(bool bCompressedInterpolation);
+    bool isCompressedInterpolation() const;
+
+    /** Sets the start color of the gradient */
+    void setStartColor( const Color3B& startColor );
+    /** Returns the start color of the gradient */
+    const Color3B& getStartColor() const;
+
+    /** Sets the end color of the gradient */
+    void setEndColor( const Color3B& endColor );
+    /** Returns the end color of the gradient */
+    const Color3B& getEndColor() const;
+
+    /** Returns the start opacity of the gradient */
+    void setStartOpacity( GLubyte startOpacity );
+    /** Returns the start opacity of the gradient */
+    GLubyte getStartOpacity() const;
+
+    /** Returns the end opacity of the gradient */
+    void setEndOpacity( GLubyte endOpacity );
+    /** Returns the end opacity of the gradient */
+    GLubyte getEndOpacity() const;
+
+    /** Sets the directional vector that will be used for the gradient.
+    The default value is vertical direction (0,-1). 
+     */
+    void setVector(const Point& alongVector);
+    /** Returns the directional vector used for the gradient */
+    const Point& getVector() const;
 
 protected:
     virtual void updateColor() override;
 
-    CC_PROPERTY_PASS_BY_REF(Color3B, _startColor, StartColor)
-    CC_PROPERTY_PASS_BY_REF(Color3B, _endColor, EndColor)
-    CC_PROPERTY(GLubyte, _startOpacity, StartOpacity)
-    CC_PROPERTY(GLubyte, _endOpacity, EndOpacity)
-    CC_PROPERTY_PASS_BY_REF(Point, _alongVector, Vector)
-
-protected:
-    bool _compressedInterpolation;
+    Color3B _startColor;
+    Color3B _endColor;
+    GLubyte _startOpacity;
+    GLubyte _endOpacity;
+    Point   _alongVector;
+    bool    _compressedInterpolation;
 };
 
 
