@@ -863,7 +863,7 @@ void Director::createStatsLabel()
         FileUtils::getInstance()->purgeCachedEntries();
     }
 
-    Texture2DPixelFormat currentFormat = Texture2D::defaultAlphaPixelFormat();
+    Texture2DPixelFormat currentFormat = Texture2D::getDefaultAlphaPixelFormat();
     Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA4444);
     unsigned char *data = NULL;
     unsigned int data_len = 0;

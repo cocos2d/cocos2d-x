@@ -171,7 +171,7 @@ void ControlStepper::setValue(double value)
     this->setValueWithSendingEvent(value, true);
 }
 
-double ControlStepper::getValue()
+double ControlStepper::getValue() const
 {
     return _value;
 }
@@ -186,7 +186,7 @@ void ControlStepper::setStepValue(double stepValue)
     _stepValue  = stepValue;
 }
 
-bool ControlStepper::isContinuous()
+bool ControlStepper::isContinuous() const
 {
     return _continuous;
 }

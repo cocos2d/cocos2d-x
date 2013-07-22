@@ -49,21 +49,18 @@ class ControlSwitchSprite;
 class ControlSwitch : public Control
 {
 public:
-    ControlSwitch();
-    virtual ~ControlSwitch();
-    /** Initializes a switch with a mask sprite, on/off sprites for on/off states and a thumb sprite. */
-    bool initWithMaskSprite(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite);
-
+    /** Creates a switch with a mask sprite, on/off sprites for on/off states, a thumb sprite and an on/off labels. */
+    static ControlSwitch* create(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite, LabelTTF* onLabel, LabelTTF* offLabel);
     /** Creates a switch with a mask sprite, on/off sprites for on/off states and a thumb sprite. */
     static ControlSwitch* create(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite);
 
+    ControlSwitch();
+    virtual ~ControlSwitch();
 
+    /** Initializes a switch with a mask sprite, on/off sprites for on/off states and a thumb sprite. */
+    bool initWithMaskSprite(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite);
     /** Initializes a switch with a mask sprite, on/off sprites for on/off states, a thumb sprite and an on/off labels. */
     bool initWithMaskSprite(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite, LabelTTF* onLabel, LabelTTF* offLabel);
-
-    /** Creates a switch with a mask sprite, on/off sprites for on/off states, a thumb sprite and an on/off labels. */
-    static ControlSwitch* create(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite, LabelTTF* onLabel, LabelTTF* offLabel);
-
 
     /**
      * Set the state of the switch to On or Off, optionally animating the transition.
@@ -75,16 +72,17 @@ public:
      */
     void setOn(bool isOn, bool animated);
     void setOn(bool isOn);
-    bool isOn(void) { return _on; }
-    bool hasMoved() { return _moved; }
+    bool isOn(void) const { return _on; }
+    bool hasMoved() const { return _moved; }
     virtual void setEnabled(bool enabled);
 
     Point locationFromTouch(Touch* touch);
-    //events
-    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent);
-    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent);
-    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent);
-    virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent);
+
+    // Overrides
+    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) override;
+    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) override;
+    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) override;
+    virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) override;
 
 protected:
     /** Sprite which represents the view. */

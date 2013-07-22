@@ -32,6 +32,14 @@ THE SOFTWARE.
 #include <ctype.h>
 #include <string.h>
 
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#define CC_DEPRECATED_ATTRIBUTE __attribute__((deprecated))
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#define CC_DEPRECATED_ATTRIBUTE __declspec(deprecated)
+#else
+#define CC_DEPRECATED_ATTRIBUTE
+#endif
+
 namespace CocosDenshion {
 
 class TypeInfo
@@ -62,23 +70,24 @@ static inline unsigned int getHashCodeByString(const char *key)
 class EXPORT_DLL SimpleAudioEngine : public TypeInfo
 {
 public:
+    /**
+     @brief Get the shared Engine object,it will new one when first time be called
+     */
+    static SimpleAudioEngine* getInstance();
+    CC_DEPRECATED_ATTRIBUTE static SimpleAudioEngine* sharedEngine() { return SimpleAudioEngine::getInstance(); }
+
+    /**
+     @brief Release the shared Engine object
+     @warning It must be called before the application exit, or a memroy leak will be casued.
+     */
+    static void end();
+
     SimpleAudioEngine();
     ~SimpleAudioEngine();
 
     virtual long getClassTypeInfo() {
         return getHashCodeByString(typeid(CocosDenshion::SimpleAudioEngine).name());
     }
-
-    /**
-    @brief Get the shared Engine object,it will new one when first time be called
-    */
-    static SimpleAudioEngine* sharedEngine();
-
-    /**
-    @brief Release the shared Engine object
-    @warning It must be called before the application exit, or a memroy leak will be casued.
-    */
-    static void end();
 
     /**
      @brief Preload background music
@@ -91,19 +100,13 @@ public:
     @param pszFilePath The path of the background music file,or the FileName of T_SoundResInfo
     @param bLoop Whether the background music loop or not
     */
-    void playBackgroundMusic(const char* pszFilePath, bool bLoop);
-    void playBackgroundMusic(const char* pszFilePath) {
-    	this->playBackgroundMusic(pszFilePath, false);
-    }
+    void playBackgroundMusic(const char* pszFilePath, bool bLoop = false);
 
     /**
     @brief Stop playing background music
     @param bReleaseData If release the background music data or not.As default value is false
     */
-    void stopBackgroundMusic(bool bReleaseData);
-    void stopBackgroundMusic() {
-    	this->stopBackgroundMusic(false);
-    }
+    void stopBackgroundMusic(bool bReleaseData = false);
 
     /**
     @brief Pause playing background music
@@ -152,18 +155,6 @@ public:
     void setEffectsVolume(float volume);
 
     // for sound effects
-    /**
-    @brief Play sound effect
-    @param pszFilePath The path of the effect file,or the FileName of T_SoundResInfo
-    @param bLoop Whether to loop the effect playing, default value is false
-    */
-    unsigned int playEffect(const char* pszFilePath, bool bLoop) {
-        return this->playEffect(pszFilePath, bLoop, 1.0, 0.0, 1.0);
-    }
-
-    unsigned int playEffect(const char* pszFilePath) {
-        return this->playEffect(pszFilePath, false);
-    }
 
     /**
     @brief Play sound effect  with a file path, pitch, pan and gain
@@ -177,8 +168,8 @@ public:
         - no pitch effect on Samsung Galaxy S2 with OpenSL backend enabled;
         - no pitch/pan/gain on emscrippten, win32, marmalade.
     */
-    unsigned int playEffect(const char* pszFilePath, bool bLoop,
-                            float pitch, float pan, float gain);
+    unsigned int playEffect(const char* pszFilePath, bool bLoop = false,
+                            float pitch = 1.0f, float pan = 0.0f, float gain = 1.0f);
 
     /**
     @brief Pause playing sound effect
