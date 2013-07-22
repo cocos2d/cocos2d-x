@@ -69,7 +69,7 @@ void ProjectileController::update(float delta)
         static_cast<EnemyController*>(target->getComponent("EnemyController"))->die();
     }
     
-    bool isDied = targetsToDelete->count();
+    bool isDied = targetsToDelete->count() > 0;
    
     targetsToDelete->release();
     

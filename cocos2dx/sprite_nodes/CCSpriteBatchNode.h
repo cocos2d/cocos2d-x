@@ -154,16 +154,16 @@ protected:
      This method should be called only when you are dealing with very big AtlasSrite and when most of the Sprite won't be updated.
      For example: a tile map (TMXMap) or a label with lots of characters (LabelBMFont)
      */
-    void insertQuadFromSprite(Sprite *sprite, unsigned int index);
+    void insertQuadFromSprite(Sprite *sprite, int index);
     /** Updates a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.
      This method should be called only when you are dealing with very big AtlasSrite and when most of the Sprite won't be updated.
      For example: a tile map (TMXMap) or a label with lots of characters (LabelBMFont)
      */
-    void updateQuadFromSprite(Sprite *sprite, unsigned int index);
+    void updateQuadFromSprite(Sprite *sprite, int index);
     /* This is the opposite of "addQuadFromSprite.
     It add the sprite to the children and descendants array, but it doesn't update add it to the texture atlas
     */
-    SpriteBatchNode * addSpriteWithoutQuad(Sprite*child, unsigned int z, int aTag);
+    SpriteBatchNode * addSpriteWithoutQuad(Sprite*child, int z, int aTag);
 
 private:
     void updateAtlasIndex(Sprite* sprite, int* curIndex);
