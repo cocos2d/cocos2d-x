@@ -1,6 +1,6 @@
 class SimpleAudioEngine
 {
-    static SimpleAudioEngine* sharedEngine();
+    static SimpleAudioEngine* getInstance();
     void preloadBackgroundMusic(const char* pszFilePath);
     void playBackgroundMusic(const char* pszFilePath, bool bLoop = false);
     void stopBackgroundMusic(bool bReleaseData = false);
