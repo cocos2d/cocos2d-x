@@ -1,18 +1,18 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
-
+ 
  http://www.cocos2d-x.org
-
+ 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
-
+ 
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
-
+ 
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -22,37 +22,32 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCLabel.h"
-#include "CCLabelBMFontNew.h"
-#include "CCStringTTF.h"
+#ifndef _CCFontCache_h_
+#define _CCFontCache_h_
+
+#include <iostream>
+#include <map>
+
+#include "cocos2d.h"
 #include "CCFontDefinition.h"
-#include "CCFontCache.h"
 
 NS_CC_BEGIN
 
-Label* Label::createWithTTF( const char* label, const char* tttFilePath, int size, GlyphCollection glyphs )
+class CCFontCache
 {
-    FontDefinitionTTF *def = CCFontCache::getFontDefinition(tttFilePath, size, glyphs);
     
-    if(!def)
-        return 0;
+public:
     
-    StringTTF* l = StringTTF::create(def);
-    l->setString( label );
-    return l;
-}
+    static FontDefinitionTTF * getFontDefinition(const char *fontFileName, int size, GlyphCollection glyphs);
+    static void purgeUnusedFonts();
 
-Label* Label::createWithBMFont( const char* label, const char* bmfontFilePath )
-{
-    return LabelBMFontNew::create(label, bmfontFilePath);
-}
-
-Label::Label()
-{
-}
-
-Label::~Label()
-{
-}
+private:
+    static std::string generateFontName(const char *fontFileName, int size);
+    static std::map<std::string, FontDefinitionTTF *> _fontsMap;
+    static const char * getGlyphCollection(GlyphCollection glyphs);
+    
+};
 
 NS_CC_END
+
+#endif

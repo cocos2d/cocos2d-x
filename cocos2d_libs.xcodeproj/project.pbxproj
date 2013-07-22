@@ -44,6 +44,10 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		0186A8EA179DB72500D88A79 /* CCFontCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0186A8E8179DB6C000D88A79 /* CCFontCache.cpp */; };
+		0186A8EB179DB72500D88A79 /* CCFontCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 0186A8E9179DB6C000D88A79 /* CCFontCache.h */; };
+		0186A8EC179DB72600D88A79 /* CCFontCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0186A8E8179DB6C000D88A79 /* CCFontCache.cpp */; };
+		0186A8ED179DB72600D88A79 /* CCFontCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 0186A8E9179DB6C000D88A79 /* CCFontCache.h */; };
 		15CBC6F3178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CBC6F1178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp */; };
 		15CBC6F4178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CBC6F1178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp */; };
 		15CBC6F5178A57DC00D8BBA7 /* LuaScriptHandlerMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 15CBC6F2178A57DC00D8BBA7 /* LuaScriptHandlerMgr.h */; };
@@ -2098,6 +2102,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0186A8E8179DB6C000D88A79 /* CCFontCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFontCache.cpp; sourceTree = "<group>"; };
+		0186A8E9179DB6C000D88A79 /* CCFontCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFontCache.h; sourceTree = "<group>"; };
 		1551A33F158F2AB200E66CFE /* libcocos2dx Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		15CBC6F1178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaScriptHandlerMgr.cpp; sourceTree = "<group>"; };
@@ -5422,6 +5428,8 @@
 				A0C80A521799DB97002532D9 /* CCTextImage.h */,
 				A0C80BE81799E866002532D9 /* CCLabel.cpp */,
 				A0C80BE91799E867002532D9 /* CCLabel.h */,
+				0186A8E8179DB6C000D88A79 /* CCFontCache.cpp */,
+				0186A8E9179DB6C000D88A79 /* CCFontCache.h */,
 			);
 			name = NewLabel_Experimental;
 			sourceTree = "<group>";
@@ -5962,6 +5970,7 @@
 				A0C80BE61799DF75002532D9 /* ttunpat.h in Headers */,
 				A0C80BE71799DF75002532D9 /* ft2build.h in Headers */,
 				A0C80BEC1799E867002532D9 /* CCLabel.h in Headers */,
+				0186A8EB179DB72500D88A79 /* CCFontCache.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6639,6 +6648,7 @@
 				A0C80B311799DF5D002532D9 /* ttunpat.h in Headers */,
 				A0C80B321799DF5D002532D9 /* ft2build.h in Headers */,
 				A0C80BED1799E867002532D9 /* CCLabel.h in Headers */,
+				0186A8ED179DB72600D88A79 /* CCFontCache.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7405,6 +7415,7 @@
 				A0C80A711799DB97002532D9 /* CCStringTTF.cpp in Sources */,
 				A0C80A751799DB97002532D9 /* CCTextImage.cpp in Sources */,
 				A0C80BEA1799E867002532D9 /* CCLabel.cpp in Sources */,
+				0186A8EA179DB72500D88A79 /* CCFontCache.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7853,6 +7864,7 @@
 				A0C80A721799DB97002532D9 /* CCStringTTF.cpp in Sources */,
 				A0C80A761799DB97002532D9 /* CCTextImage.cpp in Sources */,
 				A0C80BEB1799E867002532D9 /* CCLabel.cpp in Sources */,
+				0186A8EC179DB72600D88A79 /* CCFontCache.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
