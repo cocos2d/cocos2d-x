@@ -35,7 +35,7 @@ NS_CC_BEGIN
 bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
 {
     // to do if (m_fWidth > 0)
-    if (true)
+    if (theLabel->getMaxLineWidth())
     {
         // Step 1: Make multiline
         vector<unsigned short> str_whole = cc_utf16_vec_from_utf16_str(theLabel->getUTF8String());
@@ -206,8 +206,13 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
         
         str_new[size] = 0;
         theLabel->assignNewUTF8String(str_new);
+        
+        return true;
     }
-    return true;
+    else
+    {
+        return false;
+    }
 }
 
 bool LabelTextFormatter::alignText(LabelTextFormatProtocol *theLabel)
