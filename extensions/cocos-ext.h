@@ -3,6 +3,19 @@
 
 #include "ExtensionMacros.h"
 
+#include "AssetsManager/AssetsManager.h"
+
+#include "CCArmature/CCArmature.h"
+#include "CCArmature/CCBone.h"
+#include "CCArmature/utils/CCArmatureDataManager.h"
+#include "CCArmature/utils/CCDataReaderHelper.h"
+#include "CCArmature/utils/CCTweenFunction.h"
+#include "CCArmature/utils/CCTransformHelp.h"
+#include "CCArmature/utils/CCSpriteFrameCacheHelper.h"
+#include "CCArmature/physics/CCPhysicsWorld.h"
+#include "CCArmature/physics/CCColliderDetector.h"
+#include "CCArmature/display/CCShaderNode.h"
+
 #include "CCBReader/CCBFileLoader.h"
 #include "CCBReader/CCBMemberVariableAssigner.h"
 #include "CCBReader/CCBReader.h"
@@ -39,6 +52,7 @@
 #include "network/HttpRequest.h"
 #include "network/HttpResponse.h"
 #include "network/HttpClient.h"
+#include "network/SocketIO.h"
 
 // Physics integration
 #if CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION
@@ -51,5 +65,7 @@
 #include "Components/CCComAttribute.h"
 #include "Components/CCComAudio.h"
 #include "Components/CCComController.h"
+
+#include "CCDeprecated-ext.h"
 
 #endif /* __COCOS2D_EXT_H__ */
