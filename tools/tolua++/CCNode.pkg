@@ -97,7 +97,7 @@ class CCNode : public CCObject
     const char *      description(void) const;
     CCNode* getChildByTag(int tag);
 
-    unsigned int numberOfRunningActions(void);
+    unsigned int getNumberOfRunningActions(void) const;
 
     CCAffineTransform nodeToParentTransform(void);
     CCAffineTransform parentToNodeTransform(void);

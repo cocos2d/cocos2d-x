@@ -10,7 +10,7 @@ class CCTileMapAtlas : public CCAtlasNode
     void setTile(Color3B tile, CCPoint position);
     void releaseMap();
 
-	Color3B tileAt(const CCPoint & pos);
+	Color3B getTileAt(const CCPoint & pos) const;
 
     static CCTileMapAtlas * create(const char *tile, const char *mapFile, int tileWidth, int tileHeight);
 };

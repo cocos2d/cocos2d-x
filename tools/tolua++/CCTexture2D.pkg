@@ -505,10 +505,10 @@ class CCTexture2D : public CCObject
     void setAliasTexParameters();
     void generateMipmap();
 
-	const char* stringForFormat() const;
-    unsigned int bitsPerPixelForFormat() const;
-	unsigned int bitsPerPixelForFormat(CCTexture2DPixelFormat format) const;
+	const char* getStringForFormat() const;
+    unsigned int getBitsPerPixelForFormat() const;
+	unsigned int getBitsPerPixelForFormat(CCTexture2DPixelFormat format) const;
 
     static void setDefaultAlphaPixelFormat(CCTexture2DPixelFormat format);
-    static CCTexture2DPixelFormat defaultAlphaPixelFormat();
+    static CCTexture2DPixelFormat getDefaultAlphaPixelFormat();
 };

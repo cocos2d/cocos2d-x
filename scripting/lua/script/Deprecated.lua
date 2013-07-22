@@ -337,9 +337,119 @@ local function boundingBox(self)
 end
 rawset(CCNode,"boundingBox",boundingBox)
 
+local function numberOfRunningActions(self)
+    deprecatedTip("CCNode:numberOfRunningActions","CCNode:getNumberOfRunningActions")
+    return self:getNumberOfRunningActions()
+end
+rawset(CCNode,"numberOfRunningActions",numberOfRunningActions)
 
+local function stringForFormat(self)
+    deprecatedTip("Texture2D:stringForFormat","Texture2D:getStringForFormat")
+    return self:getStringForFormat()
+end
+rawset(CCTexture2D,"stringForFormat",stringForFormat)
 
+local function bitsPerPixelForFormat(self)
+    deprecatedTip("Texture2D:bitsPerPixelForFormat","Texture2D:getBitsPerPixelForFormat")
+    return self:getBitsPerPixelForFormat()
+end
+rawset(CCTexture2D,"bitsPerPixelForFormat",bitsPerPixelForFormat)
 
+local function bitsPerPixelForFormat(self,pixelFormat)
+    deprecatedTip("Texture2D:bitsPerPixelForFormat","Texture2D:getBitsPerPixelForFormat")
+    return self:getBitsPerPixelForFormat(pixelFormat)
+end
+rawset(CCTexture2D,"bitsPerPixelForFormat",bitsPerPixelForFormat)
+
+local function defaultAlphaPixelFormat(self)
+    deprecatedTip("Texture2D:defaultAlphaPixelFormat","Texture2D:getDefaultAlphaPixelFormat")
+    return self:getDefaultAlphaPixelFormat()
+end
+rawset(CCTexture2D,"defaultAlphaPixelFormat",defaultAlphaPixelFormat)
+
+local function spriteFrameByName(self,szName)
+    deprecatedTip("CCSpriteFrameCache:spriteFrameByName","CCSpriteFrameCache:getSpriteFrameByName")
+    return self:getSpriteFrameByName(szName)
+end
+rawset(CCSpriteFrameCache,"spriteFrameByName",spriteFrameByName)
+
+local function timerWithScriptHandler(handler,seconds)
+    deprecatedTip("CCTimer:timerWithScriptHandler","CCTimer:createWithScriptHandler")
+    return CCTimer:createWithScriptHandler(handler,seconds)
+end
+rawset(CCTimer,"timerWithScriptHandler",timerWithScriptHandler)
+
+local function numberOfRunningActionsInTarget(self,target)
+    deprecatedTip("CCActionManager:numberOfRunningActionsInTarget","CCActionManager:getNumberOfRunningActionsInTarget")
+    return self:getNumberOfRunningActionsInTarget(target)
+end
+rawset(CCTimer,"numberOfRunningActionsInTarget",numberOfRunningActionsInTarget)
+
+local function fontSize()
+    deprecatedTip("CCMenuItemFont:fontSize","CCMenuItemFont:getFontSize")
+    return CCMenuItemFont:getFontSize()
+end
+rawset(CCMenuItemFont,"fontSize",fontSize)
+
+local function fontName()
+    deprecatedTip("CCMenuItemFont:fontName","CCMenuItemFont:getFontName")
+    return CCMenuItemFont:getFontName()
+end
+rawset(CCMenuItemFont,"fontName",fontName)
+
+local function fontSizeObj(self)
+    deprecatedTip("CCMenuItemFont:fontSizeObj","CCMenuItemFont:getFontSizeObj")
+    return self:getFontSizeObj()
+end
+rawset(CCMenuItemFont,"fontSizeObj",fontSizeObj)
+
+local function fontNameObj(self)
+    deprecatedTip("CCMenuItemFont:fontNameObj","CCMenuItemFont:getFontNameObj")
+    return self:getFontNameObj()
+end
+rawset(CCMenuItemFont,"fontNameObj",fontNameObj)
+
+local function selectedItem(self)
+    deprecatedTip("CCMenuItemToggle:selectedItem","CCMenuItemToggle:getSelectedItem")
+    return self:getSelectedItem()
+end
+rawset(CCMenuItemToggle,"selectedItem",selectedItem)
+
+local function tileAt(self,pos)
+    deprecatedTip("CCTileMapAtlas:tileAt","CCTileMapAtlas:getTileAt")
+    return self:getTileAt(pos)
+end
+rawset(CCTileMapAtlas,"tileAt",tileAt)
+
+local function tileAt(self,tileCoordinate)
+    deprecatedTip("CCTMXLayer:tileAt","CCTMXLayer:getTileAt")
+    return self:getTileAt(tileCoordinate)
+end
+rawset(CCTMXLayer,"tileAt",tileAt)
+
+local function tileGIDAt(self,tileCoordinate)
+    deprecatedTip("CCTMXLayer:tileGIDAt","CCTMXLayer:getTileGIDAt")
+    return self:getTileGIDAt(tileCoordinate)
+end
+rawset(CCTMXLayer,"tileGIDAt",tileGIDAt)
+
+local function positionAt(self,tileCoordinate)
+    deprecatedTip("CCTMXLayer:positionAt","CCTMXLayer:getPositionAt")
+    return self:getPositionAt(tileCoordinate)
+end
+rawset(CCTMXLayer,"positionAt",positionAt)
+
+local function propertyNamed(self,propertyName)
+    deprecatedTip("CCTMXLayer:propertyNamed","CCTMXLayer:getPropertyNamed")
+    return self:getPropertyNamed(propertyName)
+end
+rawset(CCTMXLayer,"propertyNamed",propertyNamed)
+
+local function sharedEngine()
+    deprecatedTip("SimpleAudioEngine:sharedEngine","SimpleAudioEngine:getInstance")
+    return SimpleAudioEngine:getInstance()
+end
+rawset(SimpleAudioEngine,"sharedEngine",sharedEngine)
 
 
 
