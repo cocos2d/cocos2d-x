@@ -452,6 +452,7 @@ void Director::purgeCachedData(void)
     LabelBMFont::purgeCachedData();
     if (s_SharedDirector->getOpenGLView())
     {
+        SpriteFrameCache::getInstance()->removeUnusedSpriteFrames();
         TextureCache::getInstance()->removeUnusedTextures();
     }
     FileUtils::getInstance()->purgeCachedEntries();
