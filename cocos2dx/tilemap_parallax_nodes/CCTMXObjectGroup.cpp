@@ -66,4 +66,9 @@ Dictionary* TMXObjectGroup::getObjectNamed(const char *objectName) const
     return NULL;    
 }
 
+String* TMXObjectGroup::getPropertyNamed(const char* propertyName) const
+{
+    return static_cast<String*>(_properties->objectForKey(propertyName));
+}
+
 NS_CC_END
