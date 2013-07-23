@@ -5,7 +5,7 @@ LOCAL_MODULE := cocosdenshion_static
 
 LOCAL_MODULE_FILENAME := libcocosdenshion
 
-LOCAL_SRC_FILES := SimpleAudioEngine.cpp \
+LOCAL_SRC_FILES := cddSimpleAudioEngine.cpp \
                    ccdandroidUtils.cpp \
                    jni/SimpleAudioEngineJni.cpp \
                    jni/cddandroidAndroidJavaEngine.cpp \
