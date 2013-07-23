@@ -1,7 +1,7 @@
 
 include(../../../../cocos2dx/proj.qt5/common.pri)
 
-TARGET = TestCpp
+TARGET = cocos2dx_TestCpp
 
 INCLUDEPATH += ..
 INCLUDEPATH += ../Classes
@@ -110,4 +110,15 @@ SOURCES += ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 LIBS += $${LINK_AGAINST_COCOS2DX}
 LIBS += $${LINK_AGAINST_COCOSDENSHION}
 LIBS += $${LINK_AGAINST_COCOSEXTENSION}
+
+INSTALLS += target
+target.path = /opt/$${TARGET}
+
+INSTALLS += desktop
+desktop.files = $${TARGET}.desktop
+desktop.path = $${DESKTOP_INSTALL_DIR}
+
+INSTALLS += resources
+resources.files = icon.png ../Resources
+resources.path = /opt/$${TARGET}
 
