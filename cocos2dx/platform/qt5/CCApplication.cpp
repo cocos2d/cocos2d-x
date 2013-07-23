@@ -37,23 +37,35 @@
 #include <QObject>
 #include <QDir>
 
-NS_CC_BEGIN
-
 class Cocos2DQt5MainloopIntegration : public QObject {
     public:
-        Cocos2DQt5MainloopIntegration(long interval_ms)
+        Cocos2DQt5MainloopIntegration()
             : QObject()
+            , m_timer(0)
         {
-            startTimer(interval_ms);
+        }
+
+        void setInterval(int interval_ms)
+        {
+            if (m_timer != 0) {
+                killTimer(m_timer);
+            }
+
+            m_timer = startTimer(interval_ms);
         }
 
     protected:
         virtual void timerEvent(QTimerEvent *event)
         {
-            CCDirector::sharedDirector()->mainLoop();
+            cocos2d::CCDirector::sharedDirector()->mainLoop();
         }
+
+    private:
+        int m_timer;
 };
 
+
+NS_CC_BEGIN
 
 // Application singleton
 static CCApplication *
@@ -76,6 +88,7 @@ CCApplication::CCApplication()
     : m_application(NULL)
     , m_animationInterval(1000 / 60)
     , m_resourceRootPath("")
+    , m_mainloop(new Cocos2DQt5MainloopIntegration)
 {
     // Inject argv[0] by resolving /proc/self/exe
     QString filename = QDir("/proc/self/exe").canonicalPath();
@@ -90,6 +103,7 @@ CCApplication::CCApplication()
 
 CCApplication::~CCApplication()
 {
+    delete m_mainloop;
     delete m_application;
 
     CC_ASSERT(application == this);
@@ -104,7 +118,7 @@ CCApplication::run()
         return 0;
     }
 
-    Cocos2DQt5MainloopIntegration mainloopIntegration(m_animationInterval);
+    m_mainloop->setInterval(m_animationInterval);
 
     return m_application->exec();
 }
@@ -115,7 +129,7 @@ CCApplication::setAnimationInterval(double interval)
     // Interval is expressed in seconds
     m_animationInterval = interval * 1000;
 
-    // XXX: Update animation interval if changed while running
+    m_mainloop->setInterval(m_animationInterval);
 }
 
 void
