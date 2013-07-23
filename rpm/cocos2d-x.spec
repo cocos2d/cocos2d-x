@@ -1,6 +1,6 @@
 Name: cocos2d-x
 Version: 1.0.0
-Release: 1
+Release: 2
 Summary: Cocos2D-X Cross-Platform 2D Games Framework
 
 Group: System/GUI/Other
@@ -12,6 +12,7 @@ BuildRequires: pkgconfig(glesv2)
 BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: pkgconfig(Qt5Gui)
 BuildRequires: pkgconfig(Qt5Multimedia)
+BuildRequires: pkgconfig(Qt5Sensors)
 BuildRequires: pkgconfig(zlib)
 BuildRequires: pkgconfig(fontconfig)
 BuildRequires: pkgconfig(freetype2)
