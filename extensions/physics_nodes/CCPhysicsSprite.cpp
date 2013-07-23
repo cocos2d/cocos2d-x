@@ -148,7 +148,7 @@ PhysicsSprite* PhysicsSprite::create(const char *pszFileName, const Rect& rect)
 
 // this method will only get called if the sprite is batched.
 // return YES if the physic's values (angles, position ) changed.
-// If you return NO, then nodeToParentTransform won't be called.
+// If you return NO, then getNodeToParentTransform won't be called.
 bool PhysicsSprite::isDirty() const
 {
     return true;
@@ -208,24 +208,24 @@ void PhysicsSprite::setCPBody(cpBody *pBody)
 
 b2Body* PhysicsSprite::getB2Body() const
 {
-    CCAssert(false, "Can't call box2d methods when Chipmunk is enabled");
+    CCASSERT(false, "Can't call box2d methods when Chipmunk is enabled");
     return NULL;
 }
 
 void PhysicsSprite::setB2Body(b2Body *pBody)
 {
-    CCAssert(false, "Can't call box2d methods when Chipmunk is enabled");
+    CCASSERT(false, "Can't call box2d methods when Chipmunk is enabled");
 }
 
 float PhysicsSprite::getPTMRatio() const
 {
-    CCAssert(false, "Can't call box2d methods when Chipmunk is enabled");
+    CCASSERT(false, "Can't call box2d methods when Chipmunk is enabled");
     return 0;
 }
 
 void PhysicsSprite::setPTMRatio(float fRatio)
 {
-    CCAssert(false, "Can't call box2d methods when Chipmunk is enabled");
+    CCASSERT(false, "Can't call box2d methods when Chipmunk is enabled");
 }
 
 //
@@ -255,13 +255,13 @@ void PhysicsSprite::setPTMRatio(float fRatio)
 
 cpBody* PhysicsSprite::getCPBody() const
 {
-    CCAssert(false, "Can't call Chipmunk methods when Box2d is enabled");
+    CCASSERT(false, "Can't call Chipmunk methods when Box2d is enabled");
     return NULL;
 }
 
 void PhysicsSprite::setCPBody(cpBody *pBody)
 {
-    CCAssert(false, "Can't call Chipmunk methods when Box2d is enabled");
+    CCASSERT(false, "Can't call Chipmunk methods when Box2d is enabled");
 }
 
 #endif
@@ -342,7 +342,7 @@ void PhysicsSprite::setRotation(float fRotation)
 }
 
 // returns the transform matrix according the Chipmunk Body values
-AffineTransform PhysicsSprite::nodeToParentTransform()
+AffineTransform PhysicsSprite::getNodeToParentTransform() const
 {
     // Although scale is not used by physics engines, it is calculated just in case
 	// the sprite is animated (scaled up/down) using actions.

@@ -78,15 +78,15 @@ bool ArmatureDataManager::init()
     do
     {
         _armarureDatas = Dictionary::create();
-        CCAssert(_armarureDatas, "create ArmatureDataManager::_armarureDatas fail!");
+        CCASSERT(_armarureDatas, "create ArmatureDataManager::_armarureDatas fail!");
         _armarureDatas->retain();
 
         _animationDatas = Dictionary::create();
-        CCAssert(_animationDatas, "create ArmatureDataManager::_animationDatas fail!");
+        CCASSERT(_animationDatas, "create ArmatureDataManager::_animationDatas fail!");
         _animationDatas->retain();
 
         _textureDatas = Dictionary::create();
-        CCAssert(_textureDatas, "create ArmatureDataManager::_textureDatas fail!");
+        CCASSERT(_textureDatas, "create ArmatureDataManager::_textureDatas fail!");
         _textureDatas->retain();
 
         bRet = true;

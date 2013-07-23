@@ -44,6 +44,7 @@
 								</option>
 								<option id="gnu.cpp.compiler.option.include.paths.900905101" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/samples/Cpp/TestCpp/Classes&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/kazmath/include&quot;"/>
@@ -524,6 +525,7 @@
 								</option>
 								<option id="gnu.cpp.compiler.option.include.paths.2133476194" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/samples/Cpp/TestCpp/Classes&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/kazmath/include&quot;"/>

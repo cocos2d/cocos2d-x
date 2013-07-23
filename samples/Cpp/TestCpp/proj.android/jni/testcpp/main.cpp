@@ -30,18 +30,15 @@ void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thi
         AppDelegate *pAppDelegate = new AppDelegate();
         Application::getInstance()->run();
     }
-    /*
     else
     {
-        ccDrawInit();
         ccGLInvalidateStateCache();
-          
         ShaderCache::getInstance()->reloadDefaultShaders();
+        ccDrawInit();
         TextureCache::reloadAllTextures();
         NotificationCenter::getInstance()->postNotification(EVNET_COME_TO_FOREGROUND, NULL);
         Director::getInstance()->setGLDefaultValues(); 
     }
-    */
 }
 
 }

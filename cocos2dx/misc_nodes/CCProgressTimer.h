@@ -59,55 +59,31 @@ class CC_DLL ProgressTimer : public NodeRGBA
 #endif // EMSCRIPTEN
 {
 public:
+    /** Creates a progress timer with the sprite as the shape the timer goes through */
+    static ProgressTimer* create(Sprite* sp);
+
     ProgressTimer();
-    ~ProgressTimer(void);
-
-    /**    Change the percentage to change progress. */
-    inline ProgressTimerType getType(void) { return _type; }
-
-    /** Percentages are from 0 to 100 */
-    inline float getPercentage(void) {return _percentage; }
-
-    /** The image to show the progress percentage, retain */
-    inline Sprite* getSprite(void) { return _sprite; }
+    virtual ~ProgressTimer();
 
     /** Initializes a progress timer with the sprite as the shape the timer goes through */
     bool initWithSprite(Sprite* sp);
+
+    /** Change the percentage to change progress. */
+    inline ProgressTimerType getType() const { return _type; }
+
+    /** Percentages are from 0 to 100 */
+    inline float getPercentage() const {return _percentage; }
+
+    /** The image to show the progress percentage, retain */
+    inline Sprite* getSprite() const { return _sprite; }
 
     void setPercentage(float fPercentage);
     void setSprite(Sprite *pSprite);
     void setType(ProgressTimerType type);
     void setReverseProgress(bool reverse);
 
-    virtual void draw(void);
-    void setAnchorPoint(const Point& anchorPoint);
-
-    virtual void setColor(const Color3B& color);
-    virtual const Color3B& getColor() const;
-    virtual GLubyte getOpacity() const;
-    virtual void setOpacity(GLubyte opacity);
-    
     inline bool isReverseDirection() { return _reverseDirection; };
     inline void setReverseDirection(bool value) { _reverseDirection = value; };
-
-public:
-    /** Creates a progress timer with the sprite as the shape the timer goes through */
-    static ProgressTimer* create(Sprite* sp);
-protected:
-    Tex2F textureCoordFromAlphaPoint(Point alpha);
-    Vertex2F vertexFromAlphaPoint(Point alpha);
-    void updateProgress(void);
-    void updateBar(void);
-    void updateRadial(void);
-    void updateColor(void);
-    Point boundaryTexCoord(char index);
-
-protected:
-    ProgressTimerType _type;
-    float _percentage;
-    Sprite *_sprite;
-    int _vertexDataCount;
-    V2F_C4B_T2F *_vertexData;
 
     /**
      *    Midpoint is used to modify the progress start position.
@@ -119,7 +95,9 @@ protected:
      *        you want a bottom to top then set the midpoint all the way to Point(x,0)
      *        you want a top to bottom then set the midpoint all the way to Point(x,1)
      */
-    CC_PROPERTY(Point, _midpoint, Midpoint);
+    void setMidpoint(const Point& point);
+    /** Returns the Midpoint */
+    Point getMidpoint() const;
 
     /**
      *    This allows the bar type to move the component at a specific rate
@@ -127,7 +105,34 @@ protected:
      *    For example you want a left to right bar but not have the height stay 100%
      *    Set the rate to be Point(0,1); and set the midpoint to = Point(0,.5f);
      */
-    CC_SYNTHESIZE(Point, _barChangeRate, BarChangeRate);
+    inline void setBarChangeRate(const Point& barChangeRate ) { _barChangeRate = barChangeRate; }
+    /** Returns the BarChangeRate */
+    inline Point getBarChangeRate() const { return _barChangeRate; }
+
+    // Overrides
+    virtual void draw(void) override;
+    void setAnchorPoint(const Point& anchorPoint) override;
+    virtual void setColor(const Color3B& color) override;
+    virtual const Color3B& getColor() const override;
+    virtual GLubyte getOpacity() const override;
+    virtual void setOpacity(GLubyte opacity) override;
+    
+protected:
+    Tex2F textureCoordFromAlphaPoint(Point alpha);
+    Vertex2F vertexFromAlphaPoint(Point alpha);
+    void updateProgress(void);
+    void updateBar(void);
+    void updateRadial(void);
+    void updateColor(void);
+    Point boundaryTexCoord(char index);
+
+    ProgressTimerType _type;
+    Point _midpoint;
+    Point _barChangeRate;
+    float _percentage;
+    Sprite *_sprite;
+    int _vertexDataCount;
+    V2F_C4B_T2F *_vertexData;
 
     bool _reverseDirection;
 };

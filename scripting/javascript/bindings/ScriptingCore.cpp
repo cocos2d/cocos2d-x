@@ -733,47 +733,66 @@ void ScriptingCore::cleanupSchedulesAndActions(js_proxy_t* p)
     }
 }
 
-int ScriptingCore::executeNodeEvent(Node* pNode, int nAction)
+int ScriptingCore::handleNodeEvent(void* data)
 {
-    js_proxy_t * p = jsb_get_native_proxy(pNode);
+    if (NULL == data)
+        return 0;
+    
+    BasicScriptData* basicScriptData = static_cast<BasicScriptData*>(data);
+    if (NULL == basicScriptData->nativeObject || NULL == basicScriptData->value)
+        return 0;
+    
+    Node* node = static_cast<Node*>(basicScriptData->nativeObject);
+    int action = *((int*)(basicScriptData->value));
+                                                         
+    js_proxy_t * p = jsb_get_native_proxy(node);
     if (!p) return 0;
 
     jsval retval;
     jsval dataVal = INT_TO_JSVAL(1);
 
-    if(nAction == kNodeOnEnter)
+    if(action == kNodeOnEnter)
     {
         executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onEnter", 1, &dataVal, &retval);
         resumeSchedulesAndActions(p);
     }
-    else if(nAction == kNodeOnExit)
+    else if(action == kNodeOnExit)
     {
         executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onExit", 1, &dataVal, &retval);
         pauseSchedulesAndActions(p);
     }
-    else if(nAction == kNodeOnEnterTransitionDidFinish)
+    else if(action == kNodeOnEnterTransitionDidFinish)
     {
         executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onEnterTransitionDidFinish", 1, &dataVal, &retval);
     }
-    else if(nAction == kNodeOnExitTransitionDidStart)
+    else if(action == kNodeOnExitTransitionDidStart)
     {
         executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onExitTransitionDidStart", 1, &dataVal, &retval);
     }
-    else if(nAction == kNodeOnCleanup) {
+    else if(action == kNodeOnCleanup) {
         cleanupSchedulesAndActions(p);
     }
 
     return 1;
 }
 
-int ScriptingCore::executeMenuItemEvent(MenuItem* pMenuItem)
+int ScriptingCore::handleMenuClickedEvent(void* data)
 {
-    js_proxy_t * p = jsb_get_native_proxy(pMenuItem);
+    if (NULL == data)
+        return 0;
+    
+    BasicScriptData* basicScriptData = static_cast<BasicScriptData*>(data);
+    if (NULL == basicScriptData->nativeObject)
+        return 0;
+    
+    MenuItem* menuItem = static_cast<MenuItem*>(basicScriptData->nativeObject);
+    
+    js_proxy_t * p = jsb_get_native_proxy(menuItem);
     if (!p) return 0;
 
     jsval retval;
     jsval dataVal;
-    js_proxy_t *proxy = jsb_get_native_proxy(pMenuItem);
+    js_proxy_t *proxy = jsb_get_native_proxy(menuItem);
     dataVal = (proxy ? OBJECT_TO_JSVAL(proxy->obj) : JSVAL_NULL);
 
     executeJSFunctionFromReservedSpot(this->cx_, p->obj, dataVal, retval);
@@ -781,31 +800,19 @@ int ScriptingCore::executeMenuItemEvent(MenuItem* pMenuItem)
     return 1;
 }
 
-int ScriptingCore::executeNotificationEvent(NotificationCenter* pNotificationCenter, const char* pszName)
+int ScriptingCore::handleTouchesEvent(void* data)
 {
-    return 1;
-}
-
-int ScriptingCore::executeCallFuncActionEvent(CallFunc* pAction, Object* pTarget/* = NULL*/)
-{
-    return 1;
-}
-
-int ScriptingCore::executeSchedule(int nHandler, float dt, Node* pNode/* = NULL*/)
-{
-    js_proxy_t * p = jsb_get_native_proxy(pNode);
-    if (!p) return 0;
-
-    jsval retval;
-    jsval dataVal = DOUBLE_TO_JSVAL(dt);
-
-    executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "update", 1, &dataVal, &retval);
-
-    return 1;
-}
-
-int ScriptingCore::executeLayerTouchesEvent(Layer* pLayer, int eventType, Set *pTouches)
-{
+    if (NULL == data)
+        return 0;
+    
+    TouchesScriptData* touchesScriptData = static_cast<TouchesScriptData*>(data);
+    if (NULL == touchesScriptData->nativeObject || NULL == touchesScriptData->touches)
+        return 0;
+    
+    Layer* pLayer = static_cast<Layer*>(touchesScriptData->nativeObject);
+    int eventType = touchesScriptData->actionType;
+    Set *pTouches = touchesScriptData->touches;
+    
     std::string funcName = "";
     getTouchesFuncName(eventType, funcName);
 
@@ -833,8 +840,20 @@ int ScriptingCore::executeLayerTouchesEvent(Layer* pLayer, int eventType, Set *p
     return 1;
 }
 
-int ScriptingCore::executeLayerTouchEvent(Layer* pLayer, int eventType, Touch *pTouch)
+int ScriptingCore::handleTouchEvent(void* data)
 {
+    if (NULL == data)
+        return 0;
+    
+    TouchScriptData* touchScriptData = static_cast<TouchScriptData*>(data);
+    if (NULL == touchScriptData->nativeObject || NULL == touchScriptData->touch)
+        return 0;
+    
+    Layer* pLayer = static_cast<Layer*>(touchScriptData->nativeObject);
+    int eventType = touchScriptData->actionType;
+    Touch *pTouch = touchScriptData->touch;
+
+    
     std::string funcName = "";
     getTouchFuncName(eventType, funcName);
 
@@ -897,23 +916,42 @@ JSBool ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, ui
     return bRet;
 }
 
-int ScriptingCore::executeAccelerometerEvent(Layer *pLayer, Acceleration *pAccelerationValue) {
-
-    jsval value = ccacceleration_to_jsval(this->getGlobalContext(), *pAccelerationValue);
+int ScriptingCore::handleAccelerometerEvent(void* data)
+{
+    if (NULL == data)
+        return 0;
+    
+    BasicScriptData* basicScriptData = static_cast<BasicScriptData*>(data);
+    if (NULL == basicScriptData->nativeObject || NULL == basicScriptData->value)
+        return 0;
+    
+    Acceleration* accelerationValue = static_cast<Acceleration*>(basicScriptData->value);
+    Layer* layer = static_cast<Layer*>(basicScriptData->nativeObject);
+    
+    jsval value = ccacceleration_to_jsval(this->getGlobalContext(), *accelerationValue);
     JS_AddValueRoot(this->getGlobalContext(), &value);
 
-    executeFunctionWithObjectData(pLayer, "onAccelerometer", JSVAL_TO_OBJECT(value));
+    executeFunctionWithObjectData(layer, "onAccelerometer", JSVAL_TO_OBJECT(value));
 
     JS_RemoveValueRoot(this->getGlobalContext(), &value);
     return 1;
 }
 
-int ScriptingCore::executeLayerKeypadEvent(Layer* pLayer, int eventType)
+int ScriptingCore::handleKeypadEvent(void* data)
 {
-	js_proxy_t * p = jsb_get_native_proxy(pLayer);
+    if (NULL == data)
+        return 0;
+    
+    KeypadScriptData* keypadScriptData = static_cast<KeypadScriptData*>(data);
+    if (NULL == keypadScriptData->nativeObject)
+        return 0;
+    
+    int action = keypadScriptData->actionType;
+    
+	js_proxy_t * p = jsb_get_native_proxy(keypadScriptData->nativeObject);
 
 	if(p){
-		switch(eventType){
+		switch(action){
 		case kTypeBackClicked:
 			executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "backClicked");
 			break;
@@ -996,6 +1034,50 @@ int ScriptingCore::executeCustomTouchEvent(int eventType,
 
     return 1;
 
+}
+
+int ScriptingCore::sendEvent(ScriptEvent* evt)
+{
+    if (NULL == evt)
+        return 0;
+    
+    switch (evt->type)
+    {
+        case kNodeEvent:
+            {
+                return handleNodeEvent(evt->data);
+            }
+            break;
+        case kMenuClickedEvent:
+            {
+                return handleMenuClickedEvent(evt->data);
+            }
+            break;
+        case kTouchEvent:
+            {
+                return handleTouchEvent(evt->data);
+            }
+            break;
+        case kTouchesEvent:
+            {
+                return handleTouchesEvent(evt->data);
+            }
+            break;
+        case kKeypadEvent:
+            {
+                return handleKeypadEvent(evt->data);
+            }
+            break;
+        case kAccelerometerEvent:
+            {
+                return handleAccelerometerEvent(evt->data);
+            }
+            break;
+        default:
+            break;
+    }
+    
+    return 0;
 }
 
 #pragma mark - Conversion Routines
@@ -1337,7 +1419,7 @@ JSBool jsval_to_ccarray(JSContext* cx, jsval v, Array** ret) {
                 }
             }
             else {
-                CCAssert(false, "not supported type");
+                CCASSERT(false, "not supported type");
             }
         }
     }
@@ -1385,7 +1467,7 @@ jsval ccarray_to_jsval(JSContext* cx, Array *arr)
             }  else if ((boolVal = dynamic_cast<Bool*>(obj))) {
                 arrElement = BOOLEAN_TO_JSVAL(boolVal->getValue() ? JS_TRUE : JS_FALSE);
             } else {
-                CCAssert(false, "the type isn't suppored.");
+                CCASSERT(false, "the type isn't suppored.");
             }
         }
         if(!JS_SetElement(cx, jsretArr, i, &arrElement)) {
@@ -1433,7 +1515,7 @@ jsval ccdictionary_to_jsval(JSContext* cx, Dictionary* dict)
             } else if ((boolVal = dynamic_cast<Bool*>(obj))) {
                 dictElement = BOOLEAN_TO_JSVAL(boolVal->getValue() ? JS_TRUE : JS_FALSE);
             } else {
-                CCAssert(false, "the type isn't suppored.");
+                CCASSERT(false, "the type isn't suppored.");
             }
         }
         const char* key = pElement->getStrKey();
@@ -1536,7 +1618,7 @@ JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, Dictionary** ret) {
             }
         }
         else {
-            CCAssert(false, "not supported type");
+            CCASSERT(false, "not supported type");
         }
     }
 

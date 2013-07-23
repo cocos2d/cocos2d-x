@@ -79,9 +79,9 @@ ControlSlider* ControlSlider::create(Sprite * backgroundSprite, Sprite* pogressS
  {
      if (Control::init())
      {
-        CCAssert(backgroundSprite,  "Background sprite must be not nil");
-        CCAssert(progressSprite,    "Progress sprite must be not nil");
-        CCAssert(thumbSprite,       "Thumb sprite must be not nil");
+        CCASSERT(backgroundSprite,  "Background sprite must be not nil");
+        CCASSERT(progressSprite,    "Progress sprite must be not nil");
+        CCASSERT(thumbSprite,       "Thumb sprite must be not nil");
 
         ignoreAnchorPointForPosition(false);
         setTouchEnabled(true);
@@ -91,7 +91,7 @@ ControlSlider* ControlSlider::create(Sprite * backgroundSprite, Sprite* pogressS
         this->setThumbSprite(thumbSprite);
 
         // Defines the content size
-        Rect maxRect   = ControlUtils::RectUnion(backgroundSprite->boundingBox(), thumbSprite->boundingBox());
+        Rect maxRect   = ControlUtils::RectUnion(backgroundSprite->getBoundingBox(), thumbSprite->getBoundingBox());
 
         setContentSize(Size(maxRect.size.width, maxRect.size.height));
         
@@ -179,7 +179,7 @@ bool ControlSlider::isTouchInside(Touch * touch)
   Point touchLocation   = touch->getLocation();
   touchLocation           = this->getParent()->convertToNodeSpace(touchLocation);
 
-  Rect rect             = this->boundingBox();
+  Rect rect             = this->getBoundingBox();
   rect.size.width         += _thumbSprite->getContentSize().width;
   rect.origin.x           -= _thumbSprite->getContentSize().width / 2;
 

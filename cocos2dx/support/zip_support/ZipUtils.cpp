@@ -47,10 +47,10 @@ inline void ZipUtils::ccDecodeEncodedPvr(unsigned int *data, int len)
     
     // check if key was set
     // make sure to call caw_setkey_part() for all 4 key parts
-    CCAssert(s_uEncryptedPvrKeyParts[0] != 0, "Cocos2D: CCZ file is encrypted but key part 0 is not set. Did you call ZipUtils::ccSetPvrEncryptionKeyPart(...)?");
-    CCAssert(s_uEncryptedPvrKeyParts[1] != 0, "Cocos2D: CCZ file is encrypted but key part 1 is not set. Did you call ZipUtils::ccSetPvrEncryptionKeyPart(...)?");
-    CCAssert(s_uEncryptedPvrKeyParts[2] != 0, "Cocos2D: CCZ file is encrypted but key part 2 is not set. Did you call ZipUtils::ccSetPvrEncryptionKeyPart(...)?");
-    CCAssert(s_uEncryptedPvrKeyParts[3] != 0, "Cocos2D: CCZ file is encrypted but key part 3 is not set. Did you call ZipUtils::ccSetPvrEncryptionKeyPart(...)?");
+    CCASSERT(s_uEncryptedPvrKeyParts[0] != 0, "Cocos2D: CCZ file is encrypted but key part 0 is not set. Did you call ZipUtils::ccSetPvrEncryptionKeyPart(...)?");
+    CCASSERT(s_uEncryptedPvrKeyParts[1] != 0, "Cocos2D: CCZ file is encrypted but key part 1 is not set. Did you call ZipUtils::ccSetPvrEncryptionKeyPart(...)?");
+    CCASSERT(s_uEncryptedPvrKeyParts[2] != 0, "Cocos2D: CCZ file is encrypted but key part 2 is not set. Did you call ZipUtils::ccSetPvrEncryptionKeyPart(...)?");
+    CCASSERT(s_uEncryptedPvrKeyParts[3] != 0, "Cocos2D: CCZ file is encrypted but key part 3 is not set. Did you call ZipUtils::ccSetPvrEncryptionKeyPart(...)?");
     
     // create long key
     if(!s_bEncryptionKeyIsValid)
@@ -235,8 +235,8 @@ int ZipUtils::ccInflateGZipFile(const char *path, unsigned char **out)
     int len;
     unsigned int offset = 0;
     
-    CCAssert(out, "");
-    CCAssert(&*out, "");
+    CCASSERT(out, "");
+    CCASSERT(&*out, "");
     
     gzFile inFile = gzopen(path, "rb");
     if( inFile == NULL ) {
@@ -302,8 +302,8 @@ int ZipUtils::ccInflateGZipFile(const char *path, unsigned char **out)
 
 int ZipUtils::ccInflateCCZFile(const char *path, unsigned char **out)
 {
-    CCAssert(out, "");
-    CCAssert(&*out, "");
+    CCASSERT(out, "");
+    CCASSERT(&*out, "");
     
     // load file into memory
     unsigned char* compressed = NULL;
@@ -416,8 +416,8 @@ int ZipUtils::ccInflateCCZFile(const char *path, unsigned char **out)
 
 void ZipUtils::ccSetPvrEncryptionKeyPart(int index, unsigned int value)
 {
-    CCAssert(index >= 0, "Cocos2d: key part index cannot be less than 0");
-    CCAssert(index <= 3, "Cocos2d: key part index cannot be greater than 3");
+    CCASSERT(index >= 0, "Cocos2d: key part index cannot be less than 0");
+    CCASSERT(index <= 3, "Cocos2d: key part index cannot be greater than 3");
     
     if(s_uEncryptedPvrKeyParts[index] != value)
     {
@@ -556,7 +556,7 @@ unsigned char *ZipFile::getFileData(const std::string &fileName, unsigned long *
         
         pBuffer = new unsigned char[fileInfo.uncompressed_size];
         int CC_UNUSED nSize = unzReadCurrentFile(_data->zipFile, pBuffer, fileInfo.uncompressed_size);
-        CCAssert(nSize == 0 || nSize == (int)fileInfo.uncompressed_size, "the file size is wrong");
+        CCASSERT(nSize == 0 || nSize == (int)fileInfo.uncompressed_size, "the file size is wrong");
         
         if (pSize)
         {

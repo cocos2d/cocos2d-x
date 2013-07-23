@@ -56,12 +56,12 @@ public:
         ,_upZOrig(0)
     {}
     virtual ~ActionCamera(){}
-    // super methods
-    virtual void startWithTarget(Node *pTarget);
-	/** returns a new reversed action */
-    virtual ActionCamera * reverse() const;
-	/** returns a new clone of the action */
-	virtual ActionCamera *clone() const;
+
+    // Overrides
+    virtual void startWithTarget(Node *target) override;
+    virtual ActionCamera * reverse() const override;
+	virtual ActionCamera *clone() const override;
+
 protected:
     float _centerXOrig;
     float _centerYOrig;
@@ -84,6 +84,9 @@ Orbits the camera around the center of the screen using spherical coordinates
 class CC_DLL OrbitCamera : public ActionCamera //<NSCopying> 
 {
 public:
+    /** creates a OrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
+    static OrbitCamera* create(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
+
     OrbitCamera()
 		: _radius(0.0)
         , _deltaRadius(0.0)
@@ -98,19 +101,15 @@ public:
     {}
     ~OrbitCamera(){}
     
-    /** creates a OrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
-    static OrbitCamera* create(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
-    
     /** initializes a OrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
     bool initWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
     /** positions the camera according to spherical coordinates */
     void sphericalRadius(float *r, float *zenith, float *azimuth);
-    // super methods
-	/** returns a new clone of the action */
-	OrbitCamera *clone() const;
 
-    virtual void startWithTarget(Node *pTarget);
-    virtual void update(float time);
+    // Overrides
+	OrbitCamera *clone() const override;
+    virtual void startWithTarget(Node *target) override;
+    virtual void update(float time) override;
 
 protected:
     float _radius;

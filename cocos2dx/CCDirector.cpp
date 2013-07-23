@@ -99,12 +99,6 @@ Director* Director::getInstance()
     return s_SharedDirector;
 }
 
-// XXX: deprecated
-Director* Director::sharedDirector()
-{
-    return Director::getInstance();
-}
-
 Director::Director(void)
 {
 
@@ -222,7 +216,7 @@ void Director::setDefaultValues(void)
 	else if (strcmp(projection, "custom") == 0)
 		_projection = kDirectorProjectionCustom;
 	else
-		CCAssert(false, "Invalid projection value");
+		CCASSERT(false, "Invalid projection value");
 
 	// Default pixel format for PNG images with alpha
 	const char *pixel_format = conf->getCString("cocos2d.x.texture.pixel_format_for_png", "rgba8888");
@@ -241,7 +235,7 @@ void Director::setDefaultValues(void)
 void Director::setGLDefaultValues(void)
 {
     // This method SHOULD be called only after openGLView_ was initialized
-    CCAssert(_openGLView, "opengl view should not be null");
+    CCASSERT(_openGLView, "opengl view should not be null");
 
     setAlphaBlending(true);
     // XXX: Fix me, should enable/disable depth test according the depth format as cocos2d-iphone did
@@ -348,7 +342,7 @@ float Director::getDeltaTime() const
 }
 void Director::setOpenGLView(EGLView *pobOpenGLView)
 {
-    CCAssert(pobOpenGLView, "opengl view should not be null");
+    CCASSERT(pobOpenGLView, "opengl view should not be null");
 
     if (_openGLView != pobOpenGLView)
     {
@@ -458,6 +452,7 @@ void Director::purgeCachedData(void)
     LabelBMFont::purgeCachedData();
     if (s_SharedDirector->getOpenGLView())
     {
+        SpriteFrameCache::getInstance()->removeUnusedSpriteFrames();
         TextureCache::getInstance()->removeUnusedTextures();
     }
     FileUtils::getInstance()->purgeCachedEntries();
@@ -582,8 +577,8 @@ Point Director::getVisibleOrigin() const
 
 void Director::runWithScene(Scene *pScene)
 {
-    CCAssert(pScene != NULL, "This command can only be used to start the Director. There is already a scene present.");
-    CCAssert(_runningScene == NULL, "_runningScene should be null");
+    CCASSERT(pScene != NULL, "This command can only be used to start the Director. There is already a scene present.");
+    CCASSERT(_runningScene == NULL, "_runningScene should be null");
 
     pushScene(pScene);
     startAnimation();
@@ -591,8 +586,8 @@ void Director::runWithScene(Scene *pScene)
 
 void Director::replaceScene(Scene *pScene)
 {
-    CCAssert(_runningScene, "Use runWithScene: instead to start the director");
-    CCAssert(pScene != NULL, "the scene should not be null");
+    CCASSERT(_runningScene, "Use runWithScene: instead to start the director");
+    CCASSERT(pScene != NULL, "the scene should not be null");
 
     unsigned int index = _scenesStack->count();
 
@@ -604,7 +599,7 @@ void Director::replaceScene(Scene *pScene)
 
 void Director::pushScene(Scene *pScene)
 {
-    CCAssert(pScene, "the scene should not null");
+    CCASSERT(pScene, "the scene should not null");
 
     _sendCleanupToScene = false;
 
@@ -614,7 +609,7 @@ void Director::pushScene(Scene *pScene)
 
 void Director::popScene(void)
 {
-    CCAssert(_runningScene != NULL, "running scene should not null");
+    CCASSERT(_runningScene != NULL, "running scene should not null");
 
     _scenesStack->removeLastObject();
     unsigned int c = _scenesStack->count();
@@ -637,7 +632,7 @@ void Director::popToRootScene(void)
 
 void Director::popToSceneStackLevel(int level)
 {
-    CCAssert(_runningScene != NULL, "A running Scene is needed");
+    CCASSERT(_runningScene != NULL, "A running Scene is needed");
     int c = (int)_scenesStack->count();
 
     // level 0? -> end
@@ -869,7 +864,7 @@ void Director::createStatsLabel()
         FileUtils::getInstance()->purgeCachedEntries();
     }
 
-    Texture2DPixelFormat currentFormat = Texture2D::defaultAlphaPixelFormat();
+    Texture2DPixelFormat currentFormat = Texture2D::getDefaultAlphaPixelFormat();
     Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA4444);
     unsigned char *data = NULL;
     unsigned int data_len = 0;

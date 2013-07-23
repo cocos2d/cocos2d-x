@@ -654,7 +654,7 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
             break;
 
         int currentIndex = child->getAtlasIndex();
-        CCAssert( prev == currentIndex-1, "Child order failed");
+        CCASSERT( prev == currentIndex-1, "Child order failed");
         ////----CCLOG("children %x - atlasIndex:%d", child, currentIndex);
         prev = currentIndex;
     }
@@ -668,7 +668,7 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
             break;
 
         int currentIndex = child->getAtlasIndex();
-        CCAssert( prev == currentIndex-1, "Child order failed");
+        CCASSERT( prev == currentIndex-1, "Child order failed");
         ////----CCLOG("descendant %x - atlasIndex:%d", child, currentIndex);
         prev = currentIndex;
     }
@@ -1601,7 +1601,7 @@ void SpriteFrameTest::onEnter()
     for(int i = 1; i < 15; i++) 
     {
         sprintf(str, "grossini_dance_%02d.png", i);
-        SpriteFrame* frame = cache->spriteFrameByName( str );
+        SpriteFrame* frame = cache->getSpriteFrameByName( str );
         animFrames->addObject(frame);
     }
 
@@ -1624,14 +1624,14 @@ void SpriteFrameTest::onEnter()
     for(int i = 1; i < 15; i++) 
     {
         sprintf(str, "grossini_dance_gray_%02d.png",i);
-        SpriteFrame *frame = cache->spriteFrameByName(str);
+        SpriteFrame *frame = cache->getSpriteFrameByName(str);
         moreFrames->addObject(frame);
     }
 
 
     for( int i = 1; i < 5; i++) {
         sprintf(str, "grossini_blue_%02d.png",i);
-        SpriteFrame *frame = cache->spriteFrameByName(str);
+        SpriteFrame *frame = cache->getSpriteFrameByName(str);
         moreFrames->addObject(frame);
     }
 
@@ -1757,7 +1757,7 @@ void SpriteFrameAliasNameTest::onEnter()
     {
         // Obtain frames by alias name
         sprintf(str, "dance_%02d", i);
-        SpriteFrame *frame = cache->spriteFrameByName(str);
+        SpriteFrame *frame = cache->getSpriteFrameByName(str);
         animFrames->addObject(frame);
     }
 
@@ -1827,7 +1827,7 @@ SpriteOffsetAnchorRotation::SpriteOffsetAnchorRotation()
         for(int i = 0; i < 14; i++) 
         {
             sprintf(str, "grossini_dance_%02d.png",(i+1));
-            SpriteFrame *frame = cache->spriteFrameByName(str);
+            SpriteFrame *frame = cache->getSpriteFrameByName(str);
             animFrames->addObject(frame);
         }
 
@@ -1904,7 +1904,7 @@ SpriteBatchNodeOffsetAnchorRotation::SpriteBatchNodeOffsetAnchorRotation()
         for(int k = 0; k < 14; k++) 
         {
             sprintf(str, "grossini_dance_%02d.png",(k+1));
-            SpriteFrame *frame = cache->spriteFrameByName(str);
+            SpriteFrame *frame = cache->getSpriteFrameByName(str);
             animFrames->addObject(frame);
         }
 
@@ -1979,7 +1979,7 @@ SpriteOffsetAnchorScale::SpriteOffsetAnchorScale()
         for(int i = 0; i < 14; i++) 
         {
             sprintf(str, "grossini_dance_%02d.png",(i+1));
-            SpriteFrame *frame = cache->spriteFrameByName(str);
+            SpriteFrame *frame = cache->getSpriteFrameByName(str);
             animFrames->addObject(frame);
         }
 
@@ -2056,7 +2056,7 @@ SpriteBatchNodeOffsetAnchorScale::SpriteBatchNodeOffsetAnchorScale()
         for(int k = 0; k < 14; k++) 
         {
             sprintf(str, "grossini_dance_%02d.png",(k+1));
-            SpriteFrame *frame = cache->spriteFrameByName(str);
+            SpriteFrame *frame = cache->getSpriteFrameByName(str);
             animFrames->addObject(frame);
         }
 
@@ -2173,7 +2173,7 @@ SpriteHybrid::SpriteHybrid()
         int spriteIdx = CCRANDOM_0_1() * 14;
         char str[25] = {0};
         sprintf(str, "grossini_dance_%02d.png", (spriteIdx+1));
-        SpriteFrame* frame = SpriteFrameCache::getInstance()->spriteFrameByName(str);
+        SpriteFrame* frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(str);
         Sprite* sprite = Sprite::createWithSpriteFrame(frame);
         parent1->addChild(sprite, i, i);
         
@@ -2282,7 +2282,7 @@ SpriteBatchNodeChildren::SpriteBatchNodeChildren()
     for(int i = 1; i < 15; i++) 
     {
         sprintf(str, "grossini_dance_%02d.png",i);
-        SpriteFrame* frame = SpriteFrameCache::getInstance()->spriteFrameByName(str);
+        SpriteFrame* frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(str);
         animFrames->addObject(frame);
     }
     
@@ -3222,7 +3222,7 @@ public:
     MySprite1() : ivar(10) {}
     static MySprite1* createWithSpriteFrameName(const char *pszSpriteFrameName)
     {
-        SpriteFrame *pFrame = SpriteFrameCache::getInstance()->spriteFrameByName(pszSpriteFrameName);
+        SpriteFrame *pFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(pszSpriteFrameName);
         MySprite1 *pobSprite = new MySprite1();
         pobSprite->initWithSpriteFrame(pFrame);
         pobSprite->autorelease();
@@ -3290,11 +3290,11 @@ class DoubleSprite : public Sprite
 {
 public:
     DoubleSprite() {_HD = false;}
-    virtual bool initWithTexture(Texture2D* texture, Rect rect);
+    virtual bool initWithTexture(Texture2D* texture, const Rect& rect);
     // Called everytime the vertex needs to be updated.
     virtual void setContentSize(const Size& size);
     // rect used only for the vertex. Called everytime the vertex needs to be updated.
-    virtual void setVertexRect(Rect rect);
+    virtual void setVertexRect(const Rect& rect);
 
     static DoubleSprite* create(const char* pszFileName);
     bool _HD;
@@ -3308,7 +3308,7 @@ DoubleSprite* DoubleSprite::create(const char* pszFileName)
     return pSp;
 }
 
-bool DoubleSprite::initWithTexture(Texture2D* texture, Rect rect)
+bool DoubleSprite::initWithTexture(Texture2D* texture, const Rect& rect)
 {
     if( Sprite::initWithTexture(texture, rect)) 
     {
@@ -3332,15 +3332,16 @@ void DoubleSprite::setContentSize(const Size& size)
 }
 
 // rect used only for the vertex. Called everytime the vertex needs to be updated.
-void DoubleSprite::setVertexRect(Rect rect)
+void DoubleSprite::setVertexRect(const Rect& rect)
 {
+    Rect tmpRect = rect;
     // If Retina Display and Texture is in HD then scale the vertex rect
     if( CC_CONTENT_SCALE_FACTOR() == 2 && ! _HD ) {
-        rect.size.width *= 2;
-        rect.size.height *= 2;
+        tmpRect.size.width *= 2;
+        tmpRect.size.height *= 2;
     }
 
-    Sprite::setVertexRect(rect);
+    Sprite::setVertexRect(tmpRect);
 }
 
 
@@ -3428,7 +3429,7 @@ AnimationCacheTest::AnimationCacheTest()
     for(int i = 1; i < 15; i++)
     {
         sprintf(str, "grossini_dance_%02d.png",i);
-        SpriteFrame *frame = frameCache->spriteFrameByName(str);
+        SpriteFrame *frame = frameCache->getSpriteFrameByName(str);
         animFrames->addObject(frame);
     }
 
@@ -3445,7 +3446,7 @@ AnimationCacheTest::AnimationCacheTest()
     for(int i = 1; i < 15; i++)
     {
         sprintf(str, "grossini_dance_gray_%02d.png",i);
-        SpriteFrame *frame = frameCache->spriteFrameByName(str);
+        SpriteFrame *frame = frameCache->getSpriteFrameByName(str);
         animFrames->addObject(frame);
     }
 
@@ -3462,7 +3463,7 @@ AnimationCacheTest::AnimationCacheTest()
     for(int i = 1; i < 4; i++)
     {
         sprintf(str, "grossini_blue_%02d.png",i);
-        SpriteFrame *frame = frameCache->spriteFrameByName(str);
+        SpriteFrame *frame = frameCache->getSpriteFrameByName(str);
         animFrames->addObject(frame);
     }
 
@@ -3489,7 +3490,7 @@ AnimationCacheTest::AnimationCacheTest()
 
     // create an sprite without texture
     Sprite *grossini = Sprite::create();
-    SpriteFrame *frame = frameCache->spriteFrameByName("grossini_dance_01.png");
+    SpriteFrame *frame = frameCache->getSpriteFrameByName("grossini_dance_01.png");
     grossini->setDisplayFrame(frame);
 
     Size winSize = Director::getInstance()->getWinSize();
@@ -3546,7 +3547,7 @@ AnimationCacheFile::AnimationCacheFile()
     // create an sprite without texture
     Sprite *grossini = Sprite::create();
 
-    SpriteFrame *frame = frameCache->spriteFrameByName("grossini_dance_01.png");
+    SpriteFrame *frame = frameCache->getSpriteFrameByName("grossini_dance_01.png");
     grossini->setDisplayFrame(frame);
 
     Size winSize = Director::getInstance()->getWinSize();
@@ -3661,7 +3662,7 @@ SpriteOffsetAnchorSkew::SpriteOffsetAnchorSkew()
         for (int j = 0; j < 14; j++)
         {            
             sprintf(tmp, "grossini_dance_%02d.png", j + 1);
-            SpriteFrame *frame = cache->spriteFrameByName(tmp);
+            SpriteFrame *frame = cache->getSpriteFrameByName(tmp);
             animFrames->addObject(frame);
         }
 
@@ -3739,7 +3740,7 @@ SpriteBatchNodeOffsetAnchorSkew::SpriteBatchNodeOffsetAnchorSkew()
         for (int j = 0; j < 14; j++)
         {            
             sprintf(tmp, "grossini_dance_%02d.png", j + 1);
-            SpriteFrame *frame = cache->spriteFrameByName(tmp);
+            SpriteFrame *frame = cache->getSpriteFrameByName(tmp);
             animFrames->addObject(frame);
         }
 
@@ -3814,7 +3815,7 @@ SpriteOffsetAnchorSkewScale::SpriteOffsetAnchorSkewScale()
         for (int j = 0; j < 14; j++)
         {            
             sprintf(tmp, "grossini_dance_%02d.png", j + 1);
-            SpriteFrame *frame = cache->spriteFrameByName(tmp);
+            SpriteFrame *frame = cache->getSpriteFrameByName(tmp);
             animFrames->addObject(frame);
         }
 
@@ -3896,7 +3897,7 @@ SpriteBatchNodeOffsetAnchorSkewScale::SpriteBatchNodeOffsetAnchorSkewScale()
         for (int j = 0; j < 14; j++)
         {            
             sprintf(tmp, "grossini_dance_%02d.png", j + 1);
-            SpriteFrame *frame = cache->spriteFrameByName(tmp);
+            SpriteFrame *frame = cache->getSpriteFrameByName(tmp);
             animFrames->addObject(frame);
         }
 
@@ -3978,7 +3979,7 @@ SpriteOffsetAnchorFlip::SpriteOffsetAnchorFlip()
         for (int j = 0; j < 14; j++)
         {            
             sprintf(tmp, "grossini_dance_%02d.png", i + 1);
-            SpriteFrame *frame = cache->spriteFrameByName(tmp);
+            SpriteFrame *frame = cache->getSpriteFrameByName(tmp);
             animFrames->addObject(frame);
         }
 
@@ -4060,7 +4061,7 @@ SpriteBatchNodeOffsetAnchorFlip::SpriteBatchNodeOffsetAnchorFlip()
         for (int j = 0; j < 14; j++)
         {            
             sprintf(tmp, "grossini_dance_%02d.png", i + 1);
-            SpriteFrame *frame = cache->spriteFrameByName(tmp);
+            SpriteFrame *frame = cache->getSpriteFrameByName(tmp);
             animFrames->addObject(frame);
         }
 
@@ -4344,7 +4345,7 @@ SpriteOffsetAnchorRotationalSkew::SpriteOffsetAnchorRotationalSkew()
         {
             char pngName[30];
             snprintf(pngName, 30, "grossini_dance_%02d.png", (i+1));
-            SpriteFrame *frame = cache->spriteFrameByName(pngName);
+            SpriteFrame *frame = cache->getSpriteFrameByName(pngName);
             animFrames->addObject(frame);
         }
         Animation *animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
@@ -4420,7 +4421,7 @@ SpriteBatchNodeOffsetAnchorRotationalSkew::SpriteBatchNodeOffsetAnchorRotational
         {
             char pngName[30];
             snprintf(pngName, 30, "grossini_dance_%02d.png", (j+1));
-            SpriteFrame *frame = cache->spriteFrameByName(pngName);
+            SpriteFrame *frame = cache->getSpriteFrameByName(pngName);
             animFrames->addObject(frame);
         }
         Animation *animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
@@ -4493,7 +4494,7 @@ SpriteOffsetAnchorRotationalSkewScale::SpriteOffsetAnchorRotationalSkewScale()
         {
             char pngName[30];
             snprintf(pngName, 30, "grossini_dance_%02d.png", (j+1));
-            SpriteFrame *frame = cache->spriteFrameByName(pngName);
+            SpriteFrame *frame = cache->getSpriteFrameByName(pngName);
             animFrames->addObject(frame);
         }
         Animation *animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
@@ -4576,7 +4577,7 @@ SpriteBatchNodeOffsetAnchorRotationalSkewScale::SpriteBatchNodeOffsetAnchorRotat
         {
             char pngName[30];
             snprintf(pngName, 30, "grossini_dance_%02d.png", (j+1));
-            SpriteFrame *frame = cache->spriteFrameByName(pngName);
+            SpriteFrame *frame = cache->getSpriteFrameByName(pngName);
             animFrames->addObject(frame);
         }
         Animation *animation = Animation::createWithSpriteFrames(animFrames, 0.3f);

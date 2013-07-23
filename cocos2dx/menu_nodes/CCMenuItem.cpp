@@ -112,15 +112,11 @@ void MenuItem::activate()
 			_callback(this);
         }
         
-        if (kScriptTypeLua == _scriptType)
+        if (kScriptTypeNone != _scriptType)
         {
-            BasicScriptData data((void*)this);
+            BasicScriptData data(this);
             ScriptEvent scriptEvent(kMenuClickedEvent,&data);
-            ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);
-        }
-        else if (kScriptTypeJavascript == _scriptType)
-        {
-            ScriptEngineManager::sharedManager()->getScriptEngine()->executeMenuItemEvent(this);
+            ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
         }
     }
 }
@@ -135,7 +131,7 @@ bool MenuItem::isEnabled() const
     return _enabled;
 }
 
-Rect MenuItem::rect()
+Rect MenuItem::rect() const
 {
     return Rect( _position.x - _contentSize.width * _anchorPoint.x,
                       _position.y - _contentSize.height * _anchorPoint.y,
@@ -344,7 +340,7 @@ MenuItemAtlasFont * MenuItemAtlasFont::create(const char *value, const char *cha
 // XXX: deprecated
 bool MenuItemAtlasFont::initWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, Object* target, SEL_MenuHandler selector)
 {
-    CCAssert( value != NULL && strlen(value) != 0, "value length must be greater than 0");
+    CCASSERT( value != NULL && strlen(value) != 0, "value length must be greater than 0");
 
 	_target = target;
 	CC_SAFE_RETAIN(_target);
@@ -353,7 +349,7 @@ bool MenuItemAtlasFont::initWithString(const char *value, const char *charMapFil
 
 bool MenuItemAtlasFont::initWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback)
 {
-    CCAssert( value != NULL && strlen(value) != 0, "value length must be greater than 0");
+    CCASSERT( value != NULL && strlen(value) != 0, "value length must be greater than 0");
     LabelAtlas *label = new LabelAtlas();
     label->initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap);
     label->autorelease();
@@ -373,7 +369,7 @@ void MenuItemFont::setFontSize(unsigned int s)
     _globalFontSize = s;
 }
 
-unsigned int MenuItemFont::fontSize()
+unsigned int MenuItemFont::getFontSize()
 {
     return _globalFontSize;
 }
@@ -388,7 +384,7 @@ void MenuItemFont::setFontName(const char *name)
     _globalFontNameRelease = true;
 }
 
-const char * MenuItemFont::fontName()
+const char * MenuItemFont::getFontName()
 {
     return _globalFontName.c_str();
 }
@@ -422,7 +418,7 @@ MenuItemFont * MenuItemFont::create(const char *value)
 // XXX: deprecated
 bool MenuItemFont::initWithString(const char *value, Object* target, SEL_MenuHandler selector)
 {
-    CCAssert( value != NULL && strlen(value) != 0, "Value length must be greater than 0");
+    CCASSERT( value != NULL && strlen(value) != 0, "Value length must be greater than 0");
 
 	_target = target;
     CC_SAFE_RETAIN(target);
@@ -431,7 +427,7 @@ bool MenuItemFont::initWithString(const char *value, Object* target, SEL_MenuHan
 
 bool MenuItemFont::initWithString(const char *value, const ccMenuCallback& callback)
 {
-    CCAssert( value != NULL && strlen(value) != 0, "Value length must be greater than 0");
+    CCASSERT( value != NULL && strlen(value) != 0, "Value length must be greater than 0");
 
     _fontName = _globalFontName;
     _fontSize = _globalFontSize;
@@ -457,7 +453,7 @@ void MenuItemFont::setFontSizeObj(unsigned int s)
     recreateLabel();
 }
 
-unsigned int MenuItemFont::fontSizeObj()
+unsigned int MenuItemFont::getFontSizeObj() const
 {
     return _fontSize;
 }
@@ -468,7 +464,7 @@ void MenuItemFont::setFontNameObj(const char* name)
     recreateLabel();
 }
 
-const char* MenuItemFont::fontNameObj()
+const char* MenuItemFont::getFontNameObj() const
 {
     return _fontName.c_str();
 }
@@ -1023,7 +1019,7 @@ void MenuItemToggle::setEnabled(bool enabled)
     }
 }
 
-MenuItem* MenuItemToggle::selectedItem()
+MenuItem* MenuItemToggle::getSelectedItem()
 {
     return (MenuItem*)_subItems->objectAtIndex(_selectedIndex);
 }

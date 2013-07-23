@@ -372,7 +372,7 @@ TextLayer::TextLayer(void)
 void TextLayer::checkAnim(float dt)
 {
     Node* s2 = getChildByTag(kTagBackground);
-    if ( s2->numberOfRunningActions() == 0 && s2->getGrid() != NULL)
+    if ( s2->getNumberOfRunningActions() == 0 && s2->getGrid() != NULL)
         s2->setGrid(NULL);;
 }
 

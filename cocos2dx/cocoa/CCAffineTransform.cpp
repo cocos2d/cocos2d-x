@@ -94,13 +94,13 @@ AffineTransform AffineTransformScale(const AffineTransform& t, float sx, float s
 
 AffineTransform AffineTransformRotate(const AffineTransform& t, float anAngle)
 {
-    float fSin = sin(anAngle);
-    float fCos = cos(anAngle);
+    float sine = sinf(anAngle);
+    float cosine = cosf(anAngle);
 
-    return __CCAffineTransformMake(    t.a * fCos + t.c * fSin,
-                                    t.b * fCos + t.d * fSin,
-                                    t.c * fCos - t.a * fSin,
-                                    t.d * fCos - t.b * fSin,
+    return __CCAffineTransformMake(    t.a * cosine + t.c * sine,
+                                    t.b * cosine + t.d * sine,
+                                    t.c * cosine - t.a * sine,
+                                    t.d * cosine - t.b * sine,
                                     t.tx,
                                     t.ty);
 }

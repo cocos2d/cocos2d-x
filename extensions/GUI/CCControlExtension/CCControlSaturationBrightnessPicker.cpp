@@ -121,8 +121,8 @@ void ControlSaturationBrightnessPicker::updateSliderPosition(Point sliderPositio
     // Clamp the position of the icon within the circle
     
     // Get the center point of the bkgd image
-    float centerX           = _startPos.x + _background->boundingBox().size.width*0.5f;
-    float centerY           = _startPos.y + _background->boundingBox().size.height*0.5f;
+    float centerX           = _startPos.x + _background->getBoundingBox().size.width*0.5f;
+    float centerY           = _startPos.y + _background->getBoundingBox().size.height*0.5f;
     
     // Work out the distance difference between the location and center
     float dx                = sliderPosition.x - centerX;
@@ -133,7 +133,7 @@ void ControlSaturationBrightnessPicker::updateSliderPosition(Point sliderPositio
     float angle             = atan2f(dy, dx);
     
     // Set the limit to the slider movement within the colour picker
-    float limit             = _background->boundingBox().size.width*0.5f;
+    float limit             = _background->getBoundingBox().size.width*0.5f;
     
     // Check distance doesn't exceed the bounds of the circle
     if (dist > limit)
@@ -162,8 +162,8 @@ bool ControlSaturationBrightnessPicker::checkSliderPosition(Point location)
     // Clamp the position of the icon within the circle
     
     // get the center point of the bkgd image
-    float centerX           = _startPos.x + _background->boundingBox().size.width*0.5f;
-    float centerY           = _startPos.y + _background->boundingBox().size.height*0.5f;
+    float centerX           = _startPos.x + _background->getBoundingBox().size.width*0.5f;
+    float centerY           = _startPos.y + _background->getBoundingBox().size.height*0.5f;
     
     // work out the distance difference between the location and center
     float dx                = location.x - centerX;
@@ -171,7 +171,7 @@ bool ControlSaturationBrightnessPicker::checkSliderPosition(Point location)
     float dist              = sqrtf(dx*dx+dy*dy);
     
     // check that the touch location is within the bounding rectangle before sending updates
-    if (dist <= _background->boundingBox().size.width*0.5f)
+    if (dist <= _background->getBoundingBox().size.width*0.5f)
     {
         updateSliderPosition(location);
         sendActionsForControlEvents(ControlEventValueChanged);

@@ -106,7 +106,7 @@ Speed* Speed::create(ActionInterval* pAction, float fSpeed)
 
 bool Speed::initWithAction(ActionInterval *pAction, float fSpeed)
 {
-    CCAssert(pAction != NULL, "");
+    CCASSERT(pAction != NULL, "");
     pAction->retain();
     _innerAction = pAction;
     _speed = fSpeed;    
@@ -122,10 +122,10 @@ Speed *Speed::clone() const
 	return  a;
 }
 
-void Speed::startWithTarget(Node* pTarget)
+void Speed::startWithTarget(Node* target)
 {
-    Action::startWithTarget(pTarget);
-    _innerAction->startWithTarget(pTarget);
+    Action::startWithTarget(target);
+    _innerAction->startWithTarget(target);
 }
 
 void Speed::stop()
@@ -196,7 +196,7 @@ Follow* Follow::reverse() const
 
 bool Follow::initWithTarget(Node *pFollowedNode, const Rect& rect/* = Rect::ZERO*/)
 {
-    CCAssert(pFollowedNode != NULL, "");
+    CCASSERT(pFollowedNode != NULL, "");
  
     pFollowedNode->retain();
     _followedNode = pFollowedNode;

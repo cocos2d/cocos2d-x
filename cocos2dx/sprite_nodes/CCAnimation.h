@@ -61,9 +61,10 @@ public:
     /** initializes the animation frame with a spriteframe, number of delay units and a notification user info */
     bool initWithSpriteFrame(SpriteFrame* spriteFrame, float delayUnits, Dictionary* userInfo);
 
-	/** returns a copy of the AnimationFrame */
-	virtual AnimationFrame *clone() const;
+    // Overrides
+	virtual AnimationFrame *clone() const override;
 
+protected:
     /** SpriteFrameName to be used */
     CC_SYNTHESIZE_RETAIN(SpriteFrame*, _spriteFrame, SpriteFrame)
 
@@ -88,18 +89,15 @@ You can animate a Animation object by using the Animate action. Example:
 class CC_DLL Animation : public Object, public Clonable
 {
 public:
-    Animation();
-    ~Animation(void);
-public:
     /** Creates an animation
-    @since v0.99.5
-    */
+     @since v0.99.5
+     */
     static Animation* create(void);
 
     /* Creates an animation with an array of SpriteFrame and a delay between frames in seconds.
      The frames will be added with one "delay unit".
      @since v0.99.5
-    */
+     */
     static Animation* createWithSpriteFrames(Array* arrayOfSpriteFrameNames, float delay = 0.0f);
 
     /* Creates an animation with an array of AnimationFrame, the delay per units in seconds and and how many times it should be executed.
@@ -110,22 +108,8 @@ public:
         return Animation::create(arrayOfAnimationFrameNames, delayPerUnit, 1);
     }
 
-    /** Adds a SpriteFrame to a Animation.
-     The frame will be added with one "delay unit".
-    */
-    void addSpriteFrame(SpriteFrame *pFrame);
-
-    /** Adds a frame with an image filename. Internally it will create a SpriteFrame and it will add it.
-     The frame will be added with one "delay unit".
-     Added to facilitate the migration from v0.8 to v0.9.
-     */  
-    void addSpriteFrameWithFileName(const char *pszFileName);
-
-    /** Adds a frame with a texture and a rect. Internally it will create a SpriteFrame and it will add it.
-     The frame will be added with one "delay unit".
-     Added to facilitate the migration from v0.8 to v0.9.
-     */
-    void addSpriteFrameWithTexture(Texture2D* pobTexture, const Rect& rect);
+    Animation();
+    virtual ~Animation(void);
 
     bool init();
 
@@ -139,9 +123,27 @@ public:
     */
     bool initWithAnimationFrames(Array* arrayOfAnimationFrames, float delayPerUnit, unsigned int loops);
 
-	/** returns a clone fo the animation */
-	virtual Animation *clone() const;
+    /** Adds a SpriteFrame to a Animation.
+     The frame will be added with one "delay unit".
+     */
+    void addSpriteFrame(SpriteFrame *pFrame);
 
+    /** Adds a frame with an image filename. Internally it will create a SpriteFrame and it will add it.
+     The frame will be added with one "delay unit".
+     Added to facilitate the migration from v0.8 to v0.9.
+     */
+    void addSpriteFrameWithFileName(const char *pszFileName);
+
+    /** Adds a frame with a texture and a rect. Internally it will create a SpriteFrame and it will add it.
+     The frame will be added with one "delay unit".
+     Added to facilitate the migration from v0.8 to v0.9.
+     */
+    void addSpriteFrameWithTexture(Texture2D* pobTexture, const Rect& rect);
+
+    // overrides
+	virtual Animation *clone() const override;
+
+protected:
     /** total Delay units of the Animation. */
     CC_SYNTHESIZE_READONLY(float, _totalDelayUnits, TotalDelayUnits)
 

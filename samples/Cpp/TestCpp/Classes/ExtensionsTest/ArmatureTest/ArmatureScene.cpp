@@ -241,7 +241,7 @@ void TestCSWithoutSkeleton::onEnter()
 	Armature *armature = NULL;
 	armature = Armature::create("TestBone");
 	armature->getAnimation()->playByIndex(0);
-    armature->setAnchorPoint(Point(0.5, -0.1));
+    armature->setAnchorPoint(Point(0.5f, -0.1f));
 	armature->setScale(0.2f);
 	armature->setPosition(Point(VisibleRect::center().x, VisibleRect::center().y-100));
 	addChild(armature);
@@ -579,7 +579,7 @@ void TestBoundingBox::draw()
 {
 	CC_NODE_DRAW_SETUP();
 
-	rect = RectApplyAffineTransform(armature->boundingBox(), armature->nodeToParentTransform());
+	rect = RectApplyAffineTransform(armature->getBoundingBox(), armature->getNodeToParentTransform());
 	
 	ccDrawColor4B(100, 100, 100, 255);
 	ccDrawRect(rect.origin, Point(rect.getMaxX(), rect.getMaxY()));

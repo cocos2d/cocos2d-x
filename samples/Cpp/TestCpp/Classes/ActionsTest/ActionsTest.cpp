@@ -836,7 +836,7 @@ void ActionCallFuncND::onEnter()
 
     auto action = Sequence::create(
         MoveBy::create(2.0f, Point(200,0)),
-        CallFuncN::create( CC_CALLBACK_1(ActionCallFuncND::removeFromParentAndCleanup, this, true)),
+        CallFuncN::create( CC_CALLBACK_1(ActionCallFuncND::doRemoveFromParentAndCleanup, this, true)),
         NULL);
 
     _grossini->runAction(action);
@@ -852,7 +852,7 @@ std::string ActionCallFuncND::subtitle()
     return "simulates CallFuncND with std::bind()";
 }
 
-void ActionCallFuncND::removeFromParentAndCleanup(Node* pSender, bool cleanup)
+void ActionCallFuncND::doRemoveFromParentAndCleanup(Node* pSender, bool cleanup)
 {
     _grossini->removeFromParentAndCleanup(cleanup);
 }

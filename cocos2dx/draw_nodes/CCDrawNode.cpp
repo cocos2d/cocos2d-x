@@ -23,6 +23,8 @@
 #include "CCDrawNode.h"
 #include "shaders/CCShaderCache.h"
 #include "CCGL.h"
+#include "support/CCNotificationCenter.h"
+#include "CCEventType.h"
 
 NS_CC_BEGIN
 
@@ -118,6 +120,10 @@ DrawNode::~DrawNode()
     ccGLBindVAO(0);
     _vao = 0;
 #endif
+    
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    NotificationCenter::getInstance()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
+#endif
 }
 
 DrawNode* DrawNode::create()
@@ -135,8 +141,10 @@ DrawNode* DrawNode::create()
     return pRet;
 }
 
-void DrawNode::ensureCapacity(unsigned int count)
+void DrawNode::ensureCapacity(int count)
 {
+    CCASSERT(count>=0, "capacity must be >= 0");
+    
     if(_bufferCount + count > _bufferCapacity)
     {
 		_bufferCapacity += MAX(_bufferCapacity, count);
@@ -181,6 +189,14 @@ bool DrawNode::init()
     
     _dirty = true;
     
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    // Need to listen the event only when not use batchnode, because it will use VBO
+    NotificationCenter::getInstance()->addObserver(this,
+                                                   callfuncO_selector(DrawNode::listenBackToForeground),
+                                                   EVNET_COME_TO_FOREGROUND,
+                                                   NULL);
+#endif
+    
     return true;
 }
 
@@ -196,6 +212,7 @@ void DrawNode::render()
     ccGLBindVAO(_vao);
 #else
     ccGLEnableVertexAttribs(kVertexAttribFlag_PosColorTex);
+    
     glBindBuffer(GL_ARRAY_BUFFER, _vbo);
     // vertex
     glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, vertices));
@@ -216,11 +233,9 @@ void DrawNode::render()
 
 void DrawNode::draw()
 {
+    CC_NODE_DRAW_SETUP();
     ccGLBlendFunc(_blendFunc.src, _blendFunc.dst);
-    
-    getShaderProgram()->use();
-    getShaderProgram()->setUniformsForBuiltins();
-    
+
     render();
 }
 
@@ -438,6 +453,13 @@ const BlendFunc& DrawNode::getBlendFunc() const
 void DrawNode::setBlendFunc(const BlendFunc &blendFunc)
 {
     _blendFunc = blendFunc;
+}
+
+/** listen the event that coming to foreground on Android
+ */
+void DrawNode::listenBackToForeground(Object *obj)
+{
+    init();
 }
 
 NS_CC_END

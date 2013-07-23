@@ -109,7 +109,7 @@ bool HelloWorld::init()
 		// see http://www.cocos2d-x.org/boards/6/topics/1478
 		this->schedule( schedule_selector(HelloWorld::updateGame) );
 
-		CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("background-music-aac.wav", true);
+		CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("background-music-aac.wav", true);
 
 		bRet = true;
 	} while (0);
@@ -234,7 +234,7 @@ void HelloWorld::ccTouchesEnded(Set* touches, Event* event)
 	projectile->setTag(2);
 	_projectiles->addObject(projectile);
 
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("pew-pew-lei.wav");
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("pew-pew-lei.wav");
 }
 
 void HelloWorld::updateGame(float dt)

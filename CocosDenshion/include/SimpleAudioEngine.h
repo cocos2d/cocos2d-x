@@ -32,6 +32,14 @@ THE SOFTWARE.
 #include <ctype.h>
 #include <string.h>
 
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#define CC_DEPRECATED_ATTRIBUTE __attribute__((deprecated))
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#define CC_DEPRECATED_ATTRIBUTE __declspec(deprecated)
+#else
+#define CC_DEPRECATED_ATTRIBUTE
+#endif
+
 namespace CocosDenshion {
 
 class TypeInfo
@@ -55,13 +63,27 @@ static inline unsigned int getHashCodeByString(const char *key)
 }
 
 /**
-@class          SimpleAudioEngine
-@brief          offer a VERY simple interface to play background music & sound effect
-*/
+  @class          SimpleAudioEngine
+  @brief          Offers a VERY simple interface to play background music & sound effects.
+  @note           Make sure to call SimpleAudioEngine::end() when the sound engine is not needed anymore
+                  to release allocated resources.
+ */
 
 class EXPORT_DLL SimpleAudioEngine : public TypeInfo
 {
 public:
+    /**
+     @brief Get the shared Engine object,it will new one when first time be called
+     */
+    static SimpleAudioEngine* getInstance();
+    CC_DEPRECATED_ATTRIBUTE static SimpleAudioEngine* sharedEngine() { return SimpleAudioEngine::getInstance(); }
+
+    /**
+     @brief Release the shared Engine object
+     @warning It must be called before the application exit, or a memroy leak will be casued.
+     */
+    static void end();
+
     SimpleAudioEngine();
     ~SimpleAudioEngine();
 
@@ -70,19 +92,8 @@ public:
     }
 
     /**
-    @brief Get the shared Engine object,it will new one when first time be called
-    */
-    static SimpleAudioEngine* sharedEngine();
-
-    /**
-    @brief Release the shared Engine object
-    @warning It must be called before the application exit, or a memroy leak will be casued.
-    */
-    static void end();
-
-    /**
      @brief Preload background music
-     @param pszFilePath The path of the background music file,or the FileName of T_SoundResInfo
+     @param pszFilePath The path of the background music file.
      */
     void preloadBackgroundMusic(const char* pszFilePath);
     
@@ -91,94 +102,85 @@ public:
     @param pszFilePath The path of the background music file,or the FileName of T_SoundResInfo
     @param bLoop Whether the background music loop or not
     */
-    void playBackgroundMusic(const char* pszFilePath, bool bLoop);
-    void playBackgroundMusic(const char* pszFilePath) {
-    	this->playBackgroundMusic(pszFilePath, false);
-    }
+    void playBackgroundMusic(const char* pszFilePath, bool bLoop = false);
 
     /**
     @brief Stop playing background music
     @param bReleaseData If release the background music data or not.As default value is false
     */
-    void stopBackgroundMusic(bool bReleaseData);
-    void stopBackgroundMusic() {
-    	this->stopBackgroundMusic(false);
-    }
+    void stopBackgroundMusic(bool bReleaseData = false);
 
     /**
     @brief Pause playing background music
-    */
+     */
     void pauseBackgroundMusic();
 
     /**
     @brief Resume playing background music
-    */
+     */
     void resumeBackgroundMusic();
 
     /**
     @brief Rewind playing background music
-    */
+     */
     void rewindBackgroundMusic();
 
+    /**
+     @brief Indicates whether any background music can be played or not.
+     @return <i>true</i> if background music can be played, otherwise <i>false</i>.
+     */
     bool willPlayBackgroundMusic();
 
     /**
-    @brief Whether the background music is playing
-    @return If is playing return true,or return false
+    @brief Indicates whether the background music is playing
+    @return <i>true</i> if the background music is playing, otherwise <i>false</i>
     */
     bool isBackgroundMusicPlaying();
 
+    // 
     // properties
+    //
+
     /**
-    @brief The volume of the background music max value is 1.0,the min value is 0.0
+    @brief The volume of the background music within the range of 0.0 as the minimum and 1.0 as the maximum.
     */
     float getBackgroundMusicVolume();
 
     /**
-    @brief set the volume of background music
-    @param volume must be in 0.0~1.0
+    @brief Set the volume of background music
+    @param volume must be within the range of 0.0 as the minimum and 1.0 as the maximum.
     */
     void setBackgroundMusicVolume(float volume);
 
     /**
-    @brief The volume of the effects max value is 1.0,the min value is 0.0
+    @brief The volume of the effects within the range of 0.0 as the minimum and 1.0 as the maximum.
     */
     float getEffectsVolume();
 
     /**
-    @brief set the volume of sound effecs
-    @param volume must be in 0.0~1.0
+    @brief Set the volume of sound effects
+    @param volume must be within the range of 0.0 as the minimum and 1.0 as the maximum.
     */
     void setEffectsVolume(float volume);
 
+    // 
     // for sound effects
-    /**
-    @brief Play sound effect
-    @param pszFilePath The path of the effect file,or the FileName of T_SoundResInfo
-    @param bLoop Whether to loop the effect playing, default value is false
-    */
-    unsigned int playEffect(const char* pszFilePath, bool bLoop) {
-        return this->playEffect(pszFilePath, bLoop, 1.0, 0.0, 1.0);
-    }
-
-    unsigned int playEffect(const char* pszFilePath) {
-        return this->playEffect(pszFilePath, false);
-    }
 
     /**
-    @brief Play sound effect  with a file path, pitch, pan and gain
-    @param pszFilePath The path of the effect file,or the FileName of T_SoundResInfo
-    @param bLoop Whether to loop the effect playing, default value is false
+    @brief Play sound effect with a file path, pitch, pan and gain
+    @param pszFilePath The path of the effect file.
+    @param bLoop Determines whether to loop the effect playing or not. The default value is false.
     @param pitch Frequency, normal value is 1.0. Will also change effect play time.
-    @param pan   Stereo effect, in range [-1..1] where -1 enables only left channel.
-    @param gain  Volume, normal value is 1. Works for range [0..1].
+    @param pan   Stereo effect, in the range of [-1..1] where -1 enables only left channel.
+    @param gain  Volume, in the range of [0..1]. The normal value is 1.
+    @return the OpenAL source id
 
     @note Full support is under development, now there are limitations:
         - no pitch effect on Samsung Galaxy S2 with OpenSL backend enabled;
         - no pitch/pan/gain on emscrippten, win32, marmalade.
     */
-    unsigned int playEffect(const char* pszFilePath, bool bLoop,
-                            float pitch, float pan, float gain);
+    unsigned int playEffect(const char* pszFilePath, bool bLoop = false,
+                            float pitch = 1.0f, float pan = 0.0f, float gain = 1.0f);
 
     /**
     @brief Pause playing sound effect
@@ -217,14 +219,14 @@ public:
 
     /**
     @brief          preload a compressed audio file
-    @details        the compressed audio will be decode to wave, then write into an 
-    internal buffer in SimpleaudioEngine
+    @details        the compressed audio will be decoded to wave, then written into an internal buffer in SimpleAudioEngine
+    @param pszFilePath The path of the effect file
     */
     void preloadEffect(const char* pszFilePath);
 
     /**
     @brief          unload the preloaded effect from internal buffer
-    @param[in]        pszFilePath        The path of the effect file,or the FileName of T_SoundResInfo
+    @param pszFilePath        The path of the effect file
     */
     void unloadEffect(const char* pszFilePath);
 };

@@ -61,16 +61,16 @@ public:
     /** Returns the shared instance of the cache */
     static TextureCache * getInstance();
 
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static TextureCache * sharedTextureCache() { return TextureCache::getInstance(); }
+
     /** purges the cache. It releases the retained instance.
      @since v0.99.0
      */
     static void destroyInstance();
 
-    /** @deprecated Use getInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static TextureCache * sharedTextureCache();
-
     /** @deprecated Use destroyInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static void purgeSharedTextureCache();
+    CC_DEPRECATED_ATTRIBUTE static void purgeSharedTextureCache() { return TextureCache::destroyInstance(); }
 
     /** Reload all textures
      It's only useful when the value of CC_ENABLE_CACHE_TEXTURE_DATA is 1
@@ -219,8 +219,7 @@ public:
     ~VolatileTexture();
 
     static void addImageTexture(Texture2D *tt, const char* imageFileName, Image::EImageFormat format);
-    static void addStringTexture(Texture2D *tt, const char* text, const Size& dimensions, TextAlignment alignment, 
-                                 VerticalTextAlignment vAlignment, const char *fontName, float fontSize);
+    static void addStringTexture(Texture2D *tt, const char* text, const FontDefinition& fontDefinition);
     static void addDataTexture(Texture2D *tt, void* data, Texture2DPixelFormat pixelFormat, const Size& contentSize);
     static void addImage(Texture2D *tt, Image *image);
 
@@ -229,8 +228,8 @@ public:
     static void reloadAllTextures();
 
 public:
-    static std::list<VolatileTexture*> textures;
-    static bool isReloading;
+    static std::list<VolatileTexture*> _textures;
+    static bool _isReloading;
     
 private:
     // find VolatileTexture by Texture2D*
@@ -238,9 +237,9 @@ private:
     static VolatileTexture* findVolotileTexture(Texture2D *tt);
 
 protected:
-    Texture2D *texture;
+    Texture2D *_texture;
     
-    Image *uiImage;
+    Image *_uiImage;
 
     ccCachedImageType _cashedImageType;
 
@@ -251,13 +250,9 @@ protected:
     std::string _fileName;
     Image::EImageFormat _fmtImage;
 
-    ccTexParams     _texParams;
-    Size          _size;
-    TextAlignment _alignment;
-    VerticalTextAlignment _vAlignment;
-    std::string     _fontName;
-    std::string     _text;
-    float           _fontSize;
+    ccTexParams      _texParams;
+    std::string      _text;
+    FontDefinition   _fontDefinition;
 };
 
 #endif

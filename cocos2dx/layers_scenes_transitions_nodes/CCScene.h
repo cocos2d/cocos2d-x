@@ -54,6 +54,7 @@ public:
 
     Scene();
     virtual ~Scene();
+    
     bool init();
 
 };
