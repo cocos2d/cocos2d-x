@@ -684,7 +684,7 @@ const BlendFunc& SpriteBatchNode::getBlendFunc(void) const
     return _blendFunc;
 }
 
-Texture2D* SpriteBatchNode::getTexture(void)
+Texture2D* SpriteBatchNode::getTexture(void) const
 {
     return _textureAtlas->getTexture();
 }
