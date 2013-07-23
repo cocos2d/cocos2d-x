@@ -821,7 +821,7 @@ void ParticleSystem::updateBlendFunc()
     }
 }
 
-Texture2D * ParticleSystem::getTexture()
+Texture2D * ParticleSystem::getTexture() const
 {
     return _texture;
 }
@@ -1034,7 +1034,7 @@ unsigned int ParticleSystem::getParticleCount() const
     return _particleCount;
 }
 
-float ParticleSystem::getDuration()
+float ParticleSystem::getDuration() const
 {
     return _duration;
 }
@@ -1064,7 +1064,7 @@ void ParticleSystem::setPosVar(const Point& var)
     _posVar = var;
 }
 
-float ParticleSystem::getLife()
+float ParticleSystem::getLife() const
 {
     return _life;
 }
@@ -1074,7 +1074,7 @@ void ParticleSystem::setLife(float var)
     _life = var;
 }
 
-float ParticleSystem::getLifeVar()
+float ParticleSystem::getLifeVar() const
 {
     return _lifeVar;
 }
@@ -1084,7 +1084,7 @@ void ParticleSystem::setLifeVar(float var)
     _lifeVar = var;
 }
 
-float ParticleSystem::getAngle()
+float ParticleSystem::getAngle() const
 {
     return _angle;
 }
@@ -1094,7 +1094,7 @@ void ParticleSystem::setAngle(float var)
     _angle = var;
 }
 
-float ParticleSystem::getAngleVar()
+float ParticleSystem::getAngleVar() const
 {
     return _angleVar;
 }
@@ -1104,7 +1104,7 @@ void ParticleSystem::setAngleVar(float var)
     _angleVar = var;
 }
 
-float ParticleSystem::getStartSize()
+float ParticleSystem::getStartSize() const
 {
     return _startSize;
 }
@@ -1114,7 +1114,7 @@ void ParticleSystem::setStartSize(float var)
     _startSize = var;
 }
 
-float ParticleSystem::getStartSizeVar()
+float ParticleSystem::getStartSizeVar() const
 {
     return _startSizeVar;
 }
@@ -1124,7 +1124,7 @@ void ParticleSystem::setStartSizeVar(float var)
     _startSizeVar = var;
 }
 
-float ParticleSystem::getEndSize()
+float ParticleSystem::getEndSize() const
 {
     return _endSize;
 }
@@ -1134,7 +1134,7 @@ void ParticleSystem::setEndSize(float var)
     _endSize = var;
 }
 
-float ParticleSystem::getEndSizeVar()
+float ParticleSystem::getEndSizeVar() const
 {
     return _endSizeVar;
 }
@@ -1184,7 +1184,7 @@ void ParticleSystem::setEndColorVar(const Color4F& var)
     _endColorVar = var;
 }
 
-float ParticleSystem::getStartSpin()
+float ParticleSystem::getStartSpin() const
 {
     return _startSpin;
 }
@@ -1194,7 +1194,7 @@ void ParticleSystem::setStartSpin(float var)
     _startSpin = var;
 }
 
-float ParticleSystem::getStartSpinVar()
+float ParticleSystem::getStartSpinVar() const
 {
     return _startSpinVar;
 }
@@ -1204,7 +1204,7 @@ void ParticleSystem::setStartSpinVar(float var)
     _startSpinVar = var;
 }
 
-float ParticleSystem::getEndSpin()
+float ParticleSystem::getEndSpin() const
 {
     return _endSpin;
 }
@@ -1213,7 +1213,8 @@ void ParticleSystem::setEndSpin(float var)
 {
     _endSpin = var;
 }
-float ParticleSystem::getEndSpinVar()
+
+float ParticleSystem::getEndSpinVar() const
 {
     return _endSpinVar;
 }
@@ -1223,7 +1224,7 @@ void ParticleSystem::setEndSpinVar(float var)
     _endSpinVar = var;
 }
 
-float ParticleSystem::getEmissionRate()
+float ParticleSystem::getEmissionRate() const
 {
     return _emissionRate;
 }
@@ -1233,7 +1234,7 @@ void ParticleSystem::setEmissionRate(float var)
     _emissionRate = var;
 }
 
-unsigned int ParticleSystem::getTotalParticles()
+unsigned int ParticleSystem::getTotalParticles() const
 {
     return _totalParticles;
 }
@@ -1257,7 +1258,7 @@ void ParticleSystem::setBlendFunc(const BlendFunc &blendFunc)
     }
 }
 
-bool ParticleSystem::getOpacityModifyRGB()
+bool ParticleSystem::isOpacityModifyRGB() const
 {
     return _opacityModifyRGB;
 }
@@ -1267,7 +1268,7 @@ void ParticleSystem::setOpacityModifyRGB(bool bOpacityModifyRGB)
     _opacityModifyRGB = bOpacityModifyRGB;
 }
 
-tPositionType ParticleSystem::getPositionType()
+tPositionType ParticleSystem::getPositionType() const
 {
     return _positionType;
 }
@@ -1287,7 +1288,7 @@ void ParticleSystem::setAutoRemoveOnFinish(bool var)
     _isAutoRemoveOnFinish = var;
 }
 
-int ParticleSystem::getEmitterMode()
+int ParticleSystem::getEmitterMode() const
 {
     return _emitterMode;
 }
@@ -1300,7 +1301,7 @@ void ParticleSystem::setEmitterMode(int var)
 
 // ParticleSystem - methods for batchNode rendering
 
-ParticleBatchNode* ParticleSystem::getBatchNode(void)
+ParticleBatchNode* ParticleSystem::getBatchNode(void) const
 {
     return _batchNode;
 }

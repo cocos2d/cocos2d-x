@@ -123,7 +123,7 @@ TMXLayer::~TMXLayer()
     CC_SAFE_DELETE_ARRAY(_tiles);
 }
 
-TMXTilesetInfo * TMXLayer::getTileSet()
+TMXTilesetInfo * TMXLayer::getTileSet() const
 {
     return _tileSet;
 }
@@ -718,7 +718,7 @@ int TMXLayer::getVertexZForPos(const Point& pos)
     return ret;
 }
 
-Dictionary * TMXLayer::getProperties()
+Dictionary * TMXLayer::getProperties() const
 {
     return _properties;
 }

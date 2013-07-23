@@ -269,7 +269,7 @@ void TileMapAtlas::setTGAInfo(struct sImageTGA* var)
     _TGAInfo = var;
 }
 
-struct sImageTGA * TileMapAtlas::getTGAInfo()
+struct sImageTGA * TileMapAtlas::getTGAInfo() const
 {
     return _TGAInfo;
 }

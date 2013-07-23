@@ -133,7 +133,7 @@ public:
     // Overrides
     //
     // TextureProtocol
-    virtual Texture2D* getTexture(void) override;
+    virtual Texture2D* getTexture(void) const override;
     virtual void setTexture(Texture2D *texture) override;
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
     virtual const BlendFunc& getBlendFunc(void) const override;

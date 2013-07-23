@@ -262,9 +262,123 @@ public:
     virtual bool isBlendAdditive() const;
     virtual void setBlendAdditive(bool value);
 
+    virtual ParticleBatchNode* getBatchNode() const;
+    virtual void setBatchNode(ParticleBatchNode* batchNode);
+    
+    // index of system in batch node array
+    inline int getAtlasIndex() const { return _atlasIndex; };
+    inline void setAtlasIndex(int index) { _atlasIndex = index; };
+
+    /** Quantity of particles that are being simulated at the moment */
+    inline unsigned int getParticleCount() const;
+    
+    /** How many seconds the emitter will run. -1 means 'forever' */
+    inline float getDuration() const;
+    inline void setDuration(float duration);
+    
+    /** sourcePosition of the emitter */
+    inline const Point& getSourcePosition() const;
+    inline void setSourcePosition(const Point& pos);
+    
+    /** Position variance of the emitter */
+    inline const Point& getPosVar() const;
+    inline void setPosVar(const Point& pos);
+
+    /** life, and life variation of each particle */
+    inline float getLife() const;
+    inline void setLife(float life);
+
+    /** life variance of each particle */
+    inline float getLifeVar() const;
+    inline void setLifeVar(float lifeVar);
+
+    /** angle and angle variation of each particle */
+    inline float getAngle() const;
+    inline void setAngle(float angle);
+
+    /** angle variance of each particle */
+    inline float getAngleVar() const;
+    inline void setAngleVar(float angleVar);
+    
+    /** Switch between different kind of emitter modes:
+     - kParticleModeGravity: uses gravity, speed, radial and tangential acceleration
+     - kParticleModeRadius: uses radius movement + rotation
+     */
+    inline int getEmitterMode() const;
+    inline void setEmitterMode(int mode);
+    
+    /** start size in pixels of each particle */
+    inline float getStartSize() const;
+    inline void setStartSize(float startSize);
+
+    /** size variance in pixels of each particle */
+    inline float getStartSizeVar() const;
+    inline void setStartSizeVar(float sizeVar);
+
+    /** end size in pixels of each particle */
+    inline float getEndSize() const;
+    inline void setEndSize(float sizeVar);
+
+    /** end size variance in pixels of each particle */
+    inline float getEndSizeVar() const;
+    inline void setEndSizeVar(float sizeVar);
+
+    /** start color of each particle */
+    inline const Color4F& getStartColor() const;
+    inline void setStartColor(const Color4F& color);
+
+    /** start color variance of each particle */
+    inline const Color4F& getStartColorVar() const;
+    inline void setStartColorVar(const Color4F& color);
+
+    /** end color and end color variation of each particle */
+    inline const Color4F& getEndColor() const;
+    inline void setEndColor(const Color4F& color);
+
+    /** end color variance of each particle */
+    inline const Color4F& getEndColorVar() const;
+    inline void setEndColorVar(const Color4F& color);
+
+    //* initial angle of each particle
+    inline float getStartSpin() const;
+    inline void setStartSpin(float spin);
+
+    //* initial angle of each particle
+    inline float getStartSpinVar() const;
+    inline void setStartSpinVar(float pinVar);
+
+    //* initial angle of each particle
+    inline float getEndSpin() const;
+    inline void setEndSpin(float pin);
+
+    //* initial angle of each particle
+    inline float getEndSpinVar() const;
+    inline void setEndSpinVar(float spinVar);
+
+    /** emission rate of the particles */
+    inline float getEmissionRate() const;
+    inline void setEmissionRate(float rate);
+
+    /** maximum particles of the system */
+    virtual unsigned int getTotalParticles() const;
+    virtual void setTotalParticles(unsigned int totalParticles);
+
+    /** does the alpha value modify color */
+    inline void setOpacityModifyRGB(bool bValue);
+    inline bool isOpacityModifyRGB() const;
+    
+    /** particles movement type: Free or Grouped
+     @since v0.8
+     */
+    inline tPositionType getPositionType() const;
+    inline void setPositionType(tPositionType type);
+    
     // Overrides
     virtual void update(float dt) override;
-
+    virtual Texture2D* getTexture() const override;
+    virtual void setTexture(Texture2D *texture) override;
+    virtual void setBlendFunc(const BlendFunc &blendFunc) override;
+    virtual const BlendFunc &getBlendFunc() const override;
 protected:
     virtual void updateBlendFunc();
 
@@ -342,10 +456,10 @@ protected:
     //SEL                        updateParticleSel;
 
     /** weak reference to the SpriteBatchNode that renders the Sprite */
-    CC_PROPERTY(ParticleBatchNode*, _batchNode, BatchNode);
+    ParticleBatchNode* _batchNode;
 
     // index of system in batch node array
-    CC_SYNTHESIZE(int, _atlasIndex, AtlasIndex);
+    int _atlasIndex;
 
     //true if scaled or rotated
     bool _transformSystemDirty;
@@ -356,67 +470,67 @@ protected:
     bool _isActive;
     
     /** Quantity of particles that are being simulated at the moment */
-    CC_PROPERTY_READONLY(unsigned int, _particleCount, ParticleCount)
+    unsigned int _particleCount;
     /** How many seconds the emitter will run. -1 means 'forever' */
-    CC_PROPERTY(float, _duration, Duration)
+    float _duration;
     /** sourcePosition of the emitter */
-    CC_PROPERTY_PASS_BY_REF(Point, _sourcePosition, SourcePosition)
+    Point _sourcePosition;
     /** Position variance of the emitter */
-    CC_PROPERTY_PASS_BY_REF(Point, _posVar, PosVar)
+    Point _posVar;
     /** life, and life variation of each particle */
-    CC_PROPERTY(float, _life, Life)
+    float _life;
     /** life variance of each particle */
-    CC_PROPERTY(float, _lifeVar, LifeVar)
+    float _lifeVar;
     /** angle and angle variation of each particle */
-    CC_PROPERTY(float, _angle, Angle)
+    float _angle;
     /** angle variance of each particle */
-    CC_PROPERTY(float, _angleVar, AngleVar)
+    float _angleVar;
 
     /** Switch between different kind of emitter modes:
      - kParticleModeGravity: uses gravity, speed, radial and tangential acceleration
      - kParticleModeRadius: uses radius movement + rotation
      */
-    CC_PROPERTY(int, _emitterMode, EmitterMode)
+    int _emitterMode;
 
     /** start size in pixels of each particle */
-    CC_PROPERTY(float, _startSize, StartSize)
+    float _startSize;
     /** size variance in pixels of each particle */
-    CC_PROPERTY(float, _startSizeVar, StartSizeVar)
+    float _startSizeVar;
     /** end size in pixels of each particle */
-    CC_PROPERTY(float, _endSize, EndSize)
+    float _endSize;
     /** end size variance in pixels of each particle */
-    CC_PROPERTY(float, _endSizeVar, EndSizeVar)
+    float _endSizeVar;
     /** start color of each particle */
-    CC_PROPERTY_PASS_BY_REF(Color4F, _startColor, StartColor)
+    Color4F _startColor;
     /** start color variance of each particle */
-    CC_PROPERTY_PASS_BY_REF(Color4F, _startColorVar, StartColorVar)
+    Color4F _startColorVar;
     /** end color and end color variation of each particle */
-    CC_PROPERTY_PASS_BY_REF(Color4F, _endColor, EndColor)
+    Color4F _endColor;
     /** end color variance of each particle */
-    CC_PROPERTY_PASS_BY_REF(Color4F, _endColorVar, EndColorVar)
+    Color4F _endColorVar;
     //* initial angle of each particle
-    CC_PROPERTY(float, _startSpin, StartSpin)
+    float _startSpin;
     //* initial angle of each particle
-    CC_PROPERTY(float, _startSpinVar, StartSpinVar)
+    float _startSpinVar;
     //* initial angle of each particle
-    CC_PROPERTY(float, _endSpin, EndSpin)
+    float _endSpin;
     //* initial angle of each particle
-    CC_PROPERTY(float, _endSpinVar, EndSpinVar)
+    float _endSpinVar;
     /** emission rate of the particles */
-    CC_PROPERTY(float, _emissionRate, EmissionRate)
+    float _emissionRate;
     /** maximum particles of the system */
-    CC_PROPERTY(unsigned int, _totalParticles, TotalParticles)
+    unsigned int _totalParticles;
     /** conforms to CocosNodeTexture protocol */
-    CC_PROPERTY(Texture2D*, _texture, Texture)
+    Texture2D* _texture;
     /** conforms to CocosNodeTexture protocol */
-    CC_PROPERTY_PASS_BY_REF(BlendFunc, _blendFunc, BlendFunc)
+    BlendFunc _blendFunc;
     /** does the alpha value modify color */
-    CC_PROPERTY(bool, _opacityModifyRGB, OpacityModifyRGB)
+    bool _opacityModifyRGB;
 
     /** particles movement type: Free or Grouped
      @since v0.8
      */
-    CC_PROPERTY(tPositionType, _positionType, PositionType)
+    tPositionType _positionType;
 };
 
 // end of particle_nodes group

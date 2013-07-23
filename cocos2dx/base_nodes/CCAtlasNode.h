@@ -80,7 +80,7 @@ public:
     
     // Overrides
     virtual void draw() override;
-    virtual Texture2D* getTexture() override;
+    virtual Texture2D* getTexture() const override;
     virtual void setTexture(Texture2D *texture) override;
     virtual bool isOpacityModifyRGB() const override;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;

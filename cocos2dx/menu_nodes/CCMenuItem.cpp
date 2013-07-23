@@ -165,14 +165,17 @@ const Color3B& MenuItemLabel::getDisabledColor() const
 {
     return _disabledColor;
 }
+
 void MenuItemLabel::setDisabledColor(const Color3B& var)
 {
     _disabledColor = var;
 }
-Node *MenuItemLabel::getLabel()
+
+Node *MenuItemLabel::getLabel() const
 {
     return _label;
 }
+
 void MenuItemLabel::setLabel(Node* var)
 {
     if (var)
@@ -473,7 +476,7 @@ const char* MenuItemFont::getFontNameObj() const
 //CCMenuItemSprite
 //
 
-Node * MenuItemSprite::getNormalImage()
+Node * MenuItemSprite::getNormalImage() const
 {
     return _normalImage;
 }
@@ -499,7 +502,7 @@ void MenuItemSprite::setNormalImage(Node* pImage)
     }
 }
 
-Node * MenuItemSprite::getSelectedImage()
+Node * MenuItemSprite::getSelectedImage() const
 {
     return _selectedImage;
 }
@@ -524,7 +527,7 @@ void MenuItemSprite::setSelectedImage(Node* pImage)
     }
 }
 
-Node * MenuItemSprite::getDisabledImage()
+Node * MenuItemSprite::getDisabledImage() const
 {
     return _disabledImage;
 }
@@ -825,7 +828,7 @@ void MenuItemToggle::setSubItems(Array* var)
     _subItems = var;
 }
 
-Array* MenuItemToggle::getSubItems()
+Array* MenuItemToggle::getSubItems() const
 {
     return _subItems;
 }
@@ -977,20 +980,24 @@ void MenuItemToggle::setSelectedIndex(unsigned int index)
         item->setPosition( Point( s.width/2, s.height/2 ) );
     }
 }
-unsigned int MenuItemToggle::getSelectedIndex()
+
+unsigned int MenuItemToggle::getSelectedIndex() const
 {
     return _selectedIndex;
 }
+
 void MenuItemToggle::selected()
 {
     MenuItem::selected();
-    ((MenuItem*)(_subItems->objectAtIndex(_selectedIndex)))->selected();
+    static_cast<MenuItem*>(_subItems->objectAtIndex(_selectedIndex))->selected();
 }
+
 void MenuItemToggle::unselected()
 {
     MenuItem::unselected();
-    ((MenuItem*)(_subItems->objectAtIndex(_selectedIndex)))->unselected();
+    static_cast<MenuItem*>(_subItems->objectAtIndex(_selectedIndex))->unselected();
 }
+
 void MenuItemToggle::activate()
 {
     // update index
@@ -1021,7 +1028,7 @@ void MenuItemToggle::setEnabled(bool enabled)
 
 MenuItem* MenuItemToggle::getSelectedItem()
 {
-    return (MenuItem*)_subItems->objectAtIndex(_selectedIndex);
+    return static_cast<MenuItem*>(_subItems->objectAtIndex(_selectedIndex));
 }
 
 NS_CC_END

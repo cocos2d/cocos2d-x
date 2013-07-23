@@ -108,16 +108,6 @@ object->propertyNamed(name_of_the_property);
 */
 class CC_DLL TMXTiledMap : public Node
 {
-    /** the map's size property measured in tiles */
-    CC_SYNTHESIZE_PASS_BY_REF(Size, _mapSize, MapSize);
-    /** the tiles's size property measured in pixels */
-    CC_SYNTHESIZE_PASS_BY_REF(Size, _tileSize, TileSize);
-    /** map orientation */
-    CC_SYNTHESIZE(int, _mapOrientation, MapOrientation);
-    /** object groups */
-    CC_PROPERTY(Array*, _objectGroups, ObjectGroups);
-    /** properties */
-    CC_PROPERTY(Dictionary*, _properties, Properties);
 public:
     TMXTiledMap();
     virtual ~TMXTiledMap();
@@ -146,11 +136,42 @@ public:
     /** return properties dictionary for tile GID */
     Dictionary* propertiesForGID(int GID);
 
+    /** the map's size property measured in tiles */
+    inline const Size& getMapSize() const { return _mapSize; };
+    inline void setMapSize(const Size& mapSize) { _mapSize = mapSize; };
+
+    /** the tiles's size property measured in pixels */
+    inline const Size& getTileSize() const { return _tileSize; };
+    inline void setTileSize(const Size& tileSize) { _tileSize = tileSize; };
+
+    /** map orientation */
+    inline int getMapOrientation() const { return _mapOrientation; };
+    inline void setMapOrientation(int mapOrientation) { _mapOrientation = mapOrientation; };
+    
+    /** object groups */
+    inline Array* getObjectGroups() const;
+    inline void setObjectGroups(Array* groups);
+    
+    /** properties */
+    inline Dictionary* getProperties() const;
+    inline void setProperties(Dictionary* properties);
+    
 private:
     TMXLayer * parseLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     TMXTilesetInfo * tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     void buildWithMapInfo(TMXMapInfo* mapInfo);
 protected:
+    /** the map's size property measured in tiles */
+    Size _mapSize;
+    /** the tiles's size property measured in pixels */
+    Size _tileSize;
+    /** map orientation */
+    int _mapOrientation;
+    /** object groups */
+    Array* _objectGroups;
+    /** properties */
+    Dictionary* _properties;
+    
     //! tile properties
     Dictionary* _tileProperties;
 
