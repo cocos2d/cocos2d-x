@@ -230,7 +230,7 @@ public:
 
     /// is storing characters?
     inline bool isStoringCharacters() const { return _storingCharacters; };
-    inline bool getStoringCharacters() const { return isStoringCharacters(); };
+    CC_DEPRECATED_ATTRIBUTE inline bool getStoringCharacters() const { return isStoringCharacters(); };
     inline void setStoringCharacters(bool storingCharacters) { _storingCharacters = storingCharacters; };
 
     /// properties
