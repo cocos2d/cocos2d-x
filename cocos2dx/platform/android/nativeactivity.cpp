@@ -253,6 +253,19 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
                     (d.h > 0)) {
                     cocos2d::JniHelper::setJavaVM(app->activity->vm);
                     cocos2d::JniHelper::setClassLoaderFrom(app->activity->clazz);
+
+                    // call Cocos2dxHelper.init()
+                    cocos2d::JniMethodInfo ccxhelperInit;
+                    if (!cocos2d::JniHelper::getStaticMethodInfo(ccxhelperInit,
+                                                                 "org/cocos2dx/lib/Cocos2dxHelper",
+                                                                 "init",
+                                                                 "(Landroid/content/Context;)V")) {
+                        LOGI("cocos2d::JniHelper::getStaticMethodInfo(ccxhelperInit) FAILED");
+                    }
+                    ccxhelperInit.env->CallStaticVoidMethod(ccxhelperInit.classID,
+                                                            ccxhelperInit.methodID,
+                                                            app->activity->clazz);
+
                     cocos_init(d, app->activity->assetManager);
                 }
 

@@ -60,11 +60,12 @@ public class Cocos2dxHelper {
 	// Constructors
 	// ===========================================================
 
-	public static void init(final Context pContext, final Cocos2dxHelperListener pCocos2dxHelperListener) {
+	public static void init(final Context pContext) {
 		final ApplicationInfo applicationInfo = pContext.getApplicationInfo();
 		
 		Cocos2dxHelper.sContext = pContext;
-		Cocos2dxHelper.sCocos2dxHelperListener = pCocos2dxHelperListener;
+
+        System.loadLibrary("game");
 
 		Cocos2dxHelper.sPackageName = applicationInfo.packageName;
 		Cocos2dxHelper.sFileDirectory = pContext.getFilesDir().getAbsolutePath();
