@@ -152,16 +152,24 @@ public:
     inline void setTiles(unsigned int* tiles) { _tiles = tiles; };
     
     /** Tileset information for the layer */
-    inline TMXTilesetInfo* getTileSet() const;
-    inline void setTileSet(TMXTilesetInfo* info);
+    inline TMXTilesetInfo* getTileSet() const { return _tileSet; };
+    inline void setTileSet(TMXTilesetInfo* info) {
+        CC_SAFE_RETAIN(info);
+        CC_SAFE_RELEASE(_tileSet);
+        _tileSet = info;
+    };
     
     /** Layer orientation, which is the same as the map orientation */
     inline unsigned int getLayerOrientation() const { return _layerOrientation; };
     inline void setLayerOrientation(unsigned int orientation) { _layerOrientation = orientation; };
     
     /** properties from the layer. They can be added using Tiled */
-    inline Dictionary* getProperties() const;
-    inline void setProperties(Dictionary* dict);
+    inline Dictionary* getProperties() const { return _properties; };
+    inline void setProperties(Dictionary* properties) {
+        CC_SAFE_RETAIN(properties);
+        CC_SAFE_RELEASE(_properties);
+        _properties = properties;
+    };
     //
     // Override
     //

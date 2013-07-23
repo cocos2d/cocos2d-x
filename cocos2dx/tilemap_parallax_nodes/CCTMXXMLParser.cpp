@@ -35,23 +35,8 @@ THE SOFTWARE.
 #include "support/base64.h"
 
 using namespace std;
-/*
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-    #include "expat.h"
-#else
-    #include <libxml/parser.h>
-    #include <libxml/tree.h>
-    #include <libxml/xmlmemory.h>
-#endif
-*/
 
 NS_CC_BEGIN
-
-/*
-void tmx_startElement(void *ctx, const xmlChar *name, const xmlChar **atts);
-void tmx_endElement(void *ctx, const xmlChar *name);
-void tmx_characters(void *ctx, const xmlChar *ch, int len);
-*/
 
 static const char* valueForKey(const char *key, std::map<std::string, std::string>* dict)
 {
@@ -215,66 +200,6 @@ TMXMapInfo::~TMXMapInfo()
     CC_SAFE_RELEASE(_properties);
     CC_SAFE_RELEASE(_tileProperties);
     CC_SAFE_RELEASE(_objectGroups);
-}
-
-Array* TMXMapInfo::getLayers() const
-{
-    return _layers;
-}
-
-void TMXMapInfo::setLayers(Array* var)
-{
-    CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(_layers);
-    _layers = var;
-}
-
-Array* TMXMapInfo::getTilesets() const
-{
-    return _tilesets;
-}
-
-void TMXMapInfo::setTilesets(Array* var)
-{
-    CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(_tilesets);
-    _tilesets = var;
-}
-
-Array* TMXMapInfo::getObjectGroups() const
-{
-    return _objectGroups;
-}
-
-void TMXMapInfo::setObjectGroups(Array* var)
-{
-    CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(_objectGroups);
-    _objectGroups = var;
-}
-
-Dictionary * TMXMapInfo::getProperties() const
-{
-    return _properties;
-}
-
-void TMXMapInfo::setProperties(Dictionary* var)
-{
-    CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(_properties);
-    _properties = var;
-}
-
-Dictionary* TMXMapInfo::getTileProperties()
-{
-    return _tileProperties;
-}
-
-void TMXMapInfo::setTileProperties(Dictionary* tileProperties)
-{
-    CC_SAFE_RETAIN(tileProperties);
-    CC_SAFE_RELEASE(_tileProperties);
-    _tileProperties = tileProperties;
 }
 
 bool TMXMapInfo::parseXMLString(const char *xmlString)

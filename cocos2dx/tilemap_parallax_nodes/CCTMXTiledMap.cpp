@@ -101,30 +101,6 @@ TMXTiledMap::~TMXTiledMap()
     CC_SAFE_RELEASE(_tileProperties);
 }
 
-Array* TMXTiledMap::getObjectGroups() const
-{
-    return _objectGroups;
-}
-
-void TMXTiledMap::setObjectGroups(Array* var)
-{
-    CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(_objectGroups);
-    _objectGroups = var;
-}
-
-Dictionary * TMXTiledMap::getProperties() const
-{
-    return _properties;
-}
-
-void TMXTiledMap::setProperties(Dictionary* var)
-{
-    CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(_properties);
-    _properties = var;
-}
-
 // private
 TMXLayer * TMXTiledMap::parseLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
 {

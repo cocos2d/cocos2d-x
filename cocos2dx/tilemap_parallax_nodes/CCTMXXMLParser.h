@@ -173,8 +173,12 @@ public:
     /* initializes parsing of an XML string, either a tmx (Map) string or tsx (Tileset) string */
     bool parseXMLString(const char *xmlString);
 
-    Dictionary* getTileProperties();
-    void setTileProperties(Dictionary* tileProperties);
+    Dictionary* getTileProperties() { return _tileProperties; };
+    void setTileProperties(Dictionary* tileProperties) {
+        CC_SAFE_RETAIN(tileProperties);
+        CC_SAFE_RELEASE(_tileProperties);
+        _tileProperties = tileProperties;
+    };
 
     /// map orientation
     inline int getOrientation() const { return _orientation; };
@@ -189,16 +193,28 @@ public:
     inline void setTileSize(const Size& tileSize) { _tileSize = tileSize; };
     
     /// Layers
-    inline Array* getLayers() const;
-    inline void setLayers(Array* layers);
+    inline Array* getLayers() const { return _layers; };
+    inline void setLayers(Array* layers) {
+        CC_SAFE_RETAIN(layers);
+        CC_SAFE_RELEASE(_layers);
+        _layers = layers;
+    };
 
     /// tilesets
-    inline Array* getTilesets() const;
-    inline void setTilesets(Array* tilesets);
+    inline Array* getTilesets() const { return _tilesets; };
+    inline void setTilesets(Array* tilesets) {
+        CC_SAFE_RETAIN(tilesets);
+        CC_SAFE_RELEASE(_tilesets);
+        _tilesets = tilesets;
+    };
 
     /// ObjectGroups
-    inline Array* getObjectGroups() const;
-    inline void setObjectGroups(Array* groups);
+    inline Array* getObjectGroups() const { return _objectGroups; };
+    inline void setObjectGroups(Array* groups) {
+        CC_SAFE_RETAIN(groups);
+        CC_SAFE_RELEASE(_objectGroups);
+        _objectGroups = groups;
+    };
 
     /// parent element
     inline int getParentElement() const { return _parentElement; };
@@ -217,8 +233,12 @@ public:
     inline void setStoringCharacters(bool storingCharacters) { _storingCharacters = storingCharacters; };
 
     /// properties
-    inline Dictionary* getProperties() const;
-    inline void setProperties(Dictionary* properties);
+    inline Dictionary* getProperties() const { return _properties; };
+    inline void setProperties(Dictionary* properties) {
+        CC_SAFE_RETAIN(properties);
+        CC_SAFE_RELEASE(_properties);
+        _properties = properties;
+    };
     
     // implement pure virtual methods of SAXDelegator
     void startElement(void *ctx, const char *name, const char **atts);

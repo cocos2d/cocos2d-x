@@ -123,18 +123,6 @@ TMXLayer::~TMXLayer()
     CC_SAFE_DELETE_ARRAY(_tiles);
 }
 
-TMXTilesetInfo * TMXLayer::getTileSet() const
-{
-    return _tileSet;
-}
-
-void TMXLayer::setTileSet(TMXTilesetInfo* var)
-{
-    CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(_tileSet);
-    _tileSet = var;
-}
-
 void TMXLayer::releaseMap()
 {
     if (_tiles)
@@ -716,18 +704,6 @@ int TMXLayer::getVertexZForPos(const Point& pos)
     }
     
     return ret;
-}
-
-Dictionary * TMXLayer::getProperties() const
-{
-    return _properties;
-}
-
-void TMXLayer::setProperties(Dictionary* var)
-{
-    CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(_properties);
-    _properties = var;
 }
 
 NS_CC_END

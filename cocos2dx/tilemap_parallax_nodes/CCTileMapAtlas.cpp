@@ -264,14 +264,5 @@ void TileMapAtlas::updateAtlasValues()
     }
 }
 
-void TileMapAtlas::setTGAInfo(struct sImageTGA* var)
-{
-    _TGAInfo = var;
-}
-
-struct sImageTGA * TileMapAtlas::getTGAInfo() const
-{
-    return _TGAInfo;
-}
 
 NS_CC_END
