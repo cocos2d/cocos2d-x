@@ -10,3 +10,6 @@ INCLUDEPATH += ../include
 
 TARGET = $${LIB_OUTPUT_DIR}/cocosdenshion
 
+INSTALLS += target
+target.path = $${LIB_INSTALL_DIR}
+
