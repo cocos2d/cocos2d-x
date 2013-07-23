@@ -172,10 +172,7 @@ public:
 
     void setInnerAction(ActionInterval *pAction);
 
-    inline ActionInterval* getInnerAction() const
-    {
-        return _innerAction;
-    }
+    inline ActionInterval* getInnerAction() const { return _innerAction; }
 
     //
     // Override
