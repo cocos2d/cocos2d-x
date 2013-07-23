@@ -26,6 +26,10 @@
  **/
 
 #include "CCAccelerometer.h"
+#include "AccelerometerListener.h"
+
+#include <QAccelerometer>
+#include <QAccelerometerReading>
 
 NS_CC_BEGIN
 
@@ -33,11 +37,18 @@ static CCAccelerometer *
 shared_accelerometer = NULL;
 
 CCAccelerometer::CCAccelerometer()
+    : m_accelerometer(new QAccelerometer)
+    , m_listener(new AccelerometerListener(this))
+    , m_delegate(NULL)
 {
+    QObject::connect(m_accelerometer, SIGNAL(readingChanged()),
+            m_listener, SLOT(onReadingChanged()));
 }
 
 CCAccelerometer::~CCAccelerometer()
 {
+    delete m_listener;
+    delete m_accelerometer;
 }
 
 CCAccelerometer *
@@ -52,24 +63,38 @@ CCAccelerometer::sharedAccelerometer()
 
 
 void
-CCAccelerometer::addDelegate(CCAccelerometerDelegate *pDelegate)
-{
-}
-
-void
-CCAccelerometer::removeDelegate(CCAccelerometerDelegate *pDelegate)
-{
-}
-
-void
 CCAccelerometer::setDelegate(CCAccelerometerDelegate *pDelegate)
 {
+    m_delegate = pDelegate;
 }
 
 void
 CCAccelerometer::setAccelerometerInterval(float interval)
 {
+    if (interval == 0.0) {
+        m_accelerometer->setDataRate(0.0);
+    } else {
+        // Interval is specified in seconds
+        m_accelerometer->setDataRate(1.0 / interval);
+    }
+}
+
+void
+CCAccelerometer::readingChanged()
+{
+    if (m_delegate == NULL) {
+        return;
+    }
+
+    QAccelerometerReading *reading = m_accelerometer->reading();
+
+    CCAcceleration accel;
+    accel.x = reading->x();
+    accel.y = reading->y();
+    accel.z = reading->z();
+    accel.timestamp = reading->timestamp();
+
+    m_delegate->didAccelerate(&accel);
 }
 
 NS_CC_END
-
