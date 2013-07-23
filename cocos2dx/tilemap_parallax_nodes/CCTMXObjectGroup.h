@@ -70,16 +70,24 @@ public:
     inline void setPositionOffset(const Point& offset) { _positionOffset = offset; };
     
     /** Gets the list of properties stored in a dictionary */
-    inline Dictionary* getProperties() const;
+    inline Dictionary* getProperties() const { return _properties; };
     
     /** Sets the list of properties */
-    inline void setProperties(Dictionary* dict);
+    inline void setProperties(Dictionary* properties) {
+        CC_SAFE_RETAIN(properties);
+        CC_SAFE_RELEASE(_properties);
+        _properties = properties;
+    };
     
     /** Gets the array of the objects */
-    inline Array* getObjects() const;
+    inline Array* getObjects() const { return _objects; };
     
     /** Sets the array of the objects */
-    inline void setObjects(Array* objects);
+    inline void setObjects(Array* objects) {
+        CC_SAFE_RETAIN(objects);
+        CC_SAFE_RELEASE(_objects);
+        _objects = objects;
+    };
     
 protected:
     /** name of the group */

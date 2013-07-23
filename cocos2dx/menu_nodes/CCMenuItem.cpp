@@ -161,21 +161,6 @@ void MenuItem::setCallback(const ccMenuCallback& callback)
 //CCMenuItemLabel
 //
 
-const Color3B& MenuItemLabel::getDisabledColor() const
-{
-    return _disabledColor;
-}
-
-void MenuItemLabel::setDisabledColor(const Color3B& var)
-{
-    _disabledColor = var;
-}
-
-Node *MenuItemLabel::getLabel() const
-{
-    return _label;
-}
-
 void MenuItemLabel::setLabel(Node* var)
 {
     if (var)
@@ -476,11 +461,6 @@ const char* MenuItemFont::getFontNameObj() const
 //CCMenuItemSprite
 //
 
-Node * MenuItemSprite::getNormalImage() const
-{
-    return _normalImage;
-}
-
 void MenuItemSprite::setNormalImage(Node* pImage)
 {
     if (pImage != _normalImage)
@@ -502,11 +482,6 @@ void MenuItemSprite::setNormalImage(Node* pImage)
     }
 }
 
-Node * MenuItemSprite::getSelectedImage() const
-{
-    return _selectedImage;
-}
-
 void MenuItemSprite::setSelectedImage(Node* pImage)
 {
     if (pImage != _normalImage)
@@ -525,11 +500,6 @@ void MenuItemSprite::setSelectedImage(Node* pImage)
         _selectedImage = pImage;
         this->updateImagesVisibility();
     }
-}
-
-Node * MenuItemSprite::getDisabledImage() const
-{
-    return _disabledImage;
 }
 
 void MenuItemSprite::setDisabledImage(Node* pImage)
@@ -821,18 +791,6 @@ void MenuItemImage::setDisabledSpriteFrame(SpriteFrame * frame)
 // MenuItemToggle
 //
 
-void MenuItemToggle::setSubItems(Array* var)
-{
-    CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(_subItems);
-    _subItems = var;
-}
-
-Array* MenuItemToggle::getSubItems() const
-{
-    return _subItems;
-}
-
 // XXX: deprecated
 MenuItemToggle * MenuItemToggle::createWithTarget(Object* target, SEL_MenuHandler selector, Array* menuItems)
 {
@@ -962,6 +920,7 @@ MenuItemToggle::~MenuItemToggle()
 {
     CC_SAFE_RELEASE(_subItems);
 }
+
 void MenuItemToggle::setSelectedIndex(unsigned int index)
 {
     if( index != _selectedIndex && _subItems->count() > 0 )
@@ -979,11 +938,6 @@ void MenuItemToggle::setSelectedIndex(unsigned int index)
         this->setContentSize(s);
         item->setPosition( Point( s.width/2, s.height/2 ) );
     }
-}
-
-unsigned int MenuItemToggle::getSelectedIndex() const
-{
-    return _selectedIndex;
 }
 
 void MenuItemToggle::selected()

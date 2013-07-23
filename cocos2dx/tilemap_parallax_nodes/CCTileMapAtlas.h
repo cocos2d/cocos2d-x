@@ -81,8 +81,8 @@ public:
     /** dealloc the map from memory */
     void releaseMap();
     
-    inline struct sImageTGA* getTGAInfo() const;
-    inline void setTGAInfo(struct sImageTGA* tgaInfo);
+    inline struct sImageTGA* getTGAInfo() const { return _TGAInfo; };
+    inline void setTGAInfo(struct sImageTGA* TGAInfo) { _TGAInfo = TGAInfo; };
 private:
     void loadTGAfile(const char *file);
     void calculateItemsToRender();

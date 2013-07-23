@@ -66,33 +66,4 @@ Dictionary* TMXObjectGroup::getObjectNamed(const char *objectName) const
     return NULL;    
 }
 
-String* TMXObjectGroup::getPropertyNamed(const char* propertyName) const
-{
-    return static_cast<String*>(_properties->objectForKey(propertyName));
-}
-
-Dictionary* TMXObjectGroup::getProperties() const
-{ 
-    return _properties;
-}
-
-void TMXObjectGroup::setProperties(Dictionary * properties)
-{
-    CC_SAFE_RETAIN(properties);
-    CC_SAFE_RELEASE(_properties);
-    _properties = properties;
-}
-
-Array* TMXObjectGroup::getObjects() const
-{
-    return _objects;
-}
-
-void TMXObjectGroup::setObjects(Array* objects)
-{
-    CC_SAFE_RETAIN(objects);
-    CC_SAFE_RELEASE(_objects);
-    _objects = objects;
-}
-
 NS_CC_END

@@ -270,108 +270,108 @@ public:
     inline void setAtlasIndex(int index) { _atlasIndex = index; };
 
     /** Quantity of particles that are being simulated at the moment */
-    inline unsigned int getParticleCount() const;
+    inline unsigned int getParticleCount() const { return _particleCount; };
     
     /** How many seconds the emitter will run. -1 means 'forever' */
-    inline float getDuration() const;
-    inline void setDuration(float duration);
+    inline float getDuration() const { return _duration; };
+    inline void setDuration(float duration) { _duration = duration; };
     
     /** sourcePosition of the emitter */
-    inline const Point& getSourcePosition() const;
-    inline void setSourcePosition(const Point& pos);
+    inline const Point& getSourcePosition() const { return _sourcePosition; };
+    inline void setSourcePosition(const Point& pos) { _sourcePosition = pos; };
     
     /** Position variance of the emitter */
-    inline const Point& getPosVar() const;
-    inline void setPosVar(const Point& pos);
+    inline const Point& getPosVar() const { return _posVar; };
+    inline void setPosVar(const Point& pos) { _posVar = pos; };
 
     /** life, and life variation of each particle */
-    inline float getLife() const;
-    inline void setLife(float life);
+    inline float getLife() const { return _life; };
+    inline void setLife(float life) { _life = life; };
 
     /** life variance of each particle */
-    inline float getLifeVar() const;
-    inline void setLifeVar(float lifeVar);
+    inline float getLifeVar() const { return _lifeVar; };
+    inline void setLifeVar(float lifeVar) { _lifeVar = lifeVar; };
 
     /** angle and angle variation of each particle */
-    inline float getAngle() const;
-    inline void setAngle(float angle);
+    inline float getAngle() const { return _angle; };
+    inline void setAngle(float angle) { _angle = angle; };
 
     /** angle variance of each particle */
-    inline float getAngleVar() const;
-    inline void setAngleVar(float angleVar);
+    inline float getAngleVar() const { return _angleVar; };
+    inline void setAngleVar(float angleVar) { _angleVar = angleVar; };
     
     /** Switch between different kind of emitter modes:
      - kParticleModeGravity: uses gravity, speed, radial and tangential acceleration
      - kParticleModeRadius: uses radius movement + rotation
      */
-    inline int getEmitterMode() const;
-    inline void setEmitterMode(int mode);
+    inline int getEmitterMode() const { return _emitterMode; };
+    inline void setEmitterMode(int mode) { _emitterMode = mode; };
     
     /** start size in pixels of each particle */
-    inline float getStartSize() const;
-    inline void setStartSize(float startSize);
+    inline float getStartSize() const { return _startSize; };
+    inline void setStartSize(float startSize) { _startSize = startSize; };
 
     /** size variance in pixels of each particle */
-    inline float getStartSizeVar() const;
-    inline void setStartSizeVar(float sizeVar);
+    inline float getStartSizeVar() const { return _startSizeVar; };
+    inline void setStartSizeVar(float sizeVar) { _startSizeVar = sizeVar; };
 
     /** end size in pixels of each particle */
-    inline float getEndSize() const;
-    inline void setEndSize(float sizeVar);
+    inline float getEndSize() const { return _endSize; };
+    inline void setEndSize(float endSize) { _endSize = endSize; };
 
     /** end size variance in pixels of each particle */
-    inline float getEndSizeVar() const;
-    inline void setEndSizeVar(float sizeVar);
+    inline float getEndSizeVar() const { return _endSizeVar; };
+    inline void setEndSizeVar(float sizeVar) { _endSizeVar = sizeVar; };
 
     /** start color of each particle */
-    inline const Color4F& getStartColor() const;
-    inline void setStartColor(const Color4F& color);
+    inline const Color4F& getStartColor() const { return _startColor; };
+    inline void setStartColor(const Color4F& color) { _startColor = color; };
 
     /** start color variance of each particle */
-    inline const Color4F& getStartColorVar() const;
-    inline void setStartColorVar(const Color4F& color);
+    inline const Color4F& getStartColorVar() const { return _startColorVar; };
+    inline void setStartColorVar(const Color4F& color) { _startColorVar = color; };
 
     /** end color and end color variation of each particle */
-    inline const Color4F& getEndColor() const;
-    inline void setEndColor(const Color4F& color);
+    inline const Color4F& getEndColor() const { return _endColor; };
+    inline void setEndColor(const Color4F& color) { _endColor = color; };
 
     /** end color variance of each particle */
-    inline const Color4F& getEndColorVar() const;
-    inline void setEndColorVar(const Color4F& color);
+    inline const Color4F& getEndColorVar() const { return _endColorVar; };
+    inline void setEndColorVar(const Color4F& color) { _endColorVar = color; };
 
     //* initial angle of each particle
-    inline float getStartSpin() const;
-    inline void setStartSpin(float spin);
+    inline float getStartSpin() const { return _startSpin; };
+    inline void setStartSpin(float spin) { _startSpin = spin; };
 
     //* initial angle of each particle
-    inline float getStartSpinVar() const;
-    inline void setStartSpinVar(float pinVar);
+    inline float getStartSpinVar() const { return _startSpinVar; };
+    inline void setStartSpinVar(float pinVar) { _startSpinVar = pinVar; };
 
     //* initial angle of each particle
-    inline float getEndSpin() const;
-    inline void setEndSpin(float pin);
+    inline float getEndSpin() const { return _endSpin; };
+    inline void setEndSpin(float endSpin) { _endSpin = endSpin; };
 
     //* initial angle of each particle
-    inline float getEndSpinVar() const;
-    inline void setEndSpinVar(float spinVar);
+    inline float getEndSpinVar() const { return _endSpinVar; };
+    inline void setEndSpinVar(float endSpinVar) { _endSpinVar = endSpinVar };
 
     /** emission rate of the particles */
-    inline float getEmissionRate() const;
-    inline void setEmissionRate(float rate);
+    inline float getEmissionRate() const { return _emissionRate; };
+    inline void setEmissionRate(float rate) { _emissionRate = rate; };
 
     /** maximum particles of the system */
     virtual unsigned int getTotalParticles() const;
     virtual void setTotalParticles(unsigned int totalParticles);
 
     /** does the alpha value modify color */
-    inline void setOpacityModifyRGB(bool bValue);
-    inline bool isOpacityModifyRGB() const;
+    inline void setOpacityModifyRGB(bool opacityModifyRGB) { _opacityModifyRGB = opacityModifyRGB; };
+    inline bool isOpacityModifyRGB() const { return _opacityModifyRGB; };
     
     /** particles movement type: Free or Grouped
      @since v0.8
      */
-    inline tPositionType getPositionType() const;
-    inline void setPositionType(tPositionType type);
+    inline tPositionType getPositionType() const { return _positionType; };
+    inline void setPositionType(tPositionType type) { _positionType = type; };
     
     // Overrides
     virtual void update(float dt) override;

@@ -143,13 +143,13 @@ public:
     void setString(const char * label);
 
     /** Gets the color that will be used to disable the item */
-    inline const Color3B& getDisabledColor() const;
+    inline const Color3B& getDisabledColor() const { return _disabledColor; };
 
     /** Sets the color that will be used to disable the item */
-    void setDisabledColor(const Color3B& color);
+    inline void setDisabledColor(const Color3B& color) { _disabledColor = color; };
     
     /** Gets the label that is rendered. */
-    inline Node* getLabel() const;
+    inline Node* getLabel() const { return _label; };
     
     /** Sets the label that is rendered. */
     void setLabel(Node* node);
@@ -290,22 +290,22 @@ public:
     bool initWithNormalSprite(Node* normalSprite, Node* selectedSprite, Node* disabledSprite, const ccMenuCallback& callback);
 
     /** Gets the image used when the item is not selected */
-    inline Node* getNormalImage() const;
+    inline Node* getNormalImage() const { return _normalImage; };
     
     /** Sets the image used when the item is not selected */
-    inline void setNormalImage(Node* image);
+    void setNormalImage(Node* image);
     
     /** Gets the image used when the item is selected */
-    inline Node* getSelectedImage() const;
+    inline Node* getSelectedImage() const { return _selectedImage; };
     
     /** Sets the image used when the item is selected */
-    inline void setSelectedImage(Node* image);
+    void setSelectedImage(Node* image);
     
     /** Gets the image used when the item is disabled */
-    inline Node* getDisabledImage() const;
+    inline Node* getDisabledImage() const { return _disabledImage; };
     
     /** Sets the image used when the item is disabled */
-    inline void setDisabledImage(Node* image);
+    void setDisabledImage(Node* image);
     
     /**
      @since v0.99.5
@@ -413,19 +413,24 @@ public:
     CC_DEPRECATED_ATTRIBUTE MenuItem* selectedItem() { return getSelectedItem(); }
 
     /** Gets the index of the selected item */
-    inline unsigned int getSelectedIndex() const;
+    inline unsigned int getSelectedIndex() const { return _selectedIndex; };
     
     /** Sets the index of the selected item */
-    inline void setSelectedIndex(unsigned int index);
+    void setSelectedIndex(unsigned int index);
     
     /** Gets the array that contains the subitems.
      You can add/remove items in runtime, and you can replace the array with a new one.
      @since v0.7.2
      */
-    inline Array* getSubItems() const;
-    
+
+    inline Array* getSubItems() const { return _subItems; };
+
     /** Sets the array that contains the subitems. */
-    inline void setSubItems(Array* items);
+    inline void setSubItems(Array* items) {
+        CC_SAFE_RETAIN(items);
+        CC_SAFE_RELEASE(_subItems);
+        _subItems = items;
+    }
     
     // Overrides
     virtual void activate() override;

@@ -147,14 +147,22 @@ public:
     /** map orientation */
     inline int getMapOrientation() const { return _mapOrientation; };
     inline void setMapOrientation(int mapOrientation) { _mapOrientation = mapOrientation; };
-    
+
     /** object groups */
-    inline Array* getObjectGroups() const;
-    inline void setObjectGroups(Array* groups);
+    inline Array* getObjectGroups() const { return _objectGroups; };
+    inline void setObjectGroups(Array* groups) {
+        CC_SAFE_RETAIN(groups);
+        CC_SAFE_RELEASE(_objectGroups);
+        _objectGroups = groups;
+    };
     
     /** properties */
-    inline Dictionary* getProperties() const;
-    inline void setProperties(Dictionary* properties);
+    inline Dictionary* getProperties() const { return _properties; };
+    inline void setProperties(Dictionary* properties) {
+        CC_SAFE_RETAIN(properties);
+        CC_SAFE_RELEASE(_properties);
+        _properties = properties;
+    };
     
 private:
     TMXLayer * parseLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);

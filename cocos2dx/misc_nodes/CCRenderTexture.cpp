@@ -140,68 +140,6 @@ void RenderTexture::listenToForeground(cocos2d::Object *obj)
 #endif
 }
 
-Sprite* RenderTexture::getSprite() const
-{
-    return _sprite;
-}
-
-void RenderTexture::setSprite(Sprite* var)
-{
-    CC_SAFE_RELEASE(_sprite);
-    _sprite = var;
-    CC_SAFE_RETAIN(_sprite);
-}
-
-unsigned int RenderTexture::getClearFlags() const
-{
-    return _clearFlags;
-}
-
-void RenderTexture::setClearFlags(unsigned int uClearFlags)
-{
-    _clearFlags = uClearFlags;
-}
-
-const Color4F& RenderTexture::getClearColor() const
-{
-    return _clearColor;
-}
-
-void RenderTexture::setClearColor(const Color4F &clearColor)
-{
-    _clearColor = clearColor;
-}
-
-float RenderTexture::getClearDepth() const
-{
-    return _clearDepth;
-}
-
-void RenderTexture::setClearDepth(float fClearDepth)
-{
-    _clearDepth = fClearDepth;
-}
-
-int RenderTexture::getClearStencil() const
-{
-    return _clearStencil;
-}
-
-void RenderTexture::setClearStencil(float fClearStencil)
-{
-    _clearStencil = fClearStencil;
-}
-
-bool RenderTexture::isAutoDraw() const
-{
-    return _autoDraw;
-}
-
-void RenderTexture::setAutoDraw(bool bAutoDraw)
-{
-    _autoDraw = bAutoDraw;
-}
-
 RenderTexture * RenderTexture::create(int w, int h, Texture2DPixelFormat eFormat)
 {
     RenderTexture *pRet = new RenderTexture();
