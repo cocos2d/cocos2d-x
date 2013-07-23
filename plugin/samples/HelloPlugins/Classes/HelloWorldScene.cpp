@@ -5,6 +5,7 @@
 #include "TestIAPScene.h"
 #include "TestIAPOnlineScene.h"
 #include "TestUserScene.h"
+#include "TestSocialScene.h"
 
 USING_NS_CC;
 
@@ -16,6 +17,7 @@ std::string g_testCases[] = {
     "Test IAP",
     "Test IAP Online",
     "Test User",
+    "Test Social",
 #endif
 };
 
@@ -57,22 +59,22 @@ bool HelloWorld::init()
                                         "CloseSelected.png",
                                         CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
     
-	pCloseItem->setPosition(ccp(origin.x + visibleSize.width - pCloseItem->getContentSize().width/2 ,
+	pCloseItem->setPosition(Point(origin.x + visibleSize.width - pCloseItem->getContentSize().width/2 ,
                                 origin.y + pCloseItem->getContentSize().height/2));
 
     // create menu, it's an autorelease object
     Menu* pMenu = Menu::create(pCloseItem, NULL);
-    pMenu->setPosition(PointZero);
+    pMenu->setPosition(Point::ZERO);
     this->addChild(pMenu, 1);
 
-    Point beginPos = ccp(origin.x + visibleSize.width / 2, origin.y + visibleSize.height - 50);
+    Point beginPos = Point(origin.x + visibleSize.width / 2, origin.y + visibleSize.height - 50);
     float step = 60.0f;
     int nCaseCount = sizeof(g_testCases) / sizeof(std::string);
     for (int i = 0; i < nCaseCount; ++i) {
         std::string caseName = g_testCases[i];
         MenuItemFont *pItem = MenuItemFont::create(caseName.c_str(), CC_CALLBACK_1(HelloWorld::menuCallback, this));
         pItem->setTag(i);
-        pItem->setPosition(ccp(beginPos.x, beginPos.y - i * step));
+        pItem->setPosition(Point(beginPos.x, beginPos.y - i * step));
         pMenu->addChild(pItem);
     }
     return true;
@@ -101,6 +103,8 @@ void HelloWorld::menuCallback(Object* pSender)
     case 5:
         newScene = TestUser::scene();
         break;
+    case 6:
+        newScene = TestSocial::scene();
     default:
         break;
     }
