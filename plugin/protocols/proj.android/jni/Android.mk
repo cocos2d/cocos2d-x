@@ -17,6 +17,7 @@ $(addprefix ../../platform/android/, \
     ProtocolAds.cpp \
     ProtocolShare.cpp \
     ProtocolUser.cpp \
+    ProtocolSocial.cpp \
 ) \
 ../../PluginManager.cpp \
 ../../PluginParam.cpp
