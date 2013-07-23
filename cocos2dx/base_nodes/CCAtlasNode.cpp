@@ -238,19 +238,19 @@ Texture2D * AtlasNode::getTexture()
     return _textureAtlas->getTexture();
 }
 
-void AtlasNode::setTextureAtlas(TextureAtlas* var)
+void AtlasNode::setTextureAtlas(TextureAtlas* textureAtlas)
 {
-    CC_SAFE_RETAIN(var);
+    CC_SAFE_RETAIN(textureAtlas);
     CC_SAFE_RELEASE(_textureAtlas);
-    _textureAtlas = var;
+    _textureAtlas = textureAtlas;
 }
 
-TextureAtlas * AtlasNode::getTextureAtlas()
+TextureAtlas * AtlasNode::getTextureAtlas() const
 {
     return _textureAtlas;
 }
 
-unsigned int AtlasNode::getQuadsToDraw()
+unsigned int AtlasNode::getQuadsToDraw() const
 {
     return _quadsToDraw;
 }

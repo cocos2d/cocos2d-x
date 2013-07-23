@@ -68,6 +68,16 @@ public:
     */
     virtual void updateAtlasValues();
 
+    void setTextureAtlas(TextureAtlas* textureAtlas);
+    TextureAtlas* getTextureAtlas() const;
+    
+    void setBlendFunc(const BlendFunc& blendFunc);
+    const BlendFunc& getBlendFunc() const;
+    
+    void setQuadsToDraw(unsigned int quadsToDraw);
+    unsigned int getQuadsToDraw() const;
+
+    
     // Overrides
     virtual void draw() override;
     virtual Texture2D* getTexture() override;
@@ -96,18 +106,16 @@ protected:
     unsigned int    _itemWidth;
     //! height of each char
     unsigned int    _itemHeight;
-
+    
     Color3B    _colorUnmodified;
-
-    CC_PROPERTY(TextureAtlas*, _textureAtlas, TextureAtlas);
-
+    
+    TextureAtlas* _textureAtlas;
     // protocol variables
     bool _isOpacityModifyRGB;
-
-    CC_PROPERTY_PASS_BY_REF(BlendFunc, _blendFunc, BlendFunc);
+    BlendFunc _blendFunc;
 
     // quads to draw
-    CC_PROPERTY(unsigned int, _quadsToDraw, QuadsToDraw);
+    unsigned int _quadsToDraw;
     // color uniform
     GLint    _uniformColor;
     // This varible is only used for LabelAtlas FPS display. So plz don't modify its value.
