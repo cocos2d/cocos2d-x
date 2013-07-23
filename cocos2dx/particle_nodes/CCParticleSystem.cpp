@@ -49,7 +49,6 @@ THE SOFTWARE.
 #include "support/base64.h"
 #include "platform/CCFileUtils.h"
 #include "platform/CCImage.h"
-#include "platform/platform.h"
 #include "support/zip_support/ZipUtils.h"
 #include "CCDirector.h"
 #include "support/CCProfiling.h"
