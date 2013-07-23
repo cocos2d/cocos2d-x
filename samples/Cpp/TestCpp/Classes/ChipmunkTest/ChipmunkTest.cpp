@@ -58,13 +58,13 @@ ChipmunkTestLayer::ChipmunkTestLayer()
 
     scheduleUpdate();
 #else
-    LabelTTF *pLabel = LabelTTF::create("Should define CC_ENABLE_CHIPMUNK_INTEGRATION=1\n to run this test case",
+    LabelTTF *label = LabelTTF::create("Should define CC_ENABLE_CHIPMUNK_INTEGRATION=1\n to run this test case",
                                             "Arial",
                                             18);
     Size size = Director::getInstance()->getWinSize();
-    pLabel->setPosition(Point(size.width/2, size.height/2));
+    label->setPosition(Point(size.width/2, size.height/2));
     
-    addChild(pLabel);
+    addChild(label);
     
 #endif
     

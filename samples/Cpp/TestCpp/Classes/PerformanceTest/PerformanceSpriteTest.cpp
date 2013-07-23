@@ -303,20 +303,20 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     addChild(infoLabel, 1, kTagInfoLayer);
 
     // add menu
-    SpriteMenuLayer* pMenu = new SpriteMenuLayer(true, TEST_COUNT, s_nSpriteCurCase);
-    addChild(pMenu, 1, kTagMenuLayer);
-    pMenu->release();
+    SpriteMenuLayer* menuLayer = new SpriteMenuLayer(true, TEST_COUNT, s_nSpriteCurCase);
+    addChild(menuLayer, 1, kTagMenuLayer);
+    menuLayer->release();
 
     // Sub Tests
     MenuItemFont::setFontSize(32);
-    Menu* pSubMenu = Menu::create();
+    Menu* subMenu = Menu::create();
     for (int i = 1; i <= 9; ++i)
     {
         char str[10] = {0};
         sprintf(str, "%d ", i);
         MenuItemFont* itemFont = MenuItemFont::create(str, CC_CALLBACK_1(SpriteMainScene::testNCallback, this));
         itemFont->setTag(i);
-        pSubMenu->addChild(itemFont, 10);
+        subMenu->addChild(itemFont, 10);
 
         if( i<= 3)
             itemFont->setColor(Color3B(200,20,20));
@@ -326,9 +326,9 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
             itemFont->setColor(Color3B(0,20,200));
     }
 
-    pSubMenu->alignItemsHorizontally();
-    pSubMenu->setPosition(Point(s.width/2, 80));
-    addChild(pSubMenu, 2);
+    subMenu->alignItemsHorizontally();
+    subMenu->setPosition(Point(s.width/2, 80));
+    addChild(subMenu, 2);
 
     // add title label
     LabelTTF *label = LabelTTF::create(title().c_str(), "Arial", 40);
@@ -357,8 +357,8 @@ SpriteMainScene::~SpriteMainScene()
 void SpriteMainScene::testNCallback(Object* pSender)
 {
     subtestNumber = ((MenuItemFont*) pSender)->getTag();
-    SpriteMenuLayer* pMenu = (SpriteMenuLayer*)getChildByTag(kTagMenuLayer);
-    pMenu->restartCallback(pSender);
+    SpriteMenuLayer* menu = (SpriteMenuLayer*)getChildByTag(kTagMenuLayer);
+    menu->restartCallback(pSender);
 }
 
 void SpriteMainScene::updateNodes()
@@ -408,77 +408,77 @@ void SpriteMainScene::onDecrease(Object* pSender)
 // For test functions
 //
 ////////////////////////////////////////////////////////
-void performanceActions(Sprite* scene)
+void performanceActions(Sprite* sprite)
 {
     Size size = Director::getInstance()->getWinSize();
-    scene->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
+    sprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
 
     float period = 0.5f + (rand() % 1000) / 500.0f;
     RotateBy* rot = RotateBy::create(period, 360.0f * CCRANDOM_0_1());
     ActionInterval* rot_back = rot->reverse();
     Action *permanentRotation = RepeatForever::create(Sequence::create(rot, rot_back, NULL));
-    scene->runAction(permanentRotation);
+    sprite->runAction(permanentRotation);
 
     float growDuration = 0.5f + (rand() % 1000) / 500.0f;
     ActionInterval *grow = ScaleBy::create(growDuration, 0.5f, 0.5f);
     Action *permanentScaleLoop = RepeatForever::create(Sequence::create(grow, grow->reverse(), NULL));
-    scene->runAction(permanentScaleLoop);
+    sprite->runAction(permanentScaleLoop);
 }
 
-void performanceActions20(Sprite* scene)
+void performanceActions20(Sprite* sprite)
 {
     Size size = Director::getInstance()->getWinSize();
     if( CCRANDOM_0_1() < 0.2f )
-        scene->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
+        sprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
     else
-        scene->setPosition(Point( -1000, -1000));
+        sprite->setPosition(Point( -1000, -1000));
 
     float period = 0.5f + (rand() % 1000) / 500.0f;
     RotateBy* rot = RotateBy::create(period, 360.0f * CCRANDOM_0_1());
     ActionInterval* rot_back = rot->reverse();
     Action *permanentRotation = RepeatForever::create(Sequence::create(rot, rot_back, NULL));
-    scene->runAction(permanentRotation);
+    sprite->runAction(permanentRotation);
 
     float growDuration = 0.5f + (rand() % 1000) / 500.0f;
     ActionInterval *grow = ScaleBy::create(growDuration, 0.5f, 0.5f);
     Action *permanentScaleLoop = RepeatForever::create(Sequence::createWithTwoActions(grow, grow->reverse()));
-    scene->runAction(permanentScaleLoop);
+    sprite->runAction(permanentScaleLoop);
 }
 
-void performanceRotationScale(Sprite* scene)
+void performanceRotationScale(Sprite* sprite)
 {
     Size size = Director::getInstance()->getWinSize();
-    scene->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
-    scene->setRotation(CCRANDOM_0_1() * 360);
-    scene->setScale(CCRANDOM_0_1() * 2);
+    sprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
+    sprite->setRotation(CCRANDOM_0_1() * 360);
+    sprite->setScale(CCRANDOM_0_1() * 2);
 }
 
-void performancePosition(Sprite* scene)
+void performancePosition(Sprite* sprite)
 {
     Size size = Director::getInstance()->getWinSize();
-    scene->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
+    sprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
 }
 
-void performanceout20(Sprite* scene)
+void performanceout20(Sprite* sprite)
 {
     Size size = Director::getInstance()->getWinSize();
 
     if( CCRANDOM_0_1() < 0.2f )
-        scene->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
+        sprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
     else
-        scene->setPosition(Point( -1000, -1000));
+        sprite->setPosition(Point( -1000, -1000));
 }
 
-void performanceOut100(Sprite* scene)
+void performanceOut100(Sprite* sprite)
 {
-    scene->setPosition(Point( -1000, -1000));
+    sprite->setPosition(Point( -1000, -1000));
 }
 
-void performanceScale(Sprite* scene)
+void performanceScale(Sprite* sprite)
 {
     Size size = Director::getInstance()->getWinSize();
-    scene->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
-    scene->setScale(CCRANDOM_0_1() * 100 / 50);
+    sprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
+    sprite->setScale(CCRANDOM_0_1() * 100 / 50);
 }
 
 ////////////////////////////////////////////////////////

@@ -28,7 +28,7 @@ SceneTestLayer1::SceneTestLayer1()
     addChild( menu );
     
     Size s = Director::getInstance()->getWinSize();
-    Sprite* sprite = Sprite::create(s_pPathGrossini);
+    Sprite* sprite = Sprite::create(s_pathGrossini);
     addChild(sprite);
     sprite->setPosition( Point(s.width-40, s.height/2) );
     ActionInterval* rotate = RotateBy::create(2, 360);
@@ -113,7 +113,7 @@ SceneTestLayer2::SceneTestLayer2()
     addChild( menu );
 
     Size s = Director::getInstance()->getWinSize();
-    Sprite* sprite = Sprite::create(s_pPathGrossini);
+    Sprite* sprite = Sprite::create(s_pathGrossini);
     addChild(sprite);
     sprite->setPosition( Point(s.width-40, s.height/2) );
     ActionInterval* rotate = RotateBy::create(2, 360);
@@ -182,7 +182,7 @@ bool SceneTestLayer3::init()
 
         this->schedule(schedule_selector(SceneTestLayer3::testDealloc));
 
-        Sprite* sprite = Sprite::create(s_pPathGrossini);
+        Sprite* sprite = Sprite::create(s_pathGrossini);
         addChild(sprite);
         sprite->setPosition( Point(s.width/2, 40) );
         ActionInterval* rotate = RotateBy::create(2, 360);
@@ -195,7 +195,7 @@ bool SceneTestLayer3::init()
 
 void SceneTestLayer3::testDealloc(float dt)
 {
-    CCLog("Layer3:testDealloc");
+    log("Layer3:testDealloc");
 }
 
 void SceneTestLayer3::item0Clicked(Object* pSender)

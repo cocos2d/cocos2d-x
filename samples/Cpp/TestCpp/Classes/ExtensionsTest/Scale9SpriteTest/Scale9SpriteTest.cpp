@@ -142,24 +142,24 @@ void S9BatchNodeBasic::onEnter()
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
     
-    CCLog("S9BatchNodeBasic ...");
+    log("S9BatchNodeBasic ...");
     
     auto batchNode = SpriteBatchNode::create("Images/blocks9.png");
-    CCLog("batchNode created with : Images/blocks9.png");
+    log("batchNode created with : Images/blocks9.png");
     
     auto blocks = Scale9Sprite::create();
-    CCLog("... created");
+    log("... created");
     
     blocks->updateWithBatchNode(batchNode, Rect(0, 0, 96, 96), false, Rect(0, 0, 96, 96));
-    CCLog("... updateWithBatchNode");
+    log("... updateWithBatchNode");
     
     blocks->setPosition(Point(x, y));
-    CCLog("... setPosition");
+    log("... setPosition");
     
     this->addChild(blocks);
-    CCLog("this->addChild");
+    log("this->addChild");
     
-    CCLog("... S9BatchNodeBasic done.");
+    log("... S9BatchNodeBasic done.");
 }
 
 std::string S9BatchNodeBasic::title()
@@ -182,18 +182,18 @@ void S9FrameNameSpriteSheet::onEnter()
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
-    CCLog("S9FrameNameSpriteSheet ...");
+    log("S9FrameNameSpriteSheet ...");
 
     auto blocks = Scale9Sprite::createWithSpriteFrameName("blocks9.png");
-    CCLog("... created");
+    log("... created");
 
     blocks->setPosition(Point(x, y));
-    CCLog("... setPosition");
+    log("... setPosition");
 
     this->addChild(blocks);
-    CCLog("this->addChild");
+    log("this->addChild");
 
-    CCLog("... S9FrameNameSpriteSheet done.");
+    log("... S9FrameNameSpriteSheet done.");
 }
 
 std::string S9FrameNameSpriteSheet::title()
@@ -216,18 +216,18 @@ void S9FrameNameSpriteSheetRotated::onEnter()
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
-    CCLog("S9FrameNameSpriteSheetRotated ...");
+    log("S9FrameNameSpriteSheetRotated ...");
 
     auto blocks = Scale9Sprite::createWithSpriteFrameName("blocks9r.png");
-    CCLog("... created");
+    log("... created");
 
     blocks->setPosition(Point(x, y));
-    CCLog("... setPosition");
+    log("... setPosition");
 
     this->addChild(blocks);
-    CCLog("this->addChild");
+    log("this->addChild");
 
-    CCLog("... S9FrameNameSpriteSheetRotated done.");
+    log("... S9FrameNameSpriteSheetRotated done.");
 }
 
 std::string S9FrameNameSpriteSheetRotated::title()
@@ -251,27 +251,27 @@ void S9BatchNodeScaledNoInsets::onEnter()
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
-    CCLog("S9BatchNodeScaledNoInsets ...");
+    log("S9BatchNodeScaledNoInsets ...");
 
     // scaled without insets
     auto batchNode_scaled = SpriteBatchNode::create("Images/blocks9.png");
-    CCLog("batchNode_scaled created with : Images/blocks9.png");
+    log("batchNode_scaled created with : Images/blocks9.png");
 
     auto blocks_scaled = Scale9Sprite::create();
-    CCLog("... created");
+    log("... created");
     blocks_scaled->updateWithBatchNode(batchNode_scaled, Rect(0, 0, 96, 96), false, Rect(0, 0, 96, 96));
-    CCLog("... updateWithBatchNode");
+    log("... updateWithBatchNode");
 
     blocks_scaled->setPosition(Point(x, y));
-    CCLog("... setPosition");
+    log("... setPosition");
 
     blocks_scaled->setContentSize(Size(96 * 4, 96*2));
-    CCLog("... setContentSize");
+    log("... setContentSize");
 
     this->addChild(blocks_scaled);
-    CCLog("this->addChild");
+    log("this->addChild");
 
-    CCLog("... S9BtchNodeScaledNoInsets done.");
+    log("... S9BtchNodeScaledNoInsets done.");
 }
 
 std::string S9BatchNodeScaledNoInsets::title()
@@ -295,21 +295,21 @@ void S9FrameNameSpriteSheetScaledNoInsets::onEnter()
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
-    CCLog("S9FrameNameSpriteSheetScaledNoInsets ...");
+    log("S9FrameNameSpriteSheetScaledNoInsets ...");
 
     auto blocks_scaled = Scale9Sprite::createWithSpriteFrameName("blocks9.png");
-    CCLog("... created");
+    log("... created");
 
     blocks_scaled->setPosition(Point(x, y));
-    CCLog("... setPosition");
+    log("... setPosition");
 
     blocks_scaled->setContentSize(Size(96 * 4, 96*2));
-    CCLog("... setContentSize");
+    log("... setContentSize");
 
     this->addChild(blocks_scaled);
-    CCLog("this->addChild");
+    log("this->addChild");
 
-    CCLog("... S9FrameNameSpriteSheetScaledNoInsets done.");
+    log("... S9FrameNameSpriteSheetScaledNoInsets done.");
 }
 
 std::string S9FrameNameSpriteSheetScaledNoInsets::title()
@@ -334,21 +334,21 @@ void S9FrameNameSpriteSheetRotatedScaledNoInsets::onEnter()
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
-    CCLog("S9FrameNameSpriteSheetRotatedScaledNoInsets ...");
+    log("S9FrameNameSpriteSheetRotatedScaledNoInsets ...");
 
     auto blocks_scaled = Scale9Sprite::createWithSpriteFrameName("blocks9r.png");
-    CCLog("... created");
+    log("... created");
 
     blocks_scaled->setPosition(Point(x, y));
-    CCLog("... setPosition");
+    log("... setPosition");
 
     blocks_scaled->setContentSize(Size(96 * 4, 96*2));
-    CCLog("... setContentSize");
+    log("... setContentSize");
 
     this->addChild(blocks_scaled);
-    CCLog("this->addChild");
+    log("this->addChild");
 
-    CCLog("... S9FrameNameSpriteSheetRotatedScaledNoInsets done.");
+    log("... S9FrameNameSpriteSheetRotatedScaledNoInsets done.");
 }
 
 std::string S9FrameNameSpriteSheetRotatedScaledNoInsets::title()
@@ -373,27 +373,27 @@ void S9BatchNodeScaleWithCapInsets::onEnter()
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
-    CCLog("S9BatchNodeScaleWithCapInsets ...");
+    log("S9BatchNodeScaleWithCapInsets ...");
 
     auto batchNode_scaled_with_insets = SpriteBatchNode::create("Images/blocks9.png");
-    CCLog("batchNode_scaled_with_insets created with : Images/blocks9.png");
+    log("batchNode_scaled_with_insets created with : Images/blocks9.png");
 
     auto blocks_scaled_with_insets = Scale9Sprite::create();
-    CCLog("... created");
+    log("... created");
 
     blocks_scaled_with_insets->updateWithBatchNode(batchNode_scaled_with_insets, Rect(0, 0, 96, 96), false, Rect(32, 32, 32, 32));
-    CCLog("... updateWithBatchNode");
+    log("... updateWithBatchNode");
 
     blocks_scaled_with_insets->setContentSize(Size(96 * 4.5, 96 * 2.5));
-    CCLog("... setContentSize");
+    log("... setContentSize");
 
     blocks_scaled_with_insets->setPosition(Point(x, y));
-    CCLog("... setPosition");
+    log("... setPosition");
 
     this->addChild(blocks_scaled_with_insets);
-    CCLog("this->addChild");
+    log("this->addChild");
 
-    CCLog("... S9BatchNodeScaleWithCapInsets done.");
+    log("... S9BatchNodeScaleWithCapInsets done.");
 }
 
 std::string S9BatchNodeScaleWithCapInsets::title()
@@ -417,18 +417,18 @@ void S9FrameNameSpriteSheetInsets::onEnter()
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
-    CCLog("S9FrameNameSpriteSheetInsets ...");
+    log("S9FrameNameSpriteSheetInsets ...");
 
     auto blocks_with_insets = Scale9Sprite::createWithSpriteFrameName("blocks9.png", Rect(32, 32, 32, 32));
-    CCLog("... created");
+    log("... created");
 
     blocks_with_insets->setPosition(Point(x, y));
-    CCLog("... setPosition");
+    log("... setPosition");
 
     this->addChild(blocks_with_insets);
-    CCLog("this->addChild");
+    log("this->addChild");
 
-    CCLog("... S9FrameNameSpriteSheetInsets done.");
+    log("... S9FrameNameSpriteSheetInsets done.");
 }
 
 std::string S9FrameNameSpriteSheetInsets::title()
@@ -451,21 +451,21 @@ void S9FrameNameSpriteSheetInsetsScaled::onEnter()
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
-    CCLog("S9FrameNameSpriteSheetInsetsScaled ...");
+    log("S9FrameNameSpriteSheetInsetsScaled ...");
 
     auto blocks_scaled_with_insets = Scale9Sprite::createWithSpriteFrameName("blocks9.png", Rect(32, 32, 32, 32));
-    CCLog("... created");
+    log("... created");
 
     blocks_scaled_with_insets->setContentSize(Size(96 * 4.5, 96 * 2.5));
-    CCLog("... setContentSize");
+    log("... setContentSize");
 
     blocks_scaled_with_insets->setPosition(Point(x, y));
-    CCLog("... setPosition");
+    log("... setPosition");
 
     this->addChild(blocks_scaled_with_insets);
-    CCLog("this->addChild");
+    log("this->addChild");
 
-    CCLog("... S9FrameNameSpriteSheetInsetsScaled done.");
+    log("... S9FrameNameSpriteSheetInsetsScaled done.");
 }
 
 std::string S9FrameNameSpriteSheetInsetsScaled::title()
@@ -488,18 +488,18 @@ void S9FrameNameSpriteSheetRotatedInsets::onEnter()
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
-    CCLog("S9FrameNameSpriteSheetRotatedInsets ...");
+    log("S9FrameNameSpriteSheetRotatedInsets ...");
 
     auto blocks_with_insets = Scale9Sprite::createWithSpriteFrameName("blocks9r.png", Rect(32, 32, 32, 32));
-    CCLog("... created");
+    log("... created");
 
     blocks_with_insets->setPosition(Point(x, y));
-    CCLog("... setPosition");
+    log("... setPosition");
 
     this->addChild(blocks_with_insets);
-    CCLog("this->addChild");
+    log("this->addChild");
 
-    CCLog("... S9FrameNameSpriteSheetRotatedInsets done.");
+    log("... S9FrameNameSpriteSheetRotatedInsets done.");
 }
 
 std::string S9FrameNameSpriteSheetRotatedInsets::title()
@@ -525,35 +525,35 @@ void S9_TexturePacker::onEnter()
     float x = winSize.width / 4;
     float y = 0 + (winSize.height / 2);
 
-    CCLog("S9_TexturePacker ...");
+    log("S9_TexturePacker ...");
 
     auto s = Scale9Sprite::createWithSpriteFrameName("button_normal.png");
-    CCLog("... created");
+    log("... created");
 
     s->setPosition(Point(x, y));
-    CCLog("... setPosition");
+    log("... setPosition");
 
     s->setContentSize(Size(14 * 16, 10 * 16));
-    CCLog("... setContentSize");
+    log("... setContentSize");
 
     this->addChild(s);
-    CCLog("this->addChild");
+    log("this->addChild");
 
     x = winSize.width * 3/4;
 
     auto s2 = Scale9Sprite::createWithSpriteFrameName("button_actived.png");
-    CCLog("... created");
+    log("... created");
 
     s2->setPosition(Point(x, y));
-    CCLog("... setPosition");
+    log("... setPosition");
 
     s2->setContentSize(Size(14 * 16, 10 * 16));
-    CCLog("... setContentSize");
+    log("... setContentSize");
 
     this->addChild(s2);
-    CCLog("this->addChild");
+    log("this->addChild");
 
-    CCLog("... S9_TexturePacker done.");
+    log("... S9_TexturePacker done.");
 }
 
 std::string S9_TexturePacker::title()
@@ -577,21 +577,21 @@ void S9FrameNameSpriteSheetRotatedInsetsScaled::onEnter()
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
 
-    CCLog("S9FrameNameSpriteSheetRotatedInsetsScaled ...");
+    log("S9FrameNameSpriteSheetRotatedInsetsScaled ...");
 
     auto blocks_scaled_with_insets = Scale9Sprite::createWithSpriteFrameName("blocks9.png", Rect(32, 32, 32, 32));
-    CCLog("... created");
+    log("... created");
 
     blocks_scaled_with_insets->setContentSize(Size(96 * 4.5, 96 * 2.5));
-    CCLog("... setContentSize");
+    log("... setContentSize");
 
     blocks_scaled_with_insets->setPosition(Point(x, y));
-    CCLog("... setPosition");
+    log("... setPosition");
 
     this->addChild(blocks_scaled_with_insets);
-    CCLog("this->addChild");
+    log("this->addChild");
 
-    CCLog("... S9FrameNameSpriteSheetRotatedInsetsScaled done.");
+    log("... S9FrameNameSpriteSheetRotatedInsetsScaled done.");
 }
 
 std::string S9FrameNameSpriteSheetRotatedInsetsScaled::title()
@@ -615,22 +615,22 @@ void S9FrameNameSpriteSheetRotatedSetCapInsetLater::onEnter()
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
     
-    CCLog("Scale9FrameNameSpriteSheetRotatedSetCapInsetLater ...");
+    log("Scale9FrameNameSpriteSheetRotatedSetCapInsetLater ...");
     
     auto blocks_scaled_with_insets = Scale9Sprite::createWithSpriteFrameName("blocks9r.png");
-    CCLog("... created");
+    log("... created");
     
     blocks_scaled_with_insets->setInsetLeft(32);
     blocks_scaled_with_insets->setInsetRight(32);
 
     blocks_scaled_with_insets->setPreferredSize(Size(32*5.5f, 32*4));
     blocks_scaled_with_insets->setPosition(Point(x, y));
-    CCLog("... setPosition");
+    log("... setPosition");
     
     this->addChild(blocks_scaled_with_insets);
-    CCLog("this->addChild");
+    log("this->addChild");
     
-    CCLog("... Scale9FrameNameSpriteSheetRotatedSetCapInsetLater done.");
+    log("... Scale9FrameNameSpriteSheetRotatedSetCapInsetLater done.");
 }
 
 std::string S9FrameNameSpriteSheetRotatedSetCapInsetLater::title()
@@ -658,13 +658,13 @@ void S9CascadeOpacityAndColor::onEnter()
     rgba->setCascadeOpacityEnabled(true);
     this->addChild(rgba);
     
-    CCLog("S9CascadeOpacityAndColor ...");
+    log("S9CascadeOpacityAndColor ...");
     
     auto blocks_scaled_with_insets = Scale9Sprite::createWithSpriteFrameName("blocks9r.png");
-    CCLog("... created");
+    log("... created");
     
     blocks_scaled_with_insets->setPosition(Point(x, y));
-    CCLog("... setPosition");
+    log("... setPosition");
     
     rgba->addChild(blocks_scaled_with_insets);
     Sequence* actions = Sequence::create(FadeIn::create(1),
@@ -674,9 +674,9 @@ void S9CascadeOpacityAndColor::onEnter()
                                          NULL);
     RepeatForever* repeat = RepeatForever::create(actions);
     rgba->runAction(repeat);
-    CCLog("this->addChild");
+    log("this->addChild");
     
-    CCLog("... S9CascadeOpacityAndColor done.");
+    log("... S9CascadeOpacityAndColor done.");
 }
 
 std::string S9CascadeOpacityAndColor::title()

@@ -208,7 +208,7 @@ DrawNode* BasicTest::shape()
 
 Sprite* BasicTest::grossini()
 {
-    Sprite *grossini = Sprite::create(s_pPathGrossini);
+    Sprite *grossini = Sprite::create(s_pathGrossini);
     grossini->setScale( 1.5 );
     return grossini;
 }
@@ -377,7 +377,7 @@ void NestedTest::setup()
         clipper->runAction(RepeatForever::create(RotateBy::create(i % 3 ? 1.33 : 1.66, i % 2 ? 90 : -90)));
         parent->addChild(clipper);
         
-        Node *stencil = Sprite::create(s_pPathGrossini);
+        Node *stencil = Sprite::create(s_pathGrossini);
         stencil->setScale( 2.5 - (i * (2.5 / depth)) );
         stencil->setAnchorPoint( Point(0.5, 0.5) );
         stencil->setPosition( Point(clipper->getContentSize().width / 2, clipper->getContentSize().height / 2) );
@@ -413,7 +413,7 @@ std::string HoleDemo::subtitle()
 
 void HoleDemo::setup()
 {
-    Sprite *target = Sprite::create(s_pPathBlock);
+    Sprite *target = Sprite::create(s_pathBlock);
     target->setAnchorPoint(Point::ZERO);
     target->setScale(3);
     
@@ -598,7 +598,7 @@ void RawStencilBufferTest::setup()
     if (_stencilBits < 3) {
         CCLOGWARN("Stencil must be enabled for the current GLView.");
     }
-    _sprite = Sprite::create(s_pPathGrossini);
+    _sprite = Sprite::create(s_pathGrossini);
     _sprite->retain();
     _sprite->setAnchorPoint(  Point(0.5, 0) );
     _sprite->setScale( 2.5f );

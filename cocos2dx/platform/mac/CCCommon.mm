@@ -32,6 +32,7 @@
 
 NS_CC_BEGIN
 
+// XXX deprecated
 void CCLog(const char * pszFormat, ...)
 {
     printf("Cocos2d: ");
@@ -45,6 +46,21 @@ void CCLog(const char * pszFormat, ...)
     printf("\n");
     fflush(stdout);
 }
+
+void log(const char * pszFormat, ...)
+{
+    printf("Cocos2d: ");
+    char szBuf[kMaxLogLen];
+
+    va_list ap;
+    va_start(ap, pszFormat);
+    vsnprintf(szBuf, kMaxLogLen, pszFormat, ap);
+    va_end(ap);
+    printf("%s", szBuf);
+    printf("\n");
+    fflush(stdout);
+}
+
 
 void LuaLog(const char * pszFormat)
 {

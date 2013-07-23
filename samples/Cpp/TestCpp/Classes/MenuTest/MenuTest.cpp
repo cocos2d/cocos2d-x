@@ -151,7 +151,7 @@ void MenuLayerMainMenu::allowTouches(float dt)
     Director* director = Director::getInstance();
     director->getTouchDispatcher()->setPriority(kMenuHandlerPriority+1, this);
     unscheduleAllSelectors();
-    CCLog("TOUCHES ALLOWED AGAIN");
+    log("TOUCHES ALLOWED AGAIN");
 }
 
 void MenuLayerMainMenu::menuCallbackDisabled(Object* sender) 
@@ -160,7 +160,7 @@ void MenuLayerMainMenu::menuCallbackDisabled(Object* sender)
     Director* director = Director::getInstance();
     director->getTouchDispatcher()->setPriority(kMenuHandlerPriority-1, this);
     schedule(schedule_selector(MenuLayerMainMenu::allowTouches), 5.0f);
-    CCLog("TOUCHES DISABLED FOR 5 SECONDS");
+    log("TOUCHES DISABLED FOR 5 SECONDS");
 }
 
 void MenuLayerMainMenu::menuCallback2(Object* sender)
@@ -324,7 +324,7 @@ MenuLayer3::MenuLayer3()
     
     
     MenuItemSprite* item3 = MenuItemSprite::create(spriteNormal, spriteSelected, spriteDisabled, [](Object *sender) {
-		CCLog("sprite clicked!");
+		log("sprite clicked!");
 	});
     _disabledItem = item3;  item3->retain();
     _disabledItem->setEnabled( false );
@@ -536,7 +536,7 @@ void BugsTest::issue1410MenuCallback(Object *sender)
     menu->setTouchEnabled(false);
     menu->setTouchEnabled(true);
     
-    CCLog("NO CRASHES");
+    log("NO CRASHES");
 }
 
 void BugsTest::issue1410v2MenuCallback(cocos2d::Object *pSender)
@@ -545,7 +545,7 @@ void BugsTest::issue1410v2MenuCallback(cocos2d::Object *pSender)
     menu->setTouchEnabled(true);
     menu->setTouchEnabled(false);
     
-    CCLog("NO CRASHES. AND MENU SHOULD STOP WORKING");
+    log("NO CRASHES. AND MENU SHOULD STOP WORKING");
 }
 
 void BugsTest::backMenuCallback(cocos2d::Object *pSender)

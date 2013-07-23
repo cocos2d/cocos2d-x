@@ -114,9 +114,9 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     labelAtlas->setPosition(Point(s.width-66,50));
 
     // Next Prev Test
-    ParticleMenuLayer* pMenu = new ParticleMenuLayer(true, TEST_COUNT, s_nParCurIdx);
-    addChild(pMenu, 1, kTagMenuLayer);
-    pMenu->release();
+    ParticleMenuLayer* menuLayer = new ParticleMenuLayer(true, TEST_COUNT, s_nParCurIdx);
+    addChild(menuLayer, 1, kTagMenuLayer);
+    menuLayer->release();
 
     // Sub Tests
     MenuItemFont::setFontSize(40);
@@ -259,8 +259,8 @@ void ParticleMainScene::testNCallback(Object* pSender)
 {
     subtestNumber = ((Node*)pSender)->getTag();
 
-    ParticleMenuLayer* pMenu = (ParticleMenuLayer*)getChildByTag(kTagMenuLayer);
-    pMenu->restartCallback(pSender);
+    ParticleMenuLayer* menu = (ParticleMenuLayer*)getChildByTag(kTagMenuLayer);
+    menu->restartCallback(pSender);
 }
 
 void ParticleMainScene::updateQuantityLabel()

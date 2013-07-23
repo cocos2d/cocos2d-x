@@ -255,19 +255,19 @@ void HttpClientTest::onHttpRequestCompleted(HttpClient *sender, HttpResponse *re
     // You can get original request type from: response->request->reqType
     if (0 != strlen(response->getHttpRequest()->getTag())) 
     {
-        CCLog("%s completed", response->getHttpRequest()->getTag());
+        log("%s completed", response->getHttpRequest()->getTag());
     }
     
     int statusCode = response->getResponseCode();
     char statusString[64] = {};
     sprintf(statusString, "HTTP Status Code: %d, tag = %s", statusCode, response->getHttpRequest()->getTag());
     _labelStatusCode->setString(statusString);
-    CCLog("response code: %d", statusCode);
+    log("response code: %d", statusCode);
     
     if (!response->isSucceed()) 
     {
-        CCLog("response failed");
-        CCLog("error buffer: %s", response->getErrorBuffer());
+        log("response failed");
+        log("error buffer: %s", response->getErrorBuffer());
         return;
     }
     

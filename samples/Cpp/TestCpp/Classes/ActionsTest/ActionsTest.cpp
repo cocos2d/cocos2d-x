@@ -115,13 +115,13 @@ void ActionsDemo::onEnter()
     BaseTest::onEnter();
 
     // Or you can create an sprite using a filename. only PNG is supported now. Probably TIFF too
-    _grossini = Sprite::create(s_pPathGrossini);
+    _grossini = Sprite::create(s_pathGrossini);
     _grossini->retain();
 
-    _tamara = Sprite::create(s_pPathSister1); 
+    _tamara = Sprite::create(s_pathSister1); 
     _tamara->retain();
 
-    _kathia = Sprite::create(s_pPathSister2);
+    _kathia = Sprite::create(s_pathSister2);
     _kathia->retain();
 
     addChild(_grossini, 1);
@@ -1254,8 +1254,8 @@ void ActionOrbit::onEnter()
 
     auto move = MoveBy::create(3, Point(100,-100));
     auto move_back = move->reverse();
-    auto  seq = Sequence::create(move, move_back, NULL);
-    auto  rfe = RepeatForever::create(seq);
+    auto seq = Sequence::create(move, move_back, NULL);
+    auto rfe = RepeatForever::create(seq);
     _kathia->runAction(rfe);
     _tamara->runAction(rfe->clone() );
     _grossini->runAction( rfe->clone() );
@@ -1279,10 +1279,10 @@ void ActionFollow::onEnter()
     auto s = Director::getInstance()->getWinSize();
 
     _grossini->setPosition(Point(-200, s.height / 2));
-    auto move      = MoveBy::create(2, Point(s.width * 3, 0));
+    auto move = MoveBy::create(2, Point(s.width * 3, 0));
     auto move_back = move->reverse();
-    auto seq       = Sequence::create(move, move_back, NULL);
-    auto rep               = RepeatForever::create(seq);
+    auto seq = Sequence::create(move, move_back, NULL);
+    auto rep = RepeatForever::create(seq);
 
     _grossini->runAction(rep);
 
@@ -1313,7 +1313,7 @@ void ActionTargeted::onEnter()
 
     auto jump1 = JumpBy::create(2,Point::ZERO,100,3);
     auto jump2 = jump1->clone();
-    auto rot1 =  RotateBy::create(1, 360);
+    auto rot1 = RotateBy::create(1, 360);
     auto rot2 = rot1->clone();
 
     auto t1 = TargetedAction::create(_kathia, jump2);
@@ -1510,7 +1510,6 @@ void ActionCatmullRomStacked::onEnter()
     
     _tamara->runAction(seq);
     
-    
     _tamara->runAction(
         RepeatForever::create(
             Sequence::create(
@@ -1546,7 +1545,6 @@ void ActionCatmullRomStacked::onEnter()
                 MoveBy::create(0.05f, Point(10,0)),
                 MoveBy::create(0.05f, Point(-10,0)),
                 NULL)));
-    
     
     array->retain();
     _array1 = array;
@@ -1704,7 +1702,7 @@ void Issue1305::onEnter()
 
 void Issue1305::log(Node* pSender)
 {
-    CCLog("This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE");
+    cocos2d::log("This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE");
 }
 
 void Issue1305::onExit()
@@ -1775,22 +1773,22 @@ void Issue1305_2::onEnter()
 
 void Issue1305_2::printLog1()
 {
-    CCLog("1st block");
+    log("1st block");
 }
 
 void Issue1305_2::printLog2()
 {
-    CCLog("2nd block");
+    log("2nd block");
 }
 
 void Issue1305_2::printLog3()
 {
-    CCLog("3rd block");
+    log("3rd block");
 }
 
 void Issue1305_2::printLog4()
 {
-    CCLog("4th block");
+    log("4th block");
 }
 
 std::string Issue1305_2::title()
@@ -1889,14 +1887,14 @@ std::string Issue1327::subtitle()
 
 void Issue1327::logSprRotation(Sprite* pSender)
 {
-    CCLog("%f", pSender->getRotation());
+    log("%f", pSender->getRotation());
 }
 
 //Issue1398
 void Issue1398::incrementInteger()
 {
     _testInteger++;
-    CCLog("incremented to %d", _testInteger);
+    log("incremented to %d", _testInteger);
 }
 
 void Issue1398::onEnter()
@@ -1905,7 +1903,7 @@ void Issue1398::onEnter()
     this->centerSprites(0);
 
     _testInteger = 0;
-    CCLog("testInt = %d", _testInteger);
+    log("testInt = %d", _testInteger);
 
     this->runAction(
         Sequence::create(
@@ -1923,7 +1921,7 @@ void Issue1398::onEnter()
 void Issue1398::incrementIntegerCallback(void* data)
 {
     this->incrementInteger();
-    CCLog("%s", (char*)data);
+    log("%s", (char*)data);
 }
 
 std::string Issue1398::subtitle()
@@ -2153,7 +2151,7 @@ string PauseResumeActions::subtitle()
 
 void PauseResumeActions::pause(float dt)
 {
-    CCLog("Pausing");
+    log("Pausing");
     Director *director = Director::getInstance();
 
     CC_SAFE_RELEASE(_pausedTargets);
@@ -2163,7 +2161,7 @@ void PauseResumeActions::pause(float dt)
 
 void PauseResumeActions::resume(float dt)
 {
-    CCLog("Resuming");
+    log("Resuming");
     Director *director = Director::getInstance();
     director->getActionManager()->resumeTargets(_pausedTargets);
 }

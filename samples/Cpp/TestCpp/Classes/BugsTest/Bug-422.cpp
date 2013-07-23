@@ -27,12 +27,12 @@ void Bug422Layer::reset()
     // and then a new node will be allocated occupying the memory.
     // => CRASH BOOM BANG
     Node *node = getChildByTag(localtag-1);
-    CCLog("Menu: %p", node);
+    log("Menu: %p", node);
     removeChild(node, false);
 //    [self removeChildByTag:localtag-1 cleanup:NO];
 
     MenuItem *item1 = MenuItemFont::create("One", CC_CALLBACK_1(Bug422Layer::menuCallback, this) );
-    CCLog("MenuItemFont: %p", item1);
+    log("MenuItemFont: %p", item1);
 	MenuItem *item2 = MenuItemFont::create("Two", CC_CALLBACK_1(Bug422Layer::menuCallback, this) );
     Menu *menu = Menu::create(item1, item2, NULL);
     menu->alignItemsVertically();
@@ -53,7 +53,7 @@ void Bug422Layer::check(Node* t)
     {
         CC_BREAK_IF(! pChild);
         Node* node = static_cast<Node*>(pChild);
-        CCLog("%p, rc: %d", node, node->retainCount());
+        log("%p, rc: %d", node, node->retainCount());
         check(node);
     }
 }

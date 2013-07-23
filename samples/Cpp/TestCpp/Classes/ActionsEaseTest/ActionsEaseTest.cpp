@@ -609,9 +609,9 @@ void EaseSpriteDemo::onEnter()
     BaseTest::onEnter();
 
     // Or you can create an sprite using a filename. PNG and BMP files are supported. Probably TIFF too
-    _grossini = Sprite::create(s_pPathGrossini); _grossini->retain();
-    _tamara = Sprite::create(s_pPathSister1); _tamara->retain();
-    _kathia = Sprite::create(s_pPathSister2); _kathia->retain();
+    _grossini = Sprite::create(s_pathGrossini); _grossini->retain();
+    _tamara = Sprite::create(s_pathSister1); _tamara->retain();
+    _kathia = Sprite::create(s_pathSister2); _kathia->retain();
     
     addChild( _grossini, 3);
     addChild( _kathia, 2);

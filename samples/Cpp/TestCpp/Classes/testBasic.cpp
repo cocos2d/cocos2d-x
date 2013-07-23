@@ -17,7 +17,7 @@ void TestScene::onEnter()
 //#else
     LabelTTF* label = LabelTTF::create("MainMenu", "Arial", 20);
 //#endif
-    MenuItemLabel* pMenuItem = MenuItemLabel::create(label, [](Object *sender) {
+    MenuItemLabel* menuItem = MenuItemLabel::create(label, [](Object *sender) {
         /*
             ******    GCC Compiler issue on Android and Linux (CLANG compiler is ok)   ******
         We couldn't use 'Scene::create' directly since gcc will trigger
@@ -47,10 +47,10 @@ void TestScene::onEnter()
         }
 	});
 
-    Menu* pMenu =Menu::create(pMenuItem, NULL);
+    Menu* menu =Menu::create(menuItem, NULL);
 
-    pMenu->setPosition( Point::ZERO );
-    pMenuItem->setPosition( Point( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
+    menu->setPosition( Point::ZERO );
+    menuItem->setPosition( Point( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
 
-    addChild(pMenu, 1);
+    addChild(menu, 1);
 }

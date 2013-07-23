@@ -26,12 +26,12 @@ KeyboardTest::~KeyboardTest()
 
 void KeyboardTest::keyPressed(int keyCode)
 {
-    CCLog("Key with keycode %d pressed", keyCode);
+    log("Key with keycode %d pressed", keyCode);
 }
 
 void KeyboardTest::keyReleased(int keyCode)
 {
-    CCLog("Key with keycode %d released", keyCode);
+    log("Key with keycode %d released", keyCode);
 }
 
 void KeyboardTestScene::runThisTest()

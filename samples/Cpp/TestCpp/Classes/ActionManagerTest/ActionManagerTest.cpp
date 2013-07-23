@@ -117,7 +117,7 @@ void CrashTest::onEnter()
 {
     ActionManagerTest::onEnter();
 
-    Sprite* child = Sprite::create(s_pPathGrossini);
+    Sprite* child = Sprite::create(s_pathGrossini);
     child->setPosition( VisibleRect::center() );
     addChild(child, 1);
 
@@ -158,7 +158,7 @@ void LogicTest::onEnter()
 {
     ActionManagerTest::onEnter();
 
-    Sprite* grossini = Sprite::create(s_pPathGrossini);
+    Sprite* grossini = Sprite::create(s_pathGrossini);
     addChild(grossini, 0, 2);
     grossini->setPosition(VisibleRect::center());
 
@@ -203,7 +203,7 @@ void PauseTest::onEnter()
     //
     // Also, this test MUST be done, after [super onEnter]
     //
-    Sprite* grossini = Sprite::create(s_pPathGrossini);
+    Sprite* grossini = Sprite::create(s_pathGrossini);
     addChild(grossini, 0, kTagGrossini);
     grossini->setPosition(VisibleRect::center() );
     
@@ -246,7 +246,7 @@ void RemoveTest::onEnter()
     ActionInterval* pSequence = Sequence::create(pMove, pCallback, NULL);
     pSequence->setTag(kTagSequence);
 
-    Sprite* pChild = Sprite::create(s_pPathGrossini);
+    Sprite* pChild = Sprite::create(s_pathGrossini);
     pChild->setPosition( VisibleRect::center() );
 
     addChild(pChild, 1, kTagGrossini);
@@ -255,8 +255,8 @@ void RemoveTest::onEnter()
 
 void RemoveTest::stopAction()
 {
-    Node* scene = getChildByTag(kTagGrossini);
-    scene->stopActionByTag(kTagSequence);
+    Node* sprite = getChildByTag(kTagGrossini);
+    sprite->stopActionByTag(kTagSequence);
 }
 
 std::string RemoveTest::title()
@@ -282,7 +282,7 @@ void ResumeTest::onEnter()
     addChild(l);
     l->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 75));
 
-    Sprite* pGrossini = Sprite::create(s_pPathGrossini);
+    Sprite* pGrossini = Sprite::create(s_pathGrossini);
     addChild(pGrossini, 0, kTagGrossini);
     pGrossini->setPosition(VisibleRect::center());
 
