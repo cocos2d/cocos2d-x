@@ -88,9 +88,21 @@ void CCEGLViewProtocol::setDesignResolutionSize(float width, float height, Resol
     	m_fScaleY = m_fScaleX;
     	m_obDesignResolutionSize.height = ceilf(m_obScreenSize.height/m_fScaleY);
     }
+	
+	if ( resolutionPolicy == kResolutionGreatestChange ) {
+		int changeX = abs(m_obScreenSize.width - m_obDesignResolutionSize.width);
+		int changeY = abs(m_obScreenSize.height - m_obDesignResolutionSize.height);
+		
+		if (changeX > changeY) {
+			m_fScaleY = m_fScaleX;
+		} else {
+			m_fScaleX = m_fScaleY;
+		}
+	}
 
     // calculate the rect of viewport    
-    float viewPortW = m_obDesignResolutionSize.width * m_fScaleX;
+    
+	float viewPortW = m_obDesignResolutionSize.width * m_fScaleX;
     float viewPortH = m_obDesignResolutionSize.height * m_fScaleY;
 
     m_obViewPortRect.setRect((m_obScreenSize.width - viewPortW) / 2, (m_obScreenSize.height - viewPortH) / 2, viewPortW, viewPortH);

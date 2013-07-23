@@ -24,6 +24,8 @@ enum ResolutionPolicy
     // no distortion will occur however you must make sure your application works on different
     // aspect ratios
     kResolutionFixedWidth,
+	
+	kResolutionGreatestChange,
 
     kResolutionUnKnown,
 };
