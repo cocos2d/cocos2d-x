@@ -1,6 +1,6 @@
 #include "MciPlayer.h"
 
-#define WIN_CLASS_NAME        "CocosDenshionCallbackWnd"
+#define WIN_CLASS_NAME        L"CocosDenshionCallbackWnd"
 #define BREAK_IF(cond)      if (cond) break;
 
 namespace CocosDenshion {
@@ -68,22 +68,22 @@ MciPlayer::~MciPlayer()
 
 void MciPlayer::Open(const char* pFileName, UINT uId)
 {
-//     WCHAR * pBuf = NULL;
+    wchar_t * pBuf = NULL;
     do 
     {
         BREAK_IF(! pFileName || ! _wnd);
-        int nLen = (int)strlen(pFileName);
+        size_t nLen = strlen(pFileName);
         BREAK_IF(! nLen);
-//         pBuf = new WCHAR[nLen + 1];
-//         BREAK_IF(! pBuf);
-//         MultiByteToWideChar(CP_ACP, 0, pFileName, nLen + 1, pBuf, nLen + 1);
+        pBuf = new WCHAR[nLen + 1];
+        BREAK_IF(! pBuf);
+        MultiByteToWideChar(CP_ACP, 0, pFileName, nLen + 1, pBuf, nLen + 1);
 
         Close();
 
         MCI_OPEN_PARMS mciOpen = {0};
         MCIERROR mciError;
         mciOpen.lpstrDeviceType = (LPCTSTR)MCI_ALL_DEVICE_ID;
-        mciOpen.lpstrElementName = pFileName;
+        mciOpen.lpstrElementName = pBuf;
 
         mciError = mciSendCommand(0,MCI_OPEN, MCI_OPEN_ELEMENT, (DWORD)&mciOpen);
         BREAK_IF(mciError);
@@ -92,6 +92,7 @@ void MciPlayer::Open(const char* pFileName, UINT uId)
         _soundID = uId;
         _playing = false;
     } while (0);
+	 delete [] pBuf;
 }
 
 void MciPlayer::Play(UINT uTimes /* = 1 */)
