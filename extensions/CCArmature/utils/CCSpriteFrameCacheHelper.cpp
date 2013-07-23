@@ -92,7 +92,7 @@ void SpriteFrameCacheHelper::addSpriteFrameFromDict(Dictionary *dictionary, Text
 
         _display2ImageMap[spriteFrameName] = imagePath;
 
-        //CCLog("spriteFrameName : %s,    imagePath : %s", spriteFrameName.c_str(), _imagePath);
+        //log("spriteFrameName : %s,    imagePath : %s", spriteFrameName.c_str(), _imagePath);
 
         SpriteFrame *spriteFrame = (SpriteFrame *)SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName.c_str());
         if (spriteFrame)

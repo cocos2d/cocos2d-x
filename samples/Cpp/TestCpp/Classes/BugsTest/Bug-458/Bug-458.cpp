@@ -42,5 +42,5 @@ bool Bug458Layer::init()
 
 void Bug458Layer::selectAnswer(Object* sender)
 {
-    CCLog("Selected");
+    log("Selected");
 }

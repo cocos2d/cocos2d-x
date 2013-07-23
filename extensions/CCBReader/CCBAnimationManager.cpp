@@ -382,7 +382,7 @@ ActionInterval* CCBAnimationManager::getAction(CCBKeyframe *pKeyframe0, CCBKeyfr
     }
     else 
     {
-        CCLog("CCBReader: Failed to create animation for property: %s", pPropName);
+        log("CCBReader: Failed to create animation for property: %s", pPropName);
     }
     
     return NULL;
@@ -482,7 +482,7 @@ void CCBAnimationManager::setAnimatedProperty(const char *pPropName, Node *pNode
             }
             else
             {
-                CCLog("unsupported property name is %s", pPropName);
+                log("unsupported property name is %s", pPropName);
                 CCASSERT(false, "unsupported property now");
             }
         }
@@ -573,7 +573,7 @@ ActionInterval* CCBAnimationManager::getEaseAction(ActionInterval *pAction, int 
     }
     else
     {
-        CCLog("CCBReader: Unkown easing type %d", nEasingType);
+        log("CCBReader: Unkown easing type %d", nEasingType);
         return pAction;
     }
 }

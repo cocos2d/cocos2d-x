@@ -162,9 +162,9 @@ public:
  *
  *  // Get the object for key
  *  String* pStr1 = (String*)pDict->objectForKey("key1");
- *  CCLog("{ key1: %s }", pStr1->getCString());
+ *  log("{ key1: %s }", pStr1->getCString());
  *  Integer* pInteger = (Integer*)pDict->objectForKey("key3");
- *  CCLog("{ key3: %d }", pInteger->getValue());
+ *  log("{ key3: %d }", pInteger->getValue());
  *  @endcode
  *
  */

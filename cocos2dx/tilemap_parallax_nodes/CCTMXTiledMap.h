@@ -88,21 +88,21 @@ Each layer is created using an TMXLayer (subclass of SpriteBatchNode). If you ha
 unless the layer visibility is off. In that case, the layer won't be created at all.
 You can obtain the layers (TMXLayer objects) at runtime by:
 - map->getChildByTag(tag_number);  // 0=1st layer, 1=2nd layer, 2=3rd layer, etc...
-- map->layerNamed(name_of_the_layer);
+- map->getLayer(name_of_the_layer);
 
 Each object group is created using a TMXObjectGroup which is a subclass of MutableArray.
 You can obtain the object groups at runtime by:
-- map->objectGroupNamed(name_of_the_object_group);
+- map->getObjectGroup(name_of_the_object_group);
 
 Each object is a TMXObject.
 
 Each property is stored as a key-value pair in an MutableDictionary.
 You can obtain the properties at runtime by:
 
-map->propertyNamed(name_of_the_property);
-layer->propertyNamed(name_of_the_property);
-objectGroup->propertyNamed(name_of_the_property);
-object->propertyNamed(name_of_the_property);
+map->getProperty(name_of_the_property);
+layer->getProperty(name_of_the_property);
+objectGroup->getProperty(name_of_the_property);
+object->getProperty(name_of_the_property);
 
 @since v0.8.1
 */
@@ -125,16 +125,16 @@ public:
     bool initWithXML(const char* tmxString, const char* resourcePath);
 
     /** return the TMXLayer for the specific layer */
-    TMXLayer* getLayerNamed(const char *layerName) const;
-    CC_DEPRECATED_ATTRIBUTE TMXLayer* layerNamed(const char *layerName) const { return getLayerNamed(layerName); };
+    TMXLayer* getLayer(const char *layerName) const;
+    CC_DEPRECATED_ATTRIBUTE TMXLayer* layerNamed(const char *layerName) const { return getLayer(layerName); };
 
     /** return the TMXObjectGroup for the specific group */
-    TMXObjectGroup* getObjectGroupNamed(const char *groupName) const;
-    CC_DEPRECATED_ATTRIBUTE TMXObjectGroup* objectGroupNamed(const char *groupName) const { return getObjectGroupNamed(groupName); };
+    TMXObjectGroup* getObjectGroup(const char *groupName) const;
+    CC_DEPRECATED_ATTRIBUTE TMXObjectGroup* objectGroupNamed(const char *groupName) const { return getObjectGroup(groupName); };
 
     /** return the value for the specific property name */
-    String *getPropertyNamed(const char *propertyName) const;
-    CC_DEPRECATED_ATTRIBUTE String *propertyNamed(const char *propertyName) const { return getPropertyNamed(propertyName); };
+    String *getProperty(const char *propertyName) const;
+    CC_DEPRECATED_ATTRIBUTE String *propertyNamed(const char *propertyName) const { return getProperty(propertyName); };
 
     /** return properties dictionary for tile GID */
     Dictionary* getPropertiesForGID(int GID) const;
