@@ -140,7 +140,7 @@ void RenderTexture::listenToForeground(cocos2d::Object *obj)
 #endif
 }
 
-Sprite * RenderTexture::getSprite()
+Sprite* RenderTexture::getSprite() const
 {
     return _sprite;
 }

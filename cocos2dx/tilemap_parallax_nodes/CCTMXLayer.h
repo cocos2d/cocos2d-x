@@ -139,6 +139,29 @@ public:
     inline const char* getLayerName(){ return _layerName.c_str(); }
     inline void setLayerName(const char *layerName){ _layerName = layerName; }
 
+    /** size of the layer in tiles */
+    inline const Size& getLayerSize() const { return _layerSize; };
+    inline void setLayerSize(const Size& size) { _layerSize = size; };
+    
+    /** size of the map's tile (could be different from the tile's size) */
+    inline const Size& getMapTileSize() const { return _mapTileSize; };
+    inline void setMapTileSize(const Size& size) { _mapTileSize = size; };
+    
+    /** pointer to the map of tiles */
+    inline unsigned int* getTiles() const { return _tiles; };
+    inline void setTiles(unsigned int* tiles) { _tiles = tiles; };
+    
+    /** Tileset information for the layer */
+    inline TMXTilesetInfo* getTileSet() const;
+    inline void setTileSet(TMXTilesetInfo* info);
+    
+    /** Layer orientation, which is the same as the map orientation */
+    inline unsigned int getLayerOrientation() const { return _layerOrientation; };
+    inline void setLayerOrientation(unsigned int orientation) { _layerOrientation = orientation; };
+    
+    /** properties from the layer. They can be added using Tiled */
+    inline Dictionary* getProperties() const;
+    inline void setProperties(Dictionary* dict);
     //
     // Override
     //
@@ -192,19 +215,18 @@ protected:
     // used for retina display
     float               _contentScaleFactor;
     
-private:
     /** size of the layer in tiles */
-    CC_SYNTHESIZE_PASS_BY_REF(Size, _layerSize, LayerSize);
+    Size _layerSize;
     /** size of the map's tile (could be different from the tile's size) */
-    CC_SYNTHESIZE_PASS_BY_REF(Size, _mapTileSize, MapTileSize);
+    Size _mapTileSize;
     /** pointer to the map of tiles */
-    CC_SYNTHESIZE(unsigned int*, _tiles, Tiles);
+    unsigned int* _tiles;
     /** Tileset information for the layer */
-    CC_PROPERTY(TMXTilesetInfo*, _tileSet, TileSet);
+    TMXTilesetInfo* _tileSet;
     /** Layer orientation, which is the same as the map orientation */
-    CC_SYNTHESIZE(unsigned int, _layerOrientation, LayerOrientation);
+    unsigned int _layerOrientation;
     /** properties from the layer. They can be added using Tiled */
-    CC_PROPERTY(Dictionary*, _properties, Properties);
+    Dictionary* _properties;
 };
 
 // end of tilemap_parallax_nodes group

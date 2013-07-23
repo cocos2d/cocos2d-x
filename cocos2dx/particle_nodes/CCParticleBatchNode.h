@@ -91,6 +91,12 @@ public:
     /** disables a particle by inserting a 0'd quad into the texture atlas */
     void disableParticle(unsigned int particleIndex);
 
+    /** Gets the texture atlas used for drawing the quads */
+    inline TextureAtlas* getTextureAtlas() const { return _textureAtlas; };
+    
+    /** Sets the texture atlas used for drawing the quads */
+    inline void setTextureAtlas(TextureAtlas* atlas) { _textureAtlas = atlas; };
+    
     // Overrides
     void visit();
     virtual void addChild(Node * child) override;
@@ -99,7 +105,7 @@ public:
     virtual void removeChild(Node* child, bool cleanup) override;
     virtual void reorderChild(Node * child, int zOrder) override;
     virtual void draw(void) override;
-    virtual Texture2D* getTexture(void) override;
+    virtual Texture2D* getTexture(void) const override;
     virtual void setTexture(Texture2D *texture) override;
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
     virtual const BlendFunc& getBlendFunc(void) const override;
@@ -112,7 +118,7 @@ private:
     unsigned int addChildHelper(ParticleSystem* child, int z, int aTag);
     void updateBlendFunc(void);
     /** the texture atlas used for drawing the quads */
-    CC_SYNTHESIZE(TextureAtlas*, _textureAtlas, TextureAtlas);
+    TextureAtlas* _textureAtlas;
 
 private:
     /** the blend function used for drawing the quads */

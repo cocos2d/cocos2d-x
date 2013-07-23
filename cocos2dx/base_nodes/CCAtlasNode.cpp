@@ -233,7 +233,7 @@ void AtlasNode::setTexture(Texture2D *texture)
     this->updateOpacityModifyRGB();
 }
 
-Texture2D * AtlasNode::getTexture()
+Texture2D * AtlasNode::getTexture() const
 {
     return _textureAtlas->getTexture();
 }

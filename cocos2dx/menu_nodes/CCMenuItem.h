@@ -142,6 +142,18 @@ public:
     /** sets a new string to the inner label */
     void setString(const char * label);
 
+    /** Gets the color that will be used to disable the item */
+    inline const Color3B& getDisabledColor() const;
+
+    /** Sets the color that will be used to disable the item */
+    void setDisabledColor(const Color3B& color);
+    
+    /** Gets the label that is rendered. */
+    inline Node* getLabel() const;
+    
+    /** Sets the label that is rendered. */
+    void setLabel(Node* node);
+    
     // Overrides
     virtual void activate() override;
     virtual void selected() override;
@@ -153,9 +165,9 @@ protected:
     float      _originalScale;
 
     /** the color that will be used to disable the item */
-    CC_PROPERTY_PASS_BY_REF(Color3B, _disabledColor, DisabledColor);
+    Color3B _disabledColor;
     /** Label that is rendered. It can be any Node that implements the LabelProtocol */
-    CC_PROPERTY(Node*, _label, Label);
+    Node* _label;
 };
 
 
@@ -277,6 +289,24 @@ public:
     /** initializes a menu item with a normal, selected  and disabled image with a callable object */
     bool initWithNormalSprite(Node* normalSprite, Node* selectedSprite, Node* disabledSprite, const ccMenuCallback& callback);
 
+    /** Gets the image used when the item is not selected */
+    inline Node* getNormalImage() const;
+    
+    /** Sets the image used when the item is not selected */
+    inline void setNormalImage(Node* image);
+    
+    /** Gets the image used when the item is selected */
+    inline Node* getSelectedImage() const;
+    
+    /** Sets the image used when the item is selected */
+    inline void setSelectedImage(Node* image);
+    
+    /** Gets the image used when the item is disabled */
+    inline Node* getDisabledImage() const;
+    
+    /** Sets the image used when the item is disabled */
+    inline void setDisabledImage(Node* image);
+    
     /**
      @since v0.99.5
      */
@@ -288,11 +318,11 @@ protected:
     virtual void updateImagesVisibility();
 
     /** the image used when the item is not selected */
-    CC_PROPERTY(Node*, _normalImage, NormalImage);
+    Node* _normalImage;
     /** the image used when the item is selected */
-    CC_PROPERTY(Node*, _selectedImage, SelectedImage);
+    Node* _selectedImage;
     /** the image used when the item is disabled */
-    CC_PROPERTY(Node*, _disabledImage, DisabledImage);
+    Node* _disabledImage;
 };
 
 
@@ -382,6 +412,21 @@ public:
     /** @deprecated Use getSelectedItem() instead */
     CC_DEPRECATED_ATTRIBUTE MenuItem* selectedItem() { return getSelectedItem(); }
 
+    /** Gets the index of the selected item */
+    inline unsigned int getSelectedIndex() const;
+    
+    /** Sets the index of the selected item */
+    inline void setSelectedIndex(unsigned int index);
+    
+    /** Gets the array that contains the subitems.
+     You can add/remove items in runtime, and you can replace the array with a new one.
+     @since v0.7.2
+     */
+    inline Array* getSubItems() const;
+    
+    /** Sets the array that contains the subitems. */
+    inline void setSubItems(Array* items);
+    
     // Overrides
     virtual void activate() override;
     virtual void selected() override;
@@ -390,11 +435,11 @@ public:
 
 protected:
     /** returns the selected item */
-    CC_PROPERTY(unsigned int, _selectedIndex, SelectedIndex);
-    /** MutableArray that contains the subitems. You can add/remove items in runtime, and you can replace the array with a new one.
+    unsigned int _selectedIndex;
+    /** Array that contains the subitems. You can add/remove items in runtime, and you can replace the array with a new one.
      @since v0.7.2
      */
-    CC_PROPERTY(Array*, _subItems, SubItems);
+    Array* _subItems;
 
 };
 

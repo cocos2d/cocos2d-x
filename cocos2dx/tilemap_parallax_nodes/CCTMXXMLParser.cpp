@@ -84,6 +84,7 @@ TMXLayerInfo::~TMXLayerInfo()
         _tiles = NULL;
     }
 }
+
 Dictionary * TMXLayerInfo::getProperties()
 {
     return _properties;
@@ -104,10 +105,12 @@ TMXTilesetInfo::TMXTilesetInfo()
     ,_imageSize(Size::ZERO)
 {
 }
+
 TMXTilesetInfo::~TMXTilesetInfo()
 {
     CCLOGINFO("cocos2d: deallocing: %p", this);
 }
+
 Rect TMXTilesetInfo::rectForGID(unsigned int gid)
 {
     Rect rect;
@@ -123,7 +126,7 @@ Rect TMXTilesetInfo::rectForGID(unsigned int gid)
 
 // implementation TMXMapInfo
 
-TMXMapInfo * TMXMapInfo::formatWithTMXFile(const char *tmxFile)
+TMXMapInfo * TMXMapInfo::create(const char *tmxFile)
 {
     TMXMapInfo *pRet = new TMXMapInfo();
     if(pRet->initWithTMXFile(tmxFile))
@@ -135,7 +138,7 @@ TMXMapInfo * TMXMapInfo::formatWithTMXFile(const char *tmxFile)
     return NULL;
 }
 
-TMXMapInfo * TMXMapInfo::formatWithXML(const char* tmxString, const char* resourcePath)
+TMXMapInfo * TMXMapInfo::createWithXML(const char* tmxString, const char* resourcePath)
 {
     TMXMapInfo *pRet = new TMXMapInfo();
     if(pRet->initWithXML(tmxString, resourcePath))
@@ -214,7 +217,7 @@ TMXMapInfo::~TMXMapInfo()
     CC_SAFE_RELEASE(_objectGroups);
 }
 
-Array* TMXMapInfo::getLayers()
+Array* TMXMapInfo::getLayers() const
 {
     return _layers;
 }
@@ -226,7 +229,7 @@ void TMXMapInfo::setLayers(Array* var)
     _layers = var;
 }
 
-Array* TMXMapInfo::getTilesets()
+Array* TMXMapInfo::getTilesets() const
 {
     return _tilesets;
 }
@@ -238,7 +241,7 @@ void TMXMapInfo::setTilesets(Array* var)
     _tilesets = var;
 }
 
-Array* TMXMapInfo::getObjectGroups()
+Array* TMXMapInfo::getObjectGroups() const
 {
     return _objectGroups;
 }
@@ -250,7 +253,7 @@ void TMXMapInfo::setObjectGroups(Array* var)
     _objectGroups = var;
 }
 
-Dictionary * TMXMapInfo::getProperties()
+Dictionary * TMXMapInfo::getProperties() const
 {
     return _properties;
 }
@@ -768,7 +771,7 @@ void TMXMapInfo::textHandler(void *ctx, const char *ch, int len)
     TMXMapInfo *pTMXMapInfo = this;
     std::string pText((char*)ch,0,len);
 
-    if (pTMXMapInfo->getStoringCharacters())
+    if (pTMXMapInfo->isStoringCharacters())
     {
         std::string currentString = pTMXMapInfo->getCurrentString();
         currentString += pText;

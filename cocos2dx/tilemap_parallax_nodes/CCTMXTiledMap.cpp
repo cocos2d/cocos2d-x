@@ -62,7 +62,7 @@ bool TMXTiledMap::initWithTMXFile(const char *tmxFile)
     
     setContentSize(Size::ZERO);
 
-    TMXMapInfo *mapInfo = TMXMapInfo::formatWithTMXFile(tmxFile);
+    TMXMapInfo *mapInfo = TMXMapInfo::create(tmxFile);
 
     if (! mapInfo)
     {
@@ -78,7 +78,7 @@ bool TMXTiledMap::initWithXML(const char* tmxString, const char* resourcePath)
 {
     setContentSize(Size::ZERO);
 
-    TMXMapInfo *mapInfo = TMXMapInfo::formatWithXML(tmxString, resourcePath);
+    TMXMapInfo *mapInfo = TMXMapInfo::createWithXML(tmxString, resourcePath);
 
     CCASSERT( mapInfo->getTilesets()->count() != 0, "TMXTiledMap: Map not found. Please check the filename.");
     buildWithMapInfo(mapInfo);
@@ -101,7 +101,7 @@ TMXTiledMap::~TMXTiledMap()
     CC_SAFE_RELEASE(_tileProperties);
 }
 
-Array* TMXTiledMap::getObjectGroups()
+Array* TMXTiledMap::getObjectGroups() const
 {
     return _objectGroups;
 }
@@ -113,7 +113,7 @@ void TMXTiledMap::setObjectGroups(Array* var)
     _objectGroups = var;
 }
 
-Dictionary * TMXTiledMap::getProperties()
+Dictionary * TMXTiledMap::getProperties() const
 {
     return _properties;
 }

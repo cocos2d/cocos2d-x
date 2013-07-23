@@ -148,6 +148,12 @@ public:
     bool isAutoDraw() const;
     void setAutoDraw(bool bAutoDraw);
 
+    /** Gets the Sprite being used. */
+    inline Sprite* getSprite() const;
+    
+    /** Sets the Sprite being used. */
+    inline void setSprite(Sprite* sprite);
+    
     // Overrides
     virtual void visit() override;
     virtual void draw() override;
@@ -176,7 +182,7 @@ protected:
      The blending function can be changed in runtime by calling:
      - [[renderTexture sprite] setBlendFunc:(BlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
      */
-    CC_PROPERTY(Sprite*, _sprite, Sprite)
+    Sprite* _sprite;
 };
 
 // end of textures group
