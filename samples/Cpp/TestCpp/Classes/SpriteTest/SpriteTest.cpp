@@ -4140,23 +4140,23 @@ void NodeSort::reorderSprite(float dt)
 {
     unschedule(schedule_selector(NodeSort::reorderSprite));
 
-    CCLog("Before reorder--");
+    log("Before reorder--");
     
     Object* pObj = NULL;
     CCARRAY_FOREACH(_node->getChildren(), pObj)
     {
         Sprite *child = static_cast<Sprite*>( pObj );
-        CCLog("tag %i z %i",(int)child->getTag(),(int)child->getZOrder());
+        log("tag %i z %i",(int)child->getTag(),(int)child->getZOrder());
     }
     //z-4
     _node->reorderChild( static_cast<Node*>( _node->getChildren()->objectAtIndex(0) ), -6);
 
     _node->sortAllChildren();
-    CCLog("After reorder--");
+    log("After reorder--");
     CCARRAY_FOREACH(_node->getChildren(), pObj)
     {
         Sprite *child = static_cast<Sprite*>( pObj );
-        CCLog("tag %i z %i",(int)child->getTag(),(int)child->getZOrder());
+        log("tag %i z %i",(int)child->getTag(),(int)child->getZOrder());
     }
 }
 
@@ -4210,7 +4210,7 @@ void SpriteBatchNodeReorderSameIndex::reorderSprite(float dt)
     Object *child;
     CCARRAY_FOREACH(_batchNode->getDescendants(), child)
     {
-        CCLog("tag %i", (int)( static_cast<Node*>(child)->getTag()) );
+        log("tag %i", (int)( static_cast<Node*>(child)->getTag()) );
     }    
 }
 

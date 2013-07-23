@@ -19,7 +19,7 @@ MainLayer::MainLayer()
 {
     setTouchEnabled(true);
     
-    Sprite* sprite = Sprite::create(s_pPathGrossini);
+    Sprite* sprite = Sprite::create(s_pathGrossini);
     
     Layer* layer = LayerColor::create(Color4B(255,255,0,255));
     addChild(layer, -1);

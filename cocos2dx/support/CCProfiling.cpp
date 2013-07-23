@@ -91,7 +91,7 @@ void Profiler::displayTimers()
     CCDICT_FOREACH(_activeTimers, pElement)
     {
         ProfilingTimer* timer = static_cast<ProfilingTimer*>(pElement->getObject());
-        CCLog("%s", timer->description());
+        log("%s", timer->description());
     }
 }
 

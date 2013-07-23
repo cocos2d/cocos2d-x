@@ -20,16 +20,16 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
     Director* director = Director::getInstance();
-    EGLView* pEGLView = EGLView::getInstance();
+    EGLView* glView = EGLView::getInstance();
 
-    director->setOpenGLView(pEGLView);
+    director->setOpenGLView(glView);
     
     Size size = director->getWinSize();
 
     // Set the design resolution
-    pEGLView->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, kResolutionNoBorder);
+    glView->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, kResolutionNoBorder);
 
-	Size frameSize = pEGLView->getFrameSize();
+	Size frameSize = glView->getFrameSize();
     
     vector<string> searchPath;
 

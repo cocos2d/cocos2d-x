@@ -121,9 +121,9 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
     infoLabel->setPosition(Point(s.width/2, s.height/2-15));
     addChild(infoLabel, 1, kTagInfoLayer);
 
-    NodeChildrenMenuLayer* pMenu = new NodeChildrenMenuLayer(true, TEST_COUNT, s_nCurCase);
-    addChild(pMenu);
-    pMenu->release();
+    NodeChildrenMenuLayer* menuLayer = new NodeChildrenMenuLayer(true, TEST_COUNT, s_nCurCase);
+    addChild(menuLayer);
+    menuLayer->release();
 
     updateQuantityLabel();
     updateQuantityOfNodes();
@@ -220,8 +220,8 @@ void IterateSpriteSheetFastEnum::update(float dt)
 
     CCARRAY_FOREACH(pChildren, pObject)
     {
-        Sprite* scene = static_cast<Sprite*>(pObject);
-        scene->setVisible(false);
+        Sprite* sprite = static_cast<Sprite*>(pObject);
+        sprite->setVisible(false);
     }
 
     CC_PROFILER_STOP_INSTANCE(this, this->profilerName());
@@ -257,8 +257,8 @@ void IterateSpriteSheetCArray::update(float dt)
 
     CCARRAY_FOREACH(pChildren, pObject)
     {
-        Sprite* scene = static_cast<Sprite*>(pObject);
-        scene->setVisible(false);
+        Sprite* sprite = static_cast<Sprite*>(pObject);
+        sprite->setVisible(false);
     }
 
     CC_PROFILER_STOP(this->profilerName());
@@ -349,13 +349,13 @@ void AddSpriteSheet::update(float dt)
     if( totalToAdd > 0 )
     {
         Array* sprites = Array::createWithCapacity(totalToAdd);
-        int         *zs      = new int[totalToAdd];
+        int *zs = new int[totalToAdd];
 
         // Don't include the sprite creation time and random as part of the profiling
         for(int i=0; i<totalToAdd; i++)
         {
-            Sprite* scene = Sprite::createWithTexture(batchNode->getTexture(), Rect(0,0,32,32));
-            sprites->addObject(scene);
+            Sprite* sprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(0,0,32,32));
+            sprites->addObject(sprite);
             zs[i]      = CCRANDOM_MINUS1_1() * 50;
         }
 
@@ -415,8 +415,8 @@ void RemoveSpriteSheet::update(float dt)
         // Don't include the sprite creation time as part of the profiling
         for(int i=0;i<totalToAdd;i++)
         {
-            Sprite* scene = Sprite::createWithTexture(batchNode->getTexture(), Rect(0,0,32,32));
-            sprites->addObject(scene);
+            Sprite* sprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(0,0,32,32));
+            sprites->addObject(sprite);
         }
 
         // add them with random Z (very important!)
@@ -469,10 +469,10 @@ void ReorderSpriteSheet::update(float dt)
         Array* sprites = Array::createWithCapacity(totalToAdd);
 
         // Don't include the sprite creation time as part of the profiling
-        for(int i=0;i<totalToAdd;i++)
+        for(int i=0; i<totalToAdd; i++)
         {
-            Sprite* scene = Sprite::createWithTexture(batchNode->getTexture(), Rect(0,0,32,32));
-            sprites->addObject(scene);
+            Sprite* sprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(0,0,32,32));
+            sprites->addObject(sprite);
         }
 
         // add them with random Z (very important!)

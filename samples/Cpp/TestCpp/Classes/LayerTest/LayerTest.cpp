@@ -540,8 +540,8 @@ LayerTestBlend::LayerTestBlend()
     Size s = Director::getInstance()->getWinSize();
     LayerColor* layer1 = LayerColor::create( Color4B(255, 255, 255, 80) );
     
-    Sprite* sister1 = Sprite::create(s_pPathSister1);
-    Sprite* sister2 = Sprite::create(s_pPathSister2);
+    Sprite* sister1 = Sprite::create(s_pathSister1);
+    Sprite* sister2 = Sprite::create(s_pathSister2);
     
     addChild(sister1);
     addChild(sister2);
@@ -607,7 +607,7 @@ LayerGradientTest::LayerGradientTest()
 
 void LayerGradientTest::toggleItem(Object *sender)
 {
-    LayerGradient *gradient = (LayerGradient*)getChildByTag(kTagLayer);
+    LayerGradient *gradient = static_cast<LayerGradient*>( getChildByTag(kTagLayer) );
     gradient->setCompressedInterpolation(! gradient->isCompressedInterpolation());
 }
 
@@ -615,13 +615,13 @@ void LayerGradientTest::ccTouchesMoved(Set * touches, Event *event)
 {
     Size s = Director::getInstance()->getWinSize();
 
-    Touch* touch = (Touch*) touches->anyObject();
+    Touch* touch = static_cast<Touch*>( touches->anyObject() );
     Point start = touch->getLocation();    
 
     Point diff =  Point(s.width/2,s.height/2) - start;
     diff = diff.normalize();
 
-    LayerGradient *gradient = (LayerGradient*) getChildByTag(1);
+    LayerGradient *gradient = static_cast<LayerGradient*>( getChildByTag(1) );
     gradient->setVector(diff);
 }
 

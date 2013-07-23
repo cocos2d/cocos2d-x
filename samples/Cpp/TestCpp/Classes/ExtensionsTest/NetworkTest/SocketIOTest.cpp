@@ -103,7 +103,7 @@ SocketIOTestLayer::~SocketIOTestLayer(void)
 //test event callback handlers, these will be registered with socket.io
 void SocketIOTestLayer::testevent(SIOClient *client, const std::string& data) {
 
-	CCLog("SocketIOTestLayer::testevent called with data: %s", data.c_str());
+	log("SocketIOTestLayer::testevent called with data: %s", data.c_str());
 
 	std::stringstream s;
 	s << client->getTag() << " received event testevent with data: " << data.c_str();	
@@ -114,7 +114,7 @@ void SocketIOTestLayer::testevent(SIOClient *client, const std::string& data) {
 
 void SocketIOTestLayer::echotest(SIOClient *client, const std::string& data) {
 
-	CCLog("SocketIOTestLayer::echotest called with data: %s", data.c_str());
+	log("SocketIOTestLayer::echotest called with data: %s", data.c_str());
 
 	std::stringstream s;
 	s << client->getTag() << " received event echotest with data: " << data.c_str();	
@@ -208,7 +208,7 @@ void SocketIOTestLayer::onMenuTestEndpointDisconnectClicked(cocos2d::Object *sen
 
 void SocketIOTestLayer::onConnect(cocos2d::extension::SIOClient* client)
 {
-	CCLog("SocketIOTestLayer::onConnect called");
+	log("SocketIOTestLayer::onConnect called");
 
 	std::stringstream s;
 	s << client->getTag() << " connected!";	
@@ -218,7 +218,7 @@ void SocketIOTestLayer::onConnect(cocos2d::extension::SIOClient* client)
 
 void SocketIOTestLayer::onMessage(cocos2d::extension::SIOClient* client, const std::string& data)
 {
-	CCLog("SocketIOTestLayer::onMessage received: %s", data.c_str());
+	log("SocketIOTestLayer::onMessage received: %s", data.c_str());
 	
 	std::stringstream s;
 	s << client->getTag() << " received message with content: " << data.c_str();	
@@ -228,7 +228,7 @@ void SocketIOTestLayer::onMessage(cocos2d::extension::SIOClient* client, const s
 
 void SocketIOTestLayer::onClose(cocos2d::extension::SIOClient* client)
 {
-	CCLog("SocketIOTestLayer::onClose called");
+	log("SocketIOTestLayer::onClose called");
 
 	std::stringstream s;
 	s << client->getTag() << " closed!";	
@@ -248,7 +248,7 @@ void SocketIOTestLayer::onClose(cocos2d::extension::SIOClient* client)
 
 void SocketIOTestLayer::onError(cocos2d::extension::SIOClient* client, const std::string& data)
 {
-	CCLog("SocketIOTestLayer::onError received: %s", data.c_str());
+	log("SocketIOTestLayer::onError received: %s", data.c_str());
 
 	std::stringstream s;
 	s << client->getTag() << " received error with content: " << data.c_str();	

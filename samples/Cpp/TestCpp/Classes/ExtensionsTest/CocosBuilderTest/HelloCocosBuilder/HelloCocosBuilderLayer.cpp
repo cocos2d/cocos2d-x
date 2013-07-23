@@ -99,25 +99,25 @@ bool HelloCocosBuilderLayer::onAssignCCBCustomProperty(Object* pTarget, const ch
         if (0 == strcmp(pMemberVariableName, "mCustomPropertyInt"))
         {
             this->mCustomPropertyInt = pCCBValue->getIntValue();
-            CCLog("mCustomPropertyInt = %d", mCustomPropertyInt);
+            log("mCustomPropertyInt = %d", mCustomPropertyInt);
             bRet = true;
         }
         else if ( 0 == strcmp(pMemberVariableName, "mCustomPropertyFloat"))
         {
             this->mCustomPropertyFloat = pCCBValue->getFloatValue();
-            CCLog("mCustomPropertyFloat = %f", mCustomPropertyFloat);
+            log("mCustomPropertyFloat = %f", mCustomPropertyFloat);
             bRet = true;
         }
         else if ( 0  == strcmp(pMemberVariableName, "mCustomPropertyBoolean"))
         {
             this->mCustomPropertyBoolean = pCCBValue->getBoolValue();
-            CCLog("mCustomPropertyBoolean = %d", mCustomPropertyBoolean);
+            log("mCustomPropertyBoolean = %d", mCustomPropertyBoolean);
             bRet = true;
         }
         else if ( 0  == strcmp(pMemberVariableName, "mCustomPropertyString"))
         {
             this->mCustomPropertyString = pCCBValue->getStringValue();
-            CCLog("mCustomPropertyString = %s", mCustomPropertyString.c_str());
+            log("mCustomPropertyString = %s", mCustomPropertyString.c_str());
             bRet = true;
         }
         

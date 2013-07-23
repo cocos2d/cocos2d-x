@@ -117,9 +117,9 @@ void BugsTestBaseLayer::onEnter()
     MenuItemFont::setFontSize(24);
     MenuItemFont* pMainItem = MenuItemFont::create("Back", CC_CALLBACK_1(BugsTestBaseLayer::backCallback, this));
     pMainItem->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-    Menu* pMenu = Menu::create(pMainItem, NULL);
-    pMenu->setPosition( Point::ZERO );
-    addChild(pMenu);
+    Menu* menu = Menu::create(pMainItem, NULL);
+    menu->setPosition( Point::ZERO );
+    addChild(menu);
 }
 
 void BugsTestBaseLayer::backCallback(Object* pSender)

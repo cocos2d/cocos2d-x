@@ -94,22 +94,22 @@ void EditBoxTest::toExtensionsMainLayer(cocos2d::Object *sender)
 
 void EditBoxTest::editBoxEditingDidBegin(cocos2d::extension::EditBox* editBox)
 {
-    CCLog("editBox %p DidBegin !", editBox);
+    log("editBox %p DidBegin !", editBox);
 }
 
 void EditBoxTest::editBoxEditingDidEnd(cocos2d::extension::EditBox* editBox)
 {
-    CCLog("editBox %p DidEnd !", editBox);
+    log("editBox %p DidEnd !", editBox);
 }
 
 void EditBoxTest::editBoxTextChanged(cocos2d::extension::EditBox* editBox, const std::string& text)
 {
-    CCLog("editBox %p TextChanged, text: %s ", editBox, text.c_str());
+    log("editBox %p TextChanged, text: %s ", editBox, text.c_str());
 }
 
 void EditBoxTest::editBoxReturn(EditBox* editBox)
 {
-    CCLog("editBox %p was returned !",editBox);
+    log("editBox %p was returned !",editBox);
     
     if (_editName == editBox)
     {

@@ -65,7 +65,7 @@ bool Bug914Layer::init()
 
 void Bug914Layer::ccTouchesMoved(Set *touches, Event * event)
 {
-    CCLog("Number of touches: %d", touches->count());
+    log("Number of touches: %d", touches->count());
 }
 
 void Bug914Layer::ccTouchesBegan(Set *touches, Event * event)

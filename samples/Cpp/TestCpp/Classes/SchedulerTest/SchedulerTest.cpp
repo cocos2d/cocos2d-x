@@ -261,17 +261,17 @@ void SchedulerPauseResumeAll::onExit()
 
 void SchedulerPauseResumeAll::tick1(float dt)
 {
-    CCLog("tick1");
+    log("tick1");
 }
 
 void SchedulerPauseResumeAll::tick2(float dt)
 {
-    CCLog("tick2");
+    log("tick2");
 }
 
 void SchedulerPauseResumeAll::pause(float dt)
 {
-    CCLog("Pausing");
+    log("Pausing");
     Director* director = Director::getInstance();
     _pausedTargets = director->getScheduler()->pauseAllTargets();
     CC_SAFE_RETAIN(_pausedTargets);
@@ -281,13 +281,13 @@ void SchedulerPauseResumeAll::pause(float dt)
     if (c > 2)
     {
         // should have only 2 items: ActionManager, self
-        CCLog("Error: pausedTargets should have only 2 items, and not %u", (unsigned int)c);
+        log("Error: pausedTargets should have only 2 items, and not %u", (unsigned int)c);
     }
 }
 
 void SchedulerPauseResumeAll::resume(float dt)
 {
-    CCLog("Resuming");
+    log("Resuming");
     Director* director = Director::getInstance();
     director->getScheduler()->resumeTargets(_pausedTargets);
     CC_SAFE_RELEASE_NULL(_pausedTargets);
@@ -347,17 +347,17 @@ void SchedulerPauseResumeAllUser::onExit()
 
 void SchedulerPauseResumeAllUser::tick1(float dt)
 {
-    CCLog("tick1");
+    log("tick1");
 }
 
 void SchedulerPauseResumeAllUser::tick2(float dt)
 {
-    CCLog("tick2");
+    log("tick2");
 }
 
 void SchedulerPauseResumeAllUser::pause(float dt)
 {
-    CCLog("Pausing");
+    log("Pausing");
     Director* director = Director::getInstance();
     _pausedTargets = director->getScheduler()->pauseAllTargetsWithMinPriority(kPriorityNonSystemMin);
     CC_SAFE_RETAIN(_pausedTargets);
@@ -365,7 +365,7 @@ void SchedulerPauseResumeAllUser::pause(float dt)
 
 void SchedulerPauseResumeAllUser::resume(float dt)
 {
-    CCLog("Resuming");
+    log("Resuming");
     Director* director = Director::getInstance();
     director->getScheduler()->resumeTargets(_pausedTargets);
     CC_SAFE_RELEASE_NULL(_pausedTargets);
@@ -635,7 +635,7 @@ TestNode::~TestNode()
 void TestNode::update(float dt)
 {
     CC_UNUSED_PARAM(dt);
-    CCLog("%s", _pstring->getCString());
+    log("%s", _pstring->getCString());
 }
 
 //------------------------------------------------------------------
@@ -856,7 +856,7 @@ std::string SchedulerDelayAndRepeat::subtitle()
 
 void SchedulerDelayAndRepeat::update(float dt)
 {
-    CCLog("update called:%f", dt);
+    log("update called:%f", dt);
 }
 
 // SchedulerTimeScale
@@ -1095,7 +1095,7 @@ class TestNode2 : public Node
 {
 public:
 	~TestNode2() {
-		cocos2d::CCLog("Delete TestNode (should not crash)");
+		cocos2d::log("Delete TestNode (should not crash)");
 		this->unscheduleAllSelectors();
 	}
 

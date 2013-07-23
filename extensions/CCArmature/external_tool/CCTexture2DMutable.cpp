@@ -157,7 +157,7 @@ Color4B Texture2DMutable::pixelAt(const Point& pt)
 		c.b = 255;
 	}
     
-    //CCLog("color : %i, %i, %i, %i", c.r, c.g, c.b, c.a);
+    //log("color : %i, %i, %i, %i", c.r, c.g, c.b, c.a);
     
 	return c;
 }

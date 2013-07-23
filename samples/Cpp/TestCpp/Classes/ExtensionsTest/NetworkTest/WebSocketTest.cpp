@@ -109,7 +109,7 @@ WebSocketTestLayer::~WebSocketTestLayer()
 // Delegate methods
 void WebSocketTestLayer::onOpen(cocos2d::extension::WebSocket* ws)
 {
-    CCLog("Websocket (%p) opened", ws);
+    log("Websocket (%p) opened", ws);
     if (ws == _wsiSendText)
     {
         _sendTextStatus->setString("Send Text WS was opened.");
@@ -132,7 +132,7 @@ void WebSocketTestLayer::onMessage(cocos2d::extension::WebSocket* ws, const coco
         char times[100] = {0};
         sprintf(times, "%d", _sendTextTimes);
         std::string textStr = std::string("response text msg: ")+data.bytes+", "+times;
-        CCLog("%s", textStr.c_str());
+        log("%s", textStr.c_str());
         
         _sendTextStatus->setString(textStr.c_str());
     }
@@ -156,14 +156,14 @@ void WebSocketTestLayer::onMessage(cocos2d::extension::WebSocket* ws, const coco
         }
         
         binaryStr += std::string(", ")+times;
-        CCLog("%s", binaryStr.c_str());
+        log("%s", binaryStr.c_str());
         _sendBinaryStatus->setString(binaryStr.c_str());
     }
 }
 
 void WebSocketTestLayer::onClose(cocos2d::extension::WebSocket* ws)
 {
-    CCLog("websocket instance (%p) closed.", ws);
+    log("websocket instance (%p) closed.", ws);
     if (ws == _wsiSendText)
     {
         _wsiSendText = NULL;
@@ -182,7 +182,7 @@ void WebSocketTestLayer::onClose(cocos2d::extension::WebSocket* ws)
 
 void WebSocketTestLayer::onError(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::ErrorCode& error)
 {
-    CCLog("Error was fired, error code: %d", error);
+    log("Error was fired, error code: %d", error);
     if (ws == _wsiError)
     {
         char buf[100] = {0};
@@ -209,7 +209,7 @@ void WebSocketTestLayer::onMenuSendTextClicked(cocos2d::Object *sender)
     else
     {
         std::string warningStr = "send text websocket instance wasn't ready...";
-        CCLog("%s", warningStr.c_str());
+        log("%s", warningStr.c_str());
         _sendTextStatus->setString(warningStr.c_str());
     }
 }
@@ -225,7 +225,7 @@ void WebSocketTestLayer::onMenuSendBinaryClicked(cocos2d::Object *sender)
     else
     {
         std::string warningStr = "send binary websocket instance wasn't ready...";
-        CCLog("%s", warningStr.c_str());
+        log("%s", warningStr.c_str());
         _sendBinaryStatus->setString(warningStr.c_str());
     }
 }

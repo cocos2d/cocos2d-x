@@ -352,14 +352,14 @@ TextLayer::TextLayer(void)
 //  bg->setAnchorPoint( Point::ZERO );
     bg->setPosition(VisibleRect::center());
 
-    Sprite* grossini = Sprite::create(s_pPathSister2);
+    Sprite* grossini = Sprite::create(s_pathSister2);
     node->addChild(grossini, 1);
     grossini->setPosition( Point(VisibleRect::left().x+VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y) );
     ActionInterval* sc = ScaleBy::create(2, 5);
     ActionInterval* sc_back = sc->reverse();
     grossini->runAction( RepeatForever::create(Sequence::create(sc, sc_back, NULL) ) );
 
-    Sprite* tamara = Sprite::create(s_pPathSister1);
+    Sprite* tamara = Sprite::create(s_pathSister1);
     node->addChild(tamara, 1);
     tamara->setPosition( Point(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y) );
     ActionInterval* sc2 = ScaleBy::create(2, 5);

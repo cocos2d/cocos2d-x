@@ -66,12 +66,12 @@ void MotionStreakTest1::onEnter()
     Size s = Director::getInstance()->getWinSize();
   
     // the root object just rotates around
-    _root = Sprite::create(s_pPathR1);
+    _root = Sprite::create(s_pathR1);
     addChild(_root, 1);
     _root->setPosition(Point(s.width/2, s.height/2));
   
     // the target object is offset from root, and the streak is moved to follow it
-    _target = Sprite::create(s_pPathR1);
+    _target = Sprite::create(s_pathR1);
     _root->addChild(_target);
     _target->setPosition(Point(s.width/4, 0));
 
