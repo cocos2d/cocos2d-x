@@ -388,10 +388,10 @@ TextLayer::~TextLayer(void)
 
 TextLayer* TextLayer::create()
 {
-    TextLayer* pLayer = new TextLayer();
-    pLayer->autorelease();
+    TextLayer* layer = new TextLayer();
+    layer->autorelease();
     
-    return pLayer;
+    return layer;
 }
 
 void TextLayer::onEnter()

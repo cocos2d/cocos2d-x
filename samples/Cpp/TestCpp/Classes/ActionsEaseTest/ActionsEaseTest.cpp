@@ -552,10 +552,10 @@ Layer* nextEaseAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* pLayer = createEaseLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createEaseLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* backEaseAction()
@@ -565,18 +565,18 @@ Layer* backEaseAction()
     if( sceneIdx < 0 )
         sceneIdx += total;    
     
-    Layer* pLayer = createEaseLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createEaseLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* restartEaseAction()
 {
-    Layer* pLayer = createEaseLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createEaseLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 } 
 
 
@@ -649,8 +649,8 @@ void EaseSpriteDemo::backCallback(Object* pSender)
 
 void ActionsEaseTestScene::runThisTest()
 {
-    Layer* pLayer = nextEaseAction();
-    addChild(pLayer);
+    Layer* layer = nextEaseAction();
+    addChild(layer);
 
     Director::getInstance()->replaceScene(this);
 }

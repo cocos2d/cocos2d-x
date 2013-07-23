@@ -31,9 +31,9 @@ ParticleMenuLayer::ParticleMenuLayer(bool bControlMenuVisible, int nMaxCases, in
 
 void ParticleMenuLayer::showCurrentTest()
 {
-    ParticleMainScene* pScene = (ParticleMainScene*)getParent();
-    int subTest = pScene->getSubTestNum();
-    int parNum  = pScene->getParticlesNum();
+    ParticleMainScene* scene = (ParticleMainScene*)getParent();
+    int subTest = scene->getSubTestNum();
+    int parNum  = scene->getParticlesNum();
 
     ParticleMainScene* pNewScene = NULL;
 
@@ -559,9 +559,9 @@ void ParticlePerformTest4::doTest()
 
 void runParticleTest()
 {
-    ParticleMainScene* pScene = new ParticlePerformTest1;
-    pScene->initWithSubTest(1, kNodesIncrease);
+    ParticleMainScene* scene = new ParticlePerformTest1;
+    scene->initWithSubTest(1, kNodesIncrease);
 
-    Director::getInstance()->replaceScene(pScene);
-    pScene->release();
+    Director::getInstance()->replaceScene(scene);
+    scene->release();
 }

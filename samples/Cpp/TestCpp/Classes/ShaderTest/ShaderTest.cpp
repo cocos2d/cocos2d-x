@@ -29,10 +29,10 @@ static Layer* nextAction(void)
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* pLayer = createShaderLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createShaderLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 static Layer* backAction(void)
@@ -42,18 +42,18 @@ static Layer* backAction(void)
     if( sceneIdx < 0 )
         sceneIdx += total;    
     
-    Layer* pLayer = createShaderLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createShaderLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 static Layer* restartAction(void)
 {
-    Layer* pLayer = createShaderLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createShaderLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 

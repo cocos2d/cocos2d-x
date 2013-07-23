@@ -36,10 +36,10 @@ Layer* nextActionManagerAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* pLayer = createActionManagerLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createActionManagerLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* backActionManagerAction()
@@ -49,18 +49,18 @@ Layer* backActionManagerAction()
     if( sceneIdx < 0 )
         sceneIdx += total;    
     
-    Layer* pLayer = createActionManagerLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createActionManagerLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* restartActionManagerAction()
 {
-    Layer* pLayer = createActionManagerLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createActionManagerLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 } 
 
 //------------------------------------------------------------------
@@ -209,8 +209,8 @@ void PauseTest::onEnter()
     
     Action* action = MoveBy::create(1, Point(150,0));
 
-    Director* pDirector = Director::getInstance();
-    pDirector->getActionManager()->addAction(action, grossini, true);
+    Director* director = Director::getInstance();
+    director->getActionManager()->addAction(action, grossini, true);
 
     schedule( schedule_selector(PauseTest::unpause), 3); 
 }
@@ -219,8 +219,8 @@ void PauseTest::unpause(float dt)
 {
     unschedule( schedule_selector(PauseTest::unpause) );
     Node* node = getChildByTag( kTagGrossini );
-    Director* pDirector = Director::getInstance();
-    pDirector->getActionManager()->resumeTarget(node);
+    Director* director = Director::getInstance();
+    director->getActionManager()->resumeTarget(node);
 }
 
 std::string PauseTest::title()
@@ -255,8 +255,8 @@ void RemoveTest::onEnter()
 
 void RemoveTest::stopAction()
 {
-    Node* pSprite = getChildByTag(kTagGrossini);
-    pSprite->stopActionByTag(kTagSequence);
+    Node* scene = getChildByTag(kTagGrossini);
+    scene->stopActionByTag(kTagSequence);
 }
 
 std::string RemoveTest::title()
@@ -288,8 +288,8 @@ void ResumeTest::onEnter()
 
     pGrossini->runAction(ScaleBy::create(2, 2));
 
-    Director* pDirector = Director::getInstance();
-    pDirector->getActionManager()->pauseTarget(pGrossini);
+    Director* director = Director::getInstance();
+    director->getActionManager()->pauseTarget(pGrossini);
     pGrossini->runAction(RotateBy::create(2, 360));
 
     this->schedule(schedule_selector(ResumeTest::resumeGrossini), 3.0f);
@@ -300,8 +300,8 @@ void ResumeTest::resumeGrossini(float time)
     this->unschedule(schedule_selector(ResumeTest::resumeGrossini));
 
     Node* pGrossini = getChildByTag(kTagGrossini);
-    Director* pDirector = Director::getInstance();
-    pDirector->getActionManager()->resumeTarget(pGrossini);
+    Director* director = Director::getInstance();
+    director->getActionManager()->resumeTarget(pGrossini);
 }
 
 //------------------------------------------------------------------
@@ -311,8 +311,8 @@ void ResumeTest::resumeGrossini(float time)
 //------------------------------------------------------------------
 void ActionManagerTestScene::runThisTest()
 {
-    Layer* pLayer = nextActionManagerAction();
-    addChild(pLayer);
+    Layer* layer = nextActionManagerAction();
+    addChild(layer);
 
     Director::getInstance()->replaceScene(this);
 }

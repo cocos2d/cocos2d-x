@@ -52,10 +52,10 @@ Layer* nextCocosNodeAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* pLayer = createCocosNodeLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createCocosNodeLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* backCocosNodeAction()
@@ -65,18 +65,18 @@ Layer* backCocosNodeAction()
     if( sceneIdx < 0 )
         sceneIdx += total;    
     
-    Layer* pLayer = createCocosNodeLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createCocosNodeLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* restartCocosNodeAction()
 {
-    Layer* pLayer = createCocosNodeLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createCocosNodeLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 } 
 
 
@@ -841,8 +841,8 @@ std::string NodeNonOpaqueTest::subtitle()
 
 void CocosNodeTestScene::runThisTest()
 {
-    Layer* pLayer = nextCocosNodeAction();
-    addChild(pLayer);
+    Layer* layer = nextCocosNodeAction();
+    addChild(layer);
 
     Director::getInstance()->replaceScene(this);
 }

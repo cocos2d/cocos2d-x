@@ -123,9 +123,9 @@ void IntervalLayer::step4(float dt)
 
 void IntervalTestScene::runThisTest()
 {
-    Layer* pLayer = new IntervalLayer();
-    addChild(pLayer);
-    pLayer->release();
+    Layer* layer = new IntervalLayer();
+    addChild(layer);
+    layer->release();
 
     Director::getInstance()->replaceScene(this);
 }

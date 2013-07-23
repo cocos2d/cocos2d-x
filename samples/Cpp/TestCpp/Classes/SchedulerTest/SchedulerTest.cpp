@@ -54,11 +54,11 @@ Layer* nextSchedulerTest()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->init();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->init();
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* backSchedulerTest()
@@ -68,20 +68,20 @@ Layer* backSchedulerTest()
     if( sceneIdx < 0 )
         sceneIdx += total;    
 
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->init();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->init();
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* restartSchedulerTest()
 {
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->init();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->init();
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 //------------------------------------------------------------------
@@ -96,32 +96,32 @@ void SchedulerTestLayer::onEnter()
 
 void SchedulerTestLayer::backCallback(Object* pSender)
 {
-    Scene* pScene = new SchedulerTestScene();
-    Layer* pLayer = backSchedulerTest();
+    Scene* scene = new SchedulerTestScene();
+    Layer* layer = backSchedulerTest();
 
-    pScene->addChild(pLayer);
-    Director::getInstance()->replaceScene(pScene);
-    pScene->release();
+    scene->addChild(layer);
+    Director::getInstance()->replaceScene(scene);
+    scene->release();
 }
 
 void SchedulerTestLayer::nextCallback(Object* pSender)
 {
-    Scene* pScene = new SchedulerTestScene();
-    Layer* pLayer = nextSchedulerTest();
+    Scene* scene = new SchedulerTestScene();
+    Layer* layer = nextSchedulerTest();
 
-    pScene->addChild(pLayer);
-    Director::getInstance()->replaceScene(pScene);
-    pScene->release();
+    scene->addChild(layer);
+    Director::getInstance()->replaceScene(scene);
+    scene->release();
 }
 
 void SchedulerTestLayer::restartCallback(Object* pSender)
 {
-    Scene* pScene = new SchedulerTestScene();
-    Layer* pLayer = restartSchedulerTest();
+    Scene* scene = new SchedulerTestScene();
+    Layer* layer = restartSchedulerTest();
 
-    pScene->addChild(pLayer);
-    Director::getInstance()->replaceScene(pScene);
-    pScene->release();
+    scene->addChild(layer);
+    Director::getInstance()->replaceScene(scene);
+    scene->release();
 }
 
 std::string SchedulerTestLayer::title()
@@ -272,8 +272,8 @@ void SchedulerPauseResumeAll::tick2(float dt)
 void SchedulerPauseResumeAll::pause(float dt)
 {
     CCLog("Pausing");
-    Director* pDirector = Director::getInstance();
-    _pausedTargets = pDirector->getScheduler()->pauseAllTargets();
+    Director* director = Director::getInstance();
+    _pausedTargets = director->getScheduler()->pauseAllTargets();
     CC_SAFE_RETAIN(_pausedTargets);
     
     unsigned int c = _pausedTargets->count();
@@ -288,8 +288,8 @@ void SchedulerPauseResumeAll::pause(float dt)
 void SchedulerPauseResumeAll::resume(float dt)
 {
     CCLog("Resuming");
-    Director* pDirector = Director::getInstance();
-    pDirector->getScheduler()->resumeTargets(_pausedTargets);
+    Director* director = Director::getInstance();
+    director->getScheduler()->resumeTargets(_pausedTargets);
     CC_SAFE_RELEASE_NULL(_pausedTargets);
 }
 
@@ -358,16 +358,16 @@ void SchedulerPauseResumeAllUser::tick2(float dt)
 void SchedulerPauseResumeAllUser::pause(float dt)
 {
     CCLog("Pausing");
-    Director* pDirector = Director::getInstance();
-    _pausedTargets = pDirector->getScheduler()->pauseAllTargetsWithMinPriority(kPriorityNonSystemMin);
+    Director* director = Director::getInstance();
+    _pausedTargets = director->getScheduler()->pauseAllTargetsWithMinPriority(kPriorityNonSystemMin);
     CC_SAFE_RETAIN(_pausedTargets);
 }
 
 void SchedulerPauseResumeAllUser::resume(float dt)
 {
     CCLog("Resuming");
-    Director* pDirector = Director::getInstance();
-    pDirector->getScheduler()->resumeTargets(_pausedTargets);
+    Director* director = Director::getInstance();
+    director->getScheduler()->resumeTargets(_pausedTargets);
     CC_SAFE_RELEASE_NULL(_pausedTargets);
 }
 
@@ -695,17 +695,17 @@ void SchedulerUpdate::onEnter()
 void SchedulerUpdate::removeUpdates(float dt)
 {
     Array* children = getChildren();
-    Node* pNode;
+    Node* node;
     Object* pObject;
     CCARRAY_FOREACH(children, pObject)
     {
-        pNode = static_cast<Node*>(pObject);
+        node = static_cast<Node*>(pObject);
 
-        if (! pNode)
+        if (! node)
         {
             break;
         }
-        pNode->unscheduleAllSelectors();
+        node->unscheduleAllSelectors();
     }
 }
 
@@ -1154,8 +1154,8 @@ std::string SchedulerIssue2268::subtitle()
 //------------------------------------------------------------------
 void SchedulerTestScene::runThisTest()
 {
-    Layer* pLayer = nextSchedulerTest();
-    addChild(pLayer);
+    Layer* layer = nextSchedulerTest();
+    addChild(layer);
 
     Director::getInstance()->replaceScene(this);
 }

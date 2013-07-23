@@ -12,15 +12,15 @@
 Scene* Bug914Layer::scene()
 {
     // 'scene' is an autorelease object.
-    Scene *pScene = Scene::create();
+    Scene *scene = Scene::create();
     // 'layer' is an autorelease object.
     Bug914Layer* layer = Bug914Layer::create();
 
     // add layer as a child to scene
-    pScene->addChild(layer);
+    scene->addChild(layer);
 
     // return the scene
-    return pScene;
+    return scene;
 }
 
 // on "init" you need to initialize your instance

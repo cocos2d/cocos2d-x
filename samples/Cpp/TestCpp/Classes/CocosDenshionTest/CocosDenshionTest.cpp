@@ -414,9 +414,9 @@ void CocosDenshionTest::updateVolumes(float)
 
 void CocosDenshionTestScene::runThisTest()
 {
-    Layer* pLayer = new CocosDenshionTest();
-    addChild(pLayer);
-    pLayer->autorelease();
+    Layer* layer = new CocosDenshionTest();
+    addChild(layer);
+    layer->autorelease();
 
     Director::getInstance()->replaceScene(this);
 }

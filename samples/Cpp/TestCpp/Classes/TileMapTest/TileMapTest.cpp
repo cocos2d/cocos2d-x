@@ -1293,13 +1293,13 @@ TMXBug987::TMXBug987()
     CCLOG("ContentSize: %f, %f", s1.width,s1.height);
 
     Array* childs = map->getChildren();
-    TMXLayer* pNode;
+    TMXLayer* node;
     Object* pObject = NULL;
     CCARRAY_FOREACH(childs, pObject)
     {
-        pNode = static_cast<TMXLayer*>(pObject);
-        CC_BREAK_IF(!pNode);
-        pNode->getTexture()->setAntiAliasTexParameters();
+        node = static_cast<TMXLayer*>(pObject);
+        CC_BREAK_IF(!node);
+        node->getTexture()->setAntiAliasTexParameters();
     }
 
     map->setAnchorPoint(Point(0, 0));
@@ -1357,7 +1357,7 @@ static int sceneIdx = -1;
 
 #define MAX_LAYER    28
 
-Layer* createTileMapLayer(int nIndex)
+Layer* createTileMalayer(int nIndex)
 {
     switch(nIndex)
     {
@@ -1399,10 +1399,10 @@ Layer* nextTileMapAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* pLayer = createTileMapLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createTileMalayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* backTileMapAction()
@@ -1412,18 +1412,18 @@ Layer* backTileMapAction()
     if( sceneIdx < 0 )
         sceneIdx += total;    
     
-    Layer* pLayer = createTileMapLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createTileMalayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* restartTileMapAction()
 {
-    Layer* pLayer = createTileMapLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createTileMalayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 } 
 
 
@@ -1489,8 +1489,8 @@ void TileDemo::ccTouchesMoved(Set *pTouches, Event *pEvent)
 
 void TileMapTestScene::runThisTest()
 {
-    Layer* pLayer = nextTileMapAction();
-    addChild(pLayer);
+    Layer* layer = nextTileMapAction();
+    addChild(layer);
 
     // fix bug #486, #419. 
     // "test" is the default value in Director::setGLDefaultValues()

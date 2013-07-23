@@ -267,9 +267,9 @@ TransitionScene* createTransition(int nIndex, float t, Scene* s)
 
 void TransitionsTestScene::runThisTest()
 {
-    Layer * pLayer = new TestLayer1();
-    addChild(pLayer);
-    pLayer->release();
+    Layer * layer = new TestLayer1();
+    addChild(layer);
+    layer->release();
 
     Director::getInstance()->replaceScene(this);
 }
@@ -322,15 +322,15 @@ void TestLayer1::restartCallback(Object* pSender)
 {
     Scene* s = new TransitionsTestScene();
 
-    Layer* pLayer = new TestLayer2();
-    s->addChild(pLayer);
+    Layer* layer = new TestLayer2();
+    s->addChild(layer);
 
-    Scene* pScene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
+    Scene* scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
     s->release();
-    pLayer->release();
-    if (pScene)
+    layer->release();
+    if (scene)
     {
-        Director::getInstance()->replaceScene(pScene);
+        Director::getInstance()->replaceScene(scene);
     }    
 }
 
@@ -341,15 +341,15 @@ void TestLayer1::nextCallback(Object* pSender)
 
     Scene* s = new TransitionsTestScene();
 
-    Layer* pLayer = new TestLayer2();
-    s->addChild(pLayer);
+    Layer* layer = new TestLayer2();
+    s->addChild(layer);
 
-    Scene* pScene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
+    Scene* scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
     s->release();
-    pLayer->release();
-    if (pScene)
+    layer->release();
+    if (scene)
     {
-        Director::getInstance()->replaceScene(pScene);
+        Director::getInstance()->replaceScene(scene);
     }
 }
 
@@ -362,15 +362,15 @@ void TestLayer1::backCallback(Object* pSender)
 
     Scene* s = new TransitionsTestScene();
 
-    Layer* pLayer = new TestLayer2();
-    s->addChild(pLayer);
+    Layer* layer = new TestLayer2();
+    s->addChild(layer);
 
-    Scene* pScene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
+    Scene* scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
     s->release();
-    pLayer->release();
-    if (pScene)
+    layer->release();
+    if (scene)
     {
-        Director::getInstance()->replaceScene(pScene);
+        Director::getInstance()->replaceScene(scene);
     }
 }
 
@@ -451,15 +451,15 @@ void TestLayer2::restartCallback(Object* pSender)
 {
     Scene* s = new TransitionsTestScene();
 
-    Layer* pLayer = new TestLayer1();
-    s->addChild(pLayer);
+    Layer* layer = new TestLayer1();
+    s->addChild(layer);
 
-    Scene* pScene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
+    Scene* scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
     s->release();
-    pLayer->release();
-    if (pScene)
+    layer->release();
+    if (scene)
     {
-        Director::getInstance()->replaceScene(pScene);
+        Director::getInstance()->replaceScene(scene);
     }
 }
 
@@ -470,15 +470,15 @@ void TestLayer2::nextCallback(Object* pSender)
 
     Scene* s = new TransitionsTestScene();
 
-    Layer* pLayer = new TestLayer1();
-    s->addChild(pLayer);
+    Layer* layer = new TestLayer1();
+    s->addChild(layer);
 
-    Scene* pScene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
+    Scene* scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
     s->release();
-    pLayer->release();
-    if (pScene)
+    layer->release();
+    if (scene)
     {
-        Director::getInstance()->replaceScene(pScene);
+        Director::getInstance()->replaceScene(scene);
     }
 }
 
@@ -491,15 +491,15 @@ void TestLayer2::backCallback(Object* pSender)
 
     Scene* s = new TransitionsTestScene();
 
-    Layer* pLayer = new TestLayer1();
-    s->addChild(pLayer);
+    Layer* layer = new TestLayer1();
+    s->addChild(layer);
 
-    Scene* pScene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
+    Scene* scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
     s->release();
-    pLayer->release();
-    if (pScene)
+    layer->release();
+    if (scene)
     {
-        Director::getInstance()->replaceScene(pScene);
+        Director::getInstance()->replaceScene(scene);
     }
 }
 

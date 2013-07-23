@@ -58,11 +58,11 @@ Layer* backTextInputTest()
     return restartTextInputTest();
 }
 
-static Rect getRect(Node * pNode)
+static Rect getRect(Node * node)
 {
     Rect rc;
-    rc.origin = pNode->getPosition();
-    rc.size = pNode->getContentSize();
+    rc.origin = node->getPosition();
+    rc.size = node->getContentSize();
     rc.origin.x -= rc.size.width / 2;
     rc.origin.y -= rc.size.height / 2;
     return rc;
@@ -103,10 +103,10 @@ void TextInputTest::backCallback(Object* pSender)
     s->release();
 }
 
-void TextInputTest::addKeyboardNotificationLayer(KeyboardNotificationLayer * pLayer)
+void TextInputTest::addKeyboardNotificationLayer(KeyboardNotificationLayer * layer)
 {
-    _notificationLayer = pLayer;
-    addChild(pLayer);
+    _notificationLayer = layer;
+    addChild(layer);
 }
 
 std::string TextInputTest::title()
@@ -131,8 +131,8 @@ KeyboardNotificationLayer::KeyboardNotificationLayer()
 
 void KeyboardNotificationLayer::registerWithTouchDispatcher()
 {
-    Director* pDirector = Director::getInstance();
-    pDirector->getTouchDispatcher()->addTargetedDelegate(this, 0, false);
+    Director* director = Director::getInstance();
+    director->getTouchDispatcher()->addTargetedDelegate(this, 0, false);
 }
 
 void KeyboardNotificationLayer::keyboardWillShow(IMEKeyboardNotificationInfo& info)
@@ -436,9 +436,9 @@ bool TextFieldTTFActionTest::onDraw(TextFieldTTF * pSender)
     return false;
 }
 
-void TextFieldTTFActionTest::callbackRemoveNodeWhenDidAction(Node * pNode)
+void TextFieldTTFActionTest::callbackRemoveNodeWhenDidAction(Node * node)
 {
-    this->removeChild(pNode, true);
+    this->removeChild(node, true);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -447,8 +447,8 @@ void TextFieldTTFActionTest::callbackRemoveNodeWhenDidAction(Node * pNode)
 
 void TextInputTestScene::runThisTest()
 {
-    Layer* pLayer = nextTextInputTest();
-    addChild(pLayer);
+    Layer* layer = nextTextInputTest();
+    addChild(layer);
 
     Director::getInstance()->replaceScene(this);
 }

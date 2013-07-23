@@ -283,17 +283,17 @@ void HttpClientTest::onHttpRequestCompleted(HttpClient *sender, HttpResponse *re
 
 void HttpClientTest::toExtensionsMainLayer(cocos2d::Object *sender)
 {
-    ExtensionsTestScene *pScene = new ExtensionsTestScene();
-    pScene->runThisTest();
-    pScene->release();
+    ExtensionsTestScene *scene = new ExtensionsTestScene();
+    scene->runThisTest();
+    scene->release();
 }
 
 void runHttpClientTest()
 {
-    Scene *pScene = Scene::create();
-    HttpClientTest *pLayer = new HttpClientTest();
-    pScene->addChild(pLayer);
+    Scene *scene = Scene::create();
+    HttpClientTest *layer = new HttpClientTest();
+    scene->addChild(layer);
     
-    Director::getInstance()->replaceScene(pScene);
-    pLayer->release();
+    Director::getInstance()->replaceScene(scene);
+    layer->release();
 }

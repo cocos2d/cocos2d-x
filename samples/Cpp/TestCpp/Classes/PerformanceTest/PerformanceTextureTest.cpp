@@ -25,19 +25,19 @@ float calculateDeltaTime( struct timeval *lastUpdate )
 ////////////////////////////////////////////////////////
 void TextureMenuLayer::showCurrentTest()
 {
-    Scene* pScene = NULL;
+    Scene* scene = NULL;
 
     switch (_curCase)
     {
     case 0:
-        pScene = TextureTest::scene();
+        scene = TextureTest::scene();
         break;
     }
     s_nTexCurCase = _curCase;
 
-    if (pScene)
+    if (scene)
     {
-        Director::getInstance()->replaceScene(pScene);
+        Director::getInstance()->replaceScene(scene);
     }
 }
 
@@ -344,17 +344,17 @@ std::string TextureTest::subtitle()
 
 Scene* TextureTest::scene()
 {
-    Scene *pScene = Scene::create();
+    Scene *scene = Scene::create();
     TextureTest *layer = new TextureTest(false, TEST_COUNT, s_nTexCurCase);
-    pScene->addChild(layer);
+    scene->addChild(layer);
     layer->release();
 
-    return pScene;
+    return scene;
 }
 
 void runTextureTest()
 {
     s_nTexCurCase = 0;
-    Scene* pScene = TextureTest::scene();
-    Director::getInstance()->replaceScene(pScene);
+    Scene* scene = TextureTest::scene();
+    Director::getInstance()->replaceScene(scene);
 }

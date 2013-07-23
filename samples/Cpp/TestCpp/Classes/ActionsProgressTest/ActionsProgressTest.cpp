@@ -30,10 +30,10 @@ Layer* nextAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* pLayer = createLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* backAction()
@@ -43,18 +43,18 @@ Layer* backAction()
     if( sceneIdx < 0 )
         sceneIdx += total;    
     
-    Layer* pLayer = createLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* restartAction()
 {
-    Layer* pLayer = createLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 } 
 
 

@@ -65,13 +65,13 @@ bool HelloWorld::init()
     this->addChild(pLabel, 1);
 
     // add "HelloWorld" splash screen"
-    Sprite* pSprite = Sprite::create("HelloWorld.png");
+    Sprite* scene = Sprite::create("HelloWorld.png");
 
     // position the sprite on the center of the screen
-    pSprite->setPosition(Point(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+    scene->setPosition(Point(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
 
     // add the sprite as a child to this layer
-    this->addChild(pSprite, 0);
+    this->addChild(scene, 0);
     
     return true;
 }

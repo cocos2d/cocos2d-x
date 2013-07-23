@@ -35,15 +35,15 @@ void TestScene::onEnter()
                       outside the scope. So I choose the (2) solution. Commented by James Chen.
         */
 
-//        Scene *pScene = Scene::create();
-        Scene *pScene = new Scene();
-        if (pScene && pScene->init())
+//        Scene *scene = Scene::create();
+        Scene *scene = new Scene();
+        if (scene && scene->init())
         {
-            Layer* pLayer = new TestController();
-            pScene->addChild(pLayer);
-            pLayer->release();
-            Director::getInstance()->replaceScene(pScene);
-            pScene->release();
+            Layer* layer = new TestController();
+            scene->addChild(layer);
+            layer->release();
+            Director::getInstance()->replaceScene(scene);
+            scene->release();
         }
 	});
 

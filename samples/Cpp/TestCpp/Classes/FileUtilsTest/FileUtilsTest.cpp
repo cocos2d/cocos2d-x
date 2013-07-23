@@ -23,11 +23,11 @@ static Layer* nextAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
     
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->init();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->init();
+    layer->autorelease();
     
-    return pLayer;
+    return layer;
 }
 
 static Layer* backAction()
@@ -37,26 +37,26 @@ static Layer* backAction()
     if( sceneIdx < 0 )
         sceneIdx += total;
     
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->init();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->init();
+    layer->autorelease();
     
-    return pLayer;
+    return layer;
 }
 
 static Layer* restartAction()
 {
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->init();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->init();
+    layer->autorelease();
     
-    return pLayer;
+    return layer;
 }
 
 void FileUtilsTestScene::runThisTest()
 {
-    Layer* pLayer = nextAction();
-    addChild(pLayer);
+    Layer* layer = nextAction();
+    addChild(layer);
     
     Director::getInstance()->replaceScene(this);
 }
@@ -70,32 +70,32 @@ void FileUtilsDemo::onEnter()
 
 void FileUtilsDemo::backCallback(Object* pSender)
 {
-    Scene* pScene = new FileUtilsTestScene();
-    Layer* pLayer = backAction();
+    Scene* scene = new FileUtilsTestScene();
+    Layer* layer = backAction();
     
-    pScene->addChild(pLayer);
-    Director::getInstance()->replaceScene(pScene);
-    pScene->release();
+    scene->addChild(layer);
+    Director::getInstance()->replaceScene(scene);
+    scene->release();
 }
 
 void FileUtilsDemo::nextCallback(Object* pSender)
 {
-    Scene* pScene = new FileUtilsTestScene();
-    Layer* pLayer = nextAction();
+    Scene* scene = new FileUtilsTestScene();
+    Layer* layer = nextAction();
     
-    pScene->addChild(pLayer);
-    Director::getInstance()->replaceScene(pScene);
-    pScene->release();
+    scene->addChild(layer);
+    Director::getInstance()->replaceScene(scene);
+    scene->release();
 }
 
 void FileUtilsDemo::restartCallback(Object* pSender)
 {
-    Scene* pScene = new FileUtilsTestScene();
-    Layer* pLayer = restartAction();
+    Scene* scene = new FileUtilsTestScene();
+    Layer* layer = restartAction();
     
-    pScene->addChild(pLayer);
-    Director::getInstance()->replaceScene(pScene);
-    pScene->release();
+    scene->addChild(layer);
+    Director::getInstance()->replaceScene(scene);
+    scene->release();
 }
 
 string FileUtilsDemo::title()

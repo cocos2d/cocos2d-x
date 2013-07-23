@@ -125,9 +125,9 @@ void SocketIOTestLayer::echotest(SIOClient *client, const std::string& data) {
 
 void SocketIOTestLayer::toExtensionsMainLayer(cocos2d::Object *sender)
 {
-	ExtensionsTestScene *pScene = new ExtensionsTestScene();
-    pScene->runThisTest();
-    pScene->release();
+	ExtensionsTestScene *scene = new ExtensionsTestScene();
+    scene->runThisTest();
+    scene->release();
 
 	if(_sioEndpoint) _sioEndpoint->disconnect();
 	if(_sioClient) _sioClient->disconnect();
@@ -259,10 +259,10 @@ void SocketIOTestLayer::onError(cocos2d::extension::SIOClient* client, const std
 
 void runSocketIOTest()
 {
-    Scene *pScene = Scene::create();
-    SocketIOTestLayer *pLayer = new SocketIOTestLayer();
-    pScene->addChild(pLayer);
+    Scene *scene = Scene::create();
+    SocketIOTestLayer *layer = new SocketIOTestLayer();
+    scene->addChild(layer);
     
-    Director::getInstance()->replaceScene(pScene);
-    pLayer->release();
+    Director::getInstance()->replaceScene(scene);
+    layer->release();
 }
