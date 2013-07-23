@@ -29,7 +29,7 @@ FileUtilsEmscripten::FileUtilsEmscripten()
 
 bool FileUtilsEmscripten::init()
 {
-    _defaultResRootPath = "app/native/Resources/";
+    _defaultResRootPath = "/";
     return FileUtils::init();
 }
 
