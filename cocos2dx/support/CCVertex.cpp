@@ -45,9 +45,9 @@ void ccVertexLineToPolygon(Point *points, float stroke, Vertex2F *vertices, unsi
         Point perpVector;
 
         if(i == 0)
-            (p1 - points[i+1]).normalize().getPerp();
+            perpVector = (p1 - points[i+1]).normalize().getPerp();
         else if(i == nuPointsMinus)
-            (points[i-1] - p1).normalize().getPerp();
+            perpVector = (points[i-1] - p1).normalize().getPerp();
         else
         {
             Point p2 = points[i+1];
